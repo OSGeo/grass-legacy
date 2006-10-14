@@ -5,6 +5,7 @@
 #include <grass/gis.h>
 #include <grass/dbmi.h>
 #include <grass/Vect.h>
+#include <grass/glocale.h>
 #include "local_proto.h"
 
 /* Determine if the string is integer, e.g. 123, +123, -123
@@ -53,11 +54,11 @@ int is_double(char *str)
 int points_analyse(FILE * ascii_in, FILE * ascii, char *fs,
 		   int *rowlength, int *ncolumns, int *minncolumns,
 		   int **column_type, int **column_length, int skip_lines,
-		   int xcol, int ycol)
+		   int xcol, int ycol, int region_flag)
 {
     int i;
     int buflen;			/* buffer length */
-    char *buf;			/* buffer */
+    char *buf, *buf_raw;	/* buffer */
     int row = 1;		/* line number, first is 1 */
     int ncols = 0;		/* number of columns */
     int minncols = -1;
@@ -70,18 +71,22 @@ int points_analyse(FILE * ascii_in, FILE * ascii, char *fs,
     double northing = .0;
     double easting = .0;
     char *coorbuf, *tmp_token, *sav_buf;
+    int skip = FALSE, skipped = 0;
 
     buflen = 1000;
     buf = (char *)G_malloc(buflen);
+    buf_raw = (char *)G_malloc(buflen);
     coorbuf = (char *)G_malloc(256);
     tmp_token = (char *)G_malloc(256);
     sav_buf = NULL;
 
+    G_message(_("Scanning input for column types ..."));
     /* fetch projection for LatLong test */
     G_get_window(&window);
 
     while (1) {
-	len = 0;		/* not really needed, but what the heck */
+	len = 0;	/* not really needed, but what the heck */
+	skip = FALSE;	/* reset out-of-region check */
 
 	if (G_getl2(buf, buflen - 1, ascii_in) == 0)
 	    break;		/* EOF */
@@ -105,7 +110,10 @@ int points_analyse(FILE * ascii_in, FILE * ascii, char *fs,
 
 	/* no G_chop() as first/last column may be empty fs=tab value */
 	G_debug(3, "row %d : %d chars", row, strlen(buf));
-	fprintf(ascii, "%s\n", buf);
+
+	/* G_tokenize() will modify the buffer, so we make a copy */
+	strcpy(buf_raw, buf);
+
 	len = strlen(buf) + 1;
 	if (len > rowlen)
 	    rowlen = len;
@@ -137,35 +145,67 @@ int points_analyse(FILE * ascii_in, FILE * ascii, char *fs,
 		    /* check if coordinates are DMS or decimal or not latlong at all */
 		    sprintf(coorbuf, "%s", tokens[i]);
 		    G_debug(4, "token: %s", coorbuf);
-		    if (G_scan_northing(coorbuf, &northing, window.proj)) {
-			G_debug(4, "is_latlong north: %f", northing);
-			sprintf(tmp_token, "%f", northing);
-			/* replace current DMS token by decimal degree */
-			tokens[i] = tmp_token;
-		    }
-		    else {
+
+		    if (i == xcol) { 
 			if (G_scan_easting(coorbuf, &easting, window.proj)) {
 			    G_debug(4, "is_latlong east: %f", easting);
 			    sprintf(tmp_token, "%f", easting);
 			    /* replace current DMS token by decimal degree */
 			    tokens[i] = tmp_token;
+			    if (region_flag) {
+				if ((window.east < easting) || (window.west > easting))
+				   skip = TRUE;
+			    }
 			}
-			else {
-			    /* maybe do nothing here */
-			    G_warning("Unparsable LatLong value found: %s",
-				      tokens[i]);
+			else
+			    G_warning(_("Unparsable longitude value: [%s]"), tokens[i]);
+		    }
+
+		    if (i == ycol) {
+			if (G_scan_northing(coorbuf, &northing, window.proj)) {
+			    G_debug(4, "is_latlong north: %f", northing);
+			    sprintf(tmp_token, "%f", northing);
+			    /* replace current DMS token by decimal degree */
+			    tokens[i] = tmp_token;
+			    if (region_flag) {
+				if ((window.north < northing) || (window.south > northing))
+			 	    skip = TRUE;
+			    }
 			}
-		    }		/* G_scan_northing else */
-		}
+			else
+			    G_warning(_("Unparsable latitude value: [%s]"), tokens[i]);
+		    }
+ 		} /* if (x or y) */
+
 		if (i == ntokens - 1 && sav_buf != NULL) {
 		    /* Restore original token buffer so free_tokens works */
 		    /* Only do this if tokens[0] was re-assigned */
 		    tokens[0] = sav_buf;
 		    sav_buf = NULL;
 		}
-	    }			/* PROJECTION_LL */
+	    }		/* PROJECTION_LL */
+	    else {
+		if (region_flag) {
+		    /* consider z range if -z flag is used? */
+		    /* change to if(>= east,north){skip=1;} to allow correct tiling */
+		    /* don't "continue;" so multiple passes will have the
+			   same column types and length for patching */
+		    if (i == xcol) {
+			easting = atof(tokens[i]);
+			if ((window.east < easting) || (window.west > easting))
+			   skip = TRUE;
+		    }
+		    if (i == ycol) {
+			northing = atof(tokens[i]);
+			if ((window.north < northing) || (window.south > northing))
+			   skip = TRUE;
+		    }
+		}
+	    }
+
 	    G_debug(4, "row %d col %d: '%s' is_int = %d is_double = %d",
 		    row, i, tokens[i], is_int(tokens[i]), is_double(tokens[i]));
+
 	    if (is_int(tokens[i]))
 		continue;	/* integer */
 	    if (is_double(tokens[i])) {	/* double */
@@ -180,6 +220,13 @@ int points_analyse(FILE * ascii_in, FILE * ascii, char *fs,
 	    if (len > collen[i])
 		collen[i] = len;
 	}
+
+	/* write dataline to tmp file */
+	if (!skip)
+	    fprintf(ascii, "%s\n", buf_raw);
+	else
+	    skipped++;
+
 	G_free_tokens(tokens);
 	row++;
     }
@@ -191,8 +238,13 @@ int points_analyse(FILE * ascii_in, FILE * ascii, char *fs,
     *column_length = collen;
 
     G_free(buf);
+    G_free(buf_raw);
     G_free(coorbuf);
     G_free(tmp_token);
+
+    if (region_flag)
+	G_message(_("Skipping %d of %d rows falling outside of current region"),
+		  skipped, row-1);
 
     return 0;
 }
@@ -219,6 +271,7 @@ int points_to_bin(FILE * ascii, int rowlen, struct Map_info *Map,
     dbString sql, val;
     struct Cell_head window;
 
+    G_message(_("Importing points ..."));
     /* fetch projection for LatLong test */
     G_get_window(&window);
 
@@ -322,7 +375,7 @@ int points_to_bin(FILE * ascii, int rowlen, struct Map_info *Map,
 	    G_debug(3, db_get_string(&sql));
 
 	    if (db_execute_immediate(driver, &sql) != DB_OK) {
-		G_fatal_error("Cannot insert values: %s", db_get_string(&sql));
+		G_fatal_error(_("Cannot insert values: %s"), db_get_string(&sql));
 	    }
 	}
 

@@ -18,7 +18,7 @@ main (int argc, char *argv[])
 	struct Option *old, *new, *delim_opt, *columns_opt, *xcol_opt, 
 		*ycol_opt, *zcol_opt, *catcol_opt, *format_opt, *skip_opt;
 	int    xcol, ycol, zcol, catcol, format, skip_lines;
-	struct Flag *zcoorf, *t_flag, *e_flag, *noheader_flag, *notopol_flag;
+	struct Flag *zcoorf, *t_flag, *e_flag, *noheader_flag, *notopol_flag, *region_flag;
 	char   *table;
 	char   *fs;
 	int    zcoor=WITHOUT_Z, make_table; 
@@ -29,7 +29,8 @@ main (int argc, char *argv[])
 
 	module = G_define_module();
 	module->keywords = _("vector");
-    module->description = _("Convert GRASS ascii file or points file to binary vector.");
+	module->description =
+	    _("Convert GRASS ascii file or points file to binary vector.");
 
         /************************** Command Parser ************************************/
 	old = G_define_option();
@@ -39,7 +40,7 @@ main (int argc, char *argv[])
 	old->multiple	 =  NO;
 	old->gisprompt   = "old_file,file,input";
 	old->description =
-	    _("ASCII file to be converted to binary vector file, if not given reads from standard input");
+	  _("ASCII file to be converted to binary vector file, if not given reads from standard input");
 
 	new = G_define_standard_option(G_OPT_V_OUTPUT);
 
@@ -66,7 +67,7 @@ main (int argc, char *argv[])
 	skip_opt->multiple = NO;
 	skip_opt->answer = "0";
 	skip_opt->description =
-	    _("Number of header lines to skip at top of input file (written to map history)");
+	  _("Number of header lines to skip at top of input file (written to map history)");
 
 	columns_opt = G_define_option();
 	columns_opt->key = "columns";
@@ -74,8 +75,8 @@ main (int argc, char *argv[])
 	columns_opt->required = NO;
 	columns_opt->multiple = NO;
 	columns_opt->description =
-	    _("Columns definition for points mode in SQL style, for example:\n"
-		"'x double precision, y double precision, cat int, name varchar(10)'");
+	  _("Columns definition for points mode in SQL style, for example:\n"
+	    "'x double precision, y double precision, cat int, name varchar(10)'");
 
 	xcol_opt = G_define_option();
 	xcol_opt->key = "x";
@@ -84,7 +85,7 @@ main (int argc, char *argv[])
 	xcol_opt->multiple = NO;
 	xcol_opt->answer = "1";
 	xcol_opt->description =
-	    _("Number of column used as x coordinate (first column is 1) for points mode");
+	  _("Number of column used as x coordinate (first column is 1) for points mode");
 
 	ycol_opt = G_define_option();
 	ycol_opt->key = "y";
@@ -93,7 +94,7 @@ main (int argc, char *argv[])
 	ycol_opt->multiple = NO;
 	ycol_opt->answer = "2";
 	ycol_opt->description =
-	    _("Number of column used as y coordinate (first column is 1) for points mode");
+	  _("Number of column used as y coordinate (first column is 1) for points mode");
 
 	zcol_opt = G_define_option();
 	zcol_opt->key = "z";
@@ -102,8 +103,8 @@ main (int argc, char *argv[])
 	zcol_opt->multiple = NO;
 	zcol_opt->answer = "0";
 	zcol_opt->description =
-	    _("Number of column used as z coordinate (first column is 1) for points mode. "
-		"If 0, z coordinate is not used.");
+	  _("Number of column used as z coordinate (first column is 1) for "
+	    "points mode. If 0, z coordinate is not used.");
 
 	catcol_opt = G_define_option();
 	catcol_opt->key = "cat";
@@ -112,32 +113,39 @@ main (int argc, char *argv[])
 	catcol_opt->multiple = NO;
 	catcol_opt->answer = "0";
 	catcol_opt->description =
-	    _("Number of column used as category (first column is 1) for points mode. "
-		"If 0, unique category is assigned to each row and written to new column 'cat'.");
+	  _("Number of column used as category (first column is 1) for points mode. "
+	    "If 0, unique category is assigned to each row and written to new column 'cat'.");
 
 	zcoorf = G_define_flag ();
-        zcoorf->key           	= 'z';
+	zcoorf->key           	= 'z';
 	zcoorf->description   	= _("Create 3D file");  
+
+	e_flag = G_define_flag();
+	e_flag->key              = 'e';
+	e_flag->description      =
+	  _("Create a new empty map and exit. Nothing is read from input.");
+
+	noheader_flag = G_define_flag();
+	noheader_flag->key          = 'n';
+	noheader_flag->description  =
+	  _("Don't expect a header when reading in standard format");
 
 	t_flag = G_define_flag();
 	t_flag->key              = 't';
 	t_flag->description      = _("Do not create table in points mode");
 
-	e_flag = G_define_flag();
-	e_flag->key              = 'e';
-	e_flag->description      = _("Create a new empty map and exit. Nothing is read from input.");
+	notopol_flag = G_define_flag();
+	notopol_flag->key          = 'b';
+	notopol_flag->description  = _("Do not build topology in points mode");
 
-        noheader_flag = G_define_flag();
-        noheader_flag->key          = 'n';
-        noheader_flag->description  = _("Don't expect a header when reading in standard format");
-
-        notopol_flag = G_define_flag();
-        notopol_flag->key          = 'b';
-        notopol_flag->description  = _("Do not build topology in points mode");
+	region_flag = G_define_flag();
+	region_flag->key          = 'r';
+	region_flag->description  =
+	  _("Only import points falling within current region (points mode)");
 
 
 	if (G_parser (argc, argv))
-		exit(EXIT_FAILURE);
+	    exit(EXIT_FAILURE);
 
 
 	if ( format_opt->answer[0] == 'p' )
@@ -206,8 +214,8 @@ main (int argc, char *argv[])
 	    }
 	    unlink(tmp);
 
-	    points_analyse ( ascii, tmpascii, fs, &rowlen,
-		&ncols, &minncols, &coltype, &collen, skip_lines, xcol, ycol );
+	    points_analyse ( ascii, tmpascii, fs, &rowlen, &ncols, &minncols,
+		&coltype, &collen, skip_lines, xcol, ycol, region_flag->answer);
 
 	    fprintf ( stderr, "Maximum input row length: %d\n", rowlen);
 	    fprintf ( stderr, "Maximum number of columns: %d\n", ncols);
@@ -323,7 +331,7 @@ main (int argc, char *argv[])
 		    db_append_string ( &sql, columns_opt->answer );
 		}
 		db_append_string ( &sql, " )" );
-		
+
 		/* this link is added with default 'cat' key, later deleted and replaced by true key name,
 		 * otherwise if module crashes when the table exists but link is not written it makes troubles */ 
 		Vect_map_add_dblink ( &Map, 1, NULL, Fi->table, "cat", Fi->database, Fi->driver);
@@ -426,7 +434,7 @@ main (int argc, char *argv[])
 
 		Vect_map_del_dblink ( &Map, 1 );
 		Vect_map_add_dblink ( &Map, 1, NULL, Fi->table, key, Fi->database, Fi->driver);
-		
+
 		table = Fi->table;
 	    } else { 
 		driver = NULL;
