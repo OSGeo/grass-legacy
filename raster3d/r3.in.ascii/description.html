@@ -55,7 +55,33 @@ compared with the original data. This feature is used to find bugs in the
 library at an early stage and will be turned off as soon as confidence has
 built up.
 
-<H2>EXAMPLE</H2>
+<H2>EXAMPLES</H2>
+
+4x3x2 sample. Note lower-left (SW) corner of the bottom level comes first!
+This array format, where EW is preserved but NS is flipped, is sometimes
+known as "ij" coordinates.
+This is opposite to <em>r.in.ascii</em>'s format, which places the SW corner
+at the beginning of the last row of data.
+
+<div class="code"><pre>
+north: 3.0
+south: 0.0
+east: 4.0
+west: 0.0
+top: 2.0
+bottom: 0.0
+rows: 3
+cols: 4
+levels: 2
+x1,y1,z1  x2,y1,z1  x3,y1,z1  x4,y1,z1
+x1,y2,z1  x2,y2,z1  x3,y2,z1  x4,y2,z1
+x1,y3,z1  x2,y3,z1  x3,y3,z1  x4,y3,z1
+x1,y1,z2  x2,y1,z2  x3,y1,z2  x4,y1,z2
+x1,y2,z2  x2,y2,z2  x3,y2,z2  x4,y2,z2
+x1,y3,z2  x2,y3,z2  x3,y3,z2  x4,y3,z2
+</pre></div>
+
+<P>
 
 Sample ASCII voxel map with one layer and several rows and columns (Spearfish area):
 
@@ -81,7 +107,11 @@ Roman Waupotitsch, Michael Shapiro,
 Helena Mitasova, Bill Brown, Lubos Mitas, Jaro Hofierka
 
 <H2>SEE ALSO</H2>
-<EM><A HREF="r3.out.ascii.html">r3.out.ascii</A></EM>,
-<EM><A HREF="v.to.rast3.html">v.to.rast3</A></EM>
+<EM>
+<A HREF="r.in.ascii.html">r.in.ascii</A>,
+<A HREF="r3.out.ascii.html">r3.out.ascii</A>,
+<A HREF="v.to.rast3.html">v.to.rast3</A>
+</EM>
 
-<p><i>Last changed: $Date$</i>
+<p>
+<i>Last changed: $Date$</i>
