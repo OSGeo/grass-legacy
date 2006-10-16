@@ -445,21 +445,23 @@ main (int argc, char *argv[])
 			    coltype2, xcol, ycol, zcol, catcol, skip_lines );
 
 	    if ( driver ) {
+		G_message(_("Populating table ..."));
 	        db_commit_transaction ( driver );
 	        db_close_database_shutdown_driver ( driver );
 	    }
 	    fclose (tmpascii);
-	} else {
-            /* FORMAT_ALL = standard mode */
+	}
+
+	else {  /* FORMAT_ALL (standard mode) */
     	    if ( ! noheader_flag->answer )
-                   read_head(ascii, &Map);
+		read_head(ascii, &Map);
+
 	    asc_to_bin(ascii, &Map) ;
 	}
-	
-	if ( old->answer != NULL ) {
-	    fclose(ascii) ;
-	}
-        
+
+	if ( old->answer != NULL )
+	    fclose(ascii);
+
         if ( notopol_flag->answer ) {
             Vect_close ( &Map );
         }
@@ -468,5 +470,6 @@ main (int argc, char *argv[])
 	    Vect_close ( &Map );
         }
 
+	G_done_msg("");
 	exit(EXIT_SUCCESS) ;
 }
