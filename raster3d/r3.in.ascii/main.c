@@ -114,10 +114,12 @@ readHeaderString  (FILE *fp, char *valueString, double *value)
 {
   static char format[100];
 
-  G_snprintf (format, 100, "%s %%lf", valueString); /*to avoid buffer overflows we use snprintf*/
-  if (fscanf (fp, format, value) != 1)
+  /* to avoid buffer overflows we use snprintf */
+  G_snprintf (format, 100, "%s %%lf", valueString);
+  if (fscanf (fp, format, value) != 1) {
+    G_debug(0, "bad value for [%s]", valueString);
     fatalError ("readHeaderString: header value invalid");
-
+  }
   while (fgetc (fp) != '\n');
 }
 
@@ -136,7 +138,7 @@ openAscii  (char *asciiFile, G3D_Region *region)
   if (fp == NULL) {
     perror(asciiFile);
     G_usage ();
-    exit (-1) ;
+    exit(EXIT_FAILURE);
   }
 
   G3d_getWindow (region);
@@ -164,18 +166,19 @@ asciiToG3d  (FILE *fp, G3D_Region *region, int convertNull, double nullValue)
 {
   int x, y, z;
   double value;
-
   int tileX, tileY, tileZ;
-  
+
+
   G3d_getTileDimensionsMap (map, &tileX, &tileY, &tileZ);
   G3d_minUnlocked (map, G3D_USE_CACHE_X);
 
   G3d_autolockOn (map);
   G3d_unlockAll (map);
-  G_message("rows=%d cols=%d depths=%d\n",region->rows,region->cols,region->depths);
+  G_message(_("Loading data ...  (%dx%dx%d)"), region->cols, region->rows, 
+	region->depths);
 
-
- G_debug (3, "asciiToG3d: writing the g3d map, with rows %i cols %i depths %i", region->rows, region->cols, region->depths);
+  G_debug (3, "asciiToG3d: writing the g3d map, with rows %i cols %i depths %i",
+	region->rows, region->cols, region->depths);
 
   for (z = 0; z < region->depths; z++) {
 
@@ -183,9 +186,13 @@ asciiToG3d  (FILE *fp, G3D_Region *region, int convertNull, double nullValue)
 
     for (y = region->rows-1; y >= 0; y--)    /* go south to north */
       for (x = 0; x < region->cols; x++) {
-	if (fscanf (fp, "%lf", &value) != 1)
+	if (fscanf (fp, "%lf", &value) != 1) {
+	  if(feof(fp))
+		G_warning(_("End of file reached while still loading data."));
+	  G_debug(0, "missing data at col=%d row=%d depth=%d last_value=[%.4f]",
+		x+1, region->rows - y, z+1, value);
 	  fatalError ("asciiToG3d: read failed");
-	
+	}
 	if (convertNull && (value == nullValue))
 	  G3d_setNullValue (&value, 1, G3D_DOUBLE);
 	G3d_putDouble (map, x, y, z, value);
@@ -197,6 +204,11 @@ asciiToG3d  (FILE *fp, G3D_Region *region, int convertNull, double nullValue)
 				region->cols - 1, z))
       fatalError ("asciiTog3d: error flushing tiles");
 
+  }
+
+  if (fscanf (fp, "%lf", &value) == 1) {
+	G_warning(_("Data exists in input file after fully importing "
+		    "expected data.  [%.4f ...]"), value);
   }
 
   if (! G3d_flushAllTiles (map))  
@@ -267,6 +279,8 @@ int main  (int argc, char *argv[])
   map = NULL;
   if (fclose (fp))
 	fatalError ("main: error closing ascii file");
+
+  G_done_msg("");
 
   return EXIT_SUCCESS;
 }
