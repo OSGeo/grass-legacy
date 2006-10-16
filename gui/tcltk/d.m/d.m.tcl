@@ -840,7 +840,7 @@ global HOSTTYPE
 # fly
 proc Dm::fly { } {
     
-    set cmd "d.nviz"
+    set cmd "d.nviz --ui"
     eval exec $cmd &
 
 }
