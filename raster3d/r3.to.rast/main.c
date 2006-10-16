@@ -199,7 +199,7 @@ void close_output_map(int fd)
 /* ************************************************************************* */
 int main(int argc, char *argv[])
 {
-    G3D_Region region;
+    G3D_Region region, inputmap_bounds;
     struct Cell_head region2d;
     struct GModule *module;
     struct History history;
@@ -285,6 +285,9 @@ int main(int argc, char *argv[])
 			   param.input->answer);
     }
 
+    /* save the input map region for later use (history meta-data) */
+    G3d_getRegionStructMap(map, &inputmap_bounds);
+
     /*Get the output type */
     output_type = G3d_fileTypeMap(map);
 
@@ -332,6 +335,7 @@ int main(int argc, char *argv[])
     /*Create the Rastermaps */
     g3d_to_raster(map, region, fd);
 
+
     /*Loop over all output maps! close */
     for (i = 0; i < region.depths; i++) {
 	close_output_map(fd[i]);
@@ -347,10 +351,18 @@ int main(int argc, char *argv[])
         sprintf(history.edhist[0], "Level %d of %d", i+1, region.depths);
         sprintf(history.edhist[1], "Level z-range: %f to %f", 
 	   region.bottom + (i*region.tb_res), region.bottom + (i+1*region.tb_res) );
-        sprintf(history.edhist[3], "3D input map full z-range: %f to %f",
-	   region.bottom, region.top);
-        sprintf(history.edhist[4], "3D input map z-resolution: %f", region.tb_res);
-        history.edlinecnt = 5;
+
+	sprintf(history.edhist[3], "Input map full z-range: %f to %f",
+	    inputmap_bounds.bottom, inputmap_bounds.top);
+	sprintf(history.edhist[4], "Input map z-resolution: %f",
+	    inputmap_bounds.tb_res);
+	history.edlinecnt = 5;
+	if (! param.res->answer) {
+	    sprintf(history.edhist[6], "GIS region full z-range: %f to %f",
+		region.bottom, region.top);
+	    sprintf(history.edhist[7], "GIS region z-resolution: %f", region.tb_res);
+	    history.edlinecnt = 8;
+	}
 
 	G_command_history(&history);
 	G_write_history(RasterFileName, &history);
