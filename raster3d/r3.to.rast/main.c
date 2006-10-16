@@ -345,8 +345,9 @@ int main(int argc, char *argv[])
 	G_debug(4, "Raster map %d Filename: %s", i + 1, RasterFileName);
 	G_short_history(RasterFileName, "raster", &history);
 
-	strncpy(history.datsrc_1, param.input->answer, RECORD_LEN);
-	history.datsrc_1[RECORD_LEN-1] = '\0'; /* strncpy() doesn't null terminate if maxfill */
+	sprintf(history.datsrc_1, "3D Raster map:");
+	strncpy(history.datsrc_2, param.input->answer, RECORD_LEN);
+	history.datsrc_2[RECORD_LEN-1] = '\0'; /* strncpy() doesn't null terminate if maxfill */
 
         sprintf(history.edhist[0], "Level %d of %d", i+1, region.depths);
         sprintf(history.edhist[1], "Level z-range: %f to %f", 
