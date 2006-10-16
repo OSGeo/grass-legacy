@@ -51,7 +51,8 @@ main (int argc, char *argv[])
 		_("Convert an ASCII raster text file into a (binary) raster map layer.");
 
 	parm.input = G_define_standard_option(G_OPT_R_INPUT);
-	parm.input->description = _("Ascii raster file to be imported");
+	parm.input->description =
+	  _("Ascii raster file to be imported (\"-\" to read from stdin)");
 	parm.input->gisprompt = "old_file,file,input";
 
 	parm.output = G_define_standard_option(G_OPT_R_OUTPUT);
