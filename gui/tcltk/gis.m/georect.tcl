@@ -332,7 +332,7 @@ proc GRMap::group { } {
     if { $maptype == "rast" } {
         # First, switch to xy mapset
         GRMap::setxyenv $xymset $xyloc
-        set cmd "i.group"
+		set cmd "i.group"
         run_ui $cmd
         # Return to georectified mapset
         GRMap::resetenv
@@ -1014,7 +1014,9 @@ proc GRMap::gcpwin {} {
     }
 
     GRMap::get_gcp
-    GRMap::gcp_error
+    if {$gcpnum >2} {
+	    GRMap::gcp_error
+	}
 
     set GRMap::gcpmsg "Forward RMS error = $fwd_rmserror, backward RMS error = $rev_rmserror"
 
@@ -1194,7 +1196,7 @@ proc GRMap::gcp_error { } {
     # calculate diagonal distance error for each GCP
     set input [open "|g.transform group=$xygroup order=$rectorder"]
     set errorlist [read $input]
-    close $input
+    catch {close $input}
     # Return to georectified mapset
     GRMap::resetenv
 
@@ -1525,7 +1527,8 @@ proc GRMap::runprograms { mod } {
 	if {$xy($gcpnum) != ""} {
 		#draw GCP marks from GCP form
 		for {set gcpnum 1} {$gcpnum < 51 } { incr gcpnum } {
-			if { [$xy($gcpnum) get] != "" } {
+			if { $gcpnum > 50} {break}
+			if {[$xy($gcpnum) get] != "" } {
 				set xyfields [split [$xy($gcpnum) get] { }]
 				set mapx [lindex $xyfields 0]
 				set mapy [lindex $xyfields 1]
