@@ -58,10 +58,6 @@ void user_input (int argc, char **argv)
    struct Option *out;
 
 
-                         /* initialize the GRASS GIS system */
-
-   G_gisinit(argv[0]);   
-
                          /* use the GRASS parsing routines
                             to read in the user's parameter
                             choices */
