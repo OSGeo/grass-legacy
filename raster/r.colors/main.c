@@ -260,11 +260,9 @@ int main (int argc, char *argv[])
 
     G_suppress_warnings (0);
 
-    G_sleep_on_error (0);
     fp = G_raster_map_is_fp(name, mapset);
     G_read_fp_range (name, mapset, &range);
     G_get_fp_range_min_max (&range, &min, &max);
-    G_sleep_on_error (1);
 
     if (type)
     {
