@@ -37,12 +37,11 @@ int main (int argc, char **argv)
 {
   struct GModule *module;
 
-  /* allocate space for the choice data structure */
-  choice = (struct CHOICE *)G_calloc(1, sizeof(struct CHOICE));
-
-
   /* initialize the GRASS GIS system */
   G_gisinit(argv[0]); 
+
+  /* allocate space for the choice data structure */
+  choice = (struct CHOICE *)G_calloc(1, sizeof(struct CHOICE));
 
   module = G_define_module();
   module->keywords = _("raster");
