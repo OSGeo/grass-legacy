@@ -259,7 +259,7 @@ proc codesEpsg args {
                     -command ".infoPopup.text yview"
         pack .infoPopup.vscroll -side right -fill y
         
-        button .infoPopup.ex -justify center -width 6 -text [G_msg "Select"] \
+        button .infoPopup.ex -justify center -width 6 -text [G_msg "Close"] \
                              -command {destroy .infoPopup}			
         pack .infoPopup.ex -side bottom -expand 1 -fill both
 }
