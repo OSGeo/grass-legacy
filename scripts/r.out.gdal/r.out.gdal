@@ -22,6 +22,10 @@
 #%  key: l
 #%  description: list supported output formats
 #%END
+#%flag
+#%  key: r
+#%  description: region sensitive output
+#%END
 #%option
 #% key: input
 #% type: string
@@ -99,6 +103,14 @@ fi
 #echo $INPUT $FORMAT $OUTPUT
 #echo $GDAL_INPUT_FORMATS
 
+# region sensitive output
+if [ $GIS_FLAG_R -eq 1 ] ; then
+
+    TEMPRASTER=r.out.gdal_${INPUT}_$$
+    r.resample input=$INPUT output=$TEMPRASTER
+    INPUT=$TEMPRASTER
+fi
+
 #fetch the input raster map
 eval `g.findfile element=cell file=$INPUT` 
 if [ ! "$file" ] ; then
@@ -135,3 +147,6 @@ echo "Writing format: $FORMAT"
 echo "Writing type:   $TYPE"
 gdal_translate -of $FORMAT -ot $TYPE $CREATEKEY $METAKEY $CELLHD $OUTPUT 
 
+if [ $GIS_FLAG_R -eq 1 ] ; then
+    g.remove $TEMPRASTER
+fi
