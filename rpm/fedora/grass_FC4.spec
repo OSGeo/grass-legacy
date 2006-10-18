@@ -1,26 +1,34 @@
-# GRASS 6.1 RPM spec file for ITC
+# GRASS 6.X RPM spec file for ITC
 # This file is Free Software under GNU GPL v>=2.
 # Derived from grass_FC4.spec
 
+# Define snap to use the snapshot version, change cvssnapshot and cvsversion accordingly
+#
+#define snap 1
+
 %define PACKAGE_NAME grass
-%define PACKAGE_VERSION 6.1.cvs
+
+%if "%{!?snap:1}" == "1"
+%define PACKAGE_VERSION 6.2.0RC2
 %define PACKAGE_URL http://grass.itc.it/index.php
+%define PACKAGE_RELEASE 1
+%define shortver 62
+%else
+%define cvssnapshot	2006_10_14
+%define cvsversion	6.3
+%define PACKAGE_VERSION %{cvsversion}
+%define PACKAGE_RELEASE 1
+%define shortver 63
+%endif
 %define _prefix /usr
 %define _bindir /usr/bin
-%define shortver 61
 
-%define with_blas        %{?_with_blas:1}%{!?_with_blas:0}
-%define with_ffmpeg      %{?_with_ffmpeg:1}%{!?_with_ffmpeg:0}
-%define with_odbc        %{?_with_odbc:1}%{!?_with_odbc:0}
-%define with_mysql       %{?_with_mysql:1}%{!?_with_mysql:0}
-%define with_postgres    %{?_without_postgres:0}%{!?_without_postgres:1}
-%define with_largefiles  %{?_without_largefiles:0}%{!?_without_largefiles:1}
-%define with_motif       %{?_without_motif:0}%{!?_without_motif:1}
-%define with_fftw        %{?_without_fftw:0}%{!?_without_fftw:1}
-%define with_freetype    %{?_without_freetype:0}%{!?_without_freetype:1}
-%define with_glw         %{?_without_glw:0}%{!?_without_glw:1}
-%define with_sqlite      %{?_without_sqlite:0}%{!?_without_sqlite:1}
-%define cvssnapshot	 %{?cvs:_src_snapshot_%cvs}%{!?cvs:_src_snapshot_2006_02_25}
+%define with_blas	0
+%define with_ffmpeg	1
+%define with_odbc	0
+%define with_mysql	0
+%define with_postgres	1
+%define with_largefiles	1
 
 # Turn off automatic generation of dependencies to
 # avoid a problem with libgrass* dependency issues.
@@ -38,18 +46,28 @@
     %define FCL 1
     %define VER1 %(rpmquery --qf '%{VERSION}' fedora-release)
 %endif
-%if %(rpmquery redhat-release | grep -v 'not installed$' | grep -c -e '-[0-9][AEW]S')
+%if %(rpmquery redhat-release | grep -v 'not installed$' | grep -c -e '-[0-9][DAEW]')
     %define ENT 1
     %define VER1 %(rpmquery --qf '%{VERSION}' redhat-release|cut -c1)	
 %endif
+%if %(rpmquery sl-release | grep -v 'not installed$' | grep -c -e '-[0-9]')
+    %define SLC 1
+    %define VER1 %(rpmquery --qf '%{VERSION}' sl-release|cut -c1-)	
+%endif
+
 
 Summary:	GRASS - Geographic Resources Analysis Support System
 Name:		%PACKAGE_NAME
 Version:	%PACKAGE_VERSION
-Epoch: 0
-%{?FCL:Release: 0.fdr.%{REL}.fc%{VER1}}
-%{?ENT:Release: 0.E%{VER1}}
-Source:	        ftp://grass.itc.it/pub/grass/grass%{shortver}/source/snapshot/grass-%{version}%{cvssnapshot}.tar.gz
+Epoch: 		%PACKAGE_RELEASE
+%{?FCL:Release: %{PACKAGE_RELEASE}.fdr.%{REL}.fc%{VER1}}
+%{?ENT:Release: %{PACKAGE_RELEASE}.E%{VER1}}
+%{?SLC:Release: %{PACKAGE_RELEASE}.SL%{VER1}}
+%if  "%{!?snap:1}" == "1"
+Source:	        http://grass.itc.it/grass62/source/grass-6.2.0RC2.tar.gz  
+%else
+Source:	        http://grass.itc.it/grass63/source/snapshot/grass-%{cvsversion}.cvs_src_snapshot_%{cvssnapshot}.tar.gz
+%endif
 License:	GPL, Copyright by the GRASS Development Team
 Group:		Sciences/Geosciences
 Packager:       Markus Neteler <neteler@itc.it>
@@ -58,67 +76,66 @@ BuildRoot:      %{_tmppath}/%{name}-%{version}-%{release}-root-%(%{__id_u} -n)/%
 Prefix:         %{_prefix}
 
 Requires:       gdal >= 1.3
+BuildRequires:  gdal-devel >= 1.3
 Requires:	tcl >= 8.3
+BuildRequires:	tcl-devel >= 8.3
 Requires:	tk >= 8.3
+BuildRequires:	tk-devel >= 8.3
 Requires:	proj >= 4.4.9
+BuildRequires:	proj-devel >= 4.4.9
 Requires:       geos >= 2.1.1
-%if "%{with_freetype}" == "1"
+BuildRequires:  geos-devel >= 2.1.1
 Requires:       freetype >= 2.0.0
-BuildRequires:	freetype-devel >= 2.0.0
-%endif
+BuildRequires:  freetype-devel >= 2.0.0
 Requires:       bash >= 3.0
-%if "%{with_glw}" == "1"
 Requires:       xorg-x11-Mesa-libGL >= 6.8
 BuildRequires:  xorg-x11-Mesa-libGL >= 6.8
-%endif
 Requires:       xorg-x11-libs >= 6.8
-BuildRequires:  xorg-x11-libs >= 6.8
-%if "%{with_motif}" == "1"
+BuildRequires:  xorg-x11-devel >= 6.8
 Requires:       openmotif >= 2.2.3
-Requires:       xorg-x11-deprecated-libs
-BuildRequires:  xorg-x11-deprecated-libs-devel
 BuildRequires:  openmotif-devel >= 2.2.3
-%endif
-%if "%{with_fftw}" == "1"
-Requires:       fftw
-BuildRequires:  fftw-devel
-%endif
+Requires:       fftw3 >= 3.1
+BuildRequires:  fftw3-devel >= 3.1
 Requires:       glibc >= 2.0
+BuildRequires:  glibc-devel >= 2.0
 Requires:       libgcc >= 3.4.2
 Requires:       ncurses >= 5.4
-BuildRequires:	ncurses-devel >= 5.2
+BuildRequires:  ncurses-devel >= 5.4
 Requires:       libpng >= 1.2.8
-BuildRequires:	libpng-devel >= 1.2.2
-Requires:       libstdc++ >= 3.4
-Requires:       libtiff >= 3.6
-Requires:       zlib >= 1.2
-BuildRequires:	zlib-devel >= 1.2
+BuildRequires:  libpng-devel >= 1.2.8
 Requires:	libjpeg
 BuildRequires:	libjpeg-devel
+Requires:       libstdc++ >= 3.4
+BuildRequires:  libstdc++-devel >= 3.4
+Requires:       libtiff >= 3.6
+BuildRequires:  libtiff-devel >= 3.6
+Requires:       zlib >= 1.2
+BuildRequires:  zlib-devel >= 1.2
 %if "%{with_blas}" == "1"
 Requires:       blas >= 3.0
+BuildRequires:  blas >= 3.0
 Requires:       lapack >= 3.0
+BuildRequires:  lapack >= 3.0
 %endif
 %if "%{with_ffmpeg}" == "1"
 Requires:       ffmpeg
+BuildRequires:  ffmpeg-devel
 %endif
 %if "%{with_odbc}" == "1"
-Requires:	unixODBC
+Requires:	unixODBC     
 BuildRequires:	unixODBC-devel
 %endif
 %if "%{with_mysql}" == "1"
 Requires:	mysql
+BuildRequires:	mysql-devel
 %endif
 %if "%{with_postgres}" == "1"
 Requires:	postgresql-libs >= 7.3
-BuildRequires:	postgresql-devel
+BuildRequires:	postgresql-devel >= 7.3
 %endif
 BuildRequires:	bison
 BuildRequires:	flex
 BuildRequires:	man
-%if "%{with_mysql}" == "1"
-BuildRequires:	mysql-devel
-%endif
 
 Vendor: GRASS
 #
@@ -132,19 +149,15 @@ analysis, image processing, graphics/maps production, spatial
 modeling, and visualization. GRASS is currently used in academic and
 commercial settings around the world, as well as by many governmental
 agencies and environmental consulting companies.
-Available rpmbuild options :
 
---without postgres fftw motif largefiles glw freetype sqlite
-
-to disable default features
- 
---with blas ffmpeg odbc mysql 
-
-to enable additional features.
 
 %prep
 #%setup -q   ## run quietly with minimal output.
-%setup  -n %{name}-%{version}%{cvssnapshot}  ## name the directory
+%if "%{!?snap:1}" == "1"
+%setup  -n %{name}-%{version}  ## name the directory
+%else
+%setup  -n %{name}-%{version}.cvs_src_snapshot_%{cvssnapshot}  ## name the directory
+%endif
 #
 # Filter out library number
 #
@@ -167,80 +180,42 @@ CXXFLAGS="-g -Wall"
    --prefix=%{buildroot}/%{_prefix} \
    --bindir=%{buildroot}/%{_bindir} \
    --enable-shared \
-%ifarch x86_64
-   --enable-64bit \
-%endif
 %if "%{with_largefiles}" == "1"
    --enable-largefile \
 %endif
    --with-fftw \
-   --with-includes=/usr/include \
-%ifarch x86_64
-   --with-libs=/usr/lib64 \
-%else
-   --with-libs=/usr/lib \
-%endif
-%if "%{with_motif}" == "1"
+   --with-includes=%{_includedir} \
+   --with-libs=%{_libdir} \
    --with-motif \
    --with-motif-includes=/usr/X11R6/include/Xm \
-%else
-   --without-motif  \
-%endif
-%if "%{with_freetype}" == "1"
    --with-freetype=yes \
-   --with-freetype-includes=/usr/include/freetype2 \
-%else
-   --without-freetype  \
-%endif
+   --with-freetype-includes=%{_includedir}/freetype2 \
    --with-nls \
    --with-gdal=/usr/bin/gdal-config \
    --with-proj \
-   --with-proj-includes=/usr/include \
-%ifarch x86_64
-   --with-proj-libs=/usr/lib64 \
-%else
-   --with-proj-libs=/usr/lib \
-%endif
-%if "%{with_glw}" == "1"
+   --with-proj-includes=%{_includedir} \
+   --with-proj-libs=%{_libdir}  \
+   --with-proj-share=/usr/share/proj \
    --with-glw \
-%else
-   --without-glw  \
-%endif
-%if "%{with_sqlite}" == "1"
    --with-sqlite \
-%else
-   --without-sqlite  \
-%endif
 %if "%{with_mysql}" == "1"
    --with-mysql \
-   --with-mysql-includes=/usr/include/mysql \
-%ifarch x86_64
-   --with-mysql-libs=/usr/lib64/mysql \
-%else
-   --with-mysql-libs=/usr/lib/mysql \
-%endif
+   --with-mysql-includes=%{_includedir}/mysql \
+   --with-mysql-libs=%{_libdir}/mysql \
 %else
    --without-mysql \
 %endif
 %if "%{with_odbc}" == "1"
    --with-odbc  \
-%ifarch x86_64
-   --with-odbc-libs=/usr/lib64 \
-%else
-   --with-odbc-libs=/usr/lib \
-%endif
-   --with-odbc-includes=/usr/include \
+   --with-odbc-libs=%{_libdir} \
+   --with-odbc-includes=%{_includedir} \
 %else
    --without-odbc \
 %endif
 %if "%{with_postgres}" == "1"
    --with-postgres  \
-   --with-postgres-includes=/usr/include/pgsql \
-%ifarch x86_64
-   --with-postgres-libs=/usr/lib64  \
-%else
-   --with-postgres-libs=/usr/lib  \
-%endif
+   --with-postgres-includes=%{_includedir}/pgsql \
+   --with-postgres-libs=%{_libdir} \
 %else
    --without-postgres  \
 %endif
@@ -250,6 +225,8 @@ CXXFLAGS="-g -Wall"
 %endif
 %if "%{with_ffmpeg}" == "1"
    --with-ffmpeg \
+   --with-ffmpeg-includes=%{_includedir}/ffmpeg
+   --with-ffmpeg-libs=%{_libdir}
 %endif
    --with-cxx
 )
@@ -278,7 +255,7 @@ chmod +x %{buildroot}%{_bindir}/grass%{shortver}
 
 # Make grass libraries available on the system
 install -d %{buildroot}/etc/ld.so.conf.d
-echo %{_prefix}/grass-%{version}/lib >> %{buildroot}/etc/ld.so.conf.d/grass-%{version}.conf
+echo %{_prefix}/grass-%{version}/%{_lib} >> %{buildroot}/etc/ld.so.conf.d/grass-%{version}.conf
 
 %clean
 rm -rf %{buildroot}
@@ -294,6 +271,7 @@ rm -rf %{buildroot}
 %attr(0755,root,root)
 
 %{_bindir}/grass%{shortver}
+%{_bindir}/gem
 %{_prefix}/grass-%{version}
 /etc/ld.so.conf.d/grass-%{version}.conf
 
@@ -302,6 +280,8 @@ rm -rf %{buildroot}
 %postun -p /sbin/ldconfig
 
 %Changelog
+* Tue Oct 17 2006 Roberto Flor <flor@itc.it>
+  - Moved to 6.2.0RC3, enabled ffmpeg, added snapshot/version flag
 * Tue Mar 17 2006 Roberto Flor <flor@itc.it>
   - Added with/without option
   - Added cvs snapshot option
