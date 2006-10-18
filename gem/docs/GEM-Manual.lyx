@@ -741,7 +741,7 @@ This section will show you how to use GEM to perform basic things: installing,
  For the sake of simplicity, I will assume that your GRASS installation
  resides in 
 \emph on
-/usr/local/grass-6.0.0
+/usr/local/grass-6.x.y
 \emph default
  and you may have to adjust this path in the examples below, so that it
  reflects your individual setup (Mac OS X users: see notes on system specific
@@ -917,7 +917,7 @@ options
 \begin_layout Standard
 To install a module into your GRASS installation (in this example 
 \emph on
-/usr/local/grass-6.0.0
+/usr/local/grass-6.x.y
 \emph default
 ), simply pass the name of the archive containing the extension or the directory
  with the unpacked files to the 
@@ -941,7 +941,7 @@ To install a module into your GRASS installation (in this example
 \end_layout
 
 \begin_layout LyX-Code
-gem --grass=/usr/local/grass-6.0.0 --install=RasterTools.tar.gz
+gem --grass=/usr/local/grass-6.x.y --install=RasterTools.tar.gz
 \end_layout
 
 \begin_layout Standard
@@ -3130,7 +3130,7 @@ If you are using Lorenzo's binaries, the path to GRASS for any GEM operation
 \begin_layout Standard
 
 \emph on
-/Applications/Grass/grass60.app/Contents/Resources/grass-6.0.0
+/Applications/Grass/grass6x.app/Contents/Resources/grass-6.x.y
 \end_layout
 
 \begin_layout Standard

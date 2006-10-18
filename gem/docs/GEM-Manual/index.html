@@ -555,7 +555,7 @@ on Windows specific issues.%
 This section will show you how to use GEM to perform basic things:
 installing, querying and removing (un-installing) extensions for GRASS
 GIS. For the sake of simplicity, I will assume that your GRASS installation
-resides in <I>/usr/local/grass-6.0.0</I> and you may have to adjust
+resides in <I>/usr/local/grass-6.x.y</I> and you may have to adjust
 this path in the examples below, so that it reflects your individual
 setup (Mac OS X users: see notes on system specific issues in section
 <A HREF="#sub:Mac-OS-X">A.1</A> for how to find the path to your installation).
@@ -617,7 +617,7 @@ The regular ``options'' are just used to modify the way GEM works.
 
 <P>
 To install a module into your GRASS installation (in this example
-<I>/usr/local/grass-6.0.0</I>), simply pass the name of the archive
+<I>/usr/local/grass-6.x.y</I>), simply pass the name of the archive
 containing the extension or the directory with the unpacked files
 to the ``-install='' action and supply the path to the GRASS
 installation for which you wish to install the extension (using the
@@ -627,7 +627,7 @@ installation for which you wish to install the extension (using the
 
 <DL COMPACT>
 <DT>
-<DD>gem&nbsp;-grass=/usr/local/grass-6.0.0&nbsp;-install=RasterTools.tar.gz
+<DD>gem&nbsp;-grass=/usr/local/grass-6.x.y&nbsp;-install=RasterTools.tar.gz
 </DD>
 </DL>If everything goes well, you will see a few messages on the screen
 and after a short while the program will inform you that it is done.
@@ -1672,7 +1672,7 @@ If you are using Lorenzo's binaries, the path to GRASS for any GEM
 operation will be:
 
 <P>
-<I>/Applications/Grass/grass60.app/Contents/Resources/grass-6.0.0</I>
+<I>/Applications/Grass/grass6x.app/Contents/Resources/grass-6.x.y</I>
 
 <P>
 or
