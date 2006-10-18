@@ -1,15 +1,26 @@
+#ifndef __LOCAL_PROTO_H__
+#define __LOCAL_PROTO_H__
+
+
+#include <stdio.h>
+#include <grass/gis.h>
+#include <grass/dbmi.h>
+
+
 #define FORMAT_POINT 0
 #define FORMAT_ALL   1
 
-int points_analyse ( FILE *ascii_in, FILE *ascii, char *fs, int *rowlength,
-		     int *ncolumns, int *minncolumns, int **column_type,
-		     int **column_length, int skip_lines, int xcol, int ycol, int region_flag);
 
-int points_to_bin( FILE *ascii, int rowlen, struct Map_info *Map, dbDriver *driver,
-		   char *table, char *fs, int ncols, int *coltype,
-		   int xcol, int ycol, int zcol, int catcol, int skip_lines );
+int points_analyse (FILE *, FILE *, char *, int *, int *, int *, int **,
+		     int **, int, int, int, int);
 
-int read_head ( FILE * dascii, struct Map_info *Map );
+int points_to_bin (FILE *, int, struct Map_info *, dbDriver *,
+		   char *, char *, int, int *,
+		   int, int, int, int, int);
 
-int asc_to_bin( FILE *ascii, struct Map_info *Map);
+int read_head (FILE *, struct Map_info *);
 
+int asc_to_bin(FILE *, struct Map_info *);
+
+
+#endif /* __LOCAL_PROTO_H__ */
