@@ -739,7 +739,7 @@ bash|msh)
     echo "test -r ~/.alias && . ~/.alias" >> "$bashrc"
     echo "umask 022" >> "$bashrc"
     echo "PS1='GRASS GRASS_VERSION_NUMBER ($LOCATION_NAME):\w > '" >> "$bashrc"
-    echo "PROMPT_COMMAND='if test -d `g.gisenv GISDBASE`/`g.gisenv LOCATION_NAME`/`g.gisenv MAPSET`/grid3/G3D_MASK && test -f`g.gisenv GISDBASE`/`g.gisenv LOCATION_NAME`/`g.gisenv MAPSET`/cell/MASK ; then echo [Raster and Volume MASKs present] ; elif test -f `g.gisenv GISDBASE`/`g.gisenv LOCATION_NAME`/`g.gisenv MAPSET`/cell/MASK ; then echo [Raster MASK present] ; elif test -d `g.gisenv GISDBASE`/`g.gisenv LOCATION_NAME`/`g.gisenv MAPSET`/grid3/G3D_MASK ; then echo [Volume MASK present] ; fi'" >> "$bashrc"
+    echo "PROMPT_COMMAND=$GISBASE/etc/prompt.sh" >> "$bashrc"
     
     if [ -r "$USERHOME/.grass.bashrc" ]
     then
