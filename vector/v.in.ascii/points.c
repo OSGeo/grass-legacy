@@ -8,39 +8,50 @@
 #include <grass/glocale.h>
 #include "local_proto.h"
 
+
 /* Determine if the string is integer, e.g. 123, +123, -123
  * return 1 if integer, 0 otherwise */
-int is_int(char *str)
+static int is_int(char *str)
 {
     int i = -1;
+
     while (str[++i] != '\0') {
 	if (i == 0 && (str[i] == '+' || str[i] == '-'))
 	    continue;
+
 	if (!isdigit(str[i]))
 	    return 0;
     }
+
     return 1;
 }
 
+
 /* Determine if the string is double, e.g. 123.456, +123.456, -123.456
  * return 1 if double, 0 otherwise */
-int is_double(char *str)
+static int is_double(char *str)
 {
     int i = -1, ndots = 0;
+
     while (str[++i] != '\0') {
 	if (i == 0 && (str[i] == '+' || str[i] == '-'))
 	    continue;
+
 	if (str[i] == '.') {
 	    if (ndots > 0)
 		return 0;	/* > 1 dot */
+
 	    ndots++;
 	    continue;
 	}
+
 	if (!isdigit(str[i]))
 	    return 0;
     }
+
     return 1;
 }
+
 
 /* Analyse points ascii file. Determine number of columns and column types.
  * ascii_tmp: write copy of tempfile to ascii_tmp:
@@ -381,5 +392,6 @@ int points_to_bin(FILE * ascii, int rowlen, struct Map_info *Map,
 
 	G_free_tokens(tokens);
     }
+
     return 0;
 }
