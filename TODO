@@ -57,4 +57,5 @@ display/d.linegraph/linegraph.c:    t_color_opt->answer     = "white" ;
       (take from r.proj?)
     - add other warping methods (maybe thin splines from GDAL?)
     - implement/finish linewise ortho-rectification of satellite data
+    - Add support for > 8bit colors (only 0-255 supported currently)
 
