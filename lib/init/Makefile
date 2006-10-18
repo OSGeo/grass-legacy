@@ -36,6 +36,7 @@ endif
 
 default: $(ARCH_BINDIR)/$(START_UP) \
 	$(ETC)/Init.sh \
+	$(ETC)/prompt.sh \
 	$(SET_DATA_PROG) \
 	$(ETC)/clean_temp$(EXE) \
 	$(ETC)/lock$(EXE) \
@@ -165,4 +166,8 @@ $(ETC)/grass-run.sh: grass-run.src
 
 $(ETC)/grass-xterm-wrapper: grass-xterm-wrapper
 	$(INSTALL) -m 755 grass-xterm-wrapper $(ETC)
+
+$(ETC)/prompt.sh: prompt.sh
+	rm -f $@
+	$(INSTALL) -m 755 prompt.sh $(ETC)
 
