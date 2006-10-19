@@ -377,19 +377,19 @@ msgstr ""
 
 #: ../lib/init/file_option.tcl:76
 msgid "Name of new location"
-msgstr "Name der neuen Location."
+msgstr "Name der neuen Location"
 
 #: ../lib/init/file_option.tcl:78
 msgid "Path to new location"
-msgstr ""
+msgstr "Pfad zur neuen Location"
 
 #: ../lib/init/file_option.tcl:80
 msgid "Path to georeferenced file"
-msgstr ""
+msgstr "Pfad zur georeferenzierten Datei"
 
 #: ../lib/init/file_option.tcl:101
 msgid "Define location"
-msgstr "Definieren Sie die Location"
+msgstr "Location erzeugen"
 
 #: ../lib/init/file_option.tcl:105
 msgid "WARNING: location exists"
