@@ -60,7 +60,7 @@ proc searchGISRC { filename } {
 
             lappend grassrc_list "$thisline"
 
-            if { [scan $thisline "GISDBASE: %s" env_database] } {
+	    if { [regexp -- {^GISDBASE: *(.*)$} $thisline dummy env_database] } {
                 set database $env_database
             }
             if { [scan $thisline "LOCATION_NAME: %s" env_location] } {
