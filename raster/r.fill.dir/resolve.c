@@ -1,6 +1,7 @@
 #include <stdlib.h>
 #include <string.h>
 #include <grass/gis.h>
+#include <grass/glocale.h>
 #include "tinf.h"
 
 CELL select_dir(CELL i)
@@ -124,7 +125,7 @@ void resolve(int fd, int nl, struct band3 *bnd)
       pass+=1;
 
       activity=0;
-      fprintf(stderr, "\nDownward pass %d\n",pass);
+      G_message(_("Downward pass %d"),pass);
 
       lseek(fd,0,SEEK_SET);
       advance_band3(fd,bnd);
@@ -157,13 +158,13 @@ void resolve(int fd, int nl, struct band3 *bnd)
 
       if(!activity)
       {
-/*        fprintf(stderr, "Could not solve for all cells\n"); */
+/*        G_warning(_("Could not solve for all cells")); */
          done=1;
          continue;
       }
 
       activity=0;
-      fprintf(stderr, "Upward pass %d\n",pass);
+      G_message(_("Upward pass %d"),pass);
     
       lseek(fd,(nl-1)*bnd->sz,SEEK_SET);
       retreat_band3(fd,bnd);
@@ -195,7 +196,7 @@ void resolve(int fd, int nl, struct band3 *bnd)
    
       if(!activity)
       {
-/*         fprintf(stderr, "Could not solve for all cells\n");*/
+/*         G_warning(_("Could not solve for all cells"));*/
          done=1;
       }
 

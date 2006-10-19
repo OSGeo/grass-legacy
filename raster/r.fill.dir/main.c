@@ -201,7 +201,7 @@ main(int argc, char **argv)
    fd=open(tempfile2,O_RDWR|O_CREAT); /* dirn */
    fm=open(tempfile3,O_RDWR|O_CREAT); /* problems */
 
-   fprintf(stderr, "Reading map...");
+   G_message(_("Reading map..."));
    for(i=0;i<nrows;i++)
    {
       get_row(map_id,in_buf,i);
@@ -210,11 +210,11 @@ main(int argc, char **argv)
    G_close_cell(map_id);
 
 /* fill single-cell holes and take a first stab at flow directions */
-   fprintf(stderr, "\nFilling sinks...");
+   G_message(_("Filling sinks..."));
    filldir(fe,fd,nrows,&bnd);
 
 /* determine flow directions for ambiguous cases */
-   fprintf(stderr, "\nDetermining flow directions for ambiguous cases...");
+   G_message(_("Determining flow directions for ambiguous cases..."));
    resolve(fd,nrows,&bndC); 
 
 /* mark and count the sinks in each internally drained basin */
@@ -228,7 +228,7 @@ main(int argc, char **argv)
       ppupdate(fe, fm, nrows, nbasins, &bnd, &bndC);
 
 /* repeat the first three steps to get the final directions */
-      fprintf(stderr, "\nRepeat to get the final directions...");
+      G_message(_("Repeat to get the final directions..."));
       filldir(fe,fd,nrows,&bnd);
       resolve(fd,nrows,&bndC);
       nbasins=dopolys(fd,fm,nrows,ncols);  

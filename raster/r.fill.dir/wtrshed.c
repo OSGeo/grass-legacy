@@ -1,6 +1,7 @@
 #include <unistd.h>
 #include <stdlib.h>
 #include <grass/gis.h>
+#include <grass/glocale.h>
 
 struct whereandwhat
 {
@@ -85,7 +86,7 @@ void wtrshed(int fm, int fd, int nl, int ns, int mxbuf)
 /* complete a downward pass */
    do
    {
-      fprintf(stderr, "wtrshed pass %d\n",++pass);
+      G_message(_("wtrshed pass %d"),++pass);
       repeat=0;
 
 /* fill the buffer */ 
