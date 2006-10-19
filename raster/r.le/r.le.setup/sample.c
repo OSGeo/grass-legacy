@@ -1313,7 +1313,7 @@ back1:
 
      fprintf(stderr, "\n    Outline more sampling units of scale %d?\n", i+1);
      fprintf(stderr, "       Left button:     Exit\n");
-     fprintf(stderr, "       Middle button:   Not used\n");
+     fprintf(stderr, "       Middle button:   Check unit position\n");
      fprintf(stderr, "       Right button:    Lower right corner of next unit here\n");
 
      R_open_driver();
