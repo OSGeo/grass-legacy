@@ -116,6 +116,11 @@ proc fileLocCom args {
 					destroy .fileloc; 
 					exec -- g.proj -c georef=$filepath location=$fileLocation >@stdout 2>@stderr; 
 					destroy .fileloc
+					DialogGen .wrnDlg [G_msg "WARNING: restart GRASS please"] warning \
+					[G_msg "WARNING: Please restart GRASS in order find the created location in the list (closing it for you now)"] \
+						0 OK; 
+					puts stdout "exit";
+					destroy . 
 				}
 			}
 			set thelocation ""
