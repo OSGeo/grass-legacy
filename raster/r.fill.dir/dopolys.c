@@ -1,6 +1,7 @@
 #include <unistd.h>
 #include <stdlib.h>
 #include <grass/gis.h>
+#include <grass/glocale.h>
 
 void recurse_list(int flag, int *cells, int sz, int start)
 {
@@ -83,7 +84,7 @@ int dopolys (int fd, int fm, int nl, int ns)
          recurse_list(flag,cells,found,i);
       }
    }
-   fprintf(stderr, "Found %d unresolved areas\n",flag);
+   G_message(_("Found %d unresolved areas"),flag);
 
 /* Compose a new raster file to contain the resulting assignments */
    lseek(fm,0,SEEK_SET);
