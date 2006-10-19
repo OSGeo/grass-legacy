@@ -251,7 +251,12 @@ static int list_element( FILE *out, char *element,
             fprintf(out,"%-18s %-.60s\n",list[i],title);
         }
         else
-            fprintf(out,"%-*s", maxlen+1, list[i]);
+	{
+	    if ((i+1) % num_cols)
+                fprintf(out,"%-*s", maxlen+1, list[i]);
+	    else
+                fprintf(out,"%s", list[i]);
+	}
 
         if (!lister && !((i+1) % num_cols))
             fprintf(out, "\n");
