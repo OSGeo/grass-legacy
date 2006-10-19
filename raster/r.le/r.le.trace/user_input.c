@@ -24,10 +24,7 @@
 extern struct CHOICE *choice ;
 
 void user_input (int argc, char **argv)
-
 {
-
-
    struct Flag *bound;
    struct Flag *trace;
    struct Option *name;
@@ -48,16 +45,15 @@ void user_input (int argc, char **argv)
    name->gisprompt    = "old,cell,raster";
    name->required     = YES ;
 
-
    out = G_define_option() ;
    out->key = "out" ;
    out->description = "Name of output file to store patch data";
    out->type = TYPE_STRING ;
    out->required = NO ;
 
-
    if (G_parser(argc,argv))
-      exit(-1) ;
+      exit(EXIT_FAILURE);
+
 
    G_strcpy(choice->fn,name->answer) ;
 

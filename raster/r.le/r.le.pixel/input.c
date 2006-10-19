@@ -18,22 +18,19 @@
 *				                           *
 ************************************************************/
 
-#include "pixel.h"
+#include <stdlib.h>
 #include <grass/config.h>
-
+#include "pixel.h"
 
 
 extern struct CHOICE *choice;
 
 void user_input (int argc, char **argv)
-
 {
    int i;
-
 					/* setup the GRASS parsing routine
 					   structures to be used to read 
 					   in the user's parameter choices */
-
    struct Flag *units;
    struct Flag *zscore;
    struct Flag *edgemap;
@@ -47,13 +44,8 @@ void user_input (int argc, char **argv)
    struct Option *juxtaposition;
    struct Option *edge;
 
-					/* initialize the GRASS GIS system */
 
-   G_gisinit(argv[0]);
-
-					/* use the GRASS parsing routines
-					   to read in the user's parameter
-					   choices */
+   /* use the GRASS parsing routines to read in the user's parameter choices */
 
    edgemap = G_define_flag();
    edgemap->key 	= 'e';
@@ -146,7 +138,7 @@ void user_input (int argc, char **argv)
 
 
    if (G_parser(argc,argv))
-      exit(-1);
+      exit(EXIT_FAILURE);
 
 					/* record the user inputs for map,
 					   sam, run, and out parameters */
@@ -167,7 +159,7 @@ void user_input (int argc, char **argv)
          fprintf(stdout, "   ***************************************************\n");
          fprintf(stdout, "    You input an unacceptable value for parameter sam \n");
          fprintf(stdout, "   ***************************************************\n");
-         exit(0);
+         exit(EXIT_FAILURE);
    }
 
                                         /* check for multiple values for te1 */
@@ -179,7 +171,7 @@ void user_input (int argc, char **argv)
          fprintf(stdout, "    You input multiple values for parameter te1, \n");
          fprintf(stdout, "    but only one is allowed                      \n");
          fprintf(stdout, "   **********************************************\n");
-         exit(0);
+         exit(EXIT_FAILURE);
       }
 
 
@@ -196,7 +188,7 @@ void user_input (int argc, char **argv)
       fprintf(stdout, "    units, by using flag -u, but this option is only  \n");
       fprintf(stdout, "    available when sam=u                              \n");
       fprintf(stdout, "   ***************************************************\n");
-      exit(0);
+      exit(EXIT_FAILURE);
    }
 
 					 /* if sampling_method is by REGION
@@ -213,7 +205,7 @@ void user_input (int argc, char **argv)
          fprintf(stdout, "    input the name of the region using the reg=   \n");
       	 fprintf(stdout, "    parameter                                     \n");
       	 fprintf(stdout, "   ***********************************************\n");
-      	 exit(0);
+      	 exit(EXIT_FAILURE);
       }
    }
 
@@ -225,7 +217,7 @@ void user_input (int argc, char **argv)
          fprintf(stdout, "    the reg= parameter, but did not input the     \n");
          fprintf(stdout, "    sam=r parameter                               \n");
       	 fprintf(stdout, "   ***********************************************\n");
-      	 exit(0);
+      	 exit(EXIT_FAILURE);
    }
 
          				/* initialize flag arrays in choice
@@ -262,7 +254,7 @@ void user_input (int argc, char **argv)
       fprintf(stdout, "    An edge map (flag is -e) is not available unless   \n");
       fprintf(stdout, "    sam=w                                              \n");
       fprintf(stdout, "   ****************************************************\n");
-      exit(0);
+      exit(EXIT_FAILURE);
    }
 
    if (zscore->answer && choice->wrum == 'w') {
@@ -277,7 +269,7 @@ void user_input (int argc, char **argv)
       fprintf(stdout, "    A zscores map (flag is -z) is not available unless \n");
       fprintf(stdout, "    sam=w                                              \n");
       fprintf(stdout, "   ****************************************************\n");
-      exit(0);
+      exit(EXIT_FAILURE);
    }
 
    if (diversity->answer){
@@ -315,7 +307,7 @@ void user_input (int argc, char **argv)
          fprintf(stdout, "    You requested texture measurement, but did not \n");
          fprintf(stdout, "    input both parameter te1 and te2               \n");
          fprintf(stdout, "   ************************************************\n");
-         exit(0);
+         exit(EXIT_FAILURE);
          }
    }
 
@@ -342,10 +334,8 @@ void user_input (int argc, char **argv)
       fprintf(stdout, "   **************************************************\n");
       fprintf(stdout, "    You did not select any measures to be calculated \n");
       fprintf(stdout, "   **************************************************\n");
-      exit(0);
+      exit(EXIT_FAILURE);
    }
 
    return;
 }
-
-
