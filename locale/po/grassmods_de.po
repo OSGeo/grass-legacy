@@ -3065,7 +3065,7 @@ msgstr "%s: Kann nicht in WKT konvertieren."
 #: ../general/g.proj/main.c:397
 #, c-format
 msgid "Location %s created!"
-msgstr "Location '%s'erstellt!"
+msgstr "Location '%s' erstellt!"
 
 #: ../general/g.proj/main.c:399
 #, c-format
