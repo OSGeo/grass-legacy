@@ -23,17 +23,15 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-
 #include <sys/types.h>
 #include <dirent.h>
 
+#include <grass/config.h>
 #include <grass/gis.h>
 #include <grass/raster.h>
 #include <grass/display.h>
 #include <grass/glocale.h>
-
 #include "setup.h"
-#include <grass/config.h>
 
 
 static void get_pwd(void);
@@ -52,12 +50,11 @@ int main (int argc, char *argv[])
     double Rw_l, Rscr_wl;
     char *map_name=NULL, *v_name=NULL, *s_name=NULL;
 
-    /* must run in a term window */
-    G_putenv("GRASS_UI_TERM","1");
-
-
     /* Initialize the GIS calls */
     G_gisinit(argv[0]);
+
+    /* must run in a term window */
+    G_putenv("GRASS_UI_TERM","1");
 
     module = G_define_module();
     module->keywords = _("raster");

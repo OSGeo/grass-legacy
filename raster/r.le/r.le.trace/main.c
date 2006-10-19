@@ -21,10 +21,10 @@
 #include <stdlib.h>
 #include <string.h>
 #include <unistd.h>
+#include <grass/config.h>
 #include <grass/gis.h>
 #include <grass/raster.h>
 #include <grass/display.h>
-#include <grass/config.h>
 #include <grass/glocale.h>
 
 #include "r.le.trace.h"
@@ -35,7 +35,6 @@ int   			finput;
 int   			total_patches=0;
 PATCH 			*patch_list = NULLPTR;
 FILE  			*fp;
-
 
 				/* MAIN PROGRAM */
 int main (int argc, char *argv[])
@@ -50,9 +49,10 @@ int main (int argc, char *argv[])
   setbuf (stdout, NULL);	/* unbuffered */
   setbuf (stderr, NULL);
 
+  G_gisinit(argv[0]); 
+
   choice = (struct CHOICE *) G_calloc(1, sizeof(struct CHOICE));
 
-  G_gisinit(argv[0]); 
     module = G_define_module();
     module->keywords = _("raster");
     module->description =
@@ -61,7 +61,6 @@ int main (int argc, char *argv[])
 	"indices for each patch, and save the data in an output file.");
 
   user_input(argc,argv) ;
-
 
   				/* setup the current window for display */
   G_system(" d.colormode float");
@@ -1645,8 +1644,3 @@ void clockwise (int *i, int *j)
      *i += *j;
   return;
 }
-
-
-
-
-
