@@ -30,25 +30,24 @@
 #define GSL_SQRT_DBL_EPSILON   1.e-4
 #define GSL_DBL_EPSILON  1.e-8
 
-
+/*
 #define SAFE_FUNC_CALL(f, x, yp) \
 do { \
   *yp = GSL_FN_EVAL(f,x); \
   if (!finite(*yp)) \
   fprintf(stderr,"function not continuous\n");\
 } while (0)
-
+*/
 
 
 typedef struct
-  {
+{
     double d, e, v, w;
     double f_v, f_w;
-  }
+}
 brent_state_t;
 
 
-static int brent (void *vstate, double (* f)(), double *x_minimum, double * f_minimum, double * x_lower, double * f_lower, double * x_upper, double * f_upper);
 
 static int
 brent (void *vstate,  double (* f)(), double *x_minimum, double * f_minimum, double * x_lower, double * f_lower, double * x_upper, double * f_upper)
@@ -231,6 +230,7 @@ double brent_iterate (double (* f)(),double x_lower, double x_upper,int maxiter)
 	return x_minimum;
       }      
   }
+
   return x_minimum;
 }
 
