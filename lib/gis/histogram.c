@@ -2,11 +2,13 @@
 #include <grass/glocale.h>
 #include <stdlib.h>
 
+
 #define LIST struct Histogram_list
 
 static FILE *fopen_histogram_new(char *);
 static int cmp(const void *, const void *);
 static int cmp_count (const void *, const void *);
+
 
 /*!
  * \brief initializes the histogram structure
@@ -25,6 +27,7 @@ int G_init_histogram (
 
     return 0;
 }
+
 
 /*!
  * \brief read the histogram information
@@ -45,27 +48,26 @@ int G_read_histogram (
     char *name,char *mapset,
     struct Histogram *histogram)
 {
-    FILE *fd;
+    FILE *fd = NULL;
     long cat;
     long count;
     char buf[200];
-
-    fd = NULL;
 
     G_init_histogram (histogram);
 
     sprintf (buf,"cell_misc/%s", name);
     if (G_find_file (buf, "histogram", mapset) == NULL)
     {
-	sprintf (buf, _("Histogram for [%s in %s] missing (run r.support)"), name, mapset);
-	G_warning (buf);
+	G_warning(_("Histogram for [%s in %s] missing (run r.support)"), name, mapset);
+
 	return 0;
     }
+
     fd = G_fopen_old (buf, "histogram", mapset);
     if (!fd)
     {
-	sprintf (buf, _("Can't read histogram for [%s in %s]"), name, mapset);
-	G_warning (buf);
+	G_warning(_("Can't read histogram for [%s in %s]"), name, mapset);
+
 	return -1;
     }
 
@@ -75,23 +77,26 @@ int G_read_histogram (
 	{
 	    G_free_histogram (histogram);
 	    fclose (fd);
-	    sprintf (buf,_("Invalid histogram file for [%s in %s]"), name, mapset);
-	    G_warning (buf);
+	    G_warning(_("Invalid histogram file for [%s in %s]"), name, mapset);
+
 	    return -1;
 	}
 	G_extend_histogram ((CELL)cat, count, histogram);
     }
     fclose (fd);
+
     if (histogram->num == 0)
     {
-	sprintf (buf,_("Invalid histogram file for [%s in %s]"), name, mapset);
-	G_warning (buf);
+	G_warning(_("Invalid histogram file for [%s in %s]"), name, mapset);
+
 	return -1;
     }
 
     G_sort_histogram  (histogram);
+
     return 1;
 }
+
 
 /*!
  * \brief Writes the histogram information
@@ -122,14 +127,16 @@ int G_write_histogram (
 	    fprintf (fd, "%ld:%ld\n", (long)list[n].cat, list[n].count);
     }
     fclose (fd);
+
     return 1;
 }
+
 
 /*!
  * \brief Writes the histogram information to file
  *
  * \param name: name of map
- * \param statf
+ * \param statf: cell statistics
  * \return 
  */
 
@@ -144,6 +151,7 @@ int G_write_histogram_cs (
     fd = fopen_histogram_new (name);
     if (fd == NULL)
 	return -1;
+
     G_rewind_cell_stats (statf);
     while (G_next_cell_stat (&cat, &count, statf))
     {
@@ -151,14 +159,17 @@ int G_write_histogram_cs (
 	    fprintf (fd, "%ld:%ld\n", (long)cat, count);
     }
     fclose (fd);
+
     return 1;
 }
+
 
 /*!
  * \brief 
  *
- * \param 
- * \return 
+ * \param statf: cell statistics
+ * \param histogram: raster histogram
+ * \return 0 
  */
 int G_make_histogram_cs (
     struct Cell_stats *statf,
@@ -171,10 +182,12 @@ int G_make_histogram_cs (
     G_rewind_cell_stats (statf);
     while (G_next_cell_stat (&cat, &count, statf))
 	G_add_histogram (cat, count, histogram);
+
     G_sort_histogram (histogram);
 
     return 0;
 }
+
 
 /*!
  * \brief Sorts the histogram in ascending order by counts then category
@@ -190,6 +203,7 @@ int G_get_histogram_num (struct Histogram *histogram)
     return histogram->num;
 }
 
+
 /*!
  * \brief Returns cat for the nth element in the histogram
  *
@@ -201,8 +215,10 @@ CELL G_get_histogram_cat (int n, struct Histogram *histogram)
 {
     if (n < 0 || n >= histogram->num)
 	return 0;
+
     return histogram->list[n].cat;
 }
+
 
 /*!
  * \brief Returns count for the nth element in the histogram
@@ -216,11 +232,13 @@ long G_get_histogram_count (int n, struct Histogram *histogram)
 {
     if (n < 0 || n >= histogram->num)
 	return 0;
+
     return histogram->list[n].count;
 }
 
+
 /*!
- * \brief frees the memory allocated for the histogram
+ * \brief Frees memory allocated for the histogram
  *
  * frees the memory allocated for the histogram
  * \param histogram: struct for histogram
@@ -232,6 +250,7 @@ int G_free_histogram ( struct Histogram *histogram)
 	G_free (histogram->list);
     histogram->num = 0;
     histogram->list = NULL;
+
     return 1;
 }
 
@@ -249,22 +268,24 @@ int G_sort_histogram ( struct Histogram *histogram)
     int a,b,n;
     LIST *list;
 
-/* if histogram only has 1 entry, nothing to do */
-    if ((n = histogram->num) <= 1) return 1;
+    /* if histogram only has 1 entry, nothing to do */
+    if ((n = histogram->num) <= 1)
+        return 1;
 
     list=histogram->list;
 
-/* quick check to see if sorting needed */
+    /* quick check to see if sorting needed */
     for (a = 1; a < n; a++)
 	if (list[a-1].cat >= list[a].cat)
 	    break;
     if (a >= n) return 1;
 
-/* sort */
+    /* sort */
     qsort (list, n, sizeof(LIST), &cmp);
 
-/* sum duplicate entries */
+    /* sum duplicate entries */
     for (a = 0, b = 1; b < n; b++)
+    {
 	if (list[a].cat != list[b].cat)
 	{
 	    a++;
@@ -275,18 +296,23 @@ int G_sort_histogram ( struct Histogram *histogram)
 	{
 	    list[a].count += list[b].count;
 	}
+    }
     histogram->num = a + 1;
 
     return 0;
 }
 
+
 static int cmp(const void *aa, const void *bb)
 {
     const LIST *a = aa, *b = bb;
+
     if (a->cat < b->cat)
 	return -1;
+
     if (a->cat > b->cat)
 	return 1;
+
     return 0;
 }
 
@@ -304,28 +330,34 @@ int G_sort_histogram_by_count ( struct Histogram *histogram)
     int n;
     LIST *list;
 
-/* if histogram only has 1 entry, nothing to do */
+    /* if histogram only has 1 entry, nothing to do */
     if ((n = histogram->num) <= 1) return 1;
 
     list=histogram->list;
 
-/* sort */
+    /* sort */
     qsort (list, n, sizeof(LIST), &cmp_count);
 
     return 0;
 }
 
+
 static int cmp_count(const void *aa, const void *bb)
 {
     const LIST *a = aa, *b = bb;
+
     if(a->count < b->count)
 	return -1;
+
     if(a->count > b->count)
 	return 1;
+
     if(a->cat < b->cat)
 	return -1;
+
     if(a->cat > b->cat)
 	return 1;
+
     return 0;
 }
 
@@ -337,12 +369,11 @@ static FILE *fopen_histogram_new ( char *name)
     sprintf (buf,"cell_misc/%s", name);
     fd = G_fopen_new (buf, "histogram");
     if (fd == NULL)
-    {
-	sprintf (buf,_("can't create histogram for [%s in %s]"), name, G_mapset());
-	G_warning (buf);
-    }
+	G_warning(_("can't create histogram for [%s in %s]"), name, G_mapset());
+
     return fd;
 }
+
 
 /*!
  * \brief Removes the histogram
@@ -356,11 +387,13 @@ int G_remove_histogram (char *name)
 
 {
     char buf[100];
+
     sprintf (buf,"cell_misc/%s", name);
     G_remove(buf, "histogram");
 
     return 0;
 }
+
 
 /*!
  * \brief adds count to the histogram value for cat
@@ -380,16 +413,18 @@ int G_add_histogram (
     int i;
 
     for (i = 0 ; i < histogram->num; i++)
+    {
 	if (histogram->list[i].cat == cat)
 	{
 	    histogram->list[i].count += count;
 	    return 1;
 	}
-
+    }
     G_extend_histogram (cat, count, histogram);
 
     return 0;
 }
+
 
 /*!
  * \brief sets the histogram value for cat to count
@@ -409,19 +444,21 @@ int G_set_histogram (
     int i;
 
     for (i = 0 ; i < histogram->num; i++)
+    {
 	if (histogram->list[i].cat == cat)
 	{
 	    histogram->list[i].count = count;
 	    return 1;
 	}
-
+    }
     G_extend_histogram (cat, count, histogram);
 
     return 0;
 }
 
+
 /*!
- * \brief 
+ * \brief Extends histogram struct to accomodate a new value
  *
  * \param cat: category
  * \param count
@@ -442,8 +479,9 @@ int G_extend_histogram (
     return 0;
 }
 
+
 /*!
- * \brief 
+ * \brief Zero out histogram struct
  *
  * \param histogram: struct for histogram
  * \return 
