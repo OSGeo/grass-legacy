@@ -389,7 +389,6 @@ int
 G_matrix_LU_solve(const mat_struct *mt1, mat_struct **xmat0, 
 			const mat_struct *bmat, mat_type mtype) {
 
-  int i; /* loop */
   mat_struct *wmat, *xmat, *mtx; 
 
   if(mt1->is_init == 0 || bmat->is_init == 0) {
@@ -437,9 +436,7 @@ G_matrix_LU_solve(const mat_struct *mt1, mat_struct **xmat0,
   case NONSYM:
     {
       integer *perm, res_info;
-      int indx1, indx2, iperm; /* loop variable */
       integer num_eqns, nrhs, lda, ldb;
-      doublereal *ptin, *ptout;
 
       perm = (integer *)G_malloc(wmat->rows);
 
@@ -1117,8 +1114,8 @@ G_vector_set(vec_struct *A, int cells, int ldim, vtype vt, int vindx) {
     return -1;
   }
 
-  if(vt == RVEC && vindx >= A->cols ||
-     vt == CVEC && vindx >= A->rows) {
+  if ((vt == RVEC && vindx >= A->cols) ||
+     (vt == CVEC && vindx >= A->rows)) {
     fprintf(stderr, "Error: Row/column out of range\n");
     return -1;    
   }
@@ -1184,7 +1181,7 @@ G_vector_norm_euclid(vec_struct *vc) {
 
   if(!vc->is_init) {
     fprintf(stderr, "Error: matrix is not initialised\n");
-    exit(-1);
+    exit(EXIT_FAILURE);
   }
 
 
@@ -1250,12 +1247,11 @@ G_vector_norm_maxval(vec_struct *vc, int vflag) {
 
   doublereal xval, *startpt, *curpt;
   double cellval;
-  int ix;       /* loop */
-  int ncells, incr, cnt;
+  int ncells, incr;
 
   if(!vc->is_init) {
     fprintf(stderr, "Error: matrix is not initialised\n");
-    exit(-1);
+    exit(EXIT_FAILURE);
   }
 
   if(vc->type == ROWVEC_) {
