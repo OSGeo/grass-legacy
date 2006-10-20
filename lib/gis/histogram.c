@@ -133,11 +133,12 @@ int G_write_histogram (
 
 
 /*!
- * \brief Writes the histogram information to file
+ * \brief Writes the histogram based on cell statistics to file
  *
  * \param name: name of map
  * \param statf: cell statistics
- * \return 
+ * \return 1 on success
+ *        -1 on failure
  */
 
 int G_write_histogram_cs (
@@ -165,7 +166,7 @@ int G_write_histogram_cs (
 
 
 /*!
- * \brief 
+ * \brief Creates histogram based on cell statistics
  *
  * \param statf: cell statistics
  * \param histogram: raster histogram
