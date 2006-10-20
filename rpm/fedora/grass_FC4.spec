@@ -25,11 +25,7 @@
 
 %define with_blas	0
 %define with_ffmpeg	0
-%if "%{FCL}" == "1" &&  "%{VER1}" == "4"
 %define with_fftw3	0
-%else
-%define with_fftw3	1
-%endif
 %define with_odbc	0
 %define with_mysql	0
 %define with_postgres	1
@@ -189,8 +185,6 @@ CXXFLAGS="-O2 -g -Wall"
 #LDFLAGS="-s"
 
 ( %configure  \
-   --prefix=%{buildroot}/%{_prefix} \
-   --bindir=%{buildroot}/%{_bindir} \
    --enable-shared \
 %if "%{with_largefiles}" == "1"
    --enable-largefile \
