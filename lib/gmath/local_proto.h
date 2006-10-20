@@ -1,3 +1,6 @@
+#ifndef __LOCAL_PROTO_H__
+#define __LOCAL_PROTO_H__
+
 
 /* close_down.c */
 int close_down(void);
@@ -24,3 +27,6 @@ int write_rast(double *[2], int, int);
 int del2g(double *[2], int, double);
 /* getg.c */
 int getg(double, double *[2], int);
+
+
+#endif  /* __LOCAL_PROTO_H__ */

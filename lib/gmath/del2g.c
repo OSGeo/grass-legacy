@@ -14,6 +14,8 @@ Details:        This routine does a convolution of the Marr-Hildreth operator
 
 Author:         Bill Hoff,2-114C,8645,3563478 (hoff) at uicsl
 */
+
+
 #include <grass/config.h>
 
 #if defined(HAVE_FFTW_H) || defined(HAVE_DFFTW_H) || defined(HAVE_FFTW3_H)
@@ -23,11 +25,12 @@ Author:         Bill Hoff,2-114C,8645,3563478 (hoff) at uicsl
 #include "numerical.h"
 #include <grass/gis.h>
 
-double *g[2];   /* the filter function */
 
 int 
 del2g (double *img[2], int size, double w)
 {
+  double *g[2];   /* the filter function */
+
   fprintf (stderr, "    taking FFT of image...\n");
   fft(FORWARD, img, size*size, size, size);
 
@@ -35,6 +38,7 @@ del2g (double *img[2], int size, double w)
   g[1] = (double *) G_malloc(size*size*sizeof(double));
   if (g[0] == NULL || g[1] == NULL)
     G_fatal_error("Insufficent memory for allocation of gaussian");
+
   fprintf (stderr, "    computing del**2 g...\n");
   getg (w, g, size);
 
@@ -51,4 +55,4 @@ del2g (double *img[2], int size, double w)
   return 0;
 }
 
-#endif
+#endif /* FFTW */

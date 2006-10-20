@@ -6,16 +6,20 @@
  *     Originally: frac.h by Jo Wood, V 1.0  - 19th October, 1994
 */
 
+#ifndef __NUMERICAL_H__
+#define __NUMERICAL_H__
+
+
 #include <grass/gis.h>
-                                /* programs. It sets up the necessary   */
-                                /* prototypes for GRASS library calls.  */
-#include "string.h"
-#include "stdio.h"
+#include <string.h>
+#include <stdio.h>
+
 
 #define MAX(a,b) ((a)>(b) ? (a):(b))
 #define SWAP(a,b) tempr=(a); (a)=(b); (b) = tempr
 
 #define TWOPI 6.283185307179590 /* Constant value of 2 pi */
+
 
 /* ------ Global variables ------ */
 /* gauss.c */
@@ -41,7 +45,7 @@ double	H;			/* Hausdorff-Besickovitch dimension.	*/
 
 
 /* del2g.c */
- /* fft constants */
+/* fft constants */
 #define FORWARD 1
 #define INVERSE -1
 #define SCALE 1
@@ -49,3 +53,6 @@ double	H;			/* Hausdorff-Besickovitch dimension.	*/
 
 extern double Thresh;
 extern int NumOrients;
+
+
+#endif /* __NUMERICAL_H__ */
