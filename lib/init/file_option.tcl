@@ -114,8 +114,7 @@ proc fileLocCom args {
 			if {[file exists $filepath]== 1} {
 				if {[file exists $thelocation ]==0} {  
 					destroy .fileloc; 
-					exec -- g.proj -c georef=$filepath location=$fileLocation >@stdout 2>@stderr; 
-					destroy .fileloc
+					exec -- $env(GISBASE)/etc/grass-xterm-wrapper -T g.proj -n g.proj -e $env(GISBASE)/etc/grass-run.sh g.proj -c georef=$filepath location=$fileLocation
 					DialogGen .wrnDlg [G_msg "WARNING: restart GRASS please"] warning \
 					[G_msg "WARNING: Please restart GRASS in order find the created location in the list (closing it for you now)"] \
 						0 OK; 
