@@ -1,7 +1,7 @@
 # GDAL/OGR support for GRASS: plugin
 # This file is Free Software under GNU GPL v>=2.
 
-%define GRASS_VERSION 6.3.cvs
+%define GRASS_VERSION 6.2.0
 %define PACKAGE_NAME gdal-grass
 %define PACKAGE_VERSION 1.3.2
 %define PACKAGE_RELEASE 1
