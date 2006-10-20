@@ -24,7 +24,8 @@
 %define _bindir /usr/bin
 
 %define with_blas	0
-%define with_ffmpeg	1
+%define with_ffmpeg	0
+%define with_fftw3	0
 %define with_odbc	0
 %define with_mysql	0
 %define with_postgres	1
@@ -60,7 +61,7 @@ Summary:	GRASS - Geographic Resources Analysis Support System
 Name:		%PACKAGE_NAME
 Version:	%PACKAGE_VERSION
 Epoch: 		%PACKAGE_RELEASE
-%{?FCL:Release: %{PACKAGE_RELEASE}.fdr.%{REL}.fc%{VER1}}
+%{?FCL:Release: %{PACKAGE_RELEASE}.fdr.fc%{VER1}}
 %{?ENT:Release: %{PACKAGE_RELEASE}.E%{VER1}}
 %{?SLC:Release: %{PACKAGE_RELEASE}.SL%{VER1}}
 %if  "%{!?snap:1}" == "1"
@@ -94,8 +95,6 @@ Requires:       xorg-x11-libs >= 6.8
 BuildRequires:  xorg-x11-devel >= 6.8
 Requires:       openmotif >= 2.2.3
 BuildRequires:  openmotif-devel >= 2.2.3
-Requires:       fftw3 >= 3.1
-BuildRequires:  fftw3-devel >= 3.1
 Requires:       glibc >= 2.0
 BuildRequires:  glibc-devel >= 2.0
 Requires:       libgcc >= 3.4.2
@@ -111,6 +110,10 @@ Requires:       libtiff >= 3.6
 BuildRequires:  libtiff-devel >= 3.6
 Requires:       zlib >= 1.2
 BuildRequires:  zlib-devel >= 1.2
+%if "%{with_fftw3}" == "1"
+Requires:       fftw3 >= 3.1
+BuildRequires:  fftw3-devel >= 3.1
+%endif
 %if "%{with_blas}" == "1"
 Requires:       blas >= 3.0
 BuildRequires:  blas >= 3.0
@@ -172,8 +175,9 @@ chmod ugo+x %{_tmppath}/find_provides.sh
 #
 #configure with shared libs:
 #
-CFLAGS="-O2 -g -Wall -Werror-implicit-function-declaration -fno-common"
-CXXFLAGS="-g -Wall"
+#CFLAGS="-O2 -g -Wall -Werror-implicit-function-declaration -fno-common"
+CFLAGS="-O2 -g -Wall"
+CXXFLAGS="-O2 -g -Wall"
 #LDFLAGS="-s"
 
 ( %configure  \
@@ -183,7 +187,12 @@ CXXFLAGS="-g -Wall"
 %if "%{with_largefiles}" == "1"
    --enable-largefile \
 %endif
+%if "%{with_fftw3}" == "1"
    --with-fftw \
+%endif
+%if "%{with_fftw3}" == "0"
+   --without-fftw \
+%endif
    --with-includes=%{_includedir} \
    --with-libs=%{_libdir} \
    --with-motif \
@@ -280,6 +289,8 @@ rm -rf %{buildroot}
 %postun -p /sbin/ldconfig
 
 %Changelog
+* Fri Oct 20 2006 Markus Neteler <neteler@itc.it>
+  - fftw3 conditionalized (needed for FC4); less strict compiler flags
 * Tue Oct 17 2006 Roberto Flor <flor@itc.it>
   - Moved to 6.2.0RC3, enabled ffmpeg, added snapshot/version flag
 * Tue Mar 17 2006 Roberto Flor <flor@itc.it>
