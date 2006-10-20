@@ -273,6 +273,13 @@ chmod +x %{buildroot}%{_bindir}/grass%{shortver}
 install -d %{buildroot}/etc/ld.so.conf.d
 echo %{_prefix}/grass-%{version}/%{_lib} >> %{buildroot}/etc/ld.so.conf.d/grass-%{version}.conf
 
+# Install pkg-config
+if [ ! -d %{buildroot}%{_libdir}/pkgconfig ]
+then
+ mkdir -p %{buildroot}%{_libdir}/pkgconfig
+fi
+install -m 644 grass.pc %{buildroot}%{_libdir}/pkgconfig/
+
 %clean
 rm -rf %{buildroot}
 
@@ -289,6 +296,7 @@ rm -rf %{buildroot}
 %{_bindir}/grass%{shortver}
 %{_bindir}/gem
 %{_prefix}/grass-%{version}
+%{_libdir}/pkgconfig/grass.pc
 /etc/ld.so.conf.d/grass-%{version}.conf
 
 %post -p /sbin/ldconfig
