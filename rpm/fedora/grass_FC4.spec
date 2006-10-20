@@ -25,7 +25,11 @@
 
 %define with_blas	0
 %define with_ffmpeg	0
+%if "%{FCL}" == "1" &&  "%{VER1}" == "4"
 %define with_fftw3	0
+%else
+%define with_fftw3	1
+%endif
 %define with_odbc	0
 %define with_mysql	0
 %define with_postgres	1
@@ -175,8 +179,12 @@ chmod ugo+x %{_tmppath}/find_provides.sh
 #
 #configure with shared libs:
 #
-#CFLAGS="-O2 -g -Wall -Werror-implicit-function-declaration -fno-common"
+%if "%{FCL}" == "1" &&  "%{VER1}" == "4"
 CFLAGS="-O2 -g -Wall"
+%else
+CFLAGS="-O2 -g -Wall -Werror-implicit-function-declaration -fno-common"
+%endif
+
 CXXFLAGS="-O2 -g -Wall"
 #LDFLAGS="-s"
 
@@ -189,8 +197,7 @@ CXXFLAGS="-O2 -g -Wall"
 %endif
 %if "%{with_fftw3}" == "1"
    --with-fftw \
-%endif
-%if "%{with_fftw3}" == "0"
+%else
    --without-fftw \
 %endif
    --with-includes=%{_includedir} \
