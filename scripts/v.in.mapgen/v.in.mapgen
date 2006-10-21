@@ -38,8 +38,8 @@
 #%option
 #% key: output
 #% type: string
-#% gisprompt: new,dig,vector
-#% description: name for new vector file (omit for display to stdout)
+#% gisprompt: new,vector,vector
+#% description: name for new vector map (omit for display to stdout)
 #% required : no
 #%end
 
