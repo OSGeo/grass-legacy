@@ -45,7 +45,7 @@
 #%option
 #% key: vect
 #% type: string
-#% gisprompt: new,dig,vector
+#% gisprompt: new,vector,vector
 #% description: name for new binary vector file
 #% required : no
 #%end
@@ -134,11 +134,6 @@ if [ -n "$GIS_OPT_VECT" ] ; then
     NAME="$GIS_OPT_VECT"
 else
     NAME=$E00NAME
-fi
-
-if [ ! -z `g.findfile elem=vector file="$NAME" | grep "^file" | cut -f2 -d'='` ] ; then
-	echo "GRASS vector map <$NAME> already exists! Aborting."
-	exit 1
 fi
 
 ### do import
