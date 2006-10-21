@@ -18,6 +18,9 @@
 #define __LOCAL_PROTO_H__
 
 
+#include <grass/gis.h>
+
+
 #define BUFFSIZE 256
 
 #define METHOD_N         1
