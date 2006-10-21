@@ -46,7 +46,7 @@
 #% key: vect
 #% type: string
 #% gisprompt: new,vector,vector
-#% description: name for new binary vector file
+#% description: name for new vector map
 #% required : no
 #%end
 
