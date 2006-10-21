@@ -2,6 +2,7 @@
 #include <grass/gis.h>
 #include <grass/Vect.h>
 #include <grass/glocale.h>
+#include <grass/G3d.h>
 #include "list.h"
 
 /* 
@@ -22,28 +23,43 @@ int do_remove (int n, char *old)
 
     hold_signals(1);
     if ( G_strcasecmp(list[n].alias, "vect") == 0 ) {
-	ret = Vect_delete ( old );
-	if ( ret == -1 ) {
-	    result = 1;
+	if ((mapset = G_find_vector2 (old, "")) == NULL) {
+	    G_warning(_("Vector map <%s> not found"), old);
 	}
 	else {
-	    removed = 1;
+	    ret = Vect_delete ( old );
+	    if ( ret != -1 ) {
+		removed = 1;
+	    }
+	    else {
+		G_warning (_("couldn't be removed"));
+		result = 1;
+	    }
 	}
     } else {
-	removed = 0;
+	if (G_strcasecmp(list[n].alias, "rast") == 0 ) {
+	    if ((mapset = G_find_cell2 (old, "")) == NULL)
+		G_warning(_("Raster map <%s> not found"), old);
+	}
+	
+	if (G_strcasecmp(list[n].alias, "rast3d") == 0 ) {
+	    if ((mapset = G_find_grid3 (old, "")) == NULL)
+		G_warning(_("3D raster map <%s> not found"), old);
+	}
+
         for (i = 0; i < list[n].nelem; i++) {
 
 	    switch (G_remove (list[n].element[i], old))
 	    {
 	    case -1: 
-                G_warning ("%s: %s", list[n].desc[i],_("couldn't be removed"));
+		G_warning (_("%s: couldn't be removed"), list[n].desc[i]);
                 result = 1;
 		break;
 	    case  0: 
-		G_debug (1, "%s: %s", list[n].desc[i],_("missing"));
+		G_debug (1, "%s: missing", list[n].desc[i]);
 		break;
             case 1:
-                G_debug (1, "%s: %s", list[n].desc[i],_("removed"));
+                G_debug (1, "%s: removed", list[n].desc[i]);
 		removed = 1;
 		break;
 	    }
