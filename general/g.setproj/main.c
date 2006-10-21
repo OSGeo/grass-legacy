@@ -165,8 +165,6 @@ int main(int argc, char *argv[])
 		Out_proj = PROJECTION_UTM;
 	    else if (G_strcasecmp(proj_out, "STP") == 0)
 		Out_proj = PROJECTION_SP;
-	    else
-		Out_proj = PROJECTION_SP;
 	    break;
 	default:
 	    G_fatal_error("Unknown projection");
