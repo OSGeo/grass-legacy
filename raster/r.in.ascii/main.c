@@ -222,7 +222,7 @@ main (int argc, char *argv[])
 		rast_ptr = rast;
 	}
 	G_percent(nrows, nrows, 2);
-	G_debug ("Creating support files for %s", output);
+	G_debug (1,"Creating support files for %s", output);
 
 	sz=0;
 	if(direction<0)
