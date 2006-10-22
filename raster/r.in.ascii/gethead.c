@@ -12,7 +12,6 @@
 #define DOUBLE     "double"
 #define TMPBUFSIZE 8192
 
-static int error(char *);
 static int missing(int,char *);
 static int extract(int,char *,char *,void *,int,int (*)());
 static int scan_int(char *,int *,int);
@@ -230,14 +229,14 @@ char **nval)
           else if (ret == 1) 
               *d_type = CELL_TYPE;
           else {
-              error("ERROR: in ascii data format");
+              G_warning(_("error in ascii data format"));
               return 0;
           }
       }
 
       if ((err = G_adjust_Cell_head (cellhd, 1, 1)))
       {
-        error (err);
+        G_warning (err);
         return 0;
       }
 
@@ -264,43 +263,22 @@ char *label, char *value,
 void *data, int proj,
 int (*scanner)())
 {
-	char msg[1024];
 	if (count)
 	{
-		sprintf (msg, "duplicate \"%s\" field in header", label);
-		error (msg);
+		G_warning (_("Duplicate \"%s\" field in header"), label);
 		return 0;
 	}
 	if (scanner (value, data, proj))
 		return 1;
-	sprintf (msg, "illegal \"%s\" value in header", label);
-	error (msg);
-	sprintf (msg, "  %s: %s", label, value);
-	error (msg);
+	G_warning (_("Illegal \"%s\" value in header: %s"), label,value);
 	return 0;
 }
 
 static int missing (int count, char *label)
 {
-	char msg[200];
 	if (count) return 0;
-	sprintf (msg, "\"%s\" field missing from header", label);
-	error(msg);
+	G_warning(_("\"%s\" field missing from header"), label);
 	return 1;
-}
-
-static int error( char *msg)
-{
-	static int first = 1;
-
-	if (first)
-	{
-		G_message(_("** errors detected in header section **\n"));
-		first = 0;
-	}
-	fprintf (stderr, "  %s\n", msg);
-
-	return 0;
 }
 
 /* file_scan(): determine data type in ascii format */
