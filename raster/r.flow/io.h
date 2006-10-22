@@ -12,14 +12,6 @@ void
 parse_command_line(/* argc, argv */);
 
 /*
- * diag: print diagnostic message and flush to stderr
- * globals r: parm
- */
-
-void
-diag();
-
-/*
  * read_input_files: loads input files completely into z, o arrays
  * globals r:  region, parm
  * globals rw: el, as

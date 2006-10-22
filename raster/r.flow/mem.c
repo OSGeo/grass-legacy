@@ -24,6 +24,7 @@
 */
 
 
+#include <grass/glocale.h>
 #include "r.flow.h"
 #include "io.h"
 #include "mem.h"
@@ -51,7 +52,7 @@ void initialize_globals(
     if (G_get_set_window(&region) == -1)
 	G_fatal_error("r.flow: error getting current region");
 
- /*   diag("r.flow Version 13 August 1995, update/fix October 1999\n\n");*/
+ /*   G_message(_("r.flow Version 13 August 1995, update/fix October 1999"));*/
 
     parse_command_line(argc, argv);
 
@@ -70,7 +71,7 @@ void allocate_heap(void)
 {
     int    row;
 
-    diag("Allocating memory: elevation");
+    G_debug(1,"Allocating memory: elevation");
 
     /* 3 elevation buffers needed for precomputing aspects */
 
@@ -86,7 +87,7 @@ void allocate_heap(void)
 
     if (parm.seg)
     {
-	diag(", segment");
+        G_debug(1,"Allocating memory: segment");
 	el.seg = (SEGMENT *) G_malloc(sizeof (SEGMENT));
 	segment_init(el.seg, el.sfd, SEGSINMEM);
 	as.seg = (SEGMENT *) G_malloc(sizeof (SEGMENT));
@@ -100,7 +101,7 @@ void allocate_heap(void)
 
     if (!parm.mem)
     {
-	diag(", aspect");
+        G_debug(1,"Allocating memory: aspect");
 	as.buf = (DCELL **) G_calloc(region.rows, sizeof (DCELL *));
 /*	as.buf[0] = G_allocate_cell_buf(); replaced by Helena Oct.99 by DCELL*/
 	as.buf[0] = (DCELL *) G_allocate_raster_buf(DCELL_TYPE);
@@ -111,13 +112,13 @@ void allocate_heap(void)
 
     if (parm.barin)
     {
-	diag(", barrier");
+        G_debug(1,"Allocating memory: barrier");
 	bitbar = BM_create(region.cols, region.rows);
     }
 
     if (parm.dsout)
     {
-	diag(", density");
+        G_debug(1,"Allocating memory: density");
 	ds.buf = (DCELL **) G_calloc(region.rows, sizeof (DCELL *));
 	ds.buf[0] = (DCELL *) G_allocate_raster_buf(DCELL_TYPE);
 	for (row = 0; row < region.rows; row++)
@@ -127,18 +128,16 @@ void allocate_heap(void)
 
     if (parm.flout)
     {
-	diag(", flowline header");
+        G_debug(1,"Allocating memory: flowline header");
 	Vect_hist_command ( &fl );
     }
 
-    diag(", e/w distances");
+    G_debug(1,"Allocating memory: e/w distances");
     ew_dist = (double *) G_calloc(region.rows, sizeof (double));
 
-    diag(", quantization tolerances");
+    G_debug(1,"Allocating memory: quantization tolerances");
     epsilon[HORIZ] = (double *) G_calloc(region.rows, sizeof (double));
     epsilon[VERT] = (double *) G_calloc(region.rows, sizeof (double));
-
-    diag(".\n");
 
     return;
 }
@@ -147,7 +146,7 @@ void deallocate_heap(void)
 {
     int row;
 
-    diag("De-allocating memory...");
+    G_debug(1,"De-allocating memory");
 
     if (parm.barin)
 	BM_destroy(bitbar);
@@ -174,6 +173,4 @@ void deallocate_heap(void)
 	G_free(as.buf);
     }
     G_free(ew_dist);
-
-    diag("done.\n");
 }

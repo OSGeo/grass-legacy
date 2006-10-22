@@ -24,6 +24,7 @@
 */
 
 
+#include <grass/glocale.h>
 #include "r.flow.h"
 #include "io.h"
 #include "mem.h"
@@ -80,7 +81,6 @@ precompute_epsilons()
 	}
 	if ((a = atan2(y, x)) <= 0.5 * DEG2RAD)
 	{
-	  diag ("\n");
 	  if ((G_projection() == PROJECTION_LL))
 	    /* probably this doesn't work at all with LatLong? -MN 2005 */
 	    G_fatal_error ("r.flow: resolution too unbalanced:\n \
@@ -188,36 +188,34 @@ precompute_aspects()
 void
 precompute()
 {
-    diag("Precomputing: tangents");
+    G_message(_("Precomputing: tangents"));
     precompute_tangents();
-    diag(", e/w distances");
+    G_message(_("Precomputing: e/w distances"));
     precompute_ew_dists();
-    diag(", quantization tolerances");
+    G_message(_("Precomputing: quantization tolerances"));
     precompute_epsilons();
     if (parm.up)
     {
-	diag(", inverted elevations");
+	G_message(_("Precomputing: inverted elevations"));
 	upslope_correction();
     }
     if (!parm.aspin)
     {
-	diag(", interpolated border elevations");
+	G_message(_("Precomputing: interpolated border elevations"));
 	interpolate_border();
     }
     if (!parm.mem) {
 	if (parm.aspin)
 	{
-	    diag(", re-oriented aspects");
+	    G_message(_("Precomputing: re-oriented aspects"));
 	    reflect_and_sentinel();
 	}
 	else
 	{
-	    diag(", aspects");
+            G_message("Precomputing: aspects");
 	    precompute_aspects();
 	}
     }
-
-    diag(".\n");
 }
 
 

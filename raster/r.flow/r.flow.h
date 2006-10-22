@@ -64,7 +64,6 @@ typedef struct
     char    l3d;		/* three-dimensional length		*/
     char    mem;		/* always recompute aspect		*/
     char    seg;		/* use segmented arrays			*/
-    char    quiet;		/* no diagnostic output			*/
 }
 params;
 
