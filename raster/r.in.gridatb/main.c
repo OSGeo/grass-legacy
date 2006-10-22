@@ -66,12 +66,12 @@ main (int argc, char **argv)
 
 	mapset = G_mapset();
 
-	if(check_ready()){
-		exit(-1);
-	}
+	if(check_ready())
+            G_fatal_error(_("File not found: %s"), file);
+	
 
 	rdwr_gridatb();
 
-	exit(0);
+	exit(EXIT_SUCCESS);
 }
 

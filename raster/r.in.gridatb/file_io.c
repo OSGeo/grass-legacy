@@ -1,5 +1,6 @@
 #include <stdlib.h>
 #include <grass/gis.h>
+#include <grass/glocale.h>
 #include "local_proto.h"
 
 
@@ -7,7 +8,7 @@ void
 rdwr_gridatb()
 {
 	FILE	*fp;
-	int	fd,i,j;
+	int	fd,i,j,retval;
 	float	idx;
 
 	fp = fopen(file, "r");
@@ -26,9 +27,16 @@ rdwr_gridatb()
 	cellhd.format = -1;
 	cellhd.compressed = 1;
 
-	if(adjcellhd(&cellhd)){
+	if(retval = adjcellhd(&cellhd)){
 		fclose(fp);
-		exit(1);
+                switch (retval) {
+                    case 1: G_fatal_error(_("Setting window header failed"));
+                            break;
+                    case 2: G_fatal_error(_("Rows changed"));
+                            break;
+                    case 3: G_fatal_error(_("Cols changed"));
+                            break;
+                }
 	}
 
 	fd = G_open_raster_new(oname, FCELL_TYPE);
