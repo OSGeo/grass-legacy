@@ -281,8 +281,7 @@ int main (int argc, char *argv[])
             {
                 cellhd.proj = loc_wind.proj;
                 cellhd.zone = loc_wind.zone;
-        	fprintf(stderr, "Over-riding projection check.\n"
-		                "Proceeding with import...\n");
+        	G_warning(_("Over-riding projection check."));
             } 
             else if( loc_wind.proj != cellhd.proj
                      || (projcomp_error=G_compare_projections( loc_proj_info, 
@@ -291,13 +290,13 @@ int main (int argc, char *argv[])
                 int     i_value;
 
                 strcpy( error_msg, 
-                        "Projection of dataset does not"
-                        " appear to match current location.\n\n");
+                        _("Projection of dataset does not"
+                        " appear to match current location.\n\n"));
 
                 /* TODO: output this info sorted by key: */
                 if( loc_proj_info != NULL )
                 {
-                    strcat( error_msg, "LOCATION PROJ_INFO is:\n" );
+                    strcat( error_msg, _("Location PROJ_INFO is:\n" ));
                     for( i_value = 0; 
                          loc_proj_info != NULL && i_value < loc_proj_info->nitems; 
                          i_value++ )
@@ -309,7 +308,7 @@ int main (int argc, char *argv[])
 
                 if( proj_info != NULL )
                 {
-                    strcat( error_msg, "Dataset PROJ_INFO is:\n" );
+                    strcat( error_msg, _("Dataset PROJ_INFO is:\n" ));
                     for( i_value = 0; 
                          proj_info != NULL && i_value < proj_info->nitems; 
                          i_value++ )
@@ -349,16 +348,16 @@ int main (int argc, char *argv[])
                                  cellhd.proj, cellhd.zone );
                 }
                 strcat( error_msg, 
-                 "\nYou can use the -o flag to r.in.gdal to override this check and "
-		 "use the location definition for the dataset.\n" );
+                 _("\nYou can use the -o flag to r.in.gdal to override this check and "
+		 "use the location definition for the dataset.\n" ));
                 strcat( error_msg, 
-                 "Consider generating a new location from the input dataset using "
-		 "the 'location' parameter.\n" );
+                 _("Consider generating a new location from the input dataset using "
+		 "the 'location' parameter.\n") );
                 G_fatal_error( error_msg );
             }
             else
-    	        fprintf(stderr, "Projection of input dataset and current location "
-		                "appear to match.\nProceeding with import...\n");
+    	        G_message(_("Projection of input dataset and current location "
+		                "appear to match.\nProceeding with import...\n"));
 	}
     }
     
@@ -388,7 +387,7 @@ int main (int argc, char *argv[])
         hBand = GDALGetRasterBand(hDS,1);
         if( hBand == NULL )
         {
-            sprintf( error_msg, "Selected band (%d) does not exist.\n", 
+            sprintf( error_msg, _("Selected band (%d) does not exist.\n"), 
                      nBand );
             G_fatal_error( error_msg );
         }
@@ -468,7 +467,7 @@ int main (int argc, char *argv[])
             sPoints.n2 = sPoints.e1 + 3 * sPoints.count;
             sPoints.status = (int *) G_malloc (sizeof(int) * sPoints.count);
             
-            fprintf (stderr, "COPYING %d GCPS IN POINTS FILE FOR %s\n", 
+            G_message (_("Copying %d GCPS in points file for %s"), 
                      sPoints.count, output );
             if( GDALGetGCPProjection(hDS) != NULL 
                 && strlen(GDALGetGCPProjection(hDS)) > 0 )
@@ -543,7 +542,6 @@ int main (int argc, char *argv[])
         G__put_window( &def_wind, "../PERMANENT", "DEFAULT_WIND" );
     } 
 
-    G_done_msg("");
     exit (EXIT_SUCCESS);
 }
 
@@ -594,11 +592,11 @@ static void SetupReprojector( const char *pszSrcWKT, const char *pszDstLoc,
     }
     else
     { /* can't access target mapset */
-        sprintf(errbuf, "Mapset [%s] in target location [%s] - ",
+        sprintf(errbuf, _("Mapset [%s] in target location [%s] - "),
                 target_mapset, pszDstLoc);
         strcat(errbuf, permissions == 0
-               ? "permission denied\n"
-               : "not found\n");
+               ? _("permission denied\n")
+               : _("not found\n"));
         G_fatal_error(errbuf);
     } /* permission check */
                 
@@ -833,13 +831,13 @@ static void ImportBand( GDALRasterBandH hBand, const char *output,
 /* -------------------------------------------------------------------- */
     if( complex ) 
     {
-        fprintf (stderr, "CREATING SUPPORT FILES FOR %s\n", outputReal);
+        G_debug (1, "Creating support files for %s", outputReal);
         G_close_cell (cfR);
         G_short_history((char *)outputReal, "raster", &history);
         G_command_history(&history);
         G_write_history((char *)outputReal, &history);
 
-        fprintf (stderr, "CREATING SUPPORT FILES FOR %s\n", outputImg);
+        G_debug (1, "Creating support files for %s", outputImg);
         G_close_cell (cfI);
         G_short_history((char *)outputImg, "raster", &history);
         G_command_history(&history);
@@ -849,7 +847,7 @@ static void ImportBand( GDALRasterBandH hBand, const char *output,
     }
     else
     {
-        fprintf (stderr, "CREATING SUPPORT FILES FOR %s\n", output);
+        G_debug (1, "Creating support files for %s", output);
         G_close_cell (cf);
         G_short_history((char *)output, "raster", &history);
         G_command_history(&history);
@@ -868,7 +866,7 @@ static void ImportBand( GDALRasterBandH hBand, const char *output,
         struct Colors    colors;
         int              iColor;
 
-        fprintf (stderr, "COPYING COLOR TABLE FOR %s\n", output );
+        G_debug (1, "Copying color table for %s", output );
 
         hCT = GDALGetRasterColorTable( hBand );
         
@@ -894,7 +892,7 @@ static void ImportBand( GDALRasterBandH hBand, const char *output,
            /* found 0..255 data: we set to grey scale: */
            struct Colors    colors;
         
-           fprintf (stderr, "SETTING GREY COLOR TABLE FOR %s (8bit, full range)\n", output );
+           G_debug (1, "Setting grey color table for %s (8bit, full range)", output );
 
            G_init_colors (&colors);
            G_make_grey_scale_colors (&colors, 0, 255); /* full range */
@@ -907,7 +905,7 @@ static void ImportBand( GDALRasterBandH hBand, const char *output,
            struct Range     range;
            CELL             min, max;
         
-           fprintf (stderr, "SETTING GREY COLOR TABLE FOR %s (16bit, image range)\n", output );
+           G_debug (1, "Setting grey color table for %s (16bit, image range)", output );
            G_read_range( (char *) output, G_mapset(), &range) ;
            G_get_range_min_max (&range, &min, &max);
 
