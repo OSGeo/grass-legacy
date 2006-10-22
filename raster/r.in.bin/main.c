@@ -218,7 +218,7 @@ int main (int argc, char *argv[])
 	swap = 0;
 	if (flag.b->answer) {
 		swap = 1;
-		fprintf(stderr, "Byte Swapping Turned On!\n");
+		G_message(_("Byte Swapping Turned On."));
 	}
 
 	/* Check Endian State of Host Computer*/
@@ -277,7 +277,7 @@ int main (int argc, char *argv[])
         cellhd.south = 0.;
         cellhd.east = (double)cellhd.cols;
         cellhd.west = 0.;
-        fprintf(stderr, "Using N=%f S=%f E=%f W=%f\n", cellhd.north, cellhd.south, cellhd.east, cellhd.west);
+        G_message(_("Using N=%f S=%f E=%f W=%f"), cellhd.north, cellhd.south, cellhd.east, cellhd.west);
         }
 
 
@@ -295,7 +295,7 @@ int main (int argc, char *argv[])
 		/* Calculate rows and cols */
 		cellhd.rows = (int)cellhd.north-cellhd.south;
 		cellhd.cols = (int)cellhd.east-cellhd.west;
-		fprintf(stderr, "Using rows=%d cols=%d\n", cellhd.rows, cellhd.cols);
+		G_message(_("Using rows=%d cols=%d\n"), cellhd.rows, cellhd.cols);
 		} /* DONE */
 		}
 
@@ -360,8 +360,8 @@ int main (int argc, char *argv[])
 		
 		/* Adjust Cell Header to match resolution */
 		if (err = G_adjust_Cell_head (&cellhd, 0, 0)) {
-			fprintf(stderr, "%s\n", err);
-			return 1;
+			G_fatal_error("%s", err);
+			exit(EXIT_FAILURE);
 		}
 	nrows = header.ny;
 	ncols = header.nx;
@@ -372,8 +372,8 @@ int main (int argc, char *argv[])
 	if (!flag.gmt_hd->answer) {
 		/* Adjust Cell Header to New Values */
 		if (err = G_adjust_Cell_head (&cellhd, 1, 1)) {
-			fprintf(stderr, "%s\n", err);
-			return 1;
+			G_fatal_error("%s", err);
+			exit(EXIT_FAILURE);
 		}
 	grass_nrows = nrows = cellhd.rows;
 	grass_ncols = ncols = cellhd.cols;
@@ -383,15 +383,11 @@ int main (int argc, char *argv[])
 		exit(3);
 
 	if (grass_nrows != G_window_rows())
-	{
-		fprintf (stderr, "OOPS: rows changed from %d to %d\n", grass_nrows, G_window_rows());
-		exit(1);
-	}
+		G_fatal_error ("rows changed from %d to %d\n", grass_nrows, G_window_rows());
+	 
 	if (grass_ncols != G_window_cols())
-	{
-		fprintf (stderr, "OOPS: cols changed from %d to %d\n", grass_ncols, G_window_cols());
-		exit(1);
-	}
+		G_fatal_error ("cols changed from %d to %d\n", grass_ncols, G_window_cols());
+	 
 
 	/* Find File Size in Byte and Check against byte size */
 	if (stat(input, &fileinfo) < 0) {
@@ -403,26 +399,26 @@ int main (int argc, char *argv[])
 	if (flag.gmt_hd->answer) {
 		if(swapFlag == 0) {
 			if (FILE_SIZE != (896 + (ncols*nrows*bytes))) {
-				fprintf(stderr, "Bytes do not match File size\n");
-				fprintf(stderr, "File Size %d ... Total Bytes %d\n", FILE_SIZE, 896 + (ncols*nrows*bytes) );
-				fprintf(stderr, "Try bytes=%d or adjusting input parameters\n", (FILE_SIZE-896) / (ncols*nrows) );
-				exit(1);
+				G_warning(_("Bytes do not match File size"));
+				G_warning(_("File Size %d ... Total Bytes %d"), FILE_SIZE, 896 + (ncols*nrows*bytes) );
+				G_warning(_("Try bytes=%d or adjusting input parameters"), (FILE_SIZE-896) / (ncols*nrows) );
+				exit(EXIT_FAILURE);
 			} 
 		} else {
 			if (FILE_SIZE != (892 + (ncols*nrows*bytes))) {
-				fprintf(stderr, "Bytes do not match File size\n");
-				fprintf(stderr, "File Size %d ... Total Bytes %d\n", FILE_SIZE, 892 + (ncols*nrows*bytes) );
-				fprintf(stderr, "Try bytes=%d or adjusting input parameters\n", (FILE_SIZE-892) / (ncols*nrows) );
-				exit(1);
+				G_warning(_("Bytes do not match File size"));
+				G_warning(_("File Size %d ... Total Bytes %d"), FILE_SIZE, 892 + (ncols*nrows*bytes) );
+				G_warning(_( "Try bytes=%d or adjusting input parameters"), (FILE_SIZE-892) / (ncols*nrows) );
+				exit(EXIT_FAILURE);
 			}
 		}
 	} else {
 		/* No Header */
 		if (FILE_SIZE != (ncols*nrows*bytes)) {
-			fprintf(stderr, "Bytes do not match File size\n");
-			fprintf(stderr, "File Size %d ... Total Bytes %d\n", FILE_SIZE, ncols*nrows*bytes);
-			fprintf(stderr, "Try bytes=%d or adjusting input parameters\n", FILE_SIZE/(ncols*nrows) );
-			exit(1);
+			G_warning(_("Bytes do not match File size"));
+			G_warning(_("File Size %d ... Total Bytes %d"), FILE_SIZE, ncols*nrows*bytes);
+			G_warning(_("Try bytes=%d or adjusting input parameters"), FILE_SIZE/(ncols*nrows) );
+			exit(EXIT_FAILURE);
 		}
 	}
 
@@ -440,10 +436,8 @@ int main (int argc, char *argv[])
 	cf = G_open_raster_new(output, map_type);
 	if (cf < 0)
 	{
-		char msg[100];
-		sprintf (msg, "unable to create raster map %s", output);
-		G_fatal_error (msg);
-		exit(1);
+		G_fatal_error (_("Unable to create raster map %s"), output);
+		exit(EXIT_FAILURE);
 	}
 
 	x_v = G_malloc(ncols * bytes);
@@ -456,16 +450,13 @@ int main (int argc, char *argv[])
 	if( cellhd.proj == PROJECTION_LL && cellhd.ew_res/cellhd.ns_res > 10. ) /* TODO: find a reasonable value */
 		G_warning("East-West (ewres: %f) and North-South (nwres: %f) resolution differ significantly. Did you assign east= and west= correctly?", cellhd.ew_res, cellhd.ns_res);
 
-	fprintf(stderr, "Percent Complete: ");
 	for (row = 0; row < grass_nrows; row++)
 	{
 		if (fread (x_v, bytes * ncols, 1, fd) != 1)
 		{
-			char msg[100];
 			G_unopen_cell (cf);
-			sprintf (msg, "Conversion failed at row %d\n", row);
-			G_fatal_error (msg);
-			exit(1);
+			G_fatal_error (_("Conversion failed at row %d"), row);
+			exit(EXIT_FAILURE);
 		}
 
 		for (col = 0 ; col < grass_ncols; col++ ) {
@@ -516,11 +507,10 @@ int main (int argc, char *argv[])
 
 		G_percent(row + 1, nrows, 2);
 	}
-	fprintf (stderr, "CREATING SUPPORT FILES FOR %s\n", output);
+	G_debug (1,"Creating support files for %s\n", output);
 	G_close_cell (cf);
 	if (title)
 		G_put_cell_title (output, title);
 
 	return (0);
 }
-
