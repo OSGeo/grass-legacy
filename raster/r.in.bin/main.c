@@ -78,8 +78,8 @@ int main (int argc, char *argv[])
 	int no_coord=0, no_dim=0;
 	void *x_v;
 	char *x_c;
-	short *x_s;
-	int *x_i;
+	uint16 *x_s;
+	uint32 *x_i;
 	float *x_f;
 	double *x_d;
 	struct stat fileinfo;
@@ -443,8 +443,8 @@ int main (int argc, char *argv[])
 	x_v = G_malloc(ncols * bytes);
 	x_f = (float *) x_v;
 	x_d = (double *) x_v;
-	x_i = (int *)   x_v;
-	x_s = (short *) x_v;
+	x_i = (uint32 *)   x_v;
+	x_s = (uint16 *) x_v;
 	x_c = (char *)  x_v;
 
 	if( cellhd.proj == PROJECTION_LL && cellhd.ew_res/cellhd.ns_res > 10. ) /* TODO: find a reasonable value */
