@@ -1,4 +1,5 @@
 #include "local_proto.h"
+#include <grass/glocale.h>
 
 
 int
@@ -9,12 +10,10 @@ check_ready(void)
 
 	retval=0;
 
-	if(!(fp=fopen(file,"r"))){
-		fprintf(stderr, "\n** %s - file not exists **\n", file);
+	if(!(fp=fopen(file,"r")))
 		retval=1;
-	}else{
+	else
 		fclose(fp);
-	}
 
 	return(retval);
 }
