@@ -1,5 +1,6 @@
 #include <stdlib.h>
 #include <grass/gis.h>
+#include <grass/glocale.h>
 #include "format.h"
 #include "local_proto.h"
 
@@ -25,10 +26,7 @@ int poly_to_rast (char *input_file, char *raster_map, char *title, int nrows)
 
     rfd = G_open_cell_new (raster_map);
     if (rfd < 0)
-    {
-	fprintf (stderr, "ERROR: Can't create raster map <%s>", raster_map);
-	exit(1);
-    }
+	G_fatal_error (_("Can't create raster map <%s>"), raster_map);
 
     if (title == NULL) title = "";
     G_strip(title);
@@ -40,10 +38,7 @@ int poly_to_rast (char *input_file, char *raster_map, char *title, int nrows)
     {
 	pass++;
 	if (npasses > 1)
-	{
-	    fprintf (stdout,"Pass #%d (of %d) ... ", pass, npasses);
-	    fflush(stdout);
-	}
+	    G_message (_("Pass #%d (of %d) ... "), pass, npasses);
 
 	fseek (ifd, 0L, 0);
 	while (get_item(ifd, &type, &cat, &x, &y, &count, &labels))
@@ -65,7 +60,7 @@ int poly_to_rast (char *input_file, char *raster_map, char *title, int nrows)
 	    }
 	}
 
-	fprintf (stdout,"writing raster map ... "); fflush (stdout);
+	G_message (_("Writing raster map ... "));
 	stat = output_raster(rfd);
     } while (stat == 0);
     /* stat: 0 means repeat
@@ -79,10 +74,8 @@ int poly_to_rast (char *input_file, char *raster_map, char *title, int nrows)
 	return 1;
     }
 
-    fprintf (stdout,"Creating support files for raster map <%s>\n", raster_map);
     G_close_cell(rfd);
     G_write_cats (raster_map, &labels);
 
-    fprintf (stdout,"Done\n");
     return 0;
 }
