@@ -77,7 +77,10 @@ int main(int argc, char *argv[]) {
     struct History history;
 
     struct Option *inputfile, *outputfile;
+
+    /* please, remove before GRASS 7 released */
     struct Flag *verbose;
+
     struct GModule *module;
 
     int cf;
@@ -103,10 +106,11 @@ int main(int argc, char *argv[]) {
     outputfile = G_define_option() ;
     outputfile->key	= "output";
     outputfile->type       = TYPE_STRING;
-    outputfile->required   = NO;
+    outputfile->required   = YES;
     outputfile->gisprompt  = "new,cell,raster" ;
     outputfile->description= _("Name for the output raster map (override)");
 
+    /* please, remove before GRASS 7 released */
     verbose = G_define_flag();
     verbose->key = 'v';
     verbose->description = _("Verbose mode");
@@ -154,7 +158,7 @@ int main(int argc, char *argv[]) {
 
 
   /******  READ MAP  ****************************************************/
-    fprintf(stderr, "Reading MAT-File ..\n");
+    G_message(_("Reading MAT-File ..."));
 
     while (!feof(fp1)) {
 
@@ -310,7 +314,7 @@ int main(int argc, char *argv[]) {
 	} /* endif map_data */
 
 	else {
-	    fprintf(stderr, "Skipping unknown array '%s'\n", array_name);
+	    G_warning(_("Skipping unknown array '%s'"), array_name);
 	    switch (data_format) {
 	    /*   0=double	1=float   2=32bit signed int   5=8bit unsigned int(text)   */
 	      case 0: 
@@ -341,25 +345,8 @@ int main(int argc, char *argv[]) {
 
 
     /* set map name */
-    if(have_name) {
-        if(outfile) {
-	    if( 0 != strcmp(outfile, map_name) )
-		fprintf(stderr, "Setting map name to <%s> which overrides <%s>\n",
-		    outfile, map_name);
-	    strncpy(map_name, outfile, 61);
-	}
-    }
-    else {
-	if(outfile) {
-	    fprintf(stderr, "Setting map name to <%s>\n", outfile);
-	    strncpy(map_name, outfile, 61);
-	}
-	else {
-	    fprintf(stderr, "No 'map_name' array found; using <MatFile>\n");
-	    strcpy(map_name, "MatFile");
-	}
-    }
-
+    strncpy(map_name, outfile, 61);
+    
     G_strip(map_name);  /* remove leading and trailing whitespace */
     if(G_legal_filename(map_name) != 1)
 	G_fatal_error(_("<%s> is not a valid GRASS map name"), map_name);
@@ -386,19 +373,11 @@ int main(int argc, char *argv[]) {
     if(buff)  G_fatal_error(buff);
     G_set_window(&region);
 
-    if(verbose->answer) {
-	fprintf(stderr, "\nMap <%s> bounds set to:\n", map_name);
-	fprintf(stderr, "northern edge=%f\n", region.north);
-	fprintf(stderr, "southern edge=%f\n", region.south);
-	fprintf(stderr, "eastern edge=%f\n", region.east);
-	fprintf(stderr, "western edge=%f\n", region.west);
-	fprintf(stderr, "nsres=%f\n", region.ns_res);
-	fprintf(stderr, "ewres=%f\n", region.ew_res);
-	fprintf(stderr, "rows=%d\n", region.rows);
-	fprintf(stderr, "cols=%d\n\n", region.cols);
-    }
-
-
+    /* please, remove before GRASS 7 released */
+    if(verbose->answer) 
+        G_warning(_("The '-v' flag is superseded and will be removed "
+                    "in future. Please use '--verbose' instead."));
+    
     /* prep memory */
     raster =  G_allocate_raster_buf(map_type);
 
@@ -407,8 +386,7 @@ int main(int argc, char *argv[]) {
 	G_fatal_error (_("Unable to create raster map <%s>"), outfile);
 
     /* write new raster map*/
-    fprintf(stderr, "Writing new raster map ..");
-    fflush(stderr);
+    G_message(_("Writing new raster map ..."));
 
     mrows = region.rows;
     ncols = region.cols;
@@ -480,9 +458,6 @@ int main(int argc, char *argv[]) {
     G_short_history(map_name, "raster", &history);
     G_command_history(&history);
     G_write_history(map_name, &history);
-
-    if(verbose->answer)
-	G_done_msg("\n");
 
     return 0;
 }
