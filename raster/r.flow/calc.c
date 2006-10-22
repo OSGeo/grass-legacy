@@ -301,7 +301,7 @@ void calculate()
     int		 loopstep = (!parm.dsout && !parm.lgout && parm.flout) ?
 			    parm.skip : 1;
 
-    diag("Working...");
+    G_message(_("Calculating maps ..."));
 
     fls.px = (double *) G_calloc(parm.bound, sizeof (double));
     fls.py = (double *) G_calloc(parm.bound, sizeof (double));
@@ -387,7 +387,6 @@ void calculate()
 
     if (parm.lgout)
         G_close_cell(lgfd);
-    diag("done.\n");
 }
 
 int main(int argc, char	*argv[])

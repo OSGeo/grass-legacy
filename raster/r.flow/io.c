@@ -168,7 +168,11 @@ parse_command_line (int argc, char *argv[])
     flg	  = flag('3', _("3-D lengths instead of 2-D"));
     fmem  = flag('m', _("Use less memory, at a performance penalty"));
 /*    fseg  = flag('M', "Use much less memory, at a severe performance penalty");*/
+
+    /* please, remove before GRASS 7 released */
     fquiet= flag('q', _("Quiet operation"));
+
+    /* please, remove before GRASS 7 released */
     fcprght = flag('h', _("Display Reference Information"));
 
     if (G_parser(argc, argv))
@@ -187,58 +191,17 @@ parse_command_line (int argc, char *argv[])
     parm.l3d	= flg->answer;
     parm.mem	= fmem->answer;
 /*    parm.seg	= fseg->answer;*/
-    parm.quiet	= fquiet->answer;
 
     if(!pflout->answer && !plgout->answer && !pdsout->answer)
 	G_fatal_error(_("You must select one or more output maps (flout, lgout, dsout)")); 
 
-    if (fcprght->answer) { 
-      fprintf(stderr, "\n");
-      fprintf(stderr, "Version: GRASS5.0, update: October 1999\n");
-      fprintf(stderr, "\n");
-      fprintf(stderr, "Authors: original program: J. Hofierka, M. Zlocha, H. Mitasova, L. Mitas\n");
-      fprintf(stderr, "    new GRASS implementation: J. Caplan, M. Ruesink\n");
-      fprintf(stderr, "\n");
-      fprintf(stderr, "Methods used in this program are described in the following papers:\n");
-      fprintf(stderr, "\n");
-      fprintf(stderr, "Mitasova, H., and Hofierka, L., 1993\n");
-      fprintf(stderr, "Interpolation by Regularized Spline with Tension:\n");
-      fprintf(stderr, "II. Application to terrain modeling and surface geometry analysis.\n");
-      fprintf(stderr, "Mathematical Geology 25, 657-669.\n");
-      fprintf(stderr, "\n");
-      fprintf(stderr, "Mitasova, H., Mitas, L., Brown, W.M., Gerdes, D.P., Kosinovsky, I.,\n");
-      fprintf(stderr, "Baker, T., 1995, Modeling spatially and temporally\n");
-      fprintf(stderr, "distributed phenomena: New methods and tools for GRASS GIS.\n");
-      fprintf(stderr, "Int. Journal of Geographic Information Systems 9(4), 433-446.\n");
-      fprintf(stderr, "(special issue on Integration of GIS and Environmental Modeling)\n");
-      fprintf(stderr, "\n");
-      fprintf(stderr, "H. Mitasova, J. Hofierka, M. Zlocha, L.R. Iverson, 1996,\n");
-      fprintf(stderr, "Modeling topographic potential for erosion and deposition using GIS.\n");
-      fprintf(stderr, "Int. Journal of GIS, 629-641.\n");
-      fprintf(stderr, "\n");
-      fprintf(stderr, "The postscript versions of these papers are available via Internet at\n");
-      fprintf(stderr, "http://www2.gis.uiuc.edu:2280/modviz/papers/listsj.html\n");
-      fprintf(stderr, "\n");
-      fprintf(stderr, "Please cite these references in publications where the results of this\n");
-      fprintf(stderr, "program are used.\n");
-      fprintf(stderr, "\n");
-     } 
+    if (fcprght->answer) 
+        G_warning(_("For reference information see manual page. This option will be removed"));
 
     if (parm.seg)
 	parm.mem = '\0';
     else if (parm.mem)
 	parm.aspin = NULL;
-}
-
-void
-diag (char *msg)
-
-{
-    if (!parm.quiet)
-    {
-	fprintf(stderr, msg);
-	fflush(stderr);
-    }
 }
 
 int
@@ -263,7 +226,7 @@ read_input_files()
     int     fd, row, col;
     struct  Cell_head hd;
 
-    diag("Reading input files: elevation...\n");
+    G_message(_("Reading input files: elevation"));
 
     fd = open_existing_cell_file(parm.elevin, &hd);
     if (!((region.ew_res == hd.ew_res)
@@ -282,7 +245,7 @@ read_input_files()
 
     if (parm.aspin)
     {
-	diag(", aspect");
+        G_message(_("Reading input files: aspect"));
 	fd = open_existing_cell_file(parm.aspin, &hd);
 	if (!((region.ew_res == hd.ew_res)
 	      && (region.ns_res == hd.ns_res)))
@@ -301,7 +264,7 @@ read_input_files()
 
     if (parm.barin)
     {
-	diag(", barrier");
+        G_message(_("Reading input files: barrier"));
 	barc = G_allocate_d_raster_buf();
 	fd = open_existing_cell_file(parm.barin, &hd);
 	for (row = 0; row < region.rows; row++)
@@ -316,8 +279,6 @@ read_input_files()
 	}
 	G_close_cell(fd);
     }
-
-    diag(".\n");
 }
 
 int
@@ -354,7 +315,7 @@ open_segment_file (char *name, layer l, int new)
 void
 open_output_files()
 {
-    diag("Opening output files...");
+    /* G_message(_("Opening output files"));*/
 
     if (parm.seg)
     {
@@ -371,15 +332,11 @@ open_output_files()
     if (parm.flout && (Vect_open_new(&fl, parm.flout, 0) < 0))
 	G_fatal_error(_("Cannot create vector map %s"),
 		parm.flout);
-
-    diag("done.\n");
 }
 
 void
 close_files()
 {
-    diag("Closing files...");
-
     if (parm.seg)
     {
 	close(el.sfd);
@@ -393,7 +350,6 @@ close_files()
 	Vect_build (&fl, stderr);
 	Vect_close(&fl);
     }
-    diag("done.\n");
 }
 
 void
@@ -407,7 +363,7 @@ write_density_file()
     if (G_set_window(&region) < 0)
 	G_fatal_error(_("Cannot reset current region"));
 
-    diag("Writing density file...");
+    G_message(_("Writing density file"));
 /*    dsfd = G_open_cell_new(parm.dsout); */
     dsfd = G_open_raster_new(parm.dsout, DCELL_TYPE);
     if (dsfd < 0)
@@ -435,5 +391,4 @@ write_density_file()
 	G_fatal_error(_("Cannot find file %s"), parm.dsout);
     G_write_colors(parm.dsout, mapset, &colors);
     G_free_colors(&colors);
-    diag("done.\n");
 }
