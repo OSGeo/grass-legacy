@@ -96,10 +96,10 @@ int main (int argc, char *argv[])
 	{
 		Tmp_file = G_tempfile ();
 		if (NULL == (Tmp_fd = fopen (Tmp_file, "w+")))
-			perror (Tmp_file), exit (1);
+			G_fatal_error(_("Could not open temporary file: [%s]"),Tmp_file);
 		unlink (Tmp_file);
 		if (0 > file_cpy (stdin, Tmp_fd))
-			exit (1);
+			exit (EXIT_FAILURE);
 		fd = Tmp_fd;
 	}
 	else
@@ -107,9 +107,7 @@ int main (int argc, char *argv[])
 
 	if (fd == NULL)
 	{
-		perror (input);
-		G_usage();
-		exit(-1) ;
+		G_fatal_error(_("Could not open input file [%s]"),input);
 	}
 
 	if(!gethead (fd, &cellhd, &missingval))
@@ -183,7 +181,7 @@ int main (int argc, char *argv[])
 			break;
 		}
 	}
-	G_message(_("CREATING SUPPORT FILES FOR %s"), output);
+	/* G_message(_("CREATING SUPPORT FILES FOR %s"), output); */
 	G_close_cell (cf);
 	if (title)
 		G_put_cell_title (output, title);
@@ -216,7 +214,7 @@ file_cpy (FILE *from, FILE *to)
 		}
 		if (!fwrite (buf, 1, size, to))
 		{
-			perror ("file copy");
+			G_warning (_("Failed to copy file"));
 			return (-1);
 		}
 		written = 1;
