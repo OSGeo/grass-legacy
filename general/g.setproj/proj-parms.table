@@ -48,6 +48,7 @@ LASK:LAT0=ask,0.0;LON0=ask,20.0
 LCC:LAT0=ask,23.0;LAT1=ask,33.0;LAT2=ask,45.0;LON0=ask,-96.0;X0=ask,0.0;Y0=ask,0.0
 LEAC:LAT0=ask,55.0;LAT1=ask,0.0;LON0=ask,20.0;SOUTH=ask,nodfl
 LEE_OS:LAT0=noask,-10.0;LON0=noask,-165.0
+LL:LAT0=noask,0.0;LON0=noask,0.0
 LOXIM:LAT0=ask,0.0;LAT1=ask,45.0;LON0=ask,20.0
 LSAT:LAT0=ask,0.0;LON0=ask,20.0;SNUM=ask,1;SPATH=ask,1
 MBTFPP:LAT0=ask,0.0;LON0=ask,20.0
@@ -91,6 +92,7 @@ RPOLY:LAT0=ask,0.0;LATTS=ask,0.0;LON0=ask,20.0
 SINU:LAT0=ask,0.0;LON0=ask,20.0
 SOMERC:KFACT=noask,1.0;LAT0=noask,46.952405556;LON0=noask,7.4395833333;X0=noask,600000.0;Y0=noask,200000.0
 STERE:KFACT=ask,1.0;LAT0=ask,0.0;LATTS=ask,0.0;LON0=ask,20.0
+STP:LAT0=noask,0.0;LON0=noask,0.0
 TCC:LAT0=ask,0.0;LON0=ask,20.0
 TCEA:KFACT=ask,1.0;LAT0=ask,0.0;LON0=ask,20.0
 TISSOT:LAT0=ask,0.0;LAT1=ask,-30.0;LAT2=ask,45.0;LON0=ask,20.0
