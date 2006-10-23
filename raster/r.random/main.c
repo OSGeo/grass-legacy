@@ -32,6 +32,7 @@ main (int argc, char *argv[])
     G_gisinit (argv[0]);
 
     module = G_define_module();
+    module->keywords = _("raster");
     module->description =
         _("Creates a raster map layer and vector point map "
         "containing randomly located sites.");

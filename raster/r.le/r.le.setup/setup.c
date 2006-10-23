@@ -31,10 +31,17 @@
 
 struct Colors  *colors_old;
 
+static void change_draw (void);
+static void set_rgn (double *msc, char *name, char *name1, char *name2);
+static void set_frame (double *msc, int *t, int *b, int *l, int *r);
+static void ppoint (double *m, int x, int y, int num);
+static void pbutton (int opt);
+static void save_rgn (char *name, char *tempfile, FILE *tmp, int *x, int *y, int pts, int class, int opt);
+static void print_hd (FILE *mapfile, struct Cell_head *universe);
+static void scr_cell (struct Cell_head *wind, int top, int bot, int left, int right, double *m);
+static void change_color (char *name, char *name1, char *name2);
 
-
-
-void change_draw()
+static void change_draw (void)
 
 {
 
@@ -263,7 +270,7 @@ void paint_map (char *n1, char *n2, char *n3)
 
 				/* SETUP REGIONS */
 
-void set_rgn (double *msc, char *name, char *name1, char *name2)
+static void set_rgn (double *msc, char *name, char *name1, char *name2)
 
 {
   char     reg_name[20];
@@ -425,7 +432,7 @@ back1:
 
 				/* SETUP THE SAMPLING FRAME */
 
-void set_frame (double *msc, int *t, int *b, int *l, int *r)
+static void set_frame (double *msc, int *t, int *b, int *l, int *r)
 
 {
 int	t0, b0, l0, r0, btn;
@@ -502,7 +509,7 @@ back2:
 				/* SHOW THE CURSOR COORDINATES TO
 				   THE USER */
 
-void ppoint (double *m, int x, int y, int num)
+static void ppoint (double *m, int x, int y, int num)
 
 {
   register int i;
@@ -535,7 +542,7 @@ void ppoint (double *m, int x, int y, int num)
 				/* PRINT THE INSTRUCTIONS FOR USING THE
 				   MOUSE BUTTONS */
 
-void pbutton (int opt)
+static void pbutton (int opt)
 
 {
   static char *str[2] = {"start", "next"};
@@ -552,7 +559,7 @@ void pbutton (int opt)
 
 				/* SAVE THE REGION */
 
-void save_rgn (char *name, char *tempfile, FILE *tmp, int *x, int *y, int pts, int class, int opt)
+static void save_rgn (char *name, char *tempfile, FILE *tmp, int *x, int *y, int pts, int class, int opt)
 
 {
   char               *cmd;
@@ -626,7 +633,7 @@ void save_rgn (char *name, char *tempfile, FILE *tmp, int *x, int *y, int pts, i
 				/* SETUP THE HEADER FOR THE REGION
 				   FILE */
 
-void print_hd (FILE *mapfile, struct Cell_head *universe)
+static void print_hd (FILE *mapfile, struct Cell_head *universe)
 
 {
 	fprintf(mapfile,"TITLE:\n");
@@ -648,7 +655,7 @@ void print_hd (FILE *mapfile, struct Cell_head *universe)
 				/* SETUP THE CONVERSION BETWEEN SCREEN
 				   AND RASTER COORDINATES */
 
-void scr_cell (struct Cell_head *wind, int top, int bot, int left, int right, double *m)
+static void scr_cell (struct Cell_head *wind, int top, int bot, int left, int right, double *m)
 
 {
   m[0] = (double)wind->cols / (right - left);
@@ -663,7 +670,7 @@ void scr_cell (struct Cell_head *wind, int top, int bot, int left, int right, do
 				/* CHANGE THE COLORTABLE OF THE RASTER
 				   MAP */
 
-void change_color (char *name, char *name1, char *name2)
+static void change_color (char *name, char *name1, char *name2)
 
 {
   struct Colors colors;

@@ -47,6 +47,7 @@ main (int argc, char *argv[])
     G_gisinit(argv[0]);
 
     module = G_define_module();
+    module->keywords = _("vector");
     module->description = _("Create new vector (points) from database table containing coordinates.");
 
     driver_opt 		    = G_define_option();

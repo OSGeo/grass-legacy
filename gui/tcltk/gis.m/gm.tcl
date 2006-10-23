@@ -2,11 +2,11 @@
 #
 # gm.tcl
 #
-# Primary tcltk script for GIS Manager: GUI for GRASS 6 
+# Primary tcltk script for GIS Manager: GUI for GRASS 6
 # Author: Michael Barton (Arizona State University)
 # Based in part on Display Manager for GRASS 5.7 by Radim Blazek (ITC-IRST)
 # and tcltkgrass for GRASS 5.7 by Michael Barton (Arizona State University)--
-# with contributions by Glynn Clements, Markus Neteler, Lorenzo Moretti, 
+# with contributions by Glynn Clements, Markus Neteler, Lorenzo Moretti,
 # Florian Goessmann, and others
 #
 # March 2006
@@ -20,6 +20,7 @@
 ##########################################################################
 
 lappend auto_path $env(GISBASE)/bwidget
+
 package require -exact BWidget 1.2.1
 
 # Load up all the gis.m layers and things.
@@ -69,6 +70,15 @@ if { $osxaqua == "1"} {
     set execom "spawn"
 }
 
+if {[info exists env(MSYSCON)]} {
+	set mingw "1"
+	set devnull "nul"
+} else {
+	set mingw "0"
+	set devnull "/dev/null"
+}
+
+
 #fetch GRASS Version number:
 set fp [open $env(GISBASE)/etc/VERSIONNUMBER r]
 set GRASSVERSION [read -nonewline $fp]
@@ -85,24 +95,23 @@ source $env(GISBASE)/etc/gui.tcl
 source $gmpath/runandoutput.tcl
 
 namespace eval Gm {
-    variable mainframe
+    variable gm_mainframe
     variable status
     variable array tree # mon
     variable rcfile
     variable moncount
+    variable prgtext
+    variable mainwindow
 	global array filename # mon
 
 }
 
 
-global topwin
-global prgtext ""
+set Gm::prgtext ""
 global prgindic
-global max_prgindic 
-global guioptfont
+global max_prgindic
 
 set max_prgindic 20
-set guioptfont [font create -size 10] 
 
 
 ###############################################################################
@@ -116,12 +125,13 @@ regsub -- $regexp $env(PATH) "&:$env(GISBASE)/etc/gm/script" env(PATH)
 proc read_moncap {} {
 	global env moncap
 
+	set moncap {}
+
 	set file [open [file join $env(GISBASE) etc monitorcap] r]
 	set data [read $file]
 	close $file
 
 	set data [subst -nocommands -novariables $data]
-	set moncap {}
 	foreach line [split $data \n] {
 		if {[string match {\#*} $line]} continue
 		if {![string match {*:*:*:*:*:*} $line]} continue
@@ -157,7 +167,7 @@ proc monitor_menu {op} {
 read_moncap
 
 proc Gm::color { color } {
-    
+
     regexp -- {#(..)(..)(..)} $color x r g b
 
     set r [expr 0x$r ]
@@ -174,7 +184,7 @@ proc Gm::color { color } {
 
 proc Gm::xmon { type cmd } {
 	guarantee_xmon
-	
+
 	if { $type == "term" } {
 		term_panel $cmd
 	} else {
@@ -188,7 +198,9 @@ proc Gm::xmon { type cmd } {
 # Determine if an element already exists
 
 proc Gm::element_exists {elem name} {
-	set failure [catch {exec [list "|g.findfile" "element=$elem" "file=$name"] >& /dev/null}]
+	global devnull
+	
+	set failure [catch {exec [list "|g.findfile" "element=$elem" "file=$name"] >& $devnull}]
 
 	return [expr {! $failure}]
 }
@@ -197,56 +209,51 @@ proc Gm::element_exists {elem name} {
 
 
 proc Gm::create { } {
+    variable mainwindow
+    variable prgtext
+    variable gm_mainframe
+    variable tree
+	variable moncount
     global gmpath
-    global mainwindow
-    global cmd
-    global outtext
     global mon
     global tree_pane
     global options
     global pgs
-    global mainframe
-    global fon
-    global prgtext
     global prgindic
     global keycontrol
-    
-    variable mainframe
-    variable tree
-	variable moncount
+    global env
 
 	set moncount 1
-   
-    set prgtext [G_msg "Loading GIS Manager"]
+
+    set Gm::prgtext [G_msg "Loading GIS Manager"]
     set prgindic -1
     _create_intro
     update
-    
-    global env
-	source $gmpath/gmmenu.tcl
-	
-    set prgtext [G_msg "Creating MainFrame..."]
-    
-    set mainframe [MainFrame .mainframe \
-                       -menu $descmenu \
-                       -textvariable Gm::status \
-                       -progressvar  Gm::prgindic ]
 
-    set mainwindow [$mainframe getframe]
+	source $gmpath/gmmenu.tcl
+
+    set Gm::prgtext [G_msg "Creating MainFrame..."]
+
+    set gm_mainframe [MainFrame .mainframe \
+		       -menu $descmenu \
+		       -textvariable Gm::status \
+		       -progressvar  Gm::prgindic ]
+
+    set mainwindow [$gm_mainframe getframe]
 
     # toolbar 1 & 2 creation
-    set tb1  [$mainframe addtoolbar]
+    set tb1  [$gm_mainframe addtoolbar]
     GmToolBar1::create $tb1
-    set tb2  [$mainframe addtoolbar]
+    set tb2  [$gm_mainframe addtoolbar]
     GmToolBar2::create $tb2
-    set pw1 [PanedWindow $mainwindow.pw1 -side left -pad 0 -width 10 ]    
-   
-    # tree 
+    set pw1 [PanedWindow $mainwindow.pw1 -side left -pad 0 -width 10 ]
+
+    # tree
     set treemon [expr {$mon + 1}]
     set tree_pane  [$pw1 add  -minsize 50 -weight 1]
 	set pgs [PagesManager $tree_pane.pgs]
 
-	
+
 	pack $pgs -expand yes -fill both
 
 
@@ -261,25 +268,25 @@ proc Gm::create { } {
 
     # Scroll the options window with the mouse
     bind_scroll $options_sf
- 
-    pack $pw1 -side top -expand yes -fill both -anchor n 
+
+    pack $pw1 -side top -expand yes -fill both -anchor n
 
 	# finish up
-    set prgtext [G_msg "Done"]
+    set Gm::prgtext [G_msg "Done"]
 
     set Gm::status [G_msg "Welcome to GRASS GIS"]
-    $mainframe showstatusbar status 
+    $gm_mainframe showstatusbar status
 
-    pack $mainframe -fill both -expand yes
+    pack $gm_mainframe -fill both -expand yes
 
 	Gm::startmon
-	
-	bind .mainframe <Destroy> { 
-		set destroywin %W
-		Gm::cleanup $destroywin
-	} 
-		
-	
+
+	bind .mainframe <Destroy> {
+		if {"%W" == ".mainframe"} {
+			Gm::cleanup}
+	}
+
+
 
 }
 
@@ -288,10 +295,10 @@ proc Gm::create { } {
 
 # start new display monitor and increment canvas monitor number
 proc Gm::startmon { } {
-	global mainwindow
-	global mon
+	variable mainwindow
 	variable moncount
 	variable tree
+	global mon
 
 	set mon $moncount
 	incr moncount 1
@@ -299,7 +306,7 @@ proc Gm::startmon { } {
 	#create initial display canvas and layer tree
 	MapCanvas::create
 	GmTree::create $mon
-	
+
 	wm title .mapcan($mon) [G_msg "Map Display $mon"]
 	wm withdraw .mapcan($mon)
 	wm deiconify .mapcan($mon)
@@ -309,6 +316,7 @@ proc Gm::startmon { } {
 ###############################################################################
 
 proc Gm::_create_intro { } {
+	variable prgtext
     global gmpath
     global GRASSVERSION
     global location_name
@@ -324,12 +332,11 @@ proc Gm::_create_intro { } {
 
     set frame [frame $ximg.f -background white]
     set lab1  [label $frame.lab1 \
-        -text [format [G_msg "GRASS%s GIS Manager - %s"] $GRASSVERSION $location_name] \
-        -background white -foreground black -font {times 14}]
-    set lab2  [label $frame.lab2 -textvariable Gm::prgtext -background white \
-    	-font {times 12}]
+		-text [format [G_msg "GRASS%s GIS Manager - %s"] $GRASSVERSION $location_name] \
+		-background white -foreground black -font introfont]
+    set lab2  [label $frame.lab2 -textvariable Gm::prgtext -background white]
     set prg   [ProgressBar $frame.prg -width 50 -height 15 -background white \
-                   -variable Gm::prgindic -maximum $max_prgindic]
+		   -variable Gm::prgindic -maximum $max_prgindic]
     pack $lab1 $prg -side left -fill both -expand yes
     pack $lab2 -side right -expand yes
     place $frame -x 0 -y 0 -anchor nw
@@ -344,7 +351,7 @@ proc Gm::_create_intro { } {
 proc Gm::nviz { } {
 global osxaqua
 global HOSTTYPE
-    
+
     set cmd "nviz"
 	if { $HOSTTYPE == "macintosh" || $HOSTTYPE == "powermac" || $HOSTTYPE == "powerpc" || $HOSTTYPE == "intel-pc"} {
 		if { $osxaqua == "1"} {
@@ -391,87 +398,76 @@ proc Gm::help { } {
 
 #open dialog box
 proc Gm::OpenFileBox { } {
-    global mainwindow
-    global filename    
+    variable mainwindow
+    global filename
     global mon
-    
+
     set types {
-            {{Map Resource File} {{.dm} {.dmrc} {.grc}}}
-            {{All Files} *}
+	    {{Map Resource File} {{.dm} {.dmrc} {.grc}}}
+	    {{All Files} *}
     }
 
 	set filename_new [tk_getOpenFile -parent $mainwindow -filetypes $types \
 		-title {Open File} ]
 	if { $filename_new == "" } { return}
-	set filename($mon) $filename_new	
+	set filename($mon) $filename_new
 	GmTree::load $filename($mon)
-		
+
 };
 
 ###############################################################################
 
 #save dialog box
 proc Gm::SaveFileBox { } {
-    global mainwindow
+    variable mainwindow
     global filename
     global mon
 
     catch {
-   	if {[ regexp -- {^Untitled_?.grc$} $filename($mon) r]} {
-    		set filename($mon) ""
-    	}
+	if {[ regexp -- {^Untitled_?.grc$} $filename($mon) r]} {
+		set filename($mon) ""
+	}
     }
-    
+
     if { $filename($mon) != "" } {
-    	GmTree::save $filename($mon)
+	GmTree::save $filename($mon)
     } else {
-        set types {
-            {{Map Resource File} {{.grc}}}
-            {{DM Resource File} {{.dm} {.dmrc}}}
-            {{All Files} *}
+	set types {
+	    {{Map Resource File} {{.grc}}}
+	    {{DM Resource File} {{.dm} {.dmrc}}}
+	    {{All Files} *}
 		}
-    	set filename($mon) [tk_getSaveFile -parent $mainwindow -filetypes $types \
-    		-title {Save File} -defaultextension .grc] 
-    	if { $filename($mon) == "" } { return}
-    	GmTree::save $filename($mon)    	
+	set filename($mon) [tk_getSaveFile -parent $mainwindow -filetypes $types \
+		-title {Save File} -defaultextension .grc]
+	if { $filename($mon) == "" } { return}
+	GmTree::save $filename($mon)
     }
 };
 
 ###############################################################################
 
-proc Gm::cleanup { destroywin } {
-	global mapfile
+proc Gm::cleanup { } {
 	global mon
 	global tmpdir
-	global mappid
 	global legfile
 	variable moncount
 	
-	# stop gism PNG driver if it is still running due to error
-	if {![catch {open "|d.mon -L" r} input]} {
-		while {[gets $input line] >= 0} {
-			if {[regexp {^gism.*       running} $line]} {
-				open "|d.mon stop=gism"
-				break
-			}
-		}
-		close $input
-	}
-		
-	# delete temporary local region files
-	for {set x 1} {$x<$moncount} {incr x} {
-		exec g.remove region=map_$x
-	}
+	# delete temporary local region files (no longer needed)
+	#for {set x 1} {$x<$moncount} {incr x} {
+	#	exec g.remove region=map_$x
+	#}
 
+	set mappid $MapCanvas::mappid
+	
 	# delete all map display ppm files
 	cd $tmpdir
 	set deletefile $mappid
 	append deletefile ".*"
 	foreach file [glob -nocomplain $deletefile] {
-		file delete $file
+		catch {file delete $file}
 	}
-	
-	if {[file exists $legfile]} {file delete -force $legfile}
+
+	if {[file exists $legfile]} {catch {file delete -force $legfile}}
 
 	unset mon
 
@@ -480,12 +476,12 @@ proc Gm::cleanup { destroywin } {
 ###############################################################################
 
 proc main {argc argv} {
+    variable gm_mainframe
     global auto_path
     global GRASSVERSION
     global location_name
     global mapset
     global keycontrol
-    global mainframe
     global filename
     global mon
 
@@ -493,19 +489,19 @@ proc main {argc argv} {
     wm title . [format [G_msg "GRASS%s GIS Manager - %s %s"] $GRASSVERSION $location_name $mapset]
 
     bind . <$keycontrol-Key-o> {
-	Gm::OpenFileBox
+		Gm::OpenFileBox
     }
     bind . <$keycontrol-Key-n> {
-	GmTree::new
+		GmTree::new
     }
     bind . <$keycontrol-Key-s> {
-	Gm::SaveFileBox
+		Gm::SaveFileBox
     }
     bind . <$keycontrol-Key-q> {
-    	exit
-   	}
+		exit
+	}
     bind . <$keycontrol-Key-w> {
-	GmTree::FileClose {}
+		GmTree::FileClose {}
     }
 
     Gm::create
@@ -515,15 +511,12 @@ proc main {argc argv} {
     raise .mainframe
     focus -force .
     destroy .intro
-    if { $argc == "1"} { 
-    	set filename($mon) $argv
+    if { $argc == "1"} {
+	set filename($mon) $argv
 		GmTree::load $filename($mon)
     }
 }
 
-bind . <Destroy> { 
-	if { "%W" == "."} { Gm::cleanup }
-} 
 
 main $argc $argv
 wm geom . [wm geom .]

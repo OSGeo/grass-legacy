@@ -43,7 +43,8 @@
 #########################
 
 #%Module
-#% description: Import SRTM HGT files into GRASS
+#%  description: Import SRTM HGT files into GRASS
+#%  keywords: raster, import
 #%End
 #%option
 #% key: input

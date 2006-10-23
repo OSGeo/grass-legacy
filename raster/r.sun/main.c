@@ -150,6 +150,7 @@ int main(int argc, char *argv[])
     G_gisinit(argv[0]);
     module = G_define_module();
 
+    module->keywords = _("raster");
     module->description =
 	_("Computes direct (beam), diffuse and reflected solar irradiation raster "
 	"maps for given day, latitude, surface and atmospheric conditions. Solar "

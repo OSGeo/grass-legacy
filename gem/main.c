@@ -176,8 +176,8 @@ void show_help ( void ) {
 	fprintf (stdout, "be installed instead using the -b option. ");
 	fprintf (stdout, "For installation from source code, a C compiler and make tools are needed.\n");
 	fprintf (stdout, "\nExample:\n");
-	fprintf (stdout, "\tgem -b macosx --grass=/usr/local/grass-6.0.0 -i myExtension\n");
-	fprintf (stdout, "Installs the MacOS X binaries for 'myExtension' in /usr/local/grass-6.0.0.\n");
+	fprintf (stdout, "\tgem -b macosx --grass=/usr/local/grass-6.2.0 -i myExtension\n");
+	fprintf (stdout, "Installs the MacOS X binaries for 'myExtension' in /usr/local/grass-6.2.0.\n");
 	exit (0);	
 }
 

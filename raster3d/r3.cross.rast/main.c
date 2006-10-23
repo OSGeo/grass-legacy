@@ -255,6 +255,7 @@ int main(int argc, char *argv[])
     G_gisinit(argv[0]);
 
     module = G_define_module();
+    module->keywords = _("raster3d, voxel");
     module->description =
 	_
 	("Creates cross section 2D raster map from g3d raster volume map based on 2D elevation map");

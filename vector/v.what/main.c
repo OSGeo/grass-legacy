@@ -78,7 +78,7 @@ main(int argc, char **argv)
     maxdistance->key = "distance";
     maxdistance->answer = "0";
     maxdistance->multiple = NO;
-    maxdistance->description = _("Maximum distance");
+    maxdistance->description = _("Query threshold distance");
 
     opt1 = G_define_option() ;
     opt1->key        = "map" ;
@@ -99,6 +99,7 @@ main(int argc, char **argv)
     printattributes->description = _("Print attribute information");
   
     module = G_define_module();
+    module->keywords = _("vector");
     module->description = 
     _("Allows the user to interactively query a vector map layer "
       "at user-selected locations within the current geographic region");

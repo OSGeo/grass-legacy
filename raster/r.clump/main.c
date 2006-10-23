@@ -29,7 +29,8 @@ main (int argc, char *argv[])
 /* Define the different options */
 
 	module = G_define_module();
-	module->description =
+	module->keywords = _("raster");
+    module->description =
 		_("Recategorizes data in a raster map layer by grouping cells " 
 		"that form physically discrete areas into unique categories.");
 						

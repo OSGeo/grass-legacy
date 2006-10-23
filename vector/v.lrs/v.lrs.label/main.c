@@ -32,6 +32,7 @@
 #include <grass/gis.h>
 #include <grass/Vect.h>
 #include <grass/dbmi.h>
+#include <grass/glocale.h>
 #include "../lib/lrs.h"
 
 # define PI    3.1415926535897932384626433832795029L
@@ -97,6 +98,7 @@ int main(int argc, char **argv)
     G_gisinit (argv[0]) ;
 
     module = G_define_module();
+    module->keywords = _("vector, LRS, networking");
     module->description = "Create stationing from input lines, "
 	   "and linear reference system";
 

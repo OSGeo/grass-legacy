@@ -37,7 +37,8 @@ main(int argc, char **argv)
 	G_gisinit(argv[0]);
 
 	module = G_define_module();
-        module->description =
+        module->keywords = _("raster");
+    module->description =
 		_("Creates topographic index, ln(a/tan(beta)), map from elevation map.");
 
 	params.input			= G_define_option();

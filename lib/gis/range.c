@@ -565,12 +565,14 @@ int G_row_update_fp_range (
            range->first_time = 0;
            range->min = val;
            range->max = val;
-           continue;
         }
-	if (val < range->min)
-	    range->min = val;
-	if (val > range->max)
-	    range->max = val;
+	else
+	{
+	   if (val < range->min)
+	       range->min = val;
+	   if (val > range->max)
+	       range->max = val;
+	}
 
         rast = G_incr_void_ptr(rast, G_raster_size(data_type));
     }

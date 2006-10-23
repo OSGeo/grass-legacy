@@ -16,6 +16,7 @@
 *
 *****************************************************************************/
 #include <string.h>
+#include <grass/gis.h>
 #include <grass/Vect.h>
 
 /*
@@ -28,16 +29,20 @@
 int 
 Vect__init_head (struct Map_info *Map)
 {
+    char buf[64];
+
     Map->head.organization = NULL; 
     Vect_set_organization ( Map, "" );
     Map->head.date = NULL;
     Vect_set_date ( Map, "" );
     Map->head.your_name = NULL;
-    Vect_set_person ( Map, "" );
+    sprintf (buf, "%s", G_whoami());
+    Vect_set_person ( Map, buf );
     Map->head.map_name = NULL;
     Vect_set_map_name ( Map, "" );
     Map->head.source_date = NULL;
-    Vect_set_map_date ( Map, "" );
+    sprintf (buf, "%s", G_date());
+    Vect_set_map_date ( Map, buf );
     Map->head.line_3 = NULL;
     Vect_set_comment ( Map, "" );
     
