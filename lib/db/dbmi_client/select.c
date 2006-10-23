@@ -297,10 +297,7 @@ int db_select_CatValArray ( dbDriver *driver, char *tab, char *key, char *col, c
     db_close_cursor(&cursor);
     db_free_string ( &stmt );
 
-    if ( type == DB_C_TYPE_INT ) 
-        qsort( (void *) cvarr->value, nrows, sizeof(dbCatVal), cmpcat);
-    else if ( type == DB_C_TYPE_DOUBLE ) 
-        qsort( (void *) cvarr->value, nrows, sizeof(dbCatVal), cmpcat);
+    db_CatValArray_sort ( cvarr );
 
     return (nrows);
 }
