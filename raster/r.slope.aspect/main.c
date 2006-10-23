@@ -980,7 +980,11 @@ int main (int argc, char *argv[])
             G_put_raster_row(dxy_fd, dxy_raster, data_type);
 
     } /* row loop */
-    if (flag.q->answer) G_percent (row, nrows, 2);
+
+    if (flag.q->answer) {
+        G_percent (row, nrows, 2);
+        fprintf(stderr, "\n");
+    }
 
     G_close_cell (elevation_fd);
     if (!flag.q->answer)
