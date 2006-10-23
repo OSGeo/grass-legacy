@@ -86,22 +86,27 @@ Univariate statistics (<a href="r.univar.html">r.univar</a>) and
 reports are also available (<a href="r.report.html">r.report</a>,<a
 href="r.stats.html">r.stats</a>, <a href="r.volume.html">r.volume</a>).
 
-<h3>Raster map algebra</h3>
+<h3>Raster map algebra and aggregation</h3>
 
 The <a href="r.mapcalc.html">r.mapcalc</a> command provides raster map
 algebra methods.
+The <a href="r.resamp.stats.html">r.resamp.stats</a> command resamples raster
+map layers using various aggregation methods, the <a href="r.average.html">r.average</a>
+command aggregates one map based on a second map.
 
-<h3>Raster map interpolation methods</h3>
+<h3>Raster map resampling and interpolation methods</h3>
 
-GRASS offers various raster interpolation methods:
+GRASS offers various raster resampling and interpolation methods:
 
 <ul>
-<li> Inverse distance weighted average (IDW) interpolation</li>
-<li> Regularized spline with tension (RST) interpolation 2D</li>
-<li> Bilinear interpolation</li>
-<li> Cubic convolution interpolation</li>
-<li> Resampling</li>
-<li> Interpolating from contour lines</li>
+<li> Resampling with nearest, bilinear, and bicubic method
+ (<a href="r.resamp.interp.html">r.resamp.interp</a>)</li>
+<li> Inverse distance weighted average (IDW) interpolation
+ (<a href="r.surf.idw.html">r.surf.idw</a> and <a href="r.surf.idw2.html">r.surf.idw2</a>)</li>
+<li> Regularized spline with tension (RST) interpolation 2D
+ (<a href="r.resamp.rst.html">r.resamp.rst</a>)</li>
+<li> Bilinear interpolation (<a href="r.bilinear.html">r.bilinear</a>)</li>
+<li> Interpolating from contour lines (<a href="r.contour.html">r.contour</a>)</li>
 </ul>
 
 
