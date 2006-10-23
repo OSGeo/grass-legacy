@@ -70,14 +70,14 @@ please take care of following rules:
     Tcl script:
 
     	#!/bin/sh
-	# the next line restarts using tclsh \
+	# the next line restarts using tclsh. Note the backslash: \
 	exec $GRASS_TCLSH "$0" "$@"
 
 
     Tk script:
 
     	#!/bin/sh
-	# the next line restarts using wish \
+	# the next line restarts using wish. Note the backslash: \
 	exec $GRASS_WISH "$0" "$@"
 
 7.  Do not source files that have already been sourced.
