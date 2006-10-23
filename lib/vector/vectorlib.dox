@@ -854,6 +854,8 @@ Vect_cidx_dump();
 
 Vect_cidx_find_next();
 
+Vect_cidx_find_all();
+
 Vect_cidx_get_cat_by_index();
 
 Vect_cidx_get_field_index();
