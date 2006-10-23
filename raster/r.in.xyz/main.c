@@ -459,7 +459,6 @@ int main(int argc, char *argv[])
 		if( ((x - region.west) / region.ew_res) - cols < 10*GRASS_EPSILON)
 		    arr_col--;
 		else { /* oh well, we tried. */
-		    G_free_tokens(tokens);
 		    continue;
 		}
 	    }
