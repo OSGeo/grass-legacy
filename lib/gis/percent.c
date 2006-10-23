@@ -34,8 +34,12 @@ static int first = 1;
   int row;
   int nrows;
   nrows = 1352; // 1352 is not a special value - example only
-  fprintf (stderr, ''Percent complete: '');
+
+  fprintf (stderr, "Percent complete: ");
   for (row = 0; row < nrows; row++)
+  {
+      G_percent (row, nrows, 10);
+  }
   G_percent (row, nrows, 10);
 \endcode
  * This will print completion messages at 10% increments; i.e., 10%, 20%, 30%,
@@ -66,8 +70,11 @@ int G_percent (int n,int d,int s)
   int row;
   int nrows;
   nrows = 1352; // 1352 is not a special value - example only
-  fprintf (stderr, ''Percent complete: '');
+  fprintf (stderr, "Percent complete: ");
   for (row = 0; row < nrows; row++)
+  {
+      G_percent (row, nrows, 10);
+  }
   G_percent (row, nrows, 10);
 \endcode
  * This will print completion messages at 10% increments; i.e., 10%, 20%, 30%,
