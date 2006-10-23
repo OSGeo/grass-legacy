@@ -24,7 +24,7 @@
 int main(int argc, char *argv[])
 {
 
-    FILE   *in_fd;
+    FILE   *in_fp;
     int    out_fd;
     char   *infile, *outmap;
     int    xcol, ycol, zcol, max_col, percent;
@@ -304,14 +304,14 @@ int main(int argc, char *argv[])
 
 
     /* open input file */
-    if((in_fd = fopen(infile, "r" )) == NULL )
+    if((in_fp = fopen(infile, "r" )) == NULL )
 	G_fatal_error(_("Could not open input file <%s>."), infile);
 
     if(scan_flag->answer) {
 	if( zrange_opt->answer )
 	    G_warning(_("zrange will not be taken into account during scan"));
-	scan_bounds(in_fd, xcol, ycol, zcol, fs, shell_style->answer);
-	fclose(in_fd);
+	scan_bounds(in_fp, xcol, ycol, zcol, fs, shell_style->answer);
+	fclose(in_fp);
 	exit(EXIT_SUCCESS);
     }
 
@@ -323,12 +323,12 @@ int main(int argc, char *argv[])
 
     /* guess at number of lines in the file without actually reading it all in */
     for(line=0; line<10; line++) {  /* arbitrarily use 10th line for guess */
-	if( 0 == G_getl2(buff, BUFFSIZE-1, in_fd) ) break;
+	if( 0 == G_getl2(buff, BUFFSIZE-1, in_fp) ) break;
 	linesize = strlen(buff) + 1;
     }
-    fseek(in_fd, 0L, SEEK_END);
-    filesize = ftell(in_fd);
-    rewind(in_fd);
+    fseek(in_fp, 0L, SEEK_END);
+    filesize = ftell(in_fp);
+    rewind(in_fp);
     if(linesize < 6)  /* min possible: "0,0,0\n" */
 	linesize = 6;
     estimated_lines = filesize/linesize;
@@ -347,7 +347,7 @@ int main(int argc, char *argv[])
 	if(npasses > 1)
 	    G_message(_("Pass #%d (of %d) ..."), pass, npasses);
 
-	rewind(in_fd);
+	rewind(in_fp);
 
 	/* figure out segmentation */
 	pass_north = region.north - (pass-1)*rows*region.ns_res;
@@ -390,7 +390,7 @@ int main(int argc, char *argv[])
 	count = 0;
 	G_percent_reset();
 
-	while( 0 != G_getl2(buff, BUFFSIZE-1, in_fd) ) {
+	while( 0 != G_getl2(buff, BUFFSIZE-1, in_fp) ) {
 	    line++;
 	    if( (line%10000 == 0) && (line < estimated_lines) ) /* mod for speed */
 		G_percent(line, estimated_lines, 3);
@@ -459,7 +459,8 @@ int main(int argc, char *argv[])
 		if( ((x - region.west) / region.ew_res) - cols < 10*GRASS_EPSILON)
 		    arr_col--;
 		else { /* oh well, we tried. */
-		    G_free_tokens(tokens);
+		    G_debug(3, "skipping extraneous data point [%.3f], column %d of %d",
+			x, arr_col, cols);
 		    continue;
 		}
 	    }
@@ -589,7 +590,7 @@ int main(int argc, char *argv[])
     G_free(raster_row);
 
     /* close input file */
-    fclose(in_fd);
+    fclose(in_fp);
 
     /* close raster file & write history */
     G_close_cell(out_fd);
