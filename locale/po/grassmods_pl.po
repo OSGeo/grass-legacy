@@ -1,8 +1,7 @@
 # translation of grassmods_pl.po into Polski
-# translation of grassmods_pl.po into Polish
 # This file is distributed under the same license as the GRASS package.
 # Copyright (C) 2005, GRASS Development Team
-# Artur Nie¶cior <nieart@interia.pl>,2005, 2006.
+# Artur Nie¶cior <nieart@interia.pl>, 2005, 2006.
 #
 msgid ""
 msgstr ""
@@ -168,11 +167,11 @@ msgstr "Plik zawieraj±cy wyra¿enia SQL"
 
 #: ../db/base/execute.c:110 ../vector/v.db.connect/main.c:61
 msgid "Driver name"
-msgstr ""
+msgstr "Nazwa sterownika"
 
 #: ../db/base/execute.c:118 ../vector/v.db.connect/main.c:70
 msgid "Database name"
-msgstr ""
+msgstr "Nazwa bazy danych"
 
 #: ../db/base/execute.c:124
 msgid "Ignore SQL errors and continue"
@@ -240,11 +239,11 @@ msgstr "wypisz parametry bie¿±cego po³±czenia i wyjd¼"
 
 #: ../db/base/connect.c:35
 msgid "driver name:"
-msgstr "nazwa sterownika"
+msgstr "nazwa sterownika:"
 
 #: ../db/base/connect.c:43
 msgid "Database name:"
-msgstr "Nazwa bazy danych"
+msgstr "Nazwa bazy danych:"
 
 #: ../db/base/connect.c:52
 msgid ""
@@ -259,8 +258,9 @@ msgid "Default group of database users to which select privilege is granted."
 msgstr "Domy¶lna grupa u¿ytkowników bazy danych którym nadano przywilej wyboru"
 
 #: ../db/base/connect.c:81
+#, fuzzy
 msgid "Prints/sets general DB connection for current mapset"
-msgstr ""
+msgstr "Wy¶wietla/ustawia ogólne po³±czenie DB dla bie¿±cego mapsetu"
 
 #: ../db/base/connect.c:116
 msgid "No db connection settings defined. Set with db.connect"
@@ -394,11 +394,11 @@ msgstr "Pozycja kursora nie jest obs³ugiwana przez sterownik MySQL"
 
 #: ../db/drivers/mysql/fetch.c:180
 msgid "Cannot scan timestamp: "
-msgstr ""
+msgstr "Nie mo¿na przeskanowaæ przedzia³ów czasowych: "
 
 #: ../db/drivers/mysql/fetch.c:188
 msgid "Unknown timestamp format: "
-msgstr ""
+msgstr "Nieznany format przedzia³ów czasowych: "
 
 #: ../db/drivers/mysql/fetch.c:202
 msgid "Cannot scan date: "
@@ -439,7 +439,7 @@ msgstr "Problem przy interpretacji wspó³rzêdnych [%s]"
 
 #: ../display/d.graph/do_graph.c:101
 msgid "Unable to read color"
-msgstr "Nie mo¿na odczytaækoloru"
+msgstr "Nie mo¿na odczytaæ koloru"
 
 #: ../display/d.graph/do_graph.c:108 ../display/d.graph/do_graph.c:394
 #: ../display/d.graph/do_graph.c:404 ../display/d.graph/main.c:77
@@ -676,6 +676,8 @@ msgid ""
 "Allows the user to interactively query a vector map layer at user-selected "
 "locations within the current geographic region."
 msgstr ""
+"Pozwala u¿ytkownikowi interaktywnie odpytaæ warstwê wektorow± w wybranej "
+"przez u¿ytkownika przestrzeni bie¿±cego regionu geograficznego."
 
 #: ../display/d.what.vect/main.c:56 ../display/d.what.rast/main.c:68
 msgid "Identify just one location"
@@ -687,15 +689,15 @@ msgstr "Nazwa istniej±cego pliku wektorowego"
 
 #: ../display/d.what.vect/main.c:71 ../display/d.what.rast/main.c:72
 msgid "Terse output. For parsing by programs"
-msgstr ""
+msgstr "Zwiêz³y wynik. Dla przegl±dania przez programy"
 
 #: ../display/d.what.vect/main.c:75
 msgid "Print information as plain text to terminal window"
-msgstr ""
+msgstr "Wy¶wietl informacje jako czysty tekst w oknie terminala"
 
 #: ../display/d.what.vect/main.c:79 ../vector/v.what/main.c:95
 msgid "Print topological information (debugging)"
-msgstr ""
+msgstr "Wy¶wietl informacje topologiczne (debugging)"
 
 #: ../display/d.what.vect/main.c:83
 msgid "Enable flashing (slower)"
@@ -703,7 +705,7 @@ msgstr ""
 
 #: ../display/d.what.vect/main.c:87
 msgid "Open form in edit mode"
-msgstr ""
+msgstr "Otwórz formê w trybie edycji"
 
 #: ../display/d.what.vect/main.c:109
 #, c-format
@@ -720,7 +722,7 @@ msgstr "Plik wektorowy [%s] nie jest dostêpny"
 #: ../display/d.what.vect/main.c:133 ../vector/v.what/main.c:174
 #, c-format
 msgid "%s: You must build topology on vector file"
-msgstr ""
+msgstr "%s: Musisz zbudowaæ topologiê na pliku wektorowym"
 
 #: ../display/d.what.vect/main.c:135
 msgid "Building spatial index ..."
@@ -739,24 +741,20 @@ msgid "Display information about the active display monitor"
 msgstr "Wyswietl informacje na temat aktywnego monitora wy¶wietlania"
 
 #: ../display/d.info/main.c:38
-#, fuzzy
 msgid "Display screen rectangle (left, right, top, bottom)"
-msgstr "Wy¶wietl prostok±tny ekran"
+msgstr "Wy¶wietl prostok±tny ekran (lewy, prawy, górny, dolny)"
 
 #: ../display/d.info/main.c:42
-#, fuzzy
 msgid "Display screen dimensions (width, height)"
-msgstr "Wy¶wietl wymiary ekranu"
+msgstr "Wy¶wietl wymiary ekranu (szeroko¶æ, wysoko¶æ)"
 
 #: ../display/d.info/main.c:46
-#, fuzzy
 msgid "Display active frame rectangle"
-msgstr "Wy¶wietl prostok±tny ekran"
+msgstr "Wy¶wietl prostok±tn± aktywn± ramkê"
 
 #: ../display/d.info/main.c:50
-#, fuzzy
 msgid "Display screen rectangle of current region"
-msgstr "Wy¶wietl prostok±tny ekran"
+msgstr "Wy¶wietl prostok±tny ekran bie¿±cego regionu"
 
 #: ../display/d.info/main.c:54
 msgid "Display number of colors"
@@ -775,14 +773,13 @@ msgid "Error in calculating conversions"
 msgstr "B³±d w obliczeniach konwersji"
 
 #: ../display/d.profile/What.c:31
-#, fuzzy, c-format
+#, c-format
 msgid "warning: unable to open [%s] in [%s]"
-msgstr "Nie mo¿na otworzyæ mapy rastrowej [%s] w [%s]"
+msgstr "ostrze¿enie: nie mo¿na otworzyæ [%s] w [%s]"
 
 #: ../display/d.profile/What.c:37
-#, fuzzy
 msgid "error reading cell file"
-msgstr "b³±d podczas odczytu danych rastrowych"
+msgstr "b³±d podczas odczytu pliku rastrowego"
 
 #: ../display/d.profile/utils.c:8
 #, c-format
@@ -800,31 +797,29 @@ msgid "%s: 'is_null_value()' Unknown RASTER_MAP_TYPE '%d'"
 msgstr ""
 
 #: ../display/d.profile/ExtractProf.c:95
-#, fuzzy, c-format
+#, c-format
 msgid "unable to open [%s] in [%s]"
-msgstr "Nie mo¿na otworzyæ mapy rastrowej [%s] w [%s]"
+msgstr "nie mo¿na otworzyæ [%s] w [%s]"
 
 #: ../display/d.profile/Range.c:92
 msgid "one moment ..."
-msgstr ""
+msgstr "proszê czekaæ ..."
 
 #: ../display/d.profile/main.c:50
 msgid "Interactive profile plotting utility with optional output."
-msgstr ""
+msgstr "Interaktywne narzêdzie plotowania profilu z opcjonalnym wynikiem."
 
 #: ../display/d.profile/main.c:58
-#, fuzzy
 msgid "Raster map to be profiled"
-msgstr "Mapa(y) rastrowa(e) do przeanalizowania"
+msgstr "Mapa(y) rastrowa(e) dla której ma byæ utworzony profil"
 
 #: ../display/d.profile/main.c:65
 msgid "Optional display raster"
 msgstr ""
 
 #: ../display/d.profile/main.c:71
-#, fuzzy
 msgid "Output profile data to file(s) with prefix 'name'"
-msgstr "Prefix nazwy wyj¶ciowego rastra"
+msgstr "Zapisz wyj¶ciowe dane profilu do pliku(ów) z prefiksem 'nazwa'"
 
 #: ../display/d.profile/main.c:80 ../display/d.zoom/main.c:202
 #: ../display/d.what.rast/main.c:130 ../display/d.rast/main.c:91
@@ -844,21 +839,22 @@ msgid ""
 "\n"
 "\n"
 "Use mouse to choose action"
-msgstr "U¿yj myszki by okre¶liæ po³o¿enie i rozmiar legendy"
+msgstr ""
+"\n"
+"\n"
+"U¿yj myszki by wybraæ czynno¶æ"
 
 #: ../display/d.profile/main.c:188 ../display/d.profile/main.c:373
 msgid "Use 'd.frame -e' to remove left over frames"
 msgstr ""
 
 #: ../display/d.profile/main.c:276
-#, fuzzy
 msgid "Error opening cell-file"
-msgstr "Odczytywania mapy"
+msgstr "B³±d przy otwieraniu pliku rastrowego"
 
 #: ../display/d.profile/main.c:278
-#, fuzzy
 msgid "Error reading from cell-file"
-msgstr "B³±d podczas odczytu rzêdu danych"
+msgstr "B³±d podczas odczytu pliku rastrowego"
 
 #: ../display/d.profile/main.c:280
 msgid "Mysterious window inconsistancy error"
@@ -870,9 +866,9 @@ msgid "%s: Couldn't open raster <%s@%s>"
 msgstr "Nie mo¿na znale¼æ pliku rastrowego %s"
 
 #: ../display/d.profile/main.c:416
-#, fuzzy, c-format
+#, c-format
 msgid "%s: Couldn't read color table for <%s@%s>"
-msgstr "%s: Czcionka nie mo¿ by¶ czytana"
+msgstr "%s: nie mo¿na by³o odczytaæ tablicy kolorów dla <%s@%s>"
 
 #: ../display/d.grid/plot.c:155 ../display/d.grid/plot.c:160
 #: ../display/d.grid/plot.c:197 ../display/d.grid/plot.c:202
@@ -1044,27 +1040,26 @@ msgid "Unable to open the temporary file."
 msgstr "Nie mo¿na otworzyæ pliku tymczasowego"
 
 #: ../display/d.menu/main.c:66
-#, fuzzy
 msgid ""
 "Creates and displays a menu within the active frame on the graphics monitor."
-msgstr "Wy¶wietla dane wektorowe GRASS w aktywnej ramce monitora graficznego."
+msgstr ""
+"Tworzy i wy¶wietla menu wewn±trz aktywnej ramki w monitorze graficznym."
 
 #: ../display/d.menu/main.c:75
 msgid "Sets the color of the menu background"
-msgstr ""
+msgstr "Ustawia kolor t³a menu"
 
 #: ../display/d.menu/main.c:83
-#, fuzzy
 msgid "Sets the color of the menu text"
-msgstr "Ustaw kolor tekstu w legendzie"
+msgstr "Ustawia kolor tekstu menu"
 
 #: ../display/d.menu/main.c:91
 msgid "Sets the color dividing lines of text"
-msgstr ""
+msgstr "Ustawia kolor linii podzia³u tekstu"
 
 #: ../display/d.menu/main.c:99
 msgid "Sets the menu text size (in percent)"
-msgstr ""
+msgstr "Ustawia wielko¶æ tekstu (w procentach)"
 
 #: ../display/d.menu/main.c:111 ../display/d.menu/main.c:117
 #: ../display/d.menu/main.c:123 ../display/d.legend/main.c:170
@@ -1073,9 +1068,8 @@ msgid "Don't know the color %s"
 msgstr "Nieznany kolor %s"
 
 #: ../display/d.menu/main.c:184
-#, fuzzy
 msgid "Menu must contain a title and at least one option"
-msgstr "Trzeba zaznaczyæ przynajmniej cztery punkty"
+msgstr "Menu musi zawieraæ tytu³ i przynajmniej jedn± opcjê"
 
 #: ../display/d.mapgraph/main.c:29
 msgid ""
@@ -12288,8 +12282,9 @@ msgid "Input data given for (o/i)"
 msgstr ""
 
 #: ../raster/r.topmodel/main.c:178
+#, fuzzy
 msgid "Overwrite outputs"
-msgstr ""
+msgstr "Nadpisz plik mapy wyj¶ciowej"
 
 #: ../raster/r.surf.contour/main.c:36
 msgid "Surface generation program from rasterized contours."
@@ -17594,160 +17589,215 @@ msgstr ""
 msgid "Error reading wildcard."
 msgstr ""
 
-#~ msgid "Display active frame dimensions"
-#~ msgstr "Wy¶wietl wymiary aktywnej ramki"
+msgid "Display active frame dimensions"
+msgstr "Wy¶wietl wymiary aktywnej ramki"
 
-#~ msgid "%s Pan\n"
-#~ msgstr "%s Przesuñ\n"
+msgid "%s Pan\n"
+msgstr "%s Przesuñ\n"
 
-#~ msgid "%s Quit menu\n"
-#~ msgstr "%s menu Wyj¶cie\n"
+msgid "%s Quit menu\n"
+msgstr "%s menu Wyj¶cie\n"
 
-#~ msgid "%s Quit\n"
-#~ msgstr "%s Wyjd¼\n"
+msgid "%s Quit\n"
+msgstr "%s Wyjd¼\n"
 
-#~ msgid "Right: "
-#~ msgstr "Prawy: "
+msgid "Right: "
+msgstr "Prawy: "
 
-#~ msgid "Raster surface layer to process"
-#~ msgstr "Warstwa rastrowa powierzchni do przetworzenia"
+msgid "Raster surface layer to process"
+msgstr "Warstwa rastrowa powierzchni do przetworzenia"
 
-#~ msgid "%s[%d]: No raster file specified."
-#~ msgstr "%s[%d]: Nie okre¶lono pliku rastrowego."
-
-#, fuzzy
-#~ msgid "Vector map <%s> not found"
-#~ msgstr "nie znaleziono mapy wektorowej <%s>"
+msgid "%s[%d]: No raster file specified."
+msgstr "%s[%d]: Nie okre¶lono pliku rastrowego."
 
 #, fuzzy
-#~ msgid "Makes 3D trees from input point vector file"
-#~ msgstr "Nazwa wyj¶ciowego pliku wektorowego"
+msgid "Vector map <%s> not found"
+msgstr "nie znaleziono mapy wektorowej <%s>"
 
 #, fuzzy
-#~ msgid "Name of input point vector map"
-#~ msgstr "nazwa wej¶ciowego pliku wektorowego"
+msgid "Makes 3D trees from input point vector file"
+msgstr "Nazwa wyj¶ciowego pliku wektorowego"
 
 #, fuzzy
-#~ msgid "Diameter of the tree crown in map units"
-#~ msgstr "Wspó³rzêdne s± dane w jednostkach mapy"
+msgid "Name of input point vector map"
+msgstr "nazwa wej¶ciowego pliku wektorowego"
 
 #, fuzzy
-#~ msgid "Name of the column with tree crown width"
-#~ msgstr "Nazwa mapy rastrowej bêd±cej gridem z informacj± o kosztach "
+msgid "Diameter of the tree crown in map units"
+msgstr "Wspó³rzêdne s± dane w jednostkach mapy"
 
 #, fuzzy
-#~ msgid "Name of the column with tree height"
-#~ msgstr "Nazwa wy¶wietlanej kolumny"
+msgid "Name of the column with tree crown width"
+msgstr "Nazwa mapy rastrowej bêd±cej gridem z informacj± o kosztach "
 
 #, fuzzy
-#~ msgid "Elevation raster map"
+msgid "Name of the column with tree height"
+msgstr "Nazwa wy¶wietlanej kolumny"
+
+#, fuzzy
+msgid "Elevation raster map"
+msgstr "Nie mogê znale¼æ mapsetu dla %s"
+
+#, fuzzy
+msgid "Name of the column with tree species"
+msgstr "Nazwa wy¶wietlanej kolumny"
+
+#, fuzzy
+msgid "Cannot select attributes for point #%d"
+msgstr "Nie mo¿na zaznaczyæ danych z tabeli"
+
+#, fuzzy
+msgid "Cannot creat random access file\n"
+msgstr "Nie mo¿na opisaæ tabeli"
+
+#, fuzzy
+msgid "Cannot create .r.li directory"
+msgstr "Nie mogê znale¼æ mapsetu dla %s"
+
+#, fuzzy
+msgid "Cannot create .r.li/output directory"
+msgstr "Nie mo¿na utworyæ pliku raportu: "
+
+#, fuzzy
+msgid "Cannot close %s file\n"
+msgstr "Nie mo¿na otworzyæ %s"
+
+#, fuzzy
+msgid "Cannot delete %s file\n"
+msgstr "Nie mogê otworzyæ Pliku %s"
+
+#, fuzzy
+msgid "Cannot close receive channel file\n"
+msgstr "Nie mo¿na otworzyæ pliku rastra [%s]"
+
+#, fuzzy
+msgid "Cannot read setup file"
+msgstr "Nie mo¿na opisaæ tabeli"
+
+#, fuzzy
+msgid "Cannot read raster header file"
+msgstr "Nie mozna odczytaæ nag³ówka pliku [%s]"
+
+#, fuzzy
+msgid "Too much strats for raster file\n"
+msgstr "%s: B£¡D nie mo¿na otworzyæ pliku tymczasowego"
+
+#, fuzzy
+msgid "%s\n"
+msgstr " %s\n"
+
+msgid "Raster map name"
+msgstr "Nazwa mapy rastrowej"
+
+msgid "Connect to the database through DBMI."
+msgstr "Po³±cz z baz± danych poprzez DBMI"
+
+msgid "Do you wish to continue"
+msgstr "Czy chcesz kontynuowaæ"
+
+msgid "Done.\n"
+msgstr "Proces zakoñczony.\n"
+
+msgid "Zooming finished.\n"
+msgstr "Powiêkszenie zakoñczone.\n"
+
+msgid "Name of the output raster map"
+msgstr "Nazwa wyj¶ciowej mapy rastrowej"
+
+msgid "Read fp map as integer - use map's quant rules"
+msgstr ""
+"Czytaj mapê fp jako mapê o danych ca³kowitych - u¿yj regó³ ilo¶ciowych mapy"
+
+msgid "Name of output raster file"
+msgstr "Nazwa wyj¶ciowego pliku rastrowego"
+
+msgid "cover raster map"
+msgstr "wierzchnia mapa rastrowa"
+
+msgid "resultant raster map"
+msgstr "wynikowa mapa rastrowa"
+
+msgid "Name of existing raster file."
+msgstr "Nazwa istniej±cego pliku rastrowego."
+
+msgid "Name of input map"
+msgstr "Nazwa mapy wej¶ciowej"
+
+msgid "Name of output map"
+msgstr "Nazwa mapy wyj¶ciowej"
+
+msgid "Name of a raster map"
+msgstr "Nazwa mapy rastrowej"
+
+msgid "Input layer name"
+msgstr "Nazwa warstwy wejsciowej"
+
+msgid "Output layer name"
+msgstr "Nazwa warstwy wyj¶ciowej"
+
+msgid "Name of the resulting map"
+msgstr "Nazwa mapy wynikowej"
+
+msgid "Name of existing input raster file"
+msgstr "Nazwa istniej±cego wej¶ciowego pliu rastrowego"
+
+msgid "No db connection for driver <%s> defined. Run db.connect"
+msgstr ""
+"Nie zdefiniowano po³±czenia z baz± danych dla sterownika <%s>. Uruchom db."
+"conect"
+
+#, fuzzy
+#~ msgid ""
+#~ "WGS84 grid output not possible as this location does not contain\n"
+#~ "datum transformation parameters. Try running g.setproj."
+#~ msgstr ""
+#~ "Utworzenie projekcji WGS84 nie by³o mo¿liwe, lokalizacjanie posiada "
+#~ "parametrów transformacji uk³adu. Spróbuj uruchomiæ g.setproj."
+
+#, fuzzy
+#~ msgid "Draw geographic grid (referenced to current ellipsoid)"
+#~ msgstr "Wyj¶ciowe wspó³rzêdne geograficzne odniesione do bie¿±cej elipsoidy"
+
+#, fuzzy
+#~ msgid "Error reading WKT projection description"
+#~ msgstr "B³±d podczas odczytu rzêdu danych"
+
+#, fuzzy
+#~ msgid "Cannot create location: %s"
 #~ msgstr "Nie mogê znale¼æ mapsetu dla %s"
 
 #, fuzzy
-#~ msgid "Name of the column with tree species"
-#~ msgstr "Nazwa wy¶wietlanej kolumny"
-
-#, fuzzy
-#~ msgid "Cannot select attributes for point #%d"
-#~ msgstr "Nie mo¿na zaznaczyæ danych z tabeli"
-
-#, fuzzy
-#~ msgid "Cannot creat random access file\n"
+#~ msgid "Cannot create projection files: %s"
 #~ msgstr "Nie mo¿na opisaæ tabeli"
 
 #, fuzzy
-#~ msgid "Cannot create .r.li directory"
-#~ msgstr "Nie mogê znale¼æ mapsetu dla %s"
+#~ msgid "Can't get projection info of output map"
+#~ msgstr "Nie mo¿na pobraæ informacji o projekcji bie¿±cej lokalizacji"
 
 #, fuzzy
-#~ msgid "Cannot create .r.li/output directory"
-#~ msgstr "Nie mo¿na utworyæ pliku raportu: "
+#~ msgid "Can't get projection units of output map"
+#~ msgstr "Nie mo¿na pobraæ jednostek projekcji bie¿±cej lokalizacji"
 
 #, fuzzy
-#~ msgid "Cannot close %s file\n"
-#~ msgstr "Nie mo¿na otworzyæ %s"
+#~ msgid "Can't get projection key values of output map"
+#~ msgstr "Nie mo¿na pobraæ kluczowych warto¶ci projekcji bie¿±cej lokalizacji"
 
 #, fuzzy
-#~ msgid "Cannot delete %s file\n"
-#~ msgstr "Nie mogê otworzyæ Pliku %s"
+#~ msgid "Input map [%s] in location [%s] in mapset [%s] not found."
+#~ msgstr "Plik wektorowy [%s] nie jest dostêpny"
 
 #, fuzzy
-#~ msgid "Cannot close receive channel file\n"
-#~ msgstr "Nie mo¿na otworzyæ pliku rastra [%s]"
+#~ msgid "Can't get projection info of input map"
+#~ msgstr "Nie mo¿na pobraæ informacji o projekcji bie¿±cej lokalizacji"
 
 #, fuzzy
-#~ msgid "Cannot read setup file"
-#~ msgstr "Nie mo¿na opisaæ tabeli"
+#~ msgid "Can't get projection units of input map"
+#~ msgstr "Nie mo¿na pobraæ jednostek projekcji bie¿±cej lokalizacji"
 
 #, fuzzy
-#~ msgid "Cannot read raster header file"
-#~ msgstr "Nie mozna odczytaæ nag³ówka pliku [%s]"
+#~ msgid "Can't get projection key values of input map"
+#~ msgstr "Nie mo¿na pobraæ kluczowych warto¶ci projekcji bie¿±cej lokalizacji"
 
 #, fuzzy
-#~ msgid "Too much strats for raster file\n"
-#~ msgstr "%s: B£¡D nie mo¿na otworzyæ pliku tymczasowego"
-
-#, fuzzy
-#~ msgid "%s\n"
-#~ msgstr " %s\n"
-
-#~ msgid "Raster map name"
-#~ msgstr "Nazwa mapy rastrowej"
-
-#~ msgid "Connect to the database through DBMI."
-#~ msgstr "Po³±cz z baz± danych poprzez DBMI"
-
-#~ msgid "Do you wish to continue"
-#~ msgstr "Czy chcesz kontynuowaæ"
-
-#~ msgid "Done.\n"
-#~ msgstr "Proces zakoñczony.\n"
-
-#~ msgid "Zooming finished.\n"
-#~ msgstr "Powiêkszenie zakoñczone.\n"
-
-#~ msgid "Name of the output raster map"
-#~ msgstr "Nazwa wyj¶ciowej mapy rastrowej"
-
-#~ msgid "Read fp map as integer - use map's quant rules"
-#~ msgstr ""
-#~ "Czytaj mapê fp jako mapê o danych ca³kowitych - u¿yj regó³ ilo¶ciowych "
-#~ "mapy"
-
-#~ msgid "Name of output raster file"
-#~ msgstr "Nazwa wyj¶ciowego pliku rastrowego"
-
-#~ msgid "cover raster map"
-#~ msgstr "wierzchnia mapa rastrowa"
-
-#~ msgid "resultant raster map"
-#~ msgstr "wynikowa mapa rastrowa"
-
-#~ msgid "Name of existing raster file."
-#~ msgstr "Nazwa istniej±cego pliku rastrowego."
-
-#~ msgid "Name of input map"
-#~ msgstr "Nazwa mapy wej¶ciowej"
-
-#~ msgid "Name of output map"
-#~ msgstr "Nazwa mapy wyj¶ciowej"
-
-#~ msgid "Name of a raster map"
-#~ msgstr "Nazwa mapy rastrowej"
-
-#~ msgid "Input layer name"
-#~ msgstr "Nazwa warstwy wejsciowej"
-
-#~ msgid "Output layer name"
-#~ msgstr "Nazwa warstwy wyj¶ciowej"
-
-#~ msgid "Name of the resulting map"
-#~ msgstr "Nazwa mapy wynikowej"
-
-#~ msgid "Name of existing input raster file"
-#~ msgstr "Nazwa istniej±cego wej¶ciowego pliu rastrowego"
-
-#~ msgid "No db connection for driver <%s> defined. Run db.connect"
-#~ msgstr ""
-#~ "Nie zdefiniowano po³±czenia z baz± danych dla sterownika <%s>. Uruchom db."
-#~ "conect"
+#~ msgid "Error writing output map"
+#~ msgstr "B³±d przy próbie czytania pliku dbmscap \n"

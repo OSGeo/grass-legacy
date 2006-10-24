@@ -1,8 +1,7 @@
 # translation of grasslibs_pl.po into Polski
-# translation of grasslibs_pl.po into Polish
 # This file is distributed under the same license as the GRASS package.
 # Copyright (C) 2005, GRASS Development Team
-# Artur Niecior <nieart@interia.pl>, 2005, 2006.
+# Artur Nie¶cior <nieart@interia.pl>, 2005, 2006.
 #
 msgid ""
 msgstr ""
@@ -10,7 +9,7 @@ msgstr ""
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2006-07-17 20:57+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
-"Last-Translator: Artur NieÂ¶cior <nieart@interia.pl>\n"
+"Last-Translator: Artur Nie¶cior <nieart@interia.pl>\n"
 "Language-Team: Polska <translation@grass.itc.it>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=ISO-8859-2\n"
@@ -2450,12 +2449,12 @@ msgid ""
 "to area where your points are. Continuing calculations..."
 msgstr ""
 
-#~ msgid "Fixing subtle input data rounding error of west boundary (%g>%g)"
-#~ msgstr ""
-#~ "Naprawianie 'misternych' danych wej¶ciowych zaokr±glaj±c b³±d zachodniej "
-#~ "granicy (%g>%g)"
+msgid "Fixing subtle input data rounding error of west boundary (%g>%g)"
+msgstr ""
+"Naprawianie 'misternych' danych wej¶ciowych zaokr±glaj±c b³±d zachodniej "
+"granicy (%g>%g)"
 
-#~ msgid "Fixing subtle input data rounding error of east boundary (%g>%g)"
-#~ msgstr ""
-#~ "Naprawianie 'misternych' danych wej¶ciowych zaokr±glaj±c b³±d wschodniej "
-#~ "granicy (%g>%g)"
+msgid "Fixing subtle input data rounding error of east boundary (%g>%g)"
+msgstr ""
+"Naprawianie 'misternych' danych wej¶ciowych zaokr±glaj±c b³±d wschodniej "
+"granicy (%g>%g)"
