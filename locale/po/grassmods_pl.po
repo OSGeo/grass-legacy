@@ -1,8 +1,7 @@
 # translation of grassmods_pl.po into Polski
-# translation of grassmods_pl.po into Polish
 # This file is distributed under the same license as the GRASS package.
 # Copyright (C) 2005, GRASS Development Team
-# Artur Nie¶cior <nieart@interia.pl>,2005, 2006.
+# Artur Nie¶cior <nieart@interia.pl>, 2005.
 #
 msgid ""
 msgstr ""
@@ -57,11 +56,11 @@ msgstr "wypisz parametry bie¿±cego po³±czenia i wyjd¼"
 
 #: ../db/base/connect.c:35
 msgid "driver name:"
-msgstr "nazwa sterownika"
+msgstr "nazwa sterownika:"
 
 #: ../db/base/connect.c:43
 msgid "Database name:"
-msgstr "Nazwa bazy danych"
+msgstr "Nazwa bazy danych:"
 
 #: ../db/base/connect.c:52
 msgid ""
@@ -78,7 +77,7 @@ msgstr "Domy¶lna grupa u¿ytkowników bazy danych którym nadano przywilej wyboru"
 #: ../db/base/connect.c:82
 #, fuzzy
 msgid "Prints/sets general DB connection for current mapset and exits."
-msgstr "wypisz parametry bie¿±cego po³±czenia i wyjd¼"
+msgstr "Wy¶wietla/ustawia ogólne po³±czenie DB dla bie¿±cego mapsetu"
 
 #: ../db/base/connect.c:117
 msgid "No db connection settings defined. Set with db.connect"
@@ -219,14 +218,14 @@ msgstr "Plik zawieraj±cy wyra¿enia SQL"
 #: ../vector/lidar/v.lidar.edgedetection/main.c:91
 #: ../vector/lidar/v.lidar.growing/main.c:107 ../vector/v.db.connect/main.c:62
 msgid "Driver name"
-msgstr ""
+msgstr "Nazwa sterownika"
 
 #: ../db/base/execute.c:119 ../vector/lidar/v.bspline/main.c:109
 #: ../vector/lidar/v.lidar.correction/main.c:96
 #: ../vector/lidar/v.lidar.edgedetection/main.c:81
 #: ../vector/lidar/v.lidar.growing/main.c:97 ../vector/v.db.connect/main.c:71
 msgid "Database name"
-msgstr ""
+msgstr "Nazwa bazy danych"
 
 #: ../db/base/execute.c:125
 msgid "Ignore SQL errors and continue"
@@ -344,11 +343,11 @@ msgstr "Pozycja kursora nie jest obs³ugiwana przez sterownik MySQL"
 
 #: ../db/drivers/mysql/fetch.c:180
 msgid "Cannot scan timestamp: "
-msgstr ""
+msgstr "Nie mo¿na przeskanowaæ przedzia³ów czasowych: "
 
 #: ../db/drivers/mysql/fetch.c:188
 msgid "Unknown timestamp format: "
-msgstr ""
+msgstr "Nieznany format przedzia³ów czasowych: "
 
 #: ../db/drivers/mysql/fetch.c:202
 msgid "Cannot scan date: "
@@ -708,7 +707,7 @@ msgstr "Problem przy interpretacji wspó³rzêdnych [%s]"
 
 #: ../display/d.graph/do_graph.c:101
 msgid "Unable to read color"
-msgstr "Nie mo¿na odczytaækoloru"
+msgstr "Nie mo¿na odczytaæ koloru"
 
 #: ../display/d.graph/do_graph.c:108 ../display/d.graph/do_graph.c:399
 #: ../display/d.graph/do_graph.c:414 ../display/d.graph/main.c:82
@@ -973,24 +972,20 @@ msgid "Display information about the active display monitor"
 msgstr "Wyswietl informacje na temat aktywnego monitora wy¶wietlania"
 
 #: ../display/d.info/main.c:39
-#, fuzzy
 msgid "Display screen rectangle (left, right, top, bottom)"
-msgstr "Wy¶wietl prostok±tny ekran"
+msgstr "Wy¶wietl prostok±tny ekran (lewy, prawy, górny, dolny)"
 
 #: ../display/d.info/main.c:43
-#, fuzzy
 msgid "Display screen dimensions (width, height)"
-msgstr "Wy¶wietl wymiary ekranu"
+msgstr "Wy¶wietl wymiary ekranu (szeroko¶æ, wysoko¶æ)"
 
 #: ../display/d.info/main.c:47
-#, fuzzy
 msgid "Display active frame rectangle"
-msgstr "Wy¶wietl prostok±tny ekran"
+msgstr "Wy¶wietl prostok±tn± aktywn± ramkê"
 
 #: ../display/d.info/main.c:51
-#, fuzzy
 msgid "Display screen rectangle of current region"
-msgstr "Wy¶wietl prostok±tny ekran"
+msgstr "Wy¶wietl prostok±tny ekran bie¿±cego regionu"
 
 #: ../display/d.info/main.c:55
 msgid "Display number of colors"
@@ -1177,32 +1172,30 @@ msgid "Output in kilometers as well"
 msgstr ""
 
 #: ../display/d.menu/main.c:67
-#, fuzzy
 msgid ""
 "Creates and displays a menu within the active frame on the graphics monitor."
-msgstr "Wy¶wietla dane wektorowe GRASS w aktywnej ramce monitora graficznego."
+msgstr ""
+"Tworzy i wy¶wietla menu wewn±trz aktywnej ramki w monitorze graficznym."
 
 #: ../display/d.menu/main.c:76
 msgid "Sets the color of the menu background"
-msgstr ""
+msgstr "Ustawia kolor t³a menu"
 
 #: ../display/d.menu/main.c:84
-#, fuzzy
 msgid "Sets the color of the menu text"
-msgstr "Ustaw kolor tekstu w legendzie"
+msgstr "Ustawia kolor tekstu menu"
 
 #: ../display/d.menu/main.c:92
 msgid "Sets the color dividing lines of text"
-msgstr ""
+msgstr "Ustawia kolor linii podzia³u tekstu"
 
 #: ../display/d.menu/main.c:100
 msgid "Sets the menu text size (in percent)"
-msgstr ""
+msgstr "Ustawia wielko¶æ tekstu (w procentach)"
 
 #: ../display/d.menu/main.c:185
-#, fuzzy
 msgid "Menu must contain a title and at least one option"
-msgstr "Trzeba zaznaczyæ przynajmniej cztery punkty"
+msgstr "Menu musi zawieraæ tytu³ i przynajmniej jedn± opcjê"
 
 #: ../display/d.mon/cmd/main.c:31
 msgid "To establish and control use of a graphics display monitor."
@@ -1434,41 +1427,38 @@ msgid "  Distance to the network = %f, distance from the network = %f\n"
 msgstr "Odleg³o¶æ do sieci = %f, odleg³o¶æ od sieci = %f\n"
 
 #: ../display/d.profile/ExtractProf.c:95
-#, fuzzy, c-format
+#, c-format
 msgid "unable to open [%s] in [%s]"
-msgstr "Nie mo¿na otworzyæ mapy rastrowej [%s] w [%s]"
+msgstr "nie mo¿na otworzyæ [%s] w [%s]"
 
 #: ../display/d.profile/Range.c:92
 msgid "one moment ..."
-msgstr ""
+msgstr "proszê czekaæ ..."
 
 #: ../display/d.profile/What.c:31
-#, fuzzy, c-format
+#, c-format
 msgid "warning: unable to open [%s] in [%s]"
-msgstr "Nie mo¿na otworzyæ mapy rastrowej [%s] w [%s]"
+msgstr "ostrze¿enie: nie mo¿na otworzyæ [%s] w [%s]"
 
 #: ../display/d.profile/What.c:37
-#, fuzzy
 msgid "error reading cell file"
-msgstr "b³±d podczas odczytu danych rastrowych"
+msgstr "b³±d podczas odczytu pliku rastrowego"
 
 #: ../display/d.profile/main.c:51
 msgid "Interactive profile plotting utility with optional output."
-msgstr ""
+msgstr "Interaktywne narzêdzie plotowania profilu z opcjonalnym wynikiem."
 
 #: ../display/d.profile/main.c:59
-#, fuzzy
 msgid "Raster map to be profiled"
-msgstr "Mapa(y) rastrowa(e) do przeanalizowania"
+msgstr "Mapa(y) rastrowa(e) dla której ma byæ utworzony profil"
 
 #: ../display/d.profile/main.c:66
 msgid "Optional display raster"
 msgstr ""
 
 #: ../display/d.profile/main.c:72
-#, fuzzy
 msgid "Output profile data to file(s) with prefix 'name'"
-msgstr "Prefix nazwy wyj¶ciowego rastra"
+msgstr "Zapisz wyj¶ciowe dane profilu do pliku(ów) z prefiksem 'nazwa'"
 
 #: ../display/d.profile/main.c:95
 #, c-format
@@ -1481,21 +1471,22 @@ msgid ""
 "\n"
 "\n"
 "Use mouse to choose action"
-msgstr "U¿yj myszki by okre¶liæ po³o¿enie i rozmiar legendy"
+msgstr ""
+"\n"
+"\n"
+"U¿yj myszki by wybraæ czynno¶æ"
 
 #: ../display/d.profile/main.c:189 ../display/d.profile/main.c:374
 msgid "Use 'd.frame -e' to remove left over frames"
 msgstr ""
 
 #: ../display/d.profile/main.c:277
-#, fuzzy
 msgid "Error opening cell-file"
-msgstr "Odczytywania mapy"
+msgstr "B³±d przy otwieraniu pliku rastrowego"
 
 #: ../display/d.profile/main.c:279
-#, fuzzy
 msgid "Error reading from cell-file"
-msgstr "B³±d podczas odczytu rzêdu danych"
+msgstr "B³±d podczas odczytu pliku rastrowego"
 
 #: ../display/d.profile/main.c:281
 msgid "Mysterious window inconsistancy error"
@@ -1507,9 +1498,9 @@ msgid "%s: Couldn't open raster <%s@%s>"
 msgstr "Nie mo¿na znale¼æ pliku rastrowego %s"
 
 #: ../display/d.profile/main.c:417
-#, fuzzy, c-format
+#, c-format
 msgid "%s: Couldn't read color table for <%s@%s>"
-msgstr "%s: Czcionka nie mo¿ by¶ czytana"
+msgstr "%s: nie mo¿na by³o odczytaæ tablicy kolorów dla <%s@%s>"
 
 #: ../display/d.profile/utils.c:8
 #, c-format
@@ -2343,7 +2334,7 @@ msgstr "Identyfikuj tylko jedn± lokalizacjê"
 
 #: ../display/d.what.rast/main.c:73 ../display/d.what.vect/main.c:72
 msgid "Terse output. For parsing by programs"
-msgstr ""
+msgstr "Zwiêz³y wynik. Dla przegl±dania przez programy"
 
 #: ../display/d.what.rast/main.c:78
 msgid "Print out col/row for the entire map in grid resolution of the region"
@@ -2378,6 +2369,8 @@ msgid ""
 "Allows the user to interactively query a vector map layer at user-selected "
 "locations within the current geographic region."
 msgstr ""
+"Pozwala u¿ytkownikowi interaktywnie odpytaæ warstwê wektorow± w wybranej "
+"przez u¿ytkownika przestrzeni bie¿±cego regionu geograficznego."
 
 #: ../display/d.what.vect/main.c:68 ../vector/v.what/main.c:91
 msgid "Name of existing vector map"
@@ -2385,11 +2378,11 @@ msgstr "Nazwa istniej±cego pliku wektorowego"
 
 #: ../display/d.what.vect/main.c:76
 msgid "Print information as plain text to terminal window"
-msgstr ""
+msgstr "Wy¶wietl informacje jako czysty tekst w oknie terminala"
 
 #: ../display/d.what.vect/main.c:80 ../vector/v.what/main.c:95
 msgid "Print topological information (debugging)"
-msgstr ""
+msgstr "Wy¶wietl informacje topologiczne (debugging)"
 
 #: ../display/d.what.vect/main.c:84
 msgid "Enable flashing (slower)"
@@ -2397,7 +2390,7 @@ msgstr ""
 
 #: ../display/d.what.vect/main.c:88
 msgid "Open form in edit mode"
-msgstr ""
+msgstr "Otwórz formê w trybie edycji"
 
 #: ../display/d.what.vect/main.c:110
 #, c-format
@@ -2407,7 +2400,7 @@ msgstr "Nie mo¿na otworzyæ mapy wektorowej [%s]"
 #: ../display/d.what.vect/main.c:134 ../vector/v.what/main.c:175
 #, c-format
 msgid "%s: You must build topology on vector file"
-msgstr ""
+msgstr "%s: Musisz zbudowaæ topologiê na pliku wektorowym"
 
 #: ../display/d.what.vect/main.c:136
 msgid "Building spatial index ..."
@@ -17041,7 +17034,7 @@ msgstr "Plik rastrowy punktów pocz±tkowych"
 #: ../visualization/nviz/src/nviz_init.c:95
 #, fuzzy
 msgid "Name of existing 3dcell map"
-msgstr "Nazwa mapy rastrowej"
+msgstr "Nazwa istniej±cego pliku wektorowego"
 
 #: ../visualization/nviz/src/nviz_init.c:99
 msgid "Quickstart - Do not load any data"
@@ -17122,613 +17115,606 @@ msgstr ""
 msgid "Error reading wildcard."
 msgstr ""
 
-#~ msgid "Draw geographic grid"
-#~ msgstr "Rysuj siatkê geograficzn±"
+msgid "Draw geographic grid"
+msgstr "Rysuj siatkê geograficzn±"
 
-#~ msgid "raster input map"
-#~ msgstr "wej¶ciowa mapa rastrowa"
+msgid "raster input map"
+msgstr "wej¶ciowa mapa rastrowa"
 
-#~ msgid "Display monitor to start"
-#~ msgstr "Uruchom monitor wy¶wietlania"
+msgid "Display monitor to start"
+msgstr "Uruchom monitor wy¶wietlania"
 
-#~ msgid "Width in pixels of new display monitor"
-#~ msgstr "Szeroko¶æ nowego monitora wy¶wietlania w pikselach"
+msgid "Width in pixels of new display monitor"
+msgstr "Szeroko¶æ nowego monitora wy¶wietlania w pikselach"
 
-#~ msgid "Height in pixels of new display monitor"
-#~ msgstr "Wysoko¶æ nowego monitora wy¶wietlania w pikselach"
+msgid "Height in pixels of new display monitor"
+msgstr "Wysoko¶æ nowego monitora wy¶wietlania w pikselach"
 
-#~ msgid "move current displayed maps to another monitor"
-#~ msgstr "przenie¶ wy¶wietlane obecnie mapy do innego monitora"
+msgid "move current displayed maps to another monitor"
+msgstr "przenie¶ wy¶wietlane obecnie mapy do innego monitora"
 
-#~ msgid "clear target monitor before moving"
-#~ msgstr "wyczy¶æ docelowy monitor przed przeniesieniem"
+msgid "clear target monitor before moving"
+msgstr "wyczy¶æ docelowy monitor przed przeniesieniem"
 
-#~ msgid "stay with source monitor"
-#~ msgstr "pozostaw pierwotny monitor"
+msgid "stay with source monitor"
+msgstr "pozostaw pierwotny monitor"
 
-#~ msgid "kill source monitor after moving"
-#~ msgstr "zamknij pierwotny monitor po przeniesieniu"
+msgid "kill source monitor after moving"
+msgstr "zamknij pierwotny monitor po przeniesieniu"
 
-#~ msgid "Target monitor"
-#~ msgstr "Docelowy monitor"
+msgid "Target monitor"
+msgstr "Docelowy monitor"
 
-#~ msgid "Source monitor"
-#~ msgstr "Pierwotny monitor"
+msgid "Source monitor"
+msgstr "Pierwotny monitor"
 
-#~ msgid "Export display monitor to a GpsDrive compatible backdrop image"
-#~ msgstr ""
-#~ "Eksportuj zawarto¶æ monitora do zrzutu obrazu kompatybilnego z GpsDrive"
+msgid "Export display monitor to a GpsDrive compatible backdrop image"
+msgstr ""
+"Eksportuj zawarto¶æ monitora do zrzutu obrazu kompatybilnego z GpsDrive"
 
-#~ msgid "name for new map image (lives in ~/.gpsdrive)"
-#~ msgstr "nazwa dla nowego obrazu mapy (lives in ~/.gpsdrive)"
+msgid "name for new map image (lives in ~/.gpsdrive)"
+msgstr "nazwa dla nowego obrazu mapy (lives in ~/.gpsdrive)"
 
-#~ msgid "Make JPEG instead of PNG image"
-#~ msgstr "Utwórz obraz JPEG zamiast PNG"
+msgid "Make JPEG instead of PNG image"
+msgstr "Utwórz obraz JPEG zamiast PNG"
 
-#~ msgid "Saves active display monitor to PNG file in home directory"
-#~ msgstr ""
-#~ "Zapisuje zawarto¶æ aktywnego monitora do pliku PNG w katalogu domowym"
+msgid "Saves active display monitor to PNG file in home directory"
+msgstr "Zapisuje zawarto¶æ aktywnego monitora do pliku PNG w katalogu domowym"
 
-#~ msgid "Name of PNG file"
-#~ msgstr "Nazwa pliku PNG"
+msgid "Name of PNG file"
+msgstr "Nazwa pliku PNG"
 
-#~ msgid "Resolution of output file (single=1, double=2, quad=4)"
-#~ msgstr ""
-#~ "Rozdzielczo¶æ pliku wyj¶ciowego (pojedyñcza=1, podwójna=2, poczwórna=4)"
+msgid "Resolution of output file (single=1, double=2, quad=4)"
+msgstr ""
+"Rozdzielczo¶æ pliku wyj¶ciowego (pojedyñcza=1, podwójna=2, poczwórna=4)"
 
-#~ msgid "Saves active display monitor to graphics file in home directory"
-#~ msgstr ""
-#~ "Zapisuje zawarto¶æ aktywnego monitora do pliku graficznego w katalogu "
-#~ "domowym"
+msgid "Saves active display monitor to graphics file in home directory"
+msgstr ""
+"Zapisuje zawarto¶æ aktywnego monitora do pliku graficznego w katalogu domowym"
 
-#~ msgid "Name of output file (do NOT add extension)"
-#~ msgstr "Nazwa wyj¶ciowego pliku (nie dodawaj rozszerzenia)"
+msgid "Name of output file (do NOT add extension)"
+msgstr "Nazwa wyj¶ciowego pliku (nie dodawaj rozszerzenia)"
 
-#~ msgid "Graphics file format"
-#~ msgstr "Format pliku graficznego"
+msgid "Graphics file format"
+msgstr "Format pliku graficznego"
 
-#~ msgid "Compression for PNG files (0=none, 1=fastest, 9=most)"
-#~ msgstr "Kompresja dla pliku PNG (0=bez kompresji, 1=szybsza, 9=najwiêksza)"
+msgid "Compression for PNG files (0=none, 1=fastest, 9=most)"
+msgstr "Kompresja dla pliku PNG (0=bez kompresji, 1=szybsza, 9=najwiêksza)"
 
-#~ msgid "Size/quality for JPEG files (10=smallest/worst, 100=largest/best)"
-#~ msgstr ""
-#~ "Rozmiar/jako¶æ dla pliku JPEG (10=najmniejszy/najgorsza, 100=najwiêkszy/"
-#~ "najlepsza)"
+msgid "Size/quality for JPEG files (10=smallest/worst, 100=largest/best)"
+msgstr ""
+"Rozmiar/jako¶æ dla pliku JPEG (10=najmniejszy/najgorsza, 100=najwiêkszy/"
+"najlepsza)"
 
-#~ msgid "Transparent background"
-#~ msgstr "Prze¼roczyste t³o"
+msgid "Transparent background"
+msgstr "Prze¼roczyste t³o"
 
-#~ msgid "Set background color to black (white default)"
-#~ msgstr "Ustaw kolor t³a jako czarne (domy¶lnie bia³e)"
+msgid "Set background color to black (white default)"
+msgstr "Ustaw kolor t³a jako czarne (domy¶lnie bia³e)"
 
-#~ msgid "Name of raster angle map"
-#~ msgstr "Nazwa rastrowej mapy k±tów"
+msgid "Name of raster angle map"
+msgstr "Nazwa rastrowej mapy k±tów"
 
 #, fuzzy
-#~ msgid "Name of optional EPS output file"
-#~ msgstr "Nazwa pliku wyj¶ciowego"
+msgid "Name of optional EPS output file"
+msgstr "Nazwa pliku wyj¶ciowego"
 
-#~ msgid "Displays a raster map and its legend on a graphics window"
-#~ msgstr "Wy¶wietla mapê rastrow± i jej legendê w oknie graficznym"
+msgid "Displays a raster map and its legend on a graphics window"
+msgstr "Wy¶wietla mapê rastrow± i jej legendê w oknie graficznym"
 
-#~ msgid "omit entries with missing label"
-#~ msgstr "pomiñ pozycje bez etykiet"
+msgid "omit entries with missing label"
+msgstr "pomiñ pozycje bez etykiet"
 
-#~ msgid "Number of lines to appear in the legend"
-#~ msgstr "Liczba linii legendy"
+msgid "Number of lines to appear in the legend"
+msgstr "Liczba linii legendy"
 
-#~ msgid "redraw current displayed maps in GRASS monitor"
-#~ msgstr "od¶wierz aktualnie wyswietlane mapy w monitorze GRASS'a"
+msgid "redraw current displayed maps in GRASS monitor"
+msgstr "od¶wierz aktualnie wyswietlane mapy w monitorze GRASS'a"
 
-#~ msgid "Resizes active display monitor"
-#~ msgstr "Zmieñ rozmiar aktywnego monitora wy¶wietlania"
+msgid "Resizes active display monitor"
+msgstr "Zmieñ rozmiar aktywnego monitora wy¶wietlania"
 
-#~ msgid "New width for window"
-#~ msgstr "Nowa szeroko¶æ dla okna"
+msgid "New width for window"
+msgstr "Nowa szeroko¶æ dla okna"
 
-#~ msgid "New height for window"
-#~ msgstr "Nowa wysoko¶æ dla okna"
+msgid "New height for window"
+msgstr "Nowa wysoko¶æ dla okna"
 
-#~ msgid "Slide show of GRASS raster/vector maps"
-#~ msgstr "Pokaz slajdów map rastrowych/wektorowych GRASS'a"
+msgid "Slide show of GRASS raster/vector maps"
+msgstr "Pokaz slajdów map rastrowych/wektorowych GRASS'a"
 
-#~ msgid "Enter raster map to display in 1st frame"
-#~ msgstr "wprowad¼ mapê rastrow± do wy¶wietlenia w pierwszej ramce"
+msgid "Enter raster map to display in 1st frame"
+msgstr "wprowad¼ mapê rastrow± do wy¶wietlenia w pierwszej ramce"
 
-#~ msgid "Enter command to execute in 1st frame"
-#~ msgstr "Wprowad¼ komendê do wykonania w pierwszej ramce"
+msgid "Enter command to execute in 1st frame"
+msgstr "Wprowad¼ komendê do wykonania w pierwszej ramce"
 
-#~ msgid "Enter raster map to display in 2nd frame"
-#~ msgstr "Wprowad¼ mapê rastrow± do wy¶wietlenia w drugiej ramce"
+msgid "Enter raster map to display in 2nd frame"
+msgstr "Wprowad¼ mapê rastrow± do wy¶wietlenia w drugiej ramce"
 
-#~ msgid "How to split display"
-#~ msgstr "Jak podzieliæ monitor wy¶wietlania"
+msgid "How to split display"
+msgstr "Jak podzieliæ monitor wy¶wietlania"
 
-#~ msgid "Displays thematic vectormap"
-#~ msgstr "Wy¶wietla tematyczne mapy wektorowe"
+msgid "Displays thematic vectormap"
+msgstr "Wy¶wietla tematyczne mapy wektorowe"
 
-#~ msgid "Vector map to display thematically"
-#~ msgstr "Mapa wektorowa do wy¶wietlenia tematycznie"
+msgid "Vector map to display thematically"
+msgstr "Mapa wektorowa do wy¶wietlenia tematycznie"
 
-#~ msgid "Vector map type"
-#~ msgstr "Typ mapy wektorowej"
+msgid "Vector map type"
+msgstr "Typ mapy wektorowej"
 
-#~ msgid "Type of thematic display"
-#~ msgstr "Rodzaj wy¶wietlania tematycznego"
+msgid "Type of thematic display"
+msgstr "Rodzaj wy¶wietlania tematycznego"
 
-#~ msgid "Thematic divisions of data for display"
-#~ msgstr "Tematyczny podzia³ danych do wy¶wietlenia"
+msgid "Thematic divisions of data for display"
+msgstr "Tematyczny podzia³ danych do wy¶wietlenia"
 
-#~ msgid "Layer to use for thematic display"
-#~ msgstr "Warstwa jak ma byæ u¿yta dla wy¶wietlania tematycznego"
+msgid "Layer to use for thematic display"
+msgstr "Warstwa jak ma byæ u¿yta dla wy¶wietlania tematycznego"
 
-#~ msgid "Vector point icon for point data"
-#~ msgstr "Wektorowe ikony punktowe dla danych punktowych"
+msgid "Vector point icon for point data"
+msgstr "Wektorowe ikony punktowe dla danych punktowych"
 
-#~ msgid "Number of classes for interval theme (integer)"
-#~ msgstr "Liczba klas dla przedzia³ów tematu (ca³kowite)"
+msgid "Number of classes for interval theme (integer)"
+msgstr "Liczba klas dla przedzia³ów tematu (ca³kowite)"
 
-#~ msgid "Test name"
-#~ msgstr "Nazwa testu"
+msgid "Test name"
+msgstr "Nazwa testu"
 
-#~ msgid "display the HTML man pages of GRASS"
-#~ msgstr "wy¶witl strony podrêcznika GRASS w HTML"
+msgid "display the HTML man pages of GRASS"
+msgstr "wy¶witl strony podrêcznika GRASS w HTML"
 
-#~ msgid "manual entry to be displayed"
-#~ msgstr "manualne wej¶cie które ma byæ wyswietlone"
+msgid "manual entry to be displayed"
+msgstr "manualne wej¶cie które ma byæ wyswietlone"
 
-#~ msgid "print mapset name"
-#~ msgstr "wyswietl nazwê mapsetu"
+msgid "print mapset name"
+msgstr "wyswietl nazwê mapsetu"
 
-#~ msgid "data type"
-#~ msgstr "typ danych"
+msgid "data type"
+msgstr "typ danych"
 
-#~ msgid "output separator (default: newline)"
-#~ msgstr "wyj¶ciowy znak separacji (domy¶lnie: newline)"
+msgid "output separator (default: newline)"
+msgstr "wyj¶ciowy znak separacji (domy¶lnie: newline)"
 
-#~ msgid "raster to remove"
-#~ msgstr "raster do usuniêcia"
+msgid "raster to remove"
+msgstr "raster do usuniêcia"
 
-#~ msgid "3d raster to remove"
-#~ msgstr "raster 3D do usuniêcia"
+msgid "3d raster to remove"
+msgstr "raster 3D do usuniêcia"
 
-#~ msgid "region to remove"
-#~ msgstr "region do usuniêcia"
+msgid "region to remove"
+msgstr "region do usuniêcia"
 
-#~ msgid "icon to remove"
-#~ msgstr "ikona do usuniêcia"
+msgid "icon to remove"
+msgstr "ikona do usuniêcia"
 
-#~ msgid "label to remove"
-#~ msgstr "etykieta do usuniêcia"
+msgid "label to remove"
+msgstr "etykieta do usuniêcia"
 
-#~ msgid "3dview to remove"
-#~ msgstr "widok 3D do usuniêcia"
+msgid "3dview to remove"
+msgstr "widok 3D do usuniêcia"
 
-#~ msgid "group to remove"
-#~ msgstr "grupa do usuniêcia"
+msgid "group to remove"
+msgstr "grupa do usuniêcia"
 
-#~ msgid "sensor: LANDSAT"
-#~ msgstr "sensor: LANDSAT"
+msgid "sensor: LANDSAT"
+msgstr "sensor: LANDSAT"
 
-#~ msgid "sensor: QuickBird"
-#~ msgstr "sensor: QuickBird"
+msgid "sensor: QuickBird"
+msgstr "sensor: QuickBird"
 
-#~ msgid "sensor: SPOT"
-#~ msgstr "sensor: SPOT"
+msgid "sensor: SPOT"
+msgstr "sensor: SPOT"
 
-#~ msgid "raster input map (green: tm2 | qbird_green | spot1)"
-#~ msgstr "wej¶ciowa mapa rastrowa (green: tm2 | qbird_green | spot1)"
+msgid "raster input map (green: tm2 | qbird_green | spot1)"
+msgstr "wej¶ciowa mapa rastrowa (green: tm2 | qbird_green | spot1)"
 
-#~ msgid "Import of SPOT VGT NDVI file into a raster map"
-#~ msgstr "Import pliku SPOT VGT NDVI do mapy rastrowej"
+msgid "Import of SPOT VGT NDVI file into a raster map"
+msgstr "Import pliku SPOT VGT NDVI do mapy rastrowej"
 
-#~ msgid "name for new raster file"
-#~ msgstr "nazwa nowego pliku rastrowego"
+msgid "name for new raster file"
+msgstr "nazwa nowego pliku rastrowego"
 
-#~ msgid "raster input maps"
-#~ msgstr "wej¶ciowe mapy rastrowe"
+msgid "raster input maps"
+msgstr "wej¶ciowe mapy rastrowe"
 
-#~ msgid "raster input map (LANDSAT channel 1)"
-#~ msgstr "wej¶ciowa mapa rastrowa (LANDSAT channel 1)"
+msgid "raster input map (LANDSAT channel 1)"
+msgstr "wej¶ciowa mapa rastrowa (LANDSAT channel 1)"
 
-#~ msgid "raster input map (LANDSAT channel 2)"
-#~ msgstr "wej¶ciowa mapa rastrowa (LANDSAT channel 2)"
+msgid "raster input map (LANDSAT channel 2)"
+msgstr "wej¶ciowa mapa rastrowa (LANDSAT channel 2)"
 
-#~ msgid "raster input map (LANDSAT channel 3)"
-#~ msgstr "wej¶ciowa mapa rastrowa (LANDSAT channel 3)"
+msgid "raster input map (LANDSAT channel 3)"
+msgstr "wej¶ciowa mapa rastrowa (LANDSAT channel 3)"
 
-#~ msgid "raster input map (LANDSAT channel 4)"
-#~ msgstr "wej¶ciowa mapa rastrowa (LANDSAT channel 4)"
+msgid "raster input map (LANDSAT channel 4)"
+msgstr "wej¶ciowa mapa rastrowa (LANDSAT channel 4)"
 
-#~ msgid "raster input map (LANDSAT channel 5)"
-#~ msgstr "wej¶ciowa mapa rastrowa (LANDSAT channel 5)"
+msgid "raster input map (LANDSAT channel 5)"
+msgstr "wej¶ciowa mapa rastrowa (LANDSAT channel 5)"
 
-#~ msgid "raster input map (LANDSAT channel 7)"
-#~ msgstr "wej¶ciowa mapa rastrowa (LANDSAT channel 7)"
+msgid "raster input map (LANDSAT channel 7)"
+msgstr "wej¶ciowa mapa rastrowa (LANDSAT channel 7)"
 
-#~ msgid "raster output TC maps prefix"
-#~ msgstr "prefiks wyj¶ciowej mapy rastrowej TC"
+msgid "raster output TC maps prefix"
+msgstr "prefiks wyj¶ciowej mapy rastrowej TC"
 
-#~ msgid "Input coordinate file (omit to read from stdin)"
-#~ msgstr "Wej¶ciowy plik wspó³rzêdnych (pomiñ odczyt z stdin"
+msgid "Input coordinate file (omit to read from stdin)"
+msgstr "Wej¶ciowy plik wspó³rzêdnych (pomiñ odczyt z stdin"
 
-#~ msgid "Output coordinate file (omit to send to stdout)"
-#~ msgstr "Wyj¶ciowy plik wspó³rzêdnych (pomiñ wysy³anie do stdout)"
+msgid "Output coordinate file (omit to send to stdout)"
+msgstr "Wyj¶ciowy plik wspó³rzêdnych (pomiñ wysy³anie do stdout)"
 
-#~ msgid "Output projection parameters (PROJ.4 style)"
-#~ msgstr "Wyj¶ciowe parametry projekcji (w stylu PROJ.4)"
+msgid "Output projection parameters (PROJ.4 style)"
+msgstr "Wyj¶ciowe parametry projekcji (w stylu PROJ.4)"
 
-#~ msgid "Name of first raster map for blending"
-#~ msgstr "Nazwa pierwszej mapy rastrowej do wymieszania"
+msgid "Name of first raster map for blending"
+msgstr "Nazwa pierwszej mapy rastrowej do wymieszania"
 
-#~ msgid "Raster map in which to fill nulls"
-#~ msgstr "Mapa rastrowa w której maj± byæ wype³nione zera"
+msgid "Raster map in which to fill nulls"
+msgstr "Mapa rastrowa w której maj± byæ wype³nione zera"
 
-#~ msgid "Spline tension parameter"
-#~ msgstr "Parametr napiecia krzywej spline"
+msgid "Spline tension parameter"
+msgstr "Parametr napiecia krzywej spline"
 
-#~ msgid "Output GRASS image file"
-#~ msgstr "Wyj¶ciowy plik obrazu GRASS'a"
+msgid "Output GRASS image file"
+msgstr "Wyj¶ciowy plik obrazu GRASS'a"
 
-#~ msgid "Request"
-#~ msgstr "¯±danie"
+msgid "Request"
+msgstr "¯±danie"
 
-#~ msgid "Download"
-#~ msgstr "¦ci±gnij"
+msgid "Download"
+msgstr "¦ci±gnij"
 
-#~ msgid "Keep band numbers instead of using band color names."
-#~ msgstr "Zachowaj numery pasm zamiast u¿ywaæ nazw kolorów pasm"
+msgid "Keep band numbers instead of using band color names."
+msgstr "Zachowaj numery pasm zamiast u¿ywaæ nazw kolorów pasm"
 
-#~ msgid "Import"
-#~ msgstr "Import"
+msgid "Import"
+msgstr "Import"
 
-#~ msgid "Name for resultant raster map"
-#~ msgstr "Nazwa dla wynikowego pliku rastrowego"
+msgid "Name for resultant raster map"
+msgstr "Nazwa dla wynikowego pliku rastrowego"
 
-#~ msgid "Reprojection method to use"
-#~ msgstr "Metoda reprojekcji"
+msgid "Reprojection method to use"
+msgstr "Metoda reprojekcji"
 
-#~ msgid "Resulting output map"
-#~ msgstr "Wynikowa mapa wyj¶ciowa"
+msgid "Resulting output map"
+msgstr "Wynikowa mapa wyj¶ciowa"
 
-#~ msgid "Raster map to use as MASK"
-#~ msgstr "U¿yj mapy rastrowej jako maski"
+msgid "Raster map to use as MASK"
+msgstr "U¿yj mapy rastrowej jako maski"
 
-#~ msgid "Exports GRASS raster data into various formats (requires GDAL)"
-#~ msgstr ""
-#~ "Eksportuje dane rastrowe GRASS do ró¿nych formatów (wymaga biblioteki "
-#~ "GDAL)"
+msgid "Exports GRASS raster data into various formats (requires GDAL)"
+msgstr ""
+"Eksportuje dane rastrowe GRASS do ró¿nych formatów (wymaga biblioteki GDAL)"
 
-#~ msgid "list supported output formats"
-#~ msgstr "Wy¶wietl listê wspieranych formatów wyj¶ciowych"
+msgid "list supported output formats"
+msgstr "Wy¶wietl listê wspieranych formatów wyj¶ciowych"
 
-#~ msgid "GIS format to write (case sensitive, see also -l flag)"
-#~ msgstr "format GIS do zapisania (zobacz tak¿e flaga -l)"
+msgid "GIS format to write (case sensitive, see also -l flag)"
+msgstr "format GIS do zapisania (zobacz tak¿e flaga -l)"
 
-#~ msgid "file type"
-#~ msgstr "typ pliku"
+msgid "file type"
+msgstr "typ pliku"
 
-#~ msgid "Name of output file"
-#~ msgstr "Nazwa pliku wyj¶ciowego"
+msgid "Name of output file"
+msgstr "Nazwa pliku wyj¶ciowego"
 
-#~ msgid "Name of raster plane to be created."
-#~ msgstr "Nazwa p³aszczyzny rastrowej która ma byæ utworzona."
+msgid "Name of raster plane to be created."
+msgstr "Nazwa p³aszczyzny rastrowej która ma byæ utworzona."
 
-#~ msgid "Easting coordinate of a point on the plane."
-#~ msgstr "Wspó³rzêdna 'Easting' punktu na p³aszczy¼nie."
+msgid "Easting coordinate of a point on the plane."
+msgstr "Wspó³rzêdna 'Easting' punktu na p³aszczy¼nie."
 
-#~ msgid "Northing coordinate of a point on the plane."
-#~ msgstr "Wspó³rzêdna 'Northing' punktu na p³aszczy¼nie."
+msgid "Northing coordinate of a point on the plane."
+msgstr "Wspó³rzêdna 'Northing' punktu na p³aszczy¼nie."
 
-#~ msgid "Elevation coordinate of a point on the plane."
-#~ msgstr "Wspó³rzêdna wysoko¶ci punktu p³aszczyzny."
+msgid "Elevation coordinate of a point on the plane."
+msgstr "Wspó³rzêdna wysoko¶ci punktu p³aszczyzny."
 
-#~ msgid "Type of the raster map to be created."
-#~ msgstr "Typ mapy rastrowej która ma byæ utworzona."
+msgid "Type of the raster map to be created."
+msgstr "Typ mapy rastrowej która ma byæ utworzona."
 
-#~ msgid "reclass raster output map"
-#~ msgstr "przeklasuj wyj¶ciow± mapê rastrow±"
+msgid "reclass raster output map"
+msgstr "przeklasuj wyj¶ciow± mapê rastrow±"
 
-#~ msgid "Input elevation map"
-#~ msgstr "Wej¶ciowa mapa wysoko¶ci"
+msgid "Input elevation map"
+msgstr "Wej¶ciowa mapa wysoko¶ci"
 
-#~ msgid "Output shaded relief map name"
-#~ msgstr "Nazwa wyj¶ciowej mapy cieniowanej rze¼by terenu"
+msgid "Output shaded relief map name"
+msgstr "Nazwa wyj¶ciowej mapy cieniowanej rze¼by terenu"
 
-#~ msgid "Altitude of the sun in degrees above the horizon"
-#~ msgstr "Wysoko¶æ s³oñca nad horyzontem w stopniach"
+msgid "Altitude of the sun in degrees above the horizon"
+msgstr "Wysoko¶æ s³oñca nad horyzontem w stopniach"
 
-#~ msgid "Azimuth of the sun in degrees to the east of north"
-#~ msgstr "Azymut s³oñca mierzony w stopniach od pó³nocy ku wschodowi"
+msgid "Azimuth of the sun in degrees to the east of north"
+msgstr "Azymut s³oñca mierzony w stopniach od pó³nocy ku wschodowi"
 
-#~ msgid "Factor for exaggerating relief"
-#~ msgstr "Wspó³czynnik przewy¿szenia rze¼by"
+msgid "Factor for exaggerating relief"
+msgstr "Wspó³czynnik przewy¿szenia rze¼by"
 
-#~ msgid "Scale factor for converting horizontal units to elevation units"
-#~ msgstr ""
-#~ "Wspó³czynnik skalowy do konwersji jednostek poziomych na jednostki "
-#~ "wysoko¶ci"
+msgid "Scale factor for converting horizontal units to elevation units"
+msgstr ""
+"Wspó³czynnik skalowy do konwersji jednostek poziomych na jednostki wysoko¶ci"
 
-#~ msgid "Produces shell script output"
-#~ msgstr "Tworzy produkt wyj¶ciowy skryptu pow³oki"
+msgid "Produces shell script output"
+msgstr "Tworzy produkt wyj¶ciowy skryptu pow³oki"
 
-#~ msgid "Maximum number of rows for a tile in the source projection"
-#~ msgstr "Maksymalna liczba rzêdów na czê¶æ w ¼ród³owej projekcji"
+msgid "Maximum number of rows for a tile in the source projection"
+msgstr "Maksymalna liczba rzêdów na czê¶æ w ¼ród³owej projekcji"
 
-#~ msgid "Number of cells tiles should overlap in each direction"
-#~ msgstr ""
-#~ "Liczba komórek którymi czê¶æ pokrywa siê z innymi we wszystkich kierunkach"
+msgid "Number of cells tiles should overlap in each direction"
+msgstr ""
+"Liczba komórek którymi czê¶æ pokrywa siê z innymi we wszystkich kierunkach"
 
-#~ msgid "Output field seperator"
-#~ msgstr "Wyj¶ciowy separator pól"
+msgid "Output field seperator"
+msgstr "Wyj¶ciowy separator pól"
 
-#~ msgid "calculates univariate statistics from a GRASS raster map"
-#~ msgstr "oblicza statystyki z mapy rastrowej GRASS"
+msgid "calculates univariate statistics from a GRASS raster map"
+msgstr "oblicza statystyki z mapy rastrowej GRASS"
 
 #, fuzzy
-#~ msgid "Resulting output grid3D volume"
-#~ msgstr "Wynikowa mapa wyj¶ciowa"
+msgid "Resulting output grid3D volume"
+msgstr "Wynikowa mapa wyj¶ciowa"
 
-#~ msgid ""
-#~ "adds one or more columns to the attribute table connected to a given "
-#~ "vector map"
-#~ msgstr ""
-#~ "dodaje jedn± lub wiêcej kolumn do tabeli atrybutów po³±czonej z dan±  map±"
+msgid ""
+"adds one or more columns to the attribute table connected to a given vector "
+"map"
+msgstr ""
+"dodaje jedn± lub wiêcej kolumn do tabeli atrybutów po³±czonej z dan±  map±"
 
-#~ msgid "Layer where to add column"
-#~ msgstr "Warstwa do której ma byæ dodana kolumna"
+msgid "Layer where to add column"
+msgstr "Warstwa do której ma byæ dodana kolumna"
 
-#~ msgid "Name of new attribute table (default: vector map name)"
-#~ msgstr "Nazwa nowej tabeli atrybutów (domyslnie: nazwa mapy wektorowej)"
+msgid "Name of new attribute table (default: vector map name)"
+msgstr "Nazwa nowej tabeli atrybutów (domyslnie: nazwa mapy wektorowej)"
 
-#~ msgid "Layer where to add new attribute table"
-#~ msgstr "Warstwa do której ma byæ dodana nowa tabela atrybutów"
+msgid "Layer where to add new attribute table"
+msgstr "Warstwa do której ma byæ dodana nowa tabela atrybutów"
 
-#~ msgid ""
-#~ "Name and type of the new column(s) (types depend on database backend, but "
-#~ "all support VARCHAR(), INT, DOUBLE and DATE)"
-#~ msgstr ""
-#~ "Nazwa i typ nowej kolumny (typy w zale¿no¶ci od database backend, ale "
-#~ "wszystkie wspieraj± VARCHAR(), INT, DOUBLE i DATE)"
+msgid ""
+"Name and type of the new column(s) (types depend on database backend, but "
+"all support VARCHAR(), INT, DOUBLE and DATE)"
+msgstr ""
+"Nazwa i typ nowej kolumny (typy w zale¿no¶ci od database backend, ale "
+"wszystkie wspieraj± VARCHAR(), INT, DOUBLE i DATE)"
 
-#~ msgid "removes existing attribute table of a vector map"
-#~ msgstr "usuñ istniej±c± tabelê atrybutów mapy wektorowej"
+msgid "removes existing attribute table of a vector map"
+msgstr "usuñ istniej±c± tabelê atrybutów mapy wektorowej"
 
-#~ msgid "vector map from which to remove attribute table"
-#~ msgstr "nazwa mapy wektorowej z której ma byæ usuniêta tabela atrybutów"
+msgid "vector map from which to remove attribute table"
+msgstr "nazwa mapy wektorowej z której ma byæ usuniêta tabela atrybutów"
 
-#~ msgid "name of existing attribute table (default: vector map name)"
-#~ msgstr ""
-#~ "nazwa istniej±cej tabeli atrybutów (domy¶lnie: nazwa mapy wektorowej)"
+msgid "name of existing attribute table (default: vector map name)"
+msgstr "nazwa istniej±cej tabeli atrybutów (domy¶lnie: nazwa mapy wektorowej)"
 
-#~ msgid "Reconnect vectors to a new database"
-#~ msgstr "Pod³±cz wektory do nowej bazy danych"
+msgid "Reconnect vectors to a new database"
+msgstr "Pod³±cz wektory do nowej bazy danych"
 
-#~ msgid "Name of new database"
-#~ msgstr "Nazwa nowej bazy danych"
+msgid "Name of new database"
+msgstr "Nazwa nowej bazy danych"
 
-#~ msgid "column to update"
-#~ msgstr "kolumna która ma byæ uaktualniona"
+msgid "column to update"
+msgstr "kolumna która ma byæ uaktualniona"
 
-#~ msgid "verbose mode"
-#~ msgstr "pokazuj komunikaty"
+msgid "verbose mode"
+msgstr "pokazuj komunikaty"
 
-#~ msgid "name for new binary vector file (omit for display to stdout)"
-#~ msgstr ""
-#~ "nazwa nowego vektorowego pliku binarnego (pomiñ wy¶wietlanie w stdout)"
+msgid "name for new binary vector file (omit for display to stdout)"
+msgstr "nazwa nowego vektorowego pliku binarnego (pomiñ wy¶wietlanie w stdout)"
 
-#~ msgid "Import of E00 file into a vector map."
-#~ msgstr "Import pliku E00 do mapy wektorowej"
+msgid "Import of E00 file into a vector map."
+msgstr "Import pliku E00 do mapy wektorowej"
 
-#~ msgid "E00 file"
-#~ msgstr "plik E00"
+msgid "E00 file"
+msgstr "plik E00"
 
-#~ msgid "Input type point, line or area"
-#~ msgstr "Wprowad¼ typ punkt, linia lub obszar"
+msgid "Input type point, line or area"
+msgstr "Wprowad¼ typ punkt, linia lub obszar"
 
-#~ msgid "name for new binary vector file"
-#~ msgstr "nazwa nowego binarnego pliku wektorowego"
+msgid "name for new binary vector file"
+msgstr "nazwa nowego binarnego pliku wektorowego"
 
-#~ msgid "device or file used to import data"
-#~ msgstr "urz±dzenie lub plik uzyty do importu danych"
+msgid "device or file used to import data"
+msgstr "urz±dzenie lub plik uzyty do importu danych"
 
-#~ msgid "name for new vector file (omit for display to stdout)"
-#~ msgstr "nazwa nowego pliku wektorowego (pomiñ dla wy¶wietlania do stdout)"
+msgid "name for new vector file (omit for display to stdout)"
+msgstr "nazwa nowego pliku wektorowego (pomiñ dla wy¶wietlania do stdout)"
 
-#~ msgid "name of input file in Mapgen/Matlab format"
-#~ msgstr "nazwa wejsciowego pliku w formacie Mapgen/Matlab"
+msgid "name of input file in Mapgen/Matlab format"
+msgstr "nazwa wejsciowego pliku w formacie Mapgen/Matlab"
 
-#~ msgid "Name of raster map to calculate statistics from"
-#~ msgstr "Nazwa mapy rastrowej dla której maj± byæ obliczone statystyki"
+msgid "Name of raster map to calculate statistics from"
+msgstr "Nazwa mapy rastrowej dla której maj± byæ obliczone statystyki"
 
-#~ msgid "column prefix for new attribute columns"
-#~ msgstr "prefiks kolumny dla nowych kolumn tabeli atrybutów"
+msgid "column prefix for new attribute columns"
+msgstr "prefiks kolumny dla nowych kolumn tabeli atrybutów"
 
-#~ msgid "Reports geometry statistics for vectors"
-#~ msgstr "Tworzy raport statystyk geometrycznych dla wektorów"
+msgid "Reports geometry statistics for vectors"
+msgstr "Tworzy raport statystyk geometrycznych dla wektorów"
 
-#~ msgid "Input vector map"
-#~ msgstr "Wej¶ciowa mapa wektorowa"
+msgid "Input vector map"
+msgstr "Wej¶ciowa mapa wektorowa"
 
-#~ msgid "Value to calculate"
-#~ msgstr "Warto¶æ do obliczenia"
+msgid "Value to calculate"
+msgstr "Warto¶æ do obliczenia"
 
-#~ msgid "Name of data table"
-#~ msgstr "Nazwa tabeli danych"
+msgid "Name of data table"
+msgstr "Nazwa tabeli danych"
 
-#~ msgid "Database driver"
-#~ msgstr "Sterownik bazy danych"
+msgid "Database driver"
+msgstr "Sterownik bazy danych"
 
-#~ msgid "vector map to be queried"
-#~ msgstr "mapa wektorowa do odpytania"
+msgid "vector map to be queried"
+msgstr "mapa wektorowa do odpytania"
 
-#~ msgid "Query layer"
-#~ msgstr "Warstwa zapytania"
+msgid "Query layer"
+msgstr "Warstwa zapytania"
 
-#~ msgid "Query column name"
-#~ msgstr "Nazwa kolumny zapytania"
+msgid "Query column name"
+msgstr "Nazwa kolumny zapytania"
 
-#~ msgid "Output raster map"
-#~ msgstr "Wyj¶ciowa mapa rastrowa"
+msgid "Output raster map"
+msgstr "Wyj¶ciowa mapa rastrowa"
 
-#~ msgid ""
-#~ "GRASS module to create a fractal surface of a given fractal dimension. "
-#~ "Uses spectral synthesis method. Can create intermediate layers showing "
-#~ "the build up of different spectral coefficients (see Saupe, pp.106-107 "
-#~ "for an example of this). Use this module to generate naturally looking "
-#~ "synthetical elevation models (DEM)."
-#~ msgstr ""
-#~ "Modu³ GRASS'a do tworzenia powierzchni fraktalnych o wymiarze danego "
-#~ "fraktala. U¿ywa metody syntezy fraktalnej. Potrafi tworzyæ warstwy "
-#~ "po¶rednie ukazuj±ce budowê ró¿nych wspó³czynników fraktalnych (zobacz "
-#~ "Saupe, str. 106-107 dla tego przyk³adu). U¿yj tego modu³u aby tworzyæ "
-#~ "naturalnie wygl±daj±ce sztuczne modele terenu (DEM)."
+msgid ""
+"GRASS module to create a fractal surface of a given fractal dimension. Uses "
+"spectral synthesis method. Can create intermediate layers showing the build "
+"up of different spectral coefficients (see Saupe, pp.106-107 for an example "
+"of this). Use this module to generate naturally looking synthetical "
+"elevation models (DEM)."
+msgstr ""
+"Modu³ GRASS'a do tworzenia powierzchni fraktalnych o wymiarze danego "
+"fraktala. U¿ywa metody syntezy fraktalnej. Potrafi tworzyæ warstwy po¶rednie "
+"ukazuj±ce budowê ró¿nych wspó³czynników fraktalnych (zobacz Saupe, str. 106-"
+"107 dla tego przyk³adu). U¿yj tego modu³u aby tworzyæ naturalnie wygl±daj±ce "
+"sztuczne modele terenu (DEM)."
 
 #, fuzzy
-#~ msgid "Maximum distance"
-#~ msgstr "Jednostki odleg³o¶ci"
+msgid "Maximum distance"
+msgstr "Jednostki odleg³o¶ci"
 
-#~ msgid "Display active frame dimensions"
-#~ msgstr "Wy¶wietl wymiary aktywnej ramki"
+msgid "Display active frame dimensions"
+msgstr "Wy¶wietl wymiary aktywnej ramki"
 
-#~ msgid "%s Pan\n"
-#~ msgstr "%s Przesuñ\n"
+msgid "%s Pan\n"
+msgstr "%s Przesuñ\n"
 
-#~ msgid "%s Quit menu\n"
-#~ msgstr "%s menu Wyj¶cie\n"
+msgid "%s Quit menu\n"
+msgstr "%s menu Wyj¶cie\n"
 
-#~ msgid "%s Quit\n"
-#~ msgstr "%s Wyjd¼\n"
+msgid "%s Quit\n"
+msgstr "%s Wyjd¼\n"
 
-#~ msgid "Right: "
-#~ msgstr "Prawy: "
+msgid "Right: "
+msgstr "Prawy: "
 
-#~ msgid "Raster surface layer to process"
-#~ msgstr "Warstwa rastrowa powierzchni do przetworzenia"
+msgid "Raster surface layer to process"
+msgstr "Warstwa rastrowa powierzchni do przetworzenia"
 
-#~ msgid "%s[%d]: No raster file specified."
-#~ msgstr "%s[%d]: Nie okre¶lono pliku rastrowego."
-
-#, fuzzy
-#~ msgid "Makes 3D trees from input point vector file"
-#~ msgstr "Nazwa wyj¶ciowego pliku wektorowego"
+msgid "%s[%d]: No raster file specified."
+msgstr "%s[%d]: Nie okre¶lono pliku rastrowego."
 
 #, fuzzy
-#~ msgid "Diameter of the tree crown in map units"
-#~ msgstr "Wspó³rzêdne s± dane w jednostkach mapy"
+msgid "Makes 3D trees from input point vector file"
+msgstr "Nazwa wyj¶ciowego pliku wektorowego"
 
 #, fuzzy
-#~ msgid "Name of the column with tree crown width"
-#~ msgstr "Nazwa mapy rastrowej bêd±cej gridem z informacj± o kosztach "
+msgid "Diameter of the tree crown in map units"
+msgstr "Wspó³rzêdne s± dane w jednostkach mapy"
 
 #, fuzzy
-#~ msgid "Name of the column with tree height"
-#~ msgstr "Nazwa wy¶wietlanej kolumny"
+msgid "Name of the column with tree crown width"
+msgstr "Nazwa mapy rastrowej bêd±cej gridem z informacj± o kosztach "
 
 #, fuzzy
-#~ msgid "Elevation raster map"
-#~ msgstr "Nie mogê znale¼æ mapsetu dla %s"
+msgid "Name of the column with tree height"
+msgstr "Nazwa wy¶wietlanej kolumny"
 
 #, fuzzy
-#~ msgid "Name of the column with tree species"
-#~ msgstr "Nazwa wy¶wietlanej kolumny"
+msgid "Elevation raster map"
+msgstr "Nie mogê znale¼æ mapsetu dla %s"
 
 #, fuzzy
-#~ msgid "Cannot select attributes for point #%d"
-#~ msgstr "Nie mo¿na zaznaczyæ danych z tabeli"
+msgid "Name of the column with tree species"
+msgstr "Nazwa wy¶wietlanej kolumny"
 
 #, fuzzy
-#~ msgid "Cannot creat random access file\n"
-#~ msgstr "Nie mo¿na opisaæ tabeli"
+msgid "Cannot select attributes for point #%d"
+msgstr "Nie mo¿na zaznaczyæ danych z tabeli"
 
 #, fuzzy
-#~ msgid "Cannot create .r.li directory"
-#~ msgstr "Nie mogê znale¼æ mapsetu dla %s"
+msgid "Cannot creat random access file\n"
+msgstr "Nie mo¿na opisaæ tabeli"
 
 #, fuzzy
-#~ msgid "Cannot create .r.li/output directory"
-#~ msgstr "Nie mo¿na utworyæ pliku raportu: "
+msgid "Cannot create .r.li directory"
+msgstr "Nie mogê znale¼æ mapsetu dla %s"
 
 #, fuzzy
-#~ msgid "Cannot close %s file\n"
-#~ msgstr "Nie mo¿na otworzyæ %s"
+msgid "Cannot create .r.li/output directory"
+msgstr "Nie mo¿na utworyæ pliku raportu: "
 
 #, fuzzy
-#~ msgid "Cannot delete %s file\n"
-#~ msgstr "Nie mogê otworzyæ Pliku %s"
+msgid "Cannot close %s file\n"
+msgstr "Nie mo¿na otworzyæ %s"
 
 #, fuzzy
-#~ msgid "Cannot close receive channel file\n"
-#~ msgstr "Nie mo¿na otworzyæ pliku rastra [%s]"
+msgid "Cannot delete %s file\n"
+msgstr "Nie mogê otworzyæ Pliku %s"
 
 #, fuzzy
-#~ msgid "Cannot read setup file"
-#~ msgstr "Nie mo¿na opisaæ tabeli"
+msgid "Cannot close receive channel file\n"
+msgstr "Nie mo¿na otworzyæ pliku rastra [%s]"
 
 #, fuzzy
-#~ msgid "Cannot read raster header file"
-#~ msgstr "Nie mozna odczytaæ nag³ówka pliku [%s]"
+msgid "Cannot read setup file"
+msgstr "Nie mo¿na opisaæ tabeli"
 
 #, fuzzy
-#~ msgid "Too much strats for raster file\n"
-#~ msgstr "%s: B£¡D nie mo¿na otworzyæ pliku tymczasowego"
+msgid "Cannot read raster header file"
+msgstr "Nie mozna odczytaæ nag³ówka pliku [%s]"
 
 #, fuzzy
-#~ msgid "%s\n"
-#~ msgstr " %s\n"
+msgid "Too much strats for raster file\n"
+msgstr "%s: B£¡D nie mo¿na otworzyæ pliku tymczasowego"
 
-#~ msgid "Raster map name"
-#~ msgstr "Nazwa mapy rastrowej"
+#, fuzzy
+msgid "%s\n"
+msgstr " %s\n"
 
-#~ msgid "Connect to the database through DBMI."
-#~ msgstr "Po³±cz z baz± danych poprzez DBMI"
+msgid "Raster map name"
+msgstr "Nazwa mapy rastrowej"
 
-#~ msgid "Do you wish to continue"
-#~ msgstr "Czy chcesz kontynuowaæ"
+msgid "Connect to the database through DBMI."
+msgstr "Po³±cz z baz± danych poprzez DBMI"
 
-#~ msgid "Done.\n"
-#~ msgstr "Proces zakoñczony.\n"
+msgid "Do you wish to continue"
+msgstr "Czy chcesz kontynuowaæ"
 
-#~ msgid "Zooming finished.\n"
-#~ msgstr "Powiêkszenie zakoñczone.\n"
+msgid "Done.\n"
+msgstr "Proces zakoñczony.\n"
 
-#~ msgid "Name of the output raster map"
-#~ msgstr "Nazwa wyj¶ciowej mapy rastrowej"
+msgid "Zooming finished.\n"
+msgstr "Powiêkszenie zakoñczone.\n"
 
-#~ msgid "Read fp map as integer - use map's quant rules"
-#~ msgstr ""
-#~ "Czytaj mapê fp jako mapê o danych ca³kowitych - u¿yj regó³ ilo¶ciowych "
-#~ "mapy"
+msgid "Name of the output raster map"
+msgstr "Nazwa wyj¶ciowej mapy rastrowej"
 
-#~ msgid "Name of output raster file"
-#~ msgstr "Nazwa wyj¶ciowego pliku rastrowego"
+msgid "Read fp map as integer - use map's quant rules"
+msgstr ""
+"Czytaj mapê fp jako mapê o danych ca³kowitych - u¿yj regó³ ilo¶ciowych mapy"
 
-#~ msgid "cover raster map"
-#~ msgstr "wierzchnia mapa rastrowa"
+msgid "Name of output raster file"
+msgstr "Nazwa wyj¶ciowego pliku rastrowego"
 
-#~ msgid "resultant raster map"
-#~ msgstr "wynikowa mapa rastrowa"
+msgid "cover raster map"
+msgstr "wierzchnia mapa rastrowa"
 
-#~ msgid "Name of existing raster file."
-#~ msgstr "Nazwa istniej±cego pliku rastrowego."
+msgid "resultant raster map"
+msgstr "wynikowa mapa rastrowa"
 
-#~ msgid "Name of input map"
-#~ msgstr "Nazwa mapy wej¶ciowej"
+msgid "Name of existing raster file."
+msgstr "Nazwa istniej±cego pliku rastrowego."
 
-#~ msgid "Name of output map"
-#~ msgstr "Nazwa mapy wyj¶ciowej"
+msgid "Name of input map"
+msgstr "Nazwa mapy wej¶ciowej"
 
-#~ msgid "Name of a raster map"
-#~ msgstr "Nazwa mapy rastrowej"
+msgid "Name of output map"
+msgstr "Nazwa mapy wyj¶ciowej"
 
-#~ msgid "Input layer name"
-#~ msgstr "Nazwa warstwy wejsciowej"
+msgid "Name of a raster map"
+msgstr "Nazwa mapy rastrowej"
 
-#~ msgid "Output layer name"
-#~ msgstr "Nazwa warstwy wyj¶ciowej"
+msgid "Input layer name"
+msgstr "Nazwa warstwy wejsciowej"
 
-#~ msgid "Name of the resulting map"
-#~ msgstr "Nazwa mapy wynikowej"
+msgid "Output layer name"
+msgstr "Nazwa warstwy wyj¶ciowej"
 
-#~ msgid "Name of existing input raster file"
-#~ msgstr "Nazwa istniej±cego wej¶ciowego pliu rastrowego"
+msgid "Name of the resulting map"
+msgstr "Nazwa mapy wynikowej"
+
+msgid "Name of existing input raster file"
+msgstr "Nazwa istniej±cego wej¶ciowego pliu rastrowego"

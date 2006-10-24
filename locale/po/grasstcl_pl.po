@@ -1,7 +1,7 @@
 # translation of grasstcl_pl.po into Polski
 # This file is distributed under the same license as the GRASS package.
 # Copyright (C) 2005, GRASS Development Team
-# Artur Niecior <nieart@interia.pl>, 2005, 2006.
+# Artur Nie¶cior <nieart@interia.pl>, 2005, 2006.
 #
 msgid ""
 msgstr ""
@@ -60,7 +60,7 @@ msgstr ""
 #: ../gui/tcltk/gis.m/vector.tcl:309 ../lib/gis/gui.tcl:474
 #: ../lib/init/gis_set.tcl:574
 msgid "Help"
-msgstr "Pomoc"
+msgstr "&Pomoc"
 
 #: ../gui/tcltk/d.m/barscale.tcl:92
 msgid "display N. arrow only "
@@ -403,7 +403,7 @@ msgstr "Wyjd¼"
 
 #: ../gui/tcltk/d.m/menu.tcl:36 ../gui/tcltk/gis.m/gmmenu.tcl:48
 msgid "&Help"
-msgstr ""
+msgstr "&Pomoc"
 
 #: ../gui/tcltk/d.m/menu.tcl:41 ../gui/tcltk/gis.m/gmmenu.tcl:53
 msgid "GRASS help"
@@ -723,7 +723,7 @@ msgstr ""
 #: ../gui/tcltk/d.m/tool1.tcl:87 ../gui/tcltk/gis.m/georecttool.tcl:103
 #: ../gui/tcltk/gis.m/maptool.tcl:118
 msgid "Return to previous zoom"
-msgstr ""
+msgstr "Powróæ do poprzedniego powiêkszenia"
 
 #: ../gui/tcltk/d.m/tool1.tcl:93
 msgid "Pan and recenter"
@@ -1027,8 +1027,9 @@ msgid "remove all frames   "
 msgstr ""
 
 #: ../gui/tcltk/gis.m/georect.tcl:419
+#, fuzzy
 msgid "Create/replace vector group"
-msgstr ""
+msgstr "Utwórz/edytuj grupê obrazów"
 
 #: ../gui/tcltk/gis.m/georect.tcl:445
 #, fuzzy
@@ -1051,15 +1052,16 @@ msgstr ""
 #: ../gui/tcltk/gis.m/georect.tcl:469
 #, fuzzy
 msgid "Vector group"
-msgstr "Wektory"
+msgstr "Mapa wektorowa"
 
 #: ../gui/tcltk/gis.m/georect.tcl:599
 msgid "Georeference raster"
 msgstr ""
 
 #: ../gui/tcltk/gis.m/georect.tcl:603
+#, fuzzy
 msgid "Georeference vector"
-msgstr ""
+msgstr "Rektyfikuj i nadaj wspó³rzêdne mapie wektorowej"
 
 #: ../gui/tcltk/gis.m/georect.tcl:610
 msgid "1. Select mapset"
@@ -1072,7 +1074,7 @@ msgstr ""
 #: ../gui/tcltk/gis.m/georect.tcl:622
 #, fuzzy
 msgid "2. Create/edit group"
-msgstr "Utwórz now± grupê"
+msgstr "Utwórz/edytuj grupê obrazów"
 
 #: ../gui/tcltk/gis.m/georect.tcl:624
 msgid "Create/edit group (rasters or vectors to georectify)"
@@ -1146,12 +1148,14 @@ msgid "Use"
 msgstr ""
 
 #: ../gui/tcltk/gis.m/georect.tcl:981
+#, fuzzy
 msgid "xy coordinates"
-msgstr ""
+msgstr "Zapytanie wed³ug wspó³rzêdnych"
 
 #: ../gui/tcltk/gis.m/georect.tcl:983
+#, fuzzy
 msgid "geographic coordinates"
-msgstr ""
+msgstr "Zapytanie wed³ug wspó³rzêdnych"
 
 #: ../gui/tcltk/gis.m/georect.tcl:985
 msgid "forward error"
@@ -1174,8 +1178,9 @@ msgid "clear ALL GCP entries"
 msgstr ""
 
 #: ../gui/tcltk/gis.m/georect.tcl:1062
+#, fuzzy
 msgid "calculate RMS error"
-msgstr ""
+msgstr "Kalkulator rastrów"
 
 #: ../gui/tcltk/gis.m/georect.tcl:1069
 msgid "Rectify maps in group"
@@ -1452,19 +1457,20 @@ msgstr ""
 
 #: ../gui/tcltk/gis.m/maptool.tcl:176 ../gui/tcltk/menus/menu.tcl:557
 msgid "Query"
-msgstr ""
+msgstr "Zapytanie"
 
 #: ../gui/tcltk/gis.m/maptool.tcl:185
 msgid "Measure"
-msgstr ""
+msgstr "Miara"
 
 #: ../gui/tcltk/gis.m/maptool.tcl:192
+#, fuzzy
 msgid "Create profile of raster map"
-msgstr ""
+msgstr "Generuj linie sp³ywu dla mapy rastrowej"
 
 #: ../gui/tcltk/gis.m/maptool.tcl:209
 msgid "Print raster & vector maps to eps file"
-msgstr ""
+msgstr "Drukuj mapy restrowe i wektorowe do pliku eps"
 
 #: ../gui/tcltk/gis.m/maptool.tcl:216
 #, fuzzy
@@ -1658,7 +1664,7 @@ msgstr ""
 
 #: ../gui/tcltk/menus/menu.tcl:101
 msgid "&File"
-msgstr ""
+msgstr "&Plik"
 
 #: ../gui/tcltk/menus/menu.tcl:103
 msgid "Import"
@@ -1706,11 +1712,11 @@ msgstr ""
 
 #: ../gui/tcltk/menus/menu.tcl:116
 msgid "SRTM hgt files"
-msgstr ""
+msgstr "Pliki SRTM hgt"
 
 #: ../gui/tcltk/menus/menu.tcl:117
 msgid "Terra ASTER HDF files"
-msgstr ""
+msgstr "Pliki Terra ASTER HDF"
 
 #: ../gui/tcltk/menus/menu.tcl:119
 msgid "Web Mapping Server"
@@ -1718,27 +1724,27 @@ msgstr ""
 
 #: ../gui/tcltk/menus/menu.tcl:121 ../gui/tcltk/menus/menu.tcl:160
 msgid "Vector map"
-msgstr ""
+msgstr "Mapa wektorowa"
 
 #: ../gui/tcltk/menus/menu.tcl:122
 msgid "Various formats using OGR"
-msgstr ""
+msgstr "Ró¿norodne formaty poprzez sterownik OGR"
 
 #: ../gui/tcltk/menus/menu.tcl:124
 msgid "ASCII points file or GRASS ASCII vector file"
-msgstr ""
+msgstr "Plik punktów ASCII albo pliki wektorowe GRASS ASCII"
 
 #: ../gui/tcltk/menus/menu.tcl:125
 msgid "Import old GRASS vector format"
-msgstr ""
+msgstr "Importuj stary format wektorowy GRASS"
 
 #: ../gui/tcltk/menus/menu.tcl:127
 msgid "dxf file"
-msgstr ""
+msgstr "Plik dxf"
 
 #: ../gui/tcltk/menus/menu.tcl:128
 msgid "ESRI e00 format"
-msgstr ""
+msgstr "Format ESRI e00"
 
 #: ../gui/tcltk/menus/menu.tcl:129
 msgid "Garmin GPS Waypoints/Routes/Tracks"
@@ -1754,19 +1760,19 @@ msgstr ""
 
 #: ../gui/tcltk/menus/menu.tcl:132
 msgid "Matlab and MapGen files"
-msgstr ""
+msgstr "Pliki Matlab i MapGen"
 
 #: ../gui/tcltk/menus/menu.tcl:134 ../gui/tcltk/menus/menu.tcl:168
 msgid "Grid 3D"
-msgstr ""
+msgstr "Grid 3D"
 
 #: ../gui/tcltk/menus/menu.tcl:135 ../gui/tcltk/menus/menu.tcl:169
 msgid "ASCII 3D file"
-msgstr ""
+msgstr "Plik ASCII 3D"
 
 #: ../gui/tcltk/menus/menu.tcl:136 ../gui/tcltk/menus/menu.tcl:170
 msgid "Vis5D file"
-msgstr ""
+msgstr "Plik Vis5D"
 
 #: ../gui/tcltk/menus/menu.tcl:139
 msgid "Export"
@@ -1798,7 +1804,7 @@ msgstr "Obraz PPM (24bit)"
 
 #: ../gui/tcltk/menus/menu.tcl:154
 msgid "PPM image from red, green, blue raster maps"
-msgstr ""
+msgstr "Obraz PPM z map rastrowych red, green, blue"
 
 #: ../gui/tcltk/menus/menu.tcl:155
 msgid "POVray height-field"
@@ -1809,8 +1815,9 @@ msgid "TIFF image (8/24bit)"
 msgstr "Obraz TIFF (8/24bit)"
 
 #: ../gui/tcltk/menus/menu.tcl:157
+#, fuzzy
 msgid "VRML file"
-msgstr ""
+msgstr "Plik Vis5D"
 
 #: ../gui/tcltk/menus/menu.tcl:158 ../gui/tcltk/menus/menu.tcl:166
 #: ../gui/tcltk/menus/menu.tcl:171
@@ -1899,7 +1906,7 @@ msgstr ""
 
 #: ../gui/tcltk/menus/menu.tcl:195
 msgid "&Config"
-msgstr ""
+msgstr "&Konfiguruj"
 
 #: ../gui/tcltk/menus/menu.tcl:196
 msgid "Region"
@@ -1978,55 +1985,55 @@ msgstr "Wybierz domysln± czcionkê tekstu typu freetype"
 
 #: ../gui/tcltk/menus/menu.tcl:219
 msgid "X-monitor displays"
-msgstr ""
+msgstr "Wy¶wietlanie x-monitora"
 
 #: ../gui/tcltk/menus/menu.tcl:220
 msgid "Configure xmonitor displays"
-msgstr ""
+msgstr "Konfiguruj wy¶wietlanie x-monitora"
 
 #: ../gui/tcltk/menus/menu.tcl:221
 msgid "Configure frames for xmonitors"
-msgstr ""
+msgstr "Konfiguruj ramki dla x-monitorów"
 
 #: ../gui/tcltk/menus/menu.tcl:222
 msgid "Start/restart xmonitor at specified window size"
-msgstr ""
+msgstr "Otwórz/otwórz ponownie x-monitor w oknie o okre¶lonym rozmiarze"
 
 #: ../gui/tcltk/menus/menu.tcl:223
 msgid "Set active xmonitor to specified size"
-msgstr ""
+msgstr "Ustaw okre¶lony rozmiar aktywnego x-monitora"
 
 #: ../gui/tcltk/menus/menu.tcl:224
 msgid "Display information about active xmonitor"
-msgstr ""
+msgstr "Wy¶wietl informacjê o aktywnym x-monitorze"
 
 #: ../gui/tcltk/menus/menu.tcl:227
 msgid "&Raster"
-msgstr ""
+msgstr "&Raster"
 
 #: ../gui/tcltk/menus/menu.tcl:228 ../gui/tcltk/menus/menu.tcl:379
 msgid "Develop map"
-msgstr ""
+msgstr "Rozwijaj mapê"
 
 #: ../gui/tcltk/menus/menu.tcl:229
 msgid "Digitize raster"
-msgstr ""
+msgstr "Wektoryzuj mapê rastrow±"
 
 #: ../gui/tcltk/menus/menu.tcl:231
 msgid "Compress/decompress raster file"
-msgstr ""
+msgstr "Kompresuj/dekompresuj plik rastrowy"
 
 #: ../gui/tcltk/menus/menu.tcl:232
 msgid "Manage boundary definitions"
-msgstr ""
+msgstr "Zarz±dzaj definicjami granic"
 
 #: ../gui/tcltk/menus/menu.tcl:233
 msgid "Manage null values"
-msgstr ""
+msgstr "Zarz±dzaj warto¶ciami null"
 
 #: ../gui/tcltk/menus/menu.tcl:234
 msgid "Manage timestamps for files"
-msgstr ""
+msgstr "Zarz±dzaj przedzia³ami czasowymi dla plików"
 
 #: ../gui/tcltk/menus/menu.tcl:235
 msgid "Quantization for floating-point maps"
@@ -2035,18 +2042,20 @@ msgstr ""
 #: ../gui/tcltk/menus/menu.tcl:236
 msgid "Resample (change resolution) using nearest neighbor method"
 msgstr ""
+"Przepróbkowanie (zmiana rozdzielczo¶ci) z u¿yciem metody najbli¿szego "
+"s±siedztwa"
 
 #: ../gui/tcltk/menus/menu.tcl:237
 msgid "Resample (change resolution) using regularized spline tension"
-msgstr ""
+msgstr "Przepróbkowanie (zmiana rozdzielczo¶ci) z u¿yciem metody rst"
 
 #: ../gui/tcltk/menus/menu.tcl:238
 msgid "Support file creation and maintenance"
-msgstr ""
+msgstr "Tworzenie pliku wsparcia"
 
 #: ../gui/tcltk/menus/menu.tcl:240
 msgid "Reproject raster from other location"
-msgstr ""
+msgstr "Reprojekcja rastra z innej lokacji"
 
 #: ../gui/tcltk/menus/menu.tcl:241
 msgid "Generate tiling for other projection"
@@ -2054,105 +2063,108 @@ msgstr ""
 
 #: ../gui/tcltk/menus/menu.tcl:243
 msgid "Manage map colors"
-msgstr ""
+msgstr "Zarz±dzaj kolorami mapy"
 
 #: ../gui/tcltk/menus/menu.tcl:244
 msgid "Set colors to predefined color tables"
-msgstr ""
+msgstr "Ustaw kolory do zdefiniowanej tablicy kolorów"
 
 #: ../gui/tcltk/menus/menu.tcl:245
 msgid "Set colors using color rules"
-msgstr ""
+msgstr "Ustaw kolory u¿ywaj±c formu³y kolorów"
 
 #: ../gui/tcltk/menus/menu.tcl:247
 msgid "Blend 2 color maps to produce 3 RGB files"
-msgstr ""
+msgstr "Wymieszaj 2 kolorowe mapy aby utworzyæ 3 pliki RGB"
 
 #: ../gui/tcltk/menus/menu.tcl:248
 msgid "Create color image from RGB files"
-msgstr ""
+msgstr "Utwórz kolorowy obraz z plików RGB"
 
 #: ../gui/tcltk/menus/menu.tcl:249
 msgid ""
 "Create 3 RGB (red, green, blue) maps from 3 HIS (hue, intensity, saturation) "
 "maps"
 msgstr ""
+"Utwórz 3 mapy dla RGB (red, green, blue) z 3 map HIS (hue, intensity, "
+"saturation) "
 
 #: ../gui/tcltk/menus/menu.tcl:252 ../gui/tcltk/menus/menu.tcl:406
 msgid "Query by coordinate(s)"
-msgstr ""
+msgstr "Zapytanie wed³ug wspó³rzêdnych"
 
 #: ../gui/tcltk/menus/menu.tcl:254
 msgid "Create raster buffers"
-msgstr ""
+msgstr "Utwórz strefy buforowe dla rastra"
 
 #: ../gui/tcltk/menus/menu.tcl:255
 msgid "Create raster MASK"
-msgstr ""
+msgstr "Utwórz MASKÊ rastrow±"
 
 #: ../gui/tcltk/menus/menu.tcl:256
 msgid "Locate closest points between areas in 2 raster maps"
 msgstr ""
+"Zlokalizuj najbli¿szy punkt pomiêdzy obszarami na dwóch mapach rastrowych"
 
 #: ../gui/tcltk/menus/menu.tcl:257
 msgid "Map calculator"
-msgstr ""
+msgstr "Kalkulator rastrów"
 
 #: ../gui/tcltk/menus/menu.tcl:258 ../gui/tcltk/menus/menu.tcl:416
 msgid "Neighborhood analysis"
-msgstr ""
+msgstr "Analizy s±siedztwa"
 
 #: ../gui/tcltk/menus/menu.tcl:259
 msgid "Moving window analysis of raster cells"
-msgstr ""
+msgstr "Analizy 'ruchomego okna' mapy rastrowej"
 
 #: ../gui/tcltk/menus/menu.tcl:260
 msgid "Analyze vector points in neighborhood of raster cells"
-msgstr ""
+msgstr "Analiza punktów wektorowych w s±siedztwie komórek rastra"
 
 #: ../gui/tcltk/menus/menu.tcl:262 ../gui/tcltk/menus/menu.tcl:430
 msgid "Overlay maps"
-msgstr ""
+msgstr "Nak³adanie map"
 
 #: ../gui/tcltk/menus/menu.tcl:263
 msgid "Cross product"
-msgstr ""
+msgstr "Produkt poprzecznego ³±czenia rastrów"
 
 #: ../gui/tcltk/menus/menu.tcl:264
 msgid "Function of map series (time series)"
-msgstr ""
+msgstr "Funkcja serii map (serii czasowych)"
 
 #: ../gui/tcltk/menus/menu.tcl:265
 msgid "Patch maps"
-msgstr ""
+msgstr "Uzupe³niaj (³ataj) mapy sob± nawzajem"
 
 #: ../gui/tcltk/menus/menu.tcl:267
 msgid "Statistical calculations for cover map over base map"
-msgstr ""
+msgstr "Statystyczne obliczenia dla mapy wierzchniej ponad podstawow± map±"
 
 #: ../gui/tcltk/menus/menu.tcl:269
 msgid "Solar radiance and shadows"
-msgstr ""
+msgstr "Promieniowanie s³oneczne i cienie"
 
 #: ../gui/tcltk/menus/menu.tcl:270
 msgid "Solar irradiance and daily irradiation"
-msgstr ""
+msgstr "Promieniowanie s³oneczne i dzienne napromienienie"
 
 #: ../gui/tcltk/menus/menu.tcl:271
 msgid "Shadows map for sun position or date/time"
-msgstr ""
+msgstr "Mapa cieni dla pozycji s³oñca lub daty/czasu"
 
 #: ../gui/tcltk/menus/menu.tcl:273
 msgid "Terrain analysis"
-msgstr ""
+msgstr "Analizy terenu"
 
 #: ../gui/tcltk/menus/menu.tcl:274
 msgid "Calculate cumulative movement costs between locales"
-msgstr ""
+msgstr "Oblicz skumulowany koszt przemieszczenia pomiêdzy dwoma lokalizacjami"
 
 #: ../gui/tcltk/menus/menu.tcl:275
 msgid "Cost surface"
-msgstr ""
+msgstr "Powierzchnia kosztu"
 
 #: ../gui/tcltk/menus/menu.tcl:276
 msgid "Least cost route or flow"
@@ -2160,27 +2172,27 @@ msgstr ""
 
 #: ../gui/tcltk/menus/menu.tcl:277
 msgid "Profile analysis"
-msgstr ""
+msgstr "Analizy profilu"
 
 #: ../gui/tcltk/menus/menu.tcl:278
 msgid "Shaded relief map"
-msgstr ""
+msgstr "Mapa cieniowania rze¼¼by"
 
 #: ../gui/tcltk/menus/menu.tcl:279
 msgid "Slope and aspect"
-msgstr ""
+msgstr "Nachylenie zboczy i ekspozycja"
 
 #: ../gui/tcltk/menus/menu.tcl:280
 msgid "Terrain parameters"
-msgstr ""
+msgstr "Parametry terenu"
 
 #: ../gui/tcltk/menus/menu.tcl:281
 msgid "Textural features"
-msgstr ""
+msgstr "Cechy teksturalne"
 
 #: ../gui/tcltk/menus/menu.tcl:282
 msgid "Visibility/line of sight"
-msgstr ""
+msgstr "Linia maksymalnego zasiêgu widoku"
 
 #: ../gui/tcltk/menus/menu.tcl:284
 msgid "Transform features"
@@ -2188,7 +2200,7 @@ msgstr ""
 
 #: ../gui/tcltk/menus/menu.tcl:285
 msgid "Clump small areas (statistics calculated by r.volume)"
-msgstr ""
+msgstr "£±cz ma³e obszary (statystyki obliczone przez r.volume)"
 
 #: ../gui/tcltk/menus/menu.tcl:286
 msgid "Grow areas"
@@ -2196,11 +2208,11 @@ msgstr ""
 
 #: ../gui/tcltk/menus/menu.tcl:287
 msgid "Thin linear features"
-msgstr ""
+msgstr "Wycienianie struktur linijnych"
 
 #: ../gui/tcltk/menus/menu.tcl:290
 msgid "Hydrologic modeling"
-msgstr ""
+msgstr "Modelowanie hydrologiczne"
 
 #: ../gui/tcltk/menus/menu.tcl:291
 msgid "Carve stream channels into elevation map using vector streams map"
@@ -2208,7 +2220,7 @@ msgstr ""
 
 #: ../gui/tcltk/menus/menu.tcl:292
 msgid "Depressionless elevation map and flowline map"
-msgstr ""
+msgstr "Mapa powierzchni pozbawionej depresji i mapa linii sp³ywu"
 
 #: ../gui/tcltk/menus/menu.tcl:293
 msgid "Fill lake from seed point to specified level"
@@ -2216,67 +2228,67 @@ msgstr ""
 
 #: ../gui/tcltk/menus/menu.tcl:294
 msgid "Flow accumulation for massive grids"
-msgstr ""
+msgstr "Akumulacja sp³ywu dla masywnych gridów"
 
 #: ../gui/tcltk/menus/menu.tcl:295
 msgid "Generate flow lines for raster map"
-msgstr ""
+msgstr "Generuj linie sp³ywu dla mapy rastrowej"
 
 #: ../gui/tcltk/menus/menu.tcl:296
 msgid "SIMWE overland flow modeling"
-msgstr ""
+msgstr "Modelowanie sp³ywu powierzchniowego SIMWE"
 
 #: ../gui/tcltk/menus/menu.tcl:297
 msgid "SIMWE sediment erosion, transport, & deposition modeling"
-msgstr ""
+msgstr "Modelowanie erozji sedymentów, transportu i depozycji SIMWE"
 
 #: ../gui/tcltk/menus/menu.tcl:298
 msgid "Topographic index map"
-msgstr ""
+msgstr "Mapa wska¼nika topograficznego"
 
 #: ../gui/tcltk/menus/menu.tcl:299
 msgid "TOPMODEL simulation"
-msgstr ""
+msgstr "Symulacja TOPMODEL"
 
 #: ../gui/tcltk/menus/menu.tcl:300
 msgid "Watershed subbasins"
-msgstr ""
+msgstr "Dzia³ wodny zlewni"
 
 #: ../gui/tcltk/menus/menu.tcl:301
 msgid "Watershed analysis"
-msgstr ""
+msgstr "Analizy dzia³ów wodnych"
 
 #: ../gui/tcltk/menus/menu.tcl:302
 msgid "Watershed basin creation"
-msgstr ""
+msgstr "Wyznaczanie dzia³u wodnego dorzecza"
 
 #: ../gui/tcltk/menus/menu.tcl:304
 msgid "Landscape structure modeling"
-msgstr ""
+msgstr "Modelowanie struktury krajobrazu"
 
 #: ../gui/tcltk/menus/menu.tcl:305
 msgid "Set up sampling and analysis framework"
-msgstr ""
+msgstr "Ustawienia próbkowania i ram analizy"
 
 #: ../gui/tcltk/menus/menu.tcl:307
 msgid "Analyze landscape characteristics"
-msgstr ""
+msgstr "Analiza charakterystyk krajobrazu"
 
 #: ../gui/tcltk/menus/menu.tcl:308
 msgid "Analyze landscape patch characteristics"
-msgstr ""
+msgstr "Analiza charakterystyk kompleksów krajobrazu"
 
 #: ../gui/tcltk/menus/menu.tcl:309
 msgid "Output landscape patch information"
-msgstr ""
+msgstr "Wynikowe informacje o kompleksach krajobrazu"
 
 #: ../gui/tcltk/menus/menu.tcl:311
 msgid "Wildfire modeling"
-msgstr ""
+msgstr "Modelowanie samoczynnych po¿arów lasów"
 
 #: ../gui/tcltk/menus/menu.tcl:312
 msgid "Generate rate of spread (ROS) maps"
-msgstr ""
+msgstr "Generowanie mapy wspó³czynnika rozprzestrzeniania (ROS)"
 
 #: ../gui/tcltk/menus/menu.tcl:313
 msgid "Generate least-cost spread paths"
@@ -2288,59 +2300,61 @@ msgstr ""
 
 #: ../gui/tcltk/menus/menu.tcl:317
 msgid "Change category values and labels"
-msgstr ""
+msgstr "Zmieñ warto¶ci kategorii i etykiety"
 
 #: ../gui/tcltk/menus/menu.tcl:318
 msgid "Edit category values of individual cells for displayed raster map"
-msgstr ""
+msgstr "Edytuj warto¶ci kategorii poszczególnych komórek mapy rastrowej"
 
 #: ../gui/tcltk/menus/menu.tcl:321
 msgid "Reclassify categories for areas of specified sizes"
-msgstr ""
+msgstr "Zmieñ klasyfikacjê kategorii dla obszarów o okre¶lonej wielko¶ci"
 
 #: ../gui/tcltk/menus/menu.tcl:322
 msgid "Reclassify categories using rules"
-msgstr ""
+msgstr "Zmieñ klasyfikacjê kategorii za pomoc± regu³"
 
 #: ../gui/tcltk/menus/menu.tcl:323
 msgid "Reclassify categories using rules file"
-msgstr ""
+msgstr "Zmieñ klasyfikacjê kategorii za pomoc± pliku regu³y"
 
 #: ../gui/tcltk/menus/menu.tcl:325
 msgid "Recode categories using rules (create new map)"
-msgstr ""
+msgstr "Przekoduj kategorie przy u¿yciu regu³ (utwórz now± mapê)"
 
 #: ../gui/tcltk/menus/menu.tcl:326
 msgid "Recode categories using rules file (create new map)"
-msgstr ""
+msgstr "Przekoduj kategorie przy u¿yciu plików regu³ (utwórz now± mapê)"
 
 #: ../gui/tcltk/menus/menu.tcl:328
 msgid "Rescale categories (create new map)"
-msgstr ""
+msgstr "Przeskaluj kategorie (utwórz now± mapê)"
 
 #: ../gui/tcltk/menus/menu.tcl:329
 msgid "Rescale categories with equalized histogram (create new map)"
 msgstr ""
+"Przeskaluj kategorie za pomoc± wyrównanego histogramu (utwórz now± mapê)"
 
 #: ../gui/tcltk/menus/menu.tcl:332
 msgid "Generate concentric circles around points"
-msgstr ""
+msgstr "Utwórz koncentryczne krêgi dooko³a punktów"
 
 #: ../gui/tcltk/menus/menu.tcl:333
 msgid "Generate random raster cells"
-msgstr ""
+msgstr "Utwórz przypadkowo rozmieszczone komórki rastra"
 
 #: ../gui/tcltk/menus/menu.tcl:334
 msgid "Generate random cells"
-msgstr ""
+msgstr "Utórz przypadkowa rozmieszczone komórki"
 
 #: ../gui/tcltk/menus/menu.tcl:335
 msgid "Generate random cells and vector points from raster map"
 msgstr ""
+"Utwórz przypadkowo rozmieszczone komórki i punkty wektorowe z mapy rastrowej"
 
 #: ../gui/tcltk/menus/menu.tcl:337
 msgid "Generate surfaces"
-msgstr ""
+msgstr "Utwórz powierzchniê"
 
 #: ../gui/tcltk/menus/menu.tcl:338
 msgid "Generate density surface using moving Gausian kernal"
@@ -2348,7 +2362,7 @@ msgstr ""
 
 #: ../gui/tcltk/menus/menu.tcl:339
 msgid "Generate fractal surface"
-msgstr ""
+msgstr "Utwórz powierzchniê fraktaln±"
 
 #: ../gui/tcltk/menus/menu.tcl:340
 msgid "Generate gaussian deviates surface"
@@ -2368,60 +2382,62 @@ msgstr ""
 
 #: ../gui/tcltk/menus/menu.tcl:345
 msgid "Generate vector contour lines"
-msgstr ""
+msgstr "Utwórz linie wektorowych poziomic"
 
 #: ../gui/tcltk/menus/menu.tcl:346
 msgid "Interpolate surfaces"
-msgstr ""
+msgstr "Interpoluj powierzchniê"
 
 #: ../gui/tcltk/menus/menu.tcl:347
 msgid "Bilinear interpolation from raster points"
-msgstr ""
+msgstr "Interpolacja dwuliniowa z punktów rastrowych"
 
 #: ../gui/tcltk/menus/menu.tcl:348
 msgid "Inverse distance weighted interpolation from raster points"
-msgstr ""
+msgstr "Interpolacja odwrotna odleg³o¶ciowo-wagowa z punktów rastrowych"
 
 #: ../gui/tcltk/menus/menu.tcl:349
 msgid "Interpolation from raster contours"
-msgstr ""
+msgstr "Interpolacja z poziomic rastrowych"
 
 #: ../gui/tcltk/menus/menu.tcl:351
 msgid "Inverse distance weighted interpolation from vector points"
-msgstr ""
+msgstr "Interpolacja odwrotna odleg³o¶ciowo-wagowa z punktów wektorowych"
 
 #: ../gui/tcltk/menus/menu.tcl:352
 msgid "Regularized spline tension interpolation from vector points or contours"
 msgstr ""
+"Interpolacja regulowanego napiêcia splajnów (rst) z wektorowych punktów lub "
+"poziomic"
 
 #: ../gui/tcltk/menus/menu.tcl:354
 msgid "Fill NULL cells by interpolation using regularized spline tension"
-msgstr ""
+msgstr "Wype³nij komórki NULL poprzez interpolacjê rst"
 
 #: ../gui/tcltk/menus/menu.tcl:357 ../gui/tcltk/menus/menu.tcl:462
 #: ../gui/tcltk/menus/menu.tcl:518
 msgid "Reports and statistics"
-msgstr ""
+msgstr "Raporty i statystyki"
 
 #: ../gui/tcltk/menus/menu.tcl:358 ../gui/tcltk/menus/menu.tcl:519
 msgid "Report basic file information"
-msgstr ""
+msgstr "Raport podstawowych informacji o pliku"
 
 #: ../gui/tcltk/menus/menu.tcl:359
 msgid "Report category labels and values"
-msgstr ""
+msgstr "Raport warto¶ci i etykiet kategorii"
 
 #: ../gui/tcltk/menus/menu.tcl:361
 msgid "General statistics"
-msgstr ""
+msgstr "Ogólne statystyki"
 
 #: ../gui/tcltk/menus/menu.tcl:362
 msgid "Range of all category values"
-msgstr ""
+msgstr "Zakres wszystkich warto¶ci kategorii"
 
 #: ../gui/tcltk/menus/menu.tcl:363
 msgid "Sum all cell category values"
-msgstr ""
+msgstr "Suma warto¶ci kategorii wszystkich komórek"
 
 #: ../gui/tcltk/menus/menu.tcl:364
 msgid "Sum area by map and category"
@@ -2457,7 +2473,7 @@ msgstr ""
 
 #: ../gui/tcltk/menus/menu.tcl:374
 msgid "Linear regression between 2 maps"
-msgstr ""
+msgstr "Regresja liniowa pomiêdzy dwoma mapami"
 
 #: ../gui/tcltk/menus/menu.tcl:375
 msgid "Mutual category occurences (coincidence)"
@@ -2465,7 +2481,7 @@ msgstr ""
 
 #: ../gui/tcltk/menus/menu.tcl:378
 msgid "&Vector"
-msgstr ""
+msgstr "&Wektor"
 
 #: ../gui/tcltk/menus/menu.tcl:380
 msgid "Digitize"
@@ -2521,7 +2537,7 @@ msgstr ""
 
 #: ../gui/tcltk/menus/menu.tcl:399
 msgid "Vector<->database connections"
-msgstr ""
+msgstr "Po³±czenia wektor<->baza danych"
 
 #: ../gui/tcltk/menus/menu.tcl:400
 msgid "Create new vector as link to external OGR layer"
@@ -2529,23 +2545,23 @@ msgstr ""
 
 #: ../gui/tcltk/menus/menu.tcl:401
 msgid "Set database connection for vector attributes"
-msgstr ""
+msgstr "Ustaw po³±czenie z baz± danych dla atrybutów wektorów"
 
 #: ../gui/tcltk/menus/menu.tcl:403
 msgid "Rectify and georeference vector map"
-msgstr ""
+msgstr "Rektyfikuj i nadaj wspó³rzêdne mapie wektorowej"
 
 #: ../gui/tcltk/menus/menu.tcl:405
 msgid "Query by attributes"
-msgstr ""
+msgstr "Utwórz zapytanie za pomoc± atrybutów"
 
 #: ../gui/tcltk/menus/menu.tcl:407
 msgid "Query by map features"
-msgstr ""
+msgstr "Utwórz zapytanie za pomoc± "
 
 #: ../gui/tcltk/menus/menu.tcl:409
 msgid "Create vector buffers"
-msgstr ""
+msgstr "Utwórz wektorowe strefy buforowe"
 
 #: ../gui/tcltk/menus/menu.tcl:410
 msgid "Linear referencing for vectors"
@@ -2729,15 +2745,15 @@ msgstr ""
 
 #: ../gui/tcltk/menus/menu.tcl:473
 msgid "&Image"
-msgstr ""
+msgstr "&Obraz"
 
 #: ../gui/tcltk/menus/menu.tcl:474
 msgid "Develop images and groups"
-msgstr ""
+msgstr "Rozwijaj obrazy i grupy"
 
 #: ../gui/tcltk/menus/menu.tcl:475
 msgid "Create/edit imagery group"
-msgstr ""
+msgstr "Utwórz/edytuj grupê obrazów"
 
 #: ../gui/tcltk/menus/menu.tcl:476
 msgid "Target imagery group"
@@ -2749,7 +2765,7 @@ msgstr ""
 
 #: ../gui/tcltk/menus/menu.tcl:480
 msgid "Manage image colors"
-msgstr ""
+msgstr "Zarz±dza kolorami obrazuj"
 
 #: ../gui/tcltk/menus/menu.tcl:481
 msgid ""
@@ -2876,7 +2892,7 @@ msgstr ""
 
 #: ../gui/tcltk/menus/menu.tcl:527
 msgid "&Grid3D"
-msgstr ""
+msgstr "&Grid3D"
 
 #: ../gui/tcltk/menus/menu.tcl:528
 msgid "Develop grid3D volumes"
@@ -2916,7 +2932,7 @@ msgstr ""
 
 #: ../gui/tcltk/menus/menu.tcl:540
 msgid "&Databases"
-msgstr ""
+msgstr "&Bazy Danych"
 
 #: ../gui/tcltk/menus/menu.tcl:541
 msgid "Manage database"
@@ -2953,7 +2969,7 @@ msgstr "Informacja o bazie danych"
 
 #: ../gui/tcltk/menus/menu.tcl:551
 msgid "Describe table"
-msgstr ""
+msgstr "Opisz tabelê"
 
 #: ../gui/tcltk/menus/menu.tcl:552
 msgid "List columns"
@@ -2977,7 +2993,7 @@ msgstr "Wykonaj wyra¿enie SQL"
 
 #: ../gui/tcltk/menus/menu.tcl:568
 msgid "&Xtns"
-msgstr ""
+msgstr "&Xtns"
 
 #: ../lib/gis/gui.tcl:272 ../lib/gis/gui.tcl:450
 msgid "Output"
@@ -3609,275 +3625,281 @@ msgstr ""
 msgid "mouse button actions (left, right, center)"
 msgstr ""
 
-#~ msgid "html-browser"
-#~ msgstr "przegl±darka html"
+msgid "html-browser"
+msgstr "przegl±darka html"
 
-#~ msgid "System Information\n"
-#~ msgstr "Informacje systemowe\n"
+msgid "System Information\n"
+msgstr "Informacje systemowe\n"
 
-#~ msgid "Quit"
-#~ msgstr "Wyjd¼"
+msgid "Quit"
+msgstr "Wyjd¼"
 
-#~ msgid "About "
-#~ msgstr "O programie"
+msgid "About "
+msgstr "O programie"
 
-#~ msgid "Size:"
-#~ msgstr "Rozmiar:"
+msgid "Size:"
+msgstr "Rozmiar:"
 
-#~ msgid "Weight:"
-#~ msgstr "Szeroko¶æ:"
+msgid "Weight:"
+msgstr "Szeroko¶æ:"
 
-#~ msgid "normal"
-#~ msgstr "normalna"
+msgid "normal"
+msgstr "normalna"
 
-#~ msgid "bold"
-#~ msgstr "pogrubiona"
+msgid "bold"
+msgstr "pogrubiona"
 
-#~ msgid "Slant:"
-#~ msgstr "Pochylona"
+msgid "Slant:"
+msgstr "Pochylona"
 
-#~ msgid "Display dimensions"
-#~ msgstr "Wy¶wietl wymiary"
+msgid "Display dimensions"
+msgstr "Wy¶wietl wymiary"
 
-#~ msgid "Running ..."
-#~ msgstr "Proces w toku"
+msgid "Running ..."
+msgstr "Proces w toku"
 
-#~ msgid "CANCEL"
-#~ msgstr "Anuluj"
+msgid "CANCEL"
+msgstr "Anuluj"
 
-#~ msgid "Do you want to start a script session?"
-#~ msgstr "Czy chcesz zapocz±tkowaæ sesjê skryptu?"
+msgid "Do you want to start a script session?"
+msgstr "Czy chcesz zapocz±tkowaæ sesjê skryptu?"
 
-#~ msgid "Scripting already running, stop first"
-#~ msgstr "Sesja skryptu jest ju¿ uruchomiona, najpierw zakoñcz poprzedni±"
+msgid "Scripting already running, stop first"
+msgstr "Sesja skryptu jest ju¿ uruchomiona, najpierw zakoñcz poprzedni±"
 
-#~ msgid "select or enter a filename to save the generated script"
-#~ msgstr "wybierz lub wprowad¼ nazwê pliku dla zapisania utworzonego skryptu"
+msgid "select or enter a filename to save the generated script"
+msgstr "wybierz lub wprowad¼ nazwê pliku dla zapisania utworzonego skryptu"
 
-#~ msgid "Enter filename to save script"
-#~ msgstr "Wprowad¼ nazwê pliku aby zapisaæ skrypt"
+msgid "Enter filename to save script"
+msgstr "Wprowad¼ nazwê pliku aby zapisaæ skrypt"
 
-#~ msgid "No filename given, discard recorded script?"
-#~ msgstr "Nie wprowadzono ¿adnej nazwy pliku, porzuciæ zarejestrowany skrypt?"
+msgid "No filename given, discard recorded script?"
+msgstr "Nie wprowadzono ¿adnej nazwy pliku, porzuciæ zarejestrowany skrypt?"
 
-#~ msgid "Scripting not running, start first"
-#~ msgstr "Sesja skryptu nie zosta³a uruchomiona, uruchom najpierw sesjê"
+msgid "Scripting not running, start first"
+msgstr "Sesja skryptu nie zosta³a uruchomiona, uruchom najpierw sesjê"
 
-#~ msgid "Script recording in progress, stop first"
-#~ msgstr "Rejestrowanie skryptu w toku, zakoñcz najpierw sesjê skryptu"
+msgid "Script recording in progress, stop first"
+msgstr "Rejestrowanie skryptu w toku, zakoñcz najpierw sesjê skryptu"
 
-#~ msgid "Open recorded script file for replay"
-#~ msgstr "Otwórz w odpowiedzi zarejestrowany plik skryptu"
+msgid "Open recorded script file for replay"
+msgstr "Otwórz w odpowiedzi zarejestrowany plik skryptu"
 
-#~ msgid "No filename, quitting"
-#~ msgstr "Brak nazwy pliku, koñczenie"
+msgid "No filename, quitting"
+msgstr "Brak nazwy pliku, koñczenie"
 
-#~ msgid "is empty file"
-#~ msgstr "pusty plik"
+msgid "is empty file"
+msgstr "pusty plik"
 
-#~ msgid "is not a valid tcltkgrass script:"
-#~ msgstr "nie jest to prawid³owy skrypt tcltkgrass:"
+msgid "is not a valid tcltkgrass script:"
+msgstr "nie jest to prawid³owy skrypt tcltkgrass:"
 
-#~ msgid "invalid script file:"
-#~ msgstr "nieprawid³owy plik skryptu:"
+msgid "invalid script file:"
+msgstr "nieprawid³owy plik skryptu:"
 
-#~ msgid "Error executing script"
-#~ msgstr "B³±d podczas wykonywania skryptu"
+msgid "Error executing script"
+msgstr "B³±d podczas wykonywania skryptu"
 
-#~ msgid "Script"
-#~ msgstr "Skrypt"
+msgid "Script"
+msgstr "Skrypt"
 
-#~ msgid "executed"
-#~ msgstr "wykonany"
+msgid "executed"
+msgstr "wykonany"
 
-#~ msgid "path not found:"
-#~ msgstr "nie znaleziono ¶cie¿ki:"
+msgid "path not found:"
+msgstr "nie znaleziono ¶cie¿ki:"
 
-#~ msgid "no html page found in"
-#~ msgstr "nie znaleziono strony html"
+msgid "no html page found in"
+msgstr "nie znaleziono strony html"
 
-#~ msgid "for"
-#~ msgstr "dla"
+msgid "for"
+msgstr "dla"
 
-#~ msgid "Configure html-browser"
-#~ msgstr "Konfiguruj przegl±darkê html"
+msgid "Configure html-browser"
+msgstr "Konfiguruj przegl±darkê html"
 
-#~ msgid "html browser (netscape)"
-#~ msgstr "przegl±darka html (netscape)"
+msgid "html browser (netscape)"
+msgstr "przegl±darka html (netscape)"
 
-#~ msgid "path or url for html manual pages"
-#~ msgstr "¶ciezka lub adres dla stron podrêcznika w formacie html"
+msgid "path or url for html manual pages"
+msgstr "¶ciezka lub adres dla stron podrêcznika w formacie html"
 
-#~ msgid "prefix for html path or url (file:)"
-#~ msgstr "prefix dla ¶cie¿ki lub adresu html (plik:)"
+msgid "prefix for html path or url (file:)"
+msgstr "prefix dla ¶cie¿ki lub adresu html (plik:)"
 
-#~ msgid "postfix for html files (.html)"
-#~ msgstr "postfix dla plików html (.html)"
+msgid "postfix for html files (.html)"
+msgstr "postfix dla plików html (.html)"
 
-#~ msgid "Database : "
-#~ msgstr "Baza danych : "
+msgid "Database : "
+msgstr "Baza danych : "
 
-#~ msgid "Location"
-#~ msgstr "Lokacja"
+msgid "Location"
+msgstr "Lokacja"
 
-#~ msgid "Mapset"
-#~ msgstr "Mapset"
+msgid "Mapset"
+msgstr "Mapset"
 
-#~ msgid "Use Selection"
-#~ msgstr "U¿yj Zaznaczenia"
+msgid "Use Selection"
+msgstr "U¿yj Zaznaczenia"
 
-#~ msgid "Create New Location"
-#~ msgstr "Utwórz Now± Lokacjê"
+msgid "Create New Location"
+msgstr "Utwórz Now± Lokacjê"
 
-#~ msgid "Vector Panel"
-#~ msgstr "Panel Wektorów"
+msgid "Vector Panel"
+msgstr "Panel Wektorów"
 
-#~ msgid "Current:"
-#~ msgstr "Bie¿±cy:"
+msgid "Current:"
+msgstr "Bie¿±cy:"
 
-#~ msgid "Line Width"
-#~ msgstr "Grubo¶æ Linii"
+msgid "Line Width"
+msgstr "Grubo¶æ Linii"
 
-#~ msgid "Color"
-#~ msgstr "Kolor"
+msgid "Color"
+msgstr "Kolor"
 
-#~ msgid "Draw Current"
-#~ msgstr "Przerysuj Bie¿±cy"
+msgid "Draw Current"
+msgstr "Przerysuj Bie¿±cy"
 
-#~ msgid "Display on surface(s):"
-#~ msgstr "Wy¶wietl na powierzchni(ach):"
+msgid "Display on surface(s):"
+msgstr "Wy¶wietl na powierzchni(ach):"
 
-#~ msgid "Mkdspf"
-#~ msgstr "Mkdspf"
+msgid "Mkdspf"
+msgstr "Mkdspf"
 
-#~ msgid "Mkdspf Panel"
-#~ msgstr "Panel Mkdspf"
+msgid "Mkdspf Panel"
+msgstr "Panel Mkdspf"
 
-#~ msgid "Input File:"
-#~ msgstr "Wprowad¼ Plik:"
+msgid "Input File:"
+msgstr "Wprowad¼ Plik:"
 
-#~ msgid "Output File:"
-#~ msgstr "Plik Wyj¶ciowy"
+msgid "Output File:"
+msgstr "Plik Wyj¶ciowy"
 
-#~ msgid "Color File:"
-#~ msgstr "Plik Koloru"
+msgid "Color File:"
+msgstr "Plik Koloru"
 
-#~ msgid "Lighting Model"
-#~ msgstr "Model O¶wietlenia"
+msgid "Lighting Model"
+msgstr "Model O¶wietlenia"
 
-#~ msgid "flat"
-#~ msgstr "p³aski"
+msgid "flat"
+msgstr "p³aski"
 
-#~ msgid "gradient"
-#~ msgstr "gradient"
+msgid "gradient"
+msgstr "gradient"
 
-#~ msgid "Accept"
-#~ msgstr "Zatwierd¼"
+msgid "Accept"
+msgstr "Zatwierd¼"
 
-#~ msgid "Add"
-#~ msgstr "Dodaj"
+msgid "Add"
+msgstr "Dodaj"
 
-#~ msgid "Labels"
-#~ msgstr "Etykiety"
+msgid "Labels"
+msgstr "Etykiety"
 
-#~ msgid "Icons"
-#~ msgstr "Ikony"
+msgid "Icons"
+msgstr "Ikony"
 
-#~ msgid "3d.view"
-#~ msgstr "Widok 3d"
+msgid "3d.view"
+msgstr "Widok 3d"
 
-#~ msgid "Color Panel"
-#~ msgstr "Panel Kolorów"
+msgid "Color Panel"
+msgstr "Panel Kolorów"
 
-#~ msgid "Surfaces"
-#~ msgstr "Powierzchnie"
+msgid "Surfaces"
+msgstr "Powierzchnie"
 
-#~ msgid "Surface Panel"
-#~ msgstr "Panel Powierzchni"
+msgid "Surface Panel"
+msgstr "Panel Powierzchni"
 
-#~ msgid "Grid Resolution"
-#~ msgstr "Rozdzielczo¶æ Grida"
+msgid "Grid Resolution"
+msgstr "Rozdzielczo¶æ Grida"
 
-#~ msgid "Polygon Resolution"
-#~ msgstr "Rozdzielczo¶æ Poligonu"
+msgid "Polygon Resolution"
+msgstr "Rozdzielczo¶æ Poligonu"
 
-#~ msgid "Current Surface Only"
-#~ msgstr "Tylko Bie¿±ca Powierzchnia"
+msgid "Current Surface Only"
+msgstr "Tylko Bie¿±ca Powierzchnia"
 
-#~ msgid "All Surfaces"
-#~ msgstr "Wszystkie Powierzchnie"
+msgid "All Surfaces"
+msgstr "Wszystkie Powierzchnie"
 
-#~ msgid "Surface Style:"
-#~ msgstr "Styl Poweirzchni:"
+msgid "Surface Style:"
+msgstr "Styl Poweirzchni:"
 
-#~ msgid "Polygon"
-#~ msgstr "Poligon"
+msgid "Polygon"
+msgstr "Poligon"
 
-#~ msgid "Wire/Poly"
-#~ msgstr "Siatka/Poligony"
+msgid "Wire/Poly"
+msgstr "Siatka/Poligony"
 
-#~ msgid "Shading:"
-#~ msgstr "Cieniowanie:"
+msgid "Shading:"
+msgstr "Cieniowanie:"
 
-#~ msgid "Flat"
-#~ msgstr "P³askie"
+msgid "Flat"
+msgstr "P³askie"
 
-#~ msgid "Gouraud"
-#~ msgstr "Gouraud"
+msgid "Gouraud"
+msgstr "Gouraud"
 
-#~ msgid "Position"
-#~ msgstr "Pozycja"
+msgid "Position"
+msgstr "Pozycja"
 
-#~ msgid "New Map"
-#~ msgstr "Nowa Mapa"
+msgid "New Map"
+msgstr "Nowa Mapa"
 
-#~ msgid "Remove Mask"
-#~ msgstr "Usuñ Maskê"
+msgid "Remove Mask"
+msgstr "Usuñ Maskê"
 
-#~ msgid "Invert Mask"
-#~ msgstr "Odwróæ Maskê"
+msgid "Invert Mask"
+msgstr "Odwróæ Maskê"
 
-#~ msgid "New Constant"
-#~ msgstr "Nowa Sta³a"
+msgid "New Constant"
+msgstr "Nowa Sta³a"
 
-#~ msgid "Use as color"
-#~ msgstr "U¿yj jako koloru"
+msgid "Use as color"
+msgstr "U¿yj jako koloru"
 
-#~ msgid "Status: "
-#~ msgstr "Status: "
+msgid "Status: "
+msgstr "Status: "
 
-#~ msgid "not set"
-#~ msgstr "nie ustawiony"
+msgid "not set"
+msgstr "nie ustawiony"
 
-#~ msgid "color:"
-#~ msgstr "kolor"
+msgid "color:"
+msgstr "kolor"
 
-#~ msgid "R"
-#~ msgstr "R"
+msgid "R"
+msgstr "R"
 
-#~ msgid "G"
-#~ msgstr "G"
+msgid "G"
+msgstr "G"
 
-#~ msgid "B"
-#~ msgstr "B"
+msgid "B"
+msgstr "B"
 
-#~ msgid "Surface Color"
-#~ msgstr "Kolor Powierzchni"
+msgid "Surface Color"
+msgstr "Kolor Powierzchni"
 
-#~ msgid "b"
-#~ msgstr "b"
+msgid "b"
+msgstr "b"
 
-#~ msgid "mask not set"
-#~ msgstr "maska nie ustawiona"
+msgid "mask not set"
+msgstr "maska nie ustawiona"
 
-#~ msgid "Create WIND3 (default 3D window) from current 2D region"
-#~ msgstr "Utwórz WIND3 (domy¶lne okno 3D) z bie¿±cego regionu 2D"
+msgid "Create WIND3 (default 3D window) from current 2D region"
+msgstr "Utwórz WIND3 (domy¶lne okno 3D) z bie¿±cego regionu 2D"
 
-#~ msgid "Manage 3D region"
-#~ msgstr "Zarz±dzaj regionem 3D"
+msgid "Manage 3D region"
+msgstr "Zarz±dzaj regionem 3D"
 
-#~ msgid "Modify mapset search path"
-#~ msgstr "Zmieñ ¶cie¿kê mapsetu"
+msgid "Modify mapset search path"
+msgstr "Zmieñ ¶cie¿kê mapsetu"
 
-#~ msgid "Show standard GRASS fonts"
-#~ msgstr "Poka¿ standardowe czcionki GRASS"
+msgid "Show standard GRASS fonts"
+msgstr "Poka¿ standardowe czcionki GRASS"
+
+#~ msgid "Stopped ..."
+#~ msgstr "Zatrzymano ..."
+
+#~ msgid "Manage region"
+#~ msgstr "Zarz±dzaj regionem"
