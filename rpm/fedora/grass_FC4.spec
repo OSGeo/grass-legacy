@@ -9,7 +9,7 @@
 %define PACKAGE_NAME grass
 
 %if "%{!?snap:1}" == "1"
-%define PACKAGE_VERSION 6.2.0RC2
+%define PACKAGE_VERSION 6.2.0RC3
 %define PACKAGE_URL http://grass.itc.it/index.php
 %define PACKAGE_RELEASE 1
 %define shortver 62
@@ -65,7 +65,7 @@ Epoch: 		%PACKAGE_RELEASE
 %{?ENT:Release: %{PACKAGE_RELEASE}.E%{VER1}}
 %{?SLC:Release: %{PACKAGE_RELEASE}.SL%{VER1}}
 %if  "%{!?snap:1}" == "1"
-Source:	        http://grass.itc.it/grass62/source/grass-6.2.0RC2.tar.gz  
+Source:	        http://grass.itc.it/grass62/source/grass-%{PACKAGE_VERSION}.tar.gz  
 %else
 Source:	        http://grass.itc.it/grass63/source/snapshot/grass-%{cvsversion}.cvs_src_snapshot_%{cvssnapshot}.tar.gz
 %endif
