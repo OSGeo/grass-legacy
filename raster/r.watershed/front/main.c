@@ -32,8 +32,7 @@ int main(int argc, char *argv[])
 	/* Set description */
 	module              = G_define_module();
 	module->keywords = _("raster");
-    module->description =
-	_("Watershed basin analysis program.");
+	module->description = _("Watershed basin analysis program.");
 	
 	opt1 = G_define_option() ; 
 	opt1->key            = "elevation" ; 
@@ -163,7 +162,7 @@ int main(int argc, char *argv[])
 		&& (opt14->answer == NULL)
 		&& (opt15->answer == NULL))
 	{
-		G_fatal_error(_("\nSorry, you must choose some output map."));
+		G_fatal_error(_("Sorry, you must choose an output map."));
 	}
 
 	err = 0 ;
@@ -178,10 +177,10 @@ int main(int argc, char *argv[])
 	
 	if (err)
 	{
-		G_message(_("\nSorry, if any of the following options are set:\n"
+		G_message(_("Sorry, if any of the following options are set:\n"
 		        "    basin, stream, half.basin, slope, or lS\n"
 		        "    you MUST provide a value for the basin "
-                        "threshold (basin.threshold)."));
+                        "threshold parameter."));
 		G_usage() ;
 		exit(EXIT_FAILURE);
 	}
@@ -286,8 +285,8 @@ int main(int argc, char *argv[])
 		strcat(command, " S=") ; strcat(command, "\"") ;
 		strcat(command, opt15->answer) ; strcat(command, "\"") ;
 	}
-	
-	G_message(_("Running: %s"), command) ;
+
+	G_debug(1, "Running: %s", command);
 
 	exit(system(command)) ;
 }
