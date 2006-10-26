@@ -53,6 +53,7 @@
 
 extern "C" {
 #include <grass/gis.h>
+#include <grass/glocale.h>
 }
 
 #include "option.h"
@@ -89,7 +90,7 @@ parse_args(int argc, char *argv[]) {
   input_elev->type       = TYPE_STRING;
   input_elev->required   = YES;
   input_elev->gisprompt  = "old,cell,raster" ;
-  input_elev->description= "Input elevation grid" ;
+  input_elev->description= _("Input elevation grid");
 
   /* output filled elevation grid */
   struct Option *output_elev;
@@ -98,7 +99,7 @@ parse_args(int argc, char *argv[]) {
   output_elev->type       = TYPE_STRING;
   output_elev->required   = YES;
   output_elev->gisprompt  = "new,cell,raster" ;
-  output_elev->description= "Output (filled) elevation grid";
+  output_elev->description= _("Output (filled) elevation grid");
   
  /* output direction  grid */
   struct Option *output_dir;
@@ -107,7 +108,7 @@ parse_args(int argc, char *argv[]) {
   output_dir->type       = TYPE_STRING;
   output_dir->required   = YES;
   output_dir->gisprompt  = "new,cell,raster" ;
-  output_dir->description= "Output direction grid";
+  output_dir->description= _("Output direction grid");
 
   /* output sinkwatershed  grid */
   struct Option *output_watershed;
@@ -116,7 +117,7 @@ parse_args(int argc, char *argv[]) {
   output_watershed->type       = TYPE_STRING;
   output_watershed->required   = YES;
   output_watershed->gisprompt  = "new,cell,raster" ;
-  output_watershed->description= "Output sinkwatershed grid";
+  output_watershed->description= _("Output sink-watershed grid");
 
   /* output flow accumulation grid */
   struct Option *output_accu;
@@ -125,7 +126,7 @@ parse_args(int argc, char *argv[]) {
   output_accu->type       = TYPE_STRING;
   output_accu->required   = YES;
   output_accu->gisprompt  = "new,cell,raster" ;
-  output_accu->description= "Output accumulation grid";
+  output_accu->description= _("Output accumulation grid");
 
 #ifdef OUTPUT_TCI
   struct Option *output_tci;
@@ -134,14 +135,14 @@ parse_args(int argc, char *argv[]) {
   output_tci->type       = TYPE_STRING;
   output_tci->required   = YES;
   output_tci->gisprompt  = "new,cell,raster" ;
-  output_tci->description= "Output tci grid";
+  output_tci->description= _("Output tci grid");
 #endif
 
   /* MFD/SFD flag */
   struct Flag *sfd_flag;
   sfd_flag = G_define_flag() ;
   sfd_flag->key        = 's';
-  sfd_flag->description= "SFD (D8) flow (default is MFD)";
+  sfd_flag->description= _("SFD (D8) flow (default is MFD)");
   /* sfd_flag->answer     = 'n'; */
 
   /* D8CUT value*/
@@ -151,7 +152,9 @@ parse_args(int argc, char *argv[]) {
   d8cut->type = TYPE_DOUBLE;
   d8cut->required = NO;
   d8cut->answer = "infinity"; /* default value */
-  d8cut->description = "If flow accumulation is larger than this value it is routed using SFD (D8) direction \n \t\t (meaningfull only  for MFD flow)";
+  d8cut->description =
+    _("If flow accumulation is larger than this value it is routed using "
+      "SFD (D8) direction \n \t\t (meaningfull only  for MFD flow)");
   
   /* main memory */
   struct Option *mem;
@@ -160,7 +163,7 @@ parse_args(int argc, char *argv[]) {
   mem->type        = TYPE_INTEGER;
   mem->required    = NO;
   mem->answer      = "300"; /* 300MB default value */
-  mem->description = "Main memory size (in MB)";
+  mem->description = _("Main memory size (in MB)");
 
   /* temporary STREAM path */
   struct Option *streamdir;
@@ -169,13 +172,14 @@ parse_args(int argc, char *argv[]) {
   streamdir->type       = TYPE_STRING;
   streamdir->required   = NO;
   streamdir->answer     = "/var/tmp"; 
-  streamdir->description= "Location of intermediate STREAMs";
+  streamdir->description= _("Location of intermediate STREAMs");
 
   /* verbose flag */
+  /* please, remove before GRASS 7 released */
   struct Flag *quiet;
   quiet = G_define_flag() ;
   quiet->key         = 'q' ;
-  quiet->description = "Quiet" ;
+  quiet->description = _("Quiet");
   /* quiet->answer = 'n'; */
 
  /* stats file */
@@ -184,14 +188,14 @@ parse_args(int argc, char *argv[]) {
   stats_opt->key = "stats";
   stats_opt->type       = TYPE_STRING;
   stats_opt->required   = NO;
-  stats_opt->description= "Stats file";
+  stats_opt->description= _("Stats file");
   stats_opt->answer     = "stats.out";
 
 
 
   /* ************************* */
   if (G_parser(argc, argv)) {
-    exit (-1);
+    exit (EXIT_FAILURE);
   }
   
   /* ************************* */
@@ -214,7 +218,21 @@ parse_args(int argc, char *argv[]) {
 
   opt->mem = atoi(mem->answer);
   opt->streamdir = streamdir->answer;
-  opt->verbose = (!quiet->answer);
+
+  opt->verbose = FALSE;
+/* please, remove before GRASS 7 released */
+  if(quiet->answer) {
+    G_warning(_("The '-q' flag is superseded and will be removed "
+	"in future. Please use '--quiet' instead."));
+    G_putenv("GRASS_VERBOSE","0");
+    opt->verbose = FALSE;
+  }
+  else {
+    if(G_verbose() == G_verbose_max())
+	opt->verbose = TRUE;
+  }
+
+
   opt->stats = stats_opt->answer;
 
   /* somebody should delete the options */
@@ -228,21 +246,21 @@ void check_header(char* cellname) {
   char *mapset;
   mapset = G_find_cell(cellname, "");
   if (mapset == NULL) {
-    G_fatal_error ("cell file [%s] not found", cellname);
+    G_fatal_error(_("cell file [%s] not found"), cellname);
   }
   /* read cell header */
   struct Cell_head cell_hd;
   if (G_get_cellhd (cellname, mapset, &cell_hd) < 0)
-    G_fatal_error ("Cannot read header of [%s]", cellname);
+    G_fatal_error(_("Cannot read header of [%s]"), cellname);
   
   /* check compatibility with module region */
   if (!((region->ew_res == cell_hd.ew_res)
 		&& (region->ns_res == cell_hd.ns_res))) {
-    G_fatal_error("cell file %s resolution differs from current region",
+    G_fatal_error(_("cell file %s resolution differs from current region"),
 				  cellname);
   } else {
     if (opt->verbose) { 
-      fprintf(stderr, "cell %s header compatible with region header\n",
+      G_message(_("cell %s header compatible with region header"),
 	      cellname);
       fflush(stderr);
     }
@@ -253,30 +271,28 @@ void check_header(char* cellname) {
     RASTER_MAP_TYPE data_type;
 	data_type = G_raster_map_type(opt->elev_grid, mapset);
 #ifdef ELEV_SHORT
-	fprintf(stderr, "elevation stored as SHORT (%dB) ", 
-			sizeof(elevation_type));
+	G_message(_("elevation stored as SHORT (%dB)"),
+		sizeof(elevation_type));
 	if (data_type == FCELL_TYPE) {
-	  fprintf(stderr, "WARNING: raster %s is of type FCELL_TYPE \
---precision may be lost.\n", opt->elev_grid); 
+	  G_warning(_("raster %s is of type FCELL_TYPE "
+			"--precision may be lost."), opt->elev_grid); 
 	}
-	if  (data_type == DCELL_TYPE) {
-	  fprintf(stderr, "WARNING: raster %s is of type DCELL_TYPE \
---precision may be lost.\n",  opt->elev_grid);
+	if (data_type == DCELL_TYPE) {
+	  G_warning(_("raster %s is of type DCELL_TYPE "
+			"--precision may be lost."),  opt->elev_grid);
 	}
-	fprintf(stderr, "\n"); 
 #endif 
 #ifdef ELEV_FLOAT
-	fprintf(stderr, "elevation stored as FLOAT (%dB) ", 
+	G_message( _("elevation stored as FLOAT (%dB)"), 
 			sizeof(elevation_type));
 	if (data_type == CELL_TYPE) {
-	  fprintf(stderr, "WARNING: raster %s is of type CELL_TYPE \
---you should use r.terraflow.short\n", opt->elev_grid); 
+	  G_warning(_("raster %s is of type CELL_TYPE "
+		"--you should use r.terraflow.short"), opt->elev_grid); 
 	}
-	if  (data_type == DCELL_TYPE) {
-	  fprintf(stderr, "WARNING: raster %s is of type DCELL_TYPE \
---precision may be lost.\n",  opt->elev_grid);
+	if (data_type == DCELL_TYPE) {
+	  G_warning(_("raster %s is of type DCELL_TYPE "
+		"--precision may be lost."),  opt->elev_grid);
 	}
-	fprintf(stderr, "\n"); 
 #endif
 	
 
@@ -289,24 +305,24 @@ void check_args() {
 
   /* check if filled elevation grid name is  valid */
   if (G_legal_filename (opt->filled_grid) < 0) {
-    G_fatal_error ("[%s] is an illegal name", opt->filled_grid);
+    G_fatal_error(_("[%s] is an illegal name"), opt->filled_grid);
   }
   /* check if output grid names are valid */
   if (G_legal_filename (opt->dir_grid) < 0) {
-    G_fatal_error ("[%s] is an illegal name", opt->dir_grid);
+    G_fatal_error(_("[%s] is an illegal name"), opt->dir_grid);
   }
   if (G_legal_filename (opt->filled_grid) < 0) {
-    G_fatal_error ("[%s] is an illegal name", opt->filled_grid);
+    G_fatal_error(_("[%s] is an illegal name"), opt->filled_grid);
   }
   if (G_legal_filename (opt->flowaccu_grid) < 0) {
-    G_fatal_error ("[%s] is an illegal name", opt->flowaccu_grid);
+    G_fatal_error(_("[%s] is an illegal name"), opt->flowaccu_grid);
   }
   if (G_legal_filename (opt->watershed_grid) < 0) {
-    G_fatal_error ("[%s] is an illegal name", opt->watershed_grid);
+    G_fatal_error(_("[%s] is an illegal name"), opt->watershed_grid);
   }
 #ifdef OUTPU_TCI
   if (G_legal_filename (opt->tci_grid) < 0) {
-  G_fatal_error ("[%s] is an illegal name", opt->tci_grid);
+  G_fatal_error(_("[%s] is an illegal name"), opt->tci_grid);
   }
 #endif
   
@@ -375,10 +391,10 @@ setFlowAccuColorTable(char* cellname) {
 
   mapset = G_find_cell(cellname, "");
   if (mapset == NULL) {
-    G_fatal_error ("cell file [%s] not found", cellname);
+    G_fatal_error (_("cell file [%s] not found"), cellname);
   }
   if (G_read_range(cellname, mapset, &r) == -1) {
-    G_fatal_error("cannot read range");
+    G_fatal_error(_("cannot read range"));
   }
   /*fprintf(stderr, "%s range is: min=%d, max=%d\n", cellname, r.min, r.max);*/
   int v[6];
@@ -400,7 +416,32 @@ setFlowAccuColorTable(char* cellname) {
 
  
   if (G_write_colors(cellname, mapset, &colors) == -1) {
-    G_fatal_error("cannot write colors");
+    G_fatal_error(_("cannot write colors"));
+  }
+  G_free_colors(&colors);
+}
+
+
+/* ---------------------------------------------------------------------- */
+void
+setSinkWatershedColorTable(char* cellname) {
+  struct  Colors colors;
+  char   *mapset;
+  struct Range r;
+
+  mapset = G_find_cell(cellname, "");
+  if (mapset == NULL) {
+    G_fatal_error (_("cell file [%s] not found"), cellname);
+  }
+  if (G_read_range(cellname, mapset, &r) == -1) {
+    G_fatal_error(_("cannot read range"));
+  }
+
+  G_init_colors(&colors);
+  G_make_random_colors(&colors, 1, r.max);
+
+  if (G_write_colors(cellname, mapset, &colors) == -1) {
+    G_fatal_error(_("cannot write colors"));
   }
   G_free_colors(&colors);
 }
@@ -466,10 +507,10 @@ main(int argc, char *argv[]) {
  
   module = G_define_module();
 #ifdef ELEV_SHORT
-  module->description ="Flow computation for massive grids (Integer version).";
+  module->description = _("Flow computation for massive grids (Integer version).");
 #endif
 #ifdef ELEV_FLOAT
-  module->description ="Flow computation for massive grids (Float version).";
+  module->description = _("Flow computation for massive grids (Float version).");
 #endif
 
   /* get the current region and dimensions */  
@@ -481,7 +522,8 @@ main(int argc, char *argv[]) {
   int nr = G_window_rows();
   int nc = G_window_cols();
   if ((nr > dimension_type_max) || (nc > dimension_type_max)) {
-    G_fatal_error("[nrows=%d, ncols=%d] dimension_type overflow -- change dimension_type and recompile\n", nr, nc);
+    G_fatal_error(_("[nrows=%d, ncols=%d] dimension_type overflow -- "
+	"change dimension_type and recompile"), nr, nc);
   } else {
     nrows = (dimension_type)nr;
     ncols = (dimension_type)nc;
@@ -569,8 +611,10 @@ main(int argc, char *argv[]) {
   stream2_CELL(filledstr, nrows, ncols, opt->filled_grid,true);
 #endif
   delete filledstr; 
+
   stream2_CELL(labeledWater, nrows, ncols, labelElevTypePrintLabel(), 
 			   opt->watershed_grid);
+  setSinkWatershedColorTable(opt->watershed_grid);
   delete labeledWater;
   
 #else 
@@ -602,8 +646,8 @@ main(int argc, char *argv[]) {
   rt_stop(rtTotal);
   stats->recordTime("Total running time: ", rtTotal);
   stats->timestamp("end");
-  
-  fprintf(stderr, "r.terraflow done\n");
+
+  G_done_msg("");
   
   /* free the globals */
   free(region);
@@ -612,7 +656,3 @@ main(int argc, char *argv[]) {
 
   return 0;
 }
-
-
-
- 

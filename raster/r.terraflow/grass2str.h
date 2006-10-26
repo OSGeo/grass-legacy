@@ -154,8 +154,10 @@ cell2stream(char* cellname, elevation_type T_max_value, long* nodata_count) {
 
 	if (opt->verbose) G_percent(i, nrows, 2);
   }/* for i */
-  
-  if (opt->verbose)  fprintf(stderr, "\n");
+
+  if (opt->verbose)
+	G_percent(1, 1, 2); /* finish it */
+
   /* delete buffers */
   G_free(inrast);
   /* close map files */
@@ -236,7 +238,7 @@ stream2_CELL(AMI_STREAM<T>* str, dimension_type nrows, dimension_type ncols,
 
   G_percent(i, nrows, 2);
   }/* for i */
-  fprintf(stderr, "\n");
+  G_percent(1, 1, 2); /* finish it */
 
   G_free(outrast);
   G_close_cell (outfd);
@@ -315,8 +317,8 @@ stream2_CELL(AMI_STREAM<T> *str, dimension_type nrows, dimension_type ncols,
 
     G_percent(i, nrows, 2);
   }/* for i */
-  fprintf(stderr,"\n");
-  
+  G_percent(1, 1, 2); /* finish it */
+
   G_free(outrast);
   G_close_cell (outfd);
 
@@ -389,7 +391,7 @@ stream2_FCELL(AMI_STREAM<T> *str, dimension_type nrows, dimension_type ncols,
 
     G_percent(i, nrows, 2);
   }/* for i */
-  fprintf(stderr, "\n");
+  G_percent(1, 1, 2); /* finish it */
 
   G_free(outrast);
   G_close_cell (outfd);
@@ -501,7 +503,7 @@ stream2_FCELL(AMI_STREAM<T>* str,  dimension_type nrows, dimension_type ncols,
     G_percent(i, nrows, 2);
 
   }/* for i */
-  fprintf(stderr, "\n");
+  G_percent(1, 1, 2); /* finish it */
 
   G_free(rast1);
   G_close_cell (fd1);

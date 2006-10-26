@@ -326,7 +326,8 @@ sweep(AMI_STREAM<sweepItem> *sweepstr, const flowaccumulation_type D8CUT,
     G_percent(k, nitems, 2);
   } /* for k  */
   
-  fprintf(stderr, "\n");
+  G_percent(1, 1, 2); /* finish it */
+
   *stats << "sweeping done\n";
   char buf[1024];
   sprintf(buf, "pqsize = %ld \n", (long)flowpq->size());
