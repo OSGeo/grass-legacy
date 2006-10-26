@@ -17,20 +17,31 @@ determines membership, and makes decisions on GRASS project issues.
 
 \section GRASS Users, Developers and Steering Committee
 
-GRASS is developed by people organized in three concentric circles:
+GRASS is developed by people organized in three concentric circles; 
+all of these groups have crucial roles in determining the direction of the 
+GRASS project:
 
 <ul>
-<li> The GRASS Steering Committee members are in the innermost circle.
-     They make strategic decisions and manage the project.</li>
+<li> The GRASS Steering Committee members are in the innermost circle,
+     meaning they are the smallest in number and have agreed to take
+     on a strategic management role. When necessary, they make strategic 
+     decisions and manage the direction of the project, based on proposals
+     and input from the rest of the community.</li>
 <li> The GRASS Developers are the second circle and contribute to
      source code, documentation, testing, and packaging. They have write
-     access to the GRASS source code repository (CVS). This group votes
-     for the members of the GRASS PSC. Developers are also encouraged
-     to closely peer-review code submissions.</li>
+     access to the GRASS source code repository (CVS/SVN).  Developers are
+     encouraged to closely peer-review code submissions. This group votes
+     for the members of the GRASS PSC. It is recognized that there are or
+     will be developers that have specific expertise key to determining
+     the future of the GRASS project but are not (necessarily/always?) part of
+     the Steering Committee at any given time; the PSC will seek and rely
+     on their expertise and advice when making decisions in the relevant areas.</li>
 <li> The GRASS Users are the third circle and are the largest group.
      They contribute to the code, documentation and discussion on existing
      and new features through the various mailing lists, the Wiki and the
      bug/wish tracker.</li>
+<li> All members can submit proposals to the entire community and, when
+     necessary (see below), to the PSC for decisions.</li>
 </ul>
 
 In brief, the PSC votes on proposals on the GRASS Developers mailing
@@ -47,8 +58,14 @@ though ultimately a majority of committee members can pass a proposal.
 list for discussion and voting, by any interested party, not just 
 committee members.
 
-<li> Proposals need to be available for review for at least two business
-days before a final decision can be made. 
+<li> Proposals need to be available for review for at least four business
+days before a final decision can be made.  It is recognized that some
+more complex issues may require longer for discussion and deliberation.
+<B>Insert mechanism here</b> - could leave it open until the Chair decides
+no more progress is being made and calls the vote, or could have a 
+motion to call it to vote, or... let's not make the process onerous
+here, I'm just thinking that we need to avoid both pressure to rushed
+decisions and getting stuck with no decision.
 
 <li> Respondents may vote "+1" to indicate support for the proposal and a 
 willingness to support implementation. 
@@ -111,9 +128,12 @@ convinced to withdraw their veto.  We are trying to reach consensus.
 
 \section bootstrapping Bootstrapping
 
-XXX is declared initial Chair of the Project Steering Committee.
+Markus Neteler is declared initial Chair of the Project Steering Committee.
 
-X Y Z are declared to be the founding Project Steering Committee.
+Michael Barton, Dylan Beaudette, Hamish Bowman, Cannata Massimiliano, 
+Brad Douglas, Paul Kelly, Helena Mitasova, Scott Mitchell, Markus
+Neteler, and Maciej Sieczka are declared to be the founding Project Steering 
+Committee.
 
 */
  
