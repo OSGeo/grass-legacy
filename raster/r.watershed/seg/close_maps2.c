@@ -57,7 +57,7 @@ close_array_seg (void)
 		    incr = 7;
 	    }
 	}
-	G_percent(r,max,3); /* finish it */
+	G_percent(r-1,max,3); /* finish it */
       }
       else G_debug(1, "Too many subbasins to reasonably check neighboring color spread");
    }
