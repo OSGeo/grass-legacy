@@ -18,7 +18,7 @@ int main (int argc, char *argv[])
     }
     if (bas_thres <= 0)
     {
-    	G_message(_("\n\nSECTION %d: Closing Maps."), tot_parts);
+    	G_message(_("SECTION %d: Closing Maps."), tot_parts);
         close_maps ();
     }
     else    
@@ -30,9 +30,9 @@ int main (int argc, char *argv[])
 	bas = (CELL *)G_calloc(sizeof(CELL), size_array(&bas_seg,nrows,ncols));
 	haf = (CELL *)G_calloc(sizeof(CELL), size_array(&haf_seg,nrows,ncols));
 
-	G_message(_("\nSECTION %d: Watershed determination."), tot_parts - 1);
+	G_message(_("SECTION %d: Watershed determination."), tot_parts - 1);
 	find_pourpts ();
-    	G_message(_("\nSECTION %d: Closing Maps."), tot_parts);
+    	G_message(_("SECTION %d: Closing Maps."), tot_parts);
 	close_array_seg ();
     }
 

@@ -15,7 +15,7 @@ int do_astar (void)
     CELL	in_val, drain_val;
     double	slope;
 
-G_message(_("\n\nSECTION 2: A * Search.                      Percent complete:"));
+G_message(_("SECTION 2: A * Search."));
 
 count = 0;
 while (first_astar != -1) {
@@ -63,8 +63,8 @@ while (first_astar != -1) {
 }
 bseg_close (&worked);
 bseg_close (&in_list);
-fprintf (stderr, "\n");
 
+    G_percent(count, do_points, 1); /* finish it */
     return 0;
 }
 

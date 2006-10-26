@@ -63,7 +63,7 @@ if ((ele_flag != 1)
 tot_parts = 4;
 if (ls_flag || sg_flag) tot_parts++;
 if (bas_thres > 0) tot_parts++;
-G_message(_("\nSECTION 1a (of %1d): Initiating Memory."), tot_parts);
+G_message(_("SECTION 1a (of %1d): Initiating Memory."), tot_parts);
 this_mapset = G_mapset ();
 if (asp_flag)	do_legal (asp_name);
 if (bas_flag)	do_legal (bas_name);
@@ -206,12 +206,12 @@ if (ls_flag)	{
 	l_s = (double *) G_malloc (size_array (&l_s_seg, nrows, ncols) * sizeof(double));
 }
 
-G_message(_("\nSECTION 1b (of %1d): Determining Offmap Flow. Percent Complete: "), tot_parts);
+G_message(_("SECTION 1b (of %1d): Determining Offmap Flow."), tot_parts);
 
 first_astar = first_cum = -1;
 if (MASK_flag) {
 	for (r = 0; r < nrows; r++) {
-		G_percent (r, nrows, 1);
+		G_percent (r, nrows, 3);
 		for (c = 0; c < ncols; c++) {
 			if (FLAG_GET (worked, r, c)) {
 			    wat[SEG_INDEX(wat_seg,r,c)] = 0;
@@ -294,7 +294,7 @@ if (MASK_flag) {
 	}
 } else {
 	for (r = 0; r < nrows; r++) {
-		G_percent (r, nrows, 1);
+		G_percent (r, nrows, 3);
 		for (c = 0; c < ncols; c++) {
 			s_l[SEG_INDEX(s_l_seg, r, c)] = half_res;
 			asp_value = asp[SEG_INDEX(asp_seg, r, c)];
@@ -317,7 +317,8 @@ if (MASK_flag) {
 		}
 	}
 }
-    fprintf (stderr, "\n");
+
+    G_percent (r, nrows, 3); /* finish it */
 
     return 0;
 }

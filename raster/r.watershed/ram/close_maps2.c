@@ -30,12 +30,16 @@ close_array_seg (void)
 			max = theseg[SEG_INDEX(thesegseg,r,c)];
 	    }
 	}
+	G_debug(1, "%d basins created", max);
 	G_init_colors(&colors);
 	G_make_random_colors(&colors, 1, max);
+
+      if( max < 10000 ) {
 	G_set_color((CELL)0, 0, 0, 0, &colors);
 	r = 1;
 	incr = 0;
 	while(incr >= 0) {
+	    G_percent(r,max,3);
 	    for (gr=130+incr; gr<=255; gr += 20) {
 	        for (rd=90+incr; rd<=255; rd += 30) {
 		    for (bl=90+incr; bl<=255; bl += 40) {
@@ -51,6 +55,8 @@ close_array_seg (void)
 				flag = 0;
 			        incr = -1;
 			    }
+			    if(r % 200 == 0)
+				G_debug(5,"adjusting colors: r=%d\tof %d basins", r, max);
 		        }
 		    }
 	        }
@@ -61,7 +67,11 @@ close_array_seg (void)
 		    incr = 7;
 	    }
 	}
-    }
+	G_percent(r-1,max,3); /* finish it */
+      }
+      else G_debug(1, "Too many subbasins to reasonably check neighboring color spread");
+   }
+
     if (seg_flag) {
         map_fd = G_open_cell_new(seg_name);
         for (r=0; r<nrows; r++) {

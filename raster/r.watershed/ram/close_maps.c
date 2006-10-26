@@ -16,6 +16,7 @@ close_maps (void)
 		buf = G_allocate_cell_buf();
     G_free (alt);
     if (ls_flag || sg_flag) G_free (r_h);
+
     if (wat_flag)	{
 	fd = G_open_cell_new (wat_name);
 	if (fd < 0)	{
@@ -31,6 +32,7 @@ close_maps (void)
 			G_warning(_("Close failed.")) ;
 	}
     }
+
     if (asp_flag) {
 	fd = G_open_cell_new (asp_name);
 	if (fd < 0)	{
@@ -46,10 +48,11 @@ close_maps (void)
 			G_warning(_("Close failed.")) ;
 	}
 	G_init_colors (&colors);
-	G_make_grey_scale (&colors, 1, 8);
+	G_make_aspect_colors (&colors, 0, 8);
 	G_write_colors (asp_name, this_mapset, &colors);
     }
     G_free (asp);
+
     if (dis_flag) {
 	fd = G_open_cell_new (dis_name);
 	if (fd < 0)	{
@@ -83,6 +86,7 @@ close_maps (void)
     G_free_colors(&colors);
     */
     G_free (wat);
+
     if (ls_flag) {
 	fd = G_open_cell_new (ls_name);
 	if (fd < 0)	{
@@ -99,6 +103,7 @@ close_maps (void)
 	}
         G_free (l_s);
     }
+
     if (sl_flag) {
 	fd = G_open_cell_new (sl_name);
 	if (fd < 0)	{
@@ -116,8 +121,10 @@ close_maps (void)
 			G_warning(_("Close failed.")) ;
 	}
     }
+
     if (sl_flag || ls_flag || sg_flag)
         G_free (s_l);  
+
     if (sg_flag) 	{
 	fd = G_open_cell_new (sg_name);
 	if (fd < 0)	{
@@ -134,5 +141,6 @@ close_maps (void)
 	}
         G_free (s_g);
     }
+
     return 0;
 }

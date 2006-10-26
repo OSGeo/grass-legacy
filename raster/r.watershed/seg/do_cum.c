@@ -12,13 +12,13 @@ do_cum (void)
     POINT	point;
     int		killer, threshold, count;
 
-G_message(_("\nSECTION 3: Accumulating Surface Flow.       Percent complete:"));
+G_message(_("SECTION 3: Accumulating Surface Flow."));
 
 count = 0;
 if (bas_thres <= 0) threshold = 60;
 else	threshold = bas_thres;
 while (first_cum != -1) {
-	G_percent (count++, do_points, 1);
+	G_percent (count++, do_points, 3);
 	killer = first_cum;
 	seg_get (&astar_pts, (char *) &point, 0, killer);
 	first_cum = point.nxt;
@@ -52,7 +52,7 @@ while (first_cum != -1) {
         }
 }
 seg_close (&astar_pts);
-fprintf (stderr, "\n");
 
+    G_percent (count, do_points, 3); /* finish it */
     return 0;
 }

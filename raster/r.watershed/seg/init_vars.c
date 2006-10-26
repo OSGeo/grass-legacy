@@ -68,7 +68,7 @@ tot_parts = 4;
 if (ls_flag || sg_flag) tot_parts++;
 if (bas_thres > 0) tot_parts++;
 
-G_message(_("\nSECTION 1 beginning: Initiating Variables. %d sections total."), tot_parts);
+G_message(_("SECTION 1 beginning: Initiating Variables. %d sections total."), tot_parts);
 
 this_mapset = G_mapset ();
 if (asp_flag)	do_legal (asp_name);
@@ -109,14 +109,14 @@ if (sl_flag) num_cseg_bytes -= sizeof(double) * SROW * SCOL * 4;
 num_cseg = sizeof (CELL) * 3 + sizeof (double);
 num_cseg_bytes /= num_cseg * 4 * SROW * SCOL;
 num_cseg_total = nrows / SROW + 1;
-G_message(_("    segments in row:	%d"), num_cseg_total);
+G_debug(1, "    segments in row:\t%d", num_cseg_total);
 
 num_cseg_total = ncols / SCOL + 1;
-G_message(_("segments in columns:	%d"), num_cseg_total);
+G_debug(1, "segments in columns:\t%d", num_cseg_total);
 
 num_cseg_total = (ncols / SCOL + 1) * (nrows / SROW + 1);
-G_message(_("     total segments:	%d"), num_cseg_total);
-G_message(_("      open segments:	%d"), num_cseg_bytes);
+G_debug(1, "     total segments:\t%d", num_cseg_total);
+G_debug(1, "      open segments:\t%d", num_cseg_bytes);
 
 cseg_open (&alt, SROW, SCOL, num_cseg_bytes);
 cseg_open (&r_h, SROW, SCOL, 4);
@@ -193,12 +193,11 @@ if (ls_flag)
 seg_open (&astar_pts, 1, do_points, 1, PAGE_BLOCK / sizeof (POINT),
 		4, sizeof (POINT));
 first_astar = first_cum = -1;
-G_message(_("\nSECTION 1b (of %1d): Determining Offmap Flow. Percent Complete: "),
-		tot_parts);
+G_message(_("SECTION 1b (of %1d): Determining Offmap Flow."), tot_parts);
 
 if (MASK_flag) {
 	for (r = 0; r < nrows; r++) {
-		G_percent (r, nrows, 1);
+		G_percent (r, nrows, 3);
 		for (c = 0; c < ncols; c++) {
 		    bseg_get (&worked, &worked_value, r, c);
 		    if (worked_value) {
@@ -318,6 +317,7 @@ if (MASK_flag) {
 		    }
 		}
 	}
+	G_percent (r, nrows, 3); /* finish it */
 } else {
 	for (r = 0; r < nrows; r++) {
 		for (c = 0; c < ncols; c++) {
