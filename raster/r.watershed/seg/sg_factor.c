@@ -10,9 +10,9 @@ sg_factor (void)
     CELL	downer, low_elev, hih_elev;
     double	height, length, S, sin_theta;
 
-    G_message(_("\nSECTION 4: Length Slope determination.      Percent complete:"));
+    G_message(_("SECTION 4: Length Slope determination."));
     for (r = nrows - 1; r >= 0; r--) {
-	G_percent (r, nrows, 1);
+	G_percent (r, nrows, 3);
 	for (c = ncols - 1; c >= 0; c--) {
 	    	cseg_get (&alt, &low_elev, r, c);
 	    	cseg_get (&r_h, &hih_elev, r, c);
@@ -36,7 +36,7 @@ sg_factor (void)
 		}
 	}
     }
-    fprintf (stderr, "\n");
+    G_percent(r, nrows, 3); /* finish it */
 
     return 0;
 }

@@ -9,13 +9,13 @@ int do_cum (void)
     CELL	is_swale, value, valued;
     int		killer, threshold, count;
 
-    G_message(_("\nSECTION 3: Accumulating Surface Flow.       Percent complete: "));
+    G_message(_("SECTION 3: Accumulating Surface Flow."));
 
 count = 0;
 if (bas_thres <= 0) threshold = 60;
 else	threshold = bas_thres;
 while (first_cum != -1) {
-	G_percent (count++, do_points, 1);
+	G_percent (count++, do_points, 3);
 	killer = first_cum;
 	first_cum = astar_pts[killer].nxt;
         if ((dr = astar_pts[killer].downr) > -1) { 
@@ -47,8 +47,8 @@ while (first_cum != -1) {
 		}
         }
 }
+G_percent (count, do_points, 3); /* finish it */
 G_free (astar_pts);
-fprintf (stderr, "\n");
 
 return 0;
 }

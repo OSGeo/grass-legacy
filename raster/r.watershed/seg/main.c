@@ -25,7 +25,7 @@ main (int argc, char *argv[])
 
     if (bas_thres <= 0)
     {
-    	G_message(_("\nSECTION %d beginning: Closing Maps."), tot_parts);
+    	G_message(_("SECTION %d beginning: Closing Maps."), tot_parts);
         close_maps ();
     }
     else    
@@ -36,10 +36,10 @@ main (int argc, char *argv[])
 	}
 	cseg_open (&bas, SROW, SCOL, 4);
 	cseg_open (&haf, SROW, SCOL, 4);
-    	G_message(_("\nSECTION %d beginning: Watershed determination."), 
+    	G_message(_("SECTION %d beginning: Watershed determination."), 
 			tot_parts - 1);
 	find_pourpts ();
-    	G_message(_("\nSECTION %d beginning: Closing Maps."), tot_parts);
+    	G_message(_("SECTION %d beginning: Closing Maps."), tot_parts);
 	close_array_seg ();
     }
 

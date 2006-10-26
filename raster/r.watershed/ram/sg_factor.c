@@ -9,10 +9,10 @@ int sg_factor (void)
     CELL	low_elev, hih_elev;
     double	height, length, S, sin_theta;
 
-    G_message(_("\nSECTION 4: Length Slope determination.      Percent complete:"));
+    G_message(_("SECTION 4: Length Slope determination."));
 
     for (r = 0; r < nrows; r++) {
-	G_percent (r, nrows, 1);
+	G_percent (r, nrows, 3);
 	if (ril_flag) {
 		G_get_c_raster_row (ril_fd, ril_buf, r);
 	}
@@ -35,11 +35,12 @@ int sg_factor (void)
 		}
 	}
     }
+    G_percent (r, nrows, 3); /* finish it */
+
     if (ril_flag) {
 	G_free (ril_buf);
     	G_close_cell (ril_fd);
     }
-    fprintf (stderr, "\n");
 
     return 0;
 }

@@ -11,7 +11,7 @@ int do_astar (void)
     CELL	alt_val, alt_up, asp_up, wat_val;
     CELL	in_val, drain_val;
 
-    G_message(_("\nSECTION 2: A * Search.                      Percent complete: "));
+    G_message(_("SECTION 2: A * Search."));
 
 count = 0;
 while (first_astar != -1) {
@@ -59,9 +59,9 @@ while (first_astar != -1) {
         }
     }
 }
+G_percent (count, do_points, 3); /* finish it */
 flag_destroy (worked);
 flag_destroy (in_list);
-fprintf (stderr, "\n");
 
 return 0;
 }

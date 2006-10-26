@@ -4,9 +4,11 @@
 #include <grass/gis.h>
 #include <grass/glocale.h>
 
+int write_hist(char *, char *, char *, int);
+
 int main(int argc, char *argv[])
 {
-	int err ;
+	int err, ret;
 	char command[512] ;
 	struct Option *opt1 ;
 	struct Option *opt2 ;
@@ -286,7 +288,62 @@ int main(int argc, char *argv[])
 		strcat(command, opt15->answer) ; strcat(command, "\"") ;
 	}
 
+	G_debug(1, "Mode: %s", flag1->answer ? "Segmented" : "All in RAM");
 	G_debug(1, "Running: %s", command);
 
-	exit(system(command)) ;
+	ret = system(command);
+
+	/* record map metadata/history info */
+	if(opt8->answer)
+	    write_hist(opt8->answer,
+		"Accumulation map: number of cells that drain through each cell",
+		 opt1->answer, flag1->answer);
+	if(opt9->answer)
+	    write_hist(opt9->answer,
+		"Drainage map: drainage direction (divided by 45deg)",
+		 opt1->answer, flag1->answer);
+	if(opt10->answer)
+	    write_hist(opt10->answer,
+		"Basin map: unique label for each watershed basin",
+		 opt1->answer, flag1->answer);
+	if(opt11->answer)
+	    write_hist(opt11->answer,
+		"Stream map: stream segments", opt1->answer, flag1->answer);
+	if(opt12->answer)
+	    write_hist(opt12->answer,
+		"Half-basin map: each half-basin is given a unique value",
+		 opt1->answer, flag1->answer);
+	if(opt13->answer)
+	    write_hist(opt13->answer,
+		"Visual map: useful for visual display of watersheds",
+		 opt1->answer, flag1->answer);
+	if(opt14->answer)
+	    write_hist(opt14->answer,
+		"Slope length map: slope length and steepness (LS) factor",
+		 opt1->answer, flag1->answer);
+	if(opt15->answer)
+	    write_hist(opt15->answer,
+		"Slope steepness map: slope steepness (S) factor",
+		 opt1->answer, flag1->answer);
+
+	exit(ret);
+}
+
+/* record map history info*/
+int write_hist(char *map_name, char *title, char *source_name, int mode) {
+    struct History history;
+
+    G_short_history(map_name, "raster", &history);
+
+    strcpy(history.title, title);
+
+    if(strlen(source_name) < RECORD_LEN-1)
+	sprintf(history.datsrc_1, "%s", source_name);
+
+    sprintf(history.edhist[0],
+	"Processing mode: %s", mode ? "Segmented" : "All in RAM");
+    history.edlinecnt = 1;
+    G_command_history(&history);
+
+    return G_write_history(map_name, &history);
 }
