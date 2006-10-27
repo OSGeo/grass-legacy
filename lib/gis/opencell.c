@@ -1007,6 +1007,24 @@ RASTER_MAP_TYPE G_raster_map_type2 (char *name, char *mapset)
 
 
 
+/*!
+ * \brief Determine raster type from descriptor
+ *
+ * Determines if the raster map is floating point or integer. Returns
+ * DCELL_TYPE for double maps, FCELL_TYPE for float maps, CELL_TYPE for 
+ * integer maps, -1 if error has occured
+ *
+ *  \param fd
+ *  \return RASTER_MAP_TYPE
+ */
+RASTER_MAP_TYPE G_get_raster_map_type(int fd)
+{
+    struct fileinfo *fcb = &G__.fileinfo[fd];
+    return fcb->map_type;
+}
+
+
+
 RASTER_MAP_TYPE G__check_fp_type (char *name, char *mapset)
 /* determines whether the flotsing points cell file has double or float type */
 /* returns DCELL_TYPE for double, FCELL_TYPE for float, -1 for error */
