@@ -21,8 +21,8 @@ int make_mapset (char *location, char *mapset)
 	FILE *fd ;
 
 /* create the mapset directory */
-	sprintf(buffer,"mkdir '%s'/'%s'",location, mapset) ;
-	system(buffer) ;
+	sprintf(buffer,"%s/%s",location, mapset) ;
+	mkdir(buffer, 0777) ;
 
 /* give the mapset a default window for the entire location */
 	sprintf(buffer,"cat '%s'/PERMANENT/DEFAULT_WIND  > '%s'/'%s'/WIND",
@@ -42,7 +42,7 @@ int make_mapset (char *location, char *mapset)
 	
 /* Make the dbf/ subdirectory */
 	sprintf( buffer, "%s/%s/dbf", location, mapset );
-	if( mkdir( buffer, 0775 ) != 0 )
+	if( mkdir( buffer, 0777 ) != 0 )
 		return -1;
 
 	return(0) ;

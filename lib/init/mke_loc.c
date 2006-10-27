@@ -3,6 +3,10 @@
 #include <grass/gis.h>
 #include "local_proto.h"
 
+#ifdef __MINGW32__
+# define mkdir(name, mode) ((mkdir) (name))
+#endif
+
 int 
 make_location (char *gisdbase, char *location_name)
 {
@@ -146,10 +150,10 @@ make_location (char *gisdbase, char *location_name)
     G__setenv ("MAPSET", mapset);
     G__setenv ("LOCATION_NAME", location_name);
 
-    sprintf (buf, "mkdir '%s'/'%s'", gisdbase, location_name);
-    if(system(buf)) return 0;
-    sprintf (buf, "mkdir '%s'/'%s'/'%s'", gisdbase, location_name, mapset);
-    if(system(buf)) return 0;
+    sprintf (buf, "%s/%s", gisdbase, location_name);
+    if(mkdir(buf, 0777) < 0) return 0;
+    sprintf (buf, "%s/%s/%s", gisdbase, location_name, mapset);
+    if(mkdir(buf, 0777) < 0) return 0;
     /* set the dummy window */
     window.north =1.;
     window.south = 0.;
