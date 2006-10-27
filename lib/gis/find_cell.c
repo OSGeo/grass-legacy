@@ -28,15 +28,17 @@
  *
  * Looks for the raster file <b>name</b> in the database. The
  * <b>mapset</b> parameter can either be the empty string "", which means
- * search all the mapsets in the user's current mapset search path,\remarks{See
- * Mapset_Search_Path for more details about the search path.} or it
- * can be a specific mapset name, which means look for the raster file only in
- * this one mapset (for example, in the current mapset). If found, the mapset
- * where the raster file lives is returned. If not found, the NULL pointer is
- * returned.
- * If the user specifies a fully qualified raster file which exists, then
- * <i>G_find_cell(~)</i> modifies <b>name</b> by removing the
+ * search all the mapsets in the user's current mapset search path,
+ * \remarks{See Mapset_Search_Path for more details about the search path.}
+ * or it can be a specific mapset name, which means look for the raster file
+ * only in this one mapset (for example, in the current mapset). If found,
+ * the mapset where the raster file lives is returned. If not found, the NULL
+ * pointer is returned.
+ *
+ * NOTE: If the user specifies a fully qualified raster file which exists,
+ * then <i>G_find_cell(~)</i> modifies <b>name</b> by removing the
  * "@<i>mapset</i>".
+ *
  * For example, to find a raster file anywhere in the database:
 \code
   char name[GNAME_MAX];
@@ -44,7 +46,9 @@
   if ((mapset = G_find_cell(name,"")) = = NULL)
   // not found
 \endcode
+ *
  * To check that the raster file exists in the current mapset:
+ *
 \code
   char name[GNAME_MAX];
   if (G_find_cell(name,G_mapset( )) = = NULL)
@@ -62,6 +66,21 @@ G_find_cell  (char *name, char *mapset)
 {
 	return G_find_file ("cell", name, mapset);
 }
+
+
+/*!
+ * \brief find a raster file (look but don't touch)
+ *
+ * The same as G_find_cell() but doesn't remove the "@<i>mapset</i>"
+ * qualification from <b>name</b>, if present.
+ *
+ * Returns NULL if the map wasn't found, or the mapset the raster was
+ * found in if it was.
+ *
+ *  \param name
+ *  \param mapset
+ *  \return char *
+ */
 
 char *
 G_find_cell2  (char *name, char *mapset)
