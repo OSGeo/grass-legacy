@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: grassmods_ar\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2006-10-23 14:00+0200\n"
+"POT-Creation-Date: 2006-10-27 12:46+0200\n"
 "PO-Revision-Date: 2005-03-09 12:50+0100\n"
 "Last-Translator: Dr. Alaa Masoud <alaamasoud@hotmail.com>\n"
 "Language-Team: Arabic <translations@grass.itc.it>\n"
@@ -1458,27 +1458,28 @@ msgstr "%s اسم ملف غير صحيح"
 msgid "Can't write embedded null values for map open for random access"
 msgstr "لم يمكن كتابة قيم منعدمة لخريطة مفتوحة لاتصال عشوائى"
 
-#: ../lib/gis/opencell.c:930 ../lib/gis/opencell.c:951
+#: ../lib/gis/opencell.c:928 ../lib/gis/opencell.c:962
+#: ../lib/gis/opencell.c:994
 #, c-format
 msgid "unable to find [%s] in [%s]"
 msgstr "[%s] لم يتم ايجاد [%s] فى"
 
-#: ../lib/gis/opencell.c:982
+#: ../lib/gis/opencell.c:1030
 #, c-format
 msgid "unable to find [%s]"
 msgstr "[%s] لم يتم ايجاد"
 
-#: ../lib/gis/opencell.c:988
+#: ../lib/gis/opencell.c:1036
 #, c-format
 msgid "Unable to open %s"
 msgstr " %s لم يمكن فتح"
 
-#: ../lib/gis/opencell.c:997
+#: ../lib/gis/opencell.c:1045
 #, c-format
 msgid "invalid type: field %s in file %s "
 msgstr ""
 
-#: ../lib/gis/opencell.c:1042
+#: ../lib/gis/opencell.c:1090
 #, c-format
 msgid "%s - ** illegal name **"
 msgstr ""
