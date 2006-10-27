@@ -3,8 +3,10 @@
  * MODULE:       g.mapset
  * 
  * AUTHOR(S):    Radim Blazek
+ *               Joel Pitt, joel.pitt@gmail.com
  *               
- * PURPOSE:      Change current mapset
+ * PURPOSE:      Change current mapset, optionally adding it
+ *               if the mapset does not exist.
  *               
  * COPYRIGHT:    (C) 2004 by the GRASS Development Team
  *
@@ -30,6 +32,7 @@ main (int argc, char *argv[])
     int    ret;
     struct GModule *module;
     struct Option *gisdbase_opt, *location_opt, *mapset_opt;
+    struct Flag *f_add;
     char   *gisdbase_old, *location_old, *mapset_old;
     char   *gisdbase_new, *location_new, *mapset_new;
     char   *gis_lock; 
@@ -64,6 +67,11 @@ main (int argc, char *argv[])
     gisdbase_opt->required    = NO ;
     gisdbase_opt->multiple    = NO ;
     gisdbase_opt->description = "New GISDBASE (full path to the directory where the new location is)" ;
+
+    f_add = G_define_flag() ;
+    f_add->key         = 'c' ;
+    f_add->description = "Create mapset if it doesn't exist";
+    f_add->answer      = FALSE;
 
     if (G_parser(argc, argv))
     	exit(1);
@@ -104,7 +112,12 @@ main (int argc, char *argv[])
 	    G_fatal_error ( "You don't have permission to use this mapset." );
 	    break;
 	case -1:
-	    G_fatal_error ( "The mapset does not exist." );
+	    if ( f_add->answer == TRUE ) {
+	    	G_debug ( 2, "Mapset %s doesn't exist, attempting to create it", mapset_new );
+	        G_make_mapset( gisdbase_new, location_new, mapset_new );
+	    }
+	    else
+	    	G_fatal_error ( "The mapset does not exist. Use -c flag to create it." );
 	    break;
 	default:
 	    break;

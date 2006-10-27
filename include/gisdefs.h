@@ -752,6 +752,10 @@ int G__make_location(char *, struct Cell_head *, struct Key_Value *, struct Key_
 int G_make_location(char *, struct Cell_head *, struct Key_Value *, struct Key_Value *, FILE *);
 int G_compare_projections( struct Key_Value *, struct Key_Value *, struct Key_Value *, struct Key_Value *);
 
+/* make_mapset.c */
+int G__make_mapset( char *gisdbase_name, char *location_name, char *mapset_name );
+int G_make_mapset( char *gisdbase_name, char *location_name, char *mapset_name );
+
 /* mapcase.c */
 char *G_tolcase(char *);
 char *G_toucase(char *);
