@@ -1,3 +1,7 @@
+#ifndef __FLAG_H__
+#define __FLAG_H__
+
+
 /* flag.[ch] is a set of routines which will set up an array of bits
 ** that allow the programmer to "flag" cells in a cell file.
 **
@@ -64,3 +68,6 @@ int flag_get(FLAG *, int, int);
 int flag_set(FLAG *, int, int);
 /* flag_unset.c */
 int flag_unset(FLAG *, int, int);
+
+
+#endif /* __FLAG_H__ */
