@@ -10,6 +10,10 @@
  *      or in a specified mapset.
  *	returns the mapset name where the vector file was found.
  *
+ * NOTE: If the user specifies a fully qualified vector map which exists,
+ *       then <i>G_find_vector()</i> modifies <b>name</b> by removing the
+ *      "@<i>mapset</i>" part.
+ *
  *  returns:
  *      char *  pointer to a string with name of mapset
  *              where vector file was found, or NULL if not found
@@ -23,6 +27,31 @@
 #include <grass/gis.h>
 #include <grass/vect/dig_defines.h>
 
+
+/* \brief searches for a vector file
+ *
+ *	searches for a vector file from the mapset search list
+ *      or in a specified mapset.
+ *	returns the mapset name where the vector file was found.
+ *
+ *  returns:
+ *      char *  pointer to a string with name of mapset
+ *              where vector file was found, or NULL if not found
+ *  NOTES:
+ *      If the user specifies a fully qualified vector map which exists,
+ *      then <i>G_find_vector()</i> modifies <b>name</b> by removing the
+ *      "@<i>mapset</i>" part.
+ *
+ *      Rejects all names that begin with "."
+ *
+ *      If name is of the form nnn in ppp then 
+ *      name = nnn and mapset = ppp
+ *
+ *  \param name
+ *  \param mapset
+ *  \return char *
+ *
+ */
 char *
 G_find_vector  (char *name, char *mapset)
 
@@ -30,6 +59,21 @@ G_find_vector  (char *name, char *mapset)
 	return G_find_file ( GRASS_VECT_DIRECTORY, name, mapset);
 }
 
+
+
+/*!
+ * \brief find a vector map (look but don't touch)
+ *
+ * The same as G_find_vector() but doesn't remove the "@<i>mapset</i>"
+ * qualification from <b>name</b>, if present.
+ *
+ * Returns NULL if the map wasn't found, or the mapset the vector was
+ * found in if it was.
+ *
+ *  \param name
+ *  \param mapset
+ *  \return char *
+ */
 char *
 G_find_vector2  (char *name, char *mapset)
 
