@@ -1,3 +1,7 @@
+#ifndef __WATERSHED_H__
+#define __WATERSHED_H__
+
+
 #include <stdio.h>
 #include <grass/gis.h>
 
@@ -87,3 +91,6 @@ int print_output(OUTPUT *);
 int read_basins(char *, OUTPUT *);
 /* valid.c */
 int valid_basins(char *, OUTPUT *);
+
+
+#endif /* __WATERSHED_H__ */

@@ -1,3 +1,7 @@
+#ifndef __G_WATER_H__
+#define __G_WATER_H__
+
+
 /* program to map out drainage basin structure  */
 /* this one uses the A * search algorithm   	*/
 /* written by Chuck Ehlschlaeger        	*/
@@ -119,3 +123,6 @@ int slope_length(SHORT, SHORT, SHORT, SHORT);
 CELL split_stream(int, int, int [], int [], int, CELL, double, CELL);
 /* usage.c */
 void usage(char *);
+
+
+#endif /* __G_WATER_H__ */

@@ -1,3 +1,7 @@
+#ifndef __CSEG_H__
+#define __CSEG_H__
+
+
 #include <grass/segment.h>
 
 #define CSEG struct _c_s_e_g_
@@ -89,3 +93,6 @@ int seg_get(SSEG *, char *, int, int);
 int seg_open(SSEG *, int, int, int, int, int, int);
 /* sseg_put.c */
 int seg_put(SSEG *, char *, int, int);
+
+
+#endif /* __CSEG_H__ */
