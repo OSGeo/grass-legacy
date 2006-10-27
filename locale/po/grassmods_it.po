@@ -1,10 +1,11 @@
 # translation of grassmods_it.po to Italian
 # This file is distributed under the same license as the GRASS package.
-# Copyright (C) 2005, GRASS Development Team
+# Copyright (C) 2005, 2006 GRASS Development Team
 #
-# Maurizio Napolitano <napo@itc.it>, 2005.
-# Markus Neteler <neteler@itc.it>, 2005.
-# Luciano Montanaro <mikelima@cirulla.net>, 2006.
+# Maurizio Napolitano <napo at itc.it>, 2005.
+# Markus Neteler <neteler at itc.it>, 2005.
+# Luciano Montanaro <mikelima at cirulla.net>, 2006.
+# Giuseppe Patti <gpatt at tiscali.it>, 2006.
 msgid ""
 msgstr ""
 "Project-Id-Version: grassmods_it\n"
@@ -12,7 +13,7 @@ msgstr ""
 "POT-Creation-Date: 2006-09-27 15:45+0200\n"
 "PO-Revision-Date: 2006-10-26 16:07+0100\n"
 "Last-Translator: Giuseppe Patti <gpatt at tiscali.it>\n"
-"Language-Team: Italian <kde-i18n-it@kde.org>\n"
+"Language-Team: Italian <translations@grass.itc.it>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -1501,7 +1502,7 @@ msgstr ""
 #: ../display/d.profile/main.c:277
 #, fuzzy
 msgid "Error opening cell-file"
-msgstr "Non riesco a trovare il file raster %s"
+msgstr "Errore nell'apertura del file g3d"
 
 #: ../display/d.profile/main.c:279
 #, fuzzy
@@ -2250,7 +2251,7 @@ msgid "Plotting ... "
 msgstr "Sto disegnando ..."
 
 #: ../display/d.vect/main.c:566
-#, c-format
+#, fuzzy, c-format
 msgid ""
 "The bounding box of the map outside current region, nothing displayed.\n"
 msgstr ""
@@ -2809,6 +2810,7 @@ msgid "Monitor: XGetWMName: bad result\n"
 msgstr "Monitor: XGetWMName: risultato sbagliato\n"
 
 #: ../doc/raster/r.example/main.c:84
+#, fuzzy
 msgid "My first raster module."
 msgstr "Il mio primo modulo raster"
 
@@ -3355,6 +3357,8 @@ msgstr "<%s=%s> ** input non valido **"
 #: ../general/g.region/cmd/printwindow.c:406
 msgid "Error in pj_do_proj (projection of input coordinate pair)"
 msgstr ""
+"Errore nell'esecuzione di 'pj do proj' (ovvero nella coppia di coordinate di "
+"proiezione in input)"
 
 #: ../general/g.region/cmd/printwindow.c:339
 msgid ""
@@ -3450,6 +3454,8 @@ msgid ""
 "Lists available GRASS data base files of the user-specified data type to "
 "standard output."
 msgstr ""
+"Elenca nello standard output i file database GRASS disponibili del tipo "
+"sepcificato dall'utente "
 
 #: ../general/manage/cmd/list.c:54
 msgid "mapset to list (default: current search path)"
@@ -3475,7 +3481,7 @@ msgstr "Non posso scrivere i collegamenti del database"
 
 #: ../general/manage/cmd/remove.c:26
 msgid "Removes data base element files from the user's current mapset."
-msgstr ""
+msgstr "Rimuovi elementi dal database nel mapset correntemente in uso"
 
 #: ../general/manage/cmd/remove.c:41
 #, c-format
@@ -3484,7 +3490,7 @@ msgstr "%s file da rimuovere"
 
 #: ../general/manage/cmd/rename.c:25
 msgid "Renames data base element files in the user's current mapset."
-msgstr ""
+msgstr "Rinomina gli elementi database nel mapset correntemente in uso"
 
 #: ../general/manage/cmd/rename.c:40
 #, c-format
@@ -5722,7 +5728,7 @@ msgid "or an R:G:B triplet, e.g.: 0:127:255\n"
 msgstr "oppure una tripletta R:G:B , es: 0:127:255\n"
 
 #: ../raster/r.colors/rules.c:240
-#, c-format
+#, fuzzy, c-format
 msgid "** warning: R:G:B value(s) out of range [0..255]: %d:%d:%d **\n"
 msgstr ""
 "** attenzione: valore(i) R:G:B al di fuori dell'intervallo [0..255]: %d:%d:%"
@@ -5732,34 +5738,34 @@ msgstr ""
 #: ../raster/r.colors/rules.c:270 ../raster/r.colors/rules.c:282
 #: ../raster/r.colors/rules.c:292 ../raster/r.colors/rules.c:304
 #: ../raster/r.colors/rules.c:379 ../raster/r.colors/rules.c:407
-#, c-format
+#, fuzzy, c-format
 msgid "** rule is not added **\n"
 msgstr "** regola non aggiunta **\n"
 
 #: ../raster/r.colors/rules.c:256
-#, c-format
+#, fuzzy, c-format
 msgid "** warning: R G B value(s) out of range [0..255]: %d %d %d **\n"
 msgstr ""
 "** attenzione: valore(i) R G B al di fuori dell'intervallo [0..255]: %d %d %"
 "d **\n"
 
 #: ../raster/r.colors/rules.c:269 ../raster/r.colors/rules.c:291
-#, c-format
+#, fuzzy, c-format
 msgid "** warning: no such value **\n"
 msgstr "** attenzione: non trovo il valore **\n"
 
 #: ../raster/r.colors/rules.c:405
-#, c-format
+#, fuzzy, c-format
 msgid "%s:line %d:%s\n"
 msgstr "%s:linea %d:%s\n"
 
 #: ../raster/r.colors/rules.c:406
-#, c-format
+#, fuzzy, c-format
 msgid "** bad color specification **\n"
 msgstr "** definizione errata del colore **\n"
 
 #: ../raster/r.colors/rules.c:427
-#, c-format
+#, fuzzy, c-format
 msgid "%s - unknown color\n"
 msgstr "%s - colore sconosciuto\n"
 
@@ -6439,8 +6445,9 @@ msgid "Could not close the map"
 msgstr "impossibile aprire <%s>"
 
 #: ../raster/r.elev.to.rast3/main.c:152
+#, fuzzy
 msgid "2d raster maps which represent the values"
-msgstr ""
+msgstr "Mappa 3dcell con valori di riferimento"
 
 #: ../raster/r.elev.to.rast3/main.c:161
 msgid "2d raster maps which represent the elevation"
@@ -8206,8 +8213,9 @@ msgid "Error closing VTK-ASCII file"
 msgstr ""
 
 #: ../raster/r.out.vtk/parameters.c:37
+#, fuzzy
 msgid "Raster map(s) to be converted to VTK-ASCII data format"
-msgstr ""
+msgstr "Mappa 3dcell da convertire in ASCII"
 
 #: ../raster/r.out.vtk/parameters.c:47
 msgid "Raster map that represents the elevation, used for the 3D information"
@@ -8567,9 +8575,8 @@ msgid "Can't get projection key values of input map"
 msgstr ""
 
 #: ../raster/r.proj/main.c:270
-#, fuzzy
 msgid "Can't work with xy data"
-msgstr "Non riesco a mostrare i database"
+msgstr ""
 
 #: ../raster/r.proj/main.c:416
 #, fuzzy
@@ -11051,10 +11058,11 @@ msgid "Allow only horizontal and vertical flow of water"
 msgstr ""
 
 #: ../raster/r.watershed/front/main.c:166
+#, fuzzy
 msgid ""
 "\n"
 "Sorry, you must choose some output map."
-msgstr ""
+msgstr "Nome del file in output"
 
 #: ../raster/r.watershed/front/main.c:181
 msgid ""
@@ -11065,9 +11073,9 @@ msgid ""
 msgstr ""
 
 #: ../raster/r.watershed/front/main.c:290
-#, c-format
+#, fuzzy, c-format
 msgid "Running: %s"
-msgstr ""
+msgstr "Mappa raster risultante"
 
 #: ../raster/r.watershed/ram/close_maps.c:22
 #: ../raster/r.watershed/ram/close_maps.c:56
@@ -12141,17 +12149,19 @@ msgstr "tabelle di sistema invece che tabelle utente"
 #: ../raster3d/base/r3.info.main.c:115
 msgid "Print 3D raster map timestamp (day.month.year hour:minute:seconds) only"
 msgstr ""
+"Stampa esclusivamente il timestamp (giorno.mese.anno ora.minuti.secondi) di "
+"un raster 3D"
 
 #: ../raster3d/base/r3.info.main.c:130 ../raster3d/r3.mkdspf/main.c:144
 #, c-format
 msgid "Error opening grid3 file [%s]"
-msgstr ""
+msgstr "Errore nell'aperura del file grid3 [%s]"
 
 #: ../raster3d/base/r3.info.main.c:289 ../raster3d/base/r3.info.main.c:351
 #: ../raster3d/r3.mkdspf/main.c:147
 #, c-format
 msgid "Error reading range for [%s]"
-msgstr ""
+msgstr "Errore nel leggere il range di [%s]"
 
 #: ../raster3d/base/r3.info.main.c:401
 #, fuzzy
@@ -12160,24 +12170,24 @@ msgstr "Non riesco a trovare il file raster %s"
 
 #: ../raster3d/base/r3.mask.main.c:44
 msgid "3dcell map with reference values"
-msgstr ""
+msgstr "Mappa 3dcell con valori di riferimento"
 
 #: ../raster3d/base/r3.mask.main.c:52
 msgid "List of cell values to be masked out"
-msgstr ""
+msgstr "Elenco dei valori del raster da mascherare"
 
 #: ../raster3d/base/r3.mask.main.c:78 ../raster3d/base/r3.null.main.c:104
 #: ../raster3d/r3.out.ascii/main.c:273 ../raster3d/r3.out.v5d/main.c:305
 msgid "Requested g3d file not found"
-msgstr ""
+msgstr "File g3d richiesto non trovato"
 
 #: ../raster3d/base/r3.mask.main.c:84
 msgid "makeMask: error opening map."
-msgstr ""
+msgstr "makeMask. Errore nell'apertura della mappa"
 
 #: ../raster3d/base/r3.mask.main.c:95
 msgid "makeMask: error opening g3d mask file"
-msgstr ""
+msgstr "makeMask. Errore nell'apertura del file mask g3d"
 
 #: ../raster3d/base/r3.mask.main.c:124
 msgid "makeMask: error flushing tiles in cube"
@@ -12189,45 +12199,47 @@ msgstr ""
 
 #: ../raster3d/base/r3.mask.main.c:137
 msgid "makeMask: error closing g3d mask file"
-msgstr ""
+msgstr "makeMask. Errore nel chiudere il file mask g3d"
 
 #: ../raster3d/base/r3.mask.main.c:139
 msgid "makeMask: error closing map"
-msgstr ""
+msgstr "makeMask. Errore nella chiusura della mappa"
 
 #: ../raster3d/base/r3.mask.main.c:154
 msgid "Establishes the current working 3D raster mask."
-msgstr ""
+msgstr "Imposta la mask raster 3d da usare"
 
 #: ../raster3d/base/r3.mask.main.c:159
 msgid ""
 "Cannot create mask file: G3D_MASK already exists!\n"
 " Use 'g.remove rast3d=G3D_MASK' to remove the existing mask."
 msgstr ""
+"Impossibile creare la mask. MASK G3D già esistente!\n"
+"Usa il comando 'g.remove rast3d=G3D MASK' per rimuovere la maschera esistente"
 
 #: ../raster3d/base/r3.null.main.c:57
 msgid "3dcell map for which to modify null values"
-msgstr ""
+msgstr "Raster3d del quale modificare il valore null"
 
 #: ../raster3d/base/r3.null.main.c:65
 msgid "List of cell values to be set to NULL"
-msgstr ""
+msgstr "Elenco dei valori raster da settare a NULL"
 
 #: ../raster3d/base/r3.null.main.c:72
 msgid "The value to replace the null value by"
-msgstr ""
+msgstr "Valore con il quale rimpiazzare il valore null"
 
 #: ../raster3d/base/r3.null.main.c:86
 msgid "illegal value for null"
-msgstr ""
+msgstr "Valore da impostare a null non valido"
 
 #: ../raster3d/base/r3.null.main.c:111
 msgid "modifyNull: error opening map"
-msgstr ""
+msgstr "modifyNull. Errore nell'apertura della mappa"
 
 #: ../raster3d/base/r3.null.main.c:123
 msgid "modifyNull: error opening tmp file"
-msgstr ""
+msgstr "modifyNull. Errore nell'aperura del file tmp"
 
 #: ../raster3d/base/r3.null.main.c:172
 msgid "modifyNull: error flushing tiles in cube"
@@ -12239,19 +12251,19 @@ msgstr ""
 
 #: ../raster3d/base/r3.null.main.c:186
 msgid "modifyNull: error closing map"
-msgstr ""
+msgstr "Errore nell'istruzione modifyNull. Chiudo la mappa"
 
 #: ../raster3d/base/r3.null.main.c:188
 msgid "modifyNull: error closing tmp file"
-msgstr ""
+msgstr "Errore nell'istruzione modifyNull. Chiudo il file temporaneo"
 
 #: ../raster3d/base/r3.null.main.c:204
 msgid "Explicitly create the 3D NULL-value bitmap file."
-msgstr ""
+msgstr "Crea separatamente un file bitmap 3D di valori nulli"
 
 #: ../raster3d/base/r3.timestamp.main.c:32
 msgid "print/add/remove a timestamp for a 3D raster map"
-msgstr ""
+msgstr "Stampa/Aggiungi/Rimuovi data e ora di una mappa raster 3D"
 
 #: ../raster3d/base/r3.timestamp.main.c:39
 #, fuzzy
@@ -12280,7 +12292,7 @@ msgstr "Stampa solo il tipo di mappa raster"
 
 #: ../raster3d/r3.cross.rast/main.c:88
 msgid "2D elevation map used to create the cross section map"
-msgstr ""
+msgstr "Mappa di altezze 2D da utilizzare per la creazione della sezione"
 
 #: ../raster3d/r3.cross.rast/main.c:95
 #, fuzzy
@@ -12289,7 +12301,7 @@ msgstr "Mappa raster risultante"
 
 #: ../raster3d/r3.cross.rast/main.c:100
 msgid "Use g3d mask (if exists) with input map"
-msgstr ""
+msgstr "Usa una mask G3d (se esiste) con la mappa in input"
 
 #: ../raster3d/r3.cross.rast/main.c:152
 #, fuzzy
@@ -12367,8 +12379,9 @@ msgid "Could not close G3D map <%s>"
 msgstr "impossibile aprire <%s>"
 
 #: ../raster3d/r3.in.ascii/main.c:88
+#, fuzzy
 msgid "any,grid3,3d raster"
-msgstr ""
+msgstr "Non riesco ad impostare user/password"
 
 #: ../raster3d/r3.in.ascii/main.c:89
 #, fuzzy
@@ -12432,7 +12445,7 @@ msgstr ""
 #: ../raster3d/r3.mkdspf/main.c:122
 #, c-format
 msgid "Region from getWindow: %d %d %d"
-msgstr ""
+msgstr "Region da getWindow. %d %d %d"
 
 #: ../raster3d/r3.mkdspf/main.c:132
 #, fuzzy, c-format
@@ -12447,11 +12460,11 @@ msgstr "Non riesco a trovare il file raster %s"
 #: ../raster3d/r3.mkdspf/main.c:197
 #, c-format
 msgid "Writing %s from %s..."
-msgstr ""
+msgstr "Sto scrivendo %s da %s..."
 
 #: ../raster3d/r3.out.ascii/main.c:78
 msgid "3dcell map to be converted to ASCII"
-msgstr ""
+msgstr "Mappa 3dcell da convertire in ASCII"
 
 #: ../raster3d/r3.out.ascii/main.c:85
 msgid "Name for ASCII output file"
@@ -12472,11 +12485,11 @@ msgstr "Converti una mappa raster in un file testuale ASCII"
 
 #: ../raster3d/r3.out.ascii/main.c:282
 msgid "Error opening g3d file"
-msgstr ""
+msgstr "Errore nell'apertura del file g3d"
 
 #: ../raster3d/r3.out.v5d/main.c:68
 msgid "3dcell map to be converted to Vis5d (v5d) file"
-msgstr ""
+msgstr "Mappa 3dcell da convertire a Viz5d"
 
 #: ../raster3d/r3.out.v5d/main.c:75
 #, fuzzy
@@ -12486,12 +12499,12 @@ msgstr "Nome del file in output"
 #: ../raster3d/r3.out.v5d/main.c:145
 #, c-format
 msgid "Viz5D allows %d cols, you have %d cols"
-msgstr ""
+msgstr "Viz5D permette %d colonne, tu ne hao %d"
 
 #: ../raster3d/r3.out.v5d/main.c:147
 #, c-format
 msgid "Viz5D allows %d rows, you have %d rows"
-msgstr ""
+msgstr "Viz5D permette %d righe, tu ne hai %d"
 
 #: ../raster3d/r3.out.v5d/main.c:197 ../vector/v.in.ascii/a2b.c:143
 #: ../vector/v.surf.rst/main.c:826
@@ -12505,7 +12518,7 @@ msgstr "Errore: non riesco a creare %s"
 
 #: ../raster3d/r3.out.v5d/main.c:262
 msgid "Error while writing grid. Disk full?"
-msgstr ""
+msgstr "Errore nella scrittura della grid. Disco pieno?"
 
 #: ../raster3d/r3.out.v5d/main.c:286
 #, fuzzy
@@ -12636,6 +12649,8 @@ msgstr "Non riesco a trovare il file raster %s"
 #: ../raster3d/r3.out.vtk/main.c:536
 msgid "Error closing g3d data map, the VTK file may be incomplete."
 msgstr ""
+"Errore nella chiusura della mappa g3d, il file VTK potrebbe essere "
+"incompleto."
 
 #: ../raster3d/r3.out.vtk/parameters.c:34
 msgid "G3D map(s) to be converted to VTK-ASCII data format"
@@ -12687,8 +12702,9 @@ msgid ""
 msgstr ""
 
 #: ../raster3d/r3.out.vtk/writeVTKData.c:124
+#, fuzzy
 msgid "writeVTKPoints: Writing point coordinates"
-msgstr ""
+msgstr "Utilizzando le coordinate del centro della mappa\n"
 
 #: ../raster3d/r3.out.vtk/writeVTKData.c:133
 #, fuzzy
@@ -12705,11 +12721,13 @@ msgid "writeVTKUnstructuredGridCells: Writing the cells"
 msgstr ""
 
 #: ../raster3d/r3.out.vtk/writeVTKData.c:333
-#, c-format
+#, fuzzy, c-format
 msgid ""
 "writeVTKData: Writing Celldata %s with rows %i cols %i depths %i to vtk-"
 "ascii file"
 msgstr ""
+"vriteVTKData. Sto scrivendo Celldata %s con %i righe e %i colonne, "
+"profondità %i nel vtk-ascii file"
 
 #: ../raster3d/r3.out.vtk/writeVTKData.c:391
 msgid "writeVTKRGBVoxelData: writing rgb data"
@@ -12719,6 +12737,7 @@ msgstr ""
 #: ../raster3d/r3.out.vtk/writeVTKData.c:461
 msgid "Wrong g3d map values! Values should in between 0 and 255!\n"
 msgstr ""
+"Valori della mappa g3d errati! I valori devono essere compresi tra 0 e 255!\n"
 
 #: ../raster3d/r3.out.vtk/writeVTKData.c:491
 msgid "writeVTKVectorData: writing vector data"
@@ -12791,9 +12810,9 @@ msgid "Raster map %i Filename: %s\n"
 msgstr "Nome mappa raster"
 
 #: ../raster3d/r3.to.rast/main.c:293
-#, c-format
+#, fuzzy, c-format
 msgid "Raster map %i Filename: %s already exists. Will be overwritten!\n"
-msgstr ""
+msgstr "Mappa in uscita già esistente. Sarà sovrascritta!\n"
 
 #: ../raster3d/r3.to.rast/main.c:356
 #, fuzzy, c-format
@@ -13180,9 +13199,8 @@ msgstr ""
 
 #: ../vector/lidar/v.lidar.edgedetection/main.c:291
 #: ../vector/lidar/v.outlier/main.c:300
-#, fuzzy
 msgid "Bilinear interpolation"
-msgstr "Numero di passi attraverso il dataset"
+msgstr ""
 
 #: ../vector/lidar/v.lidar.edgedetection/main.c:300
 msgid "Allocation memory for bicubic interpolation"
@@ -13379,8 +13397,9 @@ msgid "Output vector wasn't entered."
 msgstr ""
 
 #: ../vector/v.clean/main.c:50
+#, fuzzy
 msgid "Toolset to clean vector topology"
-msgstr ""
+msgstr "vettore da rimuovere"
 
 #: ../vector/v.clean/main.c:58
 #, fuzzy
@@ -14214,9 +14233,8 @@ msgid "centroids"
 msgstr ""
 
 #: ../vector/v.edit/add.c:78
-#, fuzzy
 msgid "point"
-msgstr "Stampa"
+msgstr ""
 
 #: ../vector/v.edit/add.c:78
 msgid "centroid"
@@ -14257,9 +14275,8 @@ msgid "Object points will snap to existing points within snap units."
 msgstr ""
 
 #: ../vector/v.edit/args.c:51
-#, fuzzy
 msgid "Do not use topology."
-msgstr "Non riesco ad impostare user/password"
+msgstr ""
 
 #: ../vector/v.edit/args.c:55
 #, fuzzy
@@ -14271,9 +14288,8 @@ msgid "Give cats to boundaries too."
 msgstr ""
 
 #: ../vector/v.edit/args.c:63
-#, fuzzy
 msgid "Do not close boundaries"
-msgstr "impossibile aprire <%s>"
+msgstr ""
 
 #: ../vector/v.edit/args.c:81
 msgid "Required parameter <points> not set"
@@ -15597,9 +15613,8 @@ msgid "Cannot select attributes for cat = %d"
 msgstr ""
 
 #: ../vector/v.out.pov/main.c:44
-#, fuzzy
 msgid "vector, export"
-msgstr "vettore da rimuovere"
+msgstr ""
 
 #: ../vector/v.out.vtk/head.c:27
 msgid "writeVTKHeader: Writing VTK-Header"
@@ -16348,8 +16363,9 @@ msgid "The 'sides' option makes sense only for boundaries"
 msgstr ""
 
 #: ../vector/v.to.points/main.c:153
+#, fuzzy
 msgid "Create points along input lines."
-msgstr ""
+msgstr "Disponi le etichette lungo le linee"
 
 #: ../vector/v.to.points/main.c:156
 msgid "Input map containing lines"
@@ -17368,7 +17384,7 @@ msgstr "Nome di una mappa raster esistente"
 
 #, fuzzy
 msgid "Name of raster map to calculate statistics from"
-msgstr "Nome della mappa raster da utilizzare per <%s>"
+msgstr "Nome della mappa raster che contiene i risultati"
 
 #, fuzzy
 msgid "Name of new database"
@@ -17431,3 +17447,445 @@ msgstr "Mappa(e) raster da leggere"
 #, fuzzy
 msgid "No output maps"
 msgstr "Nome della mappa di output"
+
+#, fuzzy
+msgid "%s: illegal value spec\n"
+msgstr "Nome del raster file in output"
+
+#, fuzzy
+msgid "Out of memory!"
+msgstr "Memoria esaurita!\n"
+
+#, fuzzy
+msgid "Force remove"
+msgstr "vettore da rimuovere"
+
+#, fuzzy
+msgid "Input file format"
+msgstr "File di input"
+
+#, fuzzy
+msgid "Populating table ..."
+msgstr "Sto disegnando ..."
+
+#, fuzzy
+msgid ""
+"Unexpected data in vector head.\n"
+"[%s]"
+msgstr "impossibile aprire <%s>"
+
+#, fuzzy
+msgid "Unparsable longitude value: [%s]"
+msgstr "Non riesco ad aprire il cellfile per [%s]"
+
+#, fuzzy
+msgid "Unparsable latitude value: [%s]"
+msgstr "Non riesco ad aprire il cellfile per [%s]"
+
+#, fuzzy
+msgid "Skipping %d of %d rows falling outside of current region"
+msgstr "Utilizza la regione corrente"
+
+#, fuzzy
+msgid "Importing points ..."
+msgstr "Sto disegnando ..."
+
+#, fuzzy
+msgid "Cannot insert values: %s"
+msgstr "Non riesco a trovare il file raster %s"
+
+#, fuzzy
+msgid "No record for point (cat = %d)"
+msgstr "Nessun record per la cat = %d"
+
+#, fuzzy
+msgid "Print topology information only"
+msgstr "Stampa solo il tipo di mappa raster"
+
+#, fuzzy
+msgid "Illegal filename: %s"
+msgstr "Nome file non valido [%s]."
+
+#, fuzzy
+msgid "Precomputing: e/w distances"
+msgstr "Mappe per calcolare le distanza fra classi"
+
+#, fuzzy
+msgid "Reading input files: elevation"
+msgstr "Nome del file di output"
+
+#, fuzzy
+msgid "Reading input files: aspect"
+msgstr "Non riesco a trovare il file raster %s"
+
+#, fuzzy
+msgid "Writing density file"
+msgstr "Nome del raster file esistente"
+
+#, fuzzy
+msgid "Cannot get raster band."
+msgstr "Non riesco a trovare il file raster %s"
+
+#, fuzzy
+msgid "Cannot read GRASS raster."
+msgstr "Non riesco ad impostare user/password"
+
+#, fuzzy
+msgid "Cannot write GDAL raster."
+msgstr "Non riesco a trovare il file raster %s"
+
+#, fuzzy
+msgid "Exports GRASS raster into GDAL supported formats"
+msgstr "Esporta un raster grass come array binario"
+
+#, fuzzy
+msgid "list supported output formats"
+msgstr "Visualizza i formati supportati ed esci"
+
+#, fuzzy
+msgid "Raster map or group [%s] not found"
+msgstr "raster <%s> non trovato"
+
+#, fuzzy
+msgid "No raster maps in group [%s]"
+msgstr "Nome del driver in input"
+
+#, fuzzy
+msgid "Cannot create [%s] driver"
+msgstr "Non riesco a descrivere la tabella"
+
+#, fuzzy
+msgid "Cannot create memory raster driver"
+msgstr "Non riesco a trovare il file raster %s"
+
+#, fuzzy
+msgid "Cannot create dataset using memory raster driver."
+msgstr "Non riesco ad aprire il database %s col driver %s"
+
+#, fuzzy
+msgid "Cannot create [%s] dataset using [%s] driver."
+msgstr "Non riesco ad aprire il database %s col driver %s"
+
+#, fuzzy
+msgid "Couldn't set geo transform ...\n"
+msgstr "Nome del raster"
+
+#, fuzzy
+msgid "Cannot export [%s] raster file."
+msgstr "Non riesco a trovare il file raster %s"
+
+#, fuzzy
+msgid "Cannot create [%s] raster file using [%s] driver."
+msgstr "Non riesco a trovare il file raster %s"
+
+#, fuzzy
+msgid "Done!"
+msgstr "Fatto.\n"
+
+#, fuzzy
+msgid "Resamples raster map layers using interpolation."
+msgstr "Mostra il titolo del file raster"
+
+#, fuzzy
+msgid "Interpolation method"
+msgstr "Mostra il titolo del file raster"
+
+#, fuzzy
+msgid "Invalid method: %s"
+msgstr "Area: %d  Numero di isole: %d\n"
+
+#, fuzzy
+msgid "%s: %s - can't create cell file"
+msgstr "Non riesco a trovare il file raster %s"
+
+#, fuzzy
+msgid "%s: unable to re-open %s"
+msgstr "impossibile aprire <%s>"
+
+#, fuzzy
+msgid "Writing output map (%s)   ... "
+msgstr "Nome del driver in output"
+
+#, fuzzy
+msgid "%s - ERROR re-reading %s"
+msgstr "Errore nella lettura del file dbmscap\n"
+
+#, fuzzy
+msgid "%s: %s - can't open"
+msgstr "raster <%s> non trovato"
+
+#, fuzzy
+msgid "Reading input map (%s)    ... "
+msgstr "Mappa raster risultante"
+
+#, fuzzy
+msgid "%s - ERROR reading %s"
+msgstr "Errore nella lettura del file dbmscap\n"
+
+#, fuzzy
+msgid "%s: %s - illegal distance specification"
+msgstr "Nome del raster file in output"
+
+#, fuzzy
+msgid "Found %d unresolved areas"
+msgstr "trova solamente le aree non risolte"
+
+#, fuzzy
+msgid "Reading map..."
+msgstr "Mappa raster risultante"
+
+#, fuzzy
+msgid "Reading %s in %s ..."
+msgstr "Mappa raster risultante"
+
+#, fuzzy
+msgid "Unable to create cell file for [%s]"
+msgstr "Non riesco ad aprire il cellfile per [%s]"
+
+#, fuzzy
+msgid "Use G3D mask (if exists) with output map"
+msgstr "Usa una mask G3d (se esiste) con la mappa in input"
+
+#, fuzzy
+msgid "Update raster map statistics"
+msgstr "Nome della mappa raster da utilizzare per <%s>"
+
+#, fuzzy
+msgid "Raster file [%s] not found"
+msgstr "raster <%s> non trovato"
+
+#, fuzzy
+msgid "Checking input maps\n"
+msgstr "Mappa raster in input"
+
+#, fuzzy
+msgid "The number of input and elevation maps is not equal\n"
+msgstr "Nome di  2-%d mappe raster in input"
+
+#, fuzzy
+msgid "Open g3d raster map %s\n"
+msgstr "Non riesco a trovare il file raster %s"
+
+#, fuzzy
+msgid "Open input raster map %s\n"
+msgstr "Nome del driver in input"
+
+#, fuzzy
+msgid "Open elev raster map %s\n"
+msgstr "Non riesco a trovare il file raster %s"
+
+#, fuzzy
+msgid "Close g3d raster map\n"
+msgstr "Mappa raster risultante"
+
+#, fuzzy
+msgid "Name of first raster map"
+msgstr "Nome di una mappa raster esistente"
+
+#, fuzzy
+msgid "Name of second raster map"
+msgstr "Nome della mappa raster"
+
+#, fuzzy
+msgid "Unit of measure"
+msgstr "Unità della distanza"
+
+#, fuzzy
+msgid "Unable to create any tempfiles"
+msgstr "Valore da scrivere per null"
+
+#, fuzzy
+msgid "Unable to run r.stats"
+msgstr "impossibile aprire <%s>"
+
+#, fuzzy
+msgid "Unexpected output from r.stats"
+msgstr "Visualizza i formati supportati ed esci"
+
+#, fuzzy
+msgid "Unable to open tempfile"
+msgstr "Nome del file in output"
+
+#, fuzzy
+msgid ""
+"Enter the file name\n"
+"> "
+msgstr "Nome del raster file esistente"
+
+#, fuzzy
+msgid "Preparing report ..."
+msgstr "Mappa raster risultante"
+
+#, fuzzy
+msgid "Reading row %d"
+msgstr "Mappa raster risultante"
+
+#, fuzzy
+msgid "Illegal line in header"
+msgstr "Nome del file di output"
+
+#, fuzzy
+msgid "Could not open temporary file: [%s]"
+msgstr "Non riesco a trovare il file raster %s"
+
+#, fuzzy
+msgid "Could not open input file [%s]"
+msgstr "Non riesco a trovare il file raster %s"
+
+#, fuzzy
+msgid "Failed to copy file"
+msgstr "Nome del file in output"
+
+#, fuzzy
+msgid "Creating some temporary files"
+msgstr "Non riesco a trovare il file raster %s"
+
+#, fuzzy
+msgid "Can't find %d,%d:%f"
+msgstr "Non riesco a mostrare i database"
+
+#, fuzzy
+msgid "Creates explicitly the NULL-value bitmap file."
+msgstr "Crea separatamente un file bitmap 3D di valori nulli"
+
+#, fuzzy
+msgid "Only do the work if the map doesn't have a NULL-value bitmap file"
+msgstr "Crea separatamente un file bitmap 3D di valori nulli"
+
+#, fuzzy
+msgid "Remove NULL-value bitmap file"
+msgstr "Crea separatamente un file bitmap 3D di valori nulli"
+
+#, fuzzy
+msgid "error in ascii data format"
+msgstr "Non riesco a trovare il file raster %s"
+
+#, fuzzy
+msgid "Ascii raster file to be imported (or \"-\" to read from stdin)"
+msgstr "File raster ascii da importare"
+
+#, fuzzy
+msgid "Raster map to use to setup sampling"
+msgstr "Mappa(e) raster da leggere"
+
+#, fuzzy
+msgid "In scan mode, print using shell script style"
+msgstr ""
+"Stampa le impostazioni della region corrente (in stile script per la shell)"
+
+#, fuzzy
+msgid "Reading MAT-File ..."
+msgstr "Non riesco a trovare il file raster %s"
+
+#, fuzzy
+msgid "Writing new raster map ..."
+msgstr "Nome del driver in input"
+
+#, fuzzy
+msgid "Using rows=%d cols=%d\n"
+msgstr "%d raster%s, %d vettoriale%s\n"
+
+#, fuzzy
+msgid "Illegal east coordinate <%s>\n"
+msgstr "Utilizzando le coordinate del centro della mappa\n"
+
+#, fuzzy
+msgid "Illegal north coordinate <%s>\n"
+msgstr "Sono state specificate delle coordinate nord vuote."
+
+#, fuzzy
+msgid "unable to open drainage pointer map"
+msgstr "impossibile aprire <%s>"
+
+#, fuzzy
+msgid "unable to open new basin map"
+msgstr "impossibile aprire <%s>"
+
+#, fuzzy
+msgid "unable to close new basin map layer"
+msgstr "impossibile aprire <%s>"
+
+#, fuzzy
+msgid "Can't create raster map <%s>"
+msgstr "Non riesco a trovare il file raster %s"
+
+#, fuzzy
+msgid "Setting window header failed"
+msgstr "Punti di partenza del file raster"
+
+#, fuzzy
+msgid "File not found: %s"
+msgstr "raster <%s> non trovato"
+
+#, fuzzy
+msgid "Unable to properly read input raster file"
+msgstr "Non riesco a trovare il file raster %s"
+
+#, fuzzy
+msgid "Unable to properly write output raster file"
+msgstr "Nome del raster in output"
+
+#, fuzzy
+msgid "Location PROJ_INFO is:\n"
+msgstr "Errore durante la scrittura di PROJ_INFO"
+
+#, fuzzy
+msgid "Selected band (%d) does not exist.\n"
+msgstr "raster <%s> non trovato"
+
+#, fuzzy
+msgid "Copying %d GCPS in points file for %s"
+msgstr "Errore nella lettura del file dbmscap\n"
+
+#, fuzzy
+msgid "not found\n"
+msgstr "raster <%s> non trovato"
+
+#, fuzzy
+msgid "Creating support files for %s"
+msgstr "Errore nella lettura del file dbmscap\n"
+
+#, fuzzy
+msgid "Reading data."
+msgstr "Sto disegnando ..."
+
+#, fuzzy
+msgid "This step value is not allowed."
+msgstr "raster <%s> non trovato"
+
+#, fuzzy
+msgid "Displacing data."
+msgstr "Sto disegnando ..."
+
+#, fuzzy
+msgid "Screen position in geographic coordinates"
+msgstr "Utilizzando le coordinate del centro della mappa\n"
+
+#, fuzzy
+msgid "Invalid coordinates"
+msgstr "Utilizzando le coordinate del centro della mappa\n"
+
+#, fuzzy
+msgid " Left:    Place text here\n"
+msgstr " Sinistro:  mostra cosa c'è qui\n"
+
+#, fuzzy
+msgid " Right:   Quit\n"
+msgstr " Destro: esce\n"
+
+#, fuzzy
+msgid "Choose new current font"
+msgstr "Utilizza la regione corrente"
+
+#, fuzzy
+msgid "Path to TrueType font including file name"
+msgstr "Percorso del carattere TrueType (nome del file incluso)"
+
+#, fuzzy
+msgid "Error opening channel %i"
+msgstr "Non riesco a trovare il file raster %s"
+
+msgid "Wrong rgb map values! Values should in between 0 and 255!\n"
+msgstr ""
+"Mappa con valori rgb non valido! I valori devono essere compresi tra 0 e "
+"255!\n"

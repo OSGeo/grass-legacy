@@ -1,18 +1,19 @@
-# translation of grasslibs_it.po to Italian
+# translation of grassmods_it.po to Italian
 # This file is distributed under the same license as the GRASS package.
-# Copyright (C) 2005, GRASS Development Team
+# Copyright (C) 2005, 2006 GRASS Development Team
 #
-# Maurizio Napolitano <napo@itc.it>, 2005.
-# Markus Neteler <neteler@itc.it>, 2005.
-# Luciano Montanaro <mikelima@cirulla.net>, 2006.
+# Maurizio Napolitano <napo at itc.it>, 2005.
+# Markus Neteler <neteler at itc.it>, 2005.
+# Luciano Montanaro <mikelima at cirulla.net>, 2006.
+# Giuseppe Patti <gpatt at tiscali.it>, 2006.
 msgid ""
 msgstr ""
 "Project-Id-Version: grasslibs_it\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2006-09-27 15:45+0200\n"
 "PO-Revision-Date: 2006-10-26 12:30+0100\n"
-"Last-Translator: Giuseppe Patti <gpatt@tiscali.it>\n"
-"Language-Team: Italian <kde-i18n-it@kde.org>\n"
+"Last-Translator: Giuseppe Patti <gpatt at tiscali.it>\n"
+"Language-Team: Italian <translations@grass.itc.it>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -1032,9 +1033,9 @@ msgid ""
 msgstr ""
 
 #: ../lib/gis/closecell.c:250
-#, fuzzy, c-format
+#, c-format
 msgid "Error writing floating point format file for map %s"
-msgstr "Errore nella scrittura del file di topologia.\n"
+msgstr ""
 
 #: ../lib/gis/closecell.c:302
 #, c-format
@@ -1096,7 +1097,7 @@ msgid "Illegal filename.  Cannot be '.' or 'NULL'\n"
 msgstr "Nome file non valido. Non può essere '.' oppre 'NULL'\n"
 
 #: ../lib/gis/legal_name.c:39
-#, c-format
+#, fuzzy, c-format
 msgid "Illegal filename. character <%c> not allowed."
 msgstr "Nome del file non valido. Il carattere <%c> non è permesso."
 
@@ -2577,3 +2578,27 @@ msgstr "Troppi file aperti"
 
 msgid "ERROR: GISBASE not set\n"
 msgstr "ERRORE: GISBASE non definito\n"
+
+#, fuzzy
+msgid "Name of elevation raster map"
+msgstr "Nome della mappa raster in input"
+
+#, fuzzy
+msgid "Name of elevation raster map(s)"
+msgstr "Nome delle mappe raster in input"
+
+#, fuzzy
+msgid "Name of input raster3d map"
+msgstr "Nome della mappa raster in input"
+
+#, fuzzy
+msgid "Name of input raster3d map(s)"
+msgstr "Nome delle mappe raster in input"
+
+#, fuzzy
+msgid "Name for output raster3d map"
+msgstr "Nome della mappa raster in output"
+
+#, fuzzy
+msgid "Window replacing the default"
+msgstr "per accettare i valori predefiniti"
