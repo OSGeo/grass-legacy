@@ -76,25 +76,28 @@ static char *G__find_file (
     return NULL;
 }
 
+
+
 /*!
  * \brief searches for a file from the mapset search list
  *      or in a specified mapset.
  *	returns the mapset name where the file was found.
  *
- *  note:
- *      rejects all names that begin with .
+ *  notes:
  *
- *      If name is of the form nnn in ppp then only mapset ppp
- *      is searched
+ *      If the user specifies a fully qualified element (<i>name@mapset</i>)
+ *      which exists, then <i>G_find_file()</i> modifies <b>name</b>
+ *      by removing the "@<i>mapset</i>" part.
+ *
+ *      Rejects all names that begin with "."
+ *
+ *      If <b>name</b> is of the form nnn in ppp then only mapset ppp
+ *      is searched.
  *
  *  \param char *element    database element (eg, "cell", "cellhd", "colr", etc)
  *  \param char *name       file name to look for
  *  \param char *mapset     mapset to search. if mapset is ""
  *                         will search in mapset search list
- *
- *	searches for a file from the mapset search list
- *      or in a specified mapset.
- *	returns the mapset name where the file was found.
  *
  *  \return char *  pointer to a string with name of mapset
  *              where file was found, or NULL if not found
@@ -118,24 +121,24 @@ char *G_find_file (
     return mp;
 }
 
+
+
 /*!
  * \brief searches for a file from the mapset search list
- *      or in a specified mapset.
+ *      or in a specified mapset. (look but don't touch)
  *	returns the mapset name where the file was found.
- *      Exactly the same as G_find_file() except that if name is in the
- *      form nnn in ppp, and is found, name is changed to nnn by G_find_file().
+ *
+ *      Exactly the same as G_find_file() except that if <b>name</b> is in
+ *      the form "<i>name@mapset</i>", and is found, G_find_file2() will not
+ *      alter <b>name</b> by removing the "@<i>mapset</i>" part.
  *
  *  note:
- *      rejects all names that begin with .
+ *      rejects all names that begin with "."
  *
  *  \param char *element    database element (eg, "cell", "cellhd", "colr", etc)
  *  \param char *name       file name to look for
  *  \param char *mapset     mapset to search. if mapset is ""
  *                         will search in mapset search list
- *
- *	searches for a file from the mapset search list
- *      or in a specified mapset.
- *	returns the mapset name where the file was found.
  *
  *  \return char *  pointer to a string with name of mapset
  *              where file was found, or NULL if not found
