@@ -879,16 +879,16 @@ int G__reallocate_temp_buf (void)
 /*!
  * \brief 
  *
- * This controls the
- * storage type for floating-point maps. It affects subsequent calls to <tt>G_open_fp_map_new()</tt>. The <em>type</em> must be one of <tt>FCELL_TYPE</tt>
- * (float) or <tt>DCELL_TYPE</tt> (double). The use of this routine by
- * applications is discouraged since its use would override user preferences.
+ * This controls the storage type for floating-point maps. It affects
+ * subsequent calls to <tt>G_open_fp_map_new()</tt>. The <em>type</em>
+ * must be one of <tt>FCELL_TYPE</tt> (float) or <tt>DCELL_TYPE</tt>
+ * (double). The use of this routine by applications is discouraged
+ * since its use would override user preferences.
  *
  *  \param type
  *  \return int
  */
-
- int G_set_fp_type (RASTER_MAP_TYPE map_type)
+int G_set_fp_type (RASTER_MAP_TYPE map_type)
 {
     FP_TYPE_SET = 1;
     if (map_type!=FCELL_TYPE && map_type != DCELL_TYPE) 
@@ -912,16 +912,14 @@ int G__reallocate_temp_buf (void)
 /*!
  * \brief 
  *
- * Returns true(1)
- * if raster map <em>name</em> in <em>mapset</em> is a floating-point dataset;
- * false(0) otherwise.
+ * Returns true(1) if raster map <em>name</em> in <em>mapset</em>
+ * is a floating-point dataset; false(0) otherwise.
  *
  *  \param name
  *  \param mapset
  *  \return int
  */
-
- int G_raster_map_is_fp (char *name, char *mapset)
+int G_raster_map_is_fp (char *name, char *mapset)
 {
    char path[1024];
 
@@ -937,12 +935,25 @@ int G__reallocate_temp_buf (void)
    return 0;
 }
 
+
+
+
+/*!
+ * \brief Determine raster type
+ *
+ * Determines if the raster map is floating point or integer. Returns
+ * DCELL_TYPE for double maps, FCELL_TYPE for float maps, CELL_TYPE for 
+ * integer maps, -1 if error has occured
+ *
+ * NOTE: If the user specifies a fully qualified raster name which exists,
+ * then <i>G_raster_map_type()</i> modifies <b>name</b> by removing the
+ * "@<i>mapset</i>". (due to it calling <i>G_find_cell()</i>)
+ *
+ *  \param name
+ *  \param mapset
+ *  \return RASTER_MAP_TYPE
+ */
 RASTER_MAP_TYPE G_raster_map_type (char *name, char *mapset)
-
-/* Determines if the raster map is floating point or integer. Returns
-DCELL_TYPE for double maps, FCELL_TYPE for float maps, CELL_TYPE for 
-integer maps, -1 if error has occured */
-
 {
    char path[1024];
 
@@ -957,6 +968,43 @@ integer maps, -1 if error has occured */
    if (access(path,0) == 0) return DCELL_TYPE;
    return CELL_TYPE;
 }
+
+
+
+/*!
+ * \brief Determine raster type (look but don't touch)
+ *
+ * Same as G_raster_map_type() but use G_find_cell2() so <b>name</b> is not
+ * modified.
+ *
+ * Determines if the raster map is floating point or integer. Returns
+ * DCELL_TYPE for double maps, FCELL_TYPE for float maps, CELL_TYPE for 
+ * integer maps, -1 if error has occured
+ *
+ *  \param name
+ *  \param mapset
+ *  \return RASTER_MAP_TYPE
+ */
+RASTER_MAP_TYPE G_raster_map_type2 (char *name, char *mapset)
+{
+   char path[1024];
+
+   if (G_find_cell2 (name, mapset) == NULL)
+   {
+      G_warning (_("unable to find [%s] in [%s]"),name,mapset);
+      return -1;
+   }
+   G__file_name(path,"fcell", name, mapset);
+
+   if (access(path,0) == 0) return G__check_fp_type(name,mapset);
+
+   G__file_name(path, "g3dcell", name, mapset);
+
+   if (access(path,0) == 0) return DCELL_TYPE;
+
+   return CELL_TYPE;
+}
+
 
 
 RASTER_MAP_TYPE G__check_fp_type (char *name, char *mapset)
@@ -1065,8 +1113,7 @@ int G_open_raster_new_uncompressed (char *name, RASTER_MAP_TYPE wr_type)
  *  \param q
  *  \return int
  */
-
- int G_set_quant_rules (int fd, struct Quant *q)
+int G_set_quant_rules (int fd, struct Quant *q)
 {
    struct fileinfo *fcb = &G__.fileinfo[fd];
    CELL cell;
