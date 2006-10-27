@@ -10,14 +10,14 @@ msgstr ""
 "Project-Id-Version: grasslibs_it\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2006-09-27 15:45+0200\n"
-"PO-Revision-Date: 2006-08-06 17:15+0200\n"
-"Last-Translator: Luciano Montanaro <mikelima@cirulla.net>\n"
+"PO-Revision-Date: 2006-10-26 12:30+0100\n"
+"Last-Translator: Giuseppe Patti <gpatt@tiscali.it>\n"
 "Language-Team: Italian <kde-i18n-it@kde.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "X-Generator: KBabel 1.11.4\n"
-"Plural-Forms:  nplurals=2; plural=(n != 1);\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
 #: ../lib/D/Dcell.c:35
 msgid "Setting map window"
@@ -2333,7 +2333,7 @@ msgstr "Centroidi allegati:  "
 #: ../lib/vector/Vlib/build_ogr.c:258
 #, c-format
 msgid "Cannot calculate centroid for area %d"
-msgstr ""
+msgstr "Impossibile calcolare il centroide dell'area %d"
 
 #: ../lib/vector/Vlib/build_ogr.c:293
 #, c-format
@@ -2569,11 +2569,11 @@ msgstr ""
 msgid "Cannot delete line"
 msgstr "Non posso cancellare la linea"
 
-#~ msgid "Too many open raster files"
-#~ msgstr "Troppi file raster aperti"
+msgid "Too many open raster files"
+msgstr "Troppi file raster aperti"
 
-#~ msgid "Too many open files"
-#~ msgstr "Troppi file aperti"
+msgid "Too many open files"
+msgstr "Troppi file aperti"
 
-#~ msgid "ERROR: GISBASE not set\n"
-#~ msgstr "ERRORE: GISBASE non definito\n"
+msgid "ERROR: GISBASE not set\n"
+msgstr "ERRORE: GISBASE non definito\n"
