@@ -6,7 +6,6 @@
 # Markus Neteler <neteler at itc.it>, 2005.
 # Luciano Montanaro <mikelima at cirulla.net>, 2006.
 # Giuseppe Patti <gpatt at tiscali.it>, 2006.
-
 msgid ""
 msgstr ""
 "Project-Id-Version: grassmods_it\n"
@@ -81,7 +80,7 @@ msgstr ""
 #: ../raster3d/r3.mkdspf/main.c:122
 #, c-format
 msgid "Region from getWindow: %d %d %d"
-msgstr ""
+msgstr "Region da getWindow. %d %d %d"
 
 #: ../raster3d/r3.mkdspf/main.c:132
 #, fuzzy, c-format
@@ -91,13 +90,13 @@ msgstr "Non riesco ad aprire il cellfile per [%s]"
 #: ../raster3d/r3.mkdspf/main.c:144 ../raster3d/base/r3.info.main.c:130
 #, c-format
 msgid "Error opening grid3 file [%s]"
-msgstr ""
+msgstr "Errore nell'aperura del file grid3 [%s]"
 
 #: ../raster3d/r3.mkdspf/main.c:147 ../raster3d/base/r3.info.main.c:289
 #: ../raster3d/base/r3.info.main.c:351
 #, c-format
 msgid "Error reading range for [%s]"
-msgstr ""
+msgstr "Errore nel leggere il range di [%s]"
 
 #: ../raster3d/r3.mkdspf/main.c:176
 #, fuzzy, c-format
@@ -107,7 +106,7 @@ msgstr "Non riesco a trovare il file raster %s"
 #: ../raster3d/r3.mkdspf/main.c:197
 #, c-format
 msgid "Writing %s from %s..."
-msgstr ""
+msgstr "Sto scrivendo %s da %s..."
 
 #: ../raster3d/r3.in.ascii/main.c:79
 msgid "Ascii raster file to be imported"
@@ -140,7 +139,7 @@ msgstr "Converte un file raster testuale ASCII in una mappa raster (binario)"
 
 #: ../raster3d/r3.out.ascii/main.c:78
 msgid "3dcell map to be converted to ASCII"
-msgstr ""
+msgstr "Mappa 3dcell da convertire in ASCII"
 
 #: ../raster3d/r3.out.ascii/main.c:85
 msgid "Name for ASCII output file"
@@ -173,11 +172,11 @@ msgstr "Converti una mappa raster in un file testuale ASCII"
 #: ../raster3d/r3.out.ascii/main.c:273 ../raster3d/base/r3.null.main.c:104
 #: ../raster3d/base/r3.mask.main.c:78 ../raster3d/r3.out.v5d/main.c:305
 msgid "Requested g3d file not found"
-msgstr ""
+msgstr "File g3d richiesto non trovato"
 
 #: ../raster3d/r3.out.ascii/main.c:282
 msgid "Error opening g3d file"
-msgstr ""
+msgstr "Errore nell'apertura del file g3d"
 
 #: ../raster3d/base/mask_functions.c:82
 #, c-format
@@ -191,27 +190,27 @@ msgstr "Nome del raster file in output"
 
 #: ../raster3d/base/r3.null.main.c:57
 msgid "3dcell map for which to modify null values"
-msgstr ""
+msgstr "Raster3d del quale modificare il valore null"
 
 #: ../raster3d/base/r3.null.main.c:65 ../raster/r.null/null.c:63
 msgid "List of cell values to be set to NULL"
-msgstr ""
+msgstr "Elenco dei valori raster da settare a NULL"
 
 #: ../raster3d/base/r3.null.main.c:72 ../raster/r.null/null.c:70
 msgid "The value to replace the null value by"
-msgstr ""
+msgstr "Valore con il quale rimpiazzare il valore null"
 
 #: ../raster3d/base/r3.null.main.c:86
 msgid "illegal value for null"
-msgstr ""
+msgstr "Valore da impostare a null non valido"
 
 #: ../raster3d/base/r3.null.main.c:111
 msgid "modifyNull: error opening map"
-msgstr ""
+msgstr "modifyNull. Errore nell'apertura della mappa"
 
 #: ../raster3d/base/r3.null.main.c:123
 msgid "modifyNull: error opening tmp file"
-msgstr ""
+msgstr "modifyNull. Errore nell'aperura del file tmp"
 
 #: ../raster3d/base/r3.null.main.c:172
 msgid "modifyNull: error flushing tiles in cube"
@@ -223,19 +222,19 @@ msgstr ""
 
 #: ../raster3d/base/r3.null.main.c:186
 msgid "modifyNull: error closing map"
-msgstr ""
+msgstr "Errore nell'istruzione modifyNull. Chiudo la mappa"
 
 #: ../raster3d/base/r3.null.main.c:188
 msgid "modifyNull: error closing tmp file"
-msgstr ""
+msgstr "Errore nell'istruzione modifyNull. Chiudo il file temporaneo"
 
 #: ../raster3d/base/r3.null.main.c:204
 msgid "Explicitly create the 3D NULL-value bitmap file."
-msgstr ""
+msgstr "Crea separatamente un file bitmap 3D di valori nulli"
 
 #: ../raster3d/base/r3.timestamp.main.c:32
 msgid "print/add/remove a timestamp for a 3D raster map"
-msgstr ""
+msgstr "Stampa/Aggiungi/Rimuovi data e ora di una mappa raster 3D"
 
 #: ../raster3d/base/r3.timestamp.main.c:39
 #, fuzzy
@@ -291,6 +290,8 @@ msgstr "tabelle di sistema invece che tabelle utente"
 #: ../raster3d/base/r3.info.main.c:115
 msgid "Print 3D raster map timestamp (day.month.year hour:minute:seconds) only"
 msgstr ""
+"Stampa esclusivamente il timestamp (giorno.mese.anno ora.minuti.secondi) di "
+"un raster 3D"
 
 #: ../raster3d/base/r3.info.main.c:123 ../raster/r.info/main.c:107
 #, c-format
@@ -335,19 +336,19 @@ msgstr ""
 
 #: ../raster3d/base/r3.mask.main.c:44
 msgid "3dcell map with reference values"
-msgstr ""
+msgstr "Mappa 3dcell con valori di riferimento"
 
 #: ../raster3d/base/r3.mask.main.c:52
 msgid "List of cell values to be masked out"
-msgstr ""
+msgstr "Elenco dei valori del raster da mascherare"
 
 #: ../raster3d/base/r3.mask.main.c:84
 msgid "makeMask: error opening map."
-msgstr ""
+msgstr "makeMask. Errore nell'apertura della mappa"
 
 #: ../raster3d/base/r3.mask.main.c:95
 msgid "makeMask: error opening g3d mask file"
-msgstr ""
+msgstr "makeMask. Errore nell'apertura del file mask g3d"
 
 #: ../raster3d/base/r3.mask.main.c:124
 msgid "makeMask: error flushing tiles in cube"
@@ -359,21 +360,23 @@ msgstr ""
 
 #: ../raster3d/base/r3.mask.main.c:137
 msgid "makeMask: error closing g3d mask file"
-msgstr ""
+msgstr "makeMask. Errore nel chiudere il file mask g3d"
 
 #: ../raster3d/base/r3.mask.main.c:139
 msgid "makeMask: error closing map"
-msgstr ""
+msgstr "makeMask. Errore nella chiusura della mappa"
 
 #: ../raster3d/base/r3.mask.main.c:154
 msgid "Establishes the current working 3D raster mask."
-msgstr ""
+msgstr "Imposta la mask raster 3d da usare"
 
 #: ../raster3d/base/r3.mask.main.c:159
 msgid ""
 "Cannot create mask file: G3D_MASK already exists!\n"
 " Use 'g.remove rast3d=G3D_MASK' to remove the existing mask."
 msgstr ""
+"Impossibile creare la mask. MASK G3D già esistente!\n"
+"Usa il comando 'g.remove rast3d=G3D MASK' per rimuovere la maschera esistente"
 
 #: ../raster3d/r3.to.rast/main.c:55
 #, fuzzy
@@ -481,7 +484,7 @@ msgstr "Stampa solo il tipo di mappa raster"
 
 #: ../raster3d/r3.cross.rast/main.c:98
 msgid "2D elevation map used to create the cross section map"
-msgstr ""
+msgstr "Mappa di altezze 2D da utilizzare per la creazione della sezione"
 
 #: ../raster3d/r3.cross.rast/main.c:105
 #, fuzzy
@@ -490,7 +493,7 @@ msgstr "Mappa raster risultante"
 
 #: ../raster3d/r3.cross.rast/main.c:110
 msgid "Use g3d mask (if exists) with input map"
-msgstr ""
+msgstr "Usa una mask G3d (se esiste) con la mappa in input"
 
 #: ../raster3d/r3.cross.rast/main.c:162
 #, fuzzy
@@ -589,11 +592,13 @@ msgid "write_vtk_unstructured_grid_cells: Writing the cells"
 msgstr ""
 
 #: ../raster3d/r3.out.vtk/writeVTKData.c:333
-#, c-format
+#, fuzzy, c-format
 msgid ""
 "write_vtk_data: Writing Celldata %s with rows %i cols %i depths %i to vtk-"
 "ascii file"
 msgstr ""
+"vriteVTKData. Sto scrivendo Celldata %s con %i righe e %i colonne, "
+"profondità %i nel vtk-ascii file"
 
 #: ../raster3d/r3.out.vtk/writeVTKData.c:391
 msgid "write_vtk_rgb_data: writing rgb data"
@@ -603,6 +608,7 @@ msgstr ""
 #: ../raster3d/r3.out.vtk/writeVTKData.c:461
 msgid "Wrong g3d map values! Values should in between 0 and 255!\n"
 msgstr ""
+"Valori della mappa g3d errati! I valori devono essere compresi tra 0 e 255!\n"
 
 #: ../raster3d/r3.out.vtk/writeVTKData.c:491
 msgid "write_vtk_vector_data: writing vector data"
@@ -737,6 +743,8 @@ msgstr "Non riesco a trovare il file raster %s"
 #: ../raster3d/r3.out.vtk/main.c:536
 msgid "Error closing g3d data map, the VTK file may be incomplete."
 msgstr ""
+"Errore nella chiusura della mappa g3d, il file VTK potrebbe essere "
+"incompleto."
 
 #: ../raster3d/r3.out.vtk/main.c:551 ../raster/r.out.vtk/main.c:390
 msgid "Error closing VTK-ASCII file"
@@ -812,7 +820,7 @@ msgstr ""
 
 #: ../raster3d/r3.out.v5d/main.c:68
 msgid "3dcell map to be converted to Vis5d (v5d) file"
-msgstr ""
+msgstr "Mappa 3dcell da convertire a Viz5d"
 
 #: ../raster3d/r3.out.v5d/main.c:75
 #, fuzzy
@@ -822,12 +830,12 @@ msgstr "Nome del file in output"
 #: ../raster3d/r3.out.v5d/main.c:145
 #, c-format
 msgid "Viz5D allows %d cols, you have %d cols"
-msgstr ""
+msgstr "Viz5D permette %d colonne, tu ne hao %d"
 
 #: ../raster3d/r3.out.v5d/main.c:147
 #, c-format
 msgid "Viz5D allows %d rows, you have %d rows"
-msgstr ""
+msgstr "Viz5D permette %d righe, tu ne hai %d"
 
 #: ../raster3d/r3.out.v5d/main.c:197 ../vector/v.surf.rst/main.c:826
 #: ../vector/v.in.ascii/a2b.c:160
@@ -841,7 +849,7 @@ msgstr "Errore: non riesco a creare %s"
 
 #: ../raster3d/r3.out.v5d/main.c:262
 msgid "Error while writing grid. Disk full?"
-msgstr ""
+msgstr "Errore nella scrittura della grid. Disco pieno?"
 
 #: ../raster3d/r3.out.v5d/main.c:286
 #, fuzzy
@@ -1745,6 +1753,8 @@ msgstr ""
 #: ../general/g.region/cmd/printwindow.c:406
 msgid "Error in pj_do_proj (projection of input coordinate pair)"
 msgstr ""
+"Errore nell'esecuzione di 'pj do proj' (ovvero nella coppia di coordinate di "
+"proiezione in input)"
 
 #: ../general/g.region/cmd/printwindow.c:339
 msgid ""
@@ -2028,6 +2038,8 @@ msgid ""
 "Lists available GRASS data base files of the user-specified data type to "
 "standard output."
 msgstr ""
+"Elenca nello standard output i file database GRASS disponibili del tipo "
+"sepcificato dall'utente "
 
 #: ../general/manage/cmd/list.c:54
 msgid "mapset to list (default: current search path)"
@@ -2057,7 +2069,7 @@ msgstr ""
 
 #: ../general/manage/cmd/remove.c:28
 msgid "Removes data base element files from the user's current mapset."
-msgstr ""
+msgstr "Rimuovi elementi dal database nel mapset correntemente in uso"
 
 #: ../general/manage/cmd/remove.c:33
 #, fuzzy
@@ -2086,7 +2098,7 @@ msgstr ""
 
 #: ../general/manage/cmd/rename.c:25
 msgid "Renames data base element files in the user's current mapset."
-msgstr ""
+msgstr "Rinomina gli elementi database nel mapset correntemente in uso"
 
 #: ../general/manage/cmd/rename.c:40
 #, c-format
@@ -8335,8 +8347,9 @@ msgid "2d raster maps which represent the slices"
 msgstr ""
 
 #: ../raster/r.to.rast3/main.c:87
+#, fuzzy
 msgid "Use G3D mask (if exists) with output map"
-msgstr ""
+msgstr "Usa una mask G3d (se esiste) con la mappa in input"
 
 #: ../raster/r.to.rast3/main.c:111
 #, c-format
@@ -11242,8 +11255,9 @@ msgid ""
 msgstr ""
 
 #: ../raster/r.null/null.c:47
+#, fuzzy
 msgid "Creates explicitly the NULL-value bitmap file."
-msgstr ""
+msgstr "Crea separatamente un file bitmap 3D di valori nulli"
 
 #: ../raster/r.null/null.c:55
 #, fuzzy
@@ -11259,16 +11273,18 @@ msgid "Only do the work if the map is integer"
 msgstr ""
 
 #: ../raster/r.null/null.c:82
+#, fuzzy
 msgid "Only do the work if the map doesn't have a NULL-value bitmap file"
-msgstr ""
+msgstr "Crea separatamente un file bitmap 3D di valori nulli"
 
 #: ../raster/r.null/null.c:86
 msgid "Create NULL-value bitmap file validating all data cells"
 msgstr ""
 
 #: ../raster/r.null/null.c:90
+#, fuzzy
 msgid "Remove NULL-value bitmap file"
-msgstr ""
+msgstr "Crea separatamente un file bitmap 3D di valori nulli"
 
 #: ../raster/r.his/main.c:65
 msgid ""
@@ -17960,7 +17976,7 @@ msgstr ""
 #: ../display/d.profile/main.c:277
 #, fuzzy
 msgid "Error opening cell-file"
-msgstr "Non riesco a trovare il file raster %s"
+msgstr "Errore nell'apertura del file g3d"
 
 #: ../display/d.profile/main.c:279
 #, fuzzy
@@ -18538,5 +18554,14 @@ msgid "No output maps"
 msgstr "Nome della mappa di output"
 
 #, fuzzy
-#~ msgid "Name of first raster map for blending"
-#~ msgstr "Nome di una mappa raster esistente"
+msgid "Name of first raster map for blending"
+msgstr "Nome di una mappa raster esistente"
+
+#, fuzzy
+#~ msgid "Error opening channel %i"
+#~ msgstr "Non riesco a trovare il file raster %s"
+
+#~ msgid "Wrong rgb map values! Values should in between 0 and 255!\n"
+#~ msgstr ""
+#~ "Mappa con valori rgb non valido! I valori devono essere compresi tra 0 e "
+#~ "255!\n"
