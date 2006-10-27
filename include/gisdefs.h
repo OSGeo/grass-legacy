@@ -850,6 +850,7 @@ int G_raster_map_is_fp(char *, char *);
 RASTER_MAP_TYPE G_raster_map_type(char *, char *);
 RASTER_MAP_TYPE G_raster_map_type2(char *, char *);
 RASTER_MAP_TYPE G__check_fp_type(char *, char *);
+RASTER_MAP_TYPE G_get_raster_map_type(int);
 int G_open_raster_new(char *, RASTER_MAP_TYPE);
 int G_open_raster_new_uncompressed(char *, RASTER_MAP_TYPE);
 int G_set_quant_rules(int, struct Quant *);
