@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: grasslibs_hi\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2006-09-19 22:31+0200\n"
+"POT-Creation-Date: 2006-10-27 12:46+0200\n"
 "PO-Revision-Date: 2005-12-22 14:34+0100\n"
 "Last-Translator: Markus Neteler <neteler@itc.it>\n"
 "Language-Team: Hindi <translations@grass.itc.it>\n"
@@ -56,7 +56,7 @@ msgstr "n"
 msgid "hit RETURN to continue -->"
 msgstr ""
 
-#: ../lib/gis/list.c:220
+#: ../lib/gis/list.c:223
 #, fuzzy, c-format
 msgid "%s files available in mapset %s:\n"
 msgstr "n"
@@ -66,22 +66,22 @@ msgstr "n"
 msgid "color support for [%s] in mapset [%s] %s"
 msgstr "के लिए"
 
-#: ../lib/gis/histogram.c:60
+#: ../lib/gis/histogram.c:61
 #, fuzzy, c-format
 msgid "Histogram for [%s in %s] missing (run r.support)"
 msgstr "के लिए"
 
-#: ../lib/gis/histogram.c:67
+#: ../lib/gis/histogram.c:69
 #, fuzzy, c-format
 msgid "Can't read histogram for [%s in %s]"
 msgstr "के लिए"
 
-#: ../lib/gis/histogram.c:78 ../lib/gis/histogram.c:87
+#: ../lib/gis/histogram.c:80 ../lib/gis/histogram.c:90
 #, fuzzy, c-format
 msgid "Invalid histogram file for [%s in %s]"
 msgstr "के लिए"
 
-#: ../lib/gis/histogram.c:341
+#: ../lib/gis/histogram.c:373
 #, fuzzy, c-format
 msgid "can't create histogram for [%s in %s]"
 msgstr "के लिए"
@@ -554,26 +554,26 @@ msgstr ""
 msgid "Example: 1,3,7-9,13"
 msgstr "13"
 
-#: ../lib/gis/parser.c:761
+#: ../lib/gis/parser.c:783
 #, fuzzy, c-format
 msgid "Sorry <%s> is not a valid option\n"
 msgstr "खेद है है नहीं a n"
 
-#: ../lib/gis/parser.c:866
+#: ../lib/gis/parser.c:888
 #, fuzzy, c-format
 msgid ""
 "\n"
 "Description:\n"
 msgstr "n"
 
-#: ../lib/gis/parser.c:870
+#: ../lib/gis/parser.c:892
 #, c-format
 msgid ""
 "\n"
 "Keywords:\n"
 msgstr ""
 
-#: ../lib/gis/parser.c:874
+#: ../lib/gis/parser.c:896
 #, fuzzy, c-format
 msgid ""
 "\n"
@@ -581,81 +581,89 @@ msgid ""
 " "
 msgstr "n "
 
-#: ../lib/gis/parser.c:940
+#: ../lib/gis/parser.c:969
 #, fuzzy, c-format
 msgid ""
 "\n"
 "Flags:\n"
 msgstr "n"
 
-#: ../lib/gis/parser.c:963
+#: ../lib/gis/parser.c:992
 msgid "Force overwrite of output files"
 msgstr ""
 
-#: ../lib/gis/parser.c:970
+#: ../lib/gis/parser.c:994
+msgid "Verbose module output"
+msgstr ""
+
+#: ../lib/gis/parser.c:995
+msgid "Quiet module output"
+msgstr ""
+
+#: ../lib/gis/parser.c:1001
 #, fuzzy, c-format
 msgid ""
 "\n"
 "Parameters:\n"
 msgstr "n"
 
-#: ../lib/gis/parser.c:992
+#: ../lib/gis/parser.c:1023
 #, fuzzy, c-format
 msgid "  %*s   default: %s\n"
 msgstr "n"
 
-#: ../lib/gis/parser.c:1594
+#: ../lib/gis/parser.c:1647
 #, c-format
 msgid "  %*s   options: "
 msgstr ""
 
-#: ../lib/gis/parser.c:1641 ../lib/gis/parser.c:1658
+#: ../lib/gis/parser.c:1694 ../lib/gis/parser.c:1711
 #, fuzzy, c-format
 msgid "Sorry, <%c> is not a valid flag\n"
 msgstr "खेद है है नहीं a n"
 
-#: ../lib/gis/parser.c:1713
+#: ../lib/gis/parser.c:1766
 #, fuzzy, c-format
 msgid "Sorry, <%s=> is ambiguous\n"
 msgstr "खेद है है n"
 
-#: ../lib/gis/parser.c:1720
+#: ../lib/gis/parser.c:1773
 #, fuzzy, c-format
 msgid "Sorry, <%s> is not a valid parameter\n"
 msgstr "खेद है है नहीं a n"
 
-#: ../lib/gis/parser.c:1805
+#: ../lib/gis/parser.c:1858
 #, fuzzy, c-format
 msgid ""
 "\n"
 "Error: illegal range syntax for parameter <%s>\n"
 msgstr "के लिए n"
 
-#: ../lib/gis/parser.c:1807
+#: ../lib/gis/parser.c:1860
 #, fuzzy, c-format
 msgid "       Presented as: %s\n"
 msgstr "n"
 
-#: ../lib/gis/parser.c:1810
+#: ../lib/gis/parser.c:1863
 #, fuzzy, c-format
 msgid ""
 "\n"
 "Error: value <%s> out of range for parameter <%s>\n"
 msgstr "का के लिए n"
 
-#: ../lib/gis/parser.c:1812
+#: ../lib/gis/parser.c:1865
 #, fuzzy, c-format
 msgid "       Legal range: %s\n"
 msgstr "n"
 
-#: ../lib/gis/parser.c:1815
+#: ../lib/gis/parser.c:1868
 #, fuzzy, c-format
 msgid ""
 "\n"
 "Error: Missing value for parameter <%s>\n"
 msgstr "गुमा के लिए n"
 
-#: ../lib/gis/parser.c:1975
+#: ../lib/gis/parser.c:2028
 #, fuzzy, c-format
 msgid ""
 "\n"
@@ -665,83 +673,83 @@ msgstr ""
 "नहीं सेट\n"
 " n"
 
-#: ../lib/gis/parser.c:2078
+#: ../lib/gis/parser.c:2131
 #, fuzzy, c-format
 msgid ""
 "\n"
 "Error: option <%s> must be provided in multiples of %d\n"
 msgstr "का n"
 
-#: ../lib/gis/parser.c:2080
+#: ../lib/gis/parser.c:2133
 #, fuzzy, c-format
 msgid "       You provided %d items:\n"
 msgstr "n"
 
-#: ../lib/gis/parser.c:2135
+#: ../lib/gis/parser.c:2188
 #, fuzzy, c-format
 msgid "Error: option <%s>: <%s> exists.\n"
 msgstr "त्रुटि n"
 
-#: ../lib/gis/parser.c:2182
+#: ../lib/gis/parser.c:2235
 #, fuzzy, c-format
 msgid ""
 "\n"
 "FLAG: Set the following flag?\n"
 msgstr "सेट n"
 
-#: ../lib/gis/parser.c:2196
+#: ../lib/gis/parser.c:2249
 #, fuzzy, c-format
 msgid ""
 "\n"
 "OPTION:   %s\n"
 msgstr "n"
 
-#: ../lib/gis/parser.c:2197
+#: ../lib/gis/parser.c:2250
 #, fuzzy, c-format
 msgid "     key: %s\n"
 msgstr "n"
 
-#: ../lib/gis/parser.c:2199
+#: ../lib/gis/parser.c:2252
 #, fuzzy, c-format
 msgid "  format: %s\n"
 msgstr "n"
 
-#: ../lib/gis/parser.c:2201
+#: ../lib/gis/parser.c:2254
 #, fuzzy, c-format
 msgid " default: %s\n"
 msgstr "n"
 
-#: ../lib/gis/parser.c:2202
+#: ../lib/gis/parser.c:2255
 #, fuzzy, c-format
 msgid "required: %s\n"
 msgstr "n"
 
-#: ../lib/gis/parser.c:2204
+#: ../lib/gis/parser.c:2257
 #, fuzzy, c-format
 msgid "multiple: %s\n"
 msgstr "n"
 
-#: ../lib/gis/parser.c:2206
+#: ../lib/gis/parser.c:2259
 #, fuzzy, c-format
 msgid " options: %s\n"
 msgstr "n"
 
-#: ../lib/gis/parser.c:2221
+#: ../lib/gis/parser.c:2274
 #, c-format
 msgid "enter option > "
 msgstr ""
 
-#: ../lib/gis/parser.c:2235 ../lib/gis/parser.c:2246
+#: ../lib/gis/parser.c:2288 ../lib/gis/parser.c:2299
 #, fuzzy
 msgid "   Try again? "
 msgstr "कोशिश करें "
 
-#: ../lib/gis/parser.c:2244
+#: ../lib/gis/parser.c:2297
 #, fuzzy, c-format
 msgid "Sorry, %s is not accepted.\n"
 msgstr "खेद है है नहीं n"
 
-#: ../lib/gis/parser.c:2255
+#: ../lib/gis/parser.c:2308
 #, fuzzy, c-format
 msgid ""
 "\n"
@@ -751,12 +759,12 @@ msgstr ""
 "\n"
 " n"
 
-#: ../lib/gis/parser.c:2256
+#: ../lib/gis/parser.c:2309
 #, fuzzy
 msgid "Is this correct? "
 msgstr "है "
 
-#: ../lib/gis/parser.c:2325
+#: ../lib/gis/parser.c:2378
 msgid "to accept the default"
 msgstr ""
 
@@ -1250,28 +1258,28 @@ msgstr ""
 msgid "problem reading raster cell file"
 msgstr ""
 
-#: ../lib/gis/legal_name.c:33
+#: ../lib/gis/legal_name.c:34
 #, fuzzy, c-format
 msgid "Illegal filename.  Cannot be '.' or 'NULL'\n"
 msgstr "फ़ाइलनाम  n"
 
-#: ../lib/gis/legal_name.c:39
+#: ../lib/gis/legal_name.c:41
 #, fuzzy, c-format
-msgid "Illegal filename. character <%c> not allowed."
+msgid "Illegal filename. character <%c> not allowed.\n"
 msgstr "फ़ाइलनाम  नहीं."
 
-#: ../lib/gis/legal_name.c:65 ../lib/gis/legal_name.c:67
+#: ../lib/gis/legal_name.c:67 ../lib/gis/legal_name.c:69
 #, fuzzy, c-format
 msgid "Output name '%s' is not valid rast name."
 msgstr "है नहीं."
 
-#: ../lib/gis/legal_name.c:78 ../lib/gis/legal_name.c:80
+#: ../lib/gis/legal_name.c:80 ../lib/gis/legal_name.c:82
 #: ../lib/vector/Vlib/legal_vname.c:72 ../lib/vector/Vlib/legal_vname.c:74
 #, c-format
 msgid "Cannot find input map '%s'"
 msgstr ""
 
-#: ../lib/gis/legal_name.c:98 ../lib/gis/legal_name.c:100
+#: ../lib/gis/legal_name.c:100 ../lib/gis/legal_name.c:102
 #: ../lib/vector/Vlib/legal_vname.c:92 ../lib/vector/Vlib/legal_vname.c:94
 #, fuzzy, c-format
 msgid "Output map '%s' is used as input"
@@ -1486,27 +1494,28 @@ msgstr ""
 msgid "Can't write embedded null values for map open for random access"
 msgstr "के लिए के लिए"
 
-#: ../lib/gis/opencell.c:930 ../lib/gis/opencell.c:951
+#: ../lib/gis/opencell.c:928 ../lib/gis/opencell.c:962
+#: ../lib/gis/opencell.c:994
 #, c-format
 msgid "unable to find [%s] in [%s]"
 msgstr ""
 
-#: ../lib/gis/opencell.c:982
+#: ../lib/gis/opencell.c:1030
 #, c-format
 msgid "unable to find [%s]"
 msgstr ""
 
-#: ../lib/gis/opencell.c:988
+#: ../lib/gis/opencell.c:1036
 #, c-format
 msgid "Unable to open %s"
 msgstr ""
 
-#: ../lib/gis/opencell.c:997
+#: ../lib/gis/opencell.c:1045
 #, fuzzy, c-format
 msgid "invalid type: field %s in file %s "
 msgstr "अवैध फील्ड "
 
-#: ../lib/gis/opencell.c:1042
+#: ../lib/gis/opencell.c:1090
 #, c-format
 msgid "%s - ** illegal name **"
 msgstr ""
@@ -2517,6 +2526,34 @@ msgstr ""
 
 #: ../lib/g3d/g3dopen.c:319
 msgid "G3d_openCellNew: error in G3d_fillHeader"
+msgstr ""
+
+#: ../lib/g3d/g3dparam.c:54
+msgid "Data type used in the output file"
+msgstr ""
+
+#: ../lib/g3d/g3dparam.c:63
+msgid "Precision used in the output file (default, max, or 0 to 52)"
+msgstr ""
+
+#: ../lib/g3d/g3dparam.c:73
+msgid "The compression method used in the output file"
+msgstr ""
+
+#: ../lib/g3d/g3dparam.c:83
+msgid "The dimensions of the tiles used in the output file"
+msgstr ""
+
+#: ../lib/g3d/g3dparam.c:118
+msgid "G3d_getStandard3dParams: precision value invalid"
+msgstr ""
+
+#: ../lib/g3d/g3dparam.c:146
+msgid "G3d_getStandard3dParams: tile dimension value invalid"
+msgstr ""
+
+#: ../lib/g3d/g3dparam.c:171
+msgid "Window replacing the default"
 msgstr ""
 
 #: ../lib/proj/ellipse.c:85
