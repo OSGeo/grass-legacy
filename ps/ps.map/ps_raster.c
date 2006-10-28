@@ -110,7 +110,7 @@ int PS_raster_plot (void)
     /* build the image RGB string */
     if (PS.do_raster) 
     {
-        map_type = G_raster_map_type(PS.cell_name, PS.cell_mapset);
+        map_type = G_get_raster_map_type(PS.cell_fd);
 	cellbuf = G_allocate_raster_buf(map_type);
         n = 0;
         for (row = 0; row < PS.w.rows; row++)
@@ -155,7 +155,7 @@ int PS_raster_plot (void)
 	void *cptr[3];
 	for (i = 0; i < 3; i++)
 	{
-	   grp_map_type[i] = G_raster_map_type(grp.name[i], grp.mapset[i]);
+	   grp_map_type[i] = G_get_raster_map_type(grp.fd[i]);
 	   cbuf[i] = G_allocate_raster_buf(grp_map_type[i]);
         }
         n = 0;

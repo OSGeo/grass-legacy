@@ -80,7 +80,7 @@ RASTER_MAP_TYPE o_open_file (char *cell)
 	exit(-1);
     }
 
-    map_type = G_raster_map_type(cell_name, mapset);
+    map_type = G_get_raster_map_type(in_file_d);
     raster_size = G_raster_size(map_type);
     first_read = 1;
     last_read = 0;

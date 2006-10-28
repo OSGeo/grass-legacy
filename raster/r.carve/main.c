@@ -175,8 +175,9 @@ int main(int argc, char **argv)
     if ((infd = G_open_cell_old(parm.inrast->answer, rmapset)) == -1)
         G_fatal_error(_("unable to open cellfile for [%s]"), parm.inrast->answer);
 
+    parm.raster_type = G_get_raster_map_type(infd);
+
     /* open new map for output */
-    parm.raster_type = G_raster_map_type(parm.inrast->answer, rmapset);
     if ((outfd = G_open_raster_new(parm.outrast->answer,  parm.raster_type)) < 0)
         G_fatal_error(_("unable to open cellfile for [%s]"), parm.outrast->answer);
 

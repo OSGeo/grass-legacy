@@ -84,7 +84,7 @@ int main(int argc, char **argv)
 		if ((B[i].file = G_open_cell_old(name, mapset)) == -1)
 		    G_fatal_error(_("Unable to open raster map [%s]"), name);
 
-		B[i].type = G_raster_map_type(name, mapset);
+		B[i].type = G_get_raster_map_type(B[i].file);
 
 		/* Reading color lookup table */
 		if (G_read_colors(name, mapset, &B[i].colors) == -1)

@@ -377,11 +377,11 @@ int main (int argc, char **argv)
     }
 
     /* open the cell file */
-    raster_type = G_raster_map_type(layer_name, mapset);
-
     layer_fd = G_open_cell_old (layer_name, mapset);
     if (layer_fd < 0)
 	G_fatal_error(_("Unable to open raster map [%s] in [%s]"), layer_name, mapset);
+
+    raster_type = G_get_raster_map_type(layer_fd);
 
     /* allocate the cell array */
     raster_row = G_allocate_raster_buf(raster_type);
@@ -389,11 +389,11 @@ int main (int argc, char **argv)
 
     if(opt7->answer) {
 	/* open the magnitude cell file */
-	mag_raster_type = G_raster_map_type(mag_map, mag_mapset);
-
 	mag_fd = G_open_cell_old(mag_map, mag_mapset);
 	if(mag_fd < 0)
             G_fatal_error("Unable to open raster map [%s] in [%s]", mag_map, mag_mapset);
+
+	mag_raster_type = G_get_raster_map_type(mag_fd);
 
 	/* allocate the cell array */
 	mag_raster_row = G_allocate_raster_buf(mag_raster_type);

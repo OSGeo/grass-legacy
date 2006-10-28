@@ -100,12 +100,12 @@ int main(int argc, char **argv)
 		if(!mapset)
 			G_fatal_error("Couldn't find raster file %s", name);
 
-		/* Get map type (CELL/FCELL/DCELL) */
-		B[i].type = G_raster_map_type(name, mapset);
-
 		/* Open cell file */
 		if ((B[i].file = G_open_cell_old(name, mapset)) == -1) 
 			G_fatal_error("Unable to open cellfile for [%s]", name);
+
+		/* Get map type (CELL/FCELL/DCELL) */
+		B[i].type = G_get_raster_map_type(B[i].file);
 
 		/* Get color table */
 		if (G_read_colors(name, mapset, &B[i].colors) == -1)

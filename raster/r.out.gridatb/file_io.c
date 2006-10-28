@@ -13,17 +13,11 @@ rdwr_gridatb()
 	FCELL	*fcell;
 	RASTER_MAP_TYPE		data_type;
 
-	G_get_cellhd(iname, mapset, &cellhd);
-	if(adjcellhd(&cellhd)){
-		exit(1);
-	}
+	fd = G_open_cell_old(iname,mapset);
+	if(fd < 0)
+		G_fatal_error("%s - could not read",iname);
 
-	fp = fopen(file, "w");
-
-	fprintf(fp, "%s\n", G_get_cell_title(iname, mapset));
-	fprintf(fp, "%d %d %lf\n", cellhd.cols, cellhd.rows, cellhd.ns_res);
-
-	data_type = G_raster_map_type(iname,mapset);
+	data_type = G_get_raster_map_type(fd);
 	switch(data_type){
 		case CELL_TYPE:
 			cell = G_allocate_c_raster_buf();
@@ -39,10 +33,15 @@ rdwr_gridatb()
 			break;
 	}
 
-	if((fd = G_open_cell_old(iname,mapset)) < 0){
-		fprintf(stderr,"\n** %s - could not read **\n",iname);
+	G_get_cellhd(iname, mapset, &cellhd);
+	if(adjcellhd(&cellhd)){
 		exit(1);
 	}
+
+	fp = fopen(file, "w");
+
+	fprintf(fp, "%s\n", G_get_cell_title(iname, mapset));
+	fprintf(fp, "%d %d %lf\n", cellhd.cols, cellhd.rows, cellhd.ns_res);
 
 	for(row=0;row<cellhd.rows;row++){
 		G_percent(row,cellhd.rows,2);

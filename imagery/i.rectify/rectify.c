@@ -44,7 +44,7 @@ int rectify (char *name, char *mapset, char *result, int order)
 	close (infd);
 	return 0;
     }
-    map_type = G_raster_map_type(name, mapset);
+    map_type = G_get_raster_map_type(infd);
     rast = (void *)  G_calloc (G_window_cols()+1, G_raster_size(map_type));
     G_set_null_value(rast, G_window_cols()+1, map_type);
 

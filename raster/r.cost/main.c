@@ -337,7 +337,7 @@ int main(int argc, char *argv[])
     if (cost_fd < 0)
 	G_fatal_error(_("%s - can't open raster file"), cost_layer);
 
-    data_type = G_raster_map_type(cost_layer, cost_mapset);
+    data_type = G_get_raster_map_type(cost_fd);
     cell = G_allocate_raster_buf(data_type);
 
     /*   Parameters for map submatrices   */
@@ -589,7 +589,7 @@ int main(int argc, char *argv[])
 			  ("can't open raster file [%s] needed for input coordinates"),
 			  opt9->answer);
 
-	data_type2 = G_raster_map_type(opt9->answer, search_mapset);
+	data_type2 = G_get_raster_map_type(fd);
 
 	dsize2 = G_raster_size(data_type2);
 

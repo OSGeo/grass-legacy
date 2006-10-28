@@ -90,7 +90,7 @@ int main (int argc, char *argv[])
     if ( (input_fd = G_open_cell_old(in_opt->answer,mapset)) < 0 )
 	G_fatal_error (_("Could not open raster '%s'"), in_opt->answer);
 
-    data_type = G_raster_map_type(in_opt->answer,mapset);
+    data_type = G_get_raster_map_type(input_fd);
     data_size = G_raster_size(data_type);
     G_get_window(&cell_head);
 

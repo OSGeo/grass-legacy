@@ -157,18 +157,21 @@ main(int argc, char **argv)
    if(type == 3)
 	G_warning("Direction map is D8 resolution, i.e. 45 degrees.");
 
-/*      get the name of the elevation map layer for filling */
+/* get the name of the elevation map layer for filling */
    map_mapset = G_find_cell(map_name,"");
    if (!map_mapset)
       G_fatal_error ( _("Could not access %s layer"), map_name);
 
-/*      allocate cell buf for the map layer */
-   in_type = G_raster_map_type (map_name, map_mapset);
+/* open the maps and get their file id  */
+   map_id=G_open_cell_old(map_name, map_mapset);
+
+/* allocate cell buf for the map layer */
+   in_type = G_get_raster_map_type (map_id);
 
 /* set the pointers for multi-typed functions */
    set_func_pointers(in_type);
 
-/*      get the window information  */
+/* get the window information  */
    G_get_window (&window);
    nrows = G_window_rows();
    ncols = G_window_cols();
@@ -188,10 +191,6 @@ main(int argc, char **argv)
    bnd.b[2]=G_calloc (ncols,bpe());
 
    in_buf = get_buf();
-
-/*  open the maps and get their file id  */
- 
-   map_id=G_open_cell_old(map_name, map_mapset);
 
    tempfile1 = G_tempfile();
    tempfile2 = G_tempfile();

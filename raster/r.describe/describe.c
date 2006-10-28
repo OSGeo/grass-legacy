@@ -37,8 +37,6 @@ int describe (
     DCELL dmin, dmax;
     int (*get_row)();
 
-    map_type = G_raster_map_type(name, mapset);
-    if(as_int) map_type = CELL_TYPE; /* read as int */
     if (windowed)
     {
 	get_row = G_get_c_raster_row;
@@ -56,6 +54,9 @@ int describe (
     }
     fd = G_open_cell_old (name, mapset);
     if (fd < 0) return 0;
+
+    map_type = G_get_raster_map_type(fd);
+    if(as_int) map_type = CELL_TYPE; /* read as int */
 
 /* allocate the cell buffer */
     buf = G_allocate_cell_buf();

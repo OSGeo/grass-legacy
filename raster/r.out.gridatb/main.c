@@ -44,8 +44,8 @@ main (int argc, char **argv)
 	/* Set description */
 	module              = G_define_module();
 	module->keywords = _("raster");
-    module->description = 
-	_("Exports GRASS raster map to GRIDATB.FOR map file (TOPMODEL)");
+	module->description = 
+		_("Exports GRASS raster map to GRIDATB.FOR map file (TOPMODEL)");
 
 	params.input			= G_define_option();
 	params.input->key		= "input";
@@ -64,20 +64,14 @@ main (int argc, char **argv)
 	flags.overwr->key		= 'o';
 	flags.overwr->description	= _("Overwrite output map file");
 
-	if(G_parser(argc, argv)){
-	        exit(-1);
-	}
+	if(G_parser(argc, argv))
+		exit(1);
 
 	iname  = params.input->answer;
 	file   = params.output->answer;
 	overwr = flags.overwr->answer;
 
-	mapset = G_mapset();
-
-	if(check_ready()){
-		exit(-1);
-	}
-
+	check_ready();
 	rdwr_gridatb();
 
 	exit(0);

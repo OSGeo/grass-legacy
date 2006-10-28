@@ -123,13 +123,7 @@ int main(int argc, char *argv[])
 
     G_get_window(&region);
 
-    mapset = G_find_cell2(name, "");
-
-    map_type = G_raster_map_type(name, mapset);
-    if (!flag.int_out->answer)
-	out_type = map_type;
-    else
-	out_type = CELL_TYPE;
+    mapset = G_find_cell(name, "");
 
     if (mapset == NULL)
 	G_fatal_error(_("Raster map [%s] not found"), name);
@@ -137,6 +131,12 @@ int main(int argc, char *argv[])
     fd = G_open_cell_old(name, mapset);
     if (fd < 0)
 	G_fatal_error(_("Cannot open cell file [%s]"), name);
+
+    map_type = G_get_raster_map_type(fd);
+    if (!flag.int_out->answer)
+	out_type = map_type;
+    else
+	out_type = CELL_TYPE;
 
     /* open bin file for writing */
     if (do_stdout)

@@ -103,11 +103,12 @@ main(int argc, char *argv[])
     if (G_legal_filename(result) < 0)
 	G_fatal_error(_("[%s] is an illegal name"), result);
 
-    /* determine the inputmap type (CELL/FCELL/DCELL) */
-    data_type = G_raster_map_type(name, mapset);
     /*if Gispf() error */
     if ((infd = G_open_cell_old(name, mapset)) < 0)
 	G_fatal_error(_("Cannot open cell file [%s]"), name);
+
+    /* determine the inputmap type (CELL/FCELL/DCELL) */
+    data_type = G_get_raster_map_type(infd);
 
     if (G_get_cellhd(name, mapset, &cellhd) < 0)
 	G_fatal_error(_("Cannot read file header of [%s]"), name);

@@ -21,8 +21,7 @@ void get_stats (struct rr_state *theState)
         G_fatal_error("%s: unable to open raster file <%s>",
                 G_program_name(), theState->inraster);
 
-    theState->buf.type = 
-        G_raster_map_type (theState->inraster, theState->mapset);
+    theState->buf.type = G_get_raster_map_type (theState->fd_old);
     theState->buf.data.v = G_allocate_raster_buf (theState->buf.type);
 
     theState->nulls.type   = theState->buf.type;

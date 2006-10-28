@@ -360,9 +360,9 @@ int get_z_from_cell2 (double north, double east, double *height)
     G_get_cellhd (elev_layer, mapset_elev, &elevhd);
     G_set_window(&elevhd);
     
-    data_type = G_raster_map_type(elev_layer, mapset_elev);
     elev = G_open_cell_old (elev_layer, mapset_elev);
     if (elev < 0) return 0;
+    data_type = G_get_raster_map_type(elev);
 
     elevbuf = G_allocate_raster_buf(data_type); 
 

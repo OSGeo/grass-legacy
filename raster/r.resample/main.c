@@ -71,12 +71,6 @@ int main(int argc, char *argv[])
         if (G_legal_filename (result) < 0)
                 G_fatal_error ( "[%s] illegal name", result);
 
-	/* determine the map type;
-	   data_type is the type of data being processed,
-	   out_type is the type of map being created. */
-	data_type = G_raster_map_type(name, mapset);
-	out_type = data_type;
-
 	hist_ok = G_read_history (name, mapset, &hist) >= 0;
 	colr_ok = G_read_colors (name, mapset, &colr) > 0;
 	cats_ok = G_read_cats (name, mapset, &cats) >= 0;
@@ -89,6 +83,12 @@ int main(int argc, char *argv[])
 	infd = G_open_cell_old (name, mapset);
 	if (infd < 0)
 		exit(1);
+
+	/* determine the map type;
+	   data_type is the type of data being processed,
+	   out_type is the type of map being created. */
+	data_type = G_get_raster_map_type(infd);
+	out_type = data_type;
 
 	if (G_get_cellhd (name, mapset, &cellhd) < 0)
 		exit(1);

@@ -203,15 +203,14 @@ int main(int argc, char *argv[])
 	G_debug(3, _("Open Raster file %s"), param.elevationmap->answer);
 
 	mapset = G_find_cell2(param.elevationmap->answer, "");
-	out_type = G_raster_map_type(param.elevationmap->answer, mapset);
 
 	/* open raster file */
 	fd = G_open_cell_old(param.elevationmap->answer, mapset);
-	if (fd < 0) {
-	    G_fatal_error(_("Could not open map %s\n"),
+	if (fd < 0)
+	    G_fatal_error(_("Could not open map %s"),
 			  param.elevationmap->answer);
-	    exit(EXIT_FAILURE);
-	}
+
+	out_type = G_get_raster_map_type(fd);
 
 	/*The write the Coordinates */
 	if (param.usestruct->answer) {
@@ -272,15 +271,13 @@ int main(int argc, char *argv[])
 
 	    mapset = NULL;
 	    mapset = G_find_cell2(param.input->answers[i], "");
-	    out_type = G_raster_map_type(param.input->answers[i], mapset);
 
 	    /* open raster file */
 	    fd = G_open_cell_old(param.input->answers[i], mapset);
-	    if (fd < 0) {
-		G_fatal_error(_("Could not open map %s\n"),
+	    if (fd < 0)
+		G_fatal_error(_("Could not open map %s"),
 			      param.input->answers[i]);
-		exit(EXIT_FAILURE);
-	    }
+	    out_type = G_get_raster_map_type(fd);
 	    /*Now write the data */
 	    write_vtk_data(fd, fp, param.input->answers[i], region, out_type,
 			 null_value);
@@ -302,16 +299,13 @@ int main(int argc, char *argv[])
 		mapset = NULL;
 
 		mapset = G_find_cell2(param.rgbmaps->answers[i], "");
-		celltype[i] =
-		    G_raster_map_type(param.rgbmaps->answers[i], mapset);
 
 		/* open raster file */
 		rgbfd[i] = G_open_cell_old(param.rgbmaps->answers[i], mapset);
-		if (rgbfd[i] < 0) {
-		    G_fatal_error(_("Could not open map %s\n"),
+		if (rgbfd[i] < 0)
+		    G_fatal_error(_("Could not open map %s"),
 				  param.rgbmaps->answers[i]);
-		    exit(EXIT_FAILURE);
-		}
+		celltype[i] = G_get_raster_map_type(rgbfd[i]);
 	    }
 
 	    /*Maps have to be from the same type */
@@ -351,16 +345,14 @@ int main(int argc, char *argv[])
 		mapset = NULL;
 
 		mapset = G_find_cell2(param.vectmaps->answers[i], "");
-		celltype[i] =
-		    G_raster_map_type(param.vectmaps->answers[i], mapset);
 
 		/* open raster file */
 		vectfd[i] = G_open_cell_old(param.vectmaps->answers[i], mapset);
-		if (vectfd[i] < 0) {
-		    G_fatal_error(_("Could not open map %s\n"),
+		if (vectfd[i] < 0)
+		    G_fatal_error(_("Could not open map %s"),
 				  param.vectmaps->answers[i]);
-		    exit(EXIT_FAILURE);
-		}
+		celltype[i] =
+		    G_get_raster_map_type(vectfd[i]);
 	    }
 
 	    /*Maps have to be from the same type */
@@ -388,7 +380,6 @@ int main(int argc, char *argv[])
     if (param.output->answer && fp != NULL)
 	if (fclose(fp)) {
 	    G_fatal_error(_("Error closing VTK-ASCII file"));
-	    exit(EXIT_FAILURE);
 	}
 
     return 0;

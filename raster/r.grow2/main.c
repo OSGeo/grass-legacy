@@ -200,7 +200,7 @@ int main(int argc, char **argv)
 	if (in_fd < 0)
 		G_fatal_error(_("Unable to open input file <%s@%s>."), in_name, mapset);
 
-	type = G_raster_map_type(in_name, mapset);
+	type = G_get_raster_map_type(in_fd);
 
 	out_fd = G_open_raster_new(out_name, type);
 	if (out_fd < 0)

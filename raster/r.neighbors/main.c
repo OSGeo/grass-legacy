@@ -176,7 +176,7 @@ int main (int argc, char *argv[])
 		exit(-1);
 	}
 
-	map_type = G_raster_map_type(ncb.oldcell.name, ncb.oldcell.mapset);
+	map_type = G_get_raster_map_type(in_fd);
 
 	/* get the method */
 	for (method = 0; p = menu[method].name; method++)
