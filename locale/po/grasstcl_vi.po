@@ -1,5 +1,4 @@
 # translation of grasstcl_vi.po to vietnamese
-# translation of grasstcl_vi.po to vietnamese
 # This file is distributed under the same license as the GRASS package.
 # Copyright (C) 2005, GRASS Development Team
 # Markus Neteler <neteler@itc.it>, 2006.
