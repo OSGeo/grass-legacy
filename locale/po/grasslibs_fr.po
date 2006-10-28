@@ -3,7 +3,7 @@
 # Copyright (C) 2004 GRASS Development Team
 # Emmanuel Saracco <esaracco@users.labs.libre-entreprise.org>, 2004
 # Daniel Calvelo <dca@users.sf.net>, 2005
-# Eve (alias 'phyto') <dendrosociology[a]yahoo.co.uk>, 2005 
+# Eve (alias 'phyto') <dendrosociology[a]yahoo.co.uk>, 2005
 # ->just re-reading/editing to harmonize terminology with the GRASS6 french documentation project
 msgid ""
 msgstr ""

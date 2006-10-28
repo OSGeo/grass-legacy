@@ -1,7 +1,7 @@
 # translation of grassmods_tr.po to Turkish
-# oyy <yilmazy@istanbul.edu.tr>, 2006.
 # Copyright (C) 2006 GRASS Development Team
 # This file is distributed under the same license as the GRASS package.
+# oyy <yilmazy@istanbul.edu.tr>, 2006.
 msgid ""
 msgstr ""
 "Project-Id-Version: grassmods_tr\n"
