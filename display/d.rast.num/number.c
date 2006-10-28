@@ -151,7 +151,7 @@ int main (int argc, char **argv)
 	    G_fatal_error(_("Unable to open [%s]"), full_name);
 
 	/* determine the inputmap type (CELL/FCELL/DCELL) */
-	inmap_type = G_raster_map_type(full_name, mapset);
+	inmap_type = G_get_raster_map_type(layer_fd);
 	map_type = DCELL_TYPE;
 
 	/* Setup driver and check important information */

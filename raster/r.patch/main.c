@@ -107,7 +107,7 @@ int main (int argc, char *argv[])
             continue;
         }
 
-        map_type = G_raster_map_type(name, mapset);
+        map_type = G_get_raster_map_type(infd[nfiles]);
 	if(map_type==FCELL_TYPE && out_type == CELL_TYPE)
 	       out_type = FCELL_TYPE;
         else if(map_type==DCELL_TYPE) 

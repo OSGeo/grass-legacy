@@ -348,7 +348,7 @@ static int load_files()
 	    strcpy(title[cnt],G_get_cell_title(name, mapset));
     */
 
-	    rtype = G_raster_map_type(name, mapset);
+	    rtype = G_get_raster_map_type(fd);
 	    if (rtype == CELL_TYPE)
 		voidc = (CELL *)cell;
 	    else if (rtype == FCELL_TYPE)

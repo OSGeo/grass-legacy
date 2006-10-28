@@ -131,7 +131,7 @@ int main(int argc,char *argv[])
     if( (fd = G_open_cell_old (rast_opt->answer, mapset)) < 0 )
 	G_fatal_error ( _("Cannot open raster map"));
 
-    out_type = G_raster_map_type(rast_opt->answer, mapset);
+    out_type = G_get_raster_map_type(fd);
 
     /* TODO: Later possibly category labels */
     /* 

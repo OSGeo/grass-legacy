@@ -215,7 +215,7 @@ static int load_files(void)
 	    if (ret < 0)
 		exit(EXIT_FAILURE);
 
-            rtype = G_raster_map_type(name, mapset);
+            rtype = G_get_raster_map_type(fd);
             if (rtype == CELL_TYPE)
                 voidc = G_allocate_c_raster_buf();
             else if (rtype == FCELL_TYPE)

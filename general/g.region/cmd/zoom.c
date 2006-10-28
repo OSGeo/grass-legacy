@@ -18,13 +18,11 @@ int zoom (struct Cell_head *window,char *name,char *mapset)
     nrows = window->rows;
     ncols = window->cols;
 
-    map_type = G_raster_map_type(name, mapset);
     fd = G_open_cell_old (name, mapset);
     if (fd < 0)
-    {
 	G_fatal_error (_("Unable to open raster map <%s> in <%s>"),
 		       name, mapset);
-    }
+    map_type = G_get_raster_map_type(fd);
     raster = G_allocate_raster_buf(map_type);
 
 /* find first non-null row */

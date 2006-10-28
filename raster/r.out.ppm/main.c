@@ -164,7 +164,7 @@ int main( int argc, char *argv[])
 
     G_read_colors (rast->answer, cellmap, &colors);
 
-    rtype = G_raster_map_type(rast->answer, cellmap);
+    rtype = G_get_raster_map_type(cellfile);
     if (rtype == CELL_TYPE)
 	voidc = (CELL *)cell_buf;
     else if (rtype == FCELL_TYPE)

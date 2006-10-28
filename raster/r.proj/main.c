@@ -264,7 +264,6 @@ int main (int argc, char **argv)
 	G_get_cellhd(inmap->answer, setname, &incellhd);
 
 	G_set_window(&incellhd);
-	cell_type = G_raster_map_type(inmap->answer, setname);
 
 	if (G_projection() == PROJECTION_XY)
 		G_fatal_error(_("Can't work with xy data"));
@@ -359,6 +358,7 @@ int main (int argc, char **argv)
 	G__switch_env();
 	G_set_window(&incellhd);
 	fdi = G_open_cell_old(inmap->answer, setname);
+	cell_type = G_get_raster_map_type(fdi);
 	ibuffer = (FCELL **) readcell(fdi);
 	G_close_cell(fdi);
 

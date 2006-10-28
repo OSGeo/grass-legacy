@@ -160,7 +160,7 @@ int main(int argc,char *argv[])
       if(0 > (fd[nfiles] = G_open_cell_old (name, mapset)))
 	  die ("can't open", name);
 
-      out_type[nfiles] = G_raster_map_type(name, mapset);
+      out_type[nfiles] = G_get_raster_map_type(fd[nfiles]);
       if(flag3->answer) out_type[nfiles] = CELL_TYPE;
 
       if (withcats && G_read_cats (name, mapset, &cats[nfiles]) < 0)

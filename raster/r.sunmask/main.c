@@ -411,7 +411,7 @@ int main(int argc, char *argv[])
    if((output_fd = G_open_cell_new(outname)) < 0)
       G_fatal_error( _("can't open %s"), outname);
 
-    data_type = G_raster_map_type(name, mapset);
+    data_type = G_get_raster_map_type(elev_fd);
     elevbuf.v = G_allocate_raster_buf(data_type);
     tmpbuf.v  = G_allocate_raster_buf(data_type);
     outbuf.v  = G_allocate_raster_buf(CELL_TYPE); /* binary map */

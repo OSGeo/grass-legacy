@@ -528,8 +528,8 @@ int main(int argc, char *argv[])
     if (dtm_cellhd.proj != cost_cellhd.proj)
 	G_fatal_error(_("Map with different projection"));
 
-    dtm_data_type = G_raster_map_type(dtm_layer, dtm_mapset);
-    cost_data_type = G_raster_map_type(cost_layer, cost_mapset);
+    dtm_data_type = G_get_raster_map_type(dtm_fd);
+    cost_data_type = G_get_raster_map_type(cost_fd);
     dtm_cell = G_allocate_raster_buf(dtm_data_type);
     cost_cell = G_allocate_raster_buf(cost_data_type);
 
@@ -822,7 +822,7 @@ int main(int argc, char *argv[])
 	if (cum_fd < 0)
 	    G_fatal_error(_("Can't open raster file %s"), cum_cost_layer);
 
-	data_type2 = G_raster_map_type(cum_cost_layer, cum_cost_mapset);
+	data_type2 = G_get_raster_map_type(cum_fd);
 
 	dsize2 = G_raster_size(data_type2);
 

@@ -95,7 +95,7 @@ if (fd < 0)
    G_warning(_("unable to open [%s] in [%s]"), name, mapset);
    return(-2);
    }
-theCell.type = buf.type = G_raster_map_type(name, mapset);
+theCell.type = buf.type = G_get_raster_map_type(fd);
 buf.data.v = G_allocate_raster_buf(buf.type); 
 
 /*

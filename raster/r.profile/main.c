@@ -157,7 +157,7 @@ int main(int argc, char *argv[])
 	G_fatal_error(_("Not able to open file for [%s]"), outfile);
 
     /* Get Raster Type */
-    data_type = G_raster_map_type(name, mapset);
+    data_type = G_get_raster_map_type(fd);
     /* Done with file */
 
     /* Get coords */

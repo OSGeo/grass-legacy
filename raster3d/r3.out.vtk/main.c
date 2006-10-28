@@ -453,7 +453,7 @@ int main(int argc, char *argv[])
 	name = param.top->answer;
 	mapset = G_find_cell2(name, "");
 	in->top = open_input_map(name, mapset);
-	in->topMapType = G_raster_map_type(name, mapset);
+	in->topMapType = G_get_raster_map_type(in->top);
 
 	/*open bottom */
 	mapset = NULL;
@@ -461,7 +461,7 @@ int main(int argc, char *argv[])
 	name = param.bottom->answer;
 	mapset = G_find_cell2(name, "");
 	in->bottom = open_input_map(name, mapset);
-	in->bottomMapType = G_raster_map_type(name, mapset);
+	in->bottomMapType = G_get_raster_map_type(in->bottom);
 
 	/* Write the vtk-header and the points */
 	if (param.point->answer) {

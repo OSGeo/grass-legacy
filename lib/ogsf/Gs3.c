@@ -740,8 +740,8 @@ int Gs_get_cat_label(char *filename, int drow, int dcol, char *catstr)
     }
 
     if (-1 != G_read_cats(filename, mapset, &cats)) {
-	map_type = G_raster_map_type(filename, mapset);
 	fd = G_open_cell_old(filename, mapset);
+	map_type = G_get_raster_map_type(fd);
 
 	if (map_type == CELL_TYPE) {
 	    buf = G_allocate_c_raster_buf();

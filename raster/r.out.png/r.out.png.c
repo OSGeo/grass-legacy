@@ -240,7 +240,7 @@ int main(int argc, char *argv[])
 
 	G_read_colors(rast->answer, cellmap, &colors);
 
-	rtype = G_raster_map_type(rast->answer, cellmap);
+	rtype = G_get_raster_map_type(cellfile);
 	if (rtype == CELL_TYPE)
 	    voidc = (CELL *) cell_buf;
 	else if (rtype == FCELL_TYPE)
@@ -263,20 +263,7 @@ int main(int argc, char *argv[])
 	    png_set_packing(png_ptr);
 
 	    /* max: 3 color channels, one alpha channel, 16-bit */
-	    if ((line = (png_byte *)G_malloc(w.cols * 8 * sizeof(char))) == NULL) {
-		png_destroy_write_struct(&png_ptr, &info_ptr);
-		fclose(fp);
-		G_free_colors(&colors);
-		G_free(cell_buf);
-		G_free(fcell_buf);
-		G_free(dcell_buf);
-		G_free(ored);
-		G_free(ogrn);
-		G_free(oblu);
-		G_free(set);
-		G_close_cell(cellfile);
-		G_fatal_error("out of memory allocating PNG row buffer");
-	    }
+	    line = (png_byte *)G_malloc(w.cols * 8 * sizeof(char));
 
 	    for (row = 0; row < w.rows; row++) {
 

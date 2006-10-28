@@ -26,7 +26,6 @@ int rectify (char *name, char *mapset, char *result)
     double row2, col2;
     double aver_z;
     char buf[64]="";
-    RASTER_MAP_TYPE data_type;
 
 
 #ifdef DEBUG3
@@ -42,7 +41,6 @@ int rectify (char *name, char *mapset, char *result)
     G_set_window (&target_window);  
     elevfd = G_open_cell_old (elev_layer, mapset_elev);
     /**G_get_cellhd (elev_layer, mapset_elev, &elevhd);**/ 
-    data_type = G_raster_map_type(elev_layer, mapset);
     elevbuf = G_allocate_d_raster_buf(); /* enforce DCELL */
 
     /* get an average elevation of the control points */
@@ -224,7 +222,7 @@ int rectify (char *name, char *mapset, char *result)
 		close (infd);
 		return 0;
 	      }
-	    map_type = G_raster_map_type(name, mapset);
+	    map_type = G_get_raster_map_type(infd);
 	    rast = (void *)  G_calloc (G_window_cols()+1, G_raster_size(map_type));
 	    G_set_null_value(rast, G_window_cols()+1, map_type);
 

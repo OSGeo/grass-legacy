@@ -30,9 +30,7 @@ int what (int once, int terse, int colrow, char *fs, int width, int mwidth)
     screen_y = ((int)D_get_d_north() + (int)D_get_d_south()) / 2 ;
 
     for (i=0; i < nrasts; i++)
-    {
-	map_type[i] = G_raster_map_type(name[i], mapset[i]);
-    }
+	map_type[i] = G_get_raster_map_type(fd[i]);
 
     do
     {

@@ -105,17 +105,18 @@ int main(int argc, char *argv[])
 
     sprintf(null_str,"-9999");
 
-    mapset = G_find_cell2 (parm.map->answer, "");
+    mapset = G_find_cell (parm.map->answer, "");
     if (mapset == NULL)
 	G_fatal_error ("%s: <%s> cellfile not found", 
                     G_program_name(), parm.map->answer);
 
-    map_type = G_raster_map_type(parm.map->answer, mapset);
-    out_type = map_type;
-
     fd = G_open_cell_old (parm.map->answer, mapset);
     if (fd < 0)
-    	exit(EXIT_SUCCESS);
+	G_fatal_error ("%s: <%s> couldn't open cellfile", 
+                    G_program_name(), parm.map->answer);
+
+    map_type = G_get_raster_map_type(fd);
+    out_type = map_type;
 
    /*
     null_row = G_allocate_null_buf();
@@ -159,10 +160,6 @@ int main(int argc, char *argv[])
         fprintf(fp, "NODATA_value %s\n", null_str);
     }
     
-    fd = G_open_cell_old (parm.map->answer, mapset);
-    if (fd < 0)
-        exit(EXIT_FAILURE);
-
     for (row = 0; row < nrows; row++)
     {
 	G_percent(row, nrows, 2);

@@ -106,7 +106,7 @@ int main(int argc, char *argv[]) {
     if (fd < 0)
 	G_fatal_error(_("Unable to open raster map [%s]"), infile);
 
-    map_type = G_raster_map_type(infile, mapset);
+    map_type = G_get_raster_map_type(fd);
 
     if(extended->answer) {
 	pvals = G_calloc(G_window_rows() * G_window_cols() + 1,

@@ -334,8 +334,7 @@ int main(int argc, char *argv[])
 	if (elevfd <= 0)
 	    fatal_error(map, -1, -1, _("Could not open elevation map\n"));
 
-	globalElevMapType =
-	    G_raster_map_type(param.elevation->answer, mapset);
+	globalElevMapType = G_get_raster_map_type(elevfd);
 
 	/**********************/
 	/*Open the Outputmap */

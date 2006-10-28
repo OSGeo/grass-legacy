@@ -165,7 +165,7 @@ int main(int argc, char **argv)
 		if ((b->file = G_open_cell_old(b->name, mapset)) == -1)
 			G_fatal_error("Unable to open cellfile for [%s]", b->name);
 
-		b->type = G_raster_map_type(b->name, mapset);
+		b->type = G_get_raster_map_type(b->file);
 
 		b->size = G_raster_size(b->type);
 

@@ -88,17 +88,17 @@ int main(int argc, char *argv[]) {
     infile = inputfile->answer;
     outfile = outputfile->answer;
 
-    mapset = G_find_cell2 (infile, "");
+    mapset = G_find_cell(infile, "");
 
     if (mapset == NULL) {
         G_fatal_error(_("raster <%s> not found"), infile);
     }
 
-    map_type = G_raster_map_type(infile, mapset);
-
     fd = G_open_cell_old (infile, mapset);
     if (fd < 0)
         G_fatal_error(_("unable to open <%s>"), infile);
+
+    map_type = G_get_raster_map_type(fd);
 
     /* open bin file for writing */
     fp1 = fopen(outfile, "wb");

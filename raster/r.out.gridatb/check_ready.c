@@ -2,30 +2,24 @@
 #include "local_proto.h"
 
 
-int
+void
 check_ready(void)
 {
-	FILE	*fp;
-	int	retval;
+	FILE *fp;
 
-	retval=0;
+	mapset = G_find_cell(iname,"");
+	if (!mapset)
+		G_fatal_error("%s - could not find", iname);
 
-	if(!G_find_file("cell",iname,mapset)){
-		fprintf(stderr, "\n** %s - not exists **\n", iname);
-		retval=1;
-	}
+	fp = fopen(file, "r");
+	if (!fp)
+		return;
 
-	if((fp=fopen(file,"r"))){
-		fclose(fp);
-		if(overwr && !retval){
-			unlink(file);
-		}else{
-			fprintf(stderr, "\n** %s - file already exists **\n", 
-									file);
-			retval=1;
-		}
-	}
+	fclose(fp);
 
-	return(retval);
+	if (overwr)
+		unlink(file);
+	else
+		G_fatal_error("%s - file already exists", file);
 }
 

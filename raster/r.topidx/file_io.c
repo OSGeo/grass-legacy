@@ -14,10 +14,10 @@ getcells(void)
 	FCELL	*fcell = NULL;
 
 
-	data_type = G_raster_map_type(iname,mapset);
-
 	if((fd = G_open_cell_old(iname,mapset)) < 0)
 	    G_fatal_error(_("Unable to open raster map [%s]"), iname);
+
+	data_type = G_get_raster_map_type(fd);
 
 	if(data_type == CELL_TYPE)
 		ccell = (CELL *)G_malloc (sizeof(CELL)*window.cols);

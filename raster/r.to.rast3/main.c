@@ -266,11 +266,11 @@ int main(int argc, char *argv[])
 	fd[i] = open_input_raster_map(name, mapset);
 	opencells++;
 
+	maptype_tmp = G_get_raster_map_type(fd[i]);
+
 	/*maptype */
 	if (i == 0)
-	    globalRastMapType = G_raster_map_type(name, mapset);
-
-	maptype_tmp = G_raster_map_type(name, mapset);
+	    globalRastMapType = maptype_tmp;
 
 	if (maptype_tmp != globalRastMapType) {
 	    fatal_error(map, fd, opencells,
