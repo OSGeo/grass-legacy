@@ -3,7 +3,7 @@
 # Copyright (C) 2004 GRASS Development Team
 # Emmanuel Saracco <esaracco@users.labs.libre-entreprise.org>, 2004
 # Daniel Calvelo <dca@users.sf.net>, 2005
-# Eve (alias 'phyto') <dendrosociology[a]yahoo.co.uk>, 2005 
+# Eve (alias 'phyto') <dendrosociology[a]yahoo.co.uk>, 2005
 # ->just re-reading/editing to harmonize terminology with the GRASS6 french documentation project
 msgid ""
 msgstr ""
@@ -1045,9 +1045,9 @@ msgid ""
 msgstr ""
 
 #: ../lib/gis/closecell.c:250
-#, fuzzy, c-format
+#, c-format
 msgid "Error writing floating point format file for map %s"
-msgstr "Erreur lors de l'écriture du fichier topo.\n"
+msgstr ""
 
 #: ../lib/gis/closecell.c:302
 #, c-format
@@ -1113,7 +1113,7 @@ msgid "Illegal filename.  Cannot be '.' or 'NULL'\n"
 msgstr "Nom de fichier illégal.  Ne peut pas être '.' ou 'NULL'\n"
 
 #: ../lib/gis/legal_name.c:39
-#, c-format
+#, fuzzy, c-format
 msgid "Illegal filename. character <%c> not allowed."
 msgstr "Nom de fichier illégal. caractère <%c> interdit."
 
@@ -2614,83 +2614,107 @@ msgstr ""
 msgid "Cannot delete line"
 msgstr "Impossible de supprimer la ligne"
 
-#~ msgid "Too many open raster files"
-#~ msgstr "Trop de fichiers raster ouverts"
+msgid "Too many open raster files"
+msgstr "Trop de fichiers raster ouverts"
 
-#~ msgid "Too many open files"
-#~ msgstr "Trop de fichiers ouverts"
+msgid "Too many open files"
+msgstr "Trop de fichiers ouverts"
 
-#~ msgid "ERROR: GISBASE not set\n"
-#~ msgstr "ERREUR: Géodatabase (GISBASE) sans valeur\n"
+msgid "ERROR: GISBASE not set\n"
+msgstr "ERREUR: Géodatabase (GISBASE) sans valeur\n"
 
-#~ msgid "Error reading datum shift parameters for %s from table"
-#~ msgstr ""
-#~ "Erreur en lisant le paramètre de décalage du datum dans la table pour %s"
+msgid "Error reading datum shift parameters for %s from table"
+msgstr ""
+"Erreur en lisant le paramètre de décalage du datum dans la table pour %s"
 
-#~ msgid "Error reading ellipsoid parameters for %s from table"
-#~ msgstr ""
-#~ "Erreur en lisant les paramètres de l'ellipsoïde depuis la table pour %s"
+msgid "Error reading ellipsoid parameters for %s from table"
+msgstr ""
+"Erreur en lisant les paramètres de l'ellipsoïde depuis la table pour %s"
 
-#~ msgid "No ellipsoid field %s in file %s in %s"
-#~ msgstr "Pas de champ ellipsoïde %s dans le fichier %s de %s"
+msgid "No ellipsoid field %s in file %s in %s"
+msgstr "Pas de champ ellipsoïde %s dans le fichier %s de %s"
 
-#~ msgid "invalid value: field %s in file %s in %s"
-#~ msgstr "valeur invalide: champ %s dans le fichier %s de %s"
+msgid "invalid value: field %s in file %s in %s"
+msgstr "valeur invalide: champ %s dans le fichier %s de %s"
 
-#~ msgid "Unable to guess site format!"
-#~ msgstr "Impossible de deviner le format site!"
+msgid "Unable to guess site format!"
+msgstr "Impossible de deviner le format site!"
 
-#~ msgid "No n-dims in site_list"
-#~ msgstr "Pas de n-dims dans site_list"
+msgid "No n-dims in site_list"
+msgstr "Pas de n-dims dans site_list"
 
-#~ msgid "Dimension index out of range"
-#~ msgstr "Index de la dimension en dehors des limites"
+msgid "Dimension index out of range"
+msgstr "Index de la dimension en dehors des limites"
 
-#~ msgid "No double attributes in site_list"
-#~ msgstr "Aucun attribut double dans site_list"
+msgid "No double attributes in site_list"
+msgstr "Aucun attribut double dans site_list"
 
-#~ msgid "Double attribute index out of range"
-#~ msgstr "Index de l'attribut double en dehors des limites"
+msgid "Double attribute index out of range"
+msgstr "Index de l'attribut double en dehors des limites"
 
-#~ msgid "No string attributes in site_list"
-#~ msgstr "Pas d'attribut chaîne de caractère dans site_list"
+msgid "No string attributes in site_list"
+msgstr "Pas d'attribut chaîne de caractère dans site_list"
 
-#~ msgid "String attribute index out of range"
-#~ msgstr "Index de l'attribut chaîne en dehors des limites"
+msgid "String attribute index out of range"
+msgstr "Index de l'attribut chaîne en dehors des limites"
 
-#~ msgid "Unknown attribute type in call to G_readsites_xyz()!\n"
-#~ msgstr "Attribut inconnu dans l'appel a G_readsites_xyz()!\n"
+msgid "Unknown attribute type in call to G_readsites_xyz()!\n"
+msgstr "Attribut inconnu dans l'appel a G_readsites_xyz()!\n"
 
-#~ msgid "Failed to convert string attribute."
-#~ msgstr "Echec lors de la conversion de l'attribut."
+msgid "Failed to convert string attribute."
+msgstr "Echec lors de la conversion de l'attribut."
 
-#~ msgid "Reading sites list ...                  "
-#~ msgstr "Lecture de la liste des sites...        "
+msgid "Reading sites list ...                  "
+msgstr "Lecture de la liste des sites...        "
 
-#~ msgid "failed to guess format"
-#~ msgstr "impossible de deviner le format"
+msgid "failed to guess format"
+msgstr "impossible de deviner le format"
 
-#~ msgid "decimal field %i not present in sites file"
-#~ msgstr "le champ décimal %i n'est pas présent dans le fichier de sites"
+msgid "decimal field %i not present in sites file"
+msgstr "le champ décimal %i n'est pas présent dans le fichier de sites"
 
-#~ msgid ""
-#~ "I'm finding records that do not have a floating point attributes (fields "
-#~ "prefixed with '%')."
-#~ msgstr ""
-#~ "J'ai trouvé des enregistrements sans attribut en virgule flottante "
-#~ "(champs préfixés par '%')"
+msgid ""
+"I'm finding records that do not have a floating point attributes (fields "
+"prefixed with '%')."
+msgstr ""
+"J'ai trouvé des enregistrements sans attribut en virgule flottante (champs "
+"préfixés par '%')"
 
-#~ msgid "cannot allocate memory"
-#~ msgstr "Allocation mémoire impossible"
+msgid "cannot allocate memory"
+msgstr "Allocation mémoire impossible"
 
-#~ msgid "WARNING: can not create a new process\n"
-#~ msgstr "ATTENTION: impossible de créer un nouveau processus\n"
+msgid "WARNING: can not create a new process\n"
+msgstr "ATTENTION: impossible de créer un nouveau processus\n"
 
-#~ msgid "Select type: point, line, boundary, centroid or area"
-#~ msgstr "Sélectionnez un type: point, ligne, intervalle, centroïde ou zone"
+msgid "Select type: point, line, boundary, centroid or area"
+msgstr "Sélectionnez un type: point, ligne, intervalle, centroïde ou zone"
 
-#~ msgid "The vector '%s' already exists."
-#~ msgstr "Le vecteur '%s' existe déjà."
+msgid "The vector '%s' already exists."
+msgstr "Le vecteur '%s' existe déjà."
 
-#~ msgid "Field value"
-#~ msgstr "Valeur du champ"
+msgid "Field value"
+msgstr "Valeur du champ"
+
+#, fuzzy
+#~ msgid "Name of elevation raster map"
+#~ msgstr "Nom de l'entrée raster"
+
+#, fuzzy
+#~ msgid "Name of elevation raster map(s)"
+#~ msgstr "Nom de l'entrée raster"
+
+#, fuzzy
+#~ msgid "Name of input raster3d map"
+#~ msgstr "Nom de l'entrée raster"
+
+#, fuzzy
+#~ msgid "Name of input raster3d map(s)"
+#~ msgstr "Nom de l'entrée raster"
+
+#, fuzzy
+#~ msgid "Name for output raster3d map"
+#~ msgstr "Nom de la sortie raster"
+
+#, fuzzy
+#~ msgid "Window replacing the default"
+#~ msgstr "pour accepter le choix par défaut"

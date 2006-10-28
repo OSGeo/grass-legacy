@@ -1,5 +1,4 @@
 # translation of grasstcl_de.po to deutsch
-# translation of grasstcl_de.po to Deutsch
 # This file is distributed under the same license as the GRASS package.
 # Copyright (C) 2005, GRASS Development Team
 # Markus Neteler <neteler@itc.it>, 2006.
@@ -197,7 +196,9 @@ msgstr "WARNUNG: ungültige Datenbank"
 
 #: ../lib/init/gis_set.tcl:632
 msgid "WARNING: Invalid database. Finding first valid directory in parent tree"
-msgstr "WARNUNG: Ungültige Datenbasis. Finde ersten gültigen Ordner im Verzeichnisbaum"
+msgstr ""
+"WARNUNG: Ungültige Datenbasis. Finde ersten gültigen Ordner im "
+"Verzeichnisbaum"
 
 #: ../lib/init/help.tcl:115 ../lib/init/help.tcl:1566
 msgid "Back"
@@ -237,8 +238,9 @@ msgid "Open"
 msgstr "Öffnen"
 
 #: ../lib/init/help.tcl:124
+#, fuzzy
 msgid "Previous"
-msgstr ""
+msgstr "Vorschau"
 
 #: ../lib/init/help.tcl:125 ../lib/init/help.tcl:1580
 msgid "Refresh"
@@ -297,12 +299,14 @@ msgid "Topic not found!"
 msgstr "Thema nicht gefunden!"
 
 #: ../lib/init/help.tcl:1978
+#, fuzzy
 msgid "Creating title..."
-msgstr ""
+msgstr "Erzeuge Tabelle"
 
 #: ../lib/init/help.tcl:2051
+#, fuzzy
 msgid "Displaying..."
-msgstr ""
+msgstr "Darstellung:"
 
 #: ../lib/init/help.tcl:2170
 msgid "Done."
@@ -317,8 +321,9 @@ msgid "Filename will be ignored"
 msgstr "Dateiname wird ignoriert."
 
 #: ../lib/init/help.tcl:2715
+#, fuzzy
 msgid "Generating HTMLs...."
-msgstr ""
+msgstr "Erzeuge HTMLs...%i von %i \"%s\""
 
 #: ../lib/init/help.tcl:2724
 msgid "Can't open output file:"
@@ -338,16 +343,18 @@ msgid "Find what: "
 msgstr "Finden "
 
 #: ../lib/init/help.tcl:2965
+#, fuzzy
 msgid "Direction"
-msgstr ""
+msgstr "Linie"
 
 #: ../lib/init/help.tcl:2979
 msgid "Up"
 msgstr ""
 
 #: ../lib/init/help.tcl:2980
+#, fuzzy
 msgid "Down"
-msgstr ""
+msgstr "Fertig."
 
 #: ../lib/init/help.tcl:2983
 msgid "Match case"
@@ -484,7 +491,8 @@ msgid ""
 "Georeferenced file with projection information that can be read\n"
 msgstr ""
 "\n"
-"Georeferenzierte Datei mit Projektionsinformationen, die gelesen werden kann\n"
+"Georeferenzierte Datei mit Projektionsinformationen, die gelesen werden "
+"kann\n"
 
 #: ../lib/init/file_option.tcl:196
 msgid ""
@@ -625,14 +633,17 @@ msgid "Right mouse button"
 msgstr "Rechter Mausknopf"
 
 #: ../vector/v.digit/toolbox.tcl:45
+#, fuzzy
 msgid "Layer"
-msgstr "Ebene"
+msgstr "Ebene:"
 
 #: ../vector/v.digit/toolbox.tcl:49
+#, fuzzy
 msgid "Category"
-msgstr "Kategorie"
+msgstr "Kategorie:"
 
 #: ../vector/v.digit/toolbox.tcl:53
+#, fuzzy
 msgid "Mode"
 msgstr "Modus"
 
@@ -1830,14 +1841,18 @@ msgid "Mapset of xy raster group"
 msgstr "Mapset einer xy Rastergruppe"
 
 #: ../gui/tcltk/gis.m/georect.tcl:605
+#, fuzzy
 msgid "2.  Create/edit group"
 msgstr "2. Erzeuge/bearbeite Gruppe"
 
 #: ../gui/tcltk/gis.m/georect.tcl:607
 msgid "Create/edit group (rasters or vectors to georectify)"
-msgstr "Erstelle/Editiere Gruppe (Raster oder Vektoren, die georeferenziert werden sollen)"
+msgstr ""
+"Erstelle/Editiere Gruppe (Raster oder Vektoren, die georeferenziert werden "
+"sollen)"
 
 #: ../gui/tcltk/gis.m/georect.tcl:615
+#, fuzzy
 msgid "3.  Select group"
 msgstr "3. Wähle Gruppe"
 
@@ -2018,8 +2033,9 @@ msgid "Add posttscript text layer"
 msgstr "PS-Textebene hinzufügen"
 
 #: ../gui/tcltk/gis.m/gridline.tcl:140
+#, fuzzy
 msgid " grid color   "
-msgstr ""
+msgstr "Keine Hintergrundfarbe"
 
 #: ../gui/tcltk/gis.m/histogram.tcl:167
 msgid "include null values"
@@ -2628,8 +2644,9 @@ msgid "Display region settings"
 msgstr "Darstellung"
 
 #: ../gui/tcltk/menus/menu.tcl:198
+#, fuzzy
 msgid "Manage region"
-msgstr ""
+msgstr "Darstellung"
 
 #: ../gui/tcltk/menus/menu.tcl:199
 #, fuzzy
@@ -3608,17 +3625,20 @@ msgstr "Bild"
 
 #: ../gui/tcltk/menus/menu.tcl:483
 #, fuzzy
-msgid "Color balance and enhance color tables of multiband imagery for rgb display"
+msgid ""
+"Color balance and enhance color tables of multiband imagery for rgb display"
 msgstr "von für"
 
 #: ../gui/tcltk/menus/menu.tcl:484
 #, fuzzy
-msgid "Transform HIS (Hue/Intensity/Saturation) color image to RGB (Red/Green/Blue)"
+msgid ""
+"Transform HIS (Hue/Intensity/Saturation) color image to RGB (Red/Green/Blue)"
 msgstr "Umformen Intensität Bild"
 
 #: ../gui/tcltk/menus/menu.tcl:485
 #, fuzzy
-msgid "Transform RGB (Red/Green/Blue) color image to HIS (Hue/Intensity/Saturation)"
+msgid ""
+"Transform RGB (Red/Green/Blue) color image to HIS (Hue/Intensity/Saturation)"
 msgstr "Umformen Bild Intensität"
 
 #: ../gui/tcltk/menus/menu.tcl:487
@@ -3876,3 +3896,22 @@ msgstr ""
 msgid "&Xtns"
 msgstr ""
 
+#, fuzzy
+#~ msgid "Cancel georectification"
+#~ msgstr "Photo"
+
+#, fuzzy
+#~ msgid "  Layer"
+#~ msgstr "Ebene"
+
+#, fuzzy
+#~ msgid "  Category"
+#~ msgstr "Kategorie"
+
+#, fuzzy
+#~ msgid "New GIS data directory"
+#~ msgstr "Datenbankverzeichnis"
+
+#, fuzzy
+#~ msgid "Exit"
+#~ msgstr "B&eenden"

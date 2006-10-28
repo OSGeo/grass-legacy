@@ -996,9 +996,9 @@ msgid ""
 msgstr ""
 
 #: ../lib/gis/closecell.c:250
-#, fuzzy, c-format
+#, c-format
 msgid "Error writing floating point format file for map %s"
-msgstr "Topoloji dosyasını yazmada hata.\n"
+msgstr ""
 
 #: ../lib/gis/closecell.c:302
 #, c-format
@@ -1059,7 +1059,7 @@ msgid "Illegal filename.  Cannot be '.' or 'NULL'\n"
 msgstr "Uygun olmayan dosya adı. '.' veya 'NULL' olmamalı\n"
 
 #: ../lib/gis/legal_name.c:39
-#, c-format
+#, fuzzy, c-format
 msgid "Illegal filename. character <%c> not allowed."
 msgstr "Uygun olmayan dosya adı. <%c> karakteri kullanılamaz."
 
@@ -2491,11 +2491,35 @@ msgstr "Çizgi silinemedi, '%s' haritası 'write' modunda açılmadı"
 msgid "Cannot delete line"
 msgstr "Çizgi silinemedi"
 
-#~ msgid "Too many open raster files"
-#~ msgstr "Çok fazla açık raster dosya"
+msgid "Too many open raster files"
+msgstr "Çok fazla açık raster dosya"
 
-#~ msgid "Too many open files"
-#~ msgstr "Çok fazla açık dosya"
+msgid "Too many open files"
+msgstr "Çok fazla açık dosya"
 
-#~ msgid "ERROR: GISBASE not set\n"
-#~ msgstr "HATA: GISBASE ayarlanmadı\n"
+msgid "ERROR: GISBASE not set\n"
+msgstr "HATA: GISBASE ayarlanmadı\n"
+
+#, fuzzy
+#~ msgid "Name of elevation raster map"
+#~ msgstr "Girdi raster haritanın adı"
+
+#, fuzzy
+#~ msgid "Name of elevation raster map(s)"
+#~ msgstr "Girdi raster haritan(lar)ın adı"
+
+#, fuzzy
+#~ msgid "Name of input raster3d map"
+#~ msgstr "Girdi raster haritanın adı"
+
+#, fuzzy
+#~ msgid "Name of input raster3d map(s)"
+#~ msgstr "Girdi raster haritan(lar)ın adı"
+
+#, fuzzy
+#~ msgid "Name for output raster3d map"
+#~ msgstr "Çıktı raster haritanın adı"
+
+#, fuzzy
+#~ msgid "Window replacing the default"
+#~ msgstr "varsayılanı kabul et"

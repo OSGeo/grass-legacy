@@ -1,7 +1,7 @@
 # translation of grassmods_tr.po to Turkish
-# oyy <yilmazy@istanbul.edu.tr>, 2006.
 # Copyright (C) 2006 GRASS Development Team
 # This file is distributed under the same license as the GRASS package.
+# oyy <yilmazy@istanbul.edu.tr>, 2006.
 msgid ""
 msgstr ""
 "Project-Id-Version: grassmods_tr\n"
@@ -1448,7 +1448,7 @@ msgstr ""
 #: ../display/d.profile/main.c:59
 #, fuzzy
 msgid "Raster map to be profiled"
-msgstr "Sorgulanacak raster harita"
+msgstr "Örneklenecek raster harita"
 
 #: ../display/d.profile/main.c:66
 msgid "Optional display raster"
@@ -1493,7 +1493,7 @@ msgstr ""
 #: ../display/d.profile/main.c:413
 #, fuzzy, c-format
 msgid "%s: Couldn't open raster <%s@%s>"
-msgstr "%s raster dosyası açılamıyor"
+msgstr "<%s> açılamıyor"
 
 #: ../display/d.profile/main.c:417
 #, fuzzy, c-format
@@ -1866,12 +1866,16 @@ msgid "Use radians instead of degrees for rotation"
 msgstr "Döndürme için derece yerine radyan kullan"
 
 #: ../display/d.text.freetype/main.c:241
+#, fuzzy
 msgid "Coordinates are in pixels ([0,0] is top left)"
 msgstr "Piksel koordinatlarıdır ( [0,0] üst sol köşe)"
 
 #: ../display/d.text.freetype/main.c:245
+#, fuzzy
 msgid "Coordinates are percentage of frame ([0,0] is bottom left)"
 msgstr ""
+"Etiketin solüst köşe ekran koordinatları([0,0] çerçeve sol üst köşe "
+"koordinatı)"
 
 #: ../display/d.text.freetype/main.c:249
 msgid "Font size is height in pixels"
@@ -2206,7 +2210,7 @@ msgid "Plotting ... "
 msgstr "Çiziliyor..."
 
 #: ../display/d.vect/main.c:566
-#, c-format
+#, fuzzy, c-format
 msgid ""
 "The bounding box of the map outside current region, nothing displayed.\n"
 msgstr ""
@@ -2765,8 +2769,9 @@ msgid "Monitor: XGetWMName: bad result\n"
 msgstr ""
 
 #: ../doc/raster/r.example/main.c:84
+#, fuzzy
 msgid "My first raster module."
-msgstr ""
+msgstr "Görüntülenecek mevcut raster harita adı"
 
 #: ../doc/raster/r.example/main.c:94 ../raster/r.bitpattern/main.c:87
 #: ../raster/r.clump/main.c:52 ../raster/r.covar/main.c:46
@@ -5359,14 +5364,14 @@ msgstr ""
 msgid ""
 "\n"
 "Reading raster file... "
-msgstr "Raster harita okunuyor..."
+msgstr "Yeni dosya yazılıyor...\n"
 
 #: ../raster/r.carve/raster.c:34
-#, c-format
+#, fuzzy, c-format
 msgid ""
 "\n"
 "Writing raster file... "
-msgstr ""
+msgstr "Yeni dosya yazılıyor...\n"
 
 #: ../raster/r.cats/main.c:32
 msgid ""
@@ -5608,7 +5613,7 @@ msgid "or an R:G:B triplet, e.g.: 0:127:255\n"
 msgstr ""
 
 #: ../raster/r.colors/rules.c:240
-#, c-format
+#, fuzzy, c-format
 msgid "** warning: R:G:B value(s) out of range [0..255]: %d:%d:%d **\n"
 msgstr "** uyarı: R:G:B değer(ler)i [0..255] aralığı dışındadır: %d:%d:%d **\n"
 
@@ -5621,27 +5626,27 @@ msgid "** rule is not added **\n"
 msgstr ""
 
 #: ../raster/r.colors/rules.c:256
-#, c-format
+#, fuzzy, c-format
 msgid "** warning: R G B value(s) out of range [0..255]: %d %d %d **\n"
 msgstr "** uyarı: R G B değer(ler)i [0..255] aralığı dışındadır: %d:%d:%d **\n"
 
 #: ../raster/r.colors/rules.c:269 ../raster/r.colors/rules.c:291
-#, c-format
+#, fuzzy, c-format
 msgid "** warning: no such value **\n"
 msgstr "** uyarı: böyle bir değer yoktur **\n"
 
 #: ../raster/r.colors/rules.c:405
-#, c-format
+#, fuzzy, c-format
 msgid "%s:line %d:%s\n"
-msgstr ""
+msgstr "%s deki %s: %s"
 
 #: ../raster/r.colors/rules.c:406
-#, c-format
+#, fuzzy, c-format
 msgid "** bad color specification **\n"
 msgstr "** kötü renk belirtimi **\n"
 
 #: ../raster/r.colors/rules.c:427
-#, c-format
+#, fuzzy, c-format
 msgid "%s - unknown color\n"
 msgstr "%s - bilinmeyen renk\n"
 
@@ -5974,9 +5979,9 @@ msgid "Error, ct == pres_cell"
 msgstr ""
 
 #: ../raster/r.cost/main.c:894
-#, c-format
+#, fuzzy, c-format
 msgid "Writing %s ... "
-msgstr "Yazılıyor %s ..."
+msgstr "[%s] yazılıyor ..."
 
 #: ../raster/r.cost/main.c:900 ../raster/r.walk/main.c:1370
 msgid "Will copy input map null values into output map"
@@ -10820,10 +10825,11 @@ msgid "Allow only horizontal and vertical flow of water"
 msgstr "Sadece yatay ve düşey su akışı olanaklıdır"
 
 #: ../raster/r.watershed/front/main.c:166
+#, fuzzy
 msgid ""
 "\n"
 "Sorry, you must choose some output map."
-msgstr ""
+msgstr "Çıktı haritası kapatılamıyor"
 
 #: ../raster/r.watershed/front/main.c:181
 msgid ""
@@ -10834,9 +10840,9 @@ msgid ""
 msgstr ""
 
 #: ../raster/r.watershed/front/main.c:290
-#, c-format
+#, fuzzy, c-format
 msgid "Running: %s"
-msgstr ""
+msgstr "Okunuyor %s..."
 
 #: ../raster/r.watershed/ram/close_maps.c:22
 #: ../raster/r.watershed/ram/close_maps.c:56
@@ -12113,18 +12119,21 @@ msgid "Could not close G3D map <%s>"
 msgstr "<%s> G3D haritası kapatılamıyor"
 
 #: ../raster3d/r3.in.ascii/main.c:88
+#, fuzzy
 msgid "any,grid3,3d raster"
-msgstr ""
+msgstr "Raster okunamıyor"
 
 #: ../raster3d/r3.in.ascii/main.c:89
+#, fuzzy
 msgid "Name for G3d raster map"
-msgstr ""
+msgstr "Raster harita adı"
 
 #: ../raster3d/r3.in.ascii/main.c:98
 msgid "String representing NULL value data cell (use 'none' if no such value)"
 msgstr ""
 
 #: ../raster3d/r3.in.ascii/main.c:239
+#, fuzzy
 msgid ""
 "Convert a 3D ASCII raster text file into a (binary) 3D raster map layer "
 msgstr ""
@@ -12418,8 +12427,9 @@ msgid ""
 msgstr ""
 
 #: ../raster3d/r3.out.vtk/writeVTKData.c:124
+#, fuzzy
 msgid "writeVTKPoints: Writing point coordinates"
-msgstr ""
+msgstr "Harita koordinatları"
 
 #: ../raster3d/r3.out.vtk/writeVTKData.c:133
 msgid "Could not get top raster row \n"
@@ -12478,7 +12488,7 @@ msgid "G3dToRaster: Writing %i raster maps with rows %i cols."
 msgstr ""
 
 #: ../raster3d/r3.to.rast/main.c:133
-#, c-format
+#, fuzzy, c-format
 msgid "Writing raster map %i\n"
 msgstr "%i raster haritası yazılıyor\n"
 
@@ -12508,19 +12518,19 @@ msgid ""
 msgstr ""
 
 #: ../raster3d/r3.to.rast/main.c:283
-#, c-format
+#, fuzzy, c-format
 msgid "Creating %i raster maps\n"
 msgstr "%i raster haritaları oluşturuluyor\n"
 
 #: ../raster3d/r3.to.rast/main.c:289
-#, c-format
+#, fuzzy, c-format
 msgid "Raster map %i Filename: %s\n"
-msgstr ""
+msgstr "Raster yükselti dosyası adı"
 
 #: ../raster3d/r3.to.rast/main.c:293
-#, c-format
+#, fuzzy, c-format
 msgid "Raster map %i Filename: %s already exists. Will be overwritten!\n"
-msgstr ""
+msgstr "'%s' vektörü zaten mevcut"
 
 #: ../raster3d/r3.to.rast/main.c:356
 #, c-format
@@ -13138,8 +13148,9 @@ msgid ""
 msgstr ""
 
 #: ../vector/v.clean/main.c:99
+#, fuzzy
 msgid "Do not rebuild and store the topology at the end"
-msgstr ""
+msgstr "Topolojiyi nokta modunda oluşturmayın"
 
 #: ../vector/v.clean/main.c:117
 msgid "You must select at least one tool"
@@ -13357,9 +13368,8 @@ msgstr "dig_cats dosyası açılamıyor"
 
 #: ../vector/v.convert/main.c:35 ../vector/v.in.dwg/main.c:66
 #: ../vector/v.in.sites/main.c:56
-#, fuzzy
 msgid "vector, import"
-msgstr "Girdi vektör şebeke(ağ) haritası"
+msgstr ""
 
 #: ../vector/v.convert/old2new.c:32
 msgid "Failed opening input dig file."
@@ -13982,9 +13992,8 @@ msgid "Give cats to boundaries too."
 msgstr ""
 
 #: ../vector/v.edit/args.c:63
-#, fuzzy
 msgid "Do not close boundaries"
-msgstr "sınırlar güncellenemiyor"
+msgstr ""
 
 #: ../vector/v.edit/args.c:81
 msgid "Required parameter <points> not set"
@@ -14060,6 +14069,7 @@ msgid "Category ranges: e.g. 1,3-8,13"
 msgstr "Kategori aralığı: örneğin;1,3-8,13"
 
 #: ../vector/v.extract/main.c:121
+#, fuzzy
 msgid "Text file with category numbers/number ranges "
 msgstr "kategori numaraları/numara aralığı metin dosyası"
 
@@ -15490,9 +15500,8 @@ msgid ""
 msgstr "Yeni kategori dosyaları oluşturuluyor"
 
 #: ../vector/v.proj/main.c:199
-#, fuzzy
 msgid "Reading input dig file."
-msgstr "Raster girdi dosya"
+msgstr ""
 
 #: ../vector/v.proj/main.c:205
 #, fuzzy, c-format
@@ -16589,7 +16598,7 @@ msgstr ""
 #: ../visualization/nviz/src/nviz_init.c:95
 #, fuzzy
 msgid "Name of existing 3dcell map"
-msgstr "Mevcut raster haritanınadı"
+msgstr "Mevcut vektör haritanın adı"
 
 #: ../visualization/nviz/src/nviz_init.c:99
 msgid "Quickstart - Do not load any data"
@@ -16671,405 +16680,871 @@ msgid "Error reading wildcard."
 msgstr "Joker karakteri okumada hata"
 
 #, fuzzy
-#~ msgid "Diameter of the tree crown in map units"
-#~ msgstr "Harita birimlerinde verilen koordinatlar"
+msgid "Diameter of the tree crown in map units"
+msgstr "Harita birimlerinde verilen koordinatlar"
 
 #, fuzzy
-#~ msgid "Name of the column with tree crown width"
-#~ msgstr "Görüntülenecek sütun adı"
+msgid "Name of the column with tree crown width"
+msgstr "Görüntülenecek sütun adı"
 
 #, fuzzy
-#~ msgid "Name of the column with tree height"
-#~ msgstr "Görüntülenecek sütun adı"
+msgid "Name of the column with tree height"
+msgstr "Görüntülenecek sütun adı"
 
 #, fuzzy
-#~ msgid "Elevation raster map"
-#~ msgstr "Yükselti raster haritası adı"
+msgid "Elevation raster map"
+msgstr "Yükselti raster haritası adı"
 
 #, fuzzy
-#~ msgid "Cannot select attributes for point #%d"
-#~ msgstr "cat = %d için öznitelik seçilemiyor"
+msgid "Cannot select attributes for point #%d"
+msgstr "cat = %d için öznitelik seçilemiyor"
 
-#~ msgid "Feature that will be exported"
-#~ msgstr "Dışa aktarılacak objeler"
+msgid "Feature that will be exported"
+msgstr "Dışa aktarılacak objeler"
 
-#~ msgid "Display active frame dimensions"
-#~ msgstr "Aktif çerçevenin boyutlarını göster"
-
-#, fuzzy
-#~ msgid "Right: "
-#~ msgstr "Sağ:çıkış\n"
-
-#~ msgid "%s Pan\n"
-#~ msgstr "%s Kaydırma\n"
-
-#~ msgid "%s Quit\n"
-#~ msgstr "%s Çıkış\n"
-
-#~ msgid "Draw geographic grid"
-#~ msgstr "Coğrafi grid çiz"
+msgid "Display active frame dimensions"
+msgstr "Aktif çerçevenin boyutlarını göster"
 
 #, fuzzy
-#~ msgid "%s[%d]: No raster file specified."
-#~ msgstr "%s: <%s> raster dosyası zaten mevcut"
+msgid "Right: "
+msgstr "Sağ:çıkış\n"
 
-#~ msgid "Raster surface layer to process"
-#~ msgstr "İlenecek raster yüzey dosyası"
+msgid "%s Pan\n"
+msgstr "%s Kaydırma\n"
 
-#, fuzzy
-#~ msgid "Error in pipe creation"
-#~ msgstr "pj_do_proj'da hata"
+msgid "%s Quit\n"
+msgstr "%s Çıkış\n"
 
-#, fuzzy
-#~ msgid "Error opening channel %i"
-#~ msgstr "g3d dosyasını açmada hata"
+msgid "Draw geographic grid"
+msgstr "Coğrafi grid çiz"
 
 #, fuzzy
-#~ msgid "unable to create raster\n"
-#~ msgstr "%s oluşturulamıyor"
+msgid "%s[%d]: No raster file specified."
+msgstr "%s: <%s> raster dosyası zaten mevcut"
+
+msgid "Raster surface layer to process"
+msgstr "İlenecek raster yüzey dosyası"
 
 #, fuzzy
-#~ msgid "Cannot creat random access file\n"
-#~ msgstr "Aralık değerleri dosyası okunamadı"
+msgid "Error in pipe creation"
+msgstr "pj_do_proj'da hata"
 
 #, fuzzy
-#~ msgid "Cannot create .r.li directory"
-#~ msgstr "İndeks oluşturulamıyor"
+msgid "Error opening channel %i"
+msgstr "g3d dosyasını açmada hata"
 
 #, fuzzy
-#~ msgid "Cannot create .r.li/output directory"
-#~ msgstr "Çıktı harita oluşturulamıyor"
+msgid "unable to create raster\n"
+msgstr "%s oluşturulamıyor"
 
 #, fuzzy
-#~ msgid "Cannot close %s file\n"
-#~ msgstr "[%s] açılamıyor"
+msgid "Cannot creat random access file\n"
+msgstr "Aralık değerleri dosyası okunamadı"
 
 #, fuzzy
-#~ msgid "Cannot delete %s file\n"
-#~ msgstr "İcra edilemiyor: %s"
+msgid "Cannot create .r.li directory"
+msgstr "İndeks oluşturulamıyor"
 
 #, fuzzy
-#~ msgid "Cannot close receive channel file\n"
-#~ msgstr "dig_cats dosyası açılamıyor"
+msgid "Cannot create .r.li/output directory"
+msgstr "Çıktı harita oluşturulamıyor"
 
 #, fuzzy
-#~ msgid "Cannot read setup file"
-#~ msgstr "Kuzey-güney çözünürlük değeri okunamıyor"
+msgid "Cannot close %s file\n"
+msgstr "[%s] açılamıyor"
 
 #, fuzzy
-#~ msgid "Illegal configuration file"
-#~ msgstr "Uygun olmayan çıktı dosya adı"
+msgid "Cannot delete %s file\n"
+msgstr "İcra edilemiyor: %s"
 
 #, fuzzy
-#~ msgid "Cannot read raster header file"
-#~ msgstr "'%s' raster harita oluşturulamıyor"
+msgid "Cannot close receive channel file\n"
+msgstr "dig_cats dosyası açılamıyor"
 
 #, fuzzy
-#~ msgid "Illegal configuration file (sample area)"
-#~ msgstr "Uygun olmayan çıktı dosya adı"
+msgid "Cannot read setup file"
+msgstr "Kuzey-güney çözünürlük değeri okunamıyor"
 
 #, fuzzy
-#~ msgid "Too much strats for raster file\n"
-#~ msgstr "%s - raster dosya açılamadı"
+msgid "Illegal configuration file"
+msgstr "Uygun olmayan çıktı dosya adı"
 
 #, fuzzy
-#~ msgid "%s\n"
-#~ msgstr " %s\n"
+msgid "Cannot read raster header file"
+msgstr "'%s' raster harita oluşturulamıyor"
 
 #, fuzzy
-#~ msgid "name of input file in Mapgen/Matlab format"
-#~ msgstr "Sonuç raporu içeren çıktı dosyası adı"
+msgid "Illegal configuration file (sample area)"
+msgstr "Uygun olmayan çıktı dosya adı"
 
 #, fuzzy
-#~ msgid "raster input maps"
-#~ msgstr "Raster girdi harita"
+msgid "Too much strats for raster file\n"
+msgstr "%s - raster dosya açılamadı"
 
 #, fuzzy
-#~ msgid "Test name"
-#~ msgstr "tablo adı"
+msgid "%s\n"
+msgstr " %s\n"
 
 #, fuzzy
-#~ msgid "device or file used to import data"
-#~ msgstr "İçeri aktarılacak raster dosya"
+msgid "name of input file in Mapgen/Matlab format"
+msgstr "Sonuç raporu içeren çıktı dosyası adı"
 
 #, fuzzy
-#~ msgid "redraw current displayed maps in GRASS monitor"
-#~ msgstr "HATA: GRASS ekranında hiç harita görüntülenmedi\n"
+msgid "raster input maps"
+msgstr "Raster girdi harita"
 
 #, fuzzy
-#~ msgid "Raster map in which to fill nulls"
-#~ msgstr "Histogramı görüntülenecek raster harita "
+msgid "Test name"
+msgstr "tablo adı"
 
 #, fuzzy
-#~ msgid "Spline tension parameter"
-#~ msgstr "Kümeleme parametreleri\n"
+msgid "device or file used to import data"
+msgstr "İçeri aktarılacak raster dosya"
 
 #, fuzzy
-#~ msgid "manual entry to be displayed"
-#~ msgstr "Görüntülenecek raster harita "
+msgid "redraw current displayed maps in GRASS monitor"
+msgstr "HATA: GRASS ekranında hiç harita görüntülenmedi\n"
 
 #, fuzzy
-#~ msgid "name for new binary vector file"
-#~ msgstr "Vektör dosyasında okuma hatası"
+msgid "Raster map in which to fill nulls"
+msgstr "Histogramı görüntülenecek raster harita "
 
 #, fuzzy
-#~ msgid "Raster map to use as MASK"
-#~ msgstr "Örneklenecek raster harita"
+msgid "Spline tension parameter"
+msgstr "Kümeleme parametreleri\n"
 
 #, fuzzy
-#~ msgid "Import of E00 file into a vector map."
-#~ msgstr "2D girdi vektör haritanın adı"
+msgid "manual entry to be displayed"
+msgstr "Görüntülenecek raster harita "
 
 #, fuzzy
-#~ msgid "Vector map to display thematically"
-#~ msgstr "Görüntülenecek raster harita "
+msgid "name for new binary vector file"
+msgstr "Vektör dosyasında okuma hatası"
 
 #, fuzzy
-#~ msgid "Attribute column to use for thematic display (must be numeric)"
-#~ msgstr "Tampon mesafesi için kullanılacak öznitelik sütunu"
+msgid "Raster map to use as MASK"
+msgstr "Örneklenecek raster harita"
 
 #, fuzzy
-#~ msgid "Type of thematic display"
-#~ msgstr "Görüntülenecek metin"
+msgid "Import of E00 file into a vector map."
+msgstr "2D girdi vektör haritanın adı"
 
 #, fuzzy
-#~ msgid "raster to remove"
+msgid "Vector map to display thematically"
+msgstr "Görüntülenecek raster harita "
+
+#, fuzzy
+msgid "Attribute column to use for thematic display (must be numeric)"
+msgstr "Tampon mesafesi için kullanılacak öznitelik sütunu"
+
+#, fuzzy
+msgid "Type of thematic display"
+msgstr "Görüntülenecek metin"
+
+#, fuzzy
+msgid "raster to remove"
+msgstr "Alınacak ikili raster dosya"
+
+#, fuzzy
+msgid "3d raster to remove"
+msgstr "Alınacak ikili raster dosya"
+
+#, fuzzy
+msgid "label to remove"
+msgstr "işlenemiyor"
+
+#, fuzzy
+msgid "3dview to remove"
+msgstr "%s atılacak dosya(lar)"
+
+#, fuzzy
+msgid "Name of data table"
+msgstr "Veritabanı dosyasının adı"
+
+#, fuzzy
+msgid "column on which to calculate statistics (must be numeric)"
+msgstr "Sütun adı (sayı tipinde olmalıdır)"
+
+#, fuzzy
+msgid "Database driver"
+msgstr "Veritabanı adı"
+
+#, fuzzy
+msgid "print mapset name"
+msgstr "Raster harita adı"
+
+#, fuzzy
+msgid "data type"
+msgstr "Grafik tipi"
+
+#, fuzzy
+msgid "Uploads vector values at positions of vector points to the table"
+msgstr ""
+"Vektör noktaların bulunduğu konumdaki raster harita değerlerini tabloya yükle"
+
+#, fuzzy
+msgid "vector map for which to edit attribute table"
+msgstr "Öznitelik tablosu düzenlenecek nokta vektör haritasının adı"
+
+#, fuzzy
+msgid "Column name (will be updated by qvector values)"
+msgstr "Sütun adı (raster değerlere göre güncellenecek)"
+
+#, fuzzy
+msgid "Query column name"
+msgstr "y sütun adı"
+
+#, fuzzy
+msgid "vector map from which to remove attribute table"
+msgstr "Öznitelik tablosu düzenlenecek nokta vektör haritasının adı"
+
+#, fuzzy
+msgid "name of existing attribute table (default: vector map name)"
+msgstr "Mevcut vektör haritanın adı"
+
+#, fuzzy
+msgid "Layer from which to drop linked attribute table"
+msgstr "Öznitelik tablosu düzenlenecek nokta vektör haritasının adı"
+
+#, fuzzy
+msgid "raster input map"
+msgstr "Raster girdi harita"
+
+#, fuzzy
+msgid "reclass raster output map"
+msgstr "Çıktı harita oluşturulamıyor"
+
+#, fuzzy
+msgid "Saves active display monitor to graphics file in home directory"
+msgstr ""
+"Grafik ekrandaki aktif görüntüleme çerçevesinde geçerli fontu kullanarak "
+"metin çiz"
+
+#, fuzzy
+msgid "Name of output file (do NOT add extension)"
+msgstr "Sonuç raporu içeren çıktı dosyası adı"
+
+#, fuzzy
+msgid "Name of PNG file"
+msgstr "Etiket dosyası adı"
+
+#, fuzzy
+msgid "Name of raster angle map"
+msgstr "Raster harita adı"
+
+#, fuzzy
+msgid "calculates univariate statistics from a GRASS raster map"
+msgstr "Raster harita katmanlarının alansal istatistiklerini oluştur"
+
+#, fuzzy
+msgid "Output projection parameters (PROJ.4 style)"
+msgstr "Raster yön çıktı haritası"
+
+#, fuzzy
+msgid "name for new raster file"
+msgstr "Yeni raster dosyanın adı"
+
+#, fuzzy
+msgid "column to update"
+msgstr "Sütun tipi desteklenmiyor"
+
+#, fuzzy
+msgid "Resizes active display monitor"
+msgstr "Aktif görüntü ekranı ile ilgili bilgi göster"
+
+#, fuzzy
+msgid "Exports GRASS raster data into various formats (requires GDAL)"
+msgstr "GRASS raster dosyasını ikili diziye aktar."
+
+#, fuzzy
+msgid "Input elevation map"
+msgstr "Girdi yükselti dosyası"
+
+#, fuzzy
+msgid "Output shaded relief map name"
+msgstr "Çıktı sürücü adı"
+
+#, fuzzy
+msgid "Factor for exaggerating relief"
+msgstr "Eğim raporlama formatı"
+
+#, fuzzy
+msgid "Value to calculate"
+msgstr "Hafıza ayrılamıyor"
+
+#, fuzzy
+msgid "Name for resultant raster map"
+msgstr "Mevcut raster haritanınadı"
+
+#, fuzzy
+msgid "Additional options for wget"
+msgstr "İlave derinlik"
+
+#, fuzzy
+msgid "Reprojection method to use"
+msgstr "Kullanılacak enterpolasyon metodu"
+
+#, fuzzy
+msgid "raster input map (LANDSAT channel 1)"
+msgstr "Raster girdi harita(lar)"
+
+#, fuzzy
+msgid "raster input map (LANDSAT channel 2)"
+msgstr "Raster girdi harita(lar)"
+
+#, fuzzy
+msgid "raster input map (LANDSAT channel 3)"
+msgstr "Raster girdi harita(lar)"
+
+#, fuzzy
+msgid "raster input map (LANDSAT channel 4)"
+msgstr "Raster girdi harita(lar)"
+
+#, fuzzy
+msgid "raster input map (LANDSAT channel 5)"
+msgstr "Raster girdi harita(lar)"
+
+#, fuzzy
+msgid "raster input map (LANDSAT channel 7)"
+msgstr "Raster girdi harita(lar)"
+
+#, fuzzy
+msgid "raster output TC maps prefix"
+msgstr "Raster çıktı harita"
+
+#, fuzzy
+msgid "Name of raster plane to be created."
+msgstr "Görüntülenecek raster bakı haritası adı"
+
+#, fuzzy
+msgid "Type of the raster map to be created."
+msgstr "Sorgulanacak mevcut raster haritanın adı"
+
+#, fuzzy
+msgid "Name of raster map to calculate statistics from"
+msgstr "Sonuçları içeren raster haritanın adı"
+
+#, fuzzy
+msgid "Name of new database"
+msgstr "Veritabanı dosyasının adı"
+
+#, fuzzy
+msgid "Name of first raster map for blending"
+msgstr "Mevcut raster haritanınadı"
+
+#, fuzzy
+msgid "Vector map for which to add new attribute table"
+msgstr "Öznitelik tablosu düzenlenecek nokta vektör haritasının adı"
+
+#, fuzzy
+msgid "Layer where to add new attribute table"
+msgstr "Öznitelik tablosu oluşturmayın"
+
+#, fuzzy
+msgid "Displays a raster map and its legend on a graphics window"
+msgstr "Grafik ektanındaki aktif çerçevedeki raster harita için lejand göster"
+
+#, fuzzy
+msgid "omit entries with missing label"
+msgstr "Etiketsiz kategorileri atla"
+
+#, fuzzy
+msgid "Number of lines to appear in the legend"
+msgstr "Yuvarlanmış lejand için yazı etiketi sayısı"
+
+#, fuzzy
+msgid "Maximum number of rows for a tile in the source projection"
+msgstr "Maksimum iterasyon sayısı"
+
+#, fuzzy
+msgid "Output field seperator"
+msgstr "Çıktı alan ayracı"
+
+#, fuzzy
+msgid "Enter raster map to display in 1st frame"
+msgstr "Görüntülenecek raster harita "
+
+#, fuzzy
+msgid "Enter raster map to display in 2nd frame"
+msgstr "Görüntülenecek raster harita "
+
+#, fuzzy
+msgid "How to split display"
+msgstr "Görüntülenecek metin"
+
+msgid "Connect to the database through DBMI."
+msgstr "Veritabanına DBMI aracılığıyla bağlanma."
+
+msgid "Done.\n"
+msgstr "Yapıldı.\n"
+
+msgid "Do you wish to continue"
+msgstr "Devam etmek istiyormusunuz"
+
+#, fuzzy
+#~ msgid "%s: illegal value spec\n"
+#~ msgstr "%s - uygun olmayan ad"
+
+#, fuzzy
+#~ msgid "Force remove"
 #~ msgstr "Yeniden kodlanacak raster harita"
 
 #, fuzzy
-#~ msgid "3d raster to remove"
-#~ msgstr "Alınacak ikili raster dosya"
+#~ msgid "Don't build topology for the output vector"
+#~ msgstr "Topolojiyi nokta modunda oluşturmayın"
 
 #, fuzzy
-#~ msgid "label to remove"
-#~ msgstr "işlenemiyor"
+#~ msgid "Input file format"
+#~ msgstr "Girdi dosyası"
 
 #, fuzzy
-#~ msgid "3dview to remove"
-#~ msgstr "%s atılacak dosya(lar)"
+#~ msgid "Populating table ..."
+#~ msgstr "Veri döndürülüyor..."
 
 #, fuzzy
-#~ msgid "Name of data table"
-#~ msgstr "Veritabanı dosyasının adı"
+#~ msgid ""
+#~ "Unexpected data in vector head.\n"
+#~ "[%s]"
+#~ msgstr "[%s] raster haritası açılamıyor."
 
 #, fuzzy
-#~ msgid "column on which to calculate statistics (must be numeric)"
-#~ msgstr "Sütun adı (sayı tipinde olmalıdır)"
+#~ msgid "Unparsable longitude value: [%s]"
+#~ msgstr "[%s] dosyası bulunamıyor."
 
 #, fuzzy
-#~ msgid "Database driver"
-#~ msgstr "Veritabanı adı"
+#~ msgid "Unparsable latitude value: [%s]"
+#~ msgstr "[%s] dosyası bulunamıyor."
 
 #, fuzzy
-#~ msgid "print mapset name"
-#~ msgstr "Raster harita adı"
+#~ msgid "Skipping %d of %d rows falling outside of current region"
+#~ msgstr "Geçerli bölgeyi güncelleme"
 
 #, fuzzy
-#~ msgid "data type"
-#~ msgstr "Grafik tipi"
+#~ msgid "Importing points ..."
+#~ msgstr "%d haritası objeleri içe aktarılıyor..."
 
 #, fuzzy
-#~ msgid "Uploads vector values at positions of vector points to the table"
-#~ msgstr ""
-#~ "Vektör noktaların bulunduğu konumdaki raster harita değerlerini tabloya "
-#~ "yükle"
+#~ msgid "Cannot insert values: %s"
+#~ msgstr "Tabloya veri girilemiyor: %s"
 
 #, fuzzy
-#~ msgid "vector map for which to edit attribute table"
-#~ msgstr "Öznitelik tablosu düzenlenecek nokta vektör haritasının adı"
+#~ msgid "Print topology information only"
+#~ msgstr "Öznitelik bilgisini yazdır"
 
 #, fuzzy
-#~ msgid "Column name (will be updated by qvector values)"
-#~ msgstr "Sütun adı (raster değerlere göre güncellenecek)"
+#~ msgid "Illegal filename: %s"
+#~ msgstr "[%s] uygun olmayan dosya adı."
 
 #, fuzzy
-#~ msgid "Query column name"
-#~ msgstr "y sütun adı"
+#~ msgid "Calculating maps ..."
+#~ msgstr "DEM'den gölgeler hesaplanıyor..."
 
 #, fuzzy
-#~ msgid "vector map from which to remove attribute table"
-#~ msgstr "Öznitelik tablosu düzenlenecek nokta vektör haritasının adı"
+#~ msgid "Reading input files: elevation"
+#~ msgstr "Raster girdi yükselti haritası"
 
 #, fuzzy
-#~ msgid "name of existing attribute table (default: vector map name)"
-#~ msgstr "Mevcut vektör haritanın adı"
+#~ msgid "Reading input files: aspect"
+#~ msgstr "\r Dosya okunuyor '%s'"
 
 #, fuzzy
-#~ msgid "Layer from which to drop linked attribute table"
-#~ msgstr "Öznitelik tablosu düzenlenecek nokta vektör haritasının adı"
+#~ msgid "Writing density file"
+#~ msgstr "Yeni dosya yazılıyor...\n"
 
 #, fuzzy
-#~ msgid "raster input map"
-#~ msgstr "Raster girdi harita"
+#~ msgid "[%s] already uncompressed"
+#~ msgstr "Alan hesaplandı"
 
 #, fuzzy
-#~ msgid "reclass raster output map"
-#~ msgstr "Çıktı harita oluşturulamıyor"
+#~ msgid "[%s] already compressed"
+#~ msgstr "Alan hesaplandı"
 
 #, fuzzy
-#~ msgid "Saves active display monitor to graphics file in home directory"
-#~ msgstr ""
-#~ "Grafik ekrandaki aktif görüntüleme çerçevesinde geçerli fontu kullanarak "
-#~ "metin çiz"
+#~ msgid "%s: complete ... "
+#~ msgstr "FFT tamamlandı..."
 
 #, fuzzy
-#~ msgid "Name of output file (do NOT add extension)"
-#~ msgstr "Sonuç raporu içeren çıktı dosyası adı"
+#~ msgid "Cannot get raster band."
+#~ msgstr "Raster dosya açılamıyor"
 
 #, fuzzy
-#~ msgid "Name of PNG file"
-#~ msgstr "Etiket dosyası adı"
+#~ msgid "Cannot read GRASS raster."
+#~ msgstr "Raster okunamıyor"
 
 #, fuzzy
-#~ msgid "Name of raster angle map"
-#~ msgstr "Raster harita adı"
+#~ msgid "Cannot write GDAL raster."
+#~ msgstr "'%s' raster harita oluşturulamıyor"
 
 #, fuzzy
-#~ msgid "calculates univariate statistics from a GRASS raster map"
-#~ msgstr "Raster harita katmanlarının alansal istatistiklerini oluştur"
-
-#, fuzzy
-#~ msgid "Output projection parameters (PROJ.4 style)"
-#~ msgstr "Raster yön çıktı haritası"
-
-#, fuzzy
-#~ msgid "name for new raster file"
-#~ msgstr "Yeni raster dosyanın adı"
-
-#, fuzzy
-#~ msgid "column to update"
-#~ msgstr "Sütun tipi desteklenmiyor"
-
-#, fuzzy
-#~ msgid "Resizes active display monitor"
-#~ msgstr "Aktif görüntü ekranı ile ilgili bilgi göster"
-
-#, fuzzy
-#~ msgid "Exports GRASS raster data into various formats (requires GDAL)"
+#~ msgid "Exports GRASS raster into GDAL supported formats"
 #~ msgstr "GRASS raster dosyasını ikili diziye aktar."
 
 #, fuzzy
-#~ msgid "Input elevation map"
-#~ msgstr "Girdi yükselti dosyası"
+#~ msgid "Unknown GIS formats"
+#~ msgstr "bilinmeyen zaman formatı"
 
 #, fuzzy
-#~ msgid "Output shaded relief map name"
-#~ msgstr "Çıktı sürücü adı"
+#~ msgid "Raster map or group [%s] not found"
+#~ msgstr " [%s] raster haritası bulunamadı"
 
 #, fuzzy
-#~ msgid "Factor for exaggerating relief"
-#~ msgstr "Eğim raporlama formatı"
+#~ msgid "No raster maps in group [%s]"
+#~ msgstr " [%s] raster dosyasını ekleme"
 
 #, fuzzy
-#~ msgid "Value to calculate"
-#~ msgstr "Hafıza ayrılamıyor"
+#~ msgid "Cannot create [%s] driver"
+#~ msgstr "İndeks oluşturulamıyor"
 
 #, fuzzy
-#~ msgid "Name for resultant raster map"
-#~ msgstr "Mevcut raster haritanınadı"
+#~ msgid "Cannot create memory raster driver"
+#~ msgstr "'%s' raster harita oluşturulamıyor"
 
 #, fuzzy
-#~ msgid "Additional options for wget"
-#~ msgstr "İlave derinlik"
+#~ msgid "Cannot create dataset using memory raster driver."
+#~ msgstr "%s sürücüsüyle %s veritabanı açılamıyor"
 
 #, fuzzy
-#~ msgid "Reprojection method to use"
+#~ msgid "Cannot create [%s] dataset using [%s] driver."
+#~ msgstr "%s sürücüsüyle %s veritabanı açılamıyor"
+
+#, fuzzy
+#~ msgid "Couldn't set geo transform ...\n"
+#~ msgstr "Üst raster alınamıyor\n"
+
+#, fuzzy
+#~ msgid "Cannot export [%s] raster file."
+#~ msgstr "[%s] raster dosyası açılamıyor!"
+
+#, fuzzy
+#~ msgid "Cannot create [%s] raster file using [%s] driver."
+#~ msgstr "[%s] raster dosyası açılamıyor!"
+
+#, fuzzy
+#~ msgid "Done!"
+#~ msgstr "Yapıldı"
+
+#, fuzzy
+#~ msgid "Interpolation method"
 #~ msgstr "Kullanılacak enterpolasyon metodu"
 
 #, fuzzy
-#~ msgid "raster input map (LANDSAT channel 1)"
-#~ msgstr "Raster girdi harita(lar)"
+#~ msgid "Invalid method: %s"
+#~ msgstr "Geçersiz yazıtipi: %s"
 
 #, fuzzy
-#~ msgid "raster input map (LANDSAT channel 2)"
-#~ msgstr "Raster girdi harita(lar)"
+#~ msgid "%s: %s - can't create cell file"
+#~ msgstr "%s - raster dosya açılamadı"
 
 #, fuzzy
-#~ msgid "raster input map (LANDSAT channel 3)"
-#~ msgstr "Raster girdi harita(lar)"
+#~ msgid "%s: unable to re-open %s"
+#~ msgstr "<%s> açılamıyor"
 
 #, fuzzy
-#~ msgid "raster input map (LANDSAT channel 4)"
-#~ msgstr "Raster girdi harita(lar)"
+#~ msgid "Writing output map (%s)   ... "
+#~ msgstr "Çıktı %s raster haritası yazılıyor ..."
 
 #, fuzzy
-#~ msgid "raster input map (LANDSAT channel 5)"
-#~ msgstr "Raster girdi harita(lar)"
+#~ msgid "Finding buffer zones ... "
+#~ msgstr "Eğitim sınıfları bulunuyor ..."
 
 #, fuzzy
-#~ msgid "raster input map (LANDSAT channel 7)"
-#~ msgstr "Raster girdi harita(lar)"
+#~ msgid "%s: %s - can't open"
+#~ msgstr "%s: %s - bulunamadı"
 
 #, fuzzy
-#~ msgid "raster output TC maps prefix"
-#~ msgstr "Raster çıktı harita"
+#~ msgid "Reading input map (%s)    ... "
+#~ msgstr "Görüntü okunuyor..."
 
 #, fuzzy
-#~ msgid "Name of raster plane to be created."
-#~ msgstr "Görüntülenecek raster bakı haritası adı"
+#~ msgid "%s: %s - illegal distance specification"
+#~ msgstr "%s: %s - uygun olmayan birimler"
 
 #, fuzzy
-#~ msgid "Type of the raster map to be created."
-#~ msgstr "Sorgulanacak mevcut raster haritanın adı"
+#~ msgid "Reading map..."
+#~ msgstr "Harita okunuyor"
 
 #, fuzzy
-#~ msgid "Name of raster map to calculate statistics from"
+#~ msgid "Reading %s in %s ..."
+#~ msgstr "Okunuyor %s..."
+
+#, fuzzy
+#~ msgid "Unable to create cell file for [%s]"
+#~ msgstr "[%s] dosyası oluşturulamıyor"
+
+#, fuzzy
+#~ msgid "Updating statistics for [%s]..."
+#~ msgstr "[%s] için destek dosyaları oluşturuluyor."
+
+#, fuzzy
+#~ msgid "Update raster map statistics"
 #~ msgstr "Sonuçları içeren raster haritanın adı"
 
 #, fuzzy
-#~ msgid "Name of new database"
-#~ msgstr "Veritabanı dosyasının adı"
+#~ msgid "Raster file [%s] not found"
+#~ msgstr "<%s> raster dosyası bulunamadı"
 
 #, fuzzy
-#~ msgid "Name of first raster map for blending"
-#~ msgstr "Görüntülenecek mevcut raster harita adı"
+#~ msgid "Statistics for [%s] updated"
+#~ msgstr "[%s]'nin geçmiş dosyası güncellendi."
 
 #, fuzzy
-#~ msgid "Vector map for which to add new attribute table"
-#~ msgstr "Öznitelik tablosu düzenlenecek nokta vektör haritasının adı"
+#~ msgid "Aggregation method"
+#~ msgstr "Bütünleştirme işlemi"
 
 #, fuzzy
-#~ msgid "Layer where to add new attribute table"
-#~ msgstr "Öznitelik tablosu oluşturmayın"
+#~ msgid "Checking input maps\n"
+#~ msgstr "Raster girdi harita"
 
 #, fuzzy
-#~ msgid "Displays a raster map and its legend on a graphics window"
+#~ msgid "The number of input and elevation maps is not equal\n"
+#~ msgstr "Girdi raster harita(ları) adı"
+
+#, fuzzy
+#~ msgid "Open g3d raster map %s\n"
+#~ msgstr "%s g3d raster dosyasını aç"
+
+#, fuzzy
+#~ msgid "Open input raster map %s\n"
+#~ msgstr "Girdi raster harita"
+
+#, fuzzy
+#~ msgid "Open elev raster map %s\n"
+#~ msgstr "'%s' raster harita oluşturulamıyor"
+
+#, fuzzy
+#~ msgid "Close g3d raster map\n"
+#~ msgstr "Örtü raster harita"
+
+#, fuzzy
+#~ msgid "Name of second raster map"
+#~ msgstr "Raster harita adı"
+
+#, fuzzy
+#~ msgid "Unit of measure"
+#~ msgstr "Uzaklık birimi"
+
+#, fuzzy
+#~ msgid "Unable to create any tempfiles"
+#~ msgstr "Geçici dosyalar oluşturulamıyor."
+
+#, fuzzy
+#~ msgid "Unable to run r.stats"
+#~ msgstr "Boyut ayarlanamıyor"
+
+#, fuzzy
+#~ msgid "Unable to open tempfile"
+#~ msgstr "Çıktı dosyası açılamıyor"
+
+#, fuzzy
+#~ msgid ""
+#~ "Enter the file name\n"
+#~ "> "
+#~ msgstr "Mevcut raster dosya adı"
+
+#, fuzzy
+#~ msgid "Reading row %d"
+#~ msgstr "Okunuyor %s..."
+
+#, fuzzy
+#~ msgid "Illegal line in header"
+#~ msgstr "Uygun olmayan çıktı dosya adı"
+
+#, fuzzy
+#~ msgid "Could not open temporary file: [%s]"
+#~ msgstr "[%s] ascii dosyası açılamıyor"
+
+#, fuzzy
+#~ msgid "Could not open input file [%s]"
+#~ msgstr "[%s] ascii dosyası açılamıyor"
+
+#, fuzzy
+#~ msgid "Failed to copy file"
+#~ msgstr "Çıktı dosya adı"
+
+#, fuzzy
+#~ msgid "Creating some temporary files"
+#~ msgstr "Bazı geçici dosyalar oluşturuluyor..."
+
+#, fuzzy
+#~ msgid "Writing %s"
+#~ msgstr "Yazılıyor %s ..."
+
+#, fuzzy
+#~ msgid ""
+#~ "Integer cell type.\n"
+#~ "Writing"
 #~ msgstr ""
-#~ "Grafik ektanındaki aktif çerçevedeki raster harita için lejand göster"
+#~ "Tamsayı hücre tipi.\n"
+#~ " Yazılıyor..."
 
 #, fuzzy
-#~ msgid "omit entries with missing label"
-#~ msgstr "Etiketsiz kategorileri atla"
+#~ msgid ""
+#~ "Float cell type.\n"
+#~ "Writing"
+#~ msgstr ""
+#~ "Kayar nokta hücre tipi.\n"
+#~ "Yazılıyor..."
 
 #, fuzzy
-#~ msgid "Number of lines to appear in the legend"
-#~ msgstr "Yuvarlanmış lejand için yazı etiketi sayısı"
+#~ msgid ""
+#~ "Double cell type.\n"
+#~ "Writing"
+#~ msgstr ""
+#~ "Ondalık hücre tipi.\n"
+#~ "Yazılıyor..."
 
 #, fuzzy
-#~ msgid "Maximum number of rows for a tile in the source projection"
-#~ msgstr "Maksimum iterasyon sayısı"
+#~ msgid "Can't find %d,%d:%f"
+#~ msgstr "%s bulunamadı"
 
 #, fuzzy
-#~ msgid "Output field seperator"
-#~ msgstr "Çıktı alan ayracı"
+#~ msgid "%s higher above pointer wrong"
+#~ msgstr "Araziden olan kamera yüksekliği"
 
 #, fuzzy
-#~ msgid "Enter raster map to display in 1st frame"
-#~ msgstr "Görüntülenecek raster harita "
+#~ msgid "error in ascii data format"
+#~ msgstr "hücre verilerini okumada hata"
 
 #, fuzzy
-#~ msgid "Enter raster map to display in 2nd frame"
-#~ msgstr "Görüntülenecek raster harita "
+#~ msgid "Ascii raster file to be imported (or \"-\" to read from stdin)"
+#~ msgstr "Alınacak ascii raster dosya"
 
 #, fuzzy
-#~ msgid "How to split display"
-#~ msgstr "Görüntülenecek metin"
+#~ msgid "Raster map to use to setup sampling"
+#~ msgstr "Örneklenecek raster harita"
 
-#~ msgid "Connect to the database through DBMI."
-#~ msgstr "Veritabanına DBMI aracılığıyla bağlanma."
+#, fuzzy
+#~ msgid "Vector map to overlay"
+#~ msgstr "Sorgulanacak raster harita"
 
-#~ msgid "Done.\n"
-#~ msgstr "Yapıldı.\n"
+#, fuzzy
+#~ msgid "Reading MAT-File ..."
+#~ msgstr "Görüntü okunuyor..."
 
-#~ msgid "Do you wish to continue"
-#~ msgstr "Devam etmek istiyormusunuz"
+#, fuzzy
+#~ msgid "Writing new raster map ..."
+#~ msgstr "%i raster haritası yazılıyor\n"
+
+#, fuzzy
+#~ msgid "Using rows=%d cols=%d\n"
+#~ msgstr "%d satır, %d sütun"
+
+#, fuzzy
+#~ msgid "Conversion failed at row %d"
+#~ msgstr " %d sütunu %d satırında veri dönüşümünde hata oldu"
+
+#, fuzzy
+#~ msgid "Illegal east coordinate <%s>\n"
+#~ msgstr "Uygun olmayan doğu koordinatı <%s>"
+
+#, fuzzy
+#~ msgid "Illegal north coordinate <%s>\n"
+#~ msgstr "uygun olmayan kuzey koordinatı <%s>"
+
+#, fuzzy
+#~ msgid "unable to open drainage pointer map"
+#~ msgstr "Yükselti haritası kapatılamıyor"
+
+#, fuzzy
+#~ msgid "unable to open new basin map"
+#~ msgstr "Yükselti haritası kapatılamıyor"
+
+#, fuzzy
+#~ msgid "unable to close new basin map layer"
+#~ msgstr "[%s] raster haritası açılamıyor."
+
+#, fuzzy
+#~ msgid "Can't create raster map <%s>"
+#~ msgstr "'%s' raster harita oluşturulamıyor"
+
+#, fuzzy
+#~ msgid "Pass #%d (of %d) ... "
+#~ msgstr "sınıf %d (%d)\n"
+
+#, fuzzy
+#~ msgid "Setting window header failed"
+#~ msgstr "Harita penceresi ayarları"
+
+#, fuzzy
+#~ msgid "File not found: %s"
+#~ msgstr "Hücre dosyası bulunamıyor\n"
+
+#, fuzzy
+#~ msgid "Unable to properly read input raster file"
+#~ msgstr "<%s> raster dosyası açılamadı"
+
+#, fuzzy
+#~ msgid "Unable to properly write output raster file"
+#~ msgstr "Çıktı doku dosyası açılamadı."
+
+#, fuzzy
+#~ msgid "Location PROJ_INFO is:\n"
+#~ msgstr "Mevki: %s\n"
+
+#, fuzzy
+#~ msgid "Selected band (%d) does not exist.\n"
+#~ msgstr " [%s] raster haritası bulunamadı"
+
+#, fuzzy
+#~ msgid "Copying %d GCPS in points file for %s"
+#~ msgstr "<%s> için kategori dosyasını okumada hata."
+
+#, fuzzy
+#~ msgid "not found\n"
+#~ msgstr "%s bulunamadı"
+
+#, fuzzy
+#~ msgid "Creating support files for %s"
+#~ msgstr "[%s] için destek dosyaları oluşturuluyor"
+
+#, fuzzy
+#~ msgid "%ld categories"
+#~ msgstr "%-5d çizgi kategorisi okundu\n"
+
+#, fuzzy
+#~ msgid "Reading data."
+#~ msgstr "Veri döndürülüyor..."
+
+#, fuzzy
+#~ msgid "This step value is not allowed."
+#~ msgstr "%s: %d den fazla dosya olanaksız"
+
+#, fuzzy
+#~ msgid "Displacing data."
+#~ msgstr "Veri döndürülüyor..."
+
+#, fuzzy
+#~ msgid "Use mouse to interactively place text"
+#~ msgstr "Ölçeği interaktif yerleştirmek için fareyi kullan"
+
+#, fuzzy
+#~ msgid "Screen position in geographic coordinates"
+#~ msgstr "Harita koordinatları"
+
+#, fuzzy
+#~ msgid "Invalid coordinates"
+#~ msgstr "Geçersiz koordinatlar %s %s"
+
+#, fuzzy
+#~ msgid "[%s]: No such color. Use '%s'"
+#~ msgstr "[%s]:Böyle bir renk yok"
+
+#, fuzzy
+#~ msgid " Left:    Place text here\n"
+#~ msgstr "Sol: Burada ne var\n"
+
+#, fuzzy
+#~ msgid " Right:   Quit\n"
+#~ msgstr "Sağ:çıkış\n"
+
+#, fuzzy
+#~ msgid "Choose new current font"
+#~ msgstr "Geçerli bölgeyi kullan"
+
+#, fuzzy
+#~ msgid "Path to TrueType font including file name"
+#~ msgstr "TrueType yazı tipi yolu (dosya adıyla beraber)"
+
+#, fuzzy
+#~ msgid "Input vector map"
+#~ msgstr "Girdi vektör şebeke(ağ) haritası"

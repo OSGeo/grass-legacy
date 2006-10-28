@@ -1085,7 +1085,7 @@ msgid "Illegal filename.  Cannot be '.' or 'NULL'\n"
 msgstr "Tên tập tin không hợp lệ. Không thể là '.' hay 'NULL'\n"
 
 #: ../lib/gis/legal_name.c:39
-#, c-format
+#, fuzzy, c-format
 msgid "Illegal filename. character <%c> not allowed."
 msgstr "Tên tập tin không hợp lệ. ký tự <%c> không được phép"
 
@@ -2543,17 +2543,21 @@ msgstr "Không thể xóa đường, bản đồ '%s' không được mở ở c
 msgid "Cannot delete line"
 msgstr "Không thể xóa đường"
 
-#~ msgid "Name of elevation raster map"
-#~ msgstr "Tên của bản đồ raster độ cao"
+msgid "Name of elevation raster map"
+msgstr "Tên của bản đồ raster độ cao"
 
-#~ msgid "Name of elevation raster map(s)"
-#~ msgstr "Tên của (các) bản đồ raster độ cao"
+msgid "Name of elevation raster map(s)"
+msgstr "Tên của (các) bản đồ raster độ cao"
 
-#~ msgid "Name of input raster3d map"
-#~ msgstr "Tên của bản đồ raster 3d đầu vào"
+msgid "Name of input raster3d map"
+msgstr "Tên của bản đồ raster 3d đầu vào"
 
-#~ msgid "Name of input raster3d map(s)"
-#~ msgstr "Tên của (các) bản đồ raster 3d đầu vào"
+msgid "Name of input raster3d map(s)"
+msgstr "Tên của (các) bản đồ raster 3d đầu vào"
 
-#~ msgid "Name for output raster3d map"
-#~ msgstr "Tên của bản đồ raster 3d đầu ra"
+msgid "Name for output raster3d map"
+msgstr "Tên của bản đồ raster 3d đầu ra"
+
+#, fuzzy
+#~ msgid "Window replacing the default"
+#~ msgstr "để chấp nhận mặc định"

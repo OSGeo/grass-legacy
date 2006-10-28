@@ -1123,9 +1123,8 @@ msgid "Select rectification method for rasters"
 msgstr ""
 
 #: ../gui/tcltk/gis.m/georect.tcl:960
-#, fuzzy
 msgid "1st order"
-msgstr "sınırı çiz"
+msgstr ""
 
 #: ../gui/tcltk/gis.m/georect.tcl:961
 msgid "affine transformation  (rasters & vectors). Requires 3+ GCPs."
@@ -1164,9 +1163,8 @@ msgid "geographic coordinates"
 msgstr "Koordinatlara göre sorgula"
 
 #: ../gui/tcltk/gis.m/georect.tcl:985
-#, fuzzy
 msgid "forward error"
-msgstr "İleri"
+msgstr ""
 
 #: ../gui/tcltk/gis.m/georect.tcl:987
 msgid "backward error"
@@ -2507,9 +2505,8 @@ msgid "Clean vector files"
 msgstr "Vektör dosyaları temizle"
 
 #: ../gui/tcltk/menus/menu.tcl:384
-#, fuzzy
 msgid "Add missing centroids"
-msgstr "alan merkezleri"
+msgstr ""
 
 #: ../gui/tcltk/menus/menu.tcl:386
 msgid "Build polylines from adjacent segments"
@@ -3245,9 +3242,8 @@ msgid "GRASS Help"
 msgstr "GRASS Yardım"
 
 #: ../lib/init/gis_set.tcl:591
-#, fuzzy
 msgid "Exit"
-msgstr "Dışa Aktar"
+msgstr ""
 
 #: ../lib/init/gis_set.tcl:629
 msgid "WARNING: Invalid Database"
@@ -3404,8 +3400,9 @@ msgid "Up"
 msgstr "Yukarı"
 
 #: ../lib/init/help.tcl:2980
+#, fuzzy
 msgid "Down"
-msgstr ""
+msgstr "Yapıldı."
 
 #: ../lib/init/help.tcl:2983
 msgid "Match case"
@@ -3668,798 +3665,798 @@ msgstr "Kaydet ve çık"
 msgid "mouse button actions (left, right, center)"
 msgstr ""
 
-#~ msgid "html-browser"
-#~ msgstr "html-Tarayıcı"
+msgid "html-browser"
+msgstr "html-Tarayıcı"
 
-#~ msgid "System Information\n"
-#~ msgstr "Sistem Bilgisi\n"
+msgid "System Information\n"
+msgstr "Sistem Bilgisi\n"
 
-#~ msgid "Quit"
-#~ msgstr "Çık"
+msgid "Quit"
+msgstr "Çık"
 
-#~ msgid "TK System Information"
-#~ msgstr "TK Sistem Bilgisi"
+msgid "TK System Information"
+msgstr "TK Sistem Bilgisi"
 
-#~ msgid "Enter filename to save info text"
-#~ msgstr "Bilgi metnini kaydetmek için dosya adı girin"
+msgid "Enter filename to save info text"
+msgstr "Bilgi metnini kaydetmek için dosya adı girin"
 
-#~ msgid "Scripting "
-#~ msgstr "Betikleme"
+msgid "Scripting "
+msgstr "Betikleme"
 
-#~ msgid "About "
-#~ msgstr "Hakkında"
+msgid "About "
+msgstr "Hakkında"
 
-#~ msgid ""
-#~ "Left button:\trun command\n"
-#~ "Middle button:\tprint man page\n"
-#~ "Ctrl-Mid button:\tshow html page\n"
-#~ "Right button:\tprint usage"
-#~ msgstr ""
-#~ "Sol tuş:\tkomut çalıştır\n"
-#~ "Orta tuş:\tel kitabını yazdır\n"
-#~ "Ctrl-orta tuş:\t html yardımı göster\n"
-#~ "Sağ tuş:\tkullanışı yazdır"
+msgid ""
+"Left button:\trun command\n"
+"Middle button:\tprint man page\n"
+"Ctrl-Mid button:\tshow html page\n"
+"Right button:\tprint usage"
+msgstr ""
+"Sol tuş:\tkomut çalıştır\n"
+"Orta tuş:\tel kitabını yazdır\n"
+"Ctrl-orta tuş:\t html yardımı göster\n"
+"Sağ tuş:\tkullanışı yazdır"
 
-#~ msgid "Family:"
-#~ msgstr "Aile:"
+msgid "Family:"
+msgstr "Aile:"
 
-#~ msgid "Pick"
-#~ msgstr "Topla"
+msgid "Pick"
+msgstr "Topla"
 
-#~ msgid "Font family"
-#~ msgstr "Yazı tipi ailesi"
+msgid "Font family"
+msgstr "Yazı tipi ailesi"
 
-#~ msgid "Size:"
-#~ msgstr "Boyut:"
+msgid "Size:"
+msgstr "Boyut:"
 
-#~ msgid "Weight:"
-#~ msgstr "Ağırlık:"
+msgid "Weight:"
+msgstr "Ağırlık:"
 
-#~ msgid "normal"
-#~ msgstr "normal"
+msgid "normal"
+msgstr "normal"
 
-#~ msgid "bold"
-#~ msgstr "koyu"
+msgid "bold"
+msgstr "koyu"
 
-#~ msgid "Slant:"
-#~ msgstr "Eğik:"
+msgid "Slant:"
+msgstr "Eğik:"
 
-#~ msgid "italic"
-#~ msgstr "eğik"
+msgid "italic"
+msgstr "eğik"
 
-#~ msgid "Display dimensions"
-#~ msgstr "Boyutları göster"
+msgid "Display dimensions"
+msgstr "Boyutları göster"
 
-#~ msgid "Running ..."
-#~ msgstr "Çalışıyor..."
+msgid "Running ..."
+msgstr "Çalışıyor..."
 
-#~ msgid "Right button to KILL"
-#~ msgstr "Öldürmek için sağ tuşa basın."
+msgid "Right button to KILL"
+msgstr "Öldürmek için sağ tuşa basın."
 
-#~ msgid "Stopped ..."
-#~ msgstr "Durdu..."
+msgid "Stopped ..."
+msgstr "Durdu..."
 
-#~ msgid "Continued ..."
-#~ msgstr "Devam ediyor..."
+msgid "Continued ..."
+msgstr "Devam ediyor..."
 
-#~ msgid "Finished."
-#~ msgstr "Bitti."
+msgid "Finished."
+msgstr "Bitti."
 
-#~ msgid "Terminated."
-#~ msgstr "Sonlandırıldı."
+msgid "Terminated."
+msgstr "Sonlandırıldı."
 
-#~ msgid "output"
-#~ msgstr "çıktı"
+msgid "output"
+msgstr "çıktı"
 
-#~ msgid "quit_window"
-#~ msgstr "pencereden_çık"
+msgid "quit_window"
+msgstr "pencereden_çık"
 
-#~ msgid "CANCEL"
-#~ msgstr "İPTAL"
+msgid "CANCEL"
+msgstr "İPTAL"
 
-#~ msgid "Do you want to start a script session?"
-#~ msgstr "Betik oturumu başlatmak istermisiniz?"
+msgid "Do you want to start a script session?"
+msgstr "Betik oturumu başlatmak istermisiniz?"
 
-#~ msgid "Scripting already running, stop first"
-#~ msgstr "Betikleme zaten çalışıyor, önce durdurun."
+msgid "Scripting already running, stop first"
+msgstr "Betikleme zaten çalışıyor, önce durdurun."
 
-#~ msgid "select or enter a filename to save the generated script"
-#~ msgstr "Oluşturulan betiği kaydetmek için dosya adı girin yada seçin."
+msgid "select or enter a filename to save the generated script"
+msgstr "Oluşturulan betiği kaydetmek için dosya adı girin yada seçin."
 
-#~ msgid "Enter filename to save script"
-#~ msgstr "Betiği kaydetmek için dosya adı girin"
+msgid "Enter filename to save script"
+msgstr "Betiği kaydetmek için dosya adı girin"
 
-#~ msgid "No filename given, discard recorded script?"
-#~ msgstr "Dosya adı verilmedi, betiği kaydetmekten vazgeçeyim mi?"
+msgid "No filename given, discard recorded script?"
+msgstr "Dosya adı verilmedi, betiği kaydetmekten vazgeçeyim mi?"
 
-#~ msgid "Scripting not running, start first"
-#~ msgstr "betikleme çalışmıyor, önce çalıştır."
+msgid "Scripting not running, start first"
+msgstr "betikleme çalışmıyor, önce çalıştır."
 
-#~ msgid "Script recording in progress, stop first"
-#~ msgstr "Betik kaydı devam ediyor, önce durdur."
+msgid "Script recording in progress, stop first"
+msgstr "Betik kaydı devam ediyor, önce durdur."
 
-#~ msgid "No filename, quitting"
-#~ msgstr "Dosya adı yok, çıkılıyor"
+msgid "No filename, quitting"
+msgstr "Dosya adı yok, çıkılıyor"
 
-#~ msgid "is empty file"
-#~ msgstr "boş dosya."
+msgid "is empty file"
+msgstr "boş dosya."
 
-#~ msgid "is not a valid tcltkgrass script:"
-#~ msgstr "geçerli tcltkgrass betiği değil."
+msgid "is not a valid tcltkgrass script:"
+msgstr "geçerli tcltkgrass betiği değil."
 
-#~ msgid "invalid script file:"
-#~ msgstr "geçersiz betik:"
+msgid "invalid script file:"
+msgstr "geçersiz betik:"
 
-#~ msgid "Error executing script"
-#~ msgstr "Betiğin yürütülmesinde hata"
+msgid "Error executing script"
+msgstr "Betiğin yürütülmesinde hata"
 
-#~ msgid "Script"
-#~ msgstr "Betik"
+msgid "Script"
+msgstr "Betik"
 
-#~ msgid "executed"
-#~ msgstr "Yürütüldü"
+msgid "executed"
+msgstr "Yürütüldü"
 
-#~ msgid "path not found:"
-#~ msgstr "yol bulunamadı:"
+msgid "path not found:"
+msgstr "yol bulunamadı:"
 
-#~ msgid "for"
-#~ msgstr "için"
+msgid "for"
+msgstr "için"
 
-#~ msgid "first."
-#~ msgstr "önce."
+msgid "first."
+msgstr "önce."
 
-#~ msgid "Configure html-browser"
-#~ msgstr "html-tarayıcıyı yapılandır."
+msgid "Configure html-browser"
+msgstr "html-tarayıcıyı yapılandır."
 
-#~ msgid "html browser (netscape)"
-#~ msgstr "html tarayıcı (netscape)"
+msgid "html browser (netscape)"
+msgstr "html tarayıcı (netscape)"
 
-#~ msgid "path or url for html manual pages"
-#~ msgstr "html el kitabı sayfaları için yol yada adres"
+msgid "path or url for html manual pages"
+msgstr "html el kitabı sayfaları için yol yada adres"
 
-#~ msgid "new window  "
-#~ msgstr "yeni pencere"
+msgid "new window  "
+msgstr "yeni pencere"
 
-#~ msgid "reuse window"
-#~ msgstr "pencereyi tekrar kullan"
+msgid "reuse window"
+msgstr "pencereyi tekrar kullan"
 
-#~ msgid "Location:"
-#~ msgstr "MEVKİ"
+msgid "Location:"
+msgstr "MEVKİ"
 
-#~ msgid "Loading ..."
-#~ msgstr "Yükleniyor ..."
+msgid "Loading ..."
+msgstr "Yükleniyor ..."
 
-#~ msgid "Grass 5.0 Data Selection"
-#~ msgstr "Grass 5.0 Veri Seçimi"
+msgid "Grass 5.0 Data Selection"
+msgstr "Grass 5.0 Veri Seçimi"
 
-#~ msgid ""
-#~ "Welcome to GRASS GIS Version 5.0\n"
-#~ "\n"
-#~ msgstr ""
-#~ "GRASS CBS Sürüm 5.0'a hoşgeldiniz\n"
-#~ "\n"
+msgid ""
+"Welcome to GRASS GIS Version 5.0\n"
+"\n"
+msgstr ""
+"GRASS CBS Sürüm 5.0'a hoşgeldiniz\n"
+"\n"
 
-#~ msgid "Please select location and mapset\n"
-#~ msgstr "Lütfen mevki ve harita rakımını seçiniz\n"
+msgid "Please select location and mapset\n"
+msgstr "Lütfen mevki ve harita rakımını seçiniz\n"
 
-#~ msgid "Database : "
-#~ msgstr "Veritabanı : "
+msgid "Database : "
+msgstr "Veritabanı : "
 
-#~ msgid "Location"
-#~ msgstr "Mevki"
+msgid "Location"
+msgstr "Mevki"
 
-#~ msgid "Mapset"
-#~ msgstr "Harita takımı"
+msgid "Mapset"
+msgstr "Harita takımı"
 
-#~ msgid "Use Selection"
-#~ msgstr "Seçimi kullan"
+msgid "Use Selection"
+msgstr "Seçimi kullan"
 
-#~ msgid "Create New Location"
-#~ msgstr "Yeni Mevki oluştur"
+msgid "Create New Location"
+msgstr "Yeni Mevki oluştur"
 
-#~ msgid "Vectors"
-#~ msgstr "Vektörler"
+msgid "Vectors"
+msgstr "Vektörler"
 
-#~ msgid "Vector Panel"
-#~ msgstr "Vektör Paneli"
+msgid "Vector Panel"
+msgstr "Vektör Paneli"
 
-#~ msgid "Current:"
-#~ msgstr "Güncel:"
+msgid "Current:"
+msgstr "Güncel:"
 
-#~ msgid "Line Width"
-#~ msgstr "Çizgi Kalınlığı"
+msgid "Line Width"
+msgstr "Çizgi Kalınlığı"
 
-#~ msgid "Color"
-#~ msgstr "Renk"
+msgid "Color"
+msgstr "Renk"
 
-#~ msgid "Draw Current"
-#~ msgstr "Güncel olanı çiz."
+msgid "Draw Current"
+msgstr "Güncel olanı çiz."
 
-#~ msgid "Display on surface(s):"
-#~ msgstr "Yüzey(ler) üzerinde göster:"
+msgid "Display on surface(s):"
+msgstr "Yüzey(ler) üzerinde göster:"
 
-#~ msgid "Input File:"
-#~ msgstr "Girdi Dosyası:"
+msgid "Input File:"
+msgstr "Girdi Dosyası:"
 
-#~ msgid "Output File:"
-#~ msgstr "Çıktı Dosyası:"
+msgid "Output File:"
+msgstr "Çıktı Dosyası:"
 
-#~ msgid "Color File:"
-#~ msgstr "Renk Dosyası:"
+msgid "Color File:"
+msgstr "Renk Dosyası:"
 
-#~ msgid "Lighting Model"
-#~ msgstr "Aydınlatma Modeli"
+msgid "Lighting Model"
+msgstr "Aydınlatma Modeli"
 
-#~ msgid "flat"
-#~ msgstr "düz"
+msgid "flat"
+msgstr "düz"
 
-#~ msgid "Accept"
-#~ msgstr "Kabul"
+msgid "Accept"
+msgstr "Kabul"
 
-#~ msgid "Threshold Type"
-#~ msgstr "Eşik tipi"
+msgid "Threshold Type"
+msgstr "Eşik tipi"
 
-#~ msgid "Interval Size:"
-#~ msgstr "Aralık Boyutu:"
+msgid "Interval Size:"
+msgstr "Aralık Boyutu:"
 
-#~ msgid "Min:"
-#~ msgstr "Minimum:"
+msgid "Min:"
+msgstr "Minimum:"
 
-#~ msgid "Max:"
-#~ msgstr "Maksimum:"
+msgid "Max:"
+msgstr "Maksimum:"
 
-#~ msgid "Num. Levels:"
-#~ msgstr "Katman numarası:"
+msgid "Num. Levels:"
+msgstr "Katman numarası:"
 
-#~ msgid "linear"
-#~ msgstr "doğrusal"
+msgid "linear"
+msgstr "doğrusal"
 
-#~ msgid "logarithmic"
-#~ msgstr "logaritmik"
+msgid "logarithmic"
+msgstr "logaritmik"
 
-#~ msgid "Add"
-#~ msgstr "Ekle"
+msgid "Add"
+msgstr "Ekle"
 
-#~ msgid "Complete"
-#~ msgstr "Tümü"
+msgid "Complete"
+msgstr "Tümü"
 
-#~ msgid "Range"
-#~ msgstr "Aralık"
+msgid "Range"
+msgstr "Aralık"
 
-#~ msgid "Query map: None"
-#~ msgstr "Sorhu haritası: Hiç biri"
+msgid "Query map: None"
+msgstr "Sorhu haritası: Hiç biri"
 
-#~ msgid "What's Here?"
-#~ msgstr "Burası nedir?"
+msgid "What's Here?"
+msgstr "Burası nedir?"
 
-#~ msgid "What's Here Panel"
-#~ msgstr "Burası nedir Paneli"
+msgid "What's Here Panel"
+msgstr "Burası nedir Paneli"
 
-#~ msgid "Reset"
-#~ msgstr "Sıfırla"
+msgid "Reset"
+msgstr "Sıfırla"
 
-#~ msgid "Attributes"
-#~ msgstr "Öznitelikler"
+msgid "Attributes"
+msgstr "Öznitelikler"
 
-#~ msgid "Xcol:"
-#~ msgstr "X sütunu:"
+msgid "Xcol:"
+msgstr "X sütunu:"
 
-#~ msgid "Ycol:"
-#~ msgstr "Y sütunu:"
+msgid "Ycol:"
+msgstr "Y sütunu:"
 
-#~ msgid "Dist:"
-#~ msgstr "Mesafe:"
+msgid "Dist:"
+msgstr "Mesafe:"
 
-#~ msgid "PG table:"
-#~ msgstr "PG(Postgis)-Tablosu:"
+msgid "PG table:"
+msgstr "PG(Postgis)-Tablosu:"
 
-#~ msgid "Key col:"
-#~ msgstr "Anahtar sütun:"
+msgid "Key col:"
+msgstr "Anahtar sütun:"
 
-#~ msgid "Query vector"
-#~ msgstr "Vektör sorgula"
+msgid "Query vector"
+msgstr "Vektör sorgula"
 
-#~ msgid "elevation: "
-#~ msgstr "Yükselti:"
+msgid "elevation: "
+msgstr "Yükselti:"
 
-#~ msgid "Topo: "
-#~ msgstr "Topoloji:"
+msgid "Topo: "
+msgstr "Topoloji:"
 
-#~ msgid "constant"
-#~ msgstr "sabit"
+msgid "constant"
+msgstr "sabit"
 
-#~ msgid "Color: "
-#~ msgstr "Renk: "
+msgid "Color: "
+msgstr "Renk: "
 
-#~ msgid "distance along surface:      "
-#~ msgstr "Yüzey boyunca mesafe:      "
+msgid "distance along surface:      "
+msgstr "Yüzey boyunca mesafe:      "
 
-#~ msgid "Query map: "
-#~ msgstr "Sorgu haritası:"
+msgid "Query map: "
+msgstr "Sorgu haritası:"
 
-#~ msgid "Invalid query object type"
-#~ msgstr "Geçersiz sorgu objesi tipi"
+msgid "Invalid query object type"
+msgstr "Geçersiz sorgu objesi tipi"
 
-#~ msgid "Point not on surface"
-#~ msgstr "Nokta yüzey üzerinde değil."
+msgid "Point not on surface"
+msgstr "Nokta yüzey üzerinde değil."
 
-#~ msgid "Postgres: "
-#~ msgstr "Postgres:"
+msgid "Postgres: "
+msgstr "Postgres:"
 
-#~ msgid "xy distance from previous:  "
-#~ msgstr "Öncekinden olan xy uzaklığı:"
+msgid "xy distance from previous:  "
+msgstr "Öncekinden olan xy uzaklığı:"
 
-#~ msgid "xyz distance from previous:  "
-#~ msgstr "Öncekinden olan xyz uzaklığı:"
+msgid "xyz distance from previous:  "
+msgstr "Öncekinden olan xyz uzaklığı:"
 
-#~ msgid "Scale"
-#~ msgstr "Ölçek"
+msgid "Scale"
+msgstr "Ölçek"
 
-#~ msgid "Scale Panel"
-#~ msgstr "Ölçek Paneli"
+msgid "Scale Panel"
+msgstr "Ölçek Paneli"
 
-#~ msgid "Place Scale Object"
-#~ msgstr "ölçek objesini yerleştir"
+msgid "Place Scale Object"
+msgstr "ölçek objesini yerleştir"
 
-#~ msgid "Solid"
-#~ msgstr "Katı"
+msgid "Solid"
+msgstr "Katı"
 
-#~ msgid "Wire"
-#~ msgstr "Tel"
+msgid "Wire"
+msgstr "Tel"
 
-#~ msgid "Cube"
-#~ msgstr "Küp"
+msgid "Cube"
+msgstr "Küp"
 
-#~ msgid "Plane"
-#~ msgstr "Düzlem"
+msgid "Plane"
+msgstr "Düzlem"
 
-#~ msgid "North Arrow"
-#~ msgstr "Kuzey Oku"
+msgid "North Arrow"
+msgstr "Kuzey Oku"
 
-#~ msgid "NW"
-#~ msgstr "KB"
+msgid "NW"
+msgstr "KB"
 
-#~ msgid "NE"
-#~ msgstr "KD"
+msgid "NE"
+msgstr "KD"
 
-#~ msgid "SW"
-#~ msgstr "GB"
+msgid "SW"
+msgstr "GB"
 
-#~ msgid "SE"
-#~ msgstr "GD"
+msgid "SE"
+msgstr "GD"
 
-#~ msgid "size"
-#~ msgstr "boyut"
+msgid "size"
+msgstr "boyut"
 
-#~ msgid "Auto"
-#~ msgstr "Otomatik"
+msgid "Auto"
+msgstr "Otomatik"
 
-#~ msgid "Remove"
-#~ msgstr "Kaldır"
+msgid "Remove"
+msgstr "Kaldır"
 
-#~ msgid "MAPSETS"
-#~ msgstr "HARİTA TAKIMLARI"
+msgid "MAPSETS"
+msgstr "HARİTA TAKIMLARI"
 
-#~ msgid "FILES"
-#~ msgstr "DOSYALAR"
+msgid "FILES"
+msgstr "DOSYALAR"
 
-#~ msgid "Map Type:"
-#~ msgstr "Harita Tipi:"
+msgid "Map Type:"
+msgstr "Harita Tipi:"
 
-#~ msgid "Map Browser"
-#~ msgstr "Harita Gözatıcı"
+msgid "Map Browser"
+msgstr "Harita Gözatıcı"
 
-#~ msgid "use X"
-#~ msgstr "X'i kullan"
+msgid "use X"
+msgstr "X'i kullan"
 
-#~ msgid "use sphere"
-#~ msgstr "küre kullan"
+msgid "use sphere"
+msgstr "küre kullan"
 
-#~ msgid "Animation"
-#~ msgstr "Canlandırma"
+msgid "Animation"
+msgstr "Canlandırma"
 
-#~ msgid "Animation Panel"
-#~ msgstr "Canlandırma Paneli"
+msgid "Animation Panel"
+msgstr "Canlandırma Paneli"
 
-#~ msgid "run"
-#~ msgstr "çalıştır"
+msgid "run"
+msgstr "çalıştır"
 
-#~ msgid "stop"
-#~ msgstr "dur"
+msgid "stop"
+msgstr "dur"
 
-#~ msgid "show path"
-#~ msgstr "yolu göster"
+msgid "show path"
+msgstr "yolu göster"
 
-#~ msgid "show vect"
-#~ msgstr "Vektörü göster"
+msgid "show vect"
+msgstr "Vektörü göster"
 
-#~ msgid "run and save images"
-#~ msgstr "görüntüleri çalıştır ve kaydet"
+msgid "run and save images"
+msgstr "görüntüleri çalıştır ve kaydet"
 
-#~ msgid "Ok"
-#~ msgstr "Tamam"
+msgid "Ok"
+msgstr "Tamam"
 
-#~ msgid "Dismiss"
-#~ msgstr "Vazgeç"
+msgid "Dismiss"
+msgstr "Vazgeç"
 
-#~ msgid "Internal Error"
-#~ msgstr "İç hata"
+msgid "Internal Error"
+msgstr "İç hata"
 
-#~ msgid "Wireframe"
-#~ msgstr "Tel çerçeve"
+msgid "Wireframe"
+msgstr "Tel çerçeve"
 
-#~ msgid "PPM"
-#~ msgstr "PPM"
+msgid "PPM"
+msgstr "PPM"
 
-#~ msgid "TIFF"
-#~ msgstr "TIFF"
+msgid "TIFF"
+msgstr "TIFF"
 
-#~ msgid "E"
-#~ msgstr "D"
+msgid "E"
+msgstr "D"
 
-#~ msgid "W"
-#~ msgstr "B"
+msgid "W"
+msgstr "B"
 
-#~ msgid "S"
-#~ msgstr "G"
+msgid "S"
+msgstr "G"
 
-#~ msgid "New center of view has been set"
-#~ msgstr "Pencerenin yeni merkezi ayarlandı"
+msgid "New center of view has been set"
+msgstr "Pencerenin yeni merkezi ayarlandı"
 
-#~ msgid "Can't create file"
-#~ msgstr "Dosya oluşturulamıyor"
+msgid "Can't create file"
+msgstr "Dosya oluşturulamıyor"
 
-#~ msgid "None"
-#~ msgstr "Hiçbiri"
+msgid "None"
+msgstr "Hiçbiri"
 
-#~ msgid "None Selected"
-#~ msgstr "Hiçbiri seçilmedi"
+msgid "None Selected"
+msgstr "Hiçbiri seçilmedi"
 
-#~ msgid "Auto:"
-#~ msgstr "Otomatik:"
+msgid "Auto:"
+msgstr "Otomatik:"
 
-#~ msgid "Draw"
-#~ msgstr "Çiz."
+msgid "Draw"
+msgstr "Çiz."
 
-#~ msgid "Feature:"
-#~ msgstr "Obje:"
+msgid "Feature:"
+msgstr "Obje:"
 
-#~ msgid "Surface"
-#~ msgstr "Yüzey"
+msgid "Surface"
+msgstr "Yüzey"
 
-#~ msgid "DRAW"
-#~ msgstr "ÇİZ"
+msgid "DRAW"
+msgstr "ÇİZ"
 
-#~ msgid "center"
-#~ msgstr "merkez"
+msgid "center"
+msgstr "merkez"
 
-#~ msgid "top"
-#~ msgstr "tepe"
+msgid "top"
+msgstr "tepe"
 
-#~ msgid "cancel"
-#~ msgstr "İptal"
+msgid "cancel"
+msgstr "İptal"
 
-#~ msgid "perspective"
-#~ msgstr "perspektif"
+msgid "perspective"
+msgstr "perspektif"
 
-#~ msgid "RESET"
-#~ msgstr "SIFIRLA"
+msgid "RESET"
+msgstr "SIFIRLA"
 
-#~ msgid "height"
-#~ msgstr "Yükseklik"
+msgid "height"
+msgstr "Yükseklik"
 
-#~ msgid "Framerate :"
-#~ msgstr "Çerçeve hızı:"
+msgid "Framerate :"
+msgstr "Çerçeve hızı:"
 
-#~ msgid "Load"
-#~ msgstr "Yükle"
+msgid "Load"
+msgstr "Yükle"
 
-#~ msgid "Run and Save Images"
-#~ msgstr "Görüntüleri Çalıştır ve Kaydet"
+msgid "Run and Save Images"
+msgstr "Görüntüleri Çalıştır ve Kaydet"
 
-#~ msgid "New Key Time:"
-#~ msgstr "Yeni Anahtar Zamanı:"
+msgid "New Key Time:"
+msgstr "Yeni Anahtar Zamanı:"
 
-#~ msgid "FromX"
-#~ msgstr "X'den"
+msgid "FromX"
+msgstr "X'den"
 
-#~ msgid "FromY"
-#~ msgstr "Y'den"
+msgid "FromY"
+msgstr "Y'den"
 
-#~ msgid "FromZ"
-#~ msgstr "Z'den"
+msgid "FromZ"
+msgstr "Z'den"
 
-#~ msgid "New Key Time"
-#~ msgstr "Yeni Anahtar Zamanı"
+msgid "New Key Time"
+msgstr "Yeni Anahtar Zamanı"
 
-#~ msgid "Minute:"
-#~ msgstr "Dakika:"
+msgid "Minute:"
+msgstr "Dakika:"
 
-#~ msgid "Second:"
-#~ msgstr "İkinci:"
+msgid "Second:"
+msgstr "İkinci:"
 
-#~ msgid "Frame:"
-#~ msgstr "Çerçeve:"
+msgid "Frame:"
+msgstr "Çerçeve:"
 
-#~ msgid "Error - All values must be at least zero."
-#~ msgstr "Hata - Tüm değerler en azından sıfır olmalı"
+msgid "Error - All values must be at least zero."
+msgstr "Hata - Tüm değerler en azından sıfır olmalı"
 
-#~ msgid "New Frame Rate"
-#~ msgstr "Yeni Çerçeve Hızı"
+msgid "New Frame Rate"
+msgstr "Yeni Çerçeve Hızı"
 
-#~ msgid "Framerate:"
-#~ msgstr "Çerçeve hızı:"
+msgid "Framerate:"
+msgstr "Çerçeve hızı:"
 
-#~ msgid "Frame Rate Error"
-#~ msgstr "Çerçeve Hızı Hatası"
+msgid "Frame Rate Error"
+msgstr "Çerçeve Hızı Hatası"
 
-#~ msgid "Internal Error - Can't find channel"
-#~ msgstr "İç Hata - Kanal bulunamıyor"
+msgid "Internal Error - Can't find channel"
+msgstr "İç Hata - Kanal bulunamıyor"
 
-#~ msgid "Delete Keys"
-#~ msgstr "Anahtarları sil"
+msgid "Delete Keys"
+msgstr "Anahtarları sil"
 
-#~ msgid "Delete the selected keys?"
-#~ msgstr "Seçilen anahtarları sileyim mi?"
+msgid "Delete the selected keys?"
+msgstr "Seçilen anahtarları sileyim mi?"
 
-#~ msgid "File Error"
-#~ msgstr "Dosya Hatası"
+msgid "File Error"
+msgstr "Dosya Hatası"
 
-#~ msgid "Error - Could not open file"
-#~ msgstr "Hata - Dosya açılamıyor"
+msgid "Error - Could not open file"
+msgstr "Hata - Dosya açılamıyor"
 
-#~ msgid "for reading"
-#~ msgstr "Okuma için"
+msgid "for reading"
+msgstr "Okuma için"
 
-#~ msgid "Blank"
-#~ msgstr "Boş"
+msgid "Blank"
+msgstr "Boş"
 
-#~ msgid "Select Color"
-#~ msgstr "Renk seç"
+msgid "Select Color"
+msgstr "Renk seç"
 
-#~ msgid "Use Surface Color"
-#~ msgstr "Yüzey rengini kullan"
+msgid "Use Surface Color"
+msgstr "Yüzey rengini kullan"
 
-#~ msgid "Red"
-#~ msgstr "Kırmızı"
+msgid "Red"
+msgstr "Kırmızı"
 
-#~ msgid "Green"
-#~ msgstr "Yeşil"
+msgid "Green"
+msgstr "Yeşil"
 
-#~ msgid "Blue"
-#~ msgstr "Mavi"
+msgid "Blue"
+msgstr "Mavi"
 
-#~ msgid "DIRECTORIES"
-#~ msgstr "DİZİNLER"
+msgid "DIRECTORIES"
+msgstr "DİZİNLER"
 
-#~ msgid "CURRENT:"
-#~ msgstr "GÜNCEL:"
+msgid "CURRENT:"
+msgstr "GÜNCEL:"
 
-#~ msgid "File Browser"
-#~ msgstr "Dosya Göz atıcı"
+msgid "File Browser"
+msgstr "Dosya Göz atıcı"
 
-#~ msgid "Lights"
-#~ msgstr "Işık"
+msgid "Lights"
+msgstr "Işık"
 
-#~ msgid "Lighting Panel"
-#~ msgstr "Aydınlatma Paneli"
+msgid "Lighting Panel"
+msgstr "Aydınlatma Paneli"
 
-#~ msgid "Show Model"
-#~ msgstr "Modeli göster"
+msgid "Show Model"
+msgstr "Modeli göster"
 
-#~ msgid "Brightness"
-#~ msgstr "Parlaklık"
+msgid "Brightness"
+msgstr "Parlaklık"
 
-#~ msgid "Height"
-#~ msgstr "Yükseklik"
+msgid "Height"
+msgstr "Yükseklik"
 
-#~ msgid "Raster"
-#~ msgstr "Raster"
+msgid "Raster"
+msgstr "Raster"
 
-#~ msgid "Labels"
-#~ msgstr "Etiketler"
+msgid "Labels"
+msgstr "Etiketler"
 
-#~ msgid "Icons"
-#~ msgstr "Simge"
+msgid "Icons"
+msgstr "Simge"
 
-#~ msgid "Color Panel"
-#~ msgstr "Renk Paneli"
+msgid "Color Panel"
+msgstr "Renk Paneli"
 
-#~ msgid "Surfaces"
-#~ msgstr "Yüzeyler"
+msgid "Surfaces"
+msgstr "Yüzeyler"
 
-#~ msgid "Surface Panel"
-#~ msgstr "Yüzey Paneli"
+msgid "Surface Panel"
+msgstr "Yüzey Paneli"
 
-#~ msgid "Grid Resolution"
-#~ msgstr "Grid Çözünürlüğü"
+msgid "Grid Resolution"
+msgstr "Grid Çözünürlüğü"
 
-#~ msgid "Polygon Resolution"
-#~ msgstr "Poligon Çözünürlüğü"
+msgid "Polygon Resolution"
+msgstr "Poligon Çözünürlüğü"
 
-#~ msgid "Current Surface Only"
-#~ msgstr "Sadece güncel yüzey"
+msgid "Current Surface Only"
+msgstr "Sadece güncel yüzey"
 
-#~ msgid "All Surfaces"
-#~ msgstr "Tüm Yüzeyler"
+msgid "All Surfaces"
+msgstr "Tüm Yüzeyler"
 
-#~ msgid "Surface Style:"
-#~ msgstr "Yüzey sitili:"
+msgid "Surface Style:"
+msgstr "Yüzey sitili:"
 
-#~ msgid "Polygon"
-#~ msgstr "Poligon"
+msgid "Polygon"
+msgstr "Poligon"
 
-#~ msgid "Shading:"
-#~ msgstr "Gölgeleme:"
+msgid "Shading:"
+msgstr "Gölgeleme:"
 
-#~ msgid "Flat"
-#~ msgstr "Düz"
+msgid "Flat"
+msgstr "Düz"
 
-#~ msgid "Wire Color"
-#~ msgstr "Tel rengi"
+msgid "Wire Color"
+msgstr "Tel rengi"
 
-#~ msgid "Position"
-#~ msgstr "Konum"
+msgid "Position"
+msgstr "Konum"
 
-#~ msgid "WireColor"
-#~ msgstr "Tel rengi"
+msgid "WireColor"
+msgstr "Tel rengi"
 
-#~ msgid "Attribute"
-#~ msgstr "öznitelik"
+msgid "Attribute"
+msgstr "öznitelik"
 
-#~ msgid "Change Attribute"
-#~ msgstr "Özniteliği Değiştir"
+msgid "Change Attribute"
+msgstr "Özniteliği Değiştir"
 
-#~ msgid "Change Attribute:"
-#~ msgstr "Özniteliği Değiştir:"
+msgid "Change Attribute:"
+msgstr "Özniteliği Değiştir:"
 
-#~ msgid "New Map"
-#~ msgstr "Yeni harita"
+msgid "New Map"
+msgstr "Yeni harita"
 
-#~ msgid "Remove Mask"
-#~ msgstr "Maskeyi kaldır"
+msgid "Remove Mask"
+msgstr "Maskeyi kaldır"
 
-#~ msgid "New Constant"
-#~ msgstr "Yeni sabit"
+msgid "New Constant"
+msgstr "Yeni sabit"
 
-#~ msgid "Use as color"
-#~ msgstr "Renk olarak kullan"
+msgid "Use as color"
+msgstr "Renk olarak kullan"
 
-#~ msgid "Status: "
-#~ msgstr "Durum:"
+msgid "Status: "
+msgstr "Durum:"
 
-#~ msgid "not set"
-#~ msgstr "ayarlanmadı"
+msgid "not set"
+msgstr "ayarlanmadı"
 
-#~ msgid "color:"
-#~ msgstr "Renk:"
+msgid "color:"
+msgstr "Renk:"
 
-#~ msgid "Surface Color"
-#~ msgstr "Yüzey rengi"
+msgid "Surface Color"
+msgstr "Yüzey rengi"
 
-#~ msgid "Enter a constant value :"
-#~ msgstr "Sabit bir değer gir:"
+msgid "Enter a constant value :"
+msgstr "Sabit bir değer gir:"
 
-#~ msgid "Label"
-#~ msgstr "Etiket"
+msgid "Label"
+msgstr "Etiket"
 
-#~ msgid "Label Panel"
-#~ msgstr "Etiket paneli"
+msgid "Label Panel"
+msgstr "Etiket paneli"
 
-#~ msgid "Font Size:"
-#~ msgstr "Yazı tipi Boyutu:"
+msgid "Font Size:"
+msgstr "Yazı tipi Boyutu:"
 
-#~ msgid "Italic"
-#~ msgstr "Eğik"
+msgid "Italic"
+msgstr "Eğik"
 
-#~ msgid "Bold"
-#~ msgstr "koyu"
+msgid "Bold"
+msgstr "koyu"
 
-#~ msgid "Place Label"
-#~ msgstr "Etiket Yerleştir"
+msgid "Place Label"
+msgstr "Etiket Yerleştir"
 
-#~ msgid "Undo"
-#~ msgstr "Geri al"
+msgid "Undo"
+msgstr "Geri al"
 
-#~ msgid "Label Text"
-#~ msgstr "Etiket metni"
+msgid "Label Text"
+msgstr "Etiket metni"
 
-#~ msgid "Legend"
-#~ msgstr "Lejand"
+msgid "Legend"
+msgstr "Lejand"
 
-#~ msgid "Invert"
-#~ msgstr "Ters Çevir"
+msgid "Invert"
+msgstr "Ters Çevir"
 
-#~ msgid "Category Values"
-#~ msgstr "Kategori Değerleri"
+msgid "Category Values"
+msgstr "Kategori Değerleri"
 
-#~ msgid "Category Labels"
-#~ msgstr "Kategori Etiketleri"
+msgid "Category Labels"
+msgstr "Kategori Etiketleri"
 
-#~ msgid "Use Range"
-#~ msgstr "Aralığı kullan"
+msgid "Use Range"
+msgstr "Aralığı kullan"
 
-#~ msgid "Low:"
-#~ msgstr "Düşük:"
+msgid "Low:"
+msgstr "Düşük:"
 
-#~ msgid "Use List"
-#~ msgstr "Listeyi Kullan"
+msgid "Use List"
+msgstr "Listeyi Kullan"
 
-#~ msgid "Current List"
-#~ msgstr "Güncel Liste"
+msgid "Current List"
+msgstr "Güncel Liste"
 
-#~ msgid "Values"
-#~ msgstr "Değerler"
+msgid "Values"
+msgstr "Değerler"
 
-#~ msgid "LabelColor"
-#~ msgstr "Etiket Rengi"
+msgid "LabelColor"
+msgstr "Etiket Rengi"
 
-#~ msgid "cat_list"
-#~ msgstr "cat listesi"
+msgid "cat_list"
+msgstr "cat listesi"
 
-#~ msgid "Plane 0"
-#~ msgstr "0 Düzlemi"
+msgid "Plane 0"
+msgstr "0 Düzlemi"
 
-#~ msgid "Rotate"
-#~ msgstr "Döndür"
+msgid "Rotate"
+msgstr "Döndür"
 
-#~ msgid ""
-#~ "Welcome to GRASS GIS Version 5.7\n"
-#~ "\n"
-#~ msgstr ""
-#~ "GRASS CBS Sürüm 5.7'ye hoşgeldiniz\n"
-#~ "\n"
+msgid ""
+"Welcome to GRASS GIS Version 5.7\n"
+"\n"
+msgstr ""
+"GRASS CBS Sürüm 5.7'ye hoşgeldiniz\n"
+"\n"
 
-#~ msgid "(Accessible) Mapsets"
-#~ msgstr "(Erişilebilir) Harita Takımları"
+msgid "(Accessible) Mapsets"
+msgstr "(Erişilebilir) Harita Takımları"
 
-#~ msgid "Create new mapset : "
-#~ msgstr "Yeni harita takımı oluştur:"
+msgid "Create new mapset : "
+msgstr "Yeni harita takımı oluştur:"
 
-#~ msgid "Create..."
-#~ msgstr "Oluştur..."
+msgid "Create..."
+msgstr "Oluştur..."
 
-#~ msgid "Create Location From EPSG"
-#~ msgstr "EPSG den Mevki Oluştur"
+msgid "Create Location From EPSG"
+msgstr "EPSG den Mevki Oluştur"
 
-#~ msgid "New location path"
-#~ msgstr "Yeni mevki yolu"
+msgid "New location path"
+msgstr "Yeni mevki yolu"
 
-#~ msgid "or define a new projection location\n"
-#~ msgstr "veya yeni bir projeksiyon mevkisi belirle\n"
+msgid "or define a new projection location\n"
+msgstr "veya yeni bir projeksiyon mevkisi belirle\n"
 
-#~ msgid "Path to location : "
-#~ msgstr "Mevki yolu : "
+msgid "Path to location : "
+msgstr "Mevki yolu : "
 
-#~ msgid "Projection Location"
-#~ msgstr "Projeksiyon Mevkisi"
+msgid "Projection Location"
+msgstr "Projeksiyon Mevkisi"
 
-#~ msgid "(Accessible) GIS Mapsets"
-#~ msgstr "(Erişilebilir)CBS Harita Takımları"
+msgid "(Accessible) GIS Mapsets"
+msgstr "(Erişilebilir)CBS Harita Takımları"
 
-#~ msgid "Define new projection location"
-#~ msgstr "Yeni projeksiyon mevkisi belirle"
+msgid "Define new projection location"
+msgstr "Yeni projeksiyon mevkisi belirle"
 
-#~ msgid "Use EPSG values"
-#~ msgstr "EPSG değerlerini kullan"
+msgid "Use EPSG values"
+msgstr "EPSG değerlerini kullan"
 
-#~ msgid "list devices"
-#~ msgstr "araçları listele"
+msgid "list devices"
+msgstr "araçları listele"
 
-#~ msgid "Manage region"
-#~ msgstr "Bölgeyi yönet"
+msgid "Manage region"
+msgstr "Bölgeyi yönet"
 
-#~ msgid "Manage 3D region"
-#~ msgstr "3D bölgeyi yönet"
+msgid "Manage 3D region"
+msgstr "3D bölgeyi yönet"
 
-#~ msgid "Modify mapset search path"
-#~ msgstr "Harita takımı arama yolunu değiştir"
+msgid "Modify mapset search path"
+msgstr "Harita takımı arama yolunu değiştir"
 
-#~ msgid "Show standard GRASS fonts"
-#~ msgstr "Standart GRASS yazıtiplerini göster"
+msgid "Show standard GRASS fonts"
+msgstr "Standart GRASS yazıtiplerini göster"
 
-#~ msgid "Break lines at intersections"
-#~ msgstr "Kesişme noktasındaki çizgileri kır"
+msgid "Break lines at intersections"
+msgstr "Kesişme noktasındaki çizgileri kır"
 
-#~ msgid "PERMANTLY remove table"
-#~ msgstr "Tabloyu kalıcı olarak uzaklaştır"
+msgid "PERMANTLY remove table"
+msgstr "Tabloyu kalıcı olarak uzaklaştır"

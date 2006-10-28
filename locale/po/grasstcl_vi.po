@@ -1,5 +1,4 @@
 # translation of grasstcl_vi.po to vietnamese
-# translation of grasstcl_vi.po to vietnamese
 # This file is distributed under the same license as the GRASS package.
 # Copyright (C) 2005, GRASS Development Team
 # Markus Neteler <neteler@itc.it>, 2006.
@@ -1338,9 +1337,8 @@ msgid "Save current display geometry to named region"
 msgstr ""
 
 #: ../gui/tcltk/gis.m/mapcanvas.tcl:789
-#, fuzzy
 msgid "Enter region name"
-msgstr "Quản lý vùng"
+msgstr ""
 
 #: ../gui/tcltk/gis.m/maplabels.tcl:136
 msgid "Override offset, alignment, and color settings in v.labels file: "
@@ -2493,9 +2491,8 @@ msgid "Clean vector files"
 msgstr "Làm sạch các tập tin vector"
 
 #: ../gui/tcltk/menus/menu.tcl:384
-#, fuzzy
 msgid "Add missing centroids"
-msgstr "trọng tâm"
+msgstr ""
 
 #: ../gui/tcltk/menus/menu.tcl:386
 msgid "Build polylines from adjacent segments"
@@ -3674,23 +3671,26 @@ msgstr "Lưu và thoát"
 msgid "mouse button actions (left, right, center)"
 msgstr ""
 
-#~ msgid "New location path"
-#~ msgstr "Đường dẫn location mới"
+msgid "New location path"
+msgstr "Đường dẫn location mới"
 
-#~ msgid "Select raster map to profile"
-#~ msgstr "Chọn bản đồ raster để tạo mặt cắt"
+msgid "Select raster map to profile"
+msgstr "Chọn bản đồ raster để tạo mặt cắt"
 
-#~ msgid "list devices"
-#~ msgstr "Liệt kê các thiết bị"
+msgid "list devices"
+msgstr "Liệt kê các thiết bị"
 
-#~ msgid "list ghostscript output devices"
-#~ msgstr "Liệt kê các thiết bị đầu ra ghostscript"
+msgid "list ghostscript output devices"
+msgstr "Liệt kê các thiết bị đầu ra ghostscript"
 
-#~ msgid "Create WIND3 (default 3D window) from current 2D region"
-#~ msgstr "Tạo WIND3 (cửa sổ 3D mặc định) từ vùng 2D hiện tại"
+msgid "Create WIND3 (default 3D window) from current 2D region"
+msgstr "Tạo WIND3 (cửa sổ 3D mặc định) từ vùng 2D hiện tại"
 
-#~ msgid "Manage 3D region"
-#~ msgstr "Quản lý vùng 3D"
+msgid "Manage 3D region"
+msgstr "Quản lý vùng 3D"
 
-#~ msgid "Break lines at intersections"
-#~ msgstr "Ngắt đường tại các giao điểm"
+msgid "Break lines at intersections"
+msgstr "Ngắt đường tại các giao điểm"
+
+#~ msgid "Manage region"
+#~ msgstr "Quản lý vùng"

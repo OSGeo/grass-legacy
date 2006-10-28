@@ -174,9 +174,8 @@ msgid "bold text"
 msgstr "texte en gras"
 
 #: ../gui/tcltk/d.m/frames.tcl:60 ../gui/tcltk/gis.m/frames.tcl:109
-#, fuzzy
 msgid "create and select frame"
-msgstr "supprimer tous les cadres"
+msgstr ""
 
 #: ../gui/tcltk/d.m/frames.tcl:62 ../gui/tcltk/gis.m/frames.tcl:111
 msgid "select frame"
@@ -284,7 +283,7 @@ msgstr "Aide pour l'orthodromie"
 #: ../gui/tcltk/d.m/labels.tcl:65
 #, fuzzy
 msgid "Labels name:"
-msgstr "Nom du raster :"
+msgstr "Etiquettes"
 
 #: ../gui/tcltk/d.m/labels.tcl:80 ../gui/tcltk/gis.m/labels.tcl:142
 msgid "Display constraints:"
@@ -345,7 +344,7 @@ msgstr "Nouveau"
 #: ../gui/tcltk/d.m/menu.tcl:15
 #, fuzzy
 msgid "Create new group file"
-msgstr "Sauvegarder le fichier groupe"
+msgstr "Ouvrir le fichier groupe"
 
 #: ../gui/tcltk/d.m/menu.tcl:16 ../gui/tcltk/gis.m/gmmenu.tcl:27
 msgid "Open..."
@@ -518,9 +517,8 @@ msgid "Paper format"
 msgstr "Format papier"
 
 #: ../gui/tcltk/d.m/print.tcl:180
-#, fuzzy
 msgid "Custom"
-msgstr "Auto"
+msgstr ""
 
 #: ../gui/tcltk/d.m/print.tcl:181 ../gui/tcltk/gis.m/mapprint.tcl:258
 msgid "width:"
@@ -800,9 +798,8 @@ msgid "Add RGB or HIS layer"
 msgstr "Ajouter une couche RGB ou HIS"
 
 #: ../gui/tcltk/d.m/tool2.tcl:33
-#, fuzzy
 msgid "Add legend"
-msgstr "Ajouter un sommet"
+msgstr ""
 
 #: ../gui/tcltk/d.m/tool2.tcl:48 ../gui/tcltk/gis.m/gmtool1.tcl:92
 msgid "Add vector layer"
@@ -1163,9 +1160,8 @@ msgid "Select rectification method for rasters"
 msgstr ""
 
 #: ../gui/tcltk/gis.m/georect.tcl:960
-#, fuzzy
 msgid "1st order"
-msgstr "tracer la bordure"
+msgstr ""
 
 #: ../gui/tcltk/gis.m/georect.tcl:961
 msgid "affine transformation  (rasters & vectors). Requires 3+ GCPs."
@@ -1202,9 +1198,8 @@ msgid "geographic coordinates"
 msgstr ""
 
 #: ../gui/tcltk/gis.m/georect.tcl:985
-#, fuzzy
 msgid "forward error"
-msgstr "Suivant"
+msgstr ""
 
 #: ../gui/tcltk/gis.m/georect.tcl:987
 msgid "backward error"
@@ -1638,9 +1633,8 @@ msgid "Graduated colors: preset color schemes"
 msgstr ""
 
 #: ../gui/tcltk/gis.m/thematic.tcl:365
-#, fuzzy
 msgid "Legend: title font "
-msgstr "\tpolice de sous-titre\t"
+msgstr ""
 
 #: ../gui/tcltk/gis.m/thematic.tcl:368
 msgid "title font for legend"
@@ -2031,7 +2025,7 @@ msgstr "Afficher la version courante de GRASS"
 #: ../gui/tcltk/menus/menu.tcl:209
 #, fuzzy
 msgid "Manage projections"
-msgstr "directions des lignes"
+msgstr "Utiliser des valeurs de projection"
 
 #: ../gui/tcltk/menus/menu.tcl:210
 #, fuzzy
@@ -3456,7 +3450,7 @@ msgstr ""
 #: ../lib/init/help.tcl:1978
 #, fuzzy
 msgid "Creating title..."
-msgstr "Ouvrir fichier..."
+msgstr "Copier la table"
 
 #: ../lib/init/help.tcl:2051
 msgid "Displaying..."
@@ -3761,9 +3755,8 @@ msgid "Display attributes"
 msgstr "Afficher les attributs"
 
 #: ../vector/v.digit/toolbox.tcl:207
-#, fuzzy
 msgid "Open settings"
-msgstr "Options"
+msgstr ""
 
 #: ../vector/v.digit/toolbox.tcl:212
 msgid "Save and exit"
@@ -3773,715 +3766,718 @@ msgstr "Sauvegarder et sortir"
 msgid "mouse button actions (left, right, center)"
 msgstr ""
 
-#~ msgid "html-browser"
-#~ msgstr "Navigateur html"
+msgid "html-browser"
+msgstr "Navigateur html"
 
-#~ msgid "Quit"
-#~ msgstr "Quitter"
+msgid "Quit"
+msgstr "Quitter"
 
-#~ msgid "Enter filename to save info text"
-#~ msgstr "Entrer le nom de fichier pour sauvegarder le texte d'info"
+msgid "Enter filename to save info text"
+msgstr "Entrer le nom de fichier pour sauvegarder le texte d'info"
 
-#~ msgid "Scripting "
-#~ msgstr "Script"
+msgid "Scripting "
+msgstr "Script"
 
-#~ msgid ""
-#~ "Left button:\trun command\n"
-#~ "Middle button:\tprint man page\n"
-#~ "Ctrl-Mid button:\tshow html page\n"
-#~ "Right button:\tprint usage"
-#~ msgstr ""
-#~ "Bouton gauche :\tlancer la commande\n"
-#~ "Bouton du milieu :\timprimer la page de manuel\n"
-#~ "Bouton du milieu-Ctrl :\tafficher la page html\n"
-#~ "Bouton droit :\tutilisation de l'impression"
+msgid ""
+"Left button:\trun command\n"
+"Middle button:\tprint man page\n"
+"Ctrl-Mid button:\tshow html page\n"
+"Right button:\tprint usage"
+msgstr ""
+"Bouton gauche :\tlancer la commande\n"
+"Bouton du milieu :\timprimer la page de manuel\n"
+"Bouton du milieu-Ctrl :\tafficher la page html\n"
+"Bouton droit :\tutilisation de l'impression"
 
-#~ msgid "Family:"
-#~ msgstr "Famille :"
+msgid "Family:"
+msgstr "Famille :"
 
-#~ msgid "Pick"
-#~ msgstr "Choisir"
+msgid "Pick"
+msgstr "Choisir"
 
-#~ msgid "Font family"
-#~ msgstr "Famille de police"
+msgid "Font family"
+msgstr "Famille de police"
 
-#~ msgid "Size:"
-#~ msgstr "Taille :"
+msgid "Size:"
+msgstr "Taille :"
 
-#~ msgid "Weight:"
-#~ msgstr "Empatement :"
+msgid "Weight:"
+msgstr "Empatement :"
 
-#~ msgid "normal"
-#~ msgstr "normal"
+msgid "normal"
+msgstr "normal"
 
-#~ msgid "bold"
-#~ msgstr "gras"
+msgid "bold"
+msgstr "gras"
 
-#~ msgid "roman"
-#~ msgstr "roman"
+msgid "roman"
+msgstr "roman"
 
-#~ msgid "italic"
-#~ msgstr "italique"
+msgid "italic"
+msgstr "italique"
 
-#~ msgid "CELL driver WIDTH"
-#~ msgstr "pilote CELL LARGEUR"
+msgid "CELL driver WIDTH"
+msgstr "pilote CELL LARGEUR"
 
-#~ msgid "CELL driver HEIGHT"
-#~ msgstr "pilote CELL HAUTEUR"
+msgid "CELL driver HEIGHT"
+msgstr "pilote CELL HAUTEUR"
 
-#~ msgid "Right button to KILL"
-#~ msgstr "Bouton droit pour TUER"
+msgid "Right button to KILL"
+msgstr "Bouton droit pour TUER"
 
-#~ msgid "Continued ..."
-#~ msgstr "Poursuite..."
+msgid "Continued ..."
+msgstr "Poursuite..."
 
-#~ msgid "output"
-#~ msgstr "sortie"
+msgid "output"
+msgstr "sortie"
 
-#~ msgid "CANCEL"
-#~ msgstr "ANNULER"
+msgid "CANCEL"
+msgstr "ANNULER"
 
-#~ msgid "Do you want to start a script session?"
-#~ msgstr "Voulez-vous lancer une session de script?"
+msgid "Do you want to start a script session?"
+msgstr "Voulez-vous lancer une session de script?"
 
-#~ msgid "Enter filename to save script"
-#~ msgstr "Entrez un nom de fichier pour sauvegarder le script"
+msgid "Enter filename to save script"
+msgstr "Entrez un nom de fichier pour sauvegarder le script"
 
-#~ msgid "Scripting not running, start first"
-#~ msgstr "Pas de session de script en cours, lancez-la d'abord"
+msgid "Scripting not running, start first"
+msgstr "Pas de session de script en cours, lancez-la d'abord"
 
-#~ msgid "No filename, quitting"
-#~ msgstr "Pas de nom de fichier, fin"
+msgid "No filename, quitting"
+msgstr "Pas de nom de fichier, fin"
 
-#~ msgid "is empty file"
-#~ msgstr "est un fichier vide"
+msgid "is empty file"
+msgstr "est un fichier vide"
 
-#~ msgid "is not a valid tcltkgrass script:"
-#~ msgstr "n'est pas un script tcltkgrass valide :"
+msgid "is not a valid tcltkgrass script:"
+msgstr "n'est pas un script tcltkgrass valide :"
 
-#~ msgid "invalid script file:"
-#~ msgstr "fichier script invalide :"
+msgid "invalid script file:"
+msgstr "fichier script invalide :"
 
-#~ msgid "Script"
-#~ msgstr "Script"
+msgid "Script"
+msgstr "Script"
 
-#~ msgid "for"
-#~ msgstr "pour"
+msgid "for"
+msgstr "pour"
 
-#~ msgid ""
-#~ "ist not running or not in your path or an other error occurred. Please "
-#~ "try starting"
-#~ msgstr ""
-#~ "n'est pas en cours, ou pas dans votre chemin ou une autre erreur s'est "
-#~ "produite. Veuillez recommencer"
+msgid ""
+"ist not running or not in your path or an other error occurred. Please try "
+"starting"
+msgstr ""
+"n'est pas en cours, ou pas dans votre chemin ou une autre erreur s'est "
+"produite. Veuillez recommencer"
 
-#~ msgid "first."
-#~ msgstr "d'abord."
+msgid "first."
+msgstr "d'abord."
 
-#~ msgid "Configure html-browser"
-#~ msgstr "Configurez le navigateur html"
+msgid "Configure html-browser"
+msgstr "Configurez le navigateur html"
 
-#~ msgid "html browser (netscape)"
-#~ msgstr "navigateur html (netscape)"
+msgid "html browser (netscape)"
+msgstr "navigateur html (netscape)"
 
-#~ msgid "path or url for html manual pages"
-#~ msgstr "chemin ou url pour les pages de manuel html"
+msgid "path or url for html manual pages"
+msgstr "chemin ou url pour les pages de manuel html"
 
-#~ msgid "postfix for html files (.html)"
-#~ msgstr "extension pour fichier html (.html)"
+msgid "postfix for html files (.html)"
+msgstr "extension pour fichier html (.html)"
 
-#~ msgid "auto raise window of browser"
-#~ msgstr "lancer automatiquement la fenêtre du navigateur"
+msgid "auto raise window of browser"
+msgstr "lancer automatiquement la fenêtre du navigateur"
 
-#~ msgid "auto raise   "
-#~ msgstr "auto-lancement"
+msgid "auto raise   "
+msgstr "auto-lancement"
 
-#~ msgid "no auto raise"
-#~ msgstr "pas d'auto-lancement"
+msgid "no auto raise"
+msgstr "pas d'auto-lancement"
 
-#~ msgid "Location:"
-#~ msgstr "Secteur :"
+msgid "Location:"
+msgstr "Secteur :"
 
-#~ msgid "Loading ..."
-#~ msgstr "Chargement..."
+msgid "Loading ..."
+msgstr "Chargement..."
 
-#~ msgid ""
-#~ "Welcome to GRASS GIS Version 5.0\n"
-#~ "\n"
-#~ msgstr ""
-#~ "Bienvenue dans GRASS GIS Version 5.0\n"
-#~ "\n"
+msgid ""
+"Welcome to GRASS GIS Version 5.0\n"
+"\n"
+msgstr ""
+"Bienvenue dans GRASS GIS Version 5.0\n"
+"\n"
 
-#~ msgid "Location"
-#~ msgstr "Secteur"
+msgid "Location"
+msgstr "Secteur"
 
-#~ msgid "Vectors"
-#~ msgstr "Vecteurs"
+msgid "Vectors"
+msgstr "Vecteurs"
 
-#~ msgid "Current:"
-#~ msgstr "Courant:"
+msgid "Current:"
+msgstr "Courant:"
 
-#~ msgid "Line Width"
-#~ msgstr "Largeur de ligne"
+msgid "Line Width"
+msgstr "Largeur de ligne"
 
-#~ msgid "Color"
-#~ msgstr "Couleur"
+msgid "Color"
+msgstr "Couleur"
 
-#~ msgid "Draw Current"
-#~ msgstr "Tracer conf courante"
+msgid "Draw Current"
+msgstr "Tracer conf courante"
 
-#~ msgid "Display on surface(s):"
-#~ msgstr "Affichage de surface(s):"
+msgid "Display on surface(s):"
+msgstr "Affichage de surface(s):"
 
-#~ msgid "Mkdspf"
-#~ msgstr "Mkdspf"
+msgid "Mkdspf"
+msgstr "Mkdspf"
 
-#~ msgid "Output File:"
-#~ msgstr "Fichier en sortie :"
+msgid "Output File:"
+msgstr "Fichier en sortie :"
 
-#~ msgid "Color File:"
-#~ msgstr "Fichier couleur :"
+msgid "Color File:"
+msgstr "Fichier couleur :"
 
-#~ msgid "flat"
-#~ msgstr "plat"
+msgid "flat"
+msgstr "plat"
 
-#~ msgid "gradient"
-#~ msgstr "gradient"
+msgid "gradient"
+msgstr "gradient"
 
-#~ msgid "Accept"
-#~ msgstr "Accepter"
+msgid "Accept"
+msgstr "Accepter"
 
-#~ msgid "Threshold Type"
-#~ msgstr "Type de seuillage"
+msgid "Threshold Type"
+msgstr "Type de seuillage"
 
-#~ msgid "Interval Size:"
-#~ msgstr "Taille d'intervalle :"
+msgid "Interval Size:"
+msgstr "Taille d'intervalle :"
 
-#~ msgid "Min:"
-#~ msgstr "Min :"
+msgid "Min:"
+msgstr "Min :"
 
-#~ msgid "Max:"
-#~ msgstr "Max :"
+msgid "Max:"
+msgstr "Max :"
 
-#~ msgid "Num. Levels:"
-#~ msgstr "Nombre de niveaux :"
+msgid "Num. Levels:"
+msgstr "Nombre de niveaux :"
 
-#~ msgid "Interpolation"
-#~ msgstr "Interpolation"
+msgid "Interpolation"
+msgstr "Interpolation"
 
-#~ msgid "logarithmic"
-#~ msgstr "logarithmique"
+msgid "logarithmic"
+msgstr "logarithmique"
 
-#~ msgid "Quadratic"
-#~ msgstr "Quadratique"
+msgid "Quadratic"
+msgstr "Quadratique"
 
-#~ msgid "Arbitrary"
-#~ msgstr "Arbitraire"
+msgid "Arbitrary"
+msgstr "Arbitraire"
 
-#~ msgid "Iso Levels"
-#~ msgstr "Iso Levels"
+msgid "Iso Levels"
+msgstr "Iso Levels"
 
-#~ msgid "Add"
-#~ msgstr "Ajouter"
+msgid "Add"
+msgstr "Ajouter"
 
-#~ msgid "Range"
-#~ msgstr "Intervalle"
+msgid "Range"
+msgstr "Intervalle"
 
-#~ msgid "Individual"
-#~ msgstr "Individuel"
+msgid "Individual"
+msgstr "Individuel"
 
-#~ msgid "Pipe to: None"
-#~ msgstr "Flux pipe vers : aucun"
+msgid "Pipe to: None"
+msgstr "Flux pipe vers : aucun"
 
-#~ msgid "What's Here?"
-#~ msgstr "Qu'y a-t-il ici?"
+msgid "What's Here?"
+msgstr "Qu'y a-t-il ici?"
 
-#~ msgid "Attributes"
-#~ msgstr "Attributs"
+msgid "Attributes"
+msgstr "Attributs"
 
-#~ msgid "Xcol:"
-#~ msgstr "Xcol :"
+msgid "Xcol:"
+msgstr "Xcol :"
 
-#~ msgid "Ycol:"
-#~ msgstr "Ycol :"
+msgid "Ycol:"
+msgstr "Ycol :"
 
-#~ msgid "Dist:"
-#~ msgstr "Dist :"
+msgid "Dist:"
+msgstr "Dist :"
 
-#~ msgid "PG table:"
-#~ msgstr "Table PG :"
+msgid "PG table:"
+msgstr "Table PG :"
 
-#~ msgid "Key col:"
-#~ msgstr "col clef :"
+msgid "Key col:"
+msgstr "col clef :"
 
-#~ msgid "sites"
-#~ msgstr "sites"
+msgid "sites"
+msgstr "sites"
 
-#~ msgid "Pipe to: "
-#~ msgstr "Flux pipe vers :"
+msgid "Pipe to: "
+msgstr "Flux pipe vers :"
 
-#~ msgid "easting: "
-#~ msgstr "X :"
+msgid "easting: "
+msgstr "X :"
 
-#~ msgid "northing: "
-#~ msgstr "Y :"
+msgid "northing: "
+msgstr "Y :"
 
-#~ msgid "elevation: "
-#~ msgstr "altitude :"
+msgid "elevation: "
+msgstr "altitude :"
 
-#~ msgid "Topo: "
-#~ msgstr "Topo :"
+msgid "Topo: "
+msgstr "Topo :"
 
-#~ msgid "constant"
-#~ msgstr "constante"
+msgid "constant"
+msgstr "constante"
 
-#~ msgid "Color: "
-#~ msgstr "Couleur :"
+msgid "Color: "
+msgstr "Couleur :"
 
-#~ msgid "distance along surface:      "
-#~ msgstr "distance le long de la surface"
+msgid "distance along surface:      "
+msgstr "distance le long de la surface"
 
-#~ msgid "Point not on surface"
-#~ msgstr "Point pas sur la surface"
+msgid "Point not on surface"
+msgstr "Point pas sur la surface"
 
-#~ msgid "Postgres: "
-#~ msgstr "Postgres :"
+msgid "Postgres: "
+msgstr "Postgres :"
 
-#~ msgid "xy distance from previous:  "
-#~ msgstr "distance xy depuis précédent :"
+msgid "xy distance from previous:  "
+msgstr "distance xy depuis précédent :"
 
-#~ msgid "xyz distance from previous:  "
-#~ msgstr "distance xyz depuis précédent :"
+msgid "xyz distance from previous:  "
+msgstr "distance xyz depuis précédent :"
 
-#~ msgid "distance along exag. surface: "
-#~ msgstr "distance le long de la surface exag."
+msgid "distance along exag. surface: "
+msgstr "distance le long de la surface exag."
 
-#~ msgid "Scale"
-#~ msgstr "Echelle"
+msgid "Scale"
+msgstr "Echelle"
 
-#~ msgid "Solid"
-#~ msgstr "Plein"
+msgid "Solid"
+msgstr "Plein"
 
-#~ msgid "Cube"
-#~ msgstr "Cube"
+msgid "Cube"
+msgstr "Cube"
 
-#~ msgid "Plane"
-#~ msgstr "Plan"
+msgid "Plane"
+msgstr "Plan"
 
-#~ msgid "NW"
-#~ msgstr "NW"
+msgid "NW"
+msgstr "NW"
 
-#~ msgid "NE"
-#~ msgstr "NE"
+msgid "NE"
+msgstr "NE"
 
-#~ msgid "SW"
-#~ msgstr "SW"
+msgid "SW"
+msgstr "SW"
 
-#~ msgid "SE"
-#~ msgstr "SE"
+msgid "SE"
+msgstr "SE"
 
-#~ msgid "<- elev ->"
-#~ msgstr "<- alti ->"
+msgid "<- elev ->"
+msgstr "<- alti ->"
 
-#~ msgid "size"
-#~ msgstr "taille"
+msgid "size"
+msgstr "taille"
 
-#~ msgid "Remove"
-#~ msgstr "Enlever"
+msgid "Remove"
+msgstr "Enlever"
 
-#~ msgid "MAPSETS"
-#~ msgstr "JEUX DE DONNEES"
+msgid "MAPSETS"
+msgstr "JEUX DE DONNEES"
 
-#~ msgid "FILES"
-#~ msgstr "FICHIERS"
+msgid "FILES"
+msgstr "FICHIERS"
 
-#~ msgid "Map Type:"
-#~ msgstr "Type de couches :"
+msgid "Map Type:"
+msgstr "Type de couches :"
 
-#~ msgid "Map Browser"
-#~ msgstr "Navigateur de couche"
+msgid "Map Browser"
+msgstr "Navigateur de couche"
 
-#~ msgid "Sites"
-#~ msgstr "Sites"
+msgid "Sites"
+msgstr "Sites"
 
-#~ msgid "use X"
-#~ msgstr "utiliser X"
+msgid "use X"
+msgstr "utiliser X"
 
-#~ msgid "use sphere"
-#~ msgstr "utiliser rond"
+msgid "use sphere"
+msgstr "utiliser rond"
 
-#~ msgid "use diamond"
-#~ msgstr "utiliser losange"
+msgid "use diamond"
+msgstr "utiliser losange"
 
-#~ msgid "3D Sites"
-#~ msgstr "Sites 3D"
+msgid "3D Sites"
+msgstr "Sites 3D"
 
-#~ msgid "Animation"
-#~ msgstr "Animation"
+msgid "Animation"
+msgstr "Animation"
 
-#~ msgid "show vect"
-#~ msgstr "montrer vect"
+msgid "show vect"
+msgstr "montrer vect"
 
-#~ msgid "show site"
-#~ msgstr "montrer site"
+msgid "show site"
+msgstr "montrer site"
 
-#~ msgid "spline -->"
-#~ msgstr "spline -->"
+msgid "spline -->"
+msgstr "spline -->"
 
-#~ msgid "Ok"
-#~ msgstr "Ok"
+msgid "Ok"
+msgstr "Ok"
 
-#~ msgid "Dismiss"
-#~ msgstr "Annuler"
+msgid "Dismiss"
+msgstr "Annuler"
 
-#~ msgid "Internal Error"
-#~ msgstr "Erreur interne"
+msgid "Internal Error"
+msgstr "Erreur interne"
 
-#~ msgid "Replace Key"
-#~ msgstr "Remplacer l'index"
+msgid "Replace Key"
+msgstr "Remplacer l'index"
 
-#~ msgid "ras_fname"
-#~ msgstr "ras_fname"
+msgid "ras_fname"
+msgstr "ras_fname"
 
-#~ msgid "Iris RGB"
-#~ msgstr "RVB Iris"
+msgid "Iris RGB"
+msgstr "RVB Iris"
 
-#~ msgid "PPM"
-#~ msgstr "PPM"
+msgid "PPM"
+msgstr "PPM"
 
-#~ msgid "TIFF"
-#~ msgstr "TIFF"
+msgid "TIFF"
+msgstr "TIFF"
 
-#~ msgid "E"
-#~ msgstr "E"
+msgid "E"
+msgstr "E"
 
-#~ msgid "W"
-#~ msgstr "W"
+msgid "W"
+msgstr "W"
 
-#~ msgid "N"
-#~ msgstr "N"
+msgid "N"
+msgstr "N"
 
-#~ msgid "S"
-#~ msgstr "S"
+msgid "S"
+msgstr "S"
 
-#~ msgid "None"
-#~ msgstr "Aucun"
+msgid "None"
+msgstr "Aucun"
 
-#~ msgid "Auto:"
-#~ msgstr "Auto :"
+msgid "Auto:"
+msgstr "Auto :"
 
-#~ msgid "Draw"
-#~ msgstr "Tracer"
+msgid "Draw"
+msgstr "Tracer"
 
-#~ msgid "Feature:"
-#~ msgstr "Objet :"
+msgid "Feature:"
+msgstr "Objet :"
 
-#~ msgid "Surface"
-#~ msgstr "Surface"
+msgid "Surface"
+msgstr "Surface"
 
-#~ msgid "DRAW"
-#~ msgstr "TRACER"
+msgid "DRAW"
+msgstr "TRACER"
 
-#~ msgid "LOOK"
-#~ msgstr "REGARDER"
+msgid "LOOK"
+msgstr "REGARDER"
 
-#~ msgid "here"
-#~ msgstr "ici"
+msgid "here"
+msgstr "ici"
 
-#~ msgid "cancel"
-#~ msgstr "annuler"
+msgid "cancel"
+msgstr "annuler"
 
-#~ msgid "perspective"
-#~ msgstr "perspective"
+msgid "perspective"
+msgstr "perspective"
 
-#~ msgid "RESET"
-#~ msgstr "ANNULER"
+msgid "RESET"
+msgstr "ANNULER"
 
-#~ msgid "height"
-#~ msgstr "hauteur"
+msgid "height"
+msgstr "hauteur"
 
-#~ msgid "Load"
-#~ msgstr "Charger"
+msgid "Load"
+msgstr "Charger"
 
-#~ msgid "New Key Time:"
-#~ msgstr "Nouveau temps index :"
+msgid "New Key Time:"
+msgstr "Nouveau temps index :"
 
-#~ msgid "FromX"
-#~ msgstr "A partir de X"
+msgid "FromX"
+msgstr "A partir de X"
 
-#~ msgid "FromY"
-#~ msgstr "A partir de Y"
+msgid "FromY"
+msgstr "A partir de Y"
 
-#~ msgid "FromZ"
-#~ msgstr "A partir de Z"
+msgid "FromZ"
+msgstr "A partir de Z"
 
-#~ msgid "FOV"
-#~ msgstr "FOV"
+msgid "FOV"
+msgstr "FOV"
 
-#~ msgid "TWIST"
-#~ msgstr "TORSION"
+msgid "TWIST"
+msgstr "TORSION"
 
-#~ msgid "On"
-#~ msgstr "Marche"
+msgid "On"
+msgstr "Marche"
 
-#~ msgid "New Key Time"
-#~ msgstr "Nouveau temps index"
+msgid "New Key Time"
+msgstr "Nouveau temps index"
 
-#~ msgid "Minute:"
-#~ msgstr "Minute :"
+msgid "Minute:"
+msgstr "Minute :"
 
-#~ msgid "Second:"
-#~ msgstr "Seconde :"
+msgid "Second:"
+msgstr "Seconde :"
 
-#~ msgid "KeyTime Error"
-#~ msgstr "Erreur de temps index"
+msgid "KeyTime Error"
+msgstr "Erreur de temps index"
 
-#~ msgid "Internal Error - Can't find channel"
-#~ msgstr "Erreur interne - impossible de trouver le canal"
+msgid "Internal Error - Can't find channel"
+msgstr "Erreur interne - impossible de trouver le canal"
 
-#~ msgid "Delete Keys"
-#~ msgstr "Effacer les index"
+msgid "Delete Keys"
+msgstr "Effacer les index"
 
-#~ msgid "keyanimtag"
-#~ msgstr "keyanimtag"
+msgid "keyanimtag"
+msgstr "keyanimtag"
 
-#~ msgid "No Anim Error"
-#~ msgstr "Erreur pas d'anim"
+msgid "No Anim Error"
+msgstr "Erreur pas d'anim"
 
-#~ msgid "File Error"
-#~ msgstr "Erreur fichier"
+msgid "File Error"
+msgstr "Erreur fichier"
 
-#~ msgid "Error - Could not open file"
-#~ msgstr "Erreur - impossible d'ouvrir le fichier"
+msgid "Error - Could not open file"
+msgstr "Erreur - impossible d'ouvrir le fichier"
 
-#~ msgid "for reading"
-#~ msgstr "pour lecture"
+msgid "for reading"
+msgstr "pour lecture"
 
-#~ msgid "Use Surface Color"
-#~ msgstr "Utiliser la couleur de surface"
+msgid "Use Surface Color"
+msgstr "Utiliser la couleur de surface"
 
-#~ msgid "Red"
-#~ msgstr "Rouge"
+msgid "Red"
+msgstr "Rouge"
 
-#~ msgid "Green"
-#~ msgstr "Vert"
+msgid "Green"
+msgstr "Vert"
 
-#~ msgid "Blue"
-#~ msgstr "Bleu"
+msgid "Blue"
+msgstr "Bleu"
 
-#~ msgid "DIRECTORIES"
-#~ msgstr "REPERTOIRES"
+msgid "DIRECTORIES"
+msgstr "REPERTOIRES"
 
-#~ msgid "CURRENT:"
-#~ msgstr "COURANT :"
+msgid "CURRENT:"
+msgstr "COURANT :"
 
-#~ msgid "File Browser"
-#~ msgstr "Explorateur de fichier"
+msgid "File Browser"
+msgstr "Explorateur de fichier"
 
-#~ msgid "Lights"
-#~ msgstr "Eclairage"
+msgid "Lights"
+msgstr "Eclairage"
 
-#~ msgid "Follow ViewPoint"
-#~ msgstr "Suivre le point de vue"
+msgid "Follow ViewPoint"
+msgstr "Suivre le point de vue"
 
-#~ msgid "Brightness"
-#~ msgstr "Brillant"
+msgid "Brightness"
+msgstr "Brillant"
 
-#~ msgid "Ambient"
-#~ msgstr "Ambiant"
+msgid "Ambient"
+msgstr "Ambiant"
 
-#~ msgid "Height"
-#~ msgstr "Hauteur"
+msgid "Height"
+msgstr "Hauteur"
 
-#~ msgid "Raster"
-#~ msgstr "Raster"
+msgid "Raster"
+msgstr "Raster"
 
-#~ msgid "Site"
-#~ msgstr "Site"
+msgid "Site"
+msgstr "Site"
 
-#~ msgid "3d.view"
-#~ msgstr "Vue.3d"
+msgid "3d.view"
+msgstr "Vue.3d"
 
-#~ msgid "Surfaces"
-#~ msgstr "Surfaces"
+msgid "Surfaces"
+msgstr "Surfaces"
 
-#~ msgid "Current Surface Only"
-#~ msgstr "Surface courante seulement"
+msgid "Current Surface Only"
+msgstr "Surface courante seulement"
 
-#~ msgid "All Surfaces"
-#~ msgstr "Toutes les surfaces"
+msgid "All Surfaces"
+msgstr "Toutes les surfaces"
 
-#~ msgid "Surface Style:"
-#~ msgstr "Style de surface :"
+msgid "Surface Style:"
+msgstr "Style de surface :"
 
-#~ msgid "Polygon"
-#~ msgstr "Polygones"
+msgid "Polygon"
+msgstr "Polygones"
 
-#~ msgid "Shading:"
-#~ msgstr "Ombrage :"
+msgid "Shading:"
+msgstr "Ombrage :"
 
-#~ msgid "Flat"
-#~ msgstr "Plat"
+msgid "Flat"
+msgstr "Plat"
 
-#~ msgid "Gouraud"
-#~ msgstr "Gouraud"
+msgid "Gouraud"
+msgstr "Gouraud"
 
-#~ msgid "Position"
-#~ msgstr "Position"
+msgid "Position"
+msgstr "Position"
 
-#~ msgid "Position Surface"
-#~ msgstr "Position de surface"
+msgid "Position Surface"
+msgstr "Position de surface"
 
-#~ msgid "Attribute"
-#~ msgstr "Attribut"
+msgid "Attribute"
+msgstr "Attribut"
 
-#~ msgid "Change Attribute"
-#~ msgstr "Modifier attribut"
+msgid "Change Attribute"
+msgstr "Modifier attribut"
 
-#~ msgid "Change Attribute:"
-#~ msgstr "Modifier attribut :"
+msgid "Change Attribute:"
+msgstr "Modifier attribut :"
 
-#~ msgid "New Map"
-#~ msgstr "Nouvelle couche"
+msgid "New Map"
+msgstr "Nouvelle couche"
 
-#~ msgid "Remove Mask"
-#~ msgstr "Enlever le Masque"
+msgid "Remove Mask"
+msgstr "Enlever le Masque"
 
-#~ msgid "Invert Mask"
-#~ msgstr "Inverser le Masque"
+msgid "Invert Mask"
+msgstr "Inverser le Masque"
 
-#~ msgid "New Constant"
-#~ msgstr "Nouvelle constante"
+msgid "New Constant"
+msgstr "Nouvelle constante"
 
-#~ msgid "Status: "
-#~ msgstr "Statut :"
+msgid "Status: "
+msgstr "Statut :"
 
-#~ msgid "color:"
-#~ msgstr "couleur :"
+msgid "color:"
+msgstr "couleur :"
 
-#~ msgid "R"
-#~ msgstr "R"
+msgid "R"
+msgstr "R"
 
-#~ msgid "G"
-#~ msgstr "V"
+msgid "G"
+msgstr "V"
 
-#~ msgid "B"
-#~ msgstr "B"
+msgid "B"
+msgstr "B"
 
-#~ msgid "Surface Color"
-#~ msgstr "couleur de surface"
+msgid "Surface Color"
+msgstr "couleur de surface"
 
-#~ msgid "b"
-#~ msgstr "b"
+msgid "b"
+msgstr "b"
 
-#~ msgid "new_const"
-#~ msgstr "new_const"
+msgid "new_const"
+msgstr "new_const"
 
-#~ msgid "Enter a constant value :"
-#~ msgstr "Entrer une valeur constante :"
+msgid "Enter a constant value :"
+msgstr "Entrer une valeur constante :"
 
-#~ msgid "Label"
-#~ msgstr "Etiquette"
+msgid "Label"
+msgstr "Etiquette"
 
-#~ msgid "Font Size:"
-#~ msgstr "Taille de police :"
+msgid "Font Size:"
+msgstr "Taille de police :"
 
-#~ msgid "Italic"
-#~ msgstr "Italique"
+msgid "Italic"
+msgstr "Italique"
 
-#~ msgid "Bold"
-#~ msgstr "Gras"
+msgid "Bold"
+msgstr "Gras"
 
-#~ msgid "Invert"
-#~ msgstr "Inverser"
+msgid "Invert"
+msgstr "Inverser"
 
-#~ msgid "Use Range"
-#~ msgstr "Utiliser l'intervalle"
+msgid "Use Range"
+msgstr "Utiliser l'intervalle"
 
-#~ msgid "Low:"
-#~ msgstr "Bas :"
+msgid "Low:"
+msgstr "Bas :"
 
-#~ msgid "Hi:"
-#~ msgstr "Haut :"
+msgid "Hi:"
+msgstr "Haut :"
 
-#~ msgid "Use List"
-#~ msgstr "Utiliser une liste"
+msgid "Use List"
+msgstr "Utiliser une liste"
 
-#~ msgid "Current List"
-#~ msgstr "Liste courante"
+msgid "Current List"
+msgstr "Liste courante"
 
-#~ msgid "  Label Sites  "
-#~ msgstr "Etiquette de sites"
+msgid "  Label Sites  "
+msgstr "Etiquette de sites"
 
-#~ msgid "Values"
-#~ msgstr "Valeurs"
+msgid "Values"
+msgstr "Valeurs"
 
-#~ msgid "cat_list"
-#~ msgstr "cat_list"
+msgid "cat_list"
+msgstr "cat_list"
 
-#~ msgid "Cutting Planes"
-#~ msgstr "Coupe de plans"
+msgid "Cutting Planes"
+msgstr "Coupe de plans"
 
-#~ msgid "All Off"
-#~ msgstr "Tout désactivé"
+msgid "All Off"
+msgstr "Tout désactivé"
 
-#~ msgid "Plane 0"
-#~ msgstr "Plan 0"
+msgid "Plane 0"
+msgstr "Plan 0"
 
-#~ msgid "TP"
-#~ msgstr "TP"
+msgid "TP"
+msgstr "TP"
 
-#~ msgid "BP"
-#~ msgstr "BP"
+msgid "BP"
+msgstr "BP"
 
-#~ msgid "BL"
-#~ msgstr "BL"
+msgid "BL"
+msgstr "BL"
 
-#~ msgid "GR"
-#~ msgstr "GR"
+msgid "GR"
+msgstr "GR"
 
-#~ msgid "NP"
-#~ msgstr "NP"
+msgid "NP"
+msgstr "NP"
 
-#~ msgid "Rotate"
-#~ msgstr "Rotation"
+msgid "Rotate"
+msgstr "Rotation"
 
-#~ msgid "Tilt"
-#~ msgstr "Bascule"
+msgid "Tilt"
+msgstr "Bascule"
 
-#~ msgid ""
-#~ "Welcome to GRASS GIS Version 5.7\n"
-#~ "\n"
-#~ msgstr ""
-#~ "Bienvenue dans GRASS GIS Version 5.7\n"
-#~ "\n"
+msgid ""
+"Welcome to GRASS GIS Version 5.7\n"
+"\n"
+msgstr ""
+"Bienvenue dans GRASS GIS Version 5.7\n"
+"\n"
 
-#~ msgid "New location path"
-#~ msgstr "Chemin du nouveau Secteur"
+msgid "New location path"
+msgstr "Chemin du nouveau Secteur"
 
-#~ msgid "Path to location : "
-#~ msgstr "Chemin du Secteur :"
+msgid "Path to location : "
+msgstr "Chemin du Secteur :"
 
-#~ msgid "Projection Location"
-#~ msgstr "Projection du Secteur"
+msgid "Projection Location"
+msgstr "Projection du Secteur"
 
-#~ msgid "Use EPSG values"
-#~ msgstr "Utiliser des codes EPSG"
+msgid "Use EPSG values"
+msgstr "Utiliser des codes EPSG"
 
-#~ msgid "list devices"
-#~ msgstr "lister les pilotes"
+msgid "list devices"
+msgstr "lister les pilotes"
 
-#~ msgid "list ghostscript output devices"
-#~ msgstr "lister les pilotes de sortie ghostscript"
+msgid "list ghostscript output devices"
+msgstr "lister les pilotes de sortie ghostscript"
 
-#~ msgid "Strict Draw Mode"
-#~ msgstr "Mode Dessin strict"
+msgid "Strict Draw Mode"
+msgstr "Mode Dessin strict"
 
-#~ msgid "Explore Draw Mode"
-#~ msgstr "Explorer le mode Dessin"
+msgid "Explore Draw Mode"
+msgstr "Explorer le mode Dessin"
 
-#~ msgid "Show standard GRASS fonts"
-#~ msgstr "Afficher les polices GRASS standard"
+msgid "Show standard GRASS fonts"
+msgstr "Afficher les polices GRASS standard"
 
-#~ msgid "Break lines at intersections"
-#~ msgstr "Interrompre les lignes aux intersections"
+msgid "Break lines at intersections"
+msgstr "Interrompre les lignes aux intersections"
+
+#~ msgid "Auto"
+#~ msgstr "Auto"
