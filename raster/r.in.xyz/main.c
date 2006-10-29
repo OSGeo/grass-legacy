@@ -12,6 +12,7 @@
  *   This program is intended as a replacement for the GRASS 5 s.cellstats module.
  */
 
+#include <grass/config.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
@@ -33,7 +34,7 @@ int main(int argc, char *argv[])
     int    bin_n, bin_min, bin_max, bin_sum, bin_sumsq;
     double zrange_min, zrange_max, d_tmp;
     char   *fs; /* field delim */
-    unsigned long filesize;
+    off_t  filesize;
     int    linesize, estimated_lines;
 
     RASTER_MAP_TYPE rtype;
