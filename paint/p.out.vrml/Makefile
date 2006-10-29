@@ -1,6 +1,6 @@
 MODULE_TOPDIR = ../..
 
-PGM = p.out.vrml
+PGM = r.out.vrml
 
 LIBES = $(GISLIB)
 DEPENDENCIES = $(GISDEP)
@@ -8,3 +8,4 @@ DEPENDENCIES = $(GISDEP)
 include $(MODULE_TOPDIR)/include/Make/Module.make
 
 default: cmd
+	-ln -s -f $(PGM) $(BIN)/p.out.vrml
