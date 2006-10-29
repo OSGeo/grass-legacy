@@ -57,7 +57,7 @@ main(int argc, char *argv[])
     G_gisinit(argv[0]);
 
     module = G_define_module();
-    module->keywords = _("raster");
+    module->keywords = _("raster, export");
     module->description =
 		_("Converts a raster map layer into an ASCII text file.");
 
@@ -74,8 +74,8 @@ main(int argc, char *argv[])
     parm.output->key        = "output";
     parm.output->type       = TYPE_STRING;
     parm.output->required   = NO;
-    parm.output->gisprompt  = "any,cell,raster" ;
-    parm.output->description= _("Name of an output ASCII grid map (use out=- for stdout)");
+    parm.output->gisprompt  = "new_file,file,output";
+    parm.output->description= _("Name for output ASCII grid map (use out=- for stdout)");
 
     parm.dp = G_define_option() ;
     parm.dp->key        = "dp";
