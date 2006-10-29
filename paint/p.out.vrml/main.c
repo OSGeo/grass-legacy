@@ -29,39 +29,40 @@ int main(int argc, char *argv[])
     shh = color_ok = 0;
 
     module = G_define_module();
-    module->keywords = _("paint, VRML");
+    module->keywords = _("raster, export, VRML");
     module->description =
-	"Outputs GRASS data in the format of Virtual Reality Modeling Language (VRML)";
+	_("Export a raster map to the Virtual Reality Modeling Language (VRML)");
 
     rast_el = G_define_option();
     rast_el->key            	= "elev";
     rast_el->type           	= TYPE_STRING;
     rast_el->required     	= YES;
     rast_el->gisprompt    	= "old,cell,raster";
-    rast_el->description  	= "Name of elevation file.";
+    rast_el->description	= _("Name of elevation map");
 
     rast_co = G_define_option();
     rast_co->key            	= "color";
     rast_co->type           	= TYPE_STRING;
     rast_co->required     	= NO;
     rast_co->gisprompt    	= "old,cell,raster";
-    rast_co->description  	= "Name of color file.";
+    rast_co->description	= _("Name of color file");
 
     exag_opt = G_define_option();
-    exag_opt->key                    = "exag";
-    exag_opt->type                   = TYPE_DOUBLE;
-    exag_opt->required               = NO;
-    exag_opt->answer                 = "1.0";
-    exag_opt->description            = "exaggeration";
+    exag_opt->key               = "exag";
+    exag_opt->type              = TYPE_DOUBLE;
+    exag_opt->required          = NO;
+    exag_opt->answer            = "1.0";
+    exag_opt->description	= _("Vertical exaggeration");
 
     out = G_define_option();
     out->key                    = "output";
     out->type                   = TYPE_STRING;
     out->required               = YES;
-    out->description            = "Name of new VRML file.";
+    out->gisprompt		= "new_file,file,output";
+    out->description		= _("Name for new VRML file");
 
     if (G_parser (argc, argv))
-	exit (-1);
+	exit (EXIT_FAILURE);
 
     G_get_set_window (&W);
 
@@ -167,12 +168,12 @@ int main(int argc, char *argv[])
 		  W.rows, W.cols, shh);
     vrml_end(vout);
 
-    
+
     G_close_cell(elevfd);
     if(color_ok)
 	G_close_cell(colorfd);
     
-    return(1);
+    return(EXIT_SUCCESS);
 
 }
 
