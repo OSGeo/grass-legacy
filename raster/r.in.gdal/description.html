@@ -702,10 +702,19 @@ the points with i.rectify.<BR>
 
 <H2>EXAMPLES</H2>
 
+<h3>GTOPO30 DEM</h3>
 To import <A HREF="http://www.ngdc.noaa.gov/seg/topo/gltiles.shtml">GLOBE DEM tiles</a>
 (approx 1km resolution, better than GTOPO30 DEM data), the user has to download
 additionally the related <A HREF="ftp://ftp.ngdc.noaa.gov/GLOBE_DEM/data/elev/esri/hdr/">HDR file(s)</a>.
 Finally, e.g. the 'terrain' color table can be assigned to the imported map with <em>r.colors</em>.
+
+<h3>Worldclim.org</h3>
+To import <a href="http://www.worldclim.org">Worldclim</a> data, the following
+line has to be added to each .hdr file:
+<div class="code"><pre>
+PIXELTYPE SIGNEDINT
+</pre></div>
+
 
 <H2>NOTES</H2>
 
