@@ -1,4 +1,5 @@
 #include <stdlib.h>
+#include <string.h>
 #include <math.h>
 #include <grass/gis.h>
 #include <grass/glocale.h>
@@ -41,7 +42,10 @@ int main( int argc, char *argv[])
 {
 	struct GModule *module;
 	struct Option *rastin, *rastout, *method;
-	char *inmap;
+	struct History history;
+	char buf_nsres[100], buf_ewres[100];
+	struct Colors colors;
+	char *inmap, *s_mapset;
 	int infile, outfile;
 	DCELL *outbuf;
 	int row, col;
@@ -50,8 +54,8 @@ int main( int argc, char *argv[])
 	G_gisinit(argv[0]);
 
 	module = G_define_module();
-	module->keywords = _("raster");
-    module->description =
+	module->keywords = _("raster, resample");
+	module->description =
 		_("Resamples raster map layers using interpolation.");
 
 	rastin  = G_define_standard_option(G_OPT_R_INPUT);
@@ -305,7 +309,26 @@ int main( int argc, char *argv[])
 
 	G_close_cell(infile);
 	G_close_cell(outfile);
-    
+
+	/* record map metadata/history info */
+	G_short_history(rastout->answer, "raster", &history);
+	sprintf(history.title, "Resample by %s interpolation", method->answer);
+	strncpy(history.datsrc_1, rastin->answer, RECORD_LEN);
+	history.datsrc_1[RECORD_LEN-1] = '\0'; /* strncpy() doesn't null terminate if maxfill */
+	G_format_resolution(src_w.ns_res, buf_nsres, src_w.proj);
+	G_format_resolution(src_w.ew_res, buf_ewres, src_w.proj);
+	sprintf(history.datsrc_2,
+	    "Source map NS res: %s   EW res: %s", buf_nsres, buf_ewres);
+	G_command_history(&history);
+	G_write_history(rastout->answer, &history);
+
+	/* copy color table from source map */
+	s_mapset = G_find_cell2 (rastin->answer, "");
+	if (0 > G_read_colors (rastin->answer, s_mapset, &colors))
+	    G_fatal_error(_("Unable to read color table for %s"), rastin->answer);
+	G_mark_colors_as_fp(&colors);
+	if (0 > G_write_colors (rastout->answer, G_mapset(), &colors))
+	    G_fatal_error(_("Unable to write color table for %s"), rastout->answer);
+
 	return(EXIT_SUCCESS);
 }
-
