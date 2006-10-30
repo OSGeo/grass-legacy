@@ -237,13 +237,16 @@ int main( int argc, char *argv[])
 	struct {
 		struct Flag *nulls, *weight;
 	} flag;
-	char *inmap;
+	struct History history;
+	char buf_nsres[100], buf_ewres[100];
+	struct Colors colors;
+	char *inmap, *s_mapset;
 	int row;
 
 	G_gisinit(argv[0]);
 
 	module = G_define_module();
-	module->keywords = _("raster");
+	module->keywords = _("raster, resample");
 	module->description =
 		_("Resamples raster map layers using aggregation.");
 
@@ -342,7 +345,28 @@ int main( int argc, char *argv[])
 
 	G_close_cell(infile);
 	G_close_cell(outfile);
-    
+
+	/* record map metadata/history info */
+	G_short_history(parm.rastout->answer, "raster", &history);
+	sprintf(history.title, "Aggregate resample by %s", parm.method->answer);
+	strncpy(history.datsrc_1, parm.rastin->answer, RECORD_LEN);
+	history.datsrc_1[RECORD_LEN-1] = '\0'; /* strncpy() doesn't null terminate if maxfill */
+	G_format_resolution(src_w.ns_res, buf_nsres, src_w.proj);
+	G_format_resolution(src_w.ew_res, buf_ewres, src_w.proj);
+	sprintf(history.datsrc_2,
+	    "Source map NS res: %s   EW res: %s", buf_nsres, buf_ewres);
+	G_command_history(&history);
+	G_write_history(parm.rastout->answer, &history);
+
+	/* copy color table from source map */
+	if ( strcmp(parm.method->answer, "sum") != 0 ) {
+	    s_mapset = G_find_cell2 (parm.rastin->answer, "");
+	    if (0 > G_read_colors (parm.rastin->answer, s_mapset, &colors))
+		G_fatal_error(_("Unable to read color table for %s"), parm.rastin->answer);
+	    G_mark_colors_as_fp(&colors);
+	    if (0 > G_write_colors (parm.rastout->answer, G_mapset(), &colors))
+		G_fatal_error(_("Unable to write color table for %s"), parm.rastout->answer);
+	}
+
 	return(EXIT_SUCCESS);
 }
-
