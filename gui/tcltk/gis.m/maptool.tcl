@@ -21,6 +21,7 @@ proc MapToolBar::create { tb } {
 	global bgcolor
 	global mon
 	global env
+	global tk_version
 	global iconpath
 	variable toolbar
 	variable maptools
@@ -68,39 +69,79 @@ proc MapToolBar::create { tb } {
 	# DISPLAY TOOLS
 
 	# pointer
-	set pointer [radiobutton $tb.pointer \
-		-image [image create photo -file "$iconpath/gui-pointer.gif"] \
-		-command "MapCanvas::stoptool $mon; MapCanvas::pointer $mon" \
-		-variable maptools($mon) -value pointer  -relief flat -offrelief flat -overrelief raised \
-		-borderwidth 1 -indicatoron false -bg $bgcolor -selectcolor $selclr \
-		-activebackground $bgcolor -highlightbackground $bgcolor  ]
+	if {$tk_version < 8.4 } {
+		set pointer [radiobutton $tb.pointer \
+			-image [image create photo -file "$iconpath/gui-pointer.gif"] \
+			-command "MapCanvas::stoptool $mon; MapCanvas::pointer $mon" \
+			-variable maptools($mon) -value pointer -relief flat \
+			-borderwidth 1 -indicatoron false -bg $bgcolor -selectcolor $selclr \
+			-activebackground $bgcolor -highlightbackground $bgcolor  ]
+	} else {
+		set pointer [radiobutton $tb.pointer \
+			-image [image create photo -file "$iconpath/gui-pointer.gif"] \
+			-command "MapCanvas::stoptool $mon; MapCanvas::pointer $mon" \
+			-variable maptools($mon) -value pointer \
+			-relief flat -offrelief flat -overrelief raised \
+			-borderwidth 1 -indicatoron false -bg $bgcolor -selectcolor $selclr \
+			-activebackground $bgcolor -highlightbackground $bgcolor  ]
+	}
 	DynamicHelp::register $pointer balloon [G_msg "Pointer"]
 
 	# zoom in
-	set zoomin [radiobutton $tb.zoomin \
-		-image [image create photo -file "$iconpath/gui-zoom_in.gif"] \
-		-command "MapCanvas::stoptool $mon; MapCanvas::zoombind $mon 1" \
-		-variable maptools($mon) -value zoomin -relief flat -offrelief flat -overrelief raised \
-		-borderwidth 1 -indicatoron false -bg $bgcolor -selectcolor $selclr \
-		-activebackground $bgcolor -highlightbackground $bgcolor ]
+	if {$tk_version < 8.4 } {
+		set zoomin [radiobutton $tb.zoomin \
+			-image [image create photo -file "$iconpath/gui-zoom_in.gif"] \
+			-command "MapCanvas::stoptool $mon; MapCanvas::zoombind $mon 1" \
+			-variable maptools($mon) -value zoomin -relief flat \
+			-borderwidth 1 -indicatoron false -bg $bgcolor -selectcolor $selclr \
+			-activebackground $bgcolor -highlightbackground $bgcolor ]
+	} else {
+		set zoomin [radiobutton $tb.zoomin \
+			-image [image create photo -file "$iconpath/gui-zoom_in.gif"] \
+			-command "MapCanvas::stoptool $mon; MapCanvas::zoombind $mon 1" \
+			-variable maptools($mon) -value zoomin \
+			-relief flat -offrelief flat -overrelief raised \
+			-borderwidth 1 -indicatoron false -bg $bgcolor -selectcolor $selclr \
+			-activebackground $bgcolor -highlightbackground $bgcolor ]
+	}
 	DynamicHelp::register $zoomin balloon [G_msg "Zoom In"]
 
 	#zoom out
-	set zoomout [radiobutton $tb.zoomout \
-		-image [image create photo -file "$iconpath/gui-zoom_out.gif"] \
-		-command "MapCanvas::stoptool $mon; MapCanvas::zoombind $mon -1" \
-		-variable maptools($mon) -value zoomout  -relief flat -offrelief flat -overrelief raised \
-		-borderwidth 1 -indicatoron false -bg $bgcolor -selectcolor $selclr \
-		-activebackground $bgcolor -highlightbackground $bgcolor ]
+	if {$tk_version < 8.4 } {
+		set zoomout [radiobutton $tb.zoomout \
+			-image [image create photo -file "$iconpath/gui-zoom_out.gif"] \
+			-command "MapCanvas::stoptool $mon; MapCanvas::zoombind $mon -1" \
+			-variable maptools($mon) -value zoomout -relief flat \
+			-borderwidth 1 -indicatoron false -bg $bgcolor -selectcolor $selclr \
+			-activebackground $bgcolor -highlightbackground $bgcolor ]
+	} else {
+		set zoomout [radiobutton $tb.zoomout \
+			-image [image create photo -file "$iconpath/gui-zoom_out.gif"] \
+			-command "MapCanvas::stoptool $mon; MapCanvas::zoombind $mon -1" \
+			-variable maptools($mon) -value zoomout \
+			-relief flat -offrelief flat -overrelief raised \
+			-borderwidth 1 -indicatoron false -bg $bgcolor -selectcolor $selclr \
+			-activebackground $bgcolor -highlightbackground $bgcolor ]
+	}
 	DynamicHelp::register $zoomout balloon [G_msg "Zoom Out"]
 
 	# pan
-	set pan [radiobutton $tb.pan \
-		-image [image create photo -file "$iconpath/gui-pan.gif"] \
-		-command "MapCanvas::stoptool $mon; MapCanvas::panbind $mon" \
-		-variable maptools($mon) -value pan  -relief flat -offrelief flat -overrelief raised \
-		-borderwidth 1 -indicatoron false -bg $bgcolor -selectcolor $selclr \
-		-activebackground $bgcolor -highlightbackground $bgcolor ]
+	if {$tk_version < 8.4 } {
+		set pan [radiobutton $tb.pan \
+			-image [image create photo -file "$iconpath/gui-pan.gif"] \
+			-command "MapCanvas::stoptool $mon; MapCanvas::panbind $mon" \
+			-variable maptools($mon) -value pan -relief flat \
+			-borderwidth 1 -indicatoron false -bg $bgcolor -selectcolor $selclr \
+			-activebackground $bgcolor -highlightbackground $bgcolor ]
+	} else {
+		set pan [radiobutton $tb.pan \
+			-image [image create photo -file "$iconpath/gui-pan.gif"] \
+			-command "MapCanvas::stoptool $mon; MapCanvas::panbind $mon" \
+			-variable maptools($mon) -value pan \
+			-relief flat -offrelief flat -overrelief raised \
+			-borderwidth 1 -indicatoron false -bg $bgcolor -selectcolor $selclr \
+			-activebackground $bgcolor -highlightbackground $bgcolor ]
+	}
 	DynamicHelp::register $pan balloon [G_msg "Pan"]
 
 	pack $pointer $zoomin $zoomout $pan -side left -anchor w
@@ -119,7 +160,7 @@ proc MapToolBar::create { tb } {
 
 	set mapzoom [menubutton $tb.mapzoom	 \
 		-image [image create photo -file "$iconpath/gui-mapzoom.gif"] \
-		-highlightthickness 0 -takefocus 0 -relief flat -borderwidth 1	\
+		-highlightthickness 0 -takefocus 0 -relief flat -borderwidth 1 \
 		-highlightbackground $bgcolor -activebackground honeydew \
 		-bg $bgcolor -width 32 -indicatoron 0 -direction below]
 	DynamicHelp::register $mapzoom balloon [G_msg "Zoom to..."]
@@ -127,33 +168,28 @@ proc MapToolBar::create { tb } {
 	# menu zooming display
 	set zoommenu [menu $mapzoom.zm -type normal]
 
-	set zmimg [image create photo -file "$iconpath/gui-zoom_map.gif"]
-	set zrimg [image create photo -file "$iconpath/gui-zoom_region.gif"]
-	set zcimg [image create photo -file "$iconpath/gui-zoom_current.gif"]
-	set zdimg [image create photo -file "$iconpath/gui-zoom_default.gif"]
+# Could use these images along with text if -compound worked in all platforms
+#	set zmimg [image create photo -file "$iconpath/gui-zoom_map.gif"]
+#	set zrimg [image create photo -file "$iconpath/gui-zoom_region.gif"]
+#	set zcimg [image create photo -file "$iconpath/gui-zoom_current.gif"]
+#	set zdimg [image create photo -file "$iconpath/gui-zoom_default.gif"]
 
 	$zoommenu add command \
-		-compound top \
 		-label {Zoom to selected map} \
 		-command {MapCanvas::zoom_map $mon}
 	$zoommenu add command \
-		-compound right \
 		-label {Zoom to saved region} \
 		-command {MapCanvas::zoom_region $mon}
 	$zoommenu add command \
-		-compound center \
 		-label {Save display geometry to named region} \
 		-command {MapCanvas::save_region $mon}
 	$zoommenu add command \
-		-compound center \
 		-label {Zoom to current region (set with g.region)} \
 		-command {MapCanvas::zoom_current $mon}
 	$zoommenu add command \
-		-compound center \
 		-label {Zoom to default region} \
 		-command {MapCanvas::zoom_default $mon}
 	$zoommenu add command \
-		-compound center \
 		-label {Set current region (WIND file) to match display} \
 		-command {MapCanvas::set_wind $mon "" 0}
 
@@ -167,21 +203,41 @@ proc MapToolBar::create { tb } {
 	pack $sep3 -side left -fill y -padx 5 -anchor w
 
 	# query
-	set query [radiobutton $tb.query \
-		-image [image create photo -file "$iconpath/gui-query.gif"] \
-		-command "MapCanvas::stoptool $mon; MapCanvas::querybind $mon" \
-		-variable maptools($mon) -value query	 -relief flat -offrelief flat -overrelief raised \
-		-borderwidth 1 -indicatoron false -bg $bgcolor -selectcolor $selclr \
-		-activebackground $bgcolor -highlightbackground $bgcolor ]
+	if {$tk_version < 8.4 } {
+		set query [radiobutton $tb.query \
+			-image [image create photo -file "$iconpath/gui-query.gif"] \
+			-command "MapCanvas::stoptool $mon; MapCanvas::querybind $mon" \
+			-variable maptools($mon) -value query -relief flat \
+			-borderwidth 1 -indicatoron false -bg $bgcolor -selectcolor $selclr \
+			-activebackground $bgcolor -highlightbackground $bgcolor ]
+	} else {
+		set query [radiobutton $tb.query \
+			-image [image create photo -file "$iconpath/gui-query.gif"] \
+			-command "MapCanvas::stoptool $mon; MapCanvas::querybind $mon" \
+			-variable maptools($mon) -value query \
+			-relief flat -offrelief flat -overrelief raised \
+			-borderwidth 1 -indicatoron false -bg $bgcolor -selectcolor $selclr \
+			-activebackground $bgcolor -highlightbackground $bgcolor ]
+	}
 	DynamicHelp::register $query balloon [G_msg "Query"]
 
 	# measure
-	set measure [radiobutton $tb.measure \
-		-image [image create photo -file "$iconpath/gui-measure.gif"]  \
-		-command "MapCanvas::stoptool $mon; MapCanvas::measurebind $mon"\
-		-variable maptools($mon) -value measure -relief flat -offrelief flat -overrelief raised \
-		-borderwidth 1 -indicatoron false -bg $bgcolor -selectcolor $selclr \
-		-activebackground $bgcolor -highlightbackground $bgcolor ]
+	if {$tk_version < 8.4 } {
+		set measure [radiobutton $tb.measure \
+			-image [image create photo -file "$iconpath/gui-measure.gif"]  \
+			-command "MapCanvas::stoptool $mon; MapCanvas::measurebind $mon"\
+			-variable maptools($mon) -value measure -relief flat \
+			-borderwidth 1 -indicatoron false -bg $bgcolor -selectcolor $selclr \
+			-activebackground $bgcolor -highlightbackground $bgcolor ]
+	} else {
+		set measure [radiobutton $tb.measure \
+			-image [image create photo -file "$iconpath/gui-measure.gif"] \
+			-command "MapCanvas::stoptool $mon; MapCanvas::measurebind $mon"\
+			-variable maptools($mon) -value measure \
+			-relief flat -offrelief flat -overrelief raised \
+			-borderwidth 1 -indicatoron false -bg $bgcolor -selectcolor $selclr \
+			-activebackground $bgcolor -highlightbackground $bgcolor ]
+	}
 	DynamicHelp::register $measure balloon [G_msg "Measure"]
 
 	set bbox3 [ButtonBox $toolbar.bbox3 -spacing 0 ]
@@ -202,15 +258,15 @@ proc MapToolBar::create { tb } {
 	# FILE & PRINT
 	set bbox4 [ButtonBox $toolbar.bbox4 -spacing 0 ]
 
-	$bbox4 add -image [image create photo -file "$iconpath/file-print.gif"]	 \
+	$bbox4 add -image [image create photo -file "$iconpath/file-print.gif"] \
 		-command "MapCanvas::printcanvas $mon" \
-		-highlightthickness 0 -takefocus 0 -relief link -borderwidth 1	\
+		-highlightthickness 0 -takefocus 0 -relief link -borderwidth 1 \
 		-highlightbackground $bgcolor -activebackground $bgcolor \
 		-helptext [G_msg "Print raster & vector maps to eps file"]
 
-	set mapsave [menubutton $tb.mapsave	 \
+	set mapsave [menubutton $tb.mapsave \
 		-image [image create photo -file "$iconpath/gui-filesave.gif"] \
-		-highlightthickness 0 -takefocus 0 -relief flat -borderwidth 1	\
+		-highlightthickness 0 -takefocus 0 -relief flat -borderwidth 1 \
 		-highlightbackground $bgcolor -activebackground honeydew \
 		-bg $bgcolor -width 32 -indicatoron 0 -direction below]
 	DynamicHelp::register $mapsave balloon [G_msg "Export display to graphics file"]
@@ -247,23 +303,39 @@ proc MapToolBar::create { tb } {
 
 	# Strict render mode
 	# Uses previous resolution and exact boundaries
-	set strictdraw [radiobutton $tb.strictdraw \
-		-command "MapCanvas::exploremode $mon 0" \
-		-variable MapToolBar::explore($mon) -value strict \
-		-relief flat -offrelief flat -overrelief raised \
-		-borderwidth 1 -indicatoron false -bg $bgcolor -selectcolor $selclr \
-		-activebackground $bgcolor -highlightbackground $bgcolor ]
+	if {$tk_version < 8.4 } {
+		set strictdraw [radiobutton $tb.strictdraw \
+			-command "MapCanvas::exploremode $mon 0" \
+			-variable MapToolBar::explore($mon) -value strict -relief flat \
+			-borderwidth 1 -indicatoron false -bg $bgcolor -selectcolor $selclr \
+			-activebackground $bgcolor -highlightbackground $bgcolor ]
+	} else {
+		set strictdraw [radiobutton $tb.strictdraw \
+			-command "MapCanvas::exploremode $mon 0" \
+			-variable MapToolBar::explore($mon) -value strict \
+			-relief flat -offrelief flat -overrelief raised \
+			-borderwidth 1 -indicatoron false -bg $bgcolor -selectcolor $selclr \
+			-activebackground $bgcolor -highlightbackground $bgcolor ]
+	}
 	DynamicHelp::register $strictdraw balloon [G_msg "Constrain map to region geometry"]
 	icon_configure $strictdraw drawmode strict
 
 	# Explore render mode
 	# Uses resolution to match display and expanded boundaries to fill display
-	set exploredraw [radiobutton $tb.strictzoom \
-		-command "MapCanvas::exploremode $mon 1" \
-		-variable MapToolBar::explore($mon) -value explore \
-		-relief flat -offrelief flat -overrelief raised \
-		-borderwidth 1 -indicatoron false -bg $bgcolor -selectcolor $selclr \
-		-activebackground $bgcolor -highlightbackground $bgcolor ]
+	if {$tk_version < 8.4 } {
+		set exploredraw [radiobutton $tb.strictzoom \
+			-command "MapCanvas::exploremode $mon 1" \
+			-variable MapToolBar::explore($mon) -value explore -relief flat \
+			-borderwidth 1 -indicatoron false -bg $bgcolor -selectcolor $selclr \
+			-activebackground $bgcolor -highlightbackground $bgcolor ]
+	} else {
+		set exploredraw [radiobutton $tb.strictzoom \
+			-command "MapCanvas::exploremode $mon 1" \
+			-variable MapToolBar::explore($mon) -value explore \
+			-relief flat -offrelief flat -overrelief raised \
+			-borderwidth 1 -indicatoron false -bg $bgcolor -selectcolor $selclr \
+			-activebackground $bgcolor -highlightbackground $bgcolor ]
+	}
 	DynamicHelp::register $exploredraw balloon [G_msg "Map fills display window"]
 	icon_configure $exploredraw drawmode explore
 
@@ -292,7 +364,7 @@ proc MapToolBar::savefile { type quality } {
 	global env
 	global mon
 	global tmpdir
-	
+
 	set outfile($mon) $MapCanvas::outfile($mon)
 
 	if { [info exists HOME] } {
