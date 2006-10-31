@@ -37,7 +37,7 @@ void find_edge_cells (struct Map *map)
     int fd;
     CELL *buf0, *buf1, *buf2, *tmp;
 
-    G_message ("Reading map %s ...", map->fullname);
+    G_message (_("Reading map %s ..."), map->fullname);
 
     ncols = G_window_cols();
     nrows = G_window_rows();

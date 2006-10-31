@@ -25,7 +25,7 @@ void
 parse (int argc, char *argv[], struct Parms *parms)
 {
     struct Option *maps, *fs;
-    struct Flag *labels;
+    struct Flag *labels, *overlap;
     char *name, *mapset;
 
     /* please, remove before GRASS 7 released */
@@ -52,6 +52,10 @@ parse (int argc, char *argv[], struct Parms *parms)
     labels = G_define_flag();
     labels -> key = 'l';
     labels->description = _("Include category labels in the output");
+
+    overlap = G_define_flag();
+    overlap -> key = 'o';
+    overlap->description = _("Report zero distance if rasters are overlapping");
 
     /* please, remove before GRASS 7 released */
     q_flag = G_define_flag() ;
@@ -84,4 +88,5 @@ parse (int argc, char *argv[], struct Parms *parms)
 
     parms->labels = labels->answer ? 1 : 0;
     parms->fs = fs->answer;
+    parms->overlap = overlap->answer ? 1:0;
 }
