@@ -56,7 +56,7 @@ GRASS source code is currently distributed in 2 forms:
   repository (intevation.de:/grassrepository/grass6) or as a snapshot
   (*.tar.gz package) of that CVS repository. The CVS snapshot name
   contains the date when the snapshot was created (checked out from
-  the CVS repository), e.g. grass61src_cvs_snapshot_exp_2005_03_19.tar.gz
+  the CVS repository), e.g. grass-6.3.cvs_src_snapshot_2006_10_28.tar.gz
 
 
 (B) COMPILATION
