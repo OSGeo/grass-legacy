@@ -100,7 +100,8 @@ Contents
       - store in Web as announces/announce_grass$MAJOR$MINOR$RELEASE.html
 
  o upload user HTML manual in case of *final release* from compiled English
-   version at:
+   version at (warning: needs stuff to be compiled, but include/VERSION set
+   back temporarily!!):
      cd dist.$ARCH/docs/html
      scp * neteler@grass.itc.it:www/grass$MAJOR$MINOR/manuals/html$MAJOR${MINOR}_user/
 
@@ -114,6 +115,7 @@ Contents
    - publish related announcement press release at:
    
    Our GRASS web site: /announces/
+                       Note: DON'T use relative links there
 
    Our main mailing lists:
                        http://grass.itc.it/mailman/listinfo/grass-announce
