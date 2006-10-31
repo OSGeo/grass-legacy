@@ -19,6 +19,7 @@
 #define __R_DIST_DEFS_H__
 
 #include <grass/gis.h>
+#include <grass/glocale.h>
 
 struct EdgeList                  /* keep track of edge cells */
 {
@@ -48,10 +49,12 @@ struct Parms
     struct Map map1, map2;       /* two raster maps to analyze */
     int labels;                  /* boolean: report includes cat labels */
     char *fs;                    /* report field separator     */
+    int overlap;                /* checking for overlaping, than distance is 0 */
 };
 
 /* distance.c */
-void find_minimum_distance(struct CatEdgeList *, struct CatEdgeList *, double *, double *, double *, double *, double *, struct Cell_head *);
+void find_minimum_distance(struct CatEdgeList *, struct CatEdgeList *, double *, double *, double *, double *, double *, struct Cell_head *, int, char *, char *);
+int null_distance(char *name1, char *name2, int *, int *);
 /* edges.c */
 void print_edge_info(struct Map *);
 void find_edge_cells(struct Map *);
