@@ -240,7 +240,7 @@ int main( int argc, char *argv[])
 	struct History history;
 	char buf_nsres[100], buf_ewres[100];
 	struct Colors colors;
-	char *inmap, *s_mapset;
+	char *inmap;
 	int row;
 
 	G_gisinit(argv[0]);
@@ -281,7 +281,7 @@ int main( int argc, char *argv[])
 
 	G_get_set_window(&dst_w);
 
-	inmap = G_find_file2("cell", parm.rastin->answer, "");
+	inmap = G_find_cell2(parm.rastin->answer, "");
 	if (!inmap)
 		G_fatal_error(_("Couldn't find raster file %s"), parm.rastin->answer);
 
@@ -353,19 +353,18 @@ int main( int argc, char *argv[])
 	history.datsrc_1[RECORD_LEN-1] = '\0'; /* strncpy() doesn't null terminate if maxfill */
 	G_format_resolution(src_w.ns_res, buf_nsres, src_w.proj);
 	G_format_resolution(src_w.ew_res, buf_ewres, src_w.proj);
-	sprintf(history.datsrc_2,
-	    "Source map NS res: %s   EW res: %s", buf_nsres, buf_ewres);
+	sprintf(history.datsrc_2, "Source map NS res: %s   EW res: %s", buf_nsres, buf_ewres);
 	G_command_history(&history);
 	G_write_history(parm.rastout->answer, &history);
 
 	/* copy color table from source map */
-	if ( strcmp(parm.method->answer, "sum") != 0 ) {
-	    s_mapset = G_find_cell2 (parm.rastin->answer, "");
-	    if (0 > G_read_colors (parm.rastin->answer, s_mapset, &colors))
-		G_fatal_error(_("Unable to read color table for %s"), parm.rastin->answer);
-	    G_mark_colors_as_fp(&colors);
-	    if (0 > G_write_colors (parm.rastout->answer, G_mapset(), &colors))
-		G_fatal_error(_("Unable to write color table for %s"), parm.rastout->answer);
+	if (strcmp(parm.method->answer, "sum") != 0)
+	{
+		if (G_read_colors(parm.rastin->answer, inmap, &colors) < 0)
+			G_fatal_error(_("Unable to read color table for %s"), parm.rastin->answer);
+		G_mark_colors_as_fp(&colors);
+		if (G_write_colors(parm.rastout->answer, G_mapset(), &colors) < 0)
+			G_fatal_error(_("Unable to write color table for %s"), parm.rastout->answer);
 	}
 
 	return(EXIT_SUCCESS);
