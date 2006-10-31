@@ -38,17 +38,23 @@ proc namespace_import_variables {namespace args} {
 proc GmCommonLayer::display_commands {namespace id cmds} {
 	global mon
 	namespace_import_variables $namespace lfile lfilemask opt optlist dup first
+	puts "variables = $optlist $dup($id)"
 	
 	set mapfile($mon) $MapCanvas::mapfile($mon)
 	set maskfile($mon) $MapCanvas::maskfile($mon)
 
 	if {[info exists $mapfile($mon)] == ""} {return}
+	if {![info exists first]} {set first 0}
 
 	# There's no point in doing any of this unless the layer is actually on
 	if {! $opt($id,1,_check) } {
 		return 0
 	}
 
+	if {![info exists opt($id,1,mod)]} {
+		set opt($id,1,mod) 0
+	}
+	
 	# check to see if options have changed
 	foreach key $optlist {
 		if {$opt($id,0,$key) != $opt($id,1,$key)} {
@@ -56,7 +62,7 @@ proc GmCommonLayer::display_commands {namespace id cmds} {
 			set opt($id,0,$key) $opt($id,1,$key)
 		}
 	} 
-    
+
 	# if options have changed (or mod flag set by other procedures) re-render map
 	if {$opt($id,1,mod) == 1 || $dup($id) == 1 || $first == 1} {
 		runcmd "d.frame -e"
