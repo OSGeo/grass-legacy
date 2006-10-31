@@ -12,7 +12,7 @@ please take care of following rules:
 
 0.  Instructions for the GRASS script parser can be found in the g.parser 
     module's help page.
-    http://grass.ibiblio.org/grass61/manuals/html61_user/g.parser.html
+    http://grass.ibiblio.org/grass63/manuals/html63_user/g.parser.html
 
 1.  Use the directory structure to place your script appropriately into
     the source tree
