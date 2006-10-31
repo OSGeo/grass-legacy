@@ -327,13 +327,20 @@ proc GRMap::group { } {
     variable xyloc
     variable xymset
     variable maptype
+    global mingw
 
 
     if { $maptype == "rast" } {
         # First, switch to xy mapset
         GRMap::setxyenv $xymset $xyloc
 		set cmd "i.group"
-        run_ui $cmd
+    	if { $mingw == "1" } {
+			# shell scripts for MSys
+			catch {set code [exec -- sh -c '$cmd ']}
+			} else {
+			catch {set code [exec -- $cmd]}
+		}
+	#        run_ui $cmd
         # Return to georectified mapset
         GRMap::resetenv
     } elseif { $maptype == "vect" } {
@@ -575,8 +582,7 @@ proc GRMap::startup { } {
     variable initht
     global env
     global bgcolor
-
-
+    
     set grstarttitle "GRASS Georectifier"
     toplevel .grstart
 
@@ -991,6 +997,7 @@ proc GRMap::gcpwin {} {
     pack $row -side top -fill both -expand yes
 
     for {set gcpnum 1} {$gcpnum < 51 } { incr gcpnum } {
+    	if {$gcpnum == 51} {break}
         set GRMap::usegcp($gcpnum) 1
         set row [ frame $gcp.row$gcpnum -bd 0]
         set chk($gcpnum) [checkbutton $row.a \
@@ -1524,10 +1531,10 @@ proc GRMap::runprograms { mod } {
     cd $currdir
 
 	#draw gcp marks
-	if {$xy($gcpnum) != ""} {
+	set gcpnum 1
+	if {$xy(1) != ""} {
 		#draw GCP marks from GCP form
 		for {set gcpnum 1} {$gcpnum < 51 } { incr gcpnum } {
-			if { $gcpnum > 50} {break}
 			if {[$xy($gcpnum) get] != "" } {
 				set xyfields [split [$xy($gcpnum) get] { }]
 				set mapx [lindex $xyfields 0]
@@ -2294,11 +2301,20 @@ proc GRMap::scrx2mape { x } {
 ###############################################################################
 # cleanup procedure on closing window
 proc GRMap::cleanup { } {
-
+	variable xy
+	
     if { [winfo exists .gcpwin] } { destroy .gcpwin }
     if { [winfo exists .mapgrcan] } { destroy .mapgrcan }
+
+	for {set gcpnum 1} {$gcpnum < 51 } { incr gcpnum } {
+		if {[info exists xy($gcpnum)]} {
+			unset xy($gcpnum)
+		}
+	}
+
     # reset to original location and mapset
     GRMap::resetenv
+
 }
 
 ###############################################################################
