@@ -36,7 +36,7 @@
 	- make sure that no unnecessary stuff is installed in the top-level Makefile section
 	  for real-install
 	- lots of files in the make system still output to /dev/null (cygwin) !!!
-	- make install action to copy executable GEM to /usr/local or wherever grass61
+	- make install action to copy executable GEM to /usr/local or wherever grass6X
 	  script gets installed to
 	- all files installed by GEM and the Makefile sections referring to GEM are chown'd root. Can that be a problem?
 		
