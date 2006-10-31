@@ -29,6 +29,7 @@ interface (
     G_gisinit (argv[0]);                /* Link with GRASS interface.	   */
 
     module = G_define_module();
+    module->keywords = _("raster");
     module->description =
 		_("Creates a fractal surface of a given fractal dimension.");
 

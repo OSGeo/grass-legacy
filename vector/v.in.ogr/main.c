@@ -101,6 +101,7 @@ main (int argc, char *argv[])
 	  sprintf (buf, "%s,%s", buf, OGR_Dr_GetName ( Ogr_driver) );
     }
     module = G_define_module();
+    module->keywords = _("vector");
     module->description = G_store(buf);
 
     dsn_opt = G_define_option();
@@ -222,6 +223,9 @@ main (int argc, char *argv[])
     G__setenv ( "OVERWRITE", "1" );
 
     if (G_parser (argc, argv)) exit(EXIT_FAILURE);
+
+    if (G_legal_filename(out_opt->answer) < 0)
+        G_fatal_error(_("Illegal filename: %s"), out_opt->answer);
 
     if ( !outloc_opt->answer ) { /* Check if the map exists */
 	if ( G_find_vector2 (out_opt->answer, G_mapset()) ) {

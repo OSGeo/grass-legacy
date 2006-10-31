@@ -22,6 +22,7 @@
 
 #%Module
 #%  description: Auto-balancing of colors for LANDSAT images
+#%  keywords: raster, imagery, colors
 #%End
 #%option
 #% key: red

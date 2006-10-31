@@ -14,8 +14,8 @@ diff -urNad grass-5.7.0+6.0.0beta2/include/Make/Html.make /tmp/dpep.bOaT9i/grass
  	GISBASE=$(GISBASE) \
  	PATH=$(GISBASE)/bin:$$PATH \
  	$(LD_LIBRARY_PATH_VAR)="$(GISBASE)/lib:$($(LD_LIBRARY_PATH_VAR))" \
--	$(1) --html-description | grep -v '</body>\|</html>' > $(PGM).tmp.html ; true
-+	fakeroot $(1) --html-description | grep -v '</body>\|</html>' > $(PGM).tmp.html ; true
+-	LC_ALL=C $(1) --html-description | grep -v '</body>\|</html>' > $(PGM).tmp.html ; true
++	LC_ALL=C fakeroot $(1) --html-description | grep -v '</body>\|</html>' > $(PGM).tmp.html ; true
  
  # html rules for cmd commands
  htmlcmd: htmlcmd1 htmlgen

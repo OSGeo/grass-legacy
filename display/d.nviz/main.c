@@ -65,6 +65,7 @@ int main(int argc, char *argv[])
 
     /* Set description */
     module = G_define_module();
+    module->keywords = _("display");
     module->description = _("" "Create fly-through script to run in NVIZ");
 
     parm.opt1 = G_define_option();

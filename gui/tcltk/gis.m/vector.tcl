@@ -127,7 +127,7 @@ proc GmVector::create { tree parent } {
     set opt($count,1,_check) 1 
 
     set opt($count,1,vect) "" 
-	set opt($count,1,opacity) 1.0
+    set opt($count,1,opacity) 1.0
     set opt($count,1,display_shape) 1 
     set opt($count,1,display_cat) 0
     set opt($count,1,display_topo) 0 
@@ -171,7 +171,7 @@ proc GmVector::create { tree parent } {
     set opt($count,1,maxreg) "" 
     set opt($count,1,mod) 1
 
-	set optlist { _check vect display_shape display_cat display_topo display_dir \
+	set optlist { _check vect opacity display_shape display_cat display_topo display_dir \
 				display_attr type_point type_line type_boundary type_centroid \
 				type_area type_face color _use_color fcolor _use_fcolor lcolor \
 				rdmcolor sqlcolor icon size lwidth layer lfield attribute \
@@ -242,8 +242,8 @@ proc GmVector::show_columns { id } {
 proc GmVector::show_data { id } { 
 	variable opt
 	set mapname $opt($id,1,vect)
-	set layer $opt($id,1,layer)
-	if {![catch {open "|v.db.connect map=$mapname layer=$layer -g" r} vdb]} {
+	set layernum $opt($id,1,layer)
+	if {![catch {open "|v.db.connect map=$mapname layer=$layernum -g" r} vdb]} {
 		set vectdb [read $vdb]
 		catch {close $vdb}
 		set vdblist [split $vectdb " "]
@@ -270,7 +270,6 @@ proc GmVector::select_symbol { id } {
 # display and set vector options
 proc GmVector::options { id frm } {
     variable opt
-    global gmpath
     global bgcolor
     global iconpath
     
@@ -544,7 +543,7 @@ proc GmVector::vecttype { vect } {
 
 	set rv [open "|v.info map=$vect" r]
 	set vinfo [read $rv]
-	close $rv
+	catch {close $rv}
 	regexp {points:       (\d*)} $vinfo string points
 	if { $points > 0} {
 		set vecttype "points"
@@ -560,11 +559,6 @@ proc GmVector::vecttype { vect } {
 # display vector map and output to graphic file for compositing
 proc GmVector::display { node mod } {
     global mon
-    global mapfile
-    global maskfile
-    global complist
-    global opclist
-    global masklist
     variable optlist
     variable lfile 
     variable lfilemask
@@ -681,7 +675,6 @@ proc GmVector::mapname { node } {
     variable opt
     variable tree
     global mon
-    global vdist
     
     set tree($mon) $GmTree::tree($mon)
     set id [GmTree::node_id $node]
@@ -708,8 +701,6 @@ proc GmVector::WorkOnVector { node mod } {
     if { ! ( $opt($id,1,_check) ) } { return } 
 
     if { $opt($id,1,vect) == "" } { return } 
-
-    global dmpath 
     
     if {[Gm::element_exists "vector" $opt($id,1,vect)]} {
         set cmd [list v.digit "map=$opt($id,1,vect)"]

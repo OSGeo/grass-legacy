@@ -12,9 +12,8 @@ EXTRA_CFLAGS = $(XCFLAGS) $(TCLINCDIR) $(TKINCDIR)
 
 include $(MODULE_TOPDIR)/include/Make/Platform.make
 
-LIB_OBJS = generate.o
+LIB_OBJS = generate.o open.o
 ifneq ($(TCLTKLIBS),)
-    LIB_OBJS += open.o
     GTCLTKFORM = $(HTMLLIB) $(FORM) $(FORMPROG) 
 endif
 

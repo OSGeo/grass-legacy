@@ -142,7 +142,8 @@ cp -f $GEMDIR/docs/GEM-Manual/img* $HTMLDIR/gem/
 cd $HTMLDIR
 
 #get list of available GRASS modules:
-CMDLIST=`ls -1 *.*.html | grep -v "$FULLINDEX" | grep -v index.html | grep -v "\($EXCLUDEHTML\)" | cut -d'.' -f1 | sort -u`
+CMDLIST=`ls -1 *.*.html | grep -v "$FULLINDEX" | grep -v index.html | \
+  grep -v gis.m.html | grep -v "\($EXCLUDEHTML\)" | cut -d'.' -f1 | sort -u`
 CMDLISTNO=`echo $CMDLIST | wc -w | awk '{print $1}'`
 
 #write main index:
@@ -240,7 +241,7 @@ do
 done
 
 #extra stuff for 'nviz' and 'xganim' and GUIs:
-echo "<li><a href=\"d.m.html\">d.m</a> and <a href=\"gis.m.html\">gis.m</a> GIS managers</li>" >> $FILENAME
+echo "<li><a href=\"gis.m.html\">gis.m</a> and <a href=\"d.m.html\">d.m</a> GIS managers</li>" >> $FILENAME
 echo "<li><a href=\"nviz.html\">nviz</a> visualization and animation tool</li>" >> $FILENAME
 echo "<li><a href=\"xganim.html\">xganim</a> tool  for animating a raster map series</li>" >> $FILENAME
 	      

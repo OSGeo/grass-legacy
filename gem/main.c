@@ -36,7 +36,7 @@
 	- make sure that no unnecessary stuff is installed in the top-level Makefile section
 	  for real-install
 	- lots of files in the make system still output to /dev/null (cygwin) !!!
-	- make install action to copy executable GEM to /usr/local or wherever grass61
+	- make install action to copy executable GEM to /usr/local or wherever grass6X
 	  script gets installed to
 	- all files installed by GEM and the Makefile sections referring to GEM are chown'd root. Can that be a problem?
 		
@@ -176,8 +176,8 @@ void show_help ( void ) {
 	fprintf (stdout, "be installed instead using the -b option. ");
 	fprintf (stdout, "For installation from source code, a C compiler and make tools are needed.\n");
 	fprintf (stdout, "\nExample:\n");
-	fprintf (stdout, "\tgem -b macosx --grass=/usr/local/grass-6.0.0 -i myExtension\n");
-	fprintf (stdout, "Installs the MacOS X binaries for 'myExtension' in /usr/local/grass-6.0.0.\n");
+	fprintf (stdout, "\tgem -b macosx --grass=/usr/local/grass-6.2.0 -i myExtension\n");
+	fprintf (stdout, "Installs the MacOS X binaries for 'myExtension' in /usr/local/grass-6.2.0.\n");
 	exit (0);	
 }
 

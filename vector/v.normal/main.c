@@ -1,5 +1,5 @@
 /*-
- * s.normal - GRASS program for distributional testing.
+ * from s.normal - GRASS program for distributional testing.
  * Copyright (C) 1994-1995. James Darrell McCauley.
  *
  * Author: James Darrell McCauley darrell@mccauley-usa.com
@@ -37,6 +37,7 @@
 #include <grass/dbmi.h>
 #include <grass/Vect.h>
 #include <grass/cdhc.h>
+#include <grass/glocale.h>
 
 int scan_cats ( char *, long *, long *);
 
@@ -74,7 +75,8 @@ int main (int argc, char **argv)
   G_gisinit (argv[0]);
 
   module = G_define_module();
-  module->description = "tests for normality for points.";
+  module->keywords = _("vector, statistics");
+  module->description = _("Tests for normality for points.");
   parm.input = G_define_option ();
   parm.input->key = "map";
   parm.input->type = TYPE_STRING;

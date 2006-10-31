@@ -252,7 +252,7 @@ int
 Vect_cidx_find_next ( struct Map_info *Map, int field_index, int cat, int type_mask,
                                   int start_index, int *type, int *id )
 {
-    int    *catp, cat_index, tmp_cat_index;
+    int    *catp, cat_index;
     struct Cat_index *ci;
 
     G_debug (3, "Vect_cidx_find_next() cat = %d, type_mask = %d, start_index = %d", cat, type_mask, start_index);
@@ -293,7 +293,7 @@ Vect_cidx_find_next ( struct Map_info *Map, int field_index, int cat, int type_m
     
     do {
         G_debug (3, "  cat_index = %d", cat_index);
-	if ( ci->cat[cat_index][1] & type_mask ) {
+	if ( ci->cat[cat_index][0] == cat && ci->cat[cat_index][1] & type_mask ) {
 	    *type = ci->cat[cat_index][1];
 	    *id = ci->cat[cat_index][2];
             G_debug (3, "  type match -> record found");
