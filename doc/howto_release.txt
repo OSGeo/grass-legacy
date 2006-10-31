@@ -88,7 +88,7 @@ Contents
      scp grass-$VERSION.* AUTHORS COPYING ChangeLog_$VERSION.gz INSTALL REQUIREMENTS.html SUBMITTING SUBMITTING_TCLTK SUBMITTING_SCRIPTS neteler@grass.itc.it:www/grass$MAJOR$MINOR/source/
 
  o update web site to new version (HTML in Web-CVS)
-      - main.inc
+      - rss.xml (for news section)
       - download/software.inc
       - grass$MAJOR$MINOR/main.inc
       - devel/grasshist.html
@@ -102,7 +102,7 @@ Contents
  o upload user HTML manual in case of *final release* from compiled English
    version at:
      cd dist.$ARCH/docs/html
-     scp * neteler@grass.itc.it:www/grass$MAJOR$MINOR/manuals/html$MAJOR$MINOR_user/
+     scp * neteler@grass.itc.it:www/grass$MAJOR$MINOR/manuals/html$MAJOR${MINOR}_user/
 
 2. Tell others about it:
 
@@ -133,27 +133,31 @@ Contents
                        <news_item@osgeo.org>
                        http://grass.osgeo.org (is fed through <grass-announce@grass.itc.it>)
 
+ Email:
+   http://www.gismonitor.com/news/submit_news.php (matteo@gismonitor.com)
+   http://www.gis-news.de/  (news@gismngt.de)
+   http://www.gisdevelopment.net (news@gisdevelopment.net)
+   http://spatialnews.geocomm.com/submitnews.html (not free any more, convince editor@geocomm.com)
+   admin@cartographyonline.com
+   redazionenews@mondogis.net
+
+ Web:
    http://slashgeo.org/submit.pl
-   http://spatialnews.geocomm.com/submitnews.html (not free any more)
    http://freshmeat.net/projects/grass/?highlight=GRASS (update, MN)
    http://linuxtoday.com/contribute.php3
    http://www.newsforge.com/submit.pl
-   http://programming.newsforge.com/submit.pl
-   http://osx.macnn.com/    (email to news tips)
-   http://www.gis-news.de/  (news@gismngt.de)
+   http://osx.macnn.com/    (email to "contact" -> news tips)
    http://www.giscafe.com/submit_material/submit_options.php#Press (MN)
    http://www.freegis.org   (update, MN)
    http://www.directionsmag.com/pressreleases.php (News -> Post Press Release)
-   http://www.gismonitor.com/news/submit_news.php
-   http://www.gisdevelopment.net (click on 'Submit Press Release')
    http://www.gnu.org/directory/science/geography/grass.html
    http://www.kde-apps.org/content/show.php?content=19776
-   http://news.eoportal.org/cgi-bin/eoportal_header.pl?dw=psr&site=software&words=type
+   http://news.eoportal.org/cgi-bin/eoportal_header.pl?dw=psr&site=software&words=type (MN)
+            -> Share your news with the EO community
    http://www.osdir.com/Downloads+index-req-viewsdownload-sid-206.phtml
    http://www.foss4g.org/FOSS4G/modules.php?name=Submit_News
    http://groups.google.com/group/Remote-Sensing-GIS-for-a-New-World
    http://groups.google.com/group/comp.infosystems.gis
-   admin@cartographyonline.com
 
    ... anywhere else? Please add here.
 
