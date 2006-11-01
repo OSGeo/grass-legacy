@@ -38,7 +38,6 @@ proc namespace_import_variables {namespace args} {
 proc GmCommonLayer::display_commands {namespace id cmds} {
 	global mon
 	namespace_import_variables $namespace lfile lfilemask opt optlist dup first
-	puts "variables = $optlist $dup($id)"
 	
 	set mapfile($mon) $MapCanvas::mapfile($mon)
 	set maskfile($mon) $MapCanvas::maskfile($mon)
