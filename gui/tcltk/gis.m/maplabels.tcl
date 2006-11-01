@@ -238,11 +238,11 @@ proc GmCLabels::display { node } {
 		switch $key {
 			"east:" {
 				set east $val
-				set opt($id,1,xcoord) [MapCanvas::mape2scrx $east]
+				set opt($id,1,xcoord) [MapCanvas::mape2scrx $mon $east]
 			}
 			"north:" {
 				set north $val
-				set opt($id,1,ycoord) [MapCanvas::mapn2scry $north]
+				set opt($id,1,ycoord) [MapCanvas::mapn2scry $mon $north]
 			}
 			"xoffset:" {
 				if { $opt($id,1,override) == 0 } {
