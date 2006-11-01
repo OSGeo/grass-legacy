@@ -398,7 +398,7 @@ static struct datum_transform_list *get_datum_transform_by_name(const char
     for (line = 1; G_getl(buf, sizeof(buf), fd); line++) {
 	char name[100], params[1024], where_used[1024], comment[1024];
 
-	G_strip(buf);
+	G_chop(buf);
 	if (*buf == '\0' || *buf == '#')
 	    continue;
 
@@ -485,7 +485,7 @@ struct datum_list *read_datum_table(void)
 	char name[100], descr[1024], ellps[100];
 	double dx, dy, dz;
 
-	G_strip(buf);
+	G_chop(buf);
 	if (*buf == '\0' || *buf == '#')
 	    continue;
 
