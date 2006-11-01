@@ -150,7 +150,7 @@ proc GmVector::create { tree parent } {
     set opt($count,1,lwidth) 1
 
     set opt($count,1,symdir) "basic"
-    set opt($count,1,icon) "basic/x"
+    set opt($count,1,icon) "basic/circle"
     set opt($count,1,size) 5 
 
     set opt($count,1,layer) 1 
