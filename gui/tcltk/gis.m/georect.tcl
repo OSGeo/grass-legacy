@@ -109,6 +109,10 @@ namespace eval GRMap {
     variable array usegcp
     # entry widget for GCP xy coordinates indexed by gcpnum
     variable array xy
+    # entry widget for GCP forward rms error indexed by gcpnum
+    variable array fwd
+    # entry widget for GCP reverse rms error indexed by gcpnum
+    variable array rev
     # gcp form has been created and can be accessed
     variable drawform
     # entry widget for GCP georectified coordinates indexed by gcpnum
@@ -180,6 +184,8 @@ namespace eval GRMap {
 	set selftarget 0
 	set usegcp($gcpnum) 1
 	set xy($gcpnum) ""
+	set fwd($gcpnum) ""
+	set rev($gcpnum) ""
 	set xygdb ""
 	set xygroup ""
 	set xyloc ""
@@ -336,9 +342,9 @@ proc GRMap::group { } {
 		set cmd "i.group"
     	if { $mingw == "1" } {
 			# shell scripts for MSys
-			catch {set code [exec -- sh -c '$cmd ']}
-			} else {
-			catch {set code [exec -- $cmd]}
+			catch {exec -- sh -c '$cmd '}
+		} else {
+			catch {exec -- $cmd}
 		}
 	#        run_ui $cmd
         # Return to georectified mapset
@@ -730,6 +736,9 @@ proc GRMap::refmap { } {
 
     # close dialog to select mapset and raster
     destroy .grstart
+    
+    #start gcp window
+    GRMap::gcpwin
 
     # set environment to xy location
     GRMap::setxyenv $xymset $xyloc
@@ -888,9 +897,6 @@ proc GRMap::refmap { } {
     #default selector tool
     GRMap::selector
 
-    #start gcp window
-    GRMap::gcpwin
-
     # bindings for closing windows
     bind .mapgrcan <Destroy> {
         if { "%W" == ".mapgrcan" } { GRMap::cleanup }
@@ -911,6 +917,8 @@ proc GRMap::gcpwin {} {
     variable xy
     variable geoc
     variable chk
+    variable fwd
+    variable rev
     variable rectorder
     variable fwd_error
     variable rev_error
@@ -1333,8 +1341,8 @@ proc GRMap::cleargcp {} {
     variable xy
     variable geoc
     variable usegcp
-    variable fwd_error
-    variable rev_error
+    variable fwd
+    variable rev
     variable gcpnum
     variable grcan
 
@@ -1342,8 +1350,8 @@ proc GRMap::cleargcp {} {
         set usegcp($gcpnum) 1
         $xy($gcpnum) delete 0 end
         $geoc($gcpnum) delete 0 end
-        $fwd_error($gcpnum) delete 0 end
-        $rev_error($gcpnum) delete 0 end
+        $fwd($gcpnum) delete 0 end
+        $rev($gcpnum) delete 0 end
     }
     $grcan delete gcpvert gcphoriz
 }
