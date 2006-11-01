@@ -234,7 +234,7 @@ static struct ellps_list *read_ellipsoid_table(int fatal)
     err = 0;
     *badlines = 0;
     for (line = 1; G_getl(buf, sizeof buf, fd); line++) {
-	G_strip(buf);
+	G_chop(buf);
 	if (*buf == 0 || *buf == '#')
 	    continue;
 

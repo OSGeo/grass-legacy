@@ -321,7 +321,7 @@ int main(int argc, char *argv[])
 	    continue;
 
 	cmd = buff + 2;
-	G_strip(cmd);
+	G_chop(cmd);
 
 	arg = strchr(cmd, ':');
 
