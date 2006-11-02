@@ -55,6 +55,7 @@ SUBDIRS = \
 	r.out.pov \
 	r.out.ppm \
 	r.out.ppm3 \
+	r.out.vrml \
 	r.out.vtk \
 	r.param.scale \
 	r.patch \

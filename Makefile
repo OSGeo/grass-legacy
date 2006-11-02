@@ -42,7 +42,6 @@ SUBDIRS = \
 	gui \
 	imagery \
 	misc \
-	paint \
 	ps \
 	raster \
 	raster3d \
