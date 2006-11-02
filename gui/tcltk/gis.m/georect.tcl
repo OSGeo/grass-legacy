@@ -344,7 +344,7 @@ proc GRMap::group { } {
 			# shell scripts for MSys
 			catch {exec -- sh -c '$cmd '}
 		} else {
-			catch {exec -- $cmd}
+			catch {exec -- $cmd --ui}
 		}
 
         # Return to georectified mapset
