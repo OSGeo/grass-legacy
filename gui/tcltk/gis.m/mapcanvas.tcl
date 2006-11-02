@@ -1062,12 +1062,10 @@ proc MapCanvas::set_wind {mon args overwrite} {
 		lappend options "$attr=$value"
 	}
 
-	#g.region -a went here. Removed due to precision issues
-
 	if {$overwrite == 1} {
-		open [concat "|g.region --o" $options $args]
+		open [concat "|g.region -a --o" $options $args]
 	} else {
-		open [concat "|g.region" $options $args]
+		open [concat "|g.region -a" $options $args]
 	}
 }
 
