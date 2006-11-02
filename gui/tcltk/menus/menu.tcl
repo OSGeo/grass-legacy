@@ -154,7 +154,7 @@ set descmenu [subst  {
 			{command {[G_msg "PPM image from red, green, blue raster maps"]} {} "r.out.ppm3" {} -command { execute r.out.ppm3 }}
 			{command {[G_msg "POVray height-field"]} {} "r.out.pov" {} -command { execute r.out.pov }}
 			{command {[G_msg "TIFF image (8/24bit)"]} {} "r.out.tiff" {} -command { execute r.out.tiff }}
-			{command {[G_msg "VRML file"]} {} "p.out.vrml" {} -command { execute p.out.vrml }}
+			{command {[G_msg "VRML file"]} {} "r.out.vrml" {} -command { execute r.out.vrml }}
 			{command {[G_msg "VTK ASCII file"]} {} "r.out.vtk" {} -command { execute r.out.vtk }}
 		}}
 		{cascad {[G_msg "Vector map"]} {} "" $tmenu {			
@@ -233,8 +233,14 @@ set descmenu [subst  {
 		{command {[G_msg "Manage null values"]} {} "r.null" {} -command {execute r.null }}
 		{command {[G_msg "Manage timestamps for files"]} {} "r.timestamp" {} -command {execute r.timestamp }}
 		{command {[G_msg "Quantization for floating-point maps"]} {} "r.quant" {} -command {execute r.quant }}
-		{command {[G_msg "Resample (change resolution) using nearest neighbor method"]} {} "r.resample" {} -command {execute r.resample }}
-		{command {[G_msg "Resample (change resolution) using regularized spline tension"]} {} "r.resamp.rst" {} -command {execute r.resamp.rst }}
+
+	    {cascad {[G_msg "Resample (change resolution)"]} {} "" $tmenu {
+		{command {[G_msg "Resample using nearest neighbor method"]} {} "r.resample" {} -command {execute r.resample }}
+		{command {[G_msg "Resample using various interpolation methods"]} {} "r.resamp.interp" {} -command {execute r.resamp.interp }}
+		{command {[G_msg "Resample using aggregate statistics"]} {} "r.resamp.stats" {} -command {execute r.resamp.stats }}
+		{command {[G_msg "Resample using regularized spline with tension method"]} {} "r.resamp.rst" {} -command {execute r.resamp.rst }}
+	    }}
+		
 		{command {[G_msg "Support file creation and maintenance"]} {} "r.support" {} -command {term r.support }}
 		{separator}
 		{command {[G_msg "Reproject raster from other location"]} {} "r.proj" {} -command {execute r.proj }}
