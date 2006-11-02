@@ -19,6 +19,7 @@ Maintainer: M. Neteler
 ** mirrored to selected tier-1 sites via rsync (hardcoded IPs to avoid
    that too many sites connect)
 ** tier-1 sites are mirrored via rsync to tier-2 mirrors (no hardcoded IPs)
+** RSS feed: rss.xml file stored in CVS-Web
 
 * Weekly snapshots (generated Saturday morning Italian time):
 ** Source code tarball of CVS HEAD
@@ -51,6 +52,7 @@ Maintainer: M. Neteler
 
 * Search engine
 ** htdig runs once a week
+** searchgrass.inc contains selective entries (CVS-Web)
 
 * FTP server
 ** no longer available due to security risk
@@ -84,6 +86,7 @@ grass-announce 	GRASS announcements (moderated by M. Neteler)
 grass-commit 	Mailing list to distribute GRASS-CVS commits (limited posters)
 grass-dev 	GRASS GIS Development mailing list
 grass-qa 	GRASS Quality Assessment and monitoring list (limited posters)
+grass-psc 	GRASS-PSC (Project Steering Committee) list
 grassgui 	GRASSGUI mailing list
 grassuser 	GRASS user list
 nvizlist 	List to discuss GRASS/NVIZ visualization tools
@@ -105,12 +108,12 @@ Notes:
   Ecole Polytechnique de Montreal, Canada. Not open for other postings.
 * grass-commit is receiving posts from the GRASS CVS server at intevation.de.
   Not open for other postings.
-* weblist is an open list (posting without subscription possible)
+* weblist is an open list (posting without subscription possible) with spam filter
 
 
 == GRASS Wiki ==
 
-Maintainer: Stephan Holl, Otto Dassau
+Maintainer: Markus Neteler
 
 * http://grass.gdf-hannover.de
 * Mediawiki, sponsored by GDF Hannover, Germany
@@ -123,6 +126,7 @@ Summary: The system should run almost autonomous. An eye must be
 == GRASS IRC ==
 
 Channel: irc://irc.freenode.net/grass
+Web based client: http://irc.telascience.org/
 
 * channel owner: Alessandro Frigeri <afrigeri unipg.it> ("geoalf")
 * quasi guru: Markus Neteler ("markusN")
@@ -131,6 +135,7 @@ Channel: irc://irc.freenode.net/grass
    - Luca ("doktoreas")
    - Soeren ("huhabla")
    - Brad ("bdouglas")
+
 
 == GRASS Source code repository ==
 
