@@ -18,7 +18,8 @@
 #include <grass/config.h>
 #include <stdlib.h>
 
-#define MAXLEVEL 2 
+#define MAXLEVEL 3
+#define STDLEVEL 2
 #define MINLEVEL 0
 
 
@@ -32,6 +33,8 @@ static int verbose = -1; /* current verbosity level */
  * \param 0 - module should print nothing but errors and warnings (G_fatal_error, G_warning)
  * \param 1 - module will print progress information (G_percent)
  * \param 2 - module will print all messages (G_message)
+ * \param 3 - module will be very verbose. Triggered by "--v".
+ *            "--v" requires if(G_verbose() == G_verbose_max()) tests.
  */
 int G_verbose (void)
 
@@ -46,7 +49,7 @@ int G_verbose (void)
                 ;
         }
         else
-            verbose = MAXLEVEL;
+            verbose = STDLEVEL;
     }
     return verbose;
 }
