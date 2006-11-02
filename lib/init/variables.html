@@ -103,6 +103,14 @@ to standard distribution
 <br>[<!-- m.svfit, s.probplt, s.sv -->i.spectral]
 <br>&nbsp; program to use for plotting "gnuplot" data
 
+<p>GRASS_GUI
+<br>&nbsp; either "text" or "tcltk" to define non-/graphical startup.
+Can also specify the name of the GUI to use, e.g. "gis.m", "d.m" or
+"wxpython" (<i>wx name subject to change</i>). Also exists as a GRASS
+gisenv variable (see below). If this shell variable exists at GRASS startup,
+it will determine the GUI used. If it is not defined startup will default
+to the last GUI used.
+
 <p>GRASS_HEIGHT
 <br>[d.mon]
 <br>&nbsp; defines the height of GRASS monitor, see also GRASS_WIDTH
@@ -294,7 +302,11 @@ back afterwards.
 <br>&nbsp; encoding of query form (utf-8, ascii, iso8859-1, koi8-r)
 
 <p>GRASS_GUI
-<br>&nbsp; either "text" or "tcltk" to define non-/graphical startup
+<br>&nbsp; either "text" or "tcltk" to define non-/graphical startup.
+Can also specify the name of the GUI to use, e.g. "gis.m", "d.m" or
+"wxpython" (<i>wx name subject to change</i>). Can also exist as a GRASS
+startup shell variable. The gisenv setting defines what GUI GRASS will use
+the next time it starts.
 
 <p>LOCATION
 <br>&nbsp;full path to location directory

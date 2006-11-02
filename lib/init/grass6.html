@@ -16,7 +16,8 @@
 
 <H2>SYNOPSIS</H2>
 
-<B>grass63</B> [<B>-</B>] [<B>-v</B>] [<B>-h | -help | --help</B>] [<B>-text | -tcltk | -gui</B>]
+<B>grass63</B> [<B>-</B>] [<B>-v</B>] [<B>-h | -help | --help</B>]
+    [<B>-text | -gui | -oldgui]</B>]
     [[[<B>&lt;GISDBASE&gt;/</B>]<B>&lt;LOCATION_NAME&gt;/</B>]
     	<B>&lt;MAPSET&gt;</B>]
 
@@ -67,6 +68,9 @@ All command line options are optional.
 <DT><B>-gui</B> (or <B>-tcltk</B>)
 <DD> Indicates that the Tcl/Tk based graphical user interface should be used
 
+<DT><B>-oldgui</B>
+<DD> Indicates that the old graphical user interface should be used (d.m)
+
 <DT><B>-v</B> <B>--version</B>
 <DD> Prints the version for GRASS
 
@@ -102,7 +106,8 @@ The <EM>grass63</EM> program will check for the existence of an environment
 variable called GRASS_GUI which indicates the type of user interface for
 GRASS to use. If this variable is not set when <EM>grass63</EM> is run, then
 it will be created and then saved in the $HOME/.grassrc6 file for the next
-time GRASS is run.
+time GRASS is run. In addition to "text" or "tcltk", the GRASS_GUI variable
+can be set to the name of the GUI to use, for example "gis.m" or "d.m".
 
 <P>
 There is an order of precedence in the way <EM>grass63</EM> determines the user
@@ -120,7 +125,7 @@ which are used during next startup of GRASS (list of
 <DD>Command line argument<BR>
     Environment variable GRASS_GUI<BR>
     Value set in $HOME/.grassrc6<BR>
-    Default value - currently tcltk
+    Default value - currently gis.m
 
 </DL>
 
@@ -296,7 +301,7 @@ The following are some examples of how you could start GRASS
 <DD> Start GRASS using the default user interface. The user will be prompted
     to choose the appropriate location and mapset.
 
-<DT><B>grass63 -tcltk</B>
+<DT><B>grass63 -gui</B>
 <DD> Start GRASS using the Tcl/Tk based user interface. The user will be
     prompted to choose the appropriate location and mapset.
 
@@ -304,7 +309,7 @@ The following are some examples of how you could start GRASS
 <DD> Start GRASS using the text based user interface. The user will be
     prompted to choose the appropriate location and mapset.
 
-<DT><B>grass63 -tcltk -</B>
+<DT><B>grass63 -gui -</B>
 <DD> Start GRASS using the Tcl/Tk based user interface and try to obtain
     the location and mapset from environment variables.
 
@@ -340,7 +345,7 @@ first version of <EM>wish</EM>.
 <EM>$UNIX_BIN/grass63</EM> - GRASS startup program<BR><BR>
 <EM>$GISBASE/etc/Init.sh</EM> - GRASS initialization script called by
     <EM>grass63</EM><BR><BR>
-<EM>$GISBASE/tcltkgrass/script/gis_set.tcl</EM> - Tcl/Tk script to set the
+<EM>$GISBASE/etc/gis_set.tcl</EM> - Tcl/Tk script to set the
     location and mapset to use. Called by <EM>Init.sh</EM><BR><BR>
 
 <H2>SEE ALSO</H2>
