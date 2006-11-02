@@ -63,13 +63,14 @@ for i in "$@" ; do
     	# Check if the user asked for help
 	help|-h|-help|--help)
 	    echo "Usage:"
-	    echo "  $CMD_NAME [-h | -help | --help] [-text | -gui | -tcltk] [[[<GISDBASE>/]<LOCATION_NAME>/]<MAPSET>]"
+	    echo "  $CMD_NAME [-h | -help | --help] [-text | -gui] [[[<GISDBASE>/]<LOCATION_NAME>/]<MAPSET>]"
 	    echo
             echo "Flags:"
             echo "  -h or -help or --help          print this help message"
             echo "  -text                          use text based interface and set as default"
-            echo "  -gui or -tcltk                 use Tcl/Tk based graphical user interface"
+            echo "  -gui (or -tcltk)               use Tcl/Tk based graphical user interface"
             echo "                                   and set as default"
+	    echo "  -oldgui                        use the old GUI interface and set as default"
             echo
             echo "Parameters:"
             echo "  GISDBASE                       initial database (path to GIS data)"
@@ -79,6 +80,7 @@ for i in "$@" ; do
             echo "  GISDBASE/LOCATION_NAME/MAPSET  fully qualified initial mapset directory"
             echo
             echo "Environment variables relevant for startup:"
+            echo "  GRASS_GUI                      select GUI (text, gis.m, d.m)" # wxpython
             echo "  GRASS_TCLSH                    set tclsh shell name to override 'tclsh'"
             echo "  GRASS_WISH                     set wish shell name to override 'wish'"
             echo "  GRASS_HTML_BROWSER             set html web browser for help pages"
@@ -93,8 +95,15 @@ for i in "$@" ; do
 	    ;;
 	
 	# Check if the -tcltk flag was given
-	-tcltk|-gui)
-	    GRASS_GUI="tcltk"
+	# change -gui to wxpython as needed
+	-gui | -tcltk)
+	    GRASS_GUI="gis.m"
+	    shift
+	    ;;
+
+	# Check if the -oldgui flag was given
+	-oldgui)
+	    GRASS_GUI="d.m"
 	    shift
 	    ;;
     esac
@@ -155,7 +164,7 @@ fi
 # command line, been set from an external environment variable, or is 
 # not set. So we check if it is not set
 if [ ! "$GRASS_GUI" ] ; then
-    
+
     # Check for a reference to the GRASS user interface in the grassrc file
     if [ -f "$GISRC" ] ; then
     	GRASS_GUI=`awk '/GRASS_GUI/ {print $2}' "$GISRC"`
@@ -163,6 +172,11 @@ if [ ! "$GRASS_GUI" ] ; then
     
     # Set the GRASS user interface to the default if needed - currently tcltk
     if [ ! "$GRASS_GUI" ] ; then
+	GRASS_GUI="tcltk"
+    fi
+else
+    if [ "$GRASS_GUI" = "gui" ] ; then
+	# change to wxpython as needed
     	GRASS_GUI="tcltk"
     fi
 fi
@@ -349,7 +363,9 @@ echo "Starting GRASS ..."
 if [ "$DISPLAY" -o "$MINGW" ] ; then
 
     # Check if we need to find wish
-    if [ "$GRASS_GUI" = "tcltk" ] ; then
+    if [ "$GRASS_GUI" = "tcltk" ] || \
+	[ "$GRASS_GUI" = "gis.m" ] || \
+	[ "$GRASS_GUI" = "d.m" ] ; then
 
 	# Check if wish is working properly
 	echo 'exit 0' | "$GRASS_WISH" >/dev/null 2>&1
@@ -499,7 +515,7 @@ if [ ! "$LOCATION" ] ; then
 	    ;;
 	
 	# Check for tcltk interface
-	tcltk)
+	tcltk | gis.m | d.m)
 	    eval `"$GRASS_WISH" -file "$TCLTKGRASSBASE/gis_set.tcl"`
 	    thetest=$?
 	        #0: failure
@@ -641,12 +657,23 @@ fi
 case "$GRASS_GUI" in
     
     # Check for tcltk interface
-    tcltk)
+    tcltk | gis.m)
 	if [ "$osxaqua" ] ; then
 		"$GISBASE/scripts/gis.m" | sh &
 	else
 		"$GISBASE/scripts/gis.m" &
 	fi	
+	;;
+    d.m)
+	if [ "$osxaqua" ] ; then
+		"$GISBASE/scripts/d.m" | sh &
+	else
+		"$GISBASE/scripts/d.m" &
+	fi	
+	;;
+
+    wxpython)
+	echo "TODO: wxPython GUI" 1>&2
 	;;
     
     # Ignore others
