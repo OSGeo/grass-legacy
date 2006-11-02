@@ -346,7 +346,7 @@ proc GRMap::group { } {
 		} else {
 			catch {exec -- $cmd}
 		}
-	#        run_ui $cmd
+
         # Return to georectified mapset
         GRMap::resetenv
     } elseif { $maptype == "vect" } {
@@ -1070,7 +1070,7 @@ proc GRMap::gcptb { gcptb } {
         -command "GRMap::cleargcp" \
         -highlightthickness 0 -takefocus 0 -relief link -borderwidth 1  \
         -highlightbackground $bgcolor  -activebackground $bgcolor\
-        -helptext [G_msg "clear ALL GCP entries"]
+        -helptext [G_msg "clear all unchecked GCP entries"]
 
     # rms
     $bbox add -image [image create photo -file "$iconpath/gui-rms.gif"] \
@@ -1347,11 +1347,12 @@ proc GRMap::cleargcp {} {
     variable grcan
 
     for {set gcpnum 1} {$gcpnum < 51 } { incr gcpnum } {
-        set usegcp($gcpnum) 1
-        $xy($gcpnum) delete 0 end
-        $geoc($gcpnum) delete 0 end
-        $fwd($gcpnum) delete 0 end
-        $rev($gcpnum) delete 0 end
+        if {$usegcp($gcpnum) == 0} {
+	        $xy($gcpnum) delete 0 end
+    	    $geoc($gcpnum) delete 0 end
+        	$fwd($gcpnum) delete 0 end
+	        $rev($gcpnum) delete 0 end
+		}
     }
     $grcan delete gcpvert gcphoriz
 }
