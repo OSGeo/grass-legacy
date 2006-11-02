@@ -54,75 +54,78 @@ proc GRToolBar::create { tb } {
     # DISPLAY TOOLS
 
     # selector
-	if {$tk_version < 8.4 } {
-		set selector [radiobutton $tb.selector \
-			-image [image create photo -file "$iconpath/gui-gcpset.gif"] \
-			-command "GRMap::stoptool; GRMap::selector" \
-			-variable grmaptools -value selector  -relief flat \
-			-borderwidth 1 -indicatoron false -bg $bgcolor -selectcolor $selcolor \
-			-activebackground $bgcolor -highlightbackground $bgcolor  ]
-	} else {
-		set selector [radiobutton $tb.selector \
-			-image [image create photo -file "$iconpath/gui-gcpset.gif"] \
-			-command "GRMap::stoptool; GRMap::selector" \
-			-variable grmaptools -value selector  -relief flat -offrelief flat -overrelief raised \
-			-borderwidth 1 -indicatoron false -bg $bgcolor -selectcolor $selcolor \
-			-activebackground $bgcolor -highlightbackground $bgcolor  ]
+    if {$tk_version < 8.4 } {
+	set selector [radiobutton $tb.selector \
+		-image [image create photo -file "$iconpath/gui-gcpset.gif"] \
+		-command "GRMap::stoptool; GRMap::selector" \
+		-variable grmaptools -value selector -relief flat \
+		-borderwidth 1 -indicatoron false -bg $bgcolor -selectcolor $selcolor \
+		-activebackground $bgcolor -highlightbackground $bgcolor  ]
+    } else {
+	set selector [radiobutton $tb.selector \
+		-image [image create photo -file "$iconpath/gui-gcpset.gif"] \
+		-command "GRMap::stoptool; GRMap::selector" \
+		-variable grmaptools -value selector \
+		-relief flat -offrelief flat -overrelief raised \
+		-borderwidth 1 -indicatoron false -bg $bgcolor -selectcolor $selcolor \
+		-activebackground $bgcolor -highlightbackground $bgcolor  ]
     }
     DynamicHelp::register $selector balloon [G_msg "Set ground control points"]
 
     # zoom in
-	if {$tk_version < 8.4 } {
-		set zoomin [radiobutton $tb.zoomin \
-			-image [image create photo -file "$iconpath/gui-zoom_in.gif"] \
-			-command "GRMap::stoptool; GRMap::zoombind 1" \
-			-variable grmaptools -value zoomin -relief flat \
-			-borderwidth 1 -indicatoron false -bg $bgcolor -selectcolor $selcolor \
-			-activebackground $bgcolor -highlightbackground $bgcolor ]   
-	} else {
-		set zoomin [radiobutton $tb.zoomin \
-			-image [image create photo -file "$iconpath/gui-zoom_in.gif"] \
-			-command "GRMap::stoptool; GRMap::zoombind 1" \
-			-variable grmaptools -value zoomin -relief flat -offrelief flat -overrelief raised \
-			-borderwidth 1 -indicatoron false -bg $bgcolor -selectcolor $selcolor \
-			-activebackground $bgcolor -highlightbackground $bgcolor ]   
+    if {$tk_version < 8.4 } {
+	set zoomin [radiobutton $tb.zoomin \
+		-image [image create photo -file "$iconpath/gui-zoom_in.gif"] \
+		-command "GRMap::stoptool; GRMap::zoombind 1" \
+		-variable grmaptools -value zoomin -relief flat \
+		-borderwidth 1 -indicatoron false -bg $bgcolor -selectcolor $selcolor \
+		-activebackground $bgcolor -highlightbackground $bgcolor ]   
+    } else {
+	set zoomin [radiobutton $tb.zoomin \
+		-image [image create photo -file "$iconpath/gui-zoom_in.gif"] \
+		-command "GRMap::stoptool; GRMap::zoombind 1" \
+		-variable grmaptools -value zoomin \
+		-relief flat -offrelief flat -overrelief raised \
+		-borderwidth 1 -indicatoron false -bg $bgcolor -selectcolor $selcolor \
+		-activebackground $bgcolor -highlightbackground $bgcolor ]   
     }
     DynamicHelp::register $zoomin balloon [G_msg "Zoom In"]
     
     #zoom out
-    # zoom in
-	if {$tk_version < 8.4 } {
-		set zoomout [radiobutton $tb.zoomout \
-			-image [image create photo -file "$iconpath/gui-zoom_out.gif"] \
-			-command "GRMap::stoptool; GRMap::zoombind -1" \
-			-variable grmaptools -value zoomout  -relief flat \
-			-borderwidth 1 -indicatoron false -bg $bgcolor -selectcolor $selcolor \
-			-activebackground $bgcolor -highlightbackground $bgcolor ]    
-	} else {
-		set zoomout [radiobutton $tb.zoomout \
-			-image [image create photo -file "$iconpath/gui-zoom_out.gif"] \
-			-command "GRMap::stoptool; GRMap::zoombind -1" \
-			-variable grmaptools -value zoomout  -relief flat -offrelief flat -overrelief raised \
-			-borderwidth 1 -indicatoron false -bg $bgcolor -selectcolor $selcolor \
-			-activebackground $bgcolor -highlightbackground $bgcolor ]    
+    if {$tk_version < 8.4 } {
+	set zoomout [radiobutton $tb.zoomout \
+		-image [image create photo -file "$iconpath/gui-zoom_out.gif"] \
+		-command "GRMap::stoptool; GRMap::zoombind -1" \
+		-variable grmaptools -value zoomout -relief flat \
+		-borderwidth 1 -indicatoron false -bg $bgcolor -selectcolor $selcolor \
+		-activebackground $bgcolor -highlightbackground $bgcolor ]    
+    } else {
+	set zoomout [radiobutton $tb.zoomout \
+		-image [image create photo -file "$iconpath/gui-zoom_out.gif"] \
+		-command "GRMap::stoptool; GRMap::zoombind -1" \
+		-variable grmaptools -value zoomout \
+		-relief flat -offrelief flat -overrelief raised \
+		-borderwidth 1 -indicatoron false -bg $bgcolor -selectcolor $selcolor \
+		-activebackground $bgcolor -highlightbackground $bgcolor ]    
     }
     DynamicHelp::register $zoomout balloon [G_msg "Zoom Out"]
 
     # pan
-	if {$tk_version < 8.4 } {
-		set pan [radiobutton $tb.pan \
-			-image [image create photo -file "$iconpath/gui-pan.gif"] \
-			-command "GRMap::stoptool; GRMap::panbind" \
-			-variable grmaptools -value pan  -relief flat \
-			-borderwidth 1 -indicatoron false -bg $bgcolor -selectcolor $selcolor \
-			-activebackground $bgcolor -highlightbackground $bgcolor ]    
-	} else {
-		set pan [radiobutton $tb.pan \
-			-image [image create photo -file "$iconpath/gui-pan.gif"] \
-			-command "GRMap::stoptool; GRMap::panbind" \
-			-variable grmaptools -value pan  -relief flat -offrelief flat -overrelief raised \
-			-borderwidth 1 -indicatoron false -bg $bgcolor -selectcolor $selcolor \
-			-activebackground $bgcolor -highlightbackground $bgcolor ]    
+    if {$tk_version < 8.4 } {
+	set pan [radiobutton $tb.pan \
+		-image [image create photo -file "$iconpath/gui-pan.gif"] \
+		-command "GRMap::stoptool; GRMap::panbind" \
+		-variable grmaptools -value pan -relief flat \
+		-borderwidth 1 -indicatoron false -bg $bgcolor -selectcolor $selcolor \
+		-activebackground $bgcolor -highlightbackground $bgcolor ]    
+    } else {
+	set pan [radiobutton $tb.pan \
+		-image [image create photo -file "$iconpath/gui-pan.gif"] \
+		-command "GRMap::stoptool; GRMap::panbind" \
+		-variable grmaptools -value pan \
+		-relief flat -offrelief flat -overrelief raised \
+		-borderwidth 1 -indicatoron false -bg $bgcolor -selectcolor $selcolor \
+		-activebackground $bgcolor -highlightbackground $bgcolor ]    
     }
     DynamicHelp::register $pan balloon [G_msg "Pan"]
 
