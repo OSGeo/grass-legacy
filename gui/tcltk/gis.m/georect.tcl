@@ -1086,6 +1086,13 @@ proc GRMap::gcptb { gcptb } {
         -highlightbackground $bgcolor  -activebackground $bgcolor\
         -helptext [G_msg "Rectify maps in group"]
 
+    # quit
+    $bbox add -text [G_msg "Quit"] \
+        -command {destroy .gcpwin .mapgrcan} \
+        -highlightthickness 0 -takefocus 0 -relief link -borderwidth 1  \
+        -highlightbackground $bgcolor  -activebackground $bgcolor\
+        -helptext [G_msg "Exit georectifier"]
+
         pack $bbox -side left -anchor w -expand no -fill y
 }
 
@@ -1997,77 +2004,122 @@ proc GRMap::zoomregion { zoom } {
     variable grcanvas_h
     variable grcanvas_w
     variable monitor_zooms
+	variable areaX1 
+	variable areaY1 
+	variable areaX2 
+	variable areaY2
+
     variable map_n
     variable map_s
     variable map_e
     variable map_w
     variable map_ew
     variable map_ns
-	variable areaX1 
-	variable areaY1 
-	variable areaX2 
-	variable areaY2
 
-    # if click and no drag, zoom in or out by 80% of original area
+	set clickzoom 0
 
-    if {($areaX2 == 0) && ($areaY2 == 0)} {
-        set X2 [expr {$areaX1 + ($grcanvas_w / (2 * sqrt(2)))} ]
-        set X1 [expr {$areaX1 - ($grcanvas_w / (2 * sqrt(2)))} ]
-        set Y2 [expr {$areaY1 + ($grcanvas_h / (2 * sqrt(2)))} ]
-        set Y1 [expr {$areaY1 - ($grcanvas_h / (2 * sqrt(2)))}]
-        set areaX1 $X1
-        set areaY1 $Y1
-        set areaX2 $X2
-        set areaY2 $Y2
-    }
+	# get display extents in geographic coordinates
+	set dispnorth [scry2mapn 0]
+	set dispsouth [scry2mapn $grcanvas_h]
+	set dispeast  [scrx2mape $grcanvas_w]
+	set dispwest  [scrx2mape 0]
+
+	# get zoom rectangle extents in geographic coordinates
+	if { $areaX2 < $areaX1 } {
+			set cright $areaX1
+			set cleft $areaX2
+	} else {
+			set cleft $areaX1
+			set cright $areaX2
+	}
+
+	if { $areaY2 < $areaY1 } {
+			set cbottom $areaY1
+			set ctop $areaY2
+	} else {
+			set ctop $areaY1
+			set cbottom $areaY2
+	}
+
+	set north [scry2mapn $ctop]
+	set south [scry2mapn $cbottom]
+	set east  [scrx2mape $cright]
+	set west  [scrx2mape $cleft]
+	# (this is all you need to zoom in with box)
 
 
-    # get region extents
-    foreach {map_n map_s map_e map_w} [GRMap::currentzoom] {break}
+	# if click and no drag, zoom in or out by fraction of original area and center on the click spot
+	if {($areaX2 == 0) && ($areaY2 == 0)} {set clickzoom 1}
+	# get first click location in map coordinates for recentering with 1-click zooming
+	set newcenter_n [scry2mapn $areaY1]
+	set newcenter_e [scrx2mape $areaX1]	
 
-    # get zoom rectangle extents in canvas coordinates
-    if { $areaX2 < $areaX1 } {
-        set cright $areaX1
-        set cleft $areaX2
-    } else {
-        set cleft $areaX1
-        set cright $areaX2
-    }
+	# get current region extents for box zooming out and recentering	
+	foreach {map_n map_s map_e map_w nsres ewres} [GRMap::currentzoom] {break}
 
-    if { $areaY2 < $areaY1 } {
-        set cbottom $areaY1
-        set ctop $areaY2
-    } else {
-        set ctop $areaY1
-        set cbottom $areaY2
-    }
+	# get original map center for recentering after 1-click zooming
+	set oldcenter_n [expr $map_s + ($map_n - $map_s)/2]
+	set oldcenter_e [expr $map_w + ($map_e - $map_w)/2]
 
-    # get zoom rectangle extents in map coordinates
+	# set shift for recentering after 1-click zooming
+	set shift_n [expr $newcenter_n - $oldcenter_n]
+	set shift_e [expr $newcenter_e - $oldcenter_e]
 
-    set north [scry2mapn $ctop]
-    set south [scry2mapn $cbottom]
-    set east  [scrx2mape $cright]
-    set west  [scrx2mape $cleft]
+	# 1-click zooming--zooms in or out by function of square root of 2 and 
+	# recenters region in display window at spot clicked
+	if {$clickzoom == 1} {
+		# calculate amount to zoom in or out in geographic distance
+		set nsscale [expr (($dispnorth - $dispsouth) - ($dispnorth - $dispsouth)/sqrt(2))/2]
+		set ewscale [expr (($dispeast - $dispwest) - ($dispeast - $dispwest)/sqrt(2))/2]
+		if {$zoom == 1} {
+			# zoom in
+			set north [expr {$dispnorth - $nsscale + $shift_n}]
+			set south [expr {$dispsouth + $nsscale + $shift_n}]
+			set east [expr {$dispeast - $ewscale + $shift_e}]
+			set west [expr {$dispwest + $ewscale + $shift_e}]
+		} elseif {$zoom == -1} {
+			# zoom out
+			set north [expr {$dispnorth + $nsscale + $shift_n}]
+			set south [expr {$dispsouth - $nsscale + $shift_n}]
+			set east [expr {$dispeast + $ewscale + $shift_e}]
+			set west [expr {$dispwest - $ewscale + $shift_e}]
+		}
+	}
 
-    # zoom in
-    if { $zoom == 1 } {
-        GRMap::zoom_new $north $south $east $west
-    }
+	# zoom out with box
+	# box determines zoom out proportion, longest box dimension determines zoom,
+	# and box center becomes region center. Zoom out relative to the geographic
+	# extents of the display rather than the current region to deal with mismatches
+	# between geometry of region and display window.
+	if { $zoom == -1 && $clickzoom == 0} {
+		# Calculate the box geometry--to be used for new region geometry
+		set box_ns [expr $north-$south]
+		set box_ew [expr $east-$west]
+		# calcuate aspect ratio for zoom box
+		set box_aspect [expr $box_ns/$box_ew]
+		# calculate zoomout ratio for longest box dimension
+		if { $box_ns > $box_ew } {
+			set zoomratio [expr ($dispnorth - $dispsouth)/$box_ns]
+			set new_ns [expr ($dispnorth - $dispsouth) * $zoomratio]
+			set new_ew [expr $new_ns / $box_aspect]
+		} else {
+			set zoomratio [expr ($dispeast - $dispwest)/$box_ew]
+			set new_ew [expr ($dispeast - $dispwest) * $zoomratio]
+			set new_ns [expr $new_ew * $box_aspect]
+		}
 
-    #zoom out
-    # Guarantee that the current region fits in the new box on the screen.
-    if { $zoom == -1 } {
-            # This effectively zooms out by the maxmimum of the two scales
-        set nsscale [expr { ($map_n - $map_s) / ($north - $south) }]
-        set ewscale [expr { ($map_e - $map_w) / ($east - $west) }]
+		# get zoom-out box center
+		set boxcenter_n [expr $south + (($north - $south)/2)]
+		set boxcenter_e [expr $west + (($east - $west)/2)]
+		
+		# zoom out to new extents
+		set north [expr $boxcenter_n + ($new_ns/2)]
+		set south [expr $boxcenter_n - ($new_ns/2)]
+		set east [expr $boxcenter_e + ($new_ew/2)]
+		set west [expr $boxcenter_e - ($new_ew/2)]
+	}
 
-        set upnorth   [expr { $map_n + $nsscale * ($map_n - $north) }]
-        set downsouth [expr { $map_s + $nsscale * ($map_s - $south) }]
-        set backeast  [expr { $map_e + $ewscale * ($map_e - $east) }]
-        set outwest   [expr { $map_w + $ewscale * ($map_w - $west) }]
-
-        GRMap::zoom_new $upnorth $downsouth $backeast $outwest
-    }
+	GRMap::zoom_new $north $south $east $west $nsres $ewres
 
     # redraw map
     $grcan delete gr
