@@ -1,4 +1,4 @@
-# translation of grassmods_it.po to Italian
+# translation of grassmods_it.po to Italiano
 # This file is distributed under the same license as the GRASS package.
 # Copyright (C) 2005, 2006 GRASS Development Team
 #
@@ -6,13 +6,14 @@
 # Markus Neteler <neteler at itc.it>, 2005.
 # Luciano Montanaro <mikelima at cirulla.net>, 2006.
 # Giuseppe Patti <gpatt at tiscali.it>, 2006.
+# Stefano Costa <steko at iosa.it>, 2006.
 msgid ""
 msgstr ""
 "Project-Id-Version: grassmods_it\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2006-10-27 12:46+0200\n"
-"PO-Revision-Date: 2006-10-26 16:07+0100\n"
-"Last-Translator: Giuseppe Patti <gpatt at tiscali.it>\n"
+"PO-Revision-Date: 2006-11-03 19:42+0100\n"
+"Last-Translator: Stefano Costa <steko at iosa.it>\n"
 "Language-Team: Italian <translations@grass.itc.it>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -26,29 +27,28 @@ msgstr ""
 #: ../raster3d/base/r3.mask.main.c:153 ../raster3d/r3.in.v5d/main.c:202
 #: ../raster3d/r3.to.rast/main.c:215 ../raster3d/r3.cross.rast/main.c:268
 #: ../raster3d/r3.out.vtk/main.c:373 ../raster3d/r3.out.v5d/main.c:284
-#, fuzzy
 msgid "raster3d, voxel"
-msgstr "Nome mappa raster"
+msgstr "Nome mappa raster 3D"
 
 #: ../raster3d/r3.mkdspf/main.c:60
 msgid ""
 "Creates a display file from an existing grid3 file according to specified "
 "threshold levels."
 msgstr ""
+"Crea un file display da un file grid3 in base ai livelli di soglia "
+"specificati."
 
 #: ../raster3d/r3.mkdspf/main.c:68
-#, fuzzy
 msgid "Name of an existing 3dcell map"
-msgstr "Nome di una mappa raster esistente"
+msgstr "Nome di una mappa raster 3D esistente."
 
 #: ../raster3d/r3.mkdspf/main.c:74
-#, fuzzy
 msgid "Name of output display file"
-msgstr "Nome del raster file in output"
+msgstr "Nome del display file in output."
 
 #: ../raster3d/r3.mkdspf/main.c:81
 msgid "List of thresholds for isosurfaces"
-msgstr ""
+msgstr "Lista delle soglie per le isosuperfici."
 
 #: ../raster3d/r3.mkdspf/main.c:87
 #, fuzzy
@@ -67,15 +67,15 @@ msgstr "Incremento di contorno fra i livelli"
 
 #: ../raster3d/r3.mkdspf/main.c:106
 msgid "Number of isosurface threshold levels"
-msgstr ""
+msgstr "Numero di livelli di contorno."
 
 #: ../raster3d/r3.mkdspf/main.c:110
 msgid "Suppress progress report & min/max information"
-msgstr ""
+msgstr "Annulla le informazioni sull'andamento & sul minimo/massimo"
 
 #: ../raster3d/r3.mkdspf/main.c:114
 msgid "Use flat shading rather than gradient"
-msgstr ""
+msgstr "Usa una ombreggiatura piatta invece che sfumata"
 
 #: ../raster3d/r3.mkdspf/main.c:122
 #, c-format
@@ -83,7 +83,7 @@ msgid "Region from getWindow: %d %d %d"
 msgstr "Region da getWindow. %d %d %d"
 
 #: ../raster3d/r3.mkdspf/main.c:132
-#, fuzzy, c-format
+#, c-format
 msgid "Not able to find grid3 file for [%s]"
 msgstr "Non riesco ad aprire il cellfile per [%s]"
 
@@ -99,9 +99,9 @@ msgid "Error reading range for [%s]"
 msgstr "Errore nel leggere il range di [%s]"
 
 #: ../raster3d/r3.mkdspf/main.c:176
-#, fuzzy, c-format
+#, c-format
 msgid "Error opening display file [%s]"
-msgstr "Non riesco a trovare il file raster %s"
+msgstr "Non riesco a trovare il file raster 3D %s"
 
 #: ../raster3d/r3.mkdspf/main.c:197
 #, c-format
@@ -18558,10 +18558,10 @@ msgid "Name of first raster map for blending"
 msgstr "Nome di una mappa raster esistente"
 
 #, fuzzy
-#~ msgid "Error opening channel %i"
-#~ msgstr "Non riesco a trovare il file raster %s"
+msgid "Error opening channel %i"
+msgstr "Errore nell'apertura del file g3d"
 
-#~ msgid "Wrong rgb map values! Values should in between 0 and 255!\n"
-#~ msgstr ""
-#~ "Mappa con valori rgb non valido! I valori devono essere compresi tra 0 e "
-#~ "255!\n"
+#, fuzzy
+msgid "Wrong rgb map values! Values should in between 0 and 255!\n"
+msgstr ""
+"Valori della mappa g3d errati! I valori devono essere compresi tra 0 e 255!\n"
