@@ -50,7 +50,7 @@ int main(int argc, char *argv[])
     struct GModule *module;
     struct Option *rast, *png_file;
     struct Flag *bequiet;
-    char *cellmap, *map, *p, ofile[1000];
+    char *cellmap, *map, *p, *basename = NULL, *ofile;
     char rastermap[1024];
     unsigned char *set, *ored, *ogrn, *oblu;
     CELL *cell_buf;
@@ -141,7 +141,7 @@ int main(int argc, char *argv[])
 
     if (strcmp(png_file->answer, "<rasterfilename>.png")) {
 	if (strcmp(png_file->answer, "-"))
-	    strncpy(ofile, png_file->answer, 1000 * sizeof(char));
+	    basename = G_store(png_file->answer);
 	else
 	    do_stdout = 1;
     }
@@ -152,8 +152,15 @@ int main(int argc, char *argv[])
 	    if (p != map)
 		*p = '\0';
 	}
-	strncpy(ofile, map, 995 * sizeof(char));
-	strcat(ofile, ".png");
+	basename = G_store(map);
+    }
+
+    if(basename)
+    {
+	G_basename(basename, "png");
+	ofile = G_malloc(strlen(basename) + 5);
+	sprintf(ofile, "%s.png", basename);
+	G_free(basename);
     }
 
     /*G_get_set_window (&w); *//* 10/99 MN: check for current region */
@@ -187,6 +194,8 @@ int main(int argc, char *argv[])
 	    fp = stdout;
 	else if (NULL == (fp = fopen(ofile, "w")))
 	    G_fatal_error("Not able to open file for [%s]", ofile);
+	else
+	    G_free(ofile);
     }
 
     png_ptr = png_create_write_struct(PNG_LIBPNG_VER_STRING,
