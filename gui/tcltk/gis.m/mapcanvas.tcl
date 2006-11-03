@@ -86,7 +86,7 @@ namespace eval MapCanvas {
 	global geoentry "" # variable holds path of entry widgets that use coordinates from canvas
 
 	# Current region and region historys
-	# Indexed by mon, history (1 (current) - zoomhistories), part (n, s, e, w, nsres, ewres).
+	# Indexed by mon, history (1 (current) - zoomhistories), part (n, s, e, w, nsres, ewres, rows, cols).
 	variable array monitor_zooms
 	# Depth of zoom history to keep
 	variable zoomhistories
@@ -111,7 +111,7 @@ namespace eval MapCanvas {
 	# Regular order for region values in a list representing a region or zoom
 	# zoom_attrs used in g.region command to set WIND file
 	variable zoom_attrs
-	set zoom_attrs {n s e w nsres ewres}
+	set zoom_attrs {n s e w nsres ewres rows cols}
 
 	# string with region information to show in status bar
 	variable regionstr
@@ -531,7 +531,9 @@ proc MapCanvas::runprograms { mon mod } {
 	set values [MapCanvas::currentzoom $mon]
 	set options {}
 	foreach attr $zoom_attrs value $values {
-		lappend options "$attr=$value"
+		if {$attr != "rows" && $attr != "cols"} {
+			lappend options "$attr=$value"
+		}
 	}
 
 	# Now use the region values to get the region printed back out in -p format
@@ -939,7 +941,7 @@ proc MapCanvas::pointer { mon } {
 # procedures for interactive zooming in and zooming out
 
 # Get the current zoom region
-# Returns a list in zoom_attrs order (n s e w nsres ewres)
+# Returns a list in zoom_attrs order (n s e w nsres ewres rows cols)
 # Implements explore mode
 proc MapCanvas::currentzoom { mon } {
 	variable zoom_attrs
@@ -962,23 +964,26 @@ proc MapCanvas::currentzoom { mon } {
 	if {$exploremode($mon)} {
 		# Set the region extents to the smallest region no smaller than the canvas
 		set canvas_ar [expr {1.0 * $canvas_w($mon) / $canvas_h($mon)}]
-		set expanded_nsew [MapCanvas::shrinkwrap 1 [lrange $region 0 3] $canvas_ar]
-		foreach {n s e w} $expanded_nsew {break}
+		set expanded_region [MapCanvas::shrinkwrap 1 [lrange $region 0 3] $canvas_ar]
+		foreach {n s e w} $expanded_region {break}
 		# Calculate the resolutions proportional to the map size
-		lappend expanded_nsew [expr {1.0 * ($n - $s) / $canvas_h($mon)}]
-		lappend expanded_nsew [expr {1.0 * ($e - $w) / $canvas_w($mon)}]
-		set region $expanded_nsew
+		set explore_nsres [expr {1.0 * ($n - $s) / $canvas_h($mon)}]
+		set explore_ewres [expr {1.0 * ($e - $w) / $canvas_w($mon)}]
+		set explore_rows [expr round(abs($n-$s)/$nsres)]
+		set explore_cols [expr round(abs($e-$w)/$ewres)]
+		lappend expanded_region $explore_nsres $explore_ewres $explore_rows $explore_cols
+		set region $expanded_region
 	}
 
 	# create region information string for status bar message
-	set rows [expr int(abs([lindex $region 0] - [lindex $region 1])/[lindex $region 4])]
-	set cols [expr int(abs([lindex $region 2] - [lindex $region 3])/[lindex $region 5])]
+	set rows [lindex $region 6]
+	set cols [lindex $region 7]
 	set nsres [lindex $region 4]
 	set ewres [lindex $region 5]
 	set MapCanvas::regionstr "Display: rows=$rows cols=$cols N-S res=$nsres E-W res=$ewres"
 	set MapCanvas::msg($mon) $regionstr
 
-	# region contains values for n s e w ewres nsres
+	# region contains values for n s e w ewres nsres rows cols
 	return $region
 }
 
@@ -1042,9 +1047,25 @@ proc MapCanvas::zoom_gregion {mon args} {
 			set parts($key) $value
 		}
 		catch {close $input}
+	
+		# get original width and height
+		set width [expr abs($parts(e) - $parts(w))]
+		set height [expr abs($parts(n) - $parts(s))]
+		
+		# get columns and rows rounded to nearest multiple of resolution
+		set cols [expr round($width/$parts(ewres))]
+		set rows [expr round($height/$parts(nsres))]
+		
+		# reset width and height in even multiples of resolution
+		set width [expr $cols * $parts(ewres)]
+		set height [expr $rows * $parts(nsres)]
 
+		# recalculate region north and east in even multiple of resolution
+		set parts(e) [expr $parts(w) + $width]
+		set parts(n) [expr $parts(s) + $height]
+		
 		MapCanvas::zoom_new $mon $parts(n) $parts(s) $parts(e) \
-			$parts(w) $parts(nsres) $parts(ewres)
+			$parts(w) $parts(nsres) $parts(ewres) $parts(rows) $parts(cols)
 
 	}
 }
@@ -1059,13 +1080,15 @@ proc MapCanvas::set_wind {mon args overwrite} {
 
 	set options {}
 	foreach attr $zoom_attrs value $values {
-		lappend options "$attr=$value"
+		if {$attr != "rows" && $attr != "cols"} {
+			lappend options "$attr=$value"
+		}		
 	}
 
 	if {$overwrite == 1} {
-		open [concat "|g.region -a --o" $options $args]
+		open [concat "|g.region --o" $options $args]
 	} else {
-		open [concat "|g.region -a" $options $args]
+		open [concat "|g.region" $options $args]
 	}
 }
 
@@ -1201,7 +1224,7 @@ proc MapCanvas::zoomregion { mon zoom } {
 	set newcenter_e [scrx2mape $mon $areaX1($mon)]	
 
 	# get current region extents for box zooming out and recentering	
-	foreach {map_n map_s map_e map_w} [MapCanvas::currentzoom $mon] {break}
+	foreach {map_n map_s map_e map_w nsres ewres rows cols} [MapCanvas::currentzoom $mon] {break}
 		
 	# get original map center for recentering after 1-click zooming
 	set oldcenter_n [expr $map_s + ($map_n - $map_s)/2]
@@ -1266,7 +1289,27 @@ proc MapCanvas::zoomregion { mon zoom } {
 		set west [expr $boxcenter_e - ($new_ew/2)]
 	}
 
-	MapCanvas::zoom_new $mon $north $south $east $west
+# if you're going to adjust for resolution, I think you do it here
+
+
+	# get original width and height
+	set width [expr abs($east - $west)]
+	set height [expr abs($north - $south)]
+	
+	# get columns and rows rounded to nearest multiple of resolution
+	set cols [expr round($width/$ewres)]
+	set rows [expr round($height/$nsres)]
+	
+	# reset width and height in even multiples of resolution
+	set width [expr $cols * $ewres]
+	set height [expr $rows * $nsres]
+
+	# recalculate region north and east in even multiple of resolution
+	set east [expr $west + $width]
+	set north [expr $south + $height]
+
+
+	MapCanvas::zoom_new $mon $north $south $east $west $nsres $ewres $rows $cols
 
 	# redraw map
 	$can($mon) delete map$mon
