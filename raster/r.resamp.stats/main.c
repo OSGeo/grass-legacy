@@ -290,14 +290,10 @@ int main( int argc, char *argv[])
 
 	/* enlarge source window */
 	{
-		double north = G_row_to_northing(0.5, &dst_w);
-		double south = G_row_to_northing(dst_w.rows - 0.5, &dst_w);
-		int r0 = (int) floor(G_northing_to_row(north, &src_w) - 0.5) - 1;
-		int r1 = (int) floor(G_northing_to_row(south, &src_w) - 0.5) + 3;
-		double west = G_col_to_easting(0.5, &dst_w);
-		double east = G_col_to_easting(dst_w.cols - 0.5, &dst_w);
-		int c0 = (int) floor(G_easting_to_col(west, &src_w) - 0.5) - 1;
-		int c1 = (int) floor(G_easting_to_col(east, &src_w) - 0.5) + 3;
+		int r0 = (int) floor(G_northing_to_row(dst_w.north, &src_w));
+		int r1 = (int) ceil (G_northing_to_row(dst_w.south, &src_w));
+		int c0 = (int) floor(G_easting_to_col(dst_w.west, &src_w));
+		int c1 = (int) ceil (G_easting_to_col(dst_w.east, &src_w));
 
 		src_w.south -= src_w.ns_res * (r1 - src_w.rows);
 		src_w.north += src_w.ns_res * (-r0);
