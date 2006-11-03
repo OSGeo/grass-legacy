@@ -854,6 +854,17 @@ dnl AC_CHECK_TOOL(AR, ar)
             LD_SEARCH_FLAGS=""
 	    LD_LIBRARY_PATH_VAR="PATH"
 	    ;;
+        MINGW*)
+            SHLIB_CFLAGS=""
+            SHLIB_LD_LIBS='${LIBS}'
+            SHLIB_SUFFIX=".dll"
+
+            SHLIB_LD="${CC} -shared"
+            LDFLAGS="-Wl,--export-dynamic,--enable-runtime-pseudo-reloc"
+            CC_SEARCH_FLAGS=""
+            LD_SEARCH_FLAGS=""
+            LD_LIBRARY_PATH_VAR="PATH"
+            ;;
 	MP-RAS-02*)
 	    SHLIB_CFLAGS="-K PIC"
 	    SHLIB_LD="cc -G"

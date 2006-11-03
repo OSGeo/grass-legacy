@@ -27,11 +27,7 @@ SHELL           = /bin/sh
 #LIB_SUFFIX=$(STLIB_SUFFIX)
 #LIB_PREFIX=$(SHLIB_PREFIX)
 #LIB_SUFFIX=$(SHLIB_SUFFIX)
-ifdef MINGW
-LIB_PREFIX=
-else
 LIB_PREFIX=@GRASS_LIB_PREFIX@
-endif
 LIB_SUFFIX=@GRASS_LIB_SUFFIX@
 GRASS_LIBRARY_TYPE=@GRASS_LIBRARY_TYPE@
 
@@ -87,11 +83,6 @@ CFLAGS      =  $(INC) $(COMPILE_FLAGS) $(USE_TERMIO)
 CXXFLAGS    =  $(INC) $(COMPILE_FLAGS_CXX) $(USE_TERMIO)
 LDFLAGS     =  $(LIBPATH) $(LINK_FLAGS) $(LD_SEARCH_FLAGS) $(PQLIBPATH) $(USE_TERMIO)
 VECT_CFLAGS =  $(GDALCFLAGS) 
-
-# Object with _fmode which must be linked to each executable on Windows
-ifdef MINGW
-FMODE_OBJ = $(GRASS_LIBDIR)/gis/$(OBJDIR)/fmode.o
-endif
 
 ##################### library names #####################################
 

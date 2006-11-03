@@ -5,7 +5,7 @@ include $(MODULE_TOPDIR)/include/Make/Platform.make
 include $(MODULE_TOPDIR)/include/Make/Grass.make
 include $(MODULE_TOPDIR)/include/Make/Rules.make
 
-PROGDIR =  $(GISBASE)/scripts/
+PROGDIR =  $(ARCH_DISTDIR)/scripts/
 
 script: $(PROGDIR)/$(PGM) htmlscript scriptstrings
 
@@ -19,10 +19,10 @@ $(PROGDIR)/$(PGM): $(PGM)
 # See locale/scriptstrings/README for more information
 
 scriptstrings = \
-	GISRC=$(GISBASE)/demolocation/.grassrc${GRASS_VERSION_MAJOR}${GRASS_VERSION_MINOR} \
-	GISBASE=$(GISBASE) \
-	PATH=$(GISBASE)/bin:$$PATH \
-	$(LD_LIBRARY_PATH_VAR)="$(GISBASE)/lib:$($(LD_LIBRARY_PATH_VAR))" \
+	GISRC=$(RUN_GISBASE)/demolocation/.grassrc${GRASS_VERSION_MAJOR}${GRASS_VERSION_MINOR} \
+	GISBASE=$(RUN_GISBASE) \
+	PATH=$(BIN):$$PATH \
+	$(LD_LIBRARY_PATH_VAR)="$(ARCH_LIBDIR):$($(LD_LIBRARY_PATH_VAR))" \
 	g.parser -t $(1) | sed s/\"/\\\\\"/g | sed 's/.*/_("&")/' > \
 	$(MODULE_TOPDIR)/locale/scriptstrings/$(PGM)_to_translate.c ; true
 

@@ -63,15 +63,14 @@ int G_ask_proj_name (char *proj_id, char *proj_name)
           G_strip(answer); 
           if(strlen(answer)==0) return -1;
           if (strcmp(answer,"list") == 0) {
-            if (isatty(1)) {
-#ifdef __MINGW32__
-	      sprintf(buff,"%%GRASS_PAGER%% %s",Tmp_file);
-#else
-	      sprintf(buff,"$GRASS_PAGER %s",Tmp_file);
-#endif
-            }
-            else
-	      sprintf(buff,"cat %s",Tmp_file);
+            char *pager;
+
+            pager = getenv("GRASS_PAGER");
+            if (!pager || strlen(pager) == 0)
+                pager = "cat";
+
+            /* Always print interactive output to stderr */
+            sprintf(buff,"%s %s 1>&2", pager, G_convert_dirseps_to_host(Tmp_file));
             system(buff);
           }
           else {

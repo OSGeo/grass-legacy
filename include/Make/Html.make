@@ -78,20 +78,20 @@ htmlgen:
 		echo "</body>" >> $(PGM).tmp.html ; \
 		echo "</html>" >> $(PGM).tmp.html ; \
 	fi
-	-$(MKDIR) $(GISBASE)/docs/html
-	-mv -f $(PGM).tmp.html $(GISBASE)/docs/html/$(PGM).html
+	-$(MKDIR) $(ARCH_DISTDIR)/docs/html
+	-mv -f $(PGM).tmp.html $(ARCH_DISTDIR)/docs/html/$(PGM).html
 	-for file in  *.png *.jpg ; do \
 		head -n 1 $$file | grep '^#!' > /dev/null ; \
 		if [ $$? -ne 0 ] ; then \
-		   $(INSTALL_DATA) $$file $(GISBASE)/docs/html ; \
+		   $(INSTALL_DATA) $$file $(ARCH_DISTDIR)/docs/html ; \
 		fi \
 		done 2> /dev/null ; true
 
 htmldesc = \
-	GISRC=$(GISBASE)/demolocation/.grassrc${GRASS_VERSION_MAJOR}${GRASS_VERSION_MINOR} \
-	GISBASE=$(GISBASE) \
-	PATH=$(GISBASE)/bin:$$PATH \
-	$(LD_LIBRARY_PATH_VAR)="$(GISBASE)/lib:$($(LD_LIBRARY_PATH_VAR))" \
+	GISRC=$(RUN_GISBASE)/demolocation/.grassrc${GRASS_VERSION_MAJOR}${GRASS_VERSION_MINOR} \
+	GISBASE=$(RUN_GISBASE) \
+	PATH=$(BIN):$$PATH \
+	$(LD_LIBRARY_PATH_VAR)="$(ARCH_LIBDIR):$($(LD_LIBRARY_PATH_VAR))" \
 	LC_ALL=C $(1) --html-description | grep -v '</body>\|</html>' > $(PGM).tmp.html ; true
 
 # html rules for cmd commands
@@ -104,7 +104,7 @@ htmlcmd1:
 htmlscript: htmlscript1 htmlgen
 
 htmlscript1:
-	$(call htmldesc,$(GISBASE)/scripts/$(PGM))
+	$(call htmldesc,$(ARCH_DISTDIR)/scripts/$(PGM))
 
 # html rules for inter commands
 # note that fakestart doesn't work here

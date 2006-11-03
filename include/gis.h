@@ -139,6 +139,15 @@ static const char *GRASS_copyright __attribute__((unused))
                                    ((buf)[1] << 16) | \
                                    ((buf)[2] <<  8) | \
                                    ((buf)[3] <<  0))
+
+/* Cross-platform Directory Separator Character stuff */
+#define GRASS_DIRSEP '/'
+#ifdef __MINGW32__
+#  define HOST_DIRSEP '\\'
+#else
+#  define HOST_DIRSEP '/'
+#endif
+
 /**/
 typedef enum {
     G_OPT_WHERE,    /* SQL where conditions */

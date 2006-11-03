@@ -24,11 +24,12 @@ int allocated_colors = MAXCOLORS; /* This is the number of the highest allocated
 
 int D_translate_color(const char *str )
 {
+  volatile const struct color_name *std_names = standard_color_names;
   int i;
 
   for (i = 0; i < MAX_COLOR_NAMES; i ++) {
-    if (! strcmp (str, standard_color_names[i].name))
-      return standard_color_names[i].number ;
+    if (! strcmp (str, std_names[i].name))
+      return std_names[i].number ;
   }
 
   return(0) ;
@@ -52,6 +53,7 @@ int D_translate_color(const char *str )
 
 int D_translate_or_add_color (const char * str, int index)
 {
+	volatile const struct color_rgb *std_rgb = standard_colors_rgb;
 	int redi, greeni, bluei;
 	int i, preallocated, ret;
 
@@ -78,9 +80,9 @@ int D_translate_or_add_color (const char * str, int index)
 		   the preallocated colors for this color and return the
 		   preallocated index on a match. That is what this does: */
 		for (i = 1; i <= MAX_COLOR_NUM; i++)
-			if (standard_colors_rgb[i].r == redi &&
-			    standard_colors_rgb[i].g == greeni &&
-			    standard_colors_rgb[i].b == bluei)
+			if (std_rgb[i].r == redi &&
+			    std_rgb[i].g == greeni &&
+			    std_rgb[i].b == bluei)
 				return i ;
 
 		/* Add the specified color to the suggested index */

@@ -32,10 +32,6 @@
 #include <unistd.h>
 #include <sys/stat.h>
 
-#ifdef __MINGW32__
-# define mkdir(name, mode) ((mkdir) (name))
-#endif
-
 /*
  * Returns 0 on success.
  * Returns -1 to indicate a system error (check errno).
@@ -60,7 +56,7 @@ int G__make_mapset( char *gisdbase_name, char *location_name, char *mapset_name 
     
     /* Make the mapset. */
     sprintf( path, "%s/%s/%s", gisdbase_name, location_name, mapset_name );
-    if( mkdir( path, 0777 ) != 0 )
+    if( G_mkdir( path ) != 0 )
         return -1;
 
     G__create_alt_env();

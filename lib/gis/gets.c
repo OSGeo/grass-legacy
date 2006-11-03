@@ -53,7 +53,10 @@ int G_gets (char *buf)
 #endif
       eof = fgets(p,100,stdin);
       /* strip the EOL character      */
-      p[strlen(p)-1]='\0';
+      if( strlen(p) > 1 && p[strlen(p)-1] == '\n' && p[strlen(p)-2] == '\r' )
+           p[strlen(p)-2]='\0'; /* Handles DOS/Windows "\r\n" */
+      else
+           p[strlen(p)-1]='\0'; /* Handles Unix "\n" or old Mac "\r" */
       /*      buf could be any length.  Any overflow will occur here. */
       strcpy(buf,p);
 

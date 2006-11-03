@@ -59,6 +59,12 @@ AC_SUBST(BINDIR)
 
 AC_PATH_PROG(pwd, pwd, pwd)
 
+if test "$MINGW32" = yes ; then
+  winpwd="$pwd -W"
+else
+  winpwd="$pwd"
+fi
+
 AC_MSG_CHECKING(for source directory)
 
 if test -z "$srcdir" ; then
@@ -72,6 +78,7 @@ AC_MSG_RESULT("$SRCDIR")
 AC_MSG_CHECKING(for build directory)
 
 DSTDIR=`$pwd`
+WINDSTDIR=`$winpwd`
 
 AC_MSG_RESULT("$DSTDIR")
 
@@ -91,7 +98,7 @@ AC_SUBST(ARCH)
 
 # Set GISBASE and GRASS_BIN
 
-GISBASE=${DSTDIR}/dist.${ARCH}
+GISBASE=${WINDSTDIR}/dist.${ARCH}
 GRASS_BIN=${DSTDIR}/bin.${ARCH}
 
 AC_SUBST(GISBASE)
@@ -120,7 +127,6 @@ AC_SUBST(NAME_VER)
 AC_SUBST(LIB_VER)
 
 SC_ENABLE_SHARED
-AC_MSG_RESULT("$shared_ok")
 
 ac_save_ldflags="$LDFLAGS"
 SC_CONFIG_CFLAGS
@@ -371,36 +377,6 @@ else
 CROSS_COMPILING=1
 AC_SUBST(CROSS_COMPILING)
 fi
-
-case $target in
-    *mingw* | *MINGW*)
-	MINGW=yes
-	;;
-    *)
-	if test "$MINGW32" = "yes"; then
-	    MINGW=yes
-	fi
-	;;
-esac
-
-# Hack for cross compilation with MINGW on Linux (how to do that better?)
-EXE_SUFFIX=""
-if test "$MINGW" = "yes"; then
-    SHLIB_CFLAGS=""
-    SHLIB_LD_LIBS='${LIBS}'
-    SHLIB_SUFFIX=".dll"
-    EXE_SUFFIX=".exe"
-
-    SHLIB_LD="${CC} -shared"
-    LDFLAGS="-Wl,--export-dynamic,--enable-runtime-pseudo-reloc $LIBRARY_DIRS"
-    CC_SEARCH_FLAGS=""
-    LD_SEARCH_FLAGS=""
-    LD_LIBRARY_PATH_VAR="PATH"
-
-    GRASS_LIBRARY_TYPE='shlib'
-fi
-AC_SUBST(MINGW)
-AC_SUBST(EXE_SUFFIX)
 
 AC_MSG_CHECKING(for W11)
 case "$enable_w11" in
@@ -723,22 +699,7 @@ else
     fi
   fi
 
-  # GDAL test fails with MinGW cross compiler 
-  # (does not compile with C compiler which is used by autoconf
-  #  C++ compiler is necessary)
-  if test "$MINGW" != "yes" ; then
-    ac_save_libs="$LIBS"
-    LIBS="$GDAL_LIBS $LIBS"
-    AC_CHECK_FUNC(GDALOpen,[],[
-    LIBS="$GDAL_DEP_LIBS $LIBS"
-    AC_CHECK_FUNC(GDALOpen,[GDAL_LIBS="$GDAL_LIBS $GDAL_DEP_LIBS"],[
-        AC_MSG_ERROR([*** Unable to locate GDAL library.])
-    ])
-    ])
-    LIBS=$ac_save_libs
-  else
-    GDAL_LIBS="$GDAL_LIBS $GDAL_DEP_LIBS"
-  fi
+  GDAL_LIBS="$GDAL_LIBS $GDAL_DEP_LIBS"
 
   AC_SUBST(GDAL_LIBS)
   AC_SUBST(GDAL_CFLAGS)

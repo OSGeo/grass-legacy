@@ -5,10 +5,6 @@
 #include <grass/gis.h>
 #include "local_proto.h"
 
-#ifdef __MINGW32__
-# define mkdir(name, mode) ((mkdir) (name))
-#endif
-
 int 
 make_location (char *gisdbase, char *location_name)
 {
@@ -153,9 +149,9 @@ make_location (char *gisdbase, char *location_name)
     G__setenv ("LOCATION_NAME", location_name);
 
     sprintf (buf, "%s/%s", gisdbase, location_name);
-    if(mkdir(buf, 0777) < 0) return 0;
+    if(G_mkdir(buf) < 0) return 0;
     sprintf (buf, "%s/%s/%s", gisdbase, location_name, mapset);
-    if(mkdir(buf, 0777) < 0) return 0;
+    if(G_mkdir(buf) < 0) return 0;
     /* set the dummy window */
     window.north =1.;
     window.south = 0.;
@@ -178,7 +174,8 @@ make_location (char *gisdbase, char *location_name)
     /* later after calling g.setrpj we will let user create a real default window */
     G__put_window (&window, "", "DEFAULT_WIND");
     G__put_window (&window, "", "WIND");
-    sprintf (buf, "echo '%s' >  '%s'/'%s'/'%s'/MYNAME", myname, gisdbase, location_name, mapset);
+    sprintf (buf, "echo %s >  \"%s/%s/%s/MYNAME\"", myname, gisdbase, location_name, mapset);
+    G_convert_dirseps_to_host(buf);
     system(buf);
     return 1;
 }

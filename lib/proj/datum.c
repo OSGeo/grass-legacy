@@ -302,9 +302,15 @@ int GPJ_ask_datum_params(const char *datumname, char **params)
                 return -1;
             }
             if (strcmp(answer,"list") == 0) {
+                char *pager;
+
+                pager = getenv("GRASS_PAGER");
+                if (!pager || strlen(pager) == 0)
+                    pager = "cat";
+
 		/* Always print interactive output to stderr */
-                sprintf(buff,"/bin/sh -c \"$GRASS_PAGER %s 1>&2\"",Tmp_file);
-                G_system(buff);
+                sprintf(buff,"%s %s 1>&2", pager, G_convert_dirseps_to_host(Tmp_file));
+                system(buff);
             }
             else {
                 if ( (sscanf(answer, "%d", &currenttransform) != 1) ||
@@ -395,10 +401,10 @@ static struct datum_transform_list *get_datum_transform_by_name(const char
 	return NULL;
     }
 
-    for (line = 1; G_getl(buf, sizeof(buf), fd); line++) {
+    for (line = 1; G_getl2(buf, sizeof(buf), fd); line++) {
 	char name[100], params[1024], where_used[1024], comment[1024];
 
-	G_chop(buf);
+	G_strip(buf);
 	if (*buf == '\0' || *buf == '#')
 	    continue;
 
@@ -481,11 +487,11 @@ struct datum_list *read_datum_table(void)
 	return NULL;
     }
 
-    for (line = 1; G_getl(buf, sizeof(buf), fd); line++) {
+    for (line = 1; G_getl2(buf, sizeof(buf), fd); line++) {
 	char name[100], descr[1024], ellps[100];
 	double dx, dy, dz;
 
-	G_chop(buf);
+	G_strip(buf);
 	if (*buf == '\0' || *buf == '#')
 	    continue;
 

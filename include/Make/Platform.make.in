@@ -68,6 +68,7 @@ EXE                 = @EXEEXT@
 
 # GRASS dirs
 GRASS_HOME          = @GRASS_HOME@
+RUN_GISBASE         = @GISBASE@
 
 DEFAULT_DATABASE    =
 DEFAULT_LOCATION    =
@@ -220,8 +221,6 @@ USE_LARGEFILES      = @USE_LARGEFILES@
 
 #BSD sockets
 HAVE_SOCKET         = @HAVE_SOCKET@
-
-MINGW               = @MINGW@
 
 # Cross compilation
 CROSS_COMPILING = @CROSS_COMPILING@ 

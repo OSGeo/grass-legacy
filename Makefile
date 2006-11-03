@@ -367,7 +367,7 @@ GISRCFILE = ${ARCH_DISTDIR}/demolocation/.grassrc${GRASS_VERSION_MAJOR}${GRASS_V
 builddemolocation:
 	test -d ${ARCH_DISTDIR} || ${MAKE_DIR_CMD} ${ARCH_DISTDIR}
 	-tar cBf - demolocation | (cd ${ARCH_DISTDIR}/ ; tar xBfo - ) 2>/dev/null
-	@ echo "GISDBASE: ${ARCH_DISTDIR}" > ${GISRCFILE}
+	@ echo "GISDBASE: ${RUN_GISBASE}" > ${GISRCFILE}
 	@ echo "LOCATION_NAME: demolocation" >> ${GISRCFILE}
 	@ echo "MAPSET: PERMANENT" >> ${GISRCFILE}
 	@ echo "GRASS_DB_ENCODING: utf-8" >> ${GISRCFILE}

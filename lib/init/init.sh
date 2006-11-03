@@ -216,6 +216,8 @@ if [ ! "$GRASS_PAGER" ] ; then
         GRASS_PAGER=more
     elif [ -x /bin/less ] || [ -x /usr/bin/less ] ; then
         GRASS_PAGER=less
+    elif [ "$MINGW" ] ; then
+        GRASS_PAGER=more
     else
         GRASS_PAGER=cat
     fi

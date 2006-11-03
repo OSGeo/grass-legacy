@@ -10,7 +10,11 @@
 
 int G_clear_screen()
 {
+#ifdef __MINGW32__
+    system ("cls");
+#else
     system ("clear");
+#endif
 
     return 0;
 }

@@ -865,6 +865,12 @@ int G_parser(int, char **);
 int G_usage(void);
 char *G_recreate_command(void);
 
+/* paths.c */
+int G_mkdir(const char *);
+int G_is_dirsep(char);
+char *G_convert_dirseps_to_host(char *);
+char *G_convert_dirseps_from_host(char *);
+
 /* percent.c */
 int G_percent(int, int, int);
 int G_percent2(int, int, int, FILE *);
