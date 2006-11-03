@@ -73,7 +73,7 @@
   NEED HELP
     - GRASS' make install installs all files BENEATH top level dir with UID
 	  set to benni !!! Is this intentional?
-	- provide gem61 as link in /usr/local/bin as part of grass 6.1 base install
+	- provide gem61 as link in /usr/local/bin as part of grass 61 base install
 	- description.html should not contain </body> or </html> as Rules.Make seems
 	  to append those ?
 	- source install copies files COPYING README REQUIREMENTS.html to somewhere (but where?)
@@ -129,9 +129,9 @@
   	- remove cva, install again: WARNING: list item 'cva' exists in index.html (?)
 	- superfluous warning upon uninstall of extension w/o "entries-gisman"
 	- due to bad command line parsing, listing installed extensions only works like this:
-		./gem --grass=/usr/local/grass-6.1.cvs -q
+		./gem --grass=/usr/local/grass-6.3.cvs -q
 	  NOT like this:
-	  	./gem -q --grass=/usr/local/grass-6.1.cvs
+	  	./gem -q --grass=/usr/local/grass-6.3.cvs
 
   
 */
