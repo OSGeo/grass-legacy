@@ -24,7 +24,7 @@ struct proj_unit *get_proj_unit(const char *arg)
 		double factor;
 		struct proj_unit *unit;
 
-		if (!G_getl(buf, sizeof(buf), fp))
+		if (!G_getl2(buf, sizeof(buf), fp))
 			break;
 
 		if (sscanf(buf, "%[^:]:%[^:]:%lf", plural, singular, &factor) != 3)
@@ -61,7 +61,7 @@ struct proj_desc *get_proj_desc(const char *arg)
 	{
 		char name[16], type[16], key[16], desc[100];
 
-		if (!G_getl(buf, sizeof(buf), fp))
+		if (!G_getl2(buf, sizeof(buf), fp))
 			break;
 
 		if (sscanf(buf, "%[^:]:%[^:]:%[^:]:%[^\n]", name, type, key, desc) != 4)
@@ -103,7 +103,7 @@ struct proj_parm *get_proj_parms(const char *arg)
 	{
 		char *p;
 
-		if (!G_getl(buf, sizeof(buf), fp))
+		if (!G_getl2(buf, sizeof(buf), fp))
 			break;
 
 		for (p = buf; *p && *p != ':'; p++)

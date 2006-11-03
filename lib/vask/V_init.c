@@ -25,6 +25,7 @@ CALLS:
 ***********************************************************************/
 #include <stdlib.h>
 #include <grass/config.h>
+#include <grass/gis.h>
 #include <grass/vask.h>
 
 /*-----------------------------------------------------------------*/
@@ -33,7 +34,7 @@ int V_init()
 {
     static int first = 1;
 
-    system("clear");	/* this is a kludge - xterm has problems
+    G_clear_screen();   /* this is a kludge - xterm has problems
 			 * it shows what was on the screen after
 			 * endwin is called in V_exit()
 			 */

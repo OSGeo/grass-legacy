@@ -86,12 +86,12 @@ main (int argc, char *argv[])
 		        G_program_name(), covermap->answer);
     }
 
-    tempfile1 = G_tempfile();
-    tempfile2 = G_tempfile();
+    tempfile1 = G_convert_dirseps_to_host(G_tempfile());
+    tempfile2 = G_convert_dirseps_to_host(G_tempfile());
     G_message("%s:",STATS);
-    sprintf (command, "%s -anC input='%s,%s' fs=space > %s",
+    sprintf (command, "%s -anC input=%s,%s fs=space > \"%s\"",
 	STATS, basemap->answer, covermap->answer, tempfile1);
-    if ((stat = G_system(command)))
+    if ((stat = system(command)))
     {
 	unlink(tempfile1);
 	G_fatal_error(_("%s: ERROR running %s command"), G_program_name(), STATS);
@@ -149,9 +149,9 @@ main (int argc, char *argv[])
     fclose (fd1);
     fclose (fd2);
     G_message("%s:",RECODE);
-    sprintf (command, "%s input='%s' output='%s' < %s",
+    sprintf (command, "%s input=%s output=%s < \"%s\"",
 	RECODE, basemap->answer, outputmap->answer, tempfile2);
-    stat = G_system(command);
+    stat = system(command);
     unlink (tempfile1);
     unlink (tempfile2);
 

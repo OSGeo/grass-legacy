@@ -33,10 +33,6 @@
 #include <unistd.h>
 #include <sys/stat.h>
 
-#ifdef __MINGW32__
-# define mkdir(name, mode) ((mkdir) (name))
-#endif
-
 /*
  * Returns 0 on success.
  * Returns -1 to indicate a system error (check errno).
@@ -56,12 +52,12 @@ int G__make_location(
 
     /* Try to create the location directory, under the gisdbase. */
     sprintf( path, "%s/%s", G_gisdbase(), location_name );
-    if( mkdir( path, 0775 ) != 0 )
+    if( G_mkdir( path ) != 0 )
         return -1;
 
     /* Make the PERMANENT mapset. */
     sprintf( path, "%s/%s/%s", G_gisdbase(), location_name, "PERMANENT" );
-    if( mkdir( path, 0775 ) != 0 )
+    if( G_mkdir( path ) != 0 )
         return -1;
 
     /* make these the new current location and mapset */

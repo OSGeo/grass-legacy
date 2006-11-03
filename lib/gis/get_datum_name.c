@@ -66,23 +66,21 @@ int G_ask_datum_name(char *datumname, char *ellpsname)
             if (NULL == (Tmp_fd = fopen (Tmp_file, "w")))
                 G_warning(_("Cannot open temp file") );
             else
-	    { 
+            {
+                char *pager;
+
                 fprintf(Tmp_fd,"Short Name\tLong Name / Description\n---\n");
                 for (i=0; (dat = G_datum_name(i)); i++) {
                     fprintf(Tmp_fd,"%s\t%s\n\t\t\t(%s ellipsoid)\n---\n",
                             dat, G_datum_description(i), G_datum_ellipsoid(i));
                 }
                 fclose(Tmp_fd);
-                if (isatty(1)) {
-#ifdef __MINGW32__
-                    sprintf(buff,"%%GRASS_PAGER%% %s",Tmp_file);
-#else
-                    sprintf(buff,"$GRASS_PAGER %s",Tmp_file);
-#endif
-                }
-                else
-                    sprintf(buff,"cat %s",Tmp_file);
-                G_system(buff);
+
+                pager = getenv("GRASS_PAGER");
+                if (!pager || strlen(pager) == 0)
+                    pager = "cat";
+                sprintf(buff,"%s %s 1>&2",pager, G_convert_dirseps_to_host(Tmp_file));
+                system(buff);
 
 	        remove ( Tmp_file );
 	    }

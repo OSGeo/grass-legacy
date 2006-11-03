@@ -97,9 +97,6 @@ static int
 read_env ( int loc )
 {
     char buf[200];
-#ifdef __MINGW32__
-    char tmp[200];
-#endif
     char *name;
     char *value;
 
@@ -125,31 +122,6 @@ read_env ( int loc )
 	    *value++ = 0;
 	    G_strip (name);
 	    G_strip (value);
-#ifdef __MINGW32__
-	    /* We need to prepend the MSYS base path (C:/msys/1.0) to any
-	     * internal path variables since these variables cannot be
-	     * auto-transformed to win32 path by the MSYS shell. */
-	    if (strcmp(name, "GISDBASE") == 0 && value[1] != ':')
-	    {
-		char *p;
-
-		sprintf(tmp, "%s", getenv("WD"));
-		/* the default $WD = C:\msys\1.0\\bin\ */
-		for(p=tmp+strlen(tmp); --p>=tmp && *p=='\\';);
-		/* C:\msys\1.0\\bin */
-		for(; --p>=tmp && *p!='\\';);
-		/* C:\msys\1.0\\ */
-		for(; --p>=tmp && *p=='\\';);
-		/* C:\msys\1.0 */
-		*(p+1) = 0;
-		for(p=tmp; *p; p++)
-		    if(*p == '\\')
-			*p = '/';
-		/* now tmp is "C:/msys/1.0" and value is "/posix/path" */
-		strcat(tmp, value);
-		value = tmp;
-	    }
-#endif
 	    if (*name && *value)
 		set_env (name, value, loc);
 	}
@@ -271,29 +243,7 @@ static int write_env ( int loc )
 	for (n = 0; n < count; n++)
 	    if (env[n].name && env[n].value && env[n].loc == loc
 	    && (sscanf (env[n].value,"%1s", dummy) == 1))
-#ifdef __MINGW32__
-	    /* Strip out the MSYS base path (C:/msys/1.0). */
-	    {
-		char *value = env[n].value;
-		char tmp[200];
-
-		if (strcmp(env[n].name, "GISDBASE") == 0 && value[1] == ':')
-		{
-		    char *p;
-
-		    sprintf(tmp, "%s", getenv("WD"));
-		    for(p=tmp+strlen(tmp); --p>=tmp && *p=='\\';);
-		    for(; --p>=tmp && *p!='\\';);
-		    for(; --p>=tmp && *p=='\\';);
-		    *(p+1) = 0;
-		    /* skip C:/msys/1.0 */
-		    value += p+1-tmp;
-		}
-		fprintf(fd,"%s: %s\n", env[n].name, value);
-	    }
-#else
 		fprintf(fd,"%s: %s\n", env[n].name, env[n].value);
-#endif
 	fclose (fd);
     }
 
@@ -324,11 +274,7 @@ static FILE *open_env ( char *mode, int loc)
 	/* TODO: better place ? */
 	read_env ( G_VAR_GISRC );  
 
-#ifdef __MINGW32__	
-	sprintf ( buf, "%s\\%s\\VAR", G_location_path(), G_mapset() );
-#else
 	sprintf ( buf, "%s/%s/VAR", G_location_path(), G_mapset() );
-#endif
     }
 		
     return fopen (buf, mode);

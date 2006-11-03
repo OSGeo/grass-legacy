@@ -571,11 +571,7 @@ int G_parser (int argc, char **argv)
 	i = strlen(pgm_name = argv[0]) ;
 	while (--i >= 0)
 	{
-#ifdef __MINGW32__
-		if (pgm_name[i] == '/' || pgm_name[i] == '\\')
-#else
-		if (pgm_name[i] == '/')
-#endif
+		if ( G_is_dirsep(pgm_name[i]) )
 		{
 			pgm_name += i+1;
 			break;

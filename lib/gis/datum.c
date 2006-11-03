@@ -173,7 +173,7 @@ read_datum_table(void)
         return;
     }
 
-    for (line = 1; G_getl(buf, sizeof(buf), fd); line++)
+    for (line = 1; G_getl2(buf, sizeof(buf), fd); line++)
     {
         char name[100], descr[100], ellps[100];
         struct table *t;
