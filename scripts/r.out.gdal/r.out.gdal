@@ -20,11 +20,11 @@
 #%End
 #%flag
 #%  key: l
-#%  description: list supported output formats
+#%  description: List supported output formats
 #%END
 #%flag
 #%  key: r
-#%  description: region sensitive output
+#%  description: Region sensitive output
 #%END
 #%option
 #% key: input
@@ -44,7 +44,7 @@
 #%option
 #% key: type
 #% type: string
-#% description: file type
+#% description: File type
 #% options: Byte,Int16,UInt16,UInt32,Int32,Float32,Float64,CInt16,CInt32,CFloat32,CFloat64
 #% required : no
 #%END
@@ -57,14 +57,14 @@
 #%option
 #% key: createopt
 #% type: string
-#% description: creation option to the output format driver. Multiple options may be listed
+#% description: Creation option to the output format driver. Multiple options may be listed
 #% multiple: yes
 #% required : no
 #%END
 #%option
 #% key: metaopt
 #% type: string
-#% description: metadata key passed on the output dataset if possible
+#% description: Metadata key passed on the output dataset if possible
 #% multiple: yes
 #% required : no
 #%END
