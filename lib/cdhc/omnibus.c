@@ -1,8 +1,8 @@
-#include<stdio.h>
-#include<math.h>
+#include <stdio.h>
+#include <math.h>
+
 
 double *omnibus_moments  (double *x, int n)
-
 {
   double diff, mean = 0., fssm, tssm, sum_cube = 0., sum_four = 0.,
    sum_sq = 0.;
@@ -11,6 +11,7 @@ double *omnibus_moments  (double *x, int n)
 
   for (i = 0; i < n; ++i)
     mean += x[i];
+
   mean /= n;
 
   for (i = 0; i < n; ++i)
@@ -34,5 +35,6 @@ fprintf (stdout,"n %d x-bar %g sum^2 %g sum^3 %g sum^4 %g \n",n,mean,sum_sq,sum_
 
   y[0] = tssm;
   y[1] = fssm;
+
   return y;
 }

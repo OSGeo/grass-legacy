@@ -1,17 +1,21 @@
-#include<stdio.h>
-#include<stdlib.h>
-#include<math.h>
+#include <stdio.h>
+#include <stdlib.h>
+#include <math.h>
+#include "local_proto.h"
+
 
 double *shapiro_wilk  (double *x, int n)
-
 {
   static double y[2];
   double a[25], s2, *xcopy;
   double sumb = 0.0, sumx = 0.0, sumx2 = 0.0;
-  int i, k, dcmp();
+  int i, k;
 
   if ((xcopy = (double *) malloc (n * sizeof (double))) == NULL)
-    fprintf (stderr, "Memory error in shapiro_wilk\n"), exit (-1);
+  {
+      fprintf (stderr, "Memory error in shapiro_wilk\n");
+      exit (EXIT_FAILURE);
+  }
 
   k = n / 2;
   for (i = 0; i < n; ++i)
@@ -21,6 +25,7 @@ double *shapiro_wilk  (double *x, int n)
     sumx2 += x[i] * x[i];
   }
   s2 = sumx2 - sumx * sumx / n;
+
   qsort (xcopy, n, sizeof (double), dcmp);
 
   if (n == 3)
@@ -798,12 +803,14 @@ double *shapiro_wilk  (double *x, int n)
     fprintf (stdout,"  THIS IS THE SHAPIRO-WILK TEST FOR SMALL SAMPLES\n");
     fprintf (stdout,"  THE SAMPLE SIZE MUST BE LESS THAN OR EQUAL TO 50\n");
 #endif				/* NOISY */
+
     y[0] = y[1] = 0.0;
   }
   else
   {
     for (i = 1; i <= k; ++i)
       sumb += a[i - 1] * (x[n - i + 1] - x[i]);
+
     y[0] = sumb * sumb / s2;
     y[1] = s2;
 
@@ -811,6 +818,8 @@ double *shapiro_wilk  (double *x, int n)
     fprintf (stdout,"  TEST13 SW(N)  =%10.4f\n", y[0]);
 #endif				/* NOISY */
   }
+
   free (xcopy);
+
   return y;
 }

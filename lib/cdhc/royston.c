@@ -1,6 +1,8 @@
-#include<stdio.h>
-#include<stdlib.h>
-#include<math.h>
+#include <stdio.h>
+#include <stdlib.h>
+#include <math.h>
+#include "local_proto.h"
+
 
 /*-
  * driver program for AS 181: Royston's extension of the Shapiro-Wilk
@@ -9,23 +11,25 @@
  */
 
 double *royston (double *x, int n)
-
 {
   static double y[2];
   double *a, eps, w, pw, mean=0, ssq=0, *xcopy;
   int i, ifault, n2; 
-  int dcmp();
-  void wcoef (), wext();
 
   n2=(int)floor((double)n/2);
 
 #ifndef lint
-  if ((a=(double *) malloc(n2*sizeof(double)))==NULL)
-    fprintf (stderr, "Memory error in royston\n"), exit (-1);
+  if ((a = (double *) malloc(n2*sizeof(double)))==NULL)
+  {
+      fprintf (stderr, "Memory error in royston\n");
+      exit (EXIT_FAILURE);
+  }
   if ((xcopy = (double *) malloc (n * sizeof (double))) == NULL)
-    fprintf (stderr, "Memory error in shapiro_wilk\n"), exit (-1);
+  {
+      fprintf (stderr, "Memory error in royston\n");
+      exit (EXIT_FAILURE);
+  }
 #endif /* lint */
- 
 
   for (i = 0; i < n; ++i)
   {
@@ -41,7 +45,7 @@ double *royston (double *x, int n)
 
   wcoef (a, n, n2, &eps, &ifault);
 
-  if (ifault==0)
+  if (ifault == 0)
     wext (xcopy, n, ssq, a, n2, eps, &w, &pw, &ifault);
   else
   {
@@ -62,5 +66,6 @@ double *royston (double *x, int n)
 
   free(a);
   free(xcopy);
+
   return y;
 }

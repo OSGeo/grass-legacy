@@ -1,20 +1,24 @@
-#include<stdio.h>
-#include<stdlib.h>
-#include<math.h>
+#include <stdio.h>
+#include <stdlib.h>
+#include <math.h>
+#include "local_proto.h"
+
 
 double *weisberg_bingham  (double *x, int n)
-
 {
   static double y[2];
   double suma = 0.0, sumb = 0.0, sumc = 0.0, sumd = 0.0, z, *xcopy;
-  double xinormal();
-  int i, dcmp();
+  int i;
 
   if ((xcopy = (double *) malloc (n * sizeof (double))) == NULL)
-    fprintf (stderr, "Memory error in shapiro_francia\n"), exit (-1);
+  {
+      fprintf (stderr, "Memory error in shapiro_francia\n");
+      exit (EXIT_FAILURE);
+  }
 
   for (i = 0; i < n; ++i)
     xcopy[i] = x[i];
+
   qsort (xcopy, n, sizeof (double), dcmp);
 
   for (i = 0; i < n; ++i)
@@ -25,10 +29,14 @@ double *weisberg_bingham  (double *x, int n)
     sumc += xcopy[i];
     sumd += xcopy[i] * xcopy[i];
   }
+
   y[0] = suma * suma / sumb / (sumd - sumc * sumc / n);
+
 #ifdef NOISY
   fprintf (stdout,"  TEST14 SF(N)  =%10.4f\n", y[0]);
 #endif				/* NOISY */
+
   free (xcopy);
+
   return y;
 }				/* test14_ */

@@ -1,8 +1,8 @@
-#include<stdio.h>
-#include<math.h>
+#include <stdio.h>
+#include <math.h>
+
 
 double *geary_test  (double *x, int n)
-
 {
   int i;
   static double y[2];
@@ -11,6 +11,7 @@ double *geary_test  (double *x, int n)
   y[0] = 0.0;
   for (i = 0; i < n; ++i)
     mean += x[i];
+
   mean /= n;
 
   for (i = 0; i < n; ++i)
@@ -27,5 +28,6 @@ double *geary_test  (double *x, int n)
 #ifdef NOISY
   fprintf (stdout,"  TEST2  GTN    =%10.4f   Z(GTN) =%10.4f\n", y[0], y[1]);
 #endif				/* NOISY */
+
   return y;
 }

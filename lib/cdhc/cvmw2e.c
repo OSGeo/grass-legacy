@@ -1,16 +1,20 @@
-#include<stdio.h>
-#include<stdlib.h>
-#include<math.h>
+#include <stdio.h>
+#include <stdlib.h>
+#include <math.h>
+#include "local_proto.h"
+
 
 double *cramer_von_mises_exp  (double *x, int n)
-
 {
   static double y[2];
   double *xcopy, mean=0.0, fx, fn2, sum4 = 0.0;
-  int i, dcmp();
+  int i;
 
   if ((xcopy = (double *) malloc (n * sizeof (double))) == NULL)
-    fprintf (stderr, "Memory error in cramer_von_mises_exp\n"), exit (-1);
+  {
+      fprintf (stderr, "Memory error in cramer_von_mises_exp\n");
+      exit(EXIT_FAILURE);
+  }
 
   for (i = 0; i < n; ++i)
   {
@@ -44,5 +48,6 @@ double *cramer_von_mises_exp  (double *x, int n)
 #endif				/* NOISY */
 
   free (xcopy);
+
   return y;
 }

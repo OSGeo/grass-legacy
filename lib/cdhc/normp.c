@@ -1,4 +1,6 @@
-#include<math.h>
+#include <math.h>
+
+
 /*-
  *     SUBROUTINE NORMP(Z, P, Q, PDF)
  *
@@ -19,7 +21,6 @@
 /* Conversion to C by James Darrell McCauley, 24 September 1994 */
 
 double normp  (double z)
-
 {
   static double p[7] = {220.2068679123761, 221.2135961699311,
     112.079291497870, 33.91286607838300, 6.37396220353165,
@@ -46,6 +47,7 @@ double normp  (double z)
       pee = 0.0;
       queue = 1.0;
     }
+
     return pee;
   }
 
@@ -68,5 +70,6 @@ double normp  (double z)
     queue = pee;
       pee = 1.0 - queue;
   }
+
   return pee;
 }
