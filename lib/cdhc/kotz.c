@@ -1,8 +1,8 @@
-#include<stdio.h>
-#include<math.h>
+#include <stdio.h>
+#include <math.h>
+
 
 double *kotz_families  (double *x, int n)
-
 {
   static double y[2];
   int i;
@@ -14,13 +14,16 @@ double *kotz_families  (double *x, int n)
     sum1 += x[i];
     sum2 += log (x[i]);
   }
+
   b1 = sum1 / n;
   a1 = sum2 / n;
+
   for (i = 0; i < n; ++i)
   {
     lx = log (x[i]);
     sum4 += (lx - a1) * (lx - a1);
   }
+
   a2 = sum4 / n;
   b3 = exp (a1 * 2 + a2) * (exp (a2) - 1);
   c1 = log (a2 / b3);
@@ -28,6 +31,7 @@ double *kotz_families  (double *x, int n)
   c3 = a2 * (exp (a2) * 2 - 1) * (exp (a2) * 2 - 1);
   c4 = (exp (a2) - 1) * 2 * (exp (a2) - 1);
   c5 = c3 / c4;
+
   if (c2 < c5)
   {
 #ifdef NOISY
@@ -41,8 +45,10 @@ double *kotz_families  (double *x, int n)
     c6 = sqrt (c2 - c5) * 2.0 * sqrt ((double) n);
     y[0] = c1 / c6;
   }
+
 #ifdef NOISY
   fprintf (stdout,"  TEST24 KT(LN) =%10.4f\n", y[0]);
 #endif				/* NOISY */
+
   return y;
 }

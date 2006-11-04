@@ -1,6 +1,4 @@
-#include<math.h>
-double ppnd7  (double p)
-
+#include <math.h>
 
 
 /*-
@@ -11,7 +9,7 @@ double ppnd7  (double p)
  * the hash sums below are the sums of the mantissas of the coefficients.
  * they are included for use in checking transcription.
  */
-
+double ppnd7  (double p)
 {
   static double zero = 0.0, one = 1.0, half = 0.5;
   static double split1 = 0.425, split2 = 5.0;
@@ -44,10 +42,11 @@ double ppnd7  (double p)
     r = const1 - q * q;
     ret = q * (((a[3] * r + a[2]) * r + a[1]) * r + a[0]) /
       (((b[3] * r + b[2]) * r + b[1]) * r + one);
+
     return ret;;
   }
-  else
-  {
+  /* else */
+
     if (q < zero)
       r = p;
     else
@@ -55,6 +54,7 @@ double ppnd7  (double p)
 
     if (r <= zero)
       return zero;
+
     r = sqrt (-log (r));
     if (r <= split2)
     {
@@ -71,12 +71,9 @@ double ppnd7  (double p)
 
     if (q < zero)
       ret = -ret;
+
     return ret;;
-  }
 }
-
-double ppnd16  (double p)
-
 
 
 /*-
@@ -89,7 +86,7 @@ double ppnd16  (double p)
  * coefficients.   they are included for use in checking
  * transcription.
  */
-
+double ppnd16  (double p)
 {
   static double zero = 0.0, one = 1.0, half = 0.5;
   static double split1 = 0.425, split2 = 5.0;
@@ -165,10 +162,11 @@ double ppnd16  (double p)
 		 * r + a[2]) * r + a[1]) * r + a[0]) /
       (((((((b[7] * r + b[6]) * r + b[5]) * r + b[4]) * r + b[3])
 	 * r + b[2]) * r + b[1]) * r + one);
+
     return ret;
   }
-  else
-  {
+  /* else */
+
     if (q < zero)
       r = p;
     else
@@ -197,6 +195,6 @@ double ppnd16  (double p)
 
     if (q < zero)
       ret = -ret;
+
     return ret;
-  }
 }

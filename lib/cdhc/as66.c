@@ -24,12 +24,14 @@
  * real numbers.
  */
 
-#include<math.h>
+#include <math.h>
+
+
 #define LTONE 7.0
 #define UTZERO 18.66
 
-double alnorm  (double x, int upper)
 
+double alnorm  (double x, int upper)
 {
   double ret, z, y;
   int up;
@@ -62,7 +64,9 @@ double alnorm  (double x, int upper)
 	    (z + 0.742380924027 + 30.789933034 /
 	     (z + 3.99019417011))))));
   }
+
   if (up == 0)
     ret = 1.0 - ret;
+
   return ret;
 }

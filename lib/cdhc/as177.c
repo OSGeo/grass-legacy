@@ -13,32 +13,38 @@
 #define NSTEP 721
 #define H 0.025
  
-#include<math.h>
-#include<stdio.h>
+#include <math.h>
+#include <stdio.h>
+#include "local_proto.h"
 
-void nscor1  (double s[], int n, int n2, double work[], int *ifault)
 
-
+/* Local function prototypes */
+static double alnfac(int j);
+static double correc(int i, int n);
 
 
 /* exact calculation of normal scores */
-
+void nscor1  (double s[], int n, int n2, double work[], int *ifault)
 {
-  double ani, c, c1, d, scor, alnfac();
+  double ani, c, c1, d, scor;
   int i,j;
 
   *ifault = 3;
   if (n2 != n / 2)
     return;
+
   *ifault = 1;
   if (n <= 1)
     return;
+
   *ifault = 0;
   if (n > 2000)
     *ifault = 2;
+
   /* calculate the natural log of factorial(n) */
   c1 = alnfac (n);
   d = c1 - log ((double) n);
+
   /* accumulate ordinates for calculation of integral for rankits */
   for (i = 0; i < n2; ++i)
   {
@@ -51,16 +57,18 @@ void nscor1  (double s[], int n, int n2, double work[], int *ifault)
     s[i] = scor * H;
     d += log ((double)(i + 1.0) / ani);
   }
+
   return;
 }
 
-void init  (double work[])
 
+void init  (double work[])
 {
-  double xstart = -9.0, pi2 = -0.918938533, xx, alnorm();
+  double xstart = -9.0, pi2 = -0.918938533, xx;
   int i;
 
   xx = xstart;
+
   /* set up arrays for calculation of integral */
   for (i = 0; i < NSTEP; ++i)
   {
@@ -70,17 +78,15 @@ void init  (double work[])
     work[3*NSTEP+i] = log (alnorm (xx,0));
     xx = xstart + H * (i + 1.0);
   }
+
   return;
 }
-
-double alnfac  (int j)
-
 
 
 /*-Algorithm AS 177.2 Appl. Statist. (1982) Vol.31, No.2
  * Natural logarithm of factorial for non-negative argument
  */
-
+static double alnfac  (int j)
 {
   static double r[7] = {0.0, 0.0, 0.69314718056, 1.79175946923,
   3.17805383035, 4.78749174278, 6.57925121101};
@@ -90,21 +96,19 @@ double alnfac  (int j)
     return (double) 1.0;
   else if (j <= 7)
     return r[j];
+
   w = (double) j + 1;
   z = 1.0 / (w * w);
-    return (w - 0.5) * log (w) - w + 0.918938522305 +
+
+  return (w - 0.5) * log (w) - w + 0.918938522305 +
     (((4.0 - 3.0 * z) * z - 14.0) * z + 420.0) / (5040.0 * w);
 }
-
-void nscor2  (double s[], int n, int n2, int *ifault)
-
-
 
 
 /*-Algorithm AS 177.3 Appl. Statist. (1982) Vol.31, No.2
  * Approximation for Rankits
  */
-
+void nscor2  (double s[], int n, int n2, int *ifault)
 {
   static double eps[4] = {0.419885, 0.450536, 0.456936, 0.468488};
   static double dl1[4] = {0.112063, 0.121770, 0.239299, 0.215159};
@@ -112,21 +116,25 @@ void nscor2  (double s[], int n, int n2, int *ifault)
   static double gam[4] = {0.474798, 0.469051, 0.208597, 0.259784};
   static double lam[4] = {0.282765, 0.304856, 0.407708, 0.414093};
   static double bb = -0.283833, d = -0.106136, b1 = 0.5641896;
-  double e1, e2, l1, correc(), ppnd16();
+  double e1, e2, l1;
   int i, k;
 
   *ifault = 3;
   if (n2 != n / 2)
     return;
+
   *ifault = 1;
   if (n <= 1)
     return;
+
   *ifault = 0;
   if (n > 2000)
     *ifault = 2;
+
   s[0] = b1;
   if (n == 2)
     return;
+
   /* calculate normal areas for 3 largest rankits */
   k=(n2<3) ? n2 : 3;
   for (i = 0; i < k; ++i)
@@ -135,6 +143,7 @@ void nscor2  (double s[], int n, int n2, int *ifault)
     e2 = pow (e1, lam[i]);
     s[i] = e1 + e2 * (dl1[i] + e2 * dl2[i]) / n - correc (1 + i, n);
   }
+
   if (n2 != k)
   {
     /* calculate normal areas for remaining rankits */
@@ -146,21 +155,20 @@ void nscor2  (double s[], int n, int n2, int *ifault)
       s[i] = e1 + e2 * (dl1[3] + e2 * dl2[3]) / n - correc (1+i, n);
     }
   }
+
   /* convert normal tail areas to normal deviates */
   for (i = 0; i < n2; ++i)
     s[i] = -ppnd16 (s[i]);
+
   return;
 }
-
-double correc  (int i, int n)
-
 
 
 /*-Algorithm AS 177.4 Appl. Statist. (1982) Vol.31, No.2
  * Calculates correction for tail area of noraml distribution
  * corresponding to ith largest rankit in sample size n.
  */
-
+static double correc  (int i, int n)
 {
   static double c1[7] = {9.5, 28.7, 1.9, 0.0, -7.0, -6.2, -1.6};
   static double c2[7] = {-6.195e3, -9.569e3, -6.728e3, -17.614e3,
@@ -168,22 +176,19 @@ double correc  (int i, int n)
   static double c3[7] = {9.338e4, 1.7516e5, 4.1040e5, 2.157e6,
   2.376e6, 2.065e6, 2.065e6};
   static double mic = 1.0e-6, c14 = 1.9e-5;
-  double an, ret_val;
+  double an;
 
-  ret_val = c14;
   if (i * n == 4)
-    return ret_val;
-  ret_val = 0.0;
+    return c14;
+
   if (i < 1 || i > 7)
-    return ret_val;
+    return 0.0;
   else if (i != 4 && n > 20)
-    return ret_val;
+    return 0.0;
   else if (i == 4 && n > 40)
-    return ret_val;
-  else
-  {
-    an = 1.0 / (double) (n * n);
-    ret_val = (c1[i-1] + an * (c2[i-1] + an * c3[i-1])) * mic;
-    return ret_val;
-  }
+    return 0.0;
+
+  /* else */
+  an = 1.0 / (double) (n * n);
+  return (c1[i-1] + an * (c2[i-1] + an * c3[i-1])) * mic;
 }

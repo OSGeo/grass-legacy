@@ -1,10 +1,12 @@
-int dcmp  (double *i, double *j)
-
+int dcmp  (const void *i, const void *j)
 {
-    if (*i < *j)
+    double x = *(double *)i;
+    double y = *(double *)j;
+
+    if (x < y)
         return  -1;
  
-    if (*i > *j)
+    if (x > y)
         return 1;
  
     return 0;
