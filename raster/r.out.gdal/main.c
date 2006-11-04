@@ -184,7 +184,7 @@ int main (int argc, char *argv[]) {
 
 	flag_l = G_define_flag();
 	flag_l->key = 'l';
-	flag_l->description = _("list supported output formats");
+	flag_l->description = _("List supported output formats");
 
 	input = G_define_standard_option(G_OPT_R_INPUT);
 	input->required = NO;
@@ -212,7 +212,7 @@ int main (int argc, char *argv[]) {
 	type = G_define_option();
 	type->key = "type";
 	type->type = TYPE_STRING;	
-	type->description = _("file type");
+	type->description = _("File type");
 	type->options = "Byte,Int16,UInt16,UInt32,Int32,Float32,Float64,CInt16,CInt32,CFloat32,CFloat64";
 	type->required = NO;
 
@@ -222,14 +222,14 @@ int main (int argc, char *argv[]) {
 	createopt = G_define_option();
 	createopt->key = "createopt";
 	createopt->type = TYPE_STRING;	
-	createopt->description = _("creation option to the output format driver. Multiple options may be listed");
+	createopt->description = _("Creation option to the output format driver. Multiple options may be listed");
 	createopt->multiple = YES;
 	createopt->required = NO;
 
 	metaopt = G_define_option();
 	metaopt->key = "metaopt";
 	metaopt->type = TYPE_STRING;	
-	metaopt->description = _("metadata key passed on the output dataset if possible");
+	metaopt->description = _("Metadata key passed on the output dataset if possible");
 	metaopt->multiple = YES;
 	metaopt->required = NO;
 
