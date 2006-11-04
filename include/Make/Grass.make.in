@@ -84,6 +84,11 @@ CXXFLAGS    =  $(INC) $(COMPILE_FLAGS_CXX) $(USE_TERMIO)
 LDFLAGS     =  $(LIBPATH) $(LINK_FLAGS) $(LD_SEARCH_FLAGS) $(PQLIBPATH) $(USE_TERMIO)
 VECT_CFLAGS =  $(GDALCFLAGS) 
 
+# Object with _fmode which must be linked to each executable on Windows
+ifdef MINGW
+  FMODE_OBJ = $(GRASS_LIBDIR)/gis/$(OBJDIR)/fmode.o
+endif
+
 ##################### library names #####################################
 
 BITMAP_LIBNAME        = grass_bitmap

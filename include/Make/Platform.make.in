@@ -222,5 +222,7 @@ USE_LARGEFILES      = @USE_LARGEFILES@
 #BSD sockets
 HAVE_SOCKET         = @HAVE_SOCKET@
 
+MINGW		    = @MINGW32@
+
 # Cross compilation
 CROSS_COMPILING = @CROSS_COMPILING@ 
