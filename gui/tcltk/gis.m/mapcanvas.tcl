@@ -1047,6 +1047,10 @@ proc MapCanvas::zoom_gregion {mon args} {
 			set parts($key) $value
 		}
 		catch {close $input}
+		
+		#set start point (sw corner)
+		set $parts(w) [expr round($parts(w)/$parts(ewres))*$parts(ewres)]
+		set $parts(s) [expr round($parts(s)/$parts(nsres))*$parts(nsres)]
 	
 		# get original width and height
 		set width [expr abs($parts(e) - $parts(w))]
@@ -1289,8 +1293,9 @@ proc MapCanvas::zoomregion { mon zoom } {
 		set west [expr $boxcenter_e - ($new_ew/2)]
 	}
 
-# if you're going to adjust for resolution, I think you do it here
-
+	#set starting point (sw corner)
+	set west [expr $ewres*round($west/$ewres)]
+	set south [expr round($south/$nsres)*$nsres]
 
 	# get original width and height
 	set width [expr abs($east - $west)]
