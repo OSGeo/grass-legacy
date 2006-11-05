@@ -17,6 +17,7 @@
 #include <stdlib.h>
 #include <string.h>
 #include <math.h>
+#include <sys/types.h>
 #include <grass/gis.h>
 #include <grass/glocale.h>
 #include "local_proto.h"
