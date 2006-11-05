@@ -21,6 +21,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#include <math.h>
 #include <grass/gis.h>
 #include <grass/gprojects.h>
 #include <cpl_csv.h>
@@ -29,7 +30,7 @@
 /* GRASS relative location of OGR co-ordinate system lookup tables */
 #define CSVDIR "/etc/ogr_csv"
 
-static void GPJ_DatumNameMassage( char ** );
+static void DatumNameMassage( char ** );
 
 /**
  * \brief Convert a GRASS co-ordinate system representation to WKT style
@@ -74,7 +75,7 @@ char *GPJ_grass_to_wkt(struct Key_Value *proj_info,
 }
 
 /**
- * Convert a GRASS co-ordinate system to an OGRSpatialReferenceH object
+ * \brief Convert a GRASS co-ordinate system to an OGRSpatialReferenceH object
  * 
  * \param proj_info Set of GRASS PROJ_INFO key/value pairs
  * \param proj_units Set of GRASS PROJ_UNIT key/value pairs
@@ -91,9 +92,10 @@ OGRSpatialReferenceH GPJ_grass_to_osr(struct Key_Value * proj_info,
     OGRSpatialReferenceH hSRS, hSRS2;
     OGRErr errcode;
     struct gpj_datum dstruct;
+    struct gpj_ellps estruct;       
     size_t len;
-    char *ellps, *datum, *params, *towgs84, *datumlongname, *start, *end,
-	*unit, *unfact, *buff;
+    char *ellps, *ellpslong, *datum, *params, *towgs84, *datumlongname,
+        *start, *end, *unit, *unfact, *buff;
     const char *sysname, *osrunit, *osrunfact;
     double a, es, rf;
     int haveparams = 0;
@@ -145,8 +147,16 @@ OGRSpatialReferenceH GPJ_grass_to_osr(struct Key_Value * proj_info,
 	datumlongname = G_store(dstruct.longname);
 	if (ellps == NULL)
 	    ellps = G_store(dstruct.ellps);
-	GPJ_free_datum(&dstruct);
+	GPJ_free_datum(&dstruct);       
     }
+    if( GPJ_get_ellipsoid_by_name(ellps, &estruct) > 0 )	 
+    {
+	ellpslong = G_store(estruct.longname);
+	DatumNameMassage(&ellpslong);
+	GPJ_free_ellps(&estruct);	   
+    }       
+    else
+	ellpslong = G_store(ellps); 
 
     startmod = G_strstr(wkt, "GEOGCS");
     lastpart = G_strstr(wkt, "PRIMEM");
@@ -203,7 +213,7 @@ OGRSpatialReferenceH GPJ_grass_to_osr(struct Key_Value * proj_info,
 
     G_asprintf(&modwkt,
 	       "%sGEOGCS[\"%s\",DATUM[\"%s\",SPHEROID[\"%s\",%.16g,%.16g]%s],%s%s",
-	       start, ellps, datumlongname, ellps, a, rf, towgs84, lastpart,
+	       start, ellps, datumlongname, ellpslong, a, rf, towgs84, lastpart,
 	       end);
 
     hSRS2 = OSRNewSpatialReference(modwkt);
@@ -218,11 +228,32 @@ OGRSpatialReferenceH GPJ_grass_to_osr(struct Key_Value * proj_info,
     G_free(params);
     G_free(datumlongname);
     pj_free(pjinfo.pj);
+    G_free(ellpslong);
     /* Other string pointers may or may not need to be freed depending
      * on sequence of execution so just leave them. */
 
     return hSRS2;
 }
+
+/**
+ * \brief Convert an OGRSpatialReferenceH object to a GRASS co-ordinate system
+ * 
+ * \param cellhd      Pointer to a GRASS Cell_head structure that will have its
+ *                    projection-related members populated with appropriate values
+ * \param projinfo   Pointer to a pointer which will have a GRASS Key_Value 
+ *                    structure allocated containing a set of GRASS PROJ_INFO values
+ * \param projunits  Pointer to a pointer which will have a GRASS Key_Value 
+ *                    structure allocated containing a set of GRASS PROJ_UNITS values
+ * \param hSRS        OGRSpatialReferenceH object containing the co-ordinate 
+ *                    system to be converted
+ * \param interactive Flag to indicate whether or not the function should
+ *                    interactively prompt the user for incomplete datum 
+ *                    transformation data
+ * 
+ * \return            2 if a projected or lat/long co-ordinate system has been
+ *                    defined; 1 if an unreferenced XY co-ordinate system has
+ *                    been defined
+ **/
 
 int GPJ_osr_to_grass(struct Cell_head *cellhd, struct Key_Value **projinfo, 
                      struct Key_Value **projunits, OGRSpatialReferenceH hSRS,
@@ -231,6 +262,8 @@ int GPJ_osr_to_grass(struct Cell_head *cellhd, struct Key_Value **projinfo,
     struct Key_Value *temp_projinfo;
     char *pszProj4 = NULL, *pszRemaining;
     char *pszProj = NULL;
+    char *datum = NULL;
+    struct gpj_datum dstruct;
     
     if( hSRS == NULL )
         goto default_to_xy;
@@ -369,7 +402,7 @@ int GPJ_osr_to_grass(struct Cell_head *cellhd, struct Key_Value **projinfo,
     {   
         const char *pszDatumNameConst = OSRGetAttrValue( hSRS, "DATUM", 0 );
         struct datum_list *list, *listhead;
-        char *datum = NULL, *dum1, *dum2, *pszDatumName;
+        char *dum1, *dum2, *pszDatumName;
         int paramspresent = GPJ__get_datum_params(temp_projinfo, &dum1, &dum2);
 
         if ( pszDatumNameConst )
@@ -377,8 +410,8 @@ int GPJ_osr_to_grass(struct Cell_head *cellhd, struct Key_Value **projinfo,
 	    /* Need to make a new copy of the string so we don't mess
 	     * around with the memory inside the OGRSpatialReferenceH? */
 
-	    G_asprintf( &pszDatumName, pszDatumNameConst );
-            GPJ_DatumNameMassage( &pszDatumName );
+	    pszDatumName = G_store( pszDatumNameConst );
+            DatumNameMassage( &pszDatumName );
 
             list = listhead = read_datum_table();
  
@@ -444,40 +477,84 @@ int GPJ_osr_to_grass(struct Cell_head *cellhd, struct Key_Value **projinfo,
                         G_free(params);
 	        }
        
-                G_free(datum);
 	    }
 	}   
     }
 
 /* -------------------------------------------------------------------- */
-/*	Despite having the +ellps set, GRASS still requires +a and +es	*/
+/*   Determine an appropriate GRASS ellipsoid name if possible, or	*/
+/*   else just put a and es values into PROJ_INFO			*/
 /* -------------------------------------------------------------------- */
 
+    if( (datum != NULL) && (GPJ_get_datum_by_name( datum, &dstruct ) > 0) )
     {
+        /* Use ellps name associated with datum */
+        G_set_key_value( "ellps", dstruct.ellps, *projinfo );
+        GPJ_free_datum( &dstruct );
+        G_free( datum );
+    }
+    else
+    {
+        /* If we can't determine the ellipsoid from the datum, derive it
+         * directly from "SPHEROID" parameters in WKT */       
         const char *pszSemiMajor = OSRGetAttrValue( hSRS, "SPHEROID", 1 );
         const char *pszInvFlat = OSRGetAttrValue( hSRS, "SPHEROID", 2 );
 
-        if( strstr(pszProj4,"+a") == NULL && pszSemiMajor != NULL )
-            G_set_key_value( "a", (char *) pszSemiMajor, *projinfo );
-
-        if( pszInvFlat != NULL )
+        if( pszSemiMajor != NULL && pszInvFlat != NULL )
         {
-            double	es, flat;
-            char	es_str[100];
-
-	    flat = atof(pszInvFlat);
-	    /* Allow for incorrect WKT describing a sphere where InvFlat 
-	     * is given as 0 rather than inf */
-	    if( flat > 0 )
+            char *ellps = NULL;
+            struct ellps_list *list, *listhead;
+            double a = atof(pszSemiMajor), flat = atof(pszInvFlat);
+            double es;
+           
+            /* Allow for incorrect WKT describing a sphere where InvFlat 
+             * is given as 0 rather than inf */
+            if( flat > 0 )
                 flat = 1 / flat;
             
             es = flat * (2.0 - flat);
 
-            sprintf( es_str, "%.16g", es );
-            G_set_key_value( "es", es_str, *projinfo );
-        }
-    }
+            list = listhead = read_ellipsoid_table(0);
+       
+            while (list != NULL) 
+            {
+	        /* Try and match a and es against GRASS defined ellipsoids;
+		 * accept first one that matches. These numbers were found
+		 * by trial and error and could be fine-tuned, or possibly
+		 * a direct comparison of IEEE floating point values used. */
+                if ( ( a == list->a || fabs(a - list->a) < 0.1 || fabs(1 - a/list->a) < 0.0000001 ) &&
+                     ( es == list->es || fabs(es - list->es) < 0.000000001 || fabs(1 - es/list->es) < 0.0000001) )
+                {
+                    ellps = G_store(list->name);
+                    break;
+                }
+                list = list->next;
+            }
+            if(listhead != NULL)
+                free_ellps_list(listhead);
 
+            if(ellps == NULL)
+            {
+                /* If we weren't able to find a matching ellps name, set
+                 * a and es values directly from WKT-derived data */
+                char es_str[100];
+
+                G_set_key_value( "a", (char *) pszSemiMajor, *projinfo );
+
+                sprintf( es_str, "%.16g", es );
+                G_set_key_value( "es", es_str, *projinfo );
+            }
+            else
+            {
+                /* else specify the GRASS ellps name for readability */
+                G_set_key_value( "ellps", ellps, *projinfo );
+                G_free(ellps);
+            }
+           
+        }
+       
+    }
+   
 /* -------------------------------------------------------------------- */
 /*	Finally append the detailed projection parameters to the end	*/
 /* -------------------------------------------------------------------- */
@@ -544,6 +621,26 @@ int GPJ_osr_to_grass(struct Cell_head *cellhd, struct Key_Value **projinfo,
     return 1; 
 }
 
+
+/**
+ * \brief Convert a WKT projection description to a GRASS co-ordinate system
+ * 
+ * \param cellhd      Pointer to a GRASS Cell_head structure that will have its
+ *                    projection-related members populated with appropriate values
+ * \param projinfo    Pointer to a pointer which will have a GRASS Key_Value 
+ *                    structure allocated containing a set of GRASS PROJ_INFO values
+ * \param projunits   Pointer to a pointer which will have a GRASS Key_Value 
+ *                    structure allocated containing a set of GRASS PROJ_UNITS values
+ * \param wkt         Well-known Text (WKT) description of the co-ordinate 
+ *                    system to be converted
+ * \param interactive Flag to indicate whether or not the function should
+ *                    interactively prompt the user for incomplete datum 
+ *                    transformation data
+ * 
+ * \return            2 if a projected or lat/long co-ordinate system has been
+ *                    defined; 1 if an unreferenced XY co-ordinate system has
+ *                    been defined
+ **/
 
 int GPJ_wkt_to_grass(struct Cell_head *cellhd, struct Key_Value **projinfo, 
                      struct Key_Value **projunits, const char *wkt,
@@ -627,7 +724,7 @@ static const char *papszDatumEquiv[] =
 /*      specific exception cases into WKT versions.                     */
 /************************************************************************/
 
-static void GPJ_DatumNameMassage( char ** ppszDatum )
+static void DatumNameMassage( char ** ppszDatum )
 
 {
     int         i, j;

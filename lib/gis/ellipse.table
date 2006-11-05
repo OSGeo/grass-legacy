@@ -14,6 +14,8 @@
 # b / a = 1 - f = sqrt( 1 - e2 ) = 1 / sqrt ( 1 + e'2 ) 
 # 
 # no spaces before or after the =
+# PLEASE ALWAYS ADD NEW DEFINITIONS TO THE END OF THE FILE AND INCLUDE
+# A COMMENT DESCRIBING THE SOURCE OF THE DEFINITION
 
 # the following parameters are from NIMA document TR8350.2:
 # old values commented
@@ -32,8 +34,6 @@ bess_nam	"Bessel 1841, Namibia"		a=6377483.865	f=1/299.1528128
 clark66		"Clarke 1866"			a=6378206.400	f=1/294.9786982
 # Clarke 1880
 clark80		"Clarke 1880"			a=6378249.145	f=1/293.465
-# Clarke 1880 IGN France
-clark80IGN		"Clarke 1880 IGN France"			a=6378249.200	f=1/293.466021294
 # Everest 1830, India
 # everest					a=6377276.345	e=.0066378466
 everest		"Everest 1830, India"		a=6377276.345	f=1/300.8017
@@ -46,8 +46,6 @@ evrst56		"Everest 1956, India"		a=6377301.243	f=1/300.8017
 evrst69		"Everest 1969, W. Malaysia"	a=6377295.664	f=1/300.8017
 # Everest (Sabah & Sarawak), Brunei and E. Malaysia
 evrstss		"Everest Sabah and Sarawak"	a=6377298.556	f=1/300.8017
-# Geodetic Reference System 1980 (IUGG, 1980)
-grs80		"Geodetic Reference System 1980" a=6378137.000	f=1/298.257222101
 # Helmert 1906
 helmert		"Helmert 1906"			a=6378200.000	f=1/298.3
 # Hough 1960
@@ -70,6 +68,8 @@ SAD-69		"Please use sam69 instead"     	a=6378160.000	f=1/298.25
 wgs72		"World Geodetic System 1972"	a=6378135.000	f=1/298.26
 # WGS84 as defined by NIMA document TR8350.2
 wgs84		"World Geodetic System 1984"	a=6378137.000	f=1/298.257223563
+# Geodetic Reference System 1980 (IUGG, 1980)
+grs80		"Geodetic Reference System 1980" a=6378137.000	f=1/298.257222101
 
 # from original file:
 # GRS75
@@ -144,3 +144,5 @@ everest_p	"Everest (Pakistan)"		a=6377309.613	f=1/300.8017
 sphere  	"Spherical Earth"		a=6370997.000   e=0.0
 # Bessel modified (Norway) http://crs.ifag.de/
 modif_bessel    "Bessel Modified (Norway)"      a=6377492.0176  f=1/299.15281285
+# Clarke 1880 IGN France http://grass.itc.it/pipermail/grass5/2005-November/020361.html
+clark80IGN		"Clarke 1880 IGN France"			a=6378249.200	f=1/293.466021294
