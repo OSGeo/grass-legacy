@@ -24,17 +24,9 @@
 #include <grass/gis.h>
 #include <grass/glocale.h>
 #include <grass/gprojects.h>
-
-struct ellps_list
-{
-    char *name, *longname;
-    double a, es, rf;
-    struct ellps_list *next;
-};
+#include "local_proto.h"
 
 static int get_a_e2_f(const char *, const char *, double *, double *, double *);
-static struct ellps_list *read_ellipsoid_table(int);
-static void free_ellps_list(struct ellps_list *);
 
 /**
  * This routine returns the ellipsoid parameters from the database.
@@ -205,7 +197,7 @@ get_a_e2_f(const char *s1, const char *s2, double *a, double *e2, double *f)
     return 0;
 }
 
-static struct ellps_list *read_ellipsoid_table(int fatal)
+struct ellps_list *read_ellipsoid_table(int fatal)
 {
     FILE *fd;
     char *file;
@@ -259,11 +251,7 @@ static struct ellps_list *read_ellipsoid_table(int fatal)
 	    current->longname = G_store(descr);
 	    current->a = a;
 	    current->es = e2;
-	    if (e2 == 0)
-		/* for sphere */
-		current->rf = 0;
-	    else
-		current->rf = (1 / f);
+	    current->rf = (1 / f);
 	    current->next = NULL;
 	    count++;
 	}
@@ -296,7 +284,7 @@ void GPJ_free_ellps(struct gpj_ellps *estruct)
     return;
 }
 
-static void free_ellps_list(struct ellps_list *elist)
+void free_ellps_list(struct ellps_list *elist)
 {
     struct ellps_list *old;
 

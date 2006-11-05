@@ -68,7 +68,6 @@ int pj_get_kv(struct pj_info *info, struct Key_Value *in_proj_keys,
     char buffa[300], factbuff[50];
     char proj_in[50], *datum, *params;
     projPJ *pj;
-    struct gpj_datum dstruct;
 
     proj_in[0] = '\0';
     info->zone = 0;
