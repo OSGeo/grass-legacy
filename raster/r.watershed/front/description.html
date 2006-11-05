@@ -178,8 +178,10 @@ Loss Equation.  Equations taken from article entitled
 Loss Equation</EM> (see SEE ALSO section).  Since the S factor
 is a small number (usually less than one), it is multiplied
 by 100 for the GRASS output map layer.
-</DT>
+</dd>
 </dl>
+
+
 <H2>NOTES</H2>
 
 There are two versions of this program: <EM>ram</EM> and <EM>seg</EM>.
@@ -257,7 +259,14 @@ If there are incomplete data in the elevation map layer, users should mask out
 those areas.
 
 
-<P>
+<H2>EXAMPLE</H2>
+
+Convert <em>r.watershed</em> streams map output to a vector layer.
+<div class="code"><pre>
+  r.watershed elev=topo stream=rwater.stream
+  r.null rwater.stream setnull=0
+  r.to.vect -v in=rwater.stream out=rwater_stream
+</pre></div>
 
 
 <H2>SEE ALSO</H2>
