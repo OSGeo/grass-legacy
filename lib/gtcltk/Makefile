@@ -7,6 +7,6 @@ default: $(ETC)/gtcltk
 
 $(ETC)/gtcltk: *.tcl 
 	if [ ! -d $(ETC)/gtcltk ]; then $(MKDIR) $(ETC)/gtcltk; fi
-	$(INSTALL) -m 644 *.tcl $(ETC)/gtcltk/
+	for file in *.tcl ; do $(INSTALL_DATA) $$file $(ETC)/gtcltk/ ; done
 
 clean:
