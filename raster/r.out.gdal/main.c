@@ -333,10 +333,14 @@ int main (int argc, char *argv[]) {
 	adfGeoTransform[3] = cellhead.north;
 	adfGeoTransform[4] = 0.0;
 	adfGeoTransform[5] = -1*cellhead.ns_res;
-	if ( GDALSetGeoTransform( hCurrDS, adfGeoTransform ) >=CE_Failure) G_warning(_("Couldn't set geo transform ...\n"));
+	if ( GDALSetGeoTransform( hCurrDS, adfGeoTransform ) >=CE_Failure) G_warning(_("Couldn't set geo transform."));
 
 	/* Set Projection  */
-	if ( GDALSetProjection( hCurrDS, srswkt ) >=CE_Failure) G_warning(_("Couldn't set projection ...\n"));
+	CPLErr ret;
+	if (srswkt)
+		ret = GDALSetProjection( hCurrDS, srswkt );
+	if (!srswkt || ret == CE_Failure)
+		G_warning(_("Couldn't set projection."));
 
 	/* Add metadata */
 	AttachMetadata( hCurrDS, metaopt->answers );
