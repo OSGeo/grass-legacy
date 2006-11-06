@@ -117,7 +117,7 @@ public:
   ReplacementHeap<T,Compare>(size_t arity, queue<char*>* runList);
   
   //delete array mergeHeap 
-  ~ReplacementHeap<T,Compare>();
+  ~ReplacementHeap();
   
   //is heap empty?
   int empty() const { 
