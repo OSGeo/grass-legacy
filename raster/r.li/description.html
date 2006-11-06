@@ -1,0 +1,107 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+<head>
+<title>r.li</title>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<link rel="stylesheet" href="grassdocs.css" type="text/css">
+</head>
+<body bgcolor="white">
+
+<img src="grass.smlogo.gif" alt="GRASS logo"><hr align=center size=6 noshade>
+
+<h2>NAME</h2>
+<em><b>r.li</b></em>  - package overview
+
+<H2>DESCRIPTION</H2>
+
+How to calculate an index in a raster file:
+
+<ol>
+<li>run <em>r.li.setup</em>: create a configuration file selecting the parts of
+    raster to analyze.
+
+<li>run <em>r.li.'index'</em> (e.g., <em>r.li.patchdensity</em>) for calculate the selected
+    index using on the areas selected on configuration file.
+</ol>
+
+<H2>NOTE</H2>
+
+Also the <em>r.li.daemon</em> has a main function and it can be run, but it is only a
+template for new index development. Then the function has no meaning,
+it can be used only for debug.
+
+
+<H2>EXAMPLE</H2>
+
+To calculate a patch density index on a whole geology raster map in
+Spearfish, using a 5x5 moving window, follow this procedure:
+
+<ol>
+<li> CREATE A NEW CONFIGURATION FILE
+  <ol>
+  <li> run 
+<div class="code"><pre>
+        r.li.setup
+</pre></div>
+  <li> The main <em>r.li.setup</em> window is displayed, click on "New"
+  <li>  Now it is displayed the new configuration window,
+	enter the configuration file name (e.g., "my_conf", do not use absolute paths) 
+	and the name of raster map (e.g., "geology").
+	The other fields are not needed for this configuration.
+  <li> Click on "Setup sampling frame", select "Whole maplayer" and click "OK"
+  <li> Click on "Setup sampling areas", select "Moving window" and click "OK"
+  <li> Click on "Use keyboard to enter moving window dimension"
+  <li> Select "Rectangle" and enter 5 on "heigth" and "width" fields
+  <li> Click on "Save settings"
+  <li> Close <em>r.li.setup</em> window
+  </ol>
+<li> CALCULATE PATCHDENSITY INDEX
+  <ol> set region settings to geology raster map: <tt>g.region rast=geology -p</tt>
+  <li> run r.li.patchdensity:
+<div class="code"><pre>
+         r.li.patchdensity map=geology conf=my_conf out=patchdens
+</pre></div>
+  </ol>
+</ol>
+
+The resulting patch density is stored in "patchdens" raster map.
+
+You can verify the result for example with contour lines:
+<div class="code"><pre>
+r.contour in=patchdens out=patchdens step=5
+d.rast patchdens
+d.vect -c patchdens
+</pre></div>
+
+Note that if you want to run another index with the same area
+configuration, you don't have to create another configuration file.
+
+You can also use the same area configuration file on another map. The
+program rescale it automatically. For instance if you have selected a
+5x5 sample area on 100x100 raster map, and you use the same
+configuration file on a 200x200 raster map, then the sample area is
+10x10.
+
+<H2>SEE ALSO</H2>
+<EM><A HREF="r.li.patchdensity.html">r.li.patchdensity</A></EM><BR>
+<EM><A HREF="r.li.setup.html">r.li.setup</A></EM>
+
+<H2>AUTHORS</H2>
+Claudio Porta and Lucio Davide Spano, students of Computer Science 
+University of Pisa (Italy).<br>
+Commission from Faunalia Pontedera (PI)<br>
+This program is free software under the GPL (>=v2)
+Read the COPYING file that comes with GRASS for details.
+
+<H2>BUGS</h2>
+Please send bugs reports to 
+<a href="mailto:spano@cli.di.unipi.it">spano@cli.di.unipi.it</a>,
+<a href="mailto:porta@cli.di.unipi.it">porta@cli.di.unipi.it</a>
+
+<BR>
+
+<p><i>Last changed: $Date$</i>
+<HR>
+<P><a href="index.html">Main index</a> - <a href="raster.html">raster index</a> - <a href="full_index.html">Full index</a>
+</body>
+</html>
