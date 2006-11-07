@@ -1,10 +1,9 @@
 #include "driver.h"
 #include "driverlib.h"
 
+
 void DRV_draw_bitmap(int ncols, int nrows, int threshold, const unsigned char *buf)
 {
-	int i, j;
-
 	if (driver->draw_bitmap)
 		(*driver->draw_bitmap)(ncols, nrows, threshold, buf);
 }

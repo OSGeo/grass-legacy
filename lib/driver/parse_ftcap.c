@@ -5,10 +5,10 @@
 #include <grass/glocale.h>
 #include <grass/freetypecap.h>
 
+
 struct FT_CAP *parse_freetypecap(void)
 {
 	char *capfile, file[4096];
-	int i;
 	char buf[4096], iname[128], ipath[4096];
 	FILE *fp, *fp2;
 	int fonts_count = 0;
