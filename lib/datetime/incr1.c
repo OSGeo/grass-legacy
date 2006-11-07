@@ -10,6 +10,7 @@ static int _datetime_add_field (DateTime *, DateTime *, int);
 static int _datetime_subtract_field (DateTime *, DateTime *, int);
 
 /*****************************************************************/
+#if 0 /* unused */
 static double _debug_decimal (DateTime *dt)
 {
 double dtdec = 0.0; 
@@ -28,7 +29,7 @@ double dtdec = 0.0;
 	return(dtdec);
     return(-dtdec);
 }
-
+#endif /* unused */
 /*****************************************************************/
 
 /*!
