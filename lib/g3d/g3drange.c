@@ -11,7 +11,6 @@
 
 void
 G3d_range_updateFromTile  (G3D_Map *map, char *tile, int rows, int cols, int depths, int xRedundant, int yRedundant, int zRedundant, int nofNum, int type)
-
 {
   int y, z, cellType;
   struct FPRange *range;
@@ -51,12 +50,7 @@ G3d_range_updateFromTile  (G3D_Map *map, char *tile, int rows, int cols, int dep
 int
 G3d_readRange  (char *name, char *mapset, struct FPRange *drange)
  /* adapted from G_read_fp_range */
-
-
-
-
 {
-  struct Range range;
   int fd;
   char buf[200], xdr_buf[100], buf2[200], xname[512], xmapset[512];
   DCELL dcell1, dcell2;
@@ -116,7 +110,6 @@ error:
 
 int
 G3d_range_load  (G3D_Map *map)
-
 {
   if (map->operation == G3D_WRITE_DATA) return 1;
   if (G3d_readRange (map->fileName, map->mapset, &(map->range)) == -1) {
@@ -153,10 +146,6 @@ G3d_range_min_max  (G3D_Map *map, double *min, double *max)
 static int
 writeRange  (char *name, struct FPRange *range)
  /* adapted from G_write_fp_range */
-
-
-
-
 {
   int fd;
   char buf[200], xdr_buf[100], buf2[200], xname[512], xmapset[512];
@@ -214,7 +203,7 @@ int
 G3d_range_write  (G3D_Map *map)
 
 {
-  char path[4096], element[100];
+  char path[4096];
 
   G3d_filename (path, G3D_RANGE_ELEMENT, map->fileName, map->mapset);
   remove ( path );
@@ -231,7 +220,6 @@ G3d_range_write  (G3D_Map *map)
 
 int
 G3d_range_init  (G3D_Map *map)
-
 {
   return G_init_fp_range (&(map->range));
 }
