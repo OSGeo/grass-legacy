@@ -96,7 +96,7 @@ F_open ( char *title,  char *html )
 	
 	sprintf(buf,"%s/etc/form/form", G_gisbase());
 
-	execl ("/bin/sh", "sh", "-c", buf, 0);
+	execl ("/bin/sh", "sh", "-c", buf, NULL);
 	
 	G_debug(2, "CHILD END\n");
 	exit (0);
