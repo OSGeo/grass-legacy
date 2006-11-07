@@ -8,9 +8,7 @@
 int main (int argc, char **argv)
 {
 	int achar ;
-	char buf[200];
 	char buf2[200];
-	char *bptr ;
 	int map[1024];
 	long newmap[1024];
 	int nmap;
@@ -20,7 +18,6 @@ int main (int argc, char **argv)
 	long newoffset;
 	long *index;
 	int size;
-	FILE *fn ;
 	int i;
 
 	int font;
