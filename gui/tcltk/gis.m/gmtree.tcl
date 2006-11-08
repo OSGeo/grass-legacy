@@ -341,6 +341,9 @@ proc GmTree::add { type } {
         thematic {
             GmThematic::create $tree($mon)  $parent_node
         }
+        dtext {
+            GmDtext::create $tree($mon)  $parent_node
+        }
         ctext {
             GmCtext::create $tree($mon)  $parent_node
         }
@@ -419,6 +422,9 @@ proc GmTree::select { node } {
         }
         thematic {
             GmThematic::options $id $opt
+        }
+        dtext {
+            GmDtext::options $id $opt
         }
         ctext {
             GmCtext::options $id $opt
@@ -520,6 +526,9 @@ proc GmTree::display_node { node mod } {
 		}
 		thematic {
 			GmThematic::display $node $mod
+		}
+		dtext {
+			GmDtext::display $node $mod
 		}
     } 
 }
@@ -652,6 +661,9 @@ proc GmTree::duplicate { } {
         thematic {
             GmThematic::duplicate $tree($mon) $parent_node $sel $id
         }
+        dtext {
+            GmDtext::duplicate $tree($mon) $parent_node $sel $id
+        }
         ctext {
             GmCtext::duplicate $tree($mon) $parent_node $sel $id
         }
@@ -777,6 +789,11 @@ proc GmTree::save_node { depth node } {
             incr depth
 	    	GmThematic::save $tree($mon) $depth $node
 		}
+		dtext {
+            GmTree::rc_write $depth dtext $name
+            incr depth
+	    	GmDtext::save $tree($mon) $depth $node
+		}
 		ctext {
             GmTree::rc_write $depth ctext $name
             incr depth
@@ -894,6 +911,10 @@ proc GmTree::load { lpth } {
 				set current_node [GmThematic::create $tree($mon) $parent]
 				$tree($mon) itemconfigure $current_node -text $val 
 			}
+			dtext {
+				set current_node [GmDtext::create $tree($mon) $parent]
+				$tree($mon) itemconfigure $current_node -text $val 
+			}
 			ctext {
 				set current_node [GmCtext::create $tree($mon) $parent]
 				$tree($mon) itemconfigure $current_node -text $val 
@@ -917,55 +938,58 @@ proc GmTree::load { lpth } {
 					set type [GmTree::node_type $current_node]
 					switch $type {
 						group { 
-						GmGroup::set_option $current_node $key $val
+							GmGroup::set_option $current_node $key $val
 						}
 						raster { 
-						GmRaster::set_option $current_node $key $val
+							GmRaster::set_option $current_node $key $val
 						}
-						labels { 
+							labels { 
 						GmLabels::set_option $current_node $key $val
 						}
 						vector { 
-						GmVector::set_option $current_node $key $val
+							GmVector::set_option $current_node $key $val
 						}
 						cmd { 
-						GmCmd::set_option $current_node $key $val
+							GmCmd::set_option $current_node $key $val
 						}
 						gridline { 
-						GmGridline::set_option $current_node $key $val
+							GmGridline::set_option $current_node $key $val
 						}
 						rgbhis { 
-						GmRgbhis::set_option $current_node $key $val
+							GmRgbhis::set_option $current_node $key $val
 						}
 						hist { 
-						GmHist::set_option $current_node $key $val
+							GmHist::set_option $current_node $key $val
 						}
 						rnums { 
-						GmRnums::set_option $current_node $key $val
+							GmRnums::set_option $current_node $key $val
 						}
 						arrows { 
-						GmArrows::set_option $current_node $key $val
+							GmArrows::set_option $current_node $key $val
 						}
 						legend { 
-						GmLegend::set_option $current_node $key $val
+							GmLegend::set_option $current_node $key $val
 						}
 						dframe { 
-						GmDframe::set_option $current_node $key $val
+							GmDframe::set_option $current_node $key $val
 						}
 						barscale { 
-						GmBarscale::set_option $current_node $key $val
+							GmBarscale::set_option $current_node $key $val
 						}
 						chart { 
-						GmChart::set_option $current_node $key $val
+							GmChart::set_option $current_node $key $val
 						}
 						thematic { 
-						GmThematic::set_option $current_node $key $val
+							GmThematic::set_option $current_node $key $val
+						}
+						dtext { 
+							GmDtext::set_option $current_node $key $val
 						}
 						ctext { 
-						GmCtext::set_option $current_node $key $val
+							GmCtext::set_option $current_node $key $val
 						}
 						clabels { 
-						GmCLabels::set_option $current_node $key $val
+							GmCLabels::set_option $current_node $key $val
 						}
 					} 
 				}
@@ -1054,6 +1078,9 @@ proc GmTree::node_type { node } {
     }  
     if { [string match thematic* $node] } {
        return "thematic"
+    }  
+    if { [string match dtext* $node] } {
+       return "dtext"
     }  
     if { [string match ctext* $node] } {
        return "ctext"
