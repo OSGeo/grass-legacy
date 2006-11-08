@@ -156,7 +156,7 @@ echo "<tr><td>&nbsp;&nbsp;db.* </td><td>database commands</td></tr>" >> $FULLIND
 echo "<tr><td>&nbsp;&nbsp;g.*  </td><td>general commands</td></tr>" >> $FULLINDEX
 echo "<tr><td>&nbsp;&nbsp;g3.* </td><td>general3D commands</td></tr>" >> $FULLINDEX
 echo "<tr><td>&nbsp;&nbsp;i.*  </td><td>imagery commands</td></tr>" >> $FULLINDEX
-echo "<tr><td>&nbsp;&nbsp;p.*  </td><td>paint commands</td></tr>" >> $FULLINDEX
+#echo "<tr><td>&nbsp;&nbsp;p.*  </td><td>paint commands</td></tr>" >> $FULLINDEX
 echo "<tr><td>&nbsp;&nbsp;ps.* </td><td>postscript commands</td></tr>" >> $FULLINDEX
 echo "<tr><td>&nbsp;&nbsp;r.*  </td><td>raster commands</td></tr>" >> $FULLINDEX
 echo "<tr><td>&nbsp;&nbsp;r3.* </td><td>raster3D commands</td></tr>" >> $FULLINDEX
