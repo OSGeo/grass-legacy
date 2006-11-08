@@ -116,24 +116,24 @@ msgstr ""
 "[%s in %s] - la lettura richiesta per la riga %d è al di fuori dalla regione"
 
 #: ../lib/gis/get_row.c:378
-#, fuzzy, c-format
+#, c-format
 msgid "cell_values_float: xdr_float failed for index %d"
-msgstr "cell_values_double: xdr_double fallimento lettura dell'indice %d."
+msgstr "cell_values_float: xdr_float lettura non riuscita per l'indice %d"
 
 #: ../lib/gis/get_row.c:422
 #, c-format
 msgid "cell_values_double: xdr_double failed for index %d."
-msgstr "cell_values_double: xdr_double fallimento lettura dell'indice %d."
+msgstr "cell_values_double: xdr_double lettura non riuscita per l'indice %d."
 
 #: ../lib/gis/get_row.c:564
-#, fuzzy, c-format
+#, c-format
 msgid "error reading compressed map [%s] in mapset [%s], row %d"
-msgstr "errore nella lettura %s mappa [%s] nel mapset [%s] righe %d"
+msgstr "errore nella lettura della mappa compressa [%s] nel mapset [%s], riga %d"
 
 #: ../lib/gis/get_row.c:568
-#, fuzzy, c-format
+#, c-format
 msgid "error reading map [%s] in mapset [%s], row %d"
-msgstr "errore nella lettura %s mappa [%s] nel mapset [%s] righe %d"
+msgstr "errore nella lettura della mappa [%s] nel mapset [%s], riga %d"
 
 #: ../lib/gis/get_row.c:917 ../lib/gis/get_row.c:923
 #, c-format
@@ -189,49 +189,49 @@ msgid "CELL mask buffer %p"
 msgstr "CELL maschera del buffer %p\n"
 
 #: ../lib/gis/debug.c:97
-#, fuzzy, c-format
+#, c-format
 msgid "buffer for reading null rows %p"
-msgstr "buffer di lettura delle righe vuote %p\n"
+msgstr "buffer di lettura delle righe vuote %p"
 
 #: ../lib/gis/debug.c:98
-#, fuzzy, c-format
+#, c-format
 msgid "Pre/post compressed data buffer %p"
-msgstr "Pre/post buffer compressed data %p\n"
+msgstr "Buffer di dati pre/post compressi %p"
 
 #: ../lib/gis/debug.c:99
-#, fuzzy, c-format
+#, c-format
 msgid "sizeof compressed_buf %d"
-msgstr "dimensione del compressed_buf %d\n"
+msgstr "dimensione del compressed_buf %d"
 
 #: ../lib/gis/debug.c:100
-#, fuzzy, c-format
+#, c-format
 msgid "work data buffer %p"
-msgstr "work data buffer %p\n"
+msgstr "work data buffer %p"
 
 #: ../lib/gis/debug.c:101
-#, fuzzy, c-format
+#, c-format
 msgid "sizeof work_buf %d"
-msgstr "dimensione del work_buf %d\n"
+msgstr "dimensione del work_buf %d"
 
 #: ../lib/gis/debug.c:102
-#, fuzzy, c-format
+#, c-format
 msgid "sizeof null_buf %d"
-msgstr "dimensione null_buf %d\n"
+msgstr "dimensione null_buf %d"
 
 #: ../lib/gis/debug.c:103
-#, fuzzy, c-format
+#, c-format
 msgid "sizeof mask_buf %d"
-msgstr "dimensione mask_buf %d\n"
+msgstr "dimensione mask_buf %d"
 
 #: ../lib/gis/debug.c:104
-#, fuzzy, c-format
+#, c-format
 msgid "Histogram request %d"
-msgstr "Istogramma richiesto %d\n"
+msgstr "Istogramma richiesto %d"
 
 #: ../lib/gis/debug.c:106
-#, fuzzy, c-format
+#, c-format
 msgid "G_dump: file #%d"
-msgstr "G_dump: file #%d\n"
+msgstr "G_dump: file #%d"
 
 #: ../lib/gis/debug.c:107
 #, c-format
@@ -239,9 +239,9 @@ msgid "open mode = %d"
 msgstr "modalità di apertura = %d"
 
 #: ../lib/gis/debug.c:108
-#, fuzzy, c-format
+#, c-format
 msgid "Cell header %p"
-msgstr "Intestazione cella %p\n"
+msgstr "Intestazione cella %p"
 
 #: ../lib/gis/debug.c:109
 #, fuzzy, c-format
@@ -301,7 +301,7 @@ msgstr ""
 #: ../lib/gis/debug.c:120
 #, fuzzy, c-format
 msgid "nbytes per cell for current row %d"
-msgstr "nbytes per cella nella riga corrente %d\n"
+msgstr "nbyte per cella nella riga corrente %d\n"
 
 #: ../lib/gis/debug.c:121
 #, fuzzy, c-format
@@ -316,7 +316,7 @@ msgstr "byte per cella %d\n"
 #: ../lib/gis/debug.c:123
 #, fuzzy, c-format
 msgid "type: int, float or double map %d"
-msgstr "tipi: mappa int,float o double %d\n"
+msgstr "tipi: mappa int, float o double %d\n"
 
 #: ../lib/gis/debug.c:124
 #, fuzzy, c-format
@@ -1305,7 +1305,7 @@ msgstr ""
 #: ../lib/gis/legal_name.c:34
 #, c-format
 msgid "Illegal filename.  Cannot be '.' or 'NULL'\n"
-msgstr "Nome file non valido. Non può essere '.' oppre 'NULL'\n"
+msgstr "Nome file non valido. Non può essere '.' oppure 'NULL'\n"
 
 #: ../lib/gis/legal_name.c:41
 #, fuzzy, c-format
@@ -1501,7 +1501,7 @@ msgstr "[%s] nel mapset [%s] - zona [%d] diversa dalla regione in uso [%d]"
 #: ../lib/gis/opencell.c:317
 #, c-format
 msgid "[%s] in [%s] - bytes per cell (%d) too large"
-msgstr "[%s] in [%s] - bytes per cella (%d) troppo grande"
+msgstr "[%s] in [%s] - byte per cella (%d) troppo grande"
 
 #: ../lib/gis/opencell.c:617
 #, c-format
@@ -2589,7 +2589,7 @@ msgstr "per accettare i valori predefiniti"
 #: ../lib/proj/ellipse.c:85
 #, c-format
 msgid "invalid ellipsoid %s in file"
-msgstr "Nessun elissoide valido %s nel file"
+msgstr "Nessun ellissoide valido %s nel file"
 
 #: ../lib/proj/ellipse.c:128
 msgid "No ellipsoid info given in file"
@@ -2598,7 +2598,7 @@ msgstr "Nessuna informazione sull'ellissoide nel file dato"
 #: ../lib/symbol/read.c:203
 #, c-format
 msgid "Cannot read symbol line coordinates: %s"
-msgstr ""
+msgstr "Non riesco a leggere le coordinate del simbolo della linea: %s"
 
 #: ../lib/symbol/read.c:252
 #, c-format
@@ -2607,15 +2607,15 @@ msgid ""
 msgstr ""
 
 #: ../lib/symbol/read.c:274
-#, fuzzy, c-format
+#, c-format
 msgid "Cannot find/open symbol: '%s'"
-msgstr "Non riesco a trovare la mappa '%s' di input"
+msgstr "Non riesco a trovare/aprire il simbolo: '%s'"
 
 #: ../lib/symbol/read.c:358 ../lib/symbol/read.c:367 ../lib/symbol/read.c:374
 #: ../lib/symbol/read.c:383
 #, c-format
 msgid "Incorrect symbol color: '%s', using default."
-msgstr ""
+msgstr "Colore del simbolo scorretto: '%s', uso quello predefinito."
 
 #: ../lib/driver/parse_ftcap.c:21
 #, c-format
@@ -2632,7 +2632,7 @@ msgstr ""
 msgid ""
 "\n"
 "Unknown command: %d last: %d\n"
-msgstr ""
+msgstr "\nComando sconosciuto: %d ultimo: %d\n"
 
 #: ../lib/driver/command.c:646
 #, c-format
