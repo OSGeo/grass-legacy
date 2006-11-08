@@ -21,6 +21,7 @@ package ifneeded GisM 1.0 [list tclPkgSetup $dir GisM 1.0 {
 	{barscale.tcl source {GmBarscale::create}}
 	{chart.tcl source {GmChart::create}}
 	{thematic.tcl source {GmThematic::create}}
+	{dtext.tcl source {GmDtext::create}}
 	{maptext.tcl source {GmCtext::create}}
 	{maplabels.tcl source {GmCLabels::create}}
 	{mapprint.tcl source {psprint::init}}
