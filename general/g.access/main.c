@@ -1,8 +1,8 @@
 #include <stdlib.h>
 #include <string.h>
 #include <unistd.h>
-#include <grass/glocale.h>
 #include <grass/gis.h>
+#include <grass/glocale.h>
 #include "local_proto.h"
 
 int 
@@ -19,38 +19,37 @@ main (int argc, char *argv[])
 
     module = G_define_module();
     module->keywords = _("general");
-    module->description = "This program allows the user to control access to the current mapset.";
+    module->description =
+	_("Controls access to the current mapset for other users on the system.");
 
     group_opt = G_define_option();
     group_opt->key = "group";
     group_opt->type = TYPE_STRING;
     group_opt->required = NO;
     group_opt->options = "grant,revoke";
-    group_opt->description = "Access for group";
+    group_opt->description = _("Access for group");
 
     other_opt = G_define_option();
     other_opt->key = "other";
     other_opt->type = TYPE_STRING;
     other_opt->required = NO;
     other_opt->options = "grant,revoke";
-    other_opt->description = "Access for others";
+    other_opt->description = _("Access for others");
 
     if (G_parser(argc, argv) < 0)
-	exit(-1);
+	exit(EXIT_FAILURE);
 
     /* get the unix file name for the mapset directory */
     G__file_name (path, "", "", G_mapset());
     
     /* this part is until PERMANENT no longer holds DEFAULT_WIND and MYNAME */
     if (strcmp (G_mapset(), "PERMANENT") == 0)
-    {
-	G_warning ( "access to %s must be open, nothing changed", G_mapset());
-	exit(0);
-    }
+	G_fatal_error(
+	  _("Access to the PERMANENT mapset must be open, nothing changed"));
 
     /* get the current permissions */
     if(get_perms (path, &perms, &group, &other) < 0)
-	G_fatal_error ("Can't determine mapset permssions");
+	G_fatal_error(_("Unable to determine mapset permssions"));
 
     if ( group_opt->answer ) {
 	if ( group_opt->answer[0] == 'g' )
@@ -67,5 +66,5 @@ main (int argc, char *argv[])
     
     set_perms (path, perms, group, other);
 
-    return 0;
+    exit(EXIT_SUCCESS);
 }
