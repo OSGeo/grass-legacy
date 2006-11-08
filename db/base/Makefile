@@ -54,6 +54,6 @@ $(BIN)/db.tables$(EXE): $(OBJDIR)/tables.o
 $(BIN)/db.connect$(EXE): $(OBJDIR)/connect.o
 	$(CC) $(LDFLAGS) -o $@ $(OBJDIR)/connect.o $(FMODE_OBJ) $(LIBES) $(XDRLIB) $(MATHLIB)
 
-#not used: db.createdb db.dropdb db.databases
-PROGRAMS = db.columns db.copy db.droptable db.describe db.drivers db.execute db.select db.tables db.connect
+#not used: db.createdb db.dropdb db.databases db.droptable
+PROGRAMS = db.columns db.copy db.describe db.drivers db.execute db.select db.tables db.connect
 
