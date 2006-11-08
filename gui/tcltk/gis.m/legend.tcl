@@ -16,6 +16,7 @@ namespace eval GmLegend {
     variable array lfilemask # raster
     variable optlist
     variable array dup # vector
+    variable llcorner
 }
 
 
@@ -64,8 +65,11 @@ proc GmLegend::create { tree parent } {
     set opt($count,1,color) "black" 
     set opt($count,1,lines) 0 
     set opt($count,1,thin) 1 
+    set opt($count,1,mouseset) 0
     set opt($count,1,labelnum) 5 
-    set opt($count,1,at) "5,95,5,10" 
+    set opt($count,1,at) "5,90" 
+    set opt($count,1,height) 80
+    set opt($count,1,width) 5 
     set opt($count,1,use) "" 
     set opt($count,1,range) "" 
     set opt($count,1,nolbl) 0 
@@ -75,8 +79,8 @@ proc GmLegend::create { tree parent } {
     set opt($count,1,flip) 0 
     set opt($count,1,mod) 1
     
-	set optlist { _check map opacity color lines thin labelnum at use range \
-             nolbl noval skip smooth flip}
+	set optlist { _check map opacity color lines thin labelnum at height width \
+             mouseset use range nolbl noval skip smooth flip}
              
     foreach key $optlist {
 		set opt($count,0,$key) $opt($count,1,$key)
@@ -102,6 +106,22 @@ proc GmLegend::set_option { node key value } {
 }
 
 ###############################################################################
+
+proc GmLegend::mouseset { id } {
+	# use mouse to set scalebar placement coordinates
+	global mon pctentry
+	variable llcorner 
+	variable opt
+
+	if { $GmLegend::opt($id,1,mouseset) == 1 } {
+		set pctentry $GmLegend::llcorner
+	} else {
+		set pctentry ""
+	}
+
+}
+
+###############################################################################
 # select raster map
 proc GmLegend::select_map { id } {
     variable tree
@@ -117,6 +137,7 @@ proc GmLegend::select_map { id } {
 # legend options
 proc GmLegend::options { id frm } {
     variable opt
+    variable llcorner
     global bgcolor
 
     # Panel heading
@@ -153,16 +174,33 @@ proc GmLegend::options { id frm } {
     pack $row.a $row.b $row.c $row.d $row.e -side left
     pack $row -side top -fill both -expand yes
 
-    # placement
+    # size and location
     set row [ frame $frm.at1 ]
-    Label $row.a -text "    legend placement as 0-100% of display height/width from bottom left"
+    Label $row.a -text "Legend placement and size as 0-100% of display"
     pack $row.a -side left
     pack $row -side top -fill both -expand yes
 
+    # at
     set row [ frame $frm.at2 ]
-    Label $row.a -text "    set legend corners (bottom,top,left,right)"
-    LabelEntry $row.b -textvariable GmLegend::opt($id,1,at) -width 15 
-    pack $row.a $row.b -side left
+    Label $row.a -text "    x,y of lower left corner (in % from display top left)"
+    set llcorner [LabelEntry $row.b -width 8 \
+    	-textvariable GmLegend::opt($id,1,at)]
+    checkbutton $row.c -text [G_msg "place with mouse"] \
+    	-variable GmLegend::opt($id,1,mouseset) \
+    	-command "GmLegend::mouseset $id"
+    pack $row.a $row.b $row.c -side left
+    pack $row -side top -fill both -expand yes
+    
+    # size
+    set row [ frame $frm.size ]
+    Label $row.a -text "    legend height "
+    SpinBox $row.b -range {0 100 1} -textvariable GmLegend::opt($id,1,height) \
+		 -width 5 -helptext "Legend height (% of display)" 
+    Label $row.c -text "%  width" 
+    SpinBox $row.d -range {0 100 1} -textvariable GmLegend::opt($id,1,width) \
+		 -width 5 -helptext "Legend width (% of display)" 
+    Label $row.e -text "%" 
+    pack $row.a $row.b $row.c $row.d $row.e -side left
     pack $row -side top -fill both -expand yes
 
     # text color
@@ -282,11 +320,17 @@ proc GmLegend::display { node mod } {
     # If we are told dirty (for zoom) force dirty
     # Don't remove a dirty from a previous unrendered zoom
     if {$mod} {set opt($id,1,mod) 1}
+    
+	set atlist [split $opt($id,1,at) ","]
+	set x1 [lindex $atlist 0]
+	set y1 [expr 100 - [lindex $atlist 1]]
+	
+	set placement "$y1,[expr $y1+$opt($id,1,height)],$x1,[expr $x1+$opt($id,1,width)]"
 
     if { $opt($id,1,map) == "" } { return } 
     set cmd "d.legend map=$opt($id,1,map) color=$opt($id,1,color) \
             lines=$opt($id,1,lines) thin=$opt($id,1,thin) \
-            labelnum=$opt($id,1,labelnum) at=$opt($id,1,at)"
+            labelnum=$opt($id,1,labelnum) at=$placement"
 
     # use cats
     if { $opt($id,1,use) != "" } { 
@@ -322,7 +366,7 @@ proc GmLegend::display { node mod } {
     if { $opt($id,1,flip) != 0 } { 
         append cmd " -f"
     }
-
+    
 	# Decide whether to run, run command, and copy files to temp
 	GmCommonLayer::display_command [namespace current] $id $cmd
 }
@@ -372,8 +416,8 @@ proc GmLegend::duplicate { tree parent node id } {
 
 	set opt($count,1,opacity) $opt($id,1,opacity)
 
-	set optlist { _check map color lines thin labelnum at use range \
-             nolbl noval skip smooth flip}
+	set optlist { _check map opacity color lines thin labelnum at height width \
+             mouseset use range nolbl noval skip smooth flip}
              
     foreach key $optlist {
     	set opt($count,1,$key) $opt($id,1,$key)
