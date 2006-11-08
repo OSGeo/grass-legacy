@@ -367,7 +367,7 @@ proc MapToolBar::savefile { type quality } {
 
 	set outfile($mon) $MapCanvas::outfile($mon)
 
-	if { [info exists HOME] } {
+	if { [info exists env(HOME)] } {
 		set dir $env(HOME)
 		set path [tk_getSaveFile -initialdir $dir \
 			-title "Save file: do not add extension to file name"]
