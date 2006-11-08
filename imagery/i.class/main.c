@@ -16,6 +16,10 @@ int main (int argc, char *argv[])
   char name[GNAME_MAX], mapset[GMAPSET_MAX];
   struct Cell_head cellhd;
   struct GModule *module;
+  struct Option *bg_map;
+
+    /* must run in a term window */
+    G_putenv("GRASS_UI_TERM","1");
 
   /* Initialize the gis library */
   G_gisinit(argv[0]);
@@ -28,6 +32,16 @@ int main (int argc, char *argv[])
 	"interest. The resulting signature file can be used as "
 	"input for i.maxlik or as a seed signature file for "
 	"i.cluster.");
+
+    bg_map = G_define_standard_option(G_OPT_R_MAP);
+    bg_map->description =
+        _("Name of raster map to be displayed");
+
+    if (G_parser(argc, argv) < 0)
+	exit(EXIT_FAILURE);
+
+    strncpy(name, bg_map->answer, GNAME_MAX);
+    name[GNAME_MAX-1] = '\0'; /* strncpy() doesn't null terminate if maxfill */
 
   /* must have a graphics terminal selected */
   if (R_open_driver() != 0)
@@ -61,10 +75,7 @@ int main (int argc, char *argv[])
   /* put out a title */
   display_title(VIEW_MAP1);
 
-  /* ask the user for the cell map to be displayed */
-  if (G_ask_cell_old("Enter the name of the cell map to be displayed",
-		     name) == NULL)
-    exit(0);
+
   strcpy(mapset, G_find_cell(name, ""));
   if(G_get_cellhd(name, mapset, &cellhd)!=0)
     G_fatal_error(_("Did not find input cell map.")); 
