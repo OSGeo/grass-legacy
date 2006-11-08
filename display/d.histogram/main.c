@@ -176,8 +176,7 @@ int main (int argc, char **argv)
 	if (R_open_driver() != 0)
 	    G_fatal_error(_("No graphics device selected"));
 
-	Dclearscreen();
-	D_setup(0);
+	D_setup(1); /* 1 = clear frame */
 	D_set_colors(&pcolors);
 
 	/* draw a title for */
