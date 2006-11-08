@@ -120,6 +120,13 @@ proc GmToolBar1::create { tb } {
         -highlightbackground $bgcolor -activebackground $bgcolor \
         -helptext [G_msg "Add raster labels layer (using v.labels file)"]
 
+    # add text
+    $bbox3 add -image [image create photo -file "$iconpath/module-d.text.gif"] \
+        -command "GmTree::add dtext" \
+        -highlightthickness 0 -takefocus 0 -relief link -borderwidth 1  \
+        -highlightbackground $bgcolor -activebackground $bgcolor \
+        -helptext [G_msg "Add text layer"]
+
     # add TclTk labels
     $bbox3 add -image [image create photo -file "$iconpath/gui-maplabels.gif"] \
         -command "GmTree::add clabels" \
@@ -127,12 +134,12 @@ proc GmToolBar1::create { tb } {
         -highlightbackground $bgcolor -activebackground $bgcolor \
         -helptext [G_msg "Add postscript labels layer (using v.labels file)"]
 
-    # add text
+    # add postscript text
     $bbox3 add -image [image create photo -file "$iconpath/gui-maptext.gif"] \
         -command "GmTree::add ctext" \
         -highlightthickness 0 -takefocus 0 -relief link -borderwidth 1  \
         -highlightbackground $bgcolor -activebackground $bgcolor \
-        -helptext [G_msg "Add posttscript text layer"]
+        -helptext [G_msg "Add postscript text layer"]
 
     pack $bbox3 -side left -anchor w
 
