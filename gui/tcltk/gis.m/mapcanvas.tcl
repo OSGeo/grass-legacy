@@ -567,7 +567,6 @@ proc MapCanvas::runprograms { mon mod } {
 	set env(GRASS_RENDER_IMMEDIATE) "TRUE"
 
 	# Setting the font really only needs to be done once per display start
-	runcmd "d.font romans"
 	incr drawprog
 	GmGroup::display "root" $mod
 	unset env(GRASS_RENDER_IMMEDIATE)
@@ -887,42 +886,55 @@ proc MapCanvas::pointer { mon } {
 	variable b1east
 	variable b1north 
 	global coords($mon)
+	global pctentry
+	global pixelentry
+	global geogentry
 	global geoentry
-	global objentry
-	global xentry
-	global yentry
+	global llvert llhoriz
 	
-	set objentry ""
-	set xentry ""
-	set yentry ""
+	set pctentry ""
+	set pixelentry ""
+	set geogentry ""
 
 	bind $can($mon) <ButtonPress-1> {
 		global b1coords mon
-		global screenpct objentry
+		global screenpct pctentry pixelentry geoentry geogentry llvert llhoriz
 		set b1east	[MapCanvas::scrx2mape $mon %x]
 		set b1north [MapCanvas::scry2mapn $mon %y]
 		set b1coords "$b1east $b1north"
+		# grab coordinates at mouse click for georectification
 		if { [info exists geoentry] } {
 			$geoentry insert 0 $b1coords
 		}
-		
-		set w [winfo width .mapcan($mon).mf.frame.mapcanvas]
-		set h [winfo height .mapcan($mon).mf.frame.mapcanvas]
+		# grab coordinates at mouse click for decorations in displays
+		set mapdisp .mapcan($mon).mf.frame.mapcanvas
+		set w [winfo width $mapdisp]
+		set h [winfo height $mapdisp]
 		set xpct [expr int(100 * %x/$w)]
 		set ypct [expr int(100 * %y/$h)]
 		# insert x and y coordinate pair into entry widget as percents
-		if { $objentry != "" } {
-			$objentry delete 0 end
-			$objentry insert 0 "$xpct,$ypct"
+		if { $pctentry != "" } {
+			$pctentry delete 0 end
+			$pctentry insert 0 "$xpct,$ypct"
+			# object placement marker
+			$mapdisp create line %x [expr %y+5] %x [expr %y-5] -width 2
+			$mapdisp create line [expr %x-5] %y [expr %x+5] %y -width 2
 		}
-		#insert x and y coordinates into separate entry widgets as pixel values
-		if { $xentry != "" } {
-			$xentry delete 0 end
-			$xentry insert 0 %x
+		#insert x and y coordinate pair into entry as pixel values
+		if { $pixelentry != "" } {
+			$pixelentry delete 0 end
+			$pixelentry insert 0 "%x,%y"
+			# object placement marker
+			$mapdisp create line %x [expr %y+5] %x [expr %y-5] -width 2
+			$mapdisp create line [expr %x-5] %y [expr %x+5] %y -width 2
 		}
-		if { $yentry != "" } {
-			$yentry delete 0 end
-			$yentry insert 0 %y
+		#insert x and y coordinate pair into entry as geographic values
+		if { $geogentry != "" } {
+			$geogentry delete 0 end
+			$geogentry insert 0 "$b1east,$b1north"
+			# object placement marker
+			$mapdisp create line %x [expr %y+5] %x [expr %y-5] -width 2
+			$mapdisp create line [expr %x-5] %y [expr %x+5] %y -width 2
 		}
 	}
 	
