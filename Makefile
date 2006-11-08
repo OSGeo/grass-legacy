@@ -31,6 +31,10 @@ INST_DIR=		${prefix}/grass-${GRASS_VERSION_MAJOR}.${GRASS_VERSION_MINOR}.${GRASS
 MAKE_DIR_CMD=		mkdir -p -m 755
 INSTALL=    	    	cp
 
+# Extra commands
+HTML2PDF=		htmldoc --footer d.1
+GRASS_PDFDIR=		$(GISBASE)/docs/pdf
+
 
 SUBDIRS = \
 	lib \
@@ -354,6 +358,27 @@ pdfdocs:
 	(cd rfc/ ; $(MAKE) cleandocs ; $(MAKE) pdfdocs)
 	(cd swig/; $(MAKE) cleandocs ; $(MAKE) pdfdocs)
 	@echo "Written PDF docs in: lib/db/latex/, lib/g3d/latex/, lib/gis/latex/, lib/gmath/latex/ lib/ogsf/latex/, lib/proj//latex/, lib/segment/latex/, lib/vector/latex/ lib/vector/dglib/latex/ rfc/latex/ swig/latex/"
+
+html2pdfdoc:
+	@ echo "Light PDF document from modules' HTML documentation"
+	@ # http://www.htmldoc.org
+	@test -d $(GRASS_PDFDIR) || mkdir -p $(GRASS_PDFDIR)
+	(cd ${ARCH_DISTDIR}/docs/html ; $(HTML2PDF) --webpage --referer "http://grass.itc.it" --no-links database.html display.html general.html imagery.html misc.html photo.html postscript.html raster.html raster3D.html vector.html -f $(GRASS_PDFDIR)/grass${GRASS_VERSION_MAJOR}${GRASS_VERSION_MINOR}commands.pdf)
+
+html2pdfdoccomplete:
+	@ echo "Complete PDF document from modules' HTML documentation"
+	@ # http://www.htmldoc.org
+	@test -d $(GRASS_PDFDIR) || mkdir -p $(GRASS_PDFDIR)
+	(cd ${ARCH_DISTDIR}/docs/html ; $(HTML2PDF) --webpage database.html db.*.html -f $(GRASS_PDFDIR)/grass${GRASS_VERSION_MAJOR}${GRASS_VERSION_MINOR}database.pdf)
+	(cd ${ARCH_DISTDIR}/docs/html ; $(HTML2PDF) --webpage display.html d.*.html -f $(GRASS_PDFDIR)/grass${GRASS_VERSION_MAJOR}${GRASS_VERSION_MINOR}display.pdf)
+	(cd ${ARCH_DISTDIR}/docs/html ; $(HTML2PDF) --webpage general.html g.*.html -f $(GRASS_PDFDIR)/grass${GRASS_VERSION_MAJOR}${GRASS_VERSION_MINOR}general.pdf)
+	(cd ${ARCH_DISTDIR}/docs/html ; $(HTML2PDF) --webpage imagery.html i.*.html -f $(GRASS_PDFDIR)/grass${GRASS_VERSION_MAJOR}${GRASS_VERSION_MINOR}imagery.pdf)
+	(cd ${ARCH_DISTDIR}/docs/html ; $(HTML2PDF) --webpage misc.html m.*.html -f $(GRASS_PDFDIR)/grass${GRASS_VERSION_MAJOR}${GRASS_VERSION_MINOR}misc.pdf)
+	(cd ${ARCH_DISTDIR}/docs/html ; $(HTML2PDF) --webpage photo.html i.ortho*.html photo*.html -f $(GRASS_PDFDIR)/grass${GRASS_VERSION_MAJOR}${GRASS_VERSION_MINOR}photo.pdf)
+	(cd ${ARCH_DISTDIR}/docs/html ; $(HTML2PDF) --webpage postscript.html ps.*.html -f $(GRASS_PDFDIR)/grass${GRASS_VERSION_MAJOR}${GRASS_VERSION_MINOR}postscript.pdf)
+	(cd ${ARCH_DISTDIR}/docs/html ; $(HTML2PDF) --webpage raster.html r.*.html -f $(GRASS_PDFDIR)/grass${GRASS_VERSION_MAJOR}${GRASS_VERSION_MINOR}raster.pdf)
+	(cd ${ARCH_DISTDIR}/docs/html ; $(HTML2PDF) --webpage raster3D.html r3.*.html -f $(GRASS_PDFDIR)/grass${GRASS_VERSION_MAJOR}${GRASS_VERSION_MINOR}raster3d.pdf)
+	(cd ${ARCH_DISTDIR}/docs/html ; $(HTML2PDF) --webpage vector.html v*.html -f $(GRASS_PDFDIR)/grass${GRASS_VERSION_MAJOR}${GRASS_VERSION_MINOR}vector.pdf)
 
 changelog:
 	@ echo "creating ChangeLog file..."

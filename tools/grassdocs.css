@@ -16,28 +16,28 @@ BODY{	background: white;
 }
 
 H1{	background-color: white;
-	color: rgb(25%, 60%, 25%);
+	color: #409940;
 	font-family: sans-serif;
 	font-weight: bold;
 	font-size: x-large;
 }
 
 H2{	background-color: white;
-	color: rgb(25%, 60%, 25%);
+	color: #409940;
 	font-family: sans-serif;
 	font-weight: bold;
 	font-size: large;
 }
 
 H3{	background-color: white;
-	color: rgb(25%, 60%, 25%);
+	color: #409940;
 	font-family: sans-serif;
 	font-weight: bold;
 	font-size: large;
 }
 
 H4{	background-color: white;
-	color: rgb(25%, 60%, 25%);
+	color: #409940;
 	font-family: sans-serif;
 	font-weight: bold;
 	font-size: medium;
@@ -45,7 +45,7 @@ H4{	background-color: white;
 
 DIV.code{	width: 95%;
 		color : black;
-		background-color: rgb(90%, 90%, 90%);
+		background-color: #E5E5E5;
 		padding-left: 1em;
 		padding-right: 1em;
 }
