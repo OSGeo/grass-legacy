@@ -969,8 +969,8 @@ proc MapCanvas::currentzoom { mon } {
 		# Calculate the resolutions proportional to the map size
 		set explore_nsres [expr {1.0 * ($n - $s) / $canvas_h($mon)}]
 		set explore_ewres [expr {1.0 * ($e - $w) / $canvas_w($mon)}]
-		set explore_rows [expr round(abs($n-$s)/$nsres)]
-		set explore_cols [expr round(abs($e-$w)/$ewres)]
+		set explore_rows [expr round(abs($n-$s)/$explore_nsres)]
+		set explore_cols [expr round(abs($e-$w)/$explore_ewres)]
 		lappend expanded_region $explore_nsres $explore_ewres $explore_rows $explore_cols
 		set region $expanded_region
 	}
