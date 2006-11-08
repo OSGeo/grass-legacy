@@ -36,12 +36,18 @@ set gisdbase [exec g.gisenv get=GISDBASE]
 set location_name [exec g.gisenv get=LOCATION_NAME]
 set mapset [exec g.gisenv get=MAPSET]
 
-
+# path to GIS Manager files
 set gmpath $env(GISBASE)/etc/gm
+
+# path to icons for GIS Manager
 set iconpath $env(GISBASE)/etc/gui/icons
+
+# path to X11 TrueType fonts
+set xfontdir "/usr/X11R6/lib/X11/fonts/TTF/"
 
 global iconpath
 global gmpath
+global xfontdir
 
 set keycontrol "Control"
 set tmenu "1"
