@@ -366,14 +366,14 @@ static int add_color_rule (void *pt1, int r1, int g1, int b1, void *pt2, int r2,
 	    next = rule->next; /* has to be done here, not in for stmt */
 	    if (min <= rule->low.value && max >= rule->high.value)
 	    {
-		if (rule->prev->next = next) /* remove from the list */
+		if ((rule->prev->next = next)) /* remove from the list */
 		    next->prev = rule->prev;
 		G_free(rule);
                 cp->n_rules--;
 	    }
 	}
 
-    /* free lookup array, if allocated */
+        /* free lookup array, if allocated */
 	G__color_free_lookup(cp);
 	G__color_free_fp_lookup(cp);
     }

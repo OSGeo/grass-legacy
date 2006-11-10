@@ -1,5 +1,7 @@
 #include <grass/gis.h>
 #include <string.h>
+
+
 /* puts commas into numbers:
 	1234567    becomes 1,234,567
 	1234567.89 becomes 1,234,567.89
@@ -7,8 +9,7 @@
 	1234       stays   1234
 * doesn't work well with negative numbers (yet)
 */
-int G_insert_commas(
-    char *buf)
+int G_insert_commas(char *buf)
 {
     char number[100];
     int i,len;
@@ -23,12 +24,13 @@ int G_insert_commas(
 	return 1;
  
     i = 0;
-    if (comma = len%3)
+    if ((comma = len%3))
     {
 	while (i < comma)
 	    *buf++ = number[i++];
 	*buf++ = ',';
     }
+
     for (comma = 0; number[i]; comma++)
     {
 	if (number[i] == '.')
@@ -50,10 +52,7 @@ int G_insert_commas(
 	12,345      becomes 12345
 	1234       stays   1234
 */
-#include <string.h>
-
-int G_remove_commas(
-    char *buf)
+int G_remove_commas(char *buf)
 {
     char *b;
 

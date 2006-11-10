@@ -65,10 +65,8 @@ int G__make_mapset_element (char *p_element)
 	    }
 	    if (access (path, 0) != 0)
 	    {
-		char err[1024];
-		sprintf (err, _("can't make mapset element %s (%s)"), p_element, path);
-		G_fatal_error (err);
-		exit(1);
+		G_fatal_error (_("can't make mapset element %s (%s)"), p_element, path);
+		exit(EXIT_FAILURE);
 	    }
 	    if (*element == 0)
 		return 1;

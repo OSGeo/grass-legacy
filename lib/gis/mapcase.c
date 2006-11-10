@@ -3,8 +3,6 @@
  * Map uppercase A-Z to lower case a-z
  *
  */
-static int toupper(char);
-static int tolower(char);
 
 
 /*!
@@ -22,20 +20,17 @@ char *
 G_tolcase  (char *string)
 
 {
-    register char *p;
+    char *p;
 
-    for (p = string; *p; p++)
-	*p = tolower (*p);
+    for (p = string; *p; p++) {
+        /* convert to lower case */
+        if (*p >= 'A' && *p <= 'Z')
+            *p -= 'A' - 'a';
+    }
 
     return (string);
 }
 
-static int tolower(char c)
-{
-    if (c >= 'A' && c <= 'Z')
-	c -= 'A' - 'a';
-    return c;
-}
 
 /*
  * Map lowercase a-z to uppercase A-Z
@@ -57,17 +52,13 @@ char *
 G_toucase  (char *string)
 
 {
-    register char *p;
+    char *p;
 
-    for (p = string; *p; p++)
-	*p = toupper (*p);
+    for (p = string; *p; p++) {
+        /* convert to upper case */
+        if (*p >= 'A' && *p <= 'z')
+            *p += 'A' - 'a';
+    }
 
     return (string);
-}
-
-static int toupper(char c)
-{
-    if (c >= 'a' && c <= 'z')
-	c += 'A' - 'a';
-    return c;
 }
