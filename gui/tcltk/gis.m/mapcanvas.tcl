@@ -593,7 +593,7 @@ proc MapCanvas::composite {mon } {
 		cd $tmpdir
 		
 		incr drawprog
-		run_panel "g.pnmcomp in=$complist($mon) mask=$masklist($mon) opacity=$opclist($mon) background=255:255:255 width=$driver_w($mon) height=$driver_h($mon) out=$outfile($mon)"
+		run_panel "g.pnmcomp in=$complist($mon) mask=$masklist($mon) opacity=$opclist($mon) background=255:255:255 width=$driver_w($mon) height=$driver_h($mon) output=$outfile($mon)"
 
 		image create photo mapimg.$mon -file "$outfile($mon)"
 		incr drawprog
