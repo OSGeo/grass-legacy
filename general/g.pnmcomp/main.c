@@ -16,6 +16,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <stdarg.h>
+#include <string.h>
 #include <grass/gis.h>
 #include <grass/glocale.h>
 
@@ -23,6 +24,7 @@ static int width, height;
 static char *in_buf;
 static char *mask_buf;
 static char *out_buf;
+static char *out_mask_buf;
 
 static void
 erase(char *buf, const char *color)
@@ -33,7 +35,7 @@ erase(char *buf, const char *color)
 	int row, col, i;
 
 	if (sscanf(color, "%d:%d:%d", &r, &g, &b) != 3)
-		G_fatal_error("Invalid color: %s", color);
+		G_fatal_error(_("Invalid color: %s"), color);
 
 	bg[0] = (unsigned char) r;
 	bg[1] = (unsigned char) g;
@@ -51,7 +53,7 @@ read_line(char *buf, int size, FILE *fp)
 	for (;;)
 	{
 		if (!fgets(buf, size, fp))
-			G_fatal_error("Error reading PPM file.");
+			G_fatal_error(_("Error reading PPM file"));
 
 		if (buf[0] != '#')
 			return 0;
@@ -67,12 +69,12 @@ read_header(FILE *fp, char *magic, int *maxval)
 	read_line(buf, sizeof(buf), fp);
 
 	if (sscanf(buf, "P%c", magic) != 1)
-		G_fatal_error("Invalid PPM file.");
+		G_fatal_error(_("Invalid PPM file"));
 
 	read_line(buf, sizeof(buf), fp);
 
 	if (sscanf(buf, "%d %d", &ncols, &nrows) != 2)
-		G_fatal_error("Invalid PPM file.");
+		G_fatal_error(_("Invalid PPM file"));
 
 	if (ncols != width || nrows != height)
 		G_fatal_error(
@@ -82,7 +84,7 @@ read_header(FILE *fp, char *magic, int *maxval)
 	read_line(buf, sizeof(buf), fp);
 
 	if (sscanf(buf, "%d", maxval) != 1)
-		G_fatal_error("Invalid PPM file.");
+		G_fatal_error(_("Invalid PPM file"));
 }
 
 static void
@@ -96,7 +98,7 @@ read_pnm(const char *filename, char *buf, int components)
 
 	fp = fopen(filename, "rb");
 	if (!fp)
-		G_fatal_error("File '%s' not found", filename);
+		G_fatal_error(_("File '%s' not found"), filename);
 
 	read_header(fp, &magic, &maxval);
 
@@ -105,15 +107,15 @@ read_pnm(const char *filename, char *buf, int components)
 	case '2':
 	case '5':
 		if (components == 3)
-			G_fatal_error("Expecting PPM but got PGM");
+			G_fatal_error(_("Expecting PPM but got PGM"));
 		break;
 	case '3':
 	case '6':
 		if (components == 1)
-			G_fatal_error("Expecting PGM but got PPM");
+			G_fatal_error(_("Expecting PGM but got PPM"));
 		break;
 	default:
-		G_fatal_error("Invalid magic number: 'P%c'.", magic);
+		G_fatal_error(_("Invalid magic number: 'P%c'"), magic);
 		break;
 	}
 
@@ -129,7 +131,7 @@ read_pnm(const char *filename, char *buf, int components)
 				int y;
 
 				if (fscanf(fp, "%d", &y) != 1)
-					G_fatal_error("Invalid PGM file.");
+					G_fatal_error(_("Invalid PGM file"));
 				*p++ = (unsigned char) y;
 			}
 			break;
@@ -139,7 +141,7 @@ read_pnm(const char *filename, char *buf, int components)
 				int r, g, b;
 
 				if (fscanf(fp, "%d %d %d", &r, &g, &b) != 3)
-					G_fatal_error("Invalid PPM file.");
+					G_fatal_error(_("Invalid PPM file"));
 				*p++ = (unsigned char) r;
 				*p++ = (unsigned char) g;
 				*p++ = (unsigned char) b;
@@ -147,12 +149,12 @@ read_pnm(const char *filename, char *buf, int components)
 			break;
 		case '5':
 			if (fread(p, 1, width, fp) != width)
-				G_fatal_error("Invalid PGM file.");
+				G_fatal_error(_("Invalid PGM file"));
 			p += width;
 			break;
 		case '6':
 			if (fread(p, 3, width, fp) != width)
-				G_fatal_error("Invalid PPM file.");
+				G_fatal_error(_("Invalid PPM file"));
 			p += 3 * width;
 			break;
 		}
@@ -178,6 +180,7 @@ overlay(void)
 	const unsigned char *p = in_buf;
 	const unsigned char *q = mask_buf;
 	unsigned char *r = out_buf;
+	unsigned char *s = out_mask_buf;
 	int row, col, i;
 
 	for (row = 0; row < height; row++)
@@ -191,11 +194,13 @@ overlay(void)
 			case 0:
 				p += 3;
 				r += 3;
+				s++;
 				break;
 			case 255:
 				*r++ = *p++;
 				*r++ = *p++;
 				*r++ = *p++;
+				*s++ = 255;
 				break;
 			default:
 				for (i = 0; i < 3; i++)
@@ -204,6 +209,8 @@ overlay(void)
 					p++;
 					r++;
 				}
+				*s = (*s * c0 + 255 * c1) / 255;
+				s++;
 				break;
 			}
 		}
@@ -215,6 +222,7 @@ overlay_alpha(float alpha)
 	const unsigned char *p = in_buf;
 	const unsigned char *q = mask_buf;
 	unsigned char *r = out_buf;
+	unsigned char *s = out_mask_buf;
 	int row, col, i;
 
 	for (row = 0; row < height; row++)
@@ -228,6 +236,7 @@ overlay_alpha(float alpha)
 			{
 				p += 3;
 				r += 3;
+				s++;
 				continue;
 			}
 
@@ -237,6 +246,8 @@ overlay_alpha(float alpha)
 				p++;
 				r++;
 			}
+			*s = (*s * c0 + 255 * c1) / 255;
+			s++;
 		}
 }
 
@@ -248,12 +259,30 @@ write_ppm(const char *filename, const char *buf)
 
 	fp = fopen(filename, "wb");
 	if (!fp)
-		G_fatal_error("Unable to open file '%s'", filename);
+		G_fatal_error(_("Unable to open file '%s'"), filename);
 
 	fprintf(fp, "P6\n%d %d\n255\n", width, height);
 
 	if (fwrite(p, 3 * width, height, fp) != height)
-		G_fatal_error("Error writing PPM file.");
+		G_fatal_error(_("Error writing PPM file"));
+
+	fclose(fp);
+}
+
+static void
+write_pgm(const char *filename, const char *buf)
+{
+	const unsigned char *p = buf;
+	FILE *fp;
+
+	fp = fopen(filename, "wb");
+	if (!fp)
+		G_fatal_error(_("Unable to open file '%s'"), filename);
+
+	fprintf(fp, "P5\n%d %d\n255\n", width, height);
+
+	if (fwrite(p, width, height, fp) != height)
+		G_fatal_error(_("Error writing PGM file"));
 
 	fclose(fp);
 }
@@ -263,7 +292,7 @@ main(int argc, char *argv[])
 {
 	struct GModule *module;
 	struct {
-		struct Option *in, *mask, *alpha, *out, *width, *height, *bg;
+		struct Option *in, *mask, *alpha, *out, *width, *height, *bg, *outmask;
 	} opt;
 	int i;
 
@@ -271,50 +300,60 @@ main(int argc, char *argv[])
 
 	module = G_define_module();
 	module->keywords = _("general");
-    module->description =
-		"Overlays multiple PPM image files.";
+	module->description =
+		"Overlays multiple PPM image files";
 
 	opt.in = G_define_option();
 	opt.in->key		= "input";
 	opt.in->type		= TYPE_STRING;
 	opt.in->required	= YES;
 	opt.in->multiple	= YES;
-	opt.in->description	= "Names of input files.";
+	opt.in->description	= _("Names of input files");
+	opt.in->gisprompt	= "old,cell,raster";
 
 	opt.mask = G_define_option();
 	opt.mask->key		= "mask";
 	opt.mask->type		= TYPE_STRING;
 	opt.mask->multiple	= YES;
-	opt.mask->description	= "Names of mask files.";
+	opt.mask->description	= _("Names of mask files");
+	opt.mask->gisprompt	= "old,cell,raster";
 
 	opt.alpha = G_define_option();
 	opt.alpha->key		= "opacity";
 	opt.alpha->type		= TYPE_DOUBLE;
 	opt.alpha->multiple	= YES;
-	opt.alpha->description	= "Layer opacities.";
+	opt.alpha->description	= _("Layer opacities");
 
 	opt.out = G_define_option();
 	opt.out->key		= "output";
 	opt.out->type		= TYPE_STRING;
 	opt.out->required	= YES;
-	opt.out->description	= "Name of output file.";
+	opt.out->description	= _("Name of output file");
+	opt.out->gisprompt	= "new,cell,raster";
+
+	opt.outmask = G_define_option();
+	opt.outmask->key	= "outmask";
+	opt.outmask->type	= TYPE_STRING;
+	opt.outmask->required	= NO;
+	opt.outmask->description = _("Name of output mask file");
+	opt.outmask->gisprompt	= "new,cell,raster";
 
 	opt.width = G_define_option();
 	opt.width->key		= "width";
 	opt.width->type		= TYPE_INTEGER;
 	opt.width->required	= YES;
-	opt.width->description	= "Image width.";
+	opt.width->description	= _("Image width");
 
 	opt.height = G_define_option();
 	opt.height->key		= "height";
 	opt.height->type	= TYPE_INTEGER;
 	opt.height->required	= YES;
-	opt.height->description	= "Image height.";
+	opt.height->description	= _("Image height");
 
 	opt.bg = G_define_option();
 	opt.bg->key		= "background";
 	opt.bg->type		= TYPE_STRING;
-	opt.bg->description	= "Background color.";
+	opt.bg->description	= _("Background color");
 
 	if (G_parser(argc, argv) < 0)
 		return 1;
@@ -325,9 +364,12 @@ main(int argc, char *argv[])
 	in_buf = G_malloc(width * height * 3);
 	mask_buf = G_malloc(width * height);
 	out_buf = G_malloc(width * height * 3);
+	out_mask_buf = G_malloc(width * height);
 
 	if (opt.bg->answer)
 		erase(out_buf, opt.bg->answer);
+
+	memset(out_mask_buf, 0, width * height);
 
 	for (i = 0; opt.in->answers[i]; i++)
 	{
@@ -356,10 +398,15 @@ main(int argc, char *argv[])
 				overlay();
 		}
 		else
+		{
 			read_pnm(infile, out_buf, 3);
+			memset(out_mask_buf, 255, width * height);
+		}
 	}
 
 	write_ppm(opt.out->answer, out_buf);
+	if (opt.outmask->answer)
+		write_pgm(opt.outmask->answer, out_mask_buf);
 
 	return 0;
 }
