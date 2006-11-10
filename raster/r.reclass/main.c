@@ -1,9 +1,9 @@
 #include <stdlib.h>
 #include <unistd.h>
 #include <string.h>
-#include "rule.h"
 #include <grass/gis.h>
 #include <grass/glocale.h>
+#include "rule.h"
 
 int main (int argc, char *argv[])
 {
@@ -17,34 +17,28 @@ int main (int argc, char *argv[])
     int any;
     char *old_name, *old_mapset;
     char *new_name;
-	struct GModule *module;
+    struct GModule *module;
     struct
     {
 	struct Option *input, *output, *title;
     } parm;
 
+    /* any interaction must run in a term window */
+    G_putenv("GRASS_UI_TERM","1");
+
     G_gisinit (argv[0]);
 
-	module = G_define_module();
+    module = G_define_module();
     module->keywords = _("raster");
     module->description =
-		_("Creates a new map layer whose category values "
-		"are based upon the user's reclassification of categories in an "
-		"existing raster map layer.");
+	_("Creates a new map layer whose category values are based "
+	  "upon a reclassification of the categories in an existing "
+	  "raster map layer.");
 
-    parm.input = G_define_option();
-    parm.input->key = "input";
-    parm.input->required = YES;
-    parm.input->type = TYPE_STRING;
-	parm.input->gisprompt  = "old,cell,raster" ;
+    parm.input = G_define_standard_option(G_OPT_R_INPUT);
     parm.input->description =  _("Raster map to be reclassified");
 
-    parm.output = G_define_option();
-    parm.output->key = "output";
-    parm.output->required = YES;
-    parm.output->type = TYPE_STRING;
-	parm.output->gisprompt  = "new,cell,raster" ;
-    parm.output->description =  _("Name for the resulting raster map");
+    parm.output = G_define_standard_option(G_OPT_R_OUTPUT);
 
     parm.title = G_define_option();
     parm.title->key = "title";
@@ -53,29 +47,21 @@ int main (int argc, char *argv[])
     parm.title->description =  _("Title for the resulting raster map");
 
     if (G_parser(argc, argv))
-	exit(1);
+	exit(EXIT_FAILURE);
+
     old_name = parm.input->answer;
     new_name = parm.output->answer;
     title    = parm.title->answer;
 
     old_mapset = G_find_cell2 (old_name, "");
     if (old_mapset == NULL)
-    {
-	sprintf (buf, "%s - not found", old_name);
-	G_fatal_error (buf);
-	exit(1);
-    }
+	G_fatal_error(_("Raster map [%s] not found"), old_name);
+
     if (G_legal_filename(new_name) < 0)
-    {
-	sprintf (buf, "%s - illegal name", new_name);
-	G_fatal_error (buf);
-	exit(1);
-    }
-    if (strcmp(old_name,new_name)==0 && strcmp(old_mapset,G_mapset())== 0)
-    {
+	G_fatal_error(_("[%s] is an illegal file name"), new_name);
+
+    if (strcmp(old_name,new_name)==0  &&  strcmp(old_mapset,G_mapset())==0)
 	G_fatal_error ("input map can NOT be the same as output map");
-	exit(1);
-    }
 
     G_init_cats (0, "", &cats);
     fp = G_raster_map_is_fp(old_name, old_mapset);
@@ -106,8 +92,7 @@ int main (int argc, char *argv[])
 	    else
 	    {
 		strcat (buf, " - invalid reclass rule");
-		G_fatal_error (buf);
-		exit(1);
+		G_fatal_error(buf);
 	    }
 	    break;
 
@@ -120,13 +105,12 @@ int main (int argc, char *argv[])
     if (!any)
     {
 	if (isatty(0))
-	    fprintf (stderr, "no rules specified. %s not created\n", new_name);
+	    G_fatal_error("no rules specified. [%s] not created", new_name);
 	else
-	    G_fatal_error ("no rules specified");
-	exit(1);
+	    G_fatal_error("no rules specified");
     }
 
     reclass (old_name, old_mapset, new_name, rules, &cats, title);
 
-    exit(0);
+    exit(EXIT_SUCCESS);
 }
