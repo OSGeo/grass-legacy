@@ -68,7 +68,8 @@ int G_gets (char *buf)
   		return 1;
   	if (ctrlz)
   		return 0;
-  	exit(1);
+
+  	exit(EXIT_SUCCESS);
   }
   
 static void catch_ctrlz (int n)

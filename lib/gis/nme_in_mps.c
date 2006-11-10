@@ -78,7 +78,7 @@ int G__name_is_fully_qualified (
   char command[1024];
   G_gisinit(argv[0]);
   mapset = G_ask_cell_old ("", name, "");
-  if (mapset = = NULL) exit(0);
+  if (mapset = = NULL) exit(EXIT_SUCCESS);
   fqn = G_fully_qualified_name (name, mapset);
   sprintf (command, "d.rast map='%s'", fqn);
   system(command);

@@ -37,12 +37,12 @@ int G_gisinit(const char *pgm)
     case 0:
 	    sprintf(msg,_("MAPSET %s - permission denied"), mapset);
 	    G_fatal_error (msg);
-	    exit(-1);
+	    exit(EXIT_FAILURE);
 	    break;
     default:
 	    sprintf(msg,_("MAPSET %s not found"), mapset);
 	    G_fatal_error (msg);
-	    exit(-1);
+	    exit(EXIT_FAILURE);
 	    break;
     }
 
@@ -66,20 +66,18 @@ int G__check_gisinit(void)
     if (initialized) return 1;
     fprintf (stderr, _("\7ERROR: System not initialized. Programmer forgot to call G_gisinit()\n"));
     G_sleep(3);
-    exit(-1);
+    exit(EXIT_FAILURE);
 }
 
 static int gisinit(void)
 {
-    int i ;
-
-/* Mark window as not set */
+    /* Mark window as not set */
     G__.window_set = 0 ;
 
-/* no histograms */
+    /* no histograms */
     G__.want_histogram = 0;
 
-/* Set compressed data buffer size to zero */
+    /* Set compressed data buffer size to zero */
     G__.compressed_buf_size = 0;
     G__.work_buf_size = 0;
     G__.null_buf_size = 0;
@@ -88,14 +86,14 @@ static int gisinit(void)
     /* mask buf we always want to keep allocated */
     G__reallocate_mask_buf();
 
-/* set the write type for floating maps */
+    /* set the write type for floating maps */
     G__.fp_type = FCELL_TYPE;
     G__.fp_nbytes = XDR_FLOAT_NBYTES;
 
-/* Set masking flag unknown */
+    /* Set masking flag unknown */
     G__.auto_mask = -1 ;
 
-/* set architecture dependant bit patterns for embeded null vals */
+    /* set architecture dependant bit patterns for embeded null vals */
     G__init_null_patterns();
 
     initialized = 1;

@@ -45,7 +45,7 @@ int G_verbose (void)
     if ( verbose < 0 ) {
 
         if ( (verstr = getenv ( "GRASS_VERBOSE" )) ) {
-            if (verbose = atoi ( verstr ))
+            if ((verbose = atoi ( verstr )))
                 ;
         }
         else

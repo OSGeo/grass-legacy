@@ -41,7 +41,6 @@
 int G__make_mapset( char *gisdbase_name, char *location_name, char *mapset_name )
 {
     char	path[2048];
-    int         out_stat;
     struct Cell_head default_window;
 
     /* Get location */

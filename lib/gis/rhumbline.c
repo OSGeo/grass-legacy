@@ -23,7 +23,9 @@
 static double TAN_A, TAN1, TAN2, L;
 static int parallel;
 static int adjust_lat(double *);
+#if 0
 static int adjust_lon(double *);
+#endif /* unused */
 
 int G_begin_rhumbline_equation (
     double lon1,double lat1,double lon2,double lat2)
@@ -68,6 +70,7 @@ double G_rhumbline_lat_from_lon (double lon)
     return Degrees (2 * atan(exp((lon-L)/TAN_A) * TAN1) - PI/2.0) ;
 }
 
+#if 0
 static int adjust_lon(double *lon)
 {
     while (*lon > 180.0)
@@ -77,6 +80,7 @@ static int adjust_lon(double *lon)
 
     return 0;
 }
+#endif /* unused */
 
 static int adjust_lat(double *lat)
 {

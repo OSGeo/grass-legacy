@@ -1,7 +1,9 @@
 #include <unistd.h>
 #include <stdio.h>
 #include <signal.h>
+#include <stdlib.h>
 #include <sys/types.h>
+
 
 #ifdef __MINGW32__
 #  include <io.h>
@@ -14,10 +16,12 @@
 
 #include <grass/gis.h>
 
+
 #define READ      0
 #define WRITE     1
 
 static  int     popen_pid[50];
+
 
 FILE *G_popen(
     char    *cmd,

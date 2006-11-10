@@ -128,13 +128,14 @@ int unset_priority ()
 static int swap_re_uids (void)
 {
 #ifndef __MINGW32__    
-    static int flipflop = 0;
 
 #ifdef HAVE_SETREUID
     setreuid ((int)geteuid(), (int)getuid());
 #else
 #ifdef HAVE_SETRUID
 #ifdef HAVE_SETEUID
+    static int flipflop = 0;
+
     /* should we be turning off interupts here? */
 
     /* first time thru  Effective will be 0 */

@@ -50,7 +50,7 @@ char *G_home();
 	return home;
     
     G_fatal_error (_("unable to determine user's home directory"));
-    exit(-1);
+    exit(EXIT_FAILURE);
 }
 
 char *
