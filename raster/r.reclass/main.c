@@ -61,7 +61,7 @@ int main (int argc, char *argv[])
 	G_fatal_error(_("[%s] is an illegal file name"), new_name);
 
     if (strcmp(old_name,new_name)==0  &&  strcmp(old_mapset,G_mapset())==0)
-	G_fatal_error ("input map can NOT be the same as output map");
+	G_fatal_error (_("input map can NOT be the same as output map"));
 
     G_init_cats (0, "", &cats);
     fp = G_raster_map_is_fp(old_name, old_mapset);
