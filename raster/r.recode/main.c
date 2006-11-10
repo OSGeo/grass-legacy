@@ -11,7 +11,6 @@ int
 main (int argc, char *argv[])
 {
     char *title;
-    char buf[1024];
     struct GModule *module;
     struct
     {
