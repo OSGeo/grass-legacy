@@ -208,7 +208,7 @@ or as:
     26 thru 50	 = 2    medium quality
     25		 = 3    good quality
 </PRE>
-</DT>
+</DD>
 <P>
 
 The final example was given to show how the labels are handled.  If a new
@@ -242,15 +242,12 @@ reclass map (an ASCII file found under the <EM>cellhd</EM> directory, or
 viewable by running <EM><A HREF="r.support.html">r.support</A></EM>) and then run <EM><A HREF="r.resample.html">r.resample</A></EM>.
 
 <P>
-<EM><A HREF="r.mapcalc.html">r.mapcalc</A></EM> can also be used to convert
+<EM><A HREF="r.mapcalc.html">r.mapcalc</A></EM> can be used to convert
 a reclass map to a regular raster map layer:
 
-<P>
-
-<DL>
-<DD>
-<B><A HREF="r.mapcalc.html">r.mapcalc</A> raster_map=</B>reclass_map
-</DL>
+<div class="code"><pre>
+  r.mapcalc raster_map=reclass_map
+</pre></div>
 
 
 <P>
@@ -290,4 +287,5 @@ Michael Shapiro,
 <br>
 U.S.Army Construction Engineering Research Laboratory
 
-<p><i>Last changed: $Date$</i>
+<p>
+<i>Last changed: $Date$</i>
