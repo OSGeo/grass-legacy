@@ -105,9 +105,9 @@ int main (int argc, char *argv[])
     if (!any)
     {
 	if (isatty(0))
-	    G_fatal_error("no rules specified. [%s] not created", new_name);
+	    G_fatal_error(_("no rules specified. [%s] not created"), new_name);
 	else
-	    G_fatal_error("no rules specified");
+	    G_fatal_error(_("no rules specified"));
     }
 
     reclass (old_name, old_mapset, new_name, rules, &cats, title);
