@@ -82,7 +82,8 @@ int G_getl2 ( char *buf, int n, FILE *fd)
     }	
     buf[i] = '\0';
 
-    G_debug ( 4, "G_getl2: ->%s<-", buf );
+    if (G__getenv ("DEBUG"))
+	G_debug ( 4, "G_getl2: ->%s<-", buf );
 
     return ret;
 }
