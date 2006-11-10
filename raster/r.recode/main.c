@@ -3,9 +3,9 @@
 #include <stdlib.h>
 #include <string.h>
 #include <unistd.h>
-#include "global.h"
 #include <grass/gis.h>
 #include <grass/glocale.h>
+#include "global.h"
 
 int 
 main (int argc, char *argv[])
@@ -19,26 +19,19 @@ main (int argc, char *argv[])
 	struct Flag *a, *d;
     } parm;
 
+    /* any interaction must run in a term window */
+    G_putenv("GRASS_UI_TERM","1");
+
     G_gisinit (argv[0]);
 
     module = G_define_module();
     module->keywords = _("raster");
-    module->description =
-		_("Recode raster maps.");
-					        
-    parm.input = G_define_option();
-    parm.input->key = "input";
-    parm.input->required = YES;
-    parm.input->type = TYPE_STRING;
-	parm.input->gisprompt  = "old,cell,raster" ;
+    module->description = _("Recode categorical raster maps.");
+		        
+    parm.input = G_define_standard_option(G_OPT_R_INPUT);
     parm.input->description =  _("Raster map to be recoded");
 
-    parm.output = G_define_option();
-    parm.output->key = "output";
-    parm.output->required = YES;
-    parm.output->type = TYPE_STRING;
-	parm.output->gisprompt  = "new,cell,raster" ;
-    parm.output->description =  _("Name for the resulting raster map");
+    parm.output = G_define_standard_option(G_OPT_R_OUTPUT);
 
     parm.title = G_define_option();
     parm.title->key = "title";
@@ -55,39 +48,37 @@ main (int argc, char *argv[])
     parm.d->description = _("Force output to double map type (DCELL)");
 
     if (G_parser(argc, argv))
-	exit(1);
-    name = parm.input->answer;
+	exit(EXIT_FAILURE);
+
+
+    name       = parm.input->answer;
     result     = parm.output->answer;
     title      = parm.title->answer;
-    align_wind = (parm.a->answer);
-    make_dcell = (parm.d->answer);
+    align_wind = parm.a->answer;
+    make_dcell = parm.d->answer;
+
 
     mapset = G_find_cell2 (name, "");
     if (mapset == NULL)
-    {
-	sprintf (buf, "%s - not found", name);
-	G_fatal_error (buf);
-    }
+	G_fatal_error(_("Raster map [%s] not found"), name);
+
     if (G_legal_filename(result) < 0)
-    {
-	sprintf (buf, "%s - illegal name", result);
-	G_fatal_error (buf);
-    }
+	G_fatal_error(_("[%s] is an illegal file name"), result);
+
     if (strcmp(name,result)==0 && strcmp(mapset,G_mapset())== 0)
-    {
-	G_fatal_error ("input map can NOT be the same as output map");
-    }
+	G_fatal_error(_("input map can NOT be the same as output map"));
 
     if (!read_rules())
     {
 	if (isatty(0))
-	    fprintf (stderr, "no rules specified. %s not created\n", result);
+	    G_fatal_error(_("no rules specified. [%s] not created"), result);
 	else
-	    G_fatal_error ("no rules specified");
-	exit(1);
+	    G_fatal_error (_("no rules specified"));
     }
+
     no_mask = 0;
+
     do_recode();
 
-    exit(0);
+    exit(EXIT_SUCCESS);
 }
