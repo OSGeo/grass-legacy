@@ -43,7 +43,7 @@ void P_Outlier (struct Map_info *Out, struct Map_info *Outlier, struct Map_info 
 		if (FALSE == P_is_outlier (residual)){
 		    Vect_write_line (Out, GV_POINT, point, categories);
 		    Vect_cat_set (categories, 1, (int) *point->z);
-		    Vect_write_line (Qgis, GV_POINT, point, categories);
+		    if (Qgis) Vect_write_line (Qgis, GV_POINT, point, categories);
 		    }
 
 		else
@@ -101,7 +101,7 @@ void P_Outlier (struct Map_info *Out, struct Map_info *Outlier, struct Map_info 
 			if (FALSE == P_is_outlier (residual)){
 			    Vect_write_line (Out, GV_POINT, point, categories);
 			    Vect_cat_set (categories, 1, (int) *point->z);
-			    Vect_write_line (Qgis, GV_POINT, point, categories);
+			    if (Qgis) Vect_write_line (Qgis, GV_POINT, point, categories);
 			}
 		    	else 
 			    Vect_write_line (Outlier, GV_POINT, point, categories);
@@ -136,7 +136,7 @@ void P_Outlier (struct Map_info *Out, struct Map_info *Outlier, struct Map_info 
 			if (FALSE == P_is_outlier (residual)){
 			    Vect_write_line (Out, GV_POINT, point, categories);
 			    Vect_cat_set (categories, 1, (int) *point->z);
-			    Vect_write_line (Qgis, GV_POINT, point, categories);
+			    if (Qgis) Vect_write_line (Qgis, GV_POINT, point, categories);
 			}
 		    	else 
 			    Vect_write_line (Outlier, GV_POINT, point, categories);
@@ -158,7 +158,7 @@ void P_Outlier (struct Map_info *Out, struct Map_info *Outlier, struct Map_info 
 			if (FALSE == P_is_outlier (residual)){
 			    Vect_write_line (Out, GV_POINT, point, categories);
 			    Vect_cat_set (categories, 1, (int) *point->z);
-			    Vect_write_line (Qgis, GV_POINT, point, categories);
+			    if (Qgis) Vect_write_line (Qgis, GV_POINT, point, categories);
 		        }
 		    	else 
 			    Vect_write_line (Outlier, GV_POINT, point, categories);
