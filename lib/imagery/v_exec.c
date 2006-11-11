@@ -9,7 +9,8 @@
 int I_v_exec()
 {
     V_intrpt_ok();
-    if (!V_call()) exit(0);
+    if (!V_call())
+        exit(EXIT_SUCCESS);
 
     return 0;
 }
