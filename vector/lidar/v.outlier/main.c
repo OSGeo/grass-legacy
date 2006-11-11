@@ -33,10 +33,10 @@ int nsply, nsplx, first_it;
 double passoN, passoE, Thres_Outlier; 
 
 /*--------------------------------------------------------------------------------------*/
-int
+    int
 main (int argc,char *argv[])
 {
-/* Variables' declarations */
+    /* Variables' declarations */
     int dim_vect, nparameters, BW, npoints;
     double ew_resol, ns_resol, mean, lambda;
     char *dvr, *db, *mapset, table_name[1024];
@@ -49,8 +49,8 @@ main (int argc,char *argv[])
 
     /* Structs' declarations */
     struct Map_info In, Out, Outlier, Qgis;
-    struct Option *in_opt, *out_opt, *outlier_opt, *qgis_opt, *dbdriver, *dbdatabase, *passoE_opt, *passoN_opt, \
-    	*lambda_f_opt, *Thres_O_opt;
+    struct Option *in_opt, *out_opt, *outlier_opt, *qgis_opt, *passoE_opt, *passoN_opt, \
+	*lambda_f_opt, *Thres_O_opt;
     /*struct Flag *qgis_flag;*/ 
     struct GModule *module;
 
@@ -62,11 +62,11 @@ main (int argc,char *argv[])
 
     dbDriver *driver;
 
-/*------------------------------------------------------------------------------------------*/
-/* Options' declaration */
+    /*------------------------------------------------------------------------------------------*/
+    /* Options' declaration */
     module = G_define_module ();
-    module->keywords = _("vector, statistics");
-    module->description = _("Removes outliers from vector point data");
+    	module->keywords = _("vector, statistics");
+    	module->description = _("Removes outliers from vector point data");
 
     in_opt = G_define_standard_option(G_OPT_V_INPUT);
 
@@ -76,36 +76,17 @@ main (int argc,char *argv[])
     	outlier_opt->key = "outlier";
     	outlier_opt->type = TYPE_STRING;
     	outlier_opt->key_desc     = "name";
-	outlier_opt->required     = YES;
-	outlier_opt->gisprompt    = "new,vector,vector";
-	outlier_opt->description  = _("Name of output outlier vector map");
+    	outlier_opt->required     = YES;
+    	outlier_opt->gisprompt    = "new,vector,vector";
+    	outlier_opt->description  = _("Name of output outlier vector map");
 
     qgis_opt = G_define_option () ;
     	qgis_opt->key = "qgis";
     	qgis_opt->type = TYPE_STRING;
     	qgis_opt->key_desc     = "name";
-	qgis_opt->required     = NO; 
-	qgis_opt->gisprompt    = "new,vector,vector";
-	qgis_opt->description  = _("Name of vector map for visualization in qgis");
-
-    dbdatabase = G_define_option () ;
-    	dbdatabase->key        	= "database";
-    	dbdatabase->type       	= TYPE_STRING;
-    	dbdatabase->required   	= NO;
-    	dbdatabase->multiple   	= NO;
-    	dbdatabase->description	= _("database name");
-    if ( (db=G__getenv2 ("DB_DATABASE",G_VAR_MAPSET)) )
-	    dbdatabase->answer = G_store ( db );
-
-    dbdriver = G_define_option () ;
-   	dbdriver->key         = "driver" ;
-    	dbdriver->type        = TYPE_STRING;
-    	dbdriver->options     = db_list_drivers();
-    	dbdriver->required    = NO;
-    	dbdriver->multiple    = NO;
-    	dbdriver->description = _("driver name");
-    if ( (dvr = G__getenv2 ("DB_DRIVER",G_VAR_MAPSET)) )
-	    dbdriver->answer = G_store (dvr);
+    	qgis_opt->required     = NO; 
+    	qgis_opt->gisprompt    = "new,vector,vector";
+    	qgis_opt->description  = _("Name of vector map for visualization in qgis");
 
     passoE_opt = G_define_option ();
     	passoE_opt->key = "soe";
@@ -122,48 +103,50 @@ main (int argc,char *argv[])
     	passoN_opt->description = _("Interpolation spline step value in north direction");
 
     lambda_f_opt = G_define_option();
-        lambda_f_opt->key         = "lambda_i";
-        lambda_f_opt->type        = TYPE_DOUBLE;
-        lambda_f_opt->required    = NO;
-        lambda_f_opt->description = _("Thychonov regularization weigth");
-        lambda_f_opt->answer      = "0.1";
+    	lambda_f_opt->key         = "lambda_i";
+    	lambda_f_opt->type        = TYPE_DOUBLE;
+    	lambda_f_opt->required    = NO;
+    	lambda_f_opt->description = _("Thychonov regularization weigth");
+    	lambda_f_opt->answer      = "0.1";
 
     Thres_O_opt = G_define_option();
-        Thres_O_opt->key         = "thres_o";
-        Thres_O_opt->type        = TYPE_DOUBLE;
-        Thres_O_opt->required    = NO;
-        Thres_O_opt->description = _("Threshold for the outliers");
-        Thres_O_opt->answer      = "50";
-/*
-    qgis_flag = G_define_flag();
-        qgis_flag->key          = 'q';
-        qgis_flag->description  = _("QGIS vector output");
-*/
+    	Thres_O_opt->key         = "thres_o";
+    	Thres_O_opt->type        = TYPE_DOUBLE;
+    	Thres_O_opt->required    = NO;
+    	Thres_O_opt->description = _("Threshold for the outliers");
+    	Thres_O_opt->answer      = "50";
 
-/* Parsing */	
+    /* Parsing */	
     G_gisinit (argv[0]);
 
     if (G_parser (argc, argv))
 	exit (EXIT_FAILURE); 
+
+   if ( !(db=G__getenv2("DB_DATABASE",G_VAR_MAPSET)) )
+    	G_fatal_error (_("Database's name couldn't be read"));
+	
+    if ( !(dvr = G__getenv2("DB_DRIVER",G_VAR_MAPSET)) )
+	G_fatal_error (_("Driver's name couldn't be read")); 
 
     passoN = atof (passoN_opt->answer);
     passoE = atof (passoE_opt->answer);
     lambda = atof (lambda_f_opt->answer);
     Thres_Outlier = atof (Thres_O_opt->answer);
 
-/* Setting auxiliar table's name */
+    /* Setting auxiliar table's name */
     sprintf (table_name, "%s_aux", out_opt->answer);
 
-/* Checking vector names */
-   Vect_check_input_output_name ( in_opt->answer, out_opt->answer, GV_FATAL_EXIT );
+    /* Checking vector names */
+    Vect_check_input_output_name ( in_opt->answer, out_opt->answer, GV_FATAL_EXIT );
 
     if ((mapset = G_find_vector2 (in_opt->answer, "")) == NULL) {
-	 G_fatal_error ( _("It could not be find input map <%s>"), in_opt->answer);
+	G_fatal_error ( _("It could not be find input map <%s>"), in_opt->answer);
     }
 
-/* Open output vector */
-    if (0 > Vect_open_new (&Qgis, qgis_opt->answer, WITHOUT_Z))
-	G_fatal_error (_("Vector <%s> could not be open"), qgis_opt->answer);
+    /* Open output vector */
+    if (qgis_opt->answer)  
+	if (0 > Vect_open_new (&Qgis, qgis_opt->answer, WITHOUT_Z))
+	    G_fatal_error (_("Vector <%s> could not be open"), qgis_opt->answer);
 
     if (0 > Vect_open_new (&Out, out_opt->answer, WITH_Z)) {
 	Vect_close (&Qgis);
@@ -177,11 +160,11 @@ main (int argc,char *argv[])
     }
 
     Vect_set_open_level (1);
-/* Open input vector */
+    /* Open input vector */
     if (1 > Vect_open_old (&In, in_opt->answer, mapset))
-    	G_fatal_error ( _("Vector <%s> could not be open at the topological level"), in_opt->answer);
+	G_fatal_error ( _("Vector <%s> could not be open at the topological level"), in_opt->answer);
 
-/* Copy vector Head File */
+    /* Copy vector Head File */
     Vect_copy_head_data (&In, &Out);
     Vect_hist_copy (&In, &Out);
     Vect_hist_command (&Out);
@@ -190,25 +173,27 @@ main (int argc,char *argv[])
     Vect_hist_copy (&In, &Outlier);
     Vect_hist_command (&Outlier);
 
-    Vect_copy_head_data (&In, &Qgis);
-    Vect_hist_copy (&In, &Qgis);
-    Vect_hist_command (&Qgis);
+    if (qgis_opt->answer) {
+	Vect_copy_head_data (&In, &Qgis);
+	Vect_hist_copy (&In, &Qgis);
+	Vect_hist_command (&Qgis);
+    }
 
-/* Start driver and open db*/
-    driver = db_start_driver_open_database (dbdriver->answer, dbdatabase->answer);
+    /* Start driver and open db*/
+    driver = db_start_driver_open_database (dvr, db);
     if (driver == NULL) 
-	G_fatal_error (_("No database connection for driver <%s> is defined. Run db.connect"), dbdriver->answer);
+	G_fatal_error (_("No database connection for driver <%s> is defined. Run db.connect"), dvr);
 
-/* Setting regions and boxes */
+    /* Setting regions and boxes */
     G_get_set_window (&original_reg);
     G_get_set_window (&elaboration_reg);
     Vect_region_box (&elaboration_reg, &overlap_box);
     Vect_region_box (&elaboration_reg, &general_box);
 
-/* Fixxing parameters of the elaboration region */
-/*! Each original_region will be divided into several subregions. These
- *  subregion will be overlaped by its neibourgh subregions. This overlaping
- *  is calculated as OVERLAP_PASS times the east-west resolution. */
+    /* Fixxing parameters of the elaboration region */
+    /*! Each original_region will be divided into several subregions. These
+     *  subregion will be overlaped by its neibourgh subregions. This overlaping
+     *  is calculated as OVERLAP_PASS times the east-west resolution. */
 
     ew_resol = original_reg.ew_res;
     ns_resol = original_reg.ns_res;
@@ -237,13 +222,13 @@ main (int argc,char *argv[])
 	    P_set_regions (&elaboration_reg, &general_box, &overlap_box, dims, LAST_ROW);
 	    last_row = TRUE;
 	}
-	
+
 	nsply = ceil((elaboration_reg.north - elaboration_reg.south)/passoN)+1;
 	if (nsply > NSPLY_MAX) {
 	    nsply = NSPLY_MAX;
 	}
 	G_debug (1, _("nsply = %d"), nsply);
-	
+
 	elaboration_reg.east = original_reg.west;
 	last_column = FALSE;
 
@@ -259,26 +244,26 @@ main (int argc,char *argv[])
 		P_set_regions (&elaboration_reg, &general_box, &overlap_box, dims, LAST_COLUMN);
 		last_column = TRUE;
 	    }
-	    
+
 	    nsplx = ceil ((elaboration_reg.east - elaboration_reg.west)/passoE)+1;
 	    if (nsplx > NSPLX_MAX) {
-		    nsplx = NSPLX_MAX;
+		nsplx = NSPLX_MAX;
 	    }
 	    G_debug (1, _("nsplx = %d"), nsplx);
 
-	/*Setting the active region*/
+	    /*Setting the active region*/
 	    dim_vect = nsplx * nsply;
 	    observ = P_Read_Vector_Region_Map (&In, &elaboration_reg, &npoints, dim_vect);
 
 	    if (npoints > 0) {				/* If there is any point falling into elaboration_reg... */
-	        int i;
+		int i;
 
 		nparameters = nsplx * nsply;
 
-	    /* Mean's calculation */
+		/* Mean's calculation */
 		mean = P_Mean_Calc (&elaboration_reg, observ, npoints);
 
-	    /* Least Squares system */
+		/* Least Squares system */
 		G_debug (1, _("Allocation memory for bilinear interpolation"));
 		BW = P_get_BandWidth (P_BILINEAR, nsply);		/* Bilinear interpolation */
 		N = G_alloc_matrix (nparameters, BW);		/* Normal matrix */
@@ -288,7 +273,7 @@ main (int argc,char *argv[])
 		Q = G_alloc_vector (npoints);			/* "a priori" var-cov matrix */
 		lineVect = G_alloc_ivector (npoints);
 
-	    /* Setting obsVect vector & Q matrix */
+		/* Setting obsVect vector & Q matrix */
 		for (i=0; i<npoints; i++) {
 		    obsVect[i][0] = observ[i].coordX;
 		    obsVect[i][1] = observ[i].coordY;
@@ -299,7 +284,7 @@ main (int argc,char *argv[])
 
 		G_debug (1, _("Bilinear interpolation"));
 		normalDefBilin (N, TN, Q, obsVect, passoE, passoN, nsplx, nsply, elaboration_reg.west, elaboration_reg.south, \
-					npoints, nparameters, BW);
+			npoints, nparameters, BW);
 		nCorrectGrad (N, lambda, nsplx, nsply, passoE, passoN);
 		tcholSolve (N, TN, parVect, nparameters, BW);
 
@@ -313,8 +298,13 @@ main (int argc,char *argv[])
 			G_fatal_error (_("It was impossible to create <Auxiliar_outlier_table>."));
 		}
 
-		P_Outlier (&Out, &Outlier, &Qgis, elaboration_reg, general_box, overlap_box, obsVect, parVect, mean, dims.overlap, \
-				lineVect, npoints, driver);
+		if (qgis_opt->answer)
+		    P_Outlier (&Out, &Outlier, &Qgis, elaboration_reg, general_box, overlap_box, obsVect, \
+			    parVect, mean, dims.overlap, lineVect, npoints, driver);
+		else
+		    P_Outlier (&Out, &Outlier, NULL, elaboration_reg, general_box, overlap_box, obsVect, \
+			    parVect, mean, dims.overlap, lineVect, npoints, driver);
+
 
 		G_free_vector (parVect);
 		G_free_matrix (obsVect);
@@ -326,11 +316,11 @@ main (int argc,char *argv[])
 	}	/*! END WHILE; last_column = TRUE*/
     }		/*! END WHILE; last_row = TRUE*/
 
-/* Dropping auxiliar table */
+    /* Dropping auxiliar table */
     if (npoints > 0) {
-      G_debug (1, _("Dropping <%s>"), table_name);
-      if (P_Drop_Aux_Table (driver, table_name) != DB_OK)
-	 G_fatal_error(_("Auxiliar Table could not be dropped"));
+	G_debug (1, _("Dropping <%s>"), table_name);
+	if (P_Drop_Aux_Table (driver, table_name) != DB_OK)
+	    G_fatal_error(_("Auxiliar Table could not be dropped"));
     }
 
     db_close_database_shutdown_driver (driver);
@@ -338,9 +328,10 @@ main (int argc,char *argv[])
     Vect_close (&In);
     Vect_close (&Out);
     Vect_close (&Outlier);
-    
-    Vect_build (&Qgis, stdout);
-    Vect_close (&Qgis);
+    if (qgis_opt->answer) {
+	Vect_build (&Qgis, stdout);
+	Vect_close (&Qgis);
+    }
 
     G_done_msg("");
     exit(EXIT_SUCCESS);
