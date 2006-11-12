@@ -23,6 +23,9 @@ int main (int argc, char *argv[])
 	struct Option *input, *output, *title;
     } parm;
 
+    /* any interaction must run in a term window */
+    G_putenv("GRASS_UI_TERM","1");
+
     G_gisinit (argv[0]);
 
 	module = G_define_module();
