@@ -289,7 +289,7 @@ int plot1 (
 	y = Points->y;
 
         if ( (ltype & GV_POINTS) && Symb != NULL ) {
-	    /* Note: this should go to some library function */
+	  /* Note: this could/should be updated to use the new D_symbol() library function */
 	  if ((color != -1 || fcolor != -1) || rgb) {
 	    G_plot_where_xy(x[0], y[0], &x0, &y0);
 	  }  
