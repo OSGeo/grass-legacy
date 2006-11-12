@@ -97,7 +97,7 @@ for i in "$@" ; do
 	# Check if the -tcltk flag was given
 	# change -gui to wxpython as needed
 	-gui | -tcltk)
-	    GRASS_GUI="gis.m"
+	    GRASS_GUI="tcltk"
 	    shift
 	    ;;
 
