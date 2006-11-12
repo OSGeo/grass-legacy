@@ -245,7 +245,30 @@ Rewind & press the play button to preview.
 <p>
 If you output to individual frame images (e.g. PPM) you will need to do the
 encoding step on your own. See the relevant documentation that comes with
-your encoder.<br><BR>
+your encoder. For example:
+<br>
+<!-- adapted from a post by Maris N. on the grass mailing list -->
+<div class="code"><pre>
+  ###### Pick a codec ######
+  ## DivX - libavcodec MPEG 4 (DivX5)
+  OVC="-ovc lavc -lavcopts vcodec=mpeg4:vhq:vbitrate=1800"
+
+  ## XviD
+  OVC="-ovc xvid -xvidencopts bitrate=1024"
+
+  ## DivX4
+  OVC="-ovc divx4 -divx4opts q=5"
+
+  ######
+
+  ## Encode all .png files in directory to out.avi with 15 frames per second.
+  mencoder "mf://*.png" -mf fps=15 -o out.avi $OVC
+</pre></div>
+
+
+<P>
+Alternatively, NVIZ can encode to a MPEG-1 movie automatically.
+(simpler, but lower quality)<BR>
 <i>Assuming NVIZ was built with FFMPEG support for live MPEG rendering:</i>
 <BR><BR>
 Next click "Animation: [Run and Save]",
@@ -256,7 +279,7 @@ click [Ok].
 <p>
 whiz-bang-whirl.<BR>
 Done.
-
 </P>
+
 </body>
 </html>
