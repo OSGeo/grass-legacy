@@ -88,6 +88,14 @@ proc mkFlyButtons {BASE frame draw_lab draw_var1 draw_var2} {
 
 		set scales [Nget_fly_scale]
 
+		#Make sure factors are not zero 
+		if {[lindex $scales 0] == 0.0} {
+			set scales [lreplace $scales 0 0 1.0]
+		}
+		if {[lindex $scales 1] == 0.0} {
+                        set scales [lreplace $scales 1 1 1.0]
+                }
+
 		frame $fly(BUTTONS).scales -border 0 -relief flat
 			Nv_mkFloatScale $fly(BUTTONS).scales.s0 v "move
 exag" 100 1 [lindex $scales 0] fly_update_scale0 2
