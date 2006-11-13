@@ -9,6 +9,7 @@
 
 #include <stdio.h>
 #include <unistd.h>
+#include <stdlib.h>
 #include <sys/stat.h>
 #include <grass/gis.h>
 #include "G.h"
