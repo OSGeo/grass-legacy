@@ -22,10 +22,16 @@ extern int modified;
 
 extern int linewidth;
 
+extern void read_image(void);
+extern void read_ppm(void);
+extern void read_pgm(void);
+extern void read_png(void);
+
 extern void write_image(void);
 extern void write_ppm(void);
 extern void write_pgm(void);
 extern void write_png(void);
+
 extern void init_color_table(void);
 
 extern void PNG_Box_abs(int,int,int,int);

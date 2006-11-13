@@ -24,11 +24,13 @@ LIB_OBJS =	\
 	Raster_RGB.o		\
 	Raster_int.o		\
 	Respond.o		\
+	read.o			\
+	read_ppm.o		\
 	write.o			\
 	write_ppm.o		
 
 ifneq ($(USE_PNG),)
-  LIB_OBJS += write_png.o
+  LIB_OBJS += read_png.o write_png.o
 endif
 
 include $(MODULE_TOPDIR)/include/Make/Lib.make
