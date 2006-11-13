@@ -347,15 +347,16 @@ getradius:
 	  			/* get the width/length ratio */
 
 getratio:
-	   fprintf(stderr, "\n    Sampling unit SHAPE (#cols/#rows) expressed as real");
-           fprintf(stderr, " number\n    (e.g., 10 cols/5 rows = 2.0) for sampling units");
-           fprintf(stderr, " of scale %d? ", i+1);
+	fprintf(stderr, "\n    Sampling unit SHAPE (aspect ratio, #cols/#rows) "
+			"expressed as real number"
+			"\n    (e.g., 10 cols/5 rows = 2.0) for sampling units "
+			"of scale %d? ", i+1);
 
-      	   numtrap(1, &ratio);
-	   if (ratio < 0) ratio = -ratio;
-           else if (ratio > 25.0)
-              if (!G_yes("\n    Are you sure you want such a large ratio?   ",1))
-	         goto getratio;
+	numtrap(1, &ratio);
+	if (ratio < 0) ratio = -ratio;
+	else if (ratio > 25.0)
+	   if (!G_yes("\n    Are you sure you want such a large ratio?   ",1))
+		goto getratio;
 
 				/* determine the recommended maximum size
 			 	   for sampling units */
