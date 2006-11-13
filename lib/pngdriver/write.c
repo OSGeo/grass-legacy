@@ -25,7 +25,7 @@ void write_image(void)
 		write_png();
 #endif
 	else
-		G_fatal_error("Graph_Close: unknown file type: %s", p);
+		G_fatal_error("write_image: unknown file type: %s", p);
 
 	modified = 0;
 }

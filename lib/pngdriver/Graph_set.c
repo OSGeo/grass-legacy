@@ -92,6 +92,10 @@ int PNG_Graph_set(int argc, char **argv)
 
 	modified = 1;
 
+	p = getenv("GRASS_PNG_READ");
+	if (p && strcmp(p, "TRUE") == 0)
+		read_image();
+
 	return 0;
 }
 
