@@ -41,15 +41,15 @@ proc mklightsPanel { BASE } {
 	-variable Nv_(FollowView) -command follow -onvalue 1 -offvalue 0
     checkbutton $BASE.top.left.show -relief flat -text "Show Model" \
 	-variable Nv_(ShowModel)
-    Nv_mkScale $BASE.top.left.bright h Brightness 100 0 80 set_brt 2 
-    Nv_mkScale $BASE.top.left.ambient h Ambient 100 0 20 set_amb 2
+    Nv_mkScale $BASE.top.left.bright h Brightness 0 100 80 set_brt 2 
+    Nv_mkScale $BASE.top.left.ambient h Ambient 0 100 20 set_amb 2
     pack $BASE.top.left.follow $BASE.top.left.show \
         $BASE.top.left.bright $BASE.top.left.ambient \
 	-side top -fill x -expand 1
     
-    Nv_mkScale $BASE.top.right.red h Red 100 0 100 set_red 2
-    Nv_mkScale $BASE.top.right.green h Green 100 0 100 set_green 2
-    Nv_mkScale $BASE.top.right.blue h Blue 100 0 100 set_blue 2
+    Nv_mkScale $BASE.top.right.red h Red 0 100 100 set_red 2
+    Nv_mkScale $BASE.top.right.green h Green 0 100 100 set_green 2
+    Nv_mkScale $BASE.top.right.blue h Blue 0 100 100 set_blue 2
     pack $BASE.top.right.red $BASE.top.right.green $BASE.top.right.blue \
 	-side top -expand 1
     

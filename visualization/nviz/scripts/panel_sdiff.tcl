@@ -35,7 +35,7 @@ proc mksdiffPanel { BASE } {
     Nv_mksdiffSurfacelist $BASE.top.list 
     pack $BASE.top.label $BASE.top.list -side left -fill y -pady 4
     
-    Nv_mkScale $BASE.top2.sdscale h Exag 2500 0 100 set_sdexag 2 
+    Nv_mkScale $BASE.top2.sdscale h Exag 0 2500 100 set_sdexag 2 
     pack $BASE.top2.sdscale -side left -fill y -pady 4
     
 

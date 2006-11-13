@@ -135,7 +135,7 @@ proc mkcutplanePanel { BASE } {
     set ucmd "proc $update_routine \{ r \} \{ cutplaneUpdateRotation $BASE \}"
     uplevel #0 $ucmd
     frame $BASE.rotate
-    scale $BASE.rotate.scl -orient vertical -from 0 -to 360 -showvalue false \
+    scale $BASE.rotate.scl -orient vertical -from 360 -to 0 -showvalue false \
 	-activebackground gray80 -background gray90 -command $update_routine
     label $BASE.rotate.lbl -text "Rotate"
     entry $BASE.rotate.val -width 3 -relief sunken
@@ -147,7 +147,7 @@ proc mkcutplanePanel { BASE } {
     set ucmd "proc $update_routine \{ t \} \{ cutplaneUpdateTilt $BASE \}"
     uplevel #0 $ucmd
     frame $BASE.tilt
-    scale $BASE.tilt.scl -orient vertical -from 0 -to 360 -showvalue false \
+    scale $BASE.tilt.scl -orient vertical -from 360 -to 0 -showvalue false \
 	-activebackground gray80 -background gray90 -command $update_routine
     label $BASE.tilt.lbl -text "Tilt"
     entry $BASE.tilt.val -width 3 -relief sunken
