@@ -12,101 +12,117 @@
 ############################################################################
 # procedure to make main control area
 ###########################################################################
+lappend auto_path $env(GISBASE)/bwidget
+package require BWidget
+source $src_boot/etc/nviz2.2/scripts/config.tcl
 
 
 proc mkvectPanel { BASE } {
     global Nv_
+	global nviztxtfont
     
     catch {destroy $BASE}
 
     set curr [Nget_current vect]
     
     if {0 != $curr}  {
-	set width [Nvect$curr get_att width]
-	set flat_state [Nvect$curr get_att flat]
-	set height [expr [lindex [Nvect$curr get_trans] 2] * 10]
-	set maplist [Nget_map_list surf]
+		set width [Nvect$curr get_att width]
+		set flat_state [Nvect$curr get_att flat]
+		set height [expr [lindex [Nvect$curr get_trans] 2] * 10]
+		set maplist [Nget_map_list surf]
     } else {
-	set width 1
+		set width 1
         set flat_state 0
-	set height 0
-	set maplist {}
+		set height 0
+		set maplist {}
     }
     
     #  Initialize panel info
     if [catch {set Nv_($BASE)}] {
-	set panel [St_create {window name size priority} $BASE "Vector Lines/3D Polygons" 1 5]
+		set panel [St_create {window name size priority} $BASE "Vector Lines/3D Polygons" 2 5]
     } else {
-	set panel $Nv_($BASE)
+		set panel $Nv_($BASE)
     }
-    frame $BASE -relief groove -borderwidth 2
+    frame $BASE -relief flat -borderwidth 0
     Nv_mkPanelname $BASE "Vector Lines Panel"
     
-    #top frame
+  	#create top frame
+	###### make widgets that control which is current surface (menu, new delete)###
     set tmp [frame $BASE.top]
-    label $tmp.current -text "Current:" -anchor nw
-
+	Label $tmp.current -text "Current:" -anchor w
+	
     mkMapList $tmp.list vect
+    
+	button $tmp.new -text New -anchor center -width 4 -command "add_map vect" -bd 1
+	button $tmp.delete -text Delete -anchor center -width 4 -command "delete_map vect" -bd 1
 
-    button $tmp.new -text New -anchor ne -command "add_map vect" 
-    button $tmp.delete -text Delete -anchor ne -command "delete_map vect"
-
-    pack $tmp.current -side left -expand 1
+	pack $tmp.current $tmp.list -side left
     pack $tmp.list -side left 
-    pack $tmp.delete $tmp.new -side right -expand 1
+	pack $tmp.delete $tmp.new -side right -expand 0
     
-    pack $tmp -side top -fill x -expand 1
+    pack $tmp -side top -fill x -expand 1 -padx 3 -pady 5
     
-    #bottom frame
+    # create bottom frame
     set tmp [frame $BASE.f]
-    button $tmp.close -text Close -command "Nv_closePanel $BASE" -anchor s
+    button $tmp.close -text Close -command "Nv_closePanel $BASE" -anchor s -bd 1
     pack $tmp.close -side right
-    button $tmp.draw_current -text {Draw Current} \
-	-command {Nvect_draw_one [Nget_current vect]}
+    button $tmp.draw_current -text {Draw Current} -bd 1 \
+		-command {Nvect_draw_one [Nget_current vect]}
     pack $tmp.draw_current -side left
-    pack $tmp -side bottom -fill x -expand 1
+    pack $tmp -side bottom -fill x -expand 1 -padx 3
 
-    #mid frame
+    #create mid frame
     set tmp [frame $BASE.mid]
-    set tmp1 [frame $tmp.left]
-    set tmp2 [frame $tmp.mid]
-    set tmp3 [frame $tmp.right]
-    set tmp1a [frame $tmp1.b]
+    set row1 [frame $tmp.row1]
+    set row2 [frame $tmp.row2]
+    set row3 [frame $tmp.row3]
+    set tmp1a [frame $row1.b]
+    
+    set wlabel [label $row1.wlabel -text "line width" \
+    	-font $nviztxtfont -fg black]
+    
+    set vlinewidth [SpinBox $row1.linewidth -range {1 50 1}\
+		-textvariable width \
+		-modifycmd {set_width vect $width} \
+		-width 5 \
+		-entrybg white]
 
-    Nv_mkArrows $tmp1.linewidth "Line Width" [concat set_width vect] $width
 #	checkbutton $tmp.load -relief flat -text "Load to memory"
-    button $tmp1a.color -text Color \
-	-command "change_color vect $tmp1a.color"
-    bind $tmp1a.color <Expose> \
-	"$tmp1a.color configure -bg \[get_curr_sv_color vect\]"
-    radiobutton $tmp2.label1 -text "Display on surface(s):" \
-	-variable flat_state -value 0 \
-        -command "check_list $tmp2.list"
-    radiobutton $tmp2.label2 -text "Display Flat" \
-	-variable flat_state -value 1 -command "check_list $tmp2.list"
+    set vcolor [button $row1.color -text Color -bd 1\
+		-command "change_color vect $row1.color"]
+    bind $row1.color <Expose> "$row1.color configure -bg \[get_curr_sv_color vect\]"
+    
+    set rb1 [radiobutton $row1.label2 -text "display flat" \
+		-variable flat_state -value 1 -command "check_list $row2.list"]
 
-    Nv_mkScale $tmp3.scale v "Vect. Z" 1000 0 $height set_ht 1
+    set rb2 [radiobutton $row2.label1 -text "display on surface(s):" \
+		-variable flat_state -value 0 \
+        -command "check_list $row2.list"]
 
-    pack $tmp1a.color -side left
-    pack $tmp1a -side bottom -fill x -expand 1
-    pack $tmp1.linewidth -anchor w \
-	-padx 2 -pady 2 -side left -expand 1
-    pack $tmp2.label2 $tmp2.label1 -expand 1
-    pack $tmp3.scale -expand 1
+    set htscale [Nv_mkScale $row3.scale h "vector height above surface" 0 10000 $height set_ht 1]
 
-# Let radiobutton state handle building list
-# of available surfaces
+
+    pack $wlabel $vlinewidth -side left
+    pack $vcolor -side left -padx 10
+    pack $rb1 -side right -padx 5
+    pack $row1 -expand 1 -fill none -pady 4
+    pack $rb2 -side left 
+    pack $row2 -side left
+    pack $htscale -side top
+    pack $row3 -side top -fill x -expand 1 -pady 4
+
+	# Let radiobutton state handle building list
+	# of available surfaces
     if {$flat_state == 0} {
-	$tmp2.label1 select
-	check_list $tmp2.list
+		$row2.label1 select
+		check_list $row2.list
     } else {
-	$tmp2.label2 select
-	check_list $tmp2.list
+		$row2.label2 select
+		check_list $row2.list
     }
 
-    pack $tmp1 -side left -fill both -expand 1
-    pack $tmp2 -side left -fill both -expand 1
-    pack $tmp3 -side right -fill both -expand 1
+    pack $row1 $row2 -side top -fill both -expand 1
+    pack $row3 -side right -fill both -expand 1
     pack $tmp -side top  -fill both -expand 1
 
     return $panel
@@ -312,7 +328,6 @@ proc add_map {type} {
 }
 
 proc set_width {type E} {
-    set i [$E get]
     set curr [Nget_current $type]
     switch $type {
 	"vect" { set head Nvect }
@@ -320,7 +335,7 @@ proc set_width {type E} {
     }
     
     if {0 != $curr} {
-	$head$curr set_att width $i
+	$head$curr set_att width $E
     }
 }
 

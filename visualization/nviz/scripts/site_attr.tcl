@@ -19,12 +19,14 @@
 #**************************************************************
 global ___ACS_utils___
 if {![info exists ___ACS_utils___]} {
-# FUNCTIONS USED:
-# modal_edit_list_plain
-# scrollframe_...
-# lut_create_canvas
+	# FUNCTIONS USED:
+	# modal_edit_list_plain
+	# scrollframe_...
+	# lut_create_canvas
 	source $default_panel_path/ACS_utils.tcl
 }
+
+option add *label.foreground "black"
 
 ### site markers in gsurf.h
 #define ST_X    	1
@@ -38,12 +40,16 @@ if {![info exists ___ACS_utils___]} {
 #define ST_GYRO	    9
 #define ST_HISTOGRAM    10
 
+################################################################################
 proc site_attr_init {} {
 	global site_attr
+	global env
+	
 	set site_attr(INIT) 1
 
+	set site_attr(MENU_DEFAULT_BG) white
 	set site_attr(DEFAULT_COLOR) "#ffffff"
-	set site_attr(MENU_DEFAULT_BG) "#e6e6e6"
+	#set site_attr(MENU_DEFAULT_BG) "#e6e6e6"
 	set site_attr(ATTR_LIST) {color size marker}
 	set site_attr(NONE) "default"
 	set site_attr(FIXED) "fixed"
@@ -53,11 +59,16 @@ proc site_attr_init {} {
 	set site_attr(LUT_LIST) [list]
 	set site_attr(POPUP) 0
 	set site_attr(LUT_SEP) "@@@"
-	set site_attr(LUT_DIR) "~/"
+	if {[info exists env(HOME)]} {
+		#set site_attr(LUT_DIR) "~/"
+		set site_attr(LUT_DIR) $env(HOME)
+	} else {
+		set site_attr(LUT_DIR) "/"
+	}
 	set site_attr(LUT_EXT) "lut"
 	set site_attr(LUT_FILETYPES) {
-		{{LUT Files} {.lut}}
-		{{All Files}   *   }
+		{{NVIZ thematic prefs files} {.lut}}
+		{{All files}   *   }
 	}
 
 	set site_attr(MARKERS_NAME) {"histogram" "x"  "sphere" "cube" "box" "diamond" "gyro" "aster"}
@@ -66,35 +77,42 @@ proc site_attr_init {} {
 	set site_attr(FIRST_ROW) 1
 }
 
-proc site_attr_gui {BASE curr} {
+################################################################################
+proc site_attr_gui {themefr bottomfr curr} {
 	global site_attr
 
 	if {![info exists site_attr(INIT)]} {site_attr_init}
 
-    set container [frame $BASE.right.win -container 1]
-	pack $container -side bottom -expand 0
+    set container [frame $themefr.win -container 1]
+	pack $container -padx 10 -side bottom -expand 0 -fill x
 
-	set win $BASE.extra
+	set win $themefr.extra
 	toplevel $win -use [winfo id $container]
-	wm geometry $win "300x150"
+	wm maxsize $win 500 150
+	#wm geometry $win "350x150"
 
 	set site_attr(WIN) $win
 
 # Set variable for LUT_MENUBUTTON ##############################################
-	set site_attr(LUT_MENUBUTTON_WIN) $BASE.f
-	set site_attr(LUT_MENUBUTTON) $BASE.f.lut_menu
+	set site_attr(LUT_MENUBUTTON_WIN) $bottomfr
+	set site_attr(LUT_MENUBUTTON) $bottomfr.lut_menu
 
 # Set fields/attribute panel and LUT menubutton# ###############################
+# Always show thematic settings window
 
-	set site_attr(FIELD_ATTR_PANEL) 0
-	checkbutton $BASE.right.fields_attributes_win -text "Fields/Attributes/LUT panel" \
-		-variable site_attr(FIELD_ATTR_PANEL) -command "site_attr_lut_menubutton_win; site_attr_fields_attributes_win $curr"
-	pack $BASE.right.fields_attributes_win -side top -pady 3
-################################################################################
+#	set site_attr(FIELD_ATTR_PANEL) 0
+#	checkbutton $themefr.fields_attributes_win -text "thematic mapping for vector points" \
+#		-variable site_attr(FIELD_ATTR_PANEL) -command "site_attr_lut_menubutton_win; site_attr_fields_attributes_win $curr"
+#	pack $themefr.fields_attributes_win -side left 
+	
+	set site_attr(FIELD_ATTR_PANEL) 1
+	site_attr_lut_menubutton_win
+	site_attr_fields_attributes_win $curr
 }
 
+################################################################################
 # Add button for LUT load ######################################################
-# assumes that $BASE.f is defined and $BASE.f.color $BASE.f.draw_current are packed
+# assumes that $bottom is defined and $bottom.draw_current is packed
 proc site_attr_lut_menubutton_win {} {
 	global site_attr
 
@@ -103,13 +121,13 @@ proc site_attr_lut_menubutton_win {} {
 		return
 	}
 
-	catch {pack forget $site_attr(LUT_MENUBUTTON_WIN).color $site_attr(LUT_MENUBUTTON_WIN).draw_current}
+	catch {pack forget $site_attr(LUT_MENUBUTTON_WIN).draw_current}
 
 	site_attr_lut_menu $site_attr(LUT_MENUBUTTON_WIN)
 
-   	if {[catch {pack $site_attr(LUT_MENUBUTTON_WIN).color $site_attr(LUT_MENUBUTTON) $site_attr(LUT_MENUBUTTON_WIN).draw_current -side left -expand 1}]} {
+   	if {[catch {pack $site_attr(LUT_MENUBUTTON_WIN).draw_current $site_attr(LUT_MENUBUTTON) -padx 3 -side left -expand 0}]} {
 		# if someone changed original interface, the button will be drawn somewhere anyway
-		pack $site_attr(LUT_MENUBUTTON_WIN).lut_load -side left -expand 1
+		pack $site_attr(LUT_MENUBUTTON_WIN).lut_load -side left -padx 3 -expand 0
 	}
 }
 
@@ -131,10 +149,15 @@ proc site_attr_fields_attributes_win {_curr_site} {
 	}
 
 	set sf [scrollframe_create $site_attr(WIN).sf]
-	pack $sf -side bottom -expand yes -fill both
+	pack $sf -side bottom -expand yes -fill x
 
 	set tmp [scrollframe_interior $sf]
 
+	set title [frame $tmp.top]
+	label $title.l -text "Thematic Mapping for Vector Points"
+	pack $title.l -side top
+	pack $tmp.top -side top -padx 0 -pady 3
+	
 	frame $tmp.attributes
 		set site_attr(FIELD_NAMES) {}
 		set site_attr(FIELD_TYPES) {}
@@ -146,11 +169,11 @@ proc site_attr_fields_attributes_win {_curr_site} {
 		set _col 0
 		set l $tmp.attributes.row\_label
 		label $l -text "" -padx 3
-		grid $l -column $_col -row 0 -sticky e
+		grid $l -column $_col -row 0 -sticky ew
 		incr _col
 		foreach _attr $site_attr(ATTR_LIST) {
 			set l $tmp.attributes.$_attr\_label
-			label $l -text "$_attr" -padx 3
+			label $l -text "$_attr" -padx 3 -fg black
 			grid $l -column $_col -row 0 -sticky ew
 			incr _col
 		}
@@ -160,17 +183,12 @@ proc site_attr_fields_attributes_win {_curr_site} {
 			site_attr_fields_attributes_row $tmp.attributes Nsite$_curr_site $i
 		}
 
-	pack $tmp.attributes -side bottom
+	pack $tmp.attributes -side bottom -expand 1 -fill x
 
 }
 
 ################################################################################
-################################################################################
-################################################################################
 # Here idx is created
-################################################################################
-################################################################################
-################################################################################
 
 proc site_attr_idx {_map _attr _row} {
 	return $_map$_attr$_row
@@ -221,7 +239,7 @@ proc site_attr_fields_menu_button {_idx _win} {
 	global site_attr
 
 	set m $_win.menu_$_idx
-	menubutton $m -menu $m.m -relief raised -indicatoron 1 -bd 2 \
+	menubutton $m -menu $m.m -relief raised -indicatoron 1 -bd 1 \
 		-text $site_attr($_idx.MENU_TXT) -bg $site_attr($_idx.MENU_BG)
 
 	menu $m.m -tearoff 0
@@ -388,23 +406,31 @@ proc site_attr_load_values {_idx} {
 
 proc site_attr_create_win {_idx} {
 	global site_attr
+	global nviztxtfont
 
 	switch $site_attr($_idx.ATTR) {
 		"size" {
 			set which "entries"
-			set apply_msg "Fill 2 or more entry
-fields with desired
-min and max values,
-then press \"Apply\""
+			set apply_msg \
+			"Fill 2 or more entry fields with \
+			desired min and max values,\
+			then press \[Apply\]. \
+			Or press \[Auto\] to automatically \
+			generate a range of symbol sizes."
+
+
 		}
 		"color" {
 			set which "colors"
-			set apply_msg "Fill 2 or more entry
-with desired colors,
-then press \"Apply\""
+			set apply_msg \
+			"Fill 2 or more entry fields with desired\
+			colors, then press \[Apply\].\
+			Or press \[Auto\] to automatically\
+			generate a color table."
 		}
 		default {
-			puts "WARNING: No attribute behaviour for $site_attr($_idx.ATTR)!"
+			puts "WARNING: No thematic mapping preferences set"
+			for $site_attr($_idx.ATTR)!"
 		}
 	}
 
@@ -418,79 +444,66 @@ then press \"Apply\""
 	bind $win <Destroy> "site_attr_reset_menubutton $_idx %W"
 	bind $win <Destroy> "site_attr_destroy_win $_idx %W"
 
-
-	set sf [scrollframe_create $win.left]
-	set w [scrollframe_interior $sf]
+	set w [frame $win.left]
 
 	set site_attr($_idx.WIN_CMD) $w
 
 # Attribute
-		label $w.attr -text "Attribute: $site_attr($_idx.ATTR)"
+		label $w.attr -text "Vary point $site_attr($_idx.ATTR)"
 		pack $w.attr -pady 1 -padx 0 -fill x -side top
 
 # Field
-		label $w.field -text "Field: $site_attr($_idx.NAME)"
-		pack $w.field -pady 1 -padx 0 -fill x -side top
+		label $w.field -text "GIS attribute: $site_attr($_idx.NAME)"
+		pack $w.field -padx 0 -fill x -side top
 
 # Type
-		set type "numeric"; if {$site_attr($_idx.TYPE) == "s"} {set type "string"}
-		label $w.type -text "Type: $type"
-		pack $w.type -pady 1 -padx 0 -fill x -side top
+		if {$site_attr($_idx.TYPE) == "s"} {
+			set type "string"
+		} else { 
+			set type "numeric"
+		}
+		label $w.type -text "Attribute type: $type"
+		pack $w.type -padx 0 -fill x -side top
 
-# Separator
-		label $w.empty -text ""
-		pack $w.empty -pady 1 -padx 0 -fill x -side top
+# Instructions
+		message $w.help -font $nviztxtfont -width 200 \
+			-text $apply_msg
+		pack $w.help -side top -pady 3
+
+# button frame
+		frame $w.buttons -borderwidth 0 -relief flat
 
 # Apply
-		frame $w.apply -borderwidth 2 -relief groove
-			label $w.apply.help -text $apply_msg
-			pack $w.apply.help -side top
-			button $w.apply.set -text "Apply" -command "site_attr_set_$which $_idx"
-			pack $w.apply.set -side top
-		pack $w.apply -pady 1 -padx 0 -fill x -side top
-
-# Separator
-		label $w.empty2 -text ""
-		pack $w.empty2 -pady 1 -padx 0 -fill x -side top
+		Button $w.buttons.apply -text "Apply" -bd 1 -width 6 \
+			-command "site_attr_set_$which $_idx" \
+			-helptext "Apply current thematic preferences to point display"
 
 # Auto
-		frame $w.auto -borderwidth 2 -relief groove
-
-			button $w.auto.set -text "Auto" -command "site_attr_set_auto_$which $_idx"
-			pack $w.auto.set -side top
-
-#			global env
-#			button $w.auto.help  \
-#			-image [image create bitmap -file $env(GISBASE)/etc/nviz2.2/bitmaps/TimeSeries/pickable.xbm]\
-#			-command {tk_messageBox -message "help on auto"}
-#			pack $w.auto.help -side right
-
-			label $w.auto.help -text "Tries an automatic LUT
-on the current values"
-			pack $w.auto.help -side top
-		pack $w.auto -pady 1 -padx 0 -fill x -side top
+		Button $w.buttons.auto -text "Auto" -bd 1 -width 6\
+			-command "site_attr_set_auto_$which $_idx" \
+			-helptext "Automatically generate a color \
+			table distributed across range of attribute values"
 
 # Clear
-		frame $w.reset -borderwidth 2 -relief groove
-			button $w.reset.set -text "Reset" -command "site_attr_clear_lut_win $_idx"
-			pack $w.reset.set -side top
-			label $w.reset.help -text "Clears LUT input"
-			pack $w.reset.help -side top
-		pack $w.reset -pady 1 -padx 0 -fill x -side top
+		Button $w.buttons.reset -text "Reset" -bd 1 -width 6\
+			-command "site_attr_clear_lut_win $_idx" \
+			-helptext "Clear all thematic settings"
+			#pack $w.reset.set -side top -pady 5
 
-# Separator
-		label $w.empty3 -text ""
-		pack $w.empty3 -pady 1 -padx 0 -fill x -side top
-
-# External LUT management
+		pack $w.buttons.apply $w.buttons.auto $w.buttons.reset \
+			-side left -fill x -expand 1 -padx 2
+		pack $w.buttons -expand 1 -fill both -pady 5 -padx 2
+		
+# Theme prefs management
 		set site_attr($_idx.EXTERNAL_LUT_PANEL) 0
-		frame $w.external_lut -borderwidth 2 -relief groove
-			checkbutton $w.external_lut.set -text "External LUT Panel" \
-				-variable site_attr($_idx.EXTERNAL_LUT_PANEL) -command "site_attr_external_lut $_idx $w.external_lut"
-			pack $w.external_lut.set -side top
-		pack $w.external_lut -pady 1 -padx 0 -fill x -side top
+		frame $w.external_lut -borderwidth 0 -relief flat
+		checkbutton $w.external_lut.set -text "Load/save theme preferences" \
+			-variable site_attr($_idx.EXTERNAL_LUT_PANEL) -command "site_attr_external_lut $_idx $w.external_lut"
+		pack $w.external_lut.set -side top
+		pack $w.external_lut -padx 0 -fill x -side top
 
-	pack $sf -side left -pady 2 -anchor n
+
+	pack $w -side left -anchor n
 
 	site_attr_create_lut_win $_idx
 
@@ -505,76 +518,78 @@ on the current values"
 
 proc site_attr_external_lut {_idx _win} {
 	global site_attr
-
+	global nviztxtfont
+	
 	if {$site_attr($_idx.EXTERNAL_LUT_PANEL) == 0} {
 		catch {destroy $_win.external_lut_panel}
 		return
 	}
 
-	set w [frame $_win.external_lut_panel]
+	set w [frame $_win.external_lut_panel -borderwidth 1 -relief raised]
 
 # External LUT manipulation
-	frame $w.lut_choice  -borderwidth 2 -relief groove
-		frame $w.lut_choice.a  -borderwidth 2 -relief groove
-			label $w.lut_choice.a.title -text "Select LUT"
-			pack $w.lut_choice.a.title -side top -pady 1
-			radiobutton $w.lut_choice.a.local -relief flat -text "local" \
-			-value 0 -anchor nw -variable site_attr($_idx.USE_EXTERNAL_VALUES) \
-			-command "site_attr_lut_local $_idx"
-			pack $w.lut_choice.a.local -fill x -expand 1 -side top
-			label $w.lut_choice.a.local_lab -text "use LUT created here"
-			pack $w.lut_choice.a.local_lab -side top
+	frame $w.lut_choice  -borderwidth 0
+	frame $w.lut_choice.a  -borderwidth 0
+	label $w.lut_choice.a.title -text "Select thematic prefs to use"
+	pack $w.lut_choice.a.title -side top -pady 1
 
-			radiobutton $w.lut_choice.a.external -relief flat -text "external" \
-			-value 1 -anchor nw -variable site_attr($_idx.USE_EXTERNAL_VALUES)
-			bind $w.lut_choice.a.external <ButtonRelease> "site_attr_lut_external $_idx %X %Y"
-			pack $w.lut_choice.a.external -fill x -expand 1 -side top
-			label $w.lut_choice.a.external_lab -text "use external LUT
-(preserves local LUT)"
-			pack $w.lut_choice.a.external_lab -side top
-		pack $w.lut_choice.a -pady 1 -padx 0 -side top -fill x
+	radiobutton $w.lut_choice.a.local -relief flat -text "current prefs" \
+		-value 0 -anchor nw -variable site_attr($_idx.USE_EXTERNAL_VALUES) \
+		-command "site_attr_lut_local $_idx"
+	pack $w.lut_choice.a.local -fill x -expand 1 -side top
 
-		if {[info exists site_attr($_idx.EXTERNAL_LUT)]} {
-			set lut_id $site_attr($_idx.EXTERNAL_LUT)
-			trace variable site_attr($lut_id.NAME) w "site_attr_update_win $_idx"
+	radiobutton $w.lut_choice.a.external -relief flat -text "prefs. from file" \
+		-value 1 -anchor nw -variable site_attr($_idx.USE_EXTERNAL_VALUES)
+		bind $w.lut_choice.a.external <ButtonRelease> "site_attr_lut_external $_idx %X %Y"
+	pack $w.lut_choice.a.external -fill x -expand 1 -side top
 
-			set lut_label $site_attr($lut_id.NAME)
-			set lut_command "site_attr_lut_open_win $lut_id"
-		} else {
-			set lut_label "NO LUT"
-			set lut_command ""
-		}
+	label $w.lut_choice.a.external_lab -fg black -font $nviztxtfont \
+		-text "(preserves current prefs.)"
+	pack $w.lut_choice.a.external_lab -side top
+	pack $w.lut_choice.a -side top -pady 3 -fill x
 
-		frame $w.lut_choice.b  -borderwidth 2 -relief groove
-			label $w.lut_choice.b.ext_lab -text "View external LUT"
-			pack $w.lut_choice.b.ext_lab -side top
-			set site_attr($_idx.EXTERNAL_LUT_BUTTON) \
-				[button $w.lut_choice.b.ext_lut -text $lut_label -command $lut_command]
-			pack $w.lut_choice.b.ext_lut -side top -pady 1
-		pack $w.lut_choice.b -pady 1 -padx 0 -side top -fill x
-	pack $w.lut_choice -pady 1 -padx 0 -side top -fill x
+	if {[info exists site_attr($_idx.EXTERNAL_LUT)]} {
+		set lut_id $site_attr($_idx.EXTERNAL_LUT)
+		trace variable site_attr($lut_id.NAME) w "site_attr_update_win $_idx"
 
-	frame $w.io  -borderwidth 2 -relief groove
-		frame $w.io.import_lut  -borderwidth 2 -relief groove
-			button $w.io.import_lut.b -text "Import LUT" -command "site_attr_lut_import $_idx"
-			pack $w.io.import_lut.b -side top
-			bind $w.io.import_lut.b <ButtonPress> "site_attr_pick_mouse_XY %X %Y"
-			label $w.io.import_lut.l -text "Use external LUT to
-fill local LUT"
-			pack $w.io.import_lut.l -side top
-		pack $w.io.import_lut -pady 1 -padx 0 -side top -fill x
+		set lut_label $site_attr($lut_id.NAME)
+		set lut_command "site_attr_lut_open_win $lut_id"
+	} else {
+		set lut_label "no prefs loaded"
+		set lut_command ""
+	}
 
-		frame $w.io.export_lut  -borderwidth 2 -relief groove
-			button $w.io.export_lut.b -text "Export LUT" -command "site_attr_lut_export $_idx"
-			pack $w.io.export_lut.b -side top
-			bind $w.io.export_lut.b <ButtonPress> "site_attr_pick_mouse_XY %X %Y"
-			label $w.io.export_lut.l -text "Use local LUT to
-fill external LUT"
-			pack $w.io.export_lut.l -side top
-		pack $w.io.export_lut -pady 1 -padx 0 -side top -fill x
-	pack $w.io -pady 5 -padx 0 -side top -fill x
+	frame $w.lut_choice.b  -borderwidth 0
+	label $w.lut_choice.b.ext_lab -text "View loaded thematic prefs"
+	pack $w.lut_choice.b.ext_lab -side top
 
-	pack $w -side top
+	set site_attr($_idx.EXTERNAL_LUT_BUTTON) \
+		[Button $w.lut_choice.b.ext_lut -text $lut_label \
+			-command $lut_command -bd 1 -width 15]
+	pack $w.lut_choice.b.ext_lut -side top -pady 1
+	pack $w.lut_choice.b -pady 3 -padx 0 -side top -fill x
+	pack $w.lut_choice -padx 0 -side top -fill both -expand 1
+
+	frame $w.io  -borderwidth 0
+	frame $w.io.import_lut  -borderwidth 0
+	label $w.io.import_lut.a -text "Load and save prefs."
+	pack $w.io.import_lut.a -side top
+	Button $w.io.import_lut.b -text "Update" -width 15 -bd 1 \
+		-command "site_attr_lut_import $_idx" \
+		-helptext "Replace current themes with prefs loaded from file"
+	pack $w.io.import_lut.b -side top
+	bind $w.io.import_lut.b <ButtonPress> "site_attr_pick_mouse_XY %X %Y"
+	pack $w.io.import_lut -pady 3 -padx 0 -side top -fill x
+
+	frame $w.io.export_lut  -borderwidth 0
+	Button $w.io.export_lut.b -text "Save prefs" -width 15 -bd 1 \
+		-command "site_attr_lut_export $_idx" \
+		-helptext "Copy current themes to prefs loaded from file"
+	pack $w.io.export_lut.b -side top
+	bind $w.io.export_lut.b <ButtonPress> "site_attr_pick_mouse_XY %X %Y"
+	pack $w.io.export_lut -pady 3 -padx 0 -side top -fill x
+	pack $w.io -pady 3 -padx 0 -side bottom -fill both -expand 1
+	pack $w -side top -fill both -expand 1
 }
 
 # bond to site_attr($_lut_id.NAME) changes
@@ -616,7 +631,8 @@ proc site_attr_clear_lut_win {_idx} {
 
 proc site_attr_create_lut_win {_idx} {
 	global site_attr
-
+	global nviztxtfont
+	
 	set win $site_attr($_idx.WIN)
 	catch {destroy $win.f}
 
@@ -638,14 +654,16 @@ proc site_attr_create_lut_win {_idx} {
 	}
 
 	foreach elt $site_attr($_idx.VALUES_LIST) {
-		label $w.n$row -text "$row" -relief groove -borderwidth 1 -anchor w
+		label $w.n$row -text "$row" -relief groove -borderwidth 1 \
+			-anchor e -fg black -padx 4
 		grid $w.n$row	-row $row -column 0 -columnspan 1 -sticky nswe
-		label $w.v$row -text "$elt" -relief groove -borderwidth 1 -anchor w
+		label $w.v$row -text "$elt" -relief groove -borderwidth 1 \
+			-anchor w -fg black -font $nviztxtfont -padx 2
 		grid $w.v$row	-row $row -column 1 -columnspan 1 -sticky nswe
 
 		switch $site_attr($_idx.ATTR) {
 			"size" {
-				entry $w.e$row  -relief sunken -width 6 -justify right
+				entry $w.e$row  -relief sunken -width 6 -justify right -bg white
 				grid $w.e$row	-row $row -column 2 -columnspan 1 -sticky nswe
 
 				if {$already_set > 0} {
@@ -664,10 +682,10 @@ proc site_attr_create_lut_win {_idx} {
 
 			}
 			"color" {
-				button $w.b$row -command "site_attr_choose_color $w.b$row" -bg $site_attr(DEFAULT_COLOR) -width 0 -height 0
+				Button $w.b$row -command "site_attr_choose_color $w.b$row" -bg $site_attr(DEFAULT_COLOR) -width 0 -height 0
 				grid $w.b$row	-row $row -column 2 -columnspan 1 -sticky nswe
 
-				label $w.l$row -bg $site_attr(DEFAULT_COLOR) -width 3 -borderwidth 2 -relief raised
+				label $w.l$row -bg $site_attr(DEFAULT_COLOR) -width 3 -borderwidth 0 -relief flat
 				grid $w.l$row	-row $row -column 3 -columnspan 1 -sticky nswe
 
 				if {$already_set > 0} {
@@ -690,7 +708,7 @@ proc site_attr_create_lut_win {_idx} {
 		incr row
 	}
 
-	pack $sf -expand yes -fill both -side top
+	pack $sf -expand yes -fill both -side top -padx 5
 
 	if {$already_set < 0} {site_attr_update_gui_colors $_idx}
 }
@@ -1051,21 +1069,9 @@ proc site_attr_choose_color {_w} {
 
 
 ################################################################################
-################################################################################
-################################################################################
-################################################################################
-################################################################################
-################################################################################
-################################################################################
 
-# External LUT management
+# Thematic prefs file management
 
-################################################################################
-################################################################################
-################################################################################
-################################################################################
-################################################################################
-################################################################################
 ################################################################################
 
 # "local" radiobutton
@@ -1106,7 +1112,7 @@ proc site_attr_lut_external {_idx _x _y} {
 
 	switch [llength $site_attr(LUT_LIST)] {
 		0 		{
-			tk_messageBox -icon warning -message "NO External LUT" -type ok -parent $site_attr($_idx.WIN_CMD)
+			tk_messageBox -icon warning -message "No prefs file loaded" -type ok -parent $site_attr($_idx.WIN_CMD)
 			set site_attr($_idx.USE_EXTERNAL_VALUES) 0
 		}
 		1 		{site_attr_lut_set_external $_idx [lindex $site_attr(LUT_LIST) 0]}
@@ -1137,7 +1143,7 @@ proc site_attr_lut_unlink_external {_idx} {
 	trace vdelete site_attr($site_attr($_idx.EXTERNAL_LUT)) w "site_attr_lut_update_external $_idx"
 	trace vdelete site_attr($site_attr($_idx.EXTERNAL_LUT)) u "site_attr_lut_local $_idx"
 
-	catch {$site_attr($_idx.EXTERNAL_LUT_BUTTON) configure -text "NO LUT" -command ""}
+	catch {$site_attr($_idx.EXTERNAL_LUT_BUTTON) configure -text "No prefs" -command ""}
 	trace vdelete site_attr($site_attr($_idx.EXTERNAL_LUT).NAME) w "site_attr_update_win $_idx"
 }
 
@@ -1145,7 +1151,7 @@ proc site_attr_lut_set_external {_idx _lut_id} {
 	global site_attr
 
 	if {$site_attr($_idx.TYPE) != $site_attr($_lut_id.TYPE)} {
-		tk_messageBox -icon warning -message "LUT and Attribute have different types" -type ok -parent $site_attr($_idx.WIN_CMD)
+		tk_messageBox -icon warning -message "Thematic prefs and attribute have different types" -type ok -parent $site_attr($_idx.WIN_CMD)
 		set site_attr($_idx.USE_EXTERNAL_VALUES) $site_attr($_idx.USING_EXTERNAL_VALUES)
 		return
 	}
@@ -1196,7 +1202,7 @@ proc site_attr_lut_import {_idx} {
 	global site_attr
 
 	switch [llength $site_attr(LUT_LIST)] {
-		0		{tk_messageBox -icon warning -message "NO External LUT" -type ok -parent $site_attr($_idx.WIN_CMD)}
+		0		{tk_messageBox -icon warning -message "No prefs file loaded" -type ok -parent $site_attr($_idx.WIN_CMD)}
 		1		{site_attr_lut_import_attr $_idx [lindex $site_attr(LUT_LIST) 0]}
 		default	{site_attr_lut_popup $_idx site_attr_lut_import_attr}
 	}
@@ -1206,7 +1212,7 @@ proc site_attr_lut_import_attr {_idx _lut_id} {
 	global site_attr
 
 	if {$site_attr($_idx.TYPE) != $site_attr($_lut_id.TYPE)} {
-		tk_messageBox -icon warning -message "LUT and Attribute have different types" -type ok -parent $site_attr($_idx.WIN_CMD)
+		tk_messageBox -icon warning -message "Thematic prefs and attributes have different types" -type ok -parent $site_attr($_idx.WIN_CMD)
 		return
 	}
 
@@ -1306,7 +1312,7 @@ proc site_attr_pick_mouse_XY {_x _y} {
 proc site_attr_lut_create {} {
 	global site_attr
 
-	set lut_id LUT$site_attr(LUT_NUMBER)
+	set lut_id "NVIZ_pttheme$site_attr(LUT_NUMBER)"
 	incr site_attr(LUT_NUMBER)
 
 	lappend site_attr(LUT_LIST) $lut_id
@@ -1396,7 +1402,7 @@ proc site_attr_lut_open_win {_lut_id} {
 # Create window for LUT
 proc site_attr_lut_create_win {_lut_id} {
 	global site_attr
-
+	global nviztxtfont
 	if {![info exists site_attr($_lut_id.ATTR)]} {return}
 
 	switch $site_attr($_lut_id.ATTR) {
@@ -1404,7 +1410,7 @@ proc site_attr_lut_create_win {_lut_id} {
 			set row_val "label \$w.l\$row  -text \$val -relief sunken -width 6 -justify right"
 		}
 		"color" {
-			set row_val "label \$w.l\$row -bg \$val -width 3 -borderwidth 2 -relief raised"
+			set row_val "label \$w.l\$row -bg \$val -width 3 -borderwidth 1 -relief raised"
 		}
 		default {
 			puts "WARNING: No attribute behaviour for $site_attr($_lut_id.ATTR)!"
@@ -1417,60 +1423,55 @@ proc site_attr_lut_create_win {_lut_id} {
 	catch {destroy $win}
 	toplevel $win
 	wm resizable $win true true
-	wm title $win "External LUT $_lut_id"
+	wm title $win "Thematic prefs file $_lut_id"
 	bind $win <Destroy> "site_attr_lut_destroy_win $_lut_id $win %W"
 
 	set w [frame $win.left]
 		label $w.name -text "Name: $site_attr($_lut_id.NAME)" -pady 2
-		pack $w.name -pady 1 -padx 0 -fill x -side top
+		pack $w.name -pady 1 -fill x -side top
 
-		set type "numeric"; if {$site_attr($_lut_id.TYPE) == "s"} {set type "string"}
+		if {$site_attr($_lut_id.TYPE) == "s"} {
+			set type "string"
+		} else {
+			set type "numeric"
+		}
 		label $w.type -text "Type: $type" -pady 2
 		pack $w.type -pady 1 -padx 0 -fill x -side top
 
-		label $w.separator -text "" -pady 2
-		pack $w.separator -pady 1 -padx 0 -fill x -side top
+		frame $w.buttons
+		Button $w.buttons.save -text "Save" -bd 1 -width 6 \
+				-command "site_attr_lut_save $_lut_id" \
+				-helptext "Save thematic prefs in file"
+		Button $w.buttons.delete -text "Clear" -bd 1 -width 6 \
+				-command "site_attr_lut_destroy $_lut_id" \
+				-helptext "Clear current thematic prefs"
+		
+		pack $w.buttons.save -side left -expand 0 -fill x
+		pack $w.buttons.delete -side right -expand 0 -fill x
+		pack $w.buttons -side top -expand 1 -fill both -pady 5
 
-		frame $w.save -borderwidth 2 -relief groove
-			label $w.save.l -text "Save LUT in file
-(filename becomes
-LUT name)" -pady 2
-			pack $w.save.l -side top
-			button $w.save.b -text "Save" -command "site_attr_lut_save $_lut_id"
-			pack $w.save.b -side top -pady 1
-		pack $w.save -pady 1 -padx 0 -fill x -side top
+	set w [frame $w.f]
+		set row 0
+		foreach elt $site_attr($_lut_id.XLIST) val $site_attr($_lut_id.YLIST) {
+			label $w.n$row -text "$row" -relief groove -borderwidth 1 \
+				-fg black -padx 4 -anchor e
+			grid $w.n$row	-row $row -column 0 -columnspan 1 -sticky nswe
+			label $w.v$row -text "$elt" -relief groove -borderwidth 1 \
+				-fg black -font $nviztxtfont -padx 3 -anchor w
+			grid $w.v$row	-row $row -column 1 -columnspan 1 -sticky nswe
+			eval $row_val
+			grid $w.l$row	-row $row -column 2 -columnspan 1 -sticky nswe
 
-		frame $w.delete -borderwidth 2 -relief groove
-			label $w.delete.l -text "Erase LUT from
-current session
-(file not deleted)" -pady 2
-			pack $w.delete.l -side top
-			button $w.delete.b -text "Delete" -command "site_attr_lut_destroy $_lut_id"
-			pack $w.delete.b -side top -pady 1
-		pack $w.delete -pady 1 -padx 0 -fill x -side top
+			incr row
+		}
+	pack $w -pady 1 -padx 0 -side top
 
-		set sf [scrollframe_create $w.f]
-			set w [scrollframe_interior $sf]
-
-			set row 0
-			foreach elt $site_attr($_lut_id.XLIST) val $site_attr($_lut_id.YLIST) {
-				label $w.n$row -text "$row" -relief groove -borderwidth 1 -anchor w
-				grid $w.n$row	-row $row -column 0 -columnspan 1 -sticky nswe
-				label $w.v$row -text "$elt" -relief groove -borderwidth 1 -anchor w
-				grid $w.v$row	-row $row -column 1 -columnspan 1 -sticky nswe
-				eval $row_val
-				grid $w.l$row	-row $row -column 2 -columnspan 1 -sticky nswe
-
-				incr row
-			}
-		pack $sf -pady 1 -padx 0 -side top -fill y
-
-	pack $win.left -side left -pady 2
+	pack $win.left -side left -pady 2 -padx 3
 
 	if {$site_attr($_lut_id.ATTR) == "color"} {
 		set w $win.right
 		lut_create_canvas $w $site_attr($_lut_id.VALUES_LIST) $site_attr($_lut_id.LUT_LIST) 300 140 260 40 7 v
-		pack $w -side right -padx 2
+		pack $w -side left -padx 3
 	}
 
 	trace variable site_attr($_lut_id.NAME) w "site_attr_lut_update_win $win.left.name"
@@ -1497,7 +1498,7 @@ proc site_attr_lut_menu {_win} {
 
 	set m $_win.lut_menu
 	catch {destroy $m}
-	menubutton $m -menu $m.m -relief raised -indicatoron 1 -bd 2 -text "Open LUT"
+	menubutton $m -menu $m.m -relief raised -indicatoron 1 -bd 1 -text "Load Thematic Prefs"
 	bind $m <Destroy> "site_attr_lut_menu_destroy %W"
 
 	menu $m.m -tearoff 0
@@ -1581,7 +1582,7 @@ proc site_attr_lut_menu_index {_lut_id} {
 proc site_attr_lut_save {_lut_id} {
 	global site_attr
 
-	set filename [tk_getSaveFile -initialdir $site_attr(LUT_DIR) -initialfile $site_attr($_lut_id.NAME) -filetypes $site_attr(LUT_FILETYPES) -title "Save LUT"]
+	set filename [tk_getSaveFile -initialdir $site_attr(LUT_DIR) -initialfile $site_attr($_lut_id.NAME) -filetypes $site_attr(LUT_FILETYPES) -title "Save thematic prefs"]
 
 	if {$filename != ""} {
 		if {[file exists $filename]} {
@@ -1611,7 +1612,7 @@ proc site_attr_lut_write {_lut_id _filename} {
 	close $fileId
 
 	set site_attr($_lut_id.NAME) [site_attr_lut_name_from_file $_filename]
-	puts "LUT \"$name\" saved"
+	puts "Thematic preferences file \"$name\" saved"
 }
 
 
@@ -1620,18 +1621,18 @@ proc site_attr_lut_load {{filename ""}} {
 	global site_attr
 
 	if {$filename == ""} {
-		set filename [tk_getOpenFile -initialdir $site_attr(LUT_DIR) -filetypes $site_attr(LUT_FILETYPES) -title "Load LUT"]
+		set filename [tk_getOpenFile -initialdir $site_attr(LUT_DIR) -filetypes $site_attr(LUT_FILETYPES) -title "Load thematic prefs"]
 	}
 
 	if {$filename == ""} {return}
 
 	if {![file exists $filename]} {
-		puts "*** WARNING *** File $filename is unreachable"
+		puts "*** WARNING *** File $filename is unavailable"
 		return ""
 	}
 
 	if {[site_attr_lut_read $filename] < 5} {
-		puts "*** ERROR *** Some LUT component are missing in file \"$filename\""
+		puts "*** ERROR *** Some thematic pref component are missing in file \"$filename\""
 		return ""
 	}
 
