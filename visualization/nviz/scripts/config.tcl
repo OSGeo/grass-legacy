@@ -1,13 +1,19 @@
 # This script is setup by the toplevel configure shell script at
-# installation time
+# installation time - new
 
- global src_boot
- global ProcessName
+lappend auto_path $env(GISBASE)/bwidget
+package require BWidget
 
- set gisbase $env(GISBASE)
- set default_panel_path "$gisbase/etc/nviz2.2/scripts"
- set bit_map_path "$gisbase/etc/nviz2.2/bitmaps"
- set nv_path "$gisbase/etc/nviz2.2"
+global src_boot
+global ProcessName
+global nviztxtfont
+
+set nviztxtfont {-*-helvetica-medium-r-normal-*-12-*-iso8859-1}
+
+set gisbase $env(GISBASE)
+set default_panel_path "$gisbase/etc/nviz2.2/scripts"
+set bit_map_path "$gisbase/etc/nviz2.2/bitmaps"
+set nv_path "$gisbase/etc/nviz2.2"
 
 #Get ProcessName varaible set from nviz2.2_script
  set ProcessName $env(NV_processname)
@@ -59,12 +65,30 @@ source $src_boot/etc/nviz2.2/scripts/extra_bindings.tcl
 option add *background gray90 widgetDefault
 option add *activeBackground gray80 widgetDefault
 option add *font -*-helvetica-medium-r-normal-*-12-*-iso8859-1 widgetDefault
-option add *Label*font -*-helvetica-bold-r-normal-*-12-*-iso8859-1 widgetDefault
-option add *Radiobutton*relief flat
-option add *Checkbutton*relief flat
-option add *Scrollbar*troughcolor gray90 widgetDefault
-option add *Scrollbar*background gray90 widgetDefault
-option add *Scrollbar*activeBackground gray99 widgetDefault
+option add *Label.font -*-helvetica-bold-r-normal-*-12-*-iso8859-1
+option add *label.font -*-helvetica-medium-r-normal-*-12-*-iso8859-1
+option add *Label.foreground "medium blue"
+option add *label.foreground "black"
+option add *Radiobutton.relief flat
+option add *Checkbutton.relief flat
+option add *Scrollbar.troughcolor gray90 widgetDefault
+option add *Scrollbar.background gray90 widgetDefault
+option add *Scrollbar.activeBackground gray99 widgetDefault
+option add *entry.background white
+option add *entry.relief sunken
+option add *Entry.relief sunken
+option add *Radiobutton.highlightThickness 0
+option add *Checkbutton.highlightThickness 0
+option add *highlightThickness 0
+option add *Scale.troughColor grey70 widgetDefault
+option add *SpinBox.entrybg "white"
+option add *ComboBox.entrybg "white"
+option add *ComboBox.labelfont $nviztxtfont
+option add *menubutton.relief raised
+option add *menubutton.indicatoron 1
+option add *menubutton.borderwidth 1
+option add *button.borderWidth 1
+
 
 
 
