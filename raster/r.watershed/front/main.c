@@ -332,14 +332,16 @@ int main(int argc, char *argv[])
 /* record map history info*/
 int write_hist(char *map_name, char *title, char *source_name, int mode) {
     struct History history;
+    struct Categories cats;
+
+    G_read_cats(map_name, G_mapset(), &cats);
+    G_set_cats_title(title, &cats);
+    G_write_cats(map_name, &cats);
+    G_free_cats(&cats);
 
     G_short_history(map_name, "raster", &history);
-
-    strcpy(history.title, title);
-
     strncpy(history.datsrc_1, source_name, RECORD_LEN);
     history.datsrc_1[RECORD_LEN-1] = '\0'; /* strncpy() doesn't null terminate if maxfill */
-
     sprintf(history.edhist[0],
 	"Processing mode: %s", mode ? "Segmented" : "All in RAM");
     history.edlinecnt = 1;
