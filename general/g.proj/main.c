@@ -59,7 +59,12 @@ int main(int argc, char *argv[])
     module = G_define_module();
     module->keywords = _("general");
     module->description =
+#ifdef HAVE_OGR
+	_("Converts co-ordinate system descriptions (i.e. projection "
+	  "information) between various formats (including GRASS format).");
+#else
 	_("Prints and manipulates GRASS projection information files.");
+#endif   
 
     printinfo = G_define_flag();
     printinfo->key = 'p';
