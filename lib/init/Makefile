@@ -53,6 +53,7 @@ default: $(ARCH_BINDIR)/$(START_UP) \
 	$(ETC)/gintro.gif \
 	$(ETC)/make_location_epsg.sh \
 	$(ETC)/grass-run.sh \
+	$(ETC)/grass-run.bat \
 	$(ETC)/grass-xterm-wrapper
 	$(MKDIR) $(GISBASE)/docs/html
 	$(INSTALL) -m 644 variables.html $(GISBASE)/docs/html/variables.html
@@ -163,6 +164,9 @@ $(ETC)/grass-run.sh: grass-run.src
 	-e \"s#LD_LIBRARY_PATH_VAR#$(LD_LIBRARY_PATH_VAR)#g\" \
 	grass-run.src > $@"
 	chmod +x $@
+
+$(ETC)/grass-run.bat: grass-run.bat
+	$(INSTALL) grass-run.bat $(ETC)
 
 $(ETC)/grass-xterm-wrapper: grass-xterm-wrapper
 	$(INSTALL) -m 755 grass-xterm-wrapper $(ETC)
