@@ -1,5 +1,4 @@
 #!/bin/sh
-#
 ############################################################################
 #
 # MODULE:	v.in.sites.all
@@ -15,12 +14,12 @@
 #############################################################################
 
 #%Module
-#%  description: convert all old GRASS < V5.7 sites maps to vector maps in current mapset
-#%  keywords: sites, vector, import
+#% description: Convert all old GRASS < Ver5.7 sites maps in current mapset to vector maps
+#% keywords: sites, vector, import
 #%End
 #%flag
-#%  key: r
-#%  description: run non-interactively
+#% key: r
+#% description: unused
 #%end
 
 if test "$GISBASE" = ""; then
@@ -28,9 +27,10 @@ if test "$GISBASE" = ""; then
     exit 1
 fi
 
-if [ $# -eq 0 ] || [ $1 = "-h" -o $1 = "help" -o $1 = "-help" -o $1 = "--help" ] ; then
+# skip parser if no args are given
+if [ "$#" -gt 0 ] ; then
   if [ "$1" != "@ARGS_PARSED@" ] ; then
-     exec g.parser "$0" "$@"
+    exec g.parser "$0" "$@"
   fi
 fi
 
@@ -47,19 +47,21 @@ do
   OUTPUT=`echo $INPUT | sed 's+\.+_+g'`_points
 
   #do it:
-  echo "Processing $INPUT -> $OUTPUT"
+  echo "Processing $INPUT -> $OUTPUT" >&2
   v.in.sites in=$INPUT out=$OUTPUT
   if [ $? -ne 0 ] ; then
-    echo "ERROR converting map $INPUT to $OUTPUT"
+    echo "ERROR converting map $INPUT to $OUTPUT" >&2
   else
     CONVERTEDMAPS=`expr $CONVERTEDMAPS + 1`
   fi
 done
 
 if [ $CONVERTEDMAPS -lt 1 ] ; then
-  echo "No sites maps converted as no old sites maps present in current mapset <$MAPSET>."
+  echo "No sites maps converted as no old sites maps present in current mapset <$MAPSET>." >&2
 else
-  echo "Total $CONVERTEDMAPS number of sites maps in current mapset converted to vector maps (original names extended by '_points'). Please verify new vector map(s) before deleting old sites map(s)."
+  echo "Total $CONVERTEDMAPS number of sites maps in current mapset converted to vector" >&2
+  echo "maps (original names extended by '_points'). Please verify new vector map(s)" >&2
+  echo "before deleting old sites map(s)." >&2
 fi
 
 exit 0

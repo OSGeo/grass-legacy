@@ -15,12 +15,12 @@
 #############################################################################
 
 #%Module
-#%  description: convert all old GRASS < V5.7 vector maps in current mapset to current format
+#%  description: Convert all old GRASS < Ver5.7 vector maps in current mapset to current format
 #%  keywords: vector, import
 #%end
 #%flag
 #%  key: r
-#%  description: run non-interactively
+#%  description: unused
 #%end
 
 if test "$GISBASE" = ""; then
@@ -28,11 +28,13 @@ if test "$GISBASE" = ""; then
     exit 1
 fi
 
-if [ $# -eq 0 ] || [ $1 = "-h" -o $1 = "help" -o $1 = "-help" -o $1 = "--help" ] ; then
+# skip parser if no args are given
+if [ "$#" -gt 0 ] ; then
   if [ "$1" != "@ARGS_PARSED@" ] ; then
-     exec g.parser "$0" "$@"
+    exec g.parser "$0" "$@"
   fi
 fi
+
 
 eval `g.gisenv`
 : ${GISBASE?} ${GISDBASE?} ${LOCATION_NAME?} ${MAPSET?}
@@ -49,16 +51,17 @@ do
   #do it:
   v.convert in=$INPUT out=$OUTPUT
   if [ $? -ne 0 ] ; then
-    echo "ERROR converting map $INPUT to $OUTPUT"
+    echo "ERROR converting map $INPUT to $OUTPUT" >&2
   else
     CONVERTEDMAPS=`expr $CONVERTEDMAPS + 1`
   fi
 done
 
 if [ $CONVERTEDMAPS -lt 1 ] ; then
-  echo "No vector maps converted as no old vector maps present in current mapset <$MAPSET>."
+  echo "No vector maps converted as no old vector maps present in current mapset <$MAPSET>." >&2
 else
-  echo "Total $CONVERTEDMAPS number of vector maps in current mapset converted. Please verify new vector map(s) before deleting old vector map(s)."
+  echo "Total $CONVERTEDMAPS number of vector maps in current mapset converted." >&2
+  echo "Please verify new vector map(s) before deleting old vector map(s)." >&2
 fi
 
 exit 0
