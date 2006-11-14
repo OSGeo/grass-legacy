@@ -16,7 +16,7 @@
 #############################################################################
 
 #%Module
-#%  description: r.mapcalculator - Calculates new raster map from r.mapcalc expression
+#% description: Calculates new raster map from a r.mapcalc expression
 #%End
 #%option
 #% key: amap
