@@ -41,12 +41,13 @@ int G_set_program_name(const char *s)
     i = strlen (s);
     while (--i >= 0)
     {
-	if (s[i] == '/')
+	if (G_is_dirsep(s[i]))
 	{
 	    s += i+1;
 	    break;
 	}
     }
+    G_basename(s, "exe");
     name = G_store (s);
 
     return 0;
