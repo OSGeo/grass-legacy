@@ -90,8 +90,8 @@ htmlgen:
 htmldesc = \
 	GISRC=$(RUN_GISBASE)/demolocation/.grassrc${GRASS_VERSION_MAJOR}${GRASS_VERSION_MINOR} \
 	GISBASE=$(RUN_GISBASE) \
-	PATH=$(BIN):$$PATH \
-	$(LD_LIBRARY_PATH_VAR)="$(ARCH_LIBDIR):$($(LD_LIBRARY_PATH_VAR))" \
+	PATH="$(BIN):$$PATH" \
+	$(LD_LIBRARY_PATH_VAR)="$(BIN):$(ARCH_LIBDIR):$($(LD_LIBRARY_PATH_VAR))" \
 	LC_ALL=C $(1) --html-description | grep -v '</body>\|</html>' > $(PGM).tmp.html ; true
 
 # html rules for cmd commands
