@@ -5,14 +5,21 @@ include $(MODULE_TOPDIR)/include/Make/Platform.make
 include $(MODULE_TOPDIR)/include/Make/Grass.make
 include $(MODULE_TOPDIR)/include/Make/Rules.make
 
-PROGDIR =  $(ARCH_DISTDIR)/scripts/
+PROGDIR =  $(ARCH_DISTDIR)/scripts
 
-script: $(PROGDIR)/$(PGM) htmlscript scriptstrings
+SCRIPT_ACTIONS = $(PROGDIR)/$(PGM) htmlscript scriptstrings
+ifdef MINGW
+SCRIPT_ACTIONS += $(BIN)/$(PGM).bat
+endif
+
+script: $(SCRIPT_ACTIONS)
 
 $(PROGDIR)/$(PGM): $(PGM)
 	if [ ! -d $(PROGDIR) ]; then mkdir $(PROGDIR); fi
-	cp $(PGM) $(PROGDIR)
-	chmod 0755 $(PROGDIR)/$(PGM)
+	$(INSTALL) $(PGM) $(PROGDIR)/$(PGM)
+	
+$(BIN)/$(PGM).bat: $(GRASS_HOME)/scripts/windows_launch.bat
+	sed -e "s#SCRIPT_NAME#$(PGM)#" $(GRASS_HOME)/scripts/windows_launch.bat > $@
 
 # Make strings in a fake .c file so that they get picked up by the internationalizer stuff.
 # These are only the options (parser.c) type things.

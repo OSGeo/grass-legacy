@@ -19,7 +19,7 @@
 #
 #############################################################################
 
-if {[info exists env(MSYSCON)]} {
+if {[info exists env(OS)] && $env(OS) == "Windows_NT"} {
 	set mingw "1"
 } else {
 	set mingw "0"

@@ -333,19 +333,13 @@ proc GRMap::group { } {
     variable xyloc
     variable xymset
     variable maptype
-    global mingw
 
 
     if { $maptype == "rast" } {
         # First, switch to xy mapset
         GRMap::setxyenv $xymset $xyloc
 		set cmd "i.group"
-    	if { $mingw == "1" } {
-			# shell scripts for MSys
-			catch {exec -- sh -c '$cmd '}
-		} else {
-			catch {exec -- $cmd --ui}
-		}
+        catch {exec -- $cmd --ui }
 
         # Return to georectified mapset
         GRMap::resetenv

@@ -29,6 +29,11 @@ trap "echo 'User break!' ; exit" 2 3 15
 GRASS_PERL=PERL_COMMAND
 export GRASS_PERL
 
+# GRASS_SH is normally just for Windows when not started from a bourne 
+# shell. But when starting from Init.sh is still needed for Tcl/Tk.
+GRASS_SH=/bin/sh
+export GRASS_SH
+
 # Set GRASS version number for R interface etc (must be an env_var for MS-Windows)
 GRASS_VERSION="GRASS_VERSION_NUMBER"
 export GRASS_VERSION

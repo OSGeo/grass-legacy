@@ -430,12 +430,9 @@ proc Gronsole::execout {path cmd ci execcmd} {
 	set mark cmdinsert$ci
 
 	# Actually run the program
-	if { $mingw == "1" } {
-		# shell scripts require sh.exe.
-		set cmd [concat | sh -c '$cmd']
-	} else {
-		set cmd [concat | $cmd 2>@ stdout]
-	}
+	# |& grocat merges stdout and stderr because Tcl treats
+	# anything written to stderr as an error condition
+	set cmd [concat | $cmd |& $env(GISBASE)/etc/grocat]
 
 	set message_env [exec g.gisenv get=GRASS_MESSAGE_FORMAT]
         set env(GRASS_MESSAGE_FORMAT) gui
