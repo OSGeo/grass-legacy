@@ -425,7 +425,6 @@ proc Gronsole::execwait {path ci mark fh} {
 
 proc Gronsole::execout {path cmd ci execcmd} {
 	global env
-	global mingw
 
 	set mark cmdinsert$ci
 
@@ -498,10 +497,15 @@ proc Gronsole::run_wait {path cmd tags} {
 
 proc Gronsole::run_xterm {path cmd tags} {
 	global env
+	global mingw
 
 	Gronsole::annotate $path $cmd [concat xterm $tags]
 
-	exec -- $env(GISBASE)/etc/grass-xterm-wrapper -name xterm-grass -e $env(GISBASE)/etc/grass-run.sh $cmd &
+	if { $mingw == "1" } {
+	    exec -- cmd.exe /c start $env(GISBASE)/etc/grass-run.bat $cmd &
+	} else {
+	    exec -- $env(GISBASE)/etc/grass-xterm-wrapper -name xterm-grass -e $env(GISBASE)/etc/grass-run.sh $cmd &
+	}
 
 	update idletasks
 }
