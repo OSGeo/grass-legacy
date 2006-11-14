@@ -14,14 +14,21 @@
 #############################################################################
 
 #%Module
-#%  description: redraw current displayed maps in GRASS monitor
-#%  keywords: display
+#% description: Redraws the current display frame in the GRASS monitor
+#% keywords: display
 #%End
 
-#GUI is not very useful here, commented:
-#if [ "$1" != "@ARGS_PARSED@" ] ; then
-#  exec g.parser "$0" "$@"
-#fi
+if [ -z "$GISBASE" ] ; then
+    echo "You must be in GRASS GIS to run this program." 1>&2
+    exit 1
+fi
+
+# GUI is not very useful here, skip it if no args are given
+if [ "$#" -gt 0 ] ; then
+  if [ "$1" != "@ARGS_PARSED@" ] ; then
+    exec g.parser "$0" "$@"
+  fi
+fi
 
 dsave=`d.save -o`
 # With -x flag, d.redraw behaves as if it actually stops and restarts monitor,
