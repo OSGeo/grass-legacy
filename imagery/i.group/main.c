@@ -51,7 +51,7 @@ int main(int argc, char *argv[])
     rast = G_define_option();
     rast->key = "input";
     rast->type = TYPE_STRING;
-    rast->required = NO;   /* why is it NO ?? */
+    rast->required = NO;   /* why is it NO? so the -list flag is easy. */
     rast->multiple = YES;
     rast->gisprompt = "old,cell,raster";
     rast->description = _("Name of raster(s) to include in group");
