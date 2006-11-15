@@ -97,15 +97,15 @@ main (int argc, char *argv[])
     dsn_opt->key = "dsn";
     dsn_opt->type =  TYPE_STRING;
     dsn_opt->required = YES;
-    dsn_opt->description = _("OGR datasource name.\n"
-			   "\t\tESRI Shapefile: directory containing shapefiles\n"
-			   "\t\tMapInfo File: directory containing mapinfo files");
+    dsn_opt->description = _("OGR output datasource name. For example:\n"
+			   "\t\tESRI Shapefile: filename or directory for storage\n"
+			   "\t\tMapInfo File: filename or directory for storage");
 
     layer_opt = G_define_option();
     layer_opt->key = "olayer";
     layer_opt->type = TYPE_STRING;
-    layer_opt->required = YES;
-    layer_opt->description = _("OGR layer name.\n"
+    layer_opt->required = NO;
+    layer_opt->description = _("OGR layer name. If not specified, input name is used.\n"
 			   "\t\tESRI Shapefile: shapefile name\n"
 			   "\t\tMapInfo File: mapinfo file name");
     
@@ -157,7 +157,10 @@ main (int argc, char *argv[])
     
     /* Check output type */
     otype = Vect_option_to_types ( type_opt ); 
-
+    
+    if (! layer_opt->answer)
+       layer_opt->answer = G_store(in_opt->answer);
+    
     if ( otype & GV_POINTS ) wkbtype = wkbPoint;
     else if ( otype & GV_LINES ) wkbtype = wkbLineString;
     else if ( otype & GV_AREA ) wkbtype = wkbPolygon;
