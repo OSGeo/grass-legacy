@@ -985,7 +985,7 @@ int G_usage (void)
 	}
 
 	if (new_prompt)
-	        fprintf(stderr," --o   %s\n", _("Force overwrite of output files")) ;
+	    fprintf(stderr," --o   %s\n", _("Allow output files to overwrite existing files"));
 
         fprintf(stderr," --v   %s\n", _("Verbose module output")) ;
         fprintf(stderr," --q   %s\n", _("Quiet module output")) ;
@@ -1398,7 +1398,7 @@ static void G_usage_html (void)
 		if (new_prompt)
 		{
 			fprintf(stdout, "<DT><b>--overwrite</b></DT>\n");
-			fprintf(stdout, "<DD>Force overwrite of output files</DD>");
+			fprintf(stdout, "<DD>Allow output files to overwrite existing files</DD>");
 		}
 
                 fprintf(stdout, "<DT><b>--verbose</b></DT>\n");
@@ -1572,9 +1572,9 @@ static void generate_tcl(FILE *fp)
 	{
 		fprintf(fp, "add_xflag %d {\n", optn);
 		fprintf(fp, " name {overwrite}\n");
-		fprintf(fp, " desc {Force overwrite of output files}\n");
+		fprintf(fp, " desc {Allow output files to overwrite existing files}\n");
 		fprintf(fp, " answer %d\n", overwrite);
-		fprintf(fp, " label {Overwrite}\n");
+		fprintf(fp, " label {Allow overwrite}\n");
 		fprintf(fp, " guisection {}\n");
 		fprintf(fp, "}\n");
 		optn++;
