@@ -9,7 +9,6 @@
 #include <math.h>
 
 GLOBAL struct Cell_head window;
-GLOBAL int verbose INIT(0);
 
 GLOBAL char *maps[2];
 GLOBAL char *output;

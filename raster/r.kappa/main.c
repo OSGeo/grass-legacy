@@ -62,6 +62,7 @@ int main (int argc, char **argv)
  flags.w->key = 'w';
  flags.w->description = _("wide report, 132 columns (default: 80)");
 
+/* please, remove before GRASS 7 released */
  flags.q = G_define_flag();
  flags.q->key	= 'q';
  flags.q->description = _("quiet");
@@ -83,10 +84,10 @@ int main (int argc, char **argv)
  if (parms.output->answer) {
    output=parms.output->answer;
    if (G_legal_filename (output) < 0) {
-     fprintf (stderr, "\nERROR: <%s> - illegal output file name\n", 
+     G_warning (_("<%s> - illegal output file name"), 
 	parms.output->answer);
      G_usage();
-     exit(1);
+     exit(EXIT_FAILURE);
    }
  }
  else
@@ -94,7 +95,13 @@ int main (int argc, char **argv)
 
  title = parms.titles->answer;
 
- verbose = !flags.q->answer;
+/* please, remove before GRASS 7 released */
+ if(flags.q->answer) {
+        G_putenv("GRASS_VERBOSE","0");
+        G_warning(_("The '-q' flag is superseded and will be removed "
+            "in future. Please use '--quiet' instead."));
+    }
+
 
 /* run r.stats to obtain statistics of map layers */
  stats();

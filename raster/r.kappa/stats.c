@@ -36,7 +36,6 @@ int stats(void)
 
   stats_file = G_tempfile();
   strcpy (buf, "r.stats -cin");
-  if (!verbose) strcat(buf, "q");
   strcat (buf, " fs=:");
   strcat (buf, " input=");
   strcat (buf, G_fully_qualified_name(maps[0], mmapset));

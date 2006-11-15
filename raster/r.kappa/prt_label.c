@@ -1,3 +1,4 @@
+#include <grass/glocale.h>
 #include "kappa.h"
 #include "local_proto.h"
 
@@ -13,7 +14,7 @@ void prt_label(void)
     fd = stdout;
   else
     if ((fd = fopen (output, "a")) == NULL) {
-      fprintf (stderr, "ERROR: can't open file <%s> to write label\n",
+      G_fatal_error (_( "Can't open file <%s> to write label"),
 	      output);
       return;
     }
