@@ -10,8 +10,11 @@ The upload column into which the query results are stored must be present
 in the vector point map or added with <em>v.db.addcol</em>.
 <p>
 This module only uploads attributes which exist at the exact positions of
-the input points. For a "nearest feature" fit use <em>v.distance</em> 
-
+the input points. For a "nearest feature" fit use <em>v.distance</em> instead.
+<P>
+In case of a multipoint input map (several points having the same category number),
+it can happen that the query result is NULL if the same category number
+falls into different polygons.
 
 <h2>EXAMPLE</h2>
 
