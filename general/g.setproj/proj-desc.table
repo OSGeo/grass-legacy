@@ -40,4 +40,4 @@ TILT:float:tilt:Tilt Angle in Decimal Degrees
 WFACT:float:W:W factor
 X0:float:x_0:False Easting
 Y0:float:y_0:False Northing
-ZONE:int:zone:Projection Zone
+ZONE:zone:zone:Projection Zone
