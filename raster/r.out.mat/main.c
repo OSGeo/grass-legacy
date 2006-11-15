@@ -41,7 +41,7 @@ int main(int argc, char *argv[]) {
     float val_f;	/* for misc use */
     double val_d;	/* for misc use */
 
-    char *infile, *outfile, *mapset, *maptitle;
+    char *infile, *outfile, *mapset, *maptitle, *basename;
     struct Cell_head region;
     void *raster, *ptr;
     RASTER_MAP_TYPE map_type;
@@ -57,53 +57,51 @@ int main(int argc, char *argv[]) {
     G_gisinit(argv[0]);
 
     module = G_define_module();
-    module->keywords = _("raster");
+    module->keywords = _("raster, export");
     module->description =
          _("Exports a GRASS raster to a binary MAT-File.");
 
     /* Define the different options */
 
-    inputfile = G_define_option() ;
-    inputfile->key        = "input";
-    inputfile->type       = TYPE_STRING;
-    inputfile->required   = YES;
-    inputfile->gisprompt  = "old,cell,raster" ;
-    inputfile->description= _("Name of an existing raster map") ;
+    inputfile = G_define_standard_option(G_OPT_R_INPUT);
 
     outputfile = G_define_option() ;
     outputfile->key        = "output";
     outputfile->type       = TYPE_STRING;
     outputfile->required   = YES;
-    outputfile->description= _("Name for the output binary MAT-File") ;
+    outputfile->gisprompt  = "new_file,file,output";
+    outputfile->description= _("Name for the output binary MAT-File");
 
     verbose = G_define_flag();
     verbose->key = 'v';
     verbose->description = _("Verbose mode");
 
-
     if (G_parser(argc,argv))
-	exit(1);
+	exit(EXIT_FAILURE);
 
 
     infile = inputfile->answer;
-    outfile = outputfile->answer;
+
+    basename = G_store(outputfile->answer);
+    G_basename(basename, "mat");
+    outfile = G_malloc(strlen(basename) + 5);
+    sprintf(outfile, "%s.mat", basename);
 
     mapset = G_find_cell(infile, "");
-
     if (mapset == NULL) {
-        G_fatal_error(_("raster <%s> not found"), infile);
+        G_fatal_error(_("Raster map <%s> not found"), infile);
     }
 
     fd = G_open_cell_old (infile, mapset);
     if (fd < 0)
-        G_fatal_error(_("unable to open <%s>"), infile);
+        G_fatal_error(_("Unable to open raster map <%s>"), infile);
 
     map_type = G_get_raster_map_type(fd);
 
     /* open bin file for writing */
     fp1 = fopen(outfile, "wb");
     if(NULL == fp1)
-       G_fatal_error("unable to open output file <%s>", outfile);
+       G_fatal_error(_("Unable to open output file <%s>"), outfile);
 
 
     /* Check Endian State of Host Computer*/
@@ -387,5 +385,9 @@ int main(int argc, char *argv[]) {
 	fprintf(stderr, "\n%ld bytes written to '%s'.\n", filesize, outfile);
 
     G_done_msg("");
-    return 0;
+
+    G_free(basename);	
+    G_free(outfile);
+
+    exit(EXIT_SUCCESS);
 }
