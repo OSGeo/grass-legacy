@@ -37,6 +37,8 @@ detailed <a href="#files">below</a>.
 <br>&nbsp;&nbsp;Bash:&nbsp;&nbsp;&nbsp;&nbsp; <tt>export VARIABLE=value</tt>
 <br>&nbsp;&nbsp;&nbsp;or
 <br>&nbsp;&nbsp;Csh:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <tt>setenv VARIABLE value</tt>
+<br>&nbsp;&nbsp;&nbsp;or
+<br>&nbsp;&nbsp;Cmd.exe (Windows): <tt>set VARIABLE=value</tt>
 
 <h2>Setting environment variables permanently</h2>
 <ul>
@@ -144,12 +146,17 @@ d.mon x0).
 <br>Maybe set to either "less" or "more"
 
 <p>GRASS_PERL
+<br>[Used during install process for generating man pages]
 <br>&nbsp; set perl with path
 
 <!-- HB Sept 2005: I don't think this exists anymore:
 <p>GRASS_STDERR
 <br>&nbsp; set to any value to prevent user mail on error
 -->
+
+<p>GRASS_SH
+<br>[shell scripts on Windows]
+<br>Path to bourne shell interpreter used to run shell scripts
 
 <p>GRASS_TCLSH
 <br>[nviz]
