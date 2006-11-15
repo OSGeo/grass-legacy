@@ -194,7 +194,7 @@ main (int argc, char *argv[])
 
     over_flag = G_define_flag();
     over_flag->key = 'o';
-    over_flag->description = _("Override projection (use location's projection)");
+    over_flag->description = _("Override dataset projection (use location's projection)");
 
     extend_flag = G_define_flag();
     extend_flag->key = 'e';
@@ -453,7 +453,7 @@ main (int argc, char *argv[])
 	    {
                 if( loc_proj_info != NULL )
                 {
-                    strcat( error_msg, "LOCATION PROJ_INFO is:\n" );
+                    strcat( error_msg, "GRASS LOCATION PROJ_INFO is:\n" );
                     for( i_value = 0; i_value < loc_proj_info->nitems; i_value++ )
                         sprintf( error_msg + strlen(error_msg), "%s: %s\n",
                                  loc_proj_info->key[i_value],
@@ -463,7 +463,7 @@ main (int argc, char *argv[])
 
                 if( proj_info != NULL )
                 {
-                    strcat( error_msg, "Dataset PROJ_INFO is:\n" );
+                    strcat( error_msg, "Import dataset PROJ_INFO is:\n" );
                     for( i_value = 0; i_value < proj_info->nitems; i_value++ )
                         sprintf( error_msg + strlen(error_msg), "%s: %s\n",
                                  proj_info->key[i_value],
@@ -471,31 +471,32 @@ main (int argc, char *argv[])
                 }
                 else
                 {
-                    if( cellhd.proj == PROJECTION_XY )
+                    strcat( error_msg, "Import dataset PROJ_INFO is:\n" );
+		    if( cellhd.proj == PROJECTION_XY )
                         sprintf( error_msg + strlen(error_msg),
-                                 "cellhd.proj = %d (unreferenced/unknown)\n",
+                                 "Dataset proj = %d (unreferenced/unknown)\n",
                                  cellhd.proj );
                     else if( cellhd.proj == PROJECTION_LL )
                         sprintf( error_msg + strlen(error_msg),
-                                 "cellhd.proj = %d (lat/long)\n",
+                                 "Dataset proj = %d (lat/long)\n",
                                  cellhd.proj );
                     else if( cellhd.proj == PROJECTION_UTM )
                         sprintf( error_msg + strlen(error_msg),
-                                 "cellhd.proj = %d (UTM), zone = %d\n",
+                                 "Dataset proj = %d (UTM), zone = %d\n",
                                  cellhd.proj, cellhd.zone );
                     else if( cellhd.proj == PROJECTION_SP )
                         sprintf( error_msg + strlen(error_msg),
-                                 "cellhd.proj = %d (State Plane), zone = %d\n",
+                                 "Dataset proj = %d (State Plane), zone = %d\n",
                                  cellhd.proj, cellhd.zone );
                     else
                         sprintf( error_msg + strlen(error_msg),
-                                 "cellhd.proj = %d (unknown), zone = %d\n",
+                                 "Dataset proj = %d (unknown), zone = %d\n",
                                  cellhd.proj, cellhd.zone );
                 }
 	    }else{
                 if( loc_proj_units != NULL )
                 {
-                    strcat( error_msg, "LOCATION PROJ_UNITS is:\n" );
+                    strcat( error_msg, "GRASS LOCATION PROJ_UNITS is:\n" );
                     for( i_value = 0; i_value < loc_proj_units->nitems; i_value++ )
                         sprintf( error_msg + strlen(error_msg), "%s: %s\n",
                                  loc_proj_units->key[i_value],
@@ -505,7 +506,7 @@ main (int argc, char *argv[])
 
                 if( proj_units != NULL )
                 {
-                    strcat( error_msg, "Dataset PROJ_UNITS is:\n" );
+                    strcat( error_msg, "Import dataset PROJ_UNITS is:\n" );
                     for( i_value = 0; i_value < proj_units->nitems; i_value++ )
                         sprintf( error_msg + strlen(error_msg), "%s: %s\n",
                                  proj_units->key[i_value],
@@ -513,7 +514,7 @@ main (int argc, char *argv[])
                 }
 	    }
             sprintf( error_msg + strlen(error_msg),
-    	             _("\nYou can use the -o flag to %s to override this check.\n"),
+    	             _("\nYou can use the -o flag to %s to override this projection check.\n"),
     	    	     G_program_name() );
             strcat( error_msg,
              _("Consider to generate a new location with 'location' parameter"
