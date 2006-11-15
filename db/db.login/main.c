@@ -69,7 +69,7 @@ main(int argc, char *argv[])
 	  } else {
 	     G_message(_("New password set."));
 	     password->answer = G_store(answer);
-	     return -1;
+	     break;
 	  }
 	}
     }
