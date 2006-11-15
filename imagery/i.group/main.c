@@ -100,7 +100,7 @@ int main(int argc, char *argv[])
 
 	    if (sgrp->answer) {
                 /* list subgroup files */
-                I_get_group_ref(grp->answer, &ref);
+                I_get_subgroup_ref(grp->answer, sgrp->answer, &ref);
                 I_list_subgroup(grp->answer, sgrp->answer, &ref, stdout);
 	    } else {
                 /* list group files */
