@@ -1,5 +1,6 @@
 #include <stdlib.h>
 #include <grass/gis.h>
+#include <grass/glocale.h>
 #include "kappa.h"
 #include "local_proto.h"
 
@@ -35,8 +36,7 @@ void prn_error_mat(int out_cols, int hdr)
     fd = stdout;
 
   if (fd == NULL) {
-    fprintf (stderr,
-	"ERROR: can't open file <%s> to write cats and counts (error matrix)\n",
+    G_fatal_error (_("Can't open file <%s> to write cats and counts (error matrix)"),
 	output);
     return;
   }

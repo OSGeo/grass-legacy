@@ -1,4 +1,5 @@
 #include <string.h>
+#include <grass/glocale.h>
 #include "kappa.h"
 #include "local_proto.h"
 
@@ -14,7 +15,7 @@ void prn_header(void)
     fd = stdout;
   else
     if ((fd = fopen (output, "w")) == NULL) {
-      fprintf (stderr, "ERROR: can't open file <%s> to write header\n",
+      G_fatal_error (_("can't open file <%s> to write header"),
 	      output);
       return;
     }

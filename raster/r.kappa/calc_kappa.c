@@ -1,5 +1,6 @@
 #include <stdlib.h>
 #include <grass/gis.h>
+#include <grass/glocale.h>
 #include "kappa.h"
 #include "local_proto.h"
 
@@ -29,8 +30,7 @@ void calc_kappa(void)
     fd = stdout;
   else
     if ((fd = fopen (output, "a")) == NULL) {
-      fprintf (stderr,
-	"ERROR: can't open file <%s> to write kappa and relevant parameters\n",
+      G_fatal_error (_("Can't open file <%s> to write kappa and relevant parameters"),
 	output);
       return;
     }
