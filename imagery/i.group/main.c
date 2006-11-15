@@ -24,7 +24,7 @@ int main(int argc, char *argv[])
     int m, k=0;
 
     struct Option *grp, *rast, *sgrp;
-    struct Flag *r, *l;
+    struct Flag *r, *l, *simple_flag;
     struct GModule *module;
 
     G_gisinit(argv[0]);
@@ -32,7 +32,7 @@ int main(int argc, char *argv[])
     module = G_define_module();
     module->keywords = _("imagery");
     module->description =
-	_("Creates and edits groups and subgroups of imagery files.");
+	_("Creates, edits, and lists groups and subgroups of imagery files.");
 
     /* Get Args */
     grp = G_define_option();
@@ -62,10 +62,19 @@ int main(int argc, char *argv[])
 
     l = G_define_flag();
     l->key = 'l';
-    l->description = _("List files from specified (sub)group");
+    l->description = _("List files from specified (sub)group (fancy)");
+
+    simple_flag = G_define_flag();
+    simple_flag->key = 'g';
+    simple_flag->description = _("List files from specified (sub)group (simple)");
 
     if (G_parser(argc, argv))
 	exit(EXIT_FAILURE);
+
+
+    /* simple list implies list */
+    if( simple_flag->answer && !l->answer )
+	l->answer=TRUE;
 
     /* Determine number of files to include */
     if (rast->answers) {
@@ -99,13 +108,20 @@ int main(int argc, char *argv[])
             struct Ref ref;
 
 	    if (sgrp->answer) {
-                /* list subgroup files */
-                I_get_group_ref(grp->answer, &ref);
-                I_list_subgroup(grp->answer, sgrp->answer, &ref, stdout);
-	    } else {
-                /* list group files */
-                I_get_group_ref(grp->answer, &ref);
-                I_list_group(grp->answer, &ref, stdout);
+		/* list subgroup files */
+	 	I_get_subgroup_ref(grp->answer, sgrp->answer, &ref);
+		if(simple_flag->answer)
+		    I_list_subgroup_simple(&ref, stdout);
+		else
+		    I_list_subgroup(grp->answer, sgrp->answer, &ref, stdout);
+	    }
+	    else {
+		/* list group files */
+		I_get_group_ref(grp->answer, &ref);
+		if(simple_flag->answer)
+		    I_list_group_simple(&ref, stdout);
+		else
+		    I_list_group(grp->answer, &ref, stdout);
             }
 	}
 	else {
