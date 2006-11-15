@@ -43,6 +43,7 @@ int main( int argc, char *argv[])
 	struct GModule *module;
 	struct Option *rastin, *rastout, *method;
 	struct History history;
+	char title[64];
 	char buf_nsres[100], buf_ewres[100];
 	struct Colors colors;
 	char *inmap;
@@ -310,9 +311,12 @@ int main( int argc, char *argv[])
 	G_close_cell(infile);
 	G_close_cell(outfile);
 
+
 	/* record map metadata/history info */
+	sprintf(title, "Resample by %s interpolation", method->answer);
+	G_put_cell_title(rastout->answer, title);
+
 	G_short_history(rastout->answer, "raster", &history);
-	sprintf(history.title, "Resample by %s interpolation", method->answer);
 	strncpy(history.datsrc_1, rastin->answer, RECORD_LEN);
 	history.datsrc_1[RECORD_LEN-1] = '\0'; /* strncpy() doesn't null terminate if maxfill */
 	G_format_resolution(src_w.ns_res, buf_nsres, src_w.proj);

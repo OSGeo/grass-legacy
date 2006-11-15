@@ -40,6 +40,7 @@ int main(int argc, char *argv[])
 
     RASTER_MAP_TYPE rtype;
     struct History history;
+    char   title[64];
     void   *n_array, *min_array, *max_array, *sum_array, *sumsq_array;
     void   *raster_row, *ptr;
     struct Cell_head region;
@@ -596,6 +597,9 @@ int main(int argc, char *argv[])
 
     /* close raster file & write history */
     G_close_cell(out_fd);
+
+    sprintf(title, "Raw x,y,z data binned into a raster grid by cell %s", method_opt->answer);
+    G_put_cell_title(outmap, title);
 
     G_short_history(outmap, "raster", &history);
     G_command_history(&history);

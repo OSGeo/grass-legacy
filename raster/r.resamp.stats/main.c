@@ -238,6 +238,7 @@ int main( int argc, char *argv[])
 		struct Flag *nulls, *weight;
 	} flag;
 	struct History history;
+	char title[64];
 	char buf_nsres[100], buf_ewres[100];
 	struct Colors colors;
 	char *inmap;
@@ -343,8 +344,10 @@ int main( int argc, char *argv[])
 	G_close_cell(outfile);
 
 	/* record map metadata/history info */
+	sprintf(title, "Aggregate resample by %s", parm.method->answer);
+	G_put_cell_title(parm.rastout->answer, title);
+
 	G_short_history(parm.rastout->answer, "raster", &history);
-	sprintf(history.title, "Aggregate resample by %s", parm.method->answer);
 	strncpy(history.datsrc_1, parm.rastin->answer, RECORD_LEN);
 	history.datsrc_1[RECORD_LEN-1] = '\0'; /* strncpy() doesn't null terminate if maxfill */
 	G_format_resolution(src_w.ns_res, buf_nsres, src_w.proj);

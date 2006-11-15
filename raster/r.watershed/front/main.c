@@ -296,34 +296,34 @@ int main(int argc, char *argv[])
 	/* record map metadata/history info */
 	if(opt8->answer)
 	    write_hist(opt8->answer,
-		"Accumulation map: number of cells that drain through each cell",
+		"Watershed accumulation: overland flow that traverses each cell",
 		 opt1->answer, flag1->answer);
 	if(opt9->answer)
 	    write_hist(opt9->answer,
-		"Drainage map: drainage direction (divided by 45deg)",
+		"Watershed drainage direction (divided by 45deg)",
 		 opt1->answer, flag1->answer);
 	if(opt10->answer)
 	    write_hist(opt10->answer,
-		"Basin map: unique label for each watershed basin",
+		"Watershed basins",
 		 opt1->answer, flag1->answer);
 	if(opt11->answer)
 	    write_hist(opt11->answer,
-		"Stream map: stream segments", opt1->answer, flag1->answer);
+		"Watershed stream segments", opt1->answer, flag1->answer);
 	if(opt12->answer)
 	    write_hist(opt12->answer,
-		"Half-basin map: each half-basin is given a unique value",
+		"Watershed half-basins",
 		 opt1->answer, flag1->answer);
 	if(opt13->answer)
 	    write_hist(opt13->answer,
-		"Visual map: useful for visual display of watersheds",
+		"Watershed visualization map (filtered accumulation map)",
 		 opt1->answer, flag1->answer);
 	if(opt14->answer)
 	    write_hist(opt14->answer,
-		"Slope length map: slope length and steepness (LS) factor",
+		"Watershed slope length and steepness (LS) factor",
 		 opt1->answer, flag1->answer);
 	if(opt15->answer)
 	    write_hist(opt15->answer,
-		"Slope steepness map: slope steepness (S) factor",
+		"Watershed slope steepness (S) factor",
 		 opt1->answer, flag1->answer);
 
 	exit(ret);
@@ -332,12 +332,8 @@ int main(int argc, char *argv[])
 /* record map history info*/
 int write_hist(char *map_name, char *title, char *source_name, int mode) {
     struct History history;
-    struct Categories cats;
 
-    G_read_cats(map_name, G_mapset(), &cats);
-    G_set_cats_title(title, &cats);
-    G_write_cats(map_name, &cats);
-    G_free_cats(&cats);
+    G_put_cell_title(map_name, title);
 
     G_short_history(map_name, "raster", &history);
     strncpy(history.datsrc_1, source_name, RECORD_LEN);
