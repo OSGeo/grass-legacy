@@ -16,7 +16,7 @@ main(int argc, char *argv[])
 
     module              = G_define_module();
     module->keywords = _("database, SQL");
-    module->description = "Set user/password for driver/database.";
+    module->description = _("Set user/password for driver/database");
     
     driver = G_define_option() ;
     driver->key        = "driver" ;
@@ -24,7 +24,7 @@ main(int argc, char *argv[])
     driver->options    = db_list_drivers();
     driver->required   = YES;
     driver->multiple   = NO ;
-    driver->description= "Driver name" ;
+    driver->description= _("Driver name") ;
     driver->answer     = db_get_default_driver_name();
 
     database = G_define_option() ;
@@ -32,7 +32,7 @@ main(int argc, char *argv[])
     database->type       = TYPE_STRING ;
     database->required   = YES ;
     database->multiple   = NO ;
-    database->description= "Database name" ;
+    database->description= _("Database name") ;
     database->answer     = db_get_default_database_name();
 
     user = G_define_option() ;
@@ -40,17 +40,17 @@ main(int argc, char *argv[])
     user->type       = TYPE_STRING ;
     user->required   = NO  ;
     user->multiple   = NO ;
-    user->description= "User" ;    
+    user->description= _("User") ;
 
     password = G_define_option() ;
     password->key        = "password" ;
     password->type       = TYPE_STRING ;
     password->required   = NO  ;
     password->multiple   = NO ;
-    password->description= "Password" ;
+    password->description= _("Password") ;
 
     if(G_parser(argc, argv))
-	exit(1);
+	exit(EXIT_FAILURE);
 
     /* set connection */
     if (  db_set_login ( driver->answer, database->answer, user->answer, password->answer ) == DB_FAILED ) {
@@ -60,6 +60,6 @@ main(int argc, char *argv[])
     if ( password->answer )
         G_warning ( _("The password was stored in file.") );
 	
-    exit(0);
+    exit(EXIT_SUCCESS);
 }
 
