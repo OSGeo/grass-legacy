@@ -1,6 +1,15 @@
 #include <string.h>
 #include <grass/imagery.h>
 
+/*!
+ * \brief Prints maps in a subgroup (fancy version)
+ *
+ * \param group group name
+ * \param subgroup subgroup name
+ * \param ref group reference (set with I_get_subgroup_ref())
+ * \param fd where to print (typically stdout)
+ * \return 0
+ */
 int I_list_subgroup (
     char *group,
     char *subgroup,
@@ -43,5 +52,22 @@ int I_list_subgroup (
 	fprintf (fd, "\n");
     fprintf (fd, "-------------\n");
 
+    return 0;
+}
+
+/*!
+ * \brief Prints maps in a subgroup (simple version)
+ *
+ * Same as I_list_subgroup(), but without all the fancy stuff.
+ * Prints one map per line in map@mapset form.
+ *
+ * \param ref group reference (set with I_get_subgroup_ref())
+ * \param fd where to print (typically stdout)
+ * \return 0
+ */
+/* same as above, but one map per line in map@mapset form */
+int I_list_subgroup_simple(struct Ref *ref, FILE *fd)
+{
+    I_list_group_simple(ref, fd);
     return 0;
 }
