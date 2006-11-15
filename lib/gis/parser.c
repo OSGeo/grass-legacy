@@ -961,8 +961,7 @@ int G_usage (void)
 
 	/* Print help info for flags */
 
-	if(n_flags || new_prompt)	
-		fprintf (stderr, _("\nFlags:\n"));
+	fprintf (stderr, _("\nFlags:\n"));
 
 	if(n_flags)
 	{
@@ -1402,10 +1401,10 @@ static void G_usage_html (void)
 		}
 
                 fprintf(stdout, "<DT><b>--verbose</b></DT>\n");
-                fprintf(stdout, "<DD>Force verbose output</DD>");
+                fprintf(stdout, "<DD>Verbose module output</DD>");
 
                 fprintf(stdout, "<DT><b>--quiet</b></DT>\n");
-                fprintf(stdout, "<DD>Force quiet output</DD>");
+                fprintf(stdout, "<DD>Quiet module output</DD>");
 
 		fprintf(stdout, "</DL>\n");
 	}
