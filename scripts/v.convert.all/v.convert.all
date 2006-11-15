@@ -20,7 +20,7 @@
 #%end
 #%flag
 #%  key: r
-#%  description: unused
+#%  description: run non-interactively
 #%end
 
 if test "$GISBASE" = ""; then
@@ -28,11 +28,9 @@ if test "$GISBASE" = ""; then
     exit 1
 fi
 
-# skip parser if no args are given
-if [ "$#" -gt 0 ] ; then
-  if [ "$1" != "@ARGS_PARSED@" ] ; then
+# the -r flag is a noop, just there to stop the gui coming up.
+if [ "$1" != "@ARGS_PARSED@" ] ; then
     exec g.parser "$0" "$@"
-  fi
 fi
 
 
