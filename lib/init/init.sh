@@ -622,7 +622,7 @@ lockfile="$LOCATION/.gislock"
 case $? in
     0) ;;
     1)
-    	echo $USER is currently running GRASS in selected mapset. Concurrent use not allowed.
+    	echo "$USER is currently running GRASS in selected mapset (file $lockfile found). Concurrent use not allowed."
     	rm -rf "$tmp"  # remove session files from tmpdir
     	exit 1 ;;
     *)
