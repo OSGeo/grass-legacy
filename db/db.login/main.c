@@ -1,5 +1,6 @@
 #include <stdio.h>
 #include <stdlib.h>
+#include <termios.h>
 #include <unistd.h>
 #include <string.h>
 #include <grass/gis.h>
@@ -11,6 +12,7 @@ main(int argc, char *argv[])
 {
     struct Option *driver, *database, *user, *password;
     struct GModule *module;
+    struct termios tios, tios2;
     char answer[200];
     
     /* Initialize the GIS calls */
@@ -57,11 +59,16 @@ main(int argc, char *argv[])
     /* set connection */
     if (!password->answer && isatty(fileno(stdin)) ){
         for(;;) {
+          tcgetattr(STDIN_FILENO, &tios);
+          tios2 = tios;
+          tios2.c_lflag &= ~ECHO;
+          tcsetattr(STDIN_FILENO, TCSAFLUSH, &tios2);
           do {
-              fprintf (stderr,_("\nEnter database password for connection <%s:%s:user=%s>\n"), driver->answer, database->answer, user->answer);
+              fprintf (stderr,_("\nEnter database password for connection\n<%s:%s:user=%s>\n"), driver->answer, database->answer, user->answer);
               fprintf (stderr, _("Hit RETURN to cancel request\n"));
               fprintf (stderr,">");
           } while(!G_gets(answer));
+          tcsetattr(STDIN_FILENO, TCSANOW, &tios);
           G_strip(answer);
           if(strlen(answer)==0) {
 	     G_message(_("Exiting. Not changing current settings"));
