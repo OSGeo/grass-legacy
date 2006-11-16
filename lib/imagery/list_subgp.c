@@ -68,6 +68,5 @@ int I_list_subgroup (
 /* same as above, but one map per line in map@mapset form */
 int I_list_subgroup_simple(struct Ref *ref, FILE *fd)
 {
-    I_list_group_simple(ref, fd);
-    return 0;
+    return I_list_group_simple(ref, fd);
 }
