@@ -1183,7 +1183,7 @@ msgstr "Kann Benutzer/Passwort nicht setzen."
 
 #: ../db/db.login/main.c:61
 msgid "The password was stored in file."
-msgstr "Das Passwort ist in einer Datei gespeichert."
+msgstr "Das Passwort wurde in einer Datei gespeichert."
 
 #: ../db/base/dropdb.c:24
 #, c-format
