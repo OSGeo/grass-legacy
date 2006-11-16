@@ -119,7 +119,7 @@ public:
   ReplacementHeapBlock<T,Compare>(queue <MEM_STREAM<T>*> *runList); 
   
   //delete array mergeHeap 
-  ~ReplacementHeapBlock<T,Compare>();
+  ~ReplacementHeapBlock();
   
   //is heap empty?
   int empty() const { 
