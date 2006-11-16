@@ -18,10 +18,10 @@ So, it looks like you are calculating the Meridional Radius of Curvature
 as a function of GEODETIC LATITUDE.
 */
 
+#include <math.h>
 #include <grass/gis.h>
 #include "pi.h"
 
-extern double sin(), sqrt();
 
 /****************************************************************
  Various formulas for the ellipsoid.

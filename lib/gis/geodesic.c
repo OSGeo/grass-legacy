@@ -1,4 +1,8 @@
+#include <math.h>
 #include <grass/gis.h>
+#include "pi.h"
+
+
 /*
  * This code is preliminary. I don't know if it is even
  * correct.
@@ -23,14 +27,14 @@
  * integrate code from raster/r.surf.idw/ll.c
  */
 
-#include "pi.h"
 
-extern double sin(), cos(), tan(), atan();
+#define SWAP(a,b) temp=a;a=b;b=temp
 
-static double A, B;
-#define swap(a,b) temp=a;a=b;b=temp
 static int adjust_lat(double *);
 static int adjust_lon(double *);
+
+static double A, B;
+
 
 int G_begin_geodesic_equation(double lon1,double lat1,double lon2,double lat2)
 {
@@ -43,8 +47,8 @@ int G_begin_geodesic_equation(double lon1,double lat1,double lon2,double lat2)
     if (lon1 > lon2)
     {	
 	register double temp;
-	swap(lon1,lon2);
-	swap(lat1,lat2);
+	SWAP(lon1,lon2);
+	SWAP(lat1,lat2);
     }
     if (lon1 == lon2)
     {
@@ -72,6 +76,7 @@ double G_geodesic_lat_from_lon (double lon)
 {
     adjust_lon (&lon);
     lon = Radians(lon);
+
     return Degrees (atan(A * sin(lon) - B * cos(lon)));
 }
 
