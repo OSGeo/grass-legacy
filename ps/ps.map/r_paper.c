@@ -30,7 +30,14 @@ read_paper (void)
     char buf[1024];
     char *key, *data;
     double w, h, t, l, b, r;
-    
+
+    w = PS.page_width;
+    h = PS.page_height;
+    l = PS.left_marg;
+    r = PS.right_marg;
+    t = PS.top_marg;
+    b = PS.bot_marg;
+
     while (input(2, buf, help))
     {
 	if (!key_data(buf, &key, &data)) continue;
