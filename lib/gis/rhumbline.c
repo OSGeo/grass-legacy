@@ -20,12 +20,15 @@
 #include <grass/gis.h>
 #include "pi.h"
 
-static double TAN_A, TAN1, TAN2, L;
-static int parallel;
+
 static int adjust_lat(double *);
 #if 0
 static int adjust_lon(double *);
 #endif /* unused */
+
+static double TAN_A, TAN1, TAN2, L;
+static int parallel;
+
 
 int G_begin_rhumbline_equation (
     double lon1,double lat1,double lon2,double lat2)
