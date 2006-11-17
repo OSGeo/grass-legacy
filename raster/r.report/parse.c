@@ -36,12 +36,7 @@ int parse_command_line (int argc, char *argv[])
 
 	} flags;
 
-	parms.cell = G_define_option();
-	parms.cell->key    = "map";
-	parms.cell->type   = TYPE_STRING ;
-	parms.cell->required = YES ;
-	parms.cell->multiple = YES ;
-	parms.cell->gisprompt  = "old,cell,raster" ;
+	parms.cell = G_define_standard_option(G_OPT_R_MAPS);
 	parms.cell->description = _("Raster map(s) to report on");
 
 	parms.units = G_define_option();
@@ -51,6 +46,7 @@ int parse_command_line (int argc, char *argv[])
 	parms.units->multiple = YES ;
 	parms.units->description =
 	    _("mi(les),me(ters),k(ilometers),a(cres),h(ectares),c(ell_counts),p(ercent_cover)");
+	parms.units->options = "mi,me,k,a,h,c,p";
 
 	parms.nv = G_define_option();
 	parms.nv->key   = "null";
@@ -58,7 +54,8 @@ int parse_command_line (int argc, char *argv[])
 	parms.nv->required = NO ;
         parms.nv->multiple   = NO;
 	parms.nv->answer     = "*";
-        parms.nv->description= _("Character representing no data cell value");
+	parms.nv->description= _("Character representing no data cell value");
+	parms.nv->guisection  = _("Formatting");
 
 	parms.pl = G_define_option();
 	parms.pl->key = "pl";
@@ -66,6 +63,7 @@ int parse_command_line (int argc, char *argv[])
 	parms.pl->required = NO ;
 	sprintf (pl_desc, _("Page length (default: %d lines)"), DEFAULT_PAGE_LENGTH);
 	parms.pl->description = pl_desc;
+	parms.pl->guisection  = _("Formatting");
 
 	parms.pw = G_define_option();
 	parms.pw->key = "pw";
@@ -73,12 +71,15 @@ int parse_command_line (int argc, char *argv[])
 	parms.pw->required = NO ;
 	sprintf (pw_desc, _("Page width (default: %d characters)"), DEFAULT_PAGE_WIDTH);
 	parms.pw->description = pw_desc;
+	parms.pw->guisection  = _("Formatting");
 
 	parms.outfile = G_define_option();
 	parms.outfile->key = "output";
 	parms.outfile->type = TYPE_STRING;
 	parms.outfile->required = NO ;
-	parms.outfile->description = _("Name of an output file to hold the report");
+	parms.outfile->description =
+	   _("Name of an output file to hold the report");
+
         parms.nsteps = G_define_option();
         parms.nsteps->key    = "nsteps";
         parms.nsteps->type   = TYPE_INTEGER;
@@ -87,21 +88,24 @@ int parse_command_line (int argc, char *argv[])
 	parms.nsteps->answer     = "255";
         parms.nsteps->description= _("Number of fp subranges to collect stats from");
 
-	flags.h = G_define_flag();
-	flags.h->key = 'h';
-	flags.h->description = _("Suppress page headers");
-
-	flags.f = G_define_flag();
-	flags.f->key = 'f';
-	flags.f->description = _("Use formfeeds between pages");
-
 	flags.q = G_define_flag();
 	flags.q->key = 'q';
 	flags.q->description = _("Quiet");
 
+	flags.h = G_define_flag();
+	flags.h->key = 'h';
+	flags.h->description = _("Suppress page headers");
+	flags.h->guisection  = _("Formatting");
+
+	flags.f = G_define_flag();
+	flags.f->key = 'f';
+	flags.f->description = _("Use formfeeds between pages");
+	flags.f->guisection  = _("Formatting");
+
 	flags.e = G_define_flag();
 	flags.e->key = 'e';
 	flags.e->description = _("Scientific format");
+	flags.e->guisection  = _("Formatting");
 
 	flags.n = G_define_flag();
 	flags.n->key = 'n';
@@ -117,7 +121,7 @@ int parse_command_line (int argc, char *argv[])
 
 	flags.i = G_define_flag() ;
         flags.i->key = 'i';
-	flags.i->description = _("Read fp map as integer (use map's quant rules");
+	flags.i->description = _("Read fp map as integer (use map's quant rules)");
 
 
 /* hidden feature.
@@ -145,7 +149,7 @@ int parse_command_line (int argc, char *argv[])
 	}
 
 	if (G_parser(argc,argv))
-		exit(0);
+	    exit(EXIT_FAILURE);
 
 	use_formfeed = flags.f->answer;
 	with_headers = !flags.h->answer;
