@@ -133,6 +133,7 @@ int main(int argc, char *argv[])
     parm.opt3->required   = NO;
     parm.opt3->options    = "0-89.999";
     parm.opt3->description= _("A: altitude of the sun above horizon, degrees") ;
+    parm.opt3->guisection = _("By_position");
 
     parm.opt4 = G_define_option() ;
     parm.opt4->key        = "azimuth" ;
@@ -140,48 +141,56 @@ int main(int argc, char *argv[])
     parm.opt4->required   = NO;
     parm.opt4->options    = "0-360";
     parm.opt4->description= _("A: azimuth of the sun from the north, degrees") ;
+    parm.opt4->guisection = _("By_position");
 
     parm.year = G_define_option();
     parm.year->key = "year";
     parm.year->type = TYPE_INTEGER;
     parm.year->required = NO;
     parm.year->description = _("B: year (1950..2050)");
+    parm.year->guisection = _("By_time");
 
     parm.month = G_define_option();
     parm.month->key = "month";
     parm.month->type = TYPE_INTEGER;
     parm.month->required = NO;
     parm.month->description = _("B: month (0..12)");
+    parm.month->guisection = _("By_time");
 
     parm.day = G_define_option();
     parm.day->key = "day";
     parm.day->type = TYPE_INTEGER;
     parm.day->required = NO;
     parm.day->description = _("B: day (0..31)");
+    parm.day->guisection = _("By_time");
 
     parm.hour= G_define_option();
     parm.hour->key = "hour";
     parm.hour->type = TYPE_INTEGER;
     parm.hour->required = NO;
     parm.hour->description = _("B: hour (0..24)");
+    parm.hour->guisection = _("By_time");
 
     parm.minutes = G_define_option();
     parm.minutes->key = "minute";
     parm.minutes->type = TYPE_INTEGER;
     parm.minutes->required = NO;
     parm.minutes->description = _("B: minutes (0..60)");
+    parm.minutes->guisection = _("By_time");
 
     parm.seconds = G_define_option();
     parm.seconds->key = "second";
     parm.seconds->type = TYPE_INTEGER;
     parm.seconds->required = NO;
     parm.seconds->description = _("B: seconds (0..60)");
+    parm.seconds->guisection = _("By_time");
 
     parm.timezone = G_define_option();
     parm.timezone->key = "timezone";
     parm.timezone->type = TYPE_INTEGER;
     parm.timezone->required = NO;
     parm.timezone->description = _("B: timezone (east positive, offset from GMT, also use to adjust daylight savings)");
+    parm.timezone->guisection = _("By_time");
 
     parm.east = G_define_option();
     parm.east->key = "east";

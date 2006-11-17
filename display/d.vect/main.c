@@ -133,18 +133,22 @@ main (int argc, char **argv)
 	BOUND_BOX box;
 	double overlap;
 	SYMBOL *Symb;
-	
+
+	/* Initialize the GIS calls */
+	G_gisinit(argv[0]) ;
+
 	module = G_define_module();
 	module->keywords = _("display");
-    module->description = _("Displays GRASS vector data in the active frame on the "
-		              "graphics monitor.");
+	module->description =
+	    _("Displays GRASS vector data in the active "
+		"frame on the graphics monitor.");
 
 	map_opt = G_define_standard_option(G_OPT_V_MAP); 
 
 	type_opt =  G_define_standard_option(G_OPT_V_TYPE);
 	type_opt->answer     = "point,line,boundary,centroid,area,face" ;
 	type_opt->options    = "point,line,boundary,centroid,area,face" ;
-	
+
 	display_opt = G_define_option() ;
 	display_opt->key        = "display" ;
 	display_opt->type       = TYPE_STRING ;
@@ -153,19 +157,21 @@ main (int argc, char **argv)
 	display_opt->answer     = "shape" ;
 	display_opt->options    = "shape,cat,topo,dir,attr,zcoor";
 	display_opt->description= _("Display");
-	
+
 	attrcol_opt = G_define_option() ;
 	attrcol_opt->key        = "attrcol" ;
 	attrcol_opt->type       = TYPE_STRING ;
 	attrcol_opt->required   = NO ;
 	attrcol_opt->multiple   = NO ; /* or fix attr.c, around line 102 */
+	attrcol_opt->guisection = _("Labels");
 	attrcol_opt->description= _("Name of column to be displayed");
-	
+
 	icon_opt = G_define_option() ;
 	icon_opt->key        = "icon" ;
 	icon_opt->type       = TYPE_STRING ;
 	icon_opt->required   = NO ;
 	icon_opt->multiple   = NO ;
+	icon_opt->guisection = _("Symbols");
 	icon_opt->answer     = "basic/x" ;
 	/* This could also use ->gisprompt = "old,symbol,symbol" instead of ->options */
 	icon_opt->options    = icon_files();
@@ -175,28 +181,36 @@ main (int argc, char **argv)
 	size_opt->key        = "size" ;
 	size_opt->type       = TYPE_INTEGER ;
 	size_opt->answer     = "8" ;
-	size_opt->description= _("Icon size");
-	
+	size_opt->guisection = _("Symbols");
+	size_opt->description= _("Symbol size");
+
 	field_opt = G_define_standard_option(G_OPT_V_FIELD) ;
 	field_opt->description= _("Layer number. If -1, all layers are displayed.");
+
 	cat_opt = G_define_standard_option(G_OPT_V_CATS) ;
+	cat_opt->guisection = _("Query");
+
 	where_opt = G_define_standard_option(G_OPT_WHERE) ;
+	where_opt->guisection = _("Query");
 
 	width_opt = G_define_option() ;
 	width_opt->key        = "width";
 	width_opt->type       = TYPE_INTEGER ;
 	width_opt->answer     = "0" ;
+	width_opt->guisection = _("Lines");
 	width_opt->description= _("Line width");
 
 	wcolumn_opt = G_define_option() ;
 	wcolumn_opt->key        = "wcolumn" ;
 	wcolumn_opt->type       = TYPE_STRING ;
+	wcolumn_opt->guisection = _("Lines");
 	wcolumn_opt->description= _("Name of column for line widths (these values will be scaled by wscale)");
 
 	wscale_opt = G_define_option() ;
 	wscale_opt->key        = "wscale" ;
 	wscale_opt->type       = TYPE_DOUBLE ;
 	wscale_opt->answer     = "1" ;
+	wscale_opt->guisection = _("Lines");
 	wscale_opt->description= _("Scale factor for wcolumn");
 
 	color_opt = G_define_option() ;
@@ -204,6 +218,7 @@ main (int argc, char **argv)
 	color_opt->type       = TYPE_STRING ;
 	color_opt->answer     = DEFAULT_FG_COLOR;
 	color_opt->description= _("Line color");
+	color_opt->guisection = _("Colors");
 	color_opt->gisprompt  = GISPROMPT_COLOR;
 
 	fcolor_opt = G_define_option() ;
@@ -211,6 +226,7 @@ main (int argc, char **argv)
 	fcolor_opt->type       = TYPE_STRING ;
 	fcolor_opt->answer     = "200:200:200" ;
 	fcolor_opt->description= _("Area fill color");
+	fcolor_opt->guisection = _("Colors");
 	fcolor_opt->gisprompt  = GISPROMPT_COLOR;
 
 	rgbcol_opt = G_define_option();
@@ -218,12 +234,14 @@ main (int argc, char **argv)
 	rgbcol_opt->type       = TYPE_STRING ;
 	rgbcol_opt->required   = NO ;
 	rgbcol_opt->multiple   = NO ;
+	rgbcol_opt->guisection = _("Colors");
 	rgbcol_opt->description=
 	    _("Name of color definition column (for use with -a flag)");
 	rgbcol_opt->answer     = "GRASSRGB" ;
 
 	lfield_opt = G_define_standard_option(G_OPT_V_FIELD) ;
 	lfield_opt->key        = "llayer" ;
+	lfield_opt->guisection = _("Labels");
 	lfield_opt->description= "Layer for labels" ;
 	
 	lcolor_opt = G_define_option() ;
@@ -231,12 +249,14 @@ main (int argc, char **argv)
 	lcolor_opt->type       = TYPE_STRING ;
 	lcolor_opt->answer     = "red" ;
 	lcolor_opt->description= _("Label color");
+	lcolor_opt->guisection = _("Labels");
 	lcolor_opt->gisprompt  = GISPROMPT_COLOR;
-	
+
 	bgcolor_opt = G_define_option() ;
 	bgcolor_opt->key        = "bgcolor" ;
 	bgcolor_opt->type       = TYPE_STRING ;
 	bgcolor_opt->answer     = "none" ;
+	bgcolor_opt->guisection = _("Labels");
 	bgcolor_opt->description= _("Label background color");
 	bgcolor_opt->gisprompt  = GISPROMPT_COLOR;
 
@@ -244,6 +264,7 @@ main (int argc, char **argv)
 	bcolor_opt->key        = "bcolor" ;
 	bcolor_opt->type       = TYPE_STRING ;
 	bcolor_opt->answer     = "none" ;
+	bcolor_opt->guisection = _("Labels");
 	bcolor_opt->description= _("Label border color");
 	bcolor_opt->gisprompt  = GISPROMPT_COLOR;
 
@@ -251,16 +272,19 @@ main (int argc, char **argv)
 	lsize_opt->key        = "lsize" ;
 	lsize_opt->type       = TYPE_INTEGER ;
 	lsize_opt->answer     = "8" ;
+	lsize_opt->guisection = _("Labels");
 	lsize_opt->description= _("Label size (pixels)");
 
 	font_opt = G_define_option() ;
 	font_opt->key        = "font" ;
 	font_opt->type       = TYPE_STRING ;
+	font_opt->guisection = _("Labels");
 	font_opt->description= _("Font name");
 
 	xref_opt = G_define_option() ;
 	xref_opt->key        = "xref" ;
 	xref_opt->type       = TYPE_STRING ;
+	xref_opt->guisection = _("Labels");
 	xref_opt->answer     = "left" ;
 	xref_opt->options    = "left,center,right";
 	xref_opt->description= _("Label horizontal justification");
@@ -268,6 +292,7 @@ main (int argc, char **argv)
 	yref_opt = G_define_option() ;
 	yref_opt->key        = "yref" ;
 	yref_opt->type       = TYPE_STRING ;
+	yref_opt->guisection = _("Labels");
 	yref_opt->answer     = "center" ;
 	yref_opt->options    = "top,center,bottom";
 	yref_opt->description= _("Label vertical justification");
@@ -278,46 +303,52 @@ main (int argc, char **argv)
 	minreg_opt->required   = NO ;
 	minreg_opt->description= _("Minimum region size (average from height and width) "
 	                         "when map is displayed");
-	
+
 	maxreg_opt = G_define_option() ;
 	maxreg_opt->key        = "maxreg" ;
 	maxreg_opt->type       = TYPE_DOUBLE ;
 	maxreg_opt->required   = NO ;
-	maxreg_opt->description= _("Maximum region size (average from height and width) "
-	                         "when map is displayed");
-	
+	maxreg_opt->description=
+	    _("Maximum region size (average from height and width) "
+	      "when map is displayed");
+
 	quiet_flag = G_define_flag ();
 	quiet_flag->key		= 'v';
 	quiet_flag->description	= _("Run verbosely");
 
 	table_acolors_flag = G_define_flag ();
 	table_acolors_flag->key		= 'a';
+	table_acolors_flag->guisection  = _("Colors");
 	table_acolors_flag->description	=
 	    _("Get colors from map table column (of form RRR:GGG:BBB)");
 
 	cats_acolors_flag = G_define_flag ();
 	cats_acolors_flag->key		= 'c';
+	cats_acolors_flag->guisection   = _("Colors");
 	cats_acolors_flag->description	=
-	    _("Random colors according to category number (or layer number if 'layer=-1' is given)");
+	    _("Random colors according to category number "
+	      "(or layer number if 'layer=-1' is given)");
 
 	id_flag = G_define_flag ();
 	id_flag->key		= 'i';
+	id_flag->guisection     = _("Query");
 	id_flag->description	= _("Use values from 'cats' option as line ID");
 
 	x_flag = G_define_flag ();
 	x_flag->key		= 'x';
-	x_flag->description	= _("Don't add to list of vectors and commands in monitor (it won't be drawn if the monitor is refreshed)");
-	
-	/* Initialize the GIS calls */
-	G_gisinit(argv[0]) ;
+	x_flag->description	=
+	    _("Don't add to list of vectors and commands in monitor "
+	      "(it won't be drawn if the monitor is refreshed)");
 
 	/* Check command line */
 	if (G_parser(argc, argv))
-		exit(-1);
+	    exit(EXIT_FAILURE);
+
 
 	G_get_set_window (&window);
 
-	if (R_open_driver() != 0)  G_fatal_error(_("No graphics device selected"));
+	if (R_open_driver() != 0)
+	    G_fatal_error(_("No graphics device selected"));
 
 	/* Read map options */
 
@@ -327,18 +358,18 @@ main (int argc, char **argv)
 	    minreg = atof ( minreg_opt->answer );
              
 	    if ( reg < minreg ) {
-		fprintf ( stdout, _("Region size is lower than minreg, nothing displayed.\n"));
+		G_message(_("Region size is lower than minreg, nothing displayed."));
 	        D_add_to_list(G_recreate_command()) ;
-		exit (0);
+		exit(EXIT_SUCCESS);
 	    }
 	}
 	if ( maxreg_opt->answer ) {
 	    maxreg = atof ( maxreg_opt->answer );
              
 	    if ( reg > maxreg ) {
-		fprintf ( stdout, _("Region size is greater than maxreg, nothing displayed.\n"));
+		G_message(_("Region size is greater than maxreg, nothing displayed."));
 	        D_add_to_list(G_recreate_command()) ;
-		exit (0);
+		exit(EXIT_SUCCESS);
 	    }
 	}
 
@@ -550,7 +581,7 @@ main (int argc, char **argv)
                       D_move_abs, D_cont_abs);
 
 	if (!quiet)
-	     fprintf (stdout,_("Plotting ... ")); fflush (stdout);
+	     G_message(_("Plotting ... "));
 
 	if ( level >= 2 )
 	    Vect_get_map_box ( &Map, &box );
@@ -559,7 +590,8 @@ main (int argc, char **argv)
 		             window.east < box.W ||
 			     window.west > G_adjust_easting(box.E, &window) ) )
 	{
-	    G_message(_("The bounding box of the map is outside the current region, nothing drawn."));
+	    G_message(_("The bounding box of the map is outside the current region, "
+			"nothing drawn."));
 	    stat = 0;
 	} else { 
 	    overlap =  G_window_percentage_overlap(&window, box.N, box.S, box.E, box.W);
@@ -576,7 +608,8 @@ main (int argc, char **argv)
 		if ( level >= 2 ) {
 		    stat = darea ( &Map, Clist, color, fcolor, chcat,
 			(int) id_flag->answer, table_acolors_flag->answer,
-			cats_acolors_flag->answer, &window, rgbcol_opt->answer, default_width, wcolumn_opt->answer, width_scale );
+			cats_acolors_flag->answer, &window, rgbcol_opt->answer,
+			default_width, wcolumn_opt->answer, width_scale );
 	            if ( wcolumn_opt->answer )
 	                R_line_width(default_width);
 		} else
@@ -589,7 +622,8 @@ main (int argc, char **argv)
 		} else {
 		    stat = plot1 ( &Map, type, area, Clist, color, fcolor, chcat, Symb,
 			size, (int) id_flag->answer, table_acolors_flag->answer,
-			cats_acolors_flag->answer, rgbcol_opt->answer, default_width, wcolumn_opt->answer, width_scale) ;
+			cats_acolors_flag->answer, rgbcol_opt->answer, default_width,
+			wcolumn_opt->answer, width_scale) ;
 	            if ( wcolumn_opt->answer )
 	                R_line_width(default_width);
 		}

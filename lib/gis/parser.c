@@ -352,7 +352,8 @@ G_define_standard_option (int opt)
 	    Opt->type         = TYPE_STRING;
 	    Opt->key_desc     = "sql_query";
 	    Opt->required     = NO;
-	    Opt->description  = _("WHERE conditions of SQL statement without 'where' keyword. (example: income < 1000 and inhab >= 10000)");
+	    Opt->label        = _("WHERE conditions of SQL statement without 'where' keyword.'");
+	    Opt->description  = _("Example: income < 1000 and inhab >= 10000");
 	    break;
 
 	/*raster maps*/    
@@ -491,14 +492,17 @@ G_define_standard_option (int opt)
 	    Opt->multiple     = YES;
 	    Opt->answer       = "point,line,boundary,centroid,area";
 	    Opt->options      = "point,line,boundary,centroid,area";
-	    Opt->description  = _("Type");
+	    Opt->label        = _("Type");
+	    Opt->description  = _("Feature type(s)");
 	    break;
 	case G_OPT_V_FIELD:
 	    Opt->key          = "layer";
 	    Opt->type         = TYPE_INTEGER;
 	    Opt->required     = NO;
 	    Opt->answer       = "1";
-	    Opt->description  = _("Layer number");
+	    Opt->label        = _("Layer number");
+	    Opt->description  = _("A single vector can be connected to multiple database "
+				  "tables. This number determines which table to use.");
 	    break;
 	case G_OPT_V_CAT:
 	    Opt->key          = "cat";

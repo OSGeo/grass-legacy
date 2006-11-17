@@ -266,6 +266,7 @@ main (int argc, char *argv[])
     bufcol_opt->type = TYPE_STRING;
     bufcol_opt->required = NO;
     bufcol_opt->description = _("Attribute column to use for buffer distances");
+    bufcol_opt->guisection  = _("Advanced");
 
     scale_opt = G_define_option();
     scale_opt->key = "scale";
@@ -273,12 +274,14 @@ main (int argc, char *argv[])
     scale_opt->required = NO;
     scale_opt->answer = "1.0";
     scale_opt->description = _("Scaling factor for attribute column values");
+    scale_opt->guisection  = _("Advanced");
 
     tolerance_opt = G_define_option();
     tolerance_opt->key = "tolerance";
     tolerance_opt->type = TYPE_DOUBLE;
     tolerance_opt->required = NO;
     tolerance_opt->answer = "0.01";
+    tolerance_opt->guisection  = _("Advanced");
     tolerance_opt->description =
 	_("Maximum distance between theoretical arc and polygon segments "
 		"as multiple of buffer");
@@ -288,11 +291,12 @@ main (int argc, char *argv[])
     debug_opt->type = TYPE_STRING;
     debug_opt->required = NO;
     debug_opt->options = "buffer,clean";
+    debug_opt->guisection  = _("Advanced");
     debug_opt->description = _("Stop the process at a certain stage");
 
     G_gisinit(argv[0]);
     if (G_parser (argc, argv))
-	exit(-1); 
+	exit(EXIT_FAILURE); 
     
     type = Vect_option_to_types ( type_opt );
     field = atoi( field_opt->answer );
@@ -355,7 +359,7 @@ main (int argc, char *argv[])
     Vect_set_fatal_error (GV_FATAL_PRINT);
     if (0 > Vect_open_new (&Out, out_opt->answer, 0) ) {
 	 Vect_close (&In);
-	 exit (1);
+	 exit (EXIT_FAILURE);
     }
 
     /* check and load attribute column data */
@@ -560,7 +564,7 @@ main (int argc, char *argv[])
 
     if ( debug == DEBUG_BUFFER ) {
         stop ( &In, &Out );
-	exit (0);
+	exit (EXIT_SUCCESS);
     }
 
     /* Create areas */
@@ -634,7 +638,7 @@ main (int argc, char *argv[])
     
     if ( debug == DEBUG_CLEAN ) {
         stop ( &In, &Out );
-	exit (0);
+	exit (EXIT_SUCCESS);
     }
 
     /* Make a list of boundaries to be deleted (both sides inside) */
@@ -708,6 +712,6 @@ main (int argc, char *argv[])
     Vect_build_partial ( &Out, GV_BUILD_CENTROIDS, stderr );
     
     stop ( &In, &Out );
-    exit(0) ;
+    exit(EXIT_SUCCESS);
 }
 

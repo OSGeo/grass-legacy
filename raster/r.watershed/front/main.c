@@ -35,13 +35,10 @@ int main(int argc, char *argv[])
 	module              = G_define_module();
 	module->keywords = _("raster");
 	module->description = _("Watershed basin analysis program.");
-	
-	opt1 = G_define_option() ; 
-	opt1->key            = "elevation" ; 
+
+	opt1 = G_define_standard_option(G_OPT_R_ELEV);
 	opt1->description    = _("Input map: elevation on which entire analysis is based"); 
-	opt1->required       = YES ; 
-	opt1->type           = TYPE_STRING ; 
-	opt1->gisprompt      = "old,cell,raster" ;
+	opt1->guisection     = _("Input_options");
 
 	opt2 = G_define_option() ; 
 	opt2->key            = "depression" ; 
@@ -49,6 +46,7 @@ int main(int argc, char *argv[])
 	opt2->required       = NO ; 
 	opt2->type           = TYPE_STRING ;
 	opt2->gisprompt      = "old,cell,raster" ;
+	opt2->guisection     = _("Input_options");
 
 	opt3 = G_define_option() ; 
 	opt3->key            = "flow" ; 
@@ -56,6 +54,7 @@ int main(int argc, char *argv[])
 	opt3->required       = NO ; 
 	opt3->type           = TYPE_STRING ; 
 	opt3->gisprompt      = "old,cell,raster" ;
+	opt3->guisection     = _("Input_options");
 
 	opt4 = G_define_option() ; 
 	opt4->key            = "disturbed.land" ; 
@@ -63,6 +62,7 @@ int main(int argc, char *argv[])
 	opt4->required       = NO ; 
 	opt4->type           = TYPE_STRING ; 
 	opt4->gisprompt      = "old,cell,raster" ;
+	opt4->guisection     = _("Input_options");
 
 	opt5 = G_define_option() ; 
 	opt5->key            = "blocking" ; 
@@ -70,6 +70,7 @@ int main(int argc, char *argv[])
 	opt5->required       = NO ; 
 	opt5->type           = TYPE_STRING ; 
 	opt5->gisprompt      = "old,cell,raster" ;
+	opt5->guisection     = _("Input_options");
 
 	opt6 = G_define_option() ; 
 	opt6->key            = "threshold" ; 
@@ -77,6 +78,7 @@ int main(int argc, char *argv[])
 	opt6->required       = NO ; 
 	opt6->type           = TYPE_INTEGER ; 
 	opt6->gisprompt      = "new,cell,raster" ;
+	opt6->guisection     = _("Input_options");
 
 	opt7 = G_define_option() ; 
 	opt7->key            = "max.slope.length" ; 
@@ -84,6 +86,7 @@ int main(int argc, char *argv[])
 	opt7->required       = NO ; 
 	opt7->type           = TYPE_DOUBLE ; 
 	opt7->gisprompt      = "new,cell,raster" ;
+	opt7->guisection     = _("Input_options");
 
 	opt8 = G_define_option() ; 
 	opt8->key            = "accumulation" ; 
@@ -91,6 +94,7 @@ int main(int argc, char *argv[])
 	opt8->required       = NO ; 
 	opt8->type           = TYPE_STRING ; 
 	opt8->gisprompt      = "new,cell,raster" ;
+	opt8->guisection     = _("Output_options");
 
 	opt9 = G_define_option() ; 
 	opt9->key            = "drainage" ; 
@@ -98,6 +102,7 @@ int main(int argc, char *argv[])
 	opt9->required       = NO ; 
 	opt9->type           = TYPE_STRING ; 
 	opt9->gisprompt      = "new,cell,raster" ;
+	opt9->guisection     = _("Output_options");
 
 	opt10 = G_define_option() ; 
 	opt10->key            = "basin" ; 
@@ -105,6 +110,7 @@ int main(int argc, char *argv[])
 	opt10->required       = NO ; 
 	opt10->type           = TYPE_STRING ; 
 	opt10->gisprompt      = "new,cell,raster" ;
+	opt10->guisection     = _("Output_options");
 
 	opt11 = G_define_option() ; 
 	opt11->key            = "stream" ; 
@@ -112,6 +118,7 @@ int main(int argc, char *argv[])
 	opt11->required       = NO ; 
 	opt11->type           = TYPE_STRING ; 
 	opt11->gisprompt      = "new,cell,raster" ;
+	opt11->guisection     = _("Output_options");
 
 	opt12 = G_define_option() ; 
 	opt12->key            = "half.basin" ; 
@@ -119,6 +126,7 @@ int main(int argc, char *argv[])
 	opt12->required       = NO ; 
 	opt12->type           = TYPE_STRING ; 
 	opt12->gisprompt      = "new,cell,raster" ;
+	opt12->guisection     = _("Output_options");
 
 	opt13 = G_define_option() ; 
 	opt13->key            = "visual" ; 
@@ -126,6 +134,7 @@ int main(int argc, char *argv[])
 	opt13->required       = NO ; 
 	opt13->type           = TYPE_STRING ; 
 	opt13->gisprompt      = "new,cell,raster" ;
+	opt13->guisection     = _("Output_options");
 
 	opt14 = G_define_option() ; 
 	opt14->key            = "length.slope" ; 
@@ -133,6 +142,7 @@ int main(int argc, char *argv[])
 	opt14->required       = NO ; 
 	opt14->type           = TYPE_STRING ; 
 	opt14->gisprompt      = "new,cell,raster" ;
+	opt14->guisection     = _("Output_options");
 
 	opt15 = G_define_option() ; 
 	opt15->key            = "slope.steepness" ; 
@@ -140,6 +150,7 @@ int main(int argc, char *argv[])
 	opt15->required       = NO ; 
 	opt15->type           = TYPE_STRING ; 
 	opt15->gisprompt      = "new,cell,raster" ;
+	opt15->guisection     = _("Output_options");
 
 	flag1 = G_define_flag() ;
 	flag1->key            = 'm' ;
@@ -150,7 +161,7 @@ int main(int argc, char *argv[])
 	flag2->description    = _("Allow only horizontal and vertical flow of water") ;
 
 	if (G_parser(argc, argv))
-		exit(EXIT_FAILURE) ;
+	    exit(EXIT_FAILURE) ;
 
 /* Check option combinations */
 
