@@ -1,8 +1,13 @@
 #include <stdio.h>
 #include <stdlib.h>
-#include <termios.h>
 #include <unistd.h>
 #include <string.h>
+
+#include <grass/config.h>
+#ifdef HAVE_TERMIOS_H
+#include <termios.h>
+#endif
+
 #include <grass/gis.h>
 #include <grass/dbmi.h>
 #include <grass/glocale.h>
@@ -12,7 +17,9 @@ main(int argc, char *argv[])
 {
     struct Option *driver, *database, *user, *password;
     struct GModule *module;
+#ifdef HAVE_TERMIOS_H
     struct termios tios, tios2;
+#endif
     char answer[200];
     
     /* Initialize the GIS calls */
@@ -59,16 +66,20 @@ main(int argc, char *argv[])
     /* set connection */
     if (!password->answer && isatty(fileno(stdin)) ){
         for(;;) {
+#ifdef HAVE_TERMIOS_H
           tcgetattr(STDIN_FILENO, &tios);
           tios2 = tios;
           tios2.c_lflag &= ~ECHO;
           tcsetattr(STDIN_FILENO, TCSAFLUSH, &tios2);
+#endif
           do {
               fprintf (stderr,_("\nEnter database password for connection\n<%s:%s:user=%s>\n"), driver->answer, database->answer, user->answer);
               fprintf (stderr, _("Hit RETURN to cancel request\n"));
               fprintf (stderr,">");
           } while(!G_gets(answer));
+#ifdef HAVE_TERMIOS_H
           tcsetattr(STDIN_FILENO, TCSANOW, &tios);
+#endif
           G_strip(answer);
           if(strlen(answer)==0) {
 	     G_message(_("Exiting. Not changing current settings"));
