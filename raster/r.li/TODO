@@ -1,0 +1,14 @@
+TODO list
+
+A few remaining things should be done soon:
+- add relevant references
+- change AUTHORS as indicated by you (offlist, see below)
+- fix static local r.li.daemon library "libr_li.a" to dynamic
+  (see raster/simwe/simlib/ how to do that)
+- fix "clean" target in r.li.daemon (ipc binary and library)
+- missing description.html:
+  - r.li.patchnumber
+  - r.li.shape
+
+Then r.li can be activated to ../raster/Makefile.
+
