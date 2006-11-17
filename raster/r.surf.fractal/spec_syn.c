@@ -12,6 +12,7 @@
 
 #include <unistd.h>
 #include <math.h>
+#include <grass/glocale.h>
 #include "frac.h"
 
 
@@ -52,7 +53,7 @@ int specsyn (
     /* Calculate all the preliminary random coefficients. */
     /* ================================================== */
 
-    fprintf(stderr,"Preliminary surface calculations.\n");
+    G_message (_("Preliminary surface calculations."));
     data_reset(data,nn);
 
     for (row=0; row <= nn/2; row++)
@@ -112,7 +113,7 @@ int specsyn (
 
     for (coeff=0; coeff < Steps; coeff++)
     {
-        fprintf(stderr,"Calculating surface %d (of %d)\n",coeff+1,Steps);
+	G_message (_("Calculating surface %d (of %d)"),coeff+1,Steps);
         data_reset(temp,nn);
 
         for (row=0; row <= (coeff+1)*nn/(Steps*2); row++)

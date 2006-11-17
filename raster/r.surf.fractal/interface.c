@@ -64,14 +64,15 @@ interface (
     num_images->answer	    = "0";
 
     if (G_parser(argc,argv))            /* Performs the prompting for      */
-        exit(-1);                       /* keyboard input.                 */
+        exit(EXIT_FAILURE);            /* keyboard input.                 */
 
     rast_out_name  = rast_out->answer;
     sscanf(frac_dim->answer,"%lf",&H);
     H = 3.0 - H;
     Steps = atoi(num_images->answer) + 1;
 
-printf("Steps=%d\n",Steps);
+    G_message (_("Steps=%d"), Steps);
+
     /*--------------------------------------------------------------------*/
     /*                  CHECK OUTPUT RASTER FILE DOES NOT EXIST           */
     /*--------------------------------------------------------------------*/
@@ -80,16 +81,7 @@ printf("Steps=%d\n",Steps);
 
     if (G_legal_filename(rast_out_name)=='\0')
     {
-        char err[256];
-        sprintf(err,"Illegal output file name. Please try another.");
-        G_fatal_error(err);
-    }
-    else
-    {
-        if (G_find_cell2(rast_out_name,mapset_out) !=NULL)
-        {
-            G_fatal_error("Raster map [%s] exists.\nPlease try another\n",rast_out_name);
-        }
+        G_fatal_error (_("Illegal output file name. Please try another."));
     }
 
     /*--------------------------------------------------------------------*/
@@ -98,7 +90,7 @@ printf("Steps=%d\n",Steps);
 
     if ( (H <= 0) || (H >= 1))
     {
-        G_fatal_error("Fractal dimension of [%.2lf] must be between 2 and 3.", 3.0-H);
+	G_fatal_error(_("Fractal dimension of [%.2lf] must be between 2 and 3."), 3.0-H);
     }
 
 
