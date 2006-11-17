@@ -1401,14 +1401,14 @@ static void G_usage_html (void)
 		if (new_prompt)
 		{
 			fprintf(stdout, "<DT><b>--overwrite</b></DT>\n");
-			fprintf(stdout, "<DD>Allow output files to overwrite existing files</DD>");
+			fprintf(stdout, "<DD>Allow output files to overwrite existing files</DD>\n");
 		}
 
                 fprintf(stdout, "<DT><b>--verbose</b></DT>\n");
-                fprintf(stdout, "<DD>Verbose module output</DD>");
+                fprintf(stdout, "<DD>Verbose module output</DD>\n");
 
                 fprintf(stdout, "<DT><b>--quiet</b></DT>\n");
-                fprintf(stdout, "<DD>Quiet module output</DD>");
+                fprintf(stdout, "<DD>Quiet module output</DD>\n");
 
 		fprintf(stdout, "</DL>\n");
 	}
