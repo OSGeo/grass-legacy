@@ -80,10 +80,12 @@ main (int argc, char **argv)
     Along_flag = G_define_flag();
     Along_flag->key            = 'a';
     Along_flag->description    = _("Rotate labels to align with lines");
+    Along_flag->guisection = _("Effects");
 
     Curl_flag = G_define_flag();
     Curl_flag->key             = 'c';
     Curl_flag->description     = _("Curl labels along lines");
+    Curl_flag->guisection = _("Effects");
 
     Labelfile = G_define_option();
     Labelfile->key = "labels";
@@ -97,12 +99,14 @@ main (int argc, char **argv)
     Xoffset->description = _("Offset label in x-direction");
     Xoffset->type = TYPE_DOUBLE;
     Xoffset->answer = "0";
+    Xoffset->guisection = _("Placement");
 
     Yoffset = G_define_option();
     Yoffset->key = "yoffset";
     Yoffset->description = _("Offset label in y-direction");
     Yoffset->type = TYPE_DOUBLE;
     Yoffset->answer = "0";
+    Yoffset->guisection = _("Placement");
 
     Reference = G_define_option();
     Reference->key = "reference";
@@ -111,24 +115,28 @@ main (int argc, char **argv)
     Reference->multiple = YES;
     Reference->answer = "center";
     Reference->options = "center,left,right,upper,lower";
+    Reference->guisection = _("Placement");
 
     Font = G_define_option();
     Font->key = "font";
     Font->description = _("Font name");
     Font->type = TYPE_STRING;
     Font->answer = "standard";
+    Font->guisection = _("Font");
 
     Size = G_define_option();
     Size->key = "size";
     Size->description = _("Label size (in map-units)");
     Size->type = TYPE_DOUBLE;
     Size->answer = "100";
+    Size->guisection = _("Font");
 
     Space = G_define_option();
     Space->key = "space";
     Space->description = _("Space between letters for curled labels (in map-units)");
     Space->type = TYPE_DOUBLE;
     Space->required = NO;
+    Space->guisection = _("Font");
 
     FontSize = G_define_option();
     FontSize->key = "fontsize";
@@ -136,6 +144,7 @@ main (int argc, char **argv)
     FontSize->type = TYPE_INTEGER;
     FontSize->required = NO;
     FontSize->options = "1-1000";
+    FontSize->guisection = _("Font");
 
     Color = G_define_option();
     Color->key = "color";
@@ -143,6 +152,7 @@ main (int argc, char **argv)
     Color->type = TYPE_STRING;
     Color->answer = "black";
     Color->options = "aqua,black,blue,brown,cyan,gray,green,grey,indigo,magenta, orange,purple,red,violet,white,yellow";
+    Color->guisection = _("Colors");
 
     Rotation = G_define_option();
     Rotation->key = "rotation";
@@ -152,12 +162,14 @@ main (int argc, char **argv)
     Rotation->options = "0-360";
     Rotation->answer = "0";
     Rotation->key_desc = "angle";
+    Rotation->guisection = _("Placement");
 
     Width = G_define_option();
     Width->key = "width";
     Width->description = _("Border width (only for ps.map output)");
     Width->type = TYPE_DOUBLE;
     Width->answer = "1";
+    Width->guisection = _("Effects");
 
     Hcolor = G_define_option();
     Hcolor->key = "hcolor";
@@ -165,12 +177,14 @@ main (int argc, char **argv)
     Hcolor->type = TYPE_STRING;
     Hcolor->answer = "none";
     Hcolor->options = "none,aqua,black,blue,brown,cyan,gray,green,grey,indigo,magenta, orange,purple,red,violet,white,yellow";
+    Hcolor->guisection = _("Colors");
 
     Hwidth = G_define_option();
     Hwidth->key = "hwidth";
     Hwidth->description = _("Width of highlight coloring");
     Hwidth->type = TYPE_DOUBLE;
     Hwidth->answer = "0";
+    Hwidth->guisection = _("Effects");
 
     Bcolor = G_define_option();
     Bcolor->key = "background";
@@ -178,6 +192,7 @@ main (int argc, char **argv)
     Bcolor->type = TYPE_STRING;
     Bcolor->answer = "none";
     Bcolor->options = "none,aqua,black,blue,brown,cyan,gray,green,grey,indigo,magenta, orange,purple,red,violet,white,yellow";
+    Bcolor->guisection = _("Colors");
 
     Border = G_define_option();
     Border->key = "border";
@@ -185,6 +200,7 @@ main (int argc, char **argv)
     Border->type = TYPE_STRING;
     Border->answer = "none";
     Border->options = "none,aqua,black,blue,brown,cyan,gray,green,grey,indigo,magenta, orange,purple,red,violet,white,yellow";
+    Border->guisection = _("Colors");
 
     Opaque = G_define_option();
     Opaque->key = "opaque";
@@ -194,7 +210,7 @@ main (int argc, char **argv)
     Opaque->answer = "yes";
     Opaque->options = "yes,no";
     Opaque->key_desc = "yes|no";
-
+    Opaque->guisection = _("Colors");
 
     if (G_parser (argc, argv))
 	exit (EXIT_FAILURE);

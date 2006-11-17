@@ -83,9 +83,9 @@ int main( int argc, char **argv )
 
 	module = G_define_module();
 	module->keywords = _("display");
-    module->description =
-		_("Displays a legend for a raster map in the active frame "
-		"of the graphics monitor.");
+	module->description =
+	    _("Displays a legend for a raster map in the active frame "
+	      "of the graphics monitor.");
 
 	opt1 = G_define_option() ;
 	opt1->key        = "map" ;
@@ -107,6 +107,7 @@ int main( int argc, char **argv )
 	opt4->answer     = "0" ;
 	opt4->options    = "0-1000" ;
 	opt4->description= _("Number of text lines (useful for truncating long legends)");
+	opt4->guisection = _("Advanced");
 
 	opt5 = G_define_option() ;
 	opt5->key        = "thin" ;
@@ -115,6 +116,7 @@ int main( int argc, char **argv )
 	opt5->answer     = "1" ;
 	opt5->options    = "1-1000" ;
 	opt5->description= _("Thinning factor (thin=10 gives cats 0,10,20...)");
+	opt5->guisection = _("Advanced");
 
 	opt6 = G_define_option() ;
 	opt6->key        = "labelnum" ;
@@ -122,6 +124,7 @@ int main( int argc, char **argv )
 	opt6->answer     = "5" ;
 	opt6->options    = "2-100" ;
 	opt6->description= _("Number of text labels for smooth gradient legend");
+	opt6->guisection = _("Advanced");
 
 	opt7 = G_define_option() ;
 	opt7->key        = "at";
@@ -139,6 +142,7 @@ int main( int argc, char **argv )
 	opt8->required   = NO;
 	opt8->description= _("List of discrete category numbers/values for legend");
 	opt8->multiple   = YES;
+	opt8->guisection = _("Advanced");
 
 	opt9 = G_define_option() ;
 	opt9->key        = "range";
@@ -146,31 +150,37 @@ int main( int argc, char **argv )
 	opt9->type       = TYPE_DOUBLE;		/* should it be type_double or _string ??*/
 	opt9->required   = NO;
 	opt9->description= _("Use a subset of the map range for the legend (min,max)");
+	opt9->guisection = _("Advanced");
 
-
-	hidestr = G_define_flag ();
-	hidestr->key = 'v';
-	hidestr->description = _("Do not show category labels");
-
-	hidenum = G_define_flag ();
-	hidenum->key = 'c';
-	hidenum->description = _("Do not show category numbers");
-
-        hidenodata = G_define_flag ();
-	hidenodata->key = 'n';
-	hidenodata->description = _("Skip categories with no label");
-
-	smooth = G_define_flag ();
-	smooth->key = 's';
-	smooth->description = _("Draw smooth gradient");
 
 	mouse = G_define_flag ();
 	mouse->key = 'm';
 	mouse->description = _("Use mouse to size & place legend");
 
+	hidestr = G_define_flag ();
+	hidestr->key = 'v';
+	hidestr->description = _("Do not show category labels");
+	hidestr->guisection  = _("Advanced");
+
+	hidenum = G_define_flag ();
+	hidenum->key = 'c';
+	hidenum->description = _("Do not show category numbers");
+	hidenum->guisection  = _("Advanced");
+
+        hidenodata = G_define_flag ();
+	hidenodata->key = 'n';
+	hidenodata->description = _("Skip categories with no label");
+	hidenodata->guisection  = _("Advanced");
+
+	smooth = G_define_flag ();
+	smooth->key = 's';
+	smooth->description = _("Draw smooth gradient");
+	smooth->guisection  = _("Advanced");
+
 	flipit = G_define_flag ();
 	flipit->key = 'f';
 	flipit->description = _("Flip legend");
+	flipit->guisection  = _("Advanced");
 
 
 	/* Check command line */
