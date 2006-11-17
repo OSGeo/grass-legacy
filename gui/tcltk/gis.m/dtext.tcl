@@ -383,7 +383,11 @@ proc GmDtext::display { node mod } {
 	# set grass font environmental variable to whatever it was when we started
 	# this lets different text layers have different fonts
 	
-	if {$currfont != ""} {set env(GRASS_FONT) $currfont}
+	if {$currfont != ""} {
+		set env(GRASS_FONT) $currfont
+	} else {
+		unset env(GRASS_FONT)
+	}
 
 }
 
