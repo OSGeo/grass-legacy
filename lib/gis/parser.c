@@ -501,7 +501,7 @@ G_define_standard_option (int opt)
 	    Opt->required     = NO;
 	    Opt->answer       = "1";
 	    Opt->label        = _("Layer number");
-	    Opt->description  = _("A single vector can be connected to multiple database "
+	    Opt->description  = _("A single vector map can be connected to multiple database "
 				  "tables. This number determines which table to use.");
 	    break;
 	case G_OPT_V_CAT:
