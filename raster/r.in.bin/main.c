@@ -108,35 +108,44 @@ int main (int argc, char *argv[])
 	
 	/* Set description */
 	module              = G_define_module();
-	module->keywords = _("raster");
-    module->description =
-	_("Import a binary raster file into a GRASS raster map layer.");
+	module->keywords = _("raster, import");
+	module->description =
+	    _("Import a binary raster file into a GRASS raster map layer.");
 
-	flag.s = G_define_flag();
-	flag.s->key = 's';
-	flag.s->description = _("Signed data (high bit means negative value)");
 
 	flag.f = G_define_flag();
 	flag.f->key = 'f';
-	flag.f->description = _("Import as Floating Point Data (default: Integer)");
+	flag.f->description =
+	    _("Import as Floating Point Data (default: Integer)");
 
 	flag.d = G_define_flag();
 	flag.d->key = 'd';
-	flag.d->description = _("Import as Double Precision Data (default: Integer)");
+	flag.d->description =
+	    _("Import as Double Precision Data (default: Integer)");
+
+	flag.s = G_define_flag();
+	flag.s->key = 's';
+	flag.s->description =
+	    _("Signed data (high bit means negative value)");
+	flag.s->guisection  = _("Settings");
 
 	flag.b = G_define_flag();
 	flag.b->key = 'b';
-	flag.b->description = _("Byte Swap the Data During Import");
+	flag.b->description =
+	    _("Byte Swap the Data During Import");
+	flag.b->guisection  = _("Settings");
 
 	flag.gmt_hd = G_define_flag();
 	flag.gmt_hd->key = 'h';
-	flag.gmt_hd->description = _("Get region info from GMT style header");
+	flag.gmt_hd->description =
+	    _("Get region info from GMT style header");
+	flag.gmt_hd->guisection  = _("Bounds");
 
 	parm.input = G_define_option();
 	parm.input->key = "input";
 	parm.input->type = TYPE_STRING;
 	parm.input->required = YES;
-	parm.input->description = _("Bin raster file to be imported");
+	parm.input->description = _("Binary raster file to be imported");
 	parm.input->gisprompt = "old_file,file,input";
 
 	parm.output = G_define_standard_option(G_OPT_R_OUTPUT);
@@ -154,51 +163,64 @@ int main (int argc, char *argv[])
 	parm.bytes->answer = "1";
 	parm.bytes->required = NO;
 	parm.bytes->description = _("Number of bytes per cell (1, 2, 4)") ;
+	parm.bytes->guisection  = _("Settings"); 
 
 	parm.north = G_define_option();
 	parm.north->key = "north";
 	parm.north->type = TYPE_DOUBLE;
 	parm.north->required = NO;
-	parm.north->description = _("Northern limit of geographic region (outer edge)") ;
+	parm.north->description =
+	    _("Northern limit of geographic region (outer edge)") ;
+	parm.north->guisection  = _("Bounds"); 
 
 	parm.south = G_define_option();
 	parm.south->key = "south";
 	parm.south->type = TYPE_DOUBLE;
 	parm.south->required = NO;
-	parm.south->description = _("Southern limit of geographic region (outer edge)") ;
+	parm.south->description =
+	    _("Southern limit of geographic region (outer edge)") ;
+	parm.south->guisection  = _("Bounds"); 
 
 	parm.east = G_define_option();
 	parm.east->key = "east";
 	parm.east->type = TYPE_DOUBLE;
 	parm.east->required = NO;
-	parm.east->description = _("Eastern limit of geographic region (outer edge)") ;
+	parm.east->description =
+	    _("Eastern limit of geographic region (outer edge)") ;
+	parm.east->guisection  = _("Bounds"); 
 
 	parm.west = G_define_option();
 	parm.west->key = "west";
 	parm.west->type = TYPE_DOUBLE;
 	parm.west->required = NO;
-	parm.west->description = _("Western limit of geographic region (outer edge)") ;
+	parm.west->description =
+	    _("Western limit of geographic region (outer edge)") ;
+	parm.west->guisection  = _("Bounds"); 
 
 	parm.rows = G_define_option();
 	parm.rows->key = "rows";
 	parm.rows->type = TYPE_DOUBLE;
 	parm.rows->required = NO;
 	parm.rows->description = _("Number of rows");
+	parm.rows->guisection  = _("Bounds"); 
 
 	parm.cols = G_define_option();
 	parm.cols->key = "cols";
 	parm.cols->type = TYPE_DOUBLE;
 	parm.cols->required = NO;
 	parm.cols->description = _("Number of columns");
+	parm.cols->guisection  = _("Bounds"); 
 
 	parm.anull= G_define_option();
 	parm.anull->key = "anull";
 	parm.anull->type = TYPE_DOUBLE;
 	parm.anull->required = NO;
 	parm.anull->description = _("Set Value to NULL");
+	parm.anull->guisection  = _("Settings");
 
 	if (G_parser(argc,argv))
-		exit(1);
+	    exit(EXIT_FAILURE);
+
 	input = parm.input->answer;
 	output = parm.output->answer;
 	if(title = parm.title->answer)
@@ -249,15 +271,14 @@ int main (int argc, char *argv[])
 
 
 /* CASE 0 - Not enough parameters - exit */
-		if (no_dim == 1 && no_coord == 1) {
-			char msg[100];
-			sprintf (msg, "Missing parameters ...\nMust provide at least [north= south= east= west=] OR [r=	 c=]\n" );
-			G_fatal_error (msg);
-		} 
+		if (no_dim == 1 && no_coord == 1)
+		    G_fatal_error(_("Missing parameters ...\nMust provide at least"
+				    "[north= south= east= west=] OR [r=	c=]"));
+
 /* CASE 1 - All parameters supplied */
         if (no_coord == 0 && no_dim == 0) { /* Get all parmameters */
 	if (!parm.north->answer || !parm.south->answer || !parm.west->answer || !parm.east->answer)
-		G_fatal_error("You have to provide all limits of geographic region (n,s,e,w)");
+	    G_fatal_error(_("You have to provide all limits of geographic region (n,s,e,w)"));
         if (! G_scan_northing(parm.north->answer, &cellhd.north, cellhd.proj)) return 1;
         if (! G_scan_northing(parm.south->answer, &cellhd.south, cellhd.proj)) return 1;
         if (! G_scan_easting (parm.east->answer,  &cellhd.east,  cellhd.proj)) return 1;
@@ -507,10 +528,10 @@ int main (int argc, char *argv[])
 
 		G_percent(row + 1, nrows, 2);
 	}
-	G_debug (1,"Creating support files for %s\n", output);
+	G_debug (1,"Creating support files for %s", output);
 	G_close_cell (cf);
 	if (title)
 		G_put_cell_title (output, title);
 
-	return (0);
+	exit(EXIT_SUCCESS);
 }

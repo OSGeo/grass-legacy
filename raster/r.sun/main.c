@@ -182,6 +182,7 @@ int main(int argc, char *argv[])
     parm.elevin->required = YES;
     parm.elevin->gisprompt = "old,cell,raster";
     parm.elevin->description = _("Name of the input elevation raster map [meters]");
+    parm.elevin->guisection  = _("Input_options");
 
     parm.aspin = G_define_option();
     parm.aspin->key = "aspin";
@@ -189,6 +190,8 @@ int main(int argc, char *argv[])
     parm.aspin->required = YES;
     parm.aspin->gisprompt = "old,cell,raster";
     parm.aspin->description = _("Name of the input aspect map (terrain aspect or azimuth of the solar panel) [decimal degrees]");
+    parm.aspin->guisection  = _("Input_options");
+
 
     parm.slopein = G_define_option();
     parm.slopein->key = "slopein";
@@ -196,6 +199,7 @@ int main(int argc, char *argv[])
     parm.slopein->required = YES;
     parm.slopein->gisprompt = "old,cell,raster";
     parm.slopein->description = _("Name of the input slope raster map (terrain slope or solar panel inclination) [decimal degrees]");
+    parm.slopein->guisection  = _("Input_options");
 
     parm.linkein = G_define_option();
     parm.linkein->key = "linkein";
@@ -204,6 +208,7 @@ int main(int argc, char *argv[])
     parm.linkein->gisprompt = "old,cell,raster";
     parm.linkein->description =
 	_("Name of the Linke atmospheric turbidity coefficient input raster map [-]");
+    parm.linkein->guisection  = _("Input_options");
 
     if (parm.linkein->answer == NULL) {
 	parm.lin = G_define_option();
@@ -211,6 +216,7 @@ int main(int argc, char *argv[])
 	parm.lin->type = TYPE_DOUBLE;
 	parm.lin->answer = LINKE;
 	parm.lin->required = NO;
+	parm.lin->guisection  = _("Input_options");
 	parm.lin->description =
 	    _("A single value of the Linke atmospheric turbidity coefficient [-]");
     }
@@ -221,6 +227,7 @@ int main(int argc, char *argv[])
     parm.albedo->required = NO;
     parm.albedo->gisprompt = "old,cell,raster";
     parm.albedo->description = _("Name of the ground albedo coefficient input raster map [-]");
+    parm.albedo->guisection  = _("Input_options");
 
     if (parm.albedo->answer == NULL) {
 	parm.alb = G_define_option();
@@ -228,6 +235,7 @@ int main(int argc, char *argv[])
 	parm.alb->type = TYPE_DOUBLE;
 	parm.alb->answer = ALB;
 	parm.alb->required = NO;
+	parm.alb->guisection  = _("Input_options");
 	parm.alb->description = _("A single value of the ground albedo coefficient [-]");
     }
 
@@ -236,13 +244,16 @@ int main(int argc, char *argv[])
     parm.latin->type = TYPE_STRING;
     parm.latin->required = NO;
     parm.latin->gisprompt = "old,cell,raster";
-    parm.latin->description = _("Name of the latitudes input raster map [decimal degrees]");
+    parm.latin->description =
+	_("Name of the latitudes input raster map [decimal degrees]");
+    parm.latin->guisection  = _("Input_options");
 
     if (parm.latin->answer == NULL) {
 	parm.lat = G_define_option();
 	parm.lat->key = "lat";
 	parm.lat->type = TYPE_DOUBLE;
 	parm.lat->required = NO;
+	parm.lat->guisection  = _("Input_options");
 	parm.lat->description = _("A single value of latitude [decimal degrees]");
     }
 
@@ -251,7 +262,9 @@ int main(int argc, char *argv[])
     parm.coefbh->type = TYPE_STRING;
     parm.coefbh->required = NO;
     parm.coefbh->gisprompt = "old,cell,raster";
-    parm.coefbh->description = _("Name of real-sky beam radiation coefficient raster map [-]");
+    parm.coefbh->description =
+	_("Name of real-sky beam radiation coefficient raster map [-]");
+    parm.coefbh->guisection  = _("Input_options");
 
     parm.coefdh = G_define_option();
     parm.coefdh->key = "coefdh";
@@ -260,6 +273,7 @@ int main(int argc, char *argv[])
     parm.coefdh->gisprompt = "old,cell,raster";
     parm.coefdh->description =
 	_("Name of real-sky diffuse radiation coefficient raster map [-]");
+    parm.coefdh->guisection  = _("Input_options");
 
     parm.incidout = G_define_option();
     parm.incidout->key = "incidout";
@@ -267,6 +281,7 @@ int main(int argc, char *argv[])
     parm.incidout->required = NO;
     parm.incidout->gisprompt = "new,cell,raster";
     parm.incidout->description = _("Output incidence angle raster map (mode 1 only)");
+    parm.incidout->guisection  = _("Output_options");
 
     parm.beam_rad = G_define_option();
     parm.beam_rad->key = "beam_rad";
@@ -275,6 +290,7 @@ int main(int argc, char *argv[])
     parm.beam_rad->gisprompt = "new,cell,raster";
     parm.beam_rad->description =
 	_("Output beam irradiance [W.m-2] (mode 1) or irradiation raster file [Wh.m-2.day-1] (mode 2)");
+    parm.beam_rad->guisection  = _("Output_options");
 
     parm.insol_time = G_define_option();
     parm.insol_time->key = "insol_time";
@@ -282,6 +298,7 @@ int main(int argc, char *argv[])
     parm.insol_time->required = NO;
     parm.insol_time->gisprompt = "new,cell,raster";
     parm.insol_time->description = _("Output insolation time raster map [h] (mode 2 only)");
+    parm.insol_time->guisection  = _("Output_options");
 
     parm.diff_rad = G_define_option();
     parm.diff_rad->key = "diff_rad";
@@ -290,6 +307,7 @@ int main(int argc, char *argv[])
     parm.diff_rad->gisprompt = "new,cell,raster";
     parm.diff_rad->description =
 	_("Output diffuse irradiance [W.m-2] (mode 1) or irradiation raster map [Wh.m-2.day-1] (mode 2)");
+    parm.diff_rad->guisection  = _("Output_options");
 
     parm.refl_rad = G_define_option();
     parm.refl_rad->key = "refl_rad";
@@ -298,6 +316,7 @@ int main(int argc, char *argv[])
     parm.refl_rad->gisprompt = "new,cell,raster";
     parm.refl_rad->description =
 	_("Output ground reflected irradiance [W.m-2] (mode 1) or irradiation raster map [Wh.m-2.day-1] (mode 2)");
+    parm.refl_rad->guisection  = _("Output_options");
 
     parm.day = G_define_option();
     parm.day->key = "day";
