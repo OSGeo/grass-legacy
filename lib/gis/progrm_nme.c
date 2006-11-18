@@ -37,18 +37,21 @@ const char *G_program_name(void)
 int G_set_program_name(const char *s)
 {
     int i;
+    char *temp;
 
     i = strlen (s);
     while (--i >= 0)
     {
-	if (G_is_dirsep(s[i]))
+	if (G_is_dirsep (s[i]))
 	{
 	    s += i+1;
 	    break;
 	}
     }
-    G_basename(s, "exe");
-    name = G_store (s);
+    temp = G_store (s);
+    G_basename(temp, "exe");
+    name = G_store (temp);
+    G_free (temp);
 
     return 0;
 }
