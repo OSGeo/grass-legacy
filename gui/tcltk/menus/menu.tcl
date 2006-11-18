@@ -141,6 +141,7 @@ set descmenu [subst  {
 			{command {[G_msg "Multiple formats using GDAL"]} {} "r.out.gdal" {} -command { execute r.out.gdal }}
 			{separator}
 			{command {[G_msg "ASCII grid (for GRASS, Surfer, Modflow, etc)"]} {} "r.out.ascii" {} -command { execute r.out.ascii }}
+			{command {[G_msg "ASCII x,y,z values of cell centers"]} {} "r.out.xyz" {} -command { execute r.out.xyz }}
 			{separator}
 			{command {[G_msg "ESRI ARC/INFO ASCII grid"]} {} "r.out.arc" {} -command { execute r.out.arc }}
 			{command {[G_msg "GRIDATB.FOR map file (TOPMODEL)"]} {} "r.out.gridatb" {} -command { execute r.out.gridatb }}
