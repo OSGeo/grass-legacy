@@ -36,9 +36,9 @@ main (int argc, char **argv)
 	int colorb = 0;
 	double size=0., gsize=0.; /* initialize to zero */
 	double east, north;
-	int do_text;
+	int do_text, fontsize;
 	struct GModule *module;
-	struct Option *opt1, *opt2, *opt3, *opt4;
+	struct Option *opt1, *opt2, *opt3, *opt4, *fsize;
 	struct Flag *noborder, *notext, *geogrid, *nogrid, *wgs84;
 	struct pj_info info_in;  /* Proj structures */
 	struct pj_info info_out; /* Proj structures */
@@ -47,8 +47,8 @@ main (int argc, char **argv)
 	G_gisinit(argv[0]) ;
 
 	module = G_define_module();
-	module->keywords = _("display");
-    module->description =
+	module->keywords = _("display, cartography");
+	module->description =
 		_("Overlays a user-specified grid "
 		"in the active display frame on the graphics monitor.");
 
@@ -57,8 +57,10 @@ main (int argc, char **argv)
 	opt2->key_desc   = "value" ;
 	opt2->type       = TYPE_STRING ;
 	opt2->required   = YES;
-	opt2->description= _("Size of grid to be drawn") ;
-	
+	opt2->label      = _("Size of grid to be drawn");
+	opt2->description= _("In map units or DDD:MM:SS format. "
+			     "Example: \"1000\" or \"0:10\"");
+
 	opt1 = G_define_option() ;
 	opt1->key        = "color" ;
 	opt1->type       = TYPE_STRING ;
@@ -85,13 +87,23 @@ main (int argc, char **argv)
 	    _("Sets the border color, either a standard GRASS color or R:G:B triplet");
 	opt4->gisprompt  = GISPROMPT_COLOR ;
 
+	fsize = G_define_option();
+	fsize->key	  = "fontsize";
+	fsize->type	  = TYPE_INTEGER;
+	fsize->required   = NO;
+	fsize->answer     = "9";
+	fsize->options    = "1-72";
+	fsize->description= _("Font size for gridline coordinate labels");
+
 	geogrid = G_define_flag();
 	geogrid->key = 'g';
-	geogrid->description = _("Draw geographic grid (referenced to current ellipsoid)");
+	geogrid->description =
+	    _("Draw geographic grid (referenced to current ellipsoid)");
 
 	wgs84 = G_define_flag();
 	wgs84->key = 'w';
-	wgs84->description = _("Draw geographic grid (referenced to WGS84 ellipsoid)");
+	wgs84->description =
+	    _("Draw geographic grid (referenced to WGS84 ellipsoid)");
 
 	nogrid = G_define_flag();
 	nogrid->key = 'n';
@@ -123,6 +135,8 @@ main (int argc, char **argv)
 	
 	if(notext->answer) do_text = FALSE;
 	else do_text = TRUE;
+
+	fontsize = atoi(fsize->answer);
 
 	/* get grid size */
 	if (geogrid->answer)
@@ -172,10 +186,10 @@ main (int argc, char **argv)
 		{
 			/* initialzie proj stuff */
 			init_proj(&info_in, &info_out, wgs84->answer);
-			plot_geogrid(gsize, info_in, info_out, do_text);
+			plot_geogrid(gsize, info_in, info_out, do_text, fontsize);
 		} else {
 			/* Do the grid plotting */
-			plot_grid(size, east, north, do_text);
+			plot_grid(size, east, north, do_text, fontsize);
 		}
 	}
 
