@@ -38,6 +38,7 @@ SUBDIRS = \
 	r.mapcalculator \
 	r.mask \
 	r.out.gdal \
+	r.out.xyz \
 	r.plane \
 	r.reclass.area \
 	r.regression.line \
