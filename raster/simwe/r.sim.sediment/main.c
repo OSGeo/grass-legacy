@@ -77,8 +77,8 @@ int main ( int argc, char *argv[])
   module = G_define_module();
   module->keywords = _("raster");
   module->description =        
-                  "Overland flow hydrologic model based on duality "
-                  "particle-field concept (SIMWE)";
+	_("Overland flow hydrologic model based on duality "
+	  "particle-field concept (SIMWE)");
                   
   if (G_get_set_window (&cellhd) == -1)
     exit (EXIT_FAILURE);
@@ -132,141 +132,164 @@ int main ( int argc, char *argv[])
   parm.elevin->type = TYPE_STRING;
   parm.elevin->required = YES;
   parm.elevin->gisprompt = "old,cell,raster";
-  parm.elevin->description = "Name of the elevation raster file";
+  parm.elevin->description = _("Name of the elevation raster file");
+  parm.elevin->guisection  = _("Input_options");
 
   parm.wdepth = G_define_option();
   parm.wdepth->key = "wdepth";
   parm.wdepth->type = TYPE_STRING;
   parm.wdepth->required = YES;
   parm.wdepth->gisprompt = "old,cell,raster";
-  parm.wdepth->description = "Name of the water height raster file";
+  parm.wdepth->description = _("Name of the water height raster file");
+  parm.wdepth->guisection  = _("Input_options");
 
   parm.dxin = G_define_option();
   parm.dxin->key = "dxin";
   parm.dxin->type = TYPE_STRING;
   parm.dxin->required = YES;
   parm.dxin->gisprompt = "old,cell,raster";
-  parm.dxin->description = "Name of the x-derivatives raster file";
+  parm.dxin->description = _("Name of the x-derivatives raster file");
+  parm.dxin->guisection  = _("Input_options");
 
   parm.dyin = G_define_option();
   parm.dyin->key = "dyin";
   parm.dyin->type = TYPE_STRING;
   parm.dyin->required = YES;
   parm.dyin->gisprompt = "old,cell,raster";
-  parm.dyin->description = "Name of the y-derivatives raster file";
+  parm.dyin->description = _("Name of the y-derivatives raster file");
+  parm.dyin->guisection  = _("Input_options");
 
   parm.detin = G_define_option();
   parm.detin->key = "detin";
   parm.detin->type = TYPE_STRING;
   parm.detin->required = YES;
   parm.detin->gisprompt = "old,cell,raster";
-  parm.detin->description = "Name of the detachment capacity coefficient raster file";
+  parm.detin->description =
+	_("Name of the detachment capacity coefficient raster file");
+  parm.detin->guisection  = _("Input_options");
 
   parm.tranin = G_define_option();
   parm.tranin->key = "tranin";
   parm.tranin->type = TYPE_STRING;
   parm.tranin->required = YES;
   parm.tranin->gisprompt = "old,cell,raster";
-  parm.tranin->description = "Name of the transport capacity coefficient raster file";
+  parm.tranin->description =
+	_("Name of the transport capacity coefficient raster file");
+  parm.tranin->guisection  = _("Input_options");
 
   parm.tauin = G_define_option();
   parm.tauin->key = "tauin";
   parm.tauin->type = TYPE_STRING;
   parm.tauin->required = YES;
   parm.tauin->gisprompt = "old,cell,raster";
-  parm.tauin->description = "Name of the critical shear stress raster file";
+  parm.tauin->description = _("Name of the critical shear stress raster file");
+  parm.tauin->guisection  = _("Input_options");
 
   parm.manin = G_define_option();
   parm.manin->key = "manin";
   parm.manin->type = TYPE_STRING;
   parm.manin->required = YES;
   parm.manin->gisprompt = "old,cell,raster";
-  parm.manin->description = "Name of the Mannings n raster file";
+  parm.manin->description = _("Name of the Mannings n raster file");
+  parm.manin->guisection  = _("Input_options");
 
+/* needs to be updated to GRASS 6 vector format !! */
   parm.sfile = G_define_option ();
   parm.sfile->key = "sites";
   parm.sfile->type = TYPE_STRING;
   parm.sfile->required = NO;
   parm.sfile->gisprompt = "old,site_lists,sites";
-  parm.sfile->description = "Name of the site file with x,y locations";
+  parm.sfile->description = _("Name of the site file with x,y locations");
+  parm.sfile->guisection  = _("Input_options");
 
   parm.tc = G_define_option();
   parm.tc->key = "tc";
   parm.tc->type = TYPE_STRING;
   parm.tc->required = NO;
   parm.tc->gisprompt = "new,cell,raster";
-  parm.tc->description = "Output transport capacity raster file";
+  parm.tc->description = _("Output transport capacity raster file");
+  parm.tc->guisection  = _("Output_options");
 
   parm.et = G_define_option();
   parm.et->key = "et";
   parm.et->type = TYPE_STRING;
   parm.et->required = NO;
   parm.et->gisprompt = "new,cell,raster";
-  parm.et->description = "Output transp.limited erosion-deposition raster file";
+  parm.et->description =
+	_("Output transp.limited erosion-deposition raster file");
+  parm.et->guisection  = _("Output_options");
 
   parm.conc = G_define_option();
   parm.conc->key = "conc";
   parm.conc->type = TYPE_STRING;
   parm.conc->required = NO;
   parm.conc->gisprompt = "new,cell,raster";
-  parm.conc->description = "Output sediment concentration raster file";
+  parm.conc->description = _("Output sediment concentration raster file");
+  parm.conc->guisection  = _("Output_options");
 
   parm.flux = G_define_option();
   parm.flux->key = "flux";
   parm.flux->type = TYPE_STRING;
   parm.flux->required = NO;
   parm.flux->gisprompt = "new,cell,raster";
-  parm.flux->description = "Output sediment flux raster file";
+  parm.flux->description = _("Output sediment flux raster file");
+  parm.flux->guisection  = _("Output_options");
 
   parm.erdep = G_define_option();
   parm.erdep->key = "erdep";
   parm.erdep->type = TYPE_STRING;
   parm.erdep->required = NO;
   parm.erdep->gisprompt = "new,cell,raster";
-  parm.erdep->description = "Output erosion-deposition raster file";
+  parm.erdep->description = _("Output erosion-deposition raster file");
+  parm.erdep->guisection  = _("Output_options");
 
   parm.nwalk = G_define_option();
   parm.nwalk->key = "nwalk";
   parm.nwalk->type = TYPE_INTEGER;
   parm.nwalk->answer = NWALK;
   parm.nwalk->required = NO;
-  parm.nwalk->description = "Number of walkers";
+  parm.nwalk->description = _("Number of walkers");
+  parm.nwalk->guisection  = _("Parameters");
 
   parm.niter = G_define_option();
   parm.niter->key = "niter";
   parm.niter->type = TYPE_INTEGER;
   parm.niter->answer = NITER;
   parm.niter->required = NO;
-  parm.niter->description = "Number of time iterations (sec.)";
+  parm.niter->description = _("Number of time iterations (sec.)");
+  parm.niter->guisection  = _("Parameters");
 
   parm.outiter = G_define_option();
   parm.outiter->key = "outiter";
   parm.outiter->type = TYPE_INTEGER;
   parm.outiter->answer = ITEROUT;
   parm.outiter->required = NO;
-  parm.outiter->description = "Time step for saving output maps (sec.)";
+  parm.outiter->description = _("Time step for saving output maps (sec.)");
+  parm.outiter->guisection  = _("Parameters");
 
   parm.density = G_define_option();
   parm.density->key = "density";
   parm.density->type = TYPE_INTEGER;
   parm.density->answer = DENSITY;
   parm.density->required = NO;
-  parm.density->description = "Density of output walkers";
+  parm.density->description = _("Density of output walkers");
+  parm.density->guisection  = _("Parameters");
 
   parm.diffc = G_define_option();
   parm.diffc->key = "diffc";
   parm.diffc->type = TYPE_DOUBLE;
   parm.diffc->answer = DIFFC;
   parm.diffc->required = NO;
-  parm.diffc->description = "Water diffusion constant";
+  parm.diffc->description = _("Water diffusion constant");
+  parm.diffc->guisection  = _("Parameters");
 
   flag.mscale = G_define_flag ();
   flag.mscale->key = 'm';
-  flag.mscale->description = "Multiscale simulation";
+  flag.mscale->description = _("Multiscale simulation");
 
   flag.tserie = G_define_flag ();
   flag.tserie->key = 't';
-  flag.tserie->description = "Time-series (dynamic) output";
+  flag.tserie->description = _("Time-series (dynamic) output");
 
 
   if (G_parser (argc, argv))
@@ -300,7 +323,7 @@ int main ( int argc, char *argv[])
     rwalk = (double) maxwa;
 
   if (conv != 1.0) 
-  printf ("\n Using metric conversion factor %f, step=%f",conv,step);
+    G_message(_("Using metric conversion factor %f, step=%f"), conv, step);
 
 
   /*
@@ -308,11 +331,11 @@ int main ( int argc, char *argv[])
    */
 
   if ((tc == NULL) && (et == NULL) && (conc == NULL) && (flux == NULL) && (erdep == NULL))
-    fprintf (stderr, "Warning -- you are not outputing any raster or site files\n");
+    G_warning(_("You are not outputing any raster or site files"));
 
   ret_val = input_data();
   if (ret_val != 1)
-    G_fatal_error ("Input failed");
+    G_fatal_error(_("Input failed"));
 
 /* mandatory for si,sigma */
 
@@ -392,7 +415,7 @@ int main ( int argc, char *argv[])
   if (tserie == NULL) {
   ii=output_data (0,1.);
   if (ii != 1)
-    G_fatal_error ("Cannot write cell files");
+    G_fatal_error (_("Cannot write cell files"));
   }
 
   if (fdwalkers != NULL)

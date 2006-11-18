@@ -79,9 +79,9 @@ int main ( int argc, char *argv[])
 
   module = G_define_module();
   module->keywords = _("raster");
-    module->description =        
-                  _("Overland flow hydrologic model based on duality "
-                  "particle-field concept (SIMWE)");
+  module->description =        
+	_("Overland flow hydrologic model based on duality "
+	  "particle-field concept (SIMWE)");
                   
   if (G_get_set_window (&cellhd) == -1)
     exit (EXIT_FAILURE);
@@ -134,6 +134,7 @@ int main ( int argc, char *argv[])
   parm.elevin->required = YES;
   parm.elevin->gisprompt = "old,cell,raster";
   parm.elevin->description = _("Name of the elevation raster file");
+  parm.elevin->guisection  = _("Input_options");
 
   parm.dxin = G_define_option();
   parm.dxin->key = "dxin";
@@ -141,6 +142,7 @@ int main ( int argc, char *argv[])
   parm.dxin->required = YES;
   parm.dxin->gisprompt = "old,cell,raster";
   parm.dxin->description = _("Name of the x-derivatives raster file");
+  parm.dxin->guisection  = _("Input_options");
 
   parm.dyin = G_define_option();
   parm.dyin->key = "dyin";
@@ -148,6 +150,7 @@ int main ( int argc, char *argv[])
   parm.dyin->required = YES;
   parm.dyin->gisprompt = "old,cell,raster";
   parm.dyin->description = _("Name of the y-derivatives raster file");
+  parm.dyin->guisection  = _("Input_options");
 
   parm.rain = G_define_option();
   parm.rain->key = "rain";
@@ -155,6 +158,7 @@ int main ( int argc, char *argv[])
   parm.rain->required = YES;
   parm.rain->gisprompt = "old,cell,raster";
   parm.rain->description = _("Name of the rainfall excess raster file");
+  parm.rain->guisection  = _("Input_options");
 
   parm.infil = G_define_option();
   parm.infil->key = "infil";
@@ -162,6 +166,7 @@ int main ( int argc, char *argv[])
   parm.infil->required = YES;
   parm.infil->gisprompt = "old,cell,raster";
   parm.infil->description = _("Name of the infiltration excess raster file");
+  parm.infil->guisection  = _("Input_options");
 
   parm.traps = G_define_option();
   parm.traps->key = "traps";
@@ -169,6 +174,7 @@ int main ( int argc, char *argv[])
   parm.traps->required = NO;
   parm.traps->gisprompt = "old,cell,raster";
   parm.traps->description = _("Name of the flow control raster file");
+  parm.traps->guisection  = _("Input_options");
 
   parm.manin = G_define_option();
   parm.manin->key = "manin";
@@ -176,13 +182,16 @@ int main ( int argc, char *argv[])
   parm.manin->required = YES;
   parm.manin->gisprompt = "old,cell,raster";
   parm.manin->description = _("Name of the Mannings n raster file");
+  parm.manin->guisection  = _("Input_options");
 
+/* needs to be updated to GRASS 6 vector format !! */
   parm.sfile = G_define_option ();
   parm.sfile->key = "sites";
   parm.sfile->type = TYPE_STRING;
   parm.sfile->required = NO;
   parm.sfile->gisprompt = "old,site_lists,sites";
   parm.sfile->description = _("Name of the site file with x,y locations");
+  parm.sfile->guisection  = _("Input_options");
 
   parm.depth = G_define_option();
   parm.depth->key = "depth";
@@ -190,6 +199,7 @@ int main ( int argc, char *argv[])
   parm.depth->required = NO;
   parm.depth->gisprompt = "new,cell,raster";
   parm.depth->description = _("Output water depth raster file");
+  parm.depth->guisection  = _("Output_options");
 
   parm.disch = G_define_option();
   parm.disch->key = "disch";
@@ -197,6 +207,7 @@ int main ( int argc, char *argv[])
   parm.disch->required = NO;
   parm.disch->gisprompt = "new,cell,raster";
   parm.disch->description = _("Output water discharge raster file");
+  parm.disch->guisection  = _("Output_options");
 
   parm.err = G_define_option();
   parm.err->key = "err";
@@ -204,6 +215,7 @@ int main ( int argc, char *argv[])
   parm.err->required = NO;
   parm.err->gisprompt = "new,cell,raster";
   parm.err->description = _("Output simulation error raster file");
+  parm.err->guisection  = _("Output_options");
 
   parm.outwalk = G_define_option ();
   parm.outwalk->key = "outwalk";
@@ -211,6 +223,7 @@ int main ( int argc, char *argv[])
   parm.outwalk->required = NO;
   parm.outwalk->gisprompt = "new,site_lists,sites";
   parm.outwalk->description = _("Name of the output walkers site file");
+  parm.outwalk->guisection  = _("Output_options");
 
   parm.nwalk = G_define_option();
   parm.nwalk->key = "nwalk";
@@ -218,6 +231,7 @@ int main ( int argc, char *argv[])
   parm.nwalk->answer = NWALK;
   parm.nwalk->required = NO;
   parm.nwalk->description = _("Number of walkers");
+  parm.nwalk->guisection  = _("Parameters");
 
   parm.niter = G_define_option();
   parm.niter->key = "niter";
@@ -225,6 +239,7 @@ int main ( int argc, char *argv[])
   parm.niter->answer = NITER;
   parm.niter->required = NO;
   parm.niter->description = _("Number of time iterations (sec.)");
+  parm.niter->guisection  = _("Parameters");
 
   parm.outiter = G_define_option();
   parm.outiter->key = "outiter";
@@ -232,6 +247,7 @@ int main ( int argc, char *argv[])
   parm.outiter->answer = ITEROUT;
   parm.outiter->required = NO;
   parm.outiter->description = _("Time step for saving output maps (sec.)");
+  parm.outiter->guisection  = _("Parameters");
 
   parm.density = G_define_option();
   parm.density->key = "density";
@@ -239,6 +255,7 @@ int main ( int argc, char *argv[])
   parm.density->answer = DENSITY;
   parm.density->required = NO;
   parm.density->description = _("Density of output walkers");
+  parm.density->guisection  = _("Parameters");
 
   parm.diffc = G_define_option();
   parm.diffc->key = "diffc";
@@ -246,6 +263,7 @@ int main ( int argc, char *argv[])
   parm.diffc->answer = DIFFC;
   parm.diffc->required = NO;
   parm.diffc->description = _("Water diffusion constant");
+  parm.diffc->guisection  = _("Parameters");
 
   parm.hmax = G_define_option();
   parm.hmax->key = "hmax";
@@ -253,6 +271,7 @@ int main ( int argc, char *argv[])
   parm.hmax->answer = HMAX;
   parm.hmax->required = NO;
   parm.hmax->description = _("Threshold water depth (diffusion increases after this water depth is reached)");
+  parm.hmax->guisection  = _("Parameters");
 
   parm.halpha = G_define_option();
   parm.halpha->key = "halpha";
@@ -260,6 +279,7 @@ int main ( int argc, char *argv[])
   parm.halpha->answer = HALPHA;
   parm.halpha->required = NO;
   parm.halpha->description = _("Diffusion increase constant");
+  parm.halpha->guisection  = _("Parameters");
 
   parm.hbeta = G_define_option();
   parm.hbeta->key = "hbeta";
@@ -267,6 +287,7 @@ int main ( int argc, char *argv[])
   parm.hbeta->answer = HBETA;
   parm.hbeta->required = NO;
   parm.hbeta->description = _("Weighting factor for water flow velocity vector");
+  parm.hbeta->guisection  = _("Parameters");
 
   flag.mscale = G_define_flag ();
   flag.mscale->key = 'm';
@@ -309,7 +330,7 @@ int main ( int argc, char *argv[])
     rwalk = (double) maxwa;
 
   if (conv != 1.0) 
-  printf ("\nUsing metric conversion factor %f, step=%f",conv,step);
+    G_message(_("Using metric conversion factor %f, step=%f"), conv, step);
 
 
   /*
@@ -317,11 +338,11 @@ int main ( int argc, char *argv[])
    */
 
   if ((depth == NULL) && (disch == NULL) && (err == NULL) && (outwalk == NULL))
-    fprintf (stderr, "Warning -- you are not outputing any raster or site files\n");
+    G_warning(_("You are not outputing any raster or site files"));
 
   ret_val = input_data();
   if (ret_val != 1)
-    G_fatal_error ("Input failed");
+    G_fatal_error(_("Input failed"));
 
 /* memory allocation for output grids */
 
@@ -382,14 +403,14 @@ int main ( int argc, char *argv[])
   if (ts == 0) {
   ii=output_data (0,1.);
   if (ii != 1)
-    G_fatal_error ("Cannot write cell files");
+    G_fatal_error(_("Cannot write cell files"));
   }
 
   if (fdwalkers != NULL)
     fclose (fdwalkers);
 
   if (sfile != NULL)
-                fclose(fw);
+    fclose(fw);
 
   exit (EXIT_SUCCESS);
 }

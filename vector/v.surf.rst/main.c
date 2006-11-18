@@ -181,6 +181,22 @@ int main(int argc, char *argv[])
     sprintf(dminchar, "%f", dmin);
 
 
+    flag.cv = G_define_flag ();
+    flag.cv->key = 'c';
+    flag.cv->description =
+	_("Perform cross-validation procedure without raster approximation");
+
+    flag.cprght = G_define_flag();
+    flag.cprght->key = 't';
+    flag.cprght->description = _("Use scale dependent tension");
+    flag.cprght->guisection  = _("Settings");
+
+    flag.deriv = G_define_flag();
+    flag.deriv->key = 'd';
+    flag.deriv->description =
+	_("Output partial derivatives instead of topographic parameters");
+    flag.deriv->guisection  = _("Output_options");
+
     parm.input = G_define_option();
     parm.input->key = "input";
     parm.input->type = TYPE_STRING;
@@ -200,43 +216,6 @@ int main(int argc, char *argv[])
     parm.zcol->description =
 	_("Name of the attribute column with values to be used for approximation (if layer>0)");
 
-    parm.scol = G_define_option();
-    parm.scol->key = "scolumn";
-    parm.scol->type = TYPE_STRING;
-    parm.scol->required = NO;
-    parm.scol->description =
-	_("Name of the attribute column with smoothing parameters");
-
-    parm.dmax = G_define_option();
-    parm.dmax->key = "dmax";
-    parm.dmax->type = TYPE_DOUBLE;
-    parm.dmax->required = NO;
-    parm.dmax->answer = dmaxchar; 
-    parm.dmax->description =
-	_("Maximum distance between points on isoline (to insert additional points)");
-
-    parm.dmin = G_define_option();
-    parm.dmin->key = "dmin";
-    parm.dmin->type = TYPE_DOUBLE;
-    parm.dmin->required = NO;
-    parm.dmin->answer = dminchar;
-    parm.dmin->description =
-	_("Minimum distance between points (to remove almost identical points)");
-
-    parm.devi = G_define_option();
-    parm.devi->key = "devi";
-    parm.devi->type = TYPE_STRING;
-    parm.devi->required = NO;
-    parm.devi->gisprompt = "new,vector,vector";
-    parm.devi->description = _("Output deviations vector point file");
-
-    parm.cvdev = G_define_option ();
-    parm.cvdev->key = "cvdev";
-    parm.cvdev->type = TYPE_STRING;
-    parm.cvdev->required = NO;
-    parm.cvdev->gisprompt = "new,vector,vector";
-    parm.cvdev->description = _("Output cross-validation errors vector point file");
-
     parm.elev = G_define_option();
     parm.elev->key = "elev";
     parm.elev->type = TYPE_STRING;
@@ -244,16 +223,13 @@ int main(int argc, char *argv[])
     parm.elev->gisprompt = "new,cell,raster";
     parm.elev->description = _("Output surface raster file (elevation)");
 
-    flag.deriv = G_define_flag();
-    flag.deriv->key = 'd';
-    flag.deriv->description = _("Output partial derivatives instead of topographic parameters");
-
     parm.slope = G_define_option();
     parm.slope->key = "slope";
     parm.slope->type = TYPE_STRING;
     parm.slope->required = NO;
     parm.slope->gisprompt = "new,cell,raster";
     parm.slope->description = _("Output slope raster file");
+    parm.slope->guisection  = _("Output_options");
 
     parm.aspect = G_define_option();
     parm.aspect->key = "aspect";
@@ -261,6 +237,23 @@ int main(int argc, char *argv[])
     parm.aspect->required = NO;
     parm.aspect->gisprompt = "new,cell,raster";
     parm.aspect->description = _("Output aspect raster file");
+    parm.aspect->guisection  = _("Output_options");
+
+    parm.devi = G_define_option();
+    parm.devi->key = "devi";
+    parm.devi->type = TYPE_STRING;
+    parm.devi->required = NO;
+    parm.devi->gisprompt = "new,vector,vector";
+    parm.devi->description = _("Output deviations vector point file");
+    parm.devi->guisection  = _("Output_options");
+
+    parm.cvdev = G_define_option ();
+    parm.cvdev->key = "cvdev";
+    parm.cvdev->type = TYPE_STRING;
+    parm.cvdev->required = NO;
+    parm.cvdev->gisprompt = "new,vector,vector";
+    parm.cvdev->description = _("Output cross-validation errors vector point file");
+    parm.cvdev->guisection  = _("Output_options");
 
     parm.pcurv = G_define_option();
     parm.pcurv->key = "pcurv";
@@ -268,6 +261,7 @@ int main(int argc, char *argv[])
     parm.pcurv->required = NO;
     parm.pcurv->gisprompt = "new,cell,raster";
     parm.pcurv->description = _("Output profile curvature raster file");
+    parm.pcurv->guisection  = _("Output_options");
 
     parm.tcurv = G_define_option();
     parm.tcurv->key = "tcurv";
@@ -275,6 +269,7 @@ int main(int argc, char *argv[])
     parm.tcurv->required = NO;
     parm.tcurv->gisprompt = "new,cell,raster";
     parm.tcurv->description = _("Output tangential curvature raster file");
+    parm.tcurv->guisection  = _("Output_options");
 
     parm.mcurv = G_define_option();
     parm.mcurv->key = "mcurv";
@@ -282,68 +277,16 @@ int main(int argc, char *argv[])
     parm.mcurv->required = NO;
     parm.mcurv->gisprompt = "new,cell,raster";
     parm.mcurv->description = _("Output mean curvature raster file");
-
-    parm.maskmap = G_define_option();
-    parm.maskmap->key = "maskmap";
-    parm.maskmap->type = TYPE_STRING;
-    parm.maskmap->required = NO;
-    parm.maskmap->gisprompt = "old,cell,raster";
-    parm.maskmap->description = _("Name of the raster file used as mask");
-
-    parm.zmult = G_define_option();
-    parm.zmult->key = "zmult";
-    parm.zmult->type = TYPE_DOUBLE;
-    parm.zmult->answer = ZMULT;
-    parm.zmult->required = NO;
-    parm.zmult->description = _("Conversion factor for values used for approximation");
-
-    parm.fi = G_define_option();
-    parm.fi->key = "tension";
-    parm.fi->type = TYPE_DOUBLE;
-    parm.fi->answer = TENSION;
-    parm.fi->required = NO;
-    parm.fi->description = _("Tension parameter");
-
-    parm.rsm = G_define_option();
-    parm.rsm->key = "smooth";
-    parm.rsm->type = TYPE_DOUBLE;
-    parm.rsm->required = NO;
-    parm.rsm->description = _("Smoothing parameter");
-
-    parm.segmax = G_define_option();
-    parm.segmax->key = "segmax";
-    parm.segmax->type = TYPE_INTEGER;
-    parm.segmax->answer = MAXSEGM;
-    parm.segmax->required = NO;
-    parm.segmax->description = _("Maximum number of points in a segment");
-
-    parm.npmin = G_define_option();
-    parm.npmin->key = "npmin";
-    parm.npmin->type = TYPE_INTEGER;
-    parm.npmin->answer = MINPOINTS;
-    parm.npmin->required = NO;
-    parm.npmin->description =
-	_("Minimum number of points for approximation in a segment (>segmax)");
-
-    parm.theta = G_define_option();
-    parm.theta->key = "theta";
-    parm.theta->type = TYPE_DOUBLE;
-    parm.theta->required = NO;
-    parm.theta->description =
-	_("Anisotropy angle (in degrees counterclockwise from East)");
-
-    parm.scalex = G_define_option();
-    parm.scalex->key = "scalex";
-    parm.scalex->type = TYPE_DOUBLE;
-    parm.scalex->required = NO;
-    parm.scalex->description = _("Anisotropy scaling factor");
+    parm.mcurv->guisection  = _("Output_options");
 
     parm.treefile = G_define_option();
     parm.treefile->key = "treefile";
     parm.treefile->type = TYPE_STRING;
     parm.treefile->required = NO;
     parm.treefile->gisprompt = "new,dig,vector";
-    parm.treefile->description = _("Output vector file showing quadtree segmentation");
+    parm.treefile->description =
+	_("Output vector file showing quadtree segmentation");
+    parm.treefile->guisection  = _("Output_options");
 
     parm.overfile = G_define_option();
     parm.overfile->key = "overfile";
@@ -352,14 +295,96 @@ int main(int argc, char *argv[])
     parm.overfile->gisprompt = "new,dig,vector";
     parm.overfile->description =
 	_("Output vector file showing overlapping windows");
+    parm.overfile->guisection  = _("Output_options");
 
-    flag.cprght = G_define_flag();
-    flag.cprght->key = 't';
-    flag.cprght->description = _("Use scale dependent tension");
+    parm.maskmap = G_define_option();
+    parm.maskmap->key = "maskmap";
+    parm.maskmap->type = TYPE_STRING;
+    parm.maskmap->required = NO;
+    parm.maskmap->gisprompt = "old,cell,raster";
+    parm.maskmap->description = _("Name of the raster file used as mask");
 
-    flag.cv = G_define_flag ();
-    flag.cv->key = 'c';
-    flag.cv->description = _("Perform cross-validation procedure without raster approximation");
+    parm.fi = G_define_option();
+    parm.fi->key = "tension";
+    parm.fi->type = TYPE_DOUBLE;
+    parm.fi->answer = TENSION;
+    parm.fi->required = NO;
+    parm.fi->description = _("Tension parameter");
+    parm.fi->guisection  = _("Settings");
+
+    parm.rsm = G_define_option();
+    parm.rsm->key = "smooth";
+    parm.rsm->type = TYPE_DOUBLE;
+    parm.rsm->required = NO;
+    parm.rsm->description = _("Smoothing parameter");
+    parm.rsm->guisection  = _("Settings");
+
+    parm.scol = G_define_option();
+    parm.scol->key = "scolumn";
+    parm.scol->type = TYPE_STRING;
+    parm.scol->required = NO;
+    parm.scol->description =
+	_("Name of the attribute column with smoothing parameters");
+    parm.scol->guisection  = _("Settings");
+
+    parm.segmax = G_define_option();
+    parm.segmax->key = "segmax";
+    parm.segmax->type = TYPE_INTEGER;
+    parm.segmax->answer = MAXSEGM;
+    parm.segmax->required = NO;
+    parm.segmax->description = _("Maximum number of points in a segment");
+    parm.segmax->guisection  = _("Settings");
+
+    parm.npmin = G_define_option();
+    parm.npmin->key = "npmin";
+    parm.npmin->type = TYPE_INTEGER;
+    parm.npmin->answer = MINPOINTS;
+    parm.npmin->required = NO;
+    parm.npmin->description =
+	_("Minimum number of points for approximation in a segment (>segmax)");
+    parm.npmin->guisection  = _("Settings");
+
+    parm.dmin = G_define_option();
+    parm.dmin->key = "dmin";
+    parm.dmin->type = TYPE_DOUBLE;
+    parm.dmin->required = NO;
+    parm.dmin->answer = dminchar;
+    parm.dmin->description =
+	_("Minimum distance between points (to remove almost identical points)");
+    parm.dmin->guisection  = _("Settings");
+
+    parm.dmax = G_define_option();
+    parm.dmax->key = "dmax";
+    parm.dmax->type = TYPE_DOUBLE;
+    parm.dmax->required = NO;
+    parm.dmax->answer = dmaxchar; 
+    parm.dmax->description =
+	_("Maximum distance between points on isoline (to insert additional points)");
+    parm.dmax->guisection  = _("Settings");
+
+    parm.zmult = G_define_option();
+    parm.zmult->key = "zmult";
+    parm.zmult->type = TYPE_DOUBLE;
+    parm.zmult->answer = ZMULT;
+    parm.zmult->required = NO;
+    parm.zmult->description =
+	_("Conversion factor for values used for approximation");
+    parm.zmult->guisection  = _("Settings");
+
+    parm.theta = G_define_option();
+    parm.theta->key = "theta";
+    parm.theta->type = TYPE_DOUBLE;
+    parm.theta->required = NO;
+    parm.theta->description =
+	_("Anisotropy angle (in degrees counterclockwise from East)");
+    parm.theta->guisection  = _("Anisotropy");
+
+    parm.scalex = G_define_option();
+    parm.scalex->key = "scalex";
+    parm.scalex->type = TYPE_DOUBLE;
+    parm.scalex->required = NO;
+    parm.scalex->description = _("Anisotropy scaling factor");
+    parm.scalex->guisection  = _("Anisotropy");
 
 
     if (G_parser(argc, argv))

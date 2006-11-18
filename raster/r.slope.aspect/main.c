@@ -123,12 +123,12 @@ int main (int argc, char *argv[])
 
     G_gisinit (argv[0]);
 
-	module = G_define_module();
+    module = G_define_module();
     module->keywords = _("raster");
     module->description =
-		_("Generates raster map layers of slope, aspect, "
-		"curvatures and partial derivatives from a raster "
-		"map layer of true elevation values. Aspect is calculated counterclockwise from east.");
+	_("Generates raster map layers of slope, aspect, curvatures and "
+	  "partial derivatives from a raster map layer of true elevation "
+	  "values. Aspect is calculated counterclockwise from east.");
 
     parm.elevation = G_define_option() ;
     parm.elevation->key        = "elevation" ;
@@ -145,22 +145,6 @@ int main (int argc, char *argv[])
     parm.slope->gisprompt  = "new,cell,raster" ;
     parm.slope->description= _("Output slope filename") ;
 
-    parm.slope_fmt = G_define_option() ;
-    parm.slope_fmt->key        = "format" ;
-    parm.slope_fmt->type       = TYPE_STRING ;
-    parm.slope_fmt->required   = NO ;
-    parm.slope_fmt->answer     = "degrees";
-    parm.slope_fmt->options  = "degrees,percent";
-    parm.slope_fmt->description= _("Format for reporting the slope") ;
-
-    parm.out_precision = G_define_option() ;
-    parm.out_precision->key        = "prec";
-    parm.out_precision->type       = TYPE_STRING ;
-    parm.out_precision->required   = NO ;
-    parm.out_precision->answer     = "float";
-    parm.out_precision->options  = "default,double,float,int";
-    parm.out_precision->description= _("Type of output aspect and slope maps") ;
-
     parm.aspect = G_define_option() ;
     parm.aspect->key        = "aspect" ;
     parm.aspect->type       = TYPE_STRING ;
@@ -169,6 +153,24 @@ int main (int argc, char *argv[])
     parm.aspect->gisprompt  = "new,cell,raster" ;
     parm.aspect->description= _("Output aspect filename") ;
 
+    parm.slope_fmt = G_define_option() ;
+    parm.slope_fmt->key        = "format" ;
+    parm.slope_fmt->type       = TYPE_STRING ;
+    parm.slope_fmt->required   = NO ;
+    parm.slope_fmt->answer     = "degrees";
+    parm.slope_fmt->options    = "degrees,percent";
+    parm.slope_fmt->description= _("Format for reporting the slope") ;
+    parm.slope_fmt->guisection = _("Settings");
+
+    parm.out_precision = G_define_option() ;
+    parm.out_precision->key        = "prec";
+    parm.out_precision->type       = TYPE_STRING ;
+    parm.out_precision->required   = NO ;
+    parm.out_precision->answer     = "float";
+    parm.out_precision->options    = "default,double,float,int";
+    parm.out_precision->description= _("Type of output aspect and slope maps") ;
+    parm.out_precision->guisection = _("Settings");
+
     parm.pcurv = G_define_option() ;
     parm.pcurv->key        = "pcurv" ;
     parm.pcurv->type       = TYPE_STRING ;
@@ -176,6 +178,7 @@ int main (int argc, char *argv[])
     parm.pcurv->answer     = NULL ;
     parm.pcurv->gisprompt  = "new,cell,raster" ;
     parm.pcurv->description= _("Output profile curvature filename" );
+    parm.pcurv->guisection = _("Advanced");
 
     parm.tcurv = G_define_option() ;
     parm.tcurv->key        = "tcurv" ;
@@ -184,6 +187,7 @@ int main (int argc, char *argv[])
     parm.tcurv->answer     = NULL ;
     parm.tcurv->gisprompt  = "new,cell,raster" ;
     parm.tcurv->description= _("Output tangential curvature filename") ;
+    parm.tcurv->guisection = _("Advanced");
 
     parm.dx = G_define_option() ;
     parm.dx->key        = "dx" ;
@@ -192,6 +196,7 @@ int main (int argc, char *argv[])
     parm.dx->answer     = NULL ;
     parm.dx->gisprompt  = "new,cell,raster" ;
     parm.dx->description= _("Output first order partial derivative dx (E-W slope) filename") ;
+    parm.dx->guisection = _("Advanced");
 
     parm.dy = G_define_option() ;
     parm.dy->key        = "dy" ;
@@ -200,6 +205,7 @@ int main (int argc, char *argv[])
     parm.dy->answer     = NULL ;
     parm.dy->gisprompt  = "new,cell,raster" ;
     parm.dy->description= _("Output first order partial derivative dy (N-S slope) filename") ;
+    parm.dy->guisection = _("Advanced");
 
     parm.dxx = G_define_option() ;
     parm.dxx->key        = "dxx" ;
@@ -208,6 +214,7 @@ int main (int argc, char *argv[])
     parm.dxx->answer     = NULL ;
     parm.dxx->gisprompt  = "new,cell,raster" ;
     parm.dxx->description= _("Output second order partial derivative dxx filename") ;
+    parm.dxx->guisection = _("Advanced");
 
     parm.dyy = G_define_option() ;
     parm.dyy->key        = "dyy" ;
@@ -216,6 +223,7 @@ int main (int argc, char *argv[])
     parm.dyy->answer     = NULL ;
     parm.dyy->gisprompt  = "new,cell,raster" ;
     parm.dyy->description= _("Output second order partial derivative dyy filename") ;
+    parm.dyy->guisection = _("Advanced");
 
     parm.dxy = G_define_option() ;
     parm.dxy->key        = "dxy" ;
@@ -224,6 +232,7 @@ int main (int argc, char *argv[])
     parm.dxy->answer     = NULL ;
     parm.dxy->gisprompt  = "new,cell,raster" ;
     parm.dxy->description= _("Output second order partial derivative dxy filename") ;
+    parm.dxy->guisection = _("Advanced");
 
     parm.zfactor = G_define_option();
     parm.zfactor->key         = "zfactor";
@@ -231,6 +240,7 @@ int main (int argc, char *argv[])
     parm.zfactor->type        = TYPE_DOUBLE;
     parm.zfactor->required    = NO;
     parm.zfactor->answer      = "1.0";
+    parm.zfactor->guisection  = _("Settings");
 
     parm.min_slp_allowed = G_define_option();
     parm.min_slp_allowed->key         = "min_slp_allowed";
@@ -238,14 +248,17 @@ int main (int argc, char *argv[])
     parm.min_slp_allowed->type        = TYPE_DOUBLE;
     parm.min_slp_allowed->required    = NO;
     parm.min_slp_allowed->answer      = "0.0";
-
-    flag.a = G_define_flag() ;
-    flag.a->key         = 'a' ;
-    flag.a->description = _("Do not align the current region to the elevation layer") ;
+    parm.min_slp_allowed->guisection  = _("Settings");
 
     flag.q = G_define_flag() ;
     flag.q->key         = 'q' ;
     flag.q->description = _("Quiet") ;
+
+    flag.a = G_define_flag() ;
+    flag.a->key         = 'a' ;
+    flag.a->description = _("Do not align the current region to the elevation layer") ;
+    flag.a->guisection  = _("Settings");
+
 
     radians_to_degrees = 180.0 / M_PI ;
     degrees_to_radians = M_PI / 180.0 ;
