@@ -15,9 +15,12 @@ ifneq ($(USE_X11),)
   SUBDIRS += XDRIVER
 endif
 
-default: subdirs
+default: subdirs $(ETC)/monitorcap
 	$(MKDIR) $(GISBASE)/docs/html
 	$(INSTALL) -m 644 description.html $(GISBASE)/docs/html/displaydrivers.html
 
+# Touch an empty monitorcap if none exists (e.g. native Windows)
+$(ETC)/monitorcap:
+	if [ ! -f $@ ] ; then touch $@ ; fi
 
 clean: cleansubdirs
