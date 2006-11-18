@@ -10,14 +10,13 @@
 #include "local_proto.h"
 
 
-int plot_grid (double grid_size, double east, double north, int do_text)
+int plot_grid (double grid_size, double east, double north, int do_text, int fontsize)
 {
 	double x,y;
 	double e1,e2;
 	struct Cell_head window ;
 	double row_dist, colm_dist;
 	char text[128];
-	int fontsize = 9;
 
 	G_get_set_window (&window);
 
@@ -103,7 +102,8 @@ int plot_grid (double grid_size, double east, double north, int do_text)
 }
 
 
-int plot_geogrid(double size, struct pj_info info_in, struct pj_info info_out, int do_text)
+int plot_geogrid(double size, struct pj_info info_in, struct pj_info info_out,
+		 int do_text, int fontsize)
 {
 double g;
 double e1, e2, n1, n2;
@@ -113,7 +113,6 @@ double lat, lon;
 int j, ll;
 int SEGS=100;
 char text[128];
-int fontsize = 9;
 float border_off = 4.5;
 float grid_off = 3.;
 double row_dist, colm_dist;
