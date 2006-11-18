@@ -56,7 +56,8 @@ int main (int argc, char *argv[])
 
     quiet_flag = G_define_flag();
     quiet_flag->key		= 'q';
-    quiet_flag->description = _("Suppress display of residuals or other information"); 
+    quiet_flag->description =
+	_("Suppress display of residuals or other information"); 
 
     tozero_flag = G_define_flag();
     tozero_flag->key		= 't';
@@ -65,7 +66,8 @@ int main (int argc, char *argv[])
     shift_flag = G_define_flag();
     shift_flag->key		= 's';
     shift_flag->description = _("Instead of points use transformation options "
-		"(xshift, yshift, zshift, xscale, yscale, zscale, zrot)"); 
+		"(xshift, yshift, zshift, xscale, yscale, zscale, zrot)");
+    shift_flag->guisection  = _("Custom");
 
     old = G_define_standard_option(G_OPT_V_INPUT);
     
@@ -85,7 +87,8 @@ int main (int argc, char *argv[])
     xshift->required	= NO;
     xshift->multiple	= NO;
     xshift->description	= _("Shifting value for x coordinates");
-    xshift->answer     = "0.0";
+    xshift->answer      = "0.0";
+    xshift->guisection  = _("Custom");
 
     yshift = G_define_option();
     yshift->key		= "yshift";
@@ -94,6 +97,7 @@ int main (int argc, char *argv[])
     yshift->multiple	= NO;
     yshift->description	= _("Shifting value for y coordinates");
     yshift->answer     = "0.0";
+    yshift->guisection  = _("Custom");
 
     zshift = G_define_option();
     zshift->key		= "zshift";
@@ -101,7 +105,8 @@ int main (int argc, char *argv[])
     zshift->required	= NO;
     zshift->multiple	= NO;
     zshift->description	= _("Shifting value for z coordinates");
-    zshift->answer     = "0.0";
+    zshift->answer      = "0.0";
+    zshift->guisection  = _("Custom");
 
     xscale = G_define_option();
     xscale->key		= "xscale";
@@ -109,7 +114,8 @@ int main (int argc, char *argv[])
     xscale->required	= NO;
     xscale->multiple	= NO;
     xscale->description	= _("Scaling factor for x coordinates");
-    xscale->answer     = "1.0";
+    xscale->answer      = "1.0";
+    xscale->guisection  = _("Custom");
 
     yscale = G_define_option();
     yscale->key		= "yscale";
@@ -117,7 +123,8 @@ int main (int argc, char *argv[])
     yscale->required	= NO;
     yscale->multiple	= NO;
     yscale->description	= _("Scaling factor for y coordinates");
-    yscale->answer     = "1.0";
+    yscale->answer      = "1.0";
+    yscale->guisection  = _("Custom");
 
     zscale = G_define_option();
     zscale->key		= "zscale";
@@ -125,7 +132,8 @@ int main (int argc, char *argv[])
     zscale->required	= NO;
     zscale->multiple	= NO;
     zscale->description	= _("Scaling factor for z coordinates");
-    zscale->answer     = "1.0";
+    zscale->answer      = "1.0";
+    zscale->guisection  = _("Custom");
 
     zrot = G_define_option();
     zrot->key		= "zrot";
@@ -133,8 +141,9 @@ int main (int argc, char *argv[])
     zrot->required	= NO;
     zrot->multiple	= NO;
     zrot->description	= _("Rotation around z axis in degrees counterclockwise");
-    zrot->answer     = "0.0";
-    
+    zrot->answer        = "0.0";
+    zrot->guisection    = _("Custom");
+
     if (G_parser (argc, argv))
 	exit (EXIT_FAILURE);
     
