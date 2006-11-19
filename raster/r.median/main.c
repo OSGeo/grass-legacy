@@ -63,31 +63,26 @@ int main (int argc, char *argv[])
     base_mapset = G_find_cell2 (basemap, "");
     if (base_mapset == NULL)
     {
-	fprintf(stderr,"%s: base raster map not found\n", basemap);
-	exit(1);
+	G_fatal_error(_("%s: base raster map not found"), basemap);
     }
 
     cover_mapset = G_find_cell2 (covermap, "");
     if (cover_mapset == NULL)
     {
-	fprintf(stderr,"%s: cover raster map not found\n", covermap);
-	exit(1);
+	G_fatal_error(_("%s: cover raster map not found"), covermap);
     }
     if (G_legal_filename(outmap) < 0)
     {
-	fprintf(stderr,"%s: illegal map name\n", outmap);
-	exit(1);
+	G_fatal_error(_("%s: illegal map name"), outmap);
     }
     if (strcmp(G_mapset(),base_mapset)==0 && strcmp(basemap, outmap) == 0)
     {
-	fprintf(stderr,"%s: base map and output map must be different\n",
+	G_fatal_error(("%s: base map and output map must be different"),
 		outmap);
-	exit(1);
     }
     if (G_read_cats (covermap, cover_mapset, &cover_cats) < 0)
     {
-	fprintf (stderr, "%s: can't read category labels\n", covermap);
-	exit(1);
+	G_fatal_error (_("%s: can't read category labels"), covermap);
     }
 
     strcpy (command, "r.stats -a '");
