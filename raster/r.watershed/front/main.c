@@ -202,13 +202,13 @@ int main(int argc, char *argv[])
 	sprintf (command, "%s/etc/water/", G_gisbase()) ;
 
 	if (flag1->answer)
-		strcat(command,"seg") ;
+	    strcat(command,"r.watershed.seg");
 	else
-		strcat(command,"ram") ;
+	    strcat(command,"r.watershed.ram");
 
 	if (flag2->answer)
 		strcat(command," -4") ;
-	
+
 	if (opt1->answer)
 	{
 		strcat(command, " el=") ; strcat(command, "\"") ;
@@ -303,6 +303,7 @@ int main(int argc, char *argv[])
 	G_debug(1, "Running: %s", command);
 
 	ret = system(command);
+
 
 	/* record map metadata/history info */
 	if(opt8->answer)

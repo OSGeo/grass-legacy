@@ -1,6 +1,6 @@
 MODULE_TOPDIR = ../../..
 
-PGM = ram
+PGM = r.watershed.ram
 
 LIBES = $(GISLIB)
 DEPENDENCIES = $(GISDEP)
