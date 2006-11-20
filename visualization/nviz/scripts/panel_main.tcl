@@ -1,4 +1,20 @@
-#########################################################################
+##########################################################################
+#
+# Main panel and display controls for NVIZ
+# Probably originally written written ca. 1994 by
+# U.S. Army Construction Engineering Research Laboratory
+#
+# Updates 2005 by Massimo Cuomo, ACS - m.cuomo at acsys.it
+# Major update of GUI Nov 2006, Michael Barton, Arizona State University
+#
+##########################################################################
+# COPYRIGHT:	(C) 2006 by Michael Barton and the GRASS Development Team
+#
+#		This program is free software under the GNU General Public
+#		License (>=v2). Read the file COPYING that comes with GRASS
+#		for details.
+#
+##########################################################################
 # Default Priority for this panel
 #
 # priority is from 0 to 10
@@ -20,7 +36,8 @@ proc mkmainPanel { BASE } {
 	global XY
 	#Globals for draw features
 	global surface vector sites volume
-	global legend labels n_arrow fringe
+	global legend labels n_arrow 
+	global fringe_color fringe_elev fringe 
 	global n_arrow_x n_arrow_y n_arrow_z
 	global fringe_nw fringe_ne fringe_sw fringe_se
 
@@ -124,6 +141,7 @@ proc mkmainPanel { BASE } {
 	set labels 0
 	set n_arrow 0
 	set fringe 0
+	set fringe_color #AAAAAA
 
 	#Set North Arrow defaults
 	set n_arrow_x 999

@@ -28,6 +28,7 @@ global Nv_
 proc mkscalePanel { BASE } {
     global Nv_
     global n_arrow_size n_arrow
+    global fringe_elev
 
     set panel [St_create {window name size priority} $BASE "Decorations" 2 5]
     frame $BASE -relief groove -borderwidth 2
@@ -94,7 +95,9 @@ proc mkscalePanel { BASE } {
     frame $rbase.elev.entries
     frame $rbase.elev.text
 
-    entry $rbase.elev.entries.min -width 8 -relief sunken
+    entry $rbase.elev.entries.min -width 8 -relief sunken \
+	-background white -textvariable fringe_elev
+
     entry $rbase.elev.entries.max -width 8 -relief sunken
     pack $rbase.elev.entries.min $rbase.elev.entries.max
 
@@ -108,8 +111,8 @@ proc mkscalePanel { BASE } {
 	$rbase.elev.auto -side left -anchor n
 
     button $rbase.color -text "Color" \
-	-bg \#ffffff -width 8 \
-	-command "change_label_color $rbase.color"
+	-bg "#aaaaaa" -width 8 \
+	-command "change_fringe_color $rbase.color"
 
     pack $rbase.draw $rbase.where $rbase.elev $rbase.color -expand no
 
@@ -120,20 +123,35 @@ proc mkscalePanel { BASE } {
     pack $BASE.draw_ruler -fill x
 
     set n_arrow_size 100
+    set fringe_elev [lindex [Nget_zrange] 0]
 
     return $panel
 }
 #############################################################
+
+# Simple routine to change the color of fringe
+proc change_fringe_color { me } {
+global fringe_color
+
+    set clr [lindex [$me configure -bg] 4]
+    set clr [mkColorPopup .colorpop Fringe_Color $clr 1]
+    set fringe_color $clr
+    $me configure -bg $clr
+}
+
 
 ######################
 proc draw_fringe {} {
 global Nv_
 global fringe_nw fringe_ne fringe_sw fringe_se
 global fringe
+global fringe_color fringe_elev
     
 set surf [Nget_current surf]
 set fringe 1
-Ndraw_fringe $surf $fringe_nw $fringe_ne $fringe_sw $fringe_se
+
+
+Ndraw_fringe $surf $fringe_color $fringe_elev $fringe_nw $fringe_ne $fringe_sw $fringe_se
     
 } 
 
