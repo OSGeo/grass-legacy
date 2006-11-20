@@ -228,7 +228,7 @@ int main (int argc, char **argv)
 	db_shutdown_driver(driver);
 	
 	for ( i = 0; i < ncats; i++ ) add_cat( cats[i] );
-	G_free ( cats );
+	if (ncats >= 0) G_free ( cats );
     }
 
     type = Vect_option_to_types ( typopt );
