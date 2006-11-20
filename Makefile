@@ -363,7 +363,7 @@ html2pdfdoc:
 	@ echo "Light PDF document from modules' HTML documentation"
 	@ # http://www.htmldoc.org
 	@test -d $(GRASS_PDFDIR) || mkdir -p $(GRASS_PDFDIR)
-	(cd ${ARCH_DISTDIR}/docs/html ; $(HTML2PDF) --webpage --referer "http://grass.itc.it" --no-links database.html display.html general.html imagery.html misc.html photo.html postscript.html raster.html raster3D.html vector.html -f $(GRASS_PDFDIR)/grass${GRASS_VERSION_MAJOR}${GRASS_VERSION_MINOR}commands.pdf)
+	(cd ${ARCH_DISTDIR}/docs/html ; $(HTML2PDF) --webpage --no-links database.html display.html general.html imagery.html misc.html photo.html postscript.html raster.html raster3D.html vector.html -f $(GRASS_PDFDIR)/grass${GRASS_VERSION_MAJOR}${GRASS_VERSION_MINOR}commands.pdf)
 
 html2pdfdoccomplete:
 	@ echo "Complete PDF document from modules' HTML documentation"
