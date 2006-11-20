@@ -849,7 +849,11 @@ int Ndraw_all_together_cmd(Nv_data * data, Tcl_Interp * interp,	/* Current inter
                 const char *fringe_ne, *fringe_nw, *fringe_se, *fringe_sw;
                 const char *surf_id;
                 int flags[4], id;
+		int fringe_clr;
+		float fringe_elev;
 
+		fringe_clr = (int) tcl_color_to_int(Tcl_GetVar(interp, "fringe_color", TCL_GLOBAL_ONLY));
+		fringe_elev = (float) atof(Tcl_GetVar(interp, "fringe_elev", TCL_GLOBAL_ONLY));
                 fringe_ne = Tcl_GetVar(interp, "fringe_ne", TCL_GLOBAL_ONLY);
                 fringe_nw = Tcl_GetVar(interp, "fringe_nw", TCL_GLOBAL_ONLY);
                 fringe_se = Tcl_GetVar(interp, "fringe_se", TCL_GLOBAL_ONLY);
@@ -861,7 +865,7 @@ int Ndraw_all_together_cmd(Nv_data * data, Tcl_Interp * interp,	/* Current inter
                 surf_id = Tcl_GetVar2(interp, "Nv_", "CurrSurf", TCL_GLOBAL_ONLY);
                 id = atoi(surf_id);
 
-                GS_draw_fringe(id, flags);
+                GS_draw_fringe(id, fringe_clr, fringe_elev, flags);
         }
         
         /* Legend and/or labels */

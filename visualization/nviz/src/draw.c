@@ -807,15 +807,19 @@ int Ndraw_fringe_cmd(Nv_data * data, Tcl_Interp * interp, /* Current interpreter
                      )
 {
         int id;
+	int color;
+	float elev;
         int flags[4];
 
         id = (int) atoi(argv[1]);
-        flags[0] = (int) atoi(argv[2]);
-        flags[1] = (int) atoi(argv[3]);
-        flags[2] = (int) atoi(argv[4]);
-        flags[3] = (int) atoi(argv[5]);
+	color = (int) tcl_color_to_int(argv[2]);	
+	elev = (float) atof(argv[3]);
+        flags[0] = (int) atoi(argv[4]);
+        flags[1] = (int) atoi(argv[5]);
+        flags[2] = (int) atoi(argv[6]);
+        flags[3] = (int) atoi(argv[7]);
 
-        GS_draw_fringe(id, flags);
+        GS_draw_fringe(id, color, elev, flags);
 
         return (TCL_OK);
 }
