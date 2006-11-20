@@ -4,12 +4,16 @@
 #* MODULE:       site_attr.tcl 1.0
 #*
 #* AUTHOR(S):    ACS - Massimo Cuomo - m.cuomo at acsys.it
+#*				 Major update Nov 2006 by Michael Barton, 
+#*				 	Arizona State University
 #*
 #* PURPOSE:		 Variable site attribute (each point: different
 #*					geometry depending from DB fields
 #* 				 In conjunction with site_attr_commands.c
 #*
 #* COPYRIGHT:    (C) 2005 by the ACS / GRASS Development Team
+#*				 (C) 2006 Michael Barton, Arizona State University
+#*				 	and GRASS Development Team
 #*
 #*               This program is free software under the
 #*               GNU General Public License (>=v2).
@@ -173,6 +177,7 @@ proc site_attr_fields_attributes_win {_curr_site} {
 		incr _col
 		foreach _attr $site_attr(ATTR_LIST) {
 			set l $tmp.attributes.$_attr\_label
+			if {$_attr=="marker"} {set _attr "icon"}
 			label $l -text "$_attr" -padx 3 -fg black
 			grid $l -column $_col -row 0 -sticky ew
 			incr _col
@@ -574,7 +579,7 @@ proc site_attr_external_lut {_idx _win} {
 	frame $w.io.import_lut  -borderwidth 0
 	label $w.io.import_lut.a -text "Load and save prefs."
 	pack $w.io.import_lut.a -side top
-	Button $w.io.import_lut.b -text "Update" -width 15 -bd 1 \
+	Button $w.io.import_lut.b -text "Load prefs" -width 15 -bd 1 \
 		-command "site_attr_lut_import $_idx" \
 		-helptext "Replace current themes with prefs loaded from file"
 	pack $w.io.import_lut.b -side top
@@ -818,9 +823,6 @@ proc site_attr_clear_menubutton {_idx} {
 }
 
 #
-#################################################################################
-#################################################################################
-#################################################################################
 
 ################################################################################
 # MARKERS are managed here
