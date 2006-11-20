@@ -1,3 +1,21 @@
+##########################################################################
+#
+# Configuration and options database for NVIZ
+# 
+# Original author unknown.
+# Possibly U.S. Army Construction Engineering Research Laboratory
+#
+#
+# Updated 2006, Michael Barton, Arizona State University
+#
+##########################################################################
+# COPYRIGHT:	(C) 2006 by Michael Barton and the GRASS Development Team
+#
+#		This program is free software under the GNU General Public
+#		License (>=v2). Read the file COPYING that comes with GRASS
+#		for details.
+#
+##########################################################################
 # This script is setup by the toplevel configure shell script at
 # installation time - new
 

@@ -1,11 +1,17 @@
+##########################################################################
 # Nviz 1.1
 # USACERL 3/11/96
 # further changes GRASS Development Team
 # This file contains a palette of commonly used widgets.  It is
 # expected that Nviz panels will be constructed using these widgets
 # plus basic Tk functionality.
-
-
+##########################################################################
+# COPYRIGHT:	(C) 2006 GRASS Development Team
+#
+#		This program is free software under the GNU General Public
+#		License (>=v2). Read the file COPYING that comes with GRASS
+#		for details.
+#
 ##########################################################################
 # procedure to drag canvas item
 ##########################################################################
