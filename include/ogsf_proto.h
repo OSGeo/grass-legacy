@@ -199,7 +199,7 @@ int GS_write_zoom(char *, unsigned int, unsigned int);
 void GS_draw_all_list(void);
 void GS_delete_list(GLuint);
 int GS_draw_legend(char *, GLuint, int, int *, float *, int *);
-int GS_draw_fringe(int, int *);
+int GS_draw_fringe(int, unsigned long, float, int *);
 void GS_getlight_position(int, float *, float *, float *, int *);
 void GS_getlight_color(int, float *, float *, float *);
 void GS_getlight_ambient(int, float *, float *, float *);
@@ -737,7 +737,7 @@ int gvld_wire_slices(geovol *);
 int gvld_wind3_box(geovol *);
 
 /* from gsd_fringe.c */
-void gsd_display_fringe (geosurf *, int[4]);
+void gsd_display_fringe (geosurf *, unsigned long, float, int[4]);
 void gsd_fringe_horiz_poly (float, geosurf *, int, int);
 void gsd_fringe_horiz_line (float, geosurf *, int, int);
 void gsd_fringe_vert_poly (float, geosurf *, int, int);
