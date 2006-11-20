@@ -3,13 +3,14 @@
 
 
 /*!
+ * \fn double *G_alloc_vector (size_t n)
+ *
  * \brief memory allocation
  *
- * Allocate a 
- * vector (array) of <b>n</b> doubles initialized to zero.
+ * Allocate a vector (array) of <b>n</b> doubles initialized to zero.
  *
- *  \param n
- *  \return double * 
+ * \param n
+ * \return double * 
  */
 
 double *G_alloc_vector(size_t n)
@@ -19,17 +20,19 @@ double *G_alloc_vector(size_t n)
 
 
 /*!
+ * \fn double **G_alloc_matrix (int rows,int cols)
+ *
  * \brief memory allocation
  *
  * Allocate a matrix of <b>rows</b> by <b>cols</b> doubles initialized
  * to zero.
  *
- *  \param rows
- *  \param cols
- *  \return double ** 
+ * \param rows
+ * \param cols
+ * \return double ** 
  */
 
- double **G_alloc_matrix( int rows,int cols)
+double **G_alloc_matrix (int rows, int cols)
 {
     double **m;
     int i;
@@ -38,18 +41,20 @@ double *G_alloc_vector(size_t n)
     m[0] = (double *) G_calloc (rows*cols, sizeof(double));
     for (i = 1; i < rows; i++)
 	m[i] = m[i-1] + cols;
+
     return m;
 }
 
 
 /*!
+ * \fn float *G_alloc_fvector (size_t n)
+ *
  * \brief memory allocation
  *
- * Allocate a
- * vector (array) of <b>n</b> floats initialized to zero.
+ * Allocate a vector (array) of <b>n</b> floats initialized to zero.
  *
- *  \param n
- *  \return float * 
+ * \param n
+ * \return float * 
  */
 
 float *G_alloc_fvector(size_t n)
@@ -59,6 +64,8 @@ float *G_alloc_fvector(size_t n)
 
 
 /*!
+ * \fn float **G_alloc_fmatrix (int rows, int cols)
+ *
  * \brief memory allocation
  *
  * Allocate a matrix of <b>rows</b> by <b>cols</b> floats initialized
@@ -69,7 +76,7 @@ float *G_alloc_fvector(size_t n)
  *  \return float ** 
  */
 
- float **G_alloc_fmatrix( int rows,int cols)
+float **G_alloc_fmatrix (int rows, int cols)
 {
     float **m;
     int i;
@@ -78,58 +85,65 @@ float *G_alloc_fvector(size_t n)
     m[0] = (float *) G_calloc (rows*cols, sizeof(float));
     for (i = 1; i < rows; i++)
 	m[i] = m[i-1] + cols;
+
     return m;
 }
 
 
 /*!
+ * \fn int G_free_vector (double *v)
+ *
  * \brief memory deallocation
  *
- * Deallocate a
- * vector (array) of doubles or floats.
+ * Deallocate a vector (array) of doubles or floats.
  *
  *  \param v
  *  \return int
  */
 
- int G_free_vector(double *v)
+int G_free_vector (double *v)
 {
     free (v);
+
     return 0;
 }
 
 
 /*!
+ * \fn int G_free_matrix (double **m)
+ *
  * \brief memory deallocation
  *
- * Deallocate 
- * a matrix of doubles.
+ * Deallocate a matrix of doubles.
  *
  *  \param m
  *  \return int
  */
 
- int G_free_matrix( double **m)
+int G_free_matrix (double **m)
 {
     free (m[0]);
     free (m);
+
     return 0;
 }
 
 
 /*!
+ * \fn int G_free_fmatrix (float **m)
+ *
  * \brief memory deallocation
  *
- * Deallocate
- * a matrix of floats.
+ * Deallocate a matrix of floats.
  *
  *  \param m
  *  \return int
  */
 
- int G_free_fmatrix(float **m)
+int G_free_fmatrix (float **m)
 {
     free (m[0]);
     free (m);
+
     return 0;
 }

@@ -1,20 +1,21 @@
-/****************************************************************/
-/***  Random Number Generator (Gaussian:  mean=0.0 sigma=1.0) ***/
-/***                                                          ***/
-/***                                                          ***/
-/*** Coded  Oct 23 1991                                       ***/
-/*** Version 1.0                                              ***/
-/***                                                          ***/
-/****************************************************************/
-
 #include <math.h>
-#include "numerical.h"
 #include <grass/gmath.h>
 
 
+/*!
+ * \fn float gauss (int seed)
+ *
+ * \brief Gaussian random number generator
+ *
+ * Gaussian random number generator (mean = 0.0, sigma = 1.0)
+ *
+ * \param seed
+ * \return float
+ */
+
 float gauss (int seed)
 {
-	static int 	iset=0;
+	static int 	iset;
 	static float	gset;
 	float		fac,r,v1,v2;
 

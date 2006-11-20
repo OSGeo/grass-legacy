@@ -24,23 +24,25 @@
 #include <grass/gmath.h>
 #include <grass/gis.h>
 
-/*****************************************************************************
- *                                                                           *
- * Fast Fourier Transform Routine for two-dimensional array                  *
- *                                                                           *
- * Input arguments: i_sign - direction of transform :                        *
- *                                -1 -> transform, +1 -> inverse transform   *
- *                  DATA   - pointer to a complex linear array in row major  *
- *                           order containing the data and the result.       *
- *                  NN     - value of DATA dimension  (dimc*dimr)            *
- *                  dimc   - value of image column dimension (max power of 2)*
- *                  dimr   - value of image row dimension (max power of 2)   *
- *                                                                           *
- * Note: if passing real data to fft() forward transform (especially when    *
- *       using fft() in a loop), you have to explicitly (re-)initialise the  *
- *       imaginary part to zero (DATA[1][i]=0.0)                             *
- *                                                                           *
- *****************************************************************************/
+
+/*!
+ * \fn int fft(int i_sign, double *DATA[2], int NN, int dimc, int dimr)
+ *
+ * \brief Fast Fourier Transform for two-dimensional array
+ *
+ * Fast Fourier Transform for two-dimensional array.<br>
+ * <bNote:</b> If passing real data to fft() forward transform 
+ * (especially when using fft() in a loop), explicitly (re-)initialize 
+ * the imaginary part to zero (DATA[1][i] = 0.0). Returns 0.
+ *
+ * \param i_sign Direction of transform -1 is normal, +1 is inverse
+ * \param DATA Pointer to complex linear array in row major order 
+ * containing data and result
+ * \param NN Value of DATA dimension (dimc * dimr)
+ * \param dimc Value of image column dimension (max power of 2)
+ * \param dimr Value of image row dimension (max power of 2)
+ * \return int
+ */
 
 int fft(int i_sign, double *DATA[2], int NN, int dimc, int dimr)
 {
@@ -93,5 +95,4 @@ int fft(int i_sign, double *DATA[2], int NN, int dimc, int dimr)
 	return 0;
 }
 
-#endif
-
+#endif /* HAVE_FFT */

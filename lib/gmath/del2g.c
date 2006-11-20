@@ -22,37 +22,55 @@ Author:         Bill Hoff,2-114C,8645,3563478 (hoff) at uicsl
 
 #include <stdio.h>
 #include <grass/gmath.h>
-#include "numerical.h"
 #include <grass/gis.h>
+#include <grass/glocale.h>
 
+
+#define FORWARD  1
+#define INVERSE -1
+#define SCALE    1
+#define NOSCALE  0
+
+
+/*!
+ * \fn int del2g (double *img[2], int size, double w)
+ *
+ * \brief 
+ *
+ * \param img
+ * \param size
+ * \param w
+ * \return int
+ */
 
 int 
 del2g (double *img[2], int size, double w)
 {
-  double *g[2];   /* the filter function */
+    double *g[2];   /* the filter function */
 
-  fprintf (stderr, "    taking FFT of image...\n");
-  fft(FORWARD, img, size*size, size, size);
+    G_message(_("    taking FFT of image..."));
+    fft(FORWARD, img, size*size, size, size);
 
-  g[0] = (double *) G_malloc(size*size*sizeof(double));
-  g[1] = (double *) G_malloc(size*size*sizeof(double));
-  if (g[0] == NULL || g[1] == NULL)
-    G_fatal_error("Insufficent memory for allocation of gaussian");
+    g[0] = (double *) G_malloc(size * size * sizeof(double));
+    g[1] = (double *) G_malloc(size * size * sizeof(double));
 
-  fprintf (stderr, "    computing del**2 g...\n");
-  getg (w, g, size);
+    if (g[0] == NULL || g[1] == NULL)
+        G_fatal_error(_("Insufficent memory for allocation of gaussian"));
 
-  fprintf (stderr, "    taking FFT of del**2 g...\n");
-  fft(FORWARD, g, size*size, size, size);
+    G_message(_("    computing del**2 g..."));
+    getg (w, g, size);
 
-  /* multiply the complex vectors img and g, each of length size*size */
-  fprintf (stderr, "    multiplying transforms...\n");
-  mult (img, size*size, g, size*size, img, size*size);
+    G_message(_("    taking FFT of del**2 g..."));
+    fft(FORWARD, g, size*size, size, size);
 
-  fprintf (stderr, "    taking inverse FFT...\n");
-  fft(INVERSE, img, size*size, size, size);
+    /* multiply the complex vectors img and g, each of length size*size */
+    G_message(_("    multiplying transforms..."));
+    mult (img, size*size, g, size*size, img, size*size);
 
-  return 0;
+    G_message(_("    taking inverse FFT..."));
+    fft(INVERSE, img, size*size, size, size);
+
+    return 0;
 }
 
-#endif /* FFTW */
+#endif /* HAVE_FFTW */

@@ -1,21 +1,28 @@
-/*      Name:   mult.c
+/* Author: Bill Hoff,2-114C,8645,3563478 (hoff) at uicsl */
 
-Created:        Sun Mar 30 17:29:45 1986
-Last modified:  Sun Mar 30 21:34:34 1986
-
-Purpose:        Multiply the two complex vectors, point by point.
-
-Details:        Vectors are in the form:  real, imaginary (each a floating
-                number).  A vector can be of any size.  Computes
-                v3 = v1 * v2.  v3 should as big as the biggest of v1 and v2.
-
-Author:         Bill Hoff,2-114C,8645,3563478 (hoff) at uicsl
-*/
+/*!
+ * \fn int mult (double *v1[2], int size1, double *v2[2], int size2, double *v3[2], int size3)
+ *
+ * \brief Multiply two complex vectors, point by point
+ *
+ * Vectors are in the form: real, imaginary (each a floating number).  
+ * A vector can be of any size. Computes <b>v3</b> = <b>v1</b> * 
+ * <b>v2</b>.  <b>v3</b> should as big as the biggest of <b>v1</b> and 
+ * <b>v2</b>.
+ *
+ * \param v1
+ * \param size1
+ * \param v2
+ * \param size2
+ * \param v3
+ * \param size3
+ * \return int
+ */
 
 int 
 mult (double *v1[2], int size1, double *v2[2], int size2, double *v3[2], int size3)
 {
-  register int i, n;
+  int i, n;
 
   n = (size1 < size2 ? size1 : size2); /* get the smaller size */
   for (i=0; i < n; i++) {
