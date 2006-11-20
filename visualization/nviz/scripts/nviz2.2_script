@@ -1,7 +1,25 @@
+##########################################################################
+#
+# Main startup script for NVIZ
+# Probably originally written written ca. 1994 by
+# U.S. Army Construction Engineering Research Laboratory
+#
+#
+# Major update of GUI Nov 2006, Michael Barton, Arizona State University
+#
+##########################################################################
+# COPYRIGHT:	(C) 1999 - 2006 by Michael Barton and the GRASS Development Team
+#
+#		This program is free software under the GNU General Public
+#		License (>=v2). Read the file COPYING that comes with GRASS
+#		for details.
+#
+##########################################################################
+#
 #!nviz -f
 # Please log changes in the ChangeLog file in this directory
 # (Use "C-x 4 a" from emacs to add an entry)
-
+#
 # These two lines necessary to allow auto-loading
 # If you move nviz then be sure to change these two lines
 # to reflect the location of the libraries
@@ -23,9 +41,13 @@ set env(NV_processname) NVIZ
 set BGColor #FFFFFF
 
 source $src_boot/etc/nviz2.2/scripts/config.tcl
+
 #append bwidget for tooltip stuff
 lappend auto_path $env(GISBASE)/bwidget
 package require BWidget
+
+# internationalization procedures
+source $env(GISBASE)/etc/gtcltk/gmsg.tcl
 
 global Nv_ ScriptState ScriptFile ScriptPlaying NvizLoadState
 
@@ -109,6 +131,20 @@ foreach i $user_path {
 	}
 }
 
+set Nv_(config) [list]
+foreach i $user_path {
+	set index $i/configIndex
+	if {[file exists $index]} then {
+	set config [exec cat $index]
+	set config [split $config]
+	foreach j $config {
+		if {[lsearch -exact $Nv_(config) $j] == -1} then {
+		lappend Nv_(config) $j
+		}
+	}
+	}
+}
+
 # DEBUG
 if {$DEBUG} {puts Nv_(panels)}
 
@@ -158,7 +194,7 @@ proc hide_menus {} {
 
 	help $Nv_(PAREA).f1.b1 balloon "Show Panels"
 
-	$Nv_(AREA).menu.panel.m entryconfigure 1 -label "Show Panels" -command "show_menus"
+	$Nv_(AREA).menu.config.m entryconfigure 1 -label "Show Panels" -command "show_menus"
 
 }
 
@@ -353,6 +389,7 @@ if {$DEBUG} {puts "Help menu made"}
 # DEBUG
 if {$DEBUG} {puts "disabled made"}
 
+	pack [Nv_mkConfigMenu $Nv_(AREA).menu.config] -side left -fill x -expand 0
 
 	pack [Nv_mkPanelMenu $Nv_(AREA).menu.panel] -side left -fill x -expand 0
 # DEBUG
@@ -515,6 +552,34 @@ proc Nv_openPanel { name {pos -1}} {
 	}
 }
 
+#########################################################################
+# open config panel P.name	 with routine mkP and place in appropriate spot
+#########################################################################
+proc Nv_openConfig { name {pos -1}} {
+	global Nv_
+
+	set P $Nv_(P_AREA)
+
+	# create panel if it doesn't already exist
+	set path $P.$name
+
+	# if panel has not yet been created ...
+	# or panel is one that needs updating ...
+	if {[catch {set config $Nv_($path)}]} then {
+		set config [mk$name\Config $path]
+		set Nv_($path) $config
+	}
+
+	# if panel is not already mapped ...
+	if { [lsearch [place slaves $P] $P.$name] < 0 } {
+		if {$pos < 0} {
+			Q_add $Nv_(Q) $config
+		} else {
+			Nv_mapConfig $path $config $pos
+		}
+	}
+}
+
 ############################################################################
 proc Nv_mapPanel {name panel pos } {
 
@@ -552,7 +617,7 @@ proc Nv_closeAllPanels { } {
 ############################################################################
 # procedure to make	 PANEL pulldown menu
 ###########################################################################
-proc Nv_mkPanelMenu { P { name Panel } } {
+proc Nv_mkPanelMenu { P { name Visualize } } {
 	global Nv_ DEBUG
 
 	menubutton $P -text $name -menu $P.m -underline 0
@@ -561,8 +626,6 @@ proc Nv_mkPanelMenu { P { name Panel } } {
 	if {$DEBUG} {puts "Nv_mkPanelMenu 1"}
 
 	set j 0
-	$P.m add command -label "Hide Panels" -command hide_menus
-	$P.m add separator
 
 	foreach i $Nv_(panels) {
 		Nv_force_panel $i
@@ -572,11 +635,42 @@ proc Nv_mkPanelMenu { P { name Panel } } {
 		$P.m add command -label [St_get $panel name] \
 			-command "Nv_openPanel $i"
 			#Add separators
-		if {$i == "vol" || $i == "cutplane" || $i == "kanimator"} {
+		if {$i == "vol" || $i == "pick" || $i == "query"} {
 			$P.m add separator
 		}
 	
 		if {$DEBUG} {puts "Nv_mkPanelMenu 2 $j	[St_get $panel name]"}
+		incr j
+	}
+
+	return $P
+}
+
+
+############################################################################
+# procedure to make	 CONFIG pulldown menu
+###########################################################################
+proc Nv_mkConfigMenu { P { name Appearance } } {
+	global Nv_ DEBUG
+
+	menubutton $P -text $name -menu $P.m -underline 0
+	menu $P.m
+
+	if {$DEBUG} {puts "Nv_mkConfigMenu 1"}
+
+	set j 0
+	$P.m add command -label "Hide Panels" -command hide_menus
+	$P.m add separator
+
+	foreach i $Nv_(config) {
+		Nv_force_panel $i
+	
+		set config $Nv_($Nv_(P_AREA).$i)
+	
+		$P.m add command -label [St_get $config name] \
+			-command "Nv_openPanel $i"
+	
+		if {$DEBUG} {puts "Nv_mkConfigMenu 2 $j	[St_get $config name]"}
 		incr j
 	}
 
