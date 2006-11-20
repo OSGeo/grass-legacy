@@ -26,7 +26,8 @@ is available for all buttons.<br>
 Map layers are organized as a layer tree, in the window below the
 buttons. Layers can include raster and vector maps, text, map
 enhancements (scale and north arrow, grids, and frames), and commands
-(where any GRASS command be written). Layers are displayed in as arranged in the layer tree: the bottom layer
+(where any GRASS command be written). Layers are displayed in as arranged
+in the layer tree: the bottom layer
 is displayed first and the top is displayed last, as if
 layers are a series of stacked overlays. Any layer can be
 renamed by double clicking on its name and typing a new name.<br>
@@ -295,7 +296,17 @@ Requires ghostscript for all output except EPS.
 <h3>Explore draw mode</h3>
 <img src="icons/drawmode-explore.gif"> Selects explore draw mode. In explore mode the region from the last zoom is expanded to fill the entire screen. The resolution is adjusted to match the screen resolution. Explore mode shows as much as possible.
 
-<h2>SEE ALSO</h2> <a href="d.m.html">d.m</a>
+<h2>Configuration: changing fonts</h2>
+
+Fonts used in <em>gis.m</em> can be changed as follows:
+<ul>
+<li>Source code: edit file 'lib/gtcltk/options.tcl' and compile gtcltk
+<li>Runtime: edit file '$GISBASE/etc/gtcltk/options.tcl'
+</ul>
+
+<h2>SEE ALSO</h2>
+
+<em><a href="d.m.html">d.m</a></em>
 
 <h2>AUTHORS</h2>
 
