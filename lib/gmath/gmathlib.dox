@@ -279,7 +279,7 @@ The numbers of rows and columns is stored in the matrix  structure:
 
 <P>
 \verbatim
-  fprintf(stderr, "    M1 rows: %d, M1 cols: %d\n", m1->rows, m1->cols) ;
+  G_message ("    M1 rows: %d, M1 cols: %d", m1->rows, m1->cols);
 \endverbatim
 
 <P>
@@ -316,30 +316,32 @@ Example module:
 
 <P>
 \verbatim
-#include "la.h"
-#include "gis.h"
+#include <grass/config.h>
+#include <grass/gis.h>
+#include <grass/gmath.h>
 
 int
-main(int argc, char *argv[]) 
+main (int argc, char *argv[]) 
 {
-  mat_struct *matrix ;
-  double val;
+    mat_struct *matrix;
+    double val;
+
+    /* init a 3x2 matrix  */
+    matrix = G_matrix_init (3, 2, 3);
+
+    /* set cell element 0,0 in matrix  to 2.2: */
+    G_matrix_set_element (matrix, 0, 0, 2.2);
+
+    /* retrieve this value */
+    val = G_matrix_get_element (matrix, 0, 0);
+
+    /* print it */
+    G_message ( "Value: %g", val);
   
-  /* init a 3x2 matrix  */
-  matrix =G_matrix_init (3, 2, 3) ;
-    
-  /* set cell element 0,0 in matrix  to 2.2: */
-  G_matrix_set_element (matrix, 0, 0, 2.2) ;
+    /* Free the memory */
+    G_matrix_free (matrix);
 
-  /* retrieve this value */
-  val = G_matrix_get_element (matrix, 0, 0) ;  
-
-  /*print it */
-  G_message ( "Value: %g", val) ;
-  
-  /* Free the memory */
-  G_matrix_free (matrix) ;
-
+    return 0;
 }
 \endverbatim
 
