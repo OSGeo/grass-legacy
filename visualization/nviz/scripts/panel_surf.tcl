@@ -6,6 +6,14 @@
 #
 # Major modifications made Jan 1995 to account for restructuring
 # of the underlying C code (mca 1/11/95)
+# Major update of GUI Nov 2006, Michael Barton, Arizona State University
+#
+##########################################################################
+# COPYRIGHT:	(C) 2006 by Michael Barton and the GRASS Development Team
+#
+#		This program is free software under the GNU General Public
+#		License (>=v2). Read the file COPYING that comes with GRASS
+#		for details.
 #
 ##########################################################################
 # global variables set by widgets in this panel:
@@ -42,7 +50,7 @@ proc mksurfPanel { BASE } {
 
 	#  Initialize panel info
 	if [catch {set Nv_($BASE)}] {
-		set panel [St_create {window name size priority} $BASE "Raster surfaces" 2 5]
+		set panel [St_create {window name size priority} $BASE "Raster Surfaces" 2 5]
 	} else {
 		set panel $Nv_($BASE)
 	}
@@ -89,9 +97,9 @@ proc mksurfPanel { BASE } {
 
 	Label $tmp2.l1 -text "Mask zeros:" -relief flat
 	checkbutton $tmp2.nozeros1 -text "by elevation" \
-	-variable Nv_(TopNoZeros) -command no_zeros
+		-variable Nv_(TopNoZeros) -command no_zeros
 	checkbutton $tmp2.nozeros2 -text "by color" \
-	-variable Nv_(ColNoZeros) -command no_zeros
+		-variable Nv_(ColNoZeros) -command no_zeros
 
 	pack $tmp2.l1 $tmp2.nozeros1 $tmp2.nozeros2 \
 		 -side left -fill y -padx 4 -pady 4
@@ -494,9 +502,9 @@ proc change_wirecolor {me} {
 
 	set curr [Nget_current surf]
 	if {0 != $curr} {
-	set clr [Nsurf$curr get_wirecolor]
-	set clr [mkWireColorPopup .colorpop WireColor $clr 1]
-	Nsurf$curr set_wirecolor $clr
+		set clr [Nsurf$curr get_wirecolor]
+		set clr [mkWireColorPopup .colorpop WireColor $clr 1]
+		Nsurf$curr set_wirecolor $clr
 	}
 
 	$me configure -bg [get_curr_wire_color]
