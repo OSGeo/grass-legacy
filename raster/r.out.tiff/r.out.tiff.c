@@ -98,7 +98,7 @@ main (int argc, char *argv[])
 	outopt->key             = "output";
 	outopt->type            =  TYPE_STRING;
 	outopt->required        =  YES;
-	outopt->gisprompt	= "new,tiff,tiff";
+	outopt->gisprompt	= "new_file,tiff,tiff";
 	outopt->description     = _("File name for new TIFF file.");
 
 	compopt = G_define_option();
