@@ -104,8 +104,8 @@ proc create_file_browser {{w .file_browser} {mode 0} {no_top 0}} {
 
     bind $w.main.files.f.list <ButtonRelease-1> "file_browser_select_file %W %y $w"
     
-    button $w.accept -text Accept -command "fileBrowser_accept_cmd $w"
-    button $w.cancel -text Cancel -command "fileBrowser_cancel_cmd $w"
+    button $w.accept -text Accept -command "fileBrowser_accept_cmd $w" -bd 1
+    button $w.cancel -text Cancel -command "fileBrowser_cancel_cmd $w" -bd 1
     
     frame $w.cur_directory
     label $w.cur_directory.label -text "CURRENT:"

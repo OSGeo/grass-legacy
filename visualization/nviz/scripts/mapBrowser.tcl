@@ -202,7 +202,7 @@ proc create_map_browser {{w .map_browser} {type all} {mode 0}} {
 	label $w.element.menu -text "Map Type:" -relief raised
     } else {
 	set name ""
-	menubutton $w.element.menu -text {Map Type} -menu $w.element.menu.m -relief raised
+	menubutton $w.element.menu -text {Map Type} -menu $w.element.menu.m -relief raised -bd 1
 	menu $w.element.menu.m
 	$w.element.menu.m add command \
 	    -label {Raster} -command "set_map_browser_element  $w Raster"
@@ -222,8 +222,8 @@ proc create_map_browser {{w .map_browser} {type all} {mode 0}} {
 	    $w.element.menu.m add command \
 	    -label {Icons} -command "set_map_browser_element  $w icons"
     }
-    button $w.accept -text Accept -command "mapBrowser_accept_cmd $w"
-    button $w.cancel -text Cancel -command "mapBrowser_cancel_cmd $w"
+    button $w.accept -text Accept -command "mapBrowser_accept_cmd $w" -bd 1
+    button $w.cancel -text Cancel -command "mapBrowser_cancel_cmd $w" -bd 1
 
     pack $w.filename -side top -expand yes -fill x
     pack $w.main     -side top -expand yes -fill both

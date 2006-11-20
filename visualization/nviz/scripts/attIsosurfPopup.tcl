@@ -77,21 +77,21 @@ proc mkIsosurfAttPopup {w id att {mode 0}} {
     pack $w.f1.name -side top -fill both -expand yes
 
     # left button
-    button $w.f2.map -text "New Map" -command "$cb1"
+    button $w.f2.map -text "New Map" -command "$cb1" -bd 1
 
     # right button
     if {"$att" == "mask"} then {
-    button $w.f2.const -text "Remove Mask" -command "$cb2"
+    button $w.f2.const -text "Remove Mask" -command "$cb2" -bd 1
     checkbutton $w.f2.invert -text "Invert Mask" -onvalue 1 \
         -offvalue 0 -variable attIsoPopup_InvertMask
     set attIsoPopup_InvertMask [Nvol$curr isosurf get_mask_mode $id]
     } elseif {"$att" == "threshold" } then {
-    button $w.f2.const -text "New Constant"    -command "$cb2"
+    button $w.f2.const -text "New Constant"    -command "$cb2" -bd 1
     checkbutton $w.f2.use_color -text "Use volume as color" -onvalue 1 \
         -offvalue 0 -variable attIsoPopup_UseColor
     set attIsoPopup_UseColor 1
     } else {
-    button $w.f2.const -text "New Constant"    -command "$cb2"
+    button $w.f2.const -text "New Constant" -command "$cb2" -bd 1
     }
 
     # pack buttons
@@ -112,9 +112,9 @@ proc mkIsosurfAttPopup {w id att {mode 0}} {
     pack $w.f3.status $w.f3.info -side top -fill both  -expand yes
 
     # Accep, Cancel buttons
-    button $w.f4.accept -text "Accept" \
+    button $w.f4.accept -text "Accept"  -bd 1 \
     -command "aip_check_invert $id $att ; destroy $w"
-    button $w.f4.cancel -text "Cancel" \
+    button $w.f4.cancel -text "Cancel"  -bd 1 \
     -command "set attIsoPopup_Status \"no_change\" ; destroy $w"
     pack $w.f4.accept $w.f4.cancel -side left -fill both -expand yes
 
@@ -431,7 +431,7 @@ proc create_slideconstant_popup {{w .enter_constant} {mode 0}} {
     scale $w.constant -from 0 -to 255 -showvalue yes \
     -orient horizontal -activebackground gray80 \
     -background gray90
-    button $w.close -text "Done" -command "set cp_done 1"
+    button $w.close -text "Done" -command "set cp_done 1" -bd 1
     pack $w.title $w.constant $w.close -fill both
 
     if {$mode} then {grab $w}

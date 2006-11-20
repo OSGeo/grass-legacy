@@ -7,6 +7,7 @@
 # MODULE:       ACS_Utils.tcl 1.0
 #
 # AUTHOR(S):    ACS - Massimo Cuomo - m.cuomo at acsys.it
+#				Updates by Michael Barton, Arizona State University Nov. 2006
 #
 # PURPOSE:		 Several general purpose utilities:
 # 					- Configuration load (rc variables)
@@ -45,6 +46,7 @@
 
 global ___ACS_utils___
 set ___ACS_utils___ 1
+source $src_boot/etc/nviz2.2/scripts/config.tcl
 ###########################################################################################
 # Configuration load
 ###########################################################################################
@@ -512,7 +514,7 @@ proc modal_edit_list_plain {msg labels entries {ok "OK"} {cancel "Cancel"}} {
 
 proc menu_button_create {win opt labels command} {
 
-   	eval menubutton $win.menu -menu $win.menu.m -relief raised -indicatoron 0 -bd 3 $opt
+   	eval menubutton $win.menu -menu $win.menu.m -relief raised -indicatoron 0 -bd 1 $opt
     pack $win.menu
     menu $win.menu.m -tearoff 0
     foreach l $labels {$win.menu.m add command -label "$l" -command "$command $l"}
