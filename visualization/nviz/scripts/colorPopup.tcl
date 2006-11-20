@@ -58,9 +58,9 @@ proc mkColorPopup {w name {color "#000000"} {mode 0}} {
     tkwait visibility $w
     
     frame $w.bot.buttonframe
-    button $w.bot.buttonframe.ok -text OK -command "destroy $w"
-    button $w.bot.buttonframe.cancel  \
-	-text Cancel  -command "set CurrColor $tmp; destroy $w"
+    button $w.bot.buttonframe.ok -text OK -command "destroy $w" -bd 1
+    button $w.bot.buttonframe.cancel  -bd 1 \
+		-text Cancel  -command "set CurrColor $tmp; destroy $w"
     label $w.bot.buttonframe.label -text $name
     pack $w.bot.buttonframe.label  -side left -expand yes -padx 10
     pack $w.bot.buttonframe.cancel $w.bot.buttonframe.ok -side right -expand 1

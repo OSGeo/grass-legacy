@@ -70,21 +70,21 @@ proc mkAttPopup {w att {mode 0}} {
     
     label $w.f1.name -text "Change Attribute: $att" 
     pack $w.f1.name -side top -fill both -expand yes 
-    button $w.f2.map -text "New Map" -command "$cb1"
+    button $w.f2.map -text "New Map" -command "$cb1" -bd 1
     
     if {"$att" == "mask"} then {
-	button $w.f2.const -text "Remove Mask" -command "$cb2"
+	button $w.f2.const -text "Remove Mask" -command "$cb2" -bd 1
 	checkbutton $w.f2.invert -text "Invert Mask" -onvalue 1 \
 	    -offvalue 0 -variable attPopup_InvertMask
 	set curr [Nget_current surf]
 	set attPopup_InvertMask [Nsurf$curr get_mask_mode]
     } elseif {"$att" == "topography" } then {
-	button $w.f2.const -text "New Constant"	-command "$cb2"
+	button $w.f2.const -text "New Constant"	-command "$cb2" -bd 1
 	checkbutton $w.f2.use_color -text "Use as color" -onvalue 1 \
 	    -offvalue 0 -variable attPopup_UseColor
 	set attPopup_UseColor 1
     } else {
-	button $w.f2.const -text "New Constant"	-command "$cb2"
+	button $w.f2.const -text "New Constant"	-command "$cb2" -bd 1
     }
     
     pack $w.f2.map $w.f2.const -side left -fill both -expand yes
@@ -100,10 +100,10 @@ proc mkAttPopup {w att {mode 0}} {
     label $w.f3.info -textvariable attPopup_Status
     pack $w.f3.status $w.f3.info -side top -fill both  -expand yes
     
-    button $w.f4.accept -text "Accept" \
-	-command "ap_check_invert $att ; destroy $w"
-    button $w.f4.cancel -text "Cancel" \
-	-command "set attPopup_Status \"no_change\" ; destroy $w"
+    button $w.f4.accept -text "Accept"  -bd 1 \
+		-command "ap_check_invert $att ; destroy $w"
+    button $w.f4.cancel -text "Cancel"  -bd 1 \
+		-command "set attPopup_Status \"no_change\" ; destroy $w"
     pack $w.f4.accept $w.f4.cancel -side left -fill both -expand yes
     
     bind $w <Any-Enter> [list focus $w]
@@ -470,7 +470,7 @@ proc create_slideconstant_popup {{w .enter_constant} {mode 0}} {
     scale $w.constant -from 0 -to 255 -showvalue yes \
 	-orient horizontal -activebackground gray80 \
 	-background gray90
-    button $w.close -text "Done" -command "set cp_done 1"
+    button $w.close -text "Done" -command "set cp_done 1"  -bd 1
     pack $w.title $w.constant $w.close -fill both 
     
     if {$mode} then {grab $w}

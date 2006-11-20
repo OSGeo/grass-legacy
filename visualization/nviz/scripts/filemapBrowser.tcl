@@ -95,8 +95,8 @@ proc create_filemap_browser {{w .filemap_browser} {type all} {mode 0} {curfiles 
     scrollbar $w.list.l.scroll \
 	-command "$w.list.l.list yview"
 
-    button $w.list.remove -text "Remove" \
-	-command "multimap_remove_cmd $w"
+    button $w.list.remove -text "Remove" -bd 1 \
+		-command "multimap_remove_cmd $w"
     pack $w.list.l.list $w.list.l.scroll -side left -fill y -expand yes
     pack $w.list.l $w.list.remove -side top -fill x -expand yes
     
@@ -148,7 +148,7 @@ proc create_filemap_browser {{w .filemap_browser} {type all} {mode 0} {curfiles 
 	label $w.element.menu -text "Map Type:" -relief raised
     } else {
 	set name ""
-	menubutton $w.element.menu -text {Map Type} -menu $w.element.menu.m -relief raised
+	menubutton $w.element.menu -text {Map Type} -menu $w.element.menu.m -relief raised -bd 1
 	menu $w.element.menu.m
 	$w.element.menu.m add command \
 	    -label {Raster} -command "set_filemap_browser_element  $w Raster"
@@ -167,10 +167,10 @@ proc create_filemap_browser {{w .filemap_browser} {type all} {mode 0} {curfiles 
 	    -label {Icons} -command "set_filemap_browser_element  $w icons"
     }
 
-    button $w.blank -text Blank -command "multimap_blank_cmd $w"
-    button $w.previous -text Previous -command "multimap_previous_cmd $w"
-    button $w.done -text Done -command "multimap_done_cmd $w"
-    button $w.cancel -text Cancel -command "multimap_cancel_cmd $w"
+    button $w.blank -text Blank -command "multimap_blank_cmd $w" -bd 1
+    button $w.previous -text Previous -command "multimap_previous_cmd $w" -bd 1
+    button $w.done -text Done -command "multimap_done_cmd $w" -bd 1
+    button $w.cancel -text Cancel -command "multimap_cancel_cmd $w" -bd 1
     
     pack $w.filename -side top -expand yes -fill x
     pack $w.main -side top
