@@ -106,7 +106,7 @@ int import_band (GDALDatasetH hMEMDS, int band, char* name, char* mapset, struct
 			
 			if ( GDALRasterIO( hBand, GF_Write, 0, row, cols, 1, bufer, cols, 1, datatype, 0, 0 ) >=CE_Failure) 
 				{ G_warning(_("Cannot write GDAL raster.")); return -1; }
-			G_percent (row+1, rows, 10);
+			G_percent (row+1, rows, 2);
 		}
 	}
 	else if (maptype==DCELL_TYPE) {
@@ -122,7 +122,7 @@ int import_band (GDALDatasetH hMEMDS, int band, char* name, char* mapset, struct
 
 			if ( GDALRasterIO( hBand, GF_Write, 0, row, cols, 1, bufer, cols, 1, datatype, 0, 0 ) >=CE_Failure) 
 				{ G_warning(_("Cannot write GDAL raster.")); return -1; }
-			G_percent (row+1, rows, 10);
+			G_percent (row+1, rows, 2);
 		}
 	}		
 	else {
@@ -138,7 +138,7 @@ int import_band (GDALDatasetH hMEMDS, int band, char* name, char* mapset, struct
 
 			if ( GDALRasterIO( hBand, GF_Write, 0, row, cols, 1, bufer, cols, 1, datatype, 0, 0 ) >=CE_Failure) 
 				{ G_warning(_("Cannot write GDAL raster.")); return -1; }
-			G_percent (row+1, rows, 10);
+			G_percent (row+1, rows, 2);
 		}
 	}
 
@@ -218,6 +218,7 @@ int main (int argc, char *argv[]) {
 
 	output = G_define_standard_option(G_OPT_R_OUTPUT);
 	output->required = NO;
+	output->gisprompt = "new_file,file,output";
 
 	createopt = G_define_option();
 	createopt->key = "createopt";
