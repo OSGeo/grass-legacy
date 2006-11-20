@@ -1,4 +1,21 @@
 ##########################################################################
+#
+# Routines for displaying and thematic mapping of vector points for NVIZ
+# 
+# Original author unknown.
+# Probably U.S. Army Construction Engineering Research Laboratory
+#
+#
+# Major update of GUI Nov 2006, Michael Barton, Arizona State University
+#
+##########################################################################
+# COPYRIGHT:	(C) 1999 - 2006 by Michael Barton and the GRASS Development Team
+#
+#		This program is free software under the GNU General Public
+#		License (>=v2). Read the file COPYING that comes with GRASS
+#		for details.
+#
+##########################################################################
 # Default Priority for this panel
 # 
 # priority is from 0 to 10
@@ -87,7 +104,7 @@ proc mksitePanel { BASE } {
 		-command "Nv_closePanel $BASE" -anchor s -bd 1
     pack $bottom.close -side right
 
-    button $bottom.draw_current -text {Draw Current} -anchor s \
+    button $bottom.draw_current -text {DRAW CURRENT} -fg green3 -anchor s \
 		-command {Nsite_draw_one [Nget_current site]} -bd 1
 
     pack $bottom.draw_current -side left
@@ -100,7 +117,7 @@ proc mksitePanel { BASE } {
     set row2 [frame $mid1.row2]
     set row3 [frame $mid1.row3]
     
-    set szlabel [label $row1.szlabel -text "marker size" \
+    set szlabel [label $row1.szlabel -text "icon size" \
     	-font $nviztxtfont -fg black]
     
     #set increment value for SpinBox
@@ -125,7 +142,7 @@ proc mksitePanel { BASE } {
 		-command "change_color site $row1.color"]
     bind $ptcolor <Expose> "$row1.color configure -bg \[get_curr_sv_color site\]"
         
-    set markertype [ComboBox $row1.marker -label "  marker type " -width 8 \
+    set markertype [ComboBox $row1.marker -label [G_msg "  icon type "] -width 8 \
     	-textvariable Nv_(siteshape) -modifycmd change_marker \
     	-values {"x" "sphere" "diamond" "cube" "box" "gyro" "aster" "histogram"}]
 
