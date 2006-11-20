@@ -239,22 +239,6 @@ int main(int argc, char *argv[])
     parm.aspect->description = _("Output aspect raster file");
     parm.aspect->guisection  = _("Output_options");
 
-    parm.devi = G_define_option();
-    parm.devi->key = "devi";
-    parm.devi->type = TYPE_STRING;
-    parm.devi->required = NO;
-    parm.devi->gisprompt = "new,vector,vector";
-    parm.devi->description = _("Output deviations vector point file");
-    parm.devi->guisection  = _("Output_options");
-
-    parm.cvdev = G_define_option ();
-    parm.cvdev->key = "cvdev";
-    parm.cvdev->type = TYPE_STRING;
-    parm.cvdev->required = NO;
-    parm.cvdev->gisprompt = "new,vector,vector";
-    parm.cvdev->description = _("Output cross-validation errors vector point file");
-    parm.cvdev->guisection  = _("Output_options");
-
     parm.pcurv = G_define_option();
     parm.pcurv->key = "pcurv";
     parm.pcurv->type = TYPE_STRING;
@@ -278,24 +262,6 @@ int main(int argc, char *argv[])
     parm.mcurv->gisprompt = "new,cell,raster";
     parm.mcurv->description = _("Output mean curvature raster file");
     parm.mcurv->guisection  = _("Output_options");
-
-    parm.treefile = G_define_option();
-    parm.treefile->key = "treefile";
-    parm.treefile->type = TYPE_STRING;
-    parm.treefile->required = NO;
-    parm.treefile->gisprompt = "new,dig,vector";
-    parm.treefile->description =
-	_("Output vector file showing quadtree segmentation");
-    parm.treefile->guisection  = _("Output_options");
-
-    parm.overfile = G_define_option();
-    parm.overfile->key = "overfile";
-    parm.overfile->type = TYPE_STRING;
-    parm.overfile->required = NO;
-    parm.overfile->gisprompt = "new,dig,vector";
-    parm.overfile->description =
-	_("Output vector file showing overlapping windows");
-    parm.overfile->guisection  = _("Output_options");
 
     parm.maskmap = G_define_option();
     parm.maskmap->key = "maskmap";
@@ -370,6 +336,40 @@ int main(int argc, char *argv[])
     parm.zmult->description =
 	_("Conversion factor for values used for approximation");
     parm.zmult->guisection  = _("Settings");
+
+    parm.devi = G_define_option();
+    parm.devi->key = "devi";
+    parm.devi->type = TYPE_STRING;
+    parm.devi->required = NO;
+    parm.devi->gisprompt = "new,vector,vector";
+    parm.devi->description = _("Output deviations vector point file");
+    parm.devi->guisection  = _("Analysis");
+
+    parm.cvdev = G_define_option ();
+    parm.cvdev->key = "cvdev";
+    parm.cvdev->type = TYPE_STRING;
+    parm.cvdev->required = NO;
+    parm.cvdev->gisprompt = "new,vector,vector";
+    parm.cvdev->description = _("Output cross-validation errors vector point file");
+    parm.cvdev->guisection  = _("Analysis");
+
+    parm.treefile = G_define_option();
+    parm.treefile->key = "treefile";
+    parm.treefile->type = TYPE_STRING;
+    parm.treefile->required = NO;
+    parm.treefile->gisprompt = "new,dig,vector";
+    parm.treefile->description =
+	_("Output vector file showing quadtree segmentation");
+    parm.treefile->guisection  = _("Analysis");
+
+    parm.overfile = G_define_option();
+    parm.overfile->key = "overfile";
+    parm.overfile->type = TYPE_STRING;
+    parm.overfile->required = NO;
+    parm.overfile->gisprompt = "new,dig,vector";
+    parm.overfile->description =
+	_("Output vector file showing overlapping windows");
+    parm.overfile->guisection  = _("Analysis");
 
     parm.theta = G_define_option();
     parm.theta->key = "theta";
