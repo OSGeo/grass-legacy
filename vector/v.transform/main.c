@@ -155,9 +155,12 @@ int main (int argc, char *argv[])
     if ( !shift_flag->answer ) { 
 	if (pointsfile->answer != NULL)
 	    strcpy (Coord.name, pointsfile->answer);
-	else
+	else {
 	    Coord.name[0] = '\0';
-	
+	    G_warning(_("Requested 'read transform coordinates from file' "
+		"mode, but no file name was given."));
+	}
+
 	/* open coord file */
 	if ( Coord.name[0] != '\0' ){
 	    if ( (Coord.fp = fopen(Coord.name, "r"))  ==  NULL) 
