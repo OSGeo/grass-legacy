@@ -64,7 +64,6 @@ proc GmCommonLayer::display_commands {namespace id cmds} {
 
 	# if options have changed (or mod flag set by other procedures) re-render map
 	if {$opt($id,1,mod) == 1 || $dup($id) == 1 || $first == 1} {
-		runcmd "d.frame -e"
 		foreach cmd $cmds {
 			if {$cmd != ""} {
 				run_panel $cmd
