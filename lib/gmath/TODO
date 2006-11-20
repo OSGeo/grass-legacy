@@ -40,7 +40,3 @@ eigen.c/jacobi.c:
  both used in i.pca and i.cca. Header different, functionality identical.
  To be merged.
  -> some cleanup done by Glynn
-
-Clean up
- local_proto.h
- numerical.h

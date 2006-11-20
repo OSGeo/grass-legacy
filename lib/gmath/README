@@ -56,33 +56,30 @@ See INSTALL/ for further platforms.
 --------------------------------------------------------------------
 Usage:
 
-Sample Gmakefile:
+Sample Makefile:
 
-PGM=test
-HOME=.
+MODULE_TOPDIR = /path/to/grass
 
-LIBES=$(GMATHLIB) $(GISLIB) $(BLASLIB) $(LAPACKLIB) -lblas -llapack -lg2c
-LIST = main.o
+PGM = test
 
-$(HOME)/$(PGM): $(LIST) $(LIBES)
-        $(CC) $(LDFLAGS) -o $@ $(LIST) $(LIBES) $(MATHLIB) $(XDRLIB)
+LIBES = $(GMATHLIB) $(GISLIB)
+DEPENDENCIES = $(GMATHLIB) $(GISLIB)
 
-#$(LIST): global.h
-
-$(LIBES): #
+include $(MODULE_TOPDIR)/include/Make/Module.make
 
 
+Sample module source:
 
-Sample module:
+#include <grass/config.h>
+#include <grass/gis.h>
+#include <grass/gmath.h>
 
-#include "la.h" 
-#include "gis.h"
-
-int main(int argc, char *argv[])
+int main (int argc, char *argv[])
 {
-  mat_struct *matrix;
+    mat_struct *matrix;
 
-  matrix=G_matrix_init(3, 3, 1);
-  G_matrix_free(matrix);
+    matrix = G_matrix_init (3, 3, 1);
+    G_matrix_free (matrix);
+
+    return 0;
 }
-
