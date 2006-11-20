@@ -1,4 +1,19 @@
 ##########################################################################
+#
+# Routines for vector visualization for NVIZ
+# 
+# Original author unknown.
+# Probably U.S. Army Construction Engineering Research Laboratory
+#
+# Major update of GUI Nov 2006, Michael Barton, Arizona State University
+#
+##########################################################################
+# COPYRIGHT:	(C) 2006 by Michael Barton and the GRASS Development Team
+#
+#		This program is free software under the GNU General Public
+#		License (>=v2). Read the file COPYING that comes with GRASS
+#		for details.
+#
 ##########################################################################
 # Default Priority for this panel
 # 
@@ -66,7 +81,7 @@ proc mkvectPanel { BASE } {
     set tmp [frame $BASE.f]
     button $tmp.close -text Close -command "Nv_closePanel $BASE" -anchor s -bd 1
     pack $tmp.close -side right
-    button $tmp.draw_current -text {Draw Current} -bd 1 \
+    button $tmp.draw_current -text {DRAW CURRENT} -bd 1 -fg green3 \
 		-command {Nvect_draw_one [Nget_current vect]}
     pack $tmp.draw_current -side left
     pack $tmp -side bottom -fill x -expand 1 -padx 3
