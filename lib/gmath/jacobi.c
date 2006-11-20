@@ -1,8 +1,8 @@
 #include <stdlib.h>
 #include <math.h>
 #include <grass/gis.h>
-#include "numerical.h"
 #include <grass/gmath.h>
+
 
 /***************************************************************************/
 
@@ -19,6 +19,7 @@ jacobi (double a[MX][MX], long n, double d[MX], double v[MX][MX])
   }
   dd = &d[1];
   eigen(aa, vv, dd, n);
+
   return 0;
 }
 
@@ -31,6 +32,7 @@ egcmp(const void *pa, const void *pb)
   const double *b = *(const double * const *)pb;
   if (*a > *b) return -1;
   if (*a < *b) return 1;
+
   return 0;
 }
 
@@ -95,4 +97,3 @@ transpose(double eigmat[MX][MX], long bands)
 }
 
 /***************************************************************************/
-

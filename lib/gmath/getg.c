@@ -1,17 +1,17 @@
 /*      Name:   getg.c
-
-Created:        Thu May 29 00:37:44 1986
-Last modified:  Sat May 31 20:34:30 1986
-
-Purpose:        Get the laplacian of a Gaussian (not normalized).
-
-Author:         Bill Hoff,2-114C,8645,3563478 (hoff) at uicsl
-*/
+ *
+ * Created:        Thu May 29 00:37:44 1986
+ * Last modified:  Sat May 31 20:34:30 1986
+ *
+ * Purpose:        Get the laplacian of a Gaussian (not normalized).
+ *
+ * Author:         Bill Hoff,2-114C,8645,3563478 (hoff) at uicsl
+ */
 
 #include <stdio.h>
 #include <math.h>
-#include "numerical.h"
 #include <grass/gmath.h>
+
 
 int 
 getg (double w, double *g[2], int size)
@@ -49,7 +49,7 @@ getg (double w, double *g[2], int size)
     }
   }
 
-  *(g[0]+0) -= sum;             /* make sure sum of all values is zero */
+    *(g[0]+0) -= sum;         /* make sure sum of all values is zero */
 
     return 0;
 }

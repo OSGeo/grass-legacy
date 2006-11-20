@@ -1,11 +1,18 @@
-/****************************************************************/
-/***    Random Number Generator (Uniform Deviates 0.0 -> 1.0) ***/
-/***                                                          ***/
-/****************************************************************/
-
+#include <grass/config.h>
 #include <stdlib.h>
 #include <grass/gmath.h>
-#include <grass/config.h>
+
+
+/*!
+ * \fn float rand1 (int seed)
+ *
+ * \brief Random Number Generator (Uniform)
+ *
+ * Random number generator (Uniform Derivatives 0.0 -> 1.0)
+ *
+ * \param seed
+ * \return float
+ */
 
 float 
 rand1(int seed)

@@ -1,18 +1,19 @@
 #include <grass/gis.h>
 #include <grass/gmath.h>
-#include "numerical.h"
 
-/*****************************************************************************/
-/* MAX_POW2 : finds least power of 2 greater than or equal to number         */
-/*                                                                           */
-/* Input arguments: n - unsigned integer, the number                         */
-/*                                                                           */
-/* Output is an integer power of 2                                           */
-/*                                                                           */
-/*****************************************************************************/
+
+/*!
+ * \fn long max_pow2 (long n)
+ *
+ * \brief Finds least power of 2 >= <b>n</b>
+ *
+ * Finds least power of 2 >= <b>n</b>.
+ *
+ * \param n
+ * \return long
+ */
 
 long max_pow2 (long n)
-
 {
         long p2, n1;
 
@@ -24,20 +25,24 @@ long max_pow2 (long n)
                 p2 <<= 1;
         }
         if (p2 < n) p2 <<=1;
-        return(p2);
-}   /* end max_pow2 */
 
-/*****************************************************************************/
-/* MAX_POW2 : finds largest power of 2 less than or equal to number         */
-/*                                                                           */
-/* Input arguments: n - unsigned integer, the number                         */
-/*                                                                           */
-/* Output is an integer power of 2                                           */
-/*                                                                           */
-/*****************************************************************************/
+        return(p2);
+}
+
+
+/*!
+ * \fn long min_pow2 (long n)
+ *
+ * \brief Finds largest power of 2 <= <b>n</b>
+ *
+ * Finds largest power of 2 <= <b>n</b>.
+ *
+ * \param n
+ * \return long
+ */
+
 long 
 min_pow2 (long n)
-
 {
         long p2, n1;
 
@@ -48,5 +53,6 @@ min_pow2 (long n)
                 n1 >>= 1;
                 p2 <<= 1;
         }
+
         return(p2);
-}   /* end min_pow2 */
+}
