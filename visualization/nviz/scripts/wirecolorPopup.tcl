@@ -1,3 +1,4 @@
+##########################################################################
 # mkWireColorPopup w name color
 #
 # Create a dialog box with sliders and buttons to adjust current color
@@ -7,6 +8,16 @@
 #    w -	Name to use for new top-level window.
 #    name -     Label for ColorPopup
 #    color -    CurrentColor (set to UseMap if map is used)
+# Updated Nov 2006, Michael Barton, Arizona State University
+#
+##########################################################################
+# COPYRIGHT:	(C) 2006 by Michael Barton and the GRASS Development Team
+#
+#		This program is free software under the GNU General Public
+#		License (>=v2). Read the file COPYING that comes with GRASS
+#		for details.
+#
+##########################################################################
 
 
 global CurrWireColor
@@ -16,21 +27,21 @@ proc mkWireColorPopup {w name {color "#000000"} {mode 0}} {
 
     catch {destroy $w}
     toplevel $w -class Dialog
-    wm title $w "Select Color"
+    wm title $w "Select Wire Color"
     wm iconname $w "Color"
     wm geometry $w 300x450
     wm minsize $w 50 100
     wm resizable $w false false
 
     if {"$color" != "UseMap"} then {
-	set tmp [tcl_to_rgb $color]
-	set r [expr ($tmp&0xff0000)>>16]
-	set g [expr ($tmp&0x00ff00)>>8]
-	set b [expr ($tmp&0x0000ff)]
+		set tmp [tcl_to_rgb $color]
+		set r [expr ($tmp&0xff0000)>>16]
+		set g [expr ($tmp&0x00ff00)>>8]
+		set b [expr ($tmp&0x0000ff)]
     } else {
-	set r 0
-	set g 0
-	set b 0
+		set r 0
+		set g 0
+		set b 0
     }
 
     set tmp $color
@@ -43,40 +54,47 @@ proc mkWireColorPopup {w name {color "#000000"} {mode 0}} {
 
     frame $w.top -relief raised -border 1
     frame $w.bot -relief raised -border 1
-    checkbutton $w.usemap -text "Use Surface Color" -onvalue UseMap \
-	-offvalue 0 -variable CurrWireColor
-    pack $w.top $w.bot $w.usemap -side top -fill both -expand yes
-
+    checkbutton $w.usemap -text "use surface color" -onvalue UseMap \
+		-offvalue 0 -variable CurrWireColor
     frame $w.top.left
     Nv_mkWireColorScale $w.top.left Red $r red  $w.top.color
     Nv_mkWireColorScale $w.top.left Green $g green  $w.top.color
     Nv_mkWireColorScale $w.top.left Blue $b blue  $w.top.color
-
-    pack $w.top.left.red $w.top.left.green $w.top.left.blue -side top -expand 1
+    
+    pack $w.top.left.red $w.top.left.green $w.top.left.blue \
+    	-side top -expand 1 -pady 2 	
+      	   
+   	# this is the main color panel
     set CurrWireColor $color
     if {"$color" != "UseMap"} then {
-	label $w.top.color -bg $color -width 5
+		label $w.top.color -bg $color -width 20 -height 10
     } else {
-	label $w.top.color -bg \#FFFFFF -width 5
+		label $w.top.color -bg \#FFFFFF -width 20 -height 10
     }
-    pack $w.top.left  -side left -expand 1
-    pack $w.top.color -side left  -padx 10 -pady 10 -fill both -expand yes
+    pack $w.top.left  -side left -padx 10 -pady 10 -expand 1
+    pack $w.top.color -side left -padx 10 -pady 10 -expand yes
 
     tkwait visibility $w
     
     frame $w.bot.buttonframe
-    button $w.bot.buttonframe.ok -text OK -command "destroy $w"
-    button $w.bot.buttonframe.cancel  \
-	-text Cancel  -command "set CurrWireColor $tmp; destroy $w"
-    label $w.bot.buttonframe.label -text $name
-    pack $w.bot.buttonframe.label  -side left -expand yes -padx 10
-    pack $w.bot.buttonframe.cancel $w.bot.buttonframe.ok -side right -expand 1
-    pack $w.bot.buttonframe -side bottom -fill x 
+    button $w.bot.buttonframe.ok -text OK -width 6 \
+    	-command "destroy $w" -bd 1
+    button $w.bot.buttonframe.cancel  -bd 1 -width 6\
+	 -text Cancel  -command "set CurrWireColor $tmp; destroy $w"
+    pack $w.bot.buttonframe.cancel -side right -expand 0
+    pack $w.bot.buttonframe.ok -side left -expand 0
+    pack $w.bot.buttonframe -side bottom -fill x \
+    	-pady 3 -padx 10 -expand 1
+
     mkWireColorButtons $w.bot.bf $w.top.left $w.top.color
-    pack $w.bot.bf -padx 10 -pady 20 -side top -expand 1
+    pack $w.bot.bf -pady 3 -side top -expand 1
     bind $w <Any-Enter> [list focus $w]
     focus $w
     if {$mode} {grab $w}
+
+    pack $w.top $w.bot $w.usemap -side top -fill both \
+    	-expand yes
+
 
     tkwait window $w
 
@@ -100,8 +118,7 @@ proc mkWireColorButtons { B S L} {
 		-activebackground $color \
 		-width 0 -height 0 \
 		-highlightthickness 1 \
-		-padx 7 -pady 0 \
-                -command "setWireScales $S $color; $L config -bg $color; set CurrWireColor $color"
+        -command "setWireScales $S $color; $L config -bg $color; set CurrWireColor $color"
 	    pack $B.f$i.$j -padx 1 -pady 1 -side top -expand 1
 	}
 	pack $B.f$i -side left
@@ -109,7 +126,6 @@ proc mkWireColorButtons { B S L} {
 }
 
 proc getWireColorfromScales {S} {
-   
 
     set r [$S.red.scale get]
     set g [$S.green.scale get]
@@ -122,8 +138,6 @@ proc getWireColorfromScales {S} {
     
     return #$r$g$b
 }
-
-
 
 
 proc setWireLabelfromScales {S L args} {
@@ -220,18 +234,15 @@ proc Nv_mkWireColorScale { P {name " "} {curr 200}\
     frame $S
     frame $S.f
 
-    scale $S.scale -from 0 -length 140 -showvalue 0 -orient h\
+    scale $S.scale -from 0 -length 140 -showvalue 1 -orient h\
         -tickinterval 0 -to 255 -width 13 \
-        -command "Nv_scaleCallback $S s 0 null; setWireLabelfromScales $P $chip " \
-        -activebackground gray80 -background gray90 -bg $color
+        -command "setWireLabelfromScales $P $chip" \
+        -label $name \
+        -highlightthickness 3 \
+        -highlightbackground $color
        
-    label $S.f.label -text $name
     $S.scale set $curr
-    entry $S.f.entry -width 5 -borderwidth 2 -relief sunken
-    bind $S.f.entry <Return> \
-	"Nv_scaleCallback $S e 0 null; setWireLabelfromScales $P $chip"
     pack $S.scale $S.f -side top
-    pack $S.f.label $S.f.entry -side left
 
     return $S
 }
