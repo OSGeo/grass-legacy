@@ -13,12 +13,17 @@ LIBES = $(DBMIDRIVERLIB) $(DBMIBASELIB) $(DBMIEXTRALIB) $(SQLPLIB) $(DBSTUBSLIB)
 EXTRA_CFLAGS = $(GDALCFLAGS) $(TCLINCDIR) $(TKINCDIR)
 EXTRA_INC = -I$(GRASS_LIBDIR)/db/dbmi_driver
 
+DRVDOC=$(GISBASE)/docs/html/grass-ogr.html
+
 OBJS = $(subst .c,.o,$(wildcard *.c))
 	
 ARCH_OBJS := $(foreach obj,$(OBJS),$(OBJDIR)/$(obj))
 
-default: $(DRIVER)
+default: $(DRIVER) $(DRVDOC)
 
 $(DRIVER): $(ARCH_OBJS)
 	$(CC) $(LDFLAGS) -o $@ $(ARCH_OBJS) $(PQLIBPATH) $(FMODE_OBJ) $(LIBES) $(TCLTKLIBPATH) $(TCLTKLIBS) \
 		$(MATHLIB) $(XDRLIB)
+
+$(DRVDOC): grass-ogr.html
+	$(INSTALL) -m 644 grass-ogr.html $(DRVDOC)
