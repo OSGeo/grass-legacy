@@ -1,72 +1,155 @@
 ##########################################################################
+#
+# Routines for volumne visualization for NVIZ
+# 
 # Routines for volume control panel for Nviz program.
 # Written Winter 2003
 # Tomas Paudits
+#
+# Major update of GUI Nov 2006, Michael Barton, Arizona State University
+#
+##########################################################################
+# COPYRIGHT:	(C) 1999 - 2006 by Michael Barton and the GRASS Development Team
+#
+#		This program is free software under the GNU General Public
+#		License (>=v2). Read the file COPYING that comes with GRASS
+#		for details.
+#
 ##########################################################################
 
+namespace eval NV_panel_vol {
+    variable res # polygon resolution
+    variable viztype # isosurfaces or slices
+}
+
+    # initial visualization type
+    set viztype "isosurf"
+	
 ##########################################################################
 # procedure to make main control area
-##########################################################################
 proc mkvolPanel { BASE } {
     global Nv_
+    variable viztype    
+    variable res
 
     catch {destroy $BASE}
-    if {[catch {set Nv_(VolVisStyle)}]} {set Nv_(VolVisStyle) isosurfs}
+   # if {[catch {set viztype}]} {set viztype "isosurf"}
 
     #  Initialize panel info
     if [catch {set Nv_($BASE)}] {
-    set panel [St_create {window name size priority} $BASE "Raster volumes" 2 5]
+    set panel [St_create {window name size priority} $BASE "Volumes" 2 5]
     } else {
     set panel $Nv_($BASE)
     }
 
-    frame $BASE  -relief groove -borderwidth 2
+    frame $BASE  -relief flat -borderwidth 0
     Nv_mkPanelname $BASE "Volume Panel"
 
     ###### make widgets that control which is current volume #############
     set tmp [frame $BASE.volcontrol]
 
-    label $tmp.current -text "Current:" -anchor nw
+    label $tmp.current -text "Current:" -anchor w
     mkMapList $tmp.list vol
-    button $tmp.new -text New -anchor ne -command new_vol
-    button $tmp.delete -text Delete -anchor ne -command delete_vol
+    button $tmp.new -text New -anchor center -bd 1 -width 4 -command new_vol
+    button $tmp.delete -text Delete -anchor center -bd 1 -width 4 -command delete_vol
 
-    pack $tmp.current $tmp.list -side left
-    pack $tmp.delete $tmp.new -side right -expand 1
+	pack $tmp.current $tmp.list -side left
+	pack $tmp.delete $tmp.new -side right -expand 0
 
-    set tmp [frame $BASE.vistype]
     ######## controls for controling volume visualization ###############
-     label $tmp.title -text "Visualization Type: " -relief flat
-    menubutton $tmp.list -menu $tmp.list.m -relief flat
+    set tmp [frame $BASE.vistype]
+    #label $tmp.title -text "Visualization type: " -relief flat
+
+    menubutton $tmp.list -menu $tmp.list.m -text "Visualization type..." -relief raised \
+    	-indicator 1 -bd 1
     set pname [menu $tmp.list.m]
-    $pname add command -label "isosurfaces" -command "shuffle_vistype $BASE isosurfs"
-    $pname add command -label "slices" -command "shuffle_vistype $BASE slices"
-    pack $tmp.title $tmp.list -side left
+    $pname add radiobutton -label "isosurfaces" \
+    	-command "shuffle_vistype $BASE isosurf" \
+    	-variable viztype -value "isosurf"
+    $pname add radiobutton -label "slices" \
+    	-command "shuffle_vistype $BASE slice" \
+    	-variable viztype -value "slice"
+    
+    menubutton $tmp.shading -text "Shading..." -menu $tmp.shading.m \
+    	-relief raised -underline 0 -indicatoron 1 -bd 1
+    menu $tmp.shading.m
+    $tmp.shading.m add radiobutton -label Flat -value flat \
+    	-variable Nv_(ShadeStyle)  -command {all_set_drawmode $viztype $Nv_(ShadeStyle)}
+    $tmp.shading.m add radiobutton -label Gouraud -value gouraud \
+    	-variable Nv_(ShadeStyle) -command {all_set_drawmode $viztype $Nv_(ShadeStyle)}
+    	
+    # position button
+	button $tmp.position -text "Position" -command "mkVolPositionPanel .pos_vol" -bd 1
+    
+    pack $tmp.list $tmp.shading $tmp.position -side left -expand 1 -fill both
+   	
+    ######## control for volume polygon resolution ###############
+    set tmp [frame $BASE.res]
+    set reslabel [label $tmp.reslabel -text "Polygon resolution: "]
+	set sbres [SpinBox $tmp.sbres -range {1 100 1}\
+		-textvariable res \
+		-modifycmd {all_set_res $viztype $res} \
+		-width 5 -editable 1 \
+		-entrybg white]
+
+   	pack $reslabel $sbres -side left
+    $sbres setvalue @9
 
     ######## subpanels for control volume visualization #################
     set tmp [frame $BASE.subpanel]
     create_isosurfs_subpanel $tmp
     create_slices_subpanel $tmp
     # show current visualization type
-    shuffle_vistype $BASE $Nv_(VolVisStyle)
+    shuffle_vistype $BASE $viztype
 
     ############# manage  frames #########################################
-    pack $BASE.volcontrol -side top -fill both -expand 1
-    pack $BASE.vistype -side top -fill both -expand 1
-    pack $BASE.subpanel -side top -fill both -expand 1
+    pack $BASE.volcontrol -side top -fill both -expand 1 -padx 3 -pady 3
+    pack $BASE.vistype -side top -fill both -expand 1 -padx 3 -pady 3
+    pack $BASE.res -side top -fill both -expand 1 -padx 3 -pady 3
+    pack $BASE.subpanel -side top -fill both -expand 1 -padx 3 -pady 3
 
     ########## make button to close panel ################################
-    button $BASE.close -text Close -command "Nv_closePanel $BASE"
-    button $BASE.draw_current -text "Draw Current"
-	bind $BASE.draw_current <1> "Nset_cancel 1"
-	bind $BASE.draw_current <B1-ButtonRelease> "Nvol_draw_one [Nget_current vol]"
+	set tmp [frame $BASE.f]
+    button $tmp.close -text Close -command "Nv_closePanel $BASE" -bd 1
+    button $tmp.draw_current -text "DRAW CURRENT" -bd 1 -fg green3
+	bind $tmp.draw_current <1> "Nset_cancel 1"
+	bind $tmp.draw_current <B1-ButtonRelease> "Nvol_draw_one [Nget_current vol]"
 
-    pack $BASE.close -side right -fill y
-    pack $BASE.draw_current -side left -fill y
+    pack $tmp.close -side right
+    pack $tmp.draw_current -side left
+    pack $tmp -side bottom -fill x -expand 1 -padx 3 -pady 3
 
     return $panel
 }
 
+##########################################################################
+# procedures to set polygon resolution and draw mode
+
+proc all_set_res {viztype res} {
+
+	
+    set curr [Nget_current vol]
+    if {$curr == 0} {return}
+
+	if {$viztype=="isosurf"} {set vtype "isosurf"}
+	if {$viztype=="slice"} {set vtype "slice"}
+    Nvol$curr $vtype set_res $res $res $res
+ 
+}
+
+proc all_set_drawmode {viztype shadestyle} {
+
+    set curr [Nget_current vol]
+    if {$curr == 0} {return}
+
+	if {$viztype=="isosurf"} {set vtype "isosurf"}
+	if {$viztype=="slice"} {set vtype "slice"}
+    Nvol$curr $vtype set_drawmode $shadestyle
+}
+
+
+
+##########################################################################
 # Reset procedure for this panel
 proc Nviz_vol_reset {} {
 	# Need to nuke all the volumes here to reset
@@ -313,26 +396,26 @@ proc delete_vol {} {
 # A quick routine for shuffling the current visualization type
 proc shuffle_vistype { BASE new } {
     global Nv_
+    variable viztype
+
 
     set tmp $BASE.subpanel
 
-    catch {pack forget $tmp.isosurfs}
-    catch {pack forget $tmp.slices}
+    catch {pack forget $tmp.isosurf}
+    catch {pack forget $tmp.slice}
 
     pack $tmp.$new -side bottom -fill both -expand yes
 
     switch $new {
-        isosurfs {
-			$BASE.vistype.list configure -text "isosurfaces"
-			update_isosurfs_subpanel $tmp.isosurfs
+        isosurf {
+			update_isosurfs_subpanel $tmp.isosurf
 		}
         slices {
-			$BASE.vistype.list configure -text "slices"
-			update_slices_subpanel $tmp.slices
+			update_slices_subpanel $tmp.slice
 		}
     }
 
-	set Nv_(VolVisStyle) $new
+	set viztype $new
 }
 
 ############################## slices ####################################
@@ -342,89 +425,92 @@ proc create_slices_subpanel { BASE } {
     global Nv_
 
 	if {[catch {set Nv_(ShadeStyle)}]}    {set Nv_(ShadeStyle) gouraud}
-	if {[catch {set Nv_(SliceAxis)}]}     {set Nv_(SliceAxis) 2}
+	if {[catch {set Nv_(SliceAxis)}]}     {set Nv_(SliceAxis) 0}
 	if {[catch {set Nv_(SliceSelected)}]} {set Nv_(SliceSelected) -1}
+	
 
-	set pname [frame $BASE.slices -relief raised]
-
-	# resolution, shading and position widgets
-    frame $pname.t1 -relief groove -borderwidth 2
-
-    set tmp [frame $pname.t1.l]
-    # polygon resolution
-    Nv_mkArrows $tmp.polyarrows "Polygon  Resolution" slice_set_res 8
-    set Nv_(SlicePolyResWidget) $tmp.polyarrows.f2.entry
-    pack $tmp.polyarrows -side right -expand 1 -fill y
-    bind $tmp.polyarrows.f2.entry <Return> "+ slice_set_res"
-
-    set tmp [frame $pname.t1.r]
-    # shading menu
-    menubutton $tmp.shading -text "Shading:" -menu $tmp.shading.m \
-    -relief raised -underline 0 -indicatoron 1
-    menu $tmp.shading.m
-    $tmp.shading.m add radiobutton -label Flat -value flat \
-    -variable Nv_(ShadeStyle) -command "slice_set_drawmode"
-    $tmp.shading.m add radiobutton -label Gouraud -value gouraud \
-    -variable Nv_(ShadeStyle) -command "slice_set_drawmode"
-    # position button
-
-	button $tmp.position -text "Position" -command "mkVolPositionPanel .pos_vol"
-    pack $tmp.shading $tmp.position -pady 1 -expand 1 -fill both
+	set pname [frame $BASE.slice -relief flat]
 
 	# slice manipulation widgets
-	frame $pname.t2 -relief groove -borderwidth 2
+	frame $pname.t1 -relief flat -bd 0
+	label $pname.t1.l -text "Define slice geometry"
+	pack $pname.t1.l -side left -padx 3 -pady 3
+	
+	frame $pname.t2 -relief flat -borderwidth 0
 
 	# slice axes
-	set tmp [frame $pname.t2.t -borderwidth 1 -relief raised]
+	set tmp [frame $pname.t2.t -borderwidth 0 -relief flat]
 	radiobutton $tmp.xaxis -text "X-axis" -state disabled -anchor nw -value 0 \
-	 -variable Nv_(SliceAxis) -command "slice_set_pos $pname"
+	 	-variable Nv_(SliceAxis) -command "slice_set_pos $pname"
     radiobutton $tmp.yaxis -text "Y-axis" -state disabled -anchor nw -value 1 \
-	-variable Nv_(SliceAxis) -command "slice_set_pos $pname"
+		-variable Nv_(SliceAxis) -command "slice_set_pos $pname"
 	radiobutton $tmp.zaxis -text "Z-axis" -state disabled -anchor nw -value 2 \
-	 -variable Nv_(SliceAxis) -command "slice_set_pos $pname"
+	 	-variable Nv_(SliceAxis) -command "slice_set_pos $pname"
 	pack $tmp.xaxis $tmp.yaxis $tmp.zaxis -expand 1 -side left
 
-	button $tmp.transp -text "Transparency" -command "slice_set_transp" -state disabled
+	button $tmp.transp -text "Transparency" -command "slice_set_transp" \
+		-state disabled -bd 1
 	pack $tmp.transp -pady 1 -fill both -side right
-
+	
 	# slice position
-	set tmp [frame $pname.t2.b1 -borderwidth 1 -relief raised]
-	mkSlicePosScale $tmp.s_x1 X1 "X1 :" $pname
-	mkSlicePosScale $tmp.s_x2 X2 "X2 :" $pname
+	if {$Nv_(SliceAxis) == 2 } {
+		set xtitle "azimuth"
+		set ytitle "length"
+		set ztitle "height"
+	} else {
+		set xtitle "tilt"
+		set ytitle "height"
+		set ztitle "length"
+	}
+	
+	set tmp [frame $pname.t2.b1 -borderwidth 0 -relief flat]
+	mkSlicePosScale $tmp.s_x1 X1 $xtitle $pname
+	mkSlicePosScale $tmp.s_x2 X2 $xtitle $pname
 	pack $tmp.s_x1 $tmp.s_x2 -fill both -side left -expand 1
-
-	set tmp [frame $pname.t2.b2 -borderwidth 1 -relief raised]
-	mkSlicePosScale $tmp.s_y1 Y1 "Y1 :" $pname
-	mkSlicePosScale $tmp.s_y2 Y2 "Y2 :" $pname
+	
+	set tmp [frame $pname.t2.b2 -borderwidth 0 -relief flat]
+	mkSlicePosScale $tmp.s_y1 Y1 $ytitle $pname
+	mkSlicePosScale $tmp.s_y2 Y2 $ytitle $pname
 	pack $tmp.s_y1 $tmp.s_y2 -fill both -side left -expand 1
 
-	set tmp [frame $pname.t2.b3 -borderwidth 1 -relief raised]
-	mkSlicePosScale $tmp.s_z1 Z1 "Z1 :" $pname
-	mkSlicePosScale $tmp.s_z2 Z2 "Z2 :" $pname
+	set tmp [frame $pname.t2.b3 -borderwidth 0 -relief flat]
+	mkSlicePosScale $tmp.s_z1 Z1 $ztitle $pname
+	mkSlicePosScale $tmp.s_z2 Z2 $ztitle $pname
 	pack $tmp.s_z1 $tmp.s_z2 -fill both -side left -expand 1
 
-	frame $pname.t3 -relief groove -borderwidth 2
+
+	frame $pname.t3 -relief flat -borderwidth 0
 	# list
-	set tmp [frame $pname.t3.l]
+	set tmp [frame $pname.t3.l -relief sunken -bd 1]
     list_type_vscroll $tmp.list
     bind $tmp.list.l <<ListboxSelect>> "+ slice_update_att $pname"
     pack $tmp.list -side right -expand 1 -fill both
 
 	# buttons
 	set tmp [frame $pname.t3.r]
-	button $tmp.add -text "Add" -command "slice_add $pname"
-    button $tmp.delete -text "Delete" -command "slice_del $pname"
-	label $tmp.lorder
-	button $tmp.up -text "Move Up" -command "slice_up $pname"
-    button $tmp.down -text "Move Down" -command "slice_down $pname"
-    pack $tmp.add $tmp.delete $tmp.lorder $tmp.up $tmp.down -pady 2 -expand 1 -fill x -side top
+	set top [frame $tmp.top]
+	set bottom [frame $tmp.bottom]
+	
+	Button $top.add -text "Add" -command "slice_add $pname" -bd 1 \
+		-helptext "Add new slice"
+    Button $top.delete -text "Delete" -command "slice_del $pname" -bd 1\
+		-helptext "Delete selected slice"
 
-	pack $pname.t1.l $pname.t1.r -side left -expand 1 -fill both
-    pack $pname.t1 -expand 1 -fill x -side top
+	Button $bottom.up -text "Move Up" -command "slice_up $pname" -bd 1\
+		-helptext "Move slice up in list"
+    Button $bottom.down -text "Move Down" -command "slice_down $pname" -bd 1\
+		-helptext "Move slice down in list"
+    
+    pack $top.add $top.delete -side top -expand 1 -fill x
+    pack $bottom.down $bottom.up -side bottom -expand 1 -fill x
+    pack $top  -side top -expand 1 -fill x
+    pack $bottom -side bottom -expand 1 -fill x
+
+	pack $pname.t1 -side top
 	pack $pname.t2.t $pname.t2.b1 $pname.t2.b2 $pname.t2.b3 -side top -expand 1 -fill both
-    pack $pname.t2 -expand 1 -fill x -side top
-	pack $pname.t3.l -side left -expand 1 -fill both
-	pack $pname.t3.r -side right -expand 0 -fill both
+    pack $pname.t2 -expand 1 -fill x -side top -pady 3
+	pack $pname.t3.l -side left -expand 1 -fill both -pady 3 -padx 2
+	pack $pname.t3.r -side right -expand 0 -fill both -pady 3 -padx 2
 	pack $pname.t3 -expand 1 -fill x -side top
 
 	# update subpanel info
@@ -434,6 +520,7 @@ proc create_slices_subpanel { BASE } {
 # Update slices subpanel info
 proc update_slices_subpanel { BASE {select -1}} {
     global Nv_
+    variable res
 
     set curr [Nget_current vol]
     if {0 == $curr} return
@@ -441,7 +528,7 @@ proc update_slices_subpanel { BASE {select -1}} {
     # set slices resolution and drawmode
     set L [Nvol$curr slice get_res]
 	set res [lindex $L 1]
-	Nv_setEntry $Nv_(SlicePolyResWidget) [lindex $L 1]
+	#Nv_setEntry $Nv_(SlicePolyResWidget) [lindex $L 1]
     set Nv_(ShadeStyle) [Nvol$curr slice get_drawmode]
 
     # fill list with slices
@@ -478,19 +565,21 @@ proc update_slices_subpanel { BASE {select -1}} {
 # Make slice position scale widget
 proc mkSlicePosScale { S name title BASE } {
 	global Nv_
+	global nviztxtfont
 
 	frame $S
 
-	label $S.l -text $title -anchor nw -state disabled
+	#label $S.l -text $title -anchor nw -state disabled -fg black -font nviztxtfont
 
-	scale $S.s -orient horizontal -showvalue 0 -state disabled \
-	-variable Nv_(SlicePos$name) -from 0.0 -to 1.0 -resolution 0
+	scale $S.s -orient horizontal -showvalue 0 -state normal \
+		-variable Nv_(SlicePos$name) -from 0.0 -to 1.0 -resolution 0 \
+		-label $title -width 10
 
 	bind $S.s <B1-ButtonRelease> "slice_set_pos $BASE"
-	bind $S.s <B1-ButtonRelease> "+ if {[Nauto_draw] == 1} {Ndraw_all}"
+	bind $S.s <B1-ButtonRelease> "catch {+ if {[Nauto_draw] == 1} {Ndraw_all}}"
 	bind $S.s <B1-Motion> "slice_set_pos $BASE; Nquick_draw"
 
-	pack $S.l $S.s -fill both -side left -expand 1
+	pack $S.s -fill both -side left -expand 1
 
 	return $S
 }
@@ -499,7 +588,7 @@ proc mkSlicePosScale { S name title BASE } {
 proc enableSlicePosScale { S name value} {
 	global Nv_
 
-	$S.l configure -state normal
+	#$S.l configure -state normal
 	$S.s configure -state normal
 
 	set Nv_(SlicePos$name) $value
@@ -509,11 +598,12 @@ proc enableSlicePosScale { S name value} {
 proc disableSlicePosScale { S name } {
 	global Nv_
 
-	$S.l configure -state disabled
+	#$S.l configure -state disabled
 	$S.s configure -state disabled
 
 	set Nv_(SlicePos$name) 0.0
 }
+
 
 # Get index of selected slice
 proc slice_get_selected { BASE } {
@@ -553,12 +643,14 @@ proc slice_update_att { BASE } {
 
     set attw $BASE.t2
     set id [slice_get_selected $BASE]
-
+    
     if {$id != -1} then {
         set Lpos [Nvol[Nget_current vol] slice get_pos $id]
 
 		set Nv_(SliceAxis)   [lindex $Lpos 6]
 		set Nv_(SliceSelected) $id
+		
+		set scaletitle [set_scale_title $Nv_(SliceAxis)]
 
         # enable attribute widgets
         $attw.t.xaxis configure -state normal
@@ -574,6 +666,12 @@ proc slice_update_att { BASE } {
 		enableSlicePosScale $attw.b3.s_z1 Z1 [lindex $Lpos 4]
 		enableSlicePosScale $attw.b3.s_z2 Z2 [lindex $Lpos 5]
 
+		$attw.b1.s_x1.s configure -label [lindex $scaletitle 0] 
+		$attw.b1.s_x2.s configure -label [lindex $scaletitle 0]
+		$attw.b2.s_y1.s configure -label [lindex $scaletitle 1]
+		$attw.b2.s_y2.s configure -label [lindex $scaletitle 1]
+		$attw.b3.s_z1.s configure -label [lindex $scaletitle 2]
+		$attw.b3.s_z2.s configure -label [lindex $scaletitle 2]
 	} else {
 		# set undefined values
 		set Nv_(SliceAxis) 2
@@ -593,31 +691,9 @@ proc slice_update_att { BASE } {
 		disableSlicePosScale $attw.b3.s_z1 Z1
 		disableSlicePosScale $attw.b3.s_z2 Z2
     }
+    
 }
 
-# Set slices polygon resolution
-proc slice_set_res {{args null}} {
-    global Nv_
-
-    set curr [Nget_current vol]
-
-    if {0 != $curr} {
-        set res [$Nv_(SlicePolyResWidget) get]
-		puts "setres: $res"
-        Nvol$curr slice set_res $res $res $res
-    }
-}
-
-# Set slices drawmode
-proc slice_set_drawmode {} {
-    global Nv_
-
-    set curr [Nget_current vol]
-
-    if {0 != $curr} {
-        Nvol$curr slice set_drawmode $Nv_(ShadeStyle)
-    }
-}
 
 # Set slice position
 proc slice_set_pos { BASE } {
@@ -637,10 +713,25 @@ proc slice_set_pos { BASE } {
 	set z2 $Nv_(SlicePosZ2)
 
 	set dir $Nv_(SliceAxis)
-
-	Nvol$curr slice set_pos $id $x1 $x2 $y1 $y2 $z1 $z2 $dir
+		
+	Nvol$curr slice set_pos $id $x1 $x2 $y1 $y2 $z1 $z2 $dir 
 
 	update_slices_subpanel $BASE $id
+}
+
+# update slice scale titles
+proc set_scale_title { dir } {
+	if {$dir == 2 } {
+		set xtitle "azimuth"
+		set ytitle "length"
+		set ztitle "height"
+	} else {
+		set xtitle "tilt"
+		set ytitle "height"
+		set ztitle "length"
+	}
+	set scaletitle [list $xtitle $ytitle $ztitle]
+	return $scaletitle
 }
 
 # Add slice
@@ -718,45 +809,19 @@ proc slice_down { BASE } {
 # Create subpanel for isosurfaces
 proc create_isosurfs_subpanel { BASE } {
     global Nv_
+    global nviztxtfont
 
-    if {[catch {set Nv_(ShadeStyle)}]}         {set Nv_(ShadeStyle) gouraud}
+    if {[catch {set Nv_(ShadeStyle)}]} {set Nv_(ShadeStyle) gouraud}
 
-    set pname [frame $BASE.isosurfs -relief raised]
-
-    # resolution, shading and position widgets
-    frame $pname.t1 -relief groove -borderwidth 2
-
-    set tmp [frame $pname.t1.l]
-    # polygon resolution
-    Nv_mkArrows $tmp.polyarrows "Polygon  Resolution" isosurf_set_res 8
-    set Nv_(IsoPolyResWidget) $tmp.polyarrows.f2.entry
-    pack $tmp.polyarrows -side right -expand 1 -fill y
-    #bind $tmp.polyarrows.f2.entry <Motion> "+ isosurf_set_res"
-    bind $tmp.polyarrows.f2.entry <Return> "+ isosurf_set_res"
-
-    set tmp [frame $pname.t1.r]
-    # shading menu
-    menubutton $tmp.shading -text "Shading:" -menu $tmp.shading.m \
-    -relief raised -underline 0 -indicatoron 1
-    menu $tmp.shading.m
-    $tmp.shading.m add radiobutton -label Flat -value flat \
-    -variable Nv_(ShadeStyle) -command "isosurf_set_drawmode"
-    $tmp.shading.m add radiobutton -label Gouraud -value gouraud \
-    -variable Nv_(ShadeStyle) -command "isosurf_set_drawmode"
-    # position button
-    button $tmp.position -text "Position" -command "mkVolPositionPanel .pos_vol"
-    pack $tmp.shading $tmp.position -pady 1 -expand 1 -fill both
-
-    pack $pname.t1.l $pname.t1.r -side left -expand 1 -fill both
-    pack $pname.t1 -expand 1 -fill x -side top
+    set pname [frame $BASE.isosurf]
 
     # isosurface attributes and flags
-    set tmp [frame $pname.t2 -relief groove -borderwidth 2]
+    set tmp [frame $pname.t2 -relief flat -borderwidth 0]
 
     # isosurface attributes
-    menubutton $tmp.menu1 -menu $tmp.menu1.m -text "Isosurface Attribute" -relief raised \
-    -indicatoron 1 -bd 2 -state disabled
-    pack $tmp.menu1 -side left -fill y -padx 2
+    menubutton $tmp.menu1 -menu $tmp.menu1.m -text "Isosurface attributes..." -relief raised \
+    	-indicatoron 1 -bd 1 -state disabled
+    pack $tmp.menu1 -side left -fill y -padx 3 -pady 3
     menu $tmp.menu1.m
     foreach i {threshold color mask transparency shininess emission} {
         $tmp.menu1.m add command
@@ -764,32 +829,43 @@ proc create_isosurfs_subpanel { BASE } {
 
     # inout flag
     checkbutton $tmp.inout -text "toggle normal direction" -state disabled \
-    -variable Nv_(InoutFlag) -command "isosurf_set_flags $pname"
+    	-variable Nv_(InoutFlag) -command "isosurf_set_flags $pname" \
+    	-font $nviztxtfont
 
-    pack $tmp.inout -side left -padx 2 -expand 1 -fill x
+    pack $tmp.inout -side right -padx 2 -expand 1 -fill x
 
-    pack $pname.t2 -expand 1 -fill x -side top
 
     # isosurfaces list and manipulation buttons
-    frame $pname.t3 -relief groove -borderwidth 2
+    frame $pname.t3 -relief flat -borderwidth 0
 
     # list
-    set tmp [frame $pname.t3.l]
+    set tmp [frame $pname.t3.l -relief sunken -bd 1]
     list_type_vscroll $tmp.list
     bind $tmp.list.l <<ListboxSelect>> "+ isosurf_update_att $pname"
     pack $tmp.list -side right -expand 1 -fill both
 
-    # add, modify, delete buttons
-    set tmp [frame $pname.t3.r]
-    button $tmp.add -text "Add" -command "isosurf_add $pname"
-    button $tmp.delete -text "Delete" -command "isosurf_del $pname"
-	label $tmp.lorder
-	button $tmp.up -text "Move Up" -command "isosurf_up $pname"
-    button $tmp.down -text "Move Down" -command "isosurf_down $pname"
+	# buttons
+	set tmp [frame $pname.t3.r]
+	set top [frame $tmp.top]
+	set bottom [frame $tmp.bottom]
+	
+	Button $top.add -text "Add" -command "isosurf_add $pname" -bd 1 \
+		-helptext "Add new isosurface"
+    Button $top.delete -text "Delete" -command "isosurf_del $pname" -bd 1\
+		-helptext "Delete selected isosurface"
 
-    pack $tmp.add $tmp.delete $tmp.lorder $tmp.up $tmp.down -pady 2 -expand 1 -fill x -side top
+	Button $bottom.up -text "Move Up" -command "isosurf_up $pname" -bd 1\
+		-helptext "Move isosurface up in list"
+    Button $bottom.down -text "Move Down" -command "isosurf_down $pname" -bd 1\
+		-helptext "Move isosurface own in list"
+    
+    pack $top.add $top.delete -side top -expand 1 -fill x
+    pack $bottom.down $bottom.up -side bottom -expand 1 -fill x
+    pack $top  -side top -expand 1 -fill x
+    pack $bottom -side bottom -expand 1 -fill x
 
-	pack $pname.t3.l -side left -expand 1 -fill both
+    pack $pname.t2 -expand 1 -fill x -side top
+	pack $pname.t3.l -side left -expand 1 -fill both -padx 3
 	pack $pname.t3.r -side right -expand 0 -fill both
     pack $pname.t3 -expand 1 -fill x -side top
 
@@ -800,13 +876,14 @@ proc create_isosurfs_subpanel { BASE } {
 # Update isosurfaces subpanel info
 proc update_isosurfs_subpanel { BASE {select null}} {
     global Nv_
+    variable res
 
     set curr [Nget_current vol]
     if {0 == $curr} return
 
     # set isosurface resolution and drawmode
     set L [Nvol$curr isosurf get_res]
-    Nv_setEntry $Nv_(IsoPolyResWidget) [lindex $L 1]
+    set res [lindex $L 1]
     set Nv_(ShadeStyle) [Nvol$curr isosurf get_drawmode]
 
     # fill list isosurfaces level
@@ -874,29 +951,6 @@ proc isosurf_update_att { BASE } {
         # disable attribute widgets
         $attw.menu1 configure -state disabled
         $attw.inout configure -state disabled
-    }
-}
-
-# Set isosurfaces polygon resolution
-proc isosurf_set_res {{args null}} {
-    global Nv_
-
-    set curr [Nget_current vol]
-
-    if {0 != $curr} {
-        set res [$Nv_(IsoPolyResWidget) get]
-        Nvol$curr isosurf set_res $res $res $res
-    }
-}
-
-# Set isosurfaces drawmode
-proc isosurf_set_drawmode {} {
-    global Nv_
-
-    set curr [Nget_current vol]
-
-    if {0 != $curr} {
-        Nvol$curr isosurf set_drawmode $Nv_(ShadeStyle)
     }
 }
 
