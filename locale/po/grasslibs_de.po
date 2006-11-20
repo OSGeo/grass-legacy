@@ -2617,5 +2617,5 @@ msgid "Monitor: _send: write returned short count: %d of %d\n"
 msgstr "Monitor: _send: write hat verkürtzte Anzahl zurückgegeben: %d von %d\n"
 
 #, fuzzy
-#~ msgid "Window replacing the default"
-#~ msgstr "Zum Akzeptieren der Standardeinstellung"
+msgid "Window replacing the default"
+msgstr "Zum Akzeptieren der Standardeinstellung"

@@ -3897,21 +3897,21 @@ msgid "&Xtns"
 msgstr ""
 
 #, fuzzy
-#~ msgid "Cancel georectification"
-#~ msgstr "Photo"
+msgid "Cancel georectification"
+msgstr "Photo"
 
 #, fuzzy
-#~ msgid "  Layer"
-#~ msgstr "Ebene"
+msgid "  Layer"
+msgstr "Ebene"
 
 #, fuzzy
-#~ msgid "  Category"
-#~ msgstr "Kategorie"
+msgid "  Category"
+msgstr "Kategorie"
 
 #, fuzzy
-#~ msgid "New GIS data directory"
-#~ msgstr "Datenbankverzeichnis"
+msgid "New GIS data directory"
+msgstr "Datenbankverzeichnis"
 
 #, fuzzy
-#~ msgid "Exit"
-#~ msgstr "B&eenden"
+msgid "Exit"
+msgstr "B&eenden"
