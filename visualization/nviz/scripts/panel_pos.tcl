@@ -19,6 +19,7 @@
 
 proc mkposPanel { BASE } {
     global Nv_ bearing_calc
+    global nviztxtfont
     
     catch {destroy $BASE}
     
@@ -48,27 +49,27 @@ proc mkposPanel { BASE } {
 	set c1r6 [label $col1.6 -text "Range/bearing:"]
 	pack $c1r1 $c1r2 $c1r3 $c1r4 $c1r5 $c1r6 -side top -anchor e
 	
-	set c2r1 [label $col2.1 -text "East"]
+	set c2r1 [label $col2.1 -text "East" -fg black -font $nviztxtfont]
 	set c2r2 [entry $col2.2 -width 10 -textvariable Nv_(east1) -bg white]
 	set c2r3 [entry $col2.3 -width 10 -textvariable Nv_(east2) -bg white]
 	set c2r4 [label $col2.4 -text "     "]
-	set c2r5 [label $col2.5 -text "Range"]
+	set c2r5 [label $col2.5 -text "Range" -fg black -font $nviztxtfont]
 	set c2r6 [entry $col2.6 -width 10 -textvariable Nv_(range) -bg white]
 	pack $c2r1 $c2r2 $c2r3 $c2r4 $c2r5 $c2r6 -side top
 	
-	set c3r1 [label $col3.1 -text "North"]
+	set c3r1 [label $col3.1 -text "North" -fg black -font $nviztxtfont]
 	set c3r2 [entry $col3.2 -width 10 -textvariable Nv_(north1) -bg white]
 	set c3r3 [entry $col3.3 -width 10 -textvariable Nv_(north2) -bg white]
 	set c3r4 [label $col3.4 -text "     "]
-	set c3r5 [label $col3.5 -text "Bearing"]
+	set c3r5 [label $col3.5 -text "Bearing" -fg black -font $nviztxtfont]
 	set c3r6 [entry $col3.6 -width 10 -textvariable Nv_(bearing) -bg white]
 	pack $c3r1 $c3r2 $c3r3 $c3r4 $c3r5 $c3r6 -side top
 	
-	set c4r1 [label $col4.1 -text "Height"]
+	set c4r1 [label $col4.1 -text "Height" -fg black -font $nviztxtfont]
 	set c4r2 [entry $col4.2 -width 8 -textvariable Nv_(ht1) -bg white] 
 	set c4r3 [entry $col4.3 -width 8 -textvariable Nv_(ht2) -bg white]
 	set c4r4 [label $col4.4 -text "     "]
-	set c4r5 [label $col4.5 -text "Elev"]
+	set c4r5 [label $col4.5 -text "Elev" -fg black -font $nviztxtfont]
 	set c4r6 [entry $col4.6 -width 8 -textvariable Nv_(elev) -bg white]
 	pack $c4r1 $c4r2 $c4r3 $c4r4 $c4r5 $c4r6 -side top
 
@@ -79,8 +80,8 @@ proc mkposPanel { BASE } {
    
   # Mode setting radiobuttons
   	set tmp3 [frame $BASE.top3]
-    radiobutton $tmp3.r1 -text "Eye to Surface" -variable "bearing_calc" -value "1" -command "catch {show_bearing}"
-    radiobutton $tmp3.r2 -text "Surface to Eye" -variable "bearing_calc" -value "2" -command "catch {show_bearing}"
+    radiobutton $tmp3.r1 -text "Eye to surface" -variable "bearing_calc" -value "1" -command "catch {show_bearing}"
+    radiobutton $tmp3.r2 -text "Surface to eye" -variable "bearing_calc" -value "2" -command "catch {show_bearing}"
     button $tmp3.b1 -text "Calculate" -command "catch {calc_position $bearing_calc}" -bd 1
     pack $tmp3.r1 $tmp3.r2 $tmp3.b1 -side left -padx 3 -expand 1 -fill x
     
