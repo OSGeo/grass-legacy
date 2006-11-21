@@ -149,9 +149,10 @@ proc mkmainPanel { BASE } {
 	set n_arrow_z 999
 
 	#pack frames
-	pack [frame $BASE.midt -relief flat -bd 0] -side top -expand 1 -fill x -padx 3 -pady 5
-	pack [frame $BASE.midf -relief flat -bd 0] -side left -expand 1
+	pack [frame $BASE.midt -relief flat -bd 0] -side top -expand 1 -fill x -padx 5 -pady 5
+	pack [frame $BASE.midf -relief flat -bd 0] -side left -expand 1 -padx 5
 
+	# set view method radiobuttons
 	set draw_lab [label $BASE.midt.lablev1 -text "View method:" -anchor w]
 
 	set draw_var1 [radiobutton $BASE.midt.b1 -text "eye" \
@@ -167,42 +168,41 @@ proc mkmainPanel { BASE } {
 	help $BASE.midt.b2 balloon "Change view by moving scene center position"
 
 
-#*** ACS_MODIFY 1.0 BEGIN ******************************************************
 	if {$Nv_(FlyThrough)} {
 		mkFlyButtons $BASE "midt" $draw_lab $draw_var1 $draw_var2
 	} else {
 		# original code
 		pack $draw_lab $draw_var1 $draw_var2 -side left -expand 0
 	}
-#*** ACS_MODIFY 1.0 END ********************************************************
-
 	help $BASE.midt.b3 balloon "Change view interactively in display"
 
 	# make	position "widget"
 	set XY [Nv_mkXYScale $BASE.midf.pos puck XY_POS 125 125 105 105 update_eye_position]
+
+	# make vertical exageration and eye height sliders
 	set H [mk_hgt_slider $BASE.midf]
 	set E [mk_exag_slider $BASE.midf]
+	
 	help $E.scale balloon "Set vertical exaggeration"
 	help $E.entry balloon "Set vertical exaggeration"
 	help $H.scale balloon "Set eye height"
 	help $H.entry balloon "Set eye height"
-	pack $XY $H $E -side left -expand y
-
+	
 	# make lookat buttons
-	frame $BASE.midf.lookat -relief flat -borderwidth 0 -padx 3
+	frame $BASE.midf.lookat -relief flat -borderwidth 0
 
-	Label $BASE.midf.lookat.l -text Look
-
-	button $BASE.midf.lookat.here -text here -bd 1\
+	Label $BASE.midf.lookat.l -text "Look"
+	Button $BASE.midf.lookat.here -text "here" -bd 1 \
+		-helptext "Center view at point marked with mouse click" \
 		-command {bind $Nv_(TOP).canvas <Button> {look_here %W %x %y
 		if {[Nauto_draw] == 1} {Ndraw_all}
 		}}
-
-	button $BASE.midf.lookat.center -text center -bd 1\
+	Button $BASE.midf.lookat.center -text "center" -bd 1 \
+		-helptext "Center view at center of displayed surface" \
 		-command { look_center
 			if {[Nauto_draw] == 1} {Ndraw_all} }
-
-	button $BASE.midf.lookat.top -text top -bd 1 \
+	Button $BASE.midf.lookat.top -text "top" -bd 1 \
+		-helptext "View directly from above" \
 		-command {
 			# Nv_itemDrag $Nv_(main_BASE).midf.pos $Nv_(XY_POS) 62.5 62.5
 			# note: below value is somewhat strange, but with 0.5 0.5 the map rotates:
@@ -214,9 +214,11 @@ proc mkmainPanel { BASE } {
 
 			if {[Nauto_draw] == 1} {Ndraw_all}
 			}
-
-	button $BASE.midf.lookat.cancel -text cancel  -bd 1 -command no_focus
-
+	
+	# CMB Nov.2006: As far as I can tell, this button does nothing. This command doesn't exist
+	#button $BASE.midf.lookat.cancel -text "cancel"  -bd 1 -command no_focus
+	
+	# make perspective and twist sliders
 	frame $BASE.bframe -relief flat -bd 0
 	frame $BASE.bframe.cframe -relief flat -borderwidth 0 -pady 5
 
@@ -226,20 +228,22 @@ proc mkmainPanel { BASE } {
 	help $BASE.bframe.cframe.pers balloon "Set field of view size (degrees)"
 	help $BASE.bframe.cframe.tw balloon "Set twist angle (degrees)"
 
-	button $BASE.midf.lookat.reset -text reset	-bd 1 -command "do_reset $XY $H $E $P"
+	# reset button goes here so it can reference P
+	Button $BASE.midf.lookat.reset -text "reset" \
+		-bd 1 -command "do_reset $XY $H $E $P" \
+		-helptext "Reset view to default"
 
 	pack $BASE.midf.lookat.l $BASE.midf.lookat.here \
 		$BASE.midf.lookat.center $BASE.midf.lookat.top \
-		$BASE.midf.lookat.cancel $BASE.midf.lookat.reset \
-		-side top -fill x -expand 1
+		$BASE.midf.lookat.reset -side top -fill x -expand 1 -anchor n
 
-	pack $BASE.midf.lookat -side left -expand 1
-	pack $BASE.midf -side top -fill x -expand 1
+	pack $BASE.midf.lookat $XY -side left -expand 1 -padx 5 -anchor w
+	pack $H $E -side left -expand y -padx 2
+	pack $BASE.midf -side top -fill both -expand 1
 
-	pack $BASE.bframe.cframe.pers -side left
-	pack $BASE.bframe.cframe.tw -side right
-	pack $BASE.bframe -side top -fill x -expand 1
-	pack $BASE.bframe.cframe -side top -fill x -expand 1
+	pack $BASE.bframe.cframe.pers $BASE.bframe.cframe.tw -side left -fill x -expand 1 -padx 3
+	pack $BASE.bframe -side top -fill x -expand 1 -padx 3
+	pack $BASE.bframe.cframe -side top 
 
 #*** ACS_MODIFY 1.0 BEGIN ******************************************************
 	if {$Nv_(FlyThrough)} {
@@ -295,9 +299,9 @@ proc Nviz_main_load { file_hook } {
 	# window size
 	gets $file_hook data
 	set win_width [lindex $data 0]
-	set win_height [lindex $data 1]
+	set win_ -padx 3  [lindex $data 1]
 	$Nv_(TOP).canvas configure -width $win_width -height $win_height
-	pack $Nv_(TOP).canvas -side top -expand 0
+	pack $Nv_(TOP).canvas -side top -expand 1 -fill both
 
 	# perspective
 	gets $file_hook data
@@ -388,7 +392,7 @@ proc mk_exag_slider {W} {
 #		set min 0
 #	}
 
-	Nv_mkFloatScale $W.zexag v z-exag $exag $min $val update_exag 2
+	Nv_mkFloatScale $W.zexag v z-exag $exag $min $val update_exag 1
 
 	return $W.zexag
 }
@@ -402,7 +406,7 @@ proc mk_hgt_slider {W} {
 
 	# make sliders
 	set Nv_(HEIGHT_SLIDER) $W.height
-	Nv_mkFloatScale $W.height v height $max $min $val update_height 2
+	Nv_mkFloatScale $W.height v height $max $min $val update_height 1
 
 	return $W.height
 }
