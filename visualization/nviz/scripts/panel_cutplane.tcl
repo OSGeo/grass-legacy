@@ -1,4 +1,21 @@
 ##########################################################################
+#
+# Routines for creating cutting planes for stacked raster surfaces in NVIZ
+# 
+# Original author unknown.
+# Probably U.S. Army Construction Engineering Research Laboratory
+#
+#
+# Major update of GUI Nov 2006, Michael Barton, Arizona State University
+#
+##########################################################################
+# COPYRIGHT:	(C) 2006 by Michael Barton and the GRASS Development Team
+#
+#		This program is free software under the GNU General Public
+#		License (>=v2). Read the file COPYING that comes with GRASS
+#		for details.
+#
+##########################################################################
 # Default Priority for this panel
 #
 # priority is from 0 to 10
@@ -25,10 +42,11 @@ set Nv_(CurrCutPlane) -1
 
 proc mkcutplanePanel { BASE } {
     global Nv_
+    global nviztxtfont
 
     #  Initialize panel info
     set panel [St_create {window name size priority} $BASE "Cutting Planes" 1 5]
-    frame $BASE  -relief groove -borderwidth 2
+    frame $BASE  -relief flat -borderwidth 0
     Nv_mkPanelname $BASE "Cutting Planes Panel"
     set Nv_(CutPlaneBase) $BASE
 
@@ -36,62 +54,13 @@ proc mkcutplanePanel { BASE } {
     append update_routine $BASE
     set ucmd "proc $update_routine \{ x y \} \{ cutplaneXYTrans $BASE \$x \$y \}"
     uplevel #0 $ucmd
-    #Create XY canvas
-    set pos [Nv_mkXYScale $BASE.pos cross CPLANE_POS 125 125 63 63 $update_routine $update_routine]
-    pack $pos -side top
-    
-    frame $BASE.right
-    pack $BASE.right -side right -fill both -before $pos -padx 3 -pady 3 -anchor ne
-    frame $BASE.left
-    pack $BASE.left -side left -fill both -before $pos -padx 3 -pady 3 -anchor nw
-    frame $BASE.bottom
-    pack $BASE.bottom -side bottom -before $BASE.left -fill both -padx 3 -pady 3 -anchor sw
-    
-    # Create X,Y, and Z entry widgets along with
-    # Reset, all off and close buttons
-    frame $BASE.coords
-    label $BASE.coords.z_lbl -text "Z:"
-    label $BASE.coords.x_lbl -text "X:"
-    label $BASE.coords.y_lbl -text "Y:"
-    entry $BASE.coords.z_ent -width 5 -relief sunken
-    entry $BASE.coords.x_ent -width 5 -relief sunken
-    entry $BASE.coords.y_ent -width 5 -relief sunken
-    bind $BASE.coords.x_ent <Return> "cutplaneSetTransFromEntry $BASE x"
-    bind $BASE.coords.y_ent <Return> "cutplaneSetTransFromEntry $BASE y"
-    bind $BASE.coords.z_ent <Return> "cutplaneSetTransFromEntry $BASE z"
-    
-    pack $BASE.coords.z_lbl $BASE.coords.z_ent \
-	$BASE.coords.x_lbl $BASE.coords.x_ent \
-	$BASE.coords.y_lbl $BASE.coords.y_ent -side left
-    pack $BASE.coords -side top -in $BASE.bottom -fill both
-    
-    frame $BASE.commands
-    button $BASE.commands.reset 	-text "Reset" 	-command "cutplaneReset $BASE"
-    button $BASE.commands.all_off 	-text "All Off" \
-	-command "cutplaneAllOff; cutplaneSetPlane $BASE -1"
-    button $BASE.commands.close		-text "Close"	-command "Nv_closePanel $BASE" 
-    pack $BASE.commands.reset $BASE.commands.all_off $BASE.commands.close \
-	-side left -fill both -padx 3 -pady 3 -expand yes
-    pack $BASE.commands -in $BASE.bottom -fill both
-    
-    # Create Z slider
-    set update_routine zupdate
-    append update_routine $BASE
-    set ucmd "proc $update_routine \{ z \} \{ cutplaneZTrans $BASE \$z \}"
-    uplevel #0 $ucmd
-    set range [Nget_zrange]
-#    set range [list 0 1000]
-    scale $BASE.zslide -orient vertical -to [expr int([lindex $range 0])] \
-	-from [expr int([lindex $range 1])] -showvalue false \
-	-activebackground gray80 -background gray90 -command $update_routine
-    pack $BASE.zslide -side top -in $BASE.left
-    
-    # Create the current plane pulldown mechanism
+
+    # Create the active plane pulldown
     frame $BASE.current
-    label $BASE.current.lbl -text "Current:"
-    label $BASE.current.cpl -text "None" -relief raised
-    pack $BASE.current.lbl $BASE.current.cpl -side left -fill both
-    pack $BASE.current -side top -in $BASE.right
+    label $BASE.current.lbl -text "Active cutting plane: "
+    label $BASE.current.cpl -text "None" -relief raised -bd 1 \
+    	-width 8 -fg black -font $nviztxtfont
+    pack $BASE.current.lbl $BASE.current.cpl -side left -fill none
     
     menu $BASE.cut_plane_menu
     set rname $BASE.cut_plane_menu
@@ -112,33 +81,75 @@ proc mkcutplanePanel { BASE } {
     bind $BASE.current.cpl <1> "$rname post %X %Y"
     set Nv_(CutPlaneFence) OFF
     Nset_fence_color OFF
-    
-    # Create radio buttons for selecting buffers
-    frame $BASE.buffers
-    radiobutton $BASE.buffers.t 	-text "T" 	-width 3 -anchor w \
-	-command "Nset_fence_color ABOVE" -variable Nv_(CutPlaneFence) -value "ABOVE"
-    radiobutton $BASE.buffers.b		-text "B" 	-width 3 -anchor w \
-	-command "Nset_fence_color BELOW" -variable Nv_(CutPlaneFence) -value "BELOW"
-    radiobutton $BASE.buffers.bl	-text "BL"	-width 3 -anchor w \
-	-command "Nset_fence_color BLEND" -variable Nv_(CutPlaneFence) -value "BLEND"
-    radiobutton $BASE.buffers.gr	-text "GR"	-width 3 -anchor w \
-	-command "Nset_fence_color GREY" -variable Nv_(CutPlaneFence) -value "GREY"
-    radiobutton $BASE.buffers.n		-text "N"	-width 3 -anchor w \
-	-command "Nset_fence_color OFF" -variable Nv_(CutPlaneFence) -value "OFF"
 
-    pack $BASE.buffers.t $BASE.buffers.b $BASE.buffers.bl $BASE.buffers.gr $BASE.buffers.n -side top
-    pack $BASE.buffers -in $BASE.right -side right -anchor ne
+    # Create radio buttons for cut plane shading
+    menubutton $BASE.current.shading -menu $BASE.current.shading.m \
+    	-relief raised -indicatoron 1 -bd 1 -width 10 -text "set shading"
     
-    # Create rotate and tilt sliders, labels and text entry widgets
+    set shademenu [menu $BASE.current.shading.m -tearoff 0]
+    $shademenu add radiobutton -label "top color" \
+		-command "Nset_fence_color ABOVE" -variable Nv_(CutPlaneFence) -value "TOP"
+    $shademenu add radiobutton -label "bottom color" \
+		-command "Nset_fence_color BELOW" -variable Nv_(CutPlaneFence) -value "BELOW"
+    $shademenu add radiobutton -label "blend" \
+		-command "Nset_fence_color BLEND" -variable Nv_(CutPlaneFence) -value "BLEND"
+   	$shademenu add radiobutton -label "shaded" \
+		-command "Nset_fence_color GREY" -variable Nv_(CutPlaneFence) -value "GREY"
+    $shademenu add radiobutton -label "clear" \
+		-command "Nset_fence_color OFF" -variable Nv_(CutPlaneFence) -value "OFF"
+
+    pack  $BASE.current.shading -side right -anchor e
+    pack $BASE.current -side top -pady 5 -anchor w -expand 1 -fill both
+    
+	frame $BASE.top
+    frame $BASE.left
+
+    #Create XY canvas
+    set pos [Nv_mkXYScale $BASE.left.pos cross CPLANE_POS 125 125 63 63 $update_routine $update_routine]
+    pack $pos -side top -anchor e
+
+    # Create X,Y, and Z entry widgets along with
+    # Reset, all off and close buttons
+    frame $BASE.coords
+    label $BASE.coords.x_lbl -text "X:"
+    label $BASE.coords.y_lbl -text "Y:"
+    entry $BASE.coords.x_ent -width 7 -relief sunken -bg white
+    entry $BASE.coords.y_ent -width 7 -relief sunken -bg white
+    bind $BASE.coords.x_ent <Return> "cutplaneSetTransFromEntry $BASE x"
+    bind $BASE.coords.y_ent <Return> "cutplaneSetTransFromEntry $BASE y"    
+    pack $BASE.coords.x_lbl $BASE.coords.x_ent \
+		$BASE.coords.y_lbl $BASE.coords.y_ent -side left  -anchor w
+    pack $BASE.coords -side bottom -in $BASE.left -anchor e -pady 3
+
+    pack $BASE.left -side left -fill x -expand 1 -pady 3 -anchor w 
+    
+    # Create z coord, rotate, and tilt sliders, labels and text entry widgets
+    frame $BASE.right
+
+    set update_routine zupdate
+    append update_routine $BASE
+    set ucmd "proc $update_routine \{ z \} \{ cutplaneZTrans $BASE \$z \}"
+    uplevel #0 $ucmd
+    set range [Nget_zrange]
+#    set range [list 0 1000]
+	frame $BASE.zcoord
+    scale $BASE.zcoord.scl -orient vertical -to [expr int([lindex $range 0])] \
+		-from [expr int([lindex $range 1])] -showvalue false -width 13 \
+		-activebackground gray80 -background gray90 -command $update_routine
+    label $BASE.zcoord.lbl -text "Z coord"
+    entry $BASE.zcoord.val -width 5 -relief sunken -bg white
+    pack $BASE.zcoord.scl $BASE.zcoord.lbl $BASE.zcoord.val
+    bind $BASE.zcoord.val <KeyPress-Return> "cutplaneSetTransFromEntry $BASE z"
+    
     set update_routine rot_update
     append update_routine $BASE
     set ucmd "proc $update_routine \{ r \} \{ cutplaneUpdateRotation $BASE \}"
     uplevel #0 $ucmd
     frame $BASE.rotate
-    scale $BASE.rotate.scl -orient vertical -from 360 -to 0 -showvalue false \
-	-activebackground gray80 -background gray90 -command $update_routine
+    scale $BASE.rotate.scl -orient vertical -from 360 -to 0 -showvalue false  -width 13\
+		-activebackground gray80 -background gray90 -command $update_routine
     label $BASE.rotate.lbl -text "Rotate"
-    entry $BASE.rotate.val -width 3 -relief sunken
+    entry $BASE.rotate.val -width 5 -relief sunken -bg white
     pack $BASE.rotate.scl $BASE.rotate.lbl $BASE.rotate.val
     bind $BASE.rotate.val <KeyPress-Return> "cutplaneUpdateRotation2 $BASE"
     
@@ -147,20 +158,39 @@ proc mkcutplanePanel { BASE } {
     set ucmd "proc $update_routine \{ t \} \{ cutplaneUpdateTilt $BASE \}"
     uplevel #0 $ucmd
     frame $BASE.tilt
-    scale $BASE.tilt.scl -orient vertical -from 360 -to 0 -showvalue false \
-	-activebackground gray80 -background gray90 -command $update_routine
+    scale $BASE.tilt.scl -orient vertical -from 360 -to 0 -showvalue false  -width 13\
+		-activebackground gray80 -background gray90 -command $update_routine
     label $BASE.tilt.lbl -text "Tilt"
-    entry $BASE.tilt.val -width 3 -relief sunken
+    entry $BASE.tilt.val -width 5 -relief sunken -bg white
     pack $BASE.tilt.scl $BASE.tilt.lbl $BASE.tilt.val
     bind $BASE.tilt.val <KeyPress-Return> "cutplaneUpdateTilt2 $BASE"
     
-    pack $BASE.tilt $BASE.rotate -side right -in $BASE.right -before $BASE.buffers -anchor e
+    pack $BASE.zcoord $BASE.tilt $BASE.rotate -side right -in $BASE.right -padx 1 -anchor e
     $BASE.tilt.val insert 0 0 
     $BASE.rotate.val insert 0 0
+    
     # cutplaneUpdateRotation $BASE
     # cutplaneUpdateTilt $BASE
 
+    pack $BASE.right -side right -fill none -expand 0 -pady 3 -anchor e
+
     cutplaneSetPlane $BASE $Nv_(CurrCutPlane)
+
+	# panel control buttons at bottom
+    frame $BASE.bottom  
+    
+	button $BASE.bottom.reset -text "Reset" -width 7 -bd 1 \
+    	-command "cutplaneReset $BASE"
+    button $BASE.bottom.all_off -text "All Off" -width 7 -bd 1 \
+		-command "cutplaneAllOff; cutplaneSetPlane $BASE -1"
+    button $BASE.bottom.close -text "Close" -width 7 -bd 1 \
+    	-command "Nv_closePanel $BASE" 
+    pack $BASE.bottom.reset $BASE.bottom.all_off $BASE.bottom.close \
+		-side left -fill none -expand 1
+
+    pack $BASE.left $BASE.right -side left -in $BASE.top -expand 1 -fill both
+    pack $BASE.top $BASE.bottom -side top -fill both -pady 3 -expand 1
+
 
     return $panel
 }
@@ -354,7 +384,7 @@ proc cutplaneReset { BASE } {
 	$BASE.rotate.val insert 0 0
 	$BASE.tilt.val delete 0 end
 	$BASE.tilt.val insert 0 0
-	$BASE.zslide set 0
+	$BASE.zcoord.scl set 0
 	cutplaneUpdateRotation2 $BASE
 	cutplaneUpdateTilt2 $BASE
 	
@@ -426,7 +456,7 @@ proc cutplaneSetTransFromEntry { BASE coord } {
 		switch $coord {
 			x { set new_x [$BASE.coords.x_ent get] }
 			y { set new_y [$BASE.coords.y_ent get] }
-			z { set new_z [$BASE.coords.z_ent get] }
+			z { set new_z [$BASE.zcoord.val get] }
 		}
 
 		# Make sure user entered a numerical value
@@ -437,13 +467,13 @@ proc cutplaneSetTransFromEntry { BASE coord } {
 
 		#Update Z-scale to match entry value
 		#Reset to / from limits if required
-		if {$new_z < [lindex [$BASE.zslide configure -to] 4]} {
-		$BASE.zslide configure -to [expr int($new_z - 1)]
+		if {$new_z < [lindex [$BASE.zcoord.scl configure -to] 4]} {
+		$BASE.zcoord.scl configure -to [expr int($new_z - 1)]
 		}
-		if {$new_z > [lindex [$BASE.zslide configure -from] 4]} {
-                $BASE.zslide configure -from [expr int($new_z + 1)]
+		if {$new_z > [lindex [$BASE.zcoord.scl configure -from] 4]} {
+                $BASE.zcoord.scl configure -from [expr int($new_z + 1)]
                 }
-		$BASE.zslide set $new_z
+		$BASE.zcoord.scl set $new_z
 
 		#Update Canvas position based on entered XY
 		if { [Nget_xyrange] > 0} {
@@ -466,11 +496,11 @@ proc cutplaneSetTrans { w x y z } {
 	if {"$curr" != "None"} then {
 		$w.coords.x_ent delete 0 end
 		$w.coords.y_ent delete 0 end
-		$w.coords.z_ent delete 0 end
+		$w.zcoord.val delete 0 end
 
 		$w.coords.x_ent insert 0 $x
 		$w.coords.y_ent insert 0 $y
-		$w.coords.z_ent insert 0 $z
+		$w.zcoord.val insert 0 $z
 
 		$curr set_trans $x $y $z
 		$curr draw
