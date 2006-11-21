@@ -44,7 +44,7 @@ source $src_boot/etc/nviz2.2/scripts/config.tcl
 
 #append bwidget for tooltip stuff
 lappend auto_path $env(GISBASE)/bwidget
-package require BWidget
+package require -exact BWidget 1.2.1
 
 # internationalization procedures
 source $env(GISBASE)/etc/gtcltk/gmsg.tcl
