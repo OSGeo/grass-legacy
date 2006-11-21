@@ -56,7 +56,7 @@ gsd_display_fringe (geosurf * surf, unsigned long clr, float elev, int where[4])
     glNormal3fv(Nnorth);
     gsd_color_func(clr);
     gsd_zwritemask(0x0);
-    gsd_fringe_horiz_poly_tess (bot, surf, 0, 0);
+    gsd_fringe_horiz_poly (bot, surf, 0, 0);
     gsd_color_func(FRINGE_FORE); /* WHITE */
     gsd_fringe_horiz_line (bot, surf, 0, 0);
     gsd_zwritemask(0xffffffff);
