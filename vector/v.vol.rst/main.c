@@ -200,8 +200,8 @@ int main (int argc, char *argv[])
     module = G_define_module();
     module->keywords = _("vector");
     module->description =
-      "Interpolates point data to a G3D grid volume using "
-      "regularized spline with tension (RST) algorithm";
+      _("Interpolates point data to a G3D grid volume using "
+      "regularized spline with tension (RST) algorithm");
 
     if (G_get_set_window (&cellhd) == -1)
       G_fatal_error("G_get_set_window() failed"); 
@@ -248,20 +248,14 @@ int main (int argc, char *argv[])
     parm.colnum ->required   = NO ;
     parm.colnum ->description= _("Name of the column containing w attribute to interpolate");
     parm.colnum->answer = "flt1";
-
-    parm.scol = G_define_option();
-    parm.scol->key = "scolumn";
-    parm.scol->type = TYPE_STRING;
-    parm.scol->required = NO;
-    parm.scol->description =
-        _("Name of the column with smoothing parameters");
-                        
+       
     parm.fi = G_define_option ();
     parm.fi->key = "tension";
     parm.fi->type = TYPE_DOUBLE;
     parm.fi->answer = TENSION;
     parm.fi->required = NO;
     parm.fi->description = _("Tension parameter");
+    parm.fi->guisection  = _("Settings");
 
     parm.rsm = G_define_option ();
     parm.rsm->key = "smooth";
@@ -269,6 +263,15 @@ int main (int argc, char *argv[])
     parm.rsm->answer = SMOOTH;
     parm.rsm->required = NO;
     parm.rsm->description = _("Smoothing parameter");
+    parm.rsm->guisection  = _("Settings");
+
+    parm.scol = G_define_option();
+    parm.scol->key = "scolumn";
+    parm.scol->type = TYPE_STRING;
+    parm.scol->required = NO;
+    parm.scol->description =
+        _("Name of the column with smoothing parameters");
+    parm.scol->guisection  = _("Settings");
 
     parm.devi = G_define_option ();
     parm.devi->key = "devi";
@@ -276,6 +279,7 @@ int main (int argc, char *argv[])
     parm.devi->required = NO;
     parm.devi->gisprompt = "new,vector,vector";
     parm.devi->description = _("Output deviations vector point file");
+    parm.devi->guisection  = _("Analysis");
 
     parm.cvdev = G_define_option ();
     parm.cvdev->key = "cvdev";
@@ -283,6 +287,7 @@ int main (int argc, char *argv[])
     parm.cvdev->required = NO;
     parm.cvdev->gisprompt = "new,vector,vector";
     parm.cvdev->description = _("Output cross-validation vector file");
+    parm.cvdev->guisection  = _("Analysis");
 
     parm.maskmap = G_define_option ();
     parm.maskmap->key = "maskmap";
@@ -297,14 +302,7 @@ int main (int argc, char *argv[])
     parm.segmax->answer = MAXSEGM;
     parm.segmax->required = NO;
     parm.segmax->description = _("Maximum number of points in a segment");
-
-    parm.dmin1 = G_define_option ();
-    parm.dmin1->key = "dmin";
-    parm.dmin1->type = TYPE_DOUBLE;
-    parm.dmin1->answer = dminchar;
-    parm.dmin1->required = NO;
-    parm.dmin1->description = 
-        _("Minimum distance between points (to remove almost identical points)");
+    parm.segmax->guisection  = _("Settings");
 
     parm.npmin = G_define_option ();
     parm.npmin->key = "npmin";
@@ -313,13 +311,25 @@ int main (int argc, char *argv[])
     parm.npmin->required = NO;
     parm.npmin->description = 
         _("Minimum number of points for approximation in a segment (>segmax)");
+    parm.npmin->guisection  = _("Settings");
+
+    parm.dmin1 = G_define_option ();
+    parm.dmin1->key = "dmin";
+    parm.dmin1->type = TYPE_DOUBLE;
+    parm.dmin1->answer = dminchar;
+    parm.dmin1->required = NO;
+    parm.dmin1->description = 
+        _("Minimum distance between points (to remove almost identical points)");
+    parm.dmin1->guisection  = _("Settings");
 
     parm.wmult = G_define_option ();
     parm.wmult->key = "wmult";
     parm.wmult->type = TYPE_DOUBLE;
     parm.wmult->answer = ZMULT;
     parm.wmult->required = NO;
-    parm.wmult->description = _("Conversion factor for w-values used for interpolation");
+    parm.wmult->description =
+	_("Conversion factor for w-values used for interpolation");
+    parm.wmult->guisection  = _("Settings");
 
     parm.zmult = G_define_option ();
     parm.zmult->key = "zmult";
@@ -327,6 +337,7 @@ int main (int argc, char *argv[])
     parm.zmult->answer = ZMULT;
     parm.zmult->required = NO;
     parm.zmult->description = _("Conversion factor for z-values");
+    parm.zmult->guisection  = _("Settings");
 
     parm.cellout = G_define_option ();
     parm.cellout->key = "cellout";
@@ -334,6 +345,7 @@ int main (int argc, char *argv[])
     parm.cellout->required = NO;
     parm.cellout->gisprompt = "new,cell,raster";
     parm.cellout->description = _("Output cross-section cell file");
+    parm.cellout->guisection  = _("Output_options");
 
     parm.outz = G_define_option ();
     parm.outz->key = "elev";
@@ -350,6 +362,7 @@ int main (int argc, char *argv[])
     parm.gradient->multiple = NO;
     parm.gradient->gisprompt = "new,grid3,3d raster";
     parm.gradient->description = _("Output gradient magnitude g3d-file");
+    parm.gradient->guisection  = _("Output_options");
 
     parm.aspect1 = G_define_option ();
     parm.aspect1->key = "aspect1";
@@ -358,6 +371,7 @@ int main (int argc, char *argv[])
     parm.aspect1->multiple = NO;
     parm.aspect1->gisprompt = "new,grid3,3d raster";
     parm.aspect1->description = _("Output gradient horizontal angle g3d-file");
+    parm.aspect1->guisection  = _("Output_options");
 
     parm.aspect2 = G_define_option ();
     parm.aspect2->key = "aspect2";
@@ -366,6 +380,7 @@ int main (int argc, char *argv[])
     parm.aspect2->multiple = NO;
     parm.aspect2->gisprompt = "new,grid3,3d raster";
     parm.aspect2->description = _("Output gradient vertical angle g3d-file");
+    parm.aspect2->guisection  = _("Output_options");
 
     parm.ncurv = G_define_option ();
     parm.ncurv->key = "ncurv";
@@ -374,6 +389,7 @@ int main (int argc, char *argv[])
     parm.ncurv->multiple = NO;
     parm.ncurv->gisprompt = "new,grid3,3d raster";
     parm.ncurv->description = _("Output change of gradient g3d-file");
+    parm.ncurv->guisection  = _("Output_options");
 
     parm.gcurv = G_define_option ();
     parm.gcurv->key = "gcurv";
@@ -382,6 +398,7 @@ int main (int argc, char *argv[])
     parm.gcurv->multiple = NO;
     parm.gcurv->gisprompt = "new,grid3,3d raster";
     parm.gcurv->description = _("Output gaussian curvature g3d-file");
+    parm.gcurv->guisection  = _("Output_options");
 
     parm.mcurv = G_define_option ();
     parm.mcurv->key = "mcurv";
@@ -390,6 +407,7 @@ int main (int argc, char *argv[])
     parm.mcurv->multiple = NO;
     parm.mcurv->gisprompt = "new,grid3,3d raster";
     parm.mcurv->description = _("Output mean curvature g3d-file");
+    parm.mcurv->guisection  = _("Output_options");
 
     flag.cv = G_define_flag ();
     flag.cv->key = 'c';
