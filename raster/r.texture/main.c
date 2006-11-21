@@ -69,24 +69,19 @@ main(int argc, char *argv[])
 
 	module = G_define_module();
 	module->keywords = _("raster");
-    module->description =
-		_("Generate images with textural features from a raster map");
+	module->description =
+	    _("Generate images with textural features from a raster map");
 					        
 	/* Define the different options */
 
-	input = G_define_option() ;
-	input->key        = "input";
-	input->type       = TYPE_STRING;
-	input->required   = YES;
-	input->gisprompt  = "old,cell,raster" ;
-	input->description= _("Name of the input raster map") ;
+	input  = G_define_standard_option(G_OPT_R_INPUT);
 
 	output = G_define_option() ;
 	output->key        = "prefix";
 	output->type       = TYPE_STRING;
 	output->required   = YES;
 	output->gisprompt  = "new,cell,raster" ;
-	output->description= _("Name of the ouput raster map");
+	output->description= _("Prefix for the ouput raster map(s)");
 
 	size_O = G_define_option() ;
 	size_O->key        = "size";
@@ -105,75 +100,91 @@ main(int argc, char *argv[])
 	dist_O->description= _("The distance between two samples (>= 1)");
 
 	/* Define the different flags */
-
-	flag0 = G_define_flag() ;
-	flag0->key         = 'N' ;
-	flag0->description = _("Normalized") ;
-
 	flag1 = G_define_flag() ;
 	flag1->key         = 'q' ;
 	flag1->description = _("Quiet") ;
 
+	/* "Normalized" unused in the code ??? */
+	flag0 = G_define_flag() ;
+	flag0->key         = 'N' ;
+	flag0->description = _("Normalized") ;
+	flag0->guisection  = _("Features");
+
 	flag2 = G_define_flag();
 	flag2->key         = 'a';
 	flag2->description = _("Angular Second Moment") ;
+	flag2->guisection  = _("Features");
 
 	flag3 = G_define_flag();
 	flag3->key         = 'c';
 	flag3->description = _("Contrast") ;
+	flag3->guisection  = _("Features");
 
 	flag4 = G_define_flag();
 	flag4->key         = 'k' ;
 	flag4->description = _("Correlation") ;
+	flag4->guisection  = _("Features");
 
 	flag5 = G_define_flag();
 	flag5->key         = 'v' ;
 	flag5->description = _("Variance") ;
+	flag5->guisection  = _("Features");
 
 	flag6 = G_define_flag();
 	flag6->key         = 'i';
 	flag6->description = _("Inverse Diff Moment") ;
+	flag6->guisection  = _("Features");
 
 	flag7 = G_define_flag();
 	flag7->key         = 's';
 	flag7->description = _("Sum Average") ;
+	flag7->guisection  = _("Features");
 
 	flag8 = G_define_flag();
 	flag8->key         = 'w';
 	flag8->description = _("Sum Variance") ;
+	flag8->guisection  = _("Features");
 
 	flag9 = G_define_flag();
 	flag9->key         = 'x';
 	flag9->description = _("Sum Entropy") ;
+	flag9->guisection  = _("Features");
 
 	flag10 = G_define_flag();
 	flag10->key         = 'e' ;
 	flag10->description = _("Entropy") ;
+	flag10->guisection  = _("Features");
 
 	flag11 = G_define_flag();
 	flag11->key         = 'd';
 	flag11->description = _("Difference Variance") ;
+	flag11->guisection  = _("Features");
 
 	flag12 = G_define_flag();
 	flag12->key         = 'p';
 	flag12->description = _("Difference Entropy") ;
+	flag12->guisection  = _("Features");
 
 	flag13 = G_define_flag();
 	flag13->key         = 'm';
 	flag13->description = _("Measure of Correlation-1") ;
-
+	flag13->guisection  = _("Features");
 
 	flag14 = G_define_flag();
 	flag14->key         = 'n';
 	flag14->description = _("Measure of Correlation-2") ;
+	flag14->guisection  = _("Features");
 
 	flag15 = G_define_flag();
 	flag15->key         = 'o';
 	flag15->description = _("Max Correlation Coeff") ;
+	flag15->guisection  = _("Features");
+
 
 	if (G_parser(argc, argv))
-		exit (-1);
+	    exit(EXIT_FAILURE);
 		
+
 	name    = input->answer;
 	result  = output->answer;
 	verbose = (! flag1->answer);
@@ -198,19 +209,19 @@ main(int argc, char *argv[])
 	/* find map in mapset */
 	mapset = G_find_cell2 (name, "");
         if (mapset == NULL)
-                G_fatal_error ("cell file [%s] not found", name);
+	    G_fatal_error(_("cell file [%s] not found"), name);
 
         if (G_legal_filename (result) < 0)
-                G_fatal_error ("[%s] is an illegal name", result);
+	    G_fatal_error(_("[%s] is an illegal name"), result);
 
 	if ( (infd = G_open_cell_old (name, mapset)) < 0)
-		G_fatal_error ("Cannot open cell file [%s]", name);
+	    G_fatal_error(_("Cannot open cell file [%s]"), name);
 
 	/* determine the inputmap type (CELL/FCELL/DCELL) */
 	data_type = G_get_raster_map_type(infd);
 
 	if (G_get_cellhd (name, mapset, &cellhd) < 0)
-		G_fatal_error ("Cannot read file header of [%s]", name);
+	    G_fatal_error(_("Cannot read file header of [%s]"), name);
 
 	out_data_type=FCELL_TYPE;
 	/* Allocate output buffer, use FCELL data_type */
@@ -230,11 +241,11 @@ main(int argc, char *argv[])
   {
     data[i] = (int *) G_malloc (ncols * sizeof (int));
     if (data[i] == NULL)
-      G_fatal_error ("Insufficent memory for allocation of data structure");
+	G_fatal_error(_("Insufficent memory for allocation of data structure"));
   }
 
   /* Read in cell map values */
-  fprintf (stderr, "Reading the raster map...");
+  G_message(_("Reading the raster map..."));
   for (j = 0; j < nrows; j++)
   {
     G_get_raster_row (infd, cell_row, j, CELL_TYPE);
@@ -245,7 +256,7 @@ main(int argc, char *argv[])
   /* close input cell map and release the row buffer */
   G_close_cell (infd);
   G_free (cell_row);
-  fprintf (stderr, "done\n");
+  G_message(_("  ...done"));
 
 /* Now raster map is into memory. */
 
@@ -280,7 +291,7 @@ for (t_measure=0; t_measure < 56; t_measure++)
 		|| (t_measure==52 && mcc)) t_measure+=3; 
      else {
 	if ((outfd=G_open_raster_new (strcat (filename, suffixes[t_measure]), out_data_type) ) < 0)
-		G_fatal_error ("Could not open <%s>", result) ;
+	    G_fatal_error(_("Could not open <%s>"), result);
 	*result='\0';
 
 	for (row = 0; row < nrows-(size-1); row++)
@@ -326,23 +337,23 @@ for (t_measure=0; t_measure < 56; t_measure++)
 		if (row==0)
 		for (j=0; j < (size/2); j++)
 		   if (G_put_raster_row (outfd, outrast, out_data_type) < 0)
-			G_fatal_error ("Cannot write to <%s>",result);
+			G_fatal_error(_("Cannot write to <%s>"), result);
 
 		if (G_put_raster_row (outfd, outrast, out_data_type) < 0)
-		     G_fatal_error ("Cannot write to <%s>",result);
+		     G_fatal_error(_("Cannot write to <%s>"), result);
 	}
 	/* The last few (size/2) samples take value from nrows-(size/2+1)'th sample */
 	if ((row>=nrows-(size-1)) && (row<nrows))
 	   for (j=0; j < (size/2); j++)
 		   if (G_put_raster_row(outfd, outrast, out_data_type) < 0)
-			G_fatal_error ("Cannot write to <%s>",result);
+			G_fatal_error(_("Cannot write to <%s>"), result);
 
 	G_close_cell (outfd);
-	fprintf (stdout, "Calculated measure #%d (56 measures available).\n", (t_measure+1));
+	fprintf (stdout, _("Calculated measure #%d (56 measures available).\n"), (t_measure+1));
 }
    G_free(outrast); 
    G_free (data);
-   fprintf (stderr, "Calculations complete\n");
-   return 0;
-}
 
+   G_done_msg("");
+   exit(EXIT_SUCCESS);
+}
