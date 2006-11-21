@@ -30,8 +30,6 @@
 # procedure to make main control area
 ###########################################################################
 
-lappend auto_path $env(GISBASE)/bwidget
-package require BWidget
 source $src_boot/etc/nviz2.2/scripts/config.tcl
 
 
