@@ -1,0 +1,18 @@
+MODULE_TOPDIR = ../../..
+
+PGM = r.li.patchAreaDistributionSD
+
+EXTRA_CLEAN_DIRS=doxygenhtml
+
+LIB_NAME      = libr_li
+
+RLI_LIB = -l$(LIB_NAME)
+
+LIBES = $(GISLIB) $(RLI_LIB)
+
+DEPENDENCIES = $(GISDEP) $(LIB_NAME )
+
+include $(MODULE_TOPDIR)/include/Make/Module.make
+
+default: cmd
+
