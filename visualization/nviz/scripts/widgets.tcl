@@ -133,6 +133,7 @@ proc Nv_scaleCallback { S {who s} {decimal 0} {cmd null} {val 0} } {
 }
 
 proc Nv_floatscaleCallback { S {who s} {decimal 0} {cmd null} {val 0} } {
+	# CMB Nov. 2006: As far as I can tell, decimal is completely ignored.
 	#Scale
 	if {$who == "s"} {
 		set num [llength [split [expr int($val * 1)] ""]]
