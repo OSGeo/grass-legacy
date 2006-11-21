@@ -1,8 +1,11 @@
 /*
- *   Author: Serena Pallecchi
+ *   \AUTHOR: Serena Pallecchi student of Computer Science University of Pisa (Italy)
+ *			Commission from Faunalia Pontedera (PI) www.faunalia.it
  *
  *   This program is free software under the GPL (>=v2)
  *   Read the COPYING file that comes with GRASS for details.
+ *	 
+ *	 BUGS: please send bugs reports to pallecch@cli.di.unipi.it
  *
  */
  
@@ -57,13 +60,17 @@ char ** split_arg(char *linea, char separatore, long *numerotoken)
     /* copy string */
     copialinea = (char *) G_malloc( strlen(linea) + 1 );
     if (copialinea==NULL)
+    {
 	return NULL;
+    }
     strcpy(copialinea, linea);
     
     
     argv = (char **) G_malloc(sizeof(char *));
     if (argv==NULL)
+    {
 	return NULL;
+    }
     
     num=0;
     for(it=0;it<strlen(copialinea);it++)
@@ -86,8 +93,10 @@ char ** split_arg(char *linea, char separatore, long *numerotoken)
 	    {
 		i++;
 		argv[i-1]=G_malloc(sizeof(char));
-		if (argv[i-1])
+		if (argv[i-1]==NULL)
+		{
 		    return NULL;
+		}
 	    }
 	    else
 	    {

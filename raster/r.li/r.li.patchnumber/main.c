@@ -1,13 +1,15 @@
-
 /*
- * \brief calculates patch number index
+ * \brief calculates patch  number  index
  *
- *   Author: Claudio Porta and Lucio Davide Spano
+ *   Author: Claudio Porta and Lucio Davide Spano students of Computer Science University of Pisa (Italy)
+ *			Commission from Faunalia Pontedera (PI) www.faunalia.it
  *
  *   This program is free software under the GPL (>=v2)
  *   Read the COPYING file that comes with GRASS for details.
  *
+ *  BUGS: please send bugs reports to  spano@cli.di.unipi.it, porta@cli.di.unipi.it
  */
+
 
 #include <stdlib.h>
 #include <fcntl.h>
@@ -48,11 +50,9 @@ int main(int argc, char *argv[]){
 int patch_number(int fd, char ** par, area_des ad, double *result){
 	CELL *buf, *sup;
 	int count=0, i,j, connected=0, complete_line=1, other_above=0;
-//	double area;
-	char *mapset/*, c[150]*/;
+	char *mapset;
 	struct Cell_head hd;
 	CELL complete_value;
-//	double EW_DIST1,EW_DIST2,NS_DIST1,NS_DIST2;
 	int mask_fd=-1, *mask_buf, *mask_sup, null_count=0;
 	
 	G_set_c_null_value(&complete_value, 1);

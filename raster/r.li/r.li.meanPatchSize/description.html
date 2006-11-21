@@ -1,13 +1,11 @@
 <h2>DESCRIPTION</h2>
 <em>r.li.meanPatchSize</em> 
-calculates the mean size of the patches in the sampling area as:
-
-<img alt="" src="rliMeanPatchSize_formula.png"
- style="width: 184px; height: 56px;"><br>
+calculates the mean size of the patches in the sampling area as:<br>
+<img src="rliMeanPatchSize_formula.png"><br>
 
 with:
 <ul>
-  <li><b>A</b>:sampling area size </li>
+  <li><b>A</b>:sampling area size without null cells</li>
   <li><b>Npatch</b>: number of patches<br>
   </li>
 </ul>
@@ -17,7 +15,7 @@ with:
 To calculate mean path size index on map my_map, using
 my_conf configuration file and saving results in
 my_out file run:<br>
-<b>r.li.simpson map=</b>my_map <b>conf=</b>my_conf <b>output=</b>my_out<br>
+<b>r.li.meanPatchSize map=</b>my_map <b>conf=</b>my_conf <b>output=</b>my_out<br>
 
 
 <h2>NOTES</h2>
@@ -35,14 +33,15 @@ after index calculation.
 <h2>SEE ALSO</h2>
 <em>
 <a href="r.li.html">r.li</a>
+<a href="r.le.html">r.le</a>
 </em>
 
 
 <h2>AUTHORS</h2>
 Serena Pallecchi student of Computer Science University of Pisa (Italy).<br>
-Commission from Faunalia Pontedera (PI), Italy
+Commission from Faunalia Pontedera (PI), Italy (www.faunalia.it)
 
 
 <h2>BUGS</h2>
-Please send bugs reports to <a href="mailto:pallecch@cli.di.unipi.it">pallecch@cli.di.unipi.it</a>
-
+Please send bugs reports to 
+<a href="mailto:pallecch@cli.di.unipi.it">pallecch@cli.di.unipi.it</a><br>

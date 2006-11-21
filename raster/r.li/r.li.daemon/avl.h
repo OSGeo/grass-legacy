@@ -1,19 +1,29 @@
+/*
+ * \AUTHOR: Serena Pallecchi student of Computer Science University of Pisa (Italy)
+ *			Commission from Faunalia Pontedera (PI) www.faunalia.it
+ *
+ *   This program is free software under the GPL (>=v2)
+ *   Read the COPYING file that comes with GRASS for details.
+ *	 
+ *	 \BUGS: please send bugs reports to pallecch@cli.di.unipi.it
+ */
+
 #ifndef AVL_H
 #define AVL_H
 
 #include "GenericCell.h"
 
 typedef struct avl_node{
-    generic_cell key; /* il campo key e' costituito da un valore che puo' essere CELL, DCELL o FCELL */
-    long counter; /* il dato contenuto nel nodo e' un intero che serve da contatore */
-    struct avl_node *father; /* puntatore al padre */
-    struct avl_node *right_child; /* puntatore al figlio destro */
-    struct avl_node *left_child; /* puntatore al figlio sinistro */
+    generic_cell key; /* key field is a CELL or a DCELL or a FCELL */
+    long counter; /* data */
+    struct avl_node *father; 
+    struct avl_node *right_child; 
+    struct avl_node *left_child; 
 }avl_node;
 
 typedef avl_node*  avl_tree;
 
-/*tabella*/
+/*table*/
 typedef struct AVL_tableRow{
     generic_cell k;
     long tot;
@@ -21,7 +31,7 @@ typedef struct AVL_tableRow{
 
 typedef AVL_tableRow* AVL_table;
 
-/* prototipi delle funzioni */
+/* prototype of functions */
 avl_tree avl_make( const generic_cell k, const long n);
 avl_node * avl_find(const avl_tree root, const generic_cell k);
 int avl_add(avl_tree *root, const generic_cell k, const long n);

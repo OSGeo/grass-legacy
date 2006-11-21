@@ -1,4 +1,12 @@
-
+/*
+* \AUTHOR: Serena Pallecchi student of Computer Science University of Pisa (Italy)
+ *			Commission from Faunalia Pontedera (PI) www.faunalia.it
+ *
+ *   This program is free software under the GPL (>=v2)
+ *   Read the COPYING file that comes with GRASS for details.
+ *	 
+ *	 \BUGS: please send bugs reports to pallecch@cli.di.unipi.it
+ */
 #define AVL_S 1
 #define AVL_D 2
 #define AVL_SS 11
@@ -7,8 +15,8 @@
 #define AVL_DS 21
 
 
-#define PRES 0
-#define ADD 1
-#define ERR -1
+#define AVL_PRES 0
+#define AVL_ADD 1
+#define AVL_ERR -1
 
  

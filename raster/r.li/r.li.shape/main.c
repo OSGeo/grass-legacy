@@ -1,11 +1,13 @@
  /*
  * \brief calculates shape index
  *
- *   Author: Claudio Porta and Lucio Davide Spano
+ *   Author: Claudio Porta and Lucio Davide Spano students of Computer Science University of Pisa (Italy)
+ *			Commission from Faunalia Pontedera (PI) www.faunalia.it
  *
  *   This program is free software under the GPL (>=v2)
  *   Read the COPYING file that comes with GRASS for details.
- *
+ * 
+ *  BUGS: please send bugs reports to  spano@cli.di.unipi.it, porta@cli.di.unipi.it
  */
 
 #include <stdlib.h>

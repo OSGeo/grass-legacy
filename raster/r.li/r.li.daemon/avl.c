@@ -1,3 +1,12 @@
+/*
+ *	\AUTHOR: Serena Pallecchi student of Computer Science University of Pisa (Italy)
+ *			Commission from Faunalia Pontedera (PI) www.faunalia.it
+ *
+ *   This program is free software under the GPL (>=v2)
+ *   Read the COPYING file that comes with GRASS for details.
+ *	 
+ *	 \BUGS: please send bugs reports to pallecch@cli.di.unipi.it
+*/
 #include <grass/gis.h>
 #include <grass/glocale.h>
 
@@ -89,7 +98,7 @@ int avl_add(avl_tree *root, const generic_cell k, const long n)
     if ((root==NULL) || (*root==NULL)) 
     {
 	G_fatal_error("\navl.c: avl_add: param NULL");
-	return ERR;
+	return AVL_ERR;
     }
     
     
@@ -99,14 +108,14 @@ int avl_add(avl_tree *root, const generic_cell k, const long n)
     if(node_temp != NULL) 
     {
     	node_temp->counter=node_temp->counter+n;
-    	return PRES; 
+    	return AVL_PRES; 
     }
     
     node_temp = avl_make(k,n);
     if(node_temp ==NULL) 
     {
 	G_fatal_error("\navl.c:  avl_add: create node error");
-	return ERR; 
+	return AVL_ERR; 
     }
     
     
@@ -127,14 +136,14 @@ int avl_add(avl_tree *root, const generic_cell k, const long n)
 	{
 	    G_free(node_temp);
 	    G_fatal_error("avl.c: avl_add: new node position unknown");
-	    return ERR; 
+	    return AVL_ERR; 
 	}
     }
     
     /* if it's necessary balance the tree */
     critical= critical_node( node_temp, &pos1, &pos2, NULL) ;
     if( critical == NULL) 
-  	return ADD;     
+  	return AVL_ADD;     
     rotation= (pos1 * 10) + pos2; 
     
     switch( rotation )
@@ -144,14 +153,14 @@ int avl_add(avl_tree *root, const generic_cell k, const long n)
 	case AVL_DS: avl_rotation_rl( critical ); break;
 	case AVL_DD: avl_rotation_rr( critical ); break;
 	default: G_fatal_error("avl, avl_add: balancing error\n");
-	    return ERR;
+	    return AVL_ERR;
     }
 
     /* if after rotation the root is changed modufy the pointer to the root */
     while ( (*root)->father != NULL )
 	*root = (*root)->father;
     
-    return ADD;
+    return AVL_ADD;
 }
 
 
@@ -195,22 +204,27 @@ static avl_node *avl_individua( const avl_tree root, const generic_cell k, avl_n
     
     switch (ris)
     {
-	case EQUAL:
+	case GC_EQUAL:
 	{  
 	    return root; 
 	    break;
 	}
-	case HIGHER:
+	case GC_HIGHER:
 	{
 	    *father = root;
 	    *direction = -1;
 	    return avl_individua(root->left_child, k, father, direction);
   	}
-  	case LOWER:
+  	case GC_LOWER:
   	{  
 	    *father = root;
 	    *direction = 1;
 	    return avl_individua(root->right_child, k, father, direction);
+  	}
+  	case GC_DIFFERENT_TYPE:
+  	{  
+  		 G_fatal_error("\avl.c: avl_individua: different type");
+	    return NULL;
   	}
 	default:
 	{

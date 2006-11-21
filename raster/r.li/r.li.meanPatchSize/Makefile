@@ -2,10 +2,17 @@ MODULE_TOPDIR = ../../..
 
 PGM = r.li.meanPatchSize
 
-LIBES = $(GISLIB) -L../r.li.daemon -lr_li
-DEPENDENCIES = $(GISDEP) ../r.li.daemon/libr_li.a
+EXTRA_CLEAN_DIRS=doxygenhtml
 
+LIB_NAME      = libr_li
+
+RLI_LIB = -l$(LIB_NAME)
+
+LIBES = $(GISLIB) $(RLI_LIB)
+
+DEPENDENCIES = $(GISDEP) $(LIB_NAME )
 
 include $(MODULE_TOPDIR)/include/Make/Module.make
 
 default: cmd
+

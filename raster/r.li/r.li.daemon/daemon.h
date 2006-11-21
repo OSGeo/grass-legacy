@@ -23,7 +23,7 @@
 /**
  * \brief number of r.li.workers to use
  */
-#define WORKERS 5
+#define WORKERS 10
 #define NORMAL 1
 #define MVWIN 2
 #define GEN 3

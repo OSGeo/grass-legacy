@@ -1,10 +1,13 @@
 /*
  * \brief calculates edge density index
  *
- *   Author: Serena Pallecchi
- * 
+ *  AUTHOR: Serena Pallecchi student of Computer Science University of Pisa (Italy)
+ *			Commission from Faunalia Pontedera (PI) www.faunalia.it
+ *
  *   This program is free software under the GPL (>=v2)
  *   Read the COPYING file that comes with GRASS for details.
+ *	 
+ *	 BUGS: please send bugs reports to  pallecch@cli.di.unipi.it
  */
 
 #include <grass/gis.h>
@@ -18,7 +21,6 @@
 #include "../r.li.daemon/avlDefs.h"
 #include "../r.li.daemon/avl.h"
 #include "../r.li.daemon/daemon.h"
-
 
 int calculate(int fd, area_des ad, char ** valore,double *result);
 int calculateD(int fd, area_des ad, char ** valore,double *result);
@@ -49,10 +51,10 @@ int main(int argc, char *argv[])
     
     class = G_define_option();
     class->key    = "patch_type";
-    class->type   = TYPE_INTEGER;
+    class->type   = TYPE_STRING;
     class->required   = NO;
     class->multiple   = NO;
-    class->description= "The value of the patch type";
+    class->description= "The value of the patch type, it can be integer, double or float; it will be changed in function of map type";
 
     
     if (G_parser(argc, argv))
@@ -82,7 +84,7 @@ int edgedensity(int fd, char ** valore, area_des ad, double *result)
     mapset = G_find_cell(ad->raster, "");
 
     if (G_get_cellhd(ad->raster, mapset, &hd) == - 1)
-	return ERRORE;
+	return RLI_ERRORE;
     
      
     switch(ad->data_type)
@@ -105,17 +107,17 @@ int edgedensity(int fd, char ** valore, area_des ad, double *result)
 	    default:
 	    {
 		G_fatal_error("data type unknown");
-		return ERRORE;
+		return RLI_ERRORE;
 		}
     }
-    if(ris!=OK)
+    if(ris!=RLI_OK)
     {
-	    return ERRORE;
+	    return RLI_ERRORE;
     }
      
     *result=indice;
     
-    return OK;  
+    return RLI_OK;  
 }
 
 
@@ -153,21 +155,21 @@ int calculate(int fd,area_des ad, char ** valore,double *result)
 		if ( (mask_fd = open(ad->mask_name, O_RDONLY, 0755)) < 0)
 		{
 			G_fatal_error("can't  open mask");
-			return ERRORE;
+			return RLI_ERRORE;
 		}
 	
 		mask_corr = G_malloc(ad->cl * sizeof(int));
 		if (mask_corr==NULL)
 		{ 
 			G_fatal_error("malloc mask_corr failed");
-			return ERRORE;
+			return RLI_ERRORE;
 		}
 		
 		mask_inf = G_malloc(ad->cl * sizeof(int));
 		if (mask_inf==NULL)
 		{
 			G_fatal_error("malloc mask_inf failed");
-			return ERRORE;
+			return RLI_ERRORE;
 		}
 	
 		masked=TRUE;
@@ -177,7 +179,7 @@ int calculate(int fd,area_des ad, char ** valore,double *result)
 	if (buf_sup==NULL)
 	{
 		G_fatal_error("malloc buf_sup failed");
-		return ERRORE;
+		return RLI_ERRORE;
 	}
    
 	G_set_c_null_value(buf_sup+ad->x,ad->cl); /*the first time buf_sup is all null*/
@@ -202,20 +204,18 @@ int calculate(int fd,area_des ad, char ** valore,double *result)
 			if(buf_inf==NULL)
 			{
 				G_fatal_error("malloc buf_inf failed");
-				return ERRORE;
+				return RLI_ERRORE;
 			}
 			G_set_c_null_value(buf_inf+ad->x,ad->cl);
 		}
 
 		/*read mask if needed*/
 		if (masked)
-		{
-			printf("MASK");/*TODO to delete*/
-	    	   
+		{ 	   
 			if(read(mask_fd,mask_corr,(ad->cl * sizeof (int)))<0)
 			{
 				G_fatal_error("reading mask_corr");
-				return ERRORE;
+				return RLI_ERRORE;
 			}
 	   
 	    
@@ -224,7 +224,7 @@ int calculate(int fd,area_des ad, char ** valore,double *result)
 				if(read(mask_fd,mask_inf,(ad->cl * sizeof (int)))<0)
 				{ 
 					G_fatal_error("reading mask_inf");
-					return ERRORE;
+					return RLI_ERRORE;
 				}
 			}
 			else
@@ -302,7 +302,7 @@ int calculate(int fd,area_des ad, char ** valore,double *result)
 					if (albero==NULL)
 					{
 						G_fatal_error("avl_make error");
-						return ERRORE;
+						return RLI_ERRORE;
 					}
 					m++;
 				}
@@ -313,24 +313,24 @@ int calculate(int fd,area_des ad, char ** valore,double *result)
 		    
 					switch(ris)
 					{
-						case ERR:
+						case AVL_ERR:
 						{
 							G_fatal_error("avl_add error");
-							return ERRORE;
+							return RLI_ERRORE;
 						}
-						case ADD:
+						case AVL_ADD:
 						{
 							m++;
 							break;
 						}
-						case PRES:
+						case AVL_PRES:
 						{
 							break;
 						}
 						default:
 						{
 							G_fatal_error("avl_add unknown error");
-							return ERRORE;
+							return RLI_ERRORE;
 						}
 					}
 				}
@@ -353,9 +353,9 @@ int calculate(int fd,area_des ad, char ** valore,double *result)
 	}
 	
 	
-	/* calcolo dell'indice */
+	/* calculate index */
 	if(area==0)
-		indice=0;
+		indice=-1;
 	else
 	{
 
@@ -365,7 +365,7 @@ int calculate(int fd,area_des ad, char ** valore,double *result)
 			int val;
 			CELL cella;
 			
-			sval=*valore;
+			sval=valore[0];
 			val=atoi(sval);
 			cella=val;
 			c1.t=CELL_TYPE;
@@ -381,7 +381,7 @@ int calculate(int fd,area_des ad, char ** valore,double *result)
 			if(array==NULL)
 			{
 				G_fatal_error("malloc array failed");
-				return ERRORE;
+				return RLI_ERRORE;
 			}
 			tot=avl_to_array(albero,zero,array);
 			if(tot!=m)
@@ -405,7 +405,7 @@ int calculate(int fd,area_des ad, char ** valore,double *result)
 	G_free(mask_inf);
 	G_free(mask_corr);
 	}
-	return OK;
+	return RLI_OK;
 }
 
 int calculateD(int fd,area_des ad, char ** valore,double *result)
@@ -442,21 +442,21 @@ int calculateD(int fd,area_des ad, char ** valore,double *result)
 		if ( (mask_fd = open(ad->mask_name, O_RDONLY, 0755)) < 0)
 		{
 			G_fatal_error("can't  open mask");
-			return ERRORE;
+			return RLI_ERRORE;
 		}
 	
 		mask_corr = G_malloc(ad->cl * sizeof(int));
 		if (mask_corr==NULL)
 		{ 
 			G_fatal_error("malloc mask_corr failed");
-			return ERRORE;
+			return RLI_ERRORE;
 		}
 		
 		mask_inf = G_malloc(ad->cl * sizeof(int));
 		if (mask_inf==NULL)
 		{
 			G_fatal_error("malloc mask_inf failed");
-			return ERRORE;
+			return RLI_ERRORE;
 		}
 	
 		masked=TRUE;
@@ -466,7 +466,7 @@ int calculateD(int fd,area_des ad, char ** valore,double *result)
 	if (buf_sup==NULL)
 	{
 		G_fatal_error("malloc buf_sup failed");
-		return ERRORE;
+		return RLI_ERRORE;
 	}
    
 	G_set_d_null_value(buf_sup+ad->x,ad->cl); /*the first time buf_sup is all null*/
@@ -489,10 +489,10 @@ int calculateD(int fd,area_des ad, char ** valore,double *result)
 		else
 		{
 			buf_inf=G_allocate_d_raster_buf ();
-			if (mask_inf==NULL)
+			if (buf_inf==NULL)
 			{
-				G_fatal_error("malloc mask_inf failed");
-				return ERRORE;
+				G_fatal_error("malloc buf_inf failed");
+				return RLI_ERRORE;
 			}
 
 			G_set_d_null_value(buf_inf+ad->x,ad->cl);
@@ -501,13 +501,11 @@ int calculateD(int fd,area_des ad, char ** valore,double *result)
 		/*read mask if needed*/
 		if (masked)
 		{
-			printf("MASK");/*TODO to delete*/
-	    
-	   
+				   
 			if(read(mask_fd,mask_corr,(ad->cl * sizeof (int)))<0)
 			{
 				G_fatal_error("reading mask_corr");
-				return ERRORE;
+				return RLI_ERRORE;
 			}
 	   
 	    
@@ -516,7 +514,7 @@ int calculateD(int fd,area_des ad, char ** valore,double *result)
 				if(read(mask_fd,mask_inf,(ad->cl * sizeof (int)))<0)
 				{ 
 					G_fatal_error("reading mask_inf");
-					return ERRORE;
+					return RLI_ERRORE;
 				}
 			}
 			else
@@ -598,7 +596,7 @@ int calculateD(int fd,area_des ad, char ** valore,double *result)
 					if (albero==NULL)
 					{
 						G_fatal_error("avl_make error");
-						return ERRORE;
+						return RLI_ERRORE;
 					}
 					m++;
 				}
@@ -609,24 +607,24 @@ int calculateD(int fd,area_des ad, char ** valore,double *result)
 		    
 					switch(ris)
 					{
-						case ERR:
+						case AVL_ERR:
 						{
 							G_fatal_error("avl_add error");
-							return ERRORE;
+							return RLI_ERRORE;
 						}
-						case ADD:
+						case AVL_ADD:
 						{
 							m++;
 							break;
 						}
-						case PRES:
+						case AVL_PRES:
 						{
 							break;
 						}
 						default:
 						{
 							G_fatal_error("avl_add unknown error");
-							return ERRORE;
+							return RLI_ERRORE;
 						}
 					}
 				}
@@ -649,22 +647,23 @@ int calculateD(int fd,area_des ad, char ** valore,double *result)
 	}
 	
 	
-	/* calcolo dell'indice */
+	/* calculate index */
 	if(area==0)
-		indice=0;
+		indice=-1;
 	else
 	{
 
 		if (valore!=NULL) /* only 1 class*/
 		{
 			char * sval;
-			int val;
+			double val;
 			DCELL cella;
 			
-			sval=*valore;
+			sval=valore[0];
 			val=(double)atof(sval);
 			cella=val;
-			c1.val.c=cella;
+			c1.val.dc=cella;
+			c1.t=DCELL_TYPE;
 			e=(double) howManyCell(albero,c1);
 			somma=e;
 	    
@@ -675,7 +674,7 @@ int calculateD(int fd,area_des ad, char ** valore,double *result)
 			if(array==NULL)
 			{
 				G_fatal_error("malloc array failed");
-				return ERRORE;
+				return RLI_ERRORE;
 			}
 			tot=avl_to_array(albero,zero,array);
 			if(tot!=m)
@@ -698,7 +697,7 @@ int calculateD(int fd,area_des ad, char ** valore,double *result)
 	G_free(mask_inf);
 	G_free(mask_corr);
 	}
-	return OK;
+	return RLI_OK;
 }
 
 int calculateF(int fd,area_des ad, char ** valore,double *result)
@@ -734,21 +733,21 @@ int calculateF(int fd,area_des ad, char ** valore,double *result)
 		if ( (mask_fd = open(ad->mask_name, O_RDONLY, 0755)) < 0)
 		{
 			G_fatal_error("can't  open mask");
-			return ERRORE;
+			return RLI_ERRORE;
 		}
 	
 		mask_corr = G_malloc(ad->cl * sizeof(int));
 		if (mask_corr==NULL)
 		{ 
 			G_fatal_error("malloc mask_corr failed");
-			return ERRORE;
+			return RLI_ERRORE;
 		}
 		
 		mask_inf = G_malloc(ad->cl * sizeof(int));
 		if (mask_inf==NULL)
 		{
 			G_fatal_error("malloc mask_inf failed");
-			return ERRORE;
+			return RLI_ERRORE;
 		}
 	
 		masked=TRUE;
@@ -758,7 +757,7 @@ int calculateF(int fd,area_des ad, char ** valore,double *result)
 	if (buf_sup==NULL)
 	{
 		G_fatal_error("malloc buf_sup failed");
-		return ERRORE;
+		return RLI_ERRORE;
 	}
    
 	G_set_f_null_value(buf_sup+ad->x,ad->cl); /*the first time buf_sup is all null*/
@@ -784,7 +783,7 @@ int calculateF(int fd,area_des ad, char ** valore,double *result)
 					if (mask_inf==NULL)
 		{
 			G_fatal_error("malloc mask_inf failed");
-			return ERRORE;
+			return RLI_ERRORE;
 		}
 
 			G_set_f_null_value(buf_inf+ad->x,ad->cl);
@@ -793,13 +792,11 @@ int calculateF(int fd,area_des ad, char ** valore,double *result)
 		/*read mask if needed*/
 		if (masked)
 		{
-			printf("MASK");/*TODO to delete*/
-	    
-	   
+				   
 			if(read(mask_fd,mask_corr,(ad->cl * sizeof (int)))<0)
 			{
 				G_fatal_error("reading mask_corr");
-				return ERRORE;
+				return RLI_ERRORE;
 			}
 	   
 	    
@@ -808,7 +805,7 @@ int calculateF(int fd,area_des ad, char ** valore,double *result)
 				if(read(mask_fd,mask_inf,(ad->cl * sizeof (int)))<0)
 				{ 
 					G_fatal_error("reading mask_inf");
-					return ERRORE;
+					return RLI_ERRORE;
 				}
 			}
 			else
@@ -887,7 +884,7 @@ int calculateF(int fd,area_des ad, char ** valore,double *result)
 					if (albero==NULL)
 					{
 						G_fatal_error("avl_make error");
-						return ERRORE;
+						return RLI_ERRORE;
 					}
 					m++;
 				}
@@ -898,24 +895,24 @@ int calculateF(int fd,area_des ad, char ** valore,double *result)
 		    
 					switch(ris)
 					{
-						case ERR:
+						case AVL_ERR:
 						{
 							G_fatal_error("avl_add error");
-							return ERRORE;
+							return RLI_ERRORE;
 						}
-						case ADD:
+						case AVL_ADD:
 						{
 							m++;
 							break;
 						}
-						case PRES:
+						case AVL_PRES:
 						{
 							break;
 						}
 						default:
 						{
 							G_fatal_error("avl_add unknown error");
-							return ERRORE;
+							return RLI_ERRORE;
 						}
 					}
 				}
@@ -940,21 +937,21 @@ int calculateF(int fd,area_des ad, char ** valore,double *result)
 	
 	/* calculate index */
 	if(area==0)
-		indice=0;
+		indice=-1;
 	else
 	{
 
 		if (valore!=NULL) /* only 1 class*/
 		{
 			char * sval;
-			int val;
+			float val;
 			FCELL cella;
 			
-			sval=*valore;
+			sval=valore[0];
 			val=(float)atof(sval);
 			cella=val;
 			c1.t=FCELL_TYPE;
-			c1.val.c=cella;
+			c1.val.fc=cella;
 			e=(double) howManyCell(albero,c1);
 			somma=e;
 	    
@@ -966,7 +963,7 @@ int calculateF(int fd,area_des ad, char ** valore,double *result)
 			if(array==NULL)
 			{
 				G_fatal_error("malloc array failederror");
-				return ERRORE;
+				return RLI_ERRORE;
 			}
 			tot=avl_to_array(albero,zero,array);
 			if(tot!=m)
@@ -989,6 +986,6 @@ int calculateF(int fd,area_des ad, char ** valore,double *result)
 	G_free(mask_inf);
 	G_free(mask_corr);
 	}
-	return OK;
+	return RLI_OK;
 }
 

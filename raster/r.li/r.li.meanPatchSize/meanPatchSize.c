@@ -1,10 +1,13 @@
 /*
  * \brief calculates mean patch size index
  *
- *   Author: Serena Pallecchi
+ *  \AUTHOR: Serena Pallecchi student of Computer Science University of Pisa (Italy)
+ *			Commission from Faunalia Pontedera (PI) www.faunalia.it
  *
  *   This program is free software under the GPL (>=v2)
  *   Read the COPYING file that comes with GRASS for details.
+ *	 
+ *	 \BUGS: please send bugs reports to pallecch@cli.di.unipi.it
  */
 
 
@@ -72,7 +75,7 @@ int meanPatchSize(int fd, char ** par, area_des ad, double *result)
 
   mapset = G_find_cell(ad->raster, "");
   if (G_get_cellhd(ad->raster, mapset, &hd) == - 1)
-    return ERRORE;
+    return RLI_ERRORE;
   
   
 
@@ -96,16 +99,16 @@ int meanPatchSize(int fd, char ** par, area_des ad, double *result)
        default:
 	{
 		G_fatal_error("data type unknown");
-		return ERRORE;
+		return RLI_ERRORE;
 	}
     }
-  if(ris!=OK)
+  if(ris!=RLI_OK)
     {
-      return ERRORE;
+      return RLI_ERRORE;
     }
   
   *result=indice;
-  return OK;
+  return RLI_OK;
   
 }
 
@@ -123,7 +126,7 @@ int calculate (int fd,area_des ad, struct Cell_head hd,double *result)
   int mask_fd=-1, *mask_buf;
   int ris=0;
   int masked=FALSE;
-  int a=0; /*if all cells are null a=0*/
+  
    
   long npatch=0;
   long tot=0;
@@ -136,7 +139,7 @@ int calculate (int fd,area_des ad, struct Cell_head hd,double *result)
   long * mask_patch_corr;
   
   double indice=0;
-  double area=0;
+  double area=0;/*if all cells are null area=0*/
   double areaCorrect=0;
   double EW_DIST1,EW_DIST2,NS_DIST1,NS_DIST2;
   
@@ -150,12 +153,12 @@ int calculate (int fd,area_des ad, struct Cell_head hd,double *result)
   if (ad->mask == 1)
     {
       if ((mask_fd = open(ad->mask_name, O_RDONLY, 0755)) < 0)
-	return ERRORE;
+	return RLI_ERRORE;
       mask_buf = G_malloc(ad->cl * sizeof(int));
       if (mask_buf==NULL)
       {
 	      G_fatal_error("malloc mask_buf failed");
-		return ERRORE;
+		return RLI_ERRORE;
       }
       masked=TRUE;
     }
@@ -164,28 +167,28 @@ int calculate (int fd,area_des ad, struct Cell_head hd,double *result)
   if (mask_patch_sup==NULL)
     {
       G_fatal_error("malloc mask_patch_sup failed");
-      return ERRORE;
+      return RLI_ERRORE;
     }
   
   mask_patch_corr=G_malloc(ad->cl *sizeof( long));
   if (mask_patch_corr==NULL)
     {
       G_fatal_error("malloc mask_patch_corr failed");
-      return ERRORE;
+      return RLI_ERRORE;
     }
   
   buf_sup=G_allocate_cell_buf();
   if (buf_sup==NULL)
     {
       G_fatal_error("malloc buf_sup failed");
-      return ERRORE;
+      return RLI_ERRORE;
     }
   
   buf=G_allocate_cell_buf();
   if (buf==NULL)
     {
       G_fatal_error("malloc buf failed");
-      return ERRORE;
+      return RLI_ERRORE;
     }
   
   G_set_c_null_value(buf_sup+ad->x,ad->cl); /*the first time buf_sup is all null*/
@@ -210,25 +213,24 @@ int calculate (int fd,area_des ad, struct Cell_head hd,double *result)
 	  if(read(mask_fd,mask_buf,(ad->cl * sizeof (int)))<0)
 	  {
 	    	G_fatal_error("mask read failed");
-	    return ERRORE;
+	    return RLI_ERRORE;
 	  }
 	}
       G_set_c_null_value(&precCell,1);
       for(i=0; i < ad->cl; i++) 
 	{ /*for each cell in the row*/
-	  area++;
+	  
 	  corrCell=buf[i+ad->x];
      
 	  if ((masked) && (mask_buf[i+ad->x]==0)) 
 	    {
 	      G_set_c_null_value(&corrCell,1);
-	      area--;
 	    }
 	  
 	  /*valid cell*/
 	  if(!(G_is_null_value(&corrCell,CELL_TYPE)))
 	    {
-	      
+	      area++;
 	      if(i>0)
 		precCell=buf[i-1+ad->x];
 	      
@@ -257,7 +259,7 @@ int calculate (int fd,area_des ad, struct Cell_head hd,double *result)
 			      albero=avlID_make(idCorr,uno);
 			      if (albero==NULL){
 				G_fatal_error("avlID_make error");
-				return ERRORE;
+				return RLI_ERRORE;
 			      }
 			      npatch++;
 			      
@@ -267,24 +269,24 @@ int calculate (int fd,area_des ad, struct Cell_head hd,double *result)
 			      ris=avlID_add(&albero,idCorr,uno);  
 			      switch(ris)
 				{
-				case ERR:
+				case AVL_ERR:
 				  {
 				    G_fatal_error("avlID_add error");
-				    return ERRORE;
+				    return RLI_ERRORE;
 				  }
-				case ADD:
+				case AVL_ADD:
 				  {
 				    npatch++;
 				    break;
 				  }
-				case PRES:
+				case AVL_PRES:
 				  {
 				    break;
 				  }
 				default:
 				  {
 				    G_fatal_error("avlID_add unknown error");
-				    return ERRORE;
+				    return RLI_ERRORE;
 				  }
 				}
 			    }
@@ -305,30 +307,30 @@ int calculate (int fd,area_des ad, struct Cell_head hd,double *result)
 			  if(r==0)
 			    {
 			      G_fatal_error("avlID_sub error");
-			      return ERRORE;
+			      return RLI_ERRORE;
 			    }
 			  /*Remove one patch because it makes part of a patch already found*/
 			  ris=avlID_add(&albero,idCorr,uno);
 			  switch(ris)
 			    {
-			    case ERR:
+			    case AVL_ERR:
 			      {
 				G_fatal_error("avlID_add error");
-				return ERRORE;
+				return RLI_ERRORE;
 			      }
-			    case ADD:
+			    case AVL_ADD:
 			      {
 				npatch++;
 				break;
 			      }
-			    case PRES:
+			    case AVL_PRES:
 			      {
 				break;
 			      }
 			    default:
 			      {
 				G_fatal_error("avlID_add unknown error");
-				return ERRORE;
+				return RLI_ERRORE;
 			      }
 			    }
 			  r=i;
@@ -350,7 +352,7 @@ int calculate (int fd,area_des ad, struct Cell_head hd,double *result)
 			  albero=avlID_make(idCorr,uno);
 			  if (albero==NULL){
 			    G_fatal_error("avlID_make error");
-			    return ERRORE;
+			    return RLI_ERRORE;
 			  }
 			  npatch++;
 			}
@@ -359,24 +361,24 @@ int calculate (int fd,area_des ad, struct Cell_head hd,double *result)
 			  ris=avlID_add(&albero,idCorr,uno);
 			  switch(ris)
 			    {
-			    case ERR:
+			    case AVL_ERR:
 			      {
 				G_fatal_error("avlID_add error");
-				return ERRORE;
+				return RLI_ERRORE;
 			      }
-			    case ADD:
+			    case AVL_ADD:
 			      {
 				npatch++;
 				break;
 			      }
-			    case PRES:
+			    case AVL_PRES:
 			      {
 				break;
 			      }
 			    default:
 			      {
 				G_fatal_error("avlID_add unknown error");
-				return ERRORE;
+				return RLI_ERRORE;
 			      }
 			    }
 			}
@@ -426,7 +428,7 @@ int calculate (int fd,area_des ad, struct Cell_head hd,double *result)
   
   
   
-  if (a!=0)
+  if (area!=0)
     {
       if(albero==NULL)
 	{
@@ -434,7 +436,7 @@ int calculate (int fd,area_des ad, struct Cell_head hd,double *result)
 	  if (albero==NULL)
 	    {
 	      G_fatal_error("avlID_make error");
-	      return ERRORE;
+	      return RLI_ERRORE;
 	    }
 	  npatch++;
 	}
@@ -443,24 +445,24 @@ int calculate (int fd,area_des ad, struct Cell_head hd,double *result)
 	  ris=avlID_add(&albero,idCorr,uno);
 	  switch(ris)
 	    {
-	    case ERR:
+	    case AVL_ERR:
 	      {
 		G_fatal_error("avlID_add error");
-		return ERRORE;
+		return RLI_ERRORE;
 	      }
-	    case ADD:
+	    case AVL_ADD:
 	      {
 		npatch++;
 		break;
 	      }
-	    case PRES:
+	    case AVL_PRES:
 	      {
 		break;
 	      }
 	    default:
 	      {
 		G_fatal_error("avlID_add unknown error");
-		return ERRORE;
+		return RLI_ERRORE;
 	      }
 	    }
 	}
@@ -470,14 +472,14 @@ int calculate (int fd,area_des ad, struct Cell_head hd,double *result)
       if(array==NULL)
       {
 	      G_fatal_error("malloc array failed");
-		return ERRORE;
+		return RLI_ERRORE;
       }
       tot=avlID_to_array(albero,zero,array);
       
       if (tot!=npatch)
 	{
 	  G_warning("avlID_to_array unaspected value. the result could be wrong");
-	  return ERRORE;
+	  return RLI_ERRORE;
 	}
       
       for(i=0;i<npatch;i++)
@@ -513,10 +515,10 @@ int calculate (int fd,area_des ad, struct Cell_head hd,double *result)
   
   if(masked)
     G_free(mask_buf);
-  G_free(mask_patch_sup);
+
   G_free(mask_patch_corr);
   
-  return OK;
+  return RLI_OK;
 }
 
 
@@ -533,7 +535,6 @@ int calculateD (int fd,area_des ad, struct Cell_head hd,double *result)
   int mask_fd=-1, *mask_buf;
   int ris=0;
   int masked=FALSE;
-  int a=0; /*if all cells are null a=0*/
    
   long npatch=0; 
   long tot=0;
@@ -546,7 +547,7 @@ int calculateD (int fd,area_des ad, struct Cell_head hd,double *result)
   long * mask_patch_corr;
   
   double indice=0;
-  double area=0;
+  double area=0;/*if all cells are null area=0*/
   double areaCorrect=0;    
   double EW_DIST1,EW_DIST2,NS_DIST1,NS_DIST2;
   
@@ -560,12 +561,12 @@ int calculateD (int fd,area_des ad, struct Cell_head hd,double *result)
   if (ad->mask == 1)
     {
       if ((mask_fd = open(ad->mask_name, O_RDONLY, 0755)) < 0)
-	return ERRORE;
+	return RLI_ERRORE;
       mask_buf = G_malloc(ad->cl * sizeof(int));
       if (mask_buf==NULL)
       {
 	      G_fatal_error("malloc mask_buf failed");
-		return ERRORE;
+		return RLI_ERRORE;
       }
       masked=TRUE;
     }
@@ -574,28 +575,28 @@ int calculateD (int fd,area_des ad, struct Cell_head hd,double *result)
   if (mask_patch_sup==NULL)
     {
       G_fatal_error("malloc mask_patch_sup failed");
-      return ERRORE;
+      return RLI_ERRORE;
     }
   
   mask_patch_corr=G_malloc(ad->cl *sizeof( long));
   if (mask_patch_corr==NULL)
     {
       G_fatal_error("malloc mask_patch_corr failed");
-      return ERRORE;
+      return RLI_ERRORE;
     }
   
   buf_sup=G_allocate_d_raster_buf ();
    if (buf_sup==NULL)
     {
       G_fatal_error("malloc buf_sup failed");
-      return ERRORE;
+      return RLI_ERRORE;
     }
   
   buf=G_allocate_d_raster_buf ();
   if (buf==NULL)
     {
       G_fatal_error("malloc buf failed");
-      return ERRORE;
+      return RLI_ERRORE;
     }
   
   G_set_d_null_value(buf_sup+ad->x,ad->cl); /*the first time buf_sup is all null*/
@@ -619,23 +620,23 @@ int calculateD (int fd,area_des ad, struct Cell_head hd,double *result)
 	  if(read(mask_fd,mask_buf,(ad->cl * sizeof (int)))<0)
 	  {
 	    	G_fatal_error("mask read failed");
-	    return ERRORE;
+	    return RLI_ERRORE;
 	  }
 	}
       G_set_d_null_value(&precCell,1);
       for(i=0; i < ad->cl; i++) 
 	{ /*for each cell in the row*/
-	  area++; 
+	 
 	  corrCell=buf[i+ad->x];
 	  
 	  if ((masked) && (mask_buf[i+ad->x]==0))
 	    {
 	      G_set_d_null_value(&corrCell,1);
-	      area--;
 	    }
 	  
 	  if(!(G_is_null_value(&corrCell,DCELL_TYPE)))
 	    {
+	    	 area++; 
 	      if(i>0)
 		precCell=buf[i-1+ad->x];
 	      
@@ -663,7 +664,7 @@ int calculateD (int fd,area_des ad, struct Cell_head hd,double *result)
 			      albero=avlID_make(idCorr,uno);
 			      if (albero==NULL){
 				G_fatal_error("avlID_make error");
-				return ERRORE;
+				return RLI_ERRORE;
 			      }
 			      npatch++;
 			      
@@ -673,24 +674,24 @@ int calculateD (int fd,area_des ad, struct Cell_head hd,double *result)
 			      ris=avlID_add(&albero,idCorr,uno);  
 			      switch(ris)
 				{
-				case ERR:
+				case AVL_ERR:
 				  {
 				    G_fatal_error("avlID_add error");
-				    return ERRORE;
+				    return RLI_ERRORE;
 				  }
-				case ADD:
+				case AVL_ADD:
 				  {
 				    npatch++;
 				    break;
 				  }
-				case PRES:
+				case AVL_PRES:
 				  {
 				    break;
 				  }
 				default:
 				  {
 				    G_fatal_error("avlID_add unknown error");
-				    return ERRORE;
+				    return RLI_ERRORE;
 				  }
 				}
 			    }
@@ -711,30 +712,30 @@ int calculateD (int fd,area_des ad, struct Cell_head hd,double *result)
 			  if(r==0)
 			    {
 			      G_fatal_error("avlID_sub error");
-			      return ERRORE;
+			      return RLI_ERRORE;
 			    }
 			  
 			  ris=avlID_add(&albero,idCorr,uno);
 			  switch(ris)
 			    {
-			    case ERR:
+			    case AVL_ERR:
 			      {
 				G_fatal_error("avlID_add error");
-				return ERRORE;
+				return RLI_ERRORE;
 			      }
-			    case ADD:
+			    case AVL_ADD:
 			      {
 				npatch++;
 				break;
 			      }
-			    case PRES:
+			    case AVL_PRES:
 			      {
 				break;
 			      }
 			    default:
 			      {
 				G_fatal_error("avlID_add unknown error");
-				return ERRORE;
+				return RLI_ERRORE;
 			      }
 			    }
 			  r=i;
@@ -756,7 +757,7 @@ int calculateD (int fd,area_des ad, struct Cell_head hd,double *result)
 			  albero=avlID_make(idCorr,uno);
 			  if (albero==NULL){
 			    G_fatal_error("avlID_make error");
-			    return ERRORE;
+			    return RLI_ERRORE;
 			  }
 			  npatch++;
 			}
@@ -765,24 +766,24 @@ int calculateD (int fd,area_des ad, struct Cell_head hd,double *result)
 			  ris=avlID_add(&albero,idCorr,uno);
 			  switch(ris)
 			    {
-			    case ERR:
+			    case AVL_ERR:
 			      {
 				G_fatal_error("avlID_add error");
-				return ERRORE;
+				return RLI_ERRORE;
 			      }
-			    case ADD:
+			    case AVL_ADD:
 			      {
 				npatch++;
 				break;
 			      }
-			    case PRES:
+			    case AVL_PRES:
 			      {
 				break;
 			      }
 			    default:
 			      {
 				G_fatal_error("avlID_add unknown error");
-				return ERRORE;
+				return RLI_ERRORE;
 			      }
 			    }
 			}
@@ -832,7 +833,7 @@ int calculateD (int fd,area_des ad, struct Cell_head hd,double *result)
   
   
   
-  if (a!=0)
+  if (area!=0)
     {
       if(albero==NULL)
 	{
@@ -840,7 +841,7 @@ int calculateD (int fd,area_des ad, struct Cell_head hd,double *result)
 	  if (albero==NULL)
 	    {
 	      G_fatal_error("avlID_make error");
-	      return ERRORE;
+	      return RLI_ERRORE;
 	    }
 	  npatch++;
 	}
@@ -849,24 +850,24 @@ int calculateD (int fd,area_des ad, struct Cell_head hd,double *result)
 	  ris=avlID_add(&albero,idCorr,uno);
 	  switch(ris)
 	    {
-	    case ERR:
+	    case AVL_ERR:
 	      {
 		G_fatal_error("avlID_add error");
-		return ERRORE;
+		return RLI_ERRORE;
 	      }
-	    case ADD:
+	    case AVL_ADD:
 	      {
 		npatch++;
 		break;
 	      }
-	    case PRES:
+	    case AVL_PRES:
 	      {
 		break;
 	      }
 	    default:
 	      {
 		G_fatal_error("avlID_add unknown error");
-		return ERRORE;
+		return RLI_ERRORE;
 	      }
 	    }
 	}
@@ -876,14 +877,14 @@ int calculateD (int fd,area_des ad, struct Cell_head hd,double *result)
       if(array==NULL)
       {
 	      G_fatal_error("malloc array failed");
-		return ERRORE;
+		return RLI_ERRORE;
       }
       tot=avlID_to_array(albero,zero,array);
       
       if (tot!=npatch)
 	{
 	  G_warning("avlID_to_array unaspected value. the result could be wrong");
-	  return ERRORE;
+	  return RLI_ERRORE;
 	}
       
       for(i=0;i<npatch;i++)
@@ -920,10 +921,10 @@ int calculateD (int fd,area_des ad, struct Cell_head hd,double *result)
   
   if(masked)
     G_free(mask_buf);
-  G_free(mask_patch_sup);
+
   G_free(mask_patch_corr);
   
-  return OK;
+  return RLI_OK;
 }
 
 
@@ -940,7 +941,6 @@ int calculateF (int fd,area_des ad, struct Cell_head hd,double *result)
   int mask_fd=-1, *mask_buf;
   int ris=0;
   int masked=FALSE;
-  int a=0; /*if all cells are null a=0*/
    
    
   long npatch=0; 
@@ -954,7 +954,7 @@ int calculateF (int fd,area_des ad, struct Cell_head hd,double *result)
   long * mask_patch_corr;
   
   double indice=0;
-  double area=0;
+  double area=0;/*if all cells are null area=0*/
   double areaCorrect=0;    
   double EW_DIST1,EW_DIST2,NS_DIST1,NS_DIST2;
   
@@ -968,12 +968,12 @@ int calculateF (int fd,area_des ad, struct Cell_head hd,double *result)
   if (ad->mask == 1)
     {
       if ((mask_fd = open(ad->mask_name, O_RDONLY, 0755)) < 0)
-	return ERRORE;
+	return RLI_ERRORE;
       mask_buf = G_malloc(ad->cl * sizeof(int));
       if (mask_buf==NULL)
       {
 	      G_fatal_error("malloc mask_buf failed");
-		return ERRORE;
+		return RLI_ERRORE;
       }
       masked=TRUE;
     }
@@ -982,21 +982,21 @@ int calculateF (int fd,area_des ad, struct Cell_head hd,double *result)
   if (mask_patch_sup==NULL)
     {
       G_fatal_error("malloc mask_patch_sup failed");
-      return ERRORE;
+      return RLI_ERRORE;
     }
   
   mask_patch_corr=G_malloc(ad->cl *sizeof( long));
   if (mask_patch_corr==NULL)
     {
       G_fatal_error("malloc mask_patch_corr failed");
-      return ERRORE;
+      return RLI_ERRORE;
     }
   
   buf_sup=G_allocate_f_raster_buf ();
   if (buf_sup==NULL)
     {
       G_fatal_error("malloc buf_sup failed");
-      return ERRORE;
+      return RLI_ERRORE;
     }
   
     
@@ -1004,7 +1004,7 @@ int calculateF (int fd,area_des ad, struct Cell_head hd,double *result)
   if (buf==NULL)
     {
       G_fatal_error("malloc buf failed");
-      return ERRORE;
+      return RLI_ERRORE;
     }
   
   G_set_f_null_value(buf_sup+ad->x,ad->cl); /*the first time buf_sup is all null*/
@@ -1028,22 +1028,22 @@ int calculateF (int fd,area_des ad, struct Cell_head hd,double *result)
 	  if(read(mask_fd,mask_buf,(ad->cl * sizeof (int)))<0)
 	  {
 	    	G_fatal_error("mask read failed");
-	    return ERRORE;
+	    return RLI_ERRORE;
 	  }
 	}
       G_set_f_null_value(&precCell,1);
       for(i=0; i < ad->cl; i++) 
 	{ /*for each cell in the row*/
 	  
-	  area++;
+	  
 	  corrCell=buf[i+ad->x];
 	  if (((masked) && (mask_buf[i+ad->x]==0)) )
 	    {
 	      G_set_f_null_value(&corrCell,1);
-	      area--;
 	    }
 	  if(!(G_is_null_value(&corrCell,FCELL_TYPE)))
 	    {
+	    	area++;
 	      if(i>0)
 		precCell=buf[i-1+ad->x];
 	      if(j==0)
@@ -1071,7 +1071,7 @@ int calculateF (int fd,area_des ad, struct Cell_head hd,double *result)
 			      albero=avlID_make(idCorr,uno);
 			      if (albero==NULL){
 				G_fatal_error("avlID_make error");
-				return ERRORE;
+				return RLI_ERRORE;
 			      }
 			      npatch++;
 			      
@@ -1081,24 +1081,24 @@ int calculateF (int fd,area_des ad, struct Cell_head hd,double *result)
 			      ris=avlID_add(&albero,idCorr,uno);  
 			      switch(ris)
 				{
-				case ERR:
+				case AVL_ERR:
 				  {
 				    G_fatal_error("avlID_add error");
-				    return ERRORE;
+				    return RLI_ERRORE;
 				  }
-				case ADD:
+				case AVL_ADD:
 				  {
 				    npatch++;
 				    break;
 				  }
-				case PRES:
+				case AVL_PRES:
 				  {
 				    break;
 				  }
 				default:
 				  {
 				    G_fatal_error("avlID_add unknown error");
-				    return ERRORE;
+				    return RLI_ERRORE;
 				  }
 				}
 			    }
@@ -1119,30 +1119,30 @@ int calculateF (int fd,area_des ad, struct Cell_head hd,double *result)
 			  if(r==0)
 			    {
 			      G_fatal_error("avlID_sub error");
-			      return ERRORE;
+			      return RLI_ERRORE;
 			    }
 			  /*Remove one patch because it makes part of a patch already found*/
 			  ris=avlID_add(&albero,idCorr,uno);
 			  switch(ris)
 			    {
-			    case ERR:
+			    case AVL_ERR:
 			      {
 				G_fatal_error("avlID_add error");
-				return ERRORE;
+				return RLI_ERRORE;
 			      }
-			    case ADD:
+			    case AVL_ADD:
 			      {
 				npatch++;
 				break;
 			      }
-			    case PRES:
+			    case AVL_PRES:
 			      {
 				break;
 			      }
 			    default:
 			      {
 				G_fatal_error("avlID_add unknown error");
-				return ERRORE;
+				return RLI_ERRORE;
 			      }
 			    }
 			  r=i;
@@ -1164,7 +1164,7 @@ int calculateF (int fd,area_des ad, struct Cell_head hd,double *result)
 			  albero=avlID_make(idCorr,uno);
 			  if (albero==NULL){
 			    G_fatal_error("avlID_make error");
-			    return ERRORE;
+			    return RLI_ERRORE;
 			  }
 			  npatch++;
 			}
@@ -1173,24 +1173,24 @@ int calculateF (int fd,area_des ad, struct Cell_head hd,double *result)
 			  ris=avlID_add(&albero,idCorr,uno);
 			  switch(ris)
 			    {
-			    case ERR:
+			    case AVL_ERR:
 			      {
 				G_fatal_error("avlID_add error");
-				return ERRORE;
+				return RLI_ERRORE;
 			      }
-			    case ADD:
+			    case AVL_ADD:
 			      {
 				npatch++;
 				break;
 			      }
-			    case PRES:
+			    case AVL_PRES:
 			      {
 				break;
 			      }
 			    default:
 			      {
 				G_fatal_error("avlID_add unknown error");
-				return ERRORE;
+				return RLI_ERRORE;
 			      }
 			    }
 			}
@@ -1239,7 +1239,7 @@ int calculateF (int fd,area_des ad, struct Cell_head hd,double *result)
   
   
   
-  if (a!=0)
+  if (area!=0)
     {
       if(albero==NULL)
 	{
@@ -1247,7 +1247,7 @@ int calculateF (int fd,area_des ad, struct Cell_head hd,double *result)
 	  if (albero==NULL)
 	    {
 	      G_fatal_error("avlID_make error");
-	      return ERRORE;
+	      return RLI_ERRORE;
 	    }
 	  npatch++;
 	}
@@ -1256,24 +1256,24 @@ int calculateF (int fd,area_des ad, struct Cell_head hd,double *result)
 	  ris=avlID_add(&albero,idCorr,uno);
 	  switch(ris)
 	    {
-	    case ERR:
+	    case AVL_ERR:
 	      {
 		G_fatal_error("avlID_add error");
-		return ERRORE;
+		return RLI_ERRORE;
 	      }
-	    case ADD:
+	    case AVL_ADD:
 	      {
 		npatch++;
 		break;
 	      }
-	    case PRES:
+	    case AVL_PRES:
 	      {
 		break;
 	      }
 	    default:
 	      {
 		G_fatal_error("avlID_add unknown error");
-		return ERRORE;
+		return RLI_ERRORE;
 	      }
 	    }
 	}
@@ -1283,14 +1283,14 @@ int calculateF (int fd,area_des ad, struct Cell_head hd,double *result)
       if(array==NULL)
       {
 	      G_fatal_error("malloc array failed");
-		return ERRORE;
+		return RLI_ERRORE;
       }
       tot=avlID_to_array(albero,zero,array);
       
       if (tot!=npatch)
 	{
 	  G_warning("avlID_to_array unaspected value. the result could be wrong");
-	  return ERRORE;
+	  return RLI_ERRORE;
 	}
       
       for(i=0;i<npatch;i++)
@@ -1327,10 +1327,10 @@ int calculateF (int fd,area_des ad, struct Cell_head hd,double *result)
  
   if(masked)
     G_free(mask_buf);
-  G_free(mask_patch_sup);
+
   G_free(mask_patch_corr);
   
-  return OK;
+  return RLI_OK;
 }
 
 
