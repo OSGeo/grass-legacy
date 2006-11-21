@@ -1,7 +1,19 @@
 ##########################################################################
 # 
-# Panel to provide d.3d type interface for manually entering position / 
-# view.
+# Panel to provide d.3d type interface for manually entering position 
+# 	for view.
+# 
+# Original author unknown.
+#
+#
+# Major update of GUI Nov 2006, Michael Barton, Arizona State University
+#
+##########################################################################
+# COPYRIGHT:	(C) 2006 by Michael Barton and the GRASS Development Team
+#
+#		This program is free software under the GNU General Public
+#		License (>=v2). Read the file COPYING that comes with GRASS
+#		for details.
 #
 ##########################################################################
 
@@ -17,129 +29,106 @@ proc mkposPanel { BASE } {
 	set panel $Nv_($BASE)
     }
     
-    frame $BASE -relief groove -borderwidth 2
+    frame $BASE -relief flat -borderwidth 0
     Nv_mkPanelname $BASE "Position Panel"
 
 #################################
-# From menu    
-    set tmp1 [frame $BASE.top1 -border 1 -relief sunken]
-    set tmp1a [frame $BASE.top1.top1a]
-    set tmp1b [frame $BASE.top1.top1b]
+# Positioning menus    
+    set tmp1 [frame $BASE.top1]
+    set col1 [frame $BASE.top1.col1]
+    set col2 [frame $BASE.top1.col2]
+    set col3 [frame $BASE.top1.col3]
+    set col4 [frame $BASE.top1.col4]
     
-    label $tmp1a.l1 -text "From (Eye)"
-    pack $tmp1a.l1 -side top
-    
-    label $tmp1b.l1 -text "East:"
-    entry $tmp1b.e1 -width 10 -textvariable Nv_(east1) -background white
-    label $tmp1b.l2 -text "North:"
-    entry $tmp1b.e2 -width 10 -textvariable Nv_(north1) -background white
-    label $tmp1b.l3 -text "Ht:"
-    entry $tmp1b.e3 -width 8 -textvariable Nv_(ht1) -background white
-    
-    pack $tmp1b.l1 $tmp1b.e1 $tmp1b.l2 $tmp1b.e2 $tmp1b.l3 $tmp1b.e3 -side left 
-    
-    pack $tmp1a $tmp1b -side top -fill x -expand 1
-    pack $tmp1 -side top -fill x -expand 1
+    set c1r1 [label $col1.1 -text "          "]  
+    set c1r2 [label $col1.2 -text "From (eye):"]  
+	set c1r3 [label $col1.3 -text "To (surface):"]
+	set c1r4 [label $col1.4 -text "          "]
+	set c1r5 [label $col1.5 -text "          "]
+	set c1r6 [label $col1.6 -text "Range/bearing:"]
+	pack $c1r1 $c1r2 $c1r3 $c1r4 $c1r5 $c1r6 -side top -anchor e
+	
+	set c2r1 [label $col2.1 -text "East"]
+	set c2r2 [entry $col2.2 -width 10 -textvariable Nv_(east1) -bg white]
+	set c2r3 [entry $col2.3 -width 10 -textvariable Nv_(east2) -bg white]
+	set c2r4 [label $col2.4 -text "     "]
+	set c2r5 [label $col2.5 -text "Range"]
+	set c2r6 [entry $col2.6 -width 10 -textvariable Nv_(range) -bg white]
+	pack $c2r1 $c2r2 $c2r3 $c2r4 $c2r5 $c2r6 -side top
+	
+	set c3r1 [label $col3.1 -text "North"]
+	set c3r2 [entry $col3.2 -width 10 -textvariable Nv_(north1) -bg white]
+	set c3r3 [entry $col3.3 -width 10 -textvariable Nv_(north2) -bg white]
+	set c3r4 [label $col3.4 -text "     "]
+	set c3r5 [label $col3.5 -text "Bearing"]
+	set c3r6 [entry $col3.6 -width 10 -textvariable Nv_(bearing) -bg white]
+	pack $c3r1 $c3r2 $c3r3 $c3r4 $c3r5 $c3r6 -side top
+	
+	set c4r1 [label $col4.1 -text "Height"]
+	set c4r2 [entry $col4.2 -width 8 -textvariable Nv_(ht1) -bg white] 
+	set c4r3 [entry $col4.3 -width 8 -textvariable Nv_(ht2) -bg white]
+	set c4r4 [label $col4.4 -text "     "]
+	set c4r5 [label $col4.5 -text "Elev"]
+	set c4r6 [entry $col4.6 -width 8 -textvariable Nv_(elev) -bg white]
+	pack $c4r1 $c4r2 $c4r3 $c4r4 $c4r5 $c4r6 -side top
 
-# Seperator
-Nv_makeSeparator $BASE.sep1   
-#pack $BASE.sep1 -side top -fill x
-
-#################################
-# To menu       
-    set tmp2 [frame $BASE.top2 -border 1 -relief sunken]
-    set tmp2a [frame $BASE.top2.top2a]
-    set tmp2b [frame $BASE.top2.top2b]
-    
-    label $tmp2a.l1 -text "To (Surface)"
-    pack $tmp2a.l1 -side top
-    
-    label $tmp2b.l1 -text "East:"
-    entry $tmp2b.e1 -width 10 -textvariable Nv_(east2) -background white
-    label $tmp2b.l2 -text "North:"
-    entry $tmp2b.e2 -width 10 -textvariable Nv_(north2) -background white
-    label $tmp2b.l3 -text "Ht:"
-    entry $tmp2b.e3 -width 8 -textvariable Nv_(ht2) -background white
-    
-    pack $tmp2b.l1 $tmp2b.e1 $tmp2b.l2 $tmp2b.e2 $tmp2b.l3 $tmp2b.e3 -side left 
-    
-    pack $tmp2a $tmp2b -side top -fill x -expand 1
-    pack $tmp2 -side top -fill x -expand 1
-
-# Seperator
-Nv_makeSeparator $BASE.sep2   
-#pack $BASE.sep2 -side top -fill x
+	pack $col1 $col2 $col3 $col4 -side left -padx 3
+	pack $tmp1 -side top -pady 4
     
 #################################
-# Range Bearing menu       
-    set tmp4 [frame $BASE.top4 -border 1 -relief sunken]
-    set tmp4a [frame $BASE.top4.top4a]
-    set tmp4b [frame $BASE.top4.top4b]
-    set tmp4c [frame $BASE.top4.top4c]
+   
+  # Mode setting radiobuttons
+  	set tmp3 [frame $BASE.top3]
+    radiobutton $tmp3.r1 -text "Eye to Surface" -variable "bearing_calc" -value "1" -command "catch {show_bearing}"
+    radiobutton $tmp3.r2 -text "Surface to Eye" -variable "bearing_calc" -value "2" -command "catch {show_bearing}"
+    button $tmp3.b1 -text "Calculate" -command "catch {calc_position $bearing_calc}" -bd 1
+    pack $tmp3.r1 $tmp3.r2 $tmp3.b1 -side left -padx 3 -expand 1 -fill x
     
-    label $tmp4a.l1 -text "Range / Bearing"
-    pack $tmp4a.l1 -side top
-    
-    label $tmp4b.l1 -text "Range:"
-    entry $tmp4b.e1 -width 10 -textvariable Nv_(range) -background white
-    label $tmp4b.l2 -text "Bearing\n(deg.):"
-    entry $tmp4b.e2 -width 10 -textvariable Nv_(bearing) -background white
-    label $tmp4b.l3 -text "Elev.\n(deg.):"
-    entry $tmp4b.e3 -width 8 -textvariable Nv_(elev) -background white
-    pack $tmp4b.l1 $tmp4b.e1 $tmp4b.l2 $tmp4b.e2 $tmp4b.l3 $tmp4b.e3 -side left 
-    
-    radiobutton $tmp4c.r1 -text "Eye to Surface" -variable "bearing_calc" -value "1" -command "show_bearing"
-    radiobutton $tmp4c.r2 -text "Surface to Eye" -variable "bearing_calc" -value "2" -command "show_bearing"
-    button $tmp4c.b1 -text "Calculate" -command {calc_position $bearing_calc}
-    pack $tmp4c.r1 $tmp4c.r2 $tmp4c.b1 -side left
-    
-    
-    pack $tmp4a $tmp4b $tmp4c -side top -fill x -expand 1
-    pack $tmp4 -side top -fill x -expand 1
+    pack $tmp3 -side top -fill x -expand 1 -pady 4
 
     
 #################################
 # Buttons menu       
-    set tmp3 [frame $BASE.top3 -border 1 -relief sunken]
+    set tmp4 [frame $BASE.top4]
     
-    button $tmp3.b1 -text "Refresh" \
+    button $tmp4.b1 -text "Refresh" -bd 1 \
     	-command {set from_loc [Nget_real_position 1]
-    	set to_loc [Nget_real_position 2]
-    	set Nv_(east1) [format_number [lindex $from_loc 0]]
-    	set Nv_(north1) [format_number [lindex $from_loc 1]]
-    	set Nv_(ht1) [format_number [lindex $from_loc 2]]
-    	
-    	set Nv_(east2) [format_number [lindex $to_loc 0]]
-    	set Nv_(north2) [format_number [lindex $to_loc 1]]
-    	set Nv_(ht2) [format_number [lindex $to_loc 2]]
-
-	show_bearing
-    	}
+			set to_loc [Nget_real_position 2]
+			set Nv_(east1) [format_number [lindex $from_loc 0]]
+			set Nv_(north1) [format_number [lindex $from_loc 1]]
+			set Nv_(ht1) [format_number [lindex $from_loc 2]]
+			
+			set Nv_(east2) [format_number [lindex $to_loc 0]]
+			set Nv_(north2) [format_number [lindex $to_loc 1]]
+			set Nv_(ht2) [format_number [lindex $to_loc 2]]
+	
+			show_bearing
+			}
     
-    button $tmp3.b2 -text "Apply" \
+    button $tmp4.b2 -text "Apply" -bd 1 \
     	-command {
-	#Set To coords
-	Nset_focus_real $Nv_(east2) $Nv_(north2) $Nv_(ht2)
-	#reset XY canvas
-	change_display 2
-
-	#Set From coords
-    	Nmove_to_real $Nv_(east1) $Nv_(north1) $Nv_(ht1)
-	#reset height
-	Nv_setEntry $Nv_(main_BASE).midf.height.f.entry $Nv_(ht1)
-	Nv_floatscaleCallback $Nv_(main_BASE).midf.height e 2 null $Nv_(ht1)
-	#reset XY canvas
-        change_display 1
-
-	Nquick_draw
-    	}
+			#Set To coords
+			Nset_focus_real $Nv_(east2) $Nv_(north2) $Nv_(ht2)
+			#reset XY canvas
+			change_display 2
+		
+			#Set From coords
+			Nmove_to_real $Nv_(east1) $Nv_(north1) $Nv_(ht1)
+			#reset height
+			Nv_setEntry $Nv_(main_BASE).midf.height.f.entry $Nv_(ht1)
+			catch {Nv_floatscaleCallback $Nv_(main_BASE).midf.height e 2 null $Nv_(ht1)}
+			#reset XY canvas
+			change_display 1
+		
+			Nquick_draw
+			}
     
-    button $tmp3.b3 -text "Close" -command "Nv_closePanel $BASE"
+    button $tmp4.b3 -text "Close" -command "Nv_closePanel $BASE" -bd 1
     	
-    pack $tmp3.b1 $tmp3.b2 -side left 
-    pack $tmp3.b3 -side right
+    pack $tmp4.b1 $tmp4.b2 -side left 
+    pack $tmp4.b3 -side right
 
-    pack $tmp3 -side top -fill x -expand 1
+    pack $tmp4 -side top -fill x -expand 1 -padx 3 -pady 4
     
     #set radiobutton
     set bearing_calc 1
@@ -207,13 +196,13 @@ global Nv_ bearing_calc
 set RAD 0.0174532925199432958
 
 if {$bearing_calc == 1} {
-set xx [expr $Nv_(east2) - $Nv_(east1)]
-set yy [expr $Nv_(north2) - $Nv_(north1)]
-set zz [expr $Nv_(ht2) - $Nv_(ht1)]
+	set xx [expr $Nv_(east2) - $Nv_(east1)]
+	set yy [expr $Nv_(north2) - $Nv_(north1)]
+	set zz [expr $Nv_(ht2) - $Nv_(ht1)]
 } else {
-set xx [expr $Nv_(east1) - $Nv_(east2)]
-set yy [expr $Nv_(north1) - $Nv_(north2)]
-set zz [expr $Nv_(ht1) - $Nv_(ht2)]
+	set xx [expr $Nv_(east1) - $Nv_(east2)]
+	set yy [expr $Nv_(north1) - $Nv_(north2)]
+	set zz [expr $Nv_(ht1) - $Nv_(ht2)]
 }
 
 set Nv_(range) [format_number [expr sqrt( ($xx*$xx) + ($yy*$yy) + ($zz*$zz) )]]

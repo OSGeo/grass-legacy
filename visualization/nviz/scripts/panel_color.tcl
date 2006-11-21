@@ -1,4 +1,21 @@
 ##########################################################################
+#
+# Routines for background color in NVIZ
+# 
+# Original author unknown.
+# Probably U.S. Army Construction Engineering Research Laboratory
+#
+#
+# Major update of GUI Nov 2006, Michael Barton, Arizona State University
+#
+##########################################################################
+# COPYRIGHT:	(C) 2006 by Michael Barton and the GRASS Development Team
+#
+#		This program is free software under the GNU General Public
+#		License (>=v2). Read the file COPYING that comes with GRASS
+#		for details.
+#
+##########################################################################
 # Default Priority for this panel
 #
 # priority is from 0 to 10
@@ -8,7 +25,6 @@
 
 #########################################################################
 #create Color panel
-##########################################################################
 
 global BGColor
 
@@ -24,7 +40,7 @@ proc mkcolorPanel { BASE } {
 	set panel $Nv_($BASE)
     }
 
-    frame $BASE  -relief groove -borderwidth 2
+    frame $BASE  -relief flat -borderwidth 0
     Nv_mkPanelname $BASE "Background Color Panel"
     
     button $BASE.background -text Background -bg white -fg grey \
@@ -34,9 +50,9 @@ proc mkcolorPanel { BASE } {
     # place $BASE.background -rely .33 -relx .33 -relheight .20 -relwidth .40
     pack $BASE.background -padx 5 -pady 5
     frame $BASE.closef
-    button $BASE.closef.close -text Close -command "Nv_closePanel $BASE" \
-	-anchor se
-    pack $BASE.closef.close -side right
+    button $BASE.closef.close -text "Close" -command "Nv_closePanel $BASE" \
+		-anchor se -bd 1
+    pack $BASE.closef.close -side right -padx 3
     pack $BASE.closef -side bottom -fill x
 
     return $panel
