@@ -19,9 +19,6 @@
 # This script is setup by the toplevel configure shell script at
 # installation time - new
 
-lappend auto_path $env(GISBASE)/bwidget
-package require BWidget
-
 global src_boot
 global ProcessName
 global nviztxtfont
