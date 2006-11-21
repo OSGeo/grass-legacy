@@ -1200,7 +1200,7 @@ int G__write_Cell_head(FILE *, struct Cell_head *, int);
 int G__write_Cell_head3(FILE *, struct Cell_head *, int);
 
 /* writ_zeros.c */
-int G_write_zeros(int, long);
+int G_write_zeros(int, size_t);
 
 /* yes.c */
 int G_yes(char *, int);
