@@ -391,6 +391,9 @@ int main(int argc, char *argv[])
     G_close_cell(fd);
     fclose(fp);
 
+    sprintf(buf1, _("Created NVIZ script <%s>."), outfile);
+    G_done_msg(buf1);
+
     exit(EXIT_SUCCESS);
 
 }				/* Done with main */
