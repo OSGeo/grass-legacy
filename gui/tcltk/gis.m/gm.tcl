@@ -377,7 +377,7 @@ global HOSTTYPE
 proc Gm::fly { } {
 
     guarantee_xmon
-    exec d.nviz --ui &
+    exec d.nviz -i --ui &
 
 }
 
