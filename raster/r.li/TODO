@@ -2,8 +2,12 @@ TODO list
 
 A few remaining things should be done soon:
 - add relevant references
-- change AUTHORS as indicated by you (offlist, see below)
-- missing description.html:
+- change AUTHORS as already indicated by you 
+- add missing description.html (use e.g. r.li.dominance/description.html
+  as template):
   - r.li.patchnumber
   - r.li.shape
 - use english variable names as much as possible
+
+Please change the examples to Spearfish wherever possible.
+
