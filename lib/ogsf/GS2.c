@@ -2634,7 +2634,7 @@ int GS_get_selected_point_on_surface(int sx, int sy, int *id, float *x,
 	*id = surfs[iclose];
     }
 
-    fprintf(stderr, "NumHits %d, next %d\n", numhits, Next_surf);
+    G_debug(3, "NumHits %d, next %d", numhits, Next_surf);
 
     return (numhits);
 }
