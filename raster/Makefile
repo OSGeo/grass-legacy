@@ -39,6 +39,7 @@ SUBDIRS = \
 	r.kappa \
 	r.lake \
 	r.le \
+	r.li \
 	r.los \
 	r.mapcalc \
 	r.median \
