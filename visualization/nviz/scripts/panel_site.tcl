@@ -1,6 +1,6 @@
 ##########################################################################
 #
-# Routines for displaying and thematic mapping of vector points for NVIZ
+# Routines for displaying and thematic mapping of vector points in NVIZ
 # 
 # Original author unknown.
 # Probably U.S. Army Construction Engineering Research Laboratory
@@ -9,7 +9,7 @@
 # Major update of GUI Nov 2006, Michael Barton, Arizona State University
 #
 ##########################################################################
-# COPYRIGHT:	(C) 1999 - 2006 by Michael Barton and the GRASS Development Team
+# COPYRIGHT:	(C) 2006 by Michael Barton and the GRASS Development Team
 #
 #		This program is free software under the GNU General Public
 #		License (>=v2). Read the file COPYING that comes with GRASS
