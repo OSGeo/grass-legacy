@@ -1,10 +1,13 @@
 /*
  * \brief calculates shannon's diversity index
  *
- *   Author: Serena Pallecchi
+ *   \AUTHOR: Serena Pallecchi student of Computer Science University of Pisa (Italy)
+ *			Commission from Faunalia Pontedera (PI) www.faunalia.it
  *
  *   This program is free software under the GPL (>=v2)
  *   Read the COPYING file that comes with GRASS for details.
+ *	 
+ *	 \BUGS: please send bugs reports to  pallecch@cli.di.unipi.it
  *
  */
 
@@ -62,7 +65,7 @@ int shannon(int fd, char ** par, area_des ad, double *result)
        
     char * mapset;
 	
-    int ris=OK;
+    int ris=RLI_OK;
     
     double indice=0;
     
@@ -71,7 +74,7 @@ int shannon(int fd, char ** par, area_des ad, double *result)
     
     mapset = G_find_cell(ad->raster, "");
     if (G_get_cellhd(ad->raster, mapset, &hd) == - 1)
-	return ERRORE;
+	return RLI_ERRORE;
     
     
     switch(ad->data_type)
@@ -94,18 +97,18 @@ int shannon(int fd, char ** par, area_des ad, double *result)
 	default:
 	{
 	    G_fatal_error("data type unknown");
-	    return ERRORE;
+	    return RLI_ERRORE;
 	}
     }
 
-    if(ris!=OK)
+    if(ris!=RLI_OK)
     {
-	return ERRORE;
+	return RLI_ERRORE;
     }
     
     *result=indice;
     
-    return OK;
+    return RLI_OK;
     
 }
 
@@ -148,12 +151,12 @@ int calculate(int fd,area_des ad, double *result)
     if (ad->mask == 1)
     {
 	if ((mask_fd = open(ad->mask_name, O_RDONLY, 0755)) < 0)
-	    return ERRORE;
+	    return RLI_ERRORE;
 	mask_buf = G_malloc(ad->cl * sizeof(int));
 	if (mask_buf==NULL)
 	{
 		G_fatal_error("malloc mask_buf failed");
-	    return ERRORE;
+	    return RLI_ERRORE;
 	}
 	masked=TRUE;
     }
@@ -173,7 +176,7 @@ int calculate(int fd,area_des ad, double *result)
 	    if(read(mask_fd,mask_buf,(ad->cl * sizeof (int)))<0)
 	    {
 	    	G_fatal_error("mask read failed");
-		return ERRORE;
+		return RLI_ERRORE;
 	    }
 	}
 	
@@ -207,7 +210,7 @@ int calculate(int fd,area_des ad, double *result)
 			if (albero==NULL)
 			{
 			    G_fatal_error("avl_make error");
-			    return ERRORE;
+			    return RLI_ERRORE;
 			}
 			m++;
 		    }
@@ -217,24 +220,24 @@ int calculate(int fd,area_des ad, double *result)
 			ris=avl_add(&albero,cc,totCorr);
 			switch(ris)
 			{
-			    case ERR:
+			    case AVL_ERR:
 			    {
 				G_fatal_error("avl_add error");
-				return ERRORE;
+				return RLI_ERRORE;
 			    }
-			    case ADD:
+			    case AVL_ADD:
 			    {
 				m++;
 				break;
 			    }
-			    case PRES:
+			    case AVL_PRES:
 			    {
 				break;
 			    }
 			    default:
 			    {
 				G_fatal_error("avl_add unknown error");
-				return ERRORE;
+				return RLI_ERRORE;
 			    }
 			}
 		    }
@@ -262,7 +265,7 @@ int calculate(int fd,area_des ad, double *result)
 	    if (albero==NULL)
 	    {
 		G_fatal_error("avl_make error");
-		return ERRORE;
+		return RLI_ERRORE;
 	    }
 	    m++;
 	}
@@ -272,24 +275,24 @@ int calculate(int fd,area_des ad, double *result)
 	    ris=avl_add(&albero,cc,totCorr);
 	    switch(ris)
 	    {
-		case ERR:
+		case AVL_ERR:
 		{
 		    G_fatal_error("avl_add error");
-		    return ERRORE;
+		    return RLI_ERRORE;
 		}
-		case ADD:
+		case AVL_ADD:
 		{
 		    m++;
 		    break;
 		}
-		case PRES:
+		case AVL_PRES:
 		{
 		    break;
 		}
 		default:
 		{
 		    G_fatal_error("avl_add unknown error");
-		    return ERRORE;
+		    return RLI_ERRORE;
 		}
 	    }
 	}
@@ -299,14 +302,14 @@ int calculate(int fd,area_des ad, double *result)
     if(array==NULL)
     {
 	G_fatal_error("malloc array failed");
-	return ERRORE;
+	return RLI_ERRORE;
     }
     tot=avl_to_array(albero,zero,array);
     
     if (tot!=m)
     {
 	G_warning("avl_to_array unaspected value. the result could be wrong");
-	return ERRORE;
+	return RLI_ERRORE;
     }
     
     /* calculate summary */
@@ -333,7 +336,7 @@ int calculate(int fd,area_des ad, double *result)
 	G_free(mask_buf);
     }
     
-    return OK;
+    return RLI_OK;
 }
 
 
@@ -379,12 +382,12 @@ int calculateD(int fd,area_des ad, double *result)
     if (ad->mask == 1)
     {
 	if ((mask_fd = open(ad->mask_name, O_RDONLY, 0755)) < 0)
-	    return ERRORE;
+	    return RLI_ERRORE;
 	mask_buf = G_malloc(ad->cl * sizeof(int));
 	if (mask_buf==NULL)
 	{
 		G_fatal_error("malloc mask_buf failed");
-	    return ERRORE;
+	    return RLI_ERRORE;
 	}
 	masked=TRUE;
     }
@@ -403,7 +406,7 @@ int calculateD(int fd,area_des ad, double *result)
 	    if(read(mask_fd,mask_buf,(ad->cl * sizeof (int)))<0)
 	    {
 	    	G_fatal_error("mask read failed");
-		return ERRORE;
+		return RLI_ERRORE;
 	    }
 	}
 	
@@ -434,7 +437,7 @@ int calculateD(int fd,area_des ad, double *result)
 			albero=avl_make(cc,totCorr);
 			if (albero==NULL){
 			    G_fatal_error("avl_make error");
-			    return ERRORE;
+			    return RLI_ERRORE;
 			}
 			m++;
 		    }
@@ -444,24 +447,24 @@ int calculateD(int fd,area_des ad, double *result)
 			ris=avl_add(&albero,cc,totCorr);
 			switch(ris)
 			{
-			    case ERR:
+			    case AVL_ERR:
 			    {
 				G_fatal_error("avl_add error");
-				return ERRORE;
+				return RLI_ERRORE;
 				}
-			    case ADD:
+			    case AVL_ADD:
 			    {
 				m++;
 				break;
 			    }
-			    case PRES:
+			    case AVL_PRES:
 			    {
 				break;
 			    }
 			    default:
 			    {
 				G_fatal_error("avl_add unknown error");
-				return ERRORE;
+				return RLI_ERRORE;
 			    }
 			}
 		    }
@@ -492,7 +495,7 @@ int calculateD(int fd,area_des ad, double *result)
 	    if (albero==NULL)
 	    {
 		G_fatal_error("avl_make error");
-		return ERRORE;
+		return RLI_ERRORE;
 	    }
 	    m++;
 	}
@@ -502,24 +505,24 @@ int calculateD(int fd,area_des ad, double *result)
 	    ris=avl_add(&albero,cc,totCorr);
 	    switch(ris)
 	    {
-		case ERR:
+		case AVL_ERR:
 		{
 		    G_fatal_error("avl_add error");
-		    return ERRORE;
+		    return RLI_ERRORE;
 		}
-		case ADD:
+		case AVL_ADD:
 		{
 		    m++;
 		    break;
 		}
-		case PRES:
+		case AVL_PRES:
 		{
 		    break;
 		}
 		default:
 		{
 		    G_fatal_error("avl_add unknown error");
-		    return ERRORE;
+		    return RLI_ERRORE;
 		}
 	    }
 	}
@@ -529,14 +532,14 @@ int calculateD(int fd,area_des ad, double *result)
     if(array==NULL)
     {
 	G_fatal_error("malloc array failed");
-	return ERRORE;
+	return RLI_ERRORE;
     }
     tot=avl_to_array(albero,zero,array);
     
     if (tot!=m)
     {
 	G_warning("avl_to_array unaspected value. the result could be wrong");
-	return ERRORE;
+	return RLI_ERRORE;
     }
     
     /* calculate summary */
@@ -563,7 +566,7 @@ int calculateD(int fd,area_des ad, double *result)
    
     
     
-    return OK;
+    return RLI_OK;
 }
 
 
@@ -604,12 +607,12 @@ int calculateF(int fd,area_des ad, double *result)
     if (ad->mask == 1)
     {
 	if ((mask_fd = open(ad->mask_name, O_RDONLY, 0755)) < 0)
-	    return ERRORE;
+	    return RLI_ERRORE;
 	mask_buf = G_malloc(ad->cl * sizeof(int));
 	if (mask_buf==NULL)
 	{
 		G_fatal_error("malloc mask_buf failed");
-	    return ERRORE;
+	    return RLI_ERRORE;
 	}
 	masked=TRUE;
     }
@@ -629,7 +632,7 @@ int calculateF(int fd,area_des ad, double *result)
 	    if(read(mask_fd,mask_buf,(ad->cl * sizeof (int)))<0)
 	    {
 	    	G_fatal_error("mask read failed");
-		return ERRORE;
+		return RLI_ERRORE;
 	    }
 	}
 	
@@ -659,7 +662,7 @@ int calculateF(int fd,area_des ad, double *result)
 			albero=avl_make(cc,totCorr);
 			if (albero==NULL){
 			    G_fatal_error("avl_make error");
-				return ERRORE;
+				return RLI_ERRORE;
 			}
 			m++;
 		    }
@@ -669,24 +672,24 @@ int calculateF(int fd,area_des ad, double *result)
 			ris=avl_add(&albero,cc,totCorr);
 			switch(ris)
 			{
-			    case ERR:
+			    case AVL_ERR:
 			    {
 				G_fatal_error("avl_add error");
-				return ERRORE;
+				return RLI_ERRORE;
 			    }
-			    case ADD:
+			    case AVL_ADD:
 			    {
 				m++;
 				break;
 			    }
-			    case PRES:
+			    case AVL_PRES:
 			    {
 				break;
 			    }
 			    default:
 			    {
 				G_fatal_error("avl_add unknown error");
-				return ERRORE;
+				return RLI_ERRORE;
 			    }
 			}
 		    }
@@ -714,7 +717,7 @@ int calculateF(int fd,area_des ad, double *result)
 	    if (albero==NULL)
 	    {
 		G_fatal_error("avl_make error");
-		return ERRORE;
+		return RLI_ERRORE;
 	    }
 	    m++;
 	}
@@ -724,24 +727,24 @@ int calculateF(int fd,area_des ad, double *result)
 	    ris=avl_add(&albero,cc,totCorr);
 	    switch(ris)
 	    {
-		case ERR:
+		case AVL_ERR:
 		{
 		    G_fatal_error("avl_add error");
-		    return ERRORE;
+		    return RLI_ERRORE;
 		}
-		case ADD:
+		case AVL_ADD:
 		{
 		    m++;
 		    break;
 		}
-		case PRES:
+		case AVL_PRES:
 		{
 		    break;
 		}
 		default:
 		{
 		    G_fatal_error("avl_add unknown error");
-		    return ERRORE;
+		    return RLI_ERRORE;
 		}
 	    }
 	}
@@ -751,14 +754,14 @@ int calculateF(int fd,area_des ad, double *result)
     if(array==NULL)
     {
 	G_fatal_error("malloc array failed");
-	return ERRORE;
+	return RLI_ERRORE;
     }
     tot=avl_to_array(albero,zero,array);
     
     if (tot!=m)
     {
 	G_warning("avl_to_array unaspected value. the result could be wrong");
-	return ERRORE;
+	return RLI_ERRORE;
     }
     
     /* calculate summary */
@@ -785,6 +788,6 @@ int calculateF(int fd,area_des ad, double *result)
     {
 	G_free(mask_buf);
     }
-    return OK;
+    return RLI_OK;
 }
 

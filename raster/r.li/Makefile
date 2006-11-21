@@ -19,9 +19,12 @@ SUBDIRS = \
 	r.li.meanPatchSize\
 	r.li.meanPixelAttribute\
 	r.li.patchAreaDistributionCV\
+	r.li.patchAreaDistributionSD\
+	r.li.patchAreaDistributionRANGE\
 	r.li.contrastWeightedEdgeDensity\
-
-
+	r.li.richness\
+	r.li.dominance\
+	
 default: subdirs htmldir
 
 clean: cleansubdirs

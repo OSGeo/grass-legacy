@@ -1,18 +1,13 @@
 MODULE_TOPDIR = ../../..
 
-PGM = r.li.daemon
+EXTRA_LIBS=$(GISLIB) 
 
-LIBES = $(GISLIB) 
-DEPENDENCIES = $(GISDEP)
+LIB_NAME = libr_li
 
-include $(MODULE_TOPDIR)/include/Make/Module.make
+LIB_OBJS = daemon.o list.o ipc.o worker.o GenericCell.o	avl.o avlID.o
 
-default: cmd
-	rm -f libr_li.a
-	ar r libr_li.a $(OBJDIR)/daemon.o
-	ar r libr_li.a $(OBJDIR)/list.o
-	ar r libr_li.a $(OBJDIR)/ipc.o
-	ar r libr_li.a $(OBJDIR)/worker.o
-	ar r libr_li.a $(OBJDIR)/GenericCell.o	
-	ar r libr_li.a $(OBJDIR)/avl.o
-	ar r libr_li.a $(OBJDIR)/avlID.o
+DEPENDENCIES = $(GISDEP) 
+
+include $(MODULE_TOPDIR)/include/Make/Lib.make
+
+default: lib

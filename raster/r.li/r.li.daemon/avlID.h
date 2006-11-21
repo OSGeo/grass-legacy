@@ -1,16 +1,25 @@
+/*
+* \AUTHOR: Serena Pallecchi student of Computer Science University of Pisa (Italy)
+ *			Commission from Faunalia Pontedera (PI) www.faunalia.it
+ *
+ *   This program is free software under the GPL (>=v2)
+ *   Read the COPYING file that comes with GRASS for details.
+ *	 
+ *	 \BUGS: please send bugs reports to  pallecch@cli.di.unipi.it
+ */
 
 typedef struct avlID_node
 {
-     long id;
-    long counter; 
-    struct avlID_node *father; /* puntatore al padre */
-    struct avlID_node *right_child; /* puntatore al figlio destro */
-    struct avlID_node *left_child; /* puntatore al figlio sinistro */
+     long id; /*key field*/
+    long counter; /*data*/
+    struct avlID_node *father; 
+    struct avlID_node *right_child; 
+    struct avlID_node *left_child; 
 }avlID_node;
 
 typedef avlID_node*  avlID_tree;
 
-/*tabella*/
+/*table*/
 typedef struct avlID_tableRow
 {
      long k;
@@ -19,7 +28,7 @@ typedef struct avlID_tableRow
 
 typedef avlID_tableRow* avlID_table;
 
-/* prototipi delle funzioni */
+/* prototype of functions */
 avlID_tree avlID_make( const  long k, const  long n);
 avlID_node * avlID_find(const avlID_tree root, const   long k );
 int avlID_add(avlID_tree *root, const  long k, const  long n);

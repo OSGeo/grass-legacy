@@ -1,11 +1,11 @@
 /*
- *   \brief calculates Simpson's diversity index
- *
- *   Author: Serena Pallecchi
+ *	\AUTHOR: Serena Pallecchi student of Computer Science University of Pisa (Italy)
+ *			Commission from Faunalia Pontedera (PI) www.faunalia.it
  *
  *   This program is free software under the GPL (>=v2)
  *   Read the COPYING file that comes with GRASS for details.
- *
+ *	 
+ *	 \BUGS: please send bugs reports to pallecch@cli.di.unipi.it
  */
 
 
@@ -20,8 +20,6 @@
 
 #include "defs.h"
 #include "avlDefs.h"
-//#include "daemon.h"
-//#include "index.h"
 #include "avlID.h"
 
 static avlID_node *avlID_individua( const avlID_tree root, const  long k, avlID_node **father, int *direction );
@@ -104,20 +102,20 @@ int avlID_add(avlID_tree *root, const  long k, const  long n)
 
 
     if ((root==NULL) || (*root==NULL))
-	return ERR;
+	return AVL_ERR;
 
     /* find where insert the new node */
     node_temp = avlID_individua(*root, k, &p,&d);
     if(node_temp != NULL)
     {
 	node_temp->counter=node_temp->counter+n;
-	return PRES; /* key already exists in the tree, only update the counter */
+	return AVL_PRES; /* key already exists in the tree, only update the counter */
     }
 
     /* create the new node */
     node_temp = avlID_make(k,n);
     if(node_temp ==NULL)
-	return ERR;
+	return AVL_ERR;
 
     /* insert the new node */
     node_temp->father= p;
@@ -128,14 +126,14 @@ int avlID_add(avlID_tree *root, const  long k, const  long n)
 	else
 	{
 	    G_free(node_temp);
-	    return ERR;
+	    return AVL_ERR;
 	}
     }
 
     /* if necessary balance the tree */
     critical= critical_node( node_temp, &pos1, &pos2, NULL) ;
     if( critical == NULL)
-	return ADD; /* not necessary */
+	return AVL_ADD; /* not necessary */
 
     /* balance */
     rotation= (pos1 * 10) + pos2;
@@ -146,14 +144,14 @@ int avlID_add(avlID_tree *root, const  long k, const  long n)
 	case AVL_DS: avlID_rotation_rl( critical ); break;
 	case AVL_DD: avlID_rotation_rr( critical ); break;
 	default: G_fatal_error("avl, avlID_add: balancing error\n");
-	    return ERR;
+	    return AVL_ERR;
     }
 
     /* if after rotation there is a new root update the root pointer */
     while ( (*root)->father != NULL )
 	*root = (*root)->father;
 
-    return ADD;
+    return AVL_ADD;
 }
 
 

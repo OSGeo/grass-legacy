@@ -174,7 +174,7 @@ void worker(char *raster, int f(int, char **, area_des, double *),\
 		
 		 /* calculate function */
 		 
-		 if (f(fd, parameters, ad, &result) == OK){
+		 if (f(fd, parameters, ad, &result) == RLI_OK){
 			 /* success */
 			 toSend.type = DONE;
 			 toSend.f.f_d.aid = aid;
