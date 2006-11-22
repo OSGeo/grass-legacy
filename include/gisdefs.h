@@ -433,7 +433,7 @@ double G_distance_point_to_line_segment(double, double, double, double, double,
     double);
 
 /* done_msg.c */
-int G_done_msg(char *);
+int G_done_msg(const char *, ...);
 
 /* eigen_tools.c */
 int G_tqli(double [], double [], int, double **);
