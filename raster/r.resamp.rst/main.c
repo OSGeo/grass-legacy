@@ -191,6 +191,7 @@ int main(int argc, char *argv[])
     parm.slope->required = NO;
     parm.slope->gisprompt = "new,cell,raster";
     parm.slope->description = _("Output slope map (or fx)");
+    parm.slope->guisection  = _("Output_options");
 
     parm.aspect = G_define_option();
     parm.aspect->key = "aspect";
@@ -198,6 +199,7 @@ int main(int argc, char *argv[])
     parm.aspect->required = NO;
     parm.aspect->gisprompt = "new,cell,raster";
     parm.aspect->description = _("Output aspect map (or fy)");
+    parm.aspect->guisection  = _("Output_options");
 
     parm.pcurv = G_define_option();
     parm.pcurv->key = "pcurv";
@@ -205,6 +207,7 @@ int main(int argc, char *argv[])
     parm.pcurv->required = NO;
     parm.pcurv->gisprompt = "new,cell,raster";
     parm.pcurv->description = _("Output profile curvature map (or fxx)");
+    parm.pcurv->guisection  = _("Output_options");
 
     parm.tcurv = G_define_option();
     parm.tcurv->key = "tcurv";
@@ -212,6 +215,7 @@ int main(int argc, char *argv[])
     parm.tcurv->required = NO;
     parm.tcurv->gisprompt = "new,cell,raster";
     parm.tcurv->description = _("Output tangential curvature map (or fyy)");
+    parm.tcurv->guisection  = _("Output_options");
 
     parm.mcurv = G_define_option();
     parm.mcurv->key = "mcurv";
@@ -219,6 +223,7 @@ int main(int argc, char *argv[])
     parm.mcurv->required = NO;
     parm.mcurv->gisprompt = "new,cell,raster";
     parm.mcurv->description = _("Output mean curvature map (or fxy)");
+    parm.mcurv->guisection  = _("Output_options");
 
     parm.smooth = G_define_option();
     parm.smooth->key = "smooth";
@@ -226,6 +231,7 @@ int main(int argc, char *argv[])
     parm.smooth->required = NO;
     parm.smooth->gisprompt = "old,cell,raster";
     parm.smooth->description = _("Name of raster map containing smoothing");
+    parm.smooth->guisection  = _("Settings");
 
     parm.maskmap = G_define_option();
     parm.maskmap->key = "maskmap";
@@ -233,6 +239,7 @@ int main(int argc, char *argv[])
     parm.maskmap->required = NO;
     parm.maskmap->gisprompt = "old,cell,raster";
     parm.maskmap->description = _("Name of raster map to be used as mask");
+    parm.maskmap->guisection  = _("Settings");
 
     parm.overlap = G_define_option();
     parm.overlap->key = "overlap";
@@ -240,6 +247,7 @@ int main(int argc, char *argv[])
     parm.overlap->required = NO;
     parm.overlap->answer = OVERLAP;
     parm.overlap->description = _("Rows/columns overlap for segmentation");
+    parm.overlap->guisection  = _("Settings");
 
     parm.zmult = G_define_option();
     parm.zmult->key = "zmult";
@@ -247,6 +255,7 @@ int main(int argc, char *argv[])
     parm.zmult->answer = ZMULT;
     parm.zmult->required = NO;
     parm.zmult->description = _("Multiplier for z-values");
+    parm.zmult->guisection  = _("Settings");
 
     parm.fi = G_define_option();
     parm.fi->key = "tension";
@@ -254,30 +263,34 @@ int main(int argc, char *argv[])
     parm.fi->answer = TENSION;
     parm.fi->required = NO;
     parm.fi->description = _("Spline tension value");
+    parm.fi->guisection  = _("Settings");
 
     parm.theta = G_define_option();
     parm.theta->key = "theta";
     parm.theta->type = TYPE_DOUBLE;
     parm.theta->required = NO;
     parm.theta->description = _("Anisotropy angle (in degrees)");
+    parm.theta->guisection  = _("Anisotropy");
 
     parm.scalex = G_define_option();
     parm.scalex->key = "scalex";
     parm.scalex->type = TYPE_DOUBLE;
     parm.scalex->required = NO;
     parm.scalex->description = _("Anisotropy scaling factor");
-
-    flag.deriv = G_define_flag();
-    flag.deriv->key = 'd';
-    flag.deriv->description = _("Output partial derivatives instead");
+    parm.scalex->guisection  = _("Anisotropy");
 
     flag.cprght = G_define_flag();
     flag.cprght->key = 't';
     flag.cprght->description = _("Use dnorm independent tension");
 
+    flag.deriv = G_define_flag();
+    flag.deriv->key = 'd';
+    flag.deriv->description =
+	_("Output partial derivatives instead of topographic parameters");
+    flag.deriv->guisection  = _("Output_options");
 
     if (G_parser(argc, argv))
-	exit(1);
+	exit(EXIT_FAILURE);
 
     if (G_get_set_window(&winhd) == -1)
 	G_fatal_error(_("Retrieving and setting region failed"));
@@ -589,8 +602,9 @@ int main(int argc, char *argv[])
 	G_close_cell(fdsmooth);
 
     G_done_msg("");
-    return 0;
+    exit(EXIT_SUCCESS);
 }
+
 
 void create_temp_files(void)
 {
