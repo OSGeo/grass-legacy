@@ -124,10 +124,10 @@ set descmenu [subst  {
 			{command {[G_msg "ASCII points file or GRASS ASCII vector file"]} {} "v.in.ascii" {} -command { execute v.in.ascii }}
 			{command {[G_msg "Import old GRASS vector format"]} {} "v.convert" {} -command { execute v.convert }}
 			{separator}
-			{command {[G_msg "dxf file"]} {} "v.in.dxf" {} -command { execute v.in.dxf }}
+			{command {[G_msg "DXF file"]} {} "v.in.dxf" {} -command { execute v.in.dxf }}
 			{command {[G_msg "ESRI e00 format"]} {} "v.in.e00" {} -command { execute v.in.e00 }}
 			{command {[G_msg "Garmin GPS Waypoints/Routes/Tracks"]} {} "v.in.garmin" {} -command { execute v.in.garmin }}
-			{command {[G_msg "Garmin GPS Waypoints/Routes/Tracks using GPSBabel"]} {} "v.in.gpsbabel" {} -command { execute v.in.gpsbabel }}
+			{command {[G_msg "GPS Waypoints/Routes/Tracks using GPSBabel"]} {} "v.in.gpsbabel" {} -command { execute v.in.gpsbabel }}
 			{command {[G_msg "GEOnet Name server country files (US-NGA GNS)"]} {} "v.in.gns" {} -command { execute v.in.gns }}
 			{command {[G_msg "Matlab and MapGen files"]} {} "v.in.mapgen" {} -command { execute v.in.mapgen }}
 		}}
@@ -154,7 +154,7 @@ set descmenu [subst  {
 			{command {[G_msg "PPM image from red, green, blue raster maps"]} {} "r.out.ppm3" {} -command { execute r.out.ppm3 }}
 			{command {[G_msg "POVray height-field"]} {} "r.out.pov" {} -command { execute r.out.pov }}
 			{command {[G_msg "TIFF image (8/24bit)"]} {} "r.out.tiff" {} -command { execute r.out.tiff }}
-			{command {[G_msg "VRML file"]} {} "p.out.vrml" {} -command { execute p.out.vrml }}
+			{command {[G_msg "VRML file"]} {} "r.out.vrml" {} -command { execute r.out.vrml }}
 			{command {[G_msg "VTK ASCII file"]} {} "r.out.vtk" {} -command { execute r.out.vtk }}
 		}}
 		{cascad {[G_msg "Vector map"]} {} "" $tmenu {			
