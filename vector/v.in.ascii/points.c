@@ -368,7 +368,15 @@ int points_to_bin(FILE * ascii, int rowlen, struct Map_info *Map,
 		if (strlen(tokens[i]) > 0) {
 		    if (coltype[i] == DB_C_TYPE_INT ||
 			coltype[i] == DB_C_TYPE_DOUBLE) {
-			sprintf(buf2, "%s", tokens[i]);
+			if (G_projection() == PROJECTION_LL &&
+			    (i == xcol || i == ycol)) {
+			    if (i == xcol)
+			        sprintf(buf2, "%.15g", x);
+			    else
+			        sprintf(buf2, "%.15g", y);
+			}
+			else
+			    sprintf(buf2, "%s", tokens[i]);
 		    }
 		    else {
 			db_set_string(&val, tokens[i]);
