@@ -112,10 +112,10 @@ set descmenu [subst  {
 			{command {[G_msg "ASCII points file or GRASS ASCII vector file"]} {} "v.in.ascii" {} -command { execute v.in.ascii }}
 			{command {[G_msg "Import old GRASS vector format"]} {} "v.convert" {} -command { execute v.convert }}
 			{separator}
-			{command {[G_msg "dxf file"]} {} "v.in.dxf" {} -command { execute v.in.dxf }}
+			{command {[G_msg "DXF file"]} {} "v.in.dxf" {} -command { execute v.in.dxf }}
 			{command {[G_msg "ESRI e00 format"]} {} "v.in.e00" {} -command { execute v.in.e00 }}
 			{command {[G_msg "Garmin GPS Waypoints/Routes/Tracks"]} {} "v.in.garmin" {} -command { execute v.in.garmin }}
-			{command {[G_msg "Garmin GPS Waypoints/Routes/Tracks using GPSBabel"]} {} "v.in.gpsbabel" {} -command { execute v.in.gpsbabel }}
+			{command {[G_msg "GPS Waypoints/Routes/Tracks using GPSBabel"]} {} "v.in.gpsbabel" {} -command { execute v.in.gpsbabel }}
 			{command {[G_msg "GEOnet Name server country files (US-NGA GNS)"]} {} "v.in.gns" {} -command { execute v.in.gns }}
 			{command {[G_msg "Matlab and MapGen files"]} {} "v.in.mapgen" {} -command { execute v.in.mapgen }}
 		}}
@@ -129,6 +129,7 @@ set descmenu [subst  {
 			{command {[G_msg "Multiple formats using GDAL"]} {} "r.out.gdal" {} -command { execute r.out.gdal }}
 			{separator}
 			{command {[G_msg "ASCII grid (for GRASS, Surfer, Modflow, etc)"]} {} "r.out.ascii" {} -command { execute r.out.ascii }}
+			{command {[G_msg "ASCII x,y,z values of cell centers"]} {} "r.out.xyz" {} -command { execute r.out.xyz }}
 			{separator}
 			{command {[G_msg "ESRI ARC/INFO ASCII grid"]} {} "r.out.arc" {} -command { execute r.out.arc }}
 			{command {[G_msg "GRIDATB.FOR map file (TOPMODEL)"]} {} "r.out.gridatb" {} -command { execute r.out.gridatb }}
@@ -142,7 +143,7 @@ set descmenu [subst  {
 			{command {[G_msg "PPM image from red, green, blue raster maps"]} {} "r.out.ppm3" {} -command { execute r.out.ppm3 }}
 			{command {[G_msg "POVray height-field"]} {} "r.out.pov" {} -command { execute r.out.pov }}
 			{command {[G_msg "TIFF image (8/24bit)"]} {} "r.out.tiff" {} -command { execute r.out.tiff }}
-			{command {[G_msg "VRML file"]} {} "p.out.vrml" {} -command { execute p.out.vrml }}
+			{command {[G_msg "VRML file"]} {} "r.out.vrml" {} -command { execute r.out.vrml }}
 			{command {[G_msg "VTK ASCII file"]} {} "r.out.vtk" {} -command { execute r.out.vtk }}
 		}}
 		{cascad {[G_msg "Vector map"]} {} "" $tmenu {			
@@ -232,7 +233,7 @@ set descmenu [subst  {
 			{command {[G_msg "Resample using aggregate statistics"]} {} "r.resamp.stats" {} -command {execute r.resamp.stats }}
 			{command {[G_msg "Resample using regularized spline with tension method"]} {} "r.resamp.rst" {} -command {execute r.resamp.rst }}
 	    }}
-		{command {[G_msg "Support file creation and maintenance"]} {} "r.support" {} -command {term r.support.sh }}
+		{command {[G_msg "Support file creation and maintenance"]} {} "r.support" {} -command {term r.support }}
 		{separator}
 		{command {[G_msg "Reproject raster from other location"]} {} "r.proj" {} -command {execute r.proj }}
 		{command {[G_msg "Generate tiling for other projection"]} {} "r.tileset" {} -command {execute r.tileset }}
