@@ -21,6 +21,7 @@
 #%  keywords: display, legend
 #%End
 #%option
+#% guisection: Files
 #% key: map
 #% type: string
 #% gisprompt: old,vector,vector
@@ -28,6 +29,7 @@
 #% required : yes
 #%end
 #%option
+#% guisection: Theme_prefs
 #% key: type
 #% type: string
 #% description: Vector map type
@@ -36,12 +38,14 @@
 #% required : yes
 #%end
 #%option
+#% guisection: Theme_prefs
 #% key: column
 #% type: string
 #% description: Attribute column to use for thematic display (must be numeric)
 #% required : yes
 #%end
 #%option
+#% guisection: Theme_prefs
 #% key: themetype
 #% type: string
 #% options: graduated_colors,graduated_points,graduated_lines
@@ -50,6 +54,7 @@
 #% required : yes
 #%end
 #%option
+#% guisection: Theme_prefs
 #% key: themecalc
 #% type: string
 #% options: interval,std_deviation,quartiles,custom_breaks
@@ -58,12 +63,14 @@
 #% required : yes
 #%end
 #%option
+#% guisection: Theme_prefs
 #% key: breakpoints
 #% type: string
 #% description: Break points for custom breaks option. Separate values by spaces. (0 10 20 30 ...)
 #% required : no
 #%end
 #%option
+#% guisection: Theme_prefs
 #% key: layer
 #% type: integer
 #% description: Layer to use for thematic display
@@ -71,6 +78,7 @@
 #% required : no
 #%end
 #%option
+#% guisection: Points
 #% key: icon
 #% type: string
 #% description: Vector point icon for point data
@@ -79,6 +87,7 @@
 #% required : no
 #%end
 #%option
+#% guisection: Points
 #% key: size
 #% type: double
 #% description: Icon size for point data (minimum icon size/line width for graduated points/lines)
@@ -86,6 +95,7 @@
 #% required : no
 #%end
 #%option
+#% guisection: Points
 #% key: maxsize
 #% type: double
 #% description: Maximum icon size/line width for graduated points and lines
@@ -93,6 +103,7 @@
 #% required : no
 #%end
 #%option
+#% guisection: Theme_prefs
 #% key: nint
 #% type: integer
 #% description: Number of classes for interval theme (integer)
@@ -100,6 +111,7 @@
 #% required : no
 #%end
 #%option
+#% guisection: Color
 #% key: colorscheme
 #% type: string
 #% description: Color scheme for graduated color mapping (select 'single_color' for graduated point/line display)
@@ -108,6 +120,7 @@
 #% required : yes
 #%end
 #% option
+#% guisection: Color
 #% key: pointcolor
 #% type: string
 #% description: Color for graduated points map (grass named color or R:G:B triplet). Set color scheme to single color.
@@ -115,6 +128,7 @@
 #% required : no
 #%end
 #% option
+#% guisection: Color
 #% key: linecolor
 #% type: string
 #% description: Color for graduated lines or point/area outlines (grass named color or R:G:B triplet). Set color scheme to single color.
@@ -122,6 +136,7 @@
 #% required : no
 #%end
 #% option
+#% guisection: Color
 #% key: startcolor
 #% type: string
 #% description: Beginning color for custom color gradient. Must be expressed as R:G:B triplet.
@@ -129,6 +144,7 @@
 #% required : no
 #%end
 #% option
+#% guisection: Color
 #% key: endcolor
 #% type: string
 #% description: Ending color for custom color gradient. Must be expressed as R:G:B triplet
@@ -136,6 +152,7 @@
 #% required : no
 #%end
 #% option
+#% guisection: Misc
 #% key: monitor
 #% type: string
 #% description: Select x11 display monitor for legend
@@ -143,48 +160,57 @@
 #% answer: x1
 #% required : no
 #%end
-#%option
-#% key: group
-#% type: string
-#% gisprompt: new_file,file,group
-#% description: Name of group file where thematic map commands will be saved
-#% required : no
+#%flag 
+#% guisection: Files
+#%key: g
+#%description: Save thematic map commands to group file for GIS Manager
 #%end
 #%option
+#% guisection: Theme_prefs
 #% key: where
 #% type: string
 #% description: WHERE conditions of SQL statement without 'where' keyword
 #% required : no
 #%end
 #%option
+#% guisection: Files
 #% key: psmap
 #% type: string
 #% description: Root for the name of psmap instruction files to be in current directory (if not set, no psmap instruction files will be created)
 #% required : no
 #%end
+#%option
+#% guisection: Files
+#% key: group
+#% type: string
+#% gisprompt: new_file,file,group
+#% description: Name of group file where thematic map commands will be saved
+#% required : no
+#%end
+#%flag 
+#% guisection: Theme_prefs
+#%key: l
+#%description: Create graphic legend in x11 display monitor
+#%end
 #%flag
+#% guisection: Color
 #% key: f
 #% description: Only draw fills (no outlines) for areas and points
 #%end
 #%flag
+#% guisection: Color
 #% key: u
 #% description: Update color values to GRASSRGB column in attribute table
 #%end
 #%flag 
-#%key: l
-#%description: Create graphic legend in x11 display monitor
-#%end
-#%flag 
+#% guisection: Misc
 #%key: s
-#%description: Use with GIS Manager (special legend and display output)
+#%description: Output legend for GIS Manager (for scripting use only)
 #%end
 #%flag 
+#% guisection: Misc
 #%key: m
 #%description: Use math notation brackets in legend
-#%end
-#%flag 
-#%key: g
-#%description: Save thematic map commands to group file for GIS Manager
 #%end
 
 if  [ -z "$GISBASE" ] ; then
