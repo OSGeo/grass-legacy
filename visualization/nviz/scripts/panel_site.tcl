@@ -141,12 +141,13 @@ proc mksitePanel { BASE } {
     set ptcolor [button $row1.color -text Color \
 		-command "change_color site $row1.color"]
     bind $ptcolor <Expose> "$row1.color configure -bg \[get_curr_sv_color site\]"
-        
-    set markertype [ComboBox $row1.marker -label [G_msg "  icon type "] -width 8 \
+   
+   	set markerlbl [label $row1.markerlbl -text "  icon type " -fg black -font $nviztxtfont]
+    set markertype [ComboBox $row1.marker -width 8 \
     	-textvariable Nv_(siteshape) -modifycmd change_marker \
     	-values {"x" "sphere" "diamond" "cube" "box" "gyro" "aster" "histogram"}]
 
-    pack $szlabel $ptsize $markertype -side left 
+    pack $szlabel $ptsize $markerlbl $markertype -side left 
     pack $ptcolor -side left -padx 10
 
     set rb1 [radiobutton  $row2.disp3d -text "3D points" \
