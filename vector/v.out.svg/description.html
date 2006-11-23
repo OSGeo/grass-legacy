@@ -1,0 +1,52 @@
+<h2>DESCRIPTION</h2>
+
+<em>v.out.svg</em> converts GRASS vector data to SVG (Scalable Vector Graphics) code notation.
+
+<h2>EXAMPLE</h2>
+
+<p>
+Export <b>polygons</b> from GRASS vector map soils (Spearfish sample data) to SVG format:
+<br>
+<b>v.out.svg</b>
+<b>input</b>=<em>soils</em>
+<b>output</b>=<em>/tmp/output.svg</em>
+<b>type</b>=<em>poly</em>
+</p>
+
+<p>
+Export <b>lines</b> from GRASS vector map t_hydro (Spearfish sample
+data) to SVG format, set coordinate precision to 0:
+<br>
+<b>v.out.svg</b>
+<b>input</b>=<em>t_hydro</em>
+<b>output</b>=<em>/tmp/output.svg</em>
+<b>type</b>=<em>line</em>
+<b>precision</b>=<em>0</em>
+</p>
+
+<p>
+Export <b>points</b> from GRASS vector map archsites (Spearfish sample
+data) to SVG format, include attribute <b>str1</b> (name):
+<br>
+<b>v.out.svg</b>
+<b>input</b>=<em>archsites</em>
+<b>output</b>=<em>/tmp/output.svg</em>
+<b>type</b>=<em>point</em>
+<b>precision</b>=<em>0</em>
+<b>attrib</b>=<em>str1</em>
+</p>
+
+<H2>REFERENCES</H2>
+
+<a href="http://svg.cc/grass/index.html">Modul v.out.svg at svg.cc</a>
+<br>
+<a href="http://www.w3.org/Graphics/SVG/">SVG (Scalable Vector Graphics) at w3c.org</a>
+
+
+<h2>SEE ALSO</h2>
+
+<h2>AUTHOR</h2>
+
+Klaus F&#246;rster, &lt;klaus@svg.cc&gt;, Innsbruck, Austria
+
+<p><i>Last changed: $Date$</i>
