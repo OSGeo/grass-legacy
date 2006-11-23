@@ -117,6 +117,7 @@ typedef mat_struct vec_struct;
 /* Matrix routines corresponding to BLAS Level III */
 
 mat_struct *G_matrix_init(int, int, int);
+int G_matrix_zero(mat_struct *);
 int G_matrix_set(mat_struct *, int, int, int);
 mat_struct *G_matrix_copy(const mat_struct *);
 mat_struct *G_matrix_add(mat_struct *, mat_struct *);

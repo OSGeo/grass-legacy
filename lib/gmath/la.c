@@ -80,12 +80,32 @@ mat_struct *G_matrix_init (int rows, int cols, int ldim)
 
 
 /*!
+ * \fn int G_matrix_zero (mat_struct *A)
+ *
+ * \brief Clears (or resets) the matrix values to 0
+ *
+ * \param A
+ * \return 0 on error; 1 on success
+ */
+
+int G_matrix_zero (mat_struct *A)
+{
+    if (!A->vals)
+        return 0;
+
+    memset (A->vals, 0, sizeof(A->vals));
+
+    return 1;
+}
+
+
+/*!
  * \fn int G_matrix_set(mat_struct *A, int rows, int cols, int ldim)
  *
  * \brief Set paramaters for an initialized matrix
  *
  * Set parameters for matrix <b>A</b> that is allocated,
- * but not yet fully initialized.
+ * but not yet fully initialized.  Is an alternative to G_matrix_init().
  *
  * \param A
  * \param rows
