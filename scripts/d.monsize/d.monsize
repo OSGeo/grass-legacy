@@ -56,8 +56,10 @@ if [ "$1" != "@ARGS_PARSED@" ] ; then
   exec g.parser "$0" "$@"
 fi
 
-export GRASS_WIDTH=$GIS_OPT_SETWIDTH
-export GRASS_HEIGHT=$GIS_OPT_SETHEIGHT
+GRASS_WIDTH=$GIS_OPT_SETWIDTH
+export GRASS_WIDTH
+GRASS_HEIGHT=$GIS_OPT_SETHEIGHT
+export GRASS_HEIGHT
 
 
 # Check the current status of the monitor
