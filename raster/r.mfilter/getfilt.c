@@ -1,4 +1,5 @@
 #include <string.h>
+#include <grass/glocale.h>
 #include "filter.h"
 #include "local_proto.h"
 
@@ -150,7 +151,7 @@ FILTER *get_filter (char *name, int *nfilters, char *title)
 	 * this program handles them properly
 	 */
 	    else
-		fprintf (stderr, "WARNING: filter start %s ignored, using UL\n", temp);
+		G_warning (_("Filter start %s ignored, using UL"), temp);
 
 	/* disable these others
 	    else if (strcmp (temp, "UR") == 0)

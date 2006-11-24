@@ -18,7 +18,8 @@ int main (int argc, char *argv[])
     char title[1024];
     char temp[300];
     int i;
-	struct GModule *module;
+    struct GModule *module;
+    /* please, remove before GRASS 7 released */
     struct Flag *flag1 ;
     struct Flag *flag2 ;
     struct Option *opt1 ;
@@ -76,6 +77,7 @@ int main (int argc, char *argv[])
 
     /* Define the different flags */
 
+    /* please, remove before GRASS 7 released */
     flag1 = G_define_flag() ;
     flag1->key         = 'q' ;
     flag1->description = _("Quiet") ;
@@ -93,7 +95,13 @@ int main (int argc, char *argv[])
     if (G_parser(argc, argv))
         exit(-1);
 
-    silent = flag1->answer;
+    /* please, remove before GRASS 7 released */
+    if(flag1->answer) {
+        putenv("GRASS_VERBOSE=0");
+        G_warning(_("The '-q' flag is superseded and will be removed "
+            "in future. Please use '--quiet' instead."));
+    }
+
     /*
     preserve_edges = flag3->answer;
     */
@@ -107,10 +115,7 @@ int main (int argc, char *argv[])
 
     in_mapset = G_find_cell2 (in_name,"");
     if (in_mapset == NULL)
-    {
-        fprintf (stderr, "%s: raster file not found", in_name);
-        exit(1);
-    }
+        G_fatal_error (_("%s: raster file not found"), in_name);
 
     nrows = G_window_rows();
     ncols = G_window_cols();
@@ -123,12 +128,8 @@ int main (int argc, char *argv[])
     for (i=0; i < nfilters; i++)
     {
         if (filter[i].size > ncols || filter[i].size > nrows)
-        {
-            fprintf (stderr,
-		"%s: raster file too small for the size of the filter",
+            G_fatal_error (_("%s: raster file too small for the size of the filter"),
 		G_program_name());
-	    exit(1);
-        }
     }
 
 
