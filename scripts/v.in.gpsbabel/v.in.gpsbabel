@@ -97,7 +97,8 @@ fi
 
 # set environment so that awk works properly in all languages
 unset LC_ALL
-export LC_NUMERIC=C
+LC_NUMERIC=C
+export LC_NUMERIC
 
 eval `g.gisenv`
 : ${GISBASE?} ${GISDBASE?} ${LOCATION_NAME?} ${MAPSET?}
