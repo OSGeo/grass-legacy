@@ -54,7 +54,8 @@ fi
 
 # setting environment, so that awk works properly in all languages
 unset LC_ALL
-export LC_NUMERIC=C
+LC_NUMERIC=C
+export LC_NUMERIC
 
 # Check the current status of the monitor
 monitorcheck=`d.mon -p|sed s/'No monitor currently selected for output'//`
