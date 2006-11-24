@@ -83,7 +83,7 @@ int main (int argc, char *argv[])
 	G_fatal_error (_( "%s: can't read category labels"), covermap);
     }
 
-    strcpy (command, "r.stats -a '");
+    strcpy (command, "r.stats -an '");
     strcat (command, G_fully_qualified_name (basemap, base_mapset));
     strcat (command, ",");
     strcat (command, G_fully_qualified_name (covermap, cover_mapset));
