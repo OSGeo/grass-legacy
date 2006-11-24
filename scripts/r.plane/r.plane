@@ -97,7 +97,8 @@ trap 'rm -f ${TMP}*' 2 3 15
 
 # setting environment, so that awk works properly in all languages
 unset LC_ALL
-export LC_NUMERIC=C
+LC_NUMERIC=C
+export LC_NUMERIC
 
 ### setup enviro vars ###
 eval `g.gisenv`
