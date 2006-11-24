@@ -51,7 +51,7 @@ The function name convention is as follows:
 \section matrix_matrix_functions matrix -matrix functions
 
 <P>
-mat_struct *G_matrix_init (int rows, int cols, int ldim)<br>
+mat_struct *#G_matrix_init (int rows, int cols, int ldim)<br>
   Initialise a matrix  structure Initialise a matrix structure. Set 
   the number of rows with
   the first parameter and columns with the second. The third parameter, lead
@@ -85,7 +85,7 @@ the rows. So for 3 rows/2 cols it would be called:
 G_matrix_init (3, 2, 3);
 
 <P>
-mat_struct *G_matrix_set (mat_struct *A, int rows, int cols, int ldim)<br>
+mat_struct *#G_matrix_set (mat_struct *A, int rows, int cols, int ldim)<br>
   Set parameters for a matrix  structureSet parameters for a matrix 
   structure that is allocated but not yet initialised fully.
 
@@ -123,44 +123,44 @@ G_matrix_set (&A, 4, 3, 4) ;
 <BR>
 
 <P>
-mat_struct *G_matrix_add (mat_struct *mt1, mat_struct *mt2)<br>
+mat_struct *#G_matrix_add (mat_struct *mt1, mat_struct *mt2)<br>
   Add two matrices. Add two matrices and return the result.  The receiving structure
   should not be initialised, as the matrix  is created by the routine.
 
 <P>
-mat_struct *G_matrix_product (mat_struct *mt1, mat_struct *mt2)<br>
+mat_struct *#G_matrix_product (mat_struct *mt1, mat_struct *mt2)<br>
   Multiply two matricesMultiply two matrices and return the result.
   The receiving structure should not be initialised, as the matrix  is created 
   by the routine.
 
 <P>
-mat_struct *G_matrix_scale (mat_struct *mt1, const double c)<br>
+mat_struct *#G_matrix_scale (mat_struct *mt1, const double c)<br>
   Scale matrix Scale the matrix  by a given scalar value and return the
   result. The receiving structure should not be initialised, as the matrix  is
   created by the routine.
 
 <P>
-mat_struct *G_matrix_subtract (mat_struct *mt1, mat_struct *mt2)<br>
+mat_struct *#G_matrix_subtract (mat_struct *mt1, mat_struct *mt2)<br>
   Subtract two matrices. Subtract two matrices and return the result.
   The receiving structure should not be initialised, as the matrix  is created
   by the routine.
 
 <P>
-mat_struct *G_matrix_copy (const mat_struct *A)<br>
+mat_struct *#G_matrix_copy (const mat_struct *A)<br>
   Copy a matrix. Copy a matrix  by exactly duplicating its structure.
 
 <P>
-mat_struct *G_matrix_transpose (mat_struct *mt)<br>
+mat_struct *#G_matrix_transpose (mat_struct *mt)<br>
   Transpose a matrix. Transpose a matrix  by creating a new one and 
   populating with transposed element s.
 
 <P>
-void G_matrix_print (mat_struct *mt)<br>
+void #G_matrix_print (mat_struct *mt)<br>
   Print out a matrix. Print out a  representation of the matrix  to 
   standard output.
 
 <P>
-int G_matrix_LU_solve (const mat_struct *mt1, mat_struct **xmat0, const
+int #G_matrix_LU_solve (const mat_struct *mt1, mat_struct **xmat0, const
   mat_struct *bmat, mat_type mtype)<br>
   Solve a general system A.X=B. Solve a general
   system A.X=B, where A is a NxN matrix, X and B are NxC matrices, and we are to
@@ -179,24 +179,24 @@ mtype is a flag to indicate what kind of matrix  (real/complex, Hermitian,
   available. Now, only general real matrix  is supported.
 
 <P>
-mat_struct *G_matrix_inverse (mat_struct *mt)<br>
+mat_struct *#G_matrix_inverse (mat_struct *mt)<br>
   Matrix inversion using
   LU decomposition Calls G_matrix_LU_solve() to obtain matrix  inverse using
   LU decomposition. Returns NULL on failure.
 
 <P>
-void G_matrix_free (mat_struct *mt)<br> Free up allocated matrix Free up
+void #G_matrix_free (mat_struct *mt)<br> Free up allocated matrix Free up
   allocated matrix.
 
 <P>
-int G_matrix_set_element (mat_struct *mt, int rowval, int colval, double val)<br>
+int #G_matrix_set_element (mat_struct *mt, int rowval, int colval, double val)<br>
   Set the value of the (i,j) th element Set the value of the
   (i,j) th element to a double value. Index values are C-like ie. zero-based.
   The row number is given first as is conventional. Returns -1 if the
   accessed cell is outside the bounds.
 
 <P>
-double G_matrix_get_element (mat_struct *mt, int rowval, int colval)<br>
+double #G_matrix_get_element (mat_struct *mt, int rowval, int colval)<br>
   Retrieve value of the (i,j) th element Retrieve the value of the
   (i,j) th element to a double value. Index values are C-like ie. zero-based.
 
@@ -208,43 +208,43 @@ double G_matrix_get_element (mat_struct *mt, int rowval, int colval)<br>
 \section matrix_Vector_functions Matrix-Vector functions
 
 <P>
-vec_struct *G_matvect_get_column (mat_struct *mt, int
+vec_struct *#G_matvect_get_column (mat_struct *mt, int
   col) Retrieve a column of matrix Retrieve a column of the matrix  to a vector
   structure. The receiving structure should not be initialised, as the
   vector is created by the routine. Col 0 is the first column.
 
 <P>
-vec_struct *G_matvect_get_row (mat_struct *mt, int
+vec_struct *#G_matvect_get_row (mat_struct *mt, int
   row) Retrieve a row of matrix Retrieve a row of the matrix  to a vector
   structure. The receiving structure should not be initialised, as the
   vector is created by the routine. Row 0 is the first number.
 
 <P>
-int G_matvect_extract_vector (mat_struct *mt, vtype vt, int
+int #G_matvect_extract_vector (mat_struct *mt, vtype vt, int
   indx) Convert matrix  to vectorConvert the current matrix  structure to
   a vector structure. The vtype is RVEC or CVEC which specifies a row vector or
   column vector. The indx indicates the row/column number (zero based) .
 
 <P>
-int G_matvect_retrieve_matrix  (vec_struct *vc) Revert a
+int #G_matvect_retrieve_matrix  (vec_struct *vc) Revert a
   vector to matrix Revert a vector structure to a matrix .
 
 <P>
 
 \section Vector_Vector_functions Vector-Vector functions
 
-vec_struct *G_vector_init (int cells, int ldim, vtype vt) Initialise
+vec_struct *#G_vector_init (int cells, int ldim, vtype vt) Initialise
   a vector structure Initialise a vector structure. The vtype is RVEC or
   CVEC which specifies a row vector or column vector.
 
 <P>
-int G_vector_set (vec_struct *A, int cells, int ldim, vtype vt, int vindx) Set
+int #G_vector_set (vec_struct *A, int cells, int ldim, vtype vt, int vindx) Set
   parameters for vector structureSet parameters for a vector structure that is
   allocated but not yet initialised fully. The vtype is RVEC or
   CVEC which specifies a row vector or column vector.
 
 <P>
-vec_struct *G_vector_copy (const vec_struct *vc1, int
+vec_struct *#G_vector_copy (const vec_struct *vc1, int
   comp_flag) Copy a vectorCopy a vector to a new vector structure. This preserves
   the underlying structure unless you specify DO_COMPACT comp_flag:
 
@@ -254,12 +254,12 @@ vec_struct *G_vector_copy (const vec_struct *vc1, int
 1   ... or not  
 
 <P>
-double G_vector_norm_euclid (vec_struct *vc) Calculates euclidean
+double #G_vector_norm_euclid (vec_struct *vc) Calculates euclidean
   norm Calculates the euclidean norm of a row or column vector, using BLAS
   routine dnrm2_() 
 
 <P>
-double G_vector_norm_maxval (vec_struct *vc, int vflag) Calculates
+double #G_vector_norm_maxval (vec_struct *vc, int vflag) Calculates
   maximum value Calculates the maximum value of a row or column vector.
  The vflag setting defines which value to be calculated:
 
