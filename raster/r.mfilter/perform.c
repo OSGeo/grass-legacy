@@ -22,31 +22,20 @@ int perform_filter (char *in_name, char *in_mapset, char *out_name,
 
     cell = G_allocate_cell_buf();
 
-G_message(_("Filtering [%s] in [%s]"), in_name, in_mapset);
- if (repeat>1 || nfilters>1) fprintf (stderr,"\n");
-
+    G_message(_("Filtering [%s] in [%s]"), in_name, in_mapset);
 
     count=0;
-    for (pass=0; pass < repeat; pass++ )
-    {
-if (!silent && (repeat > 1)) fprintf (stderr,"PASS %d%s", pass+1, nfilters>1?"\n":" ...");
-	for (n = 0; n < nfilters; n++, count++)
-	{
-if (!silent)
-{
-    if(nfilters > 1) fprintf (stderr,"%sFILTER %d ...", repeat>1?" ":"",n+1);
-    else if(repeat==1) fprintf (stderr," ...");
-    fflush(stderr);
-}
+    for (pass=0; pass < repeat; pass++ ) {
+        G_debug(1,"Pass %d", pass+1);
+	for (n = 0; n < nfilters; n++, count++) {
+                G_debug (1,"Filter %d", n+1);
 
-	    if (count==0)
-	    {
+	    if (count==0) {
 		in = G_open_cell_old (in_name, in_mapset);
 #ifdef DEBUG
-fprintf (stderr,"open raster file %s in %s = %d\n", in_name, in_mapset, in);
+                G_message (_("Open raster file %s in %s = %d"), in_name, in_mapset, in);
 #endif
-		if (in < 0)
-		{
+		if (in < 0) {
 		    char msg[100];
 		    sprintf (msg, "unable to open raster file [%s] in [%s]",
 			in_name, in_mapset);
@@ -57,10 +46,9 @@ fprintf (stderr,"open raster file %s in %s = %d\n", in_name, in_mapset, in);
 		if (out < 0)
 		    G_fatal_error ("unable to create a temporary file");
 	    }
-	    else if (count==1)
-	    {
+	    else if (count==1) {
 #ifdef DEBUG
-fprintf (stderr,"close raster file\n");
+                G_message (_("Closing raster file"));
 #endif
 		G_close_cell(in);
 		in = out;
@@ -69,12 +57,11 @@ fprintf (stderr,"close raster file\n");
 		if (out < 0)
 		    G_fatal_error ("unable to create a temporary file");
 	    }
-	    else
-	    {
+	    else {
 		int fd;
 
 #ifdef DEBUG
-fprintf (stderr,"swap temp files\n");
+                G_message(_("Swap temp files"));
 #endif
 		fd = in;
 		in = out;
@@ -86,7 +73,6 @@ fprintf (stderr,"swap temp files\n");
 	    execute_filter (&r, out, &filter[n], cell);
 
 	    rowio_release (&r);
-if (!silent) fprintf (stderr,"\n");
 	}
     }
 
@@ -98,17 +84,15 @@ if (!silent) fprintf (stderr,"\n");
 /* copy final result to output cell file */
     in = out;
     out = G_open_cell_new (out_name);
-    if (out < 0)
-    {
+    if (out < 0) {
 	char msg[100];
 	sprintf (msg, "unable to create raster file [%s] in [%s]",
 	    out_name, G_mapset());
 	G_fatal_error (msg);
     }
 
-if (!silent) fprintf (stderr,"WRITING [%s]\n", out_name);
-    for (row=0; row<nrows; row++)
-    {
+    G_message (_("Writing [%s]"), out_name);
+    for (row=0; row<nrows; row++){
 	getrow (in, cell, row, buflen);
 	G_put_raster_row (out, cell, CELL_TYPE);
     }
@@ -116,7 +100,6 @@ if (!silent) fprintf (stderr,"WRITING [%s]\n", out_name);
 /* remove the temporary files before closing so that the G_close_cell()
    has more disk to work with
 */
-if (!silent) fprintf (stderr,"CREATING SUPPORT FILES\n");
     if (count > 0)
 	unlink (tmp1);
     if (count > 1)

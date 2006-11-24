@@ -52,7 +52,7 @@ execute_filter (ROWIO *r, int out, FILTER *filter, CELL *cell)
     }
     direction = dy;
 #ifdef DEBUG
-fprintf (stdout,"direction %d, dx=%d, dy=%d\n", direction,dx,dy);
+    fprintf (stdout,"direction %d, dx=%d, dy=%d\n", direction,dx,dy);
 #endif
 
     rcount = nrows - (size - 1);
@@ -73,7 +73,7 @@ fprintf (stdout,"direction %d, dx=%d, dy=%d\n", direction,dx,dy);
 /* for each row */
     for (count=0; count < rcount; count++)
     {
-if (!silent) G_percent (count, rcount, 2);
+        G_percent (count, rcount, 2);
 	row = starty;
 	starty += dy;
 	/* get "size" rows */
@@ -116,7 +116,7 @@ if (!silent) G_percent (count, rcount, 2);
 	/* write row */
 	write (out, cell, buflen);
     }
-if (!silent) G_percent (count, rcount, 2);
+    G_percent (count, rcount, 2);
 
 /* copy border rows to output */
     row = starty + mid*dy;
