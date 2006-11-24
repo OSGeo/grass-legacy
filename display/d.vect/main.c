@@ -22,11 +22,11 @@
 #include <grass/display.h>
 #include <grass/Vect.h>
 #include <grass/colors.h>
-#include "plot.h"
 #include <grass/symbol.h>
 #include <grass/dbmi.h>
-#include "local_proto.h"
 #include <grass/glocale.h>
+#include "plot.h"
+#include "local_proto.h"
 
 /* adopted from r.colors */
 static char *icon_files(void)
@@ -107,7 +107,6 @@ main (int argc, char **argv)
 	int size;
 	int default_width;
 	double width_scale;
-	int quiet;
 	double minreg, maxreg, reg;
 	char map_name[128] ;
 	struct GModule *module;
@@ -121,7 +120,8 @@ main (int argc, char **argv)
 	struct Option *lsize_opt, *font_opt, *xref_opt, *yref_opt;
 	struct Option *attrcol_opt, *maxreg_opt, *minreg_opt;
 	struct Option *width_opt, *wcolumn_opt, *wscale_opt;
-	struct Flag   *quiet_flag, *id_flag, *table_acolors_flag, *cats_acolors_flag, *x_flag;
+	struct Flag   *verbose_flag; /* please remove before GRASS 7 released */
+	struct Flag   *id_flag, *table_acolors_flag, *cats_acolors_flag, *x_flag;
 	struct cat_list *Clist;
 	int *cats, ncat;
 	LATTR lattr;
@@ -145,7 +145,7 @@ main (int argc, char **argv)
 
 	map_opt = G_define_standard_option(G_OPT_V_MAP); 
 
-	type_opt =  G_define_standard_option(G_OPT_V_TYPE);
+	type_opt = G_define_standard_option(G_OPT_V_TYPE);
 	type_opt->answer     = "point,line,boundary,centroid,area,face" ;
 	type_opt->options    = "point,line,boundary,centroid,area,face" ;
 
@@ -312,9 +312,10 @@ main (int argc, char **argv)
 	    _("Maximum region size (average from height and width) "
 	      "when map is displayed");
 
-	quiet_flag = G_define_flag ();
-	quiet_flag->key		= 'v';
-	quiet_flag->description	= _("Run verbosely");
+	/* please remove before GRASS 7 released */
+	verbose_flag = G_define_flag ();
+	verbose_flag->key		= 'v';
+	verbose_flag->description	= _("Run verbosely");
 
 	table_acolors_flag = G_define_flag ();
 	table_acolors_flag->key		= 'a';
@@ -344,6 +345,12 @@ main (int argc, char **argv)
 	if (G_parser(argc, argv))
 	    exit(EXIT_FAILURE);
 
+	/* please remove before GRASS 7 released */
+	if (verbose_flag->answer) {
+	    putenv ("GRASS_VERBOSE=2");
+	    G_warning(_("The '-v' flag is superseded and will be removed "
+			"in future. Please use '--verbose' instead."));
+	}
 
 	G_get_set_window (&window);
 
@@ -373,12 +380,19 @@ main (int argc, char **argv)
 	    }
 	}
 
-	strcpy(map_name, map_opt->answer);
+	G_strcpy(map_name, map_opt->answer);
 
 	default_width = atoi(width_opt->answer);
 	if( default_width < 0 )
 		default_width = 0;
 	width_scale = atof(wscale_opt->answer);
+
+	if (table_acolors_flag -> answer && cats_acolors_flag -> answer)
+ 	{
+ 	    cats_acolors_flag -> answer = '\0';
+ 	    G_warning (_("The '-c' and '-a' flags cannot be used together, "
+			 "the '-c' flag will be ignored!"));
+ 	}
 
 	color = WHITE;
 	/* test for background color */
@@ -411,8 +425,6 @@ main (int argc, char **argv)
 	} else if ( ret == 0 ) { /* error */
 	    G_fatal_error(_("Unknown color: [%s]"), fcolor_opt->answer);
 	}
-
-	quiet = !quiet_flag->answer;
 
 	size = atoi (size_opt->answer);
 	Symb = S_read ( icon_opt->answer );
@@ -580,8 +592,7 @@ main (int argc, char **argv)
                       D_get_d_west(), D_get_d_east(),
                       D_move_abs, D_cont_abs);
 
-	if (!quiet)
-	     G_message(_("Plotting ... "));
+	G_message(_("Plotting ..."));
 
 	if ( level >= 2 )
 	    Vect_get_map_box ( &Map, &box );
@@ -668,8 +679,7 @@ main (int argc, char **argv)
 
 	R_close_driver();
 
-        if (!quiet)
-	    fprintf (stdout,_("Done\n"));
+	G_done_msg ("");
 	
 	Vect_close (&Map);
 	Vect_destroy_cat_list (Clist);

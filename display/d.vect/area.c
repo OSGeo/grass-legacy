@@ -7,15 +7,16 @@
 #include <grass/Vect.h>
 #include <grass/display.h>
 #include <grass/raster.h>
-#include "plot.h"
-#include "local_proto.h"
 #include <grass/colors.h>
 #include <grass/dbmi.h>
 #include <grass/glocale.h>
+#include "plot.h"
+#include "local_proto.h"
 
 int darea ( struct Map_info *Map, struct cat_list *Clist, int bcolor, int fcolor, 
-	     int chcat, int id_flag, int table_colors_flag, int cats_color_flag,
-	     struct Cell_head *window, char *rgb_column, int default_width, char *width_column, double width_scale) {
+	    int chcat, int id_flag, int table_colors_flag, int cats_color_flag,
+	    struct Cell_head *window, char *rgb_column, int default_width,
+	    char *width_column, double width_scale) {
 
     int    num, area, isle, n_isles, n_points;
     double xl, yl;
@@ -24,7 +25,7 @@ int darea ( struct Map_info *Map, struct cat_list *Clist, int bcolor, int fcolor
     int cat, centroid = 0;
     int red, grn, blu;
 
-    struct field_info *fi=NULL;
+    struct field_info *fi = NULL;
     dbDriver *driver = NULL;
     dbCatValArray cvarr_rgb, cvarr_width;
     dbCatVal *cv_rgb = NULL, *cv_width = NULL;

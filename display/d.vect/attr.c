@@ -4,8 +4,8 @@
 #include <grass/display.h>
 #include <grass/raster.h>
 #include <grass/dbmi.h>
-#include "plot.h"
 #include <grass/glocale.h>
+#include "plot.h"
 
 int attr ( struct Map_info *Map, int type, char *attrcol, 
            struct cat_list *Clist, LATTR *lattr, int chcat)
@@ -27,7 +27,7 @@ int attr ( struct Map_info *Map, int type, char *attrcol,
     G_debug (2, "attr()");
 
     if ( attrcol == NULL || *attrcol == '\0' ) {
-	G_fatal_error ( "attrcol not specified, cannot display attributes");
+	G_fatal_error (_("attrcol not specified, cannot display attributes"));
     }
     
     Points = Vect_new_line_struct ();
@@ -40,7 +40,7 @@ int attr ( struct Map_info *Map, int type, char *attrcol,
 
     driver = db_start_driver_open_database ( fi->driver, fi->database );
     if ( driver == NULL )
-	G_fatal_error ( "Cannot open database %s by driver %s", fi->database, fi->driver );
+	G_fatal_error (_("Cannot open database %s by driver %s"), fi->database, fi->driver );
 
     Vect_rewind ( Map );
     while (1)
@@ -49,8 +49,7 @@ int attr ( struct Map_info *Map, int type, char *attrcol,
         switch ( ltype )
 	{
 	case -1:
-	    fprintf (stderr, _("\nERROR: vector file - can't read\n") );
-	    return -1;
+	    G_fatal_error (_("Can't read vector file"));
 	case -2: /* EOF */
 	    return  0;
 	}
@@ -100,7 +99,7 @@ int attr ( struct Map_info *Map, int type, char *attrcol,
 		db_append_string ( &stmt, buf);   
 		
 		if (db_open_select_cursor(driver, &stmt, &cursor, DB_SEQUENTIAL) != DB_OK)
-		    G_fatal_error ("Cannot select attributes:\n%s", db_get_string(&stmt) );
+		    G_fatal_error (_("Cannot select attributes: %s"), db_get_string(&stmt) );
 
 		nrows = db_get_num_rows ( &cursor );
 
@@ -116,7 +115,7 @@ int attr ( struct Map_info *Map, int type, char *attrcol,
 
 		    sprintf (text, "%s%s", text, db_get_string(&valstr));
 		} else {
-		    G_warning ("No attribute found for cat %d:\n%s", cat, db_get_string(&stmt));
+		    G_warning (_("No attribute found for cat %d: %s"), cat, db_get_string(&stmt));
 		}
 
 		db_close_cursor(&cursor);
@@ -194,6 +193,3 @@ int attr ( struct Map_info *Map, int type, char *attrcol,
     
     return 0;
 }
-
-
-
