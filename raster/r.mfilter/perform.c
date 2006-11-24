@@ -1,6 +1,7 @@
 #include <unistd.h>
 #include <fcntl.h>
 #include <grass/rowio.h>
+#include <grass/glocale.h>
 #include "glob.h"
 #include "filter.h"
 #include "local_proto.h"
@@ -21,10 +22,9 @@ int perform_filter (char *in_name, char *in_mapset, char *out_name,
 
     cell = G_allocate_cell_buf();
 
-if (!silent)
-{fprintf (stderr, "FILTERING [%s] in [%s]", in_name, in_mapset);
+G_message(_("Filtering [%s] in [%s]"), in_name, in_mapset);
  if (repeat>1 || nfilters>1) fprintf (stderr,"\n");
-}
+
 
     count=0;
     for (pass=0; pass < repeat; pass++ )
