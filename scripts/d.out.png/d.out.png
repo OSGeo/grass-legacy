@@ -97,17 +97,21 @@ out_height=`expr $res \* $curr_height`
 #set window geometry for PNG output
 unset GRASS_WIDTH
 unset GRASS_HEIGHT
-export GRASS_WIDTH=$out_width
-export GRASS_HEIGHT=$out_height
+GRASS_WIDTH=$out_width
+export GRASS_WIDTH
+GRASS_HEIGHT=$out_height
+export GRASS_HEIGHT
 
 #make sure that output is 24 bit color
-export GRASS_TRUECOLOR=TRUE
+GRASS_TRUECOLOR=TRUE
+export GRASS_TRUECOLOR
 
 echo "Saving display to $output.png from [$GRASS_VER- Monitor: $curr_mon]"
 echo "at $out_width x $out_height resolution"
 
 #set PNG output file name
-export GRASS_PNGFILE="$output".png
+GRASS_PNGFILE="$output".png
+export GRASS_PNGFILE
 
 #export display to PNG driver
 dsave=`d.save -a`
@@ -117,11 +121,14 @@ d.mon stop=PNG
 
 #returning old settings
 d.mon select=$curr_mon
-export GRASS_WIDTH=$old_GRASSW
-export GRASS_HEIGHT=$old_GRASSH
-export GRASS_TRUECOLOR=$old_TRUECOLOR
-export GRASS_PNGFILE=map.png
-
+GRASS_WIDTH=$old_GRASSW
+export GRASS_WIDTH
+GRASS_HEIGHT=$old_GRASSH
+export GRASS_HEIGHT
+GRASS_TRUECOLOR=$old_TRUECOLOR
+export GRASS_TRUECOLOR
+GRASS_PNGFILE=map.png
+export GRASS_PNGFILE
 
 echo "Done (writing the file may take a small amount of time)"
 exit 0

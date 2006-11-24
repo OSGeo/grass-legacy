@@ -77,8 +77,10 @@ d.mon stop=$mon
 echo ""
 echo "Display set to $GIS_OPT_WIDTH x $GIS_OPT_HEIGHT"
 echo ""
-export GRASS_WIDTH=$GIS_OPT_WIDTH
-export GRASS_HEIGHT=$GIS_OPT_HEIGHT
+GRASS_WIDTH=$GIS_OPT_WIDTH
+export GRASS_WIDTH
+GRASS_HEIGHT=$GIS_OPT_HEIGHT
+export GRASS_HEIGHT
 d.mon start=$mon
 
 #redisplay map
