@@ -610,8 +610,10 @@ if [ "$GIS_OPT_THEMETYPE" = "graduated_colors" ] ; then
 	if [ "$GIS_FLAG_S"  -eq 1 ] ; then
 		rendermode=$GRASS_RENDER_IMMEDIATE
 		autowrite=$GRASS_PNG_AUTO_WRITE
-		export GRASS_RENDER_IMMEDIATE=FALSE
-		export GRASS_PNG_AUTO_WRITE=FALSE
+		GRASS_RENDER_IMMEDIATE=FALSE
+		export GRASS_RENDER_IMMEDIATE
+		GRASS_PNG_AUTO_WRITE=FALSE
+		export GRASS_PNG_AUTO_WRITE
 		d.mon start=PNG
 	fi
 
@@ -830,8 +832,10 @@ if [ "$GIS_OPT_THEMETYPE" = "graduated_colors" ] ; then
 	if [ "$GIS_FLAG_S"  -eq 1 ] ; then
 		d.mon stop=PNG
 		d.mon select=$currmon
-		export GRASS_RENDER_IMMEDIATE=$rendermode
-		export GRASS_PNG_AUTO_WRITE=$autowrite
+		GRASS_RENDER_IMMEDIATE=$rendermodeexport
+		export GRASS_RENDER_IMMEDIATE
+		GRASS_PNG_AUTO_WRITE=$autowrite
+		export GRASS_PNG_AUTO_WRITE
 	fi
 fi
 
@@ -930,8 +934,10 @@ if [ "$GIS_OPT_THEMETYPE" = "graduated_points" -o "$GIS_OPT_THEMETYPE" = "gradua
 	if [ "$GIS_FLAG_S"  -eq 1 ] ; then
 		rendermode=$GRASS_RENDER_IMMEDIATE
 		autowrite=$GRASS_PNG_AUTO_WRITE
-		export GRASS_RENDER_IMMEDIATE=FALSE
-		export GRASS_PNG_AUTO_WRITE=FALSE
+		GRASS_RENDER_IMMEDIATE=FALSE
+		export GRASS_RENDER_IMMEDIATE
+		GRASS_PNG_AUTO_WRITE=FALSE
+		export GRASS_PNG_AUTO_WRITE
 		d.mon start=PNG
 	fi
 
@@ -1103,8 +1109,10 @@ if [ "$GIS_OPT_THEMETYPE" = "graduated_points" -o "$GIS_OPT_THEMETYPE" = "gradua
 	if [ "$GIS_FLAG_S"  -eq 1 ] ; then
 		d.mon stop=PNG
 		d.mon select=$currmon
-		export GRASS_RENDER_IMMEDIATE=$rendermode
-		export GRASS_PNG_AUTO_WRITE=$autowrite
+		GRASS_RENDER_IMMEDIATE=$rendermode
+		export GRASS_RENDER_IMMEDIATE
+		GRASS_PNG_AUTO_WRITE=$autowrite
+		export GRASS_PNG_AUTO_WRITE
 	fi
 
 fi

@@ -87,10 +87,14 @@ eval `g.gisenv`
 LOCATION=$GISDBASE/$LOCATION_NAME/$MAPSET
 
 # Open tempfiles
-export temp_stddev="`g.tempfile $$`"
-export temp_correlation="`g.tempfile $$`"
-export temp_sum="`g.tempfile $$`"
-export temp_calc="`g.tempfile $$`"
+temp_stddev="`g.tempfile $$`"
+export temp_stddev
+temp_correlation="`g.tempfile $$`"
+export temp_correlation
+temp_sum="`g.tempfile $$`"
+export temp_sum
+temp_calc="`g.tempfile $$`"
+export temp_calc
 temp_result="`g.tempfile $$`"
 temp_result2="`g.tempfile $$`"
 temp_bands="`g.tempfile $$`"
