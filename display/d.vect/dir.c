@@ -2,8 +2,8 @@
 #include <grass/Vect.h>
 #include <grass/display.h>
 #include <grass/raster.h>
-#include "plot.h"
 #include <grass/glocale.h>
+#include "plot.h"
 
 int dir ( struct Map_info *Map, int type, struct cat_list * Clist, int chcat )
 {
@@ -27,8 +27,7 @@ int dir ( struct Map_info *Map, int type, struct cat_list * Clist, int chcat )
         switch ( ltype )
 	{
 	case -1:
-	    fprintf (stderr, _("\nERROR: vector file - can't read\n" ));
-	    return -1;
+	    G_fatal_error (_("Can't read vector file"));
 	case -2: /* EOF */
 	    return  0;
 	}
@@ -72,5 +71,3 @@ int dir ( struct Map_info *Map, int type, struct cat_list * Clist, int chcat )
     
     return 0; /* not reached */
 }
-
-

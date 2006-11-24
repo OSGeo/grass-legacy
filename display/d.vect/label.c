@@ -2,8 +2,8 @@
 #include <grass/Vect.h>
 #include <grass/display.h>
 #include <grass/raster.h>
-#include "plot.h"
 #include <grass/glocale.h>
+#include "plot.h"
 
 int label (
     struct Map_info *Map, int type, int do_area, 
@@ -28,8 +28,7 @@ int label (
         switch ( ltype )
 	{
 	case -1:
-	    fprintf (stderr, _("\nERROR: vector file - can't read\n" ));
-	    return -1;
+	    G_fatal_error (_("Can't read vector file"));
 	case -2: /* EOF */
 	    return  0;
 	}
@@ -149,6 +148,3 @@ int label (
     
     return 0;
 }
-
-
-
