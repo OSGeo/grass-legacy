@@ -22,6 +22,7 @@ int main( int argc, char *argv[])
 {
 	struct GModule *module;
     struct Option 	*rast, *ppm_file;
+    /* please, remove before GRASS 7 released */
     struct Flag 	*bequiet, *gscale;
     char 		*cellmap, *map, *p, errbuf[100], ofile[1000];
     unsigned char 	*set, *ored, *ogrn, *oblu;
@@ -60,6 +61,7 @@ int main( int argc, char *argv[])
     ppm_file->description            
 		    = _("Name for new PPM file. (use out=- for stdout)");
 
+    /* please, remove before GRASS 7 released */
     bequiet = G_define_flag ();
     bequiet->key = 'q';
     bequiet->description = _("Run quietly");
@@ -70,6 +72,14 @@ int main( int argc, char *argv[])
 
     if (G_parser (argc, argv))
 	exit (-1);
+
+    /* please, remove before GRASS 7 released */
+    if(bequiet->answer) {
+        putenv("GRASS_VERBOSE=0");
+        G_warning(_("The '-q' flag is superseded and will be removed "
+            "in future. Please use '--quiet' instead."));
+    }
+
 
     /* kludge to work with r.out.mpeg */
     if(rast->answer[0] == '/')
@@ -95,8 +105,7 @@ int main( int argc, char *argv[])
     /*G_get_set_window (&w); */ /* 10/99 MN: check for current region*/
     G_get_window (&w);
 
-    if(!bequiet->answer)
-	fprintf(stderr,"rows = %d, cols = %d\n", w.rows, w.cols);
+    G_message(_("rows = %d, cols = %d"), w.rows, w.cols);
 
     /* open cell file for reading */
     {  
@@ -156,8 +165,7 @@ int main( int argc, char *argv[])
     /* max intensity val */
 
 
-    if(!bequiet->answer)
-	fprintf(stderr,"Converting %s...",rast->answer);
+    G_message(_("Converting %s..."),rast->answer);
 
     {	
     struct Colors colors;
@@ -176,8 +184,7 @@ int main( int argc, char *argv[])
 
     if(!gscale->answer){ 	/* 24BIT COLOR IMAGE */
 	for (row = 0; row < w.rows; row++) {
-	    if(!bequiet->answer)
-		G_percent (row, w.rows, 5);
+            G_percent (row, w.rows, 5);
 	    if (G_get_raster_row (cellfile, (void *)voidc, row, rtype) < 0)
 		exit(1);
 	    G_lookup_raster_colors((void *)voidc, ored, ogrn, oblu, set, 
@@ -200,8 +207,7 @@ int main( int argc, char *argv[])
     else{ 			/* GREYSCALE IMAGE */
 	for (row = 0; row < w.rows; row++) {
 
-	    if(!bequiet->answer)
-		G_percent (row, w.rows, 5);
+            G_percent (row, w.rows, 5);
 	    if (G_get_raster_row (cellfile, (void *)voidc, row, rtype) < 0)
 		exit(1);
 	    G_lookup_raster_colors((void *)voidc, ored, ogrn, oblu, set, 
@@ -238,9 +244,6 @@ int main( int argc, char *argv[])
 */
 	fclose(fp);
 
-    if(!bequiet->answer)
-	fprintf(stderr,"\nDone.\n"); 
-    
     return(1);
 }
 
