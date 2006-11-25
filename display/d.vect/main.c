@@ -107,6 +107,7 @@ main (int argc, char **argv)
 	int size;
 	int default_width;
 	double width_scale;
+	int verbose = FALSE;
 	double minreg, maxreg, reg;
 	char map_name[128] ;
 	struct GModule *module;
@@ -345,12 +346,15 @@ main (int argc, char **argv)
 	if (G_parser(argc, argv))
 	    exit(EXIT_FAILURE);
 
-	/* please remove before GRASS 7 released */
+	/* please remove -v flag before GRASS 7 released */
 	if (verbose_flag->answer) {
-	    putenv ("GRASS_VERBOSE=2");
+	    G_putenv ("GRASS_VERBOSE","3");
 	    G_warning(_("The '-v' flag is superseded and will be removed "
 			"in future. Please use '--verbose' instead."));
 	}
+	/* but keep this */
+	if(G_verbose() > G_verbose_std())
+	    verbose=TRUE;
 
 	G_get_set_window (&window);
 
@@ -592,7 +596,8 @@ main (int argc, char **argv)
                       D_get_d_west(), D_get_d_east(),
                       D_move_abs, D_cont_abs);
 
-	G_message(_("Plotting ..."));
+	if(verbose)
+	    G_message(_("Plotting ..."));
 
 	if ( level >= 2 )
 	    Vect_get_map_box ( &Map, &box );
@@ -679,7 +684,8 @@ main (int argc, char **argv)
 
 	R_close_driver();
 
-	G_done_msg ("");
+	if(verbose)
+	    G_done_msg ("");
 	
 	Vect_close (&Map);
 	Vect_destroy_cat_list (Clist);
