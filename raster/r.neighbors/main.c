@@ -44,7 +44,6 @@ int main (int argc, char *argv[])
 {
 	char *p;
 	int method;
-	int verbose;
 	int in_fd;
 	int out_fd;
 	DCELL *result;
@@ -69,6 +68,7 @@ int main (int argc, char *argv[])
 	} parm;
 	struct
 	{
+                /* please, remove before GRASS 7 released */
 		struct Flag *quiet, *align;
 	} flag;
 
@@ -131,6 +131,7 @@ int main (int argc, char *argv[])
 	flag.align->key = 'a';
 	flag.align->description = _("Do not align output with the input");
 
+        /* please, remove before GRASS 7 released */
 	flag.quiet = G_define_flag();
 	flag.quiet->key = 'q';
 	flag.quiet->description = _("Run quietly");
@@ -141,16 +142,14 @@ int main (int argc, char *argv[])
 	p = ncb.oldcell.name = parm.input->answer;
 	if(NULL == (ncb.oldcell.mapset = G_find_cell2(p,"")))
 	{
-		fprintf (stderr, "%s: <%s> raster file not found\n",
+		G_fatal_error(_("%s: <%s> raster file not found"),
 			 G_program_name(), p);
-		exit(1);
 	}
 	p = ncb.newcell.name = parm.output->answer;
 	if (G_legal_filename(p) < 0)
 	{
-		fprintf (stderr, "%s: <%s> illegal file name\n",
+		G_fatal_error (_("%s: <%s> illegal file name"),
 			 G_program_name(), p);
-		exit(1);
 	}
 	ncb.newcell.mapset = G_mapset();
 
@@ -170,10 +169,9 @@ int main (int argc, char *argv[])
 	if ((in_fd = G_open_cell_old (ncb.oldcell.name, ncb.oldcell.mapset)) < 0)
 	{
 		char msg[200];
-		sprintf(msg,"can't open cell file <%s> in mapset %s\n",
+		sprintf(msg,_("can't open cell file <%s> in mapset %s"),
 			ncb.oldcell.name, ncb.oldcell.mapset);
 		G_fatal_error (msg);
-		exit(-1);
 	}
 
 	map_type = G_get_raster_map_type(in_fd);
@@ -184,10 +182,10 @@ int main (int argc, char *argv[])
 			break;
 	if (!p)
 	{
-		fprintf (stderr, "<%s=%s> unknown %s\n",
+		G_warning (_("<%s=%s> unknown %s"),
 			 parm.method->key, parm.method->answer, parm.method->key);
 		G_usage();
-		exit(1);
+		exit(EXIT_FAILURE);
 	}
 
 	half = menu[method].half;
@@ -237,12 +235,17 @@ int main (int argc, char *argv[])
 	if (out_fd < 0)
 		exit(1);
 
-	if (verbose = !flag.quiet->answer)
-		fprintf (stderr, "Percent complete ... ");
+        /* please, remove before GRASS 7 released */
+        if(flag.quiet->answer) {
+            putenv("GRASS_VERBOSE=0");
+            G_warning(_("The '-q' flag is superseded and will be removed "
+                "in future. Please use '--quiet' instead."));
+        }
+
+
 	for (row = 0; row < nrows; row++)
 	{
-		if (verbose)
-			G_percent (row, nrows, 2);
+                G_percent (row, nrows, 2);
 		readcell (in_fd, readrow++, nrows, ncols);
 		for (col = 0; col < ncols; col++)
 		{
@@ -259,8 +262,7 @@ int main (int argc, char *argv[])
 		}
 		G_put_d_raster_row(out_fd, result);
 	}
-	if (verbose)
-		G_percent (row, nrows, 2);
+        G_percent (row, nrows, 2);
 
 	G_close_cell (out_fd);
 	G_close_cell (in_fd);
