@@ -111,13 +111,13 @@ int main( int argc, char *argv[])
     {  
 	cellmap = G_find_file2 ("cell", rast->answer, "");
 	if(!cellmap){
-	    sprintf(errbuf,"Couldn't find raster file %s", rast->answer);
+	    sprintf(errbuf,_("Couldn't find raster file %s"), rast->answer);
 	    G_fatal_error(errbuf);
 	}
 
 	if ((cellfile = G_open_cell_old(rast->answer, cellmap)) == -1) 
 	{
-	    sprintf(errbuf,"Not able to open cellfile for [%s]", rast->answer);
+	    sprintf(errbuf,_("Not able to open cellfile for [%s]"), rast->answer);
 	    G_fatal_error(errbuf);
 	}
     }
@@ -135,7 +135,7 @@ int main( int argc, char *argv[])
     {
 	if(do_stdout) fp = stdout;
 	else if(NULL == (fp = fopen(ofile, "w"))) {
-	    sprintf(errbuf,"Not able to open file for [%s]", ofile);
+	    sprintf(errbuf,_("Not able to open file for [%s]"), ofile);
 	    G_fatal_error(errbuf);
 	}
     }
