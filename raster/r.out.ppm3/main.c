@@ -33,6 +33,7 @@ int main(int argc, char **argv)
 	struct band	B[3];
 	struct GModule	*module;
 	struct Option	*ppm_file;
+        /* please, remove before GRASS 7 released */
 	struct Flag	*bequiet, *comment;
 	struct Cell_head w;
 	FILE		*fp;
@@ -72,6 +73,7 @@ int main(int argc, char **argv)
 	ppm_file->answer	  = NULL;
 	ppm_file->description = _("Name for new PPM file. (use out=- for stdout)");
 
+        /* please, remove before GRASS 7 released */
 	bequiet = G_define_flag ();
 	bequiet->key = 'q';
 	bequiet->description = _("Run quietly");
@@ -83,10 +85,17 @@ int main(int argc, char **argv)
 	if (G_parser (argc, argv))
 		exit (-1);
 
+        /* please, remove before GRASS 7 released */
+        if(bequiet->answer) {
+            putenv("GRASS_VERBOSE=0");
+            G_warning(_("The '-q' flag is superseded and will be removed "
+                "in future. Please use '--quiet' instead."));
+        }
+
+
 	G_get_window (&w);
 
-	if(!bequiet->answer)
-		fprintf(stderr,"rows = %d, cols = %d\n", w.rows, w.cols);
+        G_message(_("rows = %d, cols = %d"), w.rows, w.cols);
 
 	/* open cell file for reading */
 	for (i = 0; i < 3; i++)
@@ -157,13 +166,11 @@ int main(int argc, char **argv)
 	/* max intensity val */
 	fprintf(fp,"255\n");
 
-	if (!bequiet->answer)
-		fprintf(stderr,"Converting ... ");
+        G_message(_("Converting ... "));
 
 	for (row = 0; row < w.rows; row++)
 	{
-		if(!bequiet->answer)
-			G_percent (row, w.rows, 5);
+                G_percent (row, w.rows, 5);
 
 		for (i = 0; i < 3; i++)
 		{
@@ -207,9 +214,6 @@ int main(int argc, char **argv)
 		G_close_cell(B[i].file);
 	}
 
-	if(!bequiet->answer)
-		fprintf(stderr,"Done.\n"); 
-    
 	return 0;
 }
 

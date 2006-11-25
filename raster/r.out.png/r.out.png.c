@@ -49,6 +49,7 @@ int main(int argc, char *argv[])
 {
     struct GModule *module;
     struct Option *rast, *png_file;
+    /* please, remove before GRASS 7 released */
     struct Flag *bequiet;
     char *cellmap, *map, *p, *basename = NULL, *ofile;
     char rastermap[1024];
@@ -119,6 +120,7 @@ int main(int argc, char *argv[])
     png_file->answer = "<rasterfilename>.png";
     png_file->description = "Name for new PNG file. (use out=- for stdout)";
 
+    /* please, remove before GRASS 7 released */
     bequiet = G_define_flag();
     bequiet->key = 'q';
     bequiet->description = "Run quietly";
@@ -136,6 +138,14 @@ int main(int argc, char *argv[])
 
     if (G_parser(argc, argv))
 	exit(EXIT_FAILURE);
+
+    /* please, remove before GRASS 7 released */
+    if(bequiet->answer) {
+        putenv("GRASS_VERBOSE=0");
+        G_warning(_("The '-q' flag is superseded and will be removed "
+            "in future. Please use '--quiet' instead."));
+    }
+
 
     strncpy(rastermap, rast->answer, 1024 * sizeof(char));
 
@@ -166,8 +176,7 @@ int main(int argc, char *argv[])
     /*G_get_set_window (&w); *//* 10/99 MN: check for current region */
     G_get_window(&w);
 
-    if (!bequiet->answer)
-	G_message("rows = %d, cols = %d", w.rows, w.cols);
+    G_message(_("rows = %d, cols = %d"), w.rows, w.cols);
 
     /* open cell file for reading */
     {
@@ -241,8 +250,7 @@ int main(int argc, char *argv[])
     png_set_compression_level(png_ptr, Z_DEFAULT_COMPRESSION);
     /* } */
 
-    if (!bequiet->answer)
-	fprintf(stderr, "Converting %s...", rast->answer);
+	G_message(_("Converting %s..."), rast->answer);
 
     {
 	struct Colors colors;
@@ -276,8 +284,7 @@ int main(int argc, char *argv[])
 
 	    for (row = 0; row < w.rows; row++) {
 
-		if (!bequiet->answer)
-		    G_percent(row, w.rows, 5);
+                G_percent(row, w.rows, 5);
 		if (G_get_raster_row(cellfile, (void *)voidc, row, rtype) < 0)
 		    exit(EXIT_FAILURE);
 		G_lookup_raster_colors((void *)voidc, ored, ogrn, oblu, set,
@@ -343,9 +350,6 @@ int main(int argc, char *argv[])
 
 
     fclose(fp);
-
-    if (!bequiet->answer)
-	G_message("\nDone.");
 
     return (0);
 }
