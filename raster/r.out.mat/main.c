@@ -47,6 +47,7 @@ int main(int argc, char *argv[]) {
     RASTER_MAP_TYPE map_type;
 
     struct Option *inputfile, *outputfile;
+    /* please, remove before GRASS 7 released */
     struct Flag *verbose;
     struct GModule *module;
 
@@ -72,6 +73,7 @@ int main(int argc, char *argv[]) {
     outputfile->gisprompt  = "new_file,file,output";
     outputfile->description= _("Name for the output binary MAT-File");
 
+    /* please, remove before GRASS 7 released */
     verbose = G_define_flag();
     verbose->key = 'v';
     verbose->description = _("Verbose mode");
@@ -123,7 +125,7 @@ int main(int argc, char *argv[]) {
     data_format = 5; /* 0=double  1=float  2=32bit signed int  5=8bit unsigned int(text) */
     data_type = 1;   /* 0=numbers  1=text */
 
-    fprintf(stderr, "Exporting <%s>\n", infile);
+    G_message(_( "Exporting <%s>"), infile);
 
     /* 4 byte data format */
     format_block = endianness*1000 + data_format*10 + data_type;
@@ -181,18 +183,24 @@ int main(int argc, char *argv[]) {
     }
 
 
-    /***** Write bounds *****/
+    /* please, remove before GRASS 7 released */
     if(verbose->answer) {
-	fprintf(stderr, "\nUsing the Current Region settings:\n");
-	fprintf(stderr, "northern edge=%f\n", region.north);
-	fprintf(stderr, "southern edge=%f\n", region.south);
-	fprintf(stderr, "eastern edge=%f\n", region.east);
-	fprintf(stderr, "western edge=%f\n", region.west);
-	fprintf(stderr, "nsres=%f\n", region.ns_res);
-	fprintf(stderr, "ewres=%f\n", region.ew_res);
-	fprintf(stderr, "rows=%d\n", region.rows);
-	fprintf(stderr, "cols=%d\n\n", region.cols);
+        putenv("GRASS_VERBOSE=0");
+        G_warning(_("The '-q' flag is superseded and will be removed "
+            "in future. Please use '--quiet' instead."));
     }
+
+
+    /***** Write bounds *****/
+    G_message(_("Using the Current Region settings:"));
+    G_message(_("northern edge=%f"), region.north);
+    G_message(_("southern edge=%f"), region.south);
+    G_message(_("eastern edge=%f"), region.east);
+    G_message(_("western edge=%f"), region.west);
+    G_message(_("nsres=%f"), region.ns_res);
+    G_message(_("ewres=%f"), region.ew_res);
+    G_message(_("rows=%d"), region.rows);
+    G_message(_("cols=%d"), region.cols);
 
     for (i=0; i<4; i++) {
 	switch (i) {
@@ -258,20 +266,17 @@ int main(int argc, char *argv[]) {
 
         case CELL_TYPE:
 	    data_format = 2;
-	    if(verbose->answer)
-		fprintf(stderr, "Exporting raster as integer values\n\n");
+            G_message(_("Exporting raster as integer values"));
 	    break;
 
 	case FCELL_TYPE:
 	    data_format = 1;
-	    if(verbose->answer)
-		fprintf(stderr, "Exporting raster as floating point values\n\n");
+            G_message(_("Exporting raster as floating point values"));
 	    break;
 
 	case DCELL_TYPE:
 	    data_format = 0;
-	    if(verbose->answer)
-		fprintf(stderr, "Exporting raster as double FP values\n\n");
+            G_message(_("Exporting raster as double FP values"));
 	    break;
 
 	default:
@@ -311,9 +316,7 @@ int main(int argc, char *argv[]) {
     G_debug(1, "mem alloc is %d bytes\n", /* I think _cols()+1 is unneeded? */
     	G_raster_size(map_type)*(G_window_rows()+1)*(G_window_cols()+1) );
 
-    fprintf(stderr, "Reading in map .. ");
-    fflush(stderr);
-
+    G_message(_("Reading in map ... "));
 
     /* load entire map into memory */
     for (row = 0, ptr = raster; row < mrows; row++, 
@@ -325,9 +328,7 @@ int main(int argc, char *argv[]) {
     G_percent(row, mrows, 2);  /* finish it off */
 
     
-    fprintf(stderr, "Writing out map .. ");
-    fflush(stderr);
-
+    G_message(_("Writing out map ... "));
 
     /* then write it to disk */
     /* NoGood: fwrite(raster, G_raster_size(map_type), mrows*ncols, fp1); */
@@ -381,8 +382,7 @@ int main(int argc, char *argv[]) {
     filesize=ftell(fp1);
     fclose(fp1);
 
-    if(verbose->answer)
-	fprintf(stderr, "\n%ld bytes written to '%s'.\n", filesize, outfile);
+	G_message(_("%ld bytes written to '%s'."), filesize, outfile);
 
     G_done_msg("");
 
