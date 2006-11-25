@@ -54,6 +54,7 @@ int G_verbose (void)
     return verbose;
 }
 
+
 /*!
  * \brief get max verbosity level
  *
@@ -64,6 +65,18 @@ int G_verbose_max (void)
     return MAXLEVEL;
 }
 
+
+/*!
+ * \brief get standard verbosity level
+ *
+ * returns standard verbosity level
+ */
+int G_verbose_std (void)
+{
+    return STDLEVEL;
+}
+
+
 /*!
  * \brief get min verbosity level
  *
@@ -73,4 +86,3 @@ int G_verbose_min (void)
 {
     return MINLEVEL;
 }
-
