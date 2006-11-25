@@ -57,7 +57,7 @@ int DEBUG = 0;
 
 
 /* global functions */
-static int write_tfw(const char *, const struct Cell_head *, int);
+static int write_tfw(const char *, const struct Cell_head *);
 
 
 int 
@@ -73,6 +73,7 @@ main (int argc, char *argv[])
 	CELL *cell, *cellptr, *cells[MAX_TILE_LENGTH];
 	struct Cell_head cellhd;
 	struct GModule *module;
+        /* please, remove before GRASS 7 released */
 	int col,verbose, tfw, palette, tiled;
 	char *mapset, *basename, *filename;
 	struct Colors colors;
@@ -121,12 +122,21 @@ main (int argc, char *argv[])
 	lflag->key		= 'l';
 	lflag->description      = _("Output Tiled TIFF");
 
+        /* please, remove before GRASS 7 released */
 	vflag = G_define_flag();
 	vflag->key		= 'v';
 	vflag->description	= _("Verbose mode.");
 
 	if (G_parser (argc, argv))
 		exit (EXIT_FAILURE);
+
+        /* please, remove before GRASS 7 released */
+        if(vflag->answer) {
+            putenv("GRASS_VERBOSE=3");
+            G_warning(_("The '-v' flag is superseded and will be removed "
+                "in future. Please use '--verbose' instead."));
+        }
+
 
 	if (strncmp(compopt->answer, "packbit", 7) == 0)
 		compression = COMPRESSION_PACKBITS;
@@ -137,6 +147,7 @@ main (int argc, char *argv[])
 	else
 		compression = COMPRESSION_NONE;
 	
+        /* please, remove before GRASS 7 released */
 	verbose = vflag->answer;
 	tiled = lflag->answer;
 	palette = pflag->answer;
@@ -329,8 +340,7 @@ main (int argc, char *argv[])
                                 return (-1);
                             }
 	 		    
-			    if (verbose)
-				G_percent (row, h.ras_height, 1);
+                            G_percent (row, h.ras_height, 1);
 		    }
 
 		    colb += tilewidth;
@@ -357,15 +367,13 @@ main (int argc, char *argv[])
 		TIFFSetField(out, TIFFTAG_ROWSPERSTRIP,
 		    rowsperstrip == 0 ? 1 : rowsperstrip);
 
-		if (verbose)
-			fprintf (stderr, "%s: complete ... ", G_program_name());
+                G_message (_("%s: complete ... "), G_program_name());
 
 		for (row = 0; row < h.ras_height; row++)
 		{
 			tmpptr = buf;
 
-			if (verbose)
-				G_percent (row, h.ras_height, 2);
+                        G_percent (row, h.ras_height, 2);
 
 			if (G_get_c_raster_row (in, cell, row) < 0)
 				exit(EXIT_FAILURE);
@@ -391,8 +399,7 @@ main (int argc, char *argv[])
 				break;
 		}
 
-		if (verbose)
-			G_percent (row, h.ras_height, 2);
+                G_percent (row, h.ras_height, 2);
 	}
 	
 	(void) TIFFClose(out);
@@ -400,7 +407,7 @@ main (int argc, char *argv[])
 	if (tfw)
 	{
 		sprintf(filename, "%s.tfw", basename);
-		write_tfw(filename, &cellhd, verbose);
+		write_tfw(filename, &cellhd);
 	}
 
 	G_free(filename);
@@ -411,13 +418,12 @@ main (int argc, char *argv[])
 
 
 static int
-write_tfw(const char *fname, const struct Cell_head *win, int verbose)
+write_tfw(const char *fname, const struct Cell_head *win)
 {
 	int  width = DBL_DIG;
 	FILE *outfile;
 	
-	if (verbose)
-		G_message(_("Writing TIFF World file ..."));
+        G_message(_("Writing TIFF World file ..."));
 
 	if (fname == NULL)
 		G_fatal_error(_("Got null file name"));
@@ -435,8 +441,5 @@ write_tfw(const char *fname, const struct Cell_head *win, int verbose)
         fprintf (outfile, "%36.*f \n", width, win->north - win->ns_res / 2.0);
 
 	fclose(outfile);
-	if (verbose)
-		G_message(_("Done"));
-
 	return 0;
 }
