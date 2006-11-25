@@ -1144,6 +1144,7 @@ int G_sock_socketpair(int, int, int, int *);
 /* verbose.c */
 int G_verbose(void);
 int G_verbose_min(void);
+int G_verbose_std(void);
 int G_verbose_max(void);
 
 /* version.c */
