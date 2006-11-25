@@ -185,9 +185,9 @@ int main(int argc, char *argv[]) {
 
     /* please, remove before GRASS 7 released */
     if(verbose->answer) {
-        putenv("GRASS_VERBOSE=0");
-        G_warning(_("The '-q' flag is superseded and will be removed "
-            "in future. Please use '--quiet' instead."));
+        putenv("GRASS_VERBOSE=3");
+        G_warning(_("The '-v' flag is superseded and will be removed "
+            "in future. Please use '--verbose' instead."));
     }
 
 
