@@ -1,4 +1,5 @@
 #include <stdlib.h>
+#include <grass/glocale.h>
 #include "local_proto.h"
 
 
@@ -8,6 +9,7 @@ rdwr_gridatb()
 	FILE	*fp;
 	int	fd,row,col;
 	float	idx;
+        int     adjcellhdval;
 	CELL	*cell;
 	DCELL	*dcell;
 	FCELL	*fcell;
@@ -21,21 +23,28 @@ rdwr_gridatb()
 	switch(data_type){
 		case CELL_TYPE:
 			cell = G_allocate_c_raster_buf();
-			fprintf(stderr,"CELL\n");
 			break;
 		case FCELL_TYPE:
 			fcell = G_allocate_f_raster_buf();
-			fprintf(stderr,"FCELL\n");
 			break;
 		case DCELL_TYPE:
 			dcell = G_allocate_d_raster_buf();
-			fprintf(stderr,"DCELL\n");
 			break;
 	}
 
 	G_get_cellhd(iname, mapset, &cellhd);
-	if(adjcellhd(&cellhd)){
-		exit(1);
+
+	adjcellhdval = adjcellhd(&cellhd);
+        switch(adjcellhdval){
+            case 1: 
+                G_fatal_error(_("Setting window header"));
+                break;
+            case 2: 
+                G_fatal_error(_("Rows changed"));
+                break;
+            case 3: 
+		G_fatal_error(_("Cols changed"));
+                break;
 	}
 
 	fp = fopen(file, "w");
@@ -97,8 +106,6 @@ rdwr_gridatb()
 		}
 	}
 	G_close_cell(fd);
-
-	fprintf(stderr,"\n%d rows, %d cols\n",cellhd.rows,cellhd.cols);
 
 	return;
 }
