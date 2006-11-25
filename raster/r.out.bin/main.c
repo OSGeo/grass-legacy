@@ -178,7 +178,7 @@ int main(int argc, char *argv[])
 
 	/* Swap Header if Required */
 	if (flag.swap->answer) {
-	    fprintf(stderr, "Swapping Header Data\n");
+            G_message(_("Swapping Header Data"));
 	    TIFFSwabLong((uint32 *) & header.nx);
 	    TIFFSwabLong((uint32 *) & header.ny);
 	    TIFFSwabLong((uint32 *) & header.node_offset);
@@ -235,9 +235,9 @@ int main(int argc, char *argv[])
 	    G_fatal_error(_("Unable to create file [%s]"), out_tmp2);
 
 
-	fprintf(stderr, "Creating BIL support files ...\n");
-	fprintf(stderr, "Header File = %s\n", out_tmp1);
-	fprintf(stderr, "World File = %s\n", out_tmp2);
+	G_message(_("Creating BIL support files ..."));
+	G_message(_("Header File = %s"), out_tmp1);
+	G_message(_("World File = %s"), out_tmp2);
 
 	fprintf(fp_1, "nrows %d\n", region.rows);
 	fprintf(fp_1, "ncols %d\n", region.cols);
@@ -313,31 +313,28 @@ int main(int argc, char *argv[])
     ncols = G_window_cols();
 
     if (out_type == CELL_TYPE) {
-	fprintf(stderr, "Exporting Raster as integer values (bytes=%d)\n",
+	G_message(_("Exporting Raster as integer values (bytes=%d)"),
 		sizeof(short));
 	if (flag.gmt_hd->answer)
-	    fprintf(stderr, "Writing GMT integer format ID=2\n");
+	    G_message(_("Writing GMT integer format ID=2"));
     }
     if (out_type == FCELL_TYPE) {
-	fprintf(stderr, "Exporting Raster as floating values (bytes=%d)\n",
+	G_message(_("Exporting Raster as floating values (bytes=%d)"),
 		sizeof(float));
 	if (flag.gmt_hd->answer)
-	    fprintf(stderr, "Writing GMT float format ID=1\n");
+	    G_message(_("Writing GMT float format ID=1"));
     }
     if (out_type == DCELL_TYPE)
-	fprintf(stderr, "Exporting Raster as double values(bytes=%d)\n",
+	G_message(_("Exporting Raster as double values(bytes=%d)"),
 		sizeof(double));
 
-    fprintf(stderr, "Using the Current Region settings ...\n");
-    fprintf(stderr, "north=%f\n", region.north);
-    fprintf(stderr, "south=%f\n", region.south);
-    fprintf(stderr, "east=%f\n", region.east);
-    fprintf(stderr, "west=%f\n", region.west);
-    fprintf(stderr, "r=%d\n", region.rows);
-    fprintf(stderr, "c=%d\n\n", region.cols);
-
-    fprintf(stderr, _("Percent complete: "));
-
+    G_message(_("Using the Current Region settings ..."));
+    G_message(_("north=%f"), region.north);
+    G_message(_("south=%f"), region.south);
+    G_message(_("east=%f"), region.east);
+    G_message(_("west=%f"), region.west);
+    G_message(_("r=%d"), region.rows);
+    G_message(_("c=%d"), region.cols);
 
     for (row = 0; row < nrows; row++) {
 	if (G_get_raster_row(fd, raster, row, out_type) < 0)
@@ -393,8 +390,6 @@ int main(int argc, char *argv[])
 
     G_close_cell(fd);
     fclose(fp);
-
-    G_done_msg("\n");
     exit(0);
 }
 
