@@ -468,6 +468,10 @@ proc menu2 { menu } {
 		-command {set fname [create_file_browser .file_browser 1]
 				if {$fname != -1} then {
 					appBusy
+					# strip .ppm extension if given
+					if { [string compare [file extension $fname] ".ppm"] == 0 } then {
+					   set fname [file rootname $fname]
+					}
 					set wid [winfo screenwidth .]
 					set ht [winfo screenheight .]
 					Nstart_zoom $fname $wid $ht
