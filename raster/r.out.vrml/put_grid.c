@@ -1,3 +1,4 @@
+#include <grass/glocale.h>
 #include "pv.h"
 
 /*
@@ -34,7 +35,7 @@ FCELL *dbuf;
 	int row, col;
 
 	if(!shh)
-	    fprintf(stderr, "Writing vertices...");
+	    G_message(_("Writing vertices..."));
 
 	vrml_putline(0,vout,"Coordinate3");
 	vrml_putline(1,vout,OCB);
@@ -78,7 +79,7 @@ FCELL *dbuf;
         unsigned char *red, *green, *blue, *set;
 
 	if(!shh)
-	    fprintf(stderr,"Writing color file...");
+	    G_message(_("Writing color file..."));
 
 	vrml_putline(0,vout,"Material");
 	vrml_putline(1,vout,OCB);

@@ -146,7 +146,7 @@ int main(int argc, char *argv[])
 	    strcpy(outfile,out->answer);
 
 	/* open file for writing VRML */
-	fprintf(stderr,"Opening %s for writing... \n", outfile);
+	G_message(_("Opening %s for writing... "), outfile);
 	if (NULL == (vout = fopen(outfile, "w"))){
 	    sprintf(errbuf,"Couldn't open output file %s", outfile);
 	    G_fatal_error(errbuf);
