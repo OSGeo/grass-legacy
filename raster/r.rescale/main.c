@@ -23,6 +23,7 @@ int main (int argc, char *argv[])
 	    {
 		struct Option *input, *from, *output, *to, *title;
 	} parm;
+        /* please, remove before GRASS 7 released */
 	struct
 	    {
 		struct Flag *quiet;
@@ -73,12 +74,21 @@ int main (int argc, char *argv[])
 	parm.title->required   = NO;
 	parm.title->description= _("Title for new raster map") ;
 
+        /* please, remove before GRASS 7 released */
 	flag.quiet = G_define_flag();
 	flag.quiet->key = 'q';
 	flag.quiet->description = _("Quietly");
 
 	if (G_parser(argc, argv))
 		exit(-1);
+
+    /* please, remove before GRASS 7 released */
+    if(flag.quiet->answer) {
+        putenv("GRASS_VERBOSE=0");
+        G_warning(_("The '-q' flag is superseded and will be removed "
+            "in future. Please use '--quiet' instead."));
+    }
+
 
 	old_name = parm.input->answer;
 	new_name = parm.output->answer;
@@ -104,7 +114,7 @@ int main (int argc, char *argv[])
 
 	}
 	else
-		get_range (old_name, mapset, &old_min, &old_max, flag.quiet->answer);
+		get_range (old_name, mapset, &old_min, &old_max);
 	if (old_min > old_max)
 	{
 		value = old_min; /* swap */
@@ -121,8 +131,7 @@ int main (int argc, char *argv[])
 		new_max = value;
 	}
 	
-	if (!flag.quiet->answer)
-		fprintf (stderr, "Rescale %s[%ld,%ld] to %s[%ld,%ld]\n",
+        G_message (_("Rescale %s[%ld,%ld] to %s[%ld,%ld]"),
 		    old_name, old_min, old_max, new_name, new_min, new_max);
 
 	sprintf (buf, "r.reclass input='%s' output='%s' title='", old_name, new_name);
@@ -161,5 +170,5 @@ int main (int argc, char *argv[])
 	fprintf (fd, "\n");
 
 	pclose (fd);
-	exit(0);
+	exit(EXIT_SUCCESS);
 }
