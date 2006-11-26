@@ -1,9 +1,10 @@
 #include <stdlib.h>
 #include <grass/gis.h>
+#include <grass/glocale.h>
 #include "local_proto.h"
 
 int 
-get_range (char *name, char *mapset, long *min, long *max, int quiet)
+get_range (char *name, char *mapset, long *min, long *max)
 {
 	struct Range range;
 	int nrows, ncols, row, col;
@@ -23,19 +24,16 @@ get_range (char *name, char *mapset, long *min, long *max, int quiet)
 			exit(1);
 		nrows = G_window_rows();
 		ncols = G_window_cols();
-		if (!quiet)
-			fprintf (stderr, "Reading %s ...", name);
+                G_message (_("Reading %s ..."), name);
 		for (row = 0; row < nrows; row++)
 		{
-			if (!quiet)
-				G_percent (row, nrows, 2);
+                        G_percent (row, nrows, 2);
 			if (G_get_map_row_nomask(fd, cell, row) < 0)
 				exit(1);
 			for (col = 0; col < ncols; col++)
 				G_update_range (cell[col], &range);
 		}
-		if (!quiet)
-			G_percent (row, nrows, 2);
+                G_percent (row, nrows, 2);
 		G_close_cell(fd);
 		G_free (cell);
 	}
