@@ -22,7 +22,6 @@ int main (int argc, char *argv[])
     int i;
     int ok;
     int row,nrows,ncols;
-    int verbose;
     int ZEROFLAG;
     char *name, *mapset;
     char *new_name;
@@ -62,6 +61,7 @@ int main (int argc, char *argv[])
 
 /* Define the different flags */
 
+    /* please, remove before GRASS 7 released */
     flag1 = G_define_flag() ;
     flag1->key         = 'q' ;
     flag1->description = _("Quiet") ;
@@ -70,14 +70,20 @@ int main (int argc, char *argv[])
     zeroflag->key         = 'z' ;
     zeroflag->description = _("Use zero (0) for transparency instead of NULL") ;
 
-    verbose = 1;
     ZEROFLAG = 0; /* default: use NULL for transparency */
     nfiles = 0;
 
     if (G_parser(argc, argv))
         exit(EXIT_FAILURE);
 
-    verbose = (!flag1->answer);
+    /* please, remove before GRASS 7 released */
+    if(flag1->answer) {
+        putenv("GRASS_VERBOSE=0");
+        G_warning(_("The '-q' flag is superseded and will be removed "
+            "in future. Please use '--quiet' instead."));
+    }
+
+
     ZEROFLAG= (zeroflag->answer);
     
     ok = 1;
@@ -94,7 +100,7 @@ int main (int argc, char *argv[])
         mapset = G_find_cell2 (name, "");
         if (mapset == NULL)
         {
-            fprintf (stderr, "%s - %s not found\n", G_program_name(), name);
+            G_warning (_("%s - %s not found"), G_program_name(), name);
             G_sleep(3);
             ok = 0;
         }
@@ -135,10 +141,10 @@ int main (int argc, char *argv[])
     nrows = G_window_rows();
     ncols = G_window_cols();
 
-    if (verbose) fprintf (stderr, _("%s: percent complete: "), G_program_name());
+    G_message (_("%s: percent complete: "), G_program_name());
     for (row = 0; row < nrows; row++)
     {
-	if (verbose) G_percent (row, nrows, 2);
+	G_percent (row, nrows, 2);
 	if(G_get_raster_row (infd[0], presult, row, out_type) < 0)
 	    G_fatal_error("Cannot get raster raster of input map");
 
@@ -153,7 +159,7 @@ int main (int argc, char *argv[])
 	}
 	G_put_raster_row (outfd, presult, out_type);
     }
-    if (verbose) G_percent (row, nrows, 2);
+    G_percent (row, nrows, 2);
 
     G_free (patch);
     G_free (presult);
@@ -163,8 +169,7 @@ int main (int argc, char *argv[])
  * build the new cats and colors. do this before closing the new
  * file, in case the new file is one of the patching files as well.
  */
-    if (verbose) 
-        fprintf (stdout,"CREATING SUPPORT FILES FOR %s\n", new_name);
+    G_message (_("Creating support files for %s"), new_name);
     support (names, statf, nfiles, &cats, &cats_ok, &colr, &colr_ok, out_type);
 
 /* now close (and create) the result */
