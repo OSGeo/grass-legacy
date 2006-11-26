@@ -65,10 +65,10 @@ int main (int argc, char *argv[])
 		struct Option *input, *output, *method;
 	} parm;
 	struct {
+    /* please, remove before GRASS 7 released */
 		struct Flag *quiet;
 		struct Flag *nulls;
 	} flag;
-	int verbose;
 	int method;
 	stat_func *method_fn;
 	int i;
@@ -113,6 +113,7 @@ int main (int argc, char *argv[])
 	parm.method->options    = build_method_list();
 	parm.method->description= _("Aggregate operation") ;
 
+    /* please, remove before GRASS 7 released */
 	flag.quiet = G_define_flag();
 	flag.quiet->key = 'q';
 	flag.quiet->description = _("Run quietly");
@@ -124,7 +125,13 @@ int main (int argc, char *argv[])
 	if (G_parser(argc,argv))
 	    exit(EXIT_FAILURE);
 
-	verbose = !flag.quiet->answer;
+        /* please, remove before GRASS 7 released */
+        if(flag.quiet->answer) {
+            putenv("GRASS_VERBOSE=0");
+            G_warning(_("The '-q' flag is superseded and will be removed "
+                "in future. Please use '--quiet' instead."));
+        }
+
 
 	/* get the method */
 	method = -1;
@@ -179,13 +186,11 @@ int main (int argc, char *argv[])
 	ncols = G_window_cols();
 
 	/* process the data */
-	if (verbose)
-		fprintf (stderr, _("Percent complete ... "));
+        G_message (_("Percent complete ... "));
 
 	for (row = 0; row < nrows; row++)
 	{
-		if (verbose)
-			G_percent(row, nrows, 2);
+                G_percent(row, nrows, 2);
 
 		for (i = 0; i < num_inputs; i++)
 			G_get_d_raster_row (inputs[i].fd, inputs[i].buf, row);
@@ -213,8 +218,7 @@ int main (int argc, char *argv[])
 		G_put_d_raster_row(out_fd, out_buf);
 	}
 
-	if (verbose)
-		G_percent(row, nrows, 2);
+        G_percent(row, nrows, 2);
 
 	/* close maps */
 	G_close_cell(out_fd);
