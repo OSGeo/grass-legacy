@@ -118,7 +118,9 @@ int main (int argc, char *argv[])
     } parm;
     struct
     {
-	struct Flag *a,*q;
+	struct Flag *a;
+    /* please, remove before GRASS 7 released */
+	struct Flag *q;
     } flag;
 
     G_gisinit (argv[0]);
@@ -250,6 +252,7 @@ int main (int argc, char *argv[])
     parm.min_slp_allowed->answer      = "0.0";
     parm.min_slp_allowed->guisection  = _("Settings");
 
+    /* please, remove before GRASS 7 released */
     flag.q = G_define_flag() ;
     flag.q->key         = 'q' ;
     flag.q->description = _("Quiet") ;
@@ -286,6 +289,15 @@ int main (int argc, char *argv[])
 
     if (G_parser(argc, argv))
         exit(EXIT_FAILURE);
+
+    /* please, remove before GRASS 7 released */
+    if(flag.q->answer) {
+        putenv("GRASS_VERBOSE=0");
+        G_warning(_("The '-q' flag is superseded and will be removed "
+            "in future. Please use '--quiet' instead."));
+    }
+
+
 
     elev_name = parm.elevation->answer;
     slope_name = parm.slope->answer;
@@ -571,7 +583,7 @@ int main (int argc, char *argv[])
     }
     else G_get_d_raster_row_nomask (elevation_fd, elev_cell[2],1);
 
-    if (!flag.q->answer) fprintf (stderr, "percent complete: ");
+    G_message (_("Percent complete: "));
     for (row = 2; row < nrows; row++)
     {
         /*  if projection is Lat/Lon, recalculate  V and H   */
@@ -603,7 +615,7 @@ int main (int argc, char *argv[])
 */
 	}
 
-        if (!flag.q->answer) G_percent (row, nrows, 2);
+        G_percent (row, nrows, 2);
         temp = elev_cell[0];
         elev_cell[0] = elev_cell[1];
         elev_cell[1] = elev_cell[2];
@@ -994,14 +1006,12 @@ int main (int argc, char *argv[])
 
     } /* row loop */
 
-    if (!flag.q->answer)
-        G_percent (row, nrows, 2);
+    G_percent (row, nrows, 2);
 
     G_close_cell (elevation_fd);
-    if (!flag.q->answer)
-        G_message(_("CREATING SUPPORT FILES"));
+    G_message(_("Creating support files"));
 
-    G_message(_("ELEVATION PRODUCTS for mapset [%s] in [%s]"),
+    G_message(_("Elevation products for mapset [%s] in [%s]"),
         G_mapset(), G_location());
 
     if (aspect_fd >= 0)
