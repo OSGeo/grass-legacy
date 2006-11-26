@@ -1,3 +1,6 @@
+#ifndef GRASS_GLOCALE_H
+#define GRASS_GLOCALE_H
+
 #include <grass/config.h>
 
 extern char * G_gettext(const char *, const char *);
@@ -7,5 +10,7 @@ extern char * G_gettext(const char *, const char *);
 #define _(str) G_gettext(PACKAGE,(str))
 #else
 #define _(str) (str)
+#endif
+
 #endif
 
