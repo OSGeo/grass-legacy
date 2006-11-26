@@ -51,7 +51,9 @@ GLOBAL	FILTER	*AllFilters, Filter;
 GLOBAL	CATINFO	CatInfo;
 GLOBAL	int	*Seeds, Seed, NumSeeds, Low, High, NumMaps, NumFilters, OutFD;
 GLOBAL	char	Buf[240], **OutNames, *TheoryName, *Mapset;
-GLOBAL	struct Flag *Verbose, *Uniform;
+GLOBAL	struct Flag *Uniform;
+    /* please, remove before GRASS 7 released */
+GLOBAL	struct Flag *Verbose;
 GLOBAL  struct Option *Distance, *Exponent, *Weight;
 
 #ifdef DEBUG

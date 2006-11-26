@@ -9,6 +9,7 @@
 #include <unistd.h>
 #include <sys/types.h>
 #include <grass/gis.h>
+#include <grass/glocale.h>
 
 #undef MAIN
 #include "ransurf.h"
@@ -28,6 +29,7 @@ void Init(int argc, char **argv)
     struct Cell_head	Region;
     int			row, col, i, j, NumWeight, NumDist, NumExp;
     char		*Name, *Number, String[80];
+    char                msg[128], msg2[64];
     double		MinRes;
     FUNCTION(Init);
 
@@ -91,12 +93,21 @@ void Init(int argc, char **argv)
     Uniform->key         	= 'u' ;
     Uniform->description 	= "Uniformly distributed cell values" ;
 
+    /* please, remove before GRASS 7 released */
     Verbose 			= G_define_flag() ;
     Verbose->key         	= 'q' ;
     Verbose->description 	= "No (quiet) description during run" ;
 
     if (G_parser(argc, argv))
         exit(EXIT_FAILURE);
+
+    /* please, remove before GRASS 7 released */
+    if(Verbose->answer) {
+        putenv("GRASS_VERBOSE=0");
+        G_warning(_("The '-q' flag is superseded and will be removed "
+            "in future. Please use '--quiet' instead."));
+    }
+
 
     Rs = G_window_rows();
     Cs = G_window_cols();
@@ -181,23 +192,25 @@ void Init(int argc, char **argv)
 	for( i = 0; (Number = SeedStuff->answers[i]) && i < NumMaps; i++) {
         	sscanf( Number, "%d", &(Seeds[i]));
         	if (Seeds[i] > SEED_MAX){
-           	    if(! Verbose->answer)
-			printf( "Warning: seed [%d] larger than maximum [%d]\n",
+
+                    sprintf(msg,_( "Seed [%d] larger than maximum [%d]"),
                        		Seeds[i], SEED_MAX);
            	    Seeds[i] = Seeds[i] % SEED_MAX;
-           	    if(! Verbose->answer)
-			printf( "  seed is set to %d\n", Seeds[i]);
+                    sprintf(msg2,_(" seed is set to %d"), Seeds[i]);
+                    strcat(msg,msg2);
+                    G_warning(msg);
         	} else if (Seeds[i] < SEED_MIN){
-           	    if(! Verbose->answer)
-			printf("Warning: seed [%d] smaller than minimum [%d]\n",
+                    sprintf(msg,_("Seed [%d] smaller than minimum [%d]"),
                             Seeds[i], SEED_MIN);
            	    while( Seeds[i] < SEED_MIN) 
 			Seeds[i] += SEED_MAX - SEED_MIN;
-           	    if(! Verbose->answer)
-			printf( "  seed is set to %d\n", Seeds[i]);
+                    sprintf(msg2, _(" seed is set to %d"), Seeds[i]);
+                    strcat(msg,msg2);
+                    G_warning(msg);
 		}
-	}
-    }
+	} /* /for */
+    } /* /else */
+
     CellBuffer = G_allocate_cell_buf();
     CatInfo.NumValue = (int *) G_malloc( CatInfo.NumCat * sizeof( int));
     CatInfo.Average = (double *) G_malloc( CatInfo.NumCat * sizeof( double));

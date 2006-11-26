@@ -37,8 +37,7 @@ int main(int argc, char **argv)
                 	G_fatal_error("%s: unable to open [%s] random raster map",
                         	G_program_name(), OutNames[ DoMap]);
 
-		if(! Verbose->answer)
-			printf( "\nStarting map [%s]\n", OutNames[DoMap]);
+                G_message(_("Starting map [%s]"), OutNames[DoMap]);
 
 		if( Seeds[DoMap] == SEED_MIN - 1)
 			Seeds[ DoMap] = (int) (ran1() * SEED_MAX);
@@ -48,25 +47,22 @@ int main(int argc, char **argv)
 
 		for( DoFilter = 0; DoFilter < NumFilters; DoFilter++) {
 		    CopyFilter( &Filter, AllFilters[DoFilter]);
-		    if(! Verbose->answer) {
-			printf(
-    "\nStarting filter #%d, distance: %.*lf, exponent: %.*lf, flat: %.*lf",
-			DoFilter,
-			Digits( 2.0 * Filter.MaxDist, 6),
-			2.0 * Filter.MaxDist,
-			Digits( 1.0 / Filter.Exp, 6),
-			1.0 / Filter.Exp,
-			Digits( Filter.Mult, 6),
-			Filter.Mult);
+                    G_message(_(
+"Starting filter #%d, distance: %.*lf, exponent: %.*lf, flat: %.*lf"),
+                    DoFilter,
+                    Digits( 2.0 * Filter.MaxDist, 6),
+                    2.0 * Filter.MaxDist,
+                    Digits( 1.0 / Filter.Exp, 6),
+                    1.0 / Filter.Exp,
+                    Digits( Filter.Mult, 6),
+                    Filter.Mult);
 
-			printf( "\nPercent done:");
-		    }
+                    G_message(_("Percent done:"));
 
 		    MakeBigF();
 		    CalcSurface();
 		}
 
-		if(! Verbose->answer) printf( "\n");
 		SaveMap( DoMap, MapSeed);
 	}
 
