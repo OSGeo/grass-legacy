@@ -19,7 +19,6 @@ int main(int argc, char *argv[])
 	int nrows, ncols;
 	int row;
 	int infd, outfd;
-	int verbose;
 	RASTER_MAP_TYPE data_type, out_type ;
 	struct GModule *module;
 	struct
@@ -53,16 +52,24 @@ int main(int argc, char *argv[])
 
 	/* Define the different flags */
 
+        /* please, remove before GRASS 7 released */
 	flag1 = G_define_flag() ;
 	flag1->key         = 'q' ;
 	flag1->description = _("Quiet");
 
 	if (G_parser(argc, argv))
-		exit (-1);
+		exit (EXIT_FAILURE);
 
 	strcpy (name, option.input->answer);
 	strcpy (result, option.output->answer);
-	verbose = (! flag1->answer);
+
+        /* please, remove before GRASS 7 released */
+        if(flag1->answer) {
+            putenv("GRASS_VERBOSE=0");
+            G_warning(_("The '-q' flag is superseded and will be removed "
+                "in future. Please use '--quiet' instead."));
+        }
+
 
         mapset = G_find_cell2 (name, "");
         if (mapset == NULL)
@@ -82,7 +89,7 @@ int main(int argc, char *argv[])
 		
 	infd = G_open_cell_old (name, mapset);
 	if (infd < 0)
-		exit(1);
+		exit(EXIT_FAILURE);
 
 	/* determine the map type;
 	   data_type is the type of data being processed,
@@ -91,7 +98,7 @@ int main(int argc, char *argv[])
 	out_type = data_type;
 
 	if (G_get_cellhd (name, mapset, &cellhd) < 0)
-		exit(1);
+		exit(EXIT_FAILURE);
 
 	/* raster buffer is big enough to hold data */
 	rast = G_allocate_raster_buf(data_type);
@@ -105,29 +112,25 @@ int main(int argc, char *argv[])
 	G_set_null_value(rast, ncols, out_type);
 
 	if (outfd < 0)
-		exit(1);
+		exit(EXIT_FAILURE);
 
-	if (verbose)
-		fprintf (stderr, "percent complete: ");
+        G_message (_("Percent complete: "));
 
 	for (row = 0; row < nrows; row++)
 	{
-		if (verbose)
-			G_percent (row, nrows, 2);
+                G_percent (row, nrows, 2);
 		if (G_get_raster_row (infd, rast, row, data_type) < 0)
-			exit(1);
+			exit(EXIT_FAILURE);
 		if (G_put_raster_row (outfd, rast, out_type) < 0)
-			exit(1);
+			exit(EXIT_FAILURE);
 		G_mark_raster_cats (rast, ncols, &cats, data_type);
 	}
 
-	if (verbose)
-		G_percent (row, nrows, 2);
+        G_percent (row, nrows, 2);
 
 	G_close_cell (infd);
 
-	if (verbose)
-		G_message(_("Creating support files for %s..."), result);
+        G_message(_("Creating support files for %s..."), result);
 
 	G_close_cell (outfd);
 
@@ -169,5 +172,5 @@ int main(int argc, char *argv[])
 	if (hist_ok)
 		G_write_history (result, &hist);
 
-	exit(0);
+	exit(EXIT_SUCCESS);
 }
