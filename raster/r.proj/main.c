@@ -231,7 +231,7 @@ int main (int argc, char **argv)
 	if (list->answer)
 	{
 		if (isatty(0))  /* check if on command line */
-			fprintf(stderr, "Checking location %s, mapset %s:\n",
+			G_message(_("Checking location %s, mapset %s:"),
 				inlocation->answer, setname);
 		G_list_element ("cell", "raster", setname, 0);
 		exit(EXIT_SUCCESS); /* leave r.proj after listing*/
@@ -333,26 +333,26 @@ int main (int argc, char **argv)
 	G_adjust_Cell_head(&outcellhd, 0, 0);
 	G_set_window(&outcellhd);
 
-	fprintf(stderr, "Input:\n");
-	fprintf(stderr, "Cols:	%d (%d)\n", incellhd.cols, icols);
-	fprintf(stderr, "Rows:	%d (%d)\n", incellhd.rows, irows);
-	fprintf(stderr, "North: %f (%f)\n", incellhd.north, inorth);
-	fprintf(stderr, "South: %f (%f)\n", incellhd.south, isouth);
-	fprintf(stderr, "West:  %f (%f)\n", incellhd.west, iwest);
-	fprintf(stderr, "East:  %f (%f)\n", incellhd.east, ieast);
-	fprintf(stderr, "ew-res:	%f\n", incellhd.ew_res);
-	fprintf(stderr, "ns-res:	%f\n", incellhd.ns_res);
-	fprintf(stderr, "\n");
+	G_message(_("Input:"));
+	G_message(_("Cols:	%d (%d)"), incellhd.cols, icols);
+	G_message(_("Rows:	%d (%d)"), incellhd.rows, irows);
+	G_message(_("North: %f (%f)"), incellhd.north, inorth);
+	G_message(_("South: %f (%f)"), incellhd.south, isouth);
+	G_message(_("West:  %f (%f)"), incellhd.west, iwest);
+	G_message(_("East:  %f (%f)"), incellhd.east, ieast);
+	G_message(_("ew-res:	%f"), incellhd.ew_res);
+	G_message(_("ns-res:	%f"), incellhd.ns_res);
+	G_message(_(""));
 
-	fprintf(stderr, "Output:\n");
-	fprintf(stderr, "Cols:	%d (%d)\n", outcellhd.cols, ocols);
-	fprintf(stderr, "Rows:	%d (%d)\n", outcellhd.rows, orows);
-	fprintf(stderr, "North: %f (%f)\n", outcellhd.north, onorth);
-	fprintf(stderr, "South: %f (%f)\n", outcellhd.south, osouth);
-	fprintf(stderr, "West:  %f (%f)\n", outcellhd.west, owest);
-	fprintf(stderr, "East:  %f (%f)\n", outcellhd.east, oeast);
-	fprintf(stderr, "ew-res:	%f\n", outcellhd.ew_res);
-	fprintf(stderr, "ns-res:	%f\n", outcellhd.ns_res);
+	G_message(_("Output:"));
+	G_message(_("Cols:	%d (%d)"), outcellhd.cols, ocols);
+	G_message(_("Rows:	%d (%d)"), outcellhd.rows, orows);
+	G_message(_("North: %f (%f)"), outcellhd.north, onorth);
+	G_message(_("South: %f (%f)"), outcellhd.south, osouth);
+	G_message(_("West:  %f (%f)"), outcellhd.west, owest);
+	G_message(_("East:  %f (%f)"), outcellhd.east, oeast);
+	G_message(_("ew-res:	%f"), outcellhd.ew_res);
+	G_message(_("ns-res:	%f"), outcellhd.ns_res);
 
 	/* open and read the relevant parts of the input map and close it */
 	G__switch_env();
@@ -382,7 +382,7 @@ int main (int argc, char **argv)
 	xcoord1 = xcoord2 = outcellhd.west + (outcellhd.ew_res / 2);	/**/
 	ycoord1 = ycoord2 = outcellhd.north - (outcellhd.ns_res / 2);	/**/
 
-	fprintf(stderr, "Projecting... ");
+	G_message(_("Projecting... "));
 	G_percent(0, outcellhd.rows, 2);
 
 	for (row = 0; row < outcellhd.rows; row++)
