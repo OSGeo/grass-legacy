@@ -6,6 +6,7 @@
 #undef MAIN
 #include <string.h>
 #include <grass/gis.h>
+#include <grass/glocale.h>
 #include "ransurf.h"
 
 
@@ -98,10 +99,8 @@ void SaveMap(int NumMap, int MapSeed)
             }
         }
 
-	if(! Verbose->answer) {
-		printf("\n%s: saving [%s] raster map layer.\nPercent complete:",
+        G_message(_("%s: saving [%s] raster map layer.\nPercent complete:"),
 			G_program_name(), OutNames[ NumMap]);
-	}
 
         for (Index = 0; Index < CatInfo.NumCat; Index++) {
                 CatInfo.Max[Index] =  DownInterval;
