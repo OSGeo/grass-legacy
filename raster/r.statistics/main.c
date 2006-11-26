@@ -14,9 +14,9 @@ is_ok (char *method, char *map)
 {
    if(map == NULL)
    {
-     fprintf(stderr,"Sorry, with method '%s' you have to define an output map.\n",
+     G_fatal_error(_("Sorry, with method '%s' you have to define an output map."),
                      method);
-     exit(1);
+     exit(EXIT_FAILURE);
     }
 
     return 0;
@@ -85,7 +85,7 @@ main (int argc, char **argv)
     flag_c->description = _("Cover values extracted from the category labels of the cover map");
 
     if (G_parser(argc,argv))
-	exit(1);
+	exit(EXIT_FAILURE);
 
     usecats = flag_c->answer;
 
@@ -103,9 +103,9 @@ main (int argc, char **argv)
 
     if (G_read_cats (covermap->answer, mapset, &cats) < 0)
     {
-       fprintf (stderr, "%s: ERROR reading category file for %s\n",
+       G_fatal_error (_("%s: reading category file for %s"),
         	me, covermap->answer);
-       exit(1);
+       exit(EXIT_FAILURE);
     }
     
     for (o_method = 0; menu[o_method].name; o_method++)
@@ -114,17 +114,17 @@ main (int argc, char **argv)
 
     if (!menu[o_method].name)
     {
-       fprintf (stderr, "<%s=%s> unknown %s\n",
+       G_warning (_("<%s=%s> unknown %s"),
           method->key, method->answer, method->key);
        G_usage();
-       exit(1);
+       exit(EXIT_FAILURE);
     }                                                                                                                                                      
  
  
    switch(menu[o_method].val){
         case DISTRIB:
              if(outputmap->answer != NULL)
-               fprintf(stderr,"Outputmap '%s' ignored!\n", outputmap->answer);
+               G_warning(_("Outputmap '%s' ignored!"), outputmap->answer);
 	     
 	     o_distrib(basemap->answer, covermap->answer, 
 	                  outputmap->answer,usecats); /* ,&cats);  */
@@ -185,7 +185,7 @@ main (int argc, char **argv)
                     outputmap->answer,usecats,&cats); 
              break;	            
 	default:
-          printf("Not yet implemented!\n"); 
+          G_fatal_error(_("Not yet implemented!")); 
     }    		
 
     return 0;
