@@ -98,13 +98,13 @@ main (int argc, char *argv[])
     /* now figure out what new quant rules to write */
     if(truncate)
     {
-	fprintf (stdout,"truncating...\n");
+	G_message (_("Truncating..."));
 	G_quant_truncate (&quant_struct);
     }
 
     else if(round)
     {
-	fprintf (stdout,"rounding...\n");
+	G_message (_("Rounding..."));
 	G_quant_round (&quant_struct);
     }
 
@@ -137,7 +137,7 @@ main (int argc, char *argv[])
      else if((sscanf(fprange->answer, "%lf,%lf", &new_dmin, &new_dmax)==2)
           && (sscanf(range->answer, "%d,%d", &new_min, &new_max)==2))
      {
-       fprintf (stdout,"Setting quant rules for input map[s] to (%f %f) -> (%d,%d)\n",
+       G_message (_("Setting quant rules for input map[s] to (%f %f) -> (%d,%d)"),
 	       new_dmin, new_dmax, new_min, new_max);
        G_quant_add_rule(&quant_struct, new_dmin,new_dmax, new_min,new_max);
      }
@@ -148,7 +148,7 @@ main (int argc, char *argv[])
         if (!read_rules())
         {
 	    if (isatty(0))
-	        fprintf (stderr, "No rules specified. Quant table[s] not changed.\n");
+	        G_message (_("No rules specified. Quant table[s] not changed."));
 	    else
 	        G_fatal_error ("no rules specified");
 	    exit(1);
@@ -160,9 +160,9 @@ main (int argc, char *argv[])
     for(i=0; i < noi; i++)
     {
        if( G_write_quant(name[i], mapset[i], &quant_struct) < 0)
-   	   fprintf (stdout,"Quant table not changed for %s\n", name[i]);
-       else 
-	   fprintf (stdout,"New quant table created for %s\n", name[i]);
+   	   G_message(_("Quant table not changed for %s"), name[i]);
+       else
+	   G_message(_("New quant table created for %s"), name[i]);
     }
 
     exit(0);

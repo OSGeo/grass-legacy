@@ -1,6 +1,7 @@
 #include <stdio.h>
 #include <unistd.h>
 #include <string.h>
+#include <grass/glocale.h>
 #include "global.h"
 
 #define INCR 20
@@ -49,19 +50,19 @@ report_range (void)
   char buff[1024], buff2[300];
 
   if(G_is_d_null_value(&old_dmin) || G_is_d_null_value(&old_dmax))
-      fprintf (stdout, "Old data range is empty\n");
+      G_message (_("Old data range is empty"));
   else
   {
       sprintf(buff, "%.10f",old_dmin);
       sprintf(buff2, "%.10f",old_dmax);
       G_trim_decimal(buff);
       G_trim_decimal(buff2);
-      fprintf (stdout, "Old data range is %s to %s\n", buff, buff2);
+      G_message (_("Old data range is %s to %s"), buff, buff2);
   }
   if(G_is_c_null_value(&old_min) || G_is_c_null_value(&old_max))
-      fprintf (stdout, "Old integer data range is empty\n");
+      G_message (_("Old integer data range is empty"));
   else
-      fprintf (stdout, "Old integer data range is %d to %d\n", 
+      G_message (_("Old integer data range is %d to %d"), 
 		       (int)old_min, (int)old_max);
 
   return 0;
@@ -81,7 +82,7 @@ read_rules (void)
 
    read_range();
    report_range();
-   fprintf(stdout,
+   fprintf(stderr,
     "\nEnter the rule or 'help' for the format description or 'end' to exit:\n");
    G_quant_init(&quant_struct);
    for (line=1;;line++)
