@@ -26,7 +26,10 @@ main (int argc, char *argv[])
     } parm;
     struct
     {
-	struct Flag *zero, *quiet, *info, *z_geometry ;
+	struct Flag *zero, *info, *z_geometry ;
+
+        /* please, remove before GRASS 7 released */
+        struct Flag *quiet;
     } flag;
 
     G_gisinit (argv[0]);
@@ -55,6 +58,7 @@ main (int argc, char *argv[])
     parm.sites->required   = NO ;
     parm.sites->key        = "vector_output" ;
 
+    /* please, remove before GRASS 7 released */
     flag.quiet = G_define_flag() ;
     flag.quiet->key         = 'q' ;
     flag.quiet->description = _("Run quietly") ;
@@ -74,8 +78,14 @@ main (int argc, char *argv[])
     if (G_parser(argc, argv) != 0)
         exit(EXIT_FAILURE);
     
+    /* please, remove before GRASS 7 released */
+    if(flag.quiet->answer) {
+        putenv("GRASS_VERBOSE=0");
+        G_warning(_("The '-q' flag is superseded and will be removed "
+            "in future. Please use '--quiet' instead."));
+    }
+
     /* Set some state variables */
-    myState.verbose   = (flag.quiet->answer) ? 0 : 1;
     myState.use_nulls = flag.zero->answer;
     myState.inraster  = parm.input->answer;
     myState.outraster = parm.raster->answer;
@@ -104,14 +114,9 @@ main (int argc, char *argv[])
     {
         if (G_legal_filename (myState.outraster) < 0)
         {
-            fprintf (stderr, "%s: <%s> illegal file name",
+            G_fatal_error( _("%s: <%s> illegal file name"),
                 G_program_name(), myState.outraster);
             exit(1);
-        }
-        if (G_find_cell2 (myState.outraster, G_mapset()) != NULL)
-        {
-            G_fatal_error("%s: Output raster <%s> exists!",
-                    G_program_name(), myState.outraster);
         }
     }
 
@@ -121,11 +126,6 @@ main (int argc, char *argv[])
         {
             G_fatal_error( "%s: <%s> illegal file name",
                 G_program_name(), myState.outsites);
-        }
-        if (G_find_file ("sites", myState.outsites, G_mapset()) != NULL)
-        {
-            G_fatal_error("%s: Sites files <%s> exists!",
-                    G_program_name(), myState.outsites);
         }
     }
 

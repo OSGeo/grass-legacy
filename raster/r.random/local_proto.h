@@ -19,7 +19,7 @@ int is_null_value(struct RASTER_MAP_PTR buf, int col);
 /* Put all the state infomation into a struct */
 struct rr_state {
     char *inraster, *outraster, *mapset, *outsites;
-    int  use_nulls, verbose, fd_old, fd_new;
+    int  use_nulls, fd_old, fd_new;
     long nCells, nNulls, nRand;
     struct RASTER_MAP_PTR nulls, buf, min, max;
     FILE *fsites;

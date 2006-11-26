@@ -2,6 +2,7 @@
 #include <grass/gis.h>
 #include <grass/dbmi.h>
 #include <grass/Vect.h>
+#include <grass/glocale.h>
 #include "local_proto.h"
 
 void cpvalue (struct RASTER_MAP_PTR *from, int fcol, 
@@ -16,7 +17,7 @@ int execute_random (struct rr_state *theState)
     struct Cell_head window;
     int nrows, ncols, row, col;
     int infd, outfd;
-    char msg[256];
+    char msg[256], msg2[64];
     struct Map_info Out;
     struct field_info *fi;
     dbTable *table;
@@ -91,18 +92,18 @@ int execute_random (struct rr_state *theState)
         db_init_string (&sql);
     }
 
-    if (theState->verbose)
-    {
-        fprintf (stderr, "Writing ");
-        if (theState->outraster)
-                fprintf (stderr, "raster file [%s] ", theState->outraster);
-        if (theState->outsites && theState->outraster)
-                fprintf (stderr, "and ");
-        if (theState->outsites)
-                fprintf (stderr, "vector file [%s] ", theState->outsites);
-        fprintf (stderr, "... ");
-        G_percent (0, theState->nRand, 2);
-    }
+    sprintf (msg, _("Writing "));
+    if (theState->outraster)
+            sprintf (msg2, _("raster file [%s] "), theState->outraster);
+            strcat(msg,msg2);
+    if (theState->outsites && theState->outraster)
+            strcat (msg, "and ");
+    if (theState->outsites)
+            sprintf (msg2,_("vector file [%s] "), theState->outsites);
+            strcat(msg,msg2);
+    strcat (msg, "... ");
+    G_message(msg);
+    G_percent (0, theState->nRand, 2);
 
     init_rand();
     nc = (theState->use_nulls) ? theState->nCells : 

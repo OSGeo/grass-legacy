@@ -3,6 +3,7 @@
 #include <math.h>
 #include <unistd.h>
 #include <grass/gis.h>
+#include <grass/glocale.h>
 #include "local_proto.h"
 
 void set_min(struct RASTER_MAP_PTR *from, int col, struct RASTER_MAP_PTR *to);
@@ -39,8 +40,7 @@ void get_stats (struct rr_state *theState)
     set_min (NULL, 0, &theState->min);
     set_max (NULL, 0, &theState->max);
 
-    if (theState->verbose)
-        fprintf(stderr, "Collecting Stats ... ");
+    G_message(_("Collecting Stats ... "));
     for (row = 0; row < nrows; row++)
     {
         if (G_get_raster_row(theState->fd_old, theState->buf.data.v, 
@@ -61,13 +61,11 @@ void get_stats (struct rr_state *theState)
             }
         } /* for (col ... ) */
         
-        if (theState->verbose)
-            G_percent(row, nrows, 2);
+        G_percent(row, nrows, 2);
         
     } /* for (row ... ) */
         
-    if (theState->verbose)
-        G_percent(1, 1, 1);
+    G_percent(1, 1, 1);
 
     /* rewind the in raster file descriptor for later use */
     lseek(theState->fd_old, 0, SEEK_SET);
