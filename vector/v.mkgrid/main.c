@@ -69,7 +69,7 @@ main (int argc, char *argv[])
   position_opt = G_define_option ();
   position_opt->key = "position";
   position_opt->type = TYPE_STRING;
-  position_opt->required = YES;
+  position_opt->required = NO;
   position_opt->multiple = NO;
   position_opt->options = "region,coor";
   position_opt->answer = "region";
