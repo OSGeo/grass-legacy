@@ -1,5 +1,6 @@
 #include <stdlib.h>
 #include <stdio.h>
+#include <grass/glocale.h>
 
 int 
 read_stats (FILE *fd, long *cat1, long *cat2, double *value)
@@ -17,6 +18,6 @@ read_stats (FILE *fd, long *cat1, long *cat2, double *value)
     }
 
     
-    fprintf (stderr, "ERROR reading r.stats output\n");
-    exit(1);
+    G_fatal_error (_("Reading r.stats output"));
+    exit(EXIT_FAILURE);
 }

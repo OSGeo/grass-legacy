@@ -3,6 +3,7 @@
 #include <stdlib.h>
 #include <unistd.h>
 #include <grass/gis.h>
+#include <grass/glocale.h>
 #include "method.h"
 
 #define MEM  1024
@@ -101,7 +102,7 @@ s_dev (double *data, int n, double *sdev)
 
    if(n < 1)
    {
-    fprintf(stderr,"o_var: No data in array\n");
+    G_warning(_("o_var: No data in array"));
     return (1);
    }
 

@@ -1,6 +1,7 @@
 #include <stdlib.h>
 #include <unistd.h>
 #include <grass/gis.h>
+#include <grass/glocale.h>
 #include "method.h"
 
 #define STATS "r.stats"
@@ -29,7 +30,7 @@ o_distrib (char *basemap, char *covermap, char *outputmap, int usecats)
     if (stat = system(command))
     {
 	unlink(tempfile1);
-	fprintf (stderr, "%s: ERROR running %s command\n", me, STATS);
+	G_fatal_error (_("%s: running %s command"), me, STATS);
 	exit(stat);
     }
 
@@ -39,8 +40,8 @@ o_distrib (char *basemap, char *covermap, char *outputmap, int usecats)
     {
 	unlink(tempfile1);
 	unlink(tempfile2);
-	fprintf (stderr, "%s: ERROR can't open tempfile\n", me);
-	exit(1);
+	G_fatal_error (_("%s: can't open tempfile"), me);
+	exit(EXIT_FAILURE);
     }
     o_out(fd2, 0L, 0);	/* force at least one reclass rule */
 

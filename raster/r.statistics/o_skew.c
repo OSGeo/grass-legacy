@@ -3,6 +3,7 @@
 #include <stdlib.h>
 #include <unistd.h>
 #include <grass/gis.h>
+#include <grass/glocale.h>
 #include "method.h"
 
 #define MEM  1024
@@ -100,7 +101,7 @@ skew (double *data, int n, double *skewn)
 
    if(n < 1)
    {
-    fprintf(stderr,"o_skew: No data in array\n");
+    G_warning(_("o_skew: No data in array"));
     return (1);
    }
 
