@@ -177,9 +177,9 @@ int parse_command_line (int argc, char *argv[])
 	{
 		if (sscanf (parms.pl->answer, "%d", &page_length) != 1 || page_length < 0)
 		{
-			fprintf (stderr, "Illegal page length\n");
+			G_warning (_("Illegal page length"));
 			G_usage();
-			exit(1);
+			exit(EXIT_FAILURE);
 		}
 	}
 
@@ -187,9 +187,9 @@ int parse_command_line (int argc, char *argv[])
 	{
 		if (sscanf (parms.pw->answer, "%d", &page_width) != 1 || page_width < 1)
 		{
-			fprintf (stderr, "Illegal page width\n");
+			G_warning (_("Illegal page width"));
 			G_usage();
-			exit(1);
+			exit(EXIT_FAILURE);
 		}
 	}
 	if (parms.outfile->answer)
@@ -197,7 +197,7 @@ int parse_command_line (int argc, char *argv[])
 		if (freopen (parms.outfile->answer, "w", stdout) == NULL)
 		{
 			perror (parms.outfile->answer);
-			exit(1);
+			exit(EXIT_FAILURE);
 		}
 	}
 	no_data_str  = parms.nv->answer;
@@ -228,13 +228,13 @@ int parse_units (char *s)
 	else
 	{
 		G_usage();
-		exit(1);
+		exit(EXIT_FAILURE);
 	}
 	if (nunits >= MAX_UNITS)
 	{
-		fprintf (stderr, "\nERROR: %s: only %d unit%s allowed\n",
+		G_fatal_error (_("%s: only %d unit%s allowed"),
 		    G_program_name(), MAX_UNITS, MAX_UNITS==1?"":"s");
-		exit(1);
+		exit(EXIT_FAILURE);
 	}
 	unit[nunits].type  = x;
 	nunits++;
@@ -257,7 +257,7 @@ int parse_layer (char *s)
 	{
 		sprintf (msg, "%s: <%s> raster map not found\n", G_program_name(), s);
 		G_fatal_error (msg);
-		exit(1);
+		exit(EXIT_FAILURE);
 	}
 
 	n = nlayers++ ;
