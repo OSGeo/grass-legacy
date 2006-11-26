@@ -30,7 +30,7 @@ int main(int argc, char *argv[])
     int screen_x, screen_y, button;
     double res;
     char *null_string;
-    char ebuf[256], nbuf[256], label[512];
+    char ebuf[256], nbuf[256], label[512], formatbuff[256];
     char b1[100], b2[100];
     int n, first = 0;
     int coords = 0, i, k = -1;
@@ -127,7 +127,7 @@ int main(int argc, char *argv[])
     screen_x = ((int)D_get_d_west() + (int)D_get_d_east()) / 2;
     screen_y = ((int)D_get_d_north() + (int)D_get_d_south()) / 2;
 
-    fprintf(stderr, "Using Resolution %f\n", res);
+    G_message(_("Using Resolution %f"), res);
 
     G_begin_distance_calculations();
 
@@ -171,16 +171,14 @@ int main(int argc, char *argv[])
     }
 
     /* Show message giving output format */
-    fprintf(stderr, "Output Format:\n");
-    if (coords == 1) {
-	fprintf(stderr,
-		"[Easting] [Northing] [Along Track Dist.(m)] [Elevation]");
-    }
-    else {
-	fprintf(stderr, "[Along Track Dist.(m)] [Elevation]");
-    }
-    if(clr) fprintf(stderr, " [RGB Color]");
-    fprintf(stderr, "\n\n");
+    G_message(_("Output Format:"));
+    if (coords == 1)
+        sprintf(formatbuff,_("[Easting] [Northing] [Along Track Dist.(m)] [Elevation]"));
+    else 
+	sprintf(formatbuff,_("[Along Track Dist.(m)] [Elevation]"));
+    if(clr) 
+        strcat(formatbuff,_(" [RGB Color]"));
+    G_message(formatbuff);
 
     /* Get Profile Start Coords */
     if (!parm.profile->answer && !parm.i->answer ) {
@@ -290,7 +288,7 @@ int do_profile(double e1, double e2, double n1, double n2, char *name, int coord
     rows = n1 - n2;
 
     LEN = G_distance(e1, n1, e2, n2);
-    fprintf(stderr, "Approx. transect length %f m.\n", LEN);
+    G_message(_("Approx. transect length %f m."), LEN);
 
     /* Calculate Azimuth of Line */
     if (rows == 0 && cols == 0) {
