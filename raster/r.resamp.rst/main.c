@@ -302,12 +302,6 @@ int main(int argc, char *argv[])
     inp_x_orig = winhd.west;
     inp_y_orig = winhd.south;
 
-    fprintf(stderr, "\n");
-    fprintf(stderr,
-	    "Authors: original version -  H. Mitasova, L. Mitas, I. Kosinovsky, D.P. Gerdes\n");
-    fprintf(stderr, "See manual pages for references and publications\n");
-    fprintf(stderr, "\n");
-
     input = parm.input->answer;
     smooth = parm.smooth->answer;
     maskmap = parm.maskmap->answer;
@@ -457,9 +451,8 @@ int main(int argc, char *argv[])
     if (mcurv != NULL)
 	sdisk += disk;
 
-    fprintf(stderr, "Processing all selected output files will require\n");
-    fprintf(stderr, "%d bytes of disk space for temp files.\n", sdisk);
-    fprintf(stderr, "\n");
+    G_message(_("Processing all selected output files will require"));
+    G_message(_("%d bytes of disk space for temp files."), sdisk);
 
 
     fstar2 = fi * fi / 4.;
@@ -532,7 +525,7 @@ int main(int argc, char *argv[])
 
     ertot = 0.;
     cursegm = 0;
-    fprintf(stderr, "\nPercent complete: ");
+    G_message(_("Percent complete: "));
 
 
     NPOINT =
@@ -544,7 +537,7 @@ int main(int argc, char *argv[])
 				       inp_ew_res, dtens);
 
 
-    fprintf(stderr, "dnorm in mainc after grid before out1= %f \n", dnorm);
+    G_message(_( "dnorm in mainc after grid before out1= %f"), dnorm);
 
     if (NPOINT < 0)
 	clean_fatal_error("split_and_interpolate() failed");
@@ -561,8 +554,7 @@ int main(int argc, char *argv[])
 	    G_free_vector(adxy);
 	}
     }
-    fprintf(stderr, "dnorm in mainc after grid before out2= %f \n", dnorm);
-    fprintf(stderr, "\n");
+    G_message(_("dnorm in mainc after grid before out2= %f"), dnorm);
 
     if (IL_resample_output_2d(&params, zmin, zmax, zminac, zmaxac, c1min,
 			      c1max, c2min, c2max, gmin, gmax, ertot, input,
