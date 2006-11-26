@@ -57,7 +57,7 @@ int main(
     dbuf = (FCELL *)G_malloc (w.cols * w.rows * sizeof (FCELL));  
   
     if(!shh)
-	fprintf(stderr,"Reading %s...",rast->answer);
+	G_message(_("Reading %s..."),rast->answer);
     {
 	FCELL *tf;
 	double dsum=0.0;
@@ -77,10 +77,8 @@ int main(
 	    }
 
 	}
-    fprintf(stdout,"SUM = %f\n", dsum);
+    fprintf(stdout,"SUM=%f\n", dsum);
     }
-    fprintf(stderr,"\n");
-
 
     G_free (ibuf);
     G_free (dbuf);
