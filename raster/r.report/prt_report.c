@@ -79,8 +79,7 @@ int print_report(int unit1,int unit2)
 	    break;
 
 	default:
-	    G_fatal_error (_("Unit %d not yet supported"), unit[i].type);
-	    exit(EXIT_FAILURE);
+	    G_fatal_error("Unit %d not yet supported", unit[i].type);
 	}
 	if (need_format)
 	{
