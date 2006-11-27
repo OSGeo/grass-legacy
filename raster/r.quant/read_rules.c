@@ -93,6 +93,7 @@ read_rules (void)
 	   if(buf[n] == ',')
 	      buf[n] = ' ';
       G_strip(buf);
+      G_chop(buf);
       if (*buf == 0) continue;
       if (*buf == '#') continue;
       if (strcmp(buf, "end") == 0) {
