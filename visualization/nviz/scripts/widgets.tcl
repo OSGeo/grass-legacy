@@ -6,6 +6,8 @@
 # expected that Nviz panels will be constructed using these widgets
 # plus basic Tk functionality.
 ##########################################################################
+# Update by Michael Barton, Arizona State University, Nov. 2006
+#
 # COPYRIGHT:	(C) 2006 GRASS Development Team
 #
 #		This program is free software under the GNU General Public
@@ -13,8 +15,10 @@
 #		for details.
 #
 ##########################################################################
-# procedure to drag canvas item
+if {![info exists Nauto_draw]} {set Nauto_draw 1}
+
 ##########################################################################
+# procedure to drag canvas item
 proc Nv_itemDrag {c info x y} {
 	set lastx [St_get $info lastx]
 	set lasty [St_get $info lasty]
@@ -54,6 +58,7 @@ proc Nv_getXYPos { iname } {
 ##########################################################################
 proc Nv_mkXYScale {C {type puck} {name null} {height 100} {width 100} {x 50} {y 50} {cmd null} {upcmd null}} {
 	global Nv_
+	global Nauto_draw
 
 	canvas $C  -relief sunken -borderwidth 3 -height $height -width $width -bg white
 	set x1 [expr $x - 5]
@@ -82,16 +87,26 @@ proc Nv_mkXYScale {C {type puck} {name null} {height 100} {width 100} {x 50} {y 
 	bind $C <1> "+ Nv_itemDrag $C $Nv_($name) %x %y; Nv_xyCallback $cmd $width $height %x %y "
 	bind $C <B1-Motion> "Nv_itemDrag $C $Nv_($name) %x %y; Nv_xyCallback $cmd $width $height %x %y "
 
-	bind $C <B1-ButtonRelease> "Nv_itemDrag $C $Nv_($name) %x %y; Nv_xyCallback $upcmd $width $height %x %y "
-	bind $C <B1-ButtonRelease> {+ if {[Nauto_draw] == 1} {Ndraw_all} }
+	bind $C <ButtonRelease> "Nv_itemDrag $C $Nv_($name) %x %y; Nv_xyCallback $upcmd $width $height %x %y; dodraw"
 	return $C
 }
 
+proc dodraw {} {
+	global Nauto_draw
+	
+	if {$Nauto_draw == 1} {
+		Nset_cancel 0
+		Ndraw_all
+	} 
+}
+
 proc Nv_xyCallback { cmd w h x y } {
+	global Nauto_draw
+
 	if [string compare $cmd null] {
-	set x [expr (1.0*$x)/$w]
-	set y [expr (1.0*$y)/$h]
-	$cmd $x $y
+		set x [expr (1.0*$x)/$w]
+		set y [expr (1.0*$y)/$h]
+		$cmd $x $y
 	}
 }
 
@@ -108,28 +123,34 @@ proc Nv_setEntry {E V} {
 }
 
 proc Nv_scaleCallback { S {who s} {decimal 0} {cmd null} {val 0} } {
+	global Nauto_draw
 	if {$who == "s"} {
-	set val [expr $val/pow(10,$decimal)]
-	Nv_setEntry $S.f.entry $val
+		set val [expr $val/pow(10,$decimal)]
+		Nv_setEntry $S.f.entry $val
 	} elseif {$who == "e"} {
-	set min [expr int([lindex [$S.scale configure -to] 4] / pow(10,$decimal))]
-	set max [expr int([lindex [$S.scale configure -from] 4] / pow(10,$decimal))]
-	set val [$S.f.entry get]
-	if {$val < $min} then {
-		$S.scale configure -to [expr int($val*pow(10,$decimal))]
-	}
-	if {$val > $max} then {
-		$S.scale configure -from [expr int($val*pow(10,$decimal))]
-	}
-	Nv_changeScale	$S.scale [expr int($val*pow(10,$decimal))]
+		set min [expr int([lindex [$S.scale configure -to] 4] / pow(10,$decimal))]
+		set max [expr int([lindex [$S.scale configure -from] 4] / pow(10,$decimal))]
+		if {$min > $max} {
+			set maxtmp $min
+			set min $max
+			set max $maxtmp
+			unset maxtmp
+		}
+		set val [$S.f.entry get]
+		if {$val < $min} then {
+			$S.scale configure -to [expr int($val*pow(10,$decimal))]
+		}
+		if {$val > $max} then {
+			$S.scale configure -from [expr int($val*pow(10,$decimal))]
+		}
+		Nv_changeScale	$S.scale [expr int($val*pow(10,$decimal))]
 	} elseif {$who == "b"} {
-	Nv_changeScale	$S.scale $val
-	set tmpval [expr $val/pow(10,$decimal)]
-	Nv_setEntry $S.f.entry $tmpval
+		Nv_changeScale	$S.scale $val
+		set tmpval [expr $val/pow(10,$decimal)]
+		Nv_setEntry $S.f.entry $tmpval
 	}
 
 	$cmd $val
-
 }
 
 proc Nv_floatscaleCallback { S {who s} {decimal 0} {cmd null} {val 0} } {
@@ -220,6 +241,7 @@ proc Nv_floatscaleCallback { S {who s} {decimal 0} {cmd null} {val 0} } {
 		Nv_changeScale	$S.scale $val
 		Nv_setEntry $S.f.entry $val
 	}
+	
 	$cmd $val
 
 }
@@ -228,6 +250,8 @@ proc Nv_floatscaleCallback { S {who s} {decimal 0} {cmd null} {val 0} } {
 # procedures to make sliders
 ##########################################################################
 proc Nv_mkScale { S {orient v} {name ---} {from 10000} {to 0} {curr 500} {cmd null} {decimal 0}} {
+	global Nauto_draw
+
 	frame $S
 	frame $S.f
 
@@ -243,14 +267,22 @@ proc Nv_mkScale { S {orient v} {name ---} {from 10000} {to 0} {curr 500} {cmd nu
 
 	scale $S.scale -from $from -length 140 -showvalue 0 -orient $orient \
 		-tickinterval 0 -to $to -width 13 \
-		-command "Nv_scaleCallback $S s $decimal $cmd " \
-		-activebackground gray80 -background gray90
+		-activebackground gray80 -background gray90 \
+		-command "Nv_scaleCallback $S s $decimal $cmd"
 
 	label $S.f.label -text $name
 	$S.scale set $curr
-	entry $S.f.entry -width 5 -borderwidth 2 -relief sunken
-	pack $S.scale -side $side
-	pack $S.f -side $side
+	Entry $S.f.entry -width 5 -borderwidth 2 -relief sunken \
+		-command "
+			Nv_scaleCallback $S e $decimal $cmd
+			if {$Nauto_draw == 1} {
+				Nset_cancel 0
+				Ndraw_all
+			} 
+			"
+
+	pack $S.scale -side $side -anchor e
+	pack $S.f -side $side -anchor e
 	pack $S.f.label -side $text_side
 	pack $S.f.entry -side $text_side
 
@@ -268,16 +300,17 @@ proc Nv_mkScale { S {orient v} {name ---} {from 10000} {to 0} {curr 500} {cmd nu
 			tk::unsupported::ExposePrivateCommand tkScaleActivate
 		}
 		tkScaleActivate %W %x %y
-		if {[Nauto_draw] == 1} {Ndraw_all}
+		if {$Nauto_draw == 1} {
+			Nset_cancel 0
+			Ndraw_all
+		} 
 	}
 	
-	bind $S.f.entry <Return> "+ Nv_scaleCallback $S e $decimal $cmd"
-	bind $S.f.entry <Return> {+ if {[Nauto_draw] == 1} {Ndraw_all} }
-
 	return $S
 }
 
 proc Nv_mkFloatScale { S {orient v} {name ---} {from 10000} {to 0} {curr 500} {cmd null} {decimal 0}} {
+	global Nauto_draw
 	frame $S
 	frame $S.f
 
@@ -290,7 +323,6 @@ proc Nv_mkFloatScale { S {orient v} {name ---} {from 10000} {to 0} {curr 500} {c
 		set text_side left
 		set orient h
 	}
-
 	#calculate number length for digits var
 	set num [llength [split [expr int($curr * 1)] ""]]
 	if {$num == 1} {
@@ -308,7 +340,15 @@ proc Nv_mkFloatScale { S {orient v} {name ---} {from 10000} {to 0} {curr 500} {c
 		-command "Nv_floatscaleCallback $S s 0 $cmd " \
 		-activebackground gray80 -background gray90
 	label $S.f.label -text $name
-	entry $S.f.entry -width $num -borderwidth 2 -relief sunken
+	Entry $S.f.entry -width 5 -borderwidth 2 -relief sunken \
+		-command "
+			Nv_floatscaleCallback $S e 0 $cmd
+			if {$Nauto_draw == 1} {
+				Nset_cancel 0
+				Ndraw_all
+			} 
+			"
+
 	pack $S.scale -side $side
 	pack $S.f -side $side
 	pack $S.f.label -side $text_side
@@ -328,11 +368,11 @@ proc Nv_mkFloatScale { S {orient v} {name ---} {from 10000} {to 0} {curr 500} {c
 			tk::unsupported::ExposePrivateCommand tkScaleActivate
 		}
 		tkScaleActivate %W %x %y
-		if {[Nauto_draw] == 1} {Ndraw_all}
+		if {$Nauto_draw == 1} {
+			Nset_cancel 0
+			Ndraw_all
+		} 
 	}
-
-	bind $S.f.entry <Return> "+ Nv_floatscaleCallback $S e 0 $cmd"
-	bind $S.f.entry <Return> {+ if {[Nauto_draw] == 1} {Ndraw_all} }
 
 	Nv_floatscaleCallback $S b 0 $cmd $curr
 
@@ -608,6 +648,5 @@ proc Nset_current { type id } {
 proc Nv_makeSeparator { name } {
 	canvas $name -relief raised -height 2m -width 5m -bg \#111111
 }
-
 
 
