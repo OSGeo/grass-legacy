@@ -2,8 +2,6 @@
 #include <string.h>
 #include <unistd.h>
 #include "global.h"
-#include <grass/gis.h>
-#include <grass/glocale.h>
 
 int parse_command_line (int argc, char *argv[])
 {
