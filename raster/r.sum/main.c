@@ -1,6 +1,8 @@
 /* Written by Bill Brown, UIUC GIS Laboratory
  */
 
+/* this module should be removed before GRASS 7 released */
+
 #include <stdlib.h>
 #include <stdio.h>
 #include <string.h>
@@ -14,7 +16,7 @@ int main(
     char *argv[])
 {
 
-	struct GModule *module;
+    struct GModule *module;
     struct Option 	*rast;
     char		*cellmap;
     FILEDESC    	cellfile = 0;
@@ -77,7 +79,7 @@ int main(
 	    }
 
 	}
-    fprintf(stdout,"SUM=%f\n", dsum);
+    fprintf(stdout,"SUM = %f\n", dsum);
     }
 
     G_free (ibuf);
