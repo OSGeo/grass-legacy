@@ -90,6 +90,7 @@ option add *Scrollbar.troughcolor gray90 widgetDefault
 option add *Scrollbar.background gray90 widgetDefault
 option add *Scrollbar.activeBackground gray99 widgetDefault
 option add *entry.background white
+option add *Entry.background white
 option add *entry.relief sunken
 option add *Entry.relief sunken
 option add *Radiobutton.highlightThickness 0
