@@ -179,6 +179,7 @@ proc GmDtext::mouseset { id } {
 proc GmDtext::options { id frm } {
     variable opt
 	variable placement
+	variable first
     global iconpath bgcolor
 
     # Panel heading
@@ -241,7 +242,7 @@ proc GmDtext::options { id frm } {
     Label $row.a -text [G_msg "     text rotation (degrees)"] 
     set rotation [SpinBox $row.b -range {-360 360 1} -textvariable GmDtext::opt($id,1,rotate) \
 		-entrybg white -width 6]
-	$rotation setvalue @360
+	if {$first==1} {$rotation setvalue @360}
     pack $row.a $row.b -side left
     pack $row -side top -fill both -expand yes	
 
@@ -383,10 +384,10 @@ proc GmDtext::display { node mod } {
 	# set grass font environmental variable to whatever it was when we started
 	# this lets different text layers have different fonts
 	
-	if {$currfont != ""} {
-		set env(GRASS_FONT) $currfont
-	} else {
+	if {$currfont == ""} {
 		unset env(GRASS_FONT)
+	} else {
+		set env(GRASS_FONT) $currfont
 	}
 
 }
