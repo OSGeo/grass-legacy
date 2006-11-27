@@ -494,7 +494,8 @@ int main (int argc, char *argv[])
                       window.east = window.east + 0.5 * temp_window.ew_res;
                 }
 
-		G_align_window (&window, &temp_window);
+		if(flag.res_set->answer)
+		    G_align_window (&window, &temp_window);
 
 		Vect_close (&Map);
 	}
