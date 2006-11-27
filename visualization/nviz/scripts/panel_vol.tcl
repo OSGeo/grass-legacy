@@ -431,11 +431,7 @@ proc create_slices_subpanel { BASE } {
 
 	set pname [frame $BASE.slice -relief flat]
 
-	# slice manipulation widgets
-	frame $pname.t1 -relief flat -bd 0
-	label $pname.t1.l -text "Define slice geometry"
-	pack $pname.t1.l -side left -padx 3 -pady 3
-	
+	# slice manipulation widgets	
 	frame $pname.t2 -relief flat -borderwidth 0
 
 	# slice axes
@@ -450,7 +446,7 @@ proc create_slices_subpanel { BASE } {
 
 	button $tmp.transp -text "Transparency" -command "slice_set_transp" \
 		-state disabled -bd 1
-	pack $tmp.transp -pady 1 -fill both -side right
+	pack $tmp.transp -fill both -side right
 	
 	# slice position
 	if {$Nv_(SliceAxis) == 2 } {
@@ -506,11 +502,10 @@ proc create_slices_subpanel { BASE } {
     pack $top  -side top -expand 1 -fill x
     pack $bottom -side bottom -expand 1 -fill x
 
-	pack $pname.t1 -side top
 	pack $pname.t2.t $pname.t2.b1 $pname.t2.b2 $pname.t2.b3 -side top -expand 1 -fill both
-    pack $pname.t2 -expand 1 -fill x -side top -pady 3
-	pack $pname.t3.l -side left -expand 1 -fill both -pady 3 -padx 2
-	pack $pname.t3.r -side right -expand 0 -fill both -pady 3 -padx 2
+    pack $pname.t2 -expand 1 -fill x -side top -pady 2
+	pack $pname.t3.l -side left -expand 1 -fill both -pady 2 -padx 2
+	pack $pname.t3.r -side right -expand 0 -fill both -pady 2 -padx 2
 	pack $pname.t3 -expand 1 -fill x -side top
 
 	# update subpanel info
@@ -566,6 +561,7 @@ proc update_slices_subpanel { BASE {select -1}} {
 proc mkSlicePosScale { S name title BASE } {
 	global Nv_
 	global nviztxtfont
+	global Nauto_draw
 
 	frame $S
 
@@ -576,7 +572,7 @@ proc mkSlicePosScale { S name title BASE } {
 		-label $title -width 10
 
 	bind $S.s <B1-ButtonRelease> "slice_set_pos $BASE"
-	bind $S.s <B1-ButtonRelease> "catch {+ if {[Nauto_draw] == 1} {Ndraw_all}}"
+	bind $S.s <B1-ButtonRelease> "catch {+ if {$Nauto_draw == 1} {Nset_cancel 0; Ndraw_all}}"
 	bind $S.s <B1-Motion> "slice_set_pos $BASE; Nquick_draw"
 
 	pack $S.s -fill both -side left -expand 1
@@ -1161,7 +1157,7 @@ proc mkVolPositionPanel { w } {
     button $w.commands.reset 	-text "Reset"	-command "$w.zslide set 0; Nv_itemDrag $w.pos $Nv_(VOL_POS) 63 63; Nv_xyCallback $update_routine 126 126 63 63"
     button $w.commands.close	-text "Close"	-command "destroy $w"
     pack $w.commands.reset $w.commands.close \
-	-side left -fill both -padx 3 -pady 3 -expand yes
+		-side left -fill both -padx 3 -pady 3 -expand yes
     pack $w.commands -in $w.bottom -fill both
 
     # Create Z slider
@@ -1270,7 +1266,7 @@ proc psSetVolPosFromEntry {w curr_vol} {
 proc list_type_vscroll {window} {
     frame $window -relief raised
     listbox $window.l -relief flat -yscrollcommand "$window.sr set" \
-        -exportselection 0 -selectmode single
+        -exportselection 0 -selectmode single -height 0
     scrollbar $window.sr -command "$window.l yview"
     pack $window -side bottom -expand yes -fill both
     pack $window.l -side left -expand yes -fill both
