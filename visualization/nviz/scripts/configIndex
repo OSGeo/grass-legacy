@@ -2,4 +2,6 @@ pos
 lights
 color
 label
-scale
+legend
+arrow
+fringe
