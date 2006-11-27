@@ -37,9 +37,10 @@ proc mkmainPanel { BASE } {
 	#Globals for draw features
 	global surface vector sites volume
 	global legend labels n_arrow 
-	global fringe_color fringe_elev fringe 
+	global fringe 
 	global n_arrow_x n_arrow_y n_arrow_z
 	global fringe_nw fringe_ne fringe_sw fringe_se
+	global Nauto_draw
 
 	catch {destroy $BASE}
 
@@ -78,18 +79,14 @@ proc mkmainPanel { BASE } {
 		-side left -expand 1 -fill x
 
 	# Auto check boxes
-	set labl1 [label $BASE.redrawf.f1.label1 -text Automatically: -anchor w]
-	set auto [checkbutton $BASE.redrawf.f1.autoclear -text "clear screen" \
-		-variable autoc -justify left -anchor center -padx 5]
-	help $BASE.redrawf.f1.autoclear balloon "Automatically clear screen before drawing"
-	$auto select
-	set auto_d [checkbutton $BASE.redrawf.f1.autodraw -text "draw/redraw" \
-		-onvalue 1 -offvalue 0 -variable auto_draw \
+	set labl1 [label $BASE.redrawf.f1.label1 -text "Automatically render display:" -anchor w]
+	set auto_d [checkbutton $BASE.redrawf.f1.autodraw \
+		-onvalue 1 -offvalue 0 -variable Nauto_draw \
 		-justify left  -anchor center -padx 5]
-	help $BASE.redrawf.f1.autodraw balloon "Automatically draw selected features"
+	help $BASE.redrawf.f1.autodraw balloon "Automatically render display after changing parameters"
 	$auto_d select
-	pack $labl1 $auto $auto_d -side left -expand 1 -fill x -pady 3
-
+	pack $labl1 $auto_d -side left -expand 0 -fill x -pady 3
+	
 	#checkbuttons for features to draw
 	set labl2 [label $BASE.redrawf.f11.label1 -text "Show features:" -anchor w]
 
@@ -141,7 +138,7 @@ proc mkmainPanel { BASE } {
 	set labels 0
 	set n_arrow 0
 	set fringe 0
-	set fringe_color #AAAAAA
+	set Nv_(fringe_color) #AAAAAA
 
 	#Set North Arrow defaults
 	set n_arrow_x 999
@@ -195,12 +192,14 @@ proc mkmainPanel { BASE } {
 	Button $BASE.midf.lookat.here -text "here" -bd 1 \
 		-helptext "Center view at point marked with mouse click" \
 		-command {bind $Nv_(TOP).canvas <Button> {look_here %W %x %y
-		if {[Nauto_draw] == 1} {Ndraw_all}
+		if {$Nauto_draw == 1} {Ndraw_all}
 		}}
+		
 	Button $BASE.midf.lookat.center -text "center" -bd 1 \
 		-helptext "Center view at center of displayed surface" \
 		-command { look_center
-			if {[Nauto_draw] == 1} {Ndraw_all} }
+			if {$Nauto_draw == 1} {Ndraw_all} 
+			}
 	Button $BASE.midf.lookat.top -text "top" -bd 1 \
 		-helptext "View directly from above" \
 		-command {
@@ -212,7 +211,7 @@ proc mkmainPanel { BASE } {
 			change_display 1
 			update
 
-			if {[Nauto_draw] == 1} {Ndraw_all}
+			if {$Nauto_draw == 1} {Ndraw_all}
 			}
 	
 	# CMB Nov.2006: As far as I can tell, this button does nothing. This command doesn't exist
@@ -359,6 +358,7 @@ proc do_clear {} {
 
 proc do_reset {XY H E P} {
 	global Nv_
+	global Nauto_draw
 
 	appBusy
 
@@ -375,6 +375,7 @@ proc do_reset {XY H E P} {
 	Nv_floatscaleCallback $H b 2 Nchange_height $val
 
 	Nv_scaleCallback $P b 0 Nchange_persp 40
+	if {$Nauto_draw == 1} {Ndraw_all}
 
 	appNotBusy
 }
@@ -415,9 +416,9 @@ proc update_exag {exag} {
 	global Nv_
 
 	if {$exag == 0.} {
-	set exag [lindex [$Nv_(main_BASE).midf.zexag.scale configure -resolution] 4]
-	Nv_setEntry $Nv_(main_BASE).midf.zexag.f.entry $exag
-	Nv_floatscaleCallback $Nv_(main_BASE).midf.zexag e 2 null $exag
+		set exag [lindex [$Nv_(main_BASE).midf.zexag.scale configure -resolution] 4]
+		Nv_setEntry $Nv_(main_BASE).midf.zexag.f.entry $exag
+		Nv_floatscaleCallback $Nv_(main_BASE).midf.zexag e 2 null $exag
 	}
 
 	set ht1 [lindex [Nget_real_position 1] 2]
@@ -428,10 +429,10 @@ proc update_exag {exag} {
 	## Update height to avoid scene jump
 	## Changing the exag changes the height
 	if {$ht1 == $ht2} {
-	Nv_floatscaleCallback $Nv_(HEIGHT_SLIDER) b 2 update_height $ht2
+		Nv_floatscaleCallback $Nv_(HEIGHT_SLIDER) b 2 update_height $ht2
 	} else {
-	Nv_floatscaleCallback $Nv_(HEIGHT_SLIDER) b 2 update_height \
-		 [lindex [Nget_real_position 1] 2]
+		Nv_floatscaleCallback $Nv_(HEIGHT_SLIDER) b 2 update_height \
+			[lindex [Nget_real_position 1] 2]
 	}
 
 
@@ -453,10 +454,10 @@ proc update_eye_position {x y} {
 	Nchange_position $x $y
 
 	if {$Nv_(FollowView)} {
-	set_lgt_position $x $y
-	set x [expr int($x*125)]
-	set y [expr int($y*125)]
-	Nv_itemDrag $Nv_(LIGHT_XY) $Nv_(LIGHT_POS) $x $y
+		set_lgt_position $x $y
+		set x [expr int($x*125)]
+		set y [expr int($y*125)]
+		Nv_itemDrag $Nv_(LIGHT_XY) $Nv_(LIGHT_POS) $x $y
 	}
 }
 
@@ -476,46 +477,46 @@ proc update_center_position {x y} {
 
 
 proc change_display {flag} {
-global XY Nv_
+	global XY Nv_
 
-	   set NAME $XY
-	   set NAME2 [winfo parent $NAME]
-	   catch "destroy $XY"
+   set NAME $XY
+   set NAME2 [winfo parent $NAME]
+   catch "destroy $XY"
 
-# *** ACS_MODIFY 1.0 - one line
-
-if {$Nv_(FlyThrough)} {Nset_fly_mode -1}
-
-if {$flag == 1} {
-#draw eye position
-inform "Set eye position"
-set XY [Nv_mkXYScale $NAME puck XY_POS 125 125 105 105 update_eye_position]
-
-move_position
-
-} else {
-#draw center position
-inform "Set center of view position"
-set XY [Nv_mkXYScale $NAME cross XY_POS 125 125 109 109 update_center_position]
-
-#*** ACS_MODIFY 1.0 BEGIN ******************************************************
-	if {$Nv_(FlyThrough) == 0} {
-		# original line
-		pack $XY -side left -before $NAME2.height
-	}
-#*** ACS_MODIFY 1.0 END ******************************************************
-
-move_position
-}
-
-#*** ACS_MODIFY 1.0 BEGIN ******************************************************
-	if {$Nv_(FlyThrough)} {
-		pack_XY
+	# *** ACS_MODIFY 1.0 - one line
+	
+	if {$Nv_(FlyThrough)} {Nset_fly_mode -1}
+	
+	if {$flag == 1} {
+		#draw eye position
+		inform "Set eye position"
+		set XY [Nv_mkXYScale $NAME puck XY_POS 125 125 105 105 update_eye_position]
+		
+		move_position
+		
 	} else {
-		# original line
-	   pack $XY -side left -before $NAME2.height
+		#draw center position
+		inform "Set center of view position"
+		set XY [Nv_mkXYScale $NAME cross XY_POS 125 125 109 109 update_center_position]
+		
+		#*** ACS_MODIFY 1.0 BEGIN ******************************************************
+			if {$Nv_(FlyThrough) == 0} {
+				# original line
+				pack $XY -side left -before $NAME2.height
+			}
+		#*** ACS_MODIFY 1.0 END ******************************************************
+		
+		move_position
 	}
-#*** ACS_MODIFY 1.0 END ******************************************************
+	
+	#*** ACS_MODIFY 1.0 BEGIN ******************************************************
+		if {$Nv_(FlyThrough)} {
+			pack_XY
+		} else {
+			# original line
+		   pack $XY -side left -before $NAME2.height
+		}
+	#*** ACS_MODIFY 1.0 END ******************************************************
 }
 
 proc update_height {h} {
@@ -528,12 +529,12 @@ proc update_height {h} {
 # Nget_height does the exag guess  BB
 
 	if {$Nv_(FollowView)} {
-	set list [Nget_height]
-	set val [lindex $list 0]
-	set min [lindex $list 1]
-	set max [lindex $list 2]
-	set h [expr int((100.0*($h -$min))/($max - $min))]
-	Nv_floatscaleCallback $Nv_(LIGHT_HGT) b 2 set_lgt_hgt $h
+		set list [Nget_height]
+		set val [lindex $list 0]
+		set min [lindex $list 1]
+		set max [lindex $list 2]
+		set h [expr int((100.0*($h -$min))/($max - $min))]
+		Nv_floatscaleCallback $Nv_(LIGHT_HGT) b 2 set_lgt_hgt $h
 	}
 
 }
