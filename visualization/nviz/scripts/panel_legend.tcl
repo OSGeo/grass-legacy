@@ -1,10 +1,19 @@
-# 4/4/95
-# M. Astley
-# USACERL, blah blah blah
-
 ##########################################################################
 # 
 # Panel to create legends for raster surfaces in NVIZ
+#
+# 4/4/95
+# M. Astley
+# U.S. Army Construction Engineering Research Laboratory
+#
+# Major update of GUI Nov 2006, Michael Barton, Arizona State University
+#
+##########################################################################
+# COPYRIGHT:	(C) 2006 by Michael Barton and the GRASS Development Team
+#
+#		This program is free software under the GNU General Public
+#		License (>=v2). Read the file COPYING that comes with GRASS
+#		for details.
 #
 ##########################################################################
 
