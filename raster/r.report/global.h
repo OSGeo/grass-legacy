@@ -6,6 +6,7 @@
 #endif
 
 #include <grass/gis.h>
+#include <grass/glocale.h>
 
 GLOBAL struct Cell_head window ;
 
