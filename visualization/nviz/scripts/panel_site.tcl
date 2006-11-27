@@ -72,12 +72,13 @@ proc mksitePanel { BASE } {
 		set Nv_(siteshape) [Nsite$curr get_att marker]
 		set Nv_(sitedisplay) [Nsite$curr get_att display]
 		set maplist [Nget_map_list surf]
-		set longdim [expr int([Nget_longdim]) / 50 ]
-	
+		set longdim [expr [Nget_longdim] / 50 ]
+		if {$longdim < 1} {set longdim 1.0}
+			
 		# We do this check to make sure that size is ALWAYS set to
 		# something sensible the first time the surface is loaded
-		if {$size == "0"} then {
-			Nsite$curr set_att size [expr $longdim / 10.0]
+		if {$size == "0" || [expr $longdim/$size] < 2} then {
+			Nsite$curr set_att size [expr $longdim / 20.0]
 			set size [Nsite$curr get_att size]
 		}
 		if {"$Nv_(siteshape)" == ""} then {
@@ -94,10 +95,18 @@ proc mksitePanel { BASE } {
 		set Nv_(siteshape) sphere
 		set Nv_(sitedisplay) 3d
 		set maplist {}
-		set longdim 100
+		set longdim 100.0
+    }
+       
+    #set increment value for SpinBox
+    if {$longdim < 100} {
+    	set spin_incr [expr $longdim/100.0]
+    	set startindex [expr int(100*($size/$longdim))]
+    } else {
+    	set spin_incr 1
+    	set startindex [expr int($longdim*($size/$longdim))]
     }
 
-        
   	########## create bottom frame
     set bottom [frame $BASE.bottom] 
     button $bottom.close -text Close \
@@ -120,23 +129,16 @@ proc mksitePanel { BASE } {
     set szlabel [label $row1.szlabel -text "icon size" \
     	-font $nviztxtfont -fg black]
     
-    #set increment value for SpinBox
-    if {$longdim < 100} {
-    	set spin_incr [expr $longdim/100]
-    } else {
-    	set spin_incr 1
-    }
     
 	# SpinBox range and starting marker size
     set range "0 $longdim $spin_incr"
-    set startsize [expr int($longdim*($size/$longdim))]
 
     set ptsize [SpinBox $row1.sitesize -range $range \
 		-textvariable size \
 		-modifycmd {change_site_size $size} \
 		-width 5]
-	
-	$ptsize setvalue @$startsize
+		
+	$ptsize setvalue @$startindex
 
     set ptcolor [button $row1.color -text Color \
 		-command "change_color site $row1.color"]
