@@ -44,9 +44,9 @@ proc mkcolorPanel { BASE } {
     Nv_mkPanelname $BASE "Background Color Panel"
     
     button $BASE.background -text Background -bg white -fg grey \
-	-activebackground gray20 -activebackground white\
-	-command "set_background_color $BASE.background"\
-	-height 3 -width 12
+		-activebackground gray20 -activebackground white\
+		-command "set_background_color $BASE.background"\
+		-height 3 -width 12
     # place $BASE.background -rely .33 -relx .33 -relheight .20 -relwidth .40
     pack $BASE.background -padx 5 -pady 5
     frame $BASE.closef
@@ -60,12 +60,16 @@ proc mkcolorPanel { BASE } {
 
 proc set_background_color {W} {
     global BGColor
+    global Nauto_draw
 
     set BGColor [mkColorPopup .colorPop Background $BGColor]
     $W config -bg $BGColor
     $W config -activebackground $BGColor
     Nbackground $BGColor
     Nquick_draw
+	if {$Nauto_draw == 1} {
+		Ndraw_all
+	} 
 }
 
 # Reset procedure for color panel
