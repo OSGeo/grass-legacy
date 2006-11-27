@@ -549,7 +549,7 @@ proc MapCanvas::runprograms { mon mod } {
 		set parts(projection) [string trim $parts(projection) $end]
 
 		set gregion "projection:$parts(projection); zone:$parts(zone); north:$parts(north); south:$parts(south); east:$parts(east); west:$parts(west); e-w resol:$parts(ewres);	 n-s resol:$parts(nsres)"
-	}
+	} 
 
 	set MapCanvas::msg($mon) "please wait..."
 	$mapframe($mon) showstatusbar progression
@@ -1083,6 +1083,9 @@ proc MapCanvas::zoom_gregion {mon args} {
 		MapCanvas::zoom_new $mon $parts(n) $parts(s) $parts(e) \
 			$parts(w) $parts(nsres) $parts(ewres) $parts(rows) $parts(cols)
 
+	} else {
+		puts "GRASS command g.region failed. Check to see if you've install GRASS correctly."
+		exit
 	}
 }
 
