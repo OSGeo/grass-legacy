@@ -19,7 +19,7 @@ proc init_graphics {} {
 
 	set Light(1) [Nnew_light]
 	$Light(1) set_position 0.68 -0.68 0.8 0
-        $Light(1) set_bright 0.8
+    $Light(1) set_bright 0.8
 	$Light(1) set_color 1.0 1.0 1.0
 	$Light(1) set_ambient 0.2 0.2 0.2 
 
