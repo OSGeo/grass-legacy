@@ -112,7 +112,7 @@ proc mkvectPanel { BASE } {
 		-variable flat_state -value 0 \
         -command "check_list $row2.list"]
 
-    set htscale [Nv_mkScale $row3.scale h "vector height above surface" 0 10000 $height set_ht 1]
+    set htscale [Nv_mkScale $row3.scale h "vector height\nabove surface" 0 10000 $height set_ht 1]
 
 
     pack $wlabel $vlinewidth -side left
@@ -121,8 +121,8 @@ proc mkvectPanel { BASE } {
     pack $row1 -expand 1 -fill none -pady 4
     pack $rb2 -side left 
     pack $row2 -side left
-    pack $htscale -side top
-    pack $row3 -side top -fill x -expand 1 -pady 4
+    pack $htscale -side top -anchor w
+    pack $row3 -side top -fill x -expand 1 -pady 4 
 
 	# Let radiobutton state handle building list
 	# of available surfaces
@@ -136,7 +136,7 @@ proc mkvectPanel { BASE } {
 
     pack $row1 $row2 -side top -fill both -expand 1
     pack $row3 -side right -fill both -expand 1
-    pack $tmp -side top  -fill both -expand 1
+    pack $tmp -side top  -fill both -expand 1  -padx 3
 
     return $panel
 }
