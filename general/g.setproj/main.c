@@ -184,7 +184,7 @@ int main(int argc, char *argv[])
 
     proj_parms = get_proj_parms(proj_out);
     if (!proj_parms)
-	G_fatal_error("Projection %s is not specified in the table", proj_out);
+	G_fatal_error("Projection %s is not specified in the file 'proj-parms.table'", proj_out);
 
     G_set_key_value("name", proj_name, out_proj_keys);
 
