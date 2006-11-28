@@ -132,8 +132,11 @@ proc mklegendPanel { BASE } {
 	Button $rbase4.erase -text "Erase legend" \
 		-command "delete_list legend 0" -width 10 -bd 1 \
 		-helptext "Erase all legends"
-	pack $rbase4.place $rbase4.erase \
-		-fill none -side left -expand yes
+    button $rbase4.close -text "Close" -command "Nv_closePanel $BASE" \
+		-anchor se -bd 1
+	pack $rbase4.place -fill none -side left -expand no
+	pack $rbase4.erase -fill none -side left -expand no -padx 3
+	pack $rbase4.close -side right -fill none -expand no
 	pack $rbase4 -side top -expand yes -fill both -padx 3 -pady 4
 
     return $panel

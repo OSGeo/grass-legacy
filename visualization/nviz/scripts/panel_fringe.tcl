@@ -67,16 +67,22 @@ proc mkfringePanel { BASE } {
 		-entrybg white -textvariable Nv_(fringe_elev) \
 		-label "Fringe elevation: "
     Button $rbase2.color -text "Color" \
-		-bg "#aaaaaa" -width 8 \
+		-bg "#aaaaaa" -width 8 -bd 1 \
 		-command "change_fringe_color $rbase2.color" \
 		-fg "#000000"
-    pack $rbase2.entry $rbase2.color -side left \
+    pack $rbase2.entry -side left \
     	-expand yes -fill none -anchor w
+    pack $rbase2.color -side right \
+    	-expand yes -fill none -anchor e
 	pack $rbase2 -side top -expand yes -fill both -padx 3 -pady 4
 
     set rbase3 [frame $BASE.button]
-    Button $rbase3.draw -text "Draw Fringe" -command "draw_fringe"
+    Button $rbase3.draw -text "Draw Fringe" -command "draw_fringe" -bd 1
+    # close panel section
+    button $rbase3.close -text "Close" -command "Nv_closePanel $BASE" \
+		-anchor se -bd 1
     pack $rbase3.draw -side left -expand yes -fill none -anchor w
+    pack $rbase3.close -side right -fill none -expand yes -anchor e
 	pack $rbase3 -side top -expand yes -fill both -padx 3 -pady 4
 
     set Nv_(fringe_elev) [lindex [Nget_zrange] 0]
