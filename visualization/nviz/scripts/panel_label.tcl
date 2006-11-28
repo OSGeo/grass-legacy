@@ -90,8 +90,12 @@ proc mklabelPanel { BASE } {
     	-width 8 -bd 1 -helptext "Erase most recent label placed"
     Button $rbase3.erase_all -text "Erase all" -command "label_delete_list label 0" \
     	-width 8 -bd 1 -helptext "Erase all labels"
-    pack $rbase3.place $rbase3.erase $rbase3.erase_all -side left \
-		-expand yes -fill none
+    button $rbase3.close -text "Close" -command "Nv_closePanel $BASE" \
+		-anchor se -bd 1
+    pack $rbase3.place -side left -expand no -fill none
+	pack $rbase3.erase -side left -expand no -fill none -padx 3
+	pack $rbase3.erase_all -side left -expand no -fill none
+	pack $rbase3.close -side right -fill none -expand no
 
     pack $rbase3 -side top -expand yes -fill both -padx 3 -pady 4 -anchor w
 

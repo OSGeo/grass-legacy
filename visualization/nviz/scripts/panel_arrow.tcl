@@ -47,11 +47,9 @@ proc mkarrowPanel { BASE } {
     frame $BASE -relief flat -borderwidth 0
     Nv_mkPanelname $BASE "North Arrow Panel"
 
-    ##########################################################################
-    # This section contains widgets for placing a scale object
+    # This section contains widgets for placing the north arrow
     set rbase1 [frame $BASE.arrow]
-
-    Button $rbase1.place -text "Place arrow" \
+    Button $rbase1.place -text "Place arrow" -bd 1 \
 	 -command "bind_mouse $Nv_(TOP).canvas"
     LabelEntry $rbase1.arrow_size -relief sunken -entrybg white \
         -textvariable n_arrow_size -width 8 \
@@ -59,6 +57,13 @@ proc mkarrowPanel { BASE } {
     pack $rbase1.place -expand yes -side left -expand no -fill none
     pack $rbase1.arrow_size -side right -expand no -fill none
 	pack $rbase1 -side top -expand yes -fill both -padx 3 -pady 4
+
+    # close panel section
+    set rbase2 [frame $BASE.button]
+    button $rbase2.close -text "Close" -command "Nv_closePanel $BASE" \
+		-anchor se -bd 1
+	pack $rbase2.close -side right -fill none -expand no
+	pack $rbase2 -side top -fill both -expand yes -padx 3 -pady 4
 	
     return $panel
 }
