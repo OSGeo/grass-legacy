@@ -88,7 +88,7 @@ int main (int argc, char **argv)
     G_gisinit (argv[0]);
 
     if (G_parser (argc, argv))
-        exit (-1);
+        exit (EXIT_FAILURE);
 
     /* set input vector file name and mapset */
     field = atoi (field_opt->answer);
@@ -178,6 +178,6 @@ int main (int argc, char **argv)
 
     db_close_database_shutdown_driver(driver);
     Vect_close ( &Map);
-    
-    exit(0);
+
+    exit (EXIT_SUCCESS);
 }
