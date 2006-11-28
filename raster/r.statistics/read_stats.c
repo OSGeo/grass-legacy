@@ -1,5 +1,6 @@
 #include <stdlib.h>
 #include <stdio.h>
+#include <grass/gis.h>
 #include <grass/glocale.h>
 
 int 
@@ -12,12 +13,13 @@ read_stats (FILE *fd, long *cat1, long *cat2, double *value)
     
     if (sscanf (buf, "%ld %ld %lf", cat1, cat2, value) == 3)
     {
-/*      fprintf(stdout,"base: %ld  cover: %ld  val: %lf\n", *cat1, *cat2, *value);
-/**/
+	/*     
+	       fprintf(stdout,"base: %ld  cover: %ld  val: %lf\n", *cat1, *cat2, *value);
+	*/
       return 1;
     }
 
-    
     G_fatal_error (_("Reading r.stats output"));
+
     exit(EXIT_FAILURE);
 }
