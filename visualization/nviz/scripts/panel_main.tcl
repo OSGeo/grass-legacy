@@ -138,7 +138,7 @@ proc mkmainPanel { BASE } {
 	set labels 0
 	set n_arrow 0
 	set fringe 0
-	set Nv_(fringe_color) #AAAAAA
+	set fringe_color #AAAAAA
 
 	#Set North Arrow defaults
 	set n_arrow_x 999
@@ -400,6 +400,7 @@ proc mk_exag_slider {W} {
 proc mk_hgt_slider {W} {
 	global Nv_
 
+	puts "height is [Nget_height]"
 	set list [Nget_height]
 	set val [lindex $list 0]
 	set min [lindex $list 1]

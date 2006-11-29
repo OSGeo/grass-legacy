@@ -39,6 +39,10 @@ proc mkfringePanel { BASE } {
     global Nv_
     global n_arrow_size n_arrow
 	global fringe_nw fringe_ne fringe_sw fringe_se
+	global fringe_color fringe_elev
+
+    puts "zrange is [Nget_zrange]"
+
 
     set panel [St_create {window name size priority} $BASE "Fringe" 2 5]
     frame $BASE -relief flat -borderwidth 0
@@ -65,7 +69,7 @@ proc mkfringePanel { BASE } {
     set rbase2 [frame $BASE.color_elev]
     LabelEntry $rbase2.entry -width 8 -relief sunken \
 		-entrybg white -textvariable fringe_elev \
-		-label "Fringe elevation: "
+		-label "Elevation of fringe bottom: "
     Button $rbase2.color -text "Color" \
 		-bg "#aaaaaa" -width 8 -bd 1 \
 		-command "change_fringe_color $rbase2.color" \
@@ -94,10 +98,11 @@ proc mkfringePanel { BASE } {
 # Simple routine to change the color of fringe
 proc change_fringe_color { me } {
 	global Nv_
+	global fringe_color
 	
 	# set color button background to match fringe color
     set clr [lindex [$me configure -bg] 4]
-    set clr [mkColorPopup .colorpop Fringe_Color $clr 1]
+    set clr [mkColorPopup .colorpop fringe_color $clr 1]
     set fringe_color $clr
     $me configure -bg $clr
 
@@ -121,7 +126,7 @@ proc change_fringe_color { me } {
 proc draw_fringe {} {
 	global Nv_
 	global fringe_nw fringe_ne fringe_sw fringe_se
-	global fringe
+	global fringe fringe_color fringe_elev
 	global Nauto_draw
 		
 	set surf [Nget_current surf]
