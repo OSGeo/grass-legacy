@@ -383,15 +383,11 @@ proc do_reset {XY H E P} {
 
 proc mk_exag_slider {W} {
 
+	# initialize z-exag scale
 	set exag [Nget_first_exag]
 	set val $exag
 	set exag [expr $val * 10]
 	set min 0
-#	if {$val < 1} then {
-#		set min $val
-#	} else {
-#		set min 0
-#	}
 
 	Nv_mkFloatScale $W.zexag v z-exag $exag $min $val update_exag 1
 
@@ -400,7 +396,6 @@ proc mk_exag_slider {W} {
 proc mk_hgt_slider {W} {
 	global Nv_
 
-	puts "height is [Nget_height]"
 	set list [Nget_height]
 	set val [lindex $list 0]
 	set min [lindex $list 1]
@@ -414,35 +409,36 @@ proc mk_hgt_slider {W} {
 }
 
 proc update_exag {exag} {
-	global Nv_
+	global Nv_ 
+	global draw_option
 
 	if {$exag == 0.} {
 		set exag [lindex [$Nv_(main_BASE).midf.zexag.scale configure -resolution] 4]
 		Nv_setEntry $Nv_(main_BASE).midf.zexag.f.entry $exag
 		Nv_floatscaleCallback $Nv_(main_BASE).midf.zexag e 2 null $exag
 	}
-
-	set ht1 [lindex [Nget_real_position 1] 2]
-	set ht2 [lindex [Nget_height] 0]
-
 	Nchange_exag $exag
 
-	## Update height to avoid scene jump
-	## Changing the exag changes the height
-	if {$ht1 == $ht2} {
-		Nv_floatscaleCallback $Nv_(HEIGHT_SLIDER) b 2 update_height $ht2
-	} else {
-		Nv_floatscaleCallback $Nv_(HEIGHT_SLIDER) b 2 update_height \
-			[lindex [Nget_real_position 1] 2]
-	}
-
-
 #*** ACS_MODIFY 1.0 BEGIN ******************************************************
-	if {$Nv_(FlyThrough) == 0} {
+	if {$draw_option == 3} {
+		set ht1 [lindex [Nget_real_position 1] 2]
+		set ht2 [lindex [Nget_height] 0]
+		
+		## Update height to avoid scene jump
+		## Changing the exag changes the height
+		if {$ht1 == $ht2} {
+			Nv_floatscaleCallback $Nv_(HEIGHT_SLIDER) b 2 update_height $ht2
+		} else {
+			Nv_floatscaleCallback $Nv_(HEIGHT_SLIDER) b 2 update_height \
+				[lindex [Nget_real_position 1] 2]
+		}
+
+	} else {
 		# original 2 lines
 		Nv_floatscaleCallback $Nv_(HEIGHT_SLIDER) b 2 update_height \
 		[$Nv_(HEIGHT_SLIDER).f.entry get]
 	}
+
 #*** ACS_MODIFY 1.0 END ********************************************************
 #	 Nv_floatscaleCallback $Nv_(HEIGHT_SLIDER) b 2 update_height [lindex [Nget_height] 0]
 #	 Nquick_draw
@@ -476,7 +472,6 @@ proc update_center_position {x y} {
 	}
 }
 
-
 proc change_display {flag} {
 	global XY Nv_
 
@@ -487,15 +482,17 @@ proc change_display {flag} {
 	# *** ACS_MODIFY 1.0 - one line
 	
 	if {$Nv_(FlyThrough)} {Nset_fly_mode -1}
+	set h [lindex [Nget_height] 0]
 	
 	if {$flag == 1} {
 		#draw eye position
 		inform "Set eye position"
 		set XY [Nv_mkXYScale $NAME puck XY_POS 125 125 105 105 update_eye_position]
-		
+		update_height $h
+		reset_res
 		move_position
 		
-	} else {
+	} elseif {$flag == 0} {
 		#draw center position
 		inform "Set center of view position"
 		set XY [Nv_mkXYScale $NAME cross XY_POS 125 125 109 109 update_center_position]
@@ -506,7 +503,8 @@ proc change_display {flag} {
 				pack $XY -side left -before $NAME2.height
 			}
 		#*** ACS_MODIFY 1.0 END ******************************************************
-		
+		update_height $h		
+		reset_res
 		move_position
 	}
 	
@@ -520,12 +518,21 @@ proc change_display {flag} {
 	#*** ACS_MODIFY 1.0 END ******************************************************
 }
 
+proc reset_res { } {
+	global Nv_
+
+	set from [lindex [Nget_height] 1]
+	set to [lindex [Nget_height] 2]
+	$Nv_(main_BASE).midf.height.scale configure -resolution [expr -1.0 * (($to - $from)/140.0)]
+
+}
+
 proc update_height {h} {
 	global Nv_
 
 	Nset_focus_state 1
 	Nchange_height $h
-
+		
 # I don't think this is correct -
 # Nget_height does the exag guess  BB
 
