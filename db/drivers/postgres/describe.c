@@ -97,9 +97,14 @@ int describe_table( PGresult *res, dbTable **table, cursor *c)
 
 	/* PG types defined in globals.h (and pg_type.h) */
 	if ( sqltype == DB_SQL_TYPE_UNKNOWN ) {
-	    /* Warn, ignore and continue */
-	    G_warning ( _("pg driver: column '%s', type %d  is not supported"), fname, pgtype);
-	    continue;
+	    if (gpgtype == PG_TYPE_POSTGIS_GEOM) {
+		G_warning ( _("pg driver: PostGIS column '%s', type 'geometry'  will not be converted"), fname);
+		continue;
+	    } else {
+		/* Warn, ignore and continue */
+		G_warning ( _("pg driver: column '%s', type %d  is not supported"), fname, pgtype);
+		continue;
+	    }
 	}
 
 	if ( gpgtype == PG_TYPE_INT8 )
