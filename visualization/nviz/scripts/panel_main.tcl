@@ -37,7 +37,7 @@ proc mkmainPanel { BASE } {
 	#Globals for draw features
 	global surface vector sites volume
 	global legend labels n_arrow 
-	global fringe 
+	global fringe fringe_elev fringe_color
 	global n_arrow_x n_arrow_y n_arrow_z
 	global fringe_nw fringe_ne fringe_sw fringe_se
 	global Nauto_draw

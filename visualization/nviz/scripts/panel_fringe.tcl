@@ -64,7 +64,7 @@ proc mkfringePanel { BASE } {
 
     set rbase2 [frame $BASE.color_elev]
     LabelEntry $rbase2.entry -width 8 -relief sunken \
-		-entrybg white -textvariable Nv_(fringe_elev) \
+		-entrybg white -textvariable fringe_elev \
 		-label "Fringe elevation: "
     Button $rbase2.color -text "Color" \
 		-bg "#aaaaaa" -width 8 -bd 1 \
@@ -85,7 +85,7 @@ proc mkfringePanel { BASE } {
     pack $rbase3.close -side right -fill none -expand yes -anchor e
 	pack $rbase3 -side top -expand yes -fill both -padx 3 -pady 4
 
-    set Nv_(fringe_elev) [lindex [Nget_zrange] 0]
+    set fringe_elev [lindex [Nget_zrange] 0]
 
     return $panel
 }
@@ -98,7 +98,7 @@ proc change_fringe_color { me } {
 	# set color button background to match fringe color
     set clr [lindex [$me configure -bg] 4]
     set clr [mkColorPopup .colorpop Fringe_Color $clr 1]
-    set Nv_(fringe_color) $clr
+    set fringe_color $clr
     $me configure -bg $clr
 
 	# set color button text to black or white depending on
@@ -127,7 +127,7 @@ proc draw_fringe {} {
 	set surf [Nget_current surf]
 	set fringe 1
 		
-	Ndraw_fringe $surf $Nv_(fringe_color) $Nv_(fringe_elev) $fringe_nw $fringe_ne $fringe_sw $fringe_se
+	Ndraw_fringe $surf $fringe_color $fringe_elev $fringe_nw $fringe_ne $fringe_sw $fringe_se
 
 	if {$Nauto_draw == 1} {
 		Nset_cancel 0
