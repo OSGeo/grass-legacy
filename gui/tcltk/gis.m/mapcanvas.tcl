@@ -567,7 +567,6 @@ proc MapCanvas::runprograms { mon mod } {
 	set env(GRASS_RENDER_IMMEDIATE) "TRUE"
 
 	# Setting the font really only needs to be done once per display start
-	runcmd "d.font romans"
 	incr drawprog
 	GmGroup::display "root" $mod
 	unset env(GRASS_RENDER_IMMEDIATE)
@@ -594,7 +593,7 @@ proc MapCanvas::composite {mon } {
 		cd $tmpdir
 		
 		incr drawprog
-		run_panel "g.pnmcomp in=$complist($mon) mask=$masklist($mon) opacity=$opclist($mon) background=255:255:255 width=$driver_w($mon) height=$driver_h($mon) out=$outfile($mon)"
+		run_panel "g.pnmcomp in=$complist($mon) mask=$masklist($mon) opacity=$opclist($mon) background=255:255:255 width=$driver_w($mon) height=$driver_h($mon) output=$outfile($mon)"
 
 		image create photo mapimg.$mon -file "$outfile($mon)"
 		incr drawprog
@@ -1046,8 +1045,11 @@ proc MapCanvas::zoom_gregion {mon args} {
 			regexp -nocase {^([a-z]+)=(.*)$} $line trash key value
 			set parts($key) $value
 		}
-		catch {close $input}
-		
+		if {[catch {close $input} error]} {
+			puts $error
+			exit
+		}
+
 		#set start point (sw corner)
 		set $parts(w) [expr round($parts(w)/$parts(ewres))*$parts(ewres)]
 		set $parts(s) [expr round($parts(s)/$parts(nsres))*$parts(nsres)]
@@ -1072,7 +1074,7 @@ proc MapCanvas::zoom_gregion {mon args} {
 			$parts(w) $parts(nsres) $parts(ewres) $parts(rows) $parts(cols)
 
 	} else {
-		puts "GRASS command g.region failed. Check to see if you've install GRASS correctly."
+		puts $input
 		exit
 	}
 }
