@@ -41,9 +41,6 @@ proc mkfringePanel { BASE } {
 	global fringe_nw fringe_ne fringe_sw fringe_se
 	global fringe_color fringe_elev
 
-    puts "zrange is [Nget_zrange]"
-
-
     set panel [St_create {window name size priority} $BASE "Fringe" 2 5]
     frame $BASE -relief flat -borderwidth 0
     Nv_mkPanelname $BASE "Fringe Panel"
