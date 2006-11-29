@@ -42,7 +42,9 @@ typedef enum {     /* name in pg_type, aliases */
   PG_TYPE_TIME,      /* time */
   PG_TYPE_TIMESTAMP, /* timestamp */
 
-  PG_TYPE_BOOL       /* bool, boolean */
+  PG_TYPE_BOOL,      /* bool, boolean */
+
+  PG_TYPE_POSTGIS_GEOM /* Geometry column of PostGIS, GRASS internal type */
 } PG_TYPES;
 
 
