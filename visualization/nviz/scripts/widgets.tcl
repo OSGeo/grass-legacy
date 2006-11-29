@@ -230,13 +230,14 @@ proc Nv_floatscaleCallback { S {who s} {decimal 0} {cmd null} {val 0} } {
 			$S.scale configure -from $val
 		}
 		if {$val != 0} {
-			if {[expr abs($val)] < [expr abs($res)] || $res == 0} {
+			if {([expr abs($val)] < [expr abs($res)])} {
 				set res [expr abs($val)]
 			} else {
-				set res [expr $val/floor($val/$res)]
+				set res [expr abs($val/floor($val/$res))]
 			}
 			$S.scale configure -resolution $res
 		}
+
 		$S.scale configure -digits $num
 		Nv_changeScale	$S.scale $val
 		Nv_setEntry $S.f.entry $val
@@ -339,6 +340,7 @@ proc Nv_mkFloatScale { S {orient v} {name ---} {from 10000} {to 0} {curr 500} {c
 		-tickinterval 0 -to $to -width 13 \
 		-command "Nv_floatscaleCallback $S s 0 $cmd " \
 		-activebackground gray80 -background gray90
+		
 	label $S.f.label -text $name
 	Entry $S.f.entry -width 5 -borderwidth 2 -relief sunken \
 		-command "
