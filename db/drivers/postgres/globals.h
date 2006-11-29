@@ -15,7 +15,10 @@ typedef struct {
         char *host, *port, *options, *tty, *dbname, *user, *password, *schema;
 } PGCONN;
 
-/* Postgres data types defined in GRASS, see pg_type.h */
+/* Postgres data types defined in GRASS, see pg_type.h 
+   PostGIS types are encoded as 17xxx.
+   Types/OIDs are fetched in db.c from server.
+ */
 typedef enum {     /* name in pg_type, aliases */
   PG_TYPE_UNKNOWN,  /* all types not supported by GRASS */
 
