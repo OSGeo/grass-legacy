@@ -82,7 +82,7 @@ main (int argc, char **argv)
 	opt4->key        = "bordercolor" ;
 	opt4->type       = TYPE_STRING ;
 	opt4->required   = NO;
-	opt4->answer     = "brown" ;
+	opt4->answer     = DEFAULT_FG_COLOR;
 	opt4->description=
 	    _("Sets the border color, either a standard GRASS color or R:G:B triplet");
 	opt4->gisprompt  = GISPROMPT_COLOR ;
