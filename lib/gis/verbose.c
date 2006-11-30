@@ -1,20 +1,32 @@
-/****************************************************************
-* Purpose:  This set of functions checks for GRASS_VERBOSE
-*           environment variable
-*
-* Author:   Jachym Cepicky <jachym.cepicky centrum cz> 
-*
-* Copyright: (C) 2006 by the GRASS Development Team
-*
-*           This program is free software under the GNU General Public
-*           License (>=v2). Read the file COPYING that comes with GRASS
-*           for details.
-*           
-* see also:
-*   G_percent
-*   G_message()
-*   G_warning()
-******************************************************************/
+/**
+ * \file verbose.c
+ *
+ * \brief Functions to check for GRASS_VERBOSE environment variable.
+ *
+ * see also:
+ * G_percent()
+ * G_message()
+ * G_warning()
+ *
+ * This program is free software; you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation; either version 2 of the License, or (at
+ * your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful, but
+ * WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+ * General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program; if not, write to the Free Software
+ * Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
+ *
+ * \author Jachym Cepicky - jachym.cepicky at centrum cz
+ *
+ * \date 2006
+ */
+
 #include <grass/config.h>
 #include <stdlib.h>
 
@@ -26,16 +38,21 @@
 static int verbose = -1; /* current verbosity level */
 
 
-/*!
- * \brief get current verbosity level
+/**
+ * \fn int G_verbose (void)
  *
- * Currently, there are 3 levels of verbosity:
- * \param 0 - module should print nothing but errors and warnings (G_fatal_error, G_warning)
- * \param 1 - module will print progress information (G_percent)
- * \param 2 - module will print all messages (G_message)
- * \param 3 - module will be very verbose. Triggered by "--v".
- *            "--v" requires if(G_verbose() == G_verbose_max()) tests.
+ * \brief Get current verbosity level.
+ *
+ * "--v" requires if(G_verbose() == G_verbose_max()) tests.
+ *
+ * Currently, there are 3 levels of verbosity.
+ *
+ * \return 0 - module should print nothing but errors and warnings (G_fatal_error, G_warning)
+ * \return 1 - module will print progress information (G_percent)
+ * \return 2 - module will print all messages (G_message)
+ * \return 3 - module will be very verbose. Triggered by "--v".
  */
+
 int G_verbose (void)
 
 {
@@ -55,33 +72,42 @@ int G_verbose (void)
 }
 
 
-/*!
- * \brief get max verbosity level
+/**
+ * \fn int G_verbose_max (void)
  *
- * returns max verbosity level
+ * \brief Get max verbosity level.
+ *
+ * \return max verbosity level.
  */
+
 int G_verbose_max (void)
 {
     return MAXLEVEL;
 }
 
 
-/*!
- * \brief get standard verbosity level
+/**
+ * \fn int G_verbose_std (void)
  *
- * returns standard verbosity level
+ * \brief Get standard verbosity level.
+ *
+ * \return standard verbosity level
  */
+
 int G_verbose_std (void)
 {
     return STDLEVEL;
 }
 
 
-/*!
- * \brief get min verbosity level
+/**
+ * \fn int G_verbose_min (void)
  *
- * returns min verbosity level
+ * \brief Get min verbosity level.
+ *
+ * \return min verbosity level
  */
+
 int G_verbose_min (void)
 {
     return MINLEVEL;

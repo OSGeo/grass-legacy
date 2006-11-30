@@ -1,30 +1,45 @@
-#include <grass/gis.h>
-
-/* return RGB for given category */
-/* works for null values too */
-
-/*!
- * \brief get a category color
+/**
+ * \file color_get.c
  *
- * The <b>red, green</b>, and
- * <b>blue</b> intensities for the color associated with category <b>cat</b>
- * are extracted from the <b>colors</b> structure. The intensities will be in
- * the range 0 ­- 255.
+ * \brief Functions to get colors from a raster map.
  *
- *  \param cat
- *  \param red
- *  \param green
- *  \param blue
- *  \param colors
- *  \return int
+ * This program is free software; you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation; either version 2 of the License, or (at
+ * your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful, but
+ * WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+ * General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program; if not, write to the Free Software
+ * Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
+ *
+ * \author GRASS GIS Development Team
+ *
+ * \date 1999-2006
  */
 
- 
-/*!
- * \brief 
+#include <grass/gis.h>
+
+
+/**
+ * \fn int G_get_color (CELL n, int *red, int *grn, int *blu, struct Colors *colors)
  *
- * Modified to return a color for the NULL-value.
+ * \brief Get a category color.
  *
+ * The <b>red, green</b>, and
+ * <b>blue</b> intensities for the color associated with category <b>n</b>
+ * are extracted from the <b>colors</b> structure. The intensities will be in
+ * the range 0 ­- 255.  Also works for null cells.
+ *
+ *  \param[in] n CELL to get color from
+ *  \param[out] red red value
+ *  \param[out] grn green value
+ *  \param[out] blu blue value
+ *  \param[in] colors Colors struct
  *  \return int
  */
 
@@ -44,18 +59,20 @@ int G_get_color (CELL n, int *red, int *grn, int *blu, struct Colors *colors)
 }
 
 
-/*!
- * \brief 
+/**
+ * \fn int G_get_raster_color (void *rast, int *red, int *grn, int *blu, struct Colors *colors, RASTER_MAP_TYPE map_type)
+ *
+ * \brief Gets color from raster.
  *
  * Looks up the rgb colors for
- * <em>v</em> in the color table <em>colors</em>
+ * <em>rast</em> in the color table <em>colors</em>
  *
- *  \param v
- *  \param r
- *  \param g
- *  \param b
- *  \param colors
- *  \param data_type
+ *  \param[in] rast input raster map
+ *  \param[out] red red value
+ *  \param[out] grn green value
+ *  \param[out] blu blue value
+ *  \param[in] colors Colors struct
+ *  \param[in] map_type type of map (CELL_TYPE,FCELL_TYPE,DCELL_TYPE)
  *  \return int
  */
 
@@ -75,103 +92,91 @@ int G_get_raster_color (void *rast,
 }
 
 
-/*!
- * \brief 
+/**
+ * \fn int G_get_c_raster_color (CELL *rast, int *red, int *grn, int *blu, struct Colors *colors)
  *
- *  Calls G_get_color(*v, r, g, b, colors).
+ * \brief Gets color for a CELL raster.
  *
- *  \param v
- *  \param r
- *  \param g
- *  \param b
- *  \param colors
+ * Looks up the rgb colors for CELL
+ * <em>rast</em> in the color table <em>colors</em>
+ *
+ *  \param[in] rast input CELL raster
+ *  \param[out] red red value
+ *  \param[out] grn green value
+ *  \param[out] blu blue value
+ *  \param[in] colors Colors struct
  *  \return int
  */
 
 int G_get_c_raster_color (CELL *rast,
-    int *red, int *grn, int *blu, struct Colors *colors)
+    int *red, int *grn, int *blu,
+    struct Colors *colors)
 {
-    unsigned char r, g, b, set;
-
-    G_lookup_raster_colors (rast, &r, &g, &b, &set, 1, colors, CELL_TYPE);
-
-    *red = (int) r;
-    *grn = (int) g;
-    *blu = (int) b;
-
-    return (int)set;
+    return G_get_raster_color(rast, red, grn, blu, colors, CELL_TYPE);
 }
 
 
-/*!
- * \brief 
+/**
+ * \fn int G_get_f_raster_color (FCELL *rast, int *red, int *grn, int *blu, struct Colors *colors)
  *
- *  Looks up the rgb colors for <em>v</em> in the color table
+ * \brief Gets color for a FCELL raster.
+ *
+ *  Looks up the rgb colors for FCELL <em>rast</em> in the color table
  * <em>colors</em>
  *
- *  \param v
- *  \param r
- *  \param g
- *  \param b
- *  \param colors
+ *  \param[in] rast input FCELL raster
+ *  \param[out] red red value
+ *  \param[out] grn green value
+ *  \param[out] blu blue value
+ *  \param[in] colors Colors struct
  *  \return int
  */
 
 int G_get_f_raster_color (FCELL *rast,
-    int *red, int *grn, int *blu, struct Colors *colors)
+    int *red, int *grn, int *blu,
+    struct Colors *colors)
 {
-    unsigned char r, g, b, set;
-
-    G_lookup_raster_colors (rast, &r, &g, &b, &set, 1, colors, FCELL_TYPE);
-
-    *red = (int) r;
-    *grn = (int) g;
-    *blu = (int) b;
-
-    return (int)set;
+    return G_get_raster_color(rast, red, grn, blu, colors, FCELL_TYPE);
 }
 
 
-/*!
- * \brief 
+/**
+ * \fn int G_get_d_raster_color (DCELL *rast, int *red, int *grn, int *blu, struct Colors *colors)
  *
- *  Looks up the rgb colors for <em>v</em> in the color table
+ * \brief Gets color for a DCELL raster.
+ *
+ *  Looks up the rgb colors for DCELL <em>rast</em> in the color table
  * <em>colors</em>
  *
- *  \param v
- *  \param r
- *  \param g
- *  \param b
- *  \param colors
+ *  \param[in] rast input DCELL raster
+ *  \param[out] red red value
+ *  \param[out] grn green value
+ *  \param[out] blu blue value
+ *  \param[in] colors Colors struct
  *  \return int
  */
 
 int G_get_d_raster_color (DCELL *rast,
-    int *red, int *grn, int *blu, struct Colors *colors)
+    int *red, int *grn, int *blu,
+    struct Colors *colors)
 {
-    unsigned char r, g, b, set;
-
-    G_lookup_raster_colors (rast, &r, &g, &b, &set, 1, colors, DCELL_TYPE);
-
-    *red = (int) r;
-    *grn = (int) g;
-    *blu = (int) b;
-
-    return (int)set;
+    return G_get_raster_color(rast, red, grn, blu, colors, DCELL_TYPE);
 }
 
 
-/*!
- * \brief 
+/**
+ * \fn int G_get_null_value_color (int *red, int *grn, int *blu, struct Colors *colors)
  *
- * Puts the red, green, and blue components of the color for the
- * NULL-value into <em>r,g,b</em>.
+ * \brief  Gets color for null value.
  *
- *  \param r
- *  \param g
- *  \param b
- *  \param colors
- *  \return int
+ * Puts the red, green, and blue components of <b>colors</b> for the
+ * NULL-value into <b>red, grn, and blu</b>.
+ *
+ *  \param[out] red red value
+ *  \param[out] grn green value
+ *  \param[out] blu blue value
+ *  \param[in] colors Colors struct
+ *  \return always returns 0
  */
 
 int G_get_null_value_color (int *red, int *grn, int *blu,
@@ -196,17 +201,19 @@ int G_get_null_value_color (int *red, int *grn, int *blu,
 }
 
 
-/*!
- * \brief 
+/**
+ * \fn int G_get_default_color (int *red, int *grn, int *blu, struct Colors *colors)
+ *
+ * \brief Gets default color.
  *
  *  Puts the red, green, and blue components of the
- * <tt>"default"</tt> color into <em>r,g,b</em>.
+ * <tt>"default"</tt> color into <b>red, grn, and blu</b>.
  *
- *  \param r
- *  \param g
- *  \param b
- *  \param colors
- *  \return int
+ *  \param[out] red red value
+ *  \param[out] grn green value
+ *  \param[out] blu blue value
+ *  \param[in] colors Colors struct
+ *  \return always returns 0
  */
 
 int G_get_default_color (int *red, int *grn, int *blu,

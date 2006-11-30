@@ -1,31 +1,46 @@
+/**
+ * \file legal_name.c
+ *
+ * \brief Functions to handle file name legality.
+ *
+ * This program is free software; you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation; either version 2 of the License, or (at
+ * your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful, but
+ * WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+ * General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program; if not, write to the Free Software
+ * Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
+ *
+ * \author GRASS GIS Development Team
+ *
+ * \date 1999-2006
+ */
+
+#include <stdio.h>
 #include <string.h>
 #include <grass/gis.h>
 #include <grass/glocale.h>
-/**********************************************************************
- *
- *   char *
- *   G_legal_filename (name)
- *      char *name           filename to be checked
- *
- *   returns:    1  if name is OK
- *              -1  if name begins with ".", if name contains a "/",
- *                  if name contains a quote character,
- *                  or if name contains a non-printing character.
- **********************************************************************/
 
 
-/*!
- * \brief check for legal database file names
+/**
+ * \fn int G_legal_filename (char *s)
+ *
+ * \brief Check for legal database file name.
  *
  * Legal file names will <b>not</b> begin with '.' or NULL and must 
  * not contain the characters, ' ' (space), '/', '"'. '\'' (single 
  * quote), '@', ',', '=', '*', and all other non-alphanumeric
  * characters within.
  *
- * Returns 1 if <b>name</b> is ok, -1 otherwise.
- *
- *  \param name
- *  \return int
+ * \param[in] s file name to check
+ * \return int 1 success
+ * \return -1 failure
  */
 
 int G_legal_filename (char *s)
@@ -38,24 +53,27 @@ int G_legal_filename (char *s)
     for (; *s; s++)
 	if (*s == '/' || *s == '"' || *s == '\'' || *s <= ' ' || 
             *s == '@' || *s == ',' || *s == '=' || *s == '*' || *s > 0176) {
-		fprintf(stderr, _("Illegal filename. character <%c> not allowed.\n"), *s);
+		fprintf(stderr, _("Illegal filename. Character <%c> not allowed.\n"), *s);
 	    return -1;
 	}
 
     return 1;
 }
 
-/*!
- \fn int G_check_input_output_name ( char * input, char * output, int error );
- \brief  Check : 1) output is legal map name
- 		 2) if can find input map
-                 3) if input was found in current mapset, check if input != output
- \return 0 OK
- \return 1 error
- \param  input input name
- \param  output output name
- \param  error error type GR_FATAL_EXIT, GR_FATAL_PRINT, GR_FATAL_RETURN
-*/
+
+/**
+ * \fn int G_check_input_output_name ( char * input, char * output, int error );
+ * \brief Check input and output file names.
+ *
+ * Check: 1) output is legal map name, 2) if can find input map, and 3) 
+ * if input was found in current mapset, check if input != output.
+ *
+ * \param[in] input name
+ * \param[out] output name
+ * \param[in] error error type: GR_FATAL_EXIT, GR_FATAL_PRINT, GR_FATAL_RETURN
+ * \return 0 OK
+ * \return 1 error
+ */
 
 int G_check_input_output_name ( char * input, char * output, int error )
 {
@@ -109,4 +127,3 @@ int G_check_input_output_name ( char * input, char * output, int error )
 
     return 0;
 }
-

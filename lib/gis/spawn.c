@@ -1,3 +1,27 @@
+/**
+ * \file spawn.c
+ *
+ * \brief Handles process spawning.
+ *
+ * This program is free software; you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation; either version 2 of the License, or (at
+ * your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful, but
+ * WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+ * General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program; if not, write to the Free Software
+ * Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
+ *
+ * \author Glynn Clements
+ *
+ * \date 2004-2006
+ */
+
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
@@ -16,23 +40,33 @@
 #include <grass/glocale.h>
 #include <grass/spawn.h>
 
+/** \def MAX_ARGS Maximum number of arguments */
+/** \def MAX_BINDINGS Maximum number of bindings */
+/** \def MAX_SIGNALS Maximum number of signals */
+/** \def MAX_REDIRECTS Maximum number of redirects */
 #define MAX_ARGS 256
 #define MAX_BINDINGS 256
 #define MAX_SIGNALS 32
 #define MAX_REDIRECTS 32
 
-/****************************************************************
- * G_spawn(char *command, ...)
+
+/**
+ * \fn int G_spawn (char *command, ...)
  *
- * This is a more useful alternative to G_system(), which takes
- * the command's arguments as separate parameters.
+ * \brief Spawns a new process.
  *
- ****************************************************************/
+ * A more useful alternative to G_system(), which takes the 
+ * arguments of <b>command</b> as parameters.
+ *
+ * \param[in] command command to execute
+ * \return -1 on error
+ * \return process status on success
+ */
 
 #ifdef __MINGW32__
 int G_spawn(char *command, ...)
 {
-    G_fatal_error("G_spawn is not supported on Windows");    
+    G_fatal_error(_("G_spawn is not supported on Windows"));
     return -1;
 }
 #else
@@ -62,7 +96,7 @@ int G_spawn(char *command, ...)
 
 	if (num_args >= MAX_ARGS)
 	{
-		G_warning(_("too many arguments"));
+		G_warning(_("Too many arguments"));
 		return -1;
 	}
 
@@ -84,7 +118,7 @@ int G_spawn(char *command, ...)
 
 	if (pid < 0)
 	{
-		G_warning(_("unable to create a new process"));
+		G_warning(_("Unable to create a new process"));
 		goto error_4;
 	}
 
@@ -94,7 +128,7 @@ int G_spawn(char *command, ...)
 		sigaction(SIGQUIT, &quit, NULL);
 
 		execvp(command, args);
-		G_warning(_("unable to execute command"));
+		G_warning(_("Unable to execute command"));
 		_exit(127);
 	}
 	else
@@ -118,12 +152,6 @@ error_1:
 	return status;
 }
 
-/****************************************************************
- * G_spawn_ex(char *command, ...)
- *
- * This is a more advanced version of G_spawn().
- *
- ****************************************************************/
 
 struct redirect
 {
@@ -294,18 +322,31 @@ static void do_redirects(struct redirect *redirects, int num_redirects)
 
 static void do_bindings(struct binding *bindings, int num_bindings)
 {
-	int i;
+    int i;
 
-	for (i = 0; i < num_bindings; i++)
-	{
-		struct binding *b = &bindings[i];
-		char *str;
+    for (i = 0; i < num_bindings; i++)
+    {
+	struct binding *b = &bindings[i];
+	static char *str = NULL;
 
-		str = G_malloc(strlen(b->var) + strlen(b->val) + 2);
-		sprintf(str, "%s=%s", b->var, b->val);
-		putenv(str);
-	}
+        str = G_realloc(str, strlen(b->var) + strlen(b->val) + 2);
+        sprintf(str, "%s=%s", b->var, b->val);
+        putenv(str);
+    }
 }
+
+
+/**
+ * \fn int G_spawn_ex(char *command, ...)
+ *
+ * \brief Spawn new process based on <b>command</b>.
+ *
+ * This is a more advanced version of G_spawn().
+ *
+ * \param[in] command
+ * \return -1 error
+ * \return process status on success
+ */
 
 int G_spawn_ex(char *command, ...)
 {
@@ -332,7 +373,7 @@ int G_spawn_ex(char *command, ...)
 	{
 		char *arg = va_arg(va, char *);
 
-		switch ((int) arg)
+		switch ((int)arg)
 		{
 		case 0:
 			args[num_args++] = NULL;
@@ -391,13 +432,15 @@ int G_spawn_ex(char *command, ...)
 	va_end(va);
 
 	if (!do_signals(signals, num_signals, SST_PRE))
-		goto error_1;
+            return status;
 
 	pid = fork();
 	if (pid < 0)
 	{
-		G_warning(_("unable to create a new process"));
-		goto error_2;
+	    G_warning(_("Unable to create a new process"));
+            undo_signals(signals, num_signals, SST_PRE);
+
+            return status;
 	}
 
 	if (pid == 0)
@@ -411,7 +454,7 @@ int G_spawn_ex(char *command, ...)
 		if (directory)
 			if (chdir(directory) < 0)
 			{
-				G_warning(_("unable to change directory to %s"), directory);
+				G_warning(_("Unable to change directory to %s"), directory);
 				_exit(127);
 			}
 
@@ -419,7 +462,7 @@ int G_spawn_ex(char *command, ...)
 		do_bindings(bindings, num_bindings);
 
 		execvp(command, args);
-		G_warning(_("unable to execute command"));
+		G_warning(_("Unable to execute command"));
 		_exit(127);
 	}
 
@@ -439,10 +482,9 @@ int G_spawn_ex(char *command, ...)
 	}
 
 	undo_signals(signals, num_signals, SST_POST);
-error_2:
 	undo_signals(signals, num_signals, SST_PRE);
-error_1:
 
 	return status;
 }
+
 #endif /*#ifdef __MINGW32__*/
