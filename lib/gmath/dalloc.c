@@ -1,15 +1,39 @@
-#include <grass/gis.h>
+/**
+ * \file dalloc.c
+ *
+ * \brief Matrix memory manamegement functions.
+ *
+ * This program is free software; you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation; either version 2 of the License, or (at
+ * your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful, but
+ * WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+ * General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program; if not, write to the Free Software
+ * Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
+ *
+ * \author GRASS GIS Development Team
+ *
+ * \date 2004-2006
+ */
+
 #include <stdlib.h>
+#include <grass/gis.h>
 
 
-/*!
+/**
  * \fn double *G_alloc_vector (size_t n)
  *
- * \brief memory allocation
+ * \brief Vector matrix memory allocation.
  *
  * Allocate a vector (array) of <b>n</b> doubles initialized to zero.
  *
- * \param n
+ * \param[in] n size of vector to allocate
  * \return double * 
  */
 
@@ -19,16 +43,16 @@ double *G_alloc_vector(size_t n)
 }
 
 
-/*!
+/**
  * \fn double **G_alloc_matrix (int rows,int cols)
  *
- * \brief memory allocation
+ * \brief Matrix memory allocation.
  *
  * Allocate a matrix of <b>rows</b> by <b>cols</b> doubles initialized
  * to zero.
  *
- * \param rows
- * \param cols
+ * \param[in] rows number of rows in matrix
+ * \param[in] cols number of columns in matrix
  * \return double ** 
  */
 
@@ -46,14 +70,14 @@ double **G_alloc_matrix (int rows, int cols)
 }
 
 
-/*!
+/**
  * \fn float *G_alloc_fvector (size_t n)
  *
- * \brief memory allocation
+ * \brief Floating point vector memory allocation.
  *
  * Allocate a vector (array) of <b>n</b> floats initialized to zero.
  *
- * \param n
+ * \param[in] n size of vector to allocate
  * \return float * 
  */
 
@@ -63,16 +87,16 @@ float *G_alloc_fvector(size_t n)
 }
 
 
-/*!
+/**
  * \fn float **G_alloc_fmatrix (int rows, int cols)
  *
- * \brief memory allocation
+ * \brief Floating point matrix memory allocation.
  *
  * Allocate a matrix of <b>rows</b> by <b>cols</b> floats initialized
  * to zero.
  *
- *  \param rows
- *  \param cols
+ *  \param[in] rows number of rows in matrix
+ *  \param[in] cols number of columns in matrix
  *  \return float ** 
  */
 
@@ -90,15 +114,15 @@ float **G_alloc_fmatrix (int rows, int cols)
 }
 
 
-/*!
+/**
  * \fn int G_free_vector (double *v)
  *
- * \brief memory deallocation
+ * \brief Vector memory deallocation.
  *
  * Deallocate a vector (array) of doubles or floats.
  *
- *  \param v
- *  \return int
+ *  \param[in,out] v vector to free
+ *  \return int returns 0
  */
 
 int G_free_vector (double *v)
@@ -109,15 +133,15 @@ int G_free_vector (double *v)
 }
 
 
-/*!
+/**
  * \fn int G_free_matrix (double **m)
  *
- * \brief memory deallocation
+ * \brief Matrix memory deallocation.
  *
  * Deallocate a matrix of doubles.
  *
- *  \param m
- *  \return int
+ *  \param[in,out] m matrix to free
+ *  \return int returns 0
  */
 
 int G_free_matrix (double **m)
@@ -129,15 +153,15 @@ int G_free_matrix (double **m)
 }
 
 
-/*!
+/**
  * \fn int G_free_fmatrix (float **m)
  *
- * \brief memory deallocation
+ * \brief Floating point matrix memory deallocation.
  *
  * Deallocate a matrix of floats.
  *
- *  \param m
- *  \return int
+ *  \param[in,out] m matrix to free
+ *  \return int returns 0
  */
 
 int G_free_fmatrix (float **m)

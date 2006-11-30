@@ -1,4 +1,26 @@
-/***** Fast Fourier Transformation of Two Dimensional Satellite Data *****/
+/**
+ * \file fft.c
+ *
+ * \brief Fast Fourier Transformation of Two Dimensional Satellite Data functions.
+ *
+ * This program is free software; you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation; either version 2 of the License, or (at
+ * your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful, but
+ * WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+ * General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program; if not, write to the Free Software
+ * Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
+ *
+ * \author GRASS GIS Development Team
+ *
+ * \date 2001-2006
+ */
 
 #include <grass/config.h>
 
@@ -25,23 +47,23 @@
 #include <grass/gis.h>
 
 
-/*!
+/**
  * \fn int fft(int i_sign, double *DATA[2], int NN, int dimc, int dimr)
  *
- * \brief Fast Fourier Transform for two-dimensional array
+ * \brief Fast Fourier Transform for two-dimensional array.
  *
  * Fast Fourier Transform for two-dimensional array.<br>
  * <bNote:</b> If passing real data to fft() forward transform 
  * (especially when using fft() in a loop), explicitly (re-)initialize 
  * the imaginary part to zero (DATA[1][i] = 0.0). Returns 0.
  *
- * \param i_sign Direction of transform -1 is normal, +1 is inverse
- * \param DATA Pointer to complex linear array in row major order 
+ * \param[in] i_sign Direction of transform -1 is normal, +1 is inverse
+ * \param[in,out] DATA Pointer to complex linear array in row major order 
  * containing data and result
- * \param NN Value of DATA dimension (dimc * dimr)
- * \param dimc Value of image column dimension (max power of 2)
- * \param dimr Value of image row dimension (max power of 2)
- * \return int
+ * \param[in] NN Value of DATA dimension (dimc * dimr)
+ * \param[in] dimc Value of image column dimension (max power of 2)
+ * \param[in] dimr Value of image row dimension (max power of 2)
+ * \return int always returns 0
  */
 
 int fft(int i_sign, double *DATA[2], int NN, int dimc, int dimr)
