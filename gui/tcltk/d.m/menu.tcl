@@ -459,7 +459,7 @@ set descmenu [subst {
 		{command {[G_msg "Indices of point counts in quadrats"]} {} "v.qcount" {} -command {execute v.qcount }}
 	}}
  } 
- {[G_msg "&Image"]} all options $tmenu {			
+ {[G_msg "&Imagery"]} all options $tmenu {			
 	{cascad {[G_msg "Develop images and groups"]} {} "" $tmenu {			
 		{command {[G_msg "Create/edit imagery group"]} {} "i.group" {} -command {execute i.group }}			
 		{command {[G_msg "Target imagery group"]} {} "i.target" {} -command {execute i.target }}
