@@ -15,7 +15,7 @@ if [ $# -eq 0 ] ; then
 	else
    		exec "$GRASS_WISH" $GISBASE/etc/gm/gm.tcl -name gm_tcl &
    	fi
-	exit 0
+	exit
 fi
 
 if [ "$1" != "@ARGS_PARSED@" ] ; then

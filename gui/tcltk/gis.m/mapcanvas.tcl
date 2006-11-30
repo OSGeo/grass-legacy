@@ -1061,7 +1061,7 @@ proc MapCanvas::zoom_gregion {mon args} {
 		
 		if {[catch {close $input} error]} {
 			puts $error
-			exit
+			exit 1
 		}
 		
 		#set start point (sw corner)
@@ -1089,7 +1089,7 @@ proc MapCanvas::zoom_gregion {mon args} {
 
 	} else {
 		puts $input
-		exit
+		exit 1
 	}
 }
 
