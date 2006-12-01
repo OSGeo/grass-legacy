@@ -206,7 +206,7 @@ proc mkmainPanel { BASE } {
 			# Nv_itemDrag $Nv_(main_BASE).midf.pos $Nv_(XY_POS) 62.5 62.5
 			# note: below value is somewhat strange, but with 0.5 0.5 the map rotates:
 			#	update_eye_position 0.496802 0.50100
-			set val2 [$Nv_(main_BASE).midf.height.f.entry get]
+			set val2 [$Nv_(HEIGHT_SLIDER).f.entry get]
 			Nset_focus_top $val2
 			change_display 1
 			update
@@ -284,7 +284,7 @@ proc Nviz_main_save { file_hook } {
 	puts $file_hook "$width $height"
 	puts $file_hook "[$BASE.bframe.cframe.pers.f.entry get]"
 	puts $file_hook "[$BASE.midf.zexag.f.entry get]"
-	puts $file_hook "[$BASE.midf.height.f.entry get]"
+	puts $file_hook "[$Nv_(HEIGHT_SLIDER).f.entry get]"
 	puts $file_hook "[Nv_getXYPos  XY_POS]"
 	puts $file_hook "[Nhas_focus]"
 	puts $file_hook "[Nget_focus]"
@@ -316,8 +316,8 @@ proc Nviz_main_load { file_hook } {
 
 	# height
 	gets $file_hook data
-	Nv_setEntry $Nv_(main_BASE).midf.height.f.entry $data
-	Nv_floatscaleCallback $Nv_(main_BASE).midf.height e 2 null $data
+	Nv_setEntry $Nv_(HEIGHT_SLIDER).f.entry $data
+	Nv_floatscaleCallback $Nv_(HEIGHT_SLIDER) e 2 null $data
 	update
 
 	# XY position
@@ -372,7 +372,7 @@ proc do_reset {XY H E P} {
 
 	set list [Nget_height]
 	set val [lindex $list 0]
-	Nv_floatscaleCallback $H b 2 Nchange_height $val
+	Nv_floatscaleCallback $H b 2 update_height $val
 
 	Nv_scaleCallback $P b 0 Nchange_persp 40
 	if {$Nauto_draw == 1} {Ndraw_all}
@@ -380,10 +380,9 @@ proc do_reset {XY H E P} {
 	appNotBusy
 }
 
-
 proc mk_exag_slider {W} {
 
-	# initialize z-exag scale
+	# init z-exag slider values
 	set exag [Nget_first_exag]
 	set val $exag
 	set exag [expr $val * 10]
@@ -396,6 +395,7 @@ proc mk_exag_slider {W} {
 proc mk_hgt_slider {W} {
 	global Nv_
 
+	# init height slider values
 	set list [Nget_height]
 	set val [lindex $list 0]
 	set min [lindex $list 1]
@@ -403,9 +403,9 @@ proc mk_hgt_slider {W} {
 
 	# make sliders
 	set Nv_(HEIGHT_SLIDER) $W.height
-	Nv_mkFloatScale $W.height v height $max $min $val update_height 1
+	Nv_mkFloatScale $Nv_(HEIGHT_SLIDER) v height $max $min $val update_height 1
 
-	return $W.height
+	return $Nv_(HEIGHT_SLIDER)
 }
 
 proc update_exag {exag} {
@@ -474,6 +474,7 @@ proc update_center_position {x y} {
 
 proc change_display {flag} {
 	global XY Nv_
+	global Nauto_draw
 
    set NAME $XY
    set NAME2 [winfo parent $NAME]
@@ -482,7 +483,9 @@ proc change_display {flag} {
 	# *** ACS_MODIFY 1.0 - one line
 	
 	if {$Nv_(FlyThrough)} {Nset_fly_mode -1}
-	set h [lindex [Nget_height] 0]
+	set h [lindex [Nget_real_position 1] 2]
+	set min [lindex [Nget_height] 1]
+	set max [lindex [Nget_height] 2]
 	
 	if {$flag == 1} {
 		#draw eye position
@@ -500,7 +503,7 @@ proc change_display {flag} {
 		#*** ACS_MODIFY 1.0 BEGIN ******************************************************
 			if {$Nv_(FlyThrough) == 0} {
 				# original line
-				pack $XY -side left -before $NAME2.height
+				pack $XY -side left -before $Nv_(HEIGHT_SLIDER)
 			}
 		#*** ACS_MODIFY 1.0 END ******************************************************
 		update_height $h		
@@ -513,17 +516,20 @@ proc change_display {flag} {
 			pack_XY
 		} else {
 			# original line
-		   pack $XY -side left -before $NAME2.height
+		   pack $XY -side left -before $Nv_(HEIGHT_SLIDER)
 		}
 	#*** ACS_MODIFY 1.0 END ******************************************************
+	if {$Nauto_draw == 1} {Ndraw_all}
 }
 
 proc reset_res { } {
 	global Nv_
 
+	set h [lindex [Nget_real_position 1] 2]
 	set from [lindex [Nget_height] 1]
 	set to [lindex [Nget_height] 2]
-	$Nv_(main_BASE).midf.height.scale configure -resolution [expr -1.0 * (($to - $from)/140.0)]
+	Nv_floatscaleCallback $Nv_(HEIGHT_SLIDER) b 2 update_height $h
+	$Nv_(HEIGHT_SLIDER).scale configure -resolution [expr -1.0 * (($to - $from)/140.0)]
 
 }
 
@@ -533,14 +539,10 @@ proc update_height {h} {
 	Nset_focus_state 1
 	Nchange_height $h
 		
-# I don't think this is correct -
-# Nget_height does the exag guess  BB
-
 	if {$Nv_(FollowView)} {
-		set list [Nget_height]
-		set val [lindex $list 0]
-		set min [lindex $list 1]
-		set max [lindex $list 2]
+		set val [lindex [Nget_real_position 1] 2]
+		set min [lindex [Nget_height] 1]
+		set max [lindex [Nget_height] 2]
 		set h [expr int((100.0*($h -$min))/($max - $min))]
 		Nv_floatscaleCallback $Nv_(LIGHT_HGT) b 2 set_lgt_hgt $h
 	}
