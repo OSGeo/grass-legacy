@@ -1,41 +1,41 @@
-/***********************************************************************
+/**
+ * \file V_clear.c
+ *
+ * \brief Screen clearning functions.
+ *
+ * This program is free software; you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation; either version 2 of the License, or (at
+ * your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful, but
+ * WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+ * General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program; if not, write to the Free Software
+ * Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
+ *
+ * \author GRASS GIS Development Team
+ *
+ * \date 1999-2006
+ */
 
-NAME:		V_clear()
-
-FUNCTION:	Effectively zero out the prompt and answer arrays.
-
-USAGE:		V_clear()
-
-PARAMETERS:
-
-RETURNS:	nothing
-
-ALGORITHM:	
-		|	set lengths of all answer locations to zero (0)
-		|	set lengths of all constant locations to zero (0)
-		|	set all text strings to NULL (\0)
-		|	set number of constants to 0
-		|	set number of answers to 0
-		|	set number of text lines to 0
-		|	set number of decimal places to 2
-		|	resets interrupt msg 
-
-CALLS:		
-
-***********************************************************************/
+#include <stdio.h>
 #include <grass/vask.h>
+
 
 #define DECIMAL_PLACES -1
 
 
 /*!
- * \brief initialize screen description
+ * \brief Zero out prompt and answer arrays.
  *
- * This routine initializes
- * the screen description information, and must be called before each new screen
- * layout description.
+ * This routine initializes the screen description information and must 
+ * be called before each new screen layout description.
  *
- *  \return int
+ *  \return always returns 0
  */
 
 int V_clear()

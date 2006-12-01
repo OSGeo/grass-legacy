@@ -1,28 +1,32 @@
-#define TELLME(x)	fprintf(stderr,"V_call %d\n",x) ;
-#
-/***********************************************************************
+/**
+ * \file V_call.c
+ *
+ * \brief Interactive call functions.
+ *
+ * This program is free software; you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation; either version 2 of the License, or (at
+ * your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful, but
+ * WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+ * General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program; if not, write to the Free Software
+ * Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
+ *
+ * \note Modified by Jacques Bouchard and Markus Neteler 6/99 to make 
+ * cursor keys working. Exit now with ESC-CR.
+ *
+ * \author GRASS GIS Development Team
+ *
+ * \date 1999
+ * \date $Id$
+ */
 
-$Id$
-
-Modified by Jacques Bouchard and Markus Neteler 6/99 to make cursor
-keys working. Exit now with ESC-CR.
-
-
-NAME:       V_call()
-
-FUNCTION:   Interactively allow the user to enter answers into all
-            available fields (as previously defined).  
-            Answer fields have been created with calls to V_ques()
-            Information fields have been created using V_const()
-            General text has been created with calls to V_line()
-
-USAGE:      V_call()
-
-PARAMETERS:
-
-RETURNS:    1 user entered ESC to continue
-        0 user entered ctrl-C to cancel
-
+/*
 ALGORITHM:  
         |   Zero out screen answer locations
         |   Initial curses screens
@@ -68,27 +72,14 @@ ALGORITHM:
         |           default:   If an alphanumeric, put that char on the screen 
         |               and in the current answer field
         |   call V_exit  (erase screen and exit curses)
-
-CALLS:      
-        V_init()        Vask routine to initialize curses
-        V_exit()        Vask routine to exit curses
-        V__dump_window()   V_ask
-        V__remove_trail()   V_ask
-        addch()         curses routine
-        addstr()        curses routine
-        move()          curses routine
-        putc()          curses routine
-        refresh()       curses routine
-        getch()         curses routine
-        wrefresh()      curses routine
-        sprintf()       UNIX
-        strcpy()        UNIX
-
 ***********************************************************************/
+
+#include <grass/config.h>
+#include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-#include <grass/config.h>
 #include <grass/vask.h>
+
 
 static int centered(const char *);
 static int fmt(char *,int,double);
@@ -124,22 +115,33 @@ struct V__ V__ ;
 static int interrupts_ok = 0;			/* mod shapiro */
 
 
-/*!
- * \brief interact with the user
+/**
+ * \fn int V_call (void)
  *
- * V_call() clears the screen and
- * writes the text and data values specified by V_line(), V_ques() and
- * V_const() to the screen. It interfaces with the user, collecting user
- * responses in the V_ques() fields until the user is satisfied. A message is
- * automatically supplied on line number 23, explaining to the user to enter an
- * ESC when all inputs have been supplied as desired. V_call() ends when the
- * user hits ESC and returns a value of 1 (but see V_intrpt_ok() below). No
- * error checking is done by V_call().  Instead, all variables used in V_ques()
- * calls must be checked upon return from V_call(). If the user has supplied
- * inappropriate information, the user can be informed, and the input prompted
- * for again by further calls to V_call().
+ * \brief Interact with the user.
  *
- *  \return int
+ * Interactively allow the user to enter answers into all available 
+ * fields (as previously defined). Answer fields have been created with 
+ * calls to <i>V_ques()</i>. Information fields have been created using 
+ * <i>V_const()</i>. General text has been created with calls to 
+ * <i>V_line()</i>.
+ *
+ * <i>V_call()</i> clears the screen and writes the text and data values 
+ * specified by <i>V_line()</i>, <i>V_ques()</i> and <i>V_const()</i> to 
+ * the screen. It interfaces with the user, collecting user responses in 
+ * the <i>V_ques()</i> fields until the user is satisfied. A message is
+ * automatically supplied on line number 23, explaining to the user to 
+ * enter an ESC when all inputs have been supplied as desired. 
+ * <i>V_call()</i> ends when the user hits ESC and returns a value of 1 
+ * (but see <i>V_intrpt_ok()</i> below). No error checking is done by 
+ * <i>V_call()</i>. Instead, all variables used in <i>V_ques()</i>
+ * calls must be checked upon return from <i>V_call()</i>. If the user 
+ * has supplied inappropriate information, the user can be informed, and 
+ * the input prompted for again by further calls to <i>V_call()</i>.
+ *
+ * \return 1 user entered ESC to continue
+ * \return 0 user entered CTRL-C to cancel
+ * \return -1 no match
  */
 
 int V_call(void) 
@@ -149,31 +151,31 @@ int V_call(void)
     int num_answers ;
     int at_answer   ;
     int at_constant ;
-    int ans_col     ;
+    int ans_col = 0;
     int newchar     ;
     int lastchar = 0;
-    int new_answer  ;
+    int new_answer = 0;
     struct { char position[80]; } scr_answ[MAX_ANSW] ;
     int y,x;		/* shapiro */
     char temp[100];
     int done;
 
-/* Zero out screen answer locations */
+    /* Zero out screen answer locations */
     for(incr=0; incr<MAX_ANSW; incr++)
 	    for(incr2=0; incr2<80; incr2++)
 		    scr_answ[incr].position[incr2] = 000 ;
 
-/* Initialize the curses windows */
+    /* Initialize the curses windows */
     V_init() ;
 
-/* Display text              */
+    /* Display text              */
     for (incr=0; incr<MAX_LINE; incr++) 
     {
 	move (incr, 0) ;
 	addstr(V__.page.line[incr]) ;
     }
 
-/* Display constants   */
+    /* Display constants   */
     for (at_constant=0; at_constant < V__.NUM_CONST; at_constant++) 
     {
 	move(V__.constant[at_constant].row, V__.constant[at_constant].col) ;
@@ -205,7 +207,7 @@ int V_call(void)
 	}
     }
 
-/* Display answer locations  */
+    /* Display answer locations  */
     for (at_answer=0; at_answer < V__.NUM_ANSW; at_answer++) 
     {
 	/* clear ANSWER */
@@ -250,10 +252,12 @@ int V_call(void)
 	}
     }
     num_answers = at_answer ;
+
     if (interrupts_ok)
 	    move(22,0) ;
     else
 	    move(23,0) ;
+
     centered("AFTER COMPLETING ALL ANSWERS, HIT <ESC><ENTER> TO CONTINUE") ;
     if (interrupts_ok)
     {
@@ -261,10 +265,8 @@ int V_call(void)
 	centered(temp);
     }
 
-/* Begin taking commands/answers from terminal */
+    /* Begin taking commands/answers from terminal */
     at_answer = 0 ;
-    new_answer = 0 ;
-    ans_col  = 0 ;
 
     move(ROW, COL) ;
     refresh() ;
@@ -428,25 +430,30 @@ int V_call(void)
 	    return (newchar != CTRLC);
 	}
     }
+
+    return -1;
 }
 
 
-/*!
- * \brief allow ctrl-c
+/**
+ * \fn int V_intrpt_ok (void)
  *
- * V_call() normally only allows the
- * ESC character to end the interactive input session. Sometimes it is desirable
- * to allow the user to cancel the session. To provide this alternate means of
- * exit, the programmer can call V_intrpt_ok() before V_call(). This allows
- * the user to enter Ctrl-C, which causes V_call() to return a value of 0
- * instead of 1.
- * A message is automatically supplied to the user on line 23 saying to use
- * Ctrl-C to cancel the input session. The normal message accompanying V_call()
- * is moved up to line 22.
- * <b>Note.</b> When V_intrpt_ok() is called, the programmer must limit the
- * use of V_line(), V_ques(), and V_const() to lines 0-21.
+ * \brief Allow CTRL-C.
  *
- *  \return int
+ * <i>V_call()</i> normally only allows the ESC character to end the 
+ * interactive input session. Sometimes, it is desirable to allow the 
+ * user to cancel the session. To provide this alternate means of exit, 
+ * the programmer can call <i>V_intrpt_ok()</i> before <i>V_call()</i>. 
+ * This allows the user to enter CTRL-C, which causes <i>V_call()</i> to 
+ * return a value of 0 instead of 1.<br>
+ * A message is automatically supplied to the user on line 23 saying to 
+ * use CTRL-C to cancel the input session. The normal message 
+ * accompanying <i>V_call()</i> is moved up to line 22.<br>
+ * <b>Note:</b> When <i>V_intrpt_ok()</i> is called, the programmer must 
+ * limit the use of <i>V_line()</i>, <i>V_ques()</i>, and 
+ * <i>V_const()</i> to lines 0-21.
+ *
+ * \return always returns 0
  */
 
 int V_intrpt_ok(void)
@@ -456,16 +463,19 @@ int V_intrpt_ok(void)
     return 0;
 }
 
-/*!
- * \brief change ctrl-c message
+
+/**
+ * \fn int V_intrpt_msg (const char *msg)
  *
- * A call to
- * V_intrpt_msg() changes the default V_intrpt_ok() message from (OR
- * <Ctrl-C> TO CANCEL) to (OR <Ctrl-C> TO <i>msg</i>). The message is (re)set
- * to the default by V_clear().
+ * \brief Change CTRL-C message.
  *
- *  \param text
- *  \return int
+ * A call to <i>V_intrpt_msg()</i> changes the default 
+ * <i>V_intrpt_ok()</i> message from (OR <CTRL-C> TO CANCEL) to (OR 
+ * <CTRL-C> TO <i>msg</i>). The message is (re)set to the default by 
+ * <i>V_clear()</i>.
+ *
+ * \param[in] msg
+ * \return always returns 0
  */
 
 int V_intrpt_msg (const char *msg)
@@ -484,15 +494,17 @@ static int fmt(char *s,int n, double x)
 	sprintf (buf, "%%.%dlf", n);
     else
 	strcpy (buf, "%.5lf");
-/* I had to use .5lf instead of just lf since a number like 65.8 got sprintf'ed as 65.800003
- * this is a hack - I admit it.
- */
+
+    /* I had to use .5lf instead of just lf since a number like 65.8 got 
+     * sprintf'ed as 65.800003 this is a hack - I admit it.
+     */
     sprintf (s, buf, x);
     if (n < 0)
 	V__trim_decimal(s);
 
     return 0;
 }
+
 
 static int centered(const char *msg)
 {
@@ -501,6 +513,7 @@ static int centered(const char *msg)
     indent = (80 - strlen(msg))/2;
     while (indent-- > 0)
 	addstr(" ");
+
     addstr(msg);
     addstr("\n");
 
