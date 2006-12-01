@@ -1,35 +1,41 @@
-/***********************************************************************
+/**
+ * \file V_init.c
+ *
+ * \brief Interactive initialization functions.
+ *
+ * This program is free software; you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation; either version 2 of the License, or (at
+ * your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful, but
+ * WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+ * General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program; if not, write to the Free Software
+ * Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
+ *
+ * \author GRASS GIS Development Team
+ *
+ * \date 1999-2006
+ */
 
-NAME:		V_init()
-
-FUNCTION:	Initialize curses and prepare screen
-
-USAGE:		V_init()
-
-PARAMETERS:
-
-RETURNS:	nothing
-
-ALGORITHM:	
-		|	Ignore interrupt and quit signals
-		|	Initialize curses
-		|	set no echo and no new line capabilities of curses
-		|       set raw mode for input
-
-CALLS:		
-		initscr ()      curses
-		raw()           curses
-		noecho()        curses
-		nonl()          curses
-
-***********************************************************************/
-#include <stdlib.h>
 #include <grass/config.h>
+#include <stdlib.h>
 #include <grass/gis.h>
 #include <grass/vask.h>
 
-/*-----------------------------------------------------------------*/
-/* Prepare to use Viewform library                                 */
+
+/**
+ * \fn int V_init ()
+ *
+ * \brief Initialize curses and prepare screen.
+ *
+ * \return always returns 0
+ */
+
 int V_init()	
 {
     static int first = 1;
@@ -44,9 +50,8 @@ int V_init()
 	first = 0;
     }
 
-/* the order of these 3 calls is important for
- * Mips' braindead implementation of curses
- */
+    /* the order of these 3 calls is important for
+     * Mips' braindead implementation of curses  */
     noecho() ;
     nonl()   ;
     raw();

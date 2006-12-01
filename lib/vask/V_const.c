@@ -1,46 +1,48 @@
-/***********************************************************************
+/**
+ * \file V_const.c
+ *
+ * \brief Display constant functions.
+ *
+ * This program is free software; you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation; either version 2 of the License, or (at
+ * your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful, but
+ * WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+ * General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program; if not, write to the Free Software
+ * Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
+ *
+ * \author GRASS GIS Development Team
+ *
+ * \date 1999-2006
+ */
 
-NAME:		V_const()
-
-FUNCTION:	Allows a program to identify a constant, and where that
-			constant should be placed on the screen in the next call
-			to V_call()
-
-USAGE:		V_const(targetptr, var_type, row, col, length) 
-
-PARAMETERS:          union target targetptr ;
-			int   var_type         ;     'i', 'l', 'f', 'd', or 's'
-			int   row              ;     0 <= row <= MAX_LINE
-			int   col              ;     0 <= col <= 80
-			int   length           ;     0 <= length <= 80
-
-RETURNS:	zero (0) on success and negative 1 (-1) on failure
-
-ALGORITHM:	
-		|	Check to see if request is legal and on the screen
-		|		If not, return -1
-		|	Make assignments
-		|	return 0
-
-CALLS:		
-		none
-
-***********************************************************************/
-
+#include <stdio.h>
 #include <grass/vask.h>
 
-/*!
- * \brief define screen constant
+
+/**
+ * \fn int V_const (void *src, char var_type, int row, int col, int length)
  *
- * <i>Ctype</i> is one of int, long, float,
- * double, or char.
+ * \brief Define screen constant.
  *
- *  \param value
- *  \param type
- *  \param row
- *  \param col
- *  \param len
- *  \return int
+ * This routine allows a program to identify a constant, and where that 
+ * constant should be placed on the screen in the next call to 
+ * <i>V_call()</i>. <b>var_type</b> is one of <i>int</i>, <i>long</i>, 
+ * <i>float</i>, <i>double</i>, or <i>char</i>.
+ *
+ * \param[in] src
+ * \param[in] var_type
+ * \param[in] row
+ * \param[in] col
+ * \param[in] len
+ * \return 0 on success
+ * \return -1 on error
  */
 
 int V_const(
