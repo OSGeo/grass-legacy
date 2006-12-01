@@ -119,7 +119,7 @@ int main (int argc, char **argv)
     if (where_opt->answer) {
        char *buf = NULL;
 
-       buf = G_malloc ((strlen(where_opt->answer) + 7));
+       buf = G_malloc ((strlen(where_opt->answer) + 8));
        sprintf (buf, " WHERE %s", where_opt->answer);
        db_append_string ( &sql, buf );
        G_free (buf);
