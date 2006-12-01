@@ -1,3 +1,6 @@
+#ifndef __VASK_H__
+#define __VASK_H__
+
 #include	<signal.h>
 #include	<curses.h>
 
@@ -74,3 +77,5 @@ int V_ques(void *,char,int,int,int);
 int V__dump_window(void);
 int V__remove_trail(int,char *);
 int V__trim_decimal(char *);
+
+#endif /* __VASK_H__ */
