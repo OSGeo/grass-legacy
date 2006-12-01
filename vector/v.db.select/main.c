@@ -117,7 +117,7 @@ int main (int argc, char **argv)
     db_append_string ( &sql, Fi->table );
 
     if (where_opt->answer) {
-       buf = G_realloc(buf,(strlen(where_opt->answer) + 7));
+       buf = G_realloc(buf,(strlen(where_opt->answer) + 8));
        sprintf(buf, " WHERE %s", where_opt->answer);
        db_append_string ( &sql, buf );
     }
