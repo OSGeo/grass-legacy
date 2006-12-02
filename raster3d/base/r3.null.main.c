@@ -83,7 +83,7 @@ getParams(char **name, d_Mask ** maskRules, int *changeNull, double *newNullVal)
     *changeNull = (params.null->answer != NULL);
     if (*changeNull)
 	if (sscanf(params.null->answer, "%lf", newNullVal) != 1)
-	    G3d_fatalError(_("illegal value for null"));
+	    G3d_fatalError(_("Illegal value for null"));
 }
 
 /*-------------------------------------------------------------------------*/

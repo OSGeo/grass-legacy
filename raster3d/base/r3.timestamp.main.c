@@ -29,21 +29,21 @@ int main(int argc, char *argv[])
 
     module = G_define_module();
     module->keywords = _("raster3d, voxel");
-    module->description = _("print/add/remove a timestamp for a 3D raster map");
+    module->description = _("Print/add/remove a timestamp for a 3D raster map");
 
     map = G_define_option();
     map->key = "map";
     map->required = YES;
     map->type = TYPE_STRING;
     map->gisprompt = "old,grid3,3d raster";
-    map->description = _("input grid3 filename");
+    map->description = _("Input grid3 filename");
 
     date = G_define_option();
     date->key = "date";
     date->key_desc = "timestamp";
     date->required = NO;
     date->type = TYPE_STRING;
-    date->description = _("datetime, datetime1/datetime2, or none");
+    date->description = _("Datetime, datetime1/datetime2, or none");
 
     if (G_parser(argc, argv) < 0)
 	exit(EXIT_FAILURE);
@@ -58,7 +58,7 @@ int main(int argc, char *argv[])
 	mapset = G_find_grid3(name, "");
 
     if (mapset == NULL) {
-	G_fatal_error(_("grid3 <%s> not found %s\n"), name,
+	G_fatal_error(_("Grid3 <%s> not found %s"), name,
 		      modify ? "in current mapset" : "");
 	exit(EXIT_FAILURE);
     }
