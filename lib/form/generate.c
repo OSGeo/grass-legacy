@@ -27,6 +27,7 @@ F_generate (char *drvname, char *dbname, char *tblname, char *key, int keyval,
     dbValue  *value;
 
     int i = 0;
+    /* see /usr/lib/tcl8.4/encoding/ */
     static char *encoding_list[] = {
 	"utf-8",
 	"ascii",
