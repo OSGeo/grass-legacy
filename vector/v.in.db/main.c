@@ -34,7 +34,7 @@ main (int argc, char *argv[])
     struct Option *xcol_opt, *ycol_opt, *zcol_opt, *keycol_opt, *where_opt, *outvect;
     struct GModule *module;
     struct Map_info Map;
-    struct line_pnts *Points ;
+    struct line_pnts *Points;
     struct line_cats *Cats;
     dbString sql;
     dbDriver *driver;
@@ -47,8 +47,9 @@ main (int argc, char *argv[])
     G_gisinit(argv[0]);
 
     module = G_define_module();
-    module->keywords = _("vector");
-    module->description = _("Create new vector (points) from database table containing coordinates.");
+    module->keywords = _("vector, import");
+    module->description =
+	_("Create new vector (points) from database table containing coordinates.");
 
     driver_opt 		    = G_define_option();
     driver_opt->key 	    = "driver";
@@ -97,13 +98,7 @@ main (int argc, char *argv[])
 
     where_opt = G_define_standard_option(G_OPT_WHERE);
 
-    outvect = G_define_option();
-    outvect->key          = "output";
-    outvect->type         = TYPE_STRING;
-    outvect->required     = YES;
-    outvect->multiple     = NO;
-    outvect->gisprompt    = "new,vector,vector";
-    outvect->description  = _("Name of vector output file");
+    outvect = G_define_standard_option (G_OPT_V_OUTPUT);
 
     if (G_parser(argc, argv)) exit(EXIT_FAILURE);
 
@@ -129,7 +124,7 @@ main (int argc, char *argv[])
     /* Open driver */
     driver = db_start_driver_open_database ( driver_opt->answer, database_opt->answer );
     if ( driver == NULL ) {
-	G_fatal_error ( _("Cannot open database %s by driver %s"), fi->database, fi->driver );
+	G_fatal_error ( _("Cannot open database <%s> by driver <%s>"), fi->database, fi->driver );
     }
 
     /* check if target table already exists */
@@ -137,7 +132,8 @@ main (int argc, char *argv[])
                 outvect->answer, db_get_default_driver_name(), db_get_default_database_name());
     if( db_table_exists ( db_get_default_driver_name(), 
         db_get_default_database_name(), outvect->answer) == 1 )
-           G_fatal_error(_("Output vector table <%s> (driver: <%s>, database: <%s>) already exists"),
+           G_fatal_error(_("Output vector table <%s> (driver: <%s>, database: <%s>) "
+			   "already exists"),
            outvect->answer, db_get_default_driver_name(), db_get_default_database_name());
 
     /* Open select cursor */
@@ -198,12 +194,18 @@ main (int argc, char *argv[])
         count++;
     }
     
-    G_message ( _("%d points written to vector"), count); 
+    G_message ( _("%d points written to vector map"), count); 
     db_close_database_shutdown_driver ( driver );
 
     /* Copy table */
-    ret = db_copy_table ( driver_opt->answer, database_opt->answer, table_opt->answer,
-                     fi->driver, fi->database, fi->table );
+    if (where_opt -> answer)
+	ret = db_copy_table_where (driver_opt->answer, database_opt->answer, table_opt->answer,
+				   fi->driver, fi->database, fi->table,
+				   where_opt -> answer);
+    else
+	ret = db_copy_table (driver_opt->answer, database_opt->answer, table_opt->answer,
+			     fi->driver, fi->database, fi->table);
+
     if ( ret == DB_FAILED ) {
 	G_warning ( _("Cannot copy table") );
     } else {
@@ -213,8 +215,7 @@ main (int argc, char *argv[])
     Vect_build (&Map, stdout);
     Vect_close (&Map);
 
-    G_message ( _("Vector import complete")); 
+    G_done_msg (""); 
     
     return (EXIT_SUCCESS);
 }
-
