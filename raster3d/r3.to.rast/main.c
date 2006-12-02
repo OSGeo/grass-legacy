@@ -112,7 +112,7 @@ void g3d_to_raster(void *map, G3D_Region region, int *fd)
     depths = region.depths;
 
 
-    G_debug(2, _("g3d_to_raster: Writing %i raster maps with rows %i cols."),
+    G_debug(2, "g3d_to_raster: Writing %i raster maps with rows %i cols.",
 	    depths, rows, cols);
 
     typeIntern = G3d_tileTypeMap(map);
@@ -180,7 +180,7 @@ int open_output_map(const char *name, int res_type)
 
     fd = G_open_raster_new((char *)name, res_type);
     if (fd < 0)
-	G_fatal_error(_("cannot create output map [%s]"), name);
+	G_fatal_error(_("Cannot create output map [%s]"), name);
 
     return fd;
 }
@@ -191,7 +191,7 @@ int open_output_map(const char *name, int res_type)
 void close_output_map(int fd)
 {
     if (G_close_cell(fd) < 0)
-	G_fatal_error(_("unable to close output map"));
+	G_fatal_error(_("Unable to close output map"));
 }
 
 /* ************************************************************************* */
