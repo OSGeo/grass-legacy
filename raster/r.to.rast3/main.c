@@ -108,17 +108,17 @@ void raster_to_g3d(void *map, G3D_Region region, int *fd)
 
     rast = G_allocate_raster_buf(globalRastMapType);
 
-    G_debug(3, _("raster_to_g3d: Writing %i raster maps with rows %i cols."),
+    G_debug(3, "raster_to_g3d: Writing %i raster maps with rows %i cols.",
 	    depths, rows, cols);
 
     /*Every Rastermap */
     for (z = 0; z < depths; z++) {	/*From the bottom to the top */
-	G_debug(4, _("Writing g3d slice %i\n"), z + 1);
+	G_debug(4, "Writing g3d slice %i", z + 1);
 	for (y = 0; y < rows; y++) {
 	    G_percent(y, rows - 1, 10);
 
 	    if (!G_get_raster_row(fd[z], rast, y, globalRastMapType))
-		fatal_error(map, fd, depths, _("Cold not get raster row \n"));
+		fatal_error(map, fd, depths, _("Cold not get raster row"));
 
 	    for (x = 0, ptr = rast; x < cols; x++,
 		 ptr = G_incr_void_ptr(ptr, G_raster_size(globalRastMapType))) {
@@ -157,7 +157,7 @@ void raster_to_g3d(void *map, G3D_Region region, int *fd)
 
 	    }
 	}
-	G_debug(2, _("\nDone\n"));
+	G_debug(2, "\nDone\n");
     }
 
 
@@ -177,7 +177,7 @@ int main(int argc, char *argv[])
     struct GModule *module;
     void *map = NULL;		/*The 3D Rastermap */
     int i = 0;
-    int *fd = NULL;		/*The filehanlder array for the 2D inputmaps */
+    int *fd = NULL;		/*The filehandler array for the 2D inputmaps */
     int cols, rows, opencells;
     char *name;
     char *mapset;
@@ -188,7 +188,7 @@ int main(int argc, char *argv[])
     G_gisinit(argv[0]);
 
     module = G_define_module();
-    module->keywords = _("raster");
+    module->keywords = _("raster, volume, conversion");
     module->description =
 	_("Converts 2D raster map slices to one 3D raster volume map");
 
@@ -200,7 +200,7 @@ int main(int argc, char *argv[])
 	exit(EXIT_FAILURE);
 
 
-    /*Check ob Input */
+    /*Check for output */
     if (param.output->answer == NULL)
 	G3d_fatalError(_("No output map"));
 
@@ -212,7 +212,7 @@ int main(int argc, char *argv[])
     rows = G_window_rows();
     cols = G_window_cols();
 
-    G_debug(2, _("Check the 2d and 3d region settings\n"));
+    G_debug(2, "Check the 2d and 3d region settings");
 
     /*If not equal, set the 2D windows correct*/
     if (rows != region.rows || cols != region.cols) {
@@ -230,7 +230,7 @@ int main(int argc, char *argv[])
     fd = (int *)G_malloc(region.depths * sizeof(int));
 
     if (fd == NULL)
-	fatal_error(map, NULL, 0, _("out of memory!"));
+	fatal_error(map, NULL, 0, _("Out of memory!"));
 
     if (G_legal_filename(param.output->answer) < 0)
 	fatal_error(map, NULL, 0, _("Illegal output file name"));
@@ -254,7 +254,7 @@ int main(int argc, char *argv[])
 	    mapset = G_find_cell2(name, "");
 
 	    if (mapset == NULL) {
-		fatal_error(map, fd, opencells, _("Cell file not found\n"));
+		fatal_error(map, fd, opencells, _("Cell file not found"));
 	    }
 	}
 	else {
@@ -279,7 +279,7 @@ int main(int argc, char *argv[])
 	}
     }
 
-    G_message(_("Creating 3D raster map\n"));
+    G_message(_("Creating 3D raster map"));
     map = NULL;
 
 
@@ -303,7 +303,7 @@ int main(int argc, char *argv[])
     }
 
     if (map == NULL)
-	fatal_error(map, fd, opencells, _("error opening g3d file"));
+	fatal_error(map, fd, opencells, _("Error opening g3d file"));
 
     /*if requested set the Mask on */
     if (param.mask->answer) {
@@ -339,7 +339,7 @@ int main(int argc, char *argv[])
 
     map = NULL;
 
-    G_debug(2, _("Done\n"));
+    G_debug(2, "Done\n");
 
     return (EXIT_SUCCESS);
 }
@@ -372,5 +372,5 @@ int open_input_raster_map(char *name, char *mapset)
 void close_input_raster_map(int fd)
 {
     if (G_close_cell(fd) < 0)
-	G_fatal_error(_("unable to close input map"));
+	G_fatal_error(_("Unable to close input map"));
 }
