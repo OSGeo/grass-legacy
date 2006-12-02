@@ -283,7 +283,7 @@ geom(OGRGeometryH hGeom, struct Map_info *Map, int field, int cat, double min_ar
 	for( i = 1; i < nr; i++ ) {
             Vect_destroy_line_struct ( IPoints[i-1] );
 	}
-        if ( nr > 1 ) G_free ( IPoints );	 
+        G_free ( IPoints );	 
     }
 
     /* I did not test this because I did not have files of these types */
