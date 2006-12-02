@@ -141,6 +141,11 @@ int save_signature(void);
 int write_signatures(void);
 /* title.c */
 int display_title(View *);
+/* vask_group.c */
+int I_vask_group_new (char **,char *,char *);
+int I_vask_group_old (char **,char *,char *);
+int I_vask_subgroup_new (char **,char *,char *, int,char *);
+int I_vask_subgroup_old (char **,char *,char *, int,char *);
 /* view.c */
 int Configure_view(View *, char *, char *, double, double);
 int In_view(View *, int, int);
