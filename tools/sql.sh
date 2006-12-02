@@ -287,7 +287,7 @@ CREATE TABLE shlib_exp (
 \copy shlib_exp FROM '$tmpdir/shlib_exp.lst'
 
 CREATE TABLE obj_exp (
-	object VARCHAR(80) NOT NULL,
+	object VARCHAR(100) NOT NULL,
 	symbol VARCHAR(150) NOT NULL
 	) ;
 
@@ -309,7 +309,7 @@ CREATE TABLE shlib_imp (
 \copy shlib_imp FROM '$tmpdir/shlib_imp.lst'
 
 CREATE TABLE obj_imp (
-	object VARCHAR(80) NOT NULL,
+	object VARCHAR(100) NOT NULL,
 	symbol VARCHAR(150) NOT NULL
 	) ;
 
