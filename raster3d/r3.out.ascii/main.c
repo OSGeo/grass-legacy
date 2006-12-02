@@ -56,7 +56,7 @@ fatalError (char *errorMsg)
     {
       /* should unopen map here! */
     if (!G3d_closeCell (map))
-       fatalError ("Error closing g3d file");
+       fatalError (_("Error closing g3d file"));
 
     }
 
@@ -256,7 +256,7 @@ main (int argc, char *argv[])
   /* Initialize GRASS */
   G_gisinit (argv[0]);
   module = G_define_module ();
-  module->keywords = _("raster3d, voxel");
+  module->keywords = _("raster3d, voxel, export");
     module->description = _("Converts a 3D raster map layer into an ASCII text file");
 
   /* Get parameters from user */
@@ -315,12 +315,12 @@ main (int argc, char *argv[])
 
   /* Close files and exit */
   if (!G3d_closeCell (map))
-    fatalError ("Error closing g3d file");
+    fatalError (_("Error closing g3d file"));
 
   map = NULL;
   if (output)
     if (fclose (fp))
-      fatalError ("Error closing new ASCII file");
+      fatalError (_("Error closing new ASCII file"));
 
   return 0;
 }

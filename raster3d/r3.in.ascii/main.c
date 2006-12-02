@@ -237,7 +237,7 @@ int main  (int argc, char *argv[])
 
   G_gisinit(argv[0]);
   module = G_define_module();
-  module->keywords = _("raster3d, voxel");
+  module->keywords = _("raster3d, voxel, import");
   module->description =
      _("Convert a 3D ASCII raster text file into a (binary) 3D raster map layer");
 
@@ -262,13 +262,13 @@ int main  (int argc, char *argv[])
 			  &region,
 			  type, doLzw, doRle, precision, tileX, tileY, tileZ);
 
-  if (map == NULL) fatalError ("main: error opening g3d file");
+  if (map == NULL) fatalError (_("Error opening g3d file"));
 
   /*Create the new G3D Map*/
   asciiToG3d (fp, &region, convertNull, nullValue);
 
   if (! G3d_closeCell (map)) 
-    fatalError ("main: error closing new g3d file");
+    fatalError (_("Error closing new g3d file"));
 
   /* write input name to map history */
   G3d_readHistory(output, G_mapset(), &history);
@@ -278,7 +278,7 @@ int main  (int argc, char *argv[])
 
   map = NULL;
   if (fclose (fp))
-	fatalError ("main: error closing ascii file");
+	fatalError (_("Error closing ascii file"));
 
   G_done_msg("");
 
