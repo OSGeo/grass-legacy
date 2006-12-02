@@ -74,7 +74,7 @@ void fatal_error(void *map, int elevfd, int outfd, char *errorMsg)
 void close_output_map(int fd)
 {
     if (G_close_cell(fd) < 0)
-	G_fatal_error(_("unable to close output map"));
+	G_fatal_error(_("Unable to close output map"));
 }
 
 
@@ -159,7 +159,7 @@ void rast3d_cross_section(void *map, G3D_Region region, int elevfd, int outfd)
 	/*Read the input map row */
 	if (!G_get_raster_row(elevfd, elevrast, y, globalElevMapType))
 	    fatal_error(map, elevfd, outfd,
-		       _("Could not get elevation raster row \n"));
+		       _("Could not get elevation raster row"));
 
 	for (x = 0, ptr = elevrast; x < cols; x++, ptr =
 	     G_incr_void_ptr(ptr, G_raster_size(globalElevMapType))) {
@@ -235,7 +235,7 @@ void rast3d_cross_section(void *map, G3D_Region region, int elevfd, int outfd)
 		fatal_error(map, elevfd, outfd, _("Could not write raster row"));
 	}
     }
-    G_debug(3, _("\nDone\n"));
+    G_debug(3, "\nDone\n");
 
     /*Free the mem */
     if (elevrast)
@@ -277,7 +277,7 @@ int main(int argc, char *argv[])
     if (G_parser(argc, argv))
 	exit(EXIT_FAILURE);
 
-    G_debug(3, _("Open 3D raster file %s"), param.input->answer);
+    G_debug(3, "Open 3D raster file %s", param.input->answer);
 
     if (NULL == G_find_grid3(param.input->answer, ""))
 	G3d_fatalError(_("Requested g3d file not found <%s>"), param.input->answer);
@@ -327,12 +327,12 @@ int main(int argc, char *argv[])
 	mapset = G_find_cell2(param.elevation->answer, "");
 
 	if (mapset == NULL) {
-	    fatal_error(map, -1, -1, _("Elevation map not found\n"));
+	    fatal_error(map, -1, -1, _("Elevation map not found"));
 	}
 
 	elevfd = G_open_cell_old(param.elevation->answer, mapset);
 	if (elevfd <= 0)
-	    fatal_error(map, -1, -1, _("Could not open elevation map\n"));
+	    fatal_error(map, -1, -1, _("Could not open elevation map"));
 
 	globalElevMapType = G_get_raster_map_type(elevfd);
 
@@ -346,17 +346,17 @@ int main(int argc, char *argv[])
 	    fatal_error(map, elevfd, -1, _("Illegal output file name"));
 
 	if (G_find_cell2(param.output->answer, ""))
-	    G_message(_("Output map already exists. Will be overwritten!\n"));
+	    G_message(_("Output map already exists. Will be overwritten!"));
 
 	if (output_type == G3D_FLOAT) {
 	    outfd = G_open_raster_new(param.output->answer, FCELL_TYPE);
 	    if (outfd < 0)
-		fatal_error(map, elevfd, -1, _("Could not open output map\n"));
+		fatal_error(map, elevfd, -1, _("Could not open output map"));
 	}
 	else if (output_type == G3D_DOUBLE) {
 	    outfd = G_open_raster_new(param.output->answer, DCELL_TYPE);
 	    if (outfd < 0)
-		fatal_error(map, elevfd, -1, _("Could not open output map\n"));
+		fatal_error(map, elevfd, -1, _("Could not open output map"));
 	}
 
 	/*if requested set the Mask on */
