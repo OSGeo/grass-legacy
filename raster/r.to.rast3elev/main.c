@@ -102,7 +102,7 @@ void check_input_maps(Database * db)
     int i;
     int elevcount = 0, inputcount = 0;
 
-    G_debug(2, _("Checking input maps\n"));
+    G_debug(2, "Checking input maps");
 
     /*Check elev maps */
     if (param.elev->answers != NULL) {
@@ -111,7 +111,7 @@ void check_input_maps(Database * db)
 	    mapset = NULL;
 	    mapset = G_find_cell2(param.elev->answers[i], "");
 	    if (mapset == NULL) {
-		G_fatal_error(_("Cell file [%s] not found\n"),
+		G_fatal_error(_("Cell file [%s] not found"),
 			      param.elev->answers[i]);
 		exit(EXIT_FAILURE);
 	    }
@@ -126,7 +126,7 @@ void check_input_maps(Database * db)
 	    mapset = NULL;
 	    mapset = G_find_cell2(param.input->answers[i], "");
 	    if (mapset == NULL) {
-		G_fatal_error(_("Cell file [%s] not found\n"),
+		G_fatal_error(_("Cell file [%s] not found"),
 			      param.input->answers[i]);
 		exit(EXIT_FAILURE);
 	    }
@@ -136,7 +136,7 @@ void check_input_maps(Database * db)
 
     if (elevcount != inputcount) {
 	G_fatal_error(_
-		      ("The number of input and elevation maps is not equal\n"));
+		      ("The number of input and elevation maps is not equal"));
 	exit(EXIT_FAILURE);
     }
 
@@ -152,7 +152,7 @@ int open_input_raster_map(char *name, char *mapset)
 {
     int fd;
 
-    G_debug(3, _("Open Raster file %s in Mapset %s"), name, mapset);
+    G_debug(3, "Open Raster file %s in Mapset %s", name, mapset);
 
     /* open raster file */
     fd = G_open_cell_old(name, mapset);
@@ -169,7 +169,7 @@ int open_input_raster_map(char *name, char *mapset)
 void close_input_raster_map(int fd)
 {
     if (G_close_cell(fd) < 0)
-	G_fatal_error(_("unable to close input map"));
+	G_fatal_error(_("Unable to close input map"));
 }
 
 /* ************************************************************************* */
@@ -266,8 +266,7 @@ void elev_raster_to_g3d(Database db, G3D_Region region)
 
 
     G_debug(3,
-	    _
-	    ("elev_raster_to_g3d: Writing 3D raster map with depths %i rows %i cols %i and count %i."),
+	    "elev_raster_to_g3d: Writing 3D raster map with depths %i rows %i cols %i and count %i.",
 	    depths, rows, cols, db.count);
 
     /*The mainloop */
@@ -275,9 +274,9 @@ void elev_raster_to_g3d(Database db, G3D_Region region)
 	G_percent(y, rows - 1, 10);
 
 	if (!G_get_raster_row(db.input, input_rast, y, db.inputmaptype))
-	    fatal_error(db, _("Culd not get raster row from input map\n"));
+	    fatal_error(db, _("Could not get raster row from input map"));
 	if (!G_get_raster_row(db.elev, elev_rast, y, db.elevmaptype))
-	    fatal_error(db, _("Culd not get raster row from elev map\n"));
+	    fatal_error(db, _("Could not get raster row from elev map"));
 
 	for (x = 0, input_ptr = input_rast, elev_ptr = elev_rast; x < cols; x++,
 	     input_ptr =
@@ -291,8 +290,7 @@ void elev_raster_to_g3d(Database db, G3D_Region region)
 	    height = get_raster_value_as_double(db.elevmaptype, elev_ptr, null);
 
 	    G_debug(4,
-		    _
-		    ("Caluclating position in 3d region -> height %g with value %g\n"),
+		    "Caluclating position in 3d region -> height %g with value %g",
 		    height, inval);
 
 	    /* Calculate if the G3D cell is lower or upper the elevation map
@@ -325,7 +323,7 @@ void elev_raster_to_g3d(Database db, G3D_Region region)
 
 		    /*Write the value to the 3D map */
 		    if (G3d_putDouble(db.map, x, y, z, value) < 0)
-			fatal_error(db, _("error writing G3D double data"));
+			fatal_error(db, _("Error writing G3D double data"));
 		}
 	    }
 	    else {
@@ -359,7 +357,7 @@ void elev_raster_to_g3d(Database db, G3D_Region region)
 
 		    /*Write the value to the 3D map */
 		    if (G3d_putDouble(db.map, x, y, z, value) < 0)
-			fatal_error(db, _("error writing G3D double data"));
+			fatal_error(db, _("Error writing G3D double data"));
 
 		}
 	    }
@@ -399,7 +397,7 @@ int main(int argc, char *argv[])
     G_gisinit(argv[0]);
 
     module = G_define_module();
-    module->keywords = _("raster, raster3d, voxel");
+    module->keywords = _("raster, raster3d, voxel, conversion");
     module->description =
 	_
 	("Creates a 3D volume map based on 2D elevation and value raster maps");
@@ -458,13 +456,12 @@ int main(int argc, char *argv[])
     rows = G_window_rows();
     cols = G_window_cols();
 
-    G_debug(2, _("Checking 2d and 3d region\n"));
+    G_debug(2, "Checking 2d and 3d region");
 
     /*If not equal, set the 2D windows correct */
     if (rows != region.rows || cols != region.cols) {
-	G_message
-	    (_
-	     ("The 2d and 3d region settings are different. I will use the g3d settings to adjust the 2d region."));
+	G_message(
+	     _("The 2d and 3d region settings are different. I will use the g3d settings to adjust the 2d region."));
 	G_get_set_window(&window2d);
 	window2d.ns_res = region.ns_res;
 	window2d.ew_res = region.ew_res;
@@ -476,7 +473,7 @@ int main(int argc, char *argv[])
     if (G_legal_filename(param.output->answer) < 0)
 	G3d_fatalError(_("Illegal output file name"));
 
-    G_debug(2, _("Open g3d raster map %s\n"), param.output->answer);
+    G_debug(2, "Open g3d raster map %s", param.output->answer);
 
     /*open G3D output map */
     db.map = NULL;
@@ -484,7 +481,7 @@ int main(int argc, char *argv[])
 	G3d_openCellNew(param.output->answer, G3D_DOUBLE,
 			G3D_USE_CACHE_DEFAULT, &region);
     if (db.map == NULL)
-	fatal_error(db, _("error opening g3d file"));
+	fatal_error(db, _("Error opening g3d file"));
 
 
     /*if requested set the Mask on */
@@ -499,13 +496,13 @@ int main(int argc, char *argv[])
     }
 
 
-    G_message(_("Creating 3D raster map\n"));
+    G_message(_("Creating 3D raster map"));
 
 
     /*For each elevation - input map couple */
     for (i = 0; i < db.mapnum; i++) {
 
-	G_debug(2, _("Open input raster map %s\n"), param.input->answers[i]);
+	G_debug(2, "Open input raster map %s", param.input->answers[i]);
 
 	db.count = i;
 	/*Open input map */
@@ -516,7 +513,7 @@ int main(int argc, char *argv[])
 	db.input = open_input_raster_map(name, mapset);
 	db.inputmaptype = G_raster_map_type(name, mapset);
 
-	G_debug(2, _("Open elev raster map %s\n"), param.elev->answers[i]);
+	G_debug(2, "Open elev raster map %s", param.elev->answers[i]);
 
 	/*Open elev map */
 	mapset = NULL;
@@ -544,12 +541,12 @@ int main(int argc, char *argv[])
 		G3d_maskOff(db.map);
     }
 
-    G_debug(2, _("Close g3d raster map\n"));
+    G_debug(2, "Close g3d raster map");
 
     if (!G3d_closeCell(db.map))
 	G3d_fatalError(_("Error closing g3d file"));
 
-    G_debug(2, _("\nDone\n"));
+    G_debug(2, "\nDone\n");
 
     return (EXIT_SUCCESS);
 }
