@@ -79,7 +79,7 @@ static void parse_d_mask_rule(char *vallist, d_Mask * d_mask, char *where)
 
     /* #-# */
     if (sscanf(vallist, "%lf-%lf", &a, &b) == 2) {
-	G_message(_("adding rule: %lf - %lf\n"), a, b);
+	G_message(_("Adding rule: %lf - %lf"), a, b);
 	add_d_mask_rule(d_mask, a, b, 0);
     }
     /* inf-# */
@@ -97,7 +97,7 @@ static void parse_d_mask_rule(char *vallist, d_Mask * d_mask, char *where)
     else {
 	if (where)
 	    G_message("%s: ", where);
-	G_warning(_("%s: illegal value spec\n"), vallist);
+	G_warning(_("%s: illegal value spec"), vallist);
 	G_usage();
 	exit(EXIT_FAILURE);
     }

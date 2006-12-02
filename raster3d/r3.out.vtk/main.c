@@ -113,14 +113,14 @@ void check_input_maps()
     if (param.structgrid->answer) {
 
 	if (!param.top->answer || !param.bottom->answer)
-	    G3d_fatalError(_("You have to specify top and bottom map\n"));
+	    G3d_fatalError(_("You have to specify top and bottom map"));
 
 	mapset = NULL;
 	name = NULL;
 	name = param.top->answer;
 	mapset = G_find_cell2(name, "");
 	if (mapset == NULL) {
-	    G3d_fatalError(_("top cell map <%s> not found\n"),
+	    G3d_fatalError(_("Top cell map <%s> not found"),
 			   param.top->answer);
 	}
 
@@ -129,7 +129,7 @@ void check_input_maps()
 	name = param.bottom->answer;
 	mapset = G_find_cell2(name, "");
 	if (mapset == NULL) {
-	    G3d_fatalError(_("bottom cell map <%s> not found\n"),
+	    G3d_fatalError(_("Bottom cell map <%s> not found"),
 			   param.bottom->answer);
 	}
     }
@@ -230,7 +230,7 @@ void open_write_rgb_maps(inputMaps * in, G3D_Region region, FILE * fp, int dp)
 	}
 
 
-	G_debug(3, _("Writing VTK VoxelData\n"));
+	G_debug(3, "Writing VTK VoxelData");
 	write_vtk_rgb_data(in->map_r, in->map_g, in->map_b, fp, "RGB_Voxel",
 			     region, dp);
 
@@ -277,7 +277,7 @@ void open_write_vector_maps(inputMaps * in, G3D_Region region, FILE * fp, int dp
 
 	/*Loop over all input maps! */
 	for (i = 0; i < 3; i++) {
-	    G_debug(3, _("Open vector g3d raster file %s"),
+	    G_debug(3, "Open vector g3d raster file %s",
 		    param.vectormaps->answers[i]);
 
 	    mapvect = NULL;
@@ -313,7 +313,7 @@ void open_write_vector_maps(inputMaps * in, G3D_Region region, FILE * fp, int dp
 	}
 
 
-	G_debug(3, _("Writing VTK Vector Data\n"));
+	G_debug(3, "Writing VTK Vector Data");
 	write_vtk_vector_data(in->map_x, in->map_y, in->map_z, fp, "Vector_Data",
 			   region, dp);
 
@@ -437,8 +437,8 @@ int main(int argc, char *argv[])
 
 	/*If not equal, set the 2D windows correct */
 	if (rows != region.rows || cols != region.cols) {
-	    G_message
-		("The 2d and 3d region settings are different. The g3d settings are used to adjust the 2d region.");
+	    G_message(
+		_("The 2d and 3d region settings are different. The g3d settings are used to adjust the 2d region."));
 	    G_get_set_window(&window2d);
 	    window2d.ns_res = region.ns_res;
 	    window2d.ew_res = region.ew_res;
@@ -475,12 +475,12 @@ int main(int argc, char *argv[])
 	}
 
 	if (G_close_cell(in->top) < 0) {
-	    G_fatal_error(_("unable to close top raster map\n"));
+	    G_fatal_error(_("unable to close top raster map"));
 	}
 	in->top = -1;
 
 	if (G_close_cell(in->bottom) < 0) {
-	    G_fatal_error(_("unable to close bottom raster map\n"));
+	    G_fatal_error(_("unable to close bottom raster map"));
 	}
 	in->bottom = -1;
     }
@@ -494,7 +494,7 @@ int main(int argc, char *argv[])
     if (param.input->answers != NULL) {
 	for (i = 0; param.input->answers[i] != NULL; i++) {
 
-	    G_debug(3, _("Open g3d raster file %s"), param.input->answers[i]);
+	    G_debug(3, "Open g3d raster file %s", param.input->answers[i]);
 
 	    /*Open the map */
 	    in->map =
