@@ -39,7 +39,7 @@ main (int argc, char *argv[])
 {
     int    i, j, layer, arg_s_num, nogeom, ncnames;
     float  xmin=0., ymin=0., xmax=0., ymax=0.;
-    int    ncols, type;
+    int    ncols = 0, type;
     struct GModule *module;
     double min_area, snap;
     struct Option *dsn_opt, *out_opt, *layer_opt, *spat_opt, *where_opt, *min_area_opt;
@@ -397,7 +397,7 @@ main (int argc, char *argv[])
     /* Fetch input map projection in GRASS form. */
     proj_info = NULL;
     proj_units = NULL;
-    Ogr_projection = OGR_L_GetSpatialRef(Ogr_layer);
+    Ogr_projection = OGR_L_GetSpatialRef(Ogr_layer); /* should not be freed later */
 
     /* Do we need to create a new location? */
     if( outloc_opt->answer != NULL )
@@ -414,7 +414,7 @@ main (int argc, char *argv[])
     }
     else
     {
-	int err;
+	int err = 0;
 
         /* Projection only required for checking so convert non-interactively */
         if ( GPJ_osr_to_grass( &cellhd, &proj_info,
@@ -526,7 +526,6 @@ main (int argc, char *argv[])
 		            "appear to match.\nProceeding with import...\n"));
 
     }
-    OSRDestroySpatialReference(Ogr_projection);
 
     db_init_string (&sql);
     db_init_string (&strval);
@@ -582,10 +581,10 @@ main (int argc, char *argv[])
 		G_debug(3, "Ogr_ftype: %i", Ogr_ftype); /* look up below */
 
 		if ( i < ncnames-1 ) {
-		    Ogr_fieldname = cnames_opt->answers[i+1];
+		    Ogr_fieldname = strdup(cnames_opt->answers[i+1]);
 		} else {
 		    /* Change column names to [A-Za-z][A-Za-z0-9_]* */
-		    Ogr_fieldname = strdup ( OGR_Fld_GetNameRef( Ogr_field ) );
+		    Ogr_fieldname = strdup( OGR_Fld_GetNameRef( Ogr_field ) );
 		    G_debug(3, "Ogr_fieldname: '%s'", Ogr_fieldname);
 
 		    c = Ogr_fieldname;
@@ -658,6 +657,7 @@ main (int argc, char *argv[])
 		    buf[0] = 0;
 		}
 		db_append_string ( &sql, buf);
+		G_free(Ogr_fieldname);
 	    }
 	    db_append_string ( &sql, ")" );
 	    G_debug ( 3, db_get_string ( &sql ) );
@@ -921,7 +921,8 @@ main (int argc, char *argv[])
 	    if ( type & GV_POINT ) otype = GV_POINT; else otype = GV_CENTROID;
 	    Vect_write_line ( &Map, otype, Points, Centr[centr].cats);
 	}
-
+        if (Centr)
+		G_free(Centr);
         fprintf ( stderr, separator );
 	Vect_build_partial (&Map, GV_BUILD_NONE, NULL);
 
