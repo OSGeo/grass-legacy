@@ -59,3 +59,6 @@ display/d.linegraph/linegraph.c:    t_color_opt->answer     = "white" ;
     - implement/finish linewise ortho-rectification of satellite data
     - Add support for > 8bit colors (only 0-255 supported currently)
 
+- Depreciate tape functions in next major revision of GRASS and create a
+  tape module that accomplishes tape access.
+
