@@ -584,9 +584,14 @@ if test -z "$PROJSHARE" ; then
 fi
 
 # LOC_CHECK_SHARE does not work when cross compiling
-LOC_CHECK_SHARE(epsg,External PROJ.4,$PROJSHARE,[
-AC_MSG_WARN([*** Unable to locate PROJ data files.])
-])
+if test "$cross_compiling" = "yes" ; then
+    AC_MSG_CHECKING([for epsg])
+    AC_MSG_RESULT([unknown (cross-compiling)])
+else
+    LOC_CHECK_SHARE(epsg,External PROJ.4,$PROJSHARE,[
+    AC_MSG_WARN([*** Unable to locate PROJ data files.])
+    ])
+fi
 
 AC_SUBST(PROJINC)
 AC_SUBST(PROJLIB)
