@@ -4,8 +4,8 @@ MODULE_TOPDIR = ../..
 PGM = g.mapsets
 GUI = $(GISBASE)/etc/g.mapsets.tcl
 
-LIBES     = $(GISLIB) $(VASKLIB) $(CURSES)
-DEPENDENCIES= $(GISDEP) $(VASKDEP)
+LIBES     = $(GISLIB)
+DEPENDENCIES= $(GISDEP)
 
 CMD_OBJS = \
 	main_cmd.o \
