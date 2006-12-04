@@ -32,7 +32,11 @@ F_generate (char *drvname, char *dbname, char *tblname, char *key, int keyval,
 	"utf-8",
 	"ascii",
 	"iso8859-1",
+	"iso8859-2",
+	"iso8859-15",
+	"iso2022-jp",
 	"koi8-r",
+	"euc-jp",
 	NULL
     };
     char *enc_env;
