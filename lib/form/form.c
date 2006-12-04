@@ -181,13 +181,13 @@ int submit(ClientData cdata, Tcl_Interp * interp, int argc, char *argv[])
 
     first = 1;
     for (i = 0; i < nCols; i++) {
-	G_debug(0, "Name = %s", Cols[i].name);
+	G_debug(3, "Name = %s", Cols[i].name);
 	if (G_strcasecmp(Cols[i].name, Key) == 0)
 	    continue;
 
 	if (G_strcasecmp(Cols[i].name, F_ENCODING) == 0) {
 
-	    G_debug(3, "env is %s, val is %s", G__getenv("GRASS_DB_ENCODING"),
+	    G_debug(3, "GRASS_DB_ENCODING env-var is '%s', col val is '%s'", G__getenv("GRASS_DB_ENCODING"),
 		    Cols[i].value);
 
 	    if (G_strcasecmp(Cols[i].value, G__getenv("GRASS_DB_ENCODING")) ==
@@ -195,9 +195,9 @@ int submit(ClientData cdata, Tcl_Interp * interp, int argc, char *argv[])
 		continue;
 	    else {
 		G_setenv("GRASS_DB_ENCODING", Cols[i].value);
+		G_debug(3, "Set env var GRASS_DB_ENCODING to '%s'", Cols[i].value);
 		if (Tcl_SetSystemEncoding(interp, Cols[i].value) == TCL_ERROR) {
-		    fprintf(stderr,
-			    "Could not set Tcl system encoding to %s\n",
+		    G_warning("Could not set Tcl system encoding to '%s'",
 			    Cols[i].value);
 		}
 	    }
