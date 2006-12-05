@@ -1263,7 +1263,7 @@ msgstr "Thực thi bất kỳ câu lệnh SQL nào."
 msgid "File containing SQL statements"
 msgstr "Tập tin chứa các câu lệnh SQL"
 
-#: ../db/base/execute.c:111 ../vector/lidar/v.bspline/main.c:119
+#: ../db/base/execute.c:111 ../vector/lidar/v.surf.bspline/main.c:119
 #: ../vector/lidar/v.lidar.edgedetection/main.c:91
 #: ../vector/lidar/v.lidar.growing/main.c:107
 #: ../vector/lidar/v.lidar.correction/main.c:106
@@ -1271,7 +1271,7 @@ msgstr "Tập tin chứa các câu lệnh SQL"
 msgid "Driver name"
 msgstr "Tên trình điều khiển"
 
-#: ../db/base/execute.c:119 ../vector/lidar/v.bspline/main.c:109
+#: ../db/base/execute.c:119 ../vector/lidar/v.surf.bspline/main.c:109
 #: ../vector/lidar/v.lidar.edgedetection/main.c:81
 #: ../vector/lidar/v.lidar.growing/main.c:97
 #: ../vector/lidar/v.lidar.correction/main.c:96
@@ -3146,8 +3146,8 @@ msgid " %13e |"
 msgstr "%13e |"
 
 #: ../vector/v.clean/main.c:224 ../vector/v.distance/main.c:264
-#: ../vector/v.buffer/main.c:349 ../vector/lidar/v.bspline/main.c:178
-#: ../vector/lidar/v.bspline/main.c:195 ../vector/v.voronoi/vo_main.c:126
+#: ../vector/v.buffer/main.c:349 ../vector/lidar/v.surf.bspline/main.c:178
+#: ../vector/lidar/v.surf.bspline/main.c:195 ../vector/v.voronoi/vo_main.c:126
 #: ../vector/v.voronoi/dt_main.c:74
 #, c-format
 msgid "Could not find input map <%s>"
@@ -4426,69 +4426,69 @@ msgstr "Dung sai được thiết lập lại thành %g (đ.vị bản đồ). [
 msgid "Cannot calculate area centroid."
 msgstr "Không thể tính trọng tâm vùng."
 
-#: ../vector/lidar/v.bspline/main.c:69
+#: ../vector/lidar/v.surf.bspline/main.c:69
 msgid "vector, interpolation"
 msgstr "vector, nội suy"
 
-#: ../vector/lidar/v.bspline/main.c:70
+#: ../vector/lidar/v.surf.bspline/main.c:70
 msgid "Bicubic or bilineal interpolation with Tykhonov regularization"
 msgstr ""
 "Nội suy bậc ba kép hoặc song tuyến tính với phép chính quy hóa Tykhonov"
 
-#: ../vector/lidar/v.bspline/main.c:78
+#: ../vector/lidar/v.surf.bspline/main.c:78
 msgid "Name of input vector map"
 msgstr "Tên của bản đồ vector đầu vào"
 
-#: ../vector/lidar/v.bspline/main.c:86
+#: ../vector/lidar/v.surf.bspline/main.c:86
 msgid "Name of input vector map of sparse points"
 msgstr "Tên của bản đồ vector đầu vào chứa các điểm thưa thớt"
 
-#: ../vector/lidar/v.bspline/main.c:94
+#: ../vector/lidar/v.surf.bspline/main.c:94
 msgid "Name of output vector map"
 msgstr "Tên của bản đồ vector đầu ra"
 
-#: ../vector/lidar/v.bspline/main.c:102 ../vector/v.surf.idw/main.c:84
+#: ../vector/lidar/v.surf.bspline/main.c:102 ../vector/v.surf.idw/main.c:84
 msgid "Name of output raster map"
 msgstr "Tên của bản đồ raster đầu ra"
 
-#: ../vector/lidar/v.bspline/main.c:128
+#: ../vector/lidar/v.surf.bspline/main.c:128
 #: ../vector/lidar/v.lidar.edgedetection/main.c:100
 #: ../vector/lidar/v.lidar.correction/main.c:115
 #: ../vector/lidar/v.outlier/main.c:115
 msgid "Interpolation spline step value in east direction"
 msgstr "Giá trị bước spline nội suy theo hướng đông"
 
-#: ../vector/lidar/v.bspline/main.c:135
+#: ../vector/lidar/v.surf.bspline/main.c:135
 #: ../vector/lidar/v.lidar.edgedetection/main.c:107
 #: ../vector/lidar/v.lidar.correction/main.c:122
 #: ../vector/lidar/v.outlier/main.c:122
 msgid "Interpolation spline step value in north direction"
 msgstr "Giá trị bước spline nội suy theo hướng bắc"
 
-#: ../vector/lidar/v.bspline/main.c:141
+#: ../vector/lidar/v.surf.bspline/main.c:141
 msgid "Spline type of interpolation"
 msgstr "Kiểu đường spline của phép nội suy"
 
-#: ../vector/lidar/v.bspline/main.c:149 ../vector/lidar/v.outlier/main.c:128
+#: ../vector/lidar/v.surf.bspline/main.c:149 ../vector/lidar/v.outlier/main.c:128
 msgid "Thychonov regularization weigth"
 msgstr "Trọng số phép chính quy hóa Tykhonov"
 
-#: ../vector/lidar/v.bspline/main.c:171
+#: ../vector/lidar/v.surf.bspline/main.c:171
 #, fuzzy
 msgid "Choose either vector or raster output, not both."
 msgstr "Cả đầu ra vector lẫn raster đều không thể "
 
-#: ../vector/lidar/v.bspline/main.c:174
+#: ../vector/lidar/v.surf.bspline/main.c:174
 msgid "No raster nor vector output"
 msgstr "Không có đầu ra raster lẫn vector"
 
-#: ../vector/lidar/v.bspline/main.c:183 ../vector/lidar/v.bspline/main.c:200
+#: ../vector/lidar/v.surf.bspline/main.c:183 ../vector/lidar/v.surf.bspline/main.c:200
 #: ../vector/lidar/v.outlier/main.c:182
 #, c-format
 msgid "Vector <%s> could not be open at the topological level"
 msgstr "Vector <%s> không thể mở được ở cấp tôpô"
 
-#: ../vector/lidar/v.bspline/main.c:189
+#: ../vector/lidar/v.surf.bspline/main.c:189
 #, c-format
 msgid ""
 "No vector map to interpolate. Interpolation will be done with <%s> vector map"
@@ -4496,47 +4496,47 @@ msgstr ""
 "Không có bản đồ vector để nội suy. Việc nội suy sẽ được thực hiện với bản đồ "
 "<%s>"
 
-#: ../vector/lidar/v.bspline/main.c:192
+#: ../vector/lidar/v.surf.bspline/main.c:192
 #, c-format
 msgid "<%s> vector map will be interpolated"
 msgstr "<%s> bản đồ vector sẽ được nội suy"
 
-#: ../vector/lidar/v.bspline/main.c:207
+#: ../vector/lidar/v.surf.bspline/main.c:207
 #, c-format
 msgid ""
 "Sorry, <%s> driver is not allowed for vector output in this module. \t    \t"
 "\t\tTry with a raster output or other driver"
 msgstr ""
 
-#: ../vector/lidar/v.bspline/main.c:214 ../vector/lidar/v.outlier/main.c:166
+#: ../vector/lidar/v.surf.bspline/main.c:214 ../vector/lidar/v.outlier/main.c:166
 #: ../vector/lidar/v.outlier/main.c:170 ../vector/lidar/v.outlier/main.c:176
 #, c-format
 msgid "Vector <%s> could not be open"
 msgstr "Không thể mở được vector <%s>"
 
-#: ../vector/lidar/v.bspline/main.c:233
+#: ../vector/lidar/v.surf.bspline/main.c:233
 #, c-format
 msgid "Raster <%s> already exist."
 msgstr "Raster <%s> đã có."
 
-#: ../vector/lidar/v.bspline/main.c:236
+#: ../vector/lidar/v.surf.bspline/main.c:236
 #, c-format
 msgid "Raster <%s> could not be open."
 msgstr "Không thể mở được raster <%s>."
 
-#: ../vector/lidar/v.bspline/main.c:244
+#: ../vector/lidar/v.surf.bspline/main.c:244
 #, c-format
 msgid "No database connection for driver <%s> defined. Run db.connect"
 msgstr ""
 "Kết nối CSDL cho trình điều khiển <%s> không được định nghĩa. Hãy chạy db."
 "connect"
 
-#: ../vector/lidar/v.bspline/main.c:250
+#: ../vector/lidar/v.surf.bspline/main.c:250
 #: ../vector/lidar/v.lidar.growing/main.c:167
 msgid "Setting regions and boxes"
 msgstr "Thiết lập các vùng và các 'hộp'"
 
-#: ../vector/lidar/v.bspline/main.c:289 ../vector/lidar/v.bspline/main.c:299
+#: ../vector/lidar/v.surf.bspline/main.c:289 ../vector/lidar/v.surf.bspline/main.c:299
 #: ../vector/lidar/v.lidar.edgedetection/main.c:234
 #: ../vector/lidar/v.lidar.correction/main.c:239
 #: ../vector/lidar/v.outlier/main.c:245
@@ -4544,7 +4544,7 @@ msgstr "Thiết lập các vùng và các 'hộp'"
 msgid "nsply = %d"
 msgstr "nsply = %d"
 
-#: ../vector/lidar/v.bspline/main.c:316 ../vector/lidar/v.bspline/main.c:326
+#: ../vector/lidar/v.surf.bspline/main.c:316 ../vector/lidar/v.surf.bspline/main.c:326
 #: ../vector/lidar/v.lidar.edgedetection/main.c:256
 #: ../vector/lidar/v.lidar.correction/main.c:261
 #: ../vector/lidar/v.outlier/main.c:267
@@ -4552,27 +4552,27 @@ msgstr "nsply = %d"
 msgid "nsplx = %d"
 msgstr "nsplx = %d"
 
-#: ../vector/lidar/v.bspline/main.c:334
+#: ../vector/lidar/v.surf.bspline/main.c:334
 #, c-format
 msgid "Points number in <elaboration_box> is %d"
 msgstr "Số điểm trong <elaboration_box> là %d"
 
-#: ../vector/lidar/v.bspline/main.c:381
+#: ../vector/lidar/v.surf.bspline/main.c:381
 #, fuzzy
 msgid "Creating auxiliar table for archiving overlapping zones"
 msgstr "Đang tạo bảng phụ để lưu trữ các vùng chồng nhau"
 
-#: ../vector/lidar/v.bspline/main.c:384
+#: ../vector/lidar/v.surf.bspline/main.c:384
 #, fuzzy, c-format
 msgid "It was impossible to create table <%s>."
 msgstr "Không thể tạo %s."
 
-#: ../vector/lidar/v.bspline/main.c:445
+#: ../vector/lidar/v.surf.bspline/main.c:445
 #: ../vector/lidar/v.lidar.correction/main.c:332
 msgid "Dropping <s>"
 msgstr "Đang bỏ <s>"
 
-#: ../vector/lidar/v.bspline/main.c:447
+#: ../vector/lidar/v.surf.bspline/main.c:447
 msgid "Auxiliar Table could not be drop"
 msgstr "Không thể bỏ được bảng phụ (auxiliar table)"
 
