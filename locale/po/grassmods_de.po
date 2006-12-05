@@ -218,14 +218,14 @@ msgstr "Führe jegliches SQL-Abfrage aus."
 msgid "File containing SQL statements"
 msgstr "Datei die SQL-Statements enthält."
 
-#: ../db/base/execute.c:111 ../vector/lidar/v.bspline/main.c:119
+#: ../db/base/execute.c:111 ../vector/lidar/v.surf.bspline/main.c:119
 #: ../vector/lidar/v.lidar.correction/main.c:106
 #: ../vector/lidar/v.lidar.edgedetection/main.c:91
 #: ../vector/lidar/v.lidar.growing/main.c:107 ../vector/v.db.connect/main.c:62
 msgid "Driver name"
 msgstr "Treibername"
 
-#: ../db/base/execute.c:119 ../vector/lidar/v.bspline/main.c:109
+#: ../db/base/execute.c:119 ../vector/lidar/v.surf.bspline/main.c:109
 #: ../vector/lidar/v.lidar.correction/main.c:96
 #: ../vector/lidar/v.lidar.edgedetection/main.c:81
 #: ../vector/lidar/v.lidar.growing/main.c:97 ../vector/v.db.connect/main.c:71
@@ -6657,7 +6657,7 @@ msgstr "Vektor, Zentroid, Fläche"
 
 #: ../locale/scriptstrings/v.centroids_to_translate.c:3
 #: ../locale/scriptstrings/v.dissolve_to_translate.c:3
-#: ../vector/lidar/v.bspline/main.c:78
+#: ../vector/lidar/v.surf.bspline/main.c:78
 msgid "Name of input vector map"
 msgstr "Eingabe Vektorkarte."
 
@@ -16311,29 +16311,29 @@ msgstr "in."
 msgid "<%s> has not been created in database."
 msgstr "Tabelle in"
 
-#: ../vector/lidar/v.bspline/main.c:69
+#: ../vector/lidar/v.surf.bspline/main.c:69
 msgid "vector, interpolation"
 msgstr "Vektor, Interpolation"
 
-#: ../vector/lidar/v.bspline/main.c:70
+#: ../vector/lidar/v.surf.bspline/main.c:70
 msgid "Bicubic or bilineal interpolation with Tykhonov regularization"
 msgstr ""
 
-#: ../vector/lidar/v.bspline/main.c:86
+#: ../vector/lidar/v.surf.bspline/main.c:86
 #, fuzzy
 msgid "Name of input vector map of sparse points"
 msgstr "Vektor-Ausgabe mit den angepassten Punkten im Fluss."
 
-#: ../vector/lidar/v.bspline/main.c:94
+#: ../vector/lidar/v.surf.bspline/main.c:94
 #, fuzzy
 msgid "Name of output vector map"
 msgstr "von"
 
-#: ../vector/lidar/v.bspline/main.c:102 ../vector/v.surf.idw/main.c:84
+#: ../vector/lidar/v.surf.bspline/main.c:102 ../vector/v.surf.idw/main.c:84
 msgid "Name of output raster map"
 msgstr "Name der Ausgaberasterkarte."
 
-#: ../vector/lidar/v.bspline/main.c:128
+#: ../vector/lidar/v.surf.bspline/main.c:128
 #: ../vector/lidar/v.lidar.correction/main.c:115
 #: ../vector/lidar/v.lidar.edgedetection/main.c:100
 #: ../vector/lidar/v.outlier/main.c:96
@@ -16341,7 +16341,7 @@ msgstr "Name der Ausgaberasterkarte."
 msgid "Interpolation spline step value in east direction"
 msgstr "in"
 
-#: ../vector/lidar/v.bspline/main.c:135
+#: ../vector/lidar/v.surf.bspline/main.c:135
 #: ../vector/lidar/v.lidar.correction/main.c:122
 #: ../vector/lidar/v.lidar.edgedetection/main.c:107
 #: ../vector/lidar/v.outlier/main.c:103
@@ -16349,25 +16349,25 @@ msgstr "in"
 msgid "Interpolation spline step value in north direction"
 msgstr "in"
 
-#: ../vector/lidar/v.bspline/main.c:141
+#: ../vector/lidar/v.surf.bspline/main.c:141
 #, fuzzy
 msgid "Spline type of interpolation"
 msgstr "Name der Karte, die Interpolationsfehler enthält."
 
-#: ../vector/lidar/v.bspline/main.c:149 ../vector/lidar/v.outlier/main.c:109
+#: ../vector/lidar/v.surf.bspline/main.c:149 ../vector/lidar/v.outlier/main.c:109
 msgid "Thychonov regularization weigth"
 msgstr ""
 
-#: ../vector/lidar/v.bspline/main.c:171
+#: ../vector/lidar/v.surf.bspline/main.c:171
 msgid "Choose either vector or raster output, not both."
 msgstr ""
 
-#: ../vector/lidar/v.bspline/main.c:174
+#: ../vector/lidar/v.surf.bspline/main.c:174
 #, fuzzy
 msgid "No raster nor vector output"
 msgstr "Name der Ausgabedatei."
 
-#: ../vector/lidar/v.bspline/main.c:178 ../vector/lidar/v.bspline/main.c:195
+#: ../vector/lidar/v.surf.bspline/main.c:178 ../vector/lidar/v.surf.bspline/main.c:195
 #: ../vector/v.buffer/main.c:349 ../vector/v.clean/main.c:224
 #: ../vector/v.distance/main.c:264 ../vector/v.voronoi/dt_main.c:74
 #: ../vector/v.voronoi/vo_main.c:126
@@ -16375,59 +16375,59 @@ msgstr "Name der Ausgabedatei."
 msgid "Could not find input map <%s>"
 msgstr "Kann die Eingabekarte <%s> nicht finden."
 
-#: ../vector/lidar/v.bspline/main.c:183 ../vector/lidar/v.bspline/main.c:200
+#: ../vector/lidar/v.surf.bspline/main.c:183 ../vector/lidar/v.surf.bspline/main.c:200
 #: ../vector/lidar/v.outlier/main.c:165
 #, c-format
 msgid "Vector <%s> could not be open at the topological level"
 msgstr ""
 
-#: ../vector/lidar/v.bspline/main.c:189
+#: ../vector/lidar/v.surf.bspline/main.c:189
 #, fuzzy, c-format
 msgid "No vector map to interpolate. Interpolation will be done with <%s> vector map"
 msgstr "Nein"
 
-#: ../vector/lidar/v.bspline/main.c:192
+#: ../vector/lidar/v.surf.bspline/main.c:192
 #, fuzzy, c-format
 msgid "<%s> vector map will be interpolated"
 msgstr "Vektordatei, die erstellt werden soll."
 
-#: ../vector/lidar/v.bspline/main.c:207
+#: ../vector/lidar/v.surf.bspline/main.c:207
 #, c-format
 msgid ""
 "Sorry, <%s> driver is not allowed for vector output in this module. \t    \t"
 "\t\tTry with a raster output or other driver"
 msgstr ""
 
-#: ../vector/lidar/v.bspline/main.c:214 ../vector/lidar/v.outlier/main.c:149
+#: ../vector/lidar/v.surf.bspline/main.c:214 ../vector/lidar/v.outlier/main.c:149
 #: ../vector/lidar/v.outlier/main.c:153 ../vector/lidar/v.outlier/main.c:159
 #, fuzzy, c-format
 msgid "Vector <%s> could not be open"
 msgstr "Vektorkarte <%s> nicht gefunden."
 
-#: ../vector/lidar/v.bspline/main.c:233
+#: ../vector/lidar/v.surf.bspline/main.c:233
 #, c-format
 msgid "Raster <%s> already exist."
 msgstr "Raster <%s> existiert bereits."
 
-#: ../vector/lidar/v.bspline/main.c:236
+#: ../vector/lidar/v.surf.bspline/main.c:236
 #, c-format
 msgid "Raster <%s> could not be open."
 msgstr "Konnte Raster <%s> nicht öffnen."
 
-#: ../vector/lidar/v.bspline/main.c:244
+#: ../vector/lidar/v.surf.bspline/main.c:244
 #, fuzzy, c-format
 msgid "No database connection for driver <%s> defined. Run db.connect"
 msgstr ""
 "Keine Datenbankverbindung definiert. Bitte setzen Sie eine Verbindung mit db."
 "connect."
 
-#: ../vector/lidar/v.bspline/main.c:250
+#: ../vector/lidar/v.surf.bspline/main.c:250
 #: ../vector/lidar/v.lidar.growing/main.c:167
 #, fuzzy
 msgid "Setting regions and boxes"
 msgstr "Setze das Kartenfenster."
 
-#: ../vector/lidar/v.bspline/main.c:289 ../vector/lidar/v.bspline/main.c:299
+#: ../vector/lidar/v.surf.bspline/main.c:289 ../vector/lidar/v.surf.bspline/main.c:299
 #: ../vector/lidar/v.lidar.correction/main.c:239
 #: ../vector/lidar/v.lidar.edgedetection/main.c:234
 #: ../vector/lidar/v.outlier/main.c:230
@@ -16435,7 +16435,7 @@ msgstr "Setze das Kartenfenster."
 msgid "nsply = %d"
 msgstr "nsply = %d"
 
-#: ../vector/lidar/v.bspline/main.c:316 ../vector/lidar/v.bspline/main.c:326
+#: ../vector/lidar/v.surf.bspline/main.c:316 ../vector/lidar/v.surf.bspline/main.c:326
 #: ../vector/lidar/v.lidar.correction/main.c:261
 #: ../vector/lidar/v.lidar.edgedetection/main.c:256
 #: ../vector/lidar/v.outlier/main.c:252
@@ -16443,26 +16443,26 @@ msgstr "nsply = %d"
 msgid "nsplx = %d"
 msgstr "nsplx = %d"
 
-#: ../vector/lidar/v.bspline/main.c:334
+#: ../vector/lidar/v.surf.bspline/main.c:334
 #, c-format
 msgid "Points number in <elaboration_box> is %d"
 msgstr "Die Anzahl der Punkte in<elaboration_box> beträgt %d."
 
-#: ../vector/lidar/v.bspline/main.c:381
+#: ../vector/lidar/v.surf.bspline/main.c:381
 msgid "Creating auxiliar table for archiving overlapping zones"
 msgstr ""
 
-#: ../vector/lidar/v.bspline/main.c:384
+#: ../vector/lidar/v.surf.bspline/main.c:384
 #, fuzzy, c-format
 msgid "It was impossible to create table <%s>."
 msgstr "Kann %s nicht erstellen."
 
-#: ../vector/lidar/v.bspline/main.c:445
+#: ../vector/lidar/v.surf.bspline/main.c:445
 #: ../vector/lidar/v.lidar.correction/main.c:332
 msgid "Dropping <s>"
 msgstr ""
 
-#: ../vector/lidar/v.bspline/main.c:447
+#: ../vector/lidar/v.surf.bspline/main.c:447
 #, fuzzy
 msgid "Auxiliar Table could not be drop"
 msgstr "Tabelle"

@@ -1299,7 +1299,7 @@ msgstr ""
 msgid "File containing SQL statements"
 msgstr "推論規則ファイル"
 
-#: ../db/base/execute.c:111 ../vector/lidar/v.bspline/main.c:119
+#: ../db/base/execute.c:111 ../vector/lidar/v.surf.bspline/main.c:119
 #: ../vector/lidar/v.lidar.edgedetection/main.c:91
 #: ../vector/lidar/v.lidar.growing/main.c:107
 #: ../vector/lidar/v.lidar.correction/main.c:106
@@ -1308,7 +1308,7 @@ msgstr "推論規則ファイル"
 msgid "Driver name"
 msgstr "ドライバ"
 
-#: ../db/base/execute.c:119 ../vector/lidar/v.bspline/main.c:109
+#: ../db/base/execute.c:119 ../vector/lidar/v.surf.bspline/main.c:109
 #: ../vector/lidar/v.lidar.edgedetection/main.c:81
 #: ../vector/lidar/v.lidar.growing/main.c:97
 #: ../vector/lidar/v.lidar.correction/main.c:96
@@ -3188,8 +3188,8 @@ msgid " %13e |"
 msgstr ""
 
 #: ../vector/v.clean/main.c:224 ../vector/v.distance/main.c:264
-#: ../vector/v.buffer/main.c:349 ../vector/lidar/v.bspline/main.c:178
-#: ../vector/lidar/v.bspline/main.c:195 ../vector/v.voronoi/vo_main.c:126
+#: ../vector/v.buffer/main.c:349 ../vector/lidar/v.surf.bspline/main.c:178
+#: ../vector/lidar/v.surf.bspline/main.c:195 ../vector/v.voronoi/vo_main.c:126
 #: ../vector/v.voronoi/dt_main.c:74
 #, fuzzy, c-format
 msgid "Could not find input map <%s>"
@@ -4447,43 +4447,43 @@ msgstr ""
 msgid "Cannot calculate area centroid."
 msgstr ""
 
-#: ../vector/lidar/v.bspline/main.c:69
+#: ../vector/lidar/v.surf.bspline/main.c:69
 #, fuzzy
 msgid "vector, interpolation"
 msgstr "補間に用いる近傍点"
 
-#: ../vector/lidar/v.bspline/main.c:70
+#: ../vector/lidar/v.surf.bspline/main.c:70
 msgid "Bicubic or bilineal interpolation with Tykhonov regularization"
 msgstr ""
 
-#: ../vector/lidar/v.bspline/main.c:78
+#: ../vector/lidar/v.surf.bspline/main.c:78
 #, fuzzy
 msgid "Name of input vector map"
 msgstr "���"
 
-#: ../vector/lidar/v.bspline/main.c:86
+#: ../vector/lidar/v.surf.bspline/main.c:86
 #, fuzzy
 msgid "Name of input vector map of sparse points"
 msgstr "���"
 
-#: ../vector/lidar/v.bspline/main.c:94
+#: ../vector/lidar/v.surf.bspline/main.c:94
 #, fuzzy
 msgid "Name of output vector map"
 msgstr "出力するファイル"
 
-#: ../vector/lidar/v.bspline/main.c:102 ../vector/v.surf.idw/main.c:84
+#: ../vector/lidar/v.surf.bspline/main.c:102 ../vector/v.surf.idw/main.c:84
 #, fuzzy
 msgid "Name of output raster map"
 msgstr "出力するファイル"
 
-#: ../vector/lidar/v.bspline/main.c:128
+#: ../vector/lidar/v.surf.bspline/main.c:128
 #: ../vector/lidar/v.lidar.edgedetection/main.c:100
 #: ../vector/lidar/v.lidar.correction/main.c:115
 #: ../vector/lidar/v.outlier/main.c:115
 msgid "Interpolation spline step value in east direction"
 msgstr ""
 
-#: ../vector/lidar/v.bspline/main.c:135
+#: ../vector/lidar/v.surf.bspline/main.c:135
 #: ../vector/lidar/v.lidar.edgedetection/main.c:107
 #: ../vector/lidar/v.lidar.correction/main.c:122
 #: ../vector/lidar/v.outlier/main.c:122
@@ -4491,75 +4491,75 @@ msgstr ""
 msgid "Interpolation spline step value in north direction"
 msgstr "テンション:"
 
-#: ../vector/lidar/v.bspline/main.c:141
+#: ../vector/lidar/v.surf.bspline/main.c:141
 #, fuzzy
 msgid "Spline type of interpolation"
 msgstr "アイコンの種類"
 
-#: ../vector/lidar/v.bspline/main.c:149 ../vector/lidar/v.outlier/main.c:128
+#: ../vector/lidar/v.surf.bspline/main.c:149 ../vector/lidar/v.outlier/main.c:128
 msgid "Thychonov regularization weigth"
 msgstr ""
 
-#: ../vector/lidar/v.bspline/main.c:171
+#: ../vector/lidar/v.surf.bspline/main.c:171
 msgid "Choose either vector or raster output, not both."
 msgstr ""
 
-#: ../vector/lidar/v.bspline/main.c:174
+#: ../vector/lidar/v.surf.bspline/main.c:174
 #, fuzzy
 msgid "No raster nor vector output"
 msgstr "出力するファイル"
 
-#: ../vector/lidar/v.bspline/main.c:183 ../vector/lidar/v.bspline/main.c:200
+#: ../vector/lidar/v.surf.bspline/main.c:183 ../vector/lidar/v.surf.bspline/main.c:200
 #: ../vector/lidar/v.outlier/main.c:182
 #, c-format
 msgid "Vector <%s> could not be open at the topological level"
 msgstr ""
 
-#: ../vector/lidar/v.bspline/main.c:189
+#: ../vector/lidar/v.surf.bspline/main.c:189
 #, c-format
 msgid ""
 "No vector map to interpolate. Interpolation will be done with <%s> vector map"
 msgstr ""
 
-#: ../vector/lidar/v.bspline/main.c:192
+#: ../vector/lidar/v.surf.bspline/main.c:192
 #, fuzzy, c-format
 msgid "<%s> vector map will be interpolated"
 msgstr "対象マップ"
 
-#: ../vector/lidar/v.bspline/main.c:207
+#: ../vector/lidar/v.surf.bspline/main.c:207
 #, c-format
 msgid ""
 "Sorry, <%s> driver is not allowed for vector output in this module. \t    \t"
 "\t\tTry with a raster output or other driver"
 msgstr ""
 
-#: ../vector/lidar/v.bspline/main.c:214 ../vector/lidar/v.outlier/main.c:166
+#: ../vector/lidar/v.surf.bspline/main.c:214 ../vector/lidar/v.outlier/main.c:166
 #: ../vector/lidar/v.outlier/main.c:170 ../vector/lidar/v.outlier/main.c:176
 #, fuzzy, c-format
 msgid "Vector <%s> could not be open"
 msgstr "���"
 
-#: ../vector/lidar/v.bspline/main.c:233
+#: ../vector/lidar/v.surf.bspline/main.c:233
 #, fuzzy, c-format
 msgid "Raster <%s> already exist."
 msgstr "���."
 
-#: ../vector/lidar/v.bspline/main.c:236
+#: ../vector/lidar/v.surf.bspline/main.c:236
 #, fuzzy, c-format
 msgid "Raster <%s> could not be open."
 msgstr "入力するファイル"
 
-#: ../vector/lidar/v.bspline/main.c:244
+#: ../vector/lidar/v.surf.bspline/main.c:244
 #, c-format
 msgid "No database connection for driver <%s> defined. Run db.connect"
 msgstr ""
 
-#: ../vector/lidar/v.bspline/main.c:250
+#: ../vector/lidar/v.surf.bspline/main.c:250
 #: ../vector/lidar/v.lidar.growing/main.c:167
 msgid "Setting regions and boxes"
 msgstr ""
 
-#: ../vector/lidar/v.bspline/main.c:289 ../vector/lidar/v.bspline/main.c:299
+#: ../vector/lidar/v.surf.bspline/main.c:289 ../vector/lidar/v.surf.bspline/main.c:299
 #: ../vector/lidar/v.lidar.edgedetection/main.c:234
 #: ../vector/lidar/v.lidar.correction/main.c:239
 #: ../vector/lidar/v.outlier/main.c:245
@@ -4567,7 +4567,7 @@ msgstr ""
 msgid "nsply = %d"
 msgstr ""
 
-#: ../vector/lidar/v.bspline/main.c:316 ../vector/lidar/v.bspline/main.c:326
+#: ../vector/lidar/v.surf.bspline/main.c:316 ../vector/lidar/v.surf.bspline/main.c:326
 #: ../vector/lidar/v.lidar.edgedetection/main.c:256
 #: ../vector/lidar/v.lidar.correction/main.c:261
 #: ../vector/lidar/v.outlier/main.c:267
@@ -4575,26 +4575,26 @@ msgstr ""
 msgid "nsplx = %d"
 msgstr ""
 
-#: ../vector/lidar/v.bspline/main.c:334
+#: ../vector/lidar/v.surf.bspline/main.c:334
 #, c-format
 msgid "Points number in <elaboration_box> is %d"
 msgstr ""
 
-#: ../vector/lidar/v.bspline/main.c:381
+#: ../vector/lidar/v.surf.bspline/main.c:381
 msgid "Creating auxiliar table for archiving overlapping zones"
 msgstr ""
 
-#: ../vector/lidar/v.bspline/main.c:384
+#: ../vector/lidar/v.surf.bspline/main.c:384
 #, fuzzy, c-format
 msgid "It was impossible to create table <%s>."
 msgstr "NULL値に代入する値"
 
-#: ../vector/lidar/v.bspline/main.c:445
+#: ../vector/lidar/v.surf.bspline/main.c:445
 #: ../vector/lidar/v.lidar.correction/main.c:332
 msgid "Dropping <s>"
 msgstr ""
 
-#: ../vector/lidar/v.bspline/main.c:447
+#: ../vector/lidar/v.surf.bspline/main.c:447
 msgid "Auxiliar Table could not be drop"
 msgstr ""
 
