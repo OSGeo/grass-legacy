@@ -58,10 +58,10 @@ proc mksurfPanel { BASE } {
 	Nv_mkPanelname $BASE "Surface Panel"
 
 	# resolution panel frame
-	frame $BASE.bottom -relief flat -bd 0 -padx 3
+	frame $BASE.bottom -relief flat -bd 0
 
 	# surface list and attributes frame
-	frame $BASE.top -relief flat -bd 0 -padx 3
+	frame $BASE.top -relief flat -bd 0
 
 	###### make widgets that control which is current surface (menu, new delete)###
 	set tmp [frame $BASE.top.top]
@@ -170,7 +170,7 @@ proc mksurfPanel { BASE } {
 	pack $rblabel1 $rbcurrent $rball -side left -fill x -ipadx 2
 
 	############# manage  frames ################################################
-	pack $BASE.top $BASE.bottom -side top -fill x -expand 1
+	pack $BASE.top $BASE.bottom -side top -fill x -expand 1 -padx 3
 	pack $BASE.top.top -side top -fill x -ipady 5 -expand 1
 	pack $BASE.top.bottom -side top -fill both -expand 1
 	pack $BASE.top.bottom2 -side top -fill both -expand 1
