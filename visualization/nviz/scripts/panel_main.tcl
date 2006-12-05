@@ -55,7 +55,7 @@ proc mkmainPanel { BASE } {
 		set Nv_(main_BASE) $BASE
 
 	# make redraw button area
-	pack [frame $BASE.redrawf -bd 1 -relief flat -padx 3 -pady 5 ] -side top -fill x -expand 1
+	pack [frame $BASE.redrawf -bd 1 -relief flat ] -padx 3 -pady 5 -side top -fill x -expand 1
 	# frame for draw, clear, cancel buttons
 	pack [frame $BASE.redrawf.f2 -relief flat -bd 0] -side top -fill x -expand 1
 	# frame for auto checkbuttons
