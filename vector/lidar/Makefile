@@ -1,7 +1,7 @@
 MODULE_TOPDIR = ../..
 
 SUBDIRS = lidarlib \
-	v.bspline \
+	v.surf.bspline \
 	v.outlier \
 	v.lidar.correction \
 	v.lidar.edgedetection \
