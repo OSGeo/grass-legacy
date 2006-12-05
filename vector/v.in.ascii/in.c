@@ -164,6 +164,10 @@ main (int argc, char *argv[])
 	ycol = atoi(ycol_opt->answer) - 1;
 	zcol = atoi(zcol_opt->answer) - 1;
 
+	/* specifying zcol= implies that a 3D map is needed */
+	if(zcol>=0 && !zcoorf->answer)
+	    zcoorf->answer = 1;
+
 	if (zcoorf->answer && format == FORMAT_POINT && zcol < 0)
 	    G_fatal_error(_("Please specify reasonable z column."));
 
