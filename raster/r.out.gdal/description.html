@@ -3,16 +3,68 @@
 <EM>r.out.gdal</EM> allows a user to export a GRASS raster map layer
 into any GDAL supported raster file format.
 
-<H2>GDAL supported raster formats</H2>
+For possible <em>metaopt</em> parameters see the 'supported formats' pages
+of GDAL.
+The <em>createopt</em> may be used to create TFW or World files ("TFW=YES",
+"WORLDFILE=ON").
 
-Full details on GDAL supported formats are available at:<p>
+<H2>SUPPORTED RASTER FORMATS</H2>
 
-<a href="http://www.gdal.org/formats_list.html">http://www.gdal.org/formats_list.html</a><P>
+The set of <a href="http://www.gdal.org/formats_list.html">supported
+raster formats</a> written by <EM>r.out.gdal</EM> depends on the
+local GDAL installation. Available may be (incomplete list):<P>
+
+<pre>
+  AAIGrid: Arc/Info ASCII Grid
+  BMP: MS Windows Device Independent Bitmap
+  BSB: Maptech BSB Nautical Charts
+  DTED: DTED Elevation Raster
+  ELAS: ELAS
+  ENVI: ENVI .hdr Labelled
+  FIT: FIT Image
+  GIF: Graphics Interchange Format (.gif)
+  GTiff: GeoTIFF
+  HDF4Image: HDF4 Dataset
+  HFA: Erdas Imagine Images (.img)
+  JPEG2000: JPEG-2000 part 1 (ISO/IEC 15444-1)
+  JPEG: JPEG JFIF
+  MEM: In Memory Raster
+  MFF2: Atlantis MFF2 (HKV) Raster
+  MFF: Atlantis MFF Raster
+  NITF: National Imagery Transmission Format
+  PAux: PCI .aux Labelled
+  PCIDSK: PCIDSK Database File
+  PNG: Portable Network Graphics
+  PNM: Portable Pixmap Format (netpbm)
+  VRT: Virtual Raster
+  XPM: X11 PixMap Format
+</pre>
+
+<H2>NOTES</H2>
+
+When writing out GeoTIFF format for users of ESRI software or ImageMagick,
+the band interleaving should be switched to pixel interleaving using
+<em>createopt="INTERLEAVE=PIXEL"</em>. Multiple options have to be
+specified as comma separated list (<em>createopt=TFW=YES,COMPRESS=DEFLATE</em>).
+<p>
+Out of the GDAL data types, the closest match for GRASS CELL, FCELL and DCELL
+rasters are respectively Int32, Float32 and Float64. These are not exact
+equivalents, but they will preserve the max possible data range and number of
+decimal places for each respective GRASS data type. Please keep in mind, that
+not all CELL rasters will require Int32 - e.g., 0-255 CELL raster are covered
+by the Byte <em>type</em> as well. Moreover, some GDAL-supported formats do not
+support all the data types possible in GDAL and GRASS. Use
+<em><a href="r.info">r.info</a></em> to check the data type and range for your
+GRASS raster, refer to specific format documentation
+(<a href="http://www.gdal.org/">GDAL website</a>, format vendor's docs) and
+e.g. the Wikipedia article
+<em><a href="http://en.wikipedia.org/wiki/C_syntax#Typical_boundaries_of_primitive_integral_types">Typical boundaries of primitive integral types</a></em>
+for details.
 
 <H2>EXAMPLES</H2>
 
 <div class="code"><pre>
-r.out.gdal2 input=roads output=roads.tif format=GTiff
+r.out.gdal input=elevation.10m output=elev_dem10.tif format=GTiff type=Float32
 </pre></div>
 
 
@@ -29,6 +81,6 @@ GDAL Pages: <a href="http://www.gdal.org">http://www.gdal.org/</a>
 
 <H2>AUTHOR</H2>
 
-Vytautas V (oliver4grass at gmail.com)
+Vytautas Vebra (oliver4grass at gmail.com)
 
 <p><i>Last changed: $Date$</i>
