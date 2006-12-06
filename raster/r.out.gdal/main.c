@@ -1,10 +1,10 @@
 /****************************************************************************
 *
-* MODULE:       r.out.gdal2
+* MODULE:       r.out.gdal
 * AUTHOR(S):    Vytautas Vebra <olivership@gmail.com>
 * PURPOSE:      exports GRASS raster to many GDAL suported formats;
 *               based on GDAL library.
-*               Should replace r.out.gdal script based on gdal_translate
+*               Replace r.out.gdal.sh script based on gdal_translate
 *               executable.
 * COPYRIGHT:    (C) 2006 by the GRASS Development Team
 *
@@ -41,7 +41,7 @@ void supported_formats (char** formats) {
 	db_init_string (&gdal_formats);
 
 	if (*formats)
-		fprintf(stdout, "Supported Formats:\n" );
+		fprintf(stdout, _("Supported Formats:\n") );
 
 	for (iDr = 0; iDr < GDALGetDriverCount(); iDr++ ) {
 	
