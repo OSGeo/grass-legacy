@@ -1,12 +1,15 @@
 /*!
 \page rfc_list RFC List
 
+\link psc_motions Motions of the GRASS Project Steering Committee\endlink
+
+<p>
 A list of all GRASS RFC documents, with status. 
 
 <ul>
 
 <li> \link rfc1_psc RFC 1: Project Steering Committee Guidelines\endlink (Proposed)
-
+<li> \link rfc2_psc RFC 2: Legal aspects of code contributions\endlink (Proposed)
 </ul>
 
 */
