@@ -10,7 +10,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-
+#include <grass/gis.h>
 #include <grass/ogsf_proto.h>
 #include <grass/gstypes.h>
 #include "gsget.h"
@@ -1006,6 +1006,87 @@ void gsd_3darrow(float *center, unsigned long colr, float siz1, float siz2,
 
     return;
 }
+
+
+/**************************************************************
+ * Function to draw Scalebar takes OpenGL coords and size
+ *  adapted from gsd_north_arrow Hamish Bowman Dec 2006
+ *************************************************************/
+int gsd_scalebar (float *pos2, float len, GLuint fontbase)
+{
+    char txt[100];
+    float base[4][3];
+    float Ntop[] = { 0.0, 0.0, 1.0 };
+
+
+    base[0][Z] = base[1][Z] = base[2][Z] = base[3][Z] = pos2[Z];
+
+    /* simple 1:8 rectangle */ /* bump to X/20. for a 1:10 narrower bar? */
+    base[0][X] = base[3][X] = pos2[X] - len / 16.;
+    base[1][X] = base[2][X] = pos2[X] + len / 16.;
+
+    base[0][Y] = base[1][Y] = pos2[Y] - len / 2.;
+    base[2][Y] = base[3][Y] = pos2[Y] + len / 2.;
+
+
+    /* make sure we are drawing in front buffer */
+    GS_set_draw(GSD_FRONT);
+
+    gsd_pushmatrix();
+    gsd_do_scale(1);  /* get map scale factor */
+
+    glNormal3fv(Ntop);
+    gsd_color_func(0x000000);
+
+    gsd_bgnpolygon();
+    glVertex3fv(base[0]);
+    glVertex3fv(base[1]);
+    glVertex3fv(base[2]);
+    glVertex3fv(base[3]);
+    glVertex3fv(base[0]);
+    gsd_endpolygon();
+
+/* draw units */
+/* Need to pick a nice generic font */
+/* TODO -- project text position off bar bottom along azimuth */
+
+    gsd_color_func(0x000000);
+
+    /* format text in a nice way */
+    if (strcmp("meters", G_database_unit_name(TRUE)) == 0 ) {
+	if(len > 2500)
+	    sprintf(txt, "%g km", len/1000);
+	else
+	    sprintf(txt, "%g meters", len);
+    }
+    else if (strcmp("feet", G_database_unit_name(TRUE)) == 0 ) {
+	if(len > 5280)
+	    sprintf(txt, "%g miles", len/5280);
+	else if(len == 5280)
+	    sprintf(txt, "1 mile");
+	else
+	    sprintf(txt, "%g feet", len);
+    }
+    else {
+	sprintf(txt, "%g %s", len, G_database_unit_name(TRUE));
+    }
+
+    /* adjust position of text */
+    base[0][X] -= gsd_get_txtwidth(txt, 18) - 20.;
+    base[0][Y] -= gsd_get_txtheight(18) - 20. ;
+
+    glRasterPos3fv(base[0]);
+    glListBase(fontbase);
+    glCallLists(strlen(txt), GL_BYTE, (GLubyte *) txt);
+    GS_done_draw();
+
+    gsd_popmatrix();        
+    gsd_flush();
+
+    return (1);
+}
+
+
 
 /* primitives only called after transforms */
 /* center is actually center at base of 8 sided cone */

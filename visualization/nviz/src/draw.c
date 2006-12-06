@@ -274,6 +274,37 @@ int Ndraw_Narrow_cmd(Nv_data * data, Tcl_Interp * interp,       /* Current inter
 
     return (TCL_OK);
 }
+
+
+
+/*****************************************************
+ * Ndraw_ScaleBar
+ * Draws the Scalebar. Adaped from Ndraw_Narrow_cmd()
+ *****************************************************/
+int Ndraw_ScaleBar_cmd(Nv_data * data, Tcl_Interp * interp, /* Current interpreter. */
+                     int argc,     /* Number of arguments. */
+                     char **argv   /* Argument strings. */
+    )
+{
+    float coords[3];
+    double len;
+
+    if (argc != 5)
+	return (TCL_ERROR);
+    coords[0] = (int) atof(argv[1]); /* X */
+    coords[1] = (int) atof(argv[2]); /* Y */
+    coords[2] = (int) atof(argv[3]); /* Z */
+    len = (atof(argv[4]));
+
+    FontBase = load_font(TOGL_BITMAP_HELVETICA_18);
+    if (FontBase)
+	gsd_scalebar(coords, (float) len, FontBase);
+    else
+	fprintf(stderr, "Unable to load font\n");
+
+    return (TCL_OK);
+}
+
             
 
 int Ndraw_line_on_surf_cmd(Nv_data * data, Tcl_Interp * interp,	/* Current interpreter. */

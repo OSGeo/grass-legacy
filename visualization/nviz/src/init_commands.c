@@ -73,6 +73,8 @@ Ndraw_wire_cmd(),
 Ndraw_X_cmd(),
 Nset_Narrow_cmd(),
 Ndraw_Narrow_cmd(),
+Nset_ScaleBar_cmd(),
+Ndraw_ScaleBar_cmd(),
 Ndraw_legend_cmd(),
 Ndraw_fringe_cmd(),
 Nset_viewport_cmd(),
@@ -282,6 +284,8 @@ int init_commands(Tcl_Interp * interp, Nv_data * data)
     Tcl_CreateCommand(interp, "Ndraw_X", (Tcl_CmdProc *)Ndraw_X_cmd, data, NULL);
     Tcl_CreateCommand(interp, "Nset_Narrow", (Tcl_CmdProc *)Nset_Narrow_cmd, data, NULL);
     Tcl_CreateCommand(interp, "Ndraw_Narrow", (Tcl_CmdProc *)Ndraw_Narrow_cmd, data, NULL);
+    Tcl_CreateCommand(interp, "Nset_ScaleBar", (Tcl_CmdProc *)Nset_Narrow_cmd, data, NULL); /* reuse Narrow as it's the same */
+    Tcl_CreateCommand(interp, "Ndraw_ScaleBar", (Tcl_CmdProc *)Ndraw_ScaleBar_cmd, data, NULL);
     Tcl_CreateCommand(interp, "Ndraw_legend", (Tcl_CmdProc *)Ndraw_legend_cmd, data, NULL);
     Tcl_CreateCommand(interp, "Ndraw_fringe", (Tcl_CmdProc *)Ndraw_fringe_cmd, data, NULL);
     Tcl_CreateCommand(interp, "Nset_viewport", (Tcl_CmdProc *)Nset_viewport_cmd, data, NULL);
