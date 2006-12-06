@@ -1,7 +1,10 @@
 <H2>DESCRIPTION</H2>
 
 
-<EM>r.out.gdal</EM> outputs GRASS raster maps into various GIS formats
+WARNING: <B>This module is superseded and will be removed in future versions of GRASS.
+Use the much faster <em><A HREF="r.out.gdal.html">r.out.gdal</a></em> instead.</b>
+
+<EM>r.out.gdal.sh</EM> outputs GRASS raster maps into various GIS formats
 as supported by GDAL. This script is based on 'gdal_translate',
 it's parameters are similar to those of 
 '<a href="http://www.gdal.org/gdal_utilities.html">gdal_translate</a>'.
@@ -17,7 +20,7 @@ The <em>createopt</em> may be used to create TFW or World files ("TFW=YES",
 <H2>SUPPORTED FORMATS</H2>
 
 The set of <a href="http://www.gdal.org/formats_list.html">supported
-formats</a> written by <EM>r.out.gdal</EM> depend on the
+formats</a> written by <EM>r.out.gdal.sh</EM> depend on the
 local GDAL installation. Available may be (incomplete list):<P>
 
 <pre>
@@ -72,7 +75,7 @@ for details.
 Export of the map 'elevation.dem' from the Spearfish data set:
 
 <div class="code"><pre>
-r.out.gdal elevation.dem format=GTiff type=Int16 output=elev_dem.tif
+r.out.gdal.sh elevation.dem format=GTiff type=Int16 output=elev_dem.tif
 </pre></div>
 
 <H2>REFERENCES</H2>

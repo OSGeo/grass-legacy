@@ -2,9 +2,9 @@
 
 ############################################################################
 #
-# MODULE:	r.out.gdal
+# MODULE:	r.out.gdal.sh script
 # AUTHOR(S):	Markus Neteler. neteler itc.it
-# PURPOSE:	r.out.gdal script hack until a C version is written
+# PURPOSE:	r.out.gdal.sh script hack until a C version is written
 # COPYRIGHT:	(C) 2003,2005 by the GRASS Development Team
 #
 #		This program is free software under the GNU General Public
@@ -74,16 +74,21 @@ if [ "$1" != "@ARGS_PARSED@" ] ; then
   exec g.parser "$0" "$@"
 fi
 
+PROG=`basename $0`
+
+echo "WARNING: This module is superseded and will be removed in future versions" 1>&2
+echo "         of GRASS. Use the much faster r.out.gdal instead." 1>&2
+
 #check gdal_translate exists
 if [ -z "`which gdal_translate`" ] ; then
    echo "ERROR: Required program gdal_translate is missing."
-   echo "       Full GDAL binaries with GDAL/GRASS support are needed to use r.out.gdal."
+   echo "       Full GDAL binaries with GDAL/GRASS support are needed to use $PROG."
    exit 1
 fi
 #check that gdal's grass plugin exists
 if [ -z "`gdalinfo --formats | grep -i GRASS`" ] ; then
    echo "ERROR: Required GRASS plugin for GDAL is missing."
-   echo "       GDAL must be built with GRASS support to use r.out.gdal."
+   echo "       GDAL must be built with GRASS support to use $PROG."
    exit 1
 fi
 
