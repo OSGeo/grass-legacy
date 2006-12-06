@@ -528,6 +528,10 @@ proc gisSetWindow {} {
     	-width 20 \
     	-relief raised \
     	-command {
+          if { $mingw == "1" } {
+             exec -- cmd.exe /c start $env(GISBASE)/etc/set_data
+             # Now we should refresh the list of locations!
+          } else {
             puts stdout "OLD_DB='$oldDb';"
             puts stdout "OLD_LOC='$oldLoc';"
             puts stdout "OLD_MAP='$oldMap';"
@@ -537,8 +541,9 @@ proc gisSetWindow {} {
             set location ""
             set mapset ""
             putGRASSRC $gisrc_name
-            destroy . 
-            }
+            destroy .
+          }
+        }
 
     pack append .frame0.frameNMS
     pack .frame0.frameNMS.first.label -side top
