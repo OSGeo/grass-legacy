@@ -115,7 +115,7 @@ int getgrid (void)
 	    if(ch=='i') PS.grid_width = PS.grid_width/72.0;
 	    continue;
 	}
-	error(key, data, "illegal request");
+	error(key, data, "illegal request (getgrid)");
     }
 
     PS.grid_fontsize = fontsize;
@@ -209,7 +209,7 @@ int getgeogrid (void)
 	    if(ch=='i') PS.geogrid_width = PS.geogrid_width/72.0;
 	    continue;
 	}
-	error(key, data, "illegal request");
+	error(key, data, "illegal request (getgrid)");
     }
 
     PS.geogrid_fontsize = fontsize;
