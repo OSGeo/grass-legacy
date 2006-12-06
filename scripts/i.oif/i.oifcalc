@@ -25,7 +25,8 @@ fi
 
 # setting environment, so that awk works properly in all languages
 unset LC_ALL
-export LC_NUMERIC=C
+LC_NUMERIC=C
+export LC_NUMERIC
 
 # calculate SUM of Stddeviations:
 $GISBASE/etc/i.oif/m.cutmatrix "$temp_stddev" 1 $1 >  "$temp_sum"

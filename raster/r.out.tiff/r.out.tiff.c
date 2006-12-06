@@ -41,6 +41,7 @@
 /* global variables */
 #ifdef __MINGW32__
 typedef unsigned char u_char;
+typedef unsigned short u_short;
 typedef unsigned long u_long;
 #endif
 
@@ -81,7 +82,8 @@ main (int argc, char *argv[])
 	
 	/* Set description */
 	module              = G_define_module();
-	module->description = 
+	module->keywords = _("raster");
+    module->description = 
 	    _("Exports a GRASS raster file to a 8/24bit TIFF image file "
 	    "at the pixel resolution of the currently defined region.");
 
@@ -96,7 +98,7 @@ main (int argc, char *argv[])
 	outopt->key             = "output";
 	outopt->type            =  TYPE_STRING;
 	outopt->required        =  YES;
-	outopt->gisprompt	= "new,tiff,tiff";
+	outopt->gisprompt	= "new_file,tiff,tiff";
 	outopt->description     = _("File name for new TIFF file.");
 
 	compopt = G_define_option();

@@ -15,6 +15,7 @@
 
 #%Module
 #%  description: creates and adds a new attribute table to a given layer of an existing vector map
+#%  keywords: vector, database, attribute table
 #%End
 #%option
 #% key: map
@@ -67,7 +68,8 @@ fi
 
 # setting environment, so that awk works properly in all languages
 unset LC_ALL
-export LC_NUMERIC=C
+LC_NUMERIC=C
+export LC_NUMERIC
 
 if [ -z "$GIS_OPT_TABLE" ] ; then
     if [ $GIS_OPT_LAYER -eq 1 ] ; then

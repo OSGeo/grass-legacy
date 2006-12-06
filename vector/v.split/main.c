@@ -18,6 +18,7 @@
 #include <math.h>
 #include <grass/gis.h>
 #include <grass/Vect.h>
+#include <grass/glocale.h>
 
 int 
 main (int argc, char *argv[])
@@ -36,6 +37,7 @@ main (int argc, char *argv[])
     G_gisinit(argv[0]);
 
     module = G_define_module();
+    module->keywords = _("vector, geometry");
     module->description = "Split lines to shorter segments.";
 
     in_opt = G_define_standard_option(G_OPT_V_INPUT);

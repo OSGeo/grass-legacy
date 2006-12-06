@@ -124,10 +124,10 @@ set descmenu [subst  {
 			{command {[G_msg "ASCII points file or GRASS ASCII vector file"]} {} "v.in.ascii" {} -command { execute v.in.ascii }}
 			{command {[G_msg "Import old GRASS vector format"]} {} "v.convert" {} -command { execute v.convert }}
 			{separator}
-			{command {[G_msg "dxf file"]} {} "v.in.dxf" {} -command { execute v.in.dxf }}
+			{command {[G_msg "DXF file"]} {} "v.in.dxf" {} -command { execute v.in.dxf }}
 			{command {[G_msg "ESRI e00 format"]} {} "v.in.e00" {} -command { execute v.in.e00 }}
 			{command {[G_msg "Garmin GPS Waypoints/Routes/Tracks"]} {} "v.in.garmin" {} -command { execute v.in.garmin }}
-			{command {[G_msg "Garmin GPS Waypoints/Routes/Tracks using GPSBabel"]} {} "v.in.gpsbabel" {} -command { execute v.in.gpsbabel }}
+			{command {[G_msg "GPS Waypoints/Routes/Tracks using GPSBabel"]} {} "v.in.gpsbabel" {} -command { execute v.in.gpsbabel }}
 			{command {[G_msg "GEOnet Name server country files (US-NGA GNS)"]} {} "v.in.gns" {} -command { execute v.in.gns }}
 			{command {[G_msg "Matlab and MapGen files"]} {} "v.in.mapgen" {} -command { execute v.in.mapgen }}
 		}}
@@ -154,7 +154,7 @@ set descmenu [subst  {
 			{command {[G_msg "PPM image from red, green, blue raster maps"]} {} "r.out.ppm3" {} -command { execute r.out.ppm3 }}
 			{command {[G_msg "POVray height-field"]} {} "r.out.pov" {} -command { execute r.out.pov }}
 			{command {[G_msg "TIFF image (8/24bit)"]} {} "r.out.tiff" {} -command { execute r.out.tiff }}
-			{command {[G_msg "VRML file"]} {} "p.out.vrml" {} -command { execute p.out.vrml }}
+			{command {[G_msg "VRML file"]} {} "r.out.vrml" {} -command { execute r.out.vrml }}
 			{command {[G_msg "VTK ASCII file"]} {} "r.out.vtk" {} -command { execute r.out.vtk }}
 		}}
 		{cascad {[G_msg "Vector map"]} {} "" $tmenu {			
@@ -195,11 +195,8 @@ set descmenu [subst  {
  {[G_msg "&Config"]} all options $tmenu {
 	{cascad {[G_msg "Region"]} {} "" $tmenu {			
 		{command {[G_msg "Display region settings"]} {} "g.region -p" {} -command {run_panel "g.region -p" }}
-		{command {[G_msg "Manage region"]} {} "g.region" {} -command {execute g.region }}
+		{command {[G_msg "Change region settings"]} {} "g.region" {} -command {execute g.region }}
 		{command {[G_msg "Zoom to maximum extent of all displayed maps"]} {} "d.extend" {} -command {run_panel d.extend }}
-		{separator}
-		{command {[G_msg "Create WIND3 (default 3D window) from current 2D region"]} {} "g3.createwind" {} -command {execute g3.createwind }}
-		{command {[G_msg "Manage 3D region"]} {} "g3.setregion" {} -command {execute g3.setregion }}
 	}}
 	{cascad {[G_msg "GRASS working environment"]} {} "" $tmenu {			
 		{command {[G_msg "Access other mapsets in current location"]} {} "g.mapsets.tcl" {} -command {spawn $env(GISBASE)/etc/g.mapsets.tcl}}
@@ -238,7 +235,7 @@ set descmenu [subst  {
 		{command {[G_msg "Quantization for floating-point maps"]} {} "r.quant" {} -command {execute r.quant }}
 		{command {[G_msg "Resample (change resolution) using nearest neighbor method"]} {} "r.resample" {} -command {execute r.resample }}
 		{command {[G_msg "Resample (change resolution) using regularized spline tension"]} {} "r.resamp.rst" {} -command {execute r.resamp.rst }}
-		{command {[G_msg "Support file creation and maintenance"]} {} "r.support" {} -command {execute r.support.sh }}
+		{command {[G_msg "Support file creation and maintenance"]} {} "r.support" {} -command {term r.support }}
 		{separator}
 		{command {[G_msg "Reproject raster from other location"]} {} "r.proj" {} -command {execute r.proj }}
 		{command {[G_msg "Generate tiling for other projection"]} {} "r.tileset" {} -command {execute r.tileset }}
@@ -305,7 +302,7 @@ set descmenu [subst  {
 		{command {[G_msg "Watershed basin creation"]} {} "r.water.outlet" {} -command {execute r.water.outlet }}
 	}}
 	{cascad {[G_msg "Landscape structure modeling"]} {} "" $tmenu {			
-		{command {[G_msg "Set up sampling and analysis framework"]} {} "r.le.setup" {} -command {term r.le.setup }}
+		{command {[G_msg "Set up sampling and analysis framework"]} {} "r.le.setup" {} -command {guarantee_xmon; term r.le.setup }}
 		{separator}
 		{command {[G_msg "Analyze landscape characteristics"]} {} "r.le.pixel" {} -command {execute r.le.pixel }}
 		{command {[G_msg "Analyze landscape patch characteristics"]} {} " r.le.patch" {} -command {execute r.le.patch }}
@@ -384,11 +381,12 @@ set descmenu [subst  {
 		{separator}
 		{command {[G_msg "Create/rebuild topology"]} {} "v.build" {} -command {execute v.build }}
 		{command {[G_msg "Clean vector files"]} {} "v.clean" {} -command {execute v.clean }}
+		{command {[G_msg "Add missing centroids"]} {} "v.centroids" {} -command {execute v.centroids }}
 		{separator}
-		{command {[G_msg "Break lines at intersections"]} {} "v.topo.check" {} -command {execute v.topo.check }}
 		{command {[G_msg "Build polylines from adjacent segments"]} {} "v.build.polylines" {} -command {execute v.build.polylines }}
 		{command {[G_msg "Split polylines into segments"]} {} "v.segment" {} -command {execute v.segment }}
 		{command {[G_msg "Create lines parallel to existing lines"]} {} "v.parallel" {} -command {execute v.parallel }}
+		{command {[G_msg "Dissolve common boundaries"]} {} "v.dissolve" {} -command {execute v.dissolve }}
 		{separator}
 		{command {[G_msg "Convert vector feature types"]} {} "v.type" {} -command {execute v.type }}
 		{command {[G_msg "Convert 2D vector to 3D by sampling raster"]} {} "v.drape" {} -command {execute v.drape }}
@@ -472,7 +470,7 @@ set descmenu [subst  {
 		{command {[G_msg "Indices of point counts in quadrats"]} {} "v.qcount" {} -command {execute v.qcount }}
 	}}
  } 
- {[G_msg "&Image"]} all options $tmenu {			
+ {[G_msg "&Imagery"]} all options $tmenu {			
 	{cascad {[G_msg "Develop images and groups"]} {} "" $tmenu {			
 		{command {[G_msg "Create/edit imagery group"]} {} "i.group" {} -command {execute i.group }}			
 		{command {[G_msg "Target imagery group"]} {} "i.target" {} -command {execute i.target }}

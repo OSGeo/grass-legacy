@@ -15,6 +15,7 @@
 
 #%Module
 #%  description: Slide show of GRASS raster/vector maps
+#%  keywords: display, slideshow
 #%End
 #%flag
 #%  key: v

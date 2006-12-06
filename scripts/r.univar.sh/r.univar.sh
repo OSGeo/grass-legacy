@@ -15,6 +15,7 @@
 
 #%Module
 #% description: calculates univariate statistics from a GRASS raster map
+#% keywords: raster, statistics
 #%End
 #%flag
 #%  key: e
@@ -54,7 +55,8 @@ fi
 
 # setting environment, so that awk works properly in all languages
 unset LC_ALL
-export LC_NUMERIC=C
+LC_NUMERIC=C
+export LC_NUMERIC
 
 COVER="$GIS_OPT_MAP"
 

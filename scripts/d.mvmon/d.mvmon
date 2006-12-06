@@ -13,7 +13,8 @@
 #############################################################################
 
 #%Module
-#% description: move current displayed maps to another monitor
+#%  description: move current displayed maps to another monitor
+#%  keywords: display, setup
 #%End
 #%flag
 #% key: c

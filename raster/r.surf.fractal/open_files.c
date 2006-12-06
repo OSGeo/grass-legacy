@@ -6,6 +6,7 @@
 /***                                                                       ***/
 /*****************************************************************************/
 
+#include <grass/glocale.h>
 #include "frac.h"
 
 int 
@@ -15,9 +16,8 @@ open_files (void)
 
     if ( (fd_out=G_open_cell_new(rast_out_name)) <0)
     {
-        char err[256];
-        sprintf(err,"ERROR: Problem opening output file.");
-        G_fatal_error(err);
+        G_fatal_error (_("ERROR: Problem opening output file."));
     }
 
+    return 0;
 }

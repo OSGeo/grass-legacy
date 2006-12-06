@@ -75,6 +75,11 @@ panels=3
 iter=$((panels*2-1))
 
 eval `g.region -eg`
+eval `g.region -g`
+north=$n
+south=$s
+west=$w
+east=$e
 
 unit_ns=$(echo "scale=8; $ns_extent / $panels" | bc)
 unit_ew=$(echo "scale=8; $unit_ns * 4/3" | bc)

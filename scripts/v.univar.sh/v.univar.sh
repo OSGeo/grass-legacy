@@ -16,6 +16,7 @@
 
 #%Module
 #% description: calculates univariate statistics on selected table column for a GRASS vector map
+#% keywords: vector, statistics
 #%End
 #%flag
 #%  key: e
@@ -72,7 +73,8 @@ fi
 
 # setting environment, so that awk works properly in all languages
 unset LC_ALL
-export LC_NUMERIC=C
+LC_NUMERIC=C
+export LC_NUMERIC
 
 
 TMP="`g.tempfile pid=$$`"

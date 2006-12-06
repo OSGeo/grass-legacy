@@ -452,8 +452,8 @@ read_ellipsoid_table(int fatal)
     
     (fatal ? G_fatal_error : G_warning)(
 	(err > 1)
-	    ? _("Lines%s of ellipsoid table file <%s> are invalid")
-	    : _("Line%s of ellipsoid table file <%s> is invalid"),
+	    ? _("Lines %s of ellipsoid table file <%s> are invalid")
+	    : _("Line %s of ellipsoid table file <%s> is invalid"),
 	badlines, file);
 
     return 0;

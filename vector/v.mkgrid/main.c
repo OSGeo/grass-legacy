@@ -10,6 +10,7 @@
 #include <grass/gis.h>
 #include <grass/dbmi.h>
 #include <grass/Vect.h>
+#include <grass/glocale.h>
 #include "grid_structs.h"
 #include "local_proto.h"
 
@@ -46,7 +47,8 @@ main (int argc, char *argv[])
   
   /* Set description */
   module              = G_define_module();
-  module->description = "Creates a (binary) GRASS vector map of a user-defined grid.";
+  module->keywords = _("vector");
+    module->description = "Creates a (binary) GRASS vector map of a user-defined grid.";
 
   vectname = G_define_option ();
   vectname->key = "map";
@@ -67,7 +69,7 @@ main (int argc, char *argv[])
   position_opt = G_define_option ();
   position_opt->key = "position";
   position_opt->type = TYPE_STRING;
-  position_opt->required = YES;
+  position_opt->required = NO;
   position_opt->multiple = NO;
   position_opt->options = "region,coor";
   position_opt->answer = "region";

@@ -16,6 +16,7 @@
 
 #%Module
 #%  description: allows to assign a new value to a column in the attribute table connected to a given map
+#%  keywords: vector, database, attribute table
 #%End
 
 #%option
@@ -74,7 +75,8 @@ fi
 
 # setting environment, so that awk works properly in all languages
 unset LC_ALL
-export LC_NUMERIC=C
+LC_NUMERIC=C
+export LC_NUMERIC
 
 table=`v.db.connect $GIS_OPT_MAP -g | grep -w $GIS_OPT_LAYER | awk '{print $2}'`
 database=`v.db.connect $GIS_OPT_MAP -g | grep -w $GIS_OPT_LAYER | awk '{print $4}'`

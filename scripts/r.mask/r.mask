@@ -16,6 +16,7 @@
 
 #%Module
 #%  description: Create a MASK for limiting raster operation
+#%  keywords: raster, mask
 #%End
 #%option
 #% key: input

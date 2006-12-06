@@ -18,14 +18,14 @@ echo "select * from roads" | db.select
 or
  cat file.sql | db.select 
 or
- db.select sql=file.sql
+ db.select input=file.sql
 </pre></div>
 
 <p>
 
 <em>Select all from table roads</em><br>
 <div class="code"><pre>
-db.select -c driver=odbc database=g51test table=roads sql=file.sql > result.csv
+db.select -c driver=odbc database=g51test table=roads input=file.sql > result.csv
 </pre></div>
 
 <P>

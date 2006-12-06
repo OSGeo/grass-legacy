@@ -10,10 +10,7 @@
  *
  *   	    	This program is free software under the GPL (>=v2)
  *   	    	Read the file COPYING that comes with GRASS for details.
- ****************************************************************************
- *
- * TODO: if bottom > top, the tbres becomes negative and window struct is reset. BUG
- */
+ ****************************************************************************/
 
 #include <string.h>
 #include <stdlib.h>
@@ -77,6 +74,7 @@ int main (int argc, char *argv[])
 	G_get_default_window(&window);
 
 	module = G_define_module();
+	module->keywords = _("general");
 	module->description =
 		_("Program to manage the boundary definitions for the "
 		"geographic region.");
@@ -321,7 +319,7 @@ int main (int argc, char *argv[])
 	parm.save->guisection  = _("Effects");
 
 	if (G_parser(argc,argv))
-		exit(1);
+		exit(EXIT_FAILURE);
 
 	projection = window.proj;
 
@@ -496,7 +494,8 @@ int main (int argc, char *argv[])
                       window.east = window.east + 0.5 * temp_window.ew_res;
                 }
 
-		G_align_window (&window, &temp_window);
+		if(flag.res_set->answer)
+		    G_align_window (&window, &temp_window);
 
 		Vect_close (&Map);
 	}
@@ -691,8 +690,8 @@ int main (int argc, char *argv[])
 		window.ns_res = x;
 	
 		if (flag.res_set->answer) {
-			window.north = 2 * x * ( (int)(window.north/2/x));
-                	window.south = 2 * x * ( (int)(window.south/2/x));
+			window.north =  ceil(window.north/x) * x ;
+			window.south = floor(window.south/x) * x ;
 		}
 	}
 
@@ -704,8 +703,8 @@ int main (int argc, char *argv[])
 		window.ew_res = x;
 		
 		if (flag.res_set->answer) {
-			window.east =  2 * x * ( (int)(window.east/2/x));
-                	window.west =  2 * x * ( (int)(window.west/2/x));
+			window.east = ceil(window.east/x) * x ;
+			window.west = floor(window.west/x) * x ;
 		}
 	}
 
@@ -717,8 +716,8 @@ int main (int argc, char *argv[])
 		window.tb_res = x;
 
 		if (flag.res_set->answer) {
-			window.top =  2 * x * ( (int)(window.top/2/x));
-                	window.bottom =  2 * x * ( (int)(window.bottom/2/x));
+			window.top = ceil(window.top/x) * x ;
+			window.bottom = floor(window.bottom/x) * x ;
 		}
 	}
 
@@ -765,7 +764,7 @@ int main (int argc, char *argv[])
 	if (print_flag)
 	    print_window (&window, print_flag, dist_flag, flag.z->answer, flag.gprint->answer, flag.bbox->answer);
 
-	exit(0);
+	exit(EXIT_SUCCESS);
 }
 
 static void die(struct Option *parm)

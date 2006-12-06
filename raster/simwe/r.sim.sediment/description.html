@@ -35,64 +35,6 @@ defining simulation time step for writing output files. This option requires
 time series flag <i>-t</i>. Files are saved with suffix   containing
 iteration number (e.g. name.500, name.1000, etc.).<br>
 <br>
-<br>
-</p><h2>OPTIONS</h2>
- The user can run this program either interactively
-or non-interactively. The program will be run non-interactively
-if the user specifies program arguments and flag settings on 
-the command line using the form:            
-<p><b>r.sim.sediment</b> [-tm] <b>elevin</b>=name <b>wdepth</b>=name
-     <b>dxin</b>=name <b>dyin</b>=name <b>detin</b>=name <b>tranin</b>=name <b>tauin</b>=name
-     <b>manin</b>=name [<b>tc</b>=name] [<b>et</b>=name] [<b>conc</b>=name] [<b>flux</b>=name] 
-     [<b>erdep</b>=name] [<b>nwalk</b>=value] [<b>niter</b>=value] [<b>outiter</b>=value] 
-     [<b> density</b> =value]  [<b>diffc</b>=value]</p>             
-<p>Alternately, the user can simply type <b> r.sim.water</b> on the command line
-without program arguments. In this case, the user will be prompted
-for parameter values using the standard GRASS parser interface.
-</p>                     
-<h3> Flag:</h3>                   
-<dl><dt><b>-t</b></dt>
-    <dd>time series output</dd>
-<dt><b> -m</b></dt>
-    <dd>multiscale (not ready yet)        
-  </dd></dl>
-<h3> Parameters:</h3>
-<dl><dt><b>elevin</b> =name</dt>
-    <dd> Use the existing elevation raster file name as input [meters or feet].</dd>
-<dt><b> dxin</b>=name</dt>
-     <dd> Use the existing raster file with x-derivatives as input [-] </dd>
-<dt><b>dyin</b>=name</dt>
-     <dd> Use the existing raster file with y-derivatives as input [-].</dd>
-<dt><b>detin</b>=name</dt>
-     <dd> Use the existing raster file with detachment capacity coefficient</dd>
-<dt><b>train</b>=name</dt>
-     <dd> Use the existing raster file with transport capacity coefficient</dd>
-<dt><b>tauin</b>=name</dt>
-     <dd> Use the existing raster file with critical shear stress </dd>
-<dt><b> manin</b>=name</dt>
-     <dd> Use the existing raster file with Manning's surface roughness n raster file [-].</dd>
-<dt><b>tc</b>=name</dt>
-      <dd>Output transport capacity raster file </dd>
-<dt><b>et</b>=name</dt>
-      <dd>Output transportcapacity limited erosion/deposition raster file </dd>
-<dt><b>conc</b>=name</dt>
-      <dd> Output sediment concentration raster file </dd>
-<dt><b> flux</b>=name</dt>
-      <dd>Output sediment flux raster file </dd>
- <dt><b>erdep</b>=name</dt>
-      <dd>Output erosion/deposition raster file </dd>
-<dt><b>nwalk</b>=val</dt>
-      <dd>Set the number of walkers to val (default:2000000)</dd>
-<dt><b>niter</b>=val</dt>
-      <dd>Set the number of iterations to val (default:1200)</dd>
- <dt><b>outiter</b>=val</dt>
-       <dd>Set the time step for  saving output maps to val (default: 300)</dd>
-<dt><b>density</b>=val</dt>
-        <dd>Set the density of output walkers to val (default: 200)</dd>
-<dt> <b>diffc</b>=val</dt> 
-<!--my old man page has diffc=0.05 - was this changed?)-->
-        <dd>Set the diffusion constant to val (default: 0.8)</dd>
-<dt><br></dt></dl>
 
 <h2>NOTES</h2>
 <!--provide a table of suggested parameters for bare soil, grass, forest, pavement
@@ -123,13 +65,23 @@ csthaxto@unity.ncsu.edu<br>
 csthaxto@unity.ncsu.edu</a></address>
 <h2>
 REFERENCES</h2>
+<P>
+<a href="http://skagit.meas.ncsu.edu/~helena/gmslab/papers/II.6.8_Mitasova_044.pdf">
+Mitasova, H., Thaxton, C., Hofierka, J., McLaughlin, R., Moore, A., Mitas L., 2004,</a>
+Path sampling method for modeling overland water flow, sediment transport
+and short term terrain evolution in Open Source GIS.
+In: C.T. Miller, M.W. Farthing, V.G. Gray, G.F. Pinder eds.,
+Computational Methods in Water Resources, Elsevier.
+<P>
 <p>
 Mitas, L., and Mitasova, H., 1998, Distributed soil erosion
 simulation for effective erosion prevention. Water Resources Research,
 34(3), 505-516.</p>
 <p>
-Neteler, M. and Mitasova, H., 2002, Open Source GIS: A GRASS GIS Approach, 
-Kluwer Academic Publishers.</p>
+<a href="http://mpa.itc.it/grasstutor/">
+Neteler, M. and Mitasova, H., 2004, Open Source GIS: A GRASS GIS Approach, Second Edition, </a>
+Kluwer International Series in Engineering and Computer Science, 773, Kluwer Academic Press / Springer,
+Boston, Dordrecht, 424 pages.
 <p><br>
 Last changed: $Date$</p>
 

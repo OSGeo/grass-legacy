@@ -15,6 +15,7 @@ main(int argc, char *argv[])
     G_gisinit(argv[0]) ;
 
     module              = G_define_module();
+    module->keywords = _("database, SQL");
     module->description = "Set user/password for driver/database.";
     
     driver = G_define_option() ;

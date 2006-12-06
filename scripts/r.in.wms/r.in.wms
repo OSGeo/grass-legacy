@@ -15,6 +15,7 @@
 
 #%Module
 #%  description: Downloads and imports data from WMS servers
+#%  keywords: wms
 #%End
 #%flag
 #% key: l

@@ -1732,7 +1732,7 @@ proc keyanimRunAndSave { BASE } {
     -in .ras_fname.frame2 -fill both
     pack .ras_fname.check1 -side right \
     -in .ras_fname.frame2 -fill both
-    pack .ras_fname.label1 .ras_fname.img1 .ras_fname.img2 \
+    pack .ras_fname.label1 .ras_fname.img2 \
 	.ras_fname.img3 .ras_fname.img4 \
     -in .ras_fname.frame3 -side left -fill both
     pack .ras_fname.label .ras_fname.norm .ras_fname.fancy -side left \

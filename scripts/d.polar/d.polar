@@ -18,7 +18,8 @@
 #############################################################################
 
 #%Module
-#% description: Draws polar diagram of angle map such as aspect or flow directions
+#%  description: Draws polar diagram of angle map such as aspect or flow directions
+#%  keywords: display, diagram
 #%End
 #%option
 #% key: map

@@ -17,6 +17,7 @@
 
 #%Module
 #%  description: Builds download requests for WMS servers.
+#%  keywords: wms
 #%End
 #%flag
 #% key: o

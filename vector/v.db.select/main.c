@@ -24,6 +24,7 @@
 #include <grass/Vect.h>
 #include <grass/dbmi.h>
 
+
 int main (int argc, char **argv)
 {
     struct GModule *module;
@@ -40,9 +41,9 @@ int main (int argc, char **argv)
     struct Map_info Map;
     char   *mapset;
     char query[1024];
-    char *buf = NULL;
 
     module = G_define_module();
+    module->keywords = _("vector");
     module->description = _("Print vector attributes");
 
     map_opt = G_define_standard_option(G_OPT_V_MAP);
@@ -116,9 +117,11 @@ int main (int argc, char **argv)
     db_append_string ( &sql, Fi->table );
 
     if (where_opt->answer) {
-       buf = G_realloc(buf,(strlen(where_opt->answer) + 7));
-       sprintf(buf, " WHERE %s", where_opt->answer);
-       db_append_string ( &sql, buf );
+	char *buf = NULL;
+	buf = G_malloc ((strlen(where_opt->answer) + 8));
+	sprintf(buf, " WHERE %s", where_opt->answer);
+	db_append_string ( &sql, buf );
+	G_free (buf);
     }
 
     if (db_open_select_cursor(driver, &sql, &cursor, DB_SEQUENTIAL) != DB_OK)
