@@ -653,12 +653,11 @@ proc gisSetWindow {} {
       	}
     }
     
+    # setting list of locations
     cd $database
-    foreach i [exec ls -a [pwd]] {
-      	if { [string compare $i "."] != 0 && \
-            [string compare $i ".."] != 0 && \
-            [file isdirectory $i] } {
-            .frame0.frameLOC.listbox insert end $i
+    foreach i [glob -directory [pwd] *] {
+      	if {[file isdirectory $i] } {
+            .frame0.frameLOC.listbox insert end [file tail $i]
       	}
     }
         
@@ -676,15 +675,14 @@ proc gisSetWindow {} {
     
     .frame0.frameLOC.listbox select set $curSelected
 
+	# setting list of owned mapsets
     cd $database
     if { [file exists $location] } \
     {
 	cd $location
-	foreach i [exec ls -a [pwd]] {
-     	    if { [string compare $i "."] != 0 && \
-        	[string compare $i ".."] != 0 && \
-        	[file isdirectory $i] && [file owned $i] } {
-        	.frame0.frameMS.listbox insert end $i
+	foreach i [glob -directory [pwd] *] {
+     	    if {[file isdirectory $i] && [file owned $i] } {
+        	.frame0.frameMS.listbox insert end [file tail $i]
       	    }
 	}
 
@@ -712,11 +710,9 @@ proc gisSetWindow {} {
            %W insert 0 $new_path
            cd $new_path
            .frame0.frameLOC.listbox delete 0 end
-           foreach i [exec ls -a [pwd]] {
-               if { [string compare $i "."] != 0 && \
-                    [string compare $i ".."] != 0 && \
-                    [file isdirectory $i] } {
-                   .frame0.frameLOC.listbox insert end $i
+           foreach i [glob -directory [pwd] *] {
+               if { [file isdirectory $i] } {
+                   .frame0.frameLOC.listbox insert end [file tail $i]
                }
            }
            .frame0.frameMS.listbox delete 0 end
@@ -731,11 +727,9 @@ proc gisSetWindow {} {
         set location [%W get [%W nearest %y]]
         cd $location
         .frame0.frameMS.listbox delete 0 end
-        foreach i [exec ls -a [pwd]] {
-           if { [string compare $i "."] != 0 && \
-                [string compare $i ".."] != 0 && \
-                [file isdirectory $i] && [file owned $i] } { 
-                .frame0.frameMS.listbox insert end $i
+        foreach i [glob -directory [pwd] *] {
+           if { [file isdirectory $i] && [file owned $i] } { 
+                .frame0.frameMS.listbox insert end [file tail $i]
            }
         }
         set mapset ""
@@ -748,11 +742,9 @@ proc gisSetWindow {} {
         set location [%W get [%W nearest %y]]
         cd $location
         .frame0.frameMS.listbox delete 0 end
-        foreach i [exec ls -a [pwd]] {
-           if { [string compare $i "."] != 0 && \
-                [string compare $i ".."] != 0 && \
-                [file isdirectory $i] && [file owned $i] } {
-                .frame0.frameMS.listbox insert end $i
+        foreach i [glob -directory [pwd] *] {
+           if { [file isdirectory $i] && [file owned $i] } {
+                .frame0.frameMS.listbox insert end [file tail $i]
            }
         }
         set mapset ""
