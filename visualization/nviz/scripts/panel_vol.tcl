@@ -111,7 +111,7 @@ proc mkvolPanel { BASE } {
     ########## make button to close panel ################################
 	set tmp [frame $BASE.f]
     button $tmp.close -text Close -command "Nv_closePanel $BASE" -bd 1
-    button $tmp.draw_current -text "DRAW CURRENT" -bd 1 -fg green3
+    button $tmp.draw_current -text "DRAW CURRENT" -bd 1 -fg darkgreen
 	bind $tmp.draw_current <1> "Nset_cancel 1"
 	bind $tmp.draw_current <B1-ButtonRelease> "Nvol_draw_one [Nget_current vol]"
 

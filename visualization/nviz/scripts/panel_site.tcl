@@ -113,7 +113,7 @@ proc mksitePanel { BASE } {
 		-command "Nv_closePanel $BASE" -anchor s -bd 1
     pack $bottom.close -side right
 
-    button $bottom.draw_current -text {DRAW CURRENT} -fg green3 -anchor s \
+    button $bottom.draw_current -text {DRAW CURRENT} -fg darkgreen -anchor s \
 		-command {Nsite_draw_one [Nget_current site]} -bd 1
 
     pack $bottom.draw_current -side left

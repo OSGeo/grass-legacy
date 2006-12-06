@@ -79,7 +79,7 @@ proc mkvectPanel { BASE } {
     set tmp [frame $BASE.f]
     button $tmp.close -text Close -command "Nv_closePanel $BASE" -anchor s -bd 1
     pack $tmp.close -side right
-    button $tmp.draw_current -text {DRAW CURRENT} -bd 1 -fg green3 \
+    button $tmp.draw_current -text {DRAW CURRENT} -bd 1 -fg darkgreen \
 		-command {Nvect_draw_one [Nget_current vect]}
     pack $tmp.draw_current -side left
     pack $tmp -side bottom -fill x -expand 1 -padx 3

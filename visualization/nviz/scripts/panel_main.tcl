@@ -64,7 +64,7 @@ proc mkmainPanel { BASE } {
 	pack [frame $BASE.redrawf.f11 -relief flat -bd 0] -side top -fill x -expand 1
 
 	#Execute buttons
-	set drawbtn [button $BASE.redrawf.f2.exec -text DRAW -bd 1 -fg "green3"]
+	set drawbtn [button $BASE.redrawf.f2.exec -text DRAW -bd 1 -fg "darkgreen"]
 	bind $drawbtn <1> "Nset_cancel 0"
 	bind $drawbtn <B1-ButtonRelease> {Ndraw_all}
 	help $drawbtn balloon "Draw selected features"

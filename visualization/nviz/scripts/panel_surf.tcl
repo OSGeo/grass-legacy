@@ -180,7 +180,7 @@ proc mksurfPanel { BASE } {
 
 	########## make button to close panel ########################################
 	button $BASE.close -text Close -bd 1 -command "Nv_closePanel $BASE"
-	button $BASE.draw_current -text "DRAW CURRENT" -bd 1 -fg green3 \
+	button $BASE.draw_current -text "DRAW CURRENT" -bd 1 -fg darkgreen \
 	-command {Nsurf_draw_one [Nget_current surf]}
 	pack $BASE.close -side right -fill y
 	pack $BASE.draw_current -side left -fill y -padx 3
