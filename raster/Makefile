@@ -50,6 +50,7 @@ SUBDIRS = \
 	r.out.arc \
 	r.out.ascii \
 	r.out.bin \
+	r.out.gdal \
 	r.out.gridatb \
 	r.out.mat \
 	r.out.mpeg \
