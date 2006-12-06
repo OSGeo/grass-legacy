@@ -138,7 +138,7 @@ int main (int argc, char *argv[])
     if( parm.target->answer && parm.outloc->answer
         && strcmp(parm.target->answer, parm.outloc->answer) == 0 )
     {
-        G_fatal_error("You have to specify a target location different from output location");
+        G_fatal_error(_("You have to specify a target location different from output location"));
     }
 
 
@@ -156,7 +156,7 @@ int main (int argc, char *argv[])
     if(flag_f->answer) {
 	int iDr;
 
-	fprintf(stdout, "Supported Formats:\n" );
+	fprintf(stdout, _("Supported Formats:\n") );
 	for( iDr = 0; iDr < GDALGetDriverCount(); iDr++ ) {
 	    GDALDriverH hDriver = GDALGetDriver(iDr);
 	    const char *pszRWFlag;
@@ -206,7 +206,7 @@ int main (int argc, char *argv[])
         && adfGeoTransform[5] < 0.0 )
     {
         if (adfGeoTransform[2] != 0.0 || adfGeoTransform[4] != 0.0)
-	    G_fatal_error("Input map is rotated - cannot import. You may use 'gdalwarp' to transform the map to North-up.");
+	    G_fatal_error(_("Input map is rotated - cannot import. You may use 'gdalwarp' to transform the map to North-up."));
 
         cellhd.north = adfGeoTransform[3];
         cellhd.ns_res = fabs(adfGeoTransform[5]);
@@ -251,8 +251,8 @@ int main (int argc, char *argv[])
 	 * to set up datum etc. */
         if ( GPJ_wkt_to_grass( &cellhd, &proj_info, 
 			       &proj_units, GDALGetProjectionRef(hDS), 1) < 0 )
-	    G_fatal_error("Unable to convert input map projection to GRASS "
-			  "format; cannot create new location.");
+	    G_fatal_error(_("Unable to convert input map projection to GRASS "
+			  "format; cannot create new location."));
 	else		  
             G_make_location( parm.outloc->answer, &cellhd,
 			     proj_info, proj_units, NULL );
@@ -262,8 +262,8 @@ int main (int argc, char *argv[])
         /* Projection only required for checking so convert non-interactively */
         if ( GPJ_wkt_to_grass( &cellhd, &proj_info, 
 			       &proj_units, GDALGetProjectionRef(hDS), 0) < 0 )
-            G_warning("Unable to convert input map projection information to "
-		      "GRASS format for checking");
+            G_warning(_("Unable to convert input map projection information to "
+		      "GRASS format for checking"));
         else
 	{
 /* -------------------------------------------------------------------- */
@@ -506,8 +506,8 @@ int main (int argc, char *argv[])
                     /* re-project target GCPs */
                     if(pj_do_proj( &(sPoints.e2[iGCP]), &(sPoints.n2[iGCP]),
                                    &iproj, &oproj) < 0)
-                        G_fatal_error("Error in pj_do_proj (can't "
-                                      "re-projection GCP %i)\n", 
+                        G_fatal_error(_("Error in pj_do_proj (can't "
+                                      "re-projection GCP %i)\n"), 
                                       iGCP);
                 }
             } /* for all GCPs*/
