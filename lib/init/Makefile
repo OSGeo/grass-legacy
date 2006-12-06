@@ -35,7 +35,9 @@ SET_DATA_PROG =
 endif
 
 default: $(ARCH_BINDIR)/$(START_UP) \
+	$(ARCH_BINDIR)/$(START_UP).bat \
 	$(ETC)/Init.sh \
+	$(ETC)/Init.bat \
 	$(ETC)/prompt.sh \
 	$(SET_DATA_PROG) \
 	$(ETC)/clean_temp$(EXE) \
@@ -70,6 +72,15 @@ $(ARCH_BINDIR)/$(START_UP): init.sh
 	grass.src > $(ARCH_BINDIR)/$(START_UP) 2>/dev/null ; true"
 	chmod a+x $(ARCH_BINDIR)/$(START_UP)
 
+$(ARCH_BINDIR)/$(START_UP).bat: init.bat grass.bat
+	@test -d $(ARCH_BINDIR) || (echo 'ARCH_DISTDIR($(ARCH_BINDIR))' not found; exit 1)
+	@test -w $(ARCH_BINDIR) || (echo '($(ARCH_BINDIR))' not writeable; exit 1)
+	rm -f $@ ; true
+	$(SHELL) -c "sed \
+	-e \"s#GISBASE_VALUE#$(RUN_GISBASE)#\" \
+	grass.bat > $@"
+	chmod a+x $@
+
 $(ETC)/Init.sh: init.sh
 	rm -f $@
 	$(SHELL) -c "sed \
@@ -80,6 +91,13 @@ $(ETC)/Init.sh: init.sh
 	-e \"s#PERL_COMMAND#$(PERL)#\" \
 	-e \"s#START_UP#$(START_UP)#\" \
 	init.sh > $@"
+	chmod +x $@
+
+$(ETC)/Init.bat: init.bat
+	rm -f $@
+	$(SHELL) -c "sed \
+	-e \"s#GRASS_VERSION_NUMBER#$(GRASS_VERSION_NUMBER)#\" \
+	$< > $@"
 	chmod +x $@
 
 $(ETC)/set_data$(EXE): $(SET_DATA)
