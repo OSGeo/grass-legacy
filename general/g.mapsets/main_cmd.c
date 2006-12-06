@@ -2,7 +2,6 @@
  *
  */
 #define MAIN
-#include <unistd.h>
 #include <string.h>
 #include <stdlib.h>
 #include <grass/gis.h>
@@ -33,40 +32,40 @@ main (int argc, char *argv[])
 
     G_gisinit (argv[0]);
 
-	module = G_define_module();
-	module->keywords = _("general");
+    module = G_define_module();
+    module->keywords = _("general");
     module->description =
-		"Modifies the user's current mapset "
-		"search path, affecting the user's access to data existing "
-		"under the other GRASS mapsets in the current location.";
+	_("Modifies the user's current mapset "
+	"search path, affecting the user's access to data existing "
+	"under the other GRASS mapsets in the current location.");
 
     opt1 = G_define_option() ;
     opt1->key        = "mapset" ;
     opt1->type       = TYPE_STRING ;
     opt1->required   = NO ;
     opt1->multiple   = YES ;
-    opt1->description= "Name(s) of existing mapset(s)" ;
+    opt1->description= _("Name(s) of existing mapset(s)");
 
     opt2 = G_define_option() ;
     opt2->key        = "addmapset" ;
     opt2->type       = TYPE_STRING ;
     opt2->required   = NO ;
     opt2->multiple   = YES ;
-    opt2->description= "Name(s) of existing mapset(s) to add to search list" ;
+    opt2->description= _("Name(s) of existing mapset(s) to add to search list");
 
     list = G_define_flag();
     list->key = 'l';
-    list->description = "list all available mapsets";
+    list->description = _("List all available mapsets");
 
     print = G_define_flag();
     print->key = 'p';
-    print->description = "print current mapset search path";
+    print->description = _("Print current mapset search path");
 
     Path[0] = '\0';
     nchoices = 0;
 
     if (G_parser(argc, argv))
-        exit(1);
+        exit(EXIT_FAILURE);
 
     if (list->answer)
     {
@@ -89,8 +88,7 @@ main (int argc, char *argv[])
 		fprintf (stderr, "\nAvailable mapsets:\n\n");
 		sprintf (command, "ls -C %s/%s 1>&2", G_gisdbase(), G_location());
 		system (command);
-		sleep (3);
-		exit(1);
+		exit(EXIT_FAILURE);
 	    }
 	    nchoices++;
 	    strcat (Path, mapset);
@@ -125,8 +123,7 @@ main (int argc, char *argv[])
 		fprintf (stderr, "\nAvailable mapsets:\n\n");
 		sprintf (command, "ls -C %s/%s 1>&2", G_gisdbase(), G_location());
 		system (command);
-		sleep (3);
-		exit(1);
+		exit(EXIT_FAILURE);
 	    }
 
 	    nchoices++;
@@ -148,10 +145,7 @@ main (int argc, char *argv[])
 
     fp = G_fopen_new ("", "SEARCH_PATH");
     if (!fp)
-    {
-        G_fatal_error ("Cannot open SEARCH_PATH for write");
-        return (-1);
-    }
+        G_fatal_error (_("Cannot open SEARCH_PATH for write"));
 
     cur_mapset = G_mapset();
 
@@ -200,5 +194,6 @@ main (int argc, char *argv[])
 DISPLAY:
     if (print->answer)
 	display_mapset_path (0);
-    return (0);
+
+    exit(EXIT_SUCCESS);
 }
