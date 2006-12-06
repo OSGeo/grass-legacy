@@ -704,13 +704,18 @@ int gsd_north_arrow (float *pos2, float len, GLuint fontbase)
 {   
     char *txt;
     float v[4][3];
-    float base[2][3];
+    float base[3][3];
     float Ntop[] = { 0.0, 0.0, 1.0 };
 
-    base[0][Z] = base[1][Z] = v[0][Z] = v[1][Z] = v[2][Z] = v[3][Z] = pos2[Z];
+    base[0][Z] = base[1][Z] = base[2][Z]  = pos2[Z];
+    v[0][Z] = v[1][Z] = v[2][Z] = v[3][Z] = pos2[Z];
+
     base[0][X] = pos2[X] - len / 16.;
     base[1][X] = pos2[X] + len / 16.;
     base[0][Y] = base[1][Y] = pos2[Y] - len / 2.;
+    base[2][X] = pos2[X];
+    base[2][Y] = pos2[Y] + .45 * len;
+
     v[0][X] = v[2][X] = pos2[X];
     v[1][X] = pos2[X] + len / 8.;
     v[3][X] = pos2[X] - len / 8.;
@@ -730,7 +735,7 @@ int gsd_north_arrow (float *pos2, float len, GLuint fontbase)
     gsd_bgnpolygon();
     glVertex3fv(base[0]);
     glVertex3fv(base[1]);
-    glVertex3fv(v[0]);
+    glVertex3fv(base[2]);
     gsd_endpolygon();
 
     gsd_bgnpolygon();
