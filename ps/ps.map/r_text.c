@@ -217,7 +217,7 @@ int read_text (char *east, char *north, char *text)
 	    if (sscanf(data, "%d%1s", &xoffset, t1) != 1 || *t1)
 	    {
 		xoffset = 0;
-		error(key, data, "illegal request");
+		error(key, data, "illegal request (text)");
 	    }
 	    continue;
 	}
@@ -228,7 +228,7 @@ int read_text (char *east, char *north, char *text)
 	    if (sscanf(data, "%d%1s", &yoffset, t1) != 1 || *t1)
 	    {
 		yoffset = 0;
-		error(key, data, "illegal request");
+		error(key, data, "illegal request (text)");
 	    }
 	    continue;
 	}
@@ -244,7 +244,7 @@ int read_text (char *east, char *north, char *text)
 	    continue ;
 	}
 
-	error(key, data, "illegal request");
+	error(key, data, "illegal request (text)");
     }
 
     /* if file doesn't exist create it and close it */
