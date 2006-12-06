@@ -1157,7 +1157,7 @@ The user can specify:
 <P>
 <B>color</B> - color of the vector lines or area boundaries;
 <P>
-<B>fcolor</B> - the area fill color.
+<B>fcolor</B> - the area fill color;
 <P>
 <B>width</B> - width of the vectors lines or area boundaries in pixels
 (accepts decimal points [floating points] as well as integers);
@@ -1181,7 +1181,8 @@ first vector is used.
 simple PostScript commands. It is similar to EPS but more limited, meaning that
 while each pattern file is a true EPS file, most EPS files are not useful as pattern
 files because they contain restricted commands. Color and width of patterns are set
-by <B>fcolor</B> and <B>width</B> until overwritten in the pattern file.
+by <B>fcolor</B> (red, green, ..., none, R:G:B) and <B>width</B> until overwritten
+in the pattern file.
 Pattern may be scaled with the <b>scale</b> command. Several standard hatching
 patterns are provided in <tt>$GISBASE/etc/paint/patterns/</tt>.
 Demonstrative images can be found on the
