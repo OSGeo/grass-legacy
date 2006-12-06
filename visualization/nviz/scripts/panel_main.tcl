@@ -219,7 +219,7 @@ proc mkmainPanel { BASE } {
 	
 	# make perspective and twist sliders
 	frame $BASE.bframe -relief flat -bd 0
-	frame $BASE.bframe.cframe -relief flat -borderwidth 0 -pady 5
+	frame $BASE.bframe.cframe -relief flat -borderwidth 0
 
 	set P [Nv_mkScale $BASE.bframe.cframe.pers h perspective 120 3 40 Nchange_persp 0]
 	set T [Nv_mkScale $BASE.bframe.cframe.tw h twist -180 180 0 Nchange_twist 0]
@@ -242,7 +242,7 @@ proc mkmainPanel { BASE } {
 
 	pack $BASE.bframe.cframe.pers $BASE.bframe.cframe.tw -side left -fill x -expand 1 -padx 3
 	pack $BASE.bframe -side top -fill x -expand 1 -padx 3
-	pack $BASE.bframe.cframe -side top 
+	pack $BASE.bframe.cframe -side top -pady 5
 
 #*** ACS_MODIFY 1.0 BEGIN ******************************************************
 	if {$Nv_(FlyThrough)} {
