@@ -105,7 +105,7 @@ static int nabors (void);
 
 /* extract_areas - trace boundaries of polygons in file */
 
-int extract_areas (int quiet)
+int extract_areas (void)
 {
   double nullVal;
 
@@ -118,14 +118,12 @@ int extract_areas (int quiet)
   /* represents the "outside", the external null values */
   assign_area(nullVal,0);
 
-  if (!quiet)
-    fprintf(stderr, _("Extracting areas ... "));
+  G_message(_("Extracting areas ... "));
 
   scan_length = read_next();
   while (read_next())			/* read rest of file, one row at */
   {					/*   a time */
-    if (!quiet)
-      G_percent(row, n_rows, 2);
+    G_percent(row, n_rows, 2);
 
     for (col = 0; col < scan_length - 1; col++)
     {
@@ -142,8 +140,7 @@ int extract_areas (int quiet)
     row++;
   }
 
-  if (!quiet)
-    G_percent(row, n_rows, 2);
+  G_percent(row, n_rows, 2);
 
   write_area(a_list,e_list,area_num,n_equiv);
 
