@@ -35,6 +35,7 @@ if {$Nv_(SiteAttr)} {source $src_boot/etc/nviz2.2/scripts/site_attr.tcl}
 proc mksitePanel { BASE } {
     global Nv_
 	global nviztxtfont
+	global site_attr
     
     catch {destroy $BASE}
     
@@ -125,6 +126,8 @@ proc mksitePanel { BASE } {
     set row1 [frame $mid1.row1]
     set row2 [frame $mid1.row2]
     set row3 [frame $mid1.row3]
+    set row4 [frame $mid1.row4]
+    set row5 [frame $mid1.row5]
     
     set szlabel [label $row1.szlabel -text "icon size" \
     	-font $nviztxtfont -fg black]
@@ -136,7 +139,9 @@ proc mksitePanel { BASE } {
     set ptsize [SpinBox $row1.sitesize -range $range \
 		-textvariable size \
 		-modifycmd {change_site_size $size} \
+		-command {change_site_size $size} \
 		-width 5]
+		
 		
 	$ptsize setvalue @$startindex
 
@@ -165,15 +170,18 @@ proc mksitePanel { BASE } {
    	pack $rb1 -side left
    	pack $rb2 $surflist -side left 
 
+    pack $row1 $row2 $row3 $row4 $row5 -anchor w -side top -expand no -fill none -pady 2
+    pack $mid1 -side top -padx 3
     
 	# frame for thematic point mapping
-    set row4 [frame $mid1.row4]
+	
+	set site_attr(FIELD_ATTR_PANEL) 0
     
-    pack $row1 $row2 $row3 $row4 -anchor w -side top -expand no -fill none -pady 2
-    #pack $row3 -side left -fill y -expand 0
-    pack $mid1 -side top -padx 3
-
-	if {$Nv_(SiteAttr)} {site_attr_gui $row4 $bottom $curr}
+	checkbutton $row4.themechk -text "thematic mapping for vector points" \
+		-variable site_attr(FIELD_ATTR_PANEL) -command "site_attr_gui $row5 $bottom $curr" \
+		-offvalue 0 -onvalue 1
+	pack $row4.themechk -side left -anchor nw
+    
 
     return $panel
 }
@@ -323,28 +331,36 @@ proc Nviz_site_load { file_hook } {
 
 proc change_marker {} {
     global Nv_
+	global Nauto_draw
     
     set curr [Nget_current site]
     if {0 != $curr} {
 		Nsite$curr set_att marker $Nv_(siteshape)
+		if {$Nauto_draw == 1} {Ndraw_all}
     }
 }
 
 proc change_site_mode {} {
     global Nv_
+	global Nauto_draw
     
     set curr [Nget_current site]
     if {0 != $curr} {
 		if {![Nsite$curr set_att display $Nv_(sitedisplay)]} then {
 			set Nv_(sitedisplay) surfdisp
+			if {$Nauto_draw == 1} {Ndraw_all}
 		}
+		if {$Nauto_draw == 1} {Ndraw_all}
     }
 }
 
 proc change_site_size {size} {
+	global Nauto_draw
+	
     set curr [Nget_current site]
-    	if {0 != $curr} {
-	Nsite$curr set_att size $size
+	if {0 != $curr} {
+		Nsite$curr set_att size $size
+		if {$Nauto_draw == 1} {Ndraw_all}
     }
 }
 
