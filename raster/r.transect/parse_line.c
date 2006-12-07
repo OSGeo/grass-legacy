@@ -1,5 +1,6 @@
 #include <math.h>
 #include <grass/gis.h>
+#include <string.h>
 
 #define PI M_PI
 #define Radians(x) ((x) * PI/180.0)
@@ -25,16 +26,26 @@ parse_line (char *key, char **s, double *e1, double *n1, double *e2, double *n2,
 
     if(err)
     {
-	fprintf (stderr, "%s=", key);
-	fprintf (stderr, "%s%s%s,",
+        char warningbuff[256];
+        char partbuf[64];
+	sprintf (warningbuff, "%s=", key);
+	sprintf (partbuf, "%s%s%s,",
 	    err&1?"<":"", s[0], err&1?">":"");
-	fprintf (stderr, "%s%s%s,",
+	strcat (warningbuff,partbuf);
+
+	sprintf (partbuf, "%s%s%s,",
 	    err&2?"<":"", s[1], err&2?">":"");
-	fprintf (stderr, "%s%s%s,",
+	strcat (warningbuff,partbuf);
+
+	sprintf (partbuf, "%s%s%s,",
 	    err&4?"<":"", s[2], err&4?">":"");
-	fprintf (stderr, "%s%s%s",
+	strcat (warningbuff,partbuf);
+
+	sprintf (partbuf, "%s%s%s",
 	    err&8?"<":"", s[3], err&8?">":"");
-	fprintf (stderr, " ** invalid values(s) **\n");
+	strcat (warningbuff,partbuf);
+
+	G_warning ("%s %s",warningbuff," invalid values(s)");
 	return err;
     }
 
