@@ -258,6 +258,7 @@ int Ndraw_Narrow_cmd(Nv_data * data, Tcl_Interp * interp,       /* Current inter
 {
     float coords[3];
     double len;
+    int arrow_color, text_color;
 
     if (argc != 5)
         return (TCL_ERROR);
@@ -265,10 +266,13 @@ int Ndraw_Narrow_cmd(Nv_data * data, Tcl_Interp * interp,       /* Current inter
     coords[1] = (int) atof(argv[2]); /* Y */
     coords[2] = (int) atof(argv[3]); /* Z */
     len = (atof(argv[4]));
+    arrow_color = (int) tcl_color_to_int(argv[5]);
+    text_color  = (int) tcl_color_to_int(argv[6]);
 
     FontBase = load_font(TOGL_BITMAP_HELVETICA_18);
     if (FontBase)
-            gsd_north_arrow(coords, (float) len, FontBase);
+            gsd_north_arrow(coords, (float) len, FontBase,
+				arrow_color, text_color);
      else
             fprintf(stderr, "Unable to load font\n");
 
@@ -288,6 +292,7 @@ int Ndraw_ScaleBar_cmd(Nv_data * data, Tcl_Interp * interp, /* Current interpret
 {
     float coords[3];
     double len;
+    int bar_color, text_color;
 
     if (argc != 5)
 	return (TCL_ERROR);
@@ -295,17 +300,20 @@ int Ndraw_ScaleBar_cmd(Nv_data * data, Tcl_Interp * interp, /* Current interpret
     coords[1] = (int) atof(argv[2]); /* Y */
     coords[2] = (int) atof(argv[3]); /* Z */
     len = (atof(argv[4]));
+    bar_color  = (int) tcl_color_to_int(argv[5]);
+    text_color = (int) tcl_color_to_int(argv[6]);
 
     FontBase = load_font(TOGL_BITMAP_HELVETICA_18);
     if (FontBase)
-	gsd_scalebar(coords, (float) len, FontBase);
+	gsd_scalebar(coords, (float) len, FontBase,
+			bar_color, text_color);
     else
 	fprintf(stderr, "Unable to load font\n");
 
     return (TCL_OK);
 }
 
-            
+
 
 int Ndraw_line_on_surf_cmd(Nv_data * data, Tcl_Interp * interp,	/* Current interpreter. */
 			   int argc,	/* Number of arguments. */

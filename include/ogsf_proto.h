@@ -491,11 +491,11 @@ void gsd_draw_asterisk(float *, unsigned long, float);
 void gsd_draw_gyro(float *, unsigned long, float);
 void gsd_3dcursor(float *);
 void dir_to_slope_aspect(float *, float *, float *, int);
-int gsd_north_arrow (float *, float, GLuint);
+int gsd_north_arrow (float *, float, GLuint, unsigned long, unsigned long);
 int gsd_arrow(float *, unsigned long, float, float *, float, geosurf *);
 int gsd_arrow_onsurf(float *, float *, unsigned long, int, geosurf *);
 void gsd_3darrow(float *, unsigned long, float, float, float *, float);
-int gsd_scalebar (float *, float, GLuint);
+int gsd_scalebar (float *, float, GLuint, unsigned long, unsigned long);
 void primitive_cone(unsigned long);
 void primitive_cylinder(unsigned long, int);
 
