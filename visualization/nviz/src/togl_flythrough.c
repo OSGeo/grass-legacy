@@ -4,8 +4,8 @@
  *
  * AUTHOR(S):    ACS - Massimo Cuomo - m.cuomo at acsys.it
  *
- * PURPOSE:		 "Immersive" navigation by means of mouse buttons and movement
- * 				 In conjunction with flythrough.tcl
+ * PURPOSE:	"Immersive" navigation by means of mouse buttons and movement
+ * 		 In conjunction with flythrough.tcl
  *
  * COPYRIGHT:    (C) 2005 by the ACS / GRASS Development Team
  *
@@ -16,19 +16,19 @@
  *
  * changes from 0.99
  * 09/02/05 0.991 solved drawing at each frame in do_navigation() when TOGL_FLY_ORBIT
- *					and buttonAny now works fine
+ *		and buttonAny now works fine
  * 23/02/05 0.992 now "orbit" flythrough works also when kanimator plays
- *				  only one line in file nviz_init.c must be added
- * 					(a call to togl_flythrough_init_tcl)
- *				  Function Ndraw_all_together_cmd overrides tcl command Ndraw_all
- *				  New Tcl commands Nset/get_viewdir are defined here
+ *		only one line in file nviz_init.c must be added
+ * 		(a call to togl_flythrough_init_tcl)
+ *		Function Ndraw_all_together_cmd overrides tcl command Ndraw_all
+ *		New Tcl commands Nset/get_viewdir are defined here
  * 02/03/05 0.993 added flythrough_postdraw_cb mechanism to call registered functions
- *					after drawing (here and in quick_draw.c)
+ *		after drawing (here and in quick_draw.c)
  **************************************************************/
 #if 0
-********************************************************************************
-*** flythrough "README" ********************************************************
-********************************************************************************
+****************************************************************************
+*** flythrough "README" ****************************************************
+****************************************************************************
 
 New (new) and modified (mod) files for flythrough implementation:
 
@@ -775,7 +775,7 @@ int Ndraw_all_together_cmd(Nv_data * data, Tcl_Interp * interp,	/* Current inter
 {
 	const char *buf_surf, *buf_vect, *buf_site, *buf_vol;
 	const char *buf_north_arrow, *arrow_x, *buf_label, *buf_legend;
-	const char *buf_fringe;
+	const char *buf_fringe, *buf_scalebar, *bar_x;
 	const char* buf_is_drawing = Tcl_GetVar(interp, "is_drawing", TCL_GLOBAL_ONLY);
 	const char* EMPTYSTRING="";
 	if (buf_is_drawing && atoi(buf_is_drawing))
@@ -787,15 +787,17 @@ int Ndraw_all_together_cmd(Nv_data * data, Tcl_Interp * interp,	/* Current inter
 	GS_clear(data->BGcolor);
 	GS_ready_draw();
 
-	buf_surf = Tcl_GetVar(interp, "surface", TCL_GLOBAL_ONLY);
-	buf_vect = Tcl_GetVar(interp, "vector", TCL_GLOBAL_ONLY);
-	buf_site = Tcl_GetVar(interp, "sites", TCL_GLOBAL_ONLY);
-	buf_vol = Tcl_GetVar(interp, "volume", TCL_GLOBAL_ONLY);
+	buf_surf     = Tcl_GetVar(interp, "surface", TCL_GLOBAL_ONLY);
+	buf_vect     = Tcl_GetVar(interp, "vector", TCL_GLOBAL_ONLY);
+	buf_site     = Tcl_GetVar(interp, "sites", TCL_GLOBAL_ONLY);
+	buf_vol      = Tcl_GetVar(interp, "volume", TCL_GLOBAL_ONLY);
 	buf_north_arrow = Tcl_GetVar(interp, "n_arrow", TCL_GLOBAL_ONLY);
-        arrow_x = Tcl_GetVar(interp, "n_arrow_x", TCL_GLOBAL_ONLY);
-        buf_label = Tcl_GetVar(interp, "labels", TCL_GLOBAL_ONLY);
-        buf_legend = Tcl_GetVar(interp, "legend", TCL_GLOBAL_ONLY);
-        buf_fringe = Tcl_GetVar(interp, "fringe", TCL_GLOBAL_ONLY);
+        arrow_x      = Tcl_GetVar(interp, "n_arrow_x", TCL_GLOBAL_ONLY);
+        buf_label    = Tcl_GetVar(interp, "labels", TCL_GLOBAL_ONLY);
+        buf_legend   = Tcl_GetVar(interp, "legend", TCL_GLOBAL_ONLY);
+        buf_fringe   = Tcl_GetVar(interp, "fringe", TCL_GLOBAL_ONLY);
+	buf_scalebar = Tcl_GetVar(interp, "scalebar", TCL_GLOBAL_ONLY);
+	bar_x        = Tcl_GetVar(interp, "scalebar_x", TCL_GLOBAL_ONLY);
 
 	if (buf_surf && atoi(buf_surf) == 1)
 		surf_draw_all_together(data, interp);
@@ -805,48 +807,74 @@ int Ndraw_all_together_cmd(Nv_data * data, Tcl_Interp * interp,	/* Current inter
 		site_draw_all_together(data, interp);
 	if (buf_vol  &&atoi(buf_vol) == 1)
 	    	vol_draw_all_cmd(data, interp, argc, argv);
-	
+
 	GS_done_draw();
-        GS_set_draw(GSD_BACK);
+	GS_set_draw(GSD_BACK);
 
-        if ( buf_north_arrow == NULL ) {
-	 buf_north_arrow = EMPTYSTRING; 
-	}
-        if ( arrow_x == NULL ) {
-	 arrow_x = EMPTYSTRING; 
-	}
-        if ( buf_fringe == NULL ) {
-	 buf_fringe = EMPTYSTRING; 
-	}
-        if ( buf_label == NULL ) {
-	 buf_label = EMPTYSTRING; 
-	}
-        if ( buf_legend == NULL ) {
-	 buf_legend = EMPTYSTRING; 
-	}
-        
+	if ( buf_north_arrow == NULL )
+	    buf_north_arrow = EMPTYSTRING; 
+
+	if ( arrow_x == NULL )
+	    arrow_x = EMPTYSTRING; 
+
+	if ( buf_scalebar == NULL )
+	    buf_scalebar = EMPTYSTRING; 
+
+	if ( bar_x == NULL )
+	    bar_x = EMPTYSTRING; 
+
+	if ( buf_fringe == NULL )
+	    buf_fringe = EMPTYSTRING; 
+
+	if ( buf_label == NULL )
+	    buf_label = EMPTYSTRING; 
+
+	if ( buf_legend == NULL )
+	    buf_legend = EMPTYSTRING; 
+
+
         /* Draw decorations */
-        
+
 	/* North Arrow */
-        if (atoi(buf_north_arrow) == 1 && atoi(arrow_x) != 999 ) {
-                const char *arrow_y, *arrow_z, *arrow_len;
-                float coords[3], len;
-		int arrow_clr, text_clr;
+	if (atoi(buf_north_arrow) == 1 && atoi(arrow_x) != 999 ) {
+	    const char *arrow_y, *arrow_z, *arrow_len;
+	    float coords[3], len;
+	    int arrow_clr, text_clr;
 
-                arrow_y = Tcl_GetVar(interp, "n_arrow_y", TCL_GLOBAL_ONLY);
-                arrow_z = Tcl_GetVar(interp, "n_arrow_z", TCL_GLOBAL_ONLY);
-                arrow_len = Tcl_GetVar(interp, "n_arrow_size", TCL_GLOBAL_ONLY);
-		arrow_clr = (int) tcl_color_to_int(Tcl_GetVar(interp, "arw_clr", TCL_GLOBAL_ONLY));
-		text_clr = (int) tcl_color_to_int(Tcl_GetVar(interp, "text_clr", TCL_GLOBAL_ONLY));
-                coords[0] = atoi(arrow_x);
-                coords[1] = atoi(arrow_y);
-                coords[2] = atoi(arrow_z);
-                len = atof(arrow_len);
+	    arrow_y = Tcl_GetVar(interp, "n_arrow_y", TCL_GLOBAL_ONLY);
+	    arrow_z = Tcl_GetVar(interp, "n_arrow_z", TCL_GLOBAL_ONLY);
+	    arrow_len = Tcl_GetVar(interp, "n_arrow_size", TCL_GLOBAL_ONLY);
+	    arrow_clr = (int) tcl_color_to_int(Tcl_GetVar(interp, "arw_clr", TCL_GLOBAL_ONLY));
+	    text_clr = (int) tcl_color_to_int(Tcl_GetVar(interp, "arw_text_clr", TCL_GLOBAL_ONLY));
+	    coords[0] = atoi(arrow_x);
+	    coords[1] = atoi(arrow_y);
+	    coords[2] = atoi(arrow_z);
+	    len = atof(arrow_len);
 
-                FontBase = load_font(TOGL_BITMAP_HELVETICA_18);
-                gsd_north_arrow(coords, len, FontBase, arrow_clr, text_clr);
-        }
-        
+	    FontBase = load_font(TOGL_BITMAP_HELVETICA_18);
+	    gsd_north_arrow(coords, len, FontBase, arrow_clr, text_clr);
+	}
+
+	/* Scale Bar */
+	if (atoi(buf_scalebar) == 1 && atoi(bar_x) != 999 ) {
+	    const char *bar_y, *bar_z, *bar_len;
+	    float coords[3], len;
+	    int bar_clr, text_clr;
+
+	    bar_y = Tcl_GetVar(interp, "scalebar_y", TCL_GLOBAL_ONLY);
+	    bar_z = Tcl_GetVar(interp, "scalebar_z", TCL_GLOBAL_ONLY);
+	    bar_len = Tcl_GetVar(interp, "scalebar_size", TCL_GLOBAL_ONLY);
+	    bar_clr = (int) tcl_color_to_int(Tcl_GetVar(interp, "bar_clr", TCL_GLOBAL_ONLY));
+	    text_clr = (int) tcl_color_to_int(Tcl_GetVar(interp, "bar_text_clr", TCL_GLOBAL_ONLY));
+	    coords[0] = atoi(bar_x);
+	    coords[1] = atoi(bar_y);
+	    coords[2] = atoi(bar_z);
+	    len = atof(bar_len);
+
+	    FontBase = load_font(TOGL_BITMAP_HELVETICA_18);
+	    gsd_scalebar(coords, len, FontBase, bar_clr, bar_clr);
+	}
+
         /* fringe */
         if (atoi(buf_fringe) == 1) {
                 const char *fringe_ne, *fringe_nw, *fringe_se, *fringe_sw;

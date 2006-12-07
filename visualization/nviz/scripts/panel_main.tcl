@@ -36,10 +36,12 @@ proc mkmainPanel { BASE } {
 	global XY
 	#Globals for draw features
 	global surface vector sites volume
-	global legend labels n_arrow 
+	global legend labels n_arrow scalebar
 	global fringe fringe_elev fringe_color
 	global n_arrow_x n_arrow_y n_arrow_z
-	global arw_clr text_clr
+	global arw_clr arw_text_clr
+	global scalebar_x scalebar_y scalebar_z
+	global bar_clr bar_text_clr
 	global fringe_nw fringe_ne fringe_sw fringe_se
 	global Nauto_draw
 
@@ -123,6 +125,8 @@ proc mkmainPanel { BASE } {
 		 -onvalue 1 -offvalue 0 -variable labels
 	$BASE.redrawf.f11.m2.m add checkbutton -label "North Arrow" \
 		 -onvalue 1 -offvalue 0 -variable n_arrow
+	$BASE.redrawf.f11.m2.m add checkbutton -label "Scale Bar" \
+		 -onvalue 1 -offvalue 0 -variable scalebar
 	$BASE.redrawf.f11.m2.m add checkbutton -label "Fringe" \
 		 -onvalue 1 -offvalue 0 -variable fringe
 
@@ -138,6 +142,7 @@ proc mkmainPanel { BASE } {
 	set legend 0
 	set labels 0
 	set n_arrow 0
+	set scalebar 0
 	set fringe 0
 	set fringe_color #AAAAAA
 
@@ -146,7 +151,14 @@ proc mkmainPanel { BASE } {
 	set n_arrow_y 999
 	set n_arrow_z 999
 	set arw_clr #000000
-	set text_clr #000000
+	set arw_text_clr #FFFFFF
+
+	#Set Scalebar defaults
+	set scalebar_x 999
+	set scalebar_y 999
+	set scalebar_z 999
+	set bar_clr #000000
+	set bar_text_clr #FFFFFF
 
 	#pack frames
 	pack [frame $BASE.midt -relief flat -bd 0] -side top -expand 1 -fill x -padx 5 -pady 5
