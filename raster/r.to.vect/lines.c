@@ -59,14 +59,13 @@ static struct COOR *start_line(int);
 static struct COOR *get_ptr(void);
 
 
-int extract_lines (int quiet)
+int extract_lines (void)
 {
 	row = -3;
 	read_next();
 	read_next();
 
-	if (!quiet)
-		fprintf(stderr, _("Extracting lines ... "));
+        G_message( _("Extracting lines ... "));
 
 	switch (data_type) {
 		case CELL_TYPE:
@@ -78,8 +77,7 @@ int extract_lines (int quiet)
 				CELL* t = &((CELL*)top)[1];
 				CELL* b = &((CELL*)bottom)[1];
 
-				if (!quiet)
-					G_percent(rows, n_rows, 2);
+                                G_percent(rows, n_rows, 2);
 
 				for (col = 1; col < n_cols - 1; col++,t++,m++,b++) {
 					m = &((CELL*)middle)[col];
@@ -102,8 +100,7 @@ int extract_lines (int quiet)
 				rows++;
 			}
 
-			if (!quiet)
-				G_percent(rows, n_rows, 2);
+                        G_percent(rows, n_rows, 2);
 			break;
 		}
 		case FCELL_TYPE:
@@ -115,8 +112,7 @@ int extract_lines (int quiet)
 				FCELL* t = &((FCELL*)top)[1];
 				FCELL* b = &((FCELL*)bottom)[1];
 
-				if (!quiet)
-					G_percent(rows, n_rows, 2);
+                                G_percent(rows, n_rows, 2);
 
 				for (col = 1; col < n_cols - 1; col++,t++,m++,b++) {
 					m = &((FCELL*)middle)[col];
@@ -139,8 +135,7 @@ int extract_lines (int quiet)
 				rows++;
 			}
 
-			if (!quiet)
-				G_percent(rows, n_rows, 2);
+                        G_percent(rows, n_rows, 2);
 			break;
 		}
 		case DCELL_TYPE:
@@ -152,8 +147,7 @@ int extract_lines (int quiet)
 				DCELL* t = &((DCELL*)top)[1];
 				DCELL* b = &((DCELL*)bottom)[1];
 
-				if (!quiet)
-					G_percent(rows, n_rows, 2);
+                                G_percent(rows, n_rows, 2);
 
 				for (col = 1; col < n_cols - 1; col++,t++,m++,b++) {
 					m = &((DCELL*)middle)[col];
@@ -175,8 +169,7 @@ int extract_lines (int quiet)
 				rows++;
 			}
 
-			if (!quiet)
-				G_percent(rows, n_rows, 2);
+                        G_percent(rows, n_rows, 2);
 			break;
 		}
 	}

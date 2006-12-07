@@ -104,14 +104,14 @@ struct equiv_table
 
 /* lines.c */
 int alloc_lines_bufs(int);
-int extract_lines(int);
+int extract_lines(void);
 
 /* lines_io.c */
 int write_line(struct COOR *seed);
 
 /* areas.c */
 int alloc_areas_bufs(int);
-int extract_areas(int);
+int extract_areas(void);
 int more_equivs(void);
 
 /* areas_io.c */
@@ -119,7 +119,7 @@ int write_boundary(struct COOR *seed);
 int write_area(struct area_table *, struct equiv_table *, int, int);
     
 /* points.c */
-int extract_points(int, int);
+int extract_points(int);
 
 /* util.c */
 struct COOR *move(struct COOR *);
