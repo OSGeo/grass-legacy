@@ -37,7 +37,6 @@ global Nv_
 
 proc mkfringePanel { BASE } {
     global Nv_
-    global n_arrow_size n_arrow
 	global fringe_nw fringe_ne fringe_sw fringe_se
 	global fringe_color fringe_elev
 
@@ -138,31 +137,6 @@ proc draw_fringe {} {
 		
 } 
 
-###########################
-proc place_narrow {W x y} {
-
-global Nv_ n_arrow n_arrow_size
-global n_arrow_x n_arrow_y n_arrow_z
-
-set y [expr $Nv_(height) - $y]
-
-#Draw North Arrow at selected point
-    set curr [Nget_current surf]
-    if {$curr} {
-        set location [Nset_Narrow $x $y $curr $n_arrow_size]
-        set n_arrow_x [lindex $location 0]
-        set n_arrow_y [lindex $location 1]
-        set n_arrow_z [lindex $location 2]
-
-        Ndraw_Narrow $n_arrow_x $n_arrow_y $n_arrow_z $n_arrow_size
-        #set chuckbutton
-        set n_arrow 1
-    }
-
-#remove canvas binding
-    bind $W <Button> {}
-
-}
 
 
 
