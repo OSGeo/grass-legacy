@@ -831,17 +831,20 @@ int Ndraw_all_together_cmd(Nv_data * data, Tcl_Interp * interp,	/* Current inter
         if (atoi(buf_north_arrow) == 1 && atoi(arrow_x) != 999 ) {
                 const char *arrow_y, *arrow_z, *arrow_len;
                 float coords[3], len;
+		int arrow_clr, text_clr;
 
                 arrow_y = Tcl_GetVar(interp, "n_arrow_y", TCL_GLOBAL_ONLY);
                 arrow_z = Tcl_GetVar(interp, "n_arrow_z", TCL_GLOBAL_ONLY);
                 arrow_len = Tcl_GetVar(interp, "n_arrow_size", TCL_GLOBAL_ONLY);
+		arrow_clr = (int) tcl_color_to_int(Tcl_GetVar(interp, "arw_clr", TCL_GLOBAL_ONLY));
+		text_clr = (int) tcl_color_to_int(Tcl_GetVar(interp, "text_clr", TCL_GLOBAL_ONLY));
                 coords[0] = atoi(arrow_x);
                 coords[1] = atoi(arrow_y);
                 coords[2] = atoi(arrow_z);
                 len = atof(arrow_len);
 
                 FontBase = load_font(TOGL_BITMAP_HELVETICA_18);
-                gsd_north_arrow(coords, len, FontBase);
+                gsd_north_arrow(coords, len, FontBase, arrow_clr, text_clr);
         }
         
         /* fringe */
