@@ -94,6 +94,7 @@
 #include <math.h>
 #include <string.h>
 #include <stdio.h>
+#include <grass/gis.h>
 #include <grass/glocale.h>
 #include "solpos00.h"
 
