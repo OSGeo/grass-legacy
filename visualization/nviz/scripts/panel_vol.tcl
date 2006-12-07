@@ -89,6 +89,7 @@ proc mkvolPanel { BASE } {
 	set sbres [SpinBox $tmp.sbres -range {1 100 1}\
 		-textvariable res \
 		-modifycmd {all_set_res $viztype $res} \
+		-command {all_set_res $viztype $res} \
 		-width 5 -editable 1 \
 		-entrybg white]
 
@@ -111,7 +112,7 @@ proc mkvolPanel { BASE } {
     ########## make button to close panel ################################
 	set tmp [frame $BASE.f]
     button $tmp.close -text Close -command "Nv_closePanel $BASE" -bd 1
-    button $tmp.draw_current -text "DRAW CURRENT" -bd 1 -fg darkgreen
+    button $tmp.draw_current -text "DRAW CURRENT" -bd 1 -fg green3
 	bind $tmp.draw_current <1> "Nset_cancel 1"
 	bind $tmp.draw_current <B1-ButtonRelease> "Nvol_draw_one [Nget_current vol]"
 
@@ -126,14 +127,15 @@ proc mkvolPanel { BASE } {
 # procedures to set polygon resolution and draw mode
 
 proc all_set_res {viztype res} {
+	global Nauto_draw
 
-	
     set curr [Nget_current vol]
     if {$curr == 0} {return}
 
 	if {$viztype=="isosurf"} {set vtype "isosurf"}
 	if {$viztype=="slice"} {set vtype "slice"}
     Nvol$curr $vtype set_res $res $res $res
+	if {$Nauto_draw == 1} {Ndraw_all}
  
 }
 
@@ -571,14 +573,24 @@ proc mkSlicePosScale { S name title BASE } {
 		-variable Nv_(SlicePos$name) -from 0.0 -to 1.0 -resolution 0 \
 		-label $title -width 10
 
-	bind $S.s <B1-ButtonRelease> "slice_set_pos $BASE"
-	bind $S.s <B1-ButtonRelease> "catch {+ if {$Nauto_draw == 1} {Nset_cancel 0; Ndraw_all}}"
+	bind $S.s <B1-ButtonRelease> "slice_set_pos $BASE; vdodraw"
 	bind $S.s <B1-Motion> "slice_set_pos $BASE; Nquick_draw"
 
 	pack $S.s -fill both -side left -expand 1
 
 	return $S
 }
+
+proc vdodraw {} {
+	# calls redraw for volumes
+	global Nauto_draw
+	
+	if {$Nauto_draw == 1} {
+		Nset_cancel 0
+		Ndraw_all
+	} 
+}
+
 
 # Enable slice position scale widget
 proc enableSlicePosScale { S name value} {
