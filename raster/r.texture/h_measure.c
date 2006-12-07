@@ -669,7 +669,7 @@ vector (int nl, int nh)
 
   v = (float *) G_malloc ((unsigned) (nh - nl + 1) * sizeof (float));
   if (!v)
-    fprintf (stderr, "memory allocation failure"), exit (1);
+    G_fatal_error(_("memory allocation failure")), exit (EXIT_FAILURE);
   return v - nl;
 }
 
@@ -685,7 +685,7 @@ matrix (int nrl, int nrh, int ncl, int nch)
   /* allocate pointers to rows */
   m = (float **) G_malloc ((unsigned) (nrh - nrl + 1) * sizeof (float *));
   if (!m)
-    fprintf (stderr, "memory allocation failure"), exit (1);
+    G_fatal_error(_("memory allocation failure")), exit (EXIT_FAILURE);
   m -= ncl;
 
   /* allocate rows and set pointers to them */
@@ -693,7 +693,7 @@ matrix (int nrl, int nrh, int ncl, int nch)
   {
     m[i] = (float *) G_malloc ((unsigned) (nch - ncl + 1) * sizeof (float));
     if (!m[i])
-      fprintf (stderr, "memory allocation failure"), exit (2);
+        G_fatal_error(_("memory allocation failure")), exit (EXIT_FAILURE);
     m[i] -= ncl;
   }
   /* return pointer to array of pointers to rows */
@@ -874,8 +874,8 @@ hessenberg (float **a, int n, float wr[], float wi[])
 	else
 	{
 	  if (its == 30)
-	    fprintf (stderr,
-		  "Too many iterations to required to find %s\ngiving up\n",
+	    G_fatal_error(
+		  _("Too many iterations to required to find %s\ngiving up"),
 		     F14), exit (1);
 	  if (its == 10 || its == 20)
 	  {
