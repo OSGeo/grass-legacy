@@ -28,7 +28,6 @@
  *			[aspect=name] output=name
  * where:
  *   Flag:
- *	-v   		Run verbosely
  *   Raster Maps:
  *      model   	1-13: the standard fuel models,
  *			all other numbers: same as barriers;
@@ -152,7 +151,6 @@ main (int argc, char *argv[])
 
 	/*other local variables*/	
 	int col, row,
-	verbose,
 	spotting,
 	model, class,
 	fuel_fd=0,
@@ -192,6 +190,7 @@ main (int argc, char *argv[])
 				*output;
 	} parm;
 
+        /* please, remove before GRASS 7 released */
 	struct Flag *flag1, *flag2;
 	struct GModule *module;
 
@@ -276,6 +275,7 @@ main (int argc, char *argv[])
 	parm.output->gisprompt  = "new,cell,raster" ;
 	parm.output->description= _("Name of raster map to contain results (several new layers)");
 
+        /* please, remove before GRASS 7 released */
 	flag1 = G_define_flag();
 	flag1->key = 'v';
 	flag1->description = _("Run verbosely");
@@ -288,7 +288,13 @@ main (int argc, char *argv[])
 	if (G_parser(argc, argv))
 		exit(EXIT_FAILURE);
 
-	verbose = flag1->answer;
+        /* please, remove before GRASS 7 released */
+        if(flag1->answer) {
+            putenv("GRASS_VERBOSE=3");
+            G_warning(_("The '-v' flag is superseded and will be removed "
+                "in future. Please use '--verbose' instead."));
+        }
+
 	spotting = flag2->answer;
 
 	/*  Check if input layers exists in data base  */   
@@ -548,12 +554,10 @@ main (int argc, char *argv[])
 		}
 
 	/*major computation: compute ROSs one cell a time*/
-	if (verbose)
-	    fprintf (stderr, "Percent Completed ... ");
+        G_message (_("Percent Completed ... "));
 
 	for ( row=0 ; row < nrows ; row++ ) {
-		if (verbose)
-			G_percent (row, nrows, 2);
+                G_percent (row, nrows, 2);
                 if (G_get_map_row(fuel_fd, fuel, row)<0)
                         G_fatal_error("cannot get map row: %d!", row);
                 if (parm.mois_1h->answer) 
@@ -720,8 +724,7 @@ main (int argc, char *argv[])
 		if (spotting)
 			G_put_raster_row(spotdist_fd,spotdist, CELL_TYPE);
 	} 
-	if (verbose)
-	    G_percent (row, nrows, 2);
+        G_percent (row, nrows, 2);
 
 	G_close_cell(fuel_fd);  	 
 	if (parm.mois_1h->answer)	G_close_cell(mois_1h_fd);

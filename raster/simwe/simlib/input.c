@@ -62,7 +62,7 @@ int input_data()
       G_fatal_error("failed to guess format");
 
     site = G_site_new_struct (cc, nn, ii, dd);
-    fprintf (stderr, "Reading sites map (%s) ...\n\n\n", sfile);
+    G_message("Reading sites map (%s) ...", sfile);
 
 /*        if (dd==0)
     {

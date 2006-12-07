@@ -469,7 +469,7 @@ int output_data(int tt, double ft)
     mapst = G_find_file ("cell", depth, "");
     if (mapst == NULL)
     {
-      fprintf (stderr, "file [%s] not found\n", depth);
+      G_warning("File [%s] not found", depth);
       return -1;
     }
     G_short_history (depth, type, &hist);

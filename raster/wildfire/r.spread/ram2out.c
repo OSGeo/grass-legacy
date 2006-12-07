@@ -22,12 +22,10 @@ ram2out (void)
 	north = G_row_to_northing (0.5, &window);
 	west = G_col_to_easting (0.5, &window);
 	/*  Copy maps in ram to output maps, casting into integers */
-	if (verbose)
-	    fprintf (stderr, "\nWriting output: %s, x_output: %s, y_output: %s ... ", out_layer, x_out_layer, y_out_layer);
+        G_message("Writing output: %s, x_output: %s, y_output: %s ... ", out_layer, x_out_layer, y_out_layer);
 	for ( row=0 ; row<nrows; row++ ) {
 		for ( col=0 ; col<ncols; col++ ) {
-			if (verbose)
-			    G_percent (row, nrows, 2);
+                        G_percent (row, nrows, 2);
 			*(cell + col) = (int)DATA(map_out, row, col);
 			if (x_out) {
 				if (DATA(map_x_out, row, col)==0)
@@ -44,6 +42,5 @@ ram2out (void)
 		if (x_out)	G_put_raster_row(x_fd,x_cell, CELL_TYPE);
 		if (y_out)	G_put_raster_row(y_fd,y_cell, CELL_TYPE);
 	}
-	if (verbose)
-	    G_percent (row, nrows, 2);
+        G_percent (row, nrows, 2);
 }

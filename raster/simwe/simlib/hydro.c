@@ -153,7 +153,7 @@ printf("\n ");
 	    if (iter1 == i) {
 		nfiterw = i / iterout + 10;
 		nfiterh = i / iterout + 40;
-  fprintf(stderr,"\n iblock=%d i=%d miter=%d nwalk=%d nwalka=%d",iblock,i,miter,nwalk,nwalka);
+                G_message("iblock=%d i=%d miter=%d nwalk=%d nwalka=%d",iblock,i,miter,nwalk,nwalka);
 	    }
 	
 	    if (nwalka == 0 && i > 1) goto L_800;

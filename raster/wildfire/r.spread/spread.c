@@ -66,10 +66,8 @@ spread (void)
 	struct cell_ptrHa	*to_cell, *old_to_cell;
 	struct costHa		*pres_cell;
 
-	if (verbose) {
-		ncells = nrows*ncols;
-		fprintf (stderr, "Finding spread time - number of cells visited in percentage ...  %3d%%", 0);
-	}
+        ncells = nrows*ncols;
+        G_message("Finding spread time - number of cells visited in percentage ...  %3d%%", 0);
 	pres_cell = (struct costHa *) G_malloc (sizeof(struct costHa));
 	get_minHa(heap, pres_cell, heap_len);
 #ifdef DEBUG
@@ -122,13 +120,12 @@ printf("\n	finish a link: cost(%d,%d)->(%d,%d)=%f",pres_cell->row, pres_cell->co
 		DATA(map_visit, pres_cell->row, pres_cell->col) = YES;
 		if (display)
 			draw_a_cell (pres_cell->row, pres_cell->col, (int) pres_cell->min_cost);
-		if (verbose) {
-			cell_count ++;
-			if ((100*cell_count/ncells)%2 == 0 && (100*(cell_count+(int)(0.009*ncells))/ncells)%2 == 0)
-			{	fprintf (stdout, "\b\b\b\b%3d%%", 100*cell_count/ncells);
-				fflush (stdout);
-			}
-		}
+
+                cell_count ++;
+                if ((100*cell_count/ncells)%2 == 0 && (100*(cell_count+(int)(0.009*ncells))/ncells)%2 == 0)
+                {	
+                        G_percent(cell_count,ncells,2);
+                }
 
 		get_minHa(heap, pres_cell, heap_len);
 #ifdef DEBUG
