@@ -575,7 +575,6 @@ proc Nget_map_name {id type} {
 }
 
 proc mkMapList { P type {cmd null}} {
-
 	catch {destroy $P}
 	set list [Nget_map_list $type]
 	set name [Nget_current $type]
@@ -588,13 +587,14 @@ proc mkMapList { P type {cmd null}} {
 		set name [Nget_map_name $name $type]
 	}
 
-	menubutton $P -text $name -menu $P.m
+	menubutton $P -text $name -menu $P.m -relief sunken -bg white
 	menu $P.m -tearoff 0
 	foreach i $list {
 		set map_name [Nget_map_name $i $type]
 		$P.m add command -label "$map_name" \
 			-command "inform Current $type: $i; set_new_curr $type $i; $cmd $i"
 	}
+
 
 	return $P
 }
