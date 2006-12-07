@@ -280,8 +280,8 @@ get_Em(void)
 		denominator += pow(misc.Qobs[i] - misc.Qobs_mean, 2.0);
 
 	if(denominator == 0.0){
-		fprintf(stderr, "\n** Em can not be resolved due to constant "
-				"observed Q **\n");
+		G_warning("Em can not be resolved due to constant "
+				"observed Q");
 		G_set_d_null_value(&Em, 1);
 	}else{
 		Em = 1.0 - numerator / denominator;

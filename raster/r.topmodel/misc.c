@@ -8,10 +8,10 @@ run (char *cmd)
 
 
 	if(G_system(cmd)){
-		fprintf(stderr, "Failed\n");
+		G_warning("Failed");
 		retval=1;
 	}else{
-		fprintf(stderr, "OK\n");
+		G_message("OK");
 		retval=0;
 	}
 
@@ -39,7 +39,7 @@ gregion(void)
 	if(hdmap){
 		sprintf(buf, "%s/bin/g.region rast=%s > /dev/null",
 				gisbase, hdmap);
-		fprintf(stderr, "g.region rast=%s ... ",
+		G_message("g.region rast=%s ... ",
 				hdmap);
 
 		if(run(buf))
@@ -54,7 +54,7 @@ depressionless(void)
 	sprintf(buf, "%s/bin/r.fill.dir "
 		     "input=%s elev=%s dir=%s type=grass > /dev/null", 
 			gisbase, map.elev, map.fill, map.dir);
-	fprintf(stderr, "r.fill.dir input=%s elev=%s dir=%s type=grass ... ",
+	G_message("r.fill.dir input=%s elev=%s dir=%s type=grass ... ",
 			map.elev, map.fill, map.dir);
 
 	if(run(buf))
@@ -73,7 +73,7 @@ basin_elevation(void)
 	sprintf(buf, "%s/bin/r.mapcalc "
 		     "'%s = if(%s == 0 || isnull(%s), null(), %s)' > /dev/null",
 			gisbase, map.belev, map.basin, map.basin, map.elev);
-	fprintf(stderr, "r.mapcalc '%s = if(%s == 0 || isnull(%s), null(), %s)'"
+	G_message("r.mapcalc '%s = if(%s == 0 || isnull(%s), null(), %s)'"
 			" ... ", map.belev, map.basin, map.basin, map.elev);
 
 	if(run(buf))
@@ -91,7 +91,7 @@ top_index(void)
 		sprintf(buf, "%s/bin/r.topidx "
 			     "input=%s output=%s > /dev/null",
 				gisbase, map.belev, map.topidx);
-		fprintf(stderr, "r.topidx input=%s output=%s ... ", 
+		G_message("r.topidx input=%s output=%s ... ", 
 				map.belev, map.topidx);
 
 		if(run(buf))
@@ -103,7 +103,7 @@ top_index(void)
 			     "input=%s nsteps=%d > %s",
 				gisbase, map.topidx, misc.nidxclass,
 				file.idxstats);
-		fprintf(stderr, "r.stats -Anc input=%s nsteps=%d > %s ... ",
+		G_message("r.stats -Anc input=%s nsteps=%d > %s ... ",
 				map.topidx, misc.nidxclass, file.idxstats);
 
 		if(run(buf))
