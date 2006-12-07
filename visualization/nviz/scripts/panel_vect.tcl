@@ -79,7 +79,7 @@ proc mkvectPanel { BASE } {
     set tmp [frame $BASE.f]
     button $tmp.close -text Close -command "Nv_closePanel $BASE" -anchor s -bd 1
     pack $tmp.close -side right
-    button $tmp.draw_current -text {DRAW CURRENT} -bd 1 -fg darkgreen \
+    button $tmp.draw_current -text {DRAW CURRENT} -bd 1 -fg green3 \
 		-command {Nvect_draw_one [Nget_current vect]}
     pack $tmp.draw_current -side left
     pack $tmp -side bottom -fill x -expand 1 -padx 3
@@ -97,6 +97,7 @@ proc mkvectPanel { BASE } {
     set vlinewidth [SpinBox $row1.linewidth -range {1 50 1}\
 		-textvariable width \
 		-modifycmd {set_width vect $width} \
+		-command {set_width vect $width} \
 		-width 5 \
 		-entrybg white]
 
@@ -341,6 +342,8 @@ proc add_map {type} {
 }
 
 proc set_width {type E} {
+	global Nauto_draw
+
     set curr [Nget_current $type]
     switch $type {
 	"vect" { set head Nvect }
@@ -350,6 +353,8 @@ proc set_width {type E} {
     if {0 != $curr} {
 	$head$curr set_att width $E
     }
+
+	if {$Nauto_draw == 1} {Ndraw_all}
 }
 
 # Procedure to set vector elevation eith above surface
