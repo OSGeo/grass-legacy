@@ -209,7 +209,7 @@ interpolate(MELEMENT rowlist[], SHORT nrows, SHORT ncols, SHORT datarows,
     nbr_head->searchptr = &(nbr_head->Mptr);	/* see replace_neighbor */
 #endif
 
-    fprintf(stderr, "Interpolating raster map <%s> ... %d rows ... ", output,
+    G_message(_("Interpolating raster map <%s> ... %d rows ... "), output,
 	    nrows);
 
     for (row = 0; row < nrows; row++) {	/*  loop over rows      */
