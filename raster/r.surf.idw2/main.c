@@ -93,7 +93,7 @@ main (int argc, char *argv[])
     if (fd < 0)
 	G_fatal_error (_("%s: can't create %s"), G_program_name(), parm.output->answer);
 
-    fprintf (stderr, "Interpolating raster map <%s> ... %d rows ... ",
+    G_message (_("Interpolating raster map <%s> ... %d rows ... "),
 	parm.output->answer, window.rows);
 
     north = window.north - window.ns_res/2.0;

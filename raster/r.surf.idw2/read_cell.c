@@ -1,6 +1,7 @@
 #include <stdlib.h>
 #include <unistd.h>
 #include <grass/gis.h>
+#include <grass/glocale.h>
 #include "local_proto.h"
 
 int read_cell (char *name)
@@ -15,8 +16,8 @@ int read_cell (char *name)
     mapset = G_find_cell (name,"");
     if (mapset == NULL)
     {
-	fprintf (stderr, "%s: %s - map not found\n", G_program_name(), name);
-	exit(1);
+	G_fatal_error (_("%s: %s - map not found"), G_program_name(), name);
+	exit(EXIT_FAILURE);
     }
 
     G_get_window (&window);
@@ -31,11 +32,11 @@ int read_cell (char *name)
     fd = G_open_cell_old (name, mapset);
     if (fd < 0)
     {
-	fprintf (stderr, "%s: can't open %s\n", G_program_name(), name);
-	exit(1);
+	G_fatal_error (_("%s: can't open %s"), G_program_name(), name);
+	exit(EXIT_FAILURE);
     }
 
-    fprintf (stderr, "Reading raster map <%s> ...", name);
+    G_message (_("Reading raster map <%s> ..."), name);
 
     north = window.north - window.ns_res/2.0;
     for (row = 0; row < window.rows; row++)
