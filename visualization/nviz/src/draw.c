@@ -294,7 +294,7 @@ int Ndraw_ScaleBar_cmd(Nv_data * data, Tcl_Interp * interp, /* Current interpret
     double len;
     int bar_color, text_color;
 
-    if (argc != 5)
+    if (argc != 7)
 	return (TCL_ERROR);
     coords[0] = (int) atof(argv[1]); /* X */
     coords[1] = (int) atof(argv[2]); /* Y */
