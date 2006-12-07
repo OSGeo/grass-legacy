@@ -39,6 +39,7 @@ proc mkmainPanel { BASE } {
 	global legend labels n_arrow 
 	global fringe fringe_elev fringe_color
 	global n_arrow_x n_arrow_y n_arrow_z
+	global arw_clr text_clr
 	global fringe_nw fringe_ne fringe_sw fringe_se
 	global Nauto_draw
 
@@ -144,6 +145,8 @@ proc mkmainPanel { BASE } {
 	set n_arrow_x 999
 	set n_arrow_y 999
 	set n_arrow_z 999
+	set arw_clr #000000
+	set text_clr #000000
 
 	#pack frames
 	pack [frame $BASE.midt -relief flat -bd 0] -side top -expand 1 -fill x -padx 5 -pady 5
