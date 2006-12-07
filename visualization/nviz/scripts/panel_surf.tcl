@@ -145,6 +145,7 @@ proc mksurfPanel { BASE } {
 	set sbwire [SpinBox $tmp.gridarrows2 -range {1 100 1}\
 		-textvariable wireres \
 		-modifycmd {update_spinres "wire" $wireres} \
+		-command {update_spinres "wire" $wireres} \
 		-width 5 \
 		-entrybg white]
 
@@ -153,6 +154,7 @@ proc mksurfPanel { BASE } {
 	set sbpoly [SpinBox $tmp.gridarrows1 -range {1 100 1}\
 		-textvariable polyres \
 		-modifycmd {update_spinres "poly" $polyres} \
+		-command {update_spinres "poly" $polyres} \
 		-width 5 \
 		-entrybg white]
 
@@ -450,6 +452,7 @@ proc update_res {mode} {
 
 proc update_spinres {mode res} {
 	global Nv_
+	global Nauto_draw
 
 	if {$Nv_(CurrOnly) != 0} {
 		set L [list [Nget_current surf]]
@@ -462,6 +465,9 @@ proc update_spinres {mode res} {
 			Nsurf$surf set_res $mode $res $res
 		}
 	}
+	
+	if {$Nauto_draw == 1} {Ndraw_all}
+	
 }
 
 
