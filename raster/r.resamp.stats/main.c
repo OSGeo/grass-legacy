@@ -80,13 +80,13 @@ static void resamp_unweighted(void)
 	for (col = 0; col <= dst_w.cols; col++)
 	{
 		double x = G_col_to_easting(col, &dst_w);
-		col_map[col] = (int) floor(G_easting_to_col(x + 0.5, &src_w));
+		col_map[col] = (int) floor(G_easting_to_col(x, &src_w) + 0.5);
 	}
 
 	for (row = 0; row <= dst_w.rows; row++)
 	{
 		double y = G_row_to_northing(row, &dst_w);
-		row_map[row] = (int) floor(G_northing_to_row(y + 0.5, &src_w));
+		row_map[row] = (int) floor(G_northing_to_row(y, &src_w) + 0.5);
 	}
 
 	for (row = 0; row < dst_w.rows; row++)
