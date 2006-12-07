@@ -242,12 +242,12 @@ int print_window(struct Cell_head *window, int print_flag, int dist_flag,
 		    (mid_n_la + mid_s_la) / 2.);
 
 	}			/* transform to LL */
-	else /* in lat/long already */ if (window->proj != 0)
-	    fprintf(stderr,
-		    "You are already in lat/long. Use -p flag instead.\n");
-	else
-	    fprintf(stderr,
-		    "You are in xy location (no projection possible, use -p flag instead).\n");
+	else /* in lat/long already */
+	    if (window->proj != 0)
+		G_message (_("You are already in lat/long. Use -p flag instead."));
+	    else
+		G_message (_("You are in xy location (no projection possible, "
+			     "use -p flag instead)."));
     }
     else if (print_flag == 4) {	/* flag.center: print coordinates of map center  MN 2001 */
 	if ((G_projection() == PROJECTION_LL))
@@ -261,7 +261,7 @@ int print_window(struct Cell_head *window, int print_flag, int dist_flag,
     else if (print_flag == 5) {	/* flag.eprint: print region extent  MN 2003 */
 	if (g_flag) {
 	    if ((G_projection() == PROJECTION_LL))
-		fprintf(stderr, "Values in decimal degree:\n");
+		fprintf(stdout, "Values in decimal degree:\n");
 	    fprintf(stdout, "ns_extent=%f\n", window->north - window->south);
 	    fprintf(stdout, "ew_extent=%f\n", window->east - window->west);
 	}
