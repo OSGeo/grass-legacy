@@ -79,6 +79,8 @@ proc site_attr_init {} {
 	set site_attr(MARKERS_INDEX) {"10"       "1"     "3"      "4"   "2"    "5"      "9"    "8"}
 
 	set site_attr(FIRST_ROW) 1
+
+
 }
 
 ################################################################################
@@ -87,31 +89,31 @@ proc site_attr_gui {themefr bottomfr curr} {
 
 	if {![info exists site_attr(INIT)]} {site_attr_init}
 
-    set container [frame $themefr.win -container 1]
-	pack $container -padx 10 -side bottom -expand 0 -fill x
-
-	set win $themefr.extra
-	toplevel $win -use [winfo id $container]
-	wm maxsize $win 500 150
-	#wm geometry $win "350x150"
-
-	set site_attr(WIN) $win
 
 # Set variable for LUT_MENUBUTTON ##############################################
 	set site_attr(LUT_MENUBUTTON_WIN) $bottomfr
 	set site_attr(LUT_MENUBUTTON) $bottomfr.lut_menu
+	#set site_attr(FIELD_ATTR_PANEL) $theme_pt
 
 # Set fields/attribute panel and LUT menubutton# ###############################
-# Always show thematic settings window
 
-#	set site_attr(FIELD_ATTR_PANEL) 0
-#	checkbutton $themefr.fields_attributes_win -text "thematic mapping for vector points" \
-#		-variable site_attr(FIELD_ATTR_PANEL) -command "site_attr_lut_menubutton_win; site_attr_fields_attributes_win $curr"
-#	pack $themefr.fields_attributes_win -side left 
+	if {$site_attr(FIELD_ATTR_PANEL) == 1} {
+		set container [frame $themefr.win -container 1]
+		pack $container -padx 10 -side bottom -expand 0 -fill x
+		set win $themefr.extra
+		toplevel $win -use [winfo id $container]
+		wm maxsize $win 500 150
+		set site_attr(WIN) $win
+	}
 	
-	set site_attr(FIELD_ATTR_PANEL) 1
 	site_attr_lut_menubutton_win
-	site_attr_fields_attributes_win $curr
+	site_attr_fields_attributes_win $curr		
+	pack forget $themefr $bottomfr
+	if {$site_attr(FIELD_ATTR_PANEL) == 1} {
+		pack $themefr -side top -expand yes -fill none -pady 2
+	}
+	pack $bottomfr -fill x -expand 1 -padx 3 -pady 3
+
 }
 
 ################################################################################
@@ -122,6 +124,8 @@ proc site_attr_lut_menubutton_win {} {
 
 	if {$site_attr(FIELD_ATTR_PANEL) == 0} {
 		catch {destroy $site_attr(LUT_MENUBUTTON)}
+		pack $site_attr(LUT_MENUBUTTON_WIN).draw_current \
+			-side left 
 		return
 	}
 
@@ -129,17 +133,9 @@ proc site_attr_lut_menubutton_win {} {
 
 	site_attr_lut_menu $site_attr(LUT_MENUBUTTON_WIN)
 
-   	if {[catch {pack $site_attr(LUT_MENUBUTTON_WIN).draw_current $site_attr(LUT_MENUBUTTON) -padx 3 -side left -expand 0}]} {
-		# if someone changed original interface, the button will be drawn somewhere anyway
-		pack $site_attr(LUT_MENUBUTTON_WIN).lut_load -side left -padx 3 -expand 0
-	}
-}
-
-proc site_attr_open_fields_attributes_win {_curr_site} {
-	global site_attr
-	if {$site_attr(FIELD_ATTR_PANEL) == 1} {return}
-	set site_attr(FIELD_ATTR_PANEL) 1
-	site_attr_fields_attributes_win $_curr_site
+	pack $site_attr(LUT_MENUBUTTON_WIN).draw_current \
+		$site_attr(LUT_MENUBUTTON) \
+		-padx 3 -side left 
 }
 
 proc site_attr_fields_attributes_win {_curr_site} {
@@ -149,6 +145,7 @@ proc site_attr_fields_attributes_win {_curr_site} {
 
 	if {$site_attr(FIELD_ATTR_PANEL) == 0} {
 		catch {destroy $site_attr(WIN).sf}
+		catch {destroy $site_attr(WIN)}
 		return
 	}
 
@@ -156,11 +153,6 @@ proc site_attr_fields_attributes_win {_curr_site} {
 	pack $sf -side bottom -expand yes -fill x
 
 	set tmp [scrollframe_interior $sf]
-
-	set title [frame $tmp.top]
-	label $title.l -text "Thematic Mapping for Vector Points"
-	pack $title.l -side top
-	pack $tmp.top -side top -padx 0 -pady 3
 	
 	frame $tmp.attributes
 		set site_attr(FIELD_NAMES) {}
