@@ -83,6 +83,7 @@ proc place_narrow {W x y} {
 
 global Nv_ n_arrow n_arrow_size
 global n_arrow_x n_arrow_y n_arrow_z
+global arw_clr text_clr
 global Nauto_draw
 
 set y [expr $Nv_(height) - $y]
@@ -95,7 +96,7 @@ set y [expr $Nv_(height) - $y]
         set n_arrow_y [lindex $location 1]
         set n_arrow_z [lindex $location 2]
 
-        Ndraw_Narrow $n_arrow_x $n_arrow_y $n_arrow_z $n_arrow_size
+        Ndraw_Narrow $n_arrow_x $n_arrow_y $n_arrow_z $n_arrow_size $arw_clr $text_clr
         #set chuckbutton
         set n_arrow 1
     }
@@ -104,11 +105,3 @@ set y [expr $Nv_(height) - $y]
     bind $W <1> {}
 
 }
-
-
-
-
-
-
-
-

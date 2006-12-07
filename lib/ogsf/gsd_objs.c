@@ -700,8 +700,9 @@ void dir_to_slope_aspect(float *dir, float *slope, float *aspect, int degrees)
 /**************************************************************
  * Function to draw North Arrow takes OpenGL coords and size
  *************************************************************/
-int gsd_north_arrow (float *pos2, float len, GLuint fontbase)
-{   
+int gsd_north_arrow (float *pos2, float len, GLuint fontbase,
+	unsigned long arw_clr, unsigned long text_clr)
+{
     char *txt;
     float v[4][3];
     float base[3][3];
@@ -730,7 +731,7 @@ int gsd_north_arrow (float *pos2, float len, GLuint fontbase)
     gsd_do_scale(1);
 
     glNormal3fv(Ntop);
-    gsd_color_func(0x000000);
+    gsd_color_func(arw_clr);
 
     gsd_bgnpolygon();
     glVertex3fv(base[0]);
@@ -758,7 +759,7 @@ int gsd_north_arrow (float *pos2, float len, GLuint fontbase)
  * bottom along azimuth
  */
 
-    gsd_color_func(0x000000);
+    gsd_color_func(text_clr);
     txt = "North";
     /* adjust position of N text */
     base[0][X] -= gsd_get_txtwidth(txt, 18) - 20.;
@@ -1012,7 +1013,8 @@ void gsd_3darrow(float *center, unsigned long colr, float siz1, float siz2,
  * Function to draw Scalebar takes OpenGL coords and size
  *  adapted from gsd_north_arrow Hamish Bowman Dec 2006
  *************************************************************/
-int gsd_scalebar (float *pos2, float len, GLuint fontbase)
+int gsd_scalebar (float *pos2, float len, GLuint fontbase,
+	unsigned long bar_clr, unsigned long text_clr)
 {
     char txt[100];
     float base[4][3];
@@ -1036,7 +1038,8 @@ int gsd_scalebar (float *pos2, float len, GLuint fontbase)
     gsd_do_scale(1);  /* get map scale factor */
 
     glNormal3fv(Ntop);
-    gsd_color_func(0x000000);
+
+    gsd_color_func(bar_clr);
 
     gsd_bgnpolygon();
     glVertex3fv(base[0]);
@@ -1050,7 +1053,7 @@ int gsd_scalebar (float *pos2, float len, GLuint fontbase)
 /* Need to pick a nice generic font */
 /* TODO -- project text position off bar bottom along azimuth */
 
-    gsd_color_func(0x000000);
+    gsd_color_func(text_clr);
 
     /* format text in a nice way */
     if (strcmp("meters", G_database_unit_name(TRUE)) == 0 ) {
@@ -1074,6 +1077,10 @@ int gsd_scalebar (float *pos2, float len, GLuint fontbase)
     /* adjust position of text */
     base[0][X] -= gsd_get_txtwidth(txt, 18) - 20.;
     base[0][Y] -= gsd_get_txtheight(18) - 20. ;
+/* center the text:
+    base[0][X] = pos2[X] - gsd_get_txtwidth(txt, 18) - 20.;
+    base[0][Y] = pos2[Y] - gsd_get_txtheight(18) - 20. ;
+*/
 
     glRasterPos3fv(base[0]);
     glListBase(fontbase);
