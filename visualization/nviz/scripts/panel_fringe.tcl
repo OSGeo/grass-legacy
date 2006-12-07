@@ -127,8 +127,9 @@ proc draw_fringe {} {
 		
 	set surf [Nget_current surf]
 	set fringe 1
-		
-	Ndraw_fringe $surf $fringe_color $fringe_elev $fringe_nw $fringe_ne $fringe_sw $fringe_se
+
+	Ndraw_fringe $surf $fringe_color $fringe_elev $fringe_nw $fringe_ne \
+		$fringe_sw $fringe_se
 
 	if {$Nauto_draw == 1} {
 		Nset_cancel 0
@@ -136,12 +137,3 @@ proc draw_fringe {} {
 	} 
 		
 } 
-
-
-
-
-
-
-
-
-
