@@ -260,7 +260,7 @@ int Ndraw_Narrow_cmd(Nv_data * data, Tcl_Interp * interp,       /* Current inter
     double len;
     int arrow_color, text_color;
 
-    if (argc != 5)
+    if (argc != 7)
         return (TCL_ERROR);
     coords[0] = (int) atof(argv[1]); /* X */
     coords[1] = (int) atof(argv[2]); /* Y */
