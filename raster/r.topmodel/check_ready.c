@@ -49,47 +49,47 @@ check_required(void)
 
 	if(!flg.input){
 		if(!map.elev){
-			fprintf(stderr, 
-				"\n** elevation required **\n");
+			G_warning(
+				"elevation required");
 			retval = 1;
 		}
 
 		if(!map.basin){
-			fprintf(stderr, 
-				"\n** basin required **\n");
+			G_warning( 
+				"basin required");
 			retval = 1;
 		}
 
 		if(!map.belev){
-			fprintf(stderr, 
-				"\n** belevation required **\n");
+			G_warning( 
+				"belevation required");
 			retval = 1;
 		}
 
 		if(!map.topidx){
-			fprintf(stderr, 
-				"\n** topidx required **\n");
+			G_warning( 
+				"topidx required");
 			retval = 1;
 		}
 
 		if(map.fill && !map.dir){
-			fprintf(stderr, 
-				"\n** direction required "
-				"if depressionless is given **\n");
+			G_warning( 
+				"direction required "
+				"if depressionless is given");
 			retval = 1;
 		}
 
 		if(map.dir && !map.fill){
-			fprintf(stderr, 
-				"\n** depressionless required "
-				"if direction is given **\n");
+			G_warning( 
+				"depressionless required "
+				"if direction is given");
 			retval = 1;
 		}
 	}else{
 		if(map.belev && !map.topidx){
-			fprintf(stderr, 
-				"\n** topidx required "
-				"if belevation is given **\n");
+			G_warning( 
+				"topidx required "
+				"if belevation is given");
 			retval = 1;
 		}
 	}
@@ -110,95 +110,95 @@ check_names(void)
 	if(!flg.input){
 		if(map.elev){
 			if(map.basin && !strcmp(map.elev, map.basin)){
-				fprintf(stderr, 
-					"\n** elevation == basin **\n");
+				G_warning( 
+					"elevation == basin");
 				retval = 1;
 			}
 	
 			if(map.fill && !strcmp(map.elev, map.fill)){
-				fprintf(stderr, 
-					"\n** elevation == "
-							"depressionless **\n");
+				G_warning( 
+					"elevation == "
+							"depressionless");
 				retval = 1;
 			}
 	
 			if(map.dir && !strcmp(map.elev, map.dir)){
-				fprintf(stderr, 
-					"\n** elevation == direction **\n");
+				G_warning( 
+					"elevation == direction");
 				retval = 1;
 			}
 	
 			if(map.belev && !strcmp(map.elev, map.belev)){
-				fprintf(stderr, 
-					"\n** elevation == belevation **\n");
+				G_warning( 
+					"elevation == belevation");
 				retval = 1;
 			}
 	
 			if(map.topidx && !strcmp(map.elev, map.topidx)){
-				fprintf(stderr, 
-					"\n** elevation == topidx **\n");
+				G_warning( 
+					"elevation == topidx");
 				retval = 1;
 			}
 		}
 	
 		if(map.basin){
 			if(map.fill && !strcmp(map.basin, map.fill)){
-				fprintf(stderr, 
-					"\n** basin == depressionless **\n");
+				G_warning( 
+					"basin == depressionless");
 				retval = 1;
 			}
 	
 			if(map.dir && !strcmp(map.basin, map.dir)){
-				fprintf(stderr, 
-					"\n** basin == direction **\n");
+				G_warning( 
+					"basin == direction");
 				retval = 1;
 			}
 	
 			if(map.belev && !strcmp(map.basin, map.belev)){
-				fprintf(stderr, 
-					"\n** basin == belevation **\n");
+				G_warning( 
+					"basin == belevation");
 				retval = 1;
 			}
 	
 			if(map.topidx && !strcmp(map.basin, map.topidx)){
-				fprintf(stderr, 
-					"\n** basin == topidx **\n");
+				G_warning( 
+					"basin == topidx");
 				retval = 1;
 			}
 		}
 	
 		if(map.fill){
 			if(map.dir && !strcmp(map.fill, map.dir)){
-				fprintf(stderr, 
-					"\n** depressionless == "
-							"direction **\n");
+				G_warning( 
+					"depressionless == "
+							"direction");
 				retval = 1;
 			}
 	
 			if(map.belev && !strcmp(map.fill, map.belev)){
-				fprintf(stderr, 
-					"\n** depressionless == "
-							"belevation **\n");
+				G_warning( 
+					"depressionless == "
+							"belevation");
 				retval = 1;
 			}
 	
 			if(map.topidx && !strcmp(map.fill, map.topidx)){
-				fprintf(stderr, 
-					"\n** depressionless == topidx **\n");
+				G_warning( 
+					"depressionless == topidx");
 				retval = 1;
 			}
 		}
 	
 		if(map.dir){
 			if(map.belev && !strcmp(map.dir, map.belev)){
-				fprintf(stderr, 
-					"\n** direction == belevation **\n");
+				G_warning( 
+					"direction == belevation");
 				retval = 1;
 			}
 	
 			if(map.topidx && !strcmp(map.dir, map.topidx)){
-				fprintf(stderr, 
-					"\n** direction == topidx **\n");
+				G_warning( 
+					"direction == topidx");
 				retval = 1;
 			}
 		}
@@ -206,69 +206,69 @@ check_names(void)
 
 	if(map.belev){
 		if(map.topidx && !strcmp(map.belev, map.topidx)){
-			fprintf(stderr, 
-				"\n** belevation == topidx **\n");
+			G_warning( 
+				"belevation == topidx");
 			retval = 1;
 		}
 	}
 
 	if(!strcmp(file.idxstats, file.params)){
-		fprintf(stderr, 
-			"\n** idxstats == parameters **\n");
+		G_warning( 
+			"idxstats == parameters");
 		retval = 1;
 	}
 
 	if(!strcmp(file.idxstats, file.input)){
-		fprintf(stderr, 
-			"\n** idxstats == input **\n");
+		G_warning( 
+			"idxstats == input");
 		retval = 1;
 	}
 
 	if(!strcmp(file.idxstats, file.output)){
-		fprintf(stderr, 
-			"\n** idxstats == output **\n");
+		G_warning( 
+			"idxstats == output");
 		retval = 1;
 	}
 
 	if(file.Qobs && !strcmp(file.idxstats, file.Qobs)){
-		fprintf(stderr, 
-			"\n** idxstats == Qobs **\n");
+		G_warning( 
+			"idxstats == Qobs");
 		retval = 1;
 	}
 
 	if(!strcmp(file.params, file.input)){
-		fprintf(stderr, 
-			"\n** parameters == input **\n");
+		G_warning( 
+			"parameters == input");
 		retval = 1;
 	}
 
 	if(!strcmp(file.params, file.output)){
-		fprintf(stderr, 
-			"\n** parameters == output **\n");
+		G_warning( 
+			"parameters == output");
 		retval = 1;
 	}
 
 	if(file.Qobs && !strcmp(file.params, file.Qobs)){
-		fprintf(stderr, 
-			"\n** parameters == Qobs **\n");
+		G_warning( 
+			"parameters == Qobs");
 		retval = 1;
 	}
 
 	if(!strcmp(file.input, file.output)){
-		fprintf(stderr, 
-			"\n** input == output **\n");
+		G_warning( 
+			"input == output");
 		retval = 1;
 	}
 
 	if(file.Qobs && !strcmp(file.input, file.Qobs)){
-		fprintf(stderr, 
-			"\n** input == Qobs **\n");
+		G_warning( 
+			"input == Qobs");
 		retval = 1;
 	}
 
 	if(file.Qobs && !strcmp(file.output, file.Qobs)){
-		fprintf(stderr, 
-			"\n** output == Qobs **\n");
+		G_warning( 
+			"output == Qobs");
 		retval = 1;
 	}
 
@@ -288,15 +288,15 @@ check_io(void)
 
 	if(!flg.input){
 		if(map.elev && !G_find_file("cell", map.elev, mapset)){
-			fprintf(stderr,
-				"\n** %s - not exists **\n",
+			G_warning(
+				"%s - not exists",
 				map.elev);
 			retval = 1;
 		}
 
 		if(map.basin && !G_find_file("cell", map.basin, mapset)){
-			fprintf(stderr, 
-				"\n** %s - not exists **\n", 
+			G_warning( 
+				"%s - not exists", 
 				map.basin);
 			retval = 1;
 		}
@@ -305,8 +305,8 @@ check_io(void)
 			if(flg.overwr){
 				flg.overwrlist |= FILL;
 			}else{
-				fprintf(stderr, 
-					"\n** %s - already exists **\n", 
+				G_warning( 
+					"%s - already exists", 
 					map.fill);
 				retval = 1;
 			}
@@ -316,8 +316,8 @@ check_io(void)
 			if(flg.overwr){
 				flg.overwrlist |= DIR;
 			}else{
-				fprintf(stderr, 
-					"\n** %s - already exists **\n", 
+				G_warning( 
+					"%s - already exists", 
 					map.dir);
 				retval = 1;
 			}
@@ -327,8 +327,8 @@ check_io(void)
 			if(flg.overwr){
 				flg.overwrlist |= BELEV;
 			}else{
-				fprintf(stderr, 
-					"\n** %s - already exists **\n", 
+				G_warning( 
+					"%s - already exists", 
 					map.belev);
 				retval = 1;
 			}
@@ -338,8 +338,8 @@ check_io(void)
 			if(flg.overwr){
 				flg.overwrlist |= TOPIDX;
 			}else{
-				fprintf(stderr, 
-					"\n** %s - already exists **\n", 
+				G_warning( 
+					"%s - already exists", 
 					map.topidx);
 				retval = 1;
 			}
@@ -350,8 +350,8 @@ check_io(void)
 			if(flg.overwr){
 				flg.overwrlist |= IDXSTATS;
 			}else{
-				fprintf(stderr, 
-					"\n** %s - file already exists **\n", 
+				G_warning( 
+					"%s - file already exists", 
 					file.idxstats);
 				retval = 1;
 			}
@@ -359,8 +359,8 @@ check_io(void)
 	}else{
 		if(map.belev){
 			if(!G_find_file("cell", map.belev, mapset)){
-				fprintf(stderr, 
-					"\n** %s - not exists **\n", 
+				G_warning( 
+					"%s - not exists", 
 					map.belev);
 				retval = 1;
 			}else{
@@ -369,9 +369,9 @@ check_io(void)
 					if(flg.overwr){
 						flg.overwrlist |= TOPIDX;
 					}else{
-						fprintf(stderr, 
-							"\n** %s - "
-							"already exists **\n",
+						G_warning( 
+							"%s - "
+							"already exists",
 							map.topidx);
 						retval = 1;
 					}
@@ -383,9 +383,9 @@ check_io(void)
 					if(flg.overwr){
 						flg.overwrlist |= IDXSTATS;
 					}else{
-						fprintf(stderr, 
-							"\n** %s - file "
-							"already exists **\n", 
+						G_warning( 
+							"%s - file "
+							"already exists", 
 							file.idxstats);
 						retval = 1;
 					}
@@ -393,8 +393,8 @@ check_io(void)
 			}
 		}else if(map.topidx){
 			if(!G_find_file("cell", map.topidx, mapset)){
-				fprintf(stderr,
-					"\n** %s - not exists **\n", 
+				G_warning(
+					"%s - not exists", 
 					map.topidx);
 				retval = 1;
 			}else{
@@ -404,9 +404,9 @@ check_io(void)
 					if(flg.overwr){
 						flg.overwrlist |= IDXSTATS;
 					}else{
-						fprintf(stderr, 
-							"\n** %s - file "
-							"already exists **\n", 
+						G_warning( 
+							"%s - file "
+							"already exists", 
 							file.idxstats);
 						retval = 1;
 					}
@@ -414,8 +414,8 @@ check_io(void)
 			}
 		}else if(file.idxstats){
 			if(!(fp=fopen(file.idxstats, "r"))){
-				fprintf(stderr, 
-					"\n** %s - file not exists **\n", 
+				G_warning( 
+					"%s - file not exists", 
 					file.idxstats);
 				retval = 1;
 			}else{
@@ -426,8 +426,8 @@ check_io(void)
 
 	if(file.params){
 		if(!(fp=fopen(file.params, "r"))){
-			fprintf(stderr, 
-				"\n** %s - file not exists **\n", 
+			G_warning( 
+				"%s - file not exists", 
 				file.params);
 			retval = 1;
 		}else{
@@ -437,8 +437,8 @@ check_io(void)
 
 	if(file.input){
 		if(!(fp=fopen(file.input, "r"))){
-			fprintf(stderr, 
-				"\n** %s - file not exists **\n", 
+			G_warning( 
+				"%s - file not exists", 
 				file.input);
 			retval = 1;
 		}else{
@@ -451,8 +451,8 @@ check_io(void)
 		if(flg.overwr){
 			flg.overwrlist |= OUTPUT;
 		}else{
-			fprintf(stderr,
-				"\n** %s - file already exists **\n", 
+			G_warning(
+				"%s - file already exists", 
 				file.output);
 			retval = 1;
 		}
@@ -460,8 +460,8 @@ check_io(void)
 
 	if(file.Qobs){
 		if(!(fp=fopen(file.Qobs, "r"))){
-			fprintf(stderr, 
-				"\n** %s - file not exists **\n", 
+			G_warning( 
+				"%s - file not exists", 
 				file.Qobs);
 			retval = 1;
 		}else{
