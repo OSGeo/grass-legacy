@@ -203,8 +203,8 @@ int main(int argc, char **argv)
 			/* ignore pt outside window */
           		if(east < window.west || east > window.east ||
              			north < window.south || north > window.north) {
-               			fprintf(stderr,"Warning, ignoring point outside window: \n") ;
-               			fprintf(stderr,"   %.4f,%.4f\n", east, north) ;
+               			G_warning("Ignoring point outside window: ") ;
+               			G_warning("   %.4f,%.4f", east, north) ;
                			continue ;
           		}
 
@@ -212,8 +212,8 @@ int main(int argc, char **argv)
 			segment_get (&in_row_seg, value, row, col); 
 			/* ignore pt in no-data area */
          		if(backrow < 0) {
-               			fprintf(stderr,"Warning, ignoring point in NO-DATA area : \n") ;
-               			fprintf(stderr,"   %.4f,%.4f\n", east, north) ;
+               			G_warning("Ignoring point in NO-DATA area :") ;
+               			G_warning("   %.4f,%.4f", east, north) ;
                			continue ;
           		}
 			value = (char *)&backcol;
@@ -265,8 +265,8 @@ int main(int argc, char **argv)
 					segment_get (&in_row_seg, value, row, col);
 					/* ignore pt in no-data area */
          				if(backrow < 0) {
-               					fprintf(stderr,"Warning, ignoring point in NO-DATA area : \n") ;
-               				fprintf(stderr,"   %.4f,%.4f\n", window.west + window.ew_res*(col + 0.5), window.north - window.ns_res*(row + 0.5)) ;
+               					G_warning("Ignoring point in NO-DATA area:") ;
+                                                G_warning("   %.4f,%.4f\n", window.west + window.ew_res*(col + 0.5), window.north - window.ns_res*(row + 0.5)) ;
                			continue ;
           		}
 					value = (char *)&backcol;

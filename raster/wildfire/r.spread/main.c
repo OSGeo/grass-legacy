@@ -86,6 +86,7 @@ main (int argc, char *argv[])
 				*out, *x_out, *y_out;
 	} parm;
         struct {
+                /* please, remove before GRASS 7 released */
 		struct Flag 	*display, *spotting, *verbose;
 	} flag;
 	struct GModule *module;
@@ -200,6 +201,7 @@ main (int argc, char *argv[])
 	parm.y_out->gisprompt  = "new,cell,raster" ;
 	parm.y_out->description = _("Name of raster map to contain Y_BACK coordiates");
 
+        /* please, remove before GRASS 7 released */
 	flag.verbose = G_define_flag();
 	flag.verbose->key = 'v';
 	flag.verbose->description = _("Run VERBOSELY");
@@ -218,7 +220,14 @@ main (int argc, char *argv[])
 
 	srand(getpid()); 
 
-	verbose = flag.verbose->answer;
+        /* please, remove before GRASS 7 released */
+        if(flag.verbose->answer) {
+            putenv("GRASS_VERBOSE=0");
+            G_warning(_("The '-v' flag is superseded and will be removed "
+                "in future. Please use '--verbose' instead."));
+        }
+
+
 	display = flag.display->answer;
 	spotting = flag.spotting->answer;
 	
@@ -232,9 +241,9 @@ main (int argc, char *argv[])
 	if (parm.y_out->answer)	{y_out = 1; y_out_layer = parm.y_out->answer;}
 	if (spotting) {
 		if (!(parm.spotdist->answer && parm.velocity->answer && parm.mois->answer)) {
-			printf ("Error: SPOTTING DISTANCE, fuel MOISTURE, or wind VELOCITY map not given w/ -s\n");
+			G_warning ("SPOTTING DISTANCE, fuel MOISTURE, or wind VELOCITY map not given w/ -s");
 			G_usage();
-			exit(1);
+			exit(EXIT_FAILURE);
 		} else {
 			spotdist_layer = parm.spotdist->answer;
 			velocity_layer = parm.velocity->answer;
@@ -249,9 +258,9 @@ main (int argc, char *argv[])
         if (parm.comp_dens->answer)
         {       comp_dens = atof (parm.comp_dens->answer);
                 if (comp_dens < 0.0 || comp_dens > 1.0)
-                {       fprintf(stderr, "Illegal computing density <%s>\n",                                     parm.comp_dens->answer);
+                {       G_warning("Illegal computing density <%s>",                                     parm.comp_dens->answer);
                         G_usage();
-                        exit(1);
+                        exit(EXIT_FAILURE);
                 } 
         } else
         {       comp_dens = 0.5;
@@ -260,10 +269,10 @@ main (int argc, char *argv[])
         if (parm.init_time->answer)
         {       init_time = atoi (parm.init_time->answer);
                 if (init_time < 0)
-                {       fprintf(stderr, "Illegal initial time <%s>\n",
+                {       G_warning("Illegal initial time <%s>",
                             parm.init_time->answer);
                         G_usage();
-                        exit(1);
+                        exit(EXIT_FAILURE);
                 }
         } else
         {       time_lag = 0;
@@ -271,9 +280,9 @@ main (int argc, char *argv[])
         if (parm.time_lag->answer)
         {       time_lag = atoi (parm.time_lag->answer);
                 if (time_lag < 0)
-                {       fprintf(stderr, "Illegal simulating time lag <%s>\n",                               parm.time_lag->answer);
+                {       G_warning("Illegal simulating time lag <%s>",                               parm.time_lag->answer);
                         G_usage();
-                        exit(1);
+                        exit(EXIT_FAILURE);
                 } 
         } else
         {       time_lag = 99999;
@@ -284,7 +293,7 @@ main (int argc, char *argv[])
 	if(G_get_window (&window) < 0) {
 		sprintf (buf,"can't read current window parameters");
 		G_fatal_error (buf);
-		exit(1);
+		exit(EXIT_FAILURE);
 	} 
 
 	/*  find number of rows and columns in window    */
@@ -306,42 +315,42 @@ main (int argc, char *argv[])
         if (G_find_cell2 (max_layer, "")  == NULL) {
 		sprintf(buf, "%s - not found", max_layer);
 		G_fatal_error (buf);
-		exit(1);
+		exit(EXIT_FAILURE);
 	}  
 
         if (G_find_cell2 (dir_layer, "")  == NULL) {
 		sprintf(buf, "%s - not found", dir_layer);
 		G_fatal_error (buf);
-		exit(1);
+		exit(EXIT_FAILURE);
         }
 
         if (G_find_cell2 (base_layer, "")  == NULL) {
 		sprintf(buf, "%s - not found", base_layer);
 		G_fatal_error (buf);
-		exit(1);
+		exit(EXIT_FAILURE);
         }	
 
         if (G_find_cell2 (start_layer, "")  == NULL) {
 		sprintf(buf, "%s - not found", start_layer);
 		G_fatal_error (buf);
-		exit(1);
+		exit(EXIT_FAILURE);
         }	
 
 	if (spotting) {
         	if (G_find_cell2 (spotdist_layer, "")  == NULL) {
 			sprintf(buf, "%s - not found", spotdist_layer);
 			G_fatal_error (buf);
-			exit(1);
+			exit(EXIT_FAILURE);
 		}	
         	if (G_find_cell2 (velocity_layer, "")  == NULL) {
 			sprintf(buf, "%s - not found", velocity_layer);
 			G_fatal_error (buf);
-			exit(1);
+			exit(EXIT_FAILURE);
 		}	
         	if (G_find_cell2 (mois_layer, "")  == NULL) {
 			sprintf(buf, "%s - not found", mois_layer);
 			G_fatal_error (buf);
-			exit(1);
+			exit(EXIT_FAILURE);
 		}	
         }	
 
@@ -351,24 +360,24 @@ main (int argc, char *argv[])
 	if (G_legal_filename (out_layer) < 0) {
 		sprintf(buf, "%s - illegal name", out_layer);
 		G_fatal_error (buf);
-		exit(1);
+		exit(EXIT_FAILURE);
 	}
         if (G_find_cell2 (out_layer, G_mapset())) {
                 sprintf(buf, "%s - exits in Mapset <%s>, select another name", out_layer, G_mapset());
                 G_fatal_error (buf);
-                exit(1);
+                exit(EXIT_FAILURE);
         }
 
 	if (x_out) {
 		if (G_legal_filename (x_out_layer) < 0) {
 			sprintf(buf, "%s - illegal name", x_out_layer);
 			G_fatal_error (buf);
-			exit(1);
+			exit(EXIT_FAILURE);
 		}
         	if (G_find_cell2 (x_out_layer, G_mapset())) {
                 	sprintf(buf, "%s - exits in Mapset <%s>, select another name", x_out_layer, G_mapset());
                 	G_fatal_error (buf);
-                	exit(1);
+                	exit(EXIT_FAILURE);
         	}
 	}
 
@@ -376,12 +385,12 @@ main (int argc, char *argv[])
 		if (G_legal_filename (y_out_layer) < 0) {
 			sprintf(buf, "%s - illegal name", y_out_layer);
 			G_fatal_error (buf);
-			exit(1);
+			exit(EXIT_FAILURE);
 		}
         	if (G_find_cell2 (y_out_layer, G_mapset())) {
             	    sprintf(buf, "%s - exits in Mapset <%s>, select another name", y_out_layer, G_mapset());
              	   G_fatal_error (buf);
-              	  exit(1);
+              	  exit(EXIT_FAILURE);
         	}
 	}
 
@@ -391,21 +400,21 @@ main (int argc, char *argv[])
 	if (max_fd < 0) {
 		sprintf (buf, "%s - can't open raster file", max_layer);
 		G_fatal_error (buf);
-		exit(1);
+		exit(EXIT_FAILURE);
 	}
 
         dir_fd = G_open_cell_old(dir_layer, G_find_cell2 (dir_layer,""));
 	if (dir_fd < 0) {
 		sprintf (buf, "%s - can't open raster file", dir_layer);
 		G_fatal_error (buf);
-		exit(1);
+		exit(EXIT_FAILURE);
 	}
 
         base_fd = G_open_cell_old(base_layer, G_find_cell2 (base_layer,""));
 	if (base_fd < 0) {
 		sprintf (buf, "%s - can't open raster file", base_layer);
 		G_fatal_error (buf);
-		exit(1);
+		exit(EXIT_FAILURE);
 	}
 
 	if (spotting) {
@@ -413,19 +422,19 @@ main (int argc, char *argv[])
 		if (spotdist_fd < 0) {
 			sprintf (buf, "%s - can't open raster file", spotdist_layer);
 			G_fatal_error (buf);
-			exit(1);
+			exit(EXIT_FAILURE);
 		}
         	velocity_fd = G_open_cell_old(velocity_layer, G_find_cell2 (velocity_layer,""));
 		if (velocity_fd < 0) {
 			sprintf (buf, "%s - can't open raster file", velocity_layer);
 			G_fatal_error (buf);
-			exit(1);
+			exit(EXIT_FAILURE);
 		}
         	mois_fd = G_open_cell_old(mois_layer, G_find_cell2 (mois_layer,""));
 		if (mois_fd < 0) {
 			sprintf (buf, "%s - can't open raster file", mois_layer);
 			G_fatal_error (buf);
-			exit(1);
+			exit(EXIT_FAILURE);
 		}
 	}
 
@@ -451,41 +460,38 @@ main (int argc, char *argv[])
 
 	/*   Write the input layers in the map "arrays"  */
 
-	if (verbose)
-	        fprintf (stderr, "\nReading inputs ...");
+        G_message (_("Reading inputs ..."));
 
 	for( row=0 ; row<nrows ; row++ ) {
-		if (verbose)
-		        G_percent (row, nrows, 2);
+                G_percent (row, nrows, 2);
 		if( G_get_map_row(max_fd, cell, row)<0)
-			exit(1);
+			exit(EXIT_FAILURE);
 		for (col=0; col<ncols; col++)
 			DATA(map_max, row, col) = cell[col];
 		if( G_get_map_row(dir_fd, cell, row)<0)
-			exit(1);
+			exit(EXIT_FAILURE);
 		for (col=0; col<ncols; col++)
 			DATA(map_dir, row, col) = cell[col];
 		if( G_get_map_row(base_fd, cell, row)<0)
-			exit(1);
+			exit(EXIT_FAILURE);
 		for (col=0; col<ncols; col++)
 			DATA(map_base, row, col) = cell[col];
 		if (spotting) {
 			if( G_get_map_row(spotdist_fd, cell, row)<0)
-				exit(1);
+				exit(EXIT_FAILURE);
 			for (col=0; col<ncols; col++)
 				DATA(map_spotdist, row, col) = cell[col];
 			if( G_get_map_row(velocity_fd, cell, row)<0)
-				exit(1);
+				exit(EXIT_FAILURE);
 			for (col=0; col<ncols; col++)
 				DATA(map_velocity, row, col) = cell[col];
 			if( G_get_map_row(mois_fd, cell, row)<0)
-				exit(1);
+				exit(EXIT_FAILURE);
 			for (col=0; col<ncols; col++)
 				DATA(map_mois, row, col) = cell[col];
 		}
 	}
-	if (verbose)
-	    G_percent (row, nrows, 2);
+        G_percent (row, nrows, 2);
 
 
 	/*   Scan the START layer searching for starting points.
@@ -496,7 +502,7 @@ main (int argc, char *argv[])
 	if (start_fd < 0) {
 		sprintf (buf, "%s - can't open raster file", start_layer);
 		G_fatal_error (buf);
-		exit(1);
+		exit(EXIT_FAILURE);
 	}
 
 	G_read_range(start_layer, G_find_file("cell",start_layer,""), &range);
@@ -506,8 +512,7 @@ main (int argc, char *argv[])
         heap = (struct costHa *) G_calloc (nrows*ncols + 1, sizeof(struct costHa));
         heap_len = 0;
 
-	if (verbose)
-		fprintf (stderr, "Reading %s ... ", start_layer);
+        G_message (_("Reading %s ... "), start_layer);
 #ifdef DEBUG
 printf ("Collecting origins ...");
 #endif
