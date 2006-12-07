@@ -203,6 +203,7 @@ int next_point(
     int      horiz;
     int      semi;
     double   length, delta;
+    double   deltaz;
 
     double   oldz	= p->z;
     int	     oldtheta	= p->theta;
@@ -274,8 +275,18 @@ int next_point(
     {
 	if (parm.dsout && (ads.row != a->row || ads.col != a->col))
 	    put(ds, a->row, a->col, get(ds, a->row, a->col) + 1);
+/*	if (parm.lgout) 
+ *	*l += parm.l3d ? hypot(length, oldz - p->z) : length; this did not work, helena*/
 	if (parm.lgout)
-	    *l += parm.l3d ? hypot(length, oldz - p->z) : length;
+	{  
+            if (parm.l3d)
+            {
+	    deltaz = oldz - p->z;  /*fix by helena Dec. 06*/
+	    *l += hypot(length, deltaz);
+	    }
+	   else
+            *l += length;
+	}
 	return 1;
     }
 
