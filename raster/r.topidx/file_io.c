@@ -29,7 +29,7 @@ getcells(void)
 	atb  = (DCELL **)G_malloc (sizeof(DCELL *)*window.rows);
 	a    = (DCELL **)G_malloc (sizeof(DCELL *)*window.rows);
 
-	fprintf(stderr, _("Reading elevation map:"));
+	G_message(_("Reading elevation map:"));
 
 	for(i=0;i<window.rows;i++){
 		G_percent(i,window.rows,2);
@@ -84,7 +84,7 @@ putcells(void)
 	if((fd = G_open_raster_new(oname,DCELL_TYPE)) < 0)
 	    G_fatal_error(_("Unable to create raster map <%s>"), oname);
 
-	fprintf(stderr, _("Writing topographic index map:"));
+	G_message( _("Writing topographic index map:"));
 
 	for(i=0;i<window.rows;i++){
 		G_percent(i,window.rows,2);

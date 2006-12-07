@@ -34,6 +34,7 @@
 #include <fcntl.h>
 #include <grass/config.h>
 #include <grass/gis.h>
+#include <grass/glocale.h>
 #include <grass/rowio.h>
 
 #define PAD 2
@@ -95,19 +96,19 @@ int open_file (char *name)
 	strcpy (cell, name);
 	if ((mapset = G_find_cell2(cell,"")) == NULL)
 	{
-		fprintf(stderr,"%s:  open_file:  cell file %s not found\n",error_prefix,name);
+		G_warning("%s:  open_file:  cell file %s not found",error_prefix,name);
 	        unlink(work_file_name);
-		exit(-1);
+		exit(EXIT_FAILURE);
 	}
 	if ((cell_file = G_open_cell_old(cell,mapset)) < 0)
 	{
-		fprintf(stderr,"%s:  open_file:  could not open cell file %s in %s\n",error_prefix,cell,mapset);
 	        unlink(work_file_name);
-		exit(-1);
+		G_fatal_error("%s:  open_file:  could not open cell file %s in %s",error_prefix,cell,mapset);
+		exit(EXIT_FAILURE);
 	}
 	n_rows = G_window_rows();
 	n_cols = G_window_cols();
-	fprintf(stdout,"File %s -- %d rows X %d columns\n",name,n_rows,n_cols);
+	G_message(_("File %s -- %d rows X %d columns"),name,n_rows,n_cols);
 	n_cols += (PAD << 1);
 	/* copy cell file into our read/write file */
 	work_file_name = G_tempfile();
@@ -116,10 +117,9 @@ int open_file (char *name)
 	close(creat(work_file_name,0666));
 	if ((work_file = open(work_file_name,2)) < 0)
 	{
-		fprintf(stderr,"%s:  open_file:  could not create temporary file %s\n",error_prefix,work_file_name);
-		fprintf(stderr,"errno = %d\n",errno);
 	        unlink(work_file_name);
-		exit(-1);
+		G_fatal_error("%s:  open_file:  could not create temporary file %s\nerrno = %d",error_prefix,work_file_name,errno);
+		exit(EXIT_FAILURE);
 	}
 	buf = (CELL *) G_malloc(buf_len = n_cols * sizeof(CELL));
 	for (col = 0; col < n_cols; col++)
@@ -128,24 +128,24 @@ int open_file (char *name)
 	{
 		if (write(work_file,buf,buf_len) != buf_len)
 		{
-			fprintf(stderr,"%s:  open_file:  error writing temporary file\n",error_prefix);
 	                unlink(work_file_name);
-			exit(-1);
+			G_fatal_error("%s:  open_file:  error writing temporary file",error_prefix);
+			exit(EXIT_FAILURE);
 		}
 	}
 	for (row = 0; row < n_rows; row++)
 	{
 		if (G_get_map_row(cell_file,buf + PAD,row) < 0)
 		{
-			fprintf(stderr,"%s:  open_file:  error reading from %s in %s\n",error_prefix,cell,mapset);
 	                unlink(work_file_name);
+			G_fatal_error("%s:  open_file:  error reading from %s in %s",error_prefix,cell,mapset);
 			exit(-1);
 		}
 		if (write(work_file,buf,buf_len) != buf_len)
 		{
-			fprintf(stderr,"%s:  open_file:  error writing temporary file\n",error_prefix);
 	                unlink(work_file_name);
-			exit(-1);
+			G_fatal_error("%s:  open_file:  error writing temporary file",error_prefix);
+			exit(EXIT_FAILURE);
 		}
 	}
 	for (col = 0; col < n_cols; col++)
@@ -154,9 +154,9 @@ int open_file (char *name)
 	{
 		if (write(work_file,buf,buf_len) != buf_len)
 		{
-			fprintf(stderr,"%s:  open_file:  error writing temporary file\n",error_prefix);
 	                unlink(work_file_name);
-			exit(-1);
+			G_fatal_error("%s:  open_file:  error writing temporary file",error_prefix);
+			exit(EXIT_FAILURE);
 		}
 	}
 	n_rows += (PAD << 1);
@@ -176,14 +176,14 @@ close_file (char *name)
 
 	if ((cell_file = G_open_cell_new(name)) < 0)
 	{
-		fprintf(stderr,"%s:  close_cell:  could not open output file %s\n",error_prefix,name);
 	        unlink(work_file_name);
-		exit(-1);
+		G_fatal_error("%s:  close_cell:  could not open output file %s",error_prefix,name);
+		exit(EXIT_FAILURE);
 	}
 	row_count = n_rows - (PAD << 1);
 	col_count = n_cols - (PAD << 1);
-	fprintf(stdout,"Output file %d rows X %d columns\n",row_count,col_count);
-	fprintf(stdout,"Window %d rows X %d columns\n",G_window_rows(),G_window_cols());
+	G_message("Output file %d rows X %d columns",row_count,col_count);
+	G_message("Window %d rows X %d columns",G_window_rows(),G_window_cols());
 	for (row = 0, k = PAD; row < row_count; row++, k++)
 	{
 		buf = get_a_row(k);

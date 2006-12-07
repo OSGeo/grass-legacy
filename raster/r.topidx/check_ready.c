@@ -9,7 +9,7 @@ check_ready(void)
 	retval=0;
 
 	if(!G_find_file("cell",iname,mapset)){
-		fprintf(stderr,"\n** %s - not exists **\n",iname);
+		G_warning("%s - not exists ",iname);
 		retval=1;
 	}
 
