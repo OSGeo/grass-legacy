@@ -458,14 +458,8 @@ int main(int argc, char *argv[])
 /**********end of parser - ******************************/
 
     INPUT();
-    fprintf(stderr, "\n");
-
     calculate();
-    fprintf(stderr, "\n");
-
     OUTGR();
-
-    G_done_msg("");
     exit(EXIT_SUCCESS);
 }
 
