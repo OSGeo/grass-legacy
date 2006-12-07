@@ -256,7 +256,6 @@ main(int argc, char *argv[])
   /* close input cell map and release the row buffer */
   G_close_cell (infd);
   G_free (cell_row);
-  G_message(_("  ...done"));
 
 /* Now raster map is into memory. */
 
@@ -349,11 +348,10 @@ for (t_measure=0; t_measure < 56; t_measure++)
 			G_fatal_error(_("Cannot write to <%s>"), result);
 
 	G_close_cell (outfd);
-	fprintf (stdout, _("Calculated measure #%d (56 measures available).\n"), (t_measure+1));
+	G_message (_("Calculated measure #%d (56 measures available).\n"), (t_measure+1));
 }
    G_free(outrast); 
    G_free (data);
 
-   G_done_msg("");
    exit(EXIT_SUCCESS);
 }
