@@ -37,7 +37,7 @@ atanb(void)
 	ncells = window.rows * window.cols;
 	snatb  = natb;
 
-	fprintf(stderr,"Calculating:");
+	G_message("Calculating:");
 
 	nsink = 0;
 	for(iter=1;natb<ncells;iter++){
@@ -198,7 +198,7 @@ atanb(void)
 
 				if(!nroute){
 					if(verbose){
-						fprintf(stderr,
+						G_message(
 							"Sink or boundary node "
 							"at %d, %d\n",i,j);
 					}
@@ -301,6 +301,6 @@ atanb(void)
 		}
 	}
 	G_percent(natb-snatb, ncells-snatb, 1);
-	fprintf(stderr,"\nNumber of sinks or boundaries: %d\n",nsink);
+	G_message("Number of sinks or boundaries: %d",nsink);
 }
 

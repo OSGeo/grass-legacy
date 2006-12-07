@@ -16,6 +16,7 @@
 #include <stdio.h>
 #include <unistd.h>
 #include <grass/gis.h>
+#include <grass/glocale.h>
 #include "local_proto.h"
 
 #define LEFT 1
@@ -63,11 +64,11 @@ int thin_lines (int iterations)
 	}					/* row-loop */
 	if (box_right < box_left || box_bottom < box_top)
 	{
-		fprintf(stderr,"%s: could not find bounding box for lines\n",error_prefix);
 		unlink(work_file_name);
-		exit(-1);				/* no bounding box found */
+		G_fatal_error("%s: could not find bounding box for lines",error_prefix);
+		exit(EXIT_FAILURE);				/* no bounding box found */
 	}
-	fprintf(stdout,"Bounding box:  l = %d, r = %d, t = %d, b = %d\n",box_left,box_right,box_top,box_bottom);
+	G_message("Bounding box:  l = %d, r = %d, t = %d, b = %d",box_left,box_right,box_top,box_bottom);
 /*
  * thin - thin lines to a single pixel width
  *
@@ -113,7 +114,7 @@ int thin_lines (int iterations)
 	   i = 1;
 	   while((deleted>0)&&(i<=iterations))  /* it must be done in <= iterations passes */
 	   {
-	      fprintf(stdout, "   Pass number %d\n", i); 
+	      G_message(_("Pass number %d"), i); 
 	      i++;
 	      deleted = 0;
 	      for(j=1;j<=4;j++)
@@ -163,12 +164,12 @@ int thin_lines (int iterations)
 		        med = bottom;
                     }        /* end row loop */
               } /* j-loop */
-	      fprintf (stdout,"        Deleted %d  pixels \n", deleted);
+	      G_message(_("Deleted %d  pixels "), deleted);
         } /* while delete >0 */
 	if ( (deleted == 0) && (i <= iterations) )
-	    fprintf(stdout, "Thinning completed successfully.\n");
+	    G_message(_("Thinning completed successfully."));
 	else
-	    fprintf(stdout, "Thinning not completed, consider to increase 'iterations' parameter.\n");
+	    G_message(_("Thinning not completed, consider to increase 'iterations' parameter."));
 
 	return 0;
 }
