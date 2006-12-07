@@ -8,6 +8,7 @@
 
 #include <stdio.h>
 #include <grass/gis.h>
+#include <grass/glocale.h>
 #include "local_proto.h"
 
 FCELL **readcell(
@@ -22,7 +23,7 @@ int 	fdi)			/* handle of input layer		 */
 
 	ibuffer = (FCELL **) G_malloc(sizeof(FCELL **) * nrows);
 
-	fprintf(stderr,"Allocating memory and reading input map... ");
+	G_message(_("Allocating memory and reading input map... "));
 	G_percent(0, nrows, 5);
 	for (row = 0; row < nrows; row++){
 		ibuffer[row] = (FCELL *) G_allocate_raster_buf(FCELL_TYPE);
