@@ -151,14 +151,14 @@ proc mkmainPanel { BASE } {
 	set n_arrow_y 999
 	set n_arrow_z 999
 	set arw_clr #000000
-	set arw_text_clr #FFFFFF
+	set arw_text_clr #DDDDDD
 
 	#Set Scalebar defaults
 	set scalebar_x 999
 	set scalebar_y 999
 	set scalebar_z 999
 	set bar_clr #000000
-	set bar_text_clr #FFFFFF
+	set bar_text_clr #DDDDDD
 
 	#pack frames
 	pack [frame $BASE.midt -relief flat -bd 0] -side top -expand 1 -fill x -padx 5 -pady 5
