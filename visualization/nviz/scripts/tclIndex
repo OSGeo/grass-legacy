@@ -27,6 +27,9 @@ set auto_index(multimap_browser_select_mapset) [list source [file join $dir mult
 set auto_index(mkfringePanel) [list source [file join $dir panel_fringe.tcl]]
 set auto_index(change_fringe_color) [list source [file join $dir panel_fringe.tcl]]
 
+set auto_index(mkscalePanel) [list source [file join $dir panel_scale.tcl]]
+set auto_index(place_scale) [list source [file join $dir panel_scale.tcl]]
+
 set auto_index(mkarrowPanel) [list source [file join $dir panel_arrow.tcl]]
 set auto_index(place_narrow) [list source [file join $dir panel_arrow.tcl]]
 
