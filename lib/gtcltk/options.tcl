@@ -35,6 +35,11 @@ fontcreate textfont -family Courier -size -12
 fontcreate bolddefault -family Helvetica -size 12 -weight bold
 fontcreate introfont -family Helvetica -size 14 -weight bold
 
+global bolddefault
+global introfont
+global textfont
+global default
+
 ##############################################################################
 # Configure balloon help:
 
