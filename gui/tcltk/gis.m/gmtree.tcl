@@ -51,6 +51,7 @@ proc GmTree::create { mon } {
 	global options
 	global filename
 	global keycontrol
+	global bolddefault
 	
 	set currpg ""
 	set pth ""
@@ -64,6 +65,9 @@ proc GmTree::create { mon } {
 
 	# destroy old panel with options
     destroy $options.fr
+
+	set pgtitle [label $pg($mon).title -text "Map Layers for Display $mon" -font bolddefault]
+	pack $pgtitle -side top
 
 	set sw    [ScrolledWindow $pg($mon).sw \
 		-relief flat -borderwidth 0 ]
