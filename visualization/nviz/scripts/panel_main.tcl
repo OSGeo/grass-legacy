@@ -31,6 +31,9 @@
 # procedure to make main control area
 ###########################################################################
 
+global arw_clr arw_text_clr
+
+
 proc mkmainPanel { BASE } {
 	global Nv_
 	global XY
@@ -44,6 +47,33 @@ proc mkmainPanel { BASE } {
 	global bar_clr bar_text_clr
 	global fringe_nw fringe_ne fringe_sw fringe_se
 	global Nauto_draw
+
+	#Set defaults
+	set surface 1
+	set vector 1
+	set sites 1
+	set volume 1
+
+	set legend 0
+	set labels 0
+	set n_arrow 0
+	set scalebar 0
+	set fringe 0
+	set fringe_color #AAAAAA
+
+	#Set North Arrow defaults
+	set n_arrow_x 999
+	set n_arrow_y 999
+	set n_arrow_z 999
+	set arw_clr #000000
+	set arw_text_clr #DDDDDD
+
+	#Set Scalebar defaults
+	set scalebar_x 999
+	set scalebar_y 999
+	set scalebar_z 999
+	set bar_clr #000000
+	set bar_text_clr #DDDDDD
 
 	catch {destroy $BASE}
 
@@ -132,33 +162,6 @@ proc mkmainPanel { BASE } {
 
 	pack $labl2	 $BASE.redrawf.f11.m1 $BASE.redrawf.f11.m2 -side left \
 		-expand 1 -fill x
-
-	#Set defaults
-	set surface 1
-	set vector 1
-	set sites 1
-	set volume 1
-
-	set legend 0
-	set labels 0
-	set n_arrow 0
-	set scalebar 0
-	set fringe 0
-	set fringe_color #AAAAAA
-
-	#Set North Arrow defaults
-	set n_arrow_x 999
-	set n_arrow_y 999
-	set n_arrow_z 999
-	set arw_clr #000000
-	set arw_text_clr #DDDDDD
-
-	#Set Scalebar defaults
-	set scalebar_x 999
-	set scalebar_y 999
-	set scalebar_z 999
-	set bar_clr #000000
-	set bar_text_clr #DDDDDD
 
 	#pack frames
 	pack [frame $BASE.midt -relief flat -bd 0] -side top -expand 1 -fill x -padx 5 -pady 5
