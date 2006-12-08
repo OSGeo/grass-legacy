@@ -1,6 +1,6 @@
 ##########################################################################
 # 
-# Panel to facilitate scale placement for finishing images produced
+# Panel to facilitate north arrow placement for finishing images produced
 # by nviz.
 #
 ##########################################################################
@@ -25,23 +25,19 @@
 # Panel specific globals
 global Nv_
 
-# Font Type: Times, Helvetica, Courier
-# set Nv_(labelFontType) Times
-
-# Font Weight: Italic, Bold
-# set Nv_(labelFontWeight) Bold
-
-# Font Point Size: varies
-# set Nv_(labelFontSize) 12
 
 ##########################################################################
 
 proc mkarrowPanel { BASE } {
     global Nv_
     global n_arrow_size n_arrow
+	global arw_clr arw_text_clr
     global nviztxtfont
-
+    
+    # defaults
+    set arw_clr #000000
     set n_arrow_size 100
+	set arw_text_clr #000000
 
     set panel [St_create {window name size priority} $BASE "North arrow" 2 5]
     frame $BASE -relief flat -borderwidth 0
@@ -49,17 +45,29 @@ proc mkarrowPanel { BASE } {
 
     # This section contains widgets for placing the north arrow
     set rbase1 [frame $BASE.arrow]
-    Button $rbase1.place -text "Place arrow" -bd 1 \
-	 -command "bind_mouse $Nv_(TOP).canvas"
     LabelEntry $rbase1.arrow_size -relief sunken -entrybg white \
         -textvariable n_arrow_size -width 8 \
-        -label "arrow size (in map units) " -labelfont $nviztxtfont
-    pack $rbase1.place -expand yes -side left -expand no -fill none
-    pack $rbase1.arrow_size -side right -expand no -fill none
+        -label "Arrow size (in map units): " -fg black
+    pack $rbase1.arrow_size -side left -expand no -fill none
+    
+    $rbase1.arrow_size bind <Key> {if {$Nauto_draw == 1} {Ndraw_all}} 
+
+
+    Button $rbase1.color -text "Color" \
+		-bg $arw_clr -width 8 -bd 1 \
+		-command "change_arrow_color $rbase1.color" \
+		-fg "#ffffff"
+    pack $rbase1.color -side right \
+    	-expand yes -fill none -anchor e
+
 	pack $rbase1 -side top -expand yes -fill both -padx 3 -pady 4
 
     # close panel section
     set rbase2 [frame $BASE.button]
+    Button $rbase2.place -text "Place arrow" -bd 1 \
+	 -command "bind_mouse $Nv_(TOP).canvas"
+    pack $rbase2.place -expand yes -side left -expand no -fill none
+
     button $rbase2.close -text "Close" -command "Nv_closePanel $BASE" \
 		-anchor se -bd 1
 	pack $rbase2.close -side right -fill none -expand no
@@ -78,6 +86,40 @@ proc bind_mouse { W } {
 	}
 }
 
+#############################################################
+
+# Simple routine to change the color of Arrow. Currently text and arrow are set
+# to same color, though text color not yet working.
+proc change_arrow_color { me } {
+	global Nv_
+	global arw_clr arw_text_clr
+	global Nauto_draw
+	
+	# set color button background to match arrow color
+    set clr [lindex [$me configure -bg] 4]
+    set clr [mkColorPopup .colorpop arw_clr $clr 1]
+    set arw_clr $clr
+    set arw_text_clr $clr
+    $me configure -bg $clr
+
+	# set color button text to black or white depending on
+	# darkness of color
+    set clrnum [split $clr {}]
+    set rhex "0x[lindex $clrnum 1][lindex $clrnum 2]"
+    set ghex "0x[lindex $clrnum 3][lindex $clrnum 4]"
+    set bhex "0x[lindex $clrnum 5][lindex $clrnum 6]"
+    set clrsum [expr $rhex + $ghex +$bhex]
+   
+    if {$clrsum < 400 } {
+	   $me configure -fg "white"
+	 } else {
+	   $me configure -fg "black"
+	 }
+	if {$Nauto_draw == 1} {
+		Ndraw_all
+	} 
+	 
+}
 ###########################
 proc place_narrow {W x y} {
 
