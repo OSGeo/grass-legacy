@@ -1,9 +1,9 @@
 /*!
 \page rfc2_psc RFC 2: Legal aspects of code contributions
 
-Author: Markus Neteler<br>
+Author: Markus Neteler (based on GDAL.org/RFC3)<br>
 Contact: neteler AT itc.it<br>
-Status: Proposed<br>
+Status: Adopted<br>
 
 \section legal Legal aspects
 
