@@ -36,7 +36,7 @@ proc mkscalePanel { BASE } {
 
     # defaults
     set scalebar_size 1000
-    set bar_clr "#00000"
+    set bar_clr "#000000"
     set bar_text_clr "#DDDDDD"
 
     set panel [St_create {window name size priority} $BASE "Scale bar" 2 5]
