@@ -1,22 +1,25 @@
-# translation of grasslibs_de.po to Latvian
+# translation of grasslibs_lv.po to Latvian
 # This file is distributed under the same license as the GRASS package.
 # Copyright (C) 2005, GRASS Development Team
-# Peteris Bruns <peteris.bruns@gmail.com>, 2005
+# Peteris Bruns <peteris.bruns@gmail.com>, 2005.
+# Maris Nartiss <maris.kde@gmail.com>, 2006.
 msgid ""
 msgstr ""
 "Project-Id-Version: grasslibs_lv\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2006-10-27 12:46+0200\n"
-"PO-Revision-Date: 2005-06-26 18:10+0200\n"
-"Last-Translator: Pēteris Brūns <peteris.bruns@gmail.com>\n"
+"PO-Revision-Date: 2006-12-09 01:00+0200\n"
+"Last-Translator: Maris Nartiss <maris.kde@gmail.com>\n"
 "Language-Team: Latvian <translations@grass.itc.it>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Generator: KBabel 1.3\n"
+"X-Generator: KBabel 1.11.4\n"
 "X-Poedit-Language: Latvian\n"
 "X-Poedit-Country: LATVIA\n"
 "X-Poedit-SourceCharset: utf-8\n"
+"Plural-Forms:  nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n != 0 ? 1 : "
+"2);\n"
 
 #: ../lib/db/dbmi_base/legal_dbname.c:24
 #, fuzzy, c-format
@@ -37,16 +40,16 @@ msgstr "Nepieņemams vektoru kartes nosaukums <%s>. Zīme <%c> nav atļauta.\n"
 #: ../lib/gis/ask_cell.c:56 ../lib/gis/ask_cell.c:75 ../lib/gis/ask_cell.c:94
 #: ../lib/gis/ask_cell.c:101
 msgid "with titles"
-msgstr "ar daļām"
+msgstr "ar virsrakstiem"
 
 #: ../lib/gis/ask_cell.c:113
 msgid "(no title)"
-msgstr "(nav titula)"
+msgstr "(nav virsraksta)"
 
 #: ../lib/gis/list.c:123
 #, c-format
 msgid "no %s files available in current mapset\n"
-msgstr "nav %s faili pieejami tekošajā karšu biblotējā\n"
+msgstr "nav %s faili pieejami pašreizējā karšu biblotēkā\n"
 
 #: ../lib/gis/list.c:125
 #, c-format
@@ -56,7 +59,7 @@ msgstr "nav %s faili pieejami karšu biblotēkā %s\n"
 #: ../lib/gis/list.c:139
 #, c-format
 msgid "hit RETURN to continue -->"
-msgstr "apstiprini RETURN lai turpinātu -->"
+msgstr "spied ENTER lai turpinātu -->"
 
 #: ../lib/gis/list.c:223
 #, c-format
@@ -71,7 +74,7 @@ msgstr "krāsu atbalsts [%s] karšu biblotēkā [%s] %s"
 #: ../lib/gis/histogram.c:61
 #, c-format
 msgid "Histogram for [%s in %s] missing (run r.support)"
-msgstr "Histogramma preikš [%s iekš %s] pietrūkst (palaizt r.support)"
+msgstr "Histogramma preikš [%s iekš %s] pietrūkst (palaist r.support)"
 
 #: ../lib/gis/histogram.c:69
 #, c-format
@@ -155,14 +158,14 @@ msgid "type for writing floating maps = %d"
 msgstr "eksist;ejošām rastra kartēm %d\n"
 
 #: ../lib/gis/debug.c:92
-#, fuzzy, c-format
+#, c-format
 msgid "current window = %p"
-msgstr "tekošais logs = %p\n"
+msgstr "pašreizējais logs = %p"
 
 #: ../lib/gis/debug.c:93
-#, fuzzy, c-format
+#, c-format
 msgid "Flag: window set? %d"
-msgstr "Karogs: izvēlēties logu? %d\n"
+msgstr "Karogs: izvēlēties logu? %d"
 
 #: ../lib/gis/debug.c:94
 #, fuzzy, c-format
@@ -170,59 +173,59 @@ msgid "File descriptor for automatic mask %d"
 msgstr "Faila deskriptors automātiskai slēpšanai %d\n"
 
 #: ../lib/gis/debug.c:95
-#, fuzzy, c-format
+#, c-format
 msgid "Flag denoting automatic masking %d"
-msgstr "Karogs atņemt automātisko maskēšanu %d\n"
+msgstr "Karogs atņemt automātisko maskēšanu %d"
 
 #: ../lib/gis/debug.c:96
-#, fuzzy, c-format
+#, c-format
 msgid "CELL mask buffer %p"
-msgstr "CELL maskas bufferis = %p\n"
+msgstr "CELL maskas bufferis %p"
 
 #: ../lib/gis/debug.c:97
-#, fuzzy, c-format
+#, c-format
 msgid "buffer for reading null rows %p"
-msgstr "rezerve tukšo rindu lasīšanai %p\n"
+msgstr "rezerve tukšo rindu lasīšanai %p"
 
 #: ../lib/gis/debug.c:98
-#, fuzzy, c-format
+#, c-format
 msgid "Pre/post compressed data buffer %p"
-msgstr "Pirms/pēc kompresēto datu rzerves buferis %p\n"
+msgstr "Pirms/pēc kompresēto datu rzerves buferis %p"
 
 #: ../lib/gis/debug.c:99
-#, fuzzy, c-format
+#, c-format
 msgid "sizeof compressed_buf %d"
-msgstr "compressed_buf izmērs %d\n"
+msgstr "compressed_buf izmērs %d"
 
 #: ../lib/gis/debug.c:100
-#, fuzzy, c-format
+#, c-format
 msgid "work data buffer %p"
-msgstr "darba bufera izmērs %p\n"
+msgstr "darba bufera izmērs %p"
 
 #: ../lib/gis/debug.c:101
-#, fuzzy, c-format
+#, c-format
 msgid "sizeof work_buf %d"
-msgstr "work_buf izmērs %d\n"
+msgstr "work_buf izmērs %d"
 
 #: ../lib/gis/debug.c:102
-#, fuzzy, c-format
+#, c-format
 msgid "sizeof null_buf %d"
-msgstr "null_buf izmērs%d\n"
+msgstr "null_buf izmērs%d"
 
 #: ../lib/gis/debug.c:103
-#, fuzzy, c-format
+#, c-format
 msgid "sizeof mask_buf %d"
-msgstr "mask_buf  izmērs %d\n"
+msgstr "mask_buf  izmērs %d"
 
 #: ../lib/gis/debug.c:104
-#, fuzzy, c-format
+#, c-format
 msgid "Histogram request %d"
-msgstr "Histogrammas prasības%d\n"
+msgstr "Histogrammas pieprasījums %d"
 
 #: ../lib/gis/debug.c:106
-#, fuzzy, c-format
+#, c-format
 msgid "G_dump: file #%d"
-msgstr "G_dump: fails #%d\n"
+msgstr "G_dump: fails #%d"
 
 #: ../lib/gis/debug.c:107
 #, fuzzy, c-format
@@ -235,14 +238,14 @@ msgid "Cell header %p"
 msgstr "Šūnas iesākums  %p\n"
 
 #: ../lib/gis/debug.c:109
-#, fuzzy, c-format
+#, c-format
 msgid "Table reclass %p"
-msgstr "Tabulas pārklasificēšana %p\n"
+msgstr "Tabulas pārklasificēšana %p"
 
 #: ../lib/gis/debug.c:110
-#, fuzzy, c-format
+#, c-format
 msgid "Cell stats %p"
-msgstr "Šūnu statistika %p\n"
+msgstr "Šūnu statistika %p"
 
 #: ../lib/gis/debug.c:111
 #, fuzzy, c-format
@@ -255,19 +258,19 @@ msgid "float Range structure %p"
 msgstr "plūstoša loka struktūra %p\n"
 
 #: ../lib/gis/debug.c:113
-#, fuzzy, c-format
+#, c-format
 msgid "want histogram?  %d"
-msgstr "vēlies histogrammu? %d\n"
+msgstr "vēlies histogrammu? %d"
 
 #: ../lib/gis/debug.c:114
-#, fuzzy, c-format
+#, c-format
 msgid "Automatic reclass flag %d"
-msgstr "Automātiskās pārklasificēšanas karogs%d\n"
+msgstr "Automātiskās pārklasificēšanas karogs %d"
 
 #: ../lib/gis/debug.c:115
-#, fuzzy, c-format
+#, c-format
 msgid "File row addresses %p"
-msgstr "Faila līnijas adrese%p\n"
+msgstr "Faila līnijas adrese %p"
 
 #: ../lib/gis/debug.c:116
 #, fuzzy, c-format
@@ -280,79 +283,79 @@ msgid "Data to window row constants %f,%f"
 msgstr "Data to window row constants %f,%f\n"
 
 #: ../lib/gis/debug.c:118
-#, fuzzy, c-format
+#, c-format
 msgid "Current data row in memory %d"
-msgstr "Tekošā datu rinda/līnija atmiņā  %d\n"
+msgstr "Tekošā datu rinda/līnija atmiņā  %d"
 
 #: ../lib/gis/debug.c:119
-#, fuzzy, c-format
+#, c-format
 msgid "Current null row in memory %d"
-msgstr "Tekošā nulles līnija atmiņā %d\n"
+msgstr "Tekošā nulles līnija atmiņā %d"
 
 #: ../lib/gis/debug.c:120
-#, fuzzy, c-format
+#, c-format
 msgid "nbytes per cell for current row %d"
-msgstr "nbytes uz šūnu tekošājai rindai %d\n"
+msgstr "nbytes uz šūnu tekošājai rindai %d"
 
 #: ../lib/gis/debug.c:121
-#, fuzzy, c-format
+#, c-format
 msgid "Decompressed data buffer %s"
-msgstr "Dekompresēto datu buferis %s\n"
+msgstr "Dekompresēto datu buferis %s"
 
 #: ../lib/gis/debug.c:122
-#, fuzzy, c-format
+#, c-format
 msgid "bytes per cell %d"
-msgstr "baiti uz šūnu %d\n"
+msgstr "baiti uz šūnu %d"
 
 #: ../lib/gis/debug.c:123
-#, fuzzy, c-format
+#, c-format
 msgid "type: int, float or double map %d"
-msgstr "ieraksti: int,float vai double karti %d\n"
+msgstr "tips: int,float vai double karte %d"
 
 #: ../lib/gis/debug.c:124
-#, fuzzy, c-format
+#, c-format
 msgid "Temporary name for NEW files %s"
-msgstr "Pagaidu v;ards JAUNAJAM failam%s\n"
+msgstr "Pagaidu vārds JAUNAJAM failam %s"
 
 #: ../lib/gis/debug.c:125
-#, fuzzy, c-format
+#, c-format
 msgid "Temporary name for NEW NULL files %s"
-msgstr "Pagaidu nosaukums NEW NULL failiem %s\n"
+msgstr "Pagaidu nosaukums NEW NULL failiem %s"
 
 #: ../lib/gis/debug.c:126
-#, fuzzy, c-format
+#, c-format
 msgid "for existing raster maps %d"
-msgstr "eksist;ejošām rastra kartēm %d\n"
+msgstr "eksistējošām rastra kartēm %d"
 
 #: ../lib/gis/debug.c:127
-#, fuzzy, c-format
+#, c-format
 msgid "Name of open file %s"
-msgstr "Atvērtā faila nosaukums%s\n"
+msgstr "Atvērtā faila nosaukums %s"
 
 #: ../lib/gis/debug.c:128
-#, fuzzy, c-format
+#, c-format
 msgid "Mapset of open file %s"
-msgstr "Atvērto failu karšu biblotēka %s\n"
+msgstr "Atvērto failu karšu biblotēka %s"
 
 #: ../lib/gis/debug.c:129
-#, fuzzy, c-format
+#, c-format
 msgid "io error warning given %d"
-msgstr "sniegts io kļūdas brīdinājums %d\n"
+msgstr "sniegts io kļūdas brīdinājums %d"
 
 #: ../lib/gis/debug.c:130
-#, fuzzy, c-format
+#, c-format
 msgid "xdr stream for reading fp %p"
-msgstr "xdr plūsma fp nolasīšanai %p\n"
+msgstr "xdr plūsma fp nolasīšanai %p"
 
 #: ../lib/gis/debug.c:131
-#, fuzzy, c-format
+#, c-format
 msgid "NULL_ROWS array[%d] = %p"
-msgstr "NULL_ROWS masīvs[%d] = %p\n"
+msgstr "NULL_ROWS masīvs[%d] = %p"
 
 #: ../lib/gis/debug.c:132
-#, fuzzy, c-format
+#, c-format
 msgid "data buffer for reading null rows %p"
-msgstr "datu buferis nolasot nullees līnijas %p\n"
+msgstr "datu buferis nolasot nullees līnijas %p"
 
 #: ../lib/gis/debug.c:133
 #, fuzzy, c-format
@@ -365,9 +368,8 @@ msgid "Quant ptr = %p"
 msgstr ""
 
 #: ../lib/gis/debug.c:135
-#, fuzzy
 msgid "G_dump: end"
-msgstr "G_dump: fails #%d\n"
+msgstr "G_dump: beigas"
 
 #: ../lib/gis/put_cellhd.c:26
 #, c-format
@@ -427,9 +429,9 @@ msgid "Other Projection"
 msgstr "Cita Projekcija"
 
 #: ../lib/gis/done_msg.c:6
-#, fuzzy, c-format
+#, c-format
 msgid "%s complete. %s"
-msgstr "%s izpildīts. %s\n"
+msgstr "%s izpildīts. %s"
 
 #: ../lib/gis/get_datum_name.c:53
 #, c-format
@@ -438,7 +440,7 @@ msgid ""
 "Please specify datum name\n"
 msgstr ""
 "\n"
-"Lūdzu norādi datum nosaukumu\n"
+"Lūdzu norādi datuma nosaukumu\n"
 
 #: ../lib/gis/get_datum_name.c:54
 #, c-format
@@ -463,11 +465,11 @@ msgid ""
 "invalid datum\n"
 msgstr ""
 "\n"
-"nederīgs datum\n"
+"nederīgs datums\n"
 
 #: ../lib/gis/proj3.c:68 ../lib/vector/Vlib/header.c:458
 msgid "Unknown projection"
-msgstr "Nezināma Projekcija"
+msgstr "Nezināma projekcija"
 
 #: ../lib/gis/parser.c:355
 msgid ""
@@ -478,64 +480,52 @@ msgstr ""
 "1000 and inhab >= 10000)"
 
 #: ../lib/gis/parser.c:365 ../lib/gis/parser.c:390
-#, fuzzy
 msgid "Name of input raster map"
-msgstr "Ieejas rastra faila nosaukums"
+msgstr "Ievades rastra faila nosaukums"
 
 #: ../lib/gis/parser.c:374 ../lib/gis/parser.c:399
-#, fuzzy
 msgid "Name of input raster map(s)"
-msgstr "Ieejas rastra faila nosaukums"
+msgstr "Ievades rastra failu nosaukumi"
 
 #: ../lib/gis/parser.c:382
-#, fuzzy
 msgid "Name for output raster map"
-msgstr "Izejas rastra faila nosaukums"
+msgstr "Izvades rastra faila nosaukums"
 
 #: ../lib/gis/parser.c:407
-#, fuzzy
 msgid "Name of base raster map"
-msgstr "Ieejas rastra faila nosaukums"
+msgstr "Bāzes rastra faila nosaukums"
 
 #: ../lib/gis/parser.c:415
-#, fuzzy
 msgid "Name of cover raster map"
-msgstr "Izejas rastra faila nosaukums"
+msgstr "Pārklājuma rastra faila nosaukums"
 
 #: ../lib/gis/parser.c:423
-#, fuzzy
 msgid "Name of elevation raster map"
-msgstr "Ieejas rastra faila nosaukums"
+msgstr "Reljefa rastra faila nosaukums"
 
 #: ../lib/gis/parser.c:432
-#, fuzzy
 msgid "Name of elevation raster map(s)"
-msgstr "Ieejas rastra faila nosaukums"
+msgstr "Reljefa rastra faila(u) nosaukums(i)"
 
 #: ../lib/gis/parser.c:442
-#, fuzzy
 msgid "Name of input raster3d map"
-msgstr "Ieejas rastra faila nosaukums"
+msgstr "Ieejas 3drastra faila nosaukums"
 
 #: ../lib/gis/parser.c:451
-#, fuzzy
 msgid "Name of input raster3d map(s)"
-msgstr "Ieejas rastra faila nosaukums"
+msgstr "Ieejas 3drastra faila nosaukums(i)"
 
 #: ../lib/gis/parser.c:459
-#, fuzzy
 msgid "Name for output raster3d map"
-msgstr "Izejas rastra faila nosaukums"
+msgstr "Izejas 3drastra faila nosaukums"
 
 #: ../lib/gis/parser.c:469 ../lib/gis/parser.c:485
-#, fuzzy
 msgid "Name of input vector map"
-msgstr "Ieejas vektora nosaukums"
+msgstr "Ieejas vektorkartes nosaukums"
 
 #: ../lib/gis/parser.c:477
-#, fuzzy
 msgid "Name for output vector map"
-msgstr "Izejas vektora nosaukums"
+msgstr "Izejas vektorkartes nosaukums"
 
 #: ../lib/gis/parser.c:494
 msgid "Type"
@@ -550,9 +540,8 @@ msgid "Category value"
 msgstr "Kategorijas vērtība"
 
 #: ../lib/gis/parser.c:514
-#, fuzzy
 msgid "Category values"
-msgstr "Kategorijas vērtības"
+msgstr "Kategoriju vērtības"
 
 #: ../lib/gis/parser.c:515
 msgid "Example: 1,3,7-9,13"
@@ -561,7 +550,7 @@ msgstr "Piemēram: 1,3,7-9,13"
 #: ../lib/gis/parser.c:783
 #, c-format
 msgid "Sorry <%s> is not a valid option\n"
-msgstr "Atvainojiet<%s> ir nedrīgs parametrs\n"
+msgstr "Atvainojiet, <%s> ir nedrīgs parametrs\n"
 
 #: ../lib/gis/parser.c:888
 #, c-format
@@ -578,6 +567,8 @@ msgid ""
 "\n"
 "Keywords:\n"
 msgstr ""
+"\n"
+"Atslēgvārdi:\n"
 
 #: ../lib/gis/parser.c:896
 #, c-format
@@ -628,12 +619,12 @@ msgstr "  %*s   noklusētais: %s\n"
 #: ../lib/gis/parser.c:1647
 #, c-format
 msgid "  %*s   options: "
-msgstr "  %*s   noteikumi: "
+msgstr "  %*s   opcijas: "
 
 #: ../lib/gis/parser.c:1694 ../lib/gis/parser.c:1711
 #, c-format
 msgid "Sorry, <%c> is not a valid flag\n"
-msgstr "Atvainojiet, <%c> ir nedrīga pazīme\n"
+msgstr "Atvainojiet, <%c> ir nedrīgs karogs\n"
 
 #: ../lib/gis/parser.c:1766
 #, c-format
@@ -652,7 +643,7 @@ msgid ""
 "Error: illegal range syntax for parameter <%s>\n"
 msgstr ""
 "\n"
-"Kļūda: nepieņemems parametra apraksts <%s>\n"
+"Kļūda: nepieņemama parametra sintakse <%s>\n"
 
 #: ../lib/gis/parser.c:1860
 #, c-format
@@ -700,7 +691,7 @@ msgid ""
 "Error: option <%s> must be provided in multiples of %d\n"
 msgstr ""
 "\n"
-"Kļūda: opcija/pazīme <%s> ir jabūt paredzētai daudzkaitlīgi no %d\n"
+"Kļūda: opcija/pazīme <%s> ir jabūt paredzētai daudzskaitlīgi no %d\n"
 
 #: ../lib/gis/parser.c:2133
 #, c-format
@@ -719,7 +710,7 @@ msgid ""
 "FLAG: Set the following flag?\n"
 msgstr ""
 "\n"
-"KAROGS: Likts sekojošo pazīmi/karogu?\n"
+"KAROGS: Likt sekojošo pazīmi/karogu?\n"
 
 #: ../lib/gis/parser.c:2249
 #, c-format
@@ -753,12 +744,12 @@ msgstr "prasītais: %s\n"
 #: ../lib/gis/parser.c:2257
 #, c-format
 msgid "multiple: %s\n"
-msgstr "daudzsaitlīgs: %s\n"
+msgstr "daudzskaitlīgs: %s\n"
 
 #: ../lib/gis/parser.c:2259
 #, c-format
 msgid " options: %s\n"
-msgstr " opcijas/pazīmes: %s\n"
+msgstr " opcijas: %s\n"
 
 #: ../lib/gis/parser.c:2274
 #, c-format
@@ -830,12 +821,12 @@ msgstr "kategoriju atbalsts vektoru failam [%s] karšu biblotēkā [%s] %s"
 
 #: ../lib/gis/mapset.c:41
 msgid "MAPSET is not set"
-msgstr "MAPSET/KARŠU BIBLOTĒKA nav noteikta"
+msgstr "KARŠU KOPA nav noteikta"
 
 #: ../lib/gis/mapset.c:60 ../lib/gis/gisinit.c:43
 #, c-format
 msgid "MAPSET %s not found"
-msgstr "MAPSET/KARŠU BIBLOTĒKA %s nav atrasta"
+msgstr "KARŠU KOPA %s nav atrasta"
 
 #: ../lib/gis/get_window.c:69 ../lib/gis/get_window.c:88
 #, c-format
@@ -843,7 +834,7 @@ msgid ""
 "region for current mapset %s\n"
 "run \"g.region\""
 msgstr ""
-"tekošās karšu biblotēkas reģions %s\n"
+"pašreizejās karšu biblotēkas reģions %s\n"
 "palaižot \"g.region\""
 
 #: ../lib/gis/get_window.c:124
@@ -867,12 +858,12 @@ msgstr ""
 #: ../lib/gis/datum.c:172 ../lib/proj/datum.c:394 ../lib/proj/datum.c:480
 #, c-format
 msgid "unable to open datum table file: %s"
-msgstr "neispējami atvērt datum tabulas failu: %s"
+msgstr "neispējami atvērt datumu tabulas failu: %s"
 
 #: ../lib/gis/datum.c:196 ../lib/proj/datum.c:407 ../lib/proj/datum.c:494
 #, c-format
 msgid "error in datum table file, line %d"
-msgstr "kļūda datum tabulas failā, līnija  %d"
+msgstr "kļūda datumu tabulas failā, līnija  %d"
 
 #: ../lib/gis/closecell.c:229
 #, c-format
@@ -894,9 +885,8 @@ msgid ""
 msgstr ""
 
 #: ../lib/gis/closecell.c:357
-#, fuzzy
 msgid "unable to write quant file!"
-msgstr "neiespējami izveidot jaunu procesu"
+msgstr "neiespējami rakstīt quant failu!"
 
 #: ../lib/gis/closecell.c:406
 msgid "unable to write f_format file for CELL maps"
@@ -1006,7 +996,7 @@ msgid ""
 "**<%s> illegal name **\n"
 msgstr ""
 "\n"
-"**<%s> ineatļauts nosaukums **\n"
+"**<%s> neatļauts nosaukums **\n"
 
 #: ../lib/gis/ask.c:523
 #, c-format
@@ -1103,15 +1093,14 @@ msgstr "%s pēc adreses nav atrasts fails %s\n"
 #: ../lib/gis/get_projinfo.c:24 ../lib/gis/get_projinfo.c:52
 #, c-format
 msgid "ERROR in reading %s file for location %s\n"
-msgstr "KĻŪDA nolasot failu %s pēc trašanās vietas %s\n"
+msgstr "KĻŪDA nolasot failu %s pēc atrašanās vietas %s\n"
 
 #: ../lib/gis/system.c:83
-#, fuzzy
 msgid "Can not create a new process!"
-msgstr "neiespējami izveidot jaunu procesu"
+msgstr "Nevar izveidot jaunu procesu!"
 
 #: ../lib/gis/location.c:49
-#, fuzzy, c-format
+#, c-format
 msgid "LOCATION << %s >> not available"
 msgstr "ATRAŠANĀS VIETA  << %s >>  nav pieejama"
 
@@ -1129,7 +1118,7 @@ msgstr "G_gisinit() ir jābūt vispirms izsauktam. "
 
 #: ../lib/gis/null_val.c:117
 msgid "Please advise GRASS developers of this error.\n"
-msgstr "Lūdzu dod padomu GRASS izstrādātājiem par šo kļūdu.\n"
+msgstr "Lūdzu dod ziņu GRASS izstrādātājiem par šo kļūdu.\n"
 
 #: ../lib/gis/null_val.c:231
 msgid "G_set_null_value: wrong data type!"
@@ -1138,7 +1127,7 @@ msgstr "G_set_null_value: nepareizs datu tips!"
 #: ../lib/gis/format.c:162
 #, c-format
 msgid "Fail of initial read of compressed file [%s in %s]"
-msgstr "Fail of initial read of compressed file [%s in %s]"
+msgstr "Izgāzusies arhivētā faila lasīšanas inicializācija [%s iekš %s]"
 
 #: ../lib/gis/get_ellipse.c:81
 #, c-format
@@ -1205,7 +1194,7 @@ msgstr ""
 
 #: ../lib/gis/reclass.c:236
 msgid "Illegal reclass request"
-msgstr "Netļauts klases pieprasījums"
+msgstr "Netļauts pārklasificēšanas pieprasījums"
 
 #: ../lib/gis/reclass.c:241
 msgid "Illegal reclass type"
@@ -1262,9 +1251,9 @@ msgid "xdr_double failed for index %d of row %d"
 msgstr ""
 
 #: ../lib/gis/put_row.c:769
-#, fuzzy, c-format
+#, c-format
 msgid "unable to find a temporary null file %s"
-msgstr "neispējami atvērt datum tabulas failu: %s"
+msgstr "neispējami atrast pagaidu null failu: %s"
 
 #: ../lib/gis/put_row.c:790 ../lib/gis/put_row.c:796
 #, c-format
@@ -1282,9 +1271,8 @@ msgid "Cannot write quant rules for map %s"
 msgstr ""
 
 #: ../lib/gis/sample.c:74
-#, fuzzy
 msgid "unknown interpolation type"
-msgstr "Nezināma Atrašanās Vieta"
+msgstr "nezināns interpolācijas tips"
 
 #: ../lib/gis/sample.c:473
 msgid "\"no data\" label found; setting to zero"
@@ -1300,14 +1288,14 @@ msgid "Illegal filename.  Cannot be '.' or 'NULL'\n"
 msgstr "Neatļauts faila nosaukums.  Nevar būt '.' vai 'NULL'\n"
 
 #: ../lib/gis/legal_name.c:41
-#, fuzzy, c-format
+#, c-format
 msgid "Illegal filename. character <%c> not allowed.\n"
-msgstr "Neatļauts faila nosaukums. zīme <%c> nav atļauta."
+msgstr "Neatļauts faila nosaukums. zīme <%c> nav atļauta.\n"
 
 #: ../lib/gis/legal_name.c:67 ../lib/gis/legal_name.c:69
-#, fuzzy, c-format
+#, c-format
 msgid "Output name '%s' is not valid rast name."
-msgstr "Izejas vārds '%s' nav derīgs vektora nosaukums."
+msgstr "Izejas vārds '%s' nav derīgs rastra nosaukums."
 
 #: ../lib/gis/legal_name.c:80 ../lib/gis/legal_name.c:82
 #: ../lib/vector/Vlib/legal_vname.c:72 ../lib/vector/Vlib/legal_vname.c:74
@@ -1319,7 +1307,7 @@ msgstr "Nevar atrast ieejas karti '%s'"
 #: ../lib/vector/Vlib/legal_vname.c:92 ../lib/vector/Vlib/legal_vname.c:94
 #, c-format
 msgid "Output map '%s' is used as input"
-msgstr "Izejas karte '%s' tieklietota kā iejas karte"
+msgstr "Izejas karte '%s' tiek lietota kā iejas karte"
 
 #: ../lib/gis/rd_cellhd.c:136
 msgid "duplicate projection field"
@@ -1363,11 +1351,11 @@ msgstr "dubultot apakšas lauku"
 
 #: ../lib/gis/rd_cellhd.c:235
 msgid "duplicate e-w resolution field"
-msgstr "dubultot A-R izškirtspējas lauku"
+msgstr "dubultot A-R izšķirtspējas lauku"
 
 #: ../lib/gis/rd_cellhd.c:246
 msgid "duplicate 3D e-w resolution field"
-msgstr "dubultot 3D A-R izškirtspējas lauku"
+msgstr "dubultot 3D A-R izšķirtspējas lauku"
 
 #: ../lib/gis/rd_cellhd.c:257
 msgid "duplicate n-s resolution field"
@@ -1447,7 +1435,7 @@ msgstr "trūkst cols3 lauks"
 
 #: ../lib/gis/rd_cellhd.c:392
 msgid "rows3 field missing"
-msgstr "trūkst row3 lauks"
+msgstr "trūkst rows3 lauks"
 
 #: ../lib/gis/rd_cellhd.c:448
 #, c-format
@@ -1530,7 +1518,7 @@ msgstr "%s - ** neatļauts vārds/nosaukums **"
 #, c-format
 msgid "Can't create timestamp file for %s map %s in mapset %s"
 msgstr ""
-"CNevar izveidot laikspiedola(timestamp) failu priekš %s kartes %s karšu "
+"Nevar izveidot laikspiedola(timestamp) failu priekš %s kartes %s karšu "
 "biblitēkā %s"
 
 #: ../lib/gis/timestamp.c:308
@@ -1645,7 +1633,7 @@ msgstr "Neatļauta platuma vērtība Dienvidiem"
 
 #: ../lib/gis/adj_cellhd.c:144 ../lib/gis/adj_cellhd.c:301
 msgid "North must be north of South"
-msgstr "North must be north of South"
+msgstr ""
 
 #: ../lib/gis/adj_cellhd.c:146 ../lib/gis/adj_cellhd.c:303
 msgid "North must be larger than South"
@@ -1684,9 +1672,8 @@ msgid "Illegal depths value"
 msgstr "Neatļauta dziļuma vērtība"
 
 #: ../lib/gis/adj_cellhd.c:308
-#, fuzzy
 msgid "Top must be larger than Bottom"
-msgstr "Ziemeļiem ir jābūt lielākiem nekā Dienvidiem"
+msgstr "Augšai ir jābūt lielākai par Apakšu"
 
 #: ../lib/gis/set_window.c:60
 msgid ""
@@ -1731,7 +1718,7 @@ msgstr "G_spawn: neiespējami bloķēt signālu %d"
 #: ../lib/gis/spawn.c:244
 #, c-format
 msgid "G_spawn: unable to unblock signal %d"
-msgstr "G_spawn: neiespējami atbloķēt sihnālu %d"
+msgstr "G_spawn: neiespējami atbloķēt signālu %d"
 
 #: ../lib/gis/spawn.c:270
 #, c-format
@@ -1751,7 +1738,7 @@ msgstr "neispējami mainīt direktoriju uz %s"
 #: ../lib/gis/mask_info.c:42
 #, c-format
 msgid "<%s> in mapset <%s>"
-msgstr "<%s>mapset/karšu biblotēkā <%s>"
+msgstr "<%s>karšu kopā <%s>"
 
 #: ../lib/gis/mask_info.c:45
 msgid "none"
@@ -1809,7 +1796,7 @@ msgstr "    4:  Plēkas krāsas\n"
 #: ../lib/gis/make_colr.c:57
 #, c-format
 msgid "    5:  Aspect\n"
-msgstr "    5:  Aspect/novietojums \n"
+msgstr "    5:  Ekspozīcija \n"
 
 #: ../lib/gis/make_colr.c:58
 #, c-format
@@ -1857,28 +1844,26 @@ msgid "Setting map window"
 msgstr ""
 
 #: ../lib/D/Dcell.c:38
-#, fuzzy
 msgid "Current window not settable"
-msgstr "tekošais logs = %p\n"
+msgstr "Pašreizējais logs nav izvēlams"
 
 #: ../lib/D/Dcell.c:43
 msgid "Can't clear current graphics window"
 msgstr ""
 
 #: ../lib/D/Dcell.c:51
-#, fuzzy, c-format
+#, c-format
 msgid "Color file for [%s] not available"
-msgstr "ATRAŠANĀS VIETA  << %s >>  nav pieejama"
+msgstr "Krāsu fails priekš [%s] nav pieejams"
 
 #: ../lib/D/Dcell.c:86
-#, fuzzy
 msgid "Cannot use current window"
-msgstr "tekošais logs = %p\n"
+msgstr "Nevar lietot pašreizējo logu"
 
 #: ../lib/D/Dcell.c:92
-#, fuzzy, c-format
+#, c-format
 msgid "Not able to open cellfile for [%s]"
-msgstr "Neiespējami atvērt failu %s iekš %s"
+msgstr "Neiespējami atvērtcellfailu priekš [%s]"
 
 #: ../lib/vector/Vlib/build_ogr.c:258
 #, c-format
@@ -1927,7 +1912,7 @@ msgid ""
 "%d isles built\n"
 msgstr ""
 "\r%d  laukumi izveidoti      \n"
-"%d salas izveootas\n"
+"%d salas izveidotas\n"
 
 #: ../lib/vector/Vlib/build_nat.c:542
 msgid "Attaching islands: "
@@ -1998,7 +1983,7 @@ msgstr "'Salu' skaits     :   %d\n"
 #: ../lib/vector/Vlib/build.c:209
 #, c-format
 msgid "Number of incorrect boundaries   :   %d\n"
-msgstr "Nepareizu robešu skaits   :   %d\n"
+msgstr "Nepareizu robežu skaits   :   %d\n"
 
 #: ../lib/vector/Vlib/build.c:212
 #, c-format
@@ -2013,7 +1998,7 @@ msgstr "Dubultu centroīdu skaits    :   %d\n"
 #: ../lib/vector/Vlib/build.c:218
 #, c-format
 msgid "Number of areas without centroid :   %d\n"
-msgstr "Bez centroīdiem esošu laukumu slaits :   %d\n"
+msgstr "Bez centroīdiem esošu laukumu skaits :   %d\n"
 
 #: ../lib/vector/Vlib/build.c:221
 msgid "Number of areas     :   -\n"
@@ -2070,7 +2055,7 @@ msgid ""
 "driver: dbf\n"
 "database: $GISDBASE/$LOCATION_NAME/$MAPSET/dbf/"
 msgstr ""
-"DNoklusēto draiveri / datubāzi likt uz:\n"
+"Noklusēto draiveri / datubāzi likt uz:\n"
 "vietu: dbf\n"
 "datubāze: $GISDBASE/$LOCATION_NAME/$MAPSET/dbf/"
 
@@ -2167,12 +2152,12 @@ msgstr "Nevar atvērt jaunu vektoru %s"
 #: ../lib/vector/Vlib/open.c:564
 #, c-format
 msgid "Could not stat file '%s'"
-msgstr "Nevar 'stat file' failu '%s'"
+msgstr "Nevar palaist failu '%s'"
 
 #: ../lib/vector/Vlib/open.c:667
 msgid "Size of 'coor' file differs from value saved in topo file."
 msgstr ""
-"Krāsas paremetru failsatšķiras no vērtībām kuras saglabātas topo failā."
+"Krāsas paremetru fails atšķiras no vērtībām kuras saglabātas topo failā."
 
 #: ../lib/vector/Vlib/open.c:678
 #, c-format
@@ -2196,9 +2181,8 @@ msgid "Cannot write line, the map is not opened"
 msgstr "Nevar ierakstīt līniju,karte nav atvērta"
 
 #: ../lib/vector/Vlib/write.c:107
-#, fuzzy
 msgid "Cannot write line (negative offset)"
-msgstr "Nevar ierakstīt līniju"
+msgstr "Nevar ierakstīt līniju (negatīva nobīde/offset)"
 
 #: ../lib/vector/Vlib/write.c:143
 msgid "Cannot rewrite line, the map is not opened"
@@ -2211,7 +2195,7 @@ msgstr "Nevar pārrakstīt līniju"
 #: ../lib/vector/Vlib/write.c:197
 #, c-format
 msgid "Cannot delete the line, map '%s' is not opened on level 2"
-msgstr "Nevar izdzēst līniju, karte '%s' karte navatvērta līmenī 2"
+msgstr "Nevar izdzēst līniju, karte '%s' karte nav atvērta līmenī 2"
 
 #: ../lib/vector/Vlib/write.c:201
 #, c-format
@@ -2243,7 +2227,7 @@ msgstr ""
 #: ../lib/vector/Vlib/legal_vname.c:28
 #, c-format
 msgid "Illegal vector map name <%s>. Must start with a letter.\n"
-msgstr "Nepieņemams vektoru kartes nosaukums <%s>. J;as;akas ar burtu.\n"
+msgstr "Nepieņemams vektoru kartes nosaukums <%s>. Jāsākas ar burtu.\n"
 
 #: ../lib/vector/Vlib/legal_vname.c:34
 #, c-format
@@ -2278,7 +2262,7 @@ msgstr "Brīdinājums - nav atbildes reakcijas no grafiskā monitora <%s>.\n"
 #: ../lib/raster/rem_io.c:238
 #, c-format
 msgid "Check to see if the mouse is still active.\n"
-msgstr "Pārbaidi lai redzētu vai pele vēl ir aktīva.\n"
+msgstr "Pārbīdi lai redzētu vai pele vēl ir aktīva.\n"
 
 #: ../lib/raster/rem_io.c:241
 #, c-format
@@ -2320,7 +2304,7 @@ msgid ""
 "Trying to connect to something not a socket.\n"
 "Probably program error.\n"
 msgstr ""
-"Meiģinājusm pieslēgties kautkam kas nav kontaktligzda.\n"
+"Meiģinājums pieslēgties kautkam kas nav piesēglma iespējas.\n"
 "Iespējams programmas kļūda.\n"
 
 #: ../lib/raster/io_sock.c:132
@@ -2393,14 +2377,13 @@ msgid "Vector is not 3D"
 msgstr ""
 
 #: ../lib/rst/interp_float/vinput2d.c:87
-#, fuzzy
 msgid "Cannot get layer info"
-msgstr "Nevar dzēst līniju"
+msgstr "Nevar iegūt slāņa informāciju"
 
 #: ../lib/rst/interp_float/vinput2d.c:94
-#, fuzzy, c-format
+#, c-format
 msgid "Cannot open database %s"
-msgstr "Nevar ierakstīt datubāzes saites"
+msgstr "Nevar atvērt datubāzi %s"
 
 #: ../lib/rst/interp_float/vinput2d.c:99
 #, c-format
@@ -2565,9 +2548,8 @@ msgid "G3d_getStandard3dParams: tile dimension value invalid"
 msgstr ""
 
 #: ../lib/g3d/g3dparam.c:171
-#, fuzzy
 msgid "Window replacing the default"
-msgstr "lai apstiprinātu noklusēto"
+msgstr "Logs aizvieto noklusēto"
 
 #: ../lib/proj/ellipse.c:85
 #, c-format
@@ -2590,9 +2572,9 @@ msgid ""
 msgstr ""
 
 #: ../lib/symbol/read.c:274
-#, fuzzy, c-format
+#, c-format
 msgid "Cannot find/open symbol: '%s'"
-msgstr "Nevar atrast ieejas karti '%s'"
+msgstr "Nevar atrast/atvērt simbolu: '%s'"
 
 #: ../lib/symbol/read.c:358 ../lib/symbol/read.c:367 ../lib/symbol/read.c:374
 #: ../lib/symbol/read.c:383
@@ -2627,69 +2609,75 @@ msgstr ""
 msgid "Monitor: _send: write returned short count: %d of %d\n"
 msgstr ""
 
-#~ msgid "Too many open raster files"
-#~ msgstr "Pārāk daudz atvērtu rastra failu"
+#, fuzzy
+msgid "Too many open raster files"
+msgstr "Nevar atvērt 'temp'/pagaidu failu"
 
-#~ msgid "Too many open files"
-#~ msgstr "Pārāk daudz atvērtu failu"
+#, fuzzy
+msgid "Too many open files"
+msgstr "Atvērtā faila nosaukums %s"
 
-#~ msgid "ERROR: GISBASE not set\n"
-#~ msgstr "KĻŪDA: GISBASE nav noteikta\n"
+msgid "ERROR: GISBASE not set\n"
+msgstr "KĻŪDA: GISBASE nav noteikta\n"
 
-#~ msgid "Error reading datum shift parameters for %s from table"
-#~ msgstr "Kļūda nolsaot datum mai'mas parametrus priekš %s no  tabulas"
+msgid "Error reading datum shift parameters for %s from table"
+msgstr "Kļūda nolsaot datum mai'mas parametrus priekš %s no  tabulas"
 
-#~ msgid "Error reading ellipsoid parameters for %s from table"
-#~ msgstr "Kļūda noasot elipsoīda parametrus laukam %s no tabulas"
+msgid "Error reading ellipsoid parameters for %s from table"
+msgstr "Kļūda noasot elipsoīda parametrus laukam %s no tabulas"
 
-#~ msgid "invalid value: field %s in file %s in %s"
-#~ msgstr "nederīga vērtība: lauks %s failā %s , %s"
+#, fuzzy
+msgid "invalid value: field %s in file %s in %s"
+msgstr "nederīgs a: lauks %s failā %s pie %s"
 
-#~ msgid "Unable to guess site format!"
-#~ msgstr "Neiespējami uzminēt atrašanās vietas formātu!"
+#, fuzzy
+msgid "Unable to guess site format!"
+msgstr "Neiespējami atvērt %s priekš rakstīšanas"
 
-#~ msgid "No n-dims in site_list"
-#~ msgstr "Nav n-dims iekš site_list"
+msgid "No n-dims in site_list"
+msgstr "Nav n-dims iekš site_list"
 
-#~ msgid "Dimension index out of range"
-#~ msgstr "Dimensiju index ārpus diapazona"
+msgid "Dimension index out of range"
+msgstr "Dimensiju index ārpus diapazona"
 
-#~ msgid "No double attributes in site_list"
-#~ msgstr "Nav dubulto atribūtu site_list"
+msgid "No double attributes in site_list"
+msgstr "Nav dubulto atribūtu site_list"
 
-#~ msgid "Double attribute index out of range"
-#~ msgstr "Dubulto atribūtu indekss ārpus diapazona"
+msgid "Double attribute index out of range"
+msgstr "Dubulto atribūtu indekss ārpus diapazona"
 
-#~ msgid "No string attributes in site_list"
-#~ msgstr "Nav teksta (string) atribūtu site_list"
+msgid "No string attributes in site_list"
+msgstr "Nav teksta (string) atribūtu site_list"
 
-#~ msgid "String attribute index out of range"
-#~ msgstr "Teksts(string) atribūta indekss ir arpus diapazona"
+msgid "String attribute index out of range"
+msgstr "Teksts(string) atribūta indekss ir arpus diapazona"
 
-#~ msgid "Unknown attribute type in call to G_readsites_xyz()!\n"
-#~ msgstr "Nezināms atribūta tips pieprasījumam G_readsites_xyz()!\n"
+msgid "Unknown attribute type in call to G_readsites_xyz()!\n"
+msgstr "Nezināms atribūta tips pieprasījumam G_readsites_xyz()!\n"
 
-#~ msgid "Failed to convert string attribute."
-#~ msgstr "Izgāzusies konvertācija taksta (string) atribūtam."
+msgid "Failed to convert string attribute."
+msgstr "Izgāzusies konvertācija taksta (string) atribūtam."
 
-#~ msgid "Reading sites list ...                  "
-#~ msgstr "Lasam novietojuma sarakstu ...                  "
+msgid "Reading sites list ...                  "
+msgstr "Lasam novietojuma sarakstu ...                  "
 
-#~ msgid "failed to guess format"
-#~ msgstr "izgāšanās minot formātu"
+msgid "failed to guess format"
+msgstr "izgāšanās minot formātu"
 
-#~ msgid "decimal field %i not present in sites file"
-#~ msgstr "decimālais lauks %i nav prezentēts novietojuma failos"
+msgid "decimal field %i not present in sites file"
+msgstr "decimālais lauks %i nav prezentēts novietojuma failos"
 
-#~ msgid ""
-#~ "I'm finding records that do not have a floating point attributes (fields "
-#~ "prefixed with '%')."
-#~ msgstr ""
-#~ "Atrodu ierakstus, kuri nesatur peldošā punkta (decimāldaļu) atribūtus "
-#~ "(lauku pievienotais prefiks/piedēklis '%')."
+msgid ""
+"I'm finding records that do not have a floating point attributes (fields "
+"prefixed with '%')."
+msgstr ""
+"Atrodu ierakstus, kuri nesatur peldošā punkta (decimāldaļu) atribūtus (lauku "
+"pievienotais prefiks/piedēklis '%')."
 
-#~ msgid "cannot allocate memory"
-#~ msgstr "nevar piešķirt atmiņu"
+#, fuzzy
+msgid "cannot allocate memory"
+msgstr "Neiespējami piešķirt atmiņu\n"
 
-#~ msgid "WARNING: can not create a new process\n"
-#~ msgstr "BRĪDINĀJUMS: nevar izveidot jaunu processu\n"
+#, fuzzy
+msgid "WARNING: can not create a new process\n"
+msgstr "Nevar izveidot jaunu procesu!"
