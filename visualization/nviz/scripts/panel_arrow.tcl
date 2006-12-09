@@ -31,13 +31,11 @@ global Nv_
 proc mkarrowPanel { BASE } {
     global Nv_
     global n_arrow_size n_arrow
-	global arw_clr arw_text_clr
+    global arw_clr arw_text_clr
     global nviztxtfont
     
     # defaults
-    set arw_clr #000000
-    set n_arrow_size 100
-	set arw_text_clr #000000
+    set n_arrow_size 1000
 
     set panel [St_create {window name size priority} $BASE "North arrow" 2 5]
     frame $BASE -relief flat -borderwidth 0
@@ -88,8 +86,8 @@ proc bind_mouse { W } {
 
 #############################################################
 
-# Simple routine to change the color of Arrow. Currently text and arrow are set
-# to same color, though text color not yet working.
+# Simple routine to change the color of Arrow.
+# text color not yet user settable.
 proc change_arrow_color { me } {
 	global Nv_
 	global arw_clr arw_text_clr
@@ -99,7 +97,7 @@ proc change_arrow_color { me } {
     set clr [lindex [$me configure -bg] 4]
     set clr [mkColorPopup .colorpop arw_clr $clr 1]
     set arw_clr $clr
-    set arw_text_clr $clr
+#    set arw_text_clr $clr
     $me configure -bg $clr
 
 	# set color button text to black or white depending on

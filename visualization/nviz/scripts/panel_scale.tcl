@@ -31,15 +31,11 @@ global Nv_
 proc mkscalePanel { BASE } {
     global Nv_
     global scalebar_size scalebar
-	global bar_clr bar_text_clr
+    global bar_clr bar_text_clr
     global nviztxtfont
     
     # defaults
-    set bar_clr #000000
-    set scalebar_size 100
-	set bar_text_clr #ff0000
-    
-
+    set scalebar_size 1000
 
     set panel [St_create {window name size priority} $BASE "Scale bar" 2 5]
     frame $BASE -relief flat -borderwidth 0
@@ -90,7 +86,8 @@ proc sb_bind_mouse { W } {
 
 #############################################################
 
-# Simple routine to change the color of fringe
+# Simple routine to change the colors
+# text color not yet user settable.
 proc change_scale_color { me } {
 	global Nv_
 	global bar_clr bar_text_clr
@@ -100,7 +97,7 @@ proc change_scale_color { me } {
     set clr [lindex [$me configure -bg] 4]
     set clr [mkColorPopup .colorpop bar_clr $clr 1]
     set bar_clr $clr
-    set bar_text_clr $clr
+#    set bar_text_clr $clr
     $me configure -bg $clr
 
 	# set color button text to black or white depending on
@@ -118,8 +115,8 @@ proc change_scale_color { me } {
 	 }
 	if {$Nauto_draw == 1} {
 		Ndraw_all
-	} 
-	 
+	}
+ 
 }
 ###########################
 proc place_scale {W x y} {
