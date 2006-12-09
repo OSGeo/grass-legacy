@@ -1024,12 +1024,11 @@ int gsd_scalebar (float *pos2, float len, GLuint fontbase,
     base[0][Z] = base[1][Z] = base[2][Z] = base[3][Z] = pos2[Z];
 
     /* simple 1:8 rectangle */ /* bump to X/20. for a 1:10 narrower bar? */
-    base[0][X] = base[3][X] = pos2[X] - len / 16.;
-    base[1][X] = base[2][X] = pos2[X] + len / 16.;
+    base[0][X] = base[1][X] = pos2[X] - len / 2.;
+    base[2][X] = base[3][X] = pos2[X] + len / 2.;
 
-    base[0][Y] = base[1][Y] = pos2[Y] - len / 2.;
-    base[2][Y] = base[3][Y] = pos2[Y] + len / 2.;
-
+    base[0][Y] = base[3][Y] = pos2[Y] - len / 16.;
+    base[1][Y] = base[2][Y] = pos2[Y] + len / 16.;
 
     /* make sure we are drawing in front buffer */
     GS_set_draw(GSD_FRONT);
@@ -1074,13 +1073,10 @@ int gsd_scalebar (float *pos2, float len, GLuint fontbase,
 	sprintf(txt, "%g %s", len, G_database_unit_name(TRUE));
     }
 
-    /* adjust position of text */
+    /* adjust position of text (In map units?!) */
     base[0][X] -= gsd_get_txtwidth(txt, 18) - 20.;
     base[0][Y] -= gsd_get_txtheight(18) - 20. ;
-/* center the text:
-    base[0][X] = pos2[X] - gsd_get_txtwidth(txt, 18) - 20.;
-    base[0][Y] = pos2[Y] - gsd_get_txtheight(18) - 20. ;
-*/
+
 
     glRasterPos3fv(base[0]);
     glListBase(fontbase);
