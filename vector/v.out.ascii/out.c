@@ -30,7 +30,7 @@ int main(int argc, char *argv[])
 {
     FILE *ascii, *att;
     struct Option *input, *output, *format_opt, *dp_opt, *delim_opt;
-    struct Flag *verf;
+    struct Flag *verf, *region_flag;
     int format, dp;
     char *fs;
     struct Map_info Map;
@@ -83,6 +83,11 @@ int main(int argc, char *argv[])
     verf = G_define_flag();
     verf->key = 'o';
     verf->description = _("Create old (version 4) ASCII file");
+
+    region_flag = G_define_flag();
+    region_flag->key	      = 'r';
+    region_flag->description  =
+      _("Only export points falling within current 3D region (points mode)");
 
     if (G_parser(argc, argv))
 	exit(EXIT_FAILURE);
@@ -152,7 +157,7 @@ int main(int argc, char *argv[])
 			  output->answer);
     }
 
-    bin_to_asc(ascii, att, &Map, ver, format, dp, fs);
+    bin_to_asc(ascii, att, &Map, ver, format, dp, fs, region_flag->answer);
 
     if (ascii != NULL)
 	fclose(ascii);

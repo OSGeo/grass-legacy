@@ -3,13 +3,18 @@
 #include "local_proto.h"
 
 int bin_to_asc(FILE * ascii,
-	       FILE * att, struct Map_info *Map, int ver, int format, int dp, char *fs)
+	       FILE * att, struct Map_info *Map, int ver,
+	       int format, int dp, char *fs, int region_flag)
 {
     int type, ctype, i, cat, proj;
     double *xptr, *yptr, *zptr, x, y;
     static struct line_pnts *Points;
     struct line_cats *Cats;
     char *xstring = NULL, *ystring = NULL, *zstring = NULL;
+    struct Cell_head window;
+
+    /* get the region */
+    G_get_window(&window);
 
     Points = Vect_new_line_struct();	/* init line_pnts struct */
     Cats = Vect_new_cats_struct();
@@ -79,12 +84,25 @@ int bin_to_asc(FILE * ascii,
 	if (format == FORMAT_POINT) {
 	    /*fprintf(ascii, "%c", ctype); */
 
+	    if(region_flag) {
+		if ((window.east < Points->x[0]) || (window.west > Points->x[0]))
+		    continue;
+	    }
 	    G_asprintf(&xstring, "%.*f", dp, Points->x[0]);
 	    G_trim_decimal(xstring);
+
+	    if(region_flag) {
+		if ((window.north < Points->y[0]) || (window.south > Points->y[0]))
+		    continue;
+	    }
 	    G_asprintf(&ystring, "%.*f", dp, Points->y[0]);
 	    G_trim_decimal(ystring);
 
 	    if (Map->head.with_z && ver == 5) {
+		if(region_flag) {
+		    if ((window.top < Points->z[0]) || (window.bottom > Points->z[0]))
+			continue;
+		}
 		G_asprintf(&zstring, "%.*f", dp, Points->z[0]);
 		G_trim_decimal(zstring);
 		fprintf(ascii, "%s%s%s%s%s", xstring, fs, ystring, fs, zstring);
