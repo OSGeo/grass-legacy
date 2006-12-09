@@ -29,9 +29,10 @@
 int main(int argc, char *argv[])
 {
     FILE *ascii, *att;
-    struct Option *input, *output, *format_opt, *dp_opt;
+    struct Option *input, *output, *format_opt, *dp_opt, *delim_opt;
     struct Flag *verf;
     int format, dp;
+    char *fs;
     struct Map_info Map;
     int ver = 5, pnt = 0;
     struct GModule *module;
@@ -63,10 +64,19 @@ int main(int argc, char *argv[])
     format_opt->answer = "point";
     format_opt->description = _("Output format");
 
+    delim_opt = G_define_option();
+    delim_opt->key = "fs";
+    delim_opt->type = TYPE_STRING;
+    delim_opt->required = NO;
+    delim_opt->description = _("Field separator (points mode)");
+    delim_opt->answer = "|";
+
     dp_opt = G_define_option();
     dp_opt->key = "dp";
     dp_opt->type = TYPE_INTEGER;
     dp_opt->required = NO;
+    dp_opt->options  = "0-32";
+    dp_opt->answer   = "8"; /*This value is taken from the lib settings in G_format_easting() */
     dp_opt->description =
 	_("Number of significant digits (floating point only)");
 
@@ -93,6 +103,19 @@ int main(int argc, char *argv[])
 	G_fatal_error(_("'output' must be given for old version"));
     }
 
+    /* the field separator */
+    fs = delim_opt->answer;
+    if ( strcmp(fs,"\\t") == 0 ) fs = "\t";
+    if ( strcmp(fs,"tab") == 0 ) fs = "\t";
+    if ( strcmp(fs,"space") == 0 ) fs = " ";
+
+    /*The precision of the output */
+    if (dp_opt->answer) {
+	if (sscanf(dp_opt->answer, "%d", &dp) != 1)
+	    G_fatal_error(_("failed to interpret dp as an integer"));
+    }
+
+
     Vect_set_open_level(1);	/* only need level I */
     Vect_open_old(&Map, input->answer, "");
 
@@ -118,17 +141,6 @@ int main(int argc, char *argv[])
 	fprintf(ascii, "VERTI:\n");
     }
 
-    /*The precision of the output */
-    if (dp_opt->answer) {
-	if (sscanf(dp_opt->answer, "%d", &dp) != 1)
-	    G_fatal_error(_("failed to interpret dp as an integer"));
-	if (dp > 8 || dp < 0)
-	    G_fatal_error(_("dp has to be from 0 to 8"));
-    }
-    else {
-	dp = 8;			/*This value is taken from the lib settings in G_format_easting */
-    }
-
     /* Open dig_att */
     att = NULL;
     if (ver == 4 && !pnt) {
@@ -140,7 +152,7 @@ int main(int argc, char *argv[])
 			  output->answer);
     }
 
-    bin_to_asc(ascii, att, &Map, ver, format, dp);
+    bin_to_asc(ascii, att, &Map, ver, format, dp, fs);
 
     if (ascii != NULL)
 	fclose(ascii);
