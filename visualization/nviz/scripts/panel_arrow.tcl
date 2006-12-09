@@ -33,9 +33,11 @@ proc mkarrowPanel { BASE } {
     global n_arrow_size n_arrow
     global arw_clr arw_text_clr
     global nviztxtfont
-    
+
     # defaults
     set n_arrow_size 1000
+    set arw_clr "#000000"
+    set arw_text_clr "#DDDDDD"
 
     set panel [St_create {window name size priority} $BASE "North arrow" 2 5]
     frame $BASE -relief flat -borderwidth 0

@@ -33,9 +33,11 @@ proc mkscalePanel { BASE } {
     global scalebar_size scalebar
     global bar_clr bar_text_clr
     global nviztxtfont
-    
+
     # defaults
     set scalebar_size 1000
+    set bar_clr "#00000"
+    set bar_text_clr "#DDDDDD"
 
     set panel [St_create {window name size priority} $BASE "Scale bar" 2 5]
     frame $BASE -relief flat -borderwidth 0
