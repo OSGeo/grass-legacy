@@ -3,7 +3,7 @@
 #include "local_proto.h"
 
 int bin_to_asc(FILE * ascii,
-	       FILE * att, struct Map_info *Map, int ver, int format, int dp)
+	       FILE * att, struct Map_info *Map, int ver, int format, int dp, char *fs)
 {
     int type, ctype, i, cat, proj;
     double *xptr, *yptr, *zptr, x, y;
@@ -87,13 +87,13 @@ int bin_to_asc(FILE * ascii,
 	    if (Map->head.with_z && ver == 5) {
 		G_asprintf(&zstring, "%.*f", dp, Points->z[0]);
 		G_trim_decimal(zstring);
-		fprintf(ascii, "%s|%s|%s", xstring, ystring, zstring);
+		fprintf(ascii, "%s%s%s%s%s", xstring, fs, ystring, fs, zstring);
 	    }
 	    else {
-		fprintf(ascii, "%s|%s", xstring, ystring);
+		fprintf(ascii, "%s%s%s", xstring, fs, ystring);
 	    }
 	    if (Cats->n_cats > 0)
-		fprintf(ascii, "|%d", Cats->cat[0]);
+		fprintf(ascii, "%s%d", fs, Cats->cat[0]);
 
 	    fprintf(ascii, "\n");
 	}
