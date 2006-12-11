@@ -48,7 +48,7 @@ void read_side_cats ( struct line_cats *ACats, int *val, int *count )
 
 /* 
  * Read: - points/centroids : cat,count,coor
- *       - lines/boundaries : cat,count,length
+ *       - lines/boundaries : cat,count,length,slope
  */
 
 int 
@@ -58,7 +58,7 @@ read_lines(struct Map_info *Map )
     register int line_num;
     struct line_pnts *Points;
     struct line_cats *Cats, *LCats, *RCats;
-    double len;
+    double len,slope;
 
     /* Initialize the Point struct */
     Points = Vect_new_line_struct();
@@ -137,7 +137,13 @@ read_lines(struct Map_info *Map )
 		    
                     read_side_cats ( LCats, &(Values[idx].i1), &(Values[idx].count1) );
                     read_side_cats ( RCats, &(Values[idx].i2), &(Values[idx].count2) );
+		} else if ( options.option == O_SLOPE && (type & GV_LINES) ) {
+		    /* Calculate line slope */
+		    len = length (Points->n_points, Points->x, Points->y);
+                    slope = (Points->z[Points->n_points-1] - Points->z[0])/len;
+		    Values[idx].d1 += slope;
 		}
+
 		found = 1;
 	    }
 	}
@@ -167,7 +173,13 @@ read_lines(struct Map_info *Map )
 	    } else if ( options.option == O_SIDES && type == GV_BOUNDARY ) {
 		read_side_cats ( LCats, &(Values[idx].i1), &(Values[idx].count1) );
 		read_side_cats ( RCats, &(Values[idx].i2), &(Values[idx].count2) );
-	    }
+            } else if ( options.option == O_SLOPE && (type & GV_LINES) ) {
+                /* Calculate line slope */
+                len = length (Points->n_points, Points->x, Points->y);
+                slope = (Points->z[Points->n_points-1] - Points->z[0])/len;
+                Values[idx].d1 += slope;
+            }
+
 	}
     }
 

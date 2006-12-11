@@ -66,6 +66,13 @@ report (void)
 		for ( i = 0; i < vstat.rcat; i++ )
 		    fprintf (stdout, "%d|%.15g\n", Values[i].cat, Values[i].d1);	        
 	    }
+	    break;
+        case O_SLOPE:
+	    fprintf (stdout,"cat|slope\n");
+	    for ( i = 0; i < vstat.rcat; i++ )
+		fprintf (stdout, "%d|%.15g\n", Values[i].cat, Values[i].d1);
+
+
             break;
 
         case O_COOR:
