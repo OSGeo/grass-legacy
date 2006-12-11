@@ -49,6 +49,7 @@ update (struct Map_info *Map)
 	case O_QUERY:
 	case O_COMPACT:
 	case O_PERIMETER:
+        case O_SLOPE:
 	    sprintf (buf1, "update %s set %s =", Fi->table, options.col[0]);
             break;
         case O_COOR:
@@ -79,6 +80,7 @@ update (struct Map_info *Map)
 	    case O_AREA:
 	    case O_COMPACT:
 	    case O_PERIMETER:
+	    case O_SLOPE:
     		sprintf (buf2, "%s %f where %s = %d", buf1, Values[i].d1, Fi->key,  Values[i].cat);
         	break;
 

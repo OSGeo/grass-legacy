@@ -48,7 +48,7 @@ parse_command_line (int argc, char *argv[])
     parms.option->type         = TYPE_STRING;
     parms.option->required     = YES;
     parms.option->multiple     = NO;
-    parms.option->options      = "cat,area,compact,perimeter,length,count,coor,start,end,sides,query";
+    parms.option->options      = "cat,area,compact,perimeter,length,count,coor,start,end,sides,query,slope";
     parms.option->description  = _("Value to upload");
     parms.option->descriptions  = 
 		 "cat;insert new row for each category if doesn't exist yet;"
@@ -64,7 +64,8 @@ parse_command_line (int argc, char *argv[])
 		 "sides;categories of areas on the left and right side of the boundary, "
 		       "'qlayer' is used for area category;"
 		 "query;result of a database query for all records of the geometry"
-		       "(or geometries) from table specified by 'qlayer' option";	
+		       "(or geometries) from table specified by 'qlayer' option;"
+		 "slope;slope steepness of vector line or boundary";
 
     parms.units = G_define_option();
     parms.units->key   = "units";
@@ -132,7 +133,7 @@ parse_command_line (int argc, char *argv[])
     }
     
     if ( options.option == O_AREA || options.option == O_LENGTH || options.option == O_COUNT 
-	 || options.option == O_QUERY || options.option == O_COMPACT || options.option == O_PERIMETER) /* one column required */
+	 || options.option == O_QUERY || options.option == O_COMPACT || options.option == O_PERIMETER || options.option == O_SLOPE ) /* one column required */
     {
 	if ( ncols != 1 ) {
 	    G_fatal_error ( _("This option requires one column") );
@@ -187,6 +188,7 @@ int parse_option (char *s)
     else if (strcmp (s, "query") == 0) x = O_QUERY;
     else if (strcmp (s, "compact") == 0) x = O_COMPACT;
     else if (strcmp (s, "perimeter") == 0) x = O_PERIMETER;
+    else if (strcmp (s, "slope") == 0) x = O_SLOPE;
 
     return x;
 }

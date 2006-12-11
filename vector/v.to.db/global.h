@@ -66,6 +66,8 @@ EXT VSTAT
 #define O_START        10  /* line/boundary starting point */
 #define O_END          11  /* line/boundary end point */
 
+#define O_SLOPE 	12 /* Line slope */
+
 #define U_ACRES		1
 #define U_HECTARES	2
 #define U_KILOMETERS	3
