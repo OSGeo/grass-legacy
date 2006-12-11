@@ -181,9 +181,10 @@ set descmenu [subst  {
 		{command {[G_msg "Remove maps"]} {} "g.remove" {} -command {execute g.remove }}
 		{command {[G_msg "Remove maps using expressions and 'wildcards'"]} {} "g.mremove" {} -command {execute g.mremove }}
 	}}
-	{cascad {[G_msg "Map type conversions"]} {} "" $tmenu {			
+	{cascad {[G_msg "Map type conversions"]} {} "" $tmenu {
 		{command {[G_msg "Raster to vector map"]} {} "r.to.vect" {} -command {execute r.to.vect }}
 		{command {[G_msg "Raster map series to volume"]} {} "r.to.rast3" {} -command {execute r.to.rast3 }}
+		{command {[G_msg "Raster 2.5D map to volume"]} {} "r.to.rast3elev" {} -command {execute r.to.rast3elev }}
 		{command {[G_msg "Vector to raster"]} {} "v.to.rast" {} -command {execute v.to.rast }}
 		{command {[G_msg "Vector to vector"]} {} "v.type" {} -command {execute v.type }}
 		{command {[G_msg "Vector lines to points"]} {} "v.to.points" {} -command {execute v.to.points }}

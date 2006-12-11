@@ -154,14 +154,14 @@ set descmenu [subst  {
 			{command {[G_msg "POV-Ray format"]} {} "v.out.pov" {} -command { execute v.out.pov }}
 			{command {[G_msg "VTK ASCII file"]} {} "v.out.vtk" {} -command { execute v.out.vtk }}
 		}}
-		{cascad {[G_msg "Grid 3D"]} {} "" $tmenu {			
+		{cascad {[G_msg "Grid 3D"]} {} "" $tmenu {
 			{command {[G_msg "ASCII 3D file"]} {} "r3.out.ascii" {} -command { execute r3.out.ascii }}
 			{command {[G_msg "Vis5D file"]} {} "r3.out.v5d" {} -command { execute r3.out.v5d }}
 			{command {[G_msg "VTK ASCII file"]} {} "r3.out.vtk" {} -command { execute r3.out.vtk }}
 		}}
 	}}
 	{separator}
-	{cascad {[G_msg "Manage maps and volumes"]} {} "" $tmenu {			
+	{cascad {[G_msg "Manage maps and volumes"]} {} "" $tmenu {
 		{command {[G_msg "Copy maps"]} {} "g.copy" {} -command {execute g.copy }}
 		{command {[G_msg "List maps"]} {} "g.list" {} -command {execute g.list}}
 		{command {[G_msg "List maps using expressions and 'wildcards'"]} {} "g.mlist" {} -command {execute g.mlist }}
@@ -169,9 +169,10 @@ set descmenu [subst  {
 		{command {[G_msg "Remove maps"]} {} "g.remove" {} -command {execute g.remove }}
 		{command {[G_msg "Remove maps using expressions and 'wildcards'"]} {} "g.mremove" {} -command {execute g.mremove }}
 	}}
-	{cascad {[G_msg "Map type conversions"]} {} "" $tmenu {			
+	{cascad {[G_msg "Map type conversions"]} {} "" $tmenu {
 		{command {[G_msg "Raster to vector map"]} {} "r.to.vect" {} -command {execute r.to.vect }}
 		{command {[G_msg "Raster map series to volume"]} {} "r.to.rast3" {} -command {execute r.to.rast3 }}
+		{command {[G_msg "Raster 2.5D map to volume"]} {} "r.to.rast3elev" {} -command {execute r.to.rast3elev }}
 		{command {[G_msg "Vector to raster"]} {} "v.to.rast" {} -command {execute v.to.rast }}
 		{command {[G_msg "Vector to vector"]} {} "v.type" {} -command {execute v.type }}
 		{command {[G_msg "Vector lines to points"]} {} "v.to.points" {} -command {execute v.to.points }}
@@ -187,7 +188,7 @@ set descmenu [subst  {
 	{command {[G_msg "E&xit"]} {} "Exit GIS Manager" {} -accelerator $keyctrl-Q -command { exit } }
  }
  {[G_msg "&Config"]} all options $tmenu {
-	{cascad {[G_msg "Region"]} {} "" $tmenu {			
+	{cascad {[G_msg "Region"]} {} "" $tmenu {
 		{command {[G_msg "Display region settings"]} {} "g.region -p" {} -command {run_panel "g.region -p" }}
 		{command {[G_msg "Change region settings"]} {} "g.region" {} -command {execute g.region }}
 		{command {[G_msg "Zoom to maximum extent of all displayed maps"]} {} "d.extend" {} -command {run_panel d.extend }}
@@ -200,13 +201,13 @@ set descmenu [subst  {
 		{command {[G_msg "Set GRASS environment settings"]} {} "g.gisenv" {} -command {execute g.gisenv }}
 		{command {[G_msg "Show current GRASS version"]} {} "g.version -c" {} -command {run_panel "g.version -c" }}
 	}}
-	{cascad {[G_msg "Manage projections"]} {} "" $tmenu {			
+	{cascad {[G_msg "Manage projections"]} {} "" $tmenu {
 		{command {[G_msg "Create/edit projection information for current location"]} {} "g.setproj" {} -command {term g.setproj }}
 		{command {[G_msg "Show projection information and create projection files"]} {} "g.proj" {} -command {execute g.proj }}
 		{separator}
 		{command {[G_msg "Convert coordinates from one projection to another"]} {} "m.proj" {} -command {execute m.proj }}
 	}}
-	{cascad {[G_msg "Text"]} {} "" $tmenu {			
+	{cascad {[G_msg "Text"]} {} "" $tmenu {
 		{command {[G_msg "Select default text font"]} {} "d.font" {} -command {execute d.font }}
 		{command {[G_msg "Select default freetype text font"]} {} "" {} -command {execute d.font.freetype }}
 	}}

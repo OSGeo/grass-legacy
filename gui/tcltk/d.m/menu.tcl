@@ -131,7 +131,7 @@ set descmenu [subst {
 			{command {[G_msg "VRML file"]} {} "r.out.vrml" {} -command { execute r.out.vrml }}
 			{command {[G_msg "VTK ASCII file"]} {} "r.out.vtk" {} -command { execute r.out.vtk }}
 		}}
-		{cascad {[G_msg "Vector map"]} {} "" $tmenu {			
+		{cascad {[G_msg "Vector map"]} {} "" $tmenu {
 			{command {[G_msg "Various formats using OGR (SHAPE, MapInfo etc)"]} {} "v.out.ogr" {} -command { execute v.out.ogr }}
 			{separator}
 			{command {[G_msg "DXF file (ASCII)"]} {} "v.out.dxf" {} -command { execute v.out.dxf }}
@@ -139,14 +139,14 @@ set descmenu [subst {
 			{command {[G_msg "POV-Ray format"]} {} "v.out.pov" {} -command { execute v.out.pov }}
 			{command {[G_msg "VTK ASCII file"]} {} "v.out.vtk" {} -command { execute v.out.vtk }}
 		}}
-		{cascad {[G_msg "Grid 3D"]} {} "" $tmenu {			
+		{cascad {[G_msg "Grid 3D"]} {} "" $tmenu {
 			{command {[G_msg "ASCII 3D file"]} {} "r3.out.ascii" {} -command { execute r3.out.ascii }}
 			{command {[G_msg "Vis5D file"]} {} "r3.out.v5d" {} -command { execute r3.out.v5d }}
 			{command {[G_msg "VTK ASCII file"]} {} "r3.out.vtk" {} -command { execute r3.out.vtk }}
 		}}
 	}}
 	{separator}
-	{cascad {[G_msg "Manage maps and volumes"]} {} "" $tmenu {			
+	{cascad {[G_msg "Manage maps and volumes"]} {} "" $tmenu {
 		{command {[G_msg "Copy maps"]} {} "g.copy" {} -command {execute g.copy }}
 		{command {[G_msg "List maps"]} {} "g.list" {} -command {execute g.list}}
 		{command {[G_msg "List maps using expressions and 'wildcards'"]} {} "g.mlist" {} -command {execute g.mlist }}
@@ -154,9 +154,10 @@ set descmenu [subst {
 		{command {[G_msg "Remove maps"]} {} "g.remove" {} -command {execute g.remove }}
 		{command {[G_msg "Remove maps using expressions and 'wildcards'"]} {} "g.mremove" {} -command {execute g.mremove }}
 	}}
-	{cascad {[G_msg "Map type conversions"]} {} "" $tmenu {			
+	{cascad {[G_msg "Map type conversions"]} {} "" $tmenu {
 		{command {[G_msg "Raster to vector map"]} {} "r.to.vect" {} -command {execute r.to.vect }}
 		{command {[G_msg "Raster map series to volume"]} {} "r.to.rast3" {} -command {execute r.to.rast3 }}
+		{command {[G_msg "Raster 2.5D map to volume"]} {} "r.to.rast3elev" {} -command {execute r.to.rast3elev }}
 		{command {[G_msg "Vector to raster"]} {} "v.to.rast" {} -command {execute v.to.rast }}
 		{command {[G_msg "Vector to vector"]} {} "v.type" {} -command {execute v.type }}
 		{command {[G_msg "Vector lines to points"]} {} "v.to.points" {} -command {execute v.to.points }}
@@ -165,7 +166,7 @@ set descmenu [subst {
 		{command {[G_msg "Volumes to raster map series"]} {} "r3.to.rast" {} -command {execute r3.to.rast }}
 	}}
 	{separator}
-	{cascad {[G_msg "Groups"]} {} "" $tmenu {			
+	{cascad {[G_msg "Groups"]} {} "" $tmenu {
 		{command {[G_msg "New"]} {} {[G_msg "Create new group file"]} {} -accelerator $keyctrl-N -command { Dm::new}}
 		{command {[G_msg "Open..."]} {} {[G_msg "Open group file"]} {} -accelerator $keyctrl-O -command { Dm::OpenFileBox {}}}
 		{command {[G_msg "Save"]} {} {[G_msg "Save group file"]} {} -accelerator $keyctrl-S -command { Dm::SaveFileBox {}}}
