@@ -33,6 +33,9 @@ static int parse_command(Nv_data * data, Tcl_Interp * interp,	/* Current interpr
     struct GModule *module;
     char *arglist[3], *autoload;
     int i, aload = 1;
+    char *argv2[argc-1];
+    int argc2, ii, jj;
+
     /*
      * Flags and Options:
      * -q : quickstart, starts nvwish without querying for the usual maps
@@ -128,9 +131,23 @@ static int parse_command(Nv_data * data, Tcl_Interp * interp,	/* Current interpr
     state->required = NO;
     state->description = _("Load previosly saved state file");
 
+    jj = 0;
+    /*
+     * Routine to strip out script name passed to through argv
+     * If left in it treats it as a elev arg and tries to open
+    */
+    for (ii = 0; ii < argc; ii++)
+    {
+        if (ii == 1)
+                continue;
+        argv2[jj] = argv[ii];
+        jj++;
+    }
+    argc2 = argc-1;
+
 
     /* BUG?: warning: passing arg 2 of `G_parser' from incompatible pointer type */
-    if (G_parser(argc, argv))
+    if (G_parser(argc2, argv2))
 	exit(EXIT_FAILURE);
     /* [?!]: Exit status is zero to avoid TCL complaints */
 
@@ -498,8 +515,9 @@ int Ninit(Tcl_Interp * interp, Tk_Window w)
 /*** ACS_MODIFY site_highlight  ONE LINE ************************************************/
 	site_highlight_init_tcl(interp, &data);
 
+/*
     if (!script_mode)
-	    Tcl_Eval(interp, nviz_script); /* source nviz_script to start main window */
+	    Tcl_Eval(interp, nviz_script); */ /* source nviz_script to start main window */
 
     return(TCL_OK);
 }

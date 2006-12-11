@@ -37,14 +37,8 @@ int main(int argc,		/* Number of command-line arguments. */
 
 	Tcl_FindExecutable(argv[0]);
 	if (argc > 1) {
-		if (strstr(argv[1], "-f") != argv[1])
-		{
-			for (i = argc; i > 1; i--)
-				argv[i] = argv[i-1];
-			argv[1] = (char *)G_malloc (3 * sizeof(char));
-			sprintf(argv[1], "--");
-			argc++;
-		}
+		if (strstr(argv[argc-1], "-h") != NULL) 
+                        sprintf(argv[argc-1], "--h");
 	}
 
     Tk_Main(argc, argv, NVIZ_AppInit);
