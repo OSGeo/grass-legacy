@@ -164,8 +164,8 @@ double calculate(area_des ad,int fd, double *result)
 	
 	buf = RLI_get_cell_raster_row(fd, j+ad->y, ad);
 	for(i=0; i < ad->cl; i++)  /* for each cell in the row */
-	{	    		
-		corrCell=buf[i+ad->x];	
+	{
+		corrCell=buf[i+ad->x];
 		
 		if ((masked) && (mask_buf[i+ad->x]==0)) 
 		{
@@ -341,9 +341,9 @@ double calculateD(area_des ad,int fd, double *result)
 	buf = RLI_get_dcell_raster_row(fd, j+ad->y, ad);
 	
 	for(i=0; i < ad->cl; i++) 
-	{/* for each dcell in the row */	    
-		corrCell=buf[i+ad->x];		
-		
+	{/* for each dcell in the row */
+		corrCell=buf[i+ad->x];
+
 		if(masked && mask_buf[i+ad->x]==0)
 			{
 				G_set_d_null_value(&corrCell,1);
@@ -526,12 +526,11 @@ double calculateF(area_des ad,int fd, double *result)
 	for(i=0; i < ad->cl; i++) 
 	{ /* for each fcell in the row */	    
 	    
-		corrCell=buf[i+ad->x];		
-		
+		corrCell=buf[i+ad->x];
+
 		if(masked && mask_buf[i+ad->x]==0)
 			{
 				G_set_f_null_value(&corrCell,1);
-				
 			}
 		
 		if(!(G_is_null_value(&corrCell,uc.t)))
