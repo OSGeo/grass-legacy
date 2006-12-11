@@ -1,4 +1,21 @@
 ##########################################################################
+# 
+# Panel to create kframe animation of scenes produced in nviz.
+#
+##########################################################################
+# Original author unknown (U.S. Army Construction Engineering Research 
+#	Laboratory?)
+#
+# Major update of GUI December 2006, Michael Barton, Arizona State University
+#
+##########################################################################
+# COPYRIGHT:	(C) 2006 by Michael Barton and the GRASS Development Team
+#
+#		This program is free software under the GNU General Public
+#		License (>=v2). Read the file COPYING that comes with GRASS
+#		for details.
+#
+##########################################################################
 # Default Priority for this panel
 #
 # priority is from 0 to 10
@@ -77,95 +94,140 @@ proc Nviz_animation_reset {} {
 proc mkanimationPanel { BASE } {
     global animNumFrames animInterpType animPathState
     global bit_map_path animPanelBASE
+    global nviztxtfont
 
     catch {destroy $BASE}
-    set panel [St_create {window name size priority} $BASE "Animation" 2 5]
+    set panel [St_create {window name size priority} $BASE "Simple Animation" 2 5]
     set animPanelBASE $BASE
 
-    frame $BASE  -relief groove -borderwidth 2
-    Nv_mkPanelname $BASE "Animation Panel"
+    frame $BASE  -relief flat -borderwidth 0
+    Nv_mkPanelname $BASE "Simple Keyframe Animation Panel"
 
+	#animation playback control buttons
     set rname $BASE.buttons
-    frame $rname -relief groove -borderwidth 2
-    button $rname.slow_back    -bitmap @$bit_map_path/slow_left \
-	-command "animStepBackward $BASE"
-    button $rname.stop         -bitmap @$bit_map_path/stop \
-	-command {set animRunState stop; move_position}
-    button $rname.slow_forward -bitmap @$bit_map_path/slow_right \
-	-command "animStepForward $BASE"
-    button $rname.forward      -bitmap @$bit_map_path/right \
-	-command "animRunAnimation $BASE"
+    frame $rname -relief flat -borderwidth 0
+    Button $rname.slow_back -bitmap @$bit_map_path/slow_left \
+		-command "animStepBackward $BASE" -bd 1 \
+		-helptext "Step backward frame by frame"
+    Button $rname.stop -bitmap @$bit_map_path/stop \
+		-command {set animRunState stop; move_position} -bd 1\
+		-helptext "Pause playback"
+    Button $rname.slow_forward -bitmap @$bit_map_path/slow_right \
+		-command "animStepForward $BASE" -bd 1 \
+		-helptext "Step forward frame by frame"
+    Button $rname.forward -bitmap @$bit_map_path/right \
+		-command "animRunAnimation $BASE" -bd 1 \
+		-helptext "Run animation from beginning"
 
-    label $rname.title -text "Tot. Frames: "
-    entry $rname.set_tot_frames -width 4 -relief sunken
-    label $rname.cur_frame -text "0" -width 4
+    label $rname.title -text "  set max frames:" -font $nviztxtfont -fg black
+    entry $rname.set_tot_frames -width 4 -relief sunken -justify r
     $rname.set_tot_frames insert 0 $animNumFrames
-    bind $rname.set_tot_frames <KeyPress-Return> "animChangeNumFrames $BASE"
+    bind $rname.set_tot_frames <Key-Return> "animChangeNumFrames $BASE"
 
     pack $rname.slow_back $rname.stop $rname.slow_forward $rname.forward \
-    $rname.title $rname.set_tot_frames $rname.cur_frame \
-    -side left -padx 3 -pady 3 -fill both -expand yes
-
+    	-side left -padx 1 -fill both -expand no
+    pack $rname.set_tot_frames $rname.title \
+    	-side right -fill x -expand no
+    pack $rname -side top -padx 3 -pady 4 -expand 1 -fill both
 
     # Create mid section containing keyframe control panel
-    frame $BASE.keycontrol -relief groove -borderwidth 2
+    frame $BASE.keycontrol 
     set rname $BASE.keycontrol
     label $rname.l -text "Key Frames"
+    pack  $rname.l -fill x -expand yes -anchor n
     mkkeyframeSlider $BASE
-    pack $rname.kslide $rname.l -padx 3 -pady 3 -expand yes
-
+    
+    pack $rname.kslide -fill x -expand yes -anchor n
+    pack $rname -side top -padx 3 -pady 4
+    
+    # Section for displaying current frame info.
+    set rname [frame $BASE.keycontrol.info]
+    label $rname.cf_label -text "Current frame:" -font $nviztxtfont -fg black
+    label $rname.cur_frame -text "0" -width 4 -fg black -bg white \
+    	-font $nviztxtfont -anchor e
+    label $rname.kf_label -text "Selected key frame:" \
+    	-font $nviztxtfont -fg black
+    label $rname.cur_kframe -text "0" -width 4 -fg black \
+    	-bg white -font $nviztxtfont -anchor e
+    puts "base in startup $BASE"
+    pack $rname.cf_label $rname.cur_frame -side left -expand 0 -fill x -anchor w
+    pack $rname.cur_kframe $rname.kf_label -side right -expand 0 -fil x -anchor e
+    pack $rname -side top -expand 1 -fill both -padx 3 -pady 2
+    
 
     # Create bottom section containing command buttons
-    set rname $BASE.keycontrol.commands
-    frame $rname
-    button $rname.add -text "Add" -command "animAddKey $BASE"
-    button $rname.clear -text "Clear All" -command "animClearAllKeys $BASE"
-    pack $rname.add $rname.clear -fill y -side left -padx 2 -pady 2
-    pack $rname -side bottom -expand yes -fill both
+    set rname [frame $BASE.keycontrol.commands]
+    Button $rname.add -text "Add frame" -command "animAddKey $BASE" \
+    	-bd 1 -width 10
+    Button $rname.clear -text "Clear all" -command "animClearAllKeys $BASE" \
+    	-bd 1 -width 10
+    pack $rname.add  -fill x -expand no -side left
+    pack $rname.clear -fill x -expand no -side right
+    pack $rname -side bottom -expand yes -fill both -padx 3 -pady 4
 
-
-    set rname $BASE.path
+    set rname $BASE.options
     frame $rname -relief groove -bd 2
-    label $rname.lab -text "Show: " -relief flat
-    checkbutton $rname.spath -text "Path" -variable animPathState \
-	-command {Nshow_path $animPathState} -onvalue 1 -offvalue 0
-    checkbutton $rname.svect -text "Vect" -variable animVectState \
-	-command {Nshow_vect $animVectState} -onvalue 1 -offvalue 0
-    checkbutton $rname.ssite -text "Sites" -variable animSiteState \
-	-command {Nshow_site $animSiteState} -onvalue 1 -offvalue 0
-	checkbutton $rname.svol -text "Volumes" -variable animVolState \
-	-command {Nshow_vol $animVolState} -onvalue 1 -offvalue 0
-    pack $rname.lab $rname.spath $rname.svect $rname.ssite $rname.svol\
-    -fill y -side left -padx 2 -pady 2
+    frame $rname.row1
+    label $rname.row1.lab -text "Show: " -fg black
+    checkbutton $rname.row1.spath -text "path" -variable animPathState \
+		-command {Nshow_path $animPathState} -onvalue 1 -offvalue 0
+    checkbutton $rname.row1.svect -text "lines" -variable animVectState \
+		-command {Nshow_vect $animVectState} -onvalue 1 -offvalue 0
+    checkbutton $rname.row1.ssite -text "points" -variable animSiteState \
+		-command {Nshow_site $animSiteState} -onvalue 1 -offvalue 0
+	checkbutton $rname.row1.svol -text "volumes" -variable animVolState \
+		-command {Nshow_vol $animVolState} -onvalue 1 -offvalue 0
+    pack $rname.row1.lab $rname.row1.spath $rname.row1.svect $rname.row1.ssite $rname.row1.svol\
+    	-fill y -side left -padx 2 -pady 2
+    pack $rname.row1 -side top -anchor w
 
-    set rname $BASE.interp
-    frame $rname -relief groove -bd 2
-    label $rname.lab -text "Interp: " -relief flat
-    radiobutton $rname.linear -text "Linear" -variable animInterpType -relief raised \
-	-value linear -command "Nset_interp_mode linear ; Nupdate_frames"
-    radiobutton $rname.spline -text "Spline -->" -variable animInterpType -relief raised \
-	-value spline -command "Nset_interp_mode spline ; Nupdate_frames"
-    scale $rname.tension -label "Tension" -orient h -showvalue f \
-	-from 0 -to 1000 -command animChangeTension \
-	-activebackground gray80 -background gray90
-    $rname.tension set 500
-    pack $rname.lab $rname.linear $rname.spline $rname.tension \
-    -side left -padx 3 -pady 3
+    frame $rname.row2
+    label $rname.row2.lab -text "Interpolation: " -fg black
+    radiobutton $rname.row2.linear -text "linear" -variable animInterpType \
+		-value linear -command "Nset_interp_mode linear
+			Nupdate_frames
+			mkTensionScale linear $rname.row2"
+    radiobutton $rname.row2.spline -text "spline" -variable animInterpType \
+		-value spline -command "Nset_interp_mode spline
+			Nupdate_frames
+			mkTensionScale spline $rname.row2"
+    pack $rname.row2.lab $rname.row2.linear $rname.row2.spline \
+    	-side left -padx 3 -pady 3
+    pack $rname.row2 -side top -anchor w
+    pack $rname -padx 3
 
     set rname $BASE.bottom
     frame $rname -relief groove
-    button $rname.rands -text "Run and Save" -command "animRunAndSave $BASE"
-    button $rname.close -text Close -command "Nv_closePanel $BASE"
-    pack $rname.rands -side left -fill y -pady 2
-    pack $rname.close -side right -fill y -pady 2
+    Button $rname.rands -text "Run and save" -bd 1 \
+    	-command "animRunAndSave $BASE" \
+    	-helptext "Run animation and save frames"
+    Button $rname.close -text Close -bd 1 \
+    	-command "Nv_closePanel $BASE"
+    pack $rname.rands -side left -fill y
+    pack $rname.close -side right -fill y
+    pack $rname -padx 3 -pady 3
 
 
-    pack $BASE.buttons $BASE.keycontrol $BASE.path \
-    $BASE.interp $BASE.bottom \
+    pack $BASE.buttons $BASE.keycontrol $BASE.options \
+    $BASE.bottom \
       -side top -pady 3 -fill both -expand yes
 
 
     return $panel
+}
+
+proc mkTensionScale {type BASE} {
+	catch {destroy $BASE.tension}
+
+	if {$type == "spline"} {
+		set tscale [scale $BASE.tension -label "spline tension" -orient h -showvalue f \
+			-from 0 -to 1000 -command animChangeTension \
+			-activebackground gray80 -background gray90 -showvalue 1 -width 14]
+	
+		$tscale set 500
+		pack $tscale -side left
+	}
+
 }
 
 ############################################################################
@@ -203,11 +265,16 @@ proc mkkeyframeSlider { BASE } {
     # slider and independently created polygonal objects are used to indicate the set keyframes
 
     # Container and keyframe canvases (canvi?)
-    canvas $BASE -width 9c -height 2c
-    canvas $BASE.slider -width 75m -height 1c -relief raised -bd 3
-    $BASE create window 0 0 -anchor nw -window $BASE.slider -tags key_slider -height 12m
-    $BASE coords key_slider 0 1c
-    $BASE create bitmap 8c 5m -bitmap @$bit_map_path/trash -foreground black -tags dump_key
+    canvas $BASE -width 340 -height 60
+    canvas $BASE.slider -width 300 -height 25 -relief sunken -bd 2 -bg white
+    $BASE create window 10 20 -window $BASE.slider -tags key_slider -anchor nw
+    pack $BASE -side top
+    
+    # Trashcan for deleting single key frames
+	image create photo trash -file "$bit_map_path/trash.gif"
+    $BASE create image 332 15 -image "trash" -tags dump_key
+	DynamicHelp::register "trash" balloon [G_msg "Test"]
+
 
     # Make sure we record the dimensions so our slider works correctly
     set temp [$BASE bbox key_slider]
@@ -219,7 +286,7 @@ proc mkkeyframeSlider { BASE } {
 
     # Create and bind a sliding rule to indicate the current keyframe
     bind $BASE.slider <1> "kfMoveSlider %x $oBASE"
-    $BASE.slider create rectangle 3 0 8 1c -fill blue -outline black -tags cur_keyframe
+    $BASE.slider create rectangle 1 0 6 25 -fill blue -outline black -tags cur_keyframe
     $BASE.slider bind cur_keyframe <B1-Motion> "kfMoveSlider %x $oBASE"
 
     # Create an initial set of tickmarks
@@ -251,7 +318,7 @@ proc kfMoveSlider { x BASE } {
     # Update the frame number to indicate the current position of the slider
     set pos [expr ($x - $animStartX + 0.0)/($animEndX - $animStartX)]
     set frame [animPosToFrame $pos]
-    $oBASE.buttons.cur_frame configure -text "$frame"
+    $oBASE.keycontrol.info.cur_frame configure -text "$frame"
     Ndo_framestep [expr $frame + 1] 0
 
 }
@@ -310,7 +377,7 @@ proc kfSetSliderPos { BASE pos } {
     # Update the frame number to indicate the current position of the slider
     set pos [expr ($x - $animStartX + 0.0)/($animEndX - $animStartX)]
     set frame [animPosToFrame $pos]
-    $oBASE.buttons.cur_frame configure -text "$frame"
+    $oBASE.keycontrol.info.cur_frame configure -text "$frame"
 
 }
 
@@ -427,15 +494,15 @@ proc kfMakeKeyPointer { BASE pos tag } {
     append tag2 "_"
 
     # Create the top portion consisting of a polygon with an outline
-    $BASE create polygon $lx 1c [expr $lx - 4] 5m [expr $lx + 4] 5m $lx 1c \
-	-fill blue -tags $tag1
-    $BASE create line    $lx 1c [expr $lx - 4] 5m [expr $lx + 4] 5m $lx 1c \
+    $BASE create polygon $lx 0 [expr $lx - 4] 10 [expr $lx + 4] 10 $lx 0 \
+	-fill green -tags $tag1
+    $BASE create line    $lx 0 [expr $lx - 4] 10 [expr $lx + 4] 10 $lx 0 \
 	-fill black -tags $tag2
 
     # Create the bottom portion consisting of a polygon with an outline
-    $BASE.slider create polygon $x 3m [expr $x - 4] 0 [expr $x + 4] 0 $x 3m \
-	-fill blue -tags $tag1
-    $BASE.slider create line    $x 3m [expr $x - 4] 0 [expr $x + 4] 0 $x 3m \
+    $BASE.slider create polygon $x 10 [expr $x - 4] 0 [expr $x + 4] 0 $x 10 \
+	-fill green -tags $tag1
+    $BASE.slider create line    $x 10 [expr $x - 4] 0 [expr $x + 4] 0 $x 10 \
 	-fill black -tags $tag2
 
     # Create bindings for the top portion which controls keyframe movement
@@ -477,8 +544,8 @@ proc kfKeyPointerMove { BASE x tag } {
     }
 
     # Change coordinates of object
-    $BASE coords $tag1 $nx 1c [expr $nx - 4] 5m [expr $nx + 4] 5m $nx 1c
-    $BASE coords $tag2 $nx 1c [expr $nx - 4] 5m [expr $nx + 4] 5m $nx 1c
+    $BASE coords $tag1 $nx 0 [expr $nx - 4] 10 [expr $nx + 4] 10 $nx 0
+    $BASE coords $tag2 $nx 0 [expr $nx - 4] 10 [expr $nx + 4] 10 $nx 0
 }
 
 ############################################################################
@@ -507,54 +574,54 @@ proc kfKeyPointerMoveBot { BASE tag } {
 
     # Check if the keyframe pointer is over the trash can
     if {$x > $animEndX} then {
-	set ans [tk_dialog .verify "Verify" "Do you really want to delete this keyframe?" \
-		     {} 1 Ok Dismiss]
-	if {$ans == 1} then {
-
-	    # Cancel the delete so move top pointer back to original position
-	    set x [expr [lindex [$BASE.slider coords $tag1] 0] + \
-		       [lindex [$BASE coords key_slider] 0]]
-	    $BASE coords $tag1 $x 1c [expr $x - 4] 5m [expr $x + 4] 5m $x 1c
-	    $BASE coords $tag2 $x 1c [expr $x - 4] 5m [expr $x + 4] 5m $x 1c
-
-	} else {
-
-	    # Do the delete:  Remove the key pointers and remove the key from the list
-	    $BASE delete $tag1 $tag2
-	    $BASE.slider delete $tag1 $tag2
-
-	    # Find the keyframe in the list
-	    set tag_list [list]
-	    foreach i $animKeyList { lappend tag_list [lindex $i 5] }
-	    set i [lsearch -exact $tag_list $tag1]
-
-	    # Remove the given keytime from the GK keyframe list
-	    set key_time [lindex [lindex $animKeyList $i] 0]
-	    puts "Deleting key at $key_time"
-	    if {[Ndelete_key $key_time 0 1] == 0} then {
-		tk_dialog .ierror "Internal Error" \
-		    "Internal Error - Failed to delete keyframe in GK key list" \
-		    {} 0 Dismiss
-	    }
-	    Nupdate_frames
-
-	    # Remove the key from the tcl keyframe list
-	    set animKeyList [lreplace $animKeyList $i $i]
-
-	    # Update the display
-	    animFixEndpoints $oBASE
-	}
-
-	return
+		set ans [tk_dialog .verify "Verify" "Do you really want to delete this keyframe?" \
+				 {} 1 Ok Dismiss]
+		if {$ans == 1} then {
+	
+			# Cancel the delete so move top pointer back to original position
+			set x [expr [lindex [$BASE.slider coords $tag1] 0] + \
+				   [lindex [$BASE coords key_slider] 0]]
+			$BASE coords $tag1 $x 0 [expr $x - 4] 10 [expr $x + 4] 10 $x 0
+			$BASE coords $tag2 $x 0 [expr $x - 4] 10 [expr $x + 4] 10 $x 0
+	
+		} else {
+	
+			# Do the delete:  Remove the key pointers and remove the key from the list
+			$BASE delete $tag1 $tag2
+			$BASE.slider delete $tag1 $tag2
+	
+			# Find the keyframe in the list
+			set tag_list [list]
+			foreach i $animKeyList { lappend tag_list [lindex $i 5] }
+			set i [lsearch -exact $tag_list $tag1]
+	
+			# Remove the given keytime from the GK keyframe list
+			set key_time [lindex [lindex $animKeyList $i] 0]
+			puts "Deleting key at $key_time"
+			if {[Ndelete_key $key_time 0 1] == 0} then {
+			tk_dialog .ierror "Internal Error" \
+				"Internal Error - Failed to delete keyframe in GK key list" \
+				{} 0 Dismiss
+			}
+			Nupdate_frames
+	
+			# Remove the key from the tcl keyframe list
+			set animKeyList [lreplace $animKeyList $i $i]
+	
+			# Update the display
+			animFixEndpoints $oBASE
+		}
+	
+		return
     }
 
-    $BASE.slider coords $tag1 $x 3m [expr $x - 4] 0 [expr $x + 4] 0 $x 3m
-    $BASE.slider coords $tag2 $x 3m [expr $x - 4] 0 [expr $x + 4] 0 $x 3m
+    $BASE.slider coords $tag1 $x 10 [expr $x - 4] 0 [expr $x + 4] 0 $x 10
+    $BASE.slider coords $tag2 $x 10 [expr $x - 4] 0 [expr $x + 4] 0 $x 10
 
     # Now find the entry in the key frame list
     set tags [list]
     foreach i $animKeyList {
-	lappend tags [lindex $i 5]
+		lappend tags [lindex $i 5]
     }
     set key_num [lsearch -exact $tags $tag]
     set moved_key [lindex $animKeyList $key_num]
@@ -572,12 +639,14 @@ proc kfKeyPointerMoveBot { BASE tag } {
     set animKeyList [linsert $animKeyList $i $moved_key]
 
     # Also, move the key in the GK keyframe list
-    puts "Moving from $old_time to $new_time"
     if {[Nmove_key $old_time 0 $new_time] == 0} then {
 	tk_dialog .ierror "Internal Error" \
 	    "Internal Error - Failed to move keyframe in GK key list" \
 	    {} 0 Dismiss
     }
+    
+    set new_time_int [expr round($new_time * 100)]
+    $oBASE.keycontrol.info.cur_kframe configure -text "$new_time_int"    
     Nupdate_frames
 
     # Update the display
@@ -771,32 +840,33 @@ proc animStepForward { BASE } {
     }
 
     # Get current frame
-    set cur_frame [lindex [$BASE.buttons.cur_frame configure -text] 4]
+    set cur_frame [lindex [$BASE.
+    configure -text] 4]
 
     # Increment if possible and update the display
     if {$cur_frame < [expr $animNumFrames - 1]} then {
-	set cur_frame [expr $cur_frame + 1]
-	kfSetSliderPos $BASE [animFrameToPos $cur_frame]
-	$BASE.buttons.cur_frame configure -text "$cur_frame"
-	Ndo_framestep [expr $cur_frame + 1] $style
+		set cur_frame [expr $cur_frame + 1]
+		kfSetSliderPos $BASE [animFrameToPos $cur_frame]
+		$BASE.keycontrol.info.cur_frame configure -text "$cur_frame"
+		Ndo_framestep [expr $cur_frame + 1] $style
     } else {
-	$BASE.buttons.cur_frame configure -text "[expr $animNumFrames - 1]"
-	Ndo_framestep $animNumFrames $style
-	if {$IMG == "4" && $animRunState == "run_and_save"} {
-		Nclose_mpeg
-	}
-	set animRunState stop
+		$BASE.keycontrol.info.cur_frame configure -text "[expr $animNumFrames - 1]"
+		Ndo_framestep $animNumFrames $style
+		if {$IMG == "4" && $animRunState == "run_and_save"} {
+			Nclose_mpeg
+		}
+		set animRunState stop
     }
 
     update
 
     if {"$animRunState" == "run"} then {
-	after 1 animStepForward $BASE
+		after 1 animStepForward $BASE
     }
 
     if {"$animRunState" == "run_and_save"} then {
-	animSaveFrame [lindex [$BASE.buttons.cur_frame configure -text] 4]
-	after 1 animStepForward $BASE
+		animSaveFrame [lindex [$BASE.keycontrol.info.cur_frame configure -text] 4]
+		after 1 animStepForward $BASE
     }
 }
 
@@ -806,14 +876,14 @@ proc animStepBackward { BASE } {
     if {[llength $animKeyList] < 2} then { return }
 
     # Get current frame
-    set cur_frame [lindex [$BASE.buttons.cur_frame configure -text] 4]
+    set cur_frame [lindex [$BASE.keycontrol.info.cur_frame configure -text] 4]
 
     # Increment if possible and update the display
     if {$cur_frame > 0} then {
-	set cur_frame [expr $cur_frame - 1]
-	kfSetSliderPos $BASE [animFrameToPos $cur_frame]
-	$BASE.buttons.cur_frame configure -text "$cur_frame"
-	Ndo_framestep [expr $cur_frame + 1] 0
+		set cur_frame [expr $cur_frame - 1]
+		kfSetSliderPos $BASE [animFrameToPos $cur_frame]
+		$BASE.keycontrol.info.cur_frame configure -text "$cur_frame"
+		Ndo_framestep [expr $cur_frame + 1] 0
     }
 
     update
@@ -829,9 +899,9 @@ proc animRunAnimation { BASE } {
     if {[llength $animKeyList] < 2} then { return }
 
     # If we are already at the end then restart from the beginning
-    set cur_frame [lindex [$BASE.buttons.cur_frame configure -text] 4]
+    set cur_frame [lindex [$BASE.keycontrol.info.cur_frame configure -text] 4]
     if {$cur_frame >= [expr $animNumFrames - 1]} then {
-	$BASE.buttons.cur_frame configure -text 0
+	$BASE.keycontrol.info.cur_frame configure -text 0
 	update
 	Ndo_framestep 1 0
     }
@@ -887,9 +957,9 @@ proc animRunAndSave { BASE } {
     }
 
     # If we are already at the end then restart from the beginning
-    set cur_frame [lindex [$BASE.buttons.cur_frame configure -text] 4]
+    set cur_frame [lindex [$BASE.keycontrol.info.cur_frame configure -text] 4]
     if {$cur_frame >= [expr $animNumFrames - 1]} then {
-	$BASE.buttons.cur_frame configure -text 0
+	$BASE.keycontrol.info.cur_frame configure -text 0
 	update
 	Ndo_framestep 1 $animSaveRenderStyle
 	animSaveFrame 0
