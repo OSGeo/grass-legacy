@@ -8,7 +8,7 @@ include $(MODULE_TOPDIR)/include/Make/Grass.make
 VER=2.2
 NV_VER=nviz$(VER)
 PROG=nviz
-NVWISH_VER=NVWISH$(VER)
+NVWISH_VER=$(PROG)
 INSTALL_DIR=$(GISBASE)/etc/$(NV_VER)
 
 SCRIPTDIR=$(NV_VER)/scripts
@@ -39,6 +39,9 @@ install:
 	$(INSTALL) scripts/nviz_params $(INSTALL_DIR)/scripts/nviz_params
 ### ACS - END #################################################################
 	$(INSTALL) scripts/*Index $(INSTALL_DIR)/scripts
+	$(INSTALL) -m 755 scripts/$(PROG) $(GISBASE)/bin
+	if test -f "src/nvwish.exe" ; then mv src/nvwish.exe $(INSTALL_DIR)/$(NVWISH_VER) ; fi
+	if test -f "src/nvwish" ; then mv src/nvwish $(INSTALL_DIR)/$(NVWISH_VER) ; fi
 	(cd bitmaps; tar -cf - *  | (cd $(INSTALL_DIR)/bitmaps; tar  -xf - 2>/dev/null ); true)
 	$(INSTALL) scripts/$(NV_VER)_script $(INSTALL_DIR)/scripts
 	(cd html ; $(MAKE) )
