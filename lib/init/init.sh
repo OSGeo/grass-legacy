@@ -668,14 +668,14 @@ case "$GRASS_GUI" in
 	if [ "$osxaqua" ] ; then
 		"$GISBASE/scripts/gis.m" | sh &
 	else
-		"$GISBASE/scripts/gis.m" &
+		"$GISBASE/scripts/gis.m"
 	fi	
 	;;
     d.m)
 	if [ "$osxaqua" ] ; then
 		"$GISBASE/scripts/d.m" | sh &
 	else
-		"$GISBASE/scripts/d.m" &
+		"$GISBASE/scripts/d.m"
 	fi	
 	;;
 
@@ -709,9 +709,9 @@ echo "Help is available with the command:      g.manual -i"
 echo "See the licence terms with:              g.version -c"
 
 if [ "$GRASS_GUI" = "text" ] ; then
-    echo "Start the graphical user interface with: gis.m &"
+    echo "Start the graphical user interface with: gis.m"
 else
-    echo "If required, restart the graphical user interface with: gis.m &"
+    echo "If required, restart the graphical user interface with: gis.m"
 fi
 
 echo "When ready to quit enter:                exit"
