@@ -7,7 +7,8 @@ A few remaining things should be done soon:
   as template):
   - r.li.patchnumber
   - r.li.shape
-- use english variable names as much as possible
+- use english variable names in C code
+- some r.li modules still use capital letters in their name & are too long
 
 Please change the examples to Spearfish wherever possible.
 
