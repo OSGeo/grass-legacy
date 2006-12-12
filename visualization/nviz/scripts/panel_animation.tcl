@@ -149,7 +149,6 @@ proc mkanimationPanel { BASE } {
     	-font $nviztxtfont -fg black
     label $rname.cur_kframe -text "0" -width 4 -fg black \
     	-bg white -font $nviztxtfont -anchor e
-    puts "base in startup $BASE"
     pack $rname.cf_label $rname.cur_frame -side left -expand 0 -fill x -anchor w
     pack $rname.cur_kframe $rname.kf_label -side right -expand 0 -fil x -anchor e
     pack $rname -side top -expand 1 -fill both -padx 3 -pady 2
