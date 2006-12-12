@@ -25,6 +25,9 @@
 # Panel specific globals
 global Nv_
 
+# default cursor
+set Nv_(cursor) [$Nv_(TOP) cget -cursor]	
+
 
 ##########################################################################
 
@@ -34,7 +37,7 @@ proc mkarrowPanel { BASE } {
     global arw_clr arw_text_clr
     global nviztxtfont
 
-    # defaults
+    # defaults (for some reason not recognizing globals)
     set n_arrow_size 1000
     set arw_clr "#000000"
     set arw_text_clr "#DDDDDD"
@@ -86,7 +89,7 @@ proc mkarrowPanel { BASE } {
     # close panel section
     set rbase3 [frame $BASE.button]
     Button $rbase3.place -text "Place arrow" -bd 1 \
-	 -command "bind_mouse $Nv_(TOP).canvas"
+	 -command "bind_mouse $Nv_(TOP).canvas; $Nv_(TOP) configure -cursor plus"
     pack $rbase3.place -expand yes -side left -expand no -fill none
 
     button $rbase3.close -text "Close" -command "Nv_closePanel $BASE" \
@@ -98,14 +101,17 @@ proc mkarrowPanel { BASE } {
 }
 
 proc bind_mouse { W } {
+	global Nv_
 	bind $W <1> {
 		place_narrow %W %x %y 
 		if {$Nauto_draw == 1} {
 			#Nset_cancel 0
 			Ndraw_all
 		} 
+		$Nv_(TOP) configure -cursor $Nv_(cursor)
 	}
 }
+
 
 #############################################################
 
