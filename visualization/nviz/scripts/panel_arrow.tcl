@@ -38,7 +38,7 @@ proc mkarrowPanel { BASE } {
     global nviztxtfont
 
     # defaults (for some reason not recognizing globals)
-    set n_arrow_size 1000
+    set n_arrow_size [expr int([Nget_longdim]/4.)]
     set arw_clr "#000000"
     set arw_text_clr "#DDDDDD"
     #This doesn't do anything currently
