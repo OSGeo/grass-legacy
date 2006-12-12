@@ -13,6 +13,9 @@
 #         VERSION:  1.2
 #         CREATED:  04/01/2004
 #        REVISION:  22/04/2006 (Michael Barton, Arizona State University)
+#       CHANGELOG:  1.0.1 08/12/2006 - Fixed directory choosing dialogs. Maris Nartiss.
+#            TODO:  Check return status of make_location_epsg.sh to catch failed location creation.
+#                   Make epsg code browser user frendly.
 #=====================================================================================
 #
 #
@@ -70,7 +73,7 @@ proc epsgLocCom args {
         
         # creation of the parameter window
         toplevel .optPopup
-        wm title .optPopup {Define location using EPSG projection codes}
+        wm title .optPopup [ G_msg "Define location using EPSG projection codes" ]
         # put it in the middle of the screen
         update idletasks
         set winWidth [winfo reqwidth .optPopup]
@@ -92,9 +95,10 @@ proc epsgLocCom args {
         label .optPopup.input4_ppb -text [G_msg "EPSG code number of projection"] -justify right -height 2
         entry .optPopup.input4_ppbEntry -textvariable epsg_code  -width 35
         
-		#browse for database path
+	#browse for database path
         button .optPopup.db -justify center -width 12 -text [G_msg "Browse..."] \
-			-command "set locpath \[tk_getOpenFile\]" 
+		-command "set locpath \[tk_chooseDirectory \
+		-parent .optPopup -title \[ G_msg \"Choose path to new location\" \] -mustexist true \]"
 
         bind .optPopup.db <Leave> {
              if {$locpath == ""} {
@@ -102,17 +106,18 @@ proc epsgLocCom args {
             }
         }
 
-		#browse for epsg file
+	#browse for epsg file
         button .optPopup.browseepsgfile -justify center -width 12 -text [G_msg "Browse..."] \
-			-command "set browsedepsg \[tk_getOpenFile\]" 
-                                        
+		-command "set browsedepsg \[tk_getOpenFile -initialdir PROJSHARE -initialfile epsg \
+		-parent .optPopup -title \[ G_msg \"Choose EPSG file\" \] -multiple false\]" 
+
         bind .optPopup.input3_ppbEntry <Leave> {
              if {$browsedepsg == ""} {
                 set browsedepsg "PROJSHARE/epsg"
             }
         }
 
-		#browse epsg codes in file
+	#browse epsg codes in file
         button .optPopup.codes 	-justify center -width 12 -text [G_msg "Browse..."] \
 			-command {
 				if {[file exists $browsedepsg]== 0} {
@@ -134,6 +139,11 @@ proc epsgLocCom args {
         
         button .optPopup.submit 	-justify center -width 15 -text [G_msg "Define location"] -state disabled\
 			-command {
+				if {![string is integer $epsg_code]} {
+					DialogGen .wrnDlg [G_msg "WARNING: wrong EPSG code"] warning \
+					[G_msg "WARNING: Please supply correct EPSG code (integer)"] \
+					0 OK; 
+				} else {
 				set thelocation "$locpath/$epsgLocation";
 				if {[file exists $thelocation ]== 1} {
 					DialogGen .wrnDlg [G_msg "WARNING: location exists"] warning \
@@ -160,10 +170,11 @@ proc epsgLocCom args {
 							0 OK; 
 						set env(EPSGSCRIPT) {yes};
 						puts stdout "exit";
-						destroy . 
+						destroy .
 					}
 				}
 				set thelocation ""
+				}
 			 }
 			
         bind .optPopup.input4_ppbEntry <KeyRelease> {
@@ -223,13 +234,14 @@ proc codesEpsg args {
         .infoPopup.text tag configure underline -underline 1
         .infoPopup.text tag configure title -relief sunken -borderwidth 2 \
         	-background white -foreground "medium blue" -justify center
-        .infoPopup.text tag configure lefttitle -relief flat  
-        .infoPopup.text tag configure subtitle -relief flat -background beige
-    
+        .infoPopup.text tag configure lefttitle -relief flat -background beige
+        # Do not set background color for subtitle. It will override selection background color!
+        .infoPopup.text tag configure subtitle -relief flat
+        
         
         # the text to be inserted
         .infoPopup.text insert end [format " \n %s\n\n" [format [G_msg "EPSG CODES (from file: %s)"] $browsedepsg]] title
-        .infoPopup.text insert end " \n" lefttitle
+        .infoPopup.text insert end [G_msg "You can select EPSG code (in <braces>) and copy it for later use. \n" ] lefttitle
         .infoPopup.text insert end " \n\n" subtitle
         
         # open the file 
