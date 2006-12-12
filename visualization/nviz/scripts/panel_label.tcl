@@ -30,7 +30,7 @@ set Nv_(font) {"times" "12"}
 
 # Font Point Size: varies
 set Nv_(labelFontSize) 12
-set Nv_(labelFontColor) #000000
+set Nv_(labelFontColor) "#000000"
 
 # Legend section
 set Nv_(catval) 1
@@ -46,6 +46,9 @@ set Nv_(cat_list_select) 0
 set Nv_(labvalues) 1
 set Nv_(lablabels) 1
 set Nv_(labinbox) 1
+
+# default cursor
+set Nv_(cursor) [$Nv_(TOP) cget -cursor]	
 
 global clr
 
@@ -156,10 +159,13 @@ proc label_delete_list { list flag } {
 proc place_label { } {
     global Nv_
     global labels
+    
+ 	$Nv_(TOP) configure -cursor plus
+
     # We bind the canvas area so that the user can click to place the
     # label.  After the click is processed we unbind the canvas area
-set labels 1
-bind $Nv_(TOP).canvas <Button-1> {place_label_cb %x %y }
+	set labels 1
+	bind $Nv_(TOP).canvas <Button-1> {place_label_cb %x %y }
 
 }
 
@@ -195,6 +201,7 @@ proc place_label_cb { sx sy } {
 	set font "*-$Nv_(labelFontType)-$weight-$slant-normal-$style-$Nv_(labelFontSize)-*-*-*-*-*-*-*"
 
 	Nplace_label $Nv_(label_text) $font $Nv_(labelFontSize) $clr $sx $sy
+	$Nv_(TOP) configure -cursor $Nv_(cursor)
 
 	#remove binding
 	bind $Nv_(TOP).canvas <Button-1> {}
