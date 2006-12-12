@@ -493,9 +493,9 @@ proc kfMakeKeyPointer { BASE pos tag } {
     append tag2 "_"
 
     # Create the top portion consisting of a polygon with an outline
-    $BASE create polygon $lx 0 [expr $lx - 4] 10 [expr $lx + 4] 10 $lx 0 \
+    $BASE create polygon $lx 10 [expr $lx - 4] 20 [expr $lx + 4] 20 $lx 10 \
 	-fill green -tags $tag1
-    $BASE create line    $lx 0 [expr $lx - 4] 10 [expr $lx + 4] 10 $lx 0 \
+    $BASE create line    $lx 10 [expr $lx - 4] 20 [expr $lx + 4] 20 $lx 10 \
 	-fill black -tags $tag2
 
     # Create the bottom portion consisting of a polygon with an outline
@@ -543,8 +543,8 @@ proc kfKeyPointerMove { BASE x tag } {
     }
 
     # Change coordinates of object
-    $BASE coords $tag1 $nx 0 [expr $nx - 4] 10 [expr $nx + 4] 10 $nx 0
-    $BASE coords $tag2 $nx 0 [expr $nx - 4] 10 [expr $nx + 4] 10 $nx 0
+    $BASE coords $tag1 $nx 10 [expr $nx - 4] 20 [expr $nx + 4] 20 $nx 10
+    $BASE coords $tag2 $nx 10 [expr $nx - 4] 20 [expr $nx + 4] 20 $nx 10
 }
 
 ############################################################################
@@ -580,8 +580,8 @@ proc kfKeyPointerMoveBot { BASE tag } {
 			# Cancel the delete so move top pointer back to original position
 			set x [expr [lindex [$BASE.slider coords $tag1] 0] + \
 				   [lindex [$BASE coords key_slider] 0]]
-			$BASE coords $tag1 $x 0 [expr $x - 4] 10 [expr $x + 4] 10 $x 0
-			$BASE coords $tag2 $x 0 [expr $x - 4] 10 [expr $x + 4] 10 $x 0
+			$BASE coords $tag1 $x 10 [expr $x - 4] 20 [expr $x + 4] 20 $x 10
+			$BASE coords $tag2 $x 10 [expr $x - 4] 20 [expr $x + 4] 20 $x 10
 	
 		} else {
 	
@@ -839,8 +839,7 @@ proc animStepForward { BASE } {
     }
 
     # Get current frame
-    set cur_frame [lindex [$BASE.
-    configure -text] 4]
+    set cur_frame [lindex [$BASE.keycontrol.info.cur_frame configure -text] 4]
 
     # Increment if possible and update the display
     if {$cur_frame < [expr $animNumFrames - 1]} then {
@@ -900,9 +899,9 @@ proc animRunAnimation { BASE } {
     # If we are already at the end then restart from the beginning
     set cur_frame [lindex [$BASE.keycontrol.info.cur_frame configure -text] 4]
     if {$cur_frame >= [expr $animNumFrames - 1]} then {
-	$BASE.keycontrol.info.cur_frame configure -text 0
-	update
-	Ndo_framestep 1 0
+		$BASE.keycontrol.info.cur_frame configure -text 0
+		update
+		Ndo_framestep 1 0
     }
 
     set animRunState run
@@ -917,6 +916,7 @@ proc animRunAnimation { BASE } {
 proc animRunAndSave { BASE } {
     global animNumFrames animKeyList animRunState
     global IMG animWaitPress animBaseName animSaveRenderStyle
+    global nviztxtfont
 
     if {[llength $animKeyList] < 2} then { return }
 
@@ -925,43 +925,52 @@ proc animRunAndSave { BASE } {
     set animWaitPress false
     set IMG 2
     toplevel .ras_fname
-    frame .ras_fname.frame1
-    frame .ras_fname.frame2
-    label .ras_fname.title -text "Enter a base name:"
-    entry .ras_fname.enter -relief sunken
-    radiobutton .ras_fname.norm -text "Wireframe" -variable animSaveRenderStyle -value 0
-    radiobutton .ras_fname.fancy -text "Full Rendering" -variable animSaveRenderStyle -value 1
-    button .ras_fname.ok -text "Ok" -command "set animWaitPress true"
-    label .ras_fname.label -text "" -relief raised
-    # Start at value 2. 1 used to be SGI .rgb support
-    radiobutton .ras_fname.img2 -text "PPM" -variable IMG -value 2
-    radiobutton .ras_fname.img3 -text "TIFF" -variable IMG -value 3
-    radiobutton .ras_fname.img4 -text "MPEG-1" -variable IMG -value 4
-#Pack Menu
-    pack .ras_fname.frame1 -side top -fill both -expand 1
-    pack .ras_fname.frame2 -side bottom -fill both -expand 1
-    pack .ras_fname.title .ras_fname.enter -side top \
-    -in .ras_fname.frame1 -fill both
-    pack .ras_fname.img2 .ras_fname.img3 .ras_fname.img4 \
-    -in .ras_fname.frame1 -side left -fill both
-    pack .ras_fname.label .ras_fname.norm .ras_fname.fancy -side top \
-	-in .ras_fname.frame2 -fill both
-    pack .ras_fname.ok -side bottom -fill both -in .ras_fname.frame2 -expand 1
+    wm title .ras_fname "Save Animation Frames"
+    set row1 [frame .ras_fname.frame1]
+    set row2 [frame .ras_fname.frame2]
+    set row3 [frame .ras_fname.frame3]
+    set row4 [frame .ras_fname.frame4]
+    
+    Label $row1.label -text "Prefix for images: " \
+    	-helptext "Enter a prefix name for images to be created from animation frames"
+    entry $row1.enter -relief sunken
+    pack $row1.label $row1.enter -side left -fill x -expand 0 -anchor w
+    pack $row1 -side top -padx 3 -pady 4 -expand 1 -fill both
+    
+    Label $row2.formatlabel -text "Output format: "
+    radiobutton $row2.img2 -text "PPM" -variable IMG -value 2
+    radiobutton $row2.img3 -text "TIFF" -variable IMG -value 3
+    radiobutton $row2.img4 -text "MPEG-1" -variable IMG -value 4
+    pack $row2.formatlabel $row2.img2 $row2.img3 $row2.img4 -side left \
+    	-anchor w -fill x -expand 0
+    pack $row2 -side top -padx 3 -expand 1 -fill both
+    
+    Label $row3.rendlabel -text "Rendering mode: "
+    radiobutton $row3.norm -text "coarse" -variable animSaveRenderStyle -value 0
+    radiobutton $row3.fancy -text "fine" -variable animSaveRenderStyle -value 1
+    pack $row3.rendlabel $row3.norm $row3.fancy -side left -anchor w \
+    	 -fill x -expand 0
+    pack $row3 -side top -padx 3 -pady 4 -expand 1 -fill both
+
+    button $row4.ok -text "OK" -width 4 -bd 1 -command "set animWaitPress true"
+    pack $row4.ok
+    pack $row4 -side top -pady 3 -expand 1 -fill both
+
     tkwait variable animWaitPress
-    set animBaseName [.ras_fname.enter get]
+    set animBaseName [$row1.enter get]
     destroy .ras_fname
 
     if {$IMG == 4} {
-	Ninit_mpeg $animBaseName
+		Ninit_mpeg $animBaseName
     }
 
     # If we are already at the end then restart from the beginning
     set cur_frame [lindex [$BASE.keycontrol.info.cur_frame configure -text] 4]
     if {$cur_frame >= [expr $animNumFrames - 1]} then {
-	$BASE.keycontrol.info.cur_frame configure -text 0
-	update
-	Ndo_framestep 1 $animSaveRenderStyle
-	animSaveFrame 0
+		$BASE.keycontrol.info.cur_frame configure -text 0
+		update
+		Ndo_framestep 1 $animSaveRenderStyle
+		animSaveFrame 0
     }
 
     set animRunState run_and_save
