@@ -37,13 +37,10 @@ rem Generate GISBASE by converting dirsep characters from \ to /
 FOR /F "usebackq delims==" %%i IN (`g.dirseps -g %WINGISBASE%`) DO @set GISBASE=%%i
 
 set GRASS_PAGER=more
-if "%GRASS_SH%"=="" set GRASS_SH=c:\msys\bin\sh.exe
+if "%GRASS_SH%"=="" set GRASS_SH=c:\msys\1.0\bin\sh.exe
 rem Should do something with "assoc .html" and ftype here but would require
 rem a new g.manual.bat too so leaving it like this for now...
 if "%GRASS_HTML_BROWSER%"=="" set GRASS_HTML_BROWSER=%SYSTEMDRIVE%/PROGRA~1/INTERN~1/IEXPLORE.EXE
-
-rem Not sure about this one
-set GRASS_WISH=c:/tcl/bin/wish.exe
 
 if "%1" == "-version" goto displaylicence
 if "%1" == "-v" goto displaylicence
@@ -85,13 +82,21 @@ if "%GRASS_GUI%"=="" set GRASS_GUI=tcltk
 
 if "%GRASS_GUI%"=="text" goto text
 
-"%WINGISBASE%\etc\gis_set.tcl"
+if not "%GRASS_WISH%"=="" (
+  "%GRASS_WISH%" "%WINGISBASE%\etc\gis_set.tcl"
+) else (
+  "%WINGISBASE%\etc\gis_set.tcl"
+)
 
 rem This doesn't seem to work; don't understand return codes from gis_set.tcl PK
 rem if return ok, gis.m start:
 if %errorlevel% == 1 exit /b
 
-"%WINGISBASE%\etc\gm\gm.tcl"
+if not "%GRASS_WISH%"=="" (
+  "%GRASS_WISH%" "%WINGISBASE%\etc\gm\gm.tcl"
+) else (
+  "%WINGISBASE%\etc\gm\gm.tcl"
+)
 
 "%WINGISBASE%\etc\clean_temp" > NUL:
 
