@@ -26,6 +26,7 @@ int main(int argc, char *argv[])
     char *input, *output;
     struct GModule *module;
     struct Option *opt1, *opt2, *opt3;
+    struct History history;
     int iterations;
 
     G_gisinit(argv[0]);
@@ -57,6 +58,11 @@ int main(int argc, char *argv[])
     open_file(input);
     thin_lines(iterations);
     close_file(output);
+
+    G_put_cell_title(output, "Thinned linear features");
+    G_short_history(output, "raster", &history);
+    G_command_history(&history);
+    G_write_history(output, &history);
 
     exit(EXIT_SUCCESS);
 }
