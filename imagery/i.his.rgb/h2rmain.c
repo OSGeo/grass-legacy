@@ -3,6 +3,7 @@
 #include <stdlib.h>
 #include <string.h>
 #include <grass/gis.h>
+#include <grass/glocale.h>
 #include "globals.h"
 
 /****************************************************************************/
@@ -20,6 +21,7 @@ int main( int argc, char **argv)
 	G_gisinit(argv[0]);
 	/* Set description */
 	module              = G_define_module();
+	module->keywords = _("imagery");
 	module->description = ""\
 	"Hue-intensity-saturation (his) to red-green-blue (rgb) raster map color transformation function.";
 	

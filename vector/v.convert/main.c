@@ -1,25 +1,26 @@
-/* *****************************************************************
- * *
- * * MODULE:       v.convert
- * * 
- * * AUTHOR(S):    Radim Blazek - Radim.Blazek@dhv.cz
- * *               
- * * PURPOSE:      Convert GRASS vector files versions:
- * *               from 3 or 4 to 5.0
- * *               
- * * COPYRIGHT:    (C) 2001 by the GRASS Development Team
- * *
- * *               This program is free software under the 
- * *               GNU General Public License (>=v2). 
- * *               Read the file COPYING that comes with GRASS
- * *               for details.
- * *
- * ****************************************************************/
+/*****************************************************************
+ *
+ * MODULE:       v.convert
+ * 
+ * AUTHOR(S):    Radim Blazek - Radim.Blazek@dhv.cz
+ *               
+ * PURPOSE:      Convert GRASS vector files versions:
+ *               from 3 or 4 to 5.0
+ *               
+ * COPYRIGHT:    (C) 2001 by the GRASS Development Team
+ *
+ *               This program is free software under the 
+ *               GNU General Public License (>=v2). 
+ *               Read the file COPYING that comes with GRASS
+ *               for details.
+ *
+ ****************************************************************/
 
 #include <stdio.h>
 #include <stdlib.h>
 #include <grass/gis.h>
 #include <grass/Vect.h>
+#include <grass/glocale.h>
 #include "conv.h"
 #include "local_proto.h"
 
@@ -31,7 +32,8 @@ main (int argc, char *argv[])
     struct GModule *module;
 
     module = G_define_module();
-    module->description = "Imports older versions of GRASS vectors.";
+    module->keywords = _("vector, import");
+    module->description = "Imports older versions of GRASS vector maps.";
 
     /* input vector map */
     opt_in = G_define_option();
@@ -58,7 +60,7 @@ main (int argc, char *argv[])
     G_gisinit(argv[0]);
 
     if (G_parser(argc,argv))
-        exit(-1);
+        exit(EXIT_FAILURE);
 
     /* Numbers in portable format files are saved as big endians */
     if ( opt_end->answer[0] == 'l' )
@@ -68,5 +70,5 @@ main (int argc, char *argv[])
 
     old2new (opt_in->answer, opt_out->answer, endian);
 
-    exit(0);
+    exit(EXIT_SUCCESS);
 }

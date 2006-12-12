@@ -32,7 +32,8 @@ int main(int argc, char **argv)
   G_gisinit (argv[0]) ;
 
   module = G_define_module();
-  module->description = 
+  module->keywords = _("display");
+    module->description = 
     _("Allows the user to interactively query a vector map layer "
     "at user-selected locations within the current geographic region.");
 

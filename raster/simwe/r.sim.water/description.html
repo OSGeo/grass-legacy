@@ -12,8 +12,8 @@ first-order partial derivatives of elevation field (<i>dxin</i> and <i>dyin</i> 
 excess rate (<i>rain</i> raster file) and a surface  roughness coefficient
 given by Manning's n (<i>manin</i> raster file). Partial
 derivatives raster files can be computed along with the interpolation of a DEM using
-the -d option in <a href="s.surf.rst.html">
-s.surf.rst</a> module. If elevation raster is already provided, partial derivatives
+the -d option in <a href="v.surf.rst.html">
+v.surf.rst</a> module. If elevation raster is already provided, partial derivatives
 can  be computed using <a href="r.slope.aspect.html">r.slope.aspect</a> module. 
 Partial derivatives determine the direction and magnitude of water flow. 
 Partial derivatives computed from terrain can be modified to include pre-defined  
@@ -57,65 +57,6 @@ diffusion term increases as given by <i>halpha</i> and advection term
 (direction of flow) is given as "prevailing" direction of flow computed
 as  average of flow directions from the previous hbetanumber of grid cells.
 <br>
-<br>
-</p><h2>OPTIONS</h2>
-The user can run this program either interactively
-or non- interactively. The program will be run non-interactively if
-the user specifies program arguments and flag settings on the command
-line using the form: 
-<p><b>r.sim.water</b> [-tm] <b>elevin</b>=name <b>dxin</b>=name <b>dyin</b>=name 
-<b>rain</b>=name <b>manin</b>=name [<b>depth</b>=name] [<b>disch</b>=name] 
-[<b>err</b>=value] [<b>outwalk</b>=value] [<b>nwalk</b>=value] [<b>niter</b>=value] 
-[<b>outiter</b>=value] [<b>density</b>=value]  [<b>diffc</b>=value]  [<b>hmax</b>=name]  
-[<b>halpha</b>=value] [<b>hbeta</b>=value]</p>
-<p>Alternately, the user can simply type <b>r.sim.water</b> on the command line
-without program arguments. In this case, the user will be prompted
-for parameter values using the standard GRASS parser interface:
-</p>
-<h3> Flag:</h3>
-<dl>
-<dt><b>-t</b></dt> <dd>time series output</dd>
-<dt><b> -m</b></dt><dd>multiscale (not ready yet)</dd>
-</dl>
-<h3> Parameters:</h3>
-<dl>
-<dt><b>elevin</b> =name</dt>
-       <dd> Use the existing raster file with elevations name as input [meters/feet]</dd>
-<dt><b> dxin</b> =name</dt>
-       <dd> Use the existing raster file with dx-derivatives as input [-]</dd>
-<dt><b>dyin</b> =name</dt>
-       <dd> Use the existing raster file with dy-derivatives as input [-].</dd>
-<dt><b>rain</b> =name</dt>
-       <dd> Use the existing raster file with rainfall excess [m/s].</dd>
-<dt><b>manin</b> =name</dt>
-       <dd> Use the existing raster file with Manning's surface roughness n parameter [-].</dd>
-<dt><b>depth</b> =name</dt>
-       <dd> Output water depth raster file [m].</dd>
-<dt><b> disch</b> =name</dt>
-       <dd> Output water discharge raster file [m<sup>3</sup>/s].</dd>
-<dt><b>err</b> =name</dt>
-       <dd> Output simulation error raster file [m]</dd>
-<dt><b> outwalk</b>=name</dt>
-       <dd>Output walkers site file</dd>
-<dt><b> nwalk</b>=val</dt>
-       <dd> Set the number of walkers to val  
-       (default:2000000, can be estimated from the number of grid cells)</dd>
-<dt><b> niter</b>=val</dt>
-       <dd> Set the number of iterations to val (default:1200) </dd>
-<dt><b> outiter</b>=val</dt>
-       <dd>Set the time step for saving output maps to val (default: 300)</dd>
-<dt><b>density</b>=val</dt>
-       <dd> Set the density of output walkersto  val (default: 200)</dd>
-<dt><b>diffc</b>=val</dt>
-       <dd> Set the water diffusion constant to val (default: 0.8)</dd>
-<dt><b> hmax</b>=val</dt>
-       <dd> Set the threshold water depth (diffusion increases after this water depth is reached) 
-       to val (default: 0.4)</dd>
-<dt><b>halpha</b>=val</dt>
-       <dd>Set the diffusion increase constant to  val (default: 4.0)</dd>
-<dt><b>hbeta</b>=val</dt>
-       <dd> Set the weighting factor for water flow velocity vector to val (default: 0.5)</dd>
-<dt><br></dt></dl>
 <h2>
 NOTES</h2>
 <p>
@@ -162,7 +103,7 @@ are useful  both for everyday exploratory work using a desktop computer and
 for  large, cutting-edge applications using high performance computing. <br>
 <h2>
 SEE ALSO</h2>
-<a href="s.surf.rst.html">s.surf.rst</a>
+<a href="v.surf.rst.html">v.surf.rst</a>
 <a href="r.slope.aspect.html">r.slope.aspect</a>
 <a href="r.sim.sediment.html">r.sim.sediment</a>
 
@@ -187,7 +128,12 @@ csthaxto@unity.ncsu.edu</a>
 <h2>
 REFERENCES</h2>
 <P>
-Mitasova, H., Thaxton, C., Hofierka, J., McLaughlin, R., Moore, A., Mitas L., 2004, Path sampling method for modeling overland water flow, sediment transport and short term terrain evolution in Open Source GIS. In: C.T. Miller, M.W. Farthing, V.G. Gray, G.F. Pinder eds., Computational Methods in Water Resources, Elsevier.
+<a href="http://skagit.meas.ncsu.edu/~helena/gmslab/papers/II.6.8_Mitasova_044.pdf">
+Mitasova, H., Thaxton, C., Hofierka, J., McLaughlin, R., Moore, A., Mitas L., 2004,</a> 
+Path sampling method for modeling overland water flow, sediment transport 
+and short term terrain evolution in Open Source GIS. 
+In: C.T. Miller, M.W. Farthing, V.G. Gray, G.F. Pinder eds., 
+Computational Methods in Water Resources, Elsevier.
 <P>
 <a href="http://skagit.meas.ncsu.edu/~helena/gmslab/gisc00/duality.html">
  Mitasova H, Mitas, L., 2000, Modeling spatial processes in multiscale framework: exploring duality between particles and fields, plenary talk at GIScience2000 conference, Savannah, GA. </a>
@@ -199,8 +145,10 @@ for effective erosion prevention. Water Resources Research, 34(3), 505-516.<p></
 In: Landscape erosion and landscape evolution modeling, Harmon R. and Doe W. eds., 
 Kluwer Academic/Plenum Publishers, pp. 321-347.
 <p>
-Neteler, M. and Mitasova, H., 2002, Open Source GIS: A GRASS
-GIS   Approach,    Kluwer Academic Publishers.</font></p>
+<a href="http://mpa.itc.it/grasstutor/">
+Neteler, M. and Mitasova, H., 2004, Open Source GIS: A GRASS GIS Approach, Second Edition, </a> 
+Kluwer International Series in Engineering and Computer Science, 773, Kluwer Academic Press / Springer, 
+Boston, Dordrecht, 424 pages.
 <P>
 Last changed: Date: 2003/11/01 15:55:10 $<p></p>
 </body></html>

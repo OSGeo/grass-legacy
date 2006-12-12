@@ -19,6 +19,7 @@
 
 #%Module
 #%  description: Divides active display into two frames & displays maps/executes commands in each frame.
+#%  keywords: display, setup
 #%End
 #%option
 #% key: map1

@@ -233,7 +233,8 @@ int main(int argc, char **argv)
 
 	/* Get Args */
 	module = G_define_module();
-	module->description =
+	module->keywords = _("general");
+    module->description =
 		_("Computes a coordinate transformation based on the control points");
 
 	grp = G_define_option();

@@ -61,7 +61,7 @@ The source code is available here:
 
 <ul>
 <li> in <a href="http://grass.itc.it/devel/index.php#software">GRASS 6 CVS HEAD</a>
-<li> in the <a href="http://grass.itc.it/grass61/source/snapshot/">weekly CVS snapshot</a> (swig/ subdirectory)
+<li> in the <a href="http://grass.itc.it/grass63/source/snapshot/">weekly CVS snapshot</a> (swig/ subdirectory)
 <li> via <a href="http://freegis.org/cgi-bin/viewcvs.cgi/grass6/swig/">CVS HTML Web interface</a>
 </ul>
 

@@ -55,7 +55,6 @@ SUBDIRS = \
 	r.out.pov \
 	r.out.ppm \
 	r.out.ppm3 \
-	r.out.tiff \
 	r.out.vtk \
 	r.param.scale \
 	r.patch \
@@ -91,6 +90,7 @@ SUBDIRS = \
 	r.thin \
 	r.timestamp \
 	r.to.rast3 \
+	r.to.rast3elev \
 	r.to.vect \
 	r.topidx \
 	r.topmodel \

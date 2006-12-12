@@ -17,6 +17,7 @@
 
 #%Module
 #%  description: Downloads data from servers.
+#%  keywords: wms
 #%End
 #%option
 #% key: requestfile

@@ -8,6 +8,7 @@
 
 #%Module
 #%  description: displays spectral response at user specified locations in group or images
+#%  keywords: imagery, raster, multispectral
 #%End
 #%option
 #% key: group
@@ -62,7 +63,8 @@ fi
 
 # setting environment, so that awk works properly in all languages
 unset LC_ALL
-export LC_NUMERIC=C
+LC_NUMERIC=C
+export LC_NUMERIC
 
 TMP1="`g.tempfile pid=$$`"
 TMP2="`g.tempfile pid=$$`"

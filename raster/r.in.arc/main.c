@@ -39,7 +39,8 @@ int main (int argc, char *argv[])
 	G_gisinit (argv[0]);
 
 	module = G_define_module();
-	module->description =
+	module->keywords = _("raster");
+    module->description =
 		_("Convert an ESRI ARC/INFO ascii raster file (GRID) "
 		"into a (binary) raster map layer.");
 

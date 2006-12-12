@@ -19,7 +19,8 @@
 #  - if you send cs2cs a third data column, beware it might be treated as "z"
 
 #%Module
-#% description: Convert coordinates from one projection to another (cs2cs frontend).
+#%  description: Convert coordinates from one projection to another (cs2cs frontend).
+#%  keywords: miscellaneous, projection
 #%End
 #%option
 #% key: input
@@ -87,7 +88,8 @@ fi
 
 # setting environment, so that awk works properly in all languages (needed?)
 unset LC_ALL
-export LC_NUMERIC=C
+LC_NUMERIC=C
+export LC_NUMERIC
 
 #### check for cs2cs
 if [ ! -x "`which cs2cs`" ] ; then

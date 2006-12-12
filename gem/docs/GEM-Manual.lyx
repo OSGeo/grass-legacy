@@ -496,7 +496,7 @@ Note: please make sure that you system-wide linker path includes the location
  of the GRASS dynamic libraries (e.g.
  
 \emph on
-/usr/local/grass-6.1.cvs/libs
+/usr/local/grass-6.2.cvs/libs
 \emph default
 ).
  This is usually done by adding an appropriate entry to 
@@ -741,7 +741,7 @@ This section will show you how to use GEM to perform basic things: installing,
  For the sake of simplicity, I will assume that your GRASS installation
  resides in 
 \emph on
-/usr/local/grass-6.0.0
+/usr/local/grass-6.x.y
 \emph default
  and you may have to adjust this path in the examples below, so that it
  reflects your individual setup (Mac OS X users: see notes on system specific
@@ -917,7 +917,7 @@ options
 \begin_layout Standard
 To install a module into your GRASS installation (in this example 
 \emph on
-/usr/local/grass-6.0.0
+/usr/local/grass-6.x.y
 \emph default
 ), simply pass the name of the archive containing the extension or the directory
  with the unpacked files to the 
@@ -941,7 +941,7 @@ To install a module into your GRASS installation (in this example
 \end_layout
 
 \begin_layout LyX-Code
-gem --grass=/usr/local/grass-6.0.0 --install=RasterTools.tar.gz
+gem --grass=/usr/local/grass-6.x.y --install=RasterTools.tar.gz
 \end_layout
 
 \begin_layout Standard
@@ -1693,10 +1693,10 @@ $GISBASE/etc/gem/skeleton
 \emph on
 $GISBASE
 \emph default
- with the path to your GRASS 6.1 install, e.g.
+ with the path to your GRASS 6.2 install, e.g.
  
 \emph on
-/usr/local/grass-6.1.cvs
+/usr/local/grass-6.2.cvs
 \emph default
 ).
 \end_layout
@@ -2594,7 +2594,7 @@ configure
 The default configure script, that ships with the skeleton extension has
  all optional dependencies disabled (ca.
  line 2600 and following of the configure script).
- The check for the proj program and libraries (mandatory for GRASS 6.1) has
+ The check for the proj program and libraries (mandatory for GRASS 6) has
  been completely removed.
  If your extension code calls proj directly, you may want to add this part
  of the configure script back in.
@@ -2978,7 +2978,7 @@ description.html
 \end_layout
 
 \begin_layout Standard
-Use an HTML manual page of an existing GRASS 6.1 module for a template.
+Use an HTML manual page of an existing GRASS 6.2 module for a template.
 \end_layout
 
 \begin_layout Standard
@@ -3130,7 +3130,7 @@ If you are using Lorenzo's binaries, the path to GRASS for any GEM operation
 \begin_layout Standard
 
 \emph on
-/Applications/Grass/grass60.app/Contents/Resources/grass-6.0.0
+/Applications/Grass/grass6x.app/Contents/Resources/grass-6.x.y
 \end_layout
 
 \begin_layout Standard
@@ -3140,7 +3140,7 @@ or
 \begin_layout Standard
 
 \emph on
-/Applications/Grass/grass61cvs.app/Contents/Resources/grass-6.1.cvs
+/Applications/Grass/grass61cvs.app/Contents/Resources/grass-6.22cvs
 \end_layout
 
 \begin_layout Standard
@@ -3507,7 +3507,7 @@ GEM exports three environment variables that point to the directories storing
  GRASS 6 headers and libs and to the install location (e.g.
  
 \emph on
-/usr/local/grass-6.1.cvs
+/usr/local/grass-6.2.cvs
 \emph default
 ):
 \end_layout
