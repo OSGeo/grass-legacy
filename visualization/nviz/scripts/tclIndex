@@ -69,6 +69,8 @@ set auto_index(update_eye_position) [list source [file join $dir panel_main.tcl]
 set auto_index(update_center_position) [list source [file join $dir panel_main.tcl]]
 set auto_index(change_display) [list source [file join $dir panel_main.tcl]]
 set auto_index(update_height) [list source [file join $dir panel_main.tcl]]
+set auto_index(setcursor) [list source [file join $dir panel_main.tcl]]
+set auto_index(resetcursor) [list source [file join $dir panel_main.tcl]]
 
 set auto_index(unique) [list source [file join $dir unique.tcl]]
 
