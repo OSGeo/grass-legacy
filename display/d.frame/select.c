@@ -1,10 +1,11 @@
 #include <stdlib.h>
 #include <string.h>
+#include <time.h>
+#include <grass/gis.h>
+#include <grass/raster.h>
 #include <grass/display.h>
 #include <grass/D.h>
-#include <time.h>
-#include <grass/raster.h>
-#include <grass/gis.h>
+#include <grass/glocale.h>
 
 /*
  *   d.frame.choose [frame=name] {use mouse if frame= not specified}
@@ -30,15 +31,15 @@ main (int argc, char *argv[])
     frame->answer = NULL;
 
     if (argc > 1 && G_parser(argc, argv))
-	exit(1);
+	exit(EXIT_FAILURE);
 
     if (R_open_driver () != 0)
-	    G_fatal_error ("No graphics device selected");
+	G_fatal_error(_("No graphics device selected"));
 
     if (frame->answer)
     {
         if(stat = Dchoose(frame->answer))
-            fprintf(stderr, "Error choosing frame %s\n", frame->answer) ;
+            fprintf(stderr, _("Error choosing frame [%s]\n"), frame->answer);
         R_close_driver ();
         exit(stat) ;
     }
@@ -47,7 +48,8 @@ main (int argc, char *argv[])
     D_get_cur_wind(orig_name) ;
 
     fprintf(stderr, "\nButtons:\n") ;
-    fprintf(stderr, "Left:   Identify a frame\n") ;
+/* non functional */
+/*    fprintf(stderr, "Left:   Identify a frame\n") ; */
     fprintf(stderr, "Middle: Keep original frame\n") ;
     fprintf(stderr, "Right:  Accept frame\n") ;
 
@@ -63,5 +65,5 @@ main (int argc, char *argv[])
 
     R_close_driver() ;
 
-    exit(0);
+    exit(EXIT_SUCCESS);
 }
