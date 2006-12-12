@@ -25,6 +25,8 @@
 # Panel specific globals
 global Nv_
 
+# default cursor
+set Nv_(cursor) [$Nv_(TOP) cget -cursor]	
 
 ##########################################################################
 
@@ -38,6 +40,7 @@ proc mkscalePanel { BASE } {
     set scalebar_size 1000
     set bar_clr "#000000"
     set bar_text_clr "#DDDDDD"
+    set bar_text_size "non funct."
 
     set panel [St_create {window name size priority} $BASE "Scale bar" 2 5]
     frame $BASE -relief flat -borderwidth 0
@@ -45,33 +48,53 @@ proc mkscalePanel { BASE } {
 
     # This section contains widgets for placing the scale bar
     set rbase1 [frame $BASE.scale]
+    Label $rbase1.scalebar_lbl -text "Scale bar: " -fg black
     LabelEntry $rbase1.scalebar_size -relief sunken -entrybg white \
         -textvariable scalebar_size -width 8 \
-        -label "Scale bar size (in map units): " -fg black
-    pack $rbase1.scalebar_size -side left -expand no -fill none
+        -label "length (in map units) " -fg black -font $nviztxtfont
+    pack $rbase1.scalebar_lbl $rbase1.scalebar_size -side left -expand no -fill none
     
     $rbase1.scalebar_size bind <Key> {if {$Nauto_draw == 1} {Ndraw_all}} 
 
 
     Button $rbase1.color -text "Color" \
 		-bg $bar_clr -width 8 -bd 1 \
-		-command "change_scale_color $rbase1.color" \
+		-command "change_scale_color $rbase1.color scale" \
 		-fg "#ffffff"
     pack $rbase1.color -side right \
     	-expand yes -fill none -anchor e
 
 	pack $rbase1 -side top -expand yes -fill both -padx 3 -pady 4
 
-    # close panel section
-    set rbase2 [frame $BASE.button]
-    Button $rbase2.place -text "Place scale" -bd 1 \
-	 -command "sb_bind_mouse $Nv_(TOP).canvas"
-    pack $rbase2.place -expand yes -side left -expand no -fill none
+    # This section contains widgets for scale text
+    set rbase2 [frame $BASE.txt]
+    Label $rbase2.txt_lbl -text "Scale text: " -fg black
+    LabelEntry $rbase2.txt_size -relief sunken -entrybg grey \
+        -textvariable bar_text_size -width 8 -justify right\
+        -label "size " -fg black -labelfont $nviztxtfont
+    pack $rbase2.txt_lbl $rbase2.txt_size -side left -expand no -fill none
+    
+    $rbase2.txt_size bind <Key> {if {$Nauto_draw == 1} {Ndraw_all}} 
 
-    button $rbase2.close -text "Close" -command "Nv_closePanel $BASE" \
+    Button $rbase2.color -text "Color" \
+		-bg $bar_text_clr -width 8 -bd 1 \
+		-command "change_scale_color $rbase2.color text" \
+		-fg "#ffffff"
+    pack $rbase2.color -side right \
+    	-expand yes -fill none -anchor e
+
+	pack $rbase2 -side top -expand yes -fill both -padx 3
+
+    # close panel section
+    set rbase3 [frame $BASE.button]
+    Button $rbase3.place -text "Place scale" -bd 1 \
+	 -command "sb_bind_mouse $Nv_(TOP).canvas; $Nv_(TOP) configure -cursor plus"
+    pack $rbase3.place -expand yes -side left -expand no -fill none
+
+    button $rbase3.close -text "Close" -command "Nv_closePanel $BASE" \
 		-anchor se -bd 1
-	pack $rbase2.close -side right -fill none -expand no
-	pack $rbase2 -side top -fill both -expand yes -padx 3 -pady 4
+	pack $rbase3.close -side right -fill none -expand no
+	pack $rbase3 -side top -fill both -expand yes -padx 3 -pady 4
 
     return $panel
 }
@@ -83,6 +106,7 @@ proc sb_bind_mouse { W } {
 			#Nset_cancel 0
 			Ndraw_all
 		} 
+		$Nv_(TOP) configure -cursor $Nv_(cursor)
 	}
 }
 
@@ -90,16 +114,21 @@ proc sb_bind_mouse { W } {
 
 # Simple routine to change the colors
 # text color not yet user settable.
-proc change_scale_color { me } {
+proc change_scale_color { me type } {
 	global Nv_
 	global bar_clr bar_text_clr
 	global Nauto_draw
 	
-	# set color button background to match arrow color
+	# set color button background to match scale/text color
     set clr [lindex [$me configure -bg] 4]
     set clr [mkColorPopup .colorpop bar_clr $clr 1]
-    set bar_clr $clr
-#    set bar_text_clr $clr
+    
+    if {$type == "scale"} {
+	    set bar_clr $clr
+	} elseif {$type == "text"} {
+    	set bar_text_clr $clr
+    }
+        
     $me configure -bg $clr
 
 	# set color button text to black or white depending on
@@ -137,7 +166,7 @@ set y [expr $Nv_(height) - $y]
         set scalebar_x [lindex $location 0]
         set scalebar_y [lindex $location 1]
         set scalebar_z [lindex $location 2]
-
+        
         Ndraw_ScaleBar $scalebar_x $scalebar_y $scalebar_z $scalebar_size \
 		$bar_clr $bar_text_clr
         #set chuckbutton
