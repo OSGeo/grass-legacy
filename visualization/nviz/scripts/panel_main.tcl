@@ -75,6 +75,8 @@ proc mkmainPanel { BASE } {
 	set bar_clr #000000
 	set bar_text_clr #DDDDDD
 
+	set Nv_(cursor) [$Nv_(TOP) cget -cursor]	
+
 	catch {destroy $BASE}
 
 	#  Initialize panel info
@@ -273,8 +275,6 @@ proc mkmainPanel { BASE } {
 # According to the documentation, the Main panel can never be closed
 #	button $BASE.close -text Close -command "Nv_closePanel $BASE" -anchor s
 #	pack $BASE.close -side right
-
-	set Nv_(cursor) [$Nv_(TOP).canvas cget -cursor]	
 
 	return $panel
 }
