@@ -8,9 +8,11 @@
 #          AUTHOR:  Michael Barton (Based on epsg_option.tcl by Antonello Andrea)
 #         COMPANY:  Arizona State University
 #       COPYRIGHT:  Copyright (C) 2006 Michael Barton and GRASS Development Team
-#         VERSION:  1.0
+#         VERSION:  1.0.1
 #         CREATED:  23/04/2006
 #        REVISION:  --- 
+#       CHANGELOG:  1.0.1 08/12/2006 - Fixed directory choosing dialogs. Maris Nartiss.
+#            TODO:  Check return status of g.proj to catch failed location creation.
 #=====================================================================================
 #
 #
@@ -42,7 +44,7 @@ global browsedepsg
 
 # G_msg.tcl should be sourced first for internationalized strings.
 
-# the frame used to set EPSG parameters 
+# the frame used to set parameters 
 proc fileLocCom args {
 	#vars declaration
 	global database
@@ -59,7 +61,7 @@ proc fileLocCom args {
 	
 	# creation of the parameter window
 	toplevel .fileloc
-	wm title .fileloc {Define location using projection information in georeferenced file}
+	wm title .fileloc [ G_msg "Define location using projection information in georeferenced file" ] 
 	
 	# put it in the middle of the screen
 	update idletasks
@@ -82,7 +84,8 @@ proc fileLocCom args {
 	
 	#browse for database path
 	set dbbrowse [button .fileloc.dbbrow -justify center -width 12 \
-		-text [G_msg "Browse..."] -command "set locpath \[tk_getOpenFile\]" ]
+		-text [G_msg "Browse..."] -command "set locpath \[tk_chooseDirectory \
+		-parent .fileloc -title \[ G_msg \"Choose path to new location\" \] -mustexist true \]" ]
 
         bind $dbpath <Leave> {
              if {$locpath == ""} {
@@ -132,7 +135,7 @@ proc fileLocCom args {
 	#browse for georeferenced file
 	set filebrowse [button .fileloc.fbrow -justify center -width 12 \
 		-text [G_msg "Browse..."] -command {
-				set filepath [tk_getOpenFile]
+				set filepath [tk_getOpenFile -parent .fileloc -title [ G_msg "Choose georeferenced file"] ]
 				if {$filepath != ""} {
 					.fileloc.def configure -state active
 				}
@@ -159,7 +162,7 @@ proc fileLocCom args {
 }
 
 
-# help for the EPSG Location creation
+# help for the georeferenced file Location creation
 proc infofileloc args {
 
         toplevel .infoPopup

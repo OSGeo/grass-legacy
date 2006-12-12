@@ -7,6 +7,7 @@
 #   	    	Justin Hickey - Thailand - jhickey hpcc.nectec.or.th
 #   	    	Markus Neteler - Germany - neteler geog.uni-hannover.de, itc.it
 #				Michael Barton - USA - Arizona State University
+#               Maris Nartiss - Latvia - maris.gis gmail.com
 # PURPOSE:  	The source file for this shell script is in
 #   	    	src/tcltkgrass/main/gis_set.tcl. It allows the user to choose
 #   	    	the database, location, and mapset to use with grass by
@@ -241,31 +242,40 @@ proc ChangeDir {widget y} \
     GetListItems $widget $dir ""
 }
 
-proc CheckLocation {} \
-{
+# Returns 0, if location is invalid, 1 othervise.
+# Are hardcoded / in path's OK? They where here before me :) Maris.
+proc CheckLocation {} {
     global database location
     
     set found 0
     set dir $database
     append dir "/$location"
-    
     set currDir [pwd]
-    cd $dir
-    
-    foreach filename [glob -nocomplain *] \
-    {
-	if {[string compare $filename "PERMANENT"] == 0} \
-	{
-	    set found 1
-	}
-    }
-    
-    if {$found == 0} \
-    {
-    	set location "##ERROR##"
+
+    # Special case - wrong GISDBASE
+    if {[file isdirectory $dir] == 0} {
+        DialogGen .wrnDlg [G_msg "WARNING: invalid location"] warning \
+	[format [G_msg "Warning: location <%s> at GISDBASE <%s> is not a directory or does not exist."] \
+	$location $database] \
+        0 OK;
+    } else {
+        cd $dir
+        
+        foreach filename [glob -nocomplain *] \
+        {
+            if {[string compare $filename "PERMANENT"] == 0} \
+            {
+                # All good girls are in bed at 22:00, to be home at 24:00.
+                # All good locations have valid PERMANENT mapset.
+                if {[file exists "$dir/PERMANENT/WIND"] != 0} {
+                    set found 1
+                }
+            }
+        }
     }
     
     cd $currDir
+    return $found
 }
 
 
@@ -487,22 +497,27 @@ proc gisSetWindow {} {
      	-command { 
             .frame0.frameNMS.third.button configure -state disabled
 	    if { $mymapset != "" } {
-            	CheckLocation
-                cd $database
-                cd $location
-                file mkdir $mymapset
-                #generate default DB definition, create dbf subdirectory:
-                set varfp [open $mymapset/VAR "w"]
-                puts $varfp "DB_DRIVER: dbf"
-                puts $varfp "DB_DATABASE: \$GISDBASE/\$LOCATION_NAME/\$MAPSET/dbf/"
-                close $varfp
-                catch {file attributes $mymapset/VAR -permissions u+rw,go+r}
-                file mkdir $mymapset/dbf
-                #copy over the WIND definition:
-				catch {file copy $mymapset/../PERMANENT/WIND $mymapset}
-                catch {file attributes $mymapset/WIND -permissions u+rw,go+r}
-                .frame0.frameMS.listbox insert end $mymapset
-                #TODO: select new MAPSET
+            	if {[CheckLocation] == 0} {
+            	    DialogGen .wrnDlg [G_msg "WARNING: invalid location"] warning \
+		    [format [G_msg "Warning: selected location <%s> is not valid. \n New mapset is NOT created. \n Select valid location and try again."] $location] \
+                    0 OK;
+            	} else {
+                    cd $database
+                    cd $location
+                    file mkdir $mymapset
+                    #generate default DB definition, create dbf subdirectory:
+                    set varfp [open $mymapset/VAR "w"]
+                    puts $varfp "DB_DRIVER: dbf"
+                    puts $varfp "DB_DATABASE: \$GISDBASE/\$LOCATION_NAME/\$MAPSET/dbf/"
+                    close $varfp
+                    catch {file attributes $mymapset/VAR -permissions u+rw,go+r}
+                    file mkdir $mymapset/dbf
+                    #copy over the WIND definition:
+                                    catch {file copy $mymapset/../PERMANENT/WIND $mymapset}
+                    catch {file attributes $mymapset/WIND -permissions u+rw,go+r}
+                    .frame0.frameMS.listbox insert end $mymapset
+                    #TODO: select new MAPSET
+                }
             }
 	}
 
@@ -572,21 +587,24 @@ proc gisSetWindow {} {
      	-text [G_msg "Enter GRASS"] \
     	-width 10 \
     	-relief raised \
-     	-command { 
-            if {[file exists "$database/$location/$mapset/WIND"] == 0} {
-                DialogGen .wrnDlg [G_msg "WARNING: invalid mapset"] warning \
-		[format [G_msg "Warning: <%s> is not a valid mapset"] $mapset] \
-                0 OK;
-            }
-            if { $mapset != "" && [file exists "$database/$location/$mapset/WIND"] != 0} {
-            	CheckLocation
-                puts stdout "GISDBASE='$database';"
-                puts stdout "LOCATION_NAME='$location';"
-                puts stdout "MAPSET='$mapset';"
-                if {[string compare $location "##ERROR##"] != 0} {
-                    putGRASSRC $gisrc_name
+     	-command {
+            if {[CheckLocation] == 0} {
+            	    DialogGen .wrnDlg [G_msg "WARNING: invalid location"] warning \
+		    [format [G_msg "Warning: selected location <%s> is not valid. \n Select valid location and try again."] $location] \
+                    0 OK;
+            } else {
+                if {[file exists "$database/$location/$mapset/WIND"] == 0} {
+                    DialogGen .wrnDlg [G_msg "WARNING: invalid mapset"] warning \
+                    [format [G_msg "Warning: <%s> is not a valid mapset"] $mapset] \
+                    0 OK;
                 }
-                destroy .
+                if { $mapset != "" && [file exists "$database/$location/$mapset/WIND"] != 0} {
+                    puts stdout "GISDBASE='$database';"
+                    puts stdout "LOCATION_NAME='$location';"
+                    puts stdout "MAPSET='$mapset';"
+                    putGRASSRC $gisrc_name
+                    destroy .
+                }
             } 
         }
 
@@ -727,60 +745,81 @@ proc gisSetWindow {} {
   }
 
   bind .frame0.frameLOC.listbox <Double-ButtonPress-1> {
-        %W select set [%W nearest %y]
-	cd $database
-        set location [%W get [%W nearest %y]]
-        cd $location
-        .frame0.frameMS.listbox delete 0 end
-        foreach i [glob -directory [pwd] *] {
-           if { [file isdirectory $i] && [file owned $i] } { 
-                .frame0.frameMS.listbox insert end [file tail $i]
-           }
-        }
-        set mapset ""
-	.frame0.frameBUTTONS.ok configure -state disabled
+        # Do something only if there IS atleast one location
+        if {[%W size] > 0} {
+            %W select set [%W nearest %y]
+            cd $database
+            set location [%W get [%W nearest %y]]
+            cd $location
+            .frame0.frameMS.listbox delete 0 end
+            foreach i [glob -directory [pwd] *] {
+              if { [file isdirectory $i] && [file owned $i] } { 
+                    .frame0.frameMS.listbox insert end [file tail $i]
+              }
+            }
+            set mapset ""
+            .frame0.frameBUTTONS.ok configure -state disabled
+	}
   }
 
   bind .frame0.frameLOC.listbox <ButtonPress-1> {
-        %W select set [%W nearest %y]
-        cd $database
-        set location [%W get [%W nearest %y]]
-        cd $location
-        .frame0.frameMS.listbox delete 0 end
-        foreach i [glob -directory [pwd] *] {
-           if { [file isdirectory $i] && [file owned $i] } {
-                .frame0.frameMS.listbox insert end [file tail $i]
-           }
+        # Do something only if there IS atleast one location
+        if {[%W size] > 0} {
+            %W select set [%W nearest %y]
+            cd $database
+            set location [%W get [%W nearest %y]]
+            cd $location
+            .frame0.frameMS.listbox delete 0 end
+            foreach i [glob -directory [pwd] *] {
+              if { [file isdirectory $i] && [file owned $i] } {
+                    .frame0.frameMS.listbox insert end [file tail $i]
+              }
+            }
+            set mapset ""
+            .frame0.frameBUTTONS.ok configure -state disabled
         }
-        set mapset ""
-	.frame0.frameBUTTONS.ok configure -state disabled
   }
 
   bind .frame0.frameMS.listbox <Double-ButtonPress-1> {
-        %W select set [%W nearest %y]
-        set mapset [%W get [%W nearest %y]]
-	.frame0.frameBUTTONS.ok configure -state normal
-	if {[file exists "$database/$location/$mapset/WIND"] == 0} {
-	    DialogGen .wrnDlg [G_msg "WARNING: invalid mapset"] warning \
-	    [format [G_msg "Warning: <%s> is not a valid mapset"] $mapset] \
-	    0 OK;
-	}
-	if { $mapset != "" && [file exists "$database/$location/$mapset/WIND"] != 0} {
-	    CheckLocation
-	    puts stdout "GISDBASE='$database';"
-	    puts stdout "LOCATION_NAME='$location';"
-	    puts stdout "MAPSET='$mapset';"
-	    if {[string compare $location "##ERROR##"] != 0} {
-		putGRASSRC $gisrc_name
-	    }
-	    destroy .
-	}
+        # Do something only if there IS atleast one mapset
+        if {[%W size] > 0} {
+            %W select set [%W nearest %y]
+            set mapset [%W get [%W nearest %y]]
+            .frame0.frameBUTTONS.ok configure -state normal
+            if {[CheckLocation] == 0} {
+                    # Notice - %%s prevents %s capturing by bind
+            	    DialogGen .wrnDlg [G_msg "WARNING: invalid location"] warning \
+		    [format [G_msg "Warning: selected location <%%s> is not valid. \n Select valid location and try again."] $location] \
+                    0 OK;
+            } else {
+                if {[file exists "$database/$location/$mapset/WIND"] == 0} {
+                    DialogGen .wrnDlg [G_msg "WARNING: invalid mapset"] warning \
+                    [format [G_msg "Warning: <%%s> is not a valid mapset"] $mapset] \
+                    0 OK;
+                }
+                if { $mapset != "" && [file exists "$database/$location/$mapset/WIND"] != 0} {
+                    puts stdout "GISDBASE='$database';"
+                    puts stdout "LOCATION_NAME='$location';"
+                    puts stdout "MAPSET='$mapset';"
+                    putGRASSRC $gisrc_name
+                    destroy .
+                }
+            }
+        }
   }
 
   bind .frame0.frameMS.listbox <ButtonPress-1> {
-        %W select set [%W nearest %y]
-        set mapset [%W get [%W nearest %y]]
-	.frame0.frameBUTTONS.ok configure -state normal
+        # Do something only if there IS atleast one mapset
+        if {[%W size] > 0} {
+            %W select set [%W nearest %y]
+            set mapset [%W get [%W nearest %y]]
+            .frame0.frameBUTTONS.ok configure -state normal
+            if {[CheckLocation] == 0} {
+            	    DialogGen .wrnDlg [G_msg "WARNING: invalid location"] warning \
+		    [format [G_msg "Warning: selected location <%%s> is not valid. \n Select valid location and try again."] $location] \
+                    0 OK;
+            }
+        }
   }
 
   bind .frame0.frameNMS.second.entry <KeyRelease> {
