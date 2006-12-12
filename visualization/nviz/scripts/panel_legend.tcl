@@ -33,7 +33,7 @@ set Nv_(labelFontWeight2) 0
 
 # Font Point Size: varies
 set Nv_(labelFontSize) 12
-set Nv_(labelFontColor) #FF0000
+set Nv_(labelFontColor) #000000
 
 # Legend section
 set Nv_(catval) 1
@@ -49,6 +49,9 @@ set Nv_(cat_list_select) 0
 set Nv_(labvalues) 1
 set Nv_(lablabels) 1
 set Nv_(labinbox) 1
+
+# default cursor
+set Nv_(cursor) [$Nv_(TOP) cget -cursor]	
 
 global clr
 
@@ -308,6 +311,7 @@ proc do_legend {W x y flag } {
 				unset y1
 				unset y2
 				update
+			$Nv_(TOP) configure -cursor $Nv_(cursor)
 			}
 		}
 		3 {
@@ -319,6 +323,7 @@ proc do_legend {W x y flag } {
 					set $x1 $x2
 					set $y1 $y2
 			}
+			$Nv_(TOP) configure -cursor $Nv_(cursor)
 		}
 	}
 
@@ -348,6 +353,8 @@ proc place_legend { } {
     global Nv_
     global x1 y1 x2 y2
     global legend
+    
+ 	$Nv_(TOP) configure -cursor plus
 
 	#do bindings
 	bind $Nv_(TOP).canvas <Button-1> {do_legend %W %x %y 1 }
