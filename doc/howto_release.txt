@@ -23,6 +23,7 @@ Contents
        find . -name '.#*' | xargs rm
        find . -name '*.orig' | xargs rm
        find . -name '*.rej' | xargs rm
+       chmod -R a+r *
 
    - Create release branch (only if not yet existing)
 
