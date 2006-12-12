@@ -231,7 +231,7 @@ proc mkmainPanel { BASE } {
 
 			if {$Nauto_draw == 1} {Ndraw_all}
 			}
-	
+			
 	# CMB Nov.2006: As far as I can tell, this button does nothing. This command doesn't exist
 	#button $BASE.midf.lookat.cancel -text "cancel"  -bd 1 -command no_focus
 	
@@ -273,6 +273,8 @@ proc mkmainPanel { BASE } {
 # According to the documentation, the Main panel can never be closed
 #	button $BASE.close -text Close -command "Nv_closePanel $BASE" -anchor s
 #	pack $BASE.close -side right
+
+	set Nv_(cursor) [$Nv_(TOP).canvas cget -cursor]	
 
 	return $panel
 }
@@ -611,5 +613,22 @@ proc move_position {} {
 		update
 	}
 
+}
+
+###########################################
+# cursor setting and resetting functions
+
+proc setcursor { ctype } {
+	global Nv_
+
+	$Nv_(TOP).canvas configure -cursor $ctype
+	return
+}
+
+proc restorecursor {} {
+	global Nv_
+
+	$can($mon) configure -cursor $Nv_(cursor)
+	return
 }
 
