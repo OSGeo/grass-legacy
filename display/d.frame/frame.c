@@ -49,6 +49,10 @@ main (int argc, char *argv[])
     flag.create->key = 'c';
     flag.create->description = _("Create a new frame");
 
+    flag.select = G_define_flag();
+    flag.select->key = 's';
+    flag.select->description = _("Select a frame");
+
     flag.erase = G_define_flag();
     flag.erase->key = 'e';
     flag.erase->description = _("Remove all frames and erase the screen");
@@ -61,10 +65,6 @@ main (int argc, char *argv[])
     flag.printall->key = 'a';
     flag.printall->description = _("Print names of all frames");
 
-    flag.select = G_define_flag();
-    flag.select->key = 's';
-    flag.select->description = _("Select a frame");
-
     flag.list = G_define_flag();
     flag.list->key = 'l';
     flag.list->description = _("List map names displayed in GRASS monitor");
@@ -76,6 +76,7 @@ main (int argc, char *argv[])
     parm.frame = G_define_option();
     parm.frame->key = "frame";
     parm.frame->type = TYPE_STRING;
+    parm.frame->key_desc = _("name");
     parm.frame->required = NO;
     parm.frame->multiple = NO;
     parm.frame->description = _("Frame to be created/selected");
