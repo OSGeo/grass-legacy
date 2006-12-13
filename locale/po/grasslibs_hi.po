@@ -800,7 +800,7 @@ msgstr "के लिए"
 
 #: ../lib/gis/cats.c:423
 #, fuzzy, c-format
-msgid "category support for vector file [%s] in mapset [%s] %s"
+msgid "category support for vector map [%s] in mapset [%s] %s"
 msgstr "के लिए"
 
 #: ../lib/gis/mapset.c:41

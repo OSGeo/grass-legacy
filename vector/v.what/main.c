@@ -175,7 +175,7 @@ main(int argc, char **argv)
                 G_fatal_error ( _("Vector file [%s] not available"), vect[i]);
     
             if (level < 2) 
-                G_fatal_error ( _("%s: You must build topology on vector file"), vect[i]);
+                G_fatal_error ( _("%s: You must build topology on vector map"), vect[i]);
 
             /* G_message ("Building spatial index ..."); */
             Vect_build_spatial_index ( &Map[i], NULL );

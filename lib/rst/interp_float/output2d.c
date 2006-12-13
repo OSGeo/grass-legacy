@@ -413,7 +413,7 @@ int IL_output_2d (
       if (params->elev != NULL)
 	sprintf (hist1.edhist[0], "The elevation map is %s", params->elev);
       if (vect)
-	sprintf (hist1.datsrc_1, "vector file %s", input);
+	sprintf (hist1.datsrc_1, "vector map %s", input);
       else
 	sprintf (hist1.datsrc_1, "site file %s", input);
       hist1.edlinecnt = 1;
@@ -490,7 +490,7 @@ int IL_output_2d (
       if (params->elev != NULL)
 	sprintf (hist2.edhist[0], "The elevation map is %s", params->elev);
       if (vect)
-	sprintf (hist2.datsrc_1, "vector file %s", input);
+	sprintf (hist2.datsrc_1, "vector map %s", input);
       else
 	sprintf (hist2.datsrc_1, "site file %s", input);
       hist2.edlinecnt = 1;
@@ -557,7 +557,7 @@ int IL_output_2d (
 	if (params->elev != NULL)
 	  sprintf (hist3.edhist[0], "The elevation map is %s", params->elev);
 	if (vect)
-	  sprintf (hist3.datsrc_1, "vector file %s", input);
+	  sprintf (hist3.datsrc_1, "vector map %s", input);
 	else
 	  sprintf (hist3.datsrc_1, "site file %s", input);
 	hist3.edlinecnt = 1;
@@ -585,7 +585,7 @@ int IL_output_2d (
 	if (params->elev != NULL)
 	  sprintf (hist4.edhist[0], "The elevation map is %s", params->elev);
 	if (vect)
-	  sprintf (hist4.datsrc_1, "vector file %s", input);
+	  sprintf (hist4.datsrc_1, "vector map %s", input);
 	else
 	  sprintf (hist4.datsrc_1, "site file %s", input);
 	hist4.edlinecnt = 1;
@@ -613,7 +613,7 @@ int IL_output_2d (
 	if (params->elev != NULL)
 	  sprintf (hist5.edhist[0], "The elevation map is %s", params->elev);
 	if (vect)
-	  sprintf (hist5.datsrc_1, "vector file %s", input);
+	  sprintf (hist5.datsrc_1, "vector map %s", input);
 	else
 	  sprintf (hist5.datsrc_1, "site file %s", input);
 	hist5.edlinecnt = 1;
@@ -689,7 +689,7 @@ int IL_output_2d (
 	    hist.edlinecnt = 5;
 
     if (vect)
-      sprintf (hist.datsrc_1, "vector file %s", input);
+      sprintf (hist.datsrc_1, "vector map %s", input);
     else
       sprintf (hist.datsrc_1, "site file %s", input);
 

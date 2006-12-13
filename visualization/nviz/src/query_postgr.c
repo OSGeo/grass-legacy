@@ -46,9 +46,9 @@ char *query_postgr(name, keytable, col, x, y)
 
     level = Vect_open_old(&P_map, name, mapset);
     if (level < 0)
-	G_fatal_error("Can't open vector file");
+	G_fatal_error("Can't open vector map");
     if (level < 2)
-	G_fatal_error("You must first run v.support on vector file");
+	G_fatal_error("You must first run v.support on vector map");
 
 
 

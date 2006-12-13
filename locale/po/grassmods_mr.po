@@ -839,7 +839,7 @@ msgid "Cannot select data from table"
 msgstr ""
 
 #: ../ps/ps.map/ps_vpoints.c:132
-msgid "Read error in vector file"
+msgid "Read error in vector map"
 msgstr ""
 
 #: ../ps/ps.map/ps_vpoints.c:160 ../ps/ps.map/ps_vpoints.c:169
@@ -1823,7 +1823,7 @@ msgstr ""
 
 #: ../general/g.region/cmd/main.c:478 ../raster/r.region/main.c:233
 #, c-format
-msgid "can't open vector file <%s> in <%s>"
+msgid "can't open vector map <%s> in <%s>"
 msgstr ""
 
 #: ../general/g.region/cmd/main.c:742
@@ -2257,7 +2257,7 @@ msgid "vector, paint labels"
 msgstr ""
 
 #: ../vector/v.label/main.c:64
-msgid "Create paint labels for GRASS vector file and attached attributes."
+msgid "Create paint labels for GRASS vector map and attached attributes."
 msgstr ""
 
 #: ../vector/v.label/main.c:78
@@ -2401,7 +2401,7 @@ msgid ""
 msgstr ""
 
 #: ../vector/v.surf.rst/main.c:189
-msgid "Name of the vector file with input data"
+msgid "Name of the vector map with input data"
 msgstr ""
 
 #: ../vector/v.surf.rst/main.c:193 ../vector/v.surf.idw/main.c:97
@@ -2496,11 +2496,11 @@ msgid "Anisotropy scaling factor"
 msgstr ""
 
 #: ../vector/v.surf.rst/main.c:346
-msgid "Output vector file showing quadtree segmentation"
+msgid "Output vector map showing quadtree segmentation"
 msgstr ""
 
 #: ../vector/v.surf.rst/main.c:354
-msgid "Output vector file showing overlapping windows"
+msgid "Output vector map showing overlapping windows"
 msgstr ""
 
 #: ../vector/v.surf.rst/main.c:358
@@ -2512,7 +2512,7 @@ msgid "Perform cross-validation procedure without raster approximation"
 msgstr ""
 
 #: ../vector/v.surf.rst/main.c:402
-msgid "You are not outputing any raster or vector files"
+msgid "You are not outputing any raster or vector maps"
 msgstr ""
 
 #: ../vector/v.surf.rst/main.c:412
@@ -2581,13 +2581,13 @@ msgstr ""
 
 #: ../vector/v.surf.rst/main.c:512
 #, c-format
-msgid "Could not find vector file %s"
+msgid "Could not find vector map %s"
 msgstr ""
 
 #: ../vector/v.surf.rst/main.c:516 ../vector/v.surf.rst/main.c:660
 #: ../vector/v.surf.rst/main.c:752
 #, c-format
-msgid "Could not open vector file <%s>"
+msgid "Could not open vector map <%s>"
 msgstr ""
 
 #: ../vector/v.surf.rst/main.c:557 ../vector/v.to.points/main.c:247
@@ -2687,7 +2687,7 @@ msgstr ""
 
 #: ../vector/v.what/main.c:178 ../display/d.what.vect/main.c:134
 #, c-format
-msgid "%s: You must build topology on vector file"
+msgid "%s: You must build topology on vector map"
 msgstr ""
 
 #: ../vector/v.what/what.c:77 ../vector/v.what/what.c:78
@@ -3103,7 +3103,7 @@ msgid "%s: Cannot write dxf file."
 msgstr "'%s'. ड्राइवर चालू होत नाही"
 
 #: ../vector/v.out.dxf/main.c:48
-msgid "Exports GRASS vector files to DXF file format."
+msgid "Exports GRASS vector maps to DXF file format."
 msgstr ""
 
 #: ../vector/v.out.dxf/main.c:58
@@ -3449,7 +3449,7 @@ msgid "Cannot open select cursor"
 msgstr ""
 
 #: ../vector/v.distance/main.c:109 ../vector/v.distance/main.c:113
-msgid "Name of existing vector file"
+msgid "Name of existing vector map"
 msgstr ""
 
 #: ../vector/v.distance/main.c:119
@@ -3810,7 +3810,7 @@ msgstr ""
 #, c-format
 msgid ""
 "\n"
-"Writing output vector file using smooth parameter=%f."
+"Writing output vector map using smooth parameter=%f."
 msgstr ""
 
 #: ../vector/v.kernel/main.c:301 ../vector/v.kernel/main.c:365
@@ -3880,7 +3880,7 @@ msgstr ""
 
 #: ../vector/v.in.ascii/in.c:43
 msgid ""
-"ASCII file to be converted to binary vector file, if not given reads from "
+"ASCII file to be converted to binary vector map, if not given reads from "
 "standard input"
 msgstr ""
 
@@ -4532,15 +4532,15 @@ msgid ""
 msgstr ""
 
 #: ../vector/lidar/v.lidar.correction/main.c:73
-msgid "Input observation vector file name (v.lidar.growing output)"
+msgid "Input observation vector map name (v.lidar.growing output)"
 msgstr ""
 
 #: ../vector/lidar/v.lidar.correction/main.c:81
-msgid "Output classified vector file name"
+msgid "Output classified vector map name"
 msgstr ""
 
 #: ../vector/lidar/v.lidar.correction/main.c:89
-msgid "Output terrain only vector file name"
+msgid "Output terrain only vector map name"
 msgstr ""
 
 #: ../vector/lidar/v.lidar.correction/main.c:128
@@ -5002,7 +5002,7 @@ msgid "Cannot get db link info"
 msgstr "'%s'. ड्राइवर चालू होत नाही"
 
 #: ../vector/v.vol.rst/main.c:236
-msgid "Name of the vector file with input x,y,z,w"
+msgid "Name of the vector map with input x,y,z,w"
 msgstr ""
 
 #: ../vector/v.vol.rst/main.c:243
@@ -5018,7 +5018,7 @@ msgid "Name of the column with smoothing parameters"
 msgstr ""
 
 #: ../vector/v.vol.rst/main.c:285
-msgid "Output cross-validation vector file"
+msgid "Output cross-validation vector map"
 msgstr ""
 
 #: ../vector/v.vol.rst/main.c:322
@@ -5553,7 +5553,7 @@ msgstr "'%s'. ड्राइवर चालू होत नाही"
 
 #: ../vector/v.net.path/main.c:124
 #, c-format
-msgid "Failed opening output vector file '%s'"
+msgid "Failed opening output vector map '%s'"
 msgstr ""
 
 #: ../vector/v.to.rast/main.c:36
@@ -5752,7 +5752,7 @@ msgid "Randomly generate a 2D/3D GRASS vector points map."
 msgstr ""
 
 #: ../vector/v.random/main.c:91
-msgid "vector file to be created"
+msgid "vector map to be created"
 msgstr ""
 
 #: ../vector/v.random/main.c:97
@@ -6167,7 +6167,7 @@ msgid ""
 msgstr ""
 
 #: ../vector/v.edit/main.c:59
-msgid "Reading vector file ..."
+msgid "Reading vector map ..."
 msgstr ""
 
 #: ../vector/v.univar/main.c:56
@@ -6218,7 +6218,7 @@ msgid "end of file while looking for HEADER"
 msgstr ""
 
 #: ../vector/v.in.dxf/main.c:61
-msgid "Converts files in DXF format to GRASS vector file format."
+msgid "Converts files in DXF format to GRASS vector map format."
 msgstr ""
 
 #: ../vector/v.in.dxf/main.c:65
@@ -6272,7 +6272,7 @@ msgstr ""
 
 #: ../vector/v.in.dxf/main.c:160
 #, fuzzy, c-format
-msgid "%s: Cannot open new vector file"
+msgid "%s: Cannot open new vector map"
 msgstr "'%s'. ड्राइवर चालू होत नाही"
 
 #: ../vector/v.in.dxf/main.c:180
@@ -6319,7 +6319,7 @@ msgid ""
 msgstr ""
 
 #: ../vector/v.proj/main.c:43
-msgid "Allows projection conversion of vector files."
+msgid "Allows projection conversion of vector maps."
 msgstr ""
 
 #: ../vector/v.proj/main.c:54
@@ -6338,7 +6338,7 @@ msgstr ""
 
 #: ../vector/v.proj/main.c:73
 msgid ""
-"List vector files in input location and exit (a dummy value must be given "
+"List vector maps in input location and exit (a dummy value must be given "
 "for input)"
 msgstr ""
 
@@ -6376,7 +6376,7 @@ msgstr ""
 #, c-format
 msgid ""
 "\n"
-"Creating vector file...\n"
+"Creating vector map...\n"
 msgstr ""
 
 #: ../vector/v.proj/main.c:199
@@ -6571,7 +6571,7 @@ msgid "Maximum number of segments per flowline"
 msgstr ""
 
 #: ../raster/r.flow/io.c:161
-msgid "Output flowline vector file"
+msgid "Output flowline vector map"
 msgstr ""
 
 #: ../raster/r.flow/io.c:163
@@ -10291,7 +10291,7 @@ msgid "History file for [%s] not updated."
 msgstr ""
 
 #: ../raster/r.support/modcats/modcats.c:46
-msgid "Which vector file needs updated categories?"
+msgid "Which vector map needs updated categories?"
 msgstr ""
 
 #: ../raster/r.support/modcats/modcats.c:49
@@ -16193,7 +16193,7 @@ msgstr ""
 #, c-format
 msgid ""
 "\n"
-"ERROR: vector file - can't read\n"
+"ERROR: vector map - can't read\n"
 msgstr ""
 
 #: ../display/d.vect/area.c:63 ../display/d.vect/plot1.c:64
@@ -16508,7 +16508,7 @@ msgstr ""
 
 #: ../display/d.what.vect/openvect.c:12
 #, c-format
-msgid "warning: %s - vector file not found\n"
+msgid "warning: %s - vector map not found\n"
 msgstr ""
 
 #: ../display/d.what.vect/main.c:37

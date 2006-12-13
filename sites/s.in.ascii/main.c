@@ -56,7 +56,7 @@ main (int argc, char *argv[])
     parm.output->key = "output";
     parm.output->type = TYPE_STRING;
     parm.output->required = YES;
-    parm.output->description = "vector file to be created";
+    parm.output->description = "vector map to be created";
     parm.output->gisprompt = "any,vector,vector";
 
     parm.input = G_define_option();

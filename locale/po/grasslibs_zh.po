@@ -821,7 +821,7 @@ msgstr "[%s]在地图集[%s]中的类别 %s"
 
 #: ../lib/gis/cats.c:423
 #, c-format
-msgid "category support for vector file [%s] in mapset [%s] %s"
+msgid "category support for vector map [%s] in mapset [%s] %s"
 msgstr "矢量文件[%s]在地图集[%s]中的类别 %s"
 
 #: ../lib/gis/mapset.c:41

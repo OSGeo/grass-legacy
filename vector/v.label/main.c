@@ -61,7 +61,7 @@ main (int argc, char **argv)
     module = G_define_module();
     module->keywords = _("vector, paint labels");
     module->description =
-	_("Create paint labels for GRASS vector file and attached attributes.");
+	_("Create paint labels for GRASS vector map and attached attributes.");
 
     Vectfile = G_define_standard_option(G_OPT_V_MAP);
 

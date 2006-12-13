@@ -1,14 +1,14 @@
 /*
  ***********************************************************************
- * prompt for vector files (digit)
+ * prompt for vector maps (digit)
  *
  *   char *
  *   G_ask_vector_new(prompt, name)) 
- *       asks user to input name of a new vector file
+ *       asks user to input name of a new vector map
  *
  *   char *
  *   G_ask_vector_old(prompt, name) 
- *       asks user to input name of an existing vector file
+ *       asks user to input name of an existing vector map
  *
  *   char *
  *   G_ask_vector_any(prompt, name)
@@ -16,7 +16,7 @@
  *
  *   char *
  *   G_ask_vector_in_mapset(prompt, name)
- *       asks user to input name of an existing vector file
+ *       asks user to input name of an existing vector map
  *       in current mapset
  *
  *   parms:
@@ -31,9 +31,9 @@
 
 
 /*!
- * \brief prompt for a new vector file
+ * \brief prompt for a new vector map
  *
- * Asks the user to enter a name for a vector file which does not
+ * Asks the user to enter a name for a vector map which does not
  * exist in the current mapset.
  *
  *  \param prompt
@@ -50,7 +50,7 @@ char *G_ask_vector_new (
 
 
 /*!
- * \brief prompt for an existing vector file
+ * \brief prompt for an existing vector map
  *
  * Asks the user to enter the name of an existing vector
  * file in any mapset in the database.
@@ -76,7 +76,7 @@ char *G_ask_vector_any (
 
 
 /*!
- * \brief prompt for an existing vector file
+ * \brief prompt for an existing vector map
  *
  * Asks the user to enter the name of an existing vector
  * file in the current mapset.

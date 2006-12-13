@@ -872,7 +872,7 @@ msgid "Cannot select data from table"
 msgstr "Nemohu vybrat data z tabulky"
 
 #: ../ps/ps.map/ps_vpoints.c:132
-msgid "Read error in vector file"
+msgid "Read error in vector map"
 msgstr "Chyba pøi ètení vektorového souboru"
 
 #: ../ps/ps.map/ps_vpoints.c:160 ../ps/ps.map/ps_vpoints.c:169
@@ -1905,7 +1905,7 @@ msgstr "vektorová mapa <%s> nebyla nalezena"
 
 #: ../general/g.region/cmd/main.c:478 ../raster/r.region/main.c:233
 #, c-format
-msgid "can't open vector file <%s> in <%s>"
+msgid "can't open vector map <%s> in <%s>"
 msgstr "nemohu otevøít vektorový soubor <%s> v <%s>"
 
 #: ../general/g.region/cmd/main.c:742
@@ -2365,7 +2365,7 @@ msgid "vector, paint labels"
 msgstr "vektor, ¹títky"
 
 #: ../vector/v.label/main.c:64
-msgid "Create paint labels for GRASS vector file and attached attributes."
+msgid "Create paint labels for GRASS vector map and attached attributes."
 msgstr "Vytvoøí ¹títky pro vektorou mapu GRASSu a pøipojí atributy."
 
 #: ../vector/v.label/main.c:78
@@ -2512,7 +2512,7 @@ msgstr ""
 "spline s tenzí a vyhlezním."
 
 #: ../vector/v.surf.rst/main.c:189
-msgid "Name of the vector file with input data"
+msgid "Name of the vector map with input data"
 msgstr "Název vstupního vektorového souboru"
 
 #: ../vector/v.surf.rst/main.c:193 ../vector/v.surf.idw/main.c:97
@@ -2613,12 +2613,12 @@ msgid "Anisotropy scaling factor"
 msgstr "Míra anisotropie"
 
 #: ../vector/v.surf.rst/main.c:346
-msgid "Output vector file showing quadtree segmentation"
+msgid "Output vector map showing quadtree segmentation"
 msgstr ""
 "Výstupní vektorový soubor ukazující segmentaci kvadratické stromové struktury"
 
 #: ../vector/v.surf.rst/main.c:354
-msgid "Output vector file showing overlapping windows"
+msgid "Output vector map showing overlapping windows"
 msgstr "Výstupní vektorový soubor ukazující pøekryv oken"
 
 #: ../vector/v.surf.rst/main.c:358
@@ -2630,7 +2630,7 @@ msgid "Perform cross-validation procedure without raster approximation"
 msgstr "Provede proceduru køí¾ové validace bez rastrové aproximace"
 
 #: ../vector/v.surf.rst/main.c:402
-msgid "You are not outputing any raster or vector files"
+msgid "You are not outputing any raster or vector maps"
 msgstr "Nebyla zadána ¾ádná rastrová nebo vektorová mapa pro výstup"
 
 #: ../vector/v.surf.rst/main.c:412
@@ -2703,13 +2703,13 @@ msgstr "Nemohu vytvoøit tree info"
 
 #: ../vector/v.surf.rst/main.c:512
 #, c-format
-msgid "Could not find vector file %s"
+msgid "Could not find vector map %s"
 msgstr "Nemohu nelézt vektorový soubor %s"
 
 #: ../vector/v.surf.rst/main.c:516 ../vector/v.surf.rst/main.c:660
 #: ../vector/v.surf.rst/main.c:752
 #, c-format
-msgid "Could not open vector file <%s>"
+msgid "Could not open vector map <%s>"
 msgstr "Nemohl jsem otevøít ASCII soubor <%s>"
 
 #: ../vector/v.surf.rst/main.c:557 ../vector/v.to.points/main.c:247
@@ -2811,7 +2811,7 @@ msgstr ""
 
 #: ../vector/v.what/main.c:178 ../display/d.what.vect/main.c:134
 #, c-format
-msgid "%s: You must build topology on vector file"
+msgid "%s: You must build topology on vector map"
 msgstr "%s: Pro vektorový soubor musíte vybudovat topologii"
 
 #: ../vector/v.what/what.c:77 ../vector/v.what/what.c:78
@@ -3275,7 +3275,7 @@ msgid "%s: Cannot write dxf file."
 msgstr "%s: Nelze zapsat soubor dxf."
 
 #: ../vector/v.out.dxf/main.c:48
-msgid "Exports GRASS vector files to DXF file format."
+msgid "Exports GRASS vector maps to DXF file format."
 msgstr "Exportuje GRASS vektory jako soubor DXF."
 
 #: ../vector/v.out.dxf/main.c:58
@@ -3643,7 +3643,7 @@ msgid "Cannot open select cursor"
 msgstr "Nelze otevøít kurzor pro výbìr"
 
 #: ../vector/v.distance/main.c:109 ../vector/v.distance/main.c:113
-msgid "Name of existing vector file"
+msgid "Name of existing vector map"
 msgstr "Jméno existující vektorové vsrtvy"
 
 #: ../vector/v.distance/main.c:119
@@ -4033,7 +4033,7 @@ msgstr "Optimální parametr vyhlazení (smìrodatná odchylka): %f."
 #, c-format
 msgid ""
 "\n"
-"Writing output vector file using smooth parameter=%f."
+"Writing output vector map using smooth parameter=%f."
 msgstr ""
 "\n"
 "Zapisuji výsledný vektorový soubor s vyu¾itím parametru smooth=%f."
@@ -4111,7 +4111,7 @@ msgstr "Pøevede ASCII soubor GRASSu nebo body na binární vektorový soubor."
 
 #: ../vector/v.in.ascii/in.c:43
 msgid ""
-"ASCII file to be converted to binary vector file, if not given reads from "
+"ASCII file to be converted to binary vector map, if not given reads from "
 "standard input"
 msgstr ""
 "Soubor ASCII pro konverzi na binární vektorový soubor, pokud není zadán, ète "
@@ -4804,15 +4804,15 @@ msgstr ""
 "filtrace"
 
 #: ../vector/lidar/v.lidar.correction/main.c:73
-msgid "Input observation vector file name (v.lidar.growing output)"
+msgid "Input observation vector map name (v.lidar.growing output)"
 msgstr "Název vstupní vektorové vrstvy observace (výstup v.lidar.growing)"
 
 #: ../vector/lidar/v.lidar.correction/main.c:81
-msgid "Output classified vector file name"
+msgid "Output classified vector map name"
 msgstr "Název klasifikované vektorové vrstvy"
 
 #: ../vector/lidar/v.lidar.correction/main.c:89
-msgid "Output terrain only vector file name"
+msgid "Output terrain only vector map name"
 msgstr "Výstupní terén, pouze název vektorového souboru"
 
 #: ../vector/lidar/v.lidar.correction/main.c:128
@@ -5282,7 +5282,7 @@ msgid "Cannot get db link info"
 msgstr "Nemohu dostat informace o odkazu na databázi"
 
 #: ../vector/v.vol.rst/main.c:236
-msgid "Name of the vector file with input x,y,z,w"
+msgid "Name of the vector map with input x,y,z,w"
 msgstr "Jméno vektorového souboru se vstupem x,y,z,w"
 
 #: ../vector/v.vol.rst/main.c:243
@@ -5298,7 +5298,7 @@ msgid "Name of the column with smoothing parameters"
 msgstr "Název sloupce obsahujícího hodnoty parametru vyhlazení"
 
 #: ../vector/v.vol.rst/main.c:285
-msgid "Output cross-validation vector file"
+msgid "Output cross-validation vector map"
 msgstr "Výstupní vektorový soubor køí¾ové validace"
 
 #: ../vector/v.vol.rst/main.c:322
@@ -5854,7 +5854,7 @@ msgstr "Nelze najít vstupní vektorovou vrstvu '%s'"
 
 #: ../vector/v.net.path/main.c:124
 #, c-format
-msgid "Failed opening output vector file '%s'"
+msgid "Failed opening output vector map '%s'"
 msgstr "Chyba pøi otevírání vektorového souboru '%s'"
 
 #: ../vector/v.to.rast/main.c:36
@@ -6064,7 +6064,7 @@ msgid "Randomly generate a 2D/3D GRASS vector points map."
 msgstr "Náhodnì vytvoøit 2D/3D bodovou vektorou mapu GRASSu."
 
 #: ../vector/v.random/main.c:91
-msgid "vector file to be created"
+msgid "vector map to be created"
 msgstr "vektorový soubor, který má být vytvoøen"
 
 #: ../vector/v.random/main.c:97
@@ -6521,7 +6521,7 @@ msgstr ""
 "vektorové mapì."
 
 #: ../vector/v.edit/main.c:59
-msgid "Reading vector file ..."
+msgid "Reading vector map ..."
 msgstr "Naèítám vektorový soubor ..."
 
 #: ../vector/v.univar/main.c:56
@@ -6576,7 +6576,7 @@ msgid "end of file while looking for HEADER"
 msgstr "konec souboru, zatímco hledám HEADER"
 
 #: ../vector/v.in.dxf/main.c:61
-msgid "Converts files in DXF format to GRASS vector file format."
+msgid "Converts files in DXF format to GRASS vector map format."
 msgstr "Pøeved soubory ve formátu DXF do formátu GRASS-vektor"
 
 #: ../vector/v.in.dxf/main.c:65
@@ -6631,7 +6631,7 @@ msgstr "Pou¾ijte volbu output= pro zmìnu jména vektoru"
 
 #: ../vector/v.in.dxf/main.c:160
 #, c-format
-msgid "%s: Cannot open new vector file"
+msgid "%s: Cannot open new vector map"
 msgstr "%s: Nelze otevøít nový vektorový soubor"
 
 #: ../vector/v.in.dxf/main.c:180
@@ -6687,7 +6687,7 @@ msgstr ""
 "\t\tSoubor MapInfo: název souboru MapInfo"
 
 #: ../vector/v.proj/main.c:43
-msgid "Allows projection conversion of vector files."
+msgid "Allows projection conversion of vector maps."
 msgstr "Umo¾òuje zmìnu projekce vektorových map."
 
 #: ../vector/v.proj/main.c:54
@@ -6704,7 +6704,7 @@ msgstr "Cesta k databázi GRASSu vstupní pro location"
 
 #: ../vector/v.proj/main.c:73
 msgid ""
-"List vector files in input location and exit (a dummy value must be given "
+"List vector maps in input location and exit (a dummy value must be given "
 "for input)"
 msgstr ""
 "Vypsat vektorové vrstvy z vstupní location a ukonèit se (je nutné zadat "
@@ -6746,7 +6746,7 @@ msgstr "Mapset [%s] ve vstupní locaition [%s] - nebyl nalezen"
 #, c-format
 msgid ""
 "\n"
-"Creating vector file...\n"
+"Creating vector map...\n"
 msgstr ""
 "\n"
 "Vytváøím vektorový soubor...\n"
@@ -6954,7 +6954,7 @@ msgid "Maximum number of segments per flowline"
 msgstr "Maximální poèet segmentù na linii"
 
 #: ../raster/r.flow/io.c:161
-msgid "Output flowline vector file"
+msgid "Output flowline vector map"
 msgstr "Výstupní vektorový soubor drah odtoku"
 
 #: ../raster/r.flow/io.c:163
@@ -10873,7 +10873,7 @@ msgid "History file for [%s] not updated."
 msgstr "Soubor s historií pro [%s] nebyl aktualizován."
 
 #: ../raster/r.support/modcats/modcats.c:46
-msgid "Which vector file needs updated categories?"
+msgid "Which vector map needs updated categories?"
 msgstr "Který vektorový soubor vy¾aduje aktualizované kategorie?"
 
 #: ../raster/r.support/modcats/modcats.c:49
@@ -17199,7 +17199,7 @@ msgstr "Nemohu otevøít soubor s popisky [%s]"
 #, c-format
 msgid ""
 "\n"
-"ERROR: vector file - can't read\n"
+"ERROR: vector map - can't read\n"
 msgstr ""
 "\n"
 "CHYBA: vektorový soubor - nelze èíst\n"
@@ -17532,7 +17532,7 @@ msgstr "%s: Nelze èíst definièní soubor FreeType"
 
 #: ../display/d.what.vect/openvect.c:12
 #, c-format
-msgid "warning: %s - vector file not found\n"
+msgid "warning: %s - vector map not found\n"
 msgstr "varování: %d - vektorový soubor nenalezen\n"
 
 #: ../display/d.what.vect/main.c:37
@@ -19642,7 +19642,7 @@ msgstr "Poèet souborù s vý¹kovým modelem neodpovídá poètu souboru s barvami"
 #~ msgid "do not attempt projection transform from WGS84"
 #~ msgstr "neprovádìj pøevod projekce z WGS84"
 
-#~ msgid "name for new binary vector file (omit for display to stdout)"
+#~ msgid "name for new binary vector map (omit for display to stdout)"
 #~ msgstr ""
 #~ "název nového vektorového souboru (vynechává se pøi zobrazení na "
 #~ "standardní výstup)"
@@ -19659,7 +19659,7 @@ msgstr "Poèet souborù s vý¹kovým modelem neodpovídá poètu souboru s barvami"
 #~ msgid "Input type point, line or area"
 #~ msgstr "Typ vstupu linie nebo plocha"
 
-#~ msgid "name for new binary vector file"
+#~ msgid "name for new binary vector map"
 #~ msgstr "název nového výstupního vektorového souboru"
 
 #~ msgid ""
@@ -19688,7 +19688,7 @@ msgstr "Poèet souborù s vý¹kovým modelem neodpovídá poètu souboru s barvami"
 #~ msgid "device or file used to import data"
 #~ msgstr "zaøízení nebo soubor urèený k importu"
 
-#~ msgid "name for new vector file (omit for display to stdout)"
+#~ msgid "name for new vector map (omit for display to stdout)"
 #~ msgstr ""
 #~ "jméno nového vektorového souboru (vynechává se pro zobrazení na "
 #~ "standardní výstup)"
@@ -19937,7 +19937,7 @@ msgstr "Poèet souborù s vý¹kovým modelem neodpovídá poètu souboru s barvami"
 #~ msgid "Cannot select attributes for cat=%d"
 #~ msgstr "Nelze vybrat atributy pro cat=%d"
 
-#~ msgid "Makes 3D trees from input point vector file"
+#~ msgid "Makes 3D trees from input point vector map"
 #~ msgstr "VytvoÅ™Ã­ les (3D stromy) ze vstupnÃ­ bodovÃ© vrstvy"
 
 #~ msgid "Diameter of the tree crown in mapunits"

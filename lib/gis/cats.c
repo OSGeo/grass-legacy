@@ -86,8 +86,8 @@
  **********************************************************************
  *
  *  G_read_vector_cats (name, mapset, pcats)
- *      char *name                   name of vector file
- *      char *mapset                 mapset that vector file belongs to
+ *      char *name                   name of vector map
+ *      char *mapset                 mapset that vector map belongs to
  *      struct Categories *pcats     structure to hold category info
  *
  *
@@ -302,10 +302,10 @@
  **********************************************************************
  *
  *  G_write_vector_cats (name, pcats)
- *      char *name                   name of vector file
+ *      char *name                   name of vector map
  *      struct Categories *pcats     structure holding category info
  *
- *  Writes the category information associated with vector file "name"
+ *  Writes the category information associated with vector map "name"
  *  into current mapset from the structure "pcats".
  *
  *   returns:    1  if successful
@@ -390,7 +390,7 @@ int G_read_raster_cats (
 /*!
  * \brief read vector category file
  *
- * The category file for vector file
+ * The category file for vector map
  * <b>name</b> in <b>mapset</b> is read into the <b>cats</b> structure. If
  * there is an error reading the category file, a diagnostic message is printed
  * and -1 is returned. Otherwise, 0 is returned.
@@ -420,7 +420,7 @@ int G_read_vector_cats (
 	    return 0;
     }
 
-    G_warning (_("category support for vector file [%s] in mapset [%s] %s"),
+    G_warning (_("category support for vector map [%s] in mapset [%s] %s"),
 		    name, mapset, type);
     return -1;
 }
@@ -1246,7 +1246,7 @@ int G_write_raster_cats ( char *name , struct Categories *cats )
  * \brief write
  *       vector category file
  *
- * Writes the category file for the vector file
+ * Writes the category file for the vector map
  * <b>name</b> in the current mapset from the <b>cats</b> structure.
  * Returns 1 if successful. Otherwise, -1 is returned (no diagnostic is 
  * printed).

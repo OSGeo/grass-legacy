@@ -910,7 +910,7 @@ msgstr ""
 
 #: ../ps/ps.map/ps_vpoints.c:132
 #, fuzzy
-msgid "Read error in vector file"
+msgid "Read error in vector map"
 msgstr "���"
 
 #: ../ps/ps.map/ps_vpoints.c:160 ../ps/ps.map/ps_vpoints.c:169
@@ -1962,7 +1962,7 @@ msgstr "���"
 
 #: ../general/g.region/cmd/main.c:478 ../raster/r.region/main.c:233
 #, fuzzy, c-format
-msgid "can't open vector file <%s> in <%s>"
+msgid "can't open vector map <%s> in <%s>"
 msgstr "���"
 
 #: ../general/g.region/cmd/main.c:742
@@ -2418,7 +2418,7 @@ msgstr "対象マップ"
 
 #: ../vector/v.label/main.c:64
 #, fuzzy
-msgid "Create paint labels for GRASS vector file and attached attributes."
+msgid "Create paint labels for GRASS vector map and attached attributes."
 msgstr "���."
 
 #: ../vector/v.label/main.c:78
@@ -2577,7 +2577,7 @@ msgstr "��� ���� ����."
 
 #: ../vector/v.surf.rst/main.c:189
 #, fuzzy
-msgid "Name of the vector file with input data"
+msgid "Name of the vector map with input data"
 msgstr "入力するファイル"
 
 #: ../vector/v.surf.rst/main.c:193 ../vector/v.surf.idw/main.c:97
@@ -2695,12 +2695,12 @@ msgstr "異方性のスケールファクター"
 
 #: ../vector/v.surf.rst/main.c:346
 #, fuzzy
-msgid "Output vector file showing quadtree segmentation"
+msgid "Output vector map showing quadtree segmentation"
 msgstr "���"
 
 #: ../vector/v.surf.rst/main.c:354
 #, fuzzy
-msgid "Output vector file showing overlapping windows"
+msgid "Output vector map showing overlapping windows"
 msgstr "���"
 
 #: ../vector/v.surf.rst/main.c:358
@@ -2714,7 +2714,7 @@ msgstr ""
 
 #: ../vector/v.surf.rst/main.c:402
 #, fuzzy
-msgid "You are not outputing any raster or vector files"
+msgid "You are not outputing any raster or vector maps"
 msgstr "���"
 
 #: ../vector/v.surf.rst/main.c:412
@@ -2788,13 +2788,13 @@ msgstr "入力するファイル"
 
 #: ../vector/v.surf.rst/main.c:512
 #, fuzzy, c-format
-msgid "Could not find vector file %s"
+msgid "Could not find vector map %s"
 msgstr "���"
 
 #: ../vector/v.surf.rst/main.c:516 ../vector/v.surf.rst/main.c:660
 #: ../vector/v.surf.rst/main.c:752
 #, fuzzy, c-format
-msgid "Could not open vector file <%s>"
+msgid "Could not open vector map <%s>"
 msgstr "���"
 
 #: ../vector/v.surf.rst/main.c:557 ../vector/v.to.points/main.c:247
@@ -2906,7 +2906,7 @@ msgstr ""
 
 #: ../vector/v.what/main.c:178 ../display/d.what.vect/main.c:134
 #, fuzzy, c-format
-msgid "%s: You must build topology on vector file"
+msgid "%s: You must build topology on vector map"
 msgstr "統一する属性の値"
 
 #: ../vector/v.what/what.c:77 ../vector/v.what/what.c:78
@@ -3328,7 +3328,7 @@ msgstr "出力するファイル"
 
 #: ../vector/v.out.dxf/main.c:48
 #, fuzzy
-msgid "Exports GRASS vector files to DXF file format."
+msgid "Exports GRASS vector maps to DXF file format."
 msgstr "ベクトルマップをARC/INFOファイルとしてエクスポートします"
 
 #: ../vector/v.out.dxf/main.c:58
@@ -3704,7 +3704,7 @@ msgstr ""
 
 #: ../vector/v.distance/main.c:109 ../vector/v.distance/main.c:113
 #, fuzzy
-msgid "Name of existing vector file"
+msgid "Name of existing vector map"
 msgstr "出力するファイル"
 
 #: ../vector/v.distance/main.c:119
@@ -4085,7 +4085,7 @@ msgstr ""
 #, fuzzy, c-format
 msgid ""
 "\n"
-"Writing output vector file using smooth parameter=%f."
+"Writing output vector map using smooth parameter=%f."
 msgstr "���."
 
 #: ../vector/v.kernel/main.c:301 ../vector/v.kernel/main.c:365
@@ -4160,7 +4160,7 @@ msgstr "���."
 #: ../vector/v.in.ascii/in.c:43
 #, fuzzy
 msgid ""
-"ASCII file to be converted to binary vector file, if not given reads from "
+"ASCII file to be converted to binary vector map, if not given reads from "
 "standard input"
 msgstr "���"
 
@@ -4836,17 +4836,17 @@ msgid ""
 msgstr ""
 
 #: ../vector/lidar/v.lidar.correction/main.c:73
-msgid "Input observation vector file name (v.lidar.growing output)"
+msgid "Input observation vector map name (v.lidar.growing output)"
 msgstr ""
 
 #: ../vector/lidar/v.lidar.correction/main.c:81
 #, fuzzy
-msgid "Output classified vector file name"
+msgid "Output classified vector map name"
 msgstr "傾斜の方位を出力するファイル"
 
 #: ../vector/lidar/v.lidar.correction/main.c:89
 #, fuzzy
-msgid "Output terrain only vector file name"
+msgid "Output terrain only vector map name"
 msgstr "正接曲率を出力するファイル"
 
 #: ../vector/lidar/v.lidar.correction/main.c:128
@@ -5334,7 +5334,7 @@ msgstr "入力するファイル"
 
 #: ../vector/v.vol.rst/main.c:236
 #, fuzzy
-msgid "Name of the vector file with input x,y,z,w"
+msgid "Name of the vector map with input x,y,z,w"
 msgstr "���"
 
 #: ../vector/v.vol.rst/main.c:243
@@ -5354,7 +5354,7 @@ msgstr "最終レポートを出力するファイル"
 
 #: ../vector/v.vol.rst/main.c:285
 #, fuzzy
-msgid "Output cross-validation vector file"
+msgid "Output cross-validation vector map"
 msgstr "���"
 
 #: ../vector/v.vol.rst/main.c:322
@@ -5930,7 +5930,7 @@ msgstr "���"
 
 #: ../vector/v.net.path/main.c:124
 #, fuzzy, c-format
-msgid "Failed opening output vector file '%s'"
+msgid "Failed opening output vector map '%s'"
 msgstr "出力するファイル"
 
 #: ../vector/v.to.rast/main.c:36
@@ -6150,7 +6150,7 @@ msgstr "���."
 
 #: ../vector/v.random/main.c:91
 #, fuzzy
-msgid "vector file to be created"
+msgid "vector map to be created"
 msgstr "���"
 
 #: ../vector/v.random/main.c:97
@@ -6580,7 +6580,7 @@ msgstr ""
 
 #: ../vector/v.edit/main.c:59
 #, fuzzy
-msgid "Reading vector file ..."
+msgid "Reading vector map ..."
 msgstr "入力するファイル"
 
 #: ../vector/v.univar/main.c:56
@@ -6635,7 +6635,7 @@ msgstr ""
 
 #: ../vector/v.in.dxf/main.c:61
 #, fuzzy
-msgid "Converts files in DXF format to GRASS vector file format."
+msgid "Converts files in DXF format to GRASS vector map format."
 msgstr " AUTOCAD DXFファイルをベクトルマップとしてインポートします"
 
 #: ../vector/v.in.dxf/main.c:65
@@ -6692,7 +6692,7 @@ msgstr ""
 
 #: ../vector/v.in.dxf/main.c:160
 #, fuzzy, c-format
-msgid "%s: Cannot open new vector file"
+msgid "%s: Cannot open new vector map"
 msgstr "出力するファイル"
 
 #: ../vector/v.in.dxf/main.c:180
@@ -6741,7 +6741,7 @@ msgstr ""
 
 #: ../vector/v.proj/main.c:43
 #, fuzzy
-msgid "Allows projection conversion of vector files."
+msgid "Allows projection conversion of vector maps."
 msgstr "ベクトルマップの投影変換を行います"
 
 #: ../vector/v.proj/main.c:54
@@ -6762,7 +6762,7 @@ msgstr "目的ロケーションを含むデータベース"
 #: ../vector/v.proj/main.c:73
 #, fuzzy
 msgid ""
-"List vector files in input location and exit (a dummy value must be given "
+"List vector maps in input location and exit (a dummy value must be given "
 "for input)"
 msgstr "目的ロケーション内のベクトルマップ一覧表示"
 
@@ -6800,7 +6800,7 @@ msgstr ""
 #, fuzzy, c-format
 msgid ""
 "\n"
-"Creating vector file...\n"
+"Creating vector map...\n"
 msgstr "入力するファイル"
 
 #: ../vector/v.proj/main.c:199
@@ -7010,7 +7010,7 @@ msgstr "最大反復回数"
 
 #: ../raster/r.flow/io.c:161
 #, fuzzy
-msgid "Output flowline vector file"
+msgid "Output flowline vector map"
 msgstr "流線の密度を示すファイル(出力)"
 
 #: ../raster/r.flow/io.c:163
@@ -11075,7 +11075,7 @@ msgstr ""
 
 #: ../raster/r.support/modcats/modcats.c:46
 #, fuzzy
-msgid "Which vector file needs updated categories?"
+msgid "Which vector map needs updated categories?"
 msgstr "���?"
 
 #: ../raster/r.support/modcats/modcats.c:49
@@ -17430,7 +17430,7 @@ msgstr "出力するファイル"
 #, fuzzy, c-format
 msgid ""
 "\n"
-"ERROR: vector file - can't read\n"
+"ERROR: vector map - can't read\n"
 msgstr "���"
 
 #: ../display/d.vect/area.c:63 ../display/d.vect/plot1.c:64
@@ -17767,7 +17767,7 @@ msgstr ""
 
 #: ../display/d.what.vect/openvect.c:12
 #, fuzzy, c-format
-msgid "warning: %s - vector file not found\n"
+msgid "warning: %s - vector map not found\n"
 msgstr "�������: %s - ��������� ����n"
 
 #: ../display/d.what.vect/main.c:37
@@ -18809,7 +18809,7 @@ msgstr ""
 #~ msgstr "最大値"
 
 #, fuzzy
-#~ msgid "Makes 3D trees from input point vector file"
+#~ msgid "Makes 3D trees from input point vector map"
 #~ msgstr "���"
 
 #, fuzzy
@@ -18937,7 +18937,7 @@ msgstr ""
 #~ msgstr "最終レポートを出力するファイル"
 
 #, fuzzy
-#~ msgid "name for new vector file (omit for display to stdout)"
+#~ msgid "name for new vector map (omit for display to stdout)"
 #~ msgstr "出力するファイル"
 
 #, fuzzy
@@ -18973,7 +18973,7 @@ msgstr ""
 #~ msgstr "対象マップ"
 
 #, fuzzy
-#~ msgid "name for new binary vector file"
+#~ msgid "name for new binary vector map"
 #~ msgstr "���"
 
 #, fuzzy
@@ -19213,7 +19213,7 @@ msgstr ""
 #~ msgstr "出力するファイル"
 
 #, fuzzy
-#~ msgid "name for new binary vector file (omit for display to stdout)"
+#~ msgid "name for new binary vector map (omit for display to stdout)"
 #~ msgstr "出力するファイル"
 
 #, fuzzy
@@ -19345,7 +19345,7 @@ msgstr ""
 #~ msgstr "高速計算(大きなメモリが必要)"
 
 #, fuzzy
-#~ msgid "You first need to run v.build on vector file <%s>"
+#~ msgid "You first need to run v.build on vector map <%s>"
 #~ msgstr "���"
 
 #, fuzzy
@@ -19469,7 +19469,7 @@ msgstr ""
 #~ msgstr "ベクトルマップをARC/INFO E00ファイルとしてエクスポートします"
 
 #, fuzzy
-#~ msgid "Name of vector file to be exported"
+#~ msgid "Name of vector map to be exported"
 #~ msgstr "入力するファイル"
 
 #, fuzzy
@@ -19481,11 +19481,11 @@ msgstr ""
 #~ msgstr "出力するファイル"
 
 #, fuzzy
-#~ msgid "Process spaghetti-digitized binary vector file."
+#~ msgid "Process spaghetti-digitized binary vector map."
 #~ msgstr "スパゲッティデータ(バイナリー形式)の編集を行います"
 
 #, fuzzy
-#~ msgid "vector file name"
+#~ msgid "vector map name"
 #~ msgstr "対象マップ"
 
 #, fuzzy
@@ -19537,7 +19537,7 @@ msgstr ""
 #~ msgstr "ベクトルマップからデータを抽出してサイトマップに変換します"
 
 #, fuzzy
-#~ msgid "sites file to be made from vector file"
+#~ msgid "sites file to be made from vector map"
 #~ msgstr "出力するファイル"
 
 #, fuzzy
@@ -19699,7 +19699,7 @@ msgstr ""
 #~ msgstr "説明なし"
 
 #, fuzzy
-#~ msgid "binary vector file to be converted to ascii"
+#~ msgid "binary vector map to be converted to ascii"
 #~ msgstr "入力するファイル"
 
 #, fuzzy
@@ -19719,7 +19719,7 @@ msgstr ""
 #~ msgstr "ベクトルマップについての情報を表示します"
 
 #, fuzzy
-#~ msgid "Cleans out dead lines in GRASS vector files."
+#~ msgid "Cleans out dead lines in GRASS vector maps."
 #~ msgstr "ベクトルマップのデータ中で削除マークの付いた線を全て取り除きます"
 
 #, fuzzy
@@ -19749,7 +19749,7 @@ msgstr ""
 #~ msgstr "入力するファイル"
 
 #, fuzzy
-#~ msgid "input vector file for ARC/INFO conversion"
+#~ msgid "input vector map for ARC/INFO conversion"
 #~ msgstr "入力するファイル"
 
 #, fuzzy
@@ -19791,15 +19791,15 @@ msgstr ""
 #~ msgstr "出力するファイル"
 
 #, fuzzy
-#~ msgid "Automatically run \"v.support\" on newly created vector file."
+#~ msgid "Automatically run \"v.support\" on newly created vector map."
 #~ msgstr "'v.support'コマンドを自動的に実行"
 
 #, fuzzy
-#~ msgid "Cutter vector file"
+#~ msgid "Cutter vector map"
 #~ msgstr "切るファイル"
 
 #, fuzzy
-#~ msgid "Data vector file"
+#~ msgid "Data vector map"
 #~ msgstr "切られるファイル"
 
 #, fuzzy
@@ -19857,7 +19857,7 @@ msgstr ""
 #~ msgstr "閾値の単位:インチ"
 
 #, fuzzy
-#~ msgid "new pruned vector file"
+#~ msgid "new pruned vector map"
 #~ msgstr "出力するファイル"
 
 #, fuzzy
@@ -21204,7 +21204,7 @@ msgstr ""
 #~ msgstr "上書き"
 
 #, fuzzy
-#~ msgid "  vect   (binary vector files)\n"
+#~ msgid "  vect   (binary vector maps)\n"
 #~ msgstr "  vect   (ベクトルマップ)\n"
 
 #, fuzzy

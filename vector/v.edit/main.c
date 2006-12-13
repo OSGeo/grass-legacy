@@ -56,7 +56,7 @@ int main (int argc, char *argv[])
     }
     else {
 /* 	Vect_set_open_level(2); */
-	G_message(_("Reading vector file ..."));
+	G_message(_("Reading vector map ..."));
 	Vect_open_update (&Map, map_opt->answer, mapset);
     }
 /*     Vect_set_category_index_update ( &Map ); */

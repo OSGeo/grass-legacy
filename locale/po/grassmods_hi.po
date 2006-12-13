@@ -929,7 +929,7 @@ msgstr ""
 
 #: ../ps/ps.map/ps_vpoints.c:132
 #, fuzzy
-msgid "Read error in vector file"
+msgid "Read error in vector map"
 msgstr "त्रुटि"
 
 #: ../ps/ps.map/ps_vpoints.c:160 ../ps/ps.map/ps_vpoints.c:169
@@ -1996,7 +1996,7 @@ msgstr "नहीं"
 
 #: ../general/g.region/cmd/main.c:478 ../raster/r.region/main.c:233
 #, c-format
-msgid "can't open vector file <%s> in <%s>"
+msgid "can't open vector map <%s> in <%s>"
 msgstr ""
 
 #: ../general/g.region/cmd/main.c:742
@@ -2457,7 +2457,7 @@ msgstr ""
 
 #: ../vector/v.label/main.c:64
 #, fuzzy
-msgid "Create paint labels for GRASS vector file and attached attributes."
+msgid "Create paint labels for GRASS vector map and attached attributes."
 msgstr "के लिए संलग्न है."
 
 #: ../vector/v.label/main.c:78
@@ -2616,7 +2616,7 @@ msgstr "बिन्दु बिन्दु."
 
 #: ../vector/v.surf.rst/main.c:189
 #, fuzzy
-msgid "Name of the vector file with input data"
+msgid "Name of the vector map with input data"
 msgstr "का"
 
 #: ../vector/v.surf.rst/main.c:193 ../vector/v.surf.idw/main.c:97
@@ -2725,11 +2725,11 @@ msgid "Anisotropy scaling factor"
 msgstr ""
 
 #: ../vector/v.surf.rst/main.c:346
-msgid "Output vector file showing quadtree segmentation"
+msgid "Output vector map showing quadtree segmentation"
 msgstr ""
 
 #: ../vector/v.surf.rst/main.c:354
-msgid "Output vector file showing overlapping windows"
+msgid "Output vector map showing overlapping windows"
 msgstr ""
 
 #: ../vector/v.surf.rst/main.c:358
@@ -2744,7 +2744,7 @@ msgstr "विधि"
 
 #: ../vector/v.surf.rst/main.c:402
 #, fuzzy
-msgid "You are not outputing any raster or vector files"
+msgid "You are not outputing any raster or vector maps"
 msgstr "नहीं"
 
 #: ../vector/v.surf.rst/main.c:412
@@ -2821,13 +2821,13 @@ msgstr ""
 
 #: ../vector/v.surf.rst/main.c:512
 #, fuzzy, c-format
-msgid "Could not find vector file %s"
+msgid "Could not find vector map %s"
 msgstr "नहीं"
 
 #: ../vector/v.surf.rst/main.c:516 ../vector/v.surf.rst/main.c:660
 #: ../vector/v.surf.rst/main.c:752
 #, fuzzy, c-format
-msgid "Could not open vector file <%s>"
+msgid "Could not open vector map <%s>"
 msgstr "नहीं"
 
 #: ../vector/v.surf.rst/main.c:557 ../vector/v.to.points/main.c:247
@@ -2937,7 +2937,7 @@ msgstr "a पर."
 
 #: ../vector/v.what/main.c:178 ../display/d.what.vect/main.c:134
 #, fuzzy, c-format
-msgid "%s: You must build topology on vector file"
+msgid "%s: You must build topology on vector map"
 msgstr "नहीं"
 
 #: ../vector/v.what/what.c:77 ../vector/v.what/what.c:78
@@ -3361,7 +3361,7 @@ msgid "%s: Cannot write dxf file."
 msgstr "नहीं"
 
 #: ../vector/v.out.dxf/main.c:48
-msgid "Exports GRASS vector files to DXF file format."
+msgid "Exports GRASS vector maps to DXF file format."
 msgstr ""
 
 #: ../vector/v.out.dxf/main.c:58
@@ -3744,7 +3744,7 @@ msgstr ""
 
 #: ../vector/v.distance/main.c:109 ../vector/v.distance/main.c:113
 #, fuzzy
-msgid "Name of existing vector file"
+msgid "Name of existing vector map"
 msgstr "का"
 
 #: ../vector/v.distance/main.c:119
@@ -4121,7 +4121,7 @@ msgstr "f."
 #, fuzzy, c-format
 msgid ""
 "\n"
-"Writing output vector file using smooth parameter=%f."
+"Writing output vector map using smooth parameter=%f."
 msgstr "f."
 
 #: ../vector/v.kernel/main.c:301 ../vector/v.kernel/main.c:365
@@ -4193,7 +4193,7 @@ msgstr ""
 #: ../vector/v.in.ascii/in.c:43
 #, fuzzy
 msgid ""
-"ASCII file to be converted to binary vector file, if not given reads from "
+"ASCII file to be converted to binary vector map, if not given reads from "
 "standard input"
 msgstr "नहीं"
 
@@ -4887,17 +4887,17 @@ msgid ""
 msgstr ""
 
 #: ../vector/lidar/v.lidar.correction/main.c:73
-msgid "Input observation vector file name (v.lidar.growing output)"
+msgid "Input observation vector map name (v.lidar.growing output)"
 msgstr ""
 
 #: ../vector/lidar/v.lidar.correction/main.c:81
 #, fuzzy
-msgid "Output classified vector file name"
+msgid "Output classified vector map name"
 msgstr "फ़ाइलनाम "
 
 #: ../vector/lidar/v.lidar.correction/main.c:89
 #, fuzzy
-msgid "Output terrain only vector file name"
+msgid "Output terrain only vector map name"
 msgstr "त्रुटि"
 
 #: ../vector/lidar/v.lidar.correction/main.c:128
@@ -5387,7 +5387,7 @@ msgstr "फील्ड"
 
 #: ../vector/v.vol.rst/main.c:236
 #, fuzzy
-msgid "Name of the vector file with input x,y,z,w"
+msgid "Name of the vector map with input x,y,z,w"
 msgstr "का"
 
 #: ../vector/v.vol.rst/main.c:243
@@ -5406,7 +5406,7 @@ msgstr "का"
 
 #: ../vector/v.vol.rst/main.c:285
 #, fuzzy
-msgid "Output cross-validation vector file"
+msgid "Output cross-validation vector map"
 msgstr "का बिन्दु"
 
 #: ../vector/v.vol.rst/main.c:322
@@ -5987,7 +5987,7 @@ msgstr "नहीं"
 
 #: ../vector/v.net.path/main.c:124
 #, fuzzy, c-format
-msgid "Failed opening output vector file '%s'"
+msgid "Failed opening output vector map '%s'"
 msgstr "का"
 
 #: ../vector/v.to.rast/main.c:36
@@ -6205,7 +6205,7 @@ msgid "Randomly generate a 2D/3D GRASS vector points map."
 msgstr "a."
 
 #: ../vector/v.random/main.c:91
-msgid "vector file to be created"
+msgid "vector map to be created"
 msgstr ""
 
 #: ../vector/v.random/main.c:97
@@ -6650,7 +6650,7 @@ msgstr ""
 
 #: ../vector/v.edit/main.c:59
 #, fuzzy
-msgid "Reading vector file ..."
+msgid "Reading vector map ..."
 msgstr "n"
 
 #: ../vector/v.univar/main.c:56
@@ -6703,7 +6703,7 @@ msgstr ""
 
 #: ../vector/v.in.dxf/main.c:61
 #, fuzzy
-msgid "Converts files in DXF format to GRASS vector file format."
+msgid "Converts files in DXF format to GRASS vector map format."
 msgstr "एक का."
 
 #: ../vector/v.in.dxf/main.c:65
@@ -6759,7 +6759,7 @@ msgstr ""
 
 #: ../vector/v.in.dxf/main.c:160
 #, fuzzy, c-format
-msgid "%s: Cannot open new vector file"
+msgid "%s: Cannot open new vector map"
 msgstr "का"
 
 #: ../vector/v.in.dxf/main.c:180
@@ -6808,7 +6808,7 @@ msgstr "नहीं सभी n n फ़ाइल"
 
 #: ../vector/v.proj/main.c:43
 #, fuzzy
-msgid "Allows projection conversion of vector files."
+msgid "Allows projection conversion of vector maps."
 msgstr "का."
 
 #: ../vector/v.proj/main.c:54
@@ -6828,7 +6828,7 @@ msgstr "का"
 
 #: ../vector/v.proj/main.c:73
 msgid ""
-"List vector files in input location and exit (a dummy value must be given "
+"List vector maps in input location and exit (a dummy value must be given "
 "for input)"
 msgstr ""
 
@@ -6866,7 +6866,7 @@ msgstr ""
 #, fuzzy, c-format
 msgid ""
 "\n"
-"Creating vector file...\n"
+"Creating vector map...\n"
 msgstr "बनाया जा रहा है."
 
 #: ../vector/v.proj/main.c:199
@@ -7073,7 +7073,7 @@ msgid "Maximum number of segments per flowline"
 msgstr "संख्या का"
 
 #: ../raster/r.flow/io.c:161
-msgid "Output flowline vector file"
+msgid "Output flowline vector map"
 msgstr ""
 
 #: ../raster/r.flow/io.c:163
@@ -11149,7 +11149,7 @@ msgid "History file for [%s] not updated."
 msgstr "के लिए नहीं."
 
 #: ../raster/r.support/modcats/modcats.c:46
-msgid "Which vector file needs updated categories?"
+msgid "Which vector map needs updated categories?"
 msgstr ""
 
 #: ../raster/r.support/modcats/modcats.c:49
@@ -17576,7 +17576,7 @@ msgstr ""
 #, fuzzy, c-format
 msgid ""
 "\n"
-"ERROR: vector file - can't read\n"
+"ERROR: vector map - can't read\n"
 msgstr "n"
 
 #: ../display/d.vect/area.c:63 ../display/d.vect/plot1.c:64
@@ -17919,7 +17919,7 @@ msgstr "फ्री-टाइप"
 
 #: ../display/d.what.vect/openvect.c:12
 #, fuzzy, c-format
-msgid "warning: %s - vector file not found\n"
+msgid "warning: %s - vector map not found\n"
 msgstr "नहीं n"
 
 #: ../display/d.what.vect/main.c:37
@@ -18963,7 +18963,7 @@ msgstr "का नहीं जोड़ा संख्या का."
 #~ msgstr "का"
 
 #, fuzzy
-#~ msgid "Makes 3D trees from input point vector file"
+#~ msgid "Makes 3D trees from input point vector map"
 #~ msgstr "का"
 
 #, fuzzy
@@ -19095,7 +19095,7 @@ msgstr "का नहीं जोड़ा संख्या का."
 #~ msgstr "सदिश"
 
 #, fuzzy
-#~ msgid "name for new binary vector file"
+#~ msgid "name for new binary vector map"
 #~ msgstr "का"
 
 #, fuzzy
@@ -19123,7 +19123,7 @@ msgstr "का नहीं जोड़ा संख्या का."
 #~ msgstr "बड़बोला"
 
 #, fuzzy
-#~ msgid "name for new binary vector file (omit for display to stdout)"
+#~ msgid "name for new binary vector map (omit for display to stdout)"
 #~ msgstr "के लिए के लिए"
 
 #, fuzzy
@@ -19223,7 +19223,7 @@ msgstr "का नहीं जोड़ा संख्या का."
 #~ msgstr "का"
 
 #, fuzzy
-#~ msgid "name for new vector file (omit for display to stdout)"
+#~ msgid "name for new vector map (omit for display to stdout)"
 #~ msgstr "के लिए के लिए"
 
 #, fuzzy
@@ -19618,7 +19618,7 @@ msgstr "का नहीं जोड़ा संख्या का."
 #~ msgstr "पूर्ण n"
 
 #, fuzzy
-#~ msgid "name of resulting vector file"
+#~ msgid "name of resulting vector map"
 #~ msgstr "का"
 
 #, fuzzy
@@ -19638,7 +19638,7 @@ msgstr "का नहीं जोड़ा संख्या का."
 #~ msgstr "वस्तु ऊंचाई"
 
 #, fuzzy
-#~ msgid "You first need to run v.build on vector file <%s>"
+#~ msgid "You first need to run v.build on vector map <%s>"
 #~ msgstr "चालू"
 
 #, fuzzy
@@ -19913,7 +19913,7 @@ msgstr "का नहीं जोड़ा संख्या का."
 #~ msgstr "के लिए"
 
 #, fuzzy
-#~ msgid "input vector file for ARC/INFO conversion"
+#~ msgid "input vector map for ARC/INFO conversion"
 #~ msgstr "के लिए"
 
 #, fuzzy
@@ -20010,7 +20010,7 @@ msgstr "का नहीं जोड़ा संख्या का."
 #~ msgstr "का"
 
 #, fuzzy
-#~ msgid "Automatically run \"v.support\" on newly created vector file."
+#~ msgid "Automatically run \"v.support\" on newly created vector map."
 #~ msgstr "चालू."
 
 #, fuzzy
@@ -20149,7 +20149,7 @@ msgstr "का नहीं जोड़ा संख्या का."
 #~ msgstr "का"
 
 #, fuzzy
-#~ msgid "Converts a GRASS site_lists file into a vector file."
+#~ msgid "Converts a GRASS site_lists file into a vector map."
 #~ msgstr "a a."
 
 #, fuzzy
@@ -21096,7 +21096,7 @@ msgstr "का नहीं जोड़ा संख्या का."
 #~ msgstr "पूर्व पश्चिम "
 
 #, fuzzy
-#~ msgid "  vect   (binary vector files)\n"
+#~ msgid "  vect   (binary vector maps)\n"
 #~ msgstr "n"
 
 #, fuzzy

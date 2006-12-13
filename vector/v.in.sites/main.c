@@ -54,7 +54,7 @@ int main (int argc, char *argv[])
 
     module = G_define_module();
     module->keywords = _("vector, import");
-    module->description = "Converts a GRASS site_lists file into a vector file.";
+    module->description = "Converts a GRASS site_lists file into a vector map.";
 
     sitein = G_define_option();
     sitein->key          = "input";

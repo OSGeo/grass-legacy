@@ -1288,7 +1288,7 @@ int get_nozero(int id, int type, Nv_data * data, Tcl_Interp * interp,
  * select_surf --
  *     Syntax: <map_obj> select_surf <map_obj>
  *     Select the given surface as the drape surface for
- *     either a site or vector file.  The surface to drape over
+ *     either a site or vector map.  The surface to drape over
  *     is passed as the second argument.
  */
 int select_surf(Tcl_Interp * interp, int id, int type, int argc, char *argv[])
@@ -1324,7 +1324,7 @@ int select_surf(Tcl_Interp * interp, int id, int type, int argc, char *argv[])
  * unselect_surf --
  *     Syntax: <map_obj> unselect_surf <map_obj>
  *     Unselect the given surface as the drape surface for
- *     either a site or vector file.  The surface to undrape over
+ *     either a site or vector map.  The surface to undrape over
  *     is passed as the second argument.
  */
 int unselect_surf(int id, int type, int argc, char *argv[],

@@ -233,7 +233,7 @@ int main (int argc, char *argv[])
     parm.input->type = TYPE_STRING;
     parm.input->required = YES; 
     parm.input->gisprompt = "old,vector,vector";
-    parm.input->description = _("Name of the vector file with input x,y,z,w");
+    parm.input->description = _("Name of the vector map with input x,y,z,w");
 
     parm.cellinp = G_define_option ();
     parm.cellinp->key = "cellinp";
@@ -286,7 +286,7 @@ int main (int argc, char *argv[])
     parm.cvdev->type = TYPE_STRING;
     parm.cvdev->required = NO;
     parm.cvdev->gisprompt = "new,vector,vector";
-    parm.cvdev->description = _("Output cross-validation vector file");
+    parm.cvdev->description = _("Output cross-validation vector map");
     parm.cvdev->guisection  = _("Analysis");
 
     parm.maskmap = G_define_option ();

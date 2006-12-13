@@ -58,7 +58,7 @@ static int drawvect(int zoomit,	/* -1 = refresh, 0 = new image, 1 = zoom, 2 = wa
     static int vectclr[VFILES];
 
 
-    /* if refresh screen or overlay & no displayed vector files return */
+    /* if refresh screen or overlay & no displayed vector maps return */
     if ((zoomit == DO_REFRESH || zoomit == DO_WARP) && !numfiles) {
 	if (zoomit == DO_REFRESH) display_points(1);
 	return 0;

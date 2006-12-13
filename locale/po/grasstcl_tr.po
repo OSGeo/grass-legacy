@@ -85,7 +85,7 @@ msgid "Various formats using OGR"
 msgstr "OGR desteğindeki çeşitli biçimler"
 
 #: ../gui/tcltk/menus/menu.tcl:124
-msgid "ASCII points file or GRASS ASCII vector file"
+msgid "ASCII points file or GRASS ASCII vector map"
 msgstr "ASCII nokta dosyası veya GRASS ASCII vektör dosyası"
 
 #: ../gui/tcltk/menus/menu.tcl:125
@@ -187,7 +187,7 @@ msgid "DXF file (ASCII)"
 msgstr "DXF dosyası (ASCII)"
 
 #: ../gui/tcltk/menus/menu.tcl:164
-msgid "ASCII vector or point file/old GRASS ASCII vector file"
+msgid "ASCII vector or point file/old GRASS ASCII vector map"
 msgstr "ASCII vektör veya nokta dosyası/eski GRASS ASCII vektör dosyası"
 
 #: ../gui/tcltk/menus/menu.tcl:165
@@ -842,7 +842,7 @@ msgid "Create/rebuild topology"
 msgstr "Topoloji oluştur/yeniden kur"
 
 #: ../gui/tcltk/menus/menu.tcl:383
-msgid "Clean vector files"
+msgid "Clean vector maps"
 msgstr "Vektör dosyaları temizle"
 
 #: ../gui/tcltk/menus/menu.tcl:384
@@ -1472,7 +1472,7 @@ msgid "draw border"
 msgstr "sınırı çiz"
 
 #: ../gui/tcltk/d.m/thematic.tcl:250 ../gui/tcltk/gis.m/thematic.tcl:359
-msgid "save thematic colors to GRASSRGB column of vector file"
+msgid "save thematic colors to GRASSRGB column of vector map"
 msgstr ""
 
 #: ../gui/tcltk/d.m/thematic.tcl:258
@@ -2691,7 +2691,7 @@ msgid "   show attribute data"
 msgstr "   öznitelik verisini göster"
 
 #: ../gui/tcltk/gis.m/vector.tcl:476
-msgid "save displayed objects to new vector file "
+msgid "save displayed objects to new vector map "
 msgstr "görüntülenen objeleri yeni vektör dosyaya kaydet "
 
 #: ../gui/tcltk/gis.m/vector.tcl:478

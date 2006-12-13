@@ -774,7 +774,7 @@ msgstr "맵 [%s], 맵셑 [%s]을(를) 위한 분류지원: %s"
 
 #: ../lib/gis/cats.c:423
 #, c-format
-msgid "category support for vector file [%s] in mapset [%s] %s"
+msgid "category support for vector map [%s] in mapset [%s] %s"
 msgstr "벡터맵 [%s], 맵셑 [%s]을(를) 위한 분류지원: %s"
 
 #: ../lib/gis/mapset.c:41

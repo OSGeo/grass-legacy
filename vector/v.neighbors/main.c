@@ -54,7 +54,7 @@ int main (int argc, char *argv[])
     in_opt->type        = TYPE_STRING ;
     in_opt->required    = YES ;
     in_opt->gisprompt   = "old,vector,vector" ;
-    in_opt->description = "Name of existing vector file" ;
+    in_opt->description = "Name of existing vector map" ;
 
     out_opt	  	 = G_define_option() ;
     out_opt->key         = "output" ;

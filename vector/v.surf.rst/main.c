@@ -202,7 +202,7 @@ int main(int argc, char *argv[])
     parm.input->type = TYPE_STRING;
     parm.input->required = YES;
     parm.input->gisprompt = "old,vector,vector";
-    parm.input->description = _("Name of the vector file with input data");
+    parm.input->description = _("Name of the vector map with input data");
 
     parm.field = G_define_standard_option(G_OPT_V_FIELD);
     parm.field->description =
@@ -359,7 +359,7 @@ int main(int argc, char *argv[])
     parm.treefile->required = NO;
     parm.treefile->gisprompt = "new,dig,vector";
     parm.treefile->description =
-	_("Output vector file showing quadtree segmentation");
+	_("Output vector map showing quadtree segmentation");
     parm.treefile->guisection  = _("Analysis");
 
     parm.overfile = G_define_option();
@@ -368,7 +368,7 @@ int main(int argc, char *argv[])
     parm.overfile->required = NO;
     parm.overfile->gisprompt = "new,dig,vector";
     parm.overfile->description =
-	_("Output vector file showing overlapping windows");
+	_("Output vector map showing overlapping windows");
     parm.overfile->guisection  = _("Analysis");
 
     parm.theta = G_define_option();
@@ -424,7 +424,7 @@ int main(int argc, char *argv[])
 	  && (mcurv == NULL)
 	  && (slope == NULL) && (aspect == NULL) && (devi == NULL)
 	  && (cvdev == NULL) )
-	G_warning(_("You are not outputing any raster or vector files"));
+	G_warning(_("You are not outputing any raster or vector maps"));
 
 
     cond2 = ((pcurv != NULL) || (tcurv != NULL) || (mcurv != NULL));
@@ -534,13 +534,13 @@ int main(int argc, char *argv[])
 	G_fatal_error(_("Cannot create tree info"));
 
     if ((mapset = G_find_vector2(input, "")) == NULL)
-	G_fatal_error(_("Could not find vector file %s"), input);
+	G_fatal_error(_("Could not find vector map %s"), input);
 
     open_check = Vect_open_old(&Map, input, mapset);
     if (open_check < 1)
-	G_fatal_error(_("Could not open vector file <%s>"), input);
+	G_fatal_error(_("Could not open vector map <%s>"), input);
 /*    if (open_check < 2)
-	G_fatal_error(_("You first need to run v.build on vector file <%s>"), input);*/
+	G_fatal_error(_("You first need to run v.build on vector map <%s>"), input);*/
 
     /* we can't read the input file's timestamp as they don't exist in   */
     /*   the new vector format. Even so, a TimeStamp structure is needed */
@@ -682,7 +682,7 @@ int main(int argc, char *argv[])
 
     if (treefile != NULL) {
 	if (0 > Vect_open_new(&TreeMap, treefile, 0)) {
-	    sprintf(msg, _("Could not open vector file <%s>"), treefile);
+	    sprintf(msg, _("Could not open vector map <%s>"), treefile);
 	    clean_fatal_error(msg);
 	}
 	Vect_hist_command(&TreeMap);
@@ -774,7 +774,7 @@ int main(int argc, char *argv[])
 
     if (overfile != NULL) {
 	if (0 > Vect_open_new(&OverMap, overfile, 0)) {
-	    sprintf(msg, _("Could not open vector file <%s>"), overfile);
+	    sprintf(msg, _("Could not open vector map <%s>"), overfile);
 	    clean_fatal_error(msg);
 	}
 	Vect_hist_command(&OverMap);

@@ -915,7 +915,7 @@ msgid "Cannot select data from table"
 msgstr "Não consegui selecionar dados da tabela"
 
 #: ../ps/ps.map/ps_vpoints.c:132
-msgid "Read error in vector file"
+msgid "Read error in vector map"
 msgstr "Erro de leitura no arquivo de vetores"
 
 #: ../ps/ps.map/ps_vpoints.c:160 ../ps/ps.map/ps_vpoints.c:169
@@ -1966,7 +1966,7 @@ msgstr "mapa vetorial <%s> não encontrado"
 
 #: ../general/g.region/cmd/main.c:478 ../raster/r.region/main.c:233
 #, c-format
-msgid "can't open vector file <%s> in <%s>"
+msgid "can't open vector map <%s> in <%s>"
 msgstr "não consegui abrir arquivo de vetores <%s> em <%s>"
 
 #: ../general/g.region/cmd/main.c:742
@@ -2437,7 +2437,7 @@ msgid "vector, paint labels"
 msgstr ""
 
 #: ../vector/v.label/main.c:64
-msgid "Create paint labels for GRASS vector file and attached attributes."
+msgid "Create paint labels for GRASS vector map and attached attributes."
 msgstr ""
 "Criar rótulos de pintura para arquivo vetorial do GRASS e atributos "
 "relacionados."
@@ -2587,7 +2587,7 @@ msgstr ""
 "spline regularizada com tensão e suavização."
 
 #: ../vector/v.surf.rst/main.c:189
-msgid "Name of the vector file with input data"
+msgid "Name of the vector map with input data"
 msgstr "Nome do arquivo vetor com dados de entrada"
 
 #: ../vector/v.surf.rst/main.c:193 ../vector/v.surf.idw/main.c:97
@@ -2696,12 +2696,12 @@ msgstr "Fator de anisotropia"
 
 #: ../vector/v.surf.rst/main.c:346
 #, fuzzy
-msgid "Output vector file showing quadtree segmentation"
+msgid "Output vector map showing quadtree segmentation"
 msgstr "Saída de arquivo vetorial mostrando segmentação"
 
 #: ../vector/v.surf.rst/main.c:354
 #, fuzzy
-msgid "Output vector file showing overlapping windows"
+msgid "Output vector map showing overlapping windows"
 msgstr "Saída de vetor mostrando segmentos sobrepostos"
 
 #: ../vector/v.surf.rst/main.c:358
@@ -2716,7 +2716,7 @@ msgstr "Efetuar procedimento de validação cruzada"
 
 #: ../vector/v.surf.rst/main.c:402
 #, fuzzy
-msgid "You are not outputing any raster or vector files"
+msgid "You are not outputing any raster or vector maps"
 msgstr "Você não está gerando nenhum arquivo raster ou vetorial"
 
 #: ../vector/v.surf.rst/main.c:412
@@ -2795,13 +2795,13 @@ msgstr "Não consegui criar info da árvore"
 
 #: ../vector/v.surf.rst/main.c:512
 #, c-format
-msgid "Could not find vector file %s"
+msgid "Could not find vector map %s"
 msgstr "Não consegui encontrar o arquivo vetorial %s"
 
 #: ../vector/v.surf.rst/main.c:516 ../vector/v.surf.rst/main.c:660
 #: ../vector/v.surf.rst/main.c:752
 #, c-format
-msgid "Could not open vector file <%s>"
+msgid "Could not open vector map <%s>"
 msgstr "Não consegui abrir arquivo vetorial <%s>"
 
 #: ../vector/v.surf.rst/main.c:557 ../vector/v.to.points/main.c:247
@@ -2906,7 +2906,7 @@ msgstr ""
 
 #: ../vector/v.what/main.c:178 ../display/d.what.vect/main.c:134
 #, c-format
-msgid "%s: You must build topology on vector file"
+msgid "%s: You must build topology on vector map"
 msgstr "%s: você deve construir a topologia no arquivo vetor"
 
 #: ../vector/v.what/what.c:77 ../vector/v.what/what.c:78
@@ -3358,7 +3358,7 @@ msgid "%s: Cannot write dxf file."
 msgstr "%s: Arquivo dxf não pode ser aberto"
 
 #: ../vector/v.out.dxf/main.c:48
-msgid "Exports GRASS vector files to DXF file format."
+msgid "Exports GRASS vector maps to DXF file format."
 msgstr ""
 
 #: ../vector/v.out.dxf/main.c:58
@@ -3736,7 +3736,7 @@ msgstr "Não consegui abrir cursor de seleção"
 
 #: ../vector/v.distance/main.c:109 ../vector/v.distance/main.c:113
 #, fuzzy
-msgid "Name of existing vector file"
+msgid "Name of existing vector map"
 msgstr "Nome do mapa vetorial existente"
 
 #: ../vector/v.distance/main.c:119
@@ -4117,7 +4117,7 @@ msgstr "Parâmetro de suavização ótimo (desvio padrão): %f."
 #, c-format
 msgid ""
 "\n"
-"Writing output vector file using smooth parameter=%f."
+"Writing output vector map using smooth parameter=%f."
 msgstr ""
 "\n"
 "Escrevendo arquivo vetorial usando parâmetro de suavização=%f."
@@ -4196,7 +4196,7 @@ msgstr "Converte arquivo de pontos ou ASCII do GRASS para um vetor binário."
 
 #: ../vector/v.in.ascii/in.c:43
 msgid ""
-"ASCII file to be converted to binary vector file, if not given reads from "
+"ASCII file to be converted to binary vector map, if not given reads from "
 "standard input"
 msgstr ""
 "Arquivo ASCII para converter para vetor binário, se não for dado, lê da "
@@ -4894,17 +4894,17 @@ msgid ""
 msgstr ""
 
 #: ../vector/lidar/v.lidar.correction/main.c:73
-msgid "Input observation vector file name (v.lidar.growing output)"
+msgid "Input observation vector map name (v.lidar.growing output)"
 msgstr ""
 
 #: ../vector/lidar/v.lidar.correction/main.c:81
 #, fuzzy
-msgid "Output classified vector file name"
+msgid "Output classified vector map name"
 msgstr "Nome do arquivo de saída de direção da encosta"
 
 #: ../vector/lidar/v.lidar.correction/main.c:89
 #, fuzzy
-msgid "Output terrain only vector file name"
+msgid "Output terrain only vector map name"
 msgstr "Nome do arquivo de curvatura tangencial"
 
 #: ../vector/lidar/v.lidar.correction/main.c:128
@@ -5383,7 +5383,7 @@ msgstr "Não consegui obter informações sobre a ligação ao BD"
 
 #: ../vector/v.vol.rst/main.c:236
 #, fuzzy
-msgid "Name of the vector file with input x,y,z,w"
+msgid "Name of the vector map with input x,y,z,w"
 msgstr "Nome do arquivo vetor com dados de entrada"
 
 #: ../vector/v.vol.rst/main.c:243
@@ -5402,7 +5402,7 @@ msgstr "Nome da coluna contendo parâmetros de  suavização"
 
 #: ../vector/v.vol.rst/main.c:285
 #, fuzzy
-msgid "Output cross-validation vector file"
+msgid "Output cross-validation vector map"
 msgstr "Nome do mapa de pontos de validação cruzada para saída"
 
 #: ../vector/v.vol.rst/main.c:322
@@ -5983,7 +5983,7 @@ msgstr "Não consegui encontrar o mapa vetorial de entrada %s"
 
 #: ../vector/v.net.path/main.c:124
 #, fuzzy, c-format
-msgid "Failed opening output vector file '%s'"
+msgid "Failed opening output vector map '%s'"
 msgstr "Falha abrindo arquivo dig de entrada."
 
 #: ../vector/v.to.rast/main.c:36
@@ -6198,7 +6198,7 @@ msgid "Randomly generate a 2D/3D GRASS vector points map."
 msgstr "Gera mapa de pontos 2D/3D do GRASS aleatóriamente."
 
 #: ../vector/v.random/main.c:91
-msgid "vector file to be created"
+msgid "vector map to be created"
 msgstr "Arquivo vetorial para criar"
 
 #: ../vector/v.random/main.c:97
@@ -6663,7 +6663,7 @@ msgstr ""
 
 #: ../vector/v.edit/main.c:59
 #, fuzzy
-msgid "Reading vector file ..."
+msgid "Reading vector map ..."
 msgstr "Lendo arquivo dig_att...\n"
 
 #: ../vector/v.univar/main.c:56
@@ -6716,7 +6716,7 @@ msgid "end of file while looking for HEADER"
 msgstr "final do arquivo alcançado procurando por HEADRE"
 
 #: ../vector/v.in.dxf/main.c:61
-msgid "Converts files in DXF format to GRASS vector file format."
+msgid "Converts files in DXF format to GRASS vector map format."
 msgstr "Converter arquivos em formato DXF o formato vetorial do GRASS."
 
 #: ../vector/v.in.dxf/main.c:65
@@ -6771,7 +6771,7 @@ msgstr "Usar opção output= para alterar o nome do mapa vetor"
 
 #: ../vector/v.in.dxf/main.c:160
 #, c-format
-msgid "%s: Cannot open new vector file"
+msgid "%s: Cannot open new vector map"
 msgstr "%s: Novo arquivo vetorial não pode ser aberto"
 
 #: ../vector/v.in.dxf/main.c:180
@@ -6828,7 +6828,7 @@ msgstr ""
 "\t\tArquivo MapInfo: nome do arquivo mapinfo"
 
 #: ../vector/v.proj/main.c:43
-msgid "Allows projection conversion of vector files."
+msgid "Allows projection conversion of vector maps."
 msgstr ""
 
 #: ../vector/v.proj/main.c:54
@@ -6848,7 +6848,7 @@ msgstr "Caminho para o banco de dados GRASS da locação de entrada"
 #: ../vector/v.proj/main.c:73
 #, fuzzy
 msgid ""
-"List vector files in input location and exit (a dummy value must be given "
+"List vector maps in input location and exit (a dummy value must be given "
 "for input)"
 msgstr "Mostra os arquivos raster na locação de entrada e encerra"
 
@@ -6886,7 +6886,7 @@ msgstr ""
 #, fuzzy, c-format
 msgid ""
 "\n"
-"Creating vector file...\n"
+"Creating vector map...\n"
 msgstr "criando novo arquivo cats ..."
 
 #: ../vector/v.proj/main.c:199
@@ -7098,7 +7098,7 @@ msgstr "Número de iterações máximas"
 
 #: ../raster/r.flow/io.c:161
 #, fuzzy
-msgid "Output flowline vector file"
+msgid "Output flowline vector map"
 msgstr "Gera arquivo com a declividade"
 
 #: ../raster/r.flow/io.c:163
@@ -11106,7 +11106,7 @@ msgid "History file for [%s] not updated."
 msgstr "Arquivo de histórico para [%s] não atualizado."
 
 #: ../raster/r.support/modcats/modcats.c:46
-msgid "Which vector file needs updated categories?"
+msgid "Which vector map needs updated categories?"
 msgstr "Qual arquivo de vetores precisa de categorias atualizadas?"
 
 #: ../raster/r.support/modcats/modcats.c:49
@@ -17577,7 +17577,7 @@ msgstr "Não consegui abrir arquivo de rótulos [%s]"
 #, c-format
 msgid ""
 "\n"
-"ERROR: vector file - can't read\n"
+"ERROR: vector map - can't read\n"
 msgstr ""
 "\n"
 "ERRO: não consegui ler o arquivo de vetores\n"
@@ -17916,7 +17916,7 @@ msgstr "%s: Não consegui ler arquivo de definição FreeType"
 
 #: ../display/d.what.vect/openvect.c:12
 #, c-format
-msgid "warning: %s - vector file not found\n"
+msgid "warning: %s - vector map not found\n"
 msgstr "ATENÇÃO: %s - arquivo de vetores não foi encontrado\n"
 
 #: ../display/d.what.vect/main.c:37
@@ -19178,7 +19178,7 @@ msgstr ""
 #~ msgstr "Arquivo raster para importar"
 
 #, fuzzy
-#~ msgid "name for new vector file (omit for display to stdout)"
+#~ msgid "name for new vector map (omit for display to stdout)"
 #~ msgstr "Nome para novo arquivo PPM. (use out=- para saída padrão)"
 
 #, fuzzy
@@ -19268,7 +19268,7 @@ msgstr ""
 #~ msgstr "de pontos"
 
 #, fuzzy
-#~ msgid "name for new binary vector file (omit for display to stdout)"
+#~ msgid "name for new binary vector map (omit for display to stdout)"
 #~ msgstr "Nome para novo arquivo PPM. (use out=- para saída padrão)"
 
 #, fuzzy
@@ -19392,7 +19392,7 @@ msgstr ""
 #~ msgstr "Nomes pontos mapear"
 
 #, fuzzy
-#~ msgid "name for new binary vector file"
+#~ msgid "name for new binary vector map"
 #~ msgstr "Nome do arquivo vetor de entrada"
 
 #, fuzzy

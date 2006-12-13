@@ -26,7 +26,7 @@ double e1, e2, e3, n1, n2, n3;
    |  |  |
    *--*--* n3
 */
-/* the ps_outline function creates a vector file called "tmp.outl" in
+/* the ps_outline function creates a vector map called "tmp.outl" in
 ** the current location.  This file is removed after it has been
 ** plotted.
 */
@@ -48,7 +48,7 @@ ps_outline (void)
     set_rgb_color(PS.outline_color);
     set_line_width(PS.outline_width );
 
-    /* create temporary vector file containing outlines */
+    /* create temporary vector map containing outlines */
     o_io_init();
     map_type = o_open_file(PS.cell_name);
     draw_outline();

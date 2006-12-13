@@ -63,7 +63,7 @@ static int plot_area (struct Map_info *P_map, int area, double shift)
 
     /* plot areas */
     if (0 > (ret = Vect_get_area_points(P_map, area, Points))) {
-	if (ret == -1) G_warning("Read error in vector file\n");
+	if (ret == -1) G_warning("Read error in vector map\n");
 	return 0;
     }
     construct_path (Points, shift, WHOLE_PATH);
@@ -73,7 +73,7 @@ static int plot_area (struct Map_info *P_map, int area, double shift)
     for (j=0; j < ni; j++) {
 	island = Vect_get_area_isle (P_map, area, j);
 	if (0 > (ret = Vect_get_isle_points(P_map, island, Points))) {
-	    if (ret == -1) G_warning("Read error in vector file\n");
+	    if (ret == -1) G_warning("Read error in vector map\n");
 	    return -1;
 	}
 	    construct_path (Points, shift, WHOLE_PATH);

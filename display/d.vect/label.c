@@ -28,7 +28,7 @@ int label (
         switch ( ltype )
 	{
 	case -1:
-	    G_fatal_error (_("Can't read vector file"));
+	    G_fatal_error (_("Can't read vector map"));
 	case -2: /* EOF */
 	    return  0;
 	}

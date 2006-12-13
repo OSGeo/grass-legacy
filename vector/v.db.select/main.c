@@ -90,7 +90,7 @@ int main (int argc, char **argv)
     if (G_parser (argc, argv))
         exit (EXIT_FAILURE);
 
-    /* set input vector file name and mapset */
+    /* set input vector map name and mapset */
     field = atoi (field_opt->answer);
 
     db_init_string (&sql);

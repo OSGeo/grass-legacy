@@ -505,7 +505,7 @@ int main (int argc, char *argv[])
 
 		Vect_set_open_level (2);
 		if (2 != Vect_open_old (&Map, name, mapset))
-			G_fatal_error (_("Can't open vector file <%s> in <%s>"),
+			G_fatal_error (_("Can't open vector map <%s> in <%s>"),
 				       name, mapset);
 
 		Vect_get_map_box (&Map, &box );

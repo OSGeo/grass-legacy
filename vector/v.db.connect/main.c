@@ -122,7 +122,7 @@ int main (int argc, char **argv)
     }
     */
 
-    /* set input vector file name and mapset */
+    /* set input vector map name and mapset */
     input = inopt->answer;
     mapset = G_find_vector2 (input, "") ;
     if(field_opt->answer)

@@ -825,7 +825,7 @@ msgstr "soporte de la categoría [%s] in el mapset [%s] %s"
 
 #: ../lib/gis/cats.c:423
 #, c-format
-msgid "category support for vector file [%s] in mapset [%s] %s"
+msgid "category support for vector map [%s] in mapset [%s] %s"
 msgstr ""
 "soporte de la categoria para el archivo de vectores [%s] en el mapset [%s] %s"
 

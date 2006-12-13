@@ -164,7 +164,7 @@ int main(int argc, char *argv[])
 	}
 	i++;
     }
-    /* set input vector file name and mapset */
+    /* set input vector map name and mapset */
     Vect_check_input_output_name(old->answer, new->answer, GV_FATAL_EXIT);
     if ((mapset = G_find_vector2(old->answer, "")) == NULL)
 	G_fatal_error(_("Could not find input vector map %s"), old->answer);

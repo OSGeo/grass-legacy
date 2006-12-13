@@ -25,7 +25,7 @@
 
 int IL_vector_input_data_2d (
     struct interp_params *params,
-    struct Map_info *Map,		/* input vector file */
+    struct Map_info *Map,		/* input vector map */
     /* as z values may be used: 1) z coordinates in 3D file -> field = 0
      *                          2) categories -> field > 0, zcol = NULL
      *                          3) attributes -> field > 0, zcol != NULL */ 
@@ -318,7 +318,7 @@ int IL_vector_input_data_2d (
 	    "segmax=%d (see manual)"), params->KMAX2, params->KMAX2);
 
   fprintf (stdout, "\n");
-  fprintf (stdout, "The number of points from vector file is %d\n", k);
+  fprintf (stdout, "The number of points from vector map is %d\n", k);
   fprintf (stdout, "The number of points outside of 2D/3D region %d\n", OUTRANGE);
   fprintf (stdout, "The number of points being used is %d\n", npoint);
   fflush(stdout);

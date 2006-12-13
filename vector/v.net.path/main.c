@@ -121,7 +121,7 @@ int main(int argc, char **argv)
     Vect_set_fatal_error (GV_FATAL_PRINT);
     if (1 > Vect_open_new (&Out, output_opt->answer, Vect_is_3d(&In) )){
         Vect_close (&In);
-	G_fatal_error (_("Failed opening output vector file '%s'"), output_opt->answer);
+	G_fatal_error (_("Failed opening output vector map '%s'"), output_opt->answer);
     }
     Vect_hist_command ( &Out );
 

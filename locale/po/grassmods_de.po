@@ -2136,7 +2136,7 @@ msgstr ""
 #, c-format
 msgid ""
 "\n"
-"ERROR: vector file - can't read\n"
+"ERROR: vector map - can't read\n"
 msgstr ""
 "\n"
 " FEHLER: Kann Vektordatei nicht lesen.\n"
@@ -2499,7 +2499,7 @@ msgstr "Kann die Vektorkarte %s nicht öffnen."
 
 #: ../display/d.what.vect/main.c:134 ../vector/v.what/main.c:178
 #, c-format
-msgid "%s: You must build topology on vector file"
+msgid "%s: You must build topology on vector map"
 msgstr "%s: Es muss eine Topologie für diese Datei erstellt werden."
 
 #: ../display/d.what.vect/main.c:136
@@ -2516,7 +2516,7 @@ msgstr "Fertig."
 
 #: ../display/d.what.vect/openvect.c:12
 #, c-format
-msgid "warning: %s - vector file not found\n"
+msgid "warning: %s - vector map not found\n"
 msgstr "Warnung: Vektorkarte '%s' wurde nicht gefunden.\n"
 
 #: ../display/d.what.vect/what.c:154 ../display/d.what.vect/what.c:155
@@ -3453,7 +3453,7 @@ msgstr "Vektorkarte <%s> nicht gefunden."
 
 #: ../general/g.region/cmd/main.c:478 ../raster/r.region/main.c:233
 #, c-format
-msgid "can't open vector file <%s> in <%s>"
+msgid "can't open vector map <%s> in <%s>"
 msgstr "Kann Vektor-Datei <%s> in <%s> nicht öffnen."
 
 #: ../general/g.region/cmd/main.c:742
@@ -7232,7 +7232,7 @@ msgid "Cannot select data from table"
 msgstr "Kann Daten nicht aus der Tabelle selektieren."
 
 #: ../ps/ps.map/ps_vpoints.c:132
-msgid "Read error in vector file"
+msgid "Read error in vector map"
 msgstr "Lesefehler in Vektordatei."
 
 #: ../ps/ps.map/ps_vpoints.c:160 ../ps/ps.map/ps_vpoints.c:169
@@ -8973,7 +8973,7 @@ msgid "Maximum number of segments per flowline"
 msgstr "Maximale Anzahl der Segmente der Fließlinie."
 
 #: ../raster/r.flow/io.c:161
-msgid "Output flowline vector file"
+msgid "Output flowline vector map"
 msgstr "Ausgabekarte der Fließlinen (Vektor)"
 
 #: ../raster/r.flow/io.c:163
@@ -12400,7 +12400,7 @@ msgstr ""
 "Drücke RETURN zum Fortfahren -->"
 
 #: ../raster/r.support/modcats/modcats.c:46
-msgid "Which vector file needs updated categories?"
+msgid "Which vector map needs updated categories?"
 msgstr "Für welche Vektordatei sollen die Kategorien aktualisiert werden?"
 
 #: ../raster/r.support/modcats/modcats.c:49
@@ -16537,17 +16537,17 @@ msgid ""
 msgstr ""
 
 #: ../vector/lidar/v.lidar.correction/main.c:73
-msgid "Input observation vector file name (v.lidar.growing output)"
+msgid "Input observation vector map name (v.lidar.growing output)"
 msgstr ""
 
 #: ../vector/lidar/v.lidar.correction/main.c:81
 #, fuzzy
-msgid "Output classified vector file name"
+msgid "Output classified vector map name"
 msgstr "Ausgabekarte mit Hangexposition."
 
 #: ../vector/lidar/v.lidar.correction/main.c:89
 #, fuzzy
-msgid "Output terrain only vector file name"
+msgid "Output terrain only vector map name"
 msgstr "Ausgabekarte mit Horizontal-Wölbung."
 
 #: ../vector/lidar/v.lidar.correction/main.c:128
@@ -17503,7 +17503,7 @@ msgid "Region restored to original extent."
 msgstr ""
 
 #: ../vector/v.distance/main.c:109 ../vector/v.distance/main.c:113
-msgid "Name of existing vector file"
+msgid "Name of existing vector map"
 msgstr "Name einer existierenden Vektordatei."
 
 #: ../vector/v.distance/main.c:119
@@ -17997,7 +17997,7 @@ msgid ""
 msgstr "in."
 
 #: ../vector/v.edit/main.c:59
-msgid "Reading vector file ..."
+msgid "Reading vector map ..."
 msgstr "Lese Vektordatei ..."
 
 #: ../vector/v.hull/main.c:225 ../vector/v.overlay/main.c:44
@@ -18027,7 +18027,7 @@ msgstr ""
 
 #: ../vector/v.in.ascii/in.c:43
 msgid ""
-"ASCII file to be converted to binary vector file, if not given reads from "
+"ASCII file to be converted to binary vector map, if not given reads from "
 "standard input"
 msgstr ""
 "ASCII-Datei, die in eine binäre Vektordatei konvertiert werden soll. Wenn "
@@ -18702,7 +18702,7 @@ msgstr "Optimaler Glättungsparameter (Standardabweichung): %f."
 #, c-format
 msgid ""
 "\n"
-"Writing output vector file using smooth parameter=%f."
+"Writing output vector map using smooth parameter=%f."
 msgstr ""
 "\n"
 "Schreibe Ausgabevektordatei mit dem Glättungsparameter=%f."
@@ -18739,7 +18739,7 @@ msgid "vector, paint labels"
 msgstr ""
 
 #: ../vector/v.label/main.c:64
-msgid "Create paint labels for GRASS vector file and attached attributes."
+msgid "Create paint labels for GRASS vector map and attached attributes."
 msgstr "Erzeugt Paint-Label für GRASS Vektordateien und angehängte Label."
 
 #: ../vector/v.label/main.c:78
@@ -18912,7 +18912,7 @@ msgstr "Kann Eingabevektordatei '%s' nicht finden."
 
 #: ../vector/v.net.path/main.c:124
 #, fuzzy, c-format
-msgid "Failed opening output vector file '%s'"
+msgid "Failed opening output vector map '%s'"
 msgstr "Kann input dig Datei nicht öffnen."
 
 #: ../vector/v.normal/main.c:79
@@ -18977,7 +18977,7 @@ msgstr "s"
 
 #: ../vector/v.out.dxf/main.c:48
 #, fuzzy
-msgid "Exports GRASS vector files to DXF file format."
+msgid "Exports GRASS vector maps to DXF file format."
 msgstr "GRASS."
 
 #: ../vector/v.out.dxf/main.c:58
@@ -19315,7 +19315,7 @@ msgid "Cannot get db link info"
 msgstr "Kann die Informationen zu Datenbankverbindung nicht lesen."
 
 #: ../vector/v.proj/main.c:43
-msgid "Allows projection conversion of vector files."
+msgid "Allows projection conversion of vector maps."
 msgstr ""
 
 #: ../vector/v.proj/main.c:54
@@ -19331,7 +19331,7 @@ msgstr "von"
 #: ../vector/v.proj/main.c:73
 #, fuzzy
 msgid ""
-"List vector files in input location and exit (a dummy value must be given "
+"List vector maps in input location and exit (a dummy value must be given "
 "for input)"
 msgstr "Listet alle Rasterkarten in der Eingabe-Location auf und beendet sich."
 
@@ -19369,7 +19369,7 @@ msgstr "Kartenset in"
 #, fuzzy, c-format
 msgid ""
 "\n"
-"Creating vector file...\n"
+"Creating vector map...\n"
 msgstr "Erstelle neue Cats-Datei..."
 
 #: ../vector/v.proj/main.c:199
@@ -19387,7 +19387,7 @@ msgid "Randomly generate a 2D/3D GRASS vector points map."
 msgstr "Erzeugt zufällige 3D/3D GRASS Vektorpunkt-Karten."
 
 #: ../vector/v.random/main.c:91
-msgid "vector file to be created"
+msgid "vector map to be created"
 msgstr "Vektordatei, die erstellt werden soll."
 
 #: ../vector/v.random/main.c:97
@@ -19615,7 +19615,7 @@ msgid ""
 msgstr "von Punkt Punkt mit."
 
 #: ../vector/v.surf.rst/main.c:189
-msgid "Name of the vector file with input data"
+msgid "Name of the vector map with input data"
 msgstr "Name der Vektordatei mit den Eingabedaten."
 
 #: ../vector/v.surf.rst/main.c:201
@@ -19711,11 +19711,11 @@ msgstr "Anisotropie-Winkel (in Grad gegen den Uhrzeigersinn von Osten)."
 
 #: ../vector/v.surf.rst/main.c:346
 #, fuzzy
-msgid "Output vector file showing quadtree segmentation"
+msgid "Output vector map showing quadtree segmentation"
 msgstr "Ausgabevektordatei die die Segmentierung zeigt."
 
 #: ../vector/v.surf.rst/main.c:354
-msgid "Output vector file showing overlapping windows"
+msgid "Output vector map showing overlapping windows"
 msgstr "Ausgabe-Vektordatei, die die überlappenden Segmente beinhaltet."
 
 #: ../vector/v.surf.rst/main.c:358
@@ -19727,7 +19727,7 @@ msgid "Perform cross-validation procedure without raster approximation"
 msgstr "Benutze Vergleichsprüfung ohne Rasterannährung."
 
 #: ../vector/v.surf.rst/main.c:402
-msgid "You are not outputing any raster or vector files"
+msgid "You are not outputing any raster or vector maps"
 msgstr "Es werden weder Vektor- noch Rasterdaten ausgegeben."
 
 #: ../vector/v.surf.rst/main.c:412
@@ -19776,13 +19776,13 @@ msgstr "Kann tree-Information nicht erzeugen."
 
 #: ../vector/v.surf.rst/main.c:512
 #, c-format
-msgid "Could not find vector file %s"
+msgid "Could not find vector map %s"
 msgstr "Kann die Vektordatei %s nicht finden."
 
 #: ../vector/v.surf.rst/main.c:516 ../vector/v.surf.rst/main.c:660
 #: ../vector/v.surf.rst/main.c:752
 #, c-format
-msgid "Could not open vector file <%s>"
+msgid "Could not open vector map <%s>"
 msgstr "Kann die Vektordatei <%s> nicht öffnen."
 
 #: ../vector/v.surf.rst/main.c:653 ../vector/v.surf.rst/main.c:708
@@ -20194,7 +20194,7 @@ msgstr "s von"
 
 #: ../vector/v.vol.rst/main.c:236
 #, fuzzy
-msgid "Name of the vector file with input x,y,z,w"
+msgid "Name of the vector map with input x,y,z,w"
 msgstr "von z"
 
 #: ../vector/v.vol.rst/main.c:243
@@ -20213,7 +20213,7 @@ msgstr "Name der Attributspalte mit den Glättungs-Parametern."
 
 #: ../vector/v.vol.rst/main.c:285
 #, fuzzy
-msgid "Output cross-validation vector file"
+msgid "Output cross-validation vector map"
 msgstr "von Ausgabe Punkt"
 
 #: ../vector/v.vol.rst/main.c:322
@@ -20552,7 +20552,7 @@ msgstr "WARNUNG: 3D-Daten in der DXF-Datei."
 
 #: ../vector/v.in.dxf/main.c:61
 #, fuzzy
-msgid "Converts files in DXF format to GRASS vector file format."
+msgid "Converts files in DXF format to GRASS vector map format."
 msgstr "Konvertiert in ein von OGR unterstütztes Vektorformat."
 
 #: ../vector/v.in.dxf/main.c:69
@@ -20605,7 +20605,7 @@ msgstr "Ausgabe option"
 
 #: ../vector/v.in.dxf/main.c:160
 #, c-format
-msgid "%s: Cannot open new vector file"
+msgid "%s: Cannot open new vector map"
 msgstr "%s: Kann neue Vektordatei nicht öffnen."
 
 #: ../vector/v.in.dxf/main.c:180

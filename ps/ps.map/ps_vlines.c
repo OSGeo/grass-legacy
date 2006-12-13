@@ -52,7 +52,7 @@ int PS_vlines_plot (struct Map_info *P_map, int vec, int type)
 	int ret;
 	double d;
 	if (0 > (ret = Vect_read_line(P_map, Points, Cats, line))) {
-	    if (ret == -1) G_warning("Read error in vector file\n");
+	    if (ret == -1) G_warning("Read error in vector map\n");
 	    break;
 	}
 	if ( !(ret & GV_LINES) ) continue;

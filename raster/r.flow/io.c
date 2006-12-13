@@ -158,7 +158,7 @@ parse_command_line (int argc, char *argv[])
 			default_offset_ans); 
 */
     pflout  = parameter("flout", TYPE_STRING, NO, NULL, "any,dig,vector",
-			_("Output flowline vector file"), NULL);
+			_("Output flowline vector map"), NULL);
     plgout  = parameter("lgout", TYPE_STRING, NO, NULL, "any,cell,raster",
 			_("Output flowpath length raster map"), NULL);
     pdsout  = parameter("dsout", TYPE_STRING, NO, NULL, "any,cell,raster",

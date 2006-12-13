@@ -87,7 +87,7 @@ msgid "Various formats using OGR"
 msgstr "Nhiều định dạng khác nhau bằng cách dùng OGR"
 
 #: ../gui/tcltk/menus/menu.tcl:124
-msgid "ASCII points file or GRASS ASCII vector file"
+msgid "ASCII points file or GRASS ASCII vector map"
 msgstr "Tập tin điểm ASCII hoặc tập tin vector ASCII GRASS"
 
 #: ../gui/tcltk/menus/menu.tcl:125
@@ -188,7 +188,7 @@ msgid "DXF file (ASCII)"
 msgstr "Tập tin DXF (ASCII)"
 
 #: ../gui/tcltk/menus/menu.tcl:164
-msgid "ASCII vector or point file/old GRASS ASCII vector file"
+msgid "ASCII vector or point file/old GRASS ASCII vector map"
 msgstr "Tập tin điểm hoặc vector ASCII/tập tin vector ASCII cũ của GRASS"
 
 #: ../gui/tcltk/menus/menu.tcl:165
@@ -846,7 +846,7 @@ msgid "Create/rebuild topology"
 msgstr "Tạo/xây dựng tôpô"
 
 #: ../gui/tcltk/menus/menu.tcl:383
-msgid "Clean vector files"
+msgid "Clean vector maps"
 msgstr "Làm sạch các tập tin vector"
 
 #: ../gui/tcltk/menus/menu.tcl:384
@@ -1484,7 +1484,7 @@ msgid "draw border"
 msgstr "vẽ biên"
 
 #: ../gui/tcltk/d.m/thematic.tcl:250 ../gui/tcltk/gis.m/thematic.tcl:359
-msgid "save thematic colors to GRASSRGB column of vector file"
+msgid "save thematic colors to GRASSRGB column of vector map"
 msgstr "lưu các màu chủ đề vào cột GRASSRGB của tập tin vector"
 
 #: ../gui/tcltk/d.m/thematic.tcl:258
@@ -2689,7 +2689,7 @@ msgid "   show attribute data"
 msgstr "   hiển thị dữ liệu thuộc tính"
 
 #: ../gui/tcltk/gis.m/vector.tcl:476
-msgid "save displayed objects to new vector file "
+msgid "save displayed objects to new vector map "
 msgstr "lưu đối tượng trình bày vào tập tin vector mới"
 
 #: ../gui/tcltk/gis.m/vector.tcl:478

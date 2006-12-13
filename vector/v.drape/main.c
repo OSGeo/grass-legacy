@@ -27,8 +27,8 @@
  
 \todo add support for areas
 \todo Enhanced error checking such as
-	\li does the elevation raster cover the entire are of the vector file?
-	\li does the current region include the entire input vector file ?
+	\li does the elevation raster cover the entire are of the vector map?
+	\li does the current region include the entire input vector map ?
 \todo Make a description.html for documentation
 
  */
@@ -134,8 +134,8 @@ int main(int argc, char *argv[])
     Vect_set_open_level(2);
     Vect_open_old(&In, in_opt->answer, "");
 
-    /* setup the new vector file */
-    /* remember to open the new vector file as 3D:  Vect_open_new(,,1) */
+    /* setup the new vector map */
+    /* remember to open the new vector map as 3D:  Vect_open_new(,,1) */
     Vect_open_new(&Out, out_opt->answer, 1);
     Vect_copy_head_data(&In, &Out);
     Vect_hist_copy(&In, &Out);
