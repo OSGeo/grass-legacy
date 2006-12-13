@@ -38,7 +38,7 @@ int calculateIndex(char *file, int f(int, char **, area_des, double *),\
 	int res;
 	wd child[WORKERS];
 	int i, mypid, doneDir, withoutJob, mv_fd, random_access;
-	//int mv_rows, mv_cols;
+	/*int mv_rows, mv_cols;*/
 	list l;
 	msg m,doneJob;
 		int perc=0;
@@ -101,8 +101,8 @@ int calculateIndex(char *file, int f(int, char **, area_des, double *),\
 	
 	if (parsed == MVWIN)
 	{
-		//struct Cell_head cellhd_r, cellhd_new;
-		//char *mapset;
+		/* struct Cell_head cellhd_r, cellhd_new;
+		   char *mapset; */
 		/*creating new raster file*/
 		mv_fd = G_open_raster_new(output, DCELL_TYPE);
 		if (mv_fd < 0)
@@ -144,8 +144,8 @@ int calculateIndex(char *file, int f(int, char **, area_des, double *),\
 		int j=0, donePid;
 		
 		receive(receiveChannel, &doneJob);
-		//perc++;
-		//G_percent (perc, WORKERS, 1);
+		/*perc++;*/
+		/*G_percent (perc, WORKERS, 1);*/
 		if (doneJob.type == DONE){
 			double result;
 			donePid = doneJob.f.f_d.pid;
@@ -165,7 +165,7 @@ int calculateIndex(char *file, int f(int, char **, area_des, double *),\
 				error_Output(res, doneJob);
 			}
 			else{
-				//printf("todo ");fflush(stdout);/* TODO scrivere su raster NULL ??? */
+				/*printf("todo ");fflush(stdout); */ /* TODO scrivere su raster NULL ??? */
 			}
 		}
 		j=0;
@@ -200,7 +200,7 @@ int calculateIndex(char *file, int f(int, char **, area_des, double *),\
 				error_Output(res, doneJob);
 			}
 			else{
-				//printf("todo2 ");fflush(stdout);/*TODO scrivere su raster*/
+				/*printf("todo2 ");fflush(stdout);*/ /*TODO scrivere su raster*/
 			}
 		}
 		i--;
@@ -265,7 +265,7 @@ int calculateIndex(char *file, int f(int, char **, area_des, double *),\
 int parseSetup(char *path, list l, g_areas g, char *raster){
 	struct stat s;
 	struct Cell_head cellhd;
-	char * buf, *token, *mapset;// g_region[350];
+	char * buf, *token, *mapset;/* g_region[350]; */
 	int setup;
 	int letti;
 	double rel_x, rel_y, rel_rl, rel_cl;
