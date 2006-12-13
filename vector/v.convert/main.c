@@ -4,7 +4,7 @@
  * 
  * AUTHOR(S):    Radim Blazek - Radim.Blazek@dhv.cz
  *               
- * PURPOSE:      Convert GRASS vector files versions:
+ * PURPOSE:      Convert GRASS vector maps versions:
  *               from 3 or 4 to 5.0
  *               
  * COPYRIGHT:    (C) 2001 by the GRASS Development Team

@@ -470,7 +470,7 @@ Vect_build_nat ( struct Map_info *Map, int build, FILE *msgout )
 	    type = Vect_read_next_line (Map, Points, Cats);
 	    /* Note: check for dead lines is not needed, because they are skipped by V1_read_next_line_nat() */
 	    if ( type == -1 ) { 
-		fprintf (stderr, "\nERROR: vector file - can't read\n" );
+		fprintf (stderr, "\nERROR: vector map - can't read\n" );
 		return 0;
 	    } else if ( type == -2 ) {
 		break;

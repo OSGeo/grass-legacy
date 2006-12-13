@@ -43,7 +43,7 @@ int main (int argc, char *argv[])
 
     if (argc < 2) {
         if (vector)
-            mapset = G_ask_vector_in_mapset(_("Which vector file needs "
+            mapset = G_ask_vector_in_mapset(_("Which vector map needs "
                          "updated categories?"), name);
         else
             mapset = G_ask_cell_in_mapset(_("Which raster map needs "

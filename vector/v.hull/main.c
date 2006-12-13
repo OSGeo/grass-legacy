@@ -267,16 +267,16 @@ int main(int argc, char **argv) {
     if(numSitePoints < 3 )
         G_fatal_error ("Convex hull calculation requires at least three points");
 
-    /* create vector file */
+    /* create vector map */
     if (0 > Vect_open_new (&Map, output->answer, 0) )
-        G_fatal_error ("Unable to open vector file <%s>\n", output->answer);
+        G_fatal_error ("Unable to open vector map <%s>\n", output->answer);
 
     Vect_hist_command ( &Map );
 
     /* compute convex hull */
     numHullPoints = convexHull(points, numSitePoints, &hull);
 
-    /* output vector file */
+    /* output vector map */
     outputHull(&Map, points, hull, numHullPoints);
 
     /* clean up and bye bye */

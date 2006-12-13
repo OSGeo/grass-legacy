@@ -810,7 +810,7 @@ msgstr "hỗ trợ phạm trù cho [%s] trong bộ bản đồ [%s] %s"
 
 #: ../lib/gis/cats.c:423
 #, c-format
-msgid "category support for vector file [%s] in mapset [%s] %s"
+msgid "category support for vector map [%s] in mapset [%s] %s"
 msgstr "hỗ trợ phạm trù cho tập tin vector [%s] trong bộ bản đồ [%s] %s"
 
 #: ../lib/gis/mapset.c:41

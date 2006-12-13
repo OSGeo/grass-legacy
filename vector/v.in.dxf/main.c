@@ -58,7 +58,7 @@ int main(int argc, char *argv[])
     module = G_define_module();
     module->keywords = _("vector");
     module->description =
-	_("Converts files in DXF format to GRASS vector file format.");
+	_("Converts files in DXF format to GRASS vector map format.");
 
     flag.list = G_define_flag();
     flag.list->key = 'l';
@@ -127,7 +127,7 @@ int main(int argc, char *argv[])
 	Map = NULL;
     }
     else {
-	/* make vector file name SQL compliant */
+	/* make vector map name SQL compliant */
 	if (opt.output->answer)
 	    output = G_store(opt.output->answer);
 	else {
@@ -154,10 +154,10 @@ int main(int argc, char *argv[])
 	if (Vect_legal_filename(output) < 0)
 	    G_fatal_error(_("Use output= option to change vector map name"));
 
-	/* create vector file */
+	/* create vector map */
 	Map = (struct Map_info *)G_malloc(sizeof(struct Map_info));
 	if (Vect_open_new(Map, output, 1) < 0)
-	    G_fatal_error(_("%s: Cannot open new vector file"), output);
+	    G_fatal_error(_("%s: Cannot open new vector map"), output);
 
 	Vect_set_map_name(Map, output);
 

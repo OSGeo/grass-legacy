@@ -2,7 +2,7 @@
 
 <em>v.surf.rst</em>
 <br>This program performs spatial approximation based on z-values or attributes 
-of point or isoline data given in a vector file named <em>input</em> to grid cells in the
+of point or isoline data given in a vector map named <em>input</em> to grid cells in the
 output raster map <em>elev</em> representing a surface. As an option, simultaneously
 with approximation, topographic parameters slope, aspect, profile curvature
 (measured in the direction of the steepest slope), tangential curvature (measured
@@ -54,14 +54,14 @@ the approximation function for each segment is computed using the points
 in the given segment and the points in its neighborhood which are in the rectangular
 window surrounding the given segment. The number of points taken for approximation
 is controlled by <em>npmin</em>, the value of which must be larger than <em>segmax</em>. 
-User can choose to output vector files <em>treefile</em> and <em>overfile</em>
+User can choose to output vector maps <em>treefile</em> and <em>overfile</em>
 which represent the quad tree used for segmentation and overlapping neighborhoods
 from which additional points for approximation on each segment were taken.
 
 <P>
 
 Predictive error of surface approximation for given parameters can be computed using the 
-<b>-c</b> flag. A crossvalidation procedure is then performed using the data given in the vector file 
+<b>-c</b> flag. A crossvalidation procedure is then performed using the data given in the vector map 
 <em>input</em> and the estimated predictive errors are stored in the vector point file  
 <em>cvdev</em>. When using this flag, no raster output files are computed.
 
@@ -203,7 +203,7 @@ the remaining data points and calculating the difference between the actual and 
 value for the removed data point. The procedure is repeated until every data point has been, 
 in turn, removed. This form of CV is also known as the "leave-one-out" or "jack-knife" method 
 (Hofierka et al., 2002; Hofierka, 2005). The differences (residuals) are then stored in 
-the <em>cvdev</em> output vector file. Please note that during the CV procedure no other output 
+the <em>cvdev</em> output vector map. Please note that during the CV procedure no other output 
 files can be set, the approximation is performed only for locations defined by input data. 
 To find "optimal parameters", the CV procedure must be iteratively performed for all reasonable 
 combinations of the approximation parameters with small incremental steps (e.g. tension, smoothing) 
@@ -233,7 +233,7 @@ segment and/or with higher tension.
 800), the user can skip segmentation by setting <em>segmax</em> to the number
 of data points or <em>segmax=700</em>.
 </p><p>The program gives warning when user wants to interpolate outside the
-rectangle given by minimum and maximum coordinates in the vector file,
+rectangle given by minimum and maximum coordinates in the vector map,
 zoom into the area where the given data are is suggested in this case.
 </p><p>When a mask is used, the program takes all points in the given region
 for approximation, including those in the area which is masked out, to

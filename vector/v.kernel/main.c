@@ -297,7 +297,7 @@ int main(int argc, char **argv)
       struct line_pnts *Points, *SPoints;
       struct line_cats *SCats;
 
-      G_message(_("\nWriting output vector file using smooth parameter=%f."), sigma);
+      G_message(_("\nWriting output vector map using smooth parameter=%f."), sigma);
       G_message(_("\nNormalising factor=%f."), 1./gaussianFunction(sigma/4.,sigma,dimension));
 
       /* Divide lines to segments and calculate gaussian for center of each segment */

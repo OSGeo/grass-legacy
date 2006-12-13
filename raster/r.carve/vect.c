@@ -22,7 +22,7 @@
 
 
 /*
- * open_new_vect - opens new vector file for writing
+ * open_new_vect - opens new vector map for writing
  */
 int open_new_vect(struct Map_info *map, char *vect)
 {

@@ -8,6 +8,6 @@ char *openvect(name)
     mapset = G_find_vector2(name, "");
 
     if (mapset == NULL)
-	fprintf(stderr, "warning: %s - vector file not found\n", name);
+	fprintf(stderr, "warning: %s - vector map not found\n", name);
     return mapset;
 }

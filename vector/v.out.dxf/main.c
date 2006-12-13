@@ -4,7 +4,7 @@
  * AUTHOR(S):   Chuck Ehlschlaeger
  *              Update to GRASS 5.7 by Radim Blazek
  *
- * PURPOSE:     Convert vector files into DXF files.  This program is a
+ * PURPOSE:     Convert vector maps into DXF files.  This program is a
  *              small demo and not to be taken seriously.
  *
  * COPYRIGHT:   (C) 1989-2006 by the GRASS Development Team
@@ -45,7 +45,7 @@ int main(int argc, char *argv[])
     /* Set description */
     module = G_define_module();
     module->keywords = _("vector");
-    module->description = _("Exports GRASS vector files to DXF file format.");
+    module->description = _("Exports GRASS vector maps to DXF file format.");
 
     input = G_define_standard_option(G_OPT_V_INPUT);
 

@@ -129,7 +129,7 @@ int PS_vpoints_plot (struct Map_info *P_map, int vec, int type)
     for ( line = 1; line <= nlines; line++ ) {
 	int ret;
 	if (0 > (ret = Vect_read_line(P_map, Points, Cats, line))) {
-	    if (ret == -1) G_warning(_("Read error in vector file"));
+	    if (ret == -1) G_warning(_("Read error in vector map"));
 	    break;
 	}
 	if ( !(ret & GV_POINTS) ) continue;

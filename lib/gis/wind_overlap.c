@@ -38,7 +38,7 @@ int G_window_overlap ( struct Cell_head *window,
  * This version returns the percentage (from 0 to 1) of the box 
  * contained in the window. This feature can be used during vector
  * plotting to decide if it is more efficient to do a level-one
- * read of the whole vector file, or to pay the price of a
+ * read of the whole vector map, or to pay the price of a
  * level-two startup so only those arcs that enter the window are
  * actually read.
  *

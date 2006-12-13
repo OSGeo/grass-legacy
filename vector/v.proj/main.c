@@ -40,7 +40,7 @@ int main (int argc, char *argv[])
  
     module = G_define_module();
     module->keywords = _("vector");
-    module->description = _("Allows projection conversion of vector files.");
+    module->description = _("Allows projection conversion of vector maps.");
 
     /* set up the options and flags for the command line parser */
 
@@ -70,7 +70,7 @@ int main (int argc, char *argv[])
 
     flag.list = G_define_flag();
     flag.list->key = 'l';
-    flag.list->description = _("List vector files in input location and exit (a dummy value must be given for input)");
+    flag.list->description = _("List vector maps in input location and exit (a dummy value must be given for input)");
 
     flag.transformz = G_define_flag();
     flag.transformz->key = 'z';
@@ -79,7 +79,7 @@ int main (int argc, char *argv[])
     if (G_parser (argc, argv)) exit (EXIT_FAILURE);
 		 
     /* start checking options and flags */
-    /* set input vector file name and mapset */
+    /* set input vector map name and mapset */
     map_name = mapopt->answer;
     if (omapopt->answer) omap_name = omapopt->answer;
     else omap_name = map_name;
@@ -111,7 +111,7 @@ int main (int argc, char *argv[])
     }
 
     if (stat >= 0) {  /* yes, we can access the mapset */
-	/* if requested, list the vector files in source location - MN 5/2001*/
+	/* if requested, list the vector maps in source location - MN 5/2001*/
 	if (flag.list->answer) {
 	   fprintf(stderr, _("Checking location %s, mapset %s:\n"), iloc_name, iset_name);
 	   G_list_element ("vector", "vector", iset_name, 0);
@@ -182,7 +182,7 @@ int main (int argc, char *argv[])
     sprintf(date,"%s %d %d",mon,day,yr);
     Vect_set_date ( &Out_Map, date );
 
-    fprintf(stderr, _("\nCreating vector file...\n"));
+    fprintf(stderr, _("\nCreating vector map...\n"));
 
     /* Initialize the Point / Cat structure */
     Points = Vect_new_line_struct();

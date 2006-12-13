@@ -96,7 +96,7 @@ msgstr ""
 
 #: ../gui/tcltk/menus/menu.tcl:124
 #, fuzzy
-msgid "ASCII points file or GRASS ASCII vector file"
+msgid "ASCII points file or GRASS ASCII vector map"
 msgstr "ファイル ファイル ファイル"
 
 #: ../gui/tcltk/menus/menu.tcl:125
@@ -209,7 +209,7 @@ msgstr "ファイル"
 
 #: ../gui/tcltk/menus/menu.tcl:164
 #, fuzzy
-msgid "ASCII vector or point file/old GRASS ASCII vector file"
+msgid "ASCII vector or point file/old GRASS ASCII vector map"
 msgstr "ファイル ファイル ファイル ファイル"
 
 #: ../gui/tcltk/menus/menu.tcl:165
@@ -937,7 +937,7 @@ msgstr ""
 
 #: ../gui/tcltk/menus/menu.tcl:383
 #, fuzzy
-msgid "Clean vector files"
+msgid "Clean vector maps"
 msgstr "ファイル"
 
 #: ../gui/tcltk/menus/menu.tcl:384
@@ -1635,7 +1635,7 @@ msgstr ""
 
 #: ../gui/tcltk/d.m/thematic.tcl:250 ../gui/tcltk/gis.m/thematic.tcl:359
 #, fuzzy
-msgid "save thematic colors to GRASSRGB column of vector file"
+msgid "save thematic colors to GRASSRGB column of vector map"
 msgstr "ファイル ファイル"
 
 #: ../gui/tcltk/d.m/thematic.tcl:258
@@ -2974,7 +2974,7 @@ msgstr ""
 
 #: ../gui/tcltk/gis.m/vector.tcl:476
 #, fuzzy
-msgid "save displayed objects to new vector file "
+msgid "save displayed objects to new vector map "
 msgstr "ファイル ファイル "
 
 #: ../gui/tcltk/gis.m/vector.tcl:478

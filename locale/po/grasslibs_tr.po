@@ -802,7 +802,7 @@ msgstr "[%s] %s harita takımındaki [%s] in kategori desteği"
 
 #: ../lib/gis/cats.c:423
 #, c-format
-msgid "category support for vector file [%s] in mapset [%s] %s"
+msgid "category support for vector map [%s] in mapset [%s] %s"
 msgstr "[%s] %s harita takımındaki [%s] vektör dosyasının kategori desteği"
 
 #: ../lib/gis/mapset.c:41

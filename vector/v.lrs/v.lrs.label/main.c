@@ -1,5 +1,5 @@
 /*
-*  v.lrs.stationing - Generate stationing as new vector file and labels from
+*  v.lrs.stationing - Generate stationing as new vector map and labels from
 *                     input map for existing linear reference system
 *
 */

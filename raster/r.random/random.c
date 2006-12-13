@@ -99,7 +99,7 @@ int execute_random (struct rr_state *theState)
     if (theState->outsites && theState->outraster)
             strcat (msg, "and ");
     if (theState->outsites)
-            sprintf (msg2,_("vector file [%s] "), theState->outsites);
+            sprintf (msg2,_("vector map [%s] "), theState->outsites);
             strcat(msg,msg2);
     strcat (msg, "... ");
     G_message(msg);

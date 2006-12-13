@@ -54,7 +54,7 @@ Vect_copy_map_lines ( struct Map_info *In, struct Map_info *Out )
 	for ( i = 1; i <= nlines; i++ ) {
 	    type =  Vect_read_line (In, Points, Cats, i);
 	    if ( type == -1 ) {
-		G_warning ("Cannot read vector file\n" );
+		G_warning ("Cannot read vector map\n" );
 		ret = 1;
 		break;
 	    } 
@@ -67,7 +67,7 @@ Vect_copy_map_lines ( struct Map_info *In, struct Map_info *Out )
 	while ( 1 ) {
 	    type =  Vect_read_next_line (In, Points, Cats);
 	    if ( type == -1 ) {
-		G_warning ("Cannot read vector file\n" );
+		G_warning ("Cannot read vector map\n" );
 		ret = 1;
 		break;
 	    } else if ( type == -2 ) { /* EOF */ 
@@ -179,7 +179,7 @@ Vect_copy ( char *in, char *mapset, char *out, FILE *msgout )
            G_debug (2, "copy %s to %s", old_path, new_path );
             if ( copy_file ( old_path, new_path ) )
             {
-	        G_warning ( "Cannot copy vector file '%s' to '%s'", old_path, new_path );
+	        G_warning ( "Cannot copy vector map '%s' to '%s'", old_path, new_path );
             }
         }
         i++;

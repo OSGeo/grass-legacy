@@ -84,7 +84,7 @@ msgid "Various formats using OGR"
 msgstr "Rùzné formáty pomocí OGR"
 
 #: ../gui/tcltk/menus/menu.tcl:124
-msgid "ASCII points file or GRASS ASCII vector file"
+msgid "ASCII points file or GRASS ASCII vector map"
 msgstr "Bodový soubor ASCII nebo vektorový soubor GRASS ASCII"
 
 #: ../gui/tcltk/menus/menu.tcl:125
@@ -185,7 +185,7 @@ msgid "DXF file (ASCII)"
 msgstr "Soubor DXF (ASCII)"
 
 #: ../gui/tcltk/menus/menu.tcl:164
-msgid "ASCII vector or point file/old GRASS ASCII vector file"
+msgid "ASCII vector or point file/old GRASS ASCII vector map"
 msgstr "ASCII vektorový nebo bodový soubor/starý vektorový GRASS ASCII formát"
 
 #: ../gui/tcltk/menus/menu.tcl:165
@@ -844,7 +844,7 @@ msgid "Create/rebuild topology"
 msgstr "Vytvoøit/znovu sestavit topologii"
 
 #: ../gui/tcltk/menus/menu.tcl:383
-msgid "Clean vector files"
+msgid "Clean vector maps"
 msgstr "Vyèistit vektorové soubory"
 
 #: ../gui/tcltk/menus/menu.tcl:384
@@ -1483,7 +1483,7 @@ msgid "draw border"
 msgstr "vykreslit hranice"
 
 #: ../gui/tcltk/d.m/thematic.tcl:250 ../gui/tcltk/gis.m/thematic.tcl:359
-msgid "save thematic colors to GRASSRGB column of vector file"
+msgid "save thematic colors to GRASSRGB column of vector map"
 msgstr "ulo¾it barvy tématické mapy do GRASSRGB sloupce vektorového souboru"
 
 #: ../gui/tcltk/d.m/thematic.tcl:258
@@ -2704,7 +2704,7 @@ msgid "   show attribute data"
 msgstr "   zobrazit atributová data"
 
 #: ../gui/tcltk/gis.m/vector.tcl:476
-msgid "save displayed objects to new vector file "
+msgid "save displayed objects to new vector map "
 msgstr "ulo¾it zobrazené objekty do nového vektorové souboru "
 
 #: ../gui/tcltk/gis.m/vector.tcl:478

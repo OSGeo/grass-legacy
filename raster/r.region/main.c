@@ -230,7 +230,7 @@ int main (int argc, char *argv[])
 
 		Vect_set_open_level(1);
 		if (Vect_open_old(&Map, name, mapset) != 1)
-			G_fatal_error(_("can't open vector file <%s> in <%s>"), name, mapset);
+			G_fatal_error(_("can't open vector map <%s> in <%s>"), name, mapset);
 
 		Vect_get_map_box (&Map, &box );
 		window.north	= box.N;

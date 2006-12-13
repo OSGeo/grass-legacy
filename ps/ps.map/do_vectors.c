@@ -29,7 +29,7 @@ int do_vectors (int after_masking)
 	if (!after_masking && !vector.layer[n].masked) continue;
 
 	if (verbose > 1) {
-	    fprintf (stdout,"PS-PAINT: reading vector file <%s in %s> ...",
+	    fprintf (stdout,"PS-PAINT: reading vector map <%s in %s> ...",
 		vector.layer[n].name, vector.layer[n].mapset);
 	    fflush(stdout);
 	}
@@ -40,7 +40,7 @@ int do_vectors (int after_masking)
 	    char name[100];
 
 	    sprintf(name, "%s in %s", vector.layer[n].name, vector.layer[n].mapset);
-	    error("vector file", name, "can't open");
+	    error("vector map", name, "can't open");
 	    continue;
 	}
 
@@ -134,7 +134,7 @@ int do_vpoints (int after_masking)
 	    char name[100];
 
 	    sprintf(name, "%s in %s", vector.layer[n].name, vector.layer[n].mapset);
-	    error("vector file", name, "can't open");
+	    error("vector map", name, "can't open");
 	    continue;
 	}
 

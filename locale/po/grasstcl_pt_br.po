@@ -94,7 +94,7 @@ msgstr "Vários formatos usando GDAL"
 
 #: ../gui/tcltk/menus/menu.tcl:124
 #, fuzzy
-msgid "ASCII points file or GRASS ASCII vector file"
+msgid "ASCII points file or GRASS ASCII vector map"
 msgstr "Arquivo de pontos ASCII ou arquivo vetorial ASCII do GRASS"
 
 #: ../gui/tcltk/menus/menu.tcl:125
@@ -199,7 +199,7 @@ msgstr "Arquiv DXF (ASCII)"
 
 #: ../gui/tcltk/menus/menu.tcl:164
 #, fuzzy
-msgid "ASCII vector or point file/old GRASS ASCII vector file"
+msgid "ASCII vector or point file/old GRASS ASCII vector map"
 msgstr "Vetor ASCII ou arquivo de pontos/arquivo vetorial antigo do GRASS"
 
 #: ../gui/tcltk/menus/menu.tcl:165
@@ -918,7 +918,7 @@ msgid "Create/rebuild topology"
 msgstr "Criar/reconstruir topologia"
 
 #: ../gui/tcltk/menus/menu.tcl:383
-msgid "Clean vector files"
+msgid "Clean vector maps"
 msgstr "Limpar arquivos vetoriais"
 
 #: ../gui/tcltk/menus/menu.tcl:384
@@ -1566,7 +1566,7 @@ msgstr "desenhar borda"
 
 #: ../gui/tcltk/d.m/thematic.tcl:250 ../gui/tcltk/gis.m/thematic.tcl:359
 #, fuzzy
-msgid "save thematic colors to GRASSRGB column of vector file"
+msgid "save thematic colors to GRASSRGB column of vector map"
 msgstr "salvar cores temáticas para a coluna GRASSRGB do arquivo vetorial"
 
 #: ../gui/tcltk/d.m/thematic.tcl:258
@@ -2812,7 +2812,7 @@ msgid "   show attribute data"
 msgstr "   mostrar dados de atributos"
 
 #: ../gui/tcltk/gis.m/vector.tcl:476
-msgid "save displayed objects to new vector file "
+msgid "save displayed objects to new vector map "
 msgstr "salvar objetos exibidos para novo arquivo vetorial"
 
 #: ../gui/tcltk/gis.m/vector.tcl:478

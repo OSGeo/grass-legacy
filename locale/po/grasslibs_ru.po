@@ -797,7 +797,7 @@ msgstr "категории [%s] в наборе данных [%s] %s"
 
 #: ../lib/gis/cats.c:423
 #, fuzzy, c-format
-msgid "category support for vector file [%s] in mapset [%s] %s"
+msgid "category support for vector map [%s] in mapset [%s] %s"
 msgstr "категории векторной карты[%s] в наборе данных [%s] %s"
 
 #: ../lib/gis/mapset.c:41

@@ -39,7 +39,7 @@ int nodes ( char *in, char *out, int add_cats, int nfield)
     Vect_set_fatal_error (GV_FATAL_PRINT);
     if (1 > Vect_open_new (&Out, out, In.head.with_z)){
         Vect_close (&In);
-	G_fatal_error ("Failed opening output vector file");
+	G_fatal_error ("Failed opening output vector map");
     }
 
     Vect_copy_head_data (&In, &Out);

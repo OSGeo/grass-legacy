@@ -136,14 +136,14 @@ int main (int argc, char **argv)
 
     Vect_check_input_output_name ( inopt->answer, outopt->answer, GV_FATAL_EXIT );
 
-    /* set input vector file name and mapset */
+    /* set input vector map name and mapset */
     input = inopt->answer;
     mapset = G_find_vector2 (input, "") ;
 
     if (!mapset) G_fatal_error(_("Vector file [%s] not available in search list"), input);
       
     G_debug ( 3, "Mapset = %s", mapset);
-    /* set output vector file name */
+    /* set output vector map name */
     output = outopt->answer;
 
     if ( d_flag->answer ) dissolve = 1;

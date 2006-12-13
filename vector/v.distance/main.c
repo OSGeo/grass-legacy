@@ -106,11 +106,11 @@ int main (int argc, char *argv[])
 
     from_opt = G_define_standard_option(G_OPT_V_INPUT);
     from_opt->key         = "from" ;
-    from_opt->description = _("Name of existing vector file");
+    from_opt->description = _("Name of existing vector map");
 
     to_opt = G_define_standard_option(G_OPT_V_INPUT);
     to_opt->key         = "to" ;
-    to_opt->description = _("Name of existing vector file");
+    to_opt->description = _("Name of existing vector map");
 
     from_type_opt = G_define_standard_option(G_OPT_V_TYPE); 
     from_type_opt->key         = "from_type";

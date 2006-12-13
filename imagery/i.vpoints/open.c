@@ -1,6 +1,6 @@
 #include <grass/gis.h>
 
-/* open and close vector file for level one access */
+/* open and close vector map for level one access */
 
 FILE *
 open_vect (char *name, char *mapset)
@@ -11,12 +11,12 @@ open_vect (char *name, char *mapset)
     fd = G_fopen_vector_old (name, mapset);
     if (fd == NULL)
     {
-	sprintf (msg, "can't open vector file [%s]", name);
+	sprintf (msg, "can't open vector map [%s]", name);
 	G_fatal_error (msg);
     }
     if (dig_init (fd) < 0)
     {
-	sprintf (msg, "can't initialize vector file [%s]", name);
+	sprintf (msg, "can't initialize vector map [%s]", name);
 	G_fatal_error (msg);
     }
     return fd;

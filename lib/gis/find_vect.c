@@ -6,9 +6,9 @@
  *        char *mapset     mapset to search. if mapset is ""
  *                         will search in mapset search list
  *
- *	searches for a vector file from the mapset search list
+ *	searches for a vector map from the mapset search list
  *      or in a specified mapset.
- *	returns the mapset name where the vector file was found.
+ *	returns the mapset name where the vector map was found.
  *
  * NOTE: If the user specifies a fully qualified vector map which exists,
  *       then <i>G_find_vector()</i> modifies <b>name</b> by removing the
@@ -16,7 +16,7 @@
  *
  *  returns:
  *      char *  pointer to a string with name of mapset
- *              where vector file was found, or NULL if not found
+ *              where vector map was found, or NULL if not found
  *  note:
  *      rejects all names that begin with .
  *
@@ -28,15 +28,15 @@
 #include <grass/vect/dig_defines.h>
 
 
-/* \brief searches for a vector file
+/* \brief searches for a vector map
  *
- *	searches for a vector file from the mapset search list
+ *	searches for a vector map from the mapset search list
  *      or in a specified mapset.
- *	returns the mapset name where the vector file was found.
+ *	returns the mapset name where the vector map was found.
  *
  *  returns:
  *      char *  pointer to a string with name of mapset
- *              where vector file was found, or NULL if not found
+ *              where vector map was found, or NULL if not found
  *  NOTES:
  *      If the user specifies a fully qualified vector map which exists,
  *      then <i>G_find_vector()</i> modifies <b>name</b> by removing the

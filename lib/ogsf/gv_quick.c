@@ -8,7 +8,7 @@
 */
 
 /*
-Trying some stuff to draw a quick version of a vector file, to represent
+Trying some stuff to draw a quick version of a vector map, to represent
 it when doing interactive translations.
 */
 

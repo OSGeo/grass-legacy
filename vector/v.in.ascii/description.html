@@ -14,9 +14,9 @@ binary format. The module may import two formats:
 <P>
 The <em><a HREF="v.out.ascii.html">v.out.ascii</a></em> GRASS module 
 performs the function of <em>v.in.ascii</em> in reverse;
-i.e., it converts vector files in binary format to ASCII
+i.e., it converts vector maps in binary format to ASCII
 format.  These two companion programs are useful both for
-importing and exporting vector files between GRASS and
+importing and exporting vector maps between GRASS and
 other software, and for transferring data between
 machines.
 
@@ -46,7 +46,7 @@ or within a subregion (the <b>-r</b> flag) before resorting the to
 disabling of topology.
 
 <P>
-A GRASS ASCII vector file (in <B>standard</B> mode) may contain a mix of 
+A GRASS ASCII vector map (in <B>standard</B> mode) may contain a mix of 
 primitives including points, lines, boundaries, centroids, areas, faces, 
 and kernels. On top a header can be defined (see example below).
 
@@ -175,7 +175,7 @@ to be stored into a file with a preceding 'L' and the number of points (per line
 
 <h3>Example 2</h3>
 
-Generate a 2D points vector file 'coords.txt' as ASCII file:
+Generate a 2D points vector map 'coords.txt' as ASCII file:
 <div class="code"><pre>
 1664619|5103481
 1664473|5095782
@@ -193,7 +193,7 @@ containing the IDs will be auto-generated.
 
 <h3>Example 3</h3>
 
-Generate a 2D points vector file 'points.dat' as ASCII file:
+Generate a 2D points vector map 'points.dat' as ASCII file:
 <div class="code"><pre>
 1|1664619|5103481|studna
 2|1664473|5095782|kadibudka
@@ -225,7 +225,7 @@ The import works for 2D maps as well (no elev column and no '-z' flag).
 
 <h3>Example 5</h3>
 
-Generate a 3D points vector file 'points3d.dat' with attributes as ASCII file:
+Generate a 3D points vector map 'points3d.dat' with attributes as ASCII file:
 <div class="code"><pre>
 593493.1|4914730.2|123.1|studna|well
 591950.2|4923000.5|222.3|kadibudka|closet

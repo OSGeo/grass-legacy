@@ -15,7 +15,7 @@
 /*
 **  v.patch  input=file1,file2,.... output=composite
 **
-**   patch 2 or more vector files together creating composite
+**   patch 2 or more vector maps together creating composite
 **
 **
 **  no checking is done for overlapping lines.

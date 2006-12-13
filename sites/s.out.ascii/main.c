@@ -38,7 +38,7 @@ int main(int argc, char *argv[])
     parm.input->key = "input";
     parm.input->type = TYPE_STRING;
     parm.input->required = YES;
-    parm.input->description = "name of a vector file to be output";
+    parm.input->description = "name of a vector map to be output";
     parm.input->gisprompt = "old,vector,vector";
 
     parm.fs = G_define_option();

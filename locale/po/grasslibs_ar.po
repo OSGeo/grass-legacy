@@ -801,7 +801,7 @@ msgstr "دعم الفئة [%s] فى مجموعة الخرائط [%s] %s"
 
 #: ../lib/gis/cats.c:423
 #, c-format
-msgid "category support for vector file [%s] in mapset [%s] %s"
+msgid "category support for vector map [%s] in mapset [%s] %s"
 msgstr "دعم الفئة لملف فيكتورى [%s] مجموعة الخرائط [%s] %s"
 
 #: ../lib/gis/mapset.c:41

@@ -6,19 +6,19 @@ format. Using flag <b>-o</b> <em>v.out.ascii</em> output will be in old
 (version 4) ASCII format.
 <P>
 If the <b>output</b> parameter is not given then the coordinates of any 
-<em>point</em> data within the vector file is sent to stdout.
+<em>point</em> data within the vector map is sent to stdout.
 
 <h2>NOTES</h2>
 
 The GRASS program  <em><a HREF="v.in.ascii.html">v.in.ascii</a></em> 
 performs the function of <em>v.out.ascii</em> in reverse; i.e., it
-converts vector files in ASCII format to their binary format. 
+converts vector maps in ASCII format to their binary format. 
 These two companion programs are useful both for importing and exporting 
-vector files between GRASS and other software, and for transferring data 
+vector maps between GRASS and other software, and for transferring data 
 between machines.
 
 <P>
-If the <b>format</b> parameter is set to <b>standard</b>, A GRASS ASCII vector file will be exported,
+If the <b>format</b> parameter is set to <b>standard</b>, A GRASS ASCII vector map will be exported,
 which may contain a mix of primitives including points, lines, boundaries, centroids, areas, faces, 
 and kernels. The beginning of the output ascii file will contain a header listing any metadata for the
 input vector, if such metadata exists. An example of the <b>standard</b> format is given below.
