@@ -4,7 +4,7 @@ include $(MODULE_TOPDIR)/include/Make/Dir.make
 
 SUBDIRS =
 
-TCLTKBASED = d.m gis.m menus
+TCLTKBASED = d.m gis.m
 
 #compile if TCLTKBASED present:
 ifneq ($(strip $(TCLTKLIBS)),)
