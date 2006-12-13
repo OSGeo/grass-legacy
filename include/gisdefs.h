@@ -870,6 +870,7 @@ int G_mkdir(const char *);
 int G_is_dirsep(char);
 char *G_convert_dirseps_to_host(char *);
 char *G_convert_dirseps_from_host(char *);
+int G_lstat(const char *, struct stat *);
 
 /* percent.c */
 int G_percent(int, int, int);
