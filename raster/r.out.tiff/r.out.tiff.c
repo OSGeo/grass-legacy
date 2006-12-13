@@ -85,7 +85,7 @@ main (int argc, char *argv[])
 	module              = G_define_module();
 	module->keywords = _("raster");
     module->description = 
-	    _("Exports a GRASS raster file to a 8/24bit TIFF image file "
+	    _("Exports a GRASS raster map to a 8/24bit TIFF image file "
 	    "at the pixel resolution of the currently defined region.");
 
 	inopt = G_define_option();
@@ -93,7 +93,7 @@ main (int argc, char *argv[])
 	inopt->type            =  TYPE_STRING;
 	inopt->required        =  YES;
 	inopt->gisprompt	= "old,cell,raster";
-	inopt->description     = _("Existing raster file name");
+	inopt->description     = _("Existing raster map name");
 
 	outopt = G_define_option();
 	outopt->key             = "output";

@@ -34,7 +34,7 @@ int read_cell (char *name, char *mapset)
     /* open cell file for reading */
     if ((PS.cell_fd = G_open_cell_old(name, mapset)) < 0)
     {
-        error(fullname, "", "can't open raster file");
+        error(fullname, "", "can't open raster map");
 	G_free_colors(&PS.colors);
         return 0;
     }

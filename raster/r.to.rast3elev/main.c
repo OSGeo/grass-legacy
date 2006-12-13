@@ -154,7 +154,7 @@ int open_input_raster_map(char *name, char *mapset)
 
     G_debug(3, "Open Raster file %s in Mapset %s", name, mapset);
 
-    /* open raster file */
+    /* open raster map */
     fd = G_open_cell_old(name, mapset);
 
     if (fd < 0)

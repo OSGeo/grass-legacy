@@ -102,7 +102,7 @@ msgid "Writing %s from %s..."
 msgstr "Đang ghi %s từ %s..."
 
 #: ../raster3d/r3.in.ascii/main.c:79
-msgid "Ascii raster file to be imported"
+msgid "Ascii raster map to be imported"
 msgstr "Tập tin raster ascii cần nhập"
 
 #: ../raster3d/r3.in.ascii/main.c:90
@@ -498,7 +498,7 @@ msgstr ""
 
 #: ../raster3d/r3.cross.rast/main.c:280
 #, c-format
-msgid "Open 3D raster file %s"
+msgid "Open 3D raster map %s"
 msgstr "Mở tập tin raster 3D %s"
 
 #: ../raster3d/r3.cross.rast/main.c:283
@@ -653,7 +653,7 @@ msgstr ""
 
 #: ../raster3d/r3.out.vtk/main.c:197
 #, c-format
-msgid "Open rgb g3d raster file %s"
+msgid "Open rgb g3d raster map %s"
 msgstr "Mở tập tin raster g3d rgb %s"
 
 #: ../raster3d/r3.out.vtk/main.c:210
@@ -670,7 +670,7 @@ msgstr "Lỗi khi đang đóng bản đồ g3d rgb"
 
 #: ../raster3d/r3.out.vtk/main.c:280
 #, c-format
-msgid "Open vector g3d raster file %s"
+msgid "Open vector g3d raster map %s"
 msgstr "Mở tập tin raster g3d %s."
 
 #: ../raster3d/r3.out.vtk/main.c:293
@@ -708,7 +708,7 @@ msgstr "Không thể đóng bản đồ raster dưới cùng\n"
 
 #: ../raster3d/r3.out.vtk/main.c:497
 #, c-format
-msgid "Open g3d raster file %s"
+msgid "Open g3d raster map %s"
 msgstr "Mở tập tin graster g3d %s."
 
 #: ../raster3d/r3.out.vtk/main.c:536
@@ -823,7 +823,7 @@ msgid "Error while writing grid. Disk full?"
 msgstr "Lỗi khi đang ghi lưới grid. Đầy đĩa?"
 
 #: ../raster3d/r3.out.v5d/main.c:286
-msgid "Export of GRASS 3D raster file to 3-dimensional Vis5D file."
+msgid "Export of GRASS 3D raster map to 3-dimensional Vis5D file."
 msgstr "Xuất tập tin raster 3D GRASS thành tập tin Viz5D ba chiều."
 
 #: ../raster3d/r3.out.v5d/main.c:293
@@ -2562,7 +2562,7 @@ msgid "Output cross-validation errors vector point file"
 msgstr "Tập tin điểm vector chứa các sai số kiểm chứng chéo ở đầu ra"
 
 #: ../vector/v.surf.rst/main.c:245
-msgid "Output surface raster file (elevation)"
+msgid "Output surface raster map (elevation)"
 msgstr "Tập tin raster bề mặt (độ cao) ở đầu ra"
 
 #: ../vector/v.surf.rst/main.c:249
@@ -2570,27 +2570,27 @@ msgid "Output partial derivatives instead of topographic parameters"
 msgstr "Các đạo hàm riêng ở đầu ra thay vì các tham số địa hình"
 
 #: ../vector/v.surf.rst/main.c:256
-msgid "Output slope raster file"
+msgid "Output slope raster map"
 msgstr "tập tin raster độ dốc ở đầu ra"
 
 #: ../vector/v.surf.rst/main.c:263
-msgid "Output aspect raster file"
+msgid "Output aspect raster map"
 msgstr "Tập tin raster hướng ở đầu ra"
 
 #: ../vector/v.surf.rst/main.c:270
-msgid "Output profile curvature raster file"
+msgid "Output profile curvature raster map"
 msgstr "Tập tin raster độ cong mặt nghiêng ở đầu ra"
 
 #: ../vector/v.surf.rst/main.c:277
-msgid "Output tangential curvature raster file"
+msgid "Output tangential curvature raster map"
 msgstr "Tập tin raster độ cong tiếp tuyến ở đầu ra"
 
 #: ../vector/v.surf.rst/main.c:284
-msgid "Output mean curvature raster file"
+msgid "Output mean curvature raster map"
 msgstr "Tập tin raster độ cong trung bình ở đầu ra"
 
 #: ../vector/v.surf.rst/main.c:291 ../vector/v.vol.rst/main.c:292
-msgid "Name of the raster file used as mask"
+msgid "Name of the raster map used as mask"
 msgstr "Tên của tập tin raster dùng làm mặt nạ"
 
 #: ../vector/v.surf.rst/main.c:298
@@ -4057,7 +4057,7 @@ msgstr ""
 #, c-format
 msgid ""
 "\n"
-"Writing output raster file using smooth parameter=%f."
+"Writing output raster map using smooth parameter=%f."
 msgstr ""
 "\n"
 "Đang ghi tập tin raster đầu ra, dùng tham số làm trơn=%f."
@@ -5917,7 +5917,7 @@ msgid "Column parameter cannot be combined with use of z coordinate"
 msgstr "Tham số cột không thể phối hợp được với việc dùng tọa độ z"
 
 #: ../vector/v.sample/main.c:87
-msgid "Sample a raster file at site locations"
+msgid "Sample a raster map at site locations"
 msgstr "Lấy mẫu một tập tin raster tại các vị trí điểm"
 
 #: ../vector/v.sample/main.c:93
@@ -6971,11 +6971,11 @@ msgid "Output flowline vector file"
 msgstr "Tập tin vector đường dòng chảy đầu ra"
 
 #: ../raster/r.flow/io.c:163
-msgid "Output flowpath length raster file"
+msgid "Output flowpath length raster map"
 msgstr "Tập tin raster chiều dài đường dẫn dòng chảy đầu ra"
 
 #: ../raster/r.flow/io.c:165
-msgid "Output flowline density raster file"
+msgid "Output flowline density raster map"
 msgstr "Tập tin raster mật độ đường dòng chảy đầu ra"
 
 #: ../raster/r.flow/io.c:167
@@ -7200,11 +7200,11 @@ msgstr ""
 "bản đồ raster đầu ra."
 
 #: ../raster/r.neighbors/main.c:92
-msgid "Name of existing raster file"
+msgid "Name of existing raster map"
 msgstr "Tên tập tin raster hiện có"
 
 #: ../raster/r.neighbors/main.c:99 ../raster/r.series/main.c:107
-msgid "Name of the new raster file"
+msgid "Name of the new raster map"
 msgstr "Tên tập tin raster mới"
 
 #: ../raster/r.neighbors/main.c:114
@@ -7216,7 +7216,7 @@ msgid "Neighborhood size"
 msgstr "Kích thước vùng lân cận"
 
 #: ../raster/r.neighbors/main.c:128
-msgid "Title of the output raster file"
+msgid "Title of the output raster map"
 msgstr "Tiêu đề của bản đồ raster đầu ra"
 
 #: ../raster/r.neighbors/main.c:132
@@ -7224,7 +7224,7 @@ msgid "Do not align output with the input"
 msgstr "Không canh thẳng đầu ra với đầu vào"
 
 #: ../raster/r.compress/main.c:64
-msgid "Compresses and decompresses raster files."
+msgid "Compresses and decompresses raster maps."
 msgstr "Nén và giải nén các tập tin raster"
 
 #: ../raster/r.compress/main.c:72 ../display/d.what.rast/main.c:56
@@ -7567,7 +7567,7 @@ msgstr ""
 #: ../raster/r.bilinear/main.c:76 ../raster/r.resamp.interp/main.c:84
 #: ../raster/r.resamp.stats/main.c:283 ../raster/r.sum/main.c:47
 #, c-format
-msgid "Couldn't find raster file %s"
+msgid "Couldn't find raster map %s"
 msgstr "Không thể tìm thấy tập tin raster %s"
 
 #: ../raster/r.bilinear/main.c:90 ../raster/r.bilinear/main.c:101
@@ -7690,12 +7690,12 @@ msgstr "Phép chiếu nguồn"
 
 #: ../raster/r.out.gdal/main.c:303
 #, fuzzy, c-format
-msgid "Cannot export [%s] raster file."
+msgid "Cannot export [%s] raster map."
 msgstr "Không thể mở tập tin raster [%s]"
 
 #: ../raster/r.out.gdal/main.c:309
 #, fuzzy, c-format
-msgid "Cannot create [%s] raster file using [%s] driver."
+msgid "Cannot create [%s] raster map using [%s] driver."
 msgstr "Không thể mở tập tin raster [%s]"
 
 #: ../raster/r.out.gdal/main.c:314
@@ -7708,11 +7708,11 @@ msgid "Raster file matrix filter."
 msgstr "Lọc ma trận tập tin raster"
 
 #: ../raster/r.mfilter/main.c:45 ../raster/r.resamp.rst/main.c:167
-msgid "Name of the input raster file"
+msgid "Name of the input raster map"
 msgstr "Tên của tập tin raster đầu vào"
 
 #: ../raster/r.mfilter/main.c:53
-msgid "Name of the output raster file"
+msgid "Name of the output raster map"
 msgstr "Tên của tập tin raster đầu ra"
 
 #: ../raster/r.mfilter/main.c:60
@@ -7724,7 +7724,7 @@ msgid "Number of times to repeat the filter"
 msgstr "Số lần lặp lại phép lọc"
 
 #: ../raster/r.mfilter/main.c:75
-msgid "Output raster file title"
+msgid "Output raster map title"
 msgstr "Tiêu đề của tập tin raster đầu ra"
 
 #: ../raster/r.mfilter/main.c:91
@@ -7733,14 +7733,14 @@ msgstr "Chỉ áp dụng phép lọc cho các giá trị 0"
 
 #: ../raster/r.out.tiff/r.out.tiff.c:87
 msgid ""
-"Exports a GRASS raster file to a 8/24bit TIFF image file at the pixel "
+"Exports a GRASS raster map to a 8/24bit TIFF image file at the pixel "
 "resolution of the currently defined region."
 msgstr ""
 "Xuất một tập tin raster GRASS thành một ảnh TIFF (8/24bit) với độ phân giải "
 "điểm ảnh của vùng định nghĩa hiện tại."
 
 #: ../raster/r.out.tiff/r.out.tiff.c:95
-msgid "Existing raster file name"
+msgid "Existing raster map name"
 msgstr "Tên tập tin raster hiện có"
 
 #: ../raster/r.out.tiff/r.out.tiff.c:102
@@ -8022,7 +8022,7 @@ msgstr "Ký tự phân tách ở đầu ra (mặc định: dấu tab)"
 #: ../raster/r.cats/main.c:98 ../raster/r.basins.fill/main.c:92
 #: ../raster/r.basins.fill/main.c:105
 #, c-format
-msgid "%s: <%s> raster file not found"
+msgid "%s: <%s> raster map not found"
 msgstr "%s: Không tìm thấy tập tin raster <%s>"
 
 #: ../raster/r.cats/main.c:100
@@ -8644,31 +8644,31 @@ msgstr ""
 "(SIMWE)"
 
 #: ../raster/simwe/r.sim.water/main.c:136
-msgid "Name of the elevation raster file"
+msgid "Name of the elevation raster map"
 msgstr "Tên tập tin raster độ cao"
 
 #: ../raster/simwe/r.sim.water/main.c:143
-msgid "Name of the x-derivatives raster file"
+msgid "Name of the x-derivatives raster map"
 msgstr "Tên của tập tin raster đạo hàm x"
 
 #: ../raster/simwe/r.sim.water/main.c:150
-msgid "Name of the y-derivatives raster file"
+msgid "Name of the y-derivatives raster map"
 msgstr "Tên của tập tin raster đạo hàm y"
 
 #: ../raster/simwe/r.sim.water/main.c:157
-msgid "Name of the rainfall excess raster file"
+msgid "Name of the rainfall excess raster map"
 msgstr "Tên tập tin raster lượng mưa quá mức"
 
 #: ../raster/simwe/r.sim.water/main.c:164
-msgid "Name of the infiltration excess raster file"
+msgid "Name of the infiltration excess raster map"
 msgstr "Tên tập tin raster độ xâm nhập quá mức"
 
 #: ../raster/simwe/r.sim.water/main.c:171
-msgid "Name of the flow control raster file"
+msgid "Name of the flow control raster map"
 msgstr "Tên tập tin raster kiểm soát dòng chảy"
 
 #: ../raster/simwe/r.sim.water/main.c:178
-msgid "Name of the Mannings n raster file"
+msgid "Name of the Mannings n raster map"
 msgstr "Tên tập tin raster Mannings n"
 
 #: ../raster/simwe/r.sim.water/main.c:185
@@ -8676,15 +8676,15 @@ msgid "Name of the site file with x,y locations"
 msgstr "Tên tập tin địa điểm với các vị trí x,y."
 
 #: ../raster/simwe/r.sim.water/main.c:192
-msgid "Output water depth raster file"
+msgid "Output water depth raster map"
 msgstr "Tập tin raster độ sâu nước đầu ra"
 
 #: ../raster/simwe/r.sim.water/main.c:199
-msgid "Output water discharge raster file"
+msgid "Output water discharge raster map"
 msgstr "Tập tin raster độ tháo nước đầu ra"
 
 #: ../raster/simwe/r.sim.water/main.c:206
-msgid "Output simulation error raster file"
+msgid "Output simulation error raster map"
 msgstr "Tập tin raster lỗi mô hình giả lập đầu ra"
 
 #: ../raster/simwe/r.sim.water/main.c:213
@@ -9096,7 +9096,7 @@ msgstr ""
 "vào các ô tương ứng trong các lớp bản đồ raster đầu vào."
 
 #: ../raster/r.series/main.c:100
-msgid "Names of existing raster files"
+msgid "Names of existing raster maps"
 msgstr "Tên các tập tin raster hiện có"
 
 #: ../raster/r.series/main.c:114
@@ -10392,7 +10392,7 @@ msgstr "Tên dùng cho tập tin phân vùng đường chia nước tạo thành
 
 #: ../raster/r.basins.fill/main.c:111
 #, c-format
-msgid "%s: <%s> raster file exists already"
+msgid "%s: <%s> raster map exists already"
 msgstr "%s: tập tin raster <%s> đã tồn tại"
 
 #: ../raster/r.basins.fill/main.c:119
@@ -10435,14 +10435,14 @@ msgstr ""
 
 #: ../raster/r.in.arc/main.c:44
 msgid ""
-"Convert an ESRI ARC/INFO ascii raster file (GRID) into a (binary) raster map "
+"Convert an ESRI ARC/INFO ascii raster map (GRID) into a (binary) raster map "
 "layer."
 msgstr ""
 "Đổi một tập tin (GRID) raster ascii của ESRI ARC/INFO thành một lớp bản đồ "
 "raster (nhị phân)"
 
 #: ../raster/r.in.arc/main.c:51
-msgid "ARC/INFO ascii raster file (GRID) to be imported"
+msgid "ARC/INFO ascii raster map (GRID) to be imported"
 msgstr "Tập tin raster ascii (GRID) ARC/INFO cần nhập"
 
 #: ../raster/r.in.arc/main.c:62 ../raster/r.in.xyz/main.c:100
@@ -10571,7 +10571,7 @@ msgid "Stop points vector map"
 msgstr "Tập tin vector chứa các điểm kết thúc"
 
 #: ../raster/r.cost/main.c:156
-msgid "Starting points raster file"
+msgid "Starting points raster map"
 msgstr "Tập tin raster chứa các điểm bắt đầu"
 
 #: ../raster/r.cost/main.c:164 ../raster/r.walk/main.c:189
@@ -10667,7 +10667,7 @@ msgstr "%s - tên không hợp lệ"
 #: ../raster/r.cost/main.c:338 ../raster/r.walk/main.c:511
 #: ../raster/r.walk/main.c:514
 #, c-format
-msgid "%s - can't open raster file"
+msgid "%s - can't open raster map"
 msgstr "%s - không thể mở tập tin raster"
 
 #: ../raster/r.cost/main.c:347
@@ -10714,7 +10714,7 @@ msgstr "Không thể cấp phát bộ nhớ cho segment fbuff== NULL"
 
 #: ../raster/r.cost/main.c:589
 #, c-format
-msgid "can't open raster file [%s] needed for input coordinates"
+msgid "can't open raster map [%s] needed for input coordinates"
 msgstr "không thể mở tập tin raster [%s] cần để lấy các tọa độ đầu vào"
 
 #: ../raster/r.cost/main.c:599
@@ -10845,7 +10845,7 @@ msgid "%s higher above pointer wrong"
 msgstr "Chiều cao máy quay trên mặt địa hình"
 
 #: ../raster/r.support/modcolr/modcolr.c:37
-msgid "Which raster file needs a color table"
+msgid "Which raster map needs a color table"
 msgstr "Tập tin raster nào cần một bảng màu"
 
 #: ../raster/r.support/modcolr/modcolr.c:43
@@ -10859,7 +10859,7 @@ msgid "Color table for [%s] updated."
 msgstr "Bảng màu cho [%s] được cập nhật"
 
 #: ../raster/r.support/modhist/modhist.c:37
-msgid "Which raster file needs an updated history? "
+msgid "Which raster map needs an updated history? "
 msgstr "Tập tin raster nào cần lịch sử được cập nhật?"
 
 #: ../raster/r.support/modhist/modhist.c:43
@@ -10882,7 +10882,7 @@ msgid "Which vector file needs updated categories?"
 msgstr "Tập tin vector nào cần các phạm trù được cập nhật?"
 
 #: ../raster/r.support/modcats/modcats.c:49
-msgid "Which raster file needs updated categories?"
+msgid "Which raster map needs updated categories?"
 msgstr "Tập tin raster nào cần các phạm trù được cập nhật?"
 
 #: ../raster/r.support/modcats/modcats.c:53
@@ -11087,7 +11087,7 @@ msgstr ""
 
 #: ../raster/r.support/modhead/modhead.c:95
 #, c-format
-msgid "Cannot open raster file [%s]!"
+msgid "Cannot open raster map [%s]!"
 msgstr "Không thể mở tập tin raster [%s]"
 
 #: ../raster/r.support/modhead/modhead.c:100
@@ -11097,7 +11097,7 @@ msgstr "Tập tin raster [%s] rỗng."
 
 #: ../raster/r.support/modhead/modhead.c:102
 #, c-format
-msgid "Error reading raster file [%s]."
+msgid "Error reading raster map [%s]."
 msgstr "Lỗi khi đang đọc tập tin raster [%s]"
 
 #: ../raster/r.support/modhead/modhead.c:191
@@ -11171,7 +11171,7 @@ msgstr "Không thể ghi header cho [%s]"
 
 #: ../raster/r.support/modhead/modhead.c:301
 #, c-format
-msgid "Header for raster file [%s] updated."
+msgid "Header for raster map [%s] updated."
 msgstr "header cho tập tin raster [%s] được cập nhật."
 
 #: ../raster/r.support/modhead/ask_format.c:24
@@ -11533,7 +11533,7 @@ msgstr ""
 
 #: ../raster/r.in.ascii/main.c:55
 #, fuzzy
-msgid "Ascii raster file to be imported (or \"-\" to read from stdin)"
+msgid "Ascii raster map to be imported (or \"-\" to read from stdin)"
 msgstr "Tập tin raster ascii cần nhập"
 
 #: ../raster/r.in.ascii/main.c:80
@@ -12695,7 +12695,7 @@ msgstr ""
 
 #: ../raster/r.walk/main.c:823
 #, c-format
-msgid "Can't open raster file %s"
+msgid "Can't open raster map %s"
 msgstr "Không thể mở tập tin raster %s"
 
 #: ../raster/r.walk/main.c:833
@@ -12791,7 +12791,7 @@ msgstr "Không thể tạo bản đồ raster [%s]."
 
 #: ../raster/r.out.ppm/main.c:43
 msgid ""
-"Converts a GRASS raster file to a PPM image file at the pixel resolution of "
+"Converts a GRASS raster map to a PPM image file at the pixel resolution of "
 "the CURRENTLY DEFINED REGION."
 msgstr ""
 "Đổi một tập tin raster GRASS thành một tập tin ảnh PPM với độ phân giải điểm "
@@ -13010,7 +13010,7 @@ msgid "Resolution of output map"
 msgstr "Độ phân giải cuủa bản đồ đầu ra"
 
 #: ../raster/r.proj/main.c:180
-msgid "List raster files in input location and exit"
+msgid "List raster maps in input location and exit"
 msgstr "Liệt kê các tập tin raster trong location đầu vào và thoát"
 
 #: ../raster/r.proj/main.c:184
@@ -13142,7 +13142,7 @@ msgstr "Bản đồ raster góc tới đầu ra (chỉ áp dụng cho chế đ�
 
 #: ../raster/r.sun/main.c:277
 msgid ""
-"Output beam irradiance [W.m-2] (mode 1) or irradiation raster file [Wh.m-2."
+"Output beam irradiance [W.m-2] (mode 1) or irradiation raster map [Wh.m-2."
 "day-1] (mode 2)"
 msgstr ""
 "Bức xạ chiếu sáng đầu ra [W.m-2] (chế độ 1) hoặc tập tin raster bức xạ [Wh.m-"
@@ -13590,7 +13590,7 @@ msgid "Input data given for (o/i)"
 msgstr "Dữ liệu đầu vào cung cấp cho (o/i)"
 
 #: ../raster/r.in.bin/main.c:113
-msgid "Import a binary raster file into a GRASS raster map layer."
+msgid "Import a binary raster map into a GRASS raster map layer."
 msgstr "Nhập một tập tin raster nhị phân vào một lớp bản đồ raster GRASS"
 
 #: ../raster/r.in.bin/main.c:117
@@ -13614,7 +13614,7 @@ msgid "Get region info from GMT style header"
 msgstr "Lấy thông tin vùng từ header kiểu GMT"
 
 #: ../raster/r.in.bin/main.c:139
-msgid "Bin raster file to be imported"
+msgid "Bin raster map to be imported"
 msgstr "Tập tin raster nhị phân cần nhập"
 
 #: ../raster/r.in.bin/main.c:156
@@ -13797,7 +13797,7 @@ msgstr "Không thể đọc các tham số vùng hiện tại."
 
 #: ../raster/r.surf.idw/main.c:118
 #, c-format
-msgid "%s in %s -can't open raster file"
+msgid "%s in %s -can't open raster map"
 msgstr "%s trong %s - không thể mở tập tin raster."
 
 #: ../raster/r.surf.idw/main.c:131
@@ -13811,8 +13811,8 @@ msgstr "Không thể đọc hàng."
 
 #: ../raster/r.resamp.rst/main.c:157
 msgid ""
-"Reinterpolates and computes topographic analysis from input raster file to a "
-"new raster file (possibly with different resolution) using regularized "
+"Reinterpolates and computes topographic analysis from input raster map to a "
+"new raster map (possibly with different resolution) using regularized "
 "spline with tension and smoothing."
 msgstr ""
 "Nội suy lại và tính toán phân tích địa hình từ tập tin raster đầu vào thành "
@@ -14085,7 +14085,7 @@ msgstr "giá trị độ sâu không hợp lệ '%s' - dùng giá trị mặc đ
 
 #: ../raster/r.carve/main.c:173
 #, c-format
-msgid "unable to find raster file [%s]"
+msgid "unable to find raster map [%s]"
 msgstr "không thể tìm thấy tập tin raster %s"
 
 #: ../raster/r.carve/main.c:176 ../raster/r.carve/main.c:181
@@ -14109,14 +14109,14 @@ msgstr ""
 
 #: ../raster/r.carve/raster.c:12
 #, fuzzy
-msgid "Reading raster file... "
+msgid "Reading raster map... "
 msgstr ""
 "\n"
 "Đang ghi tập tin raster... "
 
 #: ../raster/r.carve/raster.c:31
 #, fuzzy
-msgid "Writing raster file... "
+msgid "Writing raster map... "
 msgstr ""
 "\n"
 "Đang ghi tập tin raster... "
@@ -14128,12 +14128,12 @@ msgstr ""
 
 #: ../raster/r.clump/clump.c:104
 #, fuzzy
-msgid "Unable to properly read input raster file"
+msgid "Unable to properly read input raster map"
 msgstr "<%s> không thể mở tập tin raster"
 
 #: ../raster/r.clump/clump.c:249
 #, fuzzy
-msgid "Unable to properly write output raster file"
+msgid "Unable to properly write output raster map"
 msgstr "Không thể mở tập tin chữ ký đầu ra."
 
 #: ../raster/r.clump/main.c:53
@@ -14396,7 +14396,7 @@ msgid "Generates random surface(s) with spatial dependence."
 msgstr "Tạo ra (các) bề mặt ngẫu nhiên có sự phụ thuộc vào không gian."
 
 #: ../raster/r.in.gdal/main.c:71
-msgid "Import GDAL supported raster file into a binary raster map layer."
+msgid "Import GDAL supported raster map into a binary raster map layer."
 msgstr ""
 "Nhập tập tin raster được GDAL hỗ trợ vào thành một lớp bản đồ raster nhị "
 "phân."
@@ -14625,12 +14625,12 @@ msgstr ""
 
 #: ../raster/r.contour/main.c:153
 #, c-format
-msgid "<%s> raster file not found"
+msgid "<%s> raster map not found"
 msgstr "không tìm thấy tập tin raster <%s>"
 
 #: ../raster/r.contour/main.c:157
 #, c-format
-msgid "<%s> unable to open raster file"
+msgid "<%s> unable to open raster map"
 msgstr "<%s> không thể mở tập tin raster"
 
 #: ../raster/r.contour/main.c:160
@@ -14753,7 +14753,7 @@ msgstr "không tìm thấy nhóm phụ <%s>"
 #, c-format
 msgid ""
 "\n"
-"** The following raster files in subgroup [%s] do not exist:"
+"** The following raster maps in subgroup [%s] do not exist:"
 msgstr ""
 "\n"
 "Những tập tin raster sau trong nhóm phụ [%s] không tồn tại:"
@@ -15236,15 +15236,15 @@ msgid "Inverse Fast Fourier Transform (ifft) for image processing."
 msgstr "Phép chuyển đổi Nghịch Fast Fourier (ifft) dùng cho xử lý ảnh"
 
 #: ../imagery/i.ifft/ifftmain.c:66
-msgid "input raster file (image fft, real part)"
+msgid "input raster map (image fft, real part)"
 msgstr "tập tin raster đầu vào (ảnh fft, phần-thực)"
 
 #: ../imagery/i.ifft/ifftmain.c:74
-msgid "input raster file (image fft, imaginary part"
+msgid "input raster map (image fft, imaginary part"
 msgstr "tập tin raster đầu vào (ảnh fft, phần-ảo)"
 
 #: ../imagery/i.ifft/ifftmain.c:82
-msgid "output inverse raster file after ifft"
+msgid "output inverse raster map after ifft"
 msgstr "tập tin raster nghịch đảo đầu ra sau khi chạy ifft"
 
 #: ../imagery/i.ifft/ifftmain.c:94
@@ -15275,7 +15275,7 @@ msgstr ""
 
 #: ../imagery/i.ifft/ifftmain.c:111
 #, c-format
-msgid "%s: %s - illegal name for output raster file."
+msgid "%s: %s - illegal name for output raster map."
 msgstr "%s: %s - tên dùng cho tập tin raster đầu ra không hợp lệ."
 
 #: ../imagery/i.ifft/ifftmain.c:129
@@ -15612,15 +15612,15 @@ msgid "Fast Fourier Transform (FFT) for image processing."
 msgstr "Phép chuyển đổi Fast Fourier (FFT) trong xử lý ảnh"
 
 #: ../imagery/i.fft/fftmain.c:65
-msgid "input raster file being fft"
+msgid "input raster map being fft"
 msgstr "Tập tin raster đầu vào cần xử lý fft"
 
 #: ../imagery/i.fft/fftmain.c:73
-msgid "output real part arrays stored as raster file"
+msgid "output real part arrays stored as raster map"
 msgstr "các mảng phần-thực đầu ra được lưu ở dạng tập tin raster"
 
 #: ../imagery/i.fft/fftmain.c:81
-msgid "output imaginary part arrays stored as raster file"
+msgid "output imaginary part arrays stored as raster map"
 msgstr "các mảng phần-ảo đầu ra được lưu ở dạng tập tin raster"
 
 #: ../imagery/i.fft/fftmain.c:89
@@ -16165,7 +16165,7 @@ msgid "Ascii file containing spectral signatures"
 msgstr "Tập tin ascii chứa các chữ ký phổ"
 
 #: ../imagery/i.cca/main.c:92
-msgid "Output raster file prefix name"
+msgid "Output raster map prefix name"
 msgstr "Tên tiền tố cho tập tin raster đầu ra"
 
 #: ../imagery/i.cca/main.c:99
@@ -18102,7 +18102,7 @@ msgstr "Trục trặc khi chọn %s. Sẽ thử lại lần nữa"
 #: ../display/d.histogram/main.c:71
 msgid ""
 "Displays a histogram in the form of a pie or bar chart for a user-specified "
-"raster file."
+"raster map."
 msgstr ""
 "Trình bày một biểu đồ histogram ở dạng biểu đồ quạt hay cột cho một tập tin "
 "raster do người dùng chỉ định."
@@ -18971,7 +18971,7 @@ msgstr "Số lượng tập tin độ cao không khớp với số lượng tậ
 #~ msgid "existing SPOT VGT NDVI HDF file (0001_NDV.HDF)"
 #~ msgstr "tập tin SPOT VGT NDVI hiện có (0001_NDV.HDF)"
 
-#~ msgid "name for new raster file"
+#~ msgid "name for new raster map"
 #~ msgstr "Tên của tập tin raster mới"
 
 #~ msgid "Auto-balancing of colors for LANDSAT images"

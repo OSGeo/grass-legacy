@@ -319,7 +319,7 @@ static int put_ref( char *group, char *subgroup, struct Ref *ref)
  * <b>name</b> and <b>mapset</b> to the list contained in the <b>ref</b>
  * structure, if it is not already in the list.  The <b>ref</b> structure must
  * have been properly initialized. This routine is used by programs, such as
- * <i>i.maxlik</i>, to add to the group new raster files created from files
+ * <i>i.maxlik</i>, to add to the group new raster maps created from files
  * already in the group.
  * Returns the index into the <i>file</i> array within the <b>ref</b>
  * structure for the file after insertion; see

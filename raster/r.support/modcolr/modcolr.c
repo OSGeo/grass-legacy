@@ -34,7 +34,7 @@ int main (int argc, char *argv[])
     G_gisinit(argv[0]);
 
     if (argc < 2) {
-        mapset = G_ask_cell_old(_("Which raster file needs a color table"), name);
+        mapset = G_ask_cell_old(_("Which raster map needs a color table"), name);
         if (mapset == NULL)
             return EXIT_SUCCESS;
     } else {

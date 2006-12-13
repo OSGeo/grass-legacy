@@ -46,7 +46,7 @@ int main(
 
     cellmap = G_find_file2 ("cell", rast->answer, "");
     if(!cellmap){
-	G_fatal_error(_("Couldn't find raster file %s"), rast->answer);
+	G_fatal_error(_("Couldn't find raster map %s"), rast->answer);
     }
     if ((cellfile = G_open_cell_old(rast->answer, cellmap)) == -1)
     {

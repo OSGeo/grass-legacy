@@ -97,14 +97,14 @@ int main (int argc, char *argv[])
 	parm.input->required   = YES ;
 	parm.input->multiple   = YES ;
 	parm.input->gisprompt  = "old,cell,raster" ;
-	parm.input->description= _("Names of existing raster files") ;
+	parm.input->description= _("Names of existing raster maps") ;
 
 	parm.output = G_define_option() ;
 	parm.output->key        = "output" ;
 	parm.output->type       = TYPE_STRING ;
 	parm.output->required   = YES ;
 	parm.output->gisprompt  = "new,cell,raster" ;
-	parm.output->description= _("Name of the new raster file") ;
+	parm.output->description= _("Name of the new raster map") ;
 
 	parm.method = G_define_option() ;
 	parm.method->key        = "method" ;

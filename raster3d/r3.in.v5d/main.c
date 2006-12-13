@@ -69,7 +69,7 @@ setParams ()
   param.input->key = "input";
   param.input->type = TYPE_STRING;
   param.input->required = YES;
-  param.input->description = "v5d raster file to be imported";
+  param.input->description = "v5d raster map to be imported";
 
   param.output = G_define_option();
   param.output->key = "output";

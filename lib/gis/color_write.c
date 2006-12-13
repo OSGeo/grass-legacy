@@ -35,7 +35,7 @@ static int format_max (char *, double);
  * \brief write map layer color table
  *
  * The color table is written for the
- * raster file <b>name</b> in the specified <b>mapset</b> from the
+ * raster map <b>name</b> in the specified <b>mapset</b> from the
  * <b>colors</b> structure.
  * If there is an error, -1 is returned. No diagnostic is printed. Otherwise, 1
  * is returned.
@@ -47,10 +47,10 @@ static int format_max (char *, double);
  * <i>G_make_ramp_colors.</i>}
  * <b>Note.</b> The calling sequence for this function deserves special
  * attention. The <b>mapset</b> parameter seems to imply that it is possible
- * to overwrite the color table for a raster file which is in another mapset.
+ * to overwrite the color table for a raster map which is in another mapset.
  * However, this is not what actually happens. It is very useful for users to
- * create their own color tables for raster files in other mapsets, but without
- * overwriting other users' color tables for the same raster file. If
+ * create their own color tables for raster maps in other mapsets, but without
+ * overwriting other users' color tables for the same raster map. If
  * <b>mapset</b> is the current mapset, then the color file for <b>name</b>
  * will be overwritten by the new color table. But if <b>mapset</b> is not the
  * current mapset, then the color table is actually written in the current

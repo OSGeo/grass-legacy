@@ -36,7 +36,7 @@ void *G_malloc (size_t n)
  * initializes the allocated memory to zero, and returns a pointer to the
  * allocated block of memory.
  * Dies with error message on memory allocation fail.
- * <b>Note.</b> Allocating memory for reading and writing raster files is
+ * <b>Note.</b> Allocating memory for reading and writing raster maps is
  * discussed in Allocating_Raster_I_O_Buffers.
  *
  *  \param n number of elements

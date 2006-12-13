@@ -13,13 +13,13 @@ int ask_elev (char *group, char *location, char *mapset)
     char t2[80], t3[80];
     char cur_location[30], cur_mapset[30];
 
-    sprintf (t1, "Please select the elevation raster file for group <%s>", group);
-    sprintf (t2, "Elevation raster file: ");
+    sprintf (t1, "Please select the elevation raster map for group <%s>", group);
+    sprintf (t2, "Elevation raster map: ");
 
     V_clear();
     V_line (1, t1);
     V_line (4, t2);
-    V_line (6, "(enter list for a list of existing raster files)");
+    V_line (6, "(enter list for a list of existing raster maps)");
     V_ques (elev_layer, 's',  4, 28, 20);
 
     for(;;)

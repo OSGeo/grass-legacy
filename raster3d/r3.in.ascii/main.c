@@ -76,7 +76,7 @@ setParams ()
   param.input->required = YES;
   param.input->key_desc = "name";
   param.input->gisprompt = "old_file,file,input";
-  param.input->description = _("Ascii raster file to be imported");
+  param.input->description = _("Ascii raster map to be imported");
 
   param.output = G_define_standard_option(G_OPT_R3_OUTPUT);
 

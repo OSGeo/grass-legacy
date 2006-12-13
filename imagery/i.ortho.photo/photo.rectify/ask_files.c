@@ -54,7 +54,7 @@ int ask_files (char *groupname)
 	}
 	if (!any)
 	    break;
-	V_line (ln+2, "(enter list by any name to get a list of existing raster files)");
+	V_line (ln+2, "(enter list by any name to get a list of existing raster maps)");
 	V_intrpt_ok();
 	if(!V_call())
 	    exit(0);
@@ -109,7 +109,7 @@ int ask_files (char *groupname)
 	if (duplicate)
 	    repeat = 1;
 
-/* list the raster files in the target location. must switch
+/* list the raster maps in the target location. must switch
  * environments to do this
  */
 	if (list)
@@ -139,7 +139,7 @@ int ask_files (char *groupname)
 		{
 		    repeat = 1;
 		    fprintf (stderr, "\n");
-		    fprintf (stderr, "** The following raster files already exist in\n");
+		    fprintf (stderr, "** The following raster maps already exist in\n");
 		    fprintf (stderr, "** LOCATION %s, MAPSET %s:\n\n", G_location(), G_mapset());
 		}
 		fprintf (stderr, "%-18s%s", result[i], repeat%4?" ":"\n");

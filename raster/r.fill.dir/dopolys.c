@@ -86,7 +86,7 @@ int dopolys (int fd, int fm, int nl, int ns)
    }
    G_message(_("Found %d unresolved areas"),flag);
 
-/* Compose a new raster file to contain the resulting assignments */
+/* Compose a new raster map to contain the resulting assignments */
    lseek(fm,0,SEEK_SET);
    cnt=0;
    for(i=0;i<nl;i+=1)

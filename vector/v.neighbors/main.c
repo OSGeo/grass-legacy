@@ -61,7 +61,7 @@ int main (int argc, char *argv[])
     out_opt->type        = TYPE_STRING ;
     out_opt->required    = YES ;
     out_opt->gisprompt   = "any,cell,raster" ;
-    out_opt->description = "Name of the new raster file" ;
+    out_opt->description = "Name of the new raster map" ;
 
     method_opt		    = G_define_option() ;
     method_opt->key         = "method" ;

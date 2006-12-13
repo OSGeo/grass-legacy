@@ -79,7 +79,7 @@ int enforce_downstream(int infd, int outfd,
     for (line = 1; line <= nlines; line++)
         retval = process_line(Map, outMap, rbuf, line, parm);
 
-    /* write output raster file */
+    /* write output raster map */
     write_raster(rbuf, outfd, parm->raster_type);
 
     G_free(rbuf);

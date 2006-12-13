@@ -37,7 +37,7 @@ int main(int argc, char *argv[])
     
     G_gisinit(argv[0]);
     module = G_define_module();
-    module->description =_("Calculates standard deviation of patch area a raster file");
+    module->description =_("Calculates standard deviation of patch area a raster map");
     
     /* define options */
     

@@ -25,7 +25,7 @@
  * After modification all these problems are gone
  *
  * Modified for the new Grass 5.0 floating point and
- * null values raster file format.
+ * null values raster map format.
  * Pierre de Mouveaux - 20 april 2000.
  */
 #include <stdio.h>

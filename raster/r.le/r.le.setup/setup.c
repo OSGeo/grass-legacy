@@ -592,7 +592,7 @@ static void save_rgn (char *name, char *tempfile, FILE *tmp, int *x, int *y, int
   G_get_set_window(&wind);
   G_put_cellhd(name, &wind);
 
-  				/* make a GRASS raster file from the
+  				/* make a GRASS raster map from the
 				   region boundary pts, using the
 				   poly_to_bmif and bmif_to_cell
 				   programs */

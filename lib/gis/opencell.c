@@ -135,15 +135,14 @@ static struct fileinfo *new_fileinfo(int fd)
 }
 
 /*!
- * \brief open an existing
- *       raster file
+ * \brief open an existing raster map
  *
- *  This routine opens the raster file <b>name</b> in
+ *  This routine opens the raster map <b>name</b> in
  * <b>mapset</b> for reading. A nonnegative file descriptor is returned if the
  * open is successful. Otherwise a diagnostic message is printed and a negative
  * value is returned. This routine does quite a bit of work. Since GRASS users
- * expect that all raster files will be resampled into the current region, the
- * resampling index for the raster file is prepared by this routine after the
+ * expect that all raster maps will be resampled into the current region, the
+ * resampling index for the raster map is prepared by this routine after the
  * file is opened. The resampling is based on the active module
  * region.\remarks{See also The_Region.} Preparation required for
  * reading the various raster file formats\remarks{See

@@ -2564,7 +2564,7 @@ msgstr ""
 msgid "Monitor: _send: write returned short count: %d of %d\n"
 msgstr ""
 
-#~ msgid "Too many open raster files"
+#~ msgid "Too many open raster maps"
 #~ msgstr "Çok fazla açık raster dosya"
 
 #~ msgid "Too many open files"

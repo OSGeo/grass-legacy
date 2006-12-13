@@ -33,7 +33,7 @@ static int read_old_colors(FILE *,struct Colors *);
 /*!
  * \brief read map layer color table
  *
- * The color table for the raster file
+ * The color table for the raster map
  * <b>name</b> in the specified <b>mapset</b> is read into the
  * <b>colors</b> structure.
  * If the data layer has no color table, a default color table is generated and

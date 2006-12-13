@@ -398,21 +398,21 @@ main (int argc, char *argv[])
 
 	max_fd = G_open_cell_old(max_layer, G_find_cell2 (max_layer,""));
 	if (max_fd < 0) {
-		sprintf (buf, "%s - can't open raster file", max_layer);
+		sprintf (buf, "%s - can't open raster map", max_layer);
 		G_fatal_error (buf);
 		exit(EXIT_FAILURE);
 	}
 
         dir_fd = G_open_cell_old(dir_layer, G_find_cell2 (dir_layer,""));
 	if (dir_fd < 0) {
-		sprintf (buf, "%s - can't open raster file", dir_layer);
+		sprintf (buf, "%s - can't open raster map", dir_layer);
 		G_fatal_error (buf);
 		exit(EXIT_FAILURE);
 	}
 
         base_fd = G_open_cell_old(base_layer, G_find_cell2 (base_layer,""));
 	if (base_fd < 0) {
-		sprintf (buf, "%s - can't open raster file", base_layer);
+		sprintf (buf, "%s - can't open raster map", base_layer);
 		G_fatal_error (buf);
 		exit(EXIT_FAILURE);
 	}
@@ -420,19 +420,19 @@ main (int argc, char *argv[])
 	if (spotting) {
         	spotdist_fd = G_open_cell_old(spotdist_layer, G_find_cell2 (spotdist_layer,""));
 		if (spotdist_fd < 0) {
-			sprintf (buf, "%s - can't open raster file", spotdist_layer);
+			sprintf (buf, "%s - can't open raster map", spotdist_layer);
 			G_fatal_error (buf);
 			exit(EXIT_FAILURE);
 		}
         	velocity_fd = G_open_cell_old(velocity_layer, G_find_cell2 (velocity_layer,""));
 		if (velocity_fd < 0) {
-			sprintf (buf, "%s - can't open raster file", velocity_layer);
+			sprintf (buf, "%s - can't open raster map", velocity_layer);
 			G_fatal_error (buf);
 			exit(EXIT_FAILURE);
 		}
         	mois_fd = G_open_cell_old(mois_layer, G_find_cell2 (mois_layer,""));
 		if (mois_fd < 0) {
-			sprintf (buf, "%s - can't open raster file", mois_layer);
+			sprintf (buf, "%s - can't open raster map", mois_layer);
 			G_fatal_error (buf);
 			exit(EXIT_FAILURE);
 		}
@@ -500,7 +500,7 @@ main (int argc, char *argv[])
 
         start_fd = G_open_cell_old(start_layer, G_find_cell2 (start_layer,""));
 	if (start_fd < 0) {
-		sprintf (buf, "%s - can't open raster file", start_layer);
+		sprintf (buf, "%s - can't open raster map", start_layer);
 		G_fatal_error (buf);
 		exit(EXIT_FAILURE);
 	}

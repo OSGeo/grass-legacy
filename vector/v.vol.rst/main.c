@@ -294,7 +294,7 @@ int main (int argc, char *argv[])
     parm.maskmap->type = TYPE_STRING;
     parm.maskmap->required = NO;
     parm.maskmap->gisprompt = "old,cell,raster";
-    parm.maskmap->description = _("Name of the raster file used as mask");
+    parm.maskmap->description = _("Name of the raster map used as mask");
 
     parm.segmax = G_define_option ();
     parm.segmax->key = "segmax";

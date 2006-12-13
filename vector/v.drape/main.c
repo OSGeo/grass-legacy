@@ -57,7 +57,7 @@ int main(int argc, char *argv[])
     int j;
     double scale, estimated_elevation;
     INTERP_TYPE method = UNKNOWN;
-    int fdrast;			/* file descriptor for raster file is int */
+    int fdrast;			/* file descriptor for raster map is int */
     struct Cell_head window;
     /* end raster stuff */
 

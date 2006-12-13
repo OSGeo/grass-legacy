@@ -171,9 +171,9 @@ since by use of the <EM><A HREF="d.zoom.html">d.zoom</A></EM> program, these val
 may change several times during the editing session). 
 Their effects could be lessened if the program
 were to create a table of changes that it could incorporate into
-the new raster file on a forked process started when the user exits, or 
+the new raster map on a forked process started when the user exits, or 
 otherwise allow the user to issue a "save" command when he has
-made all desired edits to the raster file.  Currently, for instance, if
+made all desired edits to the raster map.  Currently, for instance, if
 the user needs to use <EM> <A HREF="d.zoom.html">d.zoom</A></EM> to access a different area of the 
 map, he must wait for a read and write for each entrance
 and egress of the edit mode.
@@ -209,7 +209,7 @@ the new value on each cell chosen until a different value is desired.
 <P>
 
 There is no interrupt handling.  This could leave files in .tmp
-or (rarely) result in half-baked raster files.  The original file
+or (rarely) result in half-baked raster maps.  The original file
 would survive unscathed by an interrupt at most any point in execution,
 but the graphics monitor may be left in an indeterminate state
 (try <EM>

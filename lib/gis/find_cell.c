@@ -24,22 +24,22 @@
 
 
 /*!
- * \brief find a raster file
+ * \brief find a raster map
  *
- * Looks for the raster file <b>name</b> in the database. The
+ * Looks for the raster map <b>name</b> in the database. The
  * <b>mapset</b> parameter can either be the empty string "", which means
  * search all the mapsets in the user's current mapset search path,
  * \remarks{See Mapset_Search_Path for more details about the search path.}
- * or it can be a specific mapset name, which means look for the raster file
+ * or it can be a specific mapset name, which means look for the raster map
  * only in this one mapset (for example, in the current mapset). If found,
- * the mapset where the raster file lives is returned. If not found, the NULL
+ * the mapset where the raster map lives is returned. If not found, the NULL
  * pointer is returned.
  *
- * NOTE: If the user specifies a fully qualified raster file which exists,
+ * NOTE: If the user specifies a fully qualified raster map which exists,
  * then <i>G_find_cell(~)</i> modifies <b>name</b> by removing the
  * "@<i>mapset</i>".
  *
- * For example, to find a raster file anywhere in the database:
+ * For example, to find a raster map anywhere in the database:
 \code
   char name[GNAME_MAX];
   char *mapset;
@@ -47,7 +47,7 @@
   // not found
 \endcode
  *
- * To check that the raster file exists in the current mapset:
+ * To check that the raster map exists in the current mapset:
  *
 \code
   char name[GNAME_MAX];
@@ -69,7 +69,7 @@ G_find_cell  (char *name, char *mapset)
 
 
 /*!
- * \brief find a raster file (look but don't touch)
+ * \brief find a raster map (look but don't touch)
  *
  * The same as G_find_cell() but doesn't remove the "@<i>mapset</i>"
  * qualification from <b>name</b>, if present.

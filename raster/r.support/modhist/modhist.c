@@ -13,7 +13,7 @@
 * AUTHOR(S):     Original by Michael Shapiro - CERL
 *                Port to 6.x by Brad Douglas
 *
-* PURPOSE:       Allows editing of raster file history
+* PURPOSE:       Allows editing of raster map history
 *
 * COPYRIGHT:     (C) 2000-2005 by the GRASS Development Team
 *
@@ -34,7 +34,7 @@ int main (int argc, char *argv[])
     G_gisinit(argv[0]);
 
     if (argc < 2) {
-        mapset = G_ask_cell_in_mapset(_("Which raster file needs an updated history? "), name);
+        mapset = G_ask_cell_in_mapset(_("Which raster map needs an updated history? "), name);
         if (mapset == NULL)
             return EXIT_SUCCESS;
     } else {

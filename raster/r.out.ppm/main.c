@@ -2,7 +2,7 @@
  * March 21, 1994
 */
 
-/* Use to convert grass raster file to PPM
+/* Use to convert grass raster map to PPM
  * uses currently selected region
 */
 
@@ -41,7 +41,7 @@ int main( int argc, char *argv[])
 	module = G_define_module();
 	module->keywords = _("raster");
     module->description =
-		_("Converts a GRASS raster file to a PPM image file "
+		_("Converts a GRASS raster map to a PPM image file "
 		"at the pixel resolution of the CURRENTLY DEFINED REGION.");
 
     rast = G_define_option();
@@ -111,7 +111,7 @@ int main( int argc, char *argv[])
     {  
 	cellmap = G_find_file2 ("cell", rast->answer, "");
 	if(!cellmap){
-	    sprintf(errbuf,_("Couldn't find raster file %s"), rast->answer);
+	    sprintf(errbuf,_("Couldn't find raster map %s"), rast->answer);
 	    G_fatal_error(errbuf);
 	}
 
@@ -149,7 +149,7 @@ int main( int argc, char *argv[])
 	/* Magic number meaning rawbits, 8bit greyscale to ppm format */
 
     if(!do_stdout){
-	fprintf(fp,"# CREATOR: %s from GRASS raster file \"%s\"\n", 
+	fprintf(fp,"# CREATOR: %s from GRASS raster map \"%s\"\n", 
 		argv[0], rast->answer);
 	fprintf(fp,"# east-west resolution: %f\n", w.ew_res);
 	fprintf(fp,"# north-south resolution: %f\n", w.ns_res);

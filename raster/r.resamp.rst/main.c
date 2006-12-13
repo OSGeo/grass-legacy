@@ -155,7 +155,7 @@ int main(int argc, char *argv[])
     module->keywords = _("raster");
     module->description =
 	_("Reinterpolates and computes topographic analysis from "
-	  "input raster file to a new raster file (possibly with "
+	  "input raster map to a new raster map (possibly with "
 	  "different resolution) using regularized spline with "
 	  "tension and smoothing.");
 
@@ -164,7 +164,7 @@ int main(int argc, char *argv[])
     parm.input->type = TYPE_STRING;
     parm.input->required = YES;
     parm.input->gisprompt = "old,cell,raster";
-    parm.input->description = _("Name of the input raster file");
+    parm.input->description = _("Name of the input raster map");
 
     parm.res_ew = G_define_option();
     parm.res_ew->key = "ew_res";

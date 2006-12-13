@@ -5,7 +5,7 @@
 ** ps_get_map_row is substituted by G_get_map_row_nomask
 ** writing mask file is done separately by function ps_write_mask_row
 ** which used code previously in ps_get_map_row. This is done because
-** sometimes the raster file is not drawn, but we still need a mask
+** sometimes the raster map is not drawn, but we still need a mask
 ** so temporary mask file is created by new function PS_make_mask()
 ** which calls ps_write_mask_row()
 ** These changes are made by Olga Waupotitsch 4/94
@@ -100,9 +100,9 @@ int PS_raster_plot (void)
     /* let user know what's happenning */
     if (verbose > 1)
     {
-        if (PS.do_raster) fprintf (stdout,"PS-PAINT: reading raster file <%s in %s> ...",
+        if (PS.do_raster) fprintf (stdout,"PS-PAINT: reading raster map <%s in %s> ...",
 	    PS.cell_name, PS.cell_mapset);
-        else fprintf (stdout,"PS-PAINT: reading raster files in group <%s> ...",
+        else fprintf (stdout,"PS-PAINT: reading raster maps in group <%s> ...",
 	    grp.group_name);
         fflush(stdout);
     }

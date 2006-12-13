@@ -1,19 +1,19 @@
 <H2>DESCRIPTION</H2>
 
 <i>r.resamp.rst</i>
-reinterpolates the values a from given raster file (named
-<i>input</i>) to a new raster file (named <i>elev</i>).
+reinterpolates the values a from given raster map (named
+<i>input</i>) to a new raster map (named <i>elev</i>).
 
 Reinterpolation (resampling) is done to higher, same or lower resolution 
 specified by the <i>ew_res</i> and <i>ns_res</i> parameters.
 <p>
-All resulting raster files are created using the settings of the current
-region (which may be different from that of the <i>input</i> raster file).
+All resulting raster maps are created using the settings of the current
+region (which may be different from that of the <i>input</i> raster map).
 <p>
 Optionally, and simultaneously with interpolation, the topographic parameters
 slope, aspect, profile curvature (measured in the direction of steepest
 slope), tangential curvature (measured in the direction of a tangent to
-contour line) and/or mean curvature are computed and saved as raster files
+contour line) and/or mean curvature are computed and saved as raster maps
 as specified by the options <i>slope, aspect, pcurv, tcurv, mcurv</i> respectively.
 <p>
 If the <i>-d</i> flag is set the program outputs partial derivatives fx, fy, 
@@ -31,7 +31,7 @@ The user can also define a raster map (named with <i>maskmap</i>) which will
 be used as a mask. The interpolation is skipped for cells which have zero
 or NULL value in the mask.
 <p>
-Zero values will be assigned to these cells in all output raster files.
+Zero values will be assigned to these cells in all output raster maps.
 <!-- is this still true???? -->
 <p>
 The <i>zmult</i> parameter allows the user to rescale the z-values which may 

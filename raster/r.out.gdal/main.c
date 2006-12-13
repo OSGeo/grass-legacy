@@ -492,7 +492,7 @@ int main(int argc, char *argv[])
 	if (import_band
 	    (hCurrDS, band + 1, ref.file[band].name, ref.file[band].mapset,
 	     &cellhead, maptype, nodataval) < 0)
-	    G_warning(_("Cannot export [%s] raster file."),
+	    G_warning(_("Cannot export [%s] raster map."),
 		      ref.file[band].name);
     }
 
@@ -503,7 +503,7 @@ int main(int argc, char *argv[])
 			   NULL, NULL);
 	if (hDstDS == NULL)
 	    G_fatal_error(_
-			  ("Cannot create [%s] raster file using [%s] driver."),
+			  ("Cannot create [%s] raster map using [%s] driver."),
 			  output->answer, format->answer);
     }
 

@@ -949,7 +949,7 @@ void  mv_driver()
      G_free (buff[p]);
   G_free (buff);
 
-					/* close the raster files, set the
+					/* close the raster maps, set the
 					   color table for the new raster
 					   map and compress the map */
 

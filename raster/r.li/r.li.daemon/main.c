@@ -19,7 +19,7 @@ int main(int argc, char *argv[]){
 	
 	G_gisinit(argv[0]);
 	module = G_define_module();
-	module->description =_("Calculates <simple> index on a raster file");
+	module->description =_("Calculates <simple> index on a raster map");
 	
 	/* define options */
 	

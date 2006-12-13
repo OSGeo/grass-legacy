@@ -170,7 +170,7 @@ int main(int argc, char **argv)
     Vect_open_old(&Map, parm.invect->answer, vmapset);
 
     if ((rmapset = G_find_file2("cell", parm.inrast->answer, "")) == NULL)
-        G_fatal_error(_("unable to find raster file [%s]"), parm.inrast->answer);
+        G_fatal_error(_("unable to find raster map [%s]"), parm.inrast->answer);
 
     if ((infd = G_open_cell_old(parm.inrast->answer, rmapset)) == -1)
         G_fatal_error(_("unable to open cellfile for [%s]"), parm.inrast->answer);

@@ -95,7 +95,7 @@ main (int argc, char *argv[])
  
     mapset = G_find_cell2 (name,"");
     if (mapset == NULL)
-        G_fatal_error ( _("%s: <%s> raster file not found"), G_program_name(),name);
+        G_fatal_error ( _("%s: <%s> raster map not found"), G_program_name(),name);
     if (G_read_cats (name, mapset, &cats) < 0)
         G_fatal_error ( _("%s: %s in %s - can't read category file"),
                        G_program_name(), name, mapset);

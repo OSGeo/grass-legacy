@@ -107,7 +107,7 @@ msgid "Writing %s from %s..."
 msgstr "Zapisujem novo datoteko...\n"
 
 #: ../raster3d/r3.in.ascii/main.c:79
-msgid "Ascii raster file to be imported"
+msgid "Ascii raster map to be imported"
 msgstr "Ascii rastrski sloj, ki ga nameravate uvoziti"
 
 #: ../raster3d/r3.in.ascii/main.c:90
@@ -511,7 +511,7 @@ msgstr ""
 
 #: ../raster3d/r3.cross.rast/main.c:280
 #, fuzzy, c-format
-msgid "Open 3D raster file %s"
+msgid "Open 3D raster map %s"
 msgstr "Naslov izhodnega rastrskega sloja"
 
 #: ../raster3d/r3.cross.rast/main.c:283
@@ -665,7 +665,7 @@ msgstr ""
 
 #: ../raster3d/r3.out.vtk/main.c:197
 #, fuzzy, c-format
-msgid "Open rgb g3d raster file %s"
+msgid "Open rgb g3d raster map %s"
 msgstr "Naslov izhodnega rastrskega sloja"
 
 #: ../raster3d/r3.out.vtk/main.c:210
@@ -684,7 +684,7 @@ msgstr "Nisem uspel odpreti vhodne datoteke."
 
 #: ../raster3d/r3.out.vtk/main.c:280
 #, fuzzy, c-format
-msgid "Open vector g3d raster file %s"
+msgid "Open vector g3d raster map %s"
 msgstr "Naslov izhodnega rastrskega sloja"
 
 #: ../raster3d/r3.out.vtk/main.c:293
@@ -727,7 +727,7 @@ msgstr "Ime izhodnega sloja"
 
 #: ../raster3d/r3.out.vtk/main.c:497
 #, fuzzy, c-format
-msgid "Open g3d raster file %s"
+msgid "Open g3d raster map %s"
 msgstr "Naslov izhodnega rastrskega sloja"
 
 #: ../raster3d/r3.out.vtk/main.c:536
@@ -841,7 +841,7 @@ msgstr ""
 
 #: ../raster3d/r3.out.v5d/main.c:286
 #, fuzzy
-msgid "Export of GRASS 3D raster file to 3-dimensional Vis5D file."
+msgid "Export of GRASS 3D raster map to 3-dimensional Vis5D file."
 msgstr "Izvozi GRASS rastrski sloj v binarni MAT-File"
 
 #: ../raster3d/r3.out.v5d/main.c:293
@@ -2575,7 +2575,7 @@ msgstr ""
 
 #: ../vector/v.surf.rst/main.c:245
 #, fuzzy
-msgid "Output surface raster file (elevation)"
+msgid "Output surface raster map (elevation)"
 msgstr "Izdelaj z-sloj (nadmorsko vi¹ino)"
 
 #: ../vector/v.surf.rst/main.c:249
@@ -2585,31 +2585,31 @@ msgstr "Izhodni rastrski sloj z morfometriènimi parametri"
 
 #: ../vector/v.surf.rst/main.c:256
 #, fuzzy
-msgid "Output slope raster file"
+msgid "Output slope raster map"
 msgstr "Ime izhodnega rastrskega sloja naklonov"
 
 #: ../vector/v.surf.rst/main.c:263
 #, fuzzy
-msgid "Output aspect raster file"
+msgid "Output aspect raster map"
 msgstr "Ime izhodnega rastrskega sloja ekspozicij"
 
 #: ../vector/v.surf.rst/main.c:270
 #, fuzzy
-msgid "Output profile curvature raster file"
+msgid "Output profile curvature raster map"
 msgstr "Ime izhodnega gonilnika"
 
 #: ../vector/v.surf.rst/main.c:277
 #, fuzzy
-msgid "Output tangential curvature raster file"
+msgid "Output tangential curvature raster map"
 msgstr "Ime izhodne baze podatkov"
 
 #: ../vector/v.surf.rst/main.c:284
 #, fuzzy
-msgid "Output mean curvature raster file"
+msgid "Output mean curvature raster map"
 msgstr "Ime izhodnega gonilnika"
 
 #: ../vector/v.surf.rst/main.c:291 ../vector/v.vol.rst/main.c:292
-msgid "Name of the raster file used as mask"
+msgid "Name of the raster map used as mask"
 msgstr "Ime rastrskega sloja za masko"
 
 #: ../vector/v.surf.rst/main.c:298
@@ -4051,7 +4051,7 @@ msgstr "Faktor previ¹anja"
 #, fuzzy, c-format
 msgid ""
 "\n"
-"Writing output raster file using smooth parameter=%f."
+"Writing output raster map using smooth parameter=%f."
 msgstr "Izhodni rastrski sloj z morfometriènimi parametri"
 
 #: ../vector/v.kernel/main.c:372
@@ -5900,7 +5900,7 @@ msgstr ""
 
 #: ../vector/v.sample/main.c:87
 #, fuzzy
-msgid "Sample a raster file at site locations"
+msgid "Sample a raster map at site locations"
 msgstr "Izpi¹i rastrske sloje v vhodni \"location\" in konèaj"
 
 #: ../vector/v.sample/main.c:93
@@ -6926,12 +6926,12 @@ msgstr "Ime izhodnega rastrskega sloja naklonov"
 
 #: ../raster/r.flow/io.c:163
 #, fuzzy
-msgid "Output flowpath length raster file"
+msgid "Output flowpath length raster map"
 msgstr "Ime izhodnega rastrskega sloja naklonov"
 
 #: ../raster/r.flow/io.c:165
 #, fuzzy
-msgid "Output flowline density raster file"
+msgid "Output flowline density raster map"
 msgstr "Ime izhodnega rastrskega sloja naklonov"
 
 #: ../raster/r.flow/io.c:167
@@ -7159,11 +7159,11 @@ msgstr ""
 "se nahajajo v njeni okolici."
 
 #: ../raster/r.neighbors/main.c:92
-msgid "Name of existing raster file"
+msgid "Name of existing raster map"
 msgstr "Ime obstojeèega rastrskega sloja"
 
 #: ../raster/r.neighbors/main.c:99 ../raster/r.series/main.c:107
-msgid "Name of the new raster file"
+msgid "Name of the new raster map"
 msgstr "Ime novega rastrskega sloja"
 
 #: ../raster/r.neighbors/main.c:114
@@ -7175,7 +7175,7 @@ msgid "Neighborhood size"
 msgstr "Velikost okolice (neighbourhood)"
 
 #: ../raster/r.neighbors/main.c:128
-msgid "Title of the output raster file"
+msgid "Title of the output raster map"
 msgstr "Naslov novega rastrskega sloja"
 
 #: ../raster/r.neighbors/main.c:132
@@ -7183,7 +7183,7 @@ msgid "Do not align output with the input"
 msgstr ""
 
 #: ../raster/r.compress/main.c:64
-msgid "Compresses and decompresses raster files."
+msgid "Compresses and decompresses raster maps."
 msgstr "Komprimiraj ali de-komprimiraj rastrske sloje."
 
 #: ../raster/r.compress/main.c:72 ../display/d.what.rast/main.c:56
@@ -7514,7 +7514,7 @@ msgstr ""
 #: ../raster/r.bilinear/main.c:76 ../raster/r.resamp.interp/main.c:84
 #: ../raster/r.resamp.stats/main.c:283 ../raster/r.sum/main.c:47
 #, fuzzy, c-format
-msgid "Couldn't find raster file %s"
+msgid "Couldn't find raster map %s"
 msgstr "Ne najdem vhodne datoteke %s\n"
 
 #: ../raster/r.bilinear/main.c:90 ../raster/r.bilinear/main.c:101
@@ -7631,12 +7631,12 @@ msgstr ""
 
 #: ../raster/r.out.gdal/main.c:303
 #, fuzzy, c-format
-msgid "Cannot export [%s] raster file."
+msgid "Cannot export [%s] raster map."
 msgstr "Ne najdem vhodne datoteke %s\n"
 
 #: ../raster/r.out.gdal/main.c:309
 #, fuzzy, c-format
-msgid "Cannot create [%s] raster file using [%s] driver."
+msgid "Cannot create [%s] raster map using [%s] driver."
 msgstr "Ne najdem vhodne datoteke %s\n"
 
 #: ../raster/r.out.gdal/main.c:314
@@ -7651,11 +7651,11 @@ msgstr "Matrièni filter za rastrske sloje"
 
 #: ../raster/r.mfilter/main.c:45 ../raster/r.resamp.rst/main.c:167
 #, fuzzy
-msgid "Name of the input raster file"
+msgid "Name of the input raster map"
 msgstr "Ime vhodnega rastrskega sloja"
 
 #: ../raster/r.mfilter/main.c:53
-msgid "Name of the output raster file"
+msgid "Name of the output raster map"
 msgstr "Ime izhodnega rastrskega sloja"
 
 #: ../raster/r.mfilter/main.c:60
@@ -7667,7 +7667,7 @@ msgid "Number of times to repeat the filter"
 msgstr "©tevilo ponovitev filtracije"
 
 #: ../raster/r.mfilter/main.c:75
-msgid "Output raster file title"
+msgid "Output raster map title"
 msgstr "Naslov izhodnega rastrskega sloja"
 
 #: ../raster/r.mfilter/main.c:91
@@ -7677,7 +7677,7 @@ msgstr "Uporabi filter le na podatkih z vrednostjo niè (zero)"
 #: ../raster/r.out.tiff/r.out.tiff.c:87
 #, fuzzy
 msgid ""
-"Exports a GRASS raster file to a 8/24bit TIFF image file at the pixel "
+"Exports a GRASS raster map to a 8/24bit TIFF image file at the pixel "
 "resolution of the currently defined region."
 msgstr ""
 "Preobrazi GRASS-ov rastrski sloj v PPM slikovno datoteko v resoluciji "
@@ -7686,7 +7686,7 @@ msgstr ""
 
 #: ../raster/r.out.tiff/r.out.tiff.c:95
 #, fuzzy
-msgid "Existing raster file name"
+msgid "Existing raster map name"
 msgstr "Zapisujem novo datoteko...\n"
 
 #: ../raster/r.out.tiff/r.out.tiff.c:102
@@ -7978,7 +7978,7 @@ msgstr "Znak za separator na izhodu (privzet: tab)"
 #: ../raster/r.cats/main.c:98 ../raster/r.basins.fill/main.c:92
 #: ../raster/r.basins.fill/main.c:105
 #, fuzzy, c-format
-msgid "%s: <%s> raster file not found"
+msgid "%s: <%s> raster map not found"
 msgstr "pozor: ne najdem vektorja %s\n"
 
 #: ../raster/r.cats/main.c:100
@@ -8594,37 +8594,37 @@ msgstr ""
 
 #: ../raster/simwe/r.sim.water/main.c:136
 #, fuzzy
-msgid "Name of the elevation raster file"
+msgid "Name of the elevation raster map"
 msgstr "Ime vhodnega rastrskega sloja"
 
 #: ../raster/simwe/r.sim.water/main.c:143
 #, fuzzy
-msgid "Name of the x-derivatives raster file"
+msgid "Name of the x-derivatives raster map"
 msgstr "Ime vhodnega rastrskega sloja"
 
 #: ../raster/simwe/r.sim.water/main.c:150
 #, fuzzy
-msgid "Name of the y-derivatives raster file"
+msgid "Name of the y-derivatives raster map"
 msgstr "Ime vhodnega rastrskega sloja"
 
 #: ../raster/simwe/r.sim.water/main.c:157
 #, fuzzy
-msgid "Name of the rainfall excess raster file"
+msgid "Name of the rainfall excess raster map"
 msgstr "Ime novega rastrskega sloja"
 
 #: ../raster/simwe/r.sim.water/main.c:164
 #, fuzzy
-msgid "Name of the infiltration excess raster file"
+msgid "Name of the infiltration excess raster map"
 msgstr "Ime vhodnega rastrskega sloja"
 
 #: ../raster/simwe/r.sim.water/main.c:171
 #, fuzzy
-msgid "Name of the flow control raster file"
+msgid "Name of the flow control raster map"
 msgstr "Ime vhodnega rastrskega sloja"
 
 #: ../raster/simwe/r.sim.water/main.c:178
 #, fuzzy
-msgid "Name of the Mannings n raster file"
+msgid "Name of the Mannings n raster map"
 msgstr "Ime vhodnega rastrskega sloja"
 
 #: ../raster/simwe/r.sim.water/main.c:185
@@ -8634,17 +8634,17 @@ msgstr "Ime izhodnega vektorskega sloja"
 
 #: ../raster/simwe/r.sim.water/main.c:192
 #, fuzzy
-msgid "Output water depth raster file"
+msgid "Output water depth raster map"
 msgstr "Ime izhodnega rastrskega sloja naklonov"
 
 #: ../raster/simwe/r.sim.water/main.c:199
 #, fuzzy
-msgid "Output water discharge raster file"
+msgid "Output water discharge raster map"
 msgstr "Ime izhodnega gonilnika"
 
 #: ../raster/simwe/r.sim.water/main.c:206
 #, fuzzy
-msgid "Output simulation error raster file"
+msgid "Output simulation error raster map"
 msgstr "Ime izhodnega rastrskega sloja naklonov"
 
 #: ../raster/simwe/r.sim.water/main.c:213
@@ -9067,7 +9067,7 @@ msgstr ""
 "vhodnem rastrskem sloju."
 
 #: ../raster/r.series/main.c:100
-msgid "Names of existing raster files"
+msgid "Names of existing raster maps"
 msgstr "Imena obstojeèih rastrskih slojev"
 
 #: ../raster/r.series/main.c:114
@@ -10388,7 +10388,7 @@ msgstr "Ime za izhodno datoteko z delitvijo povodij"
 
 #: ../raster/r.basins.fill/main.c:111
 #, c-format
-msgid "%s: <%s> raster file exists already"
+msgid "%s: <%s> raster map exists already"
 msgstr ""
 
 #: ../raster/r.basins.fill/main.c:119
@@ -10431,7 +10431,7 @@ msgstr ""
 
 #: ../raster/r.in.arc/main.c:44
 msgid ""
-"Convert an ESRI ARC/INFO ascii raster file (GRID) into a (binary) raster map "
+"Convert an ESRI ARC/INFO ascii raster map (GRID) into a (binary) raster map "
 "layer."
 msgstr ""
 "Spremeni ESRI-jev ARC/INFO ascii rastrsko datoteko (GRID) v binarni "
@@ -10439,7 +10439,7 @@ msgstr ""
 "sloj."
 
 #: ../raster/r.in.arc/main.c:51
-msgid "ARC/INFO ascii raster file (GRID) to be imported"
+msgid "ARC/INFO ascii raster map (GRID) to be imported"
 msgstr "ARC/INFO ascii rastrska datoteka (GRID), ki jo nameravate uvoziti"
 
 #: ../raster/r.in.arc/main.c:62 ../raster/r.in.xyz/main.c:100
@@ -10572,7 +10572,7 @@ msgid "Stop points vector map"
 msgstr "Vektorski sloj konènih toèk"
 
 #: ../raster/r.cost/main.c:156
-msgid "Starting points raster file"
+msgid "Starting points raster map"
 msgstr "Rastrski sloj zaèetnih toèk"
 
 #: ../raster/r.cost/main.c:164 ../raster/r.walk/main.c:189
@@ -10675,7 +10675,7 @@ msgstr ""
 #: ../raster/r.cost/main.c:338 ../raster/r.walk/main.c:511
 #: ../raster/r.walk/main.c:514
 #, fuzzy, c-format
-msgid "%s - can't open raster file"
+msgid "%s - can't open raster map"
 msgstr "ne morem odpreti razpona za datoteko %s"
 
 #: ../raster/r.cost/main.c:347
@@ -10722,7 +10722,7 @@ msgstr ""
 
 #: ../raster/r.cost/main.c:589
 #, c-format
-msgid "can't open raster file [%s] needed for input coordinates"
+msgid "can't open raster map [%s] needed for input coordinates"
 msgstr ""
 
 #: ../raster/r.cost/main.c:599
@@ -10845,7 +10845,7 @@ msgid "%s higher above pointer wrong"
 msgstr ""
 
 #: ../raster/r.support/modcolr/modcolr.c:37
-msgid "Which raster file needs a color table"
+msgid "Which raster map needs a color table"
 msgstr ""
 
 #: ../raster/r.support/modcolr/modcolr.c:43
@@ -10859,7 +10859,7 @@ msgid "Color table for [%s] updated."
 msgstr ""
 
 #: ../raster/r.support/modhist/modhist.c:37
-msgid "Which raster file needs an updated history? "
+msgid "Which raster map needs an updated history? "
 msgstr ""
 
 #: ../raster/r.support/modhist/modhist.c:43
@@ -10882,7 +10882,7 @@ msgid "Which vector file needs updated categories?"
 msgstr ""
 
 #: ../raster/r.support/modcats/modcats.c:49
-msgid "Which raster file needs updated categories?"
+msgid "Which raster map needs updated categories?"
 msgstr ""
 
 #: ../raster/r.support/modcats/modcats.c:53
@@ -11061,7 +11061,7 @@ msgstr ""
 
 #: ../raster/r.support/modhead/modhead.c:95
 #, fuzzy, c-format
-msgid "Cannot open raster file [%s]!"
+msgid "Cannot open raster map [%s]!"
 msgstr "Ne najdem vhodne datoteke %s\n"
 
 #: ../raster/r.support/modhead/modhead.c:100
@@ -11071,7 +11071,7 @@ msgstr "Rastrski sloj, ki ga nameravate uvoziti"
 
 #: ../raster/r.support/modhead/modhead.c:102
 #, fuzzy, c-format
-msgid "Error reading raster file [%s]."
+msgid "Error reading raster map [%s]."
 msgstr "Ne najdem vhodne datoteke %s\n"
 
 #: ../raster/r.support/modhead/modhead.c:191
@@ -11143,7 +11143,7 @@ msgstr "Ne morem odpreti cellfile za [%s]"
 
 #: ../raster/r.support/modhead/modhead.c:301
 #, c-format
-msgid "Header for raster file [%s] updated."
+msgid "Header for raster map [%s] updated."
 msgstr ""
 
 #: ../raster/r.support/modhead/ask_format.c:24
@@ -11494,7 +11494,7 @@ msgstr "Spremeni ascii rastrsko tekstovno datoteko v binarni rastrski sloj."
 
 #: ../raster/r.in.ascii/main.c:55
 #, fuzzy
-msgid "Ascii raster file to be imported (or \"-\" to read from stdin)"
+msgid "Ascii raster map to be imported (or \"-\" to read from stdin)"
 msgstr "Ascii rastrski sloj, ki ga nameravate uvoziti"
 
 #: ../raster/r.in.ascii/main.c:80
@@ -12554,7 +12554,7 @@ msgstr ""
 
 #: ../raster/r.walk/main.c:823
 #, fuzzy, c-format
-msgid "Can't open raster file %s"
+msgid "Can't open raster map %s"
 msgstr "Ne najdem vhodne datoteke %s\n"
 
 #: ../raster/r.walk/main.c:833
@@ -12647,7 +12647,7 @@ msgstr "Ime izhodnega rastrskega sloja"
 
 #: ../raster/r.out.ppm/main.c:43
 msgid ""
-"Converts a GRASS raster file to a PPM image file at the pixel resolution of "
+"Converts a GRASS raster map to a PPM image file at the pixel resolution of "
 "the CURRENTLY DEFINED REGION."
 msgstr ""
 "Preobrazi GRASS-ov rastrski sloj v PPM slikovno datoteko v resoluciji "
@@ -12870,7 +12870,7 @@ msgid "Resolution of output map"
 msgstr "Resolucija izhodnega sloja"
 
 #: ../raster/r.proj/main.c:180
-msgid "List raster files in input location and exit"
+msgid "List raster maps in input location and exit"
 msgstr "Izpi¹i rastrske sloje v vhodni \"location\" in konèaj"
 
 #: ../raster/r.proj/main.c:184
@@ -13017,7 +13017,7 @@ msgstr "Izhodni rastrski sloj vpadnega kota sonènih ¾arkov"
 
 #: ../raster/r.sun/main.c:277
 msgid ""
-"Output beam irradiance [W.m-2] (mode 1) or irradiation raster file [Wh.m-2."
+"Output beam irradiance [W.m-2] (mode 1) or irradiation raster map [Wh.m-2."
 "day-1] (mode 2)"
 msgstr ""
 
@@ -13468,7 +13468,7 @@ msgid "Input data given for (o/i)"
 msgstr "Vhodni podatki za (i/o)"
 
 #: ../raster/r.in.bin/main.c:113
-msgid "Import a binary raster file into a GRASS raster map layer."
+msgid "Import a binary raster map into a GRASS raster map layer."
 msgstr "Uvozi binarno rastrsko datoteko v GRASS-ov rastrski sloj."
 
 #: ../raster/r.in.bin/main.c:117
@@ -13494,7 +13494,7 @@ msgstr "Pridobi informacijo o regiji iz vzglavja stila GMT"
 
 #: ../raster/r.in.bin/main.c:139
 #, fuzzy
-msgid "Bin raster file to be imported"
+msgid "Bin raster map to be imported"
 msgstr "Binarna rastrska datoteka, ki jo nameravate uvoziti"
 
 #: ../raster/r.in.bin/main.c:156
@@ -13683,7 +13683,7 @@ msgstr "Ne morem ustvariti indeksa"
 
 #: ../raster/r.surf.idw/main.c:118
 #, fuzzy, c-format
-msgid "%s in %s -can't open raster file"
+msgid "%s in %s -can't open raster map"
 msgstr "ne morem odpreti razpona za datoteko %s"
 
 #: ../raster/r.surf.idw/main.c:131
@@ -13698,8 +13698,8 @@ msgstr "Ne morem ustvariti tabele: %s"
 
 #: ../raster/r.resamp.rst/main.c:157
 msgid ""
-"Reinterpolates and computes topographic analysis from input raster file to a "
-"new raster file (possibly with different resolution) using regularized "
+"Reinterpolates and computes topographic analysis from input raster map to a "
+"new raster map (possibly with different resolution) using regularized "
 "spline with tension and smoothing."
 msgstr ""
 "Preinterpolira in izraèuna topografsko analizo iz vhodnega rastrskega "
@@ -13980,7 +13980,7 @@ msgstr ""
 
 #: ../raster/r.carve/main.c:173
 #, fuzzy, c-format
-msgid "unable to find raster file [%s]"
+msgid "unable to find raster map [%s]"
 msgstr "Ne najdem vhodne datoteke %s\n"
 
 #: ../raster/r.carve/main.c:176 ../raster/r.carve/main.c:181
@@ -14004,12 +14004,12 @@ msgstr ""
 
 #: ../raster/r.carve/raster.c:12
 #, fuzzy
-msgid "Reading raster file... "
+msgid "Reading raster map... "
 msgstr "Berem dig_att datoteko...\n"
 
 #: ../raster/r.carve/raster.c:31
 #, fuzzy
-msgid "Writing raster file... "
+msgid "Writing raster map... "
 msgstr "Zapisujem novo datoteko...\n"
 
 #: ../raster/r.clump/clump.c:100
@@ -14019,12 +14019,12 @@ msgstr ""
 
 #: ../raster/r.clump/clump.c:104
 #, fuzzy
-msgid "Unable to properly read input raster file"
+msgid "Unable to properly read input raster map"
 msgstr "Ne najdem vhodne datoteke %s\n"
 
 #: ../raster/r.clump/clump.c:249
 #, fuzzy
-msgid "Unable to properly write output raster file"
+msgid "Unable to properly write output raster map"
 msgstr "Ime izhodnega rastrskega sloja"
 
 #: ../raster/r.clump/main.c:53
@@ -14295,7 +14295,7 @@ msgid "Generates random surface(s) with spatial dependence."
 msgstr "Izdela nakljuèno(e) povr¹ino(e) s prostorsko odvisnostjo."
 
 #: ../raster/r.in.gdal/main.c:71
-msgid "Import GDAL supported raster file into a binary raster map layer."
+msgid "Import GDAL supported raster map into a binary raster map layer."
 msgstr ""
 "Uvozi rastrsko datoteko formata, ki ga podpira GDAL v binarni rastrski sloj"
 
@@ -14518,12 +14518,12 @@ msgstr ""
 
 #: ../raster/r.contour/main.c:153
 #, fuzzy, c-format
-msgid "<%s> raster file not found"
+msgid "<%s> raster map not found"
 msgstr "pozor: ne najdem vektorja %s\n"
 
 #: ../raster/r.contour/main.c:157
 #, fuzzy, c-format
-msgid "<%s> unable to open raster file"
+msgid "<%s> unable to open raster map"
 msgstr "Ne najdem vhodne datoteke %s\n"
 
 #: ../raster/r.contour/main.c:160
@@ -14646,7 +14646,7 @@ msgstr "Ne najdem rastrskega sloja <%s>"
 #, c-format
 msgid ""
 "\n"
-"** The following raster files in subgroup [%s] do not exist:"
+"** The following raster maps in subgroup [%s] do not exist:"
 msgstr ""
 
 #: ../imagery/i.cluster/open_files.c:38
@@ -15096,16 +15096,16 @@ msgstr ""
 
 #: ../imagery/i.ifft/ifftmain.c:66
 #, fuzzy
-msgid "input raster file (image fft, real part)"
+msgid "input raster map (image fft, real part)"
 msgstr "Binarna rastrska datoteka, ki jo nameravate uvoziti"
 
 #: ../imagery/i.ifft/ifftmain.c:74
-msgid "input raster file (image fft, imaginary part"
+msgid "input raster map (image fft, imaginary part"
 msgstr ""
 
 #: ../imagery/i.ifft/ifftmain.c:82
 #, fuzzy
-msgid "output inverse raster file after ifft"
+msgid "output inverse raster map after ifft"
 msgstr "Naslov izhodnega rastrskega sloja"
 
 #: ../imagery/i.ifft/ifftmain.c:94
@@ -15132,7 +15132,7 @@ msgstr ""
 
 #: ../imagery/i.ifft/ifftmain.c:111
 #, fuzzy, c-format
-msgid "%s: %s - illegal name for output raster file."
+msgid "%s: %s - illegal name for output raster map."
 msgstr "Ime izhodnega rastrskega sloja"
 
 #: ../imagery/i.ifft/ifftmain.c:129
@@ -15472,16 +15472,16 @@ msgstr ""
 
 #: ../imagery/i.fft/fftmain.c:65
 #, fuzzy
-msgid "input raster file being fft"
+msgid "input raster map being fft"
 msgstr "Naslov izhodnega rastrskega sloja"
 
 #: ../imagery/i.fft/fftmain.c:73
 #, fuzzy
-msgid "output real part arrays stored as raster file"
+msgid "output real part arrays stored as raster map"
 msgstr "Izdelaj vi¹inski rastrski sloj po napolnjenju"
 
 #: ../imagery/i.fft/fftmain.c:81
-msgid "output imaginary part arrays stored as raster file"
+msgid "output imaginary part arrays stored as raster map"
 msgstr ""
 
 #: ../imagery/i.fft/fftmain.c:89
@@ -16022,7 +16022,7 @@ msgstr ""
 
 #: ../imagery/i.cca/main.c:92
 #, fuzzy
-msgid "Output raster file prefix name"
+msgid "Output raster map prefix name"
 msgstr "Naslov izhodnega rastrskega sloja"
 
 #: ../imagery/i.cca/main.c:99
@@ -17937,7 +17937,7 @@ msgstr ""
 #: ../display/d.histogram/main.c:71
 msgid ""
 "Displays a histogram in the form of a pie or bar chart for a user-specified "
-"raster file."
+"raster map."
 msgstr ""
 
 #: ../display/d.histogram/main.c:76
@@ -18431,7 +18431,7 @@ msgstr ""
 #~ msgstr "Prepi¹i izhod"
 
 #, fuzzy
-#~ msgid "%s[%d]: No raster file specified."
+#~ msgid "%s[%d]: No raster map specified."
 #~ msgstr "pozor: ne najdem vektorja %s\n"
 
 #, fuzzy
@@ -18502,7 +18502,7 @@ msgstr ""
 #~ msgstr "Ime izhodnega rastrskega sloja"
 
 #, fuzzy
-#~ msgid "Too much strats for raster file\n"
+#~ msgid "Too much strats for raster map\n"
 #~ msgstr "ne morem odpreti razpona za datoteko %s"
 
 #, fuzzy
@@ -18664,7 +18664,7 @@ msgstr ""
 #~ msgstr "Uvozi binarno rastrsko datoteko v GRASS-ov rastrski sloj."
 
 #, fuzzy
-#~ msgid "name for new raster file"
+#~ msgid "name for new raster map"
 #~ msgstr "Ime novega rastrskega sloja."
 
 #, fuzzy
@@ -18868,7 +18868,7 @@ msgstr ""
 #~ msgid "unknown interpolation method"
 #~ msgstr "Interpolacijska metoda, ki jo ¾elite uporabiti"
 
-#~ msgid "Name of existing raster file."
+#~ msgid "Name of existing raster map."
 #~ msgstr "Ime obstojeèega rastrskega sloja."
 
 #~ msgid "Name of input map"
@@ -18881,10 +18881,10 @@ msgstr ""
 #~ msgstr "Ime izhodnega rastrskega sloja"
 
 #, fuzzy
-#~ msgid "Name of existing input raster file"
+#~ msgid "Name of existing input raster map"
 #~ msgstr "Nisem mogel odpreti vhodne datoteke dig_att."
 
-#~ msgid "Name of output raster file"
+#~ msgid "Name of output raster map"
 #~ msgstr "Ime izhodnega rastrskega sloja"
 
 #~ msgid "cover raster map"
@@ -18954,10 +18954,10 @@ msgstr ""
 #~ msgid "Tension"
 #~ msgstr "Napetost"
 
-#~ msgid "Name of the aspect raster file"
+#~ msgid "Name of the aspect raster map"
 #~ msgstr "Ime rastrskega sloja ekspozicij"
 
-#~ msgid "Name of the slope raster file"
+#~ msgid "Name of the slope raster map"
 #~ msgstr "Ime rastrskega sloja naklonov"
 
 #~ msgid "Output direct (beam) irradiance/irradiation file (raster)"

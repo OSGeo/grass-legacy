@@ -107,7 +107,7 @@ msgid "Writing %s from %s..."
 msgstr ""
 
 #: ../raster3d/r3.in.ascii/main.c:79
-msgid "Ascii raster file to be imported"
+msgid "Ascii raster map to be imported"
 msgstr ""
 
 #: ../raster3d/r3.in.ascii/main.c:90
@@ -533,7 +533,7 @@ msgstr ""
 
 #: ../raster3d/r3.cross.rast/main.c:280
 #, fuzzy, c-format
-msgid "Open 3D raster file %s"
+msgid "Open 3D raster map %s"
 msgstr "खोलें"
 
 #: ../raster3d/r3.cross.rast/main.c:283
@@ -693,7 +693,7 @@ msgstr ""
 
 #: ../raster3d/r3.out.vtk/main.c:197
 #, fuzzy, c-format
-msgid "Open rgb g3d raster file %s"
+msgid "Open rgb g3d raster map %s"
 msgstr "खोलें"
 
 #: ../raster3d/r3.out.vtk/main.c:210
@@ -713,7 +713,7 @@ msgstr "त्रुटि"
 
 #: ../raster3d/r3.out.vtk/main.c:280
 #, fuzzy, c-format
-msgid "Open vector g3d raster file %s"
+msgid "Open vector g3d raster map %s"
 msgstr "खोलें"
 
 #: ../raster3d/r3.out.vtk/main.c:293
@@ -756,7 +756,7 @@ msgstr "का a"
 
 #: ../raster3d/r3.out.vtk/main.c:497
 #, fuzzy, c-format
-msgid "Open g3d raster file %s"
+msgid "Open g3d raster map %s"
 msgstr "खोलें"
 
 #: ../raster3d/r3.out.vtk/main.c:536
@@ -879,7 +879,7 @@ msgstr "त्रुटि?"
 
 #: ../raster3d/r3.out.v5d/main.c:286
 #, fuzzy
-msgid "Export of GRASS 3D raster file to 3-dimensional Vis5D file."
+msgid "Export of GRASS 3D raster map to 3-dimensional Vis5D file."
 msgstr "निर्यात का."
 
 #: ../raster3d/r3.out.v5d/main.c:293
@@ -2657,7 +2657,7 @@ msgid "Output cross-validation errors vector point file"
 msgstr "का बिन्दु"
 
 #: ../vector/v.surf.rst/main.c:245
-msgid "Output surface raster file (elevation)"
+msgid "Output surface raster map (elevation)"
 msgstr ""
 
 #: ../vector/v.surf.rst/main.c:249
@@ -2667,28 +2667,28 @@ msgstr "का"
 
 #: ../vector/v.surf.rst/main.c:256
 #, fuzzy
-msgid "Output slope raster file"
+msgid "Output slope raster map"
 msgstr "ढाल"
 
 #: ../vector/v.surf.rst/main.c:263
-msgid "Output aspect raster file"
+msgid "Output aspect raster map"
 msgstr ""
 
 #: ../vector/v.surf.rst/main.c:270
-msgid "Output profile curvature raster file"
+msgid "Output profile curvature raster map"
 msgstr ""
 
 #: ../vector/v.surf.rst/main.c:277
-msgid "Output tangential curvature raster file"
+msgid "Output tangential curvature raster map"
 msgstr ""
 
 #: ../vector/v.surf.rst/main.c:284
-msgid "Output mean curvature raster file"
+msgid "Output mean curvature raster map"
 msgstr ""
 
 #: ../vector/v.surf.rst/main.c:291 ../vector/v.vol.rst/main.c:292
 #, fuzzy
-msgid "Name of the raster file used as mask"
+msgid "Name of the raster map used as mask"
 msgstr "का"
 
 #: ../vector/v.surf.rst/main.c:298
@@ -4135,7 +4135,7 @@ msgstr "f."
 #, fuzzy, c-format
 msgid ""
 "\n"
-"Writing output raster file using smooth parameter=%f."
+"Writing output raster map using smooth parameter=%f."
 msgstr "f."
 
 #: ../vector/v.kernel/main.c:372
@@ -6036,7 +6036,7 @@ msgid "Column parameter cannot be combined with use of z coordinate"
 msgstr "का ज़ेड"
 
 #: ../vector/v.sample/main.c:87
-msgid "Sample a raster file at site locations"
+msgid "Sample a raster map at site locations"
 msgstr ""
 
 #: ../vector/v.sample/main.c:93
@@ -7078,12 +7078,12 @@ msgstr ""
 
 #: ../raster/r.flow/io.c:163
 #, fuzzy
-msgid "Output flowpath length raster file"
+msgid "Output flowpath length raster map"
 msgstr "ढाल"
 
 #: ../raster/r.flow/io.c:165
 #, fuzzy
-msgid "Output flowline density raster file"
+msgid "Output flowline density raster map"
 msgstr "घनत्व"
 
 #: ../raster/r.flow/io.c:167
@@ -7314,12 +7314,12 @@ msgstr "a फंक्शन का."
 
 #: ../raster/r.neighbors/main.c:92
 #, fuzzy
-msgid "Name of existing raster file"
+msgid "Name of existing raster map"
 msgstr "का"
 
 #: ../raster/r.neighbors/main.c:99 ../raster/r.series/main.c:107
 #, fuzzy
-msgid "Name of the new raster file"
+msgid "Name of the new raster map"
 msgstr "का"
 
 #: ../raster/r.neighbors/main.c:114
@@ -7333,7 +7333,7 @@ msgstr "आकार "
 
 #: ../raster/r.neighbors/main.c:128
 #, fuzzy
-msgid "Title of the output raster file"
+msgid "Title of the output raster map"
 msgstr "का"
 
 #: ../raster/r.neighbors/main.c:132
@@ -7342,7 +7342,7 @@ msgid "Do not align output with the input"
 msgstr "नहीं"
 
 #: ../raster/r.compress/main.c:64
-msgid "Compresses and decompresses raster files."
+msgid "Compresses and decompresses raster maps."
 msgstr ""
 
 #: ../raster/r.compress/main.c:72 ../display/d.what.rast/main.c:56
@@ -7686,7 +7686,7 @@ msgstr "उत्तर दक्षिण के लिए"
 #: ../raster/r.bilinear/main.c:76 ../raster/r.resamp.interp/main.c:84
 #: ../raster/r.resamp.stats/main.c:283 ../raster/r.sum/main.c:47
 #, c-format
-msgid "Couldn't find raster file %s"
+msgid "Couldn't find raster map %s"
 msgstr ""
 
 #: ../raster/r.bilinear/main.c:90 ../raster/r.bilinear/main.c:101
@@ -7801,12 +7801,12 @@ msgstr ""
 
 #: ../raster/r.out.gdal/main.c:303
 #, fuzzy, c-format
-msgid "Cannot export [%s] raster file."
+msgid "Cannot export [%s] raster map."
 msgstr "का"
 
 #: ../raster/r.out.gdal/main.c:309
 #, fuzzy, c-format
-msgid "Cannot create [%s] raster file using [%s] driver."
+msgid "Cannot create [%s] raster map using [%s] driver."
 msgstr "डाटाटाइप."
 
 #: ../raster/r.out.gdal/main.c:314
@@ -7821,12 +7821,12 @@ msgstr "माट्रिक्स फ़िल्टर."
 
 #: ../raster/r.mfilter/main.c:45 ../raster/r.resamp.rst/main.c:167
 #, fuzzy
-msgid "Name of the input raster file"
+msgid "Name of the input raster map"
 msgstr "का"
 
 #: ../raster/r.mfilter/main.c:53
 #, fuzzy
-msgid "Name of the output raster file"
+msgid "Name of the output raster map"
 msgstr "का"
 
 #: ../raster/r.mfilter/main.c:60
@@ -7841,7 +7841,7 @@ msgstr "का फ़िल्टर"
 
 #: ../raster/r.mfilter/main.c:75
 #, fuzzy
-msgid "Output raster file title"
+msgid "Output raster map title"
 msgstr "शीर्षक"
 
 #: ../raster/r.mfilter/main.c:91
@@ -7852,12 +7852,12 @@ msgstr "लागू करें फ़िल्टर"
 #: ../raster/r.out.tiff/r.out.tiff.c:87
 #, fuzzy
 msgid ""
-"Exports a GRASS raster file to a 8/24bit TIFF image file at the pixel "
+"Exports a GRASS raster map to a 8/24bit TIFF image file at the pixel "
 "resolution of the currently defined region."
 msgstr "a a छवि पर का."
 
 #: ../raster/r.out.tiff/r.out.tiff.c:95
-msgid "Existing raster file name"
+msgid "Existing raster map name"
 msgstr ""
 
 #: ../raster/r.out.tiff/r.out.tiff.c:102
@@ -8147,7 +8147,7 @@ msgstr ""
 #: ../raster/r.cats/main.c:98 ../raster/r.basins.fill/main.c:92
 #: ../raster/r.basins.fill/main.c:105
 #, fuzzy, c-format
-msgid "%s: <%s> raster file not found"
+msgid "%s: <%s> raster map not found"
 msgstr "नहीं"
 
 #: ../raster/r.cats/main.c:100
@@ -8813,37 +8813,37 @@ msgstr ""
 
 #: ../raster/simwe/r.sim.water/main.c:136
 #, fuzzy
-msgid "Name of the elevation raster file"
+msgid "Name of the elevation raster map"
 msgstr "का"
 
 #: ../raster/simwe/r.sim.water/main.c:143
 #, fuzzy
-msgid "Name of the x-derivatives raster file"
+msgid "Name of the x-derivatives raster map"
 msgstr "का"
 
 #: ../raster/simwe/r.sim.water/main.c:150
 #, fuzzy
-msgid "Name of the y-derivatives raster file"
+msgid "Name of the y-derivatives raster map"
 msgstr "का"
 
 #: ../raster/simwe/r.sim.water/main.c:157
 #, fuzzy
-msgid "Name of the rainfall excess raster file"
+msgid "Name of the rainfall excess raster map"
 msgstr "का"
 
 #: ../raster/simwe/r.sim.water/main.c:164
 #, fuzzy
-msgid "Name of the infiltration excess raster file"
+msgid "Name of the infiltration excess raster map"
 msgstr "का"
 
 #: ../raster/simwe/r.sim.water/main.c:171
 #, fuzzy
-msgid "Name of the flow control raster file"
+msgid "Name of the flow control raster map"
 msgstr "का"
 
 #: ../raster/simwe/r.sim.water/main.c:178
 #, fuzzy
-msgid "Name of the Mannings n raster file"
+msgid "Name of the Mannings n raster map"
 msgstr "का"
 
 #: ../raster/simwe/r.sim.water/main.c:185
@@ -8853,17 +8853,17 @@ msgstr "का"
 
 #: ../raster/simwe/r.sim.water/main.c:192
 #, fuzzy
-msgid "Output water depth raster file"
+msgid "Output water depth raster map"
 msgstr "ढाल"
 
 #: ../raster/simwe/r.sim.water/main.c:199
 #, fuzzy
-msgid "Output water discharge raster file"
+msgid "Output water discharge raster map"
 msgstr "ढाल"
 
 #: ../raster/simwe/r.sim.water/main.c:206
 #, fuzzy
-msgid "Output simulation error raster file"
+msgid "Output simulation error raster map"
 msgstr "ढाल"
 
 #: ../raster/simwe/r.sim.water/main.c:213
@@ -9299,7 +9299,7 @@ msgstr "a फंक्शन का."
 
 #: ../raster/r.series/main.c:100
 #, fuzzy
-msgid "Names of existing raster files"
+msgid "Names of existing raster maps"
 msgstr "का"
 
 #: ../raster/r.series/main.c:114
@@ -10642,7 +10642,7 @@ msgstr "के लिए"
 
 #: ../raster/r.basins.fill/main.c:111
 #, c-format
-msgid "%s: <%s> raster file exists already"
+msgid "%s: <%s> raster map exists already"
 msgstr ""
 
 #: ../raster/r.basins.fill/main.c:119
@@ -10685,12 +10685,12 @@ msgstr ""
 #: ../raster/r.in.arc/main.c:44
 #, fuzzy
 msgid ""
-"Convert an ESRI ARC/INFO ascii raster file (GRID) into a (binary) raster map "
+"Convert an ESRI ARC/INFO ascii raster map (GRID) into a (binary) raster map "
 "layer."
 msgstr "a."
 
 #: ../raster/r.in.arc/main.c:51
-msgid "ARC/INFO ascii raster file (GRID) to be imported"
+msgid "ARC/INFO ascii raster map (GRID) to be imported"
 msgstr ""
 
 #: ../raster/r.in.arc/main.c:62 ../raster/r.in.xyz/main.c:100
@@ -10829,7 +10829,7 @@ msgid "Stop points vector map"
 msgstr "रूकें"
 
 #: ../raster/r.cost/main.c:156
-msgid "Starting points raster file"
+msgid "Starting points raster map"
 msgstr ""
 
 #: ../raster/r.cost/main.c:164 ../raster/r.walk/main.c:189
@@ -10934,7 +10934,7 @@ msgstr ""
 #: ../raster/r.cost/main.c:338 ../raster/r.walk/main.c:511
 #: ../raster/r.walk/main.c:514
 #, c-format
-msgid "%s - can't open raster file"
+msgid "%s - can't open raster map"
 msgstr ""
 
 #: ../raster/r.cost/main.c:347
@@ -10985,7 +10985,7 @@ msgstr "के लिए खण्ड"
 
 #: ../raster/r.cost/main.c:589
 #, c-format
-msgid "can't open raster file [%s] needed for input coordinates"
+msgid "can't open raster map [%s] needed for input coordinates"
 msgstr ""
 
 #: ../raster/r.cost/main.c:599
@@ -11116,7 +11116,7 @@ msgstr "ऊंचाई"
 
 #: ../raster/r.support/modcolr/modcolr.c:37
 #, fuzzy
-msgid "Which raster file needs a color table"
+msgid "Which raster map needs a color table"
 msgstr "a"
 
 #: ../raster/r.support/modcolr/modcolr.c:43
@@ -11130,7 +11130,7 @@ msgid "Color table for [%s] updated."
 msgstr "के लिए."
 
 #: ../raster/r.support/modhist/modhist.c:37
-msgid "Which raster file needs an updated history? "
+msgid "Which raster map needs an updated history? "
 msgstr ""
 
 #: ../raster/r.support/modhist/modhist.c:43
@@ -11153,7 +11153,7 @@ msgid "Which vector file needs updated categories?"
 msgstr ""
 
 #: ../raster/r.support/modcats/modcats.c:49
-msgid "Which raster file needs updated categories?"
+msgid "Which raster map needs updated categories?"
 msgstr ""
 
 #: ../raster/r.support/modcats/modcats.c:53
@@ -11341,7 +11341,7 @@ msgstr "है a का संपादन (_E)!"
 
 #: ../raster/r.support/modhead/modhead.c:95
 #, c-format
-msgid "Cannot open raster file [%s]!"
+msgid "Cannot open raster map [%s]!"
 msgstr ""
 
 #: ../raster/r.support/modhead/modhead.c:100
@@ -11351,7 +11351,7 @@ msgstr "है."
 
 #: ../raster/r.support/modhead/modhead.c:102
 #, fuzzy, c-format
-msgid "Error reading raster file [%s]."
+msgid "Error reading raster map [%s]."
 msgstr "त्रुटि."
 
 #: ../raster/r.support/modhead/modhead.c:191
@@ -11429,7 +11429,7 @@ msgstr "के लिए."
 
 #: ../raster/r.support/modhead/modhead.c:301
 #, fuzzy, c-format
-msgid "Header for raster file [%s] updated."
+msgid "Header for raster map [%s] updated."
 msgstr "के लिए."
 
 #: ../raster/r.support/modhead/ask_format.c:24
@@ -11800,7 +11800,7 @@ msgstr "पाठ a."
 
 #: ../raster/r.in.ascii/main.c:55
 #, fuzzy
-msgid "Ascii raster file to be imported (or \"-\" to read from stdin)"
+msgid "Ascii raster map to be imported (or \"-\" to read from stdin)"
 msgstr "उत्तर पूर्व"
 
 #: ../raster/r.in.ascii/main.c:80
@@ -12887,7 +12887,7 @@ msgstr "नहीं प्रारंभ"
 
 #: ../raster/r.walk/main.c:823
 #, c-format
-msgid "Can't open raster file %s"
+msgid "Can't open raster map %s"
 msgstr ""
 
 #: ../raster/r.walk/main.c:833
@@ -12987,7 +12987,7 @@ msgstr ""
 #: ../raster/r.out.ppm/main.c:43
 #, fuzzy
 msgid ""
-"Converts a GRASS raster file to a PPM image file at the pixel resolution of "
+"Converts a GRASS raster map to a PPM image file at the pixel resolution of "
 "the CURRENTLY DEFINED REGION."
 msgstr "a a छवि पर का."
 
@@ -13216,7 +13216,7 @@ msgid "Resolution of output map"
 msgstr "का"
 
 #: ../raster/r.proj/main.c:180
-msgid "List raster files in input location and exit"
+msgid "List raster maps in input location and exit"
 msgstr ""
 
 #: ../raster/r.proj/main.c:184
@@ -13357,7 +13357,7 @@ msgstr "कोण"
 #: ../raster/r.sun/main.c:277
 #, fuzzy
 msgid ""
-"Output beam irradiance [W.m-2] (mode 1) or irradiation raster file [Wh.m-2."
+"Output beam irradiance [W.m-2] (mode 1) or irradiation raster map [Wh.m-2."
 "day-1] (mode 2)"
 msgstr "प मी मी"
 
@@ -13824,7 +13824,7 @@ msgstr "के लिए i"
 
 #: ../raster/r.in.bin/main.c:113
 #, fuzzy
-msgid "Import a binary raster file into a GRASS raster map layer."
+msgid "Import a binary raster map into a GRASS raster map layer."
 msgstr "आयात a a."
 
 #: ../raster/r.in.bin/main.c:117
@@ -13853,7 +13853,7 @@ msgstr "पाएं जीएमटी"
 
 #: ../raster/r.in.bin/main.c:139
 #, fuzzy
-msgid "Bin raster file to be imported"
+msgid "Bin raster map to be imported"
 msgstr "Bin"
 
 #: ../raster/r.in.bin/main.c:156
@@ -14052,7 +14052,7 @@ msgstr "छापें"
 
 #: ../raster/r.surf.idw/main.c:118
 #, fuzzy, c-format
-msgid "%s in %s -can't open raster file"
+msgid "%s in %s -can't open raster map"
 msgstr "त्रुटि"
 
 #: ../raster/r.surf.idw/main.c:131
@@ -14068,8 +14068,8 @@ msgstr "के लिए"
 #: ../raster/r.resamp.rst/main.c:157
 #, fuzzy
 msgid ""
-"Reinterpolates and computes topographic analysis from input raster file to a "
-"new raster file (possibly with different resolution) using regularized "
+"Reinterpolates and computes topographic analysis from input raster map to a "
+"new raster map (possibly with different resolution) using regularized "
 "spline with tension and smoothing."
 msgstr "a."
 
@@ -14357,7 +14357,7 @@ msgstr ""
 
 #: ../raster/r.carve/main.c:173
 #, fuzzy, c-format
-msgid "unable to find raster file [%s]"
+msgid "unable to find raster map [%s]"
 msgstr "का"
 
 #: ../raster/r.carve/main.c:176 ../raster/r.carve/main.c:181
@@ -14380,12 +14380,12 @@ msgstr ""
 
 #: ../raster/r.carve/raster.c:12
 #, fuzzy
-msgid "Reading raster file... "
+msgid "Reading raster map... "
 msgstr "n"
 
 #: ../raster/r.carve/raster.c:31
 #, fuzzy
-msgid "Writing raster file... "
+msgid "Writing raster map... "
 msgstr "n"
 
 #: ../raster/r.clump/clump.c:100
@@ -14395,12 +14395,12 @@ msgstr ""
 
 #: ../raster/r.clump/clump.c:104
 #, fuzzy
-msgid "Unable to properly read input raster file"
+msgid "Unable to properly read input raster map"
 msgstr "का"
 
 #: ../raster/r.clump/clump.c:249
 #, fuzzy
-msgid "Unable to properly write output raster file"
+msgid "Unable to properly write output raster map"
 msgstr "का"
 
 #: ../raster/r.clump/main.c:53
@@ -14677,7 +14677,7 @@ msgstr ""
 
 #: ../raster/r.in.gdal/main.c:71
 #, fuzzy
-msgid "Import GDAL supported raster file into a binary raster map layer."
+msgid "Import GDAL supported raster map into a binary raster map layer."
 msgstr "आयात a."
 
 #: ../raster/r.in.gdal/main.c:80
@@ -14903,12 +14903,12 @@ msgstr ""
 
 #: ../raster/r.contour/main.c:153
 #, fuzzy, c-format
-msgid "<%s> raster file not found"
+msgid "<%s> raster map not found"
 msgstr "नहीं"
 
 #: ../raster/r.contour/main.c:157
 #, fuzzy, c-format
-msgid "<%s> unable to open raster file"
+msgid "<%s> unable to open raster map"
 msgstr "का"
 
 #: ../raster/r.contour/main.c:160
@@ -15036,7 +15036,7 @@ msgstr "नहीं"
 #, fuzzy, c-format
 msgid ""
 "\n"
-"** The following raster files in subgroup [%s] do not exist:"
+"** The following raster maps in subgroup [%s] do not exist:"
 msgstr "n नहीं:"
 
 #: ../imagery/i.cluster/open_files.c:38
@@ -15489,16 +15489,16 @@ msgstr "के लिए छवि."
 
 #: ../imagery/i.ifft/ifftmain.c:66
 #, fuzzy
-msgid "input raster file (image fft, real part)"
+msgid "input raster map (image fft, real part)"
 msgstr "छवि भाग"
 
 #: ../imagery/i.ifft/ifftmain.c:74
 #, fuzzy
-msgid "input raster file (image fft, imaginary part"
+msgid "input raster map (image fft, imaginary part"
 msgstr "छवि भाग"
 
 #: ../imagery/i.ifft/ifftmain.c:82
-msgid "output inverse raster file after ifft"
+msgid "output inverse raster map after ifft"
 msgstr ""
 
 #: ../imagery/i.ifft/ifftmain.c:94
@@ -15527,7 +15527,7 @@ msgstr "छवि i"
 
 #: ../imagery/i.ifft/ifftmain.c:111
 #, fuzzy, c-format
-msgid "%s: %s - illegal name for output raster file."
+msgid "%s: %s - illegal name for output raster map."
 msgstr "के लिए."
 
 #: ../imagery/i.ifft/ifftmain.c:129
@@ -15878,17 +15878,17 @@ msgid "Fast Fourier Transform (FFT) for image processing."
 msgstr "के लिए छवि."
 
 #: ../imagery/i.fft/fftmain.c:65
-msgid "input raster file being fft"
+msgid "input raster map being fft"
 msgstr ""
 
 #: ../imagery/i.fft/fftmain.c:73
 #, fuzzy
-msgid "output real part arrays stored as raster file"
+msgid "output real part arrays stored as raster map"
 msgstr "भाग"
 
 #: ../imagery/i.fft/fftmain.c:81
 #, fuzzy
-msgid "output imaginary part arrays stored as raster file"
+msgid "output imaginary part arrays stored as raster map"
 msgstr "भाग"
 
 #: ../imagery/i.fft/fftmain.c:89
@@ -16454,7 +16454,7 @@ msgid "Ascii file containing spectral signatures"
 msgstr ""
 
 #: ../imagery/i.cca/main.c:92
-msgid "Output raster file prefix name"
+msgid "Output raster map prefix name"
 msgstr ""
 
 #: ../imagery/i.cca/main.c:99
@@ -18482,7 +18482,7 @@ msgstr ""
 #, fuzzy
 msgid ""
 "Displays a histogram in the form of a pie or bar chart for a user-specified "
-"raster file."
+"raster map."
 msgstr "a का a के लिए a."
 
 #: ../display/d.histogram/main.c:76
@@ -19055,7 +19055,7 @@ msgstr "का नहीं जोड़ा संख्या का."
 #~ msgstr "फ़ाइल"
 
 #, fuzzy
-#~ msgid "Too much strats for raster file\n"
+#~ msgid "Too much strats for raster map\n"
 #~ msgstr "n"
 
 #, fuzzy
@@ -19297,7 +19297,7 @@ msgstr "का नहीं जोड़ा संख्या का."
 #~ msgstr "a a"
 
 #, fuzzy
-#~ msgid "name for new raster file"
+#~ msgid "name for new raster map"
 #~ msgstr "का"
 
 #, fuzzy
@@ -19553,7 +19553,7 @@ msgstr "का नहीं जोड़ा संख्या का."
 #~ msgstr "जी"
 
 #, fuzzy
-#~ msgid "%s[%d]: No raster file specified."
+#~ msgid "%s[%d]: No raster map specified."
 #~ msgstr "के लिए."
 
 #, fuzzy
@@ -19602,7 +19602,7 @@ msgstr "का नहीं जोड़ा संख्या का."
 #~ msgstr "का"
 
 #, fuzzy
-#~ msgid "Name of output raster file"
+#~ msgid "Name of output raster map"
 #~ msgstr "का"
 
 #, fuzzy
@@ -19668,15 +19668,15 @@ msgstr "का नहीं जोड़ा संख्या का."
 #~ msgstr "n"
 
 #, fuzzy
-#~ msgid "Name of existing input raster file"
+#~ msgid "Name of existing input raster map"
 #~ msgstr "का"
 
 #, fuzzy
-#~ msgid "Name of existing raster file."
+#~ msgid "Name of existing raster map."
 #~ msgstr "का."
 
 #, fuzzy
-#~ msgid "Name of new raster file."
+#~ msgid "Name of new raster map."
 #~ msgstr "का."
 
 #, fuzzy
@@ -20492,7 +20492,7 @@ msgstr "का नहीं जोड़ा संख्या का."
 #~ msgstr "के लिए"
 
 #, fuzzy
-#~ msgid "output prefix of the GRASS raster files to be created."
+#~ msgid "output prefix of the GRASS raster maps to be created."
 #~ msgstr "का."
 
 #, fuzzy
@@ -20571,7 +20571,7 @@ msgstr "का नहीं जोड़ा संख्या का."
 #~ msgstr "तृतीय"
 
 #, fuzzy
-#~ msgid "Name of raster file."
+#~ msgid "Name of raster map."
 #~ msgstr "का."
 
 #, fuzzy
@@ -20585,7 +20585,7 @@ msgstr "का नहीं जोड़ा संख्या का."
 #, fuzzy
 #~ msgid ""
 #~ "Creates a new binary GRASS vector (v.digit) file by extracting linear "
-#~ "features from a thinned raster file."
+#~ "features from a thinned raster map."
 #~ msgstr "a a."
 
 #, fuzzy
@@ -20607,7 +20607,7 @@ msgstr "का नहीं जोड़ा संख्या का."
 #~ msgstr "के लिए"
 
 #, fuzzy
-#~ msgid "Imports a TIFF (8 or 24 bit) raster file into GRASS raster file(s)"
+#~ msgid "Imports a TIFF (8 or 24 bit) raster map into GRASS raster map(s)"
 #~ msgstr "a"
 
 #, fuzzy
@@ -20615,7 +20615,7 @@ msgstr "का नहीं जोड़ा संख्या का."
 #~ msgstr "चालू."
 
 #, fuzzy
-#~ msgid "Name of new raster file or band prefix"
+#~ msgid "Name of new raster map or band prefix"
 #~ msgstr "का"
 
 #, fuzzy

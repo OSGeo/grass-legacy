@@ -69,7 +69,7 @@ int main (int argc, char **argv)
 	module->keywords = _("display");
     module->description =
 		_("Displays a histogram in the form of a pie or bar chart "
-		"for a user-specified raster file.");
+		"for a user-specified raster map.");
 
 	opt1             = G_define_option() ;
 	opt1->key        = "map" ;

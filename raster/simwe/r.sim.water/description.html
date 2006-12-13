@@ -7,11 +7,11 @@ on the concept of duality between the field and particle representation of
 the modeled quantity. Green's function Monte Carlo method, used to solve the equation,
 provides robustness necessary for spatially variable conditions and high
 resolutions   (Mitas and Mitasova 1998).  The key inputs of the model include
-elevation (<i>elevin</i> raster file), flow gradient vector given by
-first-order partial derivatives of elevation field (<i>dxin</i> and <i>dyin</i> raster files), rainfall
-excess rate (<i>rain</i> raster file) and a surface  roughness coefficient
-given by Manning's n (<i>manin</i> raster file). Partial
-derivatives raster files can be computed along with the interpolation of a DEM using
+elevation (<i>elevin</i> raster map), flow gradient vector given by
+first-order partial derivatives of elevation field (<i>dxin</i> and <i>dyin</i> raster maps), rainfall
+excess rate (<i>rain</i> raster map) and a surface  roughness coefficient
+given by Manning's n (<i>manin</i> raster map). Partial
+derivatives raster maps can be computed along with the interpolation of a DEM using
 the -d option in <a href="v.surf.rst.html">
 v.surf.rst</a> module. If elevation raster is already provided, partial derivatives
 can  be computed using <a href="r.slope.aspect.html">r.slope.aspect</a> module. 
@@ -32,9 +32,9 @@ saturated hydraulic  conductivity rates  based on field measurements or using
 reference values which can be found in literature.<br>
 </p>
 <p>
-Output includes water depth raster file <i>depth</i>  in [m], 
-water   discharge raster file <i>disch</i> in [m3/s]. Error of the numerical
-solution can  be analyzed using <i>err</i> raster file  (the resulting water depth is an average, 
+Output includes water depth raster map <i>depth</i>  in [m], 
+water   discharge raster map <i>disch</i> in [m3/s]. Error of the numerical
+solution can  be analyzed using <i>err</i> raster map  (the resulting water depth is an average, 
 and err is its RMSE).  Output site file <i>outwalk</i> can be used to analyze and visualize 
 spatial distribution of walkers at different simulation times (note that 
 the resulting water depth is based on the density of these walkers). Number 

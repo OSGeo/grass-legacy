@@ -12,10 +12,10 @@ static int get_reclass_table(FILE *, struct Reclass *);
 /*!
  * \brief reclass file?
  *
- * This function determines if the raster file
+ * This function determines if the raster map
  * <b>name</b> in <b>mapset</b> is a reclass file.
  * If it is, then the name and mapset of the referenced 
- * raster file are copied into the <b>r_name</b> and <b>r_mapset</b> 
+ * raster map are copied into the <b>r_name</b> and <b>r_mapset</b> 
  * buffers.
  * Returns 1 if <b>name</b> is a reclass file, 0 if it is not, and -1 if 
  * there was a problem reading the raster header for <b>name.</b>

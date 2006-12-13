@@ -115,7 +115,7 @@ void  patch_fore()
         free_para();
   }
 
-                         /* when everything is done, close the raster file
+                         /* when everything is done, close the raster map
                             and print a completion message */
 
   G_close_cell(finput);
@@ -1914,7 +1914,7 @@ void  mv_driver()
      G_free(buff[p]);
   G_free(buff);
 
-                         /* close the raster files, set the
+                         /* close the raster maps, set the
                             color table for the new raster
                             map and compress the map */
 	   

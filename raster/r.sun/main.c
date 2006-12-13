@@ -289,7 +289,7 @@ int main(int argc, char *argv[])
     parm.beam_rad->required = NO;
     parm.beam_rad->gisprompt = "new,cell,raster";
     parm.beam_rad->description =
-	_("Output beam irradiance [W.m-2] (mode 1) or irradiation raster file [Wh.m-2.day-1] (mode 2)");
+	_("Output beam irradiance [W.m-2] (mode 1) or irradiation raster map [Wh.m-2.day-1] (mode 2)");
     parm.beam_rad->guisection  = _("Output_options");
 
     parm.insol_time = G_define_option();

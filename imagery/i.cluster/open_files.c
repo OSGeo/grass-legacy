@@ -32,7 +32,7 @@ open_files (void)
 	if (G_find_cell (name, mapset) == NULL)
 	{
 	    if (!missing)
-		G_warning(_("\7\n** The following raster files in "
+		G_warning(_("\7\n** The following raster maps in "
                           "subgroup [%s] do not exist:"), subgroup);
 	    missing = 1;
 	    G_message(_("       %s"), G_fully_qualified_name(name, mapset));

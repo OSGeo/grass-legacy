@@ -75,7 +75,7 @@ int main( int argc, char *argv[])
 
     inmap = G_find_file2 ("cell", rastin->answer, "");
     if(!inmap){
-	G_fatal_error(_("Couldn't find raster file %s"), rastin->answer);
+	G_fatal_error(_("Couldn't find raster map %s"), rastin->answer);
     }
 
     /* set window to old map */

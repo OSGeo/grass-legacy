@@ -48,7 +48,7 @@ int G_lookup_colors (
 }
 
 /* I don't think it should exist, because it requires openning
-   of raster file every time Olga 
+   of raster map every time Olga 
 int G_lookup_rgb_colors(map, mapset, r, g, b)
     char *name, *mapset;
     unsigned char *r, *g, *b;

@@ -89,14 +89,14 @@ int main (int argc, char *argv[])
 	parm.input->type       = TYPE_STRING ;
 	parm.input->required   = YES ;
 	parm.input->gisprompt  = "old,cell,raster" ;
-	parm.input->description= _("Name of existing raster file") ;
+	parm.input->description= _("Name of existing raster map") ;
 
 	parm.output = G_define_option() ;
 	parm.output->key        = "output" ;
 	parm.output->type       = TYPE_STRING ;
 	parm.output->required   = YES ;
 	parm.output->gisprompt  = "new,cell,raster" ;
-	parm.output->description= _("Name of the new raster file") ;
+	parm.output->description= _("Name of the new raster map") ;
 
 	parm.method = G_define_option() ;
 	parm.method->key        = "method" ;
@@ -125,7 +125,7 @@ int main (int argc, char *argv[])
 	parm.title->key_desc   = "\"phrase\"" ;
 	parm.title->type       = TYPE_STRING ;
 	parm.title->required   = NO ;
-	parm.title->description= _("Title of the output raster file") ;
+	parm.title->description= _("Title of the output raster map") ;
 
 	flag.align = G_define_flag();
 	flag.align->key = 'a';
@@ -142,7 +142,7 @@ int main (int argc, char *argv[])
 	p = ncb.oldcell.name = parm.input->answer;
 	if(NULL == (ncb.oldcell.mapset = G_find_cell2(p,"")))
 	{
-		G_fatal_error(_("%s: <%s> raster file not found"),
+		G_fatal_error(_("%s: <%s> raster map not found"),
 			 G_program_name(), p);
 	}
 	p = ncb.newcell.name = parm.output->answer;

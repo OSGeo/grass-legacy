@@ -1,7 +1,7 @@
 /*****************************************************************************/
 /***                                                                       ***/
 /***                             open_files()                              ***/
-/***           Opens input and output raster files for r.example	   ***/
+/***           Opens input and output raster maps for r.example	   ***/
 /***                    Jo Wood, V1.0, 13th September, 1994                ***/
 /***                                                                       ***/
 /*****************************************************************************/

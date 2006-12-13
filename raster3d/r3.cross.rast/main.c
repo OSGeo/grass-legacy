@@ -277,7 +277,7 @@ int main(int argc, char *argv[])
     if (G_parser(argc, argv))
 	exit(EXIT_FAILURE);
 
-    G_debug(3, "Open 3D raster file %s", param.input->answer);
+    G_debug(3, "Open 3D raster map %s", param.input->answer);
 
     if (NULL == G_find_grid3(param.input->answer, ""))
 	G3d_fatalError(_("Requested g3d file not found <%s>"), param.input->answer);

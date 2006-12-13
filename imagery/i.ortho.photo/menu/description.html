@@ -17,7 +17,7 @@
 <EM>i.ortho.photo</EM>
 allows the user to ortho-rectify imagery group files. 
 An imagery group consists of several scanned aerial photographs
-(raster files) of a common area.  
+(raster maps) of a common area.  
 Imagery groups can be created or modified using the
 GRASS Image Processing Program 
 
@@ -25,7 +25,7 @@ GRASS Image Processing Program
 
 or using the first menu option described below.
 <EM>i.ortho.photo</EM> guides the user through the steps required to
-ortho-rectify the raster files in a single imagery group.
+ortho-rectify the raster maps in a single imagery group.
 
 
 <P>
@@ -50,7 +50,7 @@ options:
 <BR>
 <DT>Ortho-rectification Option:
 <DD>
-8) Ortho-rectify imagery group raster files
+8) Ortho-rectify imagery group raster maps
 <BR>
 <DT>RETURN to exit
 <DD>&gt;
@@ -93,9 +93,9 @@ please the the GRASS manual page for
 <DD>The target location and mapset may be selected or
 modified using option (2).  After choosing option (2) you
 will be prompted for the names of the target location and
-mapset, where the ortho-rectified raster files will
+mapset, where the ortho-rectified raster maps will
 reside.  The target location is also the location from
-which the elevation model (raster file) will be selected --
+which the elevation model (raster map) will be selected --
 see option (3).  Option (2) uses the GRASS Image Processing
 Program
 
@@ -111,18 +111,18 @@ selection or modification please the the GRASS manual page for
 
 <DT><EM>3. Select/Modify target elevation model</EM>
 
-<DD>Option (3) allows you to select the raster file from
+<DD>Option (3) allows you to select the raster map from
 the target location to be used as the elevation model.  The
 elevation model is required for both the computation of
 photo-to-target parameters (option 6) and for the
 ortho-rectification of the imagery group files (option 8).
-The raster file select for the elevation model should cover
+The raster map select for the elevation model should cover
 the entire area of the image group to be ortho-rectified.
-Currently, the elevation model raster file is expected to
+Currently, the elevation model raster map is expected to
 be in units of meters.  DTED and DEM files are suitable for
 use as the elevation model in the ortho-rectification
 program.  After selection option (3) you will be prompted
-for the name of the raster file in the target location that
+for the name of the raster map in the target location that
 you want to use as the elevation model.
 
 

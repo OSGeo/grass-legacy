@@ -146,7 +146,7 @@ void *get_max_d(void *v1, void *v2)
    return rc;
 }
 
-/* Read one line from a raster file */
+/* Read one line from a raster map */
 int get_row_c(int fd, void *row, int n)
 {
    return G_get_c_raster_row(fd,(CELL *)row,n);
@@ -162,7 +162,7 @@ int get_row_d(int fd, void *row, int n)
    return G_get_d_raster_row(fd,(DCELL *)row,n);
 }
 
-/* Write one row to a raster file */
+/* Write one row to a raster map */
 int put_row_c(int fd, void *row)
 {
    return G_put_c_raster_row(fd,(CELL *)row);

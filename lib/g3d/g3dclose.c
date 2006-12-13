@@ -48,7 +48,7 @@ G3d_closeNew  (G3D_Map *map)
 #endif
     if(rename(map->tempName, path)) {
       sprintf (buf,
-	   "G3d_closeNew: can't move temp raster file %s\nto 3d data file %s",
+	   "G3d_closeNew: can't move temp raster map %s\nto 3d data file %s",
 	       map->tempName, path);
       G3d_error (buf);
       return 0;

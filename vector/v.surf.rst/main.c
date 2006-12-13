@@ -221,14 +221,14 @@ int main(int argc, char *argv[])
     parm.elev->type = TYPE_STRING;
     parm.elev->required = NO;
     parm.elev->gisprompt = "new,cell,raster";
-    parm.elev->description = _("Output surface raster file (elevation)");
+    parm.elev->description = _("Output surface raster map (elevation)");
 
     parm.slope = G_define_option();
     parm.slope->key = "slope";
     parm.slope->type = TYPE_STRING;
     parm.slope->required = NO;
     parm.slope->gisprompt = "new,cell,raster";
-    parm.slope->description = _("Output slope raster file");
+    parm.slope->description = _("Output slope raster map");
     parm.slope->guisection  = _("Output_options");
 
     parm.aspect = G_define_option();
@@ -236,7 +236,7 @@ int main(int argc, char *argv[])
     parm.aspect->type = TYPE_STRING;
     parm.aspect->required = NO;
     parm.aspect->gisprompt = "new,cell,raster";
-    parm.aspect->description = _("Output aspect raster file");
+    parm.aspect->description = _("Output aspect raster map");
     parm.aspect->guisection  = _("Output_options");
 
     parm.pcurv = G_define_option();
@@ -244,7 +244,7 @@ int main(int argc, char *argv[])
     parm.pcurv->type = TYPE_STRING;
     parm.pcurv->required = NO;
     parm.pcurv->gisprompt = "new,cell,raster";
-    parm.pcurv->description = _("Output profile curvature raster file");
+    parm.pcurv->description = _("Output profile curvature raster map");
     parm.pcurv->guisection  = _("Output_options");
 
     parm.tcurv = G_define_option();
@@ -252,7 +252,7 @@ int main(int argc, char *argv[])
     parm.tcurv->type = TYPE_STRING;
     parm.tcurv->required = NO;
     parm.tcurv->gisprompt = "new,cell,raster";
-    parm.tcurv->description = _("Output tangential curvature raster file");
+    parm.tcurv->description = _("Output tangential curvature raster map");
     parm.tcurv->guisection  = _("Output_options");
 
     parm.mcurv = G_define_option();
@@ -260,7 +260,7 @@ int main(int argc, char *argv[])
     parm.mcurv->type = TYPE_STRING;
     parm.mcurv->required = NO;
     parm.mcurv->gisprompt = "new,cell,raster";
-    parm.mcurv->description = _("Output mean curvature raster file");
+    parm.mcurv->description = _("Output mean curvature raster map");
     parm.mcurv->guisection  = _("Output_options");
 
     parm.maskmap = G_define_option();
@@ -268,7 +268,7 @@ int main(int argc, char *argv[])
     parm.maskmap->type = TYPE_STRING;
     parm.maskmap->required = NO;
     parm.maskmap->gisprompt = "old,cell,raster";
-    parm.maskmap->description = _("Name of the raster file used as mask");
+    parm.maskmap->description = _("Name of the raster map used as mask");
 
     parm.fi = G_define_option();
     parm.fi->key = "tension";

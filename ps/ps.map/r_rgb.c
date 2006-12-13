@@ -82,7 +82,7 @@ int read_rgb(char *key, char *data)
         if ((grp.fd[i] = G_open_cell_old(grp.name[i], grp.mapset[i])) < 0)
         {
     	    sprintf(fullname, "%s in %s", grp.name[i], grp.mapset[i]);
-            error(fullname, "", "can't open raster file");
+            error(fullname, "", "can't open raster map");
 	    G_free_colors(&(grp.colors[i]));
             return 0;
         }

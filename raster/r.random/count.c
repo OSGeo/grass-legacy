@@ -19,7 +19,7 @@ void get_stats (struct rr_state *theState)
 
     theState->fd_old = G_open_cell_old (theState->inraster, theState->mapset);
     if (theState->fd_old < 0)
-        G_fatal_error("%s: unable to open raster file <%s>",
+        G_fatal_error("%s: unable to open raster map <%s>",
                 G_program_name(), theState->inraster);
 
     theState->buf.type = G_get_raster_map_type (theState->fd_old);
@@ -67,7 +67,7 @@ void get_stats (struct rr_state *theState)
         
     G_percent(1, 1, 1);
 
-    /* rewind the in raster file descriptor for later use */
+    /* rewind the in raster map descriptor for later use */
     lseek(theState->fd_old, 0, SEEK_SET);
 
     /* Set the NULL value replacement */

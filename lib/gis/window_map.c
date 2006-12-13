@@ -265,7 +265,7 @@ int G_window_rows ()
  *
  * These
  * routines return the number of rows and columns (respectively) in the active
- * module region. Before raster files can be read or written, it is necessary to
+ * module region. Before raster maps can be read or written, it is necessary to
  * known how many rows and columns are in the active region. For example:
  \code  
   int nrows, cols;

@@ -369,7 +369,7 @@ int main(int argc,char *argv[])
 
 	    if (PS.cell_fd < 0)
 	    {
-		error (key,data,"no raster file selected yet");
+		error (key,data,"no raster map selected yet");
 		continue;
 	    }
 	    if (sscanf (data, "%s %[^\n]", catsbuf, colorbuf) == 2)
@@ -416,7 +416,7 @@ int main(int argc,char *argv[])
 	    PS.do_colortable = 0;
 	    /*
 	    if (PS.cell_fd < 0)
-		error(key, data, "no raster file selected yet");
+		error(key, data, "no raster map selected yet");
 	    else
 	    */
 		PS.do_colortable = yesno(key, data);
@@ -577,7 +577,7 @@ int main(int argc,char *argv[])
 	{
 	    if (PS.cell_fd < 0)
 	    {
-		error(key, data, "no raster file selected yet");
+		error(key, data, "no raster map selected yet");
 		gobble_input();
 	    }
 	    else read_outline();

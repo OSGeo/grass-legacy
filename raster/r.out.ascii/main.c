@@ -144,7 +144,7 @@ main(int argc, char *argv[])
     if (!mapset)
         G_fatal_error ("Cell file [%s] not found",name);
 
-/* open raster file */
+/* open raster map */
     fd = G_open_cell_old (name, mapset);
     if (fd < 0)
         G_fatal_error("Unable to open input map");

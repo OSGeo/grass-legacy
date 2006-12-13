@@ -101,7 +101,7 @@ clump(int in_fd, int out_fd)
 	for (row = 0; row < nrows; row++)
 	{
 	    if (G_get_map_row (in_fd, cur_in+1, row) < 0)
-		G_fatal_error (_("Unable to properly read input raster file"));
+		G_fatal_error (_("Unable to properly read input raster map"));
 
             G_percent(row, nrows, 2);
 	    X = 0;
@@ -231,7 +231,7 @@ clump(int in_fd, int out_fd)
 		    out_cell[col] = index[cur_clump[col]];
 
 		if (G_put_raster_row (out_fd, out_cell+1, CELL_TYPE) < 0)
-		    G_fatal_error (_("Unable to properly write output raster file"));
+		    G_fatal_error (_("Unable to properly write output raster map"));
 	    */
 		col = ncols;
 		temp_clump = cur_clump + 1;       /* skip left edge */
@@ -246,7 +246,7 @@ clump(int in_fd, int out_fd)
 		       G_set_null_value(&out_cell[column],1,CELL_TYPE);
 		}
 		if (G_put_raster_row (out_fd, out_cell, CELL_TYPE) < 0)
-		    G_fatal_error (_("Unable to properly write output raster file"));
+		    G_fatal_error (_("Unable to properly write output raster map"));
 	    }
 
     /* switch the buffers so that the current buffer becomes the previous */

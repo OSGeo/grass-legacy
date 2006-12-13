@@ -89,7 +89,7 @@ int main (int argc, char *argv[])
     strcpy(drain_name, opt2->answer); 
     drain_mapset = G_find_cell2(drain_name, "");
     if (drain_mapset == NULL)
-        G_fatal_error(_("%s: <%s> raster file not found"), 
+        G_fatal_error(_("%s: <%s> raster map not found"), 
                     G_program_name(), opt2->answer);
 
     /* this isn't a nice thing to do. G_align_window() should be used first */
@@ -102,13 +102,13 @@ int main (int argc, char *argv[])
     strcpy (ridge_name, opt3->answer);
     ridge_mapset = G_find_cell2(ridge_name, "");
     if (ridge_mapset == NULL)
-        G_fatal_error(_("%s: <%s> raster file not found"),
+        G_fatal_error(_("%s: <%s> raster map not found"),
                     G_program_name(), opt3->answer);
 
     strcpy (part_name, opt4->answer);
     part_mapset = G_find_cell2(part_name,"");
     if (part_mapset != NULL)
-        G_fatal_error(_("%s: <%s> raster file exists already"), 
+        G_fatal_error(_("%s: <%s> raster map exists already"), 
                     G_program_name(), opt4->answer);
 
     drain = read_map (drain_name, drain_mapset, NOMASK, nrows, ncols);

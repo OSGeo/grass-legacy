@@ -61,7 +61,7 @@ int do_recode (void)
    
    /* writing history file */
    G_short_history(result, "raster", &hist);
-   sprintf(hist.edhist[0], "recode of raster file %s", name); 
+   sprintf(hist.edhist[0], "recode of raster map %s", name); 
    /* if there are more rules than history lines allocated, write only 
       MAXEDLINES-1 rules , and "...." as a last rule */
        for(i=0; (i< nrules) && (i<MAXEDLINES-2);i++)
@@ -73,7 +73,7 @@ int do_recode (void)
    }
    else
       hist.edlinecnt = nrules + 1;
-   sprintf(hist.datsrc_1,"raster file %s", name);
+   sprintf(hist.datsrc_1,"raster map %s", name);
    G_write_history (result, &hist);
 
    return 0;

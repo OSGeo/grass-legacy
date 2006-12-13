@@ -208,7 +208,7 @@ error:
  * \brief read raster range
  *
  * This routine reads the range information for the
- * raster file <b>name</b> in <b>mapset</b> into the <b>range</b>
+ * raster map <b>name</b> in <b>mapset</b> into the <b>range</b>
  * structure.
  * A diagnostic message is printed and -1 is returned if there is an error
  * reading the range file. Otherwise, 0 is returned.
@@ -325,7 +325,7 @@ error:
 /*!
  * \brief write raster range file
  *
- * This routine writes the range information for the raster file
+ * This routine writes the range information for the raster map
  * <b>name</b> in the current mapset from the <b>range</b> structure.
  * A diagnostic message is printed and -1 is returned if there is an error
  * writing the range file. Otherwise, 0 is returned.
