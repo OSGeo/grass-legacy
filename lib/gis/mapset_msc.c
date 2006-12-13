@@ -11,30 +11,20 @@
 #include <string.h>
 #include <unistd.h>
 #include <stdlib.h>
+#include <sys/types.h>
+#include <sys/stat.h>
 #include <grass/gis.h>
 #include <grass/glocale.h>
 
-#include <sys/types.h>
-#include <sys/stat.h>
-
-#ifdef __MINGW32__
-# define mkdir(name, mode) ((mkdir) (name))
-#endif
-
 int G__make_mapset_element (char *p_element)
 {
-    char command[1024];
-    char *path;
+    char path[GPATH_MAX];
     char *p;
-    char *G_mapset();
     char *element;
 
     element = p_element;
     if (*element == 0)
 	    return 0;
-    strcpy (path = command, "mkdir ");
-    while (*path)
-	path++;
 
     G__file_name (p = path, "", "", G_mapset());
     while (*p)
@@ -53,21 +43,10 @@ int G__make_mapset_element (char *p_element)
 	if (*element == '/' || *element == 0)
 	{
 	    *p = 0;
-/* MOD shapiro 16apr91 */
 	    if (access (path, 0) != 0)
-	    {
-		mkdir(path, 0777);
-	    }
-/* end MOD */
+		G_mkdir(path);
 	    if (access (path, 0) != 0)
-	    {
-		system (command);
-	    }
-	    if (access (path, 0) != 0)
-	    {
 		G_fatal_error (_("can't make mapset element %s (%s)"), p_element, path);
-		exit(EXIT_FAILURE);
-	    }
 	    if (*element == 0)
 		return 1;
 	}
@@ -84,12 +63,14 @@ int G__make_mapset_element (char *p_element)
 ****************************************************************/
 int G__mapset_permissions (char *mapset)
 {
-    char path[2000];
+    char path[GPATH_MAX];
     struct stat info;
 
     G__file_name (path,"","",mapset);
 
-    if (stat (path, &info) != 0)
+    if (G_lstat (path, &info) != 0)
+	    return -1;
+    if (!S_ISDIR(info.st_mode))
 	    return -1;
 
 #ifndef __MINGW32__    
@@ -113,12 +94,14 @@ int G__mapset_permissions (char *mapset)
 ****************************************************************/
 int G__mapset_permissions2 ( char * gisdbase, char * location, char *mapset )
 {
-    char path[2000];
+    char path[GPATH_MAX];
     struct stat info;
 
     sprintf ( path, "%s/%s/%s", gisdbase, location, mapset );
 
-    if (stat (path, &info) != 0)
+    if (G_lstat (path, &info) != 0)
+	    return -1;
+    if (!S_ISDIR(info.st_mode))
 	    return -1;
 
 #ifndef __MINGW32__    
