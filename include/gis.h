@@ -107,6 +107,7 @@ static const char *GRASS_copyright __attribute__((unused))
 #define GNAME_MAX 256
 #define GMAPSET_MAX 256
 
+#define GPATH_MAX 4096
 
 /* Macros for type size independent integers                    */
 /* Use these for portability to ensure integers are truly 32bit */
