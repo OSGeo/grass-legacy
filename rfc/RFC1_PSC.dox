@@ -111,7 +111,8 @@ of a Chair should be handled as a proposal to the committee.
 <li> Adding substantial amounts of new code.
 <li> Changing inter-subsystem APIs.
 <li> When releases should take place.
-<li> Project Infrastructure issues (hosting etc)
+<li> Project Infrastructure issues (hosting etc).
+<li> Giving a user CVS write access.
 <li> Anything that might be controversial.
 </ul>
 
