@@ -122,14 +122,12 @@ int main (int argc, char **argv)
 
 static void layer(char *s)
 {
-  char msg[100], name[200], *mapset;
+  char name[GNAME_MAX], *mapset;
   int n;
 
   strcpy (name, s);
-  if ((mapset = G_find_cell2 (name, "")) == NULL) {
-    sprintf (msg, "%s: <%s> raster file not found\n", G_program_name(), s);
-    G_fatal_error (msg);
-  }
+  if ((mapset = G_find_cell2 (name, "")) == NULL)
+    G_fatal_error( _("%s: <%s> raster map not found"), G_program_name(), s);
 
   n = nlayers++;
   layers = (LAYER *) G_realloc(layers, 2*sizeof(LAYER));
