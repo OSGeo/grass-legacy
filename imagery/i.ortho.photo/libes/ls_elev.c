@@ -24,7 +24,7 @@ int I_list_elev (int full)
     temp = fopen (tempfile, "w");
     if (temp == NULL)
 	G_fatal_error ("can't open any temp files");
-    fprintf (temp, "Available raster files:\n");
+    fprintf (temp, "Available raster maps:\n");
     fprintf (temp, "---------------------------------\n");
 
     any = 0;
@@ -43,7 +43,7 @@ int I_list_elev (int full)
 	pclose (ls);
     }
     if (!any)
-	fprintf (temp, "no raster files available\n");
+	fprintf (temp, "no raster maps available\n");
     fprintf (temp, "---------------------------------\n");
     fclose (temp);
     sprintf (buf, "$GRASS_PAGER %s", tempfile);

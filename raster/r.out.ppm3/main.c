@@ -107,7 +107,7 @@ int main(int argc, char **argv)
 		/* Get mapset of layer */
 		mapset = G_find_cell2(name, "");
 		if(!mapset)
-			G_fatal_error("Couldn't find raster file %s", name);
+			G_fatal_error("Couldn't find raster map %s", name);
 
 		/* Open cell file */
 		if ((B[i].file = G_open_cell_old(name, mapset)) == -1) 

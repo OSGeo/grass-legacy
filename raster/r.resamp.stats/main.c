@@ -284,7 +284,7 @@ int main( int argc, char *argv[])
 
 	inmap = G_find_cell2(parm.rastin->answer, "");
 	if (!inmap)
-		G_fatal_error(_("Couldn't find raster file %s"), parm.rastin->answer);
+		G_fatal_error(_("Couldn't find raster map %s"), parm.rastin->answer);
 
 	/* set window to old map */
 	G_get_cellhd(parm.rastin->answer, inmap, &src_w);

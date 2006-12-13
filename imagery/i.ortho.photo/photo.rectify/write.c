@@ -71,7 +71,7 @@ int write_map(char *name)
        }
        if(G_put_raster_row(fd,rast, map_type) < 0)
        {
-          G_fatal_error("error while writing to raster file. You might want to check available disk space and write permissions.");
+          G_fatal_error("error while writing to raster map. You might want to check available disk space and write permissions.");
           unlink(temp_name);
        }
    }

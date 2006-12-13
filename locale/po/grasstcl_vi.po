@@ -374,7 +374,7 @@ msgid "Digitize raster"
 msgstr "Số hóa raster"
 
 #: ../gui/tcltk/menus/menu.tcl:231
-msgid "Compress/decompress raster file"
+msgid "Compress/decompress raster map"
 msgstr "Nén/giải nén tập tin raster"
 
 #: ../gui/tcltk/menus/menu.tcl:232

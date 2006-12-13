@@ -19,7 +19,7 @@
  * 
  */
 
-/* Use to convert grass raster file to PNG
+/* Use to convert grass raster map to PNG
  * uses currently selected region
  */
 
@@ -182,7 +182,7 @@ int main(int argc, char *argv[])
     {
 	cellmap = G_find_file2("cell", rastermap, "");
 	if (!cellmap)
-	    G_fatal_error("Couldn't find raster file %s", rastermap);
+	    G_fatal_error("Couldn't find raster map %s", rastermap);
 
 	if ((cellfile = G_open_cell_old(rast->answer, cellmap)) == -1)
 	    G_fatal_error("Not able to open cellfile for [%s]", rastermap);

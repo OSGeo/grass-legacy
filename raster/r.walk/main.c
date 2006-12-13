@@ -508,10 +508,10 @@ int main(int argc, char *argv[])
     cost_fd = G_open_cell_old(cost_layer, cost_mapset);
 
     if (dtm_fd < 0)
-	G_fatal_error(_("%s - can't open raster file"), dtm_layer);
+	G_fatal_error(_("%s - can't open raster map"), dtm_layer);
 
     if (cost_fd < 0)
-	G_fatal_error(_("%s - can't open raster file"), cost_layer);
+	G_fatal_error(_("%s - can't open raster map"), cost_layer);
 
     dtm_head_ok = G_get_cellhd(dtm_layer, dtm_mapset, &dtm_cellhd) >= 0;
     cost_head_ok = G_get_cellhd(cost_layer, cost_mapset, &cost_cellhd) >= 0;
@@ -820,7 +820,7 @@ int main(int argc, char *argv[])
 
 	cum_fd = G_open_cell_old(cum_cost_layer, cum_cost_mapset);
 	if (cum_fd < 0)
-	    G_fatal_error(_("Can't open raster file %s"), cum_cost_layer);
+	    G_fatal_error(_("Can't open raster map %s"), cum_cost_layer);
 
 	data_type2 = G_get_raster_map_type(cum_fd);
 

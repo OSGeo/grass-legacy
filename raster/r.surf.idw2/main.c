@@ -72,7 +72,7 @@ main (int argc, char *argv[])
 
     list = (struct Point *) G_calloc (search_points, sizeof (struct Point));
 
-/* read the elevation points from the input raster file */
+/* read the elevation points from the input raster map */
     read_cell (parm.input->answer);
 
     if (npoints == 0)

@@ -90,7 +90,7 @@ int open_input_map(char *name, char *mapset)
     G_debug(3, "Open Raster file %s in Mapset %s", name, mapset);
 
 
-    /* open raster file */
+    /* open raster map */
     fd = G_open_cell_old(name, mapset);
 
     if (fd < 0)
@@ -194,7 +194,7 @@ void open_write_rgb_maps(inputMaps * in, G3D_Region region, FILE * fp, int dp)
 
 	/*Loop over all input maps! */
 	for (i = 0; i < 3; i++) {
-	    G_debug(3, _("Open rgb g3d raster file %s"),
+	    G_debug(3, _("Open rgb g3d raster map %s"),
 		    param.rgbmaps->answers[i]);
 
 	    maprgb = NULL;
@@ -277,7 +277,7 @@ void open_write_vector_maps(inputMaps * in, G3D_Region region, FILE * fp, int dp
 
 	/*Loop over all input maps! */
 	for (i = 0; i < 3; i++) {
-	    G_debug(3, "Open vector g3d raster file %s",
+	    G_debug(3, "Open vector g3d raster map %s",
 		    param.vectormaps->answers[i]);
 
 	    mapvect = NULL;
@@ -494,7 +494,7 @@ int main(int argc, char *argv[])
     if (param.input->answers != NULL) {
 	for (i = 0; param.input->answers[i] != NULL; i++) {
 
-	    G_debug(3, "Open g3d raster file %s", param.input->answers[i]);
+	    G_debug(3, "Open g3d raster map %s", param.input->answers[i]);
 
 	    /*Open the map */
 	    in->map =

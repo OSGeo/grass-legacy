@@ -33,11 +33,11 @@ int perform_filter (char *in_name, char *in_mapset, char *out_name,
 	    if (count==0) {
 		in = G_open_cell_old (in_name, in_mapset);
 #ifdef DEBUG
-                G_message (_("Open raster file %s in %s = %d"), in_name, in_mapset, in);
+                G_message (_("Open raster map %s in %s = %d"), in_name, in_mapset, in);
 #endif
 		if (in < 0) {
 		    char msg[100];
-		    sprintf (msg, "unable to open raster file [%s] in [%s]",
+		    sprintf (msg, "unable to open raster map [%s] in [%s]",
 			in_name, in_mapset);
 		    G_fatal_error (msg);
 		}
@@ -48,7 +48,7 @@ int perform_filter (char *in_name, char *in_mapset, char *out_name,
 	    }
 	    else if (count==1) {
 #ifdef DEBUG
-                G_message (_("Closing raster file"));
+                G_message (_("Closing raster map"));
 #endif
 		G_close_cell(in);
 		in = out;
@@ -86,7 +86,7 @@ int perform_filter (char *in_name, char *in_mapset, char *out_name,
     out = G_open_cell_new (out_name);
     if (out < 0) {
 	char msg[100];
-	sprintf (msg, "unable to create raster file [%s] in [%s]",
+	sprintf (msg, "unable to create raster map [%s] in [%s]",
 	    out_name, G_mapset());
 	G_fatal_error (msg);
     }

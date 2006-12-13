@@ -133,7 +133,7 @@ int main ( int argc, char *argv[])
   parm.elevin->type = TYPE_STRING;
   parm.elevin->required = YES;
   parm.elevin->gisprompt = "old,cell,raster";
-  parm.elevin->description = _("Name of the elevation raster file");
+  parm.elevin->description = _("Name of the elevation raster map");
   parm.elevin->guisection  = _("Input_options");
 
   parm.dxin = G_define_option();
@@ -141,7 +141,7 @@ int main ( int argc, char *argv[])
   parm.dxin->type = TYPE_STRING;
   parm.dxin->required = YES;
   parm.dxin->gisprompt = "old,cell,raster";
-  parm.dxin->description = _("Name of the x-derivatives raster file");
+  parm.dxin->description = _("Name of the x-derivatives raster map");
   parm.dxin->guisection  = _("Input_options");
 
   parm.dyin = G_define_option();
@@ -149,7 +149,7 @@ int main ( int argc, char *argv[])
   parm.dyin->type = TYPE_STRING;
   parm.dyin->required = YES;
   parm.dyin->gisprompt = "old,cell,raster";
-  parm.dyin->description = _("Name of the y-derivatives raster file");
+  parm.dyin->description = _("Name of the y-derivatives raster map");
   parm.dyin->guisection  = _("Input_options");
 
   parm.rain = G_define_option();
@@ -157,7 +157,7 @@ int main ( int argc, char *argv[])
   parm.rain->type = TYPE_STRING;
   parm.rain->required = YES;
   parm.rain->gisprompt = "old,cell,raster";
-  parm.rain->description = _("Name of the rainfall excess raster file");
+  parm.rain->description = _("Name of the rainfall excess raster map");
   parm.rain->guisection  = _("Input_options");
 
   parm.infil = G_define_option();
@@ -165,7 +165,7 @@ int main ( int argc, char *argv[])
   parm.infil->type = TYPE_STRING;
   parm.infil->required = YES;
   parm.infil->gisprompt = "old,cell,raster";
-  parm.infil->description = _("Name of the infiltration excess raster file");
+  parm.infil->description = _("Name of the infiltration excess raster map");
   parm.infil->guisection  = _("Input_options");
 
   parm.traps = G_define_option();
@@ -173,7 +173,7 @@ int main ( int argc, char *argv[])
   parm.traps->type = TYPE_STRING;
   parm.traps->required = NO;
   parm.traps->gisprompt = "old,cell,raster";
-  parm.traps->description = _("Name of the flow control raster file");
+  parm.traps->description = _("Name of the flow control raster map");
   parm.traps->guisection  = _("Input_options");
 
   parm.manin = G_define_option();
@@ -181,7 +181,7 @@ int main ( int argc, char *argv[])
   parm.manin->type = TYPE_STRING;
   parm.manin->required = YES;
   parm.manin->gisprompt = "old,cell,raster";
-  parm.manin->description = _("Name of the Mannings n raster file");
+  parm.manin->description = _("Name of the Mannings n raster map");
   parm.manin->guisection  = _("Input_options");
 
 /* needs to be updated to GRASS 6 vector format !! */
@@ -198,7 +198,7 @@ int main ( int argc, char *argv[])
   parm.depth->type = TYPE_STRING;
   parm.depth->required = NO;
   parm.depth->gisprompt = "new,cell,raster";
-  parm.depth->description = _("Output water depth raster file");
+  parm.depth->description = _("Output water depth raster map");
   parm.depth->guisection  = _("Output_options");
 
   parm.disch = G_define_option();
@@ -206,7 +206,7 @@ int main ( int argc, char *argv[])
   parm.disch->type = TYPE_STRING;
   parm.disch->required = NO;
   parm.disch->gisprompt = "new,cell,raster";
-  parm.disch->description = _("Output water discharge raster file");
+  parm.disch->description = _("Output water discharge raster map");
   parm.disch->guisection  = _("Output_options");
 
   parm.err = G_define_option();
@@ -214,7 +214,7 @@ int main ( int argc, char *argv[])
   parm.err->type = TYPE_STRING;
   parm.err->required = NO;
   parm.err->gisprompt = "new,cell,raster";
-  parm.err->description = _("Output simulation error raster file");
+  parm.err->description = _("Output simulation error raster map");
   parm.err->guisection  = _("Output_options");
 
   parm.outwalk = G_define_option ();

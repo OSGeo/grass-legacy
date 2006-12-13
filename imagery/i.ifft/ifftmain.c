@@ -63,7 +63,7 @@ main (int argc, char *argv[])
         op1->required         = YES;
         op1->multiple         = NO;
         op1->gisprompt        = "old,cell,raster";
-        op1->description      = _("input raster file (image fft, real part)");
+        op1->description      = _("input raster map (image fft, real part)");
 
         op2=G_define_option();
         op2->key              = "imaginary_image";
@@ -71,7 +71,7 @@ main (int argc, char *argv[])
         op2->required         = YES;
         op2->multiple         = NO;
         op2->gisprompt        = "old,cell,raster";
-        op2->description      = _("input raster file (image fft, imaginary part");
+        op2->description      = _("input raster map (image fft, imaginary part");
 
         op3=G_define_option();
         op3->key              = "output_image";
@@ -79,7 +79,7 @@ main (int argc, char *argv[])
         op3->required         = YES;
         op3->multiple         = NO;
         op3->gisprompt        = "new,cell,raster";
-        op3->description      = _("output inverse raster file after ifft");
+        op3->description      = _("output inverse raster map after ifft");
 
         /*call parser*/
         if(G_parser(argc, argv))
@@ -108,7 +108,7 @@ main (int argc, char *argv[])
 
         /* check command line args for validity */
         if (G_legal_filename(Cellmap_orig) < 0)
-                G_fatal_error(_("%s: %s - illegal name for output raster file."),
+                G_fatal_error(_("%s: %s - illegal name for output raster map."),
                               me, Cellmap_orig);
 
         /* get and compare the original window data */

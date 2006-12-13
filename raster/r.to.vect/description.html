@@ -16,7 +16,7 @@ using <EM><A HREF="r.thin.html">r.thin</A></EM>.
 <P>
 
 <EM>r.to.vect</EM> extracts vectors (aka, "arcs") from a
-raster file.  These arcs may represent linear features
+raster map.  These arcs may represent linear features
 (like roads or streams), or may represent area edge
 features (like political boundaries, or soil mapping
 units).  
@@ -59,12 +59,12 @@ error introduced by smoothing.
 <P>
 
 <EM>r.to.vect</EM> extracts only area edges from the named raster input file. 
-If the raster file contains other data (i.e., line edges, or point data) the
+If the raster map contains other data (i.e., line edges, or point data) the
 output may be wrong. 
 
 <H2>BUGS</H2>
 
-For feature=line the input raster file MUST be thinned by
+For feature=line the input raster map MUST be thinned by
 <EM><A HREF="r.thin.html">r.thin</A></EM>;
 if not, <EM>r.line</EM> may crash.
 

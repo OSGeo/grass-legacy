@@ -428,54 +428,54 @@ main (int argc, char *argv[])
 
 	fuel_fd = G_open_cell_old(parm.model->answer, G_find_cell2 (parm.model->answer,""));
 	if (fuel_fd < 0)
-		G_fatal_error("%s - can't open raster file", parm.model->answer);
+		G_fatal_error("%s - can't open raster map", parm.model->answer);
 
 	if (parm.mois_1h->answer) {
         	mois_1h_fd = G_open_cell_old(parm.mois_1h->answer, G_find_cell2 (parm.mois_1h->answer,""));
 		if (mois_1h_fd < 0)
-			G_fatal_error("%s - can't open raster file", parm.mois_1h->answer);
+			G_fatal_error("%s - can't open raster map", parm.mois_1h->answer);
 	}
 	if (parm.mois_10h->answer) {
         	mois_10h_fd = G_open_cell_old(parm.mois_10h->answer, G_find_cell2 (parm.mois_10h->answer,""));
 		if (mois_10h_fd < 0)
-			G_fatal_error("%s - can't open raster file", parm.mois_10h->answer);
+			G_fatal_error("%s - can't open raster map", parm.mois_10h->answer);
 	}
 	if (parm.mois_100h->answer) {
         	mois_100h_fd = G_open_cell_old(parm.mois_100h->answer, G_find_cell2 (parm.mois_100h->answer,""));
 		if (mois_100h_fd < 0)
-			G_fatal_error("%s - can't open raster file", parm.mois_100h->answer);
+			G_fatal_error("%s - can't open raster map", parm.mois_100h->answer);
 	}
 
         mois_live_fd = G_open_cell_old(parm.mois_live->answer, G_find_cell2 (parm.mois_live->answer,""));
 	if (mois_live_fd < 0)
-		G_fatal_error("%s - can't open raster file", parm.mois_live->answer);
+		G_fatal_error("%s - can't open raster map", parm.mois_live->answer);
 
         if (parm.vel->answer) {
 		vel_fd = G_open_cell_old(parm.vel->answer, G_find_cell2 (parm.vel->answer,""));
 		if (vel_fd < 0)
-			G_fatal_error("%s - can't open raster file", parm.vel->answer);
+			G_fatal_error("%s - can't open raster map", parm.vel->answer);
 	}
         if (parm.dir->answer) {
 		dir_fd = G_open_cell_old(parm.dir->answer, G_find_cell2 (parm.dir->answer,""));
 		if (dir_fd < 0)
-			G_fatal_error("%s - can't open raster file", parm.dir->answer);
+			G_fatal_error("%s - can't open raster map", parm.dir->answer);
 	}
 
         if (parm.slope->answer) {
 		slope_fd = G_open_cell_old(parm.slope->answer, G_find_cell2 (parm.slope->answer,""));
 		if (slope_fd < 0)
-			G_fatal_error("%s - can't open raster file", parm.slope->answer);
+			G_fatal_error("%s - can't open raster map", parm.slope->answer);
  	}
        if (parm.aspect->answer) {
 		 aspect_fd = G_open_cell_old(parm.aspect->answer, G_find_cell2 (parm.aspect->answer,""));
 		if (aspect_fd < 0)
-			G_fatal_error("%s - can't open raster file", parm.aspect->answer);
+			G_fatal_error("%s - can't open raster map", parm.aspect->answer);
  	}
 
        if (spotting) {
 		 elev_fd = G_open_cell_old(parm.elev->answer, G_find_cell2 (parm.elev->answer,""));
 		if (elev_fd < 0)
-			G_fatal_error("%s - can't open raster file", parm.elev->answer);
+			G_fatal_error("%s - can't open raster map", parm.elev->answer);
  	}
 
 	base_fd = G_open_cell_new(name_base);

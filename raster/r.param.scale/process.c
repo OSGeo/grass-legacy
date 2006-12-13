@@ -1,7 +1,7 @@
 /*****************************************************************************/
 /***                                                                       ***/
 /***                             process()                                 ***/
-/***          Reads in a raster file row by row for processing.		   ***/
+/***          Reads in a raster map row by row for processing.		   ***/
 /***           Jo Wood, Project ASSIST, V1.0 7th February 1993             ***/
 /***                                                                       ***/
 /*****************************************************************************/

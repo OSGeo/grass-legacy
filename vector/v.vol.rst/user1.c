@@ -311,11 +311,11 @@ fprintf(stderr,"xmin=%lf,xmax=%lf,ymin=%lf,ymax=%lf,zmin=%lf,zmax=%lf,wmin=%lf,w
   y0utm = 0.;
   z0utm = 0.;
   
-  /** create a bitmap mask from given raster file **/
+  /** create a bitmap mask from given raster map **/
   if (maskmap != NULL) {
     mapsetm = G_find_cell2(maskmap, "");
     if(!mapsetm) {
-      sprintf (buf, "mask raster file [%s] not found\n", maskmap);
+      sprintf (buf, "mask raster map [%s] not found\n", maskmap);
       clean_fatal_error (buf);
     }
     bitmask = BM_create (nsizc, nsizr);

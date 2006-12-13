@@ -204,7 +204,7 @@ int main(int argc, char *argv[])
 
 	mapset = G_find_cell2(param.elevationmap->answer, "");
 
-	/* open raster file */
+	/* open raster map */
 	fd = G_open_cell_old(param.elevationmap->answer, mapset);
 	if (fd < 0)
 	    G_fatal_error(_("Could not open map %s"),
@@ -272,7 +272,7 @@ int main(int argc, char *argv[])
 	    mapset = NULL;
 	    mapset = G_find_cell2(param.input->answers[i], "");
 
-	    /* open raster file */
+	    /* open raster map */
 	    fd = G_open_cell_old(param.input->answers[i], mapset);
 	    if (fd < 0)
 		G_fatal_error(_("Could not open map %s"),
@@ -300,7 +300,7 @@ int main(int argc, char *argv[])
 
 		mapset = G_find_cell2(param.rgbmaps->answers[i], "");
 
-		/* open raster file */
+		/* open raster map */
 		rgbfd[i] = G_open_cell_old(param.rgbmaps->answers[i], mapset);
 		if (rgbfd[i] < 0)
 		    G_fatal_error(_("Could not open map %s"),
@@ -346,7 +346,7 @@ int main(int argc, char *argv[])
 
 		mapset = G_find_cell2(param.vectmaps->answers[i], "");
 
-		/* open raster file */
+		/* open raster map */
 		vectfd[i] = G_open_cell_old(param.vectmaps->answers[i], mapset);
 		if (vectfd[i] < 0)
 		    G_fatal_error(_("Could not open map %s"),

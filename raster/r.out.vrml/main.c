@@ -69,7 +69,7 @@ int main(int argc, char *argv[])
     t_mapset = NULL;
     t_mapset = G_find_file2 ("cell", rast_el->answer, "");
     if(!t_mapset){
-	sprintf(errbuf,"Couldn't find raster file %s", rast_el->answer);
+	sprintf(errbuf,"Couldn't find raster map %s", rast_el->answer);
 	G_fatal_error(errbuf);
     }
     if ((elevfd = G_open_cell_old(rast_el->answer, t_mapset)) == -1)
@@ -114,7 +114,7 @@ int main(int argc, char *argv[])
 	t_mapset = NULL;
 	t_mapset = G_find_file2 ("cell", rast_co->answer, "");
 	if(!t_mapset){
-	    sprintf(errbuf,"Couldn't find raster file %s", rast_co->answer);
+	    sprintf(errbuf,"Couldn't find raster map %s", rast_co->answer);
 	    G_warning(errbuf);
 	}
 	else if ((colorfd = G_open_cell_old(rast_co->answer, t_mapset)) == -1)

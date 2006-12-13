@@ -13,7 +13,7 @@
  * \brief get raster map title
  *
  * If only the map layer title is needed, it is not necessary to read the
- * entire category file into memory. This routine gets the title for raster file
+ * entire category file into memory. This routine gets the title for raster map
  * <b>name</b> in <b>mapset</b> directly from the category file, and returns
  * a pointer to the title. A legal pointer is always returned. If the map layer
  * does not have a title, then a pointer to the empty string "" is returned.

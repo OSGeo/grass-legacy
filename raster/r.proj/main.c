@@ -177,7 +177,7 @@ int main (int argc, char **argv)
 
 	list = G_define_flag();
 	list->key = 'l';
-	list->description = _("List raster files in input location and exit");
+	list->description = _("List raster maps in input location and exit");
 
 	nocrop = G_define_flag();
 	nocrop->key = 'n';
@@ -227,7 +227,7 @@ int main (int argc, char **argv)
 			      ? "permission denied"
 			      : "not found");
 
-	/* if requested, list the raster files in source location - MN 5/2001*/
+	/* if requested, list the raster maps in source location - MN 5/2001*/
 	if (list->answer)
 	{
 		if (isatty(0))  /* check if on command line */

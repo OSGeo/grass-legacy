@@ -160,9 +160,9 @@ parse_command_line (int argc, char *argv[])
     pflout  = parameter("flout", TYPE_STRING, NO, NULL, "any,dig,vector",
 			_("Output flowline vector file"), NULL);
     plgout  = parameter("lgout", TYPE_STRING, NO, NULL, "any,cell,raster",
-			_("Output flowpath length raster file"), NULL);
+			_("Output flowpath length raster map"), NULL);
     pdsout  = parameter("dsout", TYPE_STRING, NO, NULL, "any,cell,raster",
-			_("Output flowline density raster file"), NULL);
+			_("Output flowline density raster map"), NULL);
 
     fup	  = flag('u', _("Compute upslope flowlines instead of default downhill flowlines"));
     flg	  = flag('3', _("3-D lengths instead of 2-D"));

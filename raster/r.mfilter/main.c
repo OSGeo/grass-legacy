@@ -43,7 +43,7 @@ int main (int argc, char *argv[])
     opt1->multiple   = NO;
     opt1->required   = YES;
     opt1->gisprompt  = "old,cell,raster" ;
-    opt1->description= _("Name of the input raster file") ;
+    opt1->description= _("Name of the input raster map") ;
 
     opt2 = G_define_option() ;
     opt2->key        = "output";
@@ -51,7 +51,7 @@ int main (int argc, char *argv[])
     opt2->multiple   = NO;
     opt2->required   = YES;
     opt2->gisprompt  = "new,cell,raster" ;
-    opt2->description= _("Name of the output raster file") ;
+    opt2->description= _("Name of the output raster map") ;
 
     opt3 = G_define_option() ;
     opt3->key        = "filter";
@@ -73,7 +73,7 @@ int main (int argc, char *argv[])
     opt5->key_desc   = "\"phrase\"";
     opt5->type       = TYPE_STRING;
     opt5->required   = NO;
-    opt5->description= _("Output raster file title") ;
+    opt5->description= _("Output raster map title") ;
 
     /* Define the different flags */
 
@@ -115,7 +115,7 @@ int main (int argc, char *argv[])
 
     in_mapset = G_find_cell2 (in_name,"");
     if (in_mapset == NULL)
-        G_fatal_error (_("%s: raster file not found"), in_name);
+        G_fatal_error (_("%s: raster map not found"), in_name);
 
     nrows = G_window_rows();
     ncols = G_window_cols();
@@ -128,7 +128,7 @@ int main (int argc, char *argv[])
     for (i=0; i < nfilters; i++)
     {
         if (filter[i].size > ncols || filter[i].size > nrows)
-            G_fatal_error (_("%s: raster file too small for the size of the filter"),
+            G_fatal_error (_("%s: raster map too small for the size of the filter"),
 		G_program_name());
     }
 

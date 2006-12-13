@@ -2631,7 +2631,7 @@ msgstr "Monitor: _send: escrita retornou contagem pequena: %d de %d\n"
 #~ msgid "Too many open files"
 #~ msgstr "Arquivos demais abertos"
 
-#~ msgid "Too many open raster files"
+#~ msgid "Too many open raster maps"
 #~ msgstr "Muitos arquivos raster abertos"
 
 #~ msgid "ERROR: GISBASE not set\n"

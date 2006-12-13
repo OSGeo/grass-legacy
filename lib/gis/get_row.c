@@ -651,19 +651,19 @@ static int get_map_row(
 /*--------------------------------------------------------------------------*/
 
 /*!
- * \brief read a raster file (without masking)
+ * \brief read a raster map (without masking)
  *
  * This routine reads the specified <b>row</b>
- * from the raster file open on file descriptor <b>fd</b> into the
+ * from the raster map open on file descriptor <b>fd</b> into the
  * <b>cell</b> buffer like G_get_map_row() does. The difference is that
  * masking is suppressed. If the user has a mask set, G_get_map_row( ) will
  * apply the mask but G_get_map_row_nomask() will ignore it.
  * This routine prints a diagnostic message and returns -1 if there is an error 
- * reading the raster file. Otherwise a nonnegative value is returned.
+ * reading the raster map. Otherwise a nonnegative value is returned.
  * <b>Note.</b> Ignoring the mask is not generally acceptable. Users expect 
  * the mask to be applied. However, in some cases ignoring the mask is 
  * justified. For example, the GRASS modules <i>r.describe</i>, which reads 
- * the raster file directly to report all data values in a raster file, and 
+ * the raster map directly to report all data values in a raster map, and 
  * <i>r.slope.aspect</i>, which produces slope and aspect from elevation, 
  * ignore both the mask and the region. However, the number of GRASS modules 
  * which do this should be minimal. See Mask for more information 

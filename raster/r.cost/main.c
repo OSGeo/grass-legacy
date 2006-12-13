@@ -153,7 +153,7 @@ int main(int argc, char *argv[])
     opt9->type = TYPE_STRING;
     opt9->gisprompt = "old,cell,raster";
     opt9->required = NO;
-    opt9->description = _("Starting points raster file");
+    opt9->description = _("Starting points raster map");
 
     opt3 = G_define_option();
     opt3->key = "coordinate";
@@ -335,7 +335,7 @@ int main(int argc, char *argv[])
     cost_fd = G_open_cell_old(cost_layer, cost_mapset);
 
     if (cost_fd < 0)
-	G_fatal_error(_("%s - can't open raster file"), cost_layer);
+	G_fatal_error(_("%s - can't open raster map"), cost_layer);
 
     data_type = G_get_raster_map_type(cost_fd);
     cell = G_allocate_raster_buf(data_type);
@@ -586,7 +586,7 @@ int main(int argc, char *argv[])
 	fd = G_open_cell_old(opt9->answer, search_mapset);
 	if (fd < 0)
 	    G_fatal_error(_
-			  ("can't open raster file [%s] needed for input coordinates"),
+			  ("can't open raster map [%s] needed for input coordinates"),
 			  opt9->answer);
 
 	data_type2 = G_get_raster_map_type(fd);

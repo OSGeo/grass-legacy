@@ -26,7 +26,7 @@
 struct BM * 
 IL_create_bitmask (struct interp_params *params)
 
-/** Creates a bitmap mask from given raster file **/
+/** Creates a bitmap mask from given raster map **/
 {
   int i, j, cfmask=0, irev, MASKfd;
   char *mapsetm;
@@ -46,7 +46,7 @@ IL_create_bitmask (struct interp_params *params)
     {
       mapsetm = G_find_cell2 (params->maskmap, "");
       if (!mapsetm)
-        G_fatal_error ("mask raster file [%s] not found", params->maskmap);
+        G_fatal_error ("mask raster map [%s] not found", params->maskmap);
 
       cellmask = G_allocate_cell_buf ();
       cfmask = G_open_cell_old (params->maskmap, mapsetm);

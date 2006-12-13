@@ -2602,7 +2602,7 @@ msgstr ""
 msgid "Monitor: _send: write returned short count: %d of %d\n"
 msgstr ""
 
-#~ msgid "Too many open raster files"
+#~ msgid "Too many open raster maps"
 #~ msgstr "打开太多的栅格文件"
 
 #~ msgid "Too many open files"

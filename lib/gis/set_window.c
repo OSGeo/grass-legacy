@@ -57,7 +57,7 @@ int G_set_window (struct Cell_head *window)
 		    continue;
 	    if (i != maskfd)
 	    {
-		G_warning (_("G_set_window(): projection/zone differs from that of currently open raster files"));
+		G_warning (_("G_set_window(): projection/zone differs from that of currently open raster maps"));
 		return -1;
 	    }
 	}

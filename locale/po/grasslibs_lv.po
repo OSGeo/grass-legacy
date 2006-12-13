@@ -2610,7 +2610,7 @@ msgid "Monitor: _send: write returned short count: %d of %d\n"
 msgstr ""
 
 #, fuzzy
-msgid "Too many open raster files"
+msgid "Too many open raster maps"
 msgstr "Nevar atvērt 'temp'/pagaidu failu"
 
 #, fuzzy

@@ -103,7 +103,7 @@ msgid "Writing %s from %s..."
 msgstr "Zapisuji %s z %s..."
 
 #: ../raster3d/r3.in.ascii/main.c:79
-msgid "Ascii raster file to be imported"
+msgid "Ascii raster map to be imported"
 msgstr "Název ASCII rastrového souboru, který má být naimportován"
 
 #: ../raster3d/r3.in.ascii/main.c:90
@@ -498,7 +498,7 @@ msgstr "Vytvoøí prùniky 2D mapy z g3d rastru objemù na základ 2D mapy elevace"
 
 #: ../raster3d/r3.cross.rast/main.c:280
 #, c-format
-msgid "Open 3D raster file %s"
+msgid "Open 3D raster map %s"
 msgstr "Otevøít 3D rastrový soubor %s"
 
 #: ../raster3d/r3.cross.rast/main.c:283
@@ -653,7 +653,7 @@ msgstr ""
 
 #: ../raster3d/r3.out.vtk/main.c:197
 #, c-format
-msgid "Open rgb g3d raster file %s"
+msgid "Open rgb g3d raster map %s"
 msgstr "Otevøít rgb g3d rastrový soubor %s"
 
 #: ../raster3d/r3.out.vtk/main.c:210
@@ -670,7 +670,7 @@ msgstr "Chyba pøi zavírání g3d rgb souboru"
 
 #: ../raster3d/r3.out.vtk/main.c:280
 #, c-format
-msgid "Open vector g3d raster file %s"
+msgid "Open vector g3d raster map %s"
 msgstr "Otevøít vektor g3d rastrový soubor %s"
 
 #: ../raster3d/r3.out.vtk/main.c:293
@@ -708,7 +708,7 @@ msgstr "nelze zavøít spodní rastrovou mapu\n"
 
 #: ../raster3d/r3.out.vtk/main.c:497
 #, c-format
-msgid "Open g3d raster file %s"
+msgid "Open g3d raster map %s"
 msgstr "Otevøít g3d rastrový soubor %s"
 
 #: ../raster3d/r3.out.vtk/main.c:536
@@ -825,7 +825,7 @@ msgid "Error while writing grid. Disk full?"
 msgstr "Chyba pøi zapisování møí¾ky. Disk je plný?"
 
 #: ../raster3d/r3.out.v5d/main.c:286
-msgid "Export of GRASS 3D raster file to 3-dimensional Vis5D file."
+msgid "Export of GRASS 3D raster map to 3-dimensional Vis5D file."
 msgstr ""
 "Exportuje 3D rastrový soubor GRASSu do 3-dimenzionálního Vis5D souboru."
 
@@ -2552,7 +2552,7 @@ msgid "Output cross-validation errors vector point file"
 msgstr "Výstupní bodový soubor obsahující výsledné chyby køí¾ové validace"
 
 #: ../vector/v.surf.rst/main.c:245
-msgid "Output surface raster file (elevation)"
+msgid "Output surface raster map (elevation)"
 msgstr "Výstupní mapa povrchu (elevace)"
 
 #: ../vector/v.surf.rst/main.c:249
@@ -2560,27 +2560,27 @@ msgid "Output partial derivatives instead of topographic parameters"
 msgstr "Výstup ve formì parciálních derivací místo topografických parametrù"
 
 #: ../vector/v.surf.rst/main.c:256
-msgid "Output slope raster file"
+msgid "Output slope raster map"
 msgstr "Název výstupního souboru sklonù svahù"
 
 #: ../vector/v.surf.rst/main.c:263
-msgid "Output aspect raster file"
+msgid "Output aspect raster map"
 msgstr "Název výstupního souboru expozic svahù"
 
 #: ../vector/v.surf.rst/main.c:270
-msgid "Output profile curvature raster file"
+msgid "Output profile curvature raster map"
 msgstr "Název výstupního souboru profilových køivostí"
 
 #: ../vector/v.surf.rst/main.c:277
-msgid "Output tangential curvature raster file"
+msgid "Output tangential curvature raster map"
 msgstr "Název výstupního souboru tangenciálních køivostí"
 
 #: ../vector/v.surf.rst/main.c:284
-msgid "Output mean curvature raster file"
+msgid "Output mean curvature raster map"
 msgstr "Název výstupního souboru støedních køivostí"
 
 #: ../vector/v.surf.rst/main.c:291 ../vector/v.vol.rst/main.c:292
-msgid "Name of the raster file used as mask"
+msgid "Name of the raster map used as mask"
 msgstr "Název rastrového souboru pou¾itého jako maska"
 
 #: ../vector/v.surf.rst/main.c:298
@@ -4051,7 +4051,7 @@ msgstr ""
 #, c-format
 msgid ""
 "\n"
-"Writing output raster file using smooth parameter=%f."
+"Writing output raster map using smooth parameter=%f."
 msgstr ""
 "\n"
 "Zapisuji výstupní rastrový soubor s pou¾itím parametru vyhlazení=%f."
@@ -5902,7 +5902,7 @@ msgid "Column parameter cannot be combined with use of z coordinate"
 msgstr "Parametr column nemù¾e být pou¾it souèasnì se souøadnicí z"
 
 #: ../vector/v.sample/main.c:87
-msgid "Sample a raster file at site locations"
+msgid "Sample a raster map at site locations"
 msgstr "Získává vzorky z rastrové mapy místech bodù"
 
 #: ../vector/v.sample/main.c:93
@@ -6958,11 +6958,11 @@ msgid "Output flowline vector file"
 msgstr "Výstupní vektorový soubor drah odtoku"
 
 #: ../raster/r.flow/io.c:163
-msgid "Output flowpath length raster file"
+msgid "Output flowpath length raster map"
 msgstr "Výstupní rastr délky svahu"
 
 #: ../raster/r.flow/io.c:165
-msgid "Output flowline density raster file"
+msgid "Output flowline density raster map"
 msgstr "Výstupní rastr hustoty povrchového odtoku"
 
 #: ../raster/r.flow/io.c:167
@@ -7183,11 +7183,11 @@ msgstr ""
 "bunìk a bude ulo¾ena jako hodnota ve výstupní rastrové mapì."
 
 #: ../raster/r.neighbors/main.c:92
-msgid "Name of existing raster file"
+msgid "Name of existing raster map"
 msgstr "Jméno existujícího rastru"
 
 #: ../raster/r.neighbors/main.c:99 ../raster/r.series/main.c:107
-msgid "Name of the new raster file"
+msgid "Name of the new raster map"
 msgstr "Název nového rastrového souboru"
 
 #: ../raster/r.neighbors/main.c:114
@@ -7199,7 +7199,7 @@ msgid "Neighborhood size"
 msgstr "Velikost okolí"
 
 #: ../raster/r.neighbors/main.c:128
-msgid "Title of the output raster file"
+msgid "Title of the output raster map"
 msgstr "Titulek výstupní rastrové mapy"
 
 #: ../raster/r.neighbors/main.c:132
@@ -7207,7 +7207,7 @@ msgid "Do not align output with the input"
 msgstr "Nezarovnávej výstup se vstupem"
 
 #: ../raster/r.compress/main.c:64
-msgid "Compresses and decompresses raster files."
+msgid "Compresses and decompresses raster maps."
 msgstr "Komprimuje a dekomprimuje rastrové soubory."
 
 #: ../raster/r.compress/main.c:72 ../display/d.what.rast/main.c:56
@@ -7549,7 +7549,7 @@ msgstr ""
 #: ../raster/r.bilinear/main.c:76 ../raster/r.resamp.interp/main.c:84
 #: ../raster/r.resamp.stats/main.c:283 ../raster/r.sum/main.c:47
 #, c-format
-msgid "Couldn't find raster file %s"
+msgid "Couldn't find raster map %s"
 msgstr "Nemohl jsem nalézt rastrový soubor %s"
 
 #: ../raster/r.bilinear/main.c:90 ../raster/r.bilinear/main.c:101
@@ -7670,12 +7670,12 @@ msgstr "Zdrojová projekce"
 
 #: ../raster/r.out.gdal/main.c:303
 #, fuzzy, c-format
-msgid "Cannot export [%s] raster file."
+msgid "Cannot export [%s] raster map."
 msgstr "Nemohu otevøít rastrový soubor [%s]!"
 
 #: ../raster/r.out.gdal/main.c:309
 #, fuzzy, c-format
-msgid "Cannot create [%s] raster file using [%s] driver."
+msgid "Cannot create [%s] raster map using [%s] driver."
 msgstr "Nemohu otevøít rastrový soubor [%s]!"
 
 #: ../raster/r.out.gdal/main.c:314
@@ -7688,11 +7688,11 @@ msgid "Raster file matrix filter."
 msgstr "Maticový filtr rastrových map."
 
 #: ../raster/r.mfilter/main.c:45 ../raster/r.resamp.rst/main.c:167
-msgid "Name of the input raster file"
+msgid "Name of the input raster map"
 msgstr "Název vstupního rastrového souboru"
 
 #: ../raster/r.mfilter/main.c:53
-msgid "Name of the output raster file"
+msgid "Name of the output raster map"
 msgstr "Název výstupního rastrového souboru"
 
 #: ../raster/r.mfilter/main.c:60
@@ -7704,7 +7704,7 @@ msgid "Number of times to repeat the filter"
 msgstr "Poèet iterací"
 
 #: ../raster/r.mfilter/main.c:75
-msgid "Output raster file title"
+msgid "Output raster map title"
 msgstr "Titulek výstupního rastru"
 
 #: ../raster/r.mfilter/main.c:91
@@ -7713,14 +7713,14 @@ msgstr "Aplikuj filtr pouze na nulové hodnoty dat"
 
 #: ../raster/r.out.tiff/r.out.tiff.c:87
 msgid ""
-"Exports a GRASS raster file to a 8/24bit TIFF image file at the pixel "
+"Exports a GRASS raster map to a 8/24bit TIFF image file at the pixel "
 "resolution of the currently defined region."
 msgstr ""
 "Exportuje GRASS rastr do formátu TIFF 8/24bit v rozli¹ení daném aktuálním "
 "regionem."
 
 #: ../raster/r.out.tiff/r.out.tiff.c:95
-msgid "Existing raster file name"
+msgid "Existing raster map name"
 msgstr "Jméno existujícího rastru"
 
 #: ../raster/r.out.tiff/r.out.tiff.c:102
@@ -8001,7 +8001,7 @@ msgstr "Znak pro oddìlení výstupu (výchozí: tab)"
 #: ../raster/r.cats/main.c:98 ../raster/r.basins.fill/main.c:92
 #: ../raster/r.basins.fill/main.c:105
 #, c-format
-msgid "%s: <%s> raster file not found"
+msgid "%s: <%s> raster map not found"
 msgstr "%s: <%s> rastrový soubor nebyl nalezen"
 
 #: ../raster/r.cats/main.c:100
@@ -8639,31 +8639,31 @@ msgstr ""
 "(SIMWE)"
 
 #: ../raster/simwe/r.sim.water/main.c:136
-msgid "Name of the elevation raster file"
+msgid "Name of the elevation raster map"
 msgstr "Název vstupního rastrového souboru elevace"
 
 #: ../raster/simwe/r.sim.water/main.c:143
-msgid "Name of the x-derivatives raster file"
+msgid "Name of the x-derivatives raster map"
 msgstr "Název rastrového souboru derivací x"
 
 #: ../raster/simwe/r.sim.water/main.c:150
-msgid "Name of the y-derivatives raster file"
+msgid "Name of the y-derivatives raster map"
 msgstr "Název rastrového souboru derivací y"
 
 #: ../raster/simwe/r.sim.water/main.c:157
-msgid "Name of the rainfall excess raster file"
+msgid "Name of the rainfall excess raster map"
 msgstr "Název rastrové mapy srá¾kového pøebytku"
 
 #: ../raster/simwe/r.sim.water/main.c:164
-msgid "Name of the infiltration excess raster file"
+msgid "Name of the infiltration excess raster map"
 msgstr "Název rastrové mapy pøebytkù infiltrace"
 
 #: ../raster/simwe/r.sim.water/main.c:171
-msgid "Name of the flow control raster file"
+msgid "Name of the flow control raster map"
 msgstr "Název rastrového souboru kontroly proudìní"
 
 #: ../raster/simwe/r.sim.water/main.c:178
-msgid "Name of the Mannings n raster file"
+msgid "Name of the Mannings n raster map"
 msgstr "Název rastrového souboru Manningova n"
 
 #: ../raster/simwe/r.sim.water/main.c:185
@@ -8671,15 +8671,15 @@ msgid "Name of the site file with x,y locations"
 msgstr "Jméno souboru s body s x,y místy"
 
 #: ../raster/simwe/r.sim.water/main.c:192
-msgid "Output water depth raster file"
+msgid "Output water depth raster map"
 msgstr "Výstupní rastr hloubky vody"
 
 #: ../raster/simwe/r.sim.water/main.c:199
-msgid "Output water discharge raster file"
+msgid "Output water discharge raster map"
 msgstr "Název výstupní mapy vypu¹tìní vody"
 
 #: ../raster/simwe/r.sim.water/main.c:206
-msgid "Output simulation error raster file"
+msgid "Output simulation error raster map"
 msgstr "Výstupní rastrová mapa chyb simulace"
 
 #: ../raster/simwe/r.sim.water/main.c:213
@@ -9090,7 +9090,7 @@ msgstr ""
 "dal¹íchbunìk ve vstupním rastrovém souboru."
 
 #: ../raster/r.series/main.c:100
-msgid "Names of existing raster files"
+msgid "Names of existing raster maps"
 msgstr "Názvy existujících rastrových souborù"
 
 #: ../raster/r.series/main.c:114
@@ -10384,7 +10384,7 @@ msgstr "Jméno výsledného souboru s rozdìlenými povodími"
 
 #: ../raster/r.basins.fill/main.c:111
 #, c-format
-msgid "%s: <%s> raster file exists already"
+msgid "%s: <%s> raster map exists already"
 msgstr "%s: <%s> rastrový soubor ji¾ existuje"
 
 #: ../raster/r.basins.fill/main.c:119
@@ -10427,12 +10427,12 @@ msgstr ""
 
 #: ../raster/r.in.arc/main.c:44
 msgid ""
-"Convert an ESRI ARC/INFO ascii raster file (GRID) into a (binary) raster map "
+"Convert an ESRI ARC/INFO ascii raster map (GRID) into a (binary) raster map "
 "layer."
 msgstr "Pøeveï ESRI ARC/INFO ascii rastr (GRID) do (binární) rastrové mapy."
 
 #: ../raster/r.in.arc/main.c:51
-msgid "ARC/INFO ascii raster file (GRID) to be imported"
+msgid "ARC/INFO ascii raster map (GRID) to be imported"
 msgstr "ARC/INFO ASCII rastrový soubor (GRID) urèený k importu"
 
 #: ../raster/r.in.arc/main.c:62 ../raster/r.in.xyz/main.c:100
@@ -10560,7 +10560,7 @@ msgid "Stop points vector map"
 msgstr "Vektorová mapa s cílovými body"
 
 #: ../raster/r.cost/main.c:156
-msgid "Starting points raster file"
+msgid "Starting points raster map"
 msgstr "Rastrová mapa s poèáteèními body"
 
 #: ../raster/r.cost/main.c:164 ../raster/r.walk/main.c:189
@@ -10662,7 +10662,7 @@ msgstr "%s - neplatné jméno"
 #: ../raster/r.cost/main.c:338 ../raster/r.walk/main.c:511
 #: ../raster/r.walk/main.c:514
 #, c-format
-msgid "%s - can't open raster file"
+msgid "%s - can't open raster map"
 msgstr "%s - nemohu otevøít rastrový soubor"
 
 #: ../raster/r.cost/main.c:347
@@ -10709,7 +10709,7 @@ msgstr "Nemohu alokovat pamì» pro segment fbuff == NULL"
 
 #: ../raster/r.cost/main.c:589
 #, c-format
-msgid "can't open raster file [%s] needed for input coordinates"
+msgid "can't open raster map [%s] needed for input coordinates"
 msgstr "nemohu otevøít rastrový soubor [%s] potøebý pro vstupní souøadnice"
 
 #: ../raster/r.cost/main.c:599
@@ -10840,7 +10840,7 @@ msgid "%s higher above pointer wrong"
 msgstr "Vý¹ka kamery nad terénem"
 
 #: ../raster/r.support/modcolr/modcolr.c:37
-msgid "Which raster file needs a color table"
+msgid "Which raster map needs a color table"
 msgstr "Který rastrový soubor vy¾aduje tabulku barev"
 
 #: ../raster/r.support/modcolr/modcolr.c:43
@@ -10854,7 +10854,7 @@ msgid "Color table for [%s] updated."
 msgstr "Tabulka barev pro [%s] byla aktualizována."
 
 #: ../raster/r.support/modhist/modhist.c:37
-msgid "Which raster file needs an updated history? "
+msgid "Which raster map needs an updated history? "
 msgstr "Který rastrový soubor vy¾aduje aktualizovanou historii? "
 
 #: ../raster/r.support/modhist/modhist.c:43
@@ -10877,7 +10877,7 @@ msgid "Which vector file needs updated categories?"
 msgstr "Který vektorový soubor vy¾aduje aktualizované kategorie?"
 
 #: ../raster/r.support/modcats/modcats.c:49
-msgid "Which raster file needs updated categories?"
+msgid "Which raster map needs updated categories?"
 msgstr "Který rastrový soubor vy¾aduje aktualizované kategorie?"
 
 #: ../raster/r.support/modcats/modcats.c:53
@@ -11079,7 +11079,7 @@ msgstr "[%s] je reklasifikací [%s v %s] - nemohu upravit hlavièku!"
 
 #: ../raster/r.support/modhead/modhead.c:95
 #, c-format
-msgid "Cannot open raster file [%s]!"
+msgid "Cannot open raster map [%s]!"
 msgstr "Nemohu otevøít rastrový soubor [%s]!"
 
 #: ../raster/r.support/modhead/modhead.c:100
@@ -11089,7 +11089,7 @@ msgstr "Rastrový soubor [%s] je prázdný."
 
 #: ../raster/r.support/modhead/modhead.c:102
 #, c-format
-msgid "Error reading raster file [%s]."
+msgid "Error reading raster map [%s]."
 msgstr "Chyba pøi ètení rastrového souboru [%s]."
 
 #: ../raster/r.support/modhead/modhead.c:191
@@ -11165,7 +11165,7 @@ msgstr "Nejsem schopen zapsat hlavièku pro [%s]"
 
 #: ../raster/r.support/modhead/modhead.c:301
 #, c-format
-msgid "Header for raster file [%s] updated."
+msgid "Header for raster map [%s] updated."
 msgstr "Hlavièka rastrového souboru [%s] byla aktualizána."
 
 #: ../raster/r.support/modhead/ask_format.c:24
@@ -11526,7 +11526,7 @@ msgstr "Pøevede ASCII rastrový textový soubor do (binární) rastrové mapy."
 
 #: ../raster/r.in.ascii/main.c:55
 #, fuzzy
-msgid "Ascii raster file to be imported (or \"-\" to read from stdin)"
+msgid "Ascii raster map to be imported (or \"-\" to read from stdin)"
 msgstr "Název ASCII rastrového souboru, který má být naimportován"
 
 #: ../raster/r.in.ascii/main.c:80
@@ -12680,7 +12680,7 @@ msgstr "Výstupní rastrová mapa %s - nenalezena (nebyly zadány start_points)"
 
 #: ../raster/r.walk/main.c:823
 #, c-format
-msgid "Can't open raster file %s"
+msgid "Can't open raster map %s"
 msgstr "Nemohu otevøít rastrový soubor %s"
 
 #: ../raster/r.walk/main.c:833
@@ -12776,7 +12776,7 @@ msgstr "Nejsem schopen vytvoøit rastrovou mapu [%s]."
 
 #: ../raster/r.out.ppm/main.c:43
 msgid ""
-"Converts a GRASS raster file to a PPM image file at the pixel resolution of "
+"Converts a GRASS raster map to a PPM image file at the pixel resolution of "
 "the CURRENTLY DEFINED REGION."
 msgstr ""
 "Pøevede GRASSový rastrový soubor na PPM obrázek s rozli¹ením pixelu podle "
@@ -12995,7 +12995,7 @@ msgid "Resolution of output map"
 msgstr "Rozli¹ení výstupní mapy"
 
 #: ../raster/r.proj/main.c:180
-msgid "List raster files in input location and exit"
+msgid "List raster maps in input location and exit"
 msgstr "Vypi¹ rastrové soubory vstupní location a ukonèi se"
 
 #: ../raster/r.proj/main.c:184
@@ -13125,7 +13125,7 @@ msgstr "Výstupní rastrový soubor úhlu dopadu paprsku (pouze mód 1)"
 
 #: ../raster/r.sun/main.c:277
 msgid ""
-"Output beam irradiance [W.m-2] (mode 1) or irradiation raster file [Wh.m-2."
+"Output beam irradiance [W.m-2] (mode 1) or irradiation raster map [Wh.m-2."
 "day-1] (mode 2)"
 msgstr ""
 "Výstupní osvìtlení paprskem [W.m-2] (mode 1) nebo rastrovou mapu osvìtlení "
@@ -13564,7 +13564,7 @@ msgid "Input data given for (o/i)"
 msgstr "Vstupní data dána (i/o)"
 
 #: ../raster/r.in.bin/main.c:113
-msgid "Import a binary raster file into a GRASS raster map layer."
+msgid "Import a binary raster map into a GRASS raster map layer."
 msgstr "Importuje binární rastrový soubor jako GRASS rastrovou mapu."
 
 #: ../raster/r.in.bin/main.c:117
@@ -13592,7 +13592,7 @@ msgid "Get region info from GMT style header"
 msgstr "Získej informace o regionu z GMT hlavièky"
 
 #: ../raster/r.in.bin/main.c:139
-msgid "Bin raster file to be imported"
+msgid "Bin raster map to be imported"
 msgstr "Binární rastrový soubor, který má být naimportován"
 
 #: ../raster/r.in.bin/main.c:156
@@ -13775,7 +13775,7 @@ msgstr "Nemohu naèíst parametry souèasného regionu"
 
 #: ../raster/r.surf.idw/main.c:118
 #, c-format
-msgid "%s in %s -can't open raster file"
+msgid "%s in %s -can't open raster map"
 msgstr "%s v %s - nemohu otevøít rastrový soubor"
 
 #: ../raster/r.surf.idw/main.c:131
@@ -13789,8 +13789,8 @@ msgstr "Nelze naèíst øádek"
 
 #: ../raster/r.resamp.rst/main.c:157
 msgid ""
-"Reinterpolates and computes topographic analysis from input raster file to a "
-"new raster file (possibly with different resolution) using regularized "
+"Reinterpolates and computes topographic analysis from input raster map to a "
+"new raster map (possibly with different resolution) using regularized "
 "spline with tension and smoothing."
 msgstr ""
 "Reinterpoluje a spoèítá topografickou analýzu ze vstupního rastrového "
@@ -14062,7 +14062,7 @@ msgstr "neplatná hodnota hloubky '%s' - bude pou¾ita výchozí."
 
 #: ../raster/r.carve/main.c:173
 #, c-format
-msgid "unable to find raster file [%s]"
+msgid "unable to find raster map [%s]"
 msgstr "nelze nalézt rastrovou vrstvu [%s]"
 
 #: ../raster/r.carve/main.c:176 ../raster/r.carve/main.c:181
@@ -14087,14 +14087,14 @@ msgstr ""
 
 #: ../raster/r.carve/raster.c:12
 #, fuzzy
-msgid "Reading raster file... "
+msgid "Reading raster map... "
 msgstr ""
 "\n"
 "Naèítám rastrový soubor... "
 
 #: ../raster/r.carve/raster.c:31
 #, fuzzy
-msgid "Writing raster file... "
+msgid "Writing raster map... "
 msgstr ""
 "\n"
 "Zapisuji rastrový soubor..."
@@ -14105,11 +14105,11 @@ msgid "CLUMP PASS %d ... "
 msgstr "SPOJENÍ PRÙCHOD %d ... "
 
 #: ../raster/r.clump/clump.c:104
-msgid "Unable to properly read input raster file"
+msgid "Unable to properly read input raster map"
 msgstr "Nelze správnì naèít vstupní rastrový soubor"
 
 #: ../raster/r.clump/clump.c:249
-msgid "Unable to properly write output raster file"
+msgid "Unable to properly write output raster map"
 msgstr "Nemohu správnì zapsat výsledný rastrový soubor"
 
 #: ../raster/r.clump/main.c:53
@@ -14378,7 +14378,7 @@ msgid "Generates random surface(s) with spatial dependence."
 msgstr "Vytvoøí prostorovì závislé povrchy náhodných hodnot."
 
 #: ../raster/r.in.gdal/main.c:71
-msgid "Import GDAL supported raster file into a binary raster map layer."
+msgid "Import GDAL supported raster map into a binary raster map layer."
 msgstr ""
 "Importuj rastry podporované knihovnou GDAL jako binární rastrovou mapu."
 
@@ -14602,12 +14602,12 @@ msgstr ""
 
 #: ../raster/r.contour/main.c:153
 #, c-format
-msgid "<%s> raster file not found"
+msgid "<%s> raster map not found"
 msgstr "<%s> rastr nenalezen"
 
 #: ../raster/r.contour/main.c:157
 #, c-format
-msgid "<%s> unable to open raster file"
+msgid "<%s> unable to open raster map"
 msgstr "<%s> neschopen otevøít rastrový soubor"
 
 #: ../raster/r.contour/main.c:160
@@ -14732,7 +14732,7 @@ msgstr "podskupina <%s> nebyla nalezena"
 #, c-format
 msgid ""
 "\n"
-"** The following raster files in subgroup [%s] do not exist:"
+"** The following raster maps in subgroup [%s] do not exist:"
 msgstr ""
 "^G\n"
 "** Následující rastrové soubory v podskupinì [%s] neexistují:"
@@ -15212,15 +15212,15 @@ msgstr ""
 "Rychlá inverzní Fourierova transformace (ifft) pro zpracování obrazových dat."
 
 #: ../imagery/i.ifft/ifftmain.c:66
-msgid "input raster file (image fft, real part)"
+msgid "input raster map (image fft, real part)"
 msgstr "vstupní rastrový soubor (obraz fft, reálná èást)"
 
 #: ../imagery/i.ifft/ifftmain.c:74
-msgid "input raster file (image fft, imaginary part"
+msgid "input raster map (image fft, imaginary part"
 msgstr "vstupní rastrový soubor (obraz fft, imaginární èást"
 
 #: ../imagery/i.ifft/ifftmain.c:82
-msgid "output inverse raster file after ifft"
+msgid "output inverse raster map after ifft"
 msgstr "výstupní inverzní rastrový soubor po ifft"
 
 #: ../imagery/i.ifft/ifftmain.c:94
@@ -15251,7 +15251,7 @@ msgstr ""
 
 #: ../imagery/i.ifft/ifftmain.c:111
 #, c-format
-msgid "%s: %s - illegal name for output raster file."
+msgid "%s: %s - illegal name for output raster map."
 msgstr "%s: %s - neplatné jméno pro výstupní rastrový soubor."
 
 #: ../imagery/i.ifft/ifftmain.c:129
@@ -15591,15 +15591,15 @@ msgid "Fast Fourier Transform (FFT) for image processing."
 msgstr "Rychlá Fourierova transformace (FFT) pro zpracování obrazových dat."
 
 #: ../imagery/i.fft/fftmain.c:65
-msgid "input raster file being fft"
+msgid "input raster map being fft"
 msgstr "vstupní rastrový soubor pro fft"
 
 #: ../imagery/i.fft/fftmain.c:73
-msgid "output real part arrays stored as raster file"
+msgid "output real part arrays stored as raster map"
 msgstr "výstupní reálná èást pole ulo¾ena jako rastrový soubor"
 
 #: ../imagery/i.fft/fftmain.c:81
-msgid "output imaginary part arrays stored as raster file"
+msgid "output imaginary part arrays stored as raster map"
 msgstr "výstupní imaginarní èást pole ulo¾ena jako rastrový soubor"
 
 #: ../imagery/i.fft/fftmain.c:89
@@ -16143,7 +16143,7 @@ msgid "Ascii file containing spectral signatures"
 msgstr "ASCII soubor obsahující spektrální pøíznaky"
 
 #: ../imagery/i.cca/main.c:92
-msgid "Output raster file prefix name"
+msgid "Output raster map prefix name"
 msgstr "Prefix výstupního rastrového souboru"
 
 #: ../imagery/i.cca/main.c:99
@@ -18066,7 +18066,7 @@ msgstr "Problém pøi výbìru monitoru %s. Zkusím to je¹tì jednou"
 #: ../display/d.histogram/main.c:71
 msgid ""
 "Displays a histogram in the form of a pie or bar chart for a user-specified "
-"raster file."
+"raster map."
 msgstr ""
 "Zobrazí histogram ve formì koláèového nebo sloupcového grafu pro zadanou "
 "rastrovou mapu."
@@ -18932,7 +18932,7 @@ msgstr "Poèet souborù s vý¹kovým modelem neodpovídá poètu souboru s barvami"
 #~ msgid "existing SPOT VGT NDVI HDF file (0001_NDV.HDF)"
 #~ msgstr "existující souboru SPOT VGT NDVI HDF (0001_NDV.HDF)"
 
-#~ msgid "name for new raster file"
+#~ msgid "name for new raster map"
 #~ msgstr "jméno nového rastru"
 
 #~ msgid "Auto-balancing of colors for LANDSAT images"

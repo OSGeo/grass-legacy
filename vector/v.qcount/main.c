@@ -1,5 +1,5 @@
 /*-
- * from s.qcount - GRASS program to sample a raster file at site locations.
+ * from s.qcount - GRASS program to sample a raster map at site locations.
  * Copyright (C) 1993-1995. James Darrell McCauley.
  *
  * Author: James Darrell McCauley darrell@mccauley-usa.com

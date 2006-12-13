@@ -40,7 +40,7 @@ ps_outline (void)
     /* let user know what's happenning */
     if (verbose > 1)
     {
-        fprintf (stdout,"PS-PAINT: outlining areas in raster file <%s in %s> ...",
+        fprintf (stdout,"PS-PAINT: outlining areas in raster map <%s in %s> ...",
 	    PS.cell_name, PS.cell_mapset);
         fflush(stdout);
     }

@@ -8,12 +8,12 @@ to 2D flow. The solution is based on the concept of duality between fields and
 particles and the underlying equations are solved by Green's 
 function Monte  Carlo method, to provide robustness necessary for 
 spatially variable conditions and high resolutions (Mitas and Mitasova 
-1998).  Key inputs of the model include the following raster files:
+1998).  Key inputs of the model include the following raster maps:
  elevation (<i>  elevin</i>), flow gradient given by the first-order partial 
 derivatives of elevation field (<i> dxin</i> and <i>dyin</i>), 
 overland flow water depth (<i> wdepth</i>), detachment capacity coefficient (<i>detin</i>), 
 transport capacity coefficient (<i>tranin</i>), critical shear stress (<i>tauin</i>) 
-and surface  roughness coefficient called Manning's n (<i>manin</i> raster file). 
+and surface  roughness coefficient called Manning's n (<i>manin</i> raster map). 
 Partial derivatives can be computed by <a href="v.surf.rst.html">v.surf.rst</a>
 or <a href="r.slope.aspect.html">r.slope.aspect</a>
 module. The data are automatically converted data from feet to metric
@@ -23,10 +23,10 @@ module. Other parameters must be determined using field measurements or
 reference literature (see suggested values in Notes and References). <br>
 
 <p>
-Output includes transport capacity raster file <i>tc</i>  in [kg/ms],
-transport capacity limited erosion/deposition raster file
-<i>et</i> [kg/m<sup>2</sup>s], sediment flow rate raster file 
-<i>flux</i> [kg/ms], and net erosion/deposition raster file [kg/m<sup>2</sup>s]. 
+Output includes transport capacity raster map <i>tc</i>  in [kg/ms],
+transport capacity limited erosion/deposition raster map
+<i>et</i> [kg/m<sup>2</sup>s], sediment flow rate raster map 
+<i>flux</i> [kg/ms], and net erosion/deposition raster map [kg/m<sup>2</sup>s]. 
 Simulation time is controled by <i> niter</i> parameter.  The default value is 1000,
 depending on complexity of terrain, land cover and size of the area, several thousand
  iterations may be needed to reach the steady state. Output

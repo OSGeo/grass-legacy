@@ -400,7 +400,7 @@ IL_resample_output_2d (
       if (params->elev != NULL)
 	sprintf (hist1.edhist[0], "The elevation map is %s", params->elev);
 
-      sprintf (hist1.datsrc_1, "raster file %s", input);
+      sprintf (hist1.datsrc_1, "raster map %s", input);
       hist1.edlinecnt = 1;
 
       G_write_history (params->slope, &hist1);
@@ -431,7 +431,7 @@ IL_resample_output_2d (
       if (params->elev != NULL)
 	sprintf (hist2.edhist[0], "The elevation map is %s", params->elev);
 
-      sprintf (hist2.datsrc_1, "raster file %s", input);
+      sprintf (hist2.datsrc_1, "raster map %s", input);
       hist2.edlinecnt = 1;
 
       G_write_history (params->aspect, &hist2);
@@ -496,7 +496,7 @@ IL_resample_output_2d (
 	if (params->elev != NULL)
 	  sprintf (hist3.edhist[0], "The elevation map is %s", params->elev);
 
-	sprintf (hist3.datsrc_1, "raster file %s", input);
+	sprintf (hist3.datsrc_1, "raster map %s", input);
 	hist3.edlinecnt = 1;
 
 	G_write_history (params->pcurv, &hist3);
@@ -520,7 +520,7 @@ IL_resample_output_2d (
 	if (params->elev != NULL)
 	  sprintf (hist4.edhist[0], "The elevation map is %s", params->elev);
 
-	sprintf (hist4.datsrc_1, "raster file %s", input);
+	sprintf (hist4.datsrc_1, "raster map %s", input);
 	hist4.edlinecnt = 1;
 
 	G_write_history (params->tcurv, &hist4);
@@ -545,7 +545,7 @@ IL_resample_output_2d (
 	if (params->elev != NULL)
 	  sprintf (hist5.edhist[0], "The elevation map is %s", params->elev);
 
-	sprintf (hist5.datsrc_1, "raster file %s", input);
+	sprintf (hist5.datsrc_1, "raster map %s", input);
 	hist5.edlinecnt = 1;
 
 	G_write_history (params->mcurv, &hist5);
@@ -574,7 +574,7 @@ IL_resample_output_2d (
     sprintf (hist.edhist[3], "zmin_data=%f, zmax_data=%f", zmin, zmax);
     sprintf (hist.edhist[4], "zmin_int=%f, zmax_int=%f", zminac, zmaxac);
 
-    sprintf (hist.datsrc_1, "raster file %s", input);
+    sprintf (hist.datsrc_1, "raster map %s", input);
 
     hist.edlinecnt = 5;
 

@@ -38,9 +38,9 @@ static int lister(char *,char *,char *);
 
 
 /*!
- * \brief prompt for new raster file
+ * \brief prompt for new raster map
  *
- * Asks the user to enter a name for a raster file which does not
+ * Asks the user to enter a name for a raster map which does not
  * exist in the current mapset.
  *
  *  \param prompt
@@ -58,7 +58,7 @@ G_ask_cell_new  (char *prompt, char *name)
 
 
 /*!
- * \brief prompt for existing raster file
+ * \brief prompt for existing raster map
  *
  * Asks the user to enter the name of an existing raster
  * file in any mapset in the database.
@@ -77,7 +77,7 @@ G_ask_cell_old  (char *prompt, char *name)
 
 
 /*!
- * \brief prompt for existing raster file
+ * \brief prompt for existing raster map
  *
  * Asks the user to enter the name of an existing raster
  * file in the current mapset.

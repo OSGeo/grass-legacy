@@ -1,7 +1,7 @@
 /***************************************************************************/
 /***                                                                     ***/
 /***                             process()                               ***/
-/***          Reads in a raster files row by row for processing          ***/
+/***          Reads in a raster maps row by row for processing          ***/
 /***                  Jo Wood, V1.0, 13th September, 1994		 ***/
 /***                                                                     ***/
 /***************************************************************************/

@@ -377,7 +377,7 @@ msgid "Digitize raster"
 msgstr "Raster sayısallaştır"
 
 #: ../gui/tcltk/menus/menu.tcl:231
-msgid "Compress/decompress raster file"
+msgid "Compress/decompress raster map"
 msgstr "Raster dosyayı sıkıştır/aç"
 
 #: ../gui/tcltk/menus/menu.tcl:232

@@ -283,7 +283,7 @@ main (int argc, char *argv[]) {
   module = G_define_module();
   module->keywords = _("raster3d, voxel");
     module->description =
-   _("Export of GRASS 3D raster file to 3-dimensional Vis5D file.");
+   _("Export of GRASS 3D raster map to 3-dimensional Vis5D file.");
 
   /* Get parameters from user */
   setParams();

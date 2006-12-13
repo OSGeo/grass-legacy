@@ -331,7 +331,7 @@ static int cmp (const void *, const void *);
 /*!
  * \brief read raster category file
  *
- * The category file for raster file
+ * The category file for raster map
  * <b>name</b> in <b>mapset</b> is read into the <b>cats</b> structure. If
  * there is an error reading the category file, a diagnostic message is printed
  * and -1 is returned. Otherwise, 0 is returned.
@@ -1210,7 +1210,7 @@ int G_set_raster_cat (
 /*!
  * \brief write raster category file
  *
- * Writes the category file for the raster file <b>name</b> in
+ * Writes the category file for the raster map <b>name</b> in
  * the current mapset from the <b>cats</b> structure.
  * Returns 1 if successful. Otherwise, -1 is returned (no diagnostic is
  * printed).

@@ -361,7 +361,7 @@ int main(int argc, char **argv)
       Vect_build (&Out, stderr);
       Vect_close (&Out);
   } else { 
-      G_message(_("\nWriting output raster file using smooth parameter=%f."), sigma);
+      G_message(_("\nWriting output raster map using smooth parameter=%f."), sigma);
       G_message(_("\nNormalising factor=%f."), 1./gaussianFunction(sigma/4.,sigma,dimension));
 
       for(row=0; row<window.rows; row++){

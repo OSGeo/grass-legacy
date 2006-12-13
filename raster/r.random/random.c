@@ -37,7 +37,7 @@ int execute_random (struct rr_state *theState)
     infd = theState->fd_old;
     if (infd < 0)
     {
-        sprintf (msg, "%s: unable to open raster file [%s]", G_program_name(),
+        sprintf (msg, "%s: unable to open raster map [%s]", G_program_name(),
                 theState->inraster);
         G_fatal_error (msg);
         exit(1);
@@ -47,7 +47,7 @@ int execute_random (struct rr_state *theState)
         outfd = G_open_raster_new (theState->outraster, theState->buf.type);
         if (outfd < 0)
         {
-            sprintf (msg, "%s: unable to create raster file [%s]", 
+            sprintf (msg, "%s: unable to create raster map [%s]", 
                 G_program_name(), theState->outraster);
             G_fatal_error (msg);
             exit(1);
@@ -94,7 +94,7 @@ int execute_random (struct rr_state *theState)
 
     sprintf (msg, _("Writing "));
     if (theState->outraster)
-            sprintf (msg2, _("raster file [%s] "), theState->outraster);
+            sprintf (msg2, _("raster map [%s] "), theState->outraster);
             strcat(msg,msg2);
     if (theState->outsites && theState->outraster)
             strcat (msg, "and ");
@@ -114,7 +114,7 @@ int execute_random (struct rr_state *theState)
     {
         if (G_get_raster_row (infd, theState->buf.data.v, row, theState->buf.type) < 0)
         {
-            sprintf (msg, "%s: can't read raster file [%s]",
+            sprintf (msg, "%s: can't read raster map [%s]",
                 G_program_name(), theState->inraster);
             G_fatal_error (msg);
             exit(1);

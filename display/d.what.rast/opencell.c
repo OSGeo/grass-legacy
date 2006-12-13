@@ -11,7 +11,7 @@ opencell (char *fullname, char *name, char *mapset)
 	m = G_find_cell2 (name, "");
 	if (m == NULL)
 	{
-		fprintf (stderr, "warning: %s - raster file not found\n", name);
+		fprintf (stderr, "warning: %s - raster map not found\n", name);
 		return -1;
 	}
 	if (strlen (m) == 0)

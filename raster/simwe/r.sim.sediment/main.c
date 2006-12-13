@@ -132,7 +132,7 @@ int main ( int argc, char *argv[])
   parm.elevin->type = TYPE_STRING;
   parm.elevin->required = YES;
   parm.elevin->gisprompt = "old,cell,raster";
-  parm.elevin->description = _("Name of the elevation raster file");
+  parm.elevin->description = _("Name of the elevation raster map");
   parm.elevin->guisection  = _("Input_options");
 
   parm.wdepth = G_define_option();
@@ -140,7 +140,7 @@ int main ( int argc, char *argv[])
   parm.wdepth->type = TYPE_STRING;
   parm.wdepth->required = YES;
   parm.wdepth->gisprompt = "old,cell,raster";
-  parm.wdepth->description = _("Name of the water height raster file");
+  parm.wdepth->description = _("Name of the water height raster map");
   parm.wdepth->guisection  = _("Input_options");
 
   parm.dxin = G_define_option();
@@ -148,7 +148,7 @@ int main ( int argc, char *argv[])
   parm.dxin->type = TYPE_STRING;
   parm.dxin->required = YES;
   parm.dxin->gisprompt = "old,cell,raster";
-  parm.dxin->description = _("Name of the x-derivatives raster file");
+  parm.dxin->description = _("Name of the x-derivatives raster map");
   parm.dxin->guisection  = _("Input_options");
 
   parm.dyin = G_define_option();
@@ -156,7 +156,7 @@ int main ( int argc, char *argv[])
   parm.dyin->type = TYPE_STRING;
   parm.dyin->required = YES;
   parm.dyin->gisprompt = "old,cell,raster";
-  parm.dyin->description = _("Name of the y-derivatives raster file");
+  parm.dyin->description = _("Name of the y-derivatives raster map");
   parm.dyin->guisection  = _("Input_options");
 
   parm.detin = G_define_option();
@@ -165,7 +165,7 @@ int main ( int argc, char *argv[])
   parm.detin->required = YES;
   parm.detin->gisprompt = "old,cell,raster";
   parm.detin->description =
-	_("Name of the detachment capacity coefficient raster file");
+	_("Name of the detachment capacity coefficient raster map");
   parm.detin->guisection  = _("Input_options");
 
   parm.tranin = G_define_option();
@@ -174,7 +174,7 @@ int main ( int argc, char *argv[])
   parm.tranin->required = YES;
   parm.tranin->gisprompt = "old,cell,raster";
   parm.tranin->description =
-	_("Name of the transport capacity coefficient raster file");
+	_("Name of the transport capacity coefficient raster map");
   parm.tranin->guisection  = _("Input_options");
 
   parm.tauin = G_define_option();
@@ -182,7 +182,7 @@ int main ( int argc, char *argv[])
   parm.tauin->type = TYPE_STRING;
   parm.tauin->required = YES;
   parm.tauin->gisprompt = "old,cell,raster";
-  parm.tauin->description = _("Name of the critical shear stress raster file");
+  parm.tauin->description = _("Name of the critical shear stress raster map");
   parm.tauin->guisection  = _("Input_options");
 
   parm.manin = G_define_option();
@@ -190,7 +190,7 @@ int main ( int argc, char *argv[])
   parm.manin->type = TYPE_STRING;
   parm.manin->required = YES;
   parm.manin->gisprompt = "old,cell,raster";
-  parm.manin->description = _("Name of the Mannings n raster file");
+  parm.manin->description = _("Name of the Mannings n raster map");
   parm.manin->guisection  = _("Input_options");
 
 /* needs to be updated to GRASS 6 vector format !! */
@@ -207,7 +207,7 @@ int main ( int argc, char *argv[])
   parm.tc->type = TYPE_STRING;
   parm.tc->required = NO;
   parm.tc->gisprompt = "new,cell,raster";
-  parm.tc->description = _("Output transport capacity raster file");
+  parm.tc->description = _("Output transport capacity raster map");
   parm.tc->guisection  = _("Output_options");
 
   parm.et = G_define_option();
@@ -216,7 +216,7 @@ int main ( int argc, char *argv[])
   parm.et->required = NO;
   parm.et->gisprompt = "new,cell,raster";
   parm.et->description =
-	_("Output transp.limited erosion-deposition raster file");
+	_("Output transp.limited erosion-deposition raster map");
   parm.et->guisection  = _("Output_options");
 
   parm.conc = G_define_option();
@@ -224,7 +224,7 @@ int main ( int argc, char *argv[])
   parm.conc->type = TYPE_STRING;
   parm.conc->required = NO;
   parm.conc->gisprompt = "new,cell,raster";
-  parm.conc->description = _("Output sediment concentration raster file");
+  parm.conc->description = _("Output sediment concentration raster map");
   parm.conc->guisection  = _("Output_options");
 
   parm.flux = G_define_option();
@@ -232,7 +232,7 @@ int main ( int argc, char *argv[])
   parm.flux->type = TYPE_STRING;
   parm.flux->required = NO;
   parm.flux->gisprompt = "new,cell,raster";
-  parm.flux->description = _("Output sediment flux raster file");
+  parm.flux->description = _("Output sediment flux raster map");
   parm.flux->guisection  = _("Output_options");
 
   parm.erdep = G_define_option();
@@ -240,7 +240,7 @@ int main ( int argc, char *argv[])
   parm.erdep->type = TYPE_STRING;
   parm.erdep->required = NO;
   parm.erdep->gisprompt = "new,cell,raster";
-  parm.erdep->description = _("Output erosion-deposition raster file");
+  parm.erdep->description = _("Output erosion-deposition raster map");
   parm.erdep->guisection  = _("Output_options");
 
   parm.nwalk = G_define_option();

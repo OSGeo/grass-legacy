@@ -43,15 +43,15 @@ static char CELL_DIR[100];
 
 
 /*!
- * \brief close a raster file
+ * \brief close a raster map
  *
- * The raster file
+ * The raster map
  * opened on file descriptor <b>fd</b> is closed. Memory allocated for raster
  * processing is freed. If open for writing, skeletal support files for the new
- * raster file are created as well.
+ * raster map are created as well.
  * <b>Note.</b> If a module wants to explicitly write support files (e.g., a
- * specific color table) for a raster file it creates, it must do so after the
- * raster file is closed. Otherwise the close will overwrite the support files.
+ * specific color table) for a raster map it creates, it must do so after the
+ * raster map is closed. Otherwise the close will overwrite the support files.
  * See Raster_Map_Layer_Support_Routines for routines which write
  * raster support files.
  *
@@ -88,15 +88,15 @@ int G_close_cell (int fd)
 
 
 /*!
- * \brief unopen a raster file
+ * \brief unopen a raster map
  *
- * The raster file
+ * The raster map
  * opened on file descriptor <b>fd</b> is closed. Memory allocated for raster
- * processing is freed. If open for writing, the raster file is not created and
- * the temporary file created when the raster file was opened is removed (see
+ * processing is freed. If open for writing, the raster map is not created and
+ * the temporary file created when the raster map was opened is removed (see
  * Creating_and_Opening_New_Raster_Files).
  * This routine is useful when errors are detected and it is desired to not
- * create the new raster file. While it is true that the raster file will not be
+ * create the new raster map. While it is true that the raster map will not be
  * created if the module exits without closing the file, the temporary file will
  * not be removed at module exit. GRASS database management will eventually
  * remove the temporary file, but the file can be quite large and will take up

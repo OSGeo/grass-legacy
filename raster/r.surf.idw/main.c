@@ -115,7 +115,7 @@ int main(int argc, char **argv)
     /*  Open input cell layer for reading                           */
     fd = G_open_cell_old(input, layer_mapset);
     if (fd < 0)
-	G_fatal_error(_("%s in %s -can't open raster file"), input,
+	G_fatal_error(_("%s in %s -can't open raster map"), input,
 		      layer_mapset);
 
     /* Store input data in array-indexed doubly-linked lists and close input file */

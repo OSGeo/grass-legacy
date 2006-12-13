@@ -293,7 +293,7 @@ int parseSetup(char *path, list l, g_areas g, char *raster){
 	rel_rl=atof(strtok(NULL,"|"));
 	rel_cl=atof(strtok(NULL,"\n"));
 	
-	/*finding raster file*/
+	/*finding raster map*/
 	mapset = G_find_cell(raster, "");
 	if (G_get_cellhd(raster, mapset, &cellhd) == - 1)
 		G_fatal_error( _("Cannot read raster header file"));
@@ -532,7 +532,7 @@ int disposeAreas(list l, g_areas g, char *def){
 		r_strat_len = (int) rint(g->rows/r_strat);
 		c_strat_len = (int) rint(g->cols/c_strat);
 		if (r_strat_len < g->rl || c_strat_len < g->cl)
-			G_fatal_error( _("Too much strats for raster file\n"));
+			G_fatal_error( _("Too much strats for raster map\n"));
 		loop = r_strat * c_strat;
 		srandom(getpid());
 		for (i=0; i<loop ; i++){

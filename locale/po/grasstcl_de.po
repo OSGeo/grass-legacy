@@ -423,7 +423,7 @@ msgstr ""
 
 #: ../gui/tcltk/menus/menu.tcl:231
 #, fuzzy
-msgid "Compress/decompress raster file"
+msgid "Compress/decompress raster map"
 msgstr "Komprimieren"
 
 #: ../gui/tcltk/menus/menu.tcl:232

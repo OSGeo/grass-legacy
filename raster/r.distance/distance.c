@@ -144,7 +144,7 @@ int null_distance(char *name1, char *name2, int *zerro_row, int *zerro_col)
                 G_free(inrast1);
                 G_free(inrast2);
 
-                /* closing raster files */
+                /* closing raster maps */
                 G_close_cell(mapd1);
                 G_close_cell(mapd2);
                 return 1;
@@ -155,7 +155,7 @@ int null_distance(char *name1, char *name2, int *zerro_row, int *zerro_col)
     G_free(inrast1);
     G_free(inrast2);
 
-    /* closing raster files */
+    /* closing raster maps */
     G_close_cell(mapd1);
     G_close_cell(mapd2);
 

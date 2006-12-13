@@ -89,7 +89,7 @@ int main (int argc, char *argv[])
         opt4->key        = "output";
         opt4->type       = TYPE_STRING;
         opt4->required   = YES;
-        opt4->description= _("Output raster file prefix name");
+        opt4->description= _("Output raster map prefix name");
 
         if (G_parser(argc, argv) < 0)
                 exit(-1);

@@ -3,7 +3,7 @@
  * MODULE:       r.example
  * AUTHOR(S):    Markus Neteler - neteler itc.it
  *               with hints from: Glynn Clements - glynn gclements.plus.com
- * PURPOSE:      Just copies a raster map, preserving the raster file type
+ * PURPOSE:      Just copies a raster map, preserving the raster map type
  *               Intended to explain GRASS raster programming
  *
  * COPYRIGHT:    (C) 2002,2005 by the GRASS Development Team
@@ -52,7 +52,7 @@ DCELL d_calc(DCELL x)
 
 /*
  * main function
- * it copies raster input raster file, calling the appropriate function for each
+ * it copies raster input raster map, calling the appropriate function for each
  * data type (CELL, DCELL, FCELL)
  */
 int main(int argc, char *argv[])
@@ -174,7 +174,7 @@ int main(int argc, char *argv[])
 	    }
 	}
 
-	/* write raster row to output raster file */
+	/* write raster row to output raster map */
 	if (G_put_raster_row(outfd, outrast, data_type) < 0)
 	    G_fatal_error(_("Cannot write to <%s>"), result);
     }
@@ -183,7 +183,7 @@ int main(int argc, char *argv[])
     G_free(inrast);
     G_free(outrast);
 
-    /* closing raster files */
+    /* closing raster maps */
     G_close_cell(infd);
     G_close_cell(outfd);
 

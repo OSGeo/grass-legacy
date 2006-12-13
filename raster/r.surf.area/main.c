@@ -117,7 +117,7 @@ main (int argc, char *argv[])
     {  
 	cellmap = G_find_file2 ("cell", surf->answer, "");
 	if(!cellmap){
-	    sprintf(errbuf,"Couldn't find raster file %s", surf->answer);
+	    sprintf(errbuf,"Couldn't find raster map %s", surf->answer);
 	    G_fatal_error(errbuf);
 	}
 	if ((cellfile = G_open_cell_old(surf->answer, cellmap)) == -1) 

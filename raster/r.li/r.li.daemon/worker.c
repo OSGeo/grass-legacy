@@ -50,11 +50,11 @@ void worker(char *raster, int f(int, char **, area_des, double *),\
 	 dm = G_malloc(sizeof(struct dcell_memory_entry));
 	 pid = getpid();
 	 ad = malloc(sizeof(struct area_entry));
-	 /* open raster file */
+	 /* open raster map */
 	 mapset = G_find_cell(raster, "");
 	 fd = G_open_cell_old(raster, mapset);
 	 if (G_get_cellhd(raster, mapset, &hd) == - 1){
-	 	G_message( _("CHILD[pid = %i] cannot raster file"),pid);
+	 	G_message( _("CHILD[pid = %i] cannot raster map"),pid);
 		exit(EXIT_FAILURE);
 	 }
 	 /* read data type to allocate cache */
@@ -197,7 +197,7 @@ void worker(char *raster, int f(int, char **, area_des, double *),\
 		
 		 receive(rec_ch, &toReceive);
 	 }
-	 /* close raster file */
+	 /* close raster map */
 	 G_close_cell(fd);
 	 
 	 /* close channels */

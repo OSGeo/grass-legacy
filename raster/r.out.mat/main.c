@@ -1,7 +1,7 @@
 /*
  * r.out.mat
  *
- * Output a GRASS raster file to a MAT-File (version 4).
+ * Output a GRASS raster map to a MAT-File (version 4).
  *
  *   Copyright (C) 2004 by the GRASS Development Team
  *   Author: Hamish Bowman, University of Otago, New Zealand

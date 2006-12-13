@@ -92,14 +92,14 @@ int main (int argc, char *argv[])
 
     /* Open cell file */
     if ((fd = G_open_cell_old(name, mapset)) < 0)
-        G_fatal_error(_("Cannot open raster file [%s]!"), name);
+        G_fatal_error(_("Cannot open raster map [%s]!"), name);
 
     /* Determine file size */
     filesize = lseek(fd, 0L, 2);
     if (filesize == 0)
         G_fatal_error(_("Raster file [%s] is empty."), name);
     else if (filesize < 0)
-        G_fatal_error(_("Error reading raster file [%s]."), name);
+        G_fatal_error(_("Error reading raster map [%s]."), name);
 
     G_suppress_warnings(quiet);
     cellhd_ok = (G_get_cellhd(name, mapset, &cellhd) >= 0);
@@ -298,7 +298,7 @@ int main (int argc, char *argv[])
     if (G_put_cellhd(name, &cellhd) == -1)
         G_fatal_error(_("Unable to write header for [%s]."), name);
     else
-        G_message(_("Header for raster file [%s] updated."), name);
+        G_message(_("Header for raster map [%s] updated."), name);
 
     /* Free resources */
     close(fd);

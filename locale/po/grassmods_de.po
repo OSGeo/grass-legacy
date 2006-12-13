@@ -988,7 +988,7 @@ msgstr "Fehler in pj_do_proj6"
 #: ../display/d.histogram/main.c:71
 msgid ""
 "Displays a histogram in the form of a pie or bar chart for a user-specified "
-"raster file."
+"raster map."
 msgstr ""
 "Stellt ein Histogram in Torten- oder Balkenform für eine angegebene "
 "Rasterkarte dar."
@@ -3717,7 +3717,7 @@ msgid "Ascii file containing spectral signatures"
 msgstr "ASCII-Datei, die die spektralen Signaturen enthalten."
 
 #: ../imagery/i.cca/main.c:92
-msgid "Output raster file prefix name"
+msgid "Output raster map prefix name"
 msgstr "Prefix der Ausgaberasterkarte."
 
 #: ../imagery/i.cca/main.c:99
@@ -4384,7 +4384,7 @@ msgstr "Untergruppe <%s> nicht gefunden."
 #, c-format
 msgid ""
 "\a\n"
-"** The following raster files in subgroup [%s] do not exist:"
+"** The following raster maps in subgroup [%s] do not exist:"
 msgstr ""
 " \n"
 "** Die folgenden Rasterkarten in der Untergruppe [%s] existieren nicht:"
@@ -4520,16 +4520,16 @@ msgid "Fast Fourier Transform (FFT) for image processing."
 msgstr "Fast Fourier Transformation (FFT) für die Bildverarbeitung."
 
 #: ../imagery/i.fft/fftmain.c:65
-msgid "input raster file being fft"
+msgid "input raster map being fft"
 msgstr "Eingaberasterkarte"
 
 #: ../imagery/i.fft/fftmain.c:73
-msgid "output real part arrays stored as raster file"
+msgid "output real part arrays stored as raster map"
 msgstr "Ausgabe der Real-part-Arrays (als Rasterkarte)."
 
 #: ../imagery/i.fft/fftmain.c:81
 #, fuzzy
-msgid "output imaginary part arrays stored as raster file"
+msgid "output imaginary part arrays stored as raster map"
 msgstr "Augabe deAusgabe part"
 
 #: ../imagery/i.fft/fftmain.c:89
@@ -4838,15 +4838,15 @@ msgid "Inverse Fast Fourier Transform (ifft) for image processing."
 msgstr "Inverse Fast Fourier Transformation (ifft) für die Bildverarbeitung."
 
 #: ../imagery/i.ifft/ifftmain.c:66
-msgid "input raster file (image fft, real part)"
+msgid "input raster map (image fft, real part)"
 msgstr "Eingaberaster (Bild fft, realer Teil)"
 
 #: ../imagery/i.ifft/ifftmain.c:74
-msgid "input raster file (image fft, imaginary part"
+msgid "input raster map (image fft, imaginary part"
 msgstr "Eingabe Rasterdatei "
 
 #: ../imagery/i.ifft/ifftmain.c:82
-msgid "output inverse raster file after ifft"
+msgid "output inverse raster map after ifft"
 msgstr "Invertierte Ausgabekarte (nach ifft)"
 
 #: ../imagery/i.ifft/ifftmain.c:94
@@ -4877,7 +4877,7 @@ msgstr ""
 
 #: ../imagery/i.ifft/ifftmain.c:111
 #, c-format
-msgid "%s: %s - illegal name for output raster file."
+msgid "%s: %s - illegal name for output raster map."
 msgstr "%s: %s - Ungültiger Name für die Ausgabedatei."
 
 #: ../imagery/i.ifft/ifftmain.c:129
@@ -5816,7 +5816,7 @@ msgid "existing SPOT VGT NDVI HDF file (0001_NDV.HDF)"
 msgstr "Existierende SPOT VGT NDVI HDF Datei (0001_NDV.HDF)"
 
 #: ../locale/scriptstrings/i.in.spotvgt_to_translate.c:5
-msgid "name for new raster file"
+msgid "name for new raster map"
 msgstr "Name der neuen Rasterkarte."
 
 #: ../locale/scriptstrings/i.landsat.rgb_to_translate.c:1
@@ -7310,12 +7310,12 @@ msgstr "Name für die resultierende Einzugsgebietsdatei"
 #: ../raster/r.basins.fill/main.c:92 ../raster/r.basins.fill/main.c:105
 #: ../raster/r.cats/main.c:98
 #, c-format
-msgid "%s: <%s> raster file not found"
+msgid "%s: <%s> raster map not found"
 msgstr "%s: Rasterdatei <%s> konnte nicht gefunden werden."
 
 #: ../raster/r.basins.fill/main.c:111
 #, c-format
-msgid "%s: <%s> raster file exists already"
+msgid "%s: <%s> raster map exists already"
 msgstr "%s: Rasterdatei <%s> existiert bereits."
 
 #: ../raster/r.basins.fill/main.c:119
@@ -7355,7 +7355,7 @@ msgstr "Von der Verwendung dieses Moduls wird abgeraten. Bitte verwenden Sie sta
 #: ../raster/r.bilinear/main.c:78 ../raster/r.sum/main.c:47
 #: ../raster/r.resamp.interp/main.c:88 ../raster/r.resamp.stats/main.c:286
 #, c-format
-msgid "Couldn't find raster file %s"
+msgid "Couldn't find raster map %s"
 msgstr "Kann die Rasterdatei <%s> nicht finden."
 
 #: ../raster/r.bitpattern/main.c:63
@@ -7530,7 +7530,7 @@ msgstr "Ungültiger Wert für die Flusstiefe '%s' - verwende die Standardeinstellu
 
 #: ../raster/r.carve/main.c:173
 #, c-format
-msgid "unable to find raster file [%s]"
+msgid "unable to find raster map [%s]"
 msgstr "Kann Rasterkarte %s nicht finden. "
 
 #: ../raster/r.carve/main.c:176 ../raster/r.carve/main.c:182
@@ -7543,11 +7543,11 @@ msgid "lat/lon projection not supported at this time."
 msgstr "Lat/Lon Projektion wird zur Zeit noch nicht unterstützt."
 
 #: ../raster/r.carve/raster.c:12
-msgid "Reading raster file... "
+msgid "Reading raster map... "
 msgstr "Lese Rasterdatei..."
 
 #: ../raster/r.carve/raster.c:31
-msgid "Writing raster file... "
+msgid "Writing raster map... "
 msgstr "Schreibe Rasterdatei..."
 
 #: ../raster/r.cats/cats.c:47
@@ -7633,11 +7633,11 @@ msgid "CLUMP PASS %d ... "
 msgstr "CLUMP DURCHGANG %d ... "
 
 #: ../raster/r.clump/clump.c:104
-msgid "Unable to properly read input raster file"
+msgid "Unable to properly read input raster map"
 msgstr "Kann Eingaberaster nicht richtig lesen."
 
 #: ../raster/r.clump/clump.c:249
-msgid "Unable to properly write output raster file"
+msgid "Unable to properly write output raster map"
 msgstr "Kann Ausgaberaste nicht richtig schreiben."
 
 #: ../raster/r.clump/main.c:53
@@ -8072,7 +8072,7 @@ msgid "G_put_raster_row failed (file system full?)"
 msgstr "G_put_raster_row failed (Dateisystem voll?)"
 
 #: ../raster/r.compress/main.c:64
-msgid "Compresses and decompresses raster files."
+msgid "Compresses and decompresses raster maps."
 msgstr "Komprimiert und dekomprimiert Rasterdateien."
 
 #: ../raster/r.compress/main.c:76
@@ -8163,12 +8163,12 @@ msgstr ""
 
 #: ../raster/r.contour/main.c:153
 #, c-format
-msgid "<%s> raster file not found"
+msgid "<%s> raster map not found"
 msgstr "Rasterdatei <%s> nicht gefunden."
 
 #: ../raster/r.contour/main.c:157
 #, c-format
-msgid "<%s> unable to open raster file"
+msgid "<%s> unable to open raster map"
 msgstr "Kann Rasterdatei <%s> nicht öffnen."
 
 #: ../raster/r.contour/main.c:160
@@ -8321,7 +8321,7 @@ msgid "Stop points vector map"
 msgstr "Vektorkarte mit den Stopp-Punkten"
 
 #: ../raster/r.cost/main.c:156
-msgid "Starting points raster file"
+msgid "Starting points raster map"
 msgstr "Vektorkarte mit Startpunkten"
 
 #: ../raster/r.cost/main.c:164 ../raster/r.walk/main.c:189
@@ -8423,7 +8423,7 @@ msgstr "%s - ungültiger Name."
 #: ../raster/r.cost/main.c:338 ../raster/r.walk/main.c:511
 #: ../raster/r.walk/main.c:514
 #, c-format
-msgid "%s - can't open raster file"
+msgid "%s - can't open raster map"
 msgstr "%s - Kann die Rasterkarte nicht öffnen."
 
 #: ../raster/r.cost/main.c:347
@@ -8470,7 +8470,7 @@ msgstr "Kann den Speicher für das Segment fbuff == NULL nicht belegen."
 
 #: ../raster/r.cost/main.c:589
 #, c-format
-msgid "can't open raster file [%s] needed for input coordinates"
+msgid "can't open raster map [%s] needed for input coordinates"
 msgstr ""
 "Kann die Rasterkarte [%s], die für die Eingabekoordinaten benötigt wird, "
 "nicht öffnen."
@@ -8977,11 +8977,11 @@ msgid "Output flowline vector file"
 msgstr "Ausgabekarte der Fließlinen (Vektor)"
 
 #: ../raster/r.flow/io.c:163
-msgid "Output flowpath length raster file"
+msgid "Output flowpath length raster map"
 msgstr "Ausgabekarte mit der Hangläne (Raster)."
 
 #: ../raster/r.flow/io.c:165
-msgid "Output flowline density raster file"
+msgid "Output flowline density raster map"
 msgstr "Ausgabekarte der Fließdichte (Raster)."
 
 #: ../raster/r.flow/io.c:167
@@ -9256,12 +9256,12 @@ msgstr ""
 
 #: ../raster/r.in.arc/main.c:44
 msgid ""
-"Convert an ESRI ARC/INFO ascii raster file (GRID) into a (binary) raster map "
+"Convert an ESRI ARC/INFO ascii raster map (GRID) into a (binary) raster map "
 "layer."
 msgstr "Konvertiert ein ESRI ARC/INFO ascii-GRID in eine (binäre) GRASS Rasterkarte."
 
 #: ../raster/r.in.arc/main.c:51
-msgid "ARC/INFO ascii raster file (GRID) to be imported"
+msgid "ARC/INFO ascii raster map (GRID) to be imported"
 msgstr "ARC/INFO ascii Rasterdateien (GRID) zum Importieren."
 
 #: ../raster/r.in.arc/main.c:62 ../raster/r.in.xyz/main.c:102
@@ -9391,7 +9391,7 @@ msgstr "Konvertiert eine ASCII-Datei in eine (binäre) GRASS Rasterkarte."
 
 #: ../raster/r.in.ascii/main.c:55
 #, fuzzy
-msgid "Ascii raster file to be imported (or \"-\" to read from stdin)"
+msgid "Ascii raster map to be imported (or \"-\" to read from stdin)"
 msgstr "ASCII Raster-Datei zum Importieren."
 
 #: ../raster/r.in.ascii/main.c:80
@@ -9450,7 +9450,7 @@ msgid "Unable to write to file"
 msgstr "Kann die temporäre Datei nicht schreiben."
 
 #: ../raster/r.in.bin/main.c:113
-msgid "Import a binary raster file into a GRASS raster map layer."
+msgid "Import a binary raster map into a GRASS raster map layer."
 msgstr "Importiert eine binäre Rasterkarte in eine GRASS Rasterkarte."
 
 #: ../raster/r.in.bin/main.c:117
@@ -9474,7 +9474,7 @@ msgid "Get region info from GMT style header"
 msgstr "Nehme Region-Informationen aus GMT-ähnlichen Kopfzeilen."
 
 #: ../raster/r.in.bin/main.c:139
-msgid "Bin raster file to be imported"
+msgid "Bin raster map to be imported"
 msgstr "Zu importierende Binär-Rasterdatei."
 
 #: ../raster/r.in.bin/main.c:156
@@ -9546,7 +9546,7 @@ msgid "Conversion failed at row %d"
 msgstr "Datenkonvertierung in Reihe %d, Spalte %d fehlgeschlagen."
 
 #: ../raster/r.in.gdal/main.c:71
-msgid "Import GDAL supported raster file into a binary raster map layer."
+msgid "Import GDAL supported raster map into a binary raster map layer."
 msgstr ""
 "Importiert Rasterdaten (aus Formaten die GDAL unterstützt) in eine GRASS "
 "Rasterdatei."
@@ -10045,11 +10045,11 @@ msgid "Raster file matrix filter."
 msgstr "Rasterdatei mit Matrix-Filter"
 
 #: ../raster/r.mfilter/main.c:45 ../raster/r.resamp.rst/main.c:167
-msgid "Name of the input raster file"
+msgid "Name of the input raster map"
 msgstr "Name der Eingaberasterkarte"
 
 #: ../raster/r.mfilter/main.c:53
-msgid "Name of the output raster file"
+msgid "Name of the output raster map"
 msgstr "Name der Ausgaberasterkarte"
 
 #: ../raster/r.mfilter/main.c:60
@@ -10061,7 +10061,7 @@ msgid "Number of times to repeat the filter"
 msgstr "Wie oft soll der Filter wiederholt werden?"
 
 #: ../raster/r.mfilter/main.c:75
-msgid "Output raster file title"
+msgid "Output raster map title"
 msgstr "Titel der Ausgaberasterkarte."
 
 #: ../raster/r.mfilter/main.c:91
@@ -10095,11 +10095,11 @@ msgstr ""
 "Zellenwerte in einer Ausgaberasterkarte."
 
 #: ../raster/r.neighbors/main.c:92
-msgid "Name of existing raster file"
+msgid "Name of existing raster map"
 msgstr "Name einer existenten Rasterkarte."
 
 #: ../raster/r.neighbors/main.c:99 ../raster/r.series/main.c:107
-msgid "Name of the new raster file"
+msgid "Name of the new raster map"
 msgstr "Name einer neuen Rasterkarte"
 
 #: ../raster/r.neighbors/main.c:114
@@ -10111,7 +10111,7 @@ msgid "Neighborhood size"
 msgstr "Nachbarschaftsgröße"
 
 #: ../raster/r.neighbors/main.c:128
-msgid "Title of the output raster file"
+msgid "Title of the output raster map"
 msgstr "Title der Ausgabekarte"
 
 #: ../raster/r.neighbors/main.c:132
@@ -10410,7 +10410,7 @@ msgstr "Rasterkarte mit Höheninformationen."
 
 #: ../raster/r.out.ppm/main.c:43
 msgid ""
-"Converts a GRASS raster file to a PPM image file at the pixel resolution of "
+"Converts a GRASS raster map to a PPM image file at the pixel resolution of "
 "the CURRENTLY DEFINED REGION."
 msgstr ""
 "Exportiert eine GRASS Rasterdatei als PPM-Datei mit einer Pixel-Auflösung "
@@ -10442,14 +10442,14 @@ msgstr "Füge Kommentare zur Regionsbeschreibung hinzu. "
 
 #: ../raster/r.out.tiff/r.out.tiff.c:87
 msgid ""
-"Exports a GRASS raster file to a 8/24bit TIFF image file at the pixel "
+"Exports a GRASS raster map to a 8/24bit TIFF image file at the pixel "
 "resolution of the currently defined region."
 msgstr ""
 "Exportiere GRASS Rasterdatei in ein 8/24 bit TIFF-Bild. Die Pixelauflösung "
 "wird aus der gerade aktuellen Region-Einstellung übernommen."
 
 #: ../raster/r.out.tiff/r.out.tiff.c:95
-msgid "Existing raster file name"
+msgid "Existing raster map name"
 msgstr "Rasterdateiname"
 
 #: ../raster/r.out.tiff/r.out.tiff.c:102
@@ -10925,7 +10925,7 @@ msgid "Resolution of output map"
 msgstr "Auflösung der Ausgabe-Karte"
 
 #: ../raster/r.proj/main.c:180
-msgid "List raster files in input location and exit"
+msgid "List raster maps in input location and exit"
 msgstr "Listet alle Rasterkarten in der Eingabe-Location auf und beendet sich."
 
 #: ../raster/r.proj/main.c:184
@@ -11210,8 +11210,8 @@ msgstr "Lese Fließkommakarten als Integer (benutze die Quantisier-Regeln der Kar
 
 #: ../raster/r.resamp.rst/main.c:157
 msgid ""
-"Reinterpolates and computes topographic analysis from input raster file to a "
-"new raster file (possibly with different resolution) using regularized "
+"Reinterpolates and computes topographic analysis from input raster map to a "
+"new raster map (possibly with different resolution) using regularized "
 "spline with tension and smoothing."
 msgstr ""
 "Reinterpoliert und berechnet topgraphische Analysen basierend auf einer "
@@ -11486,7 +11486,7 @@ msgstr ""
 "korrespondierenden Zelle einer Eingabekarte zugewiesen ist."
 
 #: ../raster/r.series/main.c:100
-msgid "Names of existing raster files"
+msgid "Names of existing raster maps"
 msgstr "Name einer existierenden Rasterkarte."
 
 #: ../raster/r.series/main.c:114
@@ -11911,7 +11911,7 @@ msgstr "Ausgabekarte des Einfallswinkels (nur Modus 1)."
 
 #: ../raster/r.sun/main.c:277
 msgid ""
-"Output beam irradiance [W.m-2] (mode 1) or irradiation raster file [Wh.m-2."
+"Output beam irradiance [W.m-2] (mode 1) or irradiation raster map [Wh.m-2."
 "day-1] (mode 2)"
 msgstr ""
 "Ausgabe der gerichteten [W.m-2] (Modus 1) Strahlung oder der Abstrahlung [Wh."
@@ -12404,7 +12404,7 @@ msgid "Which vector file needs updated categories?"
 msgstr "Für welche Vektordatei sollen die Kategorien aktualisiert werden?"
 
 #: ../raster/r.support/modcats/modcats.c:49
-msgid "Which raster file needs updated categories?"
+msgid "Which raster map needs updated categories?"
 msgstr "Für welche Rasterkarte sollen die Kategorien aktualisiert werden?"
 
 #: ../raster/r.support/modcats/modcats.c:53
@@ -12425,7 +12425,7 @@ msgid "Category file for [%s] updated."
 msgstr "Kategorie-Datei für [%s] aktualisiert."
 
 #: ../raster/r.support/modcolr/modcolr.c:37
-msgid "Which raster file needs a color table"
+msgid "Which raster map needs a color table"
 msgstr "Welche Rasterkarte braucht eine Farbtabelle"
 
 #: ../raster/r.support/modcolr/modcolr.c:43
@@ -12516,7 +12516,7 @@ msgstr ""
 
 #: ../raster/r.support/modhead/modhead.c:95
 #, c-format
-msgid "Cannot open raster file [%s]!"
+msgid "Cannot open raster map [%s]!"
 msgstr "Kann Rasterdatei [%s] nicht öffnen!"
 
 #: ../raster/r.support/modhead/modhead.c:100
@@ -12526,7 +12526,7 @@ msgstr "Rasterdatei [%s] ist leer."
 
 #: ../raster/r.support/modhead/modhead.c:102
 #, c-format
-msgid "Error reading raster file [%s]."
+msgid "Error reading raster map [%s]."
 msgstr "Kann die Rasterdatei [%s] nicht lesen."
 
 #: ../raster/r.support/modhead/modhead.c:191
@@ -12602,11 +12602,11 @@ msgstr "Kann Header für Karte [%s] nicht schreiben."
 
 #: ../raster/r.support/modhead/modhead.c:301
 #, c-format
-msgid "Header for raster file [%s] updated."
+msgid "Header for raster map [%s] updated."
 msgstr "Header für Rasterkarte [%s] aktualisiert."
 
 #: ../raster/r.support/modhist/modhist.c:37
-msgid "Which raster file needs an updated history? "
+msgid "Which raster map needs an updated history? "
 msgstr "Welche Rasterdatei benötigt eine Aktualisierung der History?"
 
 #: ../raster/r.support/modhist/modhist.c:43
@@ -12726,7 +12726,7 @@ msgstr "Kann die aktuellen Fenster-Parameter nicht lesen."
 
 #: ../raster/r.surf.idw/main.c:118
 #, fuzzy, c-format
-msgid "%s in %s -can't open raster file"
+msgid "%s in %s -can't open raster map"
 msgstr "%s - Kann die Rasterkarte nicht öffnen."
 
 #: ../raster/r.surf.idw/main.c:131
@@ -13524,7 +13524,7 @@ msgstr "Rasterausgabe %s - nicht gefunden (keine Start-Punkte angegeben)."
 
 #: ../raster/r.walk/main.c:823
 #, c-format
-msgid "Can't open raster file %s"
+msgid "Can't open raster map %s"
 msgstr "Kann Rasterdatei %s nicht öffnen."
 
 #: ../raster/r.walk/main.c:833
@@ -14413,37 +14413,37 @@ msgid ""
 msgstr ""
 
 #: ../raster/simwe/r.sim.water/main.c:136
-msgid "Name of the elevation raster file"
+msgid "Name of the elevation raster map"
 msgstr "Name der Rasterkarte, die Höheninformation enthält."
 
 #: ../raster/simwe/r.sim.water/main.c:143
 #, fuzzy
-msgid "Name of the x-derivatives raster file"
+msgid "Name of the x-derivatives raster map"
 msgstr "Name der Eingaberasterkarte"
 
 #: ../raster/simwe/r.sim.water/main.c:150
 #, fuzzy
-msgid "Name of the y-derivatives raster file"
+msgid "Name of the y-derivatives raster map"
 msgstr "Name der Eingaberasterkarte"
 
 #: ../raster/simwe/r.sim.water/main.c:157
 #, fuzzy
-msgid "Name of the rainfall excess raster file"
+msgid "Name of the rainfall excess raster map"
 msgstr "Name einer neuen Rasterkarte"
 
 #: ../raster/simwe/r.sim.water/main.c:164
 #, fuzzy
-msgid "Name of the infiltration excess raster file"
+msgid "Name of the infiltration excess raster map"
 msgstr "Name der Eingaberasterkarte"
 
 #: ../raster/simwe/r.sim.water/main.c:171
 #, fuzzy
-msgid "Name of the flow control raster file"
+msgid "Name of the flow control raster map"
 msgstr "Name der Eingaberasterkarte"
 
 #: ../raster/simwe/r.sim.water/main.c:178
 #, fuzzy
-msgid "Name of the Mannings n raster file"
+msgid "Name of the Mannings n raster map"
 msgstr "Name der Eingaberasterkarte"
 
 #: ../raster/simwe/r.sim.water/main.c:185
@@ -14453,17 +14453,17 @@ msgstr "Name der Vektordatei mit den Eingabedaten."
 
 #: ../raster/simwe/r.sim.water/main.c:192
 #, fuzzy
-msgid "Output water depth raster file"
+msgid "Output water depth raster map"
 msgstr "Ausgabekarte mit der Hangläne (Raster)."
 
 #: ../raster/simwe/r.sim.water/main.c:199
 #, fuzzy
-msgid "Output water discharge raster file"
+msgid "Output water discharge raster map"
 msgstr "Ausgabekarte mit der mittleren Wölbung."
 
 #: ../raster/simwe/r.sim.water/main.c:206
 #, fuzzy
-msgid "Output simulation error raster file"
+msgid "Output simulation error raster map"
 msgstr "Ausgabekarte mit der Hangneigung."
 
 #: ../raster/simwe/r.sim.water/main.c:213
@@ -15234,12 +15234,12 @@ msgstr "Quelle"
 
 #: ../raster/r.out.gdal/main.c:352
 #, fuzzy, c-format
-msgid "Cannot export [%s] raster file."
+msgid "Cannot export [%s] raster map."
 msgstr "Kann Rasterdatei [%s] nicht öffnen!"
 
 #: ../raster/r.out.gdal/main.c:358
 #, fuzzy, c-format
-msgid "Cannot create [%s] raster file using [%s] driver."
+msgid "Cannot create [%s] raster map using [%s] driver."
 msgstr "Kann Rasterdatei [%s] nicht öffnen!"
 
 #: ../raster/r.out.gdal/main.c:363
@@ -15408,7 +15408,7 @@ msgid "Too much units to place"
 msgstr "Zu viele Einheiten zu platzieren."
 
 #: ../raster/r.li/r.li.daemon/daemon.c:532
-msgid "Too much strats for raster file\n"
+msgid "Too much strats for raster map\n"
 msgstr "Zu viele Straten für Rasterdatei.\n"
 
 #: ../raster/r.li/r.li.daemon/daemon.c:564
@@ -15508,12 +15508,12 @@ msgid "OUT OF MEMORY !!!\n"
 msgstr "Platz im Hauptspeicher reicht nicht aus !!!\n"
 
 #: ../raster/r.li/r.li.daemon/main.c:22
-msgid "Calculates <simple> index on a raster file"
+msgid "Calculates <simple> index on a raster map"
 msgstr "Berechnet <einfache> Indices einer Rasterdatei."
 
 #: ../raster/r.li/r.li.daemon/worker.c:57
 #, c-format
-msgid "CHILD[pid = %i] cannot raster file"
+msgid "CHILD[pid = %i] cannot raster map"
 msgstr "CHILD[pid = %i] kann nicht Rasterdatei."
 
 #: ../raster/r.li/r.li.daemon/worker.c:94
@@ -15529,56 +15529,56 @@ msgid "CHILD[pid = %i]: unable to open %s mask ... continue without!!!"
 msgstr "CHILD[pid = %i]: kann %s Maske nicht öffnen ... mache ohne weiter !!!"
 
 #: ../raster/r.li/r.li.contrastWeightedEdgeDensity/contrastWeightedEdgeDensity.c:38
-msgid "Calculates contrast Weighted Edge Density index on a raster file"
+msgid "Calculates contrast Weighted Edge Density index on a raster map"
 msgstr "Berechne Kontrast gewichteten Kanten-Dichte-Index einer Rasterdatei."
 
 #: ../raster/r.li/r.li.edgedensity/edgedensity.c:35
-msgid "Calculates edge density index on a raster file, using a 4 neighbour algorithm"
+msgid "Calculates edge density index on a raster map, using a 4 neighbour algorithm"
 msgstr "Berechnet Kanten-Dichte-Index einer Rasterdatei, unter Verwendung eines 4-Nachbarn-Algorithmus."
 
 #: ../raster/r.li/r.li.meanPatchSize/meanPatchSize.c:36
 msgid ""
-"Calculates mean patch size index on a raster file, using a 4 neighbour "
+"Calculates mean patch size index on a raster map, using a 4 neighbour "
 "algorithm"
 msgstr "Berechnet mittleren Patch-Größe-Index einer Rasterdatei, unter Verwendung eines 4-Nachbarn-Algorithmus."
 
 #: ../raster/r.li/r.li.meanPixelAttribute/meanPixelAttribute.c:38
 msgid ""
-"Calculates mean pixel attribute index on a raster file.\n"
+"Calculates mean pixel attribute index on a raster map.\n"
 "Return -1 if all the cells in the area are null"
 msgstr ""
 "Berechnet den mittleren Pixel-Attribute-Index einer Rasterdatei.\n"
 "Gibt -1 zurück, wenn alle Zellen NULL sind."
 
 #: ../raster/r.li/r.li.patchAreaDistributionCV/patchAreaDistributionCV.c:37
-msgid "Calculates patch Area Distribution CV index on a raster file"
+msgid "Calculates patch Area Distribution CV index on a raster map"
 msgstr "Berechnet Patch-Größen-Verteilung-CV-Index einer Rasterdatei."
 
 #: ../raster/r.li/r.li.patchdensity/main.c:23
 msgid ""
-"Calculates patch density index on a raster file, using a 4 neighbour "
+"Calculates patch density index on a raster map, using a 4 neighbour "
 "algorithm"
 msgstr "Berechnet Patch-Dichte-Index einer Rasterdatei, unter Verwendung eines 4-Nachbarn-Algorithmus."
 
 #: ../raster/r.li/r.li.patchnumber/main.c:24
-msgid "Calculates patch number index on a raster file, using a 4 neighbour algorithm"
+msgid "Calculates patch number index on a raster map, using a 4 neighbour algorithm"
 msgstr "Berechnet Patch-Anzahl-Index einer Rasterdatei, unter Verwendung eines 4-Nachbarn-Algorithmus."
 
 #: ../raster/r.li/r.li.shannon/shannon.c:37
 msgid ""
-"Calculates Shannon's diversity index on a raster file\n"
+"Calculates Shannon's diversity index on a raster map\n"
 "Return -1 if all the cells in the area are null"
 msgstr ""
 "Berechnet Shannon's Diversitäts-Index einer Rasterdatei.\n"
 "Gibt -1 zurück, wenn alle Zellen NULL sind."
 
 #: ../raster/r.li/r.li.shape/main.c:23
-msgid "Calculates shape index on a raster file"
+msgid "Calculates shape index on a raster map"
 msgstr "Berechnet den Form-Index einer Rasterdatei."
 
 #: ../raster/r.li/r.li.simpson/simpson.c:37
 msgid ""
-"Calculates Simpson's diversity index on a raster file.\n"
+"Calculates Simpson's diversity index on a raster map.\n"
 "Return -1 if all the cells in the area are null"
 msgstr ""
 "Berechnet Simpson's Diversitäts-Index einer Rasterdatei.\n"
@@ -15796,7 +15796,7 @@ msgstr "Erzeugt eine section von Lautstärke ein"
 
 #: ../raster3d/r3.cross.rast/main.c:280
 #, c-format
-msgid "Open 3D raster file %s"
+msgid "Open 3D raster map %s"
 msgstr "Öffne 3D Rasterdatei %s."
 
 #: ../raster3d/r3.cross.rast/main.c:283
@@ -15840,7 +15840,7 @@ msgid "Could not close G3D map <%s>"
 msgstr "Konnte g3d Karte <%s> nicht schließen."
 
 #: ../raster3d/r3.in.ascii/main.c:79
-msgid "Ascii raster file to be imported"
+msgid "Ascii raster map to be imported"
 msgstr "ASCII Raster-Datei zum Importieren."
 
 #: ../raster3d/r3.in.ascii/main.c:90
@@ -15985,7 +15985,7 @@ msgid "Error while writing grid. Disk full?"
 msgstr "Ein Fehler trat während des Lesens der Karte auf. Festplatte voll?"
 
 #: ../raster3d/r3.out.v5d/main.c:286
-msgid "Export of GRASS 3D raster file to 3-dimensional Vis5D file."
+msgid "Export of GRASS 3D raster map to 3-dimensional Vis5D file."
 msgstr "Exportiert eine GRASS 3D Rasterdatei in eine dreidimensionnale Vis5D-Datei."
 
 #: ../raster3d/r3.out.v5d/main.c:293
@@ -16039,7 +16039,7 @@ msgstr ""
 
 #: ../raster3d/r3.out.vtk/main.c:197
 #, c-format
-msgid "Open rgb g3d raster file %s"
+msgid "Open rgb g3d raster map %s"
 msgstr "Öffne RGB g3d Rasterdatei %s."
 
 #: ../raster3d/r3.out.vtk/main.c:210
@@ -16058,7 +16058,7 @@ msgstr "Fehler beim Schließen der g3d-Datei."
 
 #: ../raster3d/r3.out.vtk/main.c:280
 #, fuzzy, c-format
-msgid "Open vector g3d raster file %s"
+msgid "Open vector g3d raster map %s"
 msgstr "Öffne g3d Rasterdatei %s."
 
 #: ../raster3d/r3.out.vtk/main.c:293
@@ -16096,7 +16096,7 @@ msgstr "Kann die Ausgabe-Karte nicht schließen."
 
 #: ../raster3d/r3.out.vtk/main.c:497
 #, c-format
-msgid "Open g3d raster file %s"
+msgid "Open g3d raster map %s"
 msgstr "Öffne g3d Rasterdatei %s."
 
 #: ../raster3d/r3.out.vtk/main.c:536
@@ -18720,7 +18720,7 @@ msgstr ""
 #, c-format
 msgid ""
 "\n"
-"Writing output raster file using smooth parameter=%f."
+"Writing output raster map using smooth parameter=%f."
 msgstr ""
 "\n"
 "Schreibe Ausgaberasterdatei mit Glättungsparameter=%f."
@@ -19417,7 +19417,7 @@ msgstr "Vektor, Attributtabelle"
 
 #: ../vector/v.sample/main.c:87
 #, fuzzy
-msgid "Sample a raster file at site locations"
+msgid "Sample a raster map at site locations"
 msgstr "a an"
 
 #: ../vector/v.sample/main.c:93
@@ -19651,7 +19651,7 @@ msgid "Output cross-validation errors vector point file"
 msgstr "Punkt"
 
 #: ../vector/v.surf.rst/main.c:245
-msgid "Output surface raster file (elevation)"
+msgid "Output surface raster map (elevation)"
 msgstr "Ausgabekarte mit den Oberflächeninformationen (Höheninformationen)."
 
 #: ../vector/v.surf.rst/main.c:249
@@ -19660,27 +19660,27 @@ msgid "Output partial derivatives instead of topographic parameters"
 msgstr "von"
 
 #: ../vector/v.surf.rst/main.c:256
-msgid "Output slope raster file"
+msgid "Output slope raster map"
 msgstr "Ausgabekarte mit der Hangneigung."
 
 #: ../vector/v.surf.rst/main.c:263
-msgid "Output aspect raster file"
+msgid "Output aspect raster map"
 msgstr "Ausgabekarte mit Hangexposition."
 
 #: ../vector/v.surf.rst/main.c:270
-msgid "Output profile curvature raster file"
+msgid "Output profile curvature raster map"
 msgstr "Ausgabekarte mit der Vertikal-Wölbung."
 
 #: ../vector/v.surf.rst/main.c:277
-msgid "Output tangential curvature raster file"
+msgid "Output tangential curvature raster map"
 msgstr "Ausgabekarte mit Horizontal-Wölbung."
 
 #: ../vector/v.surf.rst/main.c:284
-msgid "Output mean curvature raster file"
+msgid "Output mean curvature raster map"
 msgstr "Ausgabekarte mit der mittleren Wölbung."
 
 #: ../vector/v.surf.rst/main.c:291 ../vector/v.vol.rst/main.c:292
-msgid "Name of the raster file used as mask"
+msgid "Name of the raster map used as mask"
 msgstr "Name der Rasterkarte, die als Maske benutzt werden soll."
 
 #: ../vector/v.surf.rst/main.c:298

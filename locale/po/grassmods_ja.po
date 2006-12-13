@@ -109,7 +109,7 @@ msgstr "シグネチャファイル"
 
 #: ../raster3d/r3.in.ascii/main.c:79
 #, fuzzy
-msgid "Ascii raster file to be imported"
+msgid "Ascii raster map to be imported"
 msgstr "入力するファイル"
 
 #: ../raster3d/r3.in.ascii/main.c:90
@@ -523,7 +523,7 @@ msgstr ""
 
 #: ../raster3d/r3.cross.rast/main.c:280
 #, fuzzy, c-format
-msgid "Open 3D raster file %s"
+msgid "Open 3D raster map %s"
 msgstr "出力するファイル"
 
 #: ../raster3d/r3.cross.rast/main.c:283
@@ -678,7 +678,7 @@ msgstr ""
 
 #: ../raster3d/r3.out.vtk/main.c:197
 #, fuzzy, c-format
-msgid "Open rgb g3d raster file %s"
+msgid "Open rgb g3d raster map %s"
 msgstr "出力するファイル"
 
 #: ../raster3d/r3.out.vtk/main.c:210
@@ -697,7 +697,7 @@ msgstr "出力するファイル"
 
 #: ../raster3d/r3.out.vtk/main.c:280
 #, fuzzy, c-format
-msgid "Open vector g3d raster file %s"
+msgid "Open vector g3d raster map %s"
 msgstr "出力するファイル"
 
 #: ../raster3d/r3.out.vtk/main.c:293
@@ -740,7 +740,7 @@ msgstr "出力するファイル"
 
 #: ../raster3d/r3.out.vtk/main.c:497
 #, fuzzy, c-format
-msgid "Open g3d raster file %s"
+msgid "Open g3d raster map %s"
 msgstr "出力するファイル"
 
 #: ../raster3d/r3.out.vtk/main.c:536
@@ -861,7 +861,7 @@ msgstr "シグネチャファイル"
 
 #: ../raster3d/r3.out.v5d/main.c:286
 #, fuzzy
-msgid "Export of GRASS 3D raster file to 3-dimensional Vis5D file."
+msgid "Export of GRASS 3D raster map to 3-dimensional Vis5D file."
 msgstr "ラスターマップをバイナリーファイルとしてエクスポートします"
 
 #: ../raster3d/r3.out.v5d/main.c:293
@@ -2620,7 +2620,7 @@ msgstr "���"
 
 #: ../vector/v.surf.rst/main.c:245
 #, fuzzy
-msgid "Output surface raster file (elevation)"
+msgid "Output surface raster map (elevation)"
 msgstr "標高を出力するファイル"
 
 #: ../vector/v.surf.rst/main.c:249
@@ -2630,32 +2630,32 @@ msgstr "傾斜値、傾斜方位、曲率の代わりに偏導関数を出力"
 
 #: ../vector/v.surf.rst/main.c:256
 #, fuzzy
-msgid "Output slope raster file"
+msgid "Output slope raster map"
 msgstr "���"
 
 #: ../vector/v.surf.rst/main.c:263
 #, fuzzy
-msgid "Output aspect raster file"
+msgid "Output aspect raster map"
 msgstr "�����"
 
 #: ../vector/v.surf.rst/main.c:270
 #, fuzzy
-msgid "Output profile curvature raster file"
+msgid "Output profile curvature raster map"
 msgstr "断面曲率を出力するファイル"
 
 #: ../vector/v.surf.rst/main.c:277
 #, fuzzy
-msgid "Output tangential curvature raster file"
+msgid "Output tangential curvature raster map"
 msgstr "正接曲率を出力するファイル"
 
 #: ../vector/v.surf.rst/main.c:284
 #, fuzzy
-msgid "Output mean curvature raster file"
+msgid "Output mean curvature raster map"
 msgstr "断面曲率を出力するファイル"
 
 #: ../vector/v.surf.rst/main.c:291 ../vector/v.vol.rst/main.c:292
 #, fuzzy
-msgid "Name of the raster file used as mask"
+msgid "Name of the raster map used as mask"
 msgstr "マスク"
 
 #: ../vector/v.surf.rst/main.c:298
@@ -4099,7 +4099,7 @@ msgstr "サイズ"
 #, c-format
 msgid ""
 "\n"
-"Writing output raster file using smooth parameter=%f."
+"Writing output raster map using smooth parameter=%f."
 msgstr ""
 
 #: ../vector/v.kernel/main.c:372
@@ -5977,7 +5977,7 @@ msgstr ""
 
 #: ../vector/v.sample/main.c:87
 #, fuzzy
-msgid "Sample a raster file at site locations"
+msgid "Sample a raster map at site locations"
 msgstr "目的ロケーション内のラスターマップ一覧表示"
 
 #: ../vector/v.sample/main.c:93
@@ -7015,12 +7015,12 @@ msgstr "流線の密度を示すファイル(出力)"
 
 #: ../raster/r.flow/io.c:163
 #, fuzzy
-msgid "Output flowpath length raster file"
+msgid "Output flowpath length raster map"
 msgstr "���"
 
 #: ../raster/r.flow/io.c:165
 #, fuzzy
-msgid "Output flowline density raster file"
+msgid "Output flowline density raster map"
 msgstr "流線の密度を示すファイル(出力)"
 
 #: ../raster/r.flow/io.c:167
@@ -7255,12 +7255,12 @@ msgstr "近傍点解析を行い新しいラスターマップを作成します
 
 #: ../raster/r.neighbors/main.c:92
 #, fuzzy
-msgid "Name of existing raster file"
+msgid "Name of existing raster map"
 msgstr "入力するファイル"
 
 #: ../raster/r.neighbors/main.c:99 ../raster/r.series/main.c:107
 #, fuzzy
-msgid "Name of the new raster file"
+msgid "Name of the new raster map"
 msgstr "出力するファイル"
 
 #: ../raster/r.neighbors/main.c:114
@@ -7275,7 +7275,7 @@ msgstr "近傍とする範囲"
 
 #: ../raster/r.neighbors/main.c:128
 #, fuzzy
-msgid "Title of the output raster file"
+msgid "Title of the output raster map"
 msgstr "タイトル"
 
 #: ../raster/r.neighbors/main.c:132
@@ -7285,7 +7285,7 @@ msgstr "現在の地域設定の使用"
 
 #: ../raster/r.compress/main.c:64
 #, fuzzy
-msgid "Compresses and decompresses raster files."
+msgid "Compresses and decompresses raster maps."
 msgstr "ファイルの圧縮/解凍を行います"
 
 #: ../raster/r.compress/main.c:72 ../display/d.what.rast/main.c:56
@@ -7633,7 +7633,7 @@ msgstr "経度 (ddd:mm:ss{E|W}) 緯度 (dd:mm:ss{N|S})"
 #: ../raster/r.bilinear/main.c:76 ../raster/r.resamp.interp/main.c:84
 #: ../raster/r.resamp.stats/main.c:283 ../raster/r.sum/main.c:47
 #, fuzzy, c-format
-msgid "Couldn't find raster file %s"
+msgid "Couldn't find raster map %s"
 msgstr "出力するファイル"
 
 #: ../raster/r.bilinear/main.c:90 ../raster/r.bilinear/main.c:101
@@ -7746,12 +7746,12 @@ msgstr ""
 
 #: ../raster/r.out.gdal/main.c:303
 #, fuzzy, c-format
-msgid "Cannot export [%s] raster file."
+msgid "Cannot export [%s] raster map."
 msgstr "出力するファイル"
 
 #: ../raster/r.out.gdal/main.c:309
 #, fuzzy, c-format
-msgid "Cannot create [%s] raster file using [%s] driver."
+msgid "Cannot create [%s] raster map using [%s] driver."
 msgstr "出力するファイル"
 
 #: ../raster/r.out.gdal/main.c:314
@@ -7765,12 +7765,12 @@ msgstr "フィルタをかけたラスターマップを作成します"
 
 #: ../raster/r.mfilter/main.c:45 ../raster/r.resamp.rst/main.c:167
 #, fuzzy
-msgid "Name of the input raster file"
+msgid "Name of the input raster map"
 msgstr "入力するファイル"
 
 #: ../raster/r.mfilter/main.c:53
 #, fuzzy
-msgid "Name of the output raster file"
+msgid "Name of the output raster map"
 msgstr "出力するファイル"
 
 #: ../raster/r.mfilter/main.c:60
@@ -7785,7 +7785,7 @@ msgstr "フィルタをかける回数"
 
 #: ../raster/r.mfilter/main.c:75
 #, fuzzy
-msgid "Output raster file title"
+msgid "Output raster map title"
 msgstr "タイトル"
 
 #: ../raster/r.mfilter/main.c:91
@@ -7796,13 +7796,13 @@ msgstr "値0にのみフィルタを適用"
 #: ../raster/r.out.tiff/r.out.tiff.c:87
 #, fuzzy
 msgid ""
-"Exports a GRASS raster file to a 8/24bit TIFF image file at the pixel "
+"Exports a GRASS raster map to a 8/24bit TIFF image file at the pixel "
 "resolution of the currently defined region."
 msgstr "ラスターマップをTIFFファイルとしてエクスポートします"
 
 #: ../raster/r.out.tiff/r.out.tiff.c:95
 #, fuzzy
-msgid "Existing raster file name"
+msgid "Existing raster map name"
 msgstr "入力するファイル"
 
 #: ../raster/r.out.tiff/r.out.tiff.c:102
@@ -8100,7 +8100,7 @@ msgstr "区切り(デフォルト:タブ)"
 #: ../raster/r.cats/main.c:98 ../raster/r.basins.fill/main.c:92
 #: ../raster/r.basins.fill/main.c:105
 #, fuzzy, c-format
-msgid "%s: <%s> raster file not found"
+msgid "%s: <%s> raster map not found"
 msgstr "対象マップ"
 
 #: ../raster/r.cats/main.c:100
@@ -8759,37 +8759,37 @@ msgstr ""
 
 #: ../raster/simwe/r.sim.water/main.c:136
 #, fuzzy
-msgid "Name of the elevation raster file"
+msgid "Name of the elevation raster map"
 msgstr "入力するファイル"
 
 #: ../raster/simwe/r.sim.water/main.c:143
 #, fuzzy
-msgid "Name of the x-derivatives raster file"
+msgid "Name of the x-derivatives raster map"
 msgstr "入力するファイル"
 
 #: ../raster/simwe/r.sim.water/main.c:150
 #, fuzzy
-msgid "Name of the y-derivatives raster file"
+msgid "Name of the y-derivatives raster map"
 msgstr "入力するファイル"
 
 #: ../raster/simwe/r.sim.water/main.c:157
 #, fuzzy
-msgid "Name of the rainfall excess raster file"
+msgid "Name of the rainfall excess raster map"
 msgstr "出力するファイル"
 
 #: ../raster/simwe/r.sim.water/main.c:164
 #, fuzzy
-msgid "Name of the infiltration excess raster file"
+msgid "Name of the infiltration excess raster map"
 msgstr "入力するファイル"
 
 #: ../raster/simwe/r.sim.water/main.c:171
 #, fuzzy
-msgid "Name of the flow control raster file"
+msgid "Name of the flow control raster map"
 msgstr "入力するファイル"
 
 #: ../raster/simwe/r.sim.water/main.c:178
 #, fuzzy
-msgid "Name of the Mannings n raster file"
+msgid "Name of the Mannings n raster map"
 msgstr "入力するファイル"
 
 #: ../raster/simwe/r.sim.water/main.c:185
@@ -8799,17 +8799,17 @@ msgstr "入力するファイル"
 
 #: ../raster/simwe/r.sim.water/main.c:192
 #, fuzzy
-msgid "Output water depth raster file"
+msgid "Output water depth raster map"
 msgstr "���"
 
 #: ../raster/simwe/r.sim.water/main.c:199
 #, fuzzy
-msgid "Output water discharge raster file"
+msgid "Output water discharge raster map"
 msgstr "断面曲率を出力するファイル"
 
 #: ../raster/simwe/r.sim.water/main.c:206
 #, fuzzy
-msgid "Output simulation error raster file"
+msgid "Output simulation error raster map"
 msgstr "���"
 
 #: ../raster/simwe/r.sim.water/main.c:213
@@ -9233,7 +9233,7 @@ msgstr "近傍点解析を行い新しいラスターマップを作成します
 
 #: ../raster/r.series/main.c:100
 #, fuzzy
-msgid "Names of existing raster files"
+msgid "Names of existing raster maps"
 msgstr "入力するファイル"
 
 #: ../raster/r.series/main.c:114
@@ -10571,7 +10571,7 @@ msgstr "出力するファイル"
 
 #: ../raster/r.basins.fill/main.c:111
 #, fuzzy, c-format
-msgid "%s: <%s> raster file exists already"
+msgid "%s: <%s> raster map exists already"
 msgstr "対象マップ"
 
 #: ../raster/r.basins.fill/main.c:119
@@ -10615,13 +10615,13 @@ msgstr ""
 #: ../raster/r.in.arc/main.c:44
 #, fuzzy
 msgid ""
-"Convert an ESRI ARC/INFO ascii raster file (GRID) into a (binary) raster map "
+"Convert an ESRI ARC/INFO ascii raster map (GRID) into a (binary) raster map "
 "layer."
 msgstr "ESRI ARC/INFOファイルをラスターマップとしてインポートします"
 
 #: ../raster/r.in.arc/main.c:51
 #, fuzzy
-msgid "ARC/INFO ascii raster file (GRID) to be imported"
+msgid "ARC/INFO ascii raster map (GRID) to be imported"
 msgstr "入力するファイル"
 
 #: ../raster/r.in.arc/main.c:62 ../raster/r.in.xyz/main.c:100
@@ -10764,7 +10764,7 @@ msgstr "���"
 
 #: ../raster/r.cost/main.c:156
 #, fuzzy
-msgid "Starting points raster file"
+msgid "Starting points raster map"
 msgstr "始点を示すラスターマップ"
 
 #: ../raster/r.cost/main.c:164 ../raster/r.walk/main.c:189
@@ -10870,7 +10870,7 @@ msgstr ""
 #: ../raster/r.cost/main.c:338 ../raster/r.walk/main.c:511
 #: ../raster/r.walk/main.c:514
 #, fuzzy, c-format
-msgid "%s - can't open raster file"
+msgid "%s - can't open raster map"
 msgstr "出力するファイル"
 
 #: ../raster/r.cost/main.c:347
@@ -10917,7 +10917,7 @@ msgstr ""
 
 #: ../raster/r.cost/main.c:589
 #, c-format
-msgid "can't open raster file [%s] needed for input coordinates"
+msgid "can't open raster map [%s] needed for input coordinates"
 msgstr ""
 
 #: ../raster/r.cost/main.c:599
@@ -11041,7 +11041,7 @@ msgid "%s higher above pointer wrong"
 msgstr "地表からの高さ(単位:メートル)"
 
 #: ../raster/r.support/modcolr/modcolr.c:37
-msgid "Which raster file needs a color table"
+msgid "Which raster map needs a color table"
 msgstr ""
 
 #: ../raster/r.support/modcolr/modcolr.c:43
@@ -11055,7 +11055,7 @@ msgid "Color table for [%s] updated."
 msgstr ""
 
 #: ../raster/r.support/modhist/modhist.c:37
-msgid "Which raster file needs an updated history? "
+msgid "Which raster map needs an updated history? "
 msgstr ""
 
 #: ../raster/r.support/modhist/modhist.c:43
@@ -11079,7 +11079,7 @@ msgid "Which vector file needs updated categories?"
 msgstr "���?"
 
 #: ../raster/r.support/modcats/modcats.c:49
-msgid "Which raster file needs updated categories?"
+msgid "Which raster map needs updated categories?"
 msgstr ""
 
 #: ../raster/r.support/modcats/modcats.c:53
@@ -11259,7 +11259,7 @@ msgstr ""
 
 #: ../raster/r.support/modhead/modhead.c:95
 #, fuzzy, c-format
-msgid "Cannot open raster file [%s]!"
+msgid "Cannot open raster map [%s]!"
 msgstr "出力するファイル"
 
 #: ../raster/r.support/modhead/modhead.c:100
@@ -11269,7 +11269,7 @@ msgstr "��."
 
 #: ../raster/r.support/modhead/modhead.c:102
 #, fuzzy, c-format
-msgid "Error reading raster file [%s]."
+msgid "Error reading raster map [%s]."
 msgstr "出力するファイル"
 
 #: ../raster/r.support/modhead/modhead.c:191
@@ -11344,7 +11344,7 @@ msgstr "NULL値に代入する値"
 
 #: ../raster/r.support/modhead/modhead.c:301
 #, fuzzy, c-format
-msgid "Header for raster file [%s] updated."
+msgid "Header for raster map [%s] updated."
 msgstr "入力するファイル"
 
 #: ../raster/r.support/modhead/ask_format.c:24
@@ -11704,7 +11704,7 @@ msgstr "ASCII形式のファイルをラスターマップとしてインポー�
 
 #: ../raster/r.in.ascii/main.c:55
 #, fuzzy
-msgid "Ascii raster file to be imported (or \"-\" to read from stdin)"
+msgid "Ascii raster map to be imported (or \"-\" to read from stdin)"
 msgstr "入力するファイル"
 
 #: ../raster/r.in.ascii/main.c:80
@@ -12787,7 +12787,7 @@ msgstr ""
 
 #: ../raster/r.walk/main.c:823
 #, fuzzy, c-format
-msgid "Can't open raster file %s"
+msgid "Can't open raster map %s"
 msgstr "出力するファイル"
 
 #: ../raster/r.walk/main.c:833
@@ -12886,7 +12886,7 @@ msgstr "NULL値に代入する値"
 #: ../raster/r.out.ppm/main.c:43
 #, fuzzy
 msgid ""
-"Converts a GRASS raster file to a PPM image file at the pixel resolution of "
+"Converts a GRASS raster map to a PPM image file at the pixel resolution of "
 "the CURRENTLY DEFINED REGION."
 msgstr "ラスターマップをPPMファイルとしてエクスポートします"
 
@@ -13116,7 +13116,7 @@ msgstr "解像度"
 
 #: ../raster/r.proj/main.c:180
 #, fuzzy
-msgid "List raster files in input location and exit"
+msgid "List raster maps in input location and exit"
 msgstr "目的ロケーション内のラスターマップ一覧表示"
 
 #: ../raster/r.proj/main.c:184
@@ -13254,7 +13254,7 @@ msgstr "出力するファイル"
 
 #: ../raster/r.sun/main.c:277
 msgid ""
-"Output beam irradiance [W.m-2] (mode 1) or irradiation raster file [Wh.m-2."
+"Output beam irradiance [W.m-2] (mode 1) or irradiation raster map [Wh.m-2."
 "day-1] (mode 2)"
 msgstr ""
 
@@ -13706,7 +13706,7 @@ msgstr ""
 
 #: ../raster/r.in.bin/main.c:113
 #, fuzzy
-msgid "Import a binary raster file into a GRASS raster map layer."
+msgid "Import a binary raster map into a GRASS raster map layer."
 msgstr "バイナリーファイルをラスターマップとしてインポートします"
 
 #: ../raster/r.in.bin/main.c:117
@@ -13736,7 +13736,7 @@ msgstr "GMTファイルのヘッダーから地域情報を得る"
 
 #: ../raster/r.in.bin/main.c:139
 #, fuzzy
-msgid "Bin raster file to be imported"
+msgid "Bin raster map to be imported"
 msgstr "入力するファイル"
 
 #: ../raster/r.in.bin/main.c:156
@@ -13937,7 +13937,7 @@ msgstr "現在の設定を表示"
 
 #: ../raster/r.surf.idw/main.c:118
 #, fuzzy, c-format
-msgid "%s in %s -can't open raster file"
+msgid "%s in %s -can't open raster map"
 msgstr "出力するファイル"
 
 #: ../raster/r.surf.idw/main.c:131
@@ -13953,8 +13953,8 @@ msgstr "出力するファイル"
 #: ../raster/r.resamp.rst/main.c:157
 #, fuzzy
 msgid ""
-"Reinterpolates and computes topographic analysis from input raster file to a "
-"new raster file (possibly with different resolution) using regularized "
+"Reinterpolates and computes topographic analysis from input raster map to a "
+"new raster map (possibly with different resolution) using regularized "
 "spline with tension and smoothing."
 msgstr "���� ����."
 
@@ -14246,7 +14246,7 @@ msgstr ""
 
 #: ../raster/r.carve/main.c:173
 #, fuzzy, c-format
-msgid "unable to find raster file [%s]"
+msgid "unable to find raster map [%s]"
 msgstr "出力するファイル"
 
 #: ../raster/r.carve/main.c:176 ../raster/r.carve/main.c:181
@@ -14270,12 +14270,12 @@ msgstr ""
 
 #: ../raster/r.carve/raster.c:12
 #, fuzzy
-msgid "Reading raster file... "
+msgid "Reading raster map... "
 msgstr "入力するファイル"
 
 #: ../raster/r.carve/raster.c:31
 #, fuzzy
-msgid "Writing raster file... "
+msgid "Writing raster map... "
 msgstr "入力するファイル"
 
 #: ../raster/r.clump/clump.c:100
@@ -14285,12 +14285,12 @@ msgstr ""
 
 #: ../raster/r.clump/clump.c:104
 #, fuzzy
-msgid "Unable to properly read input raster file"
+msgid "Unable to properly read input raster map"
 msgstr "出力するファイル"
 
 #: ../raster/r.clump/clump.c:249
 #, fuzzy
-msgid "Unable to properly write output raster file"
+msgid "Unable to properly write output raster map"
 msgstr "出力するファイル"
 
 #: ../raster/r.clump/main.c:53
@@ -14575,7 +14575,7 @@ msgstr ""
 
 #: ../raster/r.in.gdal/main.c:71
 #, fuzzy
-msgid "Import GDAL supported raster file into a binary raster map layer."
+msgid "Import GDAL supported raster map into a binary raster map layer."
 msgstr "GDALファイルをラスターマップとしてインポートします"
 
 #: ../raster/r.in.gdal/main.c:80
@@ -14803,12 +14803,12 @@ msgstr ""
 
 #: ../raster/r.contour/main.c:153
 #, fuzzy, c-format
-msgid "<%s> raster file not found"
+msgid "<%s> raster map not found"
 msgstr "対象マップ"
 
 #: ../raster/r.contour/main.c:157
 #, fuzzy, c-format
-msgid "<%s> unable to open raster file"
+msgid "<%s> unable to open raster map"
 msgstr "出力するファイル"
 
 #: ../raster/r.contour/main.c:160
@@ -14933,7 +14933,7 @@ msgstr "入力するファイル"
 #, c-format
 msgid ""
 "\n"
-"** The following raster files in subgroup [%s] do not exist:"
+"** The following raster maps in subgroup [%s] do not exist:"
 msgstr ""
 
 #: ../imagery/i.cluster/open_files.c:38
@@ -15386,17 +15386,17 @@ msgstr "高速フーリエ逆変換を行います"
 
 #: ../imagery/i.ifft/ifftmain.c:66
 #, fuzzy
-msgid "input raster file (image fft, real part)"
+msgid "input raster map (image fft, real part)"
 msgstr "実部を含む入力ファイル"
 
 #: ../imagery/i.ifft/ifftmain.c:74
 #, fuzzy
-msgid "input raster file (image fft, imaginary part"
+msgid "input raster map (image fft, imaginary part"
 msgstr "虚部を含む入力ファイル"
 
 #: ../imagery/i.ifft/ifftmain.c:82
 #, fuzzy
-msgid "output inverse raster file after ifft"
+msgid "output inverse raster map after ifft"
 msgstr "出力するファイル"
 
 #: ../imagery/i.ifft/ifftmain.c:94
@@ -15423,7 +15423,7 @@ msgstr ""
 
 #: ../imagery/i.ifft/ifftmain.c:111
 #, fuzzy, c-format
-msgid "%s: %s - illegal name for output raster file."
+msgid "%s: %s - illegal name for output raster map."
 msgstr "出力するファイル"
 
 #: ../imagery/i.ifft/ifftmain.c:129
@@ -15778,17 +15778,17 @@ msgstr "高速フーリエ変換を行います"
 
 #: ../imagery/i.fft/fftmain.c:65
 #, fuzzy
-msgid "input raster file being fft"
+msgid "input raster map being fft"
 msgstr "入力するファイル"
 
 #: ../imagery/i.fft/fftmain.c:73
 #, fuzzy
-msgid "output real part arrays stored as raster file"
+msgid "output real part arrays stored as raster map"
 msgstr "実部の配列を出力するファイル"
 
 #: ../imagery/i.fft/fftmain.c:81
 #, fuzzy
-msgid "output imaginary part arrays stored as raster file"
+msgid "output imaginary part arrays stored as raster map"
 msgstr "虚部の配列を出力するファイル"
 
 #: ../imagery/i.fft/fftmain.c:89
@@ -16338,7 +16338,7 @@ msgstr "スペクトルシグネチャを含むファイル(ASCII形式)"
 
 #: ../imagery/i.cca/main.c:92
 #, fuzzy
-msgid "Output raster file prefix name"
+msgid "Output raster map prefix name"
 msgstr "出力ファイルの接尾語"
 
 #: ../imagery/i.cca/main.c:99
@@ -18331,7 +18331,7 @@ msgstr ""
 #, fuzzy
 msgid ""
 "Displays a histogram in the form of a pie or bar chart for a user-specified "
-"raster file."
+"raster map."
 msgstr "ラスターマップのヒストグラム(頻度分布)を表示します"
 
 #: ../display/d.histogram/main.c:76
@@ -18869,7 +18869,7 @@ msgstr ""
 #~ msgstr "上書き"
 
 #, fuzzy
-#~ msgid "%s[%d]: No raster file specified."
+#~ msgid "%s[%d]: No raster map specified."
 #~ msgstr "対象マップ"
 
 #, fuzzy
@@ -18921,7 +18921,7 @@ msgstr ""
 #~ msgstr "出力するファイル"
 
 #, fuzzy
-#~ msgid "Too much strats for raster file\n"
+#~ msgid "Too much strats for raster map\n"
 #~ msgstr "  rast   (ラスターマップ)\n"
 
 #, fuzzy
@@ -19121,7 +19121,7 @@ msgstr ""
 #~ msgstr "バイナリーファイルをラスターマップとしてインポートします"
 
 #, fuzzy
-#~ msgid "name for new raster file"
+#~ msgid "name for new raster map"
 #~ msgstr "出力するファイル"
 
 #, fuzzy
@@ -19337,7 +19337,7 @@ msgstr ""
 #~ msgstr "出力するファイル(ラスターマップ)"
 
 #, fuzzy
-#~ msgid "Name of output raster file"
+#~ msgid "Name of output raster map"
 #~ msgstr "出力するファイル"
 
 #, fuzzy
@@ -19353,11 +19353,11 @@ msgstr ""
 #~ msgstr "補間方法"
 
 #, fuzzy
-#~ msgid "Name of existing raster file."
+#~ msgid "Name of existing raster map."
 #~ msgstr "入力するファイル"
 
 #, fuzzy
-#~ msgid "Name of new raster file."
+#~ msgid "Name of new raster map."
 #~ msgstr "出力するファイル"
 
 #, fuzzy
@@ -19369,7 +19369,7 @@ msgstr ""
 #~ msgstr "出力するファイル"
 
 #, fuzzy
-#~ msgid "Name of existing input raster file"
+#~ msgid "Name of existing input raster map"
 #~ msgstr "入力するファイル"
 
 #, fuzzy
@@ -20368,7 +20368,7 @@ msgstr ""
 #~ msgstr "出力するカテゴリーの範囲"
 
 #, fuzzy
-#~ msgid "Creates raster files from ERDAS files."
+#~ msgid "Creates raster maps from ERDAS files."
 #~ msgstr "ERDAS/LANファイルをラスターマップとしてインポートします"
 
 #, fuzzy
@@ -20384,7 +20384,7 @@ msgstr ""
 #~ msgstr "強制ビット反転"
 
 #, fuzzy
-#~ msgid "output prefix of the GRASS raster files to be created."
+#~ msgid "output prefix of the GRASS raster maps to be created."
 #~ msgstr "出力するファイル"
 
 #, fuzzy
@@ -20408,7 +20408,7 @@ msgstr ""
 #~ msgstr "抽出する列数"
 
 #, fuzzy
-#~ msgid "Creates ERDAS files from raster files."
+#~ msgid "Creates ERDAS files from raster maps."
 #~ msgstr "GRASSの画像ファイルをERDAS/LANファイルとしてエクスポートします"
 
 #, fuzzy
@@ -20500,17 +20500,17 @@ msgstr ""
 #~ msgstr "標高値として出力"
 
 #, fuzzy
-#~ msgid "Name of raster file."
+#~ msgid "Name of raster map."
 #~ msgstr "入力するファイル"
 
 #, fuzzy
 #~ msgid ""
 #~ "Creates a new binary GRASS vector (v.digit) file by extracting linear "
-#~ "features from a thinned raster file."
+#~ "features from a thinned raster map."
 #~ msgstr "細線化したラスターマップからベクトルマップを作成します"
 
 #, fuzzy
-#~ msgid "Name of raster file"
+#~ msgid "Name of raster map"
 #~ msgstr "入力するファイル"
 
 #, fuzzy
@@ -20532,7 +20532,7 @@ msgstr ""
 #~ msgstr "出力するファイル(サイトマップ)"
 
 #, fuzzy
-#~ msgid "Imports a TIFF (8 or 24 bit) raster file into GRASS raster file(s)"
+#~ msgid "Imports a TIFF (8 or 24 bit) raster map into GRASS raster map(s)"
 #~ msgstr "TIFFファイルをラスターマップとしてインポートします"
 
 #, fuzzy
@@ -20540,7 +20540,7 @@ msgstr ""
 #~ msgstr "入力するファイル"
 
 #, fuzzy
-#~ msgid "Name of new raster file or band prefix"
+#~ msgid "Name of new raster map or band prefix"
 #~ msgstr "出力するファイル"
 
 #, fuzzy
@@ -20677,7 +20677,7 @@ msgstr ""
 #~ msgstr "入力するファイル"
 
 #, fuzzy
-#~ msgid "output raster file"
+#~ msgid "output raster map"
 #~ msgstr "出力するファイル"
 
 #, fuzzy

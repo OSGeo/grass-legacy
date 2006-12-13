@@ -22,7 +22,7 @@ int main(int argc, char *argv[]){
 	
 	G_gisinit(argv[0]);
 	module = G_define_module();
-	module->description =_("Calculates patch density index on a raster file, using a 4 neighbour algorithm");
+	module->description =_("Calculates patch density index on a raster map, using a 4 neighbour algorithm");
 	
 	/* define options */
 	

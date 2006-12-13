@@ -95,7 +95,7 @@ main (int argc, char *argv[])
     myState.mapset = G_find_cell (myState.inraster, "");
     if (myState.mapset == NULL)
     {
-	G_fatal_error ("%s: <%s> raster file not found",
+	G_fatal_error ("%s: <%s> raster map not found",
 	    G_program_name(), myState.inraster);
     }
 

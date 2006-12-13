@@ -1,6 +1,6 @@
 
 /*-
- * s.sample - GRASS program to sample a raster file at site locations.
+ * s.sample - GRASS program to sample a raster map at site locations.
  * Copyright (C) 1994. James Darrell McCauley.
  *
  * Author: James Darrell McCauley darrell@mccauley-usa.com
@@ -53,7 +53,7 @@ int main(int argc, char **argv)
     char *mapset;
     double scale, predicted, actual;
     INTERP_TYPE method = UNKNOWN;
-    int fdrast;			/* file descriptor for raster file is int */
+    int fdrast;			/* file descriptor for raster map is int */
     struct Cell_head window;
     struct GModule *module;
     struct Map_info In, Out;
@@ -84,7 +84,7 @@ int main(int argc, char **argv)
 
     module = G_define_module();
     module->keywords = _("vector");
-    module->description = _("Sample a raster file at site locations");
+    module->description = _("Sample a raster map at site locations");
 
     parm.input = G_define_option();
     parm.input->key = "input";
