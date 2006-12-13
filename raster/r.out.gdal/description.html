@@ -54,7 +54,7 @@ specified as comma separated list (<em>createopt=TFW=YES,COMPRESS=DEFLATE</em>).
 Out of the GDAL data types, the closest match for GRASS CELL, FCELL and DCELL
 rasters are respectively Int32, Float32 and Float64. These are not exact
 equivalents, but they will preserve the max possible data range and number of
-decimal places for each respective GRASS data type. Please keep in mind, that
+decimal places for each respective GRASS raster data type. Please keep in mind, that
 not all CELL rasters will require Int32 - e.g., 0-255 CELL raster are covered
 by the Byte <em>type</em> as well. Moreover, some GDAL-supported formats do not
 support all the data types possible in GDAL and GRASS. Use
