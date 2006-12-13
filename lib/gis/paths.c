@@ -1,4 +1,6 @@
+#include <sys/types.h>
 #include <sys/stat.h>
+#include <unistd.h>
 #include <grass/gis.h>
 
 /**
@@ -79,5 +81,26 @@ char *G_convert_dirseps_from_host(char *path)
     }
 
     return path;
+}
+
+/**
+ * \brief Get file status
+ *
+ * Returns information about the specified file.
+ *
+ * \param file_name file name
+ * \param stat in the case of a symbolic link, the link itself is
+ *             stat-ed, not the file that it refers to
+ *
+ * \return Return value from system lstat function
+ **/
+
+int G_lstat(const char *file_name, struct stat *buf)
+{
+#ifdef __MINGW32__
+    return stat(file_name, buf);
+#else
+    return lstat(file_name, buf);
+#endif
 }
 
