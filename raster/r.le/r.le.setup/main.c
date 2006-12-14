@@ -134,7 +134,7 @@ static void get_pwd(void)
   DIR    *dp;
 
   if(!(dp = opendir("r.le.para")))      
-     G_system("mkdir r.le.para");
+     G_mkdir("r.le.para");
   else 
      closedir(dp);
   return;

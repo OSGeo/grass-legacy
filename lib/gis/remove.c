@@ -21,10 +21,6 @@
 #include <dirent.h>
 #include <grass/gis.h>
 
-#ifdef __MINGW32__
-#define lstat(path, sb) stat(path, sb)
-#endif
-
 static int recursive_remove(const char *path);
 
 /*!
@@ -76,7 +72,7 @@ recursive_remove(const char *path)
 	struct stat sb;
 	char path2[4096];
 
-	if(lstat(path, &sb))
+	if(G_lstat(path, &sb))
 		return 1;
 	if(!S_ISDIR(sb.st_mode))
 		return remove(path) == 0 ? 0 : 1;

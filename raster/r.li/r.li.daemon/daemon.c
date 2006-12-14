@@ -117,11 +117,11 @@ int calculateIndex(char *file, int f(int, char **, area_des, double *),\
 		/*check if ~/.r.li/output exist*/
 		sprintf(out, "%s/.r.li/", getenv("HOME"));	
 		
-		doneDir = mkdir(out, 0755);
+		doneDir = G_mkdir(out);
 		if (doneDir == -1 && errno != EEXIST)
 			G_fatal_error( _("Cannot create .r.li directory"));
 		sprintf(out, "%s/.r.li/output", getenv("HOME"));
-		doneDir = mkdir(out, 0755);
+		doneDir = G_mkdir(out);
 		if (doneDir == -1 && errno != EEXIST)
 			G_fatal_error( _("Cannot create .r.li/output directory"));
 		sprintf(out, "%s/.r.li/output/%s", getenv("HOME"), output);

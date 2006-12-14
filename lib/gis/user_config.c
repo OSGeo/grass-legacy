@@ -39,10 +39,6 @@
 #include <errno.h>
 #include <grass/gis.h>
 
-#ifdef __MINGW32__
-# define mkdir(name, mode) ((mkdir) (name))
-#endif
-
 /**************************************************************************
  * _make_toplevel(): make user's toplevel config directory if it doesn't
  * already exist.  Adjust perms to 1700. Returns the toplevel directory
@@ -90,14 +86,14 @@ _make_toplevel (void)
     sprintf (path, "%s%s", my_passwd->pw_dir, "/.grass");
 #endif
 
-    status = lstat (path, &buf);
+    status = G_lstat (path, &buf);
 
     /* If errno == ENOENT, the directory doesn't exist */
     if (status != 0)
     {
         if (errno == ENOENT)
         {
-            status = mkdir (path, S_IRWXU); /* drwx------ */ 
+            status = G_mkdir (path);
     
             if (status != 0)  /* mkdir failed */
             {
@@ -245,11 +241,11 @@ _make_sublevels(char *elems)
     {
         sprintf (path, "%s/%s", top, cp);
         errno = 0;
-        status = lstat (path, &buf);
+        status = G_lstat (path, &buf);
         if (status != 0)
         {
             /* the element doesn't exist */
-            status = mkdir (path, S_IRWXU); /* drwx------ */ 
+            status = G_mkdir (path);
             if (status != 0)
             {
                 /* Some kind of problem... */

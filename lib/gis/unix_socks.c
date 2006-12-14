@@ -81,9 +81,9 @@ _get_make_sock_path (void)
     
     sprintf (path, "%s-%s-%s", prefix, user, lock);
 
-    if ((status = lstat (path, &theStat)) != 0)
+    if ((status = G_lstat (path, &theStat)) != 0)
     {
-        status = mkdir (path, S_IRWXU);
+        status = G_mkdir (path);
     }
     else 
     {
