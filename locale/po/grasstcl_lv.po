@@ -1143,15 +1143,18 @@ msgid "Manage image colors"
 msgstr ""
 
 #: ../gui/tcltk/menus/menu.tcl:481
-msgid "Color balance and enhance color tables of multiband imagery for rgb display"
+msgid ""
+"Color balance and enhance color tables of multiband imagery for rgb display"
 msgstr ""
 
 #: ../gui/tcltk/menus/menu.tcl:482
-msgid "Transform HIS (Hue/Intensity/Saturation) color image to RGB (Red/Green/Blue)"
+msgid ""
+"Transform HIS (Hue/Intensity/Saturation) color image to RGB (Red/Green/Blue)"
 msgstr ""
 
 #: ../gui/tcltk/menus/menu.tcl:483
-msgid "Transform RGB (Red/Green/Blue) color image to HIS (Hue/Intensity/Saturation)"
+msgid ""
+"Transform RGB (Red/Green/Blue) color image to HIS (Hue/Intensity/Saturation)"
 msgstr ""
 
 #: ../gui/tcltk/menus/menu.tcl:485
@@ -3522,4 +3525,3 @@ msgstr ""
 #: ../gem/skeleton/src/lib/init/gis_set.tcl:544
 msgid "Create Location From EPSG"
 msgstr ""
-

@@ -2664,6 +2664,7 @@ msgid "Query threshold distance"
 msgstr ""
 
 #: ../vector/v.what/main.c:92 ../display/d.what.vect/main.c:68
+#: ../vector/v.distance/main.c:109 ../vector/v.distance/main.c:113
 msgid "Name of existing vector map"
 msgstr ""
 
@@ -3448,10 +3449,6 @@ msgstr ""
 msgid "Cannot open select cursor"
 msgstr ""
 
-#: ../vector/v.distance/main.c:109 ../vector/v.distance/main.c:113
-msgid "Name of existing vector map"
-msgstr ""
-
 #: ../vector/v.distance/main.c:119
 msgid "From type"
 msgstr ""
@@ -4200,7 +4197,8 @@ msgstr ""
 msgid "Spline type of interpolation"
 msgstr ""
 
-#: ../vector/lidar/v.surf.bspline/main.c:149 ../vector/lidar/v.outlier/main.c:128
+#: ../vector/lidar/v.surf.bspline/main.c:149
+#: ../vector/lidar/v.outlier/main.c:128
 msgid "Thychonov regularization weigth"
 msgstr ""
 
@@ -4212,7 +4210,8 @@ msgstr ""
 msgid "No raster nor vector output"
 msgstr ""
 
-#: ../vector/lidar/v.surf.bspline/main.c:183 ../vector/lidar/v.surf.bspline/main.c:200
+#: ../vector/lidar/v.surf.bspline/main.c:183
+#: ../vector/lidar/v.surf.bspline/main.c:200
 #: ../vector/lidar/v.outlier/main.c:182
 #, c-format
 msgid "Vector <%s> could not be open at the topological level"
@@ -4236,8 +4235,9 @@ msgid ""
 "\t\tTry with a raster output or other driver"
 msgstr ""
 
-#: ../vector/lidar/v.surf.bspline/main.c:214 ../vector/lidar/v.outlier/main.c:166
-#: ../vector/lidar/v.outlier/main.c:170 ../vector/lidar/v.outlier/main.c:176
+#: ../vector/lidar/v.surf.bspline/main.c:214
+#: ../vector/lidar/v.outlier/main.c:166 ../vector/lidar/v.outlier/main.c:170
+#: ../vector/lidar/v.outlier/main.c:176
 #, c-format
 msgid "Vector <%s> could not be open"
 msgstr ""
@@ -4262,7 +4262,8 @@ msgstr ""
 msgid "Setting regions and boxes"
 msgstr ""
 
-#: ../vector/lidar/v.surf.bspline/main.c:289 ../vector/lidar/v.surf.bspline/main.c:299
+#: ../vector/lidar/v.surf.bspline/main.c:289
+#: ../vector/lidar/v.surf.bspline/main.c:299
 #: ../vector/lidar/v.lidar.edgedetection/main.c:234
 #: ../vector/lidar/v.lidar.correction/main.c:239
 #: ../vector/lidar/v.outlier/main.c:245
@@ -4270,7 +4271,8 @@ msgstr ""
 msgid "nsply = %d"
 msgstr ""
 
-#: ../vector/lidar/v.surf.bspline/main.c:316 ../vector/lidar/v.surf.bspline/main.c:326
+#: ../vector/lidar/v.surf.bspline/main.c:316
+#: ../vector/lidar/v.surf.bspline/main.c:326
 #: ../vector/lidar/v.lidar.edgedetection/main.c:256
 #: ../vector/lidar/v.lidar.correction/main.c:261
 #: ../vector/lidar/v.outlier/main.c:267
@@ -6338,8 +6340,8 @@ msgstr ""
 
 #: ../vector/v.proj/main.c:73
 msgid ""
-"List vector maps in input location and exit (a dummy value must be given "
-"for input)"
+"List vector maps in input location and exit (a dummy value must be given for "
+"input)"
 msgstr ""
 
 #: ../vector/v.proj/main.c:77
@@ -6788,7 +6790,8 @@ msgid ""
 "layer."
 msgstr ""
 
-#: ../raster/r.neighbors/main.c:92
+#: ../raster/r.neighbors/main.c:92 ../raster/r.random/main.c:41
+#: ../display/d.nviz/main.c:77
 msgid "Name of existing raster map"
 msgstr ""
 
@@ -6952,6 +6955,8 @@ msgid "%s - raster map not found"
 msgstr ""
 
 #: ../raster/r.covar/main.c:99 ../raster/r.out.tiff/r.out.tiff.c:168
+#: ../raster/r.cost/main.c:338 ../raster/r.walk/main.c:511
+#: ../raster/r.walk/main.c:514
 #, c-format
 msgid "%s - can't open raster map"
 msgstr ""
@@ -7263,6 +7268,7 @@ msgid "Raster file matrix filter."
 msgstr ""
 
 #: ../raster/r.mfilter/main.c:45 ../raster/r.resamp.rst/main.c:167
+#: ../raster/r.texture/main.c:82
 msgid "Name of the input raster map"
 msgstr ""
 
@@ -7562,7 +7568,9 @@ msgid "Output separator character (default: tab)"
 msgstr ""
 
 #: ../raster/r.cats/main.c:98 ../raster/r.basins.fill/main.c:92
-#: ../raster/r.basins.fill/main.c:105
+#: ../raster/r.basins.fill/main.c:105 ../raster/r.coin/cmd_parms.c:93
+#: ../raster/r.coin/cmd_parms.c:96 ../raster/r.kappa/stats.c:30
+#: ../raster/r.transect/main.c:97
 #, c-format
 msgid "%s: <%s> raster map not found"
 msgstr ""
@@ -7871,10 +7879,6 @@ msgstr ""
 msgid ""
 "Creates a raster map layer and vector point map containing randomly located "
 "sites."
-msgstr ""
-
-#: ../raster/r.random/main.c:41 ../display/d.nviz/main.c:77
-msgid "Name of existing raster map"
 msgstr ""
 
 #: ../raster/r.random/main.c:48
@@ -9233,10 +9237,6 @@ msgstr ""
 msgid "Generate images with textural features from a raster map"
 msgstr ""
 
-#: ../raster/r.texture/main.c:82
-msgid "Name of the input raster map"
-msgstr ""
-
 #: ../raster/r.texture/main.c:89
 msgid "Name of the ouput raster map"
 msgstr ""
@@ -9569,12 +9569,6 @@ msgstr ""
 
 #: ../raster/r.coin/cmd_parms.c:70
 msgid "Wide report, 132 columns (default: 80)"
-msgstr ""
-
-#: ../raster/r.coin/cmd_parms.c:93 ../raster/r.coin/cmd_parms.c:96
-#: ../raster/r.kappa/stats.c:30 ../raster/r.transect/main.c:97
-#, c-format
-msgid "%s: <%s> raster map not found"
 msgstr ""
 
 #: ../raster/r.coin/make_coin.c:48
@@ -10085,12 +10079,6 @@ msgstr ""
 #: ../raster/r.cost/main.c:325 ../raster/r.walk/main.c:497
 #, c-format
 msgid "%s - illegal name"
-msgstr ""
-
-#: ../raster/r.cost/main.c:338 ../raster/r.walk/main.c:511
-#: ../raster/r.walk/main.c:514
-#, c-format
-msgid "%s - can't open raster map"
 msgstr ""
 
 #: ../raster/r.cost/main.c:347
@@ -12979,8 +12967,8 @@ msgstr "'%s'. ड्राइवर चालू होत नाही"
 #: ../raster/r.resamp.rst/main.c:157
 msgid ""
 "Reinterpolates and computes topographic analysis from input raster map to a "
-"new raster map (possibly with different resolution) using regularized "
-"spline with tension and smoothing."
+"new raster map (possibly with different resolution) using regularized spline "
+"with tension and smoothing."
 msgstr ""
 
 #: ../raster/r.resamp.rst/main.c:173

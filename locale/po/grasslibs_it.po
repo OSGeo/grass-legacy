@@ -6,7 +6,6 @@
 # Markus Neteler <neteler at itc.it>, 2005.
 # Luciano Montanaro <mikelima at cirulla.net>, 2006.
 # Giuseppe Patti <gpatt at tiscali.it>, 2006.
-
 msgid ""
 msgstr ""
 "Project-Id-Version: grasslibs_it\n"
@@ -128,7 +127,8 @@ msgstr "cell_values_double: xdr_double lettura non riuscita per l'indice %d."
 #: ../lib/gis/get_row.c:564
 #, c-format
 msgid "error reading compressed map [%s] in mapset [%s], row %d"
-msgstr "errore nella lettura della mappa compressa [%s] nel mapset [%s], riga %d"
+msgstr ""
+"errore nella lettura della mappa compressa [%s] nel mapset [%s], riga %d"
 
 #: ../lib/gis/get_row.c:568
 #, c-format
@@ -2632,7 +2632,9 @@ msgstr ""
 msgid ""
 "\n"
 "Unknown command: %d last: %d\n"
-msgstr "\nComando sconosciuto: %d ultimo: %d\n"
+msgstr ""
+"\n"
+"Comando sconosciuto: %d ultimo: %d\n"
 
 #: ../lib/driver/command.c:646
 #, c-format

@@ -2765,15 +2765,18 @@ msgid "Manage image colors"
 msgstr ""
 
 #: ../gui/tcltk/menus/menu.tcl:487
-msgid "Color balance and enhance color tables of multiband imagery for rgb display"
+msgid ""
+"Color balance and enhance color tables of multiband imagery for rgb display"
 msgstr ""
 
 #: ../gui/tcltk/menus/menu.tcl:488
-msgid "Transform HIS (Hue/Intensity/Saturation) color image to RGB (Red/Green/Blue)"
+msgid ""
+"Transform HIS (Hue/Intensity/Saturation) color image to RGB (Red/Green/Blue)"
 msgstr ""
 
 #: ../gui/tcltk/menus/menu.tcl:489
-msgid "Transform RGB (Red/Green/Blue) color image to HIS (Hue/Intensity/Saturation)"
+msgid ""
+"Transform RGB (Red/Green/Blue) color image to HIS (Hue/Intensity/Saturation)"
 msgstr ""
 
 #: ../gui/tcltk/menus/menu.tcl:491
@@ -3111,7 +3114,9 @@ msgstr "AVISO: La base de datos no es válida"
 
 #: ../lib/init/gis_set.tcl:647
 msgid "WARNING: Invalid database. Finding first valid directory in parent tree"
-msgstr "AVISO: La base de datos no es válida. Buscando el primer directorio válido en directorios superiores"
+msgstr ""
+"AVISO: La base de datos no es válida. Buscando el primer directorio válido "
+"en directorios superiores"
 
 #: ../lib/init/file_option.tcl:76
 msgid "Name of new location"
@@ -3149,7 +3154,9 @@ msgstr "AVISO: reinicia GRASS, por favor."
 msgid ""
 "WARNING: Please restart GRASS in order find the created location in the list "
 "(closing it for you now)"
-msgstr "AVISO: Por favor, reinicia GRASS para poder encontrar el proyecto creado en la lista (cerrándolo por tí ahora)"
+msgstr ""
+"AVISO: Por favor, reinicia GRASS para poder encontrar el proyecto creado en "
+"la lista (cerrándolo por tí ahora)"
 
 #: ../lib/init/file_option.tcl:189
 msgid ""
@@ -3223,7 +3230,8 @@ msgid ""
 "Georeferenced file with projection information that can be read\n"
 msgstr ""
 "\n"
-"Archivo georeferenciado con información sobre la proyección que puede leerse\n"
+"Archivo georeferenciado con información sobre la proyección que puede "
+"leerse\n"
 
 #: ../lib/init/file_option.tcl:200
 msgid ""
@@ -3466,4 +3474,3 @@ msgstr ""
 #: ../vector/v.digit/settings.tcl:297
 msgid "Table"
 msgstr "Tabla"
-

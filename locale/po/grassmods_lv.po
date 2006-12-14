@@ -2704,6 +2704,7 @@ msgid "Query threshold distance"
 msgstr ""
 
 #: ../vector/v.what/main.c:92 ../display/d.what.vect/main.c:68
+#: ../vector/v.distance/main.c:109 ../vector/v.distance/main.c:113
 msgid "Name of existing vector map"
 msgstr "Eksistējošas vektorkartes nosaukums"
 
@@ -3521,10 +3522,6 @@ msgstr "Datubāzes konekcija nav definēta"
 #: ../vector/v.db.select/main.c:126
 msgid "Cannot open select cursor"
 msgstr "Nevar atvērt izvēlēto marķieri/kursoru"
-
-#: ../vector/v.distance/main.c:109 ../vector/v.distance/main.c:113
-msgid "Name of existing vector map"
-msgstr "Eksistējošas vektorkartes nosaukums"
 
 #: ../vector/v.distance/main.c:119
 msgid "From type"
@@ -6502,8 +6499,8 @@ msgstr ""
 
 #: ../vector/v.proj/main.c:73
 msgid ""
-"List vector maps in input location and exit (a dummy value must be given "
-"for input)"
+"List vector maps in input location and exit (a dummy value must be given for "
+"input)"
 msgstr ""
 
 #: ../vector/v.proj/main.c:77
@@ -6973,7 +6970,8 @@ msgstr ""
 "esošo šūnu kategoriju vērtībām un noglabā jauno šūnu vērtības izejas rastra "
 "kartes līmenī."
 
-#: ../raster/r.neighbors/main.c:92
+#: ../raster/r.neighbors/main.c:92 ../raster/r.random/main.c:41
+#: ../display/d.nviz/main.c:77
 msgid "Name of existing raster map"
 msgstr "Eksistējošas rastra kartes nosaukums"
 
@@ -7136,10 +7134,11 @@ msgstr ""
 msgid "%s - raster map not found"
 msgstr "rastra karte <%s> nav atrasta"
 
-#: ../raster/r.covar/main.c:99 ../raster/r.out.tiff/r.out.tiff.c:168
-#, fuzzy, c-format
+#: ../raster/r.cost/main.c:338 ../raster/r.walk/main.c:511
+#: ../raster/r.walk/main.c:514
+#, c-format
 msgid "%s - can't open raster map"
-msgstr "cnevar atvērt nepieciešamo daļu faila priekš %s"
+msgstr "%s - nav iespējams atvērt rastra failu"
 
 #: ../raster/r.covar/main.c:105
 #, c-format
@@ -7456,8 +7455,12 @@ msgid "Name of the input raster map"
 msgstr "Ieejas rastra faila nosaukums"
 
 #: ../raster/r.mfilter/main.c:53
+#, fuzzy
 msgid "Name of the output raster map"
 msgstr ""
+"#-#-#-#-#  grassmods_lv.po (grassmods_lv)  #-#-#-#-#\n"
+"#-#-#-#-#  grassmods_lv.po (grassmods_lv)  #-#-#-#-#\n"
+"Ieejas rastra faila nosaukums"
 
 #: ../raster/r.mfilter/main.c:60
 msgid "Name of the filter file"
@@ -7764,10 +7767,16 @@ msgid "Output separator character (default: tab)"
 msgstr ""
 
 #: ../raster/r.cats/main.c:98 ../raster/r.basins.fill/main.c:92
-#: ../raster/r.basins.fill/main.c:105
+#: ../raster/r.basins.fill/main.c:105 ../raster/r.coin/cmd_parms.c:93
+#: ../raster/r.coin/cmd_parms.c:96 ../raster/r.kappa/stats.c:30
+#: ../raster/r.transect/main.c:97
 #, fuzzy, c-format
 msgid "%s: <%s> raster map not found"
-msgstr "brīdinājums: %s - vektora fails nav atrasts\n"
+msgstr ""
+"#-#-#-#-#  grassmods_lv.po (grassmods_lv)  #-#-#-#-#\n"
+"brīdinājums: %s - vektora fails nav atrasts\n"
+"#-#-#-#-#  grassmods_lv.po (grassmods_lv)  #-#-#-#-#\n"
+"rastra karte <%s> nav atrasta"
 
 #: ../raster/r.cats/main.c:100
 #, c-format
@@ -8074,10 +8083,6 @@ msgid ""
 "Creates a raster map layer and vector point map containing randomly located "
 "sites."
 msgstr ""
-
-#: ../raster/r.random/main.c:41 ../display/d.nviz/main.c:77
-msgid "Name of existing raster map"
-msgstr "Eksistējošas rastra kartes nosaukums"
 
 #: ../raster/r.random/main.c:48
 msgid "The number of points to allocate"
@@ -9496,10 +9501,6 @@ msgstr ""
 msgid "Generate images with textural features from a raster map"
 msgstr ""
 
-#: ../raster/r.texture/main.c:82
-msgid "Name of the input raster map"
-msgstr ""
-
 #: ../raster/r.texture/main.c:89
 msgid "Name of the ouput raster map"
 msgstr ""
@@ -9838,12 +9839,6 @@ msgstr ""
 #: ../raster/r.coin/cmd_parms.c:70
 msgid "Wide report, 132 columns (default: 80)"
 msgstr ""
-
-#: ../raster/r.coin/cmd_parms.c:93 ../raster/r.coin/cmd_parms.c:96
-#: ../raster/r.kappa/stats.c:30 ../raster/r.transect/main.c:97
-#, fuzzy, c-format
-msgid "%s: <%s> raster map not found"
-msgstr "rastra karte <%s> nav atrasta"
 
 #: ../raster/r.coin/make_coin.c:48
 #, c-format
@@ -10361,12 +10356,6 @@ msgstr "%s - nav atrasts"
 #, c-format
 msgid "%s - illegal name"
 msgstr "%s - nederīgs nosaukums"
-
-#: ../raster/r.cost/main.c:338 ../raster/r.walk/main.c:511
-#: ../raster/r.walk/main.c:514
-#, c-format
-msgid "%s - can't open raster map"
-msgstr "%s - nav iespējams atvērt rastra failu"
 
 #: ../raster/r.cost/main.c:347
 msgid "Source map is: Integer cell type"
@@ -13285,8 +13274,8 @@ msgstr "Nevar izveidot tabulu: %s"
 #: ../raster/r.resamp.rst/main.c:157
 msgid ""
 "Reinterpolates and computes topographic analysis from input raster map to a "
-"new raster map (possibly with different resolution) using regularized "
-"spline with tension and smoothing."
+"new raster map (possibly with different resolution) using regularized spline "
+"with tension and smoothing."
 msgstr ""
 
 #: ../raster/r.resamp.rst/main.c:173
@@ -18188,10 +18177,6 @@ msgstr "Izejas rastra kartes nosaukums"
 
 msgid "Connect to the database through DBMI."
 msgstr "Pieslēgties datubāzei caur DBMI."
-
-#, fuzzy
-msgid "Name of the output raster map"
-msgstr "Ieejas rastra faila nosaukums"
 
 #, fuzzy
 msgid "Name of existing input raster map"

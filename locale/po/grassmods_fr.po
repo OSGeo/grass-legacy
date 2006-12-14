@@ -3814,11 +3814,6 @@ msgstr "La connexion à la base de données n'a pas été définie"
 msgid "Cannot open select cursor"
 msgstr "Impossible d'ouvrir le curseur sélectionné"
 
-#: ../vector/v.distance/main.c:109 ../vector/v.distance/main.c:113
-#, fuzzy
-msgid "Name of existing vector map"
-msgstr "Nom de la couche vectorielle existante"
-
 #: ../vector/v.distance/main.c:119
 #, fuzzy
 msgid "From type"
@@ -4645,8 +4640,13 @@ msgid "Name of output vector map"
 msgstr "Nom du fichier vecteur de sortie"
 
 #: ../vector/lidar/v.surf.bspline/main.c:102 ../vector/v.surf.idw/main.c:84
+#, fuzzy
 msgid "Name of output raster map"
-msgstr "Nom de la couche raster cible"
+msgstr ""
+"#-#-#-#-#  grassmods_fr.po (grassmods_fr)  #-#-#-#-#\n"
+"Nom de la couche raster cible\n"
+"#-#-#-#-#  grassmods_fr.po (grassmods_fr)  #-#-#-#-#\n"
+"Nom de la couche raster de sortie"
 
 #: ../vector/lidar/v.surf.bspline/main.c:128
 #: ../vector/lidar/v.lidar.edgedetection/main.c:100
@@ -4667,7 +4667,8 @@ msgstr ""
 msgid "Spline type of interpolation"
 msgstr "La valeur en sortie est l'erreur d'interpolation"
 
-#: ../vector/lidar/v.surf.bspline/main.c:149 ../vector/lidar/v.outlier/main.c:128
+#: ../vector/lidar/v.surf.bspline/main.c:149
+#: ../vector/lidar/v.outlier/main.c:128
 msgid "Thychonov regularization weigth"
 msgstr ""
 
@@ -4680,7 +4681,8 @@ msgstr ""
 msgid "No raster nor vector output"
 msgstr "Nom du fichier vecteur de sortie"
 
-#: ../vector/lidar/v.surf.bspline/main.c:183 ../vector/lidar/v.surf.bspline/main.c:200
+#: ../vector/lidar/v.surf.bspline/main.c:183
+#: ../vector/lidar/v.surf.bspline/main.c:200
 #: ../vector/lidar/v.outlier/main.c:182
 #, c-format
 msgid "Vector <%s> could not be open at the topological level"
@@ -4705,8 +4707,9 @@ msgid ""
 msgstr ""
 
 # c-format
-#: ../vector/lidar/v.surf.bspline/main.c:214 ../vector/lidar/v.outlier/main.c:166
-#: ../vector/lidar/v.outlier/main.c:170 ../vector/lidar/v.outlier/main.c:176
+#: ../vector/lidar/v.surf.bspline/main.c:214
+#: ../vector/lidar/v.outlier/main.c:166 ../vector/lidar/v.outlier/main.c:170
+#: ../vector/lidar/v.outlier/main.c:176
 #, fuzzy, c-format
 msgid "Vector <%s> could not be open"
 msgstr "couche vecteur <%s> introuvable"
@@ -4732,7 +4735,8 @@ msgstr "Pas de connexion définie pour le pilote <%s>. Exécutez db.connect"
 msgid "Setting regions and boxes"
 msgstr "Paramétrage de la fenêtre graphique"
 
-#: ../vector/lidar/v.surf.bspline/main.c:289 ../vector/lidar/v.surf.bspline/main.c:299
+#: ../vector/lidar/v.surf.bspline/main.c:289
+#: ../vector/lidar/v.surf.bspline/main.c:299
 #: ../vector/lidar/v.lidar.edgedetection/main.c:234
 #: ../vector/lidar/v.lidar.correction/main.c:239
 #: ../vector/lidar/v.outlier/main.c:245
@@ -4740,7 +4744,8 @@ msgstr "Paramétrage de la fenêtre graphique"
 msgid "nsply = %d"
 msgstr ""
 
-#: ../vector/lidar/v.surf.bspline/main.c:316 ../vector/lidar/v.surf.bspline/main.c:326
+#: ../vector/lidar/v.surf.bspline/main.c:316
+#: ../vector/lidar/v.surf.bspline/main.c:326
 #: ../vector/lidar/v.lidar.edgedetection/main.c:256
 #: ../vector/lidar/v.lidar.correction/main.c:261
 #: ../vector/lidar/v.outlier/main.c:267
@@ -7021,8 +7026,8 @@ msgstr "Chemin vers la base de données GRASS du Secteur source"
 #: ../vector/v.proj/main.c:73
 #, fuzzy
 msgid ""
-"List vector maps in input location and exit (a dummy value must be given "
-"for input)"
+"List vector maps in input location and exit (a dummy value must be given for "
+"input)"
 msgstr "Lister les couches raster de l'emplacement source et quitter"
 
 #: ../vector/v.proj/main.c:77
@@ -7513,9 +7518,15 @@ msgstr ""
 "adjacentes, et sauvegarde les nouvelles valeurs de cellule dans une couche "
 "raster de sortie."
 
-#: ../raster/r.neighbors/main.c:92
+#: ../raster/r.neighbors/main.c:92 ../raster/r.random/main.c:41
+#: ../display/d.nviz/main.c:77
+#, fuzzy
 msgid "Name of existing raster map"
-msgstr "Nom du fichier raster existant"
+msgstr ""
+"#-#-#-#-#  grassmods_fr.po (grassmods_fr)  #-#-#-#-#\n"
+"Nom du fichier raster existant\n"
+"#-#-#-#-#  grassmods_fr.po (grassmods_fr)  #-#-#-#-#\n"
+"Nom de la couche raster existante"
 
 #: ../raster/r.neighbors/main.c:99 ../raster/r.series/main.c:107
 msgid "Name of the new raster map"
@@ -7684,6 +7695,8 @@ msgstr "%s - couche raster non trouvée"
 
 # c-format
 #: ../raster/r.covar/main.c:99 ../raster/r.out.tiff/r.out.tiff.c:168
+#: ../raster/r.cost/main.c:338 ../raster/r.walk/main.c:511
+#: ../raster/r.walk/main.c:514
 #, c-format
 msgid "%s - can't open raster map"
 msgstr "%s - impossible d'ouvrir le fichier raster"
@@ -8029,12 +8042,23 @@ msgid "Raster file matrix filter."
 msgstr "Filtre matriciel de fichier raster"
 
 #: ../raster/r.mfilter/main.c:45 ../raster/r.resamp.rst/main.c:167
+#: ../raster/r.texture/main.c:82
+#, fuzzy
 msgid "Name of the input raster map"
-msgstr "Nom du fichier raster source"
+msgstr ""
+"#-#-#-#-#  grassmods_fr.po (grassmods_fr)  #-#-#-#-#\n"
+"Nom du fichier raster source\n"
+"#-#-#-#-#  grassmods_fr.po (grassmods_fr)  #-#-#-#-#\n"
+"Nom de la couche raster source"
 
 #: ../raster/r.mfilter/main.c:53
+#, fuzzy
 msgid "Name of the output raster map"
-msgstr "Nom de la nouvelle couche raster"
+msgstr ""
+"#-#-#-#-#  grassmods_fr.po (grassmods_fr)  #-#-#-#-#\n"
+"Nom de la nouvelle couche raster\n"
+"#-#-#-#-#  grassmods_fr.po (grassmods_fr)  #-#-#-#-#\n"
+"Nom de la couche raster de sortie"
 
 #: ../raster/r.mfilter/main.c:60
 msgid "Name of the filter file"
@@ -8355,11 +8379,19 @@ msgstr "Liste de catégories. Exemple : 1,3-8,13"
 msgid "Output separator character (default: tab)"
 msgstr "Caractère de séparation en sortie (par défaut : tabulation)"
 
+# #-#-#-#-#  grassmods_fr.po (grassmods_fr)  #-#-#-#-#
+# c-format
 #: ../raster/r.cats/main.c:98 ../raster/r.basins.fill/main.c:92
-#: ../raster/r.basins.fill/main.c:105
-#, c-format
+#: ../raster/r.basins.fill/main.c:105 ../raster/r.coin/cmd_parms.c:93
+#: ../raster/r.coin/cmd_parms.c:96 ../raster/r.kappa/stats.c:30
+#: ../raster/r.transect/main.c:97
+#, fuzzy, c-format
 msgid "%s: <%s> raster map not found"
-msgstr "%s: <%s> fichier raster introuvable"
+msgstr ""
+"#-#-#-#-#  grassmods_fr.po (grassmods_fr)  #-#-#-#-#\n"
+"%s: <%s> fichier raster introuvable\n"
+"#-#-#-#-#  grassmods_fr.po (grassmods_fr)  #-#-#-#-#\n"
+"%s : couche raster <%s> introuvable"
 
 #: ../raster/r.cats/main.c:100
 #, c-format
@@ -8717,10 +8749,6 @@ msgid ""
 msgstr ""
 "Crée une couche raster et une couche vectorielle contenant des points placés "
 "au hasard."
-
-#: ../raster/r.random/main.c:41 ../display/d.nviz/main.c:77
-msgid "Name of existing raster map"
-msgstr "Nom de la couche raster existante"
 
 #: ../raster/r.random/main.c:48
 msgid "The number of points to allocate"
@@ -10227,10 +10255,6 @@ msgstr ""
 msgid "Generate images with textural features from a raster map"
 msgstr "Génère des images de textures à partir d'une couche raster"
 
-#: ../raster/r.texture/main.c:82
-msgid "Name of the input raster map"
-msgstr "Nom de la couche raster source"
-
 #: ../raster/r.texture/main.c:89
 msgid "Name of the ouput raster map"
 msgstr "Nom de la couche raster cible"
@@ -10590,13 +10614,6 @@ msgstr "Unités de distance"
 #, fuzzy
 msgid "Wide report, 132 columns (default: 80)"
 msgstr "rapport étendu, 132 colonnes (80 par défaut)"
-
-# c-format
-#: ../raster/r.coin/cmd_parms.c:93 ../raster/r.coin/cmd_parms.c:96
-#: ../raster/r.kappa/stats.c:30 ../raster/r.transect/main.c:97
-#, c-format
-msgid "%s: <%s> raster map not found"
-msgstr "%s : couche raster <%s> introuvable"
 
 #: ../raster/r.coin/make_coin.c:48
 #, c-format
@@ -11140,13 +11157,6 @@ msgstr "%s non trouvé"
 #, c-format
 msgid "%s - illegal name"
 msgstr "%s - nom illégal"
-
-# c-format
-#: ../raster/r.cost/main.c:338 ../raster/r.walk/main.c:511
-#: ../raster/r.walk/main.c:514
-#, c-format
-msgid "%s - can't open raster map"
-msgstr "%s - impossible d'ouvrir le fichier raster"
 
 #: ../raster/r.cost/main.c:347
 msgid "Source map is: Integer cell type"
@@ -14473,8 +14483,8 @@ msgstr "Impossible de lire %s"
 #: ../raster/r.resamp.rst/main.c:157
 msgid ""
 "Reinterpolates and computes topographic analysis from input raster map to a "
-"new raster map (possibly with different resolution) using regularized "
-"spline with tension and smoothing."
+"new raster map (possibly with different resolution) using regularized spline "
+"with tension and smoothing."
 msgstr ""
 "Ré-interpole et fait une analyse topographique depuis une couche raster vers "
 "une nouvelle couche raster (probablement avec une résolution différente) en "
@@ -20997,14 +21007,8 @@ msgstr ""
 #~ msgid "Name of output map"
 #~ msgstr "Nom de la couche de sortie"
 
-#~ msgid "Name of the output raster map"
-#~ msgstr "Nom de la couche raster de sortie"
-
 #~ msgid "Name of existing input raster map"
 #~ msgstr "Nom du fichier raster source"
-
-#~ msgid "Name of output raster map"
-#~ msgstr "Nom de la couche raster de sortie"
 
 #~ msgid "Wrong RGB maps. RGB output not added!"
 #~ msgstr "Couches RGB erronées. La sortie RGB n'est pas ajoutée!"
