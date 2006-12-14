@@ -64,9 +64,9 @@ _get_make_pipe_path (void)
     path = G_malloc (len);
     sprintf (path, "%s%s", prefix, user);
 
-    if ((status = lstat (path, &theStat)) != 0)
+    if ((status = G_lstat (path, &theStat)) != 0)
     {
-        status = mkdir ( path );
+        status = G_mkdir ( path );
     }
     else 
     {

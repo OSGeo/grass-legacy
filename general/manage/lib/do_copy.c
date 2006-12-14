@@ -9,11 +9,6 @@
 #include <grass/Vect.h>
 #include "list.h"
 
-#ifdef __MINGW32__
-#define mkdir(name, mode) mkdir(name)
-#define lstat(path, sb) stat(path, sb)
-#endif
-
 static int recursive_copy(const char *src, const char *dst);
 
 /*
@@ -119,13 +114,13 @@ recursive_copy(const char *src, const char *dst)
 	size_t len, len2;
 	mode_t mode;
 
-	if(lstat(src, &sb))
+	if(G_lstat(src, &sb))
 		return 1;
 
 	/* src is a file */
 	if(!S_ISDIR((mode = sb.st_mode)))
 	{
-		if(!lstat(dst, &sb) && S_ISDIR(sb.st_mode))
+		if(!G_lstat(dst, &sb) && S_ISDIR(sb.st_mode))
 		{
 			const char *p = strrchr(src, '/');
 			/* src => dst/src */
@@ -156,15 +151,15 @@ recursive_copy(const char *src, const char *dst)
 
 	/* src is a directory */
 
-	if(lstat(dst, &sb))
+	if(G_lstat(dst, &sb))
 	{
-		if(mkdir(dst, mode & 0777))
+		if(G_mkdir(dst))
 			return 1;
 	}else
 	/* if dst already exists and it's a file, try to remove it */
 	if(!S_ISDIR(sb.st_mode))
 	{
-		if(remove(dst) || mkdir(dst, mode & 0777))
+		if(remove(dst) || G_mkdir(dst))
 			return 1;
 	}
 

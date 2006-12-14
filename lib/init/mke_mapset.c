@@ -10,10 +10,6 @@ extern int errno;
 
 #include <grass/gis.h>
 
-#ifdef __MINGW32__
-# define mkdir(name, mode) ((mkdir) (name))
-#endif
-
 int make_mapset (char *location, char *mapset)
 {
 	char buffer[2048] ;
@@ -22,7 +18,7 @@ int make_mapset (char *location, char *mapset)
 
 /* create the mapset directory */
 	sprintf(buffer,"%s/%s",location, mapset) ;
-	mkdir(buffer, 0777) ;
+	G_mkdir(buffer) ;
 
 /* give the mapset a default window for the entire location */
 	sprintf(buffer,"cat '%s'/PERMANENT/DEFAULT_WIND  > '%s'/'%s'/WIND",
@@ -42,7 +38,7 @@ int make_mapset (char *location, char *mapset)
 	
 /* Make the dbf/ subdirectory */
 	sprintf( buffer, "%s/%s/dbf", location, mapset );
-	if( mkdir( buffer, 0777 ) != 0 )
+	if( G_mkdir( buffer ) != 0 )
 		return -1;
 
 	return(0) ;

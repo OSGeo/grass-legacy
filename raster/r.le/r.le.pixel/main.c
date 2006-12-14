@@ -120,7 +120,7 @@ int main (int argc, char **argv)
  					   r.le.out subdirectory */
 
   if (choice->wrum != 'm')
-     G_system("mkdir r.le.out");
+     G_mkdir("r.le.out");
 
   texture_fore();
   G_free (choice);
