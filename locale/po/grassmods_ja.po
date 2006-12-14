@@ -2877,9 +2877,14 @@ msgid "Query threshold distance"
 msgstr "閾値"
 
 #: ../vector/v.what/main.c:92 ../display/d.what.vect/main.c:68
+#: ../vector/v.distance/main.c:109 ../vector/v.distance/main.c:113
 #, fuzzy
 msgid "Name of existing vector map"
-msgstr "対象マップ"
+msgstr ""
+"#-#-#-#-#  grassmods_ja.po (grassmods_ja)  #-#-#-#-#\n"
+"対象マップ\n"
+"#-#-#-#-#  grassmods_ja.po (grassmods_ja)  #-#-#-#-#\n"
+"出力するファイル"
 
 #: ../vector/v.what/main.c:96 ../display/d.what.vect/main.c:80
 msgid "Print topological information (debugging)"
@@ -3702,11 +3707,6 @@ msgstr ""
 msgid "Cannot open select cursor"
 msgstr ""
 
-#: ../vector/v.distance/main.c:109 ../vector/v.distance/main.c:113
-#, fuzzy
-msgid "Name of existing vector map"
-msgstr "出力するファイル"
-
 #: ../vector/v.distance/main.c:119
 #, fuzzy
 msgid "From type"
@@ -4496,7 +4496,8 @@ msgstr "テンション:"
 msgid "Spline type of interpolation"
 msgstr "アイコンの種類"
 
-#: ../vector/lidar/v.surf.bspline/main.c:149 ../vector/lidar/v.outlier/main.c:128
+#: ../vector/lidar/v.surf.bspline/main.c:149
+#: ../vector/lidar/v.outlier/main.c:128
 msgid "Thychonov regularization weigth"
 msgstr ""
 
@@ -4509,7 +4510,8 @@ msgstr ""
 msgid "No raster nor vector output"
 msgstr "出力するファイル"
 
-#: ../vector/lidar/v.surf.bspline/main.c:183 ../vector/lidar/v.surf.bspline/main.c:200
+#: ../vector/lidar/v.surf.bspline/main.c:183
+#: ../vector/lidar/v.surf.bspline/main.c:200
 #: ../vector/lidar/v.outlier/main.c:182
 #, c-format
 msgid "Vector <%s> could not be open at the topological level"
@@ -4533,8 +4535,9 @@ msgid ""
 "\t\tTry with a raster output or other driver"
 msgstr ""
 
-#: ../vector/lidar/v.surf.bspline/main.c:214 ../vector/lidar/v.outlier/main.c:166
-#: ../vector/lidar/v.outlier/main.c:170 ../vector/lidar/v.outlier/main.c:176
+#: ../vector/lidar/v.surf.bspline/main.c:214
+#: ../vector/lidar/v.outlier/main.c:166 ../vector/lidar/v.outlier/main.c:170
+#: ../vector/lidar/v.outlier/main.c:176
 #, fuzzy, c-format
 msgid "Vector <%s> could not be open"
 msgstr "���"
@@ -4559,7 +4562,8 @@ msgstr ""
 msgid "Setting regions and boxes"
 msgstr ""
 
-#: ../vector/lidar/v.surf.bspline/main.c:289 ../vector/lidar/v.surf.bspline/main.c:299
+#: ../vector/lidar/v.surf.bspline/main.c:289
+#: ../vector/lidar/v.surf.bspline/main.c:299
 #: ../vector/lidar/v.lidar.edgedetection/main.c:234
 #: ../vector/lidar/v.lidar.correction/main.c:239
 #: ../vector/lidar/v.outlier/main.c:245
@@ -4567,7 +4571,8 @@ msgstr ""
 msgid "nsply = %d"
 msgstr ""
 
-#: ../vector/lidar/v.surf.bspline/main.c:316 ../vector/lidar/v.surf.bspline/main.c:326
+#: ../vector/lidar/v.surf.bspline/main.c:316
+#: ../vector/lidar/v.surf.bspline/main.c:326
 #: ../vector/lidar/v.lidar.edgedetection/main.c:256
 #: ../vector/lidar/v.lidar.correction/main.c:261
 #: ../vector/lidar/v.outlier/main.c:267
@@ -6762,8 +6767,8 @@ msgstr "目的ロケーションを含むデータベース"
 #: ../vector/v.proj/main.c:73
 #, fuzzy
 msgid ""
-"List vector maps in input location and exit (a dummy value must be given "
-"for input)"
+"List vector maps in input location and exit (a dummy value must be given for "
+"input)"
 msgstr "目的ロケーション内のベクトルマップ一覧表示"
 
 #: ../vector/v.proj/main.c:77
@@ -7253,10 +7258,15 @@ msgid ""
 "layer."
 msgstr "近傍点解析を行い新しいラスターマップを作成します"
 
-#: ../raster/r.neighbors/main.c:92
+#: ../raster/r.neighbors/main.c:92 ../raster/r.random/main.c:41
+#: ../display/d.nviz/main.c:77
 #, fuzzy
 msgid "Name of existing raster map"
-msgstr "入力するファイル"
+msgstr ""
+"#-#-#-#-#  grassmods_ja.po (grassmods_ja)  #-#-#-#-#\n"
+"入力するファイル\n"
+"#-#-#-#-#  grassmods_ja.po (grassmods_ja)  #-#-#-#-#\n"
+"対象マップ"
 
 #: ../raster/r.neighbors/main.c:99 ../raster/r.series/main.c:107
 #, fuzzy
@@ -7442,6 +7452,8 @@ msgid "%s - raster map not found"
 msgstr "対象マップ"
 
 #: ../raster/r.covar/main.c:99 ../raster/r.out.tiff/r.out.tiff.c:168
+#: ../raster/r.cost/main.c:338 ../raster/r.walk/main.c:511
+#: ../raster/r.walk/main.c:514
 #, fuzzy, c-format
 msgid "%s - can't open raster map"
 msgstr "出力するファイル"
@@ -7764,6 +7776,7 @@ msgid "Raster file matrix filter."
 msgstr "フィルタをかけたラスターマップを作成します"
 
 #: ../raster/r.mfilter/main.c:45 ../raster/r.resamp.rst/main.c:167
+#: ../raster/r.texture/main.c:82
 #, fuzzy
 msgid "Name of the input raster map"
 msgstr "入力するファイル"
@@ -7771,7 +7784,11 @@ msgstr "入力するファイル"
 #: ../raster/r.mfilter/main.c:53
 #, fuzzy
 msgid "Name of the output raster map"
-msgstr "出力するファイル"
+msgstr ""
+"#-#-#-#-#  grassmods_ja.po (grassmods_ja)  #-#-#-#-#\n"
+"出力するファイル\n"
+"#-#-#-#-#  grassmods_ja.po (grassmods_ja)  #-#-#-#-#\n"
+"出力するファイル(ラスターマップ)"
 
 #: ../raster/r.mfilter/main.c:60
 #, fuzzy
@@ -8098,7 +8115,9 @@ msgid "Output separator character (default: tab)"
 msgstr "区切り(デフォルト:タブ)"
 
 #: ../raster/r.cats/main.c:98 ../raster/r.basins.fill/main.c:92
-#: ../raster/r.basins.fill/main.c:105
+#: ../raster/r.basins.fill/main.c:105 ../raster/r.coin/cmd_parms.c:93
+#: ../raster/r.coin/cmd_parms.c:96 ../raster/r.kappa/stats.c:30
+#: ../raster/r.transect/main.c:97
 #, fuzzy, c-format
 msgid "%s: <%s> raster map not found"
 msgstr "対象マップ"
@@ -8438,11 +8457,6 @@ msgid ""
 "Creates a raster map layer and vector point map containing randomly located "
 "sites."
 msgstr "���."
-
-#: ../raster/r.random/main.c:41 ../display/d.nviz/main.c:77
-#, fuzzy
-msgid "Name of existing raster map"
-msgstr "対象マップ"
 
 #: ../raster/r.random/main.c:48
 #, fuzzy
@@ -9931,11 +9945,6 @@ msgstr ""
 msgid "Generate images with textural features from a raster map"
 msgstr "サイトマップをラスターマップに変換します"
 
-#: ../raster/r.texture/main.c:82
-#, fuzzy
-msgid "Name of the input raster map"
-msgstr "入力するファイル"
-
 #: ../raster/r.texture/main.c:89
 #, fuzzy
 msgid "Name of the ouput raster map"
@@ -10303,12 +10312,6 @@ msgstr "単位"
 #, fuzzy
 msgid "Wide report, 132 columns (default: 80)"
 msgstr "レポート幅の拡大"
-
-#: ../raster/r.coin/cmd_parms.c:93 ../raster/r.coin/cmd_parms.c:96
-#: ../raster/r.kappa/stats.c:30 ../raster/r.transect/main.c:97
-#, fuzzy, c-format
-msgid "%s: <%s> raster map not found"
-msgstr "対象マップ"
 
 #: ../raster/r.coin/make_coin.c:48
 #, c-format
@@ -10866,12 +10869,6 @@ msgstr "入力するファイル"
 #, c-format
 msgid "%s - illegal name"
 msgstr ""
-
-#: ../raster/r.cost/main.c:338 ../raster/r.walk/main.c:511
-#: ../raster/r.walk/main.c:514
-#, fuzzy, c-format
-msgid "%s - can't open raster map"
-msgstr "出力するファイル"
 
 #: ../raster/r.cost/main.c:347
 msgid "Source map is: Integer cell type"
@@ -13954,8 +13951,8 @@ msgstr "出力するファイル"
 #, fuzzy
 msgid ""
 "Reinterpolates and computes topographic analysis from input raster map to a "
-"new raster map (possibly with different resolution) using regularized "
-"spline with tension and smoothing."
+"new raster map (possibly with different resolution) using regularized spline "
+"with tension and smoothing."
 msgstr "���� ����."
 
 #: ../raster/r.resamp.rst/main.c:173
@@ -19333,14 +19330,6 @@ msgstr ""
 #~ msgstr "始点の座標値"
 
 #, fuzzy
-#~ msgid "Name of the output raster map"
-#~ msgstr "出力するファイル(ラスターマップ)"
-
-#, fuzzy
-#~ msgid "Name of output raster map"
-#~ msgstr "出力するファイル"
-
-#, fuzzy
 #~ msgid "Invoke fast, but memory intensive operation"
 #~ msgstr "高速計算(大きなメモリが必要)"
 
@@ -20510,10 +20499,6 @@ msgstr ""
 #~ msgstr "細線化したラスターマップからベクトルマップを作成します"
 
 #, fuzzy
-#~ msgid "Name of raster map"
-#~ msgstr "入力するファイル"
-
-#, fuzzy
 #~ msgid "Line type of the extracted vectors"
 #~ msgstr "出力タイプ"
 
@@ -20675,10 +20660,6 @@ msgstr ""
 #, fuzzy
 #~ msgid "input file"
 #~ msgstr "入力するファイル"
-
-#, fuzzy
-#~ msgid "output raster map"
-#~ msgstr "出力するファイル"
 
 #, fuzzy
 #~ msgid "number of bytes per cell"

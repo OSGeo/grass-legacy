@@ -2739,6 +2739,7 @@ msgid "Query threshold distance"
 msgstr ""
 
 #: ../vector/v.what/main.c:92 ../display/d.what.vect/main.c:68
+#: ../vector/v.distance/main.c:109 ../vector/v.distance/main.c:113
 #, fuzzy
 msgid "Name of existing vector map"
 msgstr "得到的 3D 矢量地图的名称"
@@ -3556,11 +3557,6 @@ msgstr "数据库连接未定义"
 msgid "Cannot open select cursor"
 msgstr "无法打开选择游标"
 
-#: ../vector/v.distance/main.c:109 ../vector/v.distance/main.c:113
-#, fuzzy
-msgid "Name of existing vector map"
-msgstr "得到的 3D 矢量地图的名称"
-
 #: ../vector/v.distance/main.c:119
 #, fuzzy
 msgid "From type"
@@ -4315,8 +4311,13 @@ msgid "Name of output vector map"
 msgstr "输出矢量文件的名称"
 
 #: ../vector/lidar/v.surf.bspline/main.c:102 ../vector/v.surf.idw/main.c:84
+#, fuzzy
 msgid "Name of output raster map"
-msgstr "输出栅格图的名称"
+msgstr ""
+"#-#-#-#-#  grassmods_zh.po (grassmods_zh)  #-#-#-#-#\n"
+"输出栅格图的名称\n"
+"#-#-#-#-#  grassmods_zh.po (grassmods_zh)  #-#-#-#-#\n"
+"输出栅格文件的名称"
 
 #: ../vector/lidar/v.surf.bspline/main.c:128
 #: ../vector/lidar/v.lidar.edgedetection/main.c:100
@@ -4337,7 +4338,8 @@ msgstr ""
 msgid "Spline type of interpolation"
 msgstr "输出的是内插误差"
 
-#: ../vector/lidar/v.surf.bspline/main.c:149 ../vector/lidar/v.outlier/main.c:128
+#: ../vector/lidar/v.surf.bspline/main.c:149
+#: ../vector/lidar/v.outlier/main.c:128
 msgid "Thychonov regularization weigth"
 msgstr ""
 
@@ -4350,7 +4352,8 @@ msgstr ""
 msgid "No raster nor vector output"
 msgstr "输出的矢量文件的名称"
 
-#: ../vector/lidar/v.surf.bspline/main.c:183 ../vector/lidar/v.surf.bspline/main.c:200
+#: ../vector/lidar/v.surf.bspline/main.c:183
+#: ../vector/lidar/v.surf.bspline/main.c:200
 #: ../vector/lidar/v.outlier/main.c:182
 #, c-format
 msgid "Vector <%s> could not be open at the topological level"
@@ -4374,8 +4377,9 @@ msgid ""
 "\t\tTry with a raster output or other driver"
 msgstr ""
 
-#: ../vector/lidar/v.surf.bspline/main.c:214 ../vector/lidar/v.outlier/main.c:166
-#: ../vector/lidar/v.outlier/main.c:170 ../vector/lidar/v.outlier/main.c:176
+#: ../vector/lidar/v.surf.bspline/main.c:214
+#: ../vector/lidar/v.outlier/main.c:166 ../vector/lidar/v.outlier/main.c:170
+#: ../vector/lidar/v.outlier/main.c:176
 #, fuzzy, c-format
 msgid "Vector <%s> could not be open"
 msgstr "未发现矢量地图<%s>"
@@ -4400,7 +4404,8 @@ msgstr "数据库连接未定义，请用db.connect进行设置。"
 msgid "Setting regions and boxes"
 msgstr ""
 
-#: ../vector/lidar/v.surf.bspline/main.c:289 ../vector/lidar/v.surf.bspline/main.c:299
+#: ../vector/lidar/v.surf.bspline/main.c:289
+#: ../vector/lidar/v.surf.bspline/main.c:299
 #: ../vector/lidar/v.lidar.edgedetection/main.c:234
 #: ../vector/lidar/v.lidar.correction/main.c:239
 #: ../vector/lidar/v.outlier/main.c:245
@@ -4408,7 +4413,8 @@ msgstr ""
 msgid "nsply = %d"
 msgstr ""
 
-#: ../vector/lidar/v.surf.bspline/main.c:316 ../vector/lidar/v.surf.bspline/main.c:326
+#: ../vector/lidar/v.surf.bspline/main.c:316
+#: ../vector/lidar/v.surf.bspline/main.c:326
 #: ../vector/lidar/v.lidar.edgedetection/main.c:256
 #: ../vector/lidar/v.lidar.correction/main.c:261
 #: ../vector/lidar/v.outlier/main.c:267
@@ -6562,8 +6568,8 @@ msgstr "输入区域的GRASS数据库路径"
 #: ../vector/v.proj/main.c:73
 #, fuzzy
 msgid ""
-"List vector maps in input location and exit (a dummy value must be given "
-"for input)"
+"List vector maps in input location and exit (a dummy value must be given for "
+"input)"
 msgstr "列出输入区域内的栅格文件并退出"
 
 #: ../vector/v.proj/main.c:77
@@ -7033,9 +7039,15 @@ msgstr ""
 "对一个像元周围的像元值进行函数计算，将得到的值赋予该像元，并将新的像元值存储"
 "在输出栅格图层中。"
 
-#: ../raster/r.neighbors/main.c:92
+#: ../raster/r.neighbors/main.c:92 ../raster/r.random/main.c:41
+#: ../display/d.nviz/main.c:77
+#, fuzzy
 msgid "Name of existing raster map"
-msgstr "已有栅格文件的名称"
+msgstr ""
+"#-#-#-#-#  grassmods_zh.po (grassmods_zh)  #-#-#-#-#\n"
+"已有栅格文件的名称\n"
+"#-#-#-#-#  grassmods_zh.po (grassmods_zh)  #-#-#-#-#\n"
+"已有栅格图的名称"
 
 #: ../raster/r.neighbors/main.c:99 ../raster/r.series/main.c:107
 msgid "Name of the new raster map"
@@ -7196,8 +7208,9 @@ msgstr "打印相关矩阵"
 msgid "%s - raster map not found"
 msgstr "%s： %s - 栅格地图未找到"
 
-#: ../raster/r.covar/main.c:99 ../raster/r.out.tiff/r.out.tiff.c:168
-#, fuzzy, c-format
+#: ../raster/r.cost/main.c:338 ../raster/r.walk/main.c:511
+#: ../raster/r.walk/main.c:514
+#, c-format
 msgid "%s - can't open raster map"
 msgstr "%s - 无法打开栅格文件"
 
@@ -7516,12 +7529,23 @@ msgid "Raster file matrix filter."
 msgstr "栅格文件的矩阵过滤器"
 
 #: ../raster/r.mfilter/main.c:45 ../raster/r.resamp.rst/main.c:167
+#: ../raster/r.texture/main.c:82
+#, fuzzy
 msgid "Name of the input raster map"
-msgstr "输入栅格文件的名称"
+msgstr ""
+"#-#-#-#-#  grassmods_zh.po (grassmods_zh)  #-#-#-#-#\n"
+"输入栅格文件的名称\n"
+"#-#-#-#-#  grassmods_zh.po (grassmods_zh)  #-#-#-#-#\n"
+"输入栅格图的名称"
 
 #: ../raster/r.mfilter/main.c:53
+#, fuzzy
 msgid "Name of the output raster map"
-msgstr "输出栅格文件的名称"
+msgstr ""
+"#-#-#-#-#  grassmods_zh.po (grassmods_zh)  #-#-#-#-#\n"
+"输出栅格文件的名称\n"
+"#-#-#-#-#  grassmods_zh.po (grassmods_zh)  #-#-#-#-#\n"
+"输出栅格图的名称"
 
 #: ../raster/r.mfilter/main.c:60
 msgid "Name of the filter file"
@@ -8149,10 +8173,6 @@ msgid ""
 "Creates a raster map layer and vector point map containing randomly located "
 "sites."
 msgstr "创建一格栅格图层和一个包含随机位置点的矢量地图。"
-
-#: ../raster/r.random/main.c:41 ../display/d.nviz/main.c:77
-msgid "Name of existing raster map"
-msgstr "已有栅格图的名称"
 
 #: ../raster/r.random/main.c:48
 msgid "The number of points to allocate"
@@ -9575,10 +9595,6 @@ msgstr "太多的类别 (找到：%i，最大值：%i)。试着将地图重新�
 msgid "Generate images with textural features from a raster map"
 msgstr "基于栅格图生成包含地形特征要素的影像"
 
-#: ../raster/r.texture/main.c:82
-msgid "Name of the input raster map"
-msgstr "输入栅格图的名称"
-
 #: ../raster/r.texture/main.c:89
 msgid "Name of the ouput raster map"
 msgstr "输出栅格图的名称"
@@ -9918,12 +9934,6 @@ msgstr "距离的单位"
 #, fuzzy
 msgid "Wide report, 132 columns (default: 80)"
 msgstr "宽幅报告，132列(默认值：80)"
-
-#: ../raster/r.coin/cmd_parms.c:93 ../raster/r.coin/cmd_parms.c:96
-#: ../raster/r.kappa/stats.c:30 ../raster/r.transect/main.c:97
-#, c-format
-msgid "%s: <%s> raster map not found"
-msgstr ""
 
 #: ../raster/r.coin/make_coin.c:48
 #, c-format
@@ -10448,12 +10458,6 @@ msgstr "%s - 未发现"
 #, c-format
 msgid "%s - illegal name"
 msgstr "%s - 非法的名称"
-
-#: ../raster/r.cost/main.c:338 ../raster/r.walk/main.c:511
-#: ../raster/r.walk/main.c:514
-#, c-format
-msgid "%s - can't open raster map"
-msgstr "%s - 无法打开栅格文件"
 
 #: ../raster/r.cost/main.c:347
 msgid "Source map is: Integer cell type"
@@ -13421,8 +13425,8 @@ msgstr "无法读取 %s"
 #: ../raster/r.resamp.rst/main.c:157
 msgid ""
 "Reinterpolates and computes topographic analysis from input raster map to a "
-"new raster map (possibly with different resolution) using regularized "
-"spline with tension and smoothing."
+"new raster map (possibly with different resolution) using regularized spline "
+"with tension and smoothing."
 msgstr ""
 "使用拉伸和平滑的规则样条，对输入的栅格文件进行重新插值和地形分析，生成一个新"
 "的栅格文件(可能有不同的分辨率)。"
@@ -18463,14 +18467,8 @@ msgstr ""
 #~ msgid "Name of output map"
 #~ msgstr "输出地图的名称"
 
-#~ msgid "Name of the output raster map"
-#~ msgstr "输出栅格图的名称"
-
 #~ msgid "Name of existing input raster map"
 #~ msgstr "已有输入栅格文件大的名称"
-
-#~ msgid "Name of output raster map"
-#~ msgstr "输出栅格文件的名称"
 
 #~ msgid "Wrong RGB maps. RGB output not added!"
 #~ msgstr "错误的 RGB 地图。 RGB 输出没有添加！"

@@ -2786,8 +2786,14 @@ msgid "Query threshold distance"
 msgstr "Prahová hodnota pro vzdálenost dotazu"
 
 #: ../vector/v.what/main.c:92 ../display/d.what.vect/main.c:68
+#: ../vector/v.distance/main.c:109 ../vector/v.distance/main.c:113
+#, fuzzy
 msgid "Name of existing vector map"
-msgstr "Jméno existující vektorové mapy"
+msgstr ""
+"#-#-#-#-#  grassmods_cs.po (grassmods_cs)  #-#-#-#-#\n"
+"Jméno existující vektorové mapy\n"
+"#-#-#-#-#  grassmods_cs.po (grassmods_cs)  #-#-#-#-#\n"
+"Jméno existující vektorové vsrtvy"
 
 #: ../vector/v.what/main.c:96 ../display/d.what.vect/main.c:80
 msgid "Print topological information (debugging)"
@@ -3642,10 +3648,6 @@ msgstr "Spojení s databází nebylo definováno"
 msgid "Cannot open select cursor"
 msgstr "Nelze otevøít kurzor pro výbìr"
 
-#: ../vector/v.distance/main.c:109 ../vector/v.distance/main.c:113
-msgid "Name of existing vector map"
-msgstr "Jméno existující vektorové vsrtvy"
-
 #: ../vector/v.distance/main.c:119
 msgid "From type"
 msgstr "Z typu"
@@ -4462,7 +4464,8 @@ msgstr "Hodnota kroku spline interpolace v severním smìru"
 msgid "Spline type of interpolation"
 msgstr "Spline typ interpolace"
 
-#: ../vector/lidar/v.surf.bspline/main.c:149 ../vector/lidar/v.outlier/main.c:128
+#: ../vector/lidar/v.surf.bspline/main.c:149
+#: ../vector/lidar/v.outlier/main.c:128
 msgid "Thychonov regularization weigth"
 msgstr "Váha Thychonovy regularizace"
 
@@ -4474,7 +4477,8 @@ msgstr "Vektorový a souèasnì rastrový výstup není mo¾ný, vyberte jeden z nich"
 msgid "No raster nor vector output"
 msgstr "Bez rastrového nebo vektorového výstupu"
 
-#: ../vector/lidar/v.surf.bspline/main.c:183 ../vector/lidar/v.surf.bspline/main.c:200
+#: ../vector/lidar/v.surf.bspline/main.c:183
+#: ../vector/lidar/v.surf.bspline/main.c:200
 #: ../vector/lidar/v.outlier/main.c:182
 #, c-format
 msgid "Vector <%s> could not be open at the topological level"
@@ -4502,8 +4506,9 @@ msgstr ""
 "Promiòte, v tomto modulu není povolen ovladaè <%s> \t    \t\t\tZkuste "
 "rastrový výstup nebo jiný ovladaè"
 
-#: ../vector/lidar/v.surf.bspline/main.c:214 ../vector/lidar/v.outlier/main.c:166
-#: ../vector/lidar/v.outlier/main.c:170 ../vector/lidar/v.outlier/main.c:176
+#: ../vector/lidar/v.surf.bspline/main.c:214
+#: ../vector/lidar/v.outlier/main.c:166 ../vector/lidar/v.outlier/main.c:170
+#: ../vector/lidar/v.outlier/main.c:176
 #, c-format
 msgid "Vector <%s> could not be open"
 msgstr "Vektorová vrstva <%s> nemohla být otevøena"
@@ -4529,7 +4534,8 @@ msgstr ""
 msgid "Setting regions and boxes"
 msgstr "Nastavuji regiony a okraje"
 
-#: ../vector/lidar/v.surf.bspline/main.c:289 ../vector/lidar/v.surf.bspline/main.c:299
+#: ../vector/lidar/v.surf.bspline/main.c:289
+#: ../vector/lidar/v.surf.bspline/main.c:299
 #: ../vector/lidar/v.lidar.edgedetection/main.c:234
 #: ../vector/lidar/v.lidar.correction/main.c:239
 #: ../vector/lidar/v.outlier/main.c:245
@@ -4537,7 +4543,8 @@ msgstr "Nastavuji regiony a okraje"
 msgid "nsply = %d"
 msgstr "nsply = %d"
 
-#: ../vector/lidar/v.surf.bspline/main.c:316 ../vector/lidar/v.surf.bspline/main.c:326
+#: ../vector/lidar/v.surf.bspline/main.c:316
+#: ../vector/lidar/v.surf.bspline/main.c:326
 #: ../vector/lidar/v.lidar.edgedetection/main.c:256
 #: ../vector/lidar/v.lidar.correction/main.c:261
 #: ../vector/lidar/v.outlier/main.c:267
@@ -6704,8 +6711,8 @@ msgstr "Cesta k databázi GRASSu vstupní pro location"
 
 #: ../vector/v.proj/main.c:73
 msgid ""
-"List vector maps in input location and exit (a dummy value must be given "
-"for input)"
+"List vector maps in input location and exit (a dummy value must be given for "
+"input)"
 msgstr ""
 "Vypsat vektorové vrstvy z vstupní location a ukonèit se (je nutné zadat "
 "fiktivní hodnoty pro parametr input)"
@@ -7182,9 +7189,15 @@ msgstr ""
 "Hodnota ka¾dé buòky v novém rastru bude funkcí hodnot kategorii sousedních "
 "bunìk a bude ulo¾ena jako hodnota ve výstupní rastrové mapì."
 
-#: ../raster/r.neighbors/main.c:92
+#: ../raster/r.neighbors/main.c:92 ../raster/r.random/main.c:41
+#: ../display/d.nviz/main.c:77
+#, fuzzy
 msgid "Name of existing raster map"
-msgstr "Jméno existujícího rastru"
+msgstr ""
+"#-#-#-#-#  grassmods_cs.po (grassmods_cs)  #-#-#-#-#\n"
+"Jméno existujícího rastru\n"
+"#-#-#-#-#  grassmods_cs.po (grassmods_cs)  #-#-#-#-#\n"
+"Název existující rastrové mapy"
 
 #: ../raster/r.neighbors/main.c:99 ../raster/r.series/main.c:107
 msgid "Name of the new raster map"
@@ -7351,6 +7364,8 @@ msgid "%s - raster map not found"
 msgstr "%s - rastrová mapa nenalezena"
 
 #: ../raster/r.covar/main.c:99 ../raster/r.out.tiff/r.out.tiff.c:168
+#: ../raster/r.cost/main.c:338 ../raster/r.walk/main.c:511
+#: ../raster/r.walk/main.c:514
 #, c-format
 msgid "%s - can't open raster map"
 msgstr "%s - nemohu otevøít rastrový soubor"
@@ -7688,8 +7703,14 @@ msgid "Raster file matrix filter."
 msgstr "Maticový filtr rastrových map."
 
 #: ../raster/r.mfilter/main.c:45 ../raster/r.resamp.rst/main.c:167
+#: ../raster/r.texture/main.c:82
+#, fuzzy
 msgid "Name of the input raster map"
-msgstr "Název vstupního rastrového souboru"
+msgstr ""
+"#-#-#-#-#  grassmods_cs.po (grassmods_cs)  #-#-#-#-#\n"
+"Název vstupního rastrového souboru\n"
+"#-#-#-#-#  grassmods_cs.po (grassmods_cs)  #-#-#-#-#\n"
+"Název vstupní rastrové mapy"
 
 #: ../raster/r.mfilter/main.c:53
 msgid "Name of the output raster map"
@@ -7999,10 +8020,16 @@ msgid "Output separator character (default: tab)"
 msgstr "Znak pro oddìlení výstupu (výchozí: tab)"
 
 #: ../raster/r.cats/main.c:98 ../raster/r.basins.fill/main.c:92
-#: ../raster/r.basins.fill/main.c:105
-#, c-format
+#: ../raster/r.basins.fill/main.c:105 ../raster/r.coin/cmd_parms.c:93
+#: ../raster/r.coin/cmd_parms.c:96 ../raster/r.kappa/stats.c:30
+#: ../raster/r.transect/main.c:97
+#, fuzzy, c-format
 msgid "%s: <%s> raster map not found"
-msgstr "%s: <%s> rastrový soubor nebyl nalezen"
+msgstr ""
+"#-#-#-#-#  grassmods_cs.po (grassmods_cs)  #-#-#-#-#\n"
+"%s: <%s> rastrový soubor nebyl nalezen\n"
+"#-#-#-#-#  grassmods_cs.po (grassmods_cs)  #-#-#-#-#\n"
+"%s: <%s> rastrová mapa nebyla nalezena"
 
 #: ../raster/r.cats/main.c:100
 #, c-format
@@ -8344,10 +8371,6 @@ msgid ""
 msgstr ""
 "Vytvoøí rastrovou mapu a bodovou vektorovou mapu obsahující náhodnì "
 "rozmístìné body."
-
-#: ../raster/r.random/main.c:41 ../display/d.nviz/main.c:77
-msgid "Name of existing raster map"
-msgstr "Název existující rastrové mapy"
 
 #: ../raster/r.random/main.c:48
 msgid "The number of points to allocate"
@@ -9777,10 +9800,6 @@ msgstr ""
 msgid "Generate images with textural features from a raster map"
 msgstr "Vytvoøí obrázky s texturálními vlastnostmi rastrové mapy"
 
-#: ../raster/r.texture/main.c:82
-msgid "Name of the input raster map"
-msgstr "Název vstupní rastrové mapy"
-
 #: ../raster/r.texture/main.c:89
 msgid "Name of the ouput raster map"
 msgstr "Název výstupní rastrové mapy"
@@ -10125,12 +10144,6 @@ msgstr "Jednotky mìøítka"
 #: ../raster/r.coin/cmd_parms.c:70
 msgid "Wide report, 132 columns (default: 80)"
 msgstr "Del¹í zpráva, 132 sloupcù (výchozí: 80)"
-
-#: ../raster/r.coin/cmd_parms.c:93 ../raster/r.coin/cmd_parms.c:96
-#: ../raster/r.kappa/stats.c:30 ../raster/r.transect/main.c:97
-#, c-format
-msgid "%s: <%s> raster map not found"
-msgstr "%s: <%s> rastrová mapa nebyla nalezena"
 
 #: ../raster/r.coin/make_coin.c:48
 #, fuzzy, c-format
@@ -10658,12 +10671,6 @@ msgstr "%s - nenalazen"
 #, c-format
 msgid "%s - illegal name"
 msgstr "%s - neplatné jméno"
-
-#: ../raster/r.cost/main.c:338 ../raster/r.walk/main.c:511
-#: ../raster/r.walk/main.c:514
-#, c-format
-msgid "%s - can't open raster map"
-msgstr "%s - nemohu otevøít rastrový soubor"
 
 #: ../raster/r.cost/main.c:347
 msgid "Source map is: Integer cell type"
@@ -13790,8 +13797,8 @@ msgstr "Nelze naèíst øádek"
 #: ../raster/r.resamp.rst/main.c:157
 msgid ""
 "Reinterpolates and computes topographic analysis from input raster map to a "
-"new raster map (possibly with different resolution) using regularized "
-"spline with tension and smoothing."
+"new raster map (possibly with different resolution) using regularized spline "
+"with tension and smoothing."
 msgstr ""
 "Reinterpoluje a spoèítá topografickou analýzu ze vstupního rastrového "
 "souborudo nové rastrové mapy (volitelnì s novým rozli¹eném) za pou¾ití "

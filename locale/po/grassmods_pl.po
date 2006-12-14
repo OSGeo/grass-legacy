@@ -3542,11 +3542,6 @@ msgstr "Po³±czenie bazy danych nie zdefiniowane"
 msgid "Cannot open select cursor"
 msgstr ""
 
-#: ../vector/v.distance/main.c:109 ../vector/v.distance/main.c:113
-#, fuzzy
-msgid "Name of existing vector map"
-msgstr "Nazwa istniej±cego pliku wektorowego"
-
 #: ../vector/v.distance/main.c:119
 #, fuzzy
 msgid "From type"
@@ -4291,10 +4286,6 @@ msgstr "Nazwa wyj¶ciowej wektorowej mapy punktów"
 msgid "Name of output vector map"
 msgstr "nazwa wej¶ciowego pliku wektorowego"
 
-#: ../vector/lidar/v.surf.bspline/main.c:102 ../vector/v.surf.idw/main.c:84
-msgid "Name of output raster map"
-msgstr ""
-
 #: ../vector/lidar/v.surf.bspline/main.c:128
 #: ../vector/lidar/v.lidar.edgedetection/main.c:100
 #: ../vector/lidar/v.lidar.correction/main.c:115
@@ -4314,7 +4305,8 @@ msgstr ""
 msgid "Spline type of interpolation"
 msgstr "Wynik jest b³êdem interpolacji"
 
-#: ../vector/lidar/v.surf.bspline/main.c:149 ../vector/lidar/v.outlier/main.c:128
+#: ../vector/lidar/v.surf.bspline/main.c:149
+#: ../vector/lidar/v.outlier/main.c:128
 msgid "Thychonov regularization weigth"
 msgstr ""
 
@@ -4327,7 +4319,8 @@ msgstr ""
 msgid "No raster nor vector output"
 msgstr "Nazwa mapy wektorowej"
 
-#: ../vector/lidar/v.surf.bspline/main.c:183 ../vector/lidar/v.surf.bspline/main.c:200
+#: ../vector/lidar/v.surf.bspline/main.c:183
+#: ../vector/lidar/v.surf.bspline/main.c:200
 #: ../vector/lidar/v.outlier/main.c:182
 #, c-format
 msgid "Vector <%s> could not be open at the topological level"
@@ -4351,8 +4344,9 @@ msgid ""
 "\t\tTry with a raster output or other driver"
 msgstr ""
 
-#: ../vector/lidar/v.surf.bspline/main.c:214 ../vector/lidar/v.outlier/main.c:166
-#: ../vector/lidar/v.outlier/main.c:170 ../vector/lidar/v.outlier/main.c:176
+#: ../vector/lidar/v.surf.bspline/main.c:214
+#: ../vector/lidar/v.outlier/main.c:166 ../vector/lidar/v.outlier/main.c:170
+#: ../vector/lidar/v.outlier/main.c:176
 #, fuzzy, c-format
 msgid "Vector <%s> could not be open"
 msgstr "nie znaleziono mapy wektorowej <%s>"
@@ -4380,7 +4374,8 @@ msgstr ""
 msgid "Setting regions and boxes"
 msgstr "Ustawianie okna graficznego"
 
-#: ../vector/lidar/v.surf.bspline/main.c:289 ../vector/lidar/v.surf.bspline/main.c:299
+#: ../vector/lidar/v.surf.bspline/main.c:289
+#: ../vector/lidar/v.surf.bspline/main.c:299
 #: ../vector/lidar/v.lidar.edgedetection/main.c:234
 #: ../vector/lidar/v.lidar.correction/main.c:239
 #: ../vector/lidar/v.outlier/main.c:245
@@ -4388,7 +4383,8 @@ msgstr "Ustawianie okna graficznego"
 msgid "nsply = %d"
 msgstr ""
 
-#: ../vector/lidar/v.surf.bspline/main.c:316 ../vector/lidar/v.surf.bspline/main.c:326
+#: ../vector/lidar/v.surf.bspline/main.c:316
+#: ../vector/lidar/v.surf.bspline/main.c:326
 #: ../vector/lidar/v.lidar.edgedetection/main.c:256
 #: ../vector/lidar/v.lidar.correction/main.c:261
 #: ../vector/lidar/v.outlier/main.c:267
@@ -6535,8 +6531,8 @@ msgstr "¦cie¿ka wej¶ciowej lokacji w bazie danych GRASS"
 #: ../vector/v.proj/main.c:73
 #, fuzzy
 msgid ""
-"List vector maps in input location and exit (a dummy value must be given "
-"for input)"
+"List vector maps in input location and exit (a dummy value must be given for "
+"input)"
 msgstr "Wy¶wietl listê plików rastrowych w wej¶ciowej lokacji i wyjd¼"
 
 #: ../vector/v.proj/main.c:77
@@ -7019,9 +7015,15 @@ msgstr ""
 "przypisanych do komórek dooko³a niej, i zachowuje now± warto¶æ komórki w "
 "wyj¶ciowej wastwie mapy rastrowej"
 
-#: ../raster/r.neighbors/main.c:92
+#: ../raster/r.neighbors/main.c:92 ../raster/r.random/main.c:41
+#: ../display/d.nviz/main.c:77
+#, fuzzy
 msgid "Name of existing raster map"
-msgstr "Nazwa istniej±cego pliku rastrowego"
+msgstr ""
+"#-#-#-#-#  grassmods_pl.po (grassmodes_pl)  #-#-#-#-#\n"
+"Nazwa istniej±cego pliku rastrowego\n"
+"#-#-#-#-#  grassmods_pl.po (grassmodes_pl)  #-#-#-#-#\n"
+"Nazwa mapy rastrowej"
 
 #: ../raster/r.neighbors/main.c:99 ../raster/r.series/main.c:107
 msgid "Name of the new raster map"
@@ -7185,9 +7187,15 @@ msgid "%s - raster map not found"
 msgstr "%s - mapy rastrowej nie znaleziono"
 
 #: ../raster/r.covar/main.c:99 ../raster/r.out.tiff/r.out.tiff.c:168
-#, c-format
+#: ../raster/r.cost/main.c:338 ../raster/r.walk/main.c:511
+#: ../raster/r.walk/main.c:514
+#, fuzzy, c-format
 msgid "%s - can't open raster map"
-msgstr "%s - nie mo¿na otworzyæ mapy rastrowej"
+msgstr ""
+"#-#-#-#-#  grassmods_pl.po (grassmodes_pl)  #-#-#-#-#\n"
+"%s - nie mo¿na otworzyæ mapy rastrowej\n"
+"#-#-#-#-#  grassmods_pl.po (grassmodes_pl)  #-#-#-#-#\n"
+"%s - nie mo¿na otworzyæ pliku rastrowego"
 
 #: ../raster/r.covar/main.c:105
 #, fuzzy, c-format
@@ -7512,8 +7520,13 @@ msgid "Name of the input raster map"
 msgstr "Nazwa wej¶ciowego pliku rastrowego"
 
 #: ../raster/r.mfilter/main.c:53
+#, fuzzy
 msgid "Name of the output raster map"
-msgstr "Nazwa wyj¶ciowego pliku rastrowego"
+msgstr ""
+"#-#-#-#-#  grassmods_pl.po (grassmodes_pl)  #-#-#-#-#\n"
+"Nazwa wyj¶ciowego pliku rastrowego\n"
+"#-#-#-#-#  grassmods_pl.po (grassmodes_pl)  #-#-#-#-#\n"
+"Nazwa wyj¶ciowej mapy rastrowej"
 
 #: ../raster/r.mfilter/main.c:60
 msgid "Name of the filter file"
@@ -7825,10 +7838,16 @@ msgid "Output separator character (default: tab)"
 msgstr "Wyj¶ciowy znak separacji (domy¶lnie: tab)"
 
 #: ../raster/r.cats/main.c:98 ../raster/r.basins.fill/main.c:92
-#: ../raster/r.basins.fill/main.c:105
-#, c-format
+#: ../raster/r.basins.fill/main.c:105 ../raster/r.coin/cmd_parms.c:93
+#: ../raster/r.coin/cmd_parms.c:96 ../raster/r.kappa/stats.c:30
+#: ../raster/r.transect/main.c:97
+#, fuzzy, c-format
 msgid "%s: <%s> raster map not found"
-msgstr "%s: <%s> nie znaleziono pliku rastrowego"
+msgstr ""
+"#-#-#-#-#  grassmods_pl.po (grassmodes_pl)  #-#-#-#-#\n"
+"%s: <%s> nie znaleziono pliku rastrowego\n"
+"#-#-#-#-#  grassmods_pl.po (grassmodes_pl)  #-#-#-#-#\n"
+"%s: <%s> mapy rastrowej nie znaleziono"
 
 #: ../raster/r.cats/main.c:100
 #, c-format
@@ -8147,10 +8166,6 @@ msgid ""
 msgstr ""
 "Tworzy rastrow± i wektorow± warstwê mapy zawieraj±ce przypadkowo "
 "rozmieszczone punkty."
-
-#: ../raster/r.random/main.c:41 ../display/d.nviz/main.c:77
-msgid "Name of existing raster map"
-msgstr "Nazwa mapy rastrowej"
 
 #: ../raster/r.random/main.c:48
 msgid "The number of points to allocate"
@@ -9597,10 +9612,6 @@ msgstr ""
 msgid "Generate images with textural features from a raster map"
 msgstr ""
 
-#: ../raster/r.texture/main.c:82
-msgid "Name of the input raster map"
-msgstr ""
-
 #: ../raster/r.texture/main.c:89
 msgid "Name of the ouput raster map"
 msgstr ""
@@ -9953,12 +9964,6 @@ msgstr "Jednostki odleg³o¶ci"
 #, fuzzy
 msgid "Wide report, 132 columns (default: 80)"
 msgstr "rozszerzony raport, 132 kolumny (domy¶lnie: 80)"
-
-#: ../raster/r.coin/cmd_parms.c:93 ../raster/r.coin/cmd_parms.c:96
-#: ../raster/r.kappa/stats.c:30 ../raster/r.transect/main.c:97
-#, c-format
-msgid "%s: <%s> raster map not found"
-msgstr "%s: <%s> mapy rastrowej nie znaleziono"
 
 #: ../raster/r.coin/make_coin.c:48
 #, c-format
@@ -10487,12 +10492,6 @@ msgstr "%s - nie znaleziono"
 #, c-format
 msgid "%s - illegal name"
 msgstr "%s - niew³a¶ciwa nazwa"
-
-#: ../raster/r.cost/main.c:338 ../raster/r.walk/main.c:511
-#: ../raster/r.walk/main.c:514
-#, c-format
-msgid "%s - can't open raster map"
-msgstr "%s - nie mo¿na otworzyæ pliku rastrowego"
 
 #: ../raster/r.cost/main.c:347
 msgid "Source map is: Integer cell type"
@@ -13521,8 +13520,8 @@ msgstr "Nie mo¿na zapisaæ <%s>"
 #: ../raster/r.resamp.rst/main.c:157
 msgid ""
 "Reinterpolates and computes topographic analysis from input raster map to a "
-"new raster map (possibly with different resolution) using regularized "
-"spline with tension and smoothing."
+"new raster map (possibly with different resolution) using regularized spline "
+"with tension and smoothing."
 msgstr ""
 "Przeprowadza ponown± interpolacjê i dokonuje analiz topograficznych "
 "wej¶ciowego pliku rastrowego tworz±c nowy plik rastrowy (z mo¿liwo¶ci± "
@@ -18255,6 +18254,9 @@ msgstr ""
 msgid "Number of elevation files does not match number of colors files"
 msgstr ""
 
+#~ msgid "Name of output raster map"
+#~ msgstr "Nazwa wyj¶ciowego pliku rastrowego"
+
 #~ msgid "Draw geographic grid"
 #~ msgstr "Rysuj siatkê geograficzn±"
 
@@ -18816,16 +18818,10 @@ msgstr ""
 #~ msgid "Zooming finished.\n"
 #~ msgstr "Powiêkszenie zakoñczone.\n"
 
-#~ msgid "Name of the output raster map"
-#~ msgstr "Nazwa wyj¶ciowej mapy rastrowej"
-
 #~ msgid "Read fp map as integer - use map's quant rules"
 #~ msgstr ""
 #~ "Czytaj mapê fp jako mapê o danych ca³kowitych - u¿yj regó³ ilo¶ciowych "
 #~ "mapy"
-
-#~ msgid "Name of output raster map"
-#~ msgstr "Nazwa wyj¶ciowego pliku rastrowego"
 
 #~ msgid "cover raster map"
 #~ msgstr "wierzchnia mapa rastrowa"

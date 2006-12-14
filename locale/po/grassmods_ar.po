@@ -2786,9 +2786,14 @@ msgid "Query threshold distance"
 msgstr ""
 
 #: ../vector/v.what/main.c:92 ../display/d.what.vect/main.c:68
+#: ../vector/v.distance/main.c:109 ../vector/v.distance/main.c:113
 #, fuzzy
 msgid "Name of existing vector map"
-msgstr "اسم الخريطة الراسترية الموجودة"
+msgstr ""
+"#-#-#-#-#  grassmods_ar.po (grassmods_ar)  #-#-#-#-#\n"
+"اسم الخريطة الراسترية الموجودة\n"
+"#-#-#-#-#  grassmods_ar.po (grassmods_ar)  #-#-#-#-#\n"
+"اسم الملف الراسترى الموجود"
 
 #: ../vector/v.what/main.c:96 ../display/d.what.vect/main.c:80
 msgid "Print topological information (debugging)"
@@ -3615,11 +3620,6 @@ msgstr "لم يتم الإتصال بقاعدة البيانات\n"
 msgid "Cannot open select cursor"
 msgstr "لم يتم فتح إختيار المؤشر"
 
-#: ../vector/v.distance/main.c:109 ../vector/v.distance/main.c:113
-#, fuzzy
-msgid "Name of existing vector map"
-msgstr "اسم الملف الراسترى الموجود"
-
 #: ../vector/v.distance/main.c:119
 #, fuzzy
 msgid "From type"
@@ -4394,7 +4394,8 @@ msgstr ""
 msgid "Spline type of interpolation"
 msgstr "المخرج هو خطأ الإستيفاء"
 
-#: ../vector/lidar/v.surf.bspline/main.c:149 ../vector/lidar/v.outlier/main.c:128
+#: ../vector/lidar/v.surf.bspline/main.c:149
+#: ../vector/lidar/v.outlier/main.c:128
 msgid "Thychonov regularization weigth"
 msgstr ""
 
@@ -4406,7 +4407,8 @@ msgstr ""
 msgid "No raster nor vector output"
 msgstr ""
 
-#: ../vector/lidar/v.surf.bspline/main.c:183 ../vector/lidar/v.surf.bspline/main.c:200
+#: ../vector/lidar/v.surf.bspline/main.c:183
+#: ../vector/lidar/v.surf.bspline/main.c:200
 #: ../vector/lidar/v.outlier/main.c:182
 #, c-format
 msgid "Vector <%s> could not be open at the topological level"
@@ -4430,8 +4432,9 @@ msgid ""
 "\t\tTry with a raster output or other driver"
 msgstr ""
 
-#: ../vector/lidar/v.surf.bspline/main.c:214 ../vector/lidar/v.outlier/main.c:166
-#: ../vector/lidar/v.outlier/main.c:170 ../vector/lidar/v.outlier/main.c:176
+#: ../vector/lidar/v.surf.bspline/main.c:214
+#: ../vector/lidar/v.outlier/main.c:166 ../vector/lidar/v.outlier/main.c:170
+#: ../vector/lidar/v.outlier/main.c:176
 #, fuzzy, c-format
 msgid "Vector <%s> could not be open"
 msgstr "لم توجد<%s>الخريطة الفيكتورية"
@@ -4456,7 +4459,8 @@ msgstr "db.connect إتصل مستخدما<%s>لم يتم تعريف مشغل ا
 msgid "Setting regions and boxes"
 msgstr ""
 
-#: ../vector/lidar/v.surf.bspline/main.c:289 ../vector/lidar/v.surf.bspline/main.c:299
+#: ../vector/lidar/v.surf.bspline/main.c:289
+#: ../vector/lidar/v.surf.bspline/main.c:299
 #: ../vector/lidar/v.lidar.edgedetection/main.c:234
 #: ../vector/lidar/v.lidar.correction/main.c:239
 #: ../vector/lidar/v.outlier/main.c:245
@@ -4464,7 +4468,8 @@ msgstr ""
 msgid "nsply = %d"
 msgstr ""
 
-#: ../vector/lidar/v.surf.bspline/main.c:316 ../vector/lidar/v.surf.bspline/main.c:326
+#: ../vector/lidar/v.surf.bspline/main.c:316
+#: ../vector/lidar/v.surf.bspline/main.c:326
 #: ../vector/lidar/v.lidar.edgedetection/main.c:256
 #: ../vector/lidar/v.lidar.correction/main.c:261
 #: ../vector/lidar/v.outlier/main.c:267
@@ -6601,8 +6606,8 @@ msgstr "الطريق لقاعدة البيانات للموقع المدخل"
 #: ../vector/v.proj/main.c:73
 #, fuzzy
 msgid ""
-"List vector maps in input location and exit (a dummy value must be given "
-"for input)"
+"List vector maps in input location and exit (a dummy value must be given for "
+"input)"
 msgstr "عرض ملفات الراستر للموقع والخروج"
 
 #: ../vector/v.proj/main.c:77
@@ -7076,9 +7081,15 @@ msgstr ""
 "جعل قيمة فئة الخلية دالة فى قيم فئات الخلايا المحيطة وحفظ قيم الخلية الجديدة "
 "فى خريطة راسترية جديدة"
 
-#: ../raster/r.neighbors/main.c:92
+#: ../raster/r.neighbors/main.c:92 ../raster/r.random/main.c:41
+#: ../display/d.nviz/main.c:77
+#, fuzzy
 msgid "Name of existing raster map"
-msgstr "اسم الملف الراسترى الموجود"
+msgstr ""
+"#-#-#-#-#  grassmods_ar.po (grassmods_ar)  #-#-#-#-#\n"
+"اسم الملف الراسترى الموجود\n"
+"#-#-#-#-#  grassmods_ar.po (grassmods_ar)  #-#-#-#-#\n"
+"اسم الخريطة الراسترية الموجودة"
 
 #: ../raster/r.neighbors/main.c:99 ../raster/r.series/main.c:107
 msgid "Name of the new raster map"
@@ -7240,9 +7251,15 @@ msgid "%s - raster map not found"
 msgstr "غير موجودة <%s> الخريطة الراسترية "
 
 #: ../raster/r.covar/main.c:99 ../raster/r.out.tiff/r.out.tiff.c:168
+#: ../raster/r.cost/main.c:338 ../raster/r.walk/main.c:511
+#: ../raster/r.walk/main.c:514
 #, fuzzy, c-format
 msgid "%s - can't open raster map"
-msgstr "خريطة الراستر الغطاء"
+msgstr ""
+"#-#-#-#-#  grassmods_ar.po (grassmods_ar)  #-#-#-#-#\n"
+"خريطة الراستر الغطاء\n"
+"#-#-#-#-#  grassmods_ar.po (grassmods_ar)  #-#-#-#-#\n"
+"%s لم يمكن فتح ملف المدى ل"
 
 #: ../raster/r.covar/main.c:105
 #, fuzzy, c-format
@@ -7559,8 +7576,14 @@ msgid "Raster file matrix filter."
 msgstr "مصفوفة الترشيح للملف الراسترى"
 
 #: ../raster/r.mfilter/main.c:45 ../raster/r.resamp.rst/main.c:167
+#: ../raster/r.texture/main.c:82
+#, fuzzy
 msgid "Name of the input raster map"
-msgstr "اسم الخريطة المدخلة"
+msgstr ""
+"#-#-#-#-#  grassmods_ar.po (grassmods_ar)  #-#-#-#-#\n"
+"اسم الخريطة المدخلة\n"
+"#-#-#-#-#  grassmods_ar.po (grassmods_ar)  #-#-#-#-#\n"
+"اسم الخريطة الراسترية المدخلة"
 
 #: ../raster/r.mfilter/main.c:53
 msgid "Name of the output raster map"
@@ -7876,10 +7899,16 @@ msgid "Output separator character (default: tab)"
 msgstr "شكل فاصل المخرج"
 
 #: ../raster/r.cats/main.c:98 ../raster/r.basins.fill/main.c:92
-#: ../raster/r.basins.fill/main.c:105
+#: ../raster/r.basins.fill/main.c:105 ../raster/r.coin/cmd_parms.c:93
+#: ../raster/r.coin/cmd_parms.c:96 ../raster/r.kappa/stats.c:30
+#: ../raster/r.transect/main.c:97
 #, fuzzy, c-format
 msgid "%s: <%s> raster map not found"
-msgstr "الملف الفيكتورى غير موجود %s : تحذير\n"
+msgstr ""
+"#-#-#-#-#  grassmods_ar.po (grassmods_ar)  #-#-#-#-#\n"
+"الملف الفيكتورى غير موجود %s : تحذير\n"
+"#-#-#-#-#  grassmods_ar.po (grassmods_ar)  #-#-#-#-#\n"
+"غير موجودة <%s> الخريطة الراسترية "
 
 #: ../raster/r.cats/main.c:100
 #, c-format
@@ -8192,10 +8221,6 @@ msgid ""
 "sites."
 msgstr ""
 "خلق طبقة خريطة راسترية وخريطة نقط فيكتورية تحتوى على اماكن عشوائية التوزيع"
-
-#: ../raster/r.random/main.c:41 ../display/d.nviz/main.c:77
-msgid "Name of existing raster map"
-msgstr "اسم الخريطة الراسترية الموجودة"
 
 #: ../raster/r.random/main.c:48
 msgid "The number of points to allocate"
@@ -9615,10 +9640,6 @@ msgstr ""
 msgid "Generate images with textural features from a raster map"
 msgstr ""
 
-#: ../raster/r.texture/main.c:82
-msgid "Name of the input raster map"
-msgstr "اسم الخريطة الراسترية المدخلة"
-
 #: ../raster/r.texture/main.c:89
 msgid "Name of the ouput raster map"
 msgstr "اسم الخريطة الراسترية المخرجة"
@@ -9966,12 +9987,6 @@ msgstr "وحدات المسافة"
 #, fuzzy
 msgid "Wide report, 132 columns (default: 80)"
 msgstr "تقرير مفصل من 132 عمود والأساس 80"
-
-#: ../raster/r.coin/cmd_parms.c:93 ../raster/r.coin/cmd_parms.c:96
-#: ../raster/r.kappa/stats.c:30 ../raster/r.transect/main.c:97
-#, fuzzy, c-format
-msgid "%s: <%s> raster map not found"
-msgstr "غير موجودة <%s> الخريطة الراسترية "
 
 #: ../raster/r.coin/make_coin.c:48
 #, c-format
@@ -10492,12 +10507,6 @@ msgstr "غير موجود <%s> الراستر"
 #, c-format
 msgid "%s - illegal name"
 msgstr ""
-
-#: ../raster/r.cost/main.c:338 ../raster/r.walk/main.c:511
-#: ../raster/r.walk/main.c:514
-#, fuzzy, c-format
-msgid "%s - can't open raster map"
-msgstr "%s لم يمكن فتح ملف المدى ل"
 
 #: ../raster/r.cost/main.c:347
 msgid "Source map is: Integer cell type"
@@ -13468,8 +13477,8 @@ msgstr "لم بمكن قراءة معلومات الحقل"
 #: ../raster/r.resamp.rst/main.c:157
 msgid ""
 "Reinterpolates and computes topographic analysis from input raster map to a "
-"new raster map (possibly with different resolution) using regularized "
-"spline with tension and smoothing."
+"new raster map (possibly with different resolution) using regularized spline "
+"with tension and smoothing."
 msgstr ""
 "regularized spline with tension and smoothing اعادة استيفاء وحساب التحليل "
 "الطبوغرافى من خريطة مدخلة الى خريطة جديدة مستخدما "
