@@ -47,11 +47,10 @@ main (int argc, char *argv[])
 /* Save current frame just in case */
     D_get_cur_wind(orig_name) ;
 
-    fprintf(stderr, "\nButtons:\n") ;
-/* non functional */
-/*    fprintf(stderr, "Left:   Identify a frame\n") ; */
-    fprintf(stderr, "Middle: Keep original frame\n") ;
-    fprintf(stderr, "Right:  Accept frame\n") ;
+    fprintf(stderr, _("\nButtons:\n"));
+    fprintf(stderr, _("Left:   Select frame\n"));
+    fprintf(stderr, _("Middle: Keep original frame\n"));
+    fprintf(stderr, _("Right:  Accept frame\n"));
 
     button = ident_win(cur_name) ;
 
