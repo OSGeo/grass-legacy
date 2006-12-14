@@ -4,8 +4,12 @@
 #include <unistd.h>
 #include <fcntl.h>
 #include <sys/types.h>
-#include <sys/wait.h>
 #include <sys/time.h>
+#ifdef __MINGW32__
+#include <process.h>
+#else
+#include <sys/wait.h>
+#endif
 #include "includes.h"
 #include <grass/colors.h>
 #include "pad.h"

@@ -24,8 +24,13 @@
 #include <unistd.h>
 #include <sys/types.h>
 #include <sys/time.h>
-#include <sys/wait.h>
 #include <ctype.h>
+
+#ifdef __MINGW32__
+#include <process.h>
+#else
+#include <sys/wait.h>
+#endif
 
 #ifndef WAIT_ANY
 #define WAIT_ANY ((pid_t) -1)

@@ -1,7 +1,9 @@
 #include <stdio.h>
 #include <string.h>
 
-#ifndef __MINGW32__
+#ifdef __MINGW32__
+#include <process.h>
+#else
 #include <sys/wait.h>
 #endif
 
