@@ -1,7 +1,11 @@
 #include <stdlib.h>
 #include <unistd.h>
 #include <sys/types.h>
+#ifdef __MINGW32__
+#include <process.h>
+#else
 #include <sys/wait.h>
+#endif
 #include <grass/gis.h>
 #include "globals.h"
 

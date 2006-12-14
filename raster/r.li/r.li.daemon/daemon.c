@@ -20,9 +20,15 @@
 #include <sys/types.h>
 #include <sys/stat.h>
 #include <dirent.h>
-#include <sys/wait.h>
 #include <errno.h>
 #include <math.h>
+
+#ifdef __MINGW32__
+#include <process.h>
+#else
+#include <sys/wait.h>
+#endif
+
 #include <grass/gis.h>
 #include <grass/glocale.h>
 #include "daemon.h"
