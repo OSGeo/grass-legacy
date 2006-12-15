@@ -128,7 +128,7 @@ int main(int argc, char **argv)
     /* open cell layer for writing output              */
     fd = G_open_cell_new(output);
     if (fd < 0)
-	G_fatal_error(_("%s - can't create cell file"), output);
+	G_fatal_error(_("%s - can't create raster map"), output);
 
     /* call the interpolation function                              */
     interpolate(rowlist, nrows, ncols, datarows, npoints, fd, maskfd);
