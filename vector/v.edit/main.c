@@ -21,6 +21,7 @@
 
 #define MAIN
 #include "global.h"
+
 /* static int error_routine(const char*msg, int fatal); */
 
 int main (int argc, char *argv[])
@@ -56,7 +57,6 @@ int main (int argc, char *argv[])
     }
     else {
 /* 	Vect_set_open_level(2); */
-	G_message(_("Reading vector map ..."));
 	Vect_open_update (&Map, map_opt->answer, mapset);
     }
 /*     Vect_set_category_index_update ( &Map ); */
@@ -66,11 +66,15 @@ int main (int argc, char *argv[])
 
     switch(action_mode) {
       case MODE_ADD:
-	ret = do_add(&Map);
+	G_message(_("Adding new features to vector file ..."));
+        ret = asc_to_bin(ascii, &Map) ;
 	break;
       case MODE_DEL:
 	ret = do_del(&Map);
 	break;
+      case MODE_MOVE:
+        ret = do_move(&Map);
+        break;
       default:
 	G_warning("Sorry this is not yet implemented");
 	ret=0;
