@@ -15,8 +15,8 @@
 
 /* Entry points: */
 /*   get_a_row     get row from temporary work file */
-/*   open_file     open input cell file and read it into work file */
-/*   close_file    copy work file into new cell file */
+/*   open_file     open input raster map and read it into work file */
+/*   close_file    copy work file into new raster map */
 /*   map_size      get size of map and its pad */
 
 /* Global variables: */
@@ -92,25 +92,27 @@ int open_file (char *name)
 	char cell[100];
 	CELL *buf;
 
-	/* open cell file */
+	/* open raster map */
 	strcpy (cell, name);
 	if ((mapset = G_find_cell2(cell,"")) == NULL)
 	{
-		G_warning("%s:  open_file:  cell file %s not found",error_prefix,name);
 	        unlink(work_file_name);
-		exit(EXIT_FAILURE);
+		G_fatal_error (_("%s: Unable to find raster map <%s>"),
+                              error_prefix, name);
 	}
 	if ((cell_file = G_open_cell_old(cell,mapset)) < 0)
 	{
 	        unlink(work_file_name);
-		G_fatal_error("%s:  open_file:  could not open cell file %s in %s",error_prefix,cell,mapset);
-		exit(EXIT_FAILURE);
+		G_fatal_error (_("%s: Unable to open raster map <%s> in mapset <%s>"),
+                              error_prefix, cell, mapset);
 	}
+
 	n_rows = G_window_rows();
 	n_cols = G_window_cols();
-	G_message(_("File %s -- %d rows X %d columns"),name,n_rows,n_cols);
+	G_message(_("File %s -- %d rows X %d columns"), name, n_rows, n_cols);
 	n_cols += (PAD << 1);
-	/* copy cell file into our read/write file */
+
+	/* copy raster map into our read/write file */
 	work_file_name = G_tempfile();
 
 	/* create the file and then open it for read and write */
@@ -118,8 +120,8 @@ int open_file (char *name)
 	if ((work_file = open(work_file_name,2)) < 0)
 	{
 	        unlink(work_file_name);
-		G_fatal_error("%s:  open_file:  could not create temporary file %s\nerrno = %d",error_prefix,work_file_name,errno);
-		exit(EXIT_FAILURE);
+		G_fatal_error (_("%s: Unable to create temporary file <%s> -- errno = %d"),
+                              error_prefix, work_file_name, errno);
 	}
 	buf = (CELL *) G_malloc(buf_len = n_cols * sizeof(CELL));
 	for (col = 0; col < n_cols; col++)
@@ -129,8 +131,7 @@ int open_file (char *name)
 		if (write(work_file,buf,buf_len) != buf_len)
 		{
 	                unlink(work_file_name);
-			G_fatal_error("%s:  open_file:  error writing temporary file",error_prefix);
-			exit(EXIT_FAILURE);
+			G_fatal_error (_("%s: Error writing temporary file"), error_prefix);
 		}
 	}
 	for (row = 0; row < n_rows; row++)
@@ -138,25 +139,25 @@ int open_file (char *name)
 		if (G_get_map_row(cell_file,buf + PAD,row) < 0)
 		{
 	                unlink(work_file_name);
-			G_fatal_error("%s:  open_file:  error reading from %s in %s",error_prefix,cell,mapset);
-			exit(-1);
+			G_fatal_error (_("%s: Error reading from raster map <%s> in mapset <%s>"),
+                                      error_prefix, cell, mapset);
 		}
 		if (write(work_file,buf,buf_len) != buf_len)
 		{
 	                unlink(work_file_name);
-			G_fatal_error("%s:  open_file:  error writing temporary file",error_prefix);
-			exit(EXIT_FAILURE);
+			G_fatal_error (_("%s: Error writing temporary file"), error_prefix);
 		}
 	}
+
 	for (col = 0; col < n_cols; col++)
 		buf[col] = 0;
+
 	for (i = 0; i < PAD; i++)
 	{
 		if (write(work_file,buf,buf_len) != buf_len)
 		{
 	                unlink(work_file_name);
-			G_fatal_error("%s:  open_file:  error writing temporary file",error_prefix);
-			exit(EXIT_FAILURE);
+			G_fatal_error (_("%s: Error writing temporary file"), error_prefix);
 		}
 	}
 	n_rows += (PAD << 1);
@@ -177,13 +178,15 @@ close_file (char *name)
 	if ((cell_file = G_open_cell_new(name)) < 0)
 	{
 	        unlink(work_file_name);
-		G_fatal_error("%s:  close_cell:  could not open output file %s",error_prefix,name);
-		exit(EXIT_FAILURE);
+		G_fatal_error (_("%s:  Unable to open output raster map <%s>"),
+                              error_prefix, name);
 	}
+
 	row_count = n_rows - (PAD << 1);
 	col_count = n_cols - (PAD << 1);
-	G_message("Output file %d rows X %d columns",row_count,col_count);
-	G_message("Window %d rows X %d columns",G_window_rows(),G_window_cols());
+	G_message (_("Output file %d rows X %d columns"), row_count, col_count);
+	G_message (_("Window %d rows X %d columns"), G_window_rows(), G_window_cols());
+
 	for (row = 0, k = PAD; row < row_count; row++, k++)
 	{
 		buf = get_a_row(k);
