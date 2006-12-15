@@ -22,7 +22,7 @@ int read_cell (char *name)
 
     G_get_window (&window);
 
-/* Set window to align with input cell file */
+/* Set window to align with input raster map */
     G_get_cellhd (name, mapset, &cellhd);
     G_align_window (&window, &cellhd);
     G_set_window (&window);

@@ -126,7 +126,7 @@ int ask_files (char *groupname)
 	    f2 = f1;
 	    continue;
 	}
-/* check for existing cell files
+/* check for existing raster maps
  * this check must occur in the target location, so we switch
  * environments to be in the target location
  */

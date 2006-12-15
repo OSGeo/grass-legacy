@@ -36,7 +36,7 @@ int write_output_map (char *output, int offset)
 
     fd_out = G_open_cell_new (output);
     if (fd_out < 0)
-	G_fatal_error(_("%s: %s - can't create cell file"), pgm_name, output);
+	G_fatal_error(_("%s: %s - can't create raster map"), pgm_name, output);
 
     if (offset)
     {

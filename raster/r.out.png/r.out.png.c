@@ -178,7 +178,7 @@ int main(int argc, char *argv[])
 
     G_message(_("rows = %d, cols = %d"), w.rows, w.cols);
 
-    /* open cell file for reading */
+    /* open raster map for reading */
     {
 	cellmap = G_find_file2("cell", rastermap, "");
 	if (!cellmap)

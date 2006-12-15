@@ -10,7 +10,7 @@ readbands (int nbands, int cur)
 
   for (i=0; i<nbands; i++)
     if (G_get_map_row_nomask(Bandfd[i],Bandbuf[i],cur) < 0)
-      G_fatal_error(_("Error reading cell file in function readbands."));
+      G_fatal_error(_("Error reading raster map in function readbands."));
 
   return 0;
 }

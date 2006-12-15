@@ -240,7 +240,7 @@ int main (int argc, char *argv[])
     parm.cellinp->type = TYPE_STRING;
     parm.cellinp->required = NO;
     parm.cellinp->gisprompt = "old,cell,raster";
-    parm.cellinp->description = _("Name of the surface cell file for cross-section");
+    parm.cellinp->description = _("Name of the surface raster map for cross-section");
 
     parm.colnum = G_define_option();
     parm.colnum ->key        = "wcolumn" ;
@@ -344,7 +344,7 @@ int main (int argc, char *argv[])
     parm.cellout->type = TYPE_STRING;
     parm.cellout->required = NO;
     parm.cellout->gisprompt = "new,cell,raster";
-    parm.cellout->description = _("Output cross-section cell file");
+    parm.cellout->description = _("Output cross-section raster map");
     parm.cellout->guisection  = _("Output_options");
 
     parm.outz = G_define_option ();

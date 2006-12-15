@@ -2256,7 +2256,7 @@ msgstr "है"
 #: ../doc/raster/r.example/main.c:121 ../raster/r.out.gdal/main.c:78
 #: ../raster/r.bitpattern/main.c:110 ../raster/r.out.bin/main.c:139
 #, c-format
-msgid "Cannot open cell file [%s]"
+msgid "Cannot open raster map [%s]"
 msgstr ""
 
 #: ../doc/raster/r.example/main.c:126 ../raster/r.bitpattern/main.c:113
@@ -2879,7 +2879,7 @@ msgid "Interp_segmets failed"
 msgstr ""
 
 #: ../vector/v.surf.rst/main.c:735
-msgid "Cannot write cell files -- try to increase resolution"
+msgid "Cannot write raster maps -- try to increase resolution"
 msgstr ""
 
 #: ../vector/v.overlay/main.c:44 ../vector/v.parallel/main.c:38
@@ -5392,7 +5392,7 @@ msgid "Name of the vector map with input x,y,z,w"
 msgstr "का"
 
 #: ../vector/v.vol.rst/main.c:243
-msgid "Name of the surface cell file for cross-section"
+msgid "Name of the surface raster map for cross-section"
 msgstr ""
 
 #: ../vector/v.vol.rst/main.c:249
@@ -5422,7 +5422,7 @@ msgstr "के लिए ज़ेड"
 
 #: ../vector/v.vol.rst/main.c:336
 #, fuzzy
-msgid "Output cross-section cell file"
+msgid "Output cross-section raster map"
 msgstr "फ़ाइलनाम "
 
 #: ../vector/v.vol.rst/main.c:344
@@ -5653,7 +5653,7 @@ msgstr ""
 
 #: ../vector/v.drape/main.c:124 ../vector/v.extrude/main.c:210
 #, fuzzy, c-format
-msgid "can't open cell file [%s]"
+msgid "can't open raster map [%s]"
 msgstr "के लिए"
 
 #: ../vector/v.category/main.c:176
@@ -6085,7 +6085,7 @@ msgstr "नहीं"
 
 #: ../vector/v.sample/main.c:170
 #, fuzzy, c-format
-msgid "unable to open cell file [%s]"
+msgid "unable to open raster map [%s]"
 msgstr "के लिए"
 
 #: ../vector/v.sample/main.c:175
@@ -7434,7 +7434,7 @@ msgstr "नहीं"
 
 #: ../raster/r.what/main.c:152
 #, c-format
-msgid "%s: can only do up to %d cell files, sorry\n"
+msgid "%s: can only do up to %d raster maps, sorry\n"
 msgstr ""
 
 #: ../raster/r.out.gridatb/main.c:48
@@ -7964,7 +7964,7 @@ msgstr "अवैध"
 
 #: ../raster/r.buffer/write_map.c:39
 #, fuzzy, c-format
-msgid "%s: %s - can't create cell file"
+msgid "%s: %s - can't create raster map"
 msgstr "के लिए"
 
 #: ../raster/r.buffer/write_map.c:45
@@ -8566,7 +8566,7 @@ msgstr ""
 
 #: ../raster/r.circle/dist.c:126
 #, fuzzy, c-format
-msgid "Unable to create cell file for [%s]"
+msgid "Unable to create raster map for [%s]"
 msgstr "के लिए"
 
 #: ../raster/r.to.rast3/main.c:57 ../raster/r.to.rast3elev/main.c:184
@@ -11406,7 +11406,7 @@ msgstr "n"
 #: ../raster/r.support/modhead/modhead.c:267
 #, c-format
 msgid ""
-"Header indicates %d row%s in the cell file, but the actual file format "
+"Header indicates %d row%s in the raster map, but the actual file format "
 "indicates %d row%s"
 msgstr ""
 
@@ -11695,7 +11695,7 @@ msgstr ""
 
 #: ../raster/r.his/main.c:126
 #, fuzzy, c-format
-msgid "%s: <%s> cell file not found"
+msgid "%s: <%s> raster map not found"
 msgstr "नहीं"
 
 #: ../raster/r.his/main.c:144 ../raster/r.his/main.c:167
@@ -13424,42 +13424,42 @@ msgstr "का"
 
 #: ../raster/r.sun/main.c:479
 #, fuzzy, c-format
-msgid "elevin cell file <%s> not found"
+msgid "elevin raster map <%s> not found"
 msgstr "नहीं"
 
 #: ../raster/r.sun/main.c:482
 #, fuzzy, c-format
-msgid "aspin cell file <%s> not found"
+msgid "aspin raster map <%s> not found"
 msgstr "नहीं"
 
 #: ../raster/r.sun/main.c:485
 #, fuzzy, c-format
-msgid "slopein cell file <%s> not found"
+msgid "slopein raster map <%s> not found"
 msgstr "नहीं"
 
 #: ../raster/r.sun/main.c:498
 #, fuzzy, c-format
-msgid "linkein cell file <%s> not found"
+msgid "linkein raster map <%s> not found"
 msgstr "नहीं"
 
 #: ../raster/r.sun/main.c:510
 #, fuzzy, c-format
-msgid "albedo cell file <%s> not found"
+msgid "albedo raster map <%s> not found"
 msgstr "नहीं"
 
 #: ../raster/r.sun/main.c:522
 #, fuzzy, c-format
-msgid "latin cell file <%s> not found"
+msgid "latin raster map <%s> not found"
 msgstr "नहीं"
 
 #: ../raster/r.sun/main.c:534
 #, fuzzy, c-format
-msgid "coefbh cell file <%s> not found"
+msgid "coefbh raster map <%s> not found"
 msgstr "नहीं"
 
 #: ../raster/r.sun/main.c:546
 #, fuzzy, c-format
-msgid "coefdh cell file <%s> not found"
+msgid "coefdh raster map <%s> not found"
 msgstr "नहीं"
 
 #: ../raster/r.sun/main.c:721
@@ -14045,7 +14045,7 @@ msgstr "त्रुटि"
 
 #: ../raster/r.surf.idw/main.c:131
 #, fuzzy, c-format
-msgid "%s - can't create cell file"
+msgid "%s - can't create raster map"
 msgstr "के लिए"
 
 #: ../raster/r.surf.idw/main.c:220 ../raster/r.surf.idw/main.c:668
@@ -14202,7 +14202,7 @@ msgstr "त्रुटि"
 
 #: ../raster/r.resamp.rst/main.c:483
 #, fuzzy
-msgid "Maximum value of a cell file is NULL."
+msgid "Maximum value of a raster map is NULL."
 msgstr "का a है."
 
 #: ../raster/r.resamp.rst/main.c:510
@@ -16013,7 +16013,7 @@ msgstr ""
 #, fuzzy, c-format
 msgid ""
 "\n"
-"** The following cell files in subgroup [%s] do not exist."
+"** The following raster maps in subgroup [%s] do not exist."
 msgstr "n नहीं."
 
 #: ../imagery/i.class/ask_files.c:63
@@ -16192,7 +16192,7 @@ msgstr "पूर्ण."
 
 #: ../imagery/i.class/readbands.c:13
 #, fuzzy
-msgid "Error reading cell file in function readbands."
+msgid "Error reading raster map in function readbands."
 msgstr "त्रुटि फंक्शन."
 
 #: ../imagery/i.maxlik/invert.c:30
@@ -18663,7 +18663,7 @@ msgstr "के लिए"
 
 #: ../display/d.profile/What.c:37
 #, fuzzy
-msgid "error reading cell file"
+msgid "error reading raster map"
 msgstr "त्रुटि."
 
 #: ../display/d.profile/Range.c:92
@@ -19570,7 +19570,7 @@ msgstr "का नहीं जोड़ा संख्या का."
 #~ msgstr "का के बराबर!"
 
 #, fuzzy
-#~ msgid "top cell file not found\n"
+#~ msgid "top raster map not found\n"
 #~ msgstr "नहीं n"
 
 #, fuzzy

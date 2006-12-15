@@ -81,7 +81,7 @@ int perform_filter (char *in_name, char *in_mapset, char *out_name,
     else if (count > 1)
 	close(in);
 
-/* copy final result to output cell file */
+/* copy final result to output raster map */
     in = out;
     out = G_open_cell_new (out_name);
     if (out < 0) {

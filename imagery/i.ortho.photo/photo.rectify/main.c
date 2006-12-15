@@ -69,7 +69,7 @@ int main (int argc, char *argv[])
     fprintf (Bugsr,"Looking for elevation file in group: %s\n", group.name);
 #endif
 
-    /* get the block elevation layer cell file  in target location */
+    /* get the block elevation layer raster map  in target location */
     I_get_group_elev (group.name, elev_layer, mapset_elev, tl, math_exp, 
 			 units, nd);
 

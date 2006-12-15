@@ -231,7 +231,7 @@ int main (int argc, char *argv[])
     }
 
 
-/* open all cell files */
+/* open all raster maps */
     if( option.cell->answers[0] == NULL )
 	G_fatal_error(_("Raster map not found."));
 

@@ -52,7 +52,7 @@ sleep (3);
 	G__switch_search_path();
 	which_env = 0;
 
-           /* get the block elevation layer cell file  in target location */
+           /* get the block elevation layer raster map  in target location */
 /***
 fprintf (stderr,"Looking for elevation file in block: %s\n", block.name);
 sleep (3);

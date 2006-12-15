@@ -366,7 +366,7 @@ int get_z_from_cell2 (double north, double east, double *height)
 
     elevbuf = G_allocate_raster_buf(data_type); 
 
-/* find row, col in elevation cell file */
+/* find row, col in elevation raster map */
     row = (int) northing_to_row (&elevhd, north);
     col = (int) easting_to_col  (&elevhd, east);
 

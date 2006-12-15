@@ -23,7 +23,7 @@ FLAG
 
 
 /* flag.[ch] is a set of routines which will set up an array of bits
-** that allow the programmer to "flag" cells in a cell file.
+** that allow the programmer to "flag" cells in a raster map.
 **/
 FLAG *FlagCreate(int nrows, int ncols);
 /**	opens the structure flag.  

@@ -90,7 +90,7 @@ int import_band(GDALDatasetH hMEMDS, int band, char *name, char *mapset,
     /* Open GRASS raster */
     fd = G_open_cell_old(name, mapset);
     if (fd < 0) {
-	G_warning(_("Cannot open cell file [%s]"), name);
+	G_warning(_("Cannot open raster map [%s]"), name);
 	return -1;
     }
 

@@ -207,7 +207,7 @@ int main(int argc, char *argv[])
 
 	/* open the elev raster, and check for error condition */
 	if ((fdrast = G_open_cell_old(elevation->answer, mapset)) < 0)
-	    G_fatal_error(_("can't open cell file [%s]"), elevation->answer);
+	    G_fatal_error(_("can't open raster map [%s]"), elevation->answer);
     }
 
     /* if area */

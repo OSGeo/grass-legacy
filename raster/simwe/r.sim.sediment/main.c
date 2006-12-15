@@ -415,7 +415,7 @@ int main ( int argc, char *argv[])
   if (tserie == NULL) {
   ii=output_data (0,1.);
   if (ii != 1)
-    G_fatal_error (_("Cannot write cell files"));
+    G_fatal_error (_("Cannot write raster maps"));
   }
 
   if (fdwalkers != NULL)

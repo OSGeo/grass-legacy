@@ -4,7 +4,7 @@
  * 
  * The material here based originally on Dwhat. Idea is to allow user to mouse
  * on a cell layer on the graphics window, and we figure out which location
- * (row and col) in the cell file corresponds to the location clicked on the
+ * (row and col) in the raster map corresponds to the location clicked on the
  * screen. We find "real" row and col based on the cellhd window, to allow
  * for the displayed cell map to be in any given "current" window.
  * 

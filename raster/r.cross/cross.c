@@ -34,7 +34,7 @@ CELL cross (int fd[],int non_zero,int primary,int outfd)
     NODE *pnode, *new_node;
     CELL result;
 
-/* allocate i/o buffers for each cell file */
+/* allocate i/o buffers for each raster map */
 
     for (i = 0; i < nfiles; i++)
 	cell[i] = G_allocate_cell_buf();

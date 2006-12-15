@@ -68,7 +68,7 @@ main(argc, argv)
 	record = G_allocate_cell_buf() ;
 
 	if ( (newmap = G_open_cell_new(argv[1]) ) == -1) {
-	   fprintf(stderr, "ERROR bmif_to_cell: can't open cell file %s\n", argv[1]) ;
+	   fprintf(stderr, "ERROR bmif_to_cell: can't open raster map %s\n", argv[1]) ;
 	   quit() ;
 	}
 

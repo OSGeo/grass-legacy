@@ -124,7 +124,7 @@ int main (int argc, char *argv[])
     /* get the filter */
     filter = get_filter (filt_name, &nfilters, temp);
 
-    /* make sure filter matrix won't extend outside the cell file */
+    /* make sure filter matrix won't extend outside the raster map */
     for (i=0; i < nfilters; i++)
     {
         if (filter[i].size > ncols || filter[i].size > nrows)

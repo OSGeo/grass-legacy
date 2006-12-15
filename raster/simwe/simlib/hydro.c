@@ -308,7 +308,7 @@ printf("\n ");
 		ii=output_data (itime,conn); 
 		nstack = 0;
 	  	if (ii != 1)
-    		G_fatal_error ("Cannot write cell files");
+    		G_fatal_error ("Cannot write raster maps");
 		}
 
 	    }

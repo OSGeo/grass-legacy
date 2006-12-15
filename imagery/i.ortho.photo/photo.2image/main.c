@@ -86,7 +86,7 @@ int main (int argc, char *argv[])
 #endif
 */
 
-    /* ask user for cell file to be displayed */
+    /* ask user for raster map to be displayed */
     do
     {  if(!choose_groupfile (name, mapset)) 
 	    quit(0);

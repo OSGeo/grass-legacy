@@ -34,7 +34,7 @@ if (G_read_cats(name,mapset,&cat) < 0)
    NoCatStrings = 1;
 
 if (G_get_map_row (fd,buf,row) < 0)
-   G_fatal_error(_("error reading cell file"));
+   G_fatal_error(_("error reading raster map"));
 else
    {
    R_standard_color(D_translate_color(DEFAULT_BG_COLOR));

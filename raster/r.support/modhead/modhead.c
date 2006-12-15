@@ -90,7 +90,7 @@ int main (int argc, char *argv[])
                       name, rname, rmapset);
     }
 
-    /* Open cell file */
+    /* Open raster map */
     if ((fd = G_open_cell_old(name, mapset)) < 0)
         G_fatal_error(_("Cannot open raster map [%s]!"), name);
 
@@ -264,7 +264,7 @@ int main (int argc, char *argv[])
 
         rows = (cellhd.compressed > 0 ? rows_new : rows_old);
 
-        G_warning(_("Header indicates %d row%s in the cell file, but "
+        G_warning(_("Header indicates %d row%s in the raster map, but "
                    "the actual file format indicates %d row%s"),
                    cellhd.rows, (cellhd.rows == 1) ? "" : "s",
                    rows, (rows == 1) ? "" : "s");

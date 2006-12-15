@@ -12,7 +12,7 @@ int cell_stats (int fd[], int with_percents, int with_counts,
     int compute_areas;
     double G_area_of_cell_at_row();
 
-/* allocate i/o buffers for each cell file */
+/* allocate i/o buffers for each raster map */
     cell = (CELL **) G_calloc (nfiles, sizeof (CELL *));
     for (i = 0; i < nfiles; i++)
 	cell[i] = G_allocate_cell_buf();

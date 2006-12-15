@@ -118,7 +118,7 @@ int main(int argc, char *argv[])
 
     /* G_open_cell_old - returns file destriptor (>0) */
     if ((infd = G_open_cell_old(name, mapset)) < 0)
-	G_fatal_error(_("Cannot open cell file [%s]"), name);
+	G_fatal_error(_("Cannot open raster map [%s]"), name);
 
 
     /* controlling, if we can open input raster */

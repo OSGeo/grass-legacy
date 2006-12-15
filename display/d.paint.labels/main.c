@@ -118,7 +118,7 @@ int main (int argc, char **argv)
     if (D_do_conversions(&window, t, b, l, r))
 	G_fatal_error(_("Error in calculating conversions"));
 
-    /* Go draw the cell file */
+    /* Go draw the raster map */
     do_labels(infile, !horiz_flag->answer) ;
 
     D_add_to_list(G_recreate_command()) ;

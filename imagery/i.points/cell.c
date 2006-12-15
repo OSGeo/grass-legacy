@@ -21,7 +21,7 @@ plotcell (int x, int y)
 	{0}
     };
 /*
- * if the target cell file list is ready, ask the user which side
+ * if the target raster map list is ready, ask the user which side
  * should be plotted, otherwise can only plot group files
  */
     if (access (cell_list,0) == 0)
