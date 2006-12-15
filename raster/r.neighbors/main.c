@@ -136,8 +136,8 @@ int main (int argc, char *argv[])
 	flag.quiet->key = 'q';
 	flag.quiet->description = _("Run quietly");
 
-	if (G_parser(argc,argv))
-		exit(1);
+	if (G_parser(argc, argv))
+		exit(EXIT_FAILURE);
 
 	p = ncb.oldcell.name = parm.input->answer;
 	if(NULL == (ncb.oldcell.mapset = G_find_cell2(p,"")))
@@ -156,7 +156,7 @@ int main (int argc, char *argv[])
 	if(!flag.align->answer)
 	{
 		if (G_get_cellhd (ncb.oldcell.name, ncb.oldcell.mapset, &cellhd) < 0)
-			exit(1);
+			exit(EXIT_FAILURE);
 		G_get_window (&window);
 		G_align_window (&window, &cellhd);
 		G_set_window (&window);
@@ -165,20 +165,16 @@ int main (int argc, char *argv[])
 	nrows = G_window_rows();
 	ncols = G_window_cols();
 
-	/* open cell files */
+	/* open raster maps */
 	if ((in_fd = G_open_cell_old (ncb.oldcell.name, ncb.oldcell.mapset)) < 0)
-	{
-		char msg[200];
-		sprintf(msg,_("can't open cell file <%s> in mapset %s"),
+		G_fatal_error (_("can't open raster map <%s> in mapset %s"),
 			ncb.oldcell.name, ncb.oldcell.mapset);
-		G_fatal_error (msg);
-	}
 
 	map_type = G_get_raster_map_type(in_fd);
 
 	/* get the method */
-	for (method = 0; p = menu[method].name; method++)
-		if (strcmp(p, parm.method->answer) == 0)
+	for (method = 0; (p = menu[method].name); method++)
+		if ((strcmp(p, parm.method->answer) == 0))
 			break;
 	if (!p)
 	{
@@ -225,15 +221,15 @@ int main (int argc, char *argv[])
 	/* establish the newvalue routine */
 	newvalue = menu[method].method;
 
-	/* open cell file */
+	/* open raster map */
 	in_fd = G_open_cell_old (ncb.oldcell.name, ncb.oldcell.mapset);
 	if (in_fd < 0)
-		exit(1);
+		exit(EXIT_FAILURE);
 
-	/*open the new cellfile */
+	/*open the new raster map */
 	out_fd = G_open_raster_new (ncb.newcell.name, map_type);
 	if (out_fd < 0)
-		exit(1);
+		exit(EXIT_FAILURE);
 
         /* please, remove before GRASS 7 released */
         if(flag.quiet->answer) {
@@ -269,7 +265,7 @@ int main (int argc, char *argv[])
 
 	/* put out category info */
 	null_cats () ;
-	if (cat_names = menu[method].cat_names)
+	if ((cat_names = menu[method].cat_names))
 		cat_names();
 
 	G_write_cats (ncb.newcell.name, &ncb.cats);
@@ -277,5 +273,5 @@ int main (int argc, char *argv[])
 	if(copycolr)
 		G_write_colors (ncb.newcell.name, ncb.newcell.mapset, &colr);
 
-	exit(0);
+	exit(EXIT_SUCCESS);
 }
