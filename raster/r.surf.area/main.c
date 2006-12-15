@@ -53,13 +53,16 @@
  */
 
 #include <stdlib.h>
+#include <stdio.h>
 #include <math.h>
 #include <grass/gis.h>
 #include <grass/glocale.h>
 
+
 #define X 0
 #define Y 1
 #define Z 2
+
 
 void add_row_area(DCELL *, DCELL *, double, struct Cell_head *, 
 		double *, double *);
@@ -67,14 +70,13 @@ void v3cross(double v1[3], double v2[3], double v3[3]);
 void v3mag(double v1[3], double *mag);
 void add_null_area(DCELL *, struct Cell_head *, double *);
 
+
 int
 main (int argc, char *argv[])
-
 {
-
     struct GModule *module;
     struct Option 	*surf, *vscale;
-    char 		*cellmap, errbuf[100];
+    char 		*cellmap;
     DCELL                *cell_buf[2];
     int 		row;
     struct Cell_head	w;
@@ -103,9 +105,8 @@ main (int argc, char *argv[])
     vscale->multiple               = NO;
     vscale->description            = _("Vertical scale");
 
-
     if (G_parser (argc, argv))
-	exit (-1);
+	exit (EXIT_FAILURE);
 
     if(vscale->answer)
 	sz = atof(vscale->answer);
@@ -113,18 +114,14 @@ main (int argc, char *argv[])
 
     G_get_set_window (&w); 
 
-    /* open cell file for reading */
+    /* open raster map for reading */
     {  
 	cellmap = G_find_file2 ("cell", surf->answer, "");
-	if(!cellmap){
-	    sprintf(errbuf,"Couldn't find raster map %s", surf->answer);
-	    G_fatal_error(errbuf);
-	}
+	if(!cellmap)
+	    G_fatal_error (_("Couldn't find raster map [%s]"), surf->answer);
+
 	if ((cellfile = G_open_cell_old(surf->answer, cellmap)) == -1) 
-	{
-	    sprintf(errbuf,"Not able to open cellfile for [%s]", surf->answer);
-	    G_fatal_error(errbuf);
-	}
+	    G_fatal_error (_("Unable to open raster map [%s]"), surf->answer);
     }
     
     cell_buf[0] = (DCELL *) G_malloc (w.cols * G_raster_size(DCELL_TYPE));
@@ -184,7 +181,6 @@ main (int argc, char *argv[])
 
 void
 add_row_area (DCELL *top, DCELL *bottom, double sz, struct Cell_head *w, double *low, double *high)
-
 {
 double guess1, guess2, mag, tedge1[3], tedge2[3], crossp[3];
 int col;
