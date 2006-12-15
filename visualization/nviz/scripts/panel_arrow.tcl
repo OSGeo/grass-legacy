@@ -38,8 +38,8 @@ proc mkarrowPanel { BASE } {
     global nviztxtfont
 
     # defaults (for some reason not recognizing globals)
-    set n_arrow_size [expr int([Nget_longdim]/4.)]
-    set arw_clr "#000000"
+	set n_arrow_size [expr int([Nget_longdim]/8.)]
+	set arw_clr "#000000"
     set arw_text_clr "#DDDDDD"
     #This doesn't do anything currently
     set arw_text_size "not funct." 
@@ -70,13 +70,11 @@ proc mkarrowPanel { BASE } {
     # This section contains widgets for north text
     set rbase2 [frame $BASE.txt]
     Label $rbase2.txt_lbl -text "North text: " -fg black
-    LabelEntry $rbase2.txt_size -relief sunken -entrybg grey \
-        -textvariable arw_text_size -width 8 -justify right\
-        -label "size " -fg black -labelfont $nviztxtfont
-    pack $rbase2.txt_lbl $rbase2.txt_size -side left -expand no -fill none
+    Button $rbase2.font -text "Font" \
+		-width 8 -command "select_arw_font $rbase2.font" -bd 1 \
+		-helptext "Select font family, size, and style"
+    pack $rbase2.txt_lbl $rbase2.font -side left -expand no -fill none
     
-    $rbase2.txt_size bind <Key> {if {$Nauto_draw == 1} {Ndraw_all}} 
-
     Button $rbase2.color -text "Color" \
 		-bg $arw_text_clr -width 8 -bd 1 \
 		-command "change_arrow_color $rbase2.color text" \
@@ -112,6 +110,15 @@ proc bind_mouse { W } {
 	}
 }
 
+
+###############################################################################
+# use Tk dialog to select fonts
+proc select_arw_font {fbutton} {
+	global Nv_
+	
+    set fon [SelectFont $fbutton.fontset -type dialog -sampletext 1 -title "Select font"]
+	if { $fon != "" } {set Nv_(arw_font) $fon}
+}
 
 #############################################################
 
@@ -153,12 +160,29 @@ proc change_arrow_color { me type } {
 ###########################
 proc place_narrow {W x y} {
 
-global Nv_ n_arrow n_arrow_size
-global n_arrow_x n_arrow_y n_arrow_z
-global arw_clr arw_text_clr
-global Nauto_draw
+	global Nv_ n_arrow n_arrow_size
+	global n_arrow_x n_arrow_y n_arrow_z
+	global arw_clr arw_text_clr
+	global Nauto_draw
+	
+	set y [expr $Nv_(height) - $y]
 
-set y [expr $Nv_(height) - $y]
+	#create font description	
+	set weight "medium"
+	set slant "r"
+	set style ""
+    set clr $arw_text_clr
+	
+	if {[lindex $Nv_(arw_font) 0] != ""} {set Nv_(arw_FontType) [lindex $Nv_(arw_font) 0]}
+	if {[lindex $Nv_(arw_font) 1] != ""} {set Nv_(arw_FontSize) [lindex $Nv_(arw_font) 1]}	
+	if {[lsearch $Nv_(arw_font) "bold"] != -1} {set weight "bold"}
+	if {[lsearch $Nv_(arw_font) "italic"] != -1} {set slant "i"}
+	if {[lsearch $Nv_(arw_font) "underline"] != -1} {set style "underline"}
+	if {[lsearch $Nv_(arw_font) "overstrike"] != -1} {set style "overstrike"}
+	
+	set font "*-$Nv_(arw_FontType)-$weight-$slant-normal-$style-$Nv_(arw_FontSize)-*-*-*-*-*-*-*"
+
+#	Nplace_label $Nv_(label_text) $font $Nv_(arw_FontSize) $arw_text_clr $sx $sy
 
 #Draw North Arrow at selected point
     set curr [Nget_current surf]
