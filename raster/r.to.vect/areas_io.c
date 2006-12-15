@@ -8,7 +8,7 @@
 /* Champaign, IL  61820 */
 /* November 1987 - January 1988 */
 
-/* input is a cell file found in the normal GRASS way */
+/* input is a raster map found in the normal GRASS way */
 /* outputs are binary digit files and a supplemental area file */
 /* to be used to improve the dlg labelling process */
 
