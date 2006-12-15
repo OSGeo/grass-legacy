@@ -486,7 +486,7 @@ int main(int argc, char *argv[])
 
     fcellmin = (float)cellmin;
     if (G_is_f_null_value(&fcellmin))
-	G_fatal_error(_("Maximum value of a cell file is NULL."));
+	G_fatal_error(_("Maximum value of a raster map is NULL."));
 
     zmin = (double)cellmin *zmult;
     zmax = (double)cellmax *zmult;
@@ -559,7 +559,7 @@ int main(int argc, char *argv[])
     if (IL_resample_output_2d(&params, zmin, zmax, zminac, zmaxac, c1min,
 			      c1max, c2min, c2max, gmin, gmax, ertot, input,
 			      &dnorm, &outhd, &winhd, smooth, NPOINT) < 0)
-	clean_fatal_error("Can not write cell files--try increasing cell size");
+	clean_fatal_error("Can not write raster maps -- try increasing cell size");
 
     G_free (zero_array_cell);
     if (elev != NULL)
