@@ -196,14 +196,13 @@ int main (int argc, char *argv[])
 	type = Vect_read_next_line (&Map, Points, Cats); /* read line */
 	if ( type == 0 ) continue; /* Dead */
 
-	if (type == -1) G_fatal_error(_("Reading input dig file.")) ;
+	if (type == -1) G_fatal_error(_("Reading input vector map.")) ;
 	if ( type == -2) break;
 	if(pj_do_transform( Points->n_points, Points->x, Points->y, 
 			    flag.transformz->answer? Points->z : NULL,
 		              &info_in,&info_out)<0) 
 	{ 
-	    fprintf(stderr, _("Error in pj_do_transform\n"));
-	    exit(EXIT_FAILURE);
+	    G_fatal_error(_("Error in pj_do_transform"));
 	}
 
 	Vect_write_line (&Out_Map, type, Points, Cats); /* write line */
