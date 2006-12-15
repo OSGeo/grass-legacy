@@ -6759,8 +6759,8 @@ msgstr ""
 "Vytváøím vektorový soubor...\n"
 
 #: ../vector/v.proj/main.c:199
-msgid "Reading input dig file."
-msgstr "Naèítání vstupního souboru dig."
+msgid "Reading input vector map."
+msgstr "Naèítání vstupního souboru vektorový."
 
 #: ../vector/v.proj/main.c:205
 #, c-format

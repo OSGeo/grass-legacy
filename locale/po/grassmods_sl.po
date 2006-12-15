@@ -6715,7 +6715,7 @@ msgstr "Zapisujem novo datoteko...\n"
 
 #: ../vector/v.proj/main.c:199
 #, fuzzy
-msgid "Reading input dig file."
+msgid "Reading input vector map."
 msgstr "Nisem uspel odpreti vhodne datoteke."
 
 #: ../vector/v.proj/main.c:205

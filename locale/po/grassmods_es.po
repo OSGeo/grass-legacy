@@ -6551,8 +6551,8 @@ msgstr "Escribiendo un nuevo archivo...\n"
 
 #: ../vector/v.proj/main.c:199
 #, fuzzy
-msgid "Reading input dig file."
-msgstr "Fallo abriendo el archivo de ingreso dig."
+msgid "Reading input vector map."
+msgstr "Fallo abriendo el archivo de ingreso vector."
 
 #: ../vector/v.proj/main.c:205
 #, c-format

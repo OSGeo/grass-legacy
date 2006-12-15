@@ -19630,8 +19630,8 @@ msgstr "Erstelle neue Cats-Datei..."
 
 #: ../vector/v.proj/main.c:199
 #, fuzzy
-msgid "Reading input dig file."
-msgstr "Kann input dig Datei nicht öffnen."
+msgid "Reading input vector map."
+msgstr "Kann input Vektorkarte nicht öffnen."
 
 #: ../vector/v.proj/main.c:205
 #, fuzzy, c-format

@@ -6574,7 +6574,7 @@ msgstr "tworzenie nowego pliku kategorii..."
 
 #: ../vector/v.proj/main.c:199
 #, fuzzy
-msgid "Reading input dig file."
+msgid "Reading input vector map."
 msgstr "Odczytywanie mapy rastrowej..."
 
 #: ../vector/v.proj/main.c:205
