@@ -97,7 +97,7 @@ int main(int argc, char **argv)
 
         G_message(_("rows = %d, cols = %d"), w.rows, w.cols);
 
-	/* open cell file for reading */
+	/* open raster map for reading */
 	for (i = 0; i < 3; i++)
 	{  
 		/* Get name of layer */
@@ -109,7 +109,7 @@ int main(int argc, char **argv)
 		if(!mapset)
 			G_fatal_error("Couldn't find raster map %s", name);
 
-		/* Open cell file */
+		/* Open raster map */
 		if ((B[i].file = G_open_cell_old(name, mapset)) == -1) 
 			G_fatal_error("Unable to open cellfile for [%s]", name);
 

@@ -6,7 +6,7 @@ CSEG
 	SEGMENT	seg;         /* segment structure */
 	int	fd;          /* fd for reading/writing segment file */
 	char	*filename;   /* name of segment file */
-	char	*name;       /* cell file read into segment file */
+	char	*name;       /* raster map read into segment file */
 	char	*mapset;
 } ;
 
@@ -16,7 +16,7 @@ DSEG
 	SEGMENT	seg;         /* segment structure */
 	int	fd;          /* fd for reading/writing segment file */
 	char	*filename;   /* name of segment file */
-	char	*name;       /* cell file read into segment file */
+	char	*name;       /* raster map read into segment file */
 	char	*mapset;
 } ;
 
@@ -26,7 +26,7 @@ BSEG
 	SEGMENT	seg;         /* segment structure */
 	int	fd;          /* fd for reading/writing segment file */
 	char	*filename;   /* name of segment file */
-	char	*name;       /* cell file read into segment file */
+	char	*name;       /* raster map read into segment file */
 	char	*mapset;
 } ;
  

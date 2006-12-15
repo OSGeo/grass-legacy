@@ -48,7 +48,7 @@ int ask_files (char *me)
 	    if (G_find_cell (name, mapset) == NULL)
 	    {
 		if (!any)
-		    G_warning(_("\7\n** The following cell files in subgroup "
+		    G_warning(_("\7\n** The following raster maps in subgroup "
                               "[%s] do not exist."), Subgroup);
 		any = 1;
 		G_message("       %s@%s", name, mapset);

@@ -21,7 +21,7 @@ make_new_cell_layer (void)
     int tmpfd;
     int row;
 
-  /* open the new cell file to contain the edited version of
+  /* open the new raster map to contain the edited version of
      the original cell layer. open our temporary file for read
      and copy its contents to the layer */
 
@@ -40,7 +40,7 @@ make_new_cell_layer (void)
 
     for (row = 0; row < real_nrows; row++) {
         if ( read (tmpfd, rast, real_ncols * cellsize) != (real_ncols * cellsize))
-            error(1,"error writing cell file during copy");
+            error(1,"error writing raster map during copy");
         G_put_raster_row(cellfd, rast, map_type);
         G_percent(row, real_nrows, 5);
         }

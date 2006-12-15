@@ -121,7 +121,7 @@ int main(int argc, char *argv[])
 
     /* open the elev raster, and check for error condition */
     if ((fdrast = G_open_cell_old(rast_opt->answer, mapset)) < 0) {
-	G_fatal_error(_("can't open cell file [%s]"), rast_opt->answer);
+	G_fatal_error(_("can't open raster map [%s]"), rast_opt->answer);
     }
 
     /* used to scale sampled raster values: will need to add an option to modify this later */

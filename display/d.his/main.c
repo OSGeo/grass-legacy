@@ -101,7 +101,7 @@ main (int argc, char **argv)
 
 	mapset = G_find_cell2(name_h, "");
 	if (mapset == NULL)
-		G_fatal_error("%s: <%s> cell file not found\n",
+		G_fatal_error("%s: <%s> raster map not found\n",
 			      G_program_name(),
 			      opt_h->answer);
 
@@ -246,7 +246,7 @@ main (int argc, char **argv)
 	D_add_to_list(G_recreate_command()) ;
 	R_close_driver() ;
 
-	/* Close the cell files */
+	/* Close the raster maps */
 	G_close_cell(hue_file) ;
 	if (int_used)
 		G_close_cell(int_file) ;

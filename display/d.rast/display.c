@@ -43,13 +43,13 @@ int display(
     /* Set the colors for the display */
     D_set_colors (&colors);
 
-    /* Go draw the cell file */
+    /* Go draw the raster map */
     cell_draw(name, mapset, &colors, overlay, invert, data_type) ;
 
     /* release the colors now */
     G_free_colors (&colors);
 
-    /* record the cell file */
+    /* record the raster map */
     if ( !nocmd ) {
 	D_set_cell_name(G_fully_qualified_name(name, mapset));
 	D_add_to_cell_list(G_fully_qualified_name(name, mapset));

@@ -15,7 +15,7 @@ raw_stats (int fd[], int with_coordinates, int with_xy, int with_labels)
     char nbuf[100], ebuf[100];
     RASTER_MAP_TYPE *map_type;
 
-/* allocate i/o buffers for each cell file */
+/* allocate i/o buffers for each raster map */
     rast = (void **) G_calloc (nfiles, sizeof (void *));
     rastp = (void **) G_calloc (nfiles, sizeof (void *));
     map_type = (RASTER_MAP_TYPE *) G_calloc (nfiles, sizeof( RASTER_MAP_TYPE));

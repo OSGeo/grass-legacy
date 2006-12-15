@@ -11,7 +11,7 @@ open_band_files (void)
   int n, nbands;
   char *name, *mapset;
 
-  /* allocate row buffers and open cell files */
+  /* allocate row buffers and open raster maps */
   nbands = Refer.nfiles ;
   Bandbuf = (CELL **) G_malloc (nbands * sizeof (CELL *));
   Bandfd = (int *) G_malloc (nbands * sizeof (int));

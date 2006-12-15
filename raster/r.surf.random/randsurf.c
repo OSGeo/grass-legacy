@@ -7,7 +7,7 @@
 #include <grass/gis.h>
 
 int randsurf (
-    char *out,				/* Name of cell files to be opened.	*/
+    char *out,				/* Name of raster maps to be opened.	*/
     int min,
     int max			/* Minimum and maximum cell values.	*/
 )
@@ -22,7 +22,7 @@ int randsurf (
     					/* row of the raster map layer.		*/
 
 	int	fd_out;			/* File descriptor - used to identify 	*/
-					/* open cell files.			*/
+					/* open raster maps.			*/
 	
 
 	int	row_count,col_count;

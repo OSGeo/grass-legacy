@@ -67,16 +67,16 @@ RASTER_MAP_TYPE o_open_file (char *cell)
 {
     char *mapset;
 
-    /* open cell file */
+    /* open raster map */
     if ((mapset = G_find_cell(cell,"")) == NULL)
     {
-	fprintf(stderr,"%s:  o_open_file:  cell file %s not found\n",error_prefix,cell);
+	fprintf(stderr,"%s:  o_open_file:  raster map %s not found\n",error_prefix,cell);
 	exit(-1);
     }
     sscanf(cell,"%s",cell_name);
     if ((in_file_d = G_open_cell_old(cell_name,mapset)) < 0)
     {
-	fprintf(stderr,"%s:  o_open_file:  could not open cell file %s in %s\n",error_prefix,cell_name,mapset);
+	fprintf(stderr,"%s:  o_open_file:  could not open raster map %s in %s\n",error_prefix,cell_name,mapset);
 	exit(-1);
     }
 

@@ -156,10 +156,10 @@ int rectify (char *name, char *mapset, char *result)
 
 /* open the result file into target window
  * this open must be first since we change the window later
- * cell files open for writing are not affected by window changes
+ * raster maps open for writing are not affected by window changes
  * but those open for reading are
  *
- * also tell open that cell file will have the same format
+ * also tell open that raster map will have the same format
  * (ie number of bytes per cell) as the file being rectified
  */
     select_current_env();

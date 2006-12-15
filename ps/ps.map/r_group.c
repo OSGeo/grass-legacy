@@ -50,7 +50,7 @@ int read_group (void)
     	}
     }
 
-    /* open cell files for reading */
+    /* open raster maps for reading */
     for (i = 0; i < 3; i++)
     {
         if ((grp.fd[i] = G_open_cell_old(grp.name[i], grp.mapset[i])) < 0)

@@ -81,7 +81,7 @@ int main(int argc, char **argv)
 	G_get_fp_range_min_max(&fp_range, &min_value, &max_value);
 
 	/*
-	 * get the name for the new cell file to be created (the one we will
+	 * get the name for the new raster map to be created (the one we will
 	 * edit)
 	 */
 	m = G_ask_cell_new("Enter the name for the new layer to be created\n",
@@ -96,8 +96,8 @@ int main(int argc, char **argv)
 
 	/*
 	 * we are not in the business of resampling the old file to a new
-	 * cell file with a different window setting, so when we make a copy
-	 * of the cell file to be edited, we will ignor the current window
+	 * raster map with a different window setting, so when we make a copy
+	 * of the raster map to be edited, we will ignor the current window
 	 * and find out what the cell_head window is (and call that
 	 * "real_window")(the current_window could be anything, since the
 	 * user will probably have to use zoom to get a detailed view of what

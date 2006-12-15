@@ -8,7 +8,7 @@
 #include <grass/gis.h>
 
 int gaussurf (
-    char *out,				/* Name of cell files to be opened.	*/
+    char *out,				/* Name of raster maps to be opened.	*/
     double mean,
     double sigma			/* Distribution parameters.		*/
 )
@@ -23,7 +23,7 @@ int gaussurf (
     					/* row of the raster map layer.		*/
 
 	int	fd_out;			/* File descriptor - used to identify 	*/
-					/* open cell files.			*/
+					/* open raster maps.			*/
 	
 
 	int	row_count,col_count;

@@ -78,7 +78,7 @@ int read_rgb(char *key, char *data)
             return 0;
     	}
 
-	/* open cell files for reading */
+	/* open raster maps for reading */
         if ((grp.fd[i] = G_open_cell_old(grp.name[i], grp.mapset[i])) < 0)
         {
     	    sprintf(fullname, "%s in %s", grp.name[i], grp.mapset[i]);

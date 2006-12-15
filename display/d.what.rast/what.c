@@ -59,7 +59,7 @@ int what (int once, int terse, int colrow, char *fs, int width, int mwidth)
             }
             if (G_get_c_raster_row (fd[i], buf, row) < 0)
                 show_cat (width, mwidth, name[i], mapset[i], null_cell,
-                    "ERROR reading cell file", terse, fs, map_type[i]);
+                    "ERROR reading raster map", terse, fs, map_type[i]);
             else if(map_type[i] == CELL_TYPE)
 	    {
                show_cat (width, mwidth, name[i], mapset[i], buf[col],

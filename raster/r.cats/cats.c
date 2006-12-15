@@ -34,7 +34,7 @@ int get_cats (char *name, char *mapset)
 	exit(1);
     G_set_window (&cellhd);
 
-/* open the cell file */
+/* open the raster map */
     fd = G_open_cell_old (name, mapset);
     if (fd < 0)
 	exit(1);
@@ -43,7 +43,7 @@ int get_cats (char *name, char *mapset)
     cell = G_allocate_cell_buf();
     G_init_cell_stats (&statf);
 
-/* read the cell file */
+/* read the raster map */
     G_message (_("Reading %s in %s ..."), name, mapset);
     for (row = 0; row < nrows; row++)
     {

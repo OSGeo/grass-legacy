@@ -602,7 +602,7 @@ main(int argc, char *argv[]) {
 
   delete elstr;
 
-  /* write streams to GRASS cell files */
+  /* write streams to GRASS raster maps */
   stream2_CELL(dirstr, nrows, ncols, opt->dir_grid);
   delete dirstr;
 #ifdef ELEV_SHORT
@@ -631,7 +631,7 @@ main(int argc, char *argv[]) {
   computeFlowAccumulation(flowStream, outstr);
   /* delete flowStream -- deleted inside */
 
-  /* write output stream to GRASS cell files */
+  /* write output stream to GRASS raster maps */
 #ifdef OUTPUT_TCI
   stream2_FCELL(outstr, nrows, ncols, printAccumulation(), printTci(),
 		opt->flowaccu_grid, opt->tci_grid);

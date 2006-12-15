@@ -321,7 +321,7 @@ typedef RGBA_Color RGB_Color;
 
 struct Reclass
 {
-    char name[GNAME_MAX];  	    /* name of cell file being reclassed    */
+    char name[GNAME_MAX];  	    /* name of raster map being reclassed    */
     char mapset[GMAPSET_MAX]; 	    /* mapset in which "name" is found      */
     int type;	    	    /* type of reclass                      */
     int num;	    	    /* size of reclass table                */

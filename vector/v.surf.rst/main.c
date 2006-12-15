@@ -757,7 +757,7 @@ int main(int argc, char *argv[])
 		      dtens, 1, NPOINT);
     if (ii < 0)
 	clean_fatal_error
-	    (_("Cannot write cell files -- try to increase resolution"));
+	    (_("Cannot write raster maps -- try to increase resolution"));
     G_free (zero_array_cell);
     if (elev != NULL)
 	fclose(Tmp_fd_z);

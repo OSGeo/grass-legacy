@@ -19,14 +19,14 @@ int prepare_group_list (void)
 
 /*
  * build sorted index into group files
- * so that all cell files for a mapset to appear together
+ * so that all raster maps for a mapset to appear together
  */
     idx = (int *) G_calloc (group.group_ref.nfiles, sizeof (int));
     for (n = 0; n < group.group_ref.nfiles; n++)
 	idx[n] = n;
     qsort (idx, group.group_ref.nfiles, sizeof(int), cmp);
 
-/* determine length of longest mapset name, and longest cell file name */
+/* determine length of longest mapset name, and longest raster map name */
     len1 = len2 = 0;
     for (n = 0; n < group.group_ref.nfiles; n++)
     {

@@ -2146,7 +2146,7 @@ msgstr "[%s] jest niedozwolon± nazw±"
 #: ../doc/raster/r.example/main.c:121 ../raster/r.out.gdal/main.c:78
 #: ../raster/r.bitpattern/main.c:110 ../raster/r.out.bin/main.c:139
 #, c-format
-msgid "Cannot open cell file [%s]"
+msgid "Cannot open raster map [%s]"
 msgstr "Nie mo¿na otworzyæ pliku rastra [%s]"
 
 #: ../doc/raster/r.example/main.c:126 ../raster/r.bitpattern/main.c:113
@@ -2718,7 +2718,7 @@ msgid "Interp_segmets failed"
 msgstr ""
 
 #: ../vector/v.surf.rst/main.c:735
-msgid "Cannot write cell files -- try to increase resolution"
+msgid "Cannot write raster maps -- try to increase resolution"
 msgstr ""
 
 #: ../vector/v.overlay/main.c:44 ../vector/v.parallel/main.c:38
@@ -5150,7 +5150,7 @@ msgid "Name of the vector map with input x,y,z,w"
 msgstr "Nazwa wyj¶ciowego pliku wektorowego"
 
 #: ../vector/v.vol.rst/main.c:243
-msgid "Name of the surface cell file for cross-section"
+msgid "Name of the surface raster map for cross-section"
 msgstr ""
 
 #: ../vector/v.vol.rst/main.c:249
@@ -5175,7 +5175,7 @@ msgid "Conversion factor for z-values"
 msgstr ""
 
 #: ../vector/v.vol.rst/main.c:336
-msgid "Output cross-section cell file"
+msgid "Output cross-section raster map"
 msgstr ""
 
 #: ../vector/v.vol.rst/main.c:344
@@ -5401,7 +5401,7 @@ msgstr ""
 
 #: ../vector/v.drape/main.c:124 ../vector/v.extrude/main.c:210
 #, fuzzy, c-format
-msgid "can't open cell file [%s]"
+msgid "can't open raster map [%s]"
 msgstr "Nie mo¿na otworzyæ pliku rastra [%s]"
 
 #: ../vector/v.category/main.c:176
@@ -5810,7 +5810,7 @@ msgstr "Nie mo¿na odnale¿æ pliku wej¶ciowego"
 
 #: ../vector/v.sample/main.c:170
 #, fuzzy, c-format
-msgid "unable to open cell file [%s]"
+msgid "unable to open raster map [%s]"
 msgstr "Nie mo¿na otworzyæ pliku rastra dla [%s]"
 
 #: ../vector/v.sample/main.c:175
@@ -7130,7 +7130,7 @@ msgstr "Wyj¶ciowe warto¶ci kategorii 'integer', nie warto¶ci komórek"
 
 #: ../raster/r.what/main.c:152
 #, c-format
-msgid "%s: can only do up to %d cell files, sorry\n"
+msgid "%s: can only do up to %d raster maps, sorry\n"
 msgstr ""
 
 #: ../raster/r.out.gridatb/main.c:48
@@ -7648,7 +7648,7 @@ msgstr "Niew³a¶ciwa czcionka: %s"
 
 #: ../raster/r.buffer/write_map.c:39
 #, fuzzy, c-format
-msgid "%s: %s - can't create cell file"
+msgid "%s: %s - can't create raster map"
 msgstr "%s - nie mo¿na odczytaæ pliku nag³ówkowego rastra 'cellhd'"
 
 #: ../raster/r.buffer/write_map.c:45
@@ -8218,7 +8218,7 @@ msgstr ""
 
 #: ../raster/r.circle/dist.c:126
 #, fuzzy, c-format
-msgid "Unable to create cell file for [%s]"
+msgid "Unable to create raster map for [%s]"
 msgstr "Nie mo¿na utworzyæ pliku [%s]"
 
 #: ../raster/r.to.rast3/main.c:57 ../raster/r.to.rast3elev/main.c:184
@@ -10974,7 +10974,7 @@ msgstr "Plik wydaje siê nie byæ skompresowany.\n"
 #: ../raster/r.support/modhead/modhead.c:267
 #, c-format
 msgid ""
-"Header indicates %d row%s in the cell file, but the actual file format "
+"Header indicates %d row%s in the raster map, but the actual file format "
 "indicates %d row%s"
 msgstr ""
 "Nag³ówek wskazuje %d rz±d%s w pliku rastrowym, ale w³a¶ciwy format "
@@ -11242,7 +11242,7 @@ msgstr "Uwzglêdniaj warto¶ci NULL podczas przerysowywania"
 
 #: ../raster/r.his/main.c:126
 #, c-format
-msgid "%s: <%s> cell file not found"
+msgid "%s: <%s> raster map not found"
 msgstr "%s: <%s> pliku rastra nie znaleziono"
 
 #: ../raster/r.his/main.c:144 ../raster/r.his/main.c:167
@@ -12923,42 +12923,42 @@ msgstr ""
 
 #: ../raster/r.sun/main.c:479
 #, fuzzy, c-format
-msgid "elevin cell file <%s> not found"
+msgid "elevin raster map <%s> not found"
 msgstr "nie znaleziono pliku <%s> widoku 3d "
 
 #: ../raster/r.sun/main.c:482
 #, fuzzy, c-format
-msgid "aspin cell file <%s> not found"
+msgid "aspin raster map <%s> not found"
 msgstr "pliku rastra [%s] nie znaleziono"
 
 #: ../raster/r.sun/main.c:485
 #, fuzzy, c-format
-msgid "slopein cell file <%s> not found"
+msgid "slopein raster map <%s> not found"
 msgstr "pliku rastra [%s] nie znaleziono"
 
 #: ../raster/r.sun/main.c:498
 #, fuzzy, c-format
-msgid "linkein cell file <%s> not found"
+msgid "linkein raster map <%s> not found"
 msgstr "pliku rastra [%s] nie znaleziono"
 
 #: ../raster/r.sun/main.c:510
 #, fuzzy, c-format
-msgid "albedo cell file <%s> not found"
+msgid "albedo raster map <%s> not found"
 msgstr "pliku rastra [%s] nie znaleziono"
 
 #: ../raster/r.sun/main.c:522
 #, fuzzy, c-format
-msgid "latin cell file <%s> not found"
+msgid "latin raster map <%s> not found"
 msgstr "pliku rastra [%s] nie znaleziono"
 
 #: ../raster/r.sun/main.c:534
 #, fuzzy, c-format
-msgid "coefbh cell file <%s> not found"
+msgid "coefbh raster map <%s> not found"
 msgstr "pliku rastra [%s] nie znaleziono"
 
 #: ../raster/r.sun/main.c:546
 #, fuzzy, c-format
-msgid "coefdh cell file <%s> not found"
+msgid "coefdh raster map <%s> not found"
 msgstr "pliku rastra [%s] nie znaleziono"
 
 #: ../raster/r.sun/main.c:721
@@ -13509,7 +13509,7 @@ msgstr "%s - nie mo¿na otworzyæ pliku rastrowego"
 
 #: ../raster/r.surf.idw/main.c:131
 #, fuzzy, c-format
-msgid "%s - can't create cell file"
+msgid "%s - can't create raster map"
 msgstr "%s - nie mo¿na odczytaæ pliku nag³ówkowego rastra 'cellhd'"
 
 #: ../raster/r.surf.idw/main.c:220 ../raster/r.surf.idw/main.c:668
@@ -13655,7 +13655,7 @@ msgid "Cannot get row %d (error = %d)"
 msgstr "Nie mo¿na pobraæ rzêdu %d (b³±d = %d)"
 
 #: ../raster/r.resamp.rst/main.c:483
-msgid "Maximum value of a cell file is NULL."
+msgid "Maximum value of a raster map is NULL."
 msgstr "Maksymalna warto¶æ pliku rastrowego to NULL."
 
 #: ../raster/r.resamp.rst/main.c:510
@@ -15456,7 +15456,7 @@ msgstr "Naci¶nij ENTER -->"
 #, c-format
 msgid ""
 "\n"
-"** The following cell files in subgroup [%s] do not exist."
+"** The following raster maps in subgroup [%s] do not exist."
 msgstr ""
 "\n"
 "** Nastêpuj±ce pliki w podgrupie [%s] nie istniej±."
@@ -15636,7 +15636,7 @@ msgid "Area already completed."
 msgstr "Obszar ukoñczony."
 
 #: ../imagery/i.class/readbands.c:13
-msgid "Error reading cell file in function readbands."
+msgid "Error reading raster map in function readbands."
 msgstr "B³±d podczas odczytywania pliku rastrowego"
 
 #: ../imagery/i.maxlik/invert.c:30
@@ -17989,7 +17989,7 @@ msgid "warning: unable to open [%s] in [%s]"
 msgstr "ostrze¿enie: nie mo¿na otworzyæ [%s] w [%s]"
 
 #: ../display/d.profile/What.c:37
-msgid "error reading cell file"
+msgid "error reading raster map"
 msgstr "b³±d podczas odczytu pliku rastrowego"
 
 #: ../display/d.profile/Range.c:92
@@ -18693,11 +18693,11 @@ msgstr ""
 #~ msgstr "wyj¶ciowa mapa rastrowa"
 
 #, fuzzy
-#~ msgid "input cell file not found\n"
+#~ msgid "input raster map not found\n"
 #~ msgstr "pliku rastra [%s] nie znaleziono"
 
 #, fuzzy
-#~ msgid "elev cell file not found\n"
+#~ msgid "elev raster map not found\n"
 #~ msgstr "pliku rastra [%s] nie znaleziono"
 
 #~ msgid ""

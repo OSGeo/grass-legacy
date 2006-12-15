@@ -127,7 +127,7 @@ int main(int argc, char **argv)
 
 	R_close_driver() ;
 
-	/* Close the cell files */
+	/* Close the raster maps */
 	for (i = 0; i < 3; i++)
 		G_close_cell(B[i].file) ;
 

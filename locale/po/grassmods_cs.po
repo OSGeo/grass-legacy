@@ -2154,7 +2154,7 @@ msgstr "[%s] je neplatným jménem"
 #: ../doc/raster/r.example/main.c:121 ../raster/r.out.gdal/main.c:78
 #: ../raster/r.bitpattern/main.c:110 ../raster/r.out.bin/main.c:139
 #, c-format
-msgid "Cannot open cell file [%s]"
+msgid "Cannot open raster map [%s]"
 msgstr "Nejsem schopen otevøít rastrový soubor (cell) pro [%s]"
 
 #: ../doc/raster/r.example/main.c:126 ../raster/r.bitpattern/main.c:113
@@ -2759,7 +2759,7 @@ msgid "Interp_segmets failed"
 msgstr "Interp_segmets selhalo"
 
 #: ../vector/v.surf.rst/main.c:735
-msgid "Cannot write cell files -- try to increase resolution"
+msgid "Cannot write raster maps -- try to increase resolution"
 msgstr "Nemohu zapsat rastrové soubory -- pokuste se zvý¹it rozli¹ení"
 
 #: ../vector/v.overlay/main.c:44 ../vector/v.parallel/main.c:38
@@ -5293,7 +5293,7 @@ msgid "Name of the vector map with input x,y,z,w"
 msgstr "Jméno vektorového souboru se vstupem x,y,z,w"
 
 #: ../vector/v.vol.rst/main.c:243
-msgid "Name of the surface cell file for cross-section"
+msgid "Name of the surface raster map for cross-section"
 msgstr "Název rastrové mapy s povrchem pro køí¾ový výbìr"
 
 #: ../vector/v.vol.rst/main.c:249
@@ -5317,7 +5317,7 @@ msgid "Conversion factor for z-values"
 msgstr "Pøevodní koeficient pro hodnoty z"
 
 #: ../vector/v.vol.rst/main.c:336
-msgid "Output cross-section cell file"
+msgid "Output cross-section raster map"
 msgstr "Výstupní rastrový soubor obsahující køí¾ový výbìr"
 
 #: ../vector/v.vol.rst/main.c:344
@@ -5545,7 +5545,7 @@ msgstr "pou¾ívám výchozí nastavení - vzorkování metodou nejbli¾¹ího souseda"
 
 #: ../vector/v.drape/main.c:124 ../vector/v.extrude/main.c:210
 #, c-format
-msgid "can't open cell file [%s]"
+msgid "can't open raster map [%s]"
 msgstr "Nejsem schopen otevøít rastrový soubor (cell) [%s]"
 
 #: ../vector/v.category/main.c:176
@@ -5955,7 +5955,7 @@ msgstr "cemohl jsem nalézt vstupní mapu <%s>"
 
 #: ../vector/v.sample/main.c:170
 #, c-format
-msgid "unable to open cell file [%s]"
+msgid "unable to open raster map [%s]"
 msgstr "Nejsem schopen otevøít rastrový (cell) soubor [%s]."
 
 #: ../vector/v.sample/main.c:175
@@ -7306,7 +7306,7 @@ msgstr "Výstup celoèíselných hodnot kategorií, ne hodnoty bunìk"
 
 #: ../raster/r.what/main.c:152
 #, c-format
-msgid "%s: can only do up to %d cell files, sorry\n"
+msgid "%s: can only do up to %d raster maps, sorry\n"
 msgstr ""
 
 #: ../raster/r.out.gridatb/main.c:48
@@ -7832,7 +7832,7 @@ msgstr "Neplatná metoda: %s"
 
 #: ../raster/r.buffer/write_map.c:39
 #, c-format
-msgid "%s: %s - can't create cell file"
+msgid "%s: %s - can't create raster map"
 msgstr "%s: %s - nemohu vytvoøit rastrový soubor"
 
 #: ../raster/r.buffer/write_map.c:45
@@ -8424,7 +8424,7 @@ msgstr ""
 
 #: ../raster/r.circle/dist.c:126
 #, c-format
-msgid "Unable to create cell file for [%s]"
+msgid "Unable to create raster map for [%s]"
 msgstr "Neschopen vytvoøit rastrový soubor pro [%s]"
 
 #: ../raster/r.to.rast3/main.c:57 ../raster/r.to.rast3elev/main.c:184
@@ -11159,7 +11159,7 @@ msgstr ""
 #: ../raster/r.support/modhead/modhead.c:267
 #, c-format
 msgid ""
-"Header indicates %d row%s in the cell file, but the actual file format "
+"Header indicates %d row%s in the raster map, but the actual file format "
 "indicates %d row%s"
 msgstr ""
 "Hlavièka uvádí %d øádkù %s v souboru, ale platný formát souboru uvádí %d "
@@ -11442,7 +11442,7 @@ msgstr "Pøi vykreslování respektuj NULLové hodnoty"
 
 #: ../raster/r.his/main.c:126
 #, c-format
-msgid "%s: <%s> cell file not found"
+msgid "%s: <%s> raster map not found"
 msgstr "%s: <%s> rastrový soubor nenalezen"
 
 #: ../raster/r.his/main.c:144 ../raster/r.his/main.c:167
@@ -13210,43 +13210,43 @@ msgstr ""
 
 #: ../raster/r.sun/main.c:479
 #, c-format
-msgid "elevin cell file <%s> not found"
+msgid "elevin raster map <%s> not found"
 msgstr "vstupní rastr s elevací <%s> nebyl nalezen"
 
 #: ../raster/r.sun/main.c:482
 #, c-format
-msgid "aspin cell file <%s> not found"
+msgid "aspin raster map <%s> not found"
 msgstr "vstupní rastr s expozicí <%s> nebyl nalezen"
 
 #: ../raster/r.sun/main.c:485
 #, c-format
-msgid "slopein cell file <%s> not found"
+msgid "slopein raster map <%s> not found"
 msgstr "vstupní rastr sklonu <%s> nebyl nalezen"
 
 #: ../raster/r.sun/main.c:498
 #, c-format
-msgid "linkein cell file <%s> not found"
+msgid "linkein raster map <%s> not found"
 msgstr "vstupní rastr s Linkovými koeficienty <%s> nebyl nalezen"
 
 #: ../raster/r.sun/main.c:510
 #, c-format
-msgid "albedo cell file <%s> not found"
+msgid "albedo raster map <%s> not found"
 msgstr "rastrový soubor albeda <%s> nebyl nalezen"
 
 #: ../raster/r.sun/main.c:522
 #, c-format
-msgid "latin cell file <%s> not found"
+msgid "latin raster map <%s> not found"
 msgstr "rastrový soubor se zem. ¹íøkou <%s> nebyl nalezen"
 
 #: ../raster/r.sun/main.c:534
 #, c-format
-msgid "coefbh cell file <%s> not found"
+msgid "coefbh raster map <%s> not found"
 msgstr ""
 "raststrový soubor s koeficientem pøímého sluneèního záøení <%s> nebyl nalezen"
 
 #: ../raster/r.sun/main.c:546
 #, c-format
-msgid "coefdh cell file <%s> not found"
+msgid "coefdh raster map <%s> not found"
 msgstr "rastrový soubor s koeficientem difúzního záøení <%s> nebyl nalezen"
 
 #: ../raster/r.sun/main.c:721
@@ -13787,7 +13787,7 @@ msgstr "%s v %s - nemohu otevøít rastrový soubor"
 
 #: ../raster/r.surf.idw/main.c:131
 #, c-format
-msgid "%s - can't create cell file"
+msgid "%s - can't create raster map"
 msgstr "%s - nemohu vytvoøit rastrový soubor"
 
 #: ../raster/r.surf.idw/main.c:220 ../raster/r.surf.idw/main.c:668
@@ -13928,7 +13928,7 @@ msgid "Cannot get row %d (error = %d)"
 msgstr "Nemohu naèíst øádek %d (chyba = %d)"
 
 #: ../raster/r.resamp.rst/main.c:483
-msgid "Maximum value of a cell file is NULL."
+msgid "Maximum value of a raster map is NULL."
 msgstr "Maximální hodnota rastru je NULL"
 
 #: ../raster/r.resamp.rst/main.c:510
@@ -15735,7 +15735,7 @@ msgstr "Stisknìte RETURN -->"
 #, c-format
 msgid ""
 "\n"
-"** The following cell files in subgroup [%s] do not exist."
+"** The following raster maps in subgroup [%s] do not exist."
 msgstr "** Následující rastrový (cell) soubor v podskupinì [%s] neexistuje."
 
 #: ../imagery/i.class/ask_files.c:63
@@ -15911,7 +15911,7 @@ msgid "Area already completed."
 msgstr "Plocha ji¾ dokonèena."
 
 #: ../imagery/i.class/readbands.c:13
-msgid "Error reading cell file in function readbands."
+msgid "Error reading raster map in function readbands."
 msgstr "Chyba pøi ètení rastrového (cell) souboru ve funkci readbands."
 
 #: ../imagery/i.maxlik/invert.c:30
@@ -18251,7 +18251,7 @@ msgid "warning: unable to open [%s] in [%s]"
 msgstr "upozornìní: nelze otevøít [%s] v [%s]"
 
 #: ../display/d.profile/What.c:37
-msgid "error reading cell file"
+msgid "error reading raster map"
 msgstr "chyba pøi ètení souboru cell"
 
 #: ../display/d.profile/Range.c:92
@@ -19905,10 +19905,10 @@ msgstr "Poèet souborù s vý¹kovým modelem neodpovídá poètu souboru s barvami"
 #~ msgid "output 3dcell map"
 #~ msgstr "vÃ½stupnÃ­ 3dcell mapovÃ¡ vrstva"
 
-#~ msgid "input cell file not found\n"
+#~ msgid "input raster map not found\n"
 #~ msgstr "vstupnÃ­ soubor cell nenÃ­ platnÃ¡\n"
 
-#~ msgid "elev cell file not found\n"
+#~ msgid "elev raster map not found\n"
 #~ msgstr "vÃ½Å¡kovÃ½ soubor cell nebyl nalezen\n"
 
 #~ msgid "Raster map(s) to be converted to VTK-ASCII data format"

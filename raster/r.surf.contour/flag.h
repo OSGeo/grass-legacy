@@ -1,5 +1,5 @@
 /* flag.[ch] is a set of routines which will set up an array of bits
-** that allow the programmer to "flag" cells in a cell file.
+** that allow the programmer to "flag" cells in a raster map.
 **
 ** FLAG *
 ** flag_create(nrows,ncols)

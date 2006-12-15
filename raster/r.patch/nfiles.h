@@ -1,6 +1,6 @@
-/* The number of cell files that can be patched together.
+/* The number of raster maps that can be patched together.
  *
- * All cell files will be opened at one time, so this number can not
+ * All raster maps will be opened at one time, so this number can not
  * be arbitrarily large.
  *
  * Must be smaller than MAXFILES as defined in lib/gis/G.h which 

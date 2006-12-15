@@ -51,7 +51,7 @@ int thin_lines (int iterations)
 			if (bottom[col])			/* not background pixel */
 			{
 				if (col < box_left)		/* find bounding box which will */
-					box_left = col;		/*   cover part of cell file which */
+					box_left = col;		/*   cover part of raster map which */
 				if (col > box_right)		/*   has lines in it */
 					box_right = col;
 				if (row < box_top)

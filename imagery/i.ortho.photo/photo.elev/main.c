@@ -73,7 +73,7 @@ int main (int argc, char *argv[])
 	G__switch_search_path();
 	which_env = 0;
 
-           /* get elevation layer cell file  in target location */
+           /* get elevation layer raster map  in target location */
        select_target_env(); 
        ask_elev(group,location,mapset);
 

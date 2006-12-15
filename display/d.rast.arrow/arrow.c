@@ -376,7 +376,7 @@ int main (int argc, char **argv)
 	sscanf (full_name, "%s", layer_name);
     }
 
-    /* open the cell file */
+    /* open the raster map */
     layer_fd = G_open_cell_old (layer_name, mapset);
     if (layer_fd < 0)
 	G_fatal_error(_("Unable to open raster map [%s] in [%s]"), layer_name, mapset);
@@ -388,7 +388,7 @@ int main (int argc, char **argv)
 
 
     if(opt7->answer) {
-	/* open the magnitude cell file */
+	/* open the magnitude raster map */
 	mag_fd = G_open_cell_old(mag_map, mag_mapset);
 	if(mag_fd < 0)
             G_fatal_error("Unable to open raster map [%s] in [%s]", mag_map, mag_mapset);

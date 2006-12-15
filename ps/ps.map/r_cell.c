@@ -31,7 +31,7 @@ int read_cell (char *name, char *mapset)
     }
     G_get_color_range(&PS.min_color, &PS.max_color, &PS.colors);
 
-    /* open cell file for reading */
+    /* open raster map for reading */
     if ((PS.cell_fd = G_open_cell_old(name, mapset)) < 0)
     {
         error(fullname, "", "can't open raster map");

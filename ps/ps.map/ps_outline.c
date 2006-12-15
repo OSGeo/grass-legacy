@@ -120,7 +120,7 @@ draw_outline (void)
 {
   int raster_size;
   row = col = top = 0;			/* get started for read of first */
-  bottom = 1;				/*   line from cell file */
+  bottom = 1;				/*   line from raster map */
   scan_length = read_next();
   k = 0;
   raster_size = G_raster_size(map_type);
@@ -174,7 +174,7 @@ static int read_next (void)
   return(n);
 }
 
-/* alloc_bufs - allocate buffers we will need for storing cell file */
+/* alloc_bufs - allocate buffers we will need for storing raster map */
 /* data, pointers to extracted lines, area number information */
 
 int o_alloc_bufs (int ncols, int size)
