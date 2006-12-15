@@ -1,10 +1,14 @@
 #include <stdlib.h>
 #include <string.h>
+#include <grass/gis.h>
+#include <grass/glocale.h>
 #include "rule.h"
+
 
 extern CELL DEFAULT;
 extern int default_rule, default_to_itself;
 extern char *default_label;
+
 
 static void compose(struct Reclass *new, const struct Reclass *mid, const struct Reclass *old)
 {
@@ -46,7 +50,7 @@ static void compose(struct Reclass *new, const struct Reclass *mid, const struct
     num = new->max - new->min + 1;
     /* make sure don't overflow int */
     if (num != (int) num)
-	G_fatal_error ("Too many categories");
+	G_fatal_error (_("Too many categories"));
 
     new->num = num;
     new->table = (CELL *) G_calloc (new->num, sizeof(CELL));
@@ -217,11 +221,7 @@ int reclass (char *old_name, char *old_mapset,
 
     is_reclass = G_get_reclass (old_name, old_mapset, &old);
     if (is_reclass < 0)
-    {
-	sprintf (buf, "%s in %s - can't read header file", old_name, old_mapset);
-	G_fatal_error (buf);
-	exit(1);
-    }
+	G_fatal_error (_("%s in %s - can't read header file"), old_name, old_mapset);
 
     if (is_reclass)
     {
@@ -237,31 +237,21 @@ int reclass (char *old_name, char *old_mapset,
     }
 
     if (G_put_reclass (new_name, &new) < 0)
-    {
-	sprintf (buf, "%s - unable to create reclass file", new_name);
-	G_fatal_error (buf);
-	exit(1);
-    }
+	G_fatal_error (_("%s - unable to create reclass file"), new_name);
 
     if (title == NULL)
 	sprintf (title = buf, "Reclass of %s in %s", new.name, new.mapset);
 
     if ((fd = G_fopen_new ("cell", new_name)) == NULL)
-    {
-	sprintf (buf, "%s - unable to create cell file", new_name);
-	G_fatal_error (buf);
-	exit(1);
-    }
+	G_fatal_error (_("%s - unable to create raster map"), new_name);
+
     fprintf (fd, "Don't remove me\n");
     fclose (fd);
 
     G_set_cats_title (title, cats);
     if (G_write_cats (new_name, cats) == -1)
-    {
-	sprintf (buf, "%s - unable to create category file", new_name);
-	G_fatal_error (buf);
-	exit(1);
-    }
+	G_fatal_error (_("%s - unable to create category file"), new_name);
+
     G_free_cats (cats);
 
     G_short_history (new_name, "reclass", &hist);
@@ -274,4 +264,3 @@ int reclass (char *old_name, char *old_mapset,
 
     return 0;
 }
-
