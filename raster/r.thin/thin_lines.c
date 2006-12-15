@@ -65,10 +65,11 @@ int thin_lines (int iterations)
 	if (box_right < box_left || box_bottom < box_top)
 	{
 		unlink(work_file_name);
-		G_fatal_error("%s: could not find bounding box for lines",error_prefix);
-		exit(EXIT_FAILURE);				/* no bounding box found */
+		G_fatal_error (_("%s: Unable to find bounding box for lines"), error_prefix);
 	}
-	G_message("Bounding box:  l = %d, r = %d, t = %d, b = %d",box_left,box_right,box_top,box_bottom);
+	G_message (_("Bounding box:  l = %d, r = %d, t = %d, b = %d"),
+                  box_left, box_right, box_top, box_bottom);
+
 /*
  * thin - thin lines to a single pixel width
  *
@@ -164,8 +165,10 @@ int thin_lines (int iterations)
 		        med = bottom;
                     }        /* end row loop */
               } /* j-loop */
+
 	      G_message(_("Deleted %d  pixels "), deleted);
         } /* while delete >0 */
+
 	if ( (deleted == 0) && (i <= iterations) )
 	    G_message(_("Thinning completed successfully."));
 	else
@@ -192,19 +195,3 @@ encode_neighbours (CELL *top, CELL *middle, CELL *bottom, int col, int neg)
 
 	return (T);
 }
-
-int 
-print_bin (
-/* prints out the char in binary code */
-    int T
-)
-{
-   int i;
-   for(i=7;i>=0;i--)
-      fprintf(stdout, "%d ", (((T>>i)&1)!=0));
-   fprintf(stdout, "\n");
-
-   return 0;
-}
-
-
