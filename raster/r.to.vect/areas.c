@@ -61,7 +61,7 @@
 * Entry points:
 *   extract_areas   driver for boundary extraction, area labelling
 *                   algorithm
-*   alloc_bufs      allocate buffers for cell file data and storage of
+*   alloc_bufs      allocate buffers for raster map data and storage of
 *                   information obtained in the extraction process (v_list,
 *                   a_list, e_list, buffer[0], buffer[1])
 *
@@ -110,7 +110,7 @@ int extract_areas (void)
   double nullVal;
 
   row = col = top = 0;  /* get started for read of first */
-  bottom = 1;  /* line from cell file */
+  bottom = 1;  /* line from raster map */
   area_num = 0;
   tl_area = 0;
 
@@ -494,7 +494,7 @@ static int read_next (void)
   return(n);
 }
 
-/* alloc_bufs - allocate buffers we will need for storing cell file */
+/* alloc_bufs - allocate buffers we will need for storing raster map */
 /* data, pointers to extracted lines, area number information */
 
 int alloc_areas_bufs (int size)

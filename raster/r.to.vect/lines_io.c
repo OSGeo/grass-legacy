@@ -13,7 +13,7 @@
 /* Champaign, IL  61820 */
 /* March 1988 */
 
-/* input is a GRASS cell file */
+/* input is a GRASS raster map */
 /* output is a binary or ascii digit file */
 
 /*

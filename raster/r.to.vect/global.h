@@ -4,11 +4,11 @@
 /*    first_read    flag to indicate that we haven't read from input */
 /*                  file yet */
 /*    last_read     flag to indicate we have reached EOF on input */
-/*    row_length    length of each row of the cell file (i.e., number of */
+/*    row_length    length of each row of the raster map (i.e., number of */
 /*                  columns) */
-/*    n_rows        number of rows in the cell file */
+/*    n_rows        number of rows in the raster map */
 /*    row_count     number of the row just read in--used to prevent reading */
-/*                  beyond end of the cell file */
+/*                  beyond end of the raster map */
 /*    equivs        pointer to allocated equivalence table made by */
 /*                  write_equiv() */
 /*    areas         pointer to allocated array of area information passed */
@@ -41,7 +41,7 @@
 Global int data_type;
 Global int data_size;
 Global struct Map_info Map;
-Global int input_fd;                 /*    input_fd     input cell file descriptor */
+Global int input_fd;                 /*    input_fd     input raster map descriptor */
 Global struct line_cats *Cats;
 Global struct Cell_head cell_head;
 
