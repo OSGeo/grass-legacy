@@ -75,6 +75,9 @@ int main (int argc, char *argv[])
       case MODE_MOVE:
         ret = do_move(&Map);
         break;
+      case MODE_VERTEX:
+        ret = do_move_vertex(&Map);
+        break;
       default:
 	G_warning("Sorry this is not yet implemented");
 	ret=0;

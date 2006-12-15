@@ -99,7 +99,6 @@ int parser(int argc, char*argv[])
     /*
      * check that the given arguments makes sense together 
      */
-
     if ( input_opt->answer != NULL ) {
         if ( (ascii = fopen ( input_opt->answer, "r" ) ) == NULL )
         {
@@ -175,11 +174,11 @@ int parser(int argc, char*argv[])
     else if(strcmp(tool_opt->answer, "move")==0) { /* move requires coords or cats arguments */
 	action_mode = MODE_MOVE;
 	if(move_opt->answers == NULL) { 
-            G_warning(_("For <%s> operation, option <%s> must be set"),"move","to");
+            G_warning(_("For <%s> operation, option <%s> must be set"),"move","move");
             G_usage();
 	    return 0;
         }
-	if((coord_opt->answers == NULL) && 
+	if(coord_opt->answers == NULL && 
             (cat_opt->answers == NULL) &&
             (bbox_opt->answers == NULL)) {
 	    G_warning(_("At least one from <%s> must be specified"),"cats, coords, bbox");
@@ -198,20 +197,6 @@ int parser(int argc, char*argv[])
 	};
 	return 1;
     }
-    else if(strcmp(tool_opt->answer, "vertex")==0) { /* move vertex requires a coord and to options */
-	action_mode = MODE_VERTEX;
-	if(coord_opt->answers == NULL) {
-	    G_warning(_("Required parameter <coords> not set"));
-            G_usage();
-	    return 0;
-	};
-	if(move_opt->answers == NULL) {
-	    G_warning(_("Required parameter <to> not set"));
-            G_usage();
-	    return 0;
-	};
-	return 1;
-    }
     else if(strcmp(tool_opt->answer, "break")==0) { /* break line requires a coord and at options */
 	action_mode = MODE_BREAK;
 	if(coord_opt->answers == NULL) {
@@ -225,6 +210,21 @@ int parser(int argc, char*argv[])
 	    return 0;
 	};
 	return 1;
+    }
+    else if(strcmp(tool_opt->answer, "vertex")==0) { /* vertex requires a coord and snap or bbox options */
+        action_mode = MODE_VERTEX;
+        if (coord_opt->answers == NULL && 
+            bbox_opt->answers == NULL) {
+	    G_warning(_("At least one from <%s> must be specified"),"coords, bbox");
+            G_usage();
+	    return 0;
+        }
+        if (move_opt->answers == NULL) {
+            G_warning(_("For <%s> operation, option <%s> must be set"),"vertex","move");
+            G_usage();
+	    return 0;
+
+        }
     }
     else if(strcmp(tool_opt->answer, "split")==0) { /* split line requires a coord and at options */
 	action_mode = MODE_SPLIT;

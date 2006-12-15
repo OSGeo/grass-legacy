@@ -1,12 +1,16 @@
 #include "global.h"
+/*
 static int _get_next_cat(int *ci, struct cat_list * cl, int prev_cat);
+*/
 
 /**
  * @todo if same feature exists already, then only add cat */
+
+/* commented out Jachym
 int do_add(struct Map_info *Map)
 {
     int next_cat=-1;
-    int layer=atoi(fld_opt->answer);
+    int layer=atoi(field_opt->answer);
     int type;
     int i,np, cc=0, ci=0;
     struct line_pnts *line=NULL, *point=NULL;
@@ -86,7 +90,6 @@ int do_add(struct Map_info *Map)
 	    }
 	    cat_max_set(layer, next_cat);
 	    next_cat = _get_next_cat(&ci, cl, next_cat);
-	    /* Vect_destroy_line_struct(point); */
 	}
 	break;
       case GV_LINE:
@@ -145,9 +148,7 @@ int do_add(struct Map_info *Map)
 		double xc, yc;
 		int ret;
 
-		/* ret = Vect_get_point_in_poly(line, &xc, &yc); */
 		ret = Vect_get_point_in_poly_isl(line, NULL, 0, &xc, &yc);
-		if(ret < 0) { /* could not find point inside polygon */
 		    return 0;
 		}
 		point = Vect_new_line_struct ();
@@ -167,13 +168,11 @@ int do_add(struct Map_info *Map)
 	    }
 	    cat_max_set(layer, cc);
 	    next_cat = _get_next_cat(&ci, cl, cc);
-	    /* Vect_destroy_line_struct(point); */
 	}
 	else {
 	    cat_max_set(layer, next_cat);
 	    next_cat = _get_next_cat(&ci, cl, next_cat);
 	}
-	/* Vect_destroy_line_struct(line); */
 	break;
       default:
 	G_warning("This should not happen");
@@ -248,6 +247,7 @@ static int _get_next_cat(int *ci, struct cat_list * cl, int prev_cat)
     }
     
 }
+*/
 
 /*
 int snap(struct Map_info *Map, double *ux, double *uy, double *uz,
