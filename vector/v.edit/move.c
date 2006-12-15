@@ -49,7 +49,6 @@ int move_bbox(struct Map_info *Map)
 {
     double x1,y1,x2,y2;
     BOUND_BOX bbox;
-    BOUND_BOX feature_bbox;
     int cat, ret, type, i,j;
     struct ilist *List;
     SPATIAL_INDEX si;

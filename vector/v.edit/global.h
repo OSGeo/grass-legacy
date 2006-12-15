@@ -41,6 +41,9 @@ int move_categories(struct Map_info *Map);
 int move_coordinates(struct Map_info *Map);
 int move_bbox(struct Map_info *Map);
 
+/* vertex.c */
+int do_move_vertex(struct Map_info *Map);
+
 void cat_max_set ( int field, int cat);
 int cat_max_get ( int field );
 void cat_init(struct Map_info *Map);
