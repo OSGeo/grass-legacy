@@ -4,48 +4,75 @@ int parser(int argc, char*argv[])
 {
     map_opt = G_define_standard_option(G_OPT_V_MAP);
 
-    act_opt = G_define_option();
-    act_opt->key         = "action";
-    act_opt->type        = TYPE_STRING;
-    act_opt->required    = YES;
-    act_opt->multiple    = NO;
-    act_opt->description = _("The edit action to take.");
-    act_opt->options     = "create,add,delete,move,merge";
+    tool_opt = G_define_option();
+    tool_opt->key         = "tool";
+    tool_opt->type        = TYPE_STRING;
+    tool_opt->required    = YES;
+    tool_opt->multiple    = NO;
+    tool_opt->description = _("The edit tool to take.\n"
+                             "\t\tcreate - Create new vector file\n"
+                             "\t\tadd    - Add new vector feature to existing vector file\n"
+                             "\t\tdelete - Delete feature from vector file\n"
+                             "\t\tmove   - Move feature in vector file\n"
+                             "\t\tvertex - Move just only vertex\n"
+                             "\t\tmerge  - Merge two vector lines togher\n"
+                             "\t\tbreak  - Add new vertex to existing vector line\n"
+                             "\t\tsplit  - Split line into two separate lines");
+    tool_opt->options     = "create,add,delete,move,vertex,merge,break,split";
 
-    typ_opt = G_define_standard_option(G_OPT_V_TYPE);
-    typ_opt->required    = NO;
-    typ_opt->description = _("Select type. Required for add action.");
-    typ_opt->options     = "point,line,area,centroid,boundary";
-    typ_opt->answer      = "point";
-    
+    input_opt = G_define_option();
+    input_opt->key      = "input";
+    input_opt->type     = TYPE_STRING;
+    input_opt->required = NO;
+    input_opt->multiple = NO;
+    input_opt->description = _("ASCII file to be converted to binary vector file, if not given reads from standard input");
+
     cat_opt = G_define_standard_option(G_OPT_V_CATS);
     cat_opt->required    = NO;
     
-    pnt_opt = G_define_option();
-    pnt_opt->key         = "coords";
-    pnt_opt->key_desc    = "x,y";
-    pnt_opt->type        = TYPE_DOUBLE;
-    pnt_opt->required    = NO;
-    pnt_opt->multiple    = YES;
-    pnt_opt->description = _("An x,y list of points. Required for add and move actions.");
+    coord_opt = G_define_option();
+    coord_opt->key         = "coords";
+    coord_opt->key_desc    = "x,y";
+    coord_opt->type        = TYPE_DOUBLE;
+    coord_opt->required    = NO;
+    coord_opt->multiple    = YES;
+    coord_opt->description = _("An x,y list of points. Required for add and move actions.");
     
-    val_opt = G_define_option();
-    val_opt->key         = "values";
-    val_opt->type        = TYPE_STRING;
-    val_opt->required    = NO;
-    val_opt->multiple    = NO;
-    val_opt->description = _("A comma-separated list of attr=val pairs.");
+    move_opt = G_define_option();
+    move_opt->key         = "move";
+    move_opt->key_desc    = "x,y";
+    move_opt->type        = TYPE_DOUBLE;
+    move_opt->required    = NO;
+    move_opt->multiple    = NO;
+    move_opt->description = _("Difference in x,y direction for moving feature or vertex");
+    
+    at_opt =  G_define_option();
+    at_opt->key         = "at";
+    at_opt->key_desc    = "x,y";
+    at_opt->type        = TYPE_DOUBLE;
+    at_opt->required    = NO;
+    at_opt->multiple    = NO;
+    at_opt->description = _("An x,y location of breaking feature");
+    
+    bbox_opt =  G_define_option();
+    bbox_opt->key         = "bbox";
+    bbox_opt->key_desc    = "x1,y1,x2,y2";
+    bbox_opt->type        = TYPE_DOUBLE;
+    bbox_opt->required    = NO;
+    bbox_opt->multiple    = NO;
+    bbox_opt->description = _("Bounding box of selected feature");
 
+    snap_opt = G_define_option();
+    snap_opt->key         = "snap";
+    snap_opt->type        = TYPE_DOUBLE;
+    snap_opt->required    = NO;
+    snap_opt->multiple    = NO;
+    snap_opt->description = _("Object points will snap to existing points within snap units.");
+    snap_opt->answer      = "5.0";
+    
+ 
     fld_opt = G_define_standard_option(G_OPT_V_FIELD);
 
-    snp_opt = G_define_option();
-    snp_opt->key         = "snap";
-    snp_opt->type        = TYPE_DOUBLE;
-    snp_opt->required    = NO;
-    snp_opt->multiple    = NO;
-    snp_opt->description = _("Object points will snap to existing points within snap units.");
-    snp_opt->answer      = "5.0";
-    
     t_flg = G_define_flag();
     t_flg->key = 't';
     t_flg->description = _("Do not use topology.");
@@ -62,59 +89,162 @@ int parser(int argc, char*argv[])
     c_flg->key = 'c';
     c_flg->description = _("Do not close boundaries");
 
+    n_flg = G_define_flag();
+    n_flg->key          = 'n';
+    n_flg->description  = _("Don't expect a header");
+
     if(G_parser(argc, argv))
 	return 0;
 
-    /* check that the given arguments makes sense together*/
-/** @todo check for incorrect extra parameters */
+    /*
+     * check that the given arguments makes sense together 
+     */
 
-    if(strcmp(act_opt->answer, "create")==0) { /* create requires nothing extra*/
+    if ( input_opt->answer != NULL ) {
+        if ( (ascii = fopen ( input_opt->answer, "r" ) ) == NULL )
+        {
+            G_warning(_("Could not open ascii file <%s>"), input_opt->answer);
+            G_usage();
+        }
+    } else {
+        ascii = stdin;
+    }
+
+    /* check for coordinate param */
+    if (coord_opt->answers != NULL) {
+        int i = 0;
+        for (i = 0; coord_opt->answers[i]; i ++)
+            ;
+        if (i%2 != 0) {
+            G_warning(_("Number of coordinates must be odd number"));
+            G_usage();
+	    return 0;
+        }
+
+    }
+
+    /* check for bbox param */
+    if (bbox_opt->answers != NULL) {
+        int i = 0;
+        for (i = 0; bbox_opt->answers[i]; i ++)
+            ;
+        if (i%2 != 0) {
+            G_warning(_("Number of coordinates must be odd number"));
+            G_usage();
+	    return 0;
+        }
+
+    }
+    
+    /* check for move param */
+    if (move_opt->answers != NULL) {
+        int i = 0;
+        for (i = 0; move_opt->answers[i]; i ++)
+            ;
+        if (i<1) {
+            G_warning(_("Two coordinates are requered"));
+            G_usage();
+	    return 0;
+        }
+
+    }
+
+
+    /* check that the given arguments makes sense together */
+    /** @todo check for incorrect extra parameters */
+    if(strcmp(tool_opt->answer, "create")==0) { /* create requires nothing extra*/
 	action_mode = MODE_CREATE;
 	return 1;
     }
     
-    snap = atof(snp_opt->answer);
-    
-    if(strcmp(act_opt->answer, "add")==0) { /* add requires a points argument */
+    if(strcmp(tool_opt->answer, "add")==0) { /* add requires a points argument */
 	action_mode = MODE_ADD;
-	if(pnt_opt->answers == NULL) {
-	    help(_("Required parameter <points> not set"));
-	    return 0;
-	};
 	return 1;
     }
-    else if(strcmp(act_opt->answer, "delete")==0) { /* del requires a cats */
+    else if(strcmp(tool_opt->answer, "delete")==0) { /* del requires a cats or or bbox or coords*/
 	action_mode = MODE_DEL;
-	if(cat_opt->answers == NULL) {
-	    help(_("Required parameter <cats> not set"));
+	if((cat_opt->answers == NULL) && 
+           (coord_opt->answers == NULL) &&
+           (bbox_opt->answers == NULL)) {
+	    G_warning(_("At least one from <%s> must be specified"),"cats, coords, bbox");
+            G_usage();
 	    return 0;
 	};
 	return 1;
     }
-    else if(strcmp(act_opt->answer, "move")==0) { /* move requires points and cats arguments */
-	action_mode = MODE_ADD;
-	if((pnt_opt->answers == NULL)||(cat_opt->answers == NULL)) {
-	    help(_("Both parameters <points> and <cats> are required."));
+    else if(strcmp(tool_opt->answer, "move")==0) { /* move requires coords or cats arguments */
+	action_mode = MODE_MOVE;
+	if(move_opt->answers == NULL) { 
+            G_warning(_("For <%s> operation, option <%s> must be set"),"move","to");
+            G_usage();
+	    return 0;
+        }
+	if((coord_opt->answers == NULL) && 
+            (cat_opt->answers == NULL) &&
+            (bbox_opt->answers == NULL)) {
+	    G_warning(_("At least one from <%s> must be specified"),"cats, coords, bbox");
+            G_usage();
 	    return 0;
 	};
 	return 1;
     }
-    else if(strcmp(act_opt->answer, "merge")==0) { /* merge requires a cats argument */
-	action_mode = MODE_ADD;
-	if(cat_opt->answers == NULL) {
-	    help(_("Required parameter <cats> not set"));
+    else if(strcmp(tool_opt->answer, "merge")==0) { /* del requires a cats or or bbox or coords*/
+	action_mode = MODE_MERGE;
+	if((cat_opt->answers == NULL) && 
+           (coord_opt->answers == NULL)) {
+	    G_warning(_("At least one from <%s> must be specified"),"cats, coords");
+            G_usage();
 	    return 0;
 	};
 	return 1;
     }
+    else if(strcmp(tool_opt->answer, "vertex")==0) { /* move vertex requires a coord and to options */
+	action_mode = MODE_VERTEX;
+	if(coord_opt->answers == NULL) {
+	    G_warning(_("Required parameter <coords> not set"));
+            G_usage();
+	    return 0;
+	};
+	if(move_opt->answers == NULL) {
+	    G_warning(_("Required parameter <to> not set"));
+            G_usage();
+	    return 0;
+	};
+	return 1;
+    }
+    else if(strcmp(tool_opt->answer, "break")==0) { /* break line requires a coord and at options */
+	action_mode = MODE_BREAK;
+	if(coord_opt->answers == NULL) {
+	    G_warning(_("Required parameter <coords> not set"));
+            G_usage();
+	    return 0;
+	};
+	if(at_opt->answers == NULL) {
+	    G_warning(_("Required parameter <at> not set"));
+            G_usage();
+	    return 0;
+	};
+	return 1;
+    }
+    else if(strcmp(tool_opt->answer, "split")==0) { /* split line requires a coord and at options */
+	action_mode = MODE_SPLIT;
+	if(coord_opt->answers == NULL) {
+	    G_warning(_("Required parameter <coords> not set"));
+            G_usage();
+	    return 0;
+	};
+	if(at_opt->answers == NULL) {
+	    G_warning(_("Required parameter <at> not set"));
+            G_usage();
+	    return 0;
+	};
+	return 1;
+    }
+
     else {
-	help(_("This should never happen."));
+	G_warning(_("Operation <%s> not implemented."),tool_opt->answer);
+        G_usage();
 	return 0;
     }
 }
 
-void help(const char *msg)
-{
-    G_message("\nERROR: %s\n\n", msg);
-    G_usage();
-}

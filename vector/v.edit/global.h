@@ -18,15 +18,28 @@ enum mode {
     MODE_ADD,
     MODE_DEL,
     MODE_MOVE,
+    MODE_VERTEX,
+    MODE_SPLIT,
+    MODE_BREAK,
     MODE_MERGE
 };
 
-void help(const char *msg);
 int parser(int argc, char*argv[]);
 
-int do_add(struct Map_info *Map);
+/* delete.c */
 int do_del(struct Map_info *Map);
+int delete_categories(struct Map_info *Map);
+int delete_coordinates(struct Map_info *Map);
+int delete_bbox(struct Map_info *Map);
 
+/* a2b.c */
+int asc_to_bin(FILE *, struct Map_info *);
+
+/* move.c */
+int do_move(struct Map_info *Map);
+int move_categories(struct Map_info *Map);
+int move_coordinates(struct Map_info *Map);
+int move_bbox(struct Map_info *Map);
 
 void cat_max_set ( int field, int cat);
 int cat_max_get ( int field );
@@ -37,11 +50,14 @@ int attr_new(struct Map_info *Map, int field, int cat, const char *vals);
 int attr_edit(struct Map_info *Map, int field, int cat, const char *vals);
 int attr_del(struct Map_info *Map, int field, int cat);
 
-global struct Option *map_opt, *act_opt, *typ_opt, *cat_opt, *pnt_opt, *fld_opt, *val_opt, *snp_opt;
-global struct Flag *n_flg, *t_flg, *d_flg, *b_flg, *c_flg;
+global struct Option *input_opt, *map_opt, *tool_opt, *coord_opt, *cat_opt, *move_opt, *at_opt, *bbox_opt, *snap_opt, *fld_opt;
+global struct Flag *n_flg, *t_flg, *d_flg, *b_flg, *c_flg, *n_flg;
 global struct GModule *module;
 global struct Map_info Map;
 global enum mode action_mode;
 global char *mapset;
-global double snap;
+
+global FILE *ascii;
+
+
 #endif
