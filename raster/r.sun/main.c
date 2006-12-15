@@ -489,13 +489,13 @@ int INPUT(void)
     }
 
     if ((mapset1 = G_find_cell(elevin, "")) == NULL)
-	G_fatal_error(_("elevin cell file <%s> not found"), elevin);
+	G_fatal_error(_("elevin raster map <%s> not found"), elevin);
 
     if ((mapset2 = G_find_cell(aspin, "")) == NULL)
-	G_fatal_error(_("aspin cell file <%s> not found"), aspin);
+	G_fatal_error(_("aspin raster map <%s> not found"), aspin);
 
     if ((mapset3 = G_find_cell(slopein, "")) == NULL)
-	G_fatal_error(_("slopein cell file <%s> not found"), slopein);
+	G_fatal_error(_("slopein raster map <%s> not found"), slopein);
 
     fd1 = G_open_cell_old(elevin, mapset1);
     fd2 = G_open_cell_old(aspin, mapset2);
@@ -508,7 +508,7 @@ int INPUT(void)
 	    li[l] = (float *)G_malloc (sizeof(float) * (n));
 
 	if ((mapset4 = G_find_cell(linkein, "")) == NULL)
-	    G_fatal_error(_("linkein cell file <%s> not found"), linkein);
+	    G_fatal_error(_("linkein raster map <%s> not found"), linkein);
 
 	fd4 = G_open_cell_old(linkein, mapset4);
     }
@@ -520,7 +520,7 @@ int INPUT(void)
 	    a[l] = (float *)G_malloc (sizeof(float) * (n));
 
 	if ((mapset5 = G_find_cell(albedo, "")) == NULL)
-	    G_fatal_error(_("albedo cell file <%s> not found"), albedo);
+	    G_fatal_error(_("albedo raster map <%s> not found"), albedo);
 
 	fd5 = G_open_cell_old(albedo, mapset5);
     }
@@ -532,7 +532,7 @@ int INPUT(void)
 	    la[l] = (float *)G_malloc (sizeof(float) * (n));
 
 	if ((mapset6 = G_find_cell(latin, "")) == NULL)
-	    G_fatal_error(_("latin cell file <%s> not found"), latin);
+	    G_fatal_error(_("latin raster map <%s> not found"), latin);
 
 	fd6 = G_open_cell_old(latin, mapset6);
     }
@@ -544,7 +544,7 @@ int INPUT(void)
 	    cbhr[l] = (float *)G_malloc (sizeof(float) * (n));
 
 	if ((mapset7 = G_find_cell(coefbh, "")) == NULL)
-	    G_fatal_error(_("coefbh cell file <%s> not found"), coefbh);
+	    G_fatal_error(_("coefbh raster map <%s> not found"), coefbh);
 
 	fr1 = G_open_cell_old(coefbh, mapset7);
     }
@@ -556,7 +556,7 @@ int INPUT(void)
 	    cdhr[l] = (float *)G_malloc (sizeof(float) * (n));
 
 	if ((mapset8 = G_find_cell(coefdh, "")) == NULL)
-	    G_fatal_error(_("coefdh cell file <%s> not found"), coefdh);
+	    G_fatal_error(_("coefdh raster map <%s> not found"), coefdh);
 
 	fr2 = G_open_cell_old(coefdh, mapset8);
     }
