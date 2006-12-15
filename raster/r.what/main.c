@@ -46,7 +46,6 @@ int main(int argc,char *argv[])
   int line;
   char buffer[1024];
   char **ptr;
-  char *message;
   struct Option *opt1, *opt2, *opt3, *opt4;
   struct Flag *flag1, *flag2, *flag3;
   int Cache_size;
@@ -148,11 +147,8 @@ int main(int argc,char *argv[])
       char name[GNAME_MAX];
 
       if (nfiles >= NFILES)
-      {
-	  G_asprintf (&message, _("%s: can only do up to %d cell files, sorry\n"),
+	  G_fatal_error (_("%s: can only do up to %d raster maps, sorry\n"),
 	      G_program_name(), NFILES);
-	  G_fatal_error(message);
-      }
 
       strcpy (name, *ptr);
       if(NULL == (mapset = G_find_cell2 (name, "")))
