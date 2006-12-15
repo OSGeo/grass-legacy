@@ -1123,7 +1123,7 @@ while (G_next_cell_stat(&cat,&count,&s)
 
 \subsection The_CELL_Data_Type The CELL Data Type
 
-GRASS integer cell file data is defined to be of type CELL. This data
+GRASS integer raster map data is defined to be of type CELL. This data
 type is defined in the "gis.h" header file. Programmers must declare
 all variables and buffers which will hold raster data or category
 codes as type CELL.  Under GRASS the CELL data type is declared to be
