@@ -1,4 +1,4 @@
-/* this program makes an elevation cell file from a contour map
+/* this program makes an elevation raster map from a contour map
 ** that has been converted to cell form.
 ** last modified /06/07/91
 ** by  Chuck Ehlschlaeger
@@ -64,7 +64,7 @@ main (int argc, char *argv[])
 	off = 0;
 
 	if (G_parser(argc, argv))
-		exit(-1);
+		exit (EXIT_FAILURE);
 
 	con_name = opt1->answer;
 	alt_name = opt2->answer;
@@ -77,7 +77,7 @@ main (int argc, char *argv[])
 
 	con_mapset = G_find_cell2(con_name, "");
 	if (!con_mapset)
-		G_fatal_error ("contour cell file [%s] not found\n", con_name);
+		G_fatal_error ("Contour raster map [%s] not found", con_name);
 
 	nrows = G_window_rows();
 	ncols = G_window_cols();
@@ -160,5 +160,5 @@ main (int argc, char *argv[])
 	G_command_history(&history);
 	G_write_history(alt_name, &history);
 
-	exit(0);
+	exit (EXIT_SUCCESS);
 }
