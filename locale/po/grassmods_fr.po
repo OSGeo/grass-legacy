@@ -7069,8 +7069,8 @@ msgstr "Écriture du nouveau fichier cats..."
 
 #: ../vector/v.proj/main.c:199
 #, fuzzy
-msgid "Reading input dig file."
-msgstr "Échec d'ouverture du fichier dig."
+msgid "Reading input vector map."
+msgstr "Échec d'ouverture du fichier vectorielle."
 
 #: ../vector/v.proj/main.c:205
 #, fuzzy, c-format

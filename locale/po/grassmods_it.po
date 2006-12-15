@@ -6741,8 +6741,8 @@ msgstr "Non riesco a trovare il file raster %s"
 
 #: ../vector/v.proj/main.c:199
 #, fuzzy
-msgid "Reading input dig file."
-msgstr "Mappa raster risultante"
+msgid "Reading input vector map."
+msgstr "Leggere mappa vettoriale"
 
 #: ../vector/v.proj/main.c:205
 #, c-format

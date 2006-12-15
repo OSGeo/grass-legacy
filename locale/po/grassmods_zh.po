@@ -6611,7 +6611,7 @@ msgstr "创建一些临时文件 ..."
 
 #: ../vector/v.proj/main.c:199
 #, fuzzy
-msgid "Reading input dig file."
+msgid "Reading input vector map."
 msgstr "无法打开输入的dig文件。"
 
 #: ../vector/v.proj/main.c:205

@@ -6338,7 +6338,7 @@ msgid ""
 msgstr ""
 
 #: ../vector/v.proj/main.c:199
-msgid "Reading input dig file."
+msgid "Reading input vector map."
 msgstr ""
 
 #: ../vector/v.proj/main.c:205

@@ -6770,7 +6770,7 @@ msgstr ""
 "Đang tạo tập tin vector...\n"
 
 #: ../vector/v.proj/main.c:199
-msgid "Reading input dig file."
+msgid "Reading input vector map."
 msgstr "Đang đọc tập tin dig đầu vào."
 
 #: ../vector/v.proj/main.c:205

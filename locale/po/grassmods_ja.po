@@ -6810,7 +6810,7 @@ msgstr "入力するファイル"
 
 #: ../vector/v.proj/main.c:199
 #, fuzzy
-msgid "Reading input dig file."
+msgid "Reading input vector map."
 msgstr "入力するファイル"
 
 #: ../vector/v.proj/main.c:205

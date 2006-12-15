@@ -6542,7 +6542,7 @@ msgstr "Rakstu jaunu failu... \n"
 
 #: ../vector/v.proj/main.c:199
 #, fuzzy
-msgid "Reading input dig file."
+msgid "Reading input vector map."
 msgstr "Neveiksme atverot ieejas dig ieejas failu"
 
 #: ../vector/v.proj/main.c:205
