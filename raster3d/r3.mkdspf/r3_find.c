@@ -36,7 +36,7 @@ char *check_get_any_dspname(char *dspf, char *g3f, char *mset)
 	return(NULL);
 
     if (!G_find_grid3(g3f, ""))
-        G_fatal_error("[%s]: invalid 3dcell file.", g3f);
+        G_fatal_error("[%s] 3D raster map not found", g3f);
 
     if(mset){   /* otherwise must be reading only  */
 	if(g3_find_dsp_file (g3f, dspf, mset)){  /* already exists */

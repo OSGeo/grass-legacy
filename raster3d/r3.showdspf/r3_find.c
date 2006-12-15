@@ -39,8 +39,7 @@ static char dspout[200];
 	return(NULL);
 
     if(!G_find_grid3(g3f, "")){
-	fprintf
-	(stderr, "[%s] Invalid 3dcell file (does not exist)\n", g3f);
+	fprintf(stderr, "[%s] 3D raster map not found\n", g3f);
 	return(NULL);
     }
 
