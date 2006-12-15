@@ -104,7 +104,7 @@ int main(int argc, char *argv[])
     flag.swap->description = _("Byte Swap output");
 
     if (G_parser(argc, argv))
-	exit(1);
+	exit (EXIT_FAILURE);
 
     if( sscanf(parm.null->answer, "%d", &null_str) != 1 )
 	G_fatal_error(_("Invalid value for null (integers only)"));
@@ -130,7 +130,7 @@ int main(int argc, char *argv[])
 
     fd = G_open_cell_old(name, mapset);
     if (fd < 0)
-	G_fatal_error(_("Cannot open cell file [%s]"), name);
+	G_fatal_error(_("Cannot open raster map [%s]"), name);
 
     map_type = G_get_raster_map_type(fd);
     if (!flag.int_out->answer)
@@ -390,7 +390,8 @@ int main(int argc, char *argv[])
 
     G_close_cell(fd);
     fclose(fp);
-    exit(0);
+
+    exit (EXIT_SUCCESS);
 }
 
 #ifdef UNUSED
