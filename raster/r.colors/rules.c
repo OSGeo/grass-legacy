@@ -21,8 +21,8 @@
 #include <unistd.h>
 #include <string.h>
 #include <grass/gis.h>
-#include "local_proto.h"
 #include <grass/glocale.h>
+#include "local_proto.h"
 
 struct rule
 {
@@ -52,6 +52,7 @@ int read_color_rules(
     int low,high,n;
     int set,nv,others,r,g,b;
     double val, rulemin, rulemax;
+    char minstr[64], maxstr[64];
 
     /* initialization */
     df.r = df.g = df.b = df.set = 0;
@@ -61,8 +62,13 @@ int read_color_rules(
     if (isatty(fileno(fp)))
     {
 	fprintf (stdout, _("Enter rules, \"end\" when done, \"help\" if you need it.\n"));
-	if (is_fp)
-	  fprintf (stdout, _("fp: Data range is %.25f to %.25f\n"), (double)min, (double)max);
+	if (is_fp) {
+	  sprintf(minstr, "%.25f", (double)min);
+	  sprintf(maxstr, "%.25f", (double)max);
+	  G_trim_decimal(minstr);
+	  G_trim_decimal(maxstr);
+	  fprintf (stdout, _("fp: Data range is %s to %s\n"), minstr, maxstr);
+	}
 	else
 	  fprintf (stdout, _("Data range is %ld to %ld\n"), (long)min, (long)max);
     }
