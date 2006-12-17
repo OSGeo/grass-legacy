@@ -1,8 +1,9 @@
 <h2>DESCRIPTION</h2>
 
-<em>v.buffer</em> creates a buffer around features of given type with category of given field.
-The <em>tolerance</em> parameter controls the number of vector segments being generated (the
-smaller the value, the more vector segments are generated).
+<em>v.buffer</em> creates a buffer around features of given <em>type</em>, which
+have a category in the given <em>layer</em>. The <em>tolerance</em> controls
+the number of vector segments being generated (the smaller the value, the more
+vector segments are generated).
 
 <h2>EXAMPLES</h2>
 
@@ -19,8 +20,8 @@ v.buffer input=map output=buffer type=line buffer=100
 v.buffer input=pointsmap output=circles type=point buffer=1000 
 </pre></div>
 <BR>
-Note that attributes are not transferred (due to potential buffer overlap which cannot be 
-resolved automatically).
+Note that attributes are not transferred (due to potential buffer overlap which
+cannot be resolved automatically).
 
 <h4>Non-overlapping circles around input points with attribute transfer</h4>
 
@@ -45,9 +46,9 @@ the buffer size is bigger than input features. Usually you can solve the
 problem if you run <em>v.buffer</em> more times with smaller buffer.
 <P>
 The <b>bufcol</b> dynamic buffer distance parameter has problems cleaning
-complex features. (holes left filled, etc.) If you experience problems
-try running <em>v.buffer</em> multiple times with a single buffer distance
-and patch the results with <em>v.patch</em> and remove any overlaps with 
+complex features. (holes left filled, etc.) If you experience problems, try
+running <em>v.buffer</em> multiple times with a single buffer distance, patch
+the results with <em>v.patch</em> and remove any overlaps with 
 <em>v.extract -d</em>.
 
 <h2>SEE ALSO</h2>
