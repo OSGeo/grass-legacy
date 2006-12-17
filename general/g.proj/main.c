@@ -50,8 +50,7 @@ int main(int argc, char *argv[])
           ;
    
     struct Key_Value *projinfo = NULL, *projunits = NULL;
-    struct Key_Value *old_projinfo = NULL, *old_projunits = NULL;
-    struct Cell_head cellhd, old_cellhd;
+    struct Cell_head cellhd;
     struct GModule *module;
 
     G_gisinit(argv[0]);
@@ -141,14 +140,6 @@ int main(int argc, char *argv[])
 	exit(EXIT_FAILURE);
 
 
-    /* Always read projection information from current location first */
-    G_get_default_window(&old_cellhd);
-
-    if (old_cellhd.proj != PROJECTION_XY) {
-        old_projinfo = G_get_projinfo();
-	old_projunits = G_get_projunits();
-    }
-
 #ifdef HAVE_OGR
     importformats = ((ingeo->answer ? 1 : 0) + (inwkt->answer ? 1 : 0) +
 		     (inproj4->answer ? 1 : 0));
@@ -161,8 +152,10 @@ int main(int argc, char *argv[])
 #endif       
         /* Use data from the current location */
         G_get_default_window(&cellhd);
-        projinfo = old_projinfo;
-        projunits = old_projunits;
+        if (cellhd.proj != PROJECTION_XY) {
+	    projinfo = G_get_projinfo();
+	    projunits = G_get_projunits();
+        }
 #ifdef HAVE_OGR       
     }
     else if (importformats > 1)
@@ -414,11 +407,21 @@ int main(int argc, char *argv[])
 
 		int go_ahead = 0;
 		char *mapset = G_mapset();
+		struct Key_Value *old_projinfo = NULL, *old_projunits = NULL;
+		struct Cell_head old_cellhd;
 		   
 		if (strcmp(mapset, "PERMANENT") != 0)
                     G_fatal_error(_("You must select the PERMANENT mapset before updating the "
 				  "current location's projection. (Current mapset is %s)"), mapset);
 		   
+		/* Read projection information from current location first */
+		G_get_default_window(&old_cellhd);
+
+		if (old_cellhd.proj != PROJECTION_XY) {
+		    old_projinfo = G_get_projinfo();
+		    old_projunits = G_get_projunits();
+		}
+
 	        if(old_projinfo && old_projunits) {
 		    /* Warn as in g.setproj before overwriting current location */
 		    fprintf(stderr, _("\n\nWARNING!  A projection file already exists for this location\n"));
