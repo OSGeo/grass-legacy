@@ -153,6 +153,7 @@ static const char *GRASS_copyright __attribute__((unused))
 typedef enum {
     G_OPT_WHERE,    /* SQL where conditions */
 
+    G_OPT_I_GROUP,  /* old input imagery group */
     G_OPT_R_INPUT,  /* old input raster map */
     G_OPT_R_INPUTS,  /* old input raster maps */
     G_OPT_R_OUTPUT, /* new output raster map */
