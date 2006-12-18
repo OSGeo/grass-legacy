@@ -92,6 +92,7 @@ block *get_block(struct cache *c, int idx)
 		c->grid[ref] = NULL;
 
 	c->grid[idx] = p;
+	c->refs[replace] = idx;
 
 	if (lseek(c->fd, offset, SEEK_SET) < 0)
 		G_fatal_error("Error seeking on segment file");
