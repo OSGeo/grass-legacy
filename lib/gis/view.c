@@ -1,12 +1,15 @@
-/*
-**  Written by Bill Brown  1992 
-**  US Army Construction Engineering Research Lab
-*/
-
-/*
-** Copyright USA CERL 1992. All rights reserved.
-*/
-
+/**
+ * \file view.c
+ *
+ * \brief 3D View functions.
+ *
+ * This program is free software under the GNU General Public License
+ * (>=v2). Read the file COPYING that comes with GRASS for details.
+ *
+ * \author Bill Brown - US Army CERL
+ *
+ * \date 1992-2006
+ */
 
 #include <stdio.h>
 #include <string.h>
@@ -14,22 +17,31 @@
 #include <grass/gis.h>
 #include <grass/glocale.h>
 
+
 #define REQ_KEYS 8
 
-static int get_bool();
-static int read_old_format();
-static void pr_winerr ();
-static void edge_sort();
-static int compare_wind();
+static int compare_wind(struct Cell_head *, struct Cell_head *);
+static int get_bool(char *);
+static void pr_winerr(int, char *);
+static void edge_sort (float sides[4]);
+static int read_old_format(struct G_3dview *, FILE *);
 
 static int vers_major = 4;
 static int vers_minor = 1;
 static int Suppress_warn = 0;
 
-/* ********************************************************************
+
+/**
+ * \fn int G_3dview_warning (int b)
+ *
+ * \brief Turns 3D View warnings on and off.
+ *
  * If Suppress_warn is 0, a warning will be printed if less than 95% of
  * the window when the view was saved overlaps the current window.
-*/
+ *
+ * \param[in] b
+ * \return always returns 0
+ */
 
 int G_3dview_warning(int b)
 {
@@ -39,11 +51,17 @@ int G_3dview_warning(int b)
 }
 
 
-/*********************************************************************/
+/**
+ * \fn int G_get_3dview_defaults (struct G_3dview *v, struct Cell_head *w)
+ *
+ * \brief Sets default for <b>v</b> based on <b>w</b>.
+ *
+ * \param[in,out] v
+ * \param[in] w
+ * \return always returns 1
+ */
 
-int G_get_3dview_defaults(
-struct G_3dview *v,
-struct Cell_head *w)
+int G_get_3dview_defaults(struct G_3dview *v, struct Cell_head *w)
 {
     if(!v || !w)
 	return(-1);
@@ -90,79 +108,76 @@ struct Cell_head *w)
 
 }
 
-/*********************************************************************/
 
+/**
+ * \fn int G_put_3dview (char *fname, char *mapset, struct G_3dview *View, struct Cell_head *Win)
+ *
+ * \brief Saves info to a 3d.view file.
+ *
+ * The address of a window (struct Cell_head *) may be passed, or if 
+ * NULL is passed, the Cell_head structure inside the G_3dview struct 
+ * will be used.  e.g., if you called <i>G_get_3dview_defaults</i> with 
+ * the Cell_head you want saved, the G_3dview returned already contains 
+ * the new Cell_head. But if you're using all the keywords, so didn't 
+ * need defaults, pass this routine the address of a Cell_head.<br>
+ *
+ * User should call <i>G_get_3dview_defaults</i> before filling a 
+ * G_3dview struct to be written if not using all of the optional 
+ * keywords.<br>
+ *
+ * These keywords are constant in all 3d.view files:<br>
+ * PGM_ID<br>
+ * <b>cell keywords:</b><br>
+ * north<br>
+ * south<br>
+ * east<br>
+ * west<br>
+ * rows<br>
+ * cols<br>
+ * <b>required keywords:</b><br>
+ * TO_EASTING<br>
+ * TO_NORTHING<br>
+ * TO_HEIGHT<br>
+ * FROM_EASTING<br>
+ * FROM_NORTHING<br>
+ * FROM_HEIGHT<br>
+ * Z_EXAG<br>
+ * FIELD_VIEW<br>
+ * <b>optional keywords:</b> (defaults provided when reading)<br>
+ * TWIST<br>
+ * MESH_FREQ<br>
+ * POLY_RES<br>
+ * DOAVG<br>
+ * DISPLAY_TYPE<br>
+ * DOZERO<br>
+ * COLORGRID<br>
+ * SHADING<br>
+ * FRINGE<br>
+ * BG_COL<br>
+ * GRID_COL<br>
+ * OTHER_COL<br>
+ * LIGHTS_ON<br>
+ * LIGHTPOS<br>
+ * LIGHTCOL<br>
+ * LIGHTAMBIENT<br>
+ * SHINE<br>
+ * SURFACEONLY<br>
+ *
+ * \param[in] fname file name
+ * \param[in] mapset
+ * \param[in] View
+ * \param[in] Win
+ * \return 1 on success
+ * \return -1 on error
+ */
 
-/* ********************************************************************
- * Library routine for saving info in a 3d.view file.  Requires:
- *
- *    name of file
- *    name of mapset
- *    address of a struct G_3dview with values set. 
- *
- *    The address of a window (struct Cell_head *) may 
- *    be passed, or if NULL is passed, the Cell_head structure inside 
- *    the G_3dview struct will be used.  e.g., if you called
- *    G_get_3dview_defaults with the Cell_head you want saved, the 
- *    G_3dview returned already contains the new Cell_head. But if 
- *    you're using all the keywords, so didn't need defaults, pass this
- *    routine the address of a Cell_head.
- *
- *    These keywords are constant in all 3d.view files:
- * 
- *		PGM_ID
- *		       cell keywords:
- *		north
- *		south
- *		east
- *		west
- *		rows 
- *		cols
- *		     required keywords:
- *		TO_EASTING
- *		TO_NORTHING
- *		TO_HEIGHT
- *		FROM_EASTING
- *		FROM_NORTHING
- *		FROM_HEIGHT
- *		Z_EXAG
- *		FIELD_VIEW
- *		     optional keywords: (defaults provided when reading)
- *		TWIST
- *		MESH_FREQ
- *		POLY_RES
- *              DOAVG
- *		DISPLAY_TYPE         User should call G_get_3dview_defaults
- *		DOZERO               before filling a G_3dview struct
- *		COLORGRID            to be written if not using all of
- *		SHADING              the optional keywords.
- *		FRINGE
- *              BG_COL
- *              GRID_COL
- *              OTHER_COL
- *		LIGHTS_ON
- *		LIGHTPOS
- *		LIGHTCOL
- *		LIGHTAMBIENT
- *		SHINE
- *		SURFACEONLY
- *
- *      
- * Returns -1 on failure
-*/
-
-int G_put_3dview(
-char *fname,
-char *mapset,
-struct G_3dview *View,
-struct Cell_head *Win)
+int G_put_3dview(char *fname, char *mapset,
+        struct G_3dview *View, struct Cell_head *Win)
 {
     FILE *fp;
-    char err_buf[80];
 
     if(NULL == (fp = G_fopen_new("3d.view",fname))){
-	sprintf(err_buf,_("Unable to open %s for writing"), fname);
-	G_warning (err_buf);
+	G_warning(_("Unable to open %s for writing"), fname);
 	return(-1);
     }
 
@@ -217,41 +232,41 @@ struct Cell_head *Win)
     fprintf(fp,"SHINE: %f\n",View->shine);
 
     fclose(fp);
+
     return (1);
 }
 
-/*********************************************************************/
 
+/**
+ * \fn int G_get_3dview (char *fname, char *mapset, struct G_3dview *View)
+ *
+ * \brief Gets a 3D View.
+ *
+ * If reading an old format, the window boundaries are not checked 
+ * against the current window since boundaries weren't saved.
+ *
+ * \param[in] fname
+ * \param[in] mapset
+ * \param[in,out] View
+ * \return -1 on error
+ * \return 1 on success
+ * \return 2 if <b>fname</b> was written with this version of routine
+ * \return 0 if is older format (through 4.0)
+ */
 
-
-/* ********************************************************************
- * returns -1 on failure, 0 for old (through 4.0) d.3d format file
- * or if the window was not saved in the 3dview file,
- * 2 if file was written using current version of this routine, otherwise 1.
- * Defaults provided for non-required keywords.  If reading an old format,
- * the window boundaries are not checked against the current window since
- * boundaries weren't saved.
-*/
-
-int G_get_3dview(
-char *fname,
-char *mapset,
-struct G_3dview *View)
+int G_get_3dview(char *fname, char *mapset, struct G_3dview *View)
 {
     struct Cell_head curwin;
     FILE *fp;
-    char err_buf[80], buffer[80], keystring[24], boo[8], nbuf[128], ebuf[128];
-    int current = 0;                /* current version flag */
+    char buffer[80], keystring[24], boo[8], nbuf[128], ebuf[128];
     int lap, v_maj, v_min, wind_keys = 0, reqkeys = 0;
-
+    int current = 0;                /* current version flag */
 
     mapset = G_find_file2 ("3d.view", fname, mapset);
     if(mapset != NULL)
     {
-
 	if(NULL == (fp = G_fopen_old("3d.view",fname,mapset))){
-	    sprintf(err_buf,_("Unable to open %s for reading"), fname);
-	    G_warning (err_buf);
+	    G_warning(_("Unable to open %s for reading"), fname);
 	    return(-1);
 	}
 
@@ -451,7 +466,6 @@ struct G_3dview *View)
 	else
 	    return(0);    /* older format */
 
-
 	if(!Suppress_warn){
 	    if(95 > (lap = compare_wind(&(View->vwin),&curwin))){
 
@@ -469,28 +483,22 @@ struct G_3dview *View)
 	}
     }
     else{
-	sprintf(err_buf,_("Unable to open %s for reading"), fname);
-	G_warning (err_buf);
+	G_warning(_("Unable to open %s for reading"), fname);
 	return(-1);
     }
+
     if(current) return(2);
+
     return(1);
 }
 
-/*********************************************************************/
 
+/* returns the percentage of savedwin that overlaps curwin */
 
-
-/* *********************************************************************
- * returns the percentage of savedwin that overlaps curwin 
-*/
-
-static int compare_wind(
-struct Cell_head *savedwin, 
-struct Cell_head *curwin)
+static int compare_wind(struct Cell_head *savedwin, struct Cell_head *curwin)
 {
-float e_ings[4], n_ings[4], area_lap, area_saved;
-int outside = 0;
+    float e_ings[4], n_ings[4], area_lap, area_saved;
+    int outside = 0;
 
     if(savedwin->north < curwin->south) outside = 1;
     if(savedwin->south > curwin->north) outside = 1;
@@ -517,38 +525,30 @@ int outside = 0;
     return ((int)(area_lap * 100.0 / area_saved));
 }
 
-/*********************************************************************/
 
-
-static int get_bool( char *str)
+static int get_bool(char *str)
 {
     if (str[0] == 'y' || str[0] == 'Y')
 	return (1);
     if (str[0] == 'n' || str[0] == 'N')
 	return (0);
+
     return (atoi(str) ? 1 : 0);
 }
     
-/*********************************************************************/
-
 
 static void pr_winerr (
     int vis,         /* % of saved window overlapping current window */
     char *viewname)
 {
-    char err_buf[80];
-
     switch(vis)
     {
     case 0:
-	sprintf(err_buf,_(" Window saved in \"%s\" is completely outside of current GRASS window."), viewname);
-	G_warning (err_buf);
+        G_warning(_(" Window saved in \"%s\" is completely outside of current GRASS window."), viewname);
 	break;
     default:
-	sprintf(err_buf,_(" Only %d%% of window saved in \"%s\" overlaps with current GRASS window."), vis, viewname);
-	G_warning (err_buf);
+        G_warning(_(" Only %d%% of window saved in \"%s\" overlaps with current GRASS window."), vis, viewname);
 	break;
-
     }
 }
 
@@ -571,18 +571,13 @@ static void edge_sort (float sides[4])
     }
 }
 
-/*********************************************************************/
 
-
-static int read_old_format(
-struct G_3dview *v,
-FILE *fp)
+static int read_old_format(struct G_3dview *v, FILE *fp)
 {
     char buffer[80];
     int req_keys = 0;
     double td;
     char boo[8];
-
 
         strcpy((v->pgm_id), "d.3d");
 	if(1 == sscanf(fgets(buffer, 80, fp),"%f",&(v->from_to[1][0])) )
@@ -633,8 +628,3 @@ FILE *fp)
 	else 
 	    return (-1);
 }
-
-/*********************************************************************/
-
-
-
