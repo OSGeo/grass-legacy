@@ -63,6 +63,7 @@ SUBDIRS = \
 	r.patch \
 	r.profile \
 	r.proj \
+	r.proj.seg \
 	r.quant \
 	r.random \
 	r.random.cells \
