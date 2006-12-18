@@ -23,7 +23,7 @@
 	set env(SF_Y) 0
 	set env(SF_RL) [expr abs(round(double($s - $n) / double($env(SF_NSRES))))]
 	set env(SF_CL) [expr abs(round(double($e - $w) / double($env(SF_EWRES))))]
-	exec rm -f $env(TMP).tmp
+	file delete $env(TMP).tmp
 	#debug line
 	#tk_messageBox -message "$env(SF_N)|$env(SF_S)|$env(SF_W)|$env(SF_E)|$env(SF_NSRES)|$env(SF_EWRES)|"
 	
@@ -208,7 +208,7 @@ switch $selection {
 			#tk_messageBox -message "$x|$y|$rl|$cl"
 			exec echo "SAMPLINGFRAME $x|$y|$rl|$cl" >> $tmp.set 
 			tk_messageBox -message "Selected area set as sampling frame" -type ok
-			exec rm -f $tmp.tmp
+			file delete $tmp.tmp
 			$button configure -state disabled
 		} else {
 			tk_messageBox -message "Warning sampling frame not set" -type ok -icon warning
@@ -438,7 +438,7 @@ proc drawRegions { number } {
 				#tk_messageBox -message "$x|$y|$rl|$cl"
 				exec echo "MASKEDSAMPLEAREA $x|$y|$rl|$cl|$r_name" >> $env(TMP).set 
 				tk_messageBox -message "Selected region saved as sampling area" -type ok
-				exec rm -f $env(TMP).tmp
+				file delete $env(TMP).tmp
 			} else {
 				tk_messageBox -message "Please redraw region number $i" -type ok -icon warning
 			}
@@ -494,7 +494,7 @@ proc drawMouseUnits { num sel } {
 						#tk_messageBox -message "$x|$y|$rl|$cl"
 						exec echo "SAMPLEAREA $x|$y|$rl|$cl" >> $env(TMP).set 
 						tk_messageBox -message "Selected area saved as sample area" -type ok
-						exec rm -f $env(TMP).tmp
+						file delete $env(TMP).tmp
 					} else {
 						tk_messageBox -message "Warning sampling area not set" -type ok -icon warning
 					}	
@@ -532,7 +532,7 @@ proc drawMouseUnits { num sel } {
 					#tk_messageBox -message "$x|$y|$rl|$cl"
 					exec echo "MASKEDSAMPLEAREA $x|$y|$rl|$cl|$r_name" >> $env(TMP).set 
 					tk_messageBox -message "Selection saved as sampling area" -type ok
-					exec rm -f $env(TMP).tmp
+					file delete $env(TMP).tmp
 				} else {
 					tk_messageBox -message "Please redraw sample unit number $i" -type ok -icon warning
 				}
@@ -583,7 +583,7 @@ proc drawMouseWindow { sel } {
 						exec echo "MOVINGWINDOW" >> $env(TMP).set
 						exec echo "SAMPLEAREA -1|-1|$rl|$cl" >> $env(TMP).set 
 						tk_messageBox -message "Moving window set" -type ok
-						exec rm -f $env(TMP).tmp
+						file delete $env(TMP).tmp
 					} else {
 						tk_messageBox -message "Moving window not set" -type ok -icon warning
 					}	
@@ -618,7 +618,7 @@ proc drawMouseWindow { sel } {
 					exec echo "MOVINGWINDOW" >> $env(TMP).set
 					exec echo "MASKEDSAMPLEAREA -1|-1|$rl|$cl|$r_name" >> $env(TMP).set 
 					tk_messageBox -message "Moving window set" -type ok
-					exec rm -f $env(TMP).tmp
+					file delete $env(TMP).tmp
 				} else {
 					tk_messageBox -message "Moving window not set" -type ok -icon warning
 				}
@@ -659,7 +659,7 @@ proc circleMask { radius name} {
 	#tk_messageBox -message "$xcenter , $ycenter $env(SF_N) $southEdge $env(SF_W) $easthEdge"
 	#creating circle
 	catch {exec r.circle -b output=$name coordinate=$xcenter,$ycenter max=$radius }
-	exec rm -f $env(TMP).tmp
+	file delete $env(TMP).tmp
 } 
 
 #set sample units from a site file 
@@ -725,7 +725,7 @@ proc centerOverSites { rl cl name} {
 			}
 				
 		}
-	exec rm -f $env(TMP).tmp $env(TMP).line $env(TMP).asc 
+	file delete $env(TMP).tmp $env(TMP).line $env(TMP).asc 
 	
 	} 
 }
@@ -751,6 +751,6 @@ proc saveSettings { widget } {
 	catch { exec cat $env(TMP).set | grep "SYSTEMATICCONTIGUOUS " >> $env(CONF) }
 	catch { exec cat $env(TMP).set | grep "SYSTEMATICNONCONTIGUOUS " >> $env(CONF) } 
 	catch { exec cat $env(TMP).set | grep "STRATIFIEDRANDOM " >> $env(CONF)  }
-	exec rm -f $env(TMP).set
+	file delete $env(TMP).set
 	destroy $widget
 }
