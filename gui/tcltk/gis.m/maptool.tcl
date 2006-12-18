@@ -389,11 +389,11 @@ proc MapToolBar::savefile { type quality } {
 			}
 			"tif" {
 				exec gdal_translate $path.ppm $path.tif -of GTIFF
-				exec rm $path.ppm
+				file delete $path.ppm
 			}
 			"bmp" {
 				exec gdal_translate $path.ppm $path.bmp -of BMP
-				exec rm $path.ppm
+				file delete $path.ppm
 			}
 			"jpg" {
 			       if { $quality == 300 } {
@@ -401,7 +401,7 @@ proc MapToolBar::savefile { type quality } {
 				exec rm $path.ppm
 				} else {
 				exec gdal_translate $path.ppm $path.jpg -of JPEG -co QUALITY=$quality 
-				exec rm $path.ppm
+				file delete $path.ppm
 				}
 			}
 		}
