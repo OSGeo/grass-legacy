@@ -1,15 +1,28 @@
+/**
+ * \file writ_zeros.c
+ *
+ * \brief Write zero functions.
+ *
+ * This program is free software under the GNU General Public License
+ * (>=v2). Read the file COPYING that comes with GRASS for details.
+ *
+ * \author GRASS GIS Development Team
+ *
+ * \date 1999-2006
+ */
+
 #include <unistd.h>
 #include <grass/gis.h>
 
 
-/*!
+/**
  * \fn int G_write_zeros (int fd, size_t n)
  *
  * \brief Writes <b>n</b> bytes of 9 to file descriptor <b>fd</b>
  *
- * \param fd file descriptor
- * \param n number of bytes to write
- * \return int 0 is always returned
+ * \param[in] fd file descriptor
+ * \param[in] n number of bytes to write
+ * \return always returns 0
  */
 
 int G_write_zeros (int fd, size_t n)

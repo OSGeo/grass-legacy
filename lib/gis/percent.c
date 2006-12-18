@@ -1,36 +1,36 @@
-#include <grass/gis.h>
-/******************************************************************
-* G_percent (n, d, s)
-*
-*  print a counter to stderr
-*  prints percentage of n in d, in increments of s
-*
-*  example:
-*
-*       for (row = 0; row < nrows; row++)
-*       {
-*           G_percent (row, nrows, 10);
-*                ...
-*       }
-*       G_percent (row, nrows, 10);
-*
-*  will print percent complete for row/nrows in multiples of 10  
-*****************************************************************/ 
+/**
+ * \file percent.c
+ *
+ * \brief Percentage progress functions.
+ *
+ * This program is free software under the GNU General Public License
+ * (>=v2). Read the file COPYING that comes with GRASS for details.
+ *
+ * \author GRASS GIS Development Team
+ *
+ * \date 1999-2006
+ */
+
 #include <stdio.h>
+#include <grass/gis.h>
+
 
 static int prev = -1;
 static int first = 1;
 
 
-/*!
- * \brief print percent complete messages
+/**
+ * \fn int G_percent (int n, int d, int s)
+ *
+ * \brief Print percent complete messages.
  *
  * This routine prints a percentage complete message to stderr. The
- * percentage complete is (<b>n</b>/ <b>total</b>)*100, and these are printed
- * only for each <b>incr</b> percentage. This is perhaps best explained by
- * example:
+ * percentage complete is <i>(<b>n</b>/<b>d</b>)*100</i>, and these are 
+ * printed only for each <b>s</b> percentage. This is perhaps best 
+ * explained by example:
 \code
   #include <stdio.h>
+  #include <grass/gis.h>
   int row;
   int nrows;
   nrows = 1352; // 1352 is not a special value - example only
@@ -46,10 +46,10 @@ static int first = 1;
  * etc., up to 100%. Each message does not appear on a new line, but rather erases
  * the previous message. After 100%, a new line is printed.
  *
- *  \param n
- *  \param total
- *  \param incr
- *  \return int
+ * \param[in] n current element
+ * \param[in] d total number of elements
+ * \param[in] s increment size
+ * \return always returns 0
  */
 
 int G_percent (int n,int d,int s)
@@ -58,15 +58,18 @@ int G_percent (int n,int d,int s)
 }
 
 
-/*!
- * \brief print percent complete messages
+/**
+ * \fn int G_percent2 (int n, int d, int s, FILE *out)
+ *
+ * \brief Print percent complete messages.
  *
  * This routine prints a percentage complete message to stderr. The
- * percentage complete is (<b>n</b>/ <b>total</b>)*100, and these are printed
- * only for each <b>incr</b> percentage. This is perhaps best explained by
- * example:
+ * percentage complete is <i>(<b>n</b>/<b>d</b>)*100</i>, and these are 
+ * printed only for each <b>s</b> percentage. This is perhaps best 
+ * explained by example:
 \code
   #include <stdio.h>
+  #include <grass/gis.h>
   int row;
   int nrows;
   nrows = 1352; // 1352 is not a special value - example only
@@ -81,11 +84,11 @@ int G_percent (int n,int d,int s)
  * etc., up to 100%. Each message does not appear on a new line, but rather erases
  * the previous message. After 100%, a new line is printed.
  *
- *  \param n
- *  \param total
- *  \param incr
- *  \param out print here
- *  \return int
+ * \param[in] n current element
+ * \param[in] d total number of elements
+ * \param[in] s increment size
+ * \param[in,out] out file to print to
+ * \return always returns 0
  */
 
 int G_percent2 (int n,int d,int s, FILE *out)
@@ -137,9 +140,12 @@ int G_percent2 (int n,int d,int s, FILE *out)
 }
 
 
-/*!
+/**
+ * \fn int G_percent_reset (void)
+ *
  * \brief Reset G_percent() to 0%; do not add newline.
- * \return int
+ *
+ * \return always returns 0
  */
 
 int G_percent_reset(void)

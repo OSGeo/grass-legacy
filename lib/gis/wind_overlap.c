@@ -1,11 +1,36 @@
+/**
+ * \file wind_overlap.c
+ *
+ * \brief Window overlap functions.
+ *
+ * This program is free software under the GNU General Public License
+ * (>=v2). Read the file COPYING that comes with GRASS for details.
+ *
+ * \author GRASS GIS Development Team
+ *
+ * \date 1999-2006
+ */
+
 #include <grass/gis.h>
 
-/*
- * given a map window, and a box of N,S,E,W
- * does the box overlap the map window?
- * Returns 1 yes, 0 no.
+
+/**
+ * \fn int G_window_overlap (struct Cell_head *window, double N, double S, double E, double W)
  *
- * Note: knows about global wrap-around for lat-long
+ * \brief Determins if a box overlays a map window.
+ *
+ * Given a map <b>window</b>, and a box of <b>N</b>,<b>S</b>,<b>E</b>,<b>W</b>
+ * does the box overlap the map <b>window</b>?<br>
+ *
+ * Note: knows about global wrap-around for lat-long.
+ *
+ * \param[in] window
+ * \param[in] N
+ * \param[in] S
+ * \param[in] E
+ * \param[in] W
+ * \return 1 if box overlaps window
+ * \return 0 if box does not overlap window
  */
 
 int G_window_overlap ( struct Cell_head *window,
@@ -34,7 +59,12 @@ int G_window_overlap ( struct Cell_head *window,
     return 1;
 }
 
-/*
+
+/**
+ * \fn double G_window_percentage_overlap (struct Cell_head *window, double N, double S, double E, double W)
+ *
+ * \brief Determines percentage of box is contained in the <b>window</b>.
+ *
  * This version returns the percentage (from 0 to 1) of the box 
  * contained in the window. This feature can be used during vector
  * plotting to decide if it is more efficient to do a level-one
@@ -42,6 +72,12 @@ int G_window_overlap ( struct Cell_head *window,
  * level-two startup so only those arcs that enter the window are
  * actually read.
  *
+ * \param[in] window
+ * \param[in] N
+ * \param[in] S
+ * \param[in] E
+ * \param[in] W
+ * \return Percentage of overlap
  */
 
 double G_window_percentage_overlap ( struct Cell_head *window,
@@ -51,13 +87,15 @@ double G_window_percentage_overlap ( struct Cell_head *window,
     double n,s,e,w;
     double shift;
 
-/* vertical height of the box that overlaps the window */
+    /* vertical height of the box that overlaps the window */
     if ((n = window->north) > N) n = N;
     if ((s = window->south) < S) s = S;
     V = n - s;
-    if(V <= 0.0) return 0.0 ;
 
-/* global wrap-around, part 1 */
+    if (V <= 0.0)
+        return 0.0;
+
+    /* global wrap-around, part 1 */
     if (window->proj == PROJECTION_LL)
     {
 	shift = 0.0;
@@ -69,13 +107,14 @@ double G_window_percentage_overlap ( struct Cell_head *window,
 	W += shift;
     }
 
-/* horizontal width of the box that overlaps the window */
+    /* horizontal width of the box that overlaps the window */
     if ((e = window->east) > E) e = E;
     if ((w = window->west) < W) w = W;
     H = e - w;
-    if(H <= 0.0) return 0.0 ;
+    if (H <= 0.0)
+        return 0.0;
 
-/* global wrap-around, part 2 */
+    /* global wrap-around, part 2 */
     if (window->proj == PROJECTION_LL)
     {
 	shift = 0.0;

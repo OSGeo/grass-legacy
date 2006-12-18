@@ -1,26 +1,39 @@
-#include <grass/gis.h>
-/* this routine remove trailing zeros from decimal number
- * for example: 23.45000 would come back as 23.45
+/**
+ * \file trim_dec.c
+ *
+ * \brief Trim string decimal functions.
+ *
+ * This program is free software under the GNU General Public License
+ * (>=v2). Read the file COPYING that comes with GRASS for details.
+ *
+ * \author GRASS GIS Development Team
+ *
+ * \date 1999-2006
  */
 
-/*!
- * \brief trim
+#include <grass/gis.h>
+
+
+/**
+ * \fn int G_trim_decimal (char *buf)
  *
- * this routine remove trailing
- * zeros from decimal number for example: 23.45000 would come back as 23.45
+ * \brief Removes trailing zeros from decimal number.
  *
- *  \param buf
- *  \return int
+ * Example: 23.45000 would come back as 23.45
+ *
+ * \param[in,out] buf
+ * \return always returns 0
  */
 
 int G_trim_decimal (char *buf)
 {
     char *mark;
 
-/* find the . */
+    /* find the . */
     while (*buf != '.')
 	if (*buf++ == 0)
 	    return 0;
+
     mark = buf;
     while (*++buf)
 	if (*buf != '0')

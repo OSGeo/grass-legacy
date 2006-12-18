@@ -1,30 +1,27 @@
-/*
-* $Id$
-*
-****************************************************************************
-*
-* LIBRARY:      user_config.c  -- Routines related to the user's GRASS 
-*               configuration, tmp, and miscellaneous files.
-*
-* AUTHOR(S):    Eric G. Miller <egm2@jps.net>
-*
-* PURPOSE:      Provide a set of routines for creating and accessing
-*               elements within the user's "rc" directory.  The directory is
-*               in $HOME/.grass
-*
-* COPYRIGHT:    (C) 2000 by the GRASS Development Team
-*
-*               This program is free software under the GNU General Public
-*   	    	License (>=v2). Read the file COPYING that comes with GRASS
-*   	    	for details.
-*
-*****************************************************************************/
-
-/* @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
- * NOTE: As of 2001-03-25 this file is not hooked up.  It is provided as a
- * candidate for handling $HOME/.grass files and subdirectories.  There may
- * be more functionality desired (such as deletion routines, directory globs).
- * @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@*/
+/**
+ * \file user_config.c
+ *
+ * \brief Routines related to user's GRASS configuration, tmp, and 
+ * miscellaneous files.
+ *
+ * Functions related to the user's GRASS configuration, tmp, and 
+ * miscellaneous files. Provides a set of routines for creating and 
+ * accessing elements within the user's "rc" directory. The 
+ * directory is in $HOME/.grass.<br>
+ *
+ * <b>NOTE:</b> As of 2001-03-25 this file is not hooked up.  It is 
+ * provided as a candidate for handling $HOME/.grass files and 
+ * subdirectories. There may be more functionality desired (such as 
+ * deletion routines, directory globs).<br>
+ *
+ * This program is free software under the GNU General Public License
+ * (>=v2). Read the file COPYING that comes with GRASS for details.
+ *
+ * \author Eric G Miller - egm2 at jps net
+ *
+ * \date 2000
+ * \date $Id$
+ */
 
 #include <stdio.h>
 #include <stdlib.h>
@@ -39,11 +36,13 @@
 #include <errno.h>
 #include <grass/gis.h>
 
+
 /**************************************************************************
  * _make_toplevel(): make user's toplevel config directory if it doesn't
  * already exist.  Adjust perms to 1700. Returns the toplevel directory
  * path [caller must G_free ()] on success, or NULL on failure
  *************************************************************************/
+
 #ifndef __MINGW32__  /* TODO */
 static char *
 _make_toplevel (void)
@@ -295,13 +294,22 @@ _make_sublevels(char *elems)
 }
 
     
-/***************************************************************************
- * G_rc_path:  Return the path to "element" and "item". Either can be NULL,
- * but not both.  If "element" is NULL, then the file is assumed to live at
- * the top level.  If file is NULL, then it is assumed the caller is not
- * interested in the file.  If the element or rc dir do not exist, they are
- * created.  However, the file is never checked for.
- **************************************************************************/
+/**
+ * \fn char *G_rc_path (char *element, char *item)
+ *
+ * \brief Returns path to <b>element</b> and <b>item</b>.
+ *
+ * Either <b>element</b> or <b>item</b> can be NULL, but not both.  If 
+ * <b>element</b> is NULL, then the file is assumed to live at the top 
+ * level. If file is NULL, then it is assumed the caller is not 
+ * interested in the file.  If the element or rc dir do not exist, they 
+ * are created. However, the file is never checked for.
+ *
+ * \param[in] element
+ * \param[in] item
+ * \return Pointer to string path
+ */
+
 char *
 G_rc_path (char *element, char *item)
 {
@@ -342,7 +350,6 @@ G_rc_path (char *element, char *item)
     return path;
 } /* G_rc_path */
        
-
 
 /* vim: set softtabstop=4 shiftwidth=4 expandtab: */
 #endif

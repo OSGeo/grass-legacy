@@ -6,18 +6,16 @@
  *   returns pointer to string containing cell title. (from cats file)
  *************************************************************/
 
+#include <stdio.h>
 #include <grass/gis.h>
 
 char *
-G_get_dig_title (name, mapset)
-    char *name;
-    char *mapset;
+G_get_dig_title (char *name, char *mapset)
 {
     FILE *fd;
-    int stat;
+    int stat = -1;
     char title[100];
 
-    stat = -1;
     fd = G_fopen_old ("dig_cats", name, mapset);
     if (fd)
     {
@@ -34,5 +32,6 @@ G_get_dig_title (name, mapset)
 	*title = 0;
     else
 	G_strip (title);
+
     return G_store(title) ;
 }

@@ -1,23 +1,32 @@
-#include <grass/gis.h>
-/* For lat-lon,
- *   this routine adjusts the values of the longitudes so that
- *   the difference between them is less than 180.
- *   It does NOT change their true position.
- * For other databases
- *   this routine does nothing
+/**
+ * \file short_way.c
+ *
+ * \brief Shortest path functions.
+ *
+ * This program is free software under the GNU General Public License
+ * (>=v2). Read the file COPYING that comes with GRASS for details.
+ *
+ * \author GRASS GIS Development Team
+ *
+ * \date 1999-2006
  */
 
-/*!
- * \brief shortest way between eastings
+#include <grass/gis.h>
+
+
+/**
+ * \fn int G_shortest_way (double *east1, double *east2)
  *
- * If the database projection is PROJECTION_LL, then
- * <b>east1,east2</b> are changed so that they are no more than 180 degrees
- * apart. Their true locations are not changed. If the database projection is not
- * PROJECTION_LL, then <b>east1,east2</b> are not changed.
+ * \brief Shortest way between two eastings.
  *
- *  \param east1
- *  \param east2
- *  \return int
+ * For lat-lon projection (<i>PROJECTION_LL</i>), <b>east1</b>, 
+ * <b>east2</b> are changed so that they are no more than 180 degrees 
+ * apart. Their true locations are not changed. For all other 
+ * projections, this function does nothing.
+ *
+ * \param[in] east1
+ * \param[in] east2
+ * \return always returns 0
  */
 
 int G_shortest_way (double *east1,double *east2)

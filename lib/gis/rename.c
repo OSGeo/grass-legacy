@@ -1,17 +1,15 @@
-/***********************************************************************
+/**
+ * \file rename.c
  *
- *  G_rename (element, oldname, newname)
- *     char *element          element in mapset containing name
- *     char *oldname          file name to be renamed
- *     char *newname          new name for file
+ * \brief Rename file functions.
  *
- *  Only files in current mapset can be renamed
+ * This program is free software under the GNU General Public License
+ * (>=v2). Read the file COPYING that comes with GRASS for details.
  *
- *  Returns  -1  on fail
- *            0  if no file
- *            1  if successful
+ * \author GRASS GIS Development Team
  *
- ***********************************************************************/
+ * \date 1999-2006
+ */
 
 #include <stdio.h>
 #include <stdlib.h>
@@ -20,20 +18,23 @@
 #include <grass/gis.h>
 
 
-/*!
- * \brief rename a database file
+/**
+ * \fn int G_rename (char *element, char *oldname, char *newname)
  *
- * The file or directory <b>old</b> under the database <b>element</b>
- * directory in the current mapset is renamed to <b>new.</b>
- * Returns 1 if successful, 0 if <b>old</b> does not exist, and -1 if there was
- * an error.
- * <b>Bug.</b> This routine does not check to see if the <b>new</b> name is a
- * valid database file name.
+ * \brief Rename a database file.
  *
- *  \param element
- *  \param old
- *  \param new
- *  \return int
+ * The file or directory <b>oldname</b> under the database <b>element</b>
+ * directory in the current mapset is renamed to <b>newname</b>.<br>
+ *
+ * <b>Bug:</b> This routine does not check to see if the <b>newname</b> 
+ * name is a valid database file name.
+ *
+ * \param[in] element
+ * \param[in] oldname
+ * \param[in] newname
+ * \return 0 if <b>oldname</b> does not exist
+ * \return 1 if successful
+ * \return -1 on error
  */
 
 int G_rename ( char *element,
@@ -43,7 +44,7 @@ int G_rename ( char *element,
     char xname[512], xmapset[512];
     char from[512], to[512];
 
-/* name in mapset legal only if mapset is current mapset */
+    /* name in mapset legal only if mapset is current mapset */
     mapset = G_mapset();
     if (G__name_is_fully_qualified (oldname, xname, xmapset)
     && strcmp (mapset, xmapset))
@@ -52,12 +53,12 @@ int G_rename ( char *element,
     && strcmp (mapset, xmapset))
 	    return -1;
 
-/* if file does not exist return 0 */
+    /* if file does not exist return 0 */
     if (access (G__file_name (from, element, oldname, mapset),0) != 0)
 	    return 0;
 
     G__file_name (to, element, newname, mapset);
 
-/* return result of rename */
+    /* return result of rename */
     return rename(from, to) == 0 ? 1 : -1;
 }

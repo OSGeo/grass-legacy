@@ -1,14 +1,38 @@
-#include <grass/gis.h>
+/**
+ * \file commas.c
+ *
+ * \brief Comma string functions.
+ *
+ * This program is free software under the GNU General Public License
+ * (>=v2). Read the file COPYING that comes with GRASS for details.
+ *
+ * \author GRASS GIS Development Team
+ *
+ * \date 1999-2006
+ */
+
 #include <string.h>
+#include <grass/gis.h>
 
 
-/* puts commas into numbers:
-	1234567    becomes 1,234,567
-	1234567.89 becomes 1,234,567.89
-	12345      becomes 12,345
-	1234       stays   1234
-* doesn't work well with negative numbers (yet)
-*/
+/**
+ * \fn int G_insert_commas (char *buf)
+ *
+ * \brief Inserts commas into a number string.
+ *
+ * Examples:<br>
+ * 1234567    becomes 1,234,567<br>
+ * 1234567.89 becomes 1,234,567.89<br>
+ * 12345      becomes 12,345<br>
+ * 1234       stays   1234<br>
+ *
+ * <b>Note:</b> Does not work with negative numbers.
+ *
+ * \param[in,out] buf
+ * \return 1 if no commas inserted
+ * \return 0 if commas inserted
+ */
+
 int G_insert_commas(char *buf)
 {
     char number[100];
@@ -46,12 +70,22 @@ int G_insert_commas(char *buf)
     return 0;
 }
 
-/* removes commas from strings representing a number 
-	1,234,567    becomes 1234567
-	1,234,567.89 becomes 1234567.89
-	12,345      becomes 12345
-	1234       stays   1234
-*/
+
+/**
+ * \fn int G_remove_commas (char *buf)
+ *
+ * \brief Removes commas from number string.
+ *
+ * Examples:<br>
+ * 1,234,567    becomes 1234567<br>
+ * 1,234,567.89 becomes 1234567.89<br>
+ * 12,345      becomes 12345<br>
+ * 1234       stays   1234
+ *
+ * \param[in,out] buf
+ * \return always returns 0
+ */
+
 int G_remove_commas(char *buf)
 {
     char *b;
@@ -61,5 +95,6 @@ int G_remove_commas(char *buf)
 	    *buf++ = *b;
 
     *buf = 0;
+
     return  0;
 }

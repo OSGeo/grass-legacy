@@ -1,32 +1,36 @@
-/*************************************************************
- * G__create_window_mapping(fd)
- *    int fd                   file descriptor for map to be mapped
+/**
+ * \file window_map.c
  *
- * function:
- *     create mapping from cell header into window
- *     the boundaries and resolution of the two spaces do not
- *     have to be the same or aligned in any way.
- * parms:
- *     fd:      open file descriptor for cell file
+ * \brief Window mapping functions.
  *
- * called by:
- *     G_open_cell_old()
- *     G_set_window()
- ***************************************************************
- * G_window_rows(), G_window_cols()
+ * This program is free software under the GNU General Public License
+ * (>=v2). Read the file COPYING that comes with GRASS for details.
  *
- * function
- *      return the number of rows, cols in the current window
+ * \author GRASS GIS Development Team
  *
- * parms: (none)
- *
- * called by
- *      any user program
- *************************************************************/
+ * \date 1999-2006
+ */
 
 #include <stdlib.h>
 #include <grass/gis.h>
 #include "G.h"
+
+
+#define alloc_index(n) (COLUMN_MAPPING *) G_malloc((n)*sizeof(COLUMN_MAPPING))
+
+
+/**
+ * \fn int G__create_window_mapping (int fd)
+ *
+ * \brief Create window mapping.
+ *
+ * Creates mapping from cell header into window. The boundaries and 
+ * resolution of the two spaces do not have to be the same or aligned in 
+ * any way.
+ *
+ * \param[in] fd file descriptor
+ * \return always returns 0
+ */
 
 int G__create_window_mapping (int fd)
 {
@@ -39,8 +43,6 @@ int G__create_window_mapping (int fd)
 
     G__init_window () ;
 
-#define alloc_index(n) (COLUMN_MAPPING *) G_malloc((n)*sizeof(COLUMN_MAPPING))
-
     if (fcb->open_mode >= 0 && fcb->open_mode != OPEN_OLD)  /* open for write? */
         return 0;
     if (fcb->open_mode == OPEN_OLD) /* already open ? */
@@ -48,14 +50,14 @@ int G__create_window_mapping (int fd)
 
     col = fcb->col_map = alloc_index (G__.window.cols) ;
 
-/*
- * for each column in the window, go to center of the cell,
- * compute nearest column in the data file
- * if column is not in data file, set column to 0
- *
- * for lat/lon move window so that west is bigger than
- * cellhd west.
- */
+    /*
+     * for each column in the window, go to center of the cell,
+     * compute nearest column in the data file
+     * if column is not in data file, set column to 0
+     *
+     * for lat/lon move window so that west is bigger than
+     * cellhd west.
+     */
     west = G__.window.west;
     if (G__.window.proj == PROJECTION_LL)
     {
@@ -78,7 +80,7 @@ int G__create_window_mapping (int fd)
 	C2 += C1;
     }
 
-/* do wrap around for lat/lon */
+    /* do wrap around for lat/lon */
     if (G__.window.proj == PROJECTION_LL)
     {
 	col = fcb->col_map;
@@ -98,15 +100,13 @@ int G__create_window_mapping (int fd)
     }
 
 #ifdef DEBUG
-fprintf (stderr, "create window mapping (%d cols)", G__.window.cols);
+    fprintf (stderr, "create window mapping (%d cols)", G__.window.cols);
     for (i = 0; i < G__.window.cols; i++)
-	fprintf (stderr, "%s%ld", i%15?" ":"\n", (long)fcb->col_map[i]);
+        fprintf (stderr, "%s%ld", i%15?" ":"\n", (long)fcb->col_map[i]);
     fprintf (stderr, "\n");
 #endif
 
-/*
- * compute C1,C2 for row window mapping 
- */
+    /* compute C1,C2 for row window mapping */
     fcb->C1 = G__.window.ns_res / fcb->cellhd.ns_res ;
     fcb->C2 = (fcb->cellhd.north - G__.window.north + G__.window.ns_res/2.0) / fcb->cellhd.ns_res; 
 
@@ -114,17 +114,18 @@ fprintf (stderr, "create window mapping (%d cols)", G__.window.cols);
 }
 
 
-/*!
- * \brief northing to row
+/**
+ * \fn double G_northing_to_row (double north, struct Cell_head *window)
  *
- * Converts a <b>north</b>ing relative to a
- * <b>region</b> to a row.
- * <b>Note.</b> the result is a double. Casting it to an integer will give the
- * row number.
+ * \brief Northing to row.
  *
- *  \param north
- *  \param region
- *  \return double
+ * Converts a <b>north</b>ing relative to a <b>window</b> to a row.<br>
+ * <b>Note:</b> The result is a double. Casting it to an integer will 
+ * give the row number.
+ *
+ * \param[in] north
+ * \param[in] window
+ * \return double
  */
 
 double G_northing_to_row (double north,
@@ -134,16 +135,20 @@ double G_northing_to_row (double north,
 }
 
 
-/*!
- * \brief adjust east longitude
+/**
+ * \fn double G_adjust_east_longitude (double east, double west)
+ *
+ * \brief Adjust east longitude.
  *
  * This routine returns an equivalent <b>east</b> that is
- * larger, but no more than 360 larger than the <b>west</b> coordinate.
- * This routine should be used only with latitude-longitude coordinates.
+ * larger, but no more than 360 larger than the <b>west</b> 
+ * coordinate.<br>
+ * <b>Note:</b> This routine should be used only with latitude-longitude 
+ * coordinates.
  *
- *  \param east
- *  \param west
- *  \return double
+ * \param[in,out] east
+ * \param[in] west
+ * \return double returns east
  */
 
 double G_adjust_east_longitude (
@@ -153,22 +158,25 @@ double G_adjust_east_longitude (
 	east -=360.0;
     while (east <= west)
 	east += 360.0;
+
     return east;
 }
 
 
-/*!
- * \brief returns east larger than west
+/**
+ * \fn double G_adjust_easting (double east, struct Cell_head *window)
  *
- * If the region projection is
- * PROJECTION_LL, then this routine returns an equivalent <b>east</b> that is
- * larger, but no more than 360 degrees larger, than the coordinate for the
- * western edge of the region. Otherwise no adjustment is made and the original
+ * \brief Returns east larger than west.
+ *
+ * If the region projection is <i>PROJECTION_LL</i>, then this routine 
+ * returns an equivalent <b>east</b> that is larger, but no more than 
+ * 360 degrees larger, than the coordinate for the western edge of the 
+ * region. Otherwise no adjustment is made and the original
  * <b>east</b> is returned.
  *
- *  \param east
- *  \param region
- *  \return double
+ * \param[in,out] east
+ * \param[in] window
+ * \return double returns east
  */
 
 double G_adjust_easting ( double east,
@@ -180,39 +188,51 @@ double G_adjust_easting ( double east,
 	if (east > window->east && east == window->west + 360)
 	    east = window->west;
     }
+
     return east;
 }
+
+
+/**
+ * \fn double G_easting_to_col (double east, struct Cell_head *window)
+ *
+ * \brief Easting to column.
+ *
+ * Converts <b>east</b> relative to a <b>window</b> to a column.<br>
+ * <b>Note:</b> The result is a <i>double</i>. Casting it to an 
+ * <i>int</i> will give the column number.
+ *
+ * \param[in] east
+ * \param[in] window
+ * \return double
+ */
 
 double G_easting_to_col ( double east,
     struct Cell_head *window)
 {
     east = G_adjust_easting (east, window);
+
     return (east - window->west) / window->ew_res;
 }
 
-/* note: row is a double.
- *       row+0.5 will give center
- *       row+0.0 will give northern edge of row
- *       row+1.0 will give southern edge of row
- */
 
-/*!
- * \brief row to northing
+/**
+ * \fn double G_row_to_northing (double row, struct Cell_head *window)
  *
- * Converts a <b>row</b> relative to a <b>region</b> to a
- * northing;
- * <b>Note.</b> row is a double: row+0.5 will return the northing for the
- * center of the row; row+0.0 will return the northing for the northern edge of
- * the row; and row+1.0 will return the northing for the southern edge of the
- * row. double <b>G_easting_to_col</b> (east, region) <i>easting to
- * column</i> double east; struct Cell_head *region;
- * Converts an <b>east</b>ing relative to a <b>region</b> to a column.
- * <b>Note.</b> The result is a double. Casting it to an integer will give the
- * column number.
+ * \brief Row to northing.
  *
- *  \param row
- *  \param region
- *  \return double
+ * Converts a <b>row</b> relative to a <b>window</b> to a
+ * northing.<br>
+ * <b>Note:</b> row is a double:
+ * - row+0.0 will return the northing for the northern edge of the row.<br>
+ * - row+0.5 will return the northing for the center of the row.<br>
+ * - row+1.0 will return the northing for the southern edge of the row.<br>
+ * <b>Note:</b> The result is a <i>double</i>. Casting it to an 
+ * <i>int</i> will give the column number.
+ *
+ * \param[in] row
+ * \param[in] window
+ * \return double
  */
 
 double G_row_to_northing ( double row,
@@ -222,19 +242,20 @@ double G_row_to_northing ( double row,
 }
 
 
-/*!
- * \brief column to easting
+/**
+ * \fn double G_col_to_easting (double col, struct Cell_head *window)
  *
- * Converts a <b>col</b>umn relative to a
- * <b>region</b> to an easting;
- * <b>Note.</b> col is a double: col+0.5 will return the easting for the center
- * of the column; col+0.0 will return the easting for the western edge of the
- * column; and col+1.0 will return the easting for the eastern edge of the
- * column.
+ * \brief Column to easting.
  *
- *  \param col
- *  \param region
- *  \return double
+ * Converts a <b>col</b> relative to a <b>window</b> to an easting.<br>
+ * <b>Note:</b> <b>col</b> is a <i>double</i>:<br>
+ * - col+0.0 will return the easting for the western edge of the column.<br>
+ * - col+0.5 will return the easting for the center of the column.<br>
+ * - col+1.0 will return the easting for the eastern edge of the column.<br>
+ *
+ * \param[in] col
+ * \param[in] window
+ * \return double
  */
 
 double G_col_to_easting (double col,
@@ -244,29 +265,14 @@ double G_col_to_easting (double col,
 }
 
 
-/*!
- * \brief number of rows in active region
+/**
+ * \fn int G_window_rows ()
  *
+ * \brief Number of rows in active window.
  *
- *  \param void
- *  \return int
- */
-
-int G_window_rows ()
-{
-    G__init_window () ;
-
-    return G__.window.rows;
-}
-
-
-/*!
- * \brief number of columns in active region
- *
- * These
- * routines return the number of rows and columns (respectively) in the active
- * module region. Before raster maps can be read or written, it is necessary to
- * known how many rows and columns are in the active region. For example:
+ * This routine returns the number of rows in the active module window. 
+ * Before raster files can be read or written, it is necessary to
+ * known how many rows are in the active window. For example:<br>
  \code  
   int nrows, cols;
   int row, col; 
@@ -282,8 +288,42 @@ int G_window_rows ()
   }
  \endcode 
  *
- *  \param void
- *  \return int
+ *  \return int number of rows
+ */
+
+int G_window_rows ()
+{
+    G__init_window () ;
+
+    return G__.window.rows;
+}
+
+
+/**
+ * \fn int G_window_cols ()
+ *
+ * \brief Number of columns in active window.
+ *
+ * These
+ * routines return the number of rows and columns (respectively) in the active
+ * module region. Before raster maps can be read or written, it is necessary to
+ * known how many rows and columns are in the active region. For example:<br>
+ \code  
+  int nrows, cols;
+  int row, col; 
+  nrows = G_window_rows( ); 
+  ncols = G_window_cols( ); 
+  for (row = 0; row < nrows; row++)
+  {
+  <i>read</i> row ...
+  for (col = 0; col < ncols; col++)
+  {
+  process col ...
+  }
+  }
+ \endcode 
+ *
+ * \return int number of columns
  */
 
 int G_window_cols ()
@@ -292,6 +332,15 @@ int G_window_cols ()
     
     return G__.window.cols;
 }
+
+
+/**
+ * \fn int G__init_window ()
+ *
+ * \brief Initialize window.
+ *
+ * \return always returns 0
+ */
 
 int G__init_window ()
 {
@@ -304,11 +353,20 @@ int G__init_window ()
     return 0;
 }
 
-/* this routine works fine if the mask is not set
- * may give incorrect results with a mask, since the
- * mask row may have a different repeat value
- * can be fixed by doing it for the mask as well and using
- * the smaller value
+
+/**
+ * \fn int G_row_repeat_nomask (int fd, int row)
+ *
+ * \brief Loops rows until mismatch?.
+ *
+ * This routine works fine if the mask is not set. It may give incorrect 
+ * results with a mask, since the mask row may have a different repeat 
+ * value. The issue can be fixed by doing it for the mask as well and 
+ * using the smaller value.
+ *
+ * \param[in] fd file descriptor
+ * \param[in] row starting row
+ * \return number of rows completed
  */
 
 int G_row_repeat_nomask (int fd, int row)
@@ -320,10 +378,10 @@ int G_row_repeat_nomask (int fd, int row)
 
     count = 1;
 
-/* r1 is the row in the cell file itself.
- * r2 is the next row(s) in the cell file
- * see get_row.c for details on this calculation
- */
+    /* r1 is the row in the raster map itself.
+     * r2 is the next row(s) in the raster map
+     * see get_row.c for details on this calculation
+     */
     f = row * fcb->C1 + fcb->C2;
     r1 = f;
     if (f < r1)
@@ -337,7 +395,9 @@ int G_row_repeat_nomask (int fd, int row)
 	    r2--;
 	if (r1 != r2)
 	    break;
+
 	count++;
     }
+
     return count;
 }

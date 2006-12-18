@@ -1,46 +1,50 @@
+/**
+ * \file system.c
+ *
+ * \brief Command execution functions.
+ *
+ * This program is free software under the GNU General Public License
+ * (>=v2). Read the file COPYING that comes with GRASS for details.
+ *
+ * \author GRASS GIS Development Team
+ *
+ * \date 1999-2006
+ */
+
+#include <grass/config.h>
 #include <stdlib.h>
 #include <unistd.h>
+#include <signal.h>
+#include <stdio.h>
 #include <sys/types.h>
 #ifndef __MINGW32__
 #include <sys/wait.h>
 #endif
 #include <grass/gis.h>
 #include <grass/glocale.h>
-/****************************************************************
- * G_system (command)
- *     char *command;
+
+
+/**
+ * \fn int G_system (char *command)
  *
- * This is essentially the UNIX system() call, except for the signal
- * handling. During the call, user generated signals (intr, quit)
+ * \brief Run a shell level command.
+ *
+ * This is essentially the UNIX <i>system()</i> call, except for the 
+ * signal handling. During the call, user generated signals (intr, quit)
  * for the parent are ignored, but allowed for the child. Parent
- * signals are reset upon completion.
+ * signals are reset upon completion.<br>
  *
  * This routine is useful for menu type programs that need to run
  * external commands and allow these commands to be interrupted by
- * the user without killing the menu itself.
+ * the user without killing the menu itself.<br>
  *
- * Note: if you want the signal settings to be the same for the
+ * <b>Note:</b> if you want the signal settings to be the same for the
  * parent and the command being run, set them yourself and use
- * the UNIX system() call instead.
- ****************************************************************/
-
-#include <signal.h>
-#include <stdio.h>
-
-
-/*!
- * \brief run a shell level command
+ * the UNIX <i>system()</i> call instead.
  *
- * The shell level
- * <b>command</b> is executed. Interrupt signals for the parent module are
- * ignored during the call. Interrupt signals for the <b>command</b> are
- * enabled. The interrupt signals for the parent are restored to their previous
- * settings upon return.
- * G_system(~) returns the same value as system(~), which is essentially the
- * exit status of the <b>command.</b> See UNIX manual system(1) for details.
- *
- *  \param command
- *  \return int
+ * \param[in] command
+ * \return -1 on error
+ * \return status on success
  */
 
 int G_system ( char *command)

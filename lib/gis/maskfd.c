@@ -1,28 +1,27 @@
-#include <grass/gis.h>
-/*
- **********************************************************************
+/**
+ * \file maskfd.c
  *
- *   G_maskfd()
+ * \brief Mask functions.
  *
- *   Returns the file descriptor opened for the current mask
+ * This program is free software under the GNU General Public License
+ * (>=v2). Read the file COPYING that comes with GRASS for details.
  *
- *   returns:    fd number if mask is in use
- *               -1        if no mask is in use
- **********************************************************************/
-
-#include "G.h"
-/*
- * open mask file and return file descriptor
+ * \author GRASS GIS Development Team
+ *
+ * \date 1999-2006
  */
 
-/*!
- * \brief test for current mask
+#include <grass/gis.h>
+#include "G.h"
+
+
+/**
+ * \fn int G_maskfd (void)
  *
- * returns file descriptor
- * number if MASK is in use and -1 if no MASK is in use.
+ * \brief Test for MASK.
  *
- *  \param void
- *  \return int
+ * \return -1 if no MASK
+ * \return file descriptor if MASK
  */
 
 int G_maskfd ()

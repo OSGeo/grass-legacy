@@ -1,38 +1,38 @@
-#include <grass/gis.h>
-/*
- **********************************************************************
+/**
+ * \file date.c
  *
- *   char *
- *   G_date ()
+ * \brief Date functions.
  *
- *   returns pointer to a string containing the current date and time
+ * This program is free software under the GNU General Public License
+ * (>=v2). Read the file COPYING that comes with GRASS for details.
  *
- **********************************************************************/
+ * \author GRASS GIS Development Team
+ *
+ * \date 1999-2006
+ */
 
 #include <time.h>
+#include <grass/gis.h>
 
 
-/*!
- * \brief current date and time
+/**
+ * \fn char *G_date (void)
  *
- * Returns a pointer to a string
- * which is the current date and time. The format is the same as that produced by
- * the UNIX <i>date</i> command.
+ * \brief Current date and time.
  *
- *  \param ~
- *  \return char * 
+ * Returns a pointer to a string which is the current date and time. The 
+ * format is the same as that produced by the UNIX <i>date</i> command.
+ *
+ * \return Pointer to a string holding date/time
  */
 
 char *
 G_date()
 {
-    long clock;
+    time_t clock;
     struct tm *local;
     char *date;
     char *d;
-
-    char *asctime();
-    struct tm *localtime();
 
     time(&clock);
 
@@ -41,5 +41,6 @@ G_date()
     for (d = date; *d; d++)
 	if (*d == '\n')
 	    *d = 0;
+
     return date;
 }
