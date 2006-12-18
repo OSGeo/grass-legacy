@@ -84,6 +84,9 @@ int main (int argc, char *argv[])
       case MODE_STRAIGHTEN:
         ret = do_remove_vertex(&Map);
         break;
+      case MODE_SPLIT:
+        ret = do_split(&Map);
+        break;
       default:
 	G_warning("Sorry this is not yet implemented");
 	ret=0;

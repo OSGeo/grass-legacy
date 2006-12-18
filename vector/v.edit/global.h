@@ -44,8 +44,9 @@ int move_bbox(struct Map_info *Map);
 
 /* vertex.c */
 int do_move_vertex(struct Map_info *Map);
-int do_break(struct Map_info *Map);
 int do_remove_vertex(struct Map_info *Map);
+int do_break(struct Map_info *Map);
+int do_split(struct Map_info *Map);
 
 void cat_max_set ( int field, int cat);
 int cat_max_get ( int field );
