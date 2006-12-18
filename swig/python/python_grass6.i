@@ -5,6 +5,11 @@
 %array_functions(float, floatArray);
 %array_functions(double, doubleArray);
 
+%include "cpointer.i"
+%pointer_functions(int, intp);
+%pointer_functions(float, floatp);
+%pointer_functions(double, doublep);
+
 %module python_grass6
 %{
 #include <stdio.h>
