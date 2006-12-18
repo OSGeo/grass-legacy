@@ -93,6 +93,7 @@ RPOLY:Rectangular Polyconic:LAT0=ask,0.0;LATTS=ask,0.0;LON0=ask,20.0
 SINU:Sinusoidal (Sanson-Flamsteed):LAT0=ask,0.0;LON0=ask,20.0
 SOMERC:Swiss. Obl. Mercator:KFACT=noask,1.0;LAT0=noask,46.952405556;LON0=noask,7.4395833333;X0=noask,600000.0;Y0=noask,200000.0
 STERE:Stereographic:KFACT=ask,1.0;LAT0=ask,0.0;LATTS=ask,0.0;LON0=ask,20.0
+STEREA:Oblique Stereographic Alternative:KFACT=ask,1.0;LAT0=ask,0.0;LON0=ask,20.0
 STP:State Plane (pseudo-projection):LAT0=noask,0.0;LON0=noask,0.0
 TCC:Transverse Central Cylindrical:LAT0=ask,0.0;LON0=ask,20.0
 TCEA:Transverse Cylindrical Equal Area:KFACT=ask,1.0;LAT0=ask,0.0;LON0=ask,20.0
