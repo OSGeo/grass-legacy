@@ -150,6 +150,7 @@ cleandistdirs:
 	-rm -f ${ARCH_DISTDIR}/AUTHORS ${ARCH_DISTDIR}/README ${ARCH_DISTDIR}/REQUIREMENTS.html ${ARCH_DISTDIR}/COPYING ${ARCH_DISTDIR}/grass${GRASS_VERSION_MAJOR}${GRASS_VERSION_MINOR}.tmp 2>/dev/null
 	-rmdir ${ARCH_DISTDIR}
 	-rm -f ${ARCH_BINDIR}/grass${GRASS_VERSION_MAJOR}${GRASS_VERSION_MINOR} 2>/dev/null
+	-rm -f ${ARCH_BINDIR}/grass${GRASS_VERSION_MAJOR}${GRASS_VERSION_MINOR}.bat 2>/dev/null
 	-rmdir ${ARCH_BINDIR}
 
 # Clean out the strings extracted from scripts for translation
@@ -260,7 +261,7 @@ real-install: FORCE
 	#GEM installation
 	-tar cBf - gem/skeleton | (cd ${INST_DIR}/etc ; tar xBf - ) 2>/dev/null
 	-${INSTALL} gem/gem ${BINDIR} 2>/dev/null
-	
+
 
 install-strip: FORCE
 	${MAKE} strip
