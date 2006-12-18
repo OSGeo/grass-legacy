@@ -61,7 +61,7 @@ proc kSamplingFrame {} {
 			set env(SF_S) [ expr double( $n - ( $env(SF_NSRES) * ($env(SF_Y) + $env(SF_RL)) )) ]
 			set env(SF_W) [ expr double( $w + ( $env(SF_EWRES) * $env(SF_X) )) ]
 			set env(SF_E) [ expr double( $w + ( $env(SF_EWRES) * ($env(SF_X) + $env(SF_CL)) )) ]
-			exec rm -f $env(TMP).tmp
+			file delete $env(TMP).tmp
 			destroy .keyboard
 			}
 		} else {
@@ -442,7 +442,7 @@ proc loadConfiguration { filename } {
 	frame .load.legend
 	pack .load.legend
 	
-	exec rm -f $env(TMP).tmp
+	file delete $env(TMP).tmp
 	canvas .load.legend.c -relief raised -width 600 -height 150
 	set c2 .load.legend.c
 	pack $c2 
