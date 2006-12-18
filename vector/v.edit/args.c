@@ -15,10 +15,11 @@ int parser(int argc, char*argv[])
                              "\t\tdelete - Delete feature from vector file\n"
                              "\t\tmove   - Move feature in vector file\n"
                              "\t\tvertex - Move just only vertex\n"
+                             "\t\tstraight - Remove vertex\n"
                              "\t\tmerge  - Merge two vector lines togher\n"
                              "\t\tbreak  - Add new vertex to existing vector line\n"
                              "\t\tsplit  - Split line into two separate lines");
-    tool_opt->options     = "create,add,delete,move,vertex,merge,break,split";
+    tool_opt->options     = "create,add,delete,move,vertex,straight,merge,break,split";
 
     input_opt = G_define_option();
     input_opt->key      = "input";
@@ -204,11 +205,6 @@ int parser(int argc, char*argv[])
             G_usage();
 	    return 0;
 	};
-	if(at_opt->answers == NULL) {
-	    G_warning(_("Required parameter <at> not set"));
-            G_usage();
-	    return 0;
-	};
 	return 1;
     }
     else if(strcmp(tool_opt->answer, "vertex")==0) { /* vertex requires a coord and snap or bbox options */
@@ -233,12 +229,15 @@ int parser(int argc, char*argv[])
             G_usage();
 	    return 0;
 	};
-	if(at_opt->answers == NULL) {
-	    G_warning(_("Required parameter <at> not set"));
+	return 1;
+    }
+    else if(strcmp(tool_opt->answer, "straight")==0) { /* remove vertex */
+	action_mode = MODE_STRAIGHTEN;
+	if(coord_opt->answers == NULL) {
+	    G_warning(_("Required parameter <coords> not set"));
             G_usage();
 	    return 0;
 	};
-	return 1;
     }
 
     else {

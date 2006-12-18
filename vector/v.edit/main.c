@@ -78,6 +78,12 @@ int main (int argc, char *argv[])
       case MODE_VERTEX:
         ret = do_move_vertex(&Map);
         break;
+      case MODE_BREAK:
+        ret = do_break(&Map);
+        break;
+      case MODE_STRAIGHTEN:
+        ret = do_remove_vertex(&Map);
+        break;
       default:
 	G_warning("Sorry this is not yet implemented");
 	ret=0;
