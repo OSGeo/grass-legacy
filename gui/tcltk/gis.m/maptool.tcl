@@ -398,7 +398,7 @@ proc MapToolBar::savefile { type quality } {
 			"jpg" {
 			       if { $quality == 300 } {
 				exec gdal_translate $path.ppm $path.jpg -of JPEG -co QUALITY=95 -outsize 300% 300% 
-				exec rm $path.ppm
+				file delete $path.ppm
 				} else {
 				exec gdal_translate $path.ppm $path.jpg -of JPEG -co QUALITY=$quality 
 				file delete $path.ppm
