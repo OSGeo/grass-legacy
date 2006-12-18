@@ -12,7 +12,7 @@ struct proj_unit *get_proj_unit(const char *arg)
 	struct proj_unit *unit;
 	FILE *fp;
 
-	sprintf(buf, "%s/etc/proj-unit.table", G_gisbase());
+	sprintf(buf, "%s/etc/proj-units.table", G_gisbase());
 
 	fp = fopen(buf, "r");
 	if (!fp)
