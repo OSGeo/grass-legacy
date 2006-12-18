@@ -67,6 +67,7 @@ proc psprint::init { } {
 	variable gsdevices
 	variable res
 	global mon
+	global mingw
 
     set psprint::pgwd 8.5
     set psprint::pght 11
@@ -84,7 +85,15 @@ proc psprint::init { } {
 	set psprint::mbottom 1
 	
 	# check for ghostscript
-	if ![catch {set input [exec gs -help]}] {
+	
+	# switch to native windows version of ghostscript if runing wingrass
+	if { $mingw == 1 } {
+		set cmd "gswin32c"
+	} else {
+		set cmd "gs"
+	}
+
+	if ![catch {set input [exec $cmd -help]}] {
 		regexp ".*Available devices:(.*)Search path:" $input string gsdevices 
 		set gsstate "normal"
 		set printmode "lpr"
@@ -96,7 +105,6 @@ proc psprint::init { } {
 		set gsstate "disabled"
 		set printmode "eps"
 	}
-		puts "gsdevices: $gsdevices"
 }	
 
 # calculate paper size and document size on paper (all in inches)  
@@ -370,6 +378,7 @@ proc psprint::print { cv } {
 	variable docht
 	global gmpath
 	global mon
+	global mingw
     
     psprint::init_tmpfiles
    	psprint::paper
@@ -386,8 +395,13 @@ proc psprint::print { cv } {
 	set format "-g$w"
 	append format "x$h"
 	
-	puts "printmode = $printmode"
-
+	# switch to native windows version of ghostscript if runing wingrass
+	if { $mingw == 1 } {
+		set cmd "gswin32c"
+	} else {
+		set cmd "gs"
+	}
+	
 	# lpr printing		
     if { $printmode == "lpr" } {
 		set printmap [open "$tmppsfile" w]
@@ -406,9 +420,8 @@ proc psprint::print { cv } {
 		}		
 		after 500
 		close $printmap
-		exec cat $tmppsfile | gs  $format -sDEVICE=png16m -r$res -sNOPAUSE -sOutputFile=$tmppngfile -dBATCH -  
+		exec $cmd  $format -sDEVICE#png16m -r$res -sNOPAUSE -sOutputFile#$tmppngfile -dBATCH -- $tmppsfile  
 		exec lpr $tmppngfile 
-		puts "lpr printing"
     }
 
 	# postsript printing via ghostsript
@@ -429,8 +442,7 @@ proc psprint::print { cv } {
 		}		
 		after 500
 		close $printmap
-		exec cat $tmppsfile | gs  $format -sDEVICE=$printer -r$res -sNOPAUSE -dBATCH - 
-		puts "ps printing"
+		exec $cmd  $format -sDEVICE#$printer -r$res -sNOPAUSE -dBATCH -- $tmppsfile 
 	}
 
 	# output to pdf file via ghostscript	
@@ -451,8 +463,7 @@ proc psprint::print { cv } {
 		}		
 		after 500
 		close $printmap
-		exec cat $tmppsfile | gs  $format -sDEVICE=pdfwrite -r$res -sNOPAUSE -sOutputFile=$pdffile -dBATCH - 
-		puts "pdf printing"
+		exec $cmd  $format -sDEVICE#pdfwrite -r$res -sNOPAUSE -sOutputFile#$pdffile -dBATCH -- $tmppsfile 
 	}
 
 	# output to eps file
@@ -462,7 +473,6 @@ proc psprint::print { cv } {
 		} else {
 			$cv postscript -file "$epsfile" -rotate 1
 		}
-		puts "eps printing"
 	}
 	
 	psprint::clean
