@@ -16,6 +16,9 @@
  *
  *****************************************************************************/
 
+#ifndef _GPROJECTS_H
+#define _GPROJECTS_H
+
 #include <grass/config.h>
 #include <proj_api.h>
 #ifdef HAVE_OGR
@@ -85,4 +88,6 @@ int GPJ_get_ellipsoid_params (double *, double *, double *);
 int GPJ__get_ellipsoid_params (struct Key_Value *,
 				    double *, double *, double *);
 void GPJ_free_ellps (struct gpj_ellps *);
+
+#endif
 
