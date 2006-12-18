@@ -5,6 +5,11 @@
 %{
 #include "include/gis.h"
 #include "include/gisdefs.h"
+%include "cpointer.i"
+%pointer_functions(int, intp);
+%pointer_functions(float, floatp);
+%pointer_functions(double, doublep);
+
 #include "include/imagery.h"
 #include "include/imagedefs.h"
 %}
