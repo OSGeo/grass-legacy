@@ -117,6 +117,14 @@ struct proj_parm *get_proj_parms(const char *arg)
 		if (G_strcasecmp(buf, arg) != 0)
 			continue;
 
+		for (; *p && *p != ':'; p++)
+			;
+
+		if (*p != ':')
+			break;
+
+		*p++ = '\0';
+
 		data = p;
 	}
 
