@@ -1,16 +1,22 @@
+/**
+ * \file squeeze.c
+ *
+ * \brief String white space removal functions.
+ *
+ * This program is free software under the GNU General Public License
+ * (>=v2). Read the file COPYING that comes with GRASS for details.
+ *
+ * \author GRASS GIS Development Team
+ *
+ * \date 1998-2006
+ */
+
+#include <ctype.h>
 #include <string.h>
 #include <grass/gis.h>
+
+
 /*
- * squeeze - edit superfluous white space out of strings
- *
- *  char *G_squeeze (s)
- *     char *s;
- *
- * scan a string of text, converting tabs to spaces and
- * compressing out leading spaces, redundant internal spaces,
- * and trailing spaces.
- * returns the address of the resulting compressed string.
- *
  * last modification: 12 aug 81, j w hamilton
  *
  * 1998-04-04  WBH
@@ -20,19 +26,19 @@
  *     changed line 37, line 48ff. -- return (strip_NL(line))
  */
 
-#include <ctype.h>
 
-
-/*!
- * \brief remove unnecessary white space
+/**
+ * \fn char *G_squeeze (char *line)
  *
- * Leading and trailing white space is removed from the string <b>s</b> and internal
- * white space which is more than one character is reduced to a single space
- * character. White space here means spaces, tabs, linefeeds, newlines, and
- * formfeeds. Returns <b>s.</b>
+ * \brief Remove superfluous white space.
  *
- *  \param s
- *  \return char * 
+ * Leading and trailing white space is removed from the string 
+ * <b>line</b> and internal white space which is more than one character 
+ * is reduced to a single space character. White space here means 
+ * spaces, tabs, linefeeds, newlines, and formfeeds.
+ *
+ * \param[in,out] line
+ * \return Pointer to <b>line</b>
  */
 
 char *G_squeeze (char *line)
@@ -54,5 +60,6 @@ char *G_squeeze (char *line)
     *t = '\0';
     l=strlen(line)-1;
     if(*(line+l)=='\n') *(line+l)='\0';
+
     return line;
 }

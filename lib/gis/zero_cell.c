@@ -1,48 +1,68 @@
-/*
- ****************************************************************
- *  G_zero_cell_buf (buf)
- *     char *buf           cell buffer to be zeroed
+/**
+ * \file zero_cell.c
  *
- *  G_zero_raster_buf (void *rast, RASTER_MAP_TYPE data_type)
+ * \brief Zero cell buffer functions.
  *
- *  Zeros out a cell buffer 
- ****************************************************************/
+ * This program is free software under the GNU General Public License
+ * (>=v2). Read the file COPYING that comes with GRASS for details.
+ *
+ * \author GRASS GIS Development Team
+ *
+ * \date 1999-2006
+ */
 
 #include <grass/gis.h>
 
-/*!
- * \brief zero a raster buffer
+
+/**
+ * \fn int G_zero_cell_buf (CELL *buf)
  *
- * This routines assigns each member of the raster buffer array <b>buf</b> to zero.
- * It assumes that <b>buf</b> has been allocated using
- * <i>G_allocate_cell_buf.</i>
+ * \brief Zero a raster CELL buffer.
  *
- *  \param buf
- *  \return int
+ * This routines assigns each member of the raster buffer array 
+ * <b>buf</b> to zero. It assumes that <b>buf</b> has been allocated 
+ * using <i>G_allocate_cell_buf.</i>
+ *
+ * \param[in] buf
+ * \return always returns 0
  */
 
-int G_zero_cell_buf (register CELL *buf)
+int G_zero_cell_buf (CELL *buf)
 {
-    register int i ;
-    i = G_window_cols() ;
+    int i = G_window_cols();
 
-    while(i--)
-	*buf++ = 0 ;
+    while (i--)
+	*buf++ = 0;
 
     return 0;
 }
 
-int G_zero_raster_buf ( register void *rast,
-    RASTER_MAP_TYPE data_type)
+
+/**
+ * \fn int G_zero_raster_buf (void *rast, RASTER_MAP_TYPE data_type)
+ *
+ * \brief Zero a raster buffer.
+ *
+ * This routines assigns each member of the raster buffer array 
+ * <b>rast</b> to zero. It assumes that <b>rast</b> has been allocated 
+ * using <i>G_allocate_cell_buf.</i>
+ *
+ *  \param[in,out] rast
+ *  \param[in] data_type RASTER_MAP_TYPE
+ *  \return always returns 0
+ */
+
+int G_zero_raster_buf (void *rast, RASTER_MAP_TYPE data_type)
 {
-    register int i ;
-    register unsigned char *ptr;
+    int i;
+    unsigned char *ptr;
+
     /* assuming that the size of unsigned char is 1 byte */
-    i = G_window_cols() * G_raster_size(data_type) ;
+    i = G_window_cols() * G_raster_size(data_type);
     ptr = (unsigned char *) rast;
 
-    while(i--)
-	*ptr++ = 0 ;
+    while (i--)
+	*ptr++ = 0;
 
     return 0;
 }

@@ -1,28 +1,44 @@
+/**
+ * \file distance.c
+ *
+ * \brief Distance calculation functions.
+ *
+ * WARNING: this code is preliminary and may be changed,
+ * including calling sequences to any of the functions
+ * defined here.
+ *
+ * This program is free software under the GNU General Public License
+ * (>=v2). Read the file COPYING that comes with GRASS for details.
+ *
+ * \author GRASS GIS Development Team
+ *
+ * \date 1999-2006
+ */
+
 #include <math.h>
 #include <grass/gis.h>
+
+
 static double min4(double, double, double, double);
 static double min2(double, double);
 static double dabs (double);
 
-/* WARNING: this code is preliminary and may be changed,
- * including calling sequences to any of the functions
- * defined here
- */
 
 static int projection = 0;
 static double factor = 1.0;
 
 
-/*!
- * \brief begin distance calculations
+/**
+ * \fn int G_begin_distance_calculations (void)
+ *
+ * \brief Begin distance calculations.
  *
  * Initializes the distance calculations. It is used both for the
  * planimetric and latitude-longitude projections.
- * It returns 2 if the projection is latitude-longitude, 1 if the projection is
- * planimetric, and 0 if the projection doesn't hav e a metric (e.g. imagery.)
  *
- *  \param void
- *  \return int
+ * \return 0 if projection has no metrix (ie. imagery)
+ * \return 1 if projection is planimetric
+ * \return 2 if projection is latitude-longitude
  */
 
 int G_begin_distance_calculations()
@@ -48,19 +64,21 @@ int G_begin_distance_calculations()
 }
 
 
-/*!
- * \brief distance in meters
+/**
+ * \fn double G_distance (double e1, double n1, double e2, double n2)
+ *
+ * \brief Returns distance in meters.
  *
  * This routine computes the distance, in meters, from
- * <b>x1,y1</b> to <b>x2,y2.</b> If the projection is
+ * <b>x1</b>,<b>y1</b> to <b>x2</b>,<b>y2</b>. If the projection is
  * latitude-longitude, this distance is measured along the geodesic. Two
  * routines perform geodesic distance calculations.
  *
- *  \param x1
- *  \param y1
- *  \param x2
- *  \param y2
- *  \return double
+ * \param[in] x1
+ * \param[in] y1
+ * \param[in] x2
+ * \param[in] y2
+ * \return double
  */
 
 double G_distance (double e1,double n1,double e2,double n2)
@@ -72,6 +90,23 @@ double G_distance (double e1,double n1,double e2,double n2)
     else
 	return factor * hypot (e1-e2,n1-n2);
 }
+
+
+/**
+ * \fn double G_distance_between_line_segments (double ax1, double ay1, double ax2, double ay2, double bx1, double by1, double bx2, double by2)
+ *
+ * \brief Returns distance between two line segments in meters.
+ *
+ * \param[in] ax1
+ * \param[in] ay1
+ * \param[in] ax2
+ * \param[in] ay2
+ * \param[in] bx1
+ * \param[in] by2
+ * \param[in] bx2
+ * \param[in] by2
+ * \return double
+ */
 
 double
 G_distance_between_line_segments (
@@ -95,6 +130,21 @@ G_distance_between_line_segments (
 	G_distance_point_to_line_segment (bx2,by2,ax1,ay1,ax2,ay2)
 		) ;
 }
+
+
+/**
+ * \fn double G_distance_point_to_line_segment (double xp, double yp, double x1, double y1, double x2, double y2)
+ *
+ * \brief Returns distance between a point and line segment in meters.
+ *
+ * \param[in] xp
+ * \param[in] yp
+ * \param[in] x1
+ * \param[in] y1
+ * \param[in] x2
+ * \param[in] y2
+ * \return double
+ */
 
 double
 G_distance_point_to_line_segment (

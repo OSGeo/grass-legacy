@@ -1,11 +1,30 @@
+/**
+ * \file copy.c
+ *
+ * \brief Memory copy functions.
+ *
+ * This program is free software under the GNU General Public License
+ * (>=v2). Read the file COPYING that comes with GRASS for details.
+ *
+ * \author GRASS GIS Development Team
+ *
+ * \date 1999-2006
+ */
+
 #include <grass/gis.h>
-/*
- *********************************************************
+
+
+/**
+ * \fn int G_copy (void *a,void *b, int n)
  *
- * G_copy (a, b, n)
+ * \brief Copies <b>n</b> bytes starting at address <b>b</b> into 
+ * address <b>a</b>.
  *
- * copies n bytes starting at address b into address a
- ********************************************************/
+ * \param[in,out] a
+ * \param[in] b
+ * \param[in] n
+ * \return always returns 0
+ */
 
 int G_copy ( void *a,void *b,int n)
 {

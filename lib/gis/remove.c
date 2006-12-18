@@ -1,17 +1,17 @@
-/***********************************************************************
+/**
+ * \file remove.c
  *
- *  G_remove (element, name)
- *     char *element          mapset element containing name
- *     char *name             file name to be removed
+ * \brief File remove functions.
  *
- *  Only files in current mapset can be removed
+ * This program is free software under the GNU General Public License
+ * (>=v2). Read the file COPYING that comes with GRASS for details.
  *
- *  Returns  -1  on fail
- *            0  if no file
- *            1  if successful
+ * \author GRASS GIS Development Team
  *
- ***********************************************************************/
+ * \date 1999-2006
+ */
 
+#include <grass/config.h>
 #include <stdio.h>
 #include <string.h>
 #include <unistd.h>
@@ -23,19 +23,23 @@
 
 static int recursive_remove(const char *path);
 
-/*!
- * \brief remove a database file
+
+/**
+ * \fn int G_remove (char *element, char *name)
+ *
+ * \brief Remove a database file.
  *
  * The file or directory <b>name</b> under the database <b>element</b> directory
- * in the current mapset is removed.
- * Returns 1 if successful, 0 if <b>name</b> does not exist, and -1 if there
- * was an error.
- * <b>Note.</b> If <b>name</b> is a directory, everything within the
+ * in the current mapset is removed.<br>
+ * 
+ * <b>Note:</b> If <b>name</b> is a directory, everything within the
  * directory is removed as well.
  *
- *  \param element
- *  \param name
- *  \return int
+ * \param[in] element
+ * \param[in] name
+ * \return 0 if <b>name</b> does not exist
+ * \return 1 if successful
+ * \return -1 on error
  */
 
 int G_remove ( char *element, char *name)
@@ -47,13 +51,13 @@ int G_remove ( char *element, char *name)
     if (G_legal_filename(name) < 0)
 	    return -1;
 
-/* name in mapset legal only if mapset is current mapset */
+    /* name in mapset legal only if mapset is current mapset */
     mapset = G_mapset();
     if (G__name_is_fully_qualified (name, xname, xmapset)
     && strcmp (mapset, xmapset))
 	    return -1;
 
-/* if file does not exist, return 0 */
+    /* if file does not exist, return 0 */
     if (access (G__file_name (path, element, name, mapset),0) != 0)
 	    return 0;
 
@@ -62,6 +66,7 @@ int G_remove ( char *element, char *name)
 
     return -1;
 }
+
 
 /* equivalent to rm -rf path */
 static int

@@ -1,16 +1,16 @@
-/******************************************************************
+/**
+ * \file whoami.c
  *
- *  char *
- *  G_whoami()
+ * \brief Login name functions.
  *
- *  Returns a string containing the name of the current user.
+ * This program is free software under the GNU General Public License
+ * (>=v2). Read the file COPYING that comes with GRASS for details.
  *
- *  Try getlogin() first, then go to paswd file
- *  However, some masscomp getlogin() fails in ucb universe
- *  This is because the ttyname(0) rotuine fails in ucb universe.
- *  So check for this too.
+ * \author GRASS GIS Development Team
  *
- *****************************************************************/
+ * \date 1999-2006
+ */
+
 #include <unistd.h>
 #include <stdlib.h>
 
@@ -21,14 +21,19 @@
 #include <grass/gis.h>
 
 
-/*!
- * \brief user's name
+/**
+ * \fn char *G_whoami(void)
  *
- * Returns a pointer to a string which is
- * the user's login name.
+ * \brief Gets user's name.
  *
- *  \param ~
- *  \return char * 
+ * Returns a pointer to a string containing the user's login name.
+ *
+ * Tries getlogin() first, then goes to the password file.
+ * However, some masscomp getlogin() fails in ucb universe
+ * because the ttyname(0) rotuine fails in ucb universe.
+ * So we check for this, too.
+ *
+ *  \retval char * Pointer to string
  */
 
 char *G_whoami(void)
@@ -39,7 +44,7 @@ char *G_whoami(void)
         name = "user_name";
     }
 #else
-    static char *name= 0;
+    static char *name = NULL;
 #ifdef COMMENTED_OUT
     char *getlogin();
     char *ttyname();
@@ -68,5 +73,6 @@ char *G_whoami(void)
 	name = G_store ("?");
 
 #endif
+
     return name;
 }

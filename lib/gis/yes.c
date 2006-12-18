@@ -1,52 +1,60 @@
-#include <grass/gis.h>
-/*****************************************************************
+/**
+ * \file yes.c
  *
- * G_yes (question, dflt)
+ * \brief Yes/No functions.
  *
- * print the question and get a yes/no response from the user
- * if dflt is 1 a RETURN is taken to be yes
- * if dflt is 0 a RETURN is taken to be no
- * if dflt is -1 a RETURN is not a valid response
+ * This program is free software under the GNU General Public License
+ * (>=v2). Read the file COPYING that comes with GRASS for details.
  *
- * returns 0 no, 1 yes
- ***************************************************************/
+ * \author GRASS GIS Development Team
+ *
+ * \date 1999-2006
+ */
+
 #include <stdio.h>
+#include <grass/gis.h>
 
 
-/*!
- * \brief ask a yes/no question
+/**
+ * \fn int G_yes (char *question, int dflt)
+ *
+ * \brief Ask a yes/no question.
  *
  * This routine prints a <b>question</b> to the user, and expects the user to
  * respond either yes or no. (Invalid responses are rejected and the process is
- * repeated until the user answers yes or no.)
+ * repeated until the user answers yes or no.)<br>
  * The <b>default</b> indicates what the RETURN key alone should mean. A
  * <b>default</b> of 1 indicates that RETURN means yes, 0 indicates that RETURN
- * means no, and -1 indicates that RETURN alone is not a valid response.
- * The <b>question</b> will be appended with ''(y/n) '', and, if
- * <b>default</b> is not -1, with ''[y] '' or ''[n] '', depending on the
- * <b>default.</b>
- * <i>G_yes</i> (~) returns 1 if the user said yes, and 0 if the user said no.
+ * means no. The <b>question</b> will be appended with ''(y/n) '', and, 
+ * if <b>default</b> is not -1, with ''[y] '' or ''[n] '', depending on 
+ * the <b>default.</b><br>
  *
- *  \param question
- *  \param default
- *  \return int
+ * \param[in] question
+ * \param[in] dflt
+ * \return 0 for No
+ * \return 1 for Yes
  */
 
 int G_yes (char *question,int dflt)
 {
-    char answer[100];
-
     fflush (stdout);
+
     while (1)
     {
+        char answer[100];
+
 	fprintf (stderr,"%s", question);
+
 	while (1)
 	{
 	    fprintf (stderr,"(y/n) ");
-	    if (dflt >= 0) fprintf (stderr,dflt==0?"[n] ":"[y] ");
+	    if (dflt >= 0)
+                fprintf (stderr,dflt==0?"[n] ":"[y] ");
+
 	    fflush (stderr);
 	    if (!G_gets(answer)) break;
 	    G_strip (answer);
+
 	    switch (*answer)
 	    {
 	    case 'y': case 'Y':	return (1);

@@ -1,28 +1,28 @@
-/*
-****************************************************************************
-*
-* LIBRARY:      unix_socks.c  -- Routines related to using UNIX domain 
-*               sockets for IPC mechanisms (such as XDRIVER).
-*
-* AUTHOR(S):    Eric G. Miller
-*
-* PURPOSE:      Historically GRASS has used FIFO for interprocess communic-
-*               ations for display functions.  Unfortunately, FIFO's are
-*               not available on all target platforms.  An attempt has been
-*               made to use IPC message passing, but the semantics are
-*               variable and it also isn't available on all target platforms.
-*               UNIX sockets, or local or domain sockets, are much more
-*               widely available and consistent.  NOTE: This implementation
-*               of UNIX sockets provides zero security checking so should
-*               not be used from untrusted clients.
-*
-* COPYRIGHT:    (C) 2000 by the GRASS Development Team
-*
-*               This program is free software under the GNU General Public
-*   	    	License (>=v2). Read the file COPYING that comes with GRASS
-*   	    	for details.
-*
-*****************************************************************************/
+/**
+ * \file unix_sockets.c
+ *
+ * \brief Unix sockets support functions.
+ *
+ * Routines related to using UNIX domain sockets for IPC mechanisms 
+ * (such as XDRIVER).<br>
+ *
+ * Historically GRASS has used FIFO for interprocess communications for 
+ * display functions. Unfortunately, FIFO's are not available on all 
+ * target platforms. An attempt has been made to use IPC message 
+ * passing, but the semantics are variable and it also isn't available 
+ * on all target platforms. UNIX sockets, or local or domain sockets, 
+ * are much more widely available and consistent.<br>
+ *
+ * <b>Note:</b> This implementation of UNIX sockets provides zero 
+ * security checking so should not be used from untrusted clients.<br>
+ *
+ * This program is free software under the GNU General Public License
+ * (>=v2). Read the file COPYING that comes with GRASS for details.
+ *
+ * \author Eric G. Miller
+ *
+ * \date 1999-2006
+ */
 
 #ifndef __MINGW32__
 
@@ -50,6 +50,9 @@
 #endif
 
 
+static char *_get_make_sock_path (void);
+
+
 /* ---------------------------------------------------------------------
  * _get_make_sock_path(), builds and tests the path for the socket
  * directory.  Returns NULL on any failure, otherwise it returns the
@@ -57,6 +60,7 @@
  * "/tmp/grass6-$USER-$GIS_LOCK".
  * ($GIS_LOCK is set in lib/init/init.sh to PID) 
  * ---------------------------------------------------------------------*/
+
 static char *
 _get_make_sock_path (void)
 {
@@ -107,11 +111,19 @@ _get_make_sock_path (void)
 }
 
         
- /* ----------------------------------------------------------------------
- * G_sock_get_fname(), builds the full path for a UNIX socket.  Caller 
- * should G_free () the return value when it is no longer needed.  Returns
- * NULL on failure.
- * ---------------------------------------------------------------------*/
+/**
+ * \fn char *G_sock_get_fname (const char *name)
+ *
+ * \brief Builds full path for a UNIX socket.
+ *
+ * Caller should <i>G_free()</i> the return value when it is no longer 
+ * needed.
+ *
+ * \param[in] name
+ * \return NULL on error
+ * \return Pointer to string socket path on success
+ */
+
 char *
 G_sock_get_fname (const char *name)
 {
@@ -135,11 +147,16 @@ G_sock_get_fname (const char *name)
 }
 
 
-/* -------------------------------------------------------------------
- * G_sock_exists(char *): Returns 1 if path is to a UNIX socket that
- * already exists, 0 otherwise.
- * -------------------------------------------------------------------*/
-    
+/**
+ * \fn int G_sock_exists (const char *name)
+ *
+ * \brief Checks socket existence.
+ *
+ * \param[in] name
+ * \return 1 if <b>name</b> exists
+ * \return 0 if <b>name</b> does not exist
+ */
+
 int
 G_sock_exists (const char *name)
 {
@@ -155,12 +172,18 @@ G_sock_exists (const char *name)
 }
 
 
-/* -----------------------------------------------------------------
- * G_sock_bind (char *): Takes the full pathname for a UNIX socket
- * and returns the file descriptor to the socket after a successful
- * call to bind().  On error, it returns -1.  Check "errno" if you
- * want to find out why this failed (clear it before the call).
- * ----------------------------------------------------------------*/
+/**
+ * \fn int G_sock_bind (const char *name)
+ *
+ * \brief Binds socket to file descriptor.
+ *
+ * Takes the full pathname for a UNIX socket and returns the file 
+ * descriptor to the socket after a successful call to <i>bind()</i>.
+ *
+ * \param[in] name
+ * \return -1 and "errno" is set on error
+ * \return file descriptor on success
+ */
 
 int
 G_sock_bind (const char *name)
@@ -205,10 +228,16 @@ G_sock_bind (const char *name)
 }
 
 
-/* ---------------------------------------------------------------------
- * G_sock_listen(int, unsigned int): Wrapper around the listen() 
- * function.
- * --------------------------------------------------------------------*/
+/**
+ * \fn int G_sock_listen (int sockfd, unsigned int queue_len)
+ *
+ * \brief Wrapper function to <i>listen()</i>.
+ *
+ * \param[in] sockfd
+ * \param[in] queue_len
+ * \return 0 on success
+ * \return -1 and "errno" set on error
+ */
 
 int
 G_sock_listen (int sockfd, unsigned int queue_len)
@@ -216,14 +245,19 @@ G_sock_listen (int sockfd, unsigned int queue_len)
     return listen (sockfd, queue_len);
 }
 
-/* -----------------------------------------------------------------------
- * G_sock_accept (int sockfd):
- * Wrapper around the accept() function. No client info is returned, but
- * that's not generally useful for local sockets anyway.  Function returns
- * the file descriptor or an error code generated by accept().  Note,
- * this call will usually block until a connection arrives.  You can use
- * select() for a time out on the call.
- * ---------------------------------------------------------------------*/
+
+/**
+ * \fn int G_sock_accept (int sockfd)
+ *
+ * \brief Wrapper around <i>accept()</i>.
+ *
+ * <b>Note:</b> This call will usually block until a connection arrives. 
+ * <i>select()</i> can be used for a time out on the call.
+ *
+ * \param[in] sockfd
+ * \return -1 and "errno" set on error
+ * \return file descriptor on success
+ */
 
 int
 G_sock_accept (int sockfd)
@@ -234,13 +268,15 @@ G_sock_accept (int sockfd)
 }
  
 
-/* ----------------------------------------------------------------------
- * G_sock_connect (char *name):  Tries to connect to the unix socket
- * specified by "name".  Returns the file descriptor if successful, or
- * -1 if unsuccessful.  Global errno is set by connect() if return is -1
- * (though you should zero errno first, since this function doesn't set
- * it for a couple conditions).
- * --------------------------------------------------------------------*/
+/**
+ * \fn int G_sock_connect (const char *name)
+ *
+ * \brief Tries to connect to the UNIX socket specified by <b>name</b>.
+ *
+ * \param[in] name
+ * \return -1 and "errno" set on error
+ * \return file descriptor on success
+ */
 
 int
 G_sock_connect (const char *name)
@@ -270,7 +306,18 @@ G_sock_connect (const char *name)
         return sockfd;
 }
 
-/* vim: set softtabstop=4 shiftwidth=4 expandtab : */
+
+/**
+ * \fn int G_sock_socketpair (int family, int type, int protocol, int *fd)
+ *
+ * \brief Creates an unnamed pair of connected sockets.
+ *
+ * \param[in] family
+ * \param[in] protocol
+ * \param[in] fd
+ * \return -1 and "errno" set on error
+ * \return 0 on success
+ */
 
 int
 G_sock_socketpair(int family, int type, int protocol, int *fd)
@@ -283,4 +330,5 @@ G_sock_socketpair(int family, int type, int protocol, int *fd)
 		return 0;
 }
 
+/* vim: set softtabstop=4 shiftwidth=4 expandtab : */
 #endif

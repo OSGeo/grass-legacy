@@ -1,11 +1,27 @@
+/**
+ * \file align_window.c
+ *
+ * \brief Window alignment functions.
+ *
+ * This program is free software under the GNU General Public License
+ * (>=v2). Read the file COPYING that comes with GRASS for details.
+ *
+ * \author GRASS GIS Development Team
+ *
+ * \date 1999-2006
+ */
+
 #include <stdio.h>
 #include <math.h>
 #include <grass/gis.h>
 
-/*!
- * \brief align two regions
+
+/**
+ * \fn char *G_align_window (struct Cell_head *window, struct Cell_head *ref)
  *
- *  Modifies the input <b>window</b> to align to
+ * \brief Align two regions.
+ *
+ * Modifies the input <b>window</b> to align to
  * <b>ref</b> region. The resolutions in <b>window</b> are set to match those
  * in <b>ref</b> and the <b>window</b> edges (north, south, east, west) are
  * modified to align with the grid of the <b>ref</b> region.
@@ -14,17 +30,15 @@
  * west westward. Lon-lon constraints are taken into consideration
  * to make sure that the north doesn't go above 90 degrees (for lat/lon)
  * or that the east does "wrap" past the west, etc.
- * This routine returns NULL if ok, otherwise it returns an error message
- * (do NOT free this message).
  *
- *  \param window
- *  \param ref
- *  \return char * 
+ * \param[in,out] window
+ * \param[in] ref
+ * \return NULL on success
+ * \return Pointer to an error string on failure
  */
 
 char *
 G_align_window  (struct Cell_head *window, struct Cell_head *ref)
-
 {
     int preserve;
 
@@ -49,6 +63,7 @@ G_align_window  (struct Cell_head *window, struct Cell_head *ref)
 	    window->north -= window->ns_res;
 	while (window->south < -90.0)
 	    window->south += window->ns_res;
+
 	if (preserve)
 	    window->east = window->west + 360;
 	else
