@@ -34,7 +34,7 @@ struct menu
 };
 
 extern void bordwalk(struct Cell_head *, struct Cell_head *, struct pj_info *, struct pj_info *);
-extern struct cache *readcell(int);
+extern struct cache *readcell(int, const char *);
 extern block *get_block(struct cache *, int);
 /* declare resampling methods */
 /* bilinear.c */

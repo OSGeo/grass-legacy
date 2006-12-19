@@ -68,68 +68,69 @@ static char *make_ipol_list(void);
 
 int main (int argc, char **argv)
 {
-	char     *mapname,		 /* ptr to name of output layer	 */
-	         *setname,		 /* ptr to name of input mapset	 */
-	         *ipolname;		 /* name of interpolation method */
+	char	 *mapname,		/* ptr to name of output layer	*/
+		 *setname,		/* ptr to name of input mapset	*/
+		 *ipolname;		/* name of interpolation method	*/
 
-	int       fdi,			 /* input map file descriptor	 */
-	          fdo,			 /* output map file descriptor	 */
-	          method,		 /* position of method in table	 */
-	          permissions,		 /* mapset permissions		 */
-	          cell_type,		 /* output celltype		 */
-	          cell_size,		 /* size of a cell in bytes	 */
-	          row, col,		 /* counters			 */
-		  irows, icols,		 /* original rows, cols		 */
-		  orows, ocols,
-		  have_colors;     	 /* Input map has a colour table */
+	int	fdi,			/* input map file descriptor	*/
+		fdo,			/* output map file descriptor	*/
+		method,			/* position of method in table	*/
+		permissions,		/* mapset permissions		*/
+		cell_type,		/* output celltype		*/
+		cell_size,		/* size of a cell in bytes	*/
+		row, col,		/* counters			*/
+		irows, icols,		/* original rows, cols		*/
+		orows, ocols,
+		have_colors;		/* Input map has a colour table	*/
 
-	void     *obuffer,		 /* buffer that holds one output row	 */
-	         *obufptr;		 /* column ptr in output buffer	 */
-	struct cache *ibuffer;		 /* buffer that holds the input map	 */
-	func      interpolate;		 /* interpolation routine	 */
+	void	 *obuffer,		/* buffer that holds one output row	*/
+		 *obufptr;		/* column ptr in output buffer	*/
+	struct cache *ibuffer;		/* buffer that holds the input map	*/
+	func	interpolate;		/* interpolation routine	*/
 
-	double    xcoord1, xcoord2,	 /* temporary x coordinates 	 */
-	          ycoord1, ycoord2,	 /* temporary y coordinates	 */
-	          col_idx,		 /* column index in input matrix */
-	          row_idx,		 /* row index in input matrix	 */
-		  onorth, osouth,	 /* save original border coords  */
-		  oeast, owest,
-		  inorth, isouth,
-		  ieast, iwest;
+	double	xcoord1, xcoord2,	/* temporary x coordinates	*/
+		ycoord1, ycoord2,	/* temporary y coordinates	*/
+		col_idx,		/* column index in input matrix	*/
+		row_idx,		/* row index in input matrix	*/
+		onorth, osouth,		/* save original border coords	*/
+		oeast, owest,
+		inorth, isouth,
+		ieast, iwest;
 
-	struct Colors colr;		 /* Input map colour table       */
+	struct Colors colr;		/* Input map colour table	*/
 	struct History history;
    
-	struct pj_info iproj,		 /* input map proj parameters	 */
-	          oproj;		 /* output map proj parameters	 */
+	struct pj_info iproj,		/* input map proj parameters	*/
+		oproj;			/* output map proj parameters	*/
 
-	struct Key_Value *in_proj_info,	 /* projection information of 	 */
-	         *in_unit_info,		 /* input and output mapsets	 */
-	         *out_proj_info,
-	         *out_unit_info;
+	struct Key_Value *in_proj_info,	/* projection information of	*/
+		*in_unit_info,		/* input and output mapsets	*/
+		*out_proj_info,
+		*out_unit_info;
 
 	struct GModule *module;
 
-	struct Flag *list,		 /* list files in source location */
-		 *nocrop;		 /* don't crop output map	 */
+	struct Flag *list,		/* list files in source location*/
+		*nocrop;		/* don't crop output map	*/
 
-	struct Option *imapset,		 /* name of input mapset	 */
-	         *inmap,		 /* name of input layer		 */
-                 *inlocation,            /* name of input location       */
-                 *outmap,		 /* name of output layer	 */
-	         *indbase,		 /* name of input database	 */
-	         *interpol,		 /* interpolation method:
- 					    nearest neighbor, bilinear, cubic */
-		 *res;			 /* resolution of target map     */
-		  struct Cell_head incellhd,	 /* cell header of input map	 */
-	          outcellhd;		 /* and output map		 */
+	struct Option *imapset,		/* name of input mapset		*/
+		*inmap,			/* name of input layer		*/
+		*inlocation,		/* name of input location	*/
+		*outmap,		/* name of output layer		*/
+		*indbase,		/* name of input database	*/
+		*interpol,		/* interpolation method:
+					  nearest neighbor, bilinear, cubic */
+		*memory,		/* amount of memory for cache	*/
+		*res;			/* resolution of target map	*/
+	struct Cell_head incellhd,	/* cell header of input map	*/
+		outcellhd;		/* and output map		*/
 
 
 	G_gisinit(argv[0]);
 
 	module = G_define_module();
 	module->keywords = _("raster");
-    module->description =
+	module->description =
 		_("Re-project a raster map from one location to the current location.");
 
 	inmap = G_define_option();
@@ -168,6 +169,12 @@ int main (int argc, char **argv)
 	interpol->answer = "nearest";
 	interpol->options = ipolname;
 	interpol->description = _("Interpolation method to use");
+
+	memory = G_define_option();
+	memory->key = "memory";
+	memory->type = TYPE_INTEGER;
+	memory->required = NO;
+	memory->description = _("Cache size (MiB)");
 
 	res = G_define_option();
 	res->key = "resolution";
@@ -359,7 +366,7 @@ int main (int argc, char **argv)
 	G_set_window(&incellhd);
 	fdi = G_open_cell_old(inmap->answer, setname);
 	cell_type = G_get_raster_map_type(fdi);
-	ibuffer = readcell(fdi);
+	ibuffer = readcell(fdi, memory->answer);
 	G_close_cell(fdi);
 
 	G__switch_env();
