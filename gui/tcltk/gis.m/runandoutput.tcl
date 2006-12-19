@@ -203,7 +203,13 @@ proc term_panel {cmd} {
 ###############################################################################
 proc term {cmd args} {
 	global env
-	eval [list exec -- $env(GISBASE)/etc/grass-xterm-wrapper -name xterm-grass -e $env(GISBASE)/etc/grass-run.sh $cmd] $args &
+	global mingw
+	
+	if { $mingw == "1" } {
+	   eval [list exec -- cmd.exe /c start $env(GISBASE)/etc/grass-run.bat $cmd] $args &
+	} else {
+	   eval [list exec -- $env(GISBASE)/etc/grass-xterm-wrapper -name xterm-grass -e $env(GISBASE)/etc/grass-run.sh $cmd] $args &
+	}
 }
 
 ###############################################################################
