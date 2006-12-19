@@ -1,11 +1,15 @@
-/**********************************************************************
+/**
+ * \file gisinit.c
+ * 
+ * \brief Handles program initialization.
  *
- *   G_gisinit(pgm)
- *      char *pgm        Name to be associated with current program
+ * This program is free software under the GNU General Public License
+ * (>=v2). Read the file COPYING that comes with GRASS for details.
  *
- *  Does some program initialization.  Read comments in this file
- *  for details.
- **********************************************************************/
+ * \author GRASS GIS Development Team
+ *
+ * \date 2000-2006
+ */
 
 #include <stdio.h>
 #include <unistd.h>
@@ -16,13 +20,25 @@
 #include <grass/glocale.h>
 
 struct G__ G__ ;
-static int initialized = 0;
+static int initialized = 0; /** Is set when engine is initialized */
 static int gisinit(void);
+
+
+/**
+ * \fn int G_gisinit (const char *pgm)
+ *
+ * \brief Initialize GRASS GIS engine.
+ *
+ * Initializes GIS engine and ensures a valid mapset is available.
+ *
+ * \param pgm Program (module) name
+ * \return always returns 0 on success
+ * \return exit() is called on error
+ */
 
 int G_gisinit(const char *pgm)
 {
     char *mapset;
-    char msg[100];
 
     if ( initialized )
 	return 0;
@@ -36,14 +52,10 @@ int G_gisinit(const char *pgm)
     case 1:
 	    break;
     case 0:
-	    sprintf(msg,_("MAPSET %s - permission denied"), mapset);
-	    G_fatal_error (msg);
-	    exit(EXIT_FAILURE);
+	    G_fatal_error (_("MAPSET %s - permission denied"), mapset);
 	    break;
     default:
-	    sprintf(msg,_("MAPSET %s not found"), mapset);
-	    G_fatal_error (msg);
-	    exit(EXIT_FAILURE);
+	    G_fatal_error (_("MAPSET %s not found"), mapset);
 	    break;
     }
 
@@ -51,6 +63,17 @@ int G_gisinit(const char *pgm)
 
     return 0;
 }
+
+
+/**
+ * \fn int G_no_gisinit (void)
+ *
+ * \brief Initialize GRASS GIS engine.
+ *
+ * Initializes GIS engine, but does not check for a valid mapset.
+ *
+ * \return always returns 0 on success
+ */
 
 int G_no_gisinit(void)
 {
@@ -62,6 +85,16 @@ int G_no_gisinit(void)
     return 0;
 }
 
+
+/**
+ * \fn int G__check_gisinit (void)
+ *
+ * \brief Checks to see if GIS engine is initialized.
+ *
+ * \return 1 on success
+ * \return exit() is called on error
+ */
+
 int G__check_gisinit(void)
 {
     if (initialized) return 1;
@@ -69,6 +102,7 @@ int G__check_gisinit(void)
     G_sleep(3);
     exit(EXIT_FAILURE);
 }
+
 
 static int gisinit(void)
 {
