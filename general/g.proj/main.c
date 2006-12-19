@@ -53,7 +53,8 @@ int main(int argc, char *argv[])
     struct Cell_head cellhd;
     struct GModule *module;
 
-    G_gisinit(argv[0]);
+    G_set_program_name(argv[0]);
+    G_no_gisinit();
 
     module = G_define_module();
     module->keywords = _("general");
