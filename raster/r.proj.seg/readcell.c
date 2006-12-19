@@ -16,7 +16,7 @@
 #include <grass/glocale.h>
 #include "r.proj.h"
 
-struct cache *readcell(int fdi)
+struct cache *readcell(int fdi, const char *size)
 {
 	FCELL *tmpbuf;
 	struct cache *c;
@@ -25,6 +25,8 @@ struct cache *readcell(int fdi)
 	int row;
 	char *filename;
 	int nx, ny;
+	int nblocks;
+	int i;
 
 	nrows = G_window_rows();
 	ncols = G_window_cols();
@@ -32,23 +34,37 @@ struct cache *readcell(int fdi)
 	ny = (nrows + BDIM - 1) / BDIM;
 	nx = (ncols + BDIM - 1) / BDIM;
 
-	filename = G_tempfile();
+	if (size)
+		nblocks = atoi(size) * ((1<<20) / sizeof(block));
+	else
+		nblocks = (nx + ny) * 2;	/* guess */
+
+	if (nblocks > nx * ny)
+		nblocks = nx * ny;
 
 	c = G_malloc(sizeof(struct cache));
-	c->fd = open(filename, O_RDWR|O_CREAT|O_EXCL, 0600);
 	c->stride = nx;
-	c->nblocks = (nx + ny) * 2;	/* guess */
+	c->nblocks = nblocks;
 	c->grid = (block **) G_calloc(nx * ny, sizeof(block *));
-	c->blocks = (block *) G_malloc(c->nblocks * sizeof(block));
-	c->refs = (int *) G_malloc(c->nblocks * sizeof(int));
+	c->blocks = (block *) G_malloc(nblocks * sizeof(block));
+	c->refs = (int *) G_malloc(nblocks * sizeof(int));
 
-	if (c->fd < 0)
-		G_fatal_error("Unable to open temporary file");
-
-	remove(filename);
+	if (nblocks < nx * ny)
+	{
+		filename = G_tempfile();
+		c->fd = open(filename, O_RDWR|O_CREAT|O_EXCL, 0600);
+		if (c->fd < 0)
+			G_fatal_error("Unable to open temporary file");
+		remove(filename);
+	}
+	else
+		c->fd = -1;
 
 	G_message(_("Allocating memory and reading input map... "));
 	G_percent(0, nrows, 5);
+
+	for (i = 0; i < c->nblocks; i++)
+		c->refs[i] = -1;
 
 	tmpbuf = (FCELL *) G_malloc(nx * sizeof(block));
 
@@ -58,7 +74,7 @@ struct cache *readcell(int fdi)
 
 		for (y = 0; y < BDIM; y++)
 		{
-			G_percent(row + y, nrows - 1, 5);
+			G_percent(row + y, nrows, 5);
 
 			if (row + y >= nrows)
 				break;
@@ -68,15 +84,26 @@ struct cache *readcell(int fdi)
 		}
 
 		for (x = 0; x < nx; x++)
-		for (y = 0; y < BDIM; y++)
-			if (write(c->fd, &tmpbuf[(y * nx + x) * BDIM], BDIM * sizeof(FCELL)) < 0)
-				G_fatal_error("Error writing segment file");
+			for (y = 0; y < BDIM; y++)
+				if (c->fd >= 0)
+				{
+					if (write(c->fd, &tmpbuf[(y * nx + x) * BDIM], BDIM * sizeof(FCELL)) < 0)
+						G_fatal_error("Error writing segment file");
+				}
+				else
+					memcpy(	&c->blocks[BKIDX(c, HI(row), x)][LO(y)][0],
+						&tmpbuf[(y * nx + x) * BDIM],
+						BDIM * sizeof(FCELL));
 	}
 
 	G_free(tmpbuf);
 
-	for (row = 0; row < c->nblocks; row++)
-		c->refs[row] = -1;
+	if (c->fd < 0)
+		for (i = 0; i < c->nblocks; i++)
+		{
+			c->grid[i] = &c->blocks[i];
+			c->refs[i] = i;
+		}
 
 	return c;
 }
@@ -87,6 +114,9 @@ block *get_block(struct cache *c, int idx)
 	block *p = &c->blocks[replace];
 	int ref = c->refs[replace];
 	off_t offset = (off_t) idx * sizeof(FCELL) << L2BSIZE;
+
+	if (c->fd < 0)
+		G_fatal_error("Internal error: cache miss on fully-cached map");
 
 	if (ref >= 0)
 		c->grid[ref] = NULL;
