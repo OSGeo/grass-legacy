@@ -22,6 +22,7 @@ rem   	    	for details.
 rem
 rem #########################################################################
 
+set SAVEPATH=%PATH%
 rem DON'T include scripts directory in PATH - .bat files in bin directory
 rem are used to run scripts on Windows
 if "%GRASS_ADDON_PATH%"=="" set PATH=%WINGISBASE%\bin;%WINGISBASE%\lib;%PATH%
@@ -90,7 +91,7 @@ if not "%GRASS_WISH%"=="" (
 
 rem This doesn't seem to work; don't understand return codes from gis_set.tcl PK
 rem if return ok, gis.m start:
-if %errorlevel% == 1 exit /b
+if %errorlevel% == 1 goto exitinit
 
 if not "%GRASS_WISH%"=="" (
   "%GRASS_WISH%" "%WINGISBASE%\etc\gm\gm.tcl"
@@ -100,7 +101,7 @@ if not "%GRASS_WISH%"=="" (
 
 "%WINGISBASE%\etc\clean_temp" > NUL:
 
-exit /b
+goto exitinit
 
 :text
 
@@ -124,12 +125,12 @@ prompt GRASS %GRASS_VERSION% $C%LOCATION_NAME%$F:$P $G
 cmd.exe
 
 prompt
-exit /b
+goto exitinit
 
 :displaylicence
 
 type "%WINGISBASE%\etc\license"
-exit /b
+goto exitinit
 
 :settextmode
 
@@ -145,3 +146,8 @@ shift
 
 goto afterguicheck
 
+:exitinit
+
+set PATH=%SAVEPATH%
+set SAVEPATH=
+exit /b
