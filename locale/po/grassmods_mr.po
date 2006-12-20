@@ -2064,6 +2064,7 @@ msgstr ""
 
 #: ../doc/raster/r.example/main.c:121 ../raster/r.out.gdal/main.c:78
 #: ../raster/r.bitpattern/main.c:110 ../raster/r.out.bin/main.c:139
+#: ../raster/r.resamp.rst/main.c:430
 #, c-format
 msgid "Cannot open raster map [%s]"
 msgstr ""
@@ -7570,7 +7571,7 @@ msgstr ""
 #: ../raster/r.cats/main.c:98 ../raster/r.basins.fill/main.c:92
 #: ../raster/r.basins.fill/main.c:105 ../raster/r.coin/cmd_parms.c:93
 #: ../raster/r.coin/cmd_parms.c:96 ../raster/r.kappa/stats.c:30
-#: ../raster/r.transect/main.c:97
+#: ../raster/r.transect/main.c:97 ../raster/r.his/main.c:126
 #, c-format
 msgid "%s: <%s> raster map not found"
 msgstr ""
@@ -10793,11 +10794,6 @@ msgstr ""
 msgid "Respect NULL values while drawing"
 msgstr ""
 
-#: ../raster/r.his/main.c:126
-#, c-format
-msgid "%s: <%s> raster map not found"
-msgstr ""
-
 #: ../raster/r.his/main.c:144 ../raster/r.his/main.c:167
 #: ../raster/r.his/main.c:196 ../display/d.rast/display.c:23
 #: ../display/d.rast.num/number.c:277 ../display/d.legend/main.c:247
@@ -13082,11 +13078,6 @@ msgstr ""
 
 #: ../raster/r.resamp.rst/main.c:427
 msgid "Input map resolution differs from current region resolution!"
-msgstr ""
-
-#: ../raster/r.resamp.rst/main.c:430
-#, c-format
-msgid "Cannot open raster map [%s]"
 msgstr ""
 
 #: ../raster/r.resamp.rst/main.c:474

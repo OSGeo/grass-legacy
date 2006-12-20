@@ -7769,14 +7769,17 @@ msgstr ""
 #: ../raster/r.cats/main.c:98 ../raster/r.basins.fill/main.c:92
 #: ../raster/r.basins.fill/main.c:105 ../raster/r.coin/cmd_parms.c:93
 #: ../raster/r.coin/cmd_parms.c:96 ../raster/r.kappa/stats.c:30
-#: ../raster/r.transect/main.c:97
+#: ../raster/r.transect/main.c:97 ../raster/r.his/main.c:126
 #, fuzzy, c-format
 msgid "%s: <%s> raster map not found"
 msgstr ""
 "#-#-#-#-#  grassmods_lv.po (grassmods_lv)  #-#-#-#-#\n"
+"#-#-#-#-#  grassmods_lv.po (grassmods_lv)  #-#-#-#-#\n"
 "brīdinājums: %s - vektora fails nav atrasts\n"
 "#-#-#-#-#  grassmods_lv.po (grassmods_lv)  #-#-#-#-#\n"
-"rastra karte <%s> nav atrasta"
+"rastra karte <%s> nav atrasta\n"
+"#-#-#-#-#  grassmods_lv.po (grassmods_lv)  #-#-#-#-#\n"
+"reģions <%s> nav atrasts"
 
 #: ../raster/r.cats/main.c:100
 #, c-format
@@ -11074,11 +11077,6 @@ msgstr "Līmeņa nosaukums kuru izmantos BLUE(zielais)"
 msgid "Respect NULL values while drawing"
 msgstr "Ņemt vērā NULL vērtības zīmēšanas laikā"
 
-#: ../raster/r.his/main.c:126
-#, fuzzy, c-format
-msgid "%s: <%s> raster map not found"
-msgstr "reģions <%s> nav atrasts"
-
 #: ../raster/r.his/main.c:144 ../raster/r.his/main.c:167
 #: ../raster/r.his/main.c:196 ../display/d.rast/display.c:23
 #: ../display/d.rast.num/number.c:277 ../display/d.legend/main.c:247
@@ -13394,11 +13392,6 @@ msgstr ""
 #: ../raster/r.resamp.rst/main.c:427
 msgid "Input map resolution differs from current region resolution!"
 msgstr ""
-
-#: ../raster/r.resamp.rst/main.c:430
-#, fuzzy, c-format
-msgid "Cannot open raster map [%s]"
-msgstr "Nevaratvērt datubāzi %s"
 
 #: ../raster/r.resamp.rst/main.c:474
 #, c-format

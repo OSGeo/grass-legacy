@@ -2182,9 +2182,14 @@ msgstr ""
 
 #: ../doc/raster/r.example/main.c:121 ../raster/r.out.gdal/main.c:78
 #: ../raster/r.bitpattern/main.c:110 ../raster/r.out.bin/main.c:139
+#: ../raster/r.resamp.rst/main.c:430
 #, fuzzy, c-format
 msgid "Cannot open raster map [%s]"
-msgstr "Ne morem odpreti cellfile za [%s]"
+msgstr ""
+"#-#-#-#-#  grassmods_sl.po (grassmods_sl)  #-#-#-#-#\n"
+"Ne morem odpreti cellfile za [%s]\n"
+"#-#-#-#-#  grassmods_sl.po (grassmods_sl)  #-#-#-#-#\n"
+"Ne morem odpreti baze podatkov %s"
 
 #: ../doc/raster/r.example/main.c:126 ../raster/r.bitpattern/main.c:113
 #, fuzzy, c-format
@@ -7981,14 +7986,17 @@ msgstr "Znak za separator na izhodu (privzet: tab)"
 #: ../raster/r.cats/main.c:98 ../raster/r.basins.fill/main.c:92
 #: ../raster/r.basins.fill/main.c:105 ../raster/r.coin/cmd_parms.c:93
 #: ../raster/r.coin/cmd_parms.c:96 ../raster/r.kappa/stats.c:30
-#: ../raster/r.transect/main.c:97
+#: ../raster/r.transect/main.c:97 ../raster/r.his/main.c:126
 #, fuzzy, c-format
 msgid "%s: <%s> raster map not found"
 msgstr ""
 "#-#-#-#-#  grassmods_sl.po (grassmods_sl)  #-#-#-#-#\n"
+"#-#-#-#-#  grassmods_sl.po (grassmods_sl)  #-#-#-#-#\n"
 "pozor: ne najdem vektorja %s\n"
 "#-#-#-#-#  grassmods_sl.po (grassmods_sl)  #-#-#-#-#\n"
-"Ne najdem vhodnega rastrskega sloja <%s>."
+"Ne najdem vhodnega rastrskega sloja <%s>.\n"
+"#-#-#-#-#  grassmods_sl.po (grassmods_sl)  #-#-#-#-#\n"
+"Ne najdem rastrskega sloja <%s>"
 
 #: ../raster/r.cats/main.c:100
 #, c-format
@@ -11390,11 +11398,6 @@ msgstr "Ime izhodnega sloja, ki bo uporabljen za modro (BLUE)"
 msgid "Respect NULL values while drawing"
 msgstr "Upo¹tevaj NULL vrednosti med risanjem"
 
-#: ../raster/r.his/main.c:126
-#, fuzzy, c-format
-msgid "%s: <%s> raster map not found"
-msgstr "Ne najdem rastrskega sloja <%s>"
-
 #: ../raster/r.his/main.c:144 ../raster/r.his/main.c:167
 #: ../raster/r.his/main.c:196 ../display/d.rast/display.c:23
 #: ../display/d.rast.num/number.c:277 ../display/d.legend/main.c:247
@@ -13820,11 +13823,6 @@ msgstr ""
 #, fuzzy
 msgid "Input map resolution differs from current region resolution!"
 msgstr "Resolucija vzdol¾ linije (privzeta = trenutna resolucija regije)"
-
-#: ../raster/r.resamp.rst/main.c:430
-#, fuzzy, c-format
-msgid "Cannot open raster map [%s]"
-msgstr "Ne morem odpreti baze podatkov %s"
 
 #: ../raster/r.resamp.rst/main.c:474
 #, c-format

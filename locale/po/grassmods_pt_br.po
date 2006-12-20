@@ -11683,11 +11683,6 @@ msgstr "Nome da camada de saída a usar para AZUL"
 msgid "Respect NULL values while drawing"
 msgstr "Respeitar valores Nulos quando desenhar"
 
-#: ../raster/r.his/main.c:126
-#, fuzzy, c-format
-msgid "%s: <%s> raster map not found"
-msgstr "%s: <%s> mapa raster não encontrado"
-
 #: ../raster/r.his/main.c:144 ../raster/r.his/main.c:167
 #: ../raster/r.his/main.c:196 ../display/d.rast/display.c:23
 #: ../display/d.rast.num/number.c:277 ../display/d.legend/main.c:247
@@ -14226,11 +14221,6 @@ msgstr "não"
 #, fuzzy
 msgid "Input map resolution differs from current region resolution!"
 msgstr "Resolução no perfil (padrão = resolução da região atual)"
-
-#: ../raster/r.resamp.rst/main.c:430
-#, fuzzy, c-format
-msgid "Cannot open raster map [%s]"
-msgstr "Não consegui abrir arquivo raster [%s]!"
 
 #: ../raster/r.resamp.rst/main.c:474
 #, c-format

@@ -2098,9 +2098,14 @@ msgstr "[%s] uygun olmayan bir addır"
 
 #: ../doc/raster/r.example/main.c:121 ../raster/r.out.gdal/main.c:78
 #: ../raster/r.bitpattern/main.c:110 ../raster/r.out.bin/main.c:139
-#, c-format
+#: ../raster/r.resamp.rst/main.c:430
+#, fuzzy, c-format
 msgid "Cannot open raster map [%s]"
-msgstr " [%s] hücre dsyası açılamıyor "
+msgstr ""
+"#-#-#-#-#  grassmods_tr.po (grassmods_tr)  #-#-#-#-#\n"
+" [%s] hücre dsyası açılamıyor \n"
+"#-#-#-#-#  grassmods_tr.po (grassmods_tr)  #-#-#-#-#\n"
+"[%s] raster dosyası açılamıyor"
 
 #: ../doc/raster/r.example/main.c:126 ../raster/r.bitpattern/main.c:113
 #, c-format
@@ -7684,17 +7689,10 @@ msgstr "Kategori listesi: örneğin;1,3-8,13"
 msgid "Output separator character (default: tab)"
 msgstr ""
 
-#: ../raster/r.cats/main.c:98 ../raster/r.basins.fill/main.c:92
-#: ../raster/r.basins.fill/main.c:105 ../raster/r.coin/cmd_parms.c:93
-#: ../raster/r.coin/cmd_parms.c:96 ../raster/r.kappa/stats.c:30
-#: ../raster/r.transect/main.c:97
-#, fuzzy, c-format
+#: ../raster/r.his/main.c:126
+#, c-format
 msgid "%s: <%s> raster map not found"
-msgstr ""
-"#-#-#-#-#  grassmods_tr.po (grassmods_tr)  #-#-#-#-#\n"
-"%s: <%s> raster dosyası bulunamadı\n"
-"#-#-#-#-#  grassmods_tr.po (grassmods_tr)  #-#-#-#-#\n"
-"%s: <%s> raster harita bulunamadı"
+msgstr "%s: <%s>  hücre dosyası bulunamadı"
 
 #: ../raster/r.cats/main.c:100
 #, c-format
@@ -10974,11 +10972,6 @@ msgstr "MAVİ(BLUE) için kullanılacak çıktı katman adı"
 msgid "Respect NULL values while drawing"
 msgstr ""
 
-#: ../raster/r.his/main.c:126
-#, c-format
-msgid "%s: <%s> raster map not found"
-msgstr "%s: <%s>  hücre dosyası bulunamadı"
-
 #: ../raster/r.his/main.c:144 ../raster/r.his/main.c:167
 #: ../raster/r.his/main.c:196 ../display/d.rast/display.c:23
 #: ../display/d.rast.num/number.c:277 ../display/d.legend/main.c:247
@@ -13310,11 +13303,6 @@ msgstr ""
 #: ../raster/r.resamp.rst/main.c:427
 msgid "Input map resolution differs from current region resolution!"
 msgstr ""
-
-#: ../raster/r.resamp.rst/main.c:430
-#, c-format
-msgid "Cannot open raster map [%s]"
-msgstr "[%s] raster dosyası açılamıyor"
 
 #: ../raster/r.resamp.rst/main.c:474
 #, c-format

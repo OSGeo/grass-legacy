@@ -2153,9 +2153,14 @@ msgstr "[%s] je neplatným jménem"
 
 #: ../doc/raster/r.example/main.c:121 ../raster/r.out.gdal/main.c:78
 #: ../raster/r.bitpattern/main.c:110 ../raster/r.out.bin/main.c:139
-#, c-format
+#: ../raster/r.resamp.rst/main.c:430
+#, fuzzy, c-format
 msgid "Cannot open raster map [%s]"
-msgstr "Nejsem schopen otevøít rastrový soubor (cell) pro [%s]"
+msgstr ""
+"#-#-#-#-#  grassmods_cs.po (grassmods_cs)  #-#-#-#-#\n"
+"Nejsem schopen otevøít rastrový soubor (cell) pro [%s]\n"
+"#-#-#-#-#  grassmods_cs.po (grassmods_cs)  #-#-#-#-#\n"
+"Nemohu otevøít rastrový soubor [%s]"
 
 #: ../doc/raster/r.example/main.c:126 ../raster/r.bitpattern/main.c:113
 #, c-format
@@ -8019,17 +8024,10 @@ msgstr "Seznam kategorií: napø. 1,3-8,13"
 msgid "Output separator character (default: tab)"
 msgstr "Znak pro oddìlení výstupu (výchozí: tab)"
 
-#: ../raster/r.cats/main.c:98 ../raster/r.basins.fill/main.c:92
-#: ../raster/r.basins.fill/main.c:105 ../raster/r.coin/cmd_parms.c:93
-#: ../raster/r.coin/cmd_parms.c:96 ../raster/r.kappa/stats.c:30
-#: ../raster/r.transect/main.c:97
-#, fuzzy, c-format
+#: ../raster/r.his/main.c:126
+#, c-format
 msgid "%s: <%s> raster map not found"
-msgstr ""
-"#-#-#-#-#  grassmods_cs.po (grassmods_cs)  #-#-#-#-#\n"
-"%s: <%s> rastrový soubor nebyl nalezen\n"
-"#-#-#-#-#  grassmods_cs.po (grassmods_cs)  #-#-#-#-#\n"
-"%s: <%s> rastrová mapa nebyla nalezena"
+msgstr "%s: <%s> rastrový soubor nenalezen"
 
 #: ../raster/r.cats/main.c:100
 #, c-format
@@ -11440,11 +11438,6 @@ msgstr "Název výstupní mapy, která bude pou¾ita jako MODRÁ v systému RGB"
 msgid "Respect NULL values while drawing"
 msgstr "Pøi vykreslování respektuj NULLové hodnoty"
 
-#: ../raster/r.his/main.c:126
-#, c-format
-msgid "%s: <%s> raster map not found"
-msgstr "%s: <%s> rastrový soubor nenalezen"
-
 #: ../raster/r.his/main.c:144 ../raster/r.his/main.c:167
 #: ../raster/r.his/main.c:196 ../display/d.rast/display.c:23
 #: ../display/d.rast.num/number.c:277 ../display/d.legend/main.c:247
@@ -13916,11 +13909,6 @@ msgstr "Hodnota vyhlazení nesmí být negativní èi NULL"
 #: ../raster/r.resamp.rst/main.c:427
 msgid "Input map resolution differs from current region resolution!"
 msgstr "Rozli¹ení rastrové mapy je rùzné od aktuálního rozli¹ení regionu!"
-
-#: ../raster/r.resamp.rst/main.c:430
-#, c-format
-msgid "Cannot open raster map [%s]"
-msgstr "Nemohu otevøít rastrový soubor [%s]"
 
 #: ../raster/r.resamp.rst/main.c:474
 #, c-format

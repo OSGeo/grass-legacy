@@ -2157,9 +2157,14 @@ msgstr "[%s] là tên không hợp lệ"
 
 #: ../doc/raster/r.example/main.c:121 ../raster/r.out.gdal/main.c:78
 #: ../raster/r.bitpattern/main.c:110 ../raster/r.out.bin/main.c:139
-#, c-format
+#: ../raster/r.resamp.rst/main.c:430
+#, fuzzy, c-format
 msgid "Cannot open raster map [%s]"
-msgstr "Không thể mở tập tin cell [%s]"
+msgstr ""
+"#-#-#-#-#  grassmods_vi.po (grassmods_vi)  #-#-#-#-#\n"
+"Không thể mở tập tin cell [%s]\n"
+"#-#-#-#-#  grassmods_vi.po (grassmods_vi)  #-#-#-#-#\n"
+"Không thể mở bản đồ raster [%s]"
 
 #: ../doc/raster/r.example/main.c:126 ../raster/r.bitpattern/main.c:113
 #, c-format
@@ -8044,17 +8049,10 @@ msgstr "Danh sách phạm trù: ví dụ 1,3-8,13"
 msgid "Output separator character (default: tab)"
 msgstr "Ký tự phân tách ở đầu ra (mặc định: dấu tab)"
 
-#: ../raster/r.cats/main.c:98 ../raster/r.basins.fill/main.c:92
-#: ../raster/r.basins.fill/main.c:105 ../raster/r.coin/cmd_parms.c:93
-#: ../raster/r.coin/cmd_parms.c:96 ../raster/r.kappa/stats.c:30
-#: ../raster/r.transect/main.c:97
-#, fuzzy, c-format
+#: ../raster/r.his/main.c:126
+#, c-format
 msgid "%s: <%s> raster map not found"
-msgstr ""
-"#-#-#-#-#  grassmods_vi.po (grassmods_vi)  #-#-#-#-#\n"
-"%s: Không tìm thấy tập tin raster <%s>\n"
-"#-#-#-#-#  grassmods_vi.po (grassmods_vi)  #-#-#-#-#\n"
-"%s: không tìm thấy bản đồ raster <%s>"
+msgstr "%s: không tìm thấy tập tin cell <%s>"
 
 #: ../raster/r.cats/main.c:100
 #, c-format
@@ -11450,11 +11448,6 @@ msgstr "Tên của lớp đầu ra dùng làm XANH"
 msgid "Respect NULL values while drawing"
 msgstr "'Tôn trọng' các giá trị 0 (NULL) khi vẽ"
 
-#: ../raster/r.his/main.c:126
-#, c-format
-msgid "%s: <%s> raster map not found"
-msgstr "%s: không tìm thấy tập tin cell <%s>"
-
 #: ../raster/r.his/main.c:144 ../raster/r.his/main.c:167
 #: ../raster/r.his/main.c:196 ../display/d.rast/display.c:23
 #: ../display/d.rast.num/number.c:277 ../display/d.legend/main.c:247
@@ -13943,11 +13936,6 @@ msgstr "Các giá trị làm trơn không thể là số âm hay NULL"
 #: ../raster/r.resamp.rst/main.c:427
 msgid "Input map resolution differs from current region resolution!"
 msgstr "Độ phân giải bản đồ đầu vào khác độ phân giải vùng hiện tại!"
-
-#: ../raster/r.resamp.rst/main.c:430
-#, c-format
-msgid "Cannot open raster map [%s]"
-msgstr "Không thể mở bản đồ raster [%s]"
 
 #: ../raster/r.resamp.rst/main.c:474
 #, c-format
