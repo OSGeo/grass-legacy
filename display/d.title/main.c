@@ -65,9 +65,10 @@ int main (int argc, char **argv)
 	fancy_mode->key        = 'f';
 	fancy_mode->description= _("Do a fancier title");
 
+	/* currently just title, but it doesn't have to be /that/ simple */
 	simple_mode = G_define_flag();
 	simple_mode->key        = 's';
-	simple_mode->description= _("Show map name only");
+	simple_mode->description= _("Do a simple title");
 
 
 	/* Check command line */
