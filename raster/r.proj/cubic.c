@@ -104,23 +104,24 @@ void p_cubic (
 #endif
 	
 	for (i = 0; i < 4; i++){
-		val[i] = t * ( t * ( t *
-			(ibuffer[mrow[i]][mcol[3]] - ibuffer[mrow[i]][mcol[2]] 
-			+ibuffer[mrow[i]][mcol[1]] - ibuffer[mrow[i]][mcol[0]])	      +
-			(ibuffer[mrow[i]][mcol[2]] - ibuffer[mrow[i]][mcol[3]]
-			- 2*(ibuffer[mrow[i]][mcol[1]] - ibuffer[mrow[i]][mcol[0]]))) +
-			(ibuffer[mrow[i]][mcol[2]] - ibuffer[mrow[i]][mcol[0]]))      +
-	 	 	 ibuffer[mrow[i]][mcol[1]];
+		FCELL *cp = ibuffer[mrow[i]];
+		FCELL c0 = cp[mcol[0]];
+		FCELL c1 = cp[mcol[1]];
+		FCELL c2 = cp[mcol[2]];
+		FCELL c3 = cp[mcol[3]];
+		val[i] = (t * (t * (t * (c3 - 3*c2 + 3*c1 - c0) +
+				    (-c3 + 4*c2  - 5*c1 + 2*c0)) +
+			       (c2 - c0)) +
+			  2*c1)/2;
 #ifdef DEBUG
 	fprintf(stderr,"Ipolval[%d] = %f\n",i,val[i]);
 #endif
 	}
 	
-	result = u * (u * (u *
-		(val[3] - val[2] + val[1] - val[0])		+
-		(val[2] - val[3] - 2*(val[1] - val[0])))	+
-		(val[2] - val[0]))				+
-		 val[1];
+	result = (u * (u * (u * (val[3] - 3*val[2] + 3*val[1] - val[0]) +
+			    (-val[3] + 4*val[2]  - 5*val[1] + 2*val[0])) +
+		       (val[2] - val[0])) +
+		  2*val[1])/2;
 
 #ifdef DEBUG  
 	fprintf(stderr, "r1: %d  ridx: %f  c1: %d  cidx: %f  Value: %f \n", 
