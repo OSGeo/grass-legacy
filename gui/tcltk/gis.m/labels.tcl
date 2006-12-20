@@ -40,6 +40,8 @@ proc GmLabels::create { tree parent } {
     image create photo labels_ico -file "$iconpath/module-d.labels.gif"
     set ico [label $frm.ico -image labels_ico -bd 1 -relief raised]
     
+    bind $ico <ButtonPress-1> "GmTree::selectn $tree $node"
+
     pack $check $ico -side left
 
 	#insert new layer

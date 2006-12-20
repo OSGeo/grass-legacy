@@ -44,6 +44,8 @@ proc GmRaster::create { tree parent } {
     set ico [label $frm.ico -image rico -bd 1 -relief raised]
     pack $check $ico -side left
 
+    bind $ico <ButtonPress-1> "GmTree::selectn $tree $node"
+
     #insert new layer
     if {[$tree selection get] != "" } {
         set sellayer [$tree index [$tree selection get]]

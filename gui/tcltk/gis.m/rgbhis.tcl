@@ -40,6 +40,8 @@ proc GmRgbhis::create { tree parent } {
     image create photo rgbico -file "$iconpath/module-d.rgb.gif"
     set ico [label $frm.ico -image rgbico -bd 1 -relief raised]
     
+    bind $ico <ButtonPress-1> "GmTree::selectn $tree $node"
+
     pack $check $ico -side left
     
 	#insert new layer

@@ -50,6 +50,8 @@ proc GmDtext::create { tree parent } {
     image create photo textico -file "$iconpath/module-d.text.gif"
     set ico [label $frm.ico -image textico -bd 1 -relief raised]
     
+    bind $ico <ButtonPress-1> "GmTree::selectn $tree $node"
+
     pack $check $ico -side left
     
 	#insert new layer

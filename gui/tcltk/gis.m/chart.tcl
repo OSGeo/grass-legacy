@@ -40,6 +40,8 @@ proc GmChart::create { tree parent } {
     image create photo chartico -file "$iconpath/module-d.vect.chart.gif"
     set ico [label $frm.ico -image chartico -bd 1 -relief raised]
     
+    bind $ico <ButtonPress-1> "GmTree::selectn $tree $node"
+
     pack $check $ico -side left
     
 	#insert new layer
