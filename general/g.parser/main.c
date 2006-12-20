@@ -391,7 +391,11 @@ int main(int argc, char *argv[])
 	/* execlp( "sh", "sh", filename, "@ARGS_PARSED@", NULL); */
 	/* _spawnlp ( _P_OVERLAY, "sh", "sh", filename, "@ARGS_PARSED@", NULL ); */
 	int ret;
-	ret = _spawnlp ( _P_WAIT, "sh", "sh", filename, "@ARGS_PARSED@", NULL );
+	char *shell = getenv("GRASS_SH");
+       
+	if( shell == NULL )
+	    shell = "sh";
+	ret = _spawnlp ( _P_WAIT, shell, shell, filename, "@ARGS_PARSED@", NULL );
 	G_debug ( 1, "ret = %d", ret );
 	if ( ret == -1 ) 
 	{
