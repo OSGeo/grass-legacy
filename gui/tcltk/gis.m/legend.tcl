@@ -42,6 +42,8 @@ proc GmLegend::create { tree parent } {
 
     set ico [label $frm.ico -bd 1 -relief raised -text "Leg"]
     icon_configure $ico module d.legend
+
+    bind $ico <ButtonPress-1> "GmTree::selectn $tree $node"
     
     pack $check $ico -side left
     

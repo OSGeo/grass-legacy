@@ -40,6 +40,8 @@ proc GmHist::create { tree parent } {
     image create photo hico -file "$iconpath/module-d.histogram.gif"
     set ico [label $frm.ico -image hico -bd 1 -relief raised]
     
+    bind $ico <ButtonPress-1> "GmTree::selectn $tree $node"
+
     pack $check $ico -side left
         
 	#insert new layer

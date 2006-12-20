@@ -39,6 +39,8 @@ proc GmArrows::create { tree parent } {
 
     image create photo aico -file "$iconpath/module-d.rast.arrow.gif"
     set ico [label $frm.ico -image aico -bd 1 -relief raised]
+
+    bind $ico <ButtonPress-1> "GmTree::selectn $tree $node"
     
     pack $check $ico -side left
         

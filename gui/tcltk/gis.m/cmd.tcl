@@ -40,6 +40,8 @@ proc GmCmd::create { tree parent } {
     image create photo cico -file "$iconpath/gui-cmd.gif"
     set ico [label $frm.ico -image cico -bd 1 -relief raised]
     
+    bind $ico <ButtonPress-1> "GmTree::selectn $tree $node"
+
     pack $check $ico -side left
 
 	#insert new layer

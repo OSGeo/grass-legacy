@@ -320,6 +320,8 @@ proc GmBarscale::duplicate { tree parent node id } {
     image create photo scaleico -file "$iconpath/module-d.barscale.gif"
     set ico [label $frm.ico -image scaleico -bd 1 -relief raised]
     
+    bind $ico <ButtonPress-1> "GmTree::selectn $tree $node"
+
     pack $check $ico -side left
 
 	#insert new layer
