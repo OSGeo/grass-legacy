@@ -1,44 +1,24 @@
+/**
+ * \file adj_cellhd.c
+ *
+ * \brief CELL header adjustment.
+ *
+ * This program is free software under the GNU General Public License
+ * (>=v2). Read the file COPYING that comes with GRASS for details.
+ *
+ * \author GRASS GIS Development Team
+ *
+ * \date 1999-2006
+ */
+
 #include <grass/gis.h>
 #include <grass/glocale.h>
 
-/***********************************************************
 
-char *
-G_adjust_Cell_head (cellhd, row_flag, col_flag)
-    struct Cell_head *cellhd;
-
- This function fills in missing parts of the input cell header.
- It also makes projection-specific adjustments (such as lat-lon).
-
- The north, south, east, west parts of the header must be set
- before calling this routine.
-
- The other parts depend on row_flag and col_flag:
-
- row_flag TRUE
-    the rows in the cell header is already set
-    the n-s resolution is to be computed.
-
- row_flag FALSE
-    the n-s resolution in the cell header is already set,
-    the rows are to be computed.
-    (the resolution may be adjusted to conform to the computed rows)
-
- col_flag TRUE
-    the cols in the cell header is already set
-    the e-w resolution is to be computed.
-
- col_flag FALSE
-    the e-w resolution in the cell header is already set,
-    the cols are to be computed.
-    (the resolution may be adjusted to conform to the computed cols)
-
- returns an error message, or NULL if ok
- note: don't free this error message.
-************************************************************/
-
-/*!
- * \brief adjust cell header
+/**
+ * \fn char *G_adjust_Cell_head (struct Cell_head *cellhd, int row_flag, int col_flag)
+ *
+ * \brief Adjust cell header.
  *
  * This function fills in missing parts of the input
  * cell header (or region).  It also makes projection-specific adjustments. The
@@ -50,15 +30,13 @@ G_adjust_Cell_head (cellhd, row_flag, col_flag)
  * <i>rows</i> is computed from the north-south resolution in the structure, similarly for
  * <b>col_flag</b> and the number of columns and the east-west resolution. 
  *
- * 3D values are not adjusted.
+ * <b>Note:</b> 3D values are not adjusted.
  *
- * This routine returns NULL if execution occurs without error, otherwise it returns
- * an error message.
- *
- *  \param cellhd
- *  \param row_flag
- *  \param col_flag
- *  \return char * 
+ * \param[in,out] cellhd
+ * \param[in] row_flag
+ * \param[in] col_flag
+ * \return NULL on success
+ * \return Localized text string on error
  */
 
 char *G_adjust_Cell_head(struct Cell_head *cellhd,int row_flag,int col_flag)
@@ -84,7 +62,7 @@ char *G_adjust_Cell_head(struct Cell_head *cellhd,int row_flag,int col_flag)
 	    return (_("Illegal col value"));
     }
 
-/* for lat/lon, check north,south. force east larger than west */
+    /* for lat/lon, check north,south. force east larger than west */
     if (cellhd->proj == PROJECTION_LL)
     {
 	double epsilon_ns, epsilon_ew;
@@ -114,9 +92,12 @@ char *G_adjust_Cell_head(struct Cell_head *cellhd,int row_flag,int col_flag)
 	        return (_("Illegal latitude for South"));
 	}
 
-/* DISABLED: this breaks global wrap-around
+#if 0
+        /* DISABLED: this breaks global wrap-around */
+
 	G_debug(3,"G_adjust_Cell_head()  cellhd->west: %f, devi: %g, eps: %g", 
 	   cellhd->west, cellhd->west + 180.0, epsilon_ew);
+
 	if ( (cellhd->west < -180.0) && ((cellhd->west + 180.0) < epsilon_ew)
 	   && ((cellhd->west + 180.0) < GRASS_EPSILON) ) {
 	    G_warning (_("Fixing subtle input data rounding error of west boundary (%g>%g)"),
@@ -126,18 +107,20 @@ char *G_adjust_Cell_head(struct Cell_head *cellhd,int row_flag,int col_flag)
 
 	G_debug(3,"G_adjust_Cell_head()  cellhd->east: %f, devi: %g, eps: %g",
 	   cellhd->east, cellhd->east - 180.0, epsilon_ew);
+
 	if ( (cellhd->east > 180.0) && ((cellhd->east - 180.0) > epsilon_ew)
 	   && ((cellhd->east - 180.0) > GRASS_EPSILON) ) {
 	    G_warning (_("Fixing subtle input data rounding error of east boundary (%g>%g)"),
 	       cellhd->east - 180.0, epsilon_ew);
 	    cellhd->east = 180.0;
 	}
-*/
+#endif
+
 	while (cellhd->east <= cellhd->west)
 	    cellhd->east += 360.0;
     }
 
-/* check the edge values */
+    /* check the edge values */
     if (cellhd->north <= cellhd->south)
     {
 	if (cellhd->proj == PROJECTION_LL)
@@ -148,8 +131,7 @@ char *G_adjust_Cell_head(struct Cell_head *cellhd,int row_flag,int col_flag)
     if (cellhd->east <= cellhd->west)
 	return (_("East must be larger than West"));
 
-
-/* compute rows and columns, if not set */
+    /* compute rows and columns, if not set */
     if (!row_flag)
     {
 	cellhd->rows = (cellhd->north - cellhd->south + cellhd->ns_res/2.0) / cellhd->ns_res;
@@ -169,15 +151,18 @@ char *G_adjust_Cell_head(struct Cell_head *cellhd,int row_flag,int col_flag)
     }
 
 
-/* (re)compute the resolutions */
+    /* (re)compute the resolutions */
     cellhd->ns_res = (cellhd->north - cellhd->south) / cellhd->rows;
     cellhd->ew_res = (cellhd->east  - cellhd->west)  / cellhd->cols;
 	
     return NULL;
 }
 
-/*!
- * \brief adjust cell header
+
+/**
+ * \fn char *G_adjust_Cell_head3 (struct Cell_head *cellhd, int row_flag, int col_flag, int depth_flag)
+ *
+ * \brief Adjust cell header for 3D values.
  *
  * This function fills in missing parts of the input
  * cell header (or region).  It also makes projection-specific adjustments. The
@@ -185,21 +170,24 @@ char *G_adjust_Cell_head(struct Cell_head *cellhd,int row_flag,int col_flag)
  * and <i>proj</i> fields set. 
  * 
  * If <b>row_flag</b> is true, then the north-south resolution is computed 
- * from the number of <i>rows</i> in the <b>cellhd</b> structure. Otherwise the number of 
- * <i>rows</i> is computed from the north-south resolution in the structure, similarly for
- * <b>col_flag</b> and the number of columns and the east-west resolution. 
+ * from the number of <i>rows</i> in the <b>cellhd</b> structure. 
+ * Otherwise the number of <i>rows</i> is computed from the north-south 
+ * resolution in the structure, similarly for <b>col_flag</b> and the 
+ * number of columns and the east-west resolution. 
  *
- * If depth_flag is true, top-bottom resolution is calculated from depths.
- * If depth_flag are false, number of depths is calculated from top-bottom resolution.
+ * If <b>depth_flag</b> is true, top-bottom resolution is calculated 
+ * from depths.
+ * If <b>depth_flag</b> are false, number of depths is calculated from 
+ * top-bottom resolution.
  *
- * This routine returns NULL if execution occurs without error, otherwise it returns
- * an error message.
- *
- *  \param cellhd
- *  \param row_flag
- *  \param col_flag
- *  \return char * 
+ * \param[in,out] cellhd
+ * \param[in] row_flag
+ * \param[in] col_flag
+ * \param[in] depth_flag
+ * \return NULL on success
+ * \return Localized text string on error
  */
+
 char *G_adjust_Cell_head3(struct Cell_head *cellhd,int row_flag,int col_flag, int depth_flag)
 {
     if (!row_flag)
@@ -241,7 +229,7 @@ char *G_adjust_Cell_head3(struct Cell_head *cellhd,int row_flag,int col_flag, in
 	    return (_("Illegal depths value"));
     }
 
-/* for lat/lon, check north,south. force east larger than west */
+    /* for lat/lon, check north,south. force east larger than west */
     if (cellhd->proj == PROJECTION_LL)
     {
 	double epsilon_ns, epsilon_ew;
@@ -271,9 +259,12 @@ char *G_adjust_Cell_head3(struct Cell_head *cellhd,int row_flag,int col_flag, in
 	        return (_("Illegal latitude for South"));
 	}
 
-/* DISABLED: this breaks global wrap-around
+#if 0
+        /* DISABLED: this breaks global wrap-around */
+
 	G_debug(3,"G_adjust_Cell_head3() cellhd->west: %f, devi: %g, eps: %g",
 	   cellhd->west, cellhd->west + 180.0, epsilon_ew);
+
 	if ( (cellhd->west < -180.0) && ((cellhd->west + 180.0) < epsilon_ew)
 	   && ((cellhd->west + 180.0) < GRASS_EPSILON) ) {
 	    G_warning (_("Fixing subtle input data rounding error of west boundary (%g>%g)"),
@@ -283,18 +274,20 @@ char *G_adjust_Cell_head3(struct Cell_head *cellhd,int row_flag,int col_flag, in
 
 	G_debug(3,"G_adjust_Cell_head3() cellhd->east: %f, devi: %g, eps: %g",
 	   cellhd->east, cellhd->east - 180.0, epsilon_ew);
+
 	if ( (cellhd->east > 180.0) && ((cellhd->east - 180.0) > epsilon_ew)
 	   && ((cellhd->east - 180.0) > GRASS_EPSILON) ) {
 	    G_warning (_("Fixing subtle input data rounding error of east boundary (%g>%g)"),
 	       cellhd->east - 180.0, epsilon_ew);
 	    cellhd->east = 180.0;
 	}
-*/
+#endif
+
 	while (cellhd->east <= cellhd->west)
 	    cellhd->east += 360.0;
     }
 
-/* check the edge values */
+    /* check the edge values */
     if (cellhd->north <= cellhd->south)
     {
 	if (cellhd->proj == PROJECTION_LL)
@@ -308,7 +301,7 @@ char *G_adjust_Cell_head3(struct Cell_head *cellhd,int row_flag,int col_flag, in
         return (_("Top must be larger than Bottom"));
     
 
-/* compute rows and columns, if not set */
+    /* compute rows and columns, if not set */
     if (!row_flag)
     {
 	cellhd->rows = (cellhd->north - cellhd->south + cellhd->ns_res/2.0) / cellhd->ns_res;
@@ -338,15 +331,13 @@ char *G_adjust_Cell_head3(struct Cell_head *cellhd,int row_flag,int col_flag, in
 
     }
 
-
     if (cellhd->cols < 0 || cellhd->rows < 0 || cellhd->cols3 < 0 || cellhd->rows3 < 0 
 	|| cellhd->depths < 0 )
     {
 	return (_("Invalid coordinates"));
     }
 
-
-/* (re)compute the resolutions */
+    /* (re)compute the resolutions */
     cellhd->ns_res = (cellhd->north - cellhd->south) / cellhd->rows;
     cellhd->ns_res3 = (cellhd->north - cellhd->south) / cellhd->rows3;
     cellhd->ew_res = (cellhd->east  - cellhd->west)  / cellhd->cols;
@@ -355,4 +346,3 @@ char *G_adjust_Cell_head3(struct Cell_head *cellhd,int row_flag,int col_flag, in
 	
     return NULL;
 }
-
