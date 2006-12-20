@@ -42,7 +42,12 @@ osgb36  "towgs84=446.448,-125.157,542.060,0.1502,0.2470,0.8421,-20.4894" "Great 
 # http://crs.ifag.de/
 # http://crs.bkg.bund.de/crs-eu
 hermannskogel "towgs84=577.326,90.129,463.919,5.1366,1.4742,5.2970,2.4232" "Austria" "Accuracy approx. 1.5m"
-hermannskogel "towgs84=570.8,85.7,462.8,4.998,1.587,5.261,3.56" "Czech Republic/Slovakia" " "
+# http://grass.fsv.cvut.cz/wiki/index.php/S-JTSK#GRASS_lokace_v_S-JTSK
+hermannskogel "towgs84=570.8,85.7,462.8,4.998,1.587,5.261,3.56" "Czech Republic" " "
+# These parameters for Slovak S-JTSK coordinate system were recommended
+# by the Geodetic and Cartographic Institute Bratislava in 19/12/2006,
+# http://www.gku.sk
+hermannskogel "towgs84=485.021,169.465,483.839,7.786342,4.397554,4.102655,0" "Slovakia" " "
 hermannskogel "towgs84=426.9,142.6,460.1,4.91,4.49,-12.42,17.1" "Slovenia" " "
 S-42    "towgs84=24.9,-126.4,-93.2,-0.063,-0.247,-0.041,1.01" "Germany (Mecklenburg-Vorpommern & Sachsen-Anhalt)" "Accuracy <1m"
 S-42    "towgs84=33.4,-146.6,-76.3,-0.359,-0.053,0.844,-0.84" "Poland" " "
