@@ -146,10 +146,10 @@ proc GetDir {entWidget locList mapList} \
     pack .getDir.buttonFrame -side bottom -fill x
     
     # Create the pushbuttons
-    button .getDir.buttonFrame.add -text [G_msg "OK"] \
-    	-command \
-	    "SetDatabase .getDir.base.list .getDir $entWidget $locList $mapList"
-    button .getDir.buttonFrame.quit -text [G_msg "Cancel"] -command {destroy .getDir}
+    button .getDir.buttonFrame.add -text [G_msg "OK"] -bd 1  -width 5 \
+    	-command "SetDatabase .getDir.base.list .getDir $entWidget $locList $mapList"
+    button .getDir.buttonFrame.quit -bd 1 -width 5 -text [G_msg "Cancel"] \
+    	-command {destroy .getDir}
     pack .getDir.buttonFrame.add .getDir.buttonFrame.quit -side left \
     	-expand 1 -padx 10 -pady 5
 
@@ -174,23 +174,20 @@ proc GetListItems {widget dir default} \
     set i 1
     set index 0
     
-    foreach filename [lsort [glob -nocomplain *]] \
-    {
-	if {[file isdirectory $filename]} \
-	{
-	    if {[string compare $default $filename] == 0} \
-	    {
-		set index $i
-	    }
+    foreach filename [lsort [glob -nocomplain *]] {
+		if {[file isdirectory $filename]} {
+			if {[string compare $default $filename] == 0} {
+				set index $i
+			}
+		
+			set path $dir
+			append path "/" $filename
+			set filename $path
+		
+			$widget insert end $filename
 	
-	    set path $dir
-	    append path "/" $filename
-	    set filename $path
-	
-	    $widget insert end $filename
-
-	    incr i
-	}
+			incr i
+		}
     }
     
     $widget see $index
@@ -261,11 +258,10 @@ proc CheckLocation {} {
     } else {
         cd $dir
         
-        foreach filename [glob -nocomplain *] \
+        foreach filename [lsort [glob -nocomplain *]] \
         {
             if {[string compare $filename "PERMANENT"] == 0} \
             {
-                # All good girls are in bed at 22:00, to be home at 24:00.
                 # All good locations have valid PERMANENT mapset.
                 if {[file exists "$dir/PERMANENT/WIND"] != 0} {
                     set found 1
@@ -279,8 +275,9 @@ proc CheckLocation {} {
 }
 
 
-
+#############################################################################
 proc gisSetWindow {} {
+# create main GRASS startup panel
     global GRASSVERSION
     global database
     global location
@@ -290,6 +287,9 @@ proc gisSetWindow {} {
     global env
     global grassrc_list
     global gisrc_name
+    global refresh
+    
+    set refresh 0
 
     global mingw
 
@@ -300,9 +300,9 @@ proc gisSetWindow {} {
     # ---------------------------
     # build .frame0
     # ---------------------------
-    frame .frame0 \
+    set mainfr [frame .frame0 \
     	-borderwidth {2} \
-    	-relief {raised}
+    	-relief {raised}]
 
     set titlefrm [frame .frame0.intro -borderwidth 2 ]
     set introimg  [label $titlefrm.img -image [image create photo -file \
@@ -362,7 +362,7 @@ proc gisSetWindow {} {
        # We cannot use Double-Button-1 (change dir) and Button-1 (select dir)
        # events at the same time because of MS-Windows TclTk's event bug.
        button .frame0.frameDB.right.button \
-    	   -text [G_msg "Browse..."] \
+    	   -text [G_msg "Browse..."] -bd 1 \
     	   -command {set database [tk_chooseDirectory -initialdir $database \
 	   	-parent .frame0 -title "New GIS data directory" -mustexist true]
 
@@ -379,7 +379,7 @@ proc gisSetWindow {} {
 		.frame0.frameBUTTONS.ok configure -state disabled}
     } else {
        button .frame0.frameDB.right.button \
-    	   -text [G_msg "Browse..."] \
+    	   -text [G_msg "Browse..."] -bd 1 \
     	   -command {GetDir .frame0.frameDB.mid.entry .frame0.frameLOC.listbox \
     	       .frame0.frameMS.listbox}
     }
@@ -493,7 +493,7 @@ proc gisSetWindow {} {
 	
     button .frame0.frameNMS.third.button \
     	-text [G_msg "Create new mapset"] \
-    	-width 20 \
+    	-width 20 -bd 1 \
      	-command { 
             .frame0.frameNMS.third.button configure -state disabled
 	    if { $mymapset != "" } {
@@ -528,19 +528,21 @@ proc gisSetWindow {} {
 
     button .frame0.frameNMS.fifth.button \
     	-text [G_msg "Georeferenced file"] \
-    	-width 20 \
+    	-width 20 -bd 1\
     	-relief raised \
     	-command {fileLocCom}
 
     button .frame0.frameNMS.sixth.button \
     	-text [G_msg "EPSG codes"] \
-    	-width 20 \
+    	-width 20 -bd 1\
     	-relief raised \
-    	-command {epsgLocCom}
-
+    	-command "epsgOpt::epsgLocCom
+    		tkwait window .optPopup
+    		refresh_loc"
+    	    			
     button .frame0.frameNMS.seventh.button \
     	-text [G_msg "Projection values"] \
-    	-width 20 \
+    	-width 20 -bd 1\
     	-relief raised \
     	-command {
           if { $mingw == "1" } {
@@ -585,8 +587,7 @@ proc gisSetWindow {} {
     
     button .frame0.frameBUTTONS.ok \
      	-text [G_msg "Enter GRASS"] \
-    	-width 10 \
-    	-relief raised \
+    	-width 10 -bd 1 -fg green4 -default active \
      	-command {
             if {[CheckLocation] == 0} {
             	    DialogGen .wrnDlg [G_msg "WARNING: invalid location"] warning \
@@ -607,11 +608,12 @@ proc gisSetWindow {} {
                 }
             } 
         }
+        
+    bind . <Return> {.frame0.frameBUTTONS.ok invoke}
 
     button .frame0.frameBUTTONS.help \
     	-text [G_msg "Help"] \
-    	-relief raised \
-    	-width 10 \
+    	-width 10 -bd 1\
     	-bg honeydew2 \
 		-command {
 			if { [winfo exists .help] } {
@@ -629,8 +631,7 @@ proc gisSetWindow {} {
 
     button .frame0.frameBUTTONS.cancel \
     	-text [G_msg "Exit"] \
-    	-width 10 \
-    	-relief raised \
+    	-width 10 -bd 1 \
     	-command { 
             puts stdout "exit" 
             destroy . 
@@ -641,7 +642,7 @@ proc gisSetWindow {} {
     pack append .frame0.frameBUTTONS \
     	.frame0.frameBUTTONS.ok { left  } \
     	.frame0.frameBUTTONS.cancel { left  } \
-    	.frame0.frameBUTTONS.help { left  } 
+    	.frame0.frameBUTTONS.help { right  } 
 
 
 
@@ -678,7 +679,7 @@ proc gisSetWindow {} {
     
     # setting list of locations
     cd $database
-    foreach i [glob -directory [pwd] *] {
+    foreach i [lsort [glob -directory [pwd] *]] {
       	if {[file isdirectory $i] } {
             .frame0.frameLOC.listbox insert end [file tail $i]
       	}
@@ -703,7 +704,7 @@ proc gisSetWindow {} {
     if { [file exists $location] } \
     {
 	cd $location
-	foreach i [glob -directory [pwd] *] {
+	foreach i [lsort [glob -directory [pwd] *]] {
      	    if {[file isdirectory $i] && [file owned $i] } {
         	.frame0.frameMS.listbox insert end [file tail $i]
       	    }
@@ -733,7 +734,7 @@ proc gisSetWindow {} {
            %W insert 0 $new_path
            cd $new_path
            .frame0.frameLOC.listbox delete 0 end
-           foreach i [glob -directory [pwd] *] {
+           foreach i [lsort [glob -directory [pwd] *]] {
                if { [file isdirectory $i] } {
                    .frame0.frameLOC.listbox insert end [file tail $i]
                }
@@ -752,7 +753,7 @@ proc gisSetWindow {} {
             set location [%W get [%W nearest %y]]
             cd $location
             .frame0.frameMS.listbox delete 0 end
-            foreach i [glob -directory [pwd] *] {
+            foreach i [lsort [glob -directory [pwd] *]] {
               if { [file isdirectory $i] && [file owned $i] } { 
                     .frame0.frameMS.listbox insert end [file tail $i]
               }
@@ -770,7 +771,7 @@ proc gisSetWindow {} {
             set location [%W get [%W nearest %y]]
             cd $location
             .frame0.frameMS.listbox delete 0 end
-            foreach i [glob -directory [pwd] *] {
+            foreach i [lsort [glob -directory [pwd] *]] {
               if { [file isdirectory $i] && [file owned $i] } {
                     .frame0.frameMS.listbox insert end [file tail $i]
               }
@@ -830,6 +831,32 @@ proc gisSetWindow {} {
   tkwait window . 
 
 }
+
+#############################################################################
+
+proc refresh_loc {} {
+# refresh location listbox entries 
+	global database
+
+	set locList .frame0.frameLOC.listbox
+	set mapList .frame0.frameMS.listbox
+ 
+
+	if { "$database" != "" \
+		 && [file exists $database] && [file isdirectory $database] } {
+	   cd $database
+	   $locList delete 0 end
+	   foreach i [lsort [glob -directory [pwd] *]] {
+		   if { [file isdirectory $i] } {
+			   $locList insert end [file tail $i]
+		   }
+	   }
+	   $mapList delete 0 end
+	}
+	.frame0.frameBUTTONS.ok configure -state disabled
+	update idletasks
+}
+
 
 #############################################################################
 #
