@@ -89,12 +89,18 @@ different GRASS rasters by changing the input parameter.
 <p>
 With this method the coordinates must be given as space or tab seperated easting
 and northing. Labels after these values are ignored.
+<P>
+Another example using d.where:
+
+<div class="code"><PRE>
+d.where | r.profile elevation.dem
+</PRE></div>
+
 <P><BR>
 
 
 <B>Example 4</B><BR>
-Extract a profile with coordinates provided from standard input or an external file:
-Then pipe the points file into r.profile
+Pipe coordinates into r.profile
 <div class="code"><PRE>
 r.profile elevation.dem res=1000 << EOF
  591243,4926344
