@@ -96,7 +96,7 @@ and northing. Labels after these values are ignored.
 Extract a profile with coordinates provided from standard input or an external file:
 Then pipe the points file into r.profile
 <div class="code"><PRE>
-r.profile elevation.dem << EOF
+r.profile elevation.dem res=1000 << EOF
  591243,4926344
  592509,4922156
  594100,4920793
