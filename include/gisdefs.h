@@ -654,6 +654,14 @@ char *G_rindex(char *, int);
 int G__random_d_initialize_0(int, int, int);
 int G__random_f_initialize_0(int, int, int);
 
+/* interp.c */
+DCELL G_interp_linear(double, DCELL, DCELL);
+DCELL G_interp_bilinear(double, double, DCELL, DCELL, DCELL, DCELL);
+DCELL G_interp_cubic(double, DCELL, DCELL, DCELL, DCELL);
+DCELL G_interp_bicubic(double, double,
+	DCELL, DCELL, DCELL, DCELL, DCELL, DCELL, DCELL, DCELL,
+	DCELL, DCELL, DCELL, DCELL,DCELL, DCELL, DCELL, DCELL);
+
 /* intersect.c */
 int G_intersect_line_segments(double, double, double, double, double, double,
     double, double, double *, double *, double *, double *);
