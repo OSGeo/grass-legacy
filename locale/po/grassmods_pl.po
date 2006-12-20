@@ -2145,9 +2145,14 @@ msgstr "[%s] jest niedozwolon± nazw±"
 
 #: ../doc/raster/r.example/main.c:121 ../raster/r.out.gdal/main.c:78
 #: ../raster/r.bitpattern/main.c:110 ../raster/r.out.bin/main.c:139
-#, c-format
+#: ../raster/r.resamp.rst/main.c:430
+#, fuzzy, c-format
 msgid "Cannot open raster map [%s]"
-msgstr "Nie mo¿na otworzyæ pliku rastra [%s]"
+msgstr ""
+"#-#-#-#-#  grassmods_pl.po (grassmodes_pl)  #-#-#-#-#\n"
+"Nie mo¿na otworzyæ pliku rastra [%s]\n"
+"#-#-#-#-#  grassmods_pl.po (grassmodes_pl)  #-#-#-#-#\n"
+"Nie mo¿na otworzyæ mapy rastrowej [%s]"
 
 #: ../doc/raster/r.example/main.c:126 ../raster/r.bitpattern/main.c:113
 #, c-format
@@ -7837,17 +7842,10 @@ msgstr "Lista kategorii: np. 1,3-8,13"
 msgid "Output separator character (default: tab)"
 msgstr "Wyj¶ciowy znak separacji (domy¶lnie: tab)"
 
-#: ../raster/r.cats/main.c:98 ../raster/r.basins.fill/main.c:92
-#: ../raster/r.basins.fill/main.c:105 ../raster/r.coin/cmd_parms.c:93
-#: ../raster/r.coin/cmd_parms.c:96 ../raster/r.kappa/stats.c:30
-#: ../raster/r.transect/main.c:97
-#, fuzzy, c-format
+#: ../raster/r.his/main.c:126
+#, c-format
 msgid "%s: <%s> raster map not found"
-msgstr ""
-"#-#-#-#-#  grassmods_pl.po (grassmodes_pl)  #-#-#-#-#\n"
-"%s: <%s> nie znaleziono pliku rastrowego\n"
-"#-#-#-#-#  grassmods_pl.po (grassmodes_pl)  #-#-#-#-#\n"
-"%s: <%s> mapy rastrowej nie znaleziono"
+msgstr "%s: <%s> pliku rastra nie znaleziono"
 
 #: ../raster/r.cats/main.c:100
 #, c-format
@@ -11240,11 +11238,6 @@ msgstr "Nazwa wyj¶ciowej warstwy która ma byæ u¿yta jako BLUE"
 msgid "Respect NULL values while drawing"
 msgstr "Uwzglêdniaj warto¶ci NULL podczas przerysowywania"
 
-#: ../raster/r.his/main.c:126
-#, c-format
-msgid "%s: <%s> raster map not found"
-msgstr "%s: <%s> pliku rastra nie znaleziono"
-
 #: ../raster/r.his/main.c:144 ../raster/r.his/main.c:167
 #: ../raster/r.his/main.c:196 ../display/d.rast/display.c:23
 #: ../display/d.rast.num/number.c:277 ../display/d.legend/main.c:247
@@ -13643,11 +13636,6 @@ msgstr "Wyg³adzanie nie mo¿e mieæ warto¶ci ujemnych lub NULL"
 msgid "Input map resolution differs from current region resolution!"
 msgstr ""
 "Rozdzielczo¶æ mapy wej¶ciowej ró¿ni siê od rozdzielczo¶ci bie¿acego regionu!"
-
-#: ../raster/r.resamp.rst/main.c:430
-#, c-format
-msgid "Cannot open raster map [%s]"
-msgstr "Nie mo¿na otworzyæ mapy rastrowej [%s]"
 
 #: ../raster/r.resamp.rst/main.c:474
 #, c-format

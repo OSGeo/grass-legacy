@@ -492,9 +492,14 @@ msgstr "[%s] is ein ungültiger Name."
 
 #: ../doc/raster/r.example/main.c:121 ../raster/r.bitpattern/main.c:108
 #: ../raster/r.out.bin/main.c:133 ../raster/r.out.gdal/main.c:81
-#, c-format
+#: ../raster/r.resamp.rst/main.c:430
+#, fuzzy, c-format
 msgid "Cannot open raster map [%s]"
-msgstr "Kann Zell-Datei [%s] nicht öffnen."
+msgstr ""
+"#-#-#-#-#  grassmods_de.po (grassmods_de)  #-#-#-#-#\n"
+"Kann Zell-Datei [%s] nicht öffnen.\n"
+"#-#-#-#-#  grassmods_de.po (grassmods_de)  #-#-#-#-#\n"
+"Kann die Rasterkarte [%s] nicht öffnen."
 
 #: ../doc/raster/r.example/main.c:126 ../raster/r.bitpattern/main.c:114
 #, c-format
@@ -7419,17 +7424,10 @@ msgstr "Dateiname des ausgedünnten Grat-Netzwerkes"
 msgid "Name for the resultant watershed partition file"
 msgstr "Name für die resultierende Einzugsgebietsdatei"
 
-#: ../raster/r.basins.fill/main.c:92 ../raster/r.basins.fill/main.c:105
-#: ../raster/r.cats/main.c:98 ../raster/r.coin/cmd_parms.c:93
-#: ../raster/r.coin/cmd_parms.c:96 ../raster/r.kappa/stats.c:30
-#: ../raster/r.transect/main.c:97
-#, fuzzy, c-format
+#: ../raster/r.his/main.c:126
+#, c-format
 msgid "%s: <%s> raster map not found"
-msgstr ""
-"#-#-#-#-#  grassmods_de.po (grassmods_de)  #-#-#-#-#\n"
-"%s: Rasterdatei <%s> konnte nicht gefunden werden.\n"
-"#-#-#-#-#  grassmods_de.po (grassmods_de)  #-#-#-#-#\n"
-"%s: Rasterkarte <%s> nicht gefunden."
+msgstr "%s:  Zelldatei <%s> nicht gefunden."
 
 #: ../raster/r.basins.fill/main.c:111
 #, c-format
@@ -9348,11 +9346,6 @@ msgstr "Name der Ausgabe-Karte, die den BLAUEN Kanal enthalten soll"
 #: ../raster/r.his/main.c:113
 msgid "Respect NULL values while drawing"
 msgstr "Respektiere NULL-Werte während des Zeichnens."
-
-#: ../raster/r.his/main.c:126
-#, c-format
-msgid "%s: <%s> raster map not found"
-msgstr "%s:  Zelldatei <%s> nicht gefunden."
 
 #: ../raster/r.his/main.c:171 ../raster/r.his/main.c:200
 #, c-format
@@ -11535,11 +11528,6 @@ msgid "Input map resolution differs from current region resolution!"
 msgstr ""
 "Auflösung der Eingabekarte unterscheidet sich von der aktuellen "
 "Regionsauflösung!"
-
-#: ../raster/r.resamp.rst/main.c:430
-#, c-format
-msgid "Cannot open raster map [%s]"
-msgstr "Kann die Rasterkarte [%s] nicht öffnen."
 
 #: ../raster/r.resamp.rst/main.c:474
 #, c-format

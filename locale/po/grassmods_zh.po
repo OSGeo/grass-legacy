@@ -11203,11 +11203,6 @@ msgstr "输出的蓝色图层的名称"
 msgid "Respect NULL values while drawing"
 msgstr "绘制时考虑空值"
 
-#: ../raster/r.his/main.c:126
-#, fuzzy, c-format
-msgid "%s: <%s> raster map not found"
-msgstr "<%s> 像元文件未发现"
-
 #: ../raster/r.his/main.c:144 ../raster/r.his/main.c:167
 #: ../raster/r.his/main.c:196 ../display/d.rast/display.c:23
 #: ../display/d.rast.num/number.c:277 ../display/d.legend/main.c:247
@@ -13542,11 +13537,6 @@ msgstr ""
 
 #: ../raster/r.resamp.rst/main.c:427
 msgid "Input map resolution differs from current region resolution!"
-msgstr ""
-
-#: ../raster/r.resamp.rst/main.c:430
-#, c-format
-msgid "Cannot open raster map [%s]"
 msgstr ""
 
 #: ../raster/r.resamp.rst/main.c:474

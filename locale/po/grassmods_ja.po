@@ -2219,9 +2219,13 @@ msgstr ""
 
 #: ../doc/raster/r.example/main.c:121 ../raster/r.out.gdal/main.c:78
 #: ../raster/r.bitpattern/main.c:110 ../raster/r.out.bin/main.c:139
-#, c-format
+#: ../raster/r.resamp.rst/main.c:430
+#, fuzzy, c-format
 msgid "Cannot open raster map [%s]"
 msgstr ""
+"#-#-#-#-#  grassmods_ja.po (grassmods_ja)  #-#-#-#-#\n"
+"#-#-#-#-#  grassmods_ja.po (grassmods_ja)  #-#-#-#-#\n"
+"出力するファイル"
 
 #: ../doc/raster/r.example/main.c:126 ../raster/r.bitpattern/main.c:113
 #, c-format
@@ -8117,10 +8121,14 @@ msgstr "区切り(デフォルト:タブ)"
 #: ../raster/r.cats/main.c:98 ../raster/r.basins.fill/main.c:92
 #: ../raster/r.basins.fill/main.c:105 ../raster/r.coin/cmd_parms.c:93
 #: ../raster/r.coin/cmd_parms.c:96 ../raster/r.kappa/stats.c:30
-#: ../raster/r.transect/main.c:97
+#: ../raster/r.transect/main.c:97 ../raster/r.his/main.c:126
 #, fuzzy, c-format
 msgid "%s: <%s> raster map not found"
-msgstr "対象マップ"
+msgstr ""
+"#-#-#-#-#  grassmods_ja.po (grassmods_ja)  #-#-#-#-#\n"
+"対象マップ\n"
+"#-#-#-#-#  grassmods_ja.po (grassmods_ja)  #-#-#-#-#\n"
+"入力するファイル"
 
 #: ../raster/r.cats/main.c:100
 #, c-format
@@ -11606,11 +11614,6 @@ msgstr "色相ファイル"
 msgid "Respect NULL values while drawing"
 msgstr "NULL値を考慮する"
 
-#: ../raster/r.his/main.c:126
-#, fuzzy, c-format
-msgid "%s: <%s> raster map not found"
-msgstr "入力するファイル"
-
 #: ../raster/r.his/main.c:144 ../raster/r.his/main.c:167
 #: ../raster/r.his/main.c:196 ../display/d.rast/display.c:23
 #: ../display/d.rast.num/number.c:277 ../display/d.legend/main.c:247
@@ -14086,11 +14089,6 @@ msgstr ""
 #, fuzzy
 msgid "Input map resolution differs from current region resolution!"
 msgstr "値の読みとり間隔(デフォルト:現在の解像度)"
-
-#: ../raster/r.resamp.rst/main.c:430
-#, fuzzy, c-format
-msgid "Cannot open raster map [%s]"
-msgstr "出力するファイル"
 
 #: ../raster/r.resamp.rst/main.c:474
 #, c-format

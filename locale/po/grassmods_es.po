@@ -2123,9 +2123,14 @@ msgstr ""
 
 #: ../doc/raster/r.example/main.c:121 ../raster/r.out.gdal/main.c:78
 #: ../raster/r.bitpattern/main.c:110 ../raster/r.out.bin/main.c:139
+#: ../raster/r.resamp.rst/main.c:430
 #, fuzzy, c-format
 msgid "Cannot open raster map [%s]"
-msgstr "No fue posible encontrar el archivo dig_cats."
+msgstr ""
+"#-#-#-#-#  grassmods_es.po (grassmods_es)  #-#-#-#-#\n"
+"No fue posible encontrar el archivo dig_cats.\n"
+"#-#-#-#-#  grassmods_es.po (grassmods_es)  #-#-#-#-#\n"
+"No es posible abrir la base de datos %s"
 
 #: ../doc/raster/r.example/main.c:126 ../raster/r.bitpattern/main.c:113
 #, fuzzy, c-format
@@ -7766,12 +7771,15 @@ msgstr ""
 #: ../raster/r.cats/main.c:98 ../raster/r.basins.fill/main.c:92
 #: ../raster/r.basins.fill/main.c:105 ../raster/r.coin/cmd_parms.c:93
 #: ../raster/r.coin/cmd_parms.c:96 ../raster/r.kappa/stats.c:30
-#: ../raster/r.transect/main.c:97
+#: ../raster/r.transect/main.c:97 ../raster/r.his/main.c:126
 #, fuzzy, c-format
 msgid "%s: <%s> raster map not found"
 msgstr ""
 "#-#-#-#-#  grassmods_es.po (grassmods_es)  #-#-#-#-#\n"
+"#-#-#-#-#  grassmods_es.po (grassmods_es)  #-#-#-#-#\n"
 "atención: %s - archivo conteniendo vectores no fue encontrado\n"
+"#-#-#-#-#  grassmods_es.po (grassmods_es)  #-#-#-#-#\n"
+"mapa <%s> no encontrado\n"
 "#-#-#-#-#  grassmods_es.po (grassmods_es)  #-#-#-#-#\n"
 "mapa <%s> no encontrado"
 
@@ -11058,11 +11066,6 @@ msgstr ""
 msgid "Respect NULL values while drawing"
 msgstr ""
 
-#: ../raster/r.his/main.c:126
-#, fuzzy, c-format
-msgid "%s: <%s> raster map not found"
-msgstr "mapa <%s> no encontrado"
-
 #: ../raster/r.his/main.c:144 ../raster/r.his/main.c:167
 #: ../raster/r.his/main.c:196 ../display/d.rast/display.c:23
 #: ../display/d.rast.num/number.c:277 ../display/d.legend/main.c:247
@@ -13393,11 +13396,6 @@ msgstr ""
 #: ../raster/r.resamp.rst/main.c:427
 msgid "Input map resolution differs from current region resolution!"
 msgstr ""
-
-#: ../raster/r.resamp.rst/main.c:430
-#, fuzzy, c-format
-msgid "Cannot open raster map [%s]"
-msgstr "No es posible abrir la base de datos %s"
 
 #: ../raster/r.resamp.rst/main.c:474
 #, c-format
