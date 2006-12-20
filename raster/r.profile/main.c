@@ -5,7 +5,6 @@
  * This Program is free software under the GPL (>=v2)
  * Read the file COPYING coming with GRASS for details
  *
- *
  */
 
 #include <stdlib.h>
@@ -60,8 +59,9 @@ int main(int argc, char *argv[])
     parm.output->type = TYPE_STRING;
     parm.output->required = NO;
     parm.output->answer     = "-";
-    parm.output->gisprompt = "old,cell,raster";
-    parm.output->description = _("Name of file for output (use output=- for stdout)");
+    parm.output->gisprompt = "new_file,file,output";
+    parm.output->description =
+	_("Name of file for output (use output=- for stdout)");
 
     parm.profile = G_define_option();
     parm.profile->key = "profile";
@@ -97,14 +97,12 @@ int main(int argc, char *argv[])
     parm.c = G_define_flag();
     parm.c->key = 'c';
     parm.c->description =
-	    _("Output RRR:GGG:BBB color values for each profile point");
+	_("Output RRR:GGG:BBB color values for each profile point");
 
 
     if (G_parser(argc, argv))
 	exit(EXIT_FAILURE);
 
-    if ((!parm.i->answer) && (!parm.profile->answer))
-	G_fatal_error(_("Either -i flag and/or profile parameter must be used."));
 
     clr = 0;
     if (parm.c->answer)
