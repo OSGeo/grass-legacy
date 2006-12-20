@@ -72,10 +72,7 @@ void p_bilinear(
 	u = *row_idx - row0;
 	tu = t * u;
 
-	result = ((1 - t - u + tu) * *c00) +
-		((t - tu) * *c01) +
-		((u - tu) * *c10) +
-		(tu * *c11);
+	result = G_interp_bilinear(t, u, *c00, *c01, *c10, *c11);
 
 	G_set_raster_value_f(obufptr, result, cell_type);
 }

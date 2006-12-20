@@ -209,10 +209,7 @@ int main( int argc, char *argv[])
 				}
 				else
 				{
-					DCELL c0 = u * (c01 - c00) + c00;
-					DCELL c1 = u * (c11 - c10) + c10;
-					DCELL c  = v * (c1  - c0 ) + c0 ;
-					outbuf[col] = c;
+					outbuf[col] = G_interp_bilinear(u, v, c00, c01, c10, c11);
 				}
 			}
 
@@ -291,12 +288,12 @@ int main( int argc, char *argv[])
 				}
 				else
 				{
-					DCELL c0 = (u * (u * (u * (c03 - 3*c02 + 3*c01 - c00) + (-c03 + 4*c02  - 5*c01 + 2*c00)) + (c02 - c00)) + 2*c01)/2;
-					DCELL c1 = (u * (u * (u * (c13 - 3*c12 + 3*c11 - c10) + (-c13 + 4*c12  - 5*c11 + 2*c10)) + (c12 - c10)) + 2*c11)/2;
-					DCELL c2 = (u * (u * (u * (c23 - 3*c22 + 3*c21 - c20) + (-c23 + 4*c22  - 5*c21 + 2*c20)) + (c22 - c20)) + 2*c21)/2;
-					DCELL c3 = (u * (u * (u * (c33 - 3*c32 + 3*c31 - c30) + (-c33 + 4*c32  - 5*c31 + 2*c30)) + (c32 - c30)) + 2*c31)/2;
-					DCELL c  = (v * (v * (v * (c3  - 3*c2  + 3*c1  - c0 ) + (-c3  + 4*c2   - 5*c1  + 2*c0 )) + (c2  - c0 )) + 2*c1 )/2;
-					outbuf[col] = c;
+					outbuf[col] = G_interp_bicubic(
+						u, v, 
+						c00, c01, c02, c03,
+						c10, c11, c12, c13,
+						c20, c21, c22, c23,
+						c30, c31, c32, c33);
 				}
 			}
 

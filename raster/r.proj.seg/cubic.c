@@ -75,16 +75,10 @@ void p_cubic(
 	{
 		FCELL **tmp = cellp[i];
 
-		val[i] = t * (t * (t * (*tmp[3] - *tmp[2] + *tmp[1] - *tmp[0])
-				   + (*tmp[2] - *tmp[3] - 2*(*tmp[1] - *tmp[0])))
-			      + (*tmp[2] - *tmp[0]))
-			+ *tmp[1];
+		val[i] = G_interp_cubic(t, *tmp[0], *tmp[1], *tmp[2], *tmp[3]);
 	}
 
-	result = u * (u * (u * (val[3] - val[2] + val[1] - val[0]) +
-			   (val[2] - val[3] - 2*(val[1] - val[0]))) +
-		      (val[2] - val[0])) +
-		val[1];
+	result = G_interp_cubic(u, val[0], val[1], val[2], val[3]);
 
 	G_set_raster_value_f(obufptr, result, cell_type);
 }

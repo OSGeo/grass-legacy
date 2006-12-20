@@ -229,10 +229,9 @@ static double raster_sample_bilinear (int fd,
         north -= window->ns_res;
 
     /* we do two linear interpolations along the rows */
-    tmp1 = east * grid[0][1] + (window->ew_res - east) * grid[0][0];
-    tmp1 /= window->ew_res;
-    tmp2 = east * grid[1][1] + (window->ew_res - east) * grid[1][0];
-    tmp2 /= window->ew_res;
+    tmp1 = G_interp_linear(east / window->ew_res, grid[0][0], grid[0][1]);
+    tmp2 = G_interp_linear(east / window->ew_res, grid[1][0], grid[1][1]);
+
     G_debug(3, "DIAG: r=%d c=%d t1=%g t2=%g\te=%g n=%g",
             row, col, tmp1, tmp2, east, north);
     G_debug(3, "DIAG: %g %g\n      %g %g",
@@ -245,7 +244,7 @@ static double raster_sample_bilinear (int fd,
     G_free(arow);
     G_free(brow);
 
-    return (north * tmp2 + (window->ns_res - north) * tmp1) / window->ns_res;
+    return G_interp_linear(north / window->ns_res, tmp1, tmp2);
 }
 
 
@@ -435,9 +434,7 @@ static double raster_sample_cubic (int fd,
 
     /* we do four cubic convolutions along the rows */
     for (i = 0; i < 4; ++i)
-        tmp[i] = east * (east * (east * (grid[i][3] - grid[i][2] + grid[i][1] - grid[i][0])
-                    + (grid[i][2] - grid[i][3] - 2 * grid[i][1] + 2 * grid[i][0]))
-                    + (grid[i][2] - grid[i][0])) + grid[i][1];
+        tmp[i] = G_interp_cubic(east, grid[i][0], grid[i][1], grid[i][2], grid[i][3]);
 
 #ifdef DEBUG
     for (i = 0; i < 4; ++i) {
@@ -456,9 +453,7 @@ static double raster_sample_cubic (int fd,
     G_free(drow);
 
     /* user horner's method again for the final interpolation */
-    return (north * (north * (north * (tmp[3] - tmp[2] + tmp[1] - tmp[0])
-                           + (tmp[2] - tmp[3] - 2 * tmp[1] + 2 * tmp[0]))
-                           + (tmp[2] - tmp[0])) + tmp[1]);
+    return G_interp_cubic(north, tmp[0], tmp[1], tmp[2], tmp[3]);
 }
 
 
