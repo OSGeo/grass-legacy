@@ -95,7 +95,7 @@ static int parse_command(Nv_data * data, Tcl_Interp * interp,	/* Current interpr
     vol->required = NO;
     vol->multiple = YES;
     vol->gisprompt = "old,grid3,3d raster";
-    vol->description = _("Name of existing 3dcell map");
+    vol->description = _("Name of existing 3d raster map");
 
     no_args = G_define_flag();
     no_args->key = 'q';

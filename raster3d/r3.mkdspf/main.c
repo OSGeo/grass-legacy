@@ -65,7 +65,7 @@ int main(int argc, char *argv[])
     name->required   = YES;
     name->gisprompt  = "old,grid3,3dcell";  
     /* should still find the DIRECTORY */
-    name->description= _("Name of an existing 3dcell map") ;
+    name->description= _("Name of an existing 3d raster map") ;
 
     out=G_define_option () ;
     out->key        = "dspf";

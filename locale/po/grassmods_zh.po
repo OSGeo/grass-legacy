@@ -35,7 +35,7 @@ msgid ""
 msgstr "根据指定的阈值级别，从已有的 grid3 文件创建显示文件。"
 
 #: ../raster3d/r3.mkdspf/main.c:68
-msgid "Name of an existing 3dcell map"
+msgid "Name of an existing 3d raster map"
 msgstr "已有 3d 像元地图的名称"
 
 #: ../raster3d/r3.mkdspf/main.c:74
@@ -131,7 +131,7 @@ msgid "Convert a 3D ASCII raster text file into a (binary) 3D raster map layer"
 msgstr "将 3D ASCII 栅格文本文件转化为 (二进制) 3D 栅格图层"
 
 #: ../raster3d/r3.out.ascii/main.c:78
-msgid "3dcell map to be converted to ASCII"
+msgid "3d raster map to be converted to ASCII"
 msgstr ""
 
 #: ../raster3d/r3.out.ascii/main.c:85
@@ -163,11 +163,11 @@ msgstr "将 3D 栅格图层转化为 ASCII 文本文件"
 
 #: ../raster3d/r3.out.ascii/main.c:273 ../raster3d/base/r3.null.main.c:104
 #: ../raster3d/base/r3.mask.main.c:78 ../raster3d/r3.out.v5d/main.c:305
-msgid "Requested g3d file not found"
+msgid "Requested 3d raster map not found"
 msgstr "需要的 g3d 文件未找到"
 
 #: ../raster3d/r3.out.ascii/main.c:282
-msgid "Error opening g3d file"
+msgid "Error opening 3d raster map"
 msgstr "打开 g3d 文件时发生错误"
 
 #: ../raster3d/base/mask_functions.c:82
@@ -181,7 +181,7 @@ msgid "%s: illegal value spec\n"
 msgstr "%s - 非法的名称"
 
 #: ../raster3d/base/r3.null.main.c:57
-msgid "3dcell map for which to modify null values"
+msgid "3d raster map for which to modify null values"
 msgstr "需要修改空值的 3dcell 地图"
 
 #: ../raster3d/base/r3.null.main.c:65 ../raster/r.null/null.c:63
@@ -319,11 +319,11 @@ msgstr "读取栅格文件 [%s] 时发生错误。"
 
 #: ../raster3d/base/r3.info.main.c:422 ../raster3d/r3.to.rast/main.c:389
 #: ../raster/r.to.rast3/main.c:338 ../raster/r.to.rast3elev/main.c:550
-msgid "Error closing g3d file"
+msgid "Error closing 3d raster map"
 msgstr "关闭 g3d文件时发生错误"
 
 #: ../raster3d/base/r3.mask.main.c:44
-msgid "3dcell map with reference values"
+msgid "3d raster map with reference values"
 msgstr ""
 
 #: ../raster3d/base/r3.mask.main.c:52
@@ -370,11 +370,11 @@ msgstr ""
 
 #: ../raster3d/r3.to.rast/main.c:55
 #, fuzzy
-msgid "Could not close the g3d map"
+msgid "Could not close the 3d raster map"
 msgstr "无法关闭新的 g3d 地图"
 
 #: ../raster3d/r3.to.rast/main.c:79
-msgid "3dcell map(s) to be converted to 2D raster slices"
+msgid "3d raster map(s) to be converted to 2D raster slices"
 msgstr ""
 
 #: ../raster3d/r3.to.rast/main.c:85
@@ -413,17 +413,19 @@ msgstr "将 3D 栅格图转化为 2D 栅格图"
 
 #: ../raster3d/r3.to.rast/main.c:225
 #, fuzzy, c-format
-msgid "Open g3d map <%s>"
+msgid "Open 3d raster map <%s>"
 msgstr "打开栅格地图 %s\n"
 
-#: ../raster3d/r3.to.rast/main.c:228
+#: ../raster3d/r3.to.rast/main.c:228 ../raster3d/r3.out.vtk/main.c:141
 #, fuzzy, c-format
-msgid "Requested g3d map <%s> not found"
+msgid "Requested 3d raster map <%s> not found"
 msgstr "需要的 g3d 文件未找到"
 
 #: ../raster3d/r3.to.rast/main.c:243 ../raster3d/r3.to.rast/main.c:284
+#: ../raster3d/r3.cross.rast/main.c:316 ../raster3d/r3.out.vtk/main.c:208
+#: ../raster3d/r3.out.vtk/main.c:291 ../raster3d/r3.out.vtk/main.c:506
 #, fuzzy, c-format
-msgid "Error opening g3d map <%s>"
+msgid "Error opening 3d raster map <%s>"
 msgstr "打开 g3d 文件时发生错误"
 
 #: ../raster3d/r3.to.rast/main.c:267
@@ -494,8 +496,8 @@ msgstr ""
 
 #: ../raster3d/r3.cross.rast/main.c:271
 msgid ""
-"Creates cross section 2D raster map from g3d raster volume map based on 2D "
-"elevation map"
+"Creates cross section 2D raster map from 3d raster map based on 2D elevation "
+"map"
 msgstr ""
 
 #: ../raster3d/r3.cross.rast/main.c:280
@@ -505,7 +507,7 @@ msgstr "打开 3D 栅格文件 %s"
 
 #: ../raster3d/r3.cross.rast/main.c:283
 #, fuzzy, c-format
-msgid "Requested g3d file not found <%s>"
+msgid "Requested 3d raster map not found <%s>"
 msgstr "需要的 g3d 文件未找到"
 
 #: ../raster3d/r3.cross.rast/main.c:296 ../raster/r.to.rast3/main.c:219
@@ -514,12 +516,6 @@ msgid ""
 "The 2d and 3d region settings are different. I will use the g3d settings to "
 "adjust the 2d region."
 msgstr ""
-
-#: ../raster3d/r3.cross.rast/main.c:316 ../raster3d/r3.out.vtk/main.c:208
-#: ../raster3d/r3.out.vtk/main.c:291 ../raster3d/r3.out.vtk/main.c:506
-#, fuzzy, c-format
-msgid "Error opening g3d file <%s>"
-msgstr "打开 g3d 文件时发生错误"
 
 #: ../raster3d/r3.cross.rast/main.c:330
 #, fuzzy
@@ -588,7 +584,7 @@ msgstr ""
 #: ../raster3d/r3.out.vtk/writeVTKData.c:428
 #: ../raster3d/r3.out.vtk/writeVTKData.c:461
 #, fuzzy
-msgid "Wrong g3d map values! Values should in between 0 and 255!\n"
+msgid "Wrong 3d raster map values! Values should in between 0 and 255!\n"
 msgstr "错误的地图值！地图值必须在 0 至 255 之间！\n"
 
 #: ../raster3d/r3.out.vtk/writeVTKData.c:491
@@ -602,7 +598,7 @@ msgstr "无法关闭输入地图"
 
 #: ../raster3d/r3.out.vtk/errorHandling.c:67
 #, fuzzy
-msgid "unable to close input g3d raster map\n"
+msgid "unable to close input 3d raster map\n"
 msgstr "无法关闭输入地图"
 
 #: ../raster3d/r3.out.vtk/main.c:97 ../raster/r.to.rast3/main.c:363
@@ -624,11 +620,6 @@ msgstr "未找到栅格图<%s>"
 #, fuzzy, c-format
 msgid "bottom cell map <%s> not found\n"
 msgstr "未找到栅格图<%s>"
-
-#: ../raster3d/r3.out.vtk/main.c:141
-#, fuzzy, c-format
-msgid "Requested g3d data map <%s> not found"
-msgstr "需要的 g3d 文件未找到"
 
 #: ../raster3d/r3.out.vtk/main.c:151
 #, fuzzy, c-format
@@ -656,7 +647,7 @@ msgstr ""
 
 #: ../raster3d/r3.out.vtk/main.c:197
 #, fuzzy, c-format
-msgid "Open rgb g3d raster map %s"
+msgid "Open rgb 3d raster map %s"
 msgstr "打开 3D 栅格文件 %s"
 
 #: ../raster3d/r3.out.vtk/main.c:210
@@ -675,7 +666,7 @@ msgstr "关闭 g3d文件时发生错误"
 
 #: ../raster3d/r3.out.vtk/main.c:280
 #, fuzzy, c-format
-msgid "Open vector g3d raster map %s"
+msgid "Open vector 3d raster map %s"
 msgstr "打开 3D 栅格文件 %s"
 
 #: ../raster3d/r3.out.vtk/main.c:293
@@ -717,11 +708,11 @@ msgstr "无法关闭输出地图"
 
 #: ../raster3d/r3.out.vtk/main.c:497
 #, fuzzy, c-format
-msgid "Open g3d raster map %s"
+msgid "Open 3d raster map %s"
 msgstr "打开 3D 栅格文件 %s"
 
 #: ../raster3d/r3.out.vtk/main.c:536
-msgid "Error closing g3d data map, the VTK file may be incomplete."
+msgid "Error closing 3d raster map, the VTK file may be incomplete."
 msgstr ""
 
 #: ../raster3d/r3.out.vtk/main.c:551 ../raster/r.out.vtk/main.c:390
@@ -735,14 +726,14 @@ msgstr ""
 #: ../raster3d/r3.out.vtk/parameters.c:44
 #, fuzzy
 msgid ""
-"Three (r,g,b) g3d raster maps which are used to create rgb values [redmap,"
+"Three (r,g,b) 3d raster maps which are used to create rgb values [redmap,"
 "greenmap,bluemap]"
 msgstr "3 栅格地图 (r,g,b)，他们用来生成 rgb 值 [redmap,greenmap,bluemap]"
 
 #: ../raster3d/r3.out.vtk/parameters.c:54
 #, fuzzy
 msgid ""
-"Three (x,y,z) g3d raster maps which are used to create vector values [xmap,"
+"Three (x,y,z) 3d raster maps which are used to create vector values [xmap,"
 "ymap,zmap]"
 msgstr "3 栅格地图 (r,g,b)，他们用来生成 rgb 值 [redmap,greenmap,bluemap]"
 
@@ -799,7 +790,7 @@ msgid "Correct the coordinates to fit the VTK-OpenGL precision"
 msgstr ""
 
 #: ../raster3d/r3.out.v5d/main.c:68
-msgid "3dcell map to be converted to Vis5d (v5d) file"
+msgid "3d raster map to be converted to Vis5d (v5d) file"
 msgstr ""
 
 #: ../raster3d/r3.out.v5d/main.c:75
@@ -4773,7 +4764,7 @@ msgid ""
 msgstr "将二进制的 GRASS 矢量图层 (点) 转化为 3D GRASS 栅格图层。"
 
 #: ../vector/v.to.rast3/main.c:47
-msgid "Name of output G3D grid file"
+msgid "Name of output 3d raster map"
 msgstr "输出的 G3D grid 文件名称"
 
 #: ../vector/v.to.rast3/main.c:56 ../vector/v.to.rast/main.c:62
@@ -4799,7 +4790,7 @@ msgid "No record for line (cat = %d)"
 msgstr "没有线记录(类别 = %d)"
 
 #: ../vector/v.to.rast3/main.c:154
-msgid "Could not close new g3d map"
+msgid "Could not close new 3d raster map"
 msgstr "无法关闭新的 g3d 地图"
 
 #: ../vector/v.neighbors/main.c:47
@@ -8290,7 +8281,7 @@ msgid "Creating 3D raster map\n"
 msgstr "创建 3D 栅格地图\n"
 
 #: ../raster/r.to.rast3/main.c:306 ../raster/r.to.rast3elev/main.c:487
-msgid "error opening g3d file"
+msgid "error opening 3d raster map"
 msgstr "打开 g3d 文件时发生错误"
 
 #: ../raster/r.to.rast3/main.c:342 ../display/d.vect/main.c:638
@@ -9546,7 +9537,7 @@ msgstr ""
 
 #: ../raster/r.to.rast3elev/main.c:479
 #, fuzzy, c-format
-msgid "Open g3d raster map %s\n"
+msgid "Open 3d raster map %s\n"
 msgstr "打开 3D 栅格文件 %s"
 
 #: ../raster/r.to.rast3elev/main.c:508
@@ -9561,7 +9552,7 @@ msgstr "输出的高程栅格图"
 
 #: ../raster/r.to.rast3elev/main.c:547
 #, fuzzy
-msgid "Close g3d raster map\n"
+msgid "Close 3d raster map\n"
 msgstr "叠加栅格图"
 
 #: ../raster/r.bitpattern/main.c:63
@@ -17924,7 +17915,7 @@ msgid "Vector points overlay file(s)"
 msgstr "起始点栅格文件"
 
 #: ../visualization/nviz/src/nviz_init.c:95
-msgid "Name of existing 3dcell map"
+msgid "Name of existing 3d raster map"
 msgstr "已有 3dcell 地图的名称"
 
 #: ../visualization/nviz/src/nviz_init.c:99

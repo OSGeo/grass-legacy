@@ -34,7 +34,7 @@ typedef struct
 typedef struct
 {
     int mapnum;			/*The umber of input maps */
-    int count;			/*g3d map access counter */
+    int count;			/*3d raster map access counter */
     void *map;			/*The 3d voxel output map */
     int input;			/*The current raster value map pointer */
     int elev;			/*The current raster elevation map pointer */
@@ -296,7 +296,7 @@ void elev_raster_to_g3d(Database db, G3D_Region region)
 	    /* Calculate if the G3D cell is lower or upper the elevation map
 	     *  and set the value.*/
 	    if (db.count == 0) {
-		/*Use this method if the g3d map was not touched befor */
+		/*Use this method if the 3d raster map was not touched befor */
 		for (z = 0; z < depths; z++) {
 
 		    /*Upper cells */
@@ -327,7 +327,7 @@ void elev_raster_to_g3d(Database db, G3D_Region region)
 		}
 	    }
 	    else {
-		/*Use this method for every following g3d maps access */
+		/*Use this method for every following 3d raster maps access */
 		for (z = 0; z < depths; z++) {
 		    /*Upper cells */
 		    if (height < (z * tbres + bottom)) {
@@ -473,7 +473,7 @@ int main(int argc, char *argv[])
     if (G_legal_filename(param.output->answer) < 0)
 	G3d_fatalError(_("Illegal output file name"));
 
-    G_debug(2, "Open g3d raster map %s", param.output->answer);
+    G_debug(2, "Open 3d raster map %s", param.output->answer);
 
     /*open G3D output map */
     db.map = NULL;
@@ -481,7 +481,7 @@ int main(int argc, char *argv[])
 	G3d_openCellNew(param.output->answer, G3D_DOUBLE,
 			G3D_USE_CACHE_DEFAULT, &region);
     if (db.map == NULL)
-	fatal_error(db, _("Error opening g3d file"));
+	fatal_error(db, _("Error opening 3d raster map"));
 
 
     /*if requested set the Mask on */
@@ -541,10 +541,10 @@ int main(int argc, char *argv[])
 		G3d_maskOff(db.map);
     }
 
-    G_debug(2, "Close g3d raster map");
+    G_debug(2, "Close 3d raster map");
 
     if (!G3d_closeCell(db.map))
-	G3d_fatalError(_("Error closing g3d file"));
+	G3d_fatalError(_("Error closing 3d raster map"));
 
     G_debug(2, "\nDone\n");
 

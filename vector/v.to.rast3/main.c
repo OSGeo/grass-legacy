@@ -44,7 +44,7 @@ int main(int argc, char *argv[])
     out_opt->type       = TYPE_STRING ;
     out_opt->key_desc   = "name";
     out_opt->required   = YES;
-    out_opt->description= _("Name of output G3D grid file") ;
+    out_opt->description= _("Name of output 3d raster map") ;
     out_opt->gisprompt  = "new,grid3,3d raster" ;
 
     col_opt = G_define_option();
@@ -151,7 +151,7 @@ int main(int argc, char *argv[])
     Vect_close ( &Map );
 
     if (! G3d_closeCell (map) )
-        G_fatal_error(_("Could not close new g3d map"));
+        G_fatal_error(_("Could not close new 3d raster map"));
 
 
     exit(EXIT_SUCCESS);

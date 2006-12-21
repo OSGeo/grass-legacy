@@ -33,7 +33,7 @@ with <EM><A HREF="r.to.rast3.html">r.to.rast3</A></EM>. The values of the RGB ma
 must be within 0 and 255. Whether not, the values are set automaticly 
 to 0 and warnings will be printed to stderr.
 <BR><BR>
-The vector data is created from three g3d maps. Each map represents a vector component.
+The vector data is created from three 3d raster maps. Each map represents a vector component.
 So x, y and z components are required in this order! This data can be visualized with Glyph3d or 
 StreamTracer filters within Paraview.
 <br>
@@ -99,7 +99,7 @@ r.in.onearth -l output=Sat tmband=Red
 r.in.onearth -l output=Sat tmband=IR1
 r.in.onearth -l output=Sat tmband=IR2
 
-#Convert the 2d maps to g3d maps with r.to.rast3
+#Convert the 2d maps to 3d raster maps with r.to.rast3
 r.to.rast3 input=SatLandsatTM_Red output=SatLandsatTM_Red
 r.to.rast3 input=SatLandsatTM_IR1 output=SatLandsatTM_IR1
 r.to.rast3 input=SatLandsatTM_IR2 output=SatLandsatTM_IR2

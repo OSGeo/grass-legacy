@@ -52,7 +52,7 @@ void fatal_error(void *map, int *fd, int depths, char *errorMsg)
     /* Close files and exit */
     if (map != NULL) {
 	if (!G3d_closeCell(map))
-	    G3d_fatalError(_("Could not close the g3d map"));
+	    G3d_fatalError(_("Could not close the 3d raster map"));
     }
 
     if (fd != NULL) {
@@ -76,7 +76,7 @@ void set_params()
     param.input->required = YES;
     param.input->gisprompt = "old,grid3,3d-raster";
     param.input->description =
-	_("3dcell map(s) to be converted to 2D raster slices");
+	_("3d raster map(s) to be converted to 2D raster slices");
 
     param.output = G_define_option();
     param.output->key = "output";
@@ -222,10 +222,10 @@ int main(int argc, char *argv[])
     if (G_parser(argc, argv))
 	exit(EXIT_FAILURE);
 
-    G_debug(3, _("Open g3d map <%s>"), param.input->answer);
+    G_debug(3, _("Open 3d raster map <%s>"), param.input->answer);
 
     if (NULL == G_find_grid3(param.input->answer, ""))
-	G3d_fatalError(_("Requested g3d map <%s> not found"),
+	G3d_fatalError(_("Requested 3d raster map <%s> not found"),
 		       param.input->answer);
 
     /*Set the defaults */
@@ -240,7 +240,7 @@ int main(int argc, char *argv[])
 			      G3D_DEFAULT_WINDOW, G3D_TILE_SAME_AS_FILE,
 			      G3D_USE_CACHE_DEFAULT);
 	if (map == NULL)
-	    G3d_fatalError(_("Error opening g3d map <%s>"),
+	    G3d_fatalError(_("Error opening 3d raster map <%s>"),
 			   param.input->answer);
 
 
@@ -274,14 +274,14 @@ int main(int argc, char *argv[])
 	    G3d_setWindow(&region);
 	}
 
-	/*Open the g3d map */
+	/*Open the 3d raster map */
 	map = G3d_openCellOld(param.input->answer,
 			      G_find_grid3(param.input->answer, ""),
 			      &region, G3D_TILE_SAME_AS_FILE,
 			      G3D_USE_CACHE_DEFAULT);
 
 	if (map == NULL)
-	    G3d_fatalError(_("Error opening g3d map <%s>"),
+	    G3d_fatalError(_("Error opening 3d raster map <%s>"),
 			   param.input->answer);
     }
 
@@ -386,7 +386,7 @@ int main(int argc, char *argv[])
 
     /* Close files and exit */
     if (!G3d_closeCell(map))
-	fatal_error(map, NULL, 0, _("Error closing g3d file"));
+	fatal_error(map, NULL, 0, _("Error closing 3d raster map"));
 
     map = NULL;
 

@@ -377,9 +377,9 @@ Note: changing the status of masking after one or more tiles have already
 been read does not affect the tiles which are already stored in the cache.
 
 <P>
-Any arbitrary g3d file can be used as mask file: NULL-values are interpreted as
+Any arbitrary 3d raster map can be used as mask file: NULL-values are interpreted as
  <TT>"mask-out"</TT>, all other values are interpreted as  <TT>"don't mask
-  out"</TT>. Using <EM>r3.mask</EM> to convert a g3d file into a mask file instead of
+  out"</TT>. Using <EM>r3.mask</EM> to convert a 3d raster map into a mask file instead of
 simply copying (or renaming) the directory will significantly reduce to amount
 of disk space and the access time for the mask.
 

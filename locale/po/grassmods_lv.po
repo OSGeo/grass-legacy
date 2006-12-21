@@ -36,7 +36,7 @@ msgstr ""
 
 #: ../raster3d/r3.mkdspf/main.c:68
 #, fuzzy
-msgid "Name of an existing 3dcell map"
+msgid "Name of an existing 3d raster map"
 msgstr "Eksistējošas rastra kartes nosaukums"
 
 #: ../raster3d/r3.mkdspf/main.c:74
@@ -131,7 +131,7 @@ msgid "Convert a 3D ASCII raster text file into a (binary) 3D raster map layer"
 msgstr ""
 
 #: ../raster3d/r3.out.ascii/main.c:78
-msgid "3dcell map to be converted to ASCII"
+msgid "3d raster map to be converted to ASCII"
 msgstr ""
 
 #: ../raster3d/r3.out.ascii/main.c:85
@@ -164,11 +164,11 @@ msgstr ""
 #: ../raster3d/r3.out.ascii/main.c:273 ../raster3d/base/r3.null.main.c:104
 #: ../raster3d/base/r3.mask.main.c:78 ../raster3d/r3.out.v5d/main.c:305
 #, fuzzy
-msgid "Requested g3d file not found"
+msgid "Requested 3d raster map not found"
 msgstr "3d skata fails <%s> nav atrasts"
 
 #: ../raster3d/r3.out.ascii/main.c:282
-msgid "Error opening g3d file"
+msgid "Error opening 3d raster map"
 msgstr ""
 
 #: ../raster3d/base/mask_functions.c:82
@@ -182,7 +182,7 @@ msgid "%s: illegal value spec\n"
 msgstr ""
 
 #: ../raster3d/base/r3.null.main.c:57
-msgid "3dcell map for which to modify null values"
+msgid "3d raster map for which to modify null values"
 msgstr ""
 
 #: ../raster3d/base/r3.null.main.c:65 ../raster/r.null/null.c:63
@@ -315,11 +315,11 @@ msgstr ""
 
 #: ../raster3d/base/r3.info.main.c:422 ../raster3d/r3.to.rast/main.c:389
 #: ../raster/r.to.rast3/main.c:338 ../raster/r.to.rast3elev/main.c:550
-msgid "Error closing g3d file"
+msgid "Error closing 3d raster map"
 msgstr ""
 
 #: ../raster3d/base/r3.mask.main.c:44
-msgid "3dcell map with reference values"
+msgid "3d raster map with reference values"
 msgstr ""
 
 #: ../raster3d/base/r3.mask.main.c:52
@@ -361,11 +361,11 @@ msgid ""
 msgstr ""
 
 #: ../raster3d/r3.to.rast/main.c:55
-msgid "Could not close the g3d map"
+msgid "Could not close the 3d raster map"
 msgstr ""
 
 #: ../raster3d/r3.to.rast/main.c:79
-msgid "3dcell map(s) to be converted to 2D raster slices"
+msgid "3d raster map(s) to be converted to 2D raster slices"
 msgstr ""
 
 #: ../raster3d/r3.to.rast/main.c:85
@@ -404,17 +404,17 @@ msgstr ""
 
 #: ../raster3d/r3.to.rast/main.c:225
 #, c-format
-msgid "Open g3d map <%s>"
+msgid "Open 3d raster map <%s>"
 msgstr ""
 
 #: ../raster3d/r3.to.rast/main.c:228
 #, c-format
-msgid "Requested g3d map <%s> not found"
+msgid "Requested 3d raster map <%s> not found"
 msgstr ""
 
 #: ../raster3d/r3.to.rast/main.c:243 ../raster3d/r3.to.rast/main.c:284
 #, c-format
-msgid "Error opening g3d map <%s>"
+msgid "Error opening 3d raster map <%s>"
 msgstr ""
 
 #: ../raster3d/r3.to.rast/main.c:267
@@ -482,7 +482,7 @@ msgstr ""
 
 #: ../raster3d/r3.cross.rast/main.c:271
 msgid ""
-"Creates cross section 2D raster map from g3d raster volume map based on 2D "
+"Creates cross section 2D raster map from 3d raster map based on 2D "
 "elevation map"
 msgstr ""
 
@@ -493,7 +493,7 @@ msgstr ""
 
 #: ../raster3d/r3.cross.rast/main.c:283
 #, c-format
-msgid "Requested g3d file not found <%s>"
+msgid "Requested 3d raster map not found <%s>"
 msgstr ""
 
 #: ../raster3d/r3.cross.rast/main.c:296 ../raster/r.to.rast3/main.c:219
@@ -506,7 +506,7 @@ msgstr ""
 #: ../raster3d/r3.cross.rast/main.c:316 ../raster3d/r3.out.vtk/main.c:208
 #: ../raster3d/r3.out.vtk/main.c:291 ../raster3d/r3.out.vtk/main.c:506
 #, c-format
-msgid "Error opening g3d file <%s>"
+msgid "Error opening 3d raster map <%s>"
 msgstr ""
 
 #: ../raster3d/r3.cross.rast/main.c:330
@@ -567,7 +567,7 @@ msgstr ""
 
 #: ../raster3d/r3.out.vtk/writeVTKData.c:428
 #: ../raster3d/r3.out.vtk/writeVTKData.c:461
-msgid "Wrong g3d map values! Values should in between 0 and 255!\n"
+msgid "Wrong 3d raster map values! Values should in between 0 and 255!\n"
 msgstr ""
 
 #: ../raster3d/r3.out.vtk/writeVTKData.c:491
@@ -579,7 +579,7 @@ msgid "unable to close input raster map\n"
 msgstr ""
 
 #: ../raster3d/r3.out.vtk/errorHandling.c:67
-msgid "unable to close input g3d raster map\n"
+msgid "unable to close input 3d raster map\n"
 msgstr ""
 
 #: ../raster3d/r3.out.vtk/main.c:97 ../raster/r.to.rast3/main.c:363
@@ -604,7 +604,7 @@ msgstr ""
 
 #: ../raster3d/r3.out.vtk/main.c:141
 #, c-format
-msgid "Requested g3d data map <%s> not found"
+msgid "Requested 3d raster map <%s> not found"
 msgstr ""
 
 #: ../raster3d/r3.out.vtk/main.c:151
@@ -633,7 +633,7 @@ msgstr ""
 
 #: ../raster3d/r3.out.vtk/main.c:197
 #, c-format
-msgid "Open rgb g3d raster map %s"
+msgid "Open rgb 3d raster map %s"
 msgstr ""
 
 #: ../raster3d/r3.out.vtk/main.c:210
@@ -650,7 +650,7 @@ msgstr ""
 
 #: ../raster3d/r3.out.vtk/main.c:280
 #, c-format
-msgid "Open vector g3d raster map %s"
+msgid "Open vector 3d raster map %s"
 msgstr ""
 
 #: ../raster3d/r3.out.vtk/main.c:293
@@ -688,11 +688,11 @@ msgstr ""
 
 #: ../raster3d/r3.out.vtk/main.c:497
 #, c-format
-msgid "Open g3d raster map %s"
+msgid "Open 3d raster map %s"
 msgstr ""
 
 #: ../raster3d/r3.out.vtk/main.c:536
-msgid "Error closing g3d data map, the VTK file may be incomplete."
+msgid "Error closing 3d raster map, the VTK file may be incomplete."
 msgstr ""
 
 #: ../raster3d/r3.out.vtk/main.c:551 ../raster/r.out.vtk/main.c:390
@@ -705,13 +705,13 @@ msgstr ""
 
 #: ../raster3d/r3.out.vtk/parameters.c:44
 msgid ""
-"Three (r,g,b) g3d raster maps which are used to create rgb values [redmap,"
+"Three (r,g,b) 3d raster maps which are used to create rgb values [redmap,"
 "greenmap,bluemap]"
 msgstr ""
 
 #: ../raster3d/r3.out.vtk/parameters.c:54
 msgid ""
-"Three (x,y,z) g3d raster maps which are used to create vector values [xmap,"
+"Three (x,y,z) 3d raster maps which are used to create vector values [xmap,"
 "ymap,zmap]"
 msgstr ""
 
@@ -764,7 +764,7 @@ msgid "Correct the coordinates to fit the VTK-OpenGL precision"
 msgstr ""
 
 #: ../raster3d/r3.out.v5d/main.c:68
-msgid "3dcell map to be converted to Vis5d (v5d) file"
+msgid "3d raster map to be converted to Vis5d (v5d) file"
 msgstr ""
 
 #: ../raster3d/r3.out.v5d/main.c:75
@@ -4727,7 +4727,7 @@ msgstr ""
 
 #: ../vector/v.to.rast3/main.c:47
 #, fuzzy
-msgid "Name of output G3D grid file"
+msgid "Name of output 3d raster map"
 msgstr "Izejas rastra kartes nosaukums"
 
 #: ../vector/v.to.rast3/main.c:56 ../vector/v.to.rast/main.c:62
@@ -4754,7 +4754,7 @@ msgid "No record for line (cat = %d)"
 msgstr "Nav ieraksta priekš līnijas (cat= %d)"
 
 #: ../vector/v.to.rast3/main.c:154
-msgid "Could not close new g3d map"
+msgid "Could not close new 3d raster map"
 msgstr ""
 
 #: ../vector/v.neighbors/main.c:47
@@ -8207,7 +8207,7 @@ msgstr "Eksistējošas rastra kartes nosaukums"
 
 #: ../raster/r.to.rast3/main.c:306 ../raster/r.to.rast3elev/main.c:487
 #, fuzzy
-msgid "error opening g3d file"
+msgid "error opening 3d raster map"
 msgstr "Neveiksme atverot ieejas dig ieejas failu"
 
 #: ../raster/r.to.rast3/main.c:342 ../display/d.vect/main.c:638
@@ -9457,7 +9457,7 @@ msgstr ""
 
 #: ../raster/r.to.rast3elev/main.c:479
 #, fuzzy, c-format
-msgid "Open g3d raster map %s\n"
+msgid "Open 3d raster map %s\n"
 msgstr "Nevarēja atrast rastra failu %s"
 
 #: ../raster/r.to.rast3elev/main.c:508
@@ -9472,7 +9472,7 @@ msgstr "Nevaratvērt datubāzi %s"
 
 #: ../raster/r.to.rast3elev/main.c:547
 #, fuzzy
-msgid "Close g3d raster map\n"
+msgid "Close 3d raster map\n"
 msgstr "Eksistējošas rastra kartes nosaukums"
 
 #: ../raster/r.bitpattern/main.c:63
@@ -17806,7 +17806,7 @@ msgid "Vector points overlay file(s)"
 msgstr ""
 
 #: ../visualization/nviz/src/nviz_init.c:95
-msgid "Name of existing 3dcell map"
+msgid "Name of existing 3d raster map"
 msgstr "Eksistējošas 3dcell kartes nosaukums"
 
 #: ../visualization/nviz/src/nviz_init.c:99

@@ -338,7 +338,7 @@ fprintf(stderr,"xmin=%lf,xmax=%lf,ymin=%lf,ymax=%lf,zmin=%lf,zmax=%lf,wmin=%lf,w
 }
 
 /*
- * OUTGR now writes g3d files (mca 2/15/96)
+ * OUTGR now writes 3d raster maps (mca 2/15/96)
  */
 
 int
