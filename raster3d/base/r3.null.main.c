@@ -54,7 +54,7 @@ static void setParams(void)
     params.map->required = YES;
     params.map->multiple = NO;
     params.map->gisprompt = "old,grid3,3d-raster";
-    params.map->description = _("3dcell map for which to modify null values");
+    params.map->description = _("3d raster map for which to modify null values");
 
     params.setNull = G_define_option();
     params.setNull->key = "setnull";
@@ -101,7 +101,7 @@ modifyNull(char *name, d_Mask * maskRules, int changeNull, double newNullVal)
     cacheSize = G3d_cacheSizeEncode(G3D_USE_CACHE_XY, 1);
 
     if (NULL == G_find_grid3(name, ""))
-	G3d_fatalError(_("Requested g3d file not found"));
+	G3d_fatalError(_("Requested 3d raster map not found"));
 
     fprintf(stderr, "name %s Mapset %s \n", name, G_mapset());
     map = G3d_openCellOld(name, G_mapset(), G3D_DEFAULT_WINDOW,

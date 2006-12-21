@@ -177,7 +177,7 @@ asciiToG3d  (FILE *fp, G3D_Region *region, int convertNull, double nullValue)
   G_message(_("Loading data ...  (%dx%dx%d)"), region->cols, region->rows, 
 	region->depths);
 
-  G_debug (3, "asciiToG3d: writing the g3d map, with rows %i cols %i depths %i",
+  G_debug (3, "asciiToG3d: writing the 3d raster map, with rows %i cols %i depths %i",
 	region->rows, region->cols, region->depths);
 
   for (z = 0; z < region->depths; z++) {
@@ -262,13 +262,13 @@ int main  (int argc, char *argv[])
 			  &region,
 			  type, doLzw, doRle, precision, tileX, tileY, tileZ);
 
-  if (map == NULL) fatalError (_("Error opening g3d file"));
+  if (map == NULL) fatalError (_("Error opening 3d raster map"));
 
   /*Create the new G3D Map*/
   asciiToG3d (fp, &region, convertNull, nullValue);
 
   if (! G3d_closeCell (map)) 
-    fatalError (_("Error closing new g3d file"));
+    fatalError (_("Error closing new 3d raster map"));
 
   /* write input name to map history */
   G3d_readHistory(output, G_mapset(), &history);

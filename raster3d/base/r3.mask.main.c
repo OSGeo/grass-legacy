@@ -41,7 +41,7 @@ static void setParams()
     params.map->required = YES;
     params.map->multiple = NO;
     params.map->gisprompt = "old,grid3,3d-raster";
-    params.map->description = _("3dcell map with reference values");
+    params.map->description = _("3d raster map with reference values");
 
     params.maskVals = G_define_option();
     params.maskVals->key = "maskvalues";
@@ -75,7 +75,7 @@ static void makeMask(char *name, d_Mask * maskRules)
     cacheSize = G3d_cacheSizeEncode(G3D_USE_CACHE_XY, 1);
 
     if (NULL == G_find_grid3(name, ""))
-	G3d_fatalError(_("Requested g3d file not found"));
+	G3d_fatalError(_("Requested 3d raster map not found"));
 
     map = G3d_openCellOld(name, G_mapset(), G3D_DEFAULT_WINDOW,
 			  G3D_DOUBLE, cacheSize);

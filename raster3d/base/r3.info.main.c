@@ -419,7 +419,7 @@ int main(int argc, char *argv[])
 
     /*Close the opened map */
     if (!G3d_closeCell(g3map))
-	G_fatal_error(_("Error closing g3d file"));
+	G_fatal_error(_("Error closing 3d raster map"));
 
 
     return 0;

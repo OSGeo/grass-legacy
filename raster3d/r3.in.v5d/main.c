@@ -125,7 +125,7 @@ void convert  (char *openFile, G3D_Region *region, int convertNull, double nullV
    } 
 
 
-/* Eventually change to write the time and/or vars series of g3d files.. */
+/* Eventually change to write the time and/or vars series of 3d raster maps.. */
 /*   for (time=0; time<v5d.NumTimes; time++) {
 
       for (var=0; var<v5d.NumVars; var++) {
@@ -218,12 +218,12 @@ main  (int argc, char *argv[])
 
   G3d_getWindow (&region);
   map = G3d_openCellNew (output, G3D_FLOAT, G3D_USE_CACHE_XY,&region);
-  if (map == NULL) fatalError ("main: error opening g3d file");
+  if (map == NULL) fatalError (_("Error opening 3d raster map"));
 
   convert(input, &region, convertNull, nullValue);
   
   if (! G3d_closeCell (map)) 
-    fatalError ("main: error closing new g3d file");
+    fatalError (_("Error closing 3d raster map"));
   map = NULL;
 }
 

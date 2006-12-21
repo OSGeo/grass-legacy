@@ -41,7 +41,7 @@ void set_params()
     param.rgbmaps->multiple = YES;
     param.rgbmaps->description =
 	_
-	("Three (r,g,b) g3d raster maps which are used to create rgb values [redmap,greenmap,bluemap]");
+	("Three (r,g,b) 3d raster maps which are used to create rgb values [redmap,greenmap,bluemap]");
 
     param.vectormaps = G_define_option();
     param.vectormaps->key = "vectormaps";
@@ -51,7 +51,7 @@ void set_params()
     param.vectormaps->multiple = YES;
     param.vectormaps->description =
 	_
-	("Three (x,y,z) g3d raster maps which are used to create vector values [xmap,ymap,zmap]");
+	("Three (x,y,z) 3d raster maps which are used to create vector values [xmap,ymap,zmap]");
 
     param.top = G_define_option();
     param.top->key = "top";

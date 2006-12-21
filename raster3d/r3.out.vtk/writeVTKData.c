@@ -68,7 +68,7 @@ double get_raster_value_as_double(int MapType, void *ptr, double nullval)
 }
 
 /* ************************************************************************* */
-/* Get the value of the g3d raster map as double *************************** */
+/* Get the value of the 3d raster map as double *************************** */
 /* ************************************************************************* */
 double get_g3d_raster_value_as_double(void *map, int x, int y, int z, int type,
 				 double nullval)
@@ -425,7 +425,7 @@ void write_vtk_rgb_data(void *map_r, void *map_g, void *map_b,
 			/*Test of value range, the data should be 1 byte gray values */
 			if (value > 255 || value < 0) {
 			    G_warning(_
-				      ("Wrong g3d map values! Values should in between 0 and 255!\n"));
+				      ("Wrong 3d raster map values! Values should in between 0 and 255!\n"));
 			    fprintf(fp, "0 ");
 			}
 			else {
@@ -458,7 +458,7 @@ void write_vtk_rgb_data(void *map_r, void *map_g, void *map_b,
 			/*Test of value range, the data should be 1 byte gray values */
 			if (value > 255 || value < 0) {
 			    G_warning(_
-				      ("Wrong g3d map values! Values should in between 0 and 255!\n"));
+				      ("Wrong 3d raster map values! Values should in between 0 and 255!\n"));
 			    fprintf(fp, "0 ");
 			}
 			else {

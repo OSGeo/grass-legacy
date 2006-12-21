@@ -303,7 +303,7 @@ int main(int argc, char *argv[])
     }
 
     if (map == NULL)
-	fatal_error(map, fd, opencells, _("Error opening g3d file"));
+	fatal_error(map, fd, opencells, _("Error opening 3d raster map"));
 
     /*if requested set the Mask on */
     if (param.mask->answer) {
@@ -335,7 +335,7 @@ int main(int argc, char *argv[])
 
     /* Close files and exit */
     if (!G3d_closeCell(map))
-	G3d_fatalError(_("Error closing g3d file"));
+	G3d_fatalError(_("Error closing 3d raster map"));
 
     map = NULL;
 

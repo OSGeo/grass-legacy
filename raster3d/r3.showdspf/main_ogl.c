@@ -89,7 +89,7 @@ int main(int argc,char **argv)
     g3->type       = TYPE_STRING;
     g3->required   = YES;
     g3->gisprompt  = "old,grid3,3dcell";
-    g3->description= "Name of an existing 3dcell map" ;
+    g3->description= "Name of an existing 3d raster map" ;
 
     dspf=G_define_option () ;
     dspf->key        = "dspf";

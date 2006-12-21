@@ -59,7 +59,7 @@
 #%option
 #% key: volume
 #% type: string
-#% description: Name of existing 3dcell map
+#% description: Name of existing 3d raster map
 #% required : no
 #%End
 #%option

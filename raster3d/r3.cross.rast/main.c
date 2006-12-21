@@ -185,7 +185,7 @@ void rast3d_cross_section(void *map, G3D_Region region, int elevfd, int outfd)
 		elevation = dvalue;
 	    }
 
-	    /*Check if the elevation is located in the g3d map */
+	    /*Check if the elevation is located in the 3d raster map */
 	    if (isnull == 0) {
 		/*we guess, we have no hit */
 		isnull = 1;
@@ -268,7 +268,7 @@ int main(int argc, char *argv[])
     module->keywords = _("raster3d, voxel");
     module->description =
 	_
-	("Creates cross section 2D raster map from g3d raster volume map based on 2D elevation map");
+	("Creates cross section 2D raster map from 3d raster map based on 2D elevation map");
 
     /* Get parameters from user */
     set_params();
@@ -280,7 +280,7 @@ int main(int argc, char *argv[])
     G_debug(3, "Open 3D raster map %s", param.input->answer);
 
     if (NULL == G_find_grid3(param.input->answer, ""))
-	G3d_fatalError(_("Requested g3d file not found <%s>"), param.input->answer);
+	G3d_fatalError(_("Requested 3d raster map not found <%s>"), param.input->answer);
 
     /* Figure out the region from the map */
     G3d_initDefaults();
@@ -304,7 +304,7 @@ int main(int argc, char *argv[])
 
 
     /*******************/
-    /*Open the g3d map */
+    /*Open the 3d raster map */
 
     /*******************/
     map = G3d_openCellOld(param.input->answer,
@@ -313,7 +313,7 @@ int main(int argc, char *argv[])
 			  G3D_USE_CACHE_DEFAULT);
 
     if (map == NULL)
-	G3d_fatalError(_("Error opening g3d file <%s>"), param.input->answer);
+	G3d_fatalError(_("Error opening 3d raster map <%s>"), param.input->answer);
 
     /*Get the output type */
     output_type = G3d_fileTypeMap(map);
