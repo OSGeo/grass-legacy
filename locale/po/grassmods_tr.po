@@ -403,15 +403,25 @@ msgstr "3D raster haritalarını 2D raster haritalara dönüştür"
 msgid "Open 3d raster map <%s>"
 msgstr ""
 
-#: ../raster3d/r3.to.rast/main.c:228
-#, c-format
+#: ../raster3d/r3.to.rast/main.c:228 ../raster3d/r3.out.vtk/main.c:141
+#, fuzzy, c-format
 msgid "Requested 3d raster map <%s> not found"
-msgstr "İstenen <%s> g3d haritası bulunamadı"
+msgstr ""
+"#-#-#-#-#  grassmods_tr.po (grassmods_tr)  #-#-#-#-#\n"
+"İstenen <%s> g3d haritası bulunamadı\n"
+"#-#-#-#-#  grassmods_tr.po (grassmods_tr)  #-#-#-#-#\n"
+"İstenen <%s> g3d veri haritası bulunamadı"
 
 #: ../raster3d/r3.to.rast/main.c:243 ../raster3d/r3.to.rast/main.c:284
-#, c-format
+#: ../raster3d/r3.cross.rast/main.c:316 ../raster3d/r3.out.vtk/main.c:208
+#: ../raster3d/r3.out.vtk/main.c:291 ../raster3d/r3.out.vtk/main.c:506
+#, fuzzy, c-format
 msgid "Error opening 3d raster map <%s>"
-msgstr "<%s> g3d haritasını açmada hata"
+msgstr ""
+"#-#-#-#-#  grassmods_tr.po (grassmods_tr)  #-#-#-#-#\n"
+"<%s> g3d haritasını açmada hata\n"
+"#-#-#-#-#  grassmods_tr.po (grassmods_tr)  #-#-#-#-#\n"
+"<%s>g3d dosyasını açmada hata"
 
 #: ../raster3d/r3.to.rast/main.c:267
 msgid ""
@@ -476,8 +486,8 @@ msgstr ""
 
 #: ../raster3d/r3.cross.rast/main.c:271
 msgid ""
-"Creates cross section 2D raster map from 3d raster map based on 2D "
-"elevation map"
+"Creates cross section 2D raster map from 3d raster map based on 2D elevation "
+"map"
 msgstr ""
 
 #: ../raster3d/r3.cross.rast/main.c:280
@@ -496,12 +506,6 @@ msgid ""
 "The 2d and 3d region settings are different. I will use the g3d settings to "
 "adjust the 2d region."
 msgstr ""
-
-#: ../raster3d/r3.cross.rast/main.c:316 ../raster3d/r3.out.vtk/main.c:208
-#: ../raster3d/r3.out.vtk/main.c:291 ../raster3d/r3.out.vtk/main.c:506
-#, c-format
-msgid "Error opening 3d raster map <%s>"
-msgstr "<%s>g3d dosyasını açmada hata"
 
 #: ../raster3d/r3.cross.rast/main.c:330
 msgid "Elevation map not found\n"
@@ -597,11 +601,6 @@ msgstr "<%s> tepe hücre haritası bulunamadı\n"
 #, c-format
 msgid "bottom cell map <%s> not found\n"
 msgstr "<%s> dip hücre dosyası bulunamadı\n"
-
-#: ../raster3d/r3.out.vtk/main.c:141
-#, c-format
-msgid "Requested 3d raster map <%s> not found"
-msgstr "İstenen <%s> g3d veri haritası bulunamadı"
 
 #: ../raster3d/r3.out.vtk/main.c:151
 #, c-format

@@ -427,15 +427,21 @@ msgstr "Preoblikuje rastrski sloj v vektorskega."
 msgid "Open 3d raster map <%s>"
 msgstr "Ime izhodnega rastrskega sloja"
 
-#: ../raster3d/r3.to.rast/main.c:228
+#: ../raster3d/r3.to.rast/main.c:228 ../raster3d/r3.out.vtk/main.c:141
 #, fuzzy, c-format
 msgid "Requested 3d raster map <%s> not found"
 msgstr "ne najdem 3Dview datoteke <%s>"
 
 #: ../raster3d/r3.to.rast/main.c:243 ../raster3d/r3.to.rast/main.c:284
+#: ../raster3d/r3.cross.rast/main.c:316 ../raster3d/r3.out.vtk/main.c:208
+#: ../raster3d/r3.out.vtk/main.c:291 ../raster3d/r3.out.vtk/main.c:506
 #, fuzzy, c-format
 msgid "Error opening 3d raster map <%s>"
-msgstr "Rekodira rastrske sloje"
+msgstr ""
+"#-#-#-#-#  grassmods_sl.po (grassmods_sl)  #-#-#-#-#\n"
+"Rekodira rastrske sloje\n"
+"#-#-#-#-#  grassmods_sl.po (grassmods_sl)  #-#-#-#-#\n"
+"Nisem uspel odpreti vhodne datoteke."
 
 #: ../raster3d/r3.to.rast/main.c:267
 msgid ""
@@ -505,8 +511,8 @@ msgstr "Narejeno\n"
 
 #: ../raster3d/r3.cross.rast/main.c:271
 msgid ""
-"Creates cross section 2D raster map from 3d raster map based on 2D "
-"elevation map"
+"Creates cross section 2D raster map from 3d raster map based on 2D elevation "
+"map"
 msgstr ""
 
 #: ../raster3d/r3.cross.rast/main.c:280
@@ -525,12 +531,6 @@ msgid ""
 "The 2d and 3d region settings are different. I will use the g3d settings to "
 "adjust the 2d region."
 msgstr ""
-
-#: ../raster3d/r3.cross.rast/main.c:316 ../raster3d/r3.out.vtk/main.c:208
-#: ../raster3d/r3.out.vtk/main.c:291 ../raster3d/r3.out.vtk/main.c:506
-#, fuzzy, c-format
-msgid "Error opening 3d raster map <%s>"
-msgstr "Nisem uspel odpreti vhodne datoteke."
 
 #: ../raster3d/r3.cross.rast/main.c:330
 #, fuzzy
@@ -633,11 +633,6 @@ msgstr "Ne najdem vhodnega rastrskega sloja <%s>."
 #, fuzzy, c-format
 msgid "bottom cell map <%s> not found\n"
 msgstr "Ne najdem vhodnega rastrskega sloja <%s>."
-
-#: ../raster3d/r3.out.vtk/main.c:141
-#, fuzzy, c-format
-msgid "Requested 3d raster map <%s> not found"
-msgstr "ne najdem 3Dview datoteke <%s>"
 
 #: ../raster3d/r3.out.vtk/main.c:151
 #, fuzzy, c-format

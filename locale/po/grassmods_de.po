@@ -16002,8 +16002,8 @@ msgstr "Kann die Rasterreihe nicht schreiben."
 #: ../raster3d/r3.cross.rast/main.c:271
 #, fuzzy
 msgid ""
-"Creates cross section 2D raster map from 3d raster map based on 2D "
-"elevation map"
+"Creates cross section 2D raster map from 3d raster map based on 2D elevation "
+"map"
 msgstr "Erzeugt eine section von Lautstärke ein"
 
 #: ../raster3d/r3.cross.rast/main.c:280
@@ -16018,9 +16018,14 @@ msgstr "Angeforderte g3d Karte <%s> nicht gefunden."
 
 #: ../raster3d/r3.cross.rast/main.c:316 ../raster3d/r3.out.vtk/main.c:208
 #: ../raster3d/r3.out.vtk/main.c:291 ../raster3d/r3.out.vtk/main.c:506
-#, c-format
+#: ../raster3d/r3.to.rast/main.c:243 ../raster3d/r3.to.rast/main.c:284
+#, fuzzy, c-format
 msgid "Error opening 3d raster map <%s>"
-msgstr "Fehler beim Öffnen der g3d-Datei <%s>."
+msgstr ""
+"#-#-#-#-#  grassmods_de.po (grassmods_de)  #-#-#-#-#\n"
+"Fehler beim Öffnen der g3d-Datei <%s>.\n"
+"#-#-#-#-#  grassmods_de.po (grassmods_de)  #-#-#-#-#\n"
+"Fehler beim Öffnen der g3d Karte <%s>."
 
 #: ../raster3d/r3.cross.rast/main.c:330
 msgid "Elevation map not found\n"
@@ -16221,7 +16226,7 @@ msgstr "Obere Karte <%s> nicht gefunden.\n"
 msgid "bottom cell map <%s> not found\n"
 msgstr "Untere Karte <%s> nicht gefunden.\n"
 
-#: ../raster3d/r3.out.vtk/main.c:141
+#: ../raster3d/r3.out.vtk/main.c:141 ../raster3d/r3.to.rast/main.c:228
 #, c-format
 msgid "Requested 3d raster map <%s> not found"
 msgstr "Angeforderte g3d Karte <%s> nicht gefunden."
@@ -16462,16 +16467,6 @@ msgstr "Konvertiert 3D-Rasterkarten in 2D-Rasterkarten."
 #, c-format
 msgid "Open 3d raster map <%s>"
 msgstr "Öffne g3d Karte <%s>."
-
-#: ../raster3d/r3.to.rast/main.c:228
-#, c-format
-msgid "Requested 3d raster map <%s> not found"
-msgstr "Angeforderte g3d Karte <%s> nicht gefunden."
-
-#: ../raster3d/r3.to.rast/main.c:243 ../raster3d/r3.to.rast/main.c:284
-#, c-format
-msgid "Error opening 3d raster map <%s>"
-msgstr "Fehler beim Öffnen der g3d Karte <%s>."
 
 #: ../raster3d/r3.to.rast/main.c:267
 #, fuzzy

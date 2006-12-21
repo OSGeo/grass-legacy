@@ -411,15 +411,25 @@ msgstr "Đổi các bản đồ raster 3D thành các bản đồ raster 2D"
 msgid "Open 3d raster map <%s>"
 msgstr "Mở bản đồ g3d <%s>"
 
-#: ../raster3d/r3.to.rast/main.c:228
-#, c-format
+#: ../raster3d/r3.to.rast/main.c:228 ../raster3d/r3.out.vtk/main.c:141
+#, fuzzy, c-format
 msgid "Requested 3d raster map <%s> not found"
-msgstr "Không tìm thấy bản đồ g3d <%s> được yêu cầu"
+msgstr ""
+"#-#-#-#-#  grassmods_vi.po (grassmods_vi)  #-#-#-#-#\n"
+"Không tìm thấy bản đồ g3d <%s> được yêu cầu\n"
+"#-#-#-#-#  grassmods_vi.po (grassmods_vi)  #-#-#-#-#\n"
+"Không tìm thấy bản đồ dữ liệu g3d <%s> được yêu cầu"
 
 #: ../raster3d/r3.to.rast/main.c:243 ../raster3d/r3.to.rast/main.c:284
-#, c-format
+#: ../raster3d/r3.cross.rast/main.c:316 ../raster3d/r3.out.vtk/main.c:208
+#: ../raster3d/r3.out.vtk/main.c:291 ../raster3d/r3.out.vtk/main.c:506
+#, fuzzy, c-format
 msgid "Error opening 3d raster map <%s>"
-msgstr "Lỗi khi đang mở bản đồ g3d <%s>"
+msgstr ""
+"#-#-#-#-#  grassmods_vi.po (grassmods_vi)  #-#-#-#-#\n"
+"Lỗi khi đang mở bản đồ g3d <%s>\n"
+"#-#-#-#-#  grassmods_vi.po (grassmods_vi)  #-#-#-#-#\n"
+"Lỗi mở tập tin g3d <%s>."
 
 #: ../raster3d/r3.to.rast/main.c:267
 #, fuzzy
@@ -490,8 +500,8 @@ msgstr ""
 
 #: ../raster3d/r3.cross.rast/main.c:271
 msgid ""
-"Creates cross section 2D raster map from 3d raster map based on 2D "
-"elevation map"
+"Creates cross section 2D raster map from 3d raster map based on 2D elevation "
+"map"
 msgstr ""
 "Tạo bản đồ raster mặt cắt 2D từ bản đồ raster thể tích g3d dựa trên bản đồ "
 "độ cao 2D"
@@ -514,12 +524,6 @@ msgid ""
 msgstr ""
 "Các thiết lập vùng 2d và 3d khác nhau. Tôi sẽ dùng các thiết lập g3d để điều "
 "chỉnh vùng 2d"
-
-#: ../raster3d/r3.cross.rast/main.c:316 ../raster3d/r3.out.vtk/main.c:208
-#: ../raster3d/r3.out.vtk/main.c:291 ../raster3d/r3.out.vtk/main.c:506
-#, c-format
-msgid "Error opening 3d raster map <%s>"
-msgstr "Lỗi mở tập tin g3d <%s>."
 
 #: ../raster3d/r3.cross.rast/main.c:330
 msgid "Elevation map not found\n"
@@ -619,11 +623,6 @@ msgstr "Không tìm thấy bản đồ ô trên cùng <%s>\n"
 #, c-format
 msgid "bottom cell map <%s> not found\n"
 msgstr "Không tìm thấy bản đồ ô đáy <%s>\n"
-
-#: ../raster3d/r3.out.vtk/main.c:141
-#, c-format
-msgid "Requested 3d raster map <%s> not found"
-msgstr "Không tìm thấy bản đồ dữ liệu g3d <%s> được yêu cầu"
 
 #: ../raster3d/r3.out.vtk/main.c:151
 #, c-format

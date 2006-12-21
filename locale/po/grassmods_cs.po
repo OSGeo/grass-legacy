@@ -413,15 +413,21 @@ msgstr "Pøevede 3D rastrové mapy na 2D rastrové mapy"
 msgid "Open 3d raster map <%s>"
 msgstr "Otevøi mapu g3d <%s>"
 
-#: ../raster3d/r3.to.rast/main.c:228
+#: ../raster3d/r3.to.rast/main.c:228 ../raster3d/r3.out.vtk/main.c:141
 #, c-format
 msgid "Requested 3d raster map <%s> not found"
 msgstr "Po¾adovaný soubor g3d <%s> nebyl nalezen"
 
 #: ../raster3d/r3.to.rast/main.c:243 ../raster3d/r3.to.rast/main.c:284
-#, c-format
+#: ../raster3d/r3.cross.rast/main.c:316 ../raster3d/r3.out.vtk/main.c:208
+#: ../raster3d/r3.out.vtk/main.c:291 ../raster3d/r3.out.vtk/main.c:506
+#, fuzzy, c-format
 msgid "Error opening 3d raster map <%s>"
-msgstr "Chyba pøi otevírání 3d raster mapy <%s>"
+msgstr ""
+"#-#-#-#-#  grassmods_cs.po (grassmods_cs)  #-#-#-#-#\n"
+"Chyba pøi otevírání 3d raster mapy <%s>\n"
+"#-#-#-#-#  grassmods_cs.po (grassmods_cs)  #-#-#-#-#\n"
+"Chyba pøi otevírání g3d souboru <%s>"
 
 #: ../raster3d/r3.to.rast/main.c:267
 #, fuzzy
@@ -492,8 +498,8 @@ msgstr ""
 
 #: ../raster3d/r3.cross.rast/main.c:271
 msgid ""
-"Creates cross section 2D raster map from 3d raster map based on 2D "
-"elevation map"
+"Creates cross section 2D raster map from 3d raster map based on 2D elevation "
+"map"
 msgstr "Vytvoøí prùniky 2D mapy z g3d rastru objemù na základ 2D mapy elevace"
 
 #: ../raster3d/r3.cross.rast/main.c:280
@@ -514,12 +520,6 @@ msgid ""
 msgstr ""
 "2d a 3d nastavení regionu jsou rùzná. Pou¾iji hodnoty z nastavení g3d a "
 "pøenastavím 2d region."
-
-#: ../raster3d/r3.cross.rast/main.c:316 ../raster3d/r3.out.vtk/main.c:208
-#: ../raster3d/r3.out.vtk/main.c:291 ../raster3d/r3.out.vtk/main.c:506
-#, c-format
-msgid "Error opening 3d raster map <%s>"
-msgstr "Chyba pøi otevírání g3d souboru <%s>"
 
 #: ../raster3d/r3.cross.rast/main.c:330
 msgid "Elevation map not found\n"
@@ -585,7 +585,8 @@ msgstr "write_vtk_data: Zapisuji data VTK"
 #: ../raster3d/r3.out.vtk/writeVTKData.c:428
 #: ../raster3d/r3.out.vtk/writeVTKData.c:461
 msgid "Wrong 3d raster map values! Values should in between 0 and 255!\n"
-msgstr "Chybné hodnoty 3d raster mapy! Hodnoty by mìly být v rozmezí 0 a 255!\n"
+msgstr ""
+"Chybné hodnoty 3d raster mapy! Hodnoty by mìly být v rozmezí 0 a 255!\n"
 
 #: ../raster3d/r3.out.vtk/writeVTKData.c:491
 #, fuzzy
@@ -619,11 +620,6 @@ msgstr "svrchní rastro <%s> nenalezen\n"
 #, c-format
 msgid "bottom cell map <%s> not found\n"
 msgstr "spodní rastr <%s> nenalezen\n"
-
-#: ../raster3d/r3.out.vtk/main.c:141
-#, c-format
-msgid "Requested 3d raster map <%s> not found"
-msgstr "Po¾adovaný soubor g3d <%s> nebyl nalezen"
 
 #: ../raster3d/r3.out.vtk/main.c:151
 #, c-format
