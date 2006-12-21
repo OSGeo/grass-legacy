@@ -397,12 +397,14 @@ msgstr ""
 msgid "Open 3d raster map <%s>"
 msgstr ""
 
-#: ../raster3d/r3.to.rast/main.c:228
+#: ../raster3d/r3.to.rast/main.c:228 ../raster3d/r3.out.vtk/main.c:141
 #, c-format
 msgid "Requested 3d raster map <%s> not found"
 msgstr ""
 
 #: ../raster3d/r3.to.rast/main.c:243 ../raster3d/r3.to.rast/main.c:284
+#: ../raster3d/r3.cross.rast/main.c:316 ../raster3d/r3.out.vtk/main.c:208
+#: ../raster3d/r3.out.vtk/main.c:291 ../raster3d/r3.out.vtk/main.c:506
 #, c-format
 msgid "Error opening 3d raster map <%s>"
 msgstr ""
@@ -470,8 +472,8 @@ msgstr ""
 
 #: ../raster3d/r3.cross.rast/main.c:271
 msgid ""
-"Creates cross section 2D raster map from 3d raster map based on 2D "
-"elevation map"
+"Creates cross section 2D raster map from 3d raster map based on 2D elevation "
+"map"
 msgstr ""
 
 #: ../raster3d/r3.cross.rast/main.c:280
@@ -489,12 +491,6 @@ msgstr ""
 msgid ""
 "The 2d and 3d region settings are different. I will use the g3d settings to "
 "adjust the 2d region."
-msgstr ""
-
-#: ../raster3d/r3.cross.rast/main.c:316 ../raster3d/r3.out.vtk/main.c:208
-#: ../raster3d/r3.out.vtk/main.c:291 ../raster3d/r3.out.vtk/main.c:506
-#, c-format
-msgid "Error opening 3d raster map <%s>"
 msgstr ""
 
 #: ../raster3d/r3.cross.rast/main.c:330
@@ -588,11 +584,6 @@ msgstr ""
 #: ../raster3d/r3.out.vtk/main.c:132
 #, c-format
 msgid "bottom cell map <%s> not found\n"
-msgstr ""
-
-#: ../raster3d/r3.out.vtk/main.c:141
-#, c-format
-msgid "Requested 3d raster map <%s> not found"
 msgstr ""
 
 #: ../raster3d/r3.out.vtk/main.c:151
