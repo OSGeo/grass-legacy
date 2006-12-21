@@ -342,7 +342,7 @@ int main (int argc, char **argv)
 	G_message(_("East:  %f (%f)"), incellhd.east, ieast);
 	G_message(_("ew-res:	%f"), incellhd.ew_res);
 	G_message(_("ns-res:	%f"), incellhd.ns_res);
-	G_message(_(""));
+	G_message("");
 
 	G_message(_("Output:"));
 	G_message(_("Cols:	%d (%d)"), outcellhd.cols, ocols);
