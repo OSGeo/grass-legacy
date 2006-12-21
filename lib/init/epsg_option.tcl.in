@@ -87,7 +87,7 @@ proc epsgOpt::epsgLocCom args {
         
 	# NOTE: the epsg file is generated in GDAL for PROJ4 
 	# with gdal/pymod/epsg_tr.py
-	set epsgOpt::browsedepsg "$env(PROJSHARE)/epsg"
+	set epsgOpt::browsedepsg "PROJSHARE/epsg"
 	set epsgOpt::epsgLocation "newLocation"
 	set epsgOpt::epsg_code ""
         
@@ -127,7 +127,7 @@ proc epsgOpt::epsgLocCom args {
 	#browse for epsg file
 	Button $row2.browseepsgfile -justify center -width 10 -bd 1 -text [G_msg "Browse..."] \
 		-helptext [G_msg "Browse to locate EPSG file"] \
-		-command "set browsedepsg \[tk_getOpenFile -initialdir $env(PROJSHARE) -initialfile epsg \
+		-command "set browsedepsg \[tk_getOpenFile -initialdir PROJSHARE -initialfile epsg \
 		-parent .optPopup -title \[ G_msg \"Choose EPSG file\" \] -multiple false\]" 
 		
 	pack $row2.epsgpath $row2.browseepsgfile -side left -expand 0 -fill x -padx 2
