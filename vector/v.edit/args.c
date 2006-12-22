@@ -47,14 +47,6 @@ int parser(int argc, char*argv[])
     move_opt->multiple    = NO;
     move_opt->description = _("Difference in x,y direction for moving feature or vertex");
     
-    at_opt =  G_define_option();
-    at_opt->key         = "at";
-    at_opt->key_desc    = "x,y";
-    at_opt->type        = TYPE_DOUBLE;
-    at_opt->required    = NO;
-    at_opt->multiple    = NO;
-    at_opt->description = _("An x,y location of breaking feature");
-    
     bbox_opt =  G_define_option();
     bbox_opt->key         = "bbox";
     bbox_opt->key_desc    = "x1,y1,x2,y2";

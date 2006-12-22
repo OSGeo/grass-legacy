@@ -65,7 +65,7 @@ int attr_new(struct Map_info *Map, int field, int cat, const char *vals);
 int attr_edit(struct Map_info *Map, int field, int cat, const char *vals);
 int attr_del(struct Map_info *Map, int field, int cat);
 
-global struct Option *input_opt, *map_opt, *tool_opt, *coord_opt, *cat_opt, *move_opt, *at_opt, *bbox_opt, *snap_opt, *fld_opt;
+global struct Option *input_opt, *map_opt, *tool_opt, *coord_opt, *cat_opt, *move_opt, *bbox_opt, *snap_opt, *fld_opt;
 global struct Flag *n_flg, *t_flg, *d_flg, *b_flg, *c_flg, *n_flg;
 global struct GModule *module;
 global struct Map_info Map;
