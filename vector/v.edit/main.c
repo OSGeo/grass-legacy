@@ -87,6 +87,9 @@ int main (int argc, char *argv[])
       case MODE_SPLIT:
         ret = do_split(&Map);
         break;
+      case MODE_MERGE:
+        ret = do_merge(&Map);
+        break;
       default:
 	G_warning("Sorry this is not yet implemented");
 	ret=0;
