@@ -22,7 +22,8 @@ enum mode {
     MODE_STRAIGHTEN,
     MODE_SPLIT,
     MODE_BREAK,
-    MODE_MERGE
+    MODE_MERGE,
+    MODE_COUNTOURS,
 };
 
 int parser(int argc, char*argv[]);
@@ -47,6 +48,13 @@ int do_move_vertex(struct Map_info *Map);
 int do_remove_vertex(struct Map_info *Map);
 int do_break(struct Map_info *Map);
 int do_split(struct Map_info *Map);
+int do_merge(struct Map_info *Map);
+
+/* merge.c */
+int do_merge(struct Map_info *Map);
+int select_by_cat(struct Map_info *Map,int field, int *line1, int *line2);
+int select_by_coordinates(struct Map_info *Map, int field, int *line1, int *line2);
+int select_by_bbox(struct Map_info *Map, int field, int *line1, int *line2);
 
 void cat_max_set ( int field, int cat);
 int cat_max_get ( int field );

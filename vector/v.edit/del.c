@@ -98,7 +98,6 @@ int delete_coordinates(struct Map_info *Map)
     if (line == 0) {
         G_warning(_("Nothing Found."));
         return 0;
-
     }
     else {
 	Points = Vect_new_line_struct();

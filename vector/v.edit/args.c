@@ -191,8 +191,9 @@ int parser(int argc, char*argv[])
     else if(strcmp(tool_opt->answer, "merge")==0) { /* del requires a cats or or bbox or coords*/
 	action_mode = MODE_MERGE;
 	if((cat_opt->answers == NULL) && 
-           (coord_opt->answers == NULL)) {
-	    G_warning(_("At least one from <%s> must be specified"),"cats, coords");
+           (coord_opt->answers == NULL) &&
+           (bbox_opt->answers == NULL)) {
+	    G_warning(_("At least one from <%s> must be specified"),"cats, coords, bbox");
             G_usage();
 	    return 0;
 	};
