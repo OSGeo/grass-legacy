@@ -14,10 +14,10 @@ int parser(int argc, char*argv[])
                              "\t\tadd    - Add new vector feature to existing vector file\n"
                              "\t\tdelete - Delete feature from vector file\n"
                              "\t\tmove   - Move feature in vector file\n"
-                             "\t\tvertex - Move just only vertex\n"
+                             "\t\tvertex - Move one vertex\n"
                              "\t\tstraight - Remove vertex\n"
-                             "\t\tmerge  - Merge two vector lines togher\n"
                              "\t\tbreak  - Add new vertex to existing vector line\n"
+                             "\t\tmerge  - Merge two vector lines togher\n"
                              "\t\tsplit  - Split line into two separate lines");
     tool_opt->options     = "create,add,delete,move,vertex,straight,merge,break,split";
 
