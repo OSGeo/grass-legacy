@@ -46,6 +46,7 @@ int do_select(struct Map_info *Map )
         G_warning("cats, coord or bbox must be specified");
     }
 
+    G_debug ( 1, "  %d lines selected", List->n_values );
     /* print the result */
     if (List->n_values > 0) {
         for (i = 0; i <= List->n_values-1; i++) {
