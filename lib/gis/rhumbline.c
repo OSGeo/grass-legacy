@@ -1,19 +1,27 @@
-/*
- * This code is preliminary. I don't know if it is even
- * correct.
- */
-
-/*
- * From "Map Projections" by Peter Richardus and Ron K. Alder, 1972
- * (526.8 R39m in Map & Geography Library)
- * page  20,21, formulas 2.21,2.22
+/**
+ * \file rhumbline.c
  *
- * Formula is the equation of a rhumbline from (lat1,lon1) to (lat2,lon2)
- * Input is lon, output is lat (all in degrees)
+ * \brief Rhumbline calculation routines.
  *
- * Note formula only works if 0 < abs(lon2-lon1) < 180
- * If lon1 == lon2 then rhumbline is the merdian lon1 
- * (and the formula will fail)
+ * From "Map Projections" by Peter Richardus and Ron K. Alder, 1972<br>
+ * (526.8 R39m in Map & Geography Library)<br>
+ * Page 20,21, formulas 2.21, 2.22
+ *
+ * Formula is the equation of a rhumbline from (lat1,lon1) to 
+ * (lat2,lon2). Input is lon, output is lat (all in degrees).
+ *
+ * <b>Note:</b> Formula only works if 0 < abs(lon2-lon1) < 180.
+ * If lon1 == lon2 then rhumbline is the merdian lon1 (and the formula 
+ * will fail).
+ * <br>
+ * <b>WARNING:</b> This code is preliminary. It may not even be correct.
+ *
+ * This program is free software under the GNU General Public License
+ * (>=v2). Read the file COPYING that comes with GRASS for details.
+ *
+ * \author GRASS GIS Development Team
+ *
+ * \date 1999-2006
  */
 
 #include <math.h>
@@ -29,6 +37,22 @@ static int adjust_lon(double *);
 static double TAN_A, TAN1, TAN2, L;
 static int parallel;
 
+
+/**
+ * \fn int G_begin_rhumbline_equation (double lon1, double lat1, double lon2, double lat2)
+ *
+ * \brief Start rhumbline calculations.
+ *
+ * <b>Note:</b> This function must be called before other rhumbline 
+ * functions to initialize parameters.
+ *
+ * \param[in] lon1 first longitude
+ * \param[in] lat1 first latitude
+ * \param[in] lon2 second longitude
+ * \param[in] lat2 second latitude
+ * \return 1 on success
+ * \return 0 on error
+ */
 
 int G_begin_rhumbline_equation (
     double lon1,double lat1,double lon2,double lat2)
@@ -54,15 +78,25 @@ int G_begin_rhumbline_equation (
     lat1 = Radians(lat1);
     lat2 = Radians(lat2);
 
-    TAN1 = tan (PI/4 + lat1/2.0);
-    TAN2 = tan (PI/4 + lat2/2.0);
+    TAN1 = tan (M_PI_4 + lat1/2.0);
+    TAN2 = tan (M_PI_4 + lat2/2.0);
     TAN_A = (lon2 - lon1) / (log(TAN2) - log(TAN1));
     L    = lon1;
 
     return 1;
 }
 
-/* only works if lon1 < lon < lon2 */
+
+/**
+ * \fn double G_rhumbline_lat_from_lon (double lon)
+ *
+ * \brief Calculates rhumbline latitude.
+ *
+ * <b>Note:</b> Function only works if lon1 < lon < lon2.
+ *
+ * \param[in] lon longitude
+ * \return double latitude in degrees
+ */
 
 double G_rhumbline_lat_from_lon (double lon)
 {
@@ -70,8 +104,9 @@ double G_rhumbline_lat_from_lon (double lon)
 
     lon = Radians(lon);
 
-    return Degrees (2 * atan(exp((lon-L)/TAN_A) * TAN1) - PI/2.0) ;
+    return Degrees (2 * atan(exp((lon-L)/TAN_A) * TAN1) - M_PI_2) ;
 }
+
 
 #if 0
 static int adjust_lon(double *lon)
@@ -84,6 +119,7 @@ static int adjust_lon(double *lon)
     return 0;
 }
 #endif /* unused */
+
 
 static int adjust_lat(double *lat)
 {
