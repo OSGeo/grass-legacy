@@ -57,7 +57,10 @@ int main (int argc, char *argv[])
     }
     else {
 /* 	Vect_set_open_level(2); */
-	Vect_open_update (&Map, map_opt->answer, mapset);
+        if (action_mode != MODE_SELECT)
+            Vect_open_update (&Map, map_opt->answer, mapset);
+        else
+            Vect_open_old (&Map, map_opt->answer, mapset);
     }
 /*     Vect_set_category_index_update ( &Map ); */
 
