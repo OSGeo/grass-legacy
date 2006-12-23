@@ -1,4 +1,29 @@
+/**
+ * \file asprintf.c
+ *
+ * \brief GRASS implementation of asprintf().
+ *
+ * Eric G. Miller - Thu, 2 May 2002 17:51:54 -0700
+ *
+ * I've got a sort of cheat for asprintf. We can't use vsnprintf for the
+ * same reason we can't use snprintf ;-)  Comments welcome.
+ *
+ * We cheat by printing to a tempfile via vfprintf() and then reading it
+ * back in. Probably not the most efficient way.
+ *
+ * <b>WARNING:</b> Temporarily, the G_asprintf macro cannot be used. See 
+ * explanation in gisdefs.h.
+ *
+ * This program is free software under the GNU General Public License
+ * (>=v2). Read the file COPYING that comes with GRASS for details.
+ *
+ * \author Eric Miller - egm2 at jps net
+ *
+ * \date 2002-2006
+ */
+
 #define _GNU_SOURCE /* enable asprintf */
+#include <grass/config.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include <stdarg.h>
@@ -10,37 +35,22 @@
 #include <windows.h>
 #endif /* __MINGW32__ */
 
-/* Warning: Temporarily the G_asprintf macro cannot be used 
-* see explanation in gisdefs.h */
-
-/*
- * Eric G. Miller egm2@jps.net 
- * Thu, 2 May 2002 17:51:54 -0700 
- * 
- * 
- * I've got a sort of cheat for asprintf. We can't use vsnprintf for the
- * same reason we can't use snprintf ;-)  Comments welcome.
- */
 
 #ifndef G_asprintf
 
-/* We cheat by printing to a tempfile via vfprintf and then reading it
- * back in.  Not the most efficient way, probably.
- */
-
-/*!
- * \brief safe replacement for asprintf()
+/**
+ * \fn int G_asprintf (char **out, const char *fmt, ...)
  *
- * Allocate a string large enough to hold the new output,
- * including the terminating NUL, and return a pointer to
- * the first parameter.
- * The pointer should be passed to G_free() to release the
- * allocated storage when it is no longer needed.
- * Returns number of bytes written.
+ * \brief Safe replacement for <i>asprintf()</i>.
  *
- * \param char **out
- * \param char *fmt
- * \return int
+ * Allocate a string large enough to hold the new output, including the 
+ * terminating NULL, and returns a pointer to the first parameter. The 
+ * pointer should be passed to <i>G_free()</i> to release the allocated 
+ * storage when it is no longer needed.
+ *
+ * \param[out] out
+ * \param[in] fmt
+ * \return number of bytes written
  */
 
 #ifdef HAVE_ASPRINTF 
@@ -109,6 +119,6 @@ int G_asprintf(char **out, const char *fmt, ...)
 
     return ret_status;
 }
-#endif
+#endif /* HAVE_ASPRINTF */
 
-#endif
+#endif /* G_asprintf */
