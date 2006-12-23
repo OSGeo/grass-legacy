@@ -31,34 +31,28 @@ int parser(int argc, char*argv[]);
 
 /* delete.c */
 int do_del(struct Map_info *Map);
-int delete_categories(struct Map_info *Map);
-int delete_coordinates(struct Map_info *Map);
-int delete_bbox(struct Map_info *Map);
 
 /* a2b.c */
 int asc_to_bin(FILE *, struct Map_info *);
 
 /* move.c */
 int do_move(struct Map_info *Map);
-int move_categories(struct Map_info *Map);
-int move_coordinates(struct Map_info *Map);
-int move_bbox(struct Map_info *Map);
 
 /* vertex.c */
 int do_move_vertex(struct Map_info *Map);
 int do_remove_vertex(struct Map_info *Map);
 int do_break(struct Map_info *Map);
 int do_split(struct Map_info *Map);
-int do_merge(struct Map_info *Map);
 
 /* merge.c */
 int do_merge(struct Map_info *Map);
-int select_by_cat(struct Map_info *Map,int field, int *line1, int *line2);
-int select_by_coordinates(struct Map_info *Map, int field, int *line1, int *line2);
-int select_by_bbox(struct Map_info *Map, int field, int *line1, int *line2);
 
 /* select.c */
 int do_select(struct Map_info *Map);
+struct ilist *sel_by_cat(struct Map_info *Map);
+struct ilist *sel_by_coordinates(struct Map_info *Map);
+struct ilist *sel_by_bbox(struct Map_info *Map);
+struct ilist *sel_by_polygon(struct Map_info *Map);
 
 void cat_max_set ( int field, int cat);
 int cat_max_get ( int field );
@@ -69,7 +63,8 @@ int attr_new(struct Map_info *Map, int field, int cat, const char *vals);
 int attr_edit(struct Map_info *Map, int field, int cat, const char *vals);
 int attr_del(struct Map_info *Map, int field, int cat);
 
-global struct Option *input_opt, *map_opt, *tool_opt, *coord_opt, *cat_opt, *move_opt, *bbox_opt, *snap_opt, *fld_opt;
+/* options */
+global struct Option *input_opt, *map_opt, *tool_opt, *coord_opt, *cat_opt, *move_opt, *bbox_opt, *snap_opt, *fld_opt, *poly_opt;
 global struct Flag *n_flg, *t_flg, *d_flg, *b_flg, *c_flg, *n_flg;
 global struct GModule *module;
 global struct Map_info Map;

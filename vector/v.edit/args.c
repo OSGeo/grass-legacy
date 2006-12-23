@@ -54,7 +54,15 @@ int parser(int argc, char*argv[])
     bbox_opt->type        = TYPE_DOUBLE;
     bbox_opt->required    = NO;
     bbox_opt->multiple    = NO;
-    bbox_opt->description = _("Bounding box of selected feature");
+    bbox_opt->description = _("Bounding box for selecting features");
+
+    poly_opt =  G_define_option();
+    poly_opt->key         = "polygon";
+    poly_opt->key_desc    = "x,y";
+    poly_opt->type        = TYPE_DOUBLE;
+    poly_opt->required    = NO;
+    poly_opt->multiple    = YES;
+    poly_opt->description = _("Polygon for selecting features");
 
     snap_opt = G_define_option();
     snap_opt->key         = "snap";
@@ -69,7 +77,7 @@ int parser(int argc, char*argv[])
 
     t_flg = G_define_flag();
     t_flg->key = 't';
-    t_flg->description = _("Do not use topology.");
+    t_flg->description = _("Do not build topology.");
 
     d_flg = G_define_flag();
     d_flg->key = 'd';
@@ -128,6 +136,25 @@ int parser(int argc, char*argv[])
         }
 
     }
+
+    /* check for polygon param */
+    if (poly_opt->answers != NULL) {
+        int i = 0;
+        for (i = 0; poly_opt->answers[i]; i ++)
+            ;
+        if (i%2 != 0) {
+            G_warning(_("Number of coordinates must be odd number"));
+            G_usage();
+	    return 0;
+        }
+        else if (i < 6) {
+            G_warning(_("Polygon must have at least 3 coordinate pairs"));
+            G_usage();
+	    return 0;
+        }
+
+
+    }
     
     /* check for move param */
     if (move_opt->answers != NULL) {
@@ -158,8 +185,9 @@ int parser(int argc, char*argv[])
 	action_mode = MODE_DEL;
 	if((cat_opt->answers == NULL) && 
            (coord_opt->answers == NULL) &&
+           (poly_opt->answers == NULL) &&
            (bbox_opt->answers == NULL)) {
-	    G_warning(_("At least one from <%s> must be specified"),"cats, coords, bbox");
+	    G_warning(_("At least one from <%s> must be specified"),"cats, coords, bbox, polygon");
             G_usage();
 	    return 0;
 	};
@@ -174,8 +202,9 @@ int parser(int argc, char*argv[])
         }
 	if(coord_opt->answers == NULL && 
             (cat_opt->answers == NULL) &&
+            (poly_opt->answers == NULL) &&
             (bbox_opt->answers == NULL)) {
-	    G_warning(_("At least one from <%s> must be specified"),"cats, coords, bbox");
+	    G_warning(_("At least one from <%s> must be specified"),"cats, coords, bbox, polygon");
             G_usage();
 	    return 0;
 	};
@@ -185,8 +214,9 @@ int parser(int argc, char*argv[])
 	action_mode = MODE_MERGE;
 	if((cat_opt->answers == NULL) && 
            (coord_opt->answers == NULL) &&
+           (poly_opt->answers == NULL) &&
            (bbox_opt->answers == NULL)) {
-	    G_warning(_("At least one from <%s> must be specified"),"cats, coords, bbox");
+	    G_warning(_("At least one from <%s> must be specified"),"cats, coords, bbox, polygon");
             G_usage();
 	    return 0;
 	};
@@ -205,7 +235,7 @@ int parser(int argc, char*argv[])
         action_mode = MODE_VERTEX;
         if (coord_opt->answers == NULL && 
             bbox_opt->answers == NULL) {
-	    G_warning(_("At least one from <%s> must be specified"),"coords, bbox");
+	    G_warning(_("At least one from <%s> must be specified"),"coords, bbox, polygon");
             G_usage();
 	    return 0;
         }
@@ -237,8 +267,9 @@ int parser(int argc, char*argv[])
 	action_mode = MODE_SELECT;
 	if((cat_opt->answers == NULL) && 
            (coord_opt->answers == NULL) &&
+           (poly_opt->answers == NULL) &&
            (bbox_opt->answers == NULL)) {
-	    G_warning(_("At least one from <%s> must be specified"),"cats, coords, bbox");
+	    G_warning(_("At least one from <%s> must be specified"),"cats, coords, bbox, polygon");
             G_usage();
 	    return 0;
 	};
