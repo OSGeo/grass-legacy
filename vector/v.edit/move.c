@@ -28,6 +28,7 @@ int do_move(struct Map_info *Map)
     int type;
     struct line_pnts *Points;
     struct line_cats *Cats;
+    int moved=0;
 
     move_x = atof(move_opt->answers[0]);
     move_y = atof(move_opt->answers[1]);
