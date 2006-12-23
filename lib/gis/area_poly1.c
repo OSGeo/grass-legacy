@@ -1,13 +1,29 @@
+/**
+ * \file area_poly1.c
+ *
+ * \brief Polygon area calculation routines.
+ *
+ * This program is free software under the GNU General Public License
+ * (>=v2). Read the file COPYING that comes with GRASS for details.
+ *
+ * \author GRASS GIS Development Team
+ *
+ * \date 1999-2006
+ */
+
 #include <math.h>
 #include <grass/gis.h>
 #include "pi.h"
 
+
+#define TWOPI M_PI + M_PI
+
 static double QA, QB, QC;
 static double QbarA, QbarB, QbarC, QbarD;
-static double AE;  /* a^2(1-e^2) */
-static double Qp;  /* Q at the north pole */
-static double E;   /* area of the earth */
-static double TwoPI;
+static double AE;  /** a^2(1-e^2) */
+static double Qp;  /** Q at the north pole */
+static double E;   /** Area of the earth */
+
 
 static double Q(double x)
 {
@@ -30,23 +46,23 @@ static double Qbar(double x)
 }
 
 
-/*!
- * \brief begin area calculations
+/**
+ * \fn int G_begin_ellipsoid_polygon_area (double a, double e2)
  *
- *  This initializes the polygon area calculations for the
+ * \brief Begin area calculations.
+ *
+ * This initializes the polygon area calculations for the
  * ellipsoid with semi-major axis <b>a</b> (in meters) and ellipsoid
- * eccentricity squared <b>e2.</b>
+ * eccentricity squared <b>e2</b>.
  *
- *  \param a
- *  \param e2
- *  \return int
+ * \param[in] a semi-major axis
+ * \param[in] e2 ellipsoid eccentricity
+ * \return always returns 0
  */
 
 int G_begin_ellipsoid_polygon_area (double a,double e2)
 {
     double e4, e6;
-
-    TwoPI = PI+PI;
 
     e4 = e2 * e2;
     e6 = e4 * e2;
@@ -62,27 +78,30 @@ int G_begin_ellipsoid_polygon_area (double a,double e2)
     QbarC =                     - (3.0/25.0)*e4 - (12.0/35.0)*e6;
     QbarD =                                        (4.0/49.0)*e6;
 
-    Qp = Q(PI/2);
-    E  = 4 * PI * Qp * AE;
+    Qp = Q(M_PI_2);
+    E  = 4 * M_PI * Qp * AE;
     if (E < 0.0) E = -E;
 
     return 0;
 }
 
 
-/*!
- * \brief area of lat-long polygon
+/**
+ * \fn double G_ellipsoid_polygon_area (double *lon,double *lat,int n)
  *
- *  Returns the area in square meters of the
- * polygon described by the <b>n</b> pairs of <b>lat,long</b> vertices for
- * latitude-longitude grids.
- * <b>Note.</b> This routine assumes grid lines on the connecting the vertices
- * (as opposed to geodesics.)
+ * \brief Area of lat-long polygon.
  *
- *  \param lon
- *  \param lat
- *  \param n
- *  \return double
+ * Returns the area in square meters of the polygon described by the 
+ * <b>n</b> pairs of <b>lat,long</b> vertices for latitude-longitude 
+ * grids.
+ * <br>
+ * <b>Note:</b> This routine assumes grid lines on the connecting the 
+ * vertices (as opposed to geodesics).
+ *
+ * \param[in] lon array of longitudes
+ * \param[in] lat array of latitudes
+ * \param[in] n number of lat,lon pairs
+ * \return double Area in square meters
  */
 
 double G_ellipsoid_polygon_area (double *lon,double *lat,int n)
@@ -108,11 +127,11 @@ double G_ellipsoid_polygon_area (double *lon,double *lat,int n)
 	Qbar2 = Qbar(y2);
 
 	if (x1 > x2)
-	    while (x1 - x2 > PI)
-		x2 += TwoPI;
+	    while (x1 - x2 > M_PI)
+		x2 += TWOPI;
 	else if (x2 > x1)
-	    while (x2 - x1 > PI)
-		x1 += TwoPI;
+	    while (x2 - x1 > M_PI)
+		x1 += TWOPI;
 
 	dx = x2 - x1;
 	area += dx * (Qp - Q(y2));
