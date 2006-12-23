@@ -90,6 +90,9 @@ int main (int argc, char *argv[])
       case MODE_MERGE:
         ret = do_merge(&Map);
         break;
+      case MODE_SELECT:
+        ret = do_select(&Map);
+        break;
       default:
 	G_warning("Sorry this is not yet implemented");
 	ret=0;
@@ -102,8 +105,10 @@ int main (int argc, char *argv[])
     else
 	Vect_hist_command(&Map);
 
-    Vect_build_partial(&Map, GV_BUILD_NONE, NULL);
-    Vect_build(&Map, output );
+    if  (action_mode != MODE_SELECT) {
+        Vect_build_partial(&Map, GV_BUILD_NONE, NULL);
+        Vect_build(&Map, output );
+    }
 
     Vect_close(&Map);
     G_debug(1, "Map closed");

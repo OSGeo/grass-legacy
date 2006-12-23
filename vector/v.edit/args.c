@@ -18,8 +18,9 @@ int parser(int argc, char*argv[])
                              "\t\tstraight - Remove vertex\n"
                              "\t\tbreak  - Add new vertex to existing vector line\n"
                              "\t\tmerge  - Merge two vector lines togher\n"
-                             "\t\tsplit  - Split line into two separate lines");
-    tool_opt->options     = "create,add,delete,move,vertex,straight,merge,break,split";
+                             "\t\tsplit  - Split line into two separate lines\n"
+                             "\t\tselect - Select lines and print their ID's");
+    tool_opt->options     = "create,add,delete,move,vertex,straight,merge,break,split,select";
 
     input_opt = G_define_option();
     input_opt->key      = "input";
@@ -231,6 +232,17 @@ int parser(int argc, char*argv[])
             G_usage();
 	    return 0;
 	};
+    }
+    else if(strcmp(tool_opt->answer, "select")==0) { /* del requires a cats or or bbox or coords*/
+	action_mode = MODE_SELECT;
+	if((cat_opt->answers == NULL) && 
+           (coord_opt->answers == NULL) &&
+           (bbox_opt->answers == NULL)) {
+	    G_warning(_("At least one from <%s> must be specified"),"cats, coords, bbox");
+            G_usage();
+	    return 0;
+	};
+	return 1;
     }
 
     else {

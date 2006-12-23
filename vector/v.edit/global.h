@@ -24,6 +24,7 @@ enum mode {
     MODE_BREAK,
     MODE_MERGE,
     MODE_COUNTOURS,
+    MODE_SELECT,
 };
 
 int parser(int argc, char*argv[]);
@@ -55,6 +56,9 @@ int do_merge(struct Map_info *Map);
 int select_by_cat(struct Map_info *Map,int field, int *line1, int *line2);
 int select_by_coordinates(struct Map_info *Map, int field, int *line1, int *line2);
 int select_by_bbox(struct Map_info *Map, int field, int *line1, int *line2);
+
+/* select.c */
+int do_select(struct Map_info *Map);
 
 void cat_max_set ( int field, int cat);
 int cat_max_get ( int field );
