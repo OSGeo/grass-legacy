@@ -23,7 +23,7 @@ enum mode {
     MODE_SPLIT,
     MODE_BREAK,
     MODE_MERGE,
-    MODE_COUNTOURS,
+    MODE_CONTOURS,
     MODE_SELECT,
 };
 
@@ -54,6 +54,10 @@ struct ilist *sel_by_coordinates(struct Map_info *Map);
 struct ilist *sel_by_bbox(struct Map_info *Map);
 struct ilist *sel_by_polygon(struct Map_info *Map);
 
+/* max_distance.c */
+double max_distance(double maxdistance);
+
+
 void cat_max_set ( int field, int cat);
 int cat_max_get ( int field );
 void cat_init(struct Map_info *Map);
@@ -64,7 +68,7 @@ int attr_edit(struct Map_info *Map, int field, int cat, const char *vals);
 int attr_del(struct Map_info *Map, int field, int cat);
 
 /* options */
-global struct Option *input_opt, *map_opt, *tool_opt, *coord_opt, *cat_opt, *move_opt, *bbox_opt, *snap_opt, *fld_opt, *poly_opt;
+global struct Option *input_opt, *map_opt, *maxdist_opt, *tool_opt, *coord_opt, *cat_opt, *move_opt, *bbox_opt, *snap_opt, *fld_opt, *poly_opt;
 global struct Flag *n_flg, *t_flg, *d_flg, *b_flg, *c_flg, *n_flg;
 global struct GModule *module;
 global struct Map_info Map;

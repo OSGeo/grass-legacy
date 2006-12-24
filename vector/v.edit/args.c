@@ -72,6 +72,13 @@ int parser(int argc, char*argv[])
     snap_opt->description = _("Object points will snap to existing points within snap units.");
     snap_opt->answer      = "5.0";
     
+    maxdist_opt = G_define_option();
+    maxdist_opt->key         = "distance";
+    maxdist_opt->type        = TYPE_DOUBLE;
+    maxdist_opt->required    = NO;
+    maxdist_opt->multiple    = NO;
+    maxdist_opt->description = _("Threshold distance");
+    maxdist_opt->answer      = "0";
  
     fld_opt = G_define_standard_option(G_OPT_V_FIELD);
 
@@ -187,7 +194,7 @@ int parser(int argc, char*argv[])
            (coord_opt->answers == NULL) &&
            (poly_opt->answers == NULL) &&
            (bbox_opt->answers == NULL)) {
-	    G_warning(_("At least one from <%s> must be specified"),"cats, coords, bbox, polygon");
+	    G_warning(_("At least one option from <%s> must be specified"),"cats, coords, bbox, polygon");
             G_usage();
 	    return 0;
 	};
@@ -204,7 +211,7 @@ int parser(int argc, char*argv[])
             (cat_opt->answers == NULL) &&
             (poly_opt->answers == NULL) &&
             (bbox_opt->answers == NULL)) {
-	    G_warning(_("At least one from <%s> must be specified"),"cats, coords, bbox, polygon");
+	    G_warning(_("At least one option from <%s> must be specified"),"cats, coords, bbox, polygon");
             G_usage();
 	    return 0;
 	};
@@ -216,7 +223,7 @@ int parser(int argc, char*argv[])
            (coord_opt->answers == NULL) &&
            (poly_opt->answers == NULL) &&
            (bbox_opt->answers == NULL)) {
-	    G_warning(_("At least one from <%s> must be specified"),"cats, coords, bbox, polygon");
+	    G_warning(_("At least one option from <%s> must be specified"),"cats, coords, bbox, polygon");
             G_usage();
 	    return 0;
 	};
@@ -233,9 +240,8 @@ int parser(int argc, char*argv[])
     }
     else if(strcmp(tool_opt->answer, "vertex")==0) { /* vertex requires a coord and snap or bbox options */
         action_mode = MODE_VERTEX;
-        if (coord_opt->answers == NULL && 
-            bbox_opt->answers == NULL) {
-	    G_warning(_("At least one from <%s> must be specified"),"coords, bbox, polygon");
+        if (coord_opt->answers == NULL) {
+	    G_warning(_("At least one option from <%s> must be specified"),"coords");
             G_usage();
 	    return 0;
         }
@@ -269,7 +275,7 @@ int parser(int argc, char*argv[])
            (coord_opt->answers == NULL) &&
            (poly_opt->answers == NULL) &&
            (bbox_opt->answers == NULL)) {
-	    G_warning(_("At least one from <%s> must be specified"),"cats, coords, bbox, polygon");
+	    G_warning(_("At least one option from <%s> must be specified"),"cats, coords, bbox, polygon");
             G_usage();
 	    return 0;
 	};
