@@ -98,7 +98,7 @@ struct ilist *sel_by_coordinates(struct Map_info *Map)
     double east,north;
     int id;
     struct ilist *List;
-    double maxdist = atof(snap_opt->answer);
+    double maxdist =  max_distance(atof(maxdist_opt->answer));
     int i;
 
     List = Vect_new_list ();
