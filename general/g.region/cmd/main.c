@@ -28,7 +28,7 @@ static char *llinfo(char *,char *,int);
 int main (int argc, char *argv[])
 {
 	int i;
-	int print_flag, dist_flag;
+	int print_flag = 0;
 	int set_flag;
 	double x;
 	int ival;
@@ -126,8 +126,7 @@ int main (int argc, char *argv[])
 
 	flag.bbox = G_define_flag();
 	flag.bbox->key         = 'b';
-	flag.bbox->description = _("Print the maximum bounding box in lat/long on WGS84 "
-				   "(-g mode only)");
+	flag.bbox->description = _("Print the maximum bounding box in lat/long on WGS84");
 	flag.bbox->guisection  = _("Print;Shell Script");
 
         flag.res_set= G_define_flag();
@@ -353,28 +352,41 @@ int main (int argc, char *argv[])
 	projection = window.proj;
 
 	set_flag = ! flag.update->answer;
+
+	if (flag.print->answer)
+	    print_flag |= PRINT_REG;
+
+	if (flag.gprint->answer)
+	    print_flag |= PRINT_SH;
+
+	if (flag.lprint->answer)
+	    print_flag |= PRINT_LL;
+
 	if (flag.eprint->answer)
-		print_flag = 5;
-	else if (flag.center->answer)
-		print_flag = 4;
-	else if (flag.lprint->answer)
-		print_flag = 3;
-	else if (flag.gprint->answer)
-		print_flag = 2;
-	else if (flag.print->answer)
-		print_flag = 1;
-	else
-		print_flag = 0;
+	    print_flag |= PRINT_EXTENT;
 
-	/* Flag for reporting distance in meters */
-	if (flag.dist_res->answer) {
-		dist_flag = 1;
-		/* Set -g default output */
-		if ( print_flag == 0)
-		     print_flag = 2;
-	} else
-		dist_flag = 0;
+	if (flag.center->answer)
+	    print_flag |= PRINT_CENTER;
 
+	if (flag.dist_res->answer)
+	    print_flag |= PRINT_METERS;
+
+	if (flag.z->answer)
+	    print_flag |= PRINT_3D;
+
+	if (flag.bbox->answer)
+	    print_flag |= PRINT_MBBOX;
+
+	if (print_flag == PRINT_SH)
+	    G_warning (_("Use the -g flag in combination with other print flags."));
+
+	if (print_flag == PRINT_METERS ||
+	    print_flag == PRINT_METERS + PRINT_SH)
+	    G_warning (_("Use the -m flag in combination with other print flags."));
+
+	if (flag.z -> answer && !(print_flag & PRINT_REG))
+	    G_warning (_("Use the -3 flag in combination with the -p flag."));
+	    
 	if (!flag.dflt->answer)
 		G_get_window(&window);
 
@@ -811,8 +823,7 @@ int main (int argc, char *argv[])
 	}
 
 	if (print_flag)
-	    print_window (&window, print_flag, dist_flag, flag.z->answer,
-			  flag.gprint->answer, flag.bbox->answer);
+	    print_window (&window, print_flag);
 
 	exit(EXIT_SUCCESS);
 }
