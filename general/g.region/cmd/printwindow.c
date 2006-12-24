@@ -50,13 +50,13 @@ int print_window(struct Cell_head *window, int print_flag)
     if (print_flag & PRINT_REG)
 	width = 11;
 
-    if (print_flag & PRINT_MBBOX)
+    if (print_flag & PRINT_CENTER || print_flag & PRINT_MBBOX)
 	width = 16;
     
     if (print_flag & PRINT_LL)
 	width = 18;
 
-    if (print_flag & PRINT_CENTER || print_flag & PRINT_EXTENT)
+    if (print_flag & PRINT_EXTENT)
 	width = 19;
 
     /* flag.dist_res */
