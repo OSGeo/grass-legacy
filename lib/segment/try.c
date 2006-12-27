@@ -1,4 +1,21 @@
+/**
+ * \file try.c
+ *
+ * \brief Segment library test program.
+ *
+ * This program is free software under the GNU General Public License
+ * (>=v2). Read the file COPYING that comes with GRASS for details.
+ *
+ * \author GRASS GIS Development Team
+ *
+ * \date 2005-2006
+ */
+
+
+#include <stdlib.h>
+#include <stdio.h>
 #include <grass/segment.h>
+
 
 #define NCOLS 100
 #define NROWS 100
@@ -6,6 +23,16 @@
 #define SCOLS 8
 #define LEN   2
 #define NSEGS 4
+
+
+/**
+ * \fn int main (int argc, char **argv)
+ *
+ * \brief Segment library test program.
+ *
+ * \return 0 on success
+ * \return calls <i>exit()</i> on error
+ */
 
 int main(int argc, char **argv)
 {
@@ -21,7 +48,7 @@ fprintf (stdout,"creating seg.file\n");
     if (fd < 0)
     {
 	perror ("seg.file");
-	exit(1);
+	exit(EXIT_FAILURE);
     }
     segment_format (fd, NROWS,NCOLS,SROWS,SCOLS,LEN);
     close (fd);
@@ -31,7 +58,7 @@ fprintf (stdout,"opening seg.file\n");
     if (fd < 0)
     {
 	perror ("seg.file");
-	exit(1);
+	exit(EXIT_FAILURE);
     }
     segment_init (&seg, fd, NSEGS);
 
@@ -39,8 +66,9 @@ fprintf (stdout,"opening seg.file\n");
     if (seg.nrows != NROWS || seg.ncols != NCOLS || seg.len != LEN)
     {
 	fprintf (stdout,"OOPS - wrong segment file\n");
-	exit(1);
+	exit(EXIT_FAILURE);
     }
+
 fprintf (stdout,"writing seg.file\n");
     for (row = 0 ; row < NROWS; row++)
     {
@@ -51,6 +79,7 @@ fprintf (stdout,"writing seg.file\n");
 	}
 	segment_put_row (&seg, data, row);
     }
+
     while(1)
     {
 	for (i = 0; i < seg.nseg; i++)
@@ -75,6 +104,9 @@ fprintf (stdout,"writing seg.file\n");
 	    fprintf (stdout,"data = %d %d\n", data[0], data[1]);
 	}
     }
+
     segment_release (&seg) ;
     close (fd);
+
+    return 0;
 }

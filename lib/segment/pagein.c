@@ -1,10 +1,39 @@
+/**
+ * \file pagein.c
+ *
+ * \brief Segment page-in routines.
+ *
+ * This program is free software under the GNU General Public License
+ * (>=v2). Read the file COPYING that comes with GRASS for details.
+ *
+ * \author GRASS GIS Development Team
+ *
+ * \date 2005-2006
+ */
+
 #include <stdio.h>
 #include <unistd.h>
 #include <string.h>
 #include <errno.h>
 #include <grass/segment.h>
 
+
 static int segment_select(SEGMENT *,int);
+
+
+/**
+ * \fn int segment_pagein (SEGMENT *SEG, int n)
+ *
+ * \brief Segment pagein.
+ *
+ * Finds <b>n</b> in the segment file, <b>seg</b>, and selects it as the 
+ * current segment.
+ *
+ * \param[in] seg segment
+ * \param[in] n segment number
+ * \return 1 if successful
+ * \return -1 if unable to seek or read segment file
+ */
 
 int segment_pagein ( SEGMENT *SEG,int n)
 {
@@ -13,16 +42,16 @@ int segment_pagein ( SEGMENT *SEG,int n)
     int i;
     int read_result;
 
-/* is n the current segment? */
+    /* is n the current segment? */
     if (n == SEG->scb[SEG->cur].n)
 	return SEG->cur;
 
-/* search the in memory segments */
+    /* search the in memory segments */
     for (i = 0; i < SEG->nseg; i++)
 	if (n == SEG->scb[i].n)
 	    return segment_select (SEG,i);
 
-/* find a slot to use to hold segment */
+    /* find a slot to use to hold segment */
     age = 0;
     cur = 0;
     for (i = 0; i < SEG->nseg; i++)
@@ -37,12 +66,12 @@ int segment_pagein ( SEGMENT *SEG,int n)
 	    age = SEG->scb[i].age;
 	}
 
-/* if slot is used, write it out, if dirty */
+    /* if slot is used, write it out, if dirty */
     if (SEG->scb[cur].n >= 0 && SEG->scb[cur].dirty)
 	if(segment_pageout (SEG, cur) < 0)
 	    return -1;
 
-/* read in the segment */
+    /* read in the segment */
     SEG->scb[cur].n = n;
     SEG->scb[cur].dirty = 0;
     segment_seek (SEG, SEG->scb[cur].n, 0);
@@ -65,6 +94,7 @@ int segment_pagein ( SEGMENT *SEG,int n)
     return segment_select (SEG,cur);
 }
 
+
 static int segment_select(SEGMENT *SEG,int n)
 {
     int i;
@@ -72,5 +102,6 @@ static int segment_select(SEGMENT *SEG,int n)
     SEG->scb[n].age = 0;
     for (i = 0; i < SEG->nseg; i++)
 	SEG->scb[i].age++ ;
+
     return SEG->cur = n;
 }
