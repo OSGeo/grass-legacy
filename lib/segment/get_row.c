@@ -1,26 +1,41 @@
+/**
+ * \file get_row.c
+ *
+ * \brief Segment row retrieval routines.
+ *
+ * This program is free software under the GNU General Public License
+ * (>=v2). Read the file COPYING that comes with GRASS for details.
+ *
+ * \author GRASS GIS Development Team
+ *
+ * \date 2005-2006
+ */
+
 #include <stdio.h>
 #include <unistd.h>
 #include <string.h>
 #include <errno.h>
 #include <grass/segment.h>
 
-/* bugfix:
- * int segment_get_row (SEGMENT *SEG, CELL *buf,int row) */
 
-/*!
- * \brief read row from segment file
+/**
+ * \fn int segment_get_row (SEGMENT *SEG, void *buf, int row)
+ *
+ * \brief Read row from segment file.
  *
  * Transfers data from a segment file, row by row, into memory
  * (which can then be written to a regular matrix file). <b>Seg</b> is the
- * segment structure that was configured from a call to <i>segment_init.</i>
- * <b>Buf</b> will be filled with <i>ncols*len</i> bytes of data
- * corresponding to the <b>row</b> in the data matrix.
- * Return codes are: 1 if ok; else -1 could not seek or read segment file.
+ * segment structure that was configured from a call to 
+ * <i>segment_init()</i>.
  *
- *  \param seg
- *  \param buf
- *  \param row
- *  \return int
+ * <b>Buf</b> will be filled with <em>ncols*len</em> bytes of data
+ * corresponding to the <b>row</b> in the data matrix.
+ *
+ * \param[in] seg segment
+ * \param[in,out] buf
+ * \param[in] row
+ * \return 1 if successful
+ * \return -1 if unable to seek or read segment file
  */
 
 int segment_get_row (SEGMENT *SEG, void *buf,int row)
@@ -39,6 +54,7 @@ int segment_get_row (SEGMENT *SEG, void *buf,int row)
 	segment_address (SEG, row, col, &n, &index) ;
 	if(segment_seek (SEG, n, index) < 0)
 	    return -1;
+
 	if(read (SEG->fd, buf, size) != size)
 	{
 	    G_warning ("segment_get_row: %s\n",strerror(errno));
@@ -57,6 +73,7 @@ int segment_get_row (SEGMENT *SEG, void *buf,int row)
 	segment_address (SEG, row, col, &n, &index) ;
 	if(segment_seek (SEG, n, index) < 0)
 	    return -1;
+
 	if(read (SEG->fd, buf, size) != size)
 	{
 	    G_warning ("segment_get_row: %s\n",strerror(errno));

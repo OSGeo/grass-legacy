@@ -1,9 +1,23 @@
+/**
+ * \file format.c
+ *
+ * \brief Segment formatting routines.
+ *
+ * This program is free software under the GNU General Public License
+ * (>=v2). Read the file COPYING that comes with GRASS for details.
+ *
+ * \author GRASS GIS Development Team
+ *
+ * \date 2005-2006
+ */
+
+#include <grass/config.h>
 #include <stdio.h>
 #include <string.h>
 #include <errno.h>
 #include <unistd.h>
 #include <grass/segment.h>
-#include <grass/config.h>
+
 
 static int _segment_format (int,int,int,int,int,int,int);
 static int write_int(int,int);
@@ -11,31 +25,36 @@ static int zero_fill(int, long);
 
 /* fd must be open for write */
 
-/*!
- * \brief format a segment file
+
+/**
+ * \fn int segment_format (int fd, int nrows, int ncols, int srows, int scols, int len)
  *
- * The segmentation routines require a disk file
- * to be used for paging segments in and out of memory. This routine formats the
- * file open for write on file descriptor <b>fd</b> for use as a segment file.
- * A segment file must be formatted before it can be processed by other segment
- * routines. The configuration parameters <b>nrows, ncols, srows, scols</b>,
- * and <b>len</b> are written to the beginning of the segment file which is
- * then filled with zeros.
- * The corresponding nonsegmented data matrix, which is to be transferred to the
- * segment file, is <b>nrows</b> by <b>ncols.</b> The segment file is to be
- * formed of segments which are <b>srows</b> by <b>scols.</b> The data items
- * have length <b>len</b> bytes. For example, if the <i>data type is int</i>,
- * <i>len is sizeof(int).</i>
- * Return codes are: 1 ok; else -1 could not seek or write <i>fd</i>, or -3
- * illegal configuration parameter(s).
+ * \brief Format a segment file.
  *
- *  \param fd
- *  \param nrows
- *  \param ncols
- *  \param srows
- *  \param scols
- *  \param len
- *  \return int
+ * The segmentation routines require a disk file to be used for paging 
+ * segments in and out of memory. This routine formats the file open for 
+ * write on file descriptor <b>fd</b> for use as a segment file.
+ *
+ * A segment file must be formatted before it can be processed by other 
+ * segment routines. The configuration parameters <b>nrows</b>, 
+ * <b>ncols</b>, <b>srows</b>, <b>scols</b>, and <b>len</b> are written 
+ * to the beginning of the segment file which is then filled with zeros.
+ *
+ * The corresponding nonsegmented data matrix, which is to be 
+ * transferred to the segment file, is <b>nrows</b> by <b>ncols</b>. The 
+ * segment file is to be formed of segments which are <b>srows</b> by 
+ * <b>scols</b>. The data items have length <b>len</b> bytes. For 
+ * example, if the <em>data type is int</em>, <em>len is sizeof(int)</em>.
+ *
+ * \param[in] fd file descriptor
+ * \param[in] nrows number of non-segmented rows
+ * \param[in] ncols number of non-segmented columns
+ * \param[in] srows segment rows
+ * \param[in] scols segment columns
+ * \param[in] len length of data type
+ * \return 1 of successful
+ * \return -1 if unable to seek or write <b>fd</b>
+ * \return -3 if illegal parameters are passed
  */
 
 int segment_format (int fd,int nrows,int ncols,int srows,int scols,int len)
@@ -43,11 +62,45 @@ int segment_format (int fd,int nrows,int ncols,int srows,int scols,int len)
     return _segment_format (fd, nrows, ncols, srows, scols, len, 1);
 }
 
-int segment_format_nofill (
-	int fd,int nrows,int ncols,int srows,int scols,int len)
+/**
+ * \fn int segment_format_nofill (int fd, int nrows, int ncols, int srows, int scols, int len)
+ *
+ * \brief Format a segment file.
+ *
+ * The segmentation routines require a disk file to be used for paging 
+ * segments in and out of memory. This routine formats the file open for 
+ * write on file descriptor <b>fd</b> for use as a segment file.
+ *
+ * A segment file must be formatted before it can be processed by other 
+ * segment routines. The configuration parameters <b>nrows</b>, 
+ * <b>ncols</b>, <b>srows</b>, <b>scols</b>, and <b>len</b> are written 
+ * to the beginning of the segment file which is then filled with zeros.
+ *
+ * The corresponding nonsegmented data matrix, which is to be 
+ * transferred to the segment file, is <b>nrows</b> by <b>ncols</b>. The 
+ * segment file is to be formed of segments which are <b>srows</b> by 
+ * <b>scols</b>. The data items have length <b>len</b> bytes. For 
+ * example, if the <em>data type is int</em>, <em>len is sizeof(int)</em>.
+ *
+ * <b>Note:</b> This version of the function does <b>not</b> fill in the 
+ * initialized data structures with zeros.
+ *
+ * \param[in] fd file descriptor
+ * \param[in] nrows number of non-segmented rows
+ * \param[in] ncols number of non-segmented columns
+ * \param[in] srows segment rows
+ * \param[in] scols segment columns
+ * \param[in] len length of data type
+ * \return 1 of successful
+ * \return -1 if unable to seek or write <b>fd</b>
+ * \return -3 if illegal parameters are passed
+ */
+
+int segment_format_nofill (int fd, int nrows, int ncols, int srows, int scols, int len)
 {
     return _segment_format (fd, nrows, ncols, srows, scols, len, 0);
 }
+
 
 static int _segment_format(
 	int fd,
@@ -60,13 +113,12 @@ static int _segment_format(
 
     if (nrows <= 0 || ncols <= 0 || len <= 0 || srows <= 0 || scols <= 0)
     {
-	G_warning (
-	    "segment_format(fd,%d,%d,%d,%d,%d): illegal value(s)",
+	G_warning ("segment_format(fd,%d,%d,%d,%d,%d): illegal value(s)",
 	    nrows, ncols, srows, scols, len);
 	return -3;
     }
 
-    if (lseek (fd, 0L, 0) == (off_t)-1)
+    if (lseek (fd, 0L, SEEK_SET) == (off_t)-1)
     {
 	G_warning ("Segment_format: %s",strerror(errno));
 	return -1;
@@ -84,21 +136,22 @@ static int _segment_format(
 
     size = srows * scols * len;
 
-/* calculate total number of segments */
+    /* calculate total number of segments */
     nbytes = spr * ((nrows + srows - 1)/ srows);
     nbytes *= size ;
 
-/* fill segment file with zeros */
-/* NOTE: this could be done faster using lseek() by seeking
- * ahead nbytes and then writing a single byte of 0,
- * provided lseek() on all version of UNIX will create a file
- * with holes that read as zeros.
- */
+    /* fill segment file with zeros */
+    /* NOTE: this could be done faster using lseek() by seeking
+     * ahead nbytes and then writing a single byte of 0,
+     * provided lseek() on all version of UNIX will create a file
+     * with holes that read as zeros.
+     */
     if(zero_fill (fd, nbytes) < 0)
 	return -1;
 
     return 1;
 }
+
 
 static int write_int (int fd,int n)
 {
@@ -109,8 +162,10 @@ static int write_int (int fd,int n)
 
     if((bytes_wrote = write (fd, &x, sizeof(int)) == sizeof(int) ) < 0)
         G_warning("%s",strerror(errno));
+
     return bytes_wrote;
 }
+
 
 static int zero_fill(int fd, long nbytes)
 {
@@ -119,7 +174,7 @@ static int zero_fill(int fd, long nbytes)
     register char *b;
     register int n;
 
-/* zero buf */
+    /* zero buf */
     n = nbytes > sizeof(buf) ? sizeof(buf) : nbytes ;
     b = buf;
     while (n-- > 0)
@@ -146,6 +201,7 @@ static int zero_fill(int fd, long nbytes)
     char buf[10];
 
     buf[0]=0x0;
+
     G_debug(3,"Using new segmentation code...");
     if ( lseek(fd,nbytes-1,SEEK_CUR) < 0 ) { 
             G_warning("%s",strerror(errno));
@@ -155,6 +211,7 @@ static int zero_fill(int fd, long nbytes)
             G_warning("%s",strerror(errno));
 	    return -1;
     }
+
     return 1;
 #endif
 }

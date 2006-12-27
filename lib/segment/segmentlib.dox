@@ -63,7 +63,7 @@ data is paged into memory as needed and the requested data is returned to
 the caller.
 
 <P>
-<B>Note.</B> All routines and global variables in this library, documented 
+<B>Note:</B> All routines and global variables in this library, documented 
 or undocumented, start with the prefix <B>segment_.</B> To avoid name 
 conflicts, programmers should not create variables or routines in their own 
 modules which use this prefix.
@@ -74,11 +74,12 @@ modules which use this prefix.
 <P>
 The routines in the <I>Segment Library</I> are described below, more or 
 less in the order they would logically be used in a module. They use a data 
-structure called SEGMENT which is defined in the header file ''segment.h'' 
-that must be included in any code using these routines: [footnote]
+structure called SEGMENT which is defined in the header file 
+<grass/segment.h> that must be included in any code using these 
+routines: [footnote]
 
-\verbatim 
-#include ''segment.h''
+\verbatim
+#include <grass/segment.h>
 \endverbatim 
 
 <P>
@@ -218,11 +219,11 @@ created, formatted and then closed:
 
 
 \verbatim 
-fd = creat (file,0666) ;
+fd = creat (file, 0666);
 
-segment_format (fd, nrows, ncols, srows, scols, sizeof(int) ) ;
+segment_format (fd, nrows, ncols, srows, scols, sizeof(int));
 
-close(fd) ;
+close(fd);
 \endverbatim
 
 <P>
@@ -233,11 +234,14 @@ file:
 
 
 \verbatim
+#include <fcntl.h>
+
 int buf[NCOLS];
 
 SEGMENT seg;
 
-fd = open (file, 2); segment_init (&seg, fd, nseg)
+fd = open (file, O_RDWR);
+segment_init (&seg, fd, nseg)
 
 for (row = 0; row < nrows; row++)
 {
@@ -262,7 +266,7 @@ int value;
 
 SEGMENT seg;
 
-segment_get (&seg, &value, row, col) ;
+segment_get (&seg, &value, row, col);
 \endverbatim
 
 <P>
@@ -277,16 +281,16 @@ SEGMENT seg;
 
 value = 10;
 
-segment_put (&seg, &value, row, col) ;
+segment_put (&seg, &value, row, col);
 \endverbatim
 
 <P>
-<B>Warning.</B> It is an easy mistake to pass a value directly to 
-segment_put() . The following should be avoided:
+<B>WARNING:</B> It is an easy mistake to pass a value directly to 
+segment_put(). The following should be avoided:
 
 
 \verbatim
-segment_put (&seg, 10, row, col) ; /* this will not work */
+segment_put (&seg, 10, row, col); /* this will not work */
 \endverbatim
 
 <P>
@@ -296,13 +300,13 @@ follows:
 
 
 \verbatim
-segment_flush (&seg) ;
+segment_flush (&seg);
 
 for (row = 0; row < nrows; row++) 
 {
- segment_get_row (&seg, buf, row);
+    segment_get_row (&seg, buf, row);
 
- <code to put buf into a matrix data file for row>
+    <code to put buf into a matrix data file for row>
 
 }
 \endverbatim
@@ -313,13 +317,13 @@ released and the file closed:
 
 
 \verbatim
-segment_release (&seg) ;
+segment_release (&seg);
 
-close (fd) ;
+close (fd);
 \endverbatim
 
 <P>
-<B>Note.</B> The <I>Segment Library</I> does not know the name of the 
+<B>Note:</B> The <I>Segment Library</I> does not know the name of the 
 segment file. It does not attempt to remove the file. If the file is only 
 temporary, the programmer should remove the file after closing it.
 

@@ -1,15 +1,39 @@
+/**
+ * \file setup.c
+ *
+ * \brief Segment setup routines.
+ *
+ * This program is free software under the GNU General Public License
+ * (>=v2). Read the file COPYING that comes with GRASS for details.
+ *
+ * \author GRASS GIS Development Team
+ *
+ * \date 2005-2006
+ */
+
+#include <stdlib.h>
 #include <stdio.h>
+#include <grass/gis.h>
 #include <grass/segment.h>
 
-/* SEG must have the following parms set
- *  fd (open for read and write)
- *  nrows, ncols, srows, scols, len
- *  nseg
+
+/**
+ * \fn int segment_setup (SEGMENT *SEG)
+ *
+ * \brief Setup segment.
+ *
+ * <b>SEG</b> must have the following parms set:
+ *  fd (open for read and write), nrows, ncols, srows, scols, len, nseg
+ *
+ * \param[in,out] SEG segment
+ * \return 1 if successful
+ * \return -1 if illegal parameters are passed in <b>SEG</b>
+ * \return -2 if unable to allocate memory
  */
+
 int segment_setup (SEGMENT *SEG)
 {
     int i;
-    char *malloc();
 
     SEG->open = 0;
 
@@ -38,6 +62,7 @@ int segment_setup (SEGMENT *SEG)
     {
 	if((SEG->scb[i].buf = G_malloc (SEG->size)) == NULL)
 	    return -2;
+
 	SEG->scb[i].n = -1;	/* mark free */
 	SEG->scb[i].dirty = 0;
 	SEG->scb[i].age = 0;

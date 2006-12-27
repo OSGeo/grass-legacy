@@ -1,33 +1,46 @@
-/********************************************************************
- * this file has debug versions of segment_get() and segment_put()
- * which check the row,col and print error messages to stderr upon
- * violations
+/**
+ * \file debug.c
  *
- * No functional change, just additional overhead to check the row,col.
+ * \brief Segment debug routines.
  *
- * load the debug.o file before the SEGMENTLIB and the debug versions
- * will supercede the original.
- ******************************************************************/
+ * This file has debug versions of <i>segment_get()</i> and 
+ * <i>segment_put()</i> which check the row,col and print error messages 
+ * to <em>stderr</em> upon violations.
+ *
+ * <b>Build Note:</b> Load the debug.o file before the SEGMENTLIB and 
+ * the debug versions will supercede the original.
+ *
+ * This program is free software under the GNU General Public License
+ * (>=v2). Read the file COPYING that comes with GRASS for details.
+ *
+ * \author GRASS GIS Development Team
+ *
+ * \date 2005-2006
+ */
+
 #include <stdio.h>
 #include <grass/segment.h>
+
 
 static int check(SEGMENT *,int,int,char *);
 
 
-/*!
- * \brief get value  from segment file
+/**
+ * \fn int segment_get (SEGMENT *SEG, void *buf, int row, int col)
+ *
+ * \brief Get value from segment file.
  *
  * Provides random read access to the segmented data. It gets
  * <i>len</i> bytes of data into <b>value</b> from the segment file
  * <b>seg</b> for the corresponding <b>row</b> and <b>col</b> in the
  * original data matrix.
- * Return codes are:  1 if ok;  else -1 could not seek or read segment file.
  *
- *  \param seg
- *  \param value
- *  \param row
- *  \param col
- *  \return int
+ * \param[in] seg
+ * \param[in,out] buf
+ * \param[in] row
+ * \param[in] col
+ * \return 1 on success
+ * \return -1 if unable to seek or read segment file
  */
 
 int segment_get (SEGMENT *SEG,void *buf,int row,int col)
@@ -43,6 +56,7 @@ int segment_get (SEGMENT *SEG,void *buf,int row,int col)
     segment_address (SEG, row, col, &n, &index);
     if((i = segment_pagein (SEG, n)) < 0)
 	return -1;
+
     b = &SEG->scb[i].buf[index];
 
     n = SEG->len;
@@ -53,22 +67,25 @@ int segment_get (SEGMENT *SEG,void *buf,int row,int col)
 }
 
 
-/*!
- * \brief put value to segment file
+/**
+ * \fn int segment_put (SEGMENT *SEG, void *buf, int row, int col)
+ *
+ * \brief Put value to segment file.
  *
  * Provides random write access to the segmented data. It
  * copies <i>len</i> bytes of data from <b>value</b> into the segment
  * structure <b>seg</b> for the corresponding <b>row</b> and <b>col</b> in
  * the original data matrix.
+ *
  * The data is not written to disk immediately. It is stored in a memory segment
  * until the segment routines decide to page the segment to disk.
- * Return codes are: 1 if ok; else -1 could not seek or write segment file.
  *
- *  \param seg
- *  \param value
- *  \param row
- *  \param col
- *  \return int
+ * \param[in] seg
+ * \param[in,out] buf
+ * \param[in] row
+ * \param[in] col
+ * \return 1 on success
+ * \return -1 if unable to seek or write segment file
  */
 
 int segment_put (SEGMENT *SEG,void *buf,int row,int col)
@@ -84,14 +101,17 @@ int segment_put (SEGMENT *SEG,void *buf,int row,int col)
     segment_address (SEG, row, col, &n, &index);
     if((i = segment_pagein (SEG, n)) < 0)
 	return -1;
+
     b = &SEG->scb[i].buf[index];
     SEG->scb[i].dirty = 1;
 
     n = SEG->len;
     while (n-- > 0)
 	*b++ = *p++;
+
     return 1;
 }
+
 
 static int check(SEGMENT *SEG,int row,int col,char *me)
 {
@@ -115,5 +135,6 @@ static int check(SEGMENT *SEG,int row,int col,char *me)
 	    fprintf (stderr, "(max %d) ", SEG->ncols-1);
     }
     fprintf (stderr, "\n");
+
     return 0;
 }
