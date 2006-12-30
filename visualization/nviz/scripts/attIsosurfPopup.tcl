@@ -13,7 +13,10 @@ global DEBUG
 set DEBUG 0
 
 proc mkIsosurfAttPopup {w id att {mode 0}} {
+# create popup dialog to set volume attribute values
 
+	global Nauto_draw	
+	global nviztxtfont
     global attIsoPopup_InvertMask attIsoPopup_Status attIsoPopup_Type \
     attIsoPopup_Color attIsoPopup_UseColor DEBUG
 
@@ -30,11 +33,14 @@ proc mkIsosurfAttPopup {w id att {mode 0}} {
 
     wm positionfrom $w program
     wm sizefrom $w program
-    wm title $w "Change Attribute"
+    wm title $w "Attribute"
     wm iconname $w "Attribute"
     wm geometry $w ""
     wm maxsize $w 400 400
-    wm minsize $w 50 100
+    wm minsize $w 150 100
+
+    bind $w <Any-Enter> [list focus $w]
+    bind $w <Return> "aip_check_invert $att ; destroy $w"
 
     # Callbacks depend on the attribute
     switch "$att" {
@@ -65,63 +71,60 @@ proc mkIsosurfAttPopup {w id att {mode 0}} {
     }
 
     # popup frames
-    frame $w.f1 -relief raised -border 1
-    frame $w.f2 -relief raised -border 1
-    frame $w.f3 -relief raised -border 1
-    frame $w.f4 -relief raised -border 1
-#Packed at end
-##  pack $w.f1 $w.f2 $w.f3 $w.f4 -side top -fill both -expand yes
+    frame $w.f1
+    frame $w.f2
+    frame $w.f3
+    frame $w.f4
 
-    # label
-    label $w.f1.name -text "Change Attribute: $att"
-    pack $w.f1.name -side top -fill both -expand yes
+    # popup label
+    label $w.f1.name -text "Change attribute: $att"
+    pack $w.f1.name -side top -fill both -expand yes -padx 4 -pady 3
+    pack $w.f1 -side top -fill both -expand yes -padx 4 -pady 3
 
     # left button
-    button $w.f2.map -text "New Map" -command "$cb1" -bd 1
+    button $w.f2.map -text "New map" -command "$cb1" -bd 1 -width 10
 
     # right button
     if {"$att" == "mask"} then {
-    button $w.f2.const -text "Remove Mask" -command "$cb2" -bd 1
-    checkbutton $w.f2.invert -text "Invert Mask" -onvalue 1 \
-        -offvalue 0 -variable attIsoPopup_InvertMask
-    set attIsoPopup_InvertMask [Nvol$curr isosurf get_mask_mode $id]
+		button $w.f2.const -text "Remove mask" -command "$cb2" -bd 1 -width 10
+		checkbutton $w.f2.invert -text "invert mask" -onvalue 1 \
+			-offvalue 0 -variable attIsoPopup_InvertMask
+		set attIsoPopup_InvertMask [Nvol$curr isosurf get_mask_mode $id]
+		pack $w.f2.map $w.f2.const -side left -fill both -expand yes
+		pack $w.f2.invert -side bottom -expand yes -fill both \
+			-pady 2 -before $w.f2.map
+
     } elseif {"$att" == "threshold" } then {
-    button $w.f2.const -text "New Constant"    -command "$cb2" -bd 1
-    checkbutton $w.f2.use_color -text "Use volume as color" -onvalue 1 \
-        -offvalue 0 -variable attIsoPopup_UseColor
-    set attIsoPopup_UseColor 1
+		button $w.f2.const -text "New constant"    -command "$cb2" -bd 1 -width 10
+		checkbutton $w.f2.use_color -text "use volume as color" -onvalue 1 \
+			-offvalue 0 -variable attIsoPopup_UseColor
+		set attIsoPopup_UseColor 1
+		pack $w.f2.const -side left -fill both -expand yes
+		pack $w.f2.use_color -side bottom -expand yes -fill both \
+			-pady 2 -before $w.f2.const
+
     } else {
-    button $w.f2.const -text "New Constant" -command "$cb2" -bd 1
+	    button $w.f2.const -text "New constant" -command "$cb2" -bd 1 -width 10
+    	pack $w.f2.map $w.f2.const -side left -fill x -expand yes
     }
 
-    # pack buttons
-    if {"$att" == "threshold"} then {
-    pack $w.f2.const -side left -fill both -expand yes
-    pack $w.f2.use_color -side bottom -expand yes -fill both -before $w.f2.const
-    } elseif {"$att" == "mask"} then {
-    pack $w.f2.map $w.f2.const -side left -fill both -expand yes
-    pack $w.f2.invert -side bottom -expand yes -fill both -before $w.f2.map
-    } else {
-    pack $w.f2.map $w.f2.const -side left -fill both -expand yes
-    }
+	pack $w.f2 -side top -padx 3 -pady 3 -expand yes -fill both
 
     # set current isosurface status
-    label $w.f3.status -text "Status: "
+    label $w.f3.status -text "Curr. value: " -fg black
     set_isosurf_status $id $att
-    label $w.f3.info -textvariable attIsoPopup_Status
-    pack $w.f3.status $w.f3.info -side top -fill both  -expand yes
+    label $w.f3.info -textvariable attIsoPopup_Status -fg black -font $nviztxtfont
+    pack $w.f3.status $w.f3.info -side left -fill x -expand yes -padx 4 -pady 3
+    pack $w.f3 -side top
 
     # Accep, Cancel buttons
     button $w.f4.accept -text "Accept"  -bd 1 \
     -command "aip_check_invert $id $att ; destroy $w"
     button $w.f4.cancel -text "Cancel"  -bd 1 \
     -command "set attIsoPopup_Status \"no_change\" ; destroy $w"
-    pack $w.f4.accept $w.f4.cancel -side left -fill both -expand yes
+    pack $w.f4.accept $w.f4.cancel -side left -fill none -expand yes
+    pack $w.f4 -side top  -padx 3 -pady 4 -expand 1 -fill both
 
-    #Pack frames
-    pack $w.f1 $w.f2 $w.f3 $w.f4 -side top -fill both -expand yes
-
-    bind $w <Any-Enter> [list focus $w]
     focus $w
     if {$mode} {grab $w}
 
@@ -391,17 +394,29 @@ proc create_constant_popup {{w .enter_constant} {mode 0}} {
     set cp_done 0
 
     toplevel $w
+    wm title $w "Constant"
     tkwait visibility $w
+    focus $w
 
-    label $w.title -bd 2 -text "Enter a constant value :" -relief raised
+    label $w.title -bd 2 -text "Enter value:"
     entry $w.constant -bd 2 -relief sunken
-    bind $w.constant <Return> "set cp_done 1"
-    pack $w.title $w.constant -fill both
+
+    bind $w <Return> "set cp_done 1"
+ 
+ 	set row3 [frame $w.buttons]
+    button $row3.ok -bd 1 -width 5 -text "Accept" -command "set cp_done 1" -default active
+    button $row3.cancel -bd 1 -width 5 -text "Cancel" -command "destroy $w"
+
+    pack $w.title $w.constant -side top -fill both -expand 1 \
+    	-padx 4 -pady 4
+    pack $row3.ok $row3.cancel -side left -fill none -expand 1
+    pack $row3 -side top -padx 5 -pady 3 -fill x -expand 1
 
     if {$mode} then {grab $w}
 
     tkwait variable cp_done
     set return_val [$w.constant get]
+    
     destroy $w
     return $return_val
 }
@@ -425,14 +440,25 @@ proc create_slideconstant_popup {{w .enter_constant} {mode 0}} {
     set cp_done 0
 
     toplevel $w
+    wm title $w "Constant"
     tkwait visibility $w
+    focus -force $w
 
-    label $w.title -bd 2 -text "Use slider to select constant value :" -relief raised
+    label $w.title -text "Use slider to select constant value :" -width 25
     scale $w.constant -from 0 -to 255 -showvalue yes \
-    -orient horizontal -activebackground gray80 \
-    -background gray90
-    button $w.close -text "Done" -command "set cp_done 1" -bd 1
-    pack $w.title $w.constant $w.close -fill both
+    	-orient horizontal -activebackground gray80 \
+    	-background gray90
+
+    set row3 [frame $w.buttons]
+    button $row3.ok -bd 1 -width 5 -text "Accept" -command "set cp_done 1" -default active
+    button $row3.cancel -bd 1 -width 5 -text "Cancel" -command "destroy $w"
+
+    pack $w.title -side top -fill both -expand 1 \
+    	-padx 4 -pady 4
+    pack $w.constant -side top -fill both -expand 1 \
+    	-padx 4 -pady 2
+    pack $row3.ok $row3.cancel -side left -fill none -expand 1
+    pack $row3 -side top -padx 5 -pady 3 -fill x -expand 1
 
     if {$mode} then {grab $w}
 
