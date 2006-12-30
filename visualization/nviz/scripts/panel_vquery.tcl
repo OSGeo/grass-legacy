@@ -579,7 +579,6 @@ proc pick_multimedia {_field} {
 
 	if {![rc_load_res "hyperlink.extension$ext" app]} {
 		if {[file isdirectory $dir/$_field]} {
-			#set filelist [split [exec ls $dir/$_field]]
 			set filelist [glob $dir/$_field/*]
 			set m ".pick_multimedia_hyperlink"
 			catch {destroy $m}
