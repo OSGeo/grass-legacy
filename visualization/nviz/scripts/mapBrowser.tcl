@@ -6,7 +6,7 @@ global src_boot
 proc grass_ls {element {mapset .}} {
     set dir [grass_element_name $element $mapset]
     if {[file isdir $dir]} {
-	return [exec ls $dir]
+		return [lsort [glob -directory $dir *]]
     }
     return {}
 }
@@ -78,7 +78,7 @@ proc map_browser_list_mapset {w} {
     if {[string length $mapset] == 0} {return}
     if {[string length $element] == 0} {return}
     foreach name [grass_ls $element $mapset] {
-	$w.main.files.f.list insert end $name
+	$w.main.files.f.list insert end [file tail $name]
     }
 }
 
@@ -135,98 +135,103 @@ proc set_selection_from_map_browser_filename { w } {
 
 proc create_map_browser {{w .map_browser} {type all} {mode 0}} {
     global map_browser
+    global nviztxtfont
 
     toplevel $w
+    wm title $w "Map Browser"
     tkwait visibility $w
 
-    puts "BROWSER: $w TYPE: $type MODE: $mode"
+    #puts "BROWSER: $w TYPE: $type MODE: $mode"
 
     entry $w.filename -bd 2 -relief sunken
     bind $w.filename <Return> "set_selection_from_map_browser_filename $w"
     frame $w.main
     frame     $w.main.mapsets
-    label     $w.main.mapsets.label -text MAPSETS
+    label     $w.main.mapsets.label -text "MAPSETS"
     frame     $w.main.mapsets.f
-    listbox   $w.main.mapsets.f.list -bd 2 -relief sunken \
-	-exportselection no                     \
-	-selectbackground LightYellow1           \
-	-yscroll "$w.main.mapsets.f.scroll set" \
+    listbox   $w.main.mapsets.f.list -bd 2 -relief sunken -bg white \
+		-exportselection no \
+		-selectbackground LightYellow1 \
+		-yscroll "$w.main.mapsets.f.scroll set" \
         -xscroll "$w.main.mapsets.f.scrollx set" \
-	-selectmode single
+		-selectmode single
     scrollbar $w.main.mapsets.f.scroll \
-	-command "$w.main.mapsets.f.list yview"
+		-command "$w.main.mapsets.f.list yview"
     scrollbar $w.main.mapsets.f.scrollx \
         -command "$w.main.mapsets.f.list xview" \
         -orient horizontal
 
     bind $w.main.mapsets.f.list <ButtonRelease-1> \
-	"map_browser_select_mapset  %W %y $w"
+		"map_browser_select_mapset  %W %y $w"
 
     frame     $w.main.files
     label     $w.main.files.label -text FILES
     frame     $w.main.files.f
-    listbox   $w.main.files.f.list -bd 2 -relief sunken \
-	-exportselection no                   \
-	-selectbackground LightYellow1         \
-	-yscroll "$w.main.files.f.scroll set" \
+    listbox   $w.main.files.f.list -bd 2 -relief sunken -bg white \
+		-exportselection no                   \
+		-selectbackground LightYellow1         \
+		-yscroll "$w.main.files.f.scroll set" \
         -xscroll "$w.main.files.f.scrollx set" \
-	-selectmode single
+		-selectmode single
     scrollbar $w.main.files.f.scroll \
-	-command "$w.main.files.f.list yview"
+		-command "$w.main.files.f.list yview"
     scrollbar $w.main.files.f.scrollx \
         -command "$w.main.files.f.list xview" \
         -orient horizontal
 
     bind $w.main.files.f.list <ButtonRelease-1> \
-	"map_browser_select_file %W %y $w"
+		"map_browser_select_file %W %y $w"
 
     frame $w.element
     entry $w.element.entry -bd 2 -relief sunken
     bind $w.element.entry <Return> "map_browser_list_mapset $w"
 
     if { ![string compare rast $type]} {
-	set name Raster
+		set name Raster
     } elseif { ![string compare vect $type]} {
-	set name Vector
+		set name Vector
     } elseif { ![string compare site $type]} {
-	set name Site
+		set name Site
     } elseif { ![string compare surf $type]} {
-	set name Surface
+		set name Surface
     } elseif { ![string compare 3d.view $type]} {
-	set name 3d.view
+		set name 3d.view
     } elseif {![string compare vol $type]} {
-	set name G3D
+		set name G3D
     }
 
     if [string compare $type all] {
-	label $w.element.menu -text "Map Type:" -relief raised
+		Label $w.element.menu -text "Map type:" -fg black -font $nviztxtfont
     } else {
-	set name ""
-	menubutton $w.element.menu -text {Map Type} -menu $w.element.menu.m -relief raised -bd 1
-	menu $w.element.menu.m
-	$w.element.menu.m add command \
-	    -label {Raster} -command "set_map_browser_element  $w Raster"
-	$w.element.menu.m add command \
-	    -label {Vector} -command "set_map_browser_element  $w Vector"
-	$w.element.menu.m add command \
-	    -label {Site} -command "set_map_browser_element  $w Site"
-	$w.element.menu.m add command \
-	    -label {Surf} -command "set_map_browser_element $w Surf"
-	$w.element.menu.m add command \
-	    -label {3d.view} -command "set_map_browser_element $w 3d.view"
-	$w.element.menu.m add command \
-	    -label {Regions} -command "set_map_browser_element  $w windows"
-	$w.element.menu.m add command \
-	    -label {Labels} -command "set_map_browser_element  $w\
-		    paint/labels"
+		set name ""
+		menubutton $w.element.menu -text {Map Type} -menu $w.element.menu.m -relief raised -bd 1
+		menu $w.element.menu.m
+		$w.element.menu.m add command \
+			-label {Raster} -command "set_map_browser_element  $w Raster"
+		$w.element.menu.m add command \
+			-label {Vector} -command "set_map_browser_element  $w Vector"
+		$w.element.menu.m add command \
+			-label {Site} -command "set_map_browser_element  $w Site"
+		$w.element.menu.m add command \
+			-label {Surf} -command "set_map_browser_element $w Surf"
+		$w.element.menu.m add command \
+			-label {3d.view} -command "set_map_browser_element $w 3d.view"
+		$w.element.menu.m add command \
+			-label {Regions} -command "set_map_browser_element  $w windows"
+		$w.element.menu.m add command \
+			-label {Labels} -command "set_map_browser_element  $w\
+				paint/labels"
 	    $w.element.menu.m add command \
-	    -label {Icons} -command "set_map_browser_element  $w icons"
+	    	-label {Icons} -command "set_map_browser_element  $w icons"
     }
-    button $w.accept -text Accept -command "mapBrowser_accept_cmd $w" -bd 1
-    button $w.cancel -text Cancel -command "mapBrowser_cancel_cmd $w" -bd 1
+    button $w.accept -text "Accept" -command "mapBrowser_accept_cmd $w" -bd 1 \
+    	-default active
+    button $w.cancel -text "Cancel" -command "mapBrowser_cancel_cmd $w" -bd 1
+	
+	bind $w <Return> "mapBrowser_accept_cmd $w"
 
-    pack $w.filename -side top -expand yes -fill x
-    pack $w.main     -side top -expand yes -fill both
+    pack $w.filename -side top -expand yes -fill x -padx 4 -pady 3
+    pack $w.main     -side top -expand yes -fill both -padx 4 -pady 4
 
     pack $w.main.mapsets -side left -expand yes -fill both
     pack $w.main.mapsets.label -side top
@@ -242,17 +247,16 @@ proc create_map_browser {{w .map_browser} {type all} {mode 0}} {
     pack $w.main.files.f.list -side left -expand yes -fill both
     pack $w.main.files.f.scroll -side left -expand no -fill y
 
-    pack $w.element  -side top -expand yes -fill x
+    pack $w.element  -side top -expand yes -fill x -padx 4 -pady 3
     pack $w.element.menu  -side left
     pack $w.element.entry  -side left -expand yes -fill x
-    pack $w.accept $w.cancel -side left -expand 1
+    pack $w.accept $w.cancel -side left -expand 1 -pady 4
 
     foreach mapset [grass_mapset_list] {
 	$w.main.mapsets.f.list insert end $mapset
     }
     set_map_browser_element $w $name
     set_map_browser_mapset $w {}
-    wm title $w "Map Browser"
     wm protocol $w WM_DELETE_WINDOW "destroy $w"
 
     if {$mode} {grab $w}
@@ -268,7 +272,7 @@ proc mapBrowser_accept_cmd  {w} {
 
     # Make sure a file has been selected first
     set temp [$w.filename get]
-    if {$temp != ""} then {
+    if {$temp != ""} {
     	set map_browser($w,Answer) [$w.filename get]
     	destroy $w
     } else {

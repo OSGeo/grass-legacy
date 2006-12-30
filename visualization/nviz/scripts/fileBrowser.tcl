@@ -14,17 +14,17 @@ set last_dir [pwd]
 proc set_file_browser_filename {w name} {
     $w.filename delete 0 end
     if {[string length $name] > 0} {
-	$w.filename insert 0 ${name}
-	set_selection_from_file_browser_filename $w
+		$w.filename insert 0 ${name}
+		set_selection_from_file_browser_filename $w
     }
 }
 
 proc set_file_browser_directories {w name} {
     global file_browser
 
-    if {$name != ""} then {
-	cd $name
-	set file_browser($w,cur_dir) [exec pwd]
+    if {$name != ""} {
+		cd $name
+		set file_browser($w,cur_dir) [pwd]
     }
 
     refresh_file_browser $w
@@ -39,6 +39,7 @@ proc set_selection_from_file_browser_filename { w } {
 proc create_file_browser {{w .file_browser} {mode 0} {no_top 0}} {
     global file_browser Nv_
     global last_dir
+    global nviztxtfont
     
     catch {destroy $w}
     
@@ -56,47 +57,52 @@ proc create_file_browser {{w .file_browser} {mode 0} {no_top 0}} {
 	toplevel $w 
 	wm geometry $w "+$geom_x+$geom_y"
     }
+    
+    focus -force $w
 
     if {![file isdirectory $last_dir]} {
     	file mkdir $last_dir
     }
 
-#   set file_browser($w,cur_dir) [exec pwd]
+#   set file_browser($w,cur_dir) [pwd]
     set file_browser($w,cur_dir) $last_dir
 
-#   set file_browser($w,start_dir) [exec pwd]
+#   set file_browser($w,start_dir) [pwd]
     set file_browser($w,start_dir) $last_dir
 
     set file_browser($w,Answer) ""
     
     entry $w.filename -bd 2 -relief sunken
+
+    bind $w <Return> "catch {fileBrowser_accept_cmd $w}"
+
     bind $w.filename <Return> "set_selection_from_file_browser_filename $w"
     frame $w.main
     frame     $w.main.directories
     label     $w.main.directories.label -text DIRECTORIES
     frame     $w.main.directories.f
     listbox   $w.main.directories.f.list -bd 2 -relief sunken \
-	-exportselection no -selectbackground LightYellow1 \
-	-yscroll "$w.main.directories.f.scroll set" \
-	-xscroll "$w.main.directories.f.scrollx set" \
-	-selectmode single
+		-exportselection no -selectbackground LightYellow1 -bg white \
+		-yscroll "$w.main.directories.f.scroll set" \
+		-xscroll "$w.main.directories.f.scrollx set" \
+		-selectmode single
     scrollbar $w.main.directories.f.scroll -command \
-	"$w.main.directories.f.list yview"
+		"$w.main.directories.f.list yview"
     scrollbar $w.main.directories.f.scrollx \
         -command "$w.main.directories.f.list xview" \
         -orient horizontal
     
     bind $w.main.directories.f.list <ButtonRelease-1> \
-	"file_browser_select_directories  %W %y $w"
+		"file_browser_select_directories  %W %y $w"
     
     frame     $w.main.files
     label     $w.main.files.label -text FILES
     frame     $w.main.files.f
     listbox   $w.main.files.f.list -bd 2 -relief sunken -exportselection no \
-	-selectbackground LightYellow1 \
-	-yscroll "$w.main.files.f.scroll set" \
-	-xscroll "$w.main.files.f.scrollx set" \
-	-selectmode single
+		-selectbackground LightYellow1 -bg white\
+		-yscroll "$w.main.files.f.scroll set" \
+		-xscroll "$w.main.files.f.scrollx set" \
+		-selectmode single
     scrollbar $w.main.files.f.scroll -command "$w.main.files.f.list yview"
     scrollbar $w.main.files.f.scrollx \
         -command "$w.main.files.f.list xview" \
@@ -104,18 +110,21 @@ proc create_file_browser {{w .file_browser} {mode 0} {no_top 0}} {
 
     bind $w.main.files.f.list <ButtonRelease-1> "file_browser_select_file %W %y $w"
     
-    button $w.accept -text Accept -command "fileBrowser_accept_cmd $w" -bd 1
-    button $w.cancel -text Cancel -command "fileBrowser_cancel_cmd $w" -bd 1
+    button $w.accept -text Accept -command "catch {fileBrowser_accept_cmd $w}" -bd 1 \
+    	-width 6 -default active
+    button $w.cancel -text Cancel -command "fileBrowser_cancel_cmd $w" -bd 1 \
+    	-width 6
     
     frame $w.cur_directory
-    label $w.cur_directory.label -text "CURRENT:"
-    label $w.cur_directory.entry -relief sunken -textvariable file_browser($w,cur_dir) 
+    label $w.cur_directory.label -text "Current:"
+    label $w.cur_directory.entry -relief flat -justify left -anchor w -bg grey90\
+    	-textvariable file_browser($w,cur_dir) -font $nviztxtfont -fg black
     
-    pack $w.filename -side top -expand yes -fill x
-    pack $w.main     -side top -expand yes -fill both
+    pack $w.filename -side top -expand yes -fill x -padx 4 -pady 4
+    pack $w.main     -side top -expand yes -fill both -pady 4 -padx 3
     
     pack $w.main.directories -side left -expand yes -fill both
-    pack $w.main.directories.label -side top
+    pack $w.main.directories.label -side top -pady 3
     pack $w.main.directories.f.scrollx -side bottom -expand no -fill x
     pack $w.main.directories.f -side top -expand yes -fill both
     pack $w.main.directories.f.list -side left -expand yes -fill both
@@ -123,16 +132,16 @@ proc create_file_browser {{w .file_browser} {mode 0} {no_top 0}} {
 
     
     pack $w.main.files -side left -expand yes -fill both
-    pack $w.main.files.label -side top
+    pack $w.main.files.label -side top -pady 3 -padx 3
     pack $w.main.files.f.scrollx -side bottom -expand no -fill x
-    pack $w.main.files.f -side top -expand yes -fill both
+    pack $w.main.files.f -side top -expand yes -fill both -padx 3
     pack $w.main.files.f.list -side left -expand yes -fill both
     pack $w.main.files.f.scroll -side left -expand no -fill y
 
     pack $w.cur_directory.label -side left -expand no
     pack $w.cur_directory.entry -side left -expand yes -fill x
-    pack $w.cur_directory -expand yes  -fill x
-    pack $w.accept $w.cancel -side left -expand 1
+    pack $w.cur_directory -expand yes  -fill x -side top -pady 3 -padx 3
+    pack $w.accept $w.cancel -side left -expand 1 -pady 2
     
     refresh_file_browser $w
 
@@ -142,8 +151,8 @@ proc create_file_browser {{w .file_browser} {mode 0} {no_top 0}} {
 #   set_file_browser_directories $w {} 
     set_file_browser_directories $w $last_dir
     if {$no_top == 0} {
-	wm title $w "File Browser"
-	wm protocol $w WM_DELETE_WINDOW "destroy $w"
+		wm title $w "File Browser"
+		wm protocol $w WM_DELETE_WINDOW "destroy $w"
     }
     
     if {$mode} {grab $w}
@@ -160,7 +169,7 @@ proc fileBrowser_accept_cmd  {w} {
     
     # Make sure a file has been selected first
     set temp [$w.filename get]
-    if {$temp != ""} then {
+    if {$temp != ""} {
 	set last_dir $file_browser($w,cur_dir)
 	set file_browser($w,Answer) $file_browser($w,cur_dir)/[$w.filename get]
 	destroy $w
@@ -203,11 +212,11 @@ proc refresh_file_browser { w } {
     $w.main.files.f.list delete 0 end
     $w.main.directories.f.list insert end "."
     $w.main.directories.f.list insert end ".."
-    foreach i [exec ls $cur_dir] {
-	if {[file isdir $i]} then {
-	    $w.main.directories.f.list insert end $i
+    foreach i [glob -directory $cur_dir *] {
+	if {[file isdir $i]} {
+	    $w.main.directories.f.list insert end [file tail $i]
 	} else {
-	    $w.main.files.f.list insert end $i
+	    $w.main.files.f.list insert end [file tail $i]
 	}
     }
 }
