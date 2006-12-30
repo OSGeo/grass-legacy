@@ -27,7 +27,7 @@ global Nv_
 
 # default cursor
 set Nv_(cursor) [$Nv_(TOP) cget -cursor]	
-
+set Nv_(arw_font) {"helvetica" "17"}
 
 ##########################################################################
 
