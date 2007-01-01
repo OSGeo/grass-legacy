@@ -40,14 +40,6 @@ int parser(int argc, char*argv[])
     coord_opt->multiple    = YES;
     coord_opt->description = _("An x,y list of points. Required for add and move actions.");
     
-    move_opt = G_define_option();
-    move_opt->key         = "move";
-    move_opt->key_desc    = "x,y";
-    move_opt->type        = TYPE_DOUBLE;
-    move_opt->required    = NO;
-    move_opt->multiple    = NO;
-    move_opt->description = _("Difference in x,y direction for moving feature or vertex");
-    
     bbox_opt =  G_define_option();
     bbox_opt->key         = "bbox";
     bbox_opt->key_desc    = "x1,y1,x2,y2";
@@ -64,6 +56,14 @@ int parser(int argc, char*argv[])
     poly_opt->multiple    = YES;
     poly_opt->description = _("Polygon for selecting features");
 
+    move_opt = G_define_option();
+    move_opt->key         = "move";
+    move_opt->key_desc    = "x,y";
+    move_opt->type        = TYPE_DOUBLE;
+    move_opt->required    = NO;
+    move_opt->multiple    = NO;
+    move_opt->description = _("Difference in x,y direction for moving feature or vertex");
+    
     snap_opt = G_define_option();
     snap_opt->key         = "snap";
     snap_opt->type        = TYPE_DOUBLE;
