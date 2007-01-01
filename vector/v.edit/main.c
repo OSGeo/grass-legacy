@@ -70,6 +70,8 @@ int main (int argc, char *argv[])
     switch(action_mode) {
       case MODE_ADD:
 	G_message(_("Adding new features to vector file ..."));
+        if ( ! n_flg->answer )
+            read_head(ascii, &Map);
         ret = asc_to_bin(ascii, &Map) ;
 	break;
       case MODE_DEL:

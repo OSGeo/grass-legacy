@@ -34,6 +34,7 @@ int do_del(struct Map_info *Map);
 
 /* a2b.c */
 int asc_to_bin(FILE *, struct Map_info *);
+int read_head ( FILE * dascii, struct Map_info *Map );
 
 /* move.c */
 int do_move(struct Map_info *Map);
