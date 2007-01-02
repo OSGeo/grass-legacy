@@ -377,8 +377,16 @@ int main (int argc, char *argv[])
 	if (flag.bbox->answer)
 	    print_flag |= PRINT_MBBOX;
 
-	if (print_flag == PRINT_SH)
-	    G_warning (_("Use the -g flag in combination with other print flags."));
+	if (print_flag == PRINT_SH ||
+	    print_flag == PRINT_SH + PRINT_3D)
+	{
+	    G_warning (_("This feature is superseded and will be removed "
+			 "in future versions of GRASS. "
+			 "Use the -g flag in combination with other print flags, "
+			 "e.g. -pg."));
+            /* please remove before GRASS 7 released */
+	    print_flag |= PRINT_REG;
+	}
 
 	if (print_flag == PRINT_METERS ||
 	    print_flag == PRINT_METERS + PRINT_SH)
@@ -386,7 +394,7 @@ int main (int argc, char *argv[])
 
 	if (flag.z -> answer && !(print_flag & PRINT_REG))
 	    G_warning (_("Use the -3 flag in combination with the -p flag."));
-	    
+
 	if (!flag.dflt->answer)
 		G_get_window(&window);
 
