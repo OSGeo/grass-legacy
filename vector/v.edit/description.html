@@ -1,46 +1,200 @@
 <h2>DESCRIPTION</h2>
 
-<em>v.edit</em> allows a user to edit a vector map, if a database connection
-is established v.edit can also be used to edit data stored in the database.
+<p>
+<em>v.edit</em> allows a user to edit a vector map. Vector features can be selected either by category number <code>cats</code>, coordinates <code>coords</code>, bounding box <code>bbox</code> or polygon <code>polygon</code>. Coords will always select only one vector feature.
+</p>
+
+<p>
+<em>v.edit</em> recognises only "simple" vector features: points, centroids, lines, boundaries and faces. Areas will be not found.
+</p>
+
+<p>
+Currently, it works only on 2D region. 
+</p>
+
 
 <h2>NOTES</h2>
+<p>
 Still in development, no thing is added to the database. Only points can be
 added.
+</p>
+<p>
+This manual page should be updated according to vectors used in Spearfish dataset. This examples are only imaginar.
+</p>
 
 <h2>EXAMPLES</h2>
 
-<h3>Insert a new vector point</h3>
+<h3>Create new vector file</h3>
+<p>
+Creates new vector map, eventualy will read data from standard inputs in default format (standard/point)
+</p>
 <div class="code"><pre>
-v.edit map=soils type=point action=add args=23.5432:34.45433 sql='name="Survey location #43" depth=34'
+v.edit tool=create map=vectfile
 </pre></div>
 
-<h3>Insert a new segmented vector line</h3>
+<p>
+Creates new vector map and reads data from file file.txt in default format
+</p>
 <div class="code"><pre>
-v.edit map=soils type=line action=add args=23.5432:34.45433,23.4742:34.6543:23.7753:34.5435 sql='type="dried stream" code=453'
+v.edit tool=create map=vectfile input=file.txt
 </pre></div>
 
-<h3>Insert a new area with 5 points</h3>
+<h3>Add new feature to existing vector</h3>
+
+
+<p>
+Read data from standard inputs in standard format
+</p>
 <div class="code"><pre>
-v.edit map=soils type=area action=add args=23.5432:34.45433,23.4742:34.6543,23.7753:34.5435,23.5532:34.6043,23.4232:34.34322 sql='type="dried stream" code=453'
+v.edit tool=add map=vectfile
 </pre></div>
 
-<h3>Delete an object</h3>
+<h3>Remove feature from vector file</h3>
+
+<p>
+Remove features with category 34 and 24 from file vectfile
+</p>
+
 <div class="code"><pre>
-v.edit map=soils action=del cat=343
+v.edit tool=delete map=vectfile cat=34,24
 </pre></div>
 
-<h3>Merge two adjacent areas</h3>
+<p>
+Remove feature located on coordinates 344556.23,23445.2345
+</p>
 <div class="code"><pre>
-v.edit map=soils action=merge cat=343,349
+v.edit tool=delete map=vectfile coords=344556.23,23445.2345 
 </pre></div>
 
-<h3>Move a point</h3>
+
+<p>
+Remove features defined by bounding box 344556.23,234455.2345,567566.34,456455.34
+</p>
+
 <div class="code"><pre>
-v.edit map=soils action=move type=point cat=343 args=args=23.5432:34.45433
+v.edit tool=delete map=vectifle bbox=344556.23,234455.2345,567566.34,456455.34
 </pre></div>
+
+
+<h3>Move feature</h3>
+<p>
+Move feature located on coordinates 344556.23,23445.2345 to coordinates 644556.23,43445.2345
+</p>
+<div class="code"><pre>
+v.edit tool=move map=vectifle coords=344556.23,23445.2345 move=100000,-100000
+</pre></div>
+
+
+<p>
+Move all points of feature of category 45 to coordinates about 1000 map units to the west and 1000 map units to the south
+</p>
+<div class="code"><pre>
+v.edit tool=move map=vectifle cat=45 move=1000,-1000
+</pre></div>
+
+<p>
+Move all points of features defined by bounding box 344556.23,234455.2345,567566.34,456455.34 about 1000 map units to the west and 1000 map units to the south
+</p>
+<div class="code"><pre>
+v.edit tool=move map=vectifle bbox=344556.23,234455.2345,567566.34,456455.34 to=1000,-1000
+</pre></div>
+
+<h3>Moving vertex</h3>
+<p>
+Move vertex on coordinates 344556.23,23445.2345 to 545556.23,22445.2345
+</p>
+<div class="code"><pre>
+v.edit tool=vertex map=vectifile coords=344556.23,23445.2345 move=1000,-1000
+</pre></div>
+
+
+<h3>Breaking line</h3>
+<p>
+Break line on coordinates 344556.23,23445.2345 at coords 345433.3,34567.32
+</p>
+<div class="code"><pre>
+v.edit tool=break map=vectifile coords=344556.23,23445.2345
+</pre></div>
+
+<p>
+Break line of category 45 at coords 345433.3,34567.32
+</p>
+
+<div class="code"><pre>
+v.edit tool=break map=vectifile cat=45 coords=345433.3,34567.32
+</pre></div>
+
+<h3>Remove vertex -- straight line</h3>
+<p>
+Remove vertex at coordinates 344556.23,23445.2345
+</p>
+<div class="code"><pre>
+v.edit tool=straight map=vectifile coords=344556.23,23445.2345
+</pre></div>
+
+
+
+<h3>Spliting line</h3>
+<p>
+Split line on coordinates 344556.23,23445.2345 at coords 345433.3,34567.32
+</p>
+<div class="code"><pre>
+v.edit tool=split map=vectifile coords=344556.23,23445.2345
+</pre></div>
+
+<p>
+Split line of category 45 at coords 345433.3,34567.32
+</p>
+<div class="code"><pre>
+v.edit tool=split map=vectifile cat=45 coords=345433.3,34567.32
+</pre></div>
+
+<h3>Mergin two lines</h3>
+<p>
+Merge first line defined by coordinates 606853.875,4921332 with second line, defined by coordinates 603216.75,4922763. Define nearest distance between line first and last points and move first (last) point of second line to first line -- First line will remain untached.
+</p>
+<div class="code"><pre>
+v.edit tool=merge map=vectfile coords=606853.875,4921332,603216.75,4922763 
+</pre></div>
+
+
+<p>
+Merge two lines defined by bounding box
+</p>
+<div class="code"><pre>
+v.edit tool=merge map=vectfile bbox=344556.23,23445.2345
+</pre></div>
+
+<div class="code"><pre>
+v.edit tool=merge map=vectfile cat=43,45
+</pre></div>
+
+
+</p>
+Merge two lines defined by category
+</p>
+
+<h3>Selecting features</h3>
+
+<p>
+Print line id's selected by coords, bbox or cat. Example:
+</p>
+
+<div class="code"><pre>
+v.edit map=soils@PERMANENT tool=select bbox=595733.8125,4919781.75,598536.1875,4917396.75
+</pre></div>
+
+
+Example with d.vect:
+
+<div class="code"><pre>
+d.vect col=red width=2 -i cat="`v.edit map=soils@PERMANENT tool=select bbox=595733.8125,4919781.75,598536.1875,4917396.75`" map=soils
+</pre></div>
+
+
 
 <h2>AUTHOR</h2>
 
-Wolf Bergenheim - independent developer
-
+Wolf Bergenheim - independent developer, <br>
+Jachym Cepicky, Department of Geoinformation Technologies, Mendel University of Agriculture and Forestry in Brno 
 <p><i>Last changed: $Date$</i>
