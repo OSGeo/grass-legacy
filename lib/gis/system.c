@@ -66,9 +66,9 @@ int G_system ( char *command)
 
 #ifdef __MINGW32__
     signal (SIGINT,  SIG_DFL);
-    _spawnl ( P_WAIT,
-              "command",
-              "command",
+    _spawnlp ( P_WAIT,
+              "cmd.exe",
+              "cmd.exe",
               "/c",
               command,
               NULL );
