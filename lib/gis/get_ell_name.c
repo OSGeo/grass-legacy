@@ -57,7 +57,7 @@ int G_ask_ellipse_name( char *spheriod)
 
             /* Always print interactive output to stderr */
             sprintf(buff,"%s \"%s\" 1>&2", pager, G_convert_dirseps_to_host(Tmp_file));
-            system(buff);
+            G_system(buff);
           }
           else {
             if (strcmp(answer,"sphere") == 0) break; 

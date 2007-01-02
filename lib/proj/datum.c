@@ -310,7 +310,7 @@ int GPJ_ask_datum_params(const char *datumname, char **params)
 
 		/* Always print interactive output to stderr */
                 sprintf(buff,"%s \"%s\" 1>&2", pager, G_convert_dirseps_to_host(Tmp_file));
-                system(buff);
+                G_system(buff);
             }
             else {
                 if ( (sscanf(answer, "%d", &currenttransform) != 1) ||

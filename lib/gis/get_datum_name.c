@@ -80,7 +80,7 @@ int G_ask_datum_name(char *datumname, char *ellpsname)
                 if (!pager || strlen(pager) == 0)
                     pager = "cat";
                 sprintf(buff,"%s \"%s\" 1>&2",pager, G_convert_dirseps_to_host(Tmp_file));
-                system(buff);
+                G_system(buff);
 
 	        remove ( Tmp_file );
 	    }

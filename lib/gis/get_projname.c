@@ -71,7 +71,7 @@ int G_ask_proj_name (char *proj_id, char *proj_name)
 
             /* Always print interactive output to stderr */
             sprintf(buff,"%s \"%s\" 1>&2", pager, G_convert_dirseps_to_host(Tmp_file));
-            system(buff);
+            G_system(buff);
           }
           else {
             a = G_find_key_value(answer,in_proj_keys);
