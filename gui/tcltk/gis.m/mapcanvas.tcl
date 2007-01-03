@@ -538,10 +538,11 @@ proc MapCanvas::runprograms { mon mod } {
 
 	# Now use the region values to get the region printed back out in -p format
 	# including lat long now as dd:mm:ss
+	set key ""
 	if {![catch {open [concat "|g.region" "-up" $options] r} input]} {
 		while {[gets $input line] >= 0} {
-			regexp -nocase {^([a-z]+)\:[ ]+(.*)$} $line trash key value
-			set parts($key) $value
+			set key [string trim [lindex [split $line ":"] 0]]
+			set parts($key) [string trim [lindex [split $line ":"] 1]]
 		}
 		close $input
 		# Finally put this into wind file format to use with GRASS_REGION
@@ -557,12 +558,6 @@ proc MapCanvas::runprograms { mon mod } {
 	incr drawprog
 	# only use dynamic region for display geometry; use WIND for computational geometry
 	set env(GRASS_REGION) $gregion
-
-	if {![catch {open [concat "|g.region" "-up"] r} input2]} {
-		while {[gets $input2 line] >= 0} {
-		}
-		catch close $input
-	}
 
 	set env(GRASS_RENDER_IMMEDIATE) "TRUE"
 
@@ -1053,7 +1048,7 @@ proc MapCanvas::zoom_previous {mon} {
 proc MapCanvas::zoom_gregion {mon args} {
 	global env
 
-	if {![catch {open [concat "|g.region" "-ug" $args] r} input]} {
+	if {![catch {open [concat "|g.region" "-ugp" $args] r} input]} {
 		while {[gets $input line] >= 0} {
 			regexp -nocase {^([a-z]+)=(.*)$} $line trash key value
 			set parts($key) $value

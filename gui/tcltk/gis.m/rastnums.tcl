@@ -219,7 +219,7 @@ proc GmRnums::display { node mod } {
 	set string ""
 	set cells 0
 	set rest ""
-	set rc [open "|g.region -gu" r]
+	set rc [open "|g.region -ugp" r]
 	set rowscolumns [read $rc]
 	close $rc
 	regexp {rows=(\d*)} $rowscolumns string rows

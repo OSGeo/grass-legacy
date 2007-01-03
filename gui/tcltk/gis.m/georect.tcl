@@ -1489,8 +1489,8 @@ proc GRMap::runprograms { mod } {
 	# including lat long now as dd:mm:ss
 	if {![catch {open [concat "|g.region" "-up" $options] r} input]} {
 		while {[gets $input line] >= 0} {
-			regexp -nocase {^([a-z]+)\:[ ]+(.*)$} $line trash key value
-			set parts($key) $value
+			set key [string trim [lindex [split $line ":"] 0]]
+			set parts($key) [string trim [lindex [split $line ":"] 1]]
 		}
 		close $input
 		# Finally put this into wind file format to use with GRASS_REGION
@@ -1862,7 +1862,8 @@ proc GRMap::zoom_gregion { args} {
 
     if {![catch {open [concat "|g.region" "-up" $args] r} input]} {
         while {[gets $input line] >= 0} {
-            regexp -nocase {^([a-z]+)\:*(.*)$} $line trash key value
+			set key [string trim [lindex [split $line ":"] 0]]
+			set value [string trim [lindex [split $line ":"] 1]]
             set value [string trim $value "(UTM)"]
             set value [string trim $value "(x,y)"]
             set value [string trim $value]
