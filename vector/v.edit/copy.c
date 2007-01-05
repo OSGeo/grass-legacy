@@ -33,27 +33,8 @@ int do_copy (struct Map_info *Map)
     int layer=atoi(fld_opt->answer);
     int field_idx;
 
-    /* select two lines defined by cats or coord or bbox */
-    if(cat_opt->answer != NULL) {
-        
-        List = sel_by_cat(Map);
-    }
-    else if (coord_opt->answer != NULL) {
-
-        List = sel_by_coordinates(Map);
-    }
-    else if (bbox_opt->answer != NULL) {
-
-        List = sel_by_bbox(Map);
-    }
-    else if (poly_opt->answer != NULL) {
-
-        List = sel_by_polygon(Map);
-    }
-    else {
-        /* this case should not happen, see args.c for details */
-        G_fatal_error("cats, coord or bbox must be specified");
-    }
+    /* Select features */
+    List = select_lines(Map);
 
     if (List->n_values <1) {
         G_warning(_("No lines found"),List->n_values);

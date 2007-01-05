@@ -56,11 +56,13 @@ int do_merge(struct Map_info *Map);
 int do_snap(struct Map_info *Map);
 
 /* select.c */
-int do_select(struct Map_info *Map);
+int do_print_selected(struct Map_info *Map);
+struct ilist *select_lines(struct Map_info *Map);
 struct ilist *sel_by_cat(struct Map_info *Map);
 struct ilist *sel_by_coordinates(struct Map_info *Map);
 struct ilist *sel_by_bbox(struct Map_info *Map);
 struct ilist *sel_by_polygon(struct Map_info *Map);
+struct ilist *sel_by_id(struct Map_info *Map);
 
 /* max_distance.c */
 double max_distance(double maxdistance);
@@ -72,7 +74,7 @@ int cats (struct Map_info *Map, int del);
 int do_copy (struct Map_info *Map);
 
 /* options */
-global struct Option *input_opt, *map_opt, *maxdist_opt, *tool_opt, *coord_opt, *cat_opt, *move_opt, *bbox_opt, *fld_opt, *poly_opt, *type_opt;
+global struct Option *input_opt, *map_opt, *maxdist_opt, *tool_opt, *coord_opt, *cat_opt, *move_opt, *bbox_opt, *fld_opt, *poly_opt, *type_opt, *id_opt;
 global struct Flag *n_flg, *t_flg, *i_flg, *b_flg, *c_flg, *n_flg;
 global struct GModule *module;
 global struct Map_info Map;

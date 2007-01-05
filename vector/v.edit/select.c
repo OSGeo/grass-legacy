@@ -19,11 +19,9 @@
  ****************************************************************/
 
 #include "global.h"
-
-int do_select(struct Map_info *Map )
+struct ilist *select_lines(struct Map_info *Map)
 {
     struct ilist *List;
-    int i;
 
     /* select by category */
     if(cat_opt->answer != NULL) {
@@ -41,9 +39,30 @@ int do_select(struct Map_info *Map )
     else if (poly_opt->answer != NULL) {
         List = sel_by_polygon(Map);
     }
+    /* select by id's */
+    else if (id_opt->answer != NULL) {
+        List = sel_by_id(Map);
+    }
     else {
         /* this case should not happen, see args.c for details */
         G_warning("cats, coord or bbox must be specified");
+    }
+
+    G_debug ( 1, "  %d lines selected", List->n_values );
+    return List;
+}
+
+
+int do_print_selected(struct Map_info *Map)
+{
+    struct ilist *List;
+    int i;
+
+    List = select_lines(Map);
+
+    if ( List->n_values == 0 ) {
+        /* this case should not happen, see args.c for details */
+        G_warning("cats, coord, id, polygon or bbox must be specified");
     }
 
     G_debug ( 1, "  %d lines selected", List->n_values );
@@ -172,6 +191,35 @@ struct ilist *sel_by_polygon(struct Map_info *Map)
     }
 
     Vect_select_lines_by_polygon(Map,Polygon, 0, NULL, type, List);
+
+    return List;
+}
+
+ /*
+ * Select lines by polygon, 
+ * return line List ilist
+ */
+struct ilist *sel_by_id(struct Map_info *Map)
+{
+    struct ilist *List;
+    int i,j;
+    int npoints;
+    int type = Vect_option_to_types ( type_opt );
+    struct cat_list *il; /* NOTE: this is not cat list, but list of id's */
+
+    il = Vect_new_cat_list();
+    Vect_str_to_cat_list(id_opt->answer, il);
+    List = Vect_new_list ();
+    
+    for ( i = 1; i <= Vect_get_num_lines ( Map ); i++) {
+        for(j=0;j< il->n_ranges;j++) {
+            int id;
+            for(id=il->min[j]; id <= il->max[j]; id++) {
+                if (id == i)
+                    Vect_list_append (List, id);
+            }
+        }
+    }
 
     return List;
 }

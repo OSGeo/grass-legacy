@@ -6,27 +6,11 @@ int do_del(struct Map_info *Map)
     int i;
     int removed = 0;
 
+    List = select_lines(Map);
 
-    /* cats or coord or bbox */
-    if(cat_opt->answer != NULL) {
-        
-        List = sel_by_cat(Map);
-    }
-    else if (coord_opt->answer != NULL) {
-
-        List = sel_by_coordinates(Map);
-    }
-    else if (bbox_opt->answer != NULL) {
-
-        List = sel_by_bbox(Map);
-    }
-    else if (poly_opt->answer != NULL) {
-
-        List = sel_by_polygon(Map);
-    }
-    else {
+    if ( List->n_values == 0 ) {
         /* this case should not happen, see args.c for details */
-        G_warning("cats, coord or bbox must be specified");
+        G_warning("cats, coord, id, polygon or bbox must be specified");
     }
 
     if (List->n_values == 0) {
