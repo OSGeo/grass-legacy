@@ -74,6 +74,7 @@ struct ilist *sel_by_cat(struct Map_info *Map)
     int field_idx;
     int i;
     int layer=atoi(fld_opt->answer);
+    int type = Vect_option_to_types ( type_opt );
 
     cl = Vect_new_cat_list();
     Vect_str_to_cat_list(cat_opt->answer, cl);
@@ -82,7 +83,7 @@ struct ilist *sel_by_cat(struct Map_info *Map)
     for(i=0;i<cl->n_ranges;i++) {
         int cat;
         for(cat=cl->min[i]; cat <= cl->max[i]; cat++) {
-            Vect_cidx_find_all(Map, field_idx,  GV_POINT | GV_CENTROID | GV_LINES | GV_BOUNDARY | GV_FACE, cat,  List);
+            Vect_cidx_find_all(Map, field_idx, type, cat,  List);
         }
     }
 
@@ -100,6 +101,8 @@ struct ilist *sel_by_coordinates(struct Map_info *Map)
     struct ilist *List;
     double maxdist =  max_distance(atof(maxdist_opt->answer));
     int i;
+    int type = Vect_option_to_types ( type_opt );
+
 
     List = Vect_new_list ();
 
@@ -108,7 +111,7 @@ struct ilist *sel_by_coordinates(struct Map_info *Map)
         east = atof(coord_opt->answers[i]);
         north = atof(coord_opt->answers[i+1]);
 
-        if ((id = Vect_find_line(Map, east, north, 0.0, -1, maxdist, 0, 0)) > 0) {
+        if ((id = Vect_find_line(Map, east, north, 0.0, type, maxdist, 0, 0)) > 0) {
             Vect_list_append ( List, id );
         }
     }
@@ -125,6 +128,8 @@ struct ilist *sel_by_bbox(struct Map_info *Map)
     BOUND_BOX bbox;
     double x1,x2,y1,y2;
     struct ilist *List;
+    int type = Vect_option_to_types ( type_opt );
+
 
     List = Vect_new_list ();
 
@@ -141,7 +146,7 @@ struct ilist *sel_by_bbox(struct Map_info *Map)
     bbox.T = 0.0;
     bbox.B = 0.0;
 
-    Vect_select_lines_by_box ( Map, &bbox, GV_CENTROID | GV_POINT | GV_LINES | GV_BOUNDARY | GV_FACE, List );
+    Vect_select_lines_by_box ( Map, &bbox, type, List );
 
     return List;
 }
@@ -156,6 +161,7 @@ struct ilist *sel_by_polygon(struct Map_info *Map)
     struct line_pnts *Polygon;
     int i;
     int npoints;
+    int type = Vect_option_to_types ( type_opt );
 
     List = Vect_new_list ();
     Polygon = Vect_new_line_struct();
@@ -169,7 +175,7 @@ struct ilist *sel_by_polygon(struct Map_info *Map)
         Vect_append_point(Polygon,atof(poly_opt->answers[0]),atof(poly_opt->answers[1]), 0.0);
     }
 
-    Vect_select_lines_by_polygon(Map,Polygon, 0, NULL, -1, List);
+    Vect_select_lines_by_polygon(Map,Polygon, 0, NULL, type, List);
 
     return List;
 }
