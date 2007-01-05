@@ -15,6 +15,12 @@
  *               for details.
  *
  ***************************************************************************/
+/* Algorithm comment from Jim Westervelt:
+   It appears that the code is doing a linear interpolation between cells and
+   finding where a given contour crosses through each cell.  In the end,
+   strings of coordinates are generated for user selected contours.  In GRASS,
+   these are lines and not necessarily polygons.
+*/
 
 #include <stdio.h>
 #include <math.h>
