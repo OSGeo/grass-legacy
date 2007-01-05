@@ -19,8 +19,11 @@ int parser(int argc, char*argv[])
                              "\t\tbreak  - Add new vertex to existing vector line\n"
                              "\t\tmerge  - Merge two vector lines togher\n"
                              "\t\tsplit  - Split line into two separate lines\n"
-                             "\t\tselect - Select lines and print their ID's");
-    tool_opt->options     = "create,add,delete,move,vertex,straight,merge,break,split,select";
+                             "\t\tselect - Select lines and print their ID's\n"
+                             "\t\tcatadd - Set new category to selected lines for defined layer\n"
+                             "\t\tcatdel - Delete category to selected lines for defined layer\n"
+                             "\t\tcopy   - Copy selected features");
+    tool_opt->options     = "create,add,delete,move,vertex,straight,merge,break,split,select,catadd,catdel,copy";
 
     input_opt = G_define_option();
     input_opt->key      = "input";
@@ -255,7 +258,7 @@ int parser(int argc, char*argv[])
     else if(strcmp(tool_opt->answer, "split")==0) { /* split line requires a coord and at options */
 	action_mode = MODE_SPLIT;
 	if(coord_opt->answers == NULL) {
-	    G_warning(_("Required parameter <coords> not set"));
+	    G_warning(_("Required parameter <%s> not set"),"coords");
             G_usage();
 	    return 0;
 	};
@@ -264,13 +267,46 @@ int parser(int argc, char*argv[])
     else if(strcmp(tool_opt->answer, "straight")==0) { /* remove vertex */
 	action_mode = MODE_STRAIGHTEN;
 	if(coord_opt->answers == NULL) {
-	    G_warning(_("Required parameter <coords> not set"));
+	    G_warning(_("Required parameter <%s> not set"),"coords");
             G_usage();
 	    return 0;
 	};
     }
     else if(strcmp(tool_opt->answer, "select")==0) { /* del requires a cats or or bbox or coords*/
 	action_mode = MODE_SELECT;
+	if((cat_opt->answers == NULL) && 
+           (coord_opt->answers == NULL) &&
+           (poly_opt->answers == NULL) &&
+           (bbox_opt->answers == NULL)) {
+	    G_warning(_("At least one option from <%s> must be specified"),"cats, coords, bbox, polygon");
+            G_usage();
+	    return 0;
+	};
+	return 1;
+    }
+    else if(strcmp(tool_opt->answer, "catadd")==0) { /* cat requires a cats or or bbox or coords*/
+	action_mode = MODE_CATADD;
+
+        if (cat_opt->answers == NULL) {
+            G_warning(_("Required parameter <%s> not set"), "cats");
+            return 0;
+        }
+	return 1;
+    }
+
+    else if(strcmp(tool_opt->answer, "catdel")==0) { /* cat requires a cats or or bbox or coords*/
+	action_mode = MODE_CATDEL;
+
+        if (cat_opt->answers == NULL) {
+            G_warning(_("Required parameter <%s> not set"), "cats");
+            return 0;
+        }
+	return 1;
+    }
+
+
+    else if(strcmp(tool_opt->answer, "copy")==0) { /* del requires a cats or or bbox or coords*/
+	action_mode = MODE_COPY;
 	if((cat_opt->answers == NULL) && 
            (coord_opt->answers == NULL) &&
            (poly_opt->answers == NULL) &&

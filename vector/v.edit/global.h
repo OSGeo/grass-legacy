@@ -25,6 +25,9 @@ enum mode {
     MODE_MERGE,
     MODE_CONTOURS,
     MODE_SELECT,
+    MODE_CATADD,
+    MODE_CATDEL,
+    MODE_COPY,
 };
 
 int parser(int argc, char*argv[]);
@@ -58,6 +61,11 @@ struct ilist *sel_by_polygon(struct Map_info *Map);
 /* max_distance.c */
 double max_distance(double maxdistance);
 
+/* cats.c */
+int cats (struct Map_info *Map, int del);
+
+/* copy.c */
+int do_copy (struct Map_info *Map);
 
 void cat_max_set ( int field, int cat);
 int cat_max_get ( int field );
