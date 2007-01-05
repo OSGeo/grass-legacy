@@ -37,9 +37,9 @@ int main (int argc, char *argv[])
     if(!parser(argc, argv))
 	exit(EXIT_FAILURE);
 
-/*     G_set_error_routine(error_routine); */
     mapset = G_find_vector2 (map_opt->answer, G_mapset()); 
 
+    /* open selected vector file */
     if ( mapset == NULL ) {
 	if ( action_mode == MODE_CREATE ) {
 	    Vect_open_new (&Map, map_opt->answer, 0 );
@@ -56,19 +56,17 @@ int main (int argc, char *argv[])
 	}
     }
     else {
-/* 	Vect_set_open_level(2); */
         if (action_mode != MODE_SELECT)
             Vect_open_update (&Map, map_opt->answer, mapset);
         else
             Vect_open_old (&Map, map_opt->answer, mapset);
     }
-/*     Vect_set_category_index_update ( &Map ); */
 
     G_debug (1, "Map opened");
 
+    /* perform requested editation */
     switch(action_mode) {
       case MODE_ADD:
-	G_message(_("Adding new features to vector file ..."));
         if ( ! n_flg->answer )
             read_head(ascii, &Map);
         ret = asc_to_bin(ascii, &Map) ;
@@ -121,7 +119,8 @@ int main (int argc, char *argv[])
     else
 	Vect_hist_command(&Map);
 
-    if  (action_mode != MODE_SELECT && t_flg->answer != 1) {
+    /* build topology only if requested or if tool!=select */
+    if  (!(action_mode == MODE_SELECT || t_flg->answer == 1)) {
         Vect_build_partial(&Map, GV_BUILD_NONE, NULL);
         Vect_build(&Map, output );
     }
