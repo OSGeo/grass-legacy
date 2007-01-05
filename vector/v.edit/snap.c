@@ -119,6 +119,9 @@ int do_snap(struct Map_info *Map)
         return 0;
     }
 
-    G_message(_("Lines [%d,%d] snaped"), line1,line2);
+    if (i_flg->answer) 
+        fprintf(stdout,"%d\n", line2);
+
+    G_message(_("Line [%d] snaped to line [%d]"), line2,line1);
     return 1;
 }

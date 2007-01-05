@@ -114,7 +114,13 @@ int cats (struct Map_info *Map, int del)
             G_warning("Line could not be saved");
             return 0;
         }
-        fprintf(stdout,"%d%s",List->value[line], line == List->n_values-1 ? "," : "\n");
+
+        if (i_flg->answer) 
+            fprintf(stdout,"%d%s", List->value[line], line < List->n_values-1 ? "," : "\n");
     }
+    if (del) 
+        G_message(_("Category [%d] and layer [%d] deleted from features"), cat,layer);
+    else
+        G_message(_("Category [%d] and layer [%d] set to selected features"), cat,layer);
     return 1;
 }

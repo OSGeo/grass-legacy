@@ -73,7 +73,7 @@ int do_copy (struct Map_info *Map);
 
 /* options */
 global struct Option *input_opt, *map_opt, *maxdist_opt, *tool_opt, *coord_opt, *cat_opt, *move_opt, *bbox_opt, *fld_opt, *poly_opt, *type_opt;
-global struct Flag *n_flg, *t_flg, *d_flg, *b_flg, *c_flg, *n_flg;
+global struct Flag *n_flg, *t_flg, *i_flg, *b_flg, *c_flg, *n_flg;
 global struct GModule *module;
 global struct Map_info Map;
 global enum mode action_mode;
