@@ -87,6 +87,9 @@ int do_copy (struct Map_info *Map)
         if ((cat = Vect_get_line_cat (Map, List->value[i], layer)) > 0) {
             Vect_cat_set (Cats,layer, cat);
         }
+
+        if (i_flg->answer) 
+            fprintf(stdout,"%d%s", List->value[i], i < List->n_values-1 ? "," : "\n");
     }
     return 1;
 }

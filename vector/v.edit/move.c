@@ -29,6 +29,7 @@ int do_move(struct Map_info *Map)
     struct line_pnts *Points;
     struct line_cats *Cats;
     int moved=0;
+    int newline;
 
     move_x = atof(move_opt->answers[0]);
     move_y = atof(move_opt->answers[1]);
@@ -62,6 +63,9 @@ int do_move(struct Map_info *Map)
     Points = Vect_new_line_struct();
     Cats = Vect_new_cats_struct();
 
+    if (i_flg->answer) 
+        fprintf(stdout,"id=");
+
     for ( i = 0; i < List->n_values; i++) {
 
         type = Vect_read_line(Map, Points, Cats, List->value[i]);
@@ -74,14 +78,16 @@ int do_move(struct Map_info *Map)
 
         }/* /for each point at line */
 
-        if ( Vect_rewrite_line (Map, List->value[i], type, Points, Cats) < 0)  {
+        if ( (newline = Vect_rewrite_line (Map, List->value[i], type, Points, Cats)) < 0)  {
             G_warning("Feature [%d] could not be moved",List->value[i]);
             return 0;
         }
         moved++;
-        /* attr_del(Map, layer, cat);*/
+        
+        if (i_flg->answer) 
+            fprintf(stdout,"%d%s", List->value[i], i < List->n_values-1 ? "," : "\n");
     }
-
-    G_message(_("%d features moved"), moved);
+        
+    G_message(_("[%d] features moved"), moved);
     return 1;
 }

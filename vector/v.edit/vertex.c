@@ -99,41 +99,41 @@ int do_move_vertex(struct Map_info *Map)
 
     G_debug (2, "line = %d", line);
 
+
     if (line == 0) {
         G_warning(_("No line found."));
         return 0;
-
     }
-    else {
-	Points = Vect_new_line_struct();
-	Cats = Vect_new_cats_struct();
-        type = Vect_read_line(Map, Points, Cats, line);
-        if ((cat = Vect_get_line_cat(Map, line, field )) > 0) 
-            sprintf(buff,_("category [%d]"),cat);
-            
-        G_debug(2, "Moving type [%d] number [%d] %s", type, line, buff);
-        /* move */
-        for (j = 0; j < Points->n_points; j++) {
 
-            if ((bbox.W <= Points->x[j] && Points->x[j] <= bbox.E) && 
-                (bbox.S <= Points->y[j] && Points->y[j] <= bbox.N)){
-                Points->x[j]+=move[0];
-                Points->y[j]+=move[1];
-                res++;
-            }
+    Points = Vect_new_line_struct();
+    Cats = Vect_new_cats_struct();
+    type = Vect_read_line(Map, Points, Cats, line);
+    if ((cat = Vect_get_line_cat(Map, line, field )) > 0) 
+        sprintf(buff,_("category [%d]"),cat);
+        
+    G_debug(2, "Moving type [%d] number [%d] %s", type, line, buff);
+    /* move */
+    for (j = 0; j < Points->n_points; j++) {
 
-        }/* /for each point at line */
-
-        if ( Vect_rewrite_line (Map, line, type, Points, Cats) < 0)  {
-            G_warning("Feature could not be moved");
-            return 0;
+        if ((bbox.W <= Points->x[j] && Points->x[j] <= bbox.E) && 
+            (bbox.S <= Points->y[j] && Points->y[j] <= bbox.N)){
+            Points->x[j]+=move[0];
+            Points->y[j]+=move[1];
+            res++;
         }
 
-        /* attr_del(Map, layer, cat);*/
+    }/* /for each point at line */
+
+    if ( Vect_rewrite_line (Map, line, type, Points, Cats) < 0)  {
+        G_warning("Feature could not be moved");
+        return 0;
     }
 
+
     if (res) {
-        G_message(_("%d vertexes moved"),res);
+        if (i_flg->answer) 
+            fprintf(stdout,"%d\n", line);
+        G_message(_("[%d] vertexes moved"),res);
         return 1;
     }
     else {
@@ -208,10 +208,11 @@ int do_break(struct Map_info *Map)
             G_warning("Line could not be split");
             return 0;
         }
-        /* attr_del(Map, layer, cat);*/
     }
 
-    G_message(_("Line split"));
+    if (i_flg->answer) 
+        fprintf(stdout,"%d\n", line);
+    G_message(_("Line [%d] broken"), line);
     return 1;
 }
 
@@ -283,7 +284,9 @@ int do_remove_vertex(struct Map_info *Map)
         /* attr_del(Map, layer, cat);*/
     }
 
-    G_message(_("Vertex removed"));
+    if (i_flg->answer) 
+        fprintf(stdout,"%d\n", line);
+    G_message(_("Vertex on line [%d] removed"), line);
     return 1;
 }
 
@@ -364,11 +367,10 @@ int do_split(struct Map_info *Map)
             G_warning("Line could not be split");
             return 0;
         }
-        /* attr_del(Map, layer, cat);*/
     }
 
-    G_message(_("Line split"));
+    if (i_flg->answer) 
+        fprintf(stdout,"%d\n", line);
+    G_message(_("Line [%d] split"), line);
     return 1;
 }
-
-

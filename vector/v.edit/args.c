@@ -86,9 +86,9 @@ int parser(int argc, char*argv[])
     t_flg->key = 't';
     t_flg->description = _("Do not build topology.");
 
-    d_flg = G_define_flag();
-    d_flg->key = 'd';
-    d_flg->description = _("No database updates.");
+    i_flg = G_define_flag();
+    i_flg->key = 'i';
+    i_flg->description = _("Print id's of edited features");
 
     b_flg = G_define_flag();
     b_flg->key = 'b';
