@@ -98,6 +98,15 @@ int main (int argc, char *argv[])
       case MODE_SELECT:
         ret = do_select(&Map);
         break;
+      case MODE_CATADD:
+        ret = cats(&Map, 0);
+        break;
+      case MODE_CATDEL:
+        ret = cats(&Map, 1);
+        break;
+      case MODE_COPY:
+        ret = do_copy(&Map);
+        break;
       default:
 	G_warning("Sorry this is not yet implemented");
 	ret=0;
