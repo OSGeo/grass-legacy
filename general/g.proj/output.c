@@ -94,18 +94,25 @@ void print_datuminfo(void)
 void print_proj4(int dontprettify)
 {
     struct pj_info pjinfo;
-    char *projstring, *i;
+    char *proj4, *proj4mod, *i, *unfact;
 
     if( check_xy() )
         return;
    
     pj_get_kv(&pjinfo, projinfo, projunits);
-    projstring = pj_get_def(pjinfo.pj, 0);
-    pj_free(pjinfo.pj);
+    proj4 = pj_get_def(pjinfo.pj, 0);
 
-    for (i = projstring; *i; i++) {
+    /* GRASS-style PROJ.4 strings don't include a unit factor as this is
+     * handled separately in GRASS - must include it here though */
+    unfact = G_find_key_value("meters", projunits);
+    if (unfact != NULL && (strcmp(pjinfo.proj, "ll") != 0))
+	G_asprintf(&proj4mod, "%s +to_meter=%s", proj4, unfact);
+    else
+	proj4mod = proj4;
+   
+    for (i = proj4mod; *i; i++) {
     	/* Don't print the first space */
-    	if (i == projstring && *i == ' ')
+    	if (i == proj4mod && *i == ' ')
     	    continue;
 
     	if (*i == ' ' && !(dontprettify))
@@ -114,7 +121,6 @@ void print_proj4(int dontprettify)
     	    fputc(*i, stdout);
     }
     fputc('\n', stdout);
-    pj_dalloc(projstring);
    
     return;
 }
