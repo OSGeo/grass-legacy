@@ -95,7 +95,7 @@ int print_window(struct Cell_head *window, int print_flag)
 	}
 	*/
 
-	if (! print_flag & PRINT_SH)
+	if (! (print_flag & PRINT_SH))
 	{
 	    fprintf(stdout, "%-*s: %d (%s)\n", width, "projection", window->proj, prj);
 	    fprintf(stdout, "%-*s: %d\n", width, "zone", window->zone);
@@ -132,7 +132,7 @@ int print_window(struct Cell_head *window, int print_flag)
 	    }
 	    */
 
-	    if (! print_flag & PRINT_SH)
+	    if (! (print_flag & PRINT_SH))
 	    {
 		fprintf(stdout, "%-*s: %s\n", width, "datum", datum);
 		fprintf(stdout, "%-*s: %s\n", width, "ellipsoid", ellps);
