@@ -93,7 +93,7 @@ int main (int argc, char *argv[])
         ret = do_merge(&Map);
         break;
       case MODE_SELECT:
-        ret = do_select(&Map);
+        ret = do_print_selected(&Map);
         break;
       case MODE_CATADD:
         ret = cats(&Map, 0);

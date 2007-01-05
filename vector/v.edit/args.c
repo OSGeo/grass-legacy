@@ -39,6 +39,11 @@ int parser(int argc, char*argv[])
 
     cat_opt = G_define_standard_option(G_OPT_V_CATS);
     cat_opt->required    = NO;
+
+    id_opt = G_define_standard_option(G_OPT_V_CATS);
+    id_opt->required    = NO;
+    id_opt->key    = "id";
+    id_opt->description    = "ID's of selected features";
     
     coord_opt = G_define_option();
     coord_opt->key         = "coords";
@@ -178,7 +183,6 @@ int parser(int argc, char*argv[])
 
 
     /* check that the given arguments makes sense together */
-    /** @todo check for incorrect extra parameters */
     if(strcmp(tool_opt->answer, "create")==0) { /* create requires nothing extra*/
 	action_mode = MODE_CREATE;
 	return 1;
@@ -193,8 +197,9 @@ int parser(int argc, char*argv[])
 	if((cat_opt->answers == NULL) && 
            (coord_opt->answers == NULL) &&
            (poly_opt->answers == NULL) &&
+           (id_opt->answers == NULL) &&
            (bbox_opt->answers == NULL)) {
-	    G_warning(_("At least one option from <%s> must be specified"),"cats, coords, bbox, polygon");
+	    G_warning(_("At least one option from <%s> must be specified"),"cats, coords, bbox, polygon, id");
             G_usage();
 	    return 0;
 	};
@@ -210,8 +215,9 @@ int parser(int argc, char*argv[])
 	if(coord_opt->answers == NULL && 
             (cat_opt->answers == NULL) &&
             (poly_opt->answers == NULL) &&
+            (id_opt->answers == NULL) &&
             (bbox_opt->answers == NULL)) {
-	    G_warning(_("At least one option from <%s> must be specified"),"cats, coords, bbox, polygon");
+	    G_warning(_("At least one option from <%s> must be specified"),"cats, coords, bbox, polygon, id");
             G_usage();
 	    return 0;
 	};
@@ -222,8 +228,9 @@ int parser(int argc, char*argv[])
 	if((cat_opt->answers == NULL) && 
            (coord_opt->answers == NULL) &&
            (poly_opt->answers == NULL) &&
+            (id_opt->answers == NULL) &&
            (bbox_opt->answers == NULL)) {
-	    G_warning(_("At least one option from <%s> must be specified"),"cats, coords, bbox, polygon");
+	    G_warning(_("At least one option from <%s> must be specified"),"cats, coords, bbox, polygon, id");
             G_usage();
 	    return 0;
 	};
@@ -274,8 +281,9 @@ int parser(int argc, char*argv[])
 	if((cat_opt->answers == NULL) && 
            (coord_opt->answers == NULL) &&
            (poly_opt->answers == NULL) &&
+            (id_opt->answers == NULL) &&
            (bbox_opt->answers == NULL)) {
-	    G_warning(_("At least one option from <%s> must be specified"),"cats, coords, bbox, polygon");
+	    G_warning(_("At least one option from <%s> must be specified"),"cats, coords, bbox, polygon, id");
             G_usage();
 	    return 0;
 	};
@@ -306,9 +314,10 @@ int parser(int argc, char*argv[])
 	action_mode = MODE_COPY;
 	if((cat_opt->answers == NULL) && 
            (coord_opt->answers == NULL) &&
+            (id_opt->answers == NULL) &&
            (poly_opt->answers == NULL) &&
            (bbox_opt->answers == NULL)) {
-	    G_warning(_("At least one option from <%s> must be specified"),"cats, coords, bbox, polygon");
+	    G_warning(_("At least one option from <%s> must be specified"),"cats, coords, bbox, polygon, id");
             G_usage();
 	    return 0;
 	};
@@ -319,9 +328,10 @@ int parser(int argc, char*argv[])
 	action_mode = MODE_SNAP;
 	if((cat_opt->answers == NULL) && 
            (coord_opt->answers == NULL) &&
+            (id_opt->answers == NULL) &&
            (poly_opt->answers == NULL) &&
            (bbox_opt->answers == NULL)) {
-	    G_warning(_("At least one option from <%s> must be specified"),"cats, coords, bbox, polygon");
+	    G_warning(_("At least one option from <%s> must be specified"),"cats, coords, bbox, polygon, id");
             G_usage();
 	    return 0;
 	};

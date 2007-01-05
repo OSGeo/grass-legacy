@@ -35,31 +35,13 @@ int do_move(struct Map_info *Map)
     move_y = atof(move_opt->answers[1]);
 
     /* cats or coord or bbox */
-    if(cat_opt->answer != NULL) {
-        
-        List = sel_by_cat(Map);
-    }
-    else if (coord_opt->answer != NULL) {
-
-        List = sel_by_coordinates(Map);
-    }
-    else if (bbox_opt->answer != NULL) {
-
-        List = sel_by_bbox(Map);
-    }
-    else if (poly_opt->answer != NULL) {
-
-        List = sel_by_polygon(Map);
-    }
-    else {
-        /* this case should not happen, see args.c for details */
-        G_warning("cats, coord or bbox must be specified");
-    }
+    List = select_lines(Map);
 
     if (List->n_values == 0) {
         G_message(_("No features found"));
         return 0;
     }
+
     Points = Vect_new_line_struct();
     Cats = Vect_new_cats_struct();
 

@@ -37,26 +37,7 @@ int do_snap(struct Map_info *Map)
     Cats2 = Vect_new_cats_struct();
 
     /* select two lines defined by cats or coord or bbox */
-    if(cat_opt->answer != NULL) {
-        
-        List = sel_by_cat(Map);
-    }
-    else if (coord_opt->answer != NULL) {
-
-        List = sel_by_coordinates(Map);
-    }
-    else if (bbox_opt->answer != NULL) {
-
-        List = sel_by_bbox(Map);
-    }
-    else if (poly_opt->answer != NULL) {
-
-        List = sel_by_polygon(Map);
-    }
-    else {
-        /* this case should not happen, see args.c for details */
-        G_warning("cats, coord or bbox must be specified");
-    }
+    List = select_lines(Map);
 
     if (List->n_values <2) {
         G_message(_("Only [%d] lines found, two needed"),List->n_values);
