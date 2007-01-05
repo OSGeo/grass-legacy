@@ -63,9 +63,6 @@ int do_move(struct Map_info *Map)
     Points = Vect_new_line_struct();
     Cats = Vect_new_cats_struct();
 
-    if (i_flg->answer) 
-        fprintf(stdout,"id=");
-
     for ( i = 0; i < List->n_values; i++) {
 
         type = Vect_read_line(Map, Points, Cats, List->value[i]);
