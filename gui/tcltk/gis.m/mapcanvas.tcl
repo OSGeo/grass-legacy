@@ -539,7 +539,7 @@ proc MapCanvas::runprograms { mon mod } {
 	# Now use the region values to get the region printed back out in -p format
 	# including lat long now as dd:mm:ss
 	set key ""
-	if {![catch {open [concat "|g.region" "-up" $options] r} input]} {
+	if {![catch {open [concat "|g.region" "-up" $options "|& $env(GISBASE)/etc/grocat"] r} input]} {
 		while {[gets $input line] >= 0} {
 			set key [string trim [lindex [split $line ":"] 0]]
 			set parts($key) [string trim [lindex [split $line ":"] 1]]
@@ -1048,10 +1048,11 @@ proc MapCanvas::zoom_previous {mon} {
 proc MapCanvas::zoom_gregion {mon args} {
 	global env
 
-	if {![catch {open [concat "|g.region" "-ugp" $args] r} input]} {
+	if {![catch {open [concat "|g.region" "-ugp" $args "|& $env(GISBASE)/etc/grocat"] r} input]} {
 		while {[gets $input line] >= 0} {
-			regexp -nocase {^([a-z]+)=(.*)$} $line trash key value
-			set parts($key) $value
+			if { [regexp -nocase {^([a-z]+)=(.*)$} $line trash key value] } {
+				set parts($key) $value
+			}
 		}
 		
 		if {[catch {close $input} error]} {
@@ -1104,9 +1105,9 @@ proc MapCanvas::set_wind {mon args overwrite} {
 	}
 
 	if {$overwrite == 1} {
-		open [concat "|g.region --o" $options $args]
+		open [concat "|g.region --o" $options $args "|& $env(GISBASE)/etc/grocat"]
 	} else {
-		open [concat "|g.region" $options $args]
+		open [concat "|g.region" $options $args "|& $env(GISBASE)/etc/grocat"]
 	}
 }
 
