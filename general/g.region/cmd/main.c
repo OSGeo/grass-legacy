@@ -93,11 +93,6 @@ int main (int argc, char *argv[])
 	flag.print->description = _("Print the current region");
 	flag.print->guisection  = _("Print");
 
-	flag.gprint = G_define_flag();
-	flag.gprint->key         = 'g';
-	flag.gprint->description = _("Print the current region (shell script style)");
-	flag.gprint->guisection  = _("Print;Shell Script");
-
 	flag.lprint = G_define_flag();
 	flag.lprint->key         = 'l';
 	flag.lprint->description = _("Print the current region in lat/long on current "
@@ -127,7 +122,12 @@ int main (int argc, char *argv[])
 	flag.bbox = G_define_flag();
 	flag.bbox->key         = 'b';
 	flag.bbox->description = _("Print the maximum bounding box in lat/long on WGS84");
-	flag.bbox->guisection  = _("Print;Shell Script");
+	flag.bbox->guisection  = _("Print");
+
+	flag.gprint = G_define_flag();
+	flag.gprint->key         = 'g';
+	flag.gprint->description = _("Print in shell script style");
+	flag.gprint->guisection  = _("Print;Shell Script");
 
         flag.res_set= G_define_flag();
         flag.res_set->key         = 'a';
