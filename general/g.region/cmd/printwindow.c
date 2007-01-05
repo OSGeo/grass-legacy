@@ -79,12 +79,23 @@ int print_window(struct Cell_head *window, int print_flag)
 	prj = G_database_projection_name();
 	if (!prj)
 	    prj = "** unknown **";
+	/*
+	  please remove before GRASS 7 released
+	  backward compatibility issue
+
 	if (print_flag & PRINT_SH)
 	{
 	    fprintf(stdout, "projection=%d\n", window->proj);
 	    fprintf(stdout, "zone=%d\n", window->zone);
 	}
 	else
+	{
+	    fprintf(stdout, "%-*s: %d (%s)\n", width, "projection", window->proj, prj);
+	    fprintf(stdout, "%-*s: %d\n", width, "zone", window->zone);
+	}
+	*/
+
+	if (! print_flag & PRINT_SH)
 	{
 	    fprintf(stdout, "%-*s: %d (%s)\n", width, "projection", window->proj, prj);
 	    fprintf(stdout, "%-*s: %d\n", width, "zone", window->zone);
@@ -98,7 +109,11 @@ int print_window(struct Cell_head *window, int print_flag)
 	    ellps = G_database_ellipse_name();
 	    if (!ellps)
 		ellps = "** unknown (default: WGS84) **";
-	
+
+	    /*
+	      please remove before GRASS 7 released
+	      backward compatibility issue
+
 	    if (print_flag & PRINT_SH)
 	    {
 		if (datum[0] != '*')
@@ -111,6 +126,13 @@ int print_window(struct Cell_head *window, int print_flag)
 		    fprintf(stdout, "ellipsoid=wgs84\n");
 	    }
 	    else
+	    {
+		fprintf(stdout, "%-*s: %s\n", width, "datum", datum);
+		fprintf(stdout, "%-*s: %s\n", width, "ellipsoid", ellps);
+	    }
+	    */
+
+	    if (! print_flag & PRINT_SH)
 	    {
 		fprintf(stdout, "%-*s: %s\n", width, "datum", datum);
 		fprintf(stdout, "%-*s: %s\n", width, "ellipsoid", ellps);
