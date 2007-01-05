@@ -74,8 +74,6 @@ int do_copy (struct Map_info *Map);
 void cat_max_set ( int field, int cat);
 int cat_max_get ( int field );
 void cat_init(struct Map_info *Map);
-int add_line(struct Map_info *Map, int type, struct line_pnts *Points,
-	     int field, int cat);
 
 /* options */
 global struct Option *input_opt, *map_opt, *maxdist_opt, *tool_opt, *coord_opt, *cat_opt, *move_opt, *bbox_opt, *fld_opt, *poly_opt, *type_opt;
