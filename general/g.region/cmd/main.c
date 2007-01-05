@@ -380,11 +380,16 @@ int main (int argc, char *argv[])
 	if (print_flag == PRINT_SH ||
 	    print_flag == PRINT_SH + PRINT_3D)
 	{
+	    /*
+	      please remove before GRASS 7 released
+	      backward compatibility issue
+	    */
+	    /*
 	    G_warning (_("This feature is superseded and will be removed "
 			 "in future versions of GRASS. "
 			 "Use the -g flag in combination with other print flags, "
 			 "e.g. -pg."));
-            /* please remove before GRASS 7 released */
+	    */
 	    print_flag |= PRINT_REG;
 	}
 
