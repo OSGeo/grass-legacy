@@ -65,7 +65,6 @@ int main (int argc, char *argv[])
 /*     Vect_set_category_index_update ( &Map ); */
 
     G_debug (1, "Map opened");
-    cat_init(&Map);
 
     switch(action_mode) {
       case MODE_ADD:
