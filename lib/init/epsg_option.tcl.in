@@ -13,9 +13,9 @@
 #         VERSION:  1.2
 #         CREATED:  04/01/2004
 #        REVISION:  22/04/2006 (Michael Barton, Arizona State University)
-#       CHANGELOG:  1.0.1 08/12/2006 - Fixed directory choosing dialogs. Maris Nartiss.
-#            TODO:  Check return status of make_location_epsg.sh to catch failed location creation.
-#                   Make epsg code browser user frendly.
+#       CHANGELOG:  20/12/2006 - EPSG code search and epsgOpt::create_loc. Michael Barton.
+#                   08/12/2006 - Fixed directory choosing dialogs. Maris Nartiss.
+#
 #=====================================================================================
 #
 #
@@ -84,7 +84,7 @@ proc epsgOpt::epsgLocCom args {
 	set start 1.0
 	#Mac framework location for EPSG file
 	#set env(PROJSHARE) "/Library/Frameworks/PROJ.framework/Resources/proj"
-        
+
 	# NOTE: the epsg file is generated in GDAL for PROJ4 
 	# with gdal/pymod/epsg_tr.py
 	set epsgOpt::browsedepsg "PROJSHARE/epsg"
@@ -276,7 +276,13 @@ proc epsgOpt::create_loc { } {
 		
 		
 		# create new location from EPSG code
-		catch {exec g.proj -c proj4=+init=epsg:$epsg_code location=$epsgLocation}
+		catch {exec g.proj -c proj4=+init=epsg:$epsg_code location=$epsgLocation} errMsg
+		if {[lindex $::errorCode 0] eq "CHILDSTATUS"} {
+                        DialogGen .wrnDlg [G_msg "WARNING: Error creating new location"] warning \
+				[format [G_msg "Error creating new location from EPSG code. \
+		                g.proj returned following message:\n\n%s"] $errMsg] \
+				0 OK
+		}
 	
 		# restore previous .$GRASSRC
 		if {[file exists "$database/$tempdir/$GRASSRC"]} {
@@ -288,7 +294,13 @@ proc epsgOpt::create_loc { } {
 		set env(GISRC) $curr_gisrc
 	} else {
 		# create new location from EPSG code
-		catch {exec g.proj -c proj4=+init=epsg:$epsg_code location=$epsgLocation}
+		catch {exec g.proj -c proj4=+init=epsg:$epsg_code location=$epsgLocation} errMsg
+		if {[lindex $::errorCode 0] eq "CHILDSTATUS"} {
+		        DialogGen .wrnDlg [G_msg "WARNING: Error creating new location"] warning \
+				[format [G_msg "Error creating new location from EPSG code. \
+		                g.proj returned following message:\n\n%s"] $errMsg] \
+				0 OK
+		}
 	
 	}
 
@@ -358,10 +370,10 @@ proc epsgOpt::codesEpsg args {
 	}
 			
 	set controls [frame .infoPopup.buttons]
-	button $controls.search -text "Search" -command "epsgOpt::search_epsg $epsgtxt" \
+	button $controls.search -text [G_msg "Search"] -command "epsgOpt::search_epsg $epsgtxt" \
 		-bd 1
 	
-	Button $controls.grab -text "Grab code" -width 8 -bd 1 \
+	Button $controls.grab -text [G_msg "Grab code"] -width 8 -bd 1 \
 		-command "epsgOpt::grabcode"
 	
 	pack $controls.search $controls.grab -side left -fill x -expand 0
@@ -388,29 +400,29 @@ proc epsgOpt::search_epsg { epsgtxt } {
 
     # Create a popup search dialog
     toplevel .search_epsg
-    wm title .search_epsg "Search"
+    wm title .search_epsg [G_msg "Search"]
     set row1 [frame .search_epsg.frame1]
     set row2 [frame .search_epsg.frame2]
     set row3 [frame .search_epsg.frame3]
     set row4 [frame .search_epsg.frame4]
     
-    Label $row1.label -text "Search text: " \
-    	-helptext "Search for entered text in EPSG file"
+    Label $row1.label -text [G_msg "Search text: "] \
+    	-helptext [G_msg "Search for entered text in EPSG file"]
     set searchentry [entry $row1.enter -relief sunken -textvariable epsgOpt::searchterm]
     pack $row1.label $row1.enter -side left -fill x -expand 0 -anchor w
     pack $row1 -side top -padx 3 -pady 4 -expand 1 -fill both
     
-    radiobutton $row2.forward -text "forward search" -variable epsgOpt::dir -value "f"
-    radiobutton $row2.backward -text "backward search" -variable epsgOpt::dir -value "b"
+    radiobutton $row2.forward -text [G_msg "forward search"] -variable epsgOpt::dir -value "f"
+    radiobutton $row2.backward -text [G_msg "backward search"] -variable epsgOpt::dir -value "b"
     $row2.forward select
     pack $row2.forward $row2.backward -side left \
     	-anchor w -fill x -expand 0
     pack $row2 -side top -padx 3 -expand 1 -fill both
     
-    Button $row4.search -text "Search" -width 8 -bd 1 \
+    Button $row4.search -text [G_msg "Search"] -width 8 -bd 1 \
     	-command "epsgOpt::textsearch"
     pack $row4.search -side left -fill x -expand 0
-    button $row4.cancel -text "Close" -width 8 -bd 1 -command "destroy .search_epsg"
+    button $row4.cancel -text [G_msg "Close"] -width 8 -bd 1 -command "destroy .search_epsg"
     pack $row4.cancel -side right -fill x -expand 0
     pack $row4 -side top -pady 3 -expand 1 -fill both
 
