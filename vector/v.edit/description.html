@@ -12,6 +12,10 @@
 Currently, it works only on 2D region. 
 </p>
 
+<p>
+<em>v.edit</em> does not edit attribute tables connected to vector files. For this purpose, <code>db.*</code>commands shall be used.
+</p>
+
 
 <h2>NOTES</h2>
 <p>
@@ -22,9 +26,10 @@ added.
 This manual page should be updated according to vectors used in Spearfish dataset. This examples are only imaginar.
 </p>
 
-<h2>Feature definition</h2>
+<h2>USAGE</h2>
+<h3>Feature definition</h3>
 <p>
-Vector features, which shall be edited, can be deinfed in several ways:
+Vector features, which shall be edited, can be selected in several ways:
 </p>
 <ul>
     <li><code>cats</code> -- Using line categories</li>
@@ -33,7 +38,57 @@ Vector features, which shall be edited, can be deinfed in several ways:
     <li><code>bbox</code> -- Selecting multiple features using boundig box</li>
     <li><code>polygon</code> Selecting multiple features using polygon (at least 3 coordinate pairs have to be set)</li>
 </ul>
+<p>
+Aditional parameters for vector feature specifiation are
+</p>
+<ul>
+    <li><code>layer</code> -- Number of connection to attribute table</li>
+    <li><code>distance</code> -- Threshold distance for selecting vector features by coordinates</li>
+</ul>
 
+<h3>Tool description</h3>
+
+<ul>
+    <li>create -- Creates new empty vector file, just like <code><a href="v.in.ascii.html">v.in.ascii -e</a></code>. I is possible to define new vector features using STDIN or the <code>input</code> option, in <a href="v.in.ascii.html">GRASS ASCII format</a>.</li>
+
+    <li>add -- Adds new features to existing vector file. It is possible to have header with the input. New features have to be specified in  <a href="v.in.ascii.html">GRASS ASCII format</a> and <code>v.edit</code> is able to read the input from STDIN or from text file. 
+    <div class="code">
+        <pre>
+        v.out.ascii in=geology format=standard | v.edit map=soils tool=add
+        </pre>
+    </div>
+    does something similar to
+    <div class="code">
+        <pre>
+        v.patch in=soils,geology out=soils
+        </pre>
+    </div>
+    </li>
+
+    <li>delete -- Deletes selected features from existing vector file.</li>
+
+    <li>move -- Moves selected features in existing vector file relatively to their current location. For this purpose, option <code>move</code> must be used. This option spefies x,y coordinates of the movement direction.</li>
+
+    <li>vertex -- Moves only vertex speficied by <code>coords</code> option. No other option is accepted for the selection. Direction of the movement is specified by the <code>move</code> option.</li>
+
+    <li>straight -- Removes vertex speficied by <code>coords</code> option. No other option is accepted for the selection.</li>
+
+    <li>break -- Adds new vertex to existing lines on location specified by <code>coords</code> option. No other option is accepted for the selection.</li>
+
+    <li>merge -- Merges two vector lines (boundary or line) together, so that second selected line will be deleted and it's coordinates will be clipped to the first line. <code>v.edit</code> tryes to find nearest distance between start and end nodes of both lines. The second line can eventualy be flipped in it's direction.</li>
+
+    <li>split -- Splits one vector file to two on location specified by <code>coords</code> option. No other option is accepted for the selection.</li>
+
+    <li>select -- Prints comma separated list of line ID's selected by one of selection option. This is handy for example for checking, if the selection definition coresponds with user's needs or by definition of multiple selection areas.</li>
+
+    <li>catadd -- Adds new layer category to selected vector feature(s). Category can be later used for new database entry.</li>
+
+    <li>catdel -- Deletes layer category of selected vector feature(s). </li>
+
+    <li>copy -- Makes identical copy of selected vector feauter(s).</li>
+
+    <li>snap -- Works like tool "merge", but the second line is only snaped to the first line, without deleting it.</li>
+</ul>
 
 <h2>EXAMPLES</h2>
 
@@ -205,6 +260,16 @@ d.vect col=red width=2 -i cat="`v.edit map=soils@PERMANENT tool=select bbox=5957
 </pre></div>
 
 
+<h2>SEE ALSO</h2>
+
+<em>
+<a HREF="databaseintro.html">Database editing tools</a><BR>
+<a HREF="v.in.ascii.html">v.in.ascii</a><BR>
+<a HREF="v.info.html">v.info</a><BR>
+<a HREF="v.build.html">v.build</a><BR>
+<a HREF="v.clean.html">v.clean</a><BR>
+</em>
+<a HREF="http://freegis.org/cgi-bin/viewcvs.cgi/~checkout~/grass6/doc/vector/vector.html#ascii">Vector ASCII Format Specification</a>
 
 <h2>AUTHOR</h2>
 
