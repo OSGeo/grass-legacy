@@ -121,7 +121,7 @@ int main (int argc, char *argv[])
     else
 	Vect_hist_command(&Map);
 
-    if  (action_mode != MODE_SELECT || t_flg->answer!=0) {
+    if  (action_mode != MODE_SELECT && t_flg->answer != 1) {
         Vect_build_partial(&Map, GV_BUILD_NONE, NULL);
         Vect_build(&Map, output );
     }
