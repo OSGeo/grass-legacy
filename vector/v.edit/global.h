@@ -28,6 +28,7 @@ enum mode {
     MODE_CATADD,
     MODE_CATDEL,
     MODE_COPY,
+    MODE_SNAP,
 };
 
 int parser(int argc, char*argv[]);
@@ -50,6 +51,9 @@ int do_split(struct Map_info *Map);
 
 /* merge.c */
 int do_merge(struct Map_info *Map);
+
+/* snap.c */
+int do_snap(struct Map_info *Map);
 
 /* select.c */
 int do_select(struct Map_info *Map);
@@ -77,7 +81,7 @@ int attr_edit(struct Map_info *Map, int field, int cat, const char *vals);
 int attr_del(struct Map_info *Map, int field, int cat);
 
 /* options */
-global struct Option *input_opt, *map_opt, *maxdist_opt, *tool_opt, *coord_opt, *cat_opt, *move_opt, *bbox_opt, *snap_opt, *fld_opt, *poly_opt;
+global struct Option *input_opt, *map_opt, *maxdist_opt, *tool_opt, *coord_opt, *cat_opt, *move_opt, *bbox_opt, *fld_opt, *poly_opt, *type_opt;
 global struct Flag *n_flg, *t_flg, *d_flg, *b_flg, *c_flg, *n_flg;
 global struct GModule *module;
 global struct Map_info Map;

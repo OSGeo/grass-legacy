@@ -107,6 +107,9 @@ int main (int argc, char *argv[])
       case MODE_COPY:
         ret = do_copy(&Map);
         break;
+      case MODE_SNAP:
+        ret = do_snap(&Map);
+        break;
       default:
 	G_warning("Sorry this is not yet implemented");
 	ret=0;

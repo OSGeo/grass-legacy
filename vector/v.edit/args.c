@@ -22,8 +22,9 @@ int parser(int argc, char*argv[])
                              "\t\tselect - Select lines and print their ID's\n"
                              "\t\tcatadd - Set new category to selected lines for defined layer\n"
                              "\t\tcatdel - Delete category to selected lines for defined layer\n"
-                             "\t\tcopy   - Copy selected features");
-    tool_opt->options     = "create,add,delete,move,vertex,straight,merge,break,split,select,catadd,catdel,copy";
+                             "\t\tcopy   - Copy selected features\n"
+                             "\t\tsnap   - Snap one line to another");
+    tool_opt->options     = "create,add,delete,move,vertex,straight,merge,break,split,select,catadd,catdel,copy,snap";
 
     input_opt = G_define_option();
     input_opt->key      = "input";
@@ -31,6 +32,10 @@ int parser(int argc, char*argv[])
     input_opt->required = NO;
     input_opt->multiple = NO;
     input_opt->description = _("ASCII file to be converted to binary vector file, if not given reads from standard input");
+    
+    type_opt = G_define_standard_option(G_OPT_V_TYPE);
+    type_opt->answer           = "point,line,boundary,centroid" ;
+    type_opt->options          = "point,line,boundary,centroid" ;
 
     cat_opt = G_define_standard_option(G_OPT_V_CATS);
     cat_opt->required    = NO;
@@ -66,14 +71,6 @@ int parser(int argc, char*argv[])
     move_opt->required    = NO;
     move_opt->multiple    = NO;
     move_opt->description = _("Difference in x,y direction for moving feature or vertex");
-    
-    snap_opt = G_define_option();
-    snap_opt->key         = "snap";
-    snap_opt->type        = TYPE_DOUBLE;
-    snap_opt->required    = NO;
-    snap_opt->multiple    = NO;
-    snap_opt->description = _("Object points will snap to existing points within snap units.");
-    snap_opt->answer      = "5.0";
     
     maxdist_opt = G_define_option();
     maxdist_opt->key         = "distance";
@@ -317,6 +314,20 @@ int parser(int argc, char*argv[])
 	};
 	return 1;
     }
+
+    else if(strcmp(tool_opt->answer, "snap")==0) { /* del requires a cats or or bbox or coords*/
+	action_mode = MODE_SNAP;
+	if((cat_opt->answers == NULL) && 
+           (coord_opt->answers == NULL) &&
+           (poly_opt->answers == NULL) &&
+           (bbox_opt->answers == NULL)) {
+	    G_warning(_("At least one option from <%s> must be specified"),"cats, coords, bbox, polygon");
+            G_usage();
+	    return 0;
+	};
+	return 1;
+    }
+
 
     else {
 	G_warning(_("Operation <%s> not implemented."),tool_opt->answer);
