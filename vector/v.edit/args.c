@@ -42,7 +42,7 @@ int parser(int argc, char*argv[])
 
     id_opt = G_define_standard_option(G_OPT_V_CATS);
     id_opt->required    = NO;
-    id_opt->key    = "id";
+    id_opt->key    = "ids";
     id_opt->description    = "ID's of selected features";
     
     coord_opt = G_define_option();
