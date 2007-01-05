@@ -97,8 +97,8 @@ int print_window(struct Cell_head *window, int print_flag)
 
 	if (! (print_flag & PRINT_SH))
 	{
-	    fprintf(stdout, "%-*s: %d (%s)\n", width, "projection", window->proj, prj);
-	    fprintf(stdout, "%-*s: %d\n", width, "zone", window->zone);
+	    fprintf(stdout, "%-*s %d (%s)\n", width, "projection:", window->proj, prj);
+	    fprintf(stdout, "%-*s %d\n", width, "zone:", window->zone);
 	}
 	
 	/* don't print datum/ellipsoid in XY-Locations */
@@ -127,15 +127,15 @@ int print_window(struct Cell_head *window, int print_flag)
 	    }
 	    else
 	    {
-		fprintf(stdout, "%-*s: %s\n", width, "datum", datum);
-		fprintf(stdout, "%-*s: %s\n", width, "ellipsoid", ellps);
+		fprintf(stdout, "%-*s %s\n", width, "datum:", datum);
+		fprintf(stdout, "%-*s %s\n", width, "ellipsoid:", ellps);
 	    }
 	    */
 
 	    if (! (print_flag & PRINT_SH))
 	    {
-		fprintf(stdout, "%-*s: %s\n", width, "datum", datum);
-		fprintf(stdout, "%-*s: %s\n", width, "ellipsoid", ellps);
+		fprintf(stdout, "%-*s %s\n", width, "datum:", datum);
+		fprintf(stdout, "%-*s %s\n", width, "ellipsoid:", ellps);
 	    }
 	}
 
@@ -174,37 +174,37 @@ int print_window(struct Cell_head *window, int print_flag)
 	}
 	else
 	{
-	    fprintf(stdout, "%-*s: %s\n", width, "north", north);
-	    fprintf(stdout, "%-*s: %s\n", width, "south", south);
-	    fprintf(stdout, "%-*s: %s\n", width, "west", west);
-	    fprintf(stdout, "%-*s: %s\n", width, "east", east);
+	    fprintf(stdout, "%-*s %s\n", width, "north:", north);
+	    fprintf(stdout, "%-*s %s\n", width, "south:", south);
+	    fprintf(stdout, "%-*s %s\n", width, "west:", west);
+	    fprintf(stdout, "%-*s %s\n", width, "east:", east);
 	    if (print_flag & PRINT_3D) {
-		fprintf(stdout, "%-*s: %.8f\n", width, "top", window->top);
-		fprintf(stdout, "%-*s: %.8f\n", width, "bottom", window->bottom);
+		fprintf(stdout, "%-*s %.8f\n", width, "top:", window->top);
+		fprintf(stdout, "%-*s %.8f\n", width, "bottom:", window->bottom);
 	    }
-	    fprintf(stdout, "%-*s: %s\n", width, "nsres", nsres);
+	    fprintf(stdout, "%-*s %s\n", width, "nsres:", nsres);
 	    if (print_flag & PRINT_3D) {
-		fprintf(stdout, "%-*s: %s\n", width, "nsres3", nsres3);
+		fprintf(stdout, "%-*s %s\n", width, "nsres3:", nsres3);
 	    }
-	    fprintf(stdout, "%-*s: %s\n", width, "ewres", ewres);
+	    fprintf(stdout, "%-*s %s\n", width, "ewres:", ewres);
 	    if (print_flag & PRINT_3D) {
-		fprintf(stdout, "%-*s: %s\n", width, "ewres3", ewres3);
-		fprintf(stdout, "%-*s: %s\n", width, "tbres", tbres);
+		fprintf(stdout, "%-*s %s\n", width, "ewres3:", ewres3);
+		fprintf(stdout, "%-*s %s\n", width, "tbres:", tbres);
 	    }
 
-	    fprintf(stdout, "%-*s: %d\n", width, "rows", window->rows);
+	    fprintf(stdout, "%-*s %d\n", width, "rows:", window->rows);
 	    if (print_flag & PRINT_3D) {
-		fprintf(stdout, "%-*s: %d\n", width, "rows3", window->rows3);
+		fprintf(stdout, "%-*s %d\n", width, "rows3:", window->rows3);
 	    }
-	    fprintf(stdout, "%-*s: %d\n", width, "cols", window->cols);
+	    fprintf(stdout, "%-*s %d\n", width, "cols:", window->cols);
 	    if (print_flag & PRINT_3D) {
-		fprintf(stdout, "%-*s: %d\n", width, "cols3", window->cols3);
-		fprintf(stdout, "%-*s: %d\n", width, "depths", window->depths);
+		fprintf(stdout, "%-*s %d\n", width, "cols3:", window->cols3);
+		fprintf(stdout, "%-*s %d\n", width, "depths:", window->depths);
 	    }
-	    fprintf(stdout, "%-*s: %lld\n", width, "cells",
+	    fprintf(stdout, "%-*s %lld\n", width, "cells:",
 		    (long long) window->rows * window->cols);
 	    if (print_flag & PRINT_3D)
-		fprintf(stdout, "%-*s: %lld\n", width, "3dcells",
+		fprintf(stdout, "%-*s %lld\n", width, "3dcells:",
 			(long long) window->rows3 * window->cols3 * window -> depths);
 	}
     }
@@ -342,29 +342,29 @@ int print_window(struct Cell_head *window, int print_flag)
 	    else
 	    {
 		G_format_easting(lo1, buf, PROJECTION_LL);
-		fprintf(stdout, "%-*s: long: %s ", width, "north-west corner", buf);
+		fprintf(stdout, "%-*s long: %s ", width, "north-west corner:", buf);
 		G_format_northing(la1, buf, PROJECTION_LL);
 		fprintf(stdout, "lat: %s\n", buf);
 		
 		G_format_easting(lo2, buf, PROJECTION_LL);
-		fprintf(stdout, "%-*s: long: %s ", width, "north-east corner", buf);
+		fprintf(stdout, "%-*s long: %s ", width, "north-east corner:", buf);
 		G_format_northing(la2, buf, PROJECTION_LL);
 		fprintf(stdout, "lat: %s\n", buf);
 
 		G_format_easting(lo3, buf, PROJECTION_LL);
-		fprintf(stdout, "%-*s: long: %s ", width, "south-east corner", buf);
+		fprintf(stdout, "%-*s long: %s ", width, "south-east corner:", buf);
 		G_format_northing(la3, buf, PROJECTION_LL);
 		fprintf(stdout, "lat: %s\n", buf);
 
 		G_format_easting(lo4, buf, PROJECTION_LL);
-		fprintf(stdout, "%-*s: long: %s ", width, "south-west corner", buf);
+		fprintf(stdout, "%-*s long: %s ", width, "south-west corner:", buf);
 		G_format_northing(la4, buf, PROJECTION_LL);
 		fprintf(stdout, "lat: %s\n", buf);
 
 		G_format_easting((mid_n_lo + mid_s_lo) / 2., buf, PROJECTION_LL);
-		fprintf(stdout, "%-*s: %11s\n", width, "center longitude", buf);
+		fprintf(stdout, "%-*s %11s\n", width, "center longitude:", buf);
 		G_format_northing((mid_n_la + mid_s_la) / 2., buf, PROJECTION_LL);
-		fprintf(stdout, "%-*s: %11s\n", width, "center latitude", buf);
+		fprintf(stdout, "%-*s %11s\n", width, "center latitude:", buf);
 	    }
 
 	    if (!(print_flag & PRINT_REG))
@@ -376,8 +376,8 @@ int print_window(struct Cell_head *window, int print_flag)
 		}
 		else
 		{
-		    fprintf(stdout, "%-*s: %d\n", width, "rows", window->rows);
-		    fprintf(stdout, "%-*s: %d\n", width, "cols", window->cols);
+		    fprintf(stdout, "%-*s %d\n", width, "rows:", window->rows);
+		    fprintf(stdout, "%-*s %d\n", width, "cols:", window->cols);
 		}
 	    }
 	}
@@ -403,18 +403,18 @@ int print_window(struct Cell_head *window, int print_flag)
 	{
 	    if (G_projection() != PROJECTION_LL)
 	    {
-		fprintf(stdout, "%-*s: %f\n", width, "north-south extent",
+		fprintf(stdout, "%-*s %f\n", width, "north-south extent:",
 			window->north - window->south);
-		fprintf(stdout, "%-*s: %f\n", width, "east-west extent",
+		fprintf(stdout, "%-*s %f\n", width, "east-west extent:",
 			window->east - window->west);
 	    }
 	    else
 	    {
 		G_format_northing(window->north - window->south, buf, PROJECTION_LL);
-		fprintf(stdout, "%-*s: %s\n", width, "north-south extent",
+		fprintf(stdout, "%-*s %s\n", width, "north-south extent:",
 			buf);
 		G_format_easting(window->east - window->west, buf, PROJECTION_LL);
-		fprintf(stdout, "%-*s: %s\n", width, "east-west extent",
+		fprintf(stdout, "%-*s %s\n", width, "east-west extent:",
 			buf);
 	    }
 	}
@@ -434,19 +434,19 @@ int print_window(struct Cell_head *window, int print_flag)
 	{
 	    if (G_projection() != PROJECTION_LL)
 	    {
-		fprintf(stdout, "%-*s: %f\n", width, "center northing",
+		fprintf(stdout, "%-*s %f\n", width, "center northing:",
 			((window->north - window->south) / 2. + window->south));
-		fprintf(stdout, "%-*s: %f\n", width, "center easting",
+		fprintf(stdout, "%-*s %f\n", width, "center easting:",
 			((window->west - window->east) / 2. + window->east));
 	    }
 	    else
 	    {
 		G_format_northing((window->north - window->south) / 2. + window->south,
 		    buf, PROJECTION_LL);
-		fprintf(stdout, "%-*s: %s\n", width, "north-south center", buf);
+		fprintf(stdout, "%-*s %s\n", width, "north-south center:", buf);
 		G_format_easting((window->west - window->east) / 2. + window->east,
 		    buf, PROJECTION_LL);
-		fprintf(stdout, "%-*s: %s\n", width, "east-west center", buf);
+		fprintf(stdout, "%-*s %s\n", width, "east-west center:", buf);
 	    }
 	}
     }
@@ -617,13 +617,13 @@ int print_window(struct Cell_head *window, int print_flag)
 	    else
 	    {
 		G_format_northing(sh_ll_n, buf, PROJECTION_LL);
-		fprintf(stdout, "%-*s: %s\n", width, "north longitude", buf);
+		fprintf(stdout, "%-*s %s\n", width, "north longitude:", buf);
 		G_format_northing(sh_ll_s, buf, PROJECTION_LL);
-		fprintf(stdout, "%-*s: %s\n", width, "south longitude", buf);
+		fprintf(stdout, "%-*s %s\n", width, "south longitude:", buf);
 		G_format_easting(sh_ll_w, buf, PROJECTION_LL);
-		fprintf(stdout, "%-*s: %s\n", width, "west latitude", buf);
+		fprintf(stdout, "%-*s %s\n", width, "west latitude:", buf);
 		G_format_easting(sh_ll_e, buf, PROJECTION_LL);
-		fprintf(stdout, "%-*s: %s\n", width, "east latitude", buf);
+		fprintf(stdout, "%-*s %s\n", width, "east latitude:", buf);
 	    }
 
 	    /*It should be calculated which number of rows and cols we have in LL */
