@@ -516,6 +516,7 @@ proc MapCanvas::runprograms { mon mod } {
 	variable zoom_attrs
 	global env
 	global drawprog
+	global devnull
 
 	set drawprog 0
 
@@ -539,7 +540,7 @@ proc MapCanvas::runprograms { mon mod } {
 	# Now use the region values to get the region printed back out in -p format
 	# including lat long now as dd:mm:ss
 	set key ""
-	if {![catch {open [concat "|g.region" "-up" $options "|& $env(GISBASE)/etc/grocat"] r} input]} {
+	if {![catch {open [concat "|g.region" "-up" $options "2> $devnull"] r} input]} {
 		while {[gets $input line] >= 0} {
 			set key [string trim [lindex [split $line ":"] 0]]
 			set parts($key) [string trim [lindex [split $line ":"] 1]]
@@ -1046,9 +1047,9 @@ proc MapCanvas::zoom_previous {mon} {
 
 # Zoom to something loaded from a g.region command
 proc MapCanvas::zoom_gregion {mon args} {
-	global env
+	global devnull
 
-	if {![catch {open [concat "|g.region" "-ugp" $args "|& $env(GISBASE)/etc/grocat"] r} input]} {
+	if {![catch {open [concat "|g.region" "-ugp" $args "2> $devnull"] r} input]} {
 		while {[gets $input line] >= 0} {
 			if { [regexp -nocase {^([a-z]+)=(.*)$} $line trash key value] } {
 				set parts($key) $value
@@ -1093,7 +1094,7 @@ proc MapCanvas::zoom_gregion {mon args} {
 # Set WIND file or saved region file to match settings from the current zoom
 proc MapCanvas::set_wind {mon args overwrite} {
 	variable zoom_attrs
-	global env
+	global devnull
 
 	set values [MapCanvas::currentzoom $mon]
 
@@ -1105,9 +1106,9 @@ proc MapCanvas::set_wind {mon args overwrite} {
 	}
 
 	if {$overwrite == 1} {
-		open [concat "|g.region --o" $options $args "|& $env(GISBASE)/etc/grocat"]
+		open [concat "|g.region --o" $options $args "2> $devnull"]
 	} else {
-		open [concat "|g.region" $options $args "|& $env(GISBASE)/etc/grocat"]
+		open [concat "|g.region" $options $args "2> $devnull"]
 	}
 }
 
