@@ -58,6 +58,7 @@ namespace eval epsgOpt {
 	variable epsgtxt #text widget with EPSG definitions and codes
 	global env
 	global database 
+	global refresh
 	global mingw #test to see if we are running a windows version in mingw
 
 
@@ -167,9 +168,9 @@ proc epsgOpt::epsgLocCom args {
 
 proc epsgOpt::def_loc { } {
 # define new location using EPSG code
+	global refresh
 	variable epsg_code
 	variable epsgLocation
-	global refresh
 
 	if {$epsg_code==""} {return}
 
