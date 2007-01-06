@@ -5,14 +5,17 @@
 #     DESCRIPTION:  creates location from georeferenced file
 #  
 #           NOTES:  ---
-#          AUTHOR:  Michael Barton (Based on epsg_option.tcl by Antonello Andrea)
+#          AUTHOR:  Michael Barton
 #         COMPANY:  Arizona State University
-#       COPYRIGHT:  Copyright (C) 2006 Michael Barton and GRASS Development Team
-#         VERSION:  1.0.1
+#       COPYRIGHT:  Copyright (C) 2007 Michael Barton and GRASS Development Team
+#         VERSION:  1.2
 #         CREATED:  23/04/2006
 #        REVISION:  --- 
 #       CHANGELOG:  1.0.1 08/12/2006 - Fixed directory choosing dialogs. Maris Nartiss.
-#            TODO:  Check return status of g.proj to catch failed location creation.
+#			     :	1.2 - 6 Jan 2007 - Fixed file creation for windows and reformatted
+#					dialog widgets (Michael Barton).
+#				 	Added check for return status of g.proj to catch failed location 
+#					creation (by Maris Nartiss).
 #=====================================================================================
 #
 #
@@ -39,20 +42,25 @@
 #   documentation and/or other materials provided with the distribution.   
 # 
 #############################################################################
+namespace eval fileOpt {
+	variable fileLocation #name of new location to be created
+	variable filepath  #path to georeferenced file
+	global env
+	global database 
+	global mingw #test to see if we are running a windows version in mingw
+	global refresh
+}
 
-global browsedepsg 
 
 # G_msg.tcl should be sourced first for internationalized strings.
 
 # the frame used to set parameters 
-proc fileLocCom args {
+proc fileOpt::fileLocCom args {
 	#vars declaration
+	variable filepath
+	variable fileLocation
 	global database
-	global fileLocation 
-	global filepath
 	global env
-	global thelocation
-	global locpath
 	
 	set fileLocation "newLocation"
 	set filepath ""
@@ -60,158 +68,198 @@ proc fileLocCom args {
 	set buttonstate "disabled"
 	
 	# creation of the parameter window
-	toplevel .fileloc
-	wm title .fileloc [ G_msg "Define location using projection information in georeferenced file" ] 
+	set file_win [toplevel .fileloc]
+	wm title $file_win [ G_msg "Define location using projection information in georeferenced file" ] 
 	
 	# put it in the middle of the screen
 	update idletasks
-	set winWidth [winfo reqwidth .fileloc]
-	set winHeight [winfo reqheight .fileloc]
-	set scrnWidth [winfo screenwidth .fileloc]
-	set scrnHeight [winfo screenheight .fileloc]
+	set winWidth [winfo reqwidth $file_win]
+	set winHeight [winfo reqheight $file_win]
+	set scrnWidth [winfo screenwidth $file_win]
+	set scrnHeight [winfo screenheight $file_win]
 	set x [expr ($scrnWidth - $winWidth) / 2-250]
 	set y [expr ($scrnHeight  - $winHeight) / 2]
-	wm geometry .fileloc +$x+$y
-	wm deiconify .fileloc
+	wm geometry $file_win +$x+$y
+	wm deiconify $file_win
 	
+	set row1 [frame $file_win.row1]
+	set row2 [frame $file_win.row2]
+	set row3 [frame $file_win.row3]
+	set row4 [frame $file_win.row4]
+
+
 	#create the form and buttons
-	set loclab [label .fileloc.lab1 -text [G_msg "Name of new location"] -justify right -height 2]
-	set locname [entry .fileloc.loc -textvariable fileLocation -width 35]
-	set dblab [label .fileloc.lab2 -text [G_msg "Path to new location"] -justify right -height 2]
-	set dbpath [entry .fileloc.locpath -textvariable locpath -width 35]
-	set filelab [label .fileloc.lab3 -text [G_msg "Path to georeferenced file"] -justify right -height 2]
-	set fpath [entry .fileloc.filepath -textvariable filepath  -width 35]
+	LabelEntry $row1.newloc -label [G_msg "Name of new location"] \
+		-labeljustify right -labelanchor e -labelwidth 30 \
+		-textvariable fileOpt::fileLocation -width 35 \
+		-helptext [G_msg "Enter name of location to be created"]
+		
+	pack $row1.newloc -side left -expand 0 -fill x -padx 2
+
+	LabelEntry $row2.filepath -label [G_msg "Path to georeferenced file"] \
+		-labeljustify right -labelanchor e -labelwidth 30 \
+		-textvariable fileOpt::filepath  -width 35 \
+		-helptext [G_msg "Path to georeferenced file (format must be readable by GDAL/OGR)"]
+		
+	#browse for georeferenced file
+	Button $row2.browsefile -justify center -width 10 -bd 1 -text [G_msg "Browse..."] \
+		-helptext [G_msg "Browse to locate georeferenced file"] \
+		-command "fileOpt::browse_file"
+		
+	pack $row2.filepath $row2.browsefile -side left -expand 0 -fill x -padx 2
+
+	Button $row3.submit -justify center -width 15 -text [G_msg "Define location"] \
+		-command "fileOpt::def_loc" -bd 1
+				
+	Button $row3.cancel -justify center -width 15 -text [G_msg "Cancel"] \
+		-command {destroy .fileloc} -bd 1
+		
+	pack $row3.submit -side left -fill x -expand 0
+	pack $row3.cancel -side right -fill x -expand 0
 	
-	#browse for database path
-	set dbbrowse [button .fileloc.dbbrow -justify center -width 12 \
-		-text [G_msg "Browse..."] -command "set locpath \[tk_chooseDirectory \
-		-parent .fileloc -title \[ G_msg \"Choose path to new location\" \] -mustexist true \]" ]
+	pack $row1 $row2 $row3 -side top -fill both -expand 1 -padx 3 -pady 3
 
-        bind $dbpath <Leave> {
-             if {$locpath == ""} {
-                set locpath $database
-            }
-        }
+}
 
-																									
-	set helpbutton [button .fileloc.help -justify center -bg honeydew2 -text "Help" \
-		-command {infofileloc}]
+proc fileOpt::browse_file {} {
+	global env
+	variable filepath
 
-	pack $helpbutton -side left -fill both -expand 0
+	if { [info exists env(HOME)] } {
+		set dir $env(HOME)
+		set fileOpt::filepath [tk_getOpenFile -parent .fileloc -initialdir $dir \
+			-title [ G_msg "Choose georeferenced file" ] -multiple false]
+	} else {
+		set fileOpt::filepath [tk_getOpenFile -parent .fileloc \
+			-title [ G_msg "Choose georeferenced file" ] -multiple false]
+	}
 	
-	#define button to define location
-	set locdefbutton [button .fileloc.def -justify center -width 15 \
-		-text [G_msg "Define location"] -state $buttonstate \
-		-command {
-			set thelocation "$locpath/$fileLocation";
-			if {[file exists $thelocation ]== 1} {
-				DialogGen .wrnDlg [G_msg "WARNING: location exists"] warning \
-				[G_msg "WARNING: The location '$thelocation' already exists, please try another name"] \
-				0 OK;
-			}
-			if {[file exists $filepath]== 0} {
-				DialogGen .wrnDlg [G_msg "WARNING: file not found"] warning \
-				[G_msg "WARNING: The file was not found!"] \
-				0 OK;
-			}
-			if {[file exists $filepath]== 1} {
-				if {[file exists $thelocation ]==0} {  
-					destroy .fileloc; 
-					exec -- $env(GISBASE)/etc/grass-xterm-wrapper -T g.proj -n g.proj -e $env(GISBASE)/etc/grass-run.sh g.proj -c georef=$filepath location=$fileLocation
-					DialogGen .wrnDlg [G_msg "WARNING: restart GRASS please"] warning \
-					[G_msg "WARNING: Please restart GRASS in order find the created location in the list (closing it for you now)"] \
-						0 OK; 
-					puts stdout "exit";
-					destroy . 
-				}
-			}
-			set thelocation ""
-		 }]
-		 
-	bind .fileloc.filepath <KeyRelease> {
-		.fileloc.def configure -state active
+}
+
+
+proc fileOpt::def_loc { } {
+# define new location using georeferenced file readable by GDAL/OGR
+	#vars declaration
+	variable filepath
+	variable fileLocation
+	global database
+	global env	
+
+	if {$filepath==""} {return}
+
+	if {$filepath==""} {
+		tk_messageBox -type ok -icon error \
+			-message [G_msg "WARNING: Please supply a\nvalid georeferenced file"] 
+		return
+	} 
+
+	if {[file exists $fileLocation ]== 1} {
+		tk_messageBox -type ok -icon error \
+			-message [G_msg "WARNING: The location '$fileLocation'\nalready exists, please try another name"] 
+		set fileLocation ""
+		return
 	}
 
-	#browse for georeferenced file
-	set filebrowse [button .fileloc.fbrow -justify center -width 12 \
-		-text [G_msg "Browse..."] -command {
-				set filepath [tk_getOpenFile -parent .fileloc -title [ G_msg "Choose georeferenced file"] ]
-				if {$filepath != ""} {
-					.fileloc.def configure -state active
-				}
-			} ]
+	if {[file exists $fileLocation ]==0} {  
+		destroy .fileloc
+		fileOpt::create_loc
+		set refresh 1
+		return
+	}
+}
 
-	pack $locdefbutton -side left -fill both -expand 0
+proc fileOpt::create_loc { } {
+# Create a new location using g.proj
+# original bash code by M. Neteler
+
+	variable filepath
+	variable fileLocation
+	global env database
+
+	#test for valid WIND file
+	if {[catch {exec g.region -p}] != 0} {
+
+		# Create temporary location in order to run g.proj. For 1st time use
+
+		set GRASSRC "grassrc6"
+		set curr_gisrc $env(GISRC)
+
+		set tempdir [pid]
+		append tempdir ".tmp"
+		file mkdir "$database/$tempdir/PERMANENT"
+		
+		# save existing .grassrc file
+		if {[file exists "$env(HOME)/.$GRASSRC"] } {
+			file copy "$env(HOME)/.$GRASSRC" "$database/$tempdir/$GRASSRC"
+		}
+		
+		# create temporary .grassrc file to hold temporary location information
+		set output [open "$env(HOME)/.$GRASSRC" w+]
+			puts $output "LOCATION_NAME: $tempdir" 
+			puts $output "MAPSET: PERMANENT"
+			puts $output "DIGITIZER: none"
+			puts $output "GISDBASE: $database" 
+		close $output
+		
+		set env(GISRC) "$env(HOME)/.$GRASSRC"
+				
+		# Populate a temporary location with a minimal set of files
+		set output [open "$database/$tempdir/PERMANENT/DEFAULT_WIND" w+]
+			puts $output "proj:       3"
+			puts $output "zone:       0"
+			puts $output "north:      72N"
+			puts $output "south:      27N"
+			puts $output "east:       42E"
+			puts $output "west:       11W"
+			puts $output "cols:       6360"
+			puts $output "rows:       5400"
+			puts $output "e-w resol:  0:00:30"
+			puts $output "n-s resol:  0:00:30"
+		close $output
 	
-	set cancelbutton [button .fileloc.cancel -justify center -width 15 -text [G_msg "Cancel"] \
-					-command {destroy .fileloc}]
-	pack $cancelbutton -side left -fill both -expand 0
+		set output [open "$database/$tempdir/PERMANENT/PROJ_INFO" w+]
+			puts $output "name: Lat/Lon"
+			puts $output "datum: wgs84"
+			puts $output "towgs84: 0.000,0.000,0.000"
+			puts $output "proj: ll"
+			puts $output "ellps: wgs84"
+		close $output
+		
+		set output [open "$database/$tempdir/PERMANENT/PROJ_UNITS" w+]
+			puts $output "unit: degree"
+			puts $output "units: degrees"
+			puts $output "meters: 1.0"
+		close $output
+				
+		# create new location from georeferenced file
+		catch {exec g.proj -c georef=$filepath location=$fileLocation} errMsg
+		if {[lindex $::errorCode 0] eq "CHILDSTATUS"} {
+                        DialogGen .wrnDlg [G_msg "WARNING: Error creating new location"] warning \
+				[format [G_msg "Error creating new location from georeferenced file. \
+		                g.proj returned following message:\n\n%s"] $errMsg] \
+				0 OK
+		}
+	
+		# restore previous .$GRASSRC
+		if {[file exists "$database/$tempdir/$GRASSRC"]} {
+			file copy -force "$database/$tempdir/$GRASSRC" "$env(HOME)/.$GRASSRC"
+		}
+		
+		# cleanup
+		catch {file delete -force "$database/$tempdir"}
+		set env(GISRC) $curr_gisrc
+	} else {
+		# create new location from georeferenced file
+		catch {exec g.proj -c georef=$filepath location=$fileLocation} errMsg
+		if {[lindex $::errorCode 0] eq "CHILDSTATUS"} {
+		        DialogGen .wrnDlg [G_msg "WARNING: Error creating new location"] warning \
+				[format [G_msg "Error creating new location from georeferenced file. \
+		                g.proj returned following message:\n\n%s"] $errMsg] \
+				0 OK
+		}
+	
+	}
 
-	# geometry
-	grid $loclab -row 0 -column 0 -sticky e
-	grid $locname -row 0 -column 1 -columnspan 2
-	grid $dblab -row 1 -column 0 -sticky e
-	grid $dbpath -row 1 -column 1 -columnspan 2
-	grid $filelab -row 2 -column 0 -sticky e
-	grid $fpath -row 2 -column 1 -columnspan 2
-	grid $dbbrowse -row 1 -column 3 
-	grid $filebrowse -row 2 -column 3 
-	grid $locdefbutton -row 3 -column 0
-	grid $cancelbutton -row 3 -column 1
-	grid $helpbutton -row 3 -column 2
+	return
+
 }
-
-
-# help for the georeferenced file Location creation
-proc infofileloc args {
-
-        toplevel .infoPopup
-        wm title .infoPopup {Info}
-        update idletasks
-        set winWidth [winfo reqwidth .infoPopup]
-        set winHeight [winfo reqheight .infoPopup]
-        set scrnWidth [winfo screenwidth .infoPopup]
-        set scrnHeight [winfo screenheight .infoPopup]
-        set x [expr ($scrnWidth - $winWidth) / 2-230]
-        set y [expr ($scrnHeight  - $winHeight) / 2]
-        wm geometry .infoPopup +$x+$y
-        wm deiconify .infoPopup
-        
-        text .infoPopup.text -width 40 -height 30\
-                   -wrap word \
-                   -relief raised \
-                   -yscrollcommand ".infoPopup.vscroll set"
-                   
-        # tag configuration
-        .infoPopup.text tag configure underline -underline 1
-        .infoPopup.text tag configure title -relief raised -borderwidth 2 -background grey -justify center
-        .infoPopup.text tag configure subtitle -relief flat -borderwidth 1 
-        .infoPopup.text tag configure info -relief sunken -borderwidth 1 -background white 
-    
-        # the text to be inserted
-        .infoPopup.text insert end [G_msg " \nCREATING A NEW GRASS LOCATION USING GEOREFERENCED FILE\n\n "] title
-        .infoPopup.text insert end [G_msg "The file must have georeferencing information readable\n"] subtitle
-        .infoPopup.text insert end [G_msg "by GDAL or OGR, and GRASS must be compiled with GDAL and OGR.\n\n"] subtitle
-        .infoPopup.text insert end [G_msg "\n   Name of new location:\n\n"] subtitle
-        .infoPopup.text insert end [G_msg "\nRequires as input the name of the new location to be created\n\n"] info
-        .infoPopup.text insert end "\n" 
-        .infoPopup.text insert end [G_msg "\n   Path to location:\n\n"] subtitle
-        .infoPopup.text insert end [G_msg "\nThe folder (Grass database) in which the location should be created\n\n"] info
-        .infoPopup.text insert end "\n" 
-        .infoPopup.text insert end [G_msg "\n   Path to georeferenced file:\n\n"] subtitle
-        .infoPopup.text insert end [G_msg "\nGeoreferenced file with projection information that can be read\n"] info
-        .infoPopup.text insert end [G_msg "\nby GDAL (raster) or OGR (vector)\n\n"] info
-        
-        pack .infoPopup.text -side left -fill both 
-        
-        scrollbar .infoPopup.vscroll \
-                    -relief raised \
-                    -command ".infoPopup.text yview"
-        pack .infoPopup.vscroll -side right -fill y
-        
-        button .infoPopup.ex -justify center -width 6 -text [G_msg "OK"] \
-                             -command {destroy .infoPopup}			
-        pack .infoPopup.ex -side bottom -expand 1 -fill both
-}
-
-
