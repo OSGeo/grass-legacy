@@ -530,7 +530,9 @@ proc gisSetWindow {} {
     	-text [G_msg "Georeferenced file"] \
     	-width 20 -bd 1\
     	-relief raised \
-    	-command {fileLocCom}
+    	-command "fileOpt::fileLocCom
+    		tkwait window .fileloc
+    		refresh_loc"
 
     button .frame0.frameNMS.sixth.button \
     	-text [G_msg "EPSG codes"] \
