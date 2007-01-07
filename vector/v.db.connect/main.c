@@ -157,7 +157,7 @@ int main (int argc, char **argv)
         if (print->answer || shell_print->answer)
         {
 	  if ( !(shell_print->answer) ) {
-              fprintf(stderr,"Vector map <%s> is connected by:\n", input);
+              G_message(_("Vector map <%s> is connected by:"), input);
 	  }
           for (i = 0; i < num_dblinks; i++) {
             if ( (fi = Vect_get_dblink( &Map, i)) == NULL)
@@ -172,7 +172,7 @@ int main (int argc, char **argv)
 			                               fi->database, fi->driver);
 		}
 	    } else { 
-		fprintf(stderr,"layer <%d> table <%s> in database <%s> through driver <%s> with key <%s>\n", fi->number, fi->table, fi->database, fi->driver, fi->key);
+		fprintf(stdout,"layer <%d> table <%s> in database <%s> through driver <%s> with key <%s>\n", fi->number, fi->table, fi->database, fi->driver, fi->key);
 	    }
           }
         } /* end print */
