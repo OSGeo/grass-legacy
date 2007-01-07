@@ -162,7 +162,7 @@ proc GetDir {entWidget locList mapList} \
 proc GetListItems {widget dir default} \
 {
     set currDir [pwd]
-    cd $dir
+    if { [cdir $dir] == 0} {
     
     # Insert the parent directory in the list
     $widget delete 0 end
@@ -194,37 +194,31 @@ proc GetListItems {widget dir default} \
     $widget selection set $index
     $widget xview moveto 1
     
-    cd $currDir
+    cdir $currDir
+    }
 }
 
 proc SetDatabase {widget top entryWidget locList mapList} \
 {
-    global database
+    global database location
     
-    set database [$widget get [$widget curselection]]
+    set tmpdatabase [$widget get [$widget curselection]]
     
-    if {[string compare [file tail $database] ".."] == 0} \
+    if {[string compare [file tail $tmpdatabase] ".."] == 0} \
     {
-    	set database [file dirname [file dirname $database]]
+    	set tmpdatabase [file dirname [file dirname $tmpdatabase]]
     }
     
     $entryWidget xview moveto 1
     
-    cd $database
-
-    $locList delete 0 end
-    $mapList delete 0 end
-    
-    foreach filename [lsort [glob -nocomplain *]] \
-    {
-	if {[file isdirectory $filename]} \
-	{
-	    $locList insert end $filename
-	}
-    }
+    if { [cdir $tmpdatabase] == 0} {
+        set database $tmpdatabase
+        set location ""
+        refresh_loc
     
     .frame0.frameBUTTONS.ok configure -state disabled
     destroy $top
+    }
 }
 
 proc ChangeDir {widget y} \
@@ -256,7 +250,7 @@ proc CheckLocation {} {
 	$location $database] \
         0 OK;
     } else {
-        cd $dir
+        cdir $dir
         
         foreach filename [lsort [glob -nocomplain *]] \
         {
@@ -270,7 +264,7 @@ proc CheckLocation {} {
         }
     }
     
-    cd $currDir
+    cdir $currDir
     return $found
 }
 
@@ -364,18 +358,8 @@ proc gisSetWindow {} {
        button .frame0.frameDB.right.button \
     	   -text [G_msg "Browse..."] -bd 1 \
     	   -command {set database [tk_chooseDirectory -initialdir $database \
-	   	-parent .frame0 -title "New GIS data directory" -mustexist true]
-
-		cd $database
-		.frame0.frameLOC.listbox delete 0 end
-		.frame0.frameMS.listbox delete 0 end
-		foreach filename [lsort [glob -nocomplain *]] \
-		{
-			if {[file isdirectory $filename]} \
-			{
-				.frame0.frameLOC.listbox insert end $filename
-			}
-		}
+	   	-parent .frame0 -title [G_msg "New GIS data directory"] -mustexist true]
+		refresh_loc
 		.frame0.frameBUTTONS.ok configure -state disabled}
     } else {
        button .frame0.frameDB.right.button \
@@ -502,8 +486,8 @@ proc gisSetWindow {} {
 		    [format [G_msg "Warning: selected location <%s> is not valid. \n New mapset is NOT created. \n Select valid location and try again."] $location] \
                     0 OK;
             	} else {
-                    cd $database
-                    cd $location
+                    cdir $database
+                    cdir $location
                     file mkdir $mymapset
                     #generate default DB definition, create dbf subdirectory:
                     set varfp [open $mymapset/VAR "w"]
@@ -547,21 +531,13 @@ proc gisSetWindow {} {
     	-width 20 -bd 1\
     	-relief raised \
     	-command {
-          if { $mingw == "1" } {
-             exec -- cmd.exe /c start $env(GISBASE)/etc/set_data
-             # Now we should refresh the list of locations!
-          } else {
-            puts stdout "OLD_DB='$oldDb';"
-            puts stdout "OLD_LOC='$oldLoc';"
-            puts stdout "OLD_MAP='$oldMap';"
-	    puts stdout "GISDBASE='$database';"
-    	    puts stdout "LOCATION_NAME='##NONE##';"
-            puts stdout "MAPSET='';"
-            set location ""
-            set mapset ""
-            putGRASSRC $gisrc_name
-            destroy .
-          }
+           if { $mingw == "1" } {
+               exec -- cmd.exe /c start $env(GISBASE)/etc/set_data
+           } else {
+	       exec -- $env(GISBASE)/etc/grass-xterm-wrapper -name xterm-grass -e $env(GISBASE)/etc/grass-run.sh $env(GISBASE)/etc/set_data
+           }
+           # Now we should refresh the list of locations!
+           refresh_loc ;# Could it look like this? Maris.
         }
 
     pack append .frame0.frameNMS
@@ -680,12 +656,7 @@ proc gisSetWindow {} {
     }
     
     # setting list of locations
-    cd $database
-    foreach i [lsort [glob -directory [pwd] *]] {
-      	if {[file isdirectory $i] } {
-            .frame0.frameLOC.listbox insert end [file tail $i]
-      	}
-    }
+    refresh_loc
         
     set i 0
     set curSelected 0
@@ -702,10 +673,10 @@ proc gisSetWindow {} {
     .frame0.frameLOC.listbox select set $curSelected
 
 	# setting list of owned mapsets
-    cd $database
+    cdir $database
     if { [file exists $location] } \
     {
-	cd $location
+	cdir $location
 	foreach i [lsort [glob -directory [pwd] *]] {
      	    if {[file isdirectory $i] && [file owned $i] } {
         	.frame0.frameMS.listbox insert end [file tail $i]
@@ -734,14 +705,9 @@ proc gisSetWindow {} {
              && [file exists $new_path] && [file isdirectory $new_path] } {
            %W delete 0 end
            %W insert 0 $new_path
-           cd $new_path
-           .frame0.frameLOC.listbox delete 0 end
-           foreach i [lsort [glob -directory [pwd] *]] {
-               if { [file isdirectory $i] } {
-                   .frame0.frameLOC.listbox insert end [file tail $i]
-               }
-           }
-           .frame0.frameMS.listbox delete 0 end
+           cdir $new_path
+           set location ""
+           refresh_loc
            set database [pwd]
         }
 	.frame0.frameBUTTONS.ok configure -state disabled
@@ -751,9 +717,15 @@ proc gisSetWindow {} {
         # Do something only if there IS atleast one location
         if {[%W size] > 0} {
             %W select set [%W nearest %y]
-            cd $database
+            cdir $database
             set location [%W get [%W nearest %y]]
-            cd $location
+            if {[CheckLocation] == 0} {
+                    # Notice - %%s prevents %s capturing by bind
+            	    DialogGen .wrnDlg [G_msg "WARNING: invalid location"] warning \
+		    [format [G_msg "Warning: selected location <%%s> is not valid. \n Select valid location and try again."] $location] \
+                    0 OK;
+            } else {
+                    cdir $location
             .frame0.frameMS.listbox delete 0 end
             foreach i [lsort [glob -directory [pwd] *]] {
               if { [file isdirectory $i] && [file owned $i] } { 
@@ -764,14 +736,21 @@ proc gisSetWindow {} {
             .frame0.frameBUTTONS.ok configure -state disabled
 	}
   }
+  }
 
   bind .frame0.frameLOC.listbox <ButtonPress-1> {
         # Do something only if there IS atleast one location
         if {[%W size] > 0} {
             %W select set [%W nearest %y]
-            cd $database
+            cdir $database
             set location [%W get [%W nearest %y]]
-            cd $location
+            if {[CheckLocation] == 0} {
+                    # Notice - %%s prevents %s capturing by bind
+            	    DialogGen .wrnDlg [G_msg "WARNING: invalid location"] warning \
+		    [format [G_msg "Warning: selected location <%%s> is not valid. \n Select valid location and try again."] $location] \
+                    0 OK;
+            } else {
+                    cdir $location
             .frame0.frameMS.listbox delete 0 end
             foreach i [lsort [glob -directory [pwd] *]] {
               if { [file isdirectory $i] && [file owned $i] } {
@@ -781,6 +760,7 @@ proc gisSetWindow {} {
             set mapset ""
             .frame0.frameBUTTONS.ok configure -state disabled
         }
+  }
   }
 
   bind .frame0.frameMS.listbox <Double-ButtonPress-1> {
@@ -846,9 +826,9 @@ proc refresh_loc {} {
 
 	if { "$database" != "" \
 		 && [file exists $database] && [file isdirectory $database] } {
-	   cd $database
+	   cdir $database
 	   $locList delete 0 end
-	   foreach i [lsort [glob -directory [pwd] *]] {
+	   foreach i [lsort [glob -nocomplain -directory [pwd] *]] {
 		   if { [file isdirectory $i] } {
 			   $locList insert end [file tail $i]
 		   }
@@ -859,6 +839,17 @@ proc refresh_loc {} {
 	update idletasks
 }
 
+# cd wrapper
+proc cdir { dir } {
+    if { [catch { cd $dir }] } {
+        DialogGen .wrnDlg [G_msg "WARNING: change directory failed"] warning \
+          [format [G_msg "Warning: could not change directory to <%s>.\nCheck directory permissions."] $dir ]\
+          0 OK;
+          return 1
+    } else {
+        return 0
+    }
+}
 
 #############################################################################
 #
