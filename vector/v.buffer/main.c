@@ -210,7 +210,7 @@ void stop (  struct Map_info *In,  struct Map_info *Out )
 {
     Vect_close (In);
 
-    fprintf ( stderr, "Rebuilding topology ...\n" );
+    G_message ( _("Rebuilding topology ...") );
     Vect_build_partial ( Out, GV_BUILD_NONE, NULL );
     Vect_build (Out, stderr);
     Vect_close (Out);
@@ -412,7 +412,7 @@ main (int argc, char *argv[])
 
 	nlines = Vect_get_num_lines ( &In );
 	
-        fprintf ( stderr, "Lines buffers ... ");
+        G_message ( _("Lines buffers ... "));
 	for ( line = 1; line <= nlines; line++ ) {
 	    int cat;
 	    
@@ -472,7 +472,6 @@ main (int argc, char *argv[])
 	    Vect_line_buffer ( Points, buffer, tolerance, BPoints );	
 	    Vect_write_line ( &Out, GV_BOUNDARY, BPoints, BCats );  
 	}
-        fprintf ( stderr, "\n");
     }
 
     /* Areas */
@@ -481,7 +480,7 @@ main (int argc, char *argv[])
 	
 	nareas = Vect_get_num_areas ( &In );
 
-        fprintf ( stderr, "Areas buffers ... ");
+        G_message ( _("Areas buffers ... "));
 	for ( area = 1; area <= nareas; area++ ) {
 	    int cat;
 
@@ -559,7 +558,6 @@ main (int argc, char *argv[])
 		Vect_write_line ( &Out, GV_BOUNDARY, BPoints, BCats );  
 	    }
 	}
-        fprintf ( stderr, "\n");
     }
 
     if ( debug == DEBUG_BUFFER ) {
@@ -570,7 +568,7 @@ main (int argc, char *argv[])
     /* Create areas */
     
     /* Break lines */
-    fprintf (stderr, "Building parts of topology ...\n" );
+    G_message (_("Building parts of topology ...") );
     Vect_build_partial ( &Out, GV_BUILD_BASE, stderr );
 
     /* Warning: snapping must be done, otherwise colinear boundaries are not broken and 
@@ -582,25 +580,25 @@ main (int argc, char *argv[])
     /* TODO: look at snapping threshold better, calculate some theoretical value to avoid
      * the same angles of lines at nodes, don't forget about LongLat data, probably
      * calculate different threshold for each map, depending on map's bounding box */
-    fprintf ( stderr, "Snapping boundaries ...\n" );
+    G_message(_("Snapping boundaries ...") );
     Vect_snap_lines ( &Out, GV_BOUNDARY, 1e-7, NULL, stderr );
 
-    fprintf ( stderr, "Breaking boundaries ...\n" );
+    G_message(_( "Breaking boundaries ...") );
     Vect_break_lines ( &Out, GV_BOUNDARY, NULL, stderr );
 
-    fprintf ( stderr, "Removing duplicates ...\n" );
+    G_message(_( "Removing duplicates ...") );
     Vect_remove_duplicates ( &Out, GV_BOUNDARY, NULL, stderr );
 
     /* Dangles and bridges don't seem to be necessary if snapping is small enough. */
     /*
-    fprintf ( stderr, "Removing dangles ...\n" );
+    G_message (  "Removing dangles ..." );
     Vect_remove_dangles ( &Out, GV_BOUNDARY, -1, NULL, stderr );
 
-    fprintf ( stderr, "Removing bridges ...\n" );
+    G_message (  "Removing bridges ..." );
     Vect_remove_bridges ( &Out, NULL, stderr );
     */
 
-    fprintf ( stderr, "Attaching islands ...\n" );
+    G_message(_( "Attaching islands ...") );
     Vect_build_partial ( &Out, GV_BUILD_ATTACH_ISLES, stderr );
 
     /* Calculate new centroids for all areas */
@@ -708,7 +706,7 @@ main (int argc, char *argv[])
 	}
     }
 
-    fprintf ( stderr, "Attaching centroids ...\n" );
+    G_message(_("Attaching centroids ...") );
     Vect_build_partial ( &Out, GV_BUILD_CENTROIDS, stderr );
     
     stop ( &In, &Out );
