@@ -227,9 +227,9 @@ main (int argc, char *argv[])
 	}
     }
 
-    fprintf ( stderr, "%d elements processed\n", n_elements);
+    G_message (_("%d elements processed"), n_elements);
     if ( n_skipped > 0 )
-	fprintf ( stderr, "%d elements skipped (layer name was not in list)\n", n_skipped );
+	G_message ( _("%d elements skipped (layer name was not in list)"), n_skipped );
 
     db_commit_transaction ( driver );
     db_close_database_shutdown_driver ( driver );

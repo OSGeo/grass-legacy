@@ -430,7 +430,7 @@ void wrentity (PAD_ENT_HDR adenhd,PAD_ENT aden, int level, AD_VMADDR entlist, in
 	  adEndBlobRead(bcptr);
     } else {
       getEntTypeName ( adenhd, buf );
-      fprintf(stderr, "%s entity not supported\n", buf);
+      G_warning("%s entity not supported", buf);
     }
   break;
 
