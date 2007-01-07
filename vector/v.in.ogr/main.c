@@ -435,8 +435,8 @@ main (int argc, char *argv[])
         {
             cellhd.proj = loc_wind.proj;
             cellhd.zone = loc_wind.zone;
-	    fprintf(stderr, "Over-riding projection check.\n"
-		            "Proceeding with import...\n");
+	    G_message(_("Over-riding projection check.\n"
+		            "Proceeding with import..."));
         }
         else if( loc_wind.proj != cellhd.proj
               || (err = G_compare_projections( loc_proj_info, loc_proj_units,
@@ -522,8 +522,8 @@ main (int argc, char *argv[])
             G_fatal_error( error_msg );
         }
         else
-	    fprintf(stderr, _("Projection of input dataset and current location "
-		            "appear to match.\nProceeding with import...\n"));
+	    G_message( _("Projection of input dataset and current location "
+		            "appear to match.\nProceeding with import..."));
 
     }
 
@@ -545,7 +545,7 @@ main (int argc, char *argv[])
      * of one ore more (more input layers) fields. */
     with_z = 0;
     for ( layer = 0; layer < nlayers; layer++ ) {
-	fprintf (stderr, "Layer: %s\n", layer_names[layer]);
+	G_message (_("Layer: %s"), layer_names[layer]);
 	layer_id = layers[layer];
 
 	Ogr_layer = OGR_DS_GetLayer( Ogr_ds, layer_id );
@@ -759,8 +759,8 @@ main (int argc, char *argv[])
     }
 
 
-    separator = "-----------------------------------------------------\n";
-    fprintf ( stderr, separator );
+    separator = "-----------------------------------------------------";
+    G_message ( "%s", separator );
 
     /* TODO: is it necessary to build here? probably not, consumes time */
     Vect_build ( &Map, stderr );
@@ -776,7 +776,7 @@ main (int argc, char *argv[])
 
 	Points = Vect_new_line_struct ();
 
-        fprintf ( stderr, separator );
+        G_message ( "%s", separator );
 	G_warning (_("Cleaning polygons, result is not guaranteed!\n"));
 
         Vect_set_release_support ( &Map );
@@ -785,8 +785,8 @@ main (int argc, char *argv[])
         Vect_build_partial ( &Map, GV_BUILD_BASE, stderr ); /* Downgrade topo */
 
 	if ( snap >= 0 ) {
-	    fprintf ( stderr, separator );
-	    fprintf ( stderr, "Snap boundaries (threshold = %.3e):\n", snap );
+	    G_message ( "%s", separator );
+	    G_message ( _("Snap boundaries (threshold = %.3e):"), snap );
 	    Vect_snap_lines ( &Map, GV_BOUNDARY, snap, NULL, stderr );
 	}
 
@@ -799,52 +799,52 @@ main (int argc, char *argv[])
 	Vect_snap_lines ( &Map, GV_CENTROID, 0.000001, NULL, stderr );
 	*/
 
-        fprintf ( stderr, separator );
-	fprintf ( stderr, "Break polygons:\n" );
+        G_message ( "%s", separator );
+	G_message ( _("Break polygons:") );
 	Vect_break_polygons ( &Map, GV_BOUNDARY, NULL, stderr );
 
 	/* It is important to remove also duplicate centroids in case of duplicate imput polygons */
-        fprintf ( stderr, separator );
-	fprintf ( stderr, "Remove duplicates:\n" );
+        G_message ( "%s", separator );
+	G_message ( _("Remove duplicates:") );
 	Vect_remove_duplicates ( &Map, GV_BOUNDARY | GV_CENTROID, NULL, stderr );
 
 	/* Vect_clean_small_angles_at_nodes() can change the geometry so that new intersections
 	 * are created. We must call Vect_break_lines(), Vect_remove_duplicates()
 	 * and Vect_clean_small_angles_at_nodes() until no more small dangles are found */
 	do {
-	    fprintf ( stderr, separator );
-	    fprintf ( stderr, "Break boundaries:\n" );
+            G_message ( "%s", separator );
+	    G_message ( _("Break boundaries:") );
 	    Vect_break_lines ( &Map, GV_BOUNDARY, NULL, stderr );
 
-	    fprintf ( stderr, separator );
-	    fprintf ( stderr, "Remove duplicates:\n" );
+            G_message ( "%s", separator );
+	    G_message ( _( "Remove duplicates:" ) );
 	    Vect_remove_duplicates ( &Map, GV_BOUNDARY, NULL, stderr );
 
-	    fprintf ( stderr, separator );
-	    fprintf ( stderr, "Clean boundaries at nodes:\n" );
+            G_message ( "%s", separator );
+	    G_message (_( "Clean boundaries at nodes:") );
 	    nmodif = Vect_clean_small_angles_at_nodes ( &Map, GV_BOUNDARY, NULL, stderr );
 	} while ( nmodif > 0 );
 
-        fprintf ( stderr, separator );
+        G_message ( "%s", separator );
 	if ( type & GV_BOUNDARY ) { /* that means lines were converted boundaries */
-	    fprintf ( stderr, "Change boundary dangles to lines:\n" );
+	    G_message ( _("Change boundary dangles to lines:") );
 	    Vect_chtype_dangles ( &Map, -1.0, NULL, stderr );
 	} else {
-	    fprintf ( stderr, "Change dangles to lines:\n" );
+	    G_message ( _("Change dangles to lines:") );
 	    Vect_remove_dangles ( &Map, GV_BOUNDARY, -1.0, NULL, stderr );
 	}
 
-        fprintf ( stderr, separator );
+        G_message ( "%s", separator );
 	if ( type & GV_BOUNDARY ) {
-	    fprintf ( stderr, "Change boundary bridges to lines:\n" );
+	    G_message(_("Change boundary bridges to lines:") );
 	    Vect_chtype_bridges ( &Map, NULL, stderr );
 	} else {
-	    fprintf ( stderr, "Remove bridges:\n" );
+	    G_message ( _("Remove bridges:") );
 	    Vect_remove_bridges ( &Map, NULL, stderr );
 	}
 
 	/* Boundaries are hopefully clean, build areas */
-        fprintf ( stderr, separator );
+        G_message ( "%s", separator );
         Vect_build_partial ( &Map, GV_BUILD_ATTACH_ISLES, stderr );
 
 	/* Calculate new centroids for all areas, centroids have the same id as area */
@@ -873,7 +873,7 @@ main (int argc, char *argv[])
 
 	/* Go through all layers and find centroids for each polygon */
 	for ( layer = 0; layer < nlayers; layer++ ) {
-	    fprintf (stderr, "Layer: %s\n", layer_names[layer]);
+	    G_message (_("Layer: %s"), layer_names[layer]);
 	    layer_id = layers[layer];
 	    Ogr_layer = OGR_DS_GetLayer( Ogr_ds, layer_id );
 	    OGR_L_ResetReading ( Ogr_layer );
@@ -923,13 +923,13 @@ main (int argc, char *argv[])
 	}
         if (Centr)
 		G_free(Centr);
-        fprintf ( stderr, separator );
+        G_message ( "%s", separator );
 	Vect_build_partial (&Map, GV_BUILD_NONE, NULL);
 
-        fprintf ( stderr, separator );
+        G_message ( "%s", separator );
         Vect_build ( &Map, stderr );
 
-	fprintf ( stderr, separator );
+        G_message ( "%s", separator );
 
 	if ( n_overlaps > 0 ) {
 	    G_warning (_("%d areas represent more (overlapping) features, because polygons overlap "
@@ -938,20 +938,20 @@ main (int argc, char *argv[])
 		    n_overlaps, nlayers+1 );
 	}
 
-	sprintf (buf, _("%d input polygons\n"), n_polygons);
-	fprintf (stderr, buf );
+	sprintf (buf, _("%d input polygons"), n_polygons);
+	G_message ( buf );
 	Vect_hist_write ( &Map, buf );
 
-	sprintf (buf, "total area: %e (%d areas)\n", total_area, ncentr);
-	fprintf (stderr, buf );
+	sprintf (buf, "total area: %e (%d areas)", total_area, ncentr);
+	G_message ( buf );
 	Vect_hist_write ( &Map, buf );
 
-	sprintf (buf, "overlapping area: %e (%d areas)\n", overlap_area, n_overlaps);
-	fprintf (stderr, buf );
+	sprintf (buf, "overlapping area: %e (%d areas)", overlap_area, n_overlaps);
+	G_message ( buf );
 	Vect_hist_write ( &Map, buf );
 
-	sprintf (buf, "area without category: %e (%d areas)\n", nocat_area, n_nocat );
-	fprintf (stderr, buf );
+	sprintf (buf, "area without category: %e (%d areas)", nocat_area, n_nocat );
+	G_message ( buf );
 	Vect_hist_write ( &Map, buf );
     }
 
