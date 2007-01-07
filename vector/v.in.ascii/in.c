@@ -221,9 +221,9 @@ main (int argc, char *argv[])
 	    points_analyse ( ascii, tmpascii, fs, &rowlen, &ncols, &minncols,
 		&coltype, &collen, skip_lines, xcol, ycol, region_flag->answer);
 
-	    fprintf ( stderr, "Maximum input row length: %d\n", rowlen);
-	    fprintf ( stderr, "Maximum number of columns: %d\n", ncols);
-	    fprintf ( stderr, "Minimum number of columns: %d\n", minncols);
+	    G_message(_("Maximum input row length: %d"), rowlen);
+	    G_message(_("Maximum number of columns: %d"), ncols);
+	    G_message(_("Minimum number of columns: %d"), minncols);
 
 	    /* check column numbers */
 	    if ( xcol >= minncols ) {
@@ -291,7 +291,6 @@ main (int argc, char *argv[])
 		}
 
 		for ( i = 0 ; i < ncols; i++ ) {
-		    fprintf ( stderr, "column: %d  type: ", i+1);
 		    if ( i > 0 && !columns_opt->answer ) {
 			db_append_string ( &sql, ", " );
 		    }
@@ -302,7 +301,7 @@ main (int argc, char *argv[])
 
 		    switch ( coltype[i] ) {
 			case DB_C_TYPE_INT:
-			    fprintf ( stderr, "integer\n");
+                            G_message ("column: %d  type: integer", i+1);
 			    if ( !columns_opt->answer ) {
 				sprintf ( buf, "int_%d integer", n_int+1);
 				db_append_string ( &sql, buf);
@@ -314,7 +313,7 @@ main (int argc, char *argv[])
 			    n_int++;
 			    break;
 			case DB_C_TYPE_DOUBLE:
-			    fprintf ( stderr, "double\n");
+                            G_message ("column: %d  type: double", i+1);
 			    if ( !columns_opt->answer ) {
 				sprintf ( buf, "dbl_%d double precision", n_double+1);
 				db_append_string ( &sql, buf);
@@ -322,7 +321,7 @@ main (int argc, char *argv[])
 			    n_double++;
 			    break;
 			case DB_C_TYPE_STRING:
-			    fprintf ( stderr, "string  length: %d\n", collen[i]);
+                            G_message ("column: %d  type: string length: %d", i+1, collen[i]);
 			    if ( !columns_opt->answer ) {
 				sprintf ( buf, "str_%d varchar(%d)", n_string+1, collen[i]);
 				db_append_string ( &sql, buf);

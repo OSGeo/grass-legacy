@@ -50,7 +50,7 @@ int asc_to_bin(
 		    G_debug(2, "a2b: skipping commented line");
 		    continue;
 		}
-		fprintf (stderr,"Error reading ascii file:\n[%s]\n", buff) ;
+		G_warning ( _("Error reading ascii file: [%s]"), buff) ;
 		return 0;
 	    }
 	    if (ctype == '#') {
@@ -88,7 +88,7 @@ int asc_to_bin(
 			type = 0; /* dead -> ignore */
 			break;
 		default:
-			fprintf (stderr,"Error reading ascii file:\n%s\n", buff) ;
+			G_warning (_("Error reading ascii file: %s"), buff) ;
 			return 0;
 	    }
 	    G_debug(5, "feature type = %d", type);
@@ -102,7 +102,7 @@ int asc_to_bin(
 	    for( i=0; i<n_coors; i++)
 	    {
 		    if ( G_getl2(buff,BUFFSIZE-1,ascii) == 0 ) {
-			fprintf (stderr,"End of ascii file reached before end of coordinates\n") ;
+			G_warning (_("End of ascii file reached before end of coordinates")) ;
 			return 0;
 		    }
 		    if (buff[0] == '\0') {
@@ -113,7 +113,7 @@ int asc_to_bin(
 
 		    *z=0;
 		    if ( sscanf(buff, "%lf%lf%lf", x, y, z) < 2 ) {			
-			fprintf (stderr,"Error reading ascii file:\n%s\n", buff) ;
+		        G_warning (_("Error reading ascii file: %s"), buff) ;
 			return 0;
 		    }    
 		    G_debug( 5, "coor in: %s -> x = %f y = %f z = %f", G_chop(buff), *x, *y, *z);
@@ -139,7 +139,7 @@ int asc_to_bin(
 	    for( i=0; i<n_cats; i++)
 	    {
 		    if ( G_getl2(buff,BUFFSIZE-1,ascii) == 0 ) {
-			fprintf (stderr,"End of ascii file reached before end of categories.\n") ;
+			G_warning (_("End of ascii file reached before end of categories.")) ;
 			return 0;
 		    }
 		    if (buff[0] == '\0') {
@@ -149,7 +149,7 @@ int asc_to_bin(
 		    }
 
 		    if ( sscanf(buff, "%u%u", &catn, &cat) != 2 ) {
-			fprintf (stderr,"Error reading categories:\n%s\n", buff) ;
+			G_warning (_("Error reading categories: %s"), buff) ;
 			return 0;
 		    }
 		    Vect_cat_set ( Cats, catn, cat );
