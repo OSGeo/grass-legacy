@@ -184,7 +184,7 @@ int main (int argc, char **argv)
 	    while (x <= y) add_cat(x++);
 	}
     } else if ( fileopt->answer != NULL )  {  /* got a file of category numbers */
-	fprintf(stderr,_("process file <%s> for category numbers\n"),fileopt->answer);
+	G_message(_("process file <%s> for category numbers"),fileopt->answer);
 
 	/* open input file */
 	if( (in = fopen(fileopt->answer,"r")) == NULL )
@@ -210,7 +210,7 @@ int main (int argc, char **argv)
 	if ( !Fi ) {
 	    G_fatal_error ( _("No layer database connection.") );
 	}
-	fprintf(stderr,_("Load cats from the database (table = %s, db = %s).\n"),  Fi->table, Fi->database);
+	G_message(_("Load cats from the database (table = %s, db = %s)."),  Fi->table, Fi->database);
 	
         driver = db_start_driver(Fi->driver);
         if (driver == NULL)
@@ -222,7 +222,7 @@ int main (int argc, char **argv)
             G_fatal_error(_("Cannot open database %s"), Fi->database) ;
 											 
 	ncats = db_select_int( driver, Fi->table, Fi->key, whereopt->answer, &cats);
-	fprintf(stderr,_("%d cats loaded from the database\n"),  ncats);
+	G_message(_("%d cats loaded from the database"),  ncats);
 	
 	db_close_database(driver);
 	db_shutdown_driver(driver);
@@ -338,7 +338,7 @@ int main (int argc, char **argv)
     if ( dissolve ) { 
 	int line, nlines, ltype, area;
 	
-	fprintf(stderr,_("Removing duplicate centroids ...") );
+	G_message(_("Removing duplicate centroids ...") );
 	nlines = Vect_get_num_lines ( &Out );
 	for ( line = 1; line <= nlines; line++) {
 	    if ( !Vect_line_alive ( &Out, line ) ) continue; /* should not happen */
