@@ -88,7 +88,6 @@ int main (int argc, char **argv)
   struct Option *input;
   struct Option *output;
   struct Flag *quietly;
-  /* struct Flag *overwrite; */
 
   int polyline;
   int *lines_visited;
@@ -103,42 +102,19 @@ int main (int argc, char **argv)
 
   module = G_define_module();
   module->keywords = _("vector, topology");
-  module->description = "Build polylines from lines.";
+  module->description = _("Build polylines from lines.");
 
   /* Define the options */
 
-  input = G_define_option ();
-  input->key = "input";
-  input->type = TYPE_STRING;
-  input->required = YES;
-  input->multiple = NO;
-  input->gisprompt = "old,vector,vector";
-  input->description = "Input binary vector map";
-
-  output = G_define_option ();
-  output->key = "output";
-  output->type = TYPE_STRING;
-  output->required = YES;
-  output->multiple = NO;
-  output->gisprompt = "new,vector,vector";
-  output->description = "Output vector map";
-
-  /*
-  overwrite = G_define_flag ();
-  overwrite->key = 'o';
-  overwrite->description = "Overwrite output file";
-  */
+  input = G_define_standard_option (G_OPT_V_INPUT);
+  output = G_define_standard_option (G_OPT_V_OUTPUT);
 
   quietly = G_define_flag ();
   quietly->key = 'q';
-  quietly->description = "Run quietly";
+  quietly->description = _("Do not print polyline info");
 
   if (G_parser(argc, argv)) exit (EXIT_FAILURE);
   
-  /* Make parser parameters globally available */
-  gQuietly = quietly->answer;
-  /* gOverwrite = overwrite->answer; */
-
   Vect_check_input_output_name ( input->answer, output->answer, GV_FATAL_EXIT );
 
   /* Open binary vector map at level 2 */
@@ -148,21 +124,7 @@ int main (int argc, char **argv)
   Vect_open_old (&map, input->answer, mapset);
 
   /* Open new vector */
-  if ( G_find_vector2 ( output->answer, "") != NULL ) {
-      /*
-      if (!gOverwrite)
-	G_fatal_error ("Output file exists ");
-      else {
-      */
-	  if (!gQuietly)
-	    fprintf(stderr, "\nOverwriting map %s ", output->answer);
-      /*
-      }
-      */
-  } else {
-      if (!gQuietly)
-	fprintf(stderr, "\nCreating new map %s ", output->answer);
-  }
+  G_find_vector2 ( output->answer, "");
   Vect_open_new ( &Out, output->answer, Vect_is_3d(&map) );
 
   /* Copy header info. */
@@ -177,7 +139,7 @@ int main (int argc, char **argv)
   lines_visited = (int*) G_calloc ( Vect_get_num_lines(&map) + 1, sizeof (int));
   if (lines_visited == NULL) G_fatal_error ("Error allocating memory for `lines_visited' ");
 
-  fprintf (stderr, "\nThe number of lines in the binary map is %d", Vect_get_num_lines(&map) );
+  G_message (_("The number of lines in the binary map is %d"), Vect_get_num_lines(&map) );
 
   /* Set up points structure and coordinate arrays */
   points = Vect_new_line_struct ();
@@ -185,8 +147,6 @@ int main (int argc, char **argv)
 
   /* Step over all lines in binary map */
   polyline = 0;
-
-  if (!gQuietly) fprintf (stderr, "\n");
 
   for ( line = 1; line <= Vect_get_num_lines(&map); line++ ) {
       /* Skip line if already visited from another */
@@ -197,9 +157,9 @@ int main (int argc, char **argv)
       /* Find start of this polyline */
       start_line = walk_back (&map, line);
       start_type = Vect_read_line ( &map, NULL, NULL, start_line );
-      if (!gQuietly) {
-	  fprintf (stdout, "\nPolyline %d: start line = %d ", polyline, start_line);
-	  fflush (stdout);
+      if (!quietly->answer) {
+            fprintf (stdout, "Polyline %d: start line = %d \n", polyline, start_line);
+            fflush (stdout);
       }
 
       /* Walk forward and pick up coordinates */
@@ -211,7 +171,7 @@ int main (int argc, char **argv)
       polyline++;
   }
 
-  fprintf (stderr, "\nThe number of polylines in the output map is %d \n", polyline);
+  G_message (_("The number of polylines in the output map is %d "), polyline);
 
 
   /* Tidy up */
