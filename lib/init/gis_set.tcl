@@ -27,12 +27,6 @@ if {[info exists env(OS)] && $env(OS) == "Windows_NT"} {
 }
 
 source $env(GISBASE)/etc/gtcltk/gmsg.tcl
-#############################################################################
-#
-#   part regarding to the creation of a new location using proj and 
-#   the EPSG codes    (routines epsgLocCom and infoEpsg)
-#
-#############################################################################
 source $env(GISBASE)/etc/gtcltk/options.tcl
 source $env(GISBASE)/etc/epsg_option.tcl
 source $env(GISBASE)/etc/file_option.tcl
@@ -43,14 +37,18 @@ set GRASSVERSION [read -nonewline $fp]
 close $fp
 
 
+#############################################################################
+
 proc searchGISRC { filename } {
  
   global database
   global location
   global mapset
-  global oldDb oldLoc oldMap
-
+  global oldDb 
+  global oldLoc 
+  global oldMap
   global grassrc_list
+  
   set grassrc_list ""
 
   set flag 0
@@ -85,157 +83,38 @@ proc searchGISRC { filename } {
   return $flag
 }
 
+#############################################################################
+
 proc putGRASSRC { filename } {
- 
-  global database
-  global location
-  global mapset
+ 	# create grassrc file with new values
+	global database
+	global location
+	global mapset
+	global grassrc_list
+	
+	set ofp [open $filename "w"]
 
-  global grassrc_list
-
-  set ofp [open $filename "w"]
-
-  foreach i $grassrc_list {
-      if { [regexp {^GISDBASE:} $i] } \
-      {
-	  puts $ofp "GISDBASE: $database"
-      } \
-      elseif { [regexp {^LOCATION_NAME:} $i] } \
-      {
- 	  puts $ofp "LOCATION_NAME: $location"
-      } \
-      elseif { [regexp {^MAPSET:} $i] } \
-      {
-          puts $ofp "MAPSET: $mapset"
-      } \
-      else \
-      {
-      	  puts $ofp $i
-      }
-  }
+	foreach i $grassrc_list {
+		if { [regexp {^GISDBASE:} $i] } {
+			puts $ofp "GISDBASE: $database"
+		} elseif { [regexp {^LOCATION_NAME:} $i] } {
+			puts $ofp "LOCATION_NAME: $location"
+		} elseif { [regexp {^MAPSET:} $i] } {
+			puts $ofp "MAPSET: $mapset"
+		} else {
+			puts $ofp $i
+		}
+	}
 
   close $ofp
 }
 
-proc GetDir {entWidget locList mapList} \
-{
-    global database
-    
-    toplevel .getDir
-    wm title .getDir [G_msg "New GIS data directory"]
-    wm resizable .getDir 0 0
-    
-    frame .getDir.base 
-    pack .getDir.base -side top -fill both -expand 1
-    
-    listbox .getDir.base.list -selectmode single -height 10 -width 40\
-    	-yscrollcommand ".getDir.base.vertScroll set" \
-    	-xscrollcommand ".getDir.horzScroll set"
-    pack .getDir.base.list -side left -fill x -expand 1
-    scrollbar .getDir.base.vertScroll -width 12 \
-    	-command ".getDir.base.list yview"
-    scrollbar .getDir.horzScroll -width 12 -command ".getDir.base.list xview" \
-    	-orient horizontal
-    pack .getDir.base.vertScroll -side left -fill y
-    pack .getDir.horzScroll -side top -fill x
 
-    # Create a frame for the pushbuttons
-    frame .getDir.sepFrame -height 4 -bd 2 -relief raised
-    pack .getDir.sepFrame -side top -fill x
-    frame .getDir.buttonFrame 
-    pack .getDir.buttonFrame -side bottom -fill x
-    
-    # Create the pushbuttons
-    button .getDir.buttonFrame.add -text [G_msg "OK"] -bd 1  -width 5 \
-    	-command "SetDatabase .getDir.base.list .getDir $entWidget $locList $mapList"
-    button .getDir.buttonFrame.quit -bd 1 -width 5 -text [G_msg "Cancel"] \
-    	-command {destroy .getDir}
-    pack .getDir.buttonFrame.add .getDir.buttonFrame.quit -side left \
-    	-expand 1 -padx 10 -pady 5
+#############################################################################
 
-    # Bind the double click to change directories
-    bind .getDir.base.list <Double-Button-1> {ChangeDir %W %y}
-    GetListItems .getDir.base.list [file dirname $database] \
-    	[file tail $database]
-}
-
-proc GetListItems {widget dir default} \
-{
-    set currDir [pwd]
-    if { [cdir $dir] == 0} {
-    
-    # Insert the parent directory in the list
-    $widget delete 0 end
-    set parent $dir
-    append parent "/.."
-    $widget insert end $parent
-    
-    # Set counter to 1 since parent is already in the list
-    set i 1
-    set index 0
-    
-    foreach filename [lsort [glob -nocomplain *]] {
-		if {[file isdirectory $filename]} {
-			if {[string compare $default $filename] == 0} {
-				set index $i
-			}
-		
-			set path $dir
-			append path "/" $filename
-			set filename $path
-		
-			$widget insert end $filename
-	
-			incr i
-		}
-    }
-    
-    $widget see $index
-    $widget selection set $index
-    $widget xview moveto 1
-    
-    cdir $currDir
-    }
-}
-
-proc SetDatabase {widget top entryWidget locList mapList} \
-{
-    global database location
-    
-    set tmpdatabase [$widget get [$widget curselection]]
-    
-    if {[string compare [file tail $tmpdatabase] ".."] == 0} \
-    {
-    	set tmpdatabase [file dirname [file dirname $tmpdatabase]]
-    }
-    
-    $entryWidget xview moveto 1
-    
-    if { [cdir $tmpdatabase] == 0} {
-        set database $tmpdatabase
-        set location ""
-        refresh_loc
-    
-    .frame0.frameBUTTONS.ok configure -state disabled
-    destroy $top
-    }
-}
-
-proc ChangeDir {widget y} \
-{
-    set dir [$widget get [$widget nearest $y]]
-    
-    if {[string compare [file tail $dir] ".."] == 0} \
-    {
-    	set dir [file dirname [file dirname $dir]]
-    }
-    
-    GetListItems $widget $dir ""
-}
-
-# Returns 0, if location is invalid, 1 othervise.
-# Are hardcoded / in path's OK? They where here before me :) Maris.
 proc CheckLocation {} {
+	# Returns 0, if location is invalid, 1 othervise.
+	# Are hardcoded / in path's OK? They where here before me :) Maris.
     global database location
     
     set found 0
@@ -246,16 +125,14 @@ proc CheckLocation {} {
     # Special case - wrong GISDBASE
     if {[file isdirectory $dir] == 0} {
         DialogGen .wrnDlg [G_msg "WARNING: invalid location"] warning \
-	[format [G_msg "Warning: location <%s> at GISDBASE <%s> is not a directory or does not exist."] \
-	$location $database] \
+		[format [G_msg "Warning: location <%s> at GISDBASE <%s> is not a directory or does not exist."] \
+		$location $database] \
         0 OK;
     } else {
         cdir $dir
         
-        foreach filename [lsort [glob -nocomplain *]] \
-        {
-            if {[string compare $filename "PERMANENT"] == 0} \
-            {
+        foreach filename [lsort [glob -nocomplain *]] {
+            if {[string compare $filename "PERMANENT"] == 0} {
                 # All good locations have valid PERMANENT mapset.
                 if {[file exists "$dir/PERMANENT/WIND"] != 0} {
                     set found 1
@@ -292,7 +169,7 @@ proc gisSetWindow {} {
     wm title . [format [G_msg "GRASS %s Startup"] $GRASSVERSION]
 
     # ---------------------------
-    # build .frame0
+    # build .frame0 with panel title
     # ---------------------------
     set mainfr [frame .frame0 \
     	-borderwidth {2} \
@@ -320,7 +197,7 @@ proc gisSetWindow {} {
     .frame0.intro.msg configure -state disabled
 
     # -----------------------------------
-    # build .frame0.frameDB
+    # build .frame0.frameDB - panel top section for database selection
     # -----------------------------------
 
     frame .frame0.frameDB \
@@ -352,22 +229,12 @@ proc gisSetWindow {} {
     	-width 12 \
     	-orient {horizontal}
  
-    if { $mingw == "1" } {
-       # We cannot use Double-Button-1 (change dir) and Button-1 (select dir)
-       # events at the same time because of MS-Windows TclTk's event bug.
-       button .frame0.frameDB.right.button \
-    	   -text [G_msg "Browse..."] -bd 1 \
-    	   -command {set database [tk_chooseDirectory -initialdir $database \
-	   	-parent .frame0 -title [G_msg "New GIS data directory"] -mustexist true]
-		refresh_loc
-		.frame0.frameBUTTONS.ok configure -state disabled}
-    } else {
-       button .frame0.frameDB.right.button \
-    	   -text [G_msg "Browse..."] -bd 1 \
-    	   -command {GetDir .frame0.frameDB.mid.entry .frame0.frameLOC.listbox \
-    	       .frame0.frameMS.listbox}
-    }
-
+	button .frame0.frameDB.right.button \
+		-text [G_msg "Browse..."] -bd 1 \
+		-command {set database [tk_chooseDirectory -initialdir $database \
+			-parent .frame0 -title [G_msg "New GIS data directory"] -mustexist true]
+			refresh_loc
+			.frame0.frameBUTTONS.ok configure -state disabled}
 
     pack .frame0.frameDB.left.label -side top
     pack .frame0.frameDB.mid.entry -side top -fill x
@@ -378,7 +245,7 @@ proc gisSetWindow {} {
     pack .frame0.frameDB.right -side left -anchor n -fill x
 
     # -----------------------------------
-    # build .frame0.frameLOC
+    # build .frame0.frameLOC - middle, left section for location selection listbox 
     # -----------------------------------
     frame .frame0.frameLOC \
     	-borderwidth {2}
@@ -410,7 +277,7 @@ proc gisSetWindow {} {
 
 
     # -----------------------------------
-    # build .frame0.frameMS
+    # build .frame0.frameMS - middle, right section for mapset selection listbox
     # -----------------------------------
     frame .frame0.frameMS \
     	-borderwidth {2}
@@ -440,7 +307,8 @@ proc gisSetWindow {} {
     	.frame0.frameMS.listbox { left expand fill }
 
     # -----------------------------------
-    # build .frame0.frameNMS
+    # build .frame0.frameNMS - middle far right section with buttons for
+    #    creating new mapset and location
     # -----------------------------------
     frame .frame0.frameNMS \
     	-borderwidth {2}
@@ -483,7 +351,7 @@ proc gisSetWindow {} {
 	    if { $mymapset != "" } {
             	if {[CheckLocation] == 0} {
             	    DialogGen .wrnDlg [G_msg "WARNING: invalid location"] warning \
-		    [format [G_msg "Warning: selected location <%s> is not valid. \n New mapset is NOT created. \n Select valid location and try again."] $location] \
+		    		[format [G_msg "Warning: selected location <%s> is not valid. \n New mapset is NOT created. \n Select valid location and try again."] $location] \
                     0 OK;
             	} else {
                     cdir $database
@@ -531,13 +399,13 @@ proc gisSetWindow {} {
     	-width 20 -bd 1\
     	-relief raised \
     	-command {
-           if { $mingw == "1" } {
-               exec -- cmd.exe /c start $env(GISBASE)/etc/set_data
-           } else {
-	       exec -- $env(GISBASE)/etc/grass-xterm-wrapper -name xterm-grass -e $env(GISBASE)/etc/grass-run.sh $env(GISBASE)/etc/set_data
-           }
-           # Now we should refresh the list of locations!
-           refresh_loc ;# Could it look like this? Maris.
+			if { $mingw == "1" } {
+				exec -- cmd.exe /c start $env(GISBASE)/etc/set_data
+			} else {
+				exec -- $env(GISBASE)/etc/grass-xterm-wrapper -name xterm-grass -e $env(GISBASE)/etc/grass-run.sh $env(GISBASE)/etc/set_data
+			}
+			# Now we should refresh the list of locations!
+			refresh_loc ;# Could it look like this? Maris.
         }
 
     pack append .frame0.frameNMS
@@ -568,9 +436,9 @@ proc gisSetWindow {} {
     	-width 10 -bd 1 -fg green4 -default active \
      	-command {
             if {[CheckLocation] == 0} {
-            	    DialogGen .wrnDlg [G_msg "WARNING: invalid location"] warning \
-		    [format [G_msg "Warning: selected location <%s> is not valid. \n Select valid location and try again."] $location] \
-                    0 OK;
+				DialogGen .wrnDlg [G_msg "WARNING: invalid location"] warning \
+				[format [G_msg "Warning: selected location <%s> is not valid. \n Select valid location and try again."] $location] \
+				0 OK;
             } else {
                 if {[file exists "$database/$location/$mapset/WIND"] == 0} {
                     DialogGen .wrnDlg [G_msg "WARNING: invalid mapset"] warning \
@@ -615,7 +483,6 @@ proc gisSetWindow {} {
             destroy . 
         }
 
-    #############################################################################
 
     pack append .frame0.frameBUTTONS \
     	.frame0.frameBUTTONS.ok { left  } \
@@ -643,15 +510,13 @@ proc gisSetWindow {} {
 
     .frame0.frameDB.mid.entry xview moveto 1
     
-    if { ! [file exists $database] } \
-    {
+    if { ! [file exists $database] } {
       	DialogGen .wrnDlg [G_msg "WARNING: Invalid Database"] warning \
 	    [G_msg "WARNING: Invalid database. Finding first valid directory in parent tree"] \
 	    0 OK
       
-      	while { ! [file exists $database] } \
-      	{
-	    set database [file dirname $database]
+      	while { ! [file exists $database] } {
+	    	set database [file dirname $database]
       	}
     }
     
@@ -674,32 +539,31 @@ proc gisSetWindow {} {
 
 	# setting list of owned mapsets
     cdir $database
-    if { [file exists $location] } \
-    {
-	cdir $location
-	foreach i [lsort [glob -directory [pwd] *]] {
-     	    if {[file isdirectory $i] && [file owned $i] } {
-        	.frame0.frameMS.listbox insert end [file tail $i]
-      	    }
-	}
-
-	set i 0
-	set curSelected 0
-	set length [.frame0.frameMS.listbox size]
-	while { $i <  $length } {
-    	    if { $mapset == [.frame0.frameMS.listbox get $i] } {
-        	set curSelected $i
-        	break
-            }
-
-	    incr i 1
-	}
-
-	.frame0.frameMS.listbox yview $curSelected
-	.frame0.frameMS.listbox select set $curSelected
+    if { [file exists $location] } {
+		cdir $location
+		foreach i [lsort [glob -directory [pwd] *]] {
+			if {[file isdirectory $i] && [file owned $i] } {
+				.frame0.frameMS.listbox insert end [file tail $i]
+			}
+		}
+	
+		set i 0
+		set curSelected 0
+		set length [.frame0.frameMS.listbox size]
+		while { $i <  $length } {
+			if { $mapset == [.frame0.frameMS.listbox get $i] } {
+				set curSelected $i
+				break
+			}
+	
+			incr i 1
+		}
+	
+		.frame0.frameMS.listbox yview $curSelected
+		.frame0.frameMS.listbox select set $curSelected
     }
 
-  bind .frame0.frameDB.mid.entry <Return> {
+	bind .frame0.frameDB.mid.entry <Return> {
         set new_path [%W get]
         if { "$new_path" != "" \
              && [file exists $new_path] && [file isdirectory $new_path] } {
@@ -710,70 +574,70 @@ proc gisSetWindow {} {
            refresh_loc
            set database [pwd]
         }
-	.frame0.frameBUTTONS.ok configure -state disabled
-  }
-
-  bind .frame0.frameLOC.listbox <Double-ButtonPress-1> {
-        # Do something only if there IS atleast one location
-        if {[%W size] > 0} {
-            %W select set [%W nearest %y]
-            cdir $database
-            set location [%W get [%W nearest %y]]
-            if {[CheckLocation] == 0} {
-                    # Notice - %%s prevents %s capturing by bind
-            	    DialogGen .wrnDlg [G_msg "WARNING: invalid location"] warning \
-		    [format [G_msg "Warning: selected location <%%s> is not valid. \n Select valid location and try again."] $location] \
-                    0 OK;
-            } else {
-                    cdir $location
-            .frame0.frameMS.listbox delete 0 end
-            foreach i [lsort [glob -directory [pwd] *]] {
-              if { [file isdirectory $i] && [file owned $i] } { 
-                    .frame0.frameMS.listbox insert end [file tail $i]
-              }
-            }
-            set mapset ""
-            .frame0.frameBUTTONS.ok configure -state disabled
+		.frame0.frameBUTTONS.ok configure -state disabled
 	}
-  }
-  }
 
-  bind .frame0.frameLOC.listbox <ButtonPress-1> {
+	bind .frame0.frameLOC.listbox <Double-ButtonPress-1> {
         # Do something only if there IS atleast one location
         if {[%W size] > 0} {
             %W select set [%W nearest %y]
             cdir $database
             set location [%W get [%W nearest %y]]
             if {[CheckLocation] == 0} {
-                    # Notice - %%s prevents %s capturing by bind
-            	    DialogGen .wrnDlg [G_msg "WARNING: invalid location"] warning \
-		    [format [G_msg "Warning: selected location <%%s> is not valid. \n Select valid location and try again."] $location] \
-                    0 OK;
+				# Notice - %%s prevents %s capturing by bind
+				DialogGen .wrnDlg [G_msg "WARNING: invalid location"] warning \
+		    	[format [G_msg "Warning: selected location <%%s> is not valid. \n Select valid location and try again."] $location] \
+				0 OK;
             } else {
-                    cdir $location
-            .frame0.frameMS.listbox delete 0 end
-            foreach i [lsort [glob -directory [pwd] *]] {
-              if { [file isdirectory $i] && [file owned $i] } {
-                    .frame0.frameMS.listbox insert end [file tail $i]
-              }
-            }
-            set mapset ""
-            .frame0.frameBUTTONS.ok configure -state disabled
-        }
-  }
-  }
+				cdir $location
+				.frame0.frameMS.listbox delete 0 end
+				foreach i [lsort [glob -directory [pwd] *]] {
+					if { [file isdirectory $i] && [file owned $i] } { 
+						.frame0.frameMS.listbox insert end [file tail $i]
+					}
+				}
+				set mapset ""
+				.frame0.frameBUTTONS.ok configure -state disabled
+			}
+		}
+	}
 
-  bind .frame0.frameMS.listbox <Double-ButtonPress-1> {
+	bind .frame0.frameLOC.listbox <ButtonPress-1> {
+        # Do something only if there IS atleast one location
+        if {[%W size] > 0} {
+            %W select set [%W nearest %y]
+            cdir $database
+            set location [%W get [%W nearest %y]]
+            if {[CheckLocation] == 0} {
+				# Notice - %%s prevents %s capturing by bind
+				DialogGen .wrnDlg [G_msg "WARNING: invalid location"] warning \
+		    	[format [G_msg "Warning: selected location <%%s> is not valid. \n Select valid location and try again."] $location] \
+				0 OK;
+            } else {
+				cdir $location
+				.frame0.frameMS.listbox delete 0 end
+				foreach i [lsort [glob -directory [pwd] *]] {
+					if { [file isdirectory $i] && [file owned $i] } {
+						.frame0.frameMS.listbox insert end [file tail $i]
+					}
+				}
+            	set mapset ""
+				.frame0.frameBUTTONS.ok configure -state disabled
+        	}
+  		}
+	}
+
+	bind .frame0.frameMS.listbox <Double-ButtonPress-1> {
         # Do something only if there IS atleast one mapset
         if {[%W size] > 0} {
             %W select set [%W nearest %y]
             set mapset [%W get [%W nearest %y]]
             .frame0.frameBUTTONS.ok configure -state normal
             if {[CheckLocation] == 0} {
-                    # Notice - %%s prevents %s capturing by bind
-            	    DialogGen .wrnDlg [G_msg "WARNING: invalid location"] warning \
-		    [format [G_msg "Warning: selected location <%%s> is not valid. \n Select valid location and try again."] $location] \
-                    0 OK;
+				# Notice - %%s prevents %s capturing by bind
+				DialogGen .wrnDlg [G_msg "WARNING: invalid location"] warning \
+		    	[format [G_msg "Warning: selected location <%%s> is not valid. \n Select valid location and try again."] $location] \
+				0 OK;
             } else {
                 if {[file exists "$database/$location/$mapset/WIND"] == 0} {
                     DialogGen .wrnDlg [G_msg "WARNING: invalid mapset"] warning \
@@ -789,28 +653,28 @@ proc gisSetWindow {} {
                 }
             }
         }
-  }
+	}
 
-  bind .frame0.frameMS.listbox <ButtonPress-1> {
+	bind .frame0.frameMS.listbox <ButtonPress-1> {
         # Do something only if there IS atleast one mapset
         if {[%W size] > 0} {
             %W select set [%W nearest %y]
             set mapset [%W get [%W nearest %y]]
             .frame0.frameBUTTONS.ok configure -state normal
             if {[CheckLocation] == 0} {
-            	    DialogGen .wrnDlg [G_msg "WARNING: invalid location"] warning \
-		    [format [G_msg "Warning: selected location <%%s> is not valid. \n Select valid location and try again."] $location] \
-                    0 OK;
+				DialogGen .wrnDlg [G_msg "WARNING: invalid location"] warning \
+		    	[format [G_msg "Warning: selected location <%%s> is not valid. \n Select valid location and try again."] $location] \
+				0 OK;
             }
         }
-  }
+	}
 
-  bind .frame0.frameNMS.second.entry <KeyRelease> {
-	.frame0.frameNMS.third.button configure -state active
-  }
+	bind .frame0.frameNMS.second.entry <KeyRelease> {
+		.frame0.frameNMS.third.button configure -state active
+	}
   
-  grab .
-  tkwait window . 
+	grab .
+	tkwait window . 
 
 }
 
@@ -839,8 +703,11 @@ proc refresh_loc {} {
 	update idletasks
 }
 
-# cd wrapper
+
+#############################################################################
+
 proc cdir { dir } {
+# cd wrapper
     if { [catch { cd $dir }] } {
         DialogGen .wrnDlg [G_msg "WARNING: change directory failed"] warning \
           [format [G_msg "Warning: could not change directory to <%s>.\nCheck directory permissions."] $dir ]\
@@ -898,7 +765,7 @@ proc DialogGen {widget title bitmap text default buttons} \
     label $widget.dlgFrame.icon -bitmap $bitmap
     message $widget.dlgFrame.text -text $text -width 10c
     pack $widget.dlgFrame.icon $widget.dlgFrame.text -side left -fill x \
-	-padx 10
+		-padx 10
     
     # Create a frame for the pushbuttons
     frame $widget.sepFrame -height 4 -bd 2 -relief raised
@@ -907,28 +774,25 @@ proc DialogGen {widget title bitmap text default buttons} \
 
     # Create the pushbuttons
     set i 0
-    foreach buttonLabel $buttons \
-    {
-	button $widget.buttonFrame.$i -text $buttonLabel \
-	    -command "set buttonNum $i"
-	pack $widget.buttonFrame.$i -side left -expand 1 -padx 10 -pady 5
-	incr i
+    foreach buttonLabel $buttons {
+		button $widget.buttonFrame.$i -text $buttonLabel -command "set buttonNum $i"
+		pack $widget.buttonFrame.$i -side left -expand 1 -padx 10 -pady 5
+		incr i
     }
     
     # Position the top left corner of the window over the root window
     wm withdraw $widget
     update idletasks
     wm geometry $widget +[expr [winfo rootx .] + ([winfo width .] \
-	-[winfo width $widget]) / 2]+[expr [winfo rooty .] + ([winfo \
-	height .] - [winfo height $widget]) / 2]
+		-[winfo width $widget]) / 2]+[expr [winfo rooty .] + ([winfo \
+		height .] - [winfo height $widget]) / 2]
     wm deiconify $widget
 
     # Grab the pointer to make sure this window is closed before continuing
     grab set $widget
 
-    if {$default >= 0} \
-    {
-	focus $widget.buttonFrame.$default
+    if {$default >= 0} {
+		focus $widget.buttonFrame.$default
     }
     
     tkwait variable buttonNum
@@ -941,25 +805,25 @@ proc DialogGen {widget title bitmap text default buttons} \
 }
 
 # Procedure to cancel the dialog
-proc CancelDialog {widget} \
-{
+proc CancelDialog {widget} {
     global buttonNum
 
     # Set the wait variable so that the dialog box can cancel properly
     set buttonNum 999
 }
 
+
+#############################################################################
+
 global database
 global location
 global mapset
-
 global grassrc_list
 global gisrc_name
 
 set ver [info tclversion]
 
-if { [string compare $ver "8.0"] < 0} \
-{
+if { [string compare $ver "8.0"] < 0} {
     puts stderr "Sorry your version of the Tcl/Tk libraries is $ver and is too"
     puts stderr "old for GRASS which requires a Tcl/Tk library version of 8.0 or later."
     puts stderr "Reverting default settings back to GRASS text mode interface."
@@ -969,8 +833,8 @@ if { [string compare $ver "8.0"] < 0} \
 set database ""
 set location ""
 set mapset ""
-
 set gisrc_name ""
+
 if { [info exists env(GISRC)] } {
    set gisrc_name $env(GISRC)
 }
