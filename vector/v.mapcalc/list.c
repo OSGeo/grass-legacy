@@ -53,7 +53,7 @@ listitem (size_t size)
   item = G_calloc (1, size);
   if (!item)
   {
-    fprintf (stderr, "Out of memory!\n");
+    G_fatal_error (_("Out of memory!"));
     exit (1);
   }
 
@@ -546,7 +546,7 @@ list2array (LIST *head)
   array = (LIST **)G_calloc (n + 1, sizeof (LIST *));
   if (!array)
   {
-    fprintf (stderr, "Out of memory\n");
+    G_fatal_error (_("Out of memory"));
     exit (1);
   }
 

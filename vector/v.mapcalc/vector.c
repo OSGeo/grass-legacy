@@ -138,29 +138,29 @@ printvec (SYMBOL *sym)
 
   v = (VECTOR *)sym->v.p;
 
-  printf ("\t(");
+  fprintf (stdout,"\t(");
   if (!isfinite (v->x))
-    printf ("??.??");
+    fprintf (stdout,"??.??");
   else if (v->x == (int)v->x)
-    printf ("%d", (int)v->x);
+    fprintf (stdout,"%d", (int)v->x);
   else
-    printf ("%g", v->x);
-  printf (", ");
+    fprintf (stdout,"%g", v->x);
+  fprintf (stdout,", ");
   if (!isfinite (v->y))
-    printf ("??.??");
+    fprintf (stdout,"??.??");
   else if (v->y == (int)v->y)
-    printf ("%d", (int)v->y);
+    fprintf (stdout,"%d", (int)v->y);
   else
-    printf ("%g", v->y);
+    fprintf (stdout,"%g", v->y);
   if (isfinite (v->z))
   {
-    printf (", ");
+    fprintf (stdout,", ");
     if (v->z == (int)v->z)
-      printf ("%d", (int)v->z);
+      fprintf (stdout,"%d", (int)v->z);
     else
-      printf ("%g", v->z);
+      fprintf (stdout,"%g", v->z);
   }
-  printf (")\n");
+  fprintf (stdout,")\n");
 }
 
 void
@@ -255,7 +255,7 @@ pntfunc (SYMBOL *func, SYMBOL *arglist)
   if (!func || !func->v.p || func->type != st_pfunc)
   {
     parseerror = 1;
-    printf ("Can't call bad function\n");
+    G_warning (_("Can't call bad function"));
   }
   else
     argc = listcnt ((LIST *)arglist);
@@ -296,7 +296,7 @@ pntfunc (SYMBOL *func, SYMBOL *arglist)
 				   arglist->next->next->v.p);
   else
   {
-    printf ("Bad arguments to pointfunc %s\n", func->name);
+    G_warning (_("Bad arguments to pointfunc %s"), func->name);
     parseerror = 1;
     sym = (SYMBOL *)listdelall ((LIST *)sym, freesym);
     if (res)
@@ -321,7 +321,7 @@ pntop (int op, SYMBOL *pnt1, SYMBOL *pnt2)
   func = getsym (buf);
   if (!func)
   {
-    printf ("No function defined to perform ``point %c point''\n", op);
+    G_warning (_("No function defined to perform ``point %c point''"), op);
     parseerror = 1;
   }
   else if (func->rettype == st_pnt)
