@@ -1,11 +1,12 @@
 #include <stdio.h>
 #include <grass/gis.h>
 #include <grass/Vect.h>
+#include <grass/glocale.h>
 #include "grid_structs.h"
 #include "local_proto.h"
 
 int write_grid (struct grid_description *grid_info,
-  struct Map_info *Map, int quiet)
+  struct Map_info *Map)
 {
 
   int i, k, j;
@@ -39,8 +40,7 @@ int write_grid (struct grid_description *grid_info,
   x_cols = cols*3.;
 
   /* write out all the vector lengths (x vectors) of the entire grid  */
-  if (!quiet)
-    fprintf (stderr,"Writing out vector rows ...\n");
+  G_message (_("Writing out vector rows ..."));
 
   y = grid_info->origin_y;
   for (i = 0; i < num_v_rows; ++i)
@@ -77,8 +77,7 @@ int write_grid (struct grid_description *grid_info,
   }
 
   /* write out all the vector widths (y vectors) of the entire grid  */
-  if (!quiet)
-    fprintf (stdout,"Writing out vector columns ...\n");
+  G_message (_("Writing out vector columns ..."));
   x = grid_info->origin_x;
   for (k = 0; k < num_v_cols; ++k)
   {
