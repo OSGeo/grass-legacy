@@ -1469,6 +1469,7 @@ proc GRMap::runprograms { mod } {
 
     global env
     global drawprog
+    global devnull
 
     # First, switch to xy mapset
     GRMap::setxyenv $xymset $xyloc
@@ -1487,7 +1488,7 @@ proc GRMap::runprograms { mod } {
 
 	# Now use the region values to get the region printed back out in -p format
 	# including lat long now as dd:mm:ss
-	if {![catch {open [concat "|g.region" "-up" $options] r} input]} {
+	if {![catch {open [concat "|g.region" "-up" $options "2> $devnull"] r} input]} {
 		while {[gets $input line] >= 0} {
 			set key [string trim [lindex [split $line ":"] 0]]
 			set parts($key) [string trim [lindex [split $line ":"] 1]]
@@ -1856,11 +1857,12 @@ proc GRMap::zoom_gregion { args} {
     variable xymset
     variable gregionproj
     global env
+    global devnull
 
     # First, switch to xy mapset
     GRMap::setxyenv $xymset $xyloc
 
-    if {![catch {open [concat "|g.region" "-up" $args] r} input]} {
+    if {![catch {open [concat "|g.region" "-up" $args "2> $devnull"] r} input]} {
         while {[gets $input line] >= 0} {
 			set key [string trim [lindex [split $line ":"] 0]]
 			set value [string trim [lindex [split $line ":"] 1]]
