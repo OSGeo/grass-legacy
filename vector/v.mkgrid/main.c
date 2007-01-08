@@ -100,6 +100,7 @@ main (int argc, char *argv[])
   angle->description = "angle of rotation (in degrees counter-clockwise)";
   angle->answer = "0";
 
+  /* please, remove before GRASS 7 released */
   q = G_define_flag ();
   q->key = 'q';
   q->description = "Quiet; No chatter";
@@ -107,6 +108,14 @@ main (int argc, char *argv[])
 
   if (G_parser (argc, argv))
     exit (-1);
+
+    /* please, remove before GRASS 7 released */
+    if(q->answer) {
+        putenv("GRASS_VERBOSE=0");
+        G_warning(_("The '-q' flag is superseded and will be removed "
+            "in future. Please use '--quiet' instead."));
+    }
+
 
   /* get the current window  */
   G_get_window (&window);
@@ -210,14 +219,12 @@ main (int argc, char *argv[])
   if (db_grant_on_table (Driver, Fi->table, DB_PRIV_SELECT, DB_GROUP|DB_PUBLIC ) != DB_OK )
       G_fatal_error ( "Cannot grant privileges on table %s", Fi->table );
 
-  if (!q->answer)
-    fprintf ( stderr, "Creating vector grid ...\n" );
+  G_message (_("Creating vector grid ...") );
   
-  write_grid (&grid_info, &Map, q->answer);
+  write_grid (&grid_info, &Map);
 
   /* Create a grid of label points at the centres of the grid cells */
-  if (!q->answer)
-    fprintf ( stderr, "Creating centroids ...\n" );
+  G_message ( _("Creating centroids ...") );
   
   /* Write out centroids and attributes */
   attCount = 0;
