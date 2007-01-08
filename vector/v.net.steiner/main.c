@@ -53,7 +53,7 @@ int init_node_costs(struct Map_info *Map, int from)
     int    to, ret, row, col;
     double cost;
 
-    fprintf (stderr, "Init costs from node %d\n", from );
+    G_message (_("Init costs from node %d"), from );
     
     for (to = 1; to <= nnodes; to++) {
 	if ( from == to ) continue;
@@ -481,17 +481,17 @@ int main(int argc, char **argv)
 	    j++;
 	}
     }
-    fprintf (stderr, "%d (not reachable) nodes removed from list of Steiner point candidates\n", j );
+    G_message (_( "%d (not reachable) nodes removed from list of Steiner point candidates"), j );
     
     /* calc costs for terminals MST */
     ret = mst ( &Map, terms, nterms, &cost, PORT_DOUBLE_MAX, NULL, NULL, 0, 1); /* no StP, rebuild */
-    fprintf (stderr, "MST costs = %f\n", cost );
+    G_message (_( "MST costs = %f"), cost );
     
     /* Go through all nodes and try to use as steiner poins -> find that which saves most costs */
     nspused = 0;
     for ( j = 0; j < nsp; j++ ) {
         sp = 0;
-	fprintf (stderr, "Search for %d. Steiner point", j + 1);
+            G_message (_("Search for %d. Steiner point"), j + 1);
 	    
 	for ( i = 1; i <= nnodes; i++ ) {
 	    G_percent ( i, nnodes, 1 );
@@ -508,7 +508,7 @@ int main(int argc, char **argv)
 	    }
 	}
 	if ( sp > 0 ) {
-	    fprintf ( stderr, "Steiner point at node %d was added to terminals (MST costs = %f)\n", 
+	    G_message ( _( "Steiner point at node %d was added to terminals (MST costs = %f)"), 
 		               sp, cost );
 	    terms[nterms + j] = sp;
             init_node_costs(&Map, sp);
@@ -517,7 +517,7 @@ int main(int argc, char **argv)
 	    /* rebuild for nex cycle */
             ret = mst ( &Map, terms, nterms + nspused, &tmpcost, PORT_DOUBLE_MAX, NULL, NULL, 0, 1);
 	} else { /* no steiner found */
-	    fprintf (stderr, "No Steiner point found -> leaving cycle\n");
+	    G_message (_( "No Steiner point found -> leaving cycle"));
 	    break;
 	}
     }
