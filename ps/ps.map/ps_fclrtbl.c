@@ -14,8 +14,6 @@
 #define NSTEPS 3
 #define NNSTEP 4 /* number of nice steps */
 
-extern int verbose;
-
 int PS_fcolortable (void)
 {
     char buf[512], *ch;
@@ -39,12 +37,8 @@ int PS_fcolortable (void)
     double grey_color_val;
 
     /* let user know what's happenning */
-    if (verbose > 1)
-    {
-        fprintf (stdout,"PS-PAINT: creating color table for <%s in %s> ...",
-	    ct.name, ct.mapset);
-        fflush(stdout);
-    }
+    G_message (_("Creating color table for <%s in %s> ..."),
+	       ct.name, ct.mapset);
 
     /* Get color range */
     if (G_read_fp_range(ct.name, ct.mapset, &range) == -1) {
@@ -228,8 +222,6 @@ int PS_fcolortable (void)
     }
 
     G_free_colors(&colors);
-    
-    if (verbose > 1) fprintf (stdout,"\n");
 
     return 0;
 }

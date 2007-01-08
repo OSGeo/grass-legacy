@@ -4,12 +4,12 @@
 */
 
 #include <string.h>
+#include <grass/gis.h>
+#include <grass/glocale.h>
 #include <grass/symbol.h>
 #include "clr.h"
 #include "ps_info.h"
 #include "local_proto.h"
-
-extern int verbose;
 
 int do_plt (int after_masking)
 {
@@ -38,11 +38,7 @@ int do_plt (int after_masking)
 	return 1;
     }
 
-    if (verbose > 1)
-    {
-        fprintf (stdout,"PS-PAINT: reading point/line file ...");
-        fflush(stdout);
-    }
+    G_message (_("Reading point/line file ..."));
 
     while (fgets(buf, sizeof buf, fp))
     switch (*buf)
@@ -139,7 +135,7 @@ int do_plt (int after_masking)
 	    /* Read symbol */
 	    sprintf( sname, "POINTSYMBOL%d", snum);
             Symb = S_read ( symb );
-            if ( Symb == NULL ) G_warning ("Cannot read symbol, using default icon");
+            if ( Symb == NULL ) G_warning (_("Cannot read symbol, using default icon"));
 	    symbol_save ( Symb, &pcolor, &pfcolor, sname );
             symbol_draw ( sname, x, y, size, 0.0, width);
 						
@@ -149,7 +145,7 @@ int do_plt (int after_masking)
 
 	case 'E':  /* EPS file */
 	if (sscanf (buf,"E %d %lf %lf %lf %lf %s",
-	    &masked, &e1, &n1, &scale, &rotate, name) == 6 );
+	    &masked, &e1, &n1, &scale, &rotate, name) == 6)
 	{
 	    if ( masked &&  after_masking) continue;
 	    if (!masked && !after_masking) continue;
@@ -171,7 +167,6 @@ int do_plt (int after_masking)
     }
 
     fclose (fp);
-    if (verbose > 1) fprintf (stdout,"\n");
 
     return 0;
 }

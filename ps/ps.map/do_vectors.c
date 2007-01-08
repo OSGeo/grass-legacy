@@ -8,6 +8,7 @@
 
 #include <string.h>
 #include <grass/gis.h>
+#include <grass/glocale.h>
 #include <grass/Vect.h>
 #include <grass/symbol.h>
 #include "clr.h"
@@ -20,19 +21,15 @@ int do_vectors (int after_masking)
     int n, z, lz, dig;
     struct Map_info Map;
     char dashes[100], buf[20], *ptr;
-    extern int verbose;
-
+    
     n = vector.count;
     while (n-- > 0) {
 	if( vector.layer[n].type == VPOINTS  ) continue;
 	if ( after_masking &&  vector.layer[n].masked) continue;
 	if (!after_masking && !vector.layer[n].masked) continue;
 
-	if (verbose > 1) {
-	    fprintf (stdout,"PS-PAINT: reading vector map <%s in %s> ...",
-		vector.layer[n].name, vector.layer[n].mapset);
-	    fflush(stdout);
-	}
+	G_message (_("Reading vector map <%s in %s> ..."),
+		   vector.layer[n].name, vector.layer[n].mapset);
 
 	Vect_set_open_level(2); 
 	Vect_set_fatal_error ( GV_FATAL_PRINT );
@@ -103,7 +100,6 @@ int do_vectors (int after_masking)
 
 	Vect_close(&Map);
 	fprintf(PS.fp, "[] 0 setdash\n");
-	if (verbose > 1) fprintf (stdout,"\n");
     }
 
     return 0;
@@ -114,19 +110,15 @@ int do_vpoints (int after_masking)
 {
     int n;
     struct Map_info Map;
-    extern int verbose;
-
+    
     n = vector.count;
     while (n-- > 0) {
     	if( vector.layer[n].type != VPOINTS ) continue;
 	if ( after_masking &&  vector.layer[n].masked) continue;
 	if (!after_masking && !vector.layer[n].masked) continue;
 
-	if (verbose > 1) {
-	    fprintf (stdout,"PS-PAINT: reading vector points file <%s in %s> ...",
-		vector.layer[n].name, vector.layer[n].mapset);
-	    fflush(stdout);
-	}
+	G_message (_("Reading vector points file <%s in %s> ..."),
+		   vector.layer[n].name, vector.layer[n].mapset);
 
 	Vect_set_open_level(2); 
 	Vect_set_fatal_error ( GV_FATAL_PRINT );
@@ -142,7 +134,6 @@ int do_vpoints (int after_masking)
 	
 	Vect_close(&Map);
 	fprintf(PS.fp, "[] 0 setdash\n");
-	if (verbose > 1) fprintf (stdout,"\n");
     }
 
     return 0;

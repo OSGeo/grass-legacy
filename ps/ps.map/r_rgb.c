@@ -39,7 +39,7 @@ int read_rgb(char *key, char *data)
  * not relevant here
  *
     if (I_get_group_ref(grp.group_name, &grp.ref) == 0)
-	G_fatal_error("Can't get group information");
+	G_fatal_error(_("Can't get group information"));
 */
 
     grp.group_name = "RGB Group";

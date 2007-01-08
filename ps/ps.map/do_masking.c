@@ -4,8 +4,11 @@
 */
 
 #include <stdlib.h>
-#include "ps_info.h"
 #include <unistd.h>
+#include <grass/gis.h>
+#include <grass/glocale.h>
+#include "ps_info.h"
+
 extern char *ps_mask_file;
 
 int do_masking (void)
@@ -17,10 +20,8 @@ int do_masking (void)
 
     /* open the temporary mask file */
     if ((ps_mask_fp = fopen(ps_mask_file, "r")) == NULL)
-    {
-        fprintf (stdout,"\nCan't open temporary PostScript mask file.\n");
-        exit(-1);
-    }
+	G_fatal_error (_("Can't open temporary PostScript mask file."));
+    
 
     /* adjust columns to multiple of 8 */
     rows = G_window_rows();

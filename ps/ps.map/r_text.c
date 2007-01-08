@@ -72,7 +72,7 @@ int read_text (char *east, char *north, char *text)
     hwidth = 0.;
     xref = CENTER;
     yref = CENTER;
-    strcpy(fontname, "Helvetica");
+    G_strcpy(fontname, "Helvetica");
 
     while (*text == ' ' || *text == '\t') text++;
     if (*text == '\\') text++;

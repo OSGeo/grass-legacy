@@ -4,6 +4,8 @@
 */
 
 #include <string.h>
+#include <grass/gis.h>
+#include <grass/glocale.h>
 #include "ps_info.h"
 #include "group.h"
 #include "local_proto.h"
@@ -27,7 +29,7 @@ int read_group (void)
     /* get group info */
     I_init_group_ref(&grp.ref);
     if (I_get_group_ref(grp.group_name, &grp.ref) == 0)
-	G_fatal_error("Can't get group information");
+	G_fatal_error(_("Can't get group information"));
 
     /* get file names for R, G, & B */
     I_init_ref_color_nums(&grp.ref);

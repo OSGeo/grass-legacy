@@ -7,6 +7,8 @@
 */
 #include <stdlib.h>
 #include <string.h>
+#include <grass/gis.h>
+#include <grass/glocale.h>
 #include "local_proto.h"
 #include "ps_info.h"
 
@@ -98,23 +100,23 @@ static double do_scale(char *text)
 	if (strncmp(unit2, "mile", 4) == 0)
 	{
 	    u2 = MILES_TO_INCHES;
-	    strcpy(unit2, "mile");
+	    G_strcpy(unit2, "mile");
 	}
 	else if (strncmp(unit2, "meter", 5) == 0)
 	{
 	    u2 = METERS_TO_INCHES;
-	    strcpy(unit2, "meter");
+	    G_strcpy(unit2, "meter");
 	}
 	else if (strncmp(unit2, "kilometer", 9) == 0)
 	{
 	    u2 = METERS_TO_INCHES * 1000;
-	    strcpy(unit2, "kilometer");
+	    G_strcpy(unit2, "kilometer");
 	}
 	else OOPS();
 	u2 *= n2;
 
-	strcpy(unit1, "inch");
-	strcpy(equals, "equal");
+	G_strcpy(unit1, "inch");
+	G_strcpy(equals, "equal");
 	if (n1 == 1) strcat(equals, "s");
 	else strcat(unit1, "es");
 
@@ -129,6 +131,5 @@ static double do_scale(char *text)
 
 static int OOPS (void)
 {
-    G_fatal_error("PSmap: do_scale(): shouldn't happen");
-    exit(1);
+  G_fatal_error(_("PSmap: do_scale(): shouldn't happen"));
 }

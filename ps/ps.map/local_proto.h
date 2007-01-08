@@ -1,4 +1,3 @@
-/* bound.c */
 /* box.c */
 int box_path(double, double, double, double);
 int box_clip(double, double, double, double);

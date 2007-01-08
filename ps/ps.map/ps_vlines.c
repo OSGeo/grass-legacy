@@ -5,6 +5,8 @@
 ** modified to use G_plot_line() by Olga Waupotitsch on dec,93
 */
 
+#include <grass/gis.h>
+#include <grass/glocale.h>
 #include <grass/Vect.h>
 #include "ps_info.h"
 #include "local_proto.h"
@@ -52,7 +54,7 @@ int PS_vlines_plot (struct Map_info *P_map, int vec, int type)
 	int ret;
 	double d;
 	if (0 > (ret = Vect_read_line(P_map, Points, Cats, line))) {
-	    if (ret == -1) G_warning("Read error in vector map\n");
+	    if (ret == -1) G_warning(_("Read error in vector map"));
 	    break;
 	}
 	if ( !(ret & GV_LINES) ) continue;
@@ -111,7 +113,8 @@ int PS_vlines_plot (struct Map_info *P_map, int vec, int type)
 		fprintf(PS.fp, "D\n");
 	    }
 	} else {
-	    /* draw line as filled polygon between original line and parallel line (offset=width) */
+	    /* draw line as filled polygon between original line and
+	       parallel line (offset=width) */
 	    d = width / PS.ew_to_x; 
 	    if ( vector.layer[vec].ref == LINE_REF_RIGHT ) d =- d;
 	    adjust_line ( Points ); /* LL projection */

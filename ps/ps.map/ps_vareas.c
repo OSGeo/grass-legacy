@@ -4,8 +4,10 @@
 ** modified copy of ps_vector.c by Paul W. Carlson March 1992
 */
 
-#include "vector.h"
+#include <grass/gis.h>
+#include <grass/glocale.h>
 #include <grass/Vect.h>
+#include "vector.h"
 #include "ps_info.h"
 #include "local_proto.h"
 
@@ -63,7 +65,8 @@ static int plot_area (struct Map_info *P_map, int area, double shift)
 
     /* plot areas */
     if (0 > (ret = Vect_get_area_points(P_map, area, Points))) {
-	if (ret == -1) G_warning("Read error in vector map\n");
+	if (ret == -1)
+	    G_warning(_("Read error in vector map"));
 	return 0;
     }
     construct_path (Points, shift, WHOLE_PATH);
@@ -73,7 +76,8 @@ static int plot_area (struct Map_info *P_map, int area, double shift)
     for (j=0; j < ni; j++) {
 	island = Vect_get_area_isle (P_map, area, j);
 	if (0 > (ret = Vect_get_isle_points(P_map, island, Points))) {
-	    if (ret == -1) G_warning("Read error in vector map\n");
+	    if (ret == -1)
+		G_warning(_("Read error in vector map"));
 	    return -1;
 	}
 	    construct_path (Points, shift, WHOLE_PATH);
