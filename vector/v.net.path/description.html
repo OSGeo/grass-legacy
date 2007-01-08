@@ -19,9 +19,29 @@ or
 id start_point_x start_point_y end_point_x end_point_y
 </pre></div>
 
+<p>
 Points specified by category must be exactly on network nodes,
 while, when specifying coordinates, the next node to a given
 coordinate pair is used.
+</p>
+<p>
+Attribute table will contain following attributes:
+</p>
+<ul>
+    <li>cat  - path unique category assigned by module</li>
+    <li>id   - path id (read from input)</li>
+    <li>fcat - from point category</li>
+    <li>tcat - to point category</li>
+    <li>sp - result status:
+    <ul>
+        <li>     0 - OK, path found</li>
+        <li>     1 - node is not reachable</li>
+        <li>     2 - point of given category does not exist</li>
+    </ul></li>
+    <li>cost - travelling costs (on the network, not to/from network)</li>
+    <li>fdist - the distance from first point to the network</li>
+    <li>tdist - the distance from the network to second point</li>
+</ul>
 
 <h2>NOTE</h2>
 
