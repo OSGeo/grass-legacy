@@ -90,6 +90,7 @@ $(ETC)/Init.sh: init.sh
 	-e \"s#LD_LIBRARY_PATH_VAR#$(LD_LIBRARY_PATH_VAR)#g\" \
 	-e \"s#PERL_COMMAND#$(PERL)#\" \
 	-e \"s#START_UP#$(START_UP)#\" \
+	-e \"s#CONFIG_PROJSHARE#$(PROJSHARE)#\" \
 	init.sh > $@"
 	chmod +x $@
 
@@ -97,6 +98,7 @@ $(ETC)/Init.bat: init.bat
 	rm -f $@
 	$(SHELL) -c "sed \
 	-e \"s#GRASS_VERSION_NUMBER#$(GRASS_VERSION_NUMBER)#\" \
+	-e \"s#CONFIG_PROJSHARE#$(PROJSHARE)#\" \
 	$< > $@"
 	chmod +x $@
 

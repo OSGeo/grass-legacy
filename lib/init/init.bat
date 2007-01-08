@@ -42,6 +42,7 @@ if "%GRASS_SH%"=="" set GRASS_SH=c:\msys\1.0\bin\sh.exe
 rem Should do something with "assoc .html" and ftype here but would require
 rem a new g.manual.bat too so leaving it like this for now...
 if "%GRASS_HTML_BROWSER%"=="" set GRASS_HTML_BROWSER=%SYSTEMDRIVE%/PROGRA~1/INTERN~1/IEXPLORE.EXE
+if "%GRASS_PROJSHARE%"=="" set GRASS_PROJSHARE=CONFIG_PROJSHARE
 
 if "%1" == "-version" goto displaylicence
 if "%1" == "-v" goto displaylicence

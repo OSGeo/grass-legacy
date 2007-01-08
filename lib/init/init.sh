@@ -336,6 +336,11 @@ if [ ! "$GRASS_GNUPLOT" ] ; then
     export GRASS_GNUPLOT
 fi
 
+if [ ! "$GRASS_PROJSHARE" ] ; then
+    GRASS_PROJSHARE=CONFIG_PROJSHARE
+    export GRASS_PROJSHARE
+fi
+
 # First time user - GISRC is defined in the GRASS script
 if [ ! -f "$GISRC" ] ; then
 
