@@ -184,15 +184,15 @@ int main(int argc, char **argv)
     Vect_close(&LMap);
     Vect_close(&PMap);
 
-    fprintf ( stderr, "%d points read from input\n", n_points);
-    fprintf ( stderr, "%d positions found\n", n_found);
+    G_message ( _("%d points read from input"), n_points);
+    G_message ( _( "%d positions found"), n_found);
     if ( n_outside )
-        fprintf ( stderr, "%d points outside threshold\n", n_outside);
+        G_message ( _( "%d points outside threshold"), n_outside);
     if ( n_no_record )
-        fprintf ( stderr, "%d points - no record found\n", n_no_record);
+        G_message ( _( "%d points - no record found"), n_no_record);
     if ( n_many_records )
-        fprintf ( stderr, "%d points - to many records found\n", n_many_records);
+        G_message ( _( "%d points - to many records found"), n_many_records);
 
-    exit(0);
+    exit(EXIT_SUCCESS);
 }
 
