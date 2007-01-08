@@ -143,6 +143,7 @@ proc epsgOpt::epsgLocCom args {
 		-helptext [G_msg "View EPSG codes and projection information."] \
 		-command {
 			if {[file exists $epsgOpt::browsedepsg]} {
+				set epsgOpt::epsg_code ""
 				epsgOpt::codesEpsg
 			} else {
 				DialogGen .wrnDlg [G_msg "WARNING: epsg-codes file not found"] warning \
@@ -279,10 +280,10 @@ proc epsgOpt::create_loc { } {
 		# create new location from EPSG code
 		catch {exec g.proj -c proj4=+init=epsg:$epsg_code location=$epsgLocation} errMsg
 		if {[lindex $::errorCode 0] eq "CHILDSTATUS"} {
-                        DialogGen .wrnDlg [G_msg "WARNING: Error creating new location"] warning \
-				[format [G_msg "Error creating new location from EPSG code. \
-		                g.proj returned following message:\n\n%s"] $errMsg] \
-				0 OK
+			DialogGen .wrnDlg [G_msg "WARNING: Error creating new location"] warning \
+			[format [G_msg "Error creating new location from EPSG code. \
+			g.proj returned following message:\n\n%s"] $errMsg] \
+			0 OK
 		}
 	
 		# restore previous .$GRASSRC
@@ -297,10 +298,10 @@ proc epsgOpt::create_loc { } {
 		# create new location from EPSG code
 		catch {exec g.proj -c proj4=+init=epsg:$epsg_code location=$epsgLocation} errMsg
 		if {[lindex $::errorCode 0] eq "CHILDSTATUS"} {
-		        DialogGen .wrnDlg [G_msg "WARNING: Error creating new location"] warning \
-				[format [G_msg "Error creating new location from EPSG code. \
-		                g.proj returned following message:\n\n%s"] $errMsg] \
-				0 OK
+			DialogGen .wrnDlg [G_msg "WARNING: Error creating new location"] warning \
+			[format [G_msg "Error creating new location from EPSG code. \
+			g.proj returned following message:\n\n%s"] $errMsg] \
+			0 OK
 		}
 	
 	}
@@ -475,13 +476,29 @@ proc epsgOpt::textsearch { } {
 
 proc epsgOpt::grabcode { } {
 # put the code in the EPSG code entry and activate the define location button
+# Will grab the code of the entry where the insertion cursor is located if nothing found search
 
+	variable epsgtxt
+	variable searchterm
+	variable dir
+	variable start
 	variable epsg_code
 	
-	if {$epsg_code == ""} {
-		set epsg_code [selection get]
-		.optPopup.row4.submit configure -state active
-	} 
+	if { $epsg_code == "" } {
+		set currpos [$epsgtxt index insert]
+		if { [$epsgtxt get "$currpos linestart"] == "<" } {
+			set codestart [$epsgtxt index "$currpos linestart +1c"]
+			set codeend [$epsgtxt index [$epsgtxt search -forwards -- {>} $codestart]]
+		} else {
+			set codestart [$epsgtxt index "[$epsgtxt search -forwards -- {<} $currpos] +1c"]
+			set codeend [$epsgtxt index [$epsgtxt search -forwards -- {>} $codestart]]
+		}
+		
+		$epsgtxt tag remove sel [$epsgtxt index insert]
+		$epsgtxt tag add sel "$codestart" "$codeend"
+		set epsg_code [$epsgtxt get $codestart $codeend]
+	}
+
 	destroy .infoPopup
 }
 
