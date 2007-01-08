@@ -168,7 +168,7 @@ int main(int argc, char **argv)
     
 
     /* Fill Nodes by neares centre and costs from that centre */
-    fprintf ( stderr, "Calculating costs from centres ..." );
+    G_message ( _( "Calculating costs from centres ..." ));
     for ( centre = 0; centre < ncentres;  centre++ ) {
 	G_percent ( centre, ncentres, 1 );
 	node1 = Centers[centre].node;
