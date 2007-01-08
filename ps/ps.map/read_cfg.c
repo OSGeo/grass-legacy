@@ -13,12 +13,12 @@
 #include <stdio.h>
 #include <math.h>
 #include <grass/gis.h>
+#include <grass/glocale.h>
 #include "ps_info.h"
 #include "paper.h"
 
 #define FIELD(x) strcmp(x,field)==0
 
-extern int verbose;
 extern int rotate_plot;
 
 /* Set page to one of predefined papers */
@@ -55,7 +55,7 @@ set_paper ( char *pname )
 	}
 	i++;
     }
-    G_warning ("Paper '%s' not found, using defaults", pname ); 
+    G_warning (_("Paper '%s' not found, using defaults"), pname); 
 
     return -1;
 }

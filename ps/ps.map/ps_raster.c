@@ -12,12 +12,12 @@
 */
 #include <stdlib.h>
 #include <grass/gis.h>
+#include <grass/glocale.h>
 #include "ps_info.h"
 #include "group.h"
 #include "local_proto.h"
 
 static FILE *ps_mask_fp;
-extern int verbose;
 extern char *ps_mask_file;
 
 int PS_make_mask (void)
@@ -40,10 +40,7 @@ int PS_make_mask (void)
     if (maskfd >= 0 && PS.mask_needed)
     {
 	if ((ps_mask_fp = fopen(ps_mask_file, "w")) == NULL)
-	{
-	    fprintf (stdout,"\nCan't create temporary PostScript mask file.\n");
-	    exit(-1);
-	}
+	    G_fatal_error (_("Can't create temporary PostScript mask file."));
 
 	/* get no data rgb values for mask */
     	G_get_null_value_color(&r, &g, &b, &PS.colors);
@@ -98,14 +95,12 @@ int PS_raster_plot (void)
     else	     fprintf(PS.fp, "image\n");
 
     /* let user know what's happenning */
-    if (verbose > 1)
-    {
-        if (PS.do_raster) fprintf (stdout,"PS-PAINT: reading raster map <%s in %s> ...",
-	    PS.cell_name, PS.cell_mapset);
-        else fprintf (stdout,"PS-PAINT: reading raster maps in group <%s> ...",
-	    grp.group_name);
-        fflush(stdout);
-    }
+    if (PS.do_raster)
+	G_message (_("Reading raster map <%s in %s> ..."),
+		   PS.cell_name, PS.cell_mapset);
+    else
+	G_message (_("Reading raster maps in group <%s> ..."),
+		   grp.group_name);
 
     /* build the image RGB string */
     if (PS.do_raster) 
@@ -178,7 +173,8 @@ int PS_raster_plot (void)
 			if (i == 0) r = rr;
 			if (i == 1) g = gg;
 			if (i == 2) b = bb;
-			cptr[i] = G_incr_void_ptr(cptr[i], G_raster_size(grp_map_type[0]) * PS.col_delta);
+			cptr[i] = G_incr_void_ptr(cptr[i],
+						  G_raster_size(grp_map_type[0]) * PS.col_delta);
 		    }
 			
 		    /* if color raster */
@@ -216,8 +212,6 @@ int PS_raster_plot (void)
     }
     /* restore graphics state */
     fprintf(PS.fp, "grestore\n");
-
-    if (verbose > 1) fprintf (stdout,"\n");
 
     return 0;
 }

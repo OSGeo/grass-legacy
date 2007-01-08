@@ -8,6 +8,7 @@
 #include <string.h>
 #include <math.h>
 #include <grass/gis.h>
+#include <grass/glocale.h>
 #include <grass/gprojects.h>
 
 #include "ps_info.h"
@@ -82,12 +83,12 @@ int do_geogrid (void)
 		e1 = west + (ll *((east - west)/SEGS));
  		e2 = e1 + ((east - west)/SEGS);
 	 		if (pj_do_proj(&e1, &n1, &info_in, &info_out) <0)
-				G_fatal_error("Error in pj_do_proj");
+			    G_fatal_error(_("Error in pj_do_proj"));
 			check_coords(e1, n1, &lon, &lat, 1); 
 			e1 = lon;
 			n1 = lat;
 			if (pj_do_proj(&e2, &n2, &info_in, &info_out) <0)
-				G_fatal_error("Error in pj_do_proj");
+			    G_fatal_error(_("Error in pj_do_proj"));
 			check_coords(e2, n2, &lon, &lat, 1); 
 			e2 = lon;
 			n2 = lat;
@@ -111,12 +112,12 @@ int do_geogrid (void)
 		n1 = south + (ll *((north - south)/SEGS));
 		n2 = n1 + ((north - south)/SEGS);
 	 		if (pj_do_proj(&e1, &n1, &info_in, &info_out) <0)
-			G_fatal_error("Error in pj_do_proj");
+			    G_fatal_error(_("Error in pj_do_proj"));
 			check_coords(e1, n1, &lon, &lat, 2);
 			e1 = lon;
 			n1 = lat;
 			if (pj_do_proj(&e2, &n2, &info_in, &info_out) <0)
-			G_fatal_error("Error in pj_do_proj");
+			    G_fatal_error(_("Error in pj_do_proj"));
 			check_coords(e2, n2, &lon, &lat, 2);
 			e2 = lon;
 			n2 = lat;
@@ -185,7 +186,7 @@ int do_geogrid_numbers (void)
 	e1 = east; /* draw at east boundary */
 	n1 = g;
 	if (pj_do_proj(&e1, &n1, &info_in, &info_out) <0)
-	  G_fatal_error("Error in pj_do_proj");
+	    G_fatal_error(_("Error in pj_do_proj"));
 	check_coords(e1, n1, &lon, &lat, 1);
 	e1 = lon;
 	n1 = lat;
@@ -223,7 +224,7 @@ int do_geogrid_numbers (void)
 	e1 = g;
 	n1 = south; /* draw at south edge */
 	if (pj_do_proj(&e1, &n1, &info_in, &info_out) <0)
-		G_fatal_error("Error in pj_do_proj");
+	    G_fatal_error(_("Error in pj_do_proj"));
 	check_coords(e1, n1, &lon, &lat, 2);
 	e1 = lon;
 	n1 = lat;
@@ -264,13 +265,13 @@ struct Key_Value *out_proj_keys, *out_unit_keys;
 out_proj_keys = G_get_projinfo();
 out_unit_keys = G_get_projunits();
 if (pj_get_kv(info_out,out_proj_keys,out_unit_keys) < 0) 
-	G_fatal_error("Can't get projection key values of current location");
+    G_fatal_error(_("Can't get projection key values of current location"));
 G_free_key_value( out_proj_keys);
 G_free_key_value( out_unit_keys);
 
 /* In Info */
 if (GPJ_get_equivalent_latlong(info_in, info_out) < 0)
-    G_fatal_error("Unable to set up lat/long projection parameters");
+    G_fatal_error(_("Unable to set up lat/long projection parameters"));
 
 return;
 
@@ -299,7 +300,7 @@ for (ew = PS.w.west; ew <= PS.w.east; ew+=PS.w.ew_res) {
 	e1 = ew;
 	n1 = PS.w.north;
 		if (pj_do_proj(&e1, &n1, &info_out, &info_in) <0)
-			G_fatal_error("Error in pj_do_proj");
+		    G_fatal_error(_("Error in pj_do_proj"));
 		if (!first) {
 			north = n1;
 			first = 1;
@@ -313,7 +314,7 @@ for (ew = PS.w.west; ew <= PS.w.east; ew+=PS.w.ew_res) {
 	e1 = ew;
 	s1 = PS.w.south;
 		if (pj_do_proj(&e1, &s1, &info_out, &info_in) <0)
-			G_fatal_error("Error in pj_do_proj");
+		    G_fatal_error(_("Error in pj_do_proj"));
 		if (!first) {
 			south = s1;
 			first = 1;
@@ -328,7 +329,7 @@ for (ns = PS.w.south; ns <= PS.w.north; ns+=PS.w.ns_res) {
 	e1 = PS.w.east;
 	n1 = ns;
 		if (pj_do_proj(&e1, &n1, &info_out, &info_in) <0)
-			G_fatal_error("Error in pj_do_proj");
+		    G_fatal_error(_("Error in pj_do_proj"));
 		if (!first) {
 			east = e1;
 			first = 1;
@@ -343,7 +344,7 @@ for (ns = PS.w.south; ns <= PS.w.north; ns+=PS.w.ns_res) {
 	w1 = PS.w.west;
 	n1 = ns;
 		if (pj_do_proj(&w1, &n1, &info_out, &info_in) <0)
-			G_fatal_error("Error in pj_do_proj");
+		    G_fatal_error(_("Error in pj_do_proj"));
 		if (!first) {
 			west = w1;
 			first = 1;
@@ -395,17 +396,17 @@ check_coords(double e, double n, double *lon, double *lat, int par)
      if (proj) {
 	/* convert original coords to ll */
 	if (pj_do_proj(&e, &n, &info_out, &info_in) <0)
-		G_fatal_error("Error in pj_do_proj1");
+	    G_fatal_error(_("Error in pj_do_proj"));
 	
 		if (par == 1) {
 		/* lines of latitude -- const. northing */
 		/* convert correct UTM to ll */
 		if (pj_do_proj(&x, &y, &info_out, &info_in) <0)
-			G_fatal_error("Error in pj_do_proj");
+		    G_fatal_error(_("Error in pj_do_proj"));
 			
 		/* convert new ll back to coords */
 		if (pj_do_proj(&x, &n, &info_in, &info_out) <0)
-			G_fatal_error("Error in pj_do_proj");
+		    G_fatal_error(_("Error in pj_do_proj"));
 		*lat = n;
 		*lon = x;
 		}
@@ -413,11 +414,11 @@ check_coords(double e, double n, double *lon, double *lat, int par)
 		/* lines of longitude -- const. easting */
 		/* convert correct UTM to ll */
 		if (pj_do_proj(&x, &y, &info_out, &info_in) <0)
-			G_fatal_error("Error in pj_do_proj");
+		    G_fatal_error(_("Error in pj_do_proj"));
 			
 		/* convert new ll back to coords */
 		if (pj_do_proj(&e, &y, &info_in, &info_out) <0)
-			G_fatal_error("Error in pj_do_proj");
+		    G_fatal_error(_("Error in pj_do_proj"));
 		*lat = y;
 		*lon = e;
 		}

@@ -13,7 +13,6 @@
 #include "colortable.h"
 #include "local_proto.h"
 
-extern int verbose;
 extern int do_mapinfo;
 extern int do_vlegend;
 extern int eps_output;

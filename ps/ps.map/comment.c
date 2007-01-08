@@ -13,8 +13,6 @@
 
 #define KEY(x) (strcmp(key,x)==0)
   
-extern int verbose;
-
 static char *help1[] =
 {
     "where      x y",

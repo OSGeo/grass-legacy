@@ -3,11 +3,11 @@
 ** Author: Paul W. Carlson	3/92
 */
 
+#include <grass/gis.h>
+#include <grass/glocale.h>
 #include "ps_info.h"
 #include "group.h"
 #include "local_proto.h"
-
-extern int verbose;
 
 int map_setup (void)
 {
@@ -80,11 +80,8 @@ int map_setup (void)
     /* set the scale */
     if (!PS.scaletext[0]) sprintf(PS.scaletext, "1 : %.0f",
 	39.37 * 72.0 * (PS.w.east - PS.w.west) / PS.map_pix_wide);
-    if (verbose > 1)
-    {
-        fprintf (stdout,"PS-PAINT: scale set to %s.\n", PS.scaletext);
-        fflush(stdout);
-    }
+
+    G_message (_("Scale set to %s."), PS.scaletext);
 
     /* compute map edges */
     PS.map_left  = 72.0 * PS.map_x_orig;
@@ -97,10 +94,11 @@ int map_setup (void)
        returns integer values (pixels) for x and y, and we want doubles
        until the first decimal point. Then in move() and cont() we will
        divide x and y by 10. to get double coordinates */
-    G_setup_plot(PS.map_top * 10., PS.map_bot * 10., PS.map_left * 10., PS.map_right * 10., move_local, cont_local);
+    G_setup_plot(PS.map_top * 10., PS.map_bot * 10., PS.map_left * 10.,
+		 PS.map_right * 10., move_local, cont_local);
 
-/* debug
-    fprintf (stdout,"t %.1f b %.1f l %.1f r %.1f\n", PS.map_top, PS.map_bot, PS.map_left, PS.map_right);
+    /* debug fprintf (stdout,"t %.1f b %.1f l %.1f r %.1f\n", PS.map_top,
+    PS.map_bot, PS.map_left, PS.map_right);
     */
 
     /* save original graphics state */

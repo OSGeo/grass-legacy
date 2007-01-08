@@ -21,6 +21,9 @@
 #include <string.h>
 #include <unistd.h>
 #include <stdlib.h>
+#include <signal.h>
+#include <errno.h>
+#include <grass/gis.h>
 #include <grass/glocale.h>
 
 #include "map_info.h"
@@ -34,13 +37,13 @@
 #include "group.h"
 #include "local_proto.h"
 
+#define KEY(x) (strcmp(key,x)==0)
+
 FILE *tracefd;
 FILE *inputfd;
 int do_mapinfo;
 int do_vlegend;
 char *ps_mask_file;
-
-#define KEY(x) (strcmp(key,x)==0)
 
 static char *help[]=
 {
@@ -56,17 +59,15 @@ static char *help[]=
     "colortable [y|n]                 vlegend",
     "comments   [unix-file]           psfile     PostScript include file",
     "read       unix-file             eps        Encapsulated PostScript file",
-    "verbose    [0|1|2]               rectangle  east north east north",
+    "rectangle  east north east north",
     "scale      1:#|# inches|# panels|1 inch = # miles",
     ""
 };
-int verbose;
+
 int rotate_plot;
 int eps_output;
 int ps_copies = 1;
 
-#include <signal.h>
-#include <grass/gis.h>
 int main(int argc,char *argv[])
 {
     char buf[1024];
@@ -84,7 +85,6 @@ int main(int argc,char *argv[])
     static char *def_font = "Helvetica";
 
     /**************** begin ******************************/
-    verbose = 2;
 
     signal (SIGINT, exit);
     signal (SIGTERM, exit);
@@ -153,11 +153,11 @@ int main(int argc,char *argv[])
     /* set default paper */
     set_paper ("a4" );
 
-    strcpy(buf,"black");
+    G_strcpy(buf,"black");
     BLACK = get_color_number(buf);
-    strcpy(buf, "white");
+    G_strcpy(buf, "white");
     WHITE = get_color_number(buf);
-    strcpy(buf, "grey"); 
+    G_strcpy(buf, "grey"); 
     GREY  = get_color_number(buf);
 
     /* initialize */
@@ -223,11 +223,8 @@ int main(int argc,char *argv[])
     if (input_file->answer && strcmp (input_file->answer, "-"))
     {
 	if (NULL == freopen(input_file->answer, "r", stdin))
-	{
-	    fprintf(stderr, "%s - ", G_program_name());
-	    perror(input_file->answer);
-	    exit(EXIT_FAILURE);
-	}
+	    G_fatal_error ("%s - %s: %s", G_program_name(),
+			   input_file -> answer, strerror (errno));
     }
     if (map_scale->answer)
     {
@@ -235,7 +232,7 @@ int main(int argc,char *argv[])
 	    "Please use the \"scale\" mapping instruction instead."));
 	can_reset_scale = isatty(0);
 	if (check_scale(map_scale->answer))
-	    strcpy(PS.scaletext, map_scale->answer);
+	    G_strcpy(PS.scaletext, map_scale->answer);
 	else error(map_scale->answer, "", "illegal scale request");
     }
     if (copies->answer)
@@ -251,11 +248,8 @@ int main(int argc,char *argv[])
     if (output_file->answer)
     {
 	if ((PS.fp = fopen(output_file->answer, "w")) == NULL)
-	{
-	    fprintf(stderr, "%s - ", G_program_name());
-	    perror(output_file->answer);
-	    exit(EXIT_FAILURE);
-	}
+	    G_fatal_error ("%s - %s: %s", G_program_name(),
+			   output_file->answer, strerror (errno));
     }
     else usage(1);
 
@@ -303,9 +297,11 @@ int main(int argc,char *argv[])
 	    continue;
 	}
 
+	/* Please, remove before GRASS 7 released */
 	if (KEY("verbose"))
 	{
-	    if (sscanf(data, "%d", &verbose) != 1) verbose = 2;
+	    G_warning(_("Verbose mapping instruction was removed. "
+			"Please use --verbose instead."));
 	    continue;
 	}
 
@@ -428,7 +424,7 @@ int main(int argc,char *argv[])
 	{
 	   PS.do_scalebar = 1;
 	   if (sscanf(data, "%s", sb.type) != 1)
-	   	strcpy (sb.type, "f"); /* default to fancy scalebar */
+	   	G_strcpy (sb.type, "f"); /* default to fancy scalebar */
 	   read_scalebar();
 	   if (sb.length <= 0.) {
 		   error(key, data, "Bad scalebar length");
@@ -719,12 +715,10 @@ int main(int argc,char *argv[])
     /* write the PostScript output file */
     ps_mask_file = G_tempfile();
     ps_map();
-    if (verbose > 1)
-    {
-        fprintf (stdout,"PS-PAINT: PostScript file \"%s\" successfully written.\n",
-    		output_file->answer);
-        fflush(stdout);
-    }
+
+    G_message (_("PostScript file [%s] successfully written."),
+		 output_file->answer);
+
     unlink (ps_mask_file);
     exit(EXIT_SUCCESS);
 }
@@ -736,6 +730,4 @@ usage (int full)
     if (full) G_usage();
     exit(EXIT_FAILURE);
 }
-
-
 

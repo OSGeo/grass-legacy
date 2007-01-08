@@ -5,6 +5,8 @@
 ** Author: Paul W. Carlson	March 1992
 */
 
+#include <grass/gis.h>
+#include <grass/glocale.h>
 #include "ps_info.h"
 
 int 
@@ -25,7 +27,7 @@ make_procs (void)
 
     fp = fopen(filename, "r");
     if (!fp)
-	G_fatal_error("unable to open prolog '%s'", filename);
+	G_fatal_error(_("Unable to open prolog <%s>"), filename);
 
     for (;;)
     {
@@ -42,4 +44,3 @@ make_procs (void)
 
     return 0;
 }
-

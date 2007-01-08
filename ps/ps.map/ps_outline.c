@@ -7,10 +7,10 @@
 #include <stdio.h>
 #include <string.h>
 #include <grass/gis.h>
+#include <grass/glocale.h>
 #include "ps_info.h"
 #include "local_proto.h"
 
-extern int verbose;
 static int k, col, row, top, bottom;
 static void *tl, *tr, *bl, *br;
 static void *buffer[2];
@@ -38,12 +38,9 @@ int
 ps_outline (void)
 {
     /* let user know what's happenning */
-    if (verbose > 1)
-    {
-        fprintf (stdout,"PS-PAINT: outlining areas in raster map <%s in %s> ...",
-	    PS.cell_name, PS.cell_mapset);
-        fflush(stdout);
-    }
+    G_message (_("Outlining areas in raster map <%s in %s> ..."),
+	       PS.cell_name, PS.cell_mapset);
+
     /* set the outline color and width */
     set_rgb_color(PS.outline_color);
     set_line_width(PS.outline_width );
@@ -53,8 +50,6 @@ ps_outline (void)
     map_type = o_open_file(PS.cell_name);
     draw_outline();
     o_close_file();
-
-    if (verbose > 1) fprintf (stdout,"\n");
 
     return 0;
 }

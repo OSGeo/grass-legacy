@@ -10,7 +10,6 @@
 
 #define NSTEPS 5 /* number of steps to divide color box when showing color for
 		    category data range */
-extern int verbose;
 
 int PS_colortable (void)
 {
@@ -28,12 +27,8 @@ int PS_colortable (void)
     double grey_color_val;
 
     /* let user know what's happenning */
-    if (verbose > 1)
-    {
-        fprintf (stdout,"PS-PAINT: creating color table for <%s in %s> ...",
-		ct.name, ct.mapset); 
-        fflush(stdout);
-    }
+    G_message (_("Creating color table for <%s in %s> ..."),
+	       ct.name, ct.mapset); 
 
     if (G_read_cats(ct.name, ct.mapset, &PS.cats) == -1)
     {
@@ -215,8 +210,6 @@ int PS_colortable (void)
     if (PS.min_y > y) PS.min_y = y;
 
     G_free_colors(&colors);
-
-    if (verbose > 1) fprintf (stdout,"\n");
 
     return 0;
 }

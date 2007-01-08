@@ -1,16 +1,16 @@
 #include <stdlib.h>
 #include <grass/gis.h>
+#include <grass/glocale.h>
 #include "ps_info.h"
 #include "local_proto.h"
 
 static int blank_line ();
 
-static struct Cell_head cell_head;
 static char *error_prefix;
 static int first_read, last_read;
 static char cell_name[256];
 static int in_file_d;
-static int raster_size, row_length, row_count, n_rows, total_areas;
+static int raster_size, row_length, row_count, n_rows;
 static RASTER_MAP_TYPE map_type;
 
 
@@ -69,16 +69,13 @@ RASTER_MAP_TYPE o_open_file (char *cell)
 
     /* open raster map */
     if ((mapset = G_find_cell(cell,"")) == NULL)
-    {
-	fprintf(stderr,"%s:  o_open_file:  raster map %s not found\n",error_prefix,cell);
-	exit(-1);
-    }
+	G_fatal_error (_("%s: o_open_file: raster map %s not found"),
+		       error_prefix, cell);
+
     sscanf(cell,"%s",cell_name);
     if ((in_file_d = G_open_cell_old(cell_name,mapset)) < 0)
-    {
-	fprintf(stderr,"%s:  o_open_file:  could not open raster map %s in %s\n",error_prefix,cell_name,mapset);
-	exit(-1);
-    }
+	G_fatal_error (_("%s: o_open_file: could not open raster map %s in %s"),
+		       error_prefix,cell_name,mapset);
 
     map_type = G_get_raster_map_type(in_file_d);
     raster_size = G_raster_size(map_type);

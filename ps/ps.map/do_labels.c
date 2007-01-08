@@ -21,8 +21,6 @@
 #define UPPER 1
 #define CENTER 2
 
-extern int verbose;
-
 int 
 do_labels (int other)
 {
@@ -49,12 +47,9 @@ do_labels (int other)
 	    }
 	    else
 	    {
-		if (verbose > 1)
-		{
-	    	    fprintf (stdout,"PS-PAINT: reading labels file <%s in %s> ...",
-			labels.name[i], labels.mapset[i]);
-	    	    fflush(stdout);
-		}
+		G_message (_("Reading labels file <%s in %s> ..."),
+			   labels.name[i], labels.mapset[i]);
+
 		if (labels.font[i] != NULL) {
 		    set_font_name(labels.font[i]);
 		    font_override = 1;
@@ -63,7 +58,6 @@ do_labels (int other)
 		do_label(fd, font_override);
 		fclose(fd);
 		font_override = 0;
-		if (verbose > 1) fprintf (stdout,"\n");
 	    }
 	}
     }
@@ -75,14 +69,10 @@ do_labels (int other)
 	    G_warning(_("Can't open temporary label file <%s>"), labels.other);
 	else
 	{
-	    if (verbose > 1)
-	    {
-	        fprintf (stdout,"PS-PAINT: reading text file ...");
-	        fflush(stdout);
-	    }
+	    G_message (_("Reading text file ..."));
+
 	    do_label(fd, font_override);
 	    fclose(fd);
-	    if (verbose > 1) fprintf (stdout,"\n");
 	}
     }
 
