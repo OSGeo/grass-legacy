@@ -29,7 +29,6 @@ static int ndists;    /* number of distances in dists */
 static double *dists; /* array of all distances < dmax */
 static int    npoints;
 int    net = 0;
-static int verbose = 1 ;
 static double dimension = 2.;
  
 
@@ -54,8 +53,7 @@ double L(double smooth)
 
 /* resL = (1./(pow(n,2.)*pow(smooth,dimension))) * (resL + n*( gaussianFunction(0.,2.,dimension) - 2. * gaussianKernel(0.,term)) ) + (2./(n*pow(smooth,dimension)))*gaussianKernel(0.,term);   */
   G_debug(3, "smooth = %e resL = %e", smooth, resL);  
-  if(verbose)
-    G_message(_("\tScore Value=%f\tsmoothing parameter (standard deviation)=%f"),resL, smooth);
+  G_message(_("\tScore Value=%f\tsmoothing parameter (standard deviation)=%f"),resL, smooth);
 
   return(resL);
 }
@@ -151,6 +149,7 @@ int main(int argc, char **argv)
   flag_q->key         = 'q';
   flag_q->description = _("Only calculate optimal standard deviation and exit (no map is written)");
 
+  /* please, remove before GRASS 7 released */
   flag_v = G_define_flag();
   flag_v->key = 'v';
   flag_v->description = _("Run verbosely");
@@ -164,7 +163,14 @@ int main(int argc, char **argv)
   segmax = atof(segmax_opt->answer);
   netmax = atof(netmax_opt->answer);
   multip = atof(multip_opt->answer);
-  verbose = flag_v->answer;
+
+    /* please, remove before GRASS 7 released */
+    if(flag_v->answer) {
+        putenv("GRASS_VERBOSE=3");
+        G_warning(_("The '-v' flag is superseded and will be removed "
+            "in future. Please use '--verbose' instead."));
+    }
+
 
   if( flag_q->answer ) {
     flag_o->answer=1;
