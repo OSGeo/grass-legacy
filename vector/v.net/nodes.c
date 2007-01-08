@@ -103,7 +103,7 @@ int nodes ( char *in, char *out, int add_cats, int nfield)
 	    count++;
 	}
     }
-    fprintf (stderr, "%d new points written to output.\n", count );
+    G_message (_("%d new points written to output."), count );
     
     Vect_destroy_line_struct (Points);
     Vect_destroy_line_struct (Pout);
