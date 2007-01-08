@@ -48,7 +48,7 @@ mkstring (void *a)
   str->type = st_str;
   str->any = (char *)strdup (a);
   str->refcnt = 1;
-  printf ("\t%s\n", (char *)a);
+  fprintf (stdout,"\t%s\n", (char *)a);
 
   return str;
 }
@@ -123,7 +123,7 @@ anyfunc (SYMBOL *func, SYMBOL *arglist)
   if (!func || !func->v.p || func->type != st_afunc)
   {
     parseerror = 1;
-    printf ("Can't call bad any-function\n");
+    G_warning (_("Can't call bad any-function"));
   }
   else
     argc = listcnt ((LIST *)arglist);
@@ -137,7 +137,7 @@ anyfunc (SYMBOL *func, SYMBOL *arglist)
 				  arglist->next->v.p);
   else
   {
-    printf ("Bad arguments to anyfunc %s (argc = %d)\n", func->name, argc);
+    G_warning (_("Bad arguments to anyfunc %s (argc = %d)"), func->name, argc);
     parseerror = 1;
   }
 

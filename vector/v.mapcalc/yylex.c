@@ -105,8 +105,7 @@ yylex (void)
       case st_pfunc:
 	return PNTFUNC;
       default:
-	fprintf (stderr, "Insert more translations here (%d)\n", s->type);
-	exit (1);
+	G_fatal_error ("Insert more translations here (%d)", s->type);
     }
   }
 
@@ -117,5 +116,5 @@ yylex (void)
 void
 yyerror (const char *msg)
 {
-  printf ("%s\n", msg);
+  fprintf (stdout,"%s\n", msg);
 }

@@ -51,7 +51,7 @@ testmap (MAP *m)
    * might be a temporary name, when it should not be displayed
    * (should it?).
    */
-  printf ("Performing 1 arg map function on map %s\n", m->name);
+  G_message (_("Performing 1 arg map function on map %s"), m->name);
   sprintf (namebuf, "t-%s", m->name);
   m = (MAP *)listitem (sizeof (MAP));
   m->name = strdup (namebuf);
@@ -63,7 +63,7 @@ test2map (MAP *m, MAP *n)
 {
   char namebuf[128];
 
-  printf ("Performing 2 arg map function on maps %s and %s\n", m->name, n->name);
+  G_message (_("Performing 2 arg map function on maps %s and %s"), m->name, n->name);
   sprintf (namebuf, "%s.%s", m->name, n->name);
   m = (MAP *)listitem (sizeof (MAP));
   m->name = strdup (namebuf);
@@ -75,7 +75,7 @@ map_op_func_plus (MAP *m, MAP *n)
 {
   char namebuf[128];
 
-  printf ("Performing map %s + %s\n", m->name, n->name);
+  G_message (_("Performing map %s + %s"), m->name, n->name);
   sprintf (namebuf, "%s.%s", m->name, n->name);
   m = (MAP *)listitem (sizeof (MAP));
   m->name = strdup (namebuf);
@@ -184,7 +184,7 @@ printmap (SYMBOL *sym)
 
   map = (MAP *)sym->v.p;
   if (map->name)
-    printf ("\t%s\n", map->name);
+    sprintf (stdout,"\t%s\n", map->name);
 }
 
 void
@@ -265,7 +265,7 @@ mapfunc (SYMBOL *func, SYMBOL *arglist)
   if (!func || !func->v.p || func->type != st_mfunc)
   {
     parseerror = 1;
-    printf ("Can't call bad map-function\n");
+    G_warning (_("Can't call bad map-function"));
   }
   else
     argc = listcnt ((LIST *)arglist);
@@ -279,7 +279,7 @@ mapfunc (SYMBOL *func, SYMBOL *arglist)
 				  arglist->next->v.p);
   else
   {
-    printf ("Bad arguments to mapfunc %s (argc = %d)\n", func->name, argc);
+    G_warning (_("Bad arguments to mapfunc %s (argc = %d)"), func->name, argc);
     parseerror = 1;
   }
 
@@ -304,7 +304,7 @@ mapop (int op, SYMBOL *map1, SYMBOL *map2)
   func = getsym (buf);
   if (!func)
   {
-    printf ("No function defined to perform map %c map\n", op);
+    G_warning (_("No function defined to perform map %c map"), op);
     parseerror = 1;
   }
   else

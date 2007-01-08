@@ -113,11 +113,11 @@ void
 shownum (double d)
 {
   if (!isfinite (d))
-    printf ("\t??.??\n");
+    fprintf (stdout,"\t??.??\n");
   else if (d == (int)d)
-    printf ("\t%d\n", (int)d);
+    fprintf (stdout,"\t%d\n", (int)d);
   else
-    printf ("\t%g\n", d);
+    fprintf (stdout,"\t%g\n", d);
 }
 
 void
@@ -167,7 +167,7 @@ numfunc (SYMBOL *func, SYMBOL *arglist)
   if (!func || !func->v.p || func->type != st_nfunc)
   {
     parseerror = 1;
-    printf ("Can't call bad num-function\n");
+    G_warning (_("Can't call bad num-function"));
   }
   else
     argc = listcnt ((LIST *)arglist);
@@ -201,7 +201,7 @@ numfunc (SYMBOL *func, SYMBOL *arglist)
 				   arglist->next->next->v.p);
   else
   {
-    printf ("Bad arguments to numfunc %s\n", func->name);
+    G_warning(_("Bad arguments to numfunc %s"), func->name);
     parseerror = 1;
   }
 
@@ -227,9 +227,9 @@ numop (int op, SYMBOL *opd1, SYMBOL *opd2)
   if (!func)
   {
     if (opd1->itype == st_num)
-      printf ("No function defined to perform ``number %c number''\n", op);
+      G_warning (_("No function defined to perform ``number %c number''"), op);
     else if (opd1->itype == st_pnt)
-      printf ("No function defined to perform ``point %c point''\n", op);
+      G_warning (_("No function defined to perform ``point %c point''"), op);
     parseerror = 1;
   }
   else
