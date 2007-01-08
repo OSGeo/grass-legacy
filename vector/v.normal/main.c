@@ -148,7 +148,7 @@ int main (int argc, char **argv)
       G_fatal_error ( "Column type not supported" );
 
   if ( nrecords < 0 ) G_fatal_error ("Cannot select data from table");
-  fprintf (stderr, "%d records selected from table\n", nrecords);
+  G_message (_( "%d records selected from table"), nrecords);
 
   db_close_database_shutdown_driver(Driver);
 
@@ -213,7 +213,7 @@ int main (int argc, char **argv)
 
   if (flag.l->answer)
   {
-    fprintf (stderr, "Doing log transformation\n");
+    G_message (_( "Doing log transformation"));
     warn_once = 0;
     for (i = 0; i < nsites; ++i)
     {
