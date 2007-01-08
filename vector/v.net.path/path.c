@@ -263,20 +263,6 @@ int path ( struct Map_info *In, struct Map_info *Out, int nfield, double maxdist
     Vect_destroy_line_struct(OPoints);
     Vect_destroy_cats_struct(Cats);
 
-    /* Print table info */
-    fprintf ( stderr, "Attributes:\n");
-    fprintf ( stderr, "  cat  - path unique category assigned by module\n");
-    fprintf ( stderr, "  id   - path id (read from input)\n");
-    fprintf ( stderr, "  fcat - from point category\n");
-    fprintf ( stderr, "  tcat - to point category\n");
-    fprintf ( stderr, "  sp - result status:\n");
-    fprintf ( stderr, "       0 - OK, path found\n");
-    fprintf ( stderr, "       1 - node is not reachable\n");
-    fprintf ( stderr, "       2 - point of given category does not exist\n");
-    fprintf ( stderr, "  cost - travelling costs (on the network, not to/from network)\n");
-    fprintf ( stderr, "  fdist - the distance from first point to the network\n");
-    fprintf ( stderr, "  tdist - the distance from the network to second point\n");
-
     if ( formaterr )
        G_warning ( "%d input format errors", formaterr );
     if ( nopoint )
