@@ -20,7 +20,7 @@ static int first = 1;
 
 
 /**
- * \fn int G_percent (int n, int d, int s)
+ * \fn int G_percent (long n, long d, int s)
  *
  * \brief Print percent complete messages.
  *
@@ -52,14 +52,14 @@ static int first = 1;
  * \return always returns 0
  */
 
-int G_percent (int n,int d,int s)
+int G_percent (long n,long d,int s)
 {
     return ( G_percent2 ( n, d, s, stderr ) );
 }
 
 
 /**
- * \fn int G_percent2 (int n, int d, int s, FILE *out)
+ * \fn int G_percent2 (long n, long d, int s, FILE *out)
  *
  * \brief Print percent complete messages.
  *
@@ -91,7 +91,7 @@ int G_percent (int n,int d,int s)
  * \return always returns 0
  */
 
-int G_percent2 (int n,int d,int s, FILE *out)
+int G_percent2 (long n,long d,int s, FILE *out)
 {
     int x, format;
 
@@ -99,7 +99,7 @@ int G_percent2 (int n,int d,int s, FILE *out)
 
     x = (d <= 0 || s <= 0)
 	? 100
-	: 100 * n / d;
+	: (int) (100 * n / d);
 
     /* be verbose only 1> */
     if (G_verbose() < 1)

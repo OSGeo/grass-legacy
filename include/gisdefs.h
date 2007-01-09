@@ -882,8 +882,8 @@ struct stat;
 int G_lstat(const char *, struct stat *);
 
 /* percent.c */
-int G_percent(int, int, int);
-int G_percent2(int, int, int, FILE *);
+int G_percent(long, long, int);
+int G_percent2(long, long, int, FILE *);
 int G_percent_reset(void);
 
 /* plot.c */
