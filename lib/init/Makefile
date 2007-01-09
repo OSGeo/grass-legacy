@@ -53,7 +53,6 @@ default: $(ARCH_BINDIR)/$(START_UP) \
 	$(ETC)/epsg_option.tcl \
 	$(ETC)/file_option.tcl \
 	$(ETC)/gintro.gif \
-	$(ETC)/make_location_epsg.sh \
 	$(ETC)/grass-run.sh \
 	$(ETC)/grass-run.bat \
 	$(ETC)/grass-xterm-wrapper
@@ -154,29 +153,13 @@ $(ETC)/gis_set.tcl: gis_set.tcl
 	rm -f $@
 	$(INSTALL) -m 755 gis_set.tcl $(ETC)
 
-$(ETC)/epsg_option.tcl: epsg_option.tcl.in
+$(ETC)/epsg_option.tcl: epsg_option.tcl
 	rm -f $@
-	#pre-define PROJSHARE if not set by configure:
-	if [ -z "$(PROJSHARE)" ] ; then \
-		sh ./projshare.sed "$(PROJSHAREDEFAULT)" epsg_option.tcl.in > $@ ; \
-		else \
-		sh ./projshare.sed "$(PROJSHARE)" epsg_option.tcl.in > $@ ; \
-	fi
-	chmod 755 $@
+	$(INSTALL) -m 755 epsg_option.tcl $(ETC)
 
 $(ETC)/file_option.tcl: file_option.tcl
 	rm -f $@
 	$(INSTALL) -m 755 file_option.tcl $(ETC)
-
-$(ETC)/make_location_epsg.sh: make_location_epsg.sh.in
-	rm -f $@
-	#pre-define PROJSHARE if not set by configure:
-	if [ -z "$(PROJSHARE)" ] ; then \
-		sh ./projshare.sed "$(PROJSHAREDEFAULT)" make_location_epsg.sh.in > $@ ; \
-		else \
-		sh ./projshare.sed "$(PROJSHARE)" make_location_epsg.sh.in > $@ ; \
-	fi
-	chmod 755 $@
 
 $(ETC)/grass-run.sh: grass-run.src
 	rm -f $@
