@@ -37,9 +37,6 @@ int main(int argc, char **argv)
     struct Map_info Map;
     int    type, afield, nfield, color, hcolor, bgcolor, geo;
     int    r, g, b, colornum = MAX_COLOR_NUM;
-    char **vect = NULL;
-    int nvects = 0;
-            
 
     /* Initialize the GIS calls */
     G_gisinit (argv[0]) ;
@@ -48,21 +45,6 @@ int main(int argc, char **argv)
     module->keywords = _("display, networking");
     module->description = 
     "Find shortest path for selected starting and ending node";
-
-    /* Conditionalize R_open_driver() so "help" works, open quiet as well */
-    R__open_quiet();
-    if (R_open_driver() == 0)
-    {
-        if(D_get_dig_list (&vect, &nvects) < 0)
-            vect = NULL;
-        else
-        {
-            vect = (char **)G_realloc(vect, (nvects+1)*sizeof(char *));
-            vect[nvects] = NULL;
-        }
-
-        R_close_driver();
-    }
 
     map = G_define_standard_option(G_OPT_V_MAP);
 
@@ -131,6 +113,9 @@ int main(int argc, char **argv)
     afield = atoi (afield_opt->answer);
     nfield = atoi (nfield_opt->answer);
 
+    if (R_open_driver() != 0)
+       G_fatal_error ("No graphics device selected");
+
     color = BLACK;
     if ( G_str_to_color(color_opt->answer, &r, &g, &b) ) {
         colornum++;
@@ -167,14 +152,6 @@ int main(int argc, char **argv)
 
     Vect_set_open_level(2);
     Vect_open_old (&Map, map->answer, mapset); 
-
-    if (R_open_driver() != 0) {
-       Vect_close(&Map);
-       G_fatal_error ("No graphics device selected");
-    }
-
-    if (D_get_dig_list (&vect, &nvects) < 0)
-        G_fatal_error ("No vector map shown in monitor, use d.vect first");
 
     D_setup(0);
 
