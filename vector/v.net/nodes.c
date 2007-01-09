@@ -17,6 +17,7 @@
 #include <stdlib.h>
 #include <grass/gis.h>
 #include <grass/Vect.h>
+#include <grass/glocale.h>
 #include "proto.h"
 
 int nodes ( char *in, char *out, int add_cats, int nfield)
