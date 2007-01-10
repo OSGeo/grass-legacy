@@ -75,7 +75,7 @@ void write_done(struct Map_info *Map)
     int i;
 
     if (!(found_layers = (num_fields > 0))) {
-	fprintf(stderr, _("\nNo DXF layers found!\n"));
+	G_warning (_("No DXF layers found!"));
 	return;
     }
 
@@ -84,9 +84,9 @@ void write_done(struct Map_info *Map)
 	db_close_database_shutdown_driver(driver);
     }
 
-    fprintf(stderr, _("\nFollowing DXF layers found:\n"));
+    G_message (_("Following DXF layers found:"));
     for (i = 0; i < num_fields; i++) {
-	fprintf(stderr, _("Layer %d: %s\n"), i + 1, field_names[i]);
+	G_message (_("Layer %d: %s"), i + 1, field_names[i]);
 	G_free(field_names[i]);
 	if (!flag_table) {
 	    if (flag_one_layer && i > 0)

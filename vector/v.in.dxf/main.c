@@ -42,6 +42,7 @@ int main(int argc, char *argv[])
 	struct Flag *list;
 	struct Flag *extent;
 	struct Flag *table;
+	struct Flag *topo;
 	struct Flag *invert;
 	struct Flag *one_layer;
 	struct Flag *frame;
@@ -56,7 +57,7 @@ int main(int argc, char *argv[])
     G_gisinit(argv[0]);
 
     module = G_define_module();
-    module->keywords = _("vector");
+    module->keywords = _("vector, import");
     module->description =
 	_("Converts files in DXF format to GRASS vector map format.");
 
@@ -71,6 +72,10 @@ int main(int argc, char *argv[])
     flag.table = G_define_flag();
     flag.table->key = 't';
     flag.table->description = _("Do not create attribute tables");
+
+    flag.topo = G_define_flag();
+    flag.topo->key = 'b';
+    flag.topo->description = _("Do not build topology");
 
     flag.invert = G_define_flag();
     flag.invert->key = 'i';
@@ -114,7 +119,7 @@ int main(int argc, char *argv[])
     flag_frame = flag.frame->answer;
 
     if (!flag_list)
-	fprintf(stderr, _("\nConversion of %s to vector map:  "),
+	G_message( _("Conversion of %s to vector map: "),
 		opt.input->answer);
 
     /* open DXF file */
@@ -164,6 +169,10 @@ int main(int argc, char *argv[])
 	Vect_hist_command(Map);
     }
 
+    if (!flag_list)
+	G_message (_("Conversion of [%s] to vector map ..."),
+		   opt.input->answer);
+
     /* import */
     dxf_to_vect(dxf, Map);
 
@@ -176,8 +185,9 @@ int main(int argc, char *argv[])
 
 	if (found_layers) {
 	    if (Vect_open_old(Map, output, G_mapset())) {
-		if (!Vect_build(Map, stderr))
-		    G_warning(_("Building topology failed"));
+		if (!flag_topo)
+		    if (!Vect_build(Map, stderr))
+			G_warning(_("Building topology failed"));
 		Vect_close(Map);
 	    }
 	}

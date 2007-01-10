@@ -25,8 +25,8 @@ struct dxf_file
 #define GLOBAL extern
 #endif
 
-GLOBAL int flag_list, flag_extent, flag_table, flag_invert, flag_one_layer,
-    flag_frame;
+GLOBAL int flag_list, flag_extent, flag_table, flag_topo, flag_invert,
+    flag_one_layer, flag_frame;
 GLOBAL int num_layers, found_layers;
 GLOBAL char **layers;
 GLOBAL char dxf_buf[DXF_BUF_SIZE], entity[DXF_BUF_SIZE];
@@ -50,7 +50,7 @@ void dxf_close(struct dxf_file *);
 int dxf_find_header(struct dxf_file *);
 #define dxf_get_code(a) dxf_read_code(a, dxf_buf, DXF_BUF_SIZE)
 int dxf_read_code(struct dxf_file *, char *, int);
-int big_percent(unsigned long, unsigned long, int);
+/* int big_percent(unsigned long, unsigned long, int); */
 
 /* make_arc.c */
 int make_arc(int, double, double, double, double, double, double);
