@@ -91,28 +91,3 @@ static char *dxf_fgets(char *buf, int size, struct dxf_file *dxf)
 
     return p;
 }
-
-/* this is a modified version of G_percent created because of the use of
- * unsigned long ints which G_percent does not use
-
-int big_percent(unsigned long n, unsigned long d, int s)
-{
-    int x;
-    static int prev = -1;
-
-    x = 100 * (double)n / (double)d;
-    if (x % s)
-	return 1;
-    if (n <= 0 || n >= d || x != prev) {
-	prev = x;
-	fprintf(stderr, "%4d%%\b\b\b\b\b", x);
-	fflush(stderr);
-    }
-    if (x >= 100) {
-	fprintf(stderr, "\n");
-	prev = -1;
-    }
-
-    return 0;
-}
-*/
