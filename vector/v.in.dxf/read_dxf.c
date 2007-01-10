@@ -30,7 +30,7 @@ struct dxf_file *dxf_open(char *file)
 	dxf->percent = 2;
 
     /* initialize big_percent() */
-    big_percent(0, dxf->size, dxf->percent);
+    G_percent(0, dxf->size, dxf->percent);
 
     return dxf;
 }
@@ -85,7 +85,7 @@ static char *dxf_fgets(char *buf, int size, struct dxf_file *dxf)
 
     if ((p = fgets(buf, size, dxf->fp))) {
 	dxf->pos += strlen(p);
-	big_percent(dxf->pos, dxf->size, dxf->percent);
+	G_percent(dxf->pos, dxf->size, dxf->percent);
 	G_squeeze(buf);
     }
 
@@ -94,7 +94,7 @@ static char *dxf_fgets(char *buf, int size, struct dxf_file *dxf)
 
 /* this is a modified version of G_percent created because of the use of
  * unsigned long ints which G_percent does not use
- */
+
 int big_percent(unsigned long n, unsigned long d, int s)
 {
     int x;
@@ -115,3 +115,4 @@ int big_percent(unsigned long n, unsigned long d, int s)
 
     return 0;
 }
+*/
