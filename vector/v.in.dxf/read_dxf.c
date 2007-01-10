@@ -15,7 +15,7 @@ struct dxf_file *dxf_open(char *file)
     if (!(dxf->fp = fopen(file, "r")))
 	return NULL;
 
-    /* get the file size so that big_percent() can be used */
+    /* get the file size */
     fseek(dxf->fp, 0L, SEEK_END);
     dxf->size = ftell(dxf->fp);
     rewind(dxf->fp);
@@ -29,7 +29,7 @@ struct dxf_file *dxf_open(char *file)
     else
 	dxf->percent = 2;
 
-    /* initialize big_percent() */
+    /* initialize G_percent() */
     G_percent(0, dxf->size, dxf->percent);
 
     return dxf;

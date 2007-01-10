@@ -10,7 +10,7 @@ struct dxf_file
 {
     char *name;
     FILE *fp;
-    /* for big_percent() */
+    /* for G_percent() */
     unsigned long size, pos;
     int percent;
 };
@@ -50,7 +50,6 @@ void dxf_close(struct dxf_file *);
 int dxf_find_header(struct dxf_file *);
 #define dxf_get_code(a) dxf_read_code(a, dxf_buf, DXF_BUF_SIZE)
 int dxf_read_code(struct dxf_file *, char *, int);
-/* int big_percent(unsigned long, unsigned long, int); */
 
 /* make_arc.c */
 int make_arc(int, double, double, double, double, double, double);
