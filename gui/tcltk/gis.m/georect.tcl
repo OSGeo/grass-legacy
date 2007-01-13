@@ -480,7 +480,8 @@ proc GRMap::vgroup { } {
 
     #cleanup for window closing
     bind .vgwin <Destroy>  {
-        if {"%W" == .vgwin} {GRMap::cleanup}
+    	set winname %W
+        if {$winname == ".vgwin"} {GRMap::cleanup}
     }
 }
 
@@ -648,9 +649,9 @@ proc GRMap::startup { } {
 
     # set xy raster or vector
     set row [ frame $grstartup.map ]
-    Button $row.a -text [G_msg "4. Select ref. map"] \
+    Button $row.a -text [G_msg "4. Select map"] \
         -highlightthickness 0 -takefocus 0 -relief raised -borderwidth 1  \
-        -helptext [G_msg "Select raster or vector to display for marking ground control points"]\
+        -helptext [G_msg "Select non-georectified raster or vector to display for marking ground control points"]\
         -width 16 -anchor w \
         -command {GRMap::getxymap $GRMap::maptype}
     Entry $row.b -width 35 -text "$GRMap::xymap" \
@@ -923,6 +924,12 @@ proc GRMap::gcpwin {} {
     global geoentry
     global grcoords
     global b1coords
+    
+    set fwd_rmssumsq 0.0
+    set fwd_rmserror 0.0
+    set rev_rmssumsq 0.0
+    set rev_rmserror 0.0
+
 
     toplevel .gcpwin
 
@@ -1005,6 +1012,8 @@ proc GRMap::gcpwin {} {
         set chk($gcpnum) [checkbutton $row.a \
                 -takefocus 0 \
                 -variable GRMap::usegcp($gcpnum)]
+        set fwd_error($gcpnum) 0.0
+        set rev_error($gcpnum) 0.0
 
         set xy($gcpnum) [entry $row.b -width 35  -bd 0 ]
         bind $xy($gcpnum) <FocusIn> "set xyentry %W"
@@ -1490,10 +1499,14 @@ proc GRMap::runprograms { mod } {
 	# including lat long now as dd:mm:ss
 	if {![catch {open [concat "|g.region" "-up" $options "2> $devnull"] r} input]} {
 		while {[gets $input line] >= 0} {
-			set key [string trim [lindex [split $line ":"] 0]]
-			set parts($key) [string trim [lindex [split $line ":"] 1]]
+			if { [regexp -nocase {^([a-z]+)\:[ ]+(.*)$} $line trash key value] } {
+				set parts($key) $value
+			}
 		}
-		close $input
+		if {[catch {close $input} error]} {
+			puts $error
+			exit 1
+		}
 		# Finally put this into wind file format to use with GRASS_REGION
 		regexp -nocase {^.* (\(.*\))} $parts(projection) trash end
 		set parts(projection) [string trim $parts(projection) $end]
@@ -1510,11 +1523,6 @@ proc GRMap::runprograms { mod } {
     set env(GRASS_RENDER_IMMEDIATE) "TRUE"
 
     # Setting the font really only needs to be done once per display start
-    set cmd {d.font romans}
-    runcmd $cmd
-    incr drawprog
-    set cmd "d.frame -e"
-    runcmd $cmd
     incr drawprog
     # display map for georectification
     if { $maptype == "rast" } {
@@ -1540,6 +1548,8 @@ proc GRMap::runprograms { mod } {
             -image "grimg" \
             -tag gr
     cd $currdir
+
+    GRMap::coordconv
 
 	#draw gcp marks
 	set gcpnum 1
@@ -1583,7 +1593,6 @@ proc GRMap::runprograms { mod } {
 	
     set drawprog 100
 
-    GRMap::coordconv
     set drawprog 0
     set GRMap::msg "Georectifying maps in $xygroup group"
 
