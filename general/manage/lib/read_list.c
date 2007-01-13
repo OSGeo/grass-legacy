@@ -99,9 +99,7 @@ read_list (int check_if_empty)
 
 static int format_error (char *element_list,int line, char *buf)
 {
-    fprintf (stderr, "%s ** FORMAT ERROR **\n", element_list);
-    fprintf (stderr, "** line %d **\n", line);
-    fprintf (stderr, "%s\n", buf);
-    G_sleep(3);
-    exit(1);
+    G_fatal_error (_("Format error: <%s>\nLine: %d\n%s"), element_list, line, buf);
+
+    return 1;
 }
