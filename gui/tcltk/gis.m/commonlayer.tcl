@@ -81,6 +81,8 @@ proc GmCommonLayer::display_commands {namespace id cmds} {
 		set first 0
 	}
 	
+	if {![file exists $lfile($id)]} {return}
+	
 	#add lfile, maskfile, and opacity to compositing lists
 	if {$MapCanvas::complist($mon) != "" } {
 		append MapCanvas::complist($mon) ","
