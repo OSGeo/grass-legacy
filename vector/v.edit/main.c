@@ -7,7 +7,7 @@
  * PURPOSE:    This module edits vector maps. It is inteded to be mainly
  * 	       used by the the new v.digit GUI.
  *
- * COPYRIGHT:  (C) 2002-2006 by the GRASS Development Team
+ * COPYRIGHT:  (C) 2002-2007 by the GRASS Development Team
  *
  *             This program is free software under the
  *             GNU General Public License (>=v2).
@@ -16,8 +16,6 @@
  *
  * TODO:       
  ****************************************************************/
-#include <grass/gis.h>
-#include <grass/glocale.h>
 
 #define MAIN
 #include "global.h"
@@ -26,13 +24,15 @@
 
 int main (int argc, char *argv[])
 {
-    G_gisinit(argv[0]);
     int ret;
     FILE *output=stdout;
 
+    G_gisinit(argv[0]);
+
     module = G_define_module();
     module->keywords = _("vector, editing");
-    module->description = _("Edits a vector map; allows adding, deleting and modifying objects in a vector map.");
+    module->description = _("Edits a vector map; allows adding, deleting "
+			    "and modifying objects in a vector map.");
 
     if(!parser(argc, argv))
 	exit(EXIT_FAILURE);

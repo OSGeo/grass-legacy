@@ -31,6 +31,21 @@ enum mode {
     MODE_SNAP,
 };
 
+/* options */
+global struct Option *input_opt, *map_opt, *maxdist_opt, *tool_opt,
+  *coord_opt, *cat_opt, *move_opt, *bbox_opt, *fld_opt,
+  *poly_opt, *type_opt, *id_opt;
+global struct Flag *n_flg, *t_flg, *i_flg,
+  *b_flg, *c_flg, *n_flg;
+
+/* global variables */
+global struct GModule *module;
+global struct Map_info Map;
+global char *mapset;
+global enum mode action_mode;
+global FILE *ascii;
+
+/* args.c */
 int parser(int argc, char*argv[]);
 
 /* delete.c */
@@ -72,16 +87,5 @@ int cats (struct Map_info *Map, int del);
 
 /* copy.c */
 int do_copy (struct Map_info *Map);
-
-/* options */
-global struct Option *input_opt, *map_opt, *maxdist_opt, *tool_opt, *coord_opt, *cat_opt, *move_opt, *bbox_opt, *fld_opt, *poly_opt, *type_opt, *id_opt;
-global struct Flag *n_flg, *t_flg, *i_flg, *b_flg, *c_flg, *n_flg;
-global struct GModule *module;
-global struct Map_info Map;
-global enum mode action_mode;
-global char *mapset;
-
-global FILE *ascii;
-
 
 #endif
