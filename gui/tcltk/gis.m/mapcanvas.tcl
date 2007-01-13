@@ -542,10 +542,14 @@ proc MapCanvas::runprograms { mon mod } {
 	set key ""
 	if {![catch {open [concat "|g.region" "-up" $options "2> $devnull"] r} input]} {
 		while {[gets $input line] >= 0} {
-			set key [string trim [lindex [split $line ":"] 0]]
-			set parts($key) [string trim [lindex [split $line ":"] 1]]
+			if { [regexp -nocase {^([a-z]+)\:[ ]+(.*)$} $line trash key value] } {
+				set parts($key) $value
+			}
 		}
-		close $input
+		if {[catch {close $input} error]} {
+			puts $error
+			exit 1
+		}
 		# Finally put this into wind file format to use with GRASS_REGION
 		regexp -nocase {^.* (\(.*\))} $parts(projection) trash end
 		set parts(projection) [string trim $parts(projection) $end]
