@@ -16,8 +16,8 @@
  * \date 2006
  */
 
-#include <grass/config.h>
 #include <stdlib.h>
+#include <grass/config.h>
 
 #define MAXLEVEL 3
 #define STDLEVEL 2
@@ -99,4 +99,26 @@ int G_verbose_std (void)
 int G_verbose_min (void)
 {
     return MINLEVEL;
+}
+
+/**
+ * \fn int G_set_verbose (int level)
+ *
+ * \brief Set verbosity level.
+ *
+ * \param level: new verbosity level
+ *
+ * \return 0 - failed (verbosity level untouched)
+ * \return 1 - success
+ */
+
+int G_set_verbose (int level)
+{
+  if (level >= MINLEVEL && level <= MAXLEVEL)
+  {
+      verbose = level;
+      return 1;
+  }
+
+  return 0;
 }
