@@ -300,8 +300,19 @@ int main(int argc,char *argv[])
 	/* Please, remove before GRASS 7 released */
 	if (KEY("verbose"))
 	{
-	    G_warning(_("Verbose mapping instruction was removed. "
-			"Please use --verbose instead."));
+	    int verbose;
+	    if (sscanf(data, "%d", &verbose) != 1)
+		verbose = G_verbose_std ();
+
+	    G_warning (_("GRASS environment variable GRASS_VERBOSE "
+			 "is overwritten by VERBOSE mapping instruction. "
+			 "This mapping instruction is superseded and "
+			 "will be removed in future versions of GRASS. "
+			 "Please use --verbose instead."));
+
+	    if (!G_set_verbose (verbose))
+		G_warning (_("Cannot set GRASS_VERBOSE variable.")); 
+
 	    continue;
 	}
 
