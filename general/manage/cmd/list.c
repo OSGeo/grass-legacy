@@ -1,18 +1,35 @@
+/****************************************************************************
+ *
+ * MODULE:       g.list
+ *               
+ * AUTHOR(S):    Michael Shapiro,
+ *               U.S.Army Construction Engineering Research Laboratory
+ *               
+ * PURPOSE:      Lists available GRASS data base files of the
+ *               user-specified data type to standard output
+ *
+ * COPYRIGHT:    (C) 1999-2007 by the GRASS Development Team
+ *
+ *               This program is free software under the GNU General Public
+ *               License (>=v2). Read the file COPYING that comes with GRASS
+ *               for details.
+ *
+ *****************************************************************************/
+
 #define MAIN
 #include <stdlib.h>
 #include <string.h>
 #include <unistd.h>
-#include <grass/glocale.h>
+#include <grass/spawn.h>
 #include "local_proto.h"
 #include "list.h"
-
 
 struct Option *element;
 
 int 
 main (int argc, char *argv[])
 {
-	int n, len;
+	int i, n, len;
 	struct GModule *module;
 	struct Option *mapset;
 	struct Flag *full;
@@ -20,30 +37,31 @@ main (int argc, char *argv[])
 	init (argv[0]);
 
 	module = G_define_module();
-	module->keywords = _("general");
-    module->description =
+	module->keywords = _("general, manage");
+	module->description =
 		_("Lists available GRASS data base files "
-		"of the user-specified data type to standard output.");
+		  "of the user-specified data type to standard output.");
 
 	element = G_define_option();
 	element->key =      "type";
 	element->key_desc = "datatype";
 	element->type     = TYPE_STRING;
 	element->required = YES;
-	element->multiple = NO;
-	element->description = "data type";
+	element->multiple = YES;
+	element->description = "Data type";
 	for (len=0,n=0 ; n < nlist; n++)
 	    len += strlen (list[n].alias)+1;
 	element->options = G_malloc(len);
+
 	for (n=0; n < nlist; n++)
 	{
 	    if (n)
 	    {
-		strcat (element->options, ",");
-		strcat (element->options, list[n].alias);
+		G_strcat (element->options, ",");
+		G_strcat (element->options, list[n].alias);
 	    }
 	    else
-		strcpy (element->options, list[n].alias);
+		G_strcpy (element->options, list[n].alias);
 	}
 
 	mapset = G_define_option();
@@ -51,57 +69,61 @@ main (int argc, char *argv[])
 	mapset->type = TYPE_STRING;
 	mapset->required = NO;
 	mapset->multiple = NO;
-	mapset->description = _("mapset to list (default: current search path)");
+	mapset->description = _("Mapset to list (default: current search path)");
 #define MAPSET mapset->answer
 
 	full = G_define_flag();
 	full->key = 'f';
-	full->description = _("verbose listing (also list map titles)");
+	full->description = _("Verbose listing (also list map titles)");
 #define FULL full->answer
-
-	n = parse(argc, argv);
-
-	if (MAPSET == NULL)
-		MAPSET = "";
-	if (strcmp (MAPSET,".") == 0)
-		MAPSET = G_mapset();
-	if (FULL)
-	{
-		char lister[300];
-		sprintf (lister, "%s/etc/lister/%s", G_gisbase(), list[n].element[0]);
-		G_debug(3,"lister CMD: %s",lister);
-		if (access (lister, 1) == 0) /* execute permission? */
-			execl (lister, argv[0], MAPSET, 0);
-	}
-	do_list (n,MAPSET);
-	exit(0);
-}
-
-int 
-parse (int argc, char *argv[])
-{
-	int n;
 
 	if (G_parser(argc, argv))
 	{
-		fprintf (stderr, _("\nWhere %s is one of:\n"), element->key);
-		show_elements();
-		exit(1);
+		exit(EXIT_FAILURE);
 	}
+
+	if (MAPSET == NULL)
+		MAPSET = "";
+
+	if (G_strcasecmp (MAPSET,".") == 0)
+		MAPSET = G_mapset();
+
+	i = 0;
+	while (element -> answers[i])
+	{ 
+		n = parse(element -> answers[i]);
+		
+		if (FULL)
+		{
+			char lister[300];
+			sprintf (lister, "%s/etc/lister/%s", G_gisbase(), list[n].element[0]);
+			G_debug(3,"lister CMD: %s",lister);
+			if (access (lister, 1) == 0) /* execute permission? */
+				G_spawn_ex (lister, MAPSET, NULL);
+			else
+				do_list (n, MAPSET);
+		}
+		else
+		{
+			do_list (n, MAPSET);
+		}
+
+		i++;
+	}
+
+	exit(EXIT_SUCCESS);
+}
+
+int 
+parse (const char *data_type)
+{
+	int n;
+	
 	for (n = 0 ; n < nlist; n++)
 	{
-		if (strcmp (list[n].alias, element->answer) == 0)
+		if (G_strcasecmp (list[n].alias, data_type) == 0)
 			break;
 	}
 
-	if (n >= nlist)
-	{
-		fprintf (stderr, _("%s: - no such database %s\n"),
-		    element->answer, element->key);
-		G_usage();
-		fprintf (stderr, _("\nWhere %s is one of:\n"), element->key);
-		show_elements();
-		exit(1);
-	}
 	return n;
 }

@@ -4,7 +4,7 @@ int main(int, char *[]);
 int init(char *);
 /* list.c */
 int main(int, char *[]);
-int parse(int, char *[]);
+int parse(const char *);
 /* remove.c */
 int main(int, char *[]);
 /* rename.c */

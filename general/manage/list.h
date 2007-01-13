@@ -1,4 +1,6 @@
 #include <grass/gis.h>
+#include <grass/glocale.h>
+
 struct list
 {
     char **element;	/* list of related elements */
