@@ -53,12 +53,38 @@
  */
 
 #ifdef __MINGW32__
+
 int G_spawn(char *command, ...)
 {
-    G_fatal_error(_("G_spawn is not supported on Windows"));
-    return -1;
+	va_list va;
+	char *args[MAX_ARGS];
+	int num_args = 0;
+
+	args[0] = command;
+
+	va_start(va, command);
+
+	for (num_args = 1; num_args < MAX_ARGS; )
+	{
+		char *arg = va_arg(va, char *);
+		if (!arg)
+			break;
+		args[num_args++] = arg;
+	}
+
+	va_end(va);
+
+	if (num_args >= MAX_ARGS)
+	{
+		G_warning(_("Too many arguments"));
+		return -1;
+	}
+
+	return _spawnv(_P_WAIT, command, args);
 }
+
 #else
+
 int G_spawn(char *command, ...)
 {
 	va_list va;
