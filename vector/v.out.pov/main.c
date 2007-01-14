@@ -194,8 +194,8 @@ main (int argc, char *argv[])
     Vect_close (&In);
 
     /* Summary */
-    fprintf (stderr, "%d features written.\n", count);
+    G_message (_( "%d features written."), count);
 
-    exit(0) ;
+    exit(EXIT_SUCCESS) ;
 }
 

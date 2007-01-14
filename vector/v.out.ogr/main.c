@@ -328,7 +328,7 @@ main (int argc, char *argv[])
 
     /* Lines (run always to count features of different type) */
     if ( (otype & GV_POINTS) || (otype & GV_LINES) ) {
-	fprintf(stderr,"Exporting %i points/lines...\n", Vect_get_num_lines(&In) );
+	G_message(_("Exporting %i points/lines..."), Vect_get_num_lines(&In) );
 	for ( i = 1; i <= Vect_get_num_lines(&In) ; i++ ) {
 
 	    G_percent(i,Vect_get_num_lines(&In),1);
@@ -403,7 +403,7 @@ main (int argc, char *argv[])
 
     /* Areas (run always to count features of different type) */
     if ( otype & GV_AREA ) {
-	fprintf(stderr,"Exporting %i areas (may take some time) ...\n", Vect_get_num_areas(&In) );
+	G_message(_("Exporting %i areas (may take some time) ..."), Vect_get_num_areas(&In) );
 	for ( i = 1; i <= Vect_get_num_areas(&In) ; i++ ) {
 	    OGRGeometryH    ring;
 	    
@@ -468,7 +468,7 @@ main (int argc, char *argv[])
 
     /* Faces (run always to count features of different type)  - Faces are similar to lines */
     if ( otype & GV_FACE ) {
-	fprintf(stderr,"Exporting %i faces (may take some time) ...\n", Vect_get_num_faces(&In) );
+	G_message(_("Exporting %i faces (may take some time) ..."), Vect_get_num_faces(&In) );
 	for ( i = 1; i <= Vect_get_num_faces(&In) ; i++ ) {
 	    OGRGeometryH    ring;
 	    
@@ -534,7 +534,7 @@ main (int argc, char *argv[])
     }
 
     /* Summary */
-    fprintf (stderr, "%d features written\n", fout);
+    G_message(_("%d features written"), fout);
     if ( nocat > 0 ) G_warning ( "%d features without category written", nocat);
     if ( noatt > 0 ) G_warning ( "%d features without attributes written", noatt);
     if ( nocatskip > 0 ) G_warning ( "%d features found without category skip", nocatskip);
