@@ -1,5 +1,6 @@
 #include <grass/Vect.h>
 #include <grass/gis.h>
+#include <grass/glocale.h>
 #include "local_proto.h"
 
 int bin_to_asc(FILE * ascii,
@@ -77,7 +78,7 @@ int bin_to_asc(FILE * ascii,
 	    break;
 	default:
 	    ctype = 'X';
-	    fprintf(stderr, "got type %d\n", (int)type);
+	    G_warning(_("got type %d"), (int)type);
 	    break;
 	}
 
