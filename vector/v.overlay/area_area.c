@@ -12,6 +12,7 @@
 #include <grass/gis.h>
 #include <grass/dbmi.h>
 #include <grass/Vect.h>
+#include <grass/glocale.h>
 #include "local.h"
 
 int area_area ( struct Map_info *In, int *field, struct Map_info *Out, struct field_info *Fi, 
@@ -34,17 +35,17 @@ int area_area ( struct Map_info *In, int *field, struct Map_info *Out, struct fi
      * are created. We must call Vect_break_lines(), Vect_remove_duplicates()
      * and Vect_clean_small_angles_at_nodes() until no more small dangles are found */
     do {
-	fprintf (stderr, SEP );
-	fprintf ( stderr, "Breaking lines ...\n" );
+	G_message(SEP );
+	G_message(_( "Breaking lines ...") );
 	Vect_break_lines ( Out, GV_LINE|GV_BOUNDARY, NULL, stderr );
 
 	/* Probably not necessary for LINE x AREA */
-	fprintf (stderr, SEP );
-	fprintf ( stderr, "Removing duplicates ...\n" );
+	G_message(SEP );
+	G_message(_("Removing duplicates ...") );
 	Vect_remove_duplicates ( Out, GV_BOUNDARY, NULL, stderr );
 
-	fprintf (stderr, SEP );
-	fprintf ( stderr, "Cleaning boundaries at nodes ...\n" );
+	G_message(SEP );
+	G_message(_("Cleaning boundaries at nodes ...") );
 	nmodif = Vect_clean_small_angles_at_nodes ( Out, GV_BOUNDARY, NULL, stderr );
     } while ( nmodif > 0 );
 
@@ -52,8 +53,8 @@ int area_area ( struct Map_info *In, int *field, struct Map_info *Out, struct fi
      * In that case, calls to Vect_remove_dangles() and Vect_remove_bridges() would be also necessary */
     
     /* Attach islands */
-    fprintf (stderr, SEP );
-    fprintf ( stderr, "Attaching islands ...\n" );
+    G_message(SEP );
+    G_message(_("Attaching islands ...") );
     Vect_build_partial ( Out, GV_BUILD_ATTACH_ISLES, stderr );
 
 
@@ -73,8 +74,8 @@ int area_area ( struct Map_info *In, int *field, struct Map_info *Out, struct fi
     
     /* Query input maps */
     for ( input = 0; input < 2; input++ ) {
-        fprintf (stderr, SEP );
-	fprintf (stderr, "Querying input '%s' ... ", Vect_get_full_name(&(In[input])) );
+        G_message(SEP );
+	G_message(_("Querying input '%s' ... "), Vect_get_full_name(&(In[input])) );
 
 	for ( area = 1; area <= nareas; area++ ) {
 	    Centr[area].cat[input] = Vect_new_cats_struct();
@@ -106,8 +107,8 @@ int area_area ( struct Map_info *In, int *field, struct Map_info *Out, struct fi
 	}
     }
 
-    fprintf (stderr, SEP );
-    fprintf (stderr, "Writing centroids ...\n" );
+    G_message(SEP );
+    G_message(_("Writing centroids ...") );
     
     db_init_string (&stmt);
     out_cat = 1;
@@ -233,8 +234,8 @@ int area_area ( struct Map_info *In, int *field, struct Map_info *Out, struct fi
     }
 
     /* Build topology and remove boundaries with area without centroid on both sides */
-    fprintf (stderr, SEP );
-    fprintf ( stderr, "Attaching centroids ...\n" );
+    G_message( SEP );
+    G_message(_("Attaching centroids ...") );
     Vect_build_partial ( Out, GV_BUILD_ALL, stderr );
 
     /* Create a list of lines to be deleted */

@@ -113,7 +113,7 @@ int main (int argc, char *argv[])
     if (stat >= 0) {  /* yes, we can access the mapset */
 	/* if requested, list the vector maps in source location - MN 5/2001*/
 	if (flag.list->answer) {
-	   fprintf(stderr, _("Checking location %s, mapset %s:\n"), iloc_name, iset_name);
+	   G_message(_("Checking location %s, mapset %s:"), iloc_name, iset_name);
 	   G_list_element ("vector", "vector", iset_name, 0);
 	   exit(EXIT_SUCCESS); /* leave v.proj after listing*/
 	}
@@ -182,7 +182,7 @@ int main (int argc, char *argv[])
     sprintf(date,"%s %d %d",mon,day,yr);
     Vect_set_date ( &Out_Map, date );
 
-    fprintf(stderr, _("\nCreating vector map...\n"));
+    G_message(_("Creating vector map..."));
 
     /* Initialize the Point / Cat structure */
     Points = Vect_new_line_struct();
