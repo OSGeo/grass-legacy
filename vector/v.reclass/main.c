@@ -364,8 +364,8 @@ main (int argc, char *argv[])
     Vect_build (&Out, stderr);
     Vect_close (&Out);
 
-    fprintf(stderr,"%d features reclassed\n", rclelem);
+    G_message(_("%d features reclassed"), rclelem);
 
-    exit(0);
+    exit(EXIT_SUCCESS);
 }
 
