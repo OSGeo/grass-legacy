@@ -31,7 +31,7 @@
  * returns Z struct filled with centers of n non-overlapping circles of
  * radius r contained completely within window
  */
-COOR *find_quadrats (int n, double r, struct Cell_head window, int verbose)
+COOR *find_quadrats (int n, double r, struct Cell_head window)
 {
   int i = 1, j, overlapped;
   unsigned k;
@@ -56,8 +56,7 @@ COOR *find_quadrats (int n, double r, struct Cell_head window, int verbose)
   while (i < n)
   {
     k=0;
-    if (verbose)
-      G_percent (i, n, 1);
+    G_percent (i, n, 1);
     overlapped = 1;
     while (overlapped)
     {
@@ -78,8 +77,7 @@ COOR *find_quadrats (int n, double r, struct Cell_head window, int verbose)
       if (k==2*n*n) 
         G_fatal_error("Maximum number of iterations exceeded\nTry smaller radius or smaller number of quads");
     }
-    if (verbose)
-      G_percent (i, n, 1);
+    G_percent (i, n, 1);
     quads[i].x = east;
     quads[i].y = north;
     i++;

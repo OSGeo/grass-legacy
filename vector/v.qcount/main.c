@@ -45,7 +45,7 @@ int main ( int argc, char **argv)
   char *mapset;
   double radius;
   double fisher, david, douglas, lloyd, lloydip, morisita;
-  int i, nquads, verbose, *counts;
+  int i, nquads, *counts;
 
   struct Cell_head window;
   struct GModule *module;
@@ -56,6 +56,7 @@ int main ( int argc, char **argv)
   struct
   {
     struct Flag *q;
+    struct Flag *g;
   } flag;
   COOR *quads;
 
@@ -65,36 +66,42 @@ int main ( int argc, char **argv)
 
   module = G_define_module();
   module->keywords = _("vector, statistics");
-  module->description = "indices for quadrat counts of sites lists";
+  module->description = _("Indices for quadrat counts of sites lists");
                   
   parm.input = G_define_option ();
   parm.input->key = "input";
   parm.input->type = TYPE_STRING;
   parm.input->required = YES;
-  parm.input->description = "vector of points defining sample points";
+  parm.input->description = _("Vector of points defining sample points");
   parm.input->gisprompt = "old,vector,vector";
 
   parm.output = G_define_option ();
   parm.output->key = "output";
   parm.output->type = TYPE_STRING;
   parm.output->required = NO;
-  parm.output->description = "output quadrant centres, number of points is written as category";
+  parm.output->description = _("Output quadrant centres, number of points is written as category");
   parm.output->gisprompt = "new,vector,vector";
 
   parm.n = G_define_option ();
   parm.n->key = "n";
   parm.n->type = TYPE_INTEGER;
   parm.n->required = YES;
-  parm.n->description = "number of quadrats";
+  parm.n->description = _("Number of quadrats");
   parm.n->options = NULL;
 
   parm.r = G_define_option ();
   parm.r->key = "r";
   parm.r->type = TYPE_DOUBLE;
   parm.r->required = YES;
-  parm.r->description = "quadrat radius";
+  parm.r->description = _("Quadrat radius");
   parm.r->options = NULL;
+  
+  flag.g = G_define_flag ();
+  flag.g->key = 'g';
+  flag.g->description = _("Print results in shell script style");
 
+
+  /* please, remove before GRASS 7 released */
   flag.q = G_define_flag ();
   flag.q->key = 'q';
   flag.q->description = "Quiet";
@@ -102,7 +109,12 @@ int main ( int argc, char **argv)
   if (G_parser (argc, argv))
     exit (EXIT_FAILURE);
 
-  verbose = (flag.q->answer) ? 0 : 1;
+  /* please, remove before GRASS 7 released */
+  if (flag.q->answer) {
+        G_set_verbose(G_verbose_min());
+        G_warning(_("The '-q' flag is superseded and will be removed "
+            "in future. Please use '--quiet' instead."));
+    }
 
   sscanf(parm.n->answer,"%d",&nquads);
   sscanf(parm.r->answer,"%lf",&radius);
@@ -117,23 +129,15 @@ int main ( int argc, char **argv)
   Vect_open_old (&Map, parm.input->answer, mapset);
 
   /* Get the quadrats */
-  if (verbose)
-      fprintf (stderr, "Finding quadrats ...                ");
+  G_message(_("Finding quadrats ..."));
   
-  quads = find_quadrats (nquads, radius, window,verbose);
+  quads = find_quadrats (nquads, radius, window);
 
-  if (verbose)
-      fprintf (stderr, "\n");
- 
   /* Get the counts per quadrat */
-  if (verbose)
-    fprintf(stderr, "Counting sites in quadrats ...      ");
+  G_message(_("Counting sites in quadrats ..."));
 
   counts = (int *) G_malloc (nquads * (sizeof(int)));
   count_sites (quads, nquads, counts, radius, &Map);
-
-  if (verbose)
-      fprintf (stderr, "\n");
 
   Vect_close ( &Map );
 
@@ -168,16 +172,28 @@ int main ( int argc, char **argv)
   /* Indices if requested */
   qindices (counts, nquads, &fisher, &david, &douglas, &lloyd, &lloydip, &morisita);
 
-  fprintf(stdout,"-----------------------------------------------------------\n");
-  fprintf(stdout,"Index                                           Realization\n");
-  fprintf(stdout,"-----------------------------------------------------------\n");
-  fprintf(stdout,"Fisher el al (1922) Relative Variance            %g\n",fisher);
-  fprintf(stdout,"David & Moore (1954) Index of Cluster Size       %g\n",david);
-  fprintf(stdout,"Douglas (1975) Index of Cluster Frequency        %g\n",douglas);
-  fprintf(stdout,"Lloyd (1967) \"mean crowding\"                     %g\n",lloyd);
-  fprintf(stdout,"Lloyd (1967) Index of patchiness                 %g\n",lloydip);
-  fprintf(stdout,"Morisita's (1959) I (variability b/n patches)    %g\n",morisita);
-  fprintf(stdout,"-----------------------------------------------------------\n");
+  if (!flag.g->answer) {
+    fprintf(stdout,"-----------------------------------------------------------\n");
+    fprintf(stdout,"Index                                           Realization\n");
+    fprintf(stdout,"-----------------------------------------------------------\n");
+    fprintf(stdout,"Fisher el al (1922) Relative Variance            %g\n",fisher);
+    fprintf(stdout,"David & Moore (1954) Index of Cluster Size       %g\n",david);
+    fprintf(stdout,"Douglas (1975) Index of Cluster Frequency        %g\n",douglas);
+    fprintf(stdout,"Lloyd (1967) \"mean crowding\"                     %g\n",lloyd);
+    fprintf(stdout,"Lloyd (1967) Index of patchiness                 %g\n",lloydip);
+    fprintf(stdout,"Morisita's (1959) I (variability b/n patches)    %g\n",morisita);
+    fprintf(stdout,"-----------------------------------------------------------\n");
+  }
+  else {
+    fprintf(stdout,"fisher=%g\n",fisher);
+    fprintf(stdout,"david=%g\n",david);
+    fprintf(stdout,"douglas=%g\n",douglas);
+    fprintf(stdout,"lloyd=%g\n",lloyd);
+    fprintf(stdout,"lloydip=%g\n",lloydip);
+    fprintf(stdout,"morisita=%g\n",morisita);
+  }
+
+
 
   exit (EXIT_SUCCESS);
 }
