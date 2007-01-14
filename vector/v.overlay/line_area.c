@@ -11,6 +11,7 @@
 #include <grass/gis.h>
 #include <grass/dbmi.h>
 #include <grass/Vect.h>
+#include <grass/glocale.h>
 #include "local.h"
 
 /* Check if point is inside area with category of given field. All cats are set in 
@@ -60,8 +61,8 @@ int line_area ( struct Map_info *In, int *field, struct Map_info *Out, struct fi
     OCats = Vect_new_cats_struct();
     db_init_string (&stmt);
 
-    fprintf (stderr, SEP );
-    fprintf ( stderr, "Breaking lines ...\n" );
+    G_message(SEP );
+    G_message(_("Breaking lines ...") );
     Vect_break_lines ( Out, GV_LINE|GV_BOUNDARY, NULL, stderr );
 
     /* Basic topology needed only */

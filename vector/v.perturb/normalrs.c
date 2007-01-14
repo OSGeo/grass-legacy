@@ -26,7 +26,7 @@ normalrs (double *svbox)
   zufallrs (svbox);
   klotz1_1.first = (int) svbox[608];
   if (klotz1_1.first == 0)
-    fprintf (stdout, " ERROR in normalsv, restoration of unitialized block\n");
+    G_warning(_("normalsv: restoration of unitialized block"));
   klotz1_1.xptr = (int) svbox[609];
   k = 609;
   for (i = 0; i < 1024; ++i)

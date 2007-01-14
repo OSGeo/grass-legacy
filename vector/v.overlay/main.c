@@ -141,7 +141,7 @@ main (int argc, char *argv[])
 
     /* Open database */
     if ( ofield[0] > 0 && !(table_flag->answer) ) {
-	fprintf (stderr, SEP );
+	G_message(SEP );
 	
 	db_init_string (&stmt);
 	driver = db_start_driver_open_database ( Fi->driver, Vect_subst_var(Fi->database, &Out) );
@@ -158,7 +158,7 @@ main (int argc, char *argv[])
     for ( input = 0; input < 2; input++ ) {
 	int ncats, index;
 	
-	fprintf (stderr, "Copying %sinput lines ... ", pre[input]);
+	G_message(_("Copying %sinput lines ... "), pre[input]);
 
 	if ((mapset[input] = G_find_vector2 (in_opt[input]->answer, NULL)) == NULL) {
 	    G_fatal_error ("Could not find vector '%s'\n", in_opt[input]->answer);
@@ -209,7 +209,7 @@ main (int argc, char *argv[])
 
 	G_debug ( 3, "%d cats read from index", attr[input].n );
 
-        fprintf (stderr, "Collecting input attributes ...\n");
+        G_message(_("Collecting input attributes ..."));
 
 	attr[input].null_values = NULL;
 	attr[input].columns = NULL;
@@ -364,7 +364,7 @@ main (int argc, char *argv[])
 	    db_close_database_shutdown_driver ( in_driver );
 	}
 	
-        fprintf (stderr, SEP );
+        G_message(SEP );
     }
 
     if ( driver ) {
@@ -405,7 +405,7 @@ main (int argc, char *argv[])
 	Vect_map_add_dblink ( &Out, ofield[0], NULL, Fi->table, "cat", Fi->database, Fi->driver);
     }
 
-    fprintf ( stderr, "Building partial topology ...\n" );
+    G_message(_("Building partial topology ...") );
     /* do not print output, because befor cleaning it is nonsense */
     Vect_build_partial ( &Out, GV_BUILD_BASE, NULL ); 
 
@@ -416,8 +416,8 @@ main (int argc, char *argv[])
 	line_area ( In, field, &Out, Fi, driver, operator, ofield, attr );
     }
 
-    fprintf (stderr, SEP );
-    fprintf ( stderr, "Rebuilding topology ...\n" );
+    G_message(SEP );
+    G_message(_("Rebuilding topology ...") );
     Vect_build_partial ( &Out, GV_BUILD_NONE, NULL );
     Vect_build (&Out, stderr); /* Build topology to show the final result and prepare for Vect_close() */
 
