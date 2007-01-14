@@ -12,7 +12,7 @@ msgstr ""
 "Project-Id-Version: grassmods_es\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2006-12-21 15:46+0100\n"
-"PO-Revision-Date: 2007-01-11 23:39+0100\n"
+"PO-Revision-Date: 2007-01-13 00:20+0100\n"
 "Last-Translator: Carlos Dávila <carluti@users.sourceforge.net>\n"
 "Language-Team: español <es@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -479,7 +479,7 @@ msgstr "Mapa ráster 3D de entrada para la sección cruzada."
 
 #: ../raster3d/r3.cross.rast/main.c:98
 msgid "2D elevation map used to create the cross section map"
-msgstr "Mapa de elevación 2D usado para crear el mapa de sección cruzada"
+msgstr "Mapa de altitud 2D usado para crear el mapa de sección cruzada"
 
 #: ../raster3d/r3.cross.rast/main.c:105
 #, fuzzy
@@ -492,13 +492,13 @@ msgstr "Usar máscara G3D (si existe) con el mapar de entrada"
 
 #: ../raster3d/r3.cross.rast/main.c:162
 msgid "Could not get elevation raster row"
-msgstr "No se pudo obtener la fila ráster de elevación"
+msgstr "No se pudo obtener la fila ráster de altitud"
 
 #: ../raster3d/r3.cross.rast/main.c:271
 msgid ""
 "Creates cross section 2D raster map from 3d raster map based on 2D elevation "
 "map"
-msgstr "Crea un mapa ráster 2D de sección cruzada a partir de un mapa ráster 3D basado en mapa 2D de elevación"
+msgstr "Crea un mapa ráster 2D de sección cruzada a partir de un mapa ráster 3D basado en mapa 2D de altitud"
 
 #: ../raster3d/r3.cross.rast/main.c:283
 #, c-format
@@ -514,11 +514,11 @@ msgstr "Las configuraciones de la región 2D y 3D son diferentes. Usaré las confi
 
 #: ../raster3d/r3.cross.rast/main.c:330
 msgid "Elevation map not found"
-msgstr "Mapa de elevación no encontrado"
+msgstr "Mapa de altitud no encontrado"
 
 #: ../raster3d/r3.cross.rast/main.c:335
 msgid "Could not open elevation map"
-msgstr "No se pudo abrir el mapa de elevación"
+msgstr "No se pudo abrir el mapa de altitud"
 
 #: ../raster3d/r3.cross.rast/main.c:349
 msgid "Output map already exists. Will be overwritten!"
@@ -534,7 +534,7 @@ msgstr "no se puede cerrar el mapa de salida"
 
 #: ../raster3d/r3.cross.rast/main.c:389
 msgid "unable to close elevation map"
-msgstr "no se puede cerrar el mapa de elevación"
+msgstr "no se puede cerrar el mapa de altitud"
 
 #: ../raster3d/r3.cross.rast/main.c:394
 msgid "Wrong G3D Datatype! Cannot create raster map."
@@ -665,156 +665,140 @@ msgstr "Convierte mapas ráster 3D (G3D) en formato VTK-ASCII"
 
 #: ../raster3d/r3.out.vtk/main.c:386 ../vector/v.out.ascii/out.c:120
 #: ../vector/v.out.vtk/main.c:152
-#, fuzzy
 msgid "failed to interpret dp as an integer"
-msgstr "a"
+msgstr "no se pudo interpretar dp como un entero"
 
 #: ../raster3d/r3.out.vtk/main.c:388
-#, fuzzy
 msgid "dp has to be from 0 to 20"
-msgstr "a a"
+msgstr "dp tiene que ser de 0 a 20"
 
 #: ../raster3d/r3.out.vtk/main.c:441
-#, fuzzy
 msgid ""
 "The 2d and 3d region settings are different. The g3d settings are used to "
 "adjust the 2d region."
-msgstr "a."
+msgstr "Las configuraciones de la región 2D y 3D son diferentes. Las configuraciones de G3D se usan para ajustar la región 2D."
 
 #: ../raster3d/r3.out.vtk/main.c:478
-#, fuzzy
 msgid "unable to close top raster map"
-msgstr "No es posible crear la tabla: %s"
+msgstr "no se puede cerrar el mapa ráster superior"
 
 #: ../raster3d/r3.out.vtk/main.c:483
-#, fuzzy
 msgid "unable to close bottom raster map"
-msgstr "No es posible crear la tabla: %s"
+msgstr "no se puede cerrar el mapa ráster inferior"
 
 #: ../raster3d/r3.out.vtk/main.c:536
 msgid "Error closing 3d raster map, the VTK file may be incomplete."
-msgstr ""
+msgstr "Error al cerrar el mapa ráster 3D, el archivo VTK puede estar imcompleto."
 
 #: ../raster3d/r3.out.vtk/main.c:551 ../raster/r.out.vtk/main.c:382
 msgid "Error closing VTK-ASCII file"
-msgstr ""
+msgstr "Error al cerrar el archivo VTK-ASCII"
 
 #: ../raster3d/r3.out.vtk/parameters.c:34
-#, fuzzy
 msgid "G3D map(s) to be converted to VTK-ASCII data format"
-msgstr "a a"
+msgstr "Mapa(s) G3D a convertir a formato de datos VTK-ASCII"
 
 #: ../raster3d/r3.out.vtk/parameters.c:44
-#, fuzzy
 msgid ""
 "Three (r,g,b) 3d raster maps which are used to create rgb values [redmap,"
 "greenmap,bluemap]"
-msgstr "a"
+msgstr "Tres mapas ráster 3D (R,G,B) que se usan para crear valores RGB [redmap, greenmap, bluemap]"
 
 #: ../raster3d/r3.out.vtk/parameters.c:54
-#, fuzzy
 msgid ""
 "Three (x,y,z) 3d raster maps which are used to create vector values [xmap,"
 "ymap,zmap]"
-msgstr "a"
+msgstr "Tres mapas ráster 3D (x,y,z) que se usan para crear valores vectoriales [xmap, ymap, zmap]"
 
 #: ../raster3d/r3.out.vtk/parameters.c:62
-#, fuzzy
 msgid "top surface 2D raster map"
-msgstr "Mapa de salida con la dirección"
+msgstr "mapa ráster 2D de superficie superior"
 
 #: ../raster3d/r3.out.vtk/parameters.c:70
-#, fuzzy
 msgid "bottom surface 2D raster map"
-msgstr "Mapa de salida con la dirección"
+msgstr "mapa ráster 2D de superficie inferior"
 
 #: ../raster3d/r3.out.vtk/parameters.c:77 ../raster/r.out.vtk/parameters.c:68
-#, fuzzy
 msgid "Name for VTK-ASCII output file"
-msgstr "Nombre"
+msgstr "Nombre para el fichero de salida VTK-ASCII"
 
 #: ../raster3d/r3.out.vtk/parameters.c:85
-#, fuzzy
 msgid "Float value to represent no data cell/points"
-msgstr "a"
+msgstr "Valor flotante para representar celdas/puntos sin datos"
 
 #: ../raster3d/r3.out.vtk/parameters.c:93 ../raster/r.out.vtk/parameters.c:81
-#, fuzzy
 msgid "Scale factor for elevation"
-msgstr "Escalar"
+msgstr "Factor de escala para altitud"
 
 #: ../raster3d/r3.out.vtk/parameters.c:104 ../vector/v.out.ascii/out.c:81
 #: ../vector/v.out.vtk/main.c:66 ../raster/r.out.ascii/main.c:84
 msgid "Number of significant digits (floating point only)"
-msgstr ""
+msgstr "Número de dígitos significativos (coma flotante solamente)"
 
 #: ../raster3d/r3.out.vtk/parameters.c:108
 msgid "Use g3d mask (if exists) with input maps"
-msgstr ""
+msgstr "Usar máscara G3D (si existe) con los mapas de entrada"
 
 #: ../raster3d/r3.out.vtk/parameters.c:113
 msgid "Create VTK pointdata instead of VTK celldata (celldata is default)"
-msgstr ""
+msgstr "Crear datos de punto VTK en vez de datos de celda VTK (datos de celda por defecto)"
 
 #: ../raster3d/r3.out.vtk/parameters.c:117
 #, fuzzy
 msgid "Scale factor effects the origin"
-msgstr "Escalar"
+msgstr "El factor de escala afecta al origen"
 
 #: ../raster3d/r3.out.vtk/parameters.c:123
+#, fuzzy
 msgid ""
 "Create 3d elevation output with a top and a bottom surface, both raster maps "
 "are required."
-msgstr ""
+msgstr "Crear salida de altitud 3D con una superficie superior e inferior, se requieren ambos mapas ráster"
 
 #: ../raster3d/r3.out.vtk/parameters.c:127 ../vector/v.out.vtk/main.c:77
 #: ../raster/r.out.vtk/parameters.c:120
-#, fuzzy
 msgid "Correct the coordinates to fit the VTK-OpenGL precision"
-msgstr "a"
+msgstr "Corregir las coordenadas para cumplir la precisión VTK-OpenGL"
 
 #: ../raster3d/r3.out.v5d/main.c:68
-#, fuzzy
 msgid "3d raster map to be converted to Vis5d (v5d) file"
-msgstr "a a"
+msgstr "Mapa ráster 3D a convertir en archivo Vis5d (V5D)"
 
 #: ../raster3d/r3.out.v5d/main.c:75
-#, fuzzy
 msgid "Name for v5d output file"
-msgstr "Nombre del archivo de entrada"
+msgstr "Nombre para el archivo V5D de salida"
 
 #: ../raster3d/r3.out.v5d/main.c:145
 #, c-format
 msgid "Viz5D allows %d cols, you have %d cols"
-msgstr ""
+msgstr "Viz5D permite %d columnas, tienes %d columnas"
 
 #: ../raster3d/r3.out.v5d/main.c:147
 #, c-format
 msgid "Viz5D allows %d rows, you have %d rows"
-msgstr ""
+msgstr "Viz5D permite %d filas, tienes %d filas"
 
 #: ../raster3d/r3.out.v5d/main.c:197 ../vector/v.surf.rst/main.c:851
 #: ../vector/v.in.ascii/a2b.c:160 ../vector/v.edit/a2b.c:162
 msgid "Out of memory"
-msgstr ""
+msgstr "Sin memoria"
 
 #: ../raster3d/r3.out.v5d/main.c:257
 #, c-format
 msgid "Error: couldn't create %s"
-msgstr ""
+msgstr "Error: no se pudo crear %s"
 
 #: ../raster3d/r3.out.v5d/main.c:262
 msgid "Error while writing grid. Disk full?"
-msgstr ""
+msgstr "Error mientras se escribía la rejilla. ¿Disco lleno?"
 
 #: ../raster3d/r3.out.v5d/main.c:286
-#, fuzzy
 msgid "Export of GRASS 3D raster map to 3-dimensional Vis5D file."
-msgstr "a."
+msgstr "Exportación de mapa ráster 3D de GRASS a archivo Vis5D tridimensional."
 
 #: ../raster3d/r3.out.v5d/main.c:293
 msgid "Use map coordinates instead of xyz coordinates"
-msgstr ""
+msgstr "Usar coordenadas del mapa en vez de coordenadas XYZ"
 
 #: ../ps/ps.map/ps_vpoints.c:67
 msgid "Cannot read symbol, using default icon"
@@ -3175,12 +3159,12 @@ msgstr "longitud %f\n"
 #: ../vector/v.what/what.c:166 ../display/d.what.vect/what.c:248
 #, c-format
 msgid "Point height: %f\n"
-msgstr "Altura del punto: %f\n"
+msgstr "Altitud del punto: %f\n"
 
 #: ../vector/v.what/what.c:178 ../display/d.what.vect/what.c:260
 #, c-format
 msgid "Line height: %f\n"
-msgstr "Altura de la linea: %f\n"
+msgstr "Altitud de la linea: %f\n"
 
 #: ../vector/v.what/what.c:182
 #, fuzzy, c-format
@@ -20771,7 +20755,7 @@ msgstr "nviz - Herramienta de visualización y animación para datos de GRASS"
 
 #: ../visualization/nviz/src/nviz_init.c:66
 msgid "Raster file(s) for Elevation"
-msgstr "Archivo(s) ráster para elevación"
+msgstr "Archivo(s) ráster para altitud"
 
 #: ../visualization/nviz/src/nviz_init.c:74
 msgid "Raster file(s) for Color"
@@ -20819,5 +20803,5 @@ msgstr "Cargar archivo de estado guardado previamente"
 
 #: ../visualization/nviz/src/nviz_init.c:280
 msgid "Number of elevation files does not match number of colors files"
-msgstr "El número de archivos de elevación no se ajusta al número de archivos de colores"
+msgstr "El número de archivos de altitud no se ajusta al número de archivos de colores"
 
