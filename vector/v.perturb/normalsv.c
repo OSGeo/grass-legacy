@@ -9,6 +9,7 @@
 #include<stdio.h>
 #include<math.h>
 #include"zufall.h"
+#include<grass/glocale.h>
 
 int 
 normalsv (double *svbox)
