@@ -120,8 +120,6 @@ int main(int argc, char *argv[])
     if (G_parser(argc, argv))
         exit(EXIT_FAILURE);
 
-    fprintf(stderr, "%s:\n", G_program_name());
-
     if (G_legal_filename(parm.output->answer) < 0)
         G_fatal_error( _("%s=%s - illegal name"), parm.output->key, parm.output->answer);
 
