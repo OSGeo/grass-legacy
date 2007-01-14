@@ -408,12 +408,6 @@ int main(int argc, char *argv[])
     treefile = parm.treefile->answer;
     overfile = parm.overfile->answer;
 
-    fprintf(stderr, "\n");
-    fprintf(stderr, "Authors: original version -  H.Mitasova, L.Mitas, I. Kosinovsky, D.P. Gerdes\n");
-    fprintf(stderr, "See manual pages for references and publications \n");
-    fprintf(stderr, "\n");
-
-
 /*    if (treefile)
 	Vect_check_input_output_name(input, treefile, GV_FATAL_EXIT);
 
@@ -587,7 +581,7 @@ int main(int argc, char *argv[])
 
     ertot = 0.;
     if (per)
-	fprintf(stderr, _("Percent complete: "));
+	G_message( _("Percent complete: "));
     if (elev != NULL)
 	Tmp_file_z = G_tempfile();
     if (slope != NULL)
@@ -713,9 +707,8 @@ int main(int argc, char *argv[])
     if (mcurv != NULL)
 	ddisk += disk;
     ddisk += sddisk;
-    fprintf(stderr, "\n");
-    fprintf(stderr, "Processing all selected output files\n");
-    fprintf(stderr, "will require %d bytes of disk space for temp files\n",
+    G_message(_("Processing all selected output files\n"
+                "will require %d bytes of disk space for temp files"),
 	    ddisk);
 
     deltx = xmax - xmin;
@@ -724,7 +717,7 @@ int main(int argc, char *argv[])
 
     if (dtens) {
 	params.fi = params.fi * dnorm / 1000.;
-	fprintf(stderr, "dnorm = %f, rescaled tension = %f\n", dnorm,
+	G_message("dnorm = %f, rescaled tension = %f", dnorm,
 		params.fi);
     }
 
@@ -734,7 +727,7 @@ int main(int argc, char *argv[])
 
     ertot = 0.;
     if (per)
-	fprintf(stderr, _("Percent complete: "));
+	G_message( _("Percent complete: "));
     if (IL_interp_segments_2d(&params, info, info->root, bitmask,
 			      zmin, zmax, &zminac, &zmaxac, &gmin, &gmax,
 			      &c1min, &c1max, &c2min, &c2max, &ertot, totsegm,
