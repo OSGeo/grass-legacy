@@ -60,16 +60,14 @@ int G_spawn(char *command, ...)
 	char *args[MAX_ARGS];
 	int num_args = 0;
 
-	args[0] = command;
-
 	va_start(va, command);
 
-	for (num_args = 1; num_args < MAX_ARGS; )
+	for (num_args = 0; num_args < MAX_ARGS; )
 	{
 		char *arg = va_arg(va, char *);
+		args[num_args++] = arg;
 		if (!arg)
 			break;
-		args[num_args++] = arg;
 	}
 
 	va_end(va);
@@ -95,16 +93,14 @@ int G_spawn(char *command, ...)
 	int status = -1;
 	pid_t pid;
 
-	args[0] = command;
-
 	va_start(va, command);
 
-	for (num_args = 1; num_args < MAX_ARGS; )
+	for (num_args = 0; num_args < MAX_ARGS; )
 	{
 		char *arg = va_arg(va, char *);
+		args[num_args++] = arg;
 		if (!arg)
 			break;
-		args[num_args++] = arg;
 	}
 
 	va_end(va);
@@ -379,8 +375,6 @@ int G_spawn_ex(char *command, ...)
 	char *var, *val;
 	int status = -1;
 	pid_t pid;
-
-	args[num_args++] = command;
 
 	va_start(va, command);
 
