@@ -34,15 +34,16 @@
 #define PARAM_LAMBDA 6
 #define PARAM_SPLINE 0
 
+#define SWAP(a, b) {double t=a; a=b; b=t;}
+
 
 /*-------------------------------------------------------------------------------------------*/
     int 
-cross_correlation (struct Map_info* Map, double passWE, double passNS, double *lambda_min)
+cross_correlation (struct Map_info* Map, double passWE, double passNS)
     /*
        Map: Map in which cross crorrelation will take values
        passWE: spline step in West-East direction
        passNS: spline step in North-South direction
-       lambda_min: regularizator value which provides the minimum of the error's media.
 
        RETURN:
        TRUE on success
@@ -50,9 +51,9 @@ cross_correlation (struct Map_info* Map, double passWE, double passNS, double *l
      */
 
 {
-    int bilin=TRUE, crazy=FALSE;		/*booleans*/
+    int bilin=TRUE;					/*booleans*/
     int nsplx, nsply, nparam_spl, ndata;
-    double *mean, *rms, *stdev, rms_min, stdev_min; /*passNS, passWE;*/
+    double *mean, *rms, *stdev, rms_min, stdev_min; 
 
     double lambda[PARAM_LAMBDA] = {0.0001, 0.001, 0.01, 0.1, 1.0, 10.0};  	/* Fixed values (by the moment) */
 
@@ -71,42 +72,42 @@ cross_correlation (struct Map_info* Map, double passWE, double passNS, double *l
     extern char *bspline_column;
     dbCatValArray cvarr;
 
-
-    mean = G_alloc_vector (PARAM_LAMBDA);	/* Alloc as much mean, rms and stdev values as the total*/
-    rms = G_alloc_vector (PARAM_LAMBDA);	/* number of parameter used used for cross validation*/
-    stdev = G_alloc_vector (PARAM_LAMBDA);	
-
     G_debug (5, _("CrossCorrelation: Some tests using different lambda_i values will be done"));
 
     ndata = Vect_get_num_lines (Map);
 
-    if (ndata > NDATA_MAX) {
-	G_warning (_("CrossCorrelation: %d are too many points. The cross validation would take too much time"), ndata);
-	crazy = TRUE;
-    }
+    if (ndata > NDATA_MAX) 
+	G_warning (_("CrossCorrelation: %d are too many points. "
+		    "The cross validation would take too much time"), ndata);
 
     /*points = Vect_new_line_struct ();*/
     /*Cats = Vect_new_cats_struct ();*/
 
+    /* Current region is read and points recorded into observ */
     observ = P_Read_Vector_Region_Map (Map, &region, &ndata, 1024);
     G_debug (5, _("CrossCorrelation: %d points read in region. "), ndata);
-    fprintf (stdout, _("CrossCorrelation: %d points read in region. "), ndata);
+    fprintf (stdout, _("CrossCorrelation: %d points read in region.\n"), ndata);
     
     if (ndata > 50) 
 	G_warning (_("CrossCorrelation: Maybe, it takes too long. "
 		    "It will depend on how many points you are considering"));
     else 
-	G_debug (5, _("CrossCorrelation: I wouldn't take too long."));
+	G_debug (5, _("CrossCorrelation: It shouldn't take too long."));
 
     if (ndata > 0) {			/* If at least one point is in the region */	
 	int i, j, lbd;			/* lbd: lambda index */
 	int BW, lbd_min	;		/* lbd_min: index where minimun is found */
-	double mean_reg;
+	double mean_reg, *obs_mean;
 
 	int nrec, ctype = 0;
 	struct field_info *Fi;
 	dbDriver *driver_cats;
 
+	mean = G_alloc_vector (PARAM_LAMBDA);	/* Alloc as much mean, rms and stdev values as the total*/
+	rms = G_alloc_vector (PARAM_LAMBDA);	/* number of parameter used used for cross validation*/
+	stdev = G_alloc_vector (PARAM_LAMBDA);	
+
+	/* Working with attributes*/
 	if (bspline_field > 0) {
 	    db_CatValArray_init ( &cvarr );
 
@@ -135,9 +136,10 @@ cross_correlation (struct Map_info* Map, double passWE, double passNS, double *l
 	    db_close_database_shutdown_driver (driver_cats);
 	}
 
+	/* Setting number of splines as a function of WE and SN spline steps */
 	nsplx = ceil ((region.east - region.west)/passWE);
 	nsply = ceil ((region.north - region.south)/passNS);
-	nparam_spl = nsplx * nsply;
+	nparam_spl = nsplx * nsply; 	/* Total number of splines */
 
 	if (nparam_spl > 22900)
 	    G_fatal_error (_("CrossCorrelation: Too many splines (%d x %d). "
@@ -146,26 +148,36 @@ cross_correlation (struct Map_info* Map, double passWE, double passNS, double *l
 	BW = P_get_BandWidth (bilin, nsply); 	/**/
 
 	/*Least Squares system*/
-	N = G_alloc_matrix (nparam_spl, BW);	/* Normal matrix */
+	N = G_alloc_matrix (nparam_spl, BW);		/* Normal matrix */
 	TN = G_alloc_vector (nparam_spl);		/* vector */
-	parVect = G_alloc_vector (nparam_spl);	/* Parameters vector */
-	obsVect = G_alloc_matrix (ndata, 3);	/* Observation vector */
+	parVect = G_alloc_vector (nparam_spl);		/* Parameters vector */
+	obsVect = G_alloc_matrix (ndata, 3);	 	/* Observation vector */
 	Q = G_alloc_vector (ndata);			/* "a priori" var-cov matrix */
 
-	stat_vect = alloc_Stats (ndata);
-	if (bspline_field <= 0)
-	    mean_reg = P_Mean_Calc (&region, observ, ndata);
+	obs_mean = G_alloc_vector (ndata);
+ 	stat_vect = alloc_Stats (ndata);
 
 	for (lbd=0; lbd < PARAM_LAMBDA; lbd++) {	/* For each lambda value */
 
 	    fprintf (stdout, _("CrossCorrelation: Begining cross validation with "
-			"lambda_i=%.3f ...\n"), lambda[lbd]);
+			"lambda_i=%.4f ...\n"), lambda[lbd]);
 
-	    for (j=0; j<ndata; j++) {			/* Making the interp. with all points */
-		for (i=0; i<ndata; i++) {		/* Setting obsVect vector & Q matrix */
-		    double dval;
-		    if (i==j) continue;			/* Not considering point "j"*/
+	    /*
+	       How cross correlation algorithm is done:
+	       For each cicle, only the first ndata-1 "observ" elements are considered for the 
+	       interpolation. Within every interpolation mean is calculated to lowering border 
+	       errors. The point let out will be used for an estimation. The error between the 
+	       estimation and the observation is recorded for further statistics.
+	       At the end of the cicle, the last point, that is, the ndata-1 index, and the point 
+	       with j index are swapped.
+	     */
+	    for (j=0; j<ndata; j++) {			/* Cross Correlation will use all ndata points*/
+		double out_x, out_y, out_z;		/* This point is let out */	
+		    
+		for (i=0; i<ndata; i++) {		/* Each time, only the first ndata-1 points */
+		    double dval;			/* are considered in the interpolation*/
 
+		    /* Setting obsVect vector & Q matrix */
 		    Q[i] = 1;					/* Q=I */
 		    obsVect[i][0] = observ[i].coordX;
 		    obsVect[i][1] = observ[i].coordY;
@@ -184,27 +196,42 @@ cross_correlation (struct Map_info* Map, double passWE, double passNS, double *l
 			if ( ctype == DB_C_TYPE_INT ) {
 			    ret = db_CatValArray_get_value_int ( &cvarr, cat, &ival );
 			    obsVect[i][2] = ival;
+			    obs_mean [i]= ival;
 			} else {		 /* DB_C_TYPE_DOUBLE */
 			    ret = db_CatValArray_get_value_double ( &cvarr, cat, &dval );
 			    obsVect[i][2] = dval;
+			    obs_mean [i] = dval;
 			}
 			if ( ret != DB_OK ) {
-			    G_warning (_("CrossCorrelation: No record for point (cat = %d)"), cat );
+			    G_warning (_("CrossCorrelation: No record for point (cat = %d)"), cat);
 			    continue;
 			}
 		    }
-		    else obsVect[i][2] = observ[i].coordZ - mean_reg; 
+		    else { 
+			obsVect[i][2] = observ[i].coordZ; 
+			obs_mean [i] = observ[i].coordZ;
+		    }
+		} /* i index */
 
-		}
+		/* Mean calculation for every point less the last one */
+		mean_reg = calc_mean (obs_mean, ndata-1);
+
+		for (i=0; i<ndata; i++)
+		    obsVect[i][2] -= mean_reg;
+
+		/* This is let out */
+		out_x = observ[ndata-1].coordX;
+		out_y = observ[ndata-1].coordY;
+		out_z = obsVect[ndata-1][2];
 
 		if (bilin) {		/* Bilinear interpolation */
 		    normalDefBilin (N, TN, Q, obsVect, passWE, passNS, nsplx, nsply, region.west, 
-			    region.south, ndata, nparam_spl, BW);
+			    region.south, ndata-1, nparam_spl, BW);
 		    nCorrectGrad (N, lambda[lbd], nsplx, nsply, passWE, passNS);
 		} 
 		else {			/* Bicubic interpolation */	
 		    normalDefBicubic (N, TN, Q, obsVect, passWE, passNS, nsplx, nsply, region.west, 
-			    region.south, ndata, nparam_spl, BW);
+			    region.south, ndata-1, nparam_spl, BW);
 		    nCorrectGrad (N, lambda[lbd], nsplx, nsply, passWE, passNS);
 		}
 
@@ -214,14 +241,20 @@ cross_correlation (struct Map_info* Map, double passWE, double passNS, double *l
 		 */
 		tcholSolve (N, TN, parVect, nparam_spl, BW);
 
-		/* Estimation of i-point */
-		stat_vect.estima[j] = 
-		    dataInterpolateBicubic (obsVect[j][0], obsVect[j][1], passWE, passNS, nsplx, nsply,
-			    region.west, region.south, parVect);
+		/* Estimation of j-point */
+		if (bilin) 
+		    stat_vect.estima[j] = dataInterpolateBilin (out_x, out_y, passWE, passNS, 
+			    nsplx, nsply, region.west, region.south, parVect);	
+
+		else 
+		    stat_vect.estima[j] = dataInterpolateBilin (out_x, out_y, passWE, passNS, 
+			    nsplx, nsply, region.west, region.south, parVect);	
 
 		/*Difference between estimated and observated i-point*/
-		stat_vect.error[j] = obsVect[j][2] - stat_vect.estima[j];
+		stat_vect.error[j] = out_z - stat_vect.estima[j];
 		G_debug (1, _("CrossCorrelation: stat_vect.error[%d]  =  %lf"), j, stat_vect.error[j]);
+
+		observ = swap (observ, j, ndata-1);	/* Once the last value is let out, it is swap with j-value */
 	    } 
 
 	    mean[lbd] = calc_mean (stat_vect.error, stat_vect.n_points);
@@ -239,9 +272,10 @@ cross_correlation (struct Map_info* Map, double passWE, double passNS, double *l
 	G_free_matrix (obsVect);
 	G_free_vector (parVect);
 #ifdef nodef
+	/*TODO: if the minimum lambda is wanted, the function declaration must be changed*/
 	/*At this moment, consider rms only*/
-	if (TRUE) rms_min = find_minimum (rms, &lbd_min);
-	else stdev_min = find_minimum (stdev, &lbd_min);
+	rms_min = find_minimum (rms, &lbd_min);
+	stdev_min = find_minimum (stdev, &lbd_min);
 
 	/* Writing some output*/
 	fprintf (stdout, _("CrossCorrelation: Different number of splines and lambda_i values have " \
@@ -252,17 +286,19 @@ cross_correlation (struct Map_info* Map, double passWE, double passNS, double *l
 	*lambda_min = lambda[lbd_min];
 #endif
 
-	*lambda_min = 1.0;
-
-	/*fprintf (stdout, _("%-10s|%-10s|%-10s|"), "lambda", "mean", "rms");*/
 	fprintf (stdout, _("Now, the results into a table:\n"));
-	fprintf (stdout, _(" lambda    | mean (m)    | rms (m)     |\n"));
+	fprintf (stdout, _(" lambda    | mean        | rms         |\n"));
 	for  (lbd=0; lbd < PARAM_LAMBDA; lbd++) {
-	    fprintf (stdout, _(" %-10.5f| %-12.3f| %-12.3f|\n"),lambda[lbd], mean[lbd], rms[lbd]);
+	    fprintf (stdout, _(" %-10.5f| %-12.4f| %-12.4f|\n"),lambda[lbd], mean[lbd], rms[lbd]);
 	}
 	fprintf (stdout, _("\nResults are over.\n"));
 
-    }	/* ENDIF (ndata > 0) */
+	G_free_vector (mean);
+	G_free_vector (rms);
+     }	/* ENDIF (ndata > 0) */
+     else
+	G_warning (_("CrossCorrelation: No point lies into the current region"));
+
     G_free (observ);
     return TRUE;
 }
@@ -360,3 +396,14 @@ find_minimum (double *values, int *l_min) {
     return min;
 }
 
+struct Point*
+swap (struct Point *point, int a, int b) {
+    
+    SWAP (point[a].coordX, point[b].coordX);  /* Once the last value is let out, it is swap with j-value */
+    SWAP (point[a].coordY, point[b].coordY);
+    SWAP (point[a].coordZ, point[b].coordZ);
+    SWAP (point[a].cat, point[b].cat);
+
+    return point;
+}
+  

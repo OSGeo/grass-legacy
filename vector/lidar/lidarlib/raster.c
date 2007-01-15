@@ -75,7 +75,7 @@ P_Sparse_Points (struct Map_info *Out, struct Cell_head *Elaboration, BOUND_BOX 
 
 		    } else if ((*point->y < Overlap.S)) {	/*(1)*/
 		        csi = (*point->x - Overlap.E)/overlap;
-			eta = (*point->y - General.S)/overlap;
+			eta = (Overlap.S - *point->y)/overlap;
 			weight = (1-csi)*eta;
 			*point->z = weight*interpolation;
 
@@ -89,7 +89,7 @@ P_Sparse_Points (struct Map_info *Out, struct Cell_head *Elaboration, BOUND_BOX 
 
 		    } else {					/*(1)*/
 		        weight = (*point->x - Overlap.E)/overlap;
-			*point->z = weight*interpolation;
+			*point->z = (1-weight)*interpolation;
 
 			sprintf (buf, "%lf", *point->z);
 			db_append_string (&sql, buf);
@@ -102,7 +102,7 @@ P_Sparse_Points (struct Map_info *Out, struct Cell_head *Elaboration, BOUND_BOX 
 
 		} else if ((point->x[0] < Overlap.W)) {
 		    if ((*point->y > Overlap.N)) {		/*(4)*/
-		        csi = (*point->x - General.W)/overlap;
+		        csi = (Overlap.W - *point->x)/overlap;
 			eta = (*point->y - Overlap.N)/overlap;
 			weight = (1-eta)*csi;
 			*point->z = weight*interpolation;
@@ -117,7 +117,7 @@ P_Sparse_Points (struct Map_info *Out, struct Cell_head *Elaboration, BOUND_BOX 
 			
 		    } else if ((*point->y < Overlap.S)) {	/*(2)*/
 		            csi = (*point->x - General.W)/overlap;
-			    eta = (*point->y - General.S)/overlap;
+			    eta = (Overlap.S - *point->y)/overlap;
 			    weight = csi*eta;
 			    *point->z = weight*interpolation;
 
@@ -131,7 +131,7 @@ P_Sparse_Points (struct Map_info *Out, struct Cell_head *Elaboration, BOUND_BOX 
 
 		    } else {					/*(2)*/
 		            weight = (Overlap.W - *point->x)/overlap;
-			    *point->z = weight*interpolation;
+			    *point->z = (1-weight)*interpolation;
 
 			    sprintf (buf, "%lf", *point->z);
 			    db_append_string (&sql, buf);
@@ -145,7 +145,7 @@ P_Sparse_Points (struct Map_info *Out, struct Cell_head *Elaboration, BOUND_BOX 
 		} else {
 		    if ((point->y[0] > Overlap.N)) {		/*(3)*/
 		    	weight = (*point->y - Overlap.N)/overlap;
-		    	*point->z = weight*interpolation;
+		    	*point->z = (1-weight)*interpolation;
 
 		    	sprintf (buf, "%lf", *point->z);
 		    	db_append_string (&sql, buf);
@@ -156,7 +156,7 @@ P_Sparse_Points (struct Map_info *Out, struct Cell_head *Elaboration, BOUND_BOX 
 			    G_fatal_error (_("It was no possible writting in <%s>."), tab_name);
 		    } else {						/*(1)*/
 		    	weight = (Overlap.S - *point->y)/overlap;
-		    	*point->z = weight*interpolation;
+		    	*point->z = (1-weight)*interpolation;
 
 		    	sprintf (buf, "%lf", *point->z);
 		    	db_append_string (&sql, buf);
@@ -223,7 +223,7 @@ P_Regular_Points (struct Cell_head *Elaboration, BOUND_BOX General, BOUND_BOX Ov
 			
 		    } else {					/* (1) */
 		        weight = (X - Overlap.E)/overlap;
-			interpolation *= weight;
+			interpolation *= 1 - weight;
 			matrix[row][col] = interpolation;
 		    }
 		
@@ -245,19 +245,19 @@ P_Regular_Points (struct Cell_head *Elaboration, BOUND_BOX General, BOUND_BOX Ov
 			
 		    } else {					/* (2) */
 		        weight = (Overlap.W - X)/overlap;
-			interpolation *= weight;
+			interpolation *= 1 - weight;
 			matrix[row][col] += interpolation;
 	    	    }
 		
 		} else {
 		    if ((Y > Overlap.N)){			/* (3) */
 		    	weight = (Y - Overlap.N)/overlap;
-		    	interpolation *= weight;
+		    	interpolation *= 1 - weight;
 		    	matrix[row][col] += interpolation;
 			
 		    } else {					/* (1) */
 		    	weight = (Overlap.S - Y)/overlap;
-		    	interpolation *= weight;
+		    	interpolation *= 1 - weight;
 		    	matrix[row][col] = interpolation;
 		    } 
 	    	}
