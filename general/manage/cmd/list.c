@@ -99,7 +99,7 @@ main (int argc, char *argv[])
 			sprintf (lister, "%s/etc/lister/%s", G_gisbase(), list[n].element[0]);
 			G_debug(3,"lister CMD: %s",lister);
 			if (access (lister, 1) == 0) /* execute permission? */
-				G_spawn_ex (lister, MAPSET, NULL);
+				G_spawn (lister, lister, MAPSET, NULL);
 			else
 				do_list (n, MAPSET);
 		}
