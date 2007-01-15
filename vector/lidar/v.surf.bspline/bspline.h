@@ -50,7 +50,7 @@ int col;
 /*-------------------------------------------------------------------------------------------*/
 /*FUNCTIONS*/
 /* CrossCorrelation.c */
-int cross_correlation (	struct Map_info*, double, double, double*);
+int cross_correlation (	struct Map_info*, double, double);
 double calc_mean (double *, int);
 double calc_root_mean_square (double *, int);
 double calc_standard_deviation (double *, int);
@@ -61,3 +61,4 @@ double find_minimum (double*, int*);
 int Create_tmp_table (dbDriver*, char*);
 int Point_to_db (struct Map_info*, dbDriver*);
 struct SubZone where_am_i (double, double);
+struct Point* swap (struct Point*, int, int);

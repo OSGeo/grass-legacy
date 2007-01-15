@@ -189,7 +189,7 @@ main (int argc,char *argv[])
     if (vector && map) 
 	G_fatal_error (_("Choose either vector or raster output, not both."));
 #ifdef nodef
-    if (!vector && !map)
+    if (!vector && !map && !cross_corr_flag->answer)
 	G_fatal_error (_("No raster nor vector output"));
 #endif
     /* Open input vector */
@@ -197,15 +197,14 @@ main (int argc,char *argv[])
 	G_fatal_error ( _("Could not find input map <%s>"), in_opt->answer);
 
     Vect_set_open_level (1); 		/* WITHOUT TOPOLOGY */
-    if (1 > Vect_open_old (&In, in_opt->answer, mapset)) {
-	Vect_close (&In);
+    if (1 > Vect_open_old (&In, in_opt->answer, mapset)) 
 	G_fatal_error (_("Vector <%s> could not be open at the topological level"), in_opt->answer);
-    }
 
     /* Open input ext vector */
     if (!in_ext_opt->answer){
 	ext = FALSE;
-	G_warning ( _("No vector map to interpolate. Interpolation will be done with <%s> vector map"), in_opt->answer);
+	G_warning ( _("No vector map to interpolate. "
+		    "Interpolation will be done with <%s> vector map"), in_opt->answer);
     } else {
 	ext = TRUE;
 	G_warning (_("<%s> vector map will be interpolated"), in_ext_opt->answer);
@@ -214,13 +213,12 @@ main (int argc,char *argv[])
 	    G_fatal_error ( _("Could not find input map <%s>"), in_ext_opt->answer);
 
 	Vect_set_open_level (1); 		/* WITHOUT TOPOLOGY */
-	if (1 > Vect_open_old (&In, in_opt->answer, mapset)) {
-	    Vect_close (&In);
+	if (1 > Vect_open_old (&In_ext, in_ext_opt->answer, mapset)) 
 	    G_fatal_error (_("Vector <%s> could not be open at the topological level"), in_opt->answer);
-	}
     }
 
-    /* Open output vector or raster*/
+    /* Open output map */
+    /* vector output */
     if (vector && !map) {
 	if ( strcmp(dvr, "dbf") == 0)
 	    G_fatal_error (_("Sorry, <%s> driver is not allowed for vector output in this module. " \
@@ -229,10 +227,8 @@ main (int argc,char *argv[])
 	Vect_check_input_output_name (in_opt->answer, out_opt->answer, GV_FATAL_EXIT);
 	grid = FALSE;
 
-	if (0 > Vect_open_new (&Out, out_opt->answer, WITH_Z)) {
-	    Vect_close (&In);
+	if (0 > Vect_open_new (&Out, out_opt->answer, WITH_Z)) 
 	    G_fatal_error (_("Vector <%s> could not be open"), out_opt->answer);
-	}
 
 	/* Copy vector Head File */
 	if (ext == FALSE) {
@@ -245,6 +241,7 @@ main (int argc,char *argv[])
 	Vect_hist_command (&Out);
     }
 
+    /* raster output */
     raster = -1;
     G_set_fp_type (DCELL_TYPE);
     if (!vector && map) {
@@ -286,7 +283,7 @@ main (int argc,char *argv[])
     if (cross_corr_flag->answer) {		/* CROSS-CORRELATION WILL BE DONE*/
 	G_debug (1, _("CrossCorrelation()"));
 	/*cross = cross_correlation (&In, &passoE, &passoN, &lambda);*/
-	cross = cross_correlation (&In, passoE, passoN, &lambda);
+	cross = cross_correlation (&In, passoE, passoN);
 	
 	if (cross != TRUE)
 	    G_fatal_error (_("Cross validation didn't finish correctly"));
@@ -346,7 +343,7 @@ main (int argc,char *argv[])
     P_zero_dim (&dims);					/* Set to zero the dim struct*/
     dims.latoE = NSPLX_MAX * passoE;
     dims.latoN = NSPLY_MAX * passoN;
-    dims.overlap = OVERLAP_SIZE * original_reg.ew_res;
+    dims.overlap = OVERLAP_SIZE * passoE;
     P_get_orlo (bilin, &dims, passoE, passoN);		/* Set the last two dim elements*/
 
     /* Creating line and categories structs */   
@@ -526,7 +523,7 @@ main (int argc,char *argv[])
 
 		    else {		/* FLAG_EXT == TRUE*/
 			int npoints_ext, *lineVect_ext=NULL;
-			double **obsVect_ext, mean_ext = .0;
+			double **obsVect_ext; /*, mean_ext = .0;*/
 			struct Point *observ_ext;
 
 			observ_ext = P_Read_Vector_Region_Map (&In_ext, &elaboration_reg, &npoints_ext, dim_vect);
@@ -537,7 +534,7 @@ main (int argc,char *argv[])
 			for (i=0; i<npoints_ext; i++) {		/* Setting obsVect_ext vector & Q matrix */
 			    obsVect_ext[i][0] = observ_ext[i].coordX;
 			    obsVect_ext[i][1] = observ_ext[i].coordY;
-			    obsVect_ext[i][2] = observ_ext[i].coordZ;
+			    obsVect_ext[i][2] = observ_ext[i].coordZ-mean;
 			    lineVect_ext[i] = observ_ext[i].lineID;
 			}
 
@@ -545,8 +542,8 @@ main (int argc,char *argv[])
 			
 			G_debug (0,_("Interpolation: (%d,%d): Sparse_Points..."), subregion_row, subregion_col);
 			P_Sparse_Points (&Out, &elaboration_reg, general_box, overlap_box, obsVect_ext, 
-				parVect, lineVect_ext, passoE, passoN, dims.overlap, nsplx, nsply, npoints, 
-				bilin, Cats, driver, mean_ext, table_name);
+				parVect, lineVect_ext, passoE, passoN, dims.overlap, nsplx, nsply, npoints_ext, 
+				bilin, Cats, driver, mean, table_name);
 
 			G_free_matrix (obsVect_ext);
 			G_free_vector (parVect);
