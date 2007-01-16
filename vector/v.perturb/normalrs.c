@@ -6,10 +6,11 @@
  * Read the file GPL.TXT coming with GRASS for details.
  */
 
-#include<stdio.h>
-#include<math.h>
-#include"zufall.h"
-#include<grass/glocale.h>
+#include <stdio.h>
+#include <math.h>
+#include <grass/gis.h>
+#include <grass/glocale.h>
+#include "zufall.h"
 
 int 
 normalrs (double *svbox)
