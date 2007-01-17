@@ -32,6 +32,8 @@
 #include "cpl_string.h"
 #include "gdal.h"
 
+#define GRASS_MAX_COLORS 100000  /* what is the right value ?*/
+
 void supported_formats(char **formats)
 {
     /* Code taken from r.in.gdal */
@@ -83,6 +85,13 @@ int import_band(GDALDatasetH hMEMDS, int band, char *name, char *mapset,
 		double nodataval)
 {
 
+    struct Colors sGrassColors;
+    GDALColorTableH *hCT;
+    int iColor;
+    int bHaveMinMax;
+    double dfCellMin;
+    double dfCellMax;
+    struct FPRange sRange;
     int fd;
     int cols = cellhead->cols;
     int rows = cellhead->rows;
@@ -101,8 +110,99 @@ int import_band(GDALDatasetH hMEMDS, int band, char *name, char *mapset,
 	return -1;
     }
 
+    /* Get min/max values. */
+    if( G_read_fp_range(name, mapset, &sRange ) == -1 )
+    {
+        bHaveMinMax = FALSE;
+    }
+    else
+    {
+        bHaveMinMax = TRUE;
+        G_get_fp_range_min_max( &sRange, &dfCellMin, &dfCellMax );
+    }
+
     /* Set color interpretation. TODO: Implement this better ... */
-    GDALSetRasterColorInterpretation(hBand, ((band + 3) % 4 + GCI_RedBand));
+    GDALSetRasterColorInterpretation(hBand, GCI_PaletteIndex);
+
+    if( G_read_colors(name, mapset, &sGrassColors ) == 1 )
+    {
+	int maxcolor, i;
+	CELL min, max;
+	char key[200], value[200];
+	int rcount;
+
+	G_get_color_range ( &min, &max, &sGrassColors);
+        if ( bHaveMinMax ) {
+	    if ( max < dfCellMax ) {
+	       maxcolor = max;
+            } else {
+	       maxcolor = (int) ceil ( dfCellMax );
+	    }
+	    if ( maxcolor > GRASS_MAX_COLORS ) { 
+		maxcolor = GRASS_MAX_COLORS;
+                G_warning("Too many values, color table cut to %d entries.", maxcolor );
+	    }
+	} else {
+	    if ( max < GRASS_MAX_COLORS ) {
+	       maxcolor = max;
+            } else {
+	       maxcolor = GRASS_MAX_COLORS;
+               G_warning("Too many values, color table set to %d entries.", maxcolor );
+	    }
+        }
+	
+	/* ? rcount = G_colors_count ( &sGrassColors ); */
+	rcount = maxcolor;
+	    
+	G_debug(3, "dfCellMin: %f, dfCellMax: %f, maxcolor: %d", dfCellMin, dfCellMax, maxcolor);
+
+	hCT = GDALCreateColorTable(GPI_RGB);  /* ?? GCI_PaletteIndex*/
+        for( iColor = 0; iColor <= maxcolor; iColor++ )
+        {
+            int	nRed, nGreen, nBlue;
+            GDALColorEntry sColor;
+
+            if( G_get_color( iColor, &nRed, &nGreen, &nBlue, &sGrassColors ) )
+            {
+                sColor.c1 = nRed;
+                sColor.c2 = nGreen;
+                sColor.c3 = nBlue;
+                sColor.c4 = 255;
+
+                G_debug(3, "G_get_color: Y, rcount %d, nRed %d, nGreen %d, nBlue %d", rcount, nRed, nGreen, nBlue);
+                GDALSetColorEntry( hCT, iColor, &sColor );
+            }
+            else
+            {
+                sColor.c1 = 0;
+                sColor.c2 = 0;
+                sColor.c3 = 0;
+                sColor.c4 = 0;
+
+                G_debug(3, "G_get_color: N, rcount %d, nRed %d, nGreen %d, nBlue %d", rcount, nRed, nGreen, nBlue);
+		GDALSetColorEntry( hCT, iColor, &sColor );
+            }
+        }
+	    
+	/* Create metadata entries for color table rules */
+	sprintf ( value, "%d", rcount );
+	GDALSetMetadataItem(hBand, "COLOR_TABLE_RULES_COUNT", value, NULL);
+
+	/* Add the rules in reverse order */
+	for ( i = rcount-1; i >= 0; i-- ) {
+	    DCELL val1, val2;
+	    unsigned char r1, g1, b1, r2, g2, b2;
+
+	     G_get_f_color_rule ( &val1, &r1, &g1, &b1, &val2, &r2, &g2, &b2, &sGrassColors, i );
+		
+
+	     sprintf ( key, "COLOR_TABLE_RULE_RGB_%d", rcount-i-1 );
+	     sprintf ( value, "%e %e %d %d %d %d %d %d", val1, val2, r1, g1, b1, r2, g2, b2 );
+	     GDALSetMetadataItem(hBand, key, value, NULL);
+	}
+    } else {
+	GDALSetMetadataItem(hBand, "COLOR_TABLE_RULES_COUNT", "0", NULL);
+    }
 
     /* Create GRASS raster buffer */
     void *bufer = G_allocate_raster_buf(maptype);
