@@ -122,7 +122,7 @@ int import_band(GDALDatasetH hMEMDS, int band, char *name, char *mapset,
     }
 
     /* Set color interpretation. TODO: Implement this better ... */
-    GDALSetRasterColorInterpretation(hBand, GCI_PaletteIndex);
+    GDALSetRasterColorInterpretation(hBand, GPI_RGB);  /* ?? GCI_PaletteIndex*/
 
     if( G_read_colors(name, mapset, &sGrassColors ) == 1 )
     {
