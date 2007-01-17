@@ -40,7 +40,7 @@ int main (int argc, char *argv[])
 	char *err;
 	char *G_align_window();
 	int projection;
-	char **rast_ptr;
+	char **rast_ptr, **vect_ptr;
 
 	struct GModule *module;
 	struct
@@ -177,7 +177,7 @@ int main (int argc, char *argv[])
 	parm.vect->key         = "vect";
 	parm.vect->key_desc    = "name";
 	parm.vect->required    = NO;
-	parm.vect->multiple    = NO;
+	parm.vect->multiple    = YES;
 	parm.vect->type        = TYPE_STRING;
 	parm.vect->description = _("Set region to match this vector map");
 	parm.vect->gisprompt   = "old,vector,vector";
@@ -517,43 +517,63 @@ int main (int argc, char *argv[])
 	}
 
 	/* vect= */
-	if ((name = parm.vect->answer))
+	if (parm.vect->answer)
 	{
-		struct Map_info Map;
-		BOUND_BOX box;
-		
-		mapset = G_find_vector2 (name, "");
-		if (!mapset)
-			G_fatal_error (_("Vector map <%s> not found"), name);
-
-		G_copy (&temp_window, &window, sizeof(window));
-
-		Vect_set_open_level (2);
-		if (2 != Vect_open_old (&Map, name, mapset))
-			G_fatal_error (_("Can't open vector map <%s> in <%s>"),
-				       name, mapset);
-
-		Vect_get_map_box (&Map, &box );
-		window.north = box.N;
-		window.south = box.S;
-		window.west  = box.W;
-		window.east  = box.E;
-
-       	        if(window.north == window.south)
-       	        {
-       	              window.north = window.north + 0.5 * temp_window.ns_res;
-                      window.south = window.south - 0.5 * temp_window.ns_res;
-                }
-                if(window.east==window.west)
+               int first = 0;
+                vect_ptr = parm.vect->answers;
+                for (; *vect_ptr != NULL; vect_ptr++)
                 {
-                      window.west = window.west - 0.5 * temp_window.ew_res;
-                      window.east = window.east + 0.5 * temp_window.ew_res;
-                }
+			struct Map_info Map;
+			BOUND_BOX box;
+                        char vect_name[GNAME_MAX];
 
-		if(flag.res_set->answer)
-		    G_align_window (&window, &temp_window);
+                        strcpy (vect_name, *vect_ptr);		
+			mapset = G_find_vector2 (vect_name, "");
+			if (!mapset)
+				G_fatal_error (_("Vector map <%s> not found"), vect_name);
+	
+			Vect_set_open_level (2);
+			if (2 != Vect_open_old (&Map, vect_name, mapset))
+				G_fatal_error (_("Can't open vector map <%s> in <%s>"),
+					       vect_name, mapset);
 
-		Vect_close (&Map);
+			Vect_get_map_box (&Map, &box );
+			G_copy (&temp_window, &window, sizeof(window));
+			temp_window.north = box.N;
+			temp_window.south = box.S;
+			temp_window.west  = box.W;
+			temp_window.east  = box.E;
+
+                        if (!first) {
+                                G_copy (&window, &temp_window, sizeof(window));
+                                first = 1;
+                        } else {
+				window.north = (window.north > temp_window.north) ?
+					window.north : temp_window.north;
+				window.south = (window.south < temp_window.south) ?
+					window.south : temp_window.south;
+				window.east = (window.east > temp_window.east) ?
+					window.east : temp_window.east;
+				window.west = (window.west < temp_window.west) ?
+					window.west : temp_window.west;
+                        }
+
+	       	        if(window.north == window.south)
+       		        {
+       	        	      window.north = window.north + 0.5 * temp_window.ns_res;
+	                      window.south = window.south - 0.5 * temp_window.ns_res;
+        	        }
+	                if(window.east==window.west)
+        	        {
+	                      window.west = window.west - 0.5 * temp_window.ew_res;
+        	              window.east = window.east + 0.5 * temp_window.ew_res;
+	                }
+
+			if(flag.res_set->answer)
+			    G_align_window (&window, &temp_window);
+
+			Vect_close (&Map);
+		}
 	}
 
 	/* n= */
