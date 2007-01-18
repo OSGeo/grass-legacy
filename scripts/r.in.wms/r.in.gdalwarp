@@ -119,8 +119,8 @@ warpimport () {
 	WARPFILE=${TMP}warped.geotiff
 	TMPMAPNAME=${2}_tmp
 
-	# Warp it and convert it to geotiff
-	echo "gdalwarp -s_srs \"$GIS_OPT_S_SRS\" -t_srs \"`g.proj -wf`\" \"$FILE\" \"$WARPFILE\" $GIS_OPT_WARPOPTIONS $METHOD 1>&2
+	# Warp it and convert it to geotiff with alpha band to be sure we get nulls:
+	echo "gdalwarp -s_srs \"$GIS_OPT_S_SRS\" -t_srs \"`g.proj -wf`\" \"$FILE\" \"$WARPFILE\" " $GIS_OPT_WARPOPTIONS $METHOD 1>&2
 	gdalwarp -s_srs "$GIS_OPT_S_SRS" -t_srs "`g.proj -wf`" "$FILE" "$WARPFILE" $GIS_OPT_WARPOPTIONS $METHOD
 
 	#Import it into a temporary map:
@@ -290,6 +290,7 @@ done
 if [ $COLORS -eq 3 ] && [ $GIS_FLAG_C -eq 1 ] ; then
 	echo "Building Color Image" 1>&2
 	r.composite red=${GIS_OPT_OUTPUT}.red green=${GIS_OPT_OUTPUT}.green blue=${GIS_OPT_OUTPUT}.blue output=${GIS_OPT_OUTPUT}
+	echo "Written: ${GIS_OPT_OUTPUT}"
 fi
 
 # Clean up:
