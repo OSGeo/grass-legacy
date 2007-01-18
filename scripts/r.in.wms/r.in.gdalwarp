@@ -119,9 +119,9 @@ warpimport () {
 	WARPFILE=${TMP}warped.geotiff
 	TMPMAPNAME=${2}_tmp
 
-	# Warp it and convert it to geotiff with alpha band to be sure we get nulls:
-	echo "gdalwarp -s_srs \"$GIS_OPT_S_SRS\" -t_srs \"`g.proj -wf`\" \"$FILE\" \"$WARPFILE\" -co \"ALPHA=yes\" -dstalpha" $GIS_OPT_WARPOPTIONS $METHOD 1>&2
-	gdalwarp -s_srs "$GIS_OPT_S_SRS" -t_srs "`g.proj -wf`" "$FILE" "$WARPFILE" -co "ALPHA=yes" -dstalpha $GIS_OPT_WARPOPTIONS $METHOD
+	# Warp it and convert it to geotiff
+	echo "gdalwarp -s_srs \"$GIS_OPT_S_SRS\" -t_srs \"`g.proj -wf`\" \"$FILE\" \"$WARPFILE\" $GIS_OPT_WARPOPTIONS $METHOD 1>&2
+	gdalwarp -s_srs "$GIS_OPT_S_SRS" -t_srs "`g.proj -wf`" "$FILE" "$WARPFILE" $GIS_OPT_WARPOPTIONS $METHOD
 
 	#Import it into a temporary map:
 	r.in.gdal $FLAGS input="$WARPFILE" output="$TMPMAPNAME"
