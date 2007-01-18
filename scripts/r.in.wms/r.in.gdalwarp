@@ -119,8 +119,6 @@ warpimport () {
 	WARPFILE=${TMP}warped.geotiff
 	TMPMAPNAME=${2}_tmp
 
-file "$FILE"
-exit
 	# Warp it and convert it to geotiff
 	echo "gdalwarp -s_srs \"$GIS_OPT_S_SRS\" -t_srs \"`g.proj -wf`\" \"$FILE\" \"$WARPFILE\" $GIS_OPT_WARPOPTIONS $METHOD 1>&2
 	gdalwarp -s_srs "$GIS_OPT_S_SRS" -t_srs "`g.proj -wf`" "$FILE" "$WARPFILE" $GIS_OPT_WARPOPTIONS $METHOD
