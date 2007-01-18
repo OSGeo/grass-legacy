@@ -351,6 +351,14 @@ fi
 PREFIX=${GIS_OPT_OUTPUT}
 REQUESTFILE=${GIS_OPT_FOLDER}/${PREFIX}_${GIS_OPT_REGION}.wget
 
+if [ ! -z "$GIS_OPT_REGION" ] ; then
+   eval `g.findfile element=windows file=$GIS_OPT_REGION`
+   if [ ! "$file" ] ; then
+      echo "Region file '$GIS_OPT_REGION' not found."
+      exit 1
+   fi
+fi
+
 addflag REQUEST o ${GIS_FLAG_O}
 addflag REQUEST c ${GIS_FLAG_C}
 addflag REQUEST p ${GIS_FLAG_P}
