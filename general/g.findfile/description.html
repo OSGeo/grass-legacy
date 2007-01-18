@@ -1,9 +1,16 @@
 <H2>DESCRIPTION</H2>
 
 <EM>g.findfile</EM> is designed for Bourne shell scripts that need to search
-for raster map layer files, vector files, site list files, geographic region
-definition (windows) files, and <A HREF="i.group.html">imagery</A> group
-files in the GRASS data base.
+for mapset <em>elements</em>, including: raster, vector maps, region
+definitions and <em><a HREF="i.group.html">imagery</a></em> groups.
+<p>
+The list of <em>element</em> names to search for is not fixed; any
+subdirectory of the mapset directory is a valid <em>element</em> name.
+<p>
+However, the user can find the list of standard GRASS <em>element</em> names in
+the file $GISBASE/etc/element_list. This is the file which
+g.remove/g.rename/g.copy use to determine which files need to be
+deleted/renamed/copied for a given entity type.
 
 <!-- unused
 <H2>OPTIONS</H2>
@@ -82,6 +89,8 @@ then
 fi
 </PRE>
 </DIV>
+
+Note that region files are searched as <em>element=windows</em>.
 
 <H2>SEE ALSO</H2>
 
