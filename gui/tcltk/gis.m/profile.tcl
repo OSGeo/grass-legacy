@@ -150,6 +150,7 @@ proc GmProfile::setelev { pmap } {
 	variable elevrange
 	variable elevmax
 	variable elevmin
+	global devnull
 	
     #calculate elevation range so all profiles with same window geometry with have
     # same scale. Elevation range calcuated within currently displayed region.
@@ -159,12 +160,15 @@ proc GmProfile::setelev { pmap } {
 	#set elevrange [expr $elevmax - $elevmin]		
 	
     
-	if {![catch {open "|r.univar --q -g map=$pmap" r} input]} {
+	if {![catch {open "|r.univar --q -g map=$pmap 2> $devnull" r} input]} {
 		while {[gets $input line] >= 0} {
 			regexp -nocase {^([a-z]+)=(.*)$} $line trash key value
 			set elev($key) $value	
 		}
-		close $input
+		if {[catch {close $input} error]} {
+			puts $error
+			exit 1
+		}
 	
 		set elevmax $elev(max)
 		set elevmin $elev(min)
@@ -383,6 +387,7 @@ proc GmProfile::pdraw { } {
     variable profilelist
     variable status
     global mon
+    global devnull
     
     set cumdist 0.0
     
@@ -465,14 +470,18 @@ proc GmProfile::pdraw { } {
 	}
 
 	# run r.profile first time to calculate total transect distance (needed for lat lon regions)
-   	if {![catch {open "|r.profile input=$pmap profile=$pcoords" r} input]} {
+   	if {![catch {open "|r.profile input=$pmap profile=$pcoords 2> $devnull" r} input]} {
 		while {[gets $input line] >= 0} {
 			if { [regexp -nocase {^([0-9].*) ([[.-.]0-9].*)$} $line trash dist elev] } {
 				set cumdist $dist
 			}
 		}
-		catch close $input
+		if {[catch {close $input} error]} {
+			puts $error
+			exit 1
+		}
 	}
+
 
 	# add label for total transect distance
 	$pcan create text $right $xscaletop \
@@ -482,7 +491,7 @@ proc GmProfile::pdraw { } {
 
 	# run r.profile again to
 	# convert dist elev (stdout) to xy coordinates of profile line
-   	if {![catch {open "|r.profile input=$pmap profile=$pcoords" r} input]} {
+   	if {![catch {open "|r.profile input=$pmap profile=$pcoords 2> $devnull" r} input]} {
 		while {[gets $input line] >= 0} {
 			if { [regexp -nocase {^([0-9].*) ([[.-.]0-9].*)$} $line trash dist elev] } {
 				set pelev [expr $bottom - ($height * ($elev - $elevmin) / $elevrange)] 
@@ -490,7 +499,10 @@ proc GmProfile::pdraw { } {
 				lappend profilelist $pdist $pelev 
 			}
 		}
-		catch close $input
+		if {[catch {close $input} error]} {
+			puts $error
+			exit 1
+		}
 	}
 	
 	# draw profile line
