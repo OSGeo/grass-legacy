@@ -210,7 +210,7 @@ proc show_menus {} {
 
 	help $Nv_(PAREA).f1.b1 balloon "Hide Panels"
 
-	$Nv_(AREA).menu.panel.m entryconfigure 1 -label "Hide Panels" -command "hide_menus"
+	$Nv_(AREA).menu.config.m entryconfigure 1 -label "Hide Panels" -command "hide_menus"
 }
 
 
