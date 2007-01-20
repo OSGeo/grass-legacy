@@ -2239,7 +2239,7 @@ msgstr "[%s@%s] ist die Ausgangskarte für [%s]. Löschen wurde erzwungen."
 #, c-format
 msgid "[%s@%s] is a base map. Remove reclassed map first: %s"
 msgstr ""
-"[%s@%s] ist eine Ausgangskarte. Lösche zuerst die reklassifizierte Kartet: %s"
+"[%s@%s] ist eine Ausgangskarte. Lösche zuerst die reklassifizierte Karte: %s"
 
 #: ../general/manage/cmd/remove.c:98 ../general/manage/cmd/remove.c:115
 #, c-format
