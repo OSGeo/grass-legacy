@@ -162,7 +162,10 @@ outfile=${infile}_${limit}
 fi
 echo
 echo "Generating reclass raster map <$outfile>"
-cat $infile.rules | r.reclass i=$file2 o=$outfile
+cat $infile.rules | r.reclass i=$file2 o=$outfile.recl
+r.mapcalc "$outfile=$outfile.recl"
+echo "Written: $outfile"
+g.remove rast=$outfile.recl,$file2 > /dev/null 2> /dev/null
 
 #####cleanup
 rm -f $infile.rules
