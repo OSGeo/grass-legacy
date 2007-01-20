@@ -19488,7 +19488,7 @@ msgstr "[%s@%s] ist die Ausgangskarte für [%s]. Löschen wurde erzwungen."
 
 msgid "[%s@%s] is a base map. Remove reclassed map first: %s"
 msgstr ""
-"[%s@%s] ist eine Ausgangskarte. Lösche zuerst die reklassifizierte Kartet: %s"
+"[%s@%s] ist eine Ausgangskarte. Lösche zuerst die reklassifizierte Karte: %s"
 
 msgid "Removing information about reclassed map from [%s@%s] failed"
 msgstr ""
