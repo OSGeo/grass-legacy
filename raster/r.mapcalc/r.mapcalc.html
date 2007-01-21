@@ -98,7 +98,7 @@ details.
 
 The operators are applied from left to right, with those of higher precedence
 applied before those with lower precedence.
-Division by 0 and modulus by 0 are acceptable and give a 0 result.
+Division by 0 and modulus by 0 are acceptable and give a NULL result.
 The logical operators give a 1 result if the comparison is true, 0 otherwise.
 <P>
 <P>
@@ -623,7 +623,7 @@ ave = (5*a + 3*b)/8.0
 To produce a binary representation of the raster map layer
 <EM>a</EM> so that category 0 remains 0 and all other categories become 1:
 <div class="code"><PRE>
-mask = a/a
+mask = a != 0
 </pre></div>
 This could also be accomplished by:
 <div class="code"><PRE>

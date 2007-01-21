@@ -191,7 +191,7 @@ To form a weighted average:
 To produce a binary representation of 3D grid
 <i>a</i> so that category
 0 remains 0 and all other categories become 1:
-<pre>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; mask = a/a</pre>
+<pre>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; mask = a != 0</pre>
 This could also be accomplished by:
 <pre>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; mask = if(a)</pre>
 To mask 3D grid <i>b</i> by 3D grid <i>a</i>:
