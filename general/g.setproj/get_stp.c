@@ -272,7 +272,8 @@ int ask_fips(FILE * fp, int *s, int *c, int *sc)
 		G_fatal_error(buff);
 	}
 	while (fgets(buff, 80, fp) != NULL) {
-		sscanf(buff, "%d%d%s%s%d", &sfips, &cfips, STabbr, COname, &NUM_ZON);
+		sscanf(buff, "%d%d%s%[A-Z ]%d", &sfips, &cfips, STabbr, COname, &NUM_ZON);
+		G_strip(COname);
 		if (sfips == *s) {
 			fprintf(Tmp_fd1, "%4d -- %s\n", cfips, COname);
 			fprintf(Tmp_fd2, "%d:%s\n", cfips, COname);
