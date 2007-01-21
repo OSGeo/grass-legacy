@@ -538,22 +538,31 @@ proc GmVector::addvect {node} {
 
 # set vector type for NVIZ display
 proc GmVector::vecttype { vect } {
+	global devnull
 
 	set string ""
 	set points 0
 	set rest ""
 
-	set rv [open "|v.info map=$vect" r]
-	set vinfo [read $rv]
-	catch {close $rv}
-	regexp {points:       (\d*)} $vinfo string points
-	if { $points > 0} {
-		set vecttype "points"
+	if {![catch {open "|v.info map=$vect 2> $devnull" r} rv]} {
+		set vinfo [read $rv]
+		catch {close $rv}
+		if { $vinfo == "" } {return}
+		regexp {points:       (\d*)} $vinfo string points
+		if { $points > 0} {
+			set vecttype "points"
+		} else {
+			set vecttype "lines"
+		}
+	
+		return $vecttype
+
 	} else {
-		set vecttype "lines"
+		puts $rv
+		return
 	}
 
-	return $vecttype
+
 }
 
 ###############################################################################

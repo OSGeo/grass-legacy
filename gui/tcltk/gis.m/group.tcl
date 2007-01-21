@@ -104,6 +104,7 @@ proc GmGroup::nvdisplay { node } {
 	variable nvlines
 	global mon
 	global drawprog
+	global devnull
 
     set tree($mon) $GmTree::tree($mon)
     if { $node != "root" } {
@@ -125,8 +126,7 @@ proc GmGroup::nvdisplay { node } {
 			lappend cmd points=$nvpoints
 		}
 		
-		lappend cmd &
-		eval exec $cmd
+		catch {eval exec "$cmd 2> $devnull &"}
 	}
 
 	set nvelev ""
@@ -146,6 +146,7 @@ proc GmGroup::nviz { node } {
 	variable nvlines
 	global mon
 	global drawprog
+	global devnull
 		
 	#set id [GmTree::node_id $node] 
 
@@ -157,28 +158,63 @@ proc GmGroup::nviz { node } {
 			GmGroup::nvdisplay $node 
 		}
 		"raster" {
-			if {$nvelev == "" } {
-				set nvelev [GmRaster::addelev $node $nvelev]
+			set surf [GmRaster::addelev $node $nvelev]
+			set clr [GmRaster::addcolor $node $nvcolor]
+
+			# test whether surf and clr are valid files
+			if {![catch {set rinfo [eval exec "r.info map=$surf 2> $devnull"]} err_str]} {
+				if { $rinfo == "" } {set surf ""}
 			} else {
-				append nvelev ",[GmRaster::addelev $node $nvelev]"
+				puts $err_str
+				return
+			}
+
+			if {![catch {set rinfo [eval exec "r.info map=$clr 2> $devnull"]} err_str]} {
+				if { $rinfo == "" } {set surf ""}
+			} else {
+				puts $err_str
+				return
+			}
+
+			if { $surf == "" || $clr == "" } { return }
+
+			# add surf and clr to list of maps to display in nviz
+			if {$nvelev == "" } {
+				set nvelev $surf
+			} else {
+				append nvelev ",$surf"
 			}
 				
 			if {$nvcolor == "" } {
-				set nvcolor [GmRaster::addcolor $node $nvcolor]
+				set nvcolor $clr
 			} else {
-				append nvcolor ",[GmRaster::addcolor $node $nvcolor]"
+				append nvcolor ",$clr"
 			}
 		}
 		"vector" {
 			set vect [GmVector::addvect $node]	
+			# test whether vect is a valid file
+
+			if {![catch {set vinfo [eval exec "v.info map=$vect 2> $devnull"]} err_str]} {
+				if { $vinfo == "" } {set vect ""}
+			} else {
+				puts $err_str
+				return
+			}
+			
+			if {$vect == ""} {return}
 			set vecttype [GmVector::vecttype $vect]
+			if {$vecttype == ""} {return}
+			
 			if {$vecttype == "points"} {
+				# display vector in nviz as points
 				if {$nvpoints == "" } {
 					set nvpoints $vect
 				} else {
 					append nvpoints ",$vect"
 				}
 			} else {
+				# display vector in nviz as lines
 				if {$nvlines == "" } {
 					set nvlines $vect
 				} else {
