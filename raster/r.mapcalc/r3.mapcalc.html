@@ -198,27 +198,6 @@ To mask 3D grid <i>b</i> by 3D grid <i>a</i>:
 <pre>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; result = if(a,b)</pre>
 
 <h2>
-REGION/MASK</h2>
-The user must be aware of the current geographic region and current mask
-settings when using <i>r3.mapcalc</i>. All 3D grids are read into the current
-geographic region masked by the current mask. If it is desired to modify
-an existing 3D grid without involving other 3D grids, the geographic region
-should
-be set to agree with the cell header for the 3D grid. For example, suppose
-it is determined that the
-<i>volume</i> 3D grid must have each category
-value increased by 10 meters. The following expression is legal and will
-do the job:
-<pre>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; new_volume = volume + 10</pre>
-Since a category value of 0 is used in GRASS for locations which do not
-exist in 3D grid, the new 3D grid will contain the category value 10 in
-the locations that did not exist in the original volume. Therefore, in
-this example, it is essential that the boundaries of the geographic region
-be set to agree with the cell header.
-<p>However, if there is a current mask, then the resultant 3D grid is masked
-when it is written; i.e., 0 category values in the mask force zero values
-in the output.
-<h2>
 NOTES</h2>
 Extra care must be taken if the expression is given on the command line.
 Some characters have special meaning to the UNIX shell. These include,
