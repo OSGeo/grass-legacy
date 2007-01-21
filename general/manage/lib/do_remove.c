@@ -80,7 +80,7 @@ int do_remove (int n, char *old)
 	    break;
 	case  0: 
 	    if (G_verbose() == G_verbose_max())
-		G_message (_("%s: missing)", colr2);
+		G_message (_("%s: missing"), colr2);
 	    break;
 	case 1:
 	    if (G_verbose() == G_verbose_max())
