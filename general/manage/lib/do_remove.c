@@ -56,10 +56,12 @@ int do_remove (int n, char *old)
                 result = 1;
 		break;
 	    case  0: 
-		G_debug (1, "%s: missing", list[n].desc[i]);
+		if (G_verbose() == G_verbose_max())
+		    G_message (_("%s: missing"), list[n].desc[i]);
 		break;
             case 1:
-                G_debug (1, "%s: removed", list[n].desc[i]);
+                if (G_verbose() == G_verbose_max())
+		    G_message (_("%s: removed"), list[n].desc[i]);
 		removed = 1;
 		break;
 	    }
@@ -77,10 +79,12 @@ int do_remove (int n, char *old)
 	    result = 1;
 	    break;
 	case  0: 
-	    G_debug (1, "%s: %s", colr2, _("missing"));
+	    if (G_verbose() == G_verbose_max())
+		G_message (_("%s: missing)", colr2);
 	    break;
 	case 1:
-	    G_debug (1, "%s: %s", colr2, _("removed"));
+	    if (G_verbose() == G_verbose_max())
+		G_message (_("%s: removed"), colr2);
 	    removed = 1;
 	    break;
 	}
