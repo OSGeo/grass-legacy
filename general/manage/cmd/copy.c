@@ -13,16 +13,16 @@ int main (int argc, char *argv[])
     struct Option **parm, *p;
     char *from, *to;
     char buf1[256], *location_path;
-    int result = 0;
+    int result = EXIT_SUCCESS;
 
     init (argv[0]);
 
-	module = G_define_module();
-	module->keywords = _("general");
+    module = G_define_module();
+    module->keywords = _("general, manage");
     module->description =
-		_("Copies available data files in the user's current mapset "
-		"search path and location to the appropriate element "
-		"directories under the user's current mapset.");
+      _("Copies available data files in the user's current mapset "
+	"search path and location to the appropriate element "
+	"directories under the user's current mapset.");
 
     parm = (struct Option **) G_calloc (nlist, sizeof(struct Option *));
 
@@ -41,21 +41,7 @@ int main (int argc, char *argv[])
     }
 
     if (G_parser(argc, argv))
-        exit(1);
-
-    /* check for even number of names for each element */
-    for (n = 0; n < nlist; n++)
-    {
-        i = 0;
-        if (parm[n]->answers)
-            while (parm[n]->answers[i])
-                i++;
-        if (i%2) /* must be even number of names */
-        {
-            G_usage();
-            G_fatal_error(_("must be even number of names"));
-        }
-    }
+        exit(EXIT_FAILURE);
 
     location_path = G__location_path();
 
@@ -71,33 +57,35 @@ int main (int argc, char *argv[])
             mapset = find (n, from, "");
             if (!mapset)
             {
-                fprintf (stderr, _("<%s> not found\n"), from);
+                G_warning (_("<%s> not found"), from);
+                continue;
+            }
+            if (G_strcasecmp (mapset, G_mapset()) == 0 &&
+		G_strcasecmp (from, to) == 0)
+            {
+                G_warning (_("%s=%s,%s: files are the same, no copy required"),
+			   parm[n]->key, from, to);
                 continue;
             }
 	    if (find (n, to, G_mapset()) && !(module->overwrite))
 	    {
-		fprintf (stderr, _("ERROR: <%s> already exists\n"), to);
+		G_warning (_("<%s> already exists"), to);
 		continue;
 	    }
             if (G_legal_filename (to) < 0)
             {
-                fprintf (stderr, _("ERROR: <%s> illegal name\n"), to);
-                continue;
-            }
-            if (strcmp (mapset, G_mapset()) == 0 && strcmp (from, to) == 0)
-            {
-                fprintf (stderr, _("%s=%s,%s: files are the same, no copy required\n"),
-                    parm[n]->key,from,to);
+                G_warning (_("<%s> illegal name"), to);
                 continue;
             }
             if ( do_copy (n, from, mapset, to) == 1 )
             {
-                result = 1;
+                result = EXIT_FAILURE;
             }
 	    sprintf (buf1, "%s/%s/cell_misc/%s/reclassed_to",
 			    location_path, mapset, to);
 	    remove(buf1);
         }
     }
+
     exit(result);
 }
