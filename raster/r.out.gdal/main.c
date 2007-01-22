@@ -203,7 +203,9 @@ int import_band(GDALDatasetH hMEMDS, int band, char *name, char *mapset,
 	GDALSetRasterColorTable(hBand, hCT);
 
     } else {
+        /* TODO: needed at all? */
 	GDALSetMetadataItem(hBand, "COLOR_TABLE_RULES_COUNT", "0", NULL);
+        GDALSetRasterColorTable(hBand, hCT);
     }
 
     /* Create GRASS raster buffer */
