@@ -62,7 +62,7 @@ default: $(ARCH_BINDIR)/$(START_UP) \
 	$(INSTALL) -m 644 helptext.html $(GISBASE)/docs/html/helptext.html
 
 
-$(ARCH_BINDIR)/$(START_UP): init.sh 
+$(ARCH_BINDIR)/$(START_UP): init.sh grass.src
 	@test -d $(ARCH_BINDIR) || (echo 'ARCH_DISTDIR($(ARCH_BINDIR))' not found; exit 1)
 	@test -w $(ARCH_BINDIR) || (echo '($(ARCH_BINDIR))' not writeable; exit 1)
 	rm -f $(ARCH_BINDIR)/$(START_UP) ; true
