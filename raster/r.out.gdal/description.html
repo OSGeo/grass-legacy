@@ -67,9 +67,28 @@ for details.
 
 <H2>EXAMPLES</H2>
 
+Export the integer raster roads map to GeoTIFF format:
 <div class="code"><pre>
-r.out.gdal input=elevation.10m output=elev_dem10.tif format=GTiff type=Float32
+r.out.gdal input=roads output=roads.tif type=UInt16
 </pre></div>
+<p>
+
+Export the floating point raster elevation map to ERDAS/IMG format:
+<div class="code"><pre>
+r.out.gdal input=elevation.10m output=elev_dem10.img format=HFA type=Float32
+</pre></div>
+
+<H2>GDAL RELATED ERROR MESSAGES</H2>
+
+<ul>
+<li> "ERROR 6: SetColorInterpretation() not supported for this dataset.": This <i>may</i>
+ indicate that the color table was not written properly. But usually it will be
+ correct and the message can be ignored.</li>
+<li> "ERROR 6: SetNoDataValue() not supported for this dataset.": The selected output format
+ does not support "no data". It is recommended to use a different output format.</li>
+<li> "Warning 1: Lost metadata writing to GeoTIFF ... too large to fit in tag.": The color table metadata
+  are too large. It is recommended to use a different output format.</li>
+</ul>
 
 
 <H2>SEE ALSO</H2>
