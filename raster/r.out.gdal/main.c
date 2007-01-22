@@ -86,7 +86,7 @@ int import_band(GDALDatasetH hMEMDS, int band, char *name, char *mapset,
 {
 
     struct Colors sGrassColors;
-    GDALColorTableH *hCT;
+    GDALColorTableH hCT;
     int iColor;
     int bHaveMinMax;
     double dfCellMin;
@@ -200,6 +200,8 @@ int import_band(GDALDatasetH hMEMDS, int band, char *name, char *mapset,
 	     sprintf ( value, "%e %e %d %d %d %d %d %d", val1, val2, r1, g1, b1, r2, g2, b2 );
 	     GDALSetMetadataItem(hBand, key, value, NULL);
 	}
+	GDALSetRasterColorTable(hBand, hCT);
+
     } else {
 	GDALSetMetadataItem(hBand, "COLOR_TABLE_RULES_COUNT", "0", NULL);
     }
