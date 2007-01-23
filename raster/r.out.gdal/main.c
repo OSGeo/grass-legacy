@@ -121,8 +121,10 @@ int import_band(GDALDatasetH hMEMDS, int band, char *name, char *mapset,
         G_get_fp_range_min_max( &sRange, &dfCellMin, &dfCellMax );
     }
 
-    /* Set color interpretation. TODO: Implement this better ... */
-    GDALSetRasterColorInterpretation(hBand, GPI_RGB);  /* ?? GCI_PaletteIndex*/
+    /* suppress useless warnings */
+    CPLPushErrorHandler( CPLQuietErrorHandler );
+    GDALSetRasterColorInterpretation(hBand, GPI_RGB);
+    CPLPopErrorHandler();
 
     if( G_read_colors(name, mapset, &sGrassColors ) == 1 )
     {
@@ -151,12 +153,11 @@ int import_band(GDALDatasetH hMEMDS, int band, char *name, char *mapset,
 	    }
         }
 	
-	/* ? rcount = G_colors_count ( &sGrassColors ); */
 	rcount = maxcolor;
 	    
 	G_debug(3, "dfCellMin: %f, dfCellMax: %f, maxcolor: %d", dfCellMin, dfCellMax, maxcolor);
 
-	hCT = GDALCreateColorTable(GPI_RGB);  /* ?? GCI_PaletteIndex*/
+	hCT = GDALCreateColorTable(GPI_RGB);
         for( iColor = 0; iColor <= maxcolor; iColor++ )
         {
             int	nRed, nGreen, nBlue;
