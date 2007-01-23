@@ -202,9 +202,8 @@ int import_band(GDALDatasetH hMEMDS, int band, char *name, char *mapset,
 	     GDALSetMetadataItem(hBand, key, value, NULL);
 	}
 	GDALSetRasterColorTable(hBand, hCT);
-
     } else {
-        /* TODO: needed at all? */
+        hCT = GDALCreateColorTable(GPI_RGB);
 	GDALSetMetadataItem(hBand, "COLOR_TABLE_RULES_COUNT", "0", NULL);
         GDALSetRasterColorTable(hBand, hCT);
     }
