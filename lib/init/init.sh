@@ -1,4 +1,4 @@
-#! /bin/sh
+#!/bin/sh
 #############################################################################
 #
 # $Id$
@@ -90,6 +90,7 @@ for i in "$@" ; do
             echo "  GRASS_WISH                     set wish shell name to override 'wish'"
             echo "  GRASS_HTML_BROWSER             set html web browser for help pages"
             echo "  GRASS_ADDON_PATH               set additional path(s) to local GRASS modules"
+            echo "  GRASS_BATCH_JOB                shell script to be processed as batch job"
 	    exit
 	    ;;
 	
@@ -665,6 +666,26 @@ if [ ! -x "$SHELL" ] ; then
     exit 1
 fi
 
+# hack to process batch jobs:
+if [ ! -z "$GRASS_BATCH_JOB" ] ; then
+   # defined, but ...
+   if [ ! -f "$GRASS_BATCH_JOB" ] ; then
+      # wrong file
+      echo "Job file '$GRASS_BATCH_JOB' as been defined in the 'GRASS_BATCH_JOB' variable but not found. Exiting."
+      echo "Use 'unset GRASS_BATCH_JOB' to disable batch job processing"
+      exit 1
+   else
+      # right file, but ...
+      if [ ! -x "$GRASS_BATCH_JOB" ] ; then
+         echo "Please change file permission to 'executable' for '$GRASS_BATCH_JOB'"
+         exit 1
+      else
+         echo "Executing $GRASS_BATCH_JOB..."
+         SHELL="$GRASS_BATCH_JOB"
+      fi
+   fi
+fi
+
 # Start the chosen GUI but ignore text
 case "$GRASS_GUI" in
     
@@ -699,7 +720,9 @@ if [ "$MINGW" ] ; then
 # TODO: uncomment when PDCurses works.
 #	cls
 else
-	tput clear
+	if [ -z "$GRASS_BATCH_JOB" ] ; then
+	   tput clear
+	fi
 fi
 
 if [ -f "$GISBASE/locale/$LCL/etc/welcome" ] ; then
@@ -841,7 +864,9 @@ if [ "$MINGW" ] ; then
 # TODO: uncomment when PDCurses works.
 #	cls
 else
-	tput clear
+	if [ -z "$GRASS_BATCH_JOB" ] ; then
+	   tput clear
+	fi
 fi
 
 echo "Closing monitors....."
@@ -866,3 +891,8 @@ echo
 echo 
 echo "Goodbye from GRASS GIS"
 echo
+if [ -x "$GRASS_BATCH_JOB" ] ; then
+   echo "Batch job $GRASS_BATCH_JOB (defined in GRASS_BATCH_JOB variable) was executed."
+   exit 0
+fi
+
