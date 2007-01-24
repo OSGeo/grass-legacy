@@ -5,6 +5,7 @@ SUBDIRS = \
 	datetime \
 	gis \
 	gmath \
+	gpde \
 	linkm \
 	driver \
 	pngdriver \
