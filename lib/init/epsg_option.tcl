@@ -88,7 +88,12 @@ proc epsgOpt::epsgLocCom args {
 
 	# NOTE: the epsg file is generated in GDAL for PROJ4 
 	# with gdal/pymod/epsg_tr.py
-	set epsgOpt::browsedepsg "$env(GRASS_PROJSHARE)/epsg"
+	if { [ catch { set epsgOpt::browsedepsg "$env(GRASS_PROJSHARE)/epsg" } ] } {
+		DialogGen .wrnDlg [G_msg "WARNING: cant get enviromental variable"] warning \
+		[format [G_msg "Warning: Unable to get enviromental variable GRASS_PROJSHARE. \nThis is a GRASS installation error. \nSet enviromental variable GRASS_PROJSHARE to point to directory with Proj4 EPSG file. "]] \
+		0 OK;
+		return 0
+	}
 	set epsgOpt::epsgLocation "newLocation"
 	set epsgOpt::epsg_code ""
         
@@ -128,7 +133,7 @@ proc epsgOpt::epsgLocCom args {
 	#browse for epsg file
 	Button $row2.browseepsgfile -justify center -width 10 -bd 1 -text [G_msg "Browse..."] \
 		-helptext [G_msg "Browse to locate EPSG file"] \
-		-command "set browsedepsg \[tk_getOpenFile -initialdir $env(GRASS_PROJSHARE) -initialfile epsg \
+		-command "set browsedepsg \[tk_getOpenFile -initialdir epsgOpt::browsedepsg -initialfile epsg \
 		-parent .optPopup -title \[ G_msg \"Choose EPSG file\" \] -multiple false\]" 
 		
 	pack $row2.epsgpath $row2.browseepsgfile -side left -expand 0 -fill x -padx 2
@@ -149,6 +154,7 @@ proc epsgOpt::epsgLocCom args {
 				DialogGen .wrnDlg [G_msg "WARNING: epsg-codes file not found"] warning \
 				[G_msg "WARNING: The epsg-codes file was not found!"] \
 				0 OK
+				return 0
 			}
 		}
                                      
@@ -164,7 +170,7 @@ proc epsgOpt::epsgLocCom args {
 	pack $row4.cancel -side right -fill x -expand 0
 	
 	pack $row1 $row2 $row3 $row4 -side top -fill both -expand 1 -padx 3 -pady 3
-
+	return 1
 }
 
 proc epsgOpt::def_loc { } {
@@ -180,6 +186,8 @@ proc epsgOpt::def_loc { } {
 			-message [G_msg "WARNING: Please supply a\nvalid EPSG code (integer)"] 
 		return
 	} 
+
+	set epsgLocation [ string trim $epsgLocation ]
 
 	if {[file exists $epsgLocation ]== 1} {
 		tk_messageBox -type ok -icon error \
@@ -209,7 +217,7 @@ proc epsgOpt::def_loc { } {
 #		puts stdout "exit";
 #		destroy .
 		set refresh 1
-		return
+		return 1
 	}
 }
 
@@ -220,6 +228,8 @@ proc epsgOpt::create_loc { } {
 	variable epsg_code
 	variable epsgLocation
 	global env database
+	global location
+	global mapset
 
 	#test for valid WIND file
 	if {[catch {exec g.region -p}] != 0} {
@@ -284,6 +294,9 @@ proc epsgOpt::create_loc { } {
 			[format [G_msg "Error creating new location from EPSG code. \
 			g.proj returned following message:\n\n%s"] $errMsg] \
 			0 OK
+		} else {
+		        set location $epsgLocation
+		        set mapset "PERMANENT"
 		}
 	
 		# restore previous .$GRASSRC
@@ -302,6 +315,9 @@ proc epsgOpt::create_loc { } {
 			[format [G_msg "Error creating new location from EPSG code. \
 			g.proj returned following message:\n\n%s"] $errMsg] \
 			0 OK
+		} else {
+		        set location $epsgLocation
+		        set mapset "PERMANENT"
 		}
 	
 	}
