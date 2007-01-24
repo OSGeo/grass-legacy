@@ -473,8 +473,20 @@ else
     	LOCATION="$GISDBASE/$LOCATION_NAME/$MAPSET"
     
     	if [ ! -r "$LOCATION/WIND" ] ; then
-    	    echo "$LOCATION: Not a valid GRASS location"
-    	    exit
+		if [ "$LOCATION_NAME" = "PERMANENT" ] ; then
+		   echo "$LOCATION: Not a valid GRASS location"
+		   exit 1
+		else
+		   # the user wants to create mapset on the fly
+		   if [ ! -f "$GISDBASE/$LOCATION_NAME/PERMANENT/WIND" ] ; then
+			echo "The LOCATION \"$LOCATION_NAME\" does not exist. Please create first"
+			exit 1
+		   else
+			mkdir -p "$LOCATION"
+			cp "$GISDBASE/$LOCATION_NAME/PERMANENT/WIND" "$LOCATION/WIND"
+			echo "Missing WIND file fixed"
+		   fi
+		fi
     	fi
     
     	if [ -s "$GISRC" ] ; then
