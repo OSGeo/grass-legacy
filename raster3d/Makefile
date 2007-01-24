@@ -6,6 +6,7 @@ SUBDIRS = \
 	r3.cross.rast \
 	r3.in.ascii \
 	r3.in.v5d \
+	r3.gwflow \
 	r3.out.ascii \
 	r3.out.v5d \
 	r3.out.vtk \
