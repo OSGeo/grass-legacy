@@ -106,7 +106,12 @@ proc putGRASSRC { filename } {
 		}
 	}
 
-  close $ofp
+        if { [ catch { close $ofp } err ] } {
+                DialogGen .wrnDlg [G_msg "WARNING: can not save"] warning \
+                        [format [G_msg "Warning: unable to save data to <%s> file.\nError message: %s"] \
+                        $file $msg] \
+                0 OK;
+      }
 }
 
 
@@ -128,14 +133,18 @@ proc CheckLocation {} {
 		[format [G_msg "Warning: location <%s> at GISDBASE <%s> is not a directory or does not exist."] \
 		$location $database] \
         0 OK;
+        .frame0.frameMS.listbox delete 0 end
+        .frame0.frameNMS.second.entry configure -state disabled
+        .frame0.frameBUTTONS.ok configure -state disabled
     } else {
         cdir $dir
-        
+        .frame0.frameNMS.second.entry configure -state disabled
         foreach filename [lsort [glob -nocomplain *]] {
             if {[string compare $filename "PERMANENT"] == 0} {
                 # All good locations have valid PERMANENT mapset.
                 if {[file exists "$dir/PERMANENT/WIND"] != 0} {
                     set found 1
+                    .frame0.frameNMS.second.entry configure -state normal
                 }
             }
         }
@@ -258,7 +267,8 @@ proc gisSetWindow {} {
     	-relief {sunken} \
     	-exportselection false \
     	-yscrollcommand {.frame0.frameLOC.vscrollbar set} \
-    	-xscrollcommand {.frame0.frameLOC.hscrollbar set}
+    	-xscrollcommand {.frame0.frameLOC.hscrollbar set} \
+    	-selectmode single
 
     scrollbar .frame0.frameLOC.vscrollbar -width 12 \
     	-command {.frame0.frameLOC.listbox yview} \
@@ -289,7 +299,8 @@ proc gisSetWindow {} {
     listbox .frame0.frameMS.listbox \
     	-relief {sunken} \
     	-yscrollcommand {.frame0.frameMS.vscrollbar set} \
-    	-xscrollcommand {.frame0.frameMS.hscrollbar set}
+    	-xscrollcommand {.frame0.frameMS.hscrollbar set} \
+    	-selectmode single
 
     scrollbar .frame0.frameMS.vscrollbar -width 12 \
     	-command {.frame0.frameMS.listbox yview} \
@@ -347,16 +358,28 @@ proc gisSetWindow {} {
     	-text [G_msg "Create new mapset"] \
     	-width 20 -bd 1 \
      	-command { 
+     	    set mymapset [ string trim $mymapset ]
+     	    if { [file exists $mymapset] } {
+			DialogGen .wrnDlg [G_msg "WARNING: invalid mapset name"] warning \
+			[format [G_msg "Warning: Mapset with name <%s> already exists. \nNew mapset is NOT created. \nChoose different mapset name and try again."] $mymapset] \
+			0 OK;
+			return
+     	    }
             .frame0.frameNMS.third.button configure -state disabled
 	    if { $mymapset != "" } {
             	if {[CheckLocation] == 0} {
             	    DialogGen .wrnDlg [G_msg "WARNING: invalid location"] warning \
 		    		[format [G_msg "Warning: selected location <%s> is not valid. \n New mapset is NOT created. \n Select valid location and try again."] $location] \
                     0 OK;
+                    set mapset ""
             	} else {
                     cdir $database
                     cdir $location
-                    file mkdir $mymapset
+                    if { [ catch { file mkdir $mymapset } err ] } {
+                          DialogGen .wrnDlg [G_msg "WARNING: unable to mkdir"] warning \
+                                      [format [G_msg "Warning: Unable to create directory for new mapset. \nError message: %s"] $err] \
+                          0 OK;
+                    } else {
                     #generate default DB definition, create dbf subdirectory:
                     set varfp [open $mymapset/VAR "w"]
                     puts $varfp "DB_DRIVER: dbf"
@@ -368,7 +391,11 @@ proc gisSetWindow {} {
                                     catch {file copy $mymapset/../PERMANENT/WIND $mymapset}
                     catch {file attributes $mymapset/WIND -permissions u+rw,go+r}
                     .frame0.frameMS.listbox insert end $mymapset
-                    #TODO: select new MAPSET
+                    selFromList .frame0.frameMS.listbox $mymapset
+                    set mapset $mymapset
+                    .frame0.frameNMS.second.entry delete 0 end
+                    .frame0.frameBUTTONS.ok configure -state normal
+                    }
                 }
             }
 	}
@@ -382,17 +409,25 @@ proc gisSetWindow {} {
     	-text [G_msg "Georeferenced file"] \
     	-width 20 -bd 1\
     	-relief raised \
-    	-command "fileOpt::fileLocCom
+    	-command {fileOpt::fileLocCom
     		tkwait window .fileloc
-    		refresh_loc"
+    		refresh_loc
+    		refresh_ms
+    		selFromList .frame0.frameLOC.listbox $location
+    		selFromList .frame0.frameMS.listbox $mapset
+    		.frame0.frameBUTTONS.ok configure -state normal}
 
     button .frame0.frameNMS.sixth.button \
     	-text [G_msg "EPSG codes"] \
     	-width 20 -bd 1\
     	-relief raised \
-    	-command "epsgOpt::epsgLocCom
+    	-command { if { [epsgOpt::epsgLocCom] } {
     		tkwait window .optPopup
-    		refresh_loc"
+    		refresh_loc
+    		refresh_ms
+    		selFromList .frame0.frameLOC.listbox $location
+    		selFromList .frame0.frameMS.listbox $mapset
+    		.frame0.frameBUTTONS.ok configure -state normal} }
     	    			
     button .frame0.frameNMS.seventh.button \
     	-text [G_msg "Projection values"] \
@@ -439,6 +474,7 @@ proc gisSetWindow {} {
 				DialogGen .wrnDlg [G_msg "WARNING: invalid location"] warning \
 				[format [G_msg "Warning: selected location <%s> is not valid. \n Select valid location and try again."] $location] \
 				0 OK;
+			set mapset ""
             } else {
                 if {[file exists "$database/$location/$mapset/WIND"] == 0} {
                     DialogGen .wrnDlg [G_msg "WARNING: invalid mapset"] warning \
@@ -522,45 +558,14 @@ proc gisSetWindow {} {
     
     # setting list of locations
     refresh_loc
-        
-    set i 0
-    set curSelected 0
-    set length [.frame0.frameLOC.listbox size]
-    while { $i <  $length } {
-    	if { $location == [.frame0.frameLOC.listbox get $i] } {
-            set curSelected $i
-            break
-      	}
-        
-	incr i 1
-    }
-    
-    .frame0.frameLOC.listbox select set $curSelected
-
-	# setting list of owned mapsets
-    cdir $database
-    if { [file exists $location] } {
-		cdir $location
-		foreach i [lsort [glob -directory [pwd] *]] {
-			if {[file isdirectory $i] && [file owned $i] } {
-				.frame0.frameMS.listbox insert end [file tail $i]
-			}
+    selFromList .frame0.frameLOC.listbox $location
+    if { [CheckLocation] } {
+        # setting list of mapsets
+	refresh_ms
+        selFromList .frame0.frameMS.listbox $mapset
+	if { [.frame0.frameMS.listbox get [.frame0.frameMS.listbox curselection]] == $mapset } {
+	        .frame0.frameBUTTONS.ok configure -state normal
 		}
-	
-		set i 0
-		set curSelected 0
-		set length [.frame0.frameMS.listbox size]
-		while { $i <  $length } {
-			if { $mapset == [.frame0.frameMS.listbox get $i] } {
-				set curSelected $i
-				break
-			}
-	
-			incr i 1
-		}
-	
-		.frame0.frameMS.listbox yview $curSelected
-		.frame0.frameMS.listbox select set $curSelected
     }
 
 	bind .frame0.frameDB.mid.entry <Return> {
@@ -571,6 +576,7 @@ proc gisSetWindow {} {
            %W insert 0 $new_path
            cdir $new_path
            set location ""
+           set mapset ""
            refresh_loc
            set database [pwd]
         }
@@ -580,24 +586,20 @@ proc gisSetWindow {} {
 	bind .frame0.frameLOC.listbox <Double-ButtonPress-1> {
         # Do something only if there IS atleast one location
         if {[%W size] > 0} {
+            %W selection clear 0 end
             %W select set [%W nearest %y]
             cdir $database
             set location [%W get [%W nearest %y]]
+            .frame0.frameMS.listbox delete 0 end
+            .frame0.frameBUTTONS.ok configure -state disabled
+            set mapset ""
             if {[CheckLocation] == 0} {
 				# Notice - %%s prevents %s capturing by bind
 				DialogGen .wrnDlg [G_msg "WARNING: invalid location"] warning \
 		    	[format [G_msg "Warning: selected location <%%s> is not valid. \n Select valid location and try again."] $location] \
 				0 OK;
             } else {
-				cdir $location
-				.frame0.frameMS.listbox delete 0 end
-				foreach i [lsort [glob -directory [pwd] *]] {
-					if { [file isdirectory $i] && [file owned $i] } { 
-						.frame0.frameMS.listbox insert end [file tail $i]
-					}
-				}
-				set mapset ""
-				.frame0.frameBUTTONS.ok configure -state disabled
+		refresh_ms
 			}
 		}
 	}
@@ -605,24 +607,20 @@ proc gisSetWindow {} {
 	bind .frame0.frameLOC.listbox <ButtonPress-1> {
         # Do something only if there IS atleast one location
         if {[%W size] > 0} {
+            %W selection clear 0 end
             %W select set [%W nearest %y]
             cdir $database
             set location [%W get [%W nearest %y]]
+            .frame0.frameMS.listbox delete 0 end
+            .frame0.frameBUTTONS.ok configure -state disabled
+            set mapset ""
             if {[CheckLocation] == 0} {
 				# Notice - %%s prevents %s capturing by bind
 				DialogGen .wrnDlg [G_msg "WARNING: invalid location"] warning \
 		    	[format [G_msg "Warning: selected location <%%s> is not valid. \n Select valid location and try again."] $location] \
 				0 OK;
             } else {
-				cdir $location
-				.frame0.frameMS.listbox delete 0 end
-				foreach i [lsort [glob -directory [pwd] *]] {
-					if { [file isdirectory $i] && [file owned $i] } {
-						.frame0.frameMS.listbox insert end [file tail $i]
-					}
-				}
-            	set mapset ""
-				.frame0.frameBUTTONS.ok configure -state disabled
+		refresh_ms
         	}
   		}
 	}
@@ -630,6 +628,7 @@ proc gisSetWindow {} {
 	bind .frame0.frameMS.listbox <Double-ButtonPress-1> {
         # Do something only if there IS atleast one mapset
         if {[%W size] > 0} {
+            %W selection clear 0 end
             %W select set [%W nearest %y]
             set mapset [%W get [%W nearest %y]]
             .frame0.frameBUTTONS.ok configure -state normal
@@ -638,6 +637,7 @@ proc gisSetWindow {} {
 				DialogGen .wrnDlg [G_msg "WARNING: invalid location"] warning \
 		    	[format [G_msg "Warning: selected location <%%s> is not valid. \n Select valid location and try again."] $location] \
 				0 OK;
+			set mapset ""
             } else {
                 if {[file exists "$database/$location/$mapset/WIND"] == 0} {
                     DialogGen .wrnDlg [G_msg "WARNING: invalid mapset"] warning \
@@ -658,6 +658,7 @@ proc gisSetWindow {} {
 	bind .frame0.frameMS.listbox <ButtonPress-1> {
         # Do something only if there IS atleast one mapset
         if {[%W size] > 0} {
+            %W selection clear 0 end
             %W select set [%W nearest %y]
             set mapset [%W get [%W nearest %y]]
             .frame0.frameBUTTONS.ok configure -state normal
@@ -665,12 +666,13 @@ proc gisSetWindow {} {
 				DialogGen .wrnDlg [G_msg "WARNING: invalid location"] warning \
 		    	[format [G_msg "Warning: selected location <%%s> is not valid. \n Select valid location and try again."] $location] \
 				0 OK;
+			set mapset ""
             }
         }
 	}
 
 	bind .frame0.frameNMS.second.entry <KeyRelease> {
-		.frame0.frameNMS.third.button configure -state active
+		.frame0.frameNMS.third.button configure -state normal
 	}
   
 	grab .
@@ -703,6 +705,24 @@ proc refresh_loc {} {
 	update idletasks
 }
 
+proc refresh_ms {} {
+# refresh location listbox entries
+        global database
+	global location
+
+	set mapList .frame0.frameMS.listbox
+	$mapList delete 0 end
+	if { [CheckLocation] } {
+	        cdir $database
+		cdir $location
+		foreach i [lsort [glob -directory [pwd] *]] {
+			if {[file isdirectory $i] && [file owned $i] } {
+				$mapList insert end [file tail $i]
+			}
+		}
+	}
+	.frame0.frameBUTTONS.ok configure -state disabled
+}
 
 #############################################################################
 
@@ -716,6 +736,21 @@ proc cdir { dir } {
     } else {
         return 0
     }
+}
+
+proc selFromList { lis str } {
+# Selects list entry, if there is match
+  set siz [$lis size]
+  set curSelected 0
+  for { set x 0 } { $x < $siz } { incr x } {
+        if { $str == [$lis get $x] } {
+	        set curSelected $x
+		break
+	}
+  }
+  $lis yview $curSelected
+  $lis selection clear 0 end
+  $lis select set $curSelected
 }
 
 #############################################################################

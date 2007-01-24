@@ -153,6 +153,8 @@ proc fileOpt::def_loc { } {
 		return
 	} 
 
+        set fileLocation [ string trim $fileLocation ]
+
 	if {[file exists $fileLocation ]== 1} {
 		tk_messageBox -type ok -icon error \
 			-message [G_msg "WARNING: The location '$fileLocation'\nalready exists, please try another name"] 
@@ -175,6 +177,8 @@ proc fileOpt::create_loc { } {
 	variable filepath
 	variable fileLocation
 	global env database
+	global location
+	global mapset
 
 	#test for valid WIND file
 	if {[catch {exec g.region -p}] != 0} {
@@ -238,6 +242,9 @@ proc fileOpt::create_loc { } {
 				[format [G_msg "Error creating new location from georeferenced file. \
 		                g.proj returned following message:\n\n%s"] $errMsg] \
 				0 OK
+		} else {
+			set location $fileLocation
+			set mapset "PERMANENT"
 		}
 	
 		# restore previous .$GRASSRC
@@ -256,6 +263,9 @@ proc fileOpt::create_loc { } {
 				[format [G_msg "Error creating new location from georeferenced file. \
 		                g.proj returned following message:\n\n%s"] $errMsg] \
 				0 OK
+		} else {
+			set location $fileLocation
+			set mapset "PERMANENT"
 		}
 	
 	}
