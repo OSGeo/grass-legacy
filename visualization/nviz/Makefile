@@ -13,7 +13,7 @@ INSTALL_DIR=$(GISBASE)/etc/$(NV_VER)
 
 SCRIPTDIR=$(NV_VER)/scripts
 
-default: nvwish nviz install 
+default: nvwish nviz install docs
 
 #
 # DO NOT CHANGE configure: TARGET TO doconfigure:
@@ -49,3 +49,6 @@ install:
 clean: 
 	(cd src && $(MAKE) clean) || exit 1;
 
+docs:
+	-$(MKDIR) $(ARCH_DISTDIR)/docs/html
+	$(INSTALL_DATA) description.html $(ARCH_DISTDIR)/docs/html/$(PROG).html
