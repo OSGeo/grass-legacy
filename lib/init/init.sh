@@ -679,12 +679,12 @@ if [ ! -x "$SHELL" ] ; then
 fi
 
 # hack to process batch jobs:
-if [ ! -z "$GRASS_BATCH_JOB" ] ; then
+if [ -n "$GRASS_BATCH_JOB" ] ; then
    # defined, but ...
    if [ ! -f "$GRASS_BATCH_JOB" ] ; then
       # wrong file
-      echo "Job file '$GRASS_BATCH_JOB' as been defined in the 'GRASS_BATCH_JOB' variable but not found. Exiting."
-      echo "Use 'unset GRASS_BATCH_JOB' to disable batch job processing"
+      echo "Job file '$GRASS_BATCH_JOB' has been defined in the 'GRASS_BATCH_JOB' variable but not found. Exiting."
+      echo "Use 'unset GRASS_BATCH_JOB' to disable batch job processing."
       exit 1
    else
       # right file, but ...
@@ -692,7 +692,7 @@ if [ ! -z "$GRASS_BATCH_JOB" ] ; then
          echo "Please change file permission to 'executable' for '$GRASS_BATCH_JOB'"
          exit 1
       else
-         echo "Executing $GRASS_BATCH_JOB..."
+         echo "Executing '$GRASS_BATCH_JOB' ..."
          SHELL="$GRASS_BATCH_JOB"
       fi
    fi
@@ -904,7 +904,7 @@ echo
 echo "Goodbye from GRASS GIS"
 echo
 if [ -x "$GRASS_BATCH_JOB" ] ; then
-   echo "Batch job $GRASS_BATCH_JOB (defined in GRASS_BATCH_JOB variable) was executed."
+   echo "Batch job '$GRASS_BATCH_JOB' (defined in GRASS_BATCH_JOB variable) was executed."
    exit 0
 fi
 
