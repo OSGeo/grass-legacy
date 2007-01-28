@@ -235,6 +235,10 @@ unset LC_ALL
 LC_NUMERIC=C
 export LC_NUMERIC
 
+# hard-coded parameter: the maximum number of legend items before
+# we strip them using a middle ellipsis
+MAX_LEG_ITEMS=14
+
 # check column type
 COLTYPE="`v.info -c $GIS_OPT_MAP layer=1 2> /dev/null | grep -w $GIS_OPT_COLUMN | cut -d'|' -f1 | tr -s '[:upper:]' '[:lower:]'`"
 
@@ -336,6 +340,8 @@ if [ -z "$currmon" ] ; then
 	echo ""
 	echo "*** You must open a display monitor ***"
 	echo ""
+	cleanup
+	exit 2
 fi
 
 
@@ -430,6 +436,15 @@ case "$GIS_OPT_THEMECALC" in
 esac
 
 pointstep=`echo $GIS_OPT_MAXSIZE $ptsize $numint | awk '{print (($1 - $2) / ($3-1))}'`
+
+# Prepare legend cuts for too large numint
+if [ $numint -gt $MAX_LEG_ITEMS ]; then
+    xupper=`echo $numint $MAX_LEG_ITEMS | awk '{print int($1 - $2/2)+1}'`
+    xlower=`echo $MAX_LEG_ITEMS | awk '{print int($1/2)+1}'`
+else
+    xupper=0
+    xlower=0
+fi
 
 # legend title
 echo "color 0:0:0" > "$TMP2"
@@ -662,21 +677,34 @@ if [ "$GIS_OPT_THEMETYPE" = "graduated_colors" ] ; then
             extranote=`echo $annotations| cut -d';' -f$i`
         fi
 
-        echo "color $themecolor" >> "$TMP2"
+    if [ $i -lt $xlower -o $i -ge $xupper ]; then
+        let xline1=line2+2
+	let xline3=line2-1
+	echo "color $themecolor" >> "$TMP2"
         echo "polygon" >> "$TMP2"
-        echo "5 $line1" >> "$TMP2"
-        echo "8 $line1" >> "$TMP2"
-        echo "8 $line3" >> "$TMP2"
-        echo "5 $line3" >> "$TMP2"
+        echo "5 $xline1" >> "$TMP2"
+        echo "8 $xline1" >> "$TMP2"
+        echo "8 $xline3" >> "$TMP2"
+        echo "5 $xline3" >> "$TMP2"
         echo "color $linecolor" >> "$TMP2"
-		echo "move 5 $line1" >> "$TMP2"
-		echo "draw 8 $line1" >> "$TMP2"
-		echo "draw 8 $line3" >> "$TMP2"
-		echo "draw 5 $line3" >> "$TMP2"
-		echo "draw 5 $line1" >> "$TMP2"
+		echo "move 5 $xline1" >> "$TMP2"
+		echo "draw 8 $xline1" >> "$TMP2"
+		echo "draw 8 $xline3" >> "$TMP2"
+		echo "draw 5 $xline3" >> "$TMP2"
+		echo "draw 5 $xline1" >> "$TMP2"
         echo "move 14 $line2" >> "$TMP2"
         echo "color 0:0:0" >> "$TMP2"
         echo "text $openbracket$rangemin - $rangemax$closebracket $extranote"  >> "$TMP2"
+    else
+	if [ $i -eq $xlower ]; then
+	    echo "color 0:0:0" >>"$TMP2"
+	    echo "move 10 $line2" >> "$TMP2"
+	    echo "text ..." >> "$TMP2"
+	else
+	    #undo next increment
+	    let line2=line2+4	    
+	fi
+    fi
 
 		echo "area $themecolor $linecolor - {$openbracket$rangemin - $rangemax$closebracket $extranote}" >> "$TMP6"
 
@@ -995,12 +1023,23 @@ if [ "$GIS_OPT_THEMETYPE" = "graduated_points" -o "$GIS_OPT_THEMETYPE" = "gradua
 			echo "point $themecolor $linecolor $ptsize {$openbracket$rangemin - $rangemax$closebracket $extranote}" >> "$TMP6"
 		fi
 
+    if [ $i -lt $xlower -o $i -ge $xupper ]; then
         echo "icon + $iconsize 5 $line1" >> "$TMP2"
         echo "color 0:0:0" >> "$TMP2"
         echo "move 10 $line2" >> "$TMP2"
         echo "text $ptsize pts" >> "$TMP2"
         echo "move 25 $line2" >> "$TMP2"
         echo "text $openbracket$rangemin - $rangemax$closebracket $extranote"  >> "$TMP2"
+    else
+	if [ $i -eq $xlower ]; then
+	    echo "color 0:0:0" >>"$TMP2"
+	    echo "move 10 $line2" >> "$TMP2"
+	    echo "text ..." >> "$TMP2"
+	else
+	    # undo future line increment
+	    let line2=line2+$lineht
+	fi
+    fi
 
         echo "point 8% $line1%" >> "$TMP5"
 		echo "  color $linecolor" >> "$TMP5"
