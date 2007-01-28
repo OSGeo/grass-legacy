@@ -71,7 +71,7 @@
 #%end
 
 
-if  [ -z $GISBASE ] ; then
+if  [ -z "$GISBASE" ] ; then
     echo "You must be in GRASS GIS to run this program." 1>&2
  exit 1
 fi
@@ -277,7 +277,7 @@ IFS=$defaultIFS
 for SUFFIX in $SUFFIXES ; do
 	eval "$SUFFIX"
 	# Keep track of colors
-	if [ -z $sfx ] ; then
+	if [ -z "$sfx" ] ; then
 		# There's already a no suffix, can't make colors
 		COLORS=4 # Can only go up from here ;)
 	fi

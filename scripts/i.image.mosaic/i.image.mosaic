@@ -82,7 +82,7 @@ echo "ATTENTION: Do not forget to set region properly to cover all images!"
 echo ""
 
 # two images to patch
-if [ -z $GIS_OPT_IMAGE3 -a  -z $GIS_OPT_IMAGE4 ]; then
+if [ -z "$GIS_OPT_IMAGE3" -a  -z "$GIS_OPT_IMAGE4" ]; then
      echo "Mosaicing two images..."
      r.mapcalc "$GIS_OPT_IMAGE1.$GIS_OPT_IMAGE2.mosaic = if(isnull($GIS_OPT_IMAGE1),\
 					$GIS_OPT_IMAGE2+256,\
@@ -103,7 +103,7 @@ if [ -z $GIS_OPT_IMAGE3 -a  -z $GIS_OPT_IMAGE4 ]; then
 fi
 
 # three images to patch
-if [ -z $GIS_OPT_IMAGE3 -o  -z $GIS_OPT_IMAGE4 ]; then
+if [ -z "$GIS_OPT_IMAGE3" -o  -z "$GIS_OPT_IMAGE4" ]; then
      echo "Mosaicing three images..."
      r.mapcalc "$GIS_OPT_IMAGE1.$GIS_OPT_IMAGE2.$GIS_OPT_IMAGE3.mosaic = eval(t1=if($GIS_OPT_IMAGE1,$GIS_OPT_IMAGE1,$GIS_OPT_IMAGE2+256), t2=if(t1 % 256,t1,$GIS_OPT_IMAGE3+512), t2)"
      #modify the color table:

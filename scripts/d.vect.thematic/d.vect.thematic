@@ -332,7 +332,7 @@ trap "exitprocedure" 2 3 15
 # identify current monitor or start monitor
 currmon=`eval d.mon -L | grep "(selected)" | awk '{print $1}'`
 
-if [ -z $currmon ] ; then
+if [ -z "$currmon" ] ; then
 	echo ""
 	echo "*** You must open a display monitor ***"
 	echo ""
