@@ -605,6 +605,7 @@ double eval_node(SQLPNODE *nptr, int tab, int row, SQLPVALUE *value)
     COLUMN *col;
     VALUE  *val;
     double left_dval, right_dval, dval;
+    char   *rightbuf;
 
     /* Note: node types were previously checked by eval_node_type */
 
@@ -806,10 +807,17 @@ double eval_node(SQLPNODE *nptr, int tab, int row, SQLPVALUE *value)
 		    if ( left == NODE_NULL || right == NODE_NULL ) {
 			return NODE_NULL;
 		    } else {
-			if ( left_value.s && right_value.s && strstr(left_value.s,right_value.s) != NULL) 
+			/* hack to get '%substring' and 'substring%' working */
+			rightbuf = G_str_replace ( right_value.s, "%", "" );
+			G_chop (rightbuf);
+			if ( left_value.s && right_value.s && strstr(left_value.s,rightbuf) != NULL){
+			    G_free (rightbuf);
 			    return NODE_TRUE;
-			else
+			}
+			else{
+			    G_free (rightbuf);
 			    return NODE_FALSE;
+			}
 		    }
 
 		case SQLP_ISNULL:
