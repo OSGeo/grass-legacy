@@ -88,9 +88,9 @@ v.db.select mysites where="id IN ('P04', 'P05')"
 </pre></div>
 
 
-<p>Example of pattern matching (does not work for DBF driver):
+<p>Example of pattern matching:
 <div class="code"><pre>
-# match exactly number of characters (here: 2):
+# match exactly number of characters (here: 2), does not work for DBF driver:
 v.db.select mysites where="id LIKE 'P__'"
 
 #define wildcard:
