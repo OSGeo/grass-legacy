@@ -38,7 +38,7 @@ int XD_Get_location_with_box (
 
     if (redraw_pid)
     {
-	fprintf(stderr, _("Monitor: interactive command in redraw\n"));
+	G_warning( _("Monitor: interactive command in redraw"));
 	return -1;
     }
 

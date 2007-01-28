@@ -132,7 +132,7 @@ static void check_redraw_process(void)
 
 	if (pid != redraw_pid)
 	{
-		fprintf(stderr, _("Monitor: waitpid: expected %d but got %d\n"),
+		G_warning(_("Monitor: waitpid: expected %d but got %d"),
 			redraw_pid, pid);
 		return;
 	}
@@ -343,13 +343,13 @@ static void set_title_busy(int busy)
 
 	if (!XGetWMName(dpy, grwin, &prop))
 	{
-		fprintf(stderr, _("Monitor: XGetWMName failed\n"));
+		G_warning( _("Monitor: XGetWMName failed"));
 		return;
 	}
 
 	if (!prop.value || !prop.nitems || prop.format != 8)
 	{
-		fprintf(stderr, _("Monitor: XGetWMName: bad result\n"));
+		G_warning(_("Monitor: XGetWMName: bad result"));
 		return;
 	}
 

@@ -61,7 +61,7 @@ void XD_Panel_restore(const char *name)
 
 	if (fscanf(fp, "%lx %d %d %d %d", &pix, &left, &top, &width, &height) != 5)
 	{
-		fprintf(stderr, "error reading panel file\n");
+		G_warning( "error reading panel file");
 		fclose(fp);
 		return;
 	}
@@ -87,7 +87,7 @@ void XD_Panel_delete(const char *name)
 
 	if (fscanf(fp, "%lx", &pix) != 1)
 	{
-		fprintf(stderr, "error reading panel file\n");
+		G_warning( "error reading panel file");
 		goto done;
 	}
 

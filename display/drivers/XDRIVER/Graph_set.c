@@ -111,9 +111,9 @@ find_truecolor_visual(void)
 
 	mvisual_info = XGetVisualInfo(dpy, search_mask, &search_template, &num_visuals);
 
-	fprintf (stderr,_("found %d visuals of type TrueColor\n"), num_visuals);
+	G_message (_("found %d visuals of type TrueColor"), num_visuals);
 
-	fprintf(stderr,_("searching for highest bit depth\n"));
+	G_message(_("searching for highest bit depth"));
 
 	for (vis_num = 0; vis_num < num_visuals; vis_num++)
 	{
@@ -130,7 +130,7 @@ find_truecolor_visual(void)
 	if (highest_bit_depth == 0)
 		G_warning("unable to find a TrueColor visual\n");
 	else
-		fprintf(stderr, _("selected %d bit depth\n"), use_bit_depth);
+		G_message( _("selected %d bit depth"), use_bit_depth);
 }
 
 static void
@@ -192,7 +192,7 @@ create_window(int argc, char **argv)
 	{
 		use_visual = DefaultVisual(dpy, scrn);
 		use_bit_depth = DefaultDepth(dpy, scrn);
-		fprintf(stderr, _("using default visual which is %s\n"),
+		G_message( _("using default visual which is %s"),
 			classname[use_visual->class]);
 	}
 
@@ -338,7 +338,7 @@ int XD_Graph_set(int argc, char **argv)
 
 	fixedcmap = init_color_table(fixedcmap);
 
-	fprintf(stderr,"ncolors: %d\n", NCOLORS);
+	G_message("ncolors: %d", NCOLORS);
 
 	XSetWindowColormap(dpy, grwin, fixedcmap);
 

@@ -95,12 +95,12 @@ int Graph_Set (int argc, char **argv)
 
     output = fopen(file_name, "w");
     if (output == NULL) {
-        fprintf(stderr,"HTMLMAP: couldn't open output file %s\n",file_name);
-        exit(1);
+        G_fatal_error("HTMLMAP: couldn't open output file %s",file_name);
+        exit(EXIT_FAILURE);
     }
 
 
-    printf("HTMLMAP: collecting to file: %s\n width = %d, height = %d, ",
+    G_message("HTMLMAP: collecting to file: %s\n width = %d, height = %d, ",
 		file_name, screen_right, screen_bottom);
 
     /*
@@ -113,15 +113,15 @@ int Graph_Set (int argc, char **argv)
 
     if (strcmp(p,"APACHE") == 0) {
         html_type = APACHE;
-        printf("type = APACHE\n");
+        fprintf(stdout,"type = APACHE\n");
 
     } else if (strcmp(p,"RAW") == 0) {
         html_type = RAW;
-        printf("type = RAW\n");
+        fprintf(stdout,"type = RAW\n");
 
     } else {
         html_type = CLIENT;
-        printf("type = CLIENT\n");
+        fprintf(stdout,"type = CLIENT\n");
     }
 
 
