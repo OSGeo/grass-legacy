@@ -8,17 +8,18 @@
 #include <grass/monitors.h>
 #include "open.h"
 #include <grass/raster.h>
+#include <grass/glocale.h>
 #include "local_proto.h"
 
 int 
 main (int argc, char *argv[])
 {
-    int silent, override;
+    int override;
     char *monitor;
     char *option;
     char *me;
 
-    override = silent = 0;
+    override = 0;
     me = argv[0];
     while(argc > 1 && argv[1][0] == '-')
     {
@@ -30,8 +31,13 @@ main (int argc, char *argv[])
 	    switch (*option)
 	    {
 	    case 'f': override = 1; break;
-	    case 'v': silent = 1; break;
-	    default:  fprintf (stderr, "%s: -%c ** unrecognized option\n",
+            /* Please remove before GRASS 7 is released */
+	    case 'v': 
+                    G_set_verbose(G_verbose_max());
+                    G_warning(_("The '-v' flag is superseded and will be removed "
+                        "in future. Please use '--verbose' instead."));
+                      ; break;
+	    default:  G_warning (_("%s: -%c unrecognized option"),
 		    me, *option);
 		      usage (me);
 	    }
@@ -59,21 +65,17 @@ main (int argc, char *argv[])
             R_close_driver();
         case NO_RUN:            /*   or not even in memory, */
             R_release_driver();     /*   we may release */
-	    if (!silent)
-		fprintf(stderr,"Monitor <%s> released\n", monitor);
+            G_message(_("Monitor <%s> released"), monitor);
             break;
         case LOCKED:            /* if locked by another, fail */
-	    if (!silent)
-		fprintf(stderr,"Note - Monitor <%s> in use by another user\n",
+            G_message(_("Monitor <%s> in use by another user"),
 		     monitor);
             break;
         case NO_MON:            /* if no such monitor, fail */
-	    if (!silent)
-		fprintf(stderr,"Error - No such monitor as <%s>\n",monitor);
+            G_warning(_("No such monitor as <%s>"),monitor);
             break;
         default:                /* couldn't access lock file? */
-	    if (!silent)
-		fprintf(stderr,"Error - Failed testing lock mechanism\n");
+            G_warning(_("Failed testing lock mechanism"));
             break;
         }
     }
@@ -85,6 +87,6 @@ main (int argc, char *argv[])
 int 
 usage (char *me)
 {
-    fprintf(stderr,"Usage:  %s [-fv] [name]\n",me);
-    exit(1);
+    G_fatal_error(_("Usage:  %s [-fv] [name]"),me);
+    exit(EXIT_FAILURE);
 }

@@ -6,6 +6,7 @@
 #include <stdlib.h>
 #include <grass/gis.h>
 #include <grass/monitors.h>
+#include <grass/glocale.h>
 
 int 
 main (int argc, char *argv[])
@@ -18,8 +19,8 @@ main (int argc, char *argv[])
 
 	if (argc != 2)
 	{
-		fprintf(stderr,"Usage:  %s monitor_name\n",argv[0]);
-		exit(1);
+		G_fatal_error(_("Usage:  %s monitor_name"),argv[0]);
+		exit(EXIT_FAILURE);
 	}
 
 	G_gisinit (argv[0]);
@@ -31,8 +32,8 @@ main (int argc, char *argv[])
 
 	if (R_parse_monitorcap(MON_NAME,argv[1]) == NULL)
 	{
-		fprintf(stderr,"No such monitor as '%s'\n",argv[1]);
-		exit(1);
+		G_fatal_error(_("No such monitor as '%s'"),argv[1]);
+		exit(EXIT_FAILURE);
 	}
 
 	/* change the environment variable */
@@ -61,5 +62,5 @@ main (int argc, char *argv[])
 
 	/* write the name to the .gisrc file */
 	G__write_env();
-	exit(0);
+        exit(EXIT_SUCCESS);
 }

@@ -6,6 +6,7 @@
 #include <grass/raster.h>
 #include <grass/gis.h>
 #include <grass/monitors.h>
+#include <grass/glocale.h>
 #include "open.h"
 #include "local_proto.h"
 
@@ -29,7 +30,7 @@ main (int argc, char *argv[])
 	    switch (*option)
 	    {
 	    case 'f': forced = 1; break;
-	    default:  fprintf (stderr, "%s: -%c ** unrecognized option\n",
+	    default:  G_warning (_("%s: -%c unrecognized option"),
 		    me, *option);
 		      usage (me);
 	    }
@@ -47,8 +48,8 @@ main (int argc, char *argv[])
 int 
 usage (char *me)
 {
-    fprintf(stderr,"Usage: %s [-f] monitor_name\n", me);
-    exit(1);
+    G_fatal_error(_("Usage: %s [-f] monitor_name"), me);
+    exit(EXIT_FAILURE);
 }
 
 int 
@@ -70,19 +71,19 @@ stop_mon (char *name, int forced)
     case OK:
 	    R_kill_driver();
 	    /*R_close_driver();*/
-	    fprintf(stderr,"Monitor '%s' terminated\n",name);
+	    G_message(_("Monitor '%s' terminated"),name);
 	    break;
     case NO_RUN:
-	    fprintf(stderr,"Error - Monitor '%s' was not running\n",name);
+	    G_warning(_("Error - Monitor '%s' was not running"),name);
 	    break;
     case NO_MON:
-	    fprintf(stderr,"Error - No such monitor as '%s'\n",name);
+	    G_warning(_("Error - No such monitor as '%s'"),name);
 	    break;
     case LOCKED:
-	    fprintf(stderr,"Error - Monitor '%s' in use by another user\n",name);
+	    G_warning(_("Error - Monitor '%s' in use by another user"),name);
 	    break;
     default:
-	    fprintf(stderr,"Error - Locking mechanism failed\n");
+	    G_warning(_("Error - Locking mechanism failed"));
 	    break;
     }
     if (unset)

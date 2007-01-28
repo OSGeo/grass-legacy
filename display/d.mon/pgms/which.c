@@ -15,5 +15,5 @@ main (int argc, char *argv[])
 	fprintf (stdout,"No monitor currently selected for output\n");
     else
 	fprintf (stdout,"Currently selected monitor: %s\n",name);
-    exit(0);
+    exit(EXIT_SUCCESS);
 }

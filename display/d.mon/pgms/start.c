@@ -31,8 +31,9 @@
 
 #include <grass/raster.h>
 #include <grass/monitors.h>
-#include "local_proto.h"
 #include <grass/gis.h>
+#include <grass/glocale.h>
+#include "local_proto.h"
 
 #ifdef __W98__
 
@@ -50,7 +51,7 @@ int main (int argc, char *argv[])
 {
 	if (argc != 2)
 	{
-		fprintf(stderr,"Usage:  %s monitor_name\n", argv[0]);
+		G_warning(_("Usage:  %s monitor_name"), argv[0]);
 		return 1;
 	}
 
