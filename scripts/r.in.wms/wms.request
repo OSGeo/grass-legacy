@@ -120,7 +120,7 @@
 #% answer: 1
 #%end
 
-if  [ -z $GISBASE ] ; then
+if  [ -z "$GISBASE" ] ; then
     echo "You must be in GRASS GIS to run this program." 1>&2
  exit 1
 fi
@@ -288,7 +288,7 @@ fi
 
 WMS_QUERY=${GIS_OPT_WMSQUERY}
 
-if [ -z $GIS_OPT_REGION ] ; then
+if [ -z "$GIS_OPT_REGION" ] ; then
 	TILESET_OPTIONS=$GIS_OPT_TILEOPTIONS
 else
 	TILESET_OPTIONS="region=$GIS_OPT_REGION $GIS_OPT_TILEOPTIONS"

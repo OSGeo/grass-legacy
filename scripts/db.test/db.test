@@ -64,7 +64,7 @@ do
 
     while read RES
     do
-	if [ -z $RES ]
+	if [ -z "$RES" ]
         then
 	    break
         fi
