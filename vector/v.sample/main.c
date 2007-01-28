@@ -124,12 +124,12 @@ int main(int argc, char **argv)
           "Sampled values will be multiplied by this factor");
 
     flag.B = G_define_flag();
-    flag.B->key = 'B';
+    flag.B->key = 'b';
     flag.B->description =
         _("Bilinear interpolation [default is nearest neighbor]");
 
     flag.C = G_define_flag();
-    flag.C->key = 'C';
+    flag.C->key = 'c';
     flag.C->description =
         _("Cubic convolution interpolation [default is nearest neighbor]");
 
