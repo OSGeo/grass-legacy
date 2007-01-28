@@ -78,6 +78,13 @@ unset LC_ALL
 LC_NUMERIC=C
 export LC_NUMERIC
 
+# does map exist?
+eval `g.findfile element=vector file=$GIS_OPT_MAP`
+if [ ! "$file" ] ; then
+   echo "Vector map '$GIS_OPT_MAP' not found in mapset search path"
+   exit 1
+fi
+
 table=`v.db.connect $GIS_OPT_MAP -g | grep -w $GIS_OPT_LAYER | awk '{print $2}'`
 database=`v.db.connect $GIS_OPT_MAP -g | grep -w $GIS_OPT_LAYER | awk '{print $4}'`
 driver=`v.db.connect $GIS_OPT_MAP -g | grep -w $GIS_OPT_LAYER | awk '{print $5}'`
@@ -90,7 +97,7 @@ fi
 
 if [ -n "$GIS_OPT_WHERE" ]
   then
-	echo "UPDATE $table SET $GIS_OPT_COLUMN=$GIS_OPT_VALUE where $GIS_OPT_WHERE" | db.execute database=$database driver=$driver
+	echo "UPDATE $table SET $GIS_OPT_COLUMN='$GIS_OPT_VALUE' WHERE $GIS_OPT_WHERE" | db.execute database=$database driver=$driver
   else
-	echo "UPDATE $table SET $GIS_OPT_COLUMN=$GIS_OPT_VALUE" | db.execute database=$database driver=$driver
+	echo "UPDATE $table SET $GIS_OPT_COLUMN='$GIS_OPT_VALUE'" | db.execute database=$database driver=$driver
 fi
