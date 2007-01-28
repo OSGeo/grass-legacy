@@ -51,7 +51,7 @@ int PNG_Graph_set(int argc, char **argv)
 	p = getenv("GRASS_TRUECOLOR");
 	true_color = p && strcmp(p, "TRUE") == 0;
 
-	fprintf(stderr,"PNG: GRASS_TRUECOLOR status: %s\n",
+	G_message("PNG: GRASS_TRUECOLOR status: %s",
 		true_color ? "TRUE" : "FALSE");
 
 	p = getenv("GRASS_PNG_AUTO_WRITE");
@@ -87,7 +87,7 @@ int PNG_Graph_set(int argc, char **argv)
 
 	COM_Erase();
 
-	fprintf(stderr, "PNG: collecting to file: %s,\n     GRASS_WIDTH=%d, GRASS_HEIGHT=%d\n",
+	G_message("PNG: collecting to file: %s,\n     GRASS_WIDTH=%d, GRASS_HEIGHT=%d",
 		file_name, width, height);
 
 	modified = 1;
