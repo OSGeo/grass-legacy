@@ -35,8 +35,8 @@ get_connection_fifo(const char *files, int *rfd, int *wfd, int nonblock)
 
 	if (sscanf(files,"%s %s", input, output) != 2)
 	{
-		fprintf(stderr, "Invalid connection specification <%s>", files);
-		exit(-1);
+		G_fatal_error("Invalid connection specification <%s>", files);
+		exit(EXIT_FAILURE);
 	}
 
 	if (setjmp(save))
@@ -97,17 +97,17 @@ check_connection(const char *me, const char *link)
 	/* Check existence and access of in_fifo */
 	if (stat(in_fifo, &buf) < 0)
 	{
-		fprintf(stderr,"Sorry, <%s> not available\n", in_fifo);
+		G_warning("Sorry, <%s> not available", in_fifo);
 		goto error;
 	}
 	if (!S_ISFIFO(buf.st_mode))
 	{
-		fprintf(stderr,"Sorry, <%s> is not a FIFO\n", in_fifo);
+		G_warning("Sorry, <%s> is not a FIFO", in_fifo);
 		goto error;
 	}
 	if ((buf.st_mode & MODE) != MODE)
 	{
-		fprintf(stderr,"Sorry, insufficent permissions on <%s>\n",
+		G_warning("Sorry, insufficent permissions on <%s>",
 			in_fifo);
 		goto error;
 	}
@@ -115,17 +115,17 @@ check_connection(const char *me, const char *link)
 	/* Check existence and access of out_fifo */
 	if (stat(out_fifo, &buf) < 0)
 	{
-		fprintf(stderr,"Sorry, <%s> not available\n", out_fifo);
+		G_warning("Sorry, <%s> not available", out_fifo);
 		goto error;
 	}
 	if (!S_ISFIFO(buf.st_mode))
 	{
-		fprintf(stderr,"Sorry, <%s> is not a FIFO\n", out_fifo);
+		G_warning("Sorry, <%s> is not a FIFO", out_fifo);
 		goto error;
 	}
 	if ((buf.st_mode & MODE) != MODE)
 	{
-		fprintf(stderr,"Sorry, insufficient permissions on <%s>\n",
+		G_warning("Sorry, insufficient permissions on <%s>",
 			out_fifo);
 		goto error;
 	}
@@ -153,21 +153,21 @@ check_connection(const char *me, const char *link)
 
 	if (in_file < 0)
 	{
-		fprintf(stderr,"Error opening <%s>\n", in_fifo);
+		G_warning("Error opening <%s>", in_fifo);
 		goto error;
 	}
 
 	if (out_file < 0)
 	{
-		fprintf(stderr,"Error opening <%s>\n", out_fifo);
+		G_warning("Error opening <%s>", out_fifo);
 		goto error;
 	}
 
-	fprintf(stderr,"Graphics driver [%s] is already running\n", me);
+	G_warning("Graphics driver [%s] is already running", me);
 	return(-1);				/* tell caller someone's listening */
 
 error:
-	fprintf(stderr, "Have GRASS adminstrator check etc/monitorcap file\n");
+	G_warning("Have GRASS adminstrator check etc/monitorcap file");
 	return(-2);
 }
 

@@ -601,7 +601,7 @@ int process_command(int c)
 	break;
 
     default:
-	fprintf(stderr, _("\nUnknown command: %d last: %d\n"), c, lc);
+	G_warning( _("Unknown command: %d last: %d"), c, lc);
 	break;
     }
     lc = c;
@@ -643,7 +643,7 @@ int get_command(char *c)
         while (*c == COMMAND_ESC)
             if (read1(c) != 0)
 	    {
-		fprintf(stderr, _("Monitor: get_command: Premature EOF\n"));
+		G_warning(_("Monitor: get_command: Premature EOF"));
                 return 1;               /* EOF */
 	    }
         if (*c)
@@ -716,8 +716,8 @@ static int _send(void *buf, int n)
     }
     if (r < n)
     {
-	fprintf(stderr,
-		_("Monitor: _send: write returned short count: %d of %d\n"),
+	G_warning(
+		"Monitor: _send: write returned short count: %d of %d",
 		r, n);
 	return 1;
     }

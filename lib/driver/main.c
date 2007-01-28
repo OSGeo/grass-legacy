@@ -9,6 +9,7 @@
 #include <errno.h>
 
 #include <grass/gis.h>
+#include <grass/glocale.h>
 #include "driverlib.h"
 #include "driver.h"
 #include "pad.h"
@@ -53,7 +54,7 @@ int LIB_main(int argc, char **argv)
 
 	if (argc != 4)
 	{
-		fprintf(stderr,"Usage:  %s <name> [-] \"input_fifo output_fifo\"\n", argv[0]);
+		G_warning("Usage:  %s <name> [-] \"input_fifo output_fifo\"\n", argv[0]);
 		return 1;
 	}
 
@@ -98,7 +99,7 @@ int LIB_main(int argc, char **argv)
 	listenfd = prepare_connection_sock(me, connpath);
 #endif
 
-	fprintf(stderr,"Graphics driver [%s] started\n", me);
+	G_message(_("Graphics driver [%s] started"), me);
 
 	if (!foreground)
 	{
@@ -111,8 +112,8 @@ int LIB_main(int argc, char **argv)
 			}
 			else    /* weren't able to fork */
 			{
-				fprintf(stderr,"Error - Could not fork to start [%s]\n",me);
-				exit(1);
+				G_fatal_error("Error - Could not fork to start [%s]",me);
+				exit(EXIT_FAILURE);
 			}
 		}
 		else
@@ -154,7 +155,7 @@ int LIB_main(int argc, char **argv)
 
 			if (setjmp(save))
 			{
-				fprintf(stderr, "Monitor <%s>: Caught SIGPIPE\n", me);
+				G_warning("Monitor <%s>: Caught SIGPIPE", me);
 				break;
 			}
 
@@ -163,7 +164,7 @@ int LIB_main(int argc, char **argv)
 
 			if (process_command(c))
 			{
-				fprintf(stderr, "Monitor <%s>: Premature EOF\n", me);
+				G_warning( "Monitor <%s>: Premature EOF", me);
 				break;
 			}
 		}

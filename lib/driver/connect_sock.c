@@ -48,7 +48,7 @@ get_connection_sock(int listenfd, int *rfd, int *wfd, int other_fd)
 	if (errno == EINTR)
 		return -1;
 
-	fprintf(stderr, "G_sock_accept: error \"%s\"\n",
+	G_warning("G_sock_accept: error \"%s\"",
 		strerror(errno));
 	COM_Graph_close();
 	exit(EXIT_FAILURE);
@@ -85,12 +85,12 @@ check_connection(const char *me, const char *link)
 		if ((fd = G_sock_connect(link)) >= 0)
 		{
 			close(fd);
-			fprintf(stderr,"Graphics driver [%s] is already running\n", me);
+			G_warning("Graphics driver [%s] is already running", me);
 			return(-1);
 		}
 		if (unlink(link) < 0)
 		{
-			fprintf(stderr, "Failed to remove stale socket file:\n"
+			G_warning("Failed to remove stale socket file:"
 				"\t%s\n", link);
 			return(-2);
 		}
