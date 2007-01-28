@@ -22,6 +22,7 @@
 # REQUIREMENTS:
 #	- awk
 #	- d.info newer than 30 June 2006
+#	- pngtopnm and pnmtojpeg from NetPBM  http://netpbm.sourceforge.net
 #
 #############################################################################
 #
@@ -83,7 +84,15 @@ if [ ! -x "`which awk`" ] ; then
     exit 1
 fi
 
-# setting environment, so that awk works properly in all languages
+#### check if we have NetPBM
+if [ "$GIS_FLAG_J" -eq 1 ] ; then
+  if [ ! -x "`which pngtopnm`" ] || [ ! -x "`which pnmtojpeg`" ] ; then
+    echo "$PROG: NetPBM tools are required for JPEG output" 1>&2
+    exit 1
+  fi
+fi
+
+# set environment so awk works properly in all languages
 unset LC_ALL
 LC_NUMERIC=C
 export LC_NUMERIC
