@@ -237,7 +237,7 @@ export LC_NUMERIC
 
 # hard-coded parameter: the maximum number of legend items before
 # we strip them using a middle ellipsis
-MAX_LEG_ITEMS=14
+MAX_LEG_ITEMS=18
 
 # check column type
 COLTYPE="`v.info -c $GIS_OPT_MAP layer=1 2> /dev/null | grep -w $GIS_OPT_COLUMN | cut -d'|' -f1 | tr -s '[:upper:]' '[:lower:]'`"
