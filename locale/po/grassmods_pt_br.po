@@ -3713,7 +3713,7 @@ msgstr "Número de pontos inseridos: %d\n"
 
 #: ../vector/v.transform/main.c:54
 msgid ""
-"Transforms an vector map layer from one coordinate system into another "
+"Transforms a vector map layer from one coordinate system into another "
 "coordinate system."
 msgstr ""
 "Transforma uma camada de mapa vetorial de um sistema de coordenadas em outro "
