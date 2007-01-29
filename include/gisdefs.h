@@ -727,6 +727,10 @@ char *G_location_path(void);
 char *G_location(void);
 char *G__location_path(void);
 
+/* ls.c */
+char **G__ls(const char *, int *);
+void G_ls(const char *, FILE *);
+
 /* lu.c */
 int G_ludcmp(double **, int, int *, double *);
 void G_lubksb(double **, int, int *, double []);
