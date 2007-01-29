@@ -277,8 +277,7 @@ list_locations (char *gisdbase)
     char buf[1024];
     fprintf(stderr, "\nAvailable locations:\n") ;
     fprintf(stderr, "----------------------\n") ;
-    sprintf(buf, "ls -C '%s'", gisdbase) ;
-    system(buf) ;
+    G_ls(gisdbase, stderr);
     fprintf(stderr, "----------------------\n") ;
     return 0;
 }
@@ -286,24 +285,23 @@ list_locations (char *gisdbase)
 int
 list_mapsets (char *location_name, char *location)
 {
-    char buf[1024];
-    FILE *fd, *popen();
+    char **mapsets;
+    int i, num_mapsets;
     int any, ok, any_ok;
     int len, tot_len;
 
-    sprintf (buf, "ls '%s'", location);
     fprintf (stderr, "\nMapsets in location <%s>\n", location_name);
     fprintf (stderr, "----------------------\n") ;
-    fd = popen (buf, "r");
+    mapsets = G__ls(location, &num_mapsets);
     any = 0;
     any_ok = 0;
     tot_len = 0;
-    if (fd)
+    if (num_mapsets > 0)
     {
-	while (fscanf (fd, "%s", buf) == 1)
+	for (i = 0; i < num_mapsets; i++)
 	{
 	    any = 1;
-	    len = strlen (buf)+1;
+	    len = strlen (mapsets[i])+1;
 	    len /= 20;
 	    len = (len+1)*20;
 	    tot_len += len;
@@ -312,11 +310,10 @@ list_mapsets (char *location_name, char *location)
 		fprintf (stderr, "\n");
 		tot_len = len;
 	    }
-	    if(ok = (mapset_permissions(buf) == 1))
+	    if(ok = (mapset_permissions(mapsets[i]) == 1))
 		any_ok = 1;
-	    fprintf (stderr, "%s%-*s", ok?"(+)":"   ", len, buf);
+	    fprintf (stderr, "%s%-*s", ok?"(+)":"   ", len, mapsets[i]);
 	}
-	pclose (fd);
 	if (tot_len)
 	    fprintf (stderr, "\n");
 	if (any_ok)
