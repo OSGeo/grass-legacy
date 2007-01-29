@@ -38,7 +38,9 @@ static int cmp_names(const void *aa, const void *bb)
  * \brief Stores a sorted directory listing in an array
  * 
  * The filenames in the specified directory are stored in an array of
- * strings, then sorted alphabetically.
+ * strings, then sorted alphabetically. Each filename has space allocated
+ * using G_store(), which can be freed using G_free() if necessary. The
+ * same goes for the array itself.
  * 
  * 
  * \param dir       Directory to list
@@ -122,14 +124,19 @@ void G_ls(const char *dir, FILE *stream)
     field_width = screen_width / perline;
 
     for (i=0; i < n; i++)
+    {	
         /* Print filenames in left-justified fixed-width fields, adding
 	 * a newline after every 'perline' names */
         fprintf(stream, "%-*s%s", field_width, dir_listing[i], 
 		                  (i + 1) % perline? "" : "\n");
+        G_free(dir_listing[i]);
+    }   
 
     if (n % perline)
         /* Closing newline required */
         fprintf(stream, "\n");
+   
+    G_free(dir_listing);
    
     return;
 }
