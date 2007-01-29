@@ -3546,7 +3546,7 @@ msgstr "已输入点的数量：%d\n"
 
 #: ../vector/v.transform/main.c:54
 msgid ""
-"Transforms an vector map layer from one coordinate system into another "
+"Transforms a vector map layer from one coordinate system into another "
 "coordinate system."
 msgstr ""
 

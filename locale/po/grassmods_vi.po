@@ -3670,7 +3670,7 @@ msgstr "Số điểm đã được nhập vào: %d\n"
 
 #: ../vector/v.transform/main.c:54
 msgid ""
-"Transforms an vector map layer from one coordinate system into another "
+"Transforms a vector map layer from one coordinate system into another "
 "coordinate system."
 msgstr "Chuyển đổi một lớp bản đồ vector từ hệ tọa độ này sang hệ tọa độ khác"
 

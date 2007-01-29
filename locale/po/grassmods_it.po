@@ -3659,7 +3659,7 @@ msgstr ""
 
 #: ../vector/v.transform/main.c:54
 msgid ""
-"Transforms an vector map layer from one coordinate system into another "
+"Transforms a vector map layer from one coordinate system into another "
 "coordinate system."
 msgstr ""
 

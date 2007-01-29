@@ -3686,7 +3686,7 @@ msgstr ""
 #: ../vector/v.transform/main.c:54
 #, fuzzy
 msgid ""
-"Transforms an vector map layer from one coordinate system into another "
+"Transforms a vector map layer from one coordinate system into another "
 "coordinate system."
 msgstr "ベクトルマップの座標変換を行います"
 

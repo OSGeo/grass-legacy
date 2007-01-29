@@ -21808,7 +21808,7 @@ msgstr "Poèet zadaných bodù: %d\n"
 
 #: ../vector/v.transform/main.c:54
 msgid ""
-"Transforms an vector map layer from one coordinate system into another "
+"Transforms a vector map layer from one coordinate system into another "
 "coordinate system."
 msgstr "Transformuje vektorovou mapu z jednoho souøadného systému do jiného."
 
