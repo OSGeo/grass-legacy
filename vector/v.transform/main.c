@@ -51,7 +51,7 @@ int main (int argc, char *argv[])
 
     module = G_define_module();
     module->keywords = _("vector");
-    module->description = _("Transforms an vector map layer from one "
+    module->description = _("Transforms a vector map layer from one "
 			  "coordinate system into another coordinate system.");
 
     quiet_flag = G_define_flag();
