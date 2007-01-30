@@ -19307,8 +19307,7 @@ msgstr "Kategorie <%d>: Kolor linii i kolor t³a s± takie same!"
 #: ../display/d.vect/plot1.c:209
 #, c-format
 msgid ""
-"Error in color definition column (%s), element %d with cat %d: colorstring [%"
-"s]"
+"Error in color definition column (%s), element %d with cat %d: colorstring [%s]"
 msgstr ""
 "B³±d w kolumnie definicji koloru (%s), element %d z kategori± %d: ci±g "
 "znaków dla okre¶lenia koloru [%s]"

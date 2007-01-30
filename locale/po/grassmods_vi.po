@@ -19642,8 +19642,7 @@ msgstr "Phạm trù <%d>: Màu đường và màu nền giống nhau!"
 #: ../display/d.vect/plot1.c:209
 #, c-format
 msgid ""
-"Error in color definition column (%s), element %d with cat %d: colorstring [%"
-"s]"
+"Error in color definition column (%s), element %d with cat %d: colorstring [%s]"
 msgstr ""
 "Lỗi trong cột định nghĩa màu (%s), yếu tố %d với cat %d: chuỗi màu [%s]"
 
