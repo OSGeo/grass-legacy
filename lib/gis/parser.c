@@ -139,6 +139,7 @@ static void G_gui (void);
 static void G_tcltk (void);
 static void G_usage_xml (void);
 static void G_usage_html (void);
+static void G_script ();
 
 
 /**
@@ -722,6 +723,14 @@ int G_parser (int argc, char **argv)
 		if (strcmp(argv[1],"--tcltk") == 0)
 		{
 			G_tcltk();
+			exit(EXIT_SUCCESS);
+		}
+
+		/* If first arg is "--script" then then generate
+		 * g.parser boilerplate */
+		if (strcmp(argv[1],"--script") == 0)
+		{
+			G_script();
 			exit(EXIT_SUCCESS);
 		}
 
@@ -1521,6 +1530,102 @@ static void G_usage_html (void)
 	}
 	
     fprintf(stdout, "</body>\n</html>\n");
+}
+
+static void G_script(void)
+{
+	FILE *fp = stdout;
+	char *type;
+
+	fprintf(fp, "#!/bin/sh\n\n");
+
+	fprintf(fp, "#%%Module\n");
+	if (module_info.label)
+		fprintf(fp, "#%% label: %s\n", module_info.label);
+	if (module_info.description)
+		fprintf(fp, "#%% description: %s\n", module_info.description);
+	if (module_info.keywords)
+		fprintf(fp, "#%% keywords: %s\n", module_info.keywords);
+	fprintf(fp, "#%%End\n");
+    
+	if (n_flags)
+	{
+		struct Flag *flag;
+
+		for (flag = &first_flag; flag; flag = flag->next_flag)
+		{
+			fprintf(fp, "#%%Flag\n");
+			fprintf(fp, "#%%  key: %c\n", flag->key);
+			if (flag->label)
+				fprintf(fp, "#%% label: %s\n", flag->label);
+			if (flag->description)
+				fprintf(fp, "#%% description: %s\n", flag->description);
+			if (flag->guisection)
+				fprintf(fp, "#%% guisection: %s\n", flag->guisection);
+			fprintf(fp, "#%%End\n");
+		}
+	}
+
+	if (n_opts)
+	{
+		struct Option *opt;
+
+		for (opt = &first_option; opt; opt = opt->next_opt)
+		{
+			switch (opt->type)
+			{
+			case TYPE_INTEGER:
+				type = "integer";
+				break;
+			case TYPE_DOUBLE:
+				type = "double";
+				break;
+			case TYPE_STRING:
+				type = "string";
+				break;
+			default:
+				type = "string";
+				break;
+			}
+
+			fprintf(fp, "#%%Option\n");
+			fprintf(fp, "#%% key: %s\n", opt->key);
+			fprintf(fp, "#%% type: %s\n", type);
+			fprintf(fp, "#%% required: %s\n", opt->required ? "yes" : "no");
+			fprintf(fp, "#%% multiple: %s\n", opt->multiple ? "yes" : "no");
+			if (opt->options)
+				fprintf(fp, "#%% options: %s\n", opt->options);
+			if (opt->key_desc)
+				fprintf(fp, "#%% key_desc: %s\n", opt->key_desc);
+			if (opt->label)
+				fprintf(fp, "#%% label: %s\n", opt->label);
+			if (opt->description)
+				fprintf(fp, "#%% description: %s\n", opt->description);
+			if (opt->descriptions)
+				fprintf(fp, "#%% descriptions: %s\n", opt->descriptions);
+			if (opt->answer)
+				fprintf(fp, "#%% answer: %s\n", opt->answer);
+			if (opt->gisprompt)
+				fprintf(fp, "#%% gisprompt: %s\n", opt->gisprompt);
+			if (opt->guisection)
+				fprintf(fp, "#%% guisection: %s\n", opt->guisection);
+			fprintf(fp, "#%%End\n");
+		}
+	}
+
+	fprintf(fp,
+		"if [ -z \"$GISBASE\" ] ; thenn\n"
+		"    echo \"You must be in GRASS GIS to run this program.\" 1>&2\n"
+		"    exit 1\n"
+		"fi\n"
+		"\n"
+		"if [ \"$1\" != \"@ARGS_PARSED@\" ] ; then\n"
+		"  exec $GISBASE/bin/g.parser \"$0\" \"$@\"\n"
+		"fi\n"
+		"\n"
+		"# CODE GOES HERE\n"
+		"\n"
+		);
 }
 
 static void generate_tcl(FILE *fp)
