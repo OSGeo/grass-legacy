@@ -29,7 +29,7 @@ int interactive_version (void)
 
     setbuf(stderr,NULL);
 
-    system("clear");
+    G_system("clear");
     G_message(_("GIS Coincidence Tabulation Facility\n"));
     G_message(_("This utility will allow you to compare the "
                 "coincidence of two map layers\n"));
@@ -48,7 +48,7 @@ int interactive_version (void)
 
     while(1)
     {
-	system("clear");
+	G_system("clear");
 	G_message(_("The report can be made in one of 8 units."));
 	G_message(_("Please choose a unit by entering one of the "
                     "following letter codes:"));
@@ -84,7 +84,7 @@ int interactive_version (void)
 	}
 
 	sprintf(command,"$GRASS_PAGER %s",dumpname);
-	system(command);
+	G_system(command);
 
 	while(1)
 	{
@@ -105,7 +105,7 @@ int interactive_version (void)
 		sprintf(command,"cp %s %s", dumpname, outname);
 		fprintf(stderr, _("'%s' being saved"), outname);
 	    }
-	    system(command);
+	    G_system(command);
 	    fprintf(stderr,"\n");
 	    break;
 	}
@@ -127,7 +127,7 @@ ask132:
 	    if(cols == 132) print_coin(key,132,1);
 	    else if (cols != 80) goto ask132;
 	    sprintf(command,"lpr %s",dumpname);
-	    system(command);
+	    G_system(command);
 	    break;
 	}
 
