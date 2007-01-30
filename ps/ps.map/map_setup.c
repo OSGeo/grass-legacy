@@ -9,6 +9,8 @@
 #include "group.h"
 #include "local_proto.h"
 
+#define METERS_TO_INCHES ((double)39.37)
+
 int map_setup (void)
 {
     double w, h;
@@ -18,7 +20,7 @@ int map_setup (void)
     PS.map_y_orig = PS.min_y / 72.0;
 
     if (!PS.do_raster && !grp.do_group)
-    {	
+    {
 	/* if scale has been set... */
     	if (PS.scaletext[0]) 
     	{
@@ -36,7 +38,7 @@ int map_setup (void)
 	    /* else, kill the scale */
 	    else PS.scaletext[0] = 0;
 	}
-	
+
 	/* fit map to bounding box */
 	fit_map_to_box();
     }
@@ -78,8 +80,11 @@ int map_setup (void)
     }
 
     /* set the scale */
-    if (!PS.scaletext[0]) sprintf(PS.scaletext, "1 : %.0f",
-	39.37 * 72.0 * (PS.w.east - PS.w.west) / PS.map_pix_wide);
+    /*   work from height not width to minimize lat/lon curvature problems?? */
+    if (!PS.scaletext[0]) {
+	sprintf(PS.scaletext, "1 : %.0f",
+	  METERS_TO_INCHES * distance(PS.w.east, PS.w.west) * 72.0 / PS.map_pix_wide);
+    }
 
     G_message (_("Scale set to %s."), PS.scaletext);
 
