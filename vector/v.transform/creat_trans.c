@@ -63,7 +63,7 @@ while (! ok)
 		exit(-1) ;
 #endif
 
-	system("clear") ;
+	G_system("clear") ;
 
 	status =  setup_transform( n_points) ;
 
