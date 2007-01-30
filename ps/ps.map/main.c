@@ -433,6 +433,10 @@ int main(int argc,char *argv[])
 	
 	if (KEY("scalebar"))
 	{
+	    if (G_projection() == PROJECTION_LL) {
+		error(key, data, "scalebar is not appropriate for this projection");
+		gobble_input();
+	    }
 	   PS.do_scalebar = 1;
 	   if (sscanf(data, "%s", sb.type) != 1)
 	   	G_strcpy (sb.type, "f"); /* default to fancy scalebar */
@@ -672,10 +676,12 @@ int main(int argc,char *argv[])
 
         if (KEY("geogrid"))
         {
-	if (G_projection() == PROJECTION_LL || G_projection() == PROJECTION_XY) {
+	    if (G_projection() == PROJECTION_XY) {
 		error(key, data, "geogrid is not available for this projection");
 		gobble_input();
-	}
+	    }
+/*	    if (G_projection() == PROJECTION_LL)
+		G_message(_("geogrid referenced to [???] ellipsoid"));  */
             PS.geogrid = -1.;
             PS.geogrid_numbers = 0;
             sscanf(data, "%d %s", &PS.geogrid, PS.geogridunit);
