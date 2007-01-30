@@ -187,10 +187,14 @@ int ask_fips(FILE * fp, int *s, int *c, int *sc)
 			return 0;
 		}
 		if (strcmp(answer, "list") == 0) {
-			if (isatty(1))
-				sprintf(buff, "$GRASS_PAGER %s", Tmp_file1);
-			else
-				sprintf(buff, "cat %s", Tmp_file1);
+		        char *pager;
+
+		        pager = getenv("GRASS_PAGER");
+		        if (!pager || strlen(pager) == 0)
+		            pager = "cat";
+
+		        /* Always print interactive output to stderr */
+		        sprintf(buff,"%s \"%s\" 1>&2", pager, G_convert_dirseps_to_host(Tmp_file1));
 			G_system(buff);
 		} else {
 			a = G_find_key_value(answer, sf_keys);
@@ -300,10 +304,14 @@ int ask_fips(FILE * fp, int *s, int *c, int *sc)
 			return 0;
 		}
 		if (strcmp(answer, "list") == 0) {
-			if (isatty(1))
-				sprintf(buff, "$GRASS_PAGER %s", Tmp_file1);
-			else
-				sprintf(buff, "cat %s", Tmp_file1);
+		        char *pager;
+
+		        pager = getenv("GRASS_PAGER");
+		        if (!pager || strlen(pager) == 0)
+		            pager = "cat";
+
+		        /* Always print interactive output to stderr */
+		        sprintf(buff,"%s \"%s\" 1>&2", pager, G_convert_dirseps_to_host(Tmp_file1));
 			G_system(buff);
 		} else {
 			b = G_find_key_value(answer, cf_keys);
