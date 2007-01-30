@@ -19142,8 +19142,7 @@ msgstr ""
 #: ../display/d.vect/plot1.c:209
 #, c-format
 msgid ""
-"Error in color definition column (%s), element %d with cat %d: colorstring [%"
-"s]"
+"Error in color definition column (%s), element %d with cat %d: colorstring [%s]"
 msgstr ""
 
 #: ../display/d.vect/plot1.c:215

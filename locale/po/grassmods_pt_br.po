@@ -19944,8 +19944,7 @@ msgstr "CAtegoria <%d>: Cor da linha e do fundo são iguai"
 #: ../display/d.vect/plot1.c:209
 #, fuzzy, c-format
 msgid ""
-"Error in color definition column (%s), element %d with cat %d: colorstring [%"
-"s]"
+"Error in color definition column (%s), element %d with cat %d: colorstring [%s]"
 msgstr ""
 "Erro na definição de cor na coluna GRASSRGB, elemento %d com cat %d: cor %s"
 
