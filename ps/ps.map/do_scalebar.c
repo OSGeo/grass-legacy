@@ -31,7 +31,8 @@ int do_scalebar(void)
 	METERS_TO_INCHES * distance(PS.w.east, PS.w.west) / scale(PS.scaletext);
 
     /* convert scale size to map inches */
-    length = (sb.length / scale_size) * METERS_TO_INCHES;
+    length = (sb.length / scale_size) *
+	G_database_units_to_meters_factor() * METERS_TO_INCHES;
     width = sb.height;
     seg = sb.segment;
     j = 0;
