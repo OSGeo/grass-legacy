@@ -588,6 +588,7 @@ int GPJ_osr_to_grass(struct Cell_head *cellhd, struct Key_Value **projinfo,
         char	szFormatBuf[256];
         char    *pszUnitsName = NULL;
         double  dfToMeters;
+        char    *pszUnitsPlural, *pszStringEnd;
 
         dfToMeters = OSRGetLinearUnits( hSRS, &pszUnitsName );
         
@@ -596,8 +597,35 @@ int GPJ_osr_to_grass(struct Cell_head *cellhd, struct Key_Value **projinfo,
 	    G_asprintf( &pszUnitsName, "meter" );
        
         G_set_key_value( "unit", pszUnitsName, *projunits );
-        sprintf( szFormatBuf, "%ss", pszUnitsName );
-        G_set_key_value( "units", szFormatBuf, *projunits );
+     
+        /* Attempt at plural formation (WKT format doesn't store plural
+         * form of unit name) */
+        pszUnitsPlural = G_malloc( strlen(pszUnitsName) + 3 );
+        strcpy(pszUnitsPlural, pszUnitsName);
+        pszStringEnd = pszUnitsPlural + strlen(pszUnitsPlural) - 4;
+        if( strcasecmp(pszStringEnd, "foot") == 0 )
+        {
+            /* Special case for foot - change two o's to e's */
+            pszStringEnd[1] = 'e';
+            pszStringEnd[2] = 'e';
+        }
+        else if( strcasecmp(pszStringEnd, "inch") == 0 )
+        {
+            /* Special case for inch - add es */
+            pszStringEnd[4] = 'e';
+            pszStringEnd[5] = 's';
+            pszStringEnd[6] = '\0';
+        }
+        else
+        {
+            /* For anything else add an s at the end */
+            pszStringEnd[4] = 's';
+            pszStringEnd[5] = '\0';
+        }
+       
+        G_set_key_value( "units", pszUnitsPlural, *projunits );
+        G_free( pszUnitsPlural );
+       
         sprintf( szFormatBuf, "%.16g", dfToMeters );
         G_set_key_value( "meters", szFormatBuf, *projunits );
 
