@@ -72,7 +72,6 @@ main (int argc, char *argv[])
     where_opt = G_define_standard_option(G_OPT_WHERE);
 
     field_opt = G_define_standard_option(G_OPT_V_FIELD);
-    field_opt->answer = "1";
 
     shell_flag = G_define_flag();
     shell_flag->key = 'g';
