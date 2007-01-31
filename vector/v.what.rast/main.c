@@ -14,6 +14,7 @@
  * *               Read the file COPYING that comes with GRASS
  * *               for details.
  * *
+ * * TODO: fix user notification if where= is used
  * **************************************************************/
 #include <stdio.h>
 #include <stdlib.h>
@@ -49,7 +50,7 @@ int main(int argc,char *argv[])
     DCELL *dcell;
     double drow, dcol;
     char buf[2000];
-    struct Option *vect_opt, *rast_opt, *field_opt, *col_opt;
+    struct Option *vect_opt, *rast_opt, *field_opt, *col_opt, *where_opt;
     int Cache_size;
     struct order *cache;
     int cur_row;
@@ -95,6 +96,8 @@ int main(int argc,char *argv[])
     col_opt->type       = TYPE_STRING ;
     col_opt->required   = YES ;
     col_opt->description= _("Column name (will be updated by raster values)") ;
+
+    where_opt = G_define_standard_option(G_OPT_WHERE);
 
     if (G_parser(argc, argv))
       exit(EXIT_FAILURE);
@@ -309,9 +312,13 @@ int main(int argc,char *argv[])
         }
 	db_append_string ( &stmt, buf );
 	
-	sprintf (buf, " where %s = %d", Fi->key, cache[point].cat);
+        sprintf (buf, " where %s = %d", Fi->key, cache[point].cat);
 	db_append_string ( &stmt, buf );
-	
+	/* user provides where condition: */
+	if (where_opt->answer) {
+	    sprintf(buf, " AND %s", where_opt->answer);
+	    db_append_string ( &stmt, buf );
+	}
         G_debug ( 3, db_get_string (&stmt) );
 	
 	/* Update table */
@@ -332,7 +339,7 @@ int main(int argc,char *argv[])
     G_message ( _("%d categories loaded from vector"), point_cnt );
     G_message ( _("%d categories from vector missing in table"), norec_cnt );
     G_message ( _("%d duplicate categories in vector"), dupl_cnt );
-    G_message ( _("%d records updated"), update_cnt );
+    if (! where_opt->answer) G_message ( _("%d records updated"), update_cnt );
     G_message ( _("%d update errors"), upderr_cnt );
 
     exit(EXIT_SUCCESS);
