@@ -3,6 +3,78 @@ import os
 # Authors: Michael Barton and Jachym Cepicky
 # COPYRIGHT:	(C) 1999 - 2007 by the GRASS Development Team
 
+class Layer:
+    """
+    This class servs for storing map layers to be displayed
+
+    Common layer attributes:
+        name    - layer name
+        mapset  - mapset name
+
+        l_active - layer is active, will be rendered only if True
+        l_hidden - layer is hidden, will be allways rendered
+        l_opacity - layer opacity [0-1]
+        l_mapfile  - File name of new layer
+        l_maskfile  - Mask name of new layer
+    """
+
+    def Render(self):
+        """
+        Runs all d.* commands.
+
+        Returns:
+            Name of file with rendered image or None
+        """
+    
+        cmd = ""
+        
+        os.environ["GRASS_PNGFILE"] = self.l_mapfile
+
+        #
+        # Start monitor
+        #
+        if os.system("d.mon --quiet start=gism"):
+            print "Could not run d.mon start=gism"
+            return None
+
+        #
+        # Render layers
+        #
+        if self.l_type == "raster":
+            cmd = "d.rast -o map=%s@%s" % (self.name,self.mapset)
+            if self.catlist: cmd += " catlist=%s" % (self.catlist)
+            if self.vallist: cmd += " vallist=%s" % (self.vallist)
+
+        elif self.l_type == "vector":
+            cmd = "d.vect map=%s@%s " % (self.name,self.mapset)
+            if self.display: cmd += " display=%s" % (self.display)
+            if self.attrcol: cmd += " attrcol=%s" % (self.attrcol)
+            if self.icon: cmd += " icon=%s" % (self.icon)
+            if self.size: cmd += " size=%s" % (self.size)
+            if self.cats: cmd += " cats=%s" % (self.cats)
+            if self.where: cmd += " where=%s" % (self.where)
+            if self.width: cmd += " width=%s" % (self.width)
+            if self.color: cmd += " color=%s" % (self.color)
+            if self.fcolor: cmd += " fcolor=%s" % (self.fcolor)
+        
+        elif layer['l_type'] == "wms":
+            print "Type wms is not supported yet"
+        else:
+            print "Type [%s] of layer [%s] is not supported yet" % (layer['l_type'], layer['name'])
+
+        if os.system(cmd):
+            print "Could not execute '%s'" % (cmd)
+            return None
+
+        #
+        # Stop monitor
+        #
+        if os.system("d.mon --quiet stop=gism"):
+            print "Could not run d.mon stop=gism"
+            return None
+        os.unsetenv("GRASS_PNGFILE")
+
+        return self.l_mapfile
 
 class Map:
     """
@@ -17,8 +89,6 @@ class Map:
 
         self.Height - stores height of the map in pixels
         
-        self.MapFile- name of the file with rendered image
-
         self.WIND   - stores content of WIND file for temporary region
                       settings
                       n-s resol: 30;
@@ -56,11 +126,11 @@ class Map:
         self.Region = {}    # for region settings
         self.Width = 0  # for width of the map
         self.Height = 0 # for height of the map
-        self.MapFile = "" # name of the PNG file
 
         self.Layers = []# stack of commands for render map
         self.Env = {} # enviroment variables, like MAPSET, LOCATION_NAME, etc.
         self.Verbosity = 0
+        self.MapFile = self.__getTempfile()+".png"
 
         self.RenderRegion = {
                 "render"    :False,   # Should the region be displayed?
@@ -80,7 +150,6 @@ class Map:
 	os.environ["GRASS_PNG_AUTO_WRITE"] = "TRUE"
         os.environ["GRASS_TRUECOLOR"] ="TRUE"
         os.environ["WIND_OVERRIDE"] ="TRUE"
-        os.environ["GRASS_PNGFILE"] =self.MapFile
         os.environ["GRASS_COMPRESSION"] ="0"
         os.environ["GRASS_VERBOSE"] =str(self.Verbosity)
 
@@ -143,14 +212,31 @@ class Map:
 
         os.system("d.mon --quiet stop=gism")
 
-        self.MapFile = os.popen("g.tempfile pid=%d" % 
-                os.getpid()).readlines()[0].strip()+".ppm"
         for line in os.popen("g.gisenv").readlines():
             line = line.strip()
             key,val = line.split("=")
 	    val = val.replace(";","")
 	    val = val.replace("'","")
             self.Env[key] = val
+
+    def __getTempfile(self, pref=None):
+        """
+        Creates GRASS temporary file using defined prefix.
+
+        Returns:
+            Path to file name (string) or None
+        """
+
+        tempfile = os.popen("g.tempfile pid=%d" % 
+                os.getpid()).readlines()[0].strip()
+
+        if not tempfile:
+            return None
+        else:
+            path,file = os.path.split(tempfile)
+            if pref:
+                file = "%s%s" % (pref,file)
+            return os.path.join(path,file)
 
     def GetRegion(self):
         """
@@ -270,93 +356,48 @@ class Map:
         else:
             return None
 
-    def Render(self):
+    def Render(self,force=False):
         """
-        Runs all d.* commands.
+        Creates final image composite
+
+        NOTE: This function should be done by high-level tools, which
+        should be avaliable in wxPython library
 
         Returns:
             Name of file with rendered image or None
         """
-    
-        cmd = ""
-        
-        #
-        # Set temporary region
-        #
-        os.environ["GRASS_REGION"] = self.SetRegion()
 
-        #
-        # Start monitor
-        #
-        if os.system("d.mon --quiet start=gism"):
-            print "Could not run d.mon start=gism"
-            return None
+        maps = []
+        masks =[]
+        opacities = []
 
-        #
-        # Add layers
-        #
-        for layer in self.GetListOfLayers(l_active=True):
-            if layer['l_type'] == "raster":
-                cmd = "d.rast -o map=%s@%s" % (layer['name'],layer['mapset'])
-                if layer['catlist']: cmd += " catlist=%s" % (layer['catlist'])
-                if layer['vallist']: cmd += " vallist=%s" % (layer['vallist'])
+   	for layer in self.Layers:
+            if force:
+                layer.Render()
+	    # add image to compositing list
+	    maps.append(layer.l_mapfile)
+	    masks.append(layer.l_maskfile)
+	    opacities.append(str(layer.l_opacity))
 
-            elif layer['l_type'] == "vector":
-                cmd = "d.vect map=%s@%s " % (layer['name'],layer['mapset'])
-                if layer['display']: cmd += " display=%s" % (layer['display'])
-                if layer['attrcol']: cmd += " attrcol=%s" % (layer['attrcol'])
-                if layer['icon']: cmd += " icon=%s" % (layer['icon'])
-                if layer['size']: cmd += " size=%s" % (layer['size'])
-                if layer['cats']: cmd += " cats=%s" % (layer['cats'])
-                if layer['where']: cmd += " where=%s" % (layer['where'])
-                if layer['width']: cmd += " width=%s" % (layer['width'])
-                if layer['color']: cmd += " color=%s" % (layer['color'])
-                if layer['fcolor']: cmd += " fcolor=%s" % (layer['fcolor'])
-            
-            elif layer['l_type'] == "wms":
-                print "Type wms is not supported yet"
-            else:
-                print "Type [%s] of layer [%s] is not supported yet" % (layer['l_type'], layer['name'])
-
-            if os.system(cmd):
-                print "Could not execute '%s'" % (cmd)
-                return None
-
-        #
-        # Draw region
-        #
-        if self.RenderRegion["render"]:
-            region = self.GetRegion()
-            cmd = "d.graph -m color=%s" % (self.RenderRegion["color"])
-            regcmd = "width %d\n" % (self.RenderRegion["width"])
-            regcmd += "polyline\n"
-            regcmd += "%f %f\n" % (float(region["w"]), float(region["n"]))
-            regcmd += "%f %f\n" % (float(region["e"]), float(region["n"]))
-            regcmd += "%f %f\n" % (float(region["e"]), float(region["s"]))
-            regcmd += "%f %f\n" % (float(region["w"]), float(region["s"]))
-            regcmd += "%f %f\n" % (float(region["w"]), float(region["n"]))
-
-            #print "echo \"",regcmd,"\"|",cmd
-            (w,r) = os.popen2(cmd)
-            w.write(regcmd)
-            w.close()
-            r.read()
-
-        #
-        # Stop monitor
-        #
-        if os.system("d.mon --quiet stop=gism"):
-            print "Could not run d.mon stop=gism"
-            return None
-        os.unsetenv("GRASS_REGION")
+        mapstr = ",".join(maps)
+        maskstr = ",".join(masks)
+        opacstr = repr(",".join(opacities))
+	compcmd = "g.pnmcomp in="+mapstr+" mask="+maskstr+" opacity="+opacstr+" background=255:255:255"\
+	    +" width="+str(self.Width)+" height="+str(self.Height)\
+	    +" output="+self.MapFile
+	# run g.composite to get composite image
+        if os.system(compcmd):
+            sys.stderr.write("Could not run g.pnmcomp\n")
+ 
         return self.MapFile
 
     def AddRasterLayer(self, name, mapset=None, catlist=None,
-            vallist=None, invertCats=False, l_active=True, l_hidden=False):
+            vallist=None, invertCats=False, l_active=True, l_hidden=False,
+            l_opacity=1, l_render=True):
         """
         Adds raster layer to list of layers
         
-        Parameters:
+        Layer Attributes:
             name    - raster file name
             mapset  - mapset name, default: current
             catlist - string, list of categories
@@ -366,28 +407,94 @@ class Map:
 
             l_active - layer is active, will be rendered only if True
             l_hidden - layer is hidden, will be allways rendered
+            l_opacity - layer opacity [0-1]
+            l_mapfile  - File name of new layer
+            l_maskfile  - Mask name of new layer
+            l_render - Make an image of this layer while adding
 
         Returns:
             Added layer if succeeded or None
         """
 
-        try:
-            if not mapset:
-                mapset = self.Env["MAPSET"]
+        layer = Layer()
 
-            self.Layers.append({
-                'l_type'  :   "raster",
-                'name'  :   name,
-                'mapset':   mapset,
-                'catlist':  catlist,
-                'vallist':  vallist,
-                'invertCats': invertCats,
-                'l_active': l_active,
-                'l_hidden': l_hidden,
-                })
-            return self.Layers[-1]
-        except:
-            return None
+        if not mapset:
+            mapset = self.Env["MAPSET"]
+
+        if l_opacity > 1:
+            l_opacity = float(l_opacity)/100
+
+        layer.l_type  	= "raster"
+        layer.name  	= name
+        layer.mapset	= mapset
+        layer.catlist	= catlist
+        layer.vallist	= vallist
+        layer.invertCats= invertCats
+        layer.l_active	= l_active
+        layer.l_hidden	= l_hidden
+        layer.l_opacity = l_opacity
+        gtemp = self.__getTempfile()
+        layer.l_maskfile = gtemp+".pgm"
+        layer.l_mapfile = gtemp+".ppm"
+
+        self.Layers.append(layer)
+
+        if l_render:
+            if not layer.Render():
+                sys.stderr.write("Could not render layer %s@%s\n" %\
+                        (name,mapset))
+
+        return self.Layers[-1]
+
+    def AddGraphLayer(self, name, graph=None, color="255:0:0",
+            coordsinmapunits=False,
+            l_active=True, l_hidden=True, l_opacity=1, l_render=True):
+        """
+        Adds graph layer to list of layers (for d.graph definition)
+        
+        Layer attributes:
+            name    - graphics name
+            graph   - string with graphics definition
+            color   - Color triplet
+
+            coordsinmapunits - coordinates are given in map units
+
+            l_active - layer is active, will be rendered only if True
+            l_hidden - layer is hidden, will be allways rendered
+            l_opacity - layer opacity [0-1]
+            l_mapfile  - File name of new layer
+            l_maskfile  - Mask name of new layer
+            l_render - Make an image of this layer while adding
+
+        Returns:
+            Added layer if succeeded or None
+        """
+
+        layer = Layer()
+
+        if l_opacity > 1:
+            l_opacity = float(l_opacity)/100
+
+        layer.l_type  	=   "graph"
+        layer.name  	=   name
+        layer.graph	=  graph
+        layer.color	=  color
+        layer.coordsinmapunits	= coordsinmapunits
+        layer.l_active	= l_active
+        layer.l_hidden	= l_hidden
+        layer.l_opacity	= l_opacity
+        gtemp = self.__getTempfile()
+        layer.l_maskfile = gtemp+".pgm"
+        layer.l_mapfile = gtemp+".ppm"
+        
+        self.Layers.append(layer)
+
+        if l_render:
+            if not layer.Render():
+                sys.stderr.write("Could not render layer %s\n" %\
+                        (name))
+
+        return self.Layers[-1]
 
     def AddVectorLayer(self, name, mapset=None,
             type = "point,line,boundary,centroid,area,face",
@@ -399,11 +506,11 @@ class Map:
             lsize = 8, font = None, xref = "left", yref = "center", 
             minreg = None, maxreg = None, colorfromtable=False,
             randomcolor=False, catsasid=False, l_active=True,
-            l_hidden=False):
+            l_hidden=False, l_opacity=1, l_render=True):
         """
         Adds vector layer to list of layers
 
-        Parameters:
+        Layer attributes:
             name    - raster file name
             mapset  - mapset name, default: current
             type    - feature type
@@ -436,36 +543,52 @@ class Map:
 
             l_active - layer is active, will be rendered only if True
             l_hidden - layer is hidden, will be allways rendered
+            l_opacity - layer opacity [0-100]
+            l_mapfile  - File name of new layer
+            l_maskfile - Mask name of new layer
+            l_render- Make a image of this layer while adding
 
         Returns:
             Added layer if succeeded or None
         """
 
+        layer = Layer()
+
         if not mapset:
             mapset = self.Env["MAPSET"]
 
-        try:
-            self.Layers.append({
-                'l_type': "vector",     "name"      : name,
-                "mapset": mapset  ,     "type"      : type,
-                "display": display,     "attrcol"   : attrcol,
-                "icon"	: icon,         "size"	    : size,
-                "layer"	: layer,        "cats"	    : cats,
-                "where"	: where,        "width"	    : width,
-                "wcolumn": wcolumn,     "wscale"    : wscale,
-                "color"	: color,        "fcolor"    : fcolor,
-                "rgb_column": rgb_column, "llayer"  : llayer,
-                "lcolor": lcolor,       "bgcolor"   : bgcolor,
-                "bcolor": bcolor,       "lsize"	    : lsize,
-                "font"	: font,         "xref"	    : xref,
-                "yref"	: yref,         "minreg"    : minreg,
-                "maxreg": maxreg,       "colorfromtable": colorfromtable,
-                "randomcolor": randomcolor, "catsasid": catsasid,
-                "l_active"  :l_active,  "l_hidden"  : l_hidden,
-                })
-            return self.Layers[-1]
-        except:
-            return None
+        if l_opacity > 1:
+            l_opacity = float(l_opacity)/100
+
+        layer.l_type= "vector";         layer.name      = name
+        layer.mapset= mapset  ;         layer.type      = type
+        layer.display= display;         layer.attrcol   = attrcol
+        layer.icon	= icon;         layer.size	    = size
+        layer.layer	= layer;        layer.cats	    = cats
+        layer.where	= where;        layer.width	    = width
+        layer.wcolumn= wcolumn;         layer.wscale    = wscale
+        layer.color	= color;        layer.fcolor    = fcolor
+        layer.rgb_column= rgb_column;   layer.llayer  = llayer
+        layer.lcolor= lcolor;           layer.bgcolor   = bgcolor
+        layer.bcolor= bcolor;           layer.lsize	    = lsize
+        layer.font	= font;         layer.xref	    = xref
+        layer.yref	= yref;         layer.minreg    = minreg
+        layer.maxreg= maxreg;           layer.colorfromtable= colorfromtable
+        layer.randomcolor= randomcolor; layer.catsasid= catsasid
+        layer.l_active  =l_active;      layer.l_hidden  = l_hidden
+        layer.l_opacity = l_opacity
+        gtemp = self.__getTempfile()
+        layer.l_maskfile = gtemp+".pgm"
+        layer.l_mapfile = gtemp+".ppm"
+
+        self.Layers.append(layer)
+
+        if l_render:
+            if not layer.Render():
+                sys.stderr.write("Could not render layer %s@%s\n" %\
+                        (name,mapset))
+
+        return self.Layers[-1]
 
     def PopLayer(self, name=None, mapset=None, id=None):
         """
@@ -488,7 +611,7 @@ class Map:
         if name:
             retlayer = None
             for layer in self.Layers:
-                if layer['name'] == name and layer['mapset'] == mapset:
+                if layer.name == name and layer.mapset == mapset:
                     retlayer = layer
                     self.Layers.remove(layer)
                     return layer
@@ -514,7 +637,7 @@ class Map:
             mapset = self.Env['MAPSET']
 
         for i in range(0,len(self.Layers)):
-            if self.Layers[i]['name'] == name and self.Layers[i]['mapset'] == mapset:
+            if self.Layers[i].name == name and self.Layers[i].mapset == mapset:
                 return i
 
         return None
@@ -541,18 +664,19 @@ if __name__ == "__main__":
     os.system("display %s" % image)
 
     print "Adding vector layer"
-    map.AddVectorLayer("roads", color="red", width=3, mapset="PERMANENT")
+    map.AddVectorLayer("roads", color="red", width=3, mapset="PERMANENT",
+            l_opacity=50)
     image = map.Render()
     os.system("display %s" % image)
 
     print "Rendering only vector layer, and region, on shifted region"
-    map.Region["n"] ="4937550"
-    map.Region["s"] ="4904160"
-    map.Region["w"] ="577290"
-    map.Region["e"] ="621690"
+    #map.Region["n"] ="4937550"
+    #map.Region["s"] ="4904160"
+    #map.Region["w"] ="577290"
+    #map.Region["e"] ="621690"
     map.PopLayer("elevation.dem", mapset="PERMANENT")
     layer = map.GetLayerIndex("roads", mapset="PERMANENT")
-    map.Layers[layer]['color'] = "green"
+    map.Layers[layer].color = "green"
     map.RenderRegion["render"] = True
     image = map.Render()
     os.system("display %s" % image)
