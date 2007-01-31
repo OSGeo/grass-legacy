@@ -80,12 +80,26 @@ appears in the module's usage help section. For example:
 added to an <b>input</b> option would create the usage summary
 <tt>[input=filename]</tt>.
 
+
+<H2>AUTOMATED SCRIPT CREATION</H2>
+
+The flag <em>--script</em> added to a GRASS command, 
+To write out a <em>g.parser</em> boilerplate for easy prototyping of shell
+scripts, the flag <em>--script</em> can be added to any GRASS command. Example:
+
+<div class="code"><pre>
+v.in.db --script
+</pre></div>
+
+
 <H2>TRANSLATION</h2>
 
 <em>g.parser</em> provides some support for translating the options of scripts.
 If called with the -t switch before the script filename like this
 
-<div class="code"><pre>g.parser -t somescriptfile</pre></div>
+<div class="code"><pre>
+g.parser -t somescriptfile
+</pre></div>
 
 <em>g.parser</em> will print the text of the translatable options to
 <tt>stdout</tt>, one per line, and exit. This is for internal use within
