@@ -253,7 +253,7 @@ class BufferedWindow(wx.Window):
 	    opacstr = repr(",".join(self.opaclist))
 	compcmd = "g.pnmcomp in="+mapstr+" mask="+maskstr+" opacity="+opacstr+" background=255:255:255"\
 	    +" width="+repr(RenderMap.geom[0])+" height="+repr(RenderMap.geom[1])\
-	    +" out="+self.outfile
+	    +" output="+self.outfile
 	# run g.composite to get composite image
 	os.system(compcmd)
 
@@ -448,6 +448,8 @@ if __name__ == "__main__":
     import gettext
     gettext.install("gm_map") # replace with the appropriate catalog name
 
+    if not os.getenv("GRASS_ICONPATH"):
+        os.environ["GRASS_ICONPATH"]=os.getenv("GISBASE")+"/etc/gui/icons/"
     gm_map = MapApp(0)
     gm_map.MainLoop()
 
