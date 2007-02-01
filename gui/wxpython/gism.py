@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 import sys,os, subprocess
 
-gmpath = os.environ['GMPYPATH']
+gmpath = os.getenv('PYTHONSTARTUP')
 
 
 sys.path.append(gmpath)
@@ -697,6 +697,9 @@ if __name__ == "__main__":
     import gettext
     gettext.install("GMApp") # replace with the appropriate catalog name
 
+    
+    if not os.getenv("GRASS_ICONPATH"):
+        os.environ["GRASS_ICONPATH"]=os.getenv("GISBASE")+"/etc/gui/icons/"
 
     app = GMApp(0)
     app.MainLoop()

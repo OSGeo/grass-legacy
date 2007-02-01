@@ -115,6 +115,7 @@ class Render:
 	os.system("%s > /dev/null 2>&1" % command)
 
 	# clean
+        print grass_region
 	os.unsetenv("GRASS_REGION")
 	return self.mapFile, self.maskFile
 
