@@ -1,4 +1,5 @@
-import os
+import os,sys
+import utils
 
 # Authors: Michael Barton and Jachym Cepicky
 # COPYRIGHT:	(C) 1999 - 2007 by the GRASS Development Team
@@ -18,6 +19,66 @@ class Layer:
         l_maskfile  - Mask name of new layer
     """
 
+    def __renderRasterLayer(self):
+        """
+        Stores d.rast command with all parameters in the self.cmd variable
+        """
+         
+        try:
+            self.cmd = "d.rast -o map=%s@%s" % (self.name,self.mapset)
+
+            if self.catlist: self.cmd += " catlist=%s" % (self.catlist)
+            if self.vallist: self.cmd += " vallist=%s" % (self.vallist)
+            if self.invertCats: self.cmd +=" -i"
+        except StandardError, e:
+            sys.stderr.write("Could not render raster layer [%s]: %s\n" %\
+                    (self.name, str(e)))
+            self.cmd = None
+
+    def __renderVectorLayer(self):
+        """
+        Stores d.vect command with all parameters in the self.cmd variable
+        """
+
+        try:
+            self.cmd = "d.vect"
+            
+
+            if self.colorfromtable: self.cmd += " -a"
+            if self.randomcolor: self.cmd += " -c"
+            if self.catsasid:   self.cmd += " -i"
+
+            self.cmd += " map=%s@%s" % (self.name, self.mapset)
+
+            if self.type:   self.cmd += " type=%s" % (self.type)
+            if self.display: self.cmd += " display=%s" % (self.display)
+            if self.attrcol: self.cmd += " attrcol=%s" % (self.attrcol)
+            if self.icon: self.cmd += " icon=%s" % (self.icon)
+            if self.size: self.cmd += " size=%s" % (self.size)
+            if self.layer:  self.cmd += " layer=%s" % (self.layer)
+            if self.cats: self.cmd += " cats=%s" % (self.cats)
+            if self.where: self.cmd += " where=%s" % (self.where)
+            if self.width: self.cmd += " width=%s" % (self.width)
+            if self.wcolumn: self.cmd += " wcolumn=%s" % (self.wcolumn)
+            if self.wscale:  self.cmd += " wscale=%s" % (self.wscale)
+            if self.color: self.cmd += " color=%s" % (self.color)
+            if self.fcolor: self.cmd += " fcolor=%s" % (self.fcolor)
+            if self.rgb_column : self.cmd += " rgb_column=%s" % (self.rgb_column)
+            if self.llayer  : self.cmd += " llayer=%s" % (self.llayer)
+            if self.lcolor  : self.cmd += " lcolor=%s"% (self.lcolor)
+            if self.bgcolor : self.cmd += " bgcolor=%s"% (self.bgcolor)
+            if self.lsize   : self.cmd += " lsize=%s"% (self.lsize)
+            if self.font    : self.cmd += " font=%s"% (self.font)
+            if self.xref    : self.cmd += " xref=%s"% (self.xref)
+            if self.yref    : self.cmd += " yref=%s"% (self.yref)
+            if self.minreg  : self.cmd += " minreg=%s"% (self.minreg)
+            if self.maxreg  : self.cmd += " maxreg=%s"% (self.maxreg)
+        except StandardError, e:
+            sys.stderr.write("Could not render vector layer [%s]: %s\n" %\
+                    (self.name, e))
+            self.cmd = None
+
+
     def Render(self):
         """
         Runs all d.* commands.
@@ -26,44 +87,56 @@ class Layer:
             Name of file with rendered image or None
         """
     
-        cmd = ""
+        #
+        # create command variable
+        #
+        self.cmd = ""
+
+        #
+        # to be sure, set temporary file with layer and mask
+        #
+        if not self.l_mapfile:
+            gtemp = utils.GetTempfile()
+            self.l_maskfile = gtemp+".pgm"
+            self.l_mapfile = gtemp+".ppm"
         
-        os.environ["GRASS_PNGFILE"] = self.l_mapfile
-
         #
-        # Start monitor
-        #
-        if os.system("d.mon --quiet start=gism"):
-            print "Could not run d.mon start=gism"
-            return None
-
-        #
-        # Render layers
+        # prepare command for each layer
         #
         if self.l_type == "raster":
-            cmd = "d.rast -o map=%s@%s" % (self.name,self.mapset)
-            if self.catlist: cmd += " catlist=%s" % (self.catlist)
-            if self.vallist: cmd += " vallist=%s" % (self.vallist)
-
+            self.__renderRasterLayer()
+         
         elif self.l_type == "vector":
-            cmd = "d.vect map=%s@%s " % (self.name,self.mapset)
-            if self.display: cmd += " display=%s" % (self.display)
-            if self.attrcol: cmd += " attrcol=%s" % (self.attrcol)
-            if self.icon: cmd += " icon=%s" % (self.icon)
-            if self.size: cmd += " size=%s" % (self.size)
-            if self.cats: cmd += " cats=%s" % (self.cats)
-            if self.where: cmd += " where=%s" % (self.where)
-            if self.width: cmd += " width=%s" % (self.width)
-            if self.color: cmd += " color=%s" % (self.color)
-            if self.fcolor: cmd += " fcolor=%s" % (self.fcolor)
+            self.__renderVectorLayer()
         
         elif layer['l_type'] == "wms":
             print "Type wms is not supported yet"
         else:
             print "Type [%s] of layer [%s] is not supported yet" % (layer['l_type'], layer['name'])
 
-        if os.system(cmd):
-            print "Could not execute '%s'" % (cmd)
+        #
+        # Start monitor
+        #
+        os.environ["GRASS_PNGFILE"] = self.l_mapfile
+
+        if os.system("d.mon --quiet start=gism"):
+            print "Could not run d.mon start=gism"
+            return None
+
+        os.unsetenv("GRASS_PNGFILE")
+
+        #
+        # execute command
+        #
+        if not self.cmd:
+            sys.stderr.write("Could not render layer [%s] with command: #%s#" %\
+                    (self.name, self.cmd))
+            return None
+
+        if os.system(self.cmd):
+            print "Could not execute '%s'" % (self.cmd)
+            self.l_mapfile = None
+            self.l_maskfile = None
             return None
 
         #
@@ -72,7 +145,6 @@ class Layer:
         if os.system("d.mon --quiet stop=gism"):
             print "Could not run d.mon stop=gism"
             return None
-        os.unsetenv("GRASS_PNGFILE")
 
         return self.l_mapfile
 
@@ -130,7 +202,7 @@ class Map:
         self.Layers = []# stack of commands for render map
         self.Env = {} # enviroment variables, like MAPSET, LOCATION_NAME, etc.
         self.Verbosity = 0
-        self.MapFile = self.__getTempfile()+".png"
+        self.MapFile = utils.GetTempfile()+".png"
 
         self.RenderRegion = {
                 "render"    :False,   # Should the region be displayed?
@@ -218,25 +290,6 @@ class Map:
 	    val = val.replace(";","")
 	    val = val.replace("'","")
             self.Env[key] = val
-
-    def __getTempfile(self, pref=None):
-        """
-        Creates GRASS temporary file using defined prefix.
-
-        Returns:
-            Path to file name (string) or None
-        """
-
-        tempfile = os.popen("g.tempfile pid=%d" % 
-                os.getpid()).readlines()[0].strip()
-
-        if not tempfile:
-            return None
-        else:
-            path,file = os.path.split(tempfile)
-            if pref:
-                file = "%s%s" % (pref,file)
-            return os.path.join(path,file)
 
     def GetRegion(self):
         """
@@ -371,25 +424,49 @@ class Map:
         masks =[]
         opacities = []
 
-   	for layer in self.Layers:
-            if force:
-                layer.Render()
-	    # add image to compositing list
-	    maps.append(layer.l_mapfile)
-	    masks.append(layer.l_maskfile)
-	    opacities.append(str(layer.l_opacity))
+        tmp_region = os.getenv("GRASS_REGION")
+        os.environ["GRASS_REGION"] = self.SetRegion()
+        try:
+            for layer in self.Layers:
+                
+                # Render if there is no mapfile
+                if layer.l_mapfile == None:
+                    layer.Render()
+                
+                # Redraw layer content
+                if force:
+                    if not layer.Render():
+                        continue
+                # add image to compositing list
+                maps.append(layer.l_mapfile)
+                masks.append(layer.l_maskfile)
+                opacities.append(str(layer.l_opacity))
 
-        mapstr = ",".join(maps)
-        maskstr = ",".join(masks)
-        opacstr = repr(",".join(opacities))
-	compcmd = "g.pnmcomp in="+mapstr+" mask="+maskstr+" opacity="+opacstr+" background=255:255:255"\
-	    +" width="+str(self.Width)+" height="+str(self.Height)\
-	    +" output="+self.MapFile
-	# run g.composite to get composite image
-        if os.system(compcmd):
-            sys.stderr.write("Could not run g.pnmcomp\n")
- 
-        return self.MapFile
+            # make arrays to strings
+            mapstr = ",".join(maps)
+            maskstr = ",".join(masks)
+            opacstr = repr(",".join(opacities))
+            
+            # compose command
+            compcmd = "g.pnmcomp in="+mapstr+" mask="+maskstr+" opacity="+opacstr+" background=255:255:255"\
+                +" width="+str(self.Width)+" height="+str(self.Height)\
+                +" output="+self.MapFile
+
+
+            # run g.composite to get composite image
+            if os.system(compcmd):
+                sys.stderr.write("Could not run g.pnmcomp\n")
+                raise Exception(compcmd)
+    
+            os.unsetenv("GRASS_REGION")
+            if tmp_region:
+                os.environ["GRASS_REGION"] = tmp_region
+            return self.MapFile
+        except Exception, e:
+            os.unsetenv("GRASS_REGION")
+            if tmp_region:
+                os.environ["GRASS_REGION"] = tmp_region
+            return None
 
     def AddRasterLayer(self, name, mapset=None, catlist=None,
             vallist=None, invertCats=False, l_active=True, l_hidden=False,
@@ -433,7 +510,7 @@ class Map:
         layer.l_active	= l_active
         layer.l_hidden	= l_hidden
         layer.l_opacity = l_opacity
-        gtemp = self.__getTempfile()
+        gtemp = utils.GetTempfile()
         layer.l_maskfile = gtemp+".pgm"
         layer.l_mapfile = gtemp+".ppm"
 
@@ -483,7 +560,7 @@ class Map:
         layer.l_active	= l_active
         layer.l_hidden	= l_hidden
         layer.l_opacity	= l_opacity
-        gtemp = self.__getTempfile()
+        gtemp = utils.GetTempfile()
         layer.l_maskfile = gtemp+".pgm"
         layer.l_mapfile = gtemp+".ppm"
         
@@ -552,7 +629,7 @@ class Map:
             Added layer if succeeded or None
         """
 
-        layer = Layer()
+        maplayer = Layer()
 
         if not mapset:
             mapset = self.Env["MAPSET"]
@@ -560,31 +637,31 @@ class Map:
         if l_opacity > 1:
             l_opacity = float(l_opacity)/100
 
-        layer.l_type= "vector";         layer.name      = name
-        layer.mapset= mapset  ;         layer.type      = type
-        layer.display= display;         layer.attrcol   = attrcol
-        layer.icon	= icon;         layer.size	    = size
-        layer.layer	= layer;        layer.cats	    = cats
-        layer.where	= where;        layer.width	    = width
-        layer.wcolumn= wcolumn;         layer.wscale    = wscale
-        layer.color	= color;        layer.fcolor    = fcolor
-        layer.rgb_column= rgb_column;   layer.llayer  = llayer
-        layer.lcolor= lcolor;           layer.bgcolor   = bgcolor
-        layer.bcolor= bcolor;           layer.lsize	    = lsize
-        layer.font	= font;         layer.xref	    = xref
-        layer.yref	= yref;         layer.minreg    = minreg
-        layer.maxreg= maxreg;           layer.colorfromtable= colorfromtable
-        layer.randomcolor= randomcolor; layer.catsasid= catsasid
-        layer.l_active  =l_active;      layer.l_hidden  = l_hidden
-        layer.l_opacity = l_opacity
-        gtemp = self.__getTempfile()
-        layer.l_maskfile = gtemp+".pgm"
-        layer.l_mapfile = gtemp+".ppm"
+        maplayer.l_type= "vector";          maplayer.name      = name
+        maplayer.mapset= mapset  ;          maplayer.type      = type
+        maplayer.display= display;          maplayer.attrcol   = attrcol
+        maplayer.icon	= icon;             maplayer.size	    = size
+        maplayer.layer	= layer;            maplayer.cats	    = cats
+        maplayer.where	= where;            maplayer.width	    = width
+        maplayer.wcolumn= wcolumn;          maplayer.wscale    = wscale
+        maplayer.color	= color;            maplayer.fcolor    = fcolor
+        maplayer.rgb_column= rgb_column;    maplayer.llayer  = llayer
+        maplayer.lcolor= lcolor;            maplayer.bgcolor   = bgcolor
+        maplayer.bcolor= bcolor;            maplayer.lsize	    = lsize
+        maplayer.font	= font;             maplayer.xref	    = xref
+        maplayer.yref	= yref;             maplayer.minreg    = minreg
+        maplayer.maxreg= maxreg;            maplayer.colorfromtable= colorfromtable
+        maplayer.randomcolor= randomcolor;  maplayer.catsasid= catsasid
+        maplayer.l_active  =l_active;       maplayer.l_hidden  = l_hidden
+        maplayer.l_opacity = l_opacity
+        gtemp = utils.GetTempfile()
+        maplayer.l_maskfile = gtemp+".pgm"
+        maplayer.l_mapfile = gtemp+".ppm"
 
-        self.Layers.append(layer)
+        self.Layers.append(maplayer)
 
         if l_render:
-            if not layer.Render():
+            if not maplayer.Render():
                 sys.stderr.write("Could not render layer %s@%s\n" %\
                         (name,mapset))
 
@@ -670,13 +747,13 @@ if __name__ == "__main__":
     os.system("display %s" % image)
 
     print "Rendering only vector layer, and region, on shifted region"
-    #map.Region["n"] ="4937550"
-    #map.Region["s"] ="4904160"
-    #map.Region["w"] ="577290"
-    #map.Region["e"] ="621690"
+    map.Region["n"] ="4937550"
+    map.Region["s"] ="4904160"
+    map.Region["w"] ="577290"
+    map.Region["e"] ="621690"
     map.PopLayer("elevation.dem", mapset="PERMANENT")
     layer = map.GetLayerIndex("roads", mapset="PERMANENT")
     map.Layers[layer].color = "green"
-    map.RenderRegion["render"] = True
-    image = map.Render()
+    #map.RenderRegion["render"] = True
+    image = map.Render(force=True)
     os.system("display %s" % image)
