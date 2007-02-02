@@ -4,6 +4,8 @@ import utils
 # Authors: Michael Barton and Jachym Cepicky
 # COPYRIGHT:	(C) 1999 - 2007 by the GRASS Development Team
 
+DEBUG = False
+
 class Layer:
     """
     This class servs for storing map layers to be displayed
@@ -76,8 +78,6 @@ class Layer:
         except StandardError, e:
             sys.stderr.write("Could not render vector layer [%s]: %s\n" %\
                     (self.name, e))
-            self.cmd = None
-
 
     def Render(self):
         """
@@ -90,6 +90,7 @@ class Layer:
         #
         # create command variable
         #
+
         self.cmd = ""
 
         #
@@ -282,7 +283,7 @@ class Map:
             sys.stderr.write("GISBASE not set, you have to be in running GRASS session!\n")
             sys.exit(1)
 
-        os.system("d.mon --quiet stop=gism")
+        #os.system("d.mon --quiet stop=gism")
 
         for line in os.popen("g.gisenv").readlines():
             line = line.strip()
@@ -426,6 +427,11 @@ class Map:
 
         tmp_region = os.getenv("GRASS_REGION")
         os.environ["GRASS_REGION"] = self.SetRegion()
+        os.environ["GRASS_WIDTH"] = str(self.Width)
+        os.environ["GRASS_HEIGHT"] = str(self.Height)
+
+        if DEBUG:
+            print ("mapimg.py: Map: Render: force=%s" % (force))
         try:
             for layer in self.Layers:
                 
@@ -736,7 +742,6 @@ if __name__ == "__main__":
     image = map.Render()
     if not image:
         print "Something went wrong, could not render image"
-        import sys
         sys.exit(1)
     os.system("display %s" % image)
 
