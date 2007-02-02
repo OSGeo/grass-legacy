@@ -332,7 +332,7 @@ main (int argc,char *argv[])
 	nrows_ncols = (double) nrows*ncols;
 	
 	if ((nrows_ncols) > 30000000) /* about 5500x5500 cells */
-	    G_fatal_error (_("Interpolation: The region resolution is too high: %lf cells. " 
+	    G_fatal_error (_("Interpolation: The region resolution is too high: %d cells. " 
 			"Consider to change it."), nrows_ncols);
 
 	/*raster_matrix = G_alloc_fmatrix (nrows, ncols);  Is it neccesary a double precision??*/
@@ -426,6 +426,7 @@ main (int argc,char *argv[])
 	
 	    if (npoints > 0) {				/*  */
 		int i;
+		double *obs_mean;
 		nparameters = nsplx * nsply;
 		BW = P_get_BandWidth (bilin, nsply);
 
@@ -436,13 +437,11 @@ main (int argc,char *argv[])
 		obsVect = G_alloc_matrix (npoints, 3);	/* Observation vector */
 		Q = G_alloc_vector (npoints);		/* "a priori" var-cov matrix */
 		lineVect = G_alloc_ivector (npoints);	/*  */
+		obs_mean = G_alloc_vector (npoints);
 
 		if (bspline_field <= 0)
 		    mean = P_Mean_Calc (&elaboration_reg, observ, npoints);
-		else mean = 0.0;
 
-		G_debug (0,"Interpolation: (%d,%d): mean=%lf", subregion_row, subregion_col, mean);
-		
 		for (i=0; i<npoints; i++) {		/* Setting obsVect vector & Q matrix */
 		    double dval;
 	    
@@ -465,9 +464,11 @@ main (int argc,char *argv[])
 			if ( ctype == DB_C_TYPE_INT ) {
 			    ret = db_CatValArray_get_value_int ( &cvarr, cat, &ival );
 			    obsVect[i][2] = ival;
+			    obs_mean [i] = dval;
 			} else {		 /* DB_C_TYPE_DOUBLE */
 			    ret = db_CatValArray_get_value_double ( &cvarr, cat, &dval );
 			    obsVect[i][2] = dval;
+			    obs_mean [i] = dval;
 			}
 			if ( ret != DB_OK ) {
 			    G_warning (_("Interpolation: (%d,%d): No record for point (cat = %d)"), 
@@ -476,8 +477,20 @@ main (int argc,char *argv[])
 			}
 		    }
 
-		    else obsVect[i][2] = observ[i].coordZ - mean; 
+		    else { 
+			obsVect[i][2] = observ[i].coordZ; 
+			obs_mean [i] = observ[i].coordZ;
+		    } /*obsVect[i][2] = observ[i].coordZ - mean; */
 		}
+
+		/* Mean calculation for every point*/
+		if (bspline_field > 0)
+		    mean = calc_mean (obs_mean, npoints);
+
+		G_debug (0,"Interpolation: (%d,%d): mean=%lf", subregion_row, subregion_col, mean);
+		
+		for (i=0; i<npoints; i++)
+		    obsVect[i][2] -= mean;
 
 		G_free (observ);
 
