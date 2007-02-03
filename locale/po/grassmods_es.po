@@ -1,4 +1,4 @@
-# translation of grassmods_es.po to Español
+# translation of grassmods_es.po to español
 # Spanish translation of grassmods.pot
 # This file is distributed under the same license as the GRASS package.
 # Copyright (C) 2004 GRASS Development Team
@@ -13,9 +13,9 @@ msgstr ""
 "Project-Id-Version: grassmods_es\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2007-01-12 16:39+0100\n"
-"PO-Revision-Date: 2007-01-14 20:17+0100\n"
-"Last-Translator: Enrique Cerrillo Cuenca <ecerrillo@unex.es>\n"
-"Language-Team: Español <en@li.org>\n"
+"PO-Revision-Date: 2007-02-03 00:25+0100\n"
+"Last-Translator: Carlos Dávila <carluti@users.sourceforge.net>\n"
+"Language-Team: español <grass-es@grass.itc.it>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=ISO-8859-1\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -27,9 +27,9 @@ msgstr ""
 #: ../db/base/columns.c:33 ../db/base/createdb.c:24 ../db/base/describe.c:34
 #: ../db/base/droptable.c:25 ../db/base/execute.c:52 ../db/base/select.c:63
 #: ../db/base/tables.c:34
-#, fuzzy, c-format
+#, c-format
 msgid "Cannot start driver <%s>"
-msgstr "Imposible iniciar el piloto '%s'."
+msgstr "No se puede iniciar el controlador <%s>"
 
 #: ../db/base/columns.c:71 ../db/base/describe.c:89
 msgid "table name"
@@ -38,7 +38,7 @@ msgstr "nombre de tabla"
 #: ../db/base/columns.c:78 ../db/base/databases.c:62 ../db/base/describe.c:96
 #: ../db/base/select.c:197 ../db/base/tables.c:71
 msgid "driver name"
-msgstr "nombre de piloto"
+msgstr "nombre del controlador"
 
 #: ../db/base/columns.c:86 ../db/base/describe.c:104 ../db/base/select.c:188
 #: ../db/base/tables.c:79
@@ -50,9 +50,8 @@ msgstr "nombre de la base de datos"
 #: ../db/base/describe.c:110 ../db/base/drivers.c:55 ../db/base/dropdb.c:60
 #: ../db/base/droptable.c:72 ../db/base/execute.c:95 ../db/base/select.c:248
 #: ../db/base/tables.c:93 ../db/db.login/main.c:29
-#, fuzzy
 msgid "database, SQL"
-msgstr "nombre de la base de datos"
+msgstr "base de datos, SQL"
 
 #: ../db/base/columns.c:93
 msgid "list all columns for a given table."
@@ -64,7 +63,7 @@ msgstr "Muestra los parámetros de conexión y termina"
 
 #: ../db/base/connect.c:35
 msgid "driver name:"
-msgstr "nombre del piloto:"
+msgstr "nombre del controlador:"
 
 #: ../db/base/connect.c:43
 msgid "Database name:"
@@ -74,18 +73,15 @@ msgstr "Base de datos:"
 msgid ""
 "Database schema. Don't use this option if schemas are not supported by "
 "driver/database server."
-msgstr ""
-"Esquema de la base de datos. No use esta opción si el piloto o el servidor "
-"no manejan esquemas."
+msgstr "Esquema de la base de datos. No use esta opción si el controlador/servidor de base de datos no maneja esquemas."
 
 #: ../db/base/connect.c:61
 msgid "Default group of database users to which select privilege is granted."
 msgstr "Grupo de usuarios por omisión que tiene privilegios de selección."
 
 #: ../db/base/connect.c:82
-#, fuzzy
 msgid "Prints/sets general DB connection for current mapset and exits."
-msgstr "Muestra los parámetros de conexión y termina"
+msgstr "Imprime/establece la conexión general a la base de datos para el directorio de mapas actual y sale."
 
 #: ../db/base/connect.c:117
 msgid "No db connection settings defined. Set with db.connect"
@@ -95,43 +91,39 @@ msgstr "No se definió los parámetros de conexión. Use db.connect"
 msgid ""
 "Copy a table. Either 'from_table' (optionaly with 'where') can be used or "
 "'select' option, but not 'from_table' and 'select' at the same time."
-msgstr ""
+msgstr "Copiar una tabla. Se puede usar tanto la opción 'from_table' (opcionalmente con 'where') como 'select', pero no ambas al mismo tiempo."
 
 #: ../db/base/copy.c:36 ../vector/v.in.db/main.c:59
-#, fuzzy
 msgid "Input driver name"
-msgstr "nombre de tabla"
+msgstr "Nombre de controlador de entrada"
 
 #: ../db/base/copy.c:44 ../vector/v.in.db/main.c:66
-#, fuzzy
 msgid "Input database name"
-msgstr "nombre de tabla"
+msgstr "Nombre de la base de datos de entrada"
 
 #: ../db/base/copy.c:52
-#, fuzzy
 msgid "Input table name (only, if 'select' is not used)"
-msgstr "nombre de tabla"
+msgstr "Nombre de la tabla de entrada (sólo si no se usa 'select')"
 
 #: ../db/base/copy.c:59
-#, fuzzy
 msgid "Output driver name"
-msgstr "nombre de tabla"
+msgstr "Nombre del controlador de salida"
 
 #: ../db/base/copy.c:67
-#, fuzzy
 msgid "Output database name"
-msgstr "nombre de tabla"
+msgstr "Nombre de la base de datos de salida"
 
 #: ../db/base/copy.c:75
-#, fuzzy
 msgid "Output table name"
-msgstr "nombre de tabla"
+msgstr "Nombre de tabla de salida"
 
 #: ../db/base/copy.c:81
 msgid ""
 "Optional where condition (without WHERE key word), e.g.:\n"
 "\t\tobec = 'Liptakov'"
 msgstr ""
+"Condición opcional dónde (sin la palabra clave WHERE), ej.:\n"
+"\t\tobec = 'Liptakov'"
 
 #: ../db/base/copy.c:88
 msgid ""
@@ -139,27 +131,29 @@ msgid ""
 "g.:\n"
 "\t\tSELECT dedek FROM starobince WHERE obec = 'Frimburg'"
 msgstr ""
+"Sentencia select completa (sólo si no se usa 'from_table' y 'where'), ej.:\n"
+"\t\tSELECT dedek FROM starobince WHERE obec = 'Frimburg'"
 
 #: ../db/base/copy.c:96
 msgid "Cannot combine 'from_table' and 'select' options"
-msgstr ""
+msgstr "No se pueden combinar las opciones 'from_table' y 'select'"
 
 #: ../db/base/copy.c:108
 msgid "Either 'from_table' or 'select' option must be given."
-msgstr ""
+msgstr "Se debe proporcionar la opción 'from_table' o 'select'."
 
 #: ../db/base/copy.c:111
 msgid "Cannot combine 'select' and 'where' options"
-msgstr ""
+msgstr "No se pueden combinar las opciones 'select' y 'where'"
 
 #: ../db/base/copy.c:119
 msgid "Copy table failed"
-msgstr ""
+msgstr "Falló al copiar la tabla"
 
 #: ../db/base/databases.c:34
 #, c-format
 msgid "Cannot start driver '%s'."
-msgstr "Imposible iniciar el piloto '%s'."
+msgstr "Imposible iniciar el controlador '%s'."
 
 #: ../db/base/databases.c:37
 msgid "Cannot list databases."
@@ -167,11 +161,11 @@ msgstr "No es posible listar las bases de datos."
 
 #: ../db/base/databases.c:69
 msgid "database location"
-msgstr ""
+msgstr "localización de la base de datos"
 
 #: ../db/base/databases.c:75
 msgid "List all databases for a given driver and location."
-msgstr ""
+msgstr "Listar todas las bases de datos para un controlador y localización dados."
 
 #: ../db/base/describe.c:47
 msgid "Cannot describe table"
@@ -179,11 +173,11 @@ msgstr "Imposible describir la tabla"
 
 #: ../db/base/describe.c:83
 msgid "print column names only instead of full column descriptions"
-msgstr ""
+msgstr "imprimir sólo nombres de columna en vez de descripciones completas de columna"
 
 #: ../db/base/describe.c:111
 msgid "Describe a table (in detail)."
-msgstr ""
+msgstr "Describir una tabla (en detalle)."
 
 #: ../db/base/drivers.c:24
 msgid "Error trying to read dbmscap file\n"
@@ -191,54 +185,51 @@ msgstr "Error de lectura en el archivo dbmscap\n"
 
 #: ../db/base/drivers.c:47
 msgid "Full output"
-msgstr ""
+msgstr "Salida completa"
 
 #: ../db/base/drivers.c:51
-#, fuzzy
 msgid "print drivers and exit"
-msgstr "Muestra los parámetros de conexión y termina"
+msgstr "imprimir controladores y salir"
 
 #: ../db/base/drivers.c:56
 msgid "List all database drivers."
-msgstr "Listar todos los pilotos de base de datos."
+msgstr "Listar todos los controladores de bases de datos."
 
 #: ../db/base/dropdb.c:24
-#, fuzzy, c-format
+#, c-format
 msgid "Cannot start driver <%s>."
-msgstr "Imposible iniciar el piloto '%s'."
+msgstr "No se puede iniciar el controlador <%s>."
 
 #: ../db/base/execute.c:68 ../db/base/execute.c:72
 #, c-format
 msgid "Error while executing: \"%s\""
-msgstr ""
+msgstr "Error mientras se ejecutaba: \"%s\""
 
 #: ../db/base/execute.c:96
 msgid "Execute any SQL statement."
-msgstr ""
+msgstr "Ejecutar cualquier sentencia SQL."
 
 #: ../db/base/execute.c:103
 msgid "File containing SQL statements"
-msgstr ""
+msgstr "Archivo que contiene sentencias SQL"
 
 #: ../db/base/execute.c:111 ../db/db.login/main.c:38
 #: ../vector/lidar/v.lidar.correction/main.c:106
 #: ../vector/lidar/v.lidar.edgedetection/main.c:91
 #: ../vector/lidar/v.lidar.growing/main.c:107 ../vector/v.db.connect/main.c:62
-#, fuzzy
 msgid "Driver name"
-msgstr "nombre de piloto"
+msgstr "Nombre de controlador"
 
 #: ../db/base/execute.c:119 ../db/db.login/main.c:46
 #: ../vector/lidar/v.lidar.correction/main.c:96
 #: ../vector/lidar/v.lidar.edgedetection/main.c:81
 #: ../vector/lidar/v.lidar.growing/main.c:97 ../vector/v.db.connect/main.c:71
-#, fuzzy
 msgid "Database name"
-msgstr "Base de datos:"
+msgstr "Nombre de la base de datos"
 
 #: ../db/base/execute.c:125
 msgid "Ignore SQL errors and continue"
-msgstr ""
+msgstr "Ignorar errores SQL y continuar"
 
 #: ../db/base/select.c:182
 msgid "Table name, select all from this table"
@@ -248,35 +239,35 @@ msgstr "Nombre de tabla, seleccionar todo desde esta tabla"
 msgid ""
 "SQL select statement, for example: 'select * from rybniky where kapri = "
 "'hodne'"
-msgstr ""
+msgstr "Sentencia SQL select, por ejemplo: 'select * from rybniky where kapri = 'hodne'"
 
 #: ../db/base/select.c:211
 msgid "output field separator"
-msgstr ""
+msgstr "separador de campo de salida"
 
 #: ../db/base/select.c:218
 msgid "output vertical record separator"
-msgstr ""
+msgstr "separador de registro vertical de salida"
 
 #: ../db/base/select.c:224
 msgid "null value indicator"
-msgstr ""
+msgstr "indicador de valor nulo"
 
 #: ../db/base/select.c:231
 msgid "filename with sql statement"
-msgstr ""
+msgstr "nombre de archivo con sentencia SQL"
 
 #: ../db/base/select.c:236
 msgid "do not include column names in output"
-msgstr ""
+msgstr "no incluir nombres de columna en la salida"
 
 #: ../db/base/select.c:240
 msgid "describe query only (don't run it)"
-msgstr ""
+msgstr "sólo describir la consulta (no ejecutarla)"
 
 #: ../db/base/select.c:244
 msgid "vertical output (instead of horizontal)"
-msgstr ""
+msgstr "salida vertical (en vez de horizontal)"
 
 #: ../db/base/select.c:249
 msgid "Select data from database."
@@ -284,27 +275,27 @@ msgstr "Seleccionar datos desde una base."
 
 #: ../db/base/tables.c:85
 msgid "print tables and exit"
-msgstr ""
+msgstr "imprimir tablas y salir"
 
 #: ../db/base/tables.c:89
 msgid "system tables instead of user tables"
-msgstr ""
+msgstr "tablas de sistema en vez de tablas de usuario"
 
 #: ../db/base/tables.c:94
 msgid "List all tables for a given database."
-msgstr ""
+msgstr "Listar todas las tablas para una base de datos dada."
 
 #: ../db/db.login/main.c:30
 msgid "Set user/password for driver/database"
-msgstr ""
+msgstr "Establecer usuario/contraseña para controlador/base de datos"
 
 #: ../db/db.login/main.c:54
 msgid "User"
-msgstr ""
+msgstr "Usuario"
 
 #: ../db/db.login/main.c:61
 msgid "Password"
-msgstr ""
+msgstr "Contraseña"
 
 #: ../db/db.login/main.c:76
 #, c-format
@@ -313,20 +304,22 @@ msgid ""
 "Enter database password for connection\n"
 "<%s:%s:user=%s>\n"
 msgstr ""
+"\n"
+"Introducir contraseña de la base de datos para la conexión\n"
+"<%s:%s:usuario=%s>\n"
 
 #: ../db/db.login/main.c:77
-#, fuzzy, c-format
+#, c-format
 msgid "Hit RETURN to cancel request\n"
-msgstr "a"
+msgstr "Pulsar INTRO para cancelar la solicitud\n"
 
 #: ../db/db.login/main.c:85
 msgid "Exiting. Not changing current settings"
-msgstr ""
+msgstr "Saliendo. No se cambian las configuraciones actuales"
 
 #: ../db/db.login/main.c:88
-#, fuzzy
 msgid "New password set."
-msgstr "Nuevo."
+msgstr "Establecida la nueva contraseña."
 
 #: ../db/db.login/main.c:95
 msgid "Cannot set user/password"
@@ -334,146 +327,135 @@ msgstr "Imposible encontrar usuario/clave"
 
 #: ../db/db.login/main.c:99
 msgid "The password was stored in file."
-msgstr ""
+msgstr "La contraseña se guardó en archivo."
 
 #: ../db/drivers/mysql/cursor.c:46
-#, fuzzy
 msgid "Cannot allocate cursor."
-msgstr "No es posible abrir el cursor de selección"
+msgstr "No se puede localizar el cursor."
 
 #: ../db/drivers/mysql/cursor.c:55
-#, fuzzy
 msgid "Cannot ad new token."
-msgstr "Imposible leer la información del campo"
+msgstr "No se puede añadir nuevo marcador."
 
 #: ../db/drivers/mysql/db.c:66 ../db/drivers/mysql/db.c:118
-#, fuzzy
 msgid "Cannot connect to MySQL: "
-msgstr "No es posible insertar data en la tabla: %s"
+msgstr "No se puede conectar con MySQL: "
 
 #: ../db/drivers/mysql/db.c:83
-#, fuzzy
 msgid "Cannot parse MySQL embeded database name"
-msgstr "No es posible abrir la base de datos %s"
+msgstr "No se puede analizar el nombre de la base de datos empotrada en MySQL"
 
 #: ../db/drivers/mysql/db.c:100
 msgid "Cannot initialize MySQL embeded server"
-msgstr ""
+msgstr "No se puede inicializar el servidor empotrado en MySQL"
 
 #: ../db/drivers/mysql/describe.c:120
-#, fuzzy, c-format
+#, c-format
 msgid "MySQL driver: column '%s', type %d is not supported"
-msgstr "Piloto pg: columna '%s', tipo %d no manejado"
+msgstr "Controlador MySQL: columna '%s', tipo %d no soportado"
 
 #: ../db/drivers/mysql/describe.c:126
 #, c-format
 msgid ""
 "column '%s' : type BIGINT is stored as integer (4 bytes) some data may be "
 "damaged"
-msgstr ""
+msgstr "columna '%s' : el tipo BIGINT se guarda como entero (4 bytes) algunos datos pueden deteriorarse"
 
 #: ../db/drivers/mysql/error.c:29
 msgid "DBMI-MySQL driver error:\n"
-msgstr ""
+msgstr "Error del controlador DBMI-MySQL:\n"
 
 #: ../db/drivers/mysql/fetch.c:34
-#, fuzzy
 msgid "Cursor not found"
-msgstr "mapa <%s> no encontrado"
+msgstr "No se encuentra el cursor"
 
 #: ../db/drivers/mysql/fetch.c:53
 msgid "Cursor position is not supported by MySQL driver"
-msgstr ""
+msgstr "La posición del cursor no está soportada por el controlador MySQL"
 
 #: ../db/drivers/mysql/fetch.c:180
-#, fuzzy
 msgid "Cannot scan timestamp: "
-msgstr "No es posible crear la tabla: %s"
+msgstr "No se puede escanear el indicador de tiempo: "
 
 #: ../db/drivers/mysql/fetch.c:188
 msgid "Unknown timestamp format: "
-msgstr ""
+msgstr "Formato de indicador de tiempo desconocido: "
 
 #: ../db/drivers/mysql/fetch.c:202
-#, fuzzy
 msgid "Cannot scan date: "
-msgstr "No es posible recuperar datos"
+msgstr "No se puede escanear la fecha: "
 
 #: ../db/drivers/mysql/fetch.c:215
-#, fuzzy
 msgid "Cannot scan time: "
-msgstr "No es posible crear la tabla: %s"
+msgstr "No se puede escanear la hora: "
 
 #: ../db/drivers/mysql/fetch.c:230
-#, fuzzy
 msgid "Cannot scan datetime: "
-msgstr "No es posible crear la tabla: %s"
+msgstr "No se pueden escanear fecha y hora: "
 
 #: ../db/drivers/mysql/listtab.c:37
-#, fuzzy
 msgid "Cannot get list of tables:\n"
-msgstr "No es posible insertar data en la tabla: %s"
+msgstr "No se puede obtener la lista de tablas:\n"
 
 #: ../db/drivers/mysql/parse.c:59
 msgid "Wrong port number in MySQL database definition: "
-msgstr ""
+msgstr "Número de puerto incorrecto en la definición de la base de datos MySQL: "
 
 #: ../db/drivers/mysql/parse.c:72 ../db/drivers/postgres/parse.c:53
 msgid "'user' in database definition is not supported, use db.login"
-msgstr ""
+msgstr "'usuario' no está soportado en las definiciones de la base de datos. Use db.login"
 
 #: ../db/drivers/mysql/parse.c:77 ../db/drivers/postgres/parse.c:57
 msgid "'password' in database definition is not supported, use db.login"
-msgstr ""
+msgstr "'contraseña' no está soportado en las definiciones de la base de datos. Use db.login"
 
 #: ../db/drivers/mysql/parse.c:82
 msgid "Unknown option in database definition for "
-msgstr ""
+msgstr "Opción desconocida en la definición de la base de datos para "
 
 #: ../db/drivers/mysql/select.c:44
-#, fuzzy
 msgid "Cannot select data: \n"
-msgstr "Imposible seleccionar datos de la tabla"
+msgstr "Imposible seleccionar datos: \n"
 
 #: ../db/drivers/ogr/describe.c:88
 #, c-format
 msgid "OGR driver: column '%s', OGR type %d  is not supported"
-msgstr "Piloto OGR: columna '%s', tipo OGR %d no manejado"
+msgstr "Controlador OGR: columna '%s', tipo OGR %d no soportado"
 
 #: ../db/drivers/ogr/describe.c:144
-#, fuzzy, c-format
+#, c-format
 msgid ""
 "column '%s', type 'string': unknown width -> stored as varchar(250) some "
 "data may be lost"
-msgstr "desconocido"
+msgstr "columna '%s', tipo 'cadena': anchura desconocida ->guardada como varchar(250). Algunos datos pueden perderse"
 
 #: ../db/drivers/ogr/describe.c:152 ../db/drivers/ogr/fetch.c:124
 msgid "Unknown type"
 msgstr "Tipo desconocido"
 
 #: ../db/drivers/postgres/describe.c:101
-#, fuzzy, c-format
+#, c-format
 msgid "pg driver: PostGIS column '%s', type 'geometry'  will not be converted"
-msgstr "Piloto pg: columna '%s', tipo %d no manejado"
+msgstr "Controlador pg: columna PostGIS '%s', el tipo 'geometría' no se convertirá"
 
 #: ../db/drivers/postgres/describe.c:105
 #, c-format
 msgid "pg driver: column '%s', type %d  is not supported"
-msgstr "Piloto pg: columna '%s', tipo %d no manejado"
+msgstr "Controlador pg: columna '%s', tipo %d no soportado"
 
 #: ../db/drivers/postgres/describe.c:111
 #, c-format
 msgid ""
 "column '%s' : type int8 (bigint) is stored as integer (4 bytes) some data "
 "may be damaged"
-msgstr ""
+msgstr "columna '%s' : tipo int8 (bigint) se guarda como entero (4 bytes). Algunos datos pueden deteriorarse"
 
 #: ../db/drivers/postgres/describe.c:115
 #, c-format
 msgid ""
 "column '%s' : type character varying is stored as varchar(250) some data may "
 "be lost"
-msgstr ""
+msgstr "columna '%s' : el tipo carácter variante se guarda como varchar(250). Algunos datos pueden perderse"
 
 #: ../db/drivers/postgres/describe.c:121
 #, c-format
@@ -481,28 +463,29 @@ msgid ""
 "column '%s' : type bool (boolean) is stored as char(1), values: 0 (false), 1 "
 "(true)"
 msgstr ""
+"columna '%s' : el tipo bool (booleano) se guarda como char(1), valores: 0 (falso), 1 "
+"(verdadero)"
 
 #: ../db/drivers/postgres/fetch.c:169
 msgid "Cannot recognize boolean value"
-msgstr ""
+msgstr "No se puede reconocer el valor booleano"
 
 #: ../db/drivers/postgres/parse.c:61
 msgid "Unknown option in database definition for PostgreSQL: "
-msgstr ""
+msgstr "Opción desconocida en la definición de la base de datos para PostgreSQL: "
 
 #: ../db/drivers/sqlite/describe.c:136
-#, fuzzy, c-format
+#, c-format
 msgid "SQLite driver: column '%s', SQLite type %d  is not supported"
-msgstr "Piloto pg: columna '%s', tipo %d no manejado"
+msgstr "Controlador SQLite: columna '%s', el tipo SQLite %d no está soportado"
 
 #: ../doc/raster/r.example/main.c:84 ../doc/vector/v.example/main.c:43
 msgid "keyword1, keyword2, keyword3"
-msgstr ""
+msgstr "keyword1, keyword2, keyword3"
 
 #: ../doc/raster/r.example/main.c:85 ../doc/vector/v.example/main.c:44
-#, fuzzy
 msgid "My first raster module"
-msgstr "Nombre del mapa de entrada existente"
+msgstr "Mi primer módulo ráster"
 
 #: ../doc/raster/r.example/main.c:95 ../raster/r.bitpattern/main.c:87
 #: ../raster/r.grow2/main.c:165 ../raster/r.mfilter/main.c:83
@@ -516,66 +499,60 @@ msgstr "Silencioso"
 
 #: ../doc/raster/r.example/main.c:110 ../vector/v.drape/main.c:119
 #: ../vector/v.extrude/main.c:206
-#, fuzzy, c-format
+#, c-format
 msgid "cell file [%s] not found"
-msgstr "mapa <%s> no encontrado"
+msgstr "archivo de celdas [%s] no encontrado"
 
 #: ../doc/raster/r.example/main.c:113 ../raster/r.bitpattern/main.c:104
 #: ../raster/r.los/main.c:160 ../raster/r.texture/main.c:215
-#, fuzzy, c-format
+#, c-format
 msgid "[%s] is an illegal name"
-msgstr "nombre de tabla"
+msgstr "[%s] es un nombre no admitido"
 
 #: ../doc/raster/r.example/main.c:121 ../raster/r.bitpattern/main.c:108
 #: ../raster/r.out.bin/main.c:133 ../raster/r.out.gdal/main.c:93
 #: ../raster/r.resamp.rst/main.c:437 ../raster/r.texture/main.c:218
-#, fuzzy, c-format
+#, c-format
 msgid "Cannot open raster map [%s]"
-msgstr ""
-"#-#-#-#-#  grassmods_es.po (grassmods_es)  #-#-#-#-#\n"
-"No fue posible encontrar el archivo dig_cats.\n"
-"#-#-#-#-#  grassmods_es.po (grassmods_es)  #-#-#-#-#\n"
-"No es posible abrir la base de datos %s"
+msgstr "No se puede abrir el mapa ráster [%s]"
 
 #: ../doc/raster/r.example/main.c:126 ../raster/r.bitpattern/main.c:114
 #: ../raster/r.texture/main.c:224
-#, fuzzy, c-format
+#, c-format
 msgid "Cannot read file header of [%s]"
-msgstr "Imposible leer la información del campo"
+msgstr "No se puede leer la cabecera del archivo [%s]"
 
 #: ../doc/raster/r.example/main.c:140 ../raster/r.bitpattern/main.c:125
 #: ../raster/r.texture/main.c:293
-#, fuzzy, c-format
+#, c-format
 msgid "Could not open <%s>"
-msgstr "No fue posible encontrar el mapa de entrada <%s>\n"
+msgstr "No fue posible abrir <%s>"
 
 #: ../doc/raster/r.example/main.c:153 ../general/g.region/cmd/zoom.c:36
 #: ../raster/r.bitpattern/main.c:135
-#, fuzzy, c-format
+#, c-format
 msgid "Could not read from <%s>"
-msgstr "No fue posible encontrar el mapa de entrada <%s>\n"
+msgstr "No fue posible leer desde <%s>"
 
 #: ../doc/raster/r.example/main.c:179 ../raster/r.bitpattern/main.c:150
 #: ../raster/r.texture/main.c:339 ../raster/r.texture/main.c:342
 #: ../raster/r.texture/main.c:348
-#, fuzzy, c-format
+#, c-format
 msgid "Cannot write to <%s>"
-msgstr "No es posible crear la tabla: %s"
+msgstr "No se puede escribir en <%s>"
 
 #: ../doc/vector/v.example/main.c:61 ../display/d.extract/main.c:95
-#, fuzzy, c-format
+#, c-format
 msgid "Could not find input %s"
-msgstr "No fue posible encontrar el mapa de entrada %s\n"
+msgstr "No fue posible encontrar el origen %s"
 
 #: ../doc/vector/v.example/main.c:66
-#, fuzzy
 msgid "Could not open input"
-msgstr "No fue posible encontrar el mapa de entrada %s\n"
+msgstr "No fue posible abrir el origen"
 
 #: ../doc/vector/v.example/main.c:70
-#, fuzzy
 msgid "Could not open output"
-msgstr "No fue posible encontrar el mapa de entrada %s\n"
+msgstr "No fue posible abrir el resultado"
 
 #: ../display/d.ask/main.c:19 ../display/d.colorlist/main.c:35
 #: ../display/d.colors/main.c:38 ../display/d.erase/main.c:33
@@ -599,68 +576,64 @@ msgstr "No fue posible encontrar el mapa de entrada %s\n"
 #: ../locale/scriptstrings/d.rast.leg_to_translate.c:2
 #: ../locale/scriptstrings/d.redraw_to_translate.c:2
 msgid "display"
-msgstr ""
+msgstr "mostrar"
 
 #: ../display/d.barscale/main.c:35 ../display/d.graph/main.c:32
 #: ../display/d.grid/main.c:50
 msgid "display, cartography"
-msgstr ""
+msgstr "mostrar, cartografía"
 
 #: ../display/d.barscale/main.c:37
 msgid "Displays a barscale on GRASS monitor."
-msgstr ""
+msgstr "Muestra una barra de escala en el monitor de GRASS."
 
 #: ../display/d.barscale/main.c:41
-#, fuzzy
 msgid "Use mouse to interactively place scale"
-msgstr "a"
+msgstr "Usar el ratón para situar la escala de forma interactiva"
 
 #: ../display/d.barscale/main.c:45
 msgid "Use feet/miles instead of meters"
-msgstr ""
+msgstr "Usar pies/millas en vez de metros"
 
 #: ../display/d.barscale/main.c:49
 msgid "Draw a line scale instead of a bar scale"
-msgstr ""
+msgstr "Dibujar una línea de escala en vez de una barra de escala"
 
 #: ../display/d.barscale/main.c:53
-#, fuzzy
 msgid "Write text on top of the scale, not to the right"
-msgstr "a"
+msgstr "Escribir el texto encima de la escala, no a la derecha"
 
 #: ../display/d.barscale/main.c:57
 msgid "Draw a north arrow only"
-msgstr ""
+msgstr "Dibujar sólo una flecha de Norte"
 
 #: ../display/d.barscale/main.c:61
 msgid "Draw a scale bar only"
-msgstr ""
+msgstr "Dibujar sólo una barra de escala"
 
 #: ../display/d.barscale/main.c:69
-#, fuzzy
 msgid "Background color, either a standard GRASS color, R:G:B triplet, or \"none\""
-msgstr "Fondo"
+msgstr "Color de fondo: color estándar de GRASS, triplete R:G:B o \"ninguno\""
 
 #: ../display/d.barscale/main.c:77 ../display/d.text/main.c:86
 #: ../display/d.text.freetype/main.c:193 ../display/d.text.new/main.c:161
-#, fuzzy
 msgid "Text color, either a standard GRASS color or R:G:B triplet"
-msgstr "Texto"
+msgstr "Color de texto: color estándar de GRASS o triplete R:G:B"
 
 #: ../display/d.barscale/main.c:88
 msgid ""
 "The screen coordinates for top-left corner of label ([0,0] is top-left of "
 "frame)"
-msgstr ""
+msgstr "Las coordenadas de pantalla para la esquina superior izquierda de la etiqueta ([0,0] es superior izquierda del marco)"
 
 #: ../display/d.barscale/main.c:96
 #, c-format
 msgid "%s does not work with a latitude-longitude location"
-msgstr ""
+msgstr "%s no funciona con una localización latitud-longitud"
 
 #: ../display/d.barscale/main.c:103
 msgid "Choose either -n or -s flag"
-msgstr ""
+msgstr "Elegir modificador -n o -s"
 
 #: ../display/d.barscale/main.c:116 ../display/d.erase/main.c:58
 #: ../display/d.extract/main.c:76 ../display/d.font/main.c:102
@@ -682,7 +655,7 @@ msgstr ""
 #: ../display/d.zoom/redraw.c:45 ../imagery/i.points/main.c:61
 #: ../vector/v.digit/main.c:143 ../vector/v.label/main.c:242
 msgid "No graphics device selected"
-msgstr "Dispositivo de gráficos no especificado"
+msgstr "Ningún dispositivo de gráficos seleccionado"
 
 #: ../display/d.barscale/main.c:119 ../display/d.graph/main.c:95
 #: ../display/d.info/main.c:100 ../display/d.legend/main.c:276
@@ -690,7 +663,7 @@ msgstr "Dispositivo de gráficos no especificado"
 #: ../display/d.rast.num/number.c:160 ../display/d.text/main.c:152
 #: ../display/d.text.freetype/main.c:315 ../display/d.text.new/main.c:262
 msgid "No current window"
-msgstr ""
+msgstr "Ninguna ventana actual"
 
 #: ../display/d.barscale/main.c:122 ../display/d.graph/main.c:98
 #: ../display/d.info/main.c:102 ../display/d.legend/main.c:279
@@ -698,30 +671,30 @@ msgstr ""
 #: ../display/d.rast.num/number.c:163 ../display/d.text/main.c:155
 #: ../display/d.text.freetype/main.c:317 ../display/d.text.new/main.c:265
 msgid "Current window not available"
-msgstr ""
+msgstr "La ventana actual no está disponible"
 
 #: ../display/d.barscale/main.c:138 ../display/d.info/main.c:108
 #: ../display/d.paint.labels/main.c:110 ../display/d.rast.arrow/arrow.c:258
 #: ../display/d.rast.num/number.c:170
 msgid "Setting map window"
-msgstr ""
+msgstr "Configurando ventana de mapa"
 
 #: ../display/d.barscale/main.c:141 ../display/d.paint.labels/main.c:113
 #: ../display/d.rast.arrow/arrow.c:261 ../display/d.rast.num/number.c:173
 msgid "Current window not settable"
-msgstr ""
+msgstr "La ventana actual no es configurable"
 
 #: ../display/d.barscale/main.c:145 ../display/d.graph/main.c:101
 #: ../display/d.info/main.c:110 ../display/d.paint.labels/main.c:117
 #: ../display/d.rast.arrow/arrow.c:265 ../display/d.rast.num/number.c:178
 msgid "Getting screen window"
-msgstr ""
+msgstr "Obteniendo ventana de la pantalla"
 
 #: ../display/d.barscale/main.c:147 ../display/d.info/main.c:112
 #: ../display/d.paint.labels/main.c:119 ../display/d.rast.arrow/arrow.c:267
 #: ../display/d.rast.num/number.c:180 ../display/d.what.rast/main.c:112
 msgid "Error in calculating conversions"
-msgstr ""
+msgstr "Error calculando conversiones"
 
 #: ../display/d.colortable/main.c:51 ../display/d.extend/main.c:33
 #: ../locale/scriptstrings/d.monsize_to_translate.c:2
@@ -729,36 +702,33 @@ msgstr ""
 #: ../locale/scriptstrings/d.resize_to_translate.c:2
 #: ../locale/scriptstrings/d.split_to_translate.c:2
 msgid "display, setup"
-msgstr ""
+msgstr "mostrar, configuración"
 
 #: ../display/d.erase/main.c:35
 msgid "Erase the contents of the active display frame with user defined color"
-msgstr ""
+msgstr "Borrar el contenido del marco de pantalla activa con colores definidos por el usuario"
 
 #: ../display/d.erase/main.c:43
-#, fuzzy
 msgid ""
 "Color to erase with, either a standard GRASS color or R:G:B triplet "
 "(separated by colons)"
-msgstr "Color a"
+msgstr "Color con el que borrar: color estándar de GRASS o triplete R:G:B (separados por dos puntos)"
 
 #: ../display/d.erase/main.c:48 ../display/d.frame/frame.c:58
-#, fuzzy
 msgid "Remove all frames and erase the screen"
-msgstr "fotogramas"
+msgstr "Eliminar todos los marcos y borrar la pantalla"
 
 #: ../display/d.erase/main.c:52 ../display/d.rgb/main.c:46
-#, fuzzy
 msgid "Don't add to list of commands in monitor"
-msgstr "añadir a"
+msgstr "No añadir a la lista de comandos en el monitor"
 
 #: ../display/d.erase/main.c:62 ../display/d.measure/main.c:68
 msgid "No current frame"
-msgstr ""
+msgstr "Ningún marco actual"
 
 #: ../display/d.erase/main.c:64 ../display/d.measure/main.c:71
 msgid "Current frame not available"
-msgstr ""
+msgstr "Marco actual no disponible"
 
 #: ../display/d.extract/extract.c:41
 msgid "Select vector(s) with mouse"
@@ -820,7 +790,7 @@ msgstr "Ruta de la fuente TrueType incluyendo nombre de archivo"
 
 #: ../display/d.font/main.c:91 ../display/d.font.freetype/main.c:72
 msgid "Character encoding"
-msgstr "Caracter codificado"
+msgstr "Codificación de caracteres"
 
 #: ../display/d.font.freetype/main.c:61
 msgid ""
@@ -844,238 +814,216 @@ msgstr ""
 "Configurando el lanzamiento de FreeType\n"
 
 #: ../display/d.frame/frame.c:46
-#, fuzzy
 msgid "Manages display frames on the user's graphics monitor."
-msgstr "Seleccione el tipo de letra que será mostrado en la pantalla del usuario."
+msgstr "Gestiona marcos de presentación en la pantalla del usuario."
 
 #: ../display/d.frame/frame.c:50
-#, fuzzy
 msgid "Create a new frame"
-msgstr "No es posible crear la tabla: %s"
+msgstr "Crea un nuevo marco"
 
 #: ../display/d.frame/frame.c:54
-#, fuzzy
 msgid "Select a frame"
-msgstr "Seleccionar datos desde una base."
+msgstr "Seleccionar un marco"
 
 #: ../display/d.frame/frame.c:62
-#, fuzzy
 msgid "Print name of current frame"
-msgstr ""
-"La región ha sido grabada como la región actual.\n"
-"\n"
+msgstr "Imprimir el nombre del marco actual"
 
 #: ../display/d.frame/frame.c:66
-#, fuzzy
 msgid "Print names of all frames"
-msgstr "fotogramas"
+msgstr "Imprimir el nombre de todos los marcos"
 
 #: ../display/d.frame/frame.c:70
-#, fuzzy
 msgid "List map names displayed in GRASS monitor"
-msgstr "ERROR: No es posible mostrar el mapa GRASS en pantalla\n"
+msgstr "Listar nombres de los mapas mostrados en el monitor de GRASS"
 
 #: ../display/d.frame/frame.c:74
 msgid "Debugging output"
-msgstr ""
+msgstr "Salida de depuración"
 
 #: ../display/d.frame/frame.c:79
-#, fuzzy
 msgid "name"
-msgstr "nombre de tabla"
+msgstr "nombre"
 
 #: ../display/d.frame/frame.c:82
-#, fuzzy
 msgid "Frame to be created/selected"
-msgstr ""
-"\n"
-"ERROR: no es posible leer - archivo de vectores\n"
+msgstr "Marco a crear/seleccionar"
 
 #: ../display/d.frame/frame.c:86
 msgid "bottom,top,left,right"
-msgstr ""
+msgstr "inferior,superior,izquierda,derecha"
 
 #: ../display/d.frame/frame.c:91
-#, fuzzy
 msgid "Where to place the frame, values in percent (implies -c)"
-msgstr "a"
+msgstr "Dónde colocar el marco, valores en porcentaje (implica -c)"
 
 #: ../display/d.frame/select.c:42
-#, fuzzy, c-format
+#, c-format
 msgid "Error choosing frame [%s]\n"
-msgstr "No fue posible encontrar el mapa %s"
+msgstr "Error al elegir el marco [%s]\n"
 
 #: ../display/d.frame/select.c:50
-#, fuzzy, c-format
+#, c-format
 msgid ""
 "\n"
 "Buttons:\n"
 msgstr ""
 "\n"
-"\n"
 "Botones:\n"
 
 #: ../display/d.frame/select.c:51
-#, fuzzy, c-format
+#, c-format
 msgid "Left:   Select frame\n"
-msgstr "Izquierda:  que es aqui\n"
+msgstr "Izquierda:   Seleccionar marco\n"
 
 #: ../display/d.frame/select.c:52
 #, c-format
 msgid "Middle: Keep original frame\n"
-msgstr ""
+msgstr "Centro: Mantener marco original\n"
 
 #: ../display/d.frame/select.c:53
-#, fuzzy, c-format
+#, c-format
 msgid "Right:  Accept frame\n"
-msgstr "%s Salir del menu\n"
+msgstr "Derecha:  Aceptar marco\n"
 
 #: ../display/d.graph/do_graph.c:52 ../display/d.graph/do_graph.c:80
 #, c-format
 msgid "Problem parsing coordinates [%s]"
-msgstr ""
+msgstr "Problema al analizar las coordenadas [%s]"
 
 #: ../display/d.graph/do_graph.c:101
-#, fuzzy
 msgid "Unable to read color"
-msgstr "a"
+msgstr "No se puede leer el color"
 
 #: ../display/d.graph/do_graph.c:108 ../display/d.graph/do_graph.c:399
 #: ../display/d.graph/do_graph.c:414 ../display/d.graph/main.c:81
 #: ../display/d.text/main.c:147 ../display/d.text.freetype/main.c:887
 #, c-format
 msgid "[%s]: No such color"
-msgstr ""
+msgstr "[%s]: No hay tal color"
 
 #: ../display/d.graph/do_graph.c:132 ../display/d.graph/do_graph.c:210
 #: ../display/d.graph/do_graph.c:235 ../display/d.graph/do_graph.c:301
 #: ../display/d.graph/do_graph.c:369 ../display/d.graph/graphics.c:62
 #, c-format
 msgid "Problem parsing command [%s]"
-msgstr ""
+msgstr "Problema al analizar el comando [%s]"
 
 #: ../display/d.graph/do_graph.c:421 ../display/d.vect/main.c:435
 #: ../imagery/i.vpoints/plot.c:60 ../imagery/i.vpoints/plot.c:141
 msgid "Cannot read symbol, cannot display points"
-msgstr ""
+msgstr "No se puede leer el símbolo, no se pueden mostrar los puntos"
 
 #: ../display/d.graph/main.c:34
 msgid "Program for generating and displaying simple graphics on the display monitor."
-msgstr ""
+msgstr "Programa para generar y mostrar gráficos sencillos en el monitor."
 
 #: ../display/d.graph/main.c:41
-#, fuzzy
 msgid ""
 "Name of file containing graphics commands, if not given reads from standard "
 "input"
-msgstr "Nombre"
+msgstr "Nombre del archivo que contiene los comandos de gráficos, si no se da lee de entrada estándar"
 
 #: ../display/d.graph/main.c:49
-#, fuzzy
 msgid "Color to draw with, either a standard GRASS color or R:G:B triplet"
-msgstr "Color a"
+msgstr "Color con el que dibujar, color estándar de GRASS o triplete R:G:B"
 
 #: ../display/d.graph/main.c:56
 msgid "Coordinates are given in map units"
-msgstr ""
+msgstr "Las coordenadas se dan en las unidades del mapa"
 
 #: ../display/d.graph/main.c:67
-#, fuzzy, c-format
+#, c-format
 msgid "Graph file <%s> not found"
-msgstr "mapa <%s> no encontrado"
+msgstr "Archivo gráfico <%s> no encontrado"
 
 #: ../display/d.grid/main.c:52
-#, fuzzy
 msgid ""
 "Overlays a user-specified grid in the active display frame on the graphics "
 "monitor."
-msgstr "Seleccione el tipo de letra que será mostrado en la pantalla del usuario."
+msgstr "Superpone una rejilla especificada por el usuario en el marco activo en pantalla del usuario."
 
 #: ../display/d.grid/main.c:60
-#, fuzzy
 msgid "Size of grid to be drawn"
-msgstr "Tamaño a"
+msgstr "Tamaño de la rejilla a dibujar"
 
 #: ../display/d.grid/main.c:61
 msgid "In map units or DDD:MM:SS format. Example: \"1000\" or \"0:10\""
-msgstr ""
+msgstr "En las unidades del mapa o en formato DDD:MM:SS. Ejemplo: \"1000\" o \"0:10\""
 
 #: ../display/d.grid/main.c:70
 msgid ""
 "Sets the grid color, either a standard GRASS color or R:G:B triplet "
 "(separated by colons)"
-msgstr ""
+msgstr "Establece el color de la rejilla, un color estándar de GRASS o triplete R:G:B (separado por dos puntos)"
 
 #: ../display/d.grid/main.c:79
 msgid "Lines of the grid pass through this coordinate"
-msgstr ""
+msgstr "Las líneas de la rejilla pasan por esta coordenada"
 
 #: ../display/d.grid/main.c:87
 msgid "Sets the border color, either a standard GRASS color or R:G:B triplet"
-msgstr ""
+msgstr "Establece el color del borde, color estándar de GRASS o triplete R:G:B"
 
 #: ../display/d.grid/main.c:96
-#, fuzzy
 msgid "Font size for gridline coordinate labels"
-msgstr "nombre de tabla"
+msgstr "Tamaño de fuente para las etiquetas de coordenadas de la rejilla"
 
 #: ../display/d.grid/main.c:101
-#, fuzzy
 msgid "Draw geographic grid (referenced to current ellipsoid)"
-msgstr "a"
+msgstr "Dibujar rejilla geográfica (referenciada al elipsoide actual)"
 
 #: ../display/d.grid/main.c:106
-#, fuzzy
 msgid "Draw geographic grid (referenced to WGS84 ellipsoid)"
-msgstr "a"
+msgstr "Dibujar rejilla geográfica (referenciada al elipsoide WGS84)"
 
 #: ../display/d.grid/main.c:110
 msgid "Disable grid drawing"
-msgstr ""
+msgstr "Deshabilitar el dibujo de la rejilla"
 
 #: ../display/d.grid/main.c:114
 msgid "Disable border drawing"
-msgstr ""
+msgstr "Deshabilitar el dibujo de los bordes"
 
 #: ../display/d.grid/main.c:118
 msgid "Disable text drawing"
-msgstr ""
+msgstr "Deshabilitar el dibujo de textos"
 
 #: ../display/d.grid/main.c:128
 msgid "Both grid and border drawing are disabled"
-msgstr ""
+msgstr "Están deshabilitados el dibujo de la rejilla y de los bordes"
 
 #: ../display/d.grid/main.c:132
 msgid "Geo-Grid option is not available for LL projection"
-msgstr ""
+msgstr "Opción Rejilla Geográfica no disponible para la proyección LL"
 
 #: ../display/d.grid/main.c:134
 msgid "Geo-Grid option is not available for XY projection"
-msgstr ""
+msgstr "Opción Rejilla Geográfica no disponible para la proyección XY"
 
 #: ../display/d.grid/main.c:145
 #, c-format
 msgid "Invalid geo-grid size <%s>"
-msgstr ""
+msgstr "Tamaño <%s> de rejilla geográfica inválido"
 
 #: ../display/d.grid/main.c:148
 #, c-format
 msgid "Invalid grid size <%s>"
-msgstr ""
+msgstr "Tamaño <%s> de rejilla inválido"
 
 #: ../display/d.grid/main.c:155
 #, c-format
 msgid "Illegal east coordinate <%s>"
-msgstr ""
+msgstr "Coordenada Este <%s> no admitida"
 
 #: ../display/d.grid/main.c:163
 #, c-format
 msgid "Illegal north coordinate <%s>"
-msgstr ""
+msgstr "Coordenada Norte <%s> no admitida"
 
 #: ../display/d.grid/main.c:200
 msgid "Border not yet implemented for LatLong locations: border not drawn."
-msgstr ""
+msgstr "Borde aun no implementado para localizaciones Latitud-Longitud: no se dibuja el borde."
 
 #: ../display/d.grid/plot.c:154 ../display/d.grid/plot.c:159
 #: ../display/d.grid/plot.c:196 ../display/d.grid/plot.c:201
@@ -1090,166 +1038,161 @@ msgstr ""
 #: ../ps/ps.map/do_geogrid.c:409 ../ps/ps.map/do_geogrid.c:417
 #: ../ps/ps.map/do_geogrid.c:421 ../raster/r.sun/main.c:1300
 msgid "Error in pj_do_proj"
-msgstr ""
+msgstr "Error en pj_do_proj"
 
 #: ../display/d.grid/plot.c:242 ../display/d.where/main.c:75
 #: ../general/g.region/cmd/printwindow.c:237
 #: ../general/g.region/cmd/printwindow.c:483 ../ps/ps.map/do_geogrid.c:268
 #: ../raster/r.sun/main.c:444
 msgid "Can't get projection key values of current location"
-msgstr ""
+msgstr "No se pueden obtener los valores clave de la proyección de la localización actual"
 
 #: ../display/d.grid/plot.c:250 ../display/d.grid/plot.c:278
 #: ../display/d.where/main.c:83 ../display/d.where/main.c:110
 #: ../ps/ps.map/do_geogrid.c:274 ../raster/r.sun/main.c:454
-#, fuzzy
 msgid "Unable to set up lat/long projection parameters"
-msgstr "a"
+msgstr "No se pueden establecer los parámetros de la proyección latitud/longitud"
 
 #: ../display/d.grid/plot.c:265
 msgid ""
 "WGS84 grid output not possible as this location does not contain\n"
 "datum transformation parameters. Try running g.setproj."
 msgstr ""
+"No es posible la salida de rejilla WGS84 ya que esta localización no contiene\n"
+"parámetros de transformación del datum. Pruebe ejecutando g.setproj."
 
 #: ../display/d.grid/plot.c:433
 msgid "Error in pj_do_proj1"
-msgstr ""
+msgstr "Error en pj_do_proj1"
 
 #: ../display/d.grid/plot.c:439
 msgid "Error in pj_do_proj2"
-msgstr ""
+msgstr "Error en pj_do_proj2"
 
 #: ../display/d.grid/plot.c:443
 msgid "Error in pj_do_proj3"
-msgstr ""
+msgstr "Error en pj_do_proj3"
 
 #: ../display/d.grid/plot.c:451
 msgid "Error in pj_do_proj5"
-msgstr ""
+msgstr "Error en pj_do_proj5"
 
 #: ../display/d.grid/plot.c:455
 msgid "Error in pj_do_proj6"
-msgstr ""
+msgstr "Error en pj_do_proj6"
 
 #: ../display/d.histogram/main.c:71
 msgid ""
 "Displays a histogram in the form of a pie or bar chart for a user-specified "
 "raster map."
-msgstr ""
+msgstr "Muestra un gráfico de círculos o barras para un mapa ráster especificado por el usuario."
 
 #: ../display/d.histogram/main.c:76
-#, fuzzy
 msgid "Raster map for which histogram will be displayed"
-msgstr "Mapa por reclasificar"
+msgstr "Mapa ráster para el que se mostrará el histograma"
 
 #: ../display/d.histogram/main.c:83
-#, fuzzy
 msgid "Color for legend and title"
-msgstr "Color"
+msgstr "Color para la leyenda y el título"
 
 #: ../display/d.histogram/main.c:92
 msgid "Indicate if cell counts or map areas should be displayed"
-msgstr ""
+msgstr "Indicar si se debe mostrar el número de celdas o las superficies de mapas"
 
 #: ../display/d.histogram/main.c:101
 msgid "Indicate if a pie or bar chart is desired"
-msgstr ""
+msgstr "Indicar si se desea un gráfico de círculos o de barras"
 
 #: ../display/d.histogram/main.c:108
-#, fuzzy
 msgid "Number of steps to divide the data range into (fp maps only)"
-msgstr "a"
+msgstr "Número de tramos en los que dividir el rango de datos (mapas fp solamente)"
 
 #: ../display/d.histogram/main.c:115
 msgid "Display information for null cells"
-msgstr ""
+msgstr "Mostrar información para celdas vacías"
 
 #: ../display/d.histogram/main.c:119
 msgid "Gather the histogram quietly"
-msgstr ""
+msgstr "Construir el histograma de forma silenciosa"
 
 #: ../display/d.histogram/main.c:123
 msgid "Report for ranges defined in cats file (fp maps only)"
-msgstr ""
+msgstr "Informe para rangos definidos en archivo de categorías (mapas fp solamente)"
 
 #: ../display/d.histogram/main.c:146
-#, fuzzy, c-format
+#, c-format
 msgid "Invalid number of steps: %s"
-msgstr "Area: %d  Número de islas: %d\n"
+msgstr "Número de tramos inválido: %s"
 
 #: ../display/d.histogram/main.c:151
 msgid "When -C flag is set, the nsteps argument is ignored"
-msgstr ""
+msgstr "Cuando está establecido el modificador -C se ignora el argumento nsteps (número de tramos)"
 
 #: ../display/d.histogram/main.c:159 ../display/d.profile/main.c:81
 #: ../display/d.rast/main.c:92 ../display/d.what.rast/main.c:131
 #: ../display/d.zoom/main.c:203
-#, fuzzy, c-format
+#, c-format
 msgid "Raster map [%s] not available"
-msgstr "mapa <%s> no encontrado"
+msgstr "Mapa ráster [%s] no disponible"
 
 #: ../display/d.histogram/main.c:162
-#, fuzzy, c-format
+#, c-format
 msgid "color file for [%s] not available"
-msgstr "mapa <%s> no encontrado"
+msgstr "archivo de color para [%s] no disponible"
 
 #: ../display/d.histogram/main.c:165 ../display/d.legend/main.c:268
 #: ../ps/ps.map/ps_clrtbl.c:35
 #, c-format
 msgid "Category file for [%s] not available"
-msgstr ""
+msgstr "Archivo de categoría para [%s] no disponible"
 
 #: ../display/d.histogram/main.c:168 ../display/d.legend/main.c:506
 #, c-format
 msgid "Range information for [%s] not available"
-msgstr ""
+msgstr "Información de rango para [%s] no disponible"
 
 #: ../display/d.info/main.c:35
 msgid "Display information about the active display monitor"
-msgstr ""
+msgstr "Mostrar información sobre la pantalla activa"
 
 #: ../display/d.info/main.c:39
 msgid "Display screen rectangle (left, right, top, bottom)"
-msgstr ""
+msgstr "Mostrar rectángulo de pantalla (izquierda, derecha superior, inferior)"
 
 #: ../display/d.info/main.c:43
 msgid "Display screen dimensions (width, height)"
-msgstr ""
+msgstr "Mostrar dimensiones de pantalla (anchura, altura)"
 
 #: ../display/d.info/main.c:47
 msgid "Display active frame rectangle"
-msgstr ""
+msgstr "Mostrar rectángulo del marco activo"
 
 #: ../display/d.info/main.c:51
-#, fuzzy
 msgid "Display screen rectangle of current region"
-msgstr "No es posible crear el índice"
+msgstr "Mostrar rectángulo de pantalla de la región actual"
 
 #: ../display/d.info/main.c:55
-#, fuzzy
 msgid "Display number of colors"
-msgstr "Número de columnas"
+msgstr "Mostrar número de colores"
 
 #: ../display/d.legend/main.c:87
 msgid ""
 "Displays a legend for a raster map in the active frame of the graphics "
 "monitor."
-msgstr ""
+msgstr "Mostrar una leyenda para un mapa ráster en el marco activo de la pantalla."
 
 #: ../display/d.legend/main.c:95 ../display/d.zoom/main.c:77
 #: ../locale/scriptstrings/r.univar.sh_to_translate.c:4
-#, fuzzy
 msgid "Name of raster map"
-msgstr "Nombre"
+msgstr "Nombre del mapa ráster"
 
 #: ../display/d.legend/main.c:102
 msgid "Sets the legend's text color"
-msgstr ""
+msgstr "Establece el color de texto de la leyenda"
 
 #: ../display/d.legend/main.c:109
 msgid "Number of text lines (useful for truncating long legends)"
-msgstr ""
+msgstr "Número de líneas de texto (útil para truncar leyendas largas)"
 
 #: ../display/d.legend/main.c:110 ../display/d.legend/main.c:119
 #: ../display/d.legend/main.c:127 ../display/d.legend/main.c:145
@@ -1263,7 +1206,7 @@ msgstr ""
 #: ../vector/v.buffer/main.c:277 ../vector/v.buffer/main.c:284
 #: ../vector/v.buffer/main.c:294
 msgid "Advanced"
-msgstr ""
+msgstr "Avanzado"
 
 #: ../display/d.legend/main.c:118
 msgid "Thinning factor (thin=10 gives cats 0,10,20...)"
@@ -1271,94 +1214,90 @@ msgstr ""
 
 #: ../display/d.legend/main.c:126
 msgid "Number of text labels for smooth gradient legend"
-msgstr ""
+msgstr "Número de etiquetas de texto para una leyenda de gradiente suave"
 
 #: ../display/d.legend/main.c:135
-#, fuzzy
 msgid "Screen coordinates to place the legend (as percentage)"
-msgstr "a"
+msgstr "Coordenadas de pantalla para situar la leyenda (como porcentaje)"
 
 #: ../display/d.legend/main.c:143
 msgid "List of discrete category numbers/values for legend"
-msgstr ""
+msgstr "Lista de valores/números de categoría discretos para la leyenda"
 
 #: ../display/d.legend/main.c:152
 msgid "Use a subset of the map range for the legend (min,max)"
-msgstr ""
+msgstr "Usar un subconjunto del rango del mapa para la leyenda (min, max)"
 
 #: ../display/d.legend/main.c:158
-#, fuzzy
 msgid "Use mouse to size & place legend"
-msgstr "a"
+msgstr "Usar el ratón para dimensionar y situar la leyenda"
 
 #: ../display/d.legend/main.c:162
 msgid "Do not show category labels"
-msgstr ""
+msgstr "No mostrar etiquetas de categoría"
 
 #: ../display/d.legend/main.c:167
 msgid "Do not show category numbers"
-msgstr ""
+msgstr "No mostrar números de categoría"
 
 #: ../display/d.legend/main.c:172
-#, fuzzy
 msgid "Skip categories with no label"
-msgstr "categorí­as"
+msgstr "Saltarse las categoría­s sin etiqueta"
 
 #: ../display/d.legend/main.c:177
 msgid "Draw smooth gradient"
-msgstr ""
+msgstr "Dibujar gradiente suave"
 
 #: ../display/d.legend/main.c:182
 msgid "Flip legend"
-msgstr ""
+msgstr "Dar la vuelta a la leyenda"
 
 #: ../display/d.legend/main.c:204 ../display/d.menu/main.c:112
 #: ../display/d.menu/main.c:118 ../display/d.menu/main.c:124
 #, c-format
 msgid "Don't know the color %s"
-msgstr ""
+msgstr "No se conoce el color %s"
 
 #: ../display/d.legend/main.c:254
 #, c-format
 msgid "Raster file [%s] not available"
-msgstr ""
+msgstr "Archivo ráster [%s] no disponible"
 
 #: ../display/d.legend/main.c:257 ../display/d.rast/display.c:23
 #: ../display/d.rast.num/number.c:277 ../display/d.rgb/main.c:91
 #: ../raster/r.his/main.c:141 ../raster/r.his/main.c:163
 #: ../raster/r.his/main.c:191
-#, fuzzy, c-format
+#, c-format
 msgid "Color file for [%s] not available"
-msgstr "Color"
+msgstr "Archivo de color para [%s] no disponible"
 
 #: ../display/d.legend/main.c:339
-#, fuzzy
 msgid "Legend box lies outside of frame. Text may not display properly."
-msgstr "Texto."
+msgstr "La caja de la leyenda cae fuera del marco. El texto puede no mostrarse correctamente."
 
 #: ../display/d.legend/main.c:343
 #, c-format
+#, fuzzy
 msgid "Drawing horizontal legend as box width exceeds height.\n"
-msgstr ""
+msgstr "Dibujar leyenda horizontal como anchura de la caja excede la altura.\n"
 
 #: ../display/d.legend/main.c:354
 #, c-format
 msgid "Range information for [%s] not available (run r.support)"
-msgstr ""
+msgstr "Información de rango para [%s] no disponible (ejecutar r.support)"
 
 #: ../display/d.legend/main.c:367 ../display/d.legend/main.c:519
-#, fuzzy
 msgid "Color range exceeds lower limit of actual data"
-msgstr "Color"
+msgstr "El rango de color excede el límite inferior de los datos reales"
 
 #: ../display/d.legend/main.c:371 ../display/d.legend/main.c:523
 msgid "Color range exceeds upper limit of actual data"
-msgstr "El rango de color excede el límite superior de los datos actuales"
+msgstr "El rango de color excede el límite superior de los datos reales"
 
 #: ../display/d.legend/main.c:425
 #, c-format
 msgid "use=%s out of range [%d,%d]. (extend with range= ?)"
-msgstr ""
+msgstr "usar=%s fuera de rango [%d,%d]. (¿extender con rango= ?)"
 
 #: ../display/d.legend/main.c:465
 msgid "Nothing to draw! (no categories with labels? out of range?)"
@@ -1368,258 +1307,247 @@ msgstr "¡Nada que dibujar! (¿ninguna categoría con etiquetas? ¿fuera de rango?)"
 #, c-format
 msgid "Forcing a smooth legend: too many categories for current window height.\n"
 msgstr ""
-"Forzando una leyenda suave: demasiadas categorí­as para la altura de la "
+"Forzando una leyenda suave: demasiadas categorías para la altura de la "
 "ventana actual.\n"
 
 #: ../display/d.legend/main.c:530
 #, c-format
 msgid "use=%s out of range [%.3f, %.3f]. (extend with range= ?)"
-msgstr ""
+msgstr "usar=%s fuera de rango [%.3f, %.3f]. (¿extender con rango= ?)"
 
 #: ../display/d.legend/main.c:860
 msgid "Nothing to draw! (no categories with labels?)"
 msgstr "¡Nada que dibujar! (¿ninguna categoría con etiquetas?)"
 
 #: ../display/d.mapgraph/main.c:30
+#, fuzzy
 msgid ""
 "Generates and displays simple graphics on map layers drawn in the active "
 "graphics monitor display frame."
-msgstr ""
+msgstr "Genera y muestra gráficos sencillos en capas de mapa dibujadas en el marco de la pantalla activa."
 
 #: ../display/d.mapgraph/main.c:37
 msgid ""
 "Unix file containg graphing instructions, if not given reads from standard "
 "input"
-msgstr ""
+msgstr "Archivo Unix que contiene instrucciones gráficas. Si no se indica lee de la entrada estándar"
 
 #: ../display/d.mapgraph/main.c:47
-#, fuzzy
 msgid ""
 "Color to draw with, either a standard GRASS color or R:G:B triplet "
 "(separated by colons)"
-msgstr "Color a"
+msgstr "Color con el que dibujar: color estándar de GRASS o triplete R:G:B (separado por dos puntos)"
 
 #: ../display/d.measure/main.c:29
-#, fuzzy
 msgid ""
 "Measures the lengths and areas of features drawn by the user in the active "
 "display frame on the graphics monitor."
-msgstr "Seleccione el tipo de letra que será mostrado en la pantalla del usuario."
+msgstr "Mide las longitudes y superficies de los elementos dibujados por el usuario en el marco de presentación activo en la pantalla."
 
 #: ../display/d.measure/main.c:35
-#, fuzzy
 msgid "Line color 1"
-msgstr " nv color\n"
+msgstr "Color de línea 1"
 
 #: ../display/d.measure/main.c:43
-#, fuzzy
 msgid "Line color 2"
-msgstr " nv color\n"
+msgstr "Color de línea 2"
 
 #: ../display/d.measure/main.c:51
+#, fuzzy
 msgid "Suppress clear screen"
-msgstr ""
+msgstr "Suprimir pantalla "
 
 #: ../display/d.measure/main.c:55
 msgid "Output in meters only"
-msgstr ""
+msgstr "Salida en metros solamente"
 
 #: ../display/d.measure/main.c:59
 msgid "Output in kilometers as well"
-msgstr ""
+msgstr "Salida en kilómetros también"
 
 #: ../display/d.menu/main.c:67
-#, fuzzy
 msgid "Creates and displays a menu within the active frame on the graphics monitor."
-msgstr "Seleccione el tipo de letra que será mostrado en la pantalla del usuario."
+msgstr "Crea y muestra un menú en el marco activo de la pantalla."
 
 #: ../display/d.menu/main.c:76
 msgid "Sets the color of the menu background"
-msgstr ""
+msgstr "Establece el color de fondo del menú"
 
 #: ../display/d.menu/main.c:84
 msgid "Sets the color of the menu text"
-msgstr ""
+msgstr "Establece el color del texto del menú"
 
 #: ../display/d.menu/main.c:92
 msgid "Sets the color dividing lines of text"
-msgstr ""
+msgstr "Establece el color de separación de líneas de texto"
 
 #: ../display/d.menu/main.c:100
 msgid "Sets the menu text size (in percent)"
-msgstr ""
+msgstr "Establece el tamaño de texto del menú (en porcentaje)"
 
 #: ../display/d.menu/main.c:185
-#, fuzzy
 msgid "Menu must contain a title and at least one option"
-msgstr "Menú"
+msgstr "El menú debe contener un título y al menos una opción"
 
 #: ../display/d.mon/cmd/main.c:31
 msgid "To establish and control use of a graphics display monitor."
-msgstr ""
+msgstr "Para establecer y controlar el uso de una pantalla."
 
 #: ../display/d.mon/cmd/main.c:37
-#, fuzzy
 msgid "Name of graphics monitor to start"
-msgstr "Nombre a"
+msgstr "Nombre de la pantalla a iniciar"
 
 #: ../display/d.mon/cmd/main.c:43
-#, fuzzy
 msgid "Name of graphics monitor to stop"
-msgstr "Nombre a"
+msgstr "Nombre de la pantalla a detener"
 
 #: ../display/d.mon/cmd/main.c:49
-#, fuzzy
 msgid "Name of graphics monitor to select"
-msgstr "Dispositivo de gráficos no especificado"
+msgstr "Nombre de la pantalla a seleccionar"
 
 #: ../display/d.mon/cmd/main.c:55
-#, fuzzy
 msgid "Name of graphics monitor to unlock"
-msgstr "Nombre a"
+msgstr "Nombre de la pantalla a desbloquear"
 
 #: ../display/d.mon/cmd/main.c:59
 msgid "List all monitors"
-msgstr ""
+msgstr "Listar todas las pantallas"
 
 #: ../display/d.mon/cmd/main.c:63
 msgid "List all monitors (with current status)"
-msgstr ""
+msgstr "Listar todas las pantallas (con el estado actual)"
 
 #: ../display/d.mon/cmd/main.c:67
-#, fuzzy
 msgid "Print name of currently selected monitor"
-msgstr "Muestra los parámetros de conexión y termina"
+msgstr "Impirmir el nombre de la pantalla seleccionada actualmente"
 
 #: ../display/d.mon/cmd/main.c:71
 msgid "Release currently selected monitor"
-msgstr ""
+msgstr "Libera la pantalla seleccionada actualmente"
 
 #: ../display/d.mon/cmd/main.c:76
 msgid "Do not automatically select when starting"
-msgstr ""
+msgstr "No seleccionar automáticamente al empezar"
 
 #: ../display/d.mon/cmd/main.c:118
 #, c-format
 msgid "Problem selecting %s. Will try once more"
-msgstr ""
+msgstr "Problema al seleccionar %s. Se intentará otra vez"
 
 #: ../display/d.nviz/main.c:69
 #, fuzzy
 msgid "Create fly-through script to run in NVIZ"
-msgstr "a"
+msgstr "Crear rutina fly through para ejecutar en NVIZ"
 
 #: ../display/d.nviz/main.c:77 ../raster/r.neighbors/main.c:92
 #: ../raster/r.random/main.c:44
-#, fuzzy
 msgid "Name of existing raster map"
-msgstr "Nombre"
+msgstr "Nombre de mapa ráster existente"
 
 #: ../display/d.nviz/main.c:83
-#, fuzzy
 msgid "Name of output script"
-msgstr "Nombre del archivo de entrada"
+msgstr "Nombre de rutina de salida"
 
 #: ../display/d.nviz/main.c:89
 msgid "Prefix of output images (default = NVIZ)"
-msgstr ""
+msgstr "Prefijo de las imágenes de salida (predeterminado = NVIZ)"
 
 #: ../display/d.nviz/main.c:97
 msgid "Route coordinates (east,north)"
-msgstr ""
+msgstr "Coordenadas de ruta (Este, Norte)"
 
 #: ../display/d.nviz/main.c:103
+#, fuzzy
 msgid "Camera layback distance (in map units)"
-msgstr ""
+msgstr "Distancia layback de la cámara (en unidades de mapa)"
 
 #: ../display/d.nviz/main.c:109
 msgid "Camera height above terrain"
-msgstr ""
+msgstr "Altura de la cámara sobre el terreno"
 
 #: ../display/d.nviz/main.c:115
 #, fuzzy
 msgid "Number of frames"
-msgstr "Número de líneas"
+msgstr "Número de marcos"
 
 #: ../display/d.nviz/main.c:121
 #, fuzzy
 msgid "Start frame number (default=0)"
-msgstr "Empezar"
+msgstr "Número de marco inicial (predeterminado=0)"
 
 #: ../display/d.nviz/main.c:126
 msgid "Interactively select route"
-msgstr ""
+msgstr "Seleccionar ruta de forma interactiva"
 
 #: ../display/d.nviz/main.c:130
 msgid "Full render -- Save images"
-msgstr ""
+msgstr "Renderizado completo -- Guardar imágenes"
 
 #: ../display/d.nviz/main.c:134
 msgid "Fly at constant elevation (ht)"
-msgstr ""
+msgstr "Volar a altura constante (ht)"
 
 #: ../display/d.nviz/main.c:138
 #, fuzzy
 msgid "Include command in the script to output a KeyFrame file"
-msgstr "a"
+msgstr "Incluir comando en la rutina para producir un archivo KeyFrame"
 
 #: ../display/d.nviz/main.c:142
-#, fuzzy
 msgid "Render images off-screen"
-msgstr "Renderizar"
+msgstr "Renderizar imágenes fuera de la pantalla"
 
 #: ../display/d.nviz/main.c:146
 msgid "Enable vector and sites drawing"
-msgstr ""
+msgstr "Habilitar dibujo de vectores y lugares"
 
 #: ../display/d.nviz/main.c:154
 msgid "Either -i flag and/or route parameter must be used"
-msgstr ""
+msgstr "Se debe usar parámetro de ruta y/o modificador -i"
 
 #: ../display/d.nviz/main.c:176
 msgid "Off-screen only available with full render mode"
-msgstr ""
+msgstr "Fuera de pantalla sólo disponible en modo renderizado completo"
 
 #: ../display/d.nviz/main.c:190
-#, fuzzy, c-format
+#, c-format
 msgid "Cannot find mapset for %s"
-msgstr "No es posible insertar nueva línea: %s"
+msgstr "No se puede encontrar el directorio de mapas para %s"
 
 #: ../display/d.nviz/main.c:192
-#, fuzzy, c-format
+#, c-format
 msgid "Cannot open File %s"
-msgstr "No es posible abrir la base de datos %s"
+msgstr "No se puede abrir el archivo %s"
 
 #: ../display/d.nviz/main.c:209 ../raster/r.out.ppm/main.c:138
 #: ../raster/r.profile/main.c:155
-#, fuzzy, c-format
+#, c-format
 msgid "Not able to open file for [%s]"
-msgstr "a"
+msgstr "No se puede abrir el archivo para [%s]"
 
 #: ../display/d.nviz/main.c:285
 msgid "You must select more than one point"
-msgstr ""
+msgstr "Debe seleccionar más de un punto"
 
 #: ../display/d.nviz/main.c:303
-#, fuzzy
 msgid "You must select at least four points"
-msgstr "Necesitas introducir al menos %d puntos."
+msgstr "Debe seleccionar al menos cuatro puntos"
 
 #: ../display/d.nviz/main.c:320
-#, fuzzy, c-format
+#, c-format
 msgid "You must provide at least four points %d"
-msgstr "Necesitas introducir al menos %d puntos."
+msgstr "Debe proporcionar al menos cuatro puntos %d"
 
 #: ../display/d.nviz/main.c:394
 #, c-format
 msgid "Created NVIZ script <%s>."
-msgstr ""
+msgstr "Rutina NVIZ <%s> creada."
 
 #: ../display/d.nviz/main.c:537
+#, fuzzy
 msgid ""
 "Skipping this point, selected point is outside region. Perhaps the camera "
 "setback distance puts it beyond the edge?"
-msgstr ""
+msgstr "Saltando este punto, el punto seleccionado está fuera de la región. ¿Quizás la distancia setback lo sitúa más allá del borde?"
 
 #: ../display/d.paint.labels/do_labels.c:148
 #, c-format
@@ -1627,48 +1555,44 @@ msgid "Error: %s\n"
 msgstr "Error: %s\n"
 
 #: ../display/d.paint.labels/main.c:30
-#, fuzzy
 msgid ""
 "Displays text labels (created with v.label) to the active frame on the "
 "graphics monitor."
-msgstr "a."
+msgstr "Muestra las etiquetas de texto (creadas con v-label) en el marco activo de la pantalla."
 
 #: ../display/d.paint.labels/main.c:35
 msgid "Ignore rotation setting and draw horizontally"
-msgstr ""
+msgstr "Ignorar configuración de rotación y dibujar horizontalmente"
 
 #: ../display/d.paint.labels/main.c:42
-#, fuzzy
 msgid "Name of label file"
-msgstr "Nombre del archivo de entrada"
+msgstr "Nombre del archivo de etiquetas"
 
 #: ../display/d.paint.labels/main.c:49
 msgid "Minimum region size (diagonal) when labels are displayed"
-msgstr ""
+msgstr "Tamaño mínimo de región (diagonal) cuando se muestran etiquetas"
 
 #: ../display/d.paint.labels/main.c:56
 msgid "Maximum region size (diagonal) when labels are displayed"
-msgstr ""
+msgstr "Tamaño máximo de región (diagonal) cuando se muestran etiquetas"
 
 #: ../display/d.paint.labels/main.c:67
 #, c-format
 msgid "Label file [%s] not available"
-msgstr ""
+msgstr "Archivo de etiquetas [%s] no disponible"
 
 #: ../display/d.paint.labels/main.c:82 ../display/d.vect/main.c:372
-#, fuzzy
 msgid "Region size is lower than minreg, nothing displayed."
-msgstr "El tamaño de la región es menor que minreg, nada que mostrar.\n"
+msgstr "El tamaño de la región es menor que minreg, no se muestra nada."
 
 #: ../display/d.paint.labels/main.c:91 ../display/d.vect/main.c:381
-#, fuzzy
 msgid "Region size is greater than maxreg, nothing displayed."
-msgstr "La región es más grande que maxreg, nada que mostrar.\n"
+msgstr "La región es mayor que maxreg, no se muestra nada."
 
 #: ../display/d.paint.labels/main.c:101
-#, fuzzy, c-format
+#, c-format
 msgid "Can't open label file [%s]"
-msgstr "No es posible abrir la base de datos %s"
+msgstr "No se puede abrir el archivo de etiquetas [%s]"
 
 #: ../display/d.path/main.c:45
 msgid "display, networking"
@@ -1677,7 +1601,7 @@ msgstr ""
 #: ../display/d.path/select.c:32
 #, c-format
 msgid "L: from  M: to R: quit\n"
-msgstr "L: de  M: a R: salir\n"
+msgstr "L: desde  M: hasta R: salir\n"
 
 #: ../display/d.path/select.c:57
 #, c-format
@@ -1687,17 +1611,17 @@ msgstr "Nodo %d: %f %f\n"
 #: ../display/d.path/select.c:133
 #, c-format
 msgid "Destination unreachable\n"
-msgstr "No es posible alcanzar la destinación\n"
+msgstr "No se puede alcanzar el destino\n"
 
 #: ../display/d.path/select.c:136
 #, c-format
 msgid "Costs on the network = %f\n"
-msgstr "Costo en la red= %f\n"
+msgstr "Coste en la red = %f\n"
 
 #: ../display/d.path/select.c:137
 #, c-format
 msgid "  Distance to the network = %f, distance from the network = %f\n"
-msgstr "Distancia a la red = %f, distancia desde la red = %f\n"
+msgstr "  Distancia a la red = %f, distancia desde la red = %f\n"
 
 #: ../display/d.profile/ExtractProf.c:95
 #, c-format
@@ -1719,20 +1643,20 @@ msgstr "error leyendo mapa ráster"
 
 #: ../display/d.profile/main.c:51
 msgid "Interactive profile plotting utility with optional output."
-msgstr ""
+msgstr "Utilidad de ploteo de perfil interactivo con salida opcional."
 
 #: ../display/d.profile/main.c:59
-#, fuzzy
 msgid "Raster map to be profiled"
-msgstr "Mapa por reclasificar"
+msgstr "Mapa ráster a perfilar"
 
 #: ../display/d.profile/main.c:66
+#, fuzzy
 msgid "Optional display raster"
-msgstr ""
+msgstr "Ráster display opcional"
 
 #: ../display/d.profile/main.c:72
 msgid "Output profile data to file(s) with prefix 'name'"
-msgstr ""
+msgstr "Sacar datos del perfil al archivo(s) con prefijo 'nombre'"
 
 #: ../display/d.profile/main.c:95
 #, c-format
@@ -1747,7 +1671,7 @@ msgid ""
 msgstr ""
 "\n"
 "\n"
-"Usar ratón para elegin acción"
+"Usar el ratón para elegin acción"
 
 #: ../display/d.profile/main.c:189 ../display/d.profile/main.c:374
 #, fuzzy
@@ -1755,23 +1679,21 @@ msgid "Use 'd.frame -e' to remove left over frames"
 msgstr "Usar 'd.frame -e' para eliminar left over frames"
 
 #: ../display/d.profile/main.c:277
-#, fuzzy
 msgid "Error opening cell-file"
-msgstr "Error abriendo el archivo de celdas"
+msgstr "Error al abrir el archivo de celdas"
 
 #: ../display/d.profile/main.c:279
-#, fuzzy
 msgid "Error reading from cell-file"
-msgstr "Error leyendo del archivo de celdas"
+msgstr "Error al leer del archivo de celdas"
 
 #: ../display/d.profile/main.c:281
 msgid "Mysterious window inconsistancy error"
 msgstr "Error de inconsistencia de ventana misterioso"
 
 #: ../display/d.profile/main.c:413
-#, fuzzy, c-format
+#, c-format
 msgid "%s: Couldn't open raster <%s@%s>"
-msgstr "%s: No se pudo abrir ráster<%s@%s>"
+msgstr "%s: No se pudo abrir el ráster<%s@%s>"
 
 #: ../display/d.profile/main.c:417
 #, c-format
@@ -1781,128 +1703,116 @@ msgstr "%s: No se pudo leer tabla de colores para <%s@%s>"
 #: ../display/d.profile/utils.c:8
 #, c-format
 msgid "%s: 'is_null_value()' got NULL pointer!"
-msgstr ""
+msgstr "%s: 'is_null_value()' ¡se obtuvo puntero NULL!"
 
 #: ../display/d.profile/utils.c:11
 #, c-format
+#, fuzzy
 msgid "%s: 'is_null_value()' got negative column index"
-msgstr ""
+msgstr "%s: 'is_null_value()' se obtuvo índice de columna negativo"
 
 #: ../display/d.profile/utils.c:23
 #, c-format
+#, fuzzy
 msgid "%s: 'is_null_value()' Unknown RASTER_MAP_TYPE '%d'"
-msgstr ""
+msgstr "%s: 'is_null_value()' Tipo de mapa ráster '%d' desconocido"
 
 #: ../display/d.rast/display.c:91
-#, fuzzy
 msgid "Cannot use current window"
-msgstr "No es posible crear el índice"
+msgstr "No se puede usar la ventana actual"
 
 #: ../display/d.rast/display.c:96 ../raster/r.bilinear/main.c:92
 #: ../raster/r.bilinear/main.c:103 ../raster/r.out.ppm/main.c:120
 #: ../raster/r.resamp.interp/main.c:124 ../raster/r.resamp.interp/main.c:134
 #: ../raster/r.resamp.stats/main.c:320 ../raster/r.resamp.stats/main.c:331
 #: ../raster/r.sum/main.c:53
-#, fuzzy, c-format
+#, c-format
 msgid "Not able to open cellfile for [%s]"
-msgstr "a"
+msgstr "No se puede abrir el archivo de celdas para [%s]"
 
 #: ../display/d.rast/main.c:35
 msgid ""
 "Displays and overlays raster map layers in the active display frame on the "
 "graphics monitor"
-msgstr ""
+msgstr "Muestra y superpone las capas del mapa ráster en el marco activo de la pantalla"
 
 #: ../display/d.rast/main.c:44
-#, fuzzy
 msgid "Raster map to be displayed"
-msgstr "Mapa por reclasificar"
+msgstr "Mapa ráster a mostrar"
 
 #: ../display/d.rast/main.c:52
-#, fuzzy
 msgid "List of categories to be displayed (INT maps)"
-msgstr "a"
+msgstr "Lista de categorías para mostrar (mapas INT)"
 
 #: ../display/d.rast/main.c:60
-#, fuzzy
 msgid "List of values to be displayed (FP maps)"
-msgstr "a"
+msgstr "Lista de valores a mostrar (mapas FP)"
 
 #: ../display/d.rast/main.c:68
-#, fuzzy
 msgid "Background color (for null)"
-msgstr "Fondo"
+msgstr "Color de fondo (para nulo)"
 
 #: ../display/d.rast/main.c:72 ../display/d.rgb/main.c:42
 msgid "Overlay (non-null values only)"
-msgstr ""
+msgstr "Superponer (sólo valores no nulos)"
 
 #: ../display/d.rast/main.c:76
-#, fuzzy
 msgid "Invert catlist"
-msgstr "Invertir"
+msgstr "Invertir lista de categorías"
 
 #: ../display/d.rast/main.c:80
-#, fuzzy
 msgid "Don't add to list of rasters and commands in monitor"
-msgstr "añadir a"
+msgstr "No añadir a la lista de rásters y comandos en el monitor"
 
 #: ../display/d.rast/main.c:100
 msgid "Ignoring catlist: map is floating point (please use 'val=')"
-msgstr ""
+msgstr "Ignorando lista de categorías: el mapa es coma flotante (por favor use 'val=')"
 
 #: ../display/d.rast/main.c:105
 msgid "Ignoring vallist: map is integer (please use 'cat=')"
-msgstr ""
+msgstr "Ignorando lista de valores: el mapa es entero (por favor user 'cat=')"
 
 #: ../display/d.rast.arrow/arrow.c:114
 msgid ""
 "Draws arrows representing cell aspect direction for a raster map containing "
 "aspect data."
-msgstr ""
+msgstr "Dibuja flechas que representan la dirección de orientación de celdas para un mapa ráster que contiente datos de orientación."
 
 #: ../display/d.rast.arrow/arrow.c:123
-#, fuzzy
 msgid "Name of raster aspect map to be displayed"
-msgstr "Nombre a"
+msgstr "Nombre mapa de orientación ráster a mostrar"
 
 #: ../display/d.rast.arrow/arrow.c:131
-#, fuzzy
 msgid "Type of existing raster aspect map"
-msgstr "Nombre del mapa de entrada existente"
+msgstr "Tipo de mapa de orientación ráster existente"
 
 #: ../display/d.rast.arrow/arrow.c:139
-#, fuzzy
 msgid "Color for drawing arrows"
-msgstr "Color"
+msgstr "Color para dibujar las flechas"
 
 #: ../display/d.rast.arrow/arrow.c:147 ../display/d.rast.num/number.c:106
-#, fuzzy
 msgid "Color for drawing grid, or \"none\""
-msgstr "Color"
+msgstr "Color para dibujar la rejilla o \"ninguno\""
 
 #: ../display/d.rast.arrow/arrow.c:155
-#, fuzzy
 msgid "Color for drawing X's (Null values)"
-msgstr "Color X"
+msgstr "Color para dibujar las X (Valores nulos)"
 
 #: ../display/d.rast.arrow/arrow.c:163
-#, fuzzy
 msgid "Color for showing unknown information"
-msgstr "Color desconocido"
+msgstr "Color para mostrar información desconocida"
 
 #: ../display/d.rast.arrow/arrow.c:170
 msgid "Draw arrow every Nth grid cell"
-msgstr ""
+msgstr "Dibujar flecha cada N celdas de la rejilla"
 
 #: ../display/d.rast.arrow/arrow.c:178
 msgid "Raster map containing values used for arrow length"
-msgstr ""
+msgstr "Mapa ráster que contiene los valores usados para la longitud de las flechas"
 
 #: ../display/d.rast.arrow/arrow.c:185
-#, fuzzy
 msgid "Scale factor for arrows (magnitude map)"
-msgstr "Escalar"
+msgstr "Factor de escala para las flechas (mapa de magnitud)"
 
 #: ../display/d.rast.arrow/arrow.c:196 ../display/d.rast.arrow/arrow.c:238
 #: ../display/d.rast.num/number.c:147 ../raster/r.bitpattern/main.c:101
@@ -1912,100 +1822,98 @@ msgstr "Escalar"
 #: ../raster/r.resamp.rst/main.c:400 ../raster/r.resamp.rst/main.c:426
 #: ../raster/r.texture/main.c:212 ../raster/r.univar2/main.c:102
 #: ../vector/v.sample/main.c:167
-#, fuzzy, c-format
+#, c-format
 msgid "Raster map [%s] not found"
-msgstr "mapa <%s> no encontrado"
+msgstr "Mapa ráster [%s] no encontrado"
 
 #: ../display/d.rast.arrow/arrow.c:225
 msgid "Illegal value for scale factor."
-msgstr ""
+msgstr "Valor para factor de escala no admitido."
 
 #: ../display/d.rast.arrow/arrow.c:229
 msgid "Illegal value for skip factor."
-msgstr ""
+msgstr "Valor para saltar no admitido."
 
 #: ../display/d.rast.arrow/arrow.c:234
+#, fuzzy
 msgid "Magnitude is only supported for GRASS and compass aspect maps."
-msgstr ""
+msgstr "Magnitud sólo esta soportado para mapas GRASS y compass aspect."
 
 #: ../display/d.rast.arrow/arrow.c:241
 msgid "scale option requires magnitude_map"
-msgstr ""
+msgstr "la opción escala requiere magnitude_map"
 
 #: ../display/d.rast.arrow/arrow.c:314
 msgid "Problem reading range file."
-msgstr ""
+msgstr "Problema al leer archivo de rango."
 
 #: ../display/d.rast.arrow/arrow.c:370
 msgid "No raster map exists in the current window"
-msgstr ""
+msgstr "No existe ningún mapa ráster en la ventana actual"
 
 #: ../display/d.rast.arrow/arrow.c:374 ../raster/r.compress/main.c:118
-#, fuzzy, c-format
+#, c-format
 msgid "[%s] not found"
-msgstr "mapa <%s> no encontrado"
+msgstr "[%s] no encontrado"
 
 #: ../display/d.rast.arrow/arrow.c:382
-#, fuzzy, c-format
+#, c-format
 msgid "Unable to open raster map [%s] in [%s]"
-msgstr "a"
+msgstr "No se puede abrir el mapa ráster [%s] en [%s]"
 
 #: ../display/d.rast.num/number.c:87
-#, fuzzy
 msgid ""
 "Overlays cell category values on a raster map layer displayed to the "
 "graphics monitor."
-msgstr "Seleccione el tipo de letra que será mostrado en la pantalla del usuario."
+msgstr "Superpone los valores de categoría de celda en una capa de mapa ráster mostrada en la pantalla."
 
 #: ../display/d.rast.num/number.c:97
-#, fuzzy
 msgid "Name of existing raster map to be displayed"
-msgstr "Nombre del mapa de entrada existente"
+msgstr "Nombre de mapa  ráster existente a mostrar"
 
 #: ../display/d.rast.num/number.c:115
-#, fuzzy
 msgid "Color for drawing text"
-msgstr "Color"
+msgstr "Color para dibujar texto"
 
 #: ../display/d.rast.num/number.c:119
 msgid "Get text color from cell color value"
-msgstr ""
+msgstr "Obtener color de texto del valor de color de la celda"
 
 #: ../display/d.rast.num/number.c:132
 msgid "No raster map exists in current window"
-msgstr ""
+msgstr "No existe ningún mapa ráster en la ventana actual"
 
 #: ../display/d.rast.num/number.c:151
-#, fuzzy, c-format
+#, c-format
 msgid "Unable to open [%s]"
-msgstr "no es posible abrir %s"
+msgstr "No se puede abrir [%s]"
 
 #: ../display/d.rast.num/number.c:204
-#, fuzzy
 msgid "Current window size:"
-msgstr "No es posible crear el índice"
+msgstr "Tamaño de la ventana actual:"
 
 #: ../display/d.rast.num/number.c:205
-#, fuzzy, c-format
+#, c-format
 msgid "rows:    %d"
-msgstr "Error: %s\n"
+msgstr "filas:    %d"
 
 #: ../display/d.rast.num/number.c:206
-#, fuzzy, c-format
+#, c-format
 msgid "columns: %d"
-msgstr "columna%s%s\n"
+msgstr "columnas: %d"
 
 #: ../display/d.rast.num/number.c:208
-#, fuzzy
 msgid ""
 "\n"
 "Your current window setting may be too large. Cells displayed on your "
 "graphics window may be too small for cell category number to be visible."
-msgstr "a."
+msgstr ""
+"\n"
+"La configuración de su ventana actual puede ser demasiado grande. Las celdas mostradas en su pantalla pueden ser demasiado pequeñas para el número de categoría de celda para ser visibles."
 
 #: ../display/d.rast.num/number.c:214
 msgid "Aborting."
-msgstr ""
+msgstr "Abortando."
 
 #: ../display/d.rgb/main.c:37
 msgid ""
@@ -2013,12 +1921,12 @@ msgid ""
 "overlays in the active graphics frame."
 msgstr ""
 "Muestra las tres capas del mapa ráster especificadas por el usuario como "
-"superposiciones de rojo, verde y azulen el marco gráfico activo."
+"superposiciones de rojo, verde y azul en el marco gráfico activo."
 
 #: ../display/d.rgb/main.c:51 ../raster/r.out.ppm3/main.c:55
-#, fuzzy, c-format
+#, c-format
 msgid "Name of raster map to be used for <%s>"
-msgstr "Nombre a"
+msgstr "Nombre del mapa ráster a usar para <%s>"
 
 #: ../display/d.rgb/main.c:81
 #, c-format
@@ -2030,327 +1938,310 @@ msgstr "El mapa ráster[%s] no existe"
 #: ../raster/r.los/main.c:181 ../raster/r.los/main.c:193
 #: ../raster/r.surf.area/main.c:124 ../raster/r.topidx/file_io.c:18
 #: ../raster/r.univar2/main.c:107
-#, fuzzy, c-format
+#, c-format
 msgid "Unable to open raster map [%s]"
-msgstr "No fue posible encontrar el mapa %s"
+msgstr "No fue posible abrir el mapa ráster [%s]"
 
 #: ../display/d.rgb/main.c:109
 msgid "Error reading row of data"
-msgstr "Error leyendo fila de datos"
+msgstr "Error al leer la fila de datos"
 
 #: ../display/d.save/main.c:82
 msgid "Create a list of commands for recreating screen graphics."
-msgstr ""
+msgstr "Crear una lista de comandos para recrear gráficos de pantalla."
 
 #: ../display/d.save/main.c:87
-#, fuzzy
 msgid "Name of frame(s) to save"
-msgstr "Número de líneas"
+msgstr "Nombre de marco(s) a guardar"
 
 #: ../display/d.save/main.c:125
-#, fuzzy
 msgid ""
 "List of object numbers to remove which are displayed after \"#\". -1 for the "
 "last object."
-msgstr "a."
+msgstr "Lista de números de objeto a eliminar que son mostrados tras \"#\". -1 para el último objeto."
 
 #: ../display/d.save/main.c:133
-#, fuzzy
 msgid ""
 "List of object numbers to move (\"from\" to \"to\"). remove= option will be "
 "done first, if any."
-msgstr "a a a."
+msgstr "Lista de números de objeto a mover (\"desde\" a \"a\"). eliminar= las opciones se harán primero, si las hay."
 
 #: ../display/d.save/main.c:142
 msgid "Save current frame"
-msgstr ""
+msgstr "Guardar el marco actual"
 
 #: ../display/d.save/main.c:147
-#, fuzzy
 msgid "Save all the frames"
-msgstr "fotogramas"
+msgstr "Guardar todos los marcos"
 
 #: ../display/d.save/main.c:153
 msgid "Only map objects without extra header and tailer"
-msgstr ""
+msgstr "Sólo objetos de mapa sin cabecera y cola extra"
 
 #: ../display/d.save/main.c:161
 msgid "No monitor selected"
-msgstr ""
+msgstr "Ningún monitor seleccionado"
 
 #: ../display/d.save/main.c:489
-#, fuzzy, c-format
+#, c-format
+#, fuzzy
 msgid "Unknown item type in pad: %s"
-msgstr "Tipo desconocido: %c"
+msgstr "Tipo de objeto desconocido en : %s"
 
 #: ../display/d.save/main.c:524
-#, fuzzy, c-format
+#, c-format
+#, fuzzy
 msgid "Unkown item type in pad: %s"
-msgstr "Tipo desconocido: %c"
+msgstr "Tipo de objeto desconocido en : %s"
 
 #: ../display/d.text/main.c:70 ../display/d.text.new/main.c:138
 msgid ""
 "Draws text in the active display frame on the graphics monitor using the "
 "current font."
-msgstr ""
+msgstr "Dibuja texto en el marco activo en la pantalla usando la fuente actual."
 
 #: ../display/d.text/main.c:78 ../display/d.text.new/main.c:153
 msgid "Height of letters in percentage of available frame height"
-msgstr ""
+msgstr "Altura de letras en porcentaje de la altura del marco disponible"
 
 #: ../display/d.text/main.c:94 ../display/d.text.new/main.c:169
-#, fuzzy
 msgid "The screen line number on which text will begin to be drawn"
-msgstr "a"
+msgstr "Número de línea de la pantalla en el que se empezará a escribir el texto"
 
 #: ../display/d.text/main.c:103 ../display/d.text.new/main.c:178
-#, fuzzy
 msgid ""
 "Screen position at which text will begin to be drawn (percentage, [0,0] is "
 "lower left)"
-msgstr "a"
+msgstr "Posición de la pantalla en la que se empezará a escribir el texto (porcentaje, [0,0] es la esquina inferior izquierda)"
 
 #: ../display/d.text/main.c:110 ../display/d.text.freetype/main.c:216
 #: ../display/d.text.new/main.c:194
 msgid "Rotation angle in degrees (counter-clockwise)"
-msgstr ""
+msgstr "Ángulo de rotación en grados (en el sentido de las agujas del reloj)"
 
 #: ../display/d.text/main.c:114 ../display/d.text.freetype/main.c:235
 #: ../display/d.text.new/main.c:217
 msgid "Use bold text"
-msgstr ""
+msgstr "Usar texto en negrita"
 
 #: ../display/d.text/main.c:122 ../display/d.text.new/main.c:237
 msgid "Please choose only one placement method"
-msgstr ""
+msgstr "Por favor elija un solo método de ubicación."
 
 #: ../display/d.text/main.c:176
 #, c-format
 msgid "value [%.0f,%.0f] out of range [0-100]"
-msgstr ""
+msgstr "valor [%.0f,%.0f] fuera de rango [0-100]"
 
 #: ../display/d.text/main.c:192 ../display/d.text.new/main.c:361
-#, fuzzy
 msgid "Unable to open the temporary file."
-msgstr "a."
+msgstr "No se puede abrir el archivo temporal."
 
 #: ../display/d.text.freetype/main.c:143
 msgid ""
 "Draws text in the graphics monitor's active display frame using TrueType "
 "fonts."
-msgstr ""
+msgstr "Escribe texto en el marco activo de la pantalla usando fuentes TrueType."
 
 #: ../display/d.text.freetype/main.c:149 ../display/d.text.new/main.c:144
-#, fuzzy
 msgid "Text to display"
-msgstr "Texto a"
+msgstr "Texto a mostrar"
 
 #: ../display/d.text.freetype/main.c:156
 msgid "Screen position (percentage, [0,0] is bottom left)"
-msgstr ""
+msgstr "Posición de pantalla (porcentaje, [0,0] es inferior izquierda)"
 
 #: ../display/d.text.freetype/main.c:171 ../display/d.vect/main.c:283
 #: ../vector/v.label/main.c:122
-#, fuzzy
 msgid "Font name"
-msgstr "nombre de tabla"
+msgstr "Nombre de fuente"
 
 #: ../display/d.text.freetype/main.c:201
 msgid "Height of letters (in percent of available frame height)"
-msgstr ""
+msgstr "Altura de letras (en porcentaje de la altura del marco disponible)"
 
 #: ../display/d.text.freetype/main.c:209 ../display/d.text.new/main.c:186
-#, fuzzy
 msgid "Text alignment"
-msgstr "Texto"
+msgstr "Alineación del texto"
 
 #: ../display/d.text.freetype/main.c:223 ../display/d.text.new/main.c:201
 msgid "Line spacing"
-msgstr ""
+msgstr "Espaciamiento de la línea"
 
 #: ../display/d.text.freetype/main.c:227 ../display/d.text.new/main.c:209
 msgid "Screen position in pixels ([0,0] is top left)"
-msgstr ""
+msgstr "Posición de pantalla en píxeles ([0,0] es superior izquierda)"
 
 #: ../display/d.text.freetype/main.c:231 ../display/d.text.new/main.c:213
 msgid "Screen position in geographic coordinates"
-msgstr ""
+msgstr "Posición de pantalla en coordenadas geográficas"
 
 #: ../display/d.text.freetype/main.c:239 ../display/d.text.new/main.c:221
 msgid "Use radians instead of degrees for rotation"
-msgstr ""
+msgstr "Usar radianes en vez de grados para la rotación"
 
 #: ../display/d.text.freetype/main.c:243 ../display/d.text.new/main.c:225
-#, fuzzy
 msgid "Font size is height in pixels"
-msgstr "nombre de tabla"
+msgstr "El tamaño de fuente es altura en píxeles"
 
 #: ../display/d.text.freetype/main.c:247
 msgid "Command mode (Compatibility with d.text)"
-msgstr ""
+msgstr "Modo comando (Compatibilidad con d.text)"
 
 #: ../display/d.text.freetype/main.c:254
 msgid "Either text or -c should be given"
-msgstr ""
+msgstr "Texto o se debe dar -c"
 
 #: ../display/d.text.freetype/main.c:259
 msgid "Choose only one coordinate system for placement"
-msgstr ""
+msgstr "Elegir sólo un sistema de coordenadas para la ubicación"
 
 #: ../display/d.text.freetype/main.c:264 ../display/d.text.freetype/main.c:266
 #: ../display/d.text.freetype/main.c:630
 msgid "No font selected"
-msgstr ""
+msgstr "Ninguna fuente seleccionada"
 
 #: ../display/d.text.freetype/main.c:276 ../display/d.text.freetype/main.c:455
 #, c-format
 msgid "Invalid font: %s"
-msgstr ""
+msgstr "Fuente inválida: %s"
 
 #: ../display/d.text.freetype/main.c:326
-#, fuzzy
 msgid "Unable to initialise FreeType"
-msgstr "a"
+msgstr "No se puede inicializar FreeType"
 
 #: ../display/d.text.freetype/main.c:331 ../display/d.text.freetype/main.c:473
-#, fuzzy
 msgid "Unable to create face"
-msgstr "a"
+msgstr "No se puede crear la cara"
 
 #: ../display/d.text.freetype/main.c:334 ../display/d.text.freetype/main.c:475
 #: ../display/d.text.freetype/main.c:490
-#, fuzzy
 msgid "Unable to set size"
-msgstr "a"
+msgstr "No se puede establecer el tamaño"
 
 #: ../display/d.text.freetype/main.c:353 ../display/d.text.freetype/main.c:588
-#, fuzzy
 msgid "Unable to create text conversion context"
-msgstr "a"
+msgstr "No se puede crear el contexto de conversión de texto"
 
 #: ../display/d.text.freetype/main.c:355 ../display/d.text.freetype/main.c:590
-#, fuzzy
 msgid "Text conversion error"
-msgstr "Texto"
+msgstr "Error en la conversión de texto"
 
 #: ../display/d.text.freetype/main.c:424
-#, fuzzy
 msgid "Unable to write the temporary file"
-msgstr "a"
+msgstr "No se puede escribir el archivo temporal"
 
 #: ../display/d.text.freetype/main.c:449
 msgid "No predefined font"
-msgstr ""
+msgstr "Ninguna fuente predefinida"
 
 #: ../display/d.text.freetype/main.c:466
-#, fuzzy, c-format
+#, c-format
 msgid "%s: Unable to read font"
-msgstr "a"
+msgstr "%s: No se puede leer la fuente"
 
 #: ../display/d.text.freetype/main.c:670
-#, fuzzy, c-format
+#, c-format
 msgid "%s: Unable to read FreeType definition file; use the default"
-msgstr "a"
+msgstr "%s: no se puede leer el archivo de definición FreeType; use el predeterminado"
 
 #: ../display/d.text.freetype/main.c:676
 #, c-format
 msgid "%s: No FreeType definition file"
-msgstr ""
+msgstr "%s: ninún archivo de definición FreeType"
 
 #: ../display/d.text.freetype/main.c:681
-#, fuzzy, c-format
+#, c-format
 msgid "%s: Unable to read FreeType definition file"
-msgstr "a"
+msgstr "%s: no se puede leer el archivo de definición FreeType"
 
 #: ../display/d.text.new/main.c:205
-#, fuzzy
 msgid "Use mouse to interactively place text"
-msgstr "a"
+msgstr "Usar el ratón para situar el texto de forma interactiva"
 
 #: ../display/d.text.new/main.c:290
 msgid "Invalid coordinates"
-msgstr ""
+msgstr "Coordenadas inválidas"
 
 #: ../display/d.text.new/main.c:357
-#, fuzzy, c-format
+#, c-format
 msgid ""
 "\n"
 "Please enter text instructions.  Enter EOF (ctrl-d) on last line to quit\n"
-msgstr "a"
+msgstr ""
+"\n"
+"Por favor introduzca instrucciones de texto. Introduzca EOF (ctrl-d) en la última línea para salir\n"
 
 #: ../display/d.text.new/main.c:552
 #, c-format
 msgid "[%s]: No such color. Use '%s'"
-msgstr ""
+msgstr "[%s]: No hay tal color. Use '%s'"
 
 #: ../display/d.text.new/main.c:572
 #, c-format
 msgid "Click!\n"
-msgstr ""
+msgstr "¡Clic!\n"
 
 #: ../display/d.text.new/main.c:573
-#, fuzzy, c-format
+#, c-format
 msgid " Left:    Place text here\n"
-msgstr "Izquierda:  que es aqui\n"
+msgstr " Izquierda:    Sitúe el texto aquí\n"
 
 #: ../display/d.text.new/main.c:574
-#, fuzzy, c-format
+#, c-format
 msgid " Right:   Quit\n"
-msgstr "Derecha: salir\n"
+msgstr " Derecha:   Salir\n"
 
 #: ../display/d.title/main.c:43
 msgid "Create a TITLE for a raster map in a form suitable for display with d.text."
-msgstr ""
+msgstr "Crear un TÍTULO para un mapa ráster en un modo adecuado para mostrar con d.text."
 
 #: ../display/d.title/main.c:54
-#, fuzzy
 msgid "Sets the text color"
-msgstr " color por defecto\n"
+msgstr "Establece el color de texto"
 
 #: ../display/d.title/main.c:62
 msgid "Sets the text size as percentage of the frame's height"
-msgstr ""
+msgstr "Establece el tamaño de texto como porcentaje de la altura del marco"
 
 #: ../display/d.title/main.c:66
 msgid "Do a fancier title"
-msgstr ""
+msgstr "Hacer un título más complejo"
 
 #: ../display/d.title/main.c:71
 msgid "Do a simple title"
-msgstr ""
+msgstr "Hecer un título sencillo"
 
 #: ../display/d.title/main.c:88
-#, fuzzy
 msgid "Title can be fancy or simple, not both"
-msgstr "Título"
+msgstr "El título puede ser complejo o sencillo, no ambos"
 
 #: ../display/d.title/main.c:91
-#, fuzzy
 msgid "No map name given"
-msgstr "Mapa(s) de entrada no especificado(s)."
+msgstr "Ningún nombre de mapa especificado"
 
 #: ../display/d.title/main.c:96 ../general/g.region/cmd/main.c:465
 #: ../general/g.region/cmd/main.c:803 ../general/g.region/cmd/main.c:812
 #: ../raster/r.out.mat/main.c:94 ../raster/r.out.pov/main.c:175
-#, fuzzy, c-format
+#, c-format
 msgid "Raster map <%s> not found"
-msgstr "mapa <%s> no encontrado"
+msgstr "Mapa ráster <%s> no encontrado"
 
 #: ../display/d.title/main.c:99
-#, fuzzy, c-format
+#, c-format
 msgid "Cannot read map header for <%s>"
-msgstr "Imposible leer la información del campo"
+msgstr "No se puede leer la cabecera del mapa para <%s>"
 
 #: ../display/d.title/main.c:102
-#, fuzzy, c-format
+#, c-format
 msgid "Cannot read category file for <%s>"
-msgstr "no es posible abrir %s"
+msgstr "No se puede leer el archivo de categoría para <%s>"
 
 #: ../display/d.vect/area.c:51 ../display/d.vect/plot1.c:52
 #: ../vector/lidar/v.surf.bspline/main.c:263
 #: ../vector/v.surf.idw/read_sites.c:35
 msgid "Cannot read field info"
-msgstr "Imposible leer la información del campo"
+msgstr "No se puede leer la información del campo"
 
 #: ../display/d.vect/area.c:56 ../display/d.vect/attr.c:43
 #: ../display/d.vect/plot1.c:57 ../ps/ps.map/ps_vpoints.c:99
@@ -2366,82 +2257,80 @@ msgstr "Imposible leer la información del campo"
 #: ../vector/v.to.points/main.c:240 ../vector/v.to.rast3/main.c:83
 #, c-format
 msgid "Cannot open database %s by driver %s"
-msgstr "Imposible abrir la Base de Datos %s del disco %s"
+msgstr "No se puede abrir la base de datos %s por el controlador %s"
 
 #: ../display/d.vect/area.c:64 ../display/d.vect/plot1.c:64
-#, fuzzy
 msgid "Color definition column not specified."
-msgstr "Color."
+msgstr "Columna de definición de color no especificada."
 
 #: ../display/d.vect/area.c:74 ../display/d.vect/plot1.c:74
-#, fuzzy, c-format
+#, c-format
 msgid ""
 "Color definition column (%s) not a string. Column must be of form RRR:GGG:"
 "BBB where RGB values range 0-255."
-msgstr "Color."
+msgstr "Columna de definición de color (%s) no es una cadena. La columna debe ser de la forma RRR:GGG:BBB, donde los valores RGB varían entre 0-255."
 
 #: ../display/d.vect/area.c:79 ../display/d.vect/area.c:110
 #: ../display/d.vect/plot1.c:78 ../display/d.vect/plot1.c:109
-#, fuzzy, c-format
+#, c-format
 msgid "Cannot select data (%s) from table"
-msgstr "Imposible seleccionar datos de la tabla"
+msgstr "No se pueden seleccionar datos (%s) de la tabla"
 
 #: ../display/d.vect/area.c:89
 #, c-format
 msgid "Category <%d>: Area fill color and background color are the same!"
-msgstr ""
+msgstr "Categoría <%d>: ¡El color de relleno y el color de fondo son los mismos!"
 
 #: ../display/d.vect/area.c:97 ../display/d.vect/plot1.c:96
 msgid "Line width column not specified."
-msgstr ""
+msgstr "Columna de anchura de línea no especificada."
 
 #: ../display/d.vect/area.c:107 ../display/d.vect/plot1.c:106
 #, c-format
 msgid "Line width column (%s) not a number."
-msgstr ""
+msgstr "La columna de anchura de línea (%s) no es un número."
 
 #: ../display/d.vect/area.c:241
 #, c-format
 msgid "Error in color definition column (%s), area %d with cat %d: colorstring [%s]"
-msgstr ""
+msgstr "Error en la columna (%s) de definición de color, área %d con categoría %d: cadena de color [%s]"
 
 #: ../display/d.vect/area.c:247
 #, c-format
 msgid "Error in color definition column (%s), area %d with cat %d"
-msgstr ""
+msgstr "Error en la columna (%s) de definición de color, área %d con categoría %d"
 
 #: ../display/d.vect/area.c:300 ../display/d.vect/plot1.c:275
 #, c-format
 msgid "Error in line width column (%s), element %d with cat %d: line width [%d]"
-msgstr ""
+msgstr "Error en la columna (%s) de anchura de línea, elemento %d con categoría %d: anchura de línea [%d]"
 
 #: ../display/d.vect/attr.c:30
 msgid "attrcol not specified, cannot display attributes"
-msgstr ""
+msgstr "columna de atributos no especificada. No se pueden mostrar los atributos"
 
 #: ../display/d.vect/attr.c:52 ../display/d.vect/dir.c:30
 #: ../display/d.vect/label.c:31
-#, fuzzy
 msgid "Can't read vector map"
-msgstr "Imposible leer la información del campo"
+msgstr "No se puede leer el mapa vectorial"
 
 #: ../display/d.vect/attr.c:102
-#, fuzzy, c-format
+#, c-format
 msgid "Cannot select attributes: %s"
-msgstr "Imposible seleccionar datos de la tabla"
+msgstr "No se pueden seleccionar los atributos: %s"
 
 #: ../display/d.vect/attr.c:118
-#, fuzzy, c-format
+#, c-format
 msgid "No attribute found for cat %d: %s"
-msgstr "No hay registro para la linea (cat = %d)"
+msgstr "Ningún atributo encontrado para la categoría %d: %s"
 
 #: ../display/d.vect/main.c:144
 msgid "Displays GRASS vector data in the active frame on the graphics monitor."
-msgstr ""
+msgstr "Muestra datos vectoriales de GRASS en el marco activo de la pantalla."
 
 #: ../display/d.vect/main.c:160
 msgid "Display"
-msgstr ""
+msgstr "Mostrar"
 
 #: ../display/d.vect/main.c:167 ../display/d.vect/main.c:245
 #: ../display/d.vect/main.c:253 ../display/d.vect/main.c:260
@@ -2449,136 +2338,126 @@ msgstr ""
 #: ../display/d.vect/main.c:282 ../display/d.vect/main.c:288
 #: ../display/d.vect/main.c:296
 msgid "Labels"
-msgstr ""
+msgstr "Etiquetas"
 
 #: ../display/d.vect/main.c:168
-#, fuzzy
 msgid "Name of column to be displayed"
-msgstr "Nombre a"
+msgstr "Nombre de la columna a mostrar"
 
 #: ../display/d.vect/main.c:175 ../display/d.vect/main.c:185
 msgid "Symbols"
-msgstr ""
+msgstr "Símbolos"
 
 #: ../display/d.vect/main.c:179
 msgid "Point and centroid symbol"
-msgstr ""
+msgstr "Símbolo de punto y centroide"
 
 #: ../display/d.vect/main.c:186
 msgid "Symbol size"
-msgstr ""
+msgstr "Tamaño de símbolo"
 
 #: ../display/d.vect/main.c:189
 msgid "Layer number. If -1, all layers are displayed."
-msgstr ""
+msgstr "Número de capa. Si es -1 se muestran todas las capas."
 
 #: ../display/d.vect/main.c:192 ../display/d.vect/main.c:195
 #: ../display/d.vect/main.c:336
 msgid "Query"
-msgstr ""
+msgstr "Consulta"
 
 #: ../display/d.vect/main.c:201 ../display/d.vect/main.c:207
 #: ../display/d.vect/main.c:214
 msgid "Lines"
-msgstr ""
+msgstr "Líneas"
 
 #: ../display/d.vect/main.c:202
 msgid "Line width"
-msgstr ""
+msgstr "Ancho de línea"
 
 #: ../display/d.vect/main.c:208
-#, fuzzy
 msgid "Name of column for line widths (these values will be scaled by wscale)"
-msgstr "Nombre"
+msgstr "Nombre de columna para anchuras de línea (estos valores se escalarán por wscale)"
 
 #: ../display/d.vect/main.c:215
-#, fuzzy
 msgid "Scale factor for wcolumn"
-msgstr "Escalar"
+msgstr "Factor de escala para columna de anchura (wcolumn)"
 
 #: ../display/d.vect/main.c:221
-#, fuzzy
 msgid "Line color"
-msgstr " nv color\n"
+msgstr "Color de línea"
 
 #: ../display/d.vect/main.c:222 ../display/d.vect/main.c:230
 #: ../display/d.vect/main.c:238 ../display/d.vect/main.c:323
 #: ../display/d.vect/main.c:329 ../vector/v.label/main.c:155
 #: ../vector/v.label/main.c:180 ../vector/v.label/main.c:195
 #: ../vector/v.label/main.c:203 ../vector/v.label/main.c:213
-#, fuzzy
 msgid "Colors"
 msgstr "Colores"
 
 #: ../display/d.vect/main.c:229
-#, fuzzy
 msgid "Area fill color"
-msgstr "val color\n"
+msgstr "Color de relleno"
 
 #: ../display/d.vect/main.c:240
-#, fuzzy
 msgid "Name of color definition column (for use with -a flag)"
-msgstr "Nombre"
+msgstr "Nombre de la columna de definición de color (para usar con el modificador -a)"
 
 #: ../display/d.vect/main.c:252
-#, fuzzy
 msgid "Label color"
-msgstr "val color\n"
+msgstr "Color de etiqueta"
 
 #: ../display/d.vect/main.c:261
 msgid "Label background color"
-msgstr ""
+msgstr "Color de fondo de etiqueta"
 
 #: ../display/d.vect/main.c:269
 msgid "Label border color"
-msgstr ""
+msgstr "Color de borde de etiqueta"
 
 #: ../display/d.vect/main.c:277
 msgid "Label size (pixels)"
-msgstr ""
+msgstr "Tamaño de etiqueta (píxeles)"
 
 #: ../display/d.vect/main.c:291
 msgid "Label horizontal justification"
-msgstr ""
+msgstr "Justificación horizontal de etiqueta"
 
 #: ../display/d.vect/main.c:299
 msgid "Label vertical justification"
-msgstr ""
+msgstr "Justificación vertical de etiqueta"
 
 #: ../display/d.vect/main.c:305
 msgid "Minimum region size (average from height and width) when map is displayed"
-msgstr ""
+msgstr "Tamaño mínimo de región (media de altura y anchura) cuando se muestra el mapa"
 
 #: ../display/d.vect/main.c:313
 msgid "Maximum region size (average from height and width) when map is displayed"
-msgstr ""
+msgstr "Tamaño máximo de región (media de altura y anchura) cuando se muestra el mapa"
 
 #: ../display/d.vect/main.c:319 ../raster/r.cost/main.c:217
 #: ../raster/wildfire/r.ros/main.c:281 ../vector/v.kernel/main.c:155
 msgid "Run verbosely"
-msgstr ""
+msgstr "Ejecutar con comentarios"
 
 #: ../display/d.vect/main.c:325
 msgid "Get colors from map table column (of form RRR:GGG:BBB)"
-msgstr ""
+msgstr "Tomar colores de columna de la tabla del mapa (en forma RRR:GGG:BBB)"
 
 #: ../display/d.vect/main.c:331
-#, fuzzy
 msgid ""
 "Random colors according to category number (or layer number if 'layer=-1' is "
 "given)"
-msgstr "a"
+msgstr "Colores aleatorios según el número de categoría (o número de capa si se da 'capa=-1')"
 
 #: ../display/d.vect/main.c:337
 msgid "Use values from 'cats' option as line ID"
-msgstr ""
+msgstr "Usar valores de la opción 'cats' (categorías) como línea ID"
 
 #: ../display/d.vect/main.c:342
-#, fuzzy
 msgid ""
 "Don't add to list of vectors and commands in monitor (it won't be drawn if "
 "the monitor is refreshed)"
-msgstr "añadir a"
+msgstr "No añadir a la lista de vectoriales y comandos en el monitor (no se dibujarán si se refresca el monitor)"
 
 #: ../display/d.vect/main.c:352 ../raster/r.cost/main.c:226
 #: ../raster/r.in.mat/main.c:378 ../raster/r.out.mat/main.c:189
@@ -2587,95 +2466,90 @@ msgstr "añadir a"
 msgid ""
 "The '-v' flag is superseded and will be removed in future. Please use '--"
 "verbose' instead."
-msgstr ""
+msgstr "El modificador '-v' está suplantado y se eliminará en el futuro. Por favor use '--verbose' en su lugar."
 
 #: ../display/d.vect/main.c:397
 msgid ""
 "The '-c' and '-a' flags cannot be used together, the '-c' flag will be "
 "ignored!"
-msgstr ""
+msgstr "Los modificadores '-c' y '-a' no se pueden usar juntos. ¡Se ignorará el modificador '-c'!"
 
 #: ../display/d.vect/main.c:404
 msgid "Line color and background color are the same!"
-msgstr ""
+msgstr "¡Los colores de línea y de fondo son los mismos!"
 
 #: ../display/d.vect/main.c:414 ../display/d.vect/main.c:430
-#, fuzzy, c-format
+#, c-format
 msgid "Unknown color: [%s]"
-msgstr "%s - color desconocido\n"
+msgstr "Color desconocido: [%s]"
 
 #: ../display/d.vect/main.c:420
 msgid "Area fill color and background color are the same!"
-msgstr ""
+msgstr "¡Los colores de relleno y de fondo son los mismos!"
 
 #: ../display/d.vect/main.c:442 ../display/d.vect.chart/main.c:208
 #: ../display/d.what.vect/main.c:131 ../vector/v.label/main.c:275
 #: ../vector/v.what/main.c:175
 #, c-format
 msgid "Vector file [%s] not available"
-msgstr ""
+msgstr "Archivo vectorial [%s] no disponible"
 
 #: ../display/d.vect/main.c:455 ../vector/v.extract/main.c:207
 msgid "'layer' must be > 0 for 'where'."
-msgstr ""
+msgstr "'layer' (capa) debe ser >0 para 'where' (donde)"
 
 #: ../display/d.vect/main.c:458 ../vector/v.db.connect/main.c:164
 #: ../vector/v.db.select/main.c:107 ../vector/v.extrude/main.c:190
 msgid "Database connection not defined"
-msgstr "La conexión a la base de datos no ha sido definida"
+msgstr "Conexión a la base de datos no definida"
 
 #: ../display/d.vect/main.c:463 ../vector/v.db.connect/main.c:185
 #: ../vector/v.extract/main.c:217 ../vector/v.extrude/main.c:194
 #: ../vector/v.out.ogr/main.c:252 ../vector/v.out.svg/main.c:141
-#, fuzzy, c-format
+#, c-format
 msgid "Cannot open driver %s"
-msgstr "No es posible abrir la base de datos %s"
+msgstr "No se puede abrir el controlador %s"
 
 #: ../display/d.vect/main.c:468 ../vector/v.convert/att.c:68
 #: ../vector/v.extract/main.c:222 ../vector/v.out.ogr/main.c:257
 #: ../vector/v.out.svg/main.c:148
 #, c-format
 msgid "Cannot open database %s"
-msgstr "No es posible abrir la base de datos %s"
+msgstr "No se puede abrir la base de datos %s"
 
 #: ../display/d.vect/main.c:482
 msgid "'layer' must be > 0 for 'cats'."
-msgstr ""
+msgstr "'layer' (capa) debe ser > 0 para 'cats' (categorías)."
 
 #: ../display/d.vect/main.c:486
 #, c-format
 msgid "%d errors in cat option"
-msgstr ""
+msgstr "%d errores en la opción categoría"
 
 #: ../display/d.vect/main.c:600
-#, fuzzy
 msgid "Plotting ..."
-msgstr "Imprimiendo ... "
+msgstr "Imprimiendo ..."
 
 #: ../display/d.vect/main.c:609
-#, fuzzy
 msgid "The bounding box of the map is outside the current region, nothing drawn."
-msgstr "Los limites del mapa están fuera de la región actual, nada que mostrar.\n"
+msgstr "Los limites del mapa están fuera de la región actual, no se muestra nada."
 
 #: ../display/d.vect/main.c:632
-#, fuzzy
 msgid "Cannot display areas, topology not available"
-msgstr "topologÃ­a"
+msgstr "No se pueden mostrar las superficies, topología no disponible"
 
 #: ../display/d.vect/main.c:637
-#, fuzzy
 msgid "Cannot display lines by id, topology not available"
-msgstr "topologÃ­a"
+msgstr "No se pueden mostrar las líneas por ID, la topología no está disponible"
 
 #: ../display/d.vect/main.c:674
-#, fuzzy
 msgid "Cannot display topology, not available"
-msgstr "topologÃ­a"
+msgstr "No se puede mostrar la topología, no está disponible"
 
 #: ../display/d.vect/plot1.c:88
 #, c-format
 msgid "Category <%d>: Line color and background color are the same!"
-msgstr ""
+msgstr "Categoría <%d>: ¡los colores de línea y de fondo son los mismos!"
 
 #: ../display/d.vect/plot1.c:144 ../display/d.vect/topo.c:38
 #, c-format
@@ -2684,161 +2558,149 @@ msgid ""
 "ERROR: vector map - can't read\n"
 msgstr ""
 "\n"
-"ERROR: no es posible leer - archivo de vectores\n"
+"ERROR: el mapa vectorial - no se puede leer\n"
 
 #: ../display/d.vect/plot1.c:209
 #, c-format
 msgid ""
-"Error in color definition column (%s), element %d with cat %d: colorstring [%s]"
-msgstr ""
+"Error in color definition column (%s), element %d with cat %d: colorstring [%"
+"s]"
+msgstr "Error en la columna de definición de color (%s), elemento %d con categoría %d: colorstring [%s]"
 
 #: ../display/d.vect/plot1.c:215
 #, c-format
 msgid "Error in color definition column (%s), element %d with cat %d"
-msgstr ""
+msgstr "Error en la columna de definición de color (%s) elemento %d con categoría %d"
 
 #: ../display/d.vect.chart/main.c:59
-#, fuzzy
 msgid ""
 "Displays charts of GRASS vector data in the active frame on the graphics "
 "monitor"
-msgstr "Seleccione el tipo de letra que será mostrado en la pantalla del usuario."
+msgstr "Muestra gráficos de datos vectoriales de GRASS en el marco activo de la pantalla"
 
 #: ../display/d.vect.chart/main.c:76
 msgid "Chart type"
-msgstr ""
+msgstr "Tipo de gráfico"
 
 #: ../display/d.vect.chart/main.c:83
 msgid "Attribute columns containing data"
-msgstr ""
+msgstr "Columnas de atributos que contienen datos"
 
 #: ../display/d.vect.chart/main.c:89
 msgid "Column used for pie chart size"
-msgstr ""
+msgstr "Columna usada para tamaño de gráfico circular"
 
 #: ../display/d.vect.chart/main.c:95
-#, fuzzy
 msgid "Size of chart (diameter for pie, total width for bar)"
-msgstr "Tamaño"
+msgstr "Tamaño de gráfico (diámetro para circular, anchura total para barras)"
 
 #: ../display/d.vect.chart/main.c:101
-#, fuzzy
 msgid "Scale for size (to get size in pixels)"
-msgstr "Escalar a"
+msgstr "Escala para tamaño (para obtener tamaño en píxeles)"
 
 #: ../display/d.vect.chart/main.c:107
-#, fuzzy
 msgid "Outline color"
-msgstr " nv color\n"
+msgstr "Color de contorno"
 
 #: ../display/d.vect.chart/main.c:115
-#, fuzzy
 msgid "Colors used to fill charts"
-msgstr "Colores a"
+msgstr "Colores usados para rellenar gráficos"
 
 #: ../display/d.vect.chart/main.c:120
 msgid "Center the bar chart around a data point"
-msgstr ""
+msgstr "Centrar el gráfico de barras alrededor de un punto de datos"
 
 #: ../display/d.vect.chart/main.c:127
 msgid "Maximum value used for bar plot reference"
-msgstr ""
+msgstr "Valor máximo usado para para referencia de trazado de barras"
 
 #: ../display/d.what.rast/main.c:27
-#, fuzzy
 msgid ""
 "Allows the user to interactively query the category contents of multiple "
 "raster map layers at user specified locations within the current geographic "
 "region."
-msgstr "a."
+msgstr "Permite al usuario consultar de forma interactiva el contenido de categoría de múltiples capas de mapas ráster en localizaciones especificadas por el usuario dentro de la región geográfica actual."
 
 #: ../display/d.what.rast/main.c:56 ../raster/r.compress/main.c:72
-#, fuzzy
 msgid "Name of existing raster map(s)"
-msgstr "Nombre"
+msgstr "Nombre de mapa(s) ráster existentes"
 
 #: ../display/d.what.rast/main.c:64
 msgid "Field separator (terse mode only)"
-msgstr ""
+msgstr "Separador de campos (modo conciso solamente)"
 
 #: ../display/d.what.rast/main.c:69 ../display/d.what.vect/main.c:57
 msgid "Identify just one location"
-msgstr ""
+msgstr "Identificar sólo una localización"
 
 #: ../display/d.what.rast/main.c:73 ../display/d.what.vect/main.c:72
 msgid "Terse output. For parsing by programs"
-msgstr ""
+msgstr "Salida concisa. Para analizar por programas"
 
 #: ../display/d.what.rast/main.c:78
 msgid "Print out col/row for the entire map in grid resolution of the region"
-msgstr ""
+msgstr "Imprimir columna/fila para el mapa completo en la resolución de la rejilla de la región"
 
 #: ../display/d.what.rast/main.c:94
-#, fuzzy
 msgid "No current graphics window"
-msgstr "No es posible crear el índice"
+msgstr "Ninguna ventana de gráficos actual"
 
 #: ../display/d.what.rast/main.c:97
 msgid "Current graphics window not available"
-msgstr ""
+msgstr "Ventana de gráficos actual no disponible"
 
 #: ../display/d.what.rast/main.c:103
 msgid "Setting graphics window"
-msgstr ""
+msgstr "Configurando la ventana de gráficos"
 
 #: ../display/d.what.rast/main.c:106
-#, fuzzy
 msgid "Can't set current graphics window"
-msgstr "No es posible crear el índice"
+msgstr "No se puede configurar la ventana de gráficos actual"
 
 #: ../display/d.what.rast/main.c:110
 msgid "Getting graphics window coordinates"
-msgstr ""
+msgstr "Obteniendo coordenadas de la ventana de gráficos"
 
 #: ../display/d.what.rast/what.c:57
-#, fuzzy
 msgid "You are clicking outside the map"
-msgstr "No fue posible encontrar el mapa de entrada <%s>\n"
+msgstr "Está haciendo clic fuera del mapa"
 
 #: ../display/d.what.vect/main.c:37
-#, fuzzy
 msgid ""
 "Allows the user to interactively query a vector map layer at user-selected "
 "locations within the current geographic region."
-msgstr "a."
+msgstr "Permite consultar de forma interactiva una capa vectorial en localizaciones seleccionadas por el usuario dentro de la región geográfica actual."
 
 #: ../display/d.what.vect/main.c:68 ../vector/v.distance/main.c:109
 #: ../vector/v.distance/main.c:113 ../vector/v.what/main.c:92
-#, fuzzy
 msgid "Name of existing vector map"
-msgstr "Nombre del mapa de entrada existente"
+msgstr "Nombre del mapa vectorial existente"
 
 #: ../display/d.what.vect/main.c:76
-#, fuzzy
 msgid "Print information as plain text to terminal window"
-msgstr "a"
+msgstr "Imprimir información como texto plano en la consola"
 
 #: ../display/d.what.vect/main.c:80 ../vector/v.what/main.c:96
 msgid "Print topological information (debugging)"
-msgstr ""
+msgstr "Imprimir información topológica (depuración)"
 
 #: ../display/d.what.vect/main.c:84
 msgid "Enable flashing (slower)"
-msgstr ""
+msgstr "Habilitar flashing (más lento)"
 
 #: ../display/d.what.vect/main.c:88
 msgid "Open form in edit mode"
-msgstr ""
+msgstr "Abrir formulario en modo edición"
 
 #: ../display/d.what.vect/main.c:110
-#, fuzzy, c-format
+#, c-format
 msgid "Unable to open vector map [%s]"
-msgstr "no es posible abrir %s"
+msgstr "No se puede abrir el mapa vectorial [%s]"
 
 #: ../display/d.what.vect/main.c:134 ../vector/v.what/main.c:178
-#, fuzzy, c-format
+#, c-format
 msgid "%s: You must build topology on vector map"
-msgstr "topologÃ­a"
+msgstr "%s: Debe construir la topología en mapa vectorial"
 
 #: ../display/d.what.vect/main.c:136
 msgid "Building spatial index ..."
@@ -2849,25 +2711,24 @@ msgstr "Construyendo el índice espacial ..."
 #: ../imagery/i.group/main.c:263 ../imagery/i.group/main.c:309
 #: ../raster/r.support/front/front.c:232 ../vector/v.extract/main.c:330
 #: ../vector/v.voronoi/vo_main.c:305
-#, fuzzy
 msgid "Done."
-msgstr "Terminado.\n"
+msgstr "Terminado."
 
 #: ../display/d.what.vect/openvect.c:12
 #, c-format
 msgid "warning: %s - vector map not found\n"
-msgstr "atención: %s - archivo conteniendo vectores no fue encontrado\n"
+msgstr "atención: %s - mapa vectorial encontrado\n"
 
 #: ../display/d.what.vect/what.c:154 ../display/d.what.vect/what.c:155
 #: ../vector/v.what/what.c:77 ../vector/v.what/what.c:78
 #, c-format
 msgid "Nothing Found.\n"
-msgstr "No encontrado.\n"
+msgstr "No se ha encontrado nada.\n"
 
 #: ../display/d.what.vect/what.c:203
 #, c-format
 msgid "Line: %d  Type: %s  Left: %d  Right: %d  "
-msgstr "Linea: %d  Tipo: %s  Izquierda: %d  Derecha: %d  "
+msgstr "Línea: %d  Tipo: %s  Izquierda: %d  Derecha: %d  "
 
 #: ../display/d.what.vect/what.c:206 ../vector/v.what/what.c:125
 #, c-format
@@ -2875,14 +2736,14 @@ msgid "Length: %f\n"
 msgstr "Longitud: %f\n"
 
 #: ../display/d.what.vect/what.c:219
-#, fuzzy, c-format
+#, c-format
 msgid "  Node[%d]: %d  Number of lines: %d  Coordinates: %.6f, %.6f, %.6f\n"
-msgstr "  Nodo[%d]: %d  Número de lineas: %d\n"
+msgstr "  Nodo[%d]: %d  Número de lineas: %d  Coordenadas: %.6f, %.6f, %.6f\n"
 
 #: ../display/d.what.vect/what.c:224
 #, c-format
 msgid "    Line: %5d  Angle: %.8f\n"
-msgstr "    Linea: %5d  Angulo: %.8f\n"
+msgstr "    Línea: %5d  Ángulo: %.8f\n"
 
 #: ../display/d.what.vect/what.c:230 ../vector/v.what/what.c:155
 #, c-format
@@ -2897,12 +2758,12 @@ msgstr "Altura del punto: %f\n"
 #: ../display/d.what.vect/what.c:260 ../vector/v.what/what.c:178
 #, c-format
 msgid "Line height: %f\n"
-msgstr "Altura de la linea: %f\n"
+msgstr "Altura de la línea: %f\n"
 
 #: ../display/d.what.vect/what.c:266
 #, c-format
 msgid "Line height min: %f max: %f\n"
-msgstr "Altura mínima de la linea: %f max: %f\n"
+msgstr "Altura de la línea: mínimo: %f máximo: %f\n"
 
 #: ../display/d.what.vect/what.c:283
 #, c-format
@@ -2912,12 +2773,12 @@ msgstr "Altura del área: %f\n"
 #: ../display/d.what.vect/what.c:290
 #, c-format
 msgid "Area\n"
-msgstr "Area\n"
+msgstr "Área\n"
 
 #: ../display/d.what.vect/what.c:303
 #, c-format
 msgid "Area: %d  Number of isles: %d\n"
-msgstr "Area: %d  Número de islas: %d\n"
+msgstr "Área: %d  Número de islas: %d\n"
 
 #: ../display/d.what.vect/what.c:307
 #, c-format
@@ -2927,12 +2788,12 @@ msgstr "  Isla[%d]: %d\n"
 #: ../display/d.what.vect/what.c:314
 #, c-format
 msgid "Island: %d  In area: %d\n"
-msgstr "Isla: %d  In área: %d\n"
+msgstr "Isla: %d  en área: %d\n"
 
 #: ../display/d.what.vect/what.c:318 ../display/d.what.vect/what.c:326
 #, c-format
 msgid "Size - Sq Meters: %.3f\t\tHectares: %.3f\n"
-msgstr "Tamaño - Metros cuadrados: %.3f\t\tHectareas: %.3f\n"
+msgstr "Tamaño - Metros cuadrados: %.3f\t\tHectáreas: %.3f\n"
 
 #: ../display/d.what.vect/what.c:321 ../display/d.what.vect/what.c:330
 #, c-format
@@ -2945,13 +2806,13 @@ msgid ""
 "Layer: %d\n"
 "category: %d\n"
 msgstr ""
-"capa: %d\n"
+"Capa: %d\n"
 "categoría: %d\n"
 
 #: ../display/d.what.vect/what.c:365
 #, c-format
 msgid "Database connection not defined\n"
-msgstr "La conneción a la base de datos no ha sido definida\n"
+msgstr "Conexión a la base de datos sin definir\n"
 
 #: ../display/d.what.vect/what.c:373 ../vector/v.what/what.c:257
 #, c-format
@@ -2961,10 +2822,10 @@ msgid ""
 "table: %s\n"
 "key column: %s\n"
 msgstr ""
-"piloto: %s\n"
+"controlador: %s\n"
 "base de datos: %s\n"
 "tabla: %s\n"
-"columna de llave: %s\n"
+"columna de clave: %s\n"
 
 #: ../display/d.what.vect/what.c:424
 #, c-format
@@ -2974,7 +2835,7 @@ msgid ""
 "\n"
 msgstr ""
 "\n"
-"Click el botón del ratón en el lugar deseado\n"
+"Pulsar el botón del ratón en el lugar deseado\n"
 "\n"
 
 #: ../display/d.what.vect/what.c:429
@@ -2985,150 +2846,143 @@ msgstr "Botones\n"
 #: ../display/d.what.vect/what.c:430
 #, c-format
 msgid " Left:  what's here\n"
-msgstr "Izquierda:  que es aqui\n"
+msgstr " Izquierda:  qué hay aquí\n"
 
 #: ../display/d.what.vect/what.c:432
 #, c-format
 msgid " Middle: toggle flash color\n"
-msgstr " Medio: color flash enganchado\n"
+msgstr " Centro: fijar color de parpadeo\n"
 
 #: ../display/d.what.vect/what.c:437
 #, c-format
 msgid " Right: quit\n"
-msgstr "Derecha: salir\n"
+msgstr " Derecha: salir\n"
 
 #: ../display/d.where/main.c:23
 msgid ""
 "Identifies the geographic coordinates associated with point locations in the "
 "active frame on the graphics monitor."
-msgstr ""
+msgstr "Identifica las coordenadas geográficas asociadas con las localizaciones de los puntos en el marco activo de la pantalla."
 
 #: ../display/d.where/main.c:28
 msgid "One mouse click only"
-msgstr ""
+msgstr "Un solo clic del ratón"
 
 #: ../display/d.where/main.c:32
 msgid "Output lat/long in decimal degree"
-msgstr ""
+msgstr "Producir latitud/longitud en grados decimales"
 
 #: ../display/d.where/main.c:36
-#, fuzzy
 msgid "Output lat/long referenced to current ellipsoid"
-msgstr "a"
+msgstr "Producir latitud/longitud referida al elipsoide actual"
 
 #: ../display/d.where/main.c:40
-#, fuzzy
 msgid ""
 "Output lat/long referenced to WGS84 ellipsoid using datum transformation "
 "parameters defined in current location (if available)"
-msgstr "a"
+msgstr "Producir latitud/longitud referida al elipsoide WGS84 usando los parámetros de transformación del datum definidos en la localización actual (si los hay)"
 
 #: ../display/d.where/main.c:45
 msgid "Output frame coordinates of current display monitor (percentage)"
-msgstr ""
+msgstr "Producir coordenadas del marco del monitor actual (porcentaje)"
 
 #: ../display/d.where/main.c:53
 msgid "Ambiguous request for lat/long ellipsoids"
-msgstr ""
+msgstr "Solicitud ambigua para los elipsoides lat/long"
 
 #: ../display/d.where/main.c:56
 msgid "Please specify a lat/long ellipsoid with -l or -w"
-msgstr ""
+msgstr "Por favor especifique un elipsoide de lat/long con -l o -w"
 
 #: ../display/d.where/main.c:69 ../general/g.region/cmd/printwindow.c:229
 #: ../general/g.region/cmd/printwindow.c:475
 msgid "Can't get projection info of current location"
-msgstr ""
+msgstr "No se puede obtener información de la proyección de la localización actual"
 
 #: ../display/d.where/main.c:72 ../general/g.region/cmd/printwindow.c:233
 #: ../general/g.region/cmd/printwindow.c:479 ../raster/r.sun/main.c:440
 msgid "Can't get projection units of current location"
-msgstr ""
+msgstr "No se pueden obtener unidades de la proyección de la localización actual"
 
 #: ../display/d.where/main.c:100
 msgid ""
 "WGS84 output not possible as this location does not contain\n"
 "datum transformation parameters. Try running g.setproj."
 msgstr ""
+"Salida WGS84 imposible ya que esta localización no contiene\n"
+"parámetros de transformación del datum. Pruebe ejecutando g.setproj."
 
 #: ../display/d.zoom/main.c:43
-#, fuzzy
 msgid ""
 "Allows the user to change the current geographic region settings "
 "interactively, with a mouse."
-msgstr "a."
+msgstr "Permite al usuario cambiar la configuración de la región geográfica actual de forma interactiva, con el ratón."
 
 #: ../display/d.zoom/main.c:87
-#, fuzzy
 msgid "Name of vector map"
-msgstr "Nombre del archivo de entrada"
+msgstr "Nombre de mapa vectorial"
 
 #: ../display/d.zoom/main.c:95
 msgid "Magnification: >1.0 zooms in, <1.0 zooms out"
-msgstr ""
+msgstr "Zum: >1.0 acercar, <1.0 alejar"
 
 #: ../display/d.zoom/main.c:105
 msgid "Full menu (zoom + pan) & Quit menu"
-msgstr ""
+msgstr "Menú completo (zum + panorámica) y Salir del menú"
 
 #: ../display/d.zoom/main.c:109
 msgid "Pan mode"
-msgstr ""
+msgstr "Modo panorámica"
 
 #: ../display/d.zoom/main.c:113
 msgid "Handheld mode"
-msgstr ""
+msgstr "Modo agarrado"
 
 #: ../display/d.zoom/main.c:117
 msgid "Just redraw given maps using default colors"
-msgstr ""
+msgstr "Sólo redibujar los mapas dados usando colores predeterminados"
 
 #: ../display/d.zoom/main.c:121
-#, fuzzy
 msgid "Return to previous zoom"
-msgstr "a"
+msgstr "Volver al zum anterior"
 
 #: ../display/d.zoom/main.c:133
 msgid "Please choose only one mode of operation"
-msgstr ""
+msgstr "Por favor elija sólo un modo de operación"
 
 #: ../display/d.zoom/main.c:152
-#, fuzzy
 msgid "ERROR: can not get \"list\" items"
-msgstr "ERROR: imposible de recuperar los elementos de \"list\"\n"
+msgstr "ERROR: no se pueden obtener los elementos de \"lista\""
 
 #: ../display/d.zoom/main.c:153
-#, fuzzy
 msgid "-j flag forced"
-msgstr "Bandera -j forzada\n"
+msgstr "Modificador -j forzado"
 
 #: ../display/d.zoom/main.c:190
-#, fuzzy
 msgid "No map is displayed in GRASS monitor"
-msgstr "ERROR: No es posible mostrar el mapa GRASS en pantalla\n"
+msgstr "Ningún mapa está mostrado en el monitor de GRASS"
 
 #: ../display/d.zoom/main.c:244
-#, fuzzy, c-format
+#, c-format
 msgid "Vector map [%s] not available"
-msgstr "mapa <%s> no encontrado"
+msgstr "Mapa vectorial [%s] no disponible"
 
 #: ../display/d.zoom/main.c:301
 #, c-format
 msgid "%d raster%s, %d vector%s\n"
-msgstr "%d ráster%s, %d vector%s\n"
+msgstr "%d ráster%s, %d vectorial%s\n"
 
 #: ../display/d.zoom/main.c:311
 msgid "No previous zoom availible"
-msgstr ""
+msgstr "Ningún zum anterior disponible"
 
 #: ../display/d.zoom/main.c:315
-#, fuzzy
 msgid "Returning to previous zoom"
-msgstr "a"
+msgstr "Volviendo al zum anterior"
 
 #: ../display/d.zoom/main.c:356
 msgid "Zooming complete."
-msgstr ""
+msgstr "Zum completado."
 
 #: ../display/d.zoom/pan.c:20 ../display/d.zoom/zoom.c:15
 #, c-format
@@ -3144,27 +2998,27 @@ msgstr ""
 #: ../display/d.zoom/pan.c:21
 #, c-format
 msgid "Left:   Pan\n"
-msgstr ""
+msgstr "Izquierda:   Panorámica\n"
 
 #: ../display/d.zoom/pan.c:22
-#, fuzzy, c-format
+#, c-format
 msgid "Right:  Quit\n"
-msgstr "Derecha: salir\n"
+msgstr "Derecha:  Salir\n"
 
 #: ../display/d.zoom/zoom.c:16
-#, fuzzy, c-format
+#, c-format
 msgid "Left:   Zoom menu\n"
-msgstr "%s Menu zoom\n"
+msgstr "Izquierda:   Menú de zoom\n"
 
 #: ../display/d.zoom/zoom.c:17
 #, c-format
 msgid "Middle: Pan\n"
-msgstr ""
+msgstr "Centro: Panorámica\n"
 
 #: ../display/d.zoom/zoom.c:18
-#, fuzzy, c-format
+#, c-format
 msgid "Right:  Quit menu\n"
-msgstr "%s Salir del menu\n"
+msgstr "Derecha:  Menú de salida\n"
 
 #: ../display/d.zoom/zoom.c:41
 #, c-format
@@ -3172,20 +3026,20 @@ msgid ""
 "This region now saved as current region.\n"
 "\n"
 msgstr ""
-"La región ha sido grabada como la región actual.\n"
+"La región ha sido guardada como la región actual.\n"
 "\n"
 
 #: ../display/d.zoom/zoom.c:42
 #, c-format
 msgid "Note: run 'd.erase' for the new region to affect the graphics.\n"
-msgstr "Nota: ejecutar 'd.erase' en la nueva región para modifica los gráficos.\n"
+msgstr "Nota: ejecutar 'd.erase' para que la nueva región se aplique a los gráficos.\n"
 
 #: ../display/drivers/XDRIVER/Get_w_box.c:41
 #: ../display/drivers/XDRIVER/Get_w_line.c:40
 #: ../display/drivers/XDRIVER/Get_w_pointer.c:22
 #, c-format
 msgid "Monitor: interactive command in redraw\n"
-msgstr "Monitor: commando interactivo en redraw\n"
+msgstr "Monitor: comando interactivo en redraw\n"
 
 #: ../display/drivers/XDRIVER/Graph_set.c:114
 #, c-format
@@ -3195,17 +3049,17 @@ msgstr "%d visuales encontrados de tipo TrueColor\n"
 #: ../display/drivers/XDRIVER/Graph_set.c:116
 #, c-format
 msgid "searching for highest bit depth\n"
-msgstr "buscando la más alta profundidad del bit\n"
+msgstr "buscando la profundidad de bit más alta\n"
 
 #: ../display/drivers/XDRIVER/Graph_set.c:133
 #, c-format
 msgid "selected %d bit depth\n"
-msgstr "profundidad %d por bit seleccionada\n"
+msgstr "profundidad %d de bit seleccionada\n"
 
 #: ../display/drivers/XDRIVER/Graph_set.c:195
 #, c-format
 msgid "using default visual which is %s\n"
-msgstr "utilizando el visual %s por defecto\n"
+msgstr "utilizando el visual por defecto, que es %s\n"
 
 #: ../display/drivers/XDRIVER/Serve_Xevent.c:135
 #, c-format
@@ -3231,225 +3085,198 @@ msgstr "Monitor: XGetWMName: resultado incorrecto\n"
 #: ../general/g.version/main.c:33 ../general/manage/cmd/copy.c:21
 #: ../general/manage/cmd/list.c:23 ../general/manage/cmd/rename.c:23
 msgid "general"
-msgstr ""
+msgstr "general"
 
 #: ../general/g.access/main.c:23
-#, fuzzy
 msgid "Controls access to the current mapset for other users on the system."
-msgstr "a."
+msgstr "Controla el acceso al directorio de mapas actual para otros usuarios del sistema."
 
 #: ../general/g.access/main.c:30
-#, fuzzy
 msgid "Access for group"
-msgstr "grupo"
+msgstr "Acceso para grupo"
 
 #: ../general/g.access/main.c:37
 msgid "Access for others"
-msgstr ""
+msgstr "Acceso para otros"
 
 #: ../general/g.access/main.c:48
-#, fuzzy
 msgid "Access to the PERMANENT mapset must be open, nothing changed"
-msgstr "a"
+msgstr "El acceso al directorio de mapas PERMANENT debe estar abierto, no se cambia nada"
 
 #: ../general/g.access/main.c:52
-#, fuzzy
 msgid "Unable to determine mapset permssions"
-msgstr "Fallo abriendo el archivo de ingreso dig."
+msgstr "No se pueden determinar los permisos del directorio de mapas"
 
 #: ../general/g.filename/main.c:23
 msgid "Prints GRASS data base file names."
-msgstr ""
+msgstr "Imprime los nombres de archivos de bases de datos de GRASS."
 
 #: ../general/g.filename/main.c:31
-#, fuzzy
 msgid "Name of an element"
-msgstr "Nombre del archivo de entrada"
+msgstr "Nombre de un elemento"
 
 #: ../general/g.filename/main.c:37
-#, fuzzy
 msgid "Name of a database file"
-msgstr "Nombre del archivo de entrada"
+msgstr "Nombre de un archivo de base de datos"
 
 #: ../general/g.filename/main.c:43
-#, fuzzy
 msgid "Name of a mapset (default: current)"
-msgstr "Nombre"
+msgstr "Nombre de un directorio de mapas (por defecto: actual)"
 
 #: ../general/g.gisenv/main.c:22
 msgid "Outputs and modifies the user's current GRASS variable settings."
-msgstr ""
+msgstr "Saca y modifica la configuración actual de variables de GRASS del usuario."
 
 #: ../general/g.gisenv/main.c:27
-#, fuzzy
 msgid "GRASS variable to get"
-msgstr "a"
+msgstr "Variable de GRASS a obtener"
 
 #: ../general/g.gisenv/main.c:34
-#, fuzzy
 msgid "GRASS variable to set"
-msgstr "a"
+msgstr "Variable de GRASS a establecer"
 
 #: ../general/g.gisenv/main.c:43
 msgid "Where GRASS variable is stored"
-msgstr ""
+msgstr "Donde se guarda la variable de GRASS"
 
 #: ../general/g.mapsets/main_cmd.c:39
-#, fuzzy
 msgid ""
 "Modifies the user's current mapset search path, affecting the user's access "
 "to data existing under the other GRASS mapsets in the current location."
-msgstr "a."
+msgstr "Modifica la ruta de búsqueda del directorio de mapas actual del usuario, afectado al acceso del usuario a datos existentes bajo otros directorios de mapas de GRASS en la localización actual."
 
 #: ../general/g.mapsets/main_cmd.c:48
-#, fuzzy
 msgid "Name(s) of existing mapset(s)"
-msgstr "Nombre del mapa de entrada existente"
+msgstr "Nombre(s) de directorio(s) de mapas existente(s)"
 
 #: ../general/g.mapsets/main_cmd.c:55
-#, fuzzy
 msgid "Name(s) of existing mapset(s) to add to search list"
-msgstr "Nombre del mapa de entrada existente"
+msgstr "Nombre(s) de directorio(s) de mapas a añadir a la lista de búsqueda"
 
 #: ../general/g.mapsets/main_cmd.c:59
-#, fuzzy
 msgid "List all available mapsets"
-msgstr "Listar todos los pilotos de base de datos."
+msgstr "Listar todos los directorios de mapas disponibles"
 
 #: ../general/g.mapsets/main_cmd.c:63
-#, fuzzy
 msgid "Print current mapset search path"
-msgstr "Muestra los parámetros de conexión y termina"
+msgstr "Imprimir la ruta de búsqueda del directorio de mapas actual"
 
 #: ../general/g.mapsets/main_cmd.c:149
 msgid "Cannot open SEARCH_PATH for write"
-msgstr ""
+msgstr "No se puede abrir SEARCH_PATH para escritura"
 
 #: ../general/g.pnmcomp/main.c:38
-#, fuzzy, c-format
+#, c-format
 msgid "Invalid color: %s"
-msgstr "Area: %d  Número de islas: %d\n"
+msgstr "Color no válido: %s"
 
 #: ../general/g.pnmcomp/main.c:56
-#, fuzzy
 msgid "Error reading PPM file"
-msgstr "No fue posible encontrar el mapa %s"
+msgstr "Error al leer el archivo PPM"
 
 #: ../general/g.pnmcomp/main.c:72 ../general/g.pnmcomp/main.c:77
 #: ../general/g.pnmcomp/main.c:87 ../general/g.pnmcomp/main.c:144
 #: ../general/g.pnmcomp/main.c:157
 msgid "Invalid PPM file"
-msgstr ""
+msgstr "Archivo PPM no válido"
 
 #: ../general/g.pnmcomp/main.c:101
-#, fuzzy, c-format
+#, c-format
 msgid "File '%s' not found"
-msgstr "mapa <%s> no encontrado"
+msgstr "Archivo '%s' no encontrado"
 
 #: ../general/g.pnmcomp/main.c:110
 msgid "Expecting PPM but got PGM"
-msgstr ""
+msgstr "Se esperaba PPM pero se obtuvo PGM"
 
 #: ../general/g.pnmcomp/main.c:115
 msgid "Expecting PGM but got PPM"
-msgstr ""
+msgstr "Se esperaba PGM pero se obtuvo PPM"
 
 #: ../general/g.pnmcomp/main.c:118
-#, fuzzy, c-format
+#, c-format
 msgid "Invalid magic number: 'P%c'"
-msgstr "Area: %d  Número de islas: %d\n"
+msgstr "Número mágico no válido: 'P%c'"
 
 #: ../general/g.pnmcomp/main.c:134 ../general/g.pnmcomp/main.c:152
 msgid "Invalid PGM file"
-msgstr ""
+msgstr "Archivo PGM no válido"
 
 #: ../general/g.pnmcomp/main.c:262 ../general/g.pnmcomp/main.c:280
-#, fuzzy, c-format
+#, c-format
 msgid "Unable to open file '%s'"
-msgstr "Fallo abriendo el archivo de ingreso dig."
+msgstr "No se puede abrir el archivo '%s'"
 
 #: ../general/g.pnmcomp/main.c:267
-#, fuzzy
 msgid "Error writing PPM file"
-msgstr "Error de lectura en el archivo dbmscap\n"
+msgstr "Error al escribir el archivo PPM"
 
 #: ../general/g.pnmcomp/main.c:285
-#, fuzzy
 msgid "Error writing PGM file"
-msgstr "Error de lectura en el archivo dbmscap\n"
+msgstr "Error al escribir el archivo PGM"
 
 #: ../general/g.pnmcomp/main.c:311
-#, fuzzy
 msgid "Names of input files"
-msgstr "Nombre del archivo de entrada"
+msgstr "Nombres de los archivos de entrada"
 
 #: ../general/g.pnmcomp/main.c:318
-#, fuzzy
 msgid "Names of mask files"
-msgstr "Nombre del archivo de entrada"
+msgstr "Nombre de los archivos de máscara"
 
 #: ../general/g.pnmcomp/main.c:325
 msgid "Layer opacities"
-msgstr ""
+msgstr "Opacidades de capa"
 
 #: ../general/g.pnmcomp/main.c:331
 #: ../locale/scriptstrings/r.out.gdal.sh_to_translate.c:8
-#, fuzzy
 msgid "Name of output file"
-msgstr "Nombre del archivo de entrada"
+msgstr "Nombre del archivo de salida"
 
 #: ../general/g.pnmcomp/main.c:338
-#, fuzzy
 msgid "Name of output mask file"
-msgstr "Nombre del archivo de entrada"
+msgstr "Nombre del archivo de máscara de salida"
 
 #: ../general/g.pnmcomp/main.c:345
-#, fuzzy
 msgid "Image width"
-msgstr "Imagen"
+msgstr "Anchura de imagen"
 
 #: ../general/g.pnmcomp/main.c:351
-#, fuzzy
 msgid "Image height"
-msgstr "Imagen"
+msgstr "Altura de imagen"
 
 #: ../general/g.pnmcomp/main.c:356 ../vector/v.label/main.c:191
-#, fuzzy
 msgid "Background color"
-msgstr "Fondo"
+msgstr "Color de fondo"
 
 #: ../general/g.proj/input.c:83
-#, fuzzy
 msgid "Error reading WKT projection description"
-msgstr "No fue posible encontrar el mapa %s"
+msgstr "Error al leer la descripción de la proyección WKT"
 
 #: ../general/g.proj/input.c:90
-#, fuzzy, c-format
+#, c-format
 msgid "Unable to open file [%s] for reading"
-msgstr "no es posible abrir %s"
+msgstr "No se puede abrir el archivo [%s] para lectura"
 
 #: ../general/g.proj/input.c:138
 msgid "Can't parse PROJ.4-style parameter string"
-msgstr ""
+msgstr "No se puede analizar la cadena de parámetros estilo PROJ.4"
 
 #: ../general/g.proj/input.c:177
-#, fuzzy
 msgid "Trying to open with OGR..."
-msgstr "a."
+msgstr "Intentando abrir con OGR..."
 
 #: ../general/g.proj/input.c:185 ../general/g.proj/input.c:204
 msgid "...succeeded."
-msgstr ""
+msgstr "...conseguido."
 
 #: ../general/g.proj/input.c:198
-#, fuzzy
 msgid "Trying to open with GDAL..."
-msgstr "a."
+msgstr "Intentando abrir con GDAL..."
 
 #: ../general/g.proj/input.c:211
 #, c-format
 msgid "Could not read georeferenced file %s using either OGR nor GDAL"
-msgstr ""
+msgstr "No se pudo leer el archivo georreferenciado %s usando OGR ni GDAL"
 
 #: ../general/g.proj/input.c:216
 #, c-format
@@ -3457,102 +3284,104 @@ msgid ""
 "Read of file %s was successful, but it did not contain projection "
 "information. 'XY (unprojected)' will be used"
 msgstr ""
+"La lectura del archivo %s tuvo éxito , pero no contiene información "
+"de proyección. Se usará 'XY (sin proyectar)'"
 
 #: ../general/g.proj/main.c:49
 msgid ""
 "Converts co-ordinate system descriptions (i.e. projection information) "
 "between various formats (including GRASS format)."
 msgstr ""
+"Convierte descripciones del sistema de coordenadas (esto es, información "
+"de proyección) entre distintos formatos (incluyendo el formato GRASS)."
 
 #: ../general/g.proj/main.c:56
 msgid "Print projection information (in conventional GRASS format)"
-msgstr ""
+msgstr "Imprimir información de proyección (en formato convencional GRASS)"
 
 #: ../general/g.proj/main.c:62
 msgid "Verify datum information and print transformation parameters"
-msgstr ""
+msgstr "Verificar información del datum e imprimir parámetros de transformación"
 
 #: ../general/g.proj/main.c:68
 msgid "Print projection information in PROJ.4 format"
-msgstr ""
+msgstr "Imprimir información de proyección en formato PROJ.4"
 
 #: ../general/g.proj/main.c:74
 msgid "Print projection information in WKT format"
-msgstr ""
+msgstr "Imprimir información de proyección en formato WKT"
 
 #: ../general/g.proj/main.c:80
-#, fuzzy
 msgid "Use ESRI-style format (applies to WKT output only)"
-msgstr "a"
+msgstr "Usar formato tipo ESRI (sólo aplicable a salida WKT)"
 
 #: ../general/g.proj/main.c:86
-#, fuzzy
 msgid "Print 'flat' output with no linebreaks (applies to WKT and PROJ.4 output)"
-msgstr "a"
+msgstr "Imprimir salida 'lisa' sin saltos de página (aplicable a salidas WKT y PROJ.4)"
 
 #: ../general/g.proj/main.c:95
-#, fuzzy
 msgid "Georeferenced data file to read projection information from"
-msgstr "a"
+msgstr "Archivo georreferenciado del que leer la información de proyección"
 
 #: ../general/g.proj/main.c:104
 msgid "ASCII file containing a single line WKT projection description (- for stdin)"
-msgstr ""
+msgstr "Archivo ASCII que contiene una sola línea de descripción de proyección WKT (- para stdin)"
 
 #: ../general/g.proj/main.c:113
 msgid "PROJ.4 projection description (- for stdin)"
-msgstr ""
+msgstr "Descripción de proyección PROJ.4 (- para stdin)"
 
 #: ../general/g.proj/main.c:118
 msgid ""
 "Create new projection files (modifies current location unless 'location' "
 "option specified)"
 msgstr ""
+"Crea nuevos archivos de proyección (modifica la localización actual salvo "
+"que se especifique la opción 'location')"
 
 #: ../general/g.proj/main.c:127
-#, fuzzy
 msgid "Name of new location to create"
-msgstr "Nombre del mapa de entrada existente"
+msgstr "Nombre de la nueva localización a crear"
 
 #: ../general/g.proj/main.c:145
 #, c-format
 msgid "Only one of '%s', '%s' or '%s' options may be specified"
-msgstr ""
+msgstr "Sólo se puede especificar una de las opciones '%s', '%s' o '%s'"
 
 #: ../general/g.proj/main.c:170
 msgid "Projection files missing"
-msgstr ""
+msgstr "Faltan los archivos de proyección"
 
 #: ../general/g.proj/output.c:142
-#, fuzzy, c-format
+#, c-format
 msgid "%s: Unable to convert to WKT"
-msgstr "a a"
+msgstr "%s: no se puede convertir a WKT"
 
 #: ../general/g.proj/output.c:154
-#, fuzzy, c-format
+#, c-format
 msgid "Location %s created!"
-msgstr "descripción:%s\n"
+msgstr "¡Localización %s creada!"
 
 #: ../general/g.proj/output.c:156
-#, fuzzy, c-format
+#, c-format
 msgid "Cannot create location: %s"
-msgstr "No es posible crear la tabla: %s"
+msgstr "No se puede crear la localización: %s"
 
 #: ../general/g.proj/output.c:158
-#, fuzzy, c-format
+#, c-format
 msgid "Cannot create projection files: %s"
-msgstr "No es posible crear la tabla: %s"
+msgstr "No se pueden crear los archivos de proyección: %s"
 
 #: ../general/g.proj/output.c:161
 msgid "Unspecified error while creating new location"
-msgstr ""
+msgstr "Error no especificado al crear la localización"
 
 #: ../general/g.proj/output.c:173
 #, c-format
 msgid ""
 "You must select the PERMANENT mapset before updating the current location's "
 "projection. (Current mapset is %s)"
-msgstr ""
+msgstr "Debe seleccionar el directorio de mapas PERMANENT antes de actualizar la proyección de la localización actual. (El directorio de mapas actual es %s)"
 
 #: ../general/g.proj/output.c:186
 #, c-format
@@ -3561,19 +3390,21 @@ msgid ""
 "\n"
 "WARNING!  A projection file already exists for this location\n"
 msgstr ""
+"\n"
+"\n"
+"¡AVISO!  Ya existe un archivo de proyección para esta localización\n"
 
 #: ../general/g.proj/output.c:193
-#, fuzzy
 msgid "Would you still like to overwrite the current projection information "
-msgstr "a "
+msgstr "¿Todavía quiere sobreescribir la información de la proyección actual?"
 
 #: ../general/g.proj/output.c:211
 msgid "Error writing PROJ_INFO"
-msgstr ""
+msgstr "Error al escribir PROJ_INFO"
 
 #: ../general/g.proj/output.c:218
 msgid "Error writing PROJ_UNITS"
-msgstr ""
+msgstr "Error al escribir PROJ_UNITS"
 
 #: ../general/g.proj/output.c:230
 #, c-format
@@ -3582,84 +3413,81 @@ msgid ""
 "Projection information updated!\n"
 "\n"
 msgstr ""
+"\n"
+"¡Información de la proyección actualizada!\n"
+"\n"
 
 #: ../general/g.proj/output.c:233
 msgid "The projection information will not be updated."
-msgstr ""
+msgstr "La información de la proyección no se actualizará."
 
 #: ../general/g.region/cmd/adjust.c:11
-#, fuzzy, c-format
+#, c-format
 msgid "Invalid region: %s"
-msgstr "Area: %d  Número de islas: %d\n"
+msgstr "Región no válida: %s"
 
 #: ../general/g.region/cmd/main.c:81
-#, fuzzy
 msgid "Program to manage the boundary definitions for the geographic region."
-msgstr "a."
+msgstr "Programa para administrar las definiciones de los límites para la región geográfica."
 
 #: ../general/g.region/cmd/main.c:88 ../raster/r.region/main.c:68
 msgid "Set from default region"
-msgstr ""
+msgstr "Establecido de la región predeterminada"
 
 #: ../general/g.region/cmd/main.c:89 ../general/g.region/cmd/main.c:153
 #: ../general/g.region/cmd/main.c:163 ../general/g.region/cmd/main.c:174
 #: ../general/g.region/cmd/main.c:184 ../general/g.region/cmd/main.c:194
 msgid "Existing"
-msgstr ""
+msgstr "Ya existe"
 
 #: ../general/g.region/cmd/main.c:93
-#, fuzzy
 msgid "Print the current region"
-msgstr ""
-"La región ha sido grabada como la región actual.\n"
-"\n"
+msgstr "Imprimir la región actual"
 
 #: ../general/g.region/cmd/main.c:94 ../general/g.region/cmd/main.c:100
 #: ../general/g.region/cmd/main.c:105 ../general/g.region/cmd/main.c:110
 #: ../general/g.region/cmd/main.c:115 ../general/g.region/cmd/main.c:120
 #: ../general/g.region/cmd/main.c:125
 msgid "Print"
-msgstr ""
+msgstr "Imprimir"
 
 #: ../general/g.region/cmd/main.c:98
 msgid "Print the current region in lat/long on current ellipsoid/datum"
-msgstr ""
+msgstr "Imprimir la región actual en latitud/longitud en el elipsoide/datum actual"
 
 #: ../general/g.region/cmd/main.c:104
-#, fuzzy
 msgid "Print the current region extent"
-msgstr "Muestra los parámetros de conexión y termina"
+msgstr "Imprimir la extensión de la región actual"
 
 #: ../general/g.region/cmd/main.c:109
 msgid "Print the current region map center coordinates"
-msgstr ""
+msgstr "Imprimir coordenadas del centro del mapa de la región actual"
 
 #: ../general/g.region/cmd/main.c:114
 msgid "Print region resolution in meters (geodesic)"
-msgstr ""
+msgstr "Imprimir resolución de la región en metros (geodésico)"
 
 #: ../general/g.region/cmd/main.c:119
 msgid "Print also 3D settings"
-msgstr ""
+msgstr "Imprimir también configuración 3D"
 
 #: ../general/g.region/cmd/main.c:124
 msgid "Print the maximum bounding box in lat/long on WGS84"
-msgstr ""
+msgstr "Imprimir los límites máximos en latitud/longitud en WGS84"
 
 #: ../general/g.region/cmd/main.c:129
 msgid "Print in shell script style"
-msgstr ""
+msgstr "Imprimir en estilo de rutina de consola"
 
 #: ../general/g.region/cmd/main.c:130
 msgid "Print;Shell Script"
-msgstr ""
+msgstr "Imprimir;rutina de consola"
 
 #: ../general/g.region/cmd/main.c:134
-#, fuzzy
 msgid ""
 "Align region to resolution (default = align to bounds, works only for 2D "
 "resolution)"
-msgstr "a a"
+msgstr "Alinear la región a la resolución (por defecto = alinear a los límites, funciona sólo para resolución 2D)"
 
 #: ../general/g.region/cmd/main.c:136 ../general/g.region/cmd/main.c:204
 #: ../general/g.region/cmd/main.c:214 ../general/g.region/cmd/main.c:224
@@ -3670,198 +3498,182 @@ msgstr "a a"
 #: ../raster/r.in.bin/main.c:198 ../raster/r.in.bin/main.c:205
 #: ../raster/r.in.bin/main.c:212
 msgid "Bounds"
-msgstr ""
+msgstr "Límites"
 
 #: ../general/g.region/cmd/main.c:140
-#, fuzzy
 msgid "Do not update the current region"
-msgstr ""
-"La región ha sido grabada como la región actual.\n"
-"\n"
+msgstr "No actualizar la región actual"
 
 #: ../general/g.region/cmd/main.c:141 ../general/g.region/cmd/main.c:347
 #: ../vector/v.label/main.c:83 ../vector/v.label/main.c:88
 #: ../vector/v.label/main.c:172 ../vector/v.label/main.c:187
 msgid "Effects"
-msgstr ""
+msgstr "Efectos"
 
 #: ../general/g.region/cmd/main.c:151
 msgid "Set current region from named region"
-msgstr ""
+msgstr "Establecer la región actual a partir de la región nombrada"
 
 #: ../general/g.region/cmd/main.c:161 ../raster/r.region/main.c:95
-#, fuzzy
 msgid "Set region to match this raster map"
-msgstr "a"
+msgstr "Establecer la región para ajustar este mapa ráster"
 
 #: ../general/g.region/cmd/main.c:171
-#, fuzzy
 msgid "Set region to match this 3D raster map (both 2D and 3D values)"
-msgstr "a"
+msgstr "Establecer la región para ajustar este mapa ráster 3D (tanto valores 2D como 3D)"
 
 #: ../general/g.region/cmd/main.c:182 ../raster/r.region/main.c:103
-#, fuzzy
 msgid "Set region to match this vector map"
-msgstr "a"
+msgstr "Establecer la región para ajustar este mapa vectorial"
 
 #: ../general/g.region/cmd/main.c:192 ../raster/r.region/main.c:111
-#, fuzzy
 msgid "Set region to match this 3dview file"
-msgstr "a"
+msgstr "Establecer la región para ajustar este arvchivo 3Dview"
 
 #: ../general/g.region/cmd/main.c:242
 msgid "Value for the top edge"
-msgstr ""
+msgstr "Valor para el borde superior"
 
 #: ../general/g.region/cmd/main.c:251
 msgid "Value for the bottom edge"
-msgstr ""
+msgstr "Valor para el borde inferior"
 
 #: ../general/g.region/cmd/main.c:260
-#, fuzzy
 msgid "Number of rows in the new region"
-msgstr "Número de columnas"
+msgstr "Número de filas en la nueva región"
 
 #: ../general/g.region/cmd/main.c:261 ../general/g.region/cmd/main.c:270
 #: ../general/g.region/cmd/main.c:279 ../general/g.region/cmd/main.c:288
 #: ../general/g.region/cmd/main.c:298 ../general/g.region/cmd/main.c:308
 #: ../general/g.region/cmd/main.c:317 ../general/g.region/cmd/main.c:327
 msgid "Resolution"
-msgstr ""
+msgstr "Resolución"
 
 #: ../general/g.region/cmd/main.c:269
-#, fuzzy
 msgid "Number of columns in the new region"
-msgstr "Número de columnas"
+msgstr "Número de columnas en la nueva región"
 
 #: ../general/g.region/cmd/main.c:278
 msgid "Grid resolution 2D (both north-south and east-west)"
-msgstr ""
+msgstr "Resolución de la rejilla 2D (tanto Norte-Sur como Este-Oeste)"
 
 #: ../general/g.region/cmd/main.c:287
 msgid "3D grid resolution (north-south, east-west and top-bottom)"
-msgstr ""
+msgstr "Resolucio? de la rejilla 3D (Norte-Sur, Este-Oeste y Superio-Inferior)"
 
 #: ../general/g.region/cmd/main.c:316
 msgid "Top-bottom grid resolution 3D"
-msgstr ""
+msgstr "Resolucion superior-inferior de la rejilla 3D"
 
 #: ../general/g.region/cmd/main.c:325
-#, fuzzy
 msgid "Raster map to zoom into"
-msgstr "Mapa por reclasificar"
+msgstr "Mapa ráster en el que hacer zum"
 
 #: ../general/g.region/cmd/main.c:335 ../raster/r.region/main.c:151
-#, fuzzy
 msgid "Raster map to align to"
-msgstr "a a"
+msgstr "Mapa ráster al que alinear"
 
 #: ../general/g.region/cmd/main.c:345
-#, fuzzy
 msgid "Save the current region to region definition file"
-msgstr "a"
+msgstr "Guardar la región actual en archivo de definición de región"
 
 #: ../general/g.region/cmd/main.c:398
 msgid "Use the -m flag in combination with other print flags."
-msgstr ""
+msgstr "Usar el modificador -m en combinación con otros modificadores de impresión."
 
 #: ../general/g.region/cmd/main.c:401
 msgid "Use the -3 flag in combination with the -p flag."
-msgstr ""
+msgstr "Usar el modificador -3 en combinación con el modificador -p"
 
 #: ../general/g.region/cmd/main.c:411
-#, fuzzy, c-format
+#, c-format
 msgid "Region <%s> not found"
-msgstr "mapa vectorial <%s> no encontrado"
+msgstr "Región <%s> no encontrada"
 
 #: ../general/g.region/cmd/main.c:413
-#, fuzzy, c-format
+#, c-format
 msgid "Can't read region <%s> in <%s>"
-msgstr "no es posible abrir %s"
+msgstr "No se puede leer la región <%s> en <%s>"
 
 #: ../general/g.region/cmd/main.c:425 ../raster/r.region/main.c:189
 #, c-format
 msgid "3dview file <%s> not found"
-msgstr ""
+msgstr "Archivo 3Dview <%s> no encontrado"
 
 #: ../general/g.region/cmd/main.c:430
-#, fuzzy, c-format
+#, c-format
 msgid "Can't open 3dview file <%s> in <%s>"
-msgstr "No fue posible encontrar el mapa %s"
+msgstr "No se puede abrir el archivo 3Dview <%s> en <%s>"
 
 #: ../general/g.region/cmd/main.c:435
-#, fuzzy, c-format
+#, c-format
 msgid "Can't read 3dview file <%s> in <%s>"
-msgstr "No fue posible encontrar el mapa %s"
+msgstr "No se puede leer el archivo 3Dview <%s> en <%s>"
 
 #: ../general/g.region/cmd/main.c:437 ../raster/r.region/main.c:201
 #, c-format
 msgid "Old 3dview file. Region not found in <%s> in <%s>"
-msgstr ""
+msgstr "Archivo 3Dview antiguo. Región no encontrada en <%s> en <%s>"
 
 #: ../general/g.region/cmd/main.c:467
-#, fuzzy, c-format
+#, c-format
 msgid "Can't read header for <%s> in <%s>"
-msgstr "Imposible leer la información del campo"
+msgstr "No se puede leer la cabecera para <%s> en <%s>"
 
 #: ../general/g.region/cmd/main.c:493
-#, fuzzy, c-format
+#, c-format
 msgid "3D raster map <%s> not found"
-msgstr "mapa <%s> no encontrado"
+msgstr "Mapa ráster 3D <%s> no encontrado"
 
 #: ../general/g.region/cmd/main.c:496
-#, fuzzy, c-format
+#, c-format
 msgid "Can't read header for 3D raster <%s> in <%s>"
-msgstr "No es posible abrir la base de datos %s"
+msgstr "No se puede leer la cabecera para el ráster 3D <%s> en <%s>"
 
 #: ../general/g.region/cmd/main.c:527
-#, fuzzy, c-format
+#, c-format
 msgid "Vector map <%s> not found"
-msgstr "mapa vectorial <%s> no encontrado"
+msgstr "Mapa vectorial <%s> no encontrado"
 
 #: ../general/g.region/cmd/main.c:533
-#, fuzzy, c-format
+#, c-format
 msgid "Can't open vector map <%s> in <%s>"
-msgstr "No fue posible encontrar el mapa %s"
+msgstr "No se puede abrir el mapa vectorial <%s> en <%s>"
 
 #: ../general/g.region/cmd/main.c:814 ../raster/r.region/main.c:162
 #: ../raster/r.region/main.c:219 ../raster/r.region/main.c:354
 #, c-format
 msgid "can't read header for <%s> in <%s>"
-msgstr ""
+msgstr "No se puede leer la cabecera para <%s> en <%s>"
 
 #: ../general/g.region/cmd/main.c:817
-#, fuzzy, c-format
+#, c-format
 msgid "%s in %s: %s"
-msgstr "%s:linea %d:%s\n"
+msgstr "%s en %s: %s"
 
 #: ../general/g.region/cmd/main.c:824
-#, fuzzy, c-format
+#, c-format
 msgid "<%s> - illegal region name"
-msgstr "nombre de tabla"
+msgstr "<%s> - nombre de región no admitido"
 
 #: ../general/g.region/cmd/main.c:828
-#, fuzzy, c-format
+#, c-format
 msgid "Can't write region <%s>"
-msgstr "no es posible abrir %s"
+msgstr "No se puede escribir la región <%s>"
 
 #: ../general/g.region/cmd/main.c:835
-#, fuzzy
 msgid "Unable to update current region"
-msgstr ""
-"La región ha sido grabada como la región actual.\n"
-"\n"
+msgstr "No se puede actualizar la región actual"
 
 #: ../general/g.region/cmd/main.c:849
 #, c-format
 msgid "<%s=%s> ** invalid input **"
-msgstr ""
+msgstr "<%s=%s> ** entrada no válida **"
 
 #: ../general/g.region/cmd/printwindow.c:248
 #: ../general/g.region/cmd/printwindow.c:504
-#, fuzzy
 msgid "Unable to  up lat/long projection parameters"
-msgstr "a"
+msgstr "No se pueden actualizar los parámetro de proyección latitud/longitud"
 
 #: ../general/g.region/cmd/printwindow.c:263
 #: ../general/g.region/cmd/printwindow.c:272
@@ -3872,120 +3684,114 @@ msgstr "a"
 #: ../general/g.region/cmd/printwindow.c:552
 #: ../general/g.region/cmd/printwindow.c:561
 msgid "Error in pj_do_proj (projection of input coordinate pair)"
-msgstr ""
+msgstr "Error en pj_do_proj (proyección de par de coordenadas de entrada)"
 
 #: ../general/g.region/cmd/printwindow.c:387
 msgid "You are already in lat/long. Use -p flag instead."
-msgstr ""
+msgstr "Ya está en latitud/longitud. Use el modificador -p en su lugar."
 
 #: ../general/g.region/cmd/printwindow.c:389
 msgid "You are in xy location (no projection possible, use -p flag instead)."
-msgstr ""
+msgstr "Está en una localización XY (ninguna proyección posible, use el modificador -p en su lugar)."
 
 #: ../general/g.region/cmd/printwindow.c:493
 msgid ""
 "WGS84 output not possible as this location does not contain datum "
 "transformation parameters. Try running g.setproj."
-msgstr ""
+msgstr "Salida WGS84 imposible, ya que esta localización no contiene parámetros de transformación del datum. Pruebe a ejecutar g.setproj."
 
 #: ../general/g.region/cmd/printwindow.c:637
 msgid "No LatLong information for XY-Projection"
-msgstr ""
+msgstr "Sin información de latitud/longitud para la proyección XY"
 
 #: ../general/g.region/cmd/zoom.c:23
-#, fuzzy, c-format
+#, c-format
 msgid "Unable to open raster map <%s> in <%s>"
-msgstr "No fue posible encontrar el mapa %s"
+msgstr "No se puede abrir el mapa ráster <%s> en <%s>"
 
 #: ../general/g.transform/main.c:238
 msgid "Computes a coordinate transformation based on the control points"
-msgstr ""
+msgstr "Procesa una transformación de coordenadas basada en los puntos de control"
 
 #: ../general/g.transform/main.c:245 ../imagery/i.group/main.c:43
 #: ../imagery/i.ortho.photo/photo.2target/main.c:36
 #: ../imagery/i.rectify/main.c:46 ../imagery/i.target/main.c:33
-#, fuzzy
 msgid "Name of imagery group"
-msgstr "Nombre grupo"
+msgstr "Nombre de grupo imaginario"
 
 #: ../general/g.transform/main.c:252
 msgid "Rectification polynomial order"
-msgstr ""
+msgstr "Orden polinómica de rectificación"
 
 #: ../general/g.transform/main.c:261 ../vector/v.out.ascii/out.c:65
 msgid "Output format"
-msgstr ""
+msgstr "Formato de salida"
 
 #: ../general/g.transform/main.c:265
 msgid "Display summary information"
-msgstr ""
+msgstr "Mostrar información de resumen"
 
 #: ../general/g.version/main.c:34
 msgid "Displays version and copyright information"
-msgstr ""
+msgstr "Muestra información de versión y copyright"
 
 #: ../general/g.version/main.c:38
 msgid "Print the copyright message as well"
-msgstr ""
+msgstr "Imprimir el mensaje de copyright también"
 
 #: ../general/g.version/main.c:42
 msgid "Print the GRASS build information"
-msgstr ""
+msgstr "Imprimir la información de la instalación de GRASS"
 
 #: ../general/manage/cmd/copy.c:23
-#, fuzzy
 msgid ""
 "Copies available data files in the user's current mapset search path and "
 "location to the appropriate element directories under the user's current "
 "mapset."
-msgstr "a."
+msgstr "Copia archivos de datos disponibles en la ruta de búsqueda del directorio de datos y localización actuales del usuario a los directorios de elementos adecuados bajo el directorio de mapas actual de usuario."
 
 #: ../general/manage/cmd/copy.c:40
-#, fuzzy, c-format
+#, c-format
 msgid "%s file(s) to be copied"
-msgstr ""
-"\n"
-"ERROR: no es posible leer - archivo de vectores\n"
+msgstr "%s archivo(s) a copiar"
 
 #: ../general/manage/cmd/copy.c:56 ../general/manage/cmd/rename.c:56
 msgid "must be even number of names"
-msgstr ""
+msgstr "debe haber un número par de nombres"
 
 #: ../general/manage/cmd/copy.c:74
-#, fuzzy, c-format
+#, c-format
 msgid "<%s> not found\n"
-msgstr "mapa <%s> no encontrado"
+msgstr "<%s> no encontrado\n"
 
 #: ../general/manage/cmd/copy.c:79
 #, c-format
 msgid "ERROR: <%s> already exists\n"
-msgstr ""
+msgstr "ERROR: <%s> ya existe\n"
 
 #: ../general/manage/cmd/copy.c:84 ../general/manage/cmd/rename.c:84
-#, fuzzy, c-format
+#, c-format
 msgid "ERROR: <%s> illegal name\n"
-msgstr "nombre de tabla"
+msgstr "ERROR: <%s> nombre no admitido\n"
 
 #: ../general/manage/cmd/copy.c:89
 #, c-format
 msgid "%s=%s,%s: files are the same, no copy required\n"
-msgstr ""
+msgstr "%s=%s,%s: los archivos son los mismos, no se requiere ninguna copia\n"
 
 #: ../general/manage/cmd/list.c:25
-#, fuzzy
 msgid ""
 "Lists available GRASS data base files of the user-specified data type to "
 "standard output."
-msgstr "a."
+msgstr "Lista archivos de base de datos de GRASS del tipo de datos especificado por el usuario para una salida estándar."
 
 #: ../general/manage/cmd/list.c:54
-#, fuzzy
 msgid "mapset to list (default: current search path)"
-msgstr "a"
+msgstr "directorio de mapas a listar (predeterminado: ruta de búsqueda actual)"
 
 #: ../general/manage/cmd/list.c:59
 msgid "verbose listing (also list map titles)"
-msgstr ""
+msgstr "listado detallado (también lista títulos de mapas)"
 
 #: ../general/manage/cmd/list.c:87 ../general/manage/cmd/list.c:102
 #, c-format
@@ -3993,98 +3799,94 @@ msgid ""
 "\n"
 "Where %s is one of:\n"
 msgstr ""
+"\n"
+"Donde %s es uno de:\n"
 
 #: ../general/manage/cmd/list.c:99
-#, fuzzy, c-format
+#, c-format
 msgid "%s: - no such database %s\n"
-msgstr "No es posible abrir la base de datos %s"
+msgstr "%s: - no existe tal base de datos%s\n"
 
 #: ../general/manage/cmd/remove.c:26
 msgid "general, manage"
-msgstr ""
+msgstr "general, administrar"
 
 #: ../general/manage/cmd/remove.c:28
 msgid "Removes data base element files from the user's current mapset."
-msgstr ""
+msgstr "Elimina archivos de elementos de bases de datos del directorio de mapas actual del usuario."
 
 #: ../general/manage/cmd/remove.c:33
-#, fuzzy
 msgid "Force remove"
-msgstr ""
-"\n"
-"ERROR: no es posible leer - archivo de vectores\n"
+msgstr "Forzar eliminar"
 
 #: ../general/manage/cmd/remove.c:47
-#, fuzzy, c-format
+#, c-format
 msgid "%s file(s) to be removed"
-msgstr ""
-"\n"
-"ERROR: no es posible leer - archivo de vectores\n"
+msgstr "%s archivo(s) a eliminar"
 
 #: ../general/manage/cmd/remove.c:70
 #, c-format
 msgid "[%s@%s] is a base map for [%s]. Remove forced."
-msgstr ""
+msgstr "[%s@%s] es un mapa base para [%s]. Eliminar forzado."
 
 #: ../general/manage/cmd/remove.c:75
 #, c-format
 msgid "[%s@%s] is a base map. Remove reclassed map first: %s"
-msgstr ""
+msgstr "[%s@%s] es un mapa base. Eliminar mapas reclasificados primero: %s"
 
 #: ../general/manage/cmd/remove.c:98 ../general/manage/cmd/remove.c:115
 #, c-format
 msgid "Removing information about reclassed map from [%s@%s] failed"
-msgstr ""
+msgstr "La eliminación de la información sobre el mapa reclasificado a partir de [%s@%s] falló."
 
 #: ../general/manage/cmd/rename.c:25
 msgid "Renames data base element files in the user's current mapset."
-msgstr ""
+msgstr "Renombra archivos de elementos de base de datos en el directorio de mapas actual del usuario."
 
 #: ../general/manage/cmd/rename.c:40
-#, fuzzy, c-format
+#, c-format
 msgid "%s file(s) to be renamed"
-msgstr ""
-"\n"
-"ERROR: no es posible leer - archivo de vectores\n"
+msgstr "%s archivo(s) a renombrar"
 
 #: ../general/manage/cmd/rename.c:74
-#, fuzzy, c-format
+#, c-format
 msgid "ERROR: <%s> not found\n"
-msgstr "mapa <%s> no encontrado"
+msgstr "ERROR: <%s> no encontrado\n"
 
 #: ../general/manage/cmd/rename.c:79
 #, c-format
 msgid "ERROR: <%s> already exists in mapset <%s>\n"
-msgstr ""
+msgstr "ERROR: <%s> ya existe en el directorio de mapas <%s>\n"
 
 #: ../general/manage/cmd/rename.c:89
 #, c-format
 msgid "%s=%s,%s: files are the same, no rename required\n"
-msgstr ""
+msgstr "%s=%s,%s: los archivos son los mismos, no hace falta renombrar\n"
 
 #: ../imagery/i.ask/main.c:12
 #, c-format
+#, fuzzy
 msgid "usage: %s file [prompt %%x %%y]\n"
-msgstr ""
+msgstr "uso: %s archivo [prompt %%x %%y]\n"
 
 #: ../imagery/i.ask/popup.c:179
 msgid "Out of Memory!\n"
-msgstr ""
+msgstr "¡Sin memoria!\n"
 
 #: ../imagery/i.ask/popup.c:247
-#, fuzzy, c-format
+#, c-format
 msgid "name=%s\n"
-msgstr "nombre de tabla"
+msgstr "nombre=%s\n"
 
 #: ../imagery/i.ask/popup.c:248
 #, c-format
 msgid "mapset=%s\n"
-msgstr ""
+msgstr "directorio de mapas=%s\n"
 
 #: ../imagery/i.ask/popup.c:249
 #, c-format
 msgid "fullname=%s\n"
-msgstr ""
+msgstr "nombre completo=%s\n"
 
 #: ../imagery/i.cca/main.c:65 ../imagery/i.class/main.c:28
 #: ../imagery/i.cluster/main.c:38 ../imagery/i.fft/fftmain.c:54
@@ -4097,72 +3899,67 @@ msgstr ""
 #: ../imagery/i.target/main.c:24 ../imagery/i.vpoints/main.c:42
 #: ../imagery/i.zc/main.c:48
 msgid "imagery"
-msgstr ""
+msgstr "imaginería"
 
 #: ../imagery/i.cca/main.c:67
 msgid "Canonical components analysis (cca) program for image processing."
-msgstr ""
+msgstr "Programa de análisis de componentes canónicos (cca) para procesamiento de imágenes."
 
 #: ../imagery/i.cca/main.c:74
-#, fuzzy
 msgid "Imagery files group"
-msgstr "grupo"
+msgstr "Grupo de archivos de imaginería"
 
 #: ../imagery/i.cca/main.c:80
 msgid "Imagery files subgroup"
-msgstr ""
+msgstr "Subgrupo de archivos de imaginería"
 
 #: ../imagery/i.cca/main.c:86
 msgid "Ascii file containing spectral signatures"
-msgstr ""
+msgstr "Archivo ASCII que contiene firmas espectrales"
 
 #: ../imagery/i.cca/main.c:92
-#, fuzzy
 msgid "Output raster map prefix name"
-msgstr "nombre de tabla"
+msgstr "Nombre de prefijo de mapa ráster de salida"
 
 #: ../imagery/i.cca/main.c:99
-#, fuzzy, c-format
+#, c-format
 msgid "Warning: illegal group name <%s>."
-msgstr "nombre de tabla."
+msgstr "Aviso: nombre de grupo <%s> no admitido."
 
 #: ../imagery/i.cca/main.c:108
-#, fuzzy, c-format
+#, c-format
 msgid "Warning: illegal subgroup name <%s>."
-msgstr "nombre de tabla."
+msgstr "Aviso: nombre de subgrupo <%s> no admitido."
 
 #: ../imagery/i.cca/main.c:117
-#, fuzzy, c-format
+#, c-format
 msgid "Warning: illegal signature file name <%s>."
-msgstr "nombre de tabla."
+msgstr "Aviso: nombre de archivo de firma <%s> no admitido."
 
 #: ../imagery/i.cca/main.c:126
-#, fuzzy, c-format
+#, c-format
 msgid "Warning: illegal output file name <%s>."
-msgstr "nombre de tabla."
+msgstr "Aviso: nombre de archivo de salida <%s> no admitido."
 
 #: ../imagery/i.cca/main.c:139
-#, fuzzy
 msgid "Unknown imagery group."
-msgstr "grupo."
+msgstr "Grupo de imaginería desconocido."
 
 #: ../imagery/i.cca/main.c:142
-#, fuzzy
 msgid "Unable to find subgroup reference information."
-msgstr "a."
+msgstr "No se puede encontrar información de referencia de subgrupo."
 
 #: ../imagery/i.cca/main.c:148
-#, fuzzy
 msgid "Unable to open the signature file."
-msgstr "Fallo abriendo el archivo dig_att."
+msgstr "No se puede abrir el archivo de firma."
 
 #: ../imagery/i.cca/main.c:151
 msgid "Error while reading the signatures file."
-msgstr ""
+msgstr "Error al leer el archivo de firmas."
 
 #: ../imagery/i.cca/main.c:155
 msgid "Need at least two signatures in signature file."
-msgstr ""
+msgstr "Se necesitan al menos dos firmas en el archivo de firmas."
 
 #: ../imagery/i.cca/main.c:160
 #, c-format
@@ -4170,62 +3967,61 @@ msgid ""
 "Subgroup too large.  Maximum number of bands is %d\n"
 "."
 msgstr ""
+"Subgrupo demasiado grande. El número máximo de bandas es %d\n"
+"."
 
 #: ../imagery/i.cca/main.c:166
-#, fuzzy
 msgid "An output cell map name is required."
-msgstr "nombre de tabla."
+msgstr "Se requiere un nombre de mapa de celdas de salida."
 
 #: ../imagery/i.cca/main.c:168
-#, fuzzy
 msgid "The output cell map name can not be longer than 12 characters."
-msgstr "nombre de tabla."
+msgstr "El nombre del mapa de celdas de salida no puede tener más de 12 caracteres."
 
 #: ../imagery/i.cca/main.c:211
-#, fuzzy, c-format
+#, c-format
 msgid "Unable to open cell man <%s> for input.\n"
-msgstr "a"
+msgstr "No se puede abrir el mapa de celdas <%s> para entrada.\n"
 
 #: ../imagery/i.cca/main.c:216
-#, fuzzy, c-format
+#, c-format
 msgid "Unable to open cell map <%s> for output.\n"
-msgstr "a"
+msgstr "No se puede abrir el mapa de celdas <%s> para salida.\n"
 
 #: ../imagery/i.cca/main.c:233
 #, c-format
 msgid "The output cell map <%s.%d> has values outside the 0-255 range.\n"
-msgstr ""
+msgstr "El mapa de celdas de salida <%s.%d> tiene valores fuera del rango 0-255.\n"
 
 #: ../imagery/i.cca/transform.c:19
-#, fuzzy
 msgid "Unable to allocate cell buffers."
-msgstr "a."
+msgstr "No se pueden localizar los buffers de celdas."
 
 #: ../imagery/i.cca/transform.c:25
 msgid "Error reading cell map during transform."
-msgstr ""
+msgstr "Error al leer mapa de celdas durante la transformación."
 
 #: ../imagery/i.cca/transform.c:45
 msgid "Error writing cell map during transform."
-msgstr ""
+msgstr "Error al escribir el mapa de celdas durante la transformación."
 
 #: ../imagery/i.cca/transform.c:49
 msgid "Transform completed.\n"
-msgstr ""
+msgstr "Transformación finalizada.\n"
 
 #: ../imagery/i.class/add_point.c:23
 #, c-format
 msgid "Can't mark another point.  Only %d points allowed.  Sorry."
-msgstr ""
+msgstr "No se puede marcar otro punto. Sólo se permiten puntos %d. Lo sentimos."
 
 #: ../imagery/i.class/analyze_sig.c:13
 msgid "Cannot analyze until region is completed."
-msgstr ""
+msgstr "No se puede analizar hasta que la región esté completa."
 
 #: ../imagery/i.class/ask_files.c:34
 #, c-format
 msgid "Hit RETURN -->"
-msgstr ""
+msgstr "Pulse INTRO -->"
 
 #: ../imagery/i.class/ask_files.c:51
 #, c-format
@@ -4233,21 +4029,23 @@ msgid ""
 "\a\n"
 "** The following raster maps in subgroup [%s] do not exist."
 msgstr ""
+"\a\n"
+"** Los siguientes mapas ráster en el subgrupo [%s] no existen."
 
 #: ../imagery/i.class/ask_files.c:63
 #, c-format
 msgid "Subgroup [%s] doesn't have any files."
-msgstr ""
+msgstr "El subgrupo [%s] no tiene ningún archivo."
 
 #: ../imagery/i.class/ask_files.c:65
 #, c-format
 msgid "Subgroup [%s] only has 1 file."
-msgstr ""
+msgstr "El subgrupo [%s] sólo tiene un archivo."
 
 #: ../imagery/i.class/ask_files.c:67
-#, fuzzy, c-format
+#, c-format
 msgid "The subgroup must have at least 2 files to run %s."
-msgstr "a."
+msgstr "El subgrupo debe tener al menos 2 archivos para ejecutar %s."
 
 #: ../imagery/i.class/ask_files.c:71
 #, fuzzy
@@ -4565,7 +4363,7 @@ msgstr ""
 #: ../imagery/i.cluster/main.c:208
 #, fuzzy
 msgid "Can't creat reportfile: "
-msgstr "No es posible crear la tabla: %s"
+msgstr "No se puede crear la tabla: %s"
 
 #: ../imagery/i.cluster/main.c:216
 #, c-format
@@ -23061,3 +22859,4 @@ msgstr "No se puede leer el archivo de color."
 #: ../visualization/xganim/main.c:517
 msgid "Error reading wildcard."
 msgstr ""
+
