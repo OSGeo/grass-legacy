@@ -92,7 +92,7 @@ int main (int argc, char *argv[])
         opt4->description= _("Output raster map prefix name");
 
         if (G_parser(argc, argv) < 0)
-                exit(-1);
+                exit(EXIT_FAILURE);
 
         if (G_legal_filename(opt1->answer)<0)
         {
@@ -131,7 +131,7 @@ int main (int argc, char *argv[])
                 strcpy(outputfile, opt4->answer);
 
         if(error)
-                exit(-1) ;
+                exit(EXIT_FAILURE) ;
 
         /* check group, subgroup */
         I_init_group_ref(&refs);
@@ -208,13 +208,13 @@ int main (int argc, char *argv[])
                 outbandmin[i] = (CELL) 0;
                 if ((datafds[i]=G_open_cell_old(refs.file[i-1].name,
                     refs.file[i-1].mapset)) < 0) {
-                        G_fatal_error(_("Unable to open cell man <%s> for "
-                            "input.\n"), refs.file[i-1].name);
+                        G_fatal_error(_("Unable to open cell map <%s> for "
+                            "input."), refs.file[i-1].name);
                 }
                 sprintf(tempname, "%s.%d", outputfile, i);
                 if ((outfds[i]=G_open_cell_new(tempname)) < 0) {
                         G_fatal_error(_("Unable to open cell map <%s> "
-                            "for output.\n"), tempname);
+                            "for output."), tempname);
                 }
         }
 
@@ -231,7 +231,7 @@ int main (int argc, char *argv[])
 
                 if (outbandmin[i] < (CELL) 0 || outbandmax[i] > (CELL) 255) {
                         G_warning(_("The output cell map <%s.%d> has values "
-                            "outside the 0-255 range.\n"), outputfile, i);
+                            "outside the 0-255 range."), outputfile, i);
                 }
                 G_make_grey_scale(&color_tbl, 0, outbandmax[i]);
                 sprintf(tempname, "%s.%d", outputfile, i);
@@ -243,5 +243,5 @@ int main (int argc, char *argv[])
         I_free_signatures(&sigs);
         I_free_group_ref(&refs);
 
-	exit(0);
+	exit(EXIT_SUCCESS);
 }
