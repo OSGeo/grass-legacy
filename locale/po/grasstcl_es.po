@@ -1,15 +1,16 @@
-# translation of grasstcl_es.po to Español
+# translation of grasstcl_es.po to
 # This file is distributed under the same license as the GRASS package.
 # Copyright (C) 2006, GRASS Development Team
-# 
+#
 # Roberto Antolin <tolanss@yahoo.es>, 2006, 2007.
 # Enrique Cerrillo Cuenca <ecerrillo@unex.es>, 2007.
+# Agustín Diez Castillo <Agustin.Diez@uv.es>
 msgid ""
-""
-msgstr "Project-Id-Version: grasstcl_es\n"
+msgstr ""
+"Project-Id-Version: grasstcl_es\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2007-01-06 23:58+0100\n"
-"PO-Revision-Date: 2007-01-14 18:30+0100\n"
+"PO-Revision-Date: 2007-02-03 14:41+0100\n"
 "Last-Translator: Roberto Antolin <tolanss@yahoo.es>\n"
 "Language-Team:  <es@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -259,7 +260,7 @@ msgstr "  alinear texto con punto de coordenada"
 msgid ""
 "     (for coordinates, % is from bottom left of display, pixels from top "
 "left)"
-msgstr "(en coordenadas, % es desde la esquina inferior izquierda de la pantalla y pixeles desde la esquina superior izquierda)"
+msgstr "     (de coordenadas, % desde abajo izquierda para visualizar, píxeles desde arriba izquierda)"
 
 #: ../gui/tcltk/d.m/fttext.tcl:126
 msgid "     text rotation (degrees counterclockwise)"
@@ -2010,7 +2011,7 @@ msgstr "Respuesta espectral"
 #: ../gui/tcltk/d.m/menu.tcl:507
 #: ../gui/tcltk/gis.m/gmmenu.tcl:509
 msgid "Tassled cap vegetation index"
-msgstr "Transformación "tasseled cap" convierte 6 bandas  en albedo, verdor y humedad"
+msgstr ""
 
 #: ../gui/tcltk/d.m/menu.tcl:508
 #: ../gui/tcltk/gis.m/gmmenu.tcl:510
@@ -2750,7 +2751,7 @@ msgstr "columna de colores 'GRASSRGB'"
 #: ../gui/tcltk/d.m/vector.tcl:291
 #: ../gui/tcltk/gis.m/vector.tcl:394
 msgid "Label vectors:"
-msgstr ""
+msgstr "Etiquetar vectores:"
 
 #: ../gui/tcltk/d.m/vector.tcl:292
 #: ../gui/tcltk/gis.m/vector.tcl:395
@@ -2787,19 +2788,19 @@ msgstr "Consultar vectoriales:"
 #: ../gui/tcltk/d.m/vector.tcl:327
 #: ../gui/tcltk/gis.m/vector.tcl:433
 msgid "layer for query"
-msgstr "capa para interrogación"
+msgstr "capa para consulta"
 
 #: ../gui/tcltk/d.m/vector.tcl:330
 msgid " query cat values"
-msgstr "valores de las categorias para la interrogación"
+msgstr "valores de las categorias para la consulta"
 
 #: ../gui/tcltk/d.m/vector.tcl:333
 msgid "SQL query"
-msgstr "interrogación SQL"
+msgstr "consulta SQL"
 
 #: ../gui/tcltk/d.m/vector.tcl:340
 msgid "     SQL where statement"
-msgstr "Búsqueda SQL "where""
+msgstr "     Declaración 'where' SQL"
 
 #: ../gui/tcltk/d.m/vector.tcl:366
 msgid "Mouse query setup:"
@@ -3268,7 +3269,7 @@ msgstr "Archivo de etiquetas:"
 #: ../gui/tcltk/gis.m/labels.tcl:129
 #: ../gui/tcltk/gis.m/maplabels.tcl:127
 msgid "labels file to display"
-msgstr ""
+msgstr "archivo de etiquetas para visualizar"
 
 #: ../gui/tcltk/gis.m/labels.tcl:163
 #: ../gui/tcltk/gis.m/maplabels.tcl:189
@@ -3443,7 +3444,8 @@ msgstr "El mapa se ajusta a la ventana"
 msgid ""
 "Select raster map to profile.\n"
 "Currently selected raster is default."
-msgstr "Seleccionar mapa raster para crear perfil.\n"
+msgstr ""
+"Seleccionar mapa raster para crear perfil.\n"
 "Por defecto el raster seleccionado es el actual."
 
 #: ../gui/tcltk/gis.m/profile.tcl:113
@@ -3697,7 +3699,8 @@ msgid ""
 "following message:\n"
 "\n"
 "%s"
-msgstr "Error al crear nuevo proyecto con archivo georeferenciado.  g.proj devolvió el siguiente mensaje:\n"
+msgstr ""
+"Error al crear nuevo proyecto con archivo georeferenciado.  g.proj devolvió el siguiente mensaje:\n"
 "\n"
 "%s"
 
@@ -3731,7 +3734,8 @@ msgstr "GRASS %s Startup"
 msgid ""
 "The world's leading open source GIS\n"
 "\n"
-msgstr "El principal GIS libre y de código abierto del mundo\n"
+msgstr ""
+"El principal GIS libre y de código abierto del mundo\n"
 "\n"
 
 #: ../lib/init/gis_set.tcl:323
@@ -3750,21 +3754,24 @@ msgstr "Directorio de datos GIS:"
 msgid ""
 "Project Location\n"
 "(projection/coordinate system)"
-msgstr "Proyecto\n"
+msgstr ""
+"Proyecto\n"
 "(proyección/sistema de coordenadas)"
 
 #: ../lib/init/gis_set.tcl:436
 msgid ""
 "Accessible Mapsets\n"
 "(directories of GIS files)"
-msgstr "Mapset accesibles\n"
+msgstr ""
+"Mapset accesibles\n"
 "(directorios de archivos GIS)"
 
 #: ../lib/init/gis_set.tcl:487
 msgid ""
 "Create new mapset\n"
 "in selected location"
-msgstr "Crear nuevo mapset\n"
+msgstr ""
+"Crear nuevo mapset\n"
 "en el proyecto seleccionado"
 
 #: ../lib/init/gis_set.tcl:495
@@ -3777,7 +3784,8 @@ msgid ""
 "Warning: selected location <%s> is not valid. \n"
 " New mapset is NOT created. \n"
 " Select valid location and try again."
-msgstr "AVISO: el proyecto seleccionado <%s> no es válido. \n"
+msgstr ""
+"AVISO: el proyecto seleccionado <%s> no es válido. \n"
 "El nuevo mapset no ha sido creado. \n"
 "Intentar de nuevo con un proyecto válido."
 
@@ -3806,7 +3814,8 @@ msgstr "Entrar en GRASS"
 msgid ""
 "Warning: selected location <%s> is not valid. \n"
 " Select valid location and try again."
-msgstr "AVISO: el proyecto seleccionado <%s> no es válido. \n"
+msgstr ""
+"AVISO: el proyecto seleccionado <%s> no es válido. \n"
 "Intentar de nuevo con un proyecto válido."
 
 #: ../lib/init/gis_set.tcl:600
@@ -3833,7 +3842,8 @@ msgstr "AVISO: La base de datos no es válida"
 
 #: ../lib/init/gis_set.tcl:673
 msgid "WARNING: Invalid database. Finding first valid directory in parent tree"
-msgstr "AVISO: La base de datos no es válida. Buscando el primer directorio válido "
+msgstr ""
+"AVISO: La base de datos no es válida. Buscando el primer directorio válido "
 "en directorios superiores"
 
 #: ../lib/init/gis_set.tcl:795
@@ -3842,7 +3852,8 @@ msgstr "AVISO: La base de datos no es válida. Buscando el primer directorio vá
 msgid ""
 "Warning: selected location <%%s> is not valid. \n"
 " Select valid location and try again."
-msgstr "AVISO: el proyecto seleccionado <%%s> no es válido. \n"
+msgstr ""
+"AVISO: el proyecto seleccionado <%%s> no es válido. \n"
 "Intentar de nuevo con un proyecto válido."
 
 #: ../lib/init/gis_set.tcl:800
@@ -4086,3 +4097,4 @@ msgstr "Acciones de los botones del ratón (izquierda, central, derecha)"
 #: ../visualization/nviz/scripts/panel_animation.tcl:275
 msgid "Test"
 msgstr "Test"
+
