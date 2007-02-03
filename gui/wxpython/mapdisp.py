@@ -6,12 +6,15 @@
 
 import wx
 import os, sys, time, glob
-import mapimg
+
+#sys.path.append()
+
+import render
 #import gism
 
-Map = mapimg.Map() # instantiate module to render GRASS display output to PPM file
+Map = render.Map() # instantiate module to render GRASS display output to PPM file
 
-DEBUG = True
+DEBUG = False
 
 class BufferedWindow(wx.Window):
 
@@ -125,6 +128,9 @@ class BufferedWindow(wx.Window):
 	"""
 	if self.render:
 	    Map.Width, Map.Height = self.GetClientSize()
+
+            # FIXME: align map region to client size -- Missing!!!
+
 	    self.MapFile = Map.Render(force=self.render)
 	    self.Img = self.GetImage()
 	    self.resize = False
@@ -187,7 +193,7 @@ class BufferedWindow(wx.Window):
 	    self.mouse['end'] = event.GetPositionTuple()[:]
 
 	    # set region in zoom or pan
-	    Map.zoom(self.mouse['begin'],self.mouse['end'],self.zoomtype)
+	    self.Zoom(self.mouse['begin'],self.mouse['end'],self.zoomtype)
 
 	    # redraw map
 	    self.UpdateMap()
@@ -207,13 +213,21 @@ class BufferedWindow(wx.Window):
 	elif wheel != 0:
 
 	    # zoom 1/2 of the screen
-	    begin = [Map.geom[0]/50,Map.geom[1]/50]
-	    end = [Map.geom[0] - Map.geom[0]/50,
-		Map.geom[1] - Map.geom[1]/50]
+	    begin = [Map.Width/4,Map.Height/4]
+	    end = [Map.Width - Map.Width/4,
+		Map.Height - Map.Height/4]
+
+
+            if DEBUG:
+                print "GetClientSize: ",self.GetClientSize()
+                print "Map.Width Map.Height: ", Map.Width, Map.Height
+                print "Mouse begin: ", begin
+                print "Mouse end: ", end
+
 	    if wheel > 0:
-		Map.zoom(begin,end,1)
+		self.Zoom(begin,end,1)
 	    else:
-		Map.zoom(begin,end,-1)
+		self.Zoom(begin,end,-1)
 	    self.UpdateMap()
 
 	# store current mouse position
@@ -225,6 +239,70 @@ class BufferedWindow(wx.Window):
 	else:
 	    self.Img = None
 	return self.Img
+
+    def Pixel2Cell(self, x, y):
+	"""
+	Calculates real word coordinates to image coordinates
+
+	Inputs: x,y
+	Outputs: int x, int y
+	"""
+        print Map.Region["ewres"]
+        print Map.Region["nsres"]
+	newx = Map.Region['w']+x*Map.Region["ewres"]
+	newy = Map.Region['n']-y*Map.Region["nsres"]
+	return newx,newy
+
+
+    def Zoom(self,begin,end,zoomtype):
+	x1,y1,x2,y2 = begin[0],begin[1],end[0],end[1]
+	newreg = {}
+
+	# threshold - too small squares do not make sense
+	# can only zoom to windows of > 10x10 screen pixels
+	if x2 > 10 and y2 > 10 and zoomtype != 0:
+
+	    if x1 > x2:
+		x1,x2 = x2,x1
+	    if y1 > y2:
+		y1,y2 = y2,y1
+	    # zoom in
+	    if zoomtype > 0:
+		newreg['w'],newreg['n'] = self.Pixel2Cell(x1,y1)
+		newreg['e'],newreg['s'] = self.Pixel2Cell(x2,y2)
+
+	    # zoom out
+	    elif zoomtype < 0:
+		newreg['w'],newreg['n'] = self.Pixel2Cell(
+		    -x1*2,
+		    -y1*2
+		    )
+		newreg['e'],newreg['s'] = self.Pixel2Cell(
+		    Map.Width+2*(Map.Width-x2),
+		    Map.Height+2*(Map.Height-y2)
+		    )
+	# pan
+	elif zoomtype == 0:
+	    newreg['w'],newreg['n'] = self.Pixel2Cell(
+		x1-x2,
+		y1-y2
+		)
+	    newreg['e'],newreg['s'] = self.Pixel2Cell(
+		Map.Width+x1-x2,
+		Map.Height+y1-y2
+		)
+
+	# if new region has been calculated, set the values
+	if newreg :
+	    Map.Region['n'] = newreg['n']
+	    Map.Region['s'] = newreg['s']
+	    Map.Region['e'] = newreg['e']
+	    Map.Region['w'] = newreg['w']
+            Map.Region['ewres'] = abs(newreg['e'] - newreg['w'])/Map.Region['cols']
+            Map.Region['nsres'] = abs(newreg['n'] - newreg['s'])/Map.Region['rows']
+	    # set new resolution to self.res
+	    #self.getResolution()
+
 
 class DrawWindow(BufferedWindow):
     '''Drawing routine for double buffered drawing. Overwrites Draw method
@@ -255,7 +333,7 @@ class DrawWindow(BufferedWindow):
 	    dc.DrawLine(coords[0],coords[1],coords[2],coords[3])
 	dc.EndDrawing()
 
-class MyFrame(wx.Frame):
+class MapFrame(wx.Frame):
     '''Main frame for map display window. Drawing takes place in child double buffered
     drawing window.'''
     def __init__(self, *args, **kwds):
@@ -324,7 +402,7 @@ class MyFrame(wx.Frame):
 	posx, posy = event.GetPositionTuple()
 
 	# set coordinates to status bar
-	x, y = self.Pixel2Cell(posx, posy)
+	x, y = self.MapWindow.Pixel2Cell(posx, posy)
 	self.statusbar.SetStatusText("%.3f,%.3f" % (x,y))
 	event.Skip()
 
@@ -387,32 +465,24 @@ class MyFrame(wx.Frame):
 	    os.remove(delfile)
 	self.Destroy()
 
-    def Pixel2Cell(self, x, y):
-	"""
-	Calculates real word coordinates to image coordinates
 
-	Inputs: x,y
-	Outputs: int x, int y
-	"""
-	newx = float(Map.Region['w'])+x*float(Map.Region["ewres"])
-	newy = float(Map.Region['s'])+(Map.Height - y)*float(Map.Region["nsres"])
-	return newx,newy
-
-
-# end of class MyFrame
+# end of class MapFrame
 
 
 class MapApp(wx.App):
     def OnInit(self):
 	wx.InitAllImageHandlers()
-	map_frame = MyFrame(None, -1)
+	map_frame = MapFrame(None, -1)
 	self.SetTopWindow(map_frame)
 	map_frame.Show()
         
+        # only for testing purpose
         if __name__ == "__main__":
             Map.AddRasterLayer(name="elevation.dem", mapset="PERMANENT")
             Map.AddVectorLayer(name="roads", mapset="PERMANENT",
             color="red")
+            Map.AddVectorLayer(name="bugsites", mapset="PERMANENT",
+                    color="blue")
 
 	return 1
 
