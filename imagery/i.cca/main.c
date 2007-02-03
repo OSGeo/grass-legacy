@@ -157,8 +157,8 @@ int main (int argc, char *argv[])
         /* check the number of input bands */
         bands = refs.nfiles;
         if (bands > MX-1) {
-                G_fatal_error(_("Subgroup too large.  Maximum number of "
-                      "bands is %d\n."), MX - 1);
+                G_fatal_error(_("Subgroup too large. Maximum number of "
+                      "bands is %d."), MX - 1);
         }
 
         /* check output file */

@@ -245,7 +245,7 @@ int print_window(struct Cell_head *window, int print_flag)
 	    sprintf(oproj.proj, "ll");
 	    if ((oproj.pj = pj_latlong_from_proj(iproj.pj)) == NULL)
 		G_fatal_error(_
-			      ("Unable to  up lat/long projection parameters"));
+			      ("Unable to update lat/long projection parameters"));
 
 	    /* do the transform
 	     * syntax: pj_do_proj(outx, outy, in_info, out_info) 
@@ -501,7 +501,7 @@ int print_window(struct Cell_head *window, int print_flag)
 	    
 	    if (pj_get_kv(&oproj, out_proj_info, out_unit_info) < 0)
 		G_fatal_error(_
-			      ("Unable to  up lat/long projection parameters"));
+			      ("Unable to update lat/long projection parameters"));
 	    
 	    G_free_key_value(in_proj_info);
 	    G_free_key_value(in_unit_info);
