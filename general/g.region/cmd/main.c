@@ -434,7 +434,7 @@ int main (int argc, char *argv[])
 		if(0 > (ret = G_get_3dview(name, mapset, &v)))
 		    G_fatal_error (_("Can't read 3dview file <%s> in <%s>"), name, mapset);
 		if (ret == 0)
-		    G_fatal_error (_("Old 3dview file. Region not found in <%s> in <%s>"), name, mapset);
+		    G_fatal_error (_("Old 3dview file. Region <%s> not found in <%s>"), name, mapset);
 
                  
 		window.north = v.vwin.north;
