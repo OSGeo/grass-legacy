@@ -2,39 +2,34 @@
 
 <em>v.out.svg</em> converts GRASS vector data to SVG (Scalable Vector Graphics) code notation.
 
+<ul>
+<li>converts GRASS line, boundary, area, point, centroid objects to SVG 
+  &lt;path /&gt;, &lt;circle /&gt; elements</li>
+<li>reduces coordinate precision in SVG-output to save bandwidth</li>
+<li>extract GRASS attributes to gg:name="value" attributes</li>
+</ul>
+
 <h2>EXAMPLE</h2>
 
 <p>
 Export <b>polygons</b> from GRASS vector map soils (Spearfish sample data) to SVG format:
-<br>
-<b>v.out.svg</b>
-<b>input</b>=<em>soils</em>
-<b>output</b>=<em>/tmp/output.svg</em>
-<b>type</b>=<em>poly</em>
-</p>
+<div class="code"><pre>
+v.out.svg input=soils output=/tmp/output.svg type=poly
+</pre></div>
 
 <p>
 Export <b>lines</b> from GRASS vector map t_hydro (Spearfish sample
 data) to SVG format, set coordinate precision to 0:
-<br>
-<b>v.out.svg</b>
-<b>input</b>=<em>t_hydro</em>
-<b>output</b>=<em>/tmp/output.svg</em>
-<b>type</b>=<em>line</em>
-<b>precision</b>=<em>0</em>
-</p>
+<div class="code"><pre>
+v.out.svg input=t_hydro output=/tmp/output.svg type=line precision=0
+</pre></div>
 
 <p>
 Export <b>points</b> from GRASS vector map archsites (Spearfish sample
 data) to SVG format, include attribute <b>str1</b> (name):
-<br>
-<b>v.out.svg</b>
-<b>input</b>=<em>archsites</em>
-<b>output</b>=<em>/tmp/output.svg</em>
-<b>type</b>=<em>point</em>
-<b>precision</b>=<em>0</em>
-<b>attrib</b>=<em>str1</em>
-</p>
+<div class="code"><pre>
+v.out.svg input=archsites output=/tmp/output.svg type=point precision=0 attrib=str1
+</pre></div>
 
 <H2>REFERENCES</H2>
 
@@ -47,6 +42,6 @@ data) to SVG format, include attribute <b>str1</b> (name):
 
 <h2>AUTHOR</h2>
 
-Klaus F&#246;rster, &lt;klaus@svg.cc&gt;, Innsbruck, Austria
+Klaus F&#246;rster, &lt;klaus@ AT svg.cc&gt;, Innsbruck, Austria
 
 <p><i>Last changed: $Date$</i>
