@@ -197,8 +197,8 @@ class Map:
 
         self.WIND = {}  # for the WIND settings
         self.Region = {}    # for region settings
-        self.Width = 0  # for width of the map
-        self.Height = 0 # for height of the map
+        self.Width = 300  # for width of the map
+        self.Height = 400 # for height of the map
 
         self.Layers = []# stack of commands for render map
         self.Env = {} # enviroment variables, like MAPSET, LOCATION_NAME, etc.
@@ -212,7 +212,6 @@ class Map:
                 }
         
         # setting some initial env. variables
-        self.__initMonSize()
         self.__initEnv()
         self.__initRegion()
         os.environ["GRASS_TRANSPARENT"] ="TRUE"
@@ -254,10 +253,32 @@ class Map:
 	    self.WIND[key] = value
         windfile.close()
 
+        # adjusting region to monitor size
+        if self.Width > self.Height and\
+            self.Region["w"] - self.Region["e"] > self.Region['n'] - self.Region['s']:
+            
+            # changing e-w region
+            self.Region["ewres"] = self.Region["nsres"] = (self.Region['n'] - self.Region['s'])/self.Height
+            center = self.Region['w'] + (self.Region['e'] - self.Region['w'])/2
+            self.Region['w'] = center - self.Width/2*self.Region["nsres"]
+            self.Region['e'] = center + self.Width/2*self.Region["nsres"]
+            self.Region['rows'] = self.Width
+            self.Region['cols'] = self.Height
+
+        else:
+            # changing n-s region
+            self.Region["ewres"] = self.Region["nsres"]  = (self.Region['e'] - self.Region['w'])/self.Width
+            center = self.Region['s'] + (self.Region['n'] - self.Region['s'])/2
+            self.Region['s'] = center - self.Height/2*self.Region["ewres"]
+            self.Region['n'] = center + self.Height/2*self.Region["ewres"]
+            self.Region['rows'] = self.Width
+            self.Region['cols'] = self.Height
+
+
         # 
         # Setting resolution
         #
-        self.Region['ewres'] = self.Region['nsres'] = abs(float(self.Region['e']) - float(self.Region['w']))/self.Width
+        #self.Region['ewres'] = self.Region['nsres'] = abs(float(self.Region['e']) - float(self.Region['w']))/self.Width
 
     def __initMonSize(self):
         """
@@ -308,7 +329,7 @@ class Map:
         for reg in os.popen("g.region -gp").readlines():
             reg = reg.strip()
             key,val = reg.split("=")
-            region[key] = val
+            region[key] = float(val)
 
         if tmpreg:
             os.environ["GRASS_REGION"] = tmpreg
@@ -325,6 +346,27 @@ class Map:
         """
         
         grass_region = ""
+
+        # adjusting region to monitor size
+        if self.Width > self.Height and\
+            self.Region["w"] - self.Region["e"] > self.Region['n'] - self.Region['s']:
+            
+            # changing e-w region
+            self.Region["ewres"] = self.Region["nsres"] = (self.Region['n'] - self.Region['s'])/self.Height
+            center = self.Region['w'] + (self.Region['e'] - self.Region['w'])/2
+            self.Region['w'] = center - self.Width/2*self.Region["nsres"]
+            self.Region['e'] = center + self.Width/2*self.Region["nsres"]
+            self.Region['rows'] = self.Width
+            self.Region['cols'] = self.Height
+
+        else:
+            # changing n-s region
+            self.Region["ewres"] = self.Region["nsres"]  = (self.Region['e'] - self.Region['w'])/self.Width
+            center = self.Region['s'] + (self.Region['n'] - self.Region['s'])/2
+            self.Region['s'] = center - self.Height/2*self.Region["ewres"]
+            self.Region['n'] = center + self.Height/2*self.Region["ewres"]
+            self.Region['rows'] = self.Width
+            self.Region['cols'] = self.Height
 
         try:
             for key in self.WIND.keys():
@@ -476,7 +518,7 @@ class Map:
 
     def AddRasterLayer(self, name, mapset=None, catlist=None,
             vallist=None, invertCats=False, l_active=True, l_hidden=False,
-            l_opacity=1, l_render=True):
+            l_opacity=1, l_render=False):
         """
         Adds raster layer to list of layers
         
@@ -531,7 +573,7 @@ class Map:
 
     def AddGraphLayer(self, name, graph=None, color="255:0:0",
             coordsinmapunits=False,
-            l_active=True, l_hidden=True, l_opacity=1, l_render=True):
+            l_active=True, l_hidden=True, l_opacity=1, l_render=False):
         """
         Adds graph layer to list of layers (for d.graph definition)
         
@@ -589,7 +631,7 @@ class Map:
             lsize = 8, font = None, xref = "left", yref = "center", 
             minreg = None, maxreg = None, colorfromtable=False,
             randomcolor=False, catsasid=False, l_active=True,
-            l_hidden=False, l_opacity=1, l_render=True):
+            l_hidden=False, l_opacity=1, l_render=False):
         """
         Adds vector layer to list of layers
 
@@ -736,29 +778,26 @@ if __name__ == "__main__":
     os.system("g.region -d")
 
     map = Map()
+    map.Width = 300
+    map.Height = 400
 
-    print "Rendering raster file"
     map.AddRasterLayer("elevation.dem", mapset="PERMANENT")
-    image = map.Render()
-    if not image:
-        print "Something went wrong, could not render image"
-        sys.exit(1)
-    os.system("display %s" % image)
-
-    print "Adding vector layer"
     map.AddVectorLayer("roads", color="red", width=3, mapset="PERMANENT",
             l_opacity=50)
-    image = map.Render()
-    os.system("display %s" % image)
-
-    print "Rendering only vector layer, and region, on shifted region"
-    map.Region["n"] ="4937550"
-    map.Region["s"] ="4904160"
-    map.Region["w"] ="577290"
-    map.Region["e"] ="621690"
-    map.PopLayer("elevation.dem", mapset="PERMANENT")
-    layer = map.GetLayerIndex("roads", mapset="PERMANENT")
-    map.Layers[layer].color = "green"
-    #map.RenderRegion["render"] = True
     image = map.Render(force=True)
     os.system("display %s" % image)
+
+    #image = map.Render()
+    #os.system("display %s" % image)
+
+    #print "Rendering only vector layer, and region, on shifted region"
+    #map.Region["n"] ="4937550"
+    #map.Region["s"] ="4904160"
+    #map.Region["w"] ="577290"
+    #map.Region["e"] ="621690"
+    #map.PopLayer("elevation.dem", mapset="PERMANENT")
+    #layer = map.GetLayerIndex("roads", mapset="PERMANENT")
+    #map.Layers[layer].color = "green"
+    ##map.RenderRegion["render"] = True
+    #image = map.Render(force=True)
+    #os.system("display %s" % image)

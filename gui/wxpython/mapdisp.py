@@ -68,7 +68,7 @@ class BufferedWindow(wx.Window):
 	self.dragimg = None # initialize variable for map panning
 	self.pen = None # pen for drawing zoom boxes, etc.
 	self.render = True #re-render the map from GRASS or just redraw image
-
+        
 	# OnSize called to make sure the buffer is initialized.
 	# This might result in OnSize getting called twice on some
 	# platforms at initialization, but little harm done.
@@ -128,9 +128,6 @@ class BufferedWindow(wx.Window):
 	"""
 	if self.render:
 	    Map.Width, Map.Height = self.GetClientSize()
-
-            # FIXME: align map region to client size -- Missing!!!
-
 	    self.MapFile = Map.Render(force=self.render)
 	    self.Img = self.GetImage()
 	    self.resize = False
@@ -247,8 +244,6 @@ class BufferedWindow(wx.Window):
 	Inputs: x,y
 	Outputs: int x, int y
 	"""
-        print Map.Region["ewres"]
-        print Map.Region["nsres"]
 	newx = Map.Region['w']+x*Map.Region["ewres"]
 	newy = Map.Region['n']-y*Map.Region["nsres"]
 	return newx,newy
@@ -298,11 +293,6 @@ class BufferedWindow(wx.Window):
 	    Map.Region['s'] = newreg['s']
 	    Map.Region['e'] = newreg['e']
 	    Map.Region['w'] = newreg['w']
-            Map.Region['ewres'] = abs(newreg['e'] - newreg['w'])/Map.Region['cols']
-            Map.Region['nsres'] = abs(newreg['n'] - newreg['s'])/Map.Region['rows']
-	    # set new resolution to self.res
-	    #self.getResolution()
-
 
 class DrawWindow(BufferedWindow):
     '''Drawing routine for double buffered drawing. Overwrites Draw method
