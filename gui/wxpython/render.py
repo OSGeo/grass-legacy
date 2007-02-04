@@ -206,7 +206,7 @@ class Map:
         self.MapFile = utils.GetTempfile()+".png"
 
         self.RenderRegion = {
-                "render"    :False,   # Should the region be displayed?
+                "render"    : True,   # Should the region be displayed?
                 "color"     :"255:0:0",
                 "width"     :3
                 }
@@ -253,27 +253,7 @@ class Map:
 	    self.WIND[key] = value
         windfile.close()
 
-        # adjusting region to monitor size
-        if self.Width > self.Height and\
-            self.Region["w"] - self.Region["e"] > self.Region['n'] - self.Region['s']:
-            
-            # changing e-w region
-            self.Region["ewres"] = self.Region["nsres"] = (self.Region['n'] - self.Region['s'])/self.Height
-            center = self.Region['w'] + (self.Region['e'] - self.Region['w'])/2
-            self.Region['w'] = center - self.Width/2*self.Region["nsres"]
-            self.Region['e'] = center + self.Width/2*self.Region["nsres"]
-            self.Region['rows'] = self.Width
-            self.Region['cols'] = self.Height
-
-        else:
-            # changing n-s region
-            self.Region["ewres"] = self.Region["nsres"]  = (self.Region['e'] - self.Region['w'])/self.Width
-            center = self.Region['s'] + (self.Region['n'] - self.Region['s'])/2
-            self.Region['s'] = center - self.Height/2*self.Region["ewres"]
-            self.Region['n'] = center + self.Height/2*self.Region["ewres"]
-            self.Region['rows'] = self.Width
-            self.Region['cols'] = self.Height
-
+        self.__adjustRegion()
 
         # 
         # Setting resolution
@@ -313,6 +293,30 @@ class Map:
 	    val = val.replace("'","")
             self.Env[key] = val
 
+    def __adjustRegion(self):
+
+        # adjusting region to monitor size
+        if self.Width > self.Height and\
+            self.Region["w"] - self.Region["e"] > self.Region['n'] - self.Region['s']:
+            
+            # changing e-w region
+            self.Region["ewres"] = self.Region["nsres"] = (self.Region['n'] - self.Region['s'])/self.Height
+            center = self.Region['w'] + (self.Region['e'] - self.Region['w'])/2
+            self.Region['w'] = center - self.Width/2*self.Region["nsres"]
+            self.Region['e'] = center + self.Width/2*self.Region["nsres"]
+            self.Region['rows'] = self.Width
+            self.Region['cols'] = self.Height
+
+        else:
+            # changing n-s region
+            self.Region["ewres"] = self.Region["nsres"]  = (self.Region['e'] - self.Region['w'])/self.Width
+            center = self.Region['s'] + (self.Region['n'] - self.Region['s'])/2
+            self.Region['s'] = center - self.Height/2*self.Region["ewres"]
+            self.Region['n'] = center + self.Height/2*self.Region["ewres"]
+            self.Region['rows'] = self.Width
+            self.Region['cols'] = self.Height
+
+
     def GetRegion(self):
         """
         Returns dictionary with output from g.region -gp
@@ -347,26 +351,7 @@ class Map:
         
         grass_region = ""
 
-        # adjusting region to monitor size
-        if self.Width > self.Height and\
-            self.Region["w"] - self.Region["e"] > self.Region['n'] - self.Region['s']:
-            
-            # changing e-w region
-            self.Region["ewres"] = self.Region["nsres"] = (self.Region['n'] - self.Region['s'])/self.Height
-            center = self.Region['w'] + (self.Region['e'] - self.Region['w'])/2
-            self.Region['w'] = center - self.Width/2*self.Region["nsres"]
-            self.Region['e'] = center + self.Width/2*self.Region["nsres"]
-            self.Region['rows'] = self.Width
-            self.Region['cols'] = self.Height
-
-        else:
-            # changing n-s region
-            self.Region["ewres"] = self.Region["nsres"]  = (self.Region['e'] - self.Region['w'])/self.Width
-            center = self.Region['s'] + (self.Region['n'] - self.Region['s'])/2
-            self.Region['s'] = center - self.Height/2*self.Region["ewres"]
-            self.Region['n'] = center + self.Height/2*self.Region["ewres"]
-            self.Region['rows'] = self.Width
-            self.Region['cols'] = self.Height
+        self.__adjustRegion()
 
         try:
             for key in self.WIND.keys():
