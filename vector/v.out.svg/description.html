@@ -1,12 +1,12 @@
 <h2>DESCRIPTION</h2>
 
 <em>v.out.svg</em> converts GRASS vector data to SVG (Scalable Vector Graphics) code notation.
-
+In particular, it
 <ul>
 <li>converts GRASS line, boundary, area, point, centroid objects to SVG 
-  &lt;path /&gt;, &lt;circle /&gt; elements</li>
-<li>reduces coordinate precision in SVG-output to save bandwidth</li>
-<li>extract GRASS attributes to gg:name="value" attributes</li>
+  &lt;path /&gt;, &lt;circle /&gt; elements,</li>
+<li>reduces coordinate precision in SVG-output to save bandwidth,</li>
+<li>extracts GRASS attributes to gg:name="value" attributes.</li>
 </ul>
 
 <h2>EXAMPLE</h2>
@@ -42,6 +42,6 @@ v.out.svg input=archsites output=/tmp/output.svg type=point precision=0 attrib=s
 
 <h2>AUTHOR</h2>
 
-Klaus F&#246;rster, &lt;klaus@ AT svg.cc&gt;, Innsbruck, Austria
+Klaus F&ouml;rster, &lt;klaus@ AT svg.cc&gt;, Innsbruck, Austria
 
 <p><i>Last changed: $Date$</i>
