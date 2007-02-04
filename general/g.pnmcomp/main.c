@@ -329,14 +329,14 @@ main(int argc, char *argv[])
 	opt.out->type		= TYPE_STRING;
 	opt.out->required	= YES;
 	opt.out->description	= _("Name of output file");
-	opt.out->gisprompt	= "new,cell,raster";
+	opt.out->gisprompt	= "new_file,file,output";
 
 	opt.outmask = G_define_option();
 	opt.outmask->key	= "outmask";
 	opt.outmask->type	= TYPE_STRING;
 	opt.outmask->required	= NO;
 	opt.outmask->description = _("Name of output mask file");
-	opt.outmask->gisprompt	= "new,cell,raster";
+	opt.outmask->gisprompt	= "new_file,file,output";
 
 	opt.width = G_define_option();
 	opt.width->key		= "width";
