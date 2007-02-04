@@ -516,12 +516,45 @@ Each vector feature inside a vector map has zero, one or more
 tables which are referenced by the layer, and rows which are essentially
 referenced by the &lt;layer,category&gt; pair.
 
+\section vlib_cidx Vector library category index
+
+The category index (stored in the cidx file) improves the performance of all
+selections by cats/attributes (SQL, e.g. 'd.vect cats=27591', 'v.extract list=20000-21000').
+This avoids that all selections have to be made by looping through all vector lines.
+Cidx is also essential for simple feature representation of GRASS vectors.
+
+Cidx is created for each field. In memory, it is stored in
+
+\verbatim
+struct Cat_index {
+    int field;     /* field number */
+    int n_cats;    /* number of items in cat array */
+    int a_cats;    /* allocated space in cat array */
+    int (*cat)[3]; /* array of cats (cat,type, lines/area) */
+    int n_ucats;   /* number of unique cats (not updated) */
+    int n_types;   /* number of types in type */
+    int type[7][2];/* number of elements for each type (point, line, boundary, centroid, area, face, kernel) */
+    long offset;   /* offset of the beginning of this index in cidx file */
+};
+\endverbatim
+
+Cidx is built with topology, but it is not updated if vector is edited on level 2.
+Cidx is stored in 'cidx' file, 'cat' array is written/read by one call of
+dig__fwrite_port_I( (int *)ci->cat, 3 * ci->n_cats, fp) or
+dig__fread_port_I( (int *)ci->cat, 3 * ci->n_cats, fp).
+
+Stored values can be retrieved either by index in 'cat' array 
+(if all features of given field are required) or by category value
+(one or few features), always by Vect_cidx_*() functions.
+
+To create cidx, it will be necessary to rebuild topology for all existing vectors.
+This is an opportunity to make (hopefully) last changes in 'topo', 'sidx' formats.
+
 
 \section vlibtin Vector TINs
 
 TINs are simply created as 2D/3D vector polygons consisting of 
 3 vertices.
-
 
 
 \section vlib_attributes Vector library and Attributes
