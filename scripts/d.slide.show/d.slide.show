@@ -216,7 +216,7 @@ drawvector()
 		d.frame -s map.$at_hori.$at_vert
 		d.erase
 		echo $i
-		d.vect $i 2>&1 >/dev/null
+		d.vect -c $i 2>&1 >/dev/null
 
 		atnum=`expr $atnum + 1`
 	done
