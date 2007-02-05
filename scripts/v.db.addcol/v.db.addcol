@@ -4,7 +4,8 @@
 #
 # MODULE:       v.db.addcolumn
 # AUTHOR(S):   	Moritz Lennert 
-# PURPOSE:      interface to db.execute to add a column to the attribute table connected to a given vector map
+# PURPOSE:      interface to db.execute to add a column to the attribute table
+#               connected to a given vector map
 # COPYRIGHT:    (C) 2005 by the GRASS Development Team
 #
 #               This program is free software under the GNU General Public
@@ -65,6 +66,13 @@ fi
 unset LC_ALL
 LC_NUMERIC=C
 export LC_NUMERIC
+
+# does map exist?
+eval `g.findfile element=vector file=$GIS_OPT_MAP`
+if [ ! "$file" ] ; then
+   echo "Vector map '$GIS_OPT_MAP' not found in mapset search path"
+   exit 1
+fi
 
 table=`v.db.connect $GIS_OPT_MAP -g | grep -w $GIS_OPT_LAYER | awk '{print $2}'`
 database=`v.db.connect $GIS_OPT_MAP -g | grep -w $GIS_OPT_LAYER | awk '{print $4}'`
