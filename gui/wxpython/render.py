@@ -504,7 +504,8 @@ class Map:
 	def AddRasterLayer(self, name, mapset=None, catlist=None,
 		vallist=None, invertCats=False, l_active=True, l_hidden=False,
 		l_opacity=1, l_render=False):
-            """Adds raster layer to list of layers
+		"""
+		Adds raster layer to list of layers
 
 		Layer Attributes:
 			name	- raster file name
@@ -792,31 +793,39 @@ class Track:
 	associated notebook pages, and other index values.
 	"""
 
-	# storing values of map display with focus
-
-	def setMdIdx(self, idx):
+    # store and retrieve index of display with focus
+    def SetDisp_idx(self, idx):
 		global mdidx
 		mdidx = idx
 
-	def getMdIdx(self):
+    def GetDisp_idx(self):
 		global mdidx
 		return mdidx
 
-	def setMD(self, md):
-		global currmap
-		currmap = md
+    #store and retrieve current display with focus
+    def SetCurrDisp(self, disp):
+        global curr_disp
+        curr_disp = disp
 
-	def getMD(self):
-		global currmap
-		return currmap
+    def GetCurrDisp(self):
+        global curr_disp
+        return curr_disp
 
-	# storing values of choicebook widget to be accessed later
-	def setCB(self, cb):
+    # store and retrieve choicebook widget that hold all GIS manager controls
+    def SetChbk(self, cb):
 		global gm_cb
 		gm_cb = cb
 
-	def getCB(self):
+    def GetChbk(self):
 		global gm_cb
 		return gm_cb
 
+    #store and retrieve choicebook page for display with focus
+    def SetChbkPage(self, page):
+        global cb_page
+        cb_page = page
+
+    def GetChbkPage(self):
+        global cb_page
+        return cb_page
 
