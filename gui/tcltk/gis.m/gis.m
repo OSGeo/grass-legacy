@@ -1,4 +1,5 @@
 #!/bin/sh
+
 #% Module
 #%  description: GIS manager for GRASS
 #% End
@@ -22,4 +23,4 @@ if [ "$1" != "@ARGS_PARSED@" ] ; then
   exec g.parser "$0" "$@"
 fi
 
-exec "$GRASS_WISH" "$GISBASE/etc/gm/gm.tcl" -name gm_tcl "$GIS_OPT_GRC" sh &
+exec "$GRASS_WISH" "$GISBASE/etc/gm/gm.tcl" -name gm_tcl "$GIS_OPT_DMRC" sh &
