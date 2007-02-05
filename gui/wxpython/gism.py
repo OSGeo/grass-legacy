@@ -44,11 +44,10 @@ panels and layer tree done and demo tree items appear"""
 menucmd = {}
 
 
-class MainFrame(wx.Frame):
+class GMFrame(wx.Frame):
     '''GIS Manager frame with notebook widget for controlling
     GRASS GIS. Includes command console page for typing GRASS
-    (and other) commands, tree widget page for managing GIS map and
-    decoration layers, and options page for managing each layer.'''
+    (and other) commands, tree widget page for managing GIS map layers,'''
     def __init__(self, *args, **kwds):
         kwds["style"] = wx.DEFAULT_FRAME_STYLE
         wx.Frame.__init__(self, *args, **kwds)
@@ -66,7 +65,7 @@ class MainFrame(wx.Frame):
         self.cb_panel.SetSizer(boxsizer)
         self.cb_panel.SetAutoLayout(True)
         self.Centre()
-        render.Track().setCB(self.gm_cb)
+        render.Track().SetChbk(self.gm_cb)
         
         # initialize variables
         self.MapDisplay = {} #dictionary to index open map displays
@@ -77,7 +76,7 @@ class MainFrame(wx.Frame):
         self.Bind(wx.EVT_CLOSE, self.onCloseWindow)
         
         #start default initial display
-        self.newDisplay()
+        self.NewDisplay()
     
     #---Menubar creation---#000000#FFFFFF-------------------------------------------
     
@@ -297,7 +296,7 @@ class LayerTree(CT.CustomTreeCtrl):
         
     def AddLayer(self, nb, disp_idx, type):
         layername = type+':'+str(self.node)
-        gm_nb_pg1 = render.Track().getCB().GetPage(1)
+        gm_nb_pg1 = render.Track().GetChbk().GetPage(1)
         print "nb page1 =", gm_nb_pg1
         
         if self.node >0 and self.layerID:
@@ -405,8 +404,8 @@ class GMConsole(wx.Panel):
 		cmdlst = []
 		cmd = self.console_command.GetLineText(0)
 		cmdlst = cmd.split(' ')
-		mdidx = int(render.Track().getMdIdx())
-		currmap = render.Track().getMD()
+		disp_idx = int(render.Track().GetDisp_idx())
+		curr_disp = render.Track().GetCurrDisp()
 
 		if len(cmdlst) == 1 and cmd in gcmdlst:
 			# Send GRASS command without arguments to GUI command interface
@@ -481,7 +480,7 @@ class GMApp(wx.App):
 	def OnInit(self):
 ##	  reexec_with_pythonw()
 		wx.InitAllImageHandlers()
-		mainframe = MainFrame(None, -1, "")
+		mainframe = GMFrame(None, -1, "")
 		self.SetTopWindow(mainframe)
 		mainframe.Show()
 		return 1
