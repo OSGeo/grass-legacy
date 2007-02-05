@@ -326,6 +326,7 @@ int main (int argc, char *argv[])
                 }
                 else
                 {
+                    strcat( error_msg, "Import dataset PROJ_INFO is:\n" );
                     if( cellhd.proj == PROJECTION_XY )
                         sprintf( error_msg + strlen(error_msg), 
                                  "cellhd.proj = %d (unreferenced/unknown)\n", 
