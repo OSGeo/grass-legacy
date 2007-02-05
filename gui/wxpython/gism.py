@@ -1,7 +1,10 @@
 #!/usr/bin/env python
 import sys
 import os
-import subprocess
+try:
+    import subprocess
+except:
+    from compat import subprocess
 
 gmpath = os.environ['GMPYPATH']
 sys.path.append(gmpath)

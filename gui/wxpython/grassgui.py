@@ -42,7 +42,10 @@ from xml.sax import make_parser
 
 import os
 from os import system
-import subprocess
+try:
+    import subprocess
+except:
+    from compat import subprocess
 import re
 
 import render
