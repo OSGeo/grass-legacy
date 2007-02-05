@@ -416,7 +416,7 @@ class Map:
 				l_hidden != None:
 				if layer['l_active'] == l_active and\
 					layer['l_hidden'] == l_hidden:
-				selected.append(layer)
+                                    selected.append(layer)
 
 			# active layers
 			elif l_active != None:
@@ -504,8 +504,7 @@ class Map:
 	def AddRasterLayer(self, name, mapset=None, catlist=None,
 		vallist=None, invertCats=False, l_active=True, l_hidden=False,
 		l_opacity=1, l_render=False):
-	"""
-		Adds raster layer to list of layers
+            """Adds raster layer to list of layers
 
 		Layer Attributes:
 			name	- raster file name
@@ -526,85 +525,85 @@ class Map:
 			Added layer if succeeded or None
 		"""
 
-		layer = Layer()
+            layer = Layer()
 
-		if not mapset:
-			mapset = self.Env["MAPSET"]
+            if not mapset:
+                    mapset = self.Env["MAPSET"]
 
-		if l_opacity > 1:
-			l_opacity = float(l_opacity)/100
+            if l_opacity > 1:
+                    l_opacity = float(l_opacity)/100
 
-		layer.l_type	= "raster"
-		layer.name		= name
-		layer.mapset	= mapset
-		layer.catlist	= catlist
-		layer.vallist	= vallist
-		layer.invertCats= invertCats
-		layer.l_active	= l_active
-		layer.l_hidden	= l_hidden
-		layer.l_opacity = l_opacity
-		gtemp = utils.GetTempfile()
-		layer.l_maskfile = gtemp+".pgm"
-		layer.l_mapfile = gtemp+".ppm"
+            layer.l_type	= "raster"
+            layer.name		= name
+            layer.mapset	= mapset
+            layer.catlist	= catlist
+            layer.vallist	= vallist
+            layer.invertCats= invertCats
+            layer.l_active	= l_active
+            layer.l_hidden	= l_hidden
+            layer.l_opacity = l_opacity
+            gtemp = utils.GetTempfile()
+            layer.l_maskfile = gtemp+".pgm"
+            layer.l_mapfile = gtemp+".ppm"
 
-		self.Layers.append(layer)
+            self.Layers.append(layer)
 
-		if l_render:
-			if not layer.Render():
-				sys.stderr.write("Could not render layer %s@%s\n" %\
-					(name,mapset))
+            if l_render:
+                    if not layer.Render():
+                            sys.stderr.write("Could not render layer %s@%s\n" %\
+                                    (name,mapset))
 
-		return self.Layers[-1]
+            return self.Layers[-1]
 
 	def AddGraphLayer(self, name, graph=None, color="255:0:0",
 		coordsinmapunits=False,
 		l_active=True, l_hidden=True, l_opacity=1, l_render=False):
-	"""
-		Adds graph layer to list of layers (for d.graph definition)
+            """
+            Adds graph layer to list of layers (for d.graph definition)
 
-		Layer attributes:
-			name	- graphics name
-			graph	- string with graphics definition
-			color	- Color triplet
+            Layer attributes:
+                    name	- graphics name
+                    graph	- string with graphics definition
+                    color	- Color triplet
 
-			coordsinmapunits - coordinates are given in map units
+                    coordsinmapunits - coordinates are given in map units
 
-			l_active - layer is active, will be rendered only if True
-			l_hidden - layer is hidden, will be allways rendered
-			l_opacity - layer opacity [0-1]
-			l_mapfile  - File name of new layer
-			l_maskfile	- Mask name of new layer
-			l_render - Make an image of this layer while adding
+                    l_active - layer is active, will be rendered only if True
+                    l_hidden - layer is hidden, will be allways rendered
+                    l_opacity - layer opacity [0-1]
+                    l_mapfile  - File name of new layer
+                    l_maskfile	- Mask name of new layer
+                    l_render - Make an image of this layer while adding
 
-		Returns:
-			Added layer if succeeded or None
-		"""
+            Returns:
+                    Added layer if succeeded or None
+            """
 
-		layer = Layer()
+            layer = Layer()
 
-		if l_opacity > 1:
-			l_opacity = float(l_opacity)/100
+            if l_opacity > 1:
+                    l_opacity = float(l_opacity)/100
 
-		layer.l_type	=	"graph"
-		layer.name		=	name
-		layer.graph =  graph
-		layer.color =  color
-		layer.coordsinmapunits	= coordsinmapunits
-		layer.l_active	= l_active
-		layer.l_hidden	= l_hidden
-		layer.l_opacity = l_opacity
-		gtemp = utils.GetTempfile()
-		layer.l_maskfile = gtemp+".pgm"
-		layer.l_mapfile = gtemp+".ppm"
+            layer.l_type	=	"graph"
+            layer.name		=	name
+            layer.graph =  graph
+            layer.color =  color
+            layer.coordsinmapunits	= coordsinmapunits
+            layer.l_active	= l_active
+            layer.l_hidden	= l_hidden
+            layer.l_opacity = l_opacity
+            gtemp = utils.GetTempfile()
+            layer.l_maskfile = gtemp+".pgm"
+            layer.l_mapfile = gtemp+".ppm"
 
-		self.Layers.append(layer)
+            self.Layers.append(layer)
 
-		if l_render:
-			if not layer.Render():
-				sys.stderr.write("Could not render layer %s\n" %\
-					(name))
+            if l_render:
+                    if not layer.Render():
+                            sys.stderr.write("Could not render layer %s\n" %\
+                                    (name))
 
-		return self.Layers[-1]
+            return self.Layers[-1]
 
 	def AddVectorLayer(self, name, mapset=None,
 		type = "point,line,boundary,centroid,area,face",
@@ -617,88 +616,88 @@ class Map:
 		minreg = None, maxreg = None, colorfromtable=False,
 		randomcolor=False, catsasid=False, l_active=True,
 		l_hidden=False, l_opacity=1, l_render=False):
-	"""
-		Adds vector layer to list of layers
+            """
+            Adds vector layer to list of layers
 
-		Layer attributes:
-			name	- raster file name
-			mapset	- mapset name, default: current
-			type	- feature type
-			display - display
-			attrcol - name of column to be displayed
-			icon	- point and centroid symbol
-			size	-  symbol size
-			layer	- layer number
-			cats	- category values
-			where	- WHERE conditions of SQL statement
-			width	- line width
-			wcolumn - name of column for line widths
-			wscale	- scale factor for wcolumn
-			color	- line color
-			fcolor	- area fill color
-			rgb_column - name of color definition column
-			llayer	- layer number
-			lcolor	- label color
-			bgcolor - lable border color
-			lsize	- label size
-			font	- font name
-			xref	- label horizontal justification, default: left
-			yref	- label horizontal justification, default: center
-			minreg	- minimum region size when map is displayed
-			maxreg	- maximum region size when map is displayed
+            Layer attributes:
+                    name	- raster file name
+                    mapset	- mapset name, default: current
+                    type	- feature type
+                    display - display
+                    attrcol - name of column to be displayed
+                    icon	- point and centroid symbol
+                    size	-  symbol size
+                    layer	- layer number
+                    cats	- category values
+                    where	- WHERE conditions of SQL statement
+                    width	- line width
+                    wcolumn - name of column for line widths
+                    wscale	- scale factor for wcolumn
+                    color	- line color
+                    fcolor	- area fill color
+                    rgb_column - name of color definition column
+                    llayer	- layer number
+                    lcolor	- label color
+                    bgcolor - lable border color
+                    lsize	- label size
+                    font	- font name
+                    xref	- label horizontal justification, default: left
+                    yref	- label horizontal justification, default: center
+                    minreg	- minimum region size when map is displayed
+                    maxreg	- maximum region size when map is displayed
 
-			colorfromtable - get colors from map table column, True/False
-			randomcolor - random colors according to category number, True/False
-			catsasid - use values from 'cats' option as line id
+                    colorfromtable - get colors from map table column, True/False
+                    randomcolor - random colors according to category number, True/False
+                    catsasid - use values from 'cats' option as line id
 
-			l_active - layer is active, will be rendered only if True
-			l_hidden - layer is hidden, will be allways rendered
-			l_opacity - layer opacity [0-100]
-			l_mapfile  - File name of new layer
-			l_maskfile - Mask name of new layer
-			l_render- Make a image of this layer while adding
+                    l_active - layer is active, will be rendered only if True
+                    l_hidden - layer is hidden, will be allways rendered
+                    l_opacity - layer opacity [0-100]
+                    l_mapfile  - File name of new layer
+                    l_maskfile - Mask name of new layer
+                    l_render- Make a image of this layer while adding
 
-		Returns:
-			Added layer if succeeded or None
-		"""
+            Returns:
+                    Added layer if succeeded or None
+            """
 
-		maplayer = Layer()
+            maplayer = Layer()
 
-		if not mapset:
-			mapset = self.Env["MAPSET"]
+            if not mapset:
+                    mapset = self.Env["MAPSET"]
 
-		if l_opacity > 1:
-			l_opacity = float(l_opacity)/100
+            if l_opacity > 1:
+                    l_opacity = float(l_opacity)/100
 
-		maplayer.l_type= "vector";			maplayer.name	   = name
-		maplayer.mapset= mapset	 ;			maplayer.type	   = type
-		maplayer.display= display;			maplayer.attrcol   = attrcol
-		maplayer.icon	= icon;				maplayer.size		= size
-		maplayer.layer	= layer;			maplayer.cats		= cats
-		maplayer.where	= where;			maplayer.width		= width
-		maplayer.wcolumn= wcolumn;			maplayer.wscale	   = wscale
-		maplayer.color	= color;			maplayer.fcolor	   = fcolor
-		maplayer.rgb_column= rgb_column;	maplayer.llayer	 = llayer
-		maplayer.lcolor= lcolor;			maplayer.bgcolor   = bgcolor
-		maplayer.bcolor= bcolor;			maplayer.lsize		= lsize
-		maplayer.font	= font;				maplayer.xref		= xref
-		maplayer.yref	= yref;				maplayer.minreg	   = minreg
-		maplayer.maxreg= maxreg;			maplayer.colorfromtable= colorfromtable
-		maplayer.randomcolor= randomcolor;	maplayer.catsasid= catsasid
-		maplayer.l_active  =l_active;		maplayer.l_hidden  = l_hidden
-		maplayer.l_opacity = l_opacity
-		gtemp = utils.GetTempfile()
-		maplayer.l_maskfile = gtemp+".pgm"
-		maplayer.l_mapfile = gtemp+".ppm"
+            maplayer.l_type= "vector";			maplayer.name	   = name
+            maplayer.mapset= mapset	 ;			maplayer.type	   = type
+            maplayer.display= display;			maplayer.attrcol   = attrcol
+            maplayer.icon	= icon;				maplayer.size		= size
+            maplayer.layer	= layer;			maplayer.cats		= cats
+            maplayer.where	= where;			maplayer.width		= width
+            maplayer.wcolumn= wcolumn;			maplayer.wscale	   = wscale
+            maplayer.color	= color;			maplayer.fcolor	   = fcolor
+            maplayer.rgb_column= rgb_column;	maplayer.llayer	 = llayer
+            maplayer.lcolor= lcolor;			maplayer.bgcolor   = bgcolor
+            maplayer.bcolor= bcolor;			maplayer.lsize		= lsize
+            maplayer.font	= font;				maplayer.xref		= xref
+            maplayer.yref	= yref;				maplayer.minreg	   = minreg
+            maplayer.maxreg= maxreg;			maplayer.colorfromtable= colorfromtable
+            maplayer.randomcolor= randomcolor;	maplayer.catsasid= catsasid
+            maplayer.l_active  =l_active;		maplayer.l_hidden  = l_hidden
+            maplayer.l_opacity = l_opacity
+            gtemp = utils.GetTempfile()
+            maplayer.l_maskfile = gtemp+".pgm"
+            maplayer.l_mapfile = gtemp+".ppm"
 
-		self.Layers.append(maplayer)
+            self.Layers.append(maplayer)
 
-		if l_render:
-			if not maplayer.Render():
-				sys.stderr.write("Could not render layer %s@%s\n" %\
-					(name,mapset))
+            if l_render:
+                    if not maplayer.Render():
+                            sys.stderr.write("Could not render layer %s@%s\n" %\
+                                    (name,mapset))
 
-		return self.Layers[-1]
+            return self.Layers[-1]
 
 	def PopLayer(self, name=None, mapset=None, id=None):
 		"""
