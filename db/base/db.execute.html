@@ -25,28 +25,24 @@ echo 'create table soils (cat integer, soiltype varchar(10) )' | db.execute
 </pre></div>
 
 <p>
-
 <em>Create a new table using a file with SQL statements:</em><br>
 <div class="code"><pre>
 db.execute driver=odbc database=g60test input=file.sql
 </pre></div>
 
 <P>
-
 <em>Insert new row into attribute table:</em><br>
 <div class="code"><pre>
 echo "INSERT INTO nobugs (id,name,east_gb,north_gb) values (30,'Ala',1657340,5072301)" | db.execute
 </pre></div>
 
 <P>
-
 <em>Update attribute entries to new value based on SQL rule:</em><br>
 <div class="code"><pre>
 echo "UPDATE roads SET travelcost=5 WHERE cat=1" | db.execute
 </pre></div>
 
 <P>
-
 <em>Update attribute entries to new value based on SQL rule:</em><br>
 <div class="code"><pre>
 echo "UPDATE dourokukan SET testc=50 WHERE testc is NULL" | db.execute
@@ -58,15 +54,20 @@ echo "UPDATE dourokukan SET testc=50 WHERE testc is NULL" | db.execute
 echo "ALTER TABLE roads ADD COLUMN length double" | db.execute
 </pre></div>
 
-<P>
 
+<P>
+<em>Drop column from attribute table:</em><br>
+<div class="code"><pre>
+echo "ALTER TABLE roads DROP COLUMN length" | db.execute
+</pre></div>
+
+<P>
 <em>Drop table (not supported by all drivers)</em><br>
 <div class="code"><pre>
 echo "DROP TABLE fmacopy" | db.execute
 </pre></div>
 
 <p>
-
 <em>Update attribute with multiple SQL instructions in file (e.g., file.sql,
     instruction line must end with a semicolon):</em><br>
 <div class="code"><pre>
