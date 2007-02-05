@@ -76,6 +76,28 @@ if [ $? -ne 0 ] || [ -z "$TMP" ] ; then
     exit 1
 fi
 
+cleanup()
+{
+ \rm -f $TMP $TMP.coltypes $TMP.colnames $TMP.coldesc
+}
+
+# what to do in case of user break:
+exitprocedure()
+{
+ echo "User break!"
+ cleanup
+ exit 1
+}
+# shell check for user break (signal list: trap -l)
+trap "exitprocedure" 2 3 15
+
+# does map exist?
+eval `g.findfile element=vector file=$GIS_OPT_MAP`
+if [ ! "$file" ] ; then
+   echo "Vector map '$GIS_OPT_MAP' not found in mapset search path"
+   exit 1
+fi
+
 table=`v.db.connect $GIS_OPT_MAP -g | grep -w $GIS_OPT_LAYER | awk '{print $2}'`
 database=`v.db.connect $GIS_OPT_MAP -g | grep -w $GIS_OPT_LAYER | awk '{print $4}'`
 driver=`v.db.connect $GIS_OPT_MAP -g | grep -w $GIS_OPT_LAYER | awk '{print $5}'`
@@ -83,17 +105,20 @@ col="$GIS_OPT_COLUMN"
 
 if [ -z "$table" ] ; then
    echo -e "\nERROR: There is no table connected to this map! Cannot delete any column."
+   cleanup
    exit 1
 fi
 
 if [ "$col" = "cat" ] ; then
    echo "ERROR: Cannot delete <$col> column as it is needed to keep table connected to vector map"
+   cleanup
    exit 1
 fi
 
 v.info --q -c $table | cut -d'|' -f1,2 | grep "|${col}$" 2>&1 >/dev/null
 if [ $? -ne 0 ] ; then
 	echo "ERROR: column <$col> not found in table"
+	cleanup
 	exit 1
 fi
 
@@ -115,16 +140,22 @@ INSERT INTO ${table} SELECT ${COLNAMES} FROM ${table}_backup;
 DROP TABLE ${table}_backup;
 COMMIT;" > $TMP
 	db.execute input=$TMP
+	if [ $? -eq 1 ] ; then
+	    	echo "ERROR: Cannot continue (problem deleting column)."
+	    	cleanup
+	    	exit 1
+	fi
 else
 	echo "ALTER TABLE $table DROP COLUMN $col" | db.execute database=$database driver=$driver
 	if [ $? -eq 1 ] ; then
 	    	echo "ERROR: Cannot continue (problem deleting column)."
+	    	cleanup
 	    	exit 1
 	fi
 fi
 
 # cleanup
-rm -f $TMP $TMP.coltypes $TMP.colnames
+cleanup
 
 exit 0
 
