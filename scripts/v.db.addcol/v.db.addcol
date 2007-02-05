@@ -23,6 +23,7 @@
 #% key: map
 #% type: string
 #% gisprompt: old,vector,vector
+#% key_desc : name
 #% description: Vector map for which to edit attribute table
 #% required : yes
 #%end
