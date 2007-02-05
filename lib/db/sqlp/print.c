@@ -75,6 +75,9 @@ int sqpPrintStmt(SQLPSTMT *st)
 	case (SQLP_DROP):
             fprintf( stderr, "DROP\n");
 	    break;			
+	case (SQLP_DROP_COLUMN):
+            fprintf( stderr, "DROP COLUMN\n");
+	    break;			
 	case (SQLP_INSERT):
             fprintf( stderr, "INSERT\n");
 	    break;			

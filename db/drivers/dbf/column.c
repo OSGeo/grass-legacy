@@ -71,3 +71,55 @@ int find_column (int tab, char *col)
     return (-1);
 }
 
+/* drop column from table */
+int drop_column (int tab, char *name)
+{
+    int i, j, c;
+    
+    G_debug (3, "drop_column(): tab = %d, name = %s", tab, name);
+
+    /* Check if the column exists */
+    c = find_column (tab, name);
+    if (c == -1)
+    {
+	append_error( "Column '%s' does not exist\n", name);
+	return DB_FAILED;
+    }
+    
+    db.tables[tab].ncols--;
+
+    for (i = c; i < db.tables[tab].ncols; i++)
+    {
+	strcpy (db.tables[tab].cols[i].name, db.tables[tab].cols[i+1].name);
+	db.tables[tab].cols[i].type = db.tables[tab].cols[i+1].type;
+	db.tables[tab].cols[i].width = db.tables[tab].cols[i+1].width;
+	db.tables[tab].cols[i].decimals = db.tables[tab].cols[i+1].decimals; 
+    }
+
+/* drop column from each row */
+    for (i = 0; i < db.tables[tab].nrows; i++)
+    {
+	for (j = c; j < db.tables[tab].ncols; j++)
+	{
+	    VALUE* dbval_c  = &(db.tables[tab].rows[i].values[j]);
+	    VALUE* dbval_c1 = &(db.tables[tab].rows[i].values[j + 1]);
+
+	    dbval_c->i = dbval_c1->i;
+	    dbval_c->d = dbval_c1->d;
+
+	    if (dbval_c1->c != NULL) 
+	    {
+		save_string(dbval_c, dbval_c1->c);
+		G_free ((char*) dbval_c1->c);
+		dbval_c1->c = NULL;
+	    }
+
+	    dbval_c->is_null = dbval_c1->is_null;
+	}
+
+	db.tables[tab].rows[i].values = 
+	    (VALUE *) G_realloc (db.tables[tab].rows[i].values,
+				 db.tables[tab].ncols * sizeof(VALUE));
+    }
+    return DB_OK;
+}

@@ -10,6 +10,7 @@
 #define SQLP_UPDATE 5
 #define SQLP_DELETE 6
 #define SQLP_ADD_COLUMN 7
+#define SQLP_DROP_COLUMN 8
 
 /* SQL OPERATORS */
   /* Arithmetical */

@@ -69,8 +69,8 @@ int execute(char *sql, cursor * c)
 	return DB_FAILED;
     }
     G_free ( tmpsql) ;
-
-    G_debug (3, "SQL statement parsed successfully" );
+    
+    G_debug (3, "SQL statement parsed successfully: %s", sql );
 
     /* sqpPrintStmt(st); */ /* debug output only */
 
@@ -91,7 +91,8 @@ int execute(char *sql, cursor * c)
     }
 
     if ((st->command == SQLP_DROP) || (st->command == SQLP_DELETE) ||
-        (st->command == SQLP_INSERT) || (st->command == SQLP_UPDATE) || (st->command == SQLP_ADD_COLUMN)
+        (st->command == SQLP_INSERT) || (st->command == SQLP_UPDATE) ||
+       	(st->command == SQLP_ADD_COLUMN) || (st->command == SQLP_DROP_COLUMN)
     ) {
 	if ( db.tables[tab].write == FALSE ) {
   	    append_error( "Cannot modify table, don't have write permission for DBF file.\n");
@@ -102,7 +103,7 @@ int execute(char *sql, cursor * c)
     /* find columns */
     ncols = st->nCol;
     if (st->command == SQLP_INSERT || st->command == SQLP_SELECT
-	|| st->command == SQLP_UPDATE) {
+	|| st->command == SQLP_UPDATE || st->command == SQLP_DROP_COLUMN) {
 	if (ncols > 0) {	/* colums were specified */
 	    cols = (int *) G_malloc (ncols * sizeof(int));
 	    for (i = 0; i < ncols; i++) {
@@ -140,6 +141,7 @@ int execute(char *sql, cursor * c)
     }
 
     /* do command */
+    G_debug(3,"Doing SQL command <%d> on DBF table... (see include/sqlp.h)", st->command);
     switch (st->command) {
     case (SQLP_ADD_COLUMN):
 	load_table(tab);
@@ -153,12 +155,21 @@ int execute(char *sql, cursor * c)
 	for ( i = 0; i < db.tables[tab].nrows; i++ ) {
 	    db.tables[tab].rows[i].values = 
 	        (VALUE *) G_realloc ( db.tables[tab].rows[i].values, db.tables[tab].ncols * sizeof(VALUE));
-
+	    
             dbval = &(db.tables[tab].rows[i].values[db.tables[tab].ncols-1]);
 	    dbval->i = 0;
 	    dbval->d = 0.0;
 	    dbval->c = NULL;
 	    dbval->is_null = 1;
+	}
+	db.tables[tab].updated = TRUE;
+	break;
+	
+    case (SQLP_DROP_COLUMN):
+	load_table(tab);
+	if (drop_column (tab, st->Col[0].s) != DB_OK) {
+	    append_error("Cannot delete column.\n");
+	    return DB_FAILED;
 	}
 	db.tables[tab].updated = TRUE;
 	break;
