@@ -70,7 +70,7 @@ class MainFrame(wx.Frame):
         
         # initialize variables
         self.MapDisplay = {} #dictionary to index open map displays
-        self.mapidx = 0 #index value for map displays and layer trees
+        self.disp_idx = 0 #index value for map displays and layer trees
         self.maptree = {} #dictionary to index a layer tree to accompanying a map display
         self.mapfocus = 0 #track which display currently has focus
         
@@ -139,51 +139,51 @@ class MainFrame(wx.Frame):
     def toolbarData(self):
         iconpath = os.environ['GRASS_ICONPATH']
         return (
-            ('newdisplay', iconpath+r'/gui-startmon.gif', 'Start new display', self.newDisplay),
+            ('newdisplay', iconpath+r'/gui-startmon.gif', 'Start new display', self.NewDisplay),
             ('', '', '', ''),
-            ('addraster', iconpath+r'/element-cell.gif', 'Add raster layer', self.addRaster),
-            ('addvect', iconpath+r'/element-vector.gif', 'Add vector layer', self.addVector),
-            ('addcmd', iconpath+r'/gui-cmd.gif', 'Add command layer', self.addCommand)
+            ('addraster', iconpath+r'/element-cell.gif', 'Add raster layer', self.AddRaster),
+            ('addvect', iconpath+r'/element-vector.gif', 'Add vector layer', self.AddVector),
+            ('addcmd', iconpath+r'/gui-cmd.gif', 'Add command layer', self.AddCommand)
             )
     
     #---Start display---#000000#FFFFFF----------------------------------------------
-    def newDisplay(self, event=None):
+    def NewDisplay(self, event=None):
         '''Create new map display widget'''
         #update display index
-        print 'mapidx=',self.mapidx
-        #start a new display, indexed by mapidx
+        print 'disp_idx=',self.disp_idx
+        #start a new display, indexed by disp_idx
         #mID = wx.NewId()
-        self.MapDisplay[self.mapidx] = mapdisp.MapFrame(self, -1, 'Map Display', wx.DefaultPosition, wx.DefaultSize,
-            style=wx.DEFAULT_FRAME_STYLE, cb=self.gm_cb, idx=self.mapidx)
-        self.MapDisplay[self.mapidx].SetTitle(_("Map Display-"+str(self.mapidx)))
-        #self.maptree[self.mapidx] = self.MapDisplay[self.mapidx].getTree()
-        self.MapDisplay[self.mapidx].Show()
-        self.mapidx += 1
+        self.MapDisplay[self.disp_idx] = mapdisp.MapFrame(self, -1, 'Map Display', wx.DefaultPosition, wx.DefaultSize,
+            style=wx.DEFAULT_FRAME_STYLE, cb=self.gm_cb, idx=self.disp_idx)
+        self.MapDisplay[self.disp_idx].SetTitle(_("Map Display-"+str(self.disp_idx)))
+        #self.maptree[self.disp_idx] = self.MapDisplay[self.disp_idx].getTree()
+        self.MapDisplay[self.disp_idx].Show()
+        self.disp_idx += 1
     
     #---ToolBar button handlers---#000000#FFFFFF------------------------------------
-    def addRaster(self, event):
-        self.setTree('raster')
+    def AddRaster(self, event):
+        self.SetTree('raster')
         event.Skip()
     
-    def addVector(self, event):
-        self.setTree('vector')
+    def AddVector(self, event):
+        self.SetTree('vector')
         event.Skip()
     
-    def addCommand(self, event):
-        self.setTree('command')
+    def AddCommand(self, event):
+        self.SetTree('command')
         event.Skip()
     
-    def setTree(self, layertype):
+    def SetTree(self, layertype):
         print 'hello world'
-        mapidx = self.MapDisplay[self.mapidx].getMapidx()
-        print 'mapidx in settree=',mapidx
-        self.maptree[self.mapidx].addLayer(self.gm_nb, mapidx, layertype)
+        disp_idx = self.MapDisplay[self.disp_idx].getdisp_idx()
+        print 'disp_idx in settree=',disp_idx
+        self.maptree[self.disp_idx].AddLayer(self.gm_nb, disp_idx, layertype)
         return
     
     #---Misc methods---#000000#FFFFFF-----------------------------------------------
     def onCloseWindow(self, event):
         '''Cleanup when gism.py is quit'''
-        mdlist = range(0, self.mapidx+1)
+        mdlist = range(0, self.disp_idx+1)
         try:
             for md in mdlist:
                 if self.MapDisplay.has_key(md):
@@ -199,7 +199,7 @@ class MainFrame(wx.Frame):
         event.Skip()
     
     def printmd(self):
-        print 'self.mapidx is now', self.mapidx
+        print 'self.disp_idx is now', self.disp_idx
 
 class GMChoicebook(wx.Choicebook):
     '''This class creates a choicebook widget for the GIS Manager 
@@ -295,7 +295,7 @@ class LayerTree(CT.CustomTreeCtrl):
         self.Bind(wx.EVT_TREE_ITEM_ACTIVATED, self.onActivateLayer)
         self.Bind(wx.EVT_TREE_SEL_CHANGED, self.onChangeSel)
         
-    def addLayer(self, nb, mapidx, type):
+    def AddLayer(self, nb, disp_idx, type):
         layername = type+':'+str(self.node)
         gm_nb_pg1 = render.Track().getCB().GetPage(1)
         print "nb page1 =", gm_nb_pg1
