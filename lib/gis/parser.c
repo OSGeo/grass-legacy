@@ -1614,7 +1614,7 @@ static void G_script(void)
 	}
 
 	fprintf(fp,
-		"if [ -z \"$GISBASE\" ] ; thenn\n"
+		"if [ -z \"$GISBASE\" ] ; then\n"
 		"    echo \"You must be in GRASS GIS to run this program.\" 1>&2\n"
 		"    exit 1\n"
 		"fi\n"
