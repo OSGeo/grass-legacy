@@ -59,6 +59,7 @@
 %token <floatval> FLOATNUM
 
 %token ADD
+%token DROP
 %token COLUMN
 %token EQUAL
 %token SELECT FROM WHERE
@@ -104,6 +105,7 @@ y_sql:
 y_alter:
 		ALTER TABLE y_table ADD COLUMN y_columndef	{ sqpCommand(SQLP_ADD_COLUMN); }
 	|	ALTER TABLE y_table ADD y_columndef		{ sqpCommand(SQLP_ADD_COLUMN); }
+	|	ALTER TABLE y_table DROP COLUMN NAME            { sqpCommand(SQLP_DROP_COLUMN); sqpColumn($6);}
 	;
 	
 y_create:

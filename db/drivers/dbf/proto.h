@@ -8,9 +8,10 @@ int save_string (VALUE *, char *);
 cursor * alloc_cursor ();
 void free_cursor ( cursor * );
 
+/* column.c */
 int add_column ( int table, int type,  char *name , int width, int decimals );
 int find_column ( int, char * );
-
+int drop_column ( int, char * );
 
 int add_table ( char *, char *);
 int execute ( char *, cursor *);
