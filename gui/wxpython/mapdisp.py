@@ -10,7 +10,7 @@ import os, sys, time, glob
 #sys.path.append()
 
 import render
-#import gism
+import gism
 
 Map = render.Map() # instantiate module to render GRASS display output to PPM file
 
@@ -326,11 +326,20 @@ class DrawWindow(BufferedWindow):
 class MapFrame(wx.Frame):
     '''Main frame for map display window. Drawing takes place in child double buffered
     drawing window.'''
-    def __init__(self, *args, **kwds):
-	kwds["style"] = wx.DEFAULT_FRAME_STYLE
-	wx.Frame.__init__(self, *args, **kwds)
-	self.SetClientSize((600, 475))
-
+##    def __init__(self, *args, **kwds):
+##        kwds["style"] = wx.DEFAULT_FRAME_STYLE
+##         wx.Frame.__init__(self, *args, **kwds)
+        
+    def __init__(self, parent, id, title, pos, size, style, cb, idx):        wx.Frame.__init__(self, parent, id, title, pos, size, style)        self.SetClientSize((600, 475))
+        self.cb_page = {} #choicebook page for each display, indexed by display ID
+        self.maptree = {} #layer tree on choicebook page for each display, indexed by display ID
+        self.mapconsole = {} #command console on choicebook page for each display, indexed by display ID
+        self.nb={} #notebook on choicebook page for GIS mgr controls for each display, indexed by display ID
+        self.chbk = cb
+        self.mapidx = idx
+        
+        self.createGISmgr()
+        
 	#---status bar---#000000#FFFFFF-------------------------------------------------
 	self.statusbar = self.CreateStatusBar(2, 0)
 	self.statusbar.SetStatusWidths([-3, -1])
@@ -369,18 +378,62 @@ class MapFrame(wx.Frame):
 	self.MapWindow = DrawWindow(self) # initialize buffered DC
 	self.MapWindow.Bind(wx.EVT_MOTION, self.OnMotion)
 
-    def InitDisplay(self):
-	Map.Width, Map.Height = self.GetClientSize()
+    def createGISmgr(self):
+        '''Creates choicebook page for controlling each display, with notebook for layer tree and command console'''
 
+       # make a new page in the choicebook for the layer tree (on page 0 of the notebook)
+        cb_panel= wx.Panel(self.chbk)
+        self.chbk.AddPage(cb_panel, "map layers for display "+str(self.mapidx), select = True)
+
+        # track which page is associated with which map display
+        self.cb_page[self.mapidx] =self.chbk.GetPage(self.mapidx)
+        print 'choicebook page = ', self.cb_page[self.mapidx]
+        self.nb[self.mapidx] =  wx.Notebook(self.cb_page[self.mapidx], -1, wx.DefaultPosition, wx.DefaultSize, wx.NB_RIGHT)
+
+       # set up  page for layer tree       
+        self.maptree[self.mapidx] = gism.LayerTree(self.nb[self.mapidx], -1, wx.DefaultPosition, wx.DefaultSize, wx.TR_HAS_BUTTONS
+            |wx.TR_LINES_AT_ROOT|wx.TR_EDIT_LABELS|wx.TR_HIDE_ROOT
+            |wx.TR_DEFAULT_STYLE|wx.NO_BORDER|wx.FULL_REPAINT_ON_RESIZE)
+        self.nb[self.mapidx].AddPage(self.maptree[self.mapidx], _("Layers"))
+        self.chbk.GetPage(self.mapidx)
+        
+        #set up page for command console
+        self.mapconsole[self.mapidx] = gism.GMConsole(self.nb[self.mapidx])
+        self.nb[self.mapidx].AddPage(self.mapconsole[self.mapidx] , _("Console"))
+     
+        cb_boxsizer = wx.BoxSizer()
+        cb_boxsizer.Add(self.nb[self.mapidx], 1, wx.EXPAND)
+        self.cb_page[self.mapidx].SetSizer(cb_boxsizer)
+        self.cb_page[self.mapidx].SetAutoLayout(True)
+        self.Centre()
+        
+    def getCBpage(self):
+        return self.cb_page[self.mapidx]
+        
+    def getTree(self):
+        return self.maptree[self.mapidx]
+
+    def getMapidx(self):
+        print 'mapidx =', self.mapidx
+        return self.mapidx
+    
+    def InitDisplay(self):
+        self.Width, self.Height = self.GetClientSize()
+        Map.geom = self.Width, self.Height
+        Map.GetRegion()
+        # This was Map.getResolution(). I'm guessing at the moment that this is replaced by Map.SetRegion()
+        Map.SetRegion()
+    
     def OnFocus(self, event):
-	'''get map display index number from title
-	and store it in variable in render.py
-	so it can be found by gism.py'''
-	title = self.GetTitle()
-	md = title[12:]
-	self.mdindex = md
-	Map.Index=self.mdindex
-	event.Skip()
+        ''' get map display index number from title
+        and store it in variable in render.py
+        so it can be found by gism.py'''
+        title = self.GetTitle()
+        md = title[12:]
+        self.mdindex = md
+        render.Track().setMdIdx(self.mdindex)        self.chbk.SetSelection(self.mapidx)        render.Track().setMD(self)
+        Map.Index=self.mdindex
+        event.Skip()
 
     def SetDcommandList(self, clst):
 	self.MapWindow.dcmd_list = clst
