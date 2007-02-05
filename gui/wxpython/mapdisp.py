@@ -386,37 +386,29 @@ class MapFrame(wx.Frame):
         self.chbk.AddPage(cb_panel, "map layers for display "+str(self.disp_idx), select = True)
 
         # track which page is associated with which map display
-        self.cb_page[self.disp_idx] =self.chbk.GetPage(self.disp_idx)
-        print 'choicebook page = ', self.cb_page[self.disp_idx]
+        self.cb_page[self.disp_idx]=self.chbk.GetCurrentPage()
+        #make a dictionary entry of the current display and current choicebook page
+
+        #create notebook on choicebook page to hold layer tree and command console
         self.nb[self.disp_idx] =  wx.Notebook(self.cb_page[self.disp_idx], -1, wx.DefaultPosition, wx.DefaultSize, wx.NB_RIGHT)
 
-       # set up  page for layer tree       
+       #create layer tree (tree control for managing GIS layers)  and put on new notebook page    
         self.maptree[self.disp_idx] = gism.LayerTree(self.nb[self.disp_idx], -1, wx.DefaultPosition, wx.DefaultSize, wx.TR_HAS_BUTTONS
             |wx.TR_LINES_AT_ROOT|wx.TR_EDIT_LABELS|wx.TR_HIDE_ROOT
             |wx.TR_DEFAULT_STYLE|wx.NO_BORDER|wx.FULL_REPAINT_ON_RESIZE)
         self.nb[self.disp_idx].AddPage(self.maptree[self.disp_idx], _("Layers"))
-        self.chbk.GetPage(self.disp_idx)
         
-        #set up page for command console
+        #create command console and put on new notebook page
         self.mapconsole[self.disp_idx] = gism.GMConsole(self.nb[self.disp_idx])
         self.nb[self.disp_idx].AddPage(self.mapconsole[self.disp_idx] , _("Console"))
      
+        #layout for controls
         cb_boxsizer = wx.BoxSizer()
         cb_boxsizer.Add(self.nb[self.disp_idx], 1, wx.EXPAND)
         self.cb_page[self.disp_idx].SetSizer(cb_boxsizer)
         self.cb_page[self.disp_idx].SetAutoLayout(True)
         self.Centre()
         
-    def getCBpage(self):
-        return self.cb_page[self.disp_idx]
-        
-    def getTree(self):
-        return self.maptree[self.disp_idx]
-
-    def getdisp_idx(self):
-        print 'disp_idx =', self.disp_idx
-        return self.disp_idx
-    
     def InitDisplay(self):
         self.Width, self.Height = self.GetClientSize()
         Map.geom = self.Width, self.Height
@@ -429,11 +421,11 @@ class MapFrame(wx.Frame):
         and store it in variable in render.py
         so it can be found by gism.py'''
         title = self.GetTitle()
-        md = title[12:]
-        self.mdindex = md
-        render.Track().Setdisp_idx(self.mdindex)        self.chbk.SetSelection(self.disp_idx)        render.Track().setMD(self)
-        Map.Index=self.mdindex
-        event.Skip()
+        num = title[12:]
+        render.Track().SetDisp_idx(num)
+        render.Track().SetCurrDisp(self)
+        render.Track().SetChbkPage(self.chbk)
+        self.chbk.SetSelection(self.disp_idx)        event.Skip()
 
     def SetDcommandList(self, clst):
 	self.MapWindow.dcmd_list = clst
@@ -500,6 +492,8 @@ class MapFrame(wx.Frame):
 	dlg.Destroy()
 
     def OnCloseWindow(self, event):
+        #delete associated choicebook page
+        self.chbk.DeletePage(self.disp_idx)        
 	# delete all the temp files
 	tmpdir, tmpfiles = os.path.split(self.MapWindow.gtemp)
 	tmpbase = tmpfiles.split('.')[0]
