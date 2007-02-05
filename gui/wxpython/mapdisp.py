@@ -336,7 +336,7 @@ class MapFrame(wx.Frame):
         self.mapconsole = {} #command console on choicebook page for each display, indexed by display ID
         self.nb={} #notebook on choicebook page for GIS mgr controls for each display, indexed by display ID
         self.chbk = cb
-        self.mapidx = idx
+        self.disp_idx = idx
         
         self.createGISmgr()
         
@@ -383,39 +383,39 @@ class MapFrame(wx.Frame):
 
        # make a new page in the choicebook for the layer tree (on page 0 of the notebook)
         cb_panel= wx.Panel(self.chbk)
-        self.chbk.AddPage(cb_panel, "map layers for display "+str(self.mapidx), select = True)
+        self.chbk.AddPage(cb_panel, "map layers for display "+str(self.disp_idx), select = True)
 
         # track which page is associated with which map display
-        self.cb_page[self.mapidx] =self.chbk.GetPage(self.mapidx)
-        print 'choicebook page = ', self.cb_page[self.mapidx]
-        self.nb[self.mapidx] =  wx.Notebook(self.cb_page[self.mapidx], -1, wx.DefaultPosition, wx.DefaultSize, wx.NB_RIGHT)
+        self.cb_page[self.disp_idx] =self.chbk.GetPage(self.disp_idx)
+        print 'choicebook page = ', self.cb_page[self.disp_idx]
+        self.nb[self.disp_idx] =  wx.Notebook(self.cb_page[self.disp_idx], -1, wx.DefaultPosition, wx.DefaultSize, wx.NB_RIGHT)
 
        # set up  page for layer tree       
-        self.maptree[self.mapidx] = gism.LayerTree(self.nb[self.mapidx], -1, wx.DefaultPosition, wx.DefaultSize, wx.TR_HAS_BUTTONS
+        self.maptree[self.disp_idx] = gism.LayerTree(self.nb[self.disp_idx], -1, wx.DefaultPosition, wx.DefaultSize, wx.TR_HAS_BUTTONS
             |wx.TR_LINES_AT_ROOT|wx.TR_EDIT_LABELS|wx.TR_HIDE_ROOT
             |wx.TR_DEFAULT_STYLE|wx.NO_BORDER|wx.FULL_REPAINT_ON_RESIZE)
-        self.nb[self.mapidx].AddPage(self.maptree[self.mapidx], _("Layers"))
-        self.chbk.GetPage(self.mapidx)
+        self.nb[self.disp_idx].AddPage(self.maptree[self.disp_idx], _("Layers"))
+        self.chbk.GetPage(self.disp_idx)
         
         #set up page for command console
-        self.mapconsole[self.mapidx] = gism.GMConsole(self.nb[self.mapidx])
-        self.nb[self.mapidx].AddPage(self.mapconsole[self.mapidx] , _("Console"))
+        self.mapconsole[self.disp_idx] = gism.GMConsole(self.nb[self.disp_idx])
+        self.nb[self.disp_idx].AddPage(self.mapconsole[self.disp_idx] , _("Console"))
      
         cb_boxsizer = wx.BoxSizer()
-        cb_boxsizer.Add(self.nb[self.mapidx], 1, wx.EXPAND)
-        self.cb_page[self.mapidx].SetSizer(cb_boxsizer)
-        self.cb_page[self.mapidx].SetAutoLayout(True)
+        cb_boxsizer.Add(self.nb[self.disp_idx], 1, wx.EXPAND)
+        self.cb_page[self.disp_idx].SetSizer(cb_boxsizer)
+        self.cb_page[self.disp_idx].SetAutoLayout(True)
         self.Centre()
         
     def getCBpage(self):
-        return self.cb_page[self.mapidx]
+        return self.cb_page[self.disp_idx]
         
     def getTree(self):
-        return self.maptree[self.mapidx]
+        return self.maptree[self.disp_idx]
 
-    def getMapidx(self):
-        print 'mapidx =', self.mapidx
-        return self.mapidx
+    def getdisp_idx(self):
+        print 'disp_idx =', self.disp_idx
+        return self.disp_idx
     
     def InitDisplay(self):
         self.Width, self.Height = self.GetClientSize()
@@ -431,7 +431,7 @@ class MapFrame(wx.Frame):
         title = self.GetTitle()
         md = title[12:]
         self.mdindex = md
-        render.Track().setMdIdx(self.mdindex)        self.chbk.SetSelection(self.mapidx)        render.Track().setMD(self)
+        render.Track().Setdisp_idx(self.mdindex)        self.chbk.SetSelection(self.disp_idx)        render.Track().setMD(self)
         Map.Index=self.mdindex
         event.Skip()
 
