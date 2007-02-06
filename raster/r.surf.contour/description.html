@@ -73,11 +73,11 @@ elevation (e.g. the coastline) will be ignored. In such cases converting any
 0 values in the input map to -1 with <EM>r.mapcalc</EM> may be a suitable
 work-around.
 <P>
-Currently <EM>r.surf.contour</EM> will only produces CELL (integer) map output.
+Currently <EM>r.surf.contour</EM> will only produce CELL (integer) map output.
 If you would like a finer grade output map (i.e. floating point) it is
-recommended to multiply the <b>input</b> map by 100 (for example) using
+recommended to multiply the <b>input</b> map by 1000 (for example) using
 <em>r.mapcalc</em>, then divide the resultant <EM>r.surf.contour</EM> 
-<b>output</b> map by 100.0, again with <EM>r.mapcalc</EM>.
+<b>output</b> map by 1000.0, again with <EM>r.mapcalc</EM>.
 <P>
 Volunteers are sought to remedy both these issues.
 
@@ -97,4 +97,5 @@ Volunteers are sought to remedy both these issues.
 
 Chuck Ehlschlaeger, U.S. Army Construction Engineering Research Laboratory
 
-<p><i>Last changed: $Date$</i>
+<p>
+<i>Last changed: $Date$</i>
