@@ -368,7 +368,7 @@ void calculate()
 		do
 		    add_to_line(&pts, &fls);
 		while (fls.index <= parm.bound &&
-		       (pts.z != UNDEFZ && pts.theta != UNDEF) && 
+		       (pts.z != UNDEFZ && pts.theta >= 0 && pts.theta <= 360) &&
 		 /*  (!G_is_d_null_value(&pts.z) && pts.theta != UNDEF) &&*/
 		       next_point(&pts, &ads, bbs, &length));
 	    }
