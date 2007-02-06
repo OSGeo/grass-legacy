@@ -68,10 +68,11 @@ from GRASS 5 Programmer's manual or are simply undocumented</I>
 <li>forms:	forms library - \ref forms
 <li>front.end:	interface for interactive modules library - \ref frontend
 <li>g3d:	G3D raster volume library - \ref g3dlib
-<li>gmath: 	 generic mathematical functions and BLAS/LAPACK library wrapper - \ref gmathlib
+<li>gmath: 	generic mathematical functions and BLAS/LAPACK library wrapper - \ref gmathlib
+<li>gpdelib:    partial differential equations library - \ref gpdelib
 <li>gtcltk:	Tcl/Tk stuff - \ref gtcltk
 <li>imagery:	imagery library - \ref imagerylib
-<li>image:	extra imagery library (mainly unused) - \ref image3lib
+<li>image:	extra imagery library (mainly still unused) - \ref image3lib
 <li>init:	GRASS initialization code + scripts - \ref grassinit
 <li>linkm:	linked list memory manager - \ref linkmlib
 <li>ogsf:	openGL (R) ported gsurf library (required for NVIZ) - \ref ogsflib
