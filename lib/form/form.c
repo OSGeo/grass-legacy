@@ -28,9 +28,9 @@ typedef struct
 
 char *Drvname, *Dbname, *Tblname, *Key;
 
-COLUMN *Cols = NULL;
-int aCols = 0;			/* allocated space */
-int nCols = 0;
+COLUMN *Columns = NULL;
+int allocatedRows = 0;			/* allocated space */
+int nRows = 0;
 
 int form_open = 0;
 
@@ -45,7 +45,7 @@ int close_form(ClientData cdata, Tcl_Interp * interp, int argc, char *argv[])
 /* Start new sql update */
 int reset_values(ClientData cdata, Tcl_Interp * interp, int argc, char *argv[])
 {
-    nCols = 0;
+    nRows = 0;
     Drvname = NULL;
     Dbname = NULL;
     Tblname = NULL;
@@ -71,13 +71,13 @@ int set_value(ClientData cdata, Tcl_Interp * interp, int argc, char *argv[])
 	Key = G_store(argv[2]);
     }
     else {
-	if (nCols == aCols) {
-	    aCols += 100;
-	    Cols = (COLUMN *) G_realloc(Cols, (aCols) * sizeof(COLUMN));
+	if (nRows == allocatedRows) {
+	    allocatedRows += 100;
+	    Columns = (COLUMN *) G_realloc(Columns, (allocatedRows) * sizeof(COLUMN));
 	}
-	Cols[nCols].name = G_store(argv[1]);
-	Cols[nCols].value = G_store(argv[2]);
-	nCols++;
+	Columns[nRows].name = G_store(argv[1]);
+	Columns[nRows].value = G_store(argv[2]);
+	nRows++;
     }
 
     return TCL_OK;
@@ -149,22 +149,22 @@ int submit(ClientData cdata, Tcl_Interp * interp, int argc, char *argv[])
     ncols = db_get_table_number_of_columns(table);
 
     /* For each column get ctype */
-    for (i = 0; i < nCols; i++) {
+    for (i = 0; i < nRows; i++) {
 	found = 0;
 	for (col = 0; col < ncols; col++) {
 	    /* get keyval */
-	    if (G_strcasecmp(Cols[i].name, Key) == 0) {
-		keyval = atoi(Cols[i].value);
+	    if (G_strcasecmp(Columns[i].name, Key) == 0) {
+		keyval = atoi(Columns[i].value);
 	    }
 	    column = db_get_table_column(table, col);
-	    if (G_strcasecmp(db_get_column_name(column), Cols[i].name) == 0) {
+	    if (G_strcasecmp(db_get_column_name(column), Columns[i].name) == 0) {
 		sqltype = db_get_column_sqltype(column);
-		Cols[i].ctype = db_sqltype_to_Ctype(sqltype);
+		Columns[i].ctype = db_sqltype_to_Ctype(sqltype);
 		found = 1;
 		break;
 	    }
 	}
-	if (!found && (G_strcasecmp(Cols[i].name, F_ENCODING) != 0)) {
+	if (!found && (G_strcasecmp(Columns[i].name, F_ENCODING) != 0)) {
 	    G_warning("Cannot find column type");
 	    db_close_database(driver);
 	    db_shutdown_driver(driver);
@@ -180,25 +180,24 @@ int submit(ClientData cdata, Tcl_Interp * interp, int argc, char *argv[])
     db_set_string(&sql, buf);
 
     first = 1;
-    for (i = 0; i < nCols; i++) {
-	G_debug(3, "Name = %s", Cols[i].name);
-	if (G_strcasecmp(Cols[i].name, Key) == 0)
+    for (i = 0; i < nRows; i++) {
+	G_debug(3, "Index = %d of %d Name = %s, Key = %s", i, nRows, Columns[i].name,Key);
+	if (G_strcasecmp(Columns[i].name, Key) == 0)
 	    continue;
 
-	if (G_strcasecmp(Cols[i].name, F_ENCODING) == 0) {
+	if (G_strcasecmp(Columns[i].name, F_ENCODING) == 0) {
 
 	    G_debug(3, "GRASS_DB_ENCODING env-var is '%s', col val is '%s'", G__getenv("GRASS_DB_ENCODING"),
-		    Cols[i].value);
+		    Columns[i].value);
 
-	    if (G_strcasecmp(Cols[i].value, G__getenv("GRASS_DB_ENCODING")) ==
-		0)
+	    if ( (strlen(Columns[i].value) == 0) || G_strcasecmp(Columns[i].value, G__getenv("GRASS_DB_ENCODING")) == 0)
 		continue;
 	    else {
-		G_setenv("GRASS_DB_ENCODING", Cols[i].value);
-		G_debug(3, "Set env var GRASS_DB_ENCODING to '%s'", Cols[i].value);
-		if (Tcl_SetSystemEncoding(interp, Cols[i].value) == TCL_ERROR) {
-		    G_warning("Could not set Tcl system encoding to '%s'",
-			    Cols[i].value);
+		G_setenv("GRASS_DB_ENCODING", Columns[i].value);
+		G_debug(3, "Set env var GRASS_DB_ENCODING to '%s'", Columns[i].value);
+		if (Tcl_SetSystemEncoding(interp, Columns[i].value) == TCL_ERROR) {
+		    G_warning("Could not set Tcl system encoding to '%s' (%s)",
+			    Columns[i].value,interp->result);
 		}
 	    }
 	    continue;
@@ -207,13 +206,13 @@ int submit(ClientData cdata, Tcl_Interp * interp, int argc, char *argv[])
 	if (!first) {
 	    db_append_string(&sql, ", ");
 	}
-	if (strlen(Cols[i].value) == 0) {
-	    sprintf(buf, "%s = null", Cols[i].name);
+	if (strlen(Columns[i].value) == 0) {
+	    sprintf(buf, "%s = null", Columns[i].name);
 	}
 	else {
-	    if (Cols[i].ctype == DB_C_TYPE_INT ||
-		Cols[i].ctype == DB_C_TYPE_DOUBLE) {
-		sprintf(buf, "%s = %s", Cols[i].name, Cols[i].value);
+	    if (Columns[i].ctype == DB_C_TYPE_INT ||
+		Columns[i].ctype == DB_C_TYPE_DOUBLE) {
+		sprintf(buf, "%s = %s", Columns[i].name, Columns[i].value);
 	    }
 	    else {
 		memset(buf, '\0', strlen(buf));
@@ -221,19 +220,19 @@ int submit(ClientData cdata, Tcl_Interp * interp, int argc, char *argv[])
 					Tcl_GetEncoding(interp,
 							G__getenv
 							("GRASS_DB_ENCODING")),
-					Cols[i].value, strlen(Cols[i].value), 0,
+					Columns[i].value, strlen(Columns[i].value), 0,
 					NULL, buf, 2000, NULL, NULL, NULL);
 
 		if (ret != TCL_OK) {
 		    G_warning("Could not convert UTF to external.");
-		    db_set_string(&strval, Cols[i].value);
+		    db_set_string(&strval, Columns[i].value);
 		}
 		else {
 		    db_set_string(&strval, buf);
 		}
 
 		db_double_quote_string(&strval);
-		sprintf(buf, "%s = '%s'", Cols[i].name, db_get_string(&strval));
+		sprintf(buf, "%s = '%s'", Columns[i].name, db_get_string(&strval));
 	    }
 	}
 	db_append_string(&sql, buf);
