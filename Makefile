@@ -332,6 +332,7 @@ htmldocs:
 	(cd lib/g3d/ ; $(MAKE) cleandocs ; $(MAKE) htmldocs)
 	(cd lib/gis/ ; $(MAKE) cleandocs ; $(MAKE) htmldocs)
 	(cd lib/gmath/ ; $(MAKE) cleandocs ; $(MAKE) htmldocs)
+	(cd lib/gpde/ ; $(MAKE) cleandocs ; $(MAKE) htmldocs)
 	(cd lib/ogsf/ ; $(MAKE) cleandocs ; $(MAKE) htmldocs)
 	(cd lib/proj/ ; $(MAKE) cleandocs ; $(MAKE) htmldocs)
 	(cd lib/segment/; $(MAKE) cleandocs ; $(MAKE) htmldocs)
@@ -341,7 +342,7 @@ htmldocs:
 	(cd swig/; $(MAKE) cleandocs ; $(MAKE) htmldocs)
 
 packagehtmldocs: htmldocs
-	tar chvfz grass${GRASS_VERSION_MAJOR}${GRASS_VERSION_MINOR}refman_`date '+%Y_%m_%d'`_html.tar.gz lib/db/html lib/g3d/html lib/gis/html lib/gmath/html lib/proj/html lib/ogsf/html lib/segment/html lib/vector/html lib/vector/dglib/html rfc/html swig/html
+	tar chvfz grass${GRASS_VERSION_MAJOR}${GRASS_VERSION_MINOR}refman_`date '+%Y_%m_%d'`_html.tar.gz lib/db/html lib/g3d/html lib/gis/html lib/gmath/html lib/gpde/html lib/proj/html lib/ogsf/html lib/segment/html lib/vector/html lib/vector/dglib/html rfc/html swig/html
 
 #alternatively, the docs can be generated as single PDF document (see doxygen FAQ for 'TeX capacity exceeded'):
 #  (cd lib/ ; make pdfdocs)
@@ -351,6 +352,7 @@ pdfdocs:
 	(cd lib/g3d/ ; $(MAKE) cleandocs ; $(MAKE) pdfdocs)
 	(cd lib/gis/ ; $(MAKE) cleandocs ; $(MAKE) pdfdocs)
 	(cd lib/gmath/ ; $(MAKE) cleandocs ; $(MAKE) pdfdocs)
+	(cd lib/gpde/ ; $(MAKE) cleandocs ; $(MAKE) pdfdocs)
 	(cd lib/ogsf/ ; $(MAKE) cleandocs ; $(MAKE) pdfdocs)
 	(cd lib/proj/ ; $(MAKE) cleandocs ; $(MAKE) pdfdocs)
 	(cd lib/segment/; $(MAKE) cleandocs ; $(MAKE) pdfdocs)
@@ -358,7 +360,7 @@ pdfdocs:
 	(cd lib/vector/dglib/ ; $(MAKE) cleandocs ; $(MAKE) pdfdocs)
 	(cd rfc/ ; $(MAKE) cleandocs ; $(MAKE) pdfdocs)
 	(cd swig/; $(MAKE) cleandocs ; $(MAKE) pdfdocs)
-	@echo "Written PDF docs in: lib/db/latex/, lib/g3d/latex/, lib/gis/latex/, lib/gmath/latex/ lib/ogsf/latex/, lib/proj//latex/, lib/segment/latex/, lib/vector/latex/ lib/vector/dglib/latex/ rfc/latex/ swig/latex/"
+	@echo "Written PDF docs in: lib/db/latex/, lib/g3d/latex/, lib/gis/latex/, lib/gmath/latex/ lib/gpde/latex/ lib/ogsf/latex/, lib/proj//latex/, lib/segment/latex/, lib/vector/latex/ lib/vector/dglib/latex/ rfc/latex/ swig/latex/"
 
 html2pdfdoc:
 	@ echo "Light PDF document from modules' HTML documentation"
