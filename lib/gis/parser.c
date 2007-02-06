@@ -1620,7 +1620,7 @@ static void G_script(void)
 		"fi\n"
 		"\n"
 		"if [ \"$1\" != \"@ARGS_PARSED@\" ] ; then\n"
-		"  exec $GISBASE/bin/g.parser \"$0\" \"$@\"\n"
+		"  exec g.parser \"$0\" \"$@\"\n"
 		"fi\n"
 		"\n"
 		"# CODE GOES HERE\n"
