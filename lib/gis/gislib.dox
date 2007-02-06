@@ -3755,13 +3755,13 @@ g3d        : G3D raster volume library
 gis        : main GRASS library
 gmath      : generic mathematical functions (matrix, fft etc.)
              (later to be extended, BLAS/LAPACK library wrapper)
-gpdelib    : partial differential equations library
+gpde       : partial differential equations library
 gtcltk     : Tcl/Tk stuff	     
 image      : extra imagery library (image3)
 imagery    : imagery library
 init       : GRASS initialization code + scripts
 linkm      : linked list memory manager
-ogsf       : ported gsurf library (required for NVIZ)
+ogsf       : openGL library (required for NVIZ)
 proj       : PROJ4 projection library wrapper
 raster     : GRASS raster display library (raster map functions are in gis/)
 rowio      : row in/out library
