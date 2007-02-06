@@ -178,15 +178,15 @@ set descmenu [subst  {
 		{command {[G_msg "Vector to vector"]} {} "v.type" {} -command {execute v.type }}
 		{command {[G_msg "Vector lines to points"]} {} "v.to.points" {} -command {execute v.to.points }}
 		{command {[G_msg "Vector 3D points to volume voxels"]} {} "v.to.rast3" {} -command {execute v.to.rast3 }}
-		{command {[G_msg "Sites (GRASS 5.x) to vector"]} {} "v.in.sites" {} -command {execute v.in.sites }}
+		{command {[G_msg "Sites (GRASS 5) to vector"]} {} "v.in.sites" {} -command {execute v.in.sites }}
 		{command {[G_msg "Volumes to raster map series"]} {} "r3.to.rast" {} -command {execute r3.to.rast }}
 	}}
 	{separator}
-	{command {[G_msg "Georectify"]} {} "Georectify raster map in xy location" {} -command { GRMap::startup }}
+	{command {[G_msg "Georectify"]} {} "Georectify raster map in XY location" {} -command { GRMap::startup }}
 	{separator}
 	{command {[G_msg "Convert between bearing/distance and coordinates"]} {} "m.cogo" {} -command { execute m.cogo }}
 	{separator}
-	{command {[G_msg "Create ps.map file for postscript printing"]} {} "ps.map" {} -command { execute ps.map }}
+	{command {[G_msg "Create cartographic PostScript plot"]} {} "ps.map" {} -command { execute ps.map }}
 	{separator}
 	{command {[G_msg "E&xit"]} {} "Exit GIS Manager" {} -accelerator $keyctrl-Q -command { exit } }
  }
