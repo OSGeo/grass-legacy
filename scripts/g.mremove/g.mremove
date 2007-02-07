@@ -28,7 +28,7 @@
 
 #%flag
 #%  key: f
-#%  description: force removal (use only if you know what you are doing)
+#%  description: ignored (retained for compatibility with previous versions)
 #%end
 
 #%option
@@ -206,17 +206,4 @@ if [ ! "$found" ] ; then
 	exit 1
 fi
 
-echo g.remove $rast $rast3d $vect $icon $labels $region $group $dview
-
-yn=y
-if [ $force -eq 0 ]
-then
-	echo
-	echo "Did you mean this(y/n)?"
-	read yn
-fi
-
-if [ "$yn" = "y" -o "$yn" = "Y" ]
-then
-	g.remove $rast $rast3d $vect $icon $labels $region $group $dview
-fi
+exec g.remove $rast $rast3d $vect $icon $labels $region $group $dview
