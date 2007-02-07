@@ -8,24 +8,24 @@ creates new vector (points) map from database table containing coordinates.
 <h3>1) Creating a map from PostgreSQL table:</h3>
 
 <div class="code"><pre>
- v.in.db driver=pg database="host=myserver.itc.it,dbname=mydb,user=name" \
-         table=pat_stazioni x=east y=north z=quota key=id output=pat_stazioni
+v.in.db driver=pg database="host=myserver.itc.it,dbname=mydb" \
+        table=pat_stazioni x=east y=north z=quota key=id output=pat_stazioni
 </pre></div>
 <P>
 If an ID column is not not present in the PostgreSQL table,
-a new column should be added. See <a href="pg.html">pg</a> driver
+a new column should be added. See <a href="grass-pg.html">pg</a> driver
 page for detail.
 
 <h3>2) Creating a map from PostGIS:</h3>
 
 To extract coordinate values from PostGIS, functions have to be used:
 <div class="code"><pre>
- v.in.db driver=pg database="host=myserver.itc.it,dbname=mydb,user=name" \
-         table=station x="x(geom)" y="y(geom)" z="z(geom)" key=id out=meteostations
+v.in.db driver=pg database="host=myserver.itc.it,dbname=mydb" \
+        table=station x="x(geom)" y="y(geom)" z="z(geom)" key=id out=meteostations
 </pre></div>
 <P>
 If an ID column is not not present in the PostgreSQL table,
-a new column should be added. See <a href="pg.html">pg</a> driver 
+a new column should be added. See <a href="grass-pg.html">pg</a> driver 
 page for detail.
 
 <h3>3) Import of a points table (x, y, z) from DBF file to vector points map:</h3>
