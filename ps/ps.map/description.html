@@ -77,6 +77,7 @@ to the <EM>copies</EM> mapping instruction described below.
 
 Instruction keywords:<BR>
 [ 
+<a href="#border">border</a>&nbsp;|
 <a href="#colortable">colortable</a>&nbsp;|
 <a href="#comments">comments</a>&nbsp;|
 <a href="#copies">copies</a>&nbsp;|
@@ -163,9 +164,63 @@ The default is Helvetica.
 <DD>The size of the PostScript font (in 1/72nds of an inch).
 The default is 10.
 </DD>
+
+
+<a name="NAMED_COLORS"></a>
+<DT><B>color</B> <EM>name</EM>
+
+<DD>The following colors names are accepted by <EM>ps.map</EM>:
+<tt>
+aqua,
+black,
+blue,
+brown,
+cyan,
+gray,
+grey,
+green,
+indigo,
+magenta,
+orange,
+purple,
+red,
+violet,
+white,
+yellow
+</tt>.
+<BR><BR>
+For vectors and some plotting commands you can also specify
+'<tt>none</tt>' or '<tt>R:G:B</tt>' (e.g '<tt>255:0:0</tt>').
+</DD>
 </DL>
 <P>
 
+
+<a name="border"></a>
+<H2>border</H2>
+
+Controls the border which is drawn around the map area.
+<PRE>
+USAGE:  <B>border</B> [y|n]
+	<B>color</B> color
+	<B>width</B> #
+	<B>end</B>
+</PRE>
+The <B>color</B> may be either a standard GRASS color, a R:G:B triplet,
+or "none". The width is specified in points, unless followed by an "i"
+in which case it is measured in inches.
+The default is a black border box of width 1 point.
+<P>
+
+This example would create a grey border 0.1" wide.
+<PRE>
+EXAMPLE:
+	<B>border</B>  
+	<B>color</B> grey
+	<B>width</B> 0.1i
+	<B>end</B>
+</PRE>
+<P>
 
 
 <a name="colortable"></a>
@@ -1411,37 +1466,10 @@ Terminates input and begin painting the map.
 <PRE>
 USAGE:	<B>end</B>
 </PRE>
+<BR>
 <P>
 
-<a name="NAMED_COLORS"></a>
-<H2>NAMED COLORS</H2>
 
-The following colors names are accepted by <EM>ps.map</EM>:
-
-<PRE>
-aqua
-black
-blue
-brown
-cyan
-gray
-grey
-green
-indigo
-magenta
-orange
-purple
-red
-violet
-white
-yellow
-
-</PRE>
-
-<P>
-For vectors and some plotting commands (vpoints, vlines, vareas, point, line, 
-rectangle, and region) you can also specify 'none' or 'r g b' (e.g '255 0 0').
-<P>
 
 <H2>EXAMPLE ps.map INPUT FILE</H2>
 

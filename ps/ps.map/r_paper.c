@@ -45,47 +45,47 @@ read_paper (void)
         if (KEY("width")) {
 	    w = atof (data);
 	    if ( w <= 0 ) {
-		error(key, data, "illegal page width request");
+		error(key, data, "illegal paper width request");
 	    }
 	    continue;
 	}
         if (KEY("height")) {
 	    h = atof (data);
 	    if ( h <= 0 ) {
-		error(key, data, "illegal page height request");
+		error(key, data, "illegal paper height request");
 	    }
 	    continue;
 	}
         if (KEY("left")) {
 	    l = atof (data);
 	    if ( l < 0 ) {
-		error(key, data, "illegal page left margin request");
+		error(key, data, "illegal paper left margin request");
 	    }
 	    continue;
 	}
         if (KEY("right")) {
 	    r = atof (data);
 	    if ( r < 0 ) {
-		error(key, data, "illegal page right margin request");
+		error(key, data, "illegal paper right margin request");
 	    }
 	    continue;
 	}
         if (KEY("top")) {
 	    t = atof (data);
 	    if ( t < 0 ) {
-		error(key, data, "illegal page top margin request");
+		error(key, data, "illegal paper top margin request");
 	    }
 	    continue;
 	}
         if (KEY("bottom")) {
 	    b = atof (data);
 	    if ( b < 0 ) {
-		error(key, data, "illegal page bottom margin request");
+		error(key, data, "illegal paper bottom margin request");
 	    }
 	    continue;
 	}
 
-	error(key, data, "illegal page sub-request");
+	error(key, data, "illegal paper sub-request");
     }
 
     PS.page_width = (rotate_plot) ? h : w;
