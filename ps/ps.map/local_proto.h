@@ -146,6 +146,8 @@ int read_cell(char *, char *);
 int set_paper ( char *pname );
 void reset_map_location ( void );
 void print_papers ( void );
+/* r_border.c */
+int read_border(void);
 /* r_colortable.c */
 int read_colortable(void);
 /* r_group.c */

@@ -39,6 +39,7 @@ struct PS_data
     int do_header;
     int do_raster;
     int do_colortable;
+    int do_border;
     int do_scalebar;
     int num_psfiles;
     int grid, grid_color, grid_numbers, grid_numbers_color, grid_fontsize;

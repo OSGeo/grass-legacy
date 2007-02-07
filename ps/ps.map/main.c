@@ -30,6 +30,7 @@
 #include "vector.h"
 #include "labels.h"
 #include "header.h"
+#include "border.h"
 #include "comment.h"
 #include "colortable.h"
 #include "decorate.h"
@@ -61,6 +62,7 @@ static char *help[]=
     "read       unix-file             eps        Encapsulated PostScript file",
     "rectangle  east north east north",
     "scale      1:#|# inches|# panels|1 inch = # miles",
+    "border     [y|n]",
     ""
 };
 
@@ -192,6 +194,8 @@ int main(int argc,char *argv[])
     can_reset_scale = 1;
     hdr.fp = NULL;
     grp.do_group = 0;
+    brd.R = brd.G = brd.B = 0.;
+    brd.width = 1.;
     PS.grey = 0;
     PS.mask_needed = 0;
     PS.do_header = 0;
@@ -202,6 +206,7 @@ int main(int argc,char *argv[])
     PS.cell_fd = -1;
     PS.do_outline = 0;
     PS.do_colortable = 0;
+    PS.do_border = TRUE;
     PS.do_scalebar = 0;
     PS.grid = 0;
     PS.scaletext[0] = 0;
@@ -430,7 +435,14 @@ int main(int argc,char *argv[])
 	    if (PS.do_colortable) read_colortable();
 	    continue;
 	}
-	
+
+	if (KEY("border"))
+	{
+	    PS.do_border = yesno(key, data);
+	    if (PS.do_border) read_border();
+	    continue;
+	}
+
 	if (KEY("scalebar"))
 	{
 	    if (G_projection() == PROJECTION_LL) {

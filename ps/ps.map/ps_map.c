@@ -10,6 +10,7 @@
 #include "ps_info.h"
 #include "vector.h"
 #include "group.h"
+#include "border.h"
 #include "colortable.h"
 #include "local_proto.h"
 
@@ -123,9 +124,12 @@ int ps_map (void)
     if (PS.do_scalebar) do_scalebar();
 
     /* put border around map */
-    fprintf(PS.fp, "BW\n");
-    box_draw(PS.map_top  - 0.5, PS.map_bot   + 0.5, 
-	     PS.map_left + 0.5, PS.map_right - 0.5);
+    if (PS.do_border && brd.R >= 0.) { /* if color wasn't "none" */
+	fprintf(PS.fp, "%.3f %.3f %.3f C\n", brd.R, brd.G, brd.B);
+	fprintf(PS.fp, "%.8f W\n", brd.width);
+	box_draw(PS.map_top  - 0.5, PS.map_bot   + 0.5,
+		 PS.map_left + 0.5, PS.map_right - 0.5);
+    }
 
     /* do the colortable, if requested */
     if (PS.do_colortable) {
