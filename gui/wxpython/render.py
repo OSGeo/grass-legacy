@@ -516,7 +516,7 @@ class Map:
 			invertCats - invert catlist, True/False
 
 			l_active - layer is active, will be rendered only i		layer = Layer()
-
+		"""
 		if not mapset:
 			mapset = self.Env["MAPSET"]
 
