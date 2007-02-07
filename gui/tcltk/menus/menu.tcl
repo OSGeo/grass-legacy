@@ -178,7 +178,7 @@ set descmenu [subst  {
 		{command {[G_msg "List maps using expressions and 'wildcards'"]} {} "g.mlist" {} -command {execute g.mlist }}
 		{command {[G_msg "Rename maps"]} {} "g.rename" {} -command {execute g.rename }}
 		{command {[G_msg "Remove maps"]} {} "g.remove" {} -command {execute g.remove }}
-		{command {[G_msg "Remove maps using expressions and 'wildcards'"]} {} "g.mremove" {} -command {execute g.mremove }}
+		{command {[G_msg "Remove maps using expressions and 'wildcards'"]} {} "g.mremove" {} -command {execute "g.mremove -f --ui" }}
 	}}
 	{cascad {[G_msg "Map type conversions"]} {} "" $tmenu {			
 		{command {[G_msg "Raster to vector map"]} {} "r.to.vect" {} -command {execute r.to.vect }}
