@@ -13,13 +13,6 @@ CELL v;			/* address for segment retrieval macros */
 extern CELL v;
 #endif
 
-/*
- * initialize_globals: self-explanatory
- * globals w: parm, region, el, as, ds, asp, put, get
- */
-
-void
-initialize_globals(/* argc, argv */);
 
 /*
  * allocate_heap: allocate and initialize matrices, cell buffers, headers

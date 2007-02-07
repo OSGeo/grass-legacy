@@ -31,12 +31,12 @@
 #include <stdlib.h>      /* for the random number generation */
 #include <time.h>
 #include <grass/gis.h>
+#include <grass/glocale.h>
 #include "r.flow.h"
 #include "mem.h"
 #include "io.h"
 #include "aspect.h"
 #include "precomp.h"
-#include <grass/glocale.h>
 
 #define HORIZ	1		/* \		*/
 #define VERT	0		/* |		*/
@@ -47,8 +47,6 @@
 #define ROW	1		/* |		*/
 #define COL	0		/* /		*/
 
-#define DY(dx, angle)   ((dx) / tang[angle])
-#define DX(dy, angle)   ((dy) * tang[angle])
 
 typedef struct
 {
@@ -61,7 +59,7 @@ typedef int bbox[2][2];		/* current bounding box		*/
 typedef struct
 {
     double  x, y, z;		/* exact earth coordinates	*/
-    int theta;			/* aspect			*/
+    double theta;		/* aspect			*/
     double  r, c;		/* cell matrix coordinates	*/
 }
 point;
@@ -81,7 +79,7 @@ flowline;
  * globals r: o, z, parm
  * params  w: p, b
  */
-void
+static void
 height_angle_bounding_box (int sub, double cut, int horiz, point *p, bbox b)
 
 {
@@ -120,7 +118,7 @@ height_angle_bounding_box (int sub, double cut, int horiz, point *p, bbox b)
 		a1 -= D2_PI;
 	}
 	a = r * a2 + (1. - r) * a1;
-	p->theta = ROUND(a + (a < 0.) * D2_PI);
+	p->theta = a + (a < 0.) * D2_PI;
     }
     else
 	p->theta = UNDEF;
@@ -137,7 +135,7 @@ height_angle_bounding_box (int sub, double cut, int horiz, point *p, bbox b)
  * on_map: returns map boundary condition for continuing current line
  * globals r:  region
  */
-int on_map(int sub,double cut,int horiz)
+static inline int on_map(int sub,double cut,int horiz)
 {
     return
 	(sub >= 0 && cut >= 0.0 &&
@@ -150,7 +148,7 @@ int on_map(int sub,double cut,int horiz)
  * globals r:  parm
  * params  w:  f
  */
-void add_to_line(point	*p, flowline *f)
+static void add_to_line(point *p, flowline *f)
 {
     if (parm.flout)
     {
@@ -163,7 +161,7 @@ void add_to_line(point	*p, flowline *f)
 /*
  * rectify: correct quantization problems (designed for speed, not elegance)
  */
-double rectify(double delta,double bd[2],double e)
+static double rectify(double delta,double bd[2],double e)
 {
     if (delta > 0.)
     {
@@ -191,7 +189,7 @@ double rectify(double delta,double bd[2],double e)
  * params  w:  p, a, l
  * globals w:  density
  */
-int next_point(
+static int next_point(
     point	*p, /* current/next point		*/
     addr	*a, /* current/next matrix address	*/
     bbox	 b, /* current/next bounding box	*/
@@ -204,9 +202,10 @@ int next_point(
     int      semi;
     double   length, delta;
     double   deltaz;
+    double   tangent;
 
     double   oldz	= p->z;
-    int	     oldtheta	= p->theta;
+    double   oldtheta	= p->theta;
     double   oldr	= p->r;
     double   oldc	= p->c;
 
@@ -220,8 +219,10 @@ int next_point(
     bdx[EAST]	= (double) (b[COL][EAST] - oldc) * ew_dist[ads.row];
 
     semi = oldtheta < 90 || oldtheta >= 270;
+    tangent = tan (oldtheta * DEG2RAD);
+
     if (oldtheta != 90 && oldtheta != 270 &&          /* north/south */
-	(delta = DX(bdy[semi],oldtheta)) < bdx[EAST] &&
+	(delta = (bdy[semi] * tangent)) < bdx[EAST] &&
 	delta > bdx[WEST])
     {
 	delta	 = rectify(delta, bdx, epsilon[HORIZ][ads.row]);
@@ -245,13 +246,13 @@ int next_point(
 	else
 	{
 	    /* I don't know if this is right case.
-	     * Anyway, DY() should be avoid from dividing by zero.
+	     * Anyway, should be avoid from dividing by zero.
 	     * Any hydrologic idea?
 	     */
-	    if(tang[oldtheta] == 0.0)
-	        tang[oldtheta] = 0.000001;
+	    if (tangent == 0.0)
+	        tangent = 0.000001;
 
-	    delta = DY(bdx[semi], oldtheta);
+	    delta = bdx[semi] / tangent;
 	}
 
 	delta	 = rectify(delta, bdy, epsilon[VERT][ads.row]);
@@ -297,7 +298,7 @@ int next_point(
  * calculate: create a flowline for each cell
  * globals r: region, bitbar, parm, lgfd
  */
-void calculate()
+static void calculate (void)
 {
     point	 pts;
     addr	 ads;
@@ -355,10 +356,12 @@ void calculate()
 		ads.row		= row;
 		ads.col 	= col;
 
-	/*	fprintf(stderr, "dx: %f  x: %f %f  row: %f %f\n",\
+#ifdef OFFSET
+	        G_debug (3, "dx: %f  x: %f %f  row: %f %f\n",
 			roffset, x, pts.x, (double) row, pts.r);
-		fprintf(stderr, "dy: %f  y: %f %f  col: %f %f\n",\
-			roffset, y, pts.y, (double) col, pts.c);   */
+		G_debug (3, "dy: %f  y: %f %f  col: %f %f\n",
+			roffset, y, pts.y, (double) col, pts.c);
+#endif
 
 		bbs[ROW][SOUTH]	= row + 1;
 		bbs[ROW][NORTH]	= row - 1;
@@ -400,25 +403,176 @@ void calculate()
         G_close_cell(lgfd);
 }
 
-int main(int argc, char	*argv[])
+int main (int argc, char *argv[])
 {
+    struct GModule *module;
+    struct Option *pelevin, *paspin, *pbarin, *pskip, *pbound,
+                *pflout, *plgout, *pdsout;
+    struct Flag *fup, *flg, *fmem;
+    int default_skip, larger, default_bound;
+#ifdef OFFSET
+    char *default_offset_ans, *offset_opt;
+#endif
+    char *default_skip_ans, *default_bound_ans, *skip_opt;
     struct History history;
 
-    initialize_globals(argc, argv);
+
+    /* Initialize GIS engine */
+    G_gisinit (argv[0]);
+
+    if (G_get_set_window (&region) == -1)
+        G_fatal_error (_("Unable to get current region"));
+
+    module = G_define_module ();
+    module->keywords = "raster";
+    module->description =
+        _("Construction of slope curves (flowlines), flowpath lengths, "
+          "and flowline densities (upslope areas) from a raster "
+          "digital elevation model (DEM)");
+
+    larger = ((region.cols < region.rows) ? region.rows : region.cols);
+    default_skip = (larger < 50) ? 1 : (int) (larger / 50);
+
+    default_skip_ans = G_calloc ((int) log10((double) default_skip) + 2, sizeof (char));
+    skip_opt = G_calloc ((int) log10((double) larger) + 4, sizeof (char));
+
+    sprintf (default_skip_ans, "%d", default_skip);
+    sprintf (skip_opt, "1-%d", larger);
+
+    default_bound = (int) (4. * hypot ((double) region.rows,
+                                       (double) region.cols));
+    default_bound_ans = G_calloc ((int) log10((double) default_bound) + 4, sizeof (char));
+    sprintf (default_bound_ans, "0-%d", default_bound);
+
+#ifdef OFFSET
+    /* below fix changed from 0.0 to 1.0 and its effect disabled in 
+     * calc.c, Helena June 2005 */
+
+    default_offset = 1.0; /* fixed 20. May 2001 Helena */
+    default_offset_ans = G_calloc((int) log10(default_offset) + 2, sizeof (char));
+    sprintf (default_offset_ans, "%f", default_offset);
+
+    offset_opt = G_calloc((int) log10(default_offset) + 4, sizeof (char));
+    sprintf (offset_opt, "0.0-500.0");
+#endif
+
+    pelevin              = G_define_option ();
+    pelevin->key         = "elevin";
+    pelevin->type        = TYPE_STRING;
+    pelevin->required    = YES;
+    pelevin->gisprompt   = "old,cell,raster";
+    pelevin->description = _("Input elevation raster map");
+
+    paspin               = G_define_option ();
+    paspin->key          = "aspin";
+    paspin->type         = TYPE_STRING;
+    paspin->required     = NO;
+    paspin->gisprompt    = "old,cell,raster";
+    paspin->description  = _("Input aspect raster map");
+
+    pbarin               = G_define_option ();
+    pbarin->key          = "barin";
+    pbarin->type         = TYPE_STRING;
+    pbarin->required     = NO;
+    pbarin->gisprompt    = "old,cell,raster";
+    pbarin->description  = _("Input barrier raster map");
+
+    pskip                = G_define_option ();
+    pskip->key           = "skip";
+    pskip->type          = TYPE_INTEGER;
+    pskip->required      = NO;
+    pskip->options       = skip_opt;
+    pskip->description   = _("Number of cells between flowlines");
+    pskip->answer        = default_skip_ans;
+
+    pbound               = G_define_option ();
+    pbound->key          = "bound";
+    pbound->type         = TYPE_INTEGER;
+    pbound->required     = NO;
+    pbound->options      = default_bound_ans;
+    pbound->description  = _("Maximum number of segments per flowline");
+    pbound->answer       = default_bound_ans + 2;
+
+    pflout               = G_define_option ();
+    pflout->key          = "flout";
+    pflout->type         = TYPE_STRING;
+    pflout->required     = NO;
+    pflout->gisprompt    = "any,dig,vector";
+    pflout->description  = _("Output flowline vector map");
+
+    plgout               = G_define_option ();
+    plgout->key          = "lgout";
+    plgout->type         = TYPE_STRING;
+    plgout->required     = NO;
+    plgout->gisprompt    = "any,cell,raster";
+    plgout->description  = _("Output flowpath length raster map");
+
+    pdsout               = G_define_option ();
+    pdsout->key          = "dsout";
+    pdsout->type         = TYPE_STRING;
+    pdsout->required     = NO;
+    pdsout->gisprompt    = "any,cell,raster";
+    pdsout->description  = _("Output flowline density raster map");
+
+    fup = G_define_flag ();
+    fup->key = 'u';
+    fup->description = _("Compute upslope flowlines instead of default downhill flowlines");
+
+    flg = G_define_flag ();
+    flg->key = '3';
+    flg->description = _("3-D lengths instead of 2-D");
+
+    fmem = G_define_flag ();
+    fmem->key = 'm';
+    fmem->description = _("Use less memory, at a performance penalty");
+
+    if (G_parser (argc, argv))
+        exit (EXIT_FAILURE);
+
+    parm.elevin = pelevin->answer;
+    parm.aspin  = paspin->answer;
+    parm.barin  = pbarin->answer;
+    parm.skip   = atoi (pskip->answer);
+    parm.bound  = atoi (pbound->answer);
+    parm.flout  = pflout->answer;
+    parm.lgout  = plgout->answer;
+    parm.dsout  = pdsout->answer;
+    parm.up     = fup->answer;
+    parm.l3d    = flg->answer;
+    parm.mem    = fmem->answer;
+
+    if (!pflout->answer && !plgout->answer && !pdsout->answer)
+        G_fatal_error (_("You must select one or more output maps (flout, lgout, dsout)"));
+
+    if (parm.seg)
+        parm.mem = '\0';
+    else if (parm.mem)
+        parm.aspin = NULL;
+
+    el.name = parm.elevin;
+    as.name = (parm.aspin) ? parm.aspin : "internal aspects";
+
+    ds.name = parm.dsout;
+    el.row_offset = el.col_offset = 1;
+    as.row_offset = as.col_offset = 0;
+    ds.row_offset = ds.col_offset = 0;
 
     if ((G_projection() == PROJECTION_LL)) /* added MN 2005 */
-           G_fatal_error (_("lat/long databases not supported by r.flow. Please use 'r.watershed' for calculating flow accumulation."));
-
+           G_fatal_error (_("lat/long projection not supported by "
+                   "r.flow. Please use 'r.watershed' for calculating "
+                   "flow accumulation."));
 
     if (parm.flout || parm.dsout || parm.lgout)
     {
 	open_output_files();
 	allocate_heap();
 	read_input_files();
+
 	precompute();
 	calculate();
 	if (parm.dsout)
 	    write_density_file();
+
 	close_files();
 	deallocate_heap();
     }
@@ -433,6 +587,6 @@ int main(int argc, char	*argv[])
 	G_command_history(&history);
 	G_write_history(parm.lgout, &history);
     }
-    
-    exit(EXIT_SUCCESS);
+
+    exit (EXIT_SUCCESS);
 }

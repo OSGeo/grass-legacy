@@ -36,18 +36,18 @@
 #include <grass/bitmap.h>
 
 #ifndef hypot
-#define hypot(x,y) (sqrt(x*x+y*y))
+#define hypot(x,y)	(sqrt((x)*(x)+(y)*(y)))
 #endif
+#define ROUND(x)	(int) ((x) + 0.5)
 
 #define D_PI	180.
-#define D2_PI	(2. * D_PI)
-#define DEG2RAD	(M_PI / D_PI)
+#define D2_PI	360.
+#define DEG2RAD	0.0174532925199432958
 #define UNDEF	365.		/* change to undefined when available */
 #define UNDEFZ	0.		/* change to undefined when available */
 #define HORIZ	1		/* magic	*/
 #define VERT	0		/*      numbers	*/
 
-#define ROUND(x)	(int) ((x) + 0.5)
 
 typedef struct
 {
@@ -88,7 +88,6 @@ struct  BM       *bitbar;	/* space-efficient barrier matrix	*/
 int     lgfd;			/* output length file descriptor	*/
 char    string[1024];		/* space for strings			*/
 layer   el, as, ds;		/* elevation, aspect, density		*/
-double  tang[361];		/* tangents lookup table		*/
 double *ew_dist;		/* east-west distances for rows		*/
 double *epsilon[2];		/* quantization errors for rows		*/
 
@@ -103,7 +102,6 @@ extern struct  BM       *bitbar;
 extern int     lgfd;	
 extern char    string[1024];
 extern layer   el, as, ds;
-extern double  tang[361];
 extern double *ew_dist;	
 extern double *epsilon[2];
 

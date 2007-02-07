@@ -3,15 +3,6 @@
 /********************************* I/O **********************************/
 
 /*
- * parse_command_line: invoke GRASS command-line parser
- * globals r: region
- * globals w: parm
- */
-
-void
-parse_command_line(/* argc, argv */);
-
-/*
  * read_input_files: loads input files completely into z, o arrays
  * globals r:  region, parm
  * globals rw: el, as
