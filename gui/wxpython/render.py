@@ -515,46 +515,35 @@ class Map:
 
 			invertCats - invert catlist, True/False
 
-			l_active - layer is active, will be rendered only if True
-			l_hidden - layer is hidden, will be allways rendered
-			l_opacity - layer opacity [0-1]
-			l_mapfile  - File name of new layer
-			l_maskfile	- Mask name of new layer
-			l_render - Make an image of this layer while adding
+			l_active - layer is active, will be rendered only i		layer = Layer()
 
-		Returns:
-			Added layer if succeeded or None
-		"""
+		if not mapset:
+			mapset = self.Env["MAPSET"]
 
-            layer = Layer()
+		if l_opacity > 1:
+			l_opacity = float(l_opacity)/100
 
-            if not mapset:
-                    mapset = self.Env["MAPSET"]
+		layer.l_type	= "raster"
+		layer.name		= name
+		layer.mapset	= mapset
+		layer.catlist	= catlist
+		layer.vallist	= vallist
+		layer.invertCats= invertCats
+		layer.l_active	= l_active
+		layer.l_hidden	= l_hidden
+		layer.l_opacity = l_opacity
+		gtemp = utils.GetTempfile()
+		layer.l_maskfile = gtemp+".pgm"
+		layer.l_mapfile = gtemp+".ppm"
 
-            if l_opacity > 1:
-                    l_opacity = float(l_opacity)/100
+		self.Layers.append(layer)
 
-            layer.l_type	= "raster"
-            layer.name		= name
-            layer.mapset	= mapset
-            layer.catlist	= catlist
-            layer.vallist	= vallist
-            layer.invertCats= invertCats
-            layer.l_active	= l_active
-            layer.l_hidden	= l_hidden
-            layer.l_opacity = l_opacity
-            gtemp = utils.GetTempfile()
-            layer.l_maskfile = gtemp+".pgm"
-            layer.l_mapfile = gtemp+".ppm"
+		if l_render:
+			if not layer.Render():
+				sys.stderr.write("Could not render layer %s@%s\n" %\
+					(name,mapset))
 
-            self.Layers.append(layer)
-
-            if l_render:
-                    if not layer.Render():
-                            sys.stderr.write("Could not render layer %s@%s\n" %\
-                                    (name,mapset))
-
-            return self.Layers[-1]
+		return self.Layers[-1]
 
 	def AddGraphLayer(self, name, graph=None, color="255:0:0",
 		coordsinmapunits=False,
@@ -793,39 +782,39 @@ class Track:
 	associated notebook pages, and other index values.
 	"""
 
-    # store and retrieve index of display with focus
-    def SetDisp_idx(self, idx):
+	# store and retrieve index of display with focus
+	def SetDisp_idx(self, idx):
 		global mdidx
 		mdidx = idx
 
-    def GetDisp_idx(self):
+	def GetDisp_idx(self):
 		global mdidx
 		return mdidx
 
-    #store and retrieve current display with focus
-    def SetCurrDisp(self, disp):
-        global curr_disp
-        curr_disp = disp
+	#store and retrieve current display with focus
+	def SetCurrDisp(self, disp):
+		global curr_disp
+		curr_disp = disp
 
-    def GetCurrDisp(self):
-        global curr_disp
-        return curr_disp
+	def GetCurrDisp(self):
+		global curr_disp
+		return curr_disp
 
-    # store and retrieve choicebook widget that hold all GIS manager controls
-    def SetChbk(self, cb):
+	# store and retrieve choicebook widget that hold all GIS manager controls
+	def SetChbk(self, cb):
 		global gm_cb
 		gm_cb = cb
 
-    def GetChbk(self):
+	def GetChbk(self):
 		global gm_cb
 		return gm_cb
 
-    #store and retrieve choicebook page for display with focus
-    def SetChbkPage(self, page):
-        global cb_page
-        cb_page = page
+	#store and retrieve choicebook page for display with focus
+	def SetChbkPage(self, page):
+		global cb_page
+		cb_page = page
 
-    def GetChbkPage(self):
-        global cb_page
-        return cb_page
+	def GetChbkPage(self):
+		global cb_page
+		return cb_page
 
