@@ -2,6 +2,7 @@
 #include <grass/gis.h>
 #include <grass/dbmi.h>
 #include <grass/Vect.h>
+#include <grass/glocale.h>
 #include "local.h"
 
 int vect_to_rast(char *vector_map,char *raster_map, int field, char *column, int nrows, 
@@ -27,9 +28,8 @@ int vect_to_rast(char *vector_map,char *raster_map, int field, char *column, int
     dbCatValArray cvarr;
 
     vector_mapset = G_find_vector2 (vector_map, "");
-    if (vector_mapset == NULL) {
-	G_fatal_error ( "Vector map <%s> not found", vector_map);
-    }
+    if (vector_mapset == NULL)
+	G_fatal_error (_("Vector map <%s> not found"), vector_map);
 
     start_clock (&timer);
     start_clock (NULL);
@@ -43,9 +43,8 @@ int vect_to_rast(char *vector_map,char *raster_map, int field, char *column, int
     if ( use == USE_ATTR ) {
 	db_CatValArray_init ( &cvarr );
 	Fi = Vect_get_field( &Map, field);
-	if ( Fi == NULL ) {
-	    G_fatal_error ("Cannot get layer info for vector map");
-	}
+	if ( Fi == NULL )
+	    G_fatal_error (_("Cannot get layer info for vector map"));
 
 	Driver = db_start_driver_open_database ( Fi->driver, Fi->database );
 	if (Driver == NULL)
@@ -58,9 +57,10 @@ int vect_to_rast(char *vector_map,char *raster_map, int field, char *column, int
 
 	ctype = cvarr.ctype;
 	if ( ctype != DB_C_TYPE_INT && ctype != DB_C_TYPE_DOUBLE )
-	    G_fatal_error ( "Column type not supported" );
+	    G_fatal_error (_("Unable to use column '%s'"), column);
 
-	if ( nrec < 0 ) G_fatal_error ("Cannot select data from table");
+	if ( nrec < 0 )
+            G_fatal_error (_("Cannot select data from table"));
 	sprintf (msg, "\n%d records selected from table", nrec);
 	inform (msg);
 
@@ -76,7 +76,7 @@ int vect_to_rast(char *vector_map,char *raster_map, int field, char *column, int
 
 	if ( ctype == DB_C_TYPE_INT ) format = USE_CELL;
 	else if ( ctype == DB_C_TYPE_DOUBLE ) format = USE_DCELL;
-	else G_fatal_error ("Column type not supported" );
+	else G_fatal_error (_("Unable to use column '%s'"), column);
     } else if ( use == USE_CAT ) {
 	format = USE_CELL;
     } else if ( use == USE_VAL ) {

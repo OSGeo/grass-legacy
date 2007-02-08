@@ -2,6 +2,7 @@
 #include <grass/gis.h>
 #include <grass/Vect.h>
 #include <grass/dbmi.h>
+#include <grass/glocale.h>
 #include "local.h"
 
 static
@@ -49,7 +50,7 @@ int do_areas ( struct Map_info *Map,struct line_pnts *Points, dbCatValArray *Cva
 		    }
 		    set_dcat ( dval);
 		} else {
-		    G_fatal_error ("Column type  not supported" );
+		    G_fatal_error (_("Unable to use column specified"));
 		}
 	    } else if  ( use == USE_CAT ) {
 		set_cat (cat);
@@ -62,7 +63,7 @@ int do_areas ( struct Map_info *Map,struct line_pnts *Points, dbCatValArray *Cva
          }
 
 	if(Vect_get_area_points (Map, index, Points) <= 0) {
-	    fprintf (stderr, "*** Get area [%d] failed ***\n", index);
+	    G_warning (_("Get area [%d] failed"), index);
 	    return -1;
 	}
 
