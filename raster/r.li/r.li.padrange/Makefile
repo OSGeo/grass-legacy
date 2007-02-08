@@ -1,6 +1,6 @@
 MODULE_TOPDIR = ../../..
 
-PGM = r.li.patchAreaDistributionRANGE
+PGM = r.li.padrange
 
 EXTRA_CLEAN_DIRS=doxygenhtml
 
