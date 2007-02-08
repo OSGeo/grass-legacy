@@ -384,10 +384,10 @@ html2pdfdoccomplete:
 	(cd ${ARCH_DISTDIR}/docs/html ; $(HTML2PDF) --webpage vector.html v*.html -f $(GRASS_PDFDIR)/grass${GRASS_VERSION_MAJOR}${GRASS_VERSION_MINOR}vector.pdf)
 
 changelog:
-	@ echo "creating ChangeLog file..."
+	@ echo "creating ChangeLog file (following 'trunk' only)..."
 	@ # cvs2cl.pl creates a GNU style ChangeLog file:
 	@ # http://www.red-bean.com/cvs2cl
-	GRASS_PERL=${PERL} sh tools/cvs2cl.pl -f ./ChangeLog
+	GRASS_PERL=${PERL} sh tools/cvs2cl.pl -F trunk -f ./ChangeLog
 
 
 GISRCFILE = ${ARCH_DISTDIR}/demolocation/.grassrc${GRASS_VERSION_MAJOR}${GRASS_VERSION_MINOR}
