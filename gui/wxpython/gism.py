@@ -16,8 +16,8 @@ import re
 import tempfile
 import grassgui
 import menudata
-import spare
-from optpanels import *
+#import spare
+#from optpanels import *
 import wx.lib.customtreectrl as CT
 
 
@@ -502,14 +502,12 @@ if __name__ == "__main__":
 	import gettext
 	gettext.install("GMApp") # replace with the appropriate catalog name
 
+        if not os.getenv("GISBASE"):
+            sys.stderr.write("ERROR: You have to run this script from running GRASS session");
+
+        if not os.getenv("GRASS_ICONPATH"):
+            os.environ["GRASS_ICONPATH"] = os.getenv("GISBASE")+"/etc/gui/icons"
 
 	app = GMApp(0)
 	app.MainLoop()
-
-
-
-
-
-
-
 
