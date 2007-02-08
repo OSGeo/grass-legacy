@@ -11,3 +11,4 @@ DEPENDENCIES = $(GISDEP)
 include $(MODULE_TOPDIR)/include/Make/Lib.make
 
 default: lib
+	$(INSTALL) -m 644 description.html $(GISBASE)/docs/html/r.li.daemon.html

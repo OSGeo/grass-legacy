@@ -26,5 +26,6 @@ SUBDIRS = \
 	r.li.dominance\
 	
 default: subdirs htmldir
+	$(INSTALL) -m 644 description.html $(GISBASE)/docs/html/r.li.html
 
 clean: cleansubdirs

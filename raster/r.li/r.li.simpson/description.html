@@ -18,8 +18,9 @@ Gen. Tech. Rep. PNW-351.
 <h2>EXAMPLES</h2>
 To calculate simpson's diversity index on map my_map, using
 my_conf configuration file and saving results in my_out file run:<br>
-<b>r.li.simpson map=</b>my_map <b>conf=</b>my_conf <b>output=</b>my_out<br><br>
-
+<div class="code"><pre>
+r.li.simpson map=my_map conf=my_conf output=my_out
+</pre></div>
 
 <h2>NOTES</h2>
 Do not use absolute path names for output files. They are raster if
@@ -28,7 +29,9 @@ moving window disposition was selected, otherwise they are in
 
 If input raster is full of null values r.li.simpson returns -1.<br>
 If you want to have null values instead run <br>
-<b>r.null setnull=-1 map=</b>my_map <br>
+<div class="code"><pre>
+r.null setnull=-1 map=my_map
+</pre></div>
 after index calculation.
 
 
@@ -45,3 +48,6 @@ Commission from Faunalia Pontedera (PI), Italy (www.faunalia.it)
 <h2>BUGS</h2>
 Please send bugs reports to 
 <a href="mailto:pallecch@cli.di.unipi.it">pallecch@cli.di.unipi.it</a><br>
+
+<p><i>Last changed: $Date$</i>
+
