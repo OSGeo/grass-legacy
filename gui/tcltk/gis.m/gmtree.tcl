@@ -286,16 +286,25 @@ proc GmTree::add { type } {
 	variable tree
     global new_root_node
     global mon
+    
 
     if { [catch {match string {} $new_root_node}] } {
     set new_root_node root
     }
     
     # selected node
-    set parent_node [ lindex [$tree($mon) selection get] 0 ]
+    catch {set parent_node [ lindex [$tree($mon) selection get] 0]} errormsg
+    
+    if {$errormsg != ""} {
+    	tk_messageBox -type ok -icon error \
+    		-message [G_msg "You must open a display before adding map layers"]
+    	return
+    }
+    
     if { $parent_node == "" } {
        set parent_node $new_root_node
     } 
+    
 
     set parent_type [GmTree::node_type $parent_node]
     
