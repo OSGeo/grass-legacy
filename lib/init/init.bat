@@ -38,6 +38,7 @@ rem Generate GISBASE by converting dirsep characters from \ to /
 FOR /F "usebackq delims==" %%i IN (`g.dirseps -g %WINGISBASE%`) DO @set GISBASE=%%i
 
 set GRASS_PAGER=more
+if "%GRASS_WISH%"=="" set GRASS_WISH=wish.exe
 if "%GRASS_SH%"=="" set GRASS_SH=c:\msys\1.0\bin\sh.exe
 rem Should do something with "assoc .html" and ftype here but would require
 rem a new g.manual.bat too so leaving it like this for now...
@@ -107,6 +108,8 @@ goto exitinit
 :text
 
 "%WINGISBASE%\etc\set_data"
+
+if %errorlevel% == 1 goto exitinit
 
 rem Get LOCATION_NAME to use in prompt
 FOR /F "usebackq delims==" %%i IN (`g.gisenv "get=LOCATION_NAME"`) DO @set LOCATION_NAME=%%i

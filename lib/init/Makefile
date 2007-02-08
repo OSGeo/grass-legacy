@@ -20,8 +20,6 @@ include $(MODULE_TOPDIR)/include/Make/Platform.make
 include $(MODULE_TOPDIR)/include/Make/Grass.make
 include $(MODULE_TOPDIR)/include/Make/Rules.make
 
-PROJSHAREDEFAULT=/usr/local/share/proj
-
 START_UP=grass$(GRASS_VERSION_MAJOR)$(GRASS_VERSION_MINOR)
 
 EXTRA_CFLAGS = -DD_LOCATION_NAME=\"$(DEFAULT_LOCATION)\" -DD_GISDBASE=\"$(DEFAULT_DATABASE)\" -DGRASS_VERSION_NUMBER=\"'$(GRASS_VERSION_NUMBER)'\" -DGRASS_VERSION_UPDATE_PKG=\"'$(GRASS_VERSION_UPDATE_PKG)'\"
@@ -77,7 +75,8 @@ $(ARCH_BINDIR)/$(START_UP).bat: init.bat grass.bat
 	rm -f $@ ; true
 	$(SHELL) -c "sed \
 	-e \"s#GISBASE_VALUE#$(RUN_GISBASE)#\" \
-	grass.bat > $@"
+	grass.bat | \
+	tr '/' '\\\' > $@"
 	chmod a+x $@
 
 $(ETC)/Init.sh: init.sh
