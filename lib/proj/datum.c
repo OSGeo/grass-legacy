@@ -111,6 +111,10 @@ int GPJ_get_default_datum_params_by_name(const char *name, char **params)
       return -1;
    }
    
+   /* Take the first parameter set in the list as the default
+    * (will normally be a 3-parameter transformation)        */   
+   *params = G_store( list->params );
+   
    while(list->next != NULL)
    {
         count++;
@@ -119,10 +123,6 @@ int GPJ_get_default_datum_params_by_name(const char *name, char **params)
 	G_free( old );
    }
    
-   /* Take the last parameter set in the list as the default
-    * (will normally be a 3-parameter transformation)        */
-   
-   *params = G_store( list->params );
    G_free( list );
    return count;
    
@@ -393,12 +393,37 @@ static struct datum_transform_list *get_datum_transform_by_name(const char
     struct gpj_datum dstruct;
     int count = 0;
 
+    GPJ_get_datum_by_name(inputname, &dstruct);
+    if (dstruct.dx < 99999 && dstruct.dy < 99999 && dstruct.dz < 99999) {
+	/* Include the old-style dx dy dz parameters from datum.table at the 
+	 * start of the list, unless these have been set to all 99999 to 
+	 * indicate only entries in datumtransform.table should be used */
+	if (current == NULL)
+	    current = outputlist =
+		G_malloc(sizeof(struct datum_transform_list));
+	else
+	    current = current->next =
+		G_malloc(sizeof(struct datum_transform_list));
+	G_asprintf(&(current->params), "towgs84=%.3f,%.3f,%.3f", dstruct.dx,
+		   dstruct.dy, dstruct.dz);
+	G_asprintf(&(current->where_used), "whole %s region", inputname);
+	G_asprintf(&(current->comment), "Default 3-Parameter Transformation (May not be optimum for "
+		                        "older datums; use this only if no more appropriate options "
+		                        "are available.)");
+	count++;
+	current->count = count;
+	current->next = NULL;
+    }
+    GPJ_free_datum(&dstruct);
+
+    /* Now check for additional parameters in datumtransform.table */
+   
     G_asprintf(&file, "%s%s", G_gisbase(), DATUMTRANSFORMTABLE);
 
     fd = fopen(file, "r");
     if (!fd) {
 	G_warning(_("unable to open datum table file: %s"), file);
-	return NULL;
+	return outputlist;
     }
 
     for (line = 1; G_getl2(buf, sizeof(buf), fd); line++) {
@@ -431,29 +456,6 @@ static struct datum_transform_list *get_datum_transform_by_name(const char
 	    current->next = NULL;
 	}
     }
-
-    GPJ_get_datum_by_name(inputname, &dstruct);
-    if (dstruct.dx < 99999 && dstruct.dy < 99999 && dstruct.dz < 99999) {
-	/* Include the old-style dx dy dz parameters from datum.table at the 
-	 * end of the list, unless these have been set to all 99999 to 
-	 * indicate only entries in datumtransform.table should be used */
-	if (current == NULL)
-	    current = outputlist =
-		G_malloc(sizeof(struct datum_transform_list));
-	else
-	    current = current->next =
-		G_malloc(sizeof(struct datum_transform_list));
-	G_asprintf(&(current->params), "towgs84=%.3f,%.3f,%.3f", dstruct.dx,
-		   dstruct.dy, dstruct.dz);
-	G_asprintf(&(current->where_used), "whole %s region", inputname);
-	G_asprintf(&(current->comment), "Default 3-Parameter Transformation (May not be optimum for "
-		                        "older datums; use this only if no more appropriate options "
-		                        "are available.)");
-	count++;
-	current->count = count;
-	current->next = NULL;
-    }
-    GPJ_free_datum(&dstruct);
 
 
     return outputlist;
