@@ -2,9 +2,9 @@ grass (6.3.0-1) unstable; urgency=low
 
   * changed 61 to 63
 
-grass (6.1.0-3) unstable; urgency=low
-
  -- Markus Neteler <neteler@itc.it>  Thu, 03 Sep 2006 11:54:00 +0100
+
+grass (6.1.0-3) unstable; urgency=low
 
   * patch to look for epsg codes no longer needed
 
