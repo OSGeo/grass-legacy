@@ -43,6 +43,7 @@ int main(int argc, char *argv[])
    
     int importformats;
     char buffer[64];
+    int datumtrans;		/* List number of datum transform parameters */
 
     G_set_program_name(argv[0]);
     G_no_gisinit();
@@ -177,6 +178,7 @@ int main(int argc, char *argv[])
 		  "Please try again later.");
 	exit (EXIT_SUCCESS);
     }
+    datumtrans = atoi(dtrans->answer);
 
     /* Input */
     /* We can only have one input source, hence if..else construct */
