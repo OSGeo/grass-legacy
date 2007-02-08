@@ -37,7 +37,7 @@ int main(int argc, char *argv[])
     
     G_gisinit(argv[0]);
     module = G_define_module();
-    module->description =_("Calculates dominance's diversity index on a raster map\nReturn -1 if all the cells in the area are null");
+    module->description =_("Calculates dominance's diversity index on a raster map");
     
     /* define options */
     
@@ -45,7 +45,7 @@ int main(int argc, char *argv[])
     
     conf = G_define_option();
     conf->key = "conf";
-    conf->description = "configuration file in ~/.r.li/history/ folder (i.e conf=my_configuration";
+    conf->description = "configuration file in ~/.r.li/history/ folder (i.e conf=my_configuration)";
     conf->gisprompt = "file,file,file";
     conf->type = TYPE_STRING;
     conf->required = YES;
