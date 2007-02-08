@@ -46,8 +46,8 @@ config.status: patch configure
                     --with-glw \
                     --with-odbc \
                     --with-freetype-includes=/usr/include/freetype2 \
-                    --with-tcltk-includes=/usr/include/tcl8.3 \
-                    --with-postgres-includes=/usr/include/postgresql
+                    --with-tcltk-includes=/usr/include/tcl8.4 \
+                    --with-postgres-includes=$(shell pg_config --includedir)
 
 build: build-stamp
 
