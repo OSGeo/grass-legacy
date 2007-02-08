@@ -15,6 +15,7 @@
  *****************************************************************************/
 
 #include <stdlib.h>
+#include <string.h>
 #include <grass/gis.h>
 #include <grass/glocale.h>
 
@@ -32,6 +33,8 @@ int main(int argc, char *argv[])
         *dontprettify;		/* Print 'flat' output (no linebreaks)      */
 
     struct Option *location,	/* Name of new location to create           */
+	  *inepsg,		/* EPSG code to create new location with */
+	  *dtrans,		/* index to datum transform option */
           *inwkt,	        /* Input file with projection in WKT format */
           *inproj4,		/* Projection in PROJ.4 format              */
           *ingeo;		/* Input geo-referenced file readable by 
@@ -39,7 +42,8 @@ int main(int argc, char *argv[])
     struct GModule *module;
    
     int importformats;
-   
+    char buffer[64];
+
     G_set_program_name(argv[0]);
     G_no_gisinit();
 
@@ -118,6 +122,24 @@ int main(int argc, char *argv[])
     create->description = _("Create new projection files (modifies current "
 	"location unless 'location' option specified)");
 
+    inepsg = G_define_option();
+    inepsg->key = "epsg";
+    inepsg->type = TYPE_INTEGER;
+    inepsg->required = NO;
+    inepsg->options  = "1-100000";
+    inepsg->guisection = "Create/Edit_Locations";
+    inepsg->description = _("EPSG code of projection to be created");
+
+    dtrans = G_define_option();
+    dtrans->key = "datumtrans";
+    dtrans->type = TYPE_INTEGER;
+    dtrans->required = NO;
+    dtrans->options  = "0-100";
+    dtrans->answer   = "1";
+    dtrans->guisection = "Create/Edit_Locations";
+    dtrans->description = _("Index number of datum transform parameter, "
+	"or \"0\" for a list");
+
     location = G_define_option();
     location->key = "location";
     location->type = TYPE_STRING;
@@ -140,12 +162,22 @@ int main(int argc, char *argv[])
     projunits = NULL;
    
     importformats = ((ingeo->answer? 1 : 0) + (inwkt->answer? 1 : 0) +
-		     (inproj4->answer? 1 : 0));
+		     (inproj4->answer? 1 : 0) + (inepsg->answer? 1 : 0) );
     if (importformats > 1)
 	G_fatal_error(_("Only one of '%s', '%s' or '%s' options may be specified"),
 		      ingeo->key, inwkt->key, inproj4->key);
-   
-   
+
+    if (strcmp(dtrans->answer, "0") == 0) {
+	/* list available datum transform options */
+    /* TODO: check if EPSG code exists */
+	if(!inepsg->answer)
+	    G_fatal_error(_("EPSG code <%s> does not exist"), inepsg->answer);
+    /* Does this need to work with just EPSG codes, or with any input method? */
+	G_message("Datum transform parm list still under construction.\n"
+		  "Please try again later.");
+	exit (EXIT_SUCCESS);
+    }
+
     /* Input */
     /* We can only have one input source, hence if..else construct */
    
@@ -158,11 +190,16 @@ int main(int argc, char *argv[])
     else if (inproj4->answer)
         /* Input in PROJ.4 format */
         input_proj4(inproj4->answer);
+    else if (inepsg->answer) {
+	/* Input from EPSG code */
+	sprintf(buffer, "+init=epsg:%s", inepsg->answer);
+	input_proj4(buffer);
+    }
     else 
         /* Input from georeferenced file */
         input_georef(ingeo->answer);
-   
-   
+
+
     /* Consistency Check */
    
     if ((cellhd.proj != PROJECTION_XY)
