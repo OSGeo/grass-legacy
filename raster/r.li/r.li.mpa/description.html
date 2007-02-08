@@ -1,14 +1,14 @@
 <h2>DESCRIPTION</h2>
-<em>r.li.meanPixelAttribute</em> 
-calculates the average value of the attribute of all the non-null cells in the simpling area
-as:<br>
-<img src="rliMeanPixelAttribute_formula.png"> <br>
+<em>r.li.mpa</em> 
+(mean pixel attribute) calculates the average value of the attribute of all the non-null
+cells in the sampling area as:<br>
+<img src="rlimpa_formula.png"> <br>
 with:<br>
 <ul>
   <li><b>i</b>: attribute<br></li>
   <li><b>m</b>: number of non-null attributes in the sampling area </li>
   <li><b>w<small><small>i</small></small></b>: number of cells of attribute i</li>
-  <li><b>Area</b>: size of sampling area (in cells)<br>
+  <li><b>size</b>: size of sampling area (in cells)<br>
   </li>
 </ul>
 
@@ -17,19 +17,22 @@ with:<br>
 To calculate mean pixel attribute index on map my_map, using
 my_conf configuration file and saving results in
 my_out file run:<br>
-<b>r.li.meanPixelAttribute map=</b>my_map <b>conf=</b>my_conf <b>output=</b>my_out<br>
-
+<div class="code"><pre>
+r.li.mpa map=my_map conf=my_conf output=my_out
+</pre></div>
 
 <h2>NOTES</h2>
 Do not use absolute path names for output files. They are raster if
 moving window disposition was selected, otherwise they are in
 ~/.r.li/output folder.<br>
-If input raster is full of null values r.li.meanPixelAttribute consider to
+If input raster is full of null values r.li.mpa consider to
 have 0 patch.<br>
-If area is 0 r.li.meanPixelAttribute returns -1; it is possible only if the
+If area is 0 r.li.mpa returns -1; it is possible only if the
 raster is masked <br>
 If you want to have null values instead run <br>
-<b>r.null setnull=-1 map=</b>my_map
+<div class="code"><pre>
+r.null setnull=-1 map=my_map
+</pre></div>
 after index calculation.
 
 

@@ -1,6 +1,6 @@
 MODULE_TOPDIR = ../../..
 
-PGM = r.li.meanPixelAttribute
+PGM = r.li.mpa
 
 EXTRA_CLEAN_DIRS=doxygenhtml
 
