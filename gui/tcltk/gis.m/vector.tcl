@@ -138,7 +138,7 @@ proc GmVector::create { tree parent } {
     set opt($count,1,type_point) 1 
     set opt($count,1,type_line) 1
     set opt($count,1,type_boundary) 1
-    set opt($count,1,type_centroid) 1
+    set opt($count,1,type_centroid) 0
     set opt($count,1,type_area) 1
     set opt($count,1,type_face) 0 
 
@@ -335,9 +335,9 @@ proc GmVector::options { id frm } {
                 -command "GmVector::legend $id"
     checkbutton $row.d -text [G_msg "boundaries"] -variable GmVector::opt($id,1,type_boundary) \
                 -command "GmVector::legend $id"
-    checkbutton $row.e -text [G_msg "centroids"] -variable GmVector::opt($id,1,type_centroid)\
+    checkbutton $row.e -text [G_msg "areas"] -variable GmVector::opt($id,1,type_area) \
                 -command "GmVector::legend $id"
-    checkbutton $row.f -text [G_msg "areas"] -variable GmVector::opt($id,1,type_area) \
+    checkbutton $row.f -text [G_msg "centroids"] -variable GmVector::opt($id,1,type_centroid)\
                 -command "GmVector::legend $id"
     checkbutton $row.g -text [G_msg "faces"] -variable GmVector::opt($id,1,type_face) \
                 -command "GmVector::legend $id"
