@@ -1,6 +1,6 @@
 MODULE_TOPDIR = ../../..
 
-PGM = r.li.meanPatchSize
+PGM = r.li.mps
 
 EXTRA_CLEAN_DIRS=doxygenhtml
 
