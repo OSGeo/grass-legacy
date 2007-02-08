@@ -1,6 +1,6 @@
 MODULE_TOPDIR = ../../..
 
-PGM = r.li.contrastWeightedEdgeDensity
+PGM = r.li.cwed
 
 EXTRA_CLEAN_DIRS=doxygenhtml
 
