@@ -11,7 +11,7 @@ SUBDIRS = \
 	r.li.daemon\
 	r.li.edgedensity\
 	r.li.patchdensity\
-	r.li.patchnumber\
+	r.li.patchnum\
 	r.li.setup \
 	r.li.shape\
 	r.li.simpson\

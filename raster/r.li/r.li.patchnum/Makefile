@@ -1,6 +1,6 @@
 MODULE_TOPDIR = ../../..
 
-PGM = r.li.patchnumber
+PGM = r.li.patchnum
 
 EXTRA_CLEAN_DIRS=doxygenhtml
 
