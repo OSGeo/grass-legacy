@@ -1,6 +1,6 @@
 MODULE_TOPDIR = ../../..
 
-PGM = r.li.patchAreaDistributionCV
+PGM = r.li.padcv
 
 EXTRA_CLEAN_DIRS=doxygenhtml
 
