@@ -23,17 +23,21 @@ Gen. Tech. Rep. PNW-351.
 To calculate mean pixel attribute index on map my_map, using
 my_conf configuration file and saving results in
 my_out file run:<br>
-<b>r.li.padcv map=</b>my_map <b>conf=</b>my_conf <b>output=</b>my_out<br>
+<div class="code"><pre>
+r.li.padcv map=my_map conf=my_conf output=my_out
+</pre></div>
 
 
 <h2>NOTES</h2>
 Do not use absolute path names for output files. They are raster if
 moving window disposition was selected, otherwise they are in
 ~/.r.li/output folder.<br>
-If input raster is not full of null values r.li.padcv returns a value >=0 that is PADcv. <br>
+If input raster is not full of null values r.li.padcv returns a value &gt;=0 that is PADcv. <br>
 If input raster is full of null values r.li.padcv returns -1. <br>
 If you want to have null values instead run <br>
-<b>r.null setnull=-1 map=</b>my_map
+<div class="code"><pre>
+r.null setnull=-1 map=my_map
+</pre></div>
 after index calculation.
 
 
