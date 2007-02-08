@@ -16,12 +16,12 @@ SUBDIRS = \
 	r.li.shape\
 	r.li.simpson\
 	r.li.shannon\
-	r.li.meanPatchSize\
-	r.li.meanPixelAttribute\
-	r.li.patchAreaDistributionCV\
-	r.li.patchAreaDistributionSD\
-	r.li.patchAreaDistributionRANGE\
-	r.li.contrastWeightedEdgeDensity\
+	r.li.mps\
+	r.li.mpa\
+	r.li.padcv\
+	r.li.padsd\
+	r.li.padrange\
+	r.li.cwed\
 	r.li.richness\
 	r.li.dominance\
 	
