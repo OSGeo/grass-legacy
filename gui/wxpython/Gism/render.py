@@ -520,6 +520,8 @@ class Map:
 		if not mapset:
 			mapset = self.Env["MAPSET"]
 
+                layer = Layer()
+
 		if l_opacity > 1:
 			l_opacity = float(l_opacity)/100
 
