@@ -1,27 +1,24 @@
 #!/usr/bin/env python
 import sys
 import os
-
 try:
     import subprocess
 except:
     from compat import subprocess
 
-import Gism
-from Gism import *
-gmpath = os.path.join(Gism.__path__[0], )
+gmpath = os.environ['GMPYPATH']
 sys.path.append(gmpath)
-print gmpath
 
 import wx
+import mapdisp
+import render
 import re
 import tempfile
+import grassgui
+import menudata
+#import spare
+#from optpanels import *
 import wx.lib.customtreectrl as CT
-
-from Gism import mapdisp
-from Gism import render
-from Gism import grassgui
-from Gism import menudata
 
 
 """Main Python app to set up GIS Manager window and trap commands
@@ -277,10 +274,6 @@ class GMChoicebook(wx.Choicebook):
 
 #---Layer tree creation ---#000000#FFFFFF-------------------------------------------------
 class LayerTree(CT.CustomTreeCtrl):
-    """
-    !!! JC: This class should be moved to separate file
-
-    """
     #	def __init__(self, parent, id, pos, size, style):
     def __init__(self, parent, id=wx.ID_ANY, pos=wx.DefaultPosition,
             size=wx.DefaultSize,
@@ -356,9 +349,6 @@ class LayerTree(CT.CustomTreeCtrl):
 
 #---Console functions ---#000000#FFFFFF------------------------
 class GMConsole(wx.Panel):
-    """
-    !!! JC: This class should be moved to separate file
-    """
 	def __init__(self, parent, id=-1, pos=wx.DefaultPosition, size=wx.DefaultSize, style=wx.TAB_TRAVERSAL|wx.FULL_REPAINT_ON_RESIZE):
 		wx.Panel.__init__(self, parent, id, pos, size, style)
 		# initialize variables
@@ -474,9 +464,6 @@ class SetVal:
 	'''Class to store and set values needed by map, gism,
 	and other modules. This should work but doesn't for some reason.'''
 
-        """
-        !!! JC: This class should be moved to separate file
-        """
 	def setMdFocus(self, mdnum=-1):
 		#get the id number of map display that has the focus
 		#and use it to set md
