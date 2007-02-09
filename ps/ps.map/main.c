@@ -125,8 +125,9 @@ int main(int argc,char *argv[])
     output_file = G_define_option();
     output_file->key = "output";
     output_file->type = TYPE_STRING;
+    output_file->gisprompt   = "new_file,file,output";
     output_file->description = _("PostScript output file");
-    output_file->required = NO;
+    output_file->required = YES;
 
     map_scale = G_define_option();
     map_scale->key = "scale";
@@ -137,7 +138,8 @@ int main(int argc,char *argv[])
 
     copies = G_define_option();
     copies->key = "copies";
-    copies->type = TYPE_STRING;
+    copies->type = TYPE_INTEGER;
+    copies->options = "1-20";
     copies->description = _("Number of copies to print");
     copies->required = NO;
 
@@ -240,23 +242,20 @@ int main(int argc,char *argv[])
 	    G_strcpy(PS.scaletext, map_scale->answer);
 	else error(map_scale->answer, "", "illegal scale request");
     }
+
     if (copies->answer)
     {
-	if (sscanf(copies->answer, "%d", &ps_copies) != 1
-		|| ps_copies < 1 || ps_copies > 20)
+	if (sscanf(copies->answer, "%d", &ps_copies) != 1)
 	{
 	    ps_copies = 1;
 	    error(copies->answer, "", "illegal copies request");
 	}
 	copies_set = 1;
     }
-    if (output_file->answer)
-    {
-	if ((PS.fp = fopen(output_file->answer, "w")) == NULL)
-	    G_fatal_error ("%s - %s: %s", G_program_name(),
-			   output_file->answer, strerror (errno));
-    }
-    else usage(1);
+
+    if ((PS.fp = fopen(output_file->answer, "w")) == NULL)
+	G_fatal_error ("%s - %s: %s", G_program_name(),
+			output_file->answer, strerror (errno));
 
     /* get current mapset */
     PS.cell_mapset = G_mapset();
