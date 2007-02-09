@@ -598,7 +598,7 @@ static void save_rgn (char *name, char *tempfile, FILE *tmp, int *x, int *y, int
 				   programs */
 
   cmd = G_malloc(200);
-  sprintf(cmd, "%s/bin/poly_to_bmif < %s | sort -t: +0n -1 | %s/bin/bmif_to_cell %s",
+  sprintf(cmd, "%s/etc/poly_to_bmif < %s | sort -t: +0n -1 | %s/etc/bmif_to_cell %s",
      G_gisbase(), tempfile, G_gisbase(), name);
   fprintf(stderr, "    Generating '%s' file... %20c\n\n", name, ' ') ;
   G_system(cmd) ;
