@@ -158,10 +158,10 @@ main (int argc, char *argv[])
     for ( input = 0; input < 2; input++ ) {
 	int ncats, index;
 	
-	G_message(_("Copying %sinput lines ... "), pre[input]);
+	G_message(_("Copying %s input lines ... "), pre[input]);
 
 	if ((mapset[input] = G_find_vector2 (in_opt[input]->answer, NULL)) == NULL) {
-	    G_fatal_error ("Could not find vector '%s'\n", in_opt[input]->answer);
+	    G_fatal_error ("Could not find vector '%s'", in_opt[input]->answer);
 	}
 
 	Vect_set_open_level (2);
