@@ -10,7 +10,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: grasslibs_es\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2007-02-03 15:49+0100\n"
+"POT-Creation-Date: 2007-02-09 22:50+0100\n"
 "PO-Revision-Date: 2007-01-07 23:53+0100\n"
 "Last-Translator: Enrique Cerrillo Cuenca <ecerrillo@unex.es>\n"
 "Language-Team: Español <en@li.org>\n"
@@ -898,12 +898,12 @@ msgstr ""
 "es inválido\n"
 "%s"
 
-#: ../lib/gis/datum.c:172 ../lib/proj/datum.c:400 ../lib/proj/datum.c:486
+#: ../lib/gis/datum.c:172 ../lib/proj/datum.c:425 ../lib/proj/datum.c:488
 #, c-format
 msgid "unable to open datum table file: %s"
 msgstr "No es posible abrir el archivo con la tabla de datos: %s"
 
-#: ../lib/gis/datum.c:196 ../lib/proj/datum.c:413 ../lib/proj/datum.c:500
+#: ../lib/gis/datum.c:196 ../lib/proj/datum.c:438 ../lib/proj/datum.c:502
 #, c-format
 msgid "error in datum table file, line %d"
 msgstr "error en el archivo de la tabla de datos, linea %d"
