@@ -781,40 +781,43 @@ class Track:
 	This class has functions and variables for tracking map display,
 	associated notebook pages, and other index values.
 	"""
+	nb = {} #notebook in GIS Manager, indexed by display.
+	cb_page = {} #choicbook page in GIS Manager, indexed by display.
+	curr_disp = {} #map displays, indexed by display number.
+	disp_idx = 0
 
 	# store and retrieve index of display with focus
 	def SetDisp_idx(self, idx):
-		global mdidx
-		mdidx = idx
+		self.disp_idx = idx
+		print "self disp_index =", self.disp_idx
 
 	def GetDisp_idx(self):
-		global mdidx
-		return mdidx
+		return self.disp_idx
 
 	#store and retrieve current display with focus
-	def SetCurrDisp(self, disp):
-		global curr_disp
-		curr_disp = disp
+	def SetDisp(self, disp, disp_idx):
+		self.curr_disp[disp_idx] = disp
 
-	def GetCurrDisp(self):
-		global curr_disp
-		return curr_disp
+	def GetDisp(self, disp_idx):
+		return self.curr_disp[disp_idx]
 
 	# store and retrieve choicebook widget that hold all GIS manager controls
 	def SetChbk(self, cb):
-		global gm_cb
-		gm_cb = cb
+		self.gm_cb = cb
 
 	def GetChbk(self):
-		global gm_cb
-		return gm_cb
+		return self.gm_cb
 
 	#store and retrieve choicebook page for display with focus
-	def SetChbkPage(self, page):
-		global cb_page
-		cb_page = page
+	def SetChbkPage(self, page, disp_idx):
+		self.cb_page[disp_idx] = page
 
-	def GetChbkPage(self):
-		global cb_page
-		return cb_page
+	def GetChbkPage(self, disp_idx):
+		return self.cb_page[disp_idx]
 
+	#store and retriev notebook with layer tree and console for display with focus
+	def SetNB(self, disp_idx, notebk):
+		self.nb[disp_idx] = notebk
+
+	def GetNB(self, disp_idx):
+		return self.nb[disp_idx]
