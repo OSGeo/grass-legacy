@@ -1,24 +1,25 @@
 #!/usr/bin/env python
 import sys
 import os
+
 try:
     import subprocess
 except:
     from compat import subprocess
 
-gmpath = os.environ['GMPYPATH']
+import Gism
+gmpath = os.path.join(gism.__path__[0], )
 sys.path.append(gmpath)
 
 import wx
-import mapdisp
-import render
 import re
 import tempfile
-import grassgui
-import menudata
-#import spare
-#from optpanels import *
 import wx.lib.customtreectrl as CT
+
+from Gism import mapdisp
+from Gism import render
+from Gism import grassgui
+from Gism import menudata
 
 
 """Main Python app to set up GIS Manager window and trap commands
