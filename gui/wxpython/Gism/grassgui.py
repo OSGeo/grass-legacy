@@ -48,8 +48,6 @@ except:
     from compat import subprocess
 import re
 
-import render
-import mapdisp
 
 def reexec_with_pythonw():
 	if sys.platform == 'darwin' and\
