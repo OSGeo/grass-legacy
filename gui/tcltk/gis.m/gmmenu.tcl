@@ -434,7 +434,7 @@ set descmenu [subst  {
 	{cascad {[G_msg "Lidar object filtering and detection"]} {} "" $tmenu {			
 		{command {[G_msg "Detect object edges in LIdar data"]} {} "v.lidar.edgedetection" {} -command {execute v.lidar.edgedetection }}
 		{command {[G_msg "Detect interior of objects in Lidar data"]} {} "v.lidar.growing" {} -command {execute v.lidar.growing }}
-		{command {[G_msg "Correct and reclassify objected detected in Lidar data"]} {} "v.lidar.correction" {} -command {execute v.lidar.correction }}
+		{command {[G_msg "Correct and reclassify objects detected in Lidar data"]} {} "v.lidar.correction" {} -command {execute v.lidar.correction }}
 	}}
 	{cascad {[G_msg "Linear referencing for vectors"]} {} "" $tmenu {			
 		{command {[G_msg "Create linear reference system"]} {} "v.lrs.create" {} -command {execute v.lrs.create }}
