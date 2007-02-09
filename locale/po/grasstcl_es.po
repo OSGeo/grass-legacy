@@ -6,13 +6,14 @@
 # Roberto Antolin <tolanss@yahoo.es>, 2006, 2007.
 # Enrique Cerrillo Cuenca <ecerrillo@unex.es>, 2007.
 # Carlos Dávila <carluti@users.sourceforge.net>, 2007.
+# Carlos Davila <carluti@users.sourceforge.net>, 2007.
 # Agustín Diez Castillo <Agustin.Diez@uv.es>
 msgid ""
 msgstr ""
 "Project-Id-Version: grasstcl_es\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2007-02-03 15:50+0100\n"
-"PO-Revision-Date: 2007-02-05 00:44+0100\n"
+"PO-Revision-Date: 2007-02-08 23:46+0100\n"
 "Last-Translator: Carlos Dávila <carluti@users.sourceforge.net>\n"
 "Language-Team: español <grass-es@grass.itc.it>\n"
 "MIME-Version: 1.0\n"
@@ -27,7 +28,7 @@ msgstr "Comando:"
 
 #: ../gui/tcltk/d.m/d.m.tcl:314 ../gui/tcltk/gis.m/gm.tcl:234
 msgid "Loading GIS Manager"
-msgstr "Cargando GIS Manager"
+msgstr "Cargando Administrador GIS"
 
 #: ../gui/tcltk/d.m/d.m.tcl:404 ../gui/tcltk/gis.m/gm.tcl:281
 msgid "Done"
@@ -35,7 +36,7 @@ msgstr "Hecho"
 
 #: ../gui/tcltk/d.m/d.m.tcl:406
 msgid "Welcome to the GRASS GIS manager"
-msgstr "Bienvenido al GIS Manager de GRASS"
+msgstr "Bienvenido al Administrador GIS de GRASS"
 
 #: ../gui/tcltk/d.m/thematic.tcl:116 ../gui/tcltk/gis.m/thematic.tcl:229
 #: ../gui/tcltk/gis.m/vector.tcl:299
@@ -342,12 +343,12 @@ msgstr "Animar series de mapas ráster"
 
 #: ../gui/tcltk/d.m/tool1.tcl:81
 msgid "Zoom"
-msgstr "Zoom"
+msgstr "Zum"
 
 #: ../gui/tcltk/d.m/tool1.tcl:87 ../gui/tcltk/gis.m/maptool.tcl:159
 #: ../gui/tcltk/gis.m/georecttool.tcl:144
 msgid "Return to previous zoom"
-msgstr "Volver a zoom anterior"
+msgstr "Volver al zum anterior"
 
 #: ../gui/tcltk/d.m/tool1.tcl:93
 msgid "Pan and recenter"
@@ -368,16 +369,16 @@ msgstr "Posición geográfica"
 #: ../gui/tcltk/d.m/tool1.tcl:121 ../gui/tcltk/gis.m/gmtool2.tcl:84
 msgid "Create new workspace file (erase current workspace settings first)"
 msgstr ""
-"Crear un nuevo espacio de trabajo (borrar la configuración de los espacios "
+"Crear un nuevo entorno de trabajo (borrar la configuración de los entornos "
 "actuales antes)"
 
 #: ../gui/tcltk/d.m/tool1.tcl:124 ../gui/tcltk/gis.m/gmtool2.tcl:90
 msgid "Open existing workspace file"
-msgstr "Abrir un espacio de trabajo existente en fichero"
+msgstr "Abrir un entorno de trabajo existente"
 
 #: ../gui/tcltk/d.m/tool1.tcl:127 ../gui/tcltk/gis.m/gmtool2.tcl:96
 msgid "Save workspace file"
-msgstr "Salvar el espacio de trabajo a fichero"
+msgstr "Guardar el entorno de trabajo"
 
 #: ../gui/tcltk/d.m/tool1.tcl:130
 msgid "Print raster & vector maps using ps.map"
@@ -690,7 +691,7 @@ msgstr "Archivo binario (incluye formato GTOPO30)"
 
 #: ../gui/tcltk/d.m/menu.tcl:85 ../gui/tcltk/gis.m/gmmenu.tcl:100
 msgid "ESRI Arc/Info ASCII grid"
-msgstr "ESRI Arc/Info ASCII grid"
+msgstr "Rejilla ESRI Arc/Info ASCII"
 
 #: ../gui/tcltk/d.m/menu.tcl:86 ../gui/tcltk/d.m/menu.tcl:120
 #: ../gui/tcltk/gis.m/gmmenu.tcl:101 ../gui/tcltk/gis.m/gmmenu.tcl:135
@@ -745,7 +746,7 @@ msgstr "Formato e00 de ESRI"
 
 #: ../gui/tcltk/d.m/menu.tcl:102 ../gui/tcltk/gis.m/gmmenu.tcl:117
 msgid "Garmin GPS Waypoints/Routes/Tracks"
-msgstr "Garmin GPS Waypoints/Routes/Tracks"
+msgstr "Waypoints/Rutas/Tracks de GPS Garmin"
 
 #: ../gui/tcltk/d.m/menu.tcl:103 ../gui/tcltk/gis.m/gmmenu.tcl:118
 msgid "GPS Waypoints/Routes/Tracks using GPSBabel"
@@ -788,7 +789,7 @@ msgstr "Valores x,y,z ASCII de celdas centrales"
 
 #: ../gui/tcltk/d.m/menu.tcl:119 ../gui/tcltk/gis.m/gmmenu.tcl:134
 msgid "ESRI ARC/INFO ASCII grid"
-msgstr "ESRI ARC/INFO ASCII grid"
+msgstr "Rejilla ESRI ARC/INFO ASCII"
 
 #: ../gui/tcltk/d.m/menu.tcl:123 ../gui/tcltk/gis.m/gmmenu.tcl:138
 msgid "Binary file"
@@ -886,7 +887,7 @@ msgstr "Series de mapas ráster a volúmenes"
 
 #: ../gui/tcltk/d.m/menu.tcl:160 ../gui/tcltk/gis.m/gmmenu.tcl:176
 msgid "Raster 2.5D map to volume"
-msgstr "Mapa rastrer 2.5D a volumen"
+msgstr "Mapa ráster 2.5D a volumen"
 
 #: ../gui/tcltk/d.m/menu.tcl:161 ../gui/tcltk/gis.m/gmmenu.tcl:177
 msgid "Vector to raster"
@@ -970,7 +971,7 @@ msgstr "Guardar visualización en varios formatos de archivos gráficos"
 
 #: ../gui/tcltk/d.m/menu.tcl:181
 msgid "Save map to Postscript file"
-msgstr "Guardar mapa en archivo Postscript"
+msgstr "Guardar mapa en archivo PostScript"
 
 #: ../gui/tcltk/d.m/menu.tcl:182
 msgid "Print to default printer"
@@ -1006,7 +1007,7 @@ msgstr "Cambiar los ajustes de la región"
 
 #: ../gui/tcltk/d.m/menu.tcl:190 ../gui/tcltk/gis.m/gmmenu.tcl:197
 msgid "Zoom to maximum extent of all displayed maps"
-msgstr "Ampliar al conjunto de mapas mostrados"
+msgstr "Ampliar a la máxima extensión de los mapas mostrados"
 
 #: ../gui/tcltk/d.m/menu.tcl:192 ../gui/tcltk/gis.m/gmmenu.tcl:199
 msgid "GRASS working environment"
@@ -1048,11 +1049,11 @@ msgstr "Crear/editar la información de la proyección para la localización act
 
 #: ../gui/tcltk/d.m/menu.tcl:202 ../gui/tcltk/gis.m/gmmenu.tcl:209
 msgid "Show projection information and create projection files"
-msgstr "Mostrar la la información de la proyección y crear los archivos de proyección"
+msgstr "Mostrar información de la proyección y crear los archivos de proyección"
 
 #: ../gui/tcltk/d.m/menu.tcl:204 ../gui/tcltk/gis.m/gmmenu.tcl:211
 msgid "Convert coordinates from one projection to another"
-msgstr "Conertir las coordenadas de una proyección a otra"
+msgstr "Convertir las coordenadas de una proyección a otra"
 
 #: ../gui/tcltk/d.m/menu.tcl:206 ../gui/tcltk/gis.m/gmmenu.tcl:213
 msgid "Text"
@@ -1586,7 +1587,7 @@ msgstr "Ocurrencias de categorías mútuas (coincidencia)"
 
 #: ../gui/tcltk/d.m/menu.tcl:375 ../gui/tcltk/gis.m/gmmenu.tcl:382
 msgid "&Vector"
-msgstr "&Vector"
+msgstr "&Vectorial"
 
 #: ../gui/tcltk/d.m/menu.tcl:377 ../gui/tcltk/gis.m/gmmenu.tcl:384
 msgid "Digitize"
@@ -2126,11 +2127,11 @@ msgstr "Manual de usuario"
 
 #: ../gui/tcltk/d.m/menu.tcl:561 ../gui/tcltk/gis.m/gmmenu.tcl:577
 msgid "GIS Manager &help"
-msgstr "GIS Manager &ayuda"
+msgstr "&Ayuda del Administrador GIS"
 
 #: ../gui/tcltk/d.m/menu.tcl:561 ../gui/tcltk/gis.m/gmmenu.tcl:577
 msgid "GIS Manager help"
-msgstr "Ayuda del GIS Manager"
+msgstr "Ayuda del Administrador GIS"
 
 #: ../gui/tcltk/d.m/menu.tcl:562 ../gui/tcltk/gis.m/gmmenu.tcl:578
 msgid "About &GRASS"
@@ -2419,7 +2420,7 @@ msgstr "incluir valores nulos"
 
 #: ../gui/tcltk/gis.m/gmmenu.tcl:85
 msgid "Workspace"
-msgstr "Espacio de trabajo"
+msgstr "Entorno de trabajo"
 
 #: ../gui/tcltk/gis.m/gmmenu.tcl:155
 msgid "SVG file"
@@ -2435,7 +2436,7 @@ msgstr "Convertir entre rumbo/distancia y coordenadas"
 
 #: ../gui/tcltk/gis.m/gmmenu.tcl:189
 msgid "Create ps.map file for postscript printing"
-msgstr "Crear un fichero ps.map para impresión postscript"
+msgstr "Crear un fichero ps.map para impresión PostScript"
 
 #: ../gui/tcltk/gis.m/gmmenu.tcl:241
 msgid "Update raster map statistics"
@@ -2589,11 +2590,11 @@ msgstr "Añadir capa de etiquetas ráster (usar archivo de v.labels)"
 
 #: ../gui/tcltk/gis.m/gmtool1.tcl:135
 msgid "Add postscript labels layer (using v.labels file)"
-msgstr "Añadir capa de etiquetas postscript (usar archivo de v.labels)"
+msgstr "Añadir capa de etiquetas PostScript (usar archivo de v.labels)"
 
 #: ../gui/tcltk/gis.m/gmtool1.tcl:142
 msgid "Add postscript text layer"
-msgstr "Añadir capa de texto postscript"
+msgstr "Añadir capa de texto PostScript"
 
 #: ../gui/tcltk/gis.m/georect.tcl:427
 msgid "Create/replace vector group"
@@ -2633,7 +2634,7 @@ msgstr "1. Seleccionar directorio de mapas"
 
 #: ../gui/tcltk/gis.m/georect.tcl:620
 msgid "Mapset of xy raster group"
-msgstr "Mapset de grupo de mapas ráster xy"
+msgstr "Directorio de mapas del grupo ráster XY"
 
 #: ../gui/tcltk/gis.m/georect.tcl:630
 msgid "2. Create/edit group"
@@ -2660,7 +2661,7 @@ msgstr "4. Seleccionar mapa"
 msgid ""
 "Select non-georectified raster or vector to display for marking ground "
 "control points"
-msgstr "vectorial a mostrar puntos"
+msgstr "Seleccionar ráster o vectorial no georrectificado a mostrar para hacer puntos de control de suelo"
 
 #: ../gui/tcltk/gis.m/georect.tcl:664
 msgid "5. Start georectifying"
@@ -2860,7 +2861,7 @@ msgstr "Encuadrar"
 
 #: ../gui/tcltk/gis.m/maptool.tcl:166
 msgid "Zoom to..."
-msgstr "Zoom a..."
+msgstr "Zum a..."
 
 #: ../gui/tcltk/gis.m/maptool.tcl:241
 msgid "Measure"
@@ -2917,7 +2918,7 @@ msgstr "ignorar categorías sin etiquetas"
 
 #: ../gui/tcltk/gis.m/mapprint.tcl:240
 msgid "Postscript and LPR printing of map display"
-msgstr "Postscript y LPR impresión de la pantalla de mapas"
+msgstr "PostScript y LPR impresión de la pantalla de mapas"
 
 #: ../gui/tcltk/gis.m/mapprint.tcl:254
 msgid "Preset paper type"
@@ -2957,7 +2958,7 @@ msgstr "Enviar a impresora LPR"
 
 #: ../gui/tcltk/gis.m/mapprint.tcl:316
 msgid "Send to postscript device* "
-msgstr "Enviar a dispositivo postscript* "
+msgstr "Enviar a dispositivo PostScript* "
 
 #: ../gui/tcltk/gis.m/mapprint.tcl:327
 msgid "Save to PDF file*              "
@@ -2978,7 +2979,7 @@ msgstr "Ejecutar"
 
 #: ../gui/tcltk/gis.m/runandoutput.tcl:108
 msgid "Run (Background)"
-msgstr "Ejecutar (en 'background')"
+msgstr "Ejecutar (segundo plano)"
 
 #: ../gui/tcltk/gis.m/runandoutput.tcl:109
 msgid "Run UI"
@@ -2994,7 +2995,7 @@ msgstr "Limpiar"
 
 #: ../gui/tcltk/gis.m/runandoutput.tcl:133
 msgid "Output - GIS.m"
-msgstr "Output - GIS.m"
+msgstr "Salida - GIS.m"
 
 #: ../gui/tcltk/gis.m/rastarrows.tcl:228
 msgid "    scale factor for computing arrow length"
@@ -3091,12 +3092,12 @@ msgstr "Bienvenido a GRASS GIS"
 #: ../gui/tcltk/gis.m/gm.tcl:341
 #, tcl-format
 msgid "GRASS%s GIS Manager - %s"
-msgstr "GRASS%s GIS Manager - %s"
+msgstr "Administrador GIS - %s de GRASS%s"
 
 #: ../gui/tcltk/gis.m/gm.tcl:495
 #, tcl-format
 msgid "GRASS%s GIS Manager - %s %s"
-msgstr "GRASS%s GIS Manager - %s %s"
+msgstr "Administrador GIS - %s %s de GRASS%s"
 
 #: ../gui/tcltk/gis.m/barscale.tcl:168
 msgid "Scale appearance:  text color"
@@ -3141,7 +3142,7 @@ msgstr "color de borde"
 
 #: ../gui/tcltk/gis.m/mapcanvas.tcl:784
 msgid "Save current display geometry to named region"
-msgstr "Salvar las dimensiones de la pantalla actual a una determinada región"
+msgstr "Guardar las dimensiones de la pantalla actual a una determinada región"
 
 #: ../gui/tcltk/gis.m/mapcanvas.tcl:790
 msgid "Enter region name"
@@ -3169,7 +3170,7 @@ msgstr "Seleccionar puntos de control"
 
 #: ../gui/tcltk/gis.m/georecttool.tcl:151
 msgid "Zoom to map"
-msgstr "Zoom al mapa"
+msgstr "Zum al mapa"
 
 #: ../vector/v.digit/toolbox.tcl:22
 msgid "Welcome to v.digit"
@@ -3189,7 +3190,7 @@ msgstr "Botón derecho del ratón"
 
 #: ../vector/v.digit/toolbox.tcl:47
 msgid "  Layer"
-msgstr "Capa"
+msgstr "  Capa"
 
 #: ../vector/v.digit/toolbox.tcl:51
 msgid "  Category"
@@ -3261,11 +3262,11 @@ msgstr "Alejar"
 
 #: ../vector/v.digit/toolbox.tcl:166
 msgid "Zoom to default region"
-msgstr "Zoom a la región por defecto"
+msgstr "Zum a la región por defecto"
 
 #: ../vector/v.digit/toolbox.tcl:179
 msgid "Zoom to region"
-msgstr "Zoom a la región"
+msgstr "Zum a la región"
 
 #: ../vector/v.digit/toolbox.tcl:185
 msgid "Display categories"
@@ -3405,21 +3406,22 @@ msgstr "Añadir nuevo"
 
 #: ../lib/init/epsg_option.tcl:92
 msgid "WARNING: cant get enviromental variable"
-msgstr ""
+msgstr "AVISO: no se puede obtener variable de entorno"
 
 #: ../lib/init/epsg_option.tcl:93
-#, fuzzy
 msgid ""
 "Warning: Unable to get enviromental variable GRASS_PROJSHARE. \n"
 "This is a GRASS installation error. \n"
 "Set enviromental variable GRASS_PROJSHARE to point to directory with Proj4 "
 "EPSG file. "
-msgstr "a GRASS GRASS GRASS a a "
+msgstr ""
+"Aviso: no se puede obtener la variable de entorno GRASS_PROJSHARE. \n"
+"Esto es un error de la instalación de GRASS\n"
+"Establezca la variable de entorno GRASS_PROJSHARE para que apunte al directorio con el archivo Proj4 SPSG. "
 
 #: ../lib/init/epsg_option.tcl:102
-#, fuzzy
 msgid "Define location using EPSG projection codes"
-msgstr "Definir localización usando la proyección contenida en archivo georeferenciado"
+msgstr "Definir localización usando códigos de proyección EPSG"
 
 #: ../lib/init/epsg_option.tcl:121 ../lib/init/file_option.tcl:92
 msgid "Name of new location"
@@ -3434,9 +3436,8 @@ msgid "Path to the EPSG-codes file"
 msgstr "Ruta al archivo de códigos EPSG"
 
 #: ../lib/init/epsg_option.tcl:131
-#, fuzzy
 msgid "Path to EPSG codes file"
-msgstr "a"
+msgstr "Ruta a archivo de códigos EPSG"
 
 #: ../lib/init/epsg_option.tcl:134 ../lib/init/epsg_option.tcl:147
 #: ../lib/init/file_option.tcl:105 ../lib/init/gis_set.tcl:242
@@ -3444,40 +3445,40 @@ msgid "Browse..."
 msgstr "Explorar..."
 
 #: ../lib/init/epsg_option.tcl:135
-#, fuzzy
 msgid "Browse to locate EPSG file"
-msgstr "Explorar a"
+msgstr "Explorar para localizar archivo EPSG"
 
 #: ../lib/init/epsg_option.tcl:142
 msgid "EPSG code number of projection"
-msgstr ""
+msgstr "Número de código EPSG de la proyección"
 
 #: ../lib/init/epsg_option.tcl:145
 msgid "Enter EPSG code for selected projection"
-msgstr ""
+msgstr "Introducir código EPSG para la proyección seleccionada"
 
 #: ../lib/init/epsg_option.tcl:148
 msgid "View EPSG codes and projection information."
-msgstr ""
+msgstr "Ver códigos EPSG e información de la proyección."
 
 #: ../lib/init/epsg_option.tcl:154
 msgid "WARNING: epsg-codes file not found"
-msgstr ""
+msgstr "AVISO: archivo de códigos EPSG no encontrado"
 
 #: ../lib/init/epsg_option.tcl:155
 msgid "WARNING: The epsg-codes file was not found!"
-msgstr ""
+msgstr "AVISO: ¡El archivo de códigos EPSG no se encontró!"
 
 #: ../lib/init/epsg_option.tcl:163 ../lib/init/file_option.tcl:111
 msgid "Define location"
-msgstr "Define la localización"
+msgstr "Definir la localización"
 
 #: ../lib/init/epsg_option.tcl:186
-#, fuzzy
 msgid ""
 "WARNING: Please supply a\n"
 "valid EPSG code (integer)"
-msgstr "AVISO: Por favor, especificar un archivo georeferenciado válido"
+msgstr ""
+"AVISO: Por favor, especificar un\n"
+"código EPSG (entero) válido"
 
 #: ../lib/init/epsg_option.tcl:293 ../lib/init/epsg_option.tcl:314
 #: ../lib/init/file_option.tcl:241 ../lib/init/file_option.tcl:262
@@ -3508,30 +3509,28 @@ msgstr ""
 #: ../lib/init/epsg_option.tcl:391 ../lib/init/epsg_option.tcl:421
 #: ../lib/init/epsg_option.tcl:440
 msgid "Search"
-msgstr ""
+msgstr "Buscar"
 
 #: ../lib/init/epsg_option.tcl:394
 #, fuzzy
 msgid "Grab code"
-msgstr "Códigos EPSG"
+msgstr "Código Grab"
 
 #: ../lib/init/epsg_option.tcl:427
 msgid "Search text: "
-msgstr ""
+msgstr "Buscar texto: "
 
 #: ../lib/init/epsg_option.tcl:428
 msgid "Search for entered text in EPSG file"
-msgstr ""
+msgstr "Buscar el texto introducido en archivo EPSG"
 
 #: ../lib/init/epsg_option.tcl:433
-#, fuzzy
 msgid "forward search"
-msgstr "error siguiente"
+msgstr "búscar hacia delante"
 
 #: ../lib/init/epsg_option.tcl:434
-#, fuzzy
 msgid "backward search"
-msgstr "error anterior"
+msgstr "búscar hacia atrás"
 
 #: ../lib/init/file_option.tcl:72
 msgid "Define location using projection information in georeferenced file"
@@ -3573,17 +3572,17 @@ msgstr ""
 "%s"
 
 #: ../lib/init/gis_set.tcl:110
-#, fuzzy
 msgid "WARNING: can not save"
-msgstr "AVISO: La base de datos no es válida"
+msgstr "AVISO: no se puede guardar"
 
 #: ../lib/init/gis_set.tcl:111
 #, tcl-format
-#, fuzzy
 msgid ""
 "Warning: unable to save data to <%s> file.\n"
 "Error message: %s"
-msgstr "a datos a"
+msgstr ""
+"Aviso: no se pueden guardar los datos en el archivo <%s>.\n"
+"Mensaje de error: %s"
 
 #: ../lib/init/gis_set.tcl:132 ../lib/init/gis_set.tcl:371
 #: ../lib/init/gis_set.tcl:474 ../lib/init/gis_set.tcl:598
@@ -3600,7 +3599,7 @@ msgstr "AVISO: la localización <%s> en GISDBASE <%s> no es un directorio o no e
 #: ../lib/init/gis_set.tcl:178
 #, tcl-format
 msgid "GRASS %s Startup"
-msgstr "GRASS %s Startup"
+msgstr "Inicio de GRASS %s"
 
 #: ../lib/init/gis_set.tcl:202
 msgid ""
@@ -3612,11 +3611,11 @@ msgstr ""
 
 #: ../lib/init/gis_set.tcl:203
 msgid "Select an existing project location and mapset\n"
-msgstr "Seleccione una localización y un directorio de mapas existentes\n"
+msgstr "Seleccione una localización y un directorio de mapas\n"
 
 #: ../lib/init/gis_set.tcl:204
 msgid "or define a new location\n"
-msgstr "o cree una nueva localización\n"
+msgstr "existentes o cree una nueva localización\n"
 
 #: ../lib/init/gis_set.tcl:227
 msgid "GIS Data Directory: "
@@ -3631,7 +3630,7 @@ msgid ""
 "Project Location\n"
 "(projection/coordinate system)"
 msgstr ""
-"Proyecto\n"
+"Localización\n"
 "(proyección/sistema de coordenadas)"
 
 #: ../lib/init/gis_set.tcl:297
@@ -3639,7 +3638,7 @@ msgid ""
 "Accessible Mapsets\n"
 "(directories of GIS files)"
 msgstr ""
-"Mapset accesibles\n"
+"Directorios de mapas accesibles\n"
 "(directorios de archivos GIS)"
 
 #: ../lib/init/gis_set.tcl:350
@@ -3652,20 +3651,22 @@ msgstr ""
 
 #: ../lib/init/gis_set.tcl:358
 msgid "Create new mapset"
-msgstr "Crear nuevo directorio de mapas"
+msgstr "Crear directorio de mapas"
 
 #: ../lib/init/gis_set.tcl:363
-#, fuzzy
 msgid "WARNING: invalid mapset name"
-msgstr "nombre"
+msgstr "AVISO: nombre de directorio de mapas no admitido"
 
 #: ../lib/init/gis_set.tcl:364
-#, fuzzy, tcl-format
+#, tcl-format
 msgid ""
 "Warning: Mapset with name <%s> already exists. \n"
 "New mapset is NOT created. \n"
 "Choose different mapset name and try again."
-msgstr "nombre nombre."
+msgstr ""
+"Aviso: el directorio de mapas <%s> ya existe.\n"
+"NO se crea el directorio.\n"
+"Elija un nombre diferente y pruebe otra vez."
 
 #: ../lib/init/gis_set.tcl:372
 #, tcl-format
@@ -3684,11 +3685,12 @@ msgstr "AVISO: no se puede crear directorio"
 
 #: ../lib/init/gis_set.tcl:380
 #, tcl-format
-#, fuzzy
 msgid ""
 "Warning: Unable to create directory for new mapset. \n"
 "Error message: %s"
-msgstr "a"
+msgstr ""
+"Aviso: no se puede crear el nuevo directorio de mapas.\n"
+"Mensaje de error: %s"
 
 #: ../lib/init/gis_set.tcl:405
 msgid "Define new location with..."
@@ -3763,15 +3765,16 @@ msgstr "AVISO: <%%s> no es un directorio de mapas válido"
 
 #: ../lib/init/gis_set.tcl:732
 msgid "WARNING: change directory failed"
-msgstr ""
+msgstr "AVISO: falló el cambio de directorio"
 
 #: ../lib/init/gis_set.tcl:733
 #, tcl-format
-#, fuzzy
 msgid ""
 "Warning: could not change directory to <%s>.\n"
 "Check directory permissions."
-msgstr "a."
+msgstr ""
+"Aviso: no se pudo cambiar el directorio a <%s>.\n"
+"Compruebe los permisos del directorio."
 
 #: ../lib/gis/gui.tcl:277 ../lib/gis/gui.tcl:455
 msgid "Output"
