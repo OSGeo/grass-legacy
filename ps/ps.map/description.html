@@ -433,7 +433,7 @@ EXAMPLE:
 
 Selects a raster map layer for output in shades of grey.
 <PRE>
-USAGE:	<B>greyrast</B> mapname|<EM>list</EM>
+USAGE:	<B>greyrast</B> mapname
 </PRE>
 For each 
 <EM>ps.map</EM>
@@ -508,9 +508,10 @@ USAGE:	<B>header</B>
 	<B>color</B> text color
 	<B>end</B>
 </PRE>
-If the <EM>header</EM> instruction or the <EM>file</EM> sub-instruction is absent,
-the header will consist of the map TITLE and location, each centered on
-the page above the map.
+If the <EM>file</EM> sub-instruction is absent the header will consist
+of the map's title <!-- from hist file -->
+and the location's description.<!-- PERMANENT/MYNAME -->
+The text will be centered on the page above the map.
 The default text color is black.
 
 <P>
@@ -537,7 +538,7 @@ Selects a labels file for output (see manual entry for
 <A HREF="v.label.html">v.label</A>
 ).</EM>
 <PRE>
-USAGE:	<B>labels</B>  labelfile|<EM>list</EM>
+USAGE:	<B>labels</B>  labelfile
 	<B>font</B> font name
 	<B>end</B>
 </PRE>
@@ -618,7 +619,7 @@ The default text color is black.
 The default background box color is white.
 <P>
 <EM>border</EM> will draw a border around the legend using the specified color.
- (see <a href="#NAMED_COLORS">NAMED COLORS</a> below)
+ (see <a href="#NAMED_COLORS">NAMED COLORS</a>)
 <P>
 
 This example prints (in brown) the scale, grid and region information
@@ -714,7 +715,6 @@ EXAMPLE:
 Specifies paper size and margins.
 <PRE>
 USAGE:	<B>paper</B> paper name
-	<B>point</B>
 	<B>height</B> #
 	<B>width</B> #
 	<B>left</B> #
@@ -723,7 +723,8 @@ USAGE:	<B>paper</B> paper name
 	<B>top</B> #
 	<B>end</B>	
 </PRE>
-<B>paper</B> may select predefined paper name (a4,a3,a2,a1,a0,us-legal,us-letter,us-tabloid).
+<B>paper</B> may select predefined paper name
+ (a4,a3,a2,a1,a0,us-legal,us-letter,us-tabloid).
 Default paper size is a4.
 <B>left</B>, <B>right</B>, <B>bottom</B> and <B>top</B> are paper margins.
 <P>
@@ -819,7 +820,7 @@ EXAMPLE:
 
 Selects a raster map layer for output.
 <PRE>
-USAGE:	<B>raster</B> mapname|<EM>list</EM>
+USAGE:	<B>raster</B> mapname
 </PRE>
 For each <EM>ps.map</EM> run, only one raster map layer (or set
 of layers or imagery group; see below) can be requested. If no
@@ -925,7 +926,7 @@ instructions.
 Places the outline of a smaller geographic region
 on the output.
 <PRE>
-USAGE:	<B>region</B> regionfile|<EM>list</EM>
+USAGE:	<B>region</B> regionfile
 	<B>color</B> color
 	<B>width</B> #
 	<B>end</B>
@@ -1123,7 +1124,7 @@ the PostScript font. Common possibilities are listed at the start of this
 help page. The default is <tt>Helvetica</tt>.
 <P>
 <B>color</B>
-(see <a href="#NAMED_COLORS">NAMED COLORS</a> below);
+(see <a href="#NAMED_COLORS">NAMED COLORS</a>);
 <P>
 <B>width</B>
 of the lines used to draw the text to make thicker letters
@@ -1158,6 +1159,7 @@ which shifts the text a horizontal distance in pixels from
 the specified east The horizontal offset will shift the location east if 
 positive, west if negative;
 <P>
+<B>opaque</B>,
 whether or not the text should be <B>opaque</B> to vectors.  Entering <B>no</B>
 to the opaque option will allow the user to see any vectors which go
 through the text's background box.  Otherwise, they will end at the box's edge.
@@ -1190,17 +1192,17 @@ EXAMPLE:
 <a name="vareas"></a>
 <H2>vareas</H2>
 
-Selects a vector map layer for output.
+Selects a vector map layer for output and plots areas.
 <PRE>
 USAGE:	<B>vareas</B> vectormap
 	<B>layer</B> # (layer number used with cats/where option)
 	<B>cats</B> list of categories (e.g. 1,3,5-7)
-	<B>where</B> SQL where statement like: vlastnik = 'Cimrman'
+	<B>where</B> SQL where statement
 	<B>masked</B> [y|n]
 	<B>color</B> color
 	<B>fcolor</B> color
 	<B>width</B> #
-	<B>label</B> label in legend
+	<B>label</B> label to use in legend
 	<B>lpos</B> position in legend
 	<B>pat</B> pattern file
 	<B>pwidth</B> #
@@ -1222,6 +1224,9 @@ by the current mask;
 for more information on the mask)
 <P>
 <B>cats</B> - which categories should be plotted (default is all);
+<P>
+<B>where</B> - select features using a SQL where statement.
+For example: <tt>vlastnik = 'Cimrman'</tt>;
 <P>
 <B>label</B> - for description in <a href="#vlegend">vlegend</a>.
 Default is: map(mapset);
@@ -1277,9 +1282,9 @@ EXAMPLE:
 <a name="vlines"></a>
 <H2>vlines</H2>
 
-Selects a vector map layer for output.
+Selects a vector map layer for output and plots lines.
 <PRE>
-USAGE:	<B>vlines</B> vectormap|<EM>list</EM>
+USAGE:	<B>vlines</B> vectormap
 	<B>type</B> lines and/or boundaries
 	<B>layer</B> # (layer number used with cats/where option)
 	<B>cats</B> list of categories (e.g. 1,3,5-7)
@@ -1386,7 +1391,7 @@ USAGE:	<B>vpoints</B> vectormap
 	<B>end</B>
 </PRE>
 The user may specify the
-the <B>color</B> of the sites (see section on <a href="#NAMED_COLORS">NAMED COLORS</a> below);
+the <B>color</B> of the sites (see section on <a href="#NAMED_COLORS">NAMED COLORS</a>);
 the <B>eps</B> Encapsulated Postscript file to be used to represent the presence of a site
 (if '<B>$</B>' is used in the EPS file path it will be replaced by category number); 
 and <B>rotate</B> in degrees for clockwise rotation (EPS files only).
@@ -1437,7 +1442,7 @@ column. The maximum number of colums is 10, or equal to the number of legend ent
 if there are less than 10 entries.
 <P>
 <EM>border</EM> will draw a border around the legend using the specified color.
- (see <a href="#NAMED_COLORS">NAMED COLORS</a> below)
+ (see <a href="#NAMED_COLORS">NAMED COLORS</a>)
 <P>
 Alternatively, the user can create a custom legend by using the 
 <a href="#rectangle">rectangle</a>, <a href="#point">point</a>, and 
@@ -1474,14 +1479,15 @@ USAGE:	<B>end</B>
 <H2>EXAMPLE ps.map INPUT FILE</H2>
 
 The following is an example of a <EM>ps.map</EM> script file. The file has been
-named <EM>spear.soils</EM>.  For the purposes of illustration, the file is in
-two columns.  This script file can be entered at the command line:
+named <EM>spear.soils</EM>.
+This script file can be entered at the command line:
 
 <PRE>
   <B>ps.map input=</B><EM>spear.soils</EM> <B>output=</B><EM>soils.ps</EM>
 </PRE>
 <PRE>
 
+# this ps.map example draws a map of Spearfish, SD
 <B>raster</B> soils
 <B>outline</B>
    <B>color</B> black
@@ -1554,13 +1560,14 @@ More samples can be found on the
 help site.
 <P>
 
+<!-- depreciated
 <H2>INTERACTIVE MODE</H2>
 
-If the user simply enters
-<EM>ps.map</EM>
+If the user simply enters <EM>ps.map</EM>
 without arguments, then a simple prompting session occurs.
 Some, but not all of the non-interactive requests are available
 at this level.
+-->
 
 <H2>NOTES</H2> 
 <P>
@@ -1580,6 +1587,15 @@ encoding, for example by using <EM>iconv</EM>:
 iconv -f UTF-8 -t ISO_8859-1 utf_file > iso_file
 </PRE></DIV>
 
+<P>
+The hash character ('<tt>#</tt>') may be used at the beginning of a line
+to indicate that the line is a comment. Blank lines will also be
+ignored.
+
+<P>
+Be aware that some mapping instructions require the <i>end</i> command
+and some do not. Any instruction that allows subcommands will require
+it, any instruction that does not allow subcommands will not.
 
 <H2>SEE ALSO</H2>
 <a href="v.label.html">v.label</a>
