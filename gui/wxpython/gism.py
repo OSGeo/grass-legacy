@@ -54,13 +54,13 @@ class GMFrame(wx.Frame):
     def __init__(self, *args, **kwds):
         kwds["style"] = wx.DEFAULT_FRAME_STYLE
         wx.Frame.__init__(self, *args, **kwds)
-        self.createToolBar()
-        self.createMenuBar()
+        self.ToolBar()
+        self.CreateMenuBar()
         self.SetTitle(_("GRASS GIS Manager - wxPython Prototype"))
         self.SetSize((450, 450))
         self.SetMinSize((100, 100))
         self.cb_panel = wx.Panel(self)
-        
+
         # create choicebook for GIS controls - one page for each display
         self.gm_cb = GMChoicebook(self.cb_panel, -1, wx.DefaultPosition, wx.DefaultSize, wx.CHB_TOP)
         boxsizer = wx.BoxSizer()
@@ -69,21 +69,21 @@ class GMFrame(wx.Frame):
         self.cb_panel.SetAutoLayout(True)
         self.Centre()
         render.Track().SetChbk(self.gm_cb)
-        
+
         # initialize variables
         self.MapDisplay = {} #dictionary to index open map displays
         self.disp_idx = 0 #index value for map displays and layer trees
         self.maptree = {} #dictionary to index a layer tree to accompanying a map display
         self.mapfocus = 0 #track which display currently has focus
-        
-        self.Bind(wx.EVT_CLOSE, self.onCloseWindow)
-        
+
+        self.Bind(wx.EVT_CLOSE, self.OnCloseWindow)
+
         #start default initial display
         self.NewDisplay()
-    
+
     #---Menubar creation---#000000#FFFFFF-------------------------------------------
-    
-    def createMenuBar(self):
+
+    def CreateMenuBar(self):
         menuBar = wx.MenuBar()
         # data object with descriptions for each menu item is in separate module menudata.py
         self.Data = menudata.Data()
@@ -91,21 +91,21 @@ class GMFrame(wx.Frame):
             for eachHeading in eachMenuData:
                 menuLabel = eachHeading[0]
                 menuItems = eachHeading[1]
-                menuBar.Append(self.createMenu(menuItems), menuLabel)
+                menuBar.Append(self.CreateMenu(menuItems), menuLabel)
         self.SetMenuBar(menuBar)
-    
-    def createMenu(self, menuData):
+
+    def CreateMenu(self, menuData):
         menu = wx.Menu()
         for eachItem in menuData:
             if len(eachItem) == 2:
                 label = eachItem[0]
-                subMenu = self.createMenu(eachItem[1])
+                subMenu = self.CreateMenu(eachItem[1])
                 menu.AppendMenu(wx.NewId(), label, subMenu)
             else:
-                self.createMenuItem(menu, *eachItem)
+                self.CreateMenuItem(menu, *eachItem)
         return menu
-    
-    def createMenuItem(self, menu, label, help, handler, gcmd, kind=wx.ITEM_NORMAL):
+
+    def CreateMenuItem(self, menu, label, help, handler, gcmd, kind=wx.ITEM_NORMAL):
         if not label:
             menu.AppendSeparator()
             return
@@ -114,31 +114,31 @@ class GMFrame(wx.Frame):
             menucmd[label] = gcmd
         rhandler = eval(handler)
         self.Bind(wx.EVT_MENU, rhandler, menuItem)
-    
-    def runMenuCmd(self, event):
+
+    def RunMenuCmd(self, event):
         '''Run menu command'''
         menuitem = self.GetMenuBar().FindItemById(event.GetId())
         itemtext = menuitem.GetText()
         cmd = menucmd[itemtext]
         global gmpath
         grassgui.GUI().parseCommand(cmd, gmpath)
-    
+
     #---Toolbar creation---#000000#FFFFFF-------------------------------------------
-    def createToolBar(self):
+    def ToolBar(self):
         toolbar = self.CreateToolBar()
-        for each in self.toolbarData():
-            self.addToolbarButton(toolbar, *each)
+        for each in self.ToolbarData():
+            self.AddToolbarButton(toolbar, *each)
         toolbar.Realize()
-    
-    def addToolbarButton(self, toolbar, label, iconfile, help, handler):
+
+    def AddToolbarButton(self, toolbar, label, iconfile, help, handler):
         if not label:
             toolbar.AddSeparator()
             return
         icon = wx.Bitmap(iconfile, wx.BITMAP_TYPE_ANY)
         tool = toolbar.AddSimpleTool(-1, icon, label, help)
         self.Bind(wx.EVT_TOOL, handler, tool)
-    
-    def toolbarData(self):
+
+    def ToolbarData(self):
         iconpath = os.environ['GRASS_ICONPATH']
         return (
             ('newdisplay', iconpath+r'/gui-startmon.gif', 'Start new display', self.NewDisplay),
@@ -147,7 +147,7 @@ class GMFrame(wx.Frame):
             ('addvect', iconpath+r'/element-vector.gif', 'Add vector layer', self.AddVector),
             ('addcmd', iconpath+r'/gui-cmd.gif', 'Add command layer', self.AddCommand)
             )
-    
+
     #---Start display---#000000#FFFFFF----------------------------------------------
     def NewDisplay(self, event=None):
         '''Create new map display widget'''
@@ -161,29 +161,30 @@ class GMFrame(wx.Frame):
         #self.maptree[self.disp_idx] = self.MapDisplay[self.disp_idx].getTree()
         self.MapDisplay[self.disp_idx].Show()
         self.disp_idx += 1
-    
+
     #---ToolBar button handlers---#000000#FFFFFF------------------------------------
     def AddRaster(self, event):
         self.SetTree('raster')
         event.Skip()
-    
+
     def AddVector(self, event):
         self.SetTree('vector')
         event.Skip()
-    
+
     def AddCommand(self, event):
         self.SetTree('command')
         event.Skip()
-    
+
     def SetTree(self, layertype):
-        print 'hello world'
-        disp_idx = self.MapDisplay[self.disp_idx].getdisp_idx()
-        print 'disp_idx in settree=',disp_idx
-        self.maptree[self.disp_idx].AddLayer(self.gm_nb, disp_idx, layertype)
+        #get info on display with focus
+        disp_idx = render.Track().GetDisp_idx()
+        self.gm_nb = render.Track().GetNB(disp_idx)
+
+        #create layer tree for display with focus
+        LayerTree(self.gm_nb).AddLayer(layertype)
         return
-    
-    #---Misc methods---#000000#FFFFFF-----------------------------------------------
-    def onCloseWindow(self, event):
+
+    def OnCloseWindow(self, event):
         '''Cleanup when gism.py is quit'''
         mdlist = range(0, self.disp_idx+1)
         try:
@@ -194,61 +195,22 @@ class GMFrame(wx.Frame):
         except:
             self.DestroyChildren()
         self.Destroy()
-    
+
     def Nomethod(self, event):
         '''Stub for testing'''
         pass
         event.Skip()
-    
+
     def printmd(self):
         print 'self.disp_idx is now', self.disp_idx
 
 class GMChoicebook(wx.Choicebook):
-    '''This class creates a choicebook widget for the GIS Manager 
-    control panel. The choice book allows and controls an independent 
-    ayer tree, command console, and layer options for each display 
+    '''This class creates a choicebook widget for the GIS Manager
+    control panel. The choice book allows and controls an independent
+    ayer tree, command console, and layer options for each display
     opened.'''
     def __init__(self, parent, id, pos, size, style):
         wx.Choicebook.__init__(self, parent, id, pos, size, style)
-        #nb_panel=wx.Panel(self,-1)
-##        self.curr_page=self.GetCurrentPage()
-##        print "the page=",self.curr_page
-##        gm_nb =  wx.Notebook(self,-1,pos=wx.DefaultPosition, size=wx.DefaultSize,style=wx.NB_RIGHT)
-        #self.AddPage(gm_nb, "the first page")
-        # set up initial pages
-        # page 0 for layer tree - modified by mapdisplay module
-##        nb_page0 = LayerTree(gm_nb)
-##        gm_nb.AddPage(nb_page0, _("Layers"), select=True)
-##        nb_page2 = GMConsole(gm_nb)
-##        gm_nb.AddPage(nb_page2, _("Console"))
-
-##		# create choicebook on page 0 for layer tree pages
-##		# one choicebook page for each layer tree/display
-##		self.treeCB = wx.Choicebook(self.page0, -1, wx.DefaultPosition, wx.DefaultSize, style=wx.CHB_TOP)
-##		boxsizer0 = wx.BoxSizer()
-##		boxsizer0.Add(self.treeCB, 1, wx.EXPAND)
-##		self.page0.SetSizer(boxsizer0)
-##		self.page0.SetAutoLayout(True)
-##		self.Centre()
-##
-##		self.treeCB.Bind(wx.EVT_CHOICEBOOK_PAGE_CHANGED, self.OnCBPageChanged)
-##		self.treeCB.Bind(wx.EVT_CHOICEBOOK_PAGE_CHANGING, self.OnCBPageChanging)
-##
-####		# page 1 for layer options - modified by LayerTree class
-####		self.page1 = wx.ScrolledWindow(self, -1, style=wx.FULL_REPAINT_ON_RESIZE)
-####		self.page1.SetScrollRate(10,10)
-####		self.page1.SetBackgroundColour(wx.BLUE)
-######		self.page1 = wx.Panel(self, -1)
-####		self.AddPage(self.page1, _("Options"))
-####		boxsizer1 = wx.BoxSizer()
-####		boxsizer1.Add(self.page1, 1, wx.EXPAND)
-####		self.page1.SetSizer(boxsizer1)
-####		self.page1.SetAutoLayout(True)
-####		self.Centre()
-##
-##		# page 2 for console
-##		self.page2 = GMConsole(self)
-##		self.AddPage(self.page2, 'Console', select=True)
 
 	# choicebook methods
 	def OnCBPageChanged(self, event):
@@ -263,15 +225,6 @@ class GMChoicebook(wx.Choicebook):
 		sel = self.GetSelection()
 		event.Skip()
 
-	# notebook methods
-	def changePage(self, pg, content, name):
-		self.DeletePage(pg)
-		self.InsertPage(pg, content, name)
-
-	def getPage():
-		pass
-
-
 #---Layer tree creation ---#000000#FFFFFF-------------------------------------------------
 class LayerTree(CT.CustomTreeCtrl):
     #	def __init__(self, parent, id, pos, size, style):
@@ -282,61 +235,80 @@ class LayerTree(CT.CustomTreeCtrl):
             log=None):
         CT.CustomTreeCtrl.__init__(self, parent, id, pos, size, style,ctstyle)
         self.SetAutoLayout(True)
-        
+
         self.root = "" #ID of layer tree root node
         self.layer = {} #dictionary to index layers in layer tree
         self.node = 0 #index value for layers
         self.optpage = {} # dictionary of notebook option pages for each map layer
         self.layerID = "" # ID of currently selected layer
         self.layername = "" # name off currently selected layer
-        
+
         self.root = self.AddRoot("Map Layers")
+        self.SetPyData(self.root, None)
+#        self.tree.SetItemImage(self.root, fldridx, wx.TreeItemIcon_Normal)
+#        self.tree.SetItemImage(self.root, fldropenidx, wx.TreeItemIcon_Expanded)
+
+
+        for x in range(15):
+            child = self.AppendItem(self.root, "Item %d" % x)
+            self.SetPyData(child, None)
+#            self.tree.SetItemImage(child, fldridx, wx.TreeItemIcon_Normal)
+#            self.tree.SetItemImage(child, fldropenidx, wx.TreeItemIcon_Expanded)
 
         self.Bind(wx.EVT_TREE_ITEM_EXPANDING, self.onExpandNode)
         self.Bind(wx.EVT_TREE_ITEM_COLLAPSED, self.onCollapseNode)
         self.Bind(wx.EVT_TREE_ITEM_ACTIVATED, self.onActivateLayer)
         self.Bind(wx.EVT_TREE_SEL_CHANGED, self.onChangeSel)
-        
-    def AddLayer(self, nb, disp_idx, type):
+
+    def AddLayer(self, type):
         layername = type+':'+str(self.node)
-        gm_nb_pg1 = render.Track().GetChbk().GetPage(1)
-        print "nb page1 =", gm_nb_pg1
-        
-        if self.node >0 and self.layerID:
-            self.layer[self.node] = self.InsertItem(self.root, self.layerID, type+':'+str(self.node))
-        else:
-            self.layer[self.node] = self.PrependItem(self.root, type+':'+str(self.node))
+#        gm_nb_pg1 = render.Track().GetChbk().GetPage(1)
+#        print "nb page1 =", gm_nb_pg1
 
-        print "page1 =", nb.page1
+#        if self.node >0 and self.layerID:
+#            self.layer[self.node] = self.InsertItem(self.root, self.layerID, type+':'+str(self.node))
+#        elif self.node > 0:
+#            self.layer[self.node] = self.PrependItem(self.root, type+':'+str(self.node))
+#        else:
+#            self.layer[self.node] = self.AppendItem(self.root, type+':'+str(self.node))
 
-        if type == 'raster':
-            pass
-            #self.optpage[layername] = spare.Frame(nb.page1, -1)
-##			self.optpage[layername] = rastopt.MyPanel(gm_nb_pg1, -1, style=wx.TAB_TRAVERSAL)
-        elif type == 'vector':
-            self.optpage[layername] = vectopt.MyPanel(nb.page1, -1, style=wx.TAB_TRAVERSAL)
-        elif type == 'command':
-            self.optpage[layername] = cmdopt.MyPanel(nb.page1, -1, style=wx.TAB_TRAVERSAL)
-##        self.optpage[layername].Show(True)
-##        print "optpage1 = ", self.optpage[layername]
+        #maybe this is not properly referencing the layer tree???
+
+        child = self.AppendItem(self.root, "new item")
+        #print "page1 =", nb.page1
+
+#===============================================================================
+#        if type == 'raster':
+#            pass
+#            #self.optpage[layername] = spare.Frame(nb.page1, -1)
+###			self.optpage[layername] = rastopt.MyPanel(gm_nb_pg1, -1, style=wx.TAB_TRAVERSAL)
+#        elif type == 'vector':
+#            self.optpage[layername] = vectopt.MyPanel(nb.page1, -1, style=wx.TAB_TRAVERSAL)
+#        elif type == 'command':
+#            self.optpage[layername] = cmdopt.MyPanel(nb.page1, -1, style=wx.TAB_TRAVERSAL)
+###        self.optpage[layername].Show(True)
+###        print "optpage1 = ", self.optpage[layername]
+#===============================================================================
+        self.Expand(self.root)
         self.node += 1
+        print "node =",self.node
 
     def onCollapseNode(self, event):
         print 'group collapsed'
         event.Skip()
-        
+
     def onExpandNode(self, event):
         layerID = event.GetItem()
         print 'group expanded'
         event.Skip()
-        
+
     def onActivateLayer(self, event):
         layername = self.GetItemText(event.GetItem())
         # call a method to make this item display or not display?
         # change associated icon accordingly?
         print layername,'is activated'
         event.Skip()
-        
+
     def onChangeSel(self, event):
         old_layername = ""
         if str(event.GetOldItem()) != str(event.GetItem()):
