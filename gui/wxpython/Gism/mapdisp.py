@@ -7,7 +7,7 @@
 import wx
 import os, sys, time, glob
 
-#sys.path.append()
+#sys.path.append("..")
 
 import render
 import gism
