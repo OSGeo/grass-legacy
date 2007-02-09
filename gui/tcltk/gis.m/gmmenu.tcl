@@ -311,6 +311,23 @@ set descmenu [subst  {
 		{command {[G_msg "Analyze landscape patch characteristics"]} {} " r.le.patch" {} -command {execute r.le.patch }}
 		{command {[G_msg "Output landscape patch information"]} {} "r.le.trace" {} -command {execute r.le.trace }}
 	}}
+	{cascad {[G_msg "Landscape patch analysis"]} {} "" $tmenu {			
+		{command {[G_msg "Configure and create patch map for analysis"]} {} "r.li.setup" {} -command {execute r.li.setup }}
+		{separator}
+		{command {[G_msg "Calculate contrast weighted edge density index"]} {} "r.li.cwed" {} -command {execute r.li.cwed }}
+		{command {[G_msg "Calculate dominance's diversity index"]} {} "r.li.dominance" {} -command {execute r.li.dominance }}
+		{command {[G_msg "Calculate edge density index using a 4 neighbour algorithm"]} {} "r.li.edgedensity" {} -command {execute r.li.edgedensity }}
+		{command {[G_msg "Calculate mean patch size index using a 4 neighbour algorithm"]} {} " r.li.mps" {} -command {execute r.li.mps }}
+		{command {[G_msg "Calculate coefficient of variation of patch area"]} {} "	r.li.padcv" {} -command {execute r.li.padcv }}
+ 		{command {[G_msg "Calculate range of patch area size"]} {} "r.li.padrange" {} -command {execute r.li.padrange }}
+ 		{command {[G_msg "Calculate standard deviation of patch area"]} {} "r.li.padsd" {} -command {execute r.li.padsd }}
+ 		{command {[G_msg "Calculate patch density index using a 4 neighbour algorithm"]} {} "r.li.patchdensity" {} -command {execute r.li.patchdensity }}
+ 		{command {[G_msg "Calculate patch number index using a 4 neighbour algorithm"]} {} "r.li.patchnum" {} -command {execute r.li.patchnum }}
+ 		{command {[G_msg "Calculate dominance's diversity index"]} {} "r.li.shannon" {} -command {execute r.li.shannon }}
+		{command {[G_msg "Calculate Shannon's diversity index"]} {} "r.li.richness" {} -command {execute r.li.richness }}
+ 		{command {[G_msg "Calculate shape index"]} {} "r.li.shape" {} -command {execute r.li.shape }}
+ 		{command {[G_msg "Calculate Simpson's diversity index"]} {} "r.li.simpson" {} -command {execute r.li.simpson }}
+	}}
 	{cascad {[G_msg "Wildfire modeling"]} {} "" $tmenu {			
 		{command {[G_msg "Generate rate of spread (ROS) maps"]} {} "r.ros" {} -command {execute r.ros }}
 		{command {[G_msg "Generate least-cost spread paths"]} {} "r.spreadpath" {} -command {execute r.spreadpath }}
