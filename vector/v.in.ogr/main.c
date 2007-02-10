@@ -45,7 +45,7 @@ main (int argc, char *argv[])
     struct Option *dsn_opt, *out_opt, *layer_opt, *spat_opt, *where_opt, *min_area_opt;
     struct Option *snap_opt, *type_opt, *outloc_opt, *cnames_opt;
     struct Flag *list_flag, *no_clean_flag, *z_flag, *notab_flag;
-    struct Flag *over_flag, *extend_flag, *formats_flag;
+    struct Flag *over_flag, *extend_flag, *formats_flag, *tolower_flag;
     char   buf[2000], namebuf[2000];
     char   *separator;
     struct Key_Value *loc_proj_info = NULL, *loc_proj_units = NULL;
@@ -200,7 +200,11 @@ main (int argc, char *argv[])
     extend_flag->key = 'e';
     extend_flag->description = _("Extend location extents based on new dataset");
 
-    /* The parser checks if the map already exists in current mapset, this is
+    tolower_flag = G_define_flag();
+    tolower_flag->key = 'w';
+    tolower_flag->description = _("Change column names to lowercase characters");
+
+     /* The parser checks if the map already exists in current mapset, this is
      * wrong if location options is used, so we switch out the check and do it
      * in the module after the parser */
     overwrite = 0;
@@ -611,6 +615,10 @@ main (int argc, char *argv[])
 		    Ogr_fieldname = strdup ( namebuf );
 		}
 
+		/* captial column names are a pain in SQL */
+		if ( tolower_flag->answer )
+			G_str_to_lower(Ogr_fieldname);
+		
 		if ( strcmp ( OGR_Fld_GetNameRef( Ogr_field ), Ogr_fieldname) != 0 ) {
 		    G_warning (_("Column name changed: '%s' -> '%s'"),
 				  OGR_Fld_GetNameRef( Ogr_field ), Ogr_fieldname );
