@@ -6,7 +6,8 @@
 #include "local.h"
 
 int vect_to_rast(char *vector_map,char *raster_map, int field, char *column, int nrows, 
-	          int use, double value, int value_type )
+	          int use, double value, int value_type, char *rgbcolumn, int usergbcolumn,
+                  char *labelcolumn, int uselabelcolumn)
 {
     int i;
     char *vector_mapset;
@@ -26,10 +27,12 @@ int vect_to_rast(char *vector_map,char *raster_map, int field, char *column, int
     struct field_info *Fi;
     dbDriver *Driver;
     dbCatValArray cvarr;
+    int is_fp = 0;
 
     vector_mapset = G_find_vector2 (vector_map, "");
-    if (vector_mapset == NULL)
-	G_fatal_error (_("Vector map <%s> not found"), vector_map);
+    if (vector_mapset == NULL) {
+	G_fatal_error ( "Vector map <%s> not found", vector_map);
+    }
 
     start_clock (&timer);
     start_clock (NULL);
@@ -43,8 +46,9 @@ int vect_to_rast(char *vector_map,char *raster_map, int field, char *column, int
     if ( use == USE_ATTR ) {
 	db_CatValArray_init ( &cvarr );
 	Fi = Vect_get_field( &Map, field);
-	if ( Fi == NULL )
-	    G_fatal_error (_("Cannot get layer info for vector map"));
+	if ( Fi == NULL ) {
+	    G_fatal_error ("Cannot get layer info for vector map");
+	}
 
 	Driver = db_start_driver_open_database ( Fi->driver, Fi->database );
 	if (Driver == NULL)
@@ -57,7 +61,7 @@ int vect_to_rast(char *vector_map,char *raster_map, int field, char *column, int
 
 	ctype = cvarr.ctype;
 	if ( ctype != DB_C_TYPE_INT && ctype != DB_C_TYPE_DOUBLE )
-	    G_fatal_error (_("Unable to use column '%s'"), column);
+	    G_fatal_error ( "Column type not supported" );
 
 	if ( nrec < 0 )
             G_fatal_error (_("Cannot select data from table"));
@@ -179,11 +183,26 @@ int vect_to_rast(char *vector_map,char *raster_map, int field, char *column, int
     inform ("Creating support files for raster map ...");
     G_close_cell(fd);
     update_hist(raster_map, vector_map, vector_mapset, Map.head.orig_scale);
-    if (use == USE_D)
+
+    /* colors */
+    if (usergbcolumn) {
+        if ( format == USE_DCELL) 
+            is_fp = 1;
+        if (use != USE_ATTR) {
+            G_warning(_("Color can be updated from database only if use=attr"));
+            update_colors (raster_map);
+        }
+        update_dbcolors(raster_map, vector_map, field, rgbcolumn, is_fp, column);
+    }
+    else if (use == USE_D)
         update_fcolors(raster_map);
     else
         update_colors (raster_map);
     update_cats(raster_map, vector_map, vector_mapset);
+
+    /* labels */
+    if (uselabelcolumn)
+        update_labels(raster_map, vector_map, field, labelcolumn, is_fp, column);
     inform(NULL);
     stop_clock(NULL);
 
