@@ -42,9 +42,9 @@ class LayerTree(CT.CustomTreeCtrl):
         layername = layertype+':'+str(self.node)
 
         if self.node >0 and self.layerID:
-            self.layer[self.node] = self.InsertItem(self.root, self.layerID, layername)
+            self.layer[self.node] = self.InsertItem(self.root, self.layerID, layername, ct_type=1)
         else:
-            self.layer[self.node] = self.AppendItem(self.root, layername)
+            self.layer[self.node] = self.AppendItem(self.root, layername, ct_type=1)
         self.SetPyData(self.layer[self.node], None)
 
         # create options panels for each layer added
