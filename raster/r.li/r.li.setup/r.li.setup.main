@@ -9,6 +9,12 @@
 lappend auto_path $env(GISBASE)/bwidget
 package require -exact BWidget 1.2.1
 
+if {[info exists env(OS)] && $env(OS) == "Windows_NT"} {
+        set mingw "1"
+} else {
+        set mingw "0"
+}
+
 # setting environment variables
 set env(GISDBASE) [exec g.gisenv get=GISDBASE]
 set env(LOCATION_NAME) [exec g.gisenv get=LOCATION_NAME]
@@ -339,11 +345,11 @@ pack .files -side right -expand 1 -fill both -padx 7 -pady 7
 }
 pack .l 
 #create new button
-
 button .new -text "New" -width 8 -command {
 	createNewConfiguration
 }
-pack .new 
+pack .new
+
 # create remove button
 button .r -text "Remove" -width 8 -command {
 	global env
@@ -382,3 +388,18 @@ button .r -text "Remove" -width 8 -command {
 
 pack .r 
 
+#create help button
+button .h -text "Help" -width 8 -command {
+	if { $mingw == "1" } {
+		exec -- $env(GRASS_HTML_BROWSER) file://$env(GISBASE)/docs/html/r.li.setup.html &;
+	} else {
+		exec -- $env(GRASS_HTML_BROWSER) file://$env(GISBASE)/docs/html/r.li.setup.html >@stdout 2>@stderr &;
+	}
+}
+pack .h
+
+#create close button
+button .c -text "Close" -width 8 -command {
+	destroy .
+}
+pack .c
