@@ -25,11 +25,11 @@ proc kSamplingFrame {} {
 	entry .keyboard.input.y  -width 10 -textvariable env(SF_Y)
 	grid .keyboard.input.yLabel .keyboard.input.y -sticky ew
 		
-	label .keyboard.input.rlLabel -text "Row lenght of sampling frame" -anchor e
+	label .keyboard.input.rlLabel -text "Row length of sampling frame" -anchor e
 	entry .keyboard.input.rl  -width 10 -textvariable env(SF_RL)
 	grid .keyboard.input.rlLabel .keyboard.input.rl -sticky ew
 
-	label .keyboard.input.clLabel -text "Column lenght of upper left corner" -anchor e
+	label .keyboard.input.clLabel -text "Column length of upper left corner" -anchor e
 	entry .keyboard.input.cl  -width 10 -textvariable env(SF_CL)
 	grid .keyboard.input.clLabel .keyboard.input.cl -sticky ew
 
