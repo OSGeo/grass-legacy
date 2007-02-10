@@ -1168,7 +1168,7 @@ int calculateF (int fd,area_des ad, struct Cell_head hd,double *result)
 			  }
 			  npatch++;
 			}
-		      else /*l'albero non è null*/
+		      else /*the tree (albero) isn't null */
 			{
 			  ris=avlID_add(&albero,idCorr,uno);
 			  switch(ris)
