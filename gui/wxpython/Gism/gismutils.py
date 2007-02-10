@@ -27,9 +27,9 @@ class LayerTree(CT.CustomTreeCtrl):
 #        self.tree.SetItemImage(self.root, fldropenidx, wx.TreeItemIcon_Expanded)
 
 
-        for x in range(15):
-            child = self.AppendItem(self.root, "Item %d" % x)
-            self.SetPyData(child, None)
+#        for x in range(15):
+#            child = self.AppendItem(self.root, "Item %d" % x)
+#            self.SetPyData(child, None)
 #            self.tree.SetItemImage(child, fldridx, wx.TreeItemIcon_Normal)
 #            self.tree.SetItemImage(child, fldropenidx, wx.TreeItemIcon_Expanded)
 
@@ -38,63 +38,59 @@ class LayerTree(CT.CustomTreeCtrl):
         self.Bind(wx.EVT_TREE_ITEM_ACTIVATED, self.onActivateLayer)
         self.Bind(wx.EVT_TREE_SEL_CHANGED, self.onChangeSel)
 
-    def AddLayer(self, type):
-        layername = type+':'+str(self.node)
-#        gm_nb_pg1 = render.Track().GetChbk().GetPage(1)
-#        print "nb page1 =", gm_nb_pg1
+    def AddLayer(self, idx, layertype):
+        layername = layertype+':'+str(self.node)
 
-#        if self.node >0 and self.layerID:
-#            self.layer[self.node] = self.InsertItem(self.root, self.layerID, type+':'+str(self.node))
-#        elif self.node > 0:
-#            self.layer[self.node] = self.PrependItem(self.root, type+':'+str(self.node))
-#        else:
-#            self.layer[self.node] = self.AppendItem(self.root, type+':'+str(self.node))
+        if self.node >0 and self.layerID:
+            self.layer[self.node] = self.InsertItem(self.root, self.layerID, layername)
+        else:
+            self.layer[self.node] = self.AppendItem(self.root, layername)
+        self.SetPyData(self.layer[self.node], None)
 
-        #maybe this is not properly referencing the layer tree???
-
-        child = self.AppendItem(self.root, "new item")
-        #print "page1 =", nb.page1
-
-#===============================================================================
-#        if type == 'raster':
-#            pass
-#            #self.optpage[layername] = spare.Frame(nb.page1, -1)
-###			self.optpage[layername] = rastopt.MyPanel(gm_nb_pg1, -1, style=wx.TAB_TRAVERSAL)
-#        elif type == 'vector':
-#            self.optpage[layername] = vectopt.MyPanel(nb.page1, -1, style=wx.TAB_TRAVERSAL)
-#        elif type == 'command':
-#            self.optpage[layername] = cmdopt.MyPanel(nb.page1, -1, style=wx.TAB_TRAVERSAL)
-###        self.optpage[layername].Show(True)
-###        print "optpage1 = ", self.optpage[layername]
-#===============================================================================
-        self.Expand(self.root)
+        # create options panels for each layer added
+        if layertype == 'raster':
+            pass
+            #self.optpage[layername] = spare.Frame(nb.page1, -1)
+##            self.optpage[layername] = rastopt.MyPanel(gm_nb_pg1, -1, style=wx.TAB_TRAVERSAL)
+        elif layertype == 'vector':
+            pass
+            #self.optpage[layername] = vectopt.MyPanel(nb.page1, -1, style=wx.TAB_TRAVERSAL)
+        elif layertype == 'command':
+            pass
+            #self.optpage[layername] = cmdopt.MyPanel(nb.page1, -1, style=wx.TAB_TRAVERSAL)
+##        self.optpage[layername].Show(True)
+##        print "optpage1 = ", self.optpage[layername]
         self.node += 1
-        print "node =",self.node
 
     def onCollapseNode(self, event):
         print 'group collapsed'
         event.Skip()
 
     def onExpandNode(self, event):
-        layerID = event.GetItem()
+        self.layerID = event.GetItem()
+        self.layername = self.GetItemText(event.GetItem())
         print 'group expanded'
         event.Skip()
 
     def onActivateLayer(self, event):
-        layername = self.GetItemText(event.GetItem())
+        self.layerID = event.GetItem()
+        self.layername = self.GetItemText(event.GetItem())
         # call a method to make this item display or not display?
         # change associated icon accordingly?
         print layername,'is activated'
         event.Skip()
 
     def onChangeSel(self, event):
-        old_layername = ""
-        if str(event.GetOldItem()) != str(event.GetItem()):
-            old_layername = self.GetItemText(event.GetOldItem())
-        new_layername = self.GetItemText(event.GetItem())
-        if old_layername:
-            self.optpage[old_layername].Show(False)
-        self.optpage[new_layername].Show(True)
+        self.layerID = event.GetItem()
+        self.layername = self.GetItemText(event.GetItem())
+    # old code for selecting options panels for each layer
+#        old_layername = ""
+#        if str(event.GetOldItem()) != str(event.GetItem()):
+#            old_layername = self.GetItemText(event.GetOldItem())
+#        new_layername = self.GetItemText(event.GetItem())
+#        if old_layername:
+#            self.optpage[old_layername].Show(False)
+#        self.optpage[new_layername].Show(True)
         event.Skip()
 
 #---Console functions ---#000000#FFFFFF------------------------
@@ -219,7 +215,7 @@ def GetTempfile( pref=None):
         Path to file name (string) or None
     """
 
-    tempfile = os.popen("g.tempfile pid=%d" % 
+    tempfile = os.popen("g.tempfile pid=%d" %
             os.getpid()).readlines()[0].strip()
 
     if not tempfile:
