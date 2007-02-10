@@ -47,7 +47,7 @@ int calculateIndex(char *file, int f(int, char **, area_des, double *),\
 	/*int mv_rows, mv_cols;*/
 	list l;
 	msg m,doneJob;
-		int perc=0;
+	/* int perc=0; */
 	
 	g = (g_areas) G_malloc(sizeof(struct generatore));
 	l = (list) G_malloc(sizeof(struct lista));
@@ -112,12 +112,12 @@ int calculateIndex(char *file, int f(int, char **, area_des, double *),\
 		/*creating new raster file*/
 		mv_fd = G_open_raster_new(output, DCELL_TYPE);
 		if (mv_fd < 0)
-			G_fatal_error( _("unable to create raster\n"));
+			G_fatal_error( _("unable to create raster"));
 			
 		random_access_name= G_tempfile();
 		random_access = open(random_access_name, O_RDWR|O_CREAT, 0755);
 		if(random_access == -1)
-			G_fatal_error( _("Cannot creat random access file\n"));
+			G_fatal_error( _("Cannot create random access file"));
 	}
 	else {
 		/*check if ~/.r.li/output exist*/
@@ -221,13 +221,13 @@ int calculateIndex(char *file, int f(int, char **, area_des, double *),\
 			G_message( _("r.li.worker (pid %i) exited with abnormal status %i"), \
 				donePid, status);
 		else
-			G_message( _("r.li.worker (pid %i) terminated\n"), donePid);
+			G_message( _("r.li.worker (pid %i) terminated"), donePid);
 		
 		/*remove pipe*/
 		if (close(child[j].channel) != 0)
-			G_message( _("Cannot close %s file (PIPE)\n"), child[j].pipe);
+			G_message( _("Cannot close %s file (PIPE)"), child[j].pipe);
 		if (unlink(child[j].pipe) != 0)
-			G_message( _("Cannot delete %s file (PIPE)\n"), child[j].pipe);
+			G_message( _("Cannot delete %s file (PIPE)"), child[j].pipe);
 	}
 	
 	/*kill childs without Job*/
@@ -241,12 +241,12 @@ int calculateIndex(char *file, int f(int, char **, area_des, double *),\
 			G_message( _("r.li.worker (pid %i) exited with abnormal status %i"), \
 				child[i].pid, status);
 		else
-			G_message( _("r.li.worker (pid %i) terminated\n"), child[i].pid);
+			G_message( _("r.li.worker (pid %i) terminated"), child[i].pid);
 		/*remove pipe*/
 		if (close(child[i].channel) != 0)
-			G_message( _("Cannot close %s file (PIPE2)\n"), child[i].pipe);
+			G_message( _("Cannot close %s file (PIPE2)"), child[i].pipe);
 		if (unlink(child[i].pipe) != 0)
-			G_message( _("Cannot delete %s file (PIPE2)\n"), child[i].pipe);
+			G_message( _("Cannot delete %s file (PIPE2)"), child[i].pipe);
 	}
 	/*################################################
 	  --------------delete tmp files------------------
@@ -262,9 +262,9 @@ int calculateIndex(char *file, int f(int, char **, area_des, double *),\
 	
 	
 	if (close(receiveChannel) != 0)
-			G_message( _("Cannot close receive channel file\n"));
+			G_message( _("Cannot close receive channel file"));
 	if (unlink(reportChannelName) != 0)
-			G_message( _("Cannot delete %s file\n"), child[i].pipe);
+			G_message( _("Cannot delete %s file"), child[i].pipe);
 	return 1;
 }
 
@@ -280,7 +280,7 @@ int parseSetup(char *path, list l, g_areas g, char *raster){
 	int size;
 	
 	if (stat(path, &s) != 0)
-		G_fatal_error( _("Cannot make stat of %s configuration file "), path);
+		G_fatal_error( _("Cannot make stat of %s configuration file"), path);
 	size = s.st_size * sizeof(char);
 	buf = G_malloc(size);
 	setup = open(path, O_RDONLY, 0755);
@@ -475,7 +475,7 @@ int disposeAreas(list l, g_areas g, char *def){
 		sa_cl = g->cl;
 		max_units = (int) rint((sf_rl/sa_rl) * (sf_cl/sa_cl));
 		if (units > max_units)
-			G_fatal_error( _("Too much units to place"));
+			G_fatal_error( _("Too many units to place"));
 		assigned = G_malloc(units*sizeof(int));
 		i =0;
 		srandom(getpid());
@@ -538,7 +538,7 @@ int disposeAreas(list l, g_areas g, char *def){
 		r_strat_len = (int) rint(g->rows/r_strat);
 		c_strat_len = (int) rint(g->cols/c_strat);
 		if (r_strat_len < g->rl || c_strat_len < g->cl)
-			G_fatal_error( _("Too much strats for raster map\n"));
+			G_fatal_error( _("Too many strats for raster map"));
 		loop = r_strat * c_strat;
 		srandom(getpid());
 		for (i=0; i<loop ; i++){
@@ -625,7 +625,7 @@ int raster_Output(int fd, int aid, g_areas g, double res){
 	double toPut = res;
 	long offset = aid * sizeof(double);
 	if (lseek(fd, offset, SEEK_SET) != offset){
-		G_message( _("cannot make lseek\n"));
+		G_message( _("Cannot make lseek"));
 		return -1;
 	}
 	if (write(fd, &toPut, sizeof(double)) == 0)
@@ -653,7 +653,7 @@ int write_raster(int mv_fd, int random_access, g_areas g){
 	for(i = 0; i<rows; i++){
 		letti = read(random_access, file_buf, (cols * sizeof(double)));
 		if (letti == -1 )
-			G_message( _("%s\n"), strerror(errno));
+			G_message( "%s", strerror(errno));
 		for (j=0; j<cols; j++){
 			cell_buf[j+center]= file_buf[j];
 		}
