@@ -16,6 +16,7 @@
 #############################################################################
 #%Module
 #%  description: Configuration editor for r.li.'index'
+#%  keywords: raster, landscape structure analysis
 #%End
 
 if  [ -z "$GISBASE" ] ; then
