@@ -25,6 +25,14 @@
 #% multiple : yes
 #% required : no
 #%end
+#%option
+#% key: output
+#% type: string
+#% gisprompt: output
+#% description: write output to PNG image
+#% multiple : no
+#% required : no
+#%end
 #%flag 
 #%key: i
 #%description: Use image list and not group
@@ -61,6 +69,7 @@ if [ ! -x "`which awk`" ] ; then
     exit 1
 fi
 
+
 # setting environment, so that awk works properly in all languages
 unset LC_ALL
 LC_NUMERIC=C
@@ -79,6 +88,13 @@ if [ ! "$GIS_OPT_GROUP" ] ; then
       echo "Please use -i if you don't use the 'group' parameter"
       exit 1
    fi
+fi
+
+if [ -n "$GIS_OPT_OUTPUT" ] ; then
+  if [ $GIS_FLAG_M -eq 1 ] ; then
+    echo "Cannot use -m and option output together" 2>&1
+    exit 1
+  fi
 fi
 
 if [ $GIS_FLAG_I -eq 0 ] ; then
@@ -206,6 +222,10 @@ done
 xrange=`expr $NUMBANDS + 1`
 
 # build gnuplot script
+if [ -n "$GIS_OPT_OUTPUT" ] ; then
+  echo "set term png large" >> spectrum.gnuplot
+  echo "set output '$GIS_OPT_OUTPUT'" >> spectrum.gnuplot
+fi
 echo "set xtics ($xlabels)" >> spectrum.gnuplot
 echo "set grid" >> spectrum.gnuplot
 echo "set title 'Spectral signatures'" >> spectrum.gnuplot
