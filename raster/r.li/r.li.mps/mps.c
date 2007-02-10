@@ -47,7 +47,7 @@ int main(int argc, char *argv[])
   conf->description = "configuration file in ~/.r.li/history/ folder (i.e conf=my_configuration)";
   conf->type = TYPE_STRING;
   conf->required = YES;
-  conf->gisprompt = "file,file,file";
+  conf->gisprompt = "old_file,file,input";
   
   output = G_define_standard_option(G_OPT_R_OUTPUT);
   
