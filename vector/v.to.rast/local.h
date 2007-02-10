@@ -47,7 +47,9 @@ int raster_dot(int, int);
 /* support.c */
 int update_hist(char *, char *, char *, long);
 int update_colors(char *);
+int update_dbcolors(char *, char *, int, char *, int, char *);
+int update_labels(char *, char *, int, char *, int, char *);
 int update_cats(char *, char *, char *);
 int update_fcolors(char *raster_name);
 /* vect2rast.c */
-int vect_to_rast(char *, char *, int, char *, int, int, double, int);
+int vect_to_rast(char *, char *, int, char *, int, int, double, int, char *, int, char *, int);
