@@ -56,9 +56,9 @@ set env(SF_E) ""
 set env(SF_W) ""
 #path of r.li source directory 
 set env(F_PATH) $env(GISBASE)/etc/r.li.setup
-#lenght in rows of keyboard setted circle
+#length in rows of keyboard setted circle
 set env(CIR_RL) ""
-#lengh in columns of keyboard setted circle
+#lenght in columns of keyboard setted circle
 set env(CIR_CL) ""
 
 #file for map browsing
