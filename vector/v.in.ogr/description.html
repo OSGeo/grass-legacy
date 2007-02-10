@@ -119,26 +119,27 @@ v.in.ogr dsn=OCI:username/password@database_instance output=grasslayer layer=roa
 </ul>
 
 <h3>Support of database schema:</h3>
-  <P>
-  For schema support, first set a default schema with 
-  <em><a href="db.connect.html">db.connect</a></em>. If schema support is
-  used the schema name must be specified whenever a db.* module is called.
-<P>
-  Example:
-  <div class="code"><pre>
-  db.connect driver=pg database=test schema=user1 group=group1
-  db.login driver=pg database=test user=user1 password=pwd1
-  v.in.ogr dsn=./ layer=river output=river     # -> table user1.river
-  db.select table=user1.river
-  </pre></div>
 
-  The user can ignore schemas, if desired:
-  <div class="code"><pre>
-  db.connect driver=pg database=test
-  db.login driver=pg database=test user=user1 password=pwd1
-  v.in.ogr dsn=./ layer=river output=river     # -> table public.river
-  db.select table=river
-  </pre></div>
+<P>
+For schema support, first set a default schema with 
+<em><a href="db.connect.html">db.connect</a></em>. If schema support is
+used the schema name must be specified whenever a db.* module is called.
+<P>
+Example:
+<div class="code"><pre>
+db.connect driver=pg database=test schema=user1 group=group1
+db.login driver=pg database=test user=user1 password=pwd1
+v.in.ogr dsn=./ layer=river output=river     # -> table user1.river
+db.select table=user1.river
+</pre></div>
+
+The user can ignore schemas, if desired:
+<div class="code"><pre>
+db.connect driver=pg database=test
+db.login driver=pg database=test user=user1 password=pwd1
+v.in.ogr dsn=./ layer=river output=river     # -> table public.river
+db.select table=river
+</pre></div>
 
 
 <h2>NOTES</h2>
@@ -152,7 +153,10 @@ This means that SQL neither supports '.' (dots) nor '-' (minus) nor '#' in table
 column names. Also a table name must start with a character, not a number.
 <br>
 <em>v.in.ogr</em> converts '.', '-' and '#' to '_' (underscore) during import.
-Use the <b>cnames</b> parameter to define new column names during import.
+The <em>-w</em> flag changes capital column names to lowercase characters as
+a convenience for SQL usage (lowercase column names avoid need to quote them
+if the attribute table is stored in a SQL DBMS such as PostgreSQL).
+The <b>cnames</b> parameter is used to define new column names during import.
 
 <P>
 The DBF database specification limits column names to 10 characters.
@@ -161,7 +165,7 @@ column/field names, they will be truncated. If this results in multiple
 columns with the same name then <em>v.in.ogr</em> will produce an error.
 In this case you will either have to modify the input data or use
 <em>v.in.ogr</em>'s <b>cnames</b> parameter to rename columns to something
-unique. (hint: copy & modify the list given with the error message).
+unique. (hint: copy and modify the list given with the error message).
 Alternatively, change the local DB with
 <em><a href="db.connect.html">db.connect</a></em>.
 
