@@ -783,15 +783,15 @@ class Track:
 	This class has functions and variables for tracking map display,
 	associated notebook pages, and other index values.
 	"""
+	layertree = {} #layer tree in GIS Manager, indexed by display.
 	nb = {} #notebook in GIS Manager, indexed by display.
 	cb_page = {} #choicbook page in GIS Manager, indexed by display.
 	curr_disp = {} #map displays, indexed by display number.
-	disp_idx = 0
+	disp_idx = 0 #index for each display
 
 	# store and retrieve index of display with focus
 	def SetDisp_idx(self, idx):
 		self.disp_idx = idx
-		print "self disp_index =", self.disp_idx
 
 	def GetDisp_idx(self):
 		return self.disp_idx
@@ -823,3 +823,10 @@ class Track:
 
 	def GetNB(self, disp_idx):
 		return self.nb[disp_idx]
+
+	#store and retriev notebook with layer tree and console for display with focus
+	def SetTree(self, disp_idx, tree):
+		self.layertree[disp_idx] = tree
+
+	def GetTree(self, disp_idx):
+		return self.layertree[disp_idx]
