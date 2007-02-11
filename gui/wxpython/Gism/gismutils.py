@@ -3,13 +3,26 @@ import wx
 import wx.lib.customtreectrl as CT
 import render
 
+#set path to icon directory
+if not os.getenv("GISBASE"):
+    sys.stderr.write("GISBASE not set, you have to be in running GRASS session!\n")
+    sys.exit(1)
+
+gipath = ""
+if not os.getenv("GRASS_ICONPATH"):
+    gipath = os.getenv("GISBASE")+"/etc/gui/icons/"
+else:
+    gipath = os.environ["GRASS_ICONPATH"]
+
+
 #---Layer tree creation ---#000000#FFFFFF-------------------------------------------------
 class LayerTree(CT.CustomTreeCtrl):
     #	def __init__(self, parent, id, pos, size, style):
     def __init__(self, parent, id=wx.ID_ANY, pos=wx.DefaultPosition,
             size=wx.DefaultSize,
             style=wx.SUNKEN_BORDER,
-            ctstyle=CT.TR_HAS_BUTTONS |CT.TR_HAS_VARIABLE_ROW_HEIGHT,
+            ctstyle=CT.TR_HAS_BUTTONS |CT.TR_HAS_VARIABLE_ROW_HEIGHT | CT.TR_HIDE_ROOT |
+                CT.TR_ROW_LINES,
             log=None):
         CT.CustomTreeCtrl.__init__(self, parent, id, pos, size, style,ctstyle)
         self.SetAutoLayout(True)
@@ -23,6 +36,32 @@ class LayerTree(CT.CustomTreeCtrl):
 
         self.root = self.AddRoot("Map Layers")
         self.SetPyData(self.root, None)
+
+        #create image list to use with layer tree
+        il = wx.ImageList(24, 24, False)
+
+        trgif = wx.Image(gipath+r'/element-cell.gif', wx.BITMAP_TYPE_GIF)
+        trgif.Rescale(24, 24)
+        trgif = trgif.ConvertToBitmap()
+        self.rast_icon = il.Add(trgif)
+#        print "width=",trgif.GetWidth()
+#        print "height=",trgif.GetHeight()
+        trgif = wx.Image(gipath+r'/element-vector.gif', wx.BITMAP_TYPE_GIF)
+        trgif.Rescale(24, 24)
+        trgif = trgif.ConvertToBitmap()
+        self.vect_icon = il.Add(trgif)
+
+        trgif = wx.Image(gipath+r'/gui-cmd.gif', wx.BITMAP_TYPE_GIF)
+        trgif.Rescale(24, 24)
+        trgif = trgif.ConvertToBitmap()
+        self.cmd_icon = il.Add(trgif)
+
+        checksize = il.GetSize(0)
+        checkbmp = il.GetBitmap(0)
+        print "bitmap 0=",checkbmp
+#        print "checksize=",checksize
+        self.AssignImageList(il)
+
 #        self.tree.SetItemImage(self.root, fldridx, wx.TreeItemIcon_Normal)
 #        self.tree.SetItemImage(self.root, fldropenidx, wx.TreeItemIcon_Expanded)
 
@@ -49,7 +88,8 @@ class LayerTree(CT.CustomTreeCtrl):
 
         # create options panels for each layer added
         if layertype == 'raster':
-            pass
+            self.SetItemImage(self.layer[self.node], self.rast_icon)
+
             #self.optpage[layername] = spare.Frame(nb.page1, -1)
 ##            self.optpage[layername] = rastopt.MyPanel(gm_nb_pg1, -1, style=wx.TAB_TRAVERSAL)
         elif layertype == 'vector':
