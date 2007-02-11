@@ -86,6 +86,8 @@ void write_done(struct Map_info *Map)
 
     G_message (_("Following DXF layers found:"));
     for (i = 0; i < num_fields; i++) {
+	/* capital column names are a pain in SQL */
+	G_str_to_lower(field_names[i]);
 	G_message (_("Layer %d: %s"), i + 1, field_names[i]);
 	G_free(field_names[i]);
 	if (!flag_table) {
@@ -194,6 +196,8 @@ static int get_field_cat(struct Map_info *Map, char *field_name, int *field,
 	db_init_string(&str);
     }
 
+    /* capital table names are a pain in SQL */
+    G_str_to_lower(Fi[i]->table);
     sprintf(buf, "create table %s (cat integer"
 	    ", layer varchar(%d)"
 	    ", entity varchar(%d)"
