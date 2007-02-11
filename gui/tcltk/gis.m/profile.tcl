@@ -192,9 +192,9 @@ proc GmProfile::psave { } {
 	if { [info exists HOME] } {
 		set dir $env(HOME)
 		set path [tk_getSaveFile -filetypes $types -initialdir $dir \
-			-defaultextension ".eps"]
+			-defaultextension ".eps" -parent .profile]
 	} else {
-		set path [tk_getSaveFile -filetypes $types -defaultextension ".eps"]
+		set path [tk_getSaveFile -filetypes $types -defaultextension ".eps" -parent .profile]
 	}
 	
 	$pcan postscript -file "$path"
@@ -346,6 +346,7 @@ proc GmProfile::getcoords { mapcan } {
 	
 	# coordinates for use in r.profile
 	append pcoords "," $east2 "," $north2
+	puts "pcoords = $pcoords"
 	
 	# x distance off each transect segment
 	
@@ -401,13 +402,15 @@ proc GmProfile::pdraw { } {
 				set GmProfile::pmap [GmRaster::mapname $sel]
 			}
 		} else {
-			tk_messageBox -message "You must select a raster to profile" -type ok -icon warning
+			tk_messageBox -message [G_msg "You must select a raster to profile"] -type ok -icon warning \
+			-title [G_msg "No raster map selected"] -parent .profile
 			return
 		}
 	}    
 	
 	if {$pcoords == ""} {
-		tk_messageBox -message "You must draw a transect to profile" -type ok -icon warning
+		tk_messageBox -message [G_msg "You must draw a transect to profile"] -type ok -icon warning \
+		-title [G_msg "No transect drawn"] -parent .profile
 		return
 	}
 
@@ -416,6 +419,12 @@ proc GmProfile::pdraw { } {
 	update
 	# calculate elevation max, min, and range
 	GmProfile::setelev $pmap
+	if {$elevrange == 0} {
+		tk_messageBox -message [G_msg "Elevation range for selected raster is zero.\nNo profile can be created."]\
+		-type ok -icon warning -title [G_msg "Zero elevation range"] -parent .profile
+		return
+	}
+	
 	# put map name back in status bar
 	set GmProfile::status [G_msg "Profile for $pmap"]    
 
@@ -465,8 +474,10 @@ proc GmProfile::pdraw { } {
 	
 	# add transect segment markers
 	foreach {x} $pcoordslist {
-		set segx [expr $left + (($x * $width) / $tottlength)]
-		$pcan create line $segx $bottom $segx $top -fill grey
+		if { $tottlength > 0.0 } {
+			set segx [expr $left + (($x * $width) / $tottlength)]
+			$pcan create line $segx $bottom $segx $top -fill grey
+		}
 	}
 
 	# run r.profile first time to calculate total transect distance (needed for lat lon regions)
@@ -481,8 +492,7 @@ proc GmProfile::pdraw { } {
 			exit 1
 		}
 	}
-
-
+	
 	# add label for total transect distance
 	$pcan create text $right $xscaletop \
 		-text "$cumdist" \
@@ -494,6 +504,7 @@ proc GmProfile::pdraw { } {
    	if {![catch {open "|r.profile input=$pmap profile=$pcoords 2> $devnull" r} input]} {
 		while {[gets $input line] >= 0} {
 			if { [regexp -nocase {^([0-9].*) ([[.-.]0-9].*)$} $line trash dist elev] } {
+				puts "distance = $dist and elevation = $elev"
 				set pelev [expr $bottom - ($height * ($elev - $elevmin) / $elevrange)] 
 				set pdist [expr $left + (($dist * $width) / $cumdist)]
 				lappend profilelist $pdist $pelev 
