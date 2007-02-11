@@ -9777,13 +9777,12 @@ msgstr "Benutzt G3D Maske (falls existent) mit der Eingabekarte."
 
 #: ../raster/r.to.rast3/main.c:121
 #, fuzzy
-msgid "Cold not get raster row"
-msgstr "Kann die Rasterzeile nicht holen\n"
+msgid "Could not get raster row"
+msgstr "Kann die Rasterzeile nicht holen"
 
 #: ../raster/r.to.rast3/main.c:191
-#, fuzzy
 msgid "raster, volume, conversion"
-msgstr "Raster, Bilder, Bildfusion"
+msgstr "Raster, Volumen, Konvertierung"
 
 #: ../raster/r.to.rast3/main.c:193
 msgid "Converts 2D raster map slices to one 3D raster volume map"
@@ -16930,7 +16929,7 @@ msgstr "Klassen Distribution"
 #: ../imagery/i.zc/main.c:48 ../imagery/i.his.rgb/h2rmain.c:24
 #: ../imagery/i.rectify/main.c:35
 msgid "imagery"
-msgstr "Bilder"
+msgstr "Bildverarbeitung"
 
 #: ../imagery/i.cluster/main.c:40
 msgid ""
