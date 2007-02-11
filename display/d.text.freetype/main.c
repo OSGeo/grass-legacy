@@ -73,18 +73,17 @@ static char	*transform_string(char *, int (*)(int));
 static int	convert_text(char *, char *, unsigned char **);
 static int	get_coordinates(rectinfo, char **, char, char, double *,
 			double *, int *, int *);
-static void	get_color(char *, int *);
-static void	init_colors(void);
+static void	set_color(const char *);
 
 static int	set_font(FT_Library, FT_Face *, char *);
 static void	get_dimension(FT_Face, unsigned char *, int, FT_Vector *);
 static void	get_ll_coordinates(FT_Face, unsigned char *, int, char *,
 			double, FT_Vector *);
 static void	set_matrix(FT_Matrix *, double);
-static int	draw_character(rectinfo, FT_Face, FT_Matrix *, FT_Vector *, int,
+static int	draw_character(rectinfo, FT_Face, FT_Matrix *, FT_Vector *, 
 			int);
 static void	draw_text(rectinfo, FT_Face, FT_Vector *, unsigned char *, int,
-			int, double);
+			double);
 
 
 int
@@ -334,9 +333,7 @@ main(int argc, char **argv)
 			error(_("Unable to set size"));
 	}
 
-	init_colors();
-
-	get_color(tcolor, &color);
+	set_color(tcolor);
 
 	if(!flag.c->answer)
 	{
@@ -359,17 +356,17 @@ main(int argc, char **argv)
 		get_ll_coordinates(face, out, ol,
 				param.align->answer, rotation, &pen);
 		pen2 = pen;
-		draw_text(win, face, &pen, out, ol, color, rotation);
+		draw_text(win, face, &pen, out, ol, rotation);
 
 		if(bold){
 			pen.x = pen2.x + 64 * cos(rotation);
 			pen.y = pen2.y - 64 * sin(rotation);
 			pen2 = pen;
-			draw_text(win, face, &pen, out, ol, color, rotation);
+			draw_text(win, face, &pen, out, ol, rotation);
 
 			pen.x = pen2.x - 64 * sin(rotation);
 			pen.y = pen2.y - 64 * cos(rotation);
-			draw_text(win, face, &pen, out, ol, color, rotation);
+			draw_text(win, face, &pen, out, ol, rotation);
 		}
 
 		if(param.at->answer)
@@ -476,7 +473,7 @@ main(int argc, char **argv)
 						break;
 					case 'C':
 						tcolor = transform_string(p, tolower);
-						get_color(tcolor, &color);
+						set_color(tcolor);
 						break;
 					case 'S':
 						i = 0;
@@ -604,18 +601,17 @@ main(int argc, char **argv)
 				get_ll_coordinates(face, out, ol,
 						align, rotation, &pen);
 				pen2 = pen;
-				draw_text(win, face, &pen, out, ol,
-						color, rotation);
+				draw_text(win, face, &pen, out, ol, rotation);
 
 				if(bold){
 					pen.x = pen2.x + 64 * cos(rotation);
 					pen.y = pen2.y - 64 * sin(rotation);
 					pen2 = pen;
-					draw_text(win, face, &pen, out, ol, color, rotation);
+					draw_text(win, face, &pen, out, ol, rotation);
 
 					pen.x = pen2.x - 64 * sin(rotation);
 					pen.y = pen2.y - 64 * cos(rotation);
-					draw_text(win, face, &pen, out, ol, color, rotation);
+					draw_text(win, face, &pen, out, ol, rotation);
 				}
 
 				if(!linefeed)
@@ -859,16 +855,17 @@ get_coordinates(rectinfo win, char **ans, char pixel, char geocoor,
 }
 
 static void
-get_color(char *tcolor, int *color)
+set_color(const char *tcolor)
 {
-	int	r, g, b;
-	const int customcolor = MAXCOLORS + 1;
-	
+	static int customcolor = MAXCOLORS + 1;
+	int r, g, b;
+
 	if(sscanf(tcolor, "%d:%d:%d", &r, &g, &b) == 3)
 	{
-		if (r>=0 && r<256 && g>=0 && g<256 && b>=0 && b<256) {
+		if (r>=0 && r<256 && g>=0 && g<256 && b>=0 && b<256)
+		{
 			R_reset_color(r, g, b, customcolor);
-			*color = customcolor;
+			R_color(customcolor);
 		}
 	}
 #define BACKWARDS_COMPATIBLE
@@ -876,31 +873,20 @@ get_color(char *tcolor, int *color)
 	else if(sscanf(tcolor, "0x%02x%02x%02x", &r, &g, &b) == 3)
 	{
 		R_reset_color(r, g, b, customcolor);
-		*color = customcolor;
+		R_color(customcolor);
 	}
 #endif
 	else
-		*color = D_translate_color(tcolor);
-
-	if(!*color)
 	{
-		G_warning(_("[%s]: No such color"), tcolor);
-		*color = D_translate_color(DEFAULT_COLOR);
-	}
+		int n = D_translate_color(tcolor);
 
-	return;
-}
+		if (!n)
+		{
+			G_warning(_("[%s]: No such color"), tcolor);
+			n = D_translate_color(DEFAULT_COLOR);
+		}
 
-static void
-init_colors(void)
-{
-	int i;
-
-	for (i = 0; i < MAX_COLOR_NUM; i++)
-	{
-		const struct color_rgb *col = &standard_colors_rgb[i];
-
-		R_reset_color(col->r, col->g, col->b, i);
+		R_standard_color(n);
 	}
 }
 
@@ -1036,10 +1022,11 @@ set_matrix(FT_Matrix *matrix, double rotation)
 
 static int
 draw_character(rectinfo win, FT_Face face, FT_Matrix *matrix, FT_Vector *pen,
-		int ch, int color)
+		int ch)
 {
-	int	i, j, l, start_row, start_col, rows, width, w;
-	char	*buffer;
+	static char *buffer;
+	static int nalloc;
+	int	i, j, l, start_row, start_col, rows, width, w, h;
 	rectinfo	rect;
 	FT_GlyphSlot	slot = face->glyph;
 
@@ -1047,7 +1034,7 @@ draw_character(rectinfo win, FT_Face face, FT_Matrix *matrix, FT_Vector *pen,
 
 	if(FT_Load_Char(face, ch, FT_LOAD_NO_BITMAP))
 		return -1;
-	if(FT_Render_Glyph(slot, ft_render_mode_mono))
+	if(FT_Render_Glyph(slot, ft_render_mode_normal))
 	{
 		/* FT_Render_Glyph fails for spaces */
 		pen->x += slot->advance.x;
@@ -1063,78 +1050,63 @@ draw_character(rectinfo win, FT_Face face, FT_Matrix *matrix, FT_Vector *pen,
 	rect.l = slot->bitmap_left;
 	rect.r = rect.l + width;
 
-	if((l = rows * width) > 0 &&
-	   (rect.t <= win.b && rect.b >= win.t &&
-	    rect.l <= win.r && rect.r >= win.l))
-	{
-		buffer = (char *) G_malloc(l);
-		memset(buffer, 0, l);
-
-		j = slot->bitmap.pitch;
-
-	/* note in FreeType bitmap.buffer [0,0] is lower left */
-		for(i = 0; i < l; i++)
-		{
-			if(slot->bitmap.buffer
-			  [ (i / width) * j + (i % width) / 8 ]
-			    & (1 << (7 - (i % width) % 8)) )
-				buffer[i] = color;
-		}
-
-#ifdef DEBUG
-		if(1) {
-			int k;
-
-			fprintf(stdout, "[%c] %dx%d  pitch=%d\n", ch, width, rows, j);
-			for(i=0; i<rows; i++) {
-				for(k=0; k<width; k++) {
-					if(buffer[(i*width)+k])
-						/* accented character is not printable in some encodings */
-						fprintf(stdout, "%c", (ch>126?'\\':ch));
-					else
-						fprintf(stdout, ".");
-				}
-				fprintf(stdout, "\n");
-			}
-			fprintf(stdout, "\n\n");
-			fflush(stdout);
-		}
-#endif
-
-		start_row = 0;
-		start_col = 0;
-		w = width;
-
-		if(rect.t < win.t)
-			start_row = win.t - rect.t;
-		if(rect.b > win.b)
-			rows -= rect.b - win.b;
-		if(rect.l < win.l)
-		{
-			start_col = win.l - rect.l;
-			w -= start_col;
-		}
-		if(rect.r > win.r)
-			w -= rect.r - win.r;
-
-		for(i = start_row; i < rows; i++)
-		{
-			R_move_abs(rect.l + start_col, rect.t + i);
-			R_raster_char(w, 1, 0, buffer + width * i + start_col);
-		}
-
-		G_free(buffer);
-	}
-
 	pen->x += slot->advance.x;
 	pen->y += slot->advance.y;
+
+	if (rows <= 0 || width <= 0)
+		return 0;
+
+	if (rect.t > win.b || rect.b < win.t || rect.l > win.r || rect.r < win.l)
+		return 0;
+
+	start_row = 0;
+	start_col = 0;
+	w = width;
+	h = rows;
+
+	if (rect.t < win.t)
+	{
+		start_row = win.t - rect.t;
+		h -= start_row;
+	}
+	if (rect.b > win.b)
+		h -= rect.b - win.b;
+
+	if (rect.l < win.l)
+	{
+		start_col = win.l - rect.l;
+		w -= start_col;
+	}
+	if (rect.r > win.r)
+		w -= rect.r - win.r;
+
+	R_move_abs(rect.l + start_col, rect.t + start_row);
+
+	l = w * h;
+	if (nalloc <= l)
+	{
+		nalloc = l;
+		buffer = G_realloc(buffer, nalloc);
+	}
+
+	for (j = 0; j < h; j++)
+	{
+		int y = start_row + j;
+		for (i = 0; i < w; i++)
+		{
+			int x = start_col + i;
+			buffer[j * w + i] = slot->bitmap.buffer[y * slot->bitmap.pitch + x];
+		}
+	}
+
+	R_bitmap(w, h, 128, buffer);
 
 	return 0;
 }
 
 static void
 draw_text(rectinfo win, FT_Face face, FT_Vector *pen,
-		unsigned char *out, int l, int color, double rotation)
+		unsigned char *out, int l, double rotation)
 {
 	int	i, ch;
 	FT_Matrix	matrix;
@@ -1144,7 +1116,7 @@ draw_text(rectinfo win, FT_Face face, FT_Vector *pen,
 	for(i = 0; i < l; i += 4)
 	{
 		ch = (out[i+2] << 8) | out[i+3];
-		draw_character(win, face, &matrix, pen, ch, color);
+		draw_character(win, face, &matrix, pen, ch);
 	}
 
 	return;
