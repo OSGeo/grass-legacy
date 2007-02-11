@@ -90,13 +90,6 @@ if [ ! "$GIS_OPT_GROUP" ] ; then
    fi
 fi
 
-if [ -n "$GIS_OPT_OUTPUT" ] ; then
-  if [ $GIS_FLAG_M -eq 1 ] ; then
-    echo "Cannot use -m and option output together" 2>&1
-    exit 1
-  fi
-fi
-
 if [ $GIS_FLAG_I -eq 0 ] ; then
 
 	# ## PARSES THE GROUP FILES - gets rid of ugly header info from group list output
