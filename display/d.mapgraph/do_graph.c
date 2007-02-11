@@ -113,7 +113,6 @@ int do_color (char *buff)
 {
     char in_color[64] ;
     int R, G, B, color = 0;
-    const int customcolor = MAX_COLOR_NUM + 1;
 
     sscanf(buff, "%*s %s", in_color);
 
@@ -124,8 +123,7 @@ int do_color (char *buff)
 	return(-1);
     }
     if(color == 1) {
-	R_reset_color(R, G, B, customcolor);
-	R_color(customcolor);
+	R_RGB_color(R, G, B);
     }
     if(color == 2) {    /* i.e. color=none */
 	R = D_translate_color(DEFAULT_BG_COLOR);

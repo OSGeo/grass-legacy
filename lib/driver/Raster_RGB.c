@@ -42,20 +42,8 @@ static unsigned char red[256], grn[256], blu[256];
 void COM_RGB_set_colors(
 	const unsigned char *r, const unsigned char *g, const unsigned char *b)
 {
-	int i;
-
 	if (driver->RGB_set_colors)
-	{
 		(*driver->RGB_set_colors)(r, g, b);
-		return;
-	}
-
-	for (i = 0; i < 256; i++)
-	{
-		red[i] = r[i];
-		grn[i] = g[i];
-		blu[i] = b[i];
-	}
 }
 
 void COM_RGB_raster(
@@ -63,28 +51,7 @@ void COM_RGB_raster(
 	const unsigned char *r, const unsigned char *g, const unsigned char *b,
 	const unsigned char *nul)
 {
-	static int *array;
-	static int array_alloc;
-	int i;
-
 	if (driver->RGB_raster)
-	{
 		(*driver->RGB_raster)(n, nrows, r, g, b, nul);
-		return;
-	}
-
-	if (n > array_alloc)
-	{
-		array_alloc = n + 100;
-		array = G_realloc(array, array_alloc * sizeof(int));
-	}
-
-	/* Convert RGB to color number */
-	for (i = 0; i < n; i++)
-		array[i] = (nul && nul[i])
-			? 0
-			: DRV_lookup_color(red[r[i]], grn[g[i]], blu[b[i]]);
-
-	COM_Raster_int(n, nrows, array, !nul, 0);
 }
 

@@ -3,7 +3,7 @@
 #include <grass/colors.h>
 
 /* The order in this table is important! It will be indexed by color number */
-const struct color_rgb standard_colors_rgb [MAX_COLOR_NUM + 1] =
+static const struct color_rgb standard_colors_rgb[] =
 {
   {  0,  0,  0}, /* This is a dummy value to make lookup easier */
   {  0,  0,  0}, /* BLACK   */
@@ -23,7 +23,7 @@ const struct color_rgb standard_colors_rgb [MAX_COLOR_NUM + 1] =
 };
 
 /* The order in this table has no meaning. */
-const struct color_name standard_color_names[MAX_COLOR_NAMES] =
+static const struct color_name standard_color_names[] =
 {
     {"black",   BLACK},
     {"red",     RED},
@@ -43,6 +43,26 @@ const struct color_name standard_color_names[MAX_COLOR_NAMES] =
     {"brown",   BROWN}
 };
 
+int G_num_standard_colors(void)
+{
+    return sizeof(standard_colors_rgb) / sizeof(standard_colors_rgb[0]);
+}
+
+struct color_rgb G_standard_color_rgb(int n)
+{
+    return standard_colors_rgb[n];
+}
+
+int G_num_standard_color_names(void)
+{
+    return sizeof(standard_color_names) / sizeof(standard_color_names[0]);
+}
+
+const struct color_name *G_standard_color_name(int n)
+{
+    return &standard_color_names[n];
+}
+
 /* 
 *  Parses color string and sets red,green,blue
 * 
@@ -51,40 +71,45 @@ const struct color_name standard_color_names[MAX_COLOR_NAMES] =
 *           0 - Error 
 * 
 */
-int G_str_to_color (const char *str, int *red, int *green, int *blue)
+int G_str_to_color(const char *str, int *red, int *grn, int *blu)
 {
-    int i, ret, n;
-    char buf[100], temp[10]; 
+    char buf[100]; 
+    int num_names = G_num_standard_color_names();
+    int i;
 
-    G_strcpy (buf, str );
-    G_chop (buf);
+    G_strcpy(buf, str);
+    G_chop(buf);
     
-    G_debug (3, "G_str_to_color(): str = '%s'", buf );
+    G_debug(3, "G_str_to_color(): str = '%s'", buf);
 
-    if ( G_strcasecmp ( buf, "NONE" ) == 0 ) return 2;
-    
-    ret = sscanf (buf, "%d%[,:; ]%d%[,:; ]%d", red, temp, green, temp, blue);
+    if (G_strcasecmp( buf, "NONE" ) == 0)
+	return 2;
    
-    if ( ret == 5 ) { 
-	if ( *red < 0 || *red > 255 || *green < 0 || *green > 255 ||
-	     *blue < 0 || *blue > 255 ) 
-	{ 
-	    return 0; 
-	}
-        return 1;
-    } else {
-	/* Look for this color in the standard (preallocated) colors */
-	for (i = 0; i < MAX_COLOR_NAMES; i++) {
-	    if ( G_strcasecmp(buf, standard_color_names[i].name) == 0) {
-		n = standard_color_names[i].number;
-		*red   = (int) standard_colors_rgb[n].r;
-		*green = (int) standard_colors_rgb[n].g;
-		*blue  = (int) standard_colors_rgb[n].b;
-                return 1;
-	    }
-        }
+    if (sscanf(buf, "%d%*[,:; ]%d%*[,:; ]%d", red, grn, blu) == 3)
+    {
+	if (*red < 0 || *red > 255 ||
+	    *grn < 0 || *grn > 255 ||
+	    *blu < 0 || *blu > 255)
+	    return 0;
 
-        return 0;
+        return 1;
+    }
+
+    /* Look for this color in the standard (preallocated) colors */
+    for (i = 0; i < num_names; i++)
+    {
+	const struct color_name *name = &standard_color_names[i];
+
+	if (G_strcasecmp(buf, name->name) == 0)
+	{
+	    struct color_rgb rgb = standard_colors_rgb[name->number];
+
+	    *red = (int) rgb.r;
+	    *grn = (int) rgb.g;
+	    *blu = (int) rgb.b;
+
+	    return 1;
+	}
     }
 	
     return 0;

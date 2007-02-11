@@ -35,8 +35,9 @@ int main(int argc, char **argv)
     struct GModule *module;
     char   *mapset;
     struct Map_info Map;
-    int    type, afield, nfield, color, hcolor, bgcolor, geo;
-    int    r, g, b, colornum = MAX_COLOR_NUM;
+    int    type, afield, nfield, geo;
+    struct color_rgb color, hcolor, bgcolor;
+    int    r, g, b;
 
     /* Initialize the GIS calls */
     G_gisinit (argv[0]) ;
@@ -116,25 +117,25 @@ int main(int argc, char **argv)
     if (R_open_driver() != 0)
        G_fatal_error ("No graphics device selected");
 
-    color = BLACK;
+    color = G_standard_color_rgb(BLACK);
     if ( G_str_to_color(color_opt->answer, &r, &g, &b) ) {
-        colornum++;
-	R_reset_color (r, g, b, colornum); 
-	color = colornum;
+	color.r = r;
+	color.g = g;
+	color.b = b;
     }
 
-    hcolor = RED;
+    hcolor = G_standard_color_rgb(RED);
     if ( G_str_to_color(hcolor_opt->answer, &r, &g, &b) ) {
-        colornum++;
-	R_reset_color (r, g, b, colornum); 
-	hcolor = colornum;
+	hcolor.r = r;
+	hcolor.g = g;
+	hcolor.b = b;
     }
     
-    bgcolor = WHITE;
+    bgcolor = G_standard_color_rgb(WHITE);
     if ( G_str_to_color(bgcolor_opt->answer, &r, &g, &b) ) {
-        colornum++;
-	R_reset_color (r, g, b, colornum); 
-	bgcolor = colornum;
+	bgcolor.r = r;
+	bgcolor.g = g;
+	bgcolor.b = b;
     }
 
     if ( geo_f->answer ) 
@@ -161,7 +162,7 @@ int main(int argc, char **argv)
 
     Vect_net_build_graph ( &Map, type , afield, nfield, afcol->answer, abcol->answer, ncol->answer, 
 	                   geo, 0 );
-    path ( &Map, color, hcolor, bgcolor ); 
+    path ( &Map, &color, &hcolor, &bgcolor ); 
 
 
     R_close_driver();

@@ -83,55 +83,6 @@ int R_get_cancel(void)
 	return cancel;
 }
 
-/*!
- * \brief draw a raster
- *
- * Starting at the current position, the <b>num</b> colors represented
- * in the <b>raster</b> array are drawn for <b>nrows</b> consecutive pixel
- * rows.  The <b>withzero</b> flag is used to indicate whether 0 values are to
- * be treated as a color (1) or should be ignored (0). If ignored, those screen
- * pixels in these locations are not modified. This option is useful for graphic
- * overlays.
- *
- *  \param num
- *  \param nrows
- *  \param withzero
- *  \param ras raster
- *  \return int
- */
-
-void R_raster(int num, int nrows, int withzero, const int *ras)
-{
-	static unsigned char *chararray;
-	static int nalloc;
-	int i;
-
-	/* Check to see if char buffer can hold the int values */
-	for (i = 0; i < num; i++)
-	{
-		int xc = ras[i];
-		unsigned char cc = (unsigned char) xc;
-
-		if (cc != xc)
-		{
-			R_raster_int(num, nrows, withzero, ras);
-			return;
-		}
-	}
-
-	/* If all one byte values, copy to char raster and call raster_char */
-	if (num > nalloc)
-	{
-		chararray = G_realloc(chararray, num);
-		nalloc = num;
-	}
-
-	for (i = 0; i < num; i++)
-		chararray[i] = (unsigned char) ras[i];
-
-	R_raster_char(num, nrows, withzero, chararray);
-}
-
 void R_pad_perror(const char *msg, int code)
 {
 	const char *err;

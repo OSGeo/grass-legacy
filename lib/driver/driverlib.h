@@ -12,8 +12,6 @@ extern const struct driver *driver;
 void color(int);
 /* Font.c */
 int font_is_freetype(void);
-/* Reset_colors.c */
-void reset_color(int,int,int,int);
 /* Set_window.c */
 int window_clip(double *,double *,double *,double *);
 int window_box_clip(double *,double *,double *,double *);
@@ -31,8 +29,6 @@ void get_text_ext_freetype(int*,int*,int*,int*);
 /* clip.c */
 int clip(double,double,double,double,double *,double *,double *,double *);
 /* color_support.c */
-int get_fixed_color(int);
-void get_fixed_color_array(int *,const int *,int);
 void assign_standard_color(int,int);
 int get_standard_color(int);
 int get_max_std_colors(void);

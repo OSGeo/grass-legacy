@@ -25,7 +25,7 @@
 #include <grass/dbmi.h>
 #include <grass/glocale.h>
 
-int extract(struct Map_info *, struct Map_info *, int, int, int);
+int extract(struct Map_info *, struct Map_info *, int, const struct color_rgb *, const struct color_rgb *);
 
 int main(int argc, char **argv)
 {
@@ -34,8 +34,9 @@ int main(int argc, char **argv)
     struct GModule *module;
     char *mapset;
     struct Map_info In, Out;
-    int type, color, hcolor;
-    int r, g, b, colornum = MAX_COLOR_NUM;
+    int type;
+    struct color_rgb color, hcolor;
+    int r, g, b;
     struct field_info *Fi, *Fin;
     int i, n, tbtype, ret;
 
@@ -75,18 +76,18 @@ int main(int argc, char **argv)
     if (R_open_driver() != 0)
 	G_fatal_error(_("No graphics device selected"));
 
-    color = atoi(color_opt->answer);
+    color = G_standard_color_rgb(BLACK);
     if (G_str_to_color(color_opt->answer, &r, &g, &b)) {
-	colornum++;
-	R_reset_color(r, g, b, colornum);
-	color = colornum;
+	color.r = r;
+	color.g = g;
+	color.b = b;
     }
 
-    hcolor = atoi(hcolor_opt->answer);
+    hcolor = G_standard_color_rgb(RED);
     if (G_str_to_color(hcolor_opt->answer, &r, &g, &b)) {
-	colornum++;
-	R_reset_color(r, g, b, colornum);
-	hcolor = colornum;
+	hcolor.r = r;
+	hcolor.g = g;
+	hcolor.b = b;
     }
 
     mapset = G_find_vector2(input->answer, NULL);
@@ -106,7 +107,7 @@ int main(int argc, char **argv)
     G_setup_plot(D_get_d_north(), D_get_d_south(), D_get_d_west(),
 		 D_get_d_east(), D_move_abs, D_cont_abs);
 
-    extract(&In, &Out, type, color, hcolor);
+    extract(&In, &Out, type, &color, &hcolor);
 
     R_close_driver();
 

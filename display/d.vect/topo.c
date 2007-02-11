@@ -17,7 +17,7 @@ int topo ( struct Map_info *Map, int type, int do_area, LATTR *lattr ) {
     Points = Vect_new_line_struct ();
     Cats = Vect_new_cats_struct ();
 
-    R_color(lattr->color) ;
+    R_RGB_color( lattr->color.R, lattr->color.G, lattr->color.B) ;
     R_text_size(lattr->size, lattr->size) ;
     if (lattr->font)
         R_font(lattr->font) ;
@@ -84,25 +84,25 @@ int topo ( struct Map_info *Map, int type, int do_area, LATTR *lattr ) {
 	if (lattr->yref == LCENTER) Yoffset = -(B - T) / 2 ;
 	if (lattr->yref == LBOTTOM) Yoffset = -(B - T) ; 
 	    
-	if ( lattr->bgcolor || lattr->bcolor )
+	if ( lattr->has_bgcolor || lattr->has_bcolor )
 	  {
 	    xarr[0] = xarr[1] = xarr[4] = L + Xoffset; 
 	    xarr[2] = xarr[3] = R + Xoffset; 
 	    yarr[0] = yarr[3] = yarr[4] = B + Yoffset; 
 	    yarr[1] = yarr[2] = T + Yoffset; 
 	    
-	    if( lattr->bgcolor)
+	    if( lattr->has_bgcolor)
 	      {
-		R_color( lattr->bgcolor) ;
-		R_polygon_abs(xarr, yarr, 5) ;
+		 R_RGB_color( lattr->bgcolor.R, lattr->bgcolor.G, lattr->bgcolor.B) ;
+		 R_polygon_abs(xarr, yarr, 5) ;
 	      }
 	    
-	    if( lattr->bcolor)
+	    if( lattr->has_bcolor)
 	      {
-		 R_color( lattr->bcolor) ;
+		 R_RGB_color( lattr->bcolor.R, lattr->bcolor.G, lattr->bcolor.B) ;
 		 R_polyline_abs(xarr, yarr, 5) ;
 	      }
-	    R_color(lattr->color) ;
+	    R_RGB_color( lattr->color.R, lattr->color.G, lattr->color.B) ;
 	  }
 	    
 	R_move_abs(X + Xoffset, Y + Yoffset) ;
@@ -146,25 +146,25 @@ int topo ( struct Map_info *Map, int type, int do_area, LATTR *lattr ) {
 	if (lattr->yref == LBOTTOM) Yoffset = -(B - T) ; 
 	  
 	
-	if ( lattr->bgcolor || lattr->bcolor )
+	if ( lattr->has_bgcolor || lattr->has_bcolor )
 	  {
 	    xarr[0] = xarr[1] = xarr[4] = L + Xoffset; 
 	    xarr[2] = xarr[3] = R + Xoffset; 
 	    yarr[0] = yarr[3] = yarr[4] = B + Yoffset; 
 	    yarr[1] = yarr[2] = T + Yoffset; 
 	    
-	    if( lattr->bgcolor)
+	    if( lattr->has_bgcolor)
 	      {
-		R_color( lattr->bgcolor) ;
-		R_polygon_abs(xarr, yarr, 5) ;
+		 R_RGB_color( lattr->bgcolor.R, lattr->bgcolor.G, lattr->bgcolor.B) ;
+		 R_polygon_abs(xarr, yarr, 5) ;
 	      }
 	    
-	    if( lattr->bcolor)
+	    if( lattr->has_bcolor)
 	      {
-		 R_color( lattr->bcolor) ;
+		 R_RGB_color( lattr->bcolor.R, lattr->bcolor.G, lattr->bcolor.B) ;
 		 R_polyline_abs(xarr, yarr, 5) ;
 	      }
-	    R_color(lattr->color) ;
+	    R_RGB_color( lattr->color.R, lattr->color.G, lattr->color.B) ;
 	  }
 	    
 	R_move_abs(X + Xoffset, Y + Yoffset) ;

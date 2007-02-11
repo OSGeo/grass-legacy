@@ -12,9 +12,11 @@
 #include <grass/dbmi.h>
 
 int plot1 (
-    struct Map_info *Map, int type, int area, 
-    struct cat_list *Clist, int color, int fcolor, int chcat, SYMBOL *Symb, int size, int id_flag,
-    int table_colors_flag, int cats_color_flag, char *rgb_column, int default_width, char *width_column, double width_scale)
+    struct Map_info *Map, int type, int area,  struct cat_list *Clist,
+    const struct color_rgb *color, const struct color_rgb *fcolor,
+    int chcat, SYMBOL *Symb, int size, int id_flag,
+    int table_colors_flag, int cats_color_flag, char *rgb_column,
+    int default_width, char *width_column, double width_scale)
 {
     int i, j, k, ltype, nlines = 0, line, cat = -1;
     double *x, *y, xd, yd, xd0 = 0, yd0 = 0;
@@ -124,7 +126,8 @@ int plot1 (
     
     /* Is it necessary to reset line/label color in each loop ? */
 
-    if ( color > -1 && !table_colors_flag && !cats_color_flag) R_color(color) ;
+    if ( color && !table_colors_flag && !cats_color_flag)
+	R_RGB_color(color->r, color->g, color->b);
 
     if ( Vect_level ( Map ) >= 2 )
 	nlines = Vect_get_num_lines ( Map );
@@ -290,7 +293,7 @@ int plot1 (
 
         if ( (ltype & GV_POINTS) && Symb != NULL ) {
 	  /* Note: this could/should be updated to use the new D_symbol() library function */
-	  if ((color != -1 || fcolor != -1) || rgb) {
+	  if ((color || fcolor) || rgb) {
 	    G_plot_where_xy(x[0], y[0], &x0, &y0);
 	  }  
  
@@ -301,12 +304,12 @@ int plot1 (
 		    case S_POLYGON:
 			/* Note: it may seem to be strange to calculate coor in pixels, then convert
 			 *       to E-N and plot. I hope that we get some D_polygon later. */
-			if ( (part->fcolor.color == S_COL_DEFAULT && fcolor > -1) ||
+			if ( (part->fcolor.color == S_COL_DEFAULT && fcolor) ||
 			      part->fcolor.color == S_COL_DEFINED || rgb) 
 			{
 			    if (!table_colors_flag && !cats_color_flag) {
 			      if ( part->fcolor.color == S_COL_DEFAULT )
-				R_color(fcolor);
+				R_RGB_color(fcolor->r, fcolor->g, fcolor->b);
 			      else
 				R_RGB_color ( part->fcolor.r, part->fcolor.g, part->fcolor.b );
 			  }
@@ -315,7 +318,7 @@ int plot1 (
 			      R_RGB_color ((unsigned char) red, (unsigned char) grn, (unsigned char) blu);
 			    }
 			    else {
-			      R_color (fcolor);
+			      R_RGB_color(fcolor->r, fcolor->g, fcolor->b);
 			    }
 			  }
 
@@ -340,11 +343,11 @@ int plot1 (
 			    G_plot_polygon ( PPoints->x, PPoints->y, PPoints->n_points);
 
 			}
-			if ( (part->color.color == S_COL_DEFAULT && color > -1 ) ||
+			if ( (part->color.color == S_COL_DEFAULT && color ) ||
 			      part->color.color == S_COL_DEFINED  ) 
 			{
 			    if ( part->color.color == S_COL_DEFAULT ) {
-				R_color(color);
+			        R_RGB_color(color->r, color->g, color->b);
 			    } else {
 			        R_RGB_color ( part->color.r, part->color.g, part->color.b );
 			    }
@@ -367,19 +370,20 @@ int plot1 (
 			if ( part->color.color == S_COL_NONE ) break;
 			else {
 			  if (!table_colors_flag && !cats_color_flag) {
-			    if ( part->color.color == S_COL_DEFAULT ) R_color(color) ;
+			    if ( part->color.color == S_COL_DEFAULT )
+			        R_RGB_color(color->r, color->g, color->b);
 			    else R_RGB_color ( part->color.r, part->color.g, part->color.b );
 			  }
 			  else {
 			    if (ltype == GV_CENTROID) {
-			      R_color (color);
+			      R_RGB_color(color->r, color->g, color->b);
 			    }
 			    else {
 			      if (rgb) {
 				R_RGB_color ((unsigned char) red, (unsigned char) grn, (unsigned char) blu);
 			      }
 			      else {
-				R_color (color);
+			        R_RGB_color(color->r, color->g, color->b);
 			      }
 			    }
 			  }
@@ -397,16 +401,16 @@ int plot1 (
                         break;
                 }
             }
-	} else if (color > -1 || rgb) {
+	} else if (color || rgb) {
 	  if (!table_colors_flag && !cats_color_flag) {
-	    R_color (color);
+	    R_RGB_color(color->r, color->g, color->b);
 	  }
 	  else {
 	    if (rgb) {
 	      R_RGB_color ((unsigned char) red, (unsigned char) grn, (unsigned char) blu);
 	    }
 	    else {
-	      R_color (color);
+	      R_RGB_color(color->r, color->g, color->b);
 	    }
 	  }
 	    if ( Points->n_points == 1 ) { /* line with one coor */

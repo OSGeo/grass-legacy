@@ -34,7 +34,7 @@ flash_area(struct Map_info *Map, plus_t area, struct line_pnts *Points,
 	Vect_append_point(Points, xl, yl, 0);	/* ??? */
     }
 
-    R_color(flash_colr);
+    R_standard_color(flash_colr);
     G_plot_polygon(Points->x, Points->y, Points->n_points);
 
     /* boundary */
@@ -70,7 +70,7 @@ flash_line(struct Map_info *Map, plus_t line, struct line_pnts *Points,
     x = Points->x;
     y = Points->y;
 
-    R_color(flash_colr);
+    R_standard_color(flash_colr);
 
     for (j = 1; j < np; j++) {
 

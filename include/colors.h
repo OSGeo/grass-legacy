@@ -1,9 +1,6 @@
 #ifndef GRASS_COLORS_H
 #define GRASS_COLORS_H
 
-#define FIXED		0
-#define FLOAT		1
-
 /* Don't add more colors here.
    These colors are the preallocated colors used in displays for efficiency.
    Adding colors here reduces the number of colors it is possible for a user to display.
@@ -27,12 +24,6 @@
 #define GREY            GRAY
 #define PURPLE          VIOLET
 
-/* increase when adding more colors */
-#define MAX_COLOR_NUM 14
-#define MAXCOLORS MAX_COLOR_NUM
-/* This is the number of color names. It is two higher due to grey/gray and violet/purple*/
-#define MAX_COLOR_NAMES 16
-
 /* These can be in any order. They must match the lookup strings in the table below. */
 #define D_COLOR_LIST "red,orange,yellow,green,blue,indigo,violet,white,black,gray,brown,magenta,aqua,grey,cyan,purple"
 
@@ -48,9 +39,10 @@ struct color_name {
     int number;
 };
 
-extern const struct color_rgb standard_colors_rgb[MAX_COLOR_NUM + 1];
-
-extern const struct color_name standard_color_names[MAX_COLOR_NAMES];
+extern int G_num_standard_colors(void);
+extern struct color_rgb G_standard_color_rgb(int n);
+extern int G_num_standard_color_names(void);
+extern const struct color_name *G_standard_color_name(int n);
 
 #endif 
 

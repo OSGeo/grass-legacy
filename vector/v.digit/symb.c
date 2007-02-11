@@ -110,8 +110,7 @@ symb_set_driver_color ( int code )
 {
     G_debug ( 2, "set color to symb %d: %d %d %d", code, Symb[code].r, Symb[code].g, Symb[code].b );
     
-    R_reset_color ( Symb[code].r, Symb[code].g, Symb[code].b,  MAX_COLOR_NUM + 1);
-    R_color(  MAX_COLOR_NUM + 1 ) ;
+    R_RGB_color ( Symb[code].r, Symb[code].g, Symb[code].b);
 }
 
 

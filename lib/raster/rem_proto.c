@@ -92,22 +92,6 @@ void REM_get_num_colors(int *n)
 }
 
 /*!
- * \brief select color
- *
- * Selects the <b>color</b> to be
- * used in subsequent draw commands.
- *
- *  \param index
- */
-
-void REM_color(int index)
-{
-	_send_ident(COLOR);
-	_send_int(&index);
-}
-
-
-/*!
  * \brief select standard color
  *
  * Selects the
@@ -143,70 +127,6 @@ void REM_RGB_color(unsigned char red, unsigned char grn, unsigned char blu)
 	_send_char(&red);
 	_send_char(&grn);
 	_send_char(&blu);
-}
-
-/*!
- * \brief define single color
- *
- * Sets color number <b>num</b> to the
- * intensities represented by <b>red, grn</b>, and <b>blue.</b>
- *
- *  \param red
- *  \param grn
- *  \param blu
- *  \param num number
- */
-
-void REM_reset_color(unsigned char red, unsigned char grn, unsigned char blu,
-		  int index)
-{
-	if (index < 0)
-		index = 256 - index;
-
-	_send_ident(RESET_COLOR);
-	_send_char(&red);
-	_send_char(&grn);
-	_send_char(&blu);
-	_send_int(&index);
-}
-
-/*!
- * \brief define multiple colors
- *
- * Sets color numbers
- * <b>min</b> through <b>max</b> to the intensities represented in the arrays
- * <b>red, grn, and blue.</b>
- *
- *  \param min
- *  \param max
- *  \param red
- *  \param grn
- *  \param blue
- */
-
-void REM_reset_colors(int min, int max,
-		   unsigned char *red, unsigned char *grn, unsigned char *blu)
-{
-	/* only send a chunk at a time - to avoid malloc() in the driver */
-
-	while (min <= max)
-	{
-		int n = max - min + 1;
-		int i;
-
-		if (n > 512)
-			n = 512;
-
-		_send_ident(RESET_COLORS);
-		i = min;
-		_send_int(&i);
-		i = min + n - 1;
-		_send_int(&i);
-		_send_char_array(n, red); red += n;
-		_send_char_array(n, grn); grn += n;
-		_send_char_array(n, blu); blu += n;
-		min += n;
-	}
 }
 
 /*!
@@ -752,24 +672,6 @@ void REM_RGB_raster(int n, int nrows,
   \endcode
  *
  */
-
-void REM_raster_char(int num, int nrows, int withzero, const unsigned char *ras)
-{
-	_send_ident(RASTER_CHAR);
-	_send_int(&num);
-	_send_int(&nrows);
-	_send_int(&withzero);
-	_send_char_array(num, ras);
-}
-
-void REM_raster_int(int num, int nrows, int withzero, const int *ras)
-{
-	_send_ident(RASTER_INT);
-	_send_int(&num);
-	_send_int(&nrows);
-	_send_int(&withzero);
-	_send_int_array(num, ras);
-}
 
 void REM_bitmap(int ncols, int nrows, int threshold, const unsigned char *buf)
 {

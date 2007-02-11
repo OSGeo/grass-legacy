@@ -46,7 +46,6 @@ main (int argc, char **argv)
         float size ;
         int bold ;
         int R, G, B, color = 0;
-	const int customcolor = MAXCOLORS + 1;
         int cur_dot_row, cur_dot_column ;
         int dots_per_line ;
         int start_line ;
@@ -133,8 +132,7 @@ main (int argc, char **argv)
 	/* Parse and select text color */
 	if(sscanf(opt2->answer, "%d:%d:%d", &R, &G, &B) == 3) {
 		if (R>=0 && R<256 && G>=0 && G<256 && B>=0 && B<256) {
-			R_reset_color(R, G, B, customcolor);
-			R_color(customcolor);
+			R_RGB_color(R, G, B);
 			color = 1;  /* to make success test below happy */
 		}
 	}
@@ -207,8 +205,7 @@ main (int argc, char **argv)
                         case 'C':   /* color */
 				if(sscanf(cmd_ptr, "%d:%d:%d", &R, &G, &B) == 3) {
 					if (R>=0 && R<256 && G>=0 && G<256 && B>=0 && B<256) {
-						R_reset_color(R, G, B, customcolor);
-						R_color(customcolor);
+						R_RGB_color(R, G, B);
 					}
 				}
 				else

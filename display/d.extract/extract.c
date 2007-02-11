@@ -5,6 +5,7 @@
 #include <grass/gis.h>
 #include <grass/display.h>
 #include <grass/raster.h>
+#include <grass/colors.h>
 #include <grass/Vect.h>
 #include <grass/glocale.h>
 
@@ -15,9 +16,9 @@
 #define M_DEL   3
 #define M_END   4
 
-int display ( struct Map_info *Map, struct ilist *List, int color );
+int display ( struct Map_info *Map, struct ilist *List, const struct color_rgb *color );
 
-int extract ( struct Map_info *In, struct Map_info *Out, int type, int color, int hcolor )
+int extract ( struct Map_info *In, struct Map_info *Out, int type, const struct color_rgb *color, const struct color_rgb *hcolor )
 {
     int i, button, mode, line;
     int screen_x, screen_y, cur_screen_x, cur_screen_y;
@@ -105,7 +106,7 @@ int extract ( struct Map_info *In, struct Map_info *Out, int type, int color, in
 }
 
 int 
-display ( struct Map_info *Map, struct ilist *List, int color )
+display ( struct Map_info *Map, struct ilist *List, const struct color_rgb *color )
 {
     int i, j, line, type;
     struct line_pnts *Points;
@@ -115,7 +116,7 @@ display ( struct Map_info *Map, struct ilist *List, int color )
     G_debug (1, "msize = %f\n", msize);
     
     Points = Vect_new_line_struct ();
-    R_color(color);
+    R_RGB_color(color->r, color->g, color->b);
 
     for ( i = 0; i < List->n_values; i++ ) {
         line = abs(List->value[i]);

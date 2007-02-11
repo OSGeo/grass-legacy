@@ -30,11 +30,8 @@ extern int  LOC_screen_rite(void);
 extern int  LOC_screen_bot(void);
 extern int  LOC_screen_top(void);
 extern void LOC_get_num_colors(int *n);
-extern void LOC_color(int index);
 extern void LOC_standard_color(int index);
 extern void LOC_RGB_color(unsigned char red, unsigned char grn, unsigned char blu);
-extern void LOC_reset_color(unsigned char red, unsigned char grn, unsigned char blu, int index);
-extern void LOC_reset_colors(int min, int max, unsigned char *red, unsigned char *grn, unsigned char *blu);
 extern void LOC_line_width(int width);
 extern void LOC_erase(void);
 extern void LOC_move_abs(int x, int y);
@@ -63,8 +60,6 @@ extern void LOC_panel_restore(const char *name);
 extern void LOC_panel_delete(const char *name);
 extern void LOC_set_RGB_color(unsigned char *r, unsigned char *g, unsigned char *b);
 extern void LOC_RGB_raster(int n, int nrows, unsigned char *red, unsigned char *grn, unsigned char *blu, unsigned char *nul);
-extern void LOC_raster_char(int num, int nrows, int withzero, const unsigned char *ras);
-extern void LOC_raster_int(int num, int nrows, int withzero, const int *ras);
 extern void LOC_bitmap(int ncols, int nrows, int threshold, const unsigned char *buf);
 
 extern void REM_get_location_with_box(int cx,int cy, int *wx, int *wy, int *button);
@@ -95,11 +90,8 @@ extern int  REM_screen_rite(void);
 extern int  REM_screen_bot(void);
 extern int  REM_screen_top(void);
 extern void REM_get_num_colors(int *n);
-extern void REM_color(int index);
 extern void REM_standard_color(int index);
 extern void REM_RGB_color(unsigned char red, unsigned char grn, unsigned char blu);
-extern void REM_reset_color(unsigned char red, unsigned char grn, unsigned char blu, int index);
-extern void REM_reset_colors(int min, int max, unsigned char *red, unsigned char *grn, unsigned char *blu);
 extern void REM_line_width(int width);
 extern void REM_erase(void);
 extern void REM_move_abs(int x, int y);
@@ -128,8 +120,6 @@ extern void REM_panel_restore(const char *name);
 extern void REM_panel_delete(const char *name);
 extern void REM_set_RGB_color(unsigned char *r, unsigned char *g, unsigned char *b);
 extern void REM_RGB_raster(int n, int nrows, unsigned char *red, unsigned char *grn, unsigned char *blu, unsigned char *nul);
-extern void REM_raster_char(int num, int nrows, int withzero, const unsigned char *ras);
-extern void REM_raster_int(int num, int nrows, int withzero, const int *ras);
 extern void REM_bitmap(int ncols, int nrows, int threshold, const unsigned char *buf);
 
 struct transport
@@ -146,11 +136,8 @@ struct transport
 	int  (*screen_bot)(void);
 	int  (*screen_top)(void);
 	void (*get_num_colors)(int *);
-	void (*color)(int);
 	void (*standard_color)(int);
 	void (*RGB_color)(unsigned char, unsigned char, unsigned char);
-	void (*reset_color)(unsigned char, unsigned char, unsigned char, int);
-	void (*reset_colors)(int, int, unsigned char *, unsigned char *, unsigned char *);
 	void (*line_width)(int);
 	void (*erase)(void);
 	void (*move_abs)(int, int);
@@ -179,8 +166,6 @@ struct transport
 	void (*panel_delete)(const char *);
 	void (*set_RGB_color)(unsigned char *, unsigned char *, unsigned char *);
 	void (*RGB_raster)(int n, int nrows, unsigned char *, unsigned char *, unsigned char *, unsigned char *);
-	void (*raster_char)(int, int, int, const unsigned char *);
-	void (*raster_int)(int, int, int, const int *);
 	void (*bitmap)(int, int, int, const unsigned char *);
 
 	void (*get_location_with_box)(int, int, int *, int *, int *);

@@ -102,8 +102,9 @@ main (int argc, char **argv)
 	int ret, level;
 	int i, stat = 0, type, area, display;
 	int chcat = 0;
-	int color, fcolor, r, g, b;
-	int colornum = MAX_COLOR_NUM;
+	int r, g, b;
+	int has_color, has_fcolor;
+	struct color_rgb color, fcolor;
 	int size;
 	int default_width;
 	double width_scale;
@@ -398,34 +399,36 @@ main (int argc, char **argv)
 			 "the '-c' flag will be ignored!"));
  	}
 
-	color = WHITE;
+	color = G_standard_color_rgb(WHITE);
 	/* test for background color */
 	if (test_bg_color (color_opt->answer)) {
 	  G_warning (_("Line color and background color are the same!"));
 	}
 	ret =  G_str_to_color(color_opt->answer, &r, &g, &b);
 	if ( ret == 1 ) {
-	    colornum++;
-	    R_reset_color (r, g, b, colornum); 
-	    color = colornum;
+	    has_color = 1;
+	    color.r = r;
+	    color.g = g;
+	    color.b = b;
 	} else if ( ret == 2 ) { /* none */
-	    color = -1;
+	    has_color = 0;
 	} else if ( ret == 0 ) { /* error */
 	    G_fatal_error(_("Unknown color: [%s]"), color_opt->answer);
 	}
 	
-	fcolor = WHITE;
+	fcolor = G_standard_color_rgb(WHITE);
 	/* test for background color */
 	if (test_bg_color (fcolor_opt->answer)) {
 	  G_warning (_("Area fill color and background color are the same!"));
 	}
 	ret = G_str_to_color(fcolor_opt->answer, &r, &g, &b);
         if ( ret == 1 ) {
-	    colornum++;
-	    R_reset_color (r, g, b, colornum); 
-	    fcolor = colornum;
+	    has_fcolor = 1;
+	    fcolor.r = r;
+	    fcolor.g = g;
+	    fcolor.b = b;
 	} else if ( ret == 2 ) { /* none */
-	    fcolor = -1;
+	    has_fcolor = 0;
 	} else if ( ret == 0 ) { /* error */
 	    G_fatal_error(_("Unknown color: [%s]"), fcolor_opt->answer);
 	}
@@ -544,23 +547,25 @@ main (int argc, char **argv)
 	
 	/* Read label options */
 	lattr.field = atoi (lfield_opt->answer);
-	lattr.color = WHITE;
+	lattr.color.R = lattr.color.G = lattr.color.B = 255;
 	if ( G_str_to_color(lcolor_opt->answer, &r, &g, &b) ) {
-	    colornum++;
-	    R_reset_color (r, g, b, colornum); 
-	    lattr.color = colornum;
+	    lattr.color.R = r;
+	    lattr.color.G = g;
+	    lattr.color.B = b;
 	}
-	lattr.bgcolor = 0;
+	lattr.has_bgcolor = 0;
 	if ( G_str_to_color(bgcolor_opt->answer, &r, &g, &b) == 1 ) {
-	    colornum++;
-	    R_reset_color (r, g, b, colornum); 
-	    lattr.bgcolor = colornum;
+	    lattr.has_bgcolor = 1;
+	    lattr.bgcolor.R = r;
+	    lattr.bgcolor.G = g;
+	    lattr.bgcolor.B = b;
 	}
-	lattr.bcolor = 0;
+	lattr.has_bcolor = 0;
 	if ( G_str_to_color(bcolor_opt->answer, &r, &g, &b) == 1 ) {
-	    colornum++;
-	    R_reset_color (r, g, b, colornum); 
-	    lattr.bcolor = colornum;
+	    lattr.has_bcolor = 1;
+	    lattr.bcolor.R = r;
+	    lattr.bcolor.G = g;
+	    lattr.bcolor.B = b;
 	}
 
 	lattr.size = atoi(lsize_opt->answer);
@@ -622,7 +627,8 @@ main (int argc, char **argv)
 
 	    if ( area ) {
 		if ( level >= 2 ) {
-		    stat = darea ( &Map, Clist, color, fcolor, chcat,
+		    stat = darea ( &Map, Clist,
+			has_color ? &color : NULL, has_fcolor ? &fcolor : NULL, chcat,
 			(int) id_flag->answer, table_acolors_flag->answer,
 			cats_acolors_flag->answer, &window, rgbcol_opt->answer,
 			default_width, wcolumn_opt->answer, width_scale );
@@ -636,7 +642,8 @@ main (int argc, char **argv)
 		if ( id_flag->answer && level < 2 ) {
 		    G_warning(_("Cannot display lines by id, topology not available"));
 		} else {
-		    stat = plot1 ( &Map, type, area, Clist, color, fcolor, chcat, Symb,
+		    stat = plot1 ( &Map, type, area, Clist,
+			has_color ? &color : NULL, has_fcolor ? &fcolor : NULL, chcat, Symb,
 			size, (int) id_flag->answer, table_acolors_flag->answer,
 			cats_acolors_flag->answer, rgbcol_opt->answer, default_width,
 			wcolumn_opt->answer, width_scale) ;
@@ -645,8 +652,8 @@ main (int argc, char **argv)
 		}
 	    }
 
-	    if ( color > -1 ) {
-		R_color(color);
+	    if ( has_color ) {
+		R_RGB_color(color.r, color.g, color.b);
 		if ( display & DISP_DIR )
 		    stat = dir ( &Map, type, Clist, chcat );
 	    }

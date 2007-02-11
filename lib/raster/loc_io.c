@@ -81,7 +81,6 @@ int LOC_open_driver(void)
 	drv.Polygon_rel		= NULL;
 	drv.RGB_set_colors	= PNG_RGB_set_colors;
 	drv.RGB_raster		= PNG_RGB_raster;
-	drv.Raster_int		= PNG_Raster_int;
 	drv.Respond		= PNG_Respond;
 	drv.Work_stream		= NULL;
 	drv.Do_work		= NULL;

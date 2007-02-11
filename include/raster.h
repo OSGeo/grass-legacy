@@ -10,7 +10,6 @@ void R_call_update_function(int,int);
 int R_has_update_function(void);
 void R_set_cancel(int);
 int R_get_cancel(void);
-void R_raster(int,int,int,const int *);
 void R_pad_perror(const char *,int);
 void R_pad_freelist(char **,int);
 
@@ -73,11 +72,8 @@ int R_screen_bot(void);
 int R_screen_top(void);
 void R_get_num_colors(int *);
 
-void R_color(int);
 void R_standard_color(int);
 void R_RGB_color(unsigned char,unsigned char,unsigned char);
-void R_reset_color(unsigned char,unsigned char,unsigned char,int);
-void R_reset_colors(int,int,unsigned char *,unsigned char *,unsigned char *);
 
 void R_line_width(int);
 void R_erase(void);
@@ -112,8 +108,6 @@ void R_panel_delete(const char *name);
 
 void R_set_RGB_color(unsigned char *,unsigned char *,unsigned char *);
 void R_RGB_raster(int,int,unsigned char *,unsigned char *,unsigned char *,unsigned char *);
-void R_raster_char(int,int,int,const unsigned char *);
-void R_raster_int(int,int,int,const int *);
 void R_bitmap(int,int,int,const unsigned char *);
 
 #endif

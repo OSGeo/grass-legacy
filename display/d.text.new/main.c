@@ -537,13 +537,11 @@ int main(int argc, char **argv)
 static void set_color(char *tcolor)
 {
     int r, g, b, color;
-    int customcolor = MAXCOLORS + 1;
 
     if (sscanf(tcolor, "%d:%d:%d", &r, &g, &b) == 3 ||
 	sscanf(tcolor, "0x%02x%02x%02x", &r, &g, &b) == 3) {
 	if (r >= 0 && r < 256 && g >= 0 && g < 256 && b >= 0 && b < 256) {
-	    R_reset_color(r, g, b, customcolor);
-	    R_color(customcolor);
+	    R_RGB_color(r, g, b);
 	}
     }
     else {

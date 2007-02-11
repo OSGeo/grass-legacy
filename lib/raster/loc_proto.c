@@ -92,21 +92,6 @@ void LOC_get_num_colors(int *n)
 }
 
 /*!
- * \brief select color
- *
- * Selects the <b>color</b> to be
- * used in subsequent draw commands.
- *
- *  \param index
- *  \return int
- */
-
-void LOC_color(int index)
-{
-	COM_Color(index);
-}
-
-/*!
  * \brief select standard color
  *
  * Selects the
@@ -140,49 +125,6 @@ void LOC_standard_color(int index)
 void LOC_RGB_color(unsigned char red, unsigned char grn, unsigned char blu)
 {
 	COM_Color_RGB(red, grn, blu);
-}
-
-/*!
- * \brief define single color
- *
- * Sets color number <b>num</b> to the
- * intensities represented by <b>red, grn</b>, and <b>blue.</b>
- *
- *  \param red
- *  \param grn
- *  \param blu
- *  \param num number
- *  \return int
- */
-
-void LOC_reset_color(unsigned char red, unsigned char grn, unsigned char blu,
-		  int index)
-{
-	if (index < 0)
-		index = 256 - index;
-
-	COM_Reset_color(red, grn, blu, index);
-}
-
-/*!
- * \brief define multiple colors
- *
- * Sets color numbers
- * <b>min</b> through <b>max</b> to the intensities represented in the arrays
- * <b>red, grn, and blue.</b>
- *
- *  \param min
- *  \param max
- *  \param red
- *  \param grn
- *  \param blue
- *  \return int
- */
-
-void LOC_reset_colors(int min, int max,
-		   unsigned char *red, unsigned char *grn, unsigned char *blu)
-{
-	COM_Reset_colors(min, max, red, grn, blu);
 }
 
 /*!
@@ -642,47 +584,6 @@ void LOC_RGB_raster(int n, int nrows,
 	unsigned char *nul)
 {
 	COM_RGB_raster(n, nrows, red, grn, blu, nul);
-}
-
-/*!
- * \brief Send arguments to the driver
- *
- * Sends arguments to the driver, preceded by the RASTER_CHAR opcode; 
- * the actual work is done by the driver. A raster drawing operation is
- * performed. The result is that a rectangular area of width <b>num</b> 
- * and height <b>nrows</b>, with its top-left corner at the current location,
- * is filled with <b>nrows</b> copies of the data pointed to by <b>ras</b>.
- *
- * \param num is the number of columns.
- * \param nrows is the number of rows to be drawn, all of which are identical
- *        (this is used for vertical scaling).
- * \param withzero should be true (non-zero) if zero pixels are to be drawn in
- *        color zero, false (zero) if they are to be transparent (i.e.
- *        not drawn).
- * \param ras should point to <b>num</b> bytes of data, which constitute the 
- *        pixels for a single row of a raster image.
- *
- * Example: to draw a byte-per-pixel image:
-  \code
-   unsigned char image[HEIGHT][WIDTH];
-
-   for (y = 0; y < HEIGHT; y++)
-   {
-       R_move_abs(x_left, y_top + y);
-       R_raster_char(WIDTH, 1, 1, image[y]);
-   }
-  \endcode
- *
- */
-
-void LOC_raster_char(int num, int nrows, int withzero, const unsigned char *ras)
-{
-	COM_Raster_char(num, nrows, ras, withzero, 1);
-}
-
-void LOC_raster_int(int num, int nrows, int withzero, const int *ras)
-{
-	COM_Raster_int(num, nrows, ras, withzero, 1);
 }
 
 void LOC_bitmap(int ncols, int nrows, int threshold, const unsigned char *buf)

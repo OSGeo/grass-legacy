@@ -102,17 +102,11 @@ int D_c_color(CELL, struct Colors *);
 int D_d_color(DCELL, struct Colors *);
 int D_f_color(FCELL, struct Colors *);
 int D_color_of_type(void *, struct Colors *, RASTER_MAP_TYPE);
-int D_lookup_colors(CELL *, int, struct Colors *);
-int D_lookup_c_raster_colors(CELL *, int, struct Colors *);
-int D_lookup_f_raster_colors(FCELL *, int *, int, struct Colors *);
-int D_lookup_d_raster_colors(DCELL *, int *, int, struct Colors *);
-int D_lookup_raster_colors(void *, int *, int, struct Colors *, RASTER_MAP_TYPE);
 int D_raster_of_type(void *, int, int, struct Colors *, RASTER_MAP_TYPE);
 int D_raster(CELL *, int, int, struct Colors *);
 int D_c_raster(CELL *, int, int, struct Colors *);
 int D_f_raster(FCELL *, int, int, struct Colors *);
 int D_d_raster(DCELL *, int, int, struct Colors *);
-int D_check_colormap_size(CELL, CELL, int *);
 /* scan_dbl.c */
 int D_scan_double(char *, double *);
 /* scan_float.c */

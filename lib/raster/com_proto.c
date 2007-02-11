@@ -74,20 +74,6 @@ void R_get_num_colors(int *n)
 	trans->get_num_colors(n);
 }
 
-/*!
- * \brief select color
- *
- * Selects the <b>color</b> to be
- * used in subsequent draw commands.
- *
- *  \param index
- *  \return int
- */
-
-void R_color(int index)
-{
-	trans->color(index);
-}
 
 /*!
  * \brief select standard color
@@ -123,46 +109,6 @@ void R_standard_color(int index)
 void R_RGB_color(unsigned char red, unsigned char grn, unsigned char blu)
 {
 	trans->RGB_color(red, grn, blu);
-}
-
-/*!
- * \brief define single color
- *
- * Sets color number <b>num</b> to the
- * intensities represented by <b>red, grn</b>, and <b>blue.</b>
- *
- *  \param red
- *  \param grn
- *  \param blu
- *  \param num number
- *  \return int
- */
-
-void R_reset_color(unsigned char red, unsigned char grn, unsigned char blu,
-		  int index)
-{
-	trans->reset_color(red, grn, blu, index);
-}
-
-/*!
- * \brief define multiple colors
- *
- * Sets color numbers
- * <b>min</b> through <b>max</b> to the intensities represented in the arrays
- * <b>red, grn, and blue.</b>
- *
- *  \param min
- *  \param max
- *  \param red
- *  \param grn
- *  \param blue
- *  \return int
- */
-
-void R_reset_colors(int min, int max,
-		   unsigned char *red, unsigned char *grn, unsigned char *blu)
-{
-	trans->reset_colors(min, max, red, grn, blu);
 }
 
 /*!
@@ -648,15 +594,6 @@ void R_RGB_raster(int n, int nrows,
  *
  */
 
-void R_raster_char(int num, int nrows, int withzero, const unsigned char *ras)
-{
-	trans->raster_char(num, nrows, withzero, ras);
-}
-
-void R_raster_int(int num, int nrows, int withzero, const int *ras)
-{
-	trans->raster_int(num, nrows, withzero, ras);
-}
 
 void R_bitmap(int ncols, int nrows, int threshold, const unsigned char *buf)
 {

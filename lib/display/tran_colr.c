@@ -8,7 +8,9 @@
 #include <grass/raster.h>
 #include <grass/glocale.h>
 
-int allocated_colors = MAXCOLORS; /* This is the number of the highest allocated color */
+static struct color_rgb *colors;
+static int ncolors;
+static int nalloc;
 
 /*!
  * \brief color name to number
@@ -22,17 +24,20 @@ int allocated_colors = MAXCOLORS; /* This is the number of the highest allocated
  *  \return int
  */
 
-int D_translate_color(const char *str )
+int D_translate_color(const char *str)
 {
-  volatile const struct color_name *std_names = standard_color_names;
-  int i;
+    int num_names = G_num_standard_color_names();
+    int i;
 
-  for (i = 0; i < MAX_COLOR_NAMES; i ++) {
-    if (! strcmp (str, std_names[i].name))
-      return std_names[i].number ;
-  }
+    for (i = 0; i < num_names; i++)
+    {
+	const struct color_name *name = G_standard_color_name(i);
 
-  return(0) ;
+	if (G_strcasecmp(str, name->name) == 0)
+	    return name->number;
+    }
+
+    return 0;
 }
 
 
@@ -51,61 +56,59 @@ int D_translate_color(const char *str )
  *  \return int
  */
 
-int D_translate_or_add_color (const char * str, int index)
+static int translate_or_add_color(const char *str)
 {
-	volatile const struct color_rgb *std_rgb = standard_colors_rgb;
-	int redi, greeni, bluei;
-	int i, preallocated, ret;
+    int index;
+    int red, grn, blu;
+    int i, preallocated, ret;
+    char lowerstr[MAX_COLOR_LEN];
 
-	char lowerstr[MAX_COLOR_LEN];
+    /* Make the color string lowercase for display colors */
+    G_strcpy(lowerstr, str);
+    G_chop(lowerstr);
+    G_tolcase(lowerstr);	
 
-	/* Make the color string lowercase for display colors */
-	G_strcpy (lowerstr, str );
-	G_chop (lowerstr);
-	G_tolcase (lowerstr);	
+    preallocated = D_translate_color(lowerstr);
+    if (preallocated)
+	return preallocated;
 
-	preallocated = D_translate_color (lowerstr);
-	
-	if (preallocated != 0) {
-		return preallocated;
-	}
+    if (!nalloc)
+    {
+	ncolors = G_num_standard_colors();
+	nalloc = 2 * ncolors;
+	colors = G_malloc(nalloc * sizeof(struct color_rgb));
+	for (i = 0; i < ncolors; i++)
+	    colors[i] = G_standard_color_rgb(i);
+    }
 
-	ret = G_str_to_color (str, &redi, &greeni, &bluei);
+    ret = G_str_to_color(str, &red, &grn, &blu);
 
-	if (ret == 2) {
-		/* None color */
-		return 0;
-	} else if (ret == 1) {
-		/* It would be possible to, at this point, search through
-		   the preallocated colors for this color and return the
-		   preallocated index on a match. That is what this does: */
-		for (i = 1; i <= MAX_COLOR_NUM; i++)
-			if (std_rgb[i].r == redi &&
-			    std_rgb[i].g == greeni &&
-			    std_rgb[i].b == bluei)
-				return i ;
+    /* None color */
+    if (ret == 2)
+	return 0;
 
-		/* Add the specified color to the suggested index */
-		R_reset_color ( (unsigned char) redi, (unsigned char) greeni, (unsigned char) bluei, index) ;
-		return index ;
-	} 
-
+    if (ret != 1)
 	return -1 ;
-}
 
-/*!
- * \brief create new suggested color number
- *
- * Returns an integer which is a suggested number greater than
- * the maximum number of basic colors to use as a color index
- * for custom colors. Each call returns a number one higher
- * than the number returned by the previous call.
- *
- *  \return int
- */
+    for (i = 1; i < ncolors; i++)
+	if (colors[i].r == red &&
+	    colors[i].g == grn &&
+	    colors[i].b == blu)
+	    return i;
 
-int D_allocate_color () {
-    return (++allocated_colors) ;
+    if (ncolors >= nalloc)
+    {
+	nalloc *= 2;
+	colors = G_realloc(colors, nalloc * sizeof(struct color_rgb));
+    }
+
+    index = ncolors++;
+
+    colors[index].r = red;
+    colors[index].g = grn;
+    colors[index].b = blu;
+
+    return index;
 }
 
 /*!
@@ -122,12 +125,12 @@ int D_allocate_color () {
  *  \return int
  */
 
-int D_parse_color (const char * str, int none_acceptable) {
+int D_parse_color(const char * str, int none_acceptable) {
     int color ;
-    color = D_translate_or_add_color(str, D_allocate_color());
+    color = translate_or_add_color(str);
     if (color == -1)
         G_fatal_error(_("[%s]: No such color"), str);
-    if (color == 0 && (! none_acceptable))
+    if (color == 0 && !none_acceptable)
         G_fatal_error(_("[%s]: No such color"), str);
     return color;
 }
@@ -143,16 +146,23 @@ int D_parse_color (const char * str, int none_acceptable) {
  *  \return int
  */
 
-int D_raster_use_color (int color) {
-    if (color == 0 || color == -1)
-        return 0 ;
-    if (0 < color && color <= MAXCOLORS)
+int D_raster_use_color(int color)
+{
+    if (color <= 0)
+	return 0;
+
+    if (color < G_num_standard_colors())
     {
-        R_standard_color (color) ;
-        return 1 ;
-    } else {
-        R_color (color) ;
-        return 1;
+        R_standard_color(color);
+	return 1;
     }
-    return 0 ;
+
+    if (color < ncolors)
+    {
+	const struct color_rgb *c = &colors[color];
+	R_RGB_color(c->r, c->g, c->b);
+	return 1;
+    }
+
+    return 0;
 }
