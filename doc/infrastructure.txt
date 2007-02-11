@@ -147,13 +147,23 @@ Maintainer: Bernhard Reiter, Jan-Oliver Wagner
 
 == GRASS Bugtracker ==
 
-Maintainer: Bernhard Reiter, Jan-Oliver Wagner
+Maintainer: Bernhard Reiter, Jan-Oliver Wagner (gforce)
+            Maciej Sieczka (bugs generally), with help from
+             - Jachym Cepicky - code patches,
+             - Scott Mitchell - website patches,
+             - Martin Landa   - doc patches
 
-* https://intevation.de/rt/webrt?q_queue=grass
-* webRT, sponsored by Intevation GmbH, Germany
-* spamassasin spamfilter
-* reports are directly sent to GRASS Developers mailing list for notification
+Old bugtracker (Dec 2000 - Dec 2006):
+  * https://intevation.de/rt/webrt?q_queue=grass
+  * webRT, sponsored by Intevation GmbH, Germany
+  * spamassasin spamfilter locally, bogofilter at grass-dev list
+  * reports are directly sent to GRASS Developers mailing list for notification
 
+New bugtracker (Jan 2007 - today):
+  * http://wald.intevation.org/tracker/?group_id=21
+  * gforce, sponsored by Intevation GmbH, Germany
+  * spamassasin spamfilter locally, bogofilter at grass-dev list
+  * needs 'noreply*wald.intevation.org' to be enabled as alias in Mailman
 
 == GRASS Quality Control ==
 
