@@ -346,7 +346,6 @@ proc GmProfile::getcoords { mapcan } {
 	
 	# coordinates for use in r.profile
 	append pcoords "," $east2 "," $north2
-	puts "pcoords = $pcoords"
 	
 	# x distance off each transect segment
 	
@@ -504,7 +503,6 @@ proc GmProfile::pdraw { } {
    	if {![catch {open "|r.profile input=$pmap profile=$pcoords 2> $devnull" r} input]} {
 		while {[gets $input line] >= 0} {
 			if { [regexp -nocase {^([0-9].*) ([[.-.]0-9].*)$} $line trash dist elev] } {
-				puts "distance = $dist and elevation = $elev"
 				set pelev [expr $bottom - ($height * ($elev - $elevmin) / $elevrange)] 
 				set pdist [expr $left + (($dist * $width) / $cumdist)]
 				lappend profilelist $pdist $pelev 
