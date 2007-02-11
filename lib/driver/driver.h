@@ -54,7 +54,6 @@ struct driver
 		const unsigned char *,
 		const unsigned char *,
 		const unsigned char *);
-	void (*Raster_int)(int,int,const int *,int,int);
 	void (*Respond)(void);
 	int (*Work_stream)(void);
 	void (*Do_work)(int);
@@ -68,11 +67,7 @@ struct driver
 
 /* Library Functions */
 
-/* Color.c */
-extern int LIB_get_color_index(int);
-extern void LIB_get_color_index_array(int *,const int *,int);
 /* color_supp.c */
-extern void LIB_assign_fixed_color(int,int);
 extern void LIB_assign_standard_color(int,int);
 /* command.c */
 extern int LIB_command_get_input(void);
@@ -92,7 +87,6 @@ extern void COM_Box_rel(int,int);
 extern void COM_Client_Open(void);
 extern void COM_Client_Close(void);
 /* Color.c */
-extern void COM_Color(int);
 extern void COM_Color_RGB(unsigned char,unsigned char,unsigned char);
 extern void COM_Standard_color(int);
 /* Cont.c */
@@ -135,12 +129,6 @@ extern void COM_Polyline_rel(const int *,const int *,int);
 /* Raster_RGB.c */
 extern void COM_RGB_set_colors(const unsigned char *,const unsigned char *,const unsigned char *);
 extern void COM_RGB_raster(int,int,const unsigned char *,const unsigned char *,const unsigned char *,const unsigned char *);
-/* Raster_char.c */
-extern void COM_Raster_char(int,int,const unsigned char *,int,int);
-extern void COM_Raster_int(int,int,const int *,int,int);
-/* Reset_colors.c */
-extern void COM_Reset_color(unsigned char,unsigned char,unsigned char,int);
-extern void COM_Reset_colors(int,int,const unsigned char *,const unsigned char *,const unsigned char *);
 /* Respond.c */
 extern void COM_Respond(void);
 /* Returns.c */

@@ -21,6 +21,7 @@ int plot (char *name, char *mapset, struct line_pnts *Points)
     struct Map_info P_map;
     SYMBOL *Symb;
     RGBA_Color *linecolor_rgb, *fillcolor_rgb;
+    struct color_rgb rgb;
     int ix, iy;
 
     Vect_set_open_level (2);
@@ -42,9 +43,10 @@ int plot (char *name, char *mapset, struct line_pnts *Points)
     linecolor_rgb = G_malloc(sizeof(RGB_Color));
     fillcolor_rgb = G_malloc(sizeof(RGB_Color));
 
-    linecolor_rgb->r = standard_colors_rgb[line_color].r;
-    linecolor_rgb->g = standard_colors_rgb[line_color].g;
-    linecolor_rgb->b = standard_colors_rgb[line_color].b;
+    rgb = G_standard_color_rgb(line_color);
+    linecolor_rgb->r = rgb.r;
+    linecolor_rgb->g = rgb.g;
+    linecolor_rgb->b = rgb.b;
     linecolor_rgb->a = RGBA_COLOR_OPAQUE;
     fillcolor_rgb->a = RGBA_COLOR_NONE;
 
@@ -102,6 +104,7 @@ int plot_warp(char *name, char *mapset, struct line_pnts *Points,
     struct Map_info P_map;
     SYMBOL *Symb;
     RGBA_Color *linecolor_rgb, *fillcolor_rgb;
+    struct color_rgb rgb;
     int ix, iy;
 
     Vect_set_open_level (2);
@@ -123,9 +126,10 @@ int plot_warp(char *name, char *mapset, struct line_pnts *Points,
     linecolor_rgb = G_malloc(sizeof(RGB_Color));
     fillcolor_rgb = G_malloc(sizeof(RGB_Color));
 
-    linecolor_rgb->r = standard_colors_rgb[line_color].r;
-    linecolor_rgb->g = standard_colors_rgb[line_color].g;
-    linecolor_rgb->b = standard_colors_rgb[line_color].b;
+    rgb = G_standard_color_rgb(line_color);
+    linecolor_rgb->r = rgb.r;
+    linecolor_rgb->g = rgb.g;
+    linecolor_rgb->b = rgb.b;
     linecolor_rgb->a = RGBA_COLOR_OPAQUE;
     fillcolor_rgb->a = RGBA_COLOR_NONE;
 

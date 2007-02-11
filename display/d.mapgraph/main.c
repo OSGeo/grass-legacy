@@ -19,7 +19,6 @@ main (int argc, char **argv)
 	struct GModule *module;
 	struct Option *opt1, *opt2/*, *opt3, *opt4*/ ;
 	int R, G, B, color = 0;
-	const int customcolor = MAX_COLOR_NUM + 1;
 
 	/* Initialize the GIS calls */
 	G_gisinit(argv[0]) ;
@@ -106,10 +105,9 @@ main (int argc, char **argv)
 	   color = G_str_to_color(opt2->answer, &R, &G, &B);
 	   if(color == 0)
 		G_fatal_error("[%s]: No such color", opt2->answer);
-	   if(color == 1) {
-		R_reset_color(R, G, B, customcolor);
-		R_color(customcolor);
-	   }
+	   if(color == 1)
+		R_RGB_color(R, G, B);
+
 	   /* (color==2) is "none", noop */
 	}
 

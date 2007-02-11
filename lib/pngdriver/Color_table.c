@@ -66,7 +66,7 @@ static void init_colors_indexed(void)
 
 void init_color_table(void)
 {
-	volatile const struct color_rgb *std_rgb = standard_colors_rgb;
+	int n_std_colors = G_num_standard_colors();
 	int colorindex;
 
 	if (true_color)
@@ -75,13 +75,14 @@ void init_color_table(void)
 		init_colors_indexed();
 
 	/* Generate lookup for "standard" colors */
-	for (colorindex = 1; colorindex <= MAX_COLOR_NUM; colorindex++)
+	for (colorindex = 1; colorindex < n_std_colors; colorindex++)
+	{
+		struct color_rgb rgb = G_standard_color_rgb(colorindex);
+
 		LIB_assign_standard_color(
 			colorindex,
-			DRV_lookup_color(
-				(int) std_rgb[colorindex].r,
-				(int) std_rgb[colorindex].g,
-				(int) std_rgb[colorindex].b)) ;
+			DRV_lookup_color(rgb.r, rgb.g, rgb.b));
+	}
 }
 
 static int get_color_rgb(int r, int g, int b)

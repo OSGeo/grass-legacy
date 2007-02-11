@@ -87,7 +87,8 @@ int what(int once, int txt, int terse, int flash, int width, int mwidth, int top
 		if(flash){
 		   R_panel_delete(panell);
 		   flash_basecolr++;
-		   if (flash_basecolr > MAX_COLOR_NUM) flash_basecolr = 1;
+		   if (flash_basecolr >= G_num_standard_colors())
+		       flash_basecolr = 1;
 		}
 		continue;
 	    }
@@ -402,8 +403,12 @@ int what(int once, int txt, int terse, int flash, int width, int mwidth, int top
 		F_open ( title, db_get_string(&html) );
 	    }
 	 
-	 if(flash)
-	    flash_colr++; if (flash_colr > MAX_COLOR_NUM) flash_colr=1;
+	    if (flash)
+	    {
+		flash_colr++;
+		if (flash_colr >= G_num_standard_colors())
+		    flash_colr = 1;
+	    }
 	}
 
 	if(flash){

@@ -25,9 +25,6 @@ LIB_OBJS =\
 	Polyline.o\
 	Polygon.o\
 	Raster_RGB.o\
-	Raster_int.o\
-	Raster_char.o\
-	Reset_colors.o\
 	Respond.o\
 	Returns.o\
 	Set_window.o\

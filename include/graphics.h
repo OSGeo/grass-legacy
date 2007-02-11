@@ -19,7 +19,7 @@
  */
 
 #define GET_NUM_COLORS              1
-#define COLOR                       2
+/* #define COLOR                       2 */
 #define COLOR_PRINT                 3
 #define CONT_ABS                    4
 #define CONT_REL                    5
@@ -38,10 +38,10 @@
 #define POLYLINE_REL                18
 #define POLYDOTS_ABS                19
 #define POLYDOTS_REL                20
-#define RASTER_CHAR                 21
-#define RASTER_INT                  22
-#define RESET_COLORS                23
-#define RESET_COLOR                 24
+/* #define RASTER_CHAR                 21 */
+/* #define RASTER_INT                  22 */
+/* #define RESET_COLORS                23 */
+/* #define RESET_COLOR                 24 */
 #define SCREEN_LEFT                 25
 #define SCREEN_RITE                 26
 #define SCREEN_BOT                  27

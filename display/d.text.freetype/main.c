@@ -857,24 +857,17 @@ get_coordinates(rectinfo win, char **ans, char pixel, char geocoor,
 static void
 set_color(const char *tcolor)
 {
-	static int customcolor = MAXCOLORS + 1;
 	int r, g, b;
 
 	if(sscanf(tcolor, "%d:%d:%d", &r, &g, &b) == 3)
 	{
 		if (r>=0 && r<256 && g>=0 && g<256 && b>=0 && b<256)
-		{
-			R_reset_color(r, g, b, customcolor);
-			R_color(customcolor);
-		}
+			R_RGB_color(r, g, b);
 	}
 #define BACKWARDS_COMPATIBLE
 #ifdef BACKWARDS_COMPATIBLE
 	else if(sscanf(tcolor, "0x%02x%02x%02x", &r, &g, &b) == 3)
-	{
-		R_reset_color(r, g, b, customcolor);
-		R_color(customcolor);
-	}
+		R_RGB_color(r, g, b);
 #endif
 	else
 	{

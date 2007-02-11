@@ -51,7 +51,6 @@ OBJS =  \
 	Polydots.o\
 	Polygon.o\
 	Polyline.o\
-	Raster.o\
 	Raster_RGB.o\
 	Respond.o\
 	Serve_Xevent.o\

@@ -26,7 +26,9 @@ static struct rgb_color palette[16] =  {
 
 typedef struct {
     int    field;	
-    int    color, bgcolor, bcolor;
+    int    has_bgcolor;
+    int    has_bcolor;
+    struct rgb_color color, bgcolor, bcolor;
     int    size;
     char   *font;
     int    xref, yref;

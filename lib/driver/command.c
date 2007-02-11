@@ -123,10 +123,6 @@ int process_command(int c)
 	REC(&index, sizeof index);
 	COM_Standard_color(index);
 	break;
-    case COLOR:
-	REC(&index, sizeof index);
-	COM_Color(index);
-	break;
     case RGB_COLOR:
 	REC(&red, sizeof red);
 	REC(&grn, sizeof grn);
@@ -282,26 +278,6 @@ int process_command(int c)
 	REC(blua, x * y * sizeof(char));
 	COM_Bitmap(x, y, index, blua);
 	break;
-    case RASTER_CHAR:
-	REC(&x, sizeof x);
-	REC(&y, sizeof y);
-	REC(&index, sizeof index);
-	blua = (unsigned char *) xalloc(blua, &blu_alloc, x, sizeof(*blua));
-	REC(blua, x * sizeof(char));
-	if (index != 0)
-		index = 1;
-	COM_Raster_char(x, y, blua, index, 1);
-	break;
-    case RASTER_INT:
-	REC(&x, sizeof x);
-	REC(&y, sizeof y);
-	REC(&index, sizeof index);
-	xarray = (int *) xalloc(xarray, &n_xarray, x, sizeof(*xarray));
-	REC(xarray, x * sizeof(*xarray));
-	if (index != 0)
-		index = 1;
-	COM_Raster_int(x, y, xarray, index, 1);
-	break;
     case RGB_RASTER:
 	REC(&x, sizeof x);
 	REC(&y, sizeof y);
@@ -372,25 +348,6 @@ int process_command(int c)
 	REC(xarray, number * sizeof(xarray[0]));
 	REC(yarray, number * sizeof(yarray[0]));
 	COM_Polydots_rel(xarray, yarray, number);
-	break;
-    case RESET_COLORS:
-	REC(&min, sizeof min);
-	REC(&max, sizeof max);
-	number = max - min + 1;
-	reda = (unsigned char *) xalloc(reda, &red_alloc, number, sizeof(*reda));
-	grna = (unsigned char *) xalloc(grna, &grn_alloc, number, sizeof(*grna));
-	blua = (unsigned char *) xalloc(blua, &blu_alloc, number, sizeof(*blua));
-	REC(reda, number * sizeof(char));
-	REC(grna, number * sizeof(char));
-	REC(blua, number * sizeof(char));
-	COM_Reset_colors(min, max, reda, grna, blua);
-	break;
-    case RESET_COLOR:
-	REC(&red, sizeof red);
-	REC(&grn, sizeof grn);
-	REC(&blu, sizeof blu);
-	REC(&number, sizeof number);
-	COM_Reset_color(red, grn, blu, number);
 	break;
     case SCREEN_LEFT:
 	COM_Screen_left(&index);

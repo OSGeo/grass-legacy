@@ -15,10 +15,6 @@ void DRV_color(int number)
 		(*driver->color)(number);
 }
 
-void COM_Color(int number)
-{
-	DRV_color(LIB_get_color_index(number));
-}
 
 void COM_Color_RGB(unsigned char r, unsigned char g, unsigned char b)
 {
@@ -28,15 +24,5 @@ void COM_Color_RGB(unsigned char r, unsigned char g, unsigned char b)
 void COM_Standard_color(int number)
 {
 	DRV_color(get_standard_color(number));
-}
-
-int LIB_get_color_index(int number)
-{
-	return get_fixed_color(number);
-}
-
-void LIB_get_color_index_array(int *dst, const int *src, int num)
-{
-	get_fixed_color_array(dst, src, num);
 }
 

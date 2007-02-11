@@ -12,9 +12,10 @@
 
 #define WDTH 5
 
-int display ( struct Map_info *Map, struct line_pnts *, int, int, int );
+int display ( struct Map_info *Map, struct line_pnts *, const struct color_rgb *, int, int );
 
-int path ( struct Map_info *Map, int color, int hcolor, int bgcolor )
+int path ( struct Map_info *Map, const struct color_rgb *color,
+	   const struct color_rgb *hcolor, const struct color_rgb *bgcolor )
 {
     int button, ret;
     int screen_x, screen_y ;
@@ -62,7 +63,7 @@ int path ( struct Map_info *Map, int color, int hcolor, int bgcolor )
 	    
             display ( Map, Points, color, from_node, to_node );
 		
-	    R_color(bgcolor);
+	    R_RGB_color(bgcolor->r, bgcolor->g, bgcolor->b);
 	    if ( !from_node ) 
 	        G_plot_line(Points->x[0], Points->y[0], Points->x[1], Points->y[1]);
 
@@ -74,7 +75,7 @@ int path ( struct Map_info *Map, int color, int hcolor, int bgcolor )
 	switch ( button )	{
 	    case 1:
 		if ( from_disp ) {
-		    R_color(bgcolor);
+		    R_RGB_color(bgcolor->r, bgcolor->g, bgcolor->b);
 		    G_plot_icon( fx, fy, G_ICON_BOX, 0.0, msize);
                 }
 		if ( node > 0 ) {
@@ -86,14 +87,14 @@ int path ( struct Map_info *Map, int color, int hcolor, int bgcolor )
 		    fy = y;
 		    from_node = 0;
 		}
-		R_color(hcolor);
+		R_RGB_color(hcolor->r, hcolor->g, hcolor->b);
 		G_plot_icon( fx, fy, G_ICON_BOX, 0.0, msize);
 		R_flush();
 		from_disp = 1;
 	        break;
 	    case 2:
 		if ( to_disp ) {
-		    R_color(bgcolor);
+		    R_RGB_color(bgcolor->r, bgcolor->g, bgcolor->b);
 		    G_plot_icon( tx, ty, G_ICON_CROSS, 0.0, msize);
                 }
 		if ( node > 0 ) {
@@ -105,18 +106,18 @@ int path ( struct Map_info *Map, int color, int hcolor, int bgcolor )
 		    ty = y;
 		    to_node = 0;
 		}
-		R_color(hcolor);
+		R_RGB_color(hcolor->r, hcolor->g, hcolor->b);
 		G_plot_icon( tx, ty, G_ICON_CROSS, 0.0, msize);
 		R_flush();
 		to_disp = 1;
 	        break;
 	    case 3:
 		if ( from_disp ) {
-		    R_color(bgcolor);
+		    R_RGB_color(bgcolor->r, bgcolor->g, bgcolor->b);
 		    G_plot_icon( fx, fy, G_ICON_BOX, 0.0, msize);
 		}
 		if ( to_disp ) {
-		    R_color(bgcolor);
+		    R_RGB_color(bgcolor->r, bgcolor->g, bgcolor->b);
 		    G_plot_icon( tx, ty, G_ICON_CROSS, 0.0, msize);
 		}
 	        return 1;
@@ -149,11 +150,11 @@ int path ( struct Map_info *Map, int color, int hcolor, int bgcolor )
 }
 
 int 
-display ( struct Map_info *Map, struct line_pnts *Points, int color, int first, int last )
+display ( struct Map_info *Map, struct line_pnts *Points, const struct color_rgb *color, int first, int last )
 {
     int i, from, to;
 
-    R_color(color);
+    R_RGB_color(color->r, color->g, color->b);
 
     if ( first ) from = 0; else from = 1;
     if ( last ) to = Points->n_points; else to = Points->n_points - 1;

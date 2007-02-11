@@ -13,7 +13,8 @@
 #include "plot.h"
 #include "local_proto.h"
 
-int darea ( struct Map_info *Map, struct cat_list *Clist, int bcolor, int fcolor, 
+int darea ( struct Map_info *Map, struct cat_list *Clist,
+	    const struct color_rgb *bcolor, const struct color_rgb *fcolor, 
 	    int chcat, int id_flag, int table_colors_flag, int cats_color_flag,
 	    struct Cell_head *window, char *rgb_column, int default_width,
 	    char *width_column, double width_scale) {
@@ -310,9 +311,9 @@ int darea ( struct Map_info *Map, struct cat_list *Clist, int bcolor, int fcolor
 	  R_line_width(width);
 	} /* end if nrec_width */
 
-	if ( fcolor > -1 ) {
+	if ( fcolor ) {
 	  if (!table_colors_flag && !cats_color_flag) {
-	    R_color(fcolor);
+	    R_RGB_color(fcolor->r, fcolor->g, fcolor->b);
 	    G_plot_polygon ( Points->x, Points->y, Points->n_points);
 	  }
 	  else {
@@ -320,7 +321,7 @@ int darea ( struct Map_info *Map, struct cat_list *Clist, int bcolor, int fcolor
 	      R_RGB_color ((unsigned char) red, (unsigned char) grn, (unsigned char) blu);
 	    }
 	    else {
-	      R_color (fcolor);
+	      R_RGB_color(fcolor->r, fcolor->g, fcolor->b);
 	    }
 	    if (cat >= 0) {
 	      G_plot_polygon ( Points->x, Points->y, Points->n_points);
@@ -329,14 +330,14 @@ int darea ( struct Map_info *Map, struct cat_list *Clist, int bcolor, int fcolor
 	}
 
 	/* boundary */
-	if ( bcolor > -1 ) {
+	if ( bcolor ) {
 	    int i, j;
 	    Vect_get_area_points ( Map, area, Points );   
 	    if (rgb) {
 	      R_RGB_color ((unsigned char) red, (unsigned char) grn, (unsigned char) blu);
 	    }
 	    else {
-	      R_color (bcolor);
+	      R_RGB_color(bcolor->r, bcolor->g, bcolor->b);
 	    }
 	    for ( i = 0; i < Points->n_points - 1; i++) { 
 		G_plot_line (Points->x[i], Points->y[i], Points->x[i+1], Points->y[i+1]);
