@@ -294,7 +294,6 @@ proc GmTree::add { type } {
     
     # selected node
     catch {set parent_node [ lindex [$tree($mon) selection get] 0]} errormsg
-    puts "error message = $errormsg"
     
     if {[string first "invalid command name" $errormsg] != -1} {
     	tk_messageBox -type ok -icon error \
