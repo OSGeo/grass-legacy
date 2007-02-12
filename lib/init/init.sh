@@ -515,13 +515,13 @@ fi
 
 # User selects LOCATION and MAPSET if not set
 if [ ! "$LOCATION" ] ; then
-    
+
     case "$GRASS_GUI" in
-    	
+
 	# Check for text interface
 	text)
 	    "$ETC/set_data"
-    	    
+
 	    case $? in
      	    	0) ;;
      	    	*) 
@@ -693,6 +693,7 @@ if [ -n "$GRASS_BATCH_JOB" ] ; then
          exit 1
       else
          echo "Executing '$GRASS_BATCH_JOB' ..."
+         GRASS_GUI="text"
          SHELL="$GRASS_BATCH_JOB"
       fi
    fi
@@ -864,6 +865,7 @@ cygwin)
 	rm -rf "$LOCATION/.tmp"/*  # remove gis.m session files from .tmp
     else
     	"$ETC/run" "$SHELL"
+	EXIT_VAL=$?
     fi
     ;;
 esac
@@ -905,6 +907,6 @@ echo "Goodbye from GRASS GIS"
 echo
 if [ -x "$GRASS_BATCH_JOB" ] ; then
    echo "Batch job '$GRASS_BATCH_JOB' (defined in GRASS_BATCH_JOB variable) was executed."
-   exit 0
+   exit $EXIT_VAL
 fi
 
