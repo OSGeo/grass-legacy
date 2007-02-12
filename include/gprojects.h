@@ -45,6 +45,17 @@ struct gpj_datum
     double dx, dy, dz;
 };
 
+struct gpj_datum_transform_list
+{
+    int count;			/**< Transform Number (ordered list) */
+    char *params;		/**< PROJ.4-style datum transform parameters */
+    char *where_used;		/**< Comment text describing where (geographically)
+				 * the transform is valid */
+    char *comment;		/**< Additional Comments */
+    struct gpj_datum_transform_list *next;	/**< Pointer to next set of 
+					 * transform parameters in linked list */
+};
+
 struct gpj_ellps
 {
     char *name, *longname;
@@ -81,6 +92,8 @@ int GPJ_get_datum_params (char **, char **);
 int GPJ__get_datum_params (struct Key_Value *, char **, char **);
 void GPJ_free_datum (struct gpj_datum *);
 int GPJ_ask_datum_params(const char *, char **);
+struct gpj_datum_transform_list *GPJ_get_datum_transform_by_name(const char
+								*inputname);
 
 /* ellipse.c */
 int GPJ_get_ellipsoid_by_name (const char *, struct gpj_ellps *);

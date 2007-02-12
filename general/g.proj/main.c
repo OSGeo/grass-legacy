@@ -6,7 +6,7 @@
  * PURPOSE:      Provides a means of reporting the contents of GRASS
  *               projection information files and creating
  *               new projection information files.
- * COPYRIGHT:    (C) 2003-2006 by the GRASS Development Team
+ * COPYRIGHT:    (C) 2003-2007 by the GRASS Development Team
  *
  *               This program is free software under the GNU General Public
  *               License (>=v2). Read the file COPYING that comes with GRASS
@@ -30,11 +30,13 @@ int main(int argc, char *argv[])
         *create,		/* Create new projection files              */
         *printwkt,		/* Print projection in WKT format           */
         *esristyle,		/* Use ESRI-style WKT format                */
-        *dontprettify;		/* Print 'flat' output (no linebreaks)      */
+        *dontprettify,		/* Print 'flat' output (no linebreaks)      */
+        *forcedatumtrans,	/* Force override of datumtrans parameters  */
+        *interprompt;		/* Enable interactive prompting             */
 
     struct Option *location,	/* Name of new location to create           */
-	  *inepsg,		/* EPSG code to create new location with */
-	  *dtrans,		/* index to datum transform option */
+          *inepsg,		/* EPSG projection code                     */
+          *dtrans,		/* index to datum transform option          */
           *inwkt,	        /* Input file with projection in WKT format */
           *inproj4,		/* Projection in PROJ.4 format              */
           *ingeo;		/* Input geo-referenced file readable by 
@@ -42,17 +44,18 @@ int main(int argc, char *argv[])
     struct GModule *module;
    
     int importformats;
-    char buffer[64];
-    int datumtrans;		/* List number of datum transform parameters */
 
     G_set_program_name(argv[0]);
-    G_no_gisinit();
+    G_no_gisinit(); /* We don't call G_gisinit() here because it validates the
+		     * mapset, whereas this module may legitmately be used 
+		     * (to create a new location) when none exists */
 
     module = G_define_module();
     module->keywords = _("general");
     module->description =
 	_("Converts co-ordinate system descriptions (i.e. projection "
-	  "information) between various formats (including GRASS format).");
+	  "information) between various formats (including GRASS format). "
+	  "Can also be used to create GRASS locations.");
 
     printinfo = G_define_flag();
     printinfo->key = 'p';
@@ -98,7 +101,7 @@ int main(int argc, char *argv[])
     ingeo->required = NO;
     ingeo->guisection = "Input";
     ingeo->description = _("Georeferenced data file to read projection "
-	"information from");
+		 	   "information from");
 
     inwkt = G_define_option();
     inwkt->key = "wkt";
@@ -106,8 +109,8 @@ int main(int argc, char *argv[])
     inwkt->key_desc = "file";
     inwkt->required = NO;
     inwkt->guisection = "Input";
-    inwkt->description = _("ASCII file containing a single line WKT "
-	"projection description (- for stdin)");
+    inwkt->description = _("ASCII file containing a WKT projection "
+			   "description (- for stdin)");
 
     inproj4 = G_define_option();
     inproj4->key = "proj4";
@@ -117,29 +120,36 @@ int main(int argc, char *argv[])
     inproj4->guisection = "Input";
     inproj4->description = _("PROJ.4 projection description (- for stdin)");
 
-    create = G_define_flag();
-    create->key = 'c';
-    create->guisection = "Create/Edit_Locations";
-    create->description = _("Create new projection files (modifies current "
-	"location unless 'location' option specified)");
-
     inepsg = G_define_option();
     inepsg->key = "epsg";
     inepsg->type = TYPE_INTEGER;
     inepsg->required = NO;
     inepsg->options  = "1-100000";
-    inepsg->guisection = "Create/Edit_Locations";
-    inepsg->description = _("EPSG code of projection to be created");
+    inepsg->guisection = "Input";
+    inepsg->description = _("EPSG projection code");
 
     dtrans = G_define_option();
     dtrans->key = "datumtrans";
     dtrans->type = TYPE_INTEGER;
     dtrans->required = NO;
-    dtrans->options  = "0-100";
-    dtrans->answer   = "1";
-    dtrans->guisection = "Create/Edit_Locations";
-    dtrans->description = _("Index number of datum transform parameter, "
-	"or \"0\" for a list");
+    dtrans->options  = "-1-100";
+    dtrans->answer   = "0";
+    dtrans->guisection = "Datum_Trans";
+    dtrans->description = _("Index number of datum transform parameters, \"0\" "
+	"for unspecified or \"-1\" to list and exit");
+
+    forcedatumtrans = G_define_flag();
+    forcedatumtrans->key = 't';
+    forcedatumtrans->guisection = "Datum_Trans";
+    forcedatumtrans->description =
+      _("Force override of datum transformation information in input "
+        "co-ordinate system");
+
+    create = G_define_flag();
+    create->key = 'c';
+    create->guisection = "Create/Edit_Locations";
+    create->description = _("Create new projection files (modifies current "
+	"location unless 'location' option specified)");
 
     location = G_define_option();
     location->key = "location";
@@ -149,6 +159,11 @@ int main(int argc, char *argv[])
     location->guisection = "Create/Edit_Locations";
     location->description = _("Name of new location to create");
 
+    interprompt = G_define_flag();
+    interprompt->key = 'i';
+    interprompt->description =
+      _("Enable interactive prompting (for command-line use only)");
+   
     if (G_parser(argc, argv))
 	exit(EXIT_FAILURE);
 
@@ -165,20 +180,8 @@ int main(int argc, char *argv[])
     importformats = ((ingeo->answer? 1 : 0) + (inwkt->answer? 1 : 0) +
 		     (inproj4->answer? 1 : 0) + (inepsg->answer? 1 : 0) );
     if (importformats > 1)
-	G_fatal_error(_("Only one of '%s', '%s' or '%s' options may be specified"),
-		      ingeo->key, inwkt->key, inproj4->key);
-
-    if (strcmp(dtrans->answer, "0") == 0) {
-	/* list available datum transform options */
-    /* TODO: check if EPSG code exists */
-	if(!inepsg->answer)
-	    G_fatal_error(_("EPSG code <%s> does not exist"), inepsg->answer);
-    /* Does this need to work with just EPSG codes, or with any input method? */
-	G_message("Datum transform parm list still under construction.\n"
-		  "Please try again later.");
-	exit (EXIT_SUCCESS);
-    }
-    datumtrans = atoi(dtrans->answer);
+	G_fatal_error(_("Only one of '%s', '%s', '%s' or '%s' options may be specified"),
+		      ingeo->key, inwkt->key, inproj4->key, inepsg->key);
 
     /* Input */
     /* We can only have one input source, hence if..else construct */
@@ -194,6 +197,7 @@ int main(int argc, char *argv[])
         input_proj4(inproj4->answer);
     else if (inepsg->answer) {
 	/* Input from EPSG code */
+	char buffer[64];
 	sprintf(buffer, "+init=epsg:%s", inepsg->answer);
 	input_proj4(buffer);
     }
@@ -207,7 +211,11 @@ int main(int argc, char *argv[])
     if ((cellhd.proj != PROJECTION_XY)
 	&& (projinfo == NULL || projunits == NULL))
 	G_fatal_error(_("Projection files missing"));
-
+   
+    /* Set Datum Parameters if necessary or requested */   
+    set_datumtrans(atoi(dtrans->answer), forcedatumtrans->answer, 
+		   interprompt->answer);
+   
    
     /* Output */
     /* We can output the same information in multiple formats if
@@ -226,7 +234,7 @@ int main(int argc, char *argv[])
 	print_wkt(esristyle->answer, dontprettify->answer);
        
     if (create->answer)
-	create_location(location->answer);       
+	create_location(location->answer, interprompt->answer);
 
 
     /* Tidy Up */

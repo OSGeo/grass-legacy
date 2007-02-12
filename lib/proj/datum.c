@@ -26,19 +26,6 @@
 #include <grass/gprojects.h>
 #include "local_proto.h"
 
-struct datum_transform_list
-{
-    int count;			/**< Transform Number (ordered list) */
-    char *params;		/**< PROJ.4-style datum transform parameters */
-    char *where_used;		/**< Comment text describing where (geographically)
-				 * the transform is valid */
-    char *comment;		/**< Additional Comments */
-    struct datum_transform_list *next;	/**< Pointer to next set of 
-					 * transform parameters in linked list */
-};
-
-static struct datum_transform_list *get_datum_transform_by_name(const char
-								*inputname);
 /**
  * \brief Look up a string in datum.table file to see if it is a valid datum 
  *        name and if so place its information into a gpj_datum struct
@@ -100,10 +87,10 @@ int GPJ_get_datum_by_name(const char *name, struct gpj_datum *dstruct)
 
 int GPJ_get_default_datum_params_by_name(const char *name, char **params)
 {
-   struct datum_transform_list *list, *old;
+   struct gpj_datum_transform_list *list, *old;
    int count = 1;
 
-   list = get_datum_transform_by_name( name );
+   list = GPJ_get_datum_transform_by_name( name );
    
    if( list == NULL)
    {
@@ -259,7 +246,7 @@ int GPJ_ask_datum_params(const char *datumname, char **params)
     char buff[1024], answer[100];
     char *Tmp_file;
     FILE  *Tmp_fd = NULL;
-    struct datum_transform_list *list, *listhead, *old;
+    struct gpj_datum_transform_list *list, *listhead, *old;
     int transformcount, currenttransform;
 
     if( G_strcasecmp(datumname, "custom") != 0)
@@ -270,7 +257,7 @@ int GPJ_ask_datum_params(const char *datumname, char **params)
         }
 
         fprintf(Tmp_fd,"Number\tDetails\t\n---\n");
-        listhead = get_datum_transform_by_name( datumname );
+        listhead = GPJ_get_datum_transform_by_name( datumname );
         list = listhead;
         transformcount = 0;
         while( list != NULL)
@@ -377,19 +364,19 @@ int GPJ_ask_datum_params(const char *datumname, char **params)
  * \param inputname   String containing the datum name we
  *                    are going to look up parameters for
  * 
- * \return   Pointer to struct datum_transform_list (a linked
+ * \return   Pointer to struct gpj_datum_transform_list (a linked
  *           list containing transformation parameters),
  *           or NULL if no suitable parameters were found.
  **/
 
-static struct datum_transform_list *get_datum_transform_by_name(const char
+struct gpj_datum_transform_list *GPJ_get_datum_transform_by_name(const char
 								*inputname)
 {
     FILE *fd;
     char *file;
     char buf[1024];
     int line;
-    struct datum_transform_list *current = NULL, *outputlist = NULL;
+    struct gpj_datum_transform_list *current = NULL, *outputlist = NULL;
     struct gpj_datum dstruct;
     int count = 0;
 
@@ -400,10 +387,10 @@ static struct datum_transform_list *get_datum_transform_by_name(const char
 	 * indicate only entries in datumtransform.table should be used */
 	if (current == NULL)
 	    current = outputlist =
-		G_malloc(sizeof(struct datum_transform_list));
+		G_malloc(sizeof(struct gpj_datum_transform_list));
 	else
 	    current = current->next =
-		G_malloc(sizeof(struct datum_transform_list));
+		G_malloc(sizeof(struct gpj_datum_transform_list));
 	G_asprintf(&(current->params), "towgs84=%.3f,%.3f,%.3f", dstruct.dx,
 		   dstruct.dy, dstruct.dz);
 	G_asprintf(&(current->where_used), "whole %s region", inputname);
@@ -444,10 +431,10 @@ static struct datum_transform_list *get_datum_transform_by_name(const char
 	     * looking for, add an entry to the linked list */
 	    if (current == NULL)
 		current = outputlist =
-		    G_malloc(sizeof(struct datum_transform_list));
+		    G_malloc(sizeof(struct gpj_datum_transform_list));
 	    else
 		current = current->next =
-		    G_malloc(sizeof(struct datum_transform_list));
+		    G_malloc(sizeof(struct gpj_datum_transform_list));
 	    current->params = G_store(params);
 	    current->where_used = G_store(where_used);
 	    current->comment = G_store(comment);

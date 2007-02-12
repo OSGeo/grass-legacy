@@ -3,10 +3,12 @@
  *
  * MODULE:       g.proj 
  * AUTHOR(S):    Paul Kelly - paul-grass@stjohnspoint.co.uk
+ *               Frank Warmerdam
+ *               Radim Blazek
  * PURPOSE:      Provides a means of reporting the contents of GRASS
  *               projection information files and creating
  *               new projection information files.
- * COPYRIGHT:    (C) 2003-2006 by the GRASS Development Team
+ * COPYRIGHT:    (C) 2001-2007 by the GRASS Development Team
  *
  *               This program is free software under the GNU General Public
  *               License (>=v2). Read the file COPYING that comes with GRASS
@@ -67,13 +69,10 @@ int input_wkt(char *wktfile)
 {        
     FILE *infd;
     char buff[8000];
-    int interactive = 1;
     int ret;
    
-    if (strcmp(wktfile, "-") == 0) {
+    if (strcmp(wktfile, "-") == 0)
         infd = stdin;
-        interactive = 0;
-    }
     else
         infd = fopen(wktfile, "r");
 
@@ -89,8 +88,7 @@ int input_wkt(char *wktfile)
     else
         G_fatal_error(_("Unable to open file [%s] for reading"), wktfile);
    
-    ret = GPJ_wkt_to_grass(&cellhd, &projinfo, &projunits, buff,
-    		            interactive);
+    ret = GPJ_wkt_to_grass(&cellhd, &projinfo, &projunits, buff, 0);
     set_default_region();
    
     return ret;
@@ -117,7 +115,6 @@ int input_proj4(char *proj4params)
     FILE *infd;
     char buff[8000];
     char *proj4string;
-    int interactive = 1;   
     OGRSpatialReferenceH hSRS;
     int ret = 0;
 
@@ -125,7 +122,6 @@ int input_proj4(char *proj4params)
         infd = stdin;
         fgets(buff, sizeof(buff), infd);
         G_asprintf(&proj4string, "%s +no_defs", buff);
-        interactive = 0;
     }
     else
         G_asprintf(&proj4string, "%s +no_defs", proj4params);
@@ -139,7 +135,7 @@ int input_proj4(char *proj4params)
 
     G_free(proj4string);
 
-    ret = GPJ_osr_to_grass(&cellhd, &projinfo, &projunits, hSRS, interactive);
+    ret = GPJ_osr_to_grass(&cellhd, &projinfo, &projunits, hSRS, 0);
 
     OSRDestroySpatialReference(hSRS);
    
@@ -186,7 +182,7 @@ int input_georef(char *geofile)
 	/* Get the first layer */
 	ogr_layer = OGR_DS_GetLayer(ogr_ds, 0);
 	ogr_srs = OGR_L_GetSpatialRef(ogr_layer);
-	ret = GPJ_osr_to_grass(&cellhd, &projinfo, &projunits, ogr_srs, 1);
+	ret = GPJ_osr_to_grass(&cellhd, &projinfo, &projunits, ogr_srs, 0);
 	set_ogr_region(ogr_layer);   
 
 	OGR_DS_Destroy(ogr_ds);
@@ -203,7 +199,7 @@ int input_georef(char *geofile)
 
             G_message(_("...succeeded."));
             wktstring = (char *)GDALGetProjectionRef(gdal_ds);
-            ret = GPJ_wkt_to_grass(&cellhd, &projinfo, &projunits, wktstring, 1);
+            ret = GPJ_wkt_to_grass(&cellhd, &projinfo, &projunits, wktstring, 0);
 	   
 	    set_gdal_region(gdal_ds);
         }
