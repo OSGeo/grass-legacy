@@ -30,8 +30,9 @@
 #% type: string
 #% description: data type
 #% answer: rast
-#% options: rast,rast3d,oldvect,vect,asciivect,icon,labels,sites,region,region3d,group,3dview
+#% options: rast,rast3d,oldvect,vect,asciivect,icon,labels,sites,region,region3d,group,3dview,all
 #% required : yes
+#% multiple: yes
 #%end
 #%option
 #% key: mapset
@@ -109,6 +110,15 @@ type="$GIS_OPT_TYPE"
 mapset="$GIS_OPT_MAPSET"
 sep="$GIS_OPT_SEP"
 search="$GIS_OPT_PATTERN"
+
+#list all datatypes
+types=`echo $type | sed 's/,/ /g'`
+for itype in $types
+do
+  if [ "$itype" == "all" ] ; then
+      type="rast,rast3d,oldvect,vect,asciivect,icon,labels,sites,region,region3d,group,3dview"
+  fi
+done 
 
 if [ -z "$sep" ] ; then
 #    echo using "\n" as separator
