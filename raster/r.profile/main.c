@@ -166,6 +166,8 @@ int main(int argc, char *argv[])
 	G_setup_plot(D_get_d_north(),
 		     D_get_d_south(),
 		     D_get_d_west(), D_get_d_east(), move, cont);
+
+	R_standard_color(D_translate_color(DEFAULT_FG_COLOR));
     }
 
     /* Show message giving output format */
