@@ -33,7 +33,7 @@ static int verbose = -1; /* current verbosity level */
  * \brief Get current verbosity level.
  *
  * "--v" required if (G_verbose() == G_verbose_max()) tests.
- * Currently, there are 3 levels of verbosity.
+ * Currently, there are 4 levels of verbosity.
  *
  * \return 0 - module should print nothing but errors and warnings (G_fatal_error, G_warning)
  * \return 1 - module will print progress information (G_percent)
