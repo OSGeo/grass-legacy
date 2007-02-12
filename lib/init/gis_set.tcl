@@ -224,6 +224,7 @@ proc gisSetWindow {} {
     label .frame0.frameDB.left.label \
     	-anchor {n} \
     	-justify right \
+	-wraplength 110 \
     	-text [G_msg "GIS Data Directory: "]
 
     entry .frame0.frameDB.mid.entry \
@@ -240,10 +241,13 @@ proc gisSetWindow {} {
  
 	button .frame0.frameDB.right.button \
 		-text [G_msg "Browse..."] -bd 1 \
-		-command {set database [tk_chooseDirectory -initialdir $database \
+		-command { set tmp [tk_chooseDirectory -initialdir $database \
 			-parent .frame0 -title [G_msg "New GIS data directory"] -mustexist true]
-			refresh_loc
-			.frame0.frameBUTTONS.ok configure -state disabled}
+			if {$tmp != ""} {
+				set database $tmp
+				refresh_loc
+				.frame0.frameBUTTONS.ok configure -state disabled } 
+			}
 
     pack .frame0.frameDB.left.label -side top
     pack .frame0.frameDB.mid.entry -side top -fill x
@@ -261,6 +265,7 @@ proc gisSetWindow {} {
 
     label .frame0.frameLOC.label \
     	-anchor {w} \
+	-wraplength 170 \
     	-text [G_msg "Project Location\n(projection/coordinate system)"] 
 
     listbox .frame0.frameLOC.listbox \
@@ -294,10 +299,12 @@ proc gisSetWindow {} {
 
     label .frame0.frameMS.label \
     	-anchor {w} \
+	-wraplength 150 \
     	-text [G_msg "Accessible Mapsets\n(directories of GIS files)"] 
 
     listbox .frame0.frameMS.listbox \
     	-relief {sunken} \
+	-exportselection false \
     	-yscrollcommand {.frame0.frameMS.vscrollbar set} \
     	-xscrollcommand {.frame0.frameMS.hscrollbar set} \
     	-selectmode single
@@ -347,6 +354,7 @@ proc gisSetWindow {} {
 
     label .frame0.frameNMS.first.label \
     	-anchor {n} \
+	-wraplength 160 \
     	-text [G_msg "Create new mapset\nin selected location"]
 
     entry .frame0.frameNMS.second.entry \
@@ -356,7 +364,7 @@ proc gisSetWindow {} {
 	
     button .frame0.frameNMS.third.button \
     	-text [G_msg "Create new mapset"] \
-    	-width 20 -bd 1 \
+    	-width 20 -bd 1 -wraplength 160 \
      	-command { 
      	    set mymapset [ string trim $mymapset ]
      	    if { [file exists $mymapset] } {
@@ -402,12 +410,13 @@ proc gisSetWindow {} {
 
     label .frame0.frameNMS.fourth.label \
     	-anchor {n} \
+	-wraplength 160 \
     	-text [G_msg "Define new location with..."]
 
 
     button .frame0.frameNMS.fifth.button \
     	-text [G_msg "Georeferenced file"] \
-    	-width 20 -bd 1\
+    	-width 20 -bd 1 -wraplength 160\
     	-relief raised \
     	-command {fileOpt::fileLocCom
     		tkwait window .fileloc
@@ -419,7 +428,7 @@ proc gisSetWindow {} {
 
     button .frame0.frameNMS.sixth.button \
     	-text [G_msg "EPSG codes"] \
-    	-width 20 -bd 1\
+    	-width 20 -bd 1 -wraplength 160\
     	-relief raised \
     	-command { if { [epsgOpt::epsgLocCom] } {
     		tkwait window .optPopup
@@ -431,7 +440,7 @@ proc gisSetWindow {} {
     	    			
     button .frame0.frameNMS.seventh.button \
     	-text [G_msg "Projection values"] \
-    	-width 20 -bd 1\
+    	-width 20 -bd 1 -wraplength 160\
     	-relief raised \
     	-command {
 			if { $mingw == "1" } {
@@ -468,7 +477,7 @@ proc gisSetWindow {} {
     
     button .frame0.frameBUTTONS.ok \
      	-text [G_msg "Enter GRASS"] \
-    	-width 10 -bd 1 -fg green4 -default active \
+    	-width 10 -bd 1 -fg green4 -default active -wraplength 100 \
      	-command {
             if {[CheckLocation] == 0} {
 				DialogGen .wrnDlg [G_msg "WARNING: invalid location"] warning \
@@ -495,7 +504,7 @@ proc gisSetWindow {} {
 
     button .frame0.frameBUTTONS.help \
     	-text [G_msg "Help"] \
-    	-width 10 -bd 1\
+    	-width 10 -bd 1 -wraplength 100 \
     	-bg honeydew2 \
 		-command {
 			if { [winfo exists .help] } {
@@ -513,7 +522,7 @@ proc gisSetWindow {} {
 
     button .frame0.frameBUTTONS.cancel \
     	-text [G_msg "Exit"] \
-    	-width 10 -bd 1 \
+    	-width 10 -bd 1 -wraplength 100 \
     	-command { 
             puts stdout "exit" 
             destroy . 

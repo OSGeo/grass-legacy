@@ -119,14 +119,14 @@ proc epsgOpt::epsgLocCom args {
 	set row4 [frame $epsg_win.row4]
 	
 	LabelEntry $row1.newloc -label [G_msg "Name of new location"] \
-		-labeljustify right -labelanchor e -labelwidth 30 \
+		-labeljustify right -labelanchor e -labelwidth 30 -wraplength 200 \
 		-textvariable epsgOpt::epsgLocation -width 35 \
 		-helptext [G_msg "Enter name of location to be created"]
 		
 	pack $row1.newloc -side left -expand 0 -fill x -padx 2
 
 	LabelEntry $row2.epsgpath -label [G_msg "Path to the EPSG-codes file"] \
-		-labeljustify right -labelanchor e -labelwidth 30 \
+		-labeljustify right -labelanchor e -labelwidth 30 -wraplength 200 \
 		-textvariable epsgOpt::browsedepsg  -width 35 \
 		-helptext [G_msg "Path to EPSG codes file"]
 		
@@ -140,7 +140,7 @@ proc epsgOpt::epsgLocCom args {
 
 	#browse epsg codes in file
 	LabelEntry $row3.code_entry -label [G_msg "EPSG code number of projection"] \
-		-labeljustify right -labelanchor e -labelwidth 30 \
+		-labeljustify right -labelanchor e -labelwidth 30 -wraplength 200 \
 		-textvariable epsgOpt::epsg_code  -width 35 \
 		-helptext [G_msg "Enter EPSG code for selected projection"]
         
