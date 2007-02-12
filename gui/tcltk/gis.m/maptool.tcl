@@ -276,12 +276,9 @@ proc MapToolBar::create { tb } {
 
 	# menu for saving display
 	set savefile [menu $mapsave.sf -type normal]
-	set pngfile [menu $savefile.png -type normal]
-	set ppmfile [menu $savefile.ppm -type normal]
 	set jpgfile [menu $savefile.jpg -type normal]
 
-	$savefile add command -label "PPM/PNM" -command {MapToolBar::savefile ppm 0}
-	$savefile add command -label "TIF*" -command {MapToolBar::savefile tif 0}
+	$savefile add command -label "BMP*" -command {MapToolBar::savefile bmp 0}
 	$savefile add cascade -label "JPG*" -menu $jpgfile
 		$jpgfile add command -label "low quality (50)"	\
 			-command {MapToolBar::savefile jpg 50}
@@ -291,7 +288,9 @@ proc MapToolBar::create { tb } {
 			-command {MapToolBar::savefile jpg 95}
 		$jpgfile add command -label "very high resolution (300% your current resolution)" \
 			-command {MapToolBar::savefile jpg 300}
-	$savefile add command -label "BMP*" -command {MapToolBar::savefile bmp 0}
+	$savefile add command -label "PPM/PNM" -command {MapToolBar::savefile ppm 0}
+	$savefile add command -label "PNG" -command {MapToolBar::savefile png 0}
+	$savefile add command -label "TIF*" -command {MapToolBar::savefile tif 0}
 	$savefile add command -label "(* requires gdal)" -state disabled
 
 	$mapsave configure -menu $savefile
@@ -384,25 +383,29 @@ proc MapToolBar::savefile { type quality } {
 
 	if { $path != "" } {
 		switch $type {
+			"bmp" {
+				exec gdal_translate $path.ppm $path.bmp -of BMP
+				file delete $path.ppm
+			}
+			"jpg" {
+			    if { $quality == 300 } {
+					exec gdal_translate $path.ppm $path.jpg -of JPEG -co QUALITY=95 -outsize 300% 300% 
+					file delete $path.ppm
+				} else {
+					exec gdal_translate $path.ppm $path.jpg -of JPEG -co QUALITY=$quality 
+					file delete $path.ppm
+				}
+			}
+			"png" {
+				exec gdal_translate $path.ppm $path.png -of PNG
+				file delete $path.ppm
+			}
 			"ppm" {
 				return
 			}
 			"tif" {
 				exec gdal_translate $path.ppm $path.tif -of GTIFF
 				file delete $path.ppm
-			}
-			"bmp" {
-				exec gdal_translate $path.ppm $path.bmp -of BMP
-				file delete $path.ppm
-			}
-			"jpg" {
-			       if { $quality == 300 } {
-				exec gdal_translate $path.ppm $path.jpg -of JPEG -co QUALITY=95 -outsize 300% 300% 
-				file delete $path.ppm
-				} else {
-				exec gdal_translate $path.ppm $path.jpg -of JPEG -co QUALITY=$quality 
-				file delete $path.ppm
-				}
 			}
 		}
 	}
