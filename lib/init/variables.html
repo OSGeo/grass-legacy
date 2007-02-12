@@ -235,7 +235,28 @@ GRASS_RENDER_IMMEDIATE=TRUE is set, there is no need to run
 <br>&nbsp; if "TRUE", the PNG driver will initialize the image from
 the contents of $GRASS_PNGFILE
 
+<h3>List of selected GRASS environment variables for direct rendering</h3>
+<blockquote>
+[ In addition to those which are understood by the
+ <a href="pngdriver.html">PNG Driver</a>, the following variables
+ affect direct rendering. ]
+</blockquote>
+<P></P>
 
+<p>GRASS_FONT
+<br>&nbsp; specifies the font as either the name of a stroke font in
+$GISBASE/etc/fonts, the full path to a stroke font (which must begin
+with $GISBASE/etc/fonts/), the name of a FreeType font from
+$GISBASE/etc/freetypecap, or the full path to a FreeType font file.
+
+<p>GRASS_FT_FONT
+<br>&nbsp; specifies a FreeType font as a full path to the font file. 
+If both GRASS_FONT and GRASS_FT_FONT are specified, GRASS_FT_FONT
+takes precedence.
+
+<p>GRASS_FT_ENCODING
+<br>&nbsp; the encoding to be assumed for text which is drawn using a
+freetype font; may be any encoding know to "iconv".
 
 <h3>List of selected internal GRASS environment variables</h3>
 <blockquote>
