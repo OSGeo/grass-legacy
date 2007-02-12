@@ -18,4 +18,7 @@ void print_projinfo(void);
 void print_datuminfo(void);
 void print_proj4(int);
 void print_wkt(int, int);
-void create_location(char *);
+void create_location(char *, int);
+
+/* datumtrans.c */
+int set_datumtrans(int, int, int);

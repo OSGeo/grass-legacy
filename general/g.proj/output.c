@@ -6,7 +6,7 @@
  * PURPOSE:      Provides a means of reporting the contents of GRASS
  *               projection information files and creating
  *               new projection information files.
- * COPYRIGHT:    (C) 2003-2006 by the GRASS Development Team
+ * COPYRIGHT:    (C) 2003-2007 by the GRASS Development Team
  *
  *               This program is free software under the GNU General Public
  *               License (>=v2). Read the file COPYING that comes with GRASS
@@ -144,7 +144,7 @@ void print_wkt(int esristyle, int dontprettify)
     return;
 }
    
-void create_location(char *location)
+void create_location(char *location, int interactive)
 {
     int ret;
    
@@ -182,16 +182,20 @@ void create_location(char *location)
     	}
 
         if(old_projinfo && old_projunits) {
-    	    /* Warn as in g.setproj before overwriting current location */
-    	    fprintf(stderr, _("\n\nWARNING!  A projection file already exists for this location\n"));
-    	    fprintf(stderr, "\nThis file contains all the parameters for the\nlocation's projection: %s\n", G_find_key_value("proj", old_projinfo));
-    	    fprintf(stderr, "\n    Overriding this information implies that the old projection parameters\n");
-    	    fprintf(stderr, "    were incorrect.  If you change the parameters, all existing data will be\n");
-    	    fprintf(stderr, "    interpreted differently by the projection software.\n%c%c%c", 7, 7, 7);
-    	    fprintf(stderr, "    GRASS will not re-project your data automatically\n\n");
+	    if (interactive) {		
+    	        /* Warn as in g.setproj before overwriting current location */
+    	        fprintf(stderr, _("\n\nWARNING!  A projection file already exists for this location\n"));
+    	        fprintf(stderr, "\nThis file contains all the parameters for the\nlocation's projection: %s\n", G_find_key_value("proj", old_projinfo));
+    	        fprintf(stderr, "\n    Overriding this information implies that the old projection parameters\n");
+    	        fprintf(stderr, "    were incorrect.  If you change the parameters, all existing data will be\n");
+    	        fprintf(stderr, "    interpreted differently by the projection software.\n%c%c%c", 7, 7, 7);
+    	        fprintf(stderr, "    GRASS will not re-project your data automatically\n\n");
 
-    	    if (G_yes(_("Would you still like to overwrite the current projection information "), 0))
-    	        go_ahead = 1;
+    	        if (G_yes(_("Would you still like to overwrite the current projection information "), 0))
+    	            go_ahead = 1;
+	    }
+	    else
+	        go_ahead = 1;
     	}
         else {
     	    /* Projection files missing for some reason;
@@ -223,11 +227,11 @@ void create_location(char *location)
                  * number or zone have changed */
     		G__put_window( &cellhd, "", "DEFAULT_WIND" );
     		G__put_window( &cellhd, "", "WIND" );
-    		fprintf(stderr, "\nN.B. The default region was updated to the new projection, but if you have\n"
-    				"multiple mapsets g.region -d should be run in each to update the region from\n"
-    				"the default.\n");
+    		G_message(_("N.B. The default region was updated to the new projection, but if you have "
+    			"multiple mapsets g.region -d should be run in each to update the region from "
+    			"the default."));
     	    }
-    	    fprintf(stderr, _("\nProjection information updated!\n\n"));               
+    	    G_message(_("Projection information updated!"));
     	}
     	else
     	    G_message(_("The projection information will not be updated."));

@@ -10,9 +10,9 @@ format.</P>
 <P>Projection information may also be output in the Well-Known Text (WKT) 
 format popularised
 by proprietary GIS. In addition, if one of the parameters <em>georef</em>, 
-<em>wkt</em> or <em>proj4</em> is specified, rather than the projection 
-information being read from the current location it is imported from an 
-external source as follows:
+<em>wkt</em>, <em>proj4</em> or <em>epsg</em> is specified, rather than the 
+projection information being read from the current location it is imported 
+from an external source as follows:
 <dl>
 <dt>georef=<em>filename</em></dt>
 <dd><em>g.proj</em> attempts to invoke GDAL and OGR in turn to read a
@@ -33,6 +33,14 @@ quotation marks if there are any spaces. If <em>-</em> is given for
 <em>description</em>, the PROJ.4 description will be read from stdin rather 
 than as a directly-supplied command-line parameter.</dd>
 </dl>
+
+<dt>epsg=<em>number</em></dt>
+<dd><em>number</em> should correspond to the index number of a valid
+co-ordinate system in the <a href="http://www.epsg.org/CurrentDB.html">EPSG 
+database</a>. EPSG code support is based upon a local copy of the GDAL CSV 
+co-ordinate system and datum information files, stored in the directory 
+${GISBASE}/etc/ogr_csv. These can be updated if necessary to support future
+revisions of the EPSG database.</dd>
 </P>
 
 <P>The -p, -j, -w, etc. flags are all functional when importing projection
@@ -46,14 +54,37 @@ create new GRASS projection files (PROJ_INFO, PROJ_UNITS, WIND and
 DEFAULT_WIND) based on the imported information. If the <em>location</em> 
 parameter is specified in addition to -c, then a new location will be created. 
 Otherwise the projection information files in the current location will be
-overwritten. The program will warn before doing this.</P>
+overwritten. The program will warn before doing this only if command-line
+interactive mode (<em>-i</em> flag) is selected.</P>
+
+<P>The final mode of operation of g.proj is to report on the datum
+information and datum transformation parameters associated with the
+co-ordinate system. The -d flag will report a human-readable summary of
+this.</P>
 
 <H2>NOTES</H2>
 
-<P>GRASS uses a local copy of the GDAL CSV co-ordinate system and datum
-information files, stored in the directory $(GISBASE)/etc/ogr_csv . This
-allows many possible ways of initializing a co-ordinate system, such as EPSG
-codes etc.</P>
+<P>If the input co-ordinate system contains a datum name but no
+transformation parameters, and there is more than one suitable parameter set
+available (according to the files datum.table and datumtransform.table in
+${GISBASE}/etc), g.proj will check the value of the <em>datumtrans</em>
+option and act according to the following:<br>
+<strong>-1:</strong> List available parameter sets in a GUI-parsable (but also
+human-readable) format and exit.<br>
+<strong>0 (default):</strong> Continue without specifying parameters - if 
+used when creating a location, other GRASS modules will use the "default" 
+(likely non-optimum) parameters for this datum if necessary in the future.<br>
+<strong>Any other number less than or equal to the number of parameter sets
+available for this datum:</strong> Choose this parameter set and add it to the
+co-ordinate system description.<br>
+If the module is being used from the command-line through an interactive
+terminal, the <em>-i</em> flag can be specified to enable interactive
+selection of the parameter set, and the value of <em>datumtrans</em> (if 
+specified) is ignored.<br>
+If the <em>-t</em> flag is specified, the module will attempt to change the
+datum transformation parameters using one of the above two methods 
+<strong>even if</strong> a valid parameter set is already specified in the 
+input co-ordinate system.</P>
 
 <P>Output is simply based on the input projection information. g.proj does 
 <strong>not</strong> attempt to verify that the co-ordinate system thus 
@@ -99,18 +130,19 @@ cat proj4.description | g.proj -w proj4=-
 
 <p>
 Create a new location with the co-ordinate system referred to by EPSG code
-4326 (Latitude-Longitude/WGS84):<br>
+4326 (Latitude-Longitude/WGS84), without explicitly specifiying datum
+transformation parameters:<br>
 
 <div class="code"><pre>
-g.proj -c proj4='+init=epsg:4326' location=latlong
+g.proj -c epsg=4326 location=latlong
 </pre></div>
 
 <p>
 Create a new location with the co-ordinate system referred to by EPSG code
-29900 (Irish Grid):<br>
+29900 (Irish Grid), selecting datum transformation parameter set no. 2:<br>
 
 <div class="code"><pre>
-g.proj -c proj4='+init=epsg:29900' location=irish_grid
+g.proj -c epsg=29900 datumtrans=2 location=irish_grid
 </pre></div>
 
 <p>
@@ -119,6 +151,14 @@ location:<br>
 
 <div class="code"><pre>
 g.proj -c location=newloc
+</pre></div>
+
+<p>
+Interactively change/update the datum transformation parameters for the
+current location:<br>
+
+<div class="code"><pre>
+g.proj -itc
 </pre></div>
 
 <p>
@@ -147,9 +187,9 @@ ogr2ogr -t_srs "`g.proj -wef`" polbnda_italy_GB_ovest.shp polbnda_italy_LL.shp
 
 <H2>REFERENCES</H2>
 
-<a href=http://proj.maptools.org>PROJ 4</a>: Projection/datum support library<br>
-<a href=http://www.gdal.org>GDAL raster library and toolset</a><br>
-<a href=http://www.gdal.org/ogr/>OGR vector library and toolset</a>
+<a href="http://proj.maptools.org">PROJ 4</a>: Projection/datum support library<br>
+<a href="http://www.gdal.org">GDAL raster library and toolset</a><br>
+<a href="http://www.gdal.org/ogr/">OGR vector library and toolset</a>
 
 <P>
 <B>Further reading</B>
