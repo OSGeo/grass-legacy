@@ -66,7 +66,9 @@ start_browser()
     echo "ERROR: no HTML manual page entry for <$1>." 1>&2
     exit 1
   else
-    echo "Starting browser <$BROWSERNAME> for module $1..." 1>&2
+    if [ -z "$GRASS_VERBOSE" ] || [ "$GRASS_VERBOSE" -gt 1 ] ; then
+	echo "Starting browser <$BROWSERNAME> for module $1..." 1>&2
+    fi
     "$GRASS_HTML_BROWSER" file://"$GRASS_DOC_BASE"/docs/html/$1.html
   fi
 }
