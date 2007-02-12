@@ -242,6 +242,9 @@ int update_labels(char *rast_name, char *vector_map, int field, char *label_colu
     dbDriver *Driver;
     dbCatValArray cvarr;
     dbValue value;
+    dbTable table;
+    dbColumn lcolumn;
+    int col_type;
 
     /* labels */
     int cat;
@@ -253,6 +256,7 @@ int update_labels(char *rast_name, char *vector_map, int field, char *label_colu
         double d;
         int i;
     } *my_labels_rules;
+    char tmp[64];
 
     /* init raster categories */
     G_init_cats((CELL)0, "", &rast_cats);
@@ -282,6 +286,10 @@ int update_labels(char *rast_name, char *vector_map, int field, char *label_colu
 
     my_labels_rules = (struct My_labels_rule *)G_malloc(sizeof(struct My_labels_rule)*nrec);
 
+    /* get column type */
+    col_type = db_column_Ctype ( Driver, Fi->table, label_column );
+    if ( col_type == -1 ) G_fatal_error ( _("Column <%s> not found"), label_column);
+
     /* for each attribute */
     for ( i = 0; i < cvarr.n_values; i++ ) {
 
@@ -296,8 +304,28 @@ int update_labels(char *rast_name, char *vector_map, int field, char *label_colu
         labels_n_values++;
 
         db_init_string ( &my_labels_rules[i].label );
-        db_set_string ( &my_labels_rules[i].label, db_get_value_string(&value)); 
-        
+
+        /* switch the column type */
+        switch (col_type) {
+            case DB_C_TYPE_DOUBLE:
+                sprintf(tmp,"%f",db_get_value_double(&value));
+                db_set_string ( &my_labels_rules[i].label, tmp); 
+                break;
+            
+            case DB_C_TYPE_INT:
+                sprintf(tmp,"%d",db_get_value_int(&value));
+                db_set_string ( &my_labels_rules[i].label, tmp); 
+                break;
+
+            case DB_C_TYPE_STRING:
+                db_set_string ( &my_labels_rules[i].label, db_get_value_string(&value)); 
+                break;
+
+            default:
+                G_warning(_("Column type [%d] not supported"), col_type);
+        }
+
+        /* add the raster category to label */
         if (is_fp) {
             my_labels_rules[i].d = cvarr.value[i].val.d;
         }
