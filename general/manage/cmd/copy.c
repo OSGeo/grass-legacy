@@ -18,7 +18,7 @@ int main (int argc, char *argv[])
     init (argv[0]);
 
     module = G_define_module();
-    module->keywords = _("general, manage");
+    module->keywords = _("general, map management");
     module->description =
       _("Copies available data files in the user's current mapset "
 	"search path and location to the appropriate element "
