@@ -799,6 +799,7 @@ csh|tcsh)
 
     cp "$cshrc" "$tcshrc"
     "$ETC/run" "$SHELL"
+    EXIT_VAL=$?
 
     HOME="$USERHOME"
     export HOME
@@ -825,6 +826,8 @@ bash|msh)
     echo "export HOME=\"$USERHOME\"" >> "$bashrc" # restore user home path
 
     "$ETC/run" "$SHELL"
+    EXIT_VAL=$?
+
     HOME="$USERHOME"
     export HOME
     ;;
@@ -850,6 +853,8 @@ cygwin)
     echo "export HOME=\"$USERHOME\"" >> "$bashrc" # restore user home path
 
     "$ETC/run" "$SHELL"
+    EXIT_VAL=$?
+
     HOME="$USERHOME"
     export HOME
     ;;
