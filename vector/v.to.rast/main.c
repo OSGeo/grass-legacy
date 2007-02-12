@@ -60,7 +60,7 @@ int main (int argc, char *argv[])
     col->key_desc       = "name";
     col->required       = NO;
     col->multiple       = NO;
-    col->description    = _("Column name (type must be numeric)");
+    col->description    = _("Column name (data type must be numeric)");
 
     field_opt = G_define_standard_option(G_OPT_V_FIELD);
 
