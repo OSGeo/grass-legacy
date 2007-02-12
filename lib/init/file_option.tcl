@@ -90,14 +90,14 @@ proc fileOpt::fileLocCom args {
 
 	#create the form and buttons
 	LabelEntry $row1.newloc -label [G_msg "Name of new location"] \
-		-labeljustify right -labelanchor e -labelwidth 30 \
+		-labeljustify right -labelanchor e -labelwidth 30 -wraplength 200 \
 		-textvariable fileOpt::fileLocation -width 35 \
 		-helptext [G_msg "Enter name of location to be created"]
 		
 	pack $row1.newloc -side left -expand 0 -fill x -padx 2
 
 	LabelEntry $row2.filepath -label [G_msg "Path to georeferenced file"] \
-		-labeljustify right -labelanchor e -labelwidth 30 \
+		-labeljustify right -labelanchor e -labelwidth 30 -wraplength 200 \
 		-textvariable fileOpt::filepath  -width 35 \
 		-helptext [G_msg "Path to georeferenced file (format must be readable by GDAL/OGR)"]
 		
