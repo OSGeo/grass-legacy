@@ -22,7 +22,7 @@ class LayerTree(CT.CustomTreeCtrl):
             size=wx.DefaultSize,
             style=wx.SUNKEN_BORDER,
             ctstyle=CT.TR_HAS_BUTTONS |CT.TR_HAS_VARIABLE_ROW_HEIGHT | CT.TR_HIDE_ROOT |
-                CT.TR_ROW_LINES,
+                CT.TR_ROW_LINES | CT.TR_EDIT_LABELS,
             log=None):
         CT.CustomTreeCtrl.__init__(self, parent, id, pos, size, style,ctstyle)
         self.SetAutoLayout(True)
@@ -31,6 +31,7 @@ class LayerTree(CT.CustomTreeCtrl):
         self.layer = {} #dictionary to index layers in layer tree
         self.node = 0 #index value for layers
         self.optpage = {} # dictionary of notebook option pages for each map layer
+        self.map = {} #dictionary of map layers, indexed by tree node.
         self.layerID = "" # ID of currently selected layer
         self.layername = "" # name off currently selected layer
 
@@ -60,7 +61,7 @@ class LayerTree(CT.CustomTreeCtrl):
         checkbmp = il.GetBitmap(0)
         print "bitmap 0=",checkbmp
 #        print "checksize=",checksize
-        self.AssignImageList(il)
+        #self.AssignImageList(il)
 
 #        self.tree.SetItemImage(self.root, fldridx, wx.TreeItemIcon_Normal)
 #        self.tree.SetItemImage(self.root, fldropenidx, wx.TreeItemIcon_Expanded)
@@ -80,15 +81,23 @@ class LayerTree(CT.CustomTreeCtrl):
     def AddLayer(self, idx, layertype):
         layername = layertype+':'+str(self.node)
 
+        if layertype == 'raster':
+            self.map[self.node] = wx.ComboBox(self, -1, choices=["rast.map.1", "rast.map.2", "rast.map.3", "rast.map.4", "rast.map.5"], style=wx.CB_READONLY|wx.CB_DROPDOWN)
+        elif layertype == 'vector':
+            self.map[self.node]  = wx.ComboBox(self, -1, choices=["vect.map.1", "vect.map.2", "vect.map.3", "vect.map.4", "vect.map.5"], style=wx.CB_READONLY|wx.CB_DROPDOWN)
+        elif layertype == 'command':
+            self.map[self.node]  = wx.TextCtrl(self, -1, "Enter a GRASS command here", wx.DefaultPosition, (200,40), style=wx.TE_MULTILINE|wx.TE_WORDWRAP)
+
         if self.node >0 and self.layerID:
-            self.layer[self.node] = self.InsertItem(self.root, self.layerID, layername, ct_type=1)
+            self.layer[self.node] = self.InsertItem(self.root, self.layerID, layername, ct_type=1, wnd=self.map[self.node] )
         else:
-            self.layer[self.node] = self.AppendItem(self.root, layername, ct_type=1)
+            self.layer[self.node] = self.AppendItem(self.root, layername, ct_type=1, wnd=self.map[self.node] )
         self.SetPyData(self.layer[self.node], None)
 
         # create options panels for each layer added
         if layertype == 'raster':
-            self.SetItemImage(self.layer[self.node], self.rast_icon)
+            pass
+            #self.SetItemImage(self.layer[self.node], self.rast_icon)
 
             #self.optpage[layername] = spare.Frame(nb.page1, -1)
 ##            self.optpage[layername] = rastopt.MyPanel(gm_nb_pg1, -1, style=wx.TAB_TRAVERSAL)
