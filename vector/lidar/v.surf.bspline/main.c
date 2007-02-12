@@ -90,12 +90,9 @@ main (int argc,char *argv[])
     
     in_opt = G_define_standard_option(G_OPT_V_INPUT);
     
-    in_ext_opt = G_define_option (); {
-	in_ext_opt->key 	= "input_ext";
-	in_ext_opt->type 	= TYPE_STRING;
+    in_ext_opt = G_define_standard_option (G_OPT_V_INPUT); {
+	in_ext_opt->key 	= "sparse";
 	in_ext_opt->required 	= NO;
-	in_ext_opt->key_desc    = "name";
-	in_ext_opt->gisprompt   = "old,vector,vector";
 	in_ext_opt->description = _("Name of input vector map of sparse points");
     }
 
@@ -103,7 +100,7 @@ main (int argc,char *argv[])
 	out_opt->required       = NO;
 
     out_map_opt = G_define_standard_option(G_OPT_R_OUTPUT);
-	out_map_opt->key 	  = "raster_out";
+	out_map_opt->key 	  = "raster";
 	out_map_opt->required 	  = NO;
 
     passoE_opt = G_define_option(); {
@@ -113,7 +110,7 @@ main (int argc,char *argv[])
 	passoE_opt->answer 	= "4";
 	passoE_opt->description	= 
 	    _("Interpolation spline step value in east direction");
-	passoE_opt->guisection	= "Settings";
+	passoE_opt->guisection	= _("Settings");
     }
     
     passoN_opt = G_define_option(); {
@@ -123,7 +120,7 @@ main (int argc,char *argv[])
 	passoN_opt->answer 	= "4";
 	passoN_opt->description	= 
 	    _("Interpolation spline step value in north direction");		
-	passoN_opt->guisection	= "Settings";
+	passoN_opt->guisection	= _("Settings");
     }
 
     type = G_define_option(); {
@@ -133,7 +130,7 @@ main (int argc,char *argv[])
 	type->description = _("Spline type of interpolation");	
 	type->options	  = "bilinear,bicubic";
 	type->answer	  = "bilinear";
-	type->guisection  = "Settings";
+	type->guisection  = _("Settings");
     }
 
     lambda_f_opt = G_define_option(); {
@@ -142,20 +139,22 @@ main (int argc,char *argv[])
 	lambda_f_opt->required	  = NO;
 	lambda_f_opt->description =_("Thychonov regularization weigth");
 	lambda_f_opt->answer	  = "1";
-	lambda_f_opt->guisection  = "Settings";	
+	lambda_f_opt->guisection  = _("Settings");	
     }
 
     dfield_opt = G_define_standard_option(G_OPT_V_FIELD); {
 	dfield_opt->description =
 	    _("Field value. If set to 0, z coordinates are used. (3D vector only)");
 	dfield_opt->answer = "0";
+	dfield_opt->guisection = _("Settings");
     }
 
     col_opt = G_define_option() ; {
-	col_opt->key        = "column" ;
+	col_opt->key        = _("column") ;
 	col_opt->type       = TYPE_STRING ;
 	col_opt->required   = NO ;
 	col_opt->description= _("Attribute table column with values to interpolate (if layer>0)");
+	dfield_opt->guisection = _("Settings") ;
     }
 
     /* Parsing */	
@@ -246,8 +245,10 @@ main (int argc,char *argv[])
     G_set_fp_type (DCELL_TYPE);
     if (!vector && map) {
 	grid = TRUE;
+	/*
 	if (G_find_cell (out_map_opt->answer, G_mapset()) != NULL) 
 	    G_fatal_error (_("Raster <%s> already exist."), out_map_opt->answer);
+	    */
 
 	if ((raster = G_open_fp_cell_new (out_map_opt->answer)) < 0) 
 	    G_fatal_error (_("Raster <%s> could not be open."), out_map_opt->answer);
