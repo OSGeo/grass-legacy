@@ -28,7 +28,7 @@
 
 #%flag
 #%  key: f
-#%  description: ignored (retained for compatibility with previous versions)
+#%  description: force removal (required for actual deletion of files)
 #%end
 
 #%option
@@ -105,7 +105,7 @@ LOCATION=$GISDBASE/$LOCATION_NAME/$MAPSET
 
 program=`basename $0`
 
-echo "Collecting map names for current mapset <$MAPSET>..."
+echo "Collecting map names for current mapset <$MAPSET>..." 1>&2
 
 if [ $GIS_FLAG_R -eq 1 ] ; then
    regex="-r"
@@ -205,5 +205,14 @@ if [ ! "$found" ] ; then
 	echo "No data found."
 	exit 1
 fi
+
+if [ $force -eq 0 ] ; then
+    echo "The following files would be deleted:" 1>&2
+    echo "g.remove $rast $rast3d $vect $icon $labels $region $group $dview"
+    echo 1>&2
+    echo "You must use the force flag to actually remove them. Exiting." 1>&2
+    exit 0
+fi
+
 
 exec g.remove $rast $rast3d $vect $icon $labels $region $group $dview
