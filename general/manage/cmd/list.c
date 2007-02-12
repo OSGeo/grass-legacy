@@ -37,7 +37,7 @@ main (int argc, char *argv[])
 	init (argv[0]);
 
 	module = G_define_module();
-	module->keywords = _("general, manage");
+	module->keywords = _("general, map management");
 	module->description =
 		_("Lists available GRASS data base files "
 		  "of the user-specified data type to standard output.");

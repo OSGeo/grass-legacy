@@ -19,8 +19,8 @@ main (int argc, char *argv[])
 
     init (argv[0]);
 
-	module = G_define_module();
-	module->keywords = _("general");
+    module = G_define_module();
+    module->keywords = _("general, map management");
     module->description =
 	    _("Renames data base element files in the user's current mapset.");
 
