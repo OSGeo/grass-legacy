@@ -16,7 +16,12 @@ Contents
 
 1. Local work (basically at ITC-irst)
 
- o - cleanup rubbish:
+   - check if
+        doc/raster/r.example/
+        doc/vector/v.example/
+      still compile; fix otherwise
+
+   - cleanup rubbish:
        find . -name '*~'  | xargs rm
        find . -name '*.o' | xargs rm
        find . -name '*.bak' | xargs rm
