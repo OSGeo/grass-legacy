@@ -447,7 +447,7 @@ proc MapCanvas::drawmap { mon } {
 			set previous_monitor $mon
 			# The canvas or view has been modified
 			# Redo the map settings to match the canvas
-			MapCanvas::driversettings $mon
+			if {[MapCanvas::driversettings $mon]} {return}
 	}
 
 	# Render all the layers
@@ -481,6 +481,10 @@ proc MapCanvas::driversettings { mon } {
 
 		set mapwd [expr {abs(1.0 * ($map_e - $map_w))}]
 		set mapht [expr {abs(1.0 * ($map_n - $map_s))}]
+		if {$mapwd == 0.0 || $mapht == 0.0} {
+			tk_messageBox -type ok -icon info -parent .mapcan($mon) \
+			-title [G_msg "Max zoom in reached"] -message [G_msg "Max zoom in reached"]
+			return 1}
 		set mapar [expr {$mapwd / $mapht}]
 
 		# Calculate the largest box of the map's aspect ratio no larger than
@@ -501,7 +505,7 @@ proc MapCanvas::driversettings { mon } {
 	set env(GRASS_TRANSPARENT) "TRUE"
 	set env(GRASS_PNG_AUTO_WRITE) "TRUE"
 	set env(GRASS_TRUECOLOR) "TRUE"
-
+	return 0
 }
 
 # Run the programs to clear the map and draw all of the layers
@@ -708,7 +712,10 @@ proc MapCanvas::zoom_map { mon } {
 	variable can
 
 	set sel [ GmTree::getnode ]
-	if { $sel == "" } { return }
+	if { $sel == "" } { 
+		tk_messageBox -type ok -icon warning -parent .mapcan($mon) \
+		-message [G_msg "You have to select map layer first"] -title [G_msg "No map layer selected"]
+		return }
 
 	set type [GmTree::node_type $sel]
 	if { $type == "" } { return }
@@ -1174,7 +1181,7 @@ proc MapCanvas::markzoom {mon x y} {
 
 	set areaX1($mon) [$can($mon) canvasx $x]
 	set areaY1($mon) [$can($mon) canvasy $y]
-	$can($mon) delete area
+	$can($mon) delete area area2
 }
 
 # draw zoom rectangle
@@ -1189,10 +1196,13 @@ proc MapCanvas::drawzoom { mon x y } {
 	set yc [$can($mon) canvasy $y]
 
 	if {($areaX1($mon) != $xc) && ($areaY1($mon) != $yc)} {
-			$can($mon) delete area
+			$can($mon) delete area area2
 			$can($mon) addtag area withtag \
 					[$can($mon) create rect $areaX1($mon) $areaY1($mon) $xc $yc \
-					-outline yellow -width 2]
+					-outline yellow -width 2 ]
+			$can($mon) addtag area2 withtag \
+					[$can($mon) create rect $areaX1($mon) $areaY1($mon) $xc $yc \
+					-outline black -width 2 -dash {1 6} ]
 			set areaX2($mon) $xc
 			set areaY2($mon) $yc
 	}
@@ -1218,6 +1228,11 @@ proc MapCanvas::zoomregion { mon zoom } {
 	set dispeast  [scrx2mape $mon $canvas_w($mon)]
 	set dispwest  [scrx2mape $mon 0]
 
+	# minimum zoom by rectangle size = 15pix. For users with shaky hends or jerky mouses
+	if {abs($areaX2($mon)-$areaX1($mon)) < 15 && abs($areaY2($mon)-$areaY1($mon)) < 15 } {
+		set areaX2($mon) 0
+		set areaY2($mon) 0
+	}
 	# get zoom rectangle extents in geographic coordinates
 	if { $areaX2($mon) < $areaX1($mon) } {
 			set cright $areaX1($mon)
@@ -1338,7 +1353,7 @@ proc MapCanvas::zoomregion { mon zoom } {
 
 	# redraw map
 	$can($mon) delete map$mon
-	$can($mon) delete area
+	$can($mon) delete area area2
 	MapCanvas::request_redraw $mon 1
 }
 
@@ -1504,7 +1519,7 @@ proc MapCanvas::measurebind { mon } {
 		set coords($mon) "$eastcoord $northcoord"
 		MapCanvas::drawmline $mon %x %y
 		}
-	bind $can($mon) <ButtonRelease-1> "MapCanvas::measure $mon"
+	bind $can($mon) <ButtonRelease-1> "MapCanvas::measure $mon %x %y"
 
 	set MapCanvas::msg($mon) "Draw measure line with mouse"
 
@@ -1526,13 +1541,7 @@ proc MapCanvas::markmline {mon x y} {
 	if { ![info exists linex1] } {
 		set linex1 [$can($mon) canvasx $x]
 		set liney1 [$can($mon) canvasy $y]
-	}
-
-	#check for click with no drag
-	if { ![info exists linex2] } {
 		set linex2 $linex1
-	}
-	if { ![info exists liney2] } {
 		set liney2 $liney1
 	}
 
@@ -1562,7 +1571,7 @@ proc MapCanvas::drawmline { mon x y } {
 }
 
 # measure line length
-proc MapCanvas::measure { mon } {
+proc MapCanvas::measure { mon x y } {
 	variable can
 	variable measurement_annotation_handle
 	variable mlength 
@@ -1571,6 +1580,15 @@ proc MapCanvas::measure { mon } {
 	variable liney1 
 	variable linex2 
 	variable liney2
+
+	set xc [$can($mon) canvasx $x]
+	set yc [$can($mon) canvasy $y]
+
+	# Measure also on single click, if it's not a first click.
+	if { ($linex2 != $xc) && ($liney2 != $yc)} {
+		set linex2 $xc
+		set liney2 $yc
+	}
 
 	# draw cumulative line
 	$can($mon) addtag totmline withtag \
@@ -1631,7 +1649,10 @@ proc MapCanvas::query { mon x y } {
 
 	set sel [ lindex [$tree($mon) selection get] 0 ]
 
-	if { $sel == "" } { return }
+	if { $sel == "" } { 
+		tk_messageBox -type ok -icon warning -parent .mapcan($mon) \
+		-message [G_msg "You have to select map layer first"] -title [G_msg "No map layer selected"]
+		return }
 
 	set type [GmTree::node_type $sel]
 
