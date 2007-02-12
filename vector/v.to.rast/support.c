@@ -249,7 +249,7 @@ int update_labels(char *rast_name, char *vector_map, int field, char *label_colu
     struct Categories rast_cats;
     int labels_n_values = 0;
     struct My_labels_rule {
-        char label[256];
+        dbString label;
         double d;
         int i;
     } *my_labels_rules;
@@ -287,6 +287,7 @@ int update_labels(char *rast_name, char *vector_map, int field, char *label_colu
 
         /* selecect attribute and category */
         cat = cvarr.value[i].cat;
+
         if (db_select_value (Driver,  Fi->table, Fi->key, cat, label_column, &value) < 0) {
             G_warning(_("No records selected"));
             continue;
@@ -294,7 +295,8 @@ int update_labels(char *rast_name, char *vector_map, int field, char *label_colu
 
         labels_n_values++;
 
-        sprintf(my_labels_rules[i].label,"%s",value.s);
+        db_init_string ( &my_labels_rules[i].label );
+        db_set_string ( &my_labels_rules[i].label, db_get_value_string(&value)); 
         
         if (is_fp) {
             my_labels_rules[i].d = cvarr.value[i].val.d;
@@ -310,14 +312,15 @@ int update_labels(char *rast_name, char *vector_map, int field, char *label_colu
     db_close_database_shutdown_driver(Driver);
 
     /* set the color rules: for each rule*/
-    if (is_fp) { /* add floating point color rule */
+    if (is_fp) {  
+        /*add floating point color rule */
         for ( i = 0; i < labels_n_values -1; i++ ) {
-            G_set_d_raster_cat(&my_labels_rules[i].d, &my_labels_rules[i+1].d,  my_labels_rules[i].label,&rast_cats);
+            G_set_d_raster_cat(&my_labels_rules[i].d, &my_labels_rules[i+1].d, db_get_string(&my_labels_rules[i].label),&rast_cats);
         }
     }
     else {
         for ( i = 0; i < labels_n_values ; i++ ) {
-            G_set_cat(my_labels_rules[i].i, my_labels_rules[i].label,&rast_cats);
+            G_set_cat(my_labels_rules[i].i, db_get_string(&my_labels_rules[i].label),&rast_cats);
         }
     }
     G_write_cats(rast_name, &rast_cats);
