@@ -61,7 +61,7 @@ int main (int argc, char *argv[])
     col->key_desc       = "name";
     col->required       = NO;
     col->multiple       = NO;
-    col->description    = _("Column name (data type must be numeric)");
+    col->description    = _("Name of column for attr parameter (data type must be numeric)");
 
     field_opt = G_define_standard_option(G_OPT_V_FIELD);
 
@@ -79,24 +79,22 @@ int main (int argc, char *argv[])
     rows->required         = NO;
     rows->multiple         = NO;
     rows->answer           = "4096";
-    rows->description      = _("number of rows to hold in memory");
+    rows->description      = _("Number of rows to hold in memory");
 
     rgbcol_opt = G_define_option();
     rgbcol_opt->key        = "rgbcolumn";
     rgbcol_opt->type       = TYPE_STRING ;
     rgbcol_opt->required   = NO ;
     rgbcol_opt->multiple   = NO ;
-    rgbcol_opt->guisection = _("Colors");
-    rgbcol_opt->description= _("Name of color definition column (with RRR:GGG:BBB color definition)");
+    rgbcol_opt->description= _("Name of color definition column (with RRR:GGG:BBB entries)");
 
     label_opt = G_define_option();
     label_opt->key        = "labelcolumn";
     label_opt->type       = TYPE_STRING ;
     label_opt->required   = NO ;
     label_opt->multiple   = NO ;
-    label_opt->guisection = _("Labels");
     label_opt->description=
-        _("Name of label definition column");
+        _("Name of column used as raster category labels");
 
     if (G_parser (argc, argv))
 	exit(EXIT_FAILURE);
