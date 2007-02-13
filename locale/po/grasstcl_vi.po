@@ -3045,8 +3045,8 @@ msgid "Creating MainFrame..."
 msgstr "Đang tạo MainFrame..."
 
 #: ../gui/tcltk/gis.m/gm.tcl:283
-msgid "Welcome to GRASS GIS"
-msgstr "Chào mừng đến với GRASS GIS"
+msgid "Welcome to GRASS GIS Version"
+msgstr "Chào mừng đến với GRASS GIS Version"
 
 #: ../gui/tcltk/gis.m/gm.tcl:341
 #, tcl-format
