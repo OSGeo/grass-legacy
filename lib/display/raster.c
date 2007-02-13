@@ -32,10 +32,10 @@
 #include <grass/raster.h>
 #include <grass/display.h>
 
-static int *D_to_A_tab = NULL;
-static int D_x_beg, D_y_beg, D_x_end, D_y_end ;
-static int cur_D_row ;
-static void *raster = NULL ;
+extern int D__overlay_mode;
+
+static int src[2][2], dst[2][2];
+
 static int draw_cell(int,void *,struct Colors *,RASTER_MAP_TYPE);
 
 int D_draw_raster(
@@ -104,102 +104,37 @@ static int draw_cell(
     struct Colors *colors,
     RASTER_MAP_TYPE data_type)
 {
-    int D_row ;
-    int repeat ;
-    char send_raster ;
-    int cur_A_row ;
+	static unsigned char *red, *grn, *blu, *set;
+	static int nalloc;
 
-/* Allocate memory for raster */
-    if(!raster) 
-	raster = G_malloc((D_x_end - D_x_beg) * G_raster_size(data_type)) ;
+	int ncols = src[0][1] - src[0][0];
+	void *p;
+	int i;
 
-/* If picture is done, return -1 */
-    if (cur_D_row >= D_y_end)
-        return(-1) ;
-
-/* Get window (array) row currently required */
-    D_row = cur_D_row ;
-    cur_A_row = (int)D_d_to_a_row(cur_D_row + 0.5) ;
-
-/* If we need a row further down the array, return that row number */
-    if (cur_A_row > A_row)
-        return (cur_A_row) ;
-
-/* Find out how many screen lines the current A_row gets repeated */
-    repeat = 1 ;
-    for (cur_D_row++ ; cur_D_row < D_y_end; cur_D_row++)
-    {
-        if (A_row == (cur_A_row = (int)D_d_to_a_row(cur_D_row + 0.5)))
-            repeat++ ;
-        else
-            break ;
-    }
-
-    /* Make the screen raster */
-    {
-        register int D_col ;
-	void *rasptr, *arr_ptr;
-
-	rasptr = raster;
-
-        for (D_col = D_x_beg; D_col < D_x_end; D_col++)
+	if (nalloc < ncols)
 	{
-	    /* copy array[[D_to_A_tab[D_col]] to *raster, advance raster by 1 */
+		nalloc = ncols;
+		red = G_realloc(red, nalloc);
+		grn = G_realloc(grn, nalloc);
+		blu = G_realloc(blu, nalloc);
+		set = G_realloc(set, nalloc);
+	}
 
-	    arr_ptr = G_incr_void_ptr(array, D_to_A_tab[D_col] * G_raster_size(data_type));
-	    G_raster_cpy(rasptr, arr_ptr, 1, data_type);
-	    rasptr = G_incr_void_ptr(rasptr, G_raster_size(data_type));
-        }
-    }
+	G_lookup_raster_colors(array, red, grn, blu, set, ncols, colors, data_type);
 
-    /* Check to see if raster contains one category */
-    {
-        register int D_col ;
-	void *rasptr, *first_val_ptr;
+	if (D__overlay_mode)
+		for (i = 0; i < ncols; i++)
+		{
+			set[i] = G_is_null_value(p, data_type);
+			p = G_incr_void_ptr(p, G_raster_size(data_type));
+		}
 
-	first_val_ptr = (void *) G_malloc(G_raster_size(data_type));
-	rasptr = raster;
-	G_raster_cpy(first_val_ptr, rasptr, 1, data_type);
+	A_row = R_scaled_raster(A_row, red, grn, blu, D__overlay_mode ? set : NULL);
 
-        send_raster = 0 ;
-        for (D_col = D_x_beg; D_col < D_x_end; D_col++)
-        {
-            if (G_raster_cmp(first_val_ptr, rasptr, data_type) != 0)
-            {
-		send_raster = 1 ;
-		break ;
-            }
-	    rasptr = G_incr_void_ptr(rasptr, G_raster_size(data_type));
-        }
-    }
-
-    /* Send the raster */
-    if (send_raster)
-    {
-        R_move_abs(D_x_beg, D_row) ;
-	D_raster_of_type(raster, D_x_end - D_x_beg, repeat, colors, data_type) ;
-    }
-    else
-    {
-	int draw;
-	/* this really should be part of D_raster(); */
-	extern int D__overlay_mode;
-	/* color with the color for first raster value */
-	D_color_of_type(raster, colors, data_type);
-	draw = !D__overlay_mode || !G_is_null_value(raster, data_type);
-	R_move_abs(D_x_beg, D_row) ;
-	if (draw)
-	    R_box_rel(D_x_end - D_x_beg, repeat);
-    }
-
-/* If picture is done, return -1 */
-    if (cur_D_row >= D_y_end)
-        return(-1) ;
-
-/* Return the array row of the next row needed */
-    return (cur_A_row) ;
+	return (A_row < src[1][1])
+		? A_row
+		: -1;
 }
-
 
 /*!
  * \brief prepare for raster graphic
@@ -218,34 +153,19 @@ static int draw_cell(
 
 int D_cell_draw_setup(int t,int b,int l,int r)
 {
-    int D_col ;
-    struct Cell_head window ;
+    struct Cell_head window;
 
     if (G_get_set_window(&window) == -1) 
-        G_fatal_error("Current window not available") ;
+        G_fatal_error("Current window not available");
     if (D_do_conversions(&window, t, b, l, r))
-        G_fatal_error("Error in calculating conversions") ;
-/* Set up the screen for drawing map */
-    D_x_beg = (int)D_get_d_west() ;
-    D_x_end = (int)D_get_d_east() ;
-    D_y_beg = (int)D_get_d_north() ;
-    D_y_end = (int)D_get_d_south() ;
-    cur_D_row = D_y_beg ;
+        G_fatal_error("Error in calculating conversions");
 
-    if (D_to_A_tab)
-        free (D_to_A_tab) ;
+    /* Set up the screen for drawing map */
+    D_get_a(src);
+    D_get_d(dst);
 
-    D_to_A_tab = (int *)G_calloc(D_x_end, sizeof(int)) ;
+    R_begin_scaled_raster(src, dst);
 
-/* construct D_to_A_tab for converting x screen Dots to x data Array values */
-    for (D_col = D_x_beg; D_col < D_x_end; D_col++)
-        D_to_A_tab[D_col] = (int)(D_d_to_a_col(D_col + 0.5)) ;
-
-    if (raster)
-    {
-        free(raster) ;
-        raster = NULL ;
-    }
-    return(0) ;
+    return 0;
 }
 

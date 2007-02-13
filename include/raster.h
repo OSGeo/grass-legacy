@@ -108,6 +108,9 @@ void R_panel_delete(const char *name);
 
 void R_set_RGB_color(unsigned char *,unsigned char *,unsigned char *);
 void R_RGB_raster(int,int,unsigned char *,unsigned char *,unsigned char *,unsigned char *);
+void R_begin_scaled_raster(int s[2][2], int d[2][2]);
+int R_scaled_raster(int,
+	unsigned char *, unsigned char *, unsigned char *, unsigned char *);
 void R_bitmap(int,int,int,const unsigned char *);
 
 #endif
