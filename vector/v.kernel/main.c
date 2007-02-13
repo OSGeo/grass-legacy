@@ -104,6 +104,7 @@ int main(int argc, char **argv)
   out_opt              = G_define_option();
   out_opt->key         = "output";
   out_opt->type        = TYPE_STRING;
+  out_opt->key_desc    = "name";
   out_opt->required    = YES;
   out_opt->description = _("output raster/vector map");
 
