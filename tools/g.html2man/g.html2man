@@ -8,6 +8,7 @@ eval 'exec $GRASS_PERL -S $0 ${1+"$@"}'
 #
 
 our $preformat;
+our $suppress = 0;
 
 sub CvtTable {
 #
@@ -111,8 +112,8 @@ sub DoLine {
   s#<IMG SRC=.*>##i;
   if (m#<A NAME="toc">#i) {return 2};
   s#<A NAME=".*">##i;
-  s#<\!\-\-#.\\\" #i;
-  s#\-\->##i;
+  #s#<\!\-\-#.\\\" #i;
+  #s#\-\->##i;
   if (m#^<HR.*>$#i) {return 0};
   s#<HR>##i;
   s#<HR .*>##i;
@@ -270,7 +271,30 @@ while (<INP>) {
     s#^'#\\(cq#gm;
     s#^"#\\(dq#gm;
     s#`#\\(ga#g;
-    $out .= $_;
+
+    #
+    # this part removes the comments
+    # 
+    $line = $_;
+    $line =~ s/<!--.*-->//g; # 
+    if ($line =~ s/(.*)<!--.*/$1/) {
+        $suppress = 1;
+        $out .= $line;
+    }
+    if ($line =~ s/.*\-\-\>(.*)/$1/g) {
+        print $line
+        $suppress = 0;
+    }
+    if ($suppress != 0) {
+        $line = "";
+    }
+    #
+    # end of comment part
+    #
+
+    
+    $out .= $line;
+
     if ($preformat == 1) {
       $out .= ".br\n";
     }
