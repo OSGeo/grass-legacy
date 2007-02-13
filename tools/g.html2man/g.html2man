@@ -6,6 +6,7 @@ eval 'exec $GRASS_PERL -S $0 ${1+"$@"}'
 # Usage:
 #       perl g.html2man <html file> <man file> <section>
 #
+# Main author: Daniel Calvelo Aros
 
 our $preformat;
 our $suppress = 0;
