@@ -150,7 +150,7 @@ main (int argc,char *argv[])
     }
 
     col_opt = G_define_option() ; {
-	col_opt->key        = _("column") ;
+	col_opt->key        = "column" ;
 	col_opt->type       = TYPE_STRING ;
 	col_opt->required   = NO ;
 	col_opt->description= _("Attribute table column with values to interpolate (if layer>0)");
@@ -414,10 +414,10 @@ main (int argc,char *argv[])
 		if (nsplx > NSPLX_MAX) 
 		    nsplx = NSPLX_MAX;
 	    }
-	    G_debug (0,_("Interpolation: (%d,%d): subregion bounds"), subregion_row, subregion_col);
-	    G_debug (0,_("Interpolation: \t\tNORTH:%.2f\t"), elaboration_reg.north);
-	    G_debug (0,_("Interpolation: WEST:%.2f\t\tEAST:%.2f"), elaboration_reg.west, elaboration_reg.east);
-	    G_debug (0,_("Interpolation: \t\tSOUTH:%.2f"), elaboration_reg.south);
+	    G_debug (1,_("Interpolation: (%d,%d): subregion bounds"), subregion_row, subregion_col);
+	    G_debug (1,_("Interpolation: \t\tNORTH:%.2f\t"), elaboration_reg.north);
+	    G_debug (1,_("Interpolation: WEST:%.2f\t\tEAST:%.2f"), elaboration_reg.west, elaboration_reg.east);
+	    G_debug (1,_("Interpolation: \t\tSOUTH:%.2f"), elaboration_reg.south);
 
 	    /*Setting the active region*/
 	    dim_vect = nsplx * nsply;
