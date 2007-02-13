@@ -77,24 +77,6 @@ static char *icon_files(void)
 	return list;
 }
 
-/* test for background color */
-int test_bg_color (const char* colorstring) {
-
-  int ret_bg, r_bg, g_bg, b_bg;
-  int ret, r, g, b;
-
-  ret_bg = G_str_to_color (DEFAULT_BG_COLOR, &r_bg, &g_bg, &b_bg);
-  ret    = G_str_to_color (colorstring, &r, &g, &b);
-
-  if (ret == 1 && ret_bg == 1) {
-    if (r == r_bg && g == g_bg && b == b_bg) {
-      return 1;
-    }
-  }
-
-  return 0;
-}
-
 int 
 main (int argc, char **argv)
 {
@@ -400,10 +382,6 @@ main (int argc, char **argv)
  	}
 
 	color = G_standard_color_rgb(WHITE);
-	/* test for background color */
-	if (test_bg_color (color_opt->answer)) {
-	  G_warning (_("Line color and background color are the same!"));
-	}
 	ret =  G_str_to_color(color_opt->answer, &r, &g, &b);
 	if ( ret == 1 ) {
 	    has_color = 1;
@@ -417,10 +395,6 @@ main (int argc, char **argv)
 	}
 	
 	fcolor = G_standard_color_rgb(WHITE);
-	/* test for background color */
-	if (test_bg_color (fcolor_opt->answer)) {
-	  G_warning (_("Area fill color and background color are the same!"));
-	}
 	ret = G_str_to_color(fcolor_opt->answer, &r, &g, &b);
         if ( ret == 1 ) {
 	    has_fcolor = 1;

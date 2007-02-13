@@ -84,12 +84,6 @@ int plot1 (
       for ( i = 0; i < cvarr_rgb.n_values; i++ ) {
 	G_debug (4, "cat = %d  %s = %s", cvarr_rgb.value[i].cat, rgb_column,
 		 db_get_string(cvarr_rgb.value[i].val.s));
-
-	/* test for background color */
-	if (test_bg_color (db_get_string(cvarr_rgb.value[i].val.s))) {
-	  G_warning (_("Category <%d>: Line color and background color are the same!"),
-		     cvarr_rgb.value[i].cat);
-	}
       }
     }
 
