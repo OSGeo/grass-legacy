@@ -106,40 +106,40 @@ int main(int argc, char **argv)
   out_opt->type        = TYPE_STRING;
   out_opt->key_desc    = "name";
   out_opt->required    = YES;
-  out_opt->description = _("output raster/vector map");
+  out_opt->description = _("Output raster/vector map");
 
   stddev_opt              = G_define_option() ;
   stddev_opt->key         = "stddeviation";
   stddev_opt->type        = TYPE_DOUBLE;
   stddev_opt->required    = YES;
-  stddev_opt->description = _("stddeviation in map units");
+  stddev_opt->description = _("Standard deviation in map units");
 
   dsize_opt              = G_define_option() ;
   dsize_opt->key         = "dsize";
   dsize_opt->type        = TYPE_DOUBLE;
   dsize_opt->required    = NO;
-  dsize_opt->description = _("discretization error in map units");
+  dsize_opt->description = _("Discretization error in map units");
   dsize_opt->answer      = "0.";
 
   segmax_opt              = G_define_option() ;
   segmax_opt->key         = "segmax";
   segmax_opt->type        = TYPE_DOUBLE;
   segmax_opt->required    = NO;
-  segmax_opt->description = _("maximum length of segment on network");
+  segmax_opt->description = _("Maximum length of segment on network");
   segmax_opt->answer      = "100.";
 
   netmax_opt              = G_define_option() ;
   netmax_opt->key         = "distmax";
   netmax_opt->type        = TYPE_DOUBLE;
   netmax_opt->required    = NO;
-  netmax_opt->description = _("maximum distance from point to network");
+  netmax_opt->description = _("Maximum distance from point to network");
   netmax_opt->answer      = "100.";
 
   multip_opt              = G_define_option() ;
   multip_opt->key         = "mult";
   multip_opt->type        = TYPE_DOUBLE;
   multip_opt->required    = NO;
-  multip_opt->description = _("multiply the density result by this number");
+  multip_opt->description = _("Multiply the density result by this number");
   multip_opt->answer      = "1.";
 
   flag_o              = G_define_flag();
