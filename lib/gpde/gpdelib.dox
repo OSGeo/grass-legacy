@@ -17,7 +17,7 @@ Sparse and quadratic matrices are supported by the iterative equation solvers, t
 regular quadratic matrices.
 <p>
 To enable parallel computing, you will need a compiler with OpenMP capabilities.
-Most commercial compilers support OpenMP. The gnu-C compiler supports OpenMP since version 4.2.
+Most proprietary compilers support OpenMP. The free gnu-C compiler supports OpenMP since version 4.2.
 More informations about OpenMP are available at http://www.openmp.org .
 <br>
 <br>
