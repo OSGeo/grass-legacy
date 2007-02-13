@@ -31,13 +31,7 @@
 
 extern int D__overlay_mode;
 
-static int *D_to_A_tab;
-static int D_x_beg, D_y_beg, D_x_end, D_y_end ;
-static int cur_D_row ;
-
-static int color_buf_size;
-static unsigned char *r_buf, *g_buf, *b_buf, *n_buf;
-static void *r_raster, *g_raster, *b_raster;
+static int src[2][2], dst[2][2];
 
 static int draw_cell_RGB(
     int A_row,
@@ -103,135 +97,67 @@ int D_draw_cell_RGB(
 
 static int draw_cell_RGB(
     int A_row,
-    void *r_array, void *g_array, void *b_array,
+    void *r_raster, void *g_raster, void *b_raster,
     struct Colors *r_colors, struct Colors *g_colors, struct Colors *b_colors,
     RASTER_MAP_TYPE r_type, RASTER_MAP_TYPE g_type, RASTER_MAP_TYPE b_type)
 {
-    int D_row ;
-    int repeat ;
-    int cur_A_row ;
+    static unsigned char *r_buf, *g_buf, *b_buf, *n_buf;
+    static int nalloc;
+
     int r_size = G_raster_size(r_type);
     int g_size = G_raster_size(g_type);
     int b_size = G_raster_size(b_type);
-    size_t r_bytes = (D_x_end - D_x_beg) * r_size;
-    size_t g_bytes = (D_x_end - D_x_beg) * g_size;
-    size_t b_bytes = (D_x_end - D_x_beg) * b_size;
+    int ncols = src[0][1] - src[0][0];
+    int i;
 
-/* Allocate memory for raster */
-    if(!r_raster)
-	r_raster = G_malloc(r_bytes) ;
-    if(!g_raster)
-	g_raster = G_malloc(g_bytes) ;
-    if(!b_raster)
-	b_raster = G_malloc(b_bytes) ;
-
-/* If picture is done, return -1 */
-    if (cur_D_row >= D_y_end)
-        return(-1) ;
-
-/* Get window (array) row currently required */
-    D_row = cur_D_row ;
-    cur_A_row = (int)D_d_to_a_row(cur_D_row + 0.5) ;
-
-/* If we need a row further down the array, return that row number */
-    if (cur_A_row > A_row)
-        return (cur_A_row) ;
-
-/* Find out how many screen lines the current A_row gets repeated */
-    repeat = 1 ;
-    for (cur_D_row++ ; cur_D_row < D_y_end; cur_D_row++)
+    /* reallocate color_buf if necessary */
+    if (nalloc < ncols)
     {
-        if (A_row == (cur_A_row = (int)D_d_to_a_row(cur_D_row + 0.5)))
-            repeat++ ;
-        else
-            break ;
+	nalloc = ncols;
+	r_buf = G_realloc(r_buf, nalloc);
+	g_buf = G_realloc(g_buf, nalloc);
+	b_buf = G_realloc(b_buf, nalloc);
+	n_buf = G_realloc(n_buf, nalloc);
     }
 
-    /* Make the screen raster */
-    {
-        register int D_col ;
-	void *r_ptr, *r_arr_ptr;
-	void *g_ptr, *g_arr_ptr;
-	void *b_ptr, *b_arr_ptr;
+    /* convert cell values to bytes */
+    G_lookup_raster_colors(r_raster, r_buf, n_buf, n_buf, n_buf, ncols, r_colors, r_type);
+    G_lookup_raster_colors(g_raster, n_buf, g_buf, n_buf, n_buf, ncols, g_colors, g_type);
+    G_lookup_raster_colors(b_raster, n_buf, n_buf, b_buf, n_buf, ncols, b_colors, b_type);
 
-	r_ptr = r_raster;
-	g_ptr = g_raster;
-	b_ptr = b_raster;
-
-        for (D_col = D_x_beg; D_col < D_x_end; D_col++)
+    if (D__overlay_mode)
+	for (i = 0; i < ncols; i++)
 	{
-	    /* copy array[[D_to_A_tab[D_col]] to *raster, advance raster by 1 */
+	    n_buf[i] = (G_is_null_value(r_raster, r_type) ||
+			G_is_null_value(g_raster, g_type) ||
+			G_is_null_value(b_raster, b_type));
 
-	    r_arr_ptr = G_incr_void_ptr(r_array, D_to_A_tab[D_col] * r_size);
-	    G_raster_cpy(r_ptr, r_arr_ptr, 1, r_type);
-	    r_ptr = G_incr_void_ptr(r_ptr, r_size);
+	    r_raster = G_incr_void_ptr(r_raster, r_size);
+	    g_raster = G_incr_void_ptr(g_raster, g_size);
+	    b_raster = G_incr_void_ptr(b_raster, b_size);
+	}
 
-	    g_arr_ptr = G_incr_void_ptr(g_array, D_to_A_tab[D_col] * g_size);
-	    G_raster_cpy(g_ptr, g_arr_ptr, 1, g_type);
-	    g_ptr = G_incr_void_ptr(g_ptr, g_size);
+    A_row = R_scaled_raster(A_row, r_buf, g_buf, b_buf, D__overlay_mode ? n_buf : NULL);
 
-	    b_arr_ptr = G_incr_void_ptr(b_array, D_to_A_tab[D_col] * b_size);
-	    G_raster_cpy(b_ptr, b_arr_ptr, 1, b_type);
-	    b_ptr = G_incr_void_ptr(b_ptr, b_size);
-        }
-    }
-
-    R_move_abs(D_x_beg, D_row) ;
-    D_raster_of_type_RGB(r_raster, g_raster, b_raster,
-			 D_x_end - D_x_beg, repeat,
-			 r_colors, g_colors, b_colors,
-			 r_type,   g_type,   b_type);
-
-/* If picture is done, return -1 */
-    if (cur_D_row >= D_y_end)
-        return(-1) ;
-
-/* Return the array row of the next row needed */
-    return (cur_A_row) ;
+    return (A_row < src[1][1])
+	? A_row
+	: -1;
 }
 
 int D_cell_draw_setup_RGB(int t,int b,int l,int r)
 {
-    int D_col ;
-    struct Cell_head window ;
+    struct Cell_head window;
 
     if (G_get_set_window(&window) == -1) 
         G_fatal_error("Current window not available") ;
     if (D_do_conversions(&window, t, b, l, r))
         G_fatal_error("Error in calculating conversions") ;
-/* Set up the screen for drawing map */
-    D_x_beg = (int)D_get_d_west() ;
-    D_x_end = (int)D_get_d_east() ;
-    D_y_beg = (int)D_get_d_north() ;
-    D_y_end = (int)D_get_d_south() ;
-    cur_D_row = D_y_beg ;
 
-    if (D_to_A_tab)
-        free (D_to_A_tab) ;
+    D_get_a(src);
+    D_get_d(dst);
 
-    D_to_A_tab = (int *)G_calloc(D_x_end, sizeof(int)) ;
+    R_begin_scaled_raster(src, dst);
 
-/* construct D_to_A_tab for converting x screen Dots to x data Array values */
-    for (D_col = D_x_beg; D_col < D_x_end; D_col++)
-        D_to_A_tab[D_col] = (int)(D_d_to_a_col(D_col + 0.5)) ;
-
-    if (r_raster)
-    {
-        free(r_raster) ;
-        r_raster = NULL ;
-    }
-
-    if (g_raster)
-    {
-        free(g_raster) ;
-        g_raster = NULL ;
-    }
-
-    if (b_raster)
-    {
-        free(b_raster) ;
-        b_raster = NULL ;
-    }
     return(0) ;
 }
 
@@ -241,32 +167,32 @@ int D_raster_of_type_RGB (
     struct Colors *r_colors, struct Colors *g_colors, struct Colors *b_colors,
     RASTER_MAP_TYPE r_type, RASTER_MAP_TYPE g_type, RASTER_MAP_TYPE b_type)
 {
+    static unsigned char *r_buf, *g_buf, *b_buf, *n_buf;
+    static int nalloc;
+
     int r_size = G_raster_size(r_type);
     int g_size = G_raster_size(g_type);
     int b_size = G_raster_size(b_type);
     int i;
 
     /* reallocate color_buf if necessary */
-    if(ncols > color_buf_size)
+    if(nalloc < ncols)
     {
-	r_buf = (unsigned char *) G_realloc(r_buf, ncols);
-	g_buf = (unsigned char *) G_realloc(g_buf, ncols);
-	b_buf = (unsigned char *) G_realloc(b_buf, ncols);
-	n_buf = (unsigned char *) G_realloc(n_buf, ncols);
-	color_buf_size = ncols;
+	nalloc = ncols;
+	r_buf = G_realloc(r_buf, ncols);
+	g_buf = G_realloc(g_buf, ncols);
+	b_buf = G_realloc(b_buf, ncols);
+	n_buf = G_realloc(n_buf, ncols);
     }
 
     /* convert cell values to bytes */
+    G_lookup_raster_colors(r_raster, r_buf, n_buf, n_buf, n_buf, ncols, r_colors, r_type);
+    G_lookup_raster_colors(g_raster, n_buf, g_buf, n_buf, n_buf, ncols, g_colors, g_type);
+    G_lookup_raster_colors(b_raster, n_buf, n_buf, b_buf, n_buf, ncols, b_colors, b_type);
+
     for (i = 0; i < ncols; i++)
     {
 	int r, g, b, x;
-
-	G_get_raster_color (r_raster, &r, &x, &x, r_colors, r_type);
-	G_get_raster_color (g_raster, &x, &g, &x, g_colors, g_type);
-	G_get_raster_color (b_raster, &x, &x, &b, b_colors, b_type);
-	r_buf[i] = r;
-	g_buf[i] = g;
-	b_buf[i] = b;
 
 	n_buf[i] = (G_is_null_value(r_raster, r_type) ||
 		    G_is_null_value(g_raster, g_type) ||
@@ -277,8 +203,7 @@ int D_raster_of_type_RGB (
 	b_raster = G_incr_void_ptr(b_raster, b_size);
     }
 
-    R_RGB_raster (ncols, nrows, r_buf, g_buf, b_buf,
-		  D__overlay_mode ? n_buf : NULL);
+    R_RGB_raster(ncols, nrows, r_buf, g_buf, b_buf, D__overlay_mode ? n_buf : NULL);
 
     return 0;
 }
