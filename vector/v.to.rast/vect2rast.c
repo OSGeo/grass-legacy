@@ -6,8 +6,8 @@
 #include "local.h"
 
 int vect_to_rast(char *vector_map,char *raster_map, int field, char *column, int nrows, 
-	          int use, double value, int value_type, char *rgbcolumn, int usergbcolumn,
-                  char *labelcolumn, int uselabelcolumn)
+	          int use, double value, int value_type, char *rgbcolumn, 
+                  char *labelcolumn)
 {
     int i;
     char *vector_mapset;
@@ -186,7 +186,7 @@ int vect_to_rast(char *vector_map,char *raster_map, int field, char *column, int
     update_hist(raster_map, vector_map, vector_mapset, Map.head.orig_scale);
 
     /* colors */
-    if (usergbcolumn) {
+    if (rgbcolumn) {
         if ( format == USE_DCELL) 
             is_fp = 1;
         if (use != USE_ATTR) {
@@ -202,7 +202,7 @@ int vect_to_rast(char *vector_map,char *raster_map, int field, char *column, int
     update_cats(raster_map, vector_map, vector_mapset);
 
     /* labels */
-    if (uselabelcolumn)
+    if (labelcolumn)
         update_labels(raster_map, vector_map, field, labelcolumn, is_fp, column);
     inform(NULL);
     stop_clock(NULL);
