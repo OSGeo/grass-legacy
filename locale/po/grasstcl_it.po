@@ -3204,10 +3204,6 @@ msgstr ""
 msgid "Creating MainFrame..."
 msgstr "Crea MainFrame..."
 
-#: ../gui/tcltk/gis.m/gm.tcl:283
-msgid "Welcome to GRASS GIS Version"
-msgstr "Benvenuti nel GIS GRASS Versione"
-
 #: ../gui/tcltk/gis.m/gm.tcl:341
 #, tcl-format
 msgid "GRASS%s GIS Manager - %s"
@@ -3752,7 +3748,7 @@ msgstr "Avvio GRASS %s"
 msgid ""
 "Welcome to GRASS GIS Version"
 msgstr ""
-"Benvenuti in GRASS GIS Versione"
+"Benvenuti nel GRASS GIS Versione"
 
 #: ../lib/init/gis_set.tcl:203
 msgid ""
@@ -3763,9 +3759,8 @@ msgstr ""
 "\n"
 
 #: ../lib/init/gis_set.tcl:204
-#, fuzzy
 msgid "Select an existing project location and mapset\n"
-msgstr "Seleziona una location esistente e un GIS mapset\n"
+msgstr "Selezionare location e mapset gia' presenti\n"
 
 #: ../lib/init/gis_set.tcl:205
 msgid "or define a new location\n"
@@ -3785,22 +3780,23 @@ msgstr "Nuova Cartella Database"
 msgid ""
 "Project Location\n"
 "(projection/coordinate system)"
-msgstr ""
+msgstr "Proiezione della location\n"
+"(sistema di proiezione/coordinate)"
 
 #: ../lib/init/gis_set.tcl:304
 msgid ""
 "Accessible Mapsets\n"
 "(directories of GIS files)"
-msgstr ""
+msgstr "Mapset accessibili\n"
+"(directory con file GIS)"
 
 #: ../lib/init/gis_set.tcl:359
-#, fuzzy
 msgid ""
 "Create new mapset\n"
 "in selected location"
 msgstr ""
 "Crea un nuovo GIS mapset\n"
-"nella location corrente"
+"nella location selezionata"
 
 #: ../lib/init/gis_set.tcl:367
 msgid "Create new mapset"
@@ -3840,23 +3836,20 @@ msgid ""
 msgstr ""
 
 #: ../lib/init/gis_set.tcl:415
-#, fuzzy
 msgid "Define new location with..."
-msgstr "Definisci la location"
+msgstr "Impostare nuova location con..."
 
 #: ../lib/init/gis_set.tcl:419
-#, fuzzy
 msgid "Georeferenced file"
-msgstr "Usa file georeferenziato"
+msgstr "File georeferenziato"
 
 #: ../lib/init/gis_set.tcl:431
 msgid "EPSG codes"
-msgstr ""
+msgstr "Codici EPSG"
 
 #: ../lib/init/gis_set.tcl:443
-#, fuzzy
 msgid "Projection values"
-msgstr "Usa valori della proiezione"
+msgstr "Valori della proiezione"
 
 #: ../lib/init/gis_set.tcl:480
 msgid "Enter GRASS"
