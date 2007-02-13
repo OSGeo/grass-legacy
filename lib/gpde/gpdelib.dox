@@ -23,9 +23,9 @@ More informations about OpenMP are available at http://www.openmp.org .
 <br>
 Based on the finite volume discretization for structured grids, 
 groundwater flow in 2d and 3d are implemented. 
-It is IMHO easy to add any partial differentail equation which can be 
+It is IMHO easy to add any partial differential equation which can be 
 solved with the finite volume or the finite differences method based on structured grids.
-The basis for the diskretisation is the geometrical structure of raster and volume maps.
+The basis for the discretisation is the geometrical structure of raster and volume maps.
 <br>
 <br>
 There are plans to implement heat flow in two and three dimensions, as well as 
