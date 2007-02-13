@@ -198,7 +198,8 @@ proc gisSetWindow {} {
     pack $introtitle -side top
 
     .frame0.intro.msg tag configure all -justify center
-    .frame0.intro.msg insert end [G_msg "Welcome to GRASS GIS Version $GRASSVERSION\n"]
+    .frame0.intro.msg insert end [G_msg "Welcome to GRASS GIS Version"]
+    .frame0.intro.msg insert end [G_msg " $GRASSVERSION\n"]
     .frame0.intro.msg insert end [G_msg "The world's leading open source GIS\n\n"]
     .frame0.intro.msg insert end [G_msg "Select an existing project location and mapset\n"]
     .frame0.intro.msg insert end [G_msg "or define a new location\n"]
