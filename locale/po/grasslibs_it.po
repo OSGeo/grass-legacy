@@ -10,7 +10,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: grasslibs_it\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2006-12-21 15:46+0100\n"
+"POT-Creation-Date: 2007-02-09 22:50+0100\n"
 "PO-Revision-Date: 2006-10-26 12:30+0100\n"
 "Last-Translator: Giuseppe Patti <gpatt at tiscali.it>\n"
 "Language-Team: Italian <translations@grass.itc.it>\n"
@@ -99,7 +99,7 @@ msgstr "non riesco a creare l'istogramma per [%s in %s]"
 msgid "Unknown Location"
 msgstr "Posizione sconosciuta"
 
-#: ../lib/gis/auto_mask.c:53
+#: ../lib/gis/auto_mask.c:66
 msgid "Unable to open automatic MASK file"
 msgstr "Impossibile aprire il file MASK automatico"
 
@@ -489,115 +489,115 @@ msgstr ""
 msgid "Unknown projection"
 msgstr "Proiezione sconosciuta"
 
-#: ../lib/gis/parser.c:330
+#: ../lib/gis/parser.c:331
 #, fuzzy
 msgid "WHERE conditions of SQL statement without 'where' keyword."
 msgstr ""
 "La clausola WHERE del comando SQL manca della parola chiave 'where'. "
 "(esempio: income < 1000 and inhab >=10000)"
 
-#: ../lib/gis/parser.c:331
+#: ../lib/gis/parser.c:332
 msgid "Example: income < 1000 and inhab >= 10000"
 msgstr ""
 
-#: ../lib/gis/parser.c:339
+#: ../lib/gis/parser.c:340
 #, fuzzy
 msgid "Name of input imagery group"
 msgstr "Nome della mappa raster in input"
 
-#: ../lib/gis/parser.c:348 ../lib/gis/parser.c:373
+#: ../lib/gis/parser.c:349 ../lib/gis/parser.c:374
 msgid "Name of input raster map"
 msgstr "Nome della mappa raster in input"
 
-#: ../lib/gis/parser.c:357 ../lib/gis/parser.c:382
+#: ../lib/gis/parser.c:358 ../lib/gis/parser.c:383
 msgid "Name of input raster map(s)"
 msgstr "Nome delle mappe raster in input"
 
-#: ../lib/gis/parser.c:365
+#: ../lib/gis/parser.c:366
 #, fuzzy
 msgid "Name for output raster map"
 msgstr "Nome della mappa raster in output"
 
-#: ../lib/gis/parser.c:390
+#: ../lib/gis/parser.c:391
 #, fuzzy
 msgid "Name of base raster map"
 msgstr "Nome della mappa raster base in input"
 
-#: ../lib/gis/parser.c:398
+#: ../lib/gis/parser.c:399
 #, fuzzy
 msgid "Name of cover raster map"
 msgstr "Nome del raster in output"
 
-#: ../lib/gis/parser.c:406
+#: ../lib/gis/parser.c:407
 #, fuzzy
 msgid "Name of elevation raster map"
 msgstr "Nome della mappa raster in input"
 
-#: ../lib/gis/parser.c:415
+#: ../lib/gis/parser.c:416
 #, fuzzy
 msgid "Name of elevation raster map(s)"
 msgstr "Nome delle mappe raster in input"
 
-#: ../lib/gis/parser.c:425
+#: ../lib/gis/parser.c:426
 #, fuzzy
 msgid "Name of input raster3d map"
 msgstr "Nome della mappa raster in input"
 
-#: ../lib/gis/parser.c:434
+#: ../lib/gis/parser.c:435
 #, fuzzy
 msgid "Name of input raster3d map(s)"
 msgstr "Nome delle mappe raster in input"
 
-#: ../lib/gis/parser.c:442
+#: ../lib/gis/parser.c:443
 #, fuzzy
 msgid "Name for output raster3d map"
 msgstr "Nome della mappa raster in output"
 
-#: ../lib/gis/parser.c:452 ../lib/gis/parser.c:468
+#: ../lib/gis/parser.c:453 ../lib/gis/parser.c:469
 msgid "Name of input vector map"
 msgstr "Nome della mappa vettoriale in input"
 
-#: ../lib/gis/parser.c:460
+#: ../lib/gis/parser.c:461
 #, fuzzy
 msgid "Name for output vector map"
 msgstr "Nome della mappa vettoriale in output"
 
-#: ../lib/gis/parser.c:477
+#: ../lib/gis/parser.c:478
 msgid "Type"
 msgstr "Tipo"
 
-#: ../lib/gis/parser.c:478
+#: ../lib/gis/parser.c:479
 msgid "Feature type(s)"
 msgstr ""
 
-#: ../lib/gis/parser.c:485
+#: ../lib/gis/parser.c:486
 msgid "Layer number"
 msgstr "Numero layer"
 
-#: ../lib/gis/parser.c:486
+#: ../lib/gis/parser.c:487
 msgid ""
 "A single vector map can be connected to multiple database tables.\n"
 "This number determines which table to use."
 msgstr ""
 
-#: ../lib/gis/parser.c:493
+#: ../lib/gis/parser.c:494
 msgid "Category value"
 msgstr "Valore categoria"
 
-#: ../lib/gis/parser.c:500
+#: ../lib/gis/parser.c:501
 msgid "Category values"
 msgstr "Valori categoria"
 
-#: ../lib/gis/parser.c:501
+#: ../lib/gis/parser.c:502
 msgid "Example: 1,3,7-9,13"
 msgstr "Esempio: 1,3,7-9,13"
 
-#: ../lib/gis/parser.c:792
+#: ../lib/gis/parser.c:801
 #, c-format
 msgid "Sorry <%s> is not a valid option\n"
 msgstr "Mi spiace <%s> non è una opzione valida\n"
 
-#: ../lib/gis/parser.c:902
+#: ../lib/gis/parser.c:911
 #, c-format
 msgid ""
 "\n"
@@ -606,14 +606,14 @@ msgstr ""
 "\n"
 "Descrizione:\n"
 
-#: ../lib/gis/parser.c:906
+#: ../lib/gis/parser.c:915
 #, c-format
 msgid ""
 "\n"
 "Keywords:\n"
 msgstr ""
 
-#: ../lib/gis/parser.c:910
+#: ../lib/gis/parser.c:919
 #, c-format
 msgid ""
 "\n"
@@ -624,7 +624,7 @@ msgstr ""
 "Uso:\n"
 " "
 
-#: ../lib/gis/parser.c:982
+#: ../lib/gis/parser.c:991
 #, c-format
 msgid ""
 "\n"
@@ -633,19 +633,19 @@ msgstr ""
 "\n"
 "Flags:\n"
 
-#: ../lib/gis/parser.c:1005
+#: ../lib/gis/parser.c:1014
 msgid "Allow output files to overwrite existing files"
 msgstr ""
 
-#: ../lib/gis/parser.c:1007
+#: ../lib/gis/parser.c:1016
 msgid "Verbose module output"
 msgstr ""
 
-#: ../lib/gis/parser.c:1008
+#: ../lib/gis/parser.c:1017
 msgid "Quiet module output"
 msgstr ""
 
-#: ../lib/gis/parser.c:1014
+#: ../lib/gis/parser.c:1023
 #, c-format
 msgid ""
 "\n"
@@ -654,32 +654,32 @@ msgstr ""
 "\n"
 "Parametri:\n"
 
-#: ../lib/gis/parser.c:1036
+#: ../lib/gis/parser.c:1045
 #, c-format
 msgid "  %*s   default: %s\n"
 msgstr "  %*s   predefinito: %s\n"
 
-#: ../lib/gis/parser.c:1670
+#: ../lib/gis/parser.c:1775
 #, c-format
 msgid "  %*s   options: "
 msgstr "  %*s   opzioni: "
 
-#: ../lib/gis/parser.c:1717 ../lib/gis/parser.c:1734
+#: ../lib/gis/parser.c:1822 ../lib/gis/parser.c:1839
 #, c-format
 msgid "Sorry, <%c> is not a valid flag\n"
 msgstr "Mi spiace ma, <%c> non è un flag valido\n"
 
-#: ../lib/gis/parser.c:1789
+#: ../lib/gis/parser.c:1894
 #, c-format
 msgid "Sorry, <%s=> is ambiguous\n"
 msgstr "Mi spiace, <%s=> è ambiguo\n"
 
-#: ../lib/gis/parser.c:1796
+#: ../lib/gis/parser.c:1901
 #, c-format
 msgid "Sorry, <%s> is not a valid parameter\n"
 msgstr "Spiacente <%s> non è un parametro valido\n"
 
-#: ../lib/gis/parser.c:1881
+#: ../lib/gis/parser.c:1986
 #, c-format
 msgid ""
 "\n"
@@ -688,12 +688,12 @@ msgstr ""
 "\n"
 "Errore: intervallo di sintassi non valido per il parametro <%s>\n"
 
-#: ../lib/gis/parser.c:1883
+#: ../lib/gis/parser.c:1988
 #, c-format
 msgid "       Presented as: %s\n"
 msgstr "       Presentato come: %s\n"
 
-#: ../lib/gis/parser.c:1886
+#: ../lib/gis/parser.c:1991
 #, c-format
 msgid ""
 "\n"
@@ -702,12 +702,12 @@ msgstr ""
 "\n"
 "Errore: il valore <%s> è fuori dall'intervallo atteso dal parametro<%s>\n"
 
-#: ../lib/gis/parser.c:1888
+#: ../lib/gis/parser.c:1993
 #, c-format
 msgid "       Legal range: %s\n"
 msgstr "       Intervallo valido: %s\n"
 
-#: ../lib/gis/parser.c:1891
+#: ../lib/gis/parser.c:1996
 #, c-format
 msgid ""
 "\n"
@@ -716,7 +716,7 @@ msgstr ""
 "\n"
 "Errore: Valore assente per il parametro <%s>\n"
 
-#: ../lib/gis/parser.c:2051
+#: ../lib/gis/parser.c:2156
 #, c-format
 msgid ""
 "\n"
@@ -727,7 +727,7 @@ msgstr ""
 "ERRORE: Il parametro <%s> richiesto non è definito:\n"
 "    (%s).\n"
 
-#: ../lib/gis/parser.c:2154
+#: ../lib/gis/parser.c:2259
 #, c-format
 msgid ""
 "\n"
@@ -736,17 +736,17 @@ msgstr ""
 "\n"
 "Errore: l'opzione <%s> deve essere fornita come multipli di %d\n"
 
-#: ../lib/gis/parser.c:2156
+#: ../lib/gis/parser.c:2261
 #, c-format
 msgid "       You provided %d items:\n"
 msgstr "       Hai fornito %d oggetti:\n"
 
-#: ../lib/gis/parser.c:2211
+#: ../lib/gis/parser.c:2316
 #, c-format
 msgid "Error: option <%s>: <%s> exists.\n"
 msgstr "Errore: l'opzione <%s>: <%s> esiste.\n"
 
-#: ../lib/gis/parser.c:2258
+#: ../lib/gis/parser.c:2363
 #, c-format
 msgid ""
 "\n"
@@ -755,7 +755,7 @@ msgstr ""
 "\n"
 "FLAG: Assegnare il seguente flag?\n"
 
-#: ../lib/gis/parser.c:2272
+#: ../lib/gis/parser.c:2377
 #, c-format
 msgid ""
 "\n"
@@ -764,51 +764,51 @@ msgstr ""
 "\n"
 "OPZIONE:   %s\n"
 
-#: ../lib/gis/parser.c:2273
+#: ../lib/gis/parser.c:2378
 #, c-format
 msgid "     key: %s\n"
 msgstr "     chiave: %s\n"
 
-#: ../lib/gis/parser.c:2275
+#: ../lib/gis/parser.c:2380
 #, c-format
 msgid "  format: %s\n"
 msgstr "  formato: %s\n"
 
-#: ../lib/gis/parser.c:2277
+#: ../lib/gis/parser.c:2382
 #, c-format
 msgid " default: %s\n"
 msgstr " predefinito: %s\n"
 
-#: ../lib/gis/parser.c:2278
+#: ../lib/gis/parser.c:2383
 #, c-format
 msgid "required: %s\n"
 msgstr "richiesto: %s\n"
 
-#: ../lib/gis/parser.c:2280
+#: ../lib/gis/parser.c:2385
 #, c-format
 msgid "multiple: %s\n"
 msgstr "multiplo: %s\n"
 
-#: ../lib/gis/parser.c:2282
+#: ../lib/gis/parser.c:2387
 #, c-format
 msgid " options: %s\n"
 msgstr " optioni: %s\n"
 
-#: ../lib/gis/parser.c:2297
+#: ../lib/gis/parser.c:2402
 #, c-format
 msgid "enter option > "
 msgstr "inserisci opzione > "
 
-#: ../lib/gis/parser.c:2311 ../lib/gis/parser.c:2322
+#: ../lib/gis/parser.c:2416 ../lib/gis/parser.c:2427
 msgid "   Try again? "
 msgstr "   Provo ancora? "
 
-#: ../lib/gis/parser.c:2320
+#: ../lib/gis/parser.c:2425
 #, c-format
 msgid "Sorry, %s is not accepted.\n"
 msgstr "Spiacente, %s non è accettabile.\n"
 
-#: ../lib/gis/parser.c:2331
+#: ../lib/gis/parser.c:2436
 #, c-format
 msgid ""
 "\n"
@@ -819,11 +819,11 @@ msgstr ""
 "Hai selezionato:\n"
 "  %s\n"
 
-#: ../lib/gis/parser.c:2332
+#: ../lib/gis/parser.c:2437
 msgid "Is this correct? "
 msgstr "È corretto? "
 
-#: ../lib/gis/parser.c:2401
+#: ../lib/gis/parser.c:2506
 msgid "to accept the default"
 msgstr "per accettare i valori predefiniti"
 
@@ -898,12 +898,12 @@ msgstr ""
 "non è valido\n"
 "%s"
 
-#: ../lib/gis/datum.c:172 ../lib/proj/datum.c:400 ../lib/proj/datum.c:486
+#: ../lib/gis/datum.c:172 ../lib/proj/datum.c:425 ../lib/proj/datum.c:488
 #, c-format
 msgid "unable to open datum table file: %s"
 msgstr "impossibile aprire il file tabella datum: %s"
 
-#: ../lib/gis/datum.c:196 ../lib/proj/datum.c:413 ../lib/proj/datum.c:500
+#: ../lib/gis/datum.c:196 ../lib/proj/datum.c:438 ../lib/proj/datum.c:502
 #, c-format
 msgid "error in datum table file, line %d"
 msgstr "errore nel file tabella datum, linea %d"
@@ -1744,61 +1744,57 @@ msgstr ""
 "G_set_window(): la proiezione/zona differisce da quella del raster "
 "attualmente aperto"
 
-#: ../lib/gis/spawn.c:58
-msgid "G_spawn is not supported on Windows"
-msgstr ""
-
-#: ../lib/gis/spawn.c:88
+#: ../lib/gis/spawn.c:77 ../lib/gis/spawn.c:110
 #, fuzzy
 msgid "Too many arguments"
 msgstr "troppi argomenti"
 
-#: ../lib/gis/spawn.c:110 ../lib/gis/spawn.c:429
+#: ../lib/gis/spawn.c:132 ../lib/gis/spawn.c:449
 #, fuzzy
 msgid "Unable to create a new process"
 msgstr "impossibile creare un nuovo processo"
 
-#: ../lib/gis/spawn.c:120 ../lib/gis/spawn.c:454
+#: ../lib/gis/spawn.c:142 ../lib/gis/spawn.c:474
 #, fuzzy
 msgid "Unable to execute command"
 msgstr "impossibile eseguire il comando"
 
-#: ../lib/gis/spawn.c:190 ../lib/gis/spawn.c:198
+#: ../lib/gis/spawn.c:212 ../lib/gis/spawn.c:220
 #, c-format
 msgid "G_spawn: unable to restore signal %d"
 msgstr "G_spawn: impossibile recuperare il segnale %d"
 
-#: ../lib/gis/spawn.c:231
+#: ../lib/gis/spawn.c:253
 #, c-format
 msgid "G_spawn: unable to reset signal %d"
 msgstr "G_spawn: impossibile resettare il segnale %d"
 
-#: ../lib/gis/spawn.c:241
+#: ../lib/gis/spawn.c:263
 #, c-format
 msgid "G_spawn: unable to ignore signal %d"
 msgstr "G_spawn: impossibile ignorare il segnale %d"
 
-#: ../lib/gis/spawn.c:252
+#: ../lib/gis/spawn.c:274
 #, c-format
 msgid "G_spawn: unable to block signal %d"
 msgstr "G_spawn: impossibile bloccare il segnale %d"
 
-#: ../lib/gis/spawn.c:261
+#: ../lib/gis/spawn.c:283
 #, c-format
 msgid "G_spawn: unable to unblock signal %d"
 msgstr "G_spawn: impossibile sbloccare il segnale %d"
 
-#: ../lib/gis/spawn.c:287
+#: ../lib/gis/spawn.c:309
 #, c-format
 msgid "G_spawn: unable to open file %s"
 msgstr "G_spawn: impossibile aprire il file %s"
 
-#: ../lib/gis/spawn.c:293 ../lib/gis/spawn.c:303
+#: ../lib/gis/spawn.c:315 ../lib/gis/spawn.c:325
 #, c-format
 msgid "G_spawn: unable to duplicate descriptor %d to %d"
 msgstr "G_spawn: impossibile duplicare la descrizione %d in %d"
 
-#: ../lib/gis/spawn.c:446
+#: ../lib/gis/spawn.c:466
 #, fuzzy, c-format
 msgid "Unable to change directory to %s"
 msgstr "impossibile cambiare la directory %s"
@@ -2850,6 +2846,147 @@ msgstr ""
 msgid "Window replacing the default"
 msgstr "per accettare i valori predefiniti"
 
+#: ../lib/gpde/test/test_assemble.c:43
+msgid "++ Running assembling unit tests ++"
+msgstr ""
+
+#: ../lib/gpde/test/test_assemble.c:45
+msgid "\t 1. testing 2d assembling"
+msgstr ""
+
+#: ../lib/gpde/test/test_assemble.c:48
+msgid "\t 2. testing 3d assembling"
+msgstr ""
+
+#: ../lib/gpde/test/test_assemble.c:52
+msgid "-- Assembling unit tests failure --"
+msgstr ""
+
+#: ../lib/gpde/test/test_assemble.c:54
+msgid "-- Assembling unit tests finished successfully --"
+msgstr ""
+
+#: ../lib/gpde/test/test_arrays.c:43
+msgid "++ Running array unit tests ++"
+msgstr ""
+
+#: ../lib/gpde/test/test_arrays.c:45
+msgid "\t 1. testing 2d arrays"
+msgstr ""
+
+#: ../lib/gpde/test/test_arrays.c:48
+msgid "\t 2. testing 3d arrays"
+msgstr ""
+
+#: ../lib/gpde/test/test_arrays.c:52
+msgid "-- Array unit tests failure --"
+msgstr ""
+
+#: ../lib/gpde/test/test_arrays.c:54
+msgid "-- Array unit tests finished successfully --"
+msgstr ""
+
+#: ../lib/gpde/test/test_les.c:35
+msgid "++ Running les creation unit tests ++"
+msgstr ""
+
+#: ../lib/gpde/test/test_les.c:40
+msgid "-- les creation unit tests failure --"
+msgstr ""
+
+#: ../lib/gpde/test/test_les.c:42
+msgid "-- les creation unit tests finished successfully --"
+msgstr ""
+
+#: ../lib/gpde/test/test_les.c:59
+msgid "\t * testing les creation in parallel\n"
+msgstr ""
+
+#: ../lib/gpde/test/test_les.c:97
+msgid "\t * testing les creation in serial\n"
+msgstr ""
+
+#: ../lib/gpde/test/test_solvers.c:38
+msgid "++ Running slover unit tests ++"
+msgstr ""
+
+#: ../lib/gpde/test/test_solvers.c:43
+msgid "-- Solver unit tests failure --"
+msgstr ""
+
+#: ../lib/gpde/test/test_solvers.c:45
+msgid "-- Solver unit tests finished successfully --"
+msgstr ""
+
+#: ../lib/gpde/test/test_gwflow.c:44
+msgid "++ Running gwflow integration tests ++"
+msgstr ""
+
+#: ../lib/gpde/test/test_gwflow.c:46
+msgid "\t 1. testing 2d gwflow"
+msgstr ""
+
+#: ../lib/gpde/test/test_gwflow.c:49
+msgid "\t 2. testing 3d gwflow"
+msgstr ""
+
+#: ../lib/gpde/test/test_gwflow.c:53
+msgid "-- gwflow integration tests failure --"
+msgstr ""
+
+#: ../lib/gpde/test/test_gwflow.c:55
+msgid "-- gwflow integration tests finished successfully --"
+msgstr ""
+
+#: ../lib/gpde/test/test_heat.c:33
+msgid "++ Running heat flow integration tests ++"
+msgstr ""
+
+#: ../lib/gpde/test/test_heat.c:35
+msgid "\t 1. testing 2d heat flow"
+msgstr ""
+
+#: ../lib/gpde/test/test_heat.c:37
+msgid "\t 2. testing 3d heat flow"
+msgstr ""
+
+#: ../lib/gpde/test/test_heat.c:40
+msgid "-- heat flow integration tests failure --"
+msgstr ""
+
+#: ../lib/gpde/test/test_heat.c:42
+msgid "-- heat flow integration tests finished successfully --"
+msgstr ""
+
+#: ../lib/gpde/test/test_main.c:49
+msgid "Choose the unit tests to run"
+msgstr ""
+
+#: ../lib/gpde/test/test_main.c:56
+msgid "Choose the integration tests to run"
+msgstr ""
+
+#: ../lib/gpde/test/test_main.c:61
+msgid "Run all unit tests"
+msgstr ""
+
+#: ../lib/gpde/test/test_main.c:65
+#, fuzzy
+msgid "Run all integration tests"
+msgstr "Tipo di interpolazione sconosciuta"
+
+#: ../lib/gpde/test/test_main.c:69
+msgid "Run all unit and integration tests"
+msgstr ""
+
+#: ../lib/gpde/test/test_main.c:86
+msgid "test, gpde"
+msgstr ""
+
+#: ../lib/gpde/test/test_main.c:87
+msgid "Performs unit and integration tests for gpde library"
+msgstr ""
+
 #: ../lib/vask/V_support.c:63
 #, fuzzy, c-format
 msgid "Unable to open file %s"
@@ -2897,22 +3034,19 @@ msgid "%s: No FreeType definition file"
 msgstr ""
 
 #: ../lib/driver/command.c:604
-#, c-format
-msgid ""
-"\n"
-"Unknown command: %d last: %d\n"
+#, fuzzy, c-format
+msgid "Unknown command: %d last: %d"
 msgstr ""
 "\n"
 "Comando sconosciuto: %d ultimo: %d\n"
 
 #: ../lib/driver/command.c:646
-#, c-format
-msgid "Monitor: get_command: Premature EOF\n"
+msgid "Monitor: get_command: Premature EOF"
 msgstr ""
 
-#: ../lib/driver/command.c:720
+#: ../lib/driver/main.c:102
 #, c-format
-msgid "Monitor: _send: write returned short count: %d of %d\n"
+msgid "Graphics driver [%s] started"
 msgstr ""
 
 #~ msgid "Too many open raster maps"

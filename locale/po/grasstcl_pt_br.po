@@ -3174,8 +3174,8 @@ msgid "Creating MainFrame..."
 msgstr "Criando Quadro principal"
 
 #: ../gui/tcltk/gis.m/gm.tcl:283
-msgid "Welcome to GRASS GIS"
-msgstr "Bem-vindo ao SIG GRASS"
+msgid "Welcome to GRASS GIS Version"
+msgstr "Bem-vindo ao SIG GRASS Versione"
 
 #: ../gui/tcltk/gis.m/gm.tcl:341
 #, tcl-format

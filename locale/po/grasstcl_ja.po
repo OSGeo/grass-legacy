@@ -3345,7 +3345,7 @@ msgid "Creating MainFrame..."
 msgstr ""
 
 #: ../gui/tcltk/gis.m/gm.tcl:283
-msgid "Welcome to GRASS GIS"
+msgid "Welcome to GRASS GIS Version"
 msgstr ""
 
 #: ../gui/tcltk/gis.m/gm.tcl:341
