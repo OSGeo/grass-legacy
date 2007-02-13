@@ -131,7 +131,7 @@ set descmenu [subst  {
 			{command {[G_msg "ASCII grid (for GRASS, Surfer, Modflow, etc)"]} {} "r.out.ascii" {} -command { execute r.out.ascii }}
 			{command {[G_msg "ASCII x,y,z values of cell centers"]} {} "r.out.xyz" {} -command { execute r.out.xyz }}
 			{separator}
-			{command {[G_msg "ESRI ARC/INFO ASCII grid"]} {} "r.out.arc" {} -command { execute r.out.arc }}
+			{command {[G_msg "ESRI Arc/Info ASCII grid"]} {} "r.out.arc" {} -command { execute r.out.arc }}
 			{command {[G_msg "GRIDATB.FOR map file (TOPMODEL)"]} {} "r.out.gridatb" {} -command { execute r.out.gridatb }}
 			{command {[G_msg "MAT-File (v.4) array (Matlab or Octave)"]} {} "r.out.mat" {} -command { execute r.out.mat }}
 			{separator}
