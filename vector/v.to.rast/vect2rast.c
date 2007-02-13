@@ -62,7 +62,7 @@ int vect_to_rast(char *vector_map,char *raster_map, int field, char *column, int
 
 	ctype = cvarr.ctype;
 	if ( ctype != DB_C_TYPE_INT && ctype != DB_C_TYPE_DOUBLE )
-	    G_fatal_error ( "Column type not supported" );
+	    G_fatal_error ( "Column type not supported (did you mean 'labelcolumn'?)" );
 
 	if ( nrec < 0 )
             G_fatal_error (_("Cannot select data from table"));
@@ -100,7 +100,7 @@ int vect_to_rast(char *vector_map,char *raster_map, int field, char *column, int
 	start_clock(NULL);
 	inform ("Sorting areas by size ...");
 	if((nareas = sort_areas (&Map, Points, field)) < 0) {
-	    G_fatal_error ( "ERROR processing areas from vector map <%s>\n", vector_map);
+	    G_fatal_error ( "ERROR processing areas from vector map <%s>", vector_map);
 	}
 	sprintf (msg, " %d areas", nareas);
 	inform (msg);
