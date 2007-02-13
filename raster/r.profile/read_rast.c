@@ -7,9 +7,10 @@
  * This Program is free software under the GPL (>=v2)
  * Read the file COPYING coming with GRASS for details
  *
- *
  */
 
+#include <grass/gis.h>
+#include <grass/glocale.h>
 #include "local_proto.h"
 
 int read_rast(double east, double north, double dist, int fd, int coords, 
@@ -30,14 +31,15 @@ int read_rast(double east, double north, double dist, int fd, int coords,
 
     row = (window.north - north) / window.ns_res;
     col = (east - window.west) / window.ew_res;
+    G_debug(4, "row=%d:%d  col=%d:%d", row, nrows, col, ncols);
 
-    if (row < 0)
-	G_fatal_error("Coordinate request outsite current region settings");
+    if ( (row < 0) || (row >= nrows) || (col < 0) || (col >= ncols) )
+	G_fatal_error(_("Coordinate request outsite current region settings"));
 
     if (data_type == CELL_TYPE) {
 	cell = G_allocate_c_raster_buf();
 	if (G_get_c_raster_row(fd, cell, row) < 0)
-	    exit(1);
+	    G_fatal_error(_("Reading raster map row %d"), row);
 
 	if (G_is_c_null_value(&cell[col]))
 	    sprintf(buf, null_string);
@@ -59,7 +61,7 @@ int read_rast(double east, double north, double dist, int fd, int coords,
     if (data_type == FCELL_TYPE) {
 	fcell = G_allocate_f_raster_buf();
 	if (G_get_f_raster_row(fd, fcell, row) < 0)
-	    exit(1);
+	    G_fatal_error(_("Reading raster map row %d"), row);
 
 	if (G_is_f_null_value(&fcell[col]))
 	    sprintf(buf, null_string);
@@ -81,7 +83,8 @@ int read_rast(double east, double north, double dist, int fd, int coords,
     if (data_type == DCELL_TYPE) {
 	dcell = G_allocate_d_raster_buf();
 	if (G_get_d_raster_row(fd, dcell, row) < 0)
-	    exit(1);
+	    G_fatal_error(_("Reading raster map row %d"), row);
+    
 	if (G_is_d_null_value(&dcell[col]))
 	    sprintf(buf, null_string);
 	else
