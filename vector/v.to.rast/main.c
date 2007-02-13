@@ -55,6 +55,7 @@ int main (int argc, char *argv[])
 			"\t\tdir  - output as flow direction (lines only)");
 
     col = G_define_option();
+    /* for GRASS 7, IMHO this should be changed to "attrcolumn" */
     col->key            = "column";
     col->type           = TYPE_STRING;
     col->key_desc       = "name";
@@ -81,38 +82,21 @@ int main (int argc, char *argv[])
     rows->description      = _("number of rows to hold in memory");
 
     rgbcol_opt = G_define_option();
-    rgbcol_opt->key        = "rgb_column";
+    rgbcol_opt->key        = "rgbcolumn";
     rgbcol_opt->type       = TYPE_STRING ;
     rgbcol_opt->required   = NO ;
     rgbcol_opt->multiple   = NO ;
     rgbcol_opt->guisection = _("Colors");
-    rgbcol_opt->description=
-        _("Name of color definition column (for use with -a flag)");
-    rgbcol_opt->answer     = "GRASSRGB" ;
-
-    table_acolors_flag = G_define_flag ();
-    table_acolors_flag->key		= 'a';
-    table_acolors_flag->guisection  = _("Colors");
-    table_acolors_flag->description	=
-        _("Get colors from map table column (of form RRR:GGG:BBB)");
+    rgbcol_opt->description= _("Name of color definition column (with RRR:GGG:BBB color definition)");
 
     label_opt = G_define_option();
-    label_opt->key        = "label_column";
+    label_opt->key        = "labelcolumn";
     label_opt->type       = TYPE_STRING ;
     label_opt->required   = NO ;
     label_opt->multiple   = NO ;
     label_opt->guisection = _("Labels");
     label_opt->description=
-        _("Name of label definition column (for use with -l flag)");
-    label_opt->answer     = "label" ;
-
-    table_labels_flag = G_define_flag ();
-    table_labels_flag->key		= 'l';
-    table_labels_flag->guisection  = _("Labels");
-    table_labels_flag->description	=
-        _("Get labels from map table column");
-
-
+        _("Name of label definition column");
 
     if (G_parser (argc, argv))
 	exit(EXIT_FAILURE);
@@ -147,7 +131,7 @@ int main (int argc, char *argv[])
 	value_type = USE_CELL;
 	
 
-    exit( vect_to_rast (input->answer, output->answer, field, col->answer, nrows, use, value, value_type, rgbcol_opt->answer, table_acolors_flag->answer, label_opt->answer, table_labels_flag->answer) );
+    exit( vect_to_rast (input->answer, output->answer, field, col->answer, nrows, use, value, value_type, rgbcol_opt->answer, label_opt->answer));
 }
 
 

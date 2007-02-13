@@ -52,4 +52,4 @@ int update_labels(char *, char *, int, char *, int, char *);
 int update_cats(char *, char *, char *);
 int update_fcolors(char *raster_name);
 /* vect2rast.c */
-int vect_to_rast(char *, char *, int, char *, int, int, double, int, char *, int, char *, int);
+int vect_to_rast(char *, char *, int, char *, int, int, double, int, char *,char *);
