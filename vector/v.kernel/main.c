@@ -292,7 +292,7 @@ int main(int argc, char **argv)
       if ( net_opt->answer )
 	Vect_close (&Net);
       
-      exit (0);
+      exit (EXIT_SUCCESS);
     }
   }
   
@@ -404,7 +404,7 @@ int main(int argc, char **argv)
 
   Vect_close (&In);
 
-  exit(0);
+  exit(EXIT_SUCCESS);
 }
 
 
