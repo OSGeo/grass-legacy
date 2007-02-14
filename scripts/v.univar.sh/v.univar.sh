@@ -15,12 +15,12 @@
 #############################################################################
 
 #%Module
-#% description: calculates univariate statistics on selected table column for a GRASS vector map
+#% description: Calculates univariate statistics on selected table column for a GRASS vector map
 #% keywords: vector, statistics
 #%End
 #%flag
 #%  key: e
-#%  description: extended statistics (quartiles and 90th percentile)
+#%  description: Extended statistics (quartiles and 90th percentile)
 #%END
 #%option
 #% key: table
@@ -32,7 +32,7 @@
 #%option
 #% key: column
 #% type: string
-#% description: column on which to calculate statistics (must be numeric)
+#% description: Column on which to calculate statistics (must be numeric)
 #% required : yes
 #%end
 #%option
@@ -55,7 +55,7 @@
 #%end
 
 if  [ -z "$GISBASE" ] ; then
-    echo "You must be in GRASS GIS to run this program."
+    echo "You must be in GRASS GIS to run this program." 1>&2
  exit 1
 fi   
 
@@ -133,7 +133,7 @@ fi
 LINES=`wc -l "$TMP" | awk '{print $1}'`
 if [ "$LINES" -eq 0 ] ; then
  echo ""
- echo "ERROR: Table $GIS_OPT_TABLE contains no data."
+ echo "ERROR: Table $GIS_OPT_TABLE contains no data." 1>&2
  cleanup
  exit 1
 fi
