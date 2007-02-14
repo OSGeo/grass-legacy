@@ -172,6 +172,8 @@ class GMFrame(wx.Frame):
         self.MapDisplay[self.disp_idx].SetTitle(_("Map Display-"+str(self.disp_idx)))
         #self.maptree[self.disp_idx] = self.MapDisplay[self.disp_idx].getTree()
         self.MapDisplay[self.disp_idx].Show()
+        self.MapDisplay[self.disp_idx].Refresh()
+        self.MapDisplay[self.disp_idx].Update()
         self.disp_idx += 1
 
     #---ToolBar button handlers---#000000#FFFFFF------------------------------------
@@ -224,19 +226,27 @@ class GMChoicebook(wx.Choicebook):
     opened.'''
     def __init__(self, parent, id, pos, size, style):
         wx.Choicebook.__init__(self, parent, id, pos, size, style)
+        new = ""
+        old = ""
+        sel = ""
+
+        self.Bind(wx.EVT_CHOICEBOOK_PAGE_CHANGED, self.OnCBPageChanged)
+
 
 	# choicebook methods
-	def OnCBPageChanged(self, event):
-		old = event.GetOldSelection()
-		new = event.GetSelection()
-		sel = self.GetSelection()
-		event.Skip()
+    def OnCBPageChanged(self, event):
+        old_pgnum = event.GetOldSelection()
+        new = event.GetSelection()
+        curr_pg = self.GetCurrentPage()
+        sel_pgnum = self.GetSelection()
+        #get ID of active display
+        disp_idx = render.Track().GetCB_idx(str(curr_pg))
+        #get associated display and make it active
+        newdisp = render.Track().GetDisp(disp_idx)
+        newdisp.SetFocus()
+        newdisp.Raise()
+        event.Skip()
 
-	def OnCBPageChanging(self, event):
-		old = event.GetOldSelection()
-		new = event.GetSelection()
-		sel = self.GetSelection()
-		event.Skip()
 
 	# notebook methods
 	def changePage(self, pg, content, name):
