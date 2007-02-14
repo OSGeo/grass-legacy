@@ -4,7 +4,8 @@ import utils
 layertree = {} #layer tree in GIS Manager, indexed by display.
 nb = {} #notebook in GIS Manager, indexed by display.
 cb_page = {} #choicbook page in GIS Manager, indexed by display.
-curr_disp = {} #map displays, indexed by display number.
+cb_pgnum = {} #choicebook page number, indexed by page ID
+curr_disp = {} #display ID indexed by display index number
 disp_ctrl = {} #distionary of associated choicebook pages and displays
 disp_idx = "" #index for each display
 
@@ -797,6 +798,7 @@ class Track:
 		global layertree
 		global nb
 		global cb_page
+		global cb_pgnum
 		global curr_disp
 		global disp_idx
 		global disp_ctrl
@@ -827,13 +829,21 @@ class Track:
 	def GetChbk(self):
 		return gm_cb
 
-	#store and retrieve choicebook page for display with focus
-	def SetChbkPage(self, page, disp_idx):
-		cb_page[disp_idx] = page
-		return cb_page[disp_idx]
+	#store and retrieve display index for choicebook page
+	def SetCB_idx(self, page, disp_idx):
+		cb_page[page] = disp_idx
+		return cb_page[page]
 
-	def GetChbkPage(self, disp_idx):
-		return cb_page[disp_idx]
+	def GetCB_idx(self, page):
+		return cb_page[page]
+
+	#store and retrieve page number of choicebook page
+	def SetCB_page(self, page , pgnum):
+		cb_pgnum[page] = pgnum
+		return cb_pgnum[page]
+
+	def GetCB_page(self, page):
+		return cb_pgnum[page]
 
 	def SetDispCtrl(self, disp_idx, disp, chbk):
 		disp_ctrl[disp_idx] = (disp, chbk)
