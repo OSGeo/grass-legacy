@@ -39,29 +39,28 @@ class LayerTree(CT.CustomTreeCtrl):
         self.SetPyData(self.root, None)
 
         #create image list to use with layer tree
-        il = wx.ImageList(24, 24, False)
+        il = wx.ImageList(16, 16, False)
 
         trgif = wx.Image(gipath+r'/element-cell.gif', wx.BITMAP_TYPE_GIF)
-        trgif.Rescale(24, 24)
+        trgif.Rescale(16, 16)
         trgif = trgif.ConvertToBitmap()
         self.rast_icon = il.Add(trgif)
 #        print "width=",trgif.GetWidth()
 #        print "height=",trgif.GetHeight()
         trgif = wx.Image(gipath+r'/element-vector.gif', wx.BITMAP_TYPE_GIF)
-        trgif.Rescale(24, 24)
+        trgif.Rescale(16, 16)
         trgif = trgif.ConvertToBitmap()
         self.vect_icon = il.Add(trgif)
 
         trgif = wx.Image(gipath+r'/gui-cmd.gif', wx.BITMAP_TYPE_GIF)
-        trgif.Rescale(24, 24)
+        trgif.Rescale(16, 16)
         trgif = trgif.ConvertToBitmap()
         self.cmd_icon = il.Add(trgif)
 
         checksize = il.GetSize(0)
         checkbmp = il.GetBitmap(0)
-        print "bitmap 0=",checkbmp
 #        print "checksize=",checksize
-        #self.AssignImageList(il)
+        self.AssignImageList(il)
 
 #        self.tree.SetItemImage(self.root, fldridx, wx.TreeItemIcon_Normal)
 #        self.tree.SetItemImage(self.root, fldropenidx, wx.TreeItemIcon_Expanded)
@@ -96,16 +95,15 @@ class LayerTree(CT.CustomTreeCtrl):
 
         # create options panels for each layer added
         if layertype == 'raster':
-            pass
-            #self.SetItemImage(self.layer[self.node], self.rast_icon)
+            self.SetItemImage(self.layer[self.node], self.rast_icon)
 
             #self.optpage[layername] = spare.Frame(nb.page1, -1)
 ##            self.optpage[layername] = rastopt.MyPanel(gm_nb_pg1, -1, style=wx.TAB_TRAVERSAL)
         elif layertype == 'vector':
-            pass
+            self.SetItemImage(self.layer[self.node], self.vect_icon)
             #self.optpage[layername] = vectopt.MyPanel(nb.page1, -1, style=wx.TAB_TRAVERSAL)
         elif layertype == 'command':
-            pass
+            self.SetItemImage(self.layer[self.node], self.cmd_icon)
             #self.optpage[layername] = cmdopt.MyPanel(nb.page1, -1, style=wx.TAB_TRAVERSAL)
 ##        self.optpage[layername].Show(True)
 ##        print "optpage1 = ", self.optpage[layername]
