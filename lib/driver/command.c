@@ -101,6 +101,7 @@ int process_command(int c)
     LIST *list;
     PAD *pad;
     unsigned char ch;
+    int src[2][2], dst[2][2];
 
     switch(c)
     {
@@ -300,6 +301,26 @@ int process_command(int c)
 	REC(grna, 256);
 	REC(blua, 256);
 	COM_RGB_set_colors(reda, grna, blua);
+	break;
+    case BEGIN_SCALED_RASTER:
+	REC(&src[0][0], 4 * sizeof(int));
+	REC(&dst[0][0], 4 * sizeof(int));
+	COM_begin_scaled_raster(src, dst);
+	break;
+    case SCALED_RASTER:
+	REC(&x, sizeof x);
+	REC(&y, sizeof y);
+	reda = (unsigned char *) xalloc(reda, &red_alloc, x, sizeof(*reda));
+	grna = (unsigned char *) xalloc(grna, &grn_alloc, x, sizeof(*grna));
+	blua = (unsigned char *) xalloc(blua, &blu_alloc, x, sizeof(*blua));
+	nula = (unsigned char *) xalloc(nula, &nul_alloc, x, sizeof(*nula));
+	REC(reda, x * sizeof(char));
+	REC(grna, x * sizeof(char));
+	REC(blua, x * sizeof(char));
+	REC(nula, x * sizeof(char));
+	REC(&t, sizeof t);
+	ret = COM_scaled_raster(x, y, reda, grna, blua, t ? nula : NULL);
+	SEND(&ret, sizeof ret);
 	break;
     case POLYGON_ABS:
 	REC(&number, sizeof number);

@@ -137,7 +137,7 @@ static int draw_cell_RGB(
 	    b_raster = G_incr_void_ptr(b_raster, b_size);
 	}
 
-    A_row = R_scaled_raster(A_row, r_buf, g_buf, b_buf, D__overlay_mode ? n_buf : NULL);
+    A_row = R_scaled_raster(ncols, A_row, r_buf, g_buf, b_buf, D__overlay_mode ? n_buf : NULL);
 
     return (A_row < src[1][1])
 	? A_row

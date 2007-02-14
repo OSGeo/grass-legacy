@@ -102,14 +102,14 @@ void R_font_freetype(const char *);
 void R_charset(const char *);
 void R_font_freetype_release(void);
 
-void R_panel_save(const char *name,int,int,int,int);
-void R_panel_restore(const char *name);
-void R_panel_delete(const char *name);
+void R_panel_save(const char *,int,int,int,int);
+void R_panel_restore(const char *);
+void R_panel_delete(const char *);
 
 void R_set_RGB_color(unsigned char *,unsigned char *,unsigned char *);
 void R_RGB_raster(int,int,unsigned char *,unsigned char *,unsigned char *,unsigned char *);
-void R_begin_scaled_raster(int s[2][2], int d[2][2]);
-int R_scaled_raster(int,
+void R_begin_scaled_raster(int [2][2], int [2][2]);
+int R_scaled_raster(int, int,
 	unsigned char *, unsigned char *, unsigned char *, unsigned char *);
 void R_bitmap(int,int,int,const unsigned char *);
 

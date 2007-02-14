@@ -103,6 +103,10 @@
 #define GET_LOCATION_WITH_LINE_OLD    82
 #define GET_LOCATION_WITH_POINTER_OLD 83
 
+/* scaled raster */
+#define BEGIN_SCALED_RASTER         84
+#define SCALED_RASTER               85
+
 /* return codes for pad routines */
 
 #define OK 0

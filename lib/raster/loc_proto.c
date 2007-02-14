@@ -586,6 +586,18 @@ void LOC_RGB_raster(int n, int nrows,
 	COM_RGB_raster(n, nrows, red, grn, blu, nul);
 }
 
+void LOC_begin_scaled_raster(int src[2][2], int dst[2][2])
+{
+	COM_begin_scaled_raster(src, dst);
+}
+
+int LOC_scaled_raster(int n, int row,
+	unsigned char *red, unsigned char *grn, unsigned char *blu,
+	unsigned char *nul)
+{
+	return COM_scaled_raster(n, row, red, grn, blu, nul);
+}
+
 void LOC_bitmap(int ncols, int nrows, int threshold, const unsigned char *buf)
 {
 	COM_Bitmap(ncols, nrows, threshold, buf);

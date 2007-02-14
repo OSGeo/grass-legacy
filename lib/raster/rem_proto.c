@@ -642,6 +642,31 @@ void REM_RGB_raster(int n, int nrows,
 	_send_int(&z);
 }
 
+void REM_begin_scaled_raster(int src[2][2], int dst[2][2])
+{
+	_send_ident(BEGIN_SCALED_RASTER);
+	_send_int_array(4, &src[0][0]);
+	_send_int_array(4, &dst[0][0]);
+}
+
+int REM_scaled_raster(int n, int row,
+	unsigned char *red, unsigned char *grn, unsigned char *blu,
+	unsigned char *nul)
+{
+	int z = !!nul;
+	int t;
+	_send_ident(SCALED_RASTER);
+	_send_int(&n);
+	_send_int(&row);
+	_send_char_array(n, red);
+	_send_char_array(n, grn);
+	_send_char_array(n, blu);
+	_send_char_array(n, nul ? nul : red);
+	_send_int(&z);
+	_get_int(&t);
+	return t;
+}
+
 /*!
  * \brief Send arguments to the driver
  *
