@@ -335,7 +335,7 @@ class MapFrame(wx.Frame):
         self.cb_page = {} #choicebook page for each display, indexed by display ID
         self.maptree = {} #layer tree on choicebook page for each display, indexed by display ID
         self.mapconsole = {} #command console on choicebook page for each display, indexed by display ID
-        self.nb={} #notebook on choicebook page for GIS mgr controls for each display, indexed by display ID
+        self.nb = {} #notebook on choicebook page for GIS mgr controls for each display, indexed by display ID
         self.chbk = cb
         self.disp_idx = idx
 
@@ -410,6 +410,15 @@ class MapFrame(wx.Frame):
         self.cb_page[self.disp_idx].SetAutoLayout(True)
         self.Centre()
 
+#        #store information about display and controls in variables in render.py
+        render.Track().SetDisp_idx(self.disp_idx)
+        myidx = render.Track().GetDisp_idx()
+        render.Track().SetChbk(self.chbk)
+        render.Track().SetDispCtrl(self.disp_idx, self, self.cb_page)
+        render.Track().SetChbkPage(self.cb_page, self.disp_idx)
+        render.Track().SetNB(self.disp_idx, self.nb[self.disp_idx])
+        render.Track().SetTree(self.disp_idx, self.maptree[self.disp_idx])
+
     def InitDisplay(self):
         self.Width, self.Height = self.GetClientSize()
         Map.geom = self.Width, self.Height
@@ -418,16 +427,22 @@ class MapFrame(wx.Frame):
         Map.SetRegion()
 
     def OnFocus(self, event):
-        ''' get map display index number from title
-        and store it in variable in render.py
-        so it can be found by gism.py'''
+        ''' store information about active display
+        in tracking variables and change choicebook
+        page to match display'''
         title = self.GetTitle()
         num = title[12:]
-        render.Track().SetDisp_idx(num)
-        render.Track().SetDisp(self, self.disp_idx)
+        render.Track().SetDisp_idx(self.disp_idx)
+        render.Track().SetDisp(event.GetEventObject(), self.disp_idx)
         render.Track().SetChbkPage(self.chbk, self.disp_idx)
         render.Track().SetNB(self.disp_idx, self.nb[self.disp_idx])
-        self.chbk.SetSelection(self.disp_idx)        event.Skip()
+        render.Track().SetTree(self.disp_idx, self.maptree[self.disp_idx])
+
+        # change choicebook page to page associted with display
+        ctrl = render.Track().GetDispCtrl(self.disp_idx)
+        pg = str(ctrl[1])
+        pgnum = int(pg[1:pg.index(':')])
+        self.chbk.SetSelection(pgnum)        event.Skip()
 
     def SetDcommandList(self, clst):
         self.MapWindow.dcmd_list = clst
