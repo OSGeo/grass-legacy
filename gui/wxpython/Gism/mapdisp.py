@@ -332,10 +332,10 @@ class MapFrame(wx.Frame):
 ##         wx.Frame.__init__(self, *args, **kwds)
 
     def __init__(self, parent, id, title, pos, size, style, cb, idx):        wx.Frame.__init__(self, parent, id, title, pos, size, style)        self.SetClientSize((600, 475))
-        self.cb_page = {} #choicebook page for each display, indexed by display ID
-        self.maptree = {} #layer tree on choicebook page for each display, indexed by display ID
-        self.mapconsole = {} #command console on choicebook page for each display, indexed by display ID
-        self.nb = {} #notebook on choicebook page for GIS mgr controls for each display, indexed by display ID
+        self.cb_page = "" #choicebook page for each display, indexed by display ID
+        self.maptree = "" #layer tree on choicebook page for each display, indexed by display ID
+        self.mapconsole = "" #command console on choicebook page for each display, indexed by display ID
+        self.nb = "" #notebook on choicebook page for GIS mgr controls for each display, indexed by display ID
         self.chbk = cb
         self.disp_idx = idx
 
@@ -387,27 +387,26 @@ class MapFrame(wx.Frame):
         self.chbk.AddPage(cb_panel, "map layers for display "+str(self.disp_idx), select = True)
 
         # track which page is associated with which map display
-        self.cb_page[self.disp_idx]=self.chbk.GetCurrentPage()
-        #make a dictionary entry of the current display and current choicebook page
+        self.cb_page = self.chbk.GetCurrentPage()
 
         #create notebook on choicebook page to hold layer tree and command console
-        self.nb[self.disp_idx] =  wx.Notebook(self.cb_page[self.disp_idx], -1, wx.DefaultPosition, wx.DefaultSize, wx.NB_RIGHT)
+        self.nb =  wx.Notebook(self.cb_page, -1, wx.DefaultPosition, wx.DefaultSize, wx.NB_RIGHT)
 
        #create layer tree (tree control for managing GIS layers)  and put on new notebook page
-        self.maptree[self.disp_idx] = gmutils.LayerTree(self.nb[self.disp_idx], -1, wx.DefaultPosition, wx.DefaultSize, wx.TR_HAS_BUTTONS
+        self.maptree = gmutils.LayerTree(self.nb, -1, wx.DefaultPosition, wx.DefaultSize, wx.TR_HAS_BUTTONS
             |wx.TR_LINES_AT_ROOT|wx.TR_EDIT_LABELS|wx.TR_HIDE_ROOT
             |wx.TR_DEFAULT_STYLE|wx.NO_BORDER|wx.FULL_REPAINT_ON_RESIZE)
-        self.nb[self.disp_idx].AddPage(self.maptree[self.disp_idx], _("Layers"))
+        self.nb.AddPage(self.maptree, _("Layers"))
 
         #create command console and put on new notebook page
-        self.mapconsole[self.disp_idx] = gmutils.GMConsole(self.nb[self.disp_idx])
-        self.nb[self.disp_idx].AddPage(self.mapconsole[self.disp_idx] , _("Console"))
+        self.mapaconsole = gmutils.GMConsole(self.nb)
+        self.nb.AddPage(self.mapaconsole , _("Console"))
 
         #layout for controls
         cb_boxsizer = wx.BoxSizer()
-        cb_boxsizer.Add(self.nb[self.disp_idx], 1, wx.EXPAND)
-        self.cb_page[self.disp_idx].SetSizer(cb_boxsizer)
-        self.cb_page[self.disp_idx].SetAutoLayout(True)
+        cb_boxsizer.Add(self.nb, 1, wx.EXPAND)
+        self.cb_page.SetSizer(cb_boxsizer)
+        self.cb_page.SetAutoLayout(True)
         self.Centre()
 
 #        #store information about display and controls in variables in render.py
@@ -415,9 +414,10 @@ class MapFrame(wx.Frame):
         myidx = render.Track().GetDisp_idx()
         render.Track().SetChbk(self.chbk)
         render.Track().SetDispCtrl(self.disp_idx, self, self.cb_page)
-        render.Track().SetChbkPage(self.cb_page, self.disp_idx)
-        render.Track().SetNB(self.disp_idx, self.nb[self.disp_idx])
-        render.Track().SetTree(self.disp_idx, self.maptree[self.disp_idx])
+        render.Track().SetCB_idx(str(self.cb_page), self.disp_idx)
+        render.Track().SetCB_page(self.cb_page, self.chbk.GetSelection())
+        render.Track().SetNB(self.disp_idx, self.nb)
+        render.Track().SetTree(self.disp_idx, self.maptree)
 
     def InitDisplay(self):
         self.Width, self.Height = self.GetClientSize()
@@ -434,14 +434,13 @@ class MapFrame(wx.Frame):
         num = title[12:]
         render.Track().SetDisp_idx(self.disp_idx)
         render.Track().SetDisp(event.GetEventObject(), self.disp_idx)
-        render.Track().SetChbkPage(self.chbk, self.disp_idx)
-        render.Track().SetNB(self.disp_idx, self.nb[self.disp_idx])
-        render.Track().SetTree(self.disp_idx, self.maptree[self.disp_idx])
+        render.Track().SetNB(self.disp_idx, self.nb)
+        render.Track().SetTree(self.disp_idx, self.maptree)
 
         # change choicebook page to page associted with display
         ctrl = render.Track().GetDispCtrl(self.disp_idx)
-        pg = str(ctrl[1])
-        pgnum = int(pg[1:pg.index(':')])
+        pg = ctrl[1]
+        pgnum = render.Track().GetCB_page(pg)
         self.chbk.SetSelection(pgnum)        event.Skip()
 
     def SetDcommandList(self, clst):
