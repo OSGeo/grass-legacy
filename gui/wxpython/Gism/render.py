@@ -1,6 +1,13 @@
 import os,sys
 import utils
 
+layertree = {} #layer tree in GIS Manager, indexed by display.
+nb = {} #notebook in GIS Manager, indexed by display.
+cb_page = {} #choicbook page in GIS Manager, indexed by display.
+curr_disp = {} #map displays, indexed by display number.
+disp_ctrl = {} #distionary of associated choicebook pages and displays
+disp_idx = "" #index for each display
+
 # Authors: Michael Barton and Jachym Cepicky
 # COPYRIGHT:	(C) 1999 - 2007 by the GRASS Development Team
 
@@ -783,50 +790,70 @@ class Track:
 	This class has functions and variables for tracking map display,
 	associated notebook pages, and other index values.
 	"""
-	layertree = {} #layer tree in GIS Manager, indexed by display.
-	nb = {} #notebook in GIS Manager, indexed by display.
-	cb_page = {} #choicbook page in GIS Manager, indexed by display.
-	curr_disp = {} #map displays, indexed by display number.
-	disp_idx = 0 #index for each display
-
+	def __init__(self):
+		"""
+		Variables set at initialization
+		"""
+		global layertree
+		global nb
+		global cb_page
+		global curr_disp
+		global disp_idx
+		global disp_ctrl
+#
 	# store and retrieve index of display with focus
 	def SetDisp_idx(self, idx):
-		self.disp_idx = idx
+		global disp_idx
+		disp_idx = idx
+		return disp_idx
 
 	def GetDisp_idx(self):
-		return self.disp_idx
+		global disp_idx
+		return disp_idx
 
 	#store and retrieve current display with focus
 	def SetDisp(self, disp, disp_idx):
-		self.curr_disp[disp_idx] = disp
+		curr_disp[disp_idx] = disp
+		return curr_disp[disp_idx]
 
 	def GetDisp(self, disp_idx):
-		return self.curr_disp[disp_idx]
+		return curr_disp[disp_idx]
 
 	# store and retrieve choicebook widget that hold all GIS manager controls
 	def SetChbk(self, cb):
-		self.gm_cb = cb
+		gm_cb = cb
+		return gm_cb
 
 	def GetChbk(self):
-		return self.gm_cb
+		return gm_cb
 
 	#store and retrieve choicebook page for display with focus
 	def SetChbkPage(self, page, disp_idx):
-		self.cb_page[disp_idx] = page
+		cb_page[disp_idx] = page
+		return cb_page[disp_idx]
 
 	def GetChbkPage(self, disp_idx):
-		return self.cb_page[disp_idx]
+		return cb_page[disp_idx]
+
+	def SetDispCtrl(self, disp_idx, disp, chbk):
+		disp_ctrl[disp_idx] = (disp, chbk)
+		return disp_ctrl[disp_idx]
+
+	def GetDispCtrl(self, disp_idx):
+		return disp_ctrl[disp_idx]
 
 	#store and retriev notebook with layer tree and console for display with focus
 	def SetNB(self, disp_idx, notebk):
-		self.nb[disp_idx] = notebk
+		nb[disp_idx] = notebk
+		return nb[disp_idx]
 
 	def GetNB(self, disp_idx):
-		return self.nb[disp_idx]
+		return nb[disp_idx]
 
 	#store and retriev notebook with layer tree and console for display with focus
 	def SetTree(self, disp_idx, tree):
-		self.layertree[disp_idx] = tree
+		layertree[disp_idx] = tree
+		return layertree[disp_idx]
 
 	def GetTree(self, disp_idx):
-		return self.layertree[disp_idx]
+		return layertree[disp_idx]
