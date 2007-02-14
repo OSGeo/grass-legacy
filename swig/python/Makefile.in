@@ -23,6 +23,7 @@ distclean: clean
 	-rm -f Makefile
 
 python_grass6_wrap.c: python_grass6.i
+	make -C interfaces
 	$(SWIG) -python -shadow $<
 
 
@@ -30,7 +31,6 @@ python_grass6_wrap.o: python_grass6_wrap.c
 	$(CC) $(CFLAGS) $(INCLUDE_DIRS) $<
 
 python_grass6.so: python_grass6_wrap.o
-	make -C interfaces
 	$(LD) $(LDFLAGS) $< -o _python_grass6.so
 
 # doxygen:
