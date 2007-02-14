@@ -1,3 +1,22 @@
+/**************************************************************
+ *								
+ * MODULE:       v.lidar.edgedetection			
+ * 									
+ * AUTHOR(S):    Roberto Antolin & Gonzalo Moreno			
+ *               							
+ * PURPOSE:      Detection of object's edges on a LIDAR data set	
+ *               							
+ * COPYRIGHT:    (C) 2006 by Politecnico di Milano - 			
+ *			     Polo Regionale di Como			
+ *									
+ *               This program is free software under the 		
+ *               GNU General Public License (>=v2). 			
+ *               Read the file COPYING that comes with GRASS		
+ *               for details.						
+ *									
+ **************************************************************/
+
+/*INCLUDES*/
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
@@ -381,7 +400,7 @@ int Create_AuxEdge_Table (dbDriver *driver, char *table_name)
 	int created;
 
 	table = db_alloc_table (4);		
-	db_set_table_name (table, table_name);
+	db_set_table_name (table, "Auxiliar_edge_table");
 	db_set_table_description (table, "It is used for the intermediate interpolated and gradient values");
 			    
 	ID_col = db_get_table_column (table,0);
