@@ -21,6 +21,7 @@ static int change_range;
 static int move(int, int);
 static int cont(int, int);
 
+
 int main(int argc, char *argv[])
 {
     char *name, *outfile, *mapset;
@@ -31,7 +32,8 @@ int main(int argc, char *argv[])
     char *null_string;
     char ebuf[256], nbuf[256], label[512], formatbuff[256];
     char b1[100], b2[100];
-    int n, first = 0;
+    int n;
+    int havefirst = FALSE;
     int coords = 0, i, k = -1;
     double e1, e2, n1, n2;
     RASTER_MAP_TYPE data_type;
@@ -69,7 +71,7 @@ int main(int argc, char *argv[])
     parm.profile->required = NO;
     parm.profile->multiple = YES;
     parm.profile->key_desc = "east,north";
-    parm.profile->description = _("Profile Coordinate Pairs");
+    parm.profile->description = _("Profile coordinate pairs");
 
     parm.res = G_define_option();
     parm.res->key = "res";
@@ -115,8 +117,8 @@ int main(int argc, char *argv[])
     if (parm.res->answer) {
 	res = atof(parm.res->answer);
 	/* Catch bad resolution ? */
-	if (res == 0) 
-	    G_fatal_error(_("ILLEGAL Resolution!"));
+	if (res <= 0) 
+	    G_fatal_error(_("Illegal resolution! [%g]"), res);
     }
     else {
 	/* Do average of EW and NS res */
@@ -125,7 +127,7 @@ int main(int argc, char *argv[])
     screen_x = ((int)D_get_d_west() + (int)D_get_d_east()) / 2;
     screen_y = ((int)D_get_d_north() + (int)D_get_d_south()) / 2;
 
-    G_message(_("Using Resolution %f"), res);
+    G_message(_("Using resolution %g"), res);
 
     G_begin_distance_calculations();
 
@@ -190,11 +192,11 @@ int main(int argc, char *argv[])
 			    !G_scan_northing (nbuf, &n2, G_projection()))
 		    G_fatal_error(_("Invalid coordinates %s %s"), ebuf, nbuf);
 
-	    if (first)
-		    do_profile(e1, e2, n1, n2, name, coords, res, fd, data_type, fp, null_string);
+	    if (havefirst)
+		do_profile(e1, e2, n1, n2, name, coords, res, fd, data_type, fp, null_string);
 	    e1 = e2;
 	    n1 = n2;
-	    first = 1;
+	    havefirst = TRUE;
        }
     }
     else if (parm.i->answer) {
@@ -215,7 +217,9 @@ int main(int argc, char *argv[])
 	fprintf(stderr, "Right:  Finish profile and exit\n\n");
 
 	while (button != 3) {
-	    R_get_location_with_pointer(&screen_x, &screen_y, &button);
+	    R_get_location_with_line( (int)(0.5+ D_u_to_d_col(e1)),
+		(int)(0.5+ D_u_to_d_row(n1)), &screen_x, &screen_y, &button);
+
 	    if (button == 1 || button == 2) {
 		e2 = D_d_to_u_col((double)screen_x);
 		n2 = D_d_to_u_row((double)screen_y);
@@ -250,6 +254,7 @@ int main(int argc, char *argv[])
 	    G_scan_northing(parm.profile->answers[1], &n1, G_projection());
 	    e2 = e1;
 	    n2 = n1;
+
 	    /* Get profile info */
 	    do_profile(e1, e2, n1, n2, name, coords, res, fd, data_type, fp, null_string);
 	}
@@ -259,6 +264,7 @@ int main(int argc, char *argv[])
 		G_scan_northing(parm.profile->answers[i + 1], &n1, G_projection());
 		G_scan_easting(parm.profile->answers[i + 2], &e2, G_projection());
 		G_scan_northing(parm.profile->answers[i + 3], &n2, G_projection());
+
 		/* Get profile info */
 		do_profile(e1, e2, n1, n2, name, coords, res, fd, data_type,
 			   fp, null_string);
@@ -271,9 +277,9 @@ int main(int argc, char *argv[])
     fclose(fp);
 
     if (clr)
-	    G_free_colors(&colors);
+	G_free_colors(&colors);
 
-    return 0;
+    exit(EXIT_SUCCESS);
 }				/* Done with main */
 
 /* Calculate the Profile Now */
@@ -289,6 +295,9 @@ int do_profile(double e1, double e2, double n1, double n2, char *name, int coord
 
     LEN = G_distance(e1, n1, e2, n2);
     G_message(_("Approx. transect length %f m."), LEN);
+
+    if (!point_in_region(e2, n2))
+	G_warning(_("Endpoint coordinates are outside of current region settings."));
 
     /* Calculate Azimuth of Line */
     if (rows == 0 && cols == 0) {
@@ -410,4 +419,27 @@ static int cont(int x, int y)
     }
 
     return 0;
+}
+
+
+/* is e,n in the current region? */
+int point_in_region(double easting, double northing)
+{
+    struct Cell_head window;
+
+    G_get_window(&window);
+
+    return point_in_window(easting, northing, window);
+}
+
+
+/* use directly when speed is important or for eg point in map */
+int point_in_window(double easting, double northing, struct Cell_head window)
+{
+
+    if ( easting > window.east || easting < window.west ||
+	 northing > window.north || northing < window.south)
+      return FALSE;
+
+    return TRUE;
 }
