@@ -1,3 +1,22 @@
+/**************************************************************
+ *								
+ * MODULE:       v.lidar.edgedetection			
+ * 									
+ * AUTHOR(S):    Roberto Antolin & Gonzalo Moreno			
+ *               							
+ * PURPOSE:      Detection of object's edges on a LIDAR data set	
+ *               							
+ * COPYRIGHT:    (C) 2006 by Politecnico di Milano - 			
+ *			     Polo Regionale di Como			
+ *									
+ *               This program is free software under the 		
+ *               GNU General Public License (>=v2). 			
+ *               Read the file COPYING that comes with GRASS		
+ *               for details.						
+ *									
+ **************************************************************/
+
+/*INCLUDES*/
 #include <grass/gis.h>
 #include <grass/Vect.h>
 #include <grass/dbmi.h>
