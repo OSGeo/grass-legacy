@@ -28,6 +28,8 @@ int main(int argc, char **argv)
 	drv.Polygon_rel		= XD_Polygon_rel;
 	drv.RGB_set_colors	= XD_RGB_set_colors;
 	drv.RGB_raster		= XD_RGB_raster;
+	drv.Begin_scaled_raster	= NULL;
+	drv.Scaled_raster	= NULL;
 	drv.Respond		= XD_Respond;
 	drv.Work_stream		= XD_Work_stream;
 	drv.Do_work		= XD_Do_work;

@@ -2,12 +2,11 @@
 #include <string.h>
 #include <math.h>
 #include <grass/gis.h>
-#include <grass/raster.h>
-
-#if 1
+#include "driver.h"
 
 static unsigned char *d_red, *d_grn, *d_blu, *d_nul;
 static int *trans;
+static int ncols;
 static int nalloc;
 static int src[2][2];
 static int dst[2][2];
@@ -30,7 +29,7 @@ static int next_row(int sy, int dy, const int src[2], const int dst[2])
 	}
 }
 
-static void alloc_buffers(int ncols)
+static void alloc_buffers(void)
 {
 	if (nalloc >= ncols)
 		return;
@@ -43,24 +42,25 @@ static void alloc_buffers(int ncols)
 	trans = G_realloc(trans, nalloc * sizeof(int));
 }
 
-void R_begin_scaled_raster(int s[2][2], int d[2][2])
+void LIB_begin_scaled_raster(int s[2][2], int d[2][2])
 {
 	int i;
+
+	ncols = d[0][1] - d[0][0];
 
 	memcpy(src, s, sizeof(src));
 	memcpy(dst, d, sizeof(dst));
 
-	alloc_buffers(dst[0][1]);
+	alloc_buffers();
 
-	for (i = dst[0][0]; i < dst[0][1]; i++)
-		trans[i] = scale(i, dst[0], src[0]);
+	for (i = 0; i < ncols; i++)
+		trans[i] = scale(d[0][0] + i, dst[0], src[0]);
 }
 
-int R_scaled_raster(
-	int row,
+int LIB_scaled_raster(
+	int n, int row,
 	unsigned char *red, unsigned char *grn, unsigned char *blu, unsigned char *nul)
 {
-	int d_width  = dst[0][1] - dst[0][0];
 	int d_y0 = scale(row + 0, src[1], dst[1]);
 	int d_y1 = scale(row + 1, src[1], dst[1]);
 	int d_rows = d_y1 - d_y0;
@@ -69,11 +69,8 @@ int R_scaled_raster(
 	if (d_rows <= 0)
 		return next_row(row, d_y0, src[1], dst[1]);
 
-	/* Allocate memory for raster */
-	alloc_buffers(dst[0][1]);
-
 	/* Make the screen raster */
-	for (i = dst[0][0]; i < dst[0][1]; i++)
+	for (i = 0; i < ncols; i++)
 	{
 		int j = trans[i];
 
@@ -84,21 +81,9 @@ int R_scaled_raster(
 			d_nul[i] = nul[j];
 	}
 
-	R_move_abs(dst[0][0], d_y0);
-	R_RGB_raster(d_width, d_rows, d_red, d_grn, d_blu, nul ? d_nul : nul);
+	COM_Move_abs(dst[0][0], d_y0);
+	COM_RGB_raster(ncols, d_rows, d_red, d_grn, d_blu, nul ? d_nul : nul);
 
 	return next_row(row, d_y1, src[1], dst[1]);
 }
 
-#else
-
-int R_scaled_raster(
-	int row,
-	const int src[2][2], const int dst[2][2],
-	unsigned char *red, unsigned char *grn, unsigned char *blu,
-	unsigned char *nul)
-{
-	return trans->RGB_scaled_raster(row, src, dst, red, grn, blu, nul);
-}
-
-#endif

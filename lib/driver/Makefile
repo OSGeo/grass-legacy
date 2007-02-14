@@ -38,6 +38,7 @@ LIB_OBJS =\
 	init.o\
 	pad.o\
 	parse_ftcap.o\
+	scale.o\
 	text2.o\
 	text3.o
 

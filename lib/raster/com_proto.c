@@ -563,6 +563,18 @@ void R_RGB_raster(int n, int nrows,
 	trans->RGB_raster(n, nrows, red, grn, blu, nul);
 }
 
+void R_begin_scaled_raster(int s[2][2], int d[2][2])
+{
+	return trans->begin_scaled_raster(s, d);
+}
+
+int R_scaled_raster(int n, int row,
+	unsigned char *red, unsigned char *grn, unsigned char *blu,
+	unsigned char *nul)
+{
+	return trans->scaled_raster(n, row, red, grn, blu, nul);
+}
+
 /*!
  * \brief Send arguments to the driver
  *

@@ -28,6 +28,8 @@ int main(int argc, char **argv)
 	drv.Polygon_rel		= NULL;
 	drv.RGB_set_colors	= PNG_RGB_set_colors;
 	drv.RGB_raster		= PNG_RGB_raster;
+	drv.Begin_scaled_raster	= NULL;
+	drv.Scaled_raster	= NULL;
 	drv.Respond		= PNG_Respond;
 	drv.Work_stream		= NULL;
 	drv.Do_work		= NULL;

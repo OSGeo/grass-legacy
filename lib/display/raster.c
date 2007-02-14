@@ -108,7 +108,6 @@ static int draw_cell(
 	static int nalloc;
 
 	int ncols = src[0][1] - src[0][0];
-	void *p;
 	int i;
 
 	if (nalloc < ncols)
@@ -125,11 +124,11 @@ static int draw_cell(
 	if (D__overlay_mode)
 		for (i = 0; i < ncols; i++)
 		{
-			set[i] = G_is_null_value(p, data_type);
-			p = G_incr_void_ptr(p, G_raster_size(data_type));
+			set[i] = G_is_null_value(array, data_type);
+			array = G_incr_void_ptr(array, G_raster_size(data_type));
 		}
 
-	A_row = R_scaled_raster(A_row, red, grn, blu, D__overlay_mode ? set : NULL);
+	A_row = R_scaled_raster(ncols, A_row, red, grn, blu, D__overlay_mode ? set : NULL);
 
 	return (A_row < src[1][1])
 		? A_row

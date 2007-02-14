@@ -54,6 +54,13 @@ struct driver
 		const unsigned char *,
 		const unsigned char *,
 		const unsigned char *);
+	void (*Begin_scaled_raster)(int [2][2], int [2][2]);
+	int (*Scaled_raster)(
+		int,int,
+		const unsigned char *,
+		const unsigned char *,
+		const unsigned char *,
+		const unsigned char *);
 	void (*Respond)(void);
 	int (*Work_stream)(void);
 	void (*Do_work)(int);
@@ -75,6 +82,9 @@ extern int LIB_command_get_input(void);
 extern int LIB_init(const struct driver *drv,int argc,char **argv);
 /* main.c */
 extern int LIB_main(int argc,char **argv);
+/* scale.c */
+extern void LIB_begin_scaled_raster(int [2][2], int [2][2]);
+extern int LIB_scaled_raster(int, int, unsigned char *, unsigned char *, unsigned char *, unsigned char *);
 
 /* Commands */
 
@@ -129,6 +139,9 @@ extern void COM_Polyline_rel(const int *,const int *,int);
 /* Raster_RGB.c */
 extern void COM_RGB_set_colors(const unsigned char *,const unsigned char *,const unsigned char *);
 extern void COM_RGB_raster(int,int,const unsigned char *,const unsigned char *,const unsigned char *,const unsigned char *);
+extern void COM_begin_scaled_raster(int [2][2], int [2][2]);
+extern int COM_scaled_raster(int, int, unsigned char *, unsigned char *, unsigned char *, unsigned char *);
+
 /* Respond.c */
 extern void COM_Respond(void);
 /* Returns.c */

@@ -60,6 +60,8 @@ extern void LOC_panel_restore(const char *name);
 extern void LOC_panel_delete(const char *name);
 extern void LOC_set_RGB_color(unsigned char *r, unsigned char *g, unsigned char *b);
 extern void LOC_RGB_raster(int n, int nrows, unsigned char *red, unsigned char *grn, unsigned char *blu, unsigned char *nul);
+extern void LOC_begin_scaled_raster(int s[2][2], int d[2][2]);
+extern int  LOC_scaled_raster(int n, int row, unsigned char *red, unsigned char *grn, unsigned char *blu, unsigned char *nul);
 extern void LOC_bitmap(int ncols, int nrows, int threshold, const unsigned char *buf);
 
 extern void REM_get_location_with_box(int cx,int cy, int *wx, int *wy, int *button);
@@ -120,6 +122,8 @@ extern void REM_panel_restore(const char *name);
 extern void REM_panel_delete(const char *name);
 extern void REM_set_RGB_color(unsigned char *r, unsigned char *g, unsigned char *b);
 extern void REM_RGB_raster(int n, int nrows, unsigned char *red, unsigned char *grn, unsigned char *blu, unsigned char *nul);
+extern void REM_begin_scaled_raster(int s[2][2], int d[2][2]);
+extern int  REM_scaled_raster(int n, int row, unsigned char *red, unsigned char *grn, unsigned char *blu, unsigned char *nul);
 extern void REM_bitmap(int ncols, int nrows, int threshold, const unsigned char *buf);
 
 struct transport
@@ -166,6 +170,8 @@ struct transport
 	void (*panel_delete)(const char *);
 	void (*set_RGB_color)(unsigned char *, unsigned char *, unsigned char *);
 	void (*RGB_raster)(int n, int nrows, unsigned char *, unsigned char *, unsigned char *, unsigned char *);
+	void (*begin_scaled_raster)(int [2][2], int [2][2]);
+	int  (*scaled_raster)(int, int, unsigned char *, unsigned char *, unsigned char *, unsigned char *);
 	void (*bitmap)(int, int, int, const unsigned char *);
 
 	void (*get_location_with_box)(int, int, int *, int *, int *);
