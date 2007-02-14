@@ -36,10 +36,10 @@
 
 struct rectangle
 {
-	double top;
-	double bot;
 	double left;
 	double rite;
+	double bot;
+	double top;
 };
 
 struct vector
@@ -58,10 +58,10 @@ static struct rectangle clip;
 
 static struct plane pl_left = {-1,  0, 0};
 static struct plane pl_rite = { 1,  0, 0};
-static struct plane pl_top  = { 0, -1, 0};
-static struct plane pl_bot  = { 0,  1, 0};
+static struct plane pl_bot  = { 0, -1, 0};
+static struct plane pl_top  = { 0,  1, 0};
 
-static int window_set = 0;
+static int window_set;
 
 #define min(x,y) ((x) < (y) ? (x) : (y))
 #define max(x,y) ((x) > (y) ? (x) : (y))
@@ -178,18 +178,18 @@ static int do_clip(struct vector *a, struct vector *b)
 		return -1;
 	if (a->x > clip.rite && b->x > clip.rite)
 		return -1;
-	if (a->y < clip.top && b->y < clip.top)
+	if (a->y < clip.bot && b->y < clip.bot)
 		return -1;
-	if (a->y > clip.bot && b->y > clip.bot)
+	if (a->y > clip.top && b->y > clip.top)
 		return -1;
 
 	if (clip_plane(a, b, &pl_left, &clipped))
 		return -1;
 	if (clip_plane(a, b, &pl_rite, &clipped))
 		return -1;
-	if (clip_plane(a, b, &pl_top , &clipped))
-		return -1;
 	if (clip_plane(a, b, &pl_bot , &clipped))
+		return -1;
+	if (clip_plane(a, b, &pl_top , &clipped))
 		return -1;
 
 	return clipped;
@@ -209,15 +209,15 @@ static int do_clip(struct vector *a, struct vector *b)
 
 void D_set_clip(double t, double b, double l, double r)
 {
-	clip.top  = min(t, b);
-	clip.bot  = max(t, b);
 	clip.left = min(l, r);
 	clip.rite = max(l, r);
+	clip.bot  = min(b, t);
+	clip.top  = max(b, t);
 
 	pl_left.k =  clip.left;
 	pl_rite.k = -clip.rite;
-	pl_top.k  =  clip.top ;
-	pl_bot.k  = -clip.bot ;
+	pl_bot.k  =  clip.bot ;
+	pl_top.k  = -clip.top ;
 
 	window_set = 1;
 }
@@ -277,13 +277,13 @@ int D_cont_clip(double x, double y)
 	struct vector b;
 	int clipped;
 
+	if (!window_set)
+		D_clip_to_map();
+
 	b.x = x;
 	b.y = y;
 
 	cur = b;
-
-	if (!window_set)
-		D_clip_to_map();
 
 	clipped = do_clip(&a, &b);
 
@@ -305,13 +305,16 @@ void D_polydots_clip(const double *x, const double *y, int n)
 {
 	int i, j;
 
+	if (!window_set)
+		D_clip_to_map();
+
 	alloc_float(n);
 
 	for (i = j = 0; i < n; i++)
 	{
 		if (x[i] < clip.left || x[i] > clip.rite)
 			continue;
-		if (y[i] < clip.top  || y[i] > clip.bot )
+		if (y[i] < clip.bot  || y[i] > clip.top )
 			continue;
 
 		xf[j] = x[i];
@@ -330,6 +333,9 @@ void D_polyline_clip(const double *x, const double *y, int n)
 
 	if (n < 2)
 		return;
+
+	if (!window_set)
+		D_clip_to_map();
 
 	D_move_clip(x[0], y[0]);
 
@@ -354,20 +360,19 @@ static int clip_polygon_plane(int *pn, const double *x, const double *y, const s
 		int in0 = d0 < 0;
 		int in1 = d1 < 0;
 
-		if (in0 && in1)
-		{
-			alloc_float(j + 1);
-			xf[j] = x[i];
-			yf[j] = y[i];
-			j++;
-		}
-		else if (!in0 && !in1)
-			/* skip */ ;
-		else
+		if (in0 != in1)		/* edge crossing */
 		{
 			alloc_float(j + 1);
 			xf[j] = interpolate(x0, x1, d0, d1);
 			yf[j] = interpolate(y0, y1, d0, d1);
+			j++;
+		}
+
+		if (in1)		/* point inside */
+		{
+			alloc_float(j + 1);
+			xf[j] = x[i];
+			yf[j] = y[i];
 			j++;
 		}
 
@@ -383,6 +388,9 @@ static int clip_polygon_plane(int *pn, const double *x, const double *y, const s
 
 void D_polygon_clip(const double *x, const double *y, int n)
 {
+	if (!window_set)
+		D_clip_to_map();
+
 	alloc_float(n + 10);
 
 	if (clip_polygon_plane(&n, x, y, &pl_left))
@@ -395,12 +403,12 @@ void D_polygon_clip(const double *x, const double *y, int n)
 
 	dealloc_float(&x, &y, 1);
 
-	if (clip_polygon_plane(&n, x, y, &pl_top ))
+	if (clip_polygon_plane(&n, x, y, &pl_bot ))
 		return;
 
 	dealloc_float(&x, &y, 1);
 
-	if (clip_polygon_plane(&n, x, y, &pl_bot ))
+	if (clip_polygon_plane(&n, x, y, &pl_top ))
 		return;
 
 	dealloc_float(&x, &y, 1);
@@ -412,16 +420,23 @@ void D_polygon_clip(const double *x, const double *y, int n)
 
 void D_box_clip(double x1, double y1, double x2, double y2)
 {
-	double t = min(clip.top , max(y1, y2));
-	double b = max(clip.bot , min(y1, y2));
-	double l = max(clip.left, min(x1, x2));
-	double r = min(clip.rite, max(x1, x2));
-	int ti = round(D_u_to_d_row(t));
-	int bi = round(D_u_to_d_row(b));
-	int li = round(D_u_to_d_col(l));
-	int ri = round(D_u_to_d_col(r));
+	double t, b, l, r;
+	int ti, bi, li, ri;
 
-	R_box_abs(l, t, r, b);
+	if (!window_set)
+		D_clip_to_map();
+
+	l = max(clip.left, min(x1, x2));
+	r = min(clip.rite, max(x1, x2));
+	b = max(clip.bot , min(y1, y2));
+	t = min(clip.top , max(y1, y2));
+
+	li = round(D_u_to_d_col(l));
+	ri = round(D_u_to_d_col(r));
+	bi = round(D_u_to_d_row(b));
+	ti = round(D_u_to_d_row(t));
+
+	R_box_abs(li, ti, ri, bi);
 }
 
 void D_move(double x, double y)
@@ -460,14 +475,14 @@ void D_polygon(const double *x, const double *y, int n)
 
 void D_box(double x1, double y1, double x2, double y2)
 {
-	double t = max(y1, y2);
-	double b = min(y1, y2);
 	double l = min(x1, x2);
 	double r = max(x1, x2);
-	int ti = round(D_u_to_d_row(t));
-	int bi = round(D_u_to_d_row(b));
+	double b = min(y1, y2);
+	double t = max(y1, y2);
 	int li = round(D_u_to_d_col(l));
 	int ri = round(D_u_to_d_col(r));
+	int bi = round(D_u_to_d_row(b));
+	int ti = round(D_u_to_d_row(t));
 
 	R_box_abs(l, t, r, b);
 }
