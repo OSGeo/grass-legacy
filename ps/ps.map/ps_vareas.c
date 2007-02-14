@@ -7,8 +7,11 @@
 #include <grass/gis.h>
 #include <grass/glocale.h>
 #include <grass/Vect.h>
+#include <grass/dbmi.h>
+
 #include "vector.h"
 #include "ps_info.h"
+#include "clr.h"
 #include "local_proto.h"
 
 /* constuct subpath with moveto and repeated lineto from Points */
@@ -85,6 +88,48 @@ static int plot_area (struct Map_info *P_map, int area, double shift)
     return 1; 
 }
 
+/* set pscolor based on rgb color definition stored in rgbcolumn */
+void set_ps_color_rgbcol_varea (struct Map_info* map, int vec, int area, dbCatValArray* cvarr_rgb)
+{
+    int cat, ret;
+    dbCatVal* cv_rgb;
+    int red, grn, blu;
+    char* rgbstring = NULL;
+    PSCOLOR color;
+    	
+    cat = Vect_get_area_cat (map, area, vector.layer[vec].field);
+	
+    ret = db_CatValArray_get_value (cvarr_rgb, cat, &cv_rgb);
+    
+    if (ret != DB_OK) {
+	G_warning(_("No record for category [%d]"), cat);
+    }
+    else {
+	rgbstring = db_get_string (cv_rgb -> val.s);
+	if (rgbstring == NULL || G_str_to_color (rgbstring, &red, &grn, &blu) != 1) {
+	    G_warning (_("Invalid RGB color definition in column <%s> for category [%d]"), 
+		       vector.layer[vec].rgbcol, cat);
+	    rgbstring = NULL;
+	} 
+    }
+    
+    if (rgbstring) {
+	    G_debug(3, "    dynamic symbol rgb color = %s", rgbstring);
+	    
+	    set_color (&color, red, grn, blu);
+	    set_ps_color (&color);
+	}
+	else { /* use default symbol */
+	    G_debug(3, "    static symbol rgb color = %d:%d:%d",
+		    vector.layer[vec].color.r,
+		    vector.layer[vec].color.g,
+		    vector.layer[vec].color.b);
+	    
+	    set_ps_color (&(vector.layer[vec].fcolor));
+	}
+    return;
+}
+
 /* plot areas */
 int PS_vareas_plot (struct Map_info *P_map, int vec)
 {
@@ -95,6 +140,9 @@ int PS_vareas_plot (struct Map_info *P_map, int vec)
     struct line_cats *Cats;
     BOUND_BOX box;
     VARRAY *Varray = NULL;
+
+    /* rgbcol */
+    dbCatValArray cvarr_rgb;
 
     fprintf(PS.fp, "1 setlinejoin\n"); /* set line join to round */
 
@@ -112,7 +160,12 @@ int PS_vareas_plot (struct Map_info *P_map, int vec)
 	}
 	G_debug ( 3, "%d items selected for vector %d", ret, vec );
     }
-    
+
+    /* load attributes if rgbcol used */
+    if (vector.layer[vec].rgbcol != NULL) {
+	load_catval_array_rgb (P_map, vec, &cvarr_rgb);
+    }
+
     shift = 0;
     /* read and plot areas */
     na = Vect_get_num_areas(P_map); 
@@ -155,7 +208,8 @@ int PS_vareas_plot (struct Map_info *P_map, int vec)
 	    if ( ret != 1) 
 		return 0;
 	}
-	if ( vector.layer[vec].pat != NULL || !(color_none ( &vector.layer[vec].fcolor) ) ) {
+	if (vector.layer[vec].pat != NULL ||
+	    (!color_none (&vector.layer[vec].fcolor) || vector.layer[vec].rgbcol != NULL)) {
 	    if ( vector.layer[vec].pat != NULL ) { /* use pattern */
 		sc = vector.layer[vec].scale;
 		/* DEBUG */
@@ -172,7 +226,13 @@ int PS_vareas_plot (struct Map_info *P_map, int vec)
 		fprintf(PS.fp, "    /XStep %f\n    /YStep %f\n", (urx - llx) * sc, (ury - lly) * sc);
 		fprintf(PS.fp, "    /PaintProc\n      { begin\n");
 		fprintf(PS.fp, "        %f %f scale\n", sc, sc);
-		set_ps_color ( &(vector.layer[vec].fcolor) );
+		/* load line color from rgbcol */
+		if( vector.layer[vec].rgbcol != NULL) {
+		    set_ps_color_rgbcol_varea (P_map, vec, area, &cvarr_rgb);
+		}
+		else {
+		    set_ps_color (&(vector.layer[vec].fcolor));
+		}
 		fprintf(PS.fp, "        %.8f W\n", vector.layer[vec].pwidth );  
 		fprintf(PS.fp, "        %s\n", pat);
 		fprintf(PS.fp, "        end\n");
@@ -181,7 +241,13 @@ int PS_vareas_plot (struct Map_info *P_map, int vec)
 		fprintf(PS.fp, " matrix\n makepattern /%s exch def\n", pat);
 		fprintf(PS.fp, "/Pattern setcolorspace\n %s setcolor\n", pat);
 	    } else {
-		set_ps_color ( &(vector.layer[vec].fcolor) );
+		/* load line color from rgbcol */
+		if( vector.layer[vec].rgbcol != NULL) {
+		    set_ps_color_rgbcol_varea (P_map, vec, area, &cvarr_rgb);
+		}
+		else {
+		    set_ps_color (&(vector.layer[vec].fcolor));
+		}
 	    }
 	    
 	    fprintf(PS.fp, "F\n");			

@@ -17,23 +17,24 @@
 
 static char *help[]=
 {
-    "color    color",
-    "width    #",
-    "cwidth   #",
-    "hcolor   color",
-    "hwidth   #",
-    "offset   #",    
-    "coffset   #",
-    "masked   [y|n]",
-    "style    solid|[0-9]...",
-    "line_cat #",
-    "acolor   r g b",
-    "label    label",
-    "lpos     0|1-20",
-    "ref      left|right",
-    "pat      EPS pattern file",
-    "scale    #",
-    "pwidth   #",
+    "color       color"
+    "rgbcolumn   column",
+    "width       #",
+    "cwidth      #",
+    "hcolor      color",
+    "hwidth      #",
+    "offset      #",    
+    "coffset     #",
+    "masked      [y|n]",
+    "style       solid|[0-9]...",
+    "line_cat    #",
+    "acolor      r g b",
+    "label       label",
+    "lpos        0|1-20",
+    "ref         left|right",
+    "pat         EPS pattern file",
+    "scale       #",
+    "pwidth      #",
     ""
 };
 
@@ -79,6 +80,7 @@ read_vlines (char *name, char *mapset)
     vector.layer[vec].offset  = 0. ;
     vector.layer[vec].coffset  = 0. ;            
     set_color ( &(vector.layer[vec].color), 0, 0, 0 );
+    vector.layer[vec].rgbcol = NULL;
     vector.layer[vec].linestyle = NULL;
     vector.layer[vec].ref = LINE_REF_CENTER;    
     vector.layer[vec].hwidth = 0. ;
@@ -235,6 +237,13 @@ read_vlines (char *name, char *mapset)
 	    else 
 		error (key,data,"illegal color request (vlines)");
 
+	    continue;
+	}
+
+	if (KEY("rgbcolumn")) 
+	{
+	    G_strip(data);
+	    vector.layer[vec].rgbcol = G_store(data);
 	    continue;
 	}
 

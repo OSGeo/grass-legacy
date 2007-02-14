@@ -37,6 +37,14 @@ int PS_vpoints_plot (struct Map_info *P_map, int vec, int type)
     int size_val_int;
     double size_val;
 
+    /* rgbcol */
+    dbCatValArray cvarr_rgb;
+    dbCatVal* cv_rgb;
+    int red, grn, blu;
+    char* rgbstring = NULL;
+    PSCOLOR color;
+
+    cv_rgb = NULL;
 
     /* Create vector array if required */
     if ( vector.layer[vec].cats != NULL || vector.layer[vec].where != NULL ) {
@@ -84,7 +92,6 @@ int PS_vpoints_plot (struct Map_info *P_map, int vec, int type)
 	}
     }
 
-
     /* Load attributes if sizecol used */
     if(vector.layer[vec].sizecol != NULL) {
 	db_CatValArray_init ( &cvarr );
@@ -100,7 +107,7 @@ int PS_vpoints_plot (struct Map_info *P_map, int vec, int type)
 
 	/* Note do not check if the column exists in the table because it may be expression */
 
-   /* TODO: only select values we need instead of all in column */
+	/* TODO: only select values we need instead of all in column */
 	nrec = db_select_CatValArray(Driver, Fi->table, Fi->key, 
 			vector.layer[vec].sizecol, NULL, &cvarr );
 	G_debug (3, "nrec = %d", nrec );
@@ -121,6 +128,11 @@ int PS_vpoints_plot (struct Map_info *P_map, int vec, int type)
 		G_debug (4, "cat = %d val = %f", cvarr.value[i].cat, cvarr.value[i].val.d );
 	    }
 	}
+    }
+    
+    /* load attributes if rgbcol used */
+    if (vector.layer[vec].rgbcol != NULL) {
+	load_catval_array_rgb (P_map, vec, &cvarr_rgb);
     }
 
     /* read and plot vectors */
@@ -150,6 +162,7 @@ int PS_vpoints_plot (struct Map_info *P_map, int vec, int type)
 	x = (double) x_int / 10.;
 	y = (double) y_int / 10.;
 
+	/* symbol size */
 	if( vector.layer[vec].sizecol == NULL)
 	    size = vector.layer[vec].size;
 	else {  /* get value from sizecol column */
@@ -157,7 +170,7 @@ int PS_vpoints_plot (struct Map_info *P_map, int vec, int type)
 	    if( ctype == DB_C_TYPE_INT ) {
 		ret = db_CatValArray_get_value_int(&cvarr, cat, &size_val_int);
 		if ( ret != DB_OK ) {
-		    G_warning(_("No record for cat = %d"), cat );
+		    G_warning(_("No record for category [%d]"), cat );
 		    continue;
 		}
 		size_val = (double)size_val_int;
@@ -166,13 +179,13 @@ int PS_vpoints_plot (struct Map_info *P_map, int vec, int type)
 	    if( ctype == DB_C_TYPE_DOUBLE ) {
 		ret = db_CatValArray_get_value_double(&cvarr, cat, &size_val);
 		if ( ret != DB_OK ) {
-		    G_warning(_("No record for cat = %d"), cat );
+		    G_warning(_("No record for category for [%d]"), cat );
 		    continue;
 		}
 	    }
 
 	    if (size_val < 0.0) {
-		G_warning(_("Attribute is of invalid size (%.3f) for category %d."), size_val, cat);
+		G_warning(_("Attribute is of invalid size [%.3f] for category [%d]"), size_val, cat);
 		continue;
 	    }
 
@@ -180,6 +193,44 @@ int PS_vpoints_plot (struct Map_info *P_map, int vec, int type)
 
 	    size = size_val * vector.layer[vec].scale;
 	    G_debug(3, "    dynamic symbol size = %.2f", size);
+	}
+
+	/* symbol color */
+	if( vector.layer[vec].rgbcol != NULL) {
+	    rgbstring = NULL;
+	    ret = db_CatValArray_get_value (&cvarr_rgb, cat, &cv_rgb);
+	    
+	    if (ret != DB_OK) {
+		G_warning(_("No record for category [%d]"), cat);
+	    }
+	    else {
+		rgbstring = db_get_string (cv_rgb -> val.s);
+		if (rgbstring == NULL || G_str_to_color (rgbstring, &red, &grn, &blu) != 1) {
+		    G_warning (_("Invalid RGB color definition in column <%s> for category [%d]"), 
+			       vector.layer[vec].rgbcol, cat);
+		    rgbstring = NULL;
+		} 
+	    }
+	    
+	    if (rgbstring) {
+		/* TODO: do not duplicate save symbol */
+		
+		G_debug(3, "    dynamic symbol rgb color = %s", rgbstring);
+		set_color (&color, red, grn, blu);
+		
+		sprintf (sname, "SITESYMBOL%d_%d", vec, line);		    
+		
+		symbol_save (Symb, &(vector.layer[vec].color),
+			     &color, sname);
+	    }
+	    else { /* use default symbol */
+		G_debug(3, "    static symbol rgb color = %d:%d:%d",
+			vector.layer[vec].color.r,
+			vector.layer[vec].color.g,
+			vector.layer[vec].color.b);
+		
+		sprintf (sname, "SITESYMBOL%d", vec);
+	    }
 	}
 
 	if (vector.layer[vec].epstype == 1)  /* draw common eps */ 
@@ -208,7 +259,8 @@ int PS_vpoints_plot (struct Map_info *P_map, int vec, int type)
 		    vector.layer[vec].width);
 	    }
 	}
-    }
+    } /* for (line) */
+
     fprintf(PS.fp, "\n");
     return 0;
 }
