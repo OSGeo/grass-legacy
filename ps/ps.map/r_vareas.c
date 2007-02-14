@@ -9,8 +9,9 @@
 #include <stdlib.h>
 #include <string.h>
 #include <grass/gis.h>
-#include "vector.h"
 #include <grass/Vect.h>
+
+#include "vector.h"
 #include "ps_info.h"
 #include "local_proto.h"
 
@@ -18,15 +19,16 @@
 
 static char *help[]=
 {
-    "color    color",
-    "width    #",
-    "masked   [y|n]",
-    "acolor   r g b",
-    "label    label",
-    "lpos     0|1-20",
-    "pat      EPS pattern file",
-    "scale    #",
-    "pwidth   #",
+    "color       color",
+    "rgbcolumn   column",
+    "width       #",
+    "masked      [y|n]",
+    "acolor      r g b",
+    "label       label",
+    "lpos        0|1-20",
+    "pat         EPS pattern file",
+    "scale       #",
+    "pwidth      #",
     ""
 };
 
@@ -72,6 +74,7 @@ read_vareas (char *name, char *mapset)
     vector.layer[vec].coffset  = 0. ;            
     set_color ( &(vector.layer[vec].color), 0, 0, 0 );
     set_color ( &(vector.layer[vec].fcolor), 125, 125, 125 );
+    vector.layer[vec].rgbcol = NULL;
     vector.layer[vec].linestyle = NULL;
     vector.layer[vec].ref = LINE_REF_CENTER;    
     vector.layer[vec].label = NULL ;    
@@ -137,6 +140,13 @@ read_vareas (char *name, char *mapset)
 	    else
 		error (key,data,"illegal color request (vareas)");
 
+	    continue;
+	}
+
+	if (KEY("rgbcolumn")) 
+	{
+	    G_strip(data);
+	    vector.layer[vec].rgbcol = G_store(data);
 	    continue;
 	}
 

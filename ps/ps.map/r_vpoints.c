@@ -9,8 +9,10 @@
 */
 #include <stdlib.h>
 #include <string.h>
-#include "vector.h"
+#include <grass/gis.h>
 #include <grass/Vect.h>
+#include <grass/glocale.h>
+#include "vector.h"
 #include "ps_info.h"
 #include "local_proto.h"
 
@@ -18,19 +20,20 @@
 
 static char *help[]=
 {
-    "masked   [y|n]",
-    "color color",
-    "fcolor color",
-    "icon  iconfile",
-    "eps   epsfile",    
-    "size  #",
-    "sizecol column",
-    "layer #",
-    "scale   factor",
-    "rotate #",    
-    "font  fontname",
-    "label    label",
-    "lpos     #",
+    "masked     [y|n]",
+    "color      color",
+    "fcolor     color",
+    "icon       iconfile",
+    "eps        epsfile",    
+    "size       #",
+    "sizecolumn column",
+    "rgbcolumn  column",
+    "layer      #",
+    "scale      factor",
+    "rotate     #",    
+    "font       fontname",
+    "label      label",
+    "lpos       #",
     ""
 };
 
@@ -80,6 +83,7 @@ read_vpoints (char *name, char *mapset)
 
     vector.layer[vec].size = 6.0;
     vector.layer[vec].sizecol = NULL;
+    vector.layer[vec].rgbcol = NULL;
     vector.layer[vec].scale = 1.0;
 
     vector.layer[vec].rotate = 0.0;
@@ -232,10 +236,28 @@ read_vpoints (char *name, char *mapset)
 	    continue;
 	}
 
-	if (KEY("sizecol")) 
+	/* 
+	   GRASS 6.3: sizecol renamed to sizecolumn
+	   remove sizecol test and the warning in GRASS7
+	*/
+	if (KEY("sizecol"))
+	{
+	    G_warning (_("The mapping instruction <%s> will be renamed to <%s> in future versions "
+			 "of GRASS. Please use <%s> instead."),
+		       "sizecol", "sizecolumn", "sizecol");
+	}
+
+	if (KEY("sizecol") || KEY("sizecolumn"))
 	{
 	    G_strip(data);
 	    vector.layer[vec].sizecol = G_store(data);
+	    continue;
+	}
+
+	if (KEY("rgbcolumn")) 
+	{
+	    G_strip(data);
+	    vector.layer[vec].rgbcol = G_store(data);
 	    continue;
 	}
 

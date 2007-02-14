@@ -65,8 +65,9 @@ typedef struct {
     /* Points */
     double size;  /* icon size */
     char *sizecol;  /* Column used for symbol size */
-/* already defined in Areas section above, so don't need it twice */
-/*    double scale; */  /* Scale factor for dynamic sizing */
+    char *rgbcol;   /* column used for symbol rgb color */
+    /* already defined in Areas section above, so don't need it twice */
+    /*    double scale; */  /* Scale factor for dynamic sizing */
     double rotate;   /* rotation, supported only for eps */
     char *symbol;   /* symbol name */
     char *symbol_ps;   /* symbol name in PS */

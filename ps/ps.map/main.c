@@ -235,16 +235,22 @@ int main(int argc,char *argv[])
     }
     if (map_scale->answer)
     {
-	G_warning(_("Using \"scale\" from the command line is depreciated. "
-	    "Please use the \"scale\" mapping instruction instead."));
+	G_warning(_("Using <%s> from the command line is depreciated. "
+		    "Please use the <%s> mapping instruction instead. "
+		    "The parameter <%s> will removed in future versions of GRASS."),
+		  "scale", "scale", "scale");
 	can_reset_scale = isatty(0);
 	if (check_scale(map_scale->answer))
 	    G_strcpy(PS.scaletext, map_scale->answer);
 	else error(map_scale->answer, "", "illegal scale request");
     }
-
+    
     if (copies->answer)
     {
+	G_warning(_("Using <%s> from the command line is depreciated. "
+		    "Please use the <%s> mapping instruction instead. "
+		    "The parameter <%s> will removed in future versions of GRASS."),
+		  "copies", "copies", "copies");
 	if (sscanf(copies->answer, "%d", &ps_copies) != 1)
 	{
 	    ps_copies = 1;

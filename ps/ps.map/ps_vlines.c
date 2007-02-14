@@ -8,7 +8,10 @@
 #include <grass/gis.h>
 #include <grass/glocale.h>
 #include <grass/Vect.h>
+#include <grass/dbmi.h>
+
 #include "ps_info.h"
+#include "clr.h"
 #include "local_proto.h"
 #include "vector.h"
 
@@ -19,6 +22,15 @@ int PS_vlines_plot (struct Map_info *P_map, int vec, int type)
     double *xarray, *yarray, tol=0.1, width;
     struct line_cats *Cats;
     VARRAY *Varray = NULL;
+
+    /* rgbcol */
+    dbCatValArray cvarr_rgb;
+    dbCatVal* cv_rgb;
+    int red, grn, blu;
+    char* rgbstring = NULL;
+    PSCOLOR color;
+
+    cv_rgb = NULL;
 
     fprintf(PS.fp, "1 setlinejoin\n"); /* set line join to round */
 
@@ -46,6 +58,11 @@ int PS_vlines_plot (struct Map_info *P_map, int vec, int type)
 
     tol /= PS.ew_to_x ; /* tolerance for parallel map units */
     width = vector.layer[vec].width;
+
+    /* load attributes if rgbcol used */
+    if (vector.layer[vec].rgbcol != NULL) {
+	load_catval_array_rgb (P_map, vec, &cvarr_rgb);
+    }
 
     /* read and plot vectors */
     k = 0;
@@ -76,6 +93,39 @@ int PS_vlines_plot (struct Map_info *P_map, int vec, int type)
 		width = cat * vector.layer[vec].cwidth;   
 
 	    fprintf(PS.fp, "%.8f W\n", width);   
+	}
+
+	/* load line color from rgbcol */
+	if( vector.layer[vec].rgbcol != NULL) {
+	    rgbstring = NULL;
+	    ret = db_CatValArray_get_value (&cvarr_rgb, cat, &cv_rgb);
+	    
+	    if (ret != DB_OK) {
+		G_warning(_("No record for category [%d]"), cat);
+	    }
+	    else {
+		rgbstring = db_get_string (cv_rgb -> val.s);
+		if (rgbstring == NULL || G_str_to_color (rgbstring, &red, &grn, &blu) != 1) {
+		    G_warning (_("Invalid RGB color definition in column <%s> for category [%d]"), 
+			       vector.layer[vec].rgbcol, cat);
+		    rgbstring = NULL;
+		} 
+	    }
+	    
+	    if (rgbstring) {
+		G_debug(3, "    dynamic symbol rgb color = %s", rgbstring);
+		
+		set_color (&color, red, grn, blu);
+		set_ps_color (&color);
+	    }
+	    else { /* use default symbol */
+		G_debug(3, "    static symbol rgb color = %d:%d:%d",
+			vector.layer[vec].color.r,
+			vector.layer[vec].color.g,
+			vector.layer[vec].color.b);
+		
+		set_ps_color (&(vector.layer[vec].color));
+	    }
 	}
 
 	if ( vector.layer[vec].coffset != 0 || vector.layer[vec].offset != 0 ) {
