@@ -70,10 +70,10 @@ typedef struct
 
 } N_gwflow_data2d;
 
-extern inline N_les_row_entries *N_callback_gwflow_3d (void *gwdata, N_geom_data * geom, int depth, int row, int col);
-extern inline N_les_row_entries *N_callback_gwflow_2d (void *gwdata, N_geom_data * geom, int row, int col);
-extern N_gwflow_data3d *N_alloc_gwflow_data3d (int depths, int rows, int cols);
-extern N_gwflow_data2d *N_alloc_gwflow_data2d (int rows, int cols);
+extern N_data_star *N_callback_gwflow_3d (void *gwdata, N_geom_data * geom, int col, int row, int depth);
+extern N_data_star *N_callback_gwflow_2d (void *gwdata, N_geom_data * geom, int col, int row);
+extern N_gwflow_data3d *N_alloc_gwflow_data3d (int cols, int rows, int depths);
+extern N_gwflow_data2d *N_alloc_gwflow_data2d (int cols, int rows);
 extern void N_free_gwflow_data3d (N_gwflow_data3d * data);
 extern void N_free_gwflow_data2d (N_gwflow_data2d * data);
 #endif
