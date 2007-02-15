@@ -210,10 +210,6 @@ set descmenu [subst  {
 		{separator}
 		{command {[G_msg "Convert coordinates from one projection to another"]} {} "m.proj" {} -command {execute m.proj }}
 	}}
-	{cascad {[G_msg "Text"]} {} "" $tmenu {
-		{command {[G_msg "Select default text font"]} {} "d.font" {} -command {execute d.font }}
-		{command {[G_msg "Select default freetype text font"]} {} "" {} -command {execute d.font.freetype }}
-	}}
 	{cascad {[G_msg "X-monitor displays"]} {} "" $tmenu {
 		{command {[G_msg "Configure xmonitor displays"]} {} "d.mon" {} -command {execute d.mon }}
 		{command {[G_msg "Configure frames for xmonitors"]} {} "d.frame" {} -command {execute d.frame }}
