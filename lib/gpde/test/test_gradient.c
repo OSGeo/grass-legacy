@@ -5,7 +5,7 @@
 * AUTHOR(S):    Soeren Gebbert, Berlin (GER) Dec 2006
 * 		soerengebbert <at> gmx <dot> de
 *               
-* PURPOSE:      Unit tests for matrix assembling
+* PURPOSE:      Unit tests for gradient calculation
 *
 * COPYRIGHT:    (C) 2000 by the GRASS Development Team
 *
