@@ -4,7 +4,13 @@
 # test case for Spearfish location
 
 
-import python_grass6
+import os, sys
+import python_grass6 as g6lib
+
+if not os.environ.has_key("GISBASE"):
+    print "You must be in GRASS GIS to run this program."
+    sys.exit(1)
+
 # don't confuse loc (the instance from python_grass6) with GRASS LOCATION:
 loc=python_grass6
 

@@ -2,7 +2,12 @@
 
 # run within GRASS Spearfish session
 
+import os, sys
 import python_grass6 as g6lib
+
+if not os.environ.has_key("GISBASE"):
+    print "You must be in GRASS GIS to run this program."
+    sys.exit(1)
 
 input = 'elevation.dem'
 mapset = 'PERMANENT'
