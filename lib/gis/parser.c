@@ -337,6 +337,7 @@ G_define_standard_option (int opt)
 	    Opt->type         = TYPE_STRING;
 	    Opt->key_desc     = "name";
 	    Opt->required     = YES;
+	    Opt->gisprompt    = "old,group,group";
 	    Opt->description  = _("Name of input imagery group");
             break;
 	/* raster maps */    
