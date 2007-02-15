@@ -216,9 +216,9 @@ proc show_cmd {dlg} {
 proc get_file {dlg optn new} {
 	global opt
 	if {$new == 1} {
-		set filename [tk_getSaveFile -title {Save File}]
+		set filename [tk_getSaveFile -title [G_msg "Save File"]]
 	} else {
-		set filename [tk_getOpenFile -title {Load File}]
+		set filename [tk_getOpenFile -title [G_msg "Load File"]]
 	}
 	if {$filename != ""} {
 		if {$opt($dlg,$optn,multi) && $opt($dlg,$optn,val) != ""} {
@@ -232,10 +232,18 @@ proc get_file {dlg optn new} {
 
 proc get_map {dlg optn elem} {
 	global opt
-	set val [GSelect_::create $elem]
+	global path
+	if {$opt($dlg,$optn,multi)} {
+		set val [GSelect_::create $elem multiple parent [winfo containing [winfo pointerx .] [winfo pointery .]] title $opt($dlg,pgm_name)]
+	} else {
+		set val [GSelect_::create $elem parent [winfo containing [winfo pointerx .] [winfo pointery .]] title $opt($dlg,pgm_name)]
+	}
 	if {$val != ""} {
 		if {$opt($dlg,$optn,multi) && $opt($dlg,$optn,val) != ""} {
-			append opt($dlg,$optn,val) "," $val
+			foreach i [split $val ","] {
+				if {[string first $i $opt($dlg,$optn,val)] > -1} { continue }
+				append opt($dlg,$optn,val) "," $i
+			}
 		} {
 			set opt($dlg,$optn,val) $val
 		}
@@ -436,7 +444,7 @@ proc make_command_label {dlg path root} {
 	frame $path.cmd
 	set cmdlabel [label $path.cmd.label -textvariable opt($dlg,cmd_string) -anchor w -justify left]
 	wrap_text_in_label $cmdlabel
-	button $path.cmd.copy -text "Copy" -anchor n -command "show_cmd $dlg\nclipboard clear -displayof $cmdlabel\nclipboard append -displayof $cmdlabel \$opt($dlg,cmd_string)"
+	button $path.cmd.copy -text [G_msg "Copy"] -anchor n -command "show_cmd $dlg\nclipboard clear -displayof $cmdlabel\nclipboard append -displayof $cmdlabel \$opt($dlg,cmd_string)"
 	icon_configure $path.cmd.copy edit copy
 	pack $path.cmd.copy -side left
 	pack $cmdlabel -fill x -side top
