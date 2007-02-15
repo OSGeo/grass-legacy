@@ -12,12 +12,6 @@
 #include <grass/dbmi.h>
 #include <grass/form.h>
 
-#ifdef __MINGW32__
-#include <winsock.h>
-#define        F_SETFL         4	/* Set file status flags.  */
-#define        O_NONBLOCK      0x0004	/* Non-blocking I/O.  */
-#endif
-
 /* Structure to store column names and values */
 typedef struct
 {
@@ -26,21 +20,11 @@ typedef struct
     char *value;
 } COLUMN;
 
-char *Drvname, *Dbname, *Tblname, *Key;
+static char *Drvname, *Dbname, *Tblname, *Key;
 
-COLUMN *Columns = NULL;
-int allocatedRows = 0;			/* allocated space */
-int nRows = 0;
-
-int form_open = 0;
-
-/* Close form */
-int close_form(ClientData cdata, Tcl_Interp * interp, int argc, char *argv[])
-{
-    G_debug(3, "close_form()");
-    form_open = 0;
-    return TCL_OK;
-}
+static COLUMN *Columns = NULL;
+static int allocatedRows = 0;			/* allocated space */
+static int nRows = 0;
 
 /* Start new sql update */
 int reset_values(ClientData cdata, Tcl_Interp * interp, int argc, char *argv[])
@@ -267,151 +251,49 @@ int submit(ClientData cdata, Tcl_Interp * interp, int argc, char *argv[])
 /* 
  *  Form 
  */
+int Tcl_AppInit(Tcl_Interp *interp)
+{
+	if (Tcl_Init(interp) == TCL_ERROR)
+		return TCL_ERROR;
+
+	if (Tk_Init(interp) == TCL_ERROR)
+		return TCL_ERROR;
+
+	Tcl_StaticPackage(interp, "Tk", Tk_Init, Tk_SafeInit);
+
+	/*
+	 * Call Tcl_CreateCommand for application-specific commands, if
+	 * they weren't already created by the init procedures called above.
+	 */
+
+	Tcl_CreateCommand(interp, "submit", (Tcl_CmdProc *) submit,
+			  (ClientData) NULL,
+			  (Tcl_CmdDeleteProc *) NULL);
+	Tcl_CreateCommand(interp, "set_value",
+			  (Tcl_CmdProc *) set_value,
+			  (ClientData) NULL,
+			  (Tcl_CmdDeleteProc *) NULL);
+	Tcl_CreateCommand(interp, "reset_values",
+			  (Tcl_CmdProc *) reset_values,
+			  (ClientData) NULL,
+			  (Tcl_CmdDeleteProc *) NULL);
+	/*
+	 * Specify a user-specific startup file to invoke if the application
+	 * is run interactively.  Typically the startup file is "~/.apprc"
+	 * where "app" is the name of the application.  If this line is deleted
+	 * then no user-specific startup file will be run under any conditions.
+	 */
+
+	Tcl_SetVar(interp, "tcl_rcFileName", "~/.grassformrc", TCL_GLOBAL_ONLY);
+	return TCL_OK;
+}
+
 int main(int argc, char *argv[])
 {
-    int length;
-    int ret;
-    char buf[5000];
-    char *child_html, *child_title;
-    static FILE *child_send, *child_recv;
-    static Tcl_Interp *interp;
-    static int frmid = 0;
-    char *encoding_val;
+	G_gisinit("form");
+	G_debug(2, "Form: main()");
 
-    G_gisinit("form");
-
-    G_debug(2, "Form: main()");
-
-    setlocale(LC_CTYPE, "");
-
-    child_recv = stdin;
-    child_send = stdout;
-
-    while (1) {
-	fd_set waitset;
-	struct timeval tv;
-
-	tv.tv_sec = 0;
-	tv.tv_usec = 200;
-
-	FD_ZERO(&waitset);
-	FD_SET(fileno(stdin), &waitset);
-
-	if (select(FD_SETSIZE, &waitset, NULL, NULL, &tv) < 0) {
-	    perror("form: select");
-	}
-
-	ret = read(fileno(stdin), &(buf[0]), 1);
-#ifndef __MINGW32__
-	fcntl(fileno(child_recv), F_SETFL, O_NONBLOCK);	/* Don't wait if pipe is empty */
-#endif
-	if (ret == 0)
-	    break;		/* Pipe was closed by parent -> quit */
-	if (ret == 1) {
-	    G_debug(3, "Form: received = '%c'", buf[0]);
-	    if (buf[0] == 'O') {
-		if (!form_open) {
-		    G_debug(3, "Form is not opened");
-		    /* Open the window and display the form */
-		    interp = Tcl_CreateInterp();
-		    if (Tcl_Init(interp) == TCL_ERROR)
-			G_fatal_error("Tcl_Init failed: %s\n", interp->result);
-		    if (Tk_Init(interp) == TCL_ERROR)
-			G_fatal_error("Tk_Init failed: %s\n", interp->result);
-
-		    Tcl_CreateCommand(interp, "submit", (Tcl_CmdProc *) submit,
-				      (ClientData) NULL,
-				      (Tcl_CmdDeleteProc *) NULL);
-		    Tcl_CreateCommand(interp, "set_value",
-				      (Tcl_CmdProc *) set_value,
-				      (ClientData) NULL,
-				      (Tcl_CmdDeleteProc *) NULL);
-		    Tcl_CreateCommand(interp, "reset_values",
-				      (Tcl_CmdProc *) reset_values,
-				      (ClientData) NULL,
-				      (Tcl_CmdDeleteProc *) NULL);
-		    Tcl_CreateCommand(interp, "close_form",
-				      (Tcl_CmdProc *) close_form,
-				      (ClientData) NULL,
-				      (Tcl_CmdDeleteProc *) NULL);
-
-		    sprintf(buf, "%s/etc/form/form.tcl", G_gisbase());
-		    ret = Tcl_EvalFile(interp, buf);
-		    if (ret == TCL_ERROR) {
-			if (interp->result != NULL)
-			    G_fatal_error("Cannot open form: %s\n",
-					  interp->result);
-			else
-			    G_fatal_error("Cannot open form\n");
-		    }
-
-
-		    form_open = 1;
-		}
-		G_debug(2, "Open form %d", frmid);
-		/* Read title */
-		fgets(buf, 1000, child_recv);
-		length = atoi(buf);	/* length of the string */
-		G_debug(2, "length = %d", length);
-		child_title = (char *)G_malloc(length + 1);
-		fread(child_title, length, 1, child_recv);
-		child_title[length] = '\0';
-
-		/* Read html */
-		fgets(buf, 1000, child_recv);
-		length = atoi(buf);	/* length of the string */
-		G_debug(2, "length = %d", length);
-		child_html = (char *)G_malloc(length + 1);
-		fread(child_html, length, 1, child_recv);
-		child_html[length] = '\0';
-
-		memset(buf, '\0', strlen(buf));
-
-		encoding_val = G__getenv("GRASS_DB_ENCODING");
-		Tcl_ExternalToUtf(interp,
-				  Tcl_GetEncoding(interp, encoding_val),
-				  child_html, strlen(child_html), 0, NULL,
-				  buf, strlen(child_html) * 2, NULL, NULL,
-				  NULL);
-
-		G_debug(3, "Current GRASS_DB_ENCODING: %s", encoding_val);
-		if (Tcl_SetSystemEncoding(interp, encoding_val) == TCL_ERROR) {
-		    fprintf(stderr,
-			    "Could not set Tcl system encoding to %s\n",
-			    encoding_val);
-		}
-
-		G_debug(2, "Form: html = %s", buf);
-
-		/* Insert new page */
-		Tcl_SetVar(interp, "html", buf, 0);
-		sprintf(buf, "add_form %d \"%s\"", frmid, child_title);
-		Tcl_Eval(interp, buf);
-
-		fprintf(child_send, "O");	/* OK */
-		fflush(child_send);
-		frmid++;
-		G_debug(2, "Form displayed\n");
-	    }
-	    else if (buf[0] == 'C') {	/* clear old forms */
-		Tcl_Eval(interp, "clear_nb");
-		fprintf(child_send, "O");	/* OK */
-		fflush(child_send);
-	    }
-	    else if (buf[0] == 'D') {	/* done! */
-		Tcl_Eval(interp, "clear_nb");
-		fprintf(child_send, "O");	/* OK */
-		fflush(child_send);
-		break;
-	    }
-	}
-
-	Tcl_Eval(interp, "update");
-    }
-
-    Tcl_Eval(interp, "destroy .");
-    G_debug(3, "Form: end\n");
-    exit(0);
-
-    return 0;
+	Tk_Main(argc, argv, Tcl_AppInit);
+	return 0;
 }
+

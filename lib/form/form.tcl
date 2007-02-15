@@ -2,16 +2,8 @@ lappend auto_path $env(GISBASE)/bwidget
 package require -exact BWidget 1.2.1 
 #package require http
 
-set formpath $env(GISBASE)/etc/form/ 
+set formpath $env(GISBASE)/etc/form
 source $formpath/html_library.tcl
-
-set submit_result ""
-set submit_msg ""
-set html ""
-
-set nb [NoteBook .nb]
-$nb configure -width 300 -height 500
-pack .nb -fill both -expand yes
 
 proc create_submit_msg { formid  }  {
     global submit_result submit_msg formf
@@ -70,4 +62,97 @@ proc HMsubmit_form {win param query} {
     create_submit_msg $formid   
 }
 
+proc make_form {} {
+	global nb
+
+	set nb [NoteBook .nb]
+	$nb configure -width 300 -height 500
+	pack .nb -fill both -expand yes
+}
+
+proc close_form {} {
+	global form_open
+	wm withdraw .
+	set form_open false
+}
+
+proc process_command {} {
+	global env
+	global child_recv child_send 
+	global form_open encoding_val frmid
+	global html
+
+	if {[eof $child_recv]} {
+		exit 0
+	}
+
+	set cmd [read $child_recv 1]
+
+	switch $cmd {
+		O {
+			if {! $form_open} {
+				wm state . normal
+				set form_open true
+			}
+			#  Read title 
+			set length [gets $child_recv]
+			set child_title [read $child_recv $length]
+
+			#  Read html 
+			set length [gets $child_recv]
+			set child_html [read $child_recv $length]
+
+			set child_html [encoding convertfrom $encoding_val $child_html]
+
+			#  Insert new page 
+			set html $child_html
+			add_form $frmid $child_title
+
+			puts -nonewline $child_send O
+			flush $child_send
+			incr frmid
+		}
+		C {	#  clear old forms 
+			clear_nb
+			puts -nonewline $child_send O
+			flush $child_send
+		}
+		D {	#  done! 
+			clear_nb
+			puts -nonewline $child_send O
+			flush $child_send
+
+			destroy .
+			exit 0
+		}
+	}
+}
+
+make_form
+
+wm protocol . WM_DELETE_WINDOW close_form
+
 bind . <Destroy> { if { "%W" == "."} { close_form } }
+
+set submit_result ""
+set submit_msg ""
+set html ""
+
+set frmid 0
+set form_open true
+
+set child_recv stdin
+set child_send stdout
+
+set encoding_val [exec g.gisenv GRASS_DB_ENCODING]
+if {$encoding_val == ""} {
+	set encoding_val [encoding system]
+}
+
+if {[catch {encoding system $encoding_val}]} {
+	puts stderr "Could not set Tcl system encoding to $encoding_val"
+}
+
+fconfigure $child_recv -buffering none -encoding binary -translation binary
+
+fileevent $child_recv readable process_command
