@@ -1,4 +1,5 @@
 #include <stdio.h>
+#include <stdlib.h>
 #include <grass/rowio.h>
 
 
@@ -28,7 +29,6 @@ int rowio_setup (ROWIO *R,int fd, int nrows, int len,
                  int (*getrow)(), int (*putrow)())
 {
     int i;
-    char *malloc();
 
     R->getrow = getrow;
     R->putrow = putrow;
