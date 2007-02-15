@@ -1180,6 +1180,10 @@ int G_format_northing(double, char *, int);
 int G_format_easting(double, char *, int);
 int G_format_resolution(double, char *, int);
 
+/* wind_in.c */
+int G_point_in_region(double, double);
+int G_point_in_window(double, double, struct Cell_head *);
+
 /* wind_limits.c */
 int G_limit_east(double *, int);
 int G_limit_west(double *, int);

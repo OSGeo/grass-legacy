@@ -9,8 +9,6 @@
 
 /* main.c */
 int do_profile(double, double, double, double, char *, int, double, int, int, FILE *, char *);
-int point_in_region(double, double);
-int point_in_window(double, double, struct Cell_head);
 
 /* read_rast.c */
 int read_rast(double, double, double, int, int, RASTER_MAP_TYPE, FILE *, char *);

@@ -296,7 +296,7 @@ int do_profile(double e1, double e2, double n1, double n2, char *name, int coord
     LEN = G_distance(e1, n1, e2, n2);
     G_message(_("Approx. transect length %f m."), LEN);
 
-    if (!point_in_region(e2, n2))
+    if (!G_point_in_region(e2, n2))
 	G_warning(_("Endpoint coordinates are outside of current region settings."));
 
     /* Calculate Azimuth of Line */
@@ -421,25 +421,3 @@ static int cont(int x, int y)
     return 0;
 }
 
-
-/* is e,n in the current region? */
-int point_in_region(double easting, double northing)
-{
-    struct Cell_head window;
-
-    G_get_window(&window);
-
-    return point_in_window(easting, northing, window);
-}
-
-
-/* use directly when speed is important or for eg point in map */
-int point_in_window(double easting, double northing, struct Cell_head window)
-{
-
-    if ( easting > window.east || easting < window.west ||
-	 northing > window.north || northing < window.south)
-      return FALSE;
-
-    return TRUE;
-}
