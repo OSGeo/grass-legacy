@@ -11,6 +11,52 @@
 #include <grass/glocale.h>
 #include <grass/dbmi.h>
 
+int render;
+
+static void local_plot_polygon(double *xf, double *yf, int n)
+{
+	static int *xi, *yi;
+	static int nalloc;
+	int i;
+
+	if (nalloc < n)
+	{
+		nalloc = n;
+		xi = G_realloc(xi, nalloc * sizeof(int));
+		yi = G_realloc(yi, nalloc * sizeof(int));
+	}
+
+	for (i = 0; i < n; i++)
+	{
+		xi[i] = (int) floor(0.5 + D_u_to_d_col(xf[i]));
+		yi[i] = (int) floor(0.5 + D_u_to_d_row(yf[i]));
+	}
+
+	R_polygon_abs(xi, yi, n);
+}
+
+void plot_polygon(double *xf, double *yf, int n)
+{
+	switch (render)
+	{
+	case RENDER_GPP:
+		G_plot_polygon(xf, yf, n);
+		break;
+	case RENDER_DP:
+		D_polygon(xf, yf, n);
+		break;
+	case RENDER_DPC:
+		D_polygon_clip(xf, yf, n);
+		break;
+	case RENDER_RPA:
+		local_plot_polygon(xf, yf, n);
+		break;
+	default:
+		G_plot_polygon(xf, yf, n);
+		break;
+	}
+}
+
 int plot1 (
     struct Map_info *Map, int type, int area,  struct cat_list *Clist,
     const struct color_rgb *color, const struct color_rgb *fcolor,
@@ -333,8 +379,8 @@ int plot1 (
 				    Vect_append_point ( PPoints, xd0, yd0, 0.0);
 				}
 			    }
-			    
-			    G_plot_polygon ( PPoints->x, PPoints->y, PPoints->n_points);
+
+			    plot_polygon ( PPoints->x, PPoints->y, PPoints->n_points);
 
 			}
 			if ( (part->color.color == S_COL_DEFAULT && color ) ||

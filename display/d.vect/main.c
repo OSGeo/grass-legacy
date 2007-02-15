@@ -104,6 +104,7 @@ main (int argc, char **argv)
 	struct Option *lsize_opt, *font_opt, *xref_opt, *yref_opt;
 	struct Option *attrcol_opt, *maxreg_opt, *minreg_opt;
 	struct Option *width_opt, *wcolumn_opt, *wscale_opt;
+	struct Option *render_opt;
 	struct Flag   *verbose_flag; /* please remove before GRASS 7 released */
 	struct Flag   *id_flag, *table_acolors_flag, *cats_acolors_flag, *x_flag;
 	struct cat_list *Clist;
@@ -296,6 +297,15 @@ main (int argc, char **argv)
 	    _("Maximum region size (average from height and width) "
 	      "when map is displayed");
 
+	render_opt = G_define_option() ;
+	render_opt->key        = "render" ;
+	render_opt->type       = TYPE_STRING ;
+	render_opt->required   = NO;
+	render_opt->multiple   = NO;
+	render_opt->answer     = "g" ;
+	render_opt->options    = "g,r,d,c";
+	render_opt->description= _("Rendering method for filled polygons");
+
 	/* please remove before GRASS 7 released */
 	verbose_flag = G_define_flag ();
 	verbose_flag->key		= 'v';
@@ -328,6 +338,17 @@ main (int argc, char **argv)
 	/* Check command line */
 	if (G_parser(argc, argv))
 	    exit(EXIT_FAILURE);
+
+	if (G_strcasecmp(render_opt->answer, "g") == 0)
+		render = RENDER_GPP;
+	else if (G_strcasecmp(render_opt->answer, "r") == 0)
+		render = RENDER_RPA;
+	else if (G_strcasecmp(render_opt->answer, "d") == 0)
+		render = RENDER_DP;
+	else if (G_strcasecmp(render_opt->answer, "c") == 0)
+		render = RENDER_DPC;
+	else
+		render = RENDER_GPP;
 
 	/* please remove -v flag before GRASS 7 released */
 	if (verbose_flag->answer) {
