@@ -1,7 +1,110 @@
 <H2>DESCRIPTION</H2>
+This numerical program calculates transient, confined and
+unconfined groundwater flow in two dimensions based on  
+raster maps and the current region resolution.
+All starting- and boundary-conditions must be provided as 
+raster maps.
+<br>
+<br>
+This module calculates the piezometric head and optionally the 
+filter velocity field, based on the permeability and the piezometric head. 
+The vector components can be visualized with paraview if they are exported
+with r.out.vtk.
+<br>
+<br>
+The groundwater flow will always be calculated transient. 
+If you want to calculate stady state, set the timestep 
+to a large number (billions of seconds) or set the 
+specific yield/ effective porosity raster maps to zeo.
 
-<EM><A HREF="r3.out.vtk.html">r3.out.vtk</A></EM>,<br>
-<EM><A HREF="r3.gwflow.html">r3.gwflow</A></EM>
+
+<H2>NOTES</H2>
+
+The groundwater flow calculation is based on Darcy's law and a 
+finite volume discretization. The groundwater flow partial 
+differential equation is of the following form:
+
+<p>
+(dh/dt)*S = (ht - b) * Kxx * (d^2h/dx^2) + (ht -b) * Kyy * (d^2h/dy^2) + q
+
+<ul>
+<li>h -- the piezometric head im meters [m]</li>
+<li>ht -- the piezometric head of the water surface in a unconfined aquifer or the top of the confined aquifer im meters [m] </li>
+<li>dt -- the time step for transient calculation in seconds [s]</li>
+<li>S -- the specific yield or the effective porosity no dimension [.]</li>
+<li>b -- the bottom surface of the aquifer meters [m]</li>
+<li>Kxx -- the permeability tensor part in x direction in meter per second [m/s]</li>
+<li>Kyy -- the permeability tensor part in y direction in meter per seconds [m/s]</li>
+<li>q - inner source in meter per second [m/s]</li>
+<li>x - distance between cells in x direction [m]</li>
+<li>y - distance between cells in y direction [m]</li>
+</ul>
+
+<br>
+<br>
+Two different boundary conditions are implemented, 
+the Dirichlet and Neumann conditions. 
+The calculation and boundary status of single cells can be set with the status map, 
+the following states are supportet:
+
+<ul>
+<li>0 == inactive - the cell with status 0 will not be calulated, active cells will have a no flow boundary to an inactive cell</li>
+<li>1 == active - this cell is used for groundwater calculation, inner sources and reacharge can be defined for those cells</li>
+<li>2 == Dirichlet - cells of this type will have a fixed piezometric head value which do not change over time </li>
+</ul>
+
+<br>
+<br>
+The groundwater flow equation can be solved with different solvers.
+Two iterative solvers with sparse and quadratic matrices support are implemented.
+The conjugate gradients (cg) method and the biconjugate gradients-stabilized (bicgstab) method. 
+Aditionally two GUASS and LU solvers are available. Those direct solvers
+only work with quadratic matrices, so be careful using them with large maps 
+(maps of size 10.000 cells will need more than one gigabyte of ram).
+
+<H2>EXAMPLE</H2>
+Use this small script to create a working
+groundwater flow area and data. Make sure you are not in a lat/lon projection.
+
+<div class="code"><pre>
+# set the region accordingly
+g.region res=25 res3=25 t=100 b=0 n=1000 s=0 w=0 e=1000
+
+#now create the input raster maps for confined and unconfined aquifers
+r.mapcalc "phead=if(row() == 1 , 50, 40)"
+r.mapcalc "status=if(row() == 1 , 2, 1)"
+r.mapcalc "well=if(row() == 20 && col() == 20 , -0.001, 0)"
+r.mapcalc "perm=0.00025"
+r.mapcalc "reacharge=0"
+r.mapcalc "top_conf=20.0"
+r.mapcalc "top_unconf=70.0"
+r.mapcalc "bottom=0.0"
+r.mapcalc "null=0.0"
+r.mapcalc "poros=0.15"
+r.mapcalc "syield=0.0001"
+
+#confined groundwater flow with cg solver and sparse matrix
+r.gwflow --o -s solver=0 top=top_conf bottom=bottom phead=phead status=status \
+kf_x=perm kf_y=perm q=well s=syield r=reacharge output=gwresult_conf \
+dt=8640000 type=confined velocity=gwresult_conf_velocity
+
+#unconfined groundwater flow with cg solver and sparse matrix
+r.gwflow --o -s solver=0 top=top_unconf bottom=bottom phead=phead \
+status=status kf_x=perm kf_y=perm q=well s=poros r=reacharge \
+output=gwresult_unconf dt=8640000 type=unconfined velocity=gwresult_unconf_velocity
+
+# The data can be visulaized with paraview when exported with r.out.vtk
+r.out.vtk -p in=gwresult_conf,status vector=gwresult_conf_velocity_x,gwresult_conf_velocity_y,null out=/tmp/gwdata_conf2d.vtk
+r.out.vtk -p elevation=gwresult_unconf in=gwresult_unconf,status vector=gwresult_unconf_velocity_x,gwresult_unconf_velocity_y,null out=/tmp/gwdata_unconf2d.vtk
+
+#now load the data into paraview
+
+</pre></div>
+
+<H2>SEE ALSO</H2>
+
+<EM><A HREF="r3.gwflow.html">r3.gwflow</A></EM><br>
+<EM><A HREF="r.out.vtk.html">r.out.vtk</A></EM><br>
 
 <H2>AUTHOR</H2>
 Soeren Gebbert
