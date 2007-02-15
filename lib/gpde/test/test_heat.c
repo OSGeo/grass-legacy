@@ -18,29 +18,27 @@
 #include <grass/gis.h>
 #include <grass/glocale.h>
 #include <grass/N_pde.h>
-#include <grass/N_heatflow.h>
+//#include <grass/N_heatflow.h>
 #include "test_gpde_lib.h"
 
 
 /* *************************************************************** */
 /* Performe the heat flow integration tests ********************** */
 /* *************************************************************** */
-int
-integration_test_heatflow ()
+int integration_test_heatflow()
 {
-  int sum = 0;
+    int sum = 0;
 
-  G_message (_("++ Running heat flow integration tests ++"));
+    G_message(_("++ Running heat flow integration tests ++"));
 
-  G_message (_("\t 1. testing 2d heat flow"));
+    G_message(_("\t 1. testing 2d heat flow"));
 
-  G_message (_("\t 2. testing 3d heat flow"));
+    G_message(_("\t 2. testing 3d heat flow"));
 
-  if (sum > 0)
-    G_warning (_("-- heat flow integration tests failure --"));
-  else
-    G_message (_("-- heat flow integration tests finished successfully --"));
+    if (sum > 0)
+	G_warning(_("-- heat flow integration tests failure --"));
+    else
+	G_message(_("-- heat flow integration tests finished successfully --"));
 
-  return sum;
+    return sum;
 }
-

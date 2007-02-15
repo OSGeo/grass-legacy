@@ -29,6 +29,9 @@ int unit_test_arrays ();
 /* matrix assembling */
 int unit_test_assemble();
 
+/* gradient creation and handling tests */
+int unit_test_gradient();
+
 /* direct and iterative solvers */
 int unit_test_solvers();
 
