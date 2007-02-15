@@ -270,7 +270,7 @@ int main(int argc, char *argv[]) {
 
 	    quartile_25 = ((CELL*) pvals)[qpos_25];
 	    if (n % 2) /* odd */
-		median = ((CELL*) pvals)[(int) (n/2 - .5)];
+		median = ((CELL*) pvals)[(int) (n/2)];
 	    else /* even */
 		median = ( ((CELL*) pvals)[n/2 -1] + ((CELL*) pvals)[n/2] ) / 2.0;
 	    quartile_75 = ((CELL*) pvals)[qpos_75];
@@ -282,7 +282,7 @@ int main(int argc, char *argv[]) {
 
 	    quartile_25 = ((FCELL*) pvals)[qpos_25];
 	    if (n % 2) /* odd */
-		median = ((FCELL*) pvals)[(int) (n/2 - .5)];
+		median = ((FCELL*) pvals)[(int) (n/2)];
 	    else /* even */
 		median = ( ((FCELL*) pvals)[n/2 -1] + ((FCELL*) pvals)[n/2] ) / 2.0;
 	    quartile_75 = ((FCELL*) pvals)[qpos_75];
@@ -294,7 +294,7 @@ int main(int argc, char *argv[]) {
 	    
 	    quartile_25 = ((DCELL*) pvals)[qpos_25];
 	    if (n % 2) /* odd */
-		median = ((DCELL*) pvals)[(int) (n/2 - .5)];
+		median = ((DCELL*) pvals)[(int) (n/2)];
 	    else /* even */
 		median = ( ((DCELL*) pvals)[n/2 -1] + ((DCELL*) pvals)[n/2] ) / 2.0;
 	    quartile_75 = ((DCELL*) pvals)[qpos_75];
