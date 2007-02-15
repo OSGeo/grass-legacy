@@ -91,6 +91,7 @@ int LOC_open_driver(void)
 	drv.draw_line		= PNG_draw_line;
 	drv.draw_point		= PNG_draw_point;
 	drv.draw_bitmap		= PNG_draw_bitmap;
+	drv.draw_text		= NULL;
 
 	LIB_init(&drv, 0, NULL);
 

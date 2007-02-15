@@ -38,6 +38,7 @@ int main(int argc, char **argv)
 	drv.draw_line		= XD_draw_line;
 	drv.draw_point		= XD_draw_point;
 	drv.draw_bitmap		= XD_draw_bitmap;
+	drv.draw_text		= NULL;
 
 	LIB_init(&drv, argc, argv);
 

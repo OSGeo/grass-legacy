@@ -4,13 +4,14 @@
 #include <stdlib.h>
 #include <string.h>
 #include <grass/gis.h>
-#include "htmlmap.h"
 #include "driverlib.h"
+#include "htmlmap.h"
 
-int Text (char *text)
+void HTML_Text(const char *text)
 {
     int len = strlen(text);
-    char *d, *s;
+    const char *s;
+    char *d;
 
     if (len > last_text_len) {
         G_free (last_text);
@@ -26,6 +27,4 @@ int Text (char *text)
         }
     }
     *d = '\0';
-
-    return 0;
 }

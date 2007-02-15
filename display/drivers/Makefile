@@ -1,9 +1,7 @@
 
 MODULE_TOPDIR = ../..
 
-SUBDIRS =
-#commented unless HTMLMAP accepts G_plot_area():
-# SUBDIRS = lib HTMLMAP
+SUBDIRS = HTMLMAP
 
 include $(MODULE_TOPDIR)/include/Make/Dir.make
 
