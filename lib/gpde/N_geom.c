@@ -26,9 +26,8 @@
  *
  * \return N_geom_data *
  * */
-inline N_geom_data *
-N_alloc_geom_data ()
+inline N_geom_data *N_alloc_geom_data()
 {
-  N_geom_data *geo = (N_geom_data *) G_calloc (1, sizeof (N_geom_data));
-  return geo;
+    N_geom_data *geo = (N_geom_data *) G_calloc(1, sizeof(N_geom_data));
+    return geo;
 }
