@@ -1,28 +1,41 @@
 #include <unistd.h>
 #include <stdlib.h>
 #include <string.h>
+#include <grass/gis.h>
 #include <grass/imagery.h>
+#include <grass/glocale.h>
 #include "orthophoto.h"
 #include "local_proto.h"
 
 int main (int argc, char **argv)
 {
     char title[80];
-    char buf[80];
+    char buf[80], *p;
     struct Ortho_Image_Group group;
+    struct GModule *module;
+    struct Option *group_opt;
+
+    /* must run in a term window */
+    G_putenv("GRASS_UI_TERM","1");
 
     /* initialize grass */
     G_gisinit(argv[0]);
 
-    /* get the current imagery group work with */
-    if (!I_get_group(group.name)) { 
-       if (!I_ask_group_old ("Enter imagery group for ortho-rectification", 
-		       group.name))
-	{
-	 fprintf(stderr, "Use i.group to create a image group!\n");
-         exit(0);
-        }
-    }
+    module = G_define_module();
+    module->keywords = _("imagery");
+    module->description = _("Menu driver for the photo imagery programs.");
+
+    group_opt = G_define_standard_option(G_OPT_I_GROUP);
+    group_opt->description = _("Name of imagery group for ortho-rectification");
+
+    if (G_parser(argc, argv))
+        exit(EXIT_FAILURE);
+
+
+    strncpy(group.name, group_opt->answer, 99);
+    /* strip off mapset if it's there: I_() fns only work with current mapset */
+    if ((p = strchr(group.name, '@')))
+        *p = 0;
 
     /* get and check the group reference files */
     if (!I_get_group_ref (group.name, &group.group_ref))
