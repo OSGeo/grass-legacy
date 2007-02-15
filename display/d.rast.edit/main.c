@@ -23,16 +23,30 @@
 #include <stdlib.h>
 #include <string.h>
 #define GLOBAL
+#include <grass/glocale.h>
 #include "edit.h"
+
 
 int main(int argc, char **argv)
 {
-	char            temp[128], line[128];
-	char           *m;
-	struct FPRange    fp_range;
+	struct GModule *module;
+	struct Option  *outmap;
+	char   temp[128], line[128];
+	char   *m;
+	struct FPRange fp_range;
 
 	/* Initialize the GIS calls */
 	G_gisinit(argv[0]);
+
+	module = G_define_module();
+	module->keywords = _("display, raster");
+	module->description =
+	    _("Interactively edit cell values in a raster map.");
+
+	outmap = G_define_standard_option(G_OPT_R_OUTPUT);
+
+	if(G_parser(argc, argv) )
+	    exit(EXIT_FAILURE);
 
 	/*
 	 * note: grid color used to be an option set with the help of the
@@ -40,7 +54,7 @@ int main(int argc, char **argv)
 	 * the user wants, they can reset it with the menu
 	 */
 
-	strcpy(grid_color_name, "black");
+	strcpy(grid_color_name, DEFAULT_FG_COLOR);
 	grid_color = D_translate_color(grid_color_name);
 
 	if (R_open_driver() != 0)
@@ -80,15 +94,10 @@ int main(int argc, char **argv)
 	G_read_fp_range(orig_name, orig_mapset, &fp_range);
 	G_get_fp_range_min_max(&fp_range, &min_value, &max_value);
 
-	/*
-	 * get the name for the new raster map to be created (the one we will
-	 * edit)
-	 */
-	m = G_ask_cell_new("Enter the name for the new layer to be created\n",
-			   new_name);
-	if (m == NULL) {
-		ext();
-	}
+	/* get the name for the new raster map to be created (the one we will edit) */
+	strncpy(new_name, outmap->answer, 39);
+	new_name[39] = '\0';
+
 	/* get names straight  */
 	sscanf(m, "%s", user_mapset);
 	strcpy(current_name, orig_name);
