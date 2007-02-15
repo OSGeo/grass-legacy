@@ -29,20 +29,19 @@
  * \return N_spvector *
  *
  * */
-N_spvector *
-N_alloc_spvector (int cols)
+N_spvector *N_alloc_spvector(int cols)
 {
-  N_spvector *spvector;
+    N_spvector *spvector;
 
-  G_debug (4, "Allocate memory for a sparse vector with %i cols\n", cols);
+    G_debug(4, "Allocate memory for a sparse vector with %i cols\n", cols);
 
-  spvector = (N_spvector *) G_calloc (1, sizeof (N_spvector));
+    spvector = (N_spvector *) G_calloc(1, sizeof(N_spvector));
 
-  spvector->cols = cols;
-  spvector->index = (int *) G_calloc (cols, sizeof (int));
-  spvector->values = (double *) G_calloc (cols, sizeof (double));
+    spvector->cols = cols;
+    spvector->index = (int *)G_calloc(cols, sizeof(int));
+    spvector->values = (double *)G_calloc(cols, sizeof(double));
 
-  return spvector;
+    return spvector;
 }
 
 
@@ -71,41 +70,42 @@ N_alloc_spvector (int cols)
  * \return N_les *
  *
  * */
-N_les *
-N_alloc_les (int rows, int type)
+N_les *N_alloc_les(int rows, int type)
 {
-  N_les *les;
-  int i;
+    N_les *les;
+    int i;
 
-  if (type == N_SPARSE_LES)
-    G_debug (2, "Allocate memory for a sparse linear equation system with %i rows\n", rows);
-  else
-    G_debug (2, "Allocate memory for a regular linear equation system with %i rows\n", rows);
+    if (type == N_SPARSE_LES)
+	G_debug(2,
+		"Allocate memory for a sparse linear equation system with %i rows\n",
+		rows);
+    else
+	G_debug(2,
+		"Allocate memory for a regular linear equation system with %i rows\n",
+		rows);
 
-  les = (N_les *) G_calloc (1, sizeof (N_les));
+    les = (N_les *) G_calloc(1, sizeof(N_les));
 
-  les->x = (double *) G_calloc (rows, sizeof (double));
-  les->b = (double *) G_calloc (rows, sizeof (double));
-  les->A = NULL;
-  les->Asp = NULL;
-  les->rows = rows;
+    les->x = (double *)G_calloc(rows, sizeof(double));
+    les->b = (double *)G_calloc(rows, sizeof(double));
+    les->A = NULL;
+    les->Asp = NULL;
+    les->rows = rows;
 
-  if (type == N_SPARSE_LES)
-    {
-      les->Asp = (N_spvector **) G_calloc (rows, sizeof (N_spvector *));
-      les->type = N_SPARSE_LES;
+    if (type == N_SPARSE_LES) {
+	les->Asp = (N_spvector **) G_calloc(rows, sizeof(N_spvector *));
+	les->type = N_SPARSE_LES;
     }
-  else
-    {
-      les->A = (double **) G_calloc (rows, sizeof (double *));
+    else {
+	les->A = (double **)G_calloc(rows, sizeof(double *));
 
-      for (i = 0; i < rows; i++)
-	les->A[i] = (double *) G_calloc (rows, sizeof (double));
+	for (i = 0; i < rows; i++)
+	    les->A[i] = (double *)G_calloc(rows, sizeof(double));
 
-      les->type = N_NORMAL_LES;
+	les->type = N_NORMAL_LES;
     }
 
-  return les;
+    return les;
 }
 
 
@@ -123,32 +123,30 @@ N_alloc_les (int rows, int type)
  * \return int
  *
  * */
-int
-N_add_spvector_to_les (N_les * les, N_spvector * spvector, int row)
+int N_add_spvector_to_les(N_les * les, N_spvector * spvector, int row)
 {
 
 
-  if (les != NULL)
-    {
-      if (les->type != N_SPARSE_LES)
-	return -1;
+    if (les != NULL) {
+	if (les->type != N_SPARSE_LES)
+	    return -1;
 
-      if (les->rows > row)
-	{
-	  G_debug (5, "Add sparse vector %p to the sparse linear equation system at row %i\n", spvector, row);
-	  les->Asp[row] = spvector;
+	if (les->rows > row) {
+	    G_debug(5,
+		    "Add sparse vector %p to the sparse linear equation system at row %i\n",
+		    spvector, row);
+	    les->Asp[row] = spvector;
 	}
-      else
+	else
+	    return -1;
+
+    }
+    else {
 	return -1;
-
-    }
-  else
-    {
-      return -1;
     }
 
 
-  return 1;
+    return 1;
 }
 
 /* *************************************************************** */
@@ -165,59 +163,50 @@ N_add_spvector_to_les (N_les * les, N_spvector * spvector, int row)
  * <p>
  * Example
  \verbatim
-
+ 
  2 1 1 1 * 2 = 0.1
  1 2 0 0 * 3 = 0.2
  1 0 2 0 * 3 = 0.2
  1 0 0 2 * 2 = 0.1
-
+ 
  \endverbatim
  *
  * \param les N_les * 
  * \return void
  *  
  * */
-void
-N_print_les (N_les * les)
+void N_print_les(N_les * les)
 {
-  int i, j, k, out;
+    int i, j, k, out;
 
 
-  if (les->type == N_SPARSE_LES)
-    {
-      for (i = 0; i < les->rows; i++)
-	{
-	  for (j = 0; j < les->rows; j++)
-	    {
-	      out = 0;
-	      for (k = 0; k < les->Asp[i]->cols; k++)
-		{
-		  if (les->Asp[i]->index[k] == j)
-		    {
-		      fprintf (stdout, "%4.5f ", les->Asp[i]->values[k]);
-		      out = 1;
+    if (les->type == N_SPARSE_LES) {
+	for (i = 0; i < les->rows; i++) {
+	    for (j = 0; j < les->rows; j++) {
+		out = 0;
+		for (k = 0; k < les->Asp[i]->cols; k++) {
+		    if (les->Asp[i]->index[k] == j) {
+			fprintf(stdout, "%4.5f ", les->Asp[i]->values[k]);
+			out = 1;
 		    }
 		}
-	      if (!out)
-		fprintf (stdout, "%4.5f ", 0.0);
+		if (!out)
+		    fprintf(stdout, "%4.5f ", 0.0);
 	    }
-	  fprintf (stdout, "  *  %4.5f  =  %4.5f \n", les->x[i], les->b[i]);
+	    fprintf(stdout, "  *  %4.5f  =  %4.5f \n", les->x[i], les->b[i]);
 	}
     }
-  else
-    {
+    else {
 
-      for (i = 0; i < les->rows; i++)
-	{
-	  for (j = 0; j < les->rows; j++)
-	    {
-	      fprintf (stdout, "%4.5f ", les->A[i][j]);
+	for (i = 0; i < les->rows; i++) {
+	    for (j = 0; j < les->rows; j++) {
+		fprintf(stdout, "%4.5f ", les->A[i][j]);
 	    }
-	  fprintf (stdout, "  *  %4.5f  =  %4.5f \n", les->x[i], les->b[i]);
+	    fprintf(stdout, "  *  %4.5f  =  %4.5f \n", les->x[i], les->b[i]);
 	}
 
     }
-  return;
+    return;
 }
 
 /* *************************************************************** */
@@ -230,21 +219,19 @@ N_print_les (N_les * les)
  * \return void
  *
  * */
-void
-N_free_spvector (N_spvector * spvector)
+void N_free_spvector(N_spvector * spvector)
 {
-  if (spvector)
-    {
-      if (spvector->values)
-	G_free (spvector->values);
-      if (spvector->index)
-	G_free (spvector->index);
-      G_free (spvector);
+    if (spvector) {
+	if (spvector->values)
+	    G_free(spvector->values);
+	if (spvector->index)
+	    G_free(spvector->index);
+	G_free(spvector);
 
-      spvector = NULL;
+	spvector = NULL;
     }
 
-  return;
+    return;
 }
 
 
@@ -259,51 +246,45 @@ N_free_spvector (N_spvector * spvector)
  *
  * */
 
-void
-N_free_les (N_les * les)
+void N_free_les(N_les * les)
 {
-  int i;
+    int i;
 
-  if (les->type == N_SPARSE_LES)
-    G_debug (2, "Releasing memory of a sparse linear equation system\n");
-  else
-    G_debug (2, "Releasing memory of a regular linear equation system\n");
+    if (les->type == N_SPARSE_LES)
+	G_debug(2, "Releasing memory of a sparse linear equation system\n");
+    else
+	G_debug(2, "Releasing memory of a regular linear equation system\n");
 
-  if (les)
-    {
+    if (les) {
 
-      if (les->x)
-	G_free (les->x);
-      if (les->b)
-	G_free (les->b);
+	if (les->x)
+	    G_free(les->x);
+	if (les->b)
+	    G_free(les->b);
 
-      if (les->type == N_SPARSE_LES)
-	{
+	if (les->type == N_SPARSE_LES) {
 
-	  if (les->Asp)
-	    {
-	      for (i = 0; i < les->rows; i++)
-		if (les->Asp[i])
-		  N_free_spvector (les->Asp[i]);
+	    if (les->Asp) {
+		for (i = 0; i < les->rows; i++)
+		    if (les->Asp[i])
+			N_free_spvector(les->Asp[i]);
 
-	      G_free (les->Asp);
+		G_free(les->Asp);
 	    }
 	}
-      else
-	{
+	else {
 
-	  if (les->A)
-	    {
-	      for (i = 0; i < les->rows; i++)
-		if (les->A[i])
-		  G_free (les->A[i]);
+	    if (les->A) {
+		for (i = 0; i < les->rows; i++)
+		    if (les->A[i])
+			G_free(les->A[i]);
 
-	      G_free (les->A);
+		G_free(les->A);
 	    }
 	}
 
-      free (les);
+	free(les);
     }
 
-  return;
+    return;
 }
