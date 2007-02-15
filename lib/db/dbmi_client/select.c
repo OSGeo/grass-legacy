@@ -33,17 +33,38 @@ static int cmpcatkey ( const void *pa, const void *pb)
     return 0;
 }
 
+static int cmpvalueint (const void *pa, const void *pb)
+{
+    dbCatVal *p1 = (dbCatVal *) pa;    
+    dbCatVal *p2 = (dbCatVal *) pb;
+
+    if( p1->val.i < p2->val.i ) return -1;
+    if( p1->val.i > p2->val.i ) return 1;
+
+    return 0;
+}
+
+static int cmpvaluedouble (const void *pa, const void *pb)
+{
+    dbCatVal *p1 = (dbCatVal *) pa;    
+    dbCatVal *p2 = (dbCatVal *) pb;
+
+    if( p1->val.d < p2->val.d ) return -1;
+    if( p1->val.d > p2->val.d ) return 1;
+
+    return 0;
+}
+
 /*!
- \fn 
- \brief 
- \return 
- \param 
+ \fn db_select_int (dbDriver *driver, char *tab, char *col, char *where, int **pval)
+ \brief Select array of ordered integers from table/column
+ \return number of selected values, -1 on error
+ \param driver DB driver
+ \param tab table name
+ \param col column name
+ \param where where statement
+ \param pval array of ordered integer values
 */
-/* selet array of ordered integers
- *
- * return: number of selected values
- *         -1 on error
- */
 
 int db_select_int (dbDriver *driver, char *tab, char *col, char *where, int **pval)
 {
@@ -125,22 +146,17 @@ int db_select_int (dbDriver *driver, char *tab, char *col, char *where, int **pv
 }
 
 /*!
- \fn 
- \brief 
- \return 
- \param 
+ \fn db_select_value (dbDriver *driver, char *tab, char *key, int id, char *col, dbValue *val) 
+ \brief Select one (first) value from table/column for key/id
+ \return number of selected values, -1 on error
+ \param driver DB driver
+ \param tab table name
+ \param key key column name
+ \param id identifier in key column
+ \param col name of column to select the value from
+ \param val dbValue to store within
 */
-/* selet one (first) value from table/column for key/id
- *
- * return: number of selected values
- *         -1 on error
- */
-int db_select_value (dbDriver *driver, 
-	char *tab, /* table name */
-	char *key, /* key column name (integer) */
-	int  id,   /* identifier in key column */
-	char *col, /* the name of column to select the value from */
-	dbValue *val) /* pointer to existing dbValue to store within */ 
+int db_select_value (dbDriver *driver, char *tab, char *key, int id, char *col, dbValue *val) 
 {
     int  more, count;
     char buf[1024];
@@ -178,19 +194,17 @@ int db_select_value (dbDriver *driver,
 }
 
 /*!
- \fn  
- \brief 
- \return 
- \param 
+ \fn int db_select_CatValArray (dbDriver *driver, char *tab, char *key, char *col, char *where, dbCatValArray *cvarr)
+ \brief Select pairs key/value to array, values are sorted by key (must be integer)
+ \return number of selected values, -1 on error
+ \param driver DB driver
+ \param tab table name
+ \param key key column name
+ \param col value column name
+ \param cvarr dbCatValArray to store within
 */
-/* selet pairs key/value to array, values are sorted by key
- *
- * return: number of selected values
- *         -1 on error
- */
-
 int db_select_CatValArray ( dbDriver *driver, char *tab, char *key, char *col, char *where, 
-	                 dbCatValArray *cvarr )
+			    dbCatValArray *cvarr )
 {
     int  i, type, more, nrows;
     char buf[1024];
@@ -302,15 +316,48 @@ int db_select_CatValArray ( dbDriver *driver, char *tab, char *key, char *col, c
     return (nrows);
 }
 
-/* Sort dbCatValArray by category */
+/*!
+ \fn void db_CatValArray_sort (dbCatValArray *arr)
+ \brief Sort key/value array by key
+ \param arr dbCatValArray (key/value array)
+*/
 void
 db_CatValArray_sort ( dbCatValArray *arr )
 {
     qsort( (void *) arr->value, arr->n_values, sizeof(dbCatVal), cmpcat);
 } 
 
-/* find value by key
-*  returns: DB_FAILED, DB_OK
+/*!
+ \fn int db_CatValArray_sort_by_value (dbCatValArray *arr)
+ \brief Sort key/value array by value (currently only integer or double type is supported)
+ \return DB_OK on success, DB_FAILED on error
+ \param arr dbCatValArray (key/value array)
+*/
+int
+db_CatValArray_sort_by_value ( dbCatValArray *arr )
+{
+    switch (arr->ctype)
+    {
+    case (DB_C_TYPE_INT):
+	qsort( (void *) arr->value, arr->n_values, sizeof(dbCatVal), cmpvalueint);
+	break;
+    case (DB_C_TYPE_DOUBLE):
+	qsort( (void *) arr->value, arr->n_values, sizeof(dbCatVal), cmpvaluedouble);
+	break;
+    default:
+	return (DB_FAILED);
+    }
+    
+    return (DB_OK);
+} 
+
+/*!
+ \fn int db_CatValArray_get_value (dbCatValArray *arr, int key, dbCatVal **cv)
+ \brief Find value by key
+ \return DB_OK on success, DB_FAILED on error
+ \param arr dbCatValArray (key/value array)
+ \param key key value
+ \param cv dbCatVal structure (key/value) to store within
 */
 int
 db_CatValArray_get_value ( dbCatValArray *arr, int key, dbCatVal **cv )
@@ -325,8 +372,13 @@ db_CatValArray_get_value ( dbCatValArray *arr, int key, dbCatVal **cv )
     return DB_OK;
 }
 
-/* find value by key
-*  returns: DB_FAILED, DB_OK
+/*!
+ \fn int db_CatValArray_get_value_int (dbCatValArray *arr, int key, int *val)
+ \brief Find value (integer) by key
+ \return DB_OK on success, DB_FAILED on error
+ \param arr dbCatValArray (key/value array)
+ \param key key value
+ \param val found value (integer)
 */
 int
 db_CatValArray_get_value_int ( dbCatValArray *arr, int key, int *val )
@@ -341,8 +393,13 @@ db_CatValArray_get_value_int ( dbCatValArray *arr, int key, int *val )
     return DB_OK;
 }
 
-/* find value by key
-*  returns: 0 not found, 1 OK
+/*!
+ \fn int db_CatValArray_get_value_double (dbCatValArray *arr, int key, double *val)
+ \brief Find value (double) by key
+ \return DB_OK on success, DB_FAILED on error
+ \param arr dbCatValArray (key/value array)
+ \param key key value
+ \param val found value (double)
 */
 int
 db_CatValArray_get_value_double ( dbCatValArray *arr, int key, double *val )
@@ -358,4 +415,3 @@ db_CatValArray_get_value_double ( dbCatValArray *arr, int key, double *val )
     
     return DB_OK;
 }
-
