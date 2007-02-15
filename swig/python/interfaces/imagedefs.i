@@ -19,9 +19,6 @@ int I_ask(char *, char *, int);
 char *I_bandname(int);
 char *I_bandname_prefix(void);
 int I_set_band_prefix(char *);
-int *I_ask_bands(int);
-/* ask_colors.c */
-int I_ask_ref_colors(char *, struct Ref *);
 /* ask_group.c */
 int I_ask_group_old(char *, char *);
 int I_ask_group_new(char *, char *);
@@ -183,22 +180,12 @@ int I_ask_sigset_file_any(char *, char *, char *, char *);
 int I_ask_sigset_file_old(char *, char *, char *, char *);
 FILE *I_fopen_sigset_file_new(char *, char *, char *);
 FILE *I_fopen_sigset_file_old(char *, char *, char *);
-/* tape_info.c */
-int I_clear_tape_info(struct Tape_Info *);
-int I_edit_tape_info(struct Tape_Info *);
 /* target.c */
 int I_get_target(char *, char *, char *);
 int I_put_target(char *, char *, char *);
 /* title.c */
 int I_get_group_title(char *, char *, int);
 int I_put_group_title(char *, char *);
-/* v_exec.c */
-int I_v_exec(void);
 /* var.c */
 double I_variance(double, double, int);
 double I_stddev(double, double, int);
-/* vask_group.c */
-int I_vask_group_new(char **, char *, char *);
-int I_vask_group_old(char **, char *, char *);
-int I_vask_subgroup_new(char **, char *, char *, int, char *);
-int I_vask_subgroup_old(char **, char *, char *, int, char *);
