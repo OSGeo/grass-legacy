@@ -47,3 +47,10 @@ typedef struct {
 #define DISP_DIR   0x08
 #define DISP_ATTR  0x10
 #define DISP_ZCOOR 0x20
+
+#define RENDER_GPP	0
+#define RENDER_RPA	1
+#define RENDER_DP	2
+#define RENDER_DPC	3
+
+extern int render;

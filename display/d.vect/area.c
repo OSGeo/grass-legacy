@@ -308,7 +308,7 @@ int darea ( struct Map_info *Map, struct cat_list *Clist,
 	if ( fcolor ) {
 	  if (!table_colors_flag && !cats_color_flag) {
 	    R_RGB_color(fcolor->r, fcolor->g, fcolor->b);
-	    G_plot_polygon ( Points->x, Points->y, Points->n_points);
+	    plot_polygon ( Points->x, Points->y, Points->n_points);
 	  }
 	  else {
 	    if (rgb) {
@@ -318,7 +318,7 @@ int darea ( struct Map_info *Map, struct cat_list *Clist,
 	      R_RGB_color(fcolor->r, fcolor->g, fcolor->b);
 	    }
 	    if (cat >= 0) {
-	      G_plot_polygon ( Points->x, Points->y, Points->n_points);
+	      plot_polygon ( Points->x, Points->y, Points->n_points);
 	    }
 	  }
 	}
