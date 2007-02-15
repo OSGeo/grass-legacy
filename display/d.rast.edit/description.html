@@ -1,17 +1,3 @@
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
-<html>
-<head>
-<title>d.rast.edit</title>
-<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
-<link rel="stylesheet" href="grassdocs.css" type="text/css">
-</head>
-<body bgcolor="white">
-
-<img src="grass_logo.png" alt="GRASS logo"><hr align=center size=6 noshade>
-
-<h2>NAME</h2>
-<em><b>d.rast.edit</b></em>
-
 <H2>DESCRIPTION</H2>
 
 The <EM>d.rast.edit</EM> program allows users to interactively
@@ -45,13 +31,11 @@ Cell editing is done using a mouse cursor to choose menu selections
 and indicate areas on the displayed raster map that are to be edited.
 
 <P>
-
 Selections available via the <EM>Main Menu</EM> and the
 subsequent functions or sub-menus are described below:
 <DL>
 <DD>
 1. Edit
-
 <BR>
 
 <B>invokes edit mode</B>, during which no graphic menus are used,
@@ -148,9 +132,7 @@ as it exits.
 <EM>d.rast.edit</EM> will not create a new raster map layer if
 the user makes no cell edits while running the program.
 
-
 <P>
-
 Be careful not to cover the graphics monitor window with another
 frame during the editing process.  In some cases, the <EM>redraw</EM> option
 will be able to remove traces of other frames;  otherwise, the graphics monitor
@@ -158,9 +140,7 @@ will not be refreshed until after <EM>d.rast.edit</EM> exits.  Further note,
 however, that this has only been tested on <EM>SUN</EM> workstations, using a
 modified <EM>SUNVIEW</EM> graphics monitor driver.
 
-
 <P>
-
 The primary bane of the <EM>d.rast.edit</EM> program involves large map layers
 (with lots of rows and columns) and/or slow computers,
 since the program must read and write raster map layers row by row for the full
@@ -178,15 +158,11 @@ the user needs to use <EM> <A HREF="d.zoom.html">d.zoom</A></EM> to access a dif
 map, he must wait for a read and write for each entrance
 and egress of the edit mode.
 
-
 <P>
-
 There is no "undo" command or way to exit edit mode without saving
 changes.
 
-
 <P>
-
 It would be nice to incorporate a scrollable version of <EM>
 <A HREF="d.legend.html">d.legend</A>
 </EM>
@@ -196,18 +172,14 @@ to select the category values from a graphical legend when editing
 cell values (thereby saving a trip to the text frame to type in the
 new value).
 
-
 <P>
-
 Perhaps method(s) for multiple  or mass cell edits would be useful.
 This could be done by providing modes in which the user may:
 1) edit a block of cells to a given value by drawing a box;
 2) be able to choose a given value which is automatically used as
 the new value on each cell chosen until a different value is desired.
 
-
 <P>
-
 There is no interrupt handling.  This could leave files in .tmp
 or (rarely) result in half-baked raster maps.  The original file
 would survive unscathed by an interrupt at most any point in execution,
@@ -221,7 +193,6 @@ to bring it back into shape).  Beware of exiting the program
 by means other than using <EM>exit</EM> on the <EM>Main Menu</EM>.
 
 <P>
-
 The program has no method to enter new values beyond the current range of
 categories, but additional programming could make it so.
 
@@ -241,6 +212,5 @@ categories, but additional programming could make it so.
 
 Chris Rewerts, Agricultural Engineering, 
 Purdue University
-<p><i>Last changed: $Date$</i>
-</body>
-</html>
+<p>
+<i>Last changed: $Date$</i>
