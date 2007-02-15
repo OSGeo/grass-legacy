@@ -30,3 +30,5 @@
 %include "interfaces/imagedefs.i"
 %include "interfaces/vect.i"
 %include "interfaces/dig_structs.i"
+%include "interfaces/dig_types.i"
+
