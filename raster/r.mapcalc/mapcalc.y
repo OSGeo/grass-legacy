@@ -81,6 +81,7 @@ program		: defs			{ $$ = result = $1;		}
 defs		: def			{ $$ = list($1,NULL);		}
 		| def ';'		{ $$ = list($1,NULL);		}
 		| def ';' defs		{ $$ = list($1,$3);		}
+		| error ';' defs	{ $$ = $3;			}
 		;
 
 def		: STRING '=' exp	{ $$ = binding($1,$3); define_variable($$);	}
