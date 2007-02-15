@@ -51,9 +51,6 @@ F_open ( char *title,  char *html )
 #endif /*USE_G_SOCKS*/
     int        length;
     /* child */
-    char        buf[2000];
-    
-
     
     G_debug ( 2, "F_open(): title = %s", title);
     
@@ -70,6 +67,8 @@ F_open ( char *title,  char *html )
     }
 
     if ( pid == 0 ) { /* Child */
+	char command[2000], script[2000];
+
         G_debug ( 2, "CHILD" );
 
         /* Note: If you are forking in a Tk based apllication  you
@@ -94,9 +93,10 @@ F_open ( char *title,  char *html )
 
 
 	
-	sprintf(buf,"%s/etc/form/form", G_gisbase());
+	sprintf(command, "%s/etc/form/form", G_gisbase());
+	sprintf(script,  "%s/etc/form/form.tcl", G_gisbase());
 
-	execl ("/bin/sh", "sh", "-c", buf, NULL);
+	execl(command, "form", "-f", script, NULL);
 	
 	G_debug(2, "CHILD END\n");
 	exit (0);
