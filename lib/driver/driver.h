@@ -70,6 +70,7 @@ struct driver
 	void (*draw_line)(int,int,int,int);
 	void (*draw_point)(int,int);
 	void (*draw_bitmap)(int,int,int,const unsigned char *);
+	void (*draw_text)(const char *);
 };
 
 /* Library Functions */

@@ -5,23 +5,14 @@ include $(MODULE_TOPDIR)/include/Make/Platform.make
 include $(MODULE_TOPDIR)/include/Make/Grass.make
 include $(MODULE_TOPDIR)/include/Make/Rules.make
 
-EXTRA_CFLAGS = -I../lib
+EXTRA_CFLAGS=-I../../../lib/driver
 
 OBJS =  \
-	Can_do.o\
-	Color.o\
-	Draw_line.o\
-	Draw_point.o\
-	Get_w_box.o\
-	Get_w_line.o\
-	Get_w_pnt.o\
 	Graph_Clse.o\
 	Graph_Set.o\
-	Panel.o\
 	Polygn_abs.o\
-	Reset_clr.o \
 	Text.o\
-	line_attr.o
+	main.o
 
 ARCH_OBJS := $(foreach obj,$(OBJS),OBJ.$(ARCH)/$(obj))
 
@@ -37,7 +28,5 @@ default: $(DRIVERDIR)/HTMLMAP htmlgen
 	cat moncap.entry >> $(ETC)/monitorcap ; \
 	fi
 
-
 $(DRIVERDIR)/HTMLMAP: $(ARCH_OBJS) $(DEPENDENCIES)
-	$(CC) $(LDFLAGS) -o $@ $(XLDFLAGS) $(LIBPATH) $(ARCH_OBJS) $(LIBES) $(XLIBPATH) $(XLIB) $(XEXTRALIBS) $(MATHLIB) $(XDRLIB)
-
+	$(CC) $(LDFLAGS) -o $@ $(ARCH_OBJS) $(LIBES) $(MATHLIB) $(XDRLIB)

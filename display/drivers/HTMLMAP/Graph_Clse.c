@@ -4,9 +4,9 @@
  */
 
 
-#include "htmlmap.h"
 #include <grass/gis.h>
 #include "driverlib.h"
+#include "htmlmap.h"
 
 /* sreen dimensions defined in Graph_Set.c */
 extern int screen_top;
@@ -33,8 +33,8 @@ static int pnpoly (int npol, int *xp, int *yp, int x, int y)
 
 
 
-int 
-Graph_Close (void)
+void 
+HTML_Graph_close (void)
 {
      struct MapPoly *poly, *test_poly;
 
@@ -161,6 +161,4 @@ Graph_Close (void)
      */
 
     fclose(output);
-
-	return 0;
 }

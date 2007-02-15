@@ -1,9 +1,10 @@
 #include <string.h>
 #include <stdlib.h>
+#include <math.h>
+
 #include <grass/gis.h>
-#include "math.h"
-#include "htmlmap.h"
 #include "driverlib.h"
+#include "htmlmap.h"
 
 #define RAD_DEG 57.29578
 
@@ -52,7 +53,7 @@ static double find_azimuth (double x1, double y1, double x2, double y2)
 }
 
 
-int Polygon_abs (int *x, int *y, int n)
+void HTML_Polygon_abs (const int *px, const int *py, int n)
 {
     struct MapPoly *new;
     int i;
@@ -61,7 +62,11 @@ int Polygon_abs (int *x, int *y, int n)
  
     double min_azimuth = 1.0;
     double azimuth1, azimuth2, diff1, diff2;
+    int *x = G_malloc(n * sizeof(int));
+    int *y = G_malloc(n * sizeof(int));
 
+    memcpy(x, px, n * sizeof(int));
+    memcpy(y, py, n * sizeof(int));
 
     /* 
      * remove points that have adjacent duplicates or have differences of
@@ -174,8 +179,7 @@ int Polygon_abs (int *x, int *y, int n)
 	new = (struct MapPoly *) G_malloc (sizeof(struct MapPoly));
 
 	/* grab the last text string written as url */
-	new->url = (char *) G_malloc (strlen(last_text)+1);
-	strcpy(new->url, last_text);
+	new->url = G_store(last_text);
 
 	/* hook up new MapPoly into list */
 	new->next_poly = NULL;
@@ -183,16 +187,11 @@ int Polygon_abs (int *x, int *y, int n)
 	tail  = &(new->next_poly);
 
 	new->num_pts = n;
-	new->x_pts = (int *) G_malloc (sizeof(int) * n);
-	new->y_pts = (int *) G_malloc (sizeof(int) * n);
-
-	for (i = 0; i < n; i++) {
-	    new->x_pts[i] = x[i];
-	    new->y_pts[i] = y[i];
-	}
-
+	new->x_pts = x;
+	new->y_pts = y;
+    } else {
+	G_free(x);
+	G_free(y);
     }
-
-    return 0;
 }
 
