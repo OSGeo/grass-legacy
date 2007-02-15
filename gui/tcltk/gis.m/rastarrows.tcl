@@ -101,7 +101,7 @@ proc GmArrows::select_map { id } {
     variable node
     global mon
     
-    set m [GSelect cell]
+    set m [GSelect cell title "Aspect map" parent [winfo containing [winfo pointerx .] [winfo pointery .]]]
     if { $m != "" } { 
         set GmArrows::opt($id,1,map) $m
         GmTree::autonamel "arrows for $m"
@@ -113,7 +113,7 @@ proc GmArrows::select_magmap { id } {
     variable node
     global mon
     
-    set m [GSelect cell]
+    set m [GSelect cell title "Slope/intensity map" parent [winfo containing [winfo pointerx .] [winfo pointery .]]]
     if { $m != "" } { 
         set GmArrows::opt($id,1,magnitude_map) $m
         GmTree::autonamel "arrows for $m"

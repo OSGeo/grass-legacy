@@ -770,7 +770,7 @@ proc MapCanvas::zoom_map { mon } {
 proc MapCanvas::zoom_region { mon } {
 	variable can
 
-	set reg [GSelect windows]
+	set reg [GSelect windows parent .mapcan($mon) title "Saved region"]
 	if { $reg != "" } {
 		MapCanvas::zoom_gregion $mon [list "region=$reg"]
 		$can($mon) delete map$mon

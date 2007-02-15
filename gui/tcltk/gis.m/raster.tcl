@@ -108,7 +108,7 @@ proc GmRaster::select_map { id } {
     variable node
     global mon
 
-    set m [GSelect cell]
+    set m [GSelect cell title "Raster map" parent [winfo containing [winfo pointerx .] [winfo pointery .]]]
     if { $m != "" } {
         set GmRaster::opt($id,1,map) $m
         GmTree::autonamel $m
@@ -121,7 +121,7 @@ proc GmRaster::select_drapemap { id } {
     variable node
     global mon
 
-    set m [GSelect cell]
+    set m [GSelect cell title "Raster drape map" parent [winfo containing [winfo pointerx .] [winfo pointery .]]]
     if { $m != "" } {
         set GmRaster::opt($id,1,drapemap) $m
         GmTree::autonamel $m

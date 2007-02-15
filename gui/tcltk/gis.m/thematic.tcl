@@ -124,7 +124,7 @@ proc GmThematic::set_option { node key value } {
 proc GmThematic::select_map { id } {
     variable tree
     variable node
-    set m [GSelect vector]
+    set m [GSelect vector title "Vector map" parent [winfo containing [winfo pointerx .] [winfo pointery .]]]
     if { $m != "" } { 
         set GmThematic::opt($id,1,map) $m
         GmTree::autonamel "thematic map for $m"
@@ -187,7 +187,7 @@ proc GmThematic::show_data { id } {
 # select symbols from directories
 proc GmThematic::select_symbol { id } {
     variable opt
-    set i [GSelect symbol]
+    set i [GSelect symbol title "Vector point symbol" parent [winfo containing [winfo pointerx .] [winfo pointery .]]]
     if { $i != "" } {
         set GmThematic::opt($id,1,icon) $i
     }

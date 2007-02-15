@@ -213,7 +213,7 @@ proc GmVector::set_option { node key value } {
 
 # select vector map from list and put its name in layer node
 proc GmVector::select_map { id } {
-    set m [GSelect vector]
+    set m [GSelect vector title "Vector map" parent [winfo containing [winfo pointerx .] [winfo pointery .]]]
     if { $m != "" } { 
         set GmVector::opt($id,1,vect) $m
         GmTree::autonamel $m
@@ -222,7 +222,7 @@ proc GmVector::select_map { id } {
 
 # select vector for output map from v.extract
 proc GmVector::select_qmap { id } {
-    set m [GSelect vector]
+    set m [GSelect vector title "Vector output map" parent [winfo containing [winfo pointerx .] [winfo pointery .]]]
     if { $m != "" } { 
         set GmVector::opt($id,1,qmap) $m
         GmTree::autonamel $m
@@ -261,7 +261,7 @@ proc GmVector::show_data { id } {
 # select point symbols
 proc GmVector::select_symbol { id } {
     variable opt
-    set i [GSelect symbol]
+    set i [GSelect symbol title "Vector point symbol" parent [winfo containing [winfo pointerx .] [winfo pointery .]]]
     if { $i != "" } {
         set GmVector::opt($id,1,icon) $i
     }
