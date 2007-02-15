@@ -52,9 +52,9 @@ bind all <Button-5> "handle_scroll -120"
 
 ##############################################################
 
-proc GSelect { element } {
-    
-    set sel [GSelect_::create $element]
+proc GSelect { element args } {
+
+    set sel [eval [linsert $args 0 GSelect_::create $element]]
     return $sel
 
 }
@@ -62,16 +62,47 @@ proc GSelect { element } {
 namespace eval GSelect_ {
     variable count 1
     variable dblclick
-    variable selected ""
+    variable array selwin
 }
 
-proc GSelect_::create { element } {
+proc GSelect_::create { element args } {
     global env
-    variable selected
+    variable selwin
+    variable count
+    
+    incr count
+    set id $count
+    
+    set selwin($id,self) selwin
+    set title [G_msg "Select item"]
+    set selwin($id,selected) ""
+    
+    if {[lsearch -exact $args "title"] > -1} {
+	append title " - [lindex $args [expr [lsearch -exact $args title]+1]]"
+    }
+# Leave selection on top of caller window till it's closed
+    set parentwin "."
+    if {[lsearch -exact $args "parent"] > -1} {
+    	set parentwin [lindex $args [expr [lsearch -exact $args "parent"]+1]]
+    	if { [string length $parentwin] > 1 } {
+    		set selwin($id,self) [regsub -all {[[:space:]]|[[:punct:]]} ".selwin[string range $parentwin 1 [string length $parentwin]]" ""]
+    	} elseif {[lsearch -exact $args "title"] > -1} { set selwin($id,self) [regsub -all {[[:space:]]|[[:punct:]]} ".selwin$title" ""] }
+    } 
+    set selwin($id,self) ".$selwin($id,self)"
+    set selftop "$selwin($id,self)top"
 
-    toplevel .selwin -width 40 -height 80 
-    set sw    [ScrolledWindow .selwin.sw -relief sunken -borderwidth 2 ]
-    wm title .selwin "Select item"
+# Do not create another select window, if one already exists.
+    if {[winfo exists $selwin($id,self)]} {
+    	raise $selwin($id,self) 
+    	focus $selwin($id,self) 
+    	return
+    }
+
+    toplevel $selwin($id,self) -width 300 -height 400 
+    set sw    [ScrolledWindow $selwin($id,self).sw -relief sunken -borderwidth 2 ]
+    
+    wm title $selwin($id,self) $title
+    wm transient $selwin($id,self) $parentwin
 
     set tree  [Tree $sw.tree \
                    -relief flat -borderwidth 0 -width 15 -highlightthickness 0\
@@ -85,19 +116,22 @@ proc GSelect_::create { element } {
     regexp -- {(.+)x(.+)([+-].+)([+-].+)} [wm geometry .] g w h x y
     #set w [expr int(2*$w/3)]
     set w 300
-    set h 500
-    wm geometry .selwin ${w}x$h$x$y
+    set h 400
+    wm geometry $selwin($id,self) ${w}x$h$x$y
 
     pack $sw    -side top  -expand yes -fill both
     pack $tree  -side top -expand yes -fill both 
 
-    $tree bindText  <ButtonPress-1>        "GSelect_::select $tree"
-    $tree bindImage <ButtonPress-1>        "GSelect_::select $tree"
-    $tree bindText  <Double-ButtonPress-1> "GSelect_::selectclose $tree"
-    $tree bindImage <Double-ButtonPress-1> "GSelect_::selectclose $tree"
-
+    $tree bindText  <ButtonPress-1>        "GSelect_::select $id $tree"
+    $tree bindImage <ButtonPress-1>        "GSelect_::select $id $tree"
+    $tree bindText  <Double-ButtonPress-1> "GSelect_::selectclose $id $tree"
+    $tree bindImage <Double-ButtonPress-1> "GSelect_::selectclose $id $tree"
+    if {[lsearch $args "multiple"] >= 0} {
+    	$tree bindText  <Control-ButtonPress-1> "GSelect_::select_add $id $tree"
+    }
+    
     set location_path "$env(GISDBASE)/$env(LOCATION_NAME)/"
-    set current_mapset $env(MAPSET)
+    set current_mapset "$env(MAPSET)"
     set sympath "$env(GISBASE)/etc/symbol/"
     
     if {$element != "symbol"} {
@@ -140,69 +174,91 @@ proc GSelect_::create { element } {
     $tree configure -redraw 1
 
     # buttons
-    button .selwin.ok -text Ok -command {
-        destroy .selwin
-    }
-    button .selwin.cancel -text Cancel -command {
-        set GSelect_::selected ""
-        destroy .selwin
-    }
-    pack .selwin.ok .selwin.cancel -side left -expand yes
+    button $selwin($id,self).ok -text [G_msg "Ok"] -command "destroy $selwin($id,self)"
+    button $selwin($id,self).cancel -text [G_msg "Cancel"] -command "
+        set selwin($id,selected) {}
+        destroy $selwin($id,self)
+    "
+    pack $selwin($id,self).ok $selwin($id,self).cancel -side left -expand yes
 
 
     # ScrollView
-    toplevel .selwintop -relief raised -borderwidth 2
-    wm protocol .selwintop WM_DELETE_WINDOW {
+    toplevel $selftop -relief raised -borderwidth 2
+    wm protocol $selftop WM_DELETE_WINDOW {
         # don't kill me
     }
-    wm overrideredirect .selwintop 1
-    wm withdraw .selwintop
-    wm transient .selwintop .
-    ScrollView .selwintop.sv -window $tree -fill black
-    pack .selwintop.sv -fill both -expand yes
+    wm overrideredirect $selftop 1
+    wm withdraw $selftop
+    wm transient $selftop $selwin($id,self)
+    ScrollView $selftop.sv -window $tree -fill black
+    pack $selftop.sv -fill both -expand yes
 
-    tkwait window .selwin
+    tkwait window $selwin($id,self)
 
-    destroy .selwintop
+    destroy $selftop 
 
-    if { $selected != "" } {
-        regexp {([^@]+)@(.+)} $selected x file mapset
-        
-	foreach sel [ lsort [glob -nocomplain $sympath/*] ]  {
-	    set sel [file tail $sel]
-	     if {$mapset == $sel} {
-		 return "$sel/$file"
-		 exit
-	     }  
-	}
-	
-	if { $mapset == $current_mapset} {
-            return $file    
-        } 
- 
-	if {$mapset != $current_mapset} {
-            return "$file@$mapset"
+    if { $selwin($id,selected) != "" } {
+	set ret ""
+	set len [llength $selwin($id,selected)]
+	for {set i 0}  {$i < $len} {incr i} {
+		if {$len>0 && $i<[expr $len-1]} {
+			regexp {([^@]+)@(.+),} [lindex $selwin($id,selected) $i] x file mapset
+		} else {
+			regexp {([^@]+)@(.+)} [lindex $selwin($id,selected) $i] x file mapset
+		}
+		foreach sel [ lsort [glob -nocomplain $sympath/*] ]  {
+		    set sel [file tail $sel]
+		     if {$mapset == $sel} {
+			 return "$sel/$file"
+			 exit
+		     }  
+		}
+		
+		if { $mapset == $current_mapset} {
+			append ret $file
+		} 
+	 
+		if {$mapset != $current_mapset} {
+			append ret "$file@$mapset"
+		}
+		if {$len > 0 && $i < [expr $len-1]} {
+			append ret ","
+		}
         }
+	return $ret
     }
 
     return ""
 }
 
 
-proc GSelect_::select { tree node } {
-    variable selected
+proc GSelect_::select { id tree node } {
+    variable selwin
  
     set parent [$tree parent $node]
     if { $parent == "root" } { return }
  
     $tree selection set $node
     update
-    set selected $node
+    set selwin($id,selected) $node
 }
 
-proc GSelect_::selectclose { tree node } {
-    GSelect_::select $tree $node
-    destroy .selwin
+proc GSelect_::select_add { id tree node} {
+    variable selwin
+ 
+    set parent [$tree parent $node]
+    if { $parent == "root" } { return }
+ 
+    $tree selection add $node
+    update
+    append selwin($id,selected) ", $node"
+}
+
+proc GSelect_::selectclose { id tree node } {
+    variable selwin
+
+    GSelect_::select $tree $node $id 
+    destroy $selwin($id,self)
 }
 
 proc GSelect_::moddir { idx tree node } {
