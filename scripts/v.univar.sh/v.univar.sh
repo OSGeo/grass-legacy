@@ -63,6 +63,9 @@ if [ "$1" != "@ARGS_PARSED@" ] ; then
   exec g.parser "$0" "$@"
 fi
 
+echo "WARNING: This module is superseded and will be removed in future versions" 1>&2
+echo "         of GRASS. Use the v.univar instead." 1>&2
+
 PROG=`basename $0`
 
 #### check if we have awk
