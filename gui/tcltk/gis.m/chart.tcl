@@ -106,7 +106,7 @@ proc GmChart::set_option { node key value } {
 proc GmChart::select_map { id } {
     variable tree
     variable node
-    set m [GSelect vector]
+    set m [GSelect vector title "Vector map for chart" parent [winfo containing [winfo pointerx .] [winfo pointery .]]]
     if { $m != "" } { 
         set GmChart::opt($id,1,map) $m
         GmTree::autonamel "chart for $m"

@@ -128,7 +128,7 @@ proc GmLegend::mouseset { id } {
 proc GmLegend::select_map { id } {
     variable tree
     variable node
-    set m [GSelect cell]
+    set m [GSelect cell title "Raster map for legend" parent [winfo containing [winfo pointerx .] [winfo pointery .]]]
     if { $m != "" } { 
         set GmLegend::opt($id,1,map) $m
         GmTree::autonamel "legend for $m"

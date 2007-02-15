@@ -98,7 +98,7 @@ proc GmRgbhis::set_option { node key value } {
 proc GmRgbhis::select_map1 { id } {
     variable tree
     variable node
-    set m1 [GSelect cell]
+    set m1 [GSelect cell title "Raster map for red or hue channel" parent [winfo containing [winfo pointerx .] [winfo pointery .]]]
     if { $m1 != "" } { 
         set GmRgbhis::opt($id,1,map1) $m1
         GmTree::autonamel "RGB-HIS $m1"
@@ -108,7 +108,7 @@ proc GmRgbhis::select_map1 { id } {
 proc GmRgbhis::select_map2 { id } {
     variable tree
     variable node
-    set m2 [GSelect cell]
+    set m2 [GSelect cell title "Raster map for green or intensity channel" parent [winfo containing [winfo pointerx .] [winfo pointery .]]]
     if { $m2 != "" } { 
         set GmRgbhis::opt($id,1,map2) $m2
     }
@@ -116,7 +116,7 @@ proc GmRgbhis::select_map2 { id } {
 proc GmRgbhis::select_map3 { id } {
     variable tree
     variable node
-    set m3 [GSelect cell]
+    set m3 [GSelect cell title "Raster map for blue or saturation channel" parent [winfo containing [winfo pointerx .] [winfo pointery .]]]
     if { $m3 != "" } { 
         set GmRgbhis::opt($id,1,map3) $m3
     }

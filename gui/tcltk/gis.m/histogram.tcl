@@ -98,7 +98,7 @@ proc GmHist::select_map { id } {
     variable node
     global mon
     
-    set m [GSelect cell]
+    set m [GSelect cell title "Raster map for histogram" parent [winfo containing [winfo pointerx .] [winfo pointery .]]]
     if { $m != "" } { 
         set GmHist::opt($id,1,map) $m
         GmTree::autonamel "histogram of $m"

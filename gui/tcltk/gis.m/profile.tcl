@@ -51,7 +51,7 @@ proc GmProfile::select_rast { } {
 	variable pmap
 	variable status
     
-    set m [GSelect cell]
+    set m [GSelect cell title "Raster map for profile" parent [winfo containing [winfo pointerx .] [winfo pointery .]]]
     if { $m != "" } { 
         set pmap $m
     }
@@ -491,7 +491,6 @@ proc GmProfile::pdraw { } {
 			exit 1
 		}
 	}
-	
 	# add label for total transect distance
 	$pcan create text $right $xscaletop \
 		-text "$cumdist" \

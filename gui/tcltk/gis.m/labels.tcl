@@ -91,7 +91,7 @@ proc GmLabels::set_option { node key value } {
 }
 
 proc GmLabels::select_labels { id } {
-    set m [GSelect paint/labels]
+    set m [GSelect paint/labels title "Labels for vectors" parent [winfo containing [winfo pointerx .] [winfo pointery .]]]
     if { $m != "" } { 
         set GmLabels::opt($id,1,map) $m
         GmTree::autonamel $m
