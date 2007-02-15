@@ -68,7 +68,7 @@
 #%option
 #% key: outfile
 #% type: string
-#% gisprompt: old,cell,raster
+#% gisprompt: new,cell,raster
 #% description: Resulting output map 
 #% required : yes
 #%end
