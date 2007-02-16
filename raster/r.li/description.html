@@ -14,7 +14,7 @@
 
 <H2>DESCRIPTION</H2>
 
-The r.li suite is a toolset for multiscale analysis of landscape structure.
+The <em>r.li</em> suite is a toolset for multiscale analysis of landscape structure.
 <p>
 How to calculate an index in a raster map:
 
@@ -29,14 +29,14 @@ How to calculate an index in a raster map:
 <H2>NOTE</H2>
 
 Also the <em>r.li.daemon</em> has a main function and it can be run, but it is only a
-template for new index development. Then the function has no meaning,
-it can be used only for debug.
-
+template for development of new indices.
+<!-- mhh ??: -->
+The function itself has no meaning, it can be used only for debug.
 
 <H2>EXAMPLE</H2>
 
-To calculate a patch density index on a whole geology raster map in
-Spearfish, using a 5x5 moving window, follow this procedure:
+To calculate a patch density index on a whole 'geology' raster map in the
+Spearfish region, using a 5x5 moving window, follow this procedure:
 
 <ol>
 <li> CREATE A NEW CONFIGURATION FILE
@@ -58,10 +58,14 @@ Spearfish, using a 5x5 moving window, follow this procedure:
   <li> Close <em>r.li.setup</em> window
   </ol>
 <li> CALCULATE PATCHDENSITY INDEX
-  <ol> set region settings to geology raster map: <tt>g.region rast=geology -p</tt>
-  <li> run r.li.patchdensity:
+<ol>
+	<li>	set region settings to geology raster map:
 <div class="code"><pre>
-         r.li.patchdensity map=geology conf=my_conf out=patchdens
+	g.region rast=geology -p
+</pre></div>
+	<li> run <em>r.li.patchdensity</em>:
+<div class="code"><pre>
+        r.li.patchdensity map=geology conf=my_conf out=patchdens
 </pre></div>
   </ol>
 </ol>

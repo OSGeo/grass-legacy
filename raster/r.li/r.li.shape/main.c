@@ -23,6 +23,7 @@ int main(int argc, char *argv[]){
 	G_gisinit(argv[0]);
 	module = G_define_module();
 	module->description =_("Calculates shape index on a raster map");
+	module->keywords = _("raster, landscape structure analysis, patch index");
 	
 	/* define options */
 	

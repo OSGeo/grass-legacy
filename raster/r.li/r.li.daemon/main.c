@@ -20,14 +20,15 @@ int main(int argc, char *argv[]){
 	G_gisinit(argv[0]);
 	module = G_define_module();
 	module->description =_("Calculates <simple> index on a raster map");
-	
+	module->keywords = _("raster, landscape structure analysis, job launcher");
+
 	/* define options */
 	
 	raster = G_define_standard_option(G_OPT_R_MAP);
 	
 	conf = G_define_option();
 	conf->key = "conf";
-	conf->description = "areas configuration file";
+	conf->description = "Areas configuration file";
 	conf->gisprompt = "old_file,file,input";
 	conf->type = TYPE_STRING;
 	conf->required = YES;

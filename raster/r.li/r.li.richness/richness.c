@@ -24,8 +24,6 @@
 #include "../r.li.daemon/avl.h"
 #include "../r.li.daemon/daemon.h"
 
-
-
 double calculate(area_des ad, int fd,double *result);
 double calculateD(area_des ad, int fd,double *result);
 double calculateF(area_des ad, int fd,double *result);
@@ -38,7 +36,8 @@ int main(int argc, char *argv[])
     G_gisinit(argv[0]);
     module = G_define_module();
     module->description =_("Calculates dominance's diversity index on a raster map");
-    
+    module->keywords = _("raster, landscape structure analysis, dominance index");
+
     /* define options */
     
     raster = G_define_standard_option(G_OPT_R_MAP);

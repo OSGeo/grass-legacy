@@ -24,8 +24,6 @@
 #include "../r.li.daemon/GenericCell.h"
 #include "../r.li.daemon/daemon.h"
 
-
-
 int calculate(int fd, area_des ad, double *result);
 int calculateD(int fd, area_des ad, double *result);
 int calculateF(int fd, area_des ad, double *result);
@@ -37,6 +35,7 @@ int main(int argc, char *argv[])
     G_gisinit(argv[0]);
     module = G_define_module();
     module->description = _("Calculates range of patch area size on a raster map");
+    module->keywords = _("raster, landscape structure analysis, patch index");
 
     /* define options */
     raster = G_define_standard_option(G_OPT_R_MAP);
