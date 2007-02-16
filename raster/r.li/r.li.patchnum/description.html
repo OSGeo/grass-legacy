@@ -6,19 +6,13 @@ This index is calculated using a 4 neighbour algorithm<br>
 
 <H2>EXAMPLES</H2>
 To calculate patch number index on map my_map, using 
-~/.r.li/history/my_conf configuration file and saving results in
+<em>my_conf</em> configuration file and saving results in
 my_out file run:
 <div class="code"><pre>
 r.li.patchnumber map=my_map conf=my_conf out=my_out
 </pre></div>
-Note that you MUST NOT USE ABSOLUTE PATH NAME for 
-output files, because conf output files are raster if moving window disposition was 
-selected, otherwise they are in ~/.r.li/output folder.
 
 <H2>NOTES</H2>
-Do not use absolute path names for output files. They are raster 
-if moving window disposition was selected, otherwise they are in 
-~/.r.li/output folder.
 
 An that is full of null values is considered to have zero patch. <br>
 If you want to have null values instead run <br>
@@ -36,14 +30,11 @@ after index calculation.<br>
 Claudio Porta and Lucio Davide Spano, students of Computer Science 
 University of Pisa (Italy).<br>
 Commission from Faunalia Pontedera (PI) (www.faunalia.it)<br>
-This program is free software under the GPL (>=v2)
-Read the COPYING file that comes with GRASS for details.
 
 <H2>BUGS</h2>
 Please send bugs reports to 
 <a href="mailto:spano@cli.di.unipi.it">spano@cli.di.unipi.it</a>,
 <a href="mailto:porta@cli.di.unipi.it">porta@cli.di.unipi.it</a><BR>
 
-<BR>
 
 <p><i>Last changed: $Date$</i>

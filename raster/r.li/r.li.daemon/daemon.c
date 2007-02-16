@@ -93,12 +93,9 @@ int calculateIndex(char *file, int f(int, char **, area_des, double *),\
 	/*########################################################	
 	  -----------------create area queue----------------------
 	  #########################################################*/
-	
-	/*  if you don't want use absolute path change the sprintf with this, 
-	but remember to change also the documentation of all the indexes 
-	and to remove the button to choose file
-	sprintf(pathSetup, "%s/.r.li/history/%s", getenv("HOME"), file);*/
-	sprintf(pathSetup, file);
+
+	/* TODO: check if this path is portable */
+	sprintf(pathSetup, "%s/.r.li/history/%s", getenv("HOME"), file);
 	parsed = parseSetup(pathSetup, l, g, raster);
 	
 	/*########################################################
