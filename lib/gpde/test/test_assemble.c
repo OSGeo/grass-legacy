@@ -67,7 +67,7 @@ N_array_2d *create_status_array_2d()
 
 #pragma omp parallel for private (i, j) shared (data)
     for (j = 0; j < TEST_N_NUM_ROWS; j++) {
-	for (j = 0; j < TEST_N_NUM_COLS; j++) {
+	for (i = 0; i < TEST_N_NUM_COLS; i++) {
 
 	    if (j == 0) {
 		N_put_array_2d_value_cell(data, i, j, 2);
