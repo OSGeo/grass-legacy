@@ -5,7 +5,6 @@ SUBDIRS = \
 	datetime \
 	gis \
 	gmath \
-	gpde \
 	linkm \
 	driver \
 	pngdriver \
@@ -29,6 +28,7 @@ SUBDIRS = \
 	sites \
 	rst \
 	g3d \
+	gpde \
 	dspf \
 	symbol \
 	init \
