@@ -1,14 +1,45 @@
 <H2>DESCRIPTION</H2>
 
 <EM>r.li.setup</EM>  creates and shows configuration files for the 
-others r.li programs. For a general introduction, see <a href="r.li.html">r.li</a>.
+others r.li programs. For a general introduction, see 
+<a href="r.li.html">r.li</a>.
 <br>
 The configurations are raster map indipendent, 
 it means that you can use a file created on a raster map for analyze any 
 other you have. <br>
 The program is completly interactive and uses a GUI to help you 
-in your choices. <br> 
-<P>
+in your choices.
+
+<h3>Analysis methods</h3>
+
+Definition of region for analysis:
+<ul>
+<li> Whole maplayer: entire map (current region),
+<li> Keyboard setting: based on keyboard selection for region definition,
+<li> Draw the sampling frame: based on interactive region selection via mouse.
+</ul>
+
+Definition of creation of sampling area:
+<ul>
+<li> Whole maplayer: use entire area selected above,
+<li> Regions: select one to many subareas via mouse,
+<li> Sample units: automated selection of sampling area (for details see below)
+<ul>
+  <li> Random nonoverlapping,
+  <li> Systematic contiguous,
+  <li> Systematic noncontiguous,
+  <li> Stratified random,
+  <li> Centered over sites (vector points).
+</ul>
+<li> Moving window: rectagular or circular with size
+<li> Select areas from the overlayed vector map (for details see below)
+</ul>
+
+<img src="sampleAreas.jpg" alt="Sampling area definition">
+
+
+<h3>Usage details</h3>
+
 The startup window shows your configuration files, you can: 
 <ol>
 <li><em><b>Load a file</b></em>: the configuration is printed using 
@@ -91,12 +122,9 @@ file in an interactive way, in three steps
    </ol>
 <li><em><b>Remove a file</b></em> the selected file is deleted from the
 available configuration files.
+<li><em><b>Help</b></em>: open this help text.
+<li><em><b>Close</b></em> module window.
 </ol>
-<img src="sampleAreas.jpg">
-
-<P><P>
-Use at your own risk. This software comes with absolutely no warranty.
-
 
 <H2>NOTES</H2>
 Configuration files are raster map indipendent because areas are saved using 
@@ -109,19 +137,17 @@ old r.le manual</A></EM><BR>
 <EM><A HREF="r.li.daemon.html">r.li.daemon</A></EM>,
 <EM><A HREF="r.li.patchdensity.html">r.li.patchdensity</A></EM>
 
-<P>
 <H2>AUTHORS</H2>
 Claudio Porta & Lucio Davide Spano, students of Computer Science 
 University of Pisa (Italy).<br>
 Commission from Faunalia Pontedera (PI)<br>
 Rebuild of r.le.setup from William L. Baker
 
-<P>
 <H2>BUGS</h2>
 Pleas send bugs reports to 
 <a href="mailto:spano@cli.di.unipi.it">spano@cli.di.unipi.it</a>, 
 <a href="mailto:porta@cli.di.unipi.it">porta@cli.di.unipi.it</a><BR>
 <a href="mailto:cavallini@faunalia.it">cavallini@faunalia.it</a>
-<BR>
+
 
 <p><i>Last changed: $Date$</i>
