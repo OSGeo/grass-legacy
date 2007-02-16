@@ -271,7 +271,7 @@ proc setKeyboardWindow {} {
 	label .kWin.scale.label1 -text " Width size (in cells)?" 
 	entry .kWin.scale.e1 -width 5 -textvariable number1 
 	grid .kWin.scale.label1 .kWin.scale.e1  -padx 3
-	label .kWin.scale.label2 -text " Hight size (in cells)?" 
+	label .kWin.scale.label2 -text " Height size (in cells)?" 
 	entry .kWin.scale.e2 -width 5 -textvariable number2 
 	grid .kWin.scale.label2 .kWin.scale.e2  -padx 3 -pady 20
 	label .kWin.scale.label3 -text " What radius size (in meters)?" -state disabled
