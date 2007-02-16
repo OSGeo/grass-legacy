@@ -26,6 +26,7 @@ int         db_CatValArray_realloc( dbCatValArray *arr, int n );
 void        db_CatValArray_free( dbCatValArray *arr);
 void        db_CatValArray_init ( dbCatValArray *arr );
 void        db_CatValArray_sort ( dbCatValArray *arr );
+int         db_CatValArray_sort_by_value ( dbCatValArray *arr );
 int         db_CatValArray_get_value ( dbCatValArray *arr, int key, dbCatVal ** );
 int         db_CatValArray_get_value_int ( dbCatValArray *arr, int key, int *val );
 int         db_CatValArray_get_value_double ( dbCatValArray *arr, int key, double *val );
