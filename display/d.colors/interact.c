@@ -92,7 +92,6 @@ interact (struct Categories *categories, struct Colors *colors, char *name, char
                 if (hi_mode && ! hi_save_mode)
                 {
                     G_get_color (at_cat, &cur_red, &cur_grn, &cur_blu, colors) ;
-                    D_reset_color( at_cat, cur_red, cur_grn, cur_blu);
                 }
 /*              tmark_category(at_cat, 0) ;*/
 		if(G_is_c_null_value(&at_cat)) tmp=0;
@@ -126,7 +125,6 @@ interact (struct Categories *categories, struct Colors *colors, char *name, char
                     cur_red = red_hi;
                     cur_grn = grn_hi;
                     cur_blu = blu_hi;
-                    D_reset_color(at_cat, cur_red, cur_grn, cur_blu) ;
                     if (hi_save_mode)
                     {
                         G_set_color (at_cat, cur_red, cur_grn, cur_blu, colors) ;
@@ -157,7 +155,6 @@ interact (struct Categories *categories, struct Colors *colors, char *name, char
                     cur_red = red_hi;
                     cur_grn = grn_hi;
                     cur_blu = blu_hi;
-                    D_reset_color(at_cat, cur_red, cur_grn, cur_blu) ;
                     if (hi_save_mode)
                     {
                         G_set_color (at_cat, cur_red, cur_grn, cur_blu, colors) ;
@@ -176,7 +173,6 @@ interact (struct Categories *categories, struct Colors *colors, char *name, char
                     case 'b': cur_blu = shift_color(cur_blu, -shift_incr) ; break ;
                     case 'B': cur_blu = shift_color(cur_blu,  shift_incr) ; break ;
                     }
-                    D_reset_color(at_cat, cur_red, cur_grn, cur_blu) ;
                     G_set_color (at_cat, cur_red, cur_grn, cur_blu, colors) ;
                     colors_changed = 1;
                 }
@@ -200,7 +196,6 @@ interact (struct Categories *categories, struct Colors *colors, char *name, char
                     if (hi_save_mode)
                         G_set_color (at_cat, cur_red, cur_grn, cur_blu, colors) ;
                 }
-                D_set_colors(colors);
                 colors_changed = 1;
                 WRITE_STATUS ;
                 break ;
@@ -215,7 +210,6 @@ interact (struct Categories *categories, struct Colors *colors, char *name, char
                         G_set_color (at_cat, cur_red, cur_grn, cur_blu, colors) ;
                 }
                 colors_changed = 1;
-                D_set_colors(colors);
                 WRITE_STATUS ;
                 break ;
             case 'c':        /* Writeout color lookup table */
@@ -236,7 +230,6 @@ interact (struct Categories *categories, struct Colors *colors, char *name, char
                     if (hi_save_mode)
                         G_set_color (at_cat, cur_red, cur_grn, cur_blu, colors) ;
                 }
-                D_set_colors(colors);
                 colors_changed = 1;
                 break ;
             case 'h': case 'H':
@@ -259,7 +252,6 @@ interact (struct Categories *categories, struct Colors *colors, char *name, char
                         colors_changed = 1;
                     }
                 }
-                D_reset_color(at_cat, cur_red, cur_grn, cur_blu) ;
                 WRITE_STATUS ;
 
                 break ;

@@ -24,8 +24,6 @@ int draw_cell (View *view, int overlay)
   if (overlay == OVER_WRITE)
     display_title (view);
 
-  D_set_colors (&colr);
-
   G_set_window (&view->cell.head);
   nrows = G_window_rows();
   ncols = G_window_cols();

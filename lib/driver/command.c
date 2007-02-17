@@ -293,15 +293,6 @@ int process_command(int c)
 	REC(&t, sizeof t);
 	COM_RGB_raster(x, y, reda, grna, blua, t ? nula : NULL);
 	break;
-    case RGB_COLORS:
-	reda = (unsigned char *) xalloc(reda, &red_alloc, 256, sizeof(*reda));
-	grna = (unsigned char *) xalloc(grna, &grn_alloc, 256, sizeof(*grna));
-	blua = (unsigned char *) xalloc(blua, &blu_alloc, 256, sizeof(*blua));
-	REC(reda, 256);
-	REC(grna, 256);
-	REC(blua, 256);
-	COM_RGB_set_colors(reda, grna, blua);
-	break;
     case BEGIN_SCALED_RASTER:
 	REC(&src[0][0], 4 * sizeof(int));
 	REC(&dst[0][0], 4 * sizeof(int));

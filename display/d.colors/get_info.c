@@ -32,14 +32,6 @@ get_map_info (char *name, char *mapset)
 	G_fatal_error(buff) ;
     }
 
-/* Set the colors for the display */
-    if(!D_set_colors(&colors))
-    {
-	fprintf (stdout, "Note, [%s] has more colors than the graphics device\n",
-	    name);
-	if (!G_yes("Continue? ", 1)) return 0;
-    };
-
     interact(&categories, &colors, name, mapset) ; 
 
 /* Wrapup graphics */

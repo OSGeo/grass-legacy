@@ -416,8 +416,6 @@ void myDcell (char *name, char *mapset, int overlay)
     if (G_read_colors (name, mapset, &clr) < 0)
         G_fatal_error(_("%s: Couldn't read color table for <%s@%s>"),
                             G_program_name(), name, mapset);
-    D_set_colors (&clr);
-
     D_set_overlay_mode (overlay);
 
     for (i = 0; i >= 0; )

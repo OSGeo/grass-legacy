@@ -18,14 +18,6 @@
  * with values between and including 0 and 255.
  *
  ******************************************************************************
- * Set_RGB_color(r,g,b)
- *     unsigned char r[256], g[256], b[256] ;
- * This contains the desired intensity functions for red, green, and blue.
- * Using the known number of available levels static arrays are filled with
- * which provide easy determination of which real color is associated with
- * any given RGB color intensity cmbination.
- *
- ******************************************************************************
  * RGB_raster(n, nrows, red, grn, blu, withzeros)
  *     int n ;
  *     int nrows ;
@@ -36,15 +28,6 @@
  * call.
  ******************************************************************************
  */
-
-static unsigned char red[256], grn[256], blu[256];
-
-void COM_RGB_set_colors(
-	const unsigned char *r, const unsigned char *g, const unsigned char *b)
-{
-	if (driver->RGB_set_colors)
-		(*driver->RGB_set_colors)(r, g, b);
-}
 
 void COM_RGB_raster(
 	int n, int nrows,

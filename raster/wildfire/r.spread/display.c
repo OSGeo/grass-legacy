@@ -104,7 +104,6 @@ void display_init (void)
 	/*figure scaling factors of a file cell to a screen unit*/
 	R_open_driver ();
 	G_make_grey_scale_colors (&colors, 0, 59);
-	D_set_colors (&colors);
 	width = r - l;
 	height = 0.9*(b - t) - 1;
 	if (width*nrows > height*ncols) {

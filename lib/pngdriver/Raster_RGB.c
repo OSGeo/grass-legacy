@@ -1,21 +1,6 @@
 
 #include "pngdriver.h"
 
-static int red[256], grn[256], blu[256];
-
-void PNG_RGB_set_colors(
-	const unsigned char *r, const unsigned char *g, const unsigned char *b)
-{
-	int i;
-
-	for (i = 0; i < 256; i++)
-	{
-		red[i] = r[i];
-		grn[i] = g[i];
-		blu[i] = b[i];
-	}
-}
-
 void PNG_RGB_raster(
 	int num, int nrows,
 	const unsigned char *r, const unsigned char *g, const unsigned char *b,
@@ -31,7 +16,7 @@ void PNG_RGB_raster(
 		if (nul && nul[x])
 			continue;
 
-		c = PNG_lookup_color(red[r[x]], grn[g[x]], blu[b[x]]);
+		c = PNG_lookup_color(r[x], g[x], b[x]);
 
 		for (y = 0; y < nrows; y++)
 		{

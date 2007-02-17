@@ -44,10 +44,6 @@ struct driver
 	void (*Polyline_rel)(const int *,const int *,int);
 	void (*Polygon_abs)(const int *,const int *,int);
 	void (*Polygon_rel)(const int *,const int *,int);
-	void (*RGB_set_colors)(
-		const unsigned char *,
-		const unsigned char *,
-		const unsigned char *);
 	void (*RGB_raster)(
 		int,int,
 		const unsigned char *,
@@ -138,7 +134,6 @@ extern void COM_Polygon_rel(const int *,const int *,int);
 extern void COM_Polyline_abs(const int *,const int *,int);
 extern void COM_Polyline_rel(const int *,const int *,int);
 /* Raster_RGB.c */
-extern void COM_RGB_set_colors(const unsigned char *,const unsigned char *,const unsigned char *);
 extern void COM_RGB_raster(int,int,const unsigned char *,const unsigned char *,const unsigned char *,const unsigned char *);
 extern void COM_begin_scaled_raster(int [2][2], int [2][2]);
 extern int COM_scaled_raster(int, int, unsigned char *, unsigned char *, unsigned char *, unsigned char *);

@@ -96,7 +96,6 @@ int main(int argc, char **argv)
 	/* read in current window */
 	G_get_window(&window) ;
 
-	D_set_colors_RGB();
 	D_set_overlay_mode(flag_o->answer);
 
 	next_row = 0;

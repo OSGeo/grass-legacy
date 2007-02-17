@@ -177,7 +177,6 @@ int main (int argc, char **argv)
 	    G_fatal_error(_("No graphics device selected"));
 
 	D_setup(1); /* 1 = clear frame */
-	D_set_colors(&pcolors);
 
 	/* draw a title for */
 	sprintf(title,"%s in mapset %s",map_name,mapset);

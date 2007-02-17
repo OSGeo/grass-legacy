@@ -536,36 +536,14 @@ void LOC_panel_delete(const char *name)
 }
 
 /*!
- * \brief initialize color arrays
- *
- * The three 256
- * member arrays, <b>red, green</b>, and <b>blue,</b> establish look-up
- * tables which translate the raw image values supplied in
- * <i>R_RGB_raster</i> to color intensity values which are then displayed on
- * the video screen. These two commands are tailor-made for imagery data coming
- * off sensors which give values in the range of 0-255.
- *
- *  \param r red
- *  \param g green
- *  \param b blue
- *  \return int
- */
-
-void LOC_set_RGB_color(unsigned char *r, unsigned char *g, unsigned char *b)
-{
-	COM_RGB_set_colors(r, g, b);
-}
-
-/*!
  * \brief draw a raster
  *
  * This is useful
  * only in fixed color mode (see <i>R_color_table_fixed</i>). Starting at
  * the current location, the <b>num</b> colors represented by the intensities
  * described in the <b>red, grn</b>, and <b>blu</b> arrays are drawn for
- * <b>nrows</b> consecutive pixel rows. The raw values in these arrays are in
- * the range of 0-255. They are used to map into the intensity maps which were
- * previously set with <i>R_set_RGB_color.</i> The <b>withzero</b> flag is
+ * <b>nrows</b> consecutive pixel rows. The values in these arrays are in
+ * the range of 0-255. The <b>withzero</b> flag is
  * used to indicate whether 0 values are to be treated as a color (1) or should
  * be ignored (0). If ignored, those screen pixels in these locations are not
  * modified. This option is useful for graphic overlays.

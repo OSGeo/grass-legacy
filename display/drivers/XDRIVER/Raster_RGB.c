@@ -11,14 +11,6 @@
  * with values between and including 0 and 255.
  *
  ******************************************************************************
- * Set_RGB_color(r,g,b)
- *     unsigned char r[256], g[256], b[256] ;
- * This contains the desired intensity functions for red, green, and blue.
- * Using the known number of available levels static arrays are filled with
- * which provide easy determination of which real color is associated with
- * any given RGB color intensity cmbination.
- *
- ******************************************************************************
  * RGB_raster(n, nrows, red, grn, blu, nul)
  *     int n ;
  *     int nrows ;
@@ -34,26 +26,7 @@
 #include <grass/gis.h>
 #include "XDRIVER.h"
 
-#ifndef min
-#define min(a, b) ((a) < (b) ? (a) : (b))
-#endif
-
 extern unsigned long find_color(unsigned int r, unsigned int g, unsigned int b);
-
-static int red[256], grn[256], blu[256];
-
-void XD_RGB_set_colors(
-	const unsigned char *r, const unsigned char *g, const unsigned char *b)
-{
-	int i;
-
-	for (i = 0; i < 256; i++)
-	{
-		red[i] = r[i];
-		grn[i] = g[i];
-		blu[i] = b[i];
-	}
-}
 
 void XD_RGB_raster(
 	int n, int nrows,
@@ -86,11 +59,7 @@ void XD_RGB_raster(
 
 		for ( ; i < n && (!nul || !nul[i]); i++)
 		{
-			int rr = red[r[i]];
-			int gg = grn[g[i]];
-			int bb = blu[b[i]];
-			unsigned long pixel = find_color(rr, gg, bb);
-
+			unsigned long pixel = find_color(r[i], g[i], b[i]);
 			XPutPixel(img, i, 0, pixel);
 		}
 
