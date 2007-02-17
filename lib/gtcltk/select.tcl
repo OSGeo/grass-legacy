@@ -257,7 +257,7 @@ proc GSelect_::select_add { id tree node} {
 proc GSelect_::selectclose { id tree node } {
     variable selwin
 
-    GSelect_::select $tree $node $id 
+    GSelect_::select $id $tree $node
     destroy $selwin($id,self)
 }
 
