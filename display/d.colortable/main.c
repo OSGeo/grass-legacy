@@ -138,8 +138,6 @@ int main(int argc, char **argv)
 	if (D_set_cur_wind(window_name))
 		G_fatal_error("Current frame not available") ;
 
-	D_set_colors(&colors);
-
 	/* Figure out where to put boxes */
 	D_get_screen_window(&t, &b, &l, &r) ;
 

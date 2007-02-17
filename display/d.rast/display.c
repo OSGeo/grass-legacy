@@ -40,9 +40,6 @@ int display(
     if (!overlay)
 	D_clear_window();
 
-    /* Set the colors for the display */
-    D_set_colors (&colors);
-
     /* Go draw the raster map */
     cell_draw(name, mapset, &colors, overlay, invert, data_type) ;
 

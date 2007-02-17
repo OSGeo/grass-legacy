@@ -208,13 +208,3 @@ int D_raster_of_type_RGB (
     return 0;
 }
 
-void D_set_colors_RGB(void)
-{
-    unsigned char array[256];
-    int i;
-
-    for (i = 0; i < 256; i++)
-	array[i] = i;
-
-    R_set_RGB_color(array, array, array);
-}

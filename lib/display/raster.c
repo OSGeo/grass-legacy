@@ -19,9 +19,6 @@
  *
  *   presumes the map is drawn from north to south
  *
- * NOTE: D_cell_draw() must be preceded by a call to D_set_colors()
- *       with the same Colors structure
- *
  * ALSO: if overlay mode is desired, then call D_set_overlay_mode(1)
  *       first.
  */
@@ -76,9 +73,7 @@ int D_draw_c_raster(
  * \brief render a raster row
  *
  * The <b>row</b> gives the map array row. The <b>raster</b>
- * array provides the categories for each raster value in that row. The
- * <b>colors</b> structure must be the same as the one passed to
- * <i>D_set_colors.</i>
+ * array provides the categories for each raster value in that row. 
  * This routine is called consecutively with the information necessary to draw a
  * raster image from north to south. No rows can be skipped. All screen pixel
  * rows which represent the current map array row are rendered. The routine

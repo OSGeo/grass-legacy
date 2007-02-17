@@ -184,7 +184,6 @@ main (int argc, char **argv)
 
 	/* Make color table */
 	make_gray_scale(&gray_colors) ;
-	D_set_colors_RGB();
 
 	D_set_overlay_mode(nulldraw->answer ? 1 : 0);
 

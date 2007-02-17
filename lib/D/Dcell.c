@@ -50,8 +50,6 @@ static int cell_draw( char *, char *, struct Colors *, int);
 	if (G_read_colors(name, mapset, &colors) == -1)
 		G_fatal_error(_("Color file for [%s] not available"), name) ;
 
-	D_set_colors (&colors);
-
 	/* Go draw the cell file */
 	cell_draw(name, mapset, &colors, overlay) ;
 

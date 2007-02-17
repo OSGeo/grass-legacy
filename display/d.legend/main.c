@@ -278,8 +278,6 @@ int main( int argc, char **argv )
 	if (D_set_cur_wind(window_name))
 	    G_fatal_error(_("Current window not available")) ;
 
-	D_set_colors(&colors);
-
 	white = D_translate_color(DEFAULT_FG_COLOR) ;
 	black = D_translate_color(DEFAULT_BG_COLOR) ;
 

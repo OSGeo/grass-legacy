@@ -110,11 +110,8 @@ int D_raster_of_type_RGB(void *, void *, void *,
 			 int, int,
 			 struct Colors *, struct Colors *, struct Colors *,
 			 RASTER_MAP_TYPE, RASTER_MAP_TYPE, RASTER_MAP_TYPE);
-void D_set_colors_RGB(void);
 /* raster2.c */
 int D_set_overlay_mode(int);
-int D_set_colors(struct Colors *);
-int D_reset_color(CELL, int, int, int);
 int D_color(CELL, struct Colors *);
 int D_c_color(CELL, struct Colors *);
 int D_d_color(DCELL, struct Colors *);
