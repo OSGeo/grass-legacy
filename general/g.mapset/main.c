@@ -23,7 +23,6 @@
 #include <grass/gis.h>
 #include <grass/raster.h>
 #include <grass/display.h>
-#include <grass/D.h>
 #include <grass/glocale.h>
 
 int 
@@ -150,7 +149,7 @@ main (int argc, char *argv[])
 	G__setenv("MONITOR",cap->name);
 	R__open_quiet();
 	if ( R_open_driver() == 0 ) {
-            Derase("white");
+            D_erase("white");
 	    D_add_to_list("d.erase");
 	    R_close_driver();
 	    R_release_driver();

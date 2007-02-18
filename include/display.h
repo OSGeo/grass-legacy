@@ -140,6 +140,7 @@ int D_parse_color(const char *, int);
 int D_raster_use_color(int);
 /* window.c */
 int D_new_window(char *, int, int, int, int);
+int D_new_window_percent(char *, float, float, float, float);
 int D_set_cur_wind(char *);
 int D_get_cur_wind(char *);
 int D_show_window(int);
@@ -147,7 +148,10 @@ int D_get_screen_window(int *, int *, int *, int *);
 int D_check_map_window(struct Cell_head *);
 int D_reset_screen_window(int, int, int, int);
 int D_timestamp(void);
-int D_remove_window(void);
-int D_erase_window(void);
+void D_remove_window(void);
+void D_erase_window(void);
+void D_erase(char *);
+void D_remove_windows(void);
+void D_full_screen(void);
 
 #endif /* GRASS_DISPLAY_H */

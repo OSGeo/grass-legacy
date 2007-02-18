@@ -10,7 +10,6 @@
 #include <stdlib.h>
 #include <string.h>
 #include <grass/gis.h>
-#include <grass/D.h>
 #include "edit.h"
 
 char new_color[28];

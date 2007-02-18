@@ -287,7 +287,7 @@ int D_get_list(char ***list, int *count )
  *  \return int
  */
 
-int D_clear_window()
+int D_clear_window(void)
 {
 	R_pad_delete_item("list") ;
 	R_pad_delete_item("cell") ;

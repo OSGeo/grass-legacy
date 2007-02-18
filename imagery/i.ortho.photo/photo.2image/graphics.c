@@ -1,5 +1,4 @@
 #include <grass/gis.h>
-#include <grass/D.h>
 #include <grass/display.h>
 #include <grass/raster.h>
 #include "globals.h"
@@ -44,7 +43,7 @@ static View *makeview (double bottom, double top, double left, double right)
 int Init_graphics (void)
 {
     /* Dclearscreen(); */
-    Dscreen();
+    D_full_screen();
 
     SCREEN_TOP    = R_screen_top();
     SCREEN_BOTTOM = R_screen_bot();

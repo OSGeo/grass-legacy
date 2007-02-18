@@ -15,7 +15,6 @@
 #include <grass/gis.h>
 #include <grass/raster.h>
 #include <grass/display.h>
-#include <grass/D.h>
 #include <grass/glocale.h>
 #include "profile.h"
 
@@ -124,17 +123,18 @@ if (max < 0) max = 0;
         G_fatal_error (_("No graphics device selected"));
 
     /* Make sure screen is clear */
-    R_standard_color(D_translate_color(DEFAULT_BG_COLOR));
-    Dclearscreen();
+    D_remove_windows();
+    R_standard_color(D_translate_color(DEFAULT_BG_COLOR)) ;
+    R_erase();
 
     /* Establish windows on screen */
 #ifdef USE_OLD_CODE
-    Dnew(MOU.name, MOU.bot, MOU.top, MOU.left, MOU.right) ;
-    Dnew(STA.name, STA.bot, STA.top, STA.left, STA.right) ;
-    Dnew(MAP.name, MAP.bot, MAP.top, MAP.left, MAP.right) ;
-    Dnew(ORIG.name, ORIG.bot, ORIG.top, ORIG.left, ORIG.right) ;
+    D_new_window_percent(MOU.name, MOU.bot, MOU.top, MOU.left, MOU.right) ;
+    D_new_window_percent(STA.name, STA.bot, STA.top, STA.left, STA.right) ;
+    D_new_window_percent(MAP.name, MAP.bot, MAP.top, MAP.left, MAP.right) ;
+    D_new_window_percent(ORIG.name, ORIG.bot, ORIG.top, ORIG.left, ORIG.right) ;
     for (i=0; i<=3; i++)
-        Dnew(profiles[i].name,profiles[i].bot,profiles[i].top,
+        D_new_window_percent(profiles[i].name,profiles[i].bot,profiles[i].top,
             profiles[i].left,profiles[i].right);
 #else
     /* This operates different than above, expect real world coords ? */
@@ -377,12 +377,12 @@ if (max < 0) max = 0;
         else if (button == 2)
         {
             D_set_cur_wind (MAP.name);
-            Derase(DEFAULT_BG_COLOR) ;
+            D_erase(DEFAULT_BG_COLOR) ;
             myDcell (d_mapname, d_mapset, 1);
             for (i=0; i<=3; i++)
             {
                 D_set_cur_wind (profiles[i].name);
-                Derase(DEFAULT_BG_COLOR) ;
+                D_erase(DEFAULT_BG_COLOR) ;
             }
             CurrentWin=0;
         }

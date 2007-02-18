@@ -10,7 +10,6 @@
 #include <grass/gis.h>
 #include <grass/raster.h>
 #include <grass/display.h>
-#include <grass/D.h>
 
 int 
 main (int argc, char *argv[])
@@ -65,9 +64,11 @@ main (int argc, char *argv[])
 	if (frame->answer == NULL)
 		R_pad_invent(frame->answer = name) ;
 
-	stat = Dnew(frame->answer, bottom, top, left, right) ;
-	if (stat == 0)
-		Dchoose(frame->answer);
+	stat = D_new_window_percent(frame->answer, bottom, top, left, right) ;
+	if (!stat)
+		stat = D_set_cur_wind(frame->answer);
+	if (!stat)
+		D_timestamp();
 
 	R_close_driver() ;
 

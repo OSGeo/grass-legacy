@@ -4,7 +4,6 @@
 #include <grass/gis.h>
 #include <grass/raster.h>
 #include <grass/display.h>
-#include <grass/D.h>
 #include <grass/glocale.h>
 
 /*
@@ -38,10 +37,13 @@ main (int argc, char *argv[])
 
     if (frame->answer)
     {
-        if(stat = Dchoose(frame->answer))
-            fprintf(stderr, _("Error choosing frame [%s]\n"), frame->answer);
+	stat = D_set_cur_wind(frame->answer);
+	if (stat)
+	    G_warning(_("Error choosing frame [%s]\n"), frame->answer);
+	else
+	    D_timestamp() ;
         R_close_driver ();
-        exit(stat) ;
+        exit(stat);
     }
 
 /* Save current frame just in case */

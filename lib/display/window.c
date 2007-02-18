@@ -99,6 +99,44 @@ pad_error:
 
 
 /*!
+ * \brief create new graphics frame, with coordinates in percent
+ *
+ * Creates a new frame <b>name</b> with
+ * coordinates <b>top, bottom, left</b>, and <b>right</b> as
+ * percentages of the screen size. If <b>name</b>
+ * is the empty string '''' (i.e., *<b>name</b> = = 0), the routine returns a
+ * unique string in <b>name.</b>
+ *
+ *  \param name
+ *  \param bottom
+ *  \param top
+ *  \param left
+ *  \param right
+ *  \return int
+ */
+
+int D_new_window_percent(char *name, float b, float t, float l, float r)
+{
+	int scr_t = R_screen_top();
+	int scr_b = R_screen_bot();
+	int scr_l = R_screen_left();
+	int scr_r = R_screen_rite();
+
+	int win_t = scr_t + (scr_b - scr_t) * (100. - t) / 100.0;
+	int win_b = scr_t + (scr_b - scr_t) * (100. - b) / 100.0;
+	int win_l = scr_l + (scr_r - scr_l) * l / 100.0;
+	int win_r = scr_l + (scr_r - scr_l) * r / 100.0;
+
+	if (win_t < scr_t) win_t = scr_t;
+	if (win_b > scr_b) win_b = scr_b;
+	if (win_l < scr_l) win_l = scr_l;
+	if (win_r > scr_r) win_r = scr_r;
+
+	return D_new_window(name, win_t, win_b, win_l, win_r);
+}
+
+
+/*!
  * \brief set current graphics frame
  *
  * Selects the frame <b>name</b> to be the current frame. The previous current frame
@@ -374,7 +412,7 @@ int D_reset_screen_window(int t,int b,int l,int r)
  *  \return int
  */
 
-int D_timestamp()
+int D_timestamp(void)
 {
 	char buff[128] ;
 	int stat ;
@@ -414,21 +452,14 @@ int D_timestamp()
  * current frame.
  *
  *  \param ~
- *  \return int
  */
 
-int D_remove_window()
+void D_remove_window(void)
 {
-	R_pad_delete() ;
-
-	R_pad_select("") ;
-
-/* Update the current window name in no-name pad */
-	R_pad_delete_item ("cur_w") ;
-
-	return 0;
+	R_pad_delete();
+	R_pad_select("");
+	R_pad_delete_item("cur_w") ;
 }
-
 
 /*!
  * \brief erase current frame
@@ -437,18 +468,62 @@ int D_remove_window()
  * screen using the currently selected color.
  *
  *  \param ~
- *  \return int
  */
 
-int D_erase_window()
+void D_erase_window(void)
 {
-	int t, b, l, r ;
+	int t, b, l, r;
 
-	D_get_screen_window(&t, &b, &l, &r) ;
-
-	R_box_abs(l, t, r, b) ;
-
+	D_get_screen_window(&t, &b, &l, &r);
+	R_box_abs(l, t, r, b);
 	R_flush();
+}
 
-	return 0;
+void D_erase(char *color)
+{
+	int t, b, l, r;
+	int colorindex;
+
+	D_get_screen_window(&t, &b, &l, &r);
+	D_clear_window();
+
+	/* Parse and select background color */
+	colorindex = D_parse_color (color, 0) ;
+	D_raster_use_color(colorindex);
+
+	/* Do the plotting */
+	R_box_abs(l, t, r, b);
+
+	/* Add erase item to the pad */
+	D_set_erase_color(color);
+}
+
+void D_remove_windows(void)
+{
+	char **pads;
+	int npads;
+	int i;
+
+	R_pad_list (&pads, &npads);
+
+	R_pad_select("");
+	R_pad_delete_item("time") ;
+	R_pad_delete_item("cur_w") ;
+
+	for (i = 0; i < npads; i++)
+	{
+		R_pad_select(pads[i]);
+		R_pad_delete();
+	}
+}
+
+void D_full_screen(void)
+{
+	D_remove_windows();
+	R_standard_color(D_translate_color(DEFAULT_BG_COLOR)) ;
+	R_erase() ;
+
+	D_new_window_percent("full_screen", 0.0, 100.0, 0.0, 100.0);
+	if (D_set_cur_wind("full_screen") == 0)
+		D_timestamp();
 }
