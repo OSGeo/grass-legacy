@@ -13,6 +13,8 @@
 #define YYDEBUG 1
 #define YYERROR_VERBOSE 1
 
+static int syntax_error_occurred;
+
 %}
 
 %union {
@@ -191,7 +193,7 @@ exp_let		: exp_cond
 		| name '=' exp_let	{ $$ = binding($1,$3); define_variable($$);	}
 		;
 
-exp		: exp_let
+exp		: exp_let		{ if (syntax_error_occurred) {syntax_error_occurred = 0; YYERROR; } else $$ = $1;	}
 		;
 
 name		: NAME
@@ -199,8 +201,6 @@ name		: NAME
 		;
 
 %%
-
-static int syntax_error_occurred;
 
 void syntax_error(const char *fmt, ...)
 {
@@ -218,6 +218,7 @@ void syntax_error(const char *fmt, ...)
 void yyerror(char *s)
 {
 	fprintf(stderr, "%s\n", s);
+	syntax_error_occurred = 0;
 }
 
 static expr_list *parse(void)
