@@ -56,8 +56,8 @@ Vect_get_num_primitives (struct Map_info *map, int type)
 
 /*!
  \fn int Vect_get_num_lines (struct Map_info *map)
- \brief get number of lines
- \return number of lines
+ \brief get number of line vectors (points, lines, centroids)
+ \return number of line vectors
  \param Map_info structure
  */
 int 
