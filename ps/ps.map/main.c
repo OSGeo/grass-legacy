@@ -127,7 +127,7 @@ int main(int argc,char *argv[])
     output_file->type = TYPE_STRING;
     output_file->gisprompt   = "new_file,file,output";
     output_file->description = _("PostScript output file");
-    output_file->required = YES;
+/*    output_file->required = YES;   Can omit for -p list page size & exit mode */
 
     map_scale = G_define_option();
     map_scale->key = "scale";
@@ -247,10 +247,6 @@ int main(int argc,char *argv[])
     
     if (copies->answer)
     {
-	G_warning(_("Using <%s> from the command line is depreciated. "
-		    "Please use the <%s> mapping instruction instead. "
-		    "The parameter <%s> will removed in future versions of GRASS."),
-		  "copies", "copies", "copies");
 	if (sscanf(copies->answer, "%d", &ps_copies) != 1)
 	{
 	    ps_copies = 1;
@@ -259,9 +255,16 @@ int main(int argc,char *argv[])
 	copies_set = 1;
     }
 
-    if ((PS.fp = fopen(output_file->answer, "w")) == NULL)
-	G_fatal_error ("%s - %s: %s", G_program_name(),
-			output_file->answer, strerror (errno));
+    if (output_file->answer) {
+	if ((PS.fp = fopen(output_file->answer, "w")) == NULL)
+	    G_fatal_error ("%s - %s: %s", G_program_name(),
+			    output_file->answer, strerror (errno));
+    }
+    else {
+	G_message(_("\nERROR: Required parameter <%s> not set:\n    (%s).\n"),
+		output_file->key, output_file->description);
+	usage(1);
+    }
 
     /* get current mapset */
     PS.cell_mapset = G_mapset();
