@@ -12,7 +12,6 @@ SUBDIRS = \
 	bitmap \
 	btree \
 	display \
-	D \
 	db \
 	vask \
 	edit \

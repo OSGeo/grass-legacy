@@ -3,7 +3,7 @@
 #include <grass/raster.h>
 #include <grass/gis.h>
 #include <grass/glocale.h>
-#include <grass/D.h>
+#include "local_proto.h"
 
 static int cell_draw( char *, char *, struct Colors *, int);
  
@@ -22,7 +22,7 @@ static int cell_draw( char *, char *, struct Colors *, int);
  *  \return int
  */
 
- int Dcell(char *name, char *mapset, int overlay)
+int Dcell(char *name, char *mapset, int overlay)
 {
 	struct Cell_head wind ;
 	struct Colors colors ;

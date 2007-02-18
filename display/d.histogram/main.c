@@ -34,7 +34,6 @@
 #include <string.h>
 #include <grass/gis.h>
 #include <grass/display.h>
-#include <grass/D.h>
 #include <grass/raster.h>
 #include <grass/glocale.h>
 #define MAIN

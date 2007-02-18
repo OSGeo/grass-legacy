@@ -1,7 +1,6 @@
 #include "globals.h"
 #include <grass/display.h>
 #include <grass/raster.h>
-#include <grass/D.h>
 #include "local_proto.h"
 
 static View *makeview (double bottom, double top, double left, double right)
@@ -46,7 +45,7 @@ int Init_graphics (void)
     R_font("romans");
     R_text_size(3*NORMAL_TEXT_SIZE/4,NORMAL_TEXT_SIZE);
 
-    Dscreen();
+    D_full_screen();
 
     SCREEN_TOP    = R_screen_top();
     SCREEN_BOTTOM = R_screen_bot();

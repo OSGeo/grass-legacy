@@ -27,7 +27,7 @@ $(ETC)/mon.stop:	$(OBJDIR)/stop.o $(DEPENDENCIES)
 $(ETC)/mon.which:	$(OBJDIR)/which.o $(DEPENDENCIES) 
 	$(CC) $(LDFLAGS) -o $@ $(OBJDIR)/which.o $(GISLIB) $(MATHLIB) $(XDRLIB) 
 $(ETC)/mon.select:	$(OBJDIR)/select.o $(DEPENDENCIES) 
-	$(CC) $(LDFLAGS) -o $@ $(OBJDIR)/select.o $(D_LIB) $(DISPLAYLIB) $(LIBES) $(MATHLIB) $(XDRLIB)
+	$(CC) $(LDFLAGS) -o $@ $(OBJDIR)/select.o $(DISPLAYLIB) $(LIBES) $(MATHLIB) $(XDRLIB)
 $(ETC)/mon.release:	$(OBJDIR)/release.o $(DEPENDENCIES) 
 	$(CC) $(LDFLAGS) -o $@ $(OBJDIR)/release.o $(LIBES)  $(MATHLIB) $(XDRLIB)
 

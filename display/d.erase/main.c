@@ -15,7 +15,6 @@
 #include <stdlib.h>
 #include <grass/gis.h>
 #include <grass/display.h>
-#include <grass/D.h>
 #include <grass/raster.h>
 #include <grass/glocale.h>
 
@@ -66,10 +65,10 @@ int main(int argc,char *argv[])
 		/* D_setup(1);
 		R_standard_color(D_translate_color(color->answer));
 		D_erase_window(); */
-		Derase(color->answer) ;
+		D_erase(color->answer) ;
 		
 		if (eraseframe->answer){
-			Dscreen();
+			D_full_screen();
 		}
 		if (!dontaddtolist->answer) {
 			sprintf(buf, "d.erase color=%s", color->answer);

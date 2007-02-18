@@ -7,7 +7,6 @@
 #include <grass/Vect.h>
 #include <grass/raster.h>
 #include <grass/display.h>
-#include <grass/D.h>
 #include <grass/colors.h>
 #include "global.h"
 #include "proto.h"

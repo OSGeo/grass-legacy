@@ -10,7 +10,6 @@
 #include <stdlib.h>
 #include <grass/gis.h>
 #include <grass/display.h>
-#include <grass/D.h>
 #include <grass/raster.h>
 #include <grass/glocale.h>
 
@@ -114,9 +113,13 @@ main (int argc, char *argv[])
 	    G_fatal_error(_("No graphics device selected"));
 
 	if (!create)
-	    Dscreen();
+	    D_full_screen();
 	else
-	    Dclearscreen();
+	{
+	    D_remove_windows();
+	    R_standard_color(D_translate_color(DEFAULT_BG_COLOR)) ;
+	    R_erase() ;
+	}
 
 	R_close_driver();
     }
