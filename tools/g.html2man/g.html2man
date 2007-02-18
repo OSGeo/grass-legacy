@@ -8,7 +8,7 @@ eval 'exec $GRASS_PERL -S $0 ${1+"$@"}'
 #
 # Main author: Daniel Calvelo Aros
 
-our $preformat;
+our $preformat, $in_bu, $in_nb, @nb_n;
 our $suppress = 0;
 
 sub CvtTable {
@@ -190,25 +190,26 @@ sub DoList {
   s#^.*</DL> *$#.PP#i;
   s#<DL>#\n.IP\n#i;
 
-  s#^.*<UL> *$#.RS#i;
-  s#<UL>#\n.RS\n#i;
+  s|<UL>|\n.RS\n|i and $in_bu=1;
+  s|</UL>|\n.RE\n|i and $in_bu=0;
 
-  s#^.*</UL> *$#.RE#i;
-  s#</UL>#\n.RE\n#i;
+  s|<OL>|\n..IP\n|i and ($in_nb++,$nb_n[$in_nb]=1); # @nb_n is a stack allowing for nested <ol>'s
+  s|</OL>|\n.PP\n|i and ($nb_n[$in_nb]=0,$in_nb--);
 
-  s#^.*<OL> *$#..IP#i;
-  s#<OL>#\n.AL\n#i;
-
-  s#^.*</OL> *$#.PP#i;
-  s#</OL>#\n.PP\n#i;
-
-  s#</LI>##i;
-  s#^<LI>$#.IP#i;
-  s#^ *<LI> *$#.IP#i;
-  s#<LI>#.IP\n#i;
-
-  s#<TD>#| #i;
-  s#<TR>#\n#i;
+  s|</LI>||i;
+  if(/<li>/){
+    $in_bu and s|<LI>|\n.IP\n|i;
+    $in_nb and (                          # since we're hand-composing the ordered lists (not using mm's .AL),
+      $n=(join ".", (                     # we use a uniform indentation and x.y.z numbering 
+        (map {$_-1} @nb_n[1..($in_nb-1)]) # nb_n's are one beyond the current number for the levels above current
+	,
+	$nb_n[$in_nb])),                  # and exact for the current level
+      s|<li>|\n.IP \\fB$n\\fR\n|i, 
+      $nb_n[$in_nb]++                     # because we post-increment after encountering each <li>
+      );
+  }
+  s/<TD>/| /i;
+  s/<TR>/\n/i;
 
   return 1;
 }
@@ -301,8 +302,10 @@ while (<INP>) {
     }
   }
 }
+$out =~ s/\n+/\n/gm;
 print OUT CvtTable($out);
 close(INP);
 close(OUT);
 
 exit;
+
