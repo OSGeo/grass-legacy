@@ -84,7 +84,7 @@ G3d_writeTileCompressed  (G3D_Map *map, int nofNum)
 
 {
   if (! G_fpcompress_writeXdrNums (map->data_fd, xdr, nofNum, map->precision, 
-				   tmpCompress, map->type == G3D_FLOAT,
+				   tmpCompress, map->type == FCELL_TYPE,
 				   map->useRle, map->useLzw)) {
     G3d_error (
 	       "G3d_writeTileCompressed: error in G_fpcompress_writeXdrNums");
@@ -109,7 +109,7 @@ G3d_writeTileCompressed  (G3D_Map *map, int nofNum)
  * 
  * Writes tile with index <em>tileIndex</em> to the file corresponding to <em>map</em>. 
  * It is assumed that the cells in <em>tile</em> are of <em>type</em> which
- * must be one of G3D_FLOAT and G3D_DOUBLE.  The actual type used to write the
+ * must be one of FCELL_TYPE and DCELL_TYPE.  The actual type used to write the
  * tile depends on the type specified at the time when <em>map</em> is initialized.
  * A tile can only be written once. Subsequent attempts to write the same tile
  * are ignored.
@@ -181,7 +181,7 @@ G3d_writeTile  (G3D_Map *map, int tileIndex, char *tile, int type)
 /*!
  * \brief 
  *
- *  Is equivalent to <tt>G3d_writeTile (map, tileIndex, tile, G3D_FLOAT).</tt>
+ *  Is equivalent to <tt>G3d_writeTile (map, tileIndex, tile, FCELL_TYPE).</tt>
  *
  *  \param map
  *  \param tileIndex
@@ -195,7 +195,7 @@ G3d_writeTileFloat  (G3D_Map *map, int tileIndex, char *tile)
 {
   int status;
   
-  if ((status = G3d_writeTile (map, tileIndex, tile, G3D_FLOAT))) return status;
+  if ((status = G3d_writeTile (map, tileIndex, tile, FCELL_TYPE))) return status;
 
   G3d_error ("G3d_writeTileFloat: error in G3d_writeTile");
   return 0;
@@ -207,7 +207,7 @@ G3d_writeTileFloat  (G3D_Map *map, int tileIndex, char *tile)
 /*!
  * \brief 
  *
- * Is equivalent to <tt>G3d_writeTile (map, tileIndex, tile, G3D_DOUBLE).</tt>
+ * Is equivalent to <tt>G3d_writeTile (map, tileIndex, tile, DCELL_TYPE).</tt>
  *
  *  \param map
  *  \param tileIndex
@@ -221,7 +221,7 @@ G3d_writeTileDouble  (G3D_Map *map, int tileIndex, char *tile)
 {
   int status;
 
-  if ((status = G3d_writeTile (map, tileIndex, tile, G3D_DOUBLE))) return status;
+  if ((status = G3d_writeTile (map, tileIndex, tile, DCELL_TYPE))) return status;
 
   G3d_error ("G3d_writeTileDouble: error in G3d_writeTile");
   return 0;
@@ -425,7 +425,7 @@ G3d_flushTilesInCube  (G3D_Map *map, int xMin, int yMin, int zMin, int xMax, int
 /*!
  * \brief 
  *
- *  Is equivalent to G3d_putValue (map, x, y, z, &value, G3D_DOUBLE).
+ *  Is equivalent to G3d_putValue (map, x, y, z, &value, DCELL_TYPE).
  *
  *  \param map
  *  \param x
@@ -442,7 +442,7 @@ G3d_putDouble ();
 /*!
  * \brief 
  *
- * Is equivalent to G3d_putValue (map, x, y, z, &value, G3D_FLOAT).
+ * Is equivalent to G3d_putValue (map, x, y, z, &value, FCELL_TYPE).
  *
  *  \param map
  *  \param x
@@ -459,7 +459,7 @@ G3d_putFloat (G3D_Map *map, int x, int y, int z, float value)
   int tileIndex, offs;
   float *tile;
 
-  if (map->typeIntern == G3D_DOUBLE) {
+  if (map->typeIntern == DCELL_TYPE) {
     if (! G3d_putDouble (map, x, y, z, (double) value)) {
       G3d_error ("G3d_putFloat: error in G3d_putDouble");
       return 0;
@@ -484,7 +484,7 @@ G3d_putFloat (G3D_Map *map, int x, int y, int z, float value)
 /*!
  * \brief 
  *
- *  Is equivalent to G3d_putValue (map, x, y, z, &value, G3D_DOUBLE).
+ *  Is equivalent to G3d_putValue (map, x, y, z, &value, DCELL_TYPE).
  *
  *  \param map
  *  \param x
@@ -501,7 +501,7 @@ G3d_putDouble  (G3D_Map *map, int x, int y, int z, double value)
   int tileIndex, offs;
   double *tile;
 
-  if (map->typeIntern == G3D_FLOAT) {
+  if (map->typeIntern == FCELL_TYPE) {
     if (! G3d_putFloat (map, x, y, z, (float) value)) {
       G3d_error ("G3d_putDouble: error in G3d_putFloat");
       return 0;
@@ -543,7 +543,7 @@ int
 G3d_putValue  (G3D_Map *map, int x, int y, int z, char *value, int type)
 
 {
-  if (type == G3D_FLOAT) {
+  if (type == FCELL_TYPE) {
     if (! G3d_putFloat (map, x, y, z, *((float *) value))) {
       G3d_error ("G3d_putValue: error in G3d_putFloat");
       return 0;

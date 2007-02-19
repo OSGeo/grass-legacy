@@ -96,7 +96,7 @@ int main(int argc, char *argv[])
 
     db_close_database_shutdown_driver(Driver);
 
-    map = G3d_openCellNew ( out_opt->answer, G3D_FLOAT,  
+    map = G3d_openCellNew ( out_opt->answer, FCELL_TYPE,  
 		G3D_USE_CACHE_DEFAULT, &region);
 
     if (map == NULL)

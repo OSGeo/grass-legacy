@@ -12,8 +12,8 @@
  * \brief 
  *
  * Makes a copy of <em>map</em> with name <em>nameOut</em> in which the
- * cells are of type G3D_FLOAT if they are G3D_DOUBLE in <em>map</em>,
- * and in G3D_DOUBLE otherwise.
+ * cells are of type FCELL_TYPE if they are DCELL_TYPE in <em>map</em>,
+ * and in DCELL_TYPE otherwise.
  * The source code can be found in <em>changetype.c</em>.
  *
  *  \param map
@@ -34,14 +34,14 @@ G3d_changeType  (void *map, char *nameOut)
   int tileXsave, tileYsave, tileZsave, nx, ny, nz;
  
   saveType = G3d_getFileType ();
-  G3d_setFileType (G3d_fileTypeMap (map) == G3D_FLOAT ? 
-		   G3D_DOUBLE : G3D_FLOAT);
+  G3d_setFileType (G3d_fileTypeMap (map) == FCELL_TYPE ? 
+		   DCELL_TYPE : FCELL_TYPE);
   G3d_getTileDimension (&tileXsave, &tileYsave, &tileZsave);
   G3d_getTileDimensionsMap (map, &tileX, &tileY, &tileZ);
   G3d_setTileDimension (tileX, tileY, tileZ);
 
   G3d_getRegionStructMap (map, &region);
-  map2 = G3d_openCellNew (nameOut, G3D_FLOAT, G3D_USE_CACHE_DEFAULT, &region);
+  map2 = G3d_openCellNew (nameOut, FCELL_TYPE, G3D_USE_CACHE_DEFAULT, &region);
 
   if (map2 == NULL) 
     G3d_fatalError ("G3d_changeType: error in G3d_openCellNew");

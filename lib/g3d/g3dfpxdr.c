@@ -166,7 +166,7 @@ G3d_initCopyToXdr  (G3D_Map *map, int sType)
   }
 
   type = map->type;
-  isFloat = (type == G3D_FLOAT);
+  isFloat = (type == FCELL_TYPE);
   externLength = G3d_externLength (type);
   eltLength = G3d_length (srcType);
   if (isFloat) xdrFun = xdr_float; else xdrFun = xdr_double;
@@ -206,7 +206,7 @@ G3d_copyToXdr  (char *src, int nofNum)
 	  return 0;
 	}
       } else {
-	if (type == G3D_FLOAT)
+	if (type == FCELL_TYPE)
 	  *((float *) tmp) = (float) *((double *) src);
 	else
 	  *((double *) tmp) = (double) *((float *) src);
@@ -242,7 +242,7 @@ G3d_initCopyFromXdr  (G3D_Map *map, int dType)
   }
 
   type = map->type;
-  isFloat = (type == G3D_FLOAT);
+  isFloat = (type == FCELL_TYPE);
   externLength = G3d_externLength (type);
   eltLength = G3d_length (dstType);
   if (isFloat) xdrFun = xdr_float; else xdrFun = xdr_double;
@@ -286,7 +286,7 @@ G3d_copyFromXdr  (int nofNum, char *dst)
 	  G3d_error ("G3d_copyFromXdr: reading xdr failed");
 	  return 0;
 	}
-	if (type == G3D_FLOAT)
+	if (type == FCELL_TYPE)
 	  *((double *) dst) = (double) *((float *) tmp);
 	else
 	  *((float *) dst) = (float) *((double *) tmp);

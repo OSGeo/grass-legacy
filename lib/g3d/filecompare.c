@@ -205,8 +205,8 @@ G3d_compareFloats  (float *f1, int p1, float *f2, int p2)
   unsigned char *c1, *c2;
   float xdrf1, xdrf2;
 
-  if (G3d_isNullValueNum (f1, G3D_FLOAT)) 
-    return G3d_isNullValueNum (f2, G3D_FLOAT);
+  if (G3d_isNullValueNum (f1, FCELL_TYPE)) 
+    return G3d_isNullValueNum (f2, FCELL_TYPE);
 
   G3d_float2xdrFloat (f1, &xdrf1);
   G3d_float2xdrFloat (f2, &xdrf2);
@@ -237,8 +237,8 @@ G3d_compareDoubles  (double *d1, int p1, double *d2, int p2)
   unsigned char *c1, *c2;
   double xdrd1, xdrd2;
 
-  if (G3d_isNullValueNum (d1, G3D_DOUBLE)) 
-    return G3d_isNullValueNum (d2, G3D_DOUBLE);
+  if (G3d_isNullValueNum (d1, DCELL_TYPE)) 
+    return G3d_isNullValueNum (d2, DCELL_TYPE);
 
   G3d_double2xdrDouble (d1, &xdrd1);
   G3d_double2xdrDouble (d2, &xdrd2);
@@ -272,8 +272,8 @@ G3d_compareFloatDouble  (float *f, int p1, double *d, int p2)
   float xdrf, fTmp;
   double xdrd, xdrd2, dTmp;
   
-  if (G3d_isNullValueNum (f, G3D_FLOAT)) 
-    return G3d_isNullValueNum (d, G3D_DOUBLE);
+  if (G3d_isNullValueNum (f, FCELL_TYPE)) 
+    return G3d_isNullValueNum (d, DCELL_TYPE);
 
   /* need this since assigning a double to a float actually may change the */
   /* bit pattern. an example (in xdr format) is the double*/
@@ -341,16 +341,16 @@ compareFilesNocache  (void *map, void *map2)
 	G3d_getBlock (map, x, y, z, 1, 1, 1, (char *)n1p, typeIntern);
 	G3d_getBlock (map2, x, y, z, 1, 1, 1, (char *)n2p, typeIntern2);
 
-	if (typeIntern == G3D_FLOAT)
+	if (typeIntern == FCELL_TYPE)
 	{
-	  if (typeIntern2 == G3D_FLOAT)
+	  if (typeIntern2 == FCELL_TYPE)
 	    correct = G3d_compareFloats (f1p, p1, f2p, p2);
 	  else
 	    correct = G3d_compareFloatDouble (f1p, p1, n2p, p2);
 	}
 	else
 	{
-	  if (typeIntern2 == G3D_FLOAT)
+	  if (typeIntern2 == FCELL_TYPE)
 	    correct = G3d_compareFloatDouble (f2p, p2, n1p, p1);
 	  else
 	    correct = G3d_compareDoubles (n1p, p1, n2p, p2);
@@ -478,16 +478,16 @@ G3d_compareFiles  (char *f1, char *mapset1, char *f2, char *mapset2)
 	G3d_isNullValueNum (n1p, typeIntern);
 	G3d_isNullValueNum (n2p, typeIntern2);
 	
-	if (typeIntern == G3D_FLOAT)
+	if (typeIntern == FCELL_TYPE)
 	{
-	  if (typeIntern2 == G3D_FLOAT)
+	  if (typeIntern2 == FCELL_TYPE)
 	    correct = G3d_compareFloats (f1p, p1, f2p, p2);
 	  else
 	    correct = G3d_compareFloatDouble (f1p, p1, n2p, p2);
 	}
 	else
 	{
-	  if (typeIntern2 == G3D_FLOAT)
+	  if (typeIntern2 == FCELL_TYPE)
 	    correct = G3d_compareFloatDouble (f2p, p2, n1p, p1);
 	  else
 	    correct = G3d_compareDoubles (n1p, p1, n2p, p2);

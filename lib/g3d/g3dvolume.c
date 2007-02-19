@@ -124,7 +124,7 @@ G3d_getVolumeA (map, u, nx, ny, nz, volumeBuf, type)
 		x, y, z, 
 		G3d_getDoubleRegion (map, x, y, z));
 */
-	if (type == G3D_DOUBLE)
+	if (type == DCELL_TYPE)
 	  *(doubleBuf + ((int) dz / 2) * nx * ny + ((int) dy / 2) * nx + 
 	    (int) dx / 2) = 
 	    G3d_getDoubleRegion (map, x, y, z);

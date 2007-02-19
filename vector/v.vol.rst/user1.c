@@ -378,7 +378,7 @@ OUTGR ()
   /*** Write elevation results ***/
   if (outz != NULL) {
 
-    cf1 = G3d_openCellNew(outz, G3D_FLOAT,
+    cf1 = G3d_openCellNew(outz, FCELL_TYPE,
 			  G3D_USE_CACHE_DEFAULT,
 			  &current_region);
     if (cf1 == NULL) {
@@ -405,7 +405,7 @@ OUTGR ()
 	    bmask = 1;
          value = data[cnt];	
 	  if (!bmask)
-	    G3d_setNullValue(&value, 1, G3D_FLOAT);
+	    G3d_setNullValue(&value, 1, FCELL_TYPE);
 	  if (G3d_putFloat(cf1, x, y, iarc, value)==0) {
 	    sprintf(buff, "Error writing cell (%d,%d,%d) with value %f",
 		    x, y, iarc, value);
@@ -428,7 +428,7 @@ OUTGR ()
   /*** Write out the gradient results ***/
   if (gradient != NULL) {
 
-   cf2 = G3d_openCellNew(gradient, G3D_FLOAT,
+   cf2 = G3d_openCellNew(gradient, FCELL_TYPE,
                           G3D_USE_CACHE_DEFAULT,
                           &current_region);
     if (cf2 == NULL) {
@@ -455,7 +455,7 @@ OUTGR ()
             bmask = 1;
          value = data[cnt];
           if (!bmask)
-            G3d_setNullValue(&value, 1, G3D_FLOAT);
+            G3d_setNullValue(&value, 1, FCELL_TYPE);
           if (G3d_putFloat(cf2, x, y, iarc, value)==0) {
             sprintf(buff, "Error writing cell (%d,%d,%d) with value %f",
                     x, y, iarc, value);
@@ -478,7 +478,7 @@ OUTGR ()
   /*** Write out aspect1 results ***/
   if (aspect1 != NULL) {
 
-   cf3 = G3d_openCellNew(aspect1, G3D_FLOAT,
+   cf3 = G3d_openCellNew(aspect1, FCELL_TYPE,
                           G3D_USE_CACHE_DEFAULT,
                           &current_region);
     if (cf3 == NULL) {
@@ -505,7 +505,7 @@ OUTGR ()
             bmask = 1;
          value = data[cnt];
           if (!bmask)
-            G3d_setNullValue(&value, 1, G3D_FLOAT);
+            G3d_setNullValue(&value, 1, FCELL_TYPE);
           if (G3d_putFloat(cf3, x, y, iarc, value)==0) {
             sprintf(buff, "Error writing cell (%d,%d,%d) with value %f",
                     x, y, iarc, value);
@@ -528,7 +528,7 @@ OUTGR ()
   /*** Write out aspect2 results ***/
   if (aspect2 != NULL) {
 
-   cf4 = G3d_openCellNew(aspect2, G3D_FLOAT,
+   cf4 = G3d_openCellNew(aspect2, FCELL_TYPE,
                           G3D_USE_CACHE_DEFAULT,
                           &current_region);
     if (cf4 == NULL) {
@@ -555,7 +555,7 @@ OUTGR ()
             bmask = 1;
          value = data[cnt];
           if (!bmask)
-            G3d_setNullValue(&value, 1, G3D_FLOAT);
+            G3d_setNullValue(&value, 1, FCELL_TYPE);
           if (G3d_putFloat(cf4, x, y, iarc, value)==0) {
             sprintf(buff, "Error writing cell (%d,%d,%d) with value %f",
                     x, y, iarc, value);
@@ -578,7 +578,7 @@ OUTGR ()
   /*** Write out ncurv results ***/
   if (ncurv != NULL) {
 
-   cf5 = G3d_openCellNew(ncurv, G3D_FLOAT,
+   cf5 = G3d_openCellNew(ncurv, FCELL_TYPE,
                           G3D_USE_CACHE_DEFAULT,
                           &current_region);
     if (cf5 == NULL) {
@@ -605,7 +605,7 @@ OUTGR ()
             bmask = 1;
          value = data[cnt];
           if (!bmask)
-            G3d_setNullValue(&value, 1, G3D_FLOAT);
+            G3d_setNullValue(&value, 1, FCELL_TYPE);
           if (G3d_putFloat(cf5, x, y, iarc, value)==0) {
             sprintf(buff, "Error writing cell (%d,%d,%d) with value %f",
                     x, y, iarc, value);
@@ -628,7 +628,7 @@ OUTGR ()
   /*** Write out gcurv results ***/
   if (gcurv != NULL) {
 
-   cf6 = G3d_openCellNew(gcurv, G3D_FLOAT,
+   cf6 = G3d_openCellNew(gcurv, FCELL_TYPE,
                           G3D_USE_CACHE_DEFAULT,
                           &current_region);
     if (cf6 == NULL) {
@@ -655,7 +655,7 @@ OUTGR ()
             bmask = 1;
          value = data[cnt];
           if (!bmask)
-            G3d_setNullValue(&value, 1, G3D_FLOAT);
+            G3d_setNullValue(&value, 1, FCELL_TYPE);
           if (G3d_putFloat(cf6, x, y, iarc, value)==0) {
             sprintf(buff, "Error writing cell (%d,%d,%d) with value %f",
                     x, y, iarc, value);
@@ -678,7 +678,7 @@ OUTGR ()
   /*** Write mcurv results ***/
   if (mcurv != NULL) {
 
-   cf7 = G3d_openCellNew(mcurv, G3D_FLOAT,
+   cf7 = G3d_openCellNew(mcurv, FCELL_TYPE,
                           G3D_USE_CACHE_DEFAULT,
                           &current_region);
     if (cf7 == NULL) {
@@ -705,7 +705,7 @@ OUTGR ()
             bmask = 1;
          value = data[cnt];
           if (!bmask)
-            G3d_setNullValue(&value, 1, G3D_FLOAT);
+            G3d_setNullValue(&value, 1, FCELL_TYPE);
           if (G3d_putFloat(cf7, x, y, iarc, value)==0) {
             sprintf(buff, "Error writing cell (%d,%d,%d) with value %f",
                     x, y, iarc, value);

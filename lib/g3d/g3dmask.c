@@ -28,7 +28,7 @@ static float G3D_MASKNUMmaskValue;
 #define G3D_MASKNUM(map,Xmask,Ymask,Zmask,VALUEmask,TYPEmask) \
 \
    (G3D_MASKNUMmaskValue = G3d_getMaskFloat (map, Xmask, Ymask, Zmask), \
-    ((G3d_isNullValueNum (&G3D_MASKNUMmaskValue, G3D_FLOAT)) ? \
+    ((G3d_isNullValueNum (&G3D_MASKNUMmaskValue, FCELL_TYPE)) ? \
       G3d_setNullValue (VALUEmask, 1, TYPEmask) : dummy()))
 
 /*--------------------------------------------------------------------------*/
@@ -90,7 +90,7 @@ G3d_maskOpenOld ()
   if (! G3d_maskMapExistsVar) return 1;
 
   if ((G3d_maskMap = G3d_openCellOld (G3D_MASK_MAP, G_mapset (), 
-				      G3D_DEFAULT_WINDOW, G3D_FLOAT, 
+				      G3D_DEFAULT_WINDOW, FCELL_TYPE, 
 				      maskOpenOldCacheDefault))
       == NULL) {
     G3d_error ("G3d_maskOpenOld: cannot open mask");
@@ -120,7 +120,7 @@ G3d_getMaskFloat  (G3D_Map *map, int x, int y, int z)
   top = ((double) z + 0.5) / (double) map->window.depths * 
           (map->window.top - map->window.bottom) + map->window.bottom;
 
-  G3d_getRegionValue (G3d_maskMap, north, east, top, (char *)&value, G3D_FLOAT);
+  G3d_getRegionValue (G3d_maskMap, north, east, top, (char *)&value, FCELL_TYPE);
   return value;
 }     
 
@@ -187,7 +187,7 @@ G3d_isMasked  (G3D_Map *map, int x, int y, int z)
   if (! G3d_maskMapExistsVar) return 0;
 
   G3D_MASKNUMmaskValue = G3d_getMaskFloat (map, x, y, z);
-  return (G3d_isNullValueNum (&G3D_MASKNUMmaskValue, G3D_FLOAT));
+  return (G3d_isNullValueNum (&G3D_MASKNUMmaskValue, FCELL_TYPE));
 }
 
 /*--------------------------------------------------------------------------*/
@@ -222,7 +222,7 @@ G3d_maskNum  (G3D_Map *map, int x, int y, int z, void *value, int type)
 /*!
  * \brief 
  *
- *  Same as <em>G3d_maskNum (x, y, z, value, G3D_FLOAT)</em>.
+ *  Same as <em>G3d_maskNum (x, y, z, value, FCELL_TYPE)</em>.
  *
  *  \param x
  *  \param y
@@ -236,7 +236,7 @@ G3d_maskFloat  (G3D_Map *map, int x, int y, int z, float *value)
 
 {
   if (! G3d_maskMapExistsVar) return;
-  G3D_MASKNUM (map, x, y, z, value, G3D_FLOAT);
+  G3D_MASKNUM (map, x, y, z, value, FCELL_TYPE);
 }
 
 /*--------------------------------------------------------------------------*/
@@ -245,7 +245,7 @@ G3d_maskFloat  (G3D_Map *map, int x, int y, int z, float *value)
 /*!
  * \brief 
  *
- * Same as <em>G3d_maskNum (x, y, z, value, G3D_DOUBLE)</em>.
+ * Same as <em>G3d_maskNum (x, y, z, value, DCELL_TYPE)</em>.
  *
  *  \param x
  *  \param y
@@ -259,7 +259,7 @@ G3d_maskDouble  (G3D_Map *map, int x, int y, int z, double *value)
 
 {
   if (! G3d_maskMapExistsVar) return;
-  G3D_MASKNUM (map, x, y, z, value, G3D_DOUBLE);
+  G3D_MASKNUM (map, x, y, z, value, DCELL_TYPE);
 }
 
 /*--------------------------------------------------------------------------*/

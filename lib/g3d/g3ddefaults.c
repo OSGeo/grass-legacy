@@ -13,7 +13,7 @@
 #define G3D_PRECISION_DEFAULT G3D_MAX_PRECISION
 #define G3D_CACHE_SIZE_DEFAULT 1000
 #define G3D_CACHE_SIZE_MAX_DEFAULT 2000000
-#define G3D_FILE_TYPE_DEFAULT G3D_DOUBLE
+#define G3D_FILE_TYPE_DEFAULT DCELL_TYPE
 #define G3D_TILE_X_DEFAULT 8
 #define G3D_TILE_Y_DEFAULT 8
 #define G3D_TILE_Z_DEFAULT 8
@@ -227,7 +227,7 @@ void
 G3d_setFileType  (int type)
 
 {
-    if ((type != G3D_FLOAT) && (type != G3D_DOUBLE))
+    if ((type != FCELL_TYPE) && (type != DCELL_TYPE))
     G3d_fatalError ("G3d_setFileTypeDefault: invalid type");
 
   g3d_file_type = type;
@@ -462,13 +462,13 @@ G3d_initDefaults ()
   {
     if (NULL != getenv (G3D_FILE_FLOAT_ENV_VAR)) 
     {
-      g3d_file_type = G3D_FLOAT;
+      g3d_file_type = FCELL_TYPE;
     }
     else
     {
       if (NULL != getenv (G3D_FILE_DOUBLE_ENV_VAR))
       {
-	g3d_file_type = G3D_DOUBLE;
+	g3d_file_type = DCELL_TYPE;
       }
       else
       {

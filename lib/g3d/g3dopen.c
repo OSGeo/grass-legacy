@@ -60,8 +60,8 @@ G3d_openCellOldNoHeader  (char *name, char *mapset)
  * \brief 
  *
  * Opens existing g3d-file <em>name</em> in <em>mapset</em>.
- * Tiles are stored in memory with <em>type</em> which must be any of G3D_FLOAT,
- * G3D_DOUBLE, or G3D_TILE_SAME_AS_FILE. <em>cache</em> specifies the
+ * Tiles are stored in memory with <em>type</em> which must be any of FCELL_TYPE,
+ * DCELL_TYPE, or G3D_TILE_SAME_AS_FILE. <em>cache</em> specifies the
  * cache-mode used and must be either G3D_NO_CACHE, G3D_USE_CACHE_DEFAULT,
  * G3D_USE_CACHE_X, G3D_USE_CACHE_Y, G3D_USE_CACHE_Z,
  * G3D_USE_CACHE_XY, G3D_USE_CACHE_XZ, G3D_USE_CACHE_YZ,
@@ -194,8 +194,8 @@ G3d_openCellOld  (char *name, char *mapset, G3D_Region *window, int typeIntern, 
  * \brief 
  *
  * Opens new g3d-file with <em>name</em> in the current mapset. Tiles
- * are stored in memory with <em>type</em> which must be one of G3D_FLOAT,
- * G3D_DOUBLE, or G3D_TILE_SAME_AS_FILE. <em>cache</em> specifies the
+ * are stored in memory with <em>type</em> which must be one of FCELL_TYPE,
+ * DCELL_TYPE, or G3D_TILE_SAME_AS_FILE. <em>cache</em> specifies the
  * cache-mode used and must be either G3D_NO_CACHE, G3D_USE_CACHE_DEFAULT,
  * G3D_USE_CACHE_X, G3D_USE_CACHE_Y, G3D_USE_CACHE_Z,
  * G3D_USE_CACHE_XY, G3D_USE_CACHE_XZ, G3D_USE_CACHE_YZ,
@@ -254,7 +254,7 @@ G3d_openCellNew  (char *name, int typeIntern, int cache, G3D_Region *region)
 
   map->useXdr = G3D_USE_XDR;
 
-  if (g3d_file_type == G3D_FLOAT) {
+  if (g3d_file_type == FCELL_TYPE) {
     if (precision > 23) precision = 23; /* 32 - 8 - 1 */
     else
       if (precision < -1) precision = 0;
@@ -264,7 +264,7 @@ G3d_openCellNew  (char *name, int typeIntern, int cache, G3D_Region *region)
       if (precision < -1) precision = 0;
 
   /* no need to write trailing zeros */
-  if ((typeIntern == G3D_FLOAT) && (g3d_file_type == G3D_DOUBLE)) 
+  if ((typeIntern == FCELL_TYPE) && (g3d_file_type == DCELL_TYPE)) 
   {
     if (precision == -1) 
       precision = 23;

@@ -109,7 +109,7 @@ G3d_readTileCompressed  (G3D_Map *map, int tileIndex, int nofNum)
   if (! G_fpcompress_readXdrNums (map->data_fd, xdr, nofNum,
 				  map->tileLength[tileIndex], 
 				  map->precision, tmpCompress, 
-				  map->type == G3D_FLOAT)) {
+				  map->type == FCELL_TYPE)) {
     G3d_error ("G3d_readTileCompressed: error in G_fpcompress_readXdrNums");
     return 0;
   }
@@ -127,8 +127,8 @@ G3d_readTileCompressed  (G3D_Map *map, int tileIndex, int nofNum)
  *
  * 
  * Reads tile with index <em>tileIndex</em> into the <em>tile</em> buffer. The cells
- * are stored with type <em>type</em> which must be one of G3D_FLOAT and
- * G3D_DOUBLE. If the tile with <em>tileIndex</em> is not stored on the file
+ * are stored with type <em>type</em> which must be one of FCELL_TYPE and
+ * DCELL_TYPE. If the tile with <em>tileIndex</em> is not stored on the file
  * corresponding to <em>map</em>, and <em>tileIndex</em> is a valid index <em>tile</em>
  * is filled with NULL-values. 
  *
@@ -193,7 +193,7 @@ G3d_readTile  (G3D_Map *map, int tileIndex, char *tile, int type)
 /*!
  * \brief 
  *
- *  Is equivalent to G3d_readTile (map, tileIndex, tile, G3D_FLOAT).
+ *  Is equivalent to G3d_readTile (map, tileIndex, tile, FCELL_TYPE).
  *
  *  \param map
  *  \param tileIndex
@@ -205,7 +205,7 @@ int
 G3d_readTileFloat  (G3D_Map *map, int tileIndex, char *tile)
 
 {
-  if (! G3d_readTile (map, tileIndex, tile, G3D_FLOAT)) {
+  if (! G3d_readTile (map, tileIndex, tile, FCELL_TYPE)) {
     G3d_error ("G3d_readTileFloat: error in G3d_readTile");
     return 0;
   }
@@ -219,7 +219,7 @@ G3d_readTileFloat  (G3D_Map *map, int tileIndex, char *tile)
 /*!
  * \brief 
  *
- *  Is equivalent to G3d_readTile (map, tileIndex, tile, G3D_DOUBLE).
+ *  Is equivalent to G3d_readTile (map, tileIndex, tile, DCELL_TYPE).
  *
  *  \param map
  *  \param tileIndex
@@ -231,7 +231,7 @@ int
 G3d_readTileDouble  (G3D_Map *map, int tileIndex, char *tile)
 
 {
-  if (! G3d_readTile (map, tileIndex, tile, G3D_DOUBLE)) {
+  if (! G3d_readTile (map, tileIndex, tile, DCELL_TYPE)) {
     G3d_error ("G3d_readTileDouble: error in G3d_readTile");
     return 0;
   }
