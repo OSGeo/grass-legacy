@@ -18,7 +18,12 @@ instructions is generated.  It is available for use as a
 mask, in analyses, and for display.
 
 <P>
-
+The <b>bgcmd</b> option is intended to be used with display (d.*) commands.
+If several display commands are to be used to render the background
+they should be separated with the semi-colon ';' character.
+When run from the command line, these display commands will generally
+need to be "quoted" as they will contain spaces (see examples).
+<P>
 Digitizing is done in a "polygon" method.  Each area is
 circumscribed completely.  Two or more overlapping areas and/or lines
 might define a single part of a map.  Each part of the map,
@@ -26,6 +31,17 @@ however, is assigned only the LAST area or line which
 covered it.
 
 <H3>THE PROCESS:</H3>
+
+<h4>Start a monitor and display a raster to help setup and zoom to area of interest</h4>
+<div class="code"><pre>
+d.mon x0
+</pre></div>
+<p>
+
+<h4>Digitizing an area based on a existing map; creating a new raster map</h4>
+<div class="code"><pre>
+r.digit out=name_of_new_raster_map bgcmd="d.rast map=name_of_raster"
+</pre></div>
 
 <OL>
 
