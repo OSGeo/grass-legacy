@@ -39,15 +39,15 @@ N_gwflow_data3d *N_alloc_gwflow_data3d(int cols, int rows, int depths)
 
     data = (N_gwflow_data3d *) G_calloc(1, sizeof(N_gwflow_data3d));
 
-    data->phead = N_alloc_array_3d(cols, rows, depths, 1, G3D_DOUBLE);
-    data->phead_start = N_alloc_array_3d(cols, rows, depths, 1, G3D_DOUBLE);
-    data->status = N_alloc_array_3d(cols, rows, depths, 1, G3D_DOUBLE);
-    data->kf_x = N_alloc_array_3d(cols, rows, depths, 1, G3D_DOUBLE);
-    data->kf_y = N_alloc_array_3d(cols, rows, depths, 1, G3D_DOUBLE);
-    data->kf_z = N_alloc_array_3d(cols, rows, depths, 1, G3D_DOUBLE);
-    data->q = N_alloc_array_3d(cols, rows, depths, 1, G3D_DOUBLE);
-    data->s = N_alloc_array_3d(cols, rows, depths, 1, G3D_DOUBLE);
-    data->nf = N_alloc_array_3d(cols, rows, depths, 1, G3D_DOUBLE);
+    data->phead = N_alloc_array_3d(cols, rows, depths, 1, DCELL_TYPE);
+    data->phead_start = N_alloc_array_3d(cols, rows, depths, 1, DCELL_TYPE);
+    data->status = N_alloc_array_3d(cols, rows, depths, 1, DCELL_TYPE);
+    data->kf_x = N_alloc_array_3d(cols, rows, depths, 1, DCELL_TYPE);
+    data->kf_y = N_alloc_array_3d(cols, rows, depths, 1, DCELL_TYPE);
+    data->kf_z = N_alloc_array_3d(cols, rows, depths, 1, DCELL_TYPE);
+    data->q = N_alloc_array_3d(cols, rows, depths, 1, DCELL_TYPE);
+    data->s = N_alloc_array_3d(cols, rows, depths, 1, DCELL_TYPE);
+    data->nf = N_alloc_array_3d(cols, rows, depths, 1, DCELL_TYPE);
     data->r = N_alloc_array_2d(cols, rows, 1, DCELL_TYPE);
 
     return data;
@@ -194,18 +194,18 @@ N_data_star *N_callback_gwflow_3d(void *gwdata, N_geom_data * geom, int col,
     Az = geom->dx * geom->dy;
 
     /*read the data from the arrays */
-    hc_start = N_get_array_3d_value_double(data->phead_start, col, row, depth);
+    hc_start = N_get_array_3d_d_value(data->phead_start, col, row, depth);
 
-    kf_x = N_get_array_3d_value_double(data->kf_x, col, row, depth);
-    kf_y = N_get_array_3d_value_double(data->kf_y, col, row, depth);
-    kf_z = N_get_array_3d_value_double(data->kf_z, col, row, depth);
+    kf_x = N_get_array_3d_d_value(data->kf_x, col, row, depth);
+    kf_y = N_get_array_3d_d_value(data->kf_y, col, row, depth);
+    kf_z = N_get_array_3d_d_value(data->kf_z, col, row, depth);
 
-    kf_xw = N_get_array_3d_value_double(data->kf_x, col - 1, row, depth);
-    kf_xe = N_get_array_3d_value_double(data->kf_x, col + 1, row, depth);
-    kf_yn = N_get_array_3d_value_double(data->kf_y, col, row - 1, depth);
-    kf_ys = N_get_array_3d_value_double(data->kf_y, col, row + 1, depth);
-    kf_zt = N_get_array_3d_value_double(data->kf_z, col, row, depth + 1);
-    kf_zb = N_get_array_3d_value_double(data->kf_z, col, row, depth - 1);
+    kf_xw = N_get_array_3d_d_value(data->kf_x, col - 1, row, depth);
+    kf_xe = N_get_array_3d_d_value(data->kf_x, col + 1, row, depth);
+    kf_yn = N_get_array_3d_d_value(data->kf_y, col, row - 1, depth);
+    kf_ys = N_get_array_3d_d_value(data->kf_y, col, row + 1, depth);
+    kf_zt = N_get_array_3d_d_value(data->kf_z, col, row, depth + 1);
+    kf_zb = N_get_array_3d_d_value(data->kf_z, col, row, depth - 1);
 
     if (kf_xw + kf_x != 0)
 	kf_w = 2 * kf_xw * kf_x / (kf_xw + kf_x);
@@ -221,11 +221,11 @@ N_data_star *N_callback_gwflow_3d(void *gwdata, N_geom_data * geom, int col,
 	kf_b = 2 * kf_zb * kf_z / (kf_zb + kf_z);
 
     /*inner sources */
-    q = N_get_array_3d_value_double(data->q, col, row, depth);
+    q = N_get_array_3d_d_value(data->q, col, row, depth);
     /*specific yield */
-    Ss = N_get_array_3d_value_double(data->s, col, row, depth);
+    Ss = N_get_array_3d_d_value(data->s, col, row, depth);
     /*porosity */
-    nf = N_get_array_3d_value_double(data->nf, col, row, depth);
+    nf = N_get_array_3d_d_value(data->nf, col, row, depth);
 
     /*mass balance center cell to western cell */
     W = -1 * Ax * kf_w / dx;
@@ -251,7 +251,7 @@ N_data_star *N_callback_gwflow_3d(void *gwdata, N_geom_data * geom, int col,
 
     /*only the top cells will have reacharge */
     if (depth == geom->depths - 2) {
-	r = N_get_array_2d_value_dcell(data->r, col, row);
+	r = N_get_array_2d_d_value(data->r, col, row);
 	V += r * Az;
     }
 
@@ -308,31 +308,31 @@ N_data_star *N_callback_gwflow_2d(void *gwdata, N_geom_data * geom, int col,
     Az = geom->dx * geom->dy;
 
     /*read the data from the arrays */
-    hc_start = N_get_array_2d_value_dcell(data->phead_start, col, row);
-    hc = N_get_array_2d_value_dcell(data->phead, col, row);
-    top = N_get_array_2d_value_dcell(data->top, col, row);
+    hc_start = N_get_array_2d_d_value(data->phead_start, col, row);
+    hc = N_get_array_2d_d_value(data->phead, col, row);
+    top = N_get_array_2d_d_value(data->top, col, row);
 
 
     if (hc > top) {		/*If the aquifer is confined */
-	z = N_get_array_2d_value_dcell(data->top, col,
+	z = N_get_array_2d_d_value(data->top, col,
 				       row) -
-	    N_get_array_2d_value_dcell(data->bottom, col, row);
+	    N_get_array_2d_d_value(data->bottom, col, row);
 	z_xw =
-	    N_get_array_2d_value_dcell(data->top, col - 1,
+	    N_get_array_2d_d_value(data->top, col - 1,
 				       row) -
-	    N_get_array_2d_value_dcell(data->bottom, col - 1, row);
+	    N_get_array_2d_d_value(data->bottom, col - 1, row);
 	z_xe =
-	    N_get_array_2d_value_dcell(data->top, col + 1,
+	    N_get_array_2d_d_value(data->top, col + 1,
 				       row) -
-	    N_get_array_2d_value_dcell(data->bottom, col + 1, row);
+	    N_get_array_2d_d_value(data->bottom, col + 1, row);
 	z_yn =
-	    N_get_array_2d_value_dcell(data->top, col,
+	    N_get_array_2d_d_value(data->top, col,
 				       row - 1) -
-	    N_get_array_2d_value_dcell(data->bottom, col, row - 1);
+	    N_get_array_2d_d_value(data->bottom, col, row - 1);
 	z_ys =
-	    N_get_array_2d_value_dcell(data->top, col,
+	    N_get_array_2d_d_value(data->top, col,
 				       row + 1) -
-	    N_get_array_2d_value_dcell(data->bottom, col, row + 1);
+	    N_get_array_2d_d_value(data->bottom, col, row + 1);
 
 	if (z_xw + z != 0)
 	    z_w = (z_xw + z) / 2;
@@ -347,11 +347,11 @@ N_data_star *N_callback_gwflow_2d(void *gwdata, N_geom_data * geom, int col,
 
 	/* If the aquifer is unconfied use an explicite scheme to solve
 	 * the nonlinear equation. We use the phead from the first iteration */
-	z = N_get_array_2d_value_dcell(data->phead, col, row);
-	z_xw = N_get_array_2d_value_dcell(data->phead, col - 1, row);
-	z_xe = N_get_array_2d_value_dcell(data->phead, col + 1, row);
-	z_yn = N_get_array_2d_value_dcell(data->phead, col, row - 1);
-	z_ys = N_get_array_2d_value_dcell(data->phead, col, row + 1);
+	z = N_get_array_2d_d_value(data->phead, col, row);
+	z_xw = N_get_array_2d_d_value(data->phead, col - 1, row);
+	z_xe = N_get_array_2d_d_value(data->phead, col + 1, row);
+	z_yn = N_get_array_2d_d_value(data->phead, col, row - 1);
+	z_ys = N_get_array_2d_d_value(data->phead, col, row + 1);
 
 	if (z_xw + z != 0)
 	    z_w = (z_xw + z) / 2;
@@ -365,21 +365,21 @@ N_data_star *N_callback_gwflow_2d(void *gwdata, N_geom_data * geom, int col,
     }
 
     /* Inner sources */
-    q = N_get_array_2d_value_dcell(data->q, col, row);
-    nf = N_get_array_2d_value_dcell(data->nf, col, row);
+    q = N_get_array_2d_d_value(data->q, col, row);
+    nf = N_get_array_2d_d_value(data->nf, col, row);
 
     /* specific yield */
-    Ss = N_get_array_2d_value_dcell(data->s, col, row) * Az;
+    Ss = N_get_array_2d_d_value(data->s, col, row) * Az;
     /* reacharge */
-    r = N_get_array_2d_value_dcell(data->r, col, row);
+    r = N_get_array_2d_d_value(data->r, col, row);
 
     /*get the surrounding permeabilities */
-    kf_x = N_get_array_2d_value_dcell(data->kf_x, col, row);
-    kf_y = N_get_array_2d_value_dcell(data->kf_y, col, row);
-    kf_xw = N_get_array_2d_value_dcell(data->kf_x, col - 1, row);
-    kf_xe = N_get_array_2d_value_dcell(data->kf_x, col + 1, row);
-    kf_yn = N_get_array_2d_value_dcell(data->kf_y, col, row - 1);
-    kf_ys = N_get_array_2d_value_dcell(data->kf_y, col, row + 1);
+    kf_x = N_get_array_2d_d_value(data->kf_x, col, row);
+    kf_y = N_get_array_2d_d_value(data->kf_y, col, row);
+    kf_xw = N_get_array_2d_d_value(data->kf_x, col - 1, row);
+    kf_xe = N_get_array_2d_d_value(data->kf_x, col + 1, row);
+    kf_yn = N_get_array_2d_d_value(data->kf_y, col, row - 1);
+    kf_ys = N_get_array_2d_d_value(data->kf_y, col, row + 1);
 
     /* calculate the transmissivities */
     if (kf_xw + kf_x != 0)

@@ -326,7 +326,7 @@ inline int N_is_array_2d_value_null(N_array_2d * data, int col, int row)
  * \return CELL
  *        
  * */
-inline CELL N_get_array_2d_value_cell(N_array_2d * data, int col, int row)
+inline CELL N_get_array_2d_c_value(N_array_2d * data, int col, int row)
 {
     CELL value = 0;
     FCELL fvalue = 0.0;
@@ -361,7 +361,7 @@ inline CELL N_get_array_2d_value_cell(N_array_2d * data, int col, int row)
  * \return FCELL
  
  * */
-inline FCELL N_get_array_2d_value_fcell(N_array_2d * data, int col, int row)
+inline FCELL N_get_array_2d_f_value(N_array_2d * data, int col, int row)
 {
     CELL value = 0;
     FCELL fvalue = 0.0;
@@ -396,7 +396,7 @@ inline FCELL N_get_array_2d_value_fcell(N_array_2d * data, int col, int row)
  * \return DCELL
  *        
  * */
-inline DCELL N_get_array_2d_value_dcell(N_array_2d * data, int col, int row)
+inline DCELL N_get_array_2d_d_value(N_array_2d * data, int col, int row)
 {
     CELL value = 0;
     FCELL fvalue = 0.0;
@@ -550,7 +550,7 @@ inline void N_put_array_2d_value_null(N_array_2d * data, int col, int row)
  * \return void
  * */
 inline void
-N_put_array_2d_value_cell(N_array_2d * data, int col, int row, CELL value)
+N_put_array_2d_c_value(N_array_2d * data, int col, int row, CELL value)
 {
     N_put_array_2d_value(data, col, row, (char *)&value);
 }
@@ -568,7 +568,7 @@ N_put_array_2d_value_cell(N_array_2d * data, int col, int row, CELL value)
  * \return void
  * */
 inline void
-N_put_array_2d_value_fcell(N_array_2d * data, int col, int row, FCELL value)
+N_put_array_2d_f_value(N_array_2d * data, int col, int row, FCELL value)
 {
     N_put_array_2d_value(data, col, row, (char *)&value);
 }
@@ -586,7 +586,7 @@ N_put_array_2d_value_fcell(N_array_2d * data, int col, int row, FCELL value)
  * \return void
  * */
 inline void
-N_put_array_2d_value_dcell(N_array_2d * data, int col, int row, DCELL value)
+N_put_array_2d_d_value(N_array_2d * data, int col, int row, DCELL value)
 {
     N_put_array_2d_value(data, col, row, (char *)&value);
 }
@@ -607,11 +607,11 @@ void N_print_array_2d(N_array_2d * data)
     for (j = 0; j < data->rows; j++) {
 	for (i = 0; i < data->cols; i++) {
 	    if (data->type == CELL_TYPE)
-		printf("%6d ", N_get_array_2d_value_cell(data, i, j));
+		printf("%6d ", N_get_array_2d_c_value(data, i, j));
 	    else if (data->type == FCELL_TYPE)
-		printf("%6.6f ", N_get_array_2d_value_fcell(data, i, j));
+		printf("%6.6f ", N_get_array_2d_f_value(data, i, j));
 	    else if (data->type == DCELL_TYPE)
-		printf("%6.6f ", N_get_array_2d_value_dcell(data, i, j));
+		printf("%6.6f ", N_get_array_2d_d_value(data, i, j));
 	}
 	printf("\n");
     }
@@ -879,8 +879,8 @@ N_array_2d *N_math_array_2d(N_array_2d * a, N_array_2d * b, N_array_2d * result,
 	    if (!N_is_array_2d_value_null(a, i, j) &&
 		!N_is_array_2d_value_null(a, i, j)) {
 		/*we always calulate internally with double values */
-		va = (double)N_get_array_2d_value_dcell(a, i, j);
-		vb = (double)N_get_array_2d_value_dcell(b, i, j);
+		va = (double)N_get_array_2d_d_value(a, i, j);
+		vb = (double)N_get_array_2d_d_value(b, i, j);
 		vc = 0;
 		setnull = 0;
 
@@ -906,19 +906,19 @@ N_array_2d *N_math_array_2d(N_array_2d * a, N_array_2d * b, N_array_2d * result,
 		    if (setnull)
 			N_put_array_2d_value_null(c, i, j);
 		    else
-			N_put_array_2d_value_cell(c, i, j, (CELL) vc);
+			N_put_array_2d_c_value(c, i, j, (CELL) vc);
 		}
 		if (c->type == FCELL_TYPE) {
 		    if (setnull)
 			N_put_array_2d_value_null(c, i, j);
 		    else
-			N_put_array_2d_value_fcell(c, i, j, (FCELL) vc);
+			N_put_array_2d_f_value(c, i, j, (FCELL) vc);
 		}
 		if (c->type == DCELL_TYPE) {
 		    if (setnull)
 			N_put_array_2d_value_null(c, i, j);
 		    else
-			N_put_array_2d_value_dcell(c, i, j, (DCELL) vc);
+			N_put_array_2d_d_value(c, i, j, (DCELL) vc);
 		}
 
 	    }
@@ -1081,35 +1081,35 @@ N_array_2d *N_read_rast_to_array_2d(char *name, N_array_2d * array)
 	     x++, ptr = G_incr_void_ptr(ptr, G_raster_size(type))) {
 	    if (type == CELL_TYPE) {
 		if (data->type == CELL_TYPE)
-		    N_put_array_2d_value_cell(data, x, y,
+		    N_put_array_2d_c_value(data, x, y,
 					      (CELL) * (CELL *) ptr);
 		if (data->type == FCELL_TYPE)
-		    N_put_array_2d_value_fcell(data, x, y,
+		    N_put_array_2d_f_value(data, x, y,
 					       (FCELL) * (CELL *) ptr);
 		if (data->type == DCELL_TYPE)
-		    N_put_array_2d_value_dcell(data, x, y,
+		    N_put_array_2d_d_value(data, x, y,
 					       (DCELL) * (CELL *) ptr);
 	    }
 	    if (type == FCELL_TYPE) {
 		if (data->type == CELL_TYPE)
-		    N_put_array_2d_value_cell(data, x, y,
+		    N_put_array_2d_c_value(data, x, y,
 					      (CELL) * (FCELL *) ptr);
 		if (data->type == FCELL_TYPE)
-		    N_put_array_2d_value_fcell(data, x, y,
+		    N_put_array_2d_f_value(data, x, y,
 					       (FCELL) * (FCELL *) ptr);
 		if (data->type == DCELL_TYPE)
-		    N_put_array_2d_value_dcell(data, x, y,
+		    N_put_array_2d_d_value(data, x, y,
 					       (DCELL) * (FCELL *) ptr);
 	    }
 	    if (type == DCELL_TYPE) {
 		if (data->type == CELL_TYPE)
-		    N_put_array_2d_value_cell(data, x, y,
+		    N_put_array_2d_c_value(data, x, y,
 					      (CELL) * (DCELL *) ptr);
 		if (data->type == FCELL_TYPE)
-		    N_put_array_2d_value_fcell(data, x, y,
+		    N_put_array_2d_f_value(data, x, y,
 					       (FCELL) * (DCELL *) ptr);
 		if (data->type == DCELL_TYPE)
-		    N_put_array_2d_value_dcell(data, x, y,
+		    N_put_array_2d_d_value(data, x, y,
 					       (DCELL) * (DCELL *) ptr);
 	    }
 	}
@@ -1176,11 +1176,11 @@ void N_write_array_2d_to_rast(N_array_2d * array, char *name)
 	G_percent(y, rows - 1, 10);
 	for (x = 0; x < cols; x++) {
 	    if (type == CELL_TYPE)
-		rast[x] = N_get_array_2d_value_cell(array, x, y);
+		rast[x] = N_get_array_2d_c_value(array, x, y);
 	    if (type == FCELL_TYPE)
-		frast[x] = N_get_array_2d_value_fcell(array, x, y);
+		frast[x] = N_get_array_2d_f_value(array, x, y);
 	    if (type == DCELL_TYPE)
-		drast[x] = N_get_array_2d_value_dcell(array, x, y);
+		drast[x] = N_get_array_2d_d_value(array, x, y);
 	}
 	if (type == CELL_TYPE)
 	    if (!G_put_c_raster_row(map, rast)) {
@@ -1221,7 +1221,7 @@ void N_write_array_2d_to_rast(N_array_2d * array, char *name)
  * to the new allocated memory.
  *
  * The data type of this array set by "type" must be 
- * G3D_FLOAT or G3D_DOUBLE accordingly to the raster3d map datatypes.
+ * FCELL_TYPE or DCELL_TYPE accordingly to the raster3d map datatypes.
  * The offsets sets the number of boundary cols, rows and depths. 
  * This option is useful to generate homogeneous Neumann boundary conditions around  
  * an array. The arrays are initialized with 0 by default.
@@ -1286,9 +1286,9 @@ N_array_3d *N_alloc_array_3d(int cols, int rows, int depths, int offset,
     if (rows < 1 || cols < 1 || depths < 1)
 	G_fatal_error("N_alloc_array_3d: depths, cols and rows should be > 0");
 
-    if (type != G3D_DOUBLE && type != G3D_FLOAT)
+    if (type != DCELL_TYPE && type != FCELL_TYPE)
 	G_fatal_error
-	    ("N_alloc_array_3d: Wrong data type, should be G3D_FLOAT or G3D_DOUBLE");
+	    ("N_alloc_array_3d: Wrong data type, should be FCELL_TYPE or DCELL_TYPE");
 
     data = (N_array_3d *) G_calloc(1, sizeof(N_array_3d));
 
@@ -1300,14 +1300,14 @@ N_array_3d *N_alloc_array_3d(int cols, int rows, int depths, int offset,
     data->rows_intern = rows + 2 * offset;
     data->cols_intern = cols + 2 * offset;
     data->depths_intern = depths + 2 * offset;
-    data->float_array = NULL;
-    data->double_array = NULL;
+    data->fcell_array = NULL;
+    data->dcell_array = NULL;
 
     /*Allocation is in order of array[depths][rows][cols] */
 
 
-    if (data->type == G3D_FLOAT) {
-	data->float_array =
+    if (data->type == FCELL_TYPE) {
+	data->fcell_array =
 	    (float *)G_calloc(data->depths_intern * data->rows_intern *
 			      data->cols_intern, sizeof(float));
 	G_debug(3,
@@ -1315,8 +1315,8 @@ N_array_3d *N_alloc_array_3d(int cols, int rows, int depths, int offset,
 		data->rows_intern, data->cols_intern, data->depths_intern,
 		data->offset = offset);
     }
-    else if (data->type == G3D_DOUBLE) {
-	data->double_array =
+    else if (data->type == DCELL_TYPE) {
+	data->dcell_array =
 	    (double *)G_calloc(data->depths_intern * data->rows_intern *
 			       data->cols_intern, sizeof(double));
 	G_debug(3,
@@ -1343,11 +1343,11 @@ void N_free_array_3d(N_array_3d * data)
     if (data != NULL) {
 	G_debug(3, "N_free_array_3d: free N_array_3d");
 
-	if (data->type == G3D_FLOAT && data->float_array != NULL) {
-	    G_free(data->float_array);
+	if (data->type == FCELL_TYPE && data->fcell_array != NULL) {
+	    G_free(data->fcell_array);
 	}
-	else if (data->type == G3D_DOUBLE && data->double_array != NULL) {
-	    G_free(data->double_array);
+	else if (data->type == DCELL_TYPE && data->dcell_array != NULL) {
+	    G_free(data->dcell_array);
 	}
 
 	G_free(data);
@@ -1364,10 +1364,10 @@ void N_free_array_3d(N_array_3d * data)
 /*!
  * \brief Return the data taype of the N_array_3d
  *
- * The data type can be G3D_FLOAT and G3D_DOUBLE accordingly to the raster map datatypes.
+ * The data type can be FCELL_TYPE and DCELL_TYPE accordingly to the raster map datatypes.
  *
  * \param data N_array_3d *
- * \return type int -- G3D_FLOAT or G3D_DOUBLE
+ * \return type int -- FCELL_TYPE or DCELL_TYPE
  * */
 
 int N_get_array_3d_type(N_array_3d * data)
@@ -1396,31 +1396,31 @@ N_get_array_3d_value(N_array_3d * data, int col, int row, int depth,
 {
 
     if (data->offset == 0) {
-	if (data->type == G3D_FLOAT && data->float_array != NULL) {
+	if (data->type == FCELL_TYPE && data->fcell_array != NULL) {
 	    *((float *)value) =
-		data->float_array[depth *
+		data->fcell_array[depth *
 				  (data->rows_intern * data->cols_intern) +
 				  row * data->cols_intern + col];
 	}
-	else if (data->type == G3D_DOUBLE && data->double_array != NULL) {
+	else if (data->type == DCELL_TYPE && data->dcell_array != NULL) {
 	    *((double *)value) =
-		data->double_array[depth *
+		data->dcell_array[depth *
 				   (data->rows_intern * data->cols_intern) +
 				   row * data->cols_intern + col];
 	}
     }
     else {
-	if (data->type == G3D_FLOAT && data->float_array != NULL) {
+	if (data->type == FCELL_TYPE && data->fcell_array != NULL) {
 	    *((float *)value) =
-		data->float_array[(depth + data->offset) *
+		data->fcell_array[(depth + data->offset) *
 				  (data->rows_intern * data->cols_intern) +
 				  (row + data->offset) * data->cols_intern +
 				  (col + data->offset)];
 
 	}
-	else if (data->type == G3D_DOUBLE && data->double_array != NULL) {
+	else if (data->type == DCELL_TYPE && data->dcell_array != NULL) {
 	    *((double *)value) =
-		data->double_array[(depth + data->offset) *
+		data->dcell_array[(depth + data->offset) *
 				   (data->rows_intern * data->cols_intern) +
 				   (row + data->offset) * data->cols_intern +
 				   (col + data->offset)];
@@ -1448,39 +1448,39 @@ N_is_array_3d_value_null(N_array_3d * data, int col, int row, int depth)
 {
 
     if (data->offset == 0) {
-	if (data->type == G3D_FLOAT && data->float_array != NULL) {
+	if (data->type == FCELL_TYPE && data->fcell_array != NULL) {
 	    G_debug(6,
-		    "N_is_array_3d_value_null: null value is of type G3D_DOUBLE at pos [%i][%i][%i]",
+		    "N_is_array_3d_value_null: null value is of type DCELL_TYPE at pos [%i][%i][%i]",
 		    depth, row, col);
 	    return G3d_isNullValueNum((void *)
 				      &(data->
-					float_array[depth *
+					fcell_array[depth *
 						    (data->rows_intern *
 						     data->cols_intern) +
 						    row * data->cols_intern +
-						    col]), G3D_FLOAT);
+						    col]), FCELL_TYPE);
 	}
-	else if (data->type == G3D_DOUBLE && data->double_array != NULL) {
+	else if (data->type == DCELL_TYPE && data->dcell_array != NULL) {
 	    G_debug(6,
-		    "N_is_array_3d_value_null: null value is of type G3D_DOUBLE at pos [%i][%i][%i]",
+		    "N_is_array_3d_value_null: null value is of type DCELL_TYPE at pos [%i][%i][%i]",
 		    depth, row, col);
 	    return G3d_isNullValueNum((void *)
 				      &(data->
-					double_array[depth *
+					dcell_array[depth *
 						     (data->rows_intern *
 						      data->cols_intern) +
 						     row * data->cols_intern +
-						     col]), G3D_DOUBLE);
+						     col]), DCELL_TYPE);
 	}
     }
     else {
-	if (data->type == G3D_FLOAT && data->float_array != NULL) {
+	if (data->type == FCELL_TYPE && data->fcell_array != NULL) {
 	    G_debug(6,
-		    "N_is_array_3d_value_null: null value is of type G3D_DOUBLE at pos [%i][%i][%i]",
+		    "N_is_array_3d_value_null: null value is of type DCELL_TYPE at pos [%i][%i][%i]",
 		    depth, row, col);
 	    return G3d_isNullValueNum((void *)
 				      &(data->
-					float_array[(depth +
+					fcell_array[(depth +
 						     data->offset) *
 						    (data->rows_intern *
 						     data->cols_intern) + (row +
@@ -1489,16 +1489,16 @@ N_is_array_3d_value_null(N_array_3d * data, int col, int row, int depth)
 						    * data->cols_intern + (col +
 									   data->
 									   offset)]),
-				      G3D_FLOAT);
+				      FCELL_TYPE);
 
 	}
-	else if (data->type == G3D_DOUBLE && data->double_array != NULL) {
+	else if (data->type == DCELL_TYPE && data->dcell_array != NULL) {
 	    G_debug(6,
-		    "N_is_array_3d_value_null: null value is of type G3D_DOUBLE at pos [%i][%i][%i]",
+		    "N_is_array_3d_value_null: null value is of type DCELL_TYPE at pos [%i][%i][%i]",
 		    depth, row, col);
 	    return G3d_isNullValueNum((void *)
 				      &(data->
-					double_array[(depth +
+					dcell_array[(depth +
 						      data->offset) *
 						     (data->rows_intern *
 						      data->cols_intern) +
@@ -1507,7 +1507,7 @@ N_is_array_3d_value_null(N_array_3d * data, int col, int row, int depth)
 						     data->cols_intern + (col +
 									  data->
 									  offset)]),
-				      G3D_DOUBLE);
+				      DCELL_TYPE);
 	}
     }
 
@@ -1530,16 +1530,16 @@ N_is_array_3d_value_null(N_array_3d * data, int col, int row, int depth)
  *
  * */
 inline float
-N_get_array_3d_value_float(N_array_3d * data, int col, int row, int depth)
+N_get_array_3d_f_value(N_array_3d * data, int col, int row, int depth)
 {
     float fvalue = 0.0;
     double dvalue = 0.0;
 
     switch (data->type) {
-    case G3D_FLOAT:
+    case FCELL_TYPE:
 	N_get_array_3d_value(data, col, row, depth, (void *)&fvalue);
 	return (float)fvalue;
-    case G3D_DOUBLE:
+    case DCELL_TYPE:
 	N_get_array_3d_value(data, col, row, depth, (void *)&dvalue);
 	return (float)dvalue;
     }
@@ -1563,17 +1563,17 @@ N_get_array_3d_value_float(N_array_3d * data, int col, int row, int depth)
  *
  * */
 inline double
-N_get_array_3d_value_double(N_array_3d * data, int col, int row, int depth)
+N_get_array_3d_d_value(N_array_3d * data, int col, int row, int depth)
 {
     float fvalue = 0.0;
     double dvalue = 0.0;
 
     switch (data->type) {
 
-    case G3D_FLOAT:
+    case FCELL_TYPE:
 	N_get_array_3d_value(data, col, row, depth, (void *)&fvalue);
 	return (double)fvalue;
-    case G3D_DOUBLE:
+    case DCELL_TYPE:
 	N_get_array_3d_value(data, col, row, depth, (void *)&dvalue);
 	return (double)dvalue;
     }
@@ -1605,29 +1605,29 @@ N_put_array_3d_value(N_array_3d * data, int col, int row, int depth,
 	    depth, row, col);
 
     if (data->offset == 0) {
-	if (data->type == G3D_FLOAT && data->float_array != NULL) {
-	    data->float_array[depth * (data->rows_intern * data->cols_intern) +
+	if (data->type == FCELL_TYPE && data->fcell_array != NULL) {
+	    data->fcell_array[depth * (data->rows_intern * data->cols_intern) +
 			      row * data->cols_intern + col]
 		= *((float *)value);
 	}
-	else if (data->type == G3D_DOUBLE && data->double_array != NULL) {
+	else if (data->type == DCELL_TYPE && data->dcell_array != NULL) {
 
-	    data->double_array[depth * (data->rows_intern * data->cols_intern) +
+	    data->dcell_array[depth * (data->rows_intern * data->cols_intern) +
 			       row * data->cols_intern + col]
 		= *((double *)value);
 	}
     }
     else {
-	if (data->type == G3D_FLOAT && data->float_array != NULL) {
-	    data->float_array[(depth + data->offset) *
+	if (data->type == FCELL_TYPE && data->fcell_array != NULL) {
+	    data->fcell_array[(depth + data->offset) *
 			      (data->rows_intern * data->cols_intern) + (row +
 									 data->
 									 offset)
 			      * data->cols_intern + (col + data->offset)] =
 		*((float *)value);
 	}
-	else if (data->type == G3D_DOUBLE && data->double_array != NULL) {
-	    data->double_array[(depth + data->offset) *
+	else if (data->type == DCELL_TYPE && data->dcell_array != NULL) {
+	    data->dcell_array[(depth + data->offset) *
 			       (data->rows_intern * data->cols_intern) + (row +
 									  data->
 									  offset)
@@ -1662,42 +1662,42 @@ N_put_array_3d_value_null(N_array_3d * data, int col, int row, int depth)
 	    depth, row, col);
 
     if (data->offset == 0) {
-	if (data->type == G3D_FLOAT && data->float_array != NULL) {
+	if (data->type == FCELL_TYPE && data->fcell_array != NULL) {
 	    G3d_setNullValue((void *)
 			     &(data->
-			       float_array[depth *
+			       fcell_array[depth *
 					   (data->rows_intern *
 					    data->cols_intern) +
 					   row * data->cols_intern + col]), 1,
-			     G3D_FLOAT);
+			     FCELL_TYPE);
 	}
-	else if (data->type == G3D_DOUBLE && data->double_array != NULL) {
+	else if (data->type == DCELL_TYPE && data->dcell_array != NULL) {
 	    G3d_setNullValue((void *)
 			     &(data->
-			       double_array[depth *
+			       dcell_array[depth *
 					    (data->rows_intern *
 					     data->cols_intern) +
 					    row * data->cols_intern + col]), 1,
-			     G3D_DOUBLE);
+			     DCELL_TYPE);
 	}
     }
     else {
-	if (data->type == G3D_FLOAT && data->float_array != NULL) {
+	if (data->type == FCELL_TYPE && data->fcell_array != NULL) {
 	    G3d_setNullValue((void *)
 			     &(data->
-			       float_array[(depth +
+			       fcell_array[(depth +
 					    data->offset) * (data->rows_intern *
 							     data->
 							     cols_intern) +
 					   (row +
 					    data->offset) * data->cols_intern +
 					   (col + data->offset)]), 1,
-			     G3D_FLOAT);
+			     FCELL_TYPE);
 	}
-	else if (data->type == G3D_DOUBLE && data->double_array != NULL) {
+	else if (data->type == DCELL_TYPE && data->dcell_array != NULL) {
 	    G3d_setNullValue((void *)
 			     &(data->
-			       double_array[(depth +
+			       dcell_array[(depth +
 					     data->offset) *
 					    (data->rows_intern *
 					     data->cols_intern) + (row +
@@ -1706,7 +1706,7 @@ N_put_array_3d_value_null(N_array_3d * data, int col, int row, int depth)
 					    data->cols_intern + (col +
 								 data->
 								 offset)]), 1,
-			     G3D_DOUBLE);
+			     DCELL_TYPE);
 	}
     }
 
@@ -1727,7 +1727,7 @@ N_put_array_3d_value_null(N_array_3d * data, int col, int row, int depth)
  * \return void
  * */
 inline void
-N_put_array_3d_value_float(N_array_3d * data, int col, int row, int depth,
+N_put_array_3d_f_value(N_array_3d * data, int col, int row, int depth,
 			   float value)
 {
     N_put_array_3d_value(data, col, row, depth, (void *)&value);
@@ -1749,7 +1749,7 @@ N_put_array_3d_value_float(N_array_3d * data, int col, int row, int depth,
  * \return void
  * */
 inline void
-N_put_array_3d_value_double(N_array_3d * data, int col, int row, int depth,
+N_put_array_3d_d_value(N_array_3d * data, int col, int row, int depth,
 			    double value)
 {
     N_put_array_3d_value(data, col, row, depth, (void *)&value);
@@ -1774,11 +1774,11 @@ void N_print_array_3d(N_array_3d * data)
     for (k = 0; k < data->depths; k++) {
 	for (j = 0; j < data->rows; j++) {
 	    for (i = 0; i < data->cols; i++) {
-		if (data->type == G3D_FLOAT)
-		    printf("%6.6f ", N_get_array_3d_value_float(data, i, j, k));
-		else if (data->type == G3D_DOUBLE)
+		if (data->type == FCELL_TYPE)
+		    printf("%6.6f ", N_get_array_3d_f_value(data, i, j, k));
+		else if (data->type == DCELL_TYPE)
 		    printf("%6.6f ",
-			   N_get_array_3d_value_double(data, i, j, k));
+			   N_get_array_3d_d_value(data, i, j, k));
 	    }
 	    printf("\n");
 	}
@@ -1828,37 +1828,37 @@ void N_copy_array_3d(N_array_3d * source, N_array_3d * target)
 	 i < source->cols_intern * source->rows_intern * source->depths_intern;
 	 i++) {
 	null = 0;
-	if (source->type == G3D_FLOAT) {
+	if (source->type == FCELL_TYPE) {
 	    if (G3d_isNullValueNum
-		((void *)&(source->float_array[i]), G3D_FLOAT))
+		((void *)&(source->fcell_array[i]), FCELL_TYPE))
 		null = 1;
 
-	    if (target->type == G3D_FLOAT) {
-		target->float_array[i] = source->float_array[i];
+	    if (target->type == FCELL_TYPE) {
+		target->fcell_array[i] = source->fcell_array[i];
 	    }
-	    if (target->type == G3D_DOUBLE) {
+	    if (target->type == DCELL_TYPE) {
 		if (null)
-		    G3d_setNullValue((void *)&(target->double_array[i]), 1,
-				     G3D_DOUBLE);
+		    G3d_setNullValue((void *)&(target->dcell_array[i]), 1,
+				     DCELL_TYPE);
 		else
-		    target->double_array[i] = (double)source->float_array[i];
+		    target->dcell_array[i] = (double)source->fcell_array[i];
 	    }
 
 	}
-	if (source->type == G3D_DOUBLE) {
+	if (source->type == DCELL_TYPE) {
 	    if (G3d_isNullValueNum
-		((void *)&(source->double_array[i]), G3D_DOUBLE))
+		((void *)&(source->dcell_array[i]), DCELL_TYPE))
 		null = 1;
 
-	    if (target->type == G3D_FLOAT) {
+	    if (target->type == FCELL_TYPE) {
 		if (null)
-		    G3d_setNullValue((void *)&(target->float_array[i]), 1,
-				     G3D_FLOAT);
+		    G3d_setNullValue((void *)&(target->fcell_array[i]), 1,
+				     FCELL_TYPE);
 		else
-		    target->float_array[i] = (float)source->double_array[i];
+		    target->fcell_array[i] = (float)source->dcell_array[i];
 	    }
-	    if (target->type == G3D_DOUBLE) {
-		target->double_array[i] = source->double_array[i];
+	    if (target->type == DCELL_TYPE) {
+		target->dcell_array[i] = source->dcell_array[i];
 	    }
 	}
     }
@@ -1904,21 +1904,21 @@ double N_norm_array_3d(N_array_3d * a, N_array_3d * b, int type)
 	v1 = 0.0;
 	v2 = 0.0;
 
-	if (a->type == G3D_FLOAT) {
-	    if (!G3d_isNullValueNum((void *)&(a->float_array[i]), G3D_FLOAT))
-		v1 = (double)a->float_array[i];
+	if (a->type == FCELL_TYPE) {
+	    if (!G3d_isNullValueNum((void *)&(a->fcell_array[i]), FCELL_TYPE))
+		v1 = (double)a->fcell_array[i];
 	}
-	if (a->type == G3D_DOUBLE) {
-	    if (!G3d_isNullValueNum((void *)&(a->double_array[i]), G3D_DOUBLE))
-		v1 = (double)a->double_array[i];
+	if (a->type == DCELL_TYPE) {
+	    if (!G3d_isNullValueNum((void *)&(a->dcell_array[i]), DCELL_TYPE))
+		v1 = (double)a->dcell_array[i];
 	}
-	if (b->type == G3D_FLOAT) {
-	    if (!G3d_isNullValueNum((void *)&(b->float_array[i]), G3D_FLOAT))
-		v2 = (double)b->float_array[i];
+	if (b->type == FCELL_TYPE) {
+	    if (!G3d_isNullValueNum((void *)&(b->fcell_array[i]), FCELL_TYPE))
+		v2 = (double)b->fcell_array[i];
 	}
-	if (b->type == G3D_DOUBLE) {
-	    if (!G3d_isNullValueNum((void *)&(b->double_array[i]), G3D_DOUBLE))
-		v2 = (double)b->double_array[i];
+	if (b->type == DCELL_TYPE) {
+	    if (!G3d_isNullValueNum((void *)&(b->dcell_array[i]), DCELL_TYPE))
+		v2 = (double)b->dcell_array[i];
 	}
 
 	if (type == N_MAXIMUM_NORM) {
@@ -1952,7 +1952,7 @@ double N_norm_array_3d(N_array_3d * a, N_array_3d * b, int type)
  *
  * The result array is optional, if the result arrays poins to NULL,
  * a new array will be allocated with the largest arrays datatype
- * (G3D_FLOAT or G3D_DOUBLE) used by the input arrays.
+ * (FCELL_TYPE or DCELL_TYPE) used by the input arrays.
  *
  * the calculations are of the following form:
  *
@@ -1995,15 +1995,15 @@ N_array_3d *N_math_array_3d(N_array_3d * a, N_array_3d * b, N_array_3d * result,
     /*if the result array is null, allocate a new one, use the 
      * largest data type of the input arrays*/
     if (c == NULL) {
-	if (a->type == G3D_DOUBLE || b->type == G3D_DOUBLE) {
+	if (a->type == DCELL_TYPE || b->type == DCELL_TYPE) {
 	    c = N_alloc_array_3d(a->cols, a->rows, a->depths, a->offset,
-				 G3D_DOUBLE);
-	    G_debug(3, "N_math_array_3d: array of type G3D_DOUBLE created");
+				 DCELL_TYPE);
+	    G_debug(3, "N_math_array_3d: array of type DCELL_TYPE created");
 	}
 	else {
 	    c = N_alloc_array_3d(a->cols, a->rows, a->depths, a->offset,
-				 G3D_FLOAT);
-	    G_debug(3, "N_math_array_3d: array of type G3D_FLOAT created");
+				 FCELL_TYPE);
+	    G_debug(3, "N_math_array_3d: array of type FCELL_TYPE created");
 	}
     }
     else {
@@ -2024,8 +2024,8 @@ N_array_3d *N_math_array_3d(N_array_3d * a, N_array_3d * b, N_array_3d * result,
 		if (!N_is_array_3d_value_null(a, i, j, k) &&
 		    !N_is_array_3d_value_null(a, i, j, k)) {
 		    /*we always calulate internally with double values */
-		    va = (double)N_get_array_3d_value_double(a, i, j, k);
-		    vb = (double)N_get_array_3d_value_double(b, i, j, k);
+		    va = (double)N_get_array_3d_d_value(a, i, j, k);
+		    vb = (double)N_get_array_3d_d_value(b, i, j, k);
 		    vc = 0;
 		    setnull = 0;
 
@@ -2047,17 +2047,17 @@ N_array_3d *N_math_array_3d(N_array_3d * a, N_array_3d * b, N_array_3d * result,
 			break;
 		    }
 
-		    if (c->type == G3D_FLOAT) {
+		    if (c->type == FCELL_TYPE) {
 			if (setnull)
 			    N_put_array_3d_value_null(c, i, j, k);
 			else
-			    N_put_array_3d_value_float(c, i, j, k, (float)vc);
+			    N_put_array_3d_f_value(c, i, j, k, (float)vc);
 		    }
-		    if (c->type == G3D_DOUBLE) {
+		    if (c->type == DCELL_TYPE) {
 			if (setnull)
 			    N_put_array_3d_value_null(c, i, j, k);
 			else
-			    N_put_array_3d_value_double(c, i, j, k, vc);
+			    N_put_array_3d_d_value(c, i, j, k, vc);
 		    }
 		}
 		else {
@@ -2090,31 +2090,31 @@ int N_convert_array_3d_null_to_zero(N_array_3d * a)
     G_debug(3, "N_convert_array_3d_null_to_zero: convert array of size %i",
 	    a->cols_intern * a->rows_intern * a->depths_intern);
 
-    if (a->type == G3D_FLOAT)
+    if (a->type == FCELL_TYPE)
 	for (i = 0; i < a->cols_intern * a->rows_intern * a->depths_intern; i++) {
-	    if (G3d_isNullValueNum((void *)&(a->float_array[i]), G3D_FLOAT)) {
-		a->float_array[i] = 0.0;
+	    if (G3d_isNullValueNum((void *)&(a->fcell_array[i]), FCELL_TYPE)) {
+		a->fcell_array[i] = 0.0;
 		count++;
 	    }
 	}
 
-    if (a->type == G3D_DOUBLE)
+    if (a->type == DCELL_TYPE)
 	for (i = 0; i < a->cols_intern * a->rows_intern * a->depths_intern; i++) {
-	    if (G3d_isNullValueNum((void *)&(a->double_array[i]), G3D_DOUBLE)) {
-		a->double_array[i] = 0.0;
+	    if (G3d_isNullValueNum((void *)&(a->dcell_array[i]), DCELL_TYPE)) {
+		a->dcell_array[i] = 0.0;
 		count++;
 	    }
 	}
 
 
-    if (a->type == G3D_FLOAT)
+    if (a->type == FCELL_TYPE)
 	G_debug(3,
-		"N_convert_array_3d_null_to_zero: %i values of type G3D_FLOAT are converted",
+		"N_convert_array_3d_null_to_zero: %i values of type FCELL_TYPE are converted",
 		count);
 
-    if (a->type == G3D_DOUBLE)
+    if (a->type == DCELL_TYPE)
 	G_debug(3,
-		"N_convert_array_3d_null_to_zero: %i values of type G3D_DOUBLE are converted",
+		"N_convert_array_3d_null_to_zero: %i values of type DCELL_TYPE are converted",
 		count);
 
     return count;
@@ -2180,11 +2180,11 @@ N_array_3d *N_read_rast3d_to_array_3d(char *name, N_array_3d * array, int mask)
     /*if the array is NULL create a new one with the datatype of the volume map */
     /*the offset is 0 by default */
     if (data == NULL) {
-	if (type == G3D_FLOAT) {
-	    data = N_alloc_array_3d(cols, rows, depths, 0, G3D_FLOAT);
+	if (type == FCELL_TYPE) {
+	    data = N_alloc_array_3d(cols, rows, depths, 0, FCELL_TYPE);
 	}
-	if (type == G3D_DOUBLE) {
-	    data = N_alloc_array_3d(cols, rows, depths, 0, G3D_DOUBLE);
+	if (type == DCELL_TYPE) {
+	    data = N_alloc_array_3d(cols, rows, depths, 0, DCELL_TYPE);
 	}
     }
     else {
@@ -2218,19 +2218,19 @@ N_array_3d *N_read_rast3d_to_array_3d(char *name, N_array_3d * array, int mask)
 	G_percent(z, depths - 1, 10);
 	for (y = 0; y < rows; y++) {
 	    for (x = 0; x < cols; x++) {
-		if (type == G3D_FLOAT) {
+		if (type == FCELL_TYPE) {
 		    G3d_getValue(map, x, y, z, &f1, type);
-		    if (data->type == G3D_FLOAT)
-			N_put_array_3d_value_float(data, x, y, z, f1);
-		    if (data->type == G3D_DOUBLE)
-			N_put_array_3d_value_double(data, x, y, z, (double)f1);
+		    if (data->type == FCELL_TYPE)
+			N_put_array_3d_f_value(data, x, y, z, f1);
+		    if (data->type == DCELL_TYPE)
+			N_put_array_3d_d_value(data, x, y, z, (double)f1);
 		}
 		else {
 		    G3d_getValue(map, x, y, z, &d1, type);
-		    if (data->type == G3D_FLOAT)
-			N_put_array_3d_value_float(data, x, y, z, (float)d1);
-		    if (data->type == G3D_DOUBLE)
-			N_put_array_3d_value_double(data, x, y, z, d1);
+		    if (data->type == FCELL_TYPE)
+			N_put_array_3d_f_value(data, x, y, z, (float)d1);
+		    if (data->type == DCELL_TYPE)
+			N_put_array_3d_d_value(data, x, y, z, d1);
 
 		}
 	    }
@@ -2299,10 +2299,10 @@ void N_write_array_3d_to_rast3d(N_array_3d * array, char *name, int mask)
 	    ("N_write_array_3d_to_rast3d: the data array size is different from the current region settings");
 
     /*Open the new map */
-    if (type == G3D_DOUBLE)
-	map = G3d_openCellNew(name, G3D_DOUBLE, G3D_USE_CACHE_DEFAULT, &region);
-    else if (type == G3D_FLOAT)
-	map = G3d_openCellNew(name, G3D_FLOAT, G3D_USE_CACHE_DEFAULT, &region);
+    if (type == DCELL_TYPE)
+	map = G3d_openCellNew(name, DCELL_TYPE, G3D_USE_CACHE_DEFAULT, &region);
+    else if (type == FCELL_TYPE)
+	map = G3d_openCellNew(name, FCELL_TYPE, G3D_USE_CACHE_DEFAULT, &region);
 
     if (map == NULL)
 	G3d_fatalError(_("Error opening g3d map <%s>"), name);
@@ -2325,12 +2325,12 @@ void N_write_array_3d_to_rast3d(N_array_3d * array, char *name, int mask)
 	G_percent(z, depths - 1, 10);
 	for (y = 0; y < rows; y++) {
 	    for (x = 0; x < cols; x++) {
-		if (type == G3D_FLOAT) {
-		    f1 = N_get_array_3d_value_float(data, x, y, z);
+		if (type == FCELL_TYPE) {
+		    f1 = N_get_array_3d_f_value(data, x, y, z);
 		    G3d_putFloat(map, x, y, z, f1);
 		}
-		else if (type == G3D_DOUBLE) {
-		    d1 = N_get_array_3d_value_double(data, x, y, z);
+		else if (type == DCELL_TYPE) {
+		    d1 = N_get_array_3d_d_value(data, x, y, z);
 		    G3d_putDouble(map, x, y, z, d1);
 		}
 	    }

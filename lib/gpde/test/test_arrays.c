@@ -73,19 +73,19 @@ int fill_array_2d(N_array_2d * a)
     for (j = 0; j < rows; j++) {
 	for (i = 0; i < cols; i++) {
 	    if (type == CELL_TYPE) {
-		N_put_array_2d_value_cell(a, i, j, (CELL) i * (CELL) j);
-		if (N_get_array_2d_value_cell(a, i, j) != (CELL) i * (CELL) j)
+		N_put_array_2d_c_value(a, i, j, (CELL) i * (CELL) j);
+		if (N_get_array_2d_c_value(a, i, j) != (CELL) i * (CELL) j)
 		    res++;
 	    }
 	    if (type == FCELL_TYPE) {
-		N_put_array_2d_value_fcell(a, i, j, (FCELL) i * (FCELL) j);
-		if (N_get_array_2d_value_fcell(a, i, j) !=
+		N_put_array_2d_f_value(a, i, j, (FCELL) i * (FCELL) j);
+		if (N_get_array_2d_f_value(a, i, j) !=
 		    (FCELL) i * (FCELL) j)
 		    res++;
 	    }
 	    if (type == DCELL_TYPE) {
-		N_put_array_2d_value_dcell(a, i, j, (DCELL) i * (DCELL) j);
-		if (N_get_array_2d_value_dcell(a, i, j) !=
+		N_put_array_2d_d_value(a, i, j, (DCELL) i * (DCELL) j);
+		if (N_get_array_2d_d_value(a, i, j) !=
 		    (DCELL) i * (DCELL) j)
 		    res++;
 	    }
@@ -134,18 +134,18 @@ int compare_array_2d(N_array_2d * a, N_array_2d * b)
     for (j = 0; j < rows; j++) {
 	for (i = 0; i < cols; i++) {
 	    if (type == CELL_TYPE) {
-		if (N_get_array_2d_value_cell(a, i, j) !=
-		    N_get_array_2d_value_cell(b, i, j))
+		if (N_get_array_2d_c_value(a, i, j) !=
+		    N_get_array_2d_c_value(b, i, j))
 		    res++;
 	    }
 	    if (type == FCELL_TYPE) {
-		if (N_get_array_2d_value_fcell(a, i, j) !=
-		    N_get_array_2d_value_fcell(b, i, j))
+		if (N_get_array_2d_f_value(a, i, j) !=
+		    N_get_array_2d_f_value(b, i, j))
 		    res++;
 	    }
 	    if (type == DCELL_TYPE) {
-		if (N_get_array_2d_value_dcell(a, i, j) !=
-		    N_get_array_2d_value_dcell(b, i, j))
+		if (N_get_array_2d_d_value(a, i, j) !=
+		    N_get_array_2d_d_value(b, i, j))
 		    res++;
 	    }
 	}
@@ -171,18 +171,18 @@ int fill_array_3d(N_array_3d * a)
     for (k = 0; k < depths; k++) {
 	for (j = 0; j < rows; j++) {
 	    for (i = 0; i < cols; i++) {
-		if (type == G3D_FLOAT) {
-		    N_put_array_3d_value_float(a, i, j, k,
+		if (type == FCELL_TYPE) {
+		    N_put_array_3d_f_value(a, i, j, k,
 					       (float)i * (float)j * (float)k);
-		    if (N_get_array_3d_value_float(a, i, j, k) !=
+		    if (N_get_array_3d_f_value(a, i, j, k) !=
 			(float)i * (float)j * (float)k)
 			res++;
 		}
-		if (type == G3D_DOUBLE) {
-		    N_put_array_3d_value_double(a, i, j, k,
+		if (type == DCELL_TYPE) {
+		    N_put_array_3d_d_value(a, i, j, k,
 						(double)i * (double)j *
 						(double)k);
-		    if (N_get_array_3d_value_double(a, i, j, k) !=
+		    if (N_get_array_3d_d_value(a, i, j, k) !=
 			(double)i * (double)j * (double)k)
 			res++;
 		}
@@ -237,14 +237,14 @@ int compare_array_3d(N_array_3d * a, N_array_3d * b)
     for (k = 0; k < depths; k++) {
 	for (i = 0; i < rows; i++) {
 	    for (j = 0; j < cols; j++) {
-		if (type == G3D_FLOAT) {
-		    if (N_get_array_3d_value_float(a, i, j, k) !=
-			N_get_array_3d_value_float(b, i, j, k))
+		if (type == FCELL_TYPE) {
+		    if (N_get_array_3d_f_value(a, i, j, k) !=
+			N_get_array_3d_f_value(b, i, j, k))
 			res++;
 		}
-		if (type == G3D_DOUBLE) {
-		    if (N_get_array_3d_value_double(a, i, j, k) !=
-			N_get_array_3d_value_double(b, i, j, k))
+		if (type == DCELL_TYPE) {
+		    if (N_get_array_3d_d_value(a, i, j, k) !=
+			N_get_array_3d_d_value(b, i, j, k))
 			res++;
 		}
 	    }
@@ -517,16 +517,16 @@ int test_array_3d()
     /*Alloacte memory for all arrays */
     data1 =
 	N_alloc_array_3d(TEST_N_NUM_COLS, TEST_N_NUM_ROWS, TEST_N_NUM_DEPTHS, 2,
-			 G3D_FLOAT);
+			 FCELL_TYPE);
     data11 =
 	N_alloc_array_3d(TEST_N_NUM_COLS, TEST_N_NUM_ROWS, TEST_N_NUM_DEPTHS, 2,
-			 G3D_FLOAT);
+			 FCELL_TYPE);
     data2 =
 	N_alloc_array_3d(TEST_N_NUM_COLS, TEST_N_NUM_ROWS, TEST_N_NUM_DEPTHS, 2,
-			 G3D_DOUBLE);
+			 DCELL_TYPE);
     data22 =
 	N_alloc_array_3d(TEST_N_NUM_COLS, TEST_N_NUM_ROWS, TEST_N_NUM_DEPTHS, 2,
-			 G3D_DOUBLE);
+			 DCELL_TYPE);
 
 
     /*Fill the first arrays with data */
@@ -694,10 +694,10 @@ int test_array_3d()
     G3d_getWindow(&region);
 
     data1 =
-	N_alloc_array_3d(region.cols, region.rows, region.depths, 0, G3D_FLOAT);
+	N_alloc_array_3d(region.cols, region.rows, region.depths, 0, FCELL_TYPE);
     data2 =
 	N_alloc_array_3d(region.cols, region.rows, region.depths, 0,
-			 G3D_DOUBLE);
+			 DCELL_TYPE);
     fill_array_3d(data1);
     fill_array_3d(data2);
 

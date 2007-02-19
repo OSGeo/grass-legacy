@@ -70,10 +70,10 @@ N_array_2d *create_status_array_2d()
 	for (i = 0; i < TEST_N_NUM_COLS; i++) {
 
 	    if (j == 0) {
-		N_put_array_2d_value_cell(data, i, j, 2);
+		N_put_array_2d_c_value(data, i, j, 2);
 	    }
 	    else {
-		N_put_array_2d_value_cell(data, i, j, 1);
+		N_put_array_2d_c_value(data, i, j, 1);
 	    }
 	}
     }
@@ -95,10 +95,10 @@ N_array_2d *create_value_array_2d()
 	for (i = 0; i < TEST_N_NUM_COLS; i++) {
 
 	    if (j == 0) {
-		N_put_array_2d_value_dcell(data, i, j, 50);
+		N_put_array_2d_d_value(data, i, j, 50);
 	    }
 	    else {
-		N_put_array_2d_value_dcell(data, i, j, 40);
+		N_put_array_2d_d_value(data, i, j, 40);
 	    }
 	}
     }
@@ -115,7 +115,7 @@ N_array_3d *create_status_array_3d()
 
     data =
 	N_alloc_array_3d(TEST_N_NUM_COLS, TEST_N_NUM_ROWS, TEST_N_NUM_DEPTHS, 1,
-			 G3D_FLOAT);
+			 FCELL_TYPE);
 
 #pragma omp parallel for private (i, j, k) shared (data)
     for (k = 0; k < TEST_N_NUM_DEPTHS; k++)
@@ -124,11 +124,11 @@ N_array_3d *create_status_array_3d()
 
 
 		if (i == 0) {
-		    N_put_array_3d_value_float(data, i, j, k, 2.0);
+		    N_put_array_3d_f_value(data, i, j, k, 2.0);
 		}
 		else {
 
-		    N_put_array_3d_value_float(data, i, j, k, 1.0);
+		    N_put_array_3d_f_value(data, i, j, k, 1.0);
 		}
 	    }
 	}
@@ -147,7 +147,7 @@ N_array_3d *create_value_array_3d()
 
     data =
 	N_alloc_array_3d(TEST_N_NUM_COLS, TEST_N_NUM_ROWS, TEST_N_NUM_DEPTHS, 1,
-			 G3D_DOUBLE);
+			 DCELL_TYPE);
 
 #pragma omp parallel for private (i, j, k) shared (data)
     for (k = 0; k < TEST_N_NUM_DEPTHS; k++)
@@ -156,11 +156,11 @@ N_array_3d *create_value_array_3d()
 
 
 		if (j == 0) {
-		    N_put_array_3d_value_float(data, i, j, k, 50);
+		    N_put_array_3d_f_value(data, i, j, k, 50);
 		}
 		else {
 
-		    N_put_array_3d_value_float(data, i, j, k, 50);
+		    N_put_array_3d_f_value(data, i, j, k, 50);
 		}
 	    }
 	}

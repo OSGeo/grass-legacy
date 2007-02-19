@@ -134,10 +134,10 @@ N_gradient_2d *N_get_gradient_2d(N_gradient_field_2d * field,
     N_gradient_2d *grad = gradient;
 
 
-    NC = -1 * N_get_array_2d_value_dcell(field->y_array, col, row);
-    SC = N_get_array_2d_value_dcell(field->y_array, col, row + 1);
-    WC = -1 * N_get_array_2d_value_dcell(field->x_array, col, row);
-    EC = N_get_array_2d_value_dcell(field->x_array, col + 1, row);
+    NC = -1 * N_get_array_2d_d_value(field->y_array, col, row);
+    SC = N_get_array_2d_d_value(field->y_array, col, row + 1);
+    WC = -1 * N_get_array_2d_d_value(field->x_array, col, row);
+    EC = N_get_array_2d_d_value(field->x_array, col + 1, row);
 
     G_debug(5,
 	    "N_get_gradient_2d: calculate N_gradient_2d NC %g SC %g WC %g EC %g",
@@ -282,12 +282,12 @@ N_gradient_3d *N_get_gradient_3d(N_gradient_field_3d * field,
     double NC, SC, WC, EC, TC, BC;
     N_gradient_3d *grad = gradient;
 
-    NC = -1 * N_get_array_3d_value_double(field->y_array, col, row, depth);
-    SC = N_get_array_3d_value_double(field->y_array, col, row + 1, depth);
-    WC = -1 * N_get_array_3d_value_double(field->x_array, col, row, depth);
-    EC = N_get_array_3d_value_double(field->x_array, col + 1, row, depth);
-    BC = -1 * N_get_array_3d_value_double(field->z_array, col, row, depth);
-    TC = N_get_array_3d_value_double(field->z_array, col, row, depth + 1);
+    NC = -1 * N_get_array_3d_d_value(field->y_array, col, row, depth);
+    SC = N_get_array_3d_d_value(field->y_array, col, row + 1, depth);
+    WC = -1 * N_get_array_3d_d_value(field->x_array, col, row, depth);
+    EC = N_get_array_3d_d_value(field->x_array, col + 1, row, depth);
+    BC = -1 * N_get_array_3d_d_value(field->z_array, col, row, depth);
+    TC = N_get_array_3d_d_value(field->z_array, col, row, depth + 1);
 
     G_debug(6,
 	    "N_get_gradient_3d: calculate N_gradient_3d NC %g SC %g WC %g EC %g TC %g BC %g",
@@ -1091,20 +1091,20 @@ N_gradient_field_2d *N_compute_gradient_field_2d(N_array_2d * pot,
 	    //Only compute if the arrays are not null
 	    if (!N_is_array_2d_value_null(pot, i, j) &&
 		!N_is_array_2d_value_null(pot, i + 1, j)) {
-		p1 = N_get_array_2d_value_dcell(pot, i, j);
-		p2 = N_get_array_2d_value_dcell(pot, i + 1, j);
+		p1 = N_get_array_2d_d_value(pot, i, j);
+		p2 = N_get_array_2d_d_value(pot, i + 1, j);
 		grad = (p1 - p2) / dx;	/* gradient */
 	    }
 	    if (!N_is_array_2d_value_null(relax_x, i, j) &&
 		!N_is_array_2d_value_null(relax_x, i + 1, j)) {
-		r1 = N_get_array_2d_value_dcell(relax_x, i, j);
-		r2 = N_get_array_2d_value_dcell(relax_x, i + 1, j);
+		r1 = N_get_array_2d_d_value(relax_x, i, j);
+		r2 = N_get_array_2d_d_value(relax_x, i + 1, j);
 		mean = 2 * (r1 * r2) / (r1 + r2);	/*harmonical mean */
 	    }
 
 	    res = mean * grad;
 
-	    N_put_array_2d_value_dcell(field->x_array, i + 1, j, res);
+	    N_put_array_2d_d_value(field->x_array, i + 1, j, res);
 
 	}
 
@@ -1116,20 +1116,20 @@ N_gradient_field_2d *N_compute_gradient_field_2d(N_array_2d * pot,
 	    //Only compute if the arrays are not null
 	    if (!N_is_array_2d_value_null(pot, i, j) &&
 		!N_is_array_2d_value_null(pot, i, j + 1)) {
-		p1 = N_get_array_2d_value_dcell(pot, i, j);
-		p2 = N_get_array_2d_value_dcell(pot, i, j + 1);
+		p1 = N_get_array_2d_d_value(pot, i, j);
+		p2 = N_get_array_2d_d_value(pot, i, j + 1);
 		grad = (p1 - p2) / dy;	/* gradient */
 	    }
 	    if (!N_is_array_2d_value_null(relax_y, i, j) &&
 		!N_is_array_2d_value_null(relax_y, i, j + 1)) {
-		r1 = N_get_array_2d_value_dcell(relax_y, i, j);
-		r2 = N_get_array_2d_value_dcell(relax_y, i, j + 1);
+		r1 = N_get_array_2d_d_value(relax_y, i, j);
+		r2 = N_get_array_2d_d_value(relax_y, i, j + 1);
 		mean = 2 * (r1 * r2) / (r1 + r2);	/*harmonical mean */
 	    }
 
 	    res = mean * grad;
 
-	    N_put_array_2d_value_dcell(field->y_array, i, j + 1, res);
+	    N_put_array_2d_d_value(field->y_array, i, j + 1, res);
 
 	}
 
@@ -1180,8 +1180,8 @@ N_compute_gradient_field_components_2d(N_gradient_field_2d * field,
 	    N_get_gradient_2d(field, &grad, i, j);
 	    vx = (-1 * grad.WC + grad.EC) / 2;
 	    vy = -1 * (-1 * grad.NC + grad.SC) / 2;	/*the gradient must be inverted, because grass counts the rows from north to south */
-	    N_put_array_2d_value_dcell(x, i, j, vx);
-	    N_put_array_2d_value_dcell(y, i, j, vy);
+	    N_put_array_2d_d_value(x, i, j, vx);
+	    N_put_array_2d_d_value(y, i, j, vy);
 	}
 
     return;
@@ -1193,7 +1193,7 @@ N_compute_gradient_field_components_2d(N_gradient_field_2d * field,
 /*!
  * \brief Allocate a N_gradient_field_3d
  *
- * The field arrays are always of type G3D_DOUBLE. The array in x direction
+ * The field arrays are always of type DCELL_TYPE. The array in x direction
  * is one column larger, the array in y direction is one row larger
  * and the array in z direction is one depth larger.
  * This is needed to store the gradients between cells.
@@ -1214,9 +1214,9 @@ N_gradient_field_3d *N_alloc_gradient_field_3d(int cols, int rows, int depths)
 
     field = (N_gradient_field_3d *) G_calloc(1, sizeof(N_gradient_field_3d));
 
-    field->x_array = N_alloc_array_3d(cols, rows, depths, 1, G3D_DOUBLE);
-    field->y_array = N_alloc_array_3d(cols, rows, depths, 1, G3D_DOUBLE);
-    field->z_array = N_alloc_array_3d(cols, rows, depths, 1, G3D_DOUBLE);
+    field->x_array = N_alloc_array_3d(cols, rows, depths, 1, DCELL_TYPE);
+    field->y_array = N_alloc_array_3d(cols, rows, depths, 1, DCELL_TYPE);
+    field->z_array = N_alloc_array_3d(cols, rows, depths, 1, DCELL_TYPE);
 
     return field;
 }
@@ -1356,14 +1356,14 @@ N_gradient_field_3d *N_compute_gradient_field_3d(N_array_3d * pot,
 		//Only compute if the arrays are not null
 		if (!N_is_array_3d_value_null(pot, i, j, k) &&
 		    !N_is_array_3d_value_null(pot, i + 1, j, k)) {
-		    p1 = N_get_array_3d_value_double(pot, i, j, k);
-		    p2 = N_get_array_3d_value_double(pot, i + 1, j, k);
+		    p1 = N_get_array_3d_d_value(pot, i, j, k);
+		    p2 = N_get_array_3d_d_value(pot, i + 1, j, k);
 		    grad = (p1 - p2) / dx;	/* gradient */
 		}
 		if (!N_is_array_3d_value_null(relax_x, i, j, k) &&
 		    !N_is_array_3d_value_null(relax_x, i + 1, j, k)) {
-		    r1 = N_get_array_3d_value_double(relax_x, i, j, k);
-		    r2 = N_get_array_3d_value_double(relax_x, i + 1, j, k);
+		    r1 = N_get_array_3d_d_value(relax_x, i, j, k);
+		    r2 = N_get_array_3d_d_value(relax_x, i + 1, j, k);
 		    if ((r1 + r2) != 0)
 			mean = 2 * (r1 * r2) / (r1 + r2);	/*harmonical mean */
 		}
@@ -1374,7 +1374,7 @@ N_gradient_field_3d *N_compute_gradient_field_3d(N_array_3d * pot,
 			"N_compute_gradient_field_3d: X-direction insert value %6.5g at %i %i %i ",
 			res, k, j, i + 1);
 
-		N_put_array_3d_value_double(field->x_array, i + 1, j, k, res);
+		N_put_array_3d_d_value(field->x_array, i + 1, j, k, res);
 
 	    }
 
@@ -1387,14 +1387,14 @@ N_gradient_field_3d *N_compute_gradient_field_3d(N_array_3d * pot,
 		//Only compute if the arrays are not null
 		if (!N_is_array_3d_value_null(pot, i, j, k) &&
 		    !N_is_array_3d_value_null(pot, i, j + 1, k)) {
-		    p1 = N_get_array_3d_value_double(pot, i, j, k);
-		    p2 = N_get_array_3d_value_double(pot, i, j + 1, k);
+		    p1 = N_get_array_3d_d_value(pot, i, j, k);
+		    p2 = N_get_array_3d_d_value(pot, i, j + 1, k);
 		    grad = (p1 - p2) / dy;	/* gradient */
 		}
 		if (!N_is_array_3d_value_null(relax_y, i, j, k) &&
 		    !N_is_array_3d_value_null(relax_y, i, j + 1, k)) {
-		    r1 = N_get_array_3d_value_double(relax_y, i, j, k);
-		    r2 = N_get_array_3d_value_double(relax_y, i, j + 1, k);
+		    r1 = N_get_array_3d_d_value(relax_y, i, j, k);
+		    r2 = N_get_array_3d_d_value(relax_y, i, j + 1, k);
 		    if ((r1 + r2) != 0)
 			mean = 2 * (r1 * r2) / (r1 + r2);	/*harmonical mean */
 		}
@@ -1405,7 +1405,7 @@ N_gradient_field_3d *N_compute_gradient_field_3d(N_array_3d * pot,
 			"N_compute_gradient_field_3d: Y-direction insert value %6.5g at %i %i %i ",
 			res, k, j + 1, i);
 
-		N_put_array_3d_value_double(field->y_array, i, j + 1, k, res);
+		N_put_array_3d_d_value(field->y_array, i, j + 1, k, res);
 
 	    }
 
@@ -1418,14 +1418,14 @@ N_gradient_field_3d *N_compute_gradient_field_3d(N_array_3d * pot,
 		//Only compute if the arrays are not null
 		if (!N_is_array_3d_value_null(pot, i, j, k) &&
 		    !N_is_array_3d_value_null(pot, i, j, k + 1)) {
-		    p1 = N_get_array_3d_value_double(pot, i, j, k);
-		    p2 = N_get_array_3d_value_double(pot, i, j, k + 1);
+		    p1 = N_get_array_3d_d_value(pot, i, j, k);
+		    p2 = N_get_array_3d_d_value(pot, i, j, k + 1);
 		    grad = (p1 - p2) / dz;	/* gradient */
 		}
 		if (!N_is_array_3d_value_null(relax_z, i, j, k) &&
 		    !N_is_array_3d_value_null(relax_z, i, j, k + 1)) {
-		    r1 = N_get_array_3d_value_double(relax_z, i, j, k);
-		    r2 = N_get_array_3d_value_double(relax_z, i, j, k + 1);
+		    r1 = N_get_array_3d_d_value(relax_z, i, j, k);
+		    r2 = N_get_array_3d_d_value(relax_z, i, j, k + 1);
 		    if ((r1 + r2) != 0)
 			mean = 2 * (r1 * r2) / (r1 + r2);	/*harmonical mean */
 		}
@@ -1436,7 +1436,7 @@ N_gradient_field_3d *N_compute_gradient_field_3d(N_array_3d * pot,
 			"N_compute_gradient_field_3d: Z-direction insert value %6.5g at %i %i %i ",
 			res, k + 1, j, i);
 
-		N_put_array_3d_value_double(field->z_array, i, j, k + 1, res);
+		N_put_array_3d_d_value(field->z_array, i, j, k + 1, res);
 
 	    }
 
@@ -1498,9 +1498,9 @@ N_compute_gradient_field_components_3d(N_gradient_field_3d * field,
 		vx = (-1 * grad.WC + grad.EC) / 2;
 		vy = -1 * (-1 * grad.NC + grad.SC) / 2;	/*the gradient must be inverted, because grass counts the rows from north to south */
 		vz = (grad.TC + -1 * grad.BC) / 2;
-		N_put_array_3d_value_double(x, i, j, k, vx);
-		N_put_array_3d_value_double(y, i, j, k, vy);
-		N_put_array_3d_value_double(z, i, j, k, vz);
+		N_put_array_3d_d_value(x, i, j, k, vx);
+		N_put_array_3d_d_value(y, i, j, k, vy);
+		N_put_array_3d_d_value(z, i, j, k, vz);
 	    }
 
 

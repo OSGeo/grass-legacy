@@ -421,7 +421,7 @@ N_les *N_assemble_les_3d(int les_type, N_geom_data * geom, N_array_3d * status,
     G_debug(2, "N_assemble_les_3d: assemble the linear equation system");
 
     cell_count =
-	N_alloc_array_3d(geom->cols, geom->rows, geom->depths, 1, G3D_DOUBLE);
+	N_alloc_array_3d(geom->cols, geom->rows, geom->depths, 1, DCELL_TYPE);
 
 
     /* First count the number of valid cells and save  
@@ -433,7 +433,7 @@ N_les *N_assemble_les_3d(int les_type, N_geom_data * geom, N_array_3d * status,
 	for (j = 0; j < geom->rows; j++) {
 	    for (i = 0; i < geom->cols; i++) {
 		if (N_CELL_ACTIVE ==
-		    (int)N_get_array_3d_value_double(status, i, j, k)) {
+		    (int)N_get_array_3d_d_value(status, i, j, k)) {
 		    dcount++;
 		}
 	    }
@@ -461,8 +461,8 @@ N_les *N_assemble_les_3d(int les_type, N_geom_data * geom, N_array_3d * status,
 	for (j = 0; j < geom->rows; j++) {
 	    for (i = 0; i < geom->cols; i++) {
 		if (N_CELL_ACTIVE ==
-		    N_get_array_3d_value_double(status, i, j, k)) {
-		    N_put_array_3d_value_double(cell_count, i, j, k, count);
+		    N_get_array_3d_d_value(status, i, j, k)) {
+		    N_put_array_3d_d_value(cell_count, i, j, k, count);
 		    index_ij[count][0] = i;
 		    index_ij[count][1] = j;
 		    index_ij[count][2] = k;
@@ -492,7 +492,7 @@ N_les *N_assemble_les_3d(int les_type, N_geom_data * geom, N_array_3d * status,
 	 * initial conditions
 	 */
 
-	les->x[count] = N_get_array_3d_value_double(start_val, i, j, k);
+	les->x[count] = N_get_array_3d_d_value(start_val, i, j, k);
 
 	/*
 	 * the entry in the vector b
@@ -515,18 +515,18 @@ N_les *N_assemble_les_3d(int les_type, N_geom_data * geom, N_array_3d * status,
 	 * western neighbour, entry is col - 1
 	 */
 	if (i > 0) {
-	    K = N_get_array_3d_value_double(cell_count, i - 1, j,
+	    K = N_get_array_3d_d_value(cell_count, i - 1, j,
 					    k) -
-		N_get_array_3d_value_double(cell_count, i, j, k);
+		N_get_array_3d_d_value(cell_count, i, j, k);
 
 
-	    if ((int)N_get_array_3d_value_double(status, i - 1, j, k) ==
+	    if ((int)N_get_array_3d_d_value(status, i - 1, j, k) ==
 		N_CELL_DIRICHLET) {
 		les->b[count] -=
-		    N_get_array_3d_value_double(start_val, i - 1, j,
+		    N_get_array_3d_d_value(start_val, i - 1, j,
 						k) * items->W;
 	    }
-	    else if ((int)N_get_array_3d_value_double(status, i - 1, j, k) ==
+	    else if ((int)N_get_array_3d_d_value(status, i - 1, j, k) ==
 		     N_CELL_ACTIVE) {
 		if ((count + K) >= 0 && (count + K) < les->rows) {
 		    pos++;
@@ -545,18 +545,18 @@ N_les *N_assemble_les_3d(int les_type, N_geom_data * geom, N_array_3d * status,
 	 * eastern neighbour, entry col + 1
 	 */
 	if (i < geom->cols) {
-	    K = N_get_array_3d_value_double(cell_count, i + 1, j,
+	    K = N_get_array_3d_d_value(cell_count, i + 1, j,
 					    k) -
-		N_get_array_3d_value_double(cell_count, i, j, k);
+		N_get_array_3d_d_value(cell_count, i, j, k);
 
 
-	    if ((int)N_get_array_3d_value_double(status, i + 1, j, k) ==
+	    if ((int)N_get_array_3d_d_value(status, i + 1, j, k) ==
 		N_CELL_DIRICHLET) {
 		les->b[count] -=
-		    N_get_array_3d_value_double(start_val, i + 1, j,
+		    N_get_array_3d_d_value(start_val, i + 1, j,
 						k) * items->E;
 	    }
-	    else if ((int)N_get_array_3d_value_double(status, i + 1, j, k) ==
+	    else if ((int)N_get_array_3d_d_value(status, i + 1, j, k) ==
 		     N_CELL_ACTIVE) {
 		if ((count + K) >= 0 && (count + K) < les->rows) {
 		    pos++;
@@ -575,18 +575,18 @@ N_les *N_assemble_les_3d(int les_type, N_geom_data * geom, N_array_3d * status,
 	 * northern neighbour, entry cols - number of cell in x direction
 	 */
 	if (j > 0) {
-	    K = N_get_array_3d_value_double(cell_count, i, j - 1,
+	    K = N_get_array_3d_d_value(cell_count, i, j - 1,
 					    k) -
-		N_get_array_3d_value_double(cell_count, i, j, k);
+		N_get_array_3d_d_value(cell_count, i, j, k);
 
 
-	    if ((int)N_get_array_3d_value_double(status, i, j - 1, k) ==
+	    if ((int)N_get_array_3d_d_value(status, i, j - 1, k) ==
 		N_CELL_DIRICHLET) {
 		les->b[count] -=
-		    N_get_array_3d_value_double(start_val, i, j - 1,
+		    N_get_array_3d_d_value(start_val, i, j - 1,
 						k) * items->N;
 	    }
-	    else if ((int)N_get_array_3d_value_double(status, i, j - 1, k) ==
+	    else if ((int)N_get_array_3d_d_value(status, i, j - 1, k) ==
 		     N_CELL_ACTIVE) {
 		if ((count + K) >= 0 && (count + K) < les->rows) {
 		    pos++;
@@ -605,18 +605,18 @@ N_les *N_assemble_les_3d(int les_type, N_geom_data * geom, N_array_3d * status,
 	 * southern entry, cols + number of cells in x - direction
 	 */
 	if (j < geom->rows) {
-	    K = N_get_array_3d_value_double(cell_count, i, j + 1,
+	    K = N_get_array_3d_d_value(cell_count, i, j + 1,
 					    k) -
-		N_get_array_3d_value_double(cell_count, i, j, k);
+		N_get_array_3d_d_value(cell_count, i, j, k);
 
 
-	    if ((int)N_get_array_3d_value_double(status, i, j + 1, k) ==
+	    if ((int)N_get_array_3d_d_value(status, i, j + 1, k) ==
 		N_CELL_DIRICHLET) {
 		les->b[count] -=
-		    N_get_array_3d_value_double(start_val, i, j + 1,
+		    N_get_array_3d_d_value(start_val, i, j + 1,
 						k) * items->S;
 	    }
-	    else if ((int)N_get_array_3d_value_double(status, i, j + 1, k) ==
+	    else if ((int)N_get_array_3d_d_value(status, i, j + 1, k) ==
 		     N_CELL_ACTIVE) {
 		if ((count + K) >= 0 && (count + K) < les->rows) {
 		    pos++;
@@ -638,18 +638,18 @@ N_les *N_assemble_les_3d(int les_type, N_geom_data * geom, N_array_3d * status,
 	     * Entry at postion - number of cells cols*rows direction
 	     */
 	    if (k < geom->depths) {
-		K = N_get_array_3d_value_double(cell_count, i, j,
+		K = N_get_array_3d_d_value(cell_count, i, j,
 						k + 1) -
-		    N_get_array_3d_value_double(cell_count, i, j, k);
+		    N_get_array_3d_d_value(cell_count, i, j, k);
 
 
-		if ((int)N_get_array_3d_value_double(status, i, j, k + 1) ==
+		if ((int)N_get_array_3d_d_value(status, i, j, k + 1) ==
 		    N_CELL_DIRICHLET) {
 		    les->b[count] -=
-			N_get_array_3d_value_double(start_val, i, j,
+			N_get_array_3d_d_value(start_val, i, j,
 						    k + 1) * items->T;
 		}
-		else if ((int)N_get_array_3d_value_double(status, i, j, k + 1)
+		else if ((int)N_get_array_3d_d_value(status, i, j, k + 1)
 			 == N_CELL_ACTIVE) {
 		    if ((count + K) >= 0 && (count + K) < les->rows) {
 			pos++;
@@ -669,18 +669,18 @@ N_les *N_assemble_les_3d(int les_type, N_geom_data * geom, N_array_3d * status,
 	     * Entry at position + number of cells cols*rows direction
 	     */
 	    if (k > 0) {
-		K = N_get_array_3d_value_double(cell_count, i, j,
+		K = N_get_array_3d_d_value(cell_count, i, j,
 						k - 1) -
-		    N_get_array_3d_value_double(cell_count, i, j, k);
+		    N_get_array_3d_d_value(cell_count, i, j, k);
 
 
-		if ((int)N_get_array_3d_value_double(status, i, j, k - 1) ==
+		if ((int)N_get_array_3d_d_value(status, i, j, k - 1) ==
 		    N_CELL_DIRICHLET) {
 		    les->b[count] -=
-			N_get_array_3d_value_double(start_val, i, j,
+			N_get_array_3d_d_value(start_val, i, j,
 						    k - 1) * items->B;
 		}
-		else if ((int)N_get_array_3d_value_double(status, i, j, k - 1)
+		else if ((int)N_get_array_3d_d_value(status, i, j, k - 1)
 			 == N_CELL_ACTIVE) {
 		    if ((count + K) >= 0 && (count + K) < les->rows) {
 			pos++;
@@ -770,7 +770,7 @@ N_les *N_assemble_les_2d(int les_type, N_geom_data * geom, N_array_2d * status,
      * */
     for (j = 0; j < geom->rows; j++) {
 	for (i = 0; i < geom->cols; i++) {
-	    if (N_CELL_ACTIVE == N_get_array_2d_value_dcell(status, i, j)) {
+	    if (N_CELL_ACTIVE == N_get_array_2d_d_value(status, i, j)) {
 		dcount++;
 	    }
 	}
@@ -795,8 +795,8 @@ N_les *N_assemble_les_2d(int les_type, N_geom_data * geom, N_array_2d * status,
 
     for (j = 0; j < geom->rows; j++) {
 	for (i = 0; i < geom->cols; i++) {
-	    if (N_CELL_ACTIVE == (int)N_get_array_2d_value_dcell(status, i, j)) {
-		N_put_array_2d_value_dcell(cell_count, i, j, (double)count);
+	    if (N_CELL_ACTIVE == (int)N_get_array_2d_d_value(status, i, j)) {
+		N_put_array_2d_d_value(cell_count, i, j, (double)count);
 		index_ij[count][0] = i;
 		index_ij[count][1] = j;
 		count++;
@@ -822,7 +822,7 @@ N_les *N_assemble_les_2d(int les_type, N_geom_data * geom, N_array_2d * status,
 	/*
 	 * initial conditions
 	 */
-	les->x[count] = N_get_array_2d_value_dcell(start_val, i, j);
+	les->x[count] = N_get_array_2d_d_value(start_val, i, j);
 
 	/*
 	 * the entry in the vector b
@@ -845,17 +845,17 @@ N_les *N_assemble_les_2d(int les_type, N_geom_data * geom, N_array_2d * status,
 	 * western neighbour, entry is col - 1
 	 */
 	if (i > 0) {
-	    K = N_get_array_2d_value_dcell(cell_count, i - 1,
+	    K = N_get_array_2d_d_value(cell_count, i - 1,
 					   j) -
-		N_get_array_2d_value_dcell(cell_count, i, j);
+		N_get_array_2d_d_value(cell_count, i, j);
 
 
-	    if (N_get_array_2d_value_dcell(status, i - 1, j) ==
+	    if (N_get_array_2d_d_value(status, i - 1, j) ==
 		N_CELL_DIRICHLET) {
 		les->b[count] -=
-		    N_get_array_2d_value_dcell(start_val, i - 1, j) * items->W;
+		    N_get_array_2d_d_value(start_val, i - 1, j) * items->W;
 	    }
-	    else if (N_get_array_2d_value_dcell(status, i - 1, j) ==
+	    else if (N_get_array_2d_d_value(status, i - 1, j) ==
 		     N_CELL_ACTIVE) {
 		if ((count + K) >= 0 && (count + K) < les->rows) {
 
@@ -875,17 +875,17 @@ N_les *N_assemble_les_2d(int les_type, N_geom_data * geom, N_array_2d * status,
 	 * eastern neighbour, entry col + 1
 	 */
 	if (i < geom->cols) {
-	    K = N_get_array_2d_value_dcell(cell_count, i + 1,
+	    K = N_get_array_2d_d_value(cell_count, i + 1,
 					   j) -
-		N_get_array_2d_value_dcell(cell_count, i, j);
+		N_get_array_2d_d_value(cell_count, i, j);
 
 
-	    if (N_get_array_2d_value_dcell(status, i + 1, j) ==
+	    if (N_get_array_2d_d_value(status, i + 1, j) ==
 		N_CELL_DIRICHLET) {
 		les->b[count] -=
-		    N_get_array_2d_value_dcell(start_val, i + 1, j) * items->E;
+		    N_get_array_2d_d_value(start_val, i + 1, j) * items->E;
 	    }
-	    else if (N_get_array_2d_value_dcell(status, i + 1, j) ==
+	    else if (N_get_array_2d_d_value(status, i + 1, j) ==
 		     N_CELL_ACTIVE) {
 		if ((count + K) >= 0 && (count + K) < les->rows) {
 		    pos++;
@@ -904,17 +904,17 @@ N_les *N_assemble_les_2d(int les_type, N_geom_data * geom, N_array_2d * status,
 	 * northern neighbour, entry cols - number of cell in x direction
 	 */
 	if (j > 0) {
-	    K = N_get_array_2d_value_dcell(cell_count, i,
+	    K = N_get_array_2d_d_value(cell_count, i,
 					   j - 1) -
-		N_get_array_2d_value_dcell(cell_count, i, j);
+		N_get_array_2d_d_value(cell_count, i, j);
 
 
-	    if (N_get_array_2d_value_dcell(status, i, j - 1) ==
+	    if (N_get_array_2d_d_value(status, i, j - 1) ==
 		N_CELL_DIRICHLET) {
 		les->b[count] -=
-		    N_get_array_2d_value_dcell(start_val, i, j - 1) * items->N;
+		    N_get_array_2d_d_value(start_val, i, j - 1) * items->N;
 	    }
-	    else if (N_get_array_2d_value_dcell(status, i, j - 1) ==
+	    else if (N_get_array_2d_d_value(status, i, j - 1) ==
 		     N_CELL_ACTIVE) {
 		if ((count + K) >= 0 && (count + K) < les->rows) {
 		    pos++;
@@ -933,17 +933,17 @@ N_les *N_assemble_les_2d(int les_type, N_geom_data * geom, N_array_2d * status,
 	 * southern entry, cols + number of cells in x - direction
 	 */
 	if (j < geom->rows) {
-	    K = N_get_array_2d_value_dcell(cell_count, i,
+	    K = N_get_array_2d_d_value(cell_count, i,
 					   j + 1) -
-		N_get_array_2d_value_dcell(cell_count, i, j);
+		N_get_array_2d_d_value(cell_count, i, j);
 
 
-	    if (N_get_array_2d_value_dcell(status, i, j + 1) ==
+	    if (N_get_array_2d_d_value(status, i, j + 1) ==
 		N_CELL_DIRICHLET) {
 		les->b[count] -=
-		    N_get_array_2d_value_dcell(start_val, i, j + 1) * items->S;
+		    N_get_array_2d_d_value(start_val, i, j + 1) * items->S;
 	    }
-	    else if (N_get_array_2d_value_dcell(status, i, j + 1) ==
+	    else if (N_get_array_2d_d_value(status, i, j + 1) ==
 		     N_CELL_ACTIVE) {
 		if ((count + K) >= 0 && (count + K) < les->rows) {
 		    pos++;
