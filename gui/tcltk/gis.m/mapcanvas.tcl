@@ -561,7 +561,7 @@ proc MapCanvas::runprograms { mon mod } {
 		set gregion "projection:$parts(projection); zone:$parts(zone); north:$parts(north); south:$parts(south); east:$parts(east); west:$parts(west); e-w resol:$parts(ewres);	 n-s resol:$parts(nsres)"
 	} 
 
-	set MapCanvas::msg($mon) "please wait..."
+	set MapCanvas::msg($mon) [G_msg "please wait..."]
 	$mapframe($mon) showstatusbar progression
 
 	incr drawprog
@@ -785,7 +785,7 @@ proc MapCanvas::save_region {mon} {
 
 	# make dialog window with entry widget
 	toplevel .saveregion
-	wm title .saveregion "Save Region"
+	wm title .saveregion [G_msg "Save Region"]
 	wm withdraw .saveregion
 	set row [frame .saveregion.txt]
 	Label $row.a -text [G_msg "Save current display geometry to named region"] \
@@ -829,8 +829,8 @@ proc MapCanvas::check_saveregion {mon saveregion} {
 
 	set svfile "$env(GISDBASE)/$env(LOCATION_NAME)/$env(MAPSET)/windows/$saveregion"
 	if {[file exists $svfile] } {
-		set answer [tk_messageBox -message "Region file $saveregion already exists.\
-			\nDo you want to overwrite it?" -type yesno -icon question -default no]
+		set answer [tk_messageBox -message [format [G_msg "Region file %s already exists.\
+			\nDo you want to overwrite it?"] $saveregion] -type yesno -icon question -default no]
 		if {$answer=="no"} {return}
 		set overwrite 1
 	}
@@ -999,7 +999,8 @@ proc MapCanvas::currentzoom { mon } {
 	set cols [lindex $region 7]
 	set nsres [lindex $region 4]
 	set ewres [lindex $region 5]
-	set MapCanvas::regionstr "Display: rows=$rows cols=$cols N-S res=$nsres E-W res=$ewres"
+	set MapCanvas::regionstr [format [G_msg "Display: rows=%d cols=%d N-S res=%f E-W res=%f"] \
+		$rows $cols $nsres $ewres]
 	set MapCanvas::msg($mon) $regionstr
 
 	# region contains values for n s e w ewres nsres rows cols
@@ -1142,9 +1143,9 @@ proc MapCanvas::zoombind { mon zoom } {
 	MapCanvas::setcursor $mon "plus"
 
 	if {$zoom == 1} {
-		set MapCanvas::msg($mon) "Drag or click mouse to zoom"
+		set MapCanvas::msg($mon) [G_msg "Drag or click mouse to zoom"]
 	} elseif {$zoom == -1} {
-		set MapCanvas::msg($mon) "Drag or click mouse to unzoom"
+		set MapCanvas::msg($mon) [G_msg "Drag or click mouse to unzoom"]
 	}
 
 	bind $can($mon) <1> {
@@ -1378,7 +1379,7 @@ proc MapCanvas::panbind { mon } {
 	variable can
 	variable msg
 
-	set MapCanvas::msg($mon) "Drag with mouse to pan"
+	set MapCanvas::msg($mon) [G_msg "Drag with mouse to pan"]
 
 	MapCanvas::setcursor $mon "hand2"
 
@@ -1502,7 +1503,7 @@ proc MapCanvas::measurebind { mon } {
 	variable msg
 
 	# Make the output for the measurement
-	set measurement_annotation_handle [monitor_annotation_start $mon "Measurement" {}]
+	set measurement_annotation_handle [monitor_annotation_start $mon [G_msg "Measurement"] {}]
 
 	if {[info exists linex1]} {unset linex1}
 	if {[info exists liney1]} {unset liney1}
@@ -1521,7 +1522,7 @@ proc MapCanvas::measurebind { mon } {
 		}
 	bind $can($mon) <ButtonRelease-1> "MapCanvas::measure $mon %x %y"
 
-	set MapCanvas::msg($mon) "Draw measure line with mouse"
+	set MapCanvas::msg($mon) [G_msg "Draw measure line with mouse"]
 
 	MapCanvas::setcursor $mon "pencil"
 	set mlength 0
@@ -1606,8 +1607,8 @@ proc MapCanvas::measure { mon x y } {
 	set mlength [expr {sqrt(pow(($east1 - $east2), 2) + pow(($north1 - $north2), 2))}]
 	set totmlength [expr {$totmlength + $mlength}]
 
-	monitor_annotate $measurement_annotation_handle " --segment length\t= $mlength\n"
-	monitor_annotate $measurement_annotation_handle "cumulative length\t= $totmlength\n"
+	monitor_annotate $measurement_annotation_handle [format [G_msg " --segment length = %f\n"] $mlength]
+	monitor_annotate $measurement_annotation_handle [format [G_msg "cumulative length = %f\n"] $totmlength]
 
 	set linex1 $linex2
 	set liney1 $liney2
@@ -1622,7 +1623,7 @@ proc MapCanvas::querybind { mon } {
 	variable msg
 	variable can
 
-	set MapCanvas::msg($mon) "Click to query feature"
+	set MapCanvas::msg($mon) [G_msg "Click to query feature"]
 
 	bind $can($mon) <1> {
 		MapCanvas::query $mon %x %y
@@ -1685,11 +1686,17 @@ proc MapCanvas::query { mon x y } {
 			set mapname [GmThematic::mapname $sel]
 			set cmd "v.what -a map=$mapname east_north=$east,$north distance=$vdist($mon)\n\n"
 		}
+		default {
+			set mapname ""
+			tk_messageBox -type ok -icon warning -parent .mapcan($mon) \
+			-message [G_msg "This layer does not suppor queries"] -title [G_msg "Not supported"]
+			return
+		}
 	}
 
 		if { $mapname == "" } {
-			set ah [monitor_annotation_start $mon "Query" {}]
-			monitor_annotate $ah "You must select a map to query\n"
+			set ah [monitor_annotation_start $mon [G_msg "Query"] {}]
+			monitor_annotate $ah [G_msg "You must select a map to query\n"]
 			return
 		}
 
@@ -1835,13 +1842,25 @@ proc MapCanvas::scrx2mape { mon x } {
 ###############################################################################
 # cleanup procedure on closing window
 proc MapCanvas::cleanup { mon destroywin} {
-	global pgs
+	global pgs options
+	
+	if { [winfo exists .tlegend($mon)] } { destroy .tlegend($mon) }
 	
 	if { $destroywin == ".mapcan($mon)" } {
 		$pgs delete "page_$mon"
+		array unset GmTree::tree $mon ;# No more memory leaking on monitor close!
+		# If there is any other monitor open, switch to it.
+		if { [array size GmTree::tree] > 0 } {
+			set mon [lindex [array names GmTree::tree] 0]
+			GmTree::switchpage $mon
+		} else { 
+			if {[info exists options]} {
+	    			destroy $options.fr
+			}
+			set mon 0 
+		}
 	}
 	
-	if { [winfo exists .tlegend($mon)] } { destroy .tlegend($mon) }
 }
 
 ###############################################################################
