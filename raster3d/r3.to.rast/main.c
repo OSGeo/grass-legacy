@@ -117,9 +117,9 @@ void g3d_to_raster(void *map, G3D_Region region, int *fd)
 
     typeIntern = G3d_tileTypeMap(map);
 
-    if (typeIntern == G3D_FLOAT)
+    if (typeIntern == FCELL_TYPE)
 	fcell = G_allocate_f_raster_buf();
-    else if (typeIntern == G3D_DOUBLE)
+    else if (typeIntern == DCELL_TYPE)
 	dcell = G_allocate_d_raster_buf();
 
     pos = 0;
@@ -130,29 +130,29 @@ void g3d_to_raster(void *map, G3D_Region region, int *fd)
 	    G_percent(y, rows - 1, 10);
 
 	    for (x = 0; x < cols; x++) {
-		if (typeIntern == G3D_FLOAT) {
+		if (typeIntern == FCELL_TYPE) {
 		    G3d_getValue(map, x, y, z, &f1, typeIntern);
-		    if (G3d_isNullValueNum(&f1, G3D_FLOAT))
+		    if (G3d_isNullValueNum(&f1, FCELL_TYPE))
 			G_set_null_value(&fcell[x], 1, FCELL_TYPE);
 		    else
 			fcell[x] = (FCELL) f1;
 		}
 		else {
 		    G3d_getValue(map, x, y, z, &d1, typeIntern);
-		    if (G3d_isNullValueNum(&d1, G3D_DOUBLE))
+		    if (G3d_isNullValueNum(&d1, DCELL_TYPE))
 			G_set_null_value(&dcell[x], 1, DCELL_TYPE);
 		    else
 			dcell[x] = (DCELL) d1;
 		}
 	    }
-	    if (typeIntern == G3D_FLOAT) {
+	    if (typeIntern == FCELL_TYPE) {
 		check = G_put_f_raster_row(fd[pos], fcell);
 		if (check != 1)
 		    fatal_error(map, fd, depths,
 			       _("Could not write raster row"));
 	    }
 
-	    if (typeIntern == G3D_DOUBLE) {
+	    if (typeIntern == DCELL_TYPE) {
 		check = G_put_d_raster_row(fd[pos], dcell);
 		if (check != 1)
 		    fatal_error(map, fd, depths,
@@ -314,9 +314,9 @@ int main(int argc, char *argv[])
 	      _("Raster map %d Filename: %s already exists. Will be overwritten!"),
 		      i + 1, RasterFileName);
 
-	if (output_type == G3D_FLOAT)
+	if (output_type == FCELL_TYPE)
 	    fd[i] = open_output_map(RasterFileName, FCELL_TYPE);
-	else if (output_type == G3D_DOUBLE)
+	else if (output_type == DCELL_TYPE)
 	    fd[i] = open_output_map(RasterFileName, DCELL_TYPE);
 
     }

@@ -145,9 +145,9 @@ void rast3d_cross_section(void *map, G3D_Region region, int elevfd, int outfd)
     typeIntern = G3d_tileTypeMap(map);
 
     /*Allocate mem for the output maps row */
-    if (typeIntern == G3D_FLOAT)
+    if (typeIntern == FCELL_TYPE)
 	fcell = G_allocate_f_raster_buf();
-    else if (typeIntern == G3D_DOUBLE)
+    else if (typeIntern == DCELL_TYPE)
 	dcell = G_allocate_d_raster_buf();
 
     /*Mem for the input map row */
@@ -192,16 +192,16 @@ void rast3d_cross_section(void *map, G3D_Region region, int elevfd, int outfd)
 		for (z = 0; z < depths; z++) {	/*From the bottom to the top */
 		    if (elevation >= z * tbres + bottom && elevation <= (z + 1) * tbres + bottom) {	/*if at the border, choose the value from the top */
 			/*Read the value and put it in the output map row */
-			if (typeIntern == G3D_FLOAT) {
+			if (typeIntern == FCELL_TYPE) {
 			    G3d_getValue(map, x, y, z, &f1, typeIntern);
-			    if (G3d_isNullValueNum(&f1, G3D_FLOAT))
+			    if (G3d_isNullValueNum(&f1, FCELL_TYPE))
 				G_set_null_value(&fcell[x], 1, FCELL_TYPE);
 			    else
 				fcell[x] = (FCELL) f1;
 			}
 			else {
 			    G3d_getValue(map, x, y, z, &d1, typeIntern);
-			    if (G3d_isNullValueNum(&d1, G3D_DOUBLE))
+			    if (G3d_isNullValueNum(&d1, DCELL_TYPE))
 				G_set_null_value(&dcell[x], 1, DCELL_TYPE);
 			    else
 				dcell[x] = (DCELL) d1;
@@ -215,21 +215,21 @@ void rast3d_cross_section(void *map, G3D_Region region, int elevfd, int outfd)
 
 	    /*Set the NULL values */
 	    if (isnull == 1) {
-		if (typeIntern == G3D_FLOAT)
+		if (typeIntern == FCELL_TYPE)
 		    G_set_null_value(&fcell[x], 1, FCELL_TYPE);
-		else if (typeIntern == G3D_DOUBLE)
+		else if (typeIntern == DCELL_TYPE)
 		    G_set_null_value(&dcell[x], 1, DCELL_TYPE);
 	    }
 	}
 
 	/*Write the data to the output map */
-	if (typeIntern == G3D_FLOAT) {
+	if (typeIntern == FCELL_TYPE) {
 	    check = G_put_f_raster_row(outfd, fcell);
 	    if (check != 1)
 		fatal_error(map, elevfd, outfd, _("Could not write raster row"));
 	}
 
-	if (typeIntern == G3D_DOUBLE) {
+	if (typeIntern == DCELL_TYPE) {
 	    check = G_put_d_raster_row(outfd, dcell);
 	    if (check != 1)
 		fatal_error(map, elevfd, outfd, _("Could not write raster row"));
@@ -318,7 +318,7 @@ int main(int argc, char *argv[])
     /*Get the output type */
     output_type = G3d_fileTypeMap(map);
 
-    if (output_type == G3D_FLOAT || output_type == G3D_DOUBLE) {
+    if (output_type == FCELL_TYPE || output_type == DCELL_TYPE) {
 
 	/********************************/
 	/*Open the elevation raster map */
@@ -348,12 +348,12 @@ int main(int argc, char *argv[])
 	if (G_find_cell2(param.output->answer, ""))
 	    G_message(_("Output map already exists. Will be overwritten!"));
 
-	if (output_type == G3D_FLOAT) {
+	if (output_type == FCELL_TYPE) {
 	    outfd = G_open_raster_new(param.output->answer, FCELL_TYPE);
 	    if (outfd < 0)
 		fatal_error(map, elevfd, -1, _("Could not open output map"));
 	}
-	else if (output_type == G3D_DOUBLE) {
+	else if (output_type == DCELL_TYPE) {
 	    outfd = G_open_raster_new(param.output->answer, DCELL_TYPE);
 	    if (outfd < 0)
 		fatal_error(map, elevfd, -1, _("Could not open output map"));

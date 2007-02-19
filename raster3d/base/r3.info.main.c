@@ -219,8 +219,8 @@ int main(int argc, char *argv[])
 	    G_fatal_error(_("Cannot allocate memory for string"));
 
 	if (G_asprintf(&line, "  Data Type:    %s",
-		       (data_type == G3D_FLOAT ? "float" :
-			(data_type == G3D_DOUBLE ? "double" : "??"))) > 0)
+		       (data_type == FCELL_TYPE ? "float" :
+			(data_type == DCELL_TYPE ? "double" : "??"))) > 0)
 	    printline(line);
 	else
 	    G_fatal_error(_("Cannot allocate memory for string"));
@@ -381,8 +381,8 @@ int main(int argc, char *argv[])
 	else if (tflag->answer) {
 	    fprintf(out, "datatype=\"%s\"\n",
 		    (data_type ==
-		     G3D_FLOAT ? "float" : (data_type ==
-					    G3D_DOUBLE ? "double" : "??")));
+		     FCELL_TYPE ? "float" : (data_type ==
+					    DCELL_TYPE ? "double" : "??")));
 
 	}			/*History output */
 	else if (hflag->answer) {

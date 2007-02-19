@@ -194,7 +194,7 @@ asciiToG3d  (FILE *fp, G3D_Region *region, int convertNull, double nullValue)
 	  fatalError ("asciiToG3d: read failed");
 	}
 	if (convertNull && (value == nullValue))
-	  G3d_setNullValue (&value, 1, G3D_DOUBLE);
+	  G3d_setNullValue (&value, 1, DCELL_TYPE);
 	G3d_putDouble (map, x, y, z, value);
       }
 
@@ -258,7 +258,7 @@ int main  (int argc, char *argv[])
   fp = openAscii (input, &region);
 
   /*Open the new G3D map*/
-  map = G3d_openNewParam (output, G3D_DOUBLE, G3D_USE_CACHE_XY,
+  map = G3d_openNewParam (output, DCELL_TYPE, G3D_USE_CACHE_XY,
 			  &region,
 			  type, doLzw, doRle, precision, tileX, tileY, tileZ);
 

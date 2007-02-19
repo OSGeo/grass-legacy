@@ -10,7 +10,7 @@ int r3read_level(void *g3map, G3D_Region *g3reg, file_info *Headfax,
 {
 #ifdef NO_RESAMPLE
     G3d_getBlock (g3map, 0, 0, n_lev, 
-	     Headfax->xdim, Headfax->ydim, 1, (char *)data, G3D_FLOAT);
+	     Headfax->xdim, Headfax->ydim, 1, (char *)data, FCELL_TYPE);
 #else
 /* G3d_getBlockRegion might be handy */
 /*
@@ -24,7 +24,7 @@ int r3read_level(void *g3map, G3D_Region *g3reg, file_info *Headfax,
 				g3reg->east - g3reg->west, 
 				g3reg->tb_res,
 				Headfax->xdim, Headfax->ydim, 1,
-				(char *)data, G3D_FLOAT);
+				(char *)data, FCELL_TYPE);
 #endif
 
     return 0;

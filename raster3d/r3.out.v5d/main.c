@@ -222,8 +222,8 @@ void convert(char *fileout, int rows, int cols, int depths, int trueCoords) {
 
 	 G3d_getValueRegion (map, x, y, z, d1p, typeIntern);
 
-	 if (typeIntern == G3D_FLOAT) {
-	   if (G3d_isNullValueNum(f1p, G3D_FLOAT)) {
+	 if (typeIntern == FCELL_TYPE) {
+	   if (G3d_isNullValueNum(f1p, FCELL_TYPE)) {
 	     g[cnt] = MISSING;
 	     cnt++;
 	   }
@@ -233,7 +233,7 @@ void convert(char *fileout, int rows, int cols, int depths, int trueCoords) {
 	   }
 	 }
 	 else { /*double*/
-	   if (G3d_isNullValueNum(d1p, G3D_DOUBLE)){
+	   if (G3d_isNullValueNum(d1p, DCELL_TYPE)){
 	     g[cnt]= MISSING;
 	     cnt++;
 	   }

@@ -105,7 +105,7 @@ modifyNull(char *name, d_Mask * maskRules, int changeNull, double newNullVal)
 
     fprintf(stderr, "name %s Mapset %s \n", name, G_mapset());
     map = G3d_openCellOld(name, G_mapset(), G3D_DEFAULT_WINDOW,
-			  G3D_DOUBLE, cacheSize);
+			  DCELL_TYPE, cacheSize);
 
     if (map == NULL)
 	G3d_fatalError(_("modifyNull: error opening map"));
@@ -115,7 +115,7 @@ modifyNull(char *name, d_Mask * maskRules, int changeNull, double newNullVal)
 
     G3d_getCompressionMode(&doCompress, &doLzw, &doRle, &precision);
 
-    mapOut = G3d_openNewParam(name, G3D_DOUBLE, G3D_USE_CACHE_XY,
+    mapOut = G3d_openNewParam(name, DCELL_TYPE, G3D_USE_CACHE_XY,
 			      &region, G3d_fileTypeMap(map),
 			      doLzw, doRle, G3d_tilePrecisionMap(map), tileX,
 			      tileY, tileZ);
@@ -154,13 +154,13 @@ modifyNull(char *name, d_Mask * maskRules, int changeNull, double newNullVal)
 
 		value = G3d_getDoubleRegion(map, x, y, z);
 
-		if (G3d_isNullValueNum(&value, G3D_DOUBLE)) {
+		if (G3d_isNullValueNum(&value, DCELL_TYPE)) {
 		    if (changeNull) {
 			value = newNullVal;
 		    }
 		}
 		else if (mask_d_select((DCELL *) & value, maskRules)) {
-		    G3d_setNullValue(&value, 1, G3D_DOUBLE);
+		    G3d_setNullValue(&value, 1, DCELL_TYPE);
 		}
 
 		G3d_putDouble(mapOut, x, y, z, value);

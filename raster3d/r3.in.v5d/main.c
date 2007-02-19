@@ -165,7 +165,7 @@ void convert  (char *openFile, G3D_Region *region, int convertNull, double nullV
       for (x = 0; x < region->cols; x++) {
         value = data1[cnt++];
         if (convertNull && (value == MISSING))
-          G3d_setNullValue (&value, 1, G3D_FLOAT);
+          G3d_setNullValue (&value, 1, FCELL_TYPE);
         G3d_putFloat (map, x, y, z, value);
       	  }
          }
@@ -217,7 +217,7 @@ main  (int argc, char *argv[])
     fatalError ("main: error getting standard parameters");
 
   G3d_getWindow (&region);
-  map = G3d_openCellNew (output, G3D_FLOAT, G3D_USE_CACHE_XY,&region);
+  map = G3d_openCellNew (output, FCELL_TYPE, G3D_USE_CACHE_XY,&region);
   if (map == NULL) fatalError (_("Error opening 3d raster map"));
 
   convert(input, &region, convertNull, nullValue);
