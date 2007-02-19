@@ -283,13 +283,13 @@ int main(int argc, char *argv[])
     for (z = 0; z < geom->depths; z++) {	/*From the bottom to the top */
 	for (y = 0; y < geom->rows; y++) {
 	    for (x = 0; x < geom->cols; x++) {
-		stat = (int)N_get_array_3d_value_double(data->status, x, y, z);
+		stat = (int)N_get_array_3d_d_value(data->status, x, y, z);
 		if (stat == N_CELL_INACTIVE) {	/*only inactive cells */
-		    N_put_array_3d_value_double(data->kf_x, x, y, z, 0);
-		    N_put_array_3d_value_double(data->kf_y, x, y, z, 0);
-		    N_put_array_3d_value_double(data->kf_z, x, y, z, 0);
-		    N_put_array_3d_value_double(data->s, x, y, z, 0);
-		    N_put_array_3d_value_double(data->q, x, y, z, 0);
+		    N_put_array_3d_d_value(data->kf_x, x, y, z, 0);
+		    N_put_array_3d_d_value(data->kf_y, x, y, z, 0);
+		    N_put_array_3d_d_value(data->kf_z, x, y, z, 0);
+		    N_put_array_3d_d_value(data->s, x, y, z, 0);
+		    N_put_array_3d_d_value(data->q, x, y, z, 0);
 		}
 	    }
 	}
@@ -333,13 +333,13 @@ int main(int argc, char *argv[])
 	/*allocate the vector arrays */
 	xcomp =
 	    N_alloc_array_3d(geom->cols, geom->rows, geom->depths, 1,
-			     G3D_DOUBLE);
+			     DCELL_TYPE);
 	ycomp =
 	    N_alloc_array_3d(geom->cols, geom->rows, geom->depths, 1,
-			     G3D_DOUBLE);
+			     DCELL_TYPE);
 	zcomp =
 	    N_alloc_array_3d(geom->cols, geom->rows, geom->depths, 1,
-			     G3D_DOUBLE);
+			     DCELL_TYPE);
 
 	/*compute the vector components */
 	N_compute_gradient_field_components_3d(field, xcomp, ycomp, zcomp);
@@ -394,7 +394,7 @@ write_result(N_array_3d * status, N_array_3d * phead_start, N_array_3d * phead,
     depths = region->depths;
 
     /*Open the new map */
-    map = G3d_openCellNew(name, G3D_DOUBLE, G3D_USE_CACHE_DEFAULT, region);
+    map = G3d_openCellNew(name, DCELL_TYPE, G3D_USE_CACHE_DEFAULT, region);
 
     if (map == NULL)
 	G3d_fatalError(_("Error opening g3d map <%s>"), name);
@@ -417,18 +417,18 @@ write_result(N_array_3d * status, N_array_3d * phead_start, N_array_3d * phead,
 	G_percent(z, depths - 1, 10);
 	for (y = 0; y < rows; y++) {
 	    for (x = 0; x < cols; x++) {
-		stat = (int)N_get_array_3d_value_double(status, x, y, z);
+		stat = (int)N_get_array_3d_d_value(status, x, y, z);
 		if (stat == N_CELL_ACTIVE) {	/*only active cells */
 		    d1 = result[count];
 		    /*copy the values */
-		    N_put_array_3d_value_double(phead, x, y, z, d1);
+		    N_put_array_3d_d_value(phead, x, y, z, d1);
 		    count++;
 		}
 		else if (stat == N_CELL_DIRICHLET) {	/*dirichlet cells */
-		    d1 = N_get_array_3d_value_double(phead_start, x, y, z);
+		    d1 = N_get_array_3d_d_value(phead_start, x, y, z);
 		}
 		else {
-		    G3d_setNullValue(&d1, 1, G3D_DOUBLE);
+		    G3d_setNullValue(&d1, 1, DCELL_TYPE);
 		}
 		G3d_putDouble(map, x, y, z, d1);
 	    }

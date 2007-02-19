@@ -78,7 +78,7 @@ static void makeMask(char *name, d_Mask * maskRules)
 	G3d_fatalError(_("Requested 3d raster map not found"));
 
     map = G3d_openCellOld(name, G_mapset(), G3D_DEFAULT_WINDOW,
-			  G3D_DOUBLE, cacheSize);
+			  DCELL_TYPE, cacheSize);
 
     if (map == NULL)
 	G3d_fatalError(_("makeMask: error opening map."));
@@ -87,8 +87,8 @@ static void makeMask(char *name, d_Mask * maskRules)
 
     G3d_getTileDimensionsMap(map, &tileX, &tileY, &tileZ);
 
-    mask = G3d_openNewParam(G3d_maskFile(), G3D_FLOAT, cacheSize,
-			    &region, G3D_FLOAT, G3D_NO_LZW, G3D_USE_RLE, 0,
+    mask = G3d_openNewParam(G3d_maskFile(), FCELL_TYPE, cacheSize,
+			    &region, FCELL_TYPE, G3D_NO_LZW, G3D_USE_RLE, 0,
 			    tileX, tileY, tileZ);
 
     if (mask == NULL)
@@ -101,7 +101,7 @@ static void makeMask(char *name, d_Mask * maskRules)
     G3d_autolockOn(mask);
     G3d_unlockAll(mask);
 
-    G3d_setNullValue(&floatNull, 1, G3D_FLOAT);
+    G3d_setNullValue(&floatNull, 1, FCELL_TYPE);
 
     for (z = 0; z < region.depths; z++) {
 	if ((z % tileZ) == 0) {

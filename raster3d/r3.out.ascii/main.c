@@ -220,16 +220,16 @@ G3dToascii (FILE * fp, G3D_Region region, int decim)
 	for (x = 0; x < cols; x++)
 	  {
 	    G3d_getValue (map, x, y, z, d1p, typeIntern);
-	    if (typeIntern == G3D_FLOAT)
+	    if (typeIntern == FCELL_TYPE)
 	      {
-		if (G3d_isNullValueNum (f1p, G3D_FLOAT))
+		if (G3d_isNullValueNum (f1p, FCELL_TYPE))
 		  fprintf (fp, "%s ", param.null_val->answer);
 		else
 		  fprintf (fp, "%.*f ", decim, *f1p);
 	      }
 	    else
 	      {
-		if (G3d_isNullValueNum (&d1, G3D_DOUBLE))
+		if (G3d_isNullValueNum (&d1, DCELL_TYPE))
 		  fprintf (fp, "%s ", param.null_val->answer);
 		else
 		  fprintf (fp, "%.*lf ", decim, d1);
