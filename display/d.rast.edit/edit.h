@@ -53,6 +53,8 @@ current_mapset - mapset that jives with where the current_name
                  is hanging out.
 */
 
+/* cell.c */
+int Dcell(char *, char *, int);
 /* draw_grid.c */
 int draw_grid(void);
 /* edit.c */
