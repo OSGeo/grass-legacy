@@ -3,8 +3,6 @@
 #ifndef GRASS_G3D_H
 #define GRASS_G3D_H
 
-#define G3D_FLOAT 0
-#define G3D_DOUBLE 1
 #define G3D_TILE_SAME_AS_FILE 2
 
 #define G3D_NO_COMPRESSION 0
@@ -98,7 +96,7 @@ typedef struct {
         int data_fd; /* file descriptor */
 
      /* type in which data is stored on file */
-        int type; /* G3D_DOUBLE or G3D_FLOAT */
+        int type; /* DCELL_TYPE or FCELL_TYPE */
 
      /* data concering the compression */
         int precision; /* G3D_MAX_PRECISION or, 0 .. 23 for float, 
@@ -139,7 +137,7 @@ typedef struct {
      /* tile specific information */
 
         /* type in which data is stored in memory */
-           int typeIntern; /* G3D_DOUBLE or G3D_FLOAT */
+           int typeIntern; /* DCELL_TYPE or FCELL_TYPE */
 
      /* in non-cache mode the "data" array is used to store one tile */
         char *data;
