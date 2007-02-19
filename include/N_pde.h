@@ -139,13 +139,13 @@ extern N_array_2d *N_alloc_array_2d (int cols, int rows, int offset, int type);
 extern void N_free_array_2d (N_array_2d * data_array);
 extern int N_get_array_2d_type (N_array_2d * array2d);
 extern inline void N_get_array_2d_value (N_array_2d * array2d, int col, int row, void *value);
-extern inline CELL N_get_array_2d_value_cell (N_array_2d * array2d, int col, int row);
-extern inline FCELL N_get_array_2d_value_fcell (N_array_2d * array2d, int col, int row);
-extern inline DCELL N_get_array_2d_value_dcell (N_array_2d * array2d, int col, int row);
+extern inline CELL N_get_array_2d_c_value (N_array_2d * array2d, int col, int row);
+extern inline FCELL N_get_array_2d_f_value (N_array_2d * array2d, int col, int row);
+extern inline DCELL N_get_array_2d_d_value (N_array_2d * array2d, int col, int row);
 extern inline void N_put_array_2d_value (N_array_2d * array2d, int col, int row, char *value);
-extern inline void N_put_array_2d_value_cell (N_array_2d * array2d, int col, int row, CELL value);
-extern inline void N_put_array_2d_value_fcell (N_array_2d * array2d, int col, int row, FCELL value);
-extern inline void N_put_array_2d_value_dcell (N_array_2d * array2d, int col, int row, DCELL value);
+extern inline void N_put_array_2d_c_value (N_array_2d * array2d, int col, int row, CELL value);
+extern inline void N_put_array_2d_f_value (N_array_2d * array2d, int col, int row, FCELL value);
+extern inline void N_put_array_2d_d_value (N_array_2d * array2d, int col, int row, DCELL value);
 extern inline int N_is_array_2d_value_null (N_array_2d * array2d, int col, int row);
 extern inline void N_put_array_2d_value_null (N_array_2d * array2d, int col, int row);
 extern void N_print_array_2d (N_array_2d * data);
@@ -160,23 +160,23 @@ extern void N_write_array_2d_to_rast (N_array_2d * array, char *name);
  * */
 typedef struct
 {
-  int type;			/* which raster type G3D_FLOAT, G3D_DOUBLE */
+  int type;			/* which raster type FCELL_TYPE, DCELL_TYPE */
   int rows, cols, depths;
   int rows_intern, cols_intern, depths_intern;
   int offset;			/*number of cols/rows/depths offset at each boundary */
-  float *float_array;		/*The data is stored in an one dimensional array internally */
-  double *double_array;		/*The data is stored in an one dimensional array internally */
+  float *fcell_array;		/*The data is stored in an one dimensional array internally */
+  double *dcell_array;		/*The data is stored in an one dimensional array internally */
 } N_array_3d;
 
 extern N_array_3d *N_alloc_array_3d (int cols, int rows, int depths, int offset, int type);
 extern void N_free_array_3d (N_array_3d * data_array);
 extern int N_get_array_3d_type (N_array_3d * array3d);
 extern inline void N_get_array_3d_value (N_array_3d * array3d, int col, int row, int depth, void *value);
-extern inline float N_get_array_3d_value_float (N_array_3d * array3d, int col, int row, int depth);
-extern inline double N_get_array_3d_value_double (N_array_3d * array3d, int col, int row, int depth);
+extern inline float N_get_array_3d_f_value (N_array_3d * array3d, int col, int row, int depth);
+extern inline double N_get_array_3d_d_value (N_array_3d * array3d, int col, int row, int depth);
 extern inline void N_put_array_3d_value (N_array_3d * array3d, int col, int row, int depth, char *value);
-extern inline void N_put_array_3d_value_float (N_array_3d * array3d, int col, int row, int depth, float value);
-extern inline void N_put_array_3d_value_double (N_array_3d * array3d, int col, int row, int depth, double value);
+extern inline void N_put_array_3d_f_value (N_array_3d * array3d, int col, int row, int depth, float value);
+extern inline void N_put_array_3d_d_value (N_array_3d * array3d, int col, int row, int depth, double value);
 extern inline int N_is_array_3d_value_null (N_array_3d * array3d, int col, int row, int depth);
 extern inline void N_put_array_3d_value_null (N_array_3d * array3d, int col, int row, int depth);
 extern void N_print_array_3d (N_array_3d * data);
