@@ -339,10 +339,10 @@ proc GmProfile::getcoords { mapcan } {
 
 	# get line endpoints in map coordinates
 	
-	set east1  [MapCanvas::scrx2mape $mon $linex1]
-	set north1 [MapCanvas::scry2mapn $mon $liney1]
-	set east2  [MapCanvas::scrx2mape $mon $linex2]
-	set north2 [MapCanvas::scry2mapn $mon $liney2]
+	set east1  [expr 1.0 * [MapCanvas::scrx2mape $mon $linex1]]
+	set north1 [expr 1.0 * [MapCanvas::scry2mapn $mon $liney1]]
+	set east2  [expr 1.0 * [MapCanvas::scrx2mape $mon $linex2]]
+	set north2 [expr 1.0 * [MapCanvas::scry2mapn $mon $liney2]]
 	
 	# coordinates for use in r.profile
 	append pcoords "," $east2 "," $north2
@@ -390,6 +390,23 @@ proc GmProfile::pdraw { } {
     global devnull
     
     set cumdist 0.0
+    
+	if {![catch {open "|g.proj -p" r} input]} {
+		set key ""
+		set value ""
+		while {[gets $input line] >= 0} {
+			regexp -nocase {^(.*):(.*)$} $line trash key value
+			set key [string trim $key]
+			set value [string trim $value]
+			set prj($key) $value	
+		}
+		if {[catch {close $input} error]} {
+			puts $error
+			exit 1
+		} 
+	}
+	
+	set mapunits $prj(units)
     
 	if {$pmap == ""} {
 	   # get currently selected raster map as default to profile if nothing else chosen
@@ -440,6 +457,7 @@ proc GmProfile::pdraw { } {
 	set height [expr $bottom - $top]
 	set left [expr 0.2 * $w]
 	set right [expr 0.9 * $w]
+	set center [expr 0.55 * $w]
 	set width [expr $right - $left]
 	set yscaleright [expr $left - 10]
 	set xscaletop [expr $bottom	+ 10]
@@ -471,14 +489,6 @@ proc GmProfile::pdraw { } {
 	$pcan create line $right $bottom $right [expr $bottom + 5]
 	$pcan create line [expr $left - 5] $top $left $top
 	
-	# add transect segment markers
-	foreach {x} $pcoordslist {
-		if { $tottlength > 0.0 } {
-			set segx [expr $left + (($x * $width) / $tottlength)]
-			$pcan create line $segx $bottom $segx $top -fill grey
-		}
-	}
-
 	# run r.profile first time to calculate total transect distance (needed for lat lon regions)
    	if {![catch {open "|r.profile input=$pmap profile=$pcoords 2> $devnull" r} input]} {
 		while {[gets $input line] >= 0} {
@@ -491,9 +501,27 @@ proc GmProfile::pdraw { } {
 			exit 1
 		}
 	}
+	
+	# add axis label
+	$pcan create text $center $xscaletop \
+		-text [G_msg "distance along transect ($mapunits)"] \
+		-anchor n \
+		-justify center
+	
+	# add transect segment markers
+	foreach {x} $pcoordslist {
+		if { $tottlength > 0.0 } {
+			set segx [expr $left + (($x * $width) / $tottlength)]
+			$pcan create line $segx $bottom $segx $top -fill grey
+			$pcan create text $segx $top -text "[format %g $x]" \
+				-anchor s -justify center -fill grey
+		}
+	}
+
+
 	# add label for total transect distance
 	$pcan create text $right $xscaletop \
-		-text "$cumdist" \
+		-text "[format %g $tottlength]" \
 		-anchor n \
 		-justify center
 
