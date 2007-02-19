@@ -91,22 +91,22 @@ int main()
     for (i = 0; i < geom->rows; i++) {
         for (j = 0; j < geom->cols; j++) {
             if (i == 0) {
-                N_put_array_2d_value_dcell(data->phead, i, j, 50);
-                N_put_array_2d_value_dcell(data->phead_start, i, j, 50);
-                N_put_array_2d_value_dcell(data->status, i, j, N_CELL_DIRICHLET);
+                N_put_array_2d_d_value(data->phead, i, j, 50);
+                N_put_array_2d_d_value(data->phead_start, i, j, 50);
+                N_put_array_2d_d_value(data->status, i, j, N_CELL_DIRICHLET);
             }
             else {
 
-                N_put_array_2d_value_dcell(data->phead, i, j, 40);
-                N_put_array_2d_value_dcell(data->phead_start, i, j, 40);
-                N_put_array_2d_value_dcell(data->status, i, j, N_CELL_ACTIVE);
+                N_put_array_2d_d_value(data->phead, i, j, 40);
+                N_put_array_2d_d_value(data->phead_start, i, j, 40);
+                N_put_array_2d_d_value(data->status, i, j, N_CELL_ACTIVE);
             }
-            N_put_array_2d_value_dcell(data->T_x, i, j, 30.0001);
-            N_put_array_2d_value_dcell(data->T_y, i, j, 30.0001);
-            N_put_array_2d_value_dcell(data->q, i, j, 0.0);
-            N_put_array_2d_value_dcell(data->s, i, j, 0.001);
-            N_put_array_2d_value_dcell(data->r, i, j, 0.0);
-            N_put_array_2d_value_dcell(data->nf, i, j, 0.1);
+            N_put_array_2d_d_value(data->T_x, i, j, 30.0001);
+            N_put_array_2d_d_value(data->T_y, i, j, 30.0001);
+            N_put_array_2d_d_value(data->q, i, j, 0.0);
+            N_put_array_2d_d_value(data->s, i, j, 0.001);
+            N_put_array_2d_d_value(data->r, i, j, 0.0);
+            N_put_array_2d_d_value(data->nf, i, j, 0.1);
         }
     }
 
@@ -166,19 +166,19 @@ int #N_get_array_2d_type(N_array_2d * array2d);
 <p>
 void #N_get_array_2d_value(N_array_2d * array2d, int row, int col, void *value);
 <p>
-CELL #N_get_array_2d_value_cell(N_array_2d * array2d, int row, int col);
+CELL #N_get_array_2d_c_value(N_array_2d * array2d, int row, int col);
 <p>
-FCELL #N_get_array_2d_value_fcell(N_array_2d * array2d, int row, int col);
+FCELL #N_get_array_2d_f_value(N_array_2d * array2d, int row, int col);
 <p>
-DCELL #N_get_array_2d_value_dcell(N_array_2d * array2d, int row, int col);
+DCELL #N_get_array_2d_d_value(N_array_2d * array2d, int row, int col);
 <p>
 void #N_put_array_2d_value(N_array_2d * array2d, int row, int col, char *value);
 <p>
-void #N_put_array_2d_value_cell(N_array_2d * array2d, int row, int col, CELL value);
+void #N_put_array_2d_c_value(N_array_2d * array2d, int row, int col, CELL value);
 <p>
-void #N_put_array_2d_value_fcell(N_array_2d * array2d, int row, int col, FCELL value);
+void #N_put_array_2d_f_value(N_array_2d * array2d, int row, int col, FCELL value);
 <p>
-void #N_put_array_2d_value_dcell(N_array_2d * array2d, int row, int col, DCELL value);
+void #N_put_array_2d_d_value(N_array_2d * array2d, int row, int col, DCELL value);
 <p>
 void #N_array_2d_copy(N_array_2d * source, N_array_2d * target);
 <p>
@@ -187,12 +187,12 @@ void #N_array_2d_copy(N_array_2d * source, N_array_2d * target);
 \verbatim
 typedef struct
 {
-    int type;                   /* which raster type G3D_FLOAT, G3D_DOUBLE */
+    int type;                   /* which raster type FCELL_TYPE, DCELL_TYPE */
     int rows, cols, depths;
     int rows_intern, cols_intern, depths_intern;
     int offset;                 /*number of cols/rows/depths offset at each boundary */
-    float *float_array;
-    double *double_array;
+    float *fcell_array;
+    double *dcell_array;
 } N_array_3d;
 \endverbatim
 For performance reasons the data arrays are stored as a one dimensional array internally.
@@ -208,15 +208,15 @@ int #N_get_array_3d_type(N_array_2d * array2d);
 <p>
 void #N_get_array_3d_value(N_array_3d * array3d, int depth, int row, int col, void *value);
 <p>
-float #N_get_array_3d_value_float(N_array_3d * array3d, int depth, int row, int col);
+float #N_get_array_3d_f_value(N_array_3d * array3d, int depth, int row, int col);
 <p>
-double #N_get_array_3d_value_double(N_array_3d * array3d, int depth, int row, int col);
+double #N_get_array_3d_d_value(N_array_3d * array3d, int depth, int row, int col);
 <p>
 void #N_put_array_3d_value(N_array_3d * array3d, int depth, int row, int col, char *value);
 <p>
-void #N_put_array_3d_value_float(N_array_3d * array3d, int depth, int row, int col, float value);
+void #N_put_array_3d_f_value(N_array_3d * array3d, int depth, int row, int col, float value);
 <p>
-void #N_put_array_3d_value_double(N_array_3d * array3d, int depth, int row, int col, double value);
+void #N_put_array_3d_d_value(N_array_3d * array3d, int depth, int row, int col, double value);
 <p>
 void #N_array_3d_copy(N_array_3d * source, N_array_3d * target);
 <p>

@@ -70,10 +70,10 @@ N_array_2d *create_relax_array_2d()
 	for (i = 0; i < TEST_N_NUM_COLS; i++) {
 
 	    if (j == 0) {
-		N_put_array_2d_value_cell(data, i, j, 1);
+		N_put_array_2d_c_value(data, i, j, 1);
 	    }
 	    else {
-		N_put_array_2d_value_cell(data, i, j, 1);
+		N_put_array_2d_c_value(data, i, j, 1);
 	    }
 	}
     }
@@ -95,10 +95,10 @@ N_array_2d *create_potential_array_2d()
 	for (i = 0; i < TEST_N_NUM_COLS; i++) {
 
 	    if (j == 0) {
-		N_put_array_2d_value_dcell(data, i, j, 40);
+		N_put_array_2d_d_value(data, i, j, 40);
 	    }
 	    else {
-		N_put_array_2d_value_dcell(data, i, j, 40);
+		N_put_array_2d_d_value(data, i, j, 40);
 	    }
 	}
     }
@@ -115,7 +115,7 @@ N_array_3d *create_relax_array_3d()
 
     data =
 	N_alloc_array_3d(TEST_N_NUM_COLS, TEST_N_NUM_ROWS, TEST_N_NUM_DEPTHS, 1,
-			 G3D_FLOAT);
+			 FCELL_TYPE);
 
 #pragma omp parallel for private (i, j, k) shared (data)
     for (k = 0; k < TEST_N_NUM_DEPTHS; k++)
@@ -124,11 +124,11 @@ N_array_3d *create_relax_array_3d()
 
 
 		if (i == 0) {
-		    N_put_array_3d_value_float(data, i, j, k, 1.0);
+		    N_put_array_3d_f_value(data, i, j, k, 1.0);
 		}
 		else {
 
-		    N_put_array_3d_value_float(data, i, j, k, 1.0);
+		    N_put_array_3d_f_value(data, i, j, k, 1.0);
 		}
 	    }
 	}
@@ -147,7 +147,7 @@ N_array_3d *create_potential_array_3d()
 
     data =
 	N_alloc_array_3d(TEST_N_NUM_COLS, TEST_N_NUM_ROWS, TEST_N_NUM_DEPTHS, 1,
-			 G3D_DOUBLE);
+			 DCELL_TYPE);
 
 #pragma omp parallel for private (i, j, k) shared (data)
     for (k = 0; k < TEST_N_NUM_DEPTHS; k++)
@@ -156,11 +156,11 @@ N_array_3d *create_potential_array_3d()
 
 
 		if (j == 0) {
-		    N_put_array_3d_value_float(data, i, j, k, 50);
+		    N_put_array_3d_f_value(data, i, j, k, 50);
 		}
 		else {
 
-		    N_put_array_3d_value_float(data, i, j, k, 50);
+		    N_put_array_3d_f_value(data, i, j, k, 50);
 		}
 	    }
 	}
@@ -207,42 +207,42 @@ int test_gradient_3d()
     N_free_array_3d(relax);
     N_free_array_3d(pot);
 
-    relax = N_alloc_array_3d(3, 3, 3, 0, G3D_DOUBLE);
-    pot = N_alloc_array_3d(3, 3, 3, 0, G3D_DOUBLE);
-    xcomp = N_alloc_array_3d(3, 3, 3, 0, G3D_DOUBLE);
-    ycomp = N_alloc_array_3d(3, 3, 3, 0, G3D_DOUBLE);
-    zcomp = N_alloc_array_3d(3, 3, 3, 0, G3D_DOUBLE);
+    relax = N_alloc_array_3d(3, 3, 3, 0, DCELL_TYPE);
+    pot = N_alloc_array_3d(3, 3, 3, 0, DCELL_TYPE);
+    xcomp = N_alloc_array_3d(3, 3, 3, 0, DCELL_TYPE);
+    ycomp = N_alloc_array_3d(3, 3, 3, 0, DCELL_TYPE);
+    zcomp = N_alloc_array_3d(3, 3, 3, 0, DCELL_TYPE);
 
-    N_put_array_3d_value_double(relax, 0, 0, 0, 1);
-    N_put_array_3d_value_double(relax, 0, 1, 0, 1);
-    N_put_array_3d_value_double(relax, 0, 2, 0, 1);
-    N_put_array_3d_value_double(relax, 1, 0, 0, 1);
-    N_put_array_3d_value_double(relax, 1, 1, 0, 1);
-    N_put_array_3d_value_double(relax, 1, 2, 0, 1);
-    N_put_array_3d_value_double(relax, 2, 0, 0, 1);
-    N_put_array_3d_value_double(relax, 2, 1, 0, 1);
-    N_put_array_3d_value_double(relax, 2, 2, 0, 1);
+    N_put_array_3d_d_value(relax, 0, 0, 0, 1);
+    N_put_array_3d_d_value(relax, 0, 1, 0, 1);
+    N_put_array_3d_d_value(relax, 0, 2, 0, 1);
+    N_put_array_3d_d_value(relax, 1, 0, 0, 1);
+    N_put_array_3d_d_value(relax, 1, 1, 0, 1);
+    N_put_array_3d_d_value(relax, 1, 2, 0, 1);
+    N_put_array_3d_d_value(relax, 2, 0, 0, 1);
+    N_put_array_3d_d_value(relax, 2, 1, 0, 1);
+    N_put_array_3d_d_value(relax, 2, 2, 0, 1);
 
-    N_put_array_3d_value_double(relax, 0, 0, 1, 1);
-    N_put_array_3d_value_double(relax, 0, 1, 1, 1);
-    N_put_array_3d_value_double(relax, 0, 2, 1, 1);
-    N_put_array_3d_value_double(relax, 1, 0, 1, 1);
-    N_put_array_3d_value_double(relax, 1, 1, 1, 1);
-    N_put_array_3d_value_double(relax, 1, 2, 1, 1);
-    N_put_array_3d_value_double(relax, 2, 0, 1, 1);
-    N_put_array_3d_value_double(relax, 2, 1, 1, 1);
-    N_put_array_3d_value_double(relax, 2, 2, 1, 1);
+    N_put_array_3d_d_value(relax, 0, 0, 1, 1);
+    N_put_array_3d_d_value(relax, 0, 1, 1, 1);
+    N_put_array_3d_d_value(relax, 0, 2, 1, 1);
+    N_put_array_3d_d_value(relax, 1, 0, 1, 1);
+    N_put_array_3d_d_value(relax, 1, 1, 1, 1);
+    N_put_array_3d_d_value(relax, 1, 2, 1, 1);
+    N_put_array_3d_d_value(relax, 2, 0, 1, 1);
+    N_put_array_3d_d_value(relax, 2, 1, 1, 1);
+    N_put_array_3d_d_value(relax, 2, 2, 1, 1);
 
 
-    N_put_array_3d_value_double(relax, 0, 0, 2, 1);
-    N_put_array_3d_value_double(relax, 0, 1, 2, 1);
-    N_put_array_3d_value_double(relax, 0, 2, 2, 1);
-    N_put_array_3d_value_double(relax, 1, 0, 2, 1);
-    N_put_array_3d_value_double(relax, 1, 1, 2, 1);
-    N_put_array_3d_value_double(relax, 1, 2, 2, 1);
-    N_put_array_3d_value_double(relax, 2, 0, 2, 1);
-    N_put_array_3d_value_double(relax, 2, 1, 2, 1);
-    N_put_array_3d_value_double(relax, 2, 2, 2, 1);
+    N_put_array_3d_d_value(relax, 0, 0, 2, 1);
+    N_put_array_3d_d_value(relax, 0, 1, 2, 1);
+    N_put_array_3d_d_value(relax, 0, 2, 2, 1);
+    N_put_array_3d_d_value(relax, 1, 0, 2, 1);
+    N_put_array_3d_d_value(relax, 1, 1, 2, 1);
+    N_put_array_3d_d_value(relax, 1, 2, 2, 1);
+    N_put_array_3d_d_value(relax, 2, 0, 2, 1);
+    N_put_array_3d_d_value(relax, 2, 1, 2, 1);
+    N_put_array_3d_d_value(relax, 2, 2, 2, 1);
 
     N_print_array_3d(relax);
 
@@ -253,36 +253,36 @@ int test_gradient_3d()
    * 8 15 25     -8
    * */
 
-    N_put_array_3d_value_double(pot, 0, 0, 0, 1.0);
-    N_put_array_3d_value_double(pot, 1, 0, 0, 2.0);
-    N_put_array_3d_value_double(pot, 2, 0, 0, 6.0);
-    N_put_array_3d_value_double(pot, 0, 1, 0, 3.0);
-    N_put_array_3d_value_double(pot, 1, 1, 0, 7.0);
-    N_put_array_3d_value_double(pot, 2, 1, 0, 10.0);
-    N_put_array_3d_value_double(pot, 0, 2, 0, 8.0);
-    N_put_array_3d_value_double(pot, 1, 2, 0, 15.0);
-    N_put_array_3d_value_double(pot, 2, 2, 0, 25.0);
+    N_put_array_3d_d_value(pot, 0, 0, 0, 1.0);
+    N_put_array_3d_d_value(pot, 1, 0, 0, 2.0);
+    N_put_array_3d_d_value(pot, 2, 0, 0, 6.0);
+    N_put_array_3d_d_value(pot, 0, 1, 0, 3.0);
+    N_put_array_3d_d_value(pot, 1, 1, 0, 7.0);
+    N_put_array_3d_d_value(pot, 2, 1, 0, 10.0);
+    N_put_array_3d_d_value(pot, 0, 2, 0, 8.0);
+    N_put_array_3d_d_value(pot, 1, 2, 0, 15.0);
+    N_put_array_3d_d_value(pot, 2, 2, 0, 25.0);
 
-    N_put_array_3d_value_double(pot, 0, 0, 1, 1.2);
-    N_put_array_3d_value_double(pot, 1, 0, 1, 2.2);
-    N_put_array_3d_value_double(pot, 2, 0, 1, 6.2);
-    N_put_array_3d_value_double(pot, 0, 1, 1, 3.2);
-    N_put_array_3d_value_double(pot, 1, 1, 1, 7.2);
-    N_put_array_3d_value_double(pot, 2, 1, 1, 10.2);
-    N_put_array_3d_value_double(pot, 0, 2, 1, 8.2);
-    N_put_array_3d_value_double(pot, 1, 2, 1, 15.2);
-    N_put_array_3d_value_double(pot, 2, 2, 1, 25.2);
+    N_put_array_3d_d_value(pot, 0, 0, 1, 1.2);
+    N_put_array_3d_d_value(pot, 1, 0, 1, 2.2);
+    N_put_array_3d_d_value(pot, 2, 0, 1, 6.2);
+    N_put_array_3d_d_value(pot, 0, 1, 1, 3.2);
+    N_put_array_3d_d_value(pot, 1, 1, 1, 7.2);
+    N_put_array_3d_d_value(pot, 2, 1, 1, 10.2);
+    N_put_array_3d_d_value(pot, 0, 2, 1, 8.2);
+    N_put_array_3d_d_value(pot, 1, 2, 1, 15.2);
+    N_put_array_3d_d_value(pot, 2, 2, 1, 25.2);
 
 
-    N_put_array_3d_value_double(pot, 0, 0, 2, 1.5);
-    N_put_array_3d_value_double(pot, 1, 0, 2, 2.5);
-    N_put_array_3d_value_double(pot, 2, 0, 2, 6.5);
-    N_put_array_3d_value_double(pot, 0, 1, 2, 3.5);
-    N_put_array_3d_value_double(pot, 1, 1, 2, 7.5);
-    N_put_array_3d_value_double(pot, 2, 1, 2, 10.5);
-    N_put_array_3d_value_double(pot, 0, 2, 2, 8.5);
-    N_put_array_3d_value_double(pot, 1, 2, 2, 15.5);
-    N_put_array_3d_value_double(pot, 2, 2, 2, 25.5);
+    N_put_array_3d_d_value(pot, 0, 0, 2, 1.5);
+    N_put_array_3d_d_value(pot, 1, 0, 2, 2.5);
+    N_put_array_3d_d_value(pot, 2, 0, 2, 6.5);
+    N_put_array_3d_d_value(pot, 0, 1, 2, 3.5);
+    N_put_array_3d_d_value(pot, 1, 1, 2, 7.5);
+    N_put_array_3d_d_value(pot, 2, 1, 2, 10.5);
+    N_put_array_3d_d_value(pot, 0, 2, 2, 8.5);
+    N_put_array_3d_d_value(pot, 1, 2, 2, 15.5);
+    N_put_array_3d_d_value(pot, 2, 2, 2, 25.5);
 
     N_print_array_3d(pot);
 
@@ -371,15 +371,15 @@ int test_gradient_2d()
     xcomp = N_alloc_array_2d(3, 3, 0, DCELL_TYPE);
     ycomp = N_alloc_array_2d(3, 3, 0, DCELL_TYPE);
 
-    N_put_array_2d_value_dcell(relax, 0, 0, 1.0);
-    N_put_array_2d_value_dcell(relax, 0, 1, 1.0);
-    N_put_array_2d_value_dcell(relax, 0, 2, 1.0);
-    N_put_array_2d_value_dcell(relax, 1, 0, 1.0);
-    N_put_array_2d_value_dcell(relax, 1, 1, 1.0);
-    N_put_array_2d_value_dcell(relax, 1, 2, 1.0);
-    N_put_array_2d_value_dcell(relax, 2, 0, 1.0);
-    N_put_array_2d_value_dcell(relax, 2, 1, 1.0);
-    N_put_array_2d_value_dcell(relax, 2, 2, 1.0);
+    N_put_array_2d_d_value(relax, 0, 0, 1.0);
+    N_put_array_2d_d_value(relax, 0, 1, 1.0);
+    N_put_array_2d_d_value(relax, 0, 2, 1.0);
+    N_put_array_2d_d_value(relax, 1, 0, 1.0);
+    N_put_array_2d_d_value(relax, 1, 1, 1.0);
+    N_put_array_2d_d_value(relax, 1, 2, 1.0);
+    N_put_array_2d_d_value(relax, 2, 0, 1.0);
+    N_put_array_2d_d_value(relax, 2, 1, 1.0);
+    N_put_array_2d_d_value(relax, 2, 2, 1.0);
 
     N_print_array_2d(relax);
 
@@ -389,15 +389,15 @@ int test_gradient_2d()
    * 8 15 25     -8
    * */
 
-    N_put_array_2d_value_dcell(pot, 0, 0, 1.0);
-    N_put_array_2d_value_dcell(pot, 1, 0, 2.0);
-    N_put_array_2d_value_dcell(pot, 2, 0, 6.0);
-    N_put_array_2d_value_dcell(pot, 0, 1, 3.0);
-    N_put_array_2d_value_dcell(pot, 1, 1, 7.0);
-    N_put_array_2d_value_dcell(pot, 2, 1, 10.0);
-    N_put_array_2d_value_dcell(pot, 0, 2, 8.0);
-    N_put_array_2d_value_dcell(pot, 1, 2, 15.0);
-    N_put_array_2d_value_dcell(pot, 2, 2, 25.0);
+    N_put_array_2d_d_value(pot, 0, 0, 1.0);
+    N_put_array_2d_d_value(pot, 1, 0, 2.0);
+    N_put_array_2d_d_value(pot, 2, 0, 6.0);
+    N_put_array_2d_d_value(pot, 0, 1, 3.0);
+    N_put_array_2d_d_value(pot, 1, 1, 7.0);
+    N_put_array_2d_d_value(pot, 2, 1, 10.0);
+    N_put_array_2d_d_value(pot, 0, 2, 8.0);
+    N_put_array_2d_d_value(pot, 1, 2, 15.0);
+    N_put_array_2d_d_value(pot, 2, 2, 25.0);
 
     N_print_array_2d(pot);
 

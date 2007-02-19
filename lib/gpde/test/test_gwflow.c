@@ -76,23 +76,23 @@ N_gwflow_data3d *create_gwflow_data_3d()
 
 
 		if (j == 0) {
-		    N_put_array_3d_value_double(data->phead, i, j, k, 50);
-		    N_put_array_3d_value_double(data->phead_start, i, j, k, 50);
-		    N_put_array_3d_value_double(data->status, i, j, k, 2);
+		    N_put_array_3d_d_value(data->phead, i, j, k, 50);
+		    N_put_array_3d_d_value(data->phead_start, i, j, k, 50);
+		    N_put_array_3d_d_value(data->status, i, j, k, 2);
 		}
 		else {
 
-		    N_put_array_3d_value_double(data->phead, i, j, k, 40);
-		    N_put_array_3d_value_double(data->phead_start, i, j, k, 40);
-		    N_put_array_3d_value_double(data->status, i, j, k, 1);
+		    N_put_array_3d_d_value(data->phead, i, j, k, 40);
+		    N_put_array_3d_d_value(data->phead_start, i, j, k, 40);
+		    N_put_array_3d_d_value(data->status, i, j, k, 1);
 		}
-		N_put_array_3d_value_double(data->kf_x, i, j, k, 0.0001);
-		N_put_array_3d_value_double(data->kf_y, i, j, k, 0.0001);
-		N_put_array_3d_value_double(data->kf_z, i, j, k, 0.0001);
-		N_put_array_3d_value_double(data->q, i, j, k, 0.0);
-		N_put_array_3d_value_double(data->s, i, j, k, 0.001);
-		N_put_array_2d_value_dcell(data->r, i, j, 0.0);
-		N_put_array_3d_value_double(data->nf, i, j, k, 0.1);
+		N_put_array_3d_d_value(data->kf_x, i, j, k, 0.0001);
+		N_put_array_3d_d_value(data->kf_y, i, j, k, 0.0001);
+		N_put_array_3d_d_value(data->kf_z, i, j, k, 0.0001);
+		N_put_array_3d_d_value(data->q, i, j, k, 0.0);
+		N_put_array_3d_d_value(data->s, i, j, k, 0.001);
+		N_put_array_2d_d_value(data->r, i, j, 0.0);
+		N_put_array_3d_d_value(data->nf, i, j, k, 0.1);
 	    }
 	}
 
@@ -115,24 +115,24 @@ N_gwflow_data2d *create_gwflow_data_2d()
 	for (i = 0; i < TEST_N_NUM_COLS_LOCAL; i++) {
 
 	    if (j == 0) {
-		N_put_array_2d_value_dcell(data->phead, i, j, 50);
-		N_put_array_2d_value_dcell(data->phead_start, i, j, 50);
-		N_put_array_2d_value_dcell(data->status, i, j, 2);
+		N_put_array_2d_d_value(data->phead, i, j, 50);
+		N_put_array_2d_d_value(data->phead_start, i, j, 50);
+		N_put_array_2d_d_value(data->status, i, j, 2);
 	    }
 	    else {
 
-		N_put_array_2d_value_dcell(data->phead, i, j, 40);
-		N_put_array_2d_value_dcell(data->phead_start, i, j, 40);
-		N_put_array_2d_value_dcell(data->status, i, j, 1);
+		N_put_array_2d_d_value(data->phead, i, j, 40);
+		N_put_array_2d_d_value(data->phead_start, i, j, 40);
+		N_put_array_2d_d_value(data->status, i, j, 1);
 	    }
-	    N_put_array_2d_value_dcell(data->kf_x, i, j, 30.0001);
-	    N_put_array_2d_value_dcell(data->kf_y, i, j, 30.0001);
-	    N_put_array_2d_value_dcell(data->q, i, j, 0.0);
-	    N_put_array_2d_value_dcell(data->s, i, j, 0.001);
-	    N_put_array_2d_value_dcell(data->r, i, j, 0.0);
-	    N_put_array_2d_value_dcell(data->nf, i, j, 0.1);
-	    N_put_array_2d_value_dcell(data->top, i, j, 20.0);
-	    N_put_array_2d_value_dcell(data->bottom, i, j, 0.0);
+	    N_put_array_2d_d_value(data->kf_x, i, j, 30.0001);
+	    N_put_array_2d_d_value(data->kf_y, i, j, 30.0001);
+	    N_put_array_2d_d_value(data->q, i, j, 0.0);
+	    N_put_array_2d_d_value(data->s, i, j, 0.001);
+	    N_put_array_2d_d_value(data->r, i, j, 0.0);
+	    N_put_array_2d_d_value(data->nf, i, j, 0.1);
+	    N_put_array_2d_d_value(data->top, i, j, 20.0);
+	    N_put_array_2d_d_value(data->bottom, i, j, 0.0);
 	}
     }
 
