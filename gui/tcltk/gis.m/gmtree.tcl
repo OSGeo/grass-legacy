@@ -66,7 +66,7 @@ proc GmTree::create { mon } {
 	# destroy old panel with options
     destroy $options.fr
 
-	set pgtitle [label $pg($mon).title -text "Map Layers for Display $mon" \
+	set pgtitle [label $pg($mon).title -text [format [G_msg "Map Layers for Display %s"] $mon] \
 		-font bolddefault -fg mediumblue -bg grey95]
 	pack $pgtitle -side top -expand 1 -fill x
 
@@ -287,6 +287,10 @@ proc GmTree::add { type } {
     global new_root_node
     global mon
     
+    # Create new tree, if none exists
+    if { [array size GmTree::tree] < 1 } {
+	Gm::startmon
+    }
 
     if { [catch {match string {} $new_root_node}] } {
     set new_root_node root
@@ -314,58 +318,58 @@ proc GmTree::add { type } {
 
     switch $type {
         group {
-            GmGroup::create $tree($mon)  $parent_node
+            GmTree::selectn $tree($mon) [GmGroup::create $tree($mon)  $parent_node]
         }
         raster {
-            GmRaster::create $tree($mon) $parent_node
+            GmTree::selectn $tree($mon) [GmRaster::create $tree($mon) $parent_node]
         }
         vector {
-            GmVector::create $tree($mon)  $parent_node
+            GmTree::selectn $tree($mon) [GmVector::create $tree($mon)  $parent_node]
         }
         labels {
-            GmLabels::create $tree($mon)  $parent_node
+            GmTree::selectn $tree($mon) [GmLabels::create $tree($mon)  $parent_node]
         }
         cmd {
-            GmCmd::create $tree($mon)  $parent_node
+            GmTree::selectn $tree($mon) [GmCmd::create $tree($mon)  $parent_node]
         }
         gridline {
-            GmGridline::create $tree($mon)  $parent_node
+            GmTree::selectn $tree($mon) [Gridline::create $tree($mon)  $parent_node]
         }
         rgbhis {
-            GmRgbhis::create $tree($mon)  $parent_node
+            GmTree::selectn $tree($mon) [GmRgbhis::create $tree($mon)  $parent_node]
         }
         hist {
-            GmHist::create $tree($mon)  $parent_node
+            GmTree::selectn $tree($mon) [GmHist::create $tree($mon)  $parent_node]
         }
         rnums {
-            GmRnums::create $tree($mon)  $parent_node
+            GmTree::selectn $tree($mon) [GmRnums::create $tree($mon)  $parent_node]
         }
         arrows {
-            GmArrows::create $tree($mon)  $parent_node
+            GmTree::selectn $tree($mon) [GmArrows::create $tree($mon)  $parent_node]
         }
         legend {
-            GmLegend::create $tree($mon)  $parent_node
+            GmTree::selectn $tree($mon) [GmLegend::create $tree($mon)  $parent_node]
         }
         dframe {
-            GmDframe::create $tree($mon)  $parent_node
+            GmTree::selectn $tree($mon) [GmDframe::create $tree($mon)  $parent_node]
         }
         barscale {
-            GmBarscale::create $tree($mon)  $parent_node
+            GmTree::selectn $tree($mon) [GmBarscale::create $tree($mon)  $parent_node]
         }
         chart {
-            GmChart::create $tree($mon)  $parent_node
+            GmTree::selectn $tree($mon) [GmChart::create $tree($mon)  $parent_node]
         }
         thematic {
-            GmThematic::create $tree($mon)  $parent_node
+            GmTree::selectn $tree($mon) [GmThematic::create $tree($mon)  $parent_node]
         }
         dtext {
-            GmDtext::create $tree($mon)  $parent_node
+            GmTree::selectn $tree($mon) [GmDtext::create $tree($mon)  $parent_node]
         }
         ctext {
-            GmCtext::create $tree($mon)  $parent_node
+            GmTree::selectn $tree($mon) [GmCtext::create $tree($mon)  $parent_node]
         }
         clabels {
-            GmCLabels::create $tree($mon)  $parent_node
+            GmTree::selectn $tree($mon) [GmCLabels::create $tree($mon)  $parent_node]
         }
     }
 }
@@ -470,6 +474,11 @@ proc GmTree::delete { } {
     variable tree
     global options
     global mon
+
+    if { [array size GmTree::tree] < 1 } {
+    	tk_messageBox -type ok -icon warning -message [G_msg "No layer selected"]
+        return
+    }
 
     set sel [ lindex [$tree($mon)  selection get] 0 ]
     if { $sel == "" } { return }
@@ -614,6 +623,11 @@ proc GmTree::duplicate { } {
     global options
     variable id
     global new_root_node mon
+
+    if { [array size GmTree::tree] < 1 } {
+    	tk_messageBox -type ok -icon warning -message [G_msg "No layer selected"]
+        return
+    }
 
     if { [catch {match string {} $new_root_node}] } {
     set new_root_node root
@@ -841,7 +855,7 @@ proc GmTree::load { lpth } {
     variable rcfile
     variable tree
 
-    set prgtext "Loading layers..."
+    set prgtext [G_msg "Loading layers..."]
 
     set fpath $lpth
 
@@ -949,7 +963,8 @@ proc GmTree::load { lpth } {
 			}
 			default {
 				if {[catch {GmTree::node_type $current_node}] } {
-					tk_messageBox -type ok -message "Can't open $fpath - bad file format"
+					tk_messageBox -type ok -message \
+					[format [G_msg "Can't open %s - bad file format"] $fpath]
 					break
 				} else {
 					set type [GmTree::node_type $current_node]
@@ -1019,7 +1034,7 @@ proc GmTree::load { lpth } {
 	} 
     close $rcfile
     set Gm::prgindic $max_prgindic
-    set prgtext "Layers loaded"
+    set prgtext [G_msg "Layers loaded"]
 }
 
 ###############################################################################
@@ -1117,11 +1132,15 @@ proc GmTree::vedit { } {
     variable tree
 	global options
     global mon
+    
+    if { [array size GmTree::tree] < 1 } {
+    	tk_messageBox -type ok -icon warning -message [G_msg "No layer selected"]
+        return
+    }
 
     set sel [ lindex [$tree($mon) selection get] 0 ]
     if { $sel == "" } {
-        set message "No map selected"
-        tk_messageBox -type ok -icon warning -message $message
+        tk_messageBox -type ok -icon warning -message [G_msg "No layer selected"]
         return
     }
 
@@ -1135,6 +1154,10 @@ proc GmTree::vedit { } {
         vector {
 	    GmVector::WorkOnVector $sel 0
         }
+        default {
+        	tk_messageBox -type ok -icon warning -message [G_msg "You can digitize raster or vector maps only"]
+        	return
+    	}
     }
 
 }
