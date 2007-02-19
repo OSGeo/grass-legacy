@@ -75,7 +75,7 @@ proc GmCtext::select_font { id frm } {
 	global mon
 	variable opt
     
-    set fon [SelectFont $frm.fontset -type dialog -sampletext 1 -title "Select font"]
+    set fon [SelectFont $frm.fontset -type dialog -sampletext [G_msg "This is font sample text."] -title [G_msg "Select label font"]]
 	if { $fon != "" } {set opt($id,1,font) $fon}
 }
 
@@ -121,15 +121,15 @@ proc GmCtext::options { id frm } {
 
     # Panel heading
     set row [ frame $frm.heading ]
-    Label $row.a -text "Create postscript text object (for postscript eps, pdf, and print output only)" \
+    Label $row.a -text [G_msg "Create postscript text object (for postscript eps, pdf, and print output only)"] \
     	-fg MediumBlue
     pack $row.a -side left
     pack $row -side top -fill both -expand yes
 
     # text
     set row [ frame $frm.text ]
-    Label $row.a -text "Text to display:"
-    LabelEntry $row.b -textvariable GmCtext::opt($id,1,text) -width 50 
+    Label $row.a -text [G_msg "Text to display:"]
+    LabelEntry $row.b -textvariable GmCtext::opt($id,1,text) -width 45 
     pack $row.a $row.b -side left
     pack $row -side top -fill both -expand yes
     
@@ -165,7 +165,7 @@ proc GmCtext::options { id frm } {
     Label $row.a -text [G_msg "     justification"] 
     ComboBox $row.b -padx 2 -width 7 -textvariable GmCtext::opt($id,1,justify) \
 		-values {"left" "center" "right"} 
-    Label $row.c -text "  line width"
+    Label $row.c -text [G_msg "  line width"]
     LabelEntry $row.d -textvariable GmCtext::opt($id,1,width) -width 5 
     pack $row.a $row.b $row.c $row.d -side left
     pack $row -side top -fill both -expand yes
