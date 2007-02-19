@@ -3,7 +3,7 @@
 #include <grass/raster.h>
 #include <grass/gis.h>
 #include <grass/glocale.h>
-#include "local_proto.h"
+#include "edit.h"
 
 static int cell_draw( char *, char *, struct Colors *, int);
  
