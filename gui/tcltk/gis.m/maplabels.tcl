@@ -8,13 +8,23 @@
 #		for details.
 #
 ##########################################################################
+#
+# TODO - Bugs and missing features. Maris Nartiss, 14.02.2007.
+#	* Not all label file options are in use, also not all options are in labelfiles.
+#	* Label configuration options are not separated from displayed label options. It causes
+#	label options to change after every screen redraw. This way it was already working :)
+#	* Ability to override single option. Like: use whatever defined in labelfile, except font size
+#	* Label rotation.
+#	* Somtime label enclosing box height is not calculated correctly.
+#	* Ability to display label point and configure it.
+#
 
 namespace eval GmCLabels {
-    variable array opt # labels current options
+    variable array opt ;# labels current options
     variable count 1
-    variable array tree # mon    
+    variable array tree ;# mon    
     variable optlist
-    variable array dup # layer
+    variable array dup ;# layer
 }
 
 
@@ -58,16 +68,30 @@ proc GmCLabels::create { tree parent } {
     set opt($count,1,xoffset) 1.0 
     set opt($count,1,yoffset) 1.0 
     set opt($count,1,labels) "" 
-    set opt($count,1,lfont) default 
+    set opt($count,1,lfont) [font create "labelfont$count" -family "Helvetica" -size 11 -weight "normal"]
+    set opt($count,1,lfontfamily) "Helvetica"
+    set opt($count,1,lfontsize) 11
+    set opt($count,1,lfontweight) "normal"
+    set opt($count,1,lfontslant) "roman"
+    set opt($count,1,lfontunderline) 0
+    set opt($count,1,lfontoverstrike) 0
     set opt($count,1,lfill) \#000000 
     set opt($count,1,lwidth)  100
     set opt($count,1,lanchor) "center_left" 
     set opt($count,1,ljust) "left" 
     set opt($count,1,ltxt) ""
+    set opt($count,1,lhoffset) 2 ;# space between label and enclosing box
+    set opt($count,1,lvoffset) 2 ;# space between label and enclosing box
+    set opt($count,1,lopaque) "yes"
+    set opt($count,1,lboxbenable) "yes"
+    set opt($count,1,lborder) "black"
+    set opt($count,1,lbackground) "yellow"
+    set opt($count,1,lbwidth) 1
+    set opt($count,1,lboxlenable) 1
     set opt($count,1,override) 0
 
 	set optlist { _check xcoord ycoord xoffset yoffset labels lfont lfill lwidth \
-		lanchor ljust ltxt override }
+		lanchor ljust ltxt lhoffset lvoffset lopaque lborder override }
 
     foreach key $optlist {
 		set opt($count,0,$key) $opt($count,1,$key)
@@ -85,7 +109,7 @@ proc GmCLabels::set_option { node key value } {
 }
 
 proc GmCLabels::select_labels { id } {
-    set m [GSelect paint/labels]
+    set m [GSelect paint/labels title "Label file"]
     if { $m != "" } { 
         set GmCLabels::opt($id,1,labels) $m
         GmTree::autonamel $m
@@ -95,9 +119,23 @@ proc GmCLabels::select_labels { id } {
 proc GmCLabels::select_font { id frm } {
 	global mon
 	variable opt
+	set fon ""
     
-    set fon [SelectFont $frm.lfont -type dialog -sampletext 1 -title "Select label font"]
-	if { $fon != "" } {set opt($id,1,lfont) $fon}
+	set fon [SelectFont $frm.lfon -font $opt($id,1,lfont) -type dialog \
+		-sampletext [G_msg "This is font sample text."] -title [G_msg "Select label font"]]
+
+	if { $fon != "" } {
+		set opt($id,1,lfontfamily)	[lindex $fon 0]
+		set opt($id,1,lfontsize)	[lindex $fon 1]
+		if {[lsearch $fon "bold"]>=0} 	{ set opt($id,1,lfontweight) "bold" }
+		if {[lsearch $fon "italic"]>=0} { set opt($id,1,lfontslant) "italic"}
+		if {[lsearch $fon "underline"]>=0}  { set opt($id,1,lfontunderline) 1}
+		if {[lsearch $fon "overstrike"]>=0} { set opt($id,1,lfontoverstrike) 1}
+		
+		font configure $opt($id,1,lfont) -family $opt($id,1,lfontfamily) -size $opt($id,1,lfontsize)\
+		-weight $opt($id,1,lfontweight) -slant $opt($id,1,lfontslant) \
+		-underline $opt($id,1,lfontunderline) -overstrike $opt($id,1,lfontoverstrike)
+	}
 }
 
 # display labels options
@@ -107,14 +145,14 @@ proc GmCLabels::options { id frm } {
 
     # Panel heading1
     set row [ frame $frm.heading1 ]
-    Label $row.a -text "Create postscript labels for vector objects from v.labels file" \
+    Label $row.a -text [G_msg "Create postscript labels for vector objects from v.labels file"] \
     	-fg MediumBlue
     pack $row.a -side left
     pack $row -side top -fill both -expand yes
 
     # Panel heading2
     set row [ frame $frm.heading2 ]
-    Label $row.a -text "  (for postscript eps, pdf, and print output only)" \
+    Label $row.a -text [G_msg "  (for postscript eps, pdf, and print output only)"] \
     	-fg MediumBlue
     pack $row.a -side left
     pack $row -side top -fill both -expand yes
@@ -164,28 +202,71 @@ proc GmCLabels::options { id frm } {
     Label $row.a -text [G_msg "Justification: "] 
     ComboBox $row.b -padx 2 -width 7 -textvariable GmCLabels::opt($id,1,ljust) \
                     -values {"left" "center" "right"}
-    Label $row.c -text " Label line length: "
+    Label $row.c -text [G_msg " Label line max length: "]
     LabelEntry $row.d -textvariable GmCLabels::opt($id,1,lwidth) -width 5 
+    pack $row.a $row.b $row.c $row.d -side left
+    pack $row -side top -fill both -expand yes
+    
+# labels options3
+    set row [ frame $frm.lbltopt3 ]
+    Label $row.a -text [G_msg "Enclose label in box: "] 
+    checkbutton $row.b -variable GmCLabels::opt($id,1,lboxenable)
+    	$row.b select
+    Label $row.c -text [G_msg "Draw label background: "] 
+    checkbutton $row.d -variable GmCLabels::opt($id,1,lopaque) \
+   	-command " if { $opt($id,1,lopaque) } { set opt($id,1,lboxenable) 1 } else { set opt($id,1,lboxenable) 0 }"
+    	$row.d select
+    Label $row.e -text [G_msg "Background color:"] 
+    SelectColor $row.f -type menubutton -variable GmCLabels::opt($id,1,lbackground)
+    pack $row.a $row.b $row.c $row.d $row.e $row.f -side left
+    pack $row -side top -fill both -expand yes
+        
+# labels options4
+    set row [ frame $frm.lbltopt4 ]
+    Label $row.a -text [G_msg "Draw box outline: "] 
+    checkbutton $row.b -variable GmCLabels::opt($id,1,lboxbenable) \
+    -command " if { $opt($id,1,lboxbenable) } { set opt($id,1,lboxenable) 1 } else { set opt($id,1,lboxenable) 0 }"
+    	$row.b select
+    Label $row.c -text [G_msg "Border width:"]
+    Entry $row.d -width 3 -text "$opt($id,1,lbwidth)" \
+	    -textvariable GmCLabels::opt($id,1,lbwidth)
+    Label $row.e -text [G_msg "Border color:"] 
+    SelectColor $row.f -type menubutton -variable GmCLabels::opt($id,1,lborder)
+    pack $row.a $row.b $row.c $row.d $row.e $row.f -side left
+    pack $row -side top -fill both -expand yes
+        
+# labels options5
+    set row [ frame $frm.lbltopt5 ]
+    Label $row.a -text [G_msg "Distance between label and enclosing box. Horizontal: "] 
+    Entry $row.b -width 3 -text "$opt($id,1,lhoffset)" \
+	    -textvariable GmCLabels::opt($id,1,lhoffset)  
+    Label $row.c -text [G_msg " Vertical: "]
+    Entry $row.d -width 3 -text "$opt($id,1,lvoffset)" \
+	    -textvariable GmCLabels::opt($id,1,lvoffset)  
     pack $row.a $row.b $row.c $row.d -side left
     pack $row -side top -fill both -expand yes
         
     # select font
     set row [ frame $frm.font ]
-    Label $row.a -text [G_msg "Font:"] 
+    Label $row.a -text [G_msg "Font"] 
     Button $row.b -image [image create photo -file "$iconpath/gui-font.gif"] \
         -highlightthickness 0 -takefocus 0 -relief raised -borderwidth 1  \
         -helptext [G_msg "select font for label"] \
 	    -command "GmCLabels::select_font $id $frm"
-    Entry $row.c -width 15 -text "$opt($id,1,lfont)" \
-	    -textvariable GmCLabels::opt($id,1,lfont)  
-    Label $row.d -text [G_msg "  color"] 
-    SelectColor $row.e -type menubutton -variable GmCLabels::opt($id,1,lfill)
-    pack $row.a $row.b $row.c $row.d $row.e -side left
+    Label $row.c -text [G_msg "family:"]
+    Entry $row.d -width 15 -text GmCLabels::opt($id,1,lfontfamily) \
+	    -textvariable GmCLabels::opt($id,1,lfontfamily)
+    Label $row.e -text [G_msg "size:"]
+    Entry $row.f -width 5 -text GmCLabels::opt($id,1,lfontsize) \
+	    -textvariable GmCLabels::opt($id,1,lfontsize)
+    Label $row.g -text [G_msg "  color"] 
+    SelectColor $row.h -type menubutton -variable GmCLabels::opt($id,1,lfill)
+    pack $row.a $row.b $row.c $row.d  $row.e $row.f $row.g $row.h -side left
     pack $row -side top -fill both -expand yes
 
     # launch v.label
     set row [ frame $frm.vlabel ]
-    Label $row.a -text "Launch v.label to create labels file" 
+    Label $row.a -text [G_msg "Launch v.label to create labels file"]
     Button $row.b -text [G_msg "v.label"] \
 	    -command "execute v.label"
     pack $row.a $row.b -side left
@@ -218,9 +299,13 @@ proc GmCLabels::display { node } {
     set id [GmTree::node_id $node]
     
     set can($mon) $MapCanvas::can($mon)
-    
-    set labelpath "$env(GISDBASE)/$env(LOCATION_NAME)/$env(MAPSET)/paint/labels/$opt($id,1,labels)"    
-    
+    if {[string match {*[@]*} $opt($id,1,labels)]} { 
+	set tmp [string range $opt($id,1,labels) 0 [expr [string first "@" $opt($id,1,labels)] - 1] ]
+	set labelpath "$env(GISDBASE)/$env(LOCATION_NAME)/PERMANENT/paint/labels/$tmp"
+    } else {
+	set labelpath "$env(GISDBASE)/$env(LOCATION_NAME)/$env(MAPSET)/paint/labels/$opt($id,1,labels)"
+    }
+
     if { ! ( $opt($id,1,_check) ) } { return } 
     
     # open the v.label file for reading
@@ -232,19 +317,19 @@ proc GmCLabels::display { node } {
 		set val ""
         set in [string trim $in " "] 
 		if { $in == "" } { continue }
-		if { ![regexp -- {([^ ]+) (.+)$} $in r key val] } {set key $in}
-        
+		regexp {^([^:]+):\s*(.*)$} $in -> key val ;# regexp from dkf_, mjanssen #tcl @ freenode
+
 		# Label options	
 		switch $key {
-			"east:" {
+			"east" {
 				set east $val
 				set opt($id,1,xcoord) [MapCanvas::mape2scrx $mon $east]
 			}
-			"north:" {
+			"north" {
 				set north $val
 				set opt($id,1,ycoord) [MapCanvas::mapn2scry $mon $north]
 			}
-			"xoffset:" {
+			"xoffset" {
 				if { $opt($id,1,override) == 0 } {
 					set opt($id,1,xoffset) $val
 				}
@@ -252,7 +337,7 @@ proc GmCLabels::display { node } {
 					set opt($id,1,xcoord) [expr $opt($id,1,xcoord) + $opt($id,1,xoffset)]
 				}
 			}
-			"yoffset:" {
+			"yoffset" {
 				if { $opt($id,1,override) == 0 } {
 					set opt($id,1,yoffset) $val
 				}
@@ -260,7 +345,7 @@ proc GmCLabels::display { node } {
 					set opt($id,1,ycoord) [expr $opt($id,1,ycoord) + $opt($id,1,yoffset)]
 				}
 			}
-			"ref:" {
+			"ref" {
 				if { $opt($id,1,override) == 0 } {
 					set opt($id,1,lanchor) $val
 				}
@@ -289,10 +374,10 @@ proc GmCLabels::display { node } {
 					default 		{ set opt($id,1,anchor) "w" }
 				}
 			}
-			"font:" {
+			"font" {
 				set x ""
 			}
-			"color:" {
+			"color" {
 				if { $opt($id,1,override) == 0 } {
 					set opt($id,1,lfill)  [color_grass_to_tcltk $val]
 				}
@@ -300,41 +385,79 @@ proc GmCLabels::display { node } {
 					set opt($id,1,lfill) "#000000"
 				}
 			}
-			"fontsize:" {
+			"fontsize" {
+				if { $opt($id,1,override) == 0 } {set opt($id,1,lfontsize) $val}
+			}
+			"width" {
+				if { $opt($id,1,override) == 0 } {set opt($id,1,lbwidth) $val}
+			}
+			"hcolor" {
 				set x ""
 			}
-			"width:" {
+			"hwidth" {
 				set x ""
 			}
-			"hcolor:" {
+			"background" {
+				if { $opt($id,1,override) == 0 } {
+					set opt($id,1,lbackground) [color_grass_to_tcltk $val]
+				}
+			}
+			"border" {
+				if { $opt($id,1,override) == 0 } {
+					set opt($id,1,lborder) [color_grass_to_tcltk $val]
+				}
+			}
+			"opaque" {
+				if { $opt($id,1,override) == 0 } {set opt($id,1,lopaque) $val}
+			}
+			"rotate" {
 				set x ""
 			}
-			"hwidth:" {
-				set x ""
+			"size"   {
+				if { $opt($id,1,override) == 0 } {set opt($id,1,lwidth) $val}
 			}
-			"background:" {
-				set x ""
-			}
-			"border:" {
-				set x ""
-			}
-			"opaque:" {
-				set x ""
-			}
-			"rotate:" {
-				set x ""
-			}
-			"text:" {
+			"text" {
 				set opt($id,1,ltxt) $val
 				# create each label when loop gets to a text line in the labels file
+				# Here should be set all font related options, that come from labelfile
+				if {[info exists opt($id,1,lfontsize)]} {
+					font configure $opt($id,1,lfont) -size $opt($id,1,lfontsize)
+				}
+				set linelen [font measure $opt($id,1,lfont) $opt($id,1,ltxt)]
+				if {$linelen < $opt($id,1,lwidth)} {
+					set wid [expr $linelen + 8]
+					set lineh [font metrics $opt($id,1,lfont) -linespace]
+				} else {
+					set wid $opt($id,1,lwidth)
+					set lineh [expr (ceil($linelen/$opt($id,1,lwidth))+1)\
+					 * [font metrics $opt($id,1,lfont) -linespace]]
+				}
+				if {!$opt($id,1,lopaque)} {
+					set lbackground ""
+				} else { set lbackground $opt($id,1,lbackground) }
+				if {!$opt($id,1,lboxbenable)} {
+					set wdth 0
+				} else { set wdth $opt($id,1,lbwidth) }
+
+				if {$opt($id,1,lboxenable)} { 
+				# draw recangle around label
+				$can($mon) create rectangle \
+					[expr {$opt($id,1,xcoord) - $opt($id,1,lhoffset) - $wid / 2}] \
+					[expr {$opt($id,1,ycoord) -2- $opt($id,1,lvoffset) - $lineh / 2}]\
+					[expr {$opt($id,1,xcoord) + $opt($id,1,lhoffset) + $wid / 2}] \
+					[expr {$opt($id,1,ycoord) + $opt($id,1,lvoffset) + $lineh / 2}]\
+					-width  $wdth \
+					-outline $opt($id,1,lborder) \
+					-fill $lbackground
+				}
 				$can($mon) create text $opt($id,1,xcoord) $opt($id,1,ycoord) \
 					-anchor $opt($id,1,anchor) \
 					-justify $opt($id,1,ljust) \
-					-width $opt($id,1,lwidth) \
+					-width $wid \
 					-fill $opt($id,1,lfill) \
 					-font $opt($id,1,lfont) \
 					-text $opt($id,1,ltxt)
-			}
+			} 
 			default {
 				#for anything else, just move on
 				set x ""
