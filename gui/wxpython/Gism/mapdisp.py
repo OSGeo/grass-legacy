@@ -10,8 +10,7 @@ import os, sys, time, glob
 #sys.path.append()
 
 import render
-import Gism
-import Gism.gismutils as gmutils
+import gismutils as gmutils
 
 Map = render.Map() # instantiate module to render GRASS display output to PPM file
 
@@ -331,8 +330,10 @@ class MapFrame(wx.Frame):
 ##        kwds["style"] = wx.DEFAULT_FRAME_STYLE
 ##         wx.Frame.__init__(self, *args, **kwds)
 
-    def __init__(self, parent, id, title, pos, size, style, cb, idx):        wx.Frame.__init__(self, parent, id, title, pos, size, style)        self.SetClientSize((600, 475))
-        self.cb_page = "" #choicebook page for each display, indexed by display ID
+    def __init__(self, parent, id, title, pos, size, style, cb, idx):
+        wx.Frame.__init__(self, parent, id, title, pos, size, style)
+        self.SetClientSize((600, 475))
+        self.cb_page = "" #choicebook page for each display, indexed by display ID
         self.maptree = "" #layer tree on choicebook page for each display, indexed by display ID
         self.mapconsole = "" #command console on choicebook page for each display, indexed by display ID
         self.nb = "" #notebook on choicebook page for GIS mgr controls for each display, indexed by display ID
