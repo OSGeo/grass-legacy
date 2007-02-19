@@ -43,7 +43,7 @@ G3d_writeAscii  (void *map, char *fname)
       for (x = 0; x < cols; x++) {
 	G3d_getValueRegion (map, x, y, z, (char *)d1p, typeIntern);
 	
-	if (typeIntern == G3D_FLOAT)
+	if (typeIntern == FCELL_TYPE)
 	  fprintf (fp, "%.18f ", *f1p);
 	else
 	  fprintf (fp, "%.50f ", d1);

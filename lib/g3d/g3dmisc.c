@@ -12,7 +12,7 @@ int
 G3d_g3dType2cellType  (int g3dType)
 
 {
-  if (g3dType == G3D_FLOAT) return FCELL_TYPE;
+  if (g3dType == FCELL_TYPE) return FCELL_TYPE;
   return DCELL_TYPE;
 }
 
@@ -53,13 +53,13 @@ G3d_copyValues  (char *src, int offsSrc, int typeSrc, char *dst, int offsDst, in
   char *srcStop;
   int eltLength;
 
-  if ((typeSrc == G3D_FLOAT) && (typeDst == G3D_DOUBLE)) {
+  if ((typeSrc == FCELL_TYPE) && (typeDst == DCELL_TYPE)) {
     G3d_copyFloat2Double ((float *) src, offsSrc, (double *) dst,
 			  offsDst, nElts);
     return;
   }
   
-  if ((typeSrc == G3D_DOUBLE) && (typeDst == G3D_FLOAT)) {
+  if ((typeSrc == DCELL_TYPE) && (typeDst == FCELL_TYPE)) {
     G3d_copyDouble2Float ((double *) src, offsSrc, (float *) dst,
 			  offsDst, nElts);
     return;
@@ -82,8 +82,8 @@ G3d_length  (int t)
 {
   if (! G3D_IS_CORRECT_TYPE (t)) G3d_fatalError ("G3d_length: invalid type");
 
-  if (t == G3D_FLOAT) return sizeof (float);
-  if (t == G3D_DOUBLE) return sizeof (double);
+  if (t == FCELL_TYPE) return sizeof (float);
+  if (t == DCELL_TYPE) return sizeof (double);
   return 0;
 }
 
@@ -93,7 +93,7 @@ G3d_externLength  (int t)
 {
   if (! G3D_IS_CORRECT_TYPE (t)) G3d_fatalError ("G3d_externLength: invalid type");
 
-  if (t == G3D_FLOAT) return G3D_XDR_FLOAT_LENGTH;
-  if (t == G3D_DOUBLE) return G3D_XDR_DOUBLE_LENGTH;
+  if (t == FCELL_TYPE) return G3D_XDR_FLOAT_LENGTH;
+  if (t == DCELL_TYPE) return G3D_XDR_DOUBLE_LENGTH;
   return 0;
 }

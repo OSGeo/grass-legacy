@@ -99,9 +99,9 @@ int G3d_getStandard3dParams(int *useTypeDefault, int *type, int *useLzwDefault,
   G3d_initDefaults();
 
   if (strcmp (param->type->answer, "double") == 0)
-    *type = G3D_DOUBLE;
+    *type = DCELL_TYPE;
   else if (strcmp (param->type->answer, "float") == 0)
-    *type = G3D_FLOAT;
+    *type = FCELL_TYPE;
   else {
     *type = G3d_getFileType();
     *useTypeDefault = 1;

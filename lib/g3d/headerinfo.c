@@ -256,11 +256,11 @@ G3d_printHeader  (G3D_Map *map)
 	   (map->operation == G3D_READ_DATA ? "read" : "unknown")));
   printf ("  Fd = %d, Unit %s, Type: %s, ", map->data_fd,
 	  map->unit,
-	  (map->type == G3D_FLOAT ? "float" :
-	   (map->type == G3D_DOUBLE ? "double" : "unknown")));
+	  (map->type == FCELL_TYPE ? "float" :
+	   (map->type == DCELL_TYPE ? "double" : "unknown")));
   printf ("Type intern: %s\n",
-	  (map->typeIntern == G3D_FLOAT ? "float" :
-	   (map->typeIntern == G3D_DOUBLE ? "double" : "unknown")));
+	  (map->typeIntern == FCELL_TYPE ? "float" :
+	   (map->typeIntern == DCELL_TYPE ? "double" : "unknown")));
   if (map->compression == G3D_NO_COMPRESSION)
     printf ("  Compression: none\n");
   else {
@@ -286,11 +286,11 @@ G3d_printHeader  (G3D_Map *map)
 	  map->region.depths);
   printf ("  Tile size (%d %d %d)\n", map->tileX, map->tileY, map->tileZ);
   printf ("  Range (");
-  if (G3d_isNullValueNum (&rangeMin, G3D_DOUBLE))
+  if (G3d_isNullValueNum (&rangeMin, DCELL_TYPE))
     printf ("NULL, "); 
   else
     printf ("%f, ", (double) rangeMin);
-  if (G3d_isNullValueNum (&rangeMax, G3D_DOUBLE))
+  if (G3d_isNullValueNum (&rangeMax, DCELL_TYPE))
     printf ("NULL)\n"); 
   else
     printf ("%f)\n", (double) rangeMax);

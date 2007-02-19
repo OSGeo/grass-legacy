@@ -14,7 +14,7 @@
 #define G3D_XDR_DOUBLE_LENGTH 8
 #define G3D_XDR_FLOAT_LENGTH 4
 
-#define G3D_IS_CORRECT_TYPE(t) (((t) == G3D_FLOAT) || ((t) == G3D_DOUBLE))
+#define G3D_IS_CORRECT_TYPE(t) (((t) == FCELL_TYPE) || ((t) == DCELL_TYPE))
 
 #define G3D_WRITE_DATA 1
 #define G3D_READ_DATA 0
@@ -69,7 +69,7 @@ typedef struct {
         int data_fd; /* file descriptor */
 
      /* type in which data is stored on file */
-        int type; /* G3D_DOUBLE or G3D_FLOAT */
+        int type; /* DCELL_TYPE or FCELL_TYPE */
 
      /* data concering the compression */
         int precision; /* G3D_MAX_PRECISION or, 0 .. 23 for float, 
@@ -110,7 +110,7 @@ typedef struct {
      /* tile specific information */
 
         /* type in which data is stored in memory */
-           int typeIntern; /* G3D_DOUBLE or G3D_FLOAT */
+           int typeIntern; /* DCELL_TYPE or FCELL_TYPE */
 
      /* in non-cache mode the "data" array is used to store one tile */
         char *data;
@@ -168,7 +168,7 @@ extern int g3d_do_rle_compression; /* G3D_USE_RLE or G3D_NO_RLE */
 extern int g3d_precision; /* G3D_ALLOW_PRECISION or G3D_NO_PRECISION */
 extern int g3d_cache_default; /* in number of tiles; 0 ==> no cache */
 extern int g3d_cache_max; /* in bytes */
-extern int g3d_file_type; /* G3D_FLOAT or G3D_DOUBLE */
+extern int g3d_file_type; /* FCELL_TYPE or DCELL_TYPE */
 extern int g3d_tile_dimension[3]; 
 extern void (*g3d_error_fun) (); 
 extern char *g3d_unit_default;

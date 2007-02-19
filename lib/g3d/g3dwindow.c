@@ -178,7 +178,7 @@ G3d_getValue  (G3D_Map *map, int x, int y, int z, void *value, int type)
  * \brief 
  *
  * Is equivalent to
- * <tt>G3d_getValue (map, x, y, z, &value, G3D_FLOAT);</tt> return value.
+ * <tt>G3d_getValue (map, x, y, z, &value, FCELL_TYPE);</tt> return value.
  *
  *  \param map
  *  \param x
@@ -193,7 +193,7 @@ G3d_getFloat  (G3D_Map *map, int x, int y, int z)
 {
   float value;
 
-  G3d_getValue (map, x, y, z, (char *)&value, G3D_FLOAT);
+  G3d_getValue (map, x, y, z, (char *)&value, FCELL_TYPE);
   return value;
 }
 
@@ -204,7 +204,7 @@ G3d_getFloat  (G3D_Map *map, int x, int y, int z)
  * \brief 
  *
  * Is equivalent
- * to <tt>G3d_getValue (map, x, y, z, &value, G3D_DOUBLE);</tt> return value.
+ * to <tt>G3d_getValue (map, x, y, z, &value, DCELL_TYPE);</tt> return value.
  *
  *  \param map
  *  \param x
@@ -219,6 +219,6 @@ G3d_getDouble  (G3D_Map *map, int x, int y, int z)
 {
   double value;
 
-  G3d_getValue (map, x, y, z, (char *)&value, G3D_DOUBLE);
+  G3d_getValue (map, x, y, z, (char *)&value, DCELL_TYPE);
   return value;
 }

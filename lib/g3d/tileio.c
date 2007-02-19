@@ -146,7 +146,7 @@ G3d__removeTile  (G3D_Map *map, int tileIndex)
  * \brief 
  *
  * Is  equivalent to <tt>G3d_getValueRegion (map, x, y, z, &value,
- * G3D_DOUBLE);</tt> return value.
+ * DCELL_TYPE);</tt> return value.
  *
  *  \param map
  *  \param x
@@ -162,7 +162,7 @@ G3d_getDoubleRegion();
 /*!
  * \brief 
  *
- * Is equivalent to <tt>G3d_getValueRegion (map, x, y, z, &value, G3D_FLOAT);</tt>
+ * Is equivalent to <tt>G3d_getValueRegion (map, x, y, z, &value, FCELL_TYPE);</tt>
  * return value.
  *
  *  \param map
@@ -179,7 +179,7 @@ G3d_getFloatRegion  (G3D_Map *map, int x, int y, int z)
   int tileIndex, offs;
   float *tile;
 
-  if (map->typeIntern == G3D_DOUBLE) 
+  if (map->typeIntern == DCELL_TYPE) 
     return (float) G3d_getDoubleRegion (map, x, y, z);
 
   G3d_coord2tileIndex (map, x, y, z, &tileIndex, &offs);
@@ -198,7 +198,7 @@ G3d_getFloatRegion  (G3D_Map *map, int x, int y, int z)
  * \brief 
  *
  * Is equivalent to <tt>G3d_getValueRegion (map, x, y, z, &value,
- * G3D_DOUBLE);</tt> return value.
+ * DCELL_TYPE);</tt> return value.
  *
  *  \param map
  *  \param x
@@ -214,7 +214,7 @@ G3d_getDoubleRegion  (G3D_Map *map, int x, int y, int z)
   int tileIndex, offs;
   double *tile;
 
-  if (map->typeIntern == G3D_FLOAT) 
+  if (map->typeIntern == FCELL_TYPE) 
     return (double) G3d_getFloatRegion (map, x, y, z);
 
   G3d_coord2tileIndex (map, x, y, z, &tileIndex, &offs);
@@ -251,7 +251,7 @@ void
 G3d_getValueRegion  (G3D_Map *map, int x, int y, int z, void *value, int type)
 
 {
-  if (type == G3D_FLOAT) {
+  if (type == FCELL_TYPE) {
     *((float *) value) = G3d_getFloatRegion (map, x, y, z);
     return;
   }

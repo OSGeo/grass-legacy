@@ -76,7 +76,7 @@ G3d_readWriteHeader  (struct Key_Value *headerKeys, int doRead, int *proj, int *
   returnVal &= headerInt (headerKeys, G3D_HEADER_TILEZ, tileZ);
 
   returnVal &= headerValue (headerKeys, G3D_HEADER_TYPE, 
-			    "double", "float", G3D_DOUBLE, G3D_FLOAT, type);
+			    "double", "float", DCELL_TYPE, FCELL_TYPE, type);
   returnVal &= headerValue (headerKeys, G3D_HEADER_COMPRESSION, 
 			    "0", "1", 0, 1, compression);
   returnVal &= headerValue (headerKeys, G3D_HEADER_USERLE, 
@@ -306,11 +306,11 @@ G3d_fillHeader  (G3D_Map *map, int operation, int compression, int useRle, int u
   if ((map->region.depths) % map->tileZ != 0) map->clipZ = map->nz - 1;
   else map->clipZ = -1;
 
-  if ((type != G3D_FLOAT) && (type != G3D_DOUBLE))
+  if ((type != FCELL_TYPE) && (type != DCELL_TYPE))
     G3d_fatalError ("G3d_fillHeader: invalid type");
   map->type = type;
 
-  if ((typeIntern != G3D_FLOAT) && (typeIntern != G3D_DOUBLE))
+  if ((typeIntern != FCELL_TYPE) && (typeIntern != DCELL_TYPE))
     G3d_fatalError ("G3d_fillHeader: invalid type");
   map->typeIntern = typeIntern;
 

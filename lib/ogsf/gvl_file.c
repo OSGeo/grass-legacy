@@ -346,9 +346,9 @@ void *open_g3d_file(char *filename, IFLAG *type, double *min, double *max)
 
     /* get file data type */
     itype = G3d_fileTypeMap(map);
-    if (itype == G3D_FLOAT)
+    if (itype == FCELL_TYPE)
         *type = VOL_DTYPE_FLOAT;
-    if (itype == G3D_DOUBLE)
+    if (itype == DCELL_TYPE)
         *type = VOL_DTYPE_DOUBLE;
 
     return (map);
@@ -476,12 +476,12 @@ int is_null_g3d_value(IFLAG type, void *value)
     switch (type) {
         /* float data type */
         case (VOL_DTYPE_FLOAT) :
-            return G3d_isNullValueNum(value, G3D_FLOAT);
+            return G3d_isNullValueNum(value, FCELL_TYPE);
             break;
 
         /* double data type */
         case (VOL_DTYPE_DOUBLE) :
-            return G3d_isNullValueNum(value, G3D_DOUBLE);
+            return G3d_isNullValueNum(value, DCELL_TYPE);
             break;
 
         /* unsupported data type */
