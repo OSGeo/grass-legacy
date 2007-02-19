@@ -124,33 +124,33 @@ void raster_to_g3d(void *map, G3D_Region region, int *fd)
 		 ptr = G_incr_void_ptr(ptr, G_raster_size(globalRastMapType))) {
 		if (globalRastMapType == CELL_TYPE) {
 		    if (G_is_null_value(ptr, globalRastMapType)) {
-			G3d_setNullValue(&dvalue, 1, G3D_DOUBLE);
+			G3d_setNullValue(&dvalue, 1, DCELL_TYPE);
 		    }
 		    else {
 			dvalue = *(CELL *) ptr;
 		    }
-		if (G3d_putValue(map, x, y, z, (char *) &dvalue, G3D_DOUBLE) < 0)
+		if (G3d_putValue(map, x, y, z, (char *) &dvalue, DCELL_TYPE) < 0)
 				fatal_error(map, fd, depths, "error writing double data");		    
 		}
 		else if (globalRastMapType == FCELL_TYPE) {
 		    if (G_is_null_value(ptr, globalRastMapType)) {
-			G3d_setNullValue(&fvalue, 1, G3D_FLOAT);
+			G3d_setNullValue(&fvalue, 1, FCELL_TYPE);
 		    }
 		    else {
 			fvalue = *(FCELL *) ptr;
 		    }
-		if (G3d_putValue(map, x, y, z, (char *) &fvalue, G3D_FLOAT) < 0)
+		if (G3d_putValue(map, x, y, z, (char *) &fvalue, FCELL_TYPE) < 0)
 				fatal_error(map, fd, depths, "error writing float data");		    
 
 		}
 		else if (globalRastMapType == DCELL_TYPE) {
 		    if (G_is_null_value(ptr, globalRastMapType)) {
-			G3d_setNullValue(&dvalue, 1, G3D_DOUBLE);
+			G3d_setNullValue(&dvalue, 1, DCELL_TYPE);
 		    }
 		    else {
 			dvalue = *(DCELL *) ptr;
 		    }
-		if (G3d_putValue(map, x, y, z, (char *) &dvalue, G3D_DOUBLE) < 0)
+		if (G3d_putValue(map, x, y, z, (char *) &dvalue, DCELL_TYPE) < 0)
 				fatal_error(map, fd, depths, "error writing double data");		    
 
 		}
@@ -240,7 +240,7 @@ int main(int argc, char *argv[])
     name = NULL;
 
     globalRastMapType = DCELL_TYPE;
-    globalG3dMapType = G3D_DOUBLE;
+    globalG3dMapType = DCELL_TYPE;
     maptype_tmp = DCELL_TYPE;
 
     opencells = 0;		/*Number of opened maps */
@@ -285,21 +285,21 @@ int main(int argc, char *argv[])
 
     if (globalRastMapType == CELL_TYPE) {
 	map =
-	    G3d_openCellNew(param.output->answer, G3D_DOUBLE,
+	    G3d_openCellNew(param.output->answer, DCELL_TYPE,
 			    G3D_USE_CACHE_DEFAULT, &region);
-	globalG3dMapType = G3D_DOUBLE;
+	globalG3dMapType = DCELL_TYPE;
     }
     else if (globalRastMapType == FCELL_TYPE) {
 	map =
-	    G3d_openCellNew(param.output->answer, G3D_FLOAT,
+	    G3d_openCellNew(param.output->answer, FCELL_TYPE,
 			    G3D_USE_CACHE_DEFAULT, &region);
-	globalG3dMapType = G3D_FLOAT;
+	globalG3dMapType = FCELL_TYPE;
     }
     else if (globalRastMapType == DCELL_TYPE) {
 	map =
-	    G3d_openCellNew(param.output->answer, G3D_DOUBLE,
+	    G3d_openCellNew(param.output->answer, DCELL_TYPE,
 			    G3D_USE_CACHE_DEFAULT, &region);
-	globalG3dMapType = G3D_DOUBLE;
+	globalG3dMapType = DCELL_TYPE;
     }
 
     if (map == NULL)

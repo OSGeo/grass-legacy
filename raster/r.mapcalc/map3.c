@@ -80,8 +80,8 @@ static void read_row(void *handle, char *buf, int type, int depth, int row)
 			double x;
 
 			G3d_getValue(
-				handle, i, row, depth, (char *) &x, G3D_DOUBLE);
-			if (G3d_isNullValueNum(&x, G3D_DOUBLE))
+				handle, i, row, depth, (char *) &x, DCELL_TYPE);
+			if (G3d_isNullValueNum(&x, DCELL_TYPE))
 				SET_NULL_C(&((CELL*)buf)[i]);
 			else
 				((CELL*)buf)[i] = (CELL) x;
@@ -93,8 +93,8 @@ static void read_row(void *handle, char *buf, int type, int depth, int row)
 			float x;
 
 			G3d_getValue(
-				handle, i, row, depth, (char *) &x, G3D_FLOAT);
-			if (G3d_isNullValueNum(&x, G3D_FLOAT))
+				handle, i, row, depth, (char *) &x, FCELL_TYPE);
+			if (G3d_isNullValueNum(&x, FCELL_TYPE))
 				SET_NULL_F(&((FCELL*)buf)[i]);
 			else
 				((FCELL*)buf)[i] = x;
@@ -106,8 +106,8 @@ static void read_row(void *handle, char *buf, int type, int depth, int row)
 			double x;
 
 			G3d_getValue(
-				handle, i, row, depth, (char *) &x, G3D_DOUBLE);
-			if (G3d_isNullValueNum(&x, G3D_DOUBLE))
+				handle, i, row, depth, (char *) &x, DCELL_TYPE);
+			if (G3d_isNullValueNum(&x, DCELL_TYPE))
 				SET_NULL_D(&((DCELL*)buf)[i]);
 			else
 				((DCELL*)buf)[i] = x;
@@ -128,11 +128,11 @@ static void write_row(void *handle, const char *buf, int type, int depth, int ro
 			double x;
 
 			if (IS_NULL_C(&((CELL*)buf)[i]))
-				G3d_setNullValue(&x, 1, G3D_DOUBLE);
+				G3d_setNullValue(&x, 1, DCELL_TYPE);
 			else
 				x = ((CELL*)buf)[i];
 
-			if (G3d_putValue(handle, i, row, depth, (char *) &x, G3D_DOUBLE) < 0)
+			if (G3d_putValue(handle, i, row, depth, (char *) &x, DCELL_TYPE) < 0)
 				G_fatal_error("error writing data");
 		}
 		break;
@@ -142,11 +142,11 @@ static void write_row(void *handle, const char *buf, int type, int depth, int ro
 			float x;
 
 			if (IS_NULL_F(&((FCELL*)buf)[i]))
-				G3d_setNullValue(&x, 1, G3D_FLOAT);
+				G3d_setNullValue(&x, 1, FCELL_TYPE);
 			else
 				x = ((FCELL*)buf)[i];
 
-			if (G3d_putValue(handle, i, row, depth, (char *) &x, G3D_FLOAT) < 0)
+			if (G3d_putValue(handle, i, row, depth, (char *) &x, FCELL_TYPE) < 0)
 				G_fatal_error("error writing data");
 		}
 		break;
@@ -156,11 +156,11 @@ static void write_row(void *handle, const char *buf, int type, int depth, int ro
 			double x;
 
 			if (IS_NULL_D(&((DCELL*)buf)[i]))
-				G3d_setNullValue(&x, 1, G3D_DOUBLE);
+				G3d_setNullValue(&x, 1, DCELL_TYPE);
 			else
 				x = ((DCELL*)buf)[i];
 
-			if (G3d_putValue(handle, i, row, depth, (char *) &x, G3D_DOUBLE) < 0)
+			if (G3d_putValue(handle, i, row, depth, (char *) &x, DCELL_TYPE) < 0)
 				G_fatal_error("error writing data");
 		}
 		break;
@@ -409,7 +409,7 @@ int map_type(const char *name, int mod)
 			handle = G3d_openCellOld(
 				tmpname, mapset, &current_region3,
 				G3D_TILE_SAME_AS_FILE, G3D_NO_CACHE);
-			result = (G3d_fileTypeMap == G3D_FLOAT)
+			result = (G3d_fileTypeMap == FCELL_TYPE)
 				? FCELL_TYPE
 				: DCELL_TYPE;
 			G3d_closeCell(handle);
@@ -516,7 +516,7 @@ int open_map(const char *name, int mod, int row, int col)
 
 	m->handle = G3d_openCellOld(
 		(char *) name, (char *) mapset, &current_region3,
-		G3D_DOUBLE, G3D_USE_CACHE_DEFAULT);
+		DCELL_TYPE, G3D_USE_CACHE_DEFAULT);
 
 	if (!m->handle)
 		G_fatal_error("unable to open map [%s in %s]", name, mapset);
@@ -585,7 +585,7 @@ int open_output_map(const char *name, int res_type)
 
 	handle = G3d_openCellNew(
 		(char *) name,
-		res_type == FCELL_TYPE ? G3D_FLOAT : G3D_DOUBLE,
+		res_type == FCELL_TYPE ? FCELL_TYPE : DCELL_TYPE,
 		G3D_USE_CACHE_DEFAULT,
 		&current_region3);
 
