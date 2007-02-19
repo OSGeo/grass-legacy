@@ -262,7 +262,7 @@ void elev_raster_to_g3d(Database db, G3D_Region region)
     input_rast = G_allocate_raster_buf(db.inputmaptype);
     elev_rast = G_allocate_raster_buf(db.elevmaptype);
 
-    G3d_setNullValue(&null, 1, G3D_DOUBLE);
+    G3d_setNullValue(&null, 1, DCELL_TYPE);
 
 
     G_debug(3,
@@ -318,7 +318,7 @@ void elev_raster_to_g3d(Database db, G3D_Region region)
 			height <= ((z + 1) * tbres + bottom))
 			value = inval;
 		    /*If the elevation is null, set the G3D value null */
-		    if (G3d_isNullValueNum(&height, G3D_DOUBLE))
+		    if (G3d_isNullValueNum(&height, DCELL_TYPE))
 			value = null;
 
 		    /*Write the value to the 3D map */
@@ -352,7 +352,7 @@ void elev_raster_to_g3d(Database db, G3D_Region region)
 			height <= ((z + 1) * tbres + bottom))
 			value = inval;
 		    /*If the elevation is null, set the G3D value null */
-		    if (G3d_isNullValueNum(&height, G3D_DOUBLE))
+		    if (G3d_isNullValueNum(&height, DCELL_TYPE))
 			value = G3d_getDouble(db.map, x, y, z);
 
 		    /*Write the value to the 3D map */
@@ -434,7 +434,7 @@ int main(int argc, char *argv[])
 	    G_fatal_error(_("The upper value is not valid"));
     }
     else {
-	G3d_setNullValue(&db.upper, 1, G3D_DOUBLE);
+	G3d_setNullValue(&db.upper, 1, DCELL_TYPE);
     }
 
     /*Set the lower value */
@@ -445,7 +445,7 @@ int main(int argc, char *argv[])
 	    G_fatal_error(_("The lower value is not valid"));
     }
     else {
-	G3d_setNullValue(&db.lower, 1, G3D_DOUBLE);
+	G3d_setNullValue(&db.lower, 1, DCELL_TYPE);
     }
 
     /* Figure out the current g3d region */
@@ -478,7 +478,7 @@ int main(int argc, char *argv[])
     /*open G3D output map */
     db.map = NULL;
     db.map =
-	G3d_openCellNew(param.output->answer, G3D_DOUBLE,
+	G3d_openCellNew(param.output->answer, DCELL_TYPE,
 			G3D_USE_CACHE_DEFAULT, &region);
     if (db.map == NULL)
 	fatal_error(db, _("Error opening 3d raster map"));

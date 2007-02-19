@@ -299,12 +299,12 @@ int main(int argc, char *argv[])
     /* Set the inactive values to zero, to assure a no flow boundary */
     for (y = 0; y < geom->rows; y++) {
 	for (x = 0; x < geom->cols; x++) {
-	    stat = (int)N_get_array_2d_value_dcell(data->status, x, y);
+	    stat = (int)N_get_array_2d_d_value(data->status, x, y);
 	    if (stat == N_CELL_INACTIVE) {	/*only inactive cells */
-		N_put_array_2d_value_dcell(data->kf_x, x, y, 0);
-		N_put_array_2d_value_dcell(data->kf_y, x, y, 0);
-		N_put_array_2d_value_dcell(data->s, x, y, 0);
-		N_put_array_2d_value_dcell(data->q, x, y, 0);
+		N_put_array_2d_d_value(data->kf_x, x, y, 0);
+		N_put_array_2d_d_value(data->kf_y, x, y, 0);
+		N_put_array_2d_d_value(data->s, x, y, 0);
+		N_put_array_2d_d_value(data->q, x, y, 0);
 	    }
 	}
     }
@@ -439,20 +439,20 @@ copy_result(N_array_2d * status, N_array_2d * phead_start, double *result,
     for (y = 0; y < rows; y++) {
 	G_percent(y, rows - 1, 10);
 	for (x = 0; x < cols; x++) {
-	    stat = (int)N_get_array_2d_value_dcell(status, x, y);
+	    stat = (int)N_get_array_2d_d_value(status, x, y);
 	    if (stat == N_CELL_ACTIVE) {	/*only active cells */
 		d1 = result[count];
 		val = (DCELL) d1;
 		count++;
 	    }
 	    else if (stat == N_CELL_DIRICHLET) {	/*dirichlet cells */
-		d1 = N_get_array_2d_value_dcell(phead_start, x, y);
+		d1 = N_get_array_2d_d_value(phead_start, x, y);
 		val = (DCELL) d1;
 	    }
 	    else {
 		G_set_null_value(&val, 1, DCELL_TYPE);
 	    }
-	    N_put_array_2d_value_dcell(target, x, y, val);
+	    N_put_array_2d_d_value(target, x, y, val);
 	}
     }
 
