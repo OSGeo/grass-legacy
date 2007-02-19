@@ -333,7 +333,7 @@ proc GmTree::add { type } {
             GmTree::selectn $tree($mon) [GmCmd::create $tree($mon)  $parent_node]
         }
         gridline {
-            GmTree::selectn $tree($mon) [Gridline::create $tree($mon)  $parent_node]
+            GmTree::selectn $tree($mon) [GmGridline::create $tree($mon)  $parent_node]
         }
         rgbhis {
             GmTree::selectn $tree($mon) [GmRgbhis::create $tree($mon)  $parent_node]
