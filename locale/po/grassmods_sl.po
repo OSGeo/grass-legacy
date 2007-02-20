@@ -9536,10 +9536,10 @@ msgstr "Berem dig datoteko...\n"
 #: ../raster/r.param.scale/interface.c:48
 #, fuzzy
 msgid ""
-"Extracts terrain parameters from a DEM. Uses a multi-scalar approach by "
+"Extracts terrain parameters from a DEM. Uses a multi-scale approach by "
 "taking fitting quadratic parameters to any size window (via least squares)"
 msgstr ""
-"Izraèuna reliefne parametre za DMV. Uporablja \"multi-scalar\" pristop s \n"
+"Izraèuna reliefne parametre za DMV. Uporablja \"multi-scale\" pristop s \n"
 "prilagajanjem kvadratnih parametrov kakr¹ni koli velikosti okna (s pomoèjo \n"
 "metode najmanj¹ih kvadratov)"
 

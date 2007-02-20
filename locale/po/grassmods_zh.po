@@ -9396,7 +9396,7 @@ msgstr "读取 %s ... "
 
 #: ../raster/r.param.scale/interface.c:48
 msgid ""
-"Extracts terrain parameters from a DEM. Uses a multi-scalar approach by "
+"Extracts terrain parameters from a DEM. Uses a multi-scale approach by "
 "taking fitting quadratic parameters to any size window (via least squares)"
 msgstr ""
 "从DEM提取地形参数。对于任意大小的窗口(通过最小正方形)采用多阶逼近的方法求得二"
