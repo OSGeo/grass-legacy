@@ -515,6 +515,8 @@ Each vector feature inside a vector map has zero, one or more
 &lt;layer,category&gt; tuple(s). A user can (but not must) create attribute
 tables which are referenced by the layer, and rows which are essentially
 referenced by the &lt;layer,category&gt; pair.
+<P>
+Categories start with 1. Categories do not have to be continuous.
 
 \section vlib_cidx Vector library category index
 
