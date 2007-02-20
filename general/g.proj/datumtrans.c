@@ -40,14 +40,14 @@
 
 int set_datumtrans(int datumtrans, int force, int interactive)
 {
-    char *datum, *params;
+    char *params, *datum = NULL;
     int paramsets, status;
 
     if(cellhd.proj == PROJECTION_XY)
         return 0;
 
     status = GPJ__get_datum_params(projinfo, &datum, &params);
-    if( status > 0 )
+    if( status > 0 && datum != NULL )
     {
         /* A datum name is specifed; need to determine if
 	 * there are parameters to choose from for this datum */       
