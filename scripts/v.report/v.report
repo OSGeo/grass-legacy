@@ -72,6 +72,13 @@ MAP=$GIS_OPT_MAP
 OPTION=$GIS_OPT_OPTION
 LAYER=$GIS_OPT_LAYER
 
+# does map exist?
+eval `g.findfile element=vector file=$GIS_OPT_MAP`
+if [ ! "$file" ] ; then
+   echo "Vector map '$GIS_OPT_MAP' not found in mapset search path"
+   exit 1
+fi
+
 #fetch column names
 COLNAMES="`v.info -c $MAP |grep -v '^Displaying column type' | cut -d '|' -f2 | tr '\n' '|'`"
 
@@ -89,11 +96,21 @@ if  [ ! -z $GIS_OPT_UNITS ] ; then
   UNITSPARAM="units=$GIS_OPT_UNITS"
 fi   
 
-#fetch the attributes sorted by cat:
-v.db.select -c map=$MAP layer=$LAYER | sort -n -t'|' -k 1 > "$TMP1"
+## NOTE: we suppress -1 cat and 0 cat
 
-#fetch the areas/line lengths sorted by cat:
-v.to.db -p map=$MAP opt=$OPTION col=$COLUMS $UNITSPARAM layer=$LAYER 2> /dev/null | grep -v '^cat' | sort -n -t'|' -k 1 | cut -d'|' -f2 > "$TMP2"
+#fetch the attributes sorted by cat:
+v.db.select -c map=$MAP layer=$LAYER | sort -n -t'|' -k 1 | grep -v '^0' > "$TMP1"
+if [ `wc -l "$TMP1" | awk '{print $1}'` -eq 0 ] ; then
+   #fetch the areas/line lengths sorted by cat:
+   v.to.db -p map=$MAP opt=$OPTION col=$COLUMS $UNITSPARAM \
+	   layer=$LAYER 2> /dev/null | grep -v '^cat' | grep -v '^-1' | grep -v '^0'\
+	   | sort -n -t'|' -k 1 > "$TMP2"
+else
+   #fetch the areas/line lengths sorted by cat:
+   v.to.db -p map=$MAP opt=$OPTION col=$COLUMS $UNITSPARAM \
+	   layer=$LAYER 2> /dev/null | grep -v '^cat' | grep -v '^-1' | grep -v '^0'\
+	   | sort -n -t'|' -k 1 | cut -d'|' -f2 > "$TMP2"
+fi
 
 #make and print the table:
 echo "$COLNAMES$EXTRACOLNAMES"
