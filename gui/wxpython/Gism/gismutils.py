@@ -8,11 +8,11 @@ if not os.getenv("GISBASE"):
     sys.stderr.write("GISBASE not set, you have to be in running GRASS session!\n")
     sys.exit(1)
 
-gipath = ""
+icons = ""
 if not os.getenv("GRASS_ICONPATH"):
-    gipath = os.getenv("GISBASE")+"/etc/gui/icons/"
+    icons = os.getenv("GISBASE")+"/etc/gui/icons/"
 else:
-    gipath = os.environ["GRASS_ICONPATH"]
+    icons = os.environ["GRASS_ICONPATH"]
 
 
 #---Layer tree creation ---#000000#FFFFFF-------------------------------------------------
@@ -41,18 +41,18 @@ class LayerTree(CT.CustomTreeCtrl):
         #create image list to use with layer tree
         il = wx.ImageList(16, 16, False)
 
-        trgif = wx.Image(gipath+r'/element-cell.gif', wx.BITMAP_TYPE_GIF)
+        trgif = wx.Image(icons+r'/element-cell.gif', wx.BITMAP_TYPE_GIF)
         trgif.Rescale(16, 16)
         trgif = trgif.ConvertToBitmap()
         self.rast_icon = il.Add(trgif)
 #        print "width=",trgif.GetWidth()
 #        print "height=",trgif.GetHeight()
-        trgif = wx.Image(gipath+r'/element-vector.gif', wx.BITMAP_TYPE_GIF)
+        trgif = wx.Image(icons+r'/element-vector.gif', wx.BITMAP_TYPE_GIF)
         trgif.Rescale(16, 16)
         trgif = trgif.ConvertToBitmap()
         self.vect_icon = il.Add(trgif)
 
-        trgif = wx.Image(gipath+r'/gui-cmd.gif', wx.BITMAP_TYPE_GIF)
+        trgif = wx.Image(icons+r'/gui-cmd.gif', wx.BITMAP_TYPE_GIF)
         trgif.Rescale(16, 16)
         trgif = trgif.ConvertToBitmap()
         self.cmd_icon = il.Add(trgif)
@@ -272,5 +272,4 @@ def GetTempfile( pref=None):
         if pref:
             file = "%s%s" % (pref,file)
         return os.path.join(path,file)
-
 
