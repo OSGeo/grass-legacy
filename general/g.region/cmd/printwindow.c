@@ -425,19 +425,19 @@ int print_window(struct Cell_head *window, int print_flag)
     {
 	if (print_flag & PRINT_SH)
 	{
-	    fprintf(stdout, "center_northing=%f\n",
-		    ((window->north - window->south) / 2. + window->south));
 	    fprintf(stdout, "center_easting=%f\n",
 		    ((window->west - window->east) / 2. + window->east));
+	    fprintf(stdout, "center_northing=%f\n",
+		    ((window->north - window->south) / 2. + window->south));
 	}
 	else
 	{
 	    if (G_projection() != PROJECTION_LL)
 	    {
+		fprintf(stdout, "%-*s %f\n", width, "center easting:",
+		        ((window->west - window->east) / 2. + window->east));
 		fprintf(stdout, "%-*s %f\n", width, "center northing:",
 			((window->north - window->south) / 2. + window->south));
-		fprintf(stdout, "%-*s %f\n", width, "center easting:",
-			((window->west - window->east) / 2. + window->east));
 	    }
 	    else
 	    {
