@@ -224,11 +224,12 @@ main (int argc, char **argv)
 	    _("Name of color definition column (for use with -a flag)");
 	rgbcol_opt->answer     = "GRASSRGB" ;
 
-	lfield_opt = G_define_standard_option(G_OPT_V_FIELD) ;
-	lfield_opt->key        = "llayer" ;
+	lfield_opt = G_define_option();
+	lfield_opt->key        = "llayer";
+	lfield_opt->type       = TYPE_INTEGER;
 	lfield_opt->guisection = _("Labels");
-	lfield_opt->description= "Layer for labels" ;
-	
+	lfield_opt->description= _("Layer for labels (default: the given layer number)");
+
 	lcolor_opt = G_define_option() ;
 	lcolor_opt->key        = "lcolor" ;
 	lcolor_opt->type       = TYPE_STRING ;
@@ -541,7 +542,11 @@ main (int argc, char **argv)
 	  }
 	
 	/* Read label options */
-	lattr.field = atoi (lfield_opt->answer);
+	if (lfield_opt -> answer != NULL) 
+	    lattr.field = atoi (lfield_opt->answer);
+	else
+	    lattr.field = Clist->field;
+
 	lattr.color.R = lattr.color.G = lattr.color.B = 255;
 	if ( G_str_to_color(lcolor_opt->answer, &r, &g, &b) ) {
 	    lattr.color.R = r;
