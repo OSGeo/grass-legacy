@@ -93,7 +93,7 @@ fi
 v.db.select -c map=$MAP layer=$LAYER | sort -n -t'|' -k 1 > "$TMP1"
 
 #fetch the areas/line lengths sorted by cat:
-v.to.db -p map=$MAP opt=$OPTION col=$COLUMS $UNITSPARAM layer=$LAYER 2> /dev/null | grep -v '^cat' | sort -n -t'|' -k 1 > "$TMP2"
+v.to.db -p map=$MAP opt=$OPTION col=$COLUMS $UNITSPARAM layer=$LAYER 2> /dev/null | grep -v '^cat' | sort -n -t'|' -k 1 | cut -d'|' -f2 > "$TMP2"
 
 #make and print the table:
 echo "$COLNAMES$EXTRACOLNAMES"
