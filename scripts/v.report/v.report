@@ -80,7 +80,7 @@ if [ ! "$file" ] ; then
 fi
 
 #fetch column names
-COLNAMES="`v.info -c $MAP |grep -v '^Displaying column type' | cut -d '|' -f2 | tr '\n' '|'`"
+COLNAMES="`v.info -c map=$MAP layer=$LAYER | grep -v '^Displaying column type' | cut -d '|' -f2 | tr '\n' '|'`"
 
 #special treatment for opt=coor parameter:
 if [ "$GIS_OPT_OPTION" = "coor" ] ; then
