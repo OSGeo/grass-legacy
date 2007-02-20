@@ -204,7 +204,6 @@ GetTiles() {
   #################################################
   MAXCOLS=${GIS_OPT_MAXCOLS} #The maximum cols of the biggest tile 
   MAXROWS=${GIS_OPT_MAXROWS} #The maximum rows of the biggest tile 
-  SIZE_ARRAY[0]="" #the array of the bounding boxes
 
 
   #Calculate the number of tiles and set up the arrays
