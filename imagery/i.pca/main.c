@@ -16,9 +16,9 @@
  ***************************************************************************/
 
 
-#include <string.h>
 #include <stdlib.h>
 #include <stdio.h>
+#include <string.h>
 #include <math.h>
 #include <grass/gis.h>
 #include <grass/gmath.h>
@@ -42,23 +42,23 @@ static int dump_eigen (int, double **, double *);
 
 int main (int argc, char *argv[])
 {
-    int i, j;           /* Loop control variables */
-    int bands;          /* Number of image bands */
-  double *mu;         /* Mean vector for image bands */
-  double **covar;     /* Covariance Matrix */
-  double *eigval;
-  double **eigmat;
-    int *inp_fd;
-  int scale, scale_max, scale_min;
+    int    i, j;        /* Loop control variables */
+    int    bands;       /* Number of image bands */
+    double *mu;         /* Mean vector for image bands */
+    double **covar;     /* Covariance Matrix */
+    double *eigval;
+    double **eigmat;
+    int    *inp_fd;
+    int scale, scale_max, scale_min;
 
-  struct GModule *module;
+    struct GModule *module;
     struct Option *opt_in, *opt_out, *opt_scale;
 
-  /* initialize GIS engine */
-  G_gisinit (argv[0]);
+    /* initialize GIS engine */
+    G_gisinit (argv[0]);
 
-  module = G_define_module();
-  module->keywords = _("imagery");
+    module = G_define_module();
+    module->keywords = _("imagery");
     module->description =	_("Principal components analysis (pca) program for image processing");
 
     /* Define options */
@@ -73,8 +73,8 @@ int main (int argc, char *argv[])
     opt_scale->answer     = "0,255"; 
     opt_scale->description= _("Rescaling range output (For no rescaling use 0,0)");
 
-  if (G_parser(argc, argv) < 0)
-    exit(EXIT_FAILURE);
+    if (G_parser (argc, argv) < 0)
+        exit (EXIT_FAILURE);
 
     /* determine number of bands passed in */
     for (bands = 0; opt_in->answers[bands] != NULL; bands++);
@@ -91,11 +91,11 @@ int main (int argc, char *argv[])
     set_output_scale (opt_scale, &scale, &scale_min, &scale_max);
 
     /* allocate memory */
-  covar          = (double **) G_calloc(bands, sizeof(double *));
-  mu             = (double *)  G_malloc(bands * sizeof(double));
+    covar          = (double **) G_calloc(bands, sizeof(double *));
+    mu             = (double *)  G_malloc(bands * sizeof(double));
     inp_fd         = (int *)     G_malloc (bands * sizeof(int));
-  eigmat         = (double **) G_calloc(bands, sizeof(double *));
-  eigval         = (double *)  G_calloc(bands, sizeof(double));
+    eigmat         = (double **) G_calloc(bands, sizeof(double *));
+    eigval         = (double *)  G_calloc(bands, sizeof(double));
 
     /* allocate memory for matrices */
     for (i = 0; i < bands; i++)
@@ -129,15 +129,17 @@ int main (int argc, char *argv[])
 
     calc_covariance (inp_fd, covar, mu, bands);
 
-  for (i=0 ; i<bands ; i++) {
-    for (j=0 ; j<bands ; j++) {
+    for (i = 0; i < bands; i++)
+    {
+        for (j = 0; j < bands; j++)
+        {
             covar[i][j] = covar[i][j] / ((double) ((G_window_rows () * G_window_cols ()) - 1));
             G_debug (3, "covar[%d][%d] = %f", i, j, covar[i][j]);
+        }
     }
-  }
 
     G_debug (1, _("Calculating eigenvalues and eigenvectors..."));
-  eigen(covar, eigmat, eigval, bands);
+    eigen (covar, eigmat, eigval, bands);
 
 #ifdef PCA_DEBUG
     /* dump eigen matrix and eigen values */
@@ -145,10 +147,10 @@ int main (int argc, char *argv[])
 #endif
 
     G_debug (1, _("Ordering eigenvalues in descending order..."));
-  egvorder2(eigval, eigmat, bands);
+    egvorder2 (eigval, eigmat, bands);
 
     G_debug (1, _("Transposing eigen matrix..."));
-  transpose2(eigmat, bands);
+    transpose2 (eigmat, bands);
 
     /* write output images */
     write_pca (eigmat, inp_fd, opt_out->answer, bands, scale, scale_min, scale_max); 
@@ -160,6 +162,7 @@ int main (int argc, char *argv[])
 
         sprintf (outname, "%s.%d", opt_out->answer, i + 1);
 
+        /* write colors and history to file */
         write_support (bands, outname, eigmat);
 
         /* close output file */
@@ -264,6 +267,8 @@ calc_mu (int *fds, double *mu, int bands)
 
         mu[i] = sum / (double) (rows * cols);
     }
+
+    if (rowbuf) G_free (rowbuf);
 
     return 0;
 }
@@ -502,7 +507,8 @@ write_pca (double **eigmat, int *inp_fd, char *out_basename,
         }
     }
 
-    G_free (d_buf);
+    if (d_buf)  G_free (d_buf);
+    if (outbuf) G_free (outbuf);
 
     return 0;
 }
