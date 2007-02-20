@@ -9044,7 +9044,7 @@ msgstr ""
 
 #: ../raster/r.param.scale/interface.c:48
 msgid ""
-"Extracts terrain parameters from a DEM. Uses a multi-scalar approach by "
+"Extracts terrain parameters from a DEM. Uses a multi-scale approach by "
 "taking fitting quadratic parameters to any size window (via least squares)"
 msgstr ""
 

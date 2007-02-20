@@ -9605,12 +9605,12 @@ msgstr "Lese %s ..."
 
 #: ../raster/r.param.scale/interface.c:48
 msgid ""
-"Extracts terrain parameters from a DEM. Uses a multi-scalar approach by "
+"Extracts terrain parameters from a DEM. Uses a multi-scale approach by "
 "taking fitting quadratic parameters to any size window (via least squares)"
 msgstr ""
 "Extrahiert Reliefinformationen aus einem DEM. Dazu benutzt das Modul einen "
-"multi-skalaren Ansatz indem quadratische Parameter auf jede Fenstergröße "
-"angepasst werden (über Annährung der kleinsten Quadrate)."
+"multi-skalaren Ansatz, in dem quadratische Parameter auf jede Fenstergröße "
+"angepasst werden (über kleinste Quadrate)."
 
 #: ../raster/r.param.scale/interface.c:65
 msgid "Output raster layer containing morphometric parameter"

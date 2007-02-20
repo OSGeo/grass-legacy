@@ -1,7 +1,7 @@
 r.param.scale
 
 GRASS module that extracts terrain parameters from a DEM.
-Uses a multi-scalar approach by taking fitting quadratic
+Uses a multi-scale approach by taking fitting quadratic
 parameters to any size window (via least squares).
 
 Jo Wood, 27th November, 1994.

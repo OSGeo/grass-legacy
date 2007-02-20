@@ -45,7 +45,7 @@ void interface(int argc, char **argv)
     module = G_define_module();
     module->keywords = _("raster");
     module->description =
-      _("Extracts terrain parameters from a DEM. Uses a multi-scalar approach"
+      _("Extracts terrain parameters from a DEM. Uses a multi-scale approach"
       " by taking fitting quadratic parameters to any size window (via least squares)");
 
     rast_in   = G_define_standard_option(G_OPT_R_INPUT);
