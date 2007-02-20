@@ -330,7 +330,9 @@ class MapFrame(wx.Frame):
 ##        kwds["style"] = wx.DEFAULT_FRAME_STYLE
 ##         wx.Frame.__init__(self, *args, **kwds)
 
-    def __init__(self, parent, id, title, pos, size, style, cb, idx):
+    def __init__(self, parent=None, id=-1, title="Map display",
+            pos=wx.DefaultPosition, size=wx.DefaultSize,
+            style=wx.DEFAULT_FRAME_STYLE, cb=None, idx=-1):
         wx.Frame.__init__(self, parent, id, title, pos, size, style)
         self.SetClientSize((600, 475))
         self.cb_page = "" #choicebook page for each display, indexed by display ID
@@ -340,7 +342,7 @@ class MapFrame(wx.Frame):
         self.chbk = cb
         self.disp_idx = idx
 
-        self.createGISmgr()
+        #self.createGISmgr()
 
     	#---status bar---#000000#FFFFFF-------------------------------------------------
     	self.statusbar = self.CreateStatusBar(2, 0)
@@ -380,45 +382,45 @@ class MapFrame(wx.Frame):
     	self.MapWindow = DrawWindow(self) # initialize buffered DC
     	self.MapWindow.Bind(wx.EVT_MOTION, self.OnMotion)
 
-    def createGISmgr(self):
-        '''Creates choicebook page for controlling each display, with notebook for layer tree and command console'''
+    #def createGISmgr(self):
+    #    '''Creates choicebook page for controlling each display, with notebook for layer tree and command console'''
 
-       # make a new page in the choicebook for the layer tree (on page 0 of the notebook)
-        cb_panel= wx.Panel(self.chbk)
-        self.chbk.AddPage(cb_panel, "map layers for display "+str(self.disp_idx), select = True)
+    #   # make a new page in the choicebook for the layer tree (on page 0 of the notebook)
+    #    cb_panel= wx.Panel(self.chbk)
+    #    self.chbk.AddPage(cb_panel, "map layers for display "+str(self.disp_idx), select = True)
 
-        # track which page is associated with which map display
-        self.cb_page = self.chbk.GetCurrentPage()
+    #    # track which page is associated with which map display
+    #    self.cb_page = self.chbk.GetCurrentPage()
 
-        #create notebook on choicebook page to hold layer tree and command console
-        self.nb =  wx.Notebook(self.cb_page, -1, wx.DefaultPosition, wx.DefaultSize, wx.NB_RIGHT)
+    #    #create notebook on choicebook page to hold layer tree and command console
+    #    self.nb =  wx.Notebook(self.cb_page, -1, wx.DefaultPosition, wx.DefaultSize, wx.NB_RIGHT)
 
-       #create layer tree (tree control for managing GIS layers)  and put on new notebook page
-        self.maptree = gmutils.LayerTree(self.nb, -1, wx.DefaultPosition, wx.DefaultSize, wx.TR_HAS_BUTTONS
-            |wx.TR_LINES_AT_ROOT|wx.TR_EDIT_LABELS|wx.TR_HIDE_ROOT
-            |wx.TR_DEFAULT_STYLE|wx.NO_BORDER|wx.FULL_REPAINT_ON_RESIZE)
-        self.nb.AddPage(self.maptree, _("Layers"))
+    #   #create layer tree (tree control for managing GIS layers)  and put on new notebook page
+    #    self.maptree = gmutils.LayerTree(self.nb, -1, wx.DefaultPosition, wx.DefaultSize, wx.TR_HAS_BUTTONS
+    #        |wx.TR_LINES_AT_ROOT|wx.TR_EDIT_LABELS|wx.TR_HIDE_ROOT
+    #        |wx.TR_DEFAULT_STYLE|wx.NO_BORDER|wx.FULL_REPAINT_ON_RESIZE)
+    #    self.nb.AddPage(self.maptree, _("Layers"))
 
-        #create command console and put on new notebook page
-        self.mapaconsole = gmutils.GMConsole(self.nb)
-        self.nb.AddPage(self.mapaconsole , _("Console"))
+    #    #create command console and put on new notebook page
+    #    self.mapaconsole = gmutils.GMConsole(self.nb)
+    #    self.nb.AddPage(self.mapaconsole , _("Console"))
 
-        #layout for controls
-        cb_boxsizer = wx.BoxSizer()
-        cb_boxsizer.Add(self.nb, 1, wx.EXPAND)
-        self.cb_page.SetSizer(cb_boxsizer)
-        self.cb_page.SetAutoLayout(True)
-        self.Centre()
+    #    #layout for controls
+    #    cb_boxsizer = wx.BoxSizer()
+    #    cb_boxsizer.Add(self.nb, 1, wx.EXPAND)
+    #    self.cb_page.SetSizer(cb_boxsizer)
+    #    self.cb_page.SetAutoLayout(True)
+    #    self.Centre()
 
-#        #store information about display and controls in variables in render.py
-        render.Track().SetDisp_idx(self.disp_idx)
-        myidx = render.Track().GetDisp_idx()
-        render.Track().SetChbk(self.chbk)
-        render.Track().SetDispCtrl(self.disp_idx, self, self.cb_page)
-        render.Track().SetCB_idx(str(self.cb_page), self.disp_idx)
-        render.Track().SetCB_page(self.cb_page, self.chbk.GetSelection())
-        render.Track().SetNB(self.disp_idx, self.nb)
-        render.Track().SetTree(self.disp_idx, self.maptree)
+#   #     #store information about display and controls in variables in render.py
+    #    render.Track().SetDisp_idx(self.disp_idx)
+    #    myidx = render.Track().GetDisp_idx()
+    #    render.Track().SetChbk(self.chbk)
+    #    render.Track().SetDispCtrl(self.disp_idx, self, self.cb_page)
+    #    render.Track().SetCB_idx(str(self.cb_page), self.disp_idx)
+    #    render.Track().SetCB_page(self.cb_page, self.chbk.GetSelection())
+    #    render.Track().SetNB(self.disp_idx, self.nb)
+    #    render.Track().SetTree(self.disp_idx, self.maptree)
 
     def InitDisplay(self):
         self.Width, self.Height = self.GetClientSize()
@@ -442,7 +444,8 @@ class MapFrame(wx.Frame):
         ctrl = render.Track().GetDispCtrl(self.disp_idx)
         pg = ctrl[1]
         pgnum = render.Track().GetCB_page(pg)
-        self.chbk.SetSelection(pgnum)        event.Skip()
+        self.chbk.SetSelection(pgnum)
+        event.Skip()
 
     def SetDcommandList(self, clst):
         self.MapWindow.dcmd_list = clst
@@ -526,9 +529,9 @@ class MapFrame(wx.Frame):
 class MapApp(wx.App):
     def OnInit(self):
 	wx.InitAllImageHandlers()
-	map_frame = MapFrame(None, -1)
-	self.SetTopWindow(map_frame)
-	map_frame.Show()
+	Mapfrm = MapFrame(None, -1)
+	self.SetTopWindow(Map)
+	Mapfrm.Show()
 
         # only for testing purpose
         if __name__ == "__main__":
@@ -551,7 +554,3 @@ if __name__ == "__main__":
         os.environ["GRASS_ICONPATH"]=os.getenv("GISBASE")+"/etc/gui/icons/"
     gm_map = MapApp(0)
     gm_map.MainLoop()
-
-
-
-
