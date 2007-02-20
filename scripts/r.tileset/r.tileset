@@ -393,7 +393,7 @@ fi
 	message 0 "Getting projection scale:"
 
 if [ -z "$GIS_OPT_DESTSCALE" ] ; then
-	eval `g.proj -p | $GREP meters | $SED "s/\\s*:\\s*/=/"`
+	eval `g.proj -p | $GREP '^meters' | $SED -e "s/:/=/" -e "s/ //g"`
 	DEST_SCALE=$meters;
 else
 	DEST_SCALE=$GIS_OPT_DESTSCALE
