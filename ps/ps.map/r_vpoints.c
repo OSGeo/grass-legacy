@@ -244,7 +244,7 @@ read_vpoints (char *name, char *mapset)
 	{
 	    G_warning (_("The mapping instruction <%s> will be renamed to <%s> in future versions "
 			 "of GRASS. Please use <%s> instead."),
-		       "sizecol", "sizecolumn", "sizecol");
+		       "sizecol", "sizecolumn", "sizecolumn");
 	}
 
 	if (KEY("sizecol") || KEY("sizecolumn"))
