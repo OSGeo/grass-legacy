@@ -31,7 +31,7 @@
 
 static int *cat_array, cat_count, cat_size;
 int scan_cats(char *, int *, int *);
-int xtract_line(int, int [], struct Map_info *, struct Map_info *, int, int, int, int, int);
+int xtract_line(int, int [], struct Map_info *, struct Map_info *, int, int, int, int, int, int);
 
 static void add_cat(int x)
 {
@@ -57,7 +57,7 @@ int main (int argc, char **argv)
     struct Option *inopt, *outopt, *fileopt, *newopt, *typopt, *listopt, *fieldopt;
     struct Option *whereopt;
     struct Flag *t_flag;
-    struct Flag *d_flag;
+    struct Flag *d_flag, *r_flag;
     struct Map_info In;
     struct Map_info Out;
     struct field_info *Fi;
@@ -86,6 +86,10 @@ int main (int argc, char **argv)
     t_flag->key              = 't';
     t_flag->description      = _("Do not copy table (see also 'new' parameter)");
     
+    r_flag = G_define_flag();
+    r_flag->key              = 'r';
+    r_flag->description      = _("Reverse selection");
+
     inopt = G_define_standard_option(G_OPT_V_INPUT);
 
     outopt = G_define_standard_option(G_OPT_V_OUTPUT);
@@ -120,7 +124,8 @@ int main (int argc, char **argv)
     fileopt->key             = "file";
     fileopt->type            =  TYPE_STRING;
     fileopt->required        =  NO;
-    fileopt->description     = _("Input text file with category numbers/number ranges to be extracted");
+    fileopt->description     = _("Input text file with category numbers/number ranges to be extracted "
+				 "(if '-' given reads from standard input");
 
     whereopt = G_define_standard_option(G_OPT_WHERE) ;
 
@@ -184,11 +189,17 @@ int main (int argc, char **argv)
 	    while (x <= y) add_cat(x++);
 	}
     } else if ( fileopt->answer != NULL )  {  /* got a file of category numbers */
-	G_message(_("process file <%s> for category numbers"),fileopt->answer);
+	if (G_strcasecmp (fileopt -> answer, "-") == 0) {
+	    in = stdin;
+	}
+	else {
+	    G_message(_("Process file <%s> for category numbers"),fileopt->answer);
 
-	/* open input file */
-	if( (in = fopen(fileopt->answer,"r")) == NULL )
-	    G_fatal_error(_("Can't open specified file <%s>"), fileopt->answer) ;
+	    /* open input file */
+	    if( (in = fopen(fileopt->answer,"r")) == NULL )
+		G_fatal_error(_("Can't open specified file <%s>"), fileopt->answer) ;
+	}
+
 	while (1)
 	{
 	    if (!fgets (buffr, 39, in)) break;
@@ -201,7 +212,10 @@ int main (int argc, char **argv)
 	                      - if white space appears, number is not read correctly */
 	    while (x <= y && x >= 0 && y >= 0) add_cat(x++);
 	}
-	fclose(in);
+
+	if (G_strcasecmp (fileopt -> answer, "-") != 0)
+	    fclose(in);
+
     } else if ( whereopt->answer != NULL ) { 
 	if ( field < 1 ) {
 	    G_fatal_error ( _("'layer' must be > 0 for 'where'.") );
@@ -236,7 +250,7 @@ int main (int argc, char **argv)
 	type |= GV_CENTROID;
     }
     
-    xtract_line( cat_count, cat_array, &In, &Out, new_cat, type, dissolve, field, type_only);
+    xtract_line( cat_count, cat_array, &In, &Out, new_cat, type, dissolve, field, type_only, r_flag -> answer ? 1 : 0);
     
     Vect_build (&Out, stdout );
     

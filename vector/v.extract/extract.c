@@ -36,7 +36,7 @@ int in_list ( int cat )
 }
 
 /* output reclass cats */
-void extract_cats ( struct line_cats *Cats, int type_only, int field, int new )
+void extract_cats ( struct line_cats *Cats, int type_only, int field, int new, int reverse)
 {
     int i, tmp;
     static struct line_cats *TCats = NULL;
@@ -77,7 +77,8 @@ void extract_cats ( struct line_cats *Cats, int type_only, int field, int new )
 	    
 	    for ( i = 0; i < TCats->n_cats; i++ ) {
 		if ( TCats->field[i] == field ) {
-		    if ( in_list(TCats->cat[i]) ) {
+		    if ( (!reverse && in_list(TCats->cat[i])) ||
+			 (reverse && !in_list(TCats->cat[i])) ) {
 			found = 1;
 			break;
 		    }
@@ -88,7 +89,8 @@ void extract_cats ( struct line_cats *Cats, int type_only, int field, int new )
 	} else {
 	    for ( i = 0; i < TCats->n_cats; i++ ) {
 		if ( TCats->field[i] == field ) {
-		    if ( in_list(TCats->cat[i]) ) {
+		    if ( (!reverse && in_list(TCats->cat[i])) ||
+			 (reverse && !in_list(TCats->cat[i])) ) {
 		        Vect_cat_set ( Cats, field, TCats->cat[i] );
 		    }
 		}
@@ -99,7 +101,7 @@ void extract_cats ( struct line_cats *Cats, int type_only, int field, int new )
 }
 
 /* check if output cats of left and right area match */
-int areas_new_cats_match ( struct Map_info *In, int area1, int area2, int type_only, int field, int new ) 
+int areas_new_cats_match ( struct Map_info *In, int area1, int area2, int type_only, int field, int new, int reverse) 
 {
     int i, j, found;
     int centroid1, centroid2;
@@ -121,8 +123,8 @@ int areas_new_cats_match ( struct Map_info *In, int area1, int area2, int type_o
     Vect_read_line ( In, NULL, Cats1, centroid1);
     Vect_read_line ( In, NULL, Cats2, centroid2);
 
-    extract_cats ( Cats1, type_only, field, new );
-    extract_cats ( Cats2, type_only, field, new );
+    extract_cats ( Cats1, type_only, field, new, reverse);
+    extract_cats ( Cats2, type_only, field, new, reverse);
 
     if ( Cats1->n_cats != Cats2->n_cats ) return 0;
     
@@ -144,7 +146,7 @@ int areas_new_cats_match ( struct Map_info *In, int area1, int area2, int type_o
 
 int 
 xtract_line (int num_index, int *num_array, struct Map_info *In, struct Map_info *Out,
-             int new, int select_type, int dissolve, int field, int type_only)
+             int new, int select_type, int dissolve, int field, int type_only, int reverse)
 {
         int line;
 	struct line_pnts *Points;
@@ -186,7 +188,8 @@ xtract_line (int num_index, int *num_array, struct Map_info *In, struct Map_info
 	     for ( i = 0; i < Line_Cats_Old->n_cats; i++ ) {
 	         G_debug ( 3, "field = %d cat = %d", Line_Cats_Old->field[i], Line_Cats_Old->cat[i]);
 		 if ( Line_Cats_Old->field[i] == field ) {
-		     if ( in_list(Line_Cats_Old->cat[i]) ) {
+		     if ( (!reverse && in_list(Line_Cats_Old->cat[i])) ||
+			  (reverse && !in_list(Line_Cats_Old->cat[i])) ) {
 			 cat_match = 1;
 			 break;
 		     }
@@ -207,7 +210,8 @@ xtract_line (int num_index, int *num_array, struct Map_info *In, struct Map_info
 			 left_field_match = Vect_cat_get(CCats,field,&tmp);
 			 for ( i = 0; i < CCats->n_cats; i++ ) {
 			     if ( CCats->field[i] == field ) {
-				 if ( in_list(CCats->cat[i]) ) {
+				 if ( (!reverse && in_list(CCats->cat[i])) ||
+				      (reverse && !in_list(CCats->cat[i])) ) {
 				     left_cat_match = 1;
 				     break;
 				 }
@@ -225,7 +229,8 @@ xtract_line (int num_index, int *num_array, struct Map_info *In, struct Map_info
 			 right_field_match = Vect_cat_get(CCats,field,&tmp);
 			 for ( i = 0; i < CCats->n_cats; i++ ) {
 			     if ( CCats->field[i] == field ) {
-				 if ( in_list(CCats->cat[i]) ) {
+				 if ( (!reverse && in_list(CCats->cat[i])) ||
+				      (reverse && !in_list(CCats->cat[i])) ) {
 				     right_cat_match = 1;
 				     break;
 				 }
@@ -261,7 +266,7 @@ xtract_line (int num_index, int *num_array, struct Map_info *In, struct Map_info
 
 		 /* areas */ 
 		 if ( type == GV_BOUNDARY && ( left_area || right_area ) ) {
-		     if ( !dissolve || !areas_new_cats_match ( In, left_area, right_area, type_only, field, new ) )
+		     if ( !dissolve || !areas_new_cats_match ( In, left_area, right_area, type_only, field, new, reverse) )
 		         write = 1;
 		 }
 	     }
@@ -275,7 +280,7 @@ xtract_line (int num_index, int *num_array, struct Map_info *In, struct Map_info
 
 		 /* areas */ 
 		 if ( type == GV_BOUNDARY && (select_type & GV_AREA) && ( left_field_match || right_field_match ) ) {
-		     if ( !dissolve || !areas_new_cats_match ( In, left_area, right_area, type_only, field, new ) )
+		     if ( !dissolve || !areas_new_cats_match ( In, left_area, right_area, type_only, field, new, reverse) )
 		         write = 1;
 		 }
 	     } 
@@ -289,7 +294,7 @@ xtract_line (int num_index, int *num_array, struct Map_info *In, struct Map_info
 
 		 /* areas */ 
 		 if ( type == GV_BOUNDARY && (select_type & GV_AREA) && ( left_cat_match || right_cat_match ) ) {
-		     if ( !dissolve || !areas_new_cats_match ( In, left_area, right_area, type_only, field, new ) )
+		     if ( !dissolve || !areas_new_cats_match ( In, left_area, right_area, type_only, field, new, reverse) )
 		         write = 1;
 		 }
 	     }
@@ -297,9 +302,9 @@ xtract_line (int num_index, int *num_array, struct Map_info *In, struct Map_info
 	     G_debug ( 2, "write = %d", write );
 		 
 	    if ( write ) {
-                 extract_cats ( Line_Cats_Old, type_only, field, new );
+		extract_cats ( Line_Cats_Old, type_only, field, new, reverse);
 
-		 Vect_write_line (Out, type, Points, Line_Cats_Old);
+		Vect_write_line (Out, type, Points, Line_Cats_Old);
 	    }
 		      
         }  /* end lines section */
