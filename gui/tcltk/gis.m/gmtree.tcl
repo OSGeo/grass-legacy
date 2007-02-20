@@ -255,8 +255,9 @@ proc GmTree::new { } {
 
     catch {unset filename($mon)}
     #GmPrint::init
-    set new_root_node [GmGroup::create $tree($mon) "root"]
-    $tree($mon) itemconfigure $new_root_node -text "UNTITLED_$mon"
+    # What are those lines doing? IMHO we can live without new group "UNTITLED". MarisN.
+    #set new_root_node [GmGroup::create $tree($mon) "root"]
+    #$tree($mon) itemconfigure $new_root_node -text "UNTITLED_$mon"
     
     set filename($mon) Untitled_$mon.grc 
 }
@@ -719,8 +720,10 @@ proc GmTree::save { spth } {
 
     set fpath $spth
     
-    set rcfile [open $fpath w]
-
+    if {[catch {set rcfile [open $fpath w]} err]} {
+	tk_messageBox -icon error -type ok -message [format [G_msg "Could not open file for writing.\n%s"] $err]
+	return
+    }
     GmGroup::save $tree($mon) 0 "root"
 
     close $rcfile
@@ -862,6 +865,10 @@ proc GmTree::load { lpth } {
     if { ![file exist $fpath] || ![file readable $fpath] } { 
             return 
     }
+    
+    # Clean up before add workspace
+    GmTree::new
+    set filename($mon) $fpath
 
     set rcfile [open $fpath r]
     set file_size [file size $fpath]

@@ -313,7 +313,7 @@ proc Gm::startmon { } {
 	MapCanvas::create
 	GmTree::create $mon
 
-	wm title .mapcan($mon) [G_msg "Map Display $mon"]
+	wm title .mapcan($mon) [format [G_msg "Map Display %d"] $mon]
 	wm withdraw .mapcan($mon)
 	wm deiconify .mapcan($mon)
 }
@@ -409,12 +409,12 @@ proc Gm::OpenFileBox { } {
     global mon
 
     set types {
-	    {{Map Resource File} {{.dm} {.dmrc} {.grc}}}
-	    {{All Files} *}
+	    {{[G_msg "Map Resource File"]} {{.dm} {.dmrc} {.grc}}}
+	    {{[G_msg "All Files"]} *}
     }
 
 	set filename_new [tk_getOpenFile -parent $mainwindow -filetypes $types \
-		-title {Open File} ]
+		-title [G_msg "Open File"] ]
 	if { $filename_new == "" } { return}
 	set filename($mon) $filename_new
 	GmTree::load $filename($mon)
@@ -430,7 +430,7 @@ proc Gm::SaveFileBox { } {
     global mon
 
     catch {
-	if {[ regexp -- {^Untitled_?.grc$} $filename($mon) r]} {
+	if {[ regexp -- {^Untitled_} $filename($mon) r]} {
 		set filename($mon) ""
 	}
     }
@@ -439,12 +439,12 @@ proc Gm::SaveFileBox { } {
 	GmTree::save $filename($mon)
     } else {
 	set types {
-	    {{Map Resource File} {{.grc}}}
-	    {{DM Resource File} {{.dm} {.dmrc}}}
-	    {{All Files} *}
+	    {{[G_msg "Map Resource File"]} {{.grc}}}
+	    {{[G_msg "DM Resource File"]} {{.dm} {.dmrc}}}
+	    {{[G_msg "All Files"]} *}
 		}
 	set filename($mon) [tk_getSaveFile -parent $mainwindow -filetypes $types \
-		-title {Save File} -defaultextension .grc]
+		-title [G_msg "Save File"] -defaultextension .grc]
 	if { $filename($mon) == "" } { return}
 	GmTree::save $filename($mon)
     }
@@ -517,9 +517,14 @@ proc main {argc argv} {
     raise .mainframe
     focus -force .
     destroy .intro
-    if { $argc == "1"} {
-	set filename($mon) $argv
-		GmTree::load $filename($mon)
+    
+    if { $argc > 1 } {
+    	foreach i $argv {
+    		if { [regexp -- {\.grc$} $i] || [regexp -- {\.dmrc$} $i] || [regexp -- {\.dm$} $i] } { 
+			set filename($mon) [lindex $argv 0]
+			GmTree::load $filename($mon)
+    		}
+    	}
     }
 }
 
