@@ -180,26 +180,26 @@ fi
 
 # check if we have wget
 if [ ! -x "`which wget`" ] ; then
-    echo "wget is required, please install it first" 2>&1
+    echo "wget is required, please install it first" 1>&2
     exit 1
 fi
 
 # check if we have bc -> used in wms.request and wms.download
 if [ ! -x "`which bc`" ] ; then
-    echo "bc is required, please install it first" 2>&1
+    echo "bc is required, please install it first" 1>&2
     exit 1
 fi
 
 # check if we have sed
 if [ ! -x "`which sed`" ] ; then
-    echo "sed is required, please install it first" 2>&1
+    echo "sed is required, please install it first" 1>&2
     exit 1
 fi
 
 # check if we have gdalwarp -> used in r.in.gdalwarp
 if [ $GIS_FLAG_P -ne 1 ] ; then
     if [ ! -x "`which gdalwarp`" ] ; then
-        echo "gdalwarp is required, please install it first" 2>&1
+        echo "gdalwarp is required, please install it first" 1>&2
         exit 1
     fi
 fi
@@ -333,7 +333,7 @@ fi
 # It would be a good idea to test if the map already exists here too
 
 if [ -z "${GIS_OPT_OUTPUT}" ] ; then
-	echo "No output map specified"
+	echo "No output map specified" 1>&2
 	exit 1;
 fi
 
@@ -354,7 +354,7 @@ REQUESTFILE=${GIS_OPT_FOLDER}/${PREFIX}_${GIS_OPT_REGION}.wget
 if [ ! -z "$GIS_OPT_REGION" ] ; then
    eval `g.findfile element=windows file=$GIS_OPT_REGION`
    if [ ! "$file" ] ; then
-      echo "Region file '$GIS_OPT_REGION' not found."
+      echo "Region file '$GIS_OPT_REGION' not found." 1>&2
       exit 1
    fi
 fi
@@ -378,6 +378,10 @@ addargument REQUEST tileoptions "${GIS_OPT_TILEOPTIONS}"
 if [ $GIS_FLAG_D -eq 0 ] ; then
 	message 0 "wms.request $REQUEST"
 	eval "wms.request $REQUEST"
+	if [ $? -ne 0 ] ; then
+	   echo "ERROR: wms.request failure" 1>&2
+	   exit 1
+	fi
 fi
 
 addargument DOWNLOAD requestfile "${REQUESTFILE}"
