@@ -156,8 +156,8 @@ $CHANNEL_SUFFIXES" | sort -u`
 	for SUFFIX in $CHANNEL_SUFFIXES ; do
 		eval "$SUFFIX"
 		# Use alpha channel for nulls:
-		r.mapcalculator amap=$ALPHALAYER bmap=${TMPMAPNAME}${sfx} formula="if(A,B,null())" outfile=${MAP}${sfx}
-
+		GRASS_VERBOSE=1 \
+		  r.mapcalc "${MAP}${sfx} = if( $ALPHALAYER, ${TMPMAPNAME}${sfx}, null() )"
 		# Copy the color tables:
 		r.colors map=${MAP}${sfx} rast=${TMPMAPNAME}${sfx}
 
