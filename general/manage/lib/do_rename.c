@@ -14,7 +14,12 @@ int do_rename (int n, char *old, char *new)
     int len;
     int result = 0;
 
-    fprintf (stdout,"RENAME [%s] to [%s]\n", old, new);
+    /* verbosity: --quiet is completely quiet.
+		   GRASS_VERBOSE=1 shows only map names.
+		   normal and --verbose show map names and elements. */
+    if (G_verbose() > G_verbose_min())
+	fprintf (stdout,"RENAME [%s] to [%s]\n", old, new);
+
     if (strcmp (old,new) == 0) return 1;
 
     len = get_description_len(n);
@@ -30,8 +35,10 @@ int do_rename (int n, char *old, char *new)
     } else {
 	for (i = 0; i < list[n].nelem; i++)
 	{
-	    fprintf (stdout," %-*s ", len, list[n].desc[i]);
-	    fflush (stdout);
+	    if (G_verbose() >= G_verbose_std()) {
+		fprintf (stdout," %-*s ", len, list[n].desc[i]);
+		fflush (stdout);
+	    }
 
 	    G_remove(list[n].element[i], new);
 	    switch (G_rename (list[n].element[i], old, new))
@@ -41,10 +48,12 @@ int do_rename (int n, char *old, char *new)
 		result = 1;
 		break;
 	    case  0: 
-		fprintf (stdout,"MISSING"); 
+		if (G_verbose() >= G_verbose_std())
+		    fprintf (stdout,"MISSING"); 
 		break;
 	    }
-	    fprintf (stdout,"\n");
+	    if (G_verbose() >= G_verbose_std())
+		fprintf (stdout,"\n");
 	}
 	if (strcmp (list[n].element[0], "cell") == 0)
 	{
