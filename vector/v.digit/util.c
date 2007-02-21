@@ -65,3 +65,37 @@ void get_location(int *sxn, int *syn, int *button)
     }
 }
 
+int do_tool(tool_func_begin *begin, tool_func_update *update, tool_func_end *end, void *closure)
+{
+    int sxn = COOR_NULL;
+    int syn = COOR_NULL;
+    int button;
+    int ret;
+
+    driver_open();
+    ret = (*begin)(closure);
+
+    if (ret)
+    {
+	driver_close();
+	return ret;
+    }
+
+    while (1)
+    {
+	/* Get next coordinate */
+        get_location(&sxn, &syn, &button); 
+
+	if (button == 0)
+	    break;
+
+	if ((*update)(closure, sxn, syn, button))
+	    break;
+    }
+
+    ret = (*end)(closure);
+    driver_close();
+
+    return ret;
+}
+

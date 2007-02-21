@@ -165,7 +165,7 @@ struct display_cats
     int last_cat_line;
 };
 
-void display_cats_begin(void *closure)
+int display_cats_begin(void *closure)
 {
     struct display_cats *dc = closure;
 
@@ -185,6 +185,8 @@ void display_cats_begin(void *closure)
     dc->last_cat_line = 0;
 
     set_mode(MOUSE_POINT);
+
+    return 0;
 }
 
 int display_cats_update(void *closure, int sxn, int syn, int button)
@@ -256,29 +258,8 @@ int display_cats_end(void *closure)
 int display_cats(void)
 {
     struct display_cats dc;
-    int sxn, syn, button;
-    int ret;
 
-    driver_open();
-    display_cats_begin(&dc);
-
-    sxn = COOR_NULL; syn = COOR_NULL;
-    while (1)
-    {
-	/* Get next coordinate */
-        get_location(&sxn, &syn, &button); 
-
-	if (button == 0)
-	    break;
-
-	if (display_cats_update(&dc, sxn, syn, button))
-	    break;
-    }
-
-    ret = display_cats_end(&dc);
-    driver_close();
-
-    return ret;
+    return do_tool(display_cats_begin, display_cats_update, display_cats_end, &dc);
 }
 
 /* Copy categories from one feature to another */
@@ -290,7 +271,7 @@ struct copy_cats
     struct line_cats *Src_Cats, *Dest_Cats;
 };
 
-void copy_cats_begin(void *closure)
+int copy_cats_begin(void *closure)
 {
     struct copy_cats *cc = closure;
     
@@ -311,6 +292,8 @@ void copy_cats_begin(void *closure)
     cc->dest_line = 0;
 
     set_mode(MOUSE_POINT);
+
+    return 0;
 }
 
 int copy_cats_update(void *closure, int sxn, int syn, int button)
@@ -418,29 +401,8 @@ int copy_cats_end(void *closure)
 int copy_cats(void)
 {
     struct copy_cats cc;
-    int sxn, syn, button;
-    int ret;
-    
-    driver_open();
-    copy_cats_begin(&cc);
 
-    sxn = COOR_NULL; syn = COOR_NULL;
-    while (1)
-    {
-	/* Get next coordinate */
-        get_location(&sxn, &syn, &button); 
-        
-        if (button==0)
-	    break;
-
-	if (copy_cats_update(&cc, sxn, syn, button))
-	    break;
-    }
-
-    ret = copy_cats_end(&cc);
-    driver_close();
-
-    return ret;
+    return do_tool(copy_cats_begin, copy_cats_update, copy_cats_end, &cc);
 }
 
 /* Display attributes */
@@ -454,7 +416,7 @@ struct display_attributes
     dbString html; 
 };
 
-void display_attributes_begin(void *closure)
+int display_attributes_begin(void *closure)
 {
     struct display_attributes *da = closure;
     
@@ -476,6 +438,8 @@ void display_attributes_begin(void *closure)
     db_init_string(&da->html);
 
     set_mode(MOUSE_POINT);
+
+    return 0;
 }
 
 int display_attributes_update(void *closure, int sxn, int syn, int button)
@@ -588,29 +552,8 @@ int display_attributes_end(void *closure)
 int display_attributes(void)
 {
     struct display_attributes da;
-    int sxn, syn, button;
-    int ret;
-    
-    driver_open();
-    display_attributes_begin(&da);
 
-    sxn = COOR_NULL; syn = COOR_NULL;
-    while (1)
-    {
-	/* Get next coordinate */
-        get_location(&sxn, &syn, &button); 
-        
-        if (button==0)
-	    break;
-
-	if (display_attributes_update(&da, sxn, syn, button))
-	    break;
-    }
-
-    ret = display_attributes_end(&da);
-    driver_close();
-
-    return ret;
+    return do_tool(display_attributes_begin, display_attributes_update, display_attributes_end, &da);
 }
 
 /* 

@@ -109,6 +109,7 @@ int snap ( double *x, double *y )
     return node;
 }
 
+/* Digitize new line */
 struct new_line
 {
     int type;
@@ -117,7 +118,7 @@ struct new_line
     int first;
 };
 
-void new_line_begin(void *closure)
+int new_line_begin(void *closure)
 {
     struct new_line *nl = closure;
     char buf[1000];
@@ -136,6 +137,8 @@ void new_line_begin(void *closure)
     nl->first = 1; 
 
     set_mode(MOUSE_POINT);
+
+    return 0;
 }
 
 int new_line_update(void *closure, int sxn, int syn, int button)
@@ -225,35 +228,13 @@ int new_line_end(void *closure)
     return 1;
 }
 
-/* Digitize new line */
-int new_line ( int type )
+int new_line(int type)
 {
     struct new_line nl;
-    int sxn, syn, button;
-    int ret;
 
     nl.type = type;
 
-    driver_open();
-    new_line_begin(&nl);
-
-    sxn = COOR_NULL; syn = COOR_NULL;
-    while (1)
-    {
-	/* Get next coordinate */
-	get_location(&sxn, &syn, &button);
-
-	if (button == 0) /* Tool broken by GUI */
-	    break;
-
-	if (new_line_update(&nl, sxn, syn, button))
-	    break;
-    }
-
-    ret = new_line_end(&nl);
-    driver_close();
-
-    return ret;
+    return do_tool(new_line_begin, new_line_update, new_line_end, &nl);
 }
 
 /* Continue work on the end of a line */
@@ -269,7 +250,7 @@ struct edit_line
     int reversed;
 };
 
-void edit_line_begin(void *closure)
+int edit_line_begin(void *closure)
 {
     struct edit_line *el = closure;
 
@@ -284,6 +265,8 @@ void edit_line_begin(void *closure)
 
     el->phase = 1;
     set_mode(MOUSE_POINT);
+
+    return 0;
 }
 
 void edit_line_phase2(struct edit_line *el, double x, double y)
@@ -424,34 +407,14 @@ int edit_line_end(void *closure)
     return 1;
 }
 
-int edit_line (void)
+int edit_line(void)
 {
     struct edit_line el;
-    int sxn, syn, button;
-    int ret;
-    
-    driver_open();
-    edit_line_begin(&el);
-    
-    sxn = COOR_NULL; syn = COOR_NULL;
-    while (1)
-    {
-	/* Get next coordinate */
-        get_location(&sxn, &syn, &button); 
 
-        if (button==0) /* Quit tool */
-	    break;
-
-	if (edit_line_update(&el, sxn, syn, button))
-	    break;
-    }
-
-    ret = edit_line_end(&el);
-    driver_close();
-
-    return ret;
+    return do_tool(edit_line_begin, edit_line_update, edit_line_end, &el);
 }
 
+/* Delete line */
 struct delete_line
 {
     double thresh;
@@ -462,7 +425,7 @@ struct delete_line
     int last_line;
 };
 
-void delete_line_begin(void *closure)
+int delete_line_begin(void *closure)
 {
     struct delete_line *dl = closure;
 
@@ -483,6 +446,8 @@ void delete_line_begin(void *closure)
     dl->last_line = 0;
 
     set_mode(MOUSE_POINT);
+
+    return 0;
 }
 
 int delete_line_update(void *closure, int sxn, int syn, int button)
@@ -573,33 +538,11 @@ int delete_line_end(void *closure)
     return 1;
 }
 
-/* Delete line */
-int delete_line (void)
+int delete_line(void)
 {
     struct delete_line dl;
-    int sxn, syn, button;
-    int ret;
-    
-    driver_open();
-    delete_line_begin(&dl);
 
-    sxn = COOR_NULL; syn = COOR_NULL;
-    while (1)
-    {
-	/* Get next coordinate */
-        get_location(&sxn, &syn, &button); 
-
-	if (button == 0)
-	    break;
-
-	if (delete_line_update(&dl, sxn, syn, button))
-	    break;
-    }
-
-    ret = delete_line_end(&dl);
-    driver_close();
-
-    return ret;
+    return do_tool(delete_line_begin, delete_line_update, delete_line_end, &dl);
 }
 
 /* Move line */
@@ -613,7 +556,7 @@ struct move_line
     double xo, yo;
 };
 
-void move_line_begin(void *closure)
+int move_line_begin(void *closure)
 {
     struct move_line *ml = closure;
 
@@ -632,6 +575,8 @@ void move_line_begin(void *closure)
     ml->last_line = 0;
 
     set_mode(MOUSE_POINT);
+
+    return 0;
 }
 
 int move_line_update(void *closure, int sxn, int syn, int button)
@@ -724,31 +669,10 @@ int move_line_end(void *closure)
     return 1;
 }
 
-int move_line (void)
+int move_line(void)
 {
     struct move_line ml;
-    int sxn, syn, button;
-    int ret;
-    
-    driver_open();
-    move_line_begin(&ml);
 
-    sxn = COOR_NULL; syn = COOR_NULL;
-    while (1)
-    {
-	/* Get next coordinate */
-	get_location(&sxn, &syn, &button);
-
-	if (button == 0)
-	    break;
-
-	if (move_line_update(&ml, sxn, syn, button))
-	    break;
-    }
-
-    ret = move_line_end(&ml);
-    driver_close();
-
-    return ret;
+    return do_tool(move_line_begin, move_line_update, move_line_end, &ml);
 }
 
