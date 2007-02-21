@@ -131,7 +131,7 @@ case $GIS_OPT_HELP in
 	;;
 	man)
 	g.manual r.mapcalc
-	exit 0
+	exit
 	;;
 esac
 
@@ -139,7 +139,7 @@ esac
 
 if [ "$GIS_FLAG_E" = 1 ] ; then
 	exec "$GISBASE/etc/grass-xterm-wrapper" -e r.mapcalc &
-	exit 0
+	exit
 fi
 
 
@@ -181,18 +181,27 @@ echo "(${GIS_OPT_FORMULA})" | sed \
 	-e "s/\([^a-zA-Z0-9]\)F\([^a-zA-Z0-9]\)/\1 \"$GIS_OPT_FMAP\" \2/g"
 `
 
-echo r.mapcalc "$GIS_OPT_OUTFILE" = "$command" # Show the resulting commandline
+if [ -z "$GRASS_VERBOSE" ] ; then
+   GRASS_VERBOSE=2   # default
+fi
+
+if [ "$GRASS_VERBOSE" -ge 1 ] ; then
+    # Show the resulting commandline
+    echo r.mapcalc "$GIS_OPT_OUTFILE" = "$command"
+fi
 
 r.mapcalc "$GIS_OPT_OUTFILE" = "$command" # Start the command
 
 # Check for errors
 if [ $? -ne 0 ]; then
-	echo "Error calculating $GIS_OPT_OUTFILE. Try expert mode."
-	exit 1
+    echo "Error calculating $GIS_OPT_OUTFILE. Try expert mode."
+    exit 1
 fi
 
-echo ""
-echo ""
-echo "Done"
+if [ "$GRASS_VERBOSE" -ge 2 ] ; then
+    echo "" 1>&2
+    echo "" 1>&2
+    echo "Done" 1>&2
+fi
 
 exit 0
