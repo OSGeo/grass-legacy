@@ -122,31 +122,24 @@
 
 if  [ -z "$GISBASE" ] ; then
     echo "You must be in GRASS GIS to run this program." 1>&2
- exit 1
+    exit 1
 fi
 
 if [ "$1" != "@ARGS_PARSED@" ] ; then
   exec g.parser "$0" "$@"
 fi
 
-#### setup temporary file
-TMP="`g.tempfile pid=$$`"
-if [ $? -ne 0 ] || [ -z "$TMP" ] ; then
-    echo "ERROR: unable to create temporary files" 1>&2
-    exit 1
-fi
-
 SED="sed"
 GREP="grep"
 # check if we have sed
 if [ ! -x "`which $SED`" ] ; then
-    echo "$SED is required, please install it first" 2>&1
+    echo "$SED is required, please install it first" 1>&2
     exit 1
 fi
 
 # check if we have grep
 if [ ! -x "`which $GREP`" ] ; then
-    echo "$GREP is required, please install it first" 2>&1
+    echo "$GREP is required, please install it first" 1>&2
     exit 1
 fi
 
@@ -165,17 +158,6 @@ message () {
 	fi
 }
 
-#######################################################################
-# name:     exitprocedure
-# purpose:  removes all temporary files
-#
-exitprocedure()
-{
-	message 0 "User break!"
-	rm -f ${TMP}*
-	exit 1
-}
-trap "exitprocedure" 2 3 15
 
 BC="bc"
 BCARGS="-l"
@@ -209,8 +191,11 @@ GetTiles() {
   #Calculate the number of tiles and set up the arrays
   message 1 "r.tileset -g sourceproj=\"$PROJ4_SRS\" sourcescale=\"$SRS_SCALE\" overlap=2 maxcols=${MAXCOLS} maxrows=${MAXROWS} $TILESET_OPTIONS"
   TILES=`eval "r.tileset -g sourceproj=\"$PROJ4_SRS\" sourcescale=\"$SRS_SCALE\" overlap=2 maxcols=${MAXCOLS} maxrows=${MAXROWS} $TILESET_OPTIONS"`
+  if [ $? -ne 0 ] ; then
+     echo "ERROR: r.tileset failure" 1>&2
+     exit 1
+  fi
 
-  
   NUMBER_OF_TILES=0 #The number of the tiles 
   #Calculate the number of tiles
   for i in $TILES ; do
@@ -324,6 +309,4 @@ esac
 
 GetTiles
 
-# Clean up:
-rm -f ${TMP}*
-
+exit
