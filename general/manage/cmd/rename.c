@@ -15,7 +15,7 @@ main (int argc, char *argv[])
     char *old, *new;
     int nrmaps;
     char *mapset, *location_path, **rmaps;
-    int result = 0;
+    int result = EXIT_SUCCESS;
 
     init (argv[0]);
 
@@ -41,22 +41,8 @@ main (int argc, char *argv[])
     }
 
     if (G_parser(argc, argv))
-	exit(1);
-
-/* check for even number of names for each element */
-    for (n = 0; n < nlist; n++)
-    {
-	i = 0;
-	if (parm[n]->answers)
-	    while (parm[n]->answers[i])
-		i++;
-	if (i%2) /* must be even number of names */
-	{
-	    G_usage();
-	    G_fatal_error(_("must be even number of names"));
-	}
-    }
-
+	exit(EXIT_FAILURE);
+    
     location_path = G__location_path();
     mapset = G_mapset();
 
@@ -71,22 +57,22 @@ main (int argc, char *argv[])
 	    new = parm[n]->answers[i++];
 	    if(!find (n, old, mapset))
 	    {
-		fprintf (stderr, _("ERROR: <%s> not found\n"), old);
+		G_warning (_("<%s> not found"), old);
 		continue;
 	    }
 	    if (find (n, new, "") && !(module->overwrite))
 	    {
-		fprintf (stderr, _("ERROR: <%s> already exists in mapset <%s>\n"), new, find (n, new, ""));
+		G_warning (_("<%s> already exists in mapset <%s>"), new, find (n, new, ""));
 		continue;
 	    }
 	    if (G_legal_filename (new) < 0)
 	    {
-		fprintf (stderr, _("ERROR: <%s> illegal name\n"), new);
+		G_warning (_("<%s> illegal name"), new);
 		continue;
 	    }
 	    if (strcmp (old, new) == 0)
 	    {
-		fprintf (stderr, _("%s=%s,%s: files are the same, no rename required\n"),
+		G_warning (_("%s=%s,%s: files are the same, no rename required"),
 		    parm[n]->key,old,new);
 		continue;
 	    }
@@ -97,12 +83,12 @@ main (int argc, char *argv[])
     		char buf1[256], buf2[256], buf3[256], *str;
 		FILE *fp;
 
-		fprintf(stderr, "Renaming in reclassed map%s...\n",
-				(nrmaps > 1 ? "s" : ""));
+		G_message(_("Renaming in reclassed map%s"),
+			  (nrmaps > 1 ? "s" : ""));
 
 		for(; *rmaps; rmaps++)
 		{
-                    fprintf(stderr, " %s\n", *rmaps);
+                    G_message (" %s", *rmaps);
 		    sprintf(buf3, "%s", *rmaps);
 		    if((str = strchr(buf3, '@')))
 		    {
@@ -143,7 +129,7 @@ main (int argc, char *argv[])
             }
             if ( do_rename (n, old, new) == 1 )
             {
-                result = 1;
+                result = EXIT_FAILURE;
             }
 	}
     }
