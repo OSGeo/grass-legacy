@@ -253,7 +253,8 @@ if [ $NUM_TILES -eq 1 ] ; then
 	for SUFFIX in $CHANNEL_SUFFIXES ; do
 		eval "$SUFFIX"
 		#Rename tile 0 to be the output
-		g.rename rast=${GIS_OPT_OUTPUT}_tile_0${sfx},${GIS_OPT_OUTPUT}${sfx} --quiet
+		GRASS_VERBOSE=1 \
+		  g.rename rast=${GIS_OPT_OUTPUT}_tile_0${sfx},${GIS_OPT_OUTPUT}${sfx}
 	done
 else
 	# Patch together each channel:
