@@ -443,7 +443,7 @@ static int update_list(int count)
       break;
     case 6:
 	/* the same as case 5 */
-        G_message(_("crowded cell %xH (%d,%d) -continuing"), count, row, col);
+        G_message(_("Crowded cell %xH (%d,%d) -continuing"), count, row, col);
 
         if (ml)                         /* end horz. and vert lines */
           h_ptr = end_line(h_ptr,1);
@@ -469,7 +469,7 @@ static int update_list(int count)
           v_list[col - 1].right = start_line(1);
       break;
     default:
-      G_message(_("update_list:  crowded cell %xH (%d,%d)"), count, row, col);
+      G_message(_("Crowded cell %xH (%d,%d)"), count, row, col);
       G_fatal_error(_("Raster map is not thinned properly.\nPlease run r.thin."));
   }					/* switch count */
 

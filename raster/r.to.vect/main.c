@@ -31,13 +31,7 @@ int main (int argc, char *argv[])
     module->keywords = _("raster");
     module->description = _("Converts a raster map into a vector map layer.");
 
-    in_opt = G_define_option();
-    in_opt->key             = "input";
-    in_opt->type            = TYPE_STRING;
-    in_opt->required        = YES;
-    in_opt->multiple        = NO;
-    in_opt->gisprompt       = "old,cell,raster";
-    in_opt->description     = _("raster input file");
+    in_opt = G_define_standard_option(G_OPT_R_INPUT);
 
     out_opt = G_define_standard_option(G_OPT_V_OUTPUT);
 
@@ -93,10 +87,10 @@ int main (int argc, char *argv[])
 
     /* Open files */
     if ( (mapset = G_find_cell(in_opt->answer,"")) == NULL )
-	G_fatal_error (_("Raster '%s' not found"), in_opt->answer);
+	G_fatal_error (_("Raster <%s> not found"), in_opt->answer);
 
     if ( (input_fd = G_open_cell_old(in_opt->answer,mapset)) < 0 )
-	G_fatal_error (_("Could not open raster '%s'"), in_opt->answer);
+	G_fatal_error (_("Could not open raster <%s>"), in_opt->answer);
 
     data_type = G_get_raster_map_type(input_fd);
     data_size = G_raster_size(data_type);
@@ -177,7 +171,7 @@ int main (int argc, char *argv[])
 	    G_warning (_("Cannot create index"));
 
 	if (db_grant_on_table (driver, Fi->table, DB_PRIV_SELECT, DB_GROUP|DB_PUBLIC ) != DB_OK )
-	    G_fatal_error (_("Cannot grant privileges on table %s"), Fi->table );
+	    G_fatal_error (_("Cannot grant privileges on table <%s>"), Fi->table );
 
 	db_begin_transaction ( driver );
 

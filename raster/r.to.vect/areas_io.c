@@ -364,7 +364,7 @@ int write_area(struct area_table *a_list,	/* list of areas */
 		G_debug(3, db_get_string(&sql));
 
 		if (db_execute_immediate(driver, &sql) != DB_OK)
-		    G_fatal_error("Cannot insert new row: %s", db_get_string(&sql));
+		    G_fatal_error(_("Cannot insert new row: %s"), db_get_string(&sql));
 	    }
 	}
     }
