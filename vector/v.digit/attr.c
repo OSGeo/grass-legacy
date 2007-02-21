@@ -156,336 +156,425 @@ int new_record ( int field, int cat )
 
 
 /* Display categories */
-int display_cats (void)
+
+struct display_cats
 {
-    int j, sxn, syn, line, type;
-    int button;
-    double x, y, thresh;
+    double thresh;
     struct line_pnts *Points;
     struct line_cats *Cats;
-    char buf[1000];
-    dbString cmd; 
-    
+    int last_cat_line;
+};
+
+void display_cats_begin(void *closure)
+{
+    struct display_cats *dc = closure;
+
     G_debug (2, "display_cats()");
 
-    Points = Vect_new_line_struct ();
-    Cats = Vect_new_cats_struct ();
-    db_init_string (&cmd);
+    dc->Points = Vect_new_line_struct ();
+    dc->Cats = Vect_new_cats_struct ();
     
     i_prompt ( "Display categories:"); 
     i_prompt_buttons ( "Select line", "", "Quit tool"); 
     
-    driver_open();
-    
     /* TODO: use some better threshold */
-    thresh = fabs ( D_d_to_u_col ( 10 ) - D_d_to_u_col ( 0 ) ) ; 
-    G_debug (2, "thresh = %f", thresh );
+    dc->thresh = fabs ( D_d_to_u_col ( 10 ) - D_d_to_u_col ( 0 ) ) ; 
+    G_debug (2, "thresh = %f", dc->thresh );
     
     F_clear ();
-    line = 0;
-    last_cat_line = 0;
-    sxn = COOR_NULL; syn = COOR_NULL;
-    while ( 1 ) {
-	/* Get next coordinate */
-        R_set_update_function ( update );
-        R_get_location_with_pointer ( &sxn, &syn, &button); 
+    dc->last_cat_line = 0;
+
+    set_mode(MOUSE_POINT);
+}
+
+int display_cats_update(void *closure, int sxn, int syn, int button)
+{
+    struct display_cats *dc = closure;
+    double x =  D_d_to_u_col ( sxn );
+    double y =  D_d_to_u_row ( syn );
+
+    G_debug (2, "button = %d x = %d = %f y = %d = %f", button, sxn, x, syn, y);
+
+    /* Display last highlighted in normal color */
+    G_debug (2, "  last_cat_line = %d", dc->last_cat_line);
+    if ( dc->last_cat_line > 0 )
+	display_line ( dc->last_cat_line, SYMB_DEFAULT, 1);
+
+    if (button == 3) /* Quit tool */
+	return 1;
+
+    if (button == 1) /* Confirm / select */
+    {
+	int j, line;
+	F_clear ();
+	/* Find nearest point or line (points first!) */
+	line = Vect_find_line (&Map, x, y, 0, GV_POINTS, dc->thresh, 0, 0);
+	G_debug (2, "point found = %d", line );
+	if ( line == 0 )
+	    line = Vect_find_line (&Map, x, y, 0, GV_LINE|GV_BOUNDARY, dc->thresh, 0, 0);
+	G_debug (2, "line found = %d", line );
 	    
-	x =  D_d_to_u_col ( sxn );
-	y =  D_d_to_u_row ( syn );
-	G_debug (2, "button = %d x = %d = %f y = %d = %f", button, sxn, x, syn, y);
+	/* Display new selected line if any */
+	if ( line > 0 )
+	{
+	    int type;
+	    display_line ( line, SYMB_HIGHLIGHT, 1);
+	    type = Vect_read_line(&Map, dc->Points, dc->Cats, line);
 
-	/* Display last highlighted in normal color */
-        G_debug (2, "  last_cat_line = %d", last_cat_line);
-	if ( last_cat_line > 0 ) {
-	    display_line ( last_cat_line, SYMB_DEFAULT, 1);
-	}
-
-	if ( button == 0 || button == 3 ) break; /* Quit tool */
-
-	if ( button == 1 ) { /* Confirm / select */
-	    F_clear ();
-	    /* Find nearest point or line (points first!) */
-	    line = Vect_find_line (&Map, x, y, 0, GV_POINTS, thresh, 0, 0);
-	    G_debug (2, "point found = %d", line );
-	    if ( line == 0 ) line = Vect_find_line (&Map, x, y, 0, GV_LINE|GV_BOUNDARY, thresh, 0, 0);
-	    G_debug (2, "line found = %d", line );
-	    
-	    /* Display new selected line if any */
-	    if ( line > 0 ) {
-		display_line ( line, SYMB_HIGHLIGHT, 1);
-		type = Vect_read_line(&Map, Points, Cats, line);
-
-		Tcl_Eval ( Toolbox, "mk_cats" ); /* mk_cats checks if already opened */
-	        Tcl_Eval ( Toolbox, "clear_cats" );	
+	    Tcl_Eval ( Toolbox, "mk_cats" ); /* mk_cats checks if already opened */
+	    Tcl_Eval ( Toolbox, "clear_cats" );	
 		    
-		for (j = 0; j < Cats->n_cats; j++) {
-		    G_debug(3, "field = %d category = %d", Cats->field[j], Cats->cat[j]);
+	    for (j = 0; j < dc->Cats->n_cats; j++)
+	    {
+		char buf[1000];
+		G_debug(3, "field = %d category = %d", dc->Cats->field[j], dc->Cats->cat[j]);
 
-		    sprintf ( buf, "add_cat %d %d %d", line, Cats->field[j], Cats->cat[j]);
-		    Tcl_Eval ( Toolbox, buf );
+		sprintf ( buf, "add_cat %d %d %d", line, dc->Cats->field[j], dc->Cats->cat[j]);
+		Tcl_Eval ( Toolbox, buf );
 
-		}
 	    }
-	    last_cat_line = line;
 	}
+
+	dc->last_cat_line = line;
     }
+
+    return 0;
+}
+
+int display_cats_end(void *closure)
+{
     Tcl_Eval ( Toolbox, "destroy_cats" );
-		
-    driver_close();
     
     i_prompt (""); 
     i_prompt_buttons ( "", "", ""); 
     i_coor ( COOR_NULL, COOR_NULL); 
     
     G_debug (3, "display_cats(): End");
-
     return 1;
 }
 
-/* Copy categories from one feature to another */
-int copy_cats (void)
+int display_cats(void)
 {
-    int line, src_line, dest_line, new_line, type, i;
+    struct display_cats dc;
     int sxn, syn, button;
-    double x,y,thresh;
-    struct line_pnts* Points;
-    struct line_cats *Src_Cats,*Dest_Cats;
+    int ret;
+
+    driver_open();
+    display_cats_begin(&dc);
+
+    sxn = COOR_NULL; syn = COOR_NULL;
+    while (1)
+    {
+	/* Get next coordinate */
+        get_location(&sxn, &syn, &button); 
+
+	if (button == 0)
+	    break;
+
+	if (display_cats_update(&dc, sxn, syn, button))
+	    break;
+    }
+
+    ret = display_cats_end(&dc);
+    driver_close();
+
+    return ret;
+}
+
+/* Copy categories from one feature to another */
+struct copy_cats
+{
+    int src_line, dest_line;
+    double thresh;
+    struct line_pnts *Points;
+    struct line_cats *Src_Cats, *Dest_Cats;
+};
+
+void copy_cats_begin(void *closure)
+{
+    struct copy_cats *cc = closure;
     
     G_debug (2, "copy_cats()");
 
-    Points = Vect_new_line_struct ();
-    Src_Cats = Vect_new_cats_struct ();
-    Dest_Cats = Vect_new_cats_struct ();
+    cc->Points = Vect_new_line_struct ();
+    cc->Src_Cats = Vect_new_cats_struct ();
+    cc->Dest_Cats = Vect_new_cats_struct ();
     
     i_prompt ( "Copy attributes:"); 
     i_prompt_buttons ( "Select source object", "", "Quit tool"); 
     
-    driver_open();
-    
     /* TODO: use some better threshold */
-    thresh = fabs ( D_d_to_u_col ( 10 ) - D_d_to_u_col ( 0 ) ) ; 
-    G_debug (2, "thresh = %f", thresh );
+    cc->thresh = fabs ( D_d_to_u_col ( 10 ) - D_d_to_u_col ( 0 ) ) ; 
+    G_debug (2, "thresh = %f", cc->thresh );
     
-    line = 0;
-    src_line = 0;
-    dest_line = 0;
-    sxn = COOR_NULL; syn = COOR_NULL;
-    while ( 1 ) {
-	/* Get next coordinate */
-        R_set_update_function ( update );
-        R_get_location_with_pointer ( &sxn, &syn, &button); 
+    cc->src_line = 0;
+    cc->dest_line = 0;
+
+    set_mode(MOUSE_POINT);
+}
+
+int copy_cats_update(void *closure, int sxn, int syn, int button)
+{
+    struct copy_cats *cc = closure;
+    double x =  D_d_to_u_col ( sxn );
+    double y =  D_d_to_u_row ( syn );
+    G_debug (3, "button = %d x = %d = %f y = %d = %f", button, sxn, x, syn, y);
+
+    if (button==3) /* Quit tool */
+	return 1;
         
-        if (button==0 || button==3) break; /* Quit tool */
-        
-	x =  D_d_to_u_col ( sxn );
-	y =  D_d_to_u_row ( syn );
-	G_debug (3, "button = %d x = %d = %f y = %d = %f", button, sxn, x, syn, y);
-        
-        if (src_line>0)
-            display_line (src_line, SYMB_DEFAULT, 1);
-        if (dest_line>0)
-            display_line (dest_line, SYMB_DEFAULT, 1);
-        if (button==1) {
-            line = Vect_find_line (&Map, x, y, 0, GV_LINES|GV_POINTS, thresh, 0, 0);
-            G_debug (3, "before: src_line=%d dest_line=%d line=%d",src_line,dest_line,line);
-            if (dest_line>0) {
-                /* We have a source- and a destination-object
-                 * => copy categories */
-                type = Vect_read_line (&Map, Points, Dest_Cats, dest_line);
-                new_line = Vect_rewrite_line (&Map, dest_line, type, Points, Src_Cats);
-		if (line==dest_line)
-			line = new_line;
-		dest_line = new_line;
+    if (cc->src_line>0)
+	display_line (cc->src_line, SYMB_DEFAULT, 1);
+    if (cc->dest_line>0)
+	display_line (cc->dest_line, SYMB_DEFAULT, 1);
+    if (button==1) {
+	int line = Vect_find_line (&Map, x, y, 0, GV_LINES|GV_POINTS, cc->thresh, 0, 0);
+	G_debug (3, "before: src_line=%d dest_line=%d line=%d",cc->src_line,cc->dest_line,line);
+	if (cc->dest_line>0) {
+	    int new_line, type, i;
+	    /* We have a source- and a destination-object
+	     * => copy categories */
+	    type = Vect_read_line (&Map, cc->Points, cc->Dest_Cats, cc->dest_line);
+	    new_line = Vect_rewrite_line (&Map, cc->dest_line, type, cc->Points, cc->Src_Cats);
+	    if (line==cc->dest_line)
+		line = new_line;
+	    cc->dest_line = new_line;
                 
-                for (i=0; i<Dest_Cats->n_cats; i++) {
-                    check_record (Dest_Cats->field[i], Dest_Cats->cat[i]);
-                }
+	    for (i=0; i<cc->Dest_Cats->n_cats; i++) {
+		check_record (cc->Dest_Cats->field[i], cc->Dest_Cats->cat[i]);
+	    }
                 
-                updated_lines_and_nodes_erase_refresh_display ();
+	    updated_lines_and_nodes_erase_refresh_display ();
                 
-                /* move the selections on */
-                src_line = dest_line;
-                dest_line = line;
-            } else if (src_line>0) {
-                /* We have a source-object and possibly a destination object
-                 * was selected */
-                if (line<=0)
-                    src_line = 0;
-                else if (line!=src_line)
-                    dest_line = line;
-            } else {
-                /* We have no object selected and possible a source-object
-                 * was selected => read its categories into Src_Cats */
-                src_line = line;
-                if (src_line>0)
-                    Vect_read_line (&Map, Points, Src_Cats, src_line);
-            }
-            G_debug (3, "after: src_line=%d dest_line=%d line=%d",src_line,dest_line,line);
-        } else if (button==2) {
-            /* We need to deselect the last line selected */
-            if (dest_line>0) {
-                display_line (dest_line, SYMB_DEFAULT, 1);
-                dest_line = 0;
-            } else if (src_line>0) {
-                display_line (src_line, SYMB_DEFAULT, 1);
-                src_line = 0;
-            }
-        }
-                
-        /* Display the selected lines accordingly and set the button prompts */
-        if (dest_line>0) {
-            display_line (dest_line, SYMB_HIGHLIGHT, 1);
-            display_line (src_line, SYMB_HIGHLIGHT, 1);
-            i_prompt("Select the target object");
-            i_prompt_buttons("Conform and select next","Deselect Target","Quit tool");
-        } else if (src_line>0) {
-            display_line (src_line, SYMB_HIGHLIGHT, 1);
-            i_prompt("Select the target object");
-            i_prompt_buttons("Select","Deselect Source","Quit tool");
-        } else {
-            i_prompt ( "Copy attributes:"); 
-            i_prompt_buttons ( "Select source object", "", "Quit tool"); 
-        }
+	    /* move the selections on */
+	    cc->src_line = cc->dest_line;
+	    cc->dest_line = line;
+	} else if (cc->src_line>0) {
+	    /* We have a source-object and possibly a destination object
+	     * was selected */
+	    if (line<=0)
+		cc->src_line = 0;
+	    else if (line!=cc->src_line)
+		cc->dest_line = line;
+	} else {
+	    /* We have no object selected and possible a source-object
+	     * was selected => read its categories into Src_Cats */
+	    cc->src_line = line;
+	    if (cc->src_line>0)
+		Vect_read_line (&Map, cc->Points, cc->Src_Cats, cc->src_line);
+	}
+	G_debug (3, "after: src_line=%d dest_line=%d line=%d",cc->src_line,cc->dest_line,line);
+    } else if (button==2) {
+	/* We need to deselect the last line selected */
+	if (cc->dest_line>0) {
+	    display_line (cc->dest_line, SYMB_DEFAULT, 1);
+	    cc->dest_line = 0;
+	} else if (cc->src_line>0) {
+	    display_line (cc->src_line, SYMB_DEFAULT, 1);
+	    cc->src_line = 0;
+	}
     }
-    if (dest_line>0)
-        display_line (dest_line, SYMB_DEFAULT, 1);
-    if (src_line>0)
-        display_line (src_line, SYMB_DEFAULT, 1);
-    
-    driver_close();
+                
+    /* Display the selected lines accordingly and set the button prompts */
+    if (cc->dest_line>0) {
+	display_line (cc->dest_line, SYMB_HIGHLIGHT, 1);
+	display_line (cc->src_line, SYMB_HIGHLIGHT, 1);
+	i_prompt("Select the target object");
+	i_prompt_buttons("Conform and select next","Deselect Target","Quit tool");
+    } else if (cc->src_line>0) {
+	display_line (cc->src_line, SYMB_HIGHLIGHT, 1);
+	i_prompt("Select the target object");
+	i_prompt_buttons("Select","Deselect Source","Quit tool");
+    } else {
+	i_prompt ( "Copy attributes:"); 
+	i_prompt_buttons ( "Select source object", "", "Quit tool"); 
+    }
+
+    return 0;
+}
+
+int copy_cats_end(void *closure)
+{
+    struct copy_cats *cc = closure;
+
+    if (cc->dest_line>0)
+        display_line (cc->dest_line, SYMB_DEFAULT, 1);
+    if (cc->src_line>0)
+        display_line (cc->src_line, SYMB_DEFAULT, 1);
     
     i_prompt (""); 
     i_prompt_buttons ( "", "", ""); 
     i_coor ( COOR_NULL, COOR_NULL);
     
-    Vect_destroy_line_struct (Points);
-    Vect_destroy_cats_struct (Src_Cats);
-    Vect_destroy_cats_struct (Dest_Cats);
+    Vect_destroy_line_struct (cc->Points);
+    Vect_destroy_cats_struct (cc->Src_Cats);
+    Vect_destroy_cats_struct (cc->Dest_Cats);
     
     G_debug (3, "copy_cats(): End");
     
     return 1;
 }
 
-/* Display attributes */
-int display_attributes (void)
+int copy_cats(void)
 {
-    int j, sxn, syn, line, last_line, type;
-    int button;
-    static int first_form = 1;
-    double x, y, thresh;
+    struct copy_cats cc;
+    int sxn, syn, button;
+    int ret;
+    
+    driver_open();
+    copy_cats_begin(&cc);
+
+    sxn = COOR_NULL; syn = COOR_NULL;
+    while (1)
+    {
+	/* Get next coordinate */
+        get_location(&sxn, &syn, &button); 
+        
+        if (button==0)
+	    break;
+
+	if (copy_cats_update(&cc, sxn, syn, button))
+	    break;
+    }
+
+    ret = copy_cats_end(&cc);
+    driver_close();
+
+    return ret;
+}
+
+/* Display attributes */
+
+struct display_attributes
+{
+    double thresh;
     struct line_pnts *Points;
     struct line_cats *Cats;
-    char buf[1000], title[500];
-    char *form;
+    int last_line;
     dbString html; 
-    struct field_info *Fi;
+};
+
+void display_attributes_begin(void *closure)
+{
+    struct display_attributes *da = closure;
     
     G_debug (2, "display_attributes()");
 
-    Points = Vect_new_line_struct ();
-    Cats = Vect_new_cats_struct ();
-    db_init_string (&html);
+    da->Points = Vect_new_line_struct ();
+    da->Cats = Vect_new_cats_struct ();
     
     i_prompt ( "Display attributes:"); 
     i_prompt_buttons ( "Select line", "", "Quit tool"); 
     
-    driver_open();
-    
     /* TODO: use some better threshold */
-    thresh = fabs ( D_d_to_u_col ( 10 ) - D_d_to_u_col ( 0 ) ) ; 
-    G_debug (2, "thresh = %f", thresh );
+    da->thresh = fabs ( D_d_to_u_col ( 10 ) - D_d_to_u_col ( 0 ) ) ; 
+    G_debug (2, "thresh = %f", da->thresh );
     
     F_clear ();
-    line = 0;
-    last_line = 0;
-    sxn = COOR_NULL; syn = COOR_NULL;
-    while ( 1 ) {
-	/* Get next coordinate */
-        R_set_update_function ( update );
-        R_get_location_with_pointer ( &sxn, &syn, &button); 
+    da->last_line = 0;
+
+    db_init_string(&da->html);
+
+    set_mode(MOUSE_POINT);
+}
+
+int display_attributes_update(void *closure, int sxn, int syn, int button)
+{
+    static int first_form = 1;
+    struct display_attributes *da = closure;
+    double x =  D_d_to_u_col ( sxn );
+    double y =  D_d_to_u_row ( syn );
+    G_debug (3, "button = %d x = %d = %f y = %d = %f", button, sxn, x, syn, y);
+
+    /* Display last highlighted in normal color */
+    if ( da->last_line > 0 ) {
+	display_line ( da->last_line, SYMB_DEFAULT, 1);
+    }
+
+    if (button == 3) /* Quit tool */
+	return 1;
+
+    if ( button == 1 ) { /* Confirm / select */
+	int line;
+	F_clear ();
+	/* Find nearest point or line (points first!) */
+	line = Vect_find_line (&Map, x, y, 0, GV_POINTS, da->thresh, 0, 0);
+	G_debug (2, "point found = %d", line );
+	if ( line == 0 ) line = Vect_find_line (&Map, x, y, 0, GV_LINE|GV_BOUNDARY, da->thresh, 0, 0);
+	G_debug (2, "line found = %d", line );
 	    
-	x =  D_d_to_u_col ( sxn );
-	y =  D_d_to_u_row ( syn );
-	G_debug (3, "button = %d x = %d = %f y = %d = %f", button, sxn, x, syn, y);
+	/* Display new selected line if any */
+	if ( line > 0 ) {
+	    char buf[1000], title[500];
+	    int type;
+	    display_line ( line, SYMB_HIGHLIGHT, 1);
+	    type = Vect_read_line(&Map, da->Points, da->Cats, line);
 
-	/* Display last highlighted in normal color */
-	if ( last_line > 0 ) {
-	    display_line ( last_line, SYMB_DEFAULT, 1);
-	}
+	    /* Note: F_open() must be run first time with closed monitor, otherwise next
+	     *         *        attempt to open driver hangs until form child process is killed */
+	    if ( first_form ) { 
+		driver_close();
+		F_open ( "", "" );
+		F_clear ();
+		driver_open(); 
+		first_form = 0; 
+	    }
 
-	if ( button == 0 || button == 3 ) break; /* Quit tool */
+	    if ( da->Cats->n_cats > 0 ) {
+		int j;
+		for (j = 0; j < da->Cats->n_cats; j++) {
+		    struct field_info *Fi;
+		    char *form;
 
-	if ( button == 1 ) { /* Confirm / select */
-	    F_clear ();
-	    /* Find nearest point or line (points first!) */
-	    line = Vect_find_line (&Map, x, y, 0, GV_POINTS, thresh, 0, 0);
-	    G_debug (2, "point found = %d", line );
-	    if ( line == 0 ) line = Vect_find_line (&Map, x, y, 0, GV_LINE|GV_BOUNDARY, thresh, 0, 0);
-	    G_debug (2, "line found = %d", line );
-	    
-	    /* Display new selected line if any */
-	    if ( line > 0 ) {
-		display_line ( line, SYMB_HIGHLIGHT, 1);
-		type = Vect_read_line(&Map, Points, Cats, line);
+		    G_debug(3, "field = %d category = %d", da->Cats->field[j], da->Cats->cat[j]);
 
-		/* Note: F_open() must be run first time with closed monitor, otherwise next
-		 *         *        attempt to open driver hangs until form child process is killed */
-		if ( first_form ) { 
-		     driver_close();
-		     F_open ( "", "" );
-	             F_clear ();
-		     driver_open(); 
-		     first_form = 0; 
-		}
+		    sprintf (title, "Layer %d", da->Cats->field[j] );
+		    db_set_string (&da->html, ""); 
+		    db_append_string (&da->html, "<HTML><HEAD><TITLE>Attributes</TITLE><BODY>"); 
 
-		if ( Cats->n_cats > 0 ) {
-		    for (j = 0; j < Cats->n_cats; j++) {
-			G_debug(3, "field = %d category = %d", Cats->field[j], Cats->cat[j]);
+		    sprintf(buf, "layer: %d<BR>category: %d<BR>", da->Cats->field[j], da->Cats->cat[j] );
+		    db_append_string (&da->html, buf);
 
-			sprintf (title, "Layer %d", Cats->field[j] );
-			db_set_string (&html, ""); 
-			db_append_string (&html, "<HTML><HEAD><TITLE>Attributes</TITLE><BODY>"); 
-
-			sprintf(buf, "layer: %d<BR>category: %d<BR>", Cats->field[j], Cats->cat[j] );
-			db_append_string (&html, buf);
-
-			Fi = Vect_get_field( &Map, Cats->field[j]);
-			if (Fi == NULL) {
-			    db_append_string (&html, "Database connection not defined<BR>" );
-			} else {
-			    sprintf(buf, "driver: %s<BR>database: %s<BR>table: %s<BR>key column: %s<BR>",
-					 Fi->driver, Fi->database, Fi->table, Fi->key);
-			    db_append_string (&html, buf);
+		    Fi = Vect_get_field( &Map, da->Cats->field[j]);
+		    if (Fi == NULL) {
+			db_append_string (&da->html, "Database connection not defined<BR>" );
+		    } else {
+			sprintf(buf, "driver: %s<BR>database: %s<BR>table: %s<BR>key column: %s<BR>",
+				Fi->driver, Fi->database, Fi->table, Fi->key);
+			db_append_string (&da->html, buf);
 			    
-			    F_generate ( Fi->driver, Fi->database, Fi->table, Fi->key, Cats->cat[j], 
+			F_generate ( Fi->driver, Fi->database, Fi->table, Fi->key, da->Cats->cat[j], 
 				     NULL, NULL, F_EDIT, F_HTML, &form);
 			    
-			    db_append_string (&html, form); 
-			    G_free (form);
-			    G_free(Fi);
-			}
-			db_append_string (&html, "</BODY></HTML>"); 
-			G_debug ( 3, db_get_string (&html) ); 
-			F_open ( title, db_get_string(&html) );
+			db_append_string (&da->html, form); 
+			G_free (form);
+			G_free(Fi);
 		    }
-		} else {
-		    sprintf (title, "Line %d", line );
-		    db_set_string (&html, ""); 
-		    db_append_string (&html, "<HTML><HEAD><TITLE>Attributes</TITLE><BODY>"); 
-		    db_append_string (&html, "No categories"); 
-		    db_append_string (&html, "</BODY></HTML>"); 
-		    G_debug ( 3, db_get_string (&html) ); 
-		    F_open ( title, db_get_string(&html) );
+		    db_append_string (&da->html, "</BODY></HTML>"); 
+		    G_debug ( 3, db_get_string (&da->html) ); 
+		    F_open ( title, db_get_string(&da->html) );
 		}
+	    } else {
+		sprintf (title, "Line %d", line );
+		db_init_string(&da->html);
+		db_set_string (&da->html, ""); 
+		db_append_string (&da->html, "<HTML><HEAD><TITLE>Attributes</TITLE><BODY>"); 
+		db_append_string (&da->html, "No categories"); 
+		db_append_string (&da->html, "</BODY></HTML>"); 
+		G_debug ( 3, db_get_string (&da->html) ); 
+		F_open ( title, db_get_string(&da->html) );
 	    }
-	    last_line = line;
 	}
+	da->last_line = line;
     }
+
+    return 0;
+}
+
+int display_attributes_end(void *closure)
+{
     F_clear ();
     F_close ();
-
-    driver_close();
     
     i_prompt (""); 
     i_prompt_buttons ( "", "", ""); 
@@ -494,6 +583,34 @@ int display_attributes (void)
     G_debug (3, "display_attributes(): End");
 
     return 1;
+}
+
+int display_attributes(void)
+{
+    struct display_attributes da;
+    int sxn, syn, button;
+    int ret;
+    
+    driver_open();
+    display_attributes_begin(&da);
+
+    sxn = COOR_NULL; syn = COOR_NULL;
+    while (1)
+    {
+	/* Get next coordinate */
+        get_location(&sxn, &syn, &button); 
+        
+        if (button==0)
+	    break;
+
+	if (display_attributes_update(&da, sxn, syn, button))
+	    break;
+    }
+
+    ret = display_attributes_end(&da);
+    driver_close();
+
+    return ret;
 }
 
 /* 

@@ -185,3 +185,7 @@ extern int nbgcmd;
 extern int abgcmd; 
 #endif
 
+#define MOUSE_POINT	1
+#define MOUSE_LINE	2
+#define MOUSE_BOX	3
+

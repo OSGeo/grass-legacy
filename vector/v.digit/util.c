@@ -2,6 +2,7 @@
 #include <stdio.h>
 #include <string.h>
 #include <grass/gis.h>
+#include <grass/raster.h>
 #include "global.h"
 #include "proto.h"
 
@@ -31,5 +32,36 @@ get_line_type_name ( int type)
     }
     
     return name;
+}
+
+static int sxo, syo, mode;
+
+void set_location(int x, int y)
+{
+    sxo = x;
+    syo = y;
+}
+
+void set_mode(int m)
+{
+    mode = m;
+}
+
+void get_location(int *sxn, int *syn, int *button)
+{
+    R_set_update_function (update);
+
+    switch (mode)
+    {
+    case MOUSE_POINT:
+	R_get_location_with_pointer (sxn, syn, button);
+	break;
+    case MOUSE_LINE:
+	R_get_location_with_line (sxo, syo, sxn, syn, button); 
+	break;
+    case MOUSE_BOX:
+	R_get_location_with_box (sxo, syo, sxn, syn, button); 
+	break;
+    }
 }
 
