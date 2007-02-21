@@ -109,182 +109,198 @@ int snap ( double *x, double *y )
     return node;
 }
 
-/* Digitize new line */
-int new_line ( int type )
+struct new_line
 {
-    int i, sxo = 0, syo = 0, sxn, syn;
-    int button, first, line, node1, node2;
-    double x, y;
-    char buf[1000];
+    int type;
     struct line_pnts *Points;
     struct line_cats *Cats;
-    
-    G_debug (2, "new_line(): type = %d", type);
+    int first;
+};
 
-    Points = Vect_new_line_struct ();
-    Cats = Vect_new_cats_struct ();
+void new_line_begin(void *closure)
+{
+    struct new_line *nl = closure;
+    char buf[1000];
+
+    G_debug (2, "new_line(): type = %d", nl->type);
+
+    nl->Points = Vect_new_line_struct ();
+    nl->Cats = Vect_new_cats_struct ();
     
-    sprintf ( buf, "Digitize new %s:", get_line_type_name (type) );
+    sprintf ( buf, "Digitize new %s:", get_line_type_name(nl->type) );
     i_prompt ( buf ); 
     i_prompt_buttons ( "New point", "", "Quit tool"); 
     
     i_new_line_options ( 1 );
     
-    driver_open();
-    
-    first = 1; 
-    sxn = COOR_NULL; syn = COOR_NULL;
-    while ( 1 ) {
-	/* Get next coordinate */
-        R_set_update_function ( update );
-	if ( first ) {
-	    R_get_location_with_pointer ( &sxn, &syn, &button); 
-            i_prompt_buttons ( "New point", "Undo last point", "Close line"); 
-        } else R_get_location_with_line (sxo, syo, &sxn, &syn, &button); 
-	
-	x =  D_d_to_u_col ( sxn );
-	y =  D_d_to_u_row ( syn );
-	G_debug (3, "button = %d x = %d = %f y = %d = %f", button, sxn, x, syn, y);
+    nl->first = 1; 
 
-	if ( button == 0 ) break; /* Tool broken by GUI */
+    set_mode(MOUSE_POINT);
+}
 
-	if ( first &&  button == 3 ) { /* Quit tool ( points & lines ), first is always for points */
-	    Tool_next = TOOL_NOTHING; 
-	    break;
-	}
+int new_line_update(void *closure, int sxn, int syn, int button)
+{
+    struct new_line *nl = closure;
+    double x =  D_d_to_u_col ( sxn );
+    double y =  D_d_to_u_row ( syn );
 
-	if ( type & GV_POINTS ) {
-	    /* We can get here with button = 1 or 2 -> the same write point */
+    G_debug (3, "button = %d x = %d = %f y = %d = %f", button, sxn, x, syn, y);
+
+    if ( nl->first &&  button == 3 ) { /* Quit tool ( points & lines ), first is always for points */
+	Tool_next = TOOL_NOTHING; 
+	return 1;
+    }
+
+    if ( nl->type & GV_POINTS ) {
+	/* We can get here with button = 1 or 2 -> the same write point */
+	snap ( &x, &y );
+	Vect_append_point ( nl->Points, x, y, 0 );	
+
+	write_line ( &Map, nl->type, nl->Points );
+	updated_lines_and_nodes_erase_refresh_display();
+	return 1;
+    } else { /* GV_LINES */
+	/* Button may be 1,2,3 */
+	if ( button == 1 ) { /* New point */
 	    snap ( &x, &y );
-            Vect_append_point ( Points, x, y, 0 );	
-
-	    write_line ( &Map, type, Points );
-	    updated_lines_and_nodes_erase_refresh_display();
-	    break;
-	} else { /* GV_LINES */
-	    /* Button may be 1,2,3 */
-	    if ( button == 1 ) { /* New point */
-		snap ( &x, &y );
-                Vect_append_point ( Points, x, y, 0 );	
+	    Vect_append_point ( nl->Points, x, y, 0 );	
 		
-		if ( type == GV_LINE ) symb_set_driver_color ( SYMB_LINE );
+	    if ( nl->type == GV_LINE ) symb_set_driver_color ( SYMB_LINE );
+	    else symb_set_driver_color ( SYMB_BOUNDARY_0 );
+
+	    display_points ( nl->Points, 1);
+	    set_location(D_u_to_d_col(x), D_u_to_d_row (y));
+	    nl->first = 0;
+	    set_mode(MOUSE_LINE);
+	} else if ( button == 2 ) { /* Undo last point */
+	    if ( nl->Points->n_points >= 1 ) {
+		symb_set_driver_color ( SYMB_BACKGROUND ); 
+		display_points ( nl->Points, 1);
+		nl->Points->n_points--;
+
+		if ( nl->type == GV_LINE ) symb_set_driver_color ( SYMB_LINE );
 		else symb_set_driver_color ( SYMB_BOUNDARY_0 );
 
-		display_points ( Points, 1);
-		sxo = D_u_to_d_col(x); syo = D_u_to_d_row (y);;
-		first = 0;
-	    } else if ( button == 2 ) { /* Undo last point */
-		if ( Points->n_points >= 1 ) {
-		    symb_set_driver_color ( SYMB_BACKGROUND ); 
-		    display_points ( Points, 1);
-		    Points->n_points--;
-
-		    if ( type == GV_LINE ) symb_set_driver_color ( SYMB_LINE );
-		    else symb_set_driver_color ( SYMB_BOUNDARY_0 );
-
-                    display_points ( Points, 1);
-		    sxo = D_u_to_d_col ( Points->x[Points->n_points - 1] );
-		    syo = D_u_to_d_row ( Points->y[Points->n_points - 1] );
-		}
-		if ( Points->n_points == 0 ) {
-		    i_prompt_buttons ( "New point", "", "Quit tool"); 
-		    first = 1;
-		}
-	    } else { /* button = 3 -> write the line and quit */
-		if ( Points->n_points > 1 ) {
-		    /* Before the line is written, we must check if connected to existing nodes, if yes,
-		     * such nodes must be add to update list before! the line is written (areas/isles */
-                    node1 = Vect_find_node(&Map, Points->x[0], Points->y[0], Points->z[0], 0, Vect_is_3d(&Map)); 
-		    i = Points->n_points - 1;
-                    node2 = Vect_find_node(&Map, Points->x[i], Points->y[i], Points->z[i], 0, Vect_is_3d(&Map)); 
-		    
-	            G_debug (2, "  old node1 = %d  old node2 = %d", node1, node2);
-	            line = write_line ( &Map, type, Points );
-		    updated_lines_and_nodes_erase_refresh_display();
-		} else G_warning ("Less than 2 points for line -> nothing written" );
-		    
-		break;
+		display_points ( nl->Points, 1);
+		set_location(
+		    D_u_to_d_col ( nl->Points->x[nl->Points->n_points - 1] ),
+		    D_u_to_d_row ( nl->Points->y[nl->Points->n_points - 1] )
+		    );
 	    }
-	    G_debug (2, "n_points = %d", Points->n_points);
+	    if ( nl->Points->n_points == 0 ) {
+		i_prompt_buttons ( "New point", "", "Quit tool"); 
+		nl->first = 1;
+		set_mode(MOUSE_POINT);
+	    }
+	} else { /* button = 3 -> write the line and quit */
+	    if ( nl->Points->n_points > 1 ) {
+		/* Before the line is written, we must check if connected to existing nodes, if yes,
+		 * such nodes must be add to update list before! the line is written (areas/isles */
+		int node1 = Vect_find_node(&Map, nl->Points->x[0], nl->Points->y[0], nl->Points->z[0], 0, Vect_is_3d(&Map)); 
+		int i = nl->Points->n_points - 1;
+		int node2 = Vect_find_node(&Map, nl->Points->x[i], nl->Points->y[i], nl->Points->z[i], 0, Vect_is_3d(&Map)); 
+		    
+		G_debug (2, "  old node1 = %d  old node2 = %d", node1, node2);
+		write_line ( &Map, nl->type, nl->Points );
+		updated_lines_and_nodes_erase_refresh_display();
+	    } else G_warning ("Less than 2 points for line -> nothing written" );
+		    
+	    return 1;
 	}
+	G_debug (2, "n_points = %d", nl->Points->n_points);
     }
-    driver_close();
-   
+
+    i_prompt_buttons ( "New point", "Undo last point", "Close line"); 
+    return 0;
+}
+
+int new_line_end(void *closure)
+{
     i_prompt (""); 
     i_prompt_buttons ( "", "", ""); 
     i_coor ( COOR_NULL, COOR_NULL); 
     i_new_line_options ( 0 );
     
     G_debug (3, "new_line(): End");
-
     return 1;
 }
 
+/* Digitize new line */
+int new_line ( int type )
+{
+    struct new_line nl;
+    int sxn, syn, button;
+    int ret;
+
+    nl.type = type;
+
+    driver_open();
+    new_line_begin(&nl);
+
+    sxn = COOR_NULL; syn = COOR_NULL;
+    while (1)
+    {
+	/* Get next coordinate */
+	get_location(&sxn, &syn, &button);
+
+	if (button == 0) /* Tool broken by GUI */
+	    break;
+
+	if (new_line_update(&nl, sxn, syn, button))
+	    break;
+    }
+
+    ret = new_line_end(&nl);
+    driver_close();
+
+    return ret;
+}
+
 /* Continue work on the end of a line */
-int edit_line (void) {
-    int i,sxn,syn,sxo,syo,button,line,line_type,reversed;
-    int node1,node2;
-    double x,y,thresh,nodex,nodey,nodez,dist;
+
+struct edit_line
+{
+    int phase;
+    double thresh;
     struct line_pnts *Points;
     struct line_cats *Cats;
-    
+    int line;
+    int line_type;
+    int reversed;
+};
+
+void edit_line_begin(void *closure)
+{
+    struct edit_line *el = closure;
+
     G_debug (2, "edit_line()");
     
     i_prompt ( "Edit line or boundary:");
     i_prompt_buttons ( "Select", "", "Quit tool");
     
-    driver_open();
-    
     /* TODO: use some better threshold */
-    thresh = fabs ( D_d_to_u_col ( 10 ) - D_d_to_u_col ( 0 ) ) ; 
-    G_debug (2, "thresh = %f", thresh );
-    
-    line = 0;
-    sxn = COOR_NULL; syn = COOR_NULL;
-    while (line<=0) {
-	/* Get next coordinate */
-        R_set_update_function ( update );
-        R_get_location_with_pointer ( &sxn, &syn, &button); 
-	    
-	x =  D_d_to_u_col ( sxn );
-	y =  D_d_to_u_row ( syn );
-	G_debug (3, "button = %d x = %d = %f y = %d = %f", button, sxn, x, syn, y);
-        
-        if (button==0 || button==3) break; /* Quit tool */
-        
-        if (button!=1)
-            continue;
-        
-        /* Find nearest point or line */
-        line = Vect_find_line (&Map, x, y, 0, GV_LINE|GV_BOUNDARY, thresh, 0, 0);
-        G_debug (2, "line found = %d", line );
-        
-        /* Display new selected line if any */
-        if ( line > 0 ) {
-            display_line ( line, SYMB_HIGHLIGHT, 1);
-        }
-    }
-    
-    if (line<=0) {
-        driver_close();
-        
-        i_prompt (""); 
-        i_prompt_buttons ( "", "", ""); 
-        i_coor ( COOR_NULL, COOR_NULL); 
-        
-        G_debug (3, "edit_line(): End");
-    
-        return 1;
-    }
+    el->thresh = fabs ( D_d_to_u_col ( 10 ) - D_d_to_u_col ( 0 ) ) ; 
+    G_debug (2, "thresh = %f", el->thresh );
 
-    Points = Vect_new_line_struct ();
-    Cats = Vect_new_cats_struct ();    
-    line_type = Vect_read_line (&Map, Points, Cats, line);
+    el->phase = 1;
+    set_mode(MOUSE_POINT);
+}
+
+void edit_line_phase2(struct edit_line *el, double x, double y)
+{
+    int node1, node2;
+    double nodex, nodey, nodez, dist;
+
+    el->phase = 2;
+
+    el->Points = Vect_new_line_struct ();
+    el->Cats = Vect_new_cats_struct ();    
+    el->line_type = Vect_read_line (&Map, el->Points, el->Cats, el->line);
     
-    reversed = 0;
+    el->reversed = 0;
     
     /* Find out the node nearest to the line */
-    Vect_get_line_nodes (&Map, line, &node1, &node2);
+    Vect_get_line_nodes (&Map, el->line, &node1, &node2);
     
     Vect_get_node_coor (&Map, node2, &nodex, &nodey, &nodez);
     dist=(x-nodex)*(x-nodex)+(y-nodey)*(y-nodey);
@@ -293,176 +309,261 @@ int edit_line (void) {
     if ((x-nodex)*(x-nodex)+(y-nodey)*(y-nodey)<dist) {
         /* The first node is the nearest => reverse the line and remember
          * doing so. */
-         Vect_line_reverse (Points);
-         reversed = 1;
+	Vect_line_reverse (el->Points);
+	el->reversed = 1;
     }
     
     display_node ( node1, SYMB_BACKGROUND, 1);
     display_node ( node2, SYMB_BACKGROUND, 1);
     i_prompt_buttons ( "New Point", "Undo Last Point", "Close line");
-    sxo = D_u_to_d_col ( Points->x[Points->n_points - 1] );
-    syo = D_u_to_d_row ( Points->y[Points->n_points - 1] );
-    /* Do the actual editing */
-    while (1) {
-        R_set_update_function ( update );
-        R_get_location_with_line (sxo, syo, &sxn, &syn, &button); 
-	
-	x =  D_d_to_u_col ( sxn );
-	y =  D_d_to_u_row ( syn );
-	G_debug (3, "button = %d x = %d = %f y = %d = %f", button, sxn, x, syn, y);
 
-	if ( button == 0 || button==3 ) break; /* Tool broken by GUI */
+    set_location(
+	D_u_to_d_col(el->Points->x[el->Points->n_points - 1]),
+	D_u_to_d_row(el->Points->y[el->Points->n_points - 1])
+	);
+    set_mode(MOUSE_LINE);
+}
+
+int edit_line_update(void *closure, int sxn, int syn, int button)
+{
+    struct edit_line *el = closure;
+    double x =  D_d_to_u_col ( sxn );
+    double y =  D_d_to_u_row ( syn );
+
+    G_debug (3, "button = %d x = %d = %f y = %d = %f", button, sxn, x, syn, y);
+
+    if (button == 3) /* Tool broken by GUI */
+	return 1;
+
+    switch (el->phase)
+    {
+    case 1:
+	if (button != 1)
+	    return 0;
+        
+	/* Find nearest point or line */
+	el->line = Vect_find_line (&Map, x, y, 0, GV_LINE|GV_BOUNDARY, el->thresh, 0, 0);
+	G_debug (2, "line found = %d", el->line );
+
+	/* Display new selected line if any */
+	if (el->line > 0)
+	{
+	    display_line ( el->line, SYMB_HIGHLIGHT, 1);
+	    edit_line_phase2(el, x, y);
+	}
+	break;
+
+    case 2:
         if ( button == 1 ) { /* New point */
             snap ( &x, &y );
-            Vect_append_point ( Points, x, y, 0 );	
+            Vect_append_point ( el->Points, x, y, 0 );	
             
-            if ( line_type == GV_LINE ) symb_set_driver_color ( SYMB_LINE );
+            if ( el->line_type == GV_LINE ) symb_set_driver_color ( SYMB_LINE );
             else symb_set_driver_color ( SYMB_BOUNDARY_0 );
 
-            display_points ( Points, 1);
-            sxo=sxn;syo=syn;
+            display_points ( el->Points, 1);
+	    set_location(sxn, syn);
             i_prompt_buttons ( "New Point", "Undo Last Point", "Close line");
         } else if ( button == 2 ) { /* Undo last point */
-            if ( Points->n_points > 1 ) {
+            if ( el->Points->n_points > 1 ) {
                 symb_set_driver_color ( SYMB_BACKGROUND ); 
-                display_points ( Points, 1);
+                display_points ( el->Points, 1);
                 
-                Points->n_points--;
+                el->Points->n_points--;
 
-                if ( line_type == GV_LINE ) symb_set_driver_color ( SYMB_LINE );
+                if ( el->line_type == GV_LINE ) symb_set_driver_color ( SYMB_LINE );
                 else symb_set_driver_color ( SYMB_BOUNDARY_0 );
 
-                display_points ( Points, 1);
-                sxo = D_u_to_d_col ( Points->x[Points->n_points - 1] );
-                syo = D_u_to_d_row ( Points->y[Points->n_points - 1] );
-                if (Points->n_points==1)
+                display_points ( el->Points, 1);
+                set_location(
+		    D_u_to_d_col ( el->Points->x[el->Points->n_points - 1] ),
+		    D_u_to_d_row ( el->Points->y[el->Points->n_points - 1] )
+		    );
+                if (el->Points->n_points==1)
                     i_prompt_buttons ( "New Point", "", "Delete line and exit");
             }
         }
+	break;
     }
+
+    return 0;
+}
+
+int edit_line_end(void *closure)
+{
+    struct edit_line *el = closure;
+
+    if (el->phase > 1)
+    {
+	if (el->reversed)
+	    Vect_line_reverse (el->Points);
     
-    if (reversed)
-        Vect_line_reverse (Points);
+	if (el->Points->n_points>1) {
+	    Vect_rewrite_line (&Map, el->line, el->line_type, el->Points, el->Cats);
+	    updated_lines_and_nodes_erase_refresh_display ();
+	} else {
+	    int i;
+	    /* delete lines with less than two points */
+	    Vect_delete_line ( &Map, el->line ); 
+	    for ( i = 0 ; i < el->Cats->n_cats; i++ ) {
+		check_record ( el->Cats->field[i], el->Cats->cat[i] );
+	    }
+	}
     
-    if (Points->n_points>1) {
-        Vect_rewrite_line (&Map, line, line_type, Points, Cats);
-        updated_lines_and_nodes_erase_refresh_display ();
-    } else {
-        /* delete lines with less than two points */
-        Vect_delete_line ( &Map, line ); 
-        for ( i = 0 ; i < Cats->n_cats; i++ ) {
-            check_record ( Cats->field[i], Cats->cat[i] );
-        }
+    
+	Vect_destroy_line_struct (el->Points);
+	Vect_destroy_cats_struct (el->Cats);
     }
-    
-    driver_close();
-    
-    Vect_destroy_line_struct (Points);
-    Vect_destroy_cats_struct (Cats);
-    
+
     i_prompt (""); 
     i_prompt_buttons ( "", "", ""); 
     i_coor ( COOR_NULL, COOR_NULL); 
     
     G_debug (3, "edit_line(): End");
-    
+
     return 1;
 }
 
-/* Delete line */
-int delete_line (void)
+int edit_line (void)
 {
-    int i, sxn, syn, line, last_line, node1, node2;
-    int button, first;
-    double x, y, thresh;
+    struct edit_line el;
+    int sxn, syn, button;
+    int ret;
+    
+    driver_open();
+    edit_line_begin(&el);
+    
+    sxn = COOR_NULL; syn = COOR_NULL;
+    while (1)
+    {
+	/* Get next coordinate */
+        get_location(&sxn, &syn, &button); 
+
+        if (button==0) /* Quit tool */
+	    break;
+
+	if (edit_line_update(&el, sxn, syn, button))
+	    break;
+    }
+
+    ret = edit_line_end(&el);
+    driver_close();
+
+    return ret;
+}
+
+struct delete_line
+{
+    double thresh;
     struct line_pnts *Points;
     struct line_cats *Cats;
-    
+    int first;
+    int line;
+    int last_line;
+};
+
+void delete_line_begin(void *closure)
+{
+    struct delete_line *dl = closure;
+
     G_debug (2, "delete_line()");
 
-    Points = Vect_new_line_struct ();
-    Cats = Vect_new_cats_struct ();
+    dl->Points = Vect_new_line_struct ();
+    dl->Cats = Vect_new_cats_struct ();
     
     i_prompt ( "Delete point, line, boundary, or centroid:");
     i_prompt_buttons ( "Select", "Unselect", "Quit tool"); 
     
-    driver_open();
-    
     /* TODO: use some better threshold */
-    thresh = fabs ( D_d_to_u_col ( 10 ) - D_d_to_u_col ( 0 ) ) ; 
-    G_debug (2, "thresh = %f", thresh );
+    dl->thresh = fabs ( D_d_to_u_col ( 10 ) - D_d_to_u_col ( 0 ) ) ; 
+    G_debug (2, "thresh = %f", dl->thresh );
     
-    line = 0;
-    first = 1;
-    last_line = 0;
-    sxn = COOR_NULL; syn = COOR_NULL;
-    while ( 1 ) {
-	/* Get next coordinate */
-        R_set_update_function ( update );
-        R_get_location_with_pointer ( &sxn, &syn, &button); 
-	    
-	x =  D_d_to_u_col ( sxn );
-	y =  D_d_to_u_row ( syn );
-	G_debug (3, "button = %d x = %d = %f y = %d = %f", button, sxn, x, syn, y);
+    dl->line = 0;
+    dl->first = 1;
+    dl->last_line = 0;
 
-	/* Display last highlighted in normal color */
-	if ( last_line > 0 ) {
-	    display_line ( last_line, SYMB_DEFAULT, 1);
-	}
+    set_mode(MOUSE_POINT);
+}
 
-	if ( button == 0 || button == 3 ) break; /* Quit tool */
+int delete_line_update(void *closure, int sxn, int syn, int button)
+{
+    struct delete_line *dl = closure;
+    double x =  D_d_to_u_col ( sxn );
+    double y =  D_d_to_u_row ( syn );
 
-	if ( button == 1 ) { /* Confirm / select */
-            /* Delete last if any */
-	    if ( last_line > 0 ) { 
-		/* Erase line and nodes !!! (because if the line is not connected to any other, nodes will die */
-		display_line ( last_line, SYMB_BACKGROUND, 1 );
-		Vect_get_line_nodes ( &Map, line, &node1, &node2 ); 
-		G_debug (2, "delete line = %d node1 = %d node2 = %d", last_line, node1, node2);
+    G_debug (3, "button = %d x = %d = %f y = %d = %f", button, sxn, x, syn, y);
 
-                display_node ( node1, SYMB_BACKGROUND, 1);
-                display_node ( node2, SYMB_BACKGROUND, 1);
-		
-		Vect_read_line ( &Map, NULL, Cats, last_line );
-		Vect_delete_line ( &Map, last_line ); 
-		for ( i = 0 ; i < Cats->n_cats; i++ ) {
-		    check_record ( Cats->field[i], Cats->cat[i] );
-		}
-
-		for ( i = 0; i < Vect_get_num_updated_lines(&Map); i++ )
-		    G_debug (2, "Updated line: %d", Vect_get_updated_line( &Map, i ) );
-
-		for ( i = 0; i < Vect_get_num_updated_nodes(&Map); i++ )
-		    G_debug (2, "Updated node: %d", Vect_get_updated_node( &Map, i ) );
-
-		updated_lines_and_nodes_erase_refresh_display();
-	    }
-	    
-	    /* Find neares point or line */
-	    line = Vect_find_line (&Map, x, y, 0, GV_POINT|GV_CENTROID, thresh, 0, 0);
-	    G_debug (2, "point found = %d", line );
-	    if ( line == 0 ) line = Vect_find_line (&Map, x, y, 0, GV_LINE|GV_BOUNDARY, thresh, 0, 0);
-	    G_debug (2, "line found = %d", line );
-	    
-	    /* Display new selected line if any */
-	    if ( line > 0 ) {
-		display_line ( line, SYMB_HIGHLIGHT, 1);
-	    }
-	} else { /* button == 2 -> unselect */
-	    line = 0;
-	}
-	
-	if ( line > 0 ) 
-	    i_prompt_buttons ( "Confirm and select next", "Unselect", "Quit tool"); 
-	else
-	    i_prompt_buttons ( "Select", "Unselect", "Quit tool"); 
-	
-	last_line = line;
-	first = 0;
+    /* Display last highlighted in normal color */
+    if ( dl->last_line > 0 ) {
+	display_line ( dl->last_line, SYMB_DEFAULT, 1);
     }
 
-    driver_close();
-    
+    if (button == 3) /* Quit tool */
+	return 1;
+
+    if ( button == 1 ) { /* Confirm / select */
+	/* Delete last if any */
+	if ( dl->last_line > 0 ) { 
+	    int node1, node2;
+	    int i;
+	    /* Erase line and nodes !!! (because if the line is not connected to any other, nodes will die */
+	    display_line ( dl->last_line, SYMB_BACKGROUND, 1 );
+	    Vect_get_line_nodes ( &Map, dl->line, &node1, &node2 ); 
+	    G_debug (2, "delete line = %d node1 = %d node2 = %d", dl->last_line, node1, node2);
+
+	    display_node ( node1, SYMB_BACKGROUND, 1);
+	    display_node ( node2, SYMB_BACKGROUND, 1);
+		
+	    Vect_read_line ( &Map, NULL, dl->Cats, dl->last_line );
+	    Vect_delete_line ( &Map, dl->last_line ); 
+	    for ( i = 0 ; i < dl->Cats->n_cats; i++ ) {
+		check_record ( dl->Cats->field[i], dl->Cats->cat[i] );
+	    }
+
+	    for ( i = 0; i < Vect_get_num_updated_lines(&Map); i++ )
+		G_debug (2, "Updated line: %d", Vect_get_updated_line( &Map, i ) );
+
+	    for ( i = 0; i < Vect_get_num_updated_nodes(&Map); i++ )
+		G_debug (2, "Updated node: %d", Vect_get_updated_node( &Map, i ) );
+
+	    updated_lines_and_nodes_erase_refresh_display();
+	}
+	    
+	/* Find neares point or line */
+	dl->line = Vect_find_line (&Map, x, y, 0, GV_POINT|GV_CENTROID, dl->thresh, 0, 0);
+	G_debug (2, "point found = %d", dl->line );
+	if ( dl->line == 0 )
+	    dl->line = Vect_find_line (&Map, x, y, 0, GV_LINE|GV_BOUNDARY, dl->thresh, 0, 0);
+	G_debug (2, "line found = %d", dl->line );
+	    
+	/* Display new selected line if any */
+	if ( dl->line > 0 ) {
+	    display_line ( dl->line, SYMB_HIGHLIGHT, 1);
+	}
+    } else { /* button == 2 -> unselect */
+	dl->line = 0;
+    }
+	
+    if ( dl->line > 0 ) 
+	i_prompt_buttons ( "Confirm and select next", "Unselect", "Quit tool"); 
+    else
+	i_prompt_buttons ( "Select", "Unselect", "Quit tool"); 
+	
+    dl->last_line = dl->line;
+    dl->first = 0;
+
+    return 0;
+}
+
+int delete_line_end(void *closure)
+{
+    struct delete_line *dl = closure;
+
+    /* Display last highlighted in normal color */
+    if ( dl->last_line > 0 ) {
+	display_line ( dl->last_line, SYMB_DEFAULT, 1);
+    }
+
     i_prompt (""); 
     i_prompt_buttons ( "", "", ""); 
     i_coor ( COOR_NULL, COOR_NULL); 
@@ -472,97 +573,147 @@ int delete_line (void)
     return 1;
 }
 
-/* Move line */
-int move_line (void)
+/* Delete line */
+int delete_line (void)
 {
-    int i, sxn, syn, sxo = 0, syo = 0, line, last_line, node1, node2, type;
-    int button, first;
-    double x, y, thresh, xo, yo;
-    struct line_pnts *Points;
-    struct line_cats *Cats;
-    
-    G_debug (2, "move_line()");
-
-    Points = Vect_new_line_struct ();
-    Cats = Vect_new_cats_struct ();
-    
-    i_prompt ( "Move point, line, boundary, or centroid:"); 
+    struct delete_line dl;
+    int sxn, syn, button;
+    int ret;
     
     driver_open();
+    delete_line_begin(&dl);
+
+    sxn = COOR_NULL; syn = COOR_NULL;
+    while (1)
+    {
+	/* Get next coordinate */
+        get_location(&sxn, &syn, &button); 
+
+	if (button == 0)
+	    break;
+
+	if (delete_line_update(&dl, sxn, syn, button))
+	    break;
+    }
+
+    ret = delete_line_end(&dl);
+    driver_close();
+
+    return ret;
+}
+
+/* Move line */
+struct move_line
+{
+    double thresh;
+    struct line_pnts *Points;
+    struct line_cats *Cats;
+    int line;
+    int last_line;
+    double xo, yo;
+};
+
+void move_line_begin(void *closure)
+{
+    struct move_line *ml = closure;
+
+    G_debug (2, "move_line()");
+
+    ml->Points = Vect_new_line_struct ();
+    ml->Cats = Vect_new_cats_struct ();
+    
+    i_prompt ( "Move point, line, boundary, or centroid:"); 
+    i_prompt_buttons ( "Select", "", "Quit tool"); 
     
     /* TODO: use some better threshold */
-    thresh = fabs ( D_d_to_u_col ( 10 ) - D_d_to_u_col ( 0 ) ) ; 
-    G_debug (2, "thresh = %f", thresh );
+    ml->thresh = fabs ( D_d_to_u_col ( 10 ) - D_d_to_u_col ( 0 ) ) ; 
+    G_debug (2, "thresh = %f", ml->thresh );
     
-    first = 1; 
-    last_line = 0;
-    sxn = COOR_NULL; syn = COOR_NULL;
-    while ( 1 ) {
-	/* Get next coordinate */
-        R_set_update_function ( update );
-	if ( last_line == 0 ) {
-            i_prompt_buttons ( "Select", "", "Quit tool"); 
-	    R_get_location_with_pointer ( &sxn, &syn, &button); 
-        } else R_get_location_with_line (sxo, syo, &sxn, &syn, &button); 
+    ml->last_line = 0;
+
+    set_mode(MOUSE_POINT);
+}
+
+int move_line_update(void *closure, int sxn, int syn, int button)
+{
+    struct move_line *ml = closure;
+    double x =  D_d_to_u_col ( sxn );
+    double y =  D_d_to_u_row ( syn );
+
+    G_debug (3, "button = %d x = %d = %f y = %d = %f", button, sxn, x, syn, y);
 	
-	if ( last_line > 0 ) {
-	    display_line ( last_line, SYMB_DEFAULT, 1);
-	}
+    if ( ml->last_line > 0 ) {
+	display_line ( ml->last_line, SYMB_DEFAULT, 1);
+    }
 
-	x =  D_d_to_u_col ( sxn );
-	y =  D_d_to_u_row ( syn );
-	G_debug (3, "button = %d x = %d = %f y = %d = %f", button, sxn, x, syn, y);
+    if (button == 3)
+	return 1;
 
-	if ( button == 0 || button == 3 ) break;
-
-	if ( button == 1 ) { /* Select / new location */
-	    if ( last_line == 0 ) { /* Select line */ 
-	        line = Vect_find_line (&Map, x, y, 0, GV_POINT|GV_CENTROID, thresh, 0, 0);
-		G_debug (2, "point found = %d", line );
-                if ( line == 0 ) line = Vect_find_line (&Map, x, y, 0, GV_LINE|GV_BOUNDARY, thresh, 0, 0);
-                G_debug (2, "line found = %d", line );
+    if ( button == 1 ) { /* Select / new location */
+	int type;
+	if ( ml->last_line == 0 ) { /* Select line */ 
+	    ml->line = Vect_find_line (&Map, x, y, 0, GV_POINT|GV_CENTROID, ml->thresh, 0, 0);
+	    G_debug (2, "point found = %d", ml->line );
+	    if ( ml->line == 0 ) ml->line = Vect_find_line (&Map, x, y, 0, GV_LINE|GV_BOUNDARY, ml->thresh, 0, 0);
+	    G_debug (2, "line found = %d", ml->line );
                 
-                /* Display new selected line if any */
-                if ( line > 0 ) {
-		    display_line ( line, SYMB_HIGHLIGHT, 1);
+	    /* Display new selected line if any */
+	    if ( ml->line > 0 ) {
+		display_line ( ml->line, SYMB_HIGHLIGHT, 1);
 
-		    /* Find the nearest point on the line */
-		    type = Vect_read_line ( &Map, Points, NULL, line );
-		    Vect_line_distance ( Points, x, y, 0, 0, &xo, &yo, NULL, NULL, NULL, NULL );
-                    sxo = D_u_to_d_col ( xo ) ; 
-		    syo = D_u_to_d_row ( yo );
+		/* Find the nearest point on the line */
+		type = Vect_read_line ( &Map, ml->Points, NULL, ml->line );
+		Vect_line_distance ( ml->Points, x, y, 0, 0, &ml->xo, &ml->yo, NULL, NULL, NULL, NULL );
+		set_location(D_u_to_d_col(ml->xo), D_u_to_d_row(ml->yo));
 
+		i_prompt_buttons ( "New location", "Unselect", "Quit tool"); 
+	    }
+	    ml->last_line = ml->line;
+	} else { /* Line is already selected */
+	    int node1, node2;
+	    int i;
+	    display_line ( ml->last_line, SYMB_BACKGROUND, 1);
+	    Vect_get_line_nodes ( &Map, ml->last_line, &node1, &node2 ); 
+	    display_node ( node1, SYMB_BACKGROUND, 1);
+	    display_node ( node2, SYMB_BACKGROUND, 1);
 
-                    i_prompt_buttons ( "New location", "Unselect", "Quit tool"); 
-	        }
-		last_line = line;
-	    } else { /* Line is already selected */
-	        display_line ( last_line, SYMB_BACKGROUND, 1);
-		Vect_get_line_nodes ( &Map, last_line, &node1, &node2 ); 
-                display_node ( node1, SYMB_BACKGROUND, 1);
-                display_node ( node2, SYMB_BACKGROUND, 1);
-
-		type = Vect_read_line ( &Map, Points, Cats, last_line );
-		for ( i = 0; i < Points->n_points; i++ ) {
-                    Points->x[i] = Points->x[i] + x - xo;
-                    Points->y[i] = Points->y[i] + y - yo;
-		}
-
-		Vect_rewrite_line(&Map, last_line, type, Points, Cats);
-
-		updated_lines_and_nodes_erase_refresh_display();
-		last_line = 0;
+	    type = Vect_read_line ( &Map, ml->Points, ml->Cats, ml->last_line );
+	    for ( i = 0; i < ml->Points->n_points; i++ ) {
+		ml->Points->x[i] = ml->Points->x[i] + x - ml->xo;
+		ml->Points->y[i] = ml->Points->y[i] + y - ml->yo;
 	    }
 
+	    Vect_rewrite_line(&Map, ml->last_line, type, ml->Points, ml->Cats);
+
+	    updated_lines_and_nodes_erase_refresh_display();
+	    ml->last_line = 0;
 	}
-	if ( button == 2 ) { /* Unselect */
-	    if ( last_line > 0 ) {
-		last_line = 0;
-	    }
+
+    }
+    if ( button == 2 ) { /* Unselect */
+	if ( ml->last_line > 0 ) {
+	    ml->last_line = 0;
 	}
     }
 
-    driver_close();
+    if ( ml->last_line == 0 ) {
+	i_prompt_buttons ( "Select", "", "Quit tool"); 
+	set_mode(MOUSE_POINT);
+    }
+    else
+	set_mode(MOUSE_LINE);
+
+    return 0;
+}
+
+int move_line_end(void *closure)
+{
+    struct move_line *ml = closure;
+
+    /* Display last highlighted in normal color */
+    if ( ml->last_line > 0 ) {
+	display_line ( ml->last_line, SYMB_DEFAULT, 1);
+    }
     
     i_prompt (""); 
     i_prompt_buttons ( "", "", ""); 
@@ -571,5 +722,33 @@ int move_line (void)
     G_debug (3, "move_line(): End");
 
     return 1;
+}
+
+int move_line (void)
+{
+    struct move_line ml;
+    int sxn, syn, button;
+    int ret;
+    
+    driver_open();
+    move_line_begin(&ml);
+
+    sxn = COOR_NULL; syn = COOR_NULL;
+    while (1)
+    {
+	/* Get next coordinate */
+	get_location(&sxn, &syn, &button);
+
+	if (button == 0)
+	    break;
+
+	if (move_line_update(&ml, sxn, syn, button))
+	    break;
+    }
+
+    ret = move_line_end(&ml);
+    driver_close();
+
+    return ret;
 }
 

@@ -66,6 +66,7 @@ int zoom_pan (void);
 int zoom_default (void);
 int zoom_region (void);
 
+/* c_face.c */
 int c_cancel (ClientData , Tcl_Interp *, int, char **);
 int c_next_tool (ClientData , Tcl_Interp *, int, char **);
 int c_tool_centre (ClientData , Tcl_Interp *, int, char **);
@@ -80,6 +81,7 @@ int c_add_blank_bgcmd (ClientData , Tcl_Interp *, int, char **);
 int c_del_cat (ClientData , Tcl_Interp *, int, char **);
 int c_add_cat (ClientData , Tcl_Interp *, int, char **);
 
+/* i_face.c */
 int i_prompt (char *);
 int i_prompt_buttons (char *, char *, char *);
 int i_coor ( double, double);
@@ -116,3 +118,6 @@ int bg_add ( char *);
 
 /* Utilities */
 char *get_line_type_name ( int type);
+void set_location(int x, int y);
+void set_mode(int m);
+void get_location(int *sxn, int *syn, int *button);
