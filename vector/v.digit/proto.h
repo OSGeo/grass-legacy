@@ -121,3 +121,12 @@ char *get_line_type_name ( int type);
 void set_location(int x, int y);
 void set_mode(int m);
 void get_location(int *sxn, int *syn, int *button);
+
+typedef int tool_func_begin(void *closure);
+typedef int tool_func_update(void *closure, int sxn, int syn, int button);
+typedef int tool_func_end(void *closure);
+
+int do_tool(tool_func_begin *begin,
+	    tool_func_update *update,
+	    tool_func_end *end,
+	    void *closure);
