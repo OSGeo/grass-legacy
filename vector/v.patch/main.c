@@ -182,8 +182,9 @@ main (int argc, char *argv[])
 	    {
 		int ncols, col;
 
-		if ( (table_out && !table_in) 
-		     || (!table_out && table_in) )
+		if ( !table_in || 
+		     (table_out && !table_in) ||
+		     (!table_out && table_in) )
 		{
 		  G_fatal_error (_("Missing table"));
 		}
