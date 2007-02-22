@@ -95,14 +95,17 @@ int main (int argc, char *argv[])
     struct ilist *List;
     BOUND_BOX box;
     dbCatValArray cvarr;
+    dbColumn *column;
+
+    column = NULL;
 
     G_gisinit (argv[0]);
 
     module = G_define_module();
-    module->keywords = _("vector");
-    module->description = "Find the nearest element in vector 'to' for elements in vector 'from'. "
-            "Various information about this relation may be uploaded to the attribute table of "
-	    "input vector 'from' or printed to stdout";
+    module->keywords = _("vector, database, attribute table");
+    module->description = _("Find the nearest element in vector 'to' for elements in vector 'from'. "
+			    "Various information about this relation may be uploaded to the attribute table of "
+			    "input vector 'from' or printed to stdout.");
 
     from_opt = G_define_standard_option(G_OPT_V_INPUT);
     from_opt->key         = "from" ;
@@ -264,7 +267,7 @@ int main (int argc, char *argv[])
 	G_fatal_error(_("Could not find input map <%s>"), from_opt->answer);
 
     if ( !print_flag->answer && strcmp(mapset,G_mapset()) != 0 )
-       G_fatal_error(_("Vector 'from' is not in user mapset and cannot be updated"));
+       G_fatal_error(_("Vector <%s> is not in user mapset and cannot be updated") , from_opt->answer);
 
     Vect_set_open_level (2);
     Vect_open_old (&From, from_opt->answer, mapset);
@@ -315,6 +318,22 @@ int main (int argc, char *argv[])
 	    driver = db_start_driver_open_database ( Fi->driver, Fi->database );
 	    if ( driver == NULL ) 
 		G_fatal_error(_("Cannot open database %s by driver %s"), Fi->database, Fi->driver);
+
+	    /* check if column exists */
+	    i = 0;
+	    while (column_opt -> answers[i]) {
+		db_get_column (driver, Fi-> table, column_opt -> answers[i], &column);
+		if (column) {
+		    db_free_column (column);
+		    column = NULL;
+		}
+		else {
+		    G_fatal_error (_("Column <%s> not found in table <%s>"),
+				   column_opt -> answers[i], Fi -> table);
+		}
+		i++;
+	    }
+	    
 	} else {
 	    driver = db_start_driver_open_database ( NULL, NULL );
 	    if ( driver == NULL ) 
@@ -331,8 +350,20 @@ int main (int argc, char *argv[])
 	if ( to_driver == NULL ) 
 	    G_fatal_error(_("Cannot open database %s by driver %s"), toFi->database, toFi->driver);
 
+	/* check if to_column exists */
+	db_get_column (to_driver, toFi-> table, to_column_opt -> answer, &column);
+	if (column) {
+	    db_free_column (column);
+	    column = NULL;
+	}
+	else {
+	    G_fatal_error (_("Column <%s> not found in table <%s>"),
+			   to_column_opt -> answer, toFi -> table);
+	}
+
 	/* Check column types */
-	if ( !print_flag->answer ) {
+	if ( !print_flag->answer && !all)
+	{
 	    char *fcname;
 	    int fctype, tctype;
 
@@ -663,7 +694,7 @@ int main (int argc, char *argv[])
 	if (db_grant_on_table (driver, table_opt->answer, DB_PRIV_SELECT, DB_GROUP|DB_PUBLIC ) != DB_OK )
 	    G_fatal_error(_("Cannot grant privileges on table %s"), table_opt->answer);
 		
-    } else { /* read existing cats from table */
+    } else if (!all) { /* read existing cats from table */
 	ncatexist = db_select_int( driver, Fi->table, Fi->key, NULL, &catexist);
         G_debug (1, "%d cats selected from the table", ncatexist );	
     }
@@ -955,7 +986,7 @@ int main (int argc, char *argv[])
     
     /* print stats */
     G_message(_("Statistics:"));
-    G_message(_("%d categories with more than 1 feature in 'from'"), update_dupl);
+    G_message(_("%d categories with more than 1 feature in <%s>"), update_dupl, from_opt -> answer);
     G_message(_("%d categories - no nearest feature found"), update_notfound);
 
     if ( !print_flag->answer ) { 
