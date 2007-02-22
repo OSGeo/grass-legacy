@@ -2,11 +2,13 @@ import wx
 import os
 import gismutils
 
+import cmd
+
 
 icons= os.path.split(gismutils.icons)[0]
 icons= os.path.split(icons)[0]
 icons= os.path.split(icons)[0]
-print icons
+#print icons
 
 class DigitToolbar:
     def __init__(self,parent,map):
@@ -14,9 +16,24 @@ class DigitToolbar:
         global icons
         
         self.mapcontent = map
-    	self.toolbar = wx.ToolBar(parent, -1)
-
+        self.digitize=None
+        self.parent=parent
+    	self.toolbar = wx.ToolBar(self.parent, -1)
         icons = os.path.join(icons,"v.digit")
+
+        self.addString = ""
+
+        self.layers = self._getListOfLayers()
+        
+        self.initToolbar()
+
+    def initToolbar(self):
+        self.combo = wx.ComboBox(self.toolbar, 4, 'Select vector map',
+                choices=self.layers, size=(120, 10))
+
+        self.comboid = self.toolbar.AddControl(self.combo)
+
+        self.toolbar.AddSeparator()
 
         self.point = self.toolbar.AddLabelTool(-1, "point", 
                             wx.Bitmap(os.path.join(icons,"new.point.gif"), wx.BITMAP_TYPE_ANY), 
@@ -32,11 +49,34 @@ class DigitToolbar:
                         wx.Bitmap(os.path.join(icons,"new.centroid.gif"), wx.BITMAP_TYPE_ANY), 
                         wx.NullBitmap, wx.ITEM_RADIO, "Digitize new centroid", "")
 
-        layers = self._getListOfLayers()
-        combo = wx.ComboBox(self.toolbar, 4, 'Select vector map',
-                choices=layers, size=(120, 10))
+    	self.parent.Bind(wx.EVT_TOOL, self.OnPoint, self.point)
 
-        self.combo = self.toolbar.AddControl(combo)
+    def OnPoint(self,event):
+
+        self.digitize="point"
+        #self.parent.MapWindow.mouse['box'] = "point"
+
+    def AddPoint(self,x,y):
+        #east,north = self.parent.Pixel2Cell(x,y)
+        selectedmap=self.combo.GetCurrentSelection()
+        if selectedmap < 1:
+            print "you have to select map"
+            return
+
+        addstring="""P 1
+                    %f %f
+                    """ % (x,y)
+        command = """v.edit -n  map="%s" tool=add""" % (self.combo.GetValue())
+        #print addstring, command
+        vedit=cmd.Command(command,stdin=addstring)
+        #try:
+        #    kye,val = vedit.RunV()
+        #    while 1:
+        #        print key,val
+        #        key,val = vedit.RunV()
+        #except:
+        #    pass
+
 
     def _getListOfLayers(self):
         
@@ -44,6 +84,7 @@ class DigitToolbar:
         for layer in self.mapcontent.GetListOfLayers(l_type="vector"):
             layers.append( layer.name)
         return layers
+
 
 class pokus:
     def __init__(self):
