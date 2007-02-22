@@ -24,8 +24,9 @@ make_window (int top, int bottom, int left, int right)
 	G_warning(_("make_window(%d,%d,%d,%d): illegal screen values."),
 		top, bottom, left, right);
 	sleep(3);
-	exit(1);
+	exit (EXIT_SUCCESS);
     }
+
     window = (Window *) G_malloc (sizeof(Window));
     window->top    = top;
     window->bottom = bottom;
@@ -66,6 +67,7 @@ End_curses (void)
     clear() ;       /* clear the screen */
     refresh() ;
     endwin() ;      /* let curses reset the tty now */
+
     return 0;
 }
 
@@ -236,15 +238,7 @@ Curses_prompt_gets (char *prompt, char *answer)
 	    }
 	    continue;
 	}
-	Beep();
     }
-    return 0;
-}
-
-int Beep (void)
-{
-    putchar ('\7');
-    fflush (stdout);
     return 0;
 }
 
@@ -264,7 +258,7 @@ if (!inited) return 0;
 	    if (kill++ >= 3)
 	    {
 		End_curses();
-		exit(0);
+                exit (EXIT_SUCCESS);
 	    }
 	    continue;
 	}

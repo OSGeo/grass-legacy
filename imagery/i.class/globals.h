@@ -1,3 +1,6 @@
+#ifndef __GLOBALS_H__
+#define __GLOBALS_H__
+
 #include "defs.h"
 
 #ifndef GLOBAL
@@ -73,7 +76,7 @@ GLOBAL char Group[50];
 GLOBAL char Subgroup[50];
 GLOBAL struct Ref Refer;
 GLOBAL char Outsigfile[50];
-GLOBAL FILE *Outsigfile_fd;
+GLOBAL FILE *outsig_fd;
 GLOBAL char Insigfile[50];
 GLOBAL struct Signature Sigs;
 GLOBAL struct Cell_head Band_cellhd;
@@ -104,3 +107,5 @@ GLOBAL CELL **Bandbuf;
 
 
 #undef INIT
+
+#endif /* __GLOBALS_H__ */

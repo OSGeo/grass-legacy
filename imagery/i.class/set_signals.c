@@ -1,8 +1,7 @@
-#include "globals.h"
 #include <signal.h>
+#include "globals.h"
+#include "local_proto.h"
 
-void quit();
-void sigint();
 
 int set_signals (void)
 {
@@ -10,8 +9,8 @@ int set_signals (void)
 	signal (SIGTSTP, ctrlz);
 */
 	signal (SIGTSTP, SIG_IGN); /* ignore ctrl-Z */
-/* set other signal catches */
 
+        /* set other signal catches */
 	signalflag.interrupt = 0;
 	signal (SIGINT, sigint);
 

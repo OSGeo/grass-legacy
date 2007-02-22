@@ -1,3 +1,6 @@
+#ifndef __POINT_H__
+#define __POINT_H__
+
 #ifndef POINT
 #define POINT struct _point
 
@@ -8,3 +11,5 @@ POINT
 } ;
 
 #endif
+
+#endif /* __POINT_H__ */

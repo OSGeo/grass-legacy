@@ -399,8 +399,8 @@ static int dont_save (void)
 int write_signatures (void)
 {
   Menu_msg("Saving Signature File...");
-  I_write_signatures(Outsigfile_fd, &Sigs);
-  fclose(Outsigfile_fd);
+    I_write_signatures (outsig_fd, &Sigs);
+    fclose (outsig_fd);
   sleep(1);
   Menu_msg("Done.");
 

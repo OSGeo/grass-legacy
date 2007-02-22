@@ -1,3 +1,6 @@
+#ifndef __DEFS_H__
+#define __DEFS_H__
+
 #include <grass/gis.h>
 #include <curses.h>
 #include <grass/imagery.h>
@@ -104,3 +107,5 @@ extern int edge_order(const void *, const void *);
 #define BEFORE_STD 0
 
 #define MASK "MASK"
+
+#endif /* __DEFS_H__ */
