@@ -36,6 +36,13 @@ set fp [open $env(GISBASE)/etc/VERSIONNUMBER r]
 set GRASSVERSION [read -nonewline $fp]
 close $fp
 
+# exit grass - 1 = completly; 0 - start main app
+proc exitgrass code {
+	if {$code} {
+		puts stdout "exit"
+	}
+	destroy .
+}
 
 #############################################################################
 
@@ -496,7 +503,7 @@ proc gisSetWindow {} {
                     puts stdout "LOCATION_NAME='$location';"
                     puts stdout "MAPSET='$mapset';"
                     putGRASSRC $gisrc_name
-                    destroy .
+                    exitgrass 0
                 }
             } 
         }
@@ -524,10 +531,7 @@ proc gisSetWindow {} {
     button .frame0.frameBUTTONS.cancel \
     	-text [G_msg "Exit"] \
     	-width 10 -bd 1 -wraplength 100 \
-    	-command { 
-            puts stdout "exit" 
-            destroy . 
-        }
+    	-command { exitgrass 1 }
 
 
     pack append .frame0.frameBUTTONS \
@@ -659,7 +663,7 @@ proc gisSetWindow {} {
                     puts stdout "LOCATION_NAME='$location';"
                     puts stdout "MAPSET='$mapset';"
                     putGRASSRC $gisrc_name
-                    destroy .
+                    exitgrass 0
                 }
             }
         }
@@ -683,6 +687,11 @@ proc gisSetWindow {} {
 
 	bind .frame0.frameNMS.second.entry <KeyRelease> {
 		.frame0.frameNMS.third.button configure -state normal
+	}
+	
+	# Exit GRASS, if window gets closed.
+	wm protocol . WM_DELETE_WINDOW {
+		exitgrass 1
 	}
   
 	grab .
