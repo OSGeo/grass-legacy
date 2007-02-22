@@ -1,3 +1,7 @@
+/*!
+ * \file error.c
+ */
+
 /*
  **********************************************************************
  *
@@ -55,8 +59,23 @@
 #include <grass/glocale.h>
 #include <grass/gis.h>
 
+/*!
+ * \def MSG
+ *
+ * \brief A message
+ */
 #define MSG  0
+/*!
+ * \def WARN
+ *
+ * \brief A warning message
+ */
 #define WARN 1
+/*!
+ * \def ERR
+ *
+ * \brief A fatal error message
+ */
 #define ERR  2
 
 /* static int (*error)() = 0; */
@@ -75,6 +94,8 @@ static int write_error (const char *, const int, const char *,
 static int log_error (const char *, const int);
 
 /*!
+ * \fn void G_message (char *msg,...)
+ *
  * \brief Print a message to stderr
  *
  * The output format depends on enviroment variable GRASS_MESSAGE_FORMAT
@@ -91,6 +112,24 @@ void G_message (char *msg,...)
     print_error (buffer,MSG);
 }
 
+/*!
+ * \fn int G_fatal_error ( char *msg,...)
+ *
+ * \brief Print a fatal error message to stderr
+ * 
+ * The output format depends on enviroment variable
+ * GRASS_MESSAGE_FORMAT
+ *
+ * By default, the message is handled by an internal routine which
+ * prints the message to the screen. Using G_set_error_routine() the
+ * programmer can have the message handled by another routine. This is
+ * especially useful if the message should go to a particular location
+ * on the screen when using curses or to a location on a graphics
+ * device (monitor).
+ *
+ * \return Terminates with an exit status of EXIT_FAILURE if no external
+ * routine is specified by G_set_error_routine()
+*/
 int G_fatal_error ( char *msg,...)
 {
     char buffer[2000];  /* No novels to the error logs, OK? */
@@ -107,6 +146,17 @@ int G_fatal_error ( char *msg,...)
     exit (EXIT_FAILURE);
 }
 
+/*!
+ *
+ * \fn int G_warning ( char *msg, ...)
+ *
+ * \brief Print a warning message to stderr
+ * 
+ * The output format depends on enviroment variable
+ * GRASS_MESSAGE_FORMAT
+ *
+ * A warning message can be suppressed by G_suppress_warnings()
+*/
 int G_warning ( char *msg, ...)
 {
     char buffer[2000];
@@ -122,6 +172,14 @@ int G_warning ( char *msg, ...)
     return 0;
 }
 
+/*!
+ * \fn int G_suppress_warnings (int flag)
+ *
+ * \brief Suppress printing a warning message to stderr
+ * 
+ * \param flag a warning message will be suppressed if non-zero value is given
+ * \return previous flag
+*/
 int G_suppress_warnings (int flag)
 {
     int prev;
@@ -131,6 +189,15 @@ int G_suppress_warnings (int flag)
     return prev;
 }
 
+/*!
+ * \fn int G_sleep_on_error (int flag)
+ *
+ * \brief Turn on/off no_sleep flag
+ * 
+ * \param flag if non-zero/zero value is given G_sleep() will be activated/deactivated
+ *
+ * \return previous flag
+*/
 int G_sleep_on_error (int flag)
 {
     int prev;
@@ -140,12 +207,33 @@ int G_sleep_on_error (int flag)
     return prev;
 }
 
+/*!
+ * \fn int G_set_error_routine ( int (*error_routine)())
+ *
+ * \brief Establishes error_routine as the routine that will handle
+ * the printing of subsequent error messages.
+ * 
+ * \param error_routine routine will be called like this: error_routine(msg,
+ * fatal)
+ *
+ * \return always null
+*/
 int G_set_error_routine ( int (*error_routine)())
 {
     ext_error = error_routine; /* Roger Bivand 17 June 2000 */
     return 0;
 }
 
+/*!
+ * \fn int G_unset_error_routine ()
+ *
+ * \brief After this call subsequent error messages will be handled in the
+ * default method.
+ * 
+ * Error messages are printed directly to the screen: ERROR: message or WARNING: message
+ *
+ * \return null
+*/
 int G_unset_error_routine ()
 {
     ext_error = 0; /* Roger Bivand 17 June 2000 */
@@ -247,6 +335,7 @@ static int log_error (const char *msg, const int fatal)
     return 0;
 }
 
+/* Write a message to the log file */
 static int write_error (const char *msg, const int fatal,
                         const char *dir, const time_t clock,
                         const char *cwd)
@@ -281,6 +370,7 @@ static int write_error (const char *msg, const int fatal,
     return 0;
 }
 
+/* Mail a message */
 static int mail_msg (const char *msg, const int fatal)
 {
     FILE *mail;
@@ -393,7 +483,16 @@ static void print_sentence (FILE *fd, const int type, const char *msg)
     fprintf(stderr, "GRASS_INFO_END(%d,%d)\n", getpid(), message_id );
     message_id++;
 }
-    
+
+/*!
+ * \fn int G_info_format ( void ) 
+ *
+ * \brief Get current message format
+ * 
+ * Maybe set to either "standard" or "gui" (normally GRASS takes care)
+ *
+ * \return grass_info_format value
+*/
 int G_info_format ( void ) 
 {
     static int grass_info_format = -1;
