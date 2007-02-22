@@ -213,7 +213,7 @@ proc GmVector::set_option { node key value } {
 
 # select vector map from list and put its name in layer node
 proc GmVector::select_map { id } {
-    set m [GSelect vector title "Vector map" parent [winfo containing [winfo pointerx .] [winfo pointery .]]]
+    set m [GSelect vector title [G_msg "Vector map"] parent "."]
     if { $m != "" } { 
         set GmVector::opt($id,1,vect) $m
         GmTree::autonamel $m
@@ -222,7 +222,7 @@ proc GmVector::select_map { id } {
 
 # select vector for output map from v.extract
 proc GmVector::select_qmap { id } {
-    set m [GSelect vector title "Vector output map" parent [winfo containing [winfo pointerx .] [winfo pointery .]]]
+    set m [GSelect vector title [G_msg "Vector output map"] parent "."]
     if { $m != "" } { 
         set GmVector::opt($id,1,qmap) $m
         GmTree::autonamel $m
@@ -261,7 +261,7 @@ proc GmVector::show_data { id } {
 # select point symbols
 proc GmVector::select_symbol { id } {
     variable opt
-    set i [GSelect symbol title "Vector point symbol" parent [winfo containing [winfo pointerx .] [winfo pointery .]]]
+    set i [GSelect symbol title [G_msg "Vector point symbol"] parent "."]
     if { $i != "" } {
         set GmVector::opt($id,1,icon) $i
     }
@@ -279,7 +279,7 @@ proc GmVector::options { id frm } {
 
     # Panel heading
     set row [ frame $frm.heading ]
-    Label $row.a -text "Display vector maps" \
+    Label $row.a -text [G_msg "Display vector maps"] \
     	-fg MediumBlue
     pack $row.a -side left
     pack $row -side top -fill both -expand yes
@@ -306,7 +306,7 @@ proc GmVector::options { id frm } {
     Label $row.d -text "   "
     Button $row.e -text [G_msg "Help"] \
 		-image [image create photo -file "$iconpath/gui-help.gif"] \
-		-command "run g.manual d.vect" \
+		-command "spawn g.manual --q d.vect" \
 		-background $bgcolor \
 		-helptext [G_msg "Help"]
     pack $row.a $row.b $row.c $row.d $row.e -side left
@@ -328,7 +328,7 @@ proc GmVector::options { id frm } {
 
     # type
     set row [ frame $frm.type ]
-    Label $row.a -text [G_msg "            "]
+    Label $row.a -text "            "
     checkbutton $row.b -text [G_msg "points"] -variable GmVector::opt($id,1,type_point) \
                 -command "GmVector::legend $id"
     checkbutton $row.c -text [G_msg "lines"] -variable GmVector::opt($id,1,type_line) \
@@ -346,14 +346,14 @@ proc GmVector::options { id frm } {
 
     # points
     set row [ frame $frm.icon ]  
-    Label $row.a -text "Point symbols:" 
+    Label $row.a -text [G_msg "Point symbols:"]
     Button $row.b -text [G_msg "icon"] \
             -command "GmVector::select_symbol $id" 
     Entry $row.c -width 15 -text "$opt($id,1,icon)" \
         	-textvariable GmVector::opt($id,1,icon) 
-    Label $row.d -text "  size" 
+    Label $row.d -text [G_msg " size"]
     SpinBox $row.e -range {1 50 1} -textvariable GmVector::opt($id,1,size) \
-                   -width 2 -helptext "Icon size" -modifycmd "GmVector::legend $id" 
+                   -width 2 -helptext [G_msg "Icon size"] -modifycmd "GmVector::legend $id" 
     pack $row.a $row.b $row.c $row.d $row.e -side left
     pack $row -side top -fill both -expand yes
 
@@ -365,11 +365,11 @@ proc GmVector::options { id frm } {
     Label $row.c -text [G_msg "color"] 
     SelectColor $row.d  -type menubutton -variable GmVector::opt($id,1,color) \
                -command "GmVector::legend $id"
-    Label $row.e -text " width" 
+    Label $row.e -text [G_msg " width"]
     SpinBox $row.f -range {0 50 1} -textvariable GmVector::opt($id,1,lwidth) \
-                   -width 2 -helptext "Line width" \
+                   -width 2 -helptext [G_msg "Line width"] \
                    -modifycmd "GmVector::legend $id"
-    Label $row.g -text "(pixels) " 
+    Label $row.g -text [G_msg "(pixels) "]
     pack $row.a $row.b $row.c $row.d $row.e $row.f $row.g -side left
     pack $row -side top -fill both -expand yes
 
@@ -381,7 +381,7 @@ proc GmVector::options { id frm } {
     Label $row.c -text [G_msg "color"] 
     SelectColor $row.d -type menubutton -variable GmVector::opt($id,1,fcolor) \
                 -command "GmVector::legend $id"
-    Label $row.e -text [G_msg "  "] 
+    Label $row.e -text "  " 
     checkbutton $row.f -text [G_msg "random colors"] -variable GmVector::opt($id,1,rdmcolor) \
                 -command "GmVector::legend $id"
     checkbutton $row.g -text [G_msg "GRASSRGB column colors"] -variable GmVector::opt($id,1,sqlcolor) \
@@ -406,7 +406,7 @@ proc GmVector::options { id frm } {
 
 	# label alighment
     set row [ frame $frm.label2 ]
-    Label $row.a -text [G_msg "     "] 
+    Label $row.a -text "     " 
     ComboBox $row.b -label [G_msg "label part to align with vector point"] \
 		-width 6  -textvariable GmVector::opt($id,1,xref) \
 		-values {"left" "center" "right"} \
@@ -437,7 +437,7 @@ proc GmVector::options { id frm } {
 
 	# query cat
     set row [ frame $frm.query2 ]
-    Label $row.a -text [G_msg "    "] 
+    Label $row.a -text "    " 
     LabelEntry $row.b -label [G_msg "query cat values    "] \
                 -textvariable GmVector::opt($id,1,cat) \
                -width 40
@@ -446,7 +446,7 @@ proc GmVector::options { id frm } {
 
     # sql query
     set row [ frame $frm.where ]
-    Label $row.a -text [G_msg "    "] 
+    Label $row.a -text "    " 
     checkbutton $row.b -variable GmVector::opt($id,1,_use_where) \
 		-command "GmVector::legend $id"
     LabelEntry $row.c -label [G_msg "use SQL query"] \
@@ -474,7 +474,7 @@ proc GmVector::options { id frm } {
 
 	# save query to new vector file
 	set row [ frame $frm.qsave ]
-    Label $row.a -text [G_msg "    "] 
+    Label $row.a -text "    " 
     checkbutton $row.b -text [G_msg "save displayed objects to new vector file "] \
                 -variable GmVector::opt($id,1,qsave) 
     checkbutton $row.c -text [G_msg "overwrite existing"] \
@@ -499,7 +499,7 @@ proc GmVector::options { id frm } {
     Label $row.a -text [G_msg "Display when avg. region dimension is"]
     LabelEntry $row.b -label ">" -textvariable GmVector::opt($id,1,minreg) \
                 -width 8
-    LabelEntry $row.c -label " or <" -textvariable GmVector::opt($id,1,maxreg) \
+    LabelEntry $row.c -label [G_msg " or <"] -textvariable GmVector::opt($id,1,maxreg) \
                 -width 8
     pack $row.a $row.b $row.c -side left
     pack $row -side top -fill both -expand yes

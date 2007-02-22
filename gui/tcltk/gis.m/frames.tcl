@@ -99,7 +99,7 @@ proc GmDframe::options { id frm } {
 
     # Panel heading
     set row [ frame $frm.heading1 ]
-    Label $row.a -text "Divide map display into frames for displaying multiple maps" \
+    Label $row.a -text [G_msg "Divide map display into frames for displaying multiple maps"] \
     	-fg MediumBlue
     pack $row.a -side left
     pack $row -side top -fill both -expand yes
@@ -114,7 +114,7 @@ proc GmDframe::options { id frm } {
         GmDframe::opt($id,1,erase) 
     Button $row.d -text [G_msg "Help"] \
             -image [image create photo -file "$iconpath/gui-help.gif"] \
-            -command "run g.manual d.frame" \
+            -command "spawn g.manual --q d.frame" \
             -background $bgcolor \
             -helptext [G_msg "Help"]
     pack $row.a $row.b $row.c $row.d -side left
@@ -122,20 +122,20 @@ proc GmDframe::options { id frm } {
 
     # frame name
     set row [ frame $frm.frame ]
-    Label $row.a -text "Frame name (optional): "
+    Label $row.a -text [G_msg "Frame name (optional): "]
     LabelEntry $row.b -textvariable GmDframe::opt($id,1,frame) -width 40
     pack $row.a $row.b -side left
     pack $row -side top -fill both -expand yes
 
     # place frame1
     set row [ frame $frm.at1 ]
-    Label $row.a -text "Set frame borders at 0-100% from lower left corner of display "
+    Label $row.a -text [G_msg "Set frame borders at 0-100% from lower left corner of display "]
     pack $row.a -side left
     pack $row -side top -fill both -expand yes
     
     # place frame2
     set row [ frame $frm.at2 ]
-    Label $row.a -text "     set borders (bottom,top,left,right): "
+    Label $row.a -text [G_msg "     set borders (bottom,top,left,right): "]
     LabelEntry $row.b -textvariable GmDframe::opt($id,1,at) -width 25
     pack $row.a $row.b -side left
     pack $row -side top -fill both -expand yes

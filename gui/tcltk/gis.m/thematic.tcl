@@ -124,10 +124,10 @@ proc GmThematic::set_option { node key value } {
 proc GmThematic::select_map { id } {
     variable tree
     variable node
-    set m [GSelect vector title "Vector map" parent [winfo containing [winfo pointerx .] [winfo pointery .]]]
+    set m [GSelect vector title [G_msg "Vector map"] parent "."]
     if { $m != "" } { 
         set GmThematic::opt($id,1,map) $m
-        GmTree::autonamel "thematic map for $m"
+        GmTree::autonamel [format [G_msg "thematic map for %s"] $m]
     }
 }
 
@@ -136,20 +136,20 @@ proc GmThematic::select_map { id } {
 proc GmThematic::select_tfont { id frm} {
 	variable opt
     
-    set fon [SelectFont $frm.font -type dialog -sampletext 1 -title "Select font"]
+    set fon [SelectFont $frm.font -type dialog -sampletext [G_msg "This is font sample text."] -title [G_msg "Select font"]]
 	if { $fon != "" } {set opt($id,1,titlefont) $fon}
 }
 
 proc GmThematic::select_stfont { id frm} {
 	variable opt
     
-    set fon [SelectFont $frm.font -type dialog -sampletext 1 -title "Select font"]
+    set fon [SelectFont $frm.font -type dialog -sampletext [G_msg "This is font sample text."] -title [G_msg "Select font"]]
 	if { $fon != "" } {set opt($id,1,subtitlefont) $fon}
 }
 proc GmThematic::select_lfont { id frm} {
 	variable opt
     
-    set fon [SelectFont $frm.font -type dialog -sampletext 1 -title "Select font"]
+    set fon [SelectFont $frm.font -type dialog -sampletext [G_msg "This is font sample text."] -title [G_msg "Select font"]]
 	if { $fon != "" } {set opt($id,1,labelfont) $fon}
 }
 
@@ -187,7 +187,7 @@ proc GmThematic::show_data { id } {
 # select symbols from directories
 proc GmThematic::select_symbol { id } {
     variable opt
-    set i [GSelect symbol title "Vector point symbol" parent [winfo containing [winfo pointerx .] [winfo pointery .]]]
+    set i [GSelect symbol title [G_msg "Vector point symbol"] parent "."]
     if { $i != "" } {
         set GmThematic::opt($id,1,icon) $i
     }
@@ -203,13 +203,13 @@ proc GmThematic::options { id frm } {
 
     # Panel heading
     set row [ frame $frm.heading1 ]
-    Label $row.a -text "Display vector maps thematically by graduate colors (all types)" \
+    Label $row.a -text [G_msg "Display vector maps thematically by graduate colors (all types)"] \
     	-fg MediumBlue
     pack $row.a -side left
     pack $row -side top -fill both -expand yes
 
     set row [ frame $frm.heading2 ]
-    Label $row.a -text "  or by graduated sizes (points and lines)" \
+    Label $row.a -text [G_msg "  or by graduated sizes (points and lines)"] \
     	-fg MediumBlue
     pack $row.a -side left
     pack $row -side top -fill both -expand yes
@@ -236,7 +236,7 @@ proc GmThematic::options { id frm } {
     Label $row.d -text "   "
     Button $row.e -text [G_msg "Help"] \
             -image [image create photo -file "$iconpath/gui-help.gif"] \
-            -command "run g.manual d.vect.thematic" \
+            -command "spawn g.manual --q d.vect.thematic" \
             -background $bgcolor \
             -helptext [G_msg "Help"]
     pack $row.a $row.b $row.c $row.d $row.e -side left
@@ -247,14 +247,14 @@ proc GmThematic::options { id frm } {
     Label $row.a -text [G_msg "    vector type"] 
     ComboBox $row.b -padx 2 -width 10 -textvariable GmThematic::opt($id,1,type) \
                     -values {"area" "point" "centroid" "line" "boundary"}
-    Label $row.c -text " attribute layer"
+    Label $row.c -text [G_msg " attribute layer"]
     LabelEntry $row.d -textvariable GmThematic::opt($id,1,layer) -width 3 
     pack $row.a $row.b $row.c $row.d -side left
     pack $row -side top -fill both -expand yes
 
     # vector column
     set row [ frame $frm.column ]
-    Label $row.a -text "    NUMERIC attribute column to use for thematic map"
+    Label $row.a -text [G_msg "    NUMERIC attribute column to use for thematic map"]
     LabelEntry $row.b -textvariable GmThematic::opt($id,1,column) -width 15
     pack $row.a $row.b -side left
     pack $row -side top -fill both -expand yes
@@ -290,7 +290,7 @@ proc GmThematic::options { id frm } {
 
     # intervals
     set row [ frame $frm.int ]
-    Label $row.a -text "    number of intervals to map (interval themes):" 
+    Label $row.a -text [G_msg "    number of intervals to map (interval themes):"]
     SpinBox $row.b -range {1 99 1} -textvariable GmThematic::opt($id,1,nint) \
                     -width 3 
     pack $row.a $row.b -side left
@@ -298,21 +298,21 @@ proc GmThematic::options { id frm } {
 
     # breakpoints
     set row [ frame $frm.break ]
-    Label $row.a -text "    custom breakpoints (val val ...)  "
+    Label $row.a -text [G_msg "    custom breakpoints (val val ...)  "]
     LabelEntry $row.b -textvariable GmThematic::opt($id,1,breakpoints) -width 32
     pack $row.a $row.b -side left
     pack $row -side top -fill both -expand yes
 
     # where
     set row [ frame $frm.where ]
-    Label $row.a -text "    query with SQL where clause   "
+    Label $row.a -text [G_msg "    query with SQL where clause   "]
     LabelEntry $row.b -textvariable GmThematic::opt($id,1,where) -width 32 
     pack $row.a $row.b -side left
     pack $row -side top -fill both -expand yes
 
     # point options1
     set row [ frame $frm.pts1 ]  
-    Label $row.a -text "Graduated points & lines: " 
+    Label $row.a -text [G_msg "Graduated points & lines: "]
     Button $row.b -text [G_msg "icon"] \
 	    -command "GmThematic::select_symbol $id"
     Entry $row.c -width 10 -text "$opt($id,1,icon)" \
@@ -326,12 +326,12 @@ proc GmThematic::options { id frm } {
 
     # point options2
     set row [ frame $frm.pts2 ]  
-    Label $row.a -text "    size/min size (graduated pts/lines)" 
+    Label $row.a -text [G_msg "    size/min size (graduated pts/lines)"]
     SpinBox $row.b -range {1 50 1} -textvariable GmThematic::opt($id,1,ptsize) \
-        -width 2 -helptext "icon size/min size (graduated pts/lines)"  
-    Label $row.c -text "max size (graduated pts)" 
+        -width 2 -helptext [G_msg "icon size/min size (graduated pts/lines)"]
+    Label $row.c -text [G_msg "max size (graduated pts)"]
     SpinBox $row.d -range {1 50 1} -textvariable GmThematic::opt($id,1,maxsize) \
-        -width 2 -helptext " max size (graduated pts/lines)"  
+        -width 2 -helptext [G_msg " max size (graduated pts/lines)"]
     pack $row.a $row.b $row.c $row.d -side left
     pack $row -side top -fill both -expand yes
 
@@ -347,9 +347,9 @@ proc GmThematic::options { id frm } {
 
     # color options2
     set row [ frame $frm.color2 ]
-    Label $row.a -text "    custom color scheme - start color"
+    Label $row.a -text [G_msg "    custom color scheme - start color"]
     SelectColor $row.b -type menubutton -variable GmThematic::opt($id,1,startcolor)
-    Label $row.c -text " end color"
+    Label $row.c -text [G_msg " end color"]
     SelectColor $row.d -type menubutton -variable GmThematic::opt($id,1,endcolor)
     checkbutton $row.e -text [G_msg "draw border"] -variable GmThematic::opt($id,1,border)     
     pack $row.a $row.b $row.c $row.d $row.e -side left
@@ -372,7 +372,7 @@ proc GmThematic::options { id frm } {
 	    -command "GmThematic::select_tfont $id $frm"
     Entry $row.c -width 15 -text "$opt($id,1,titlefont)" \
 	    -textvariable GmThematic::opt($id,1,titlefont)  
-    Label $row.d -text " font color"
+    Label $row.d -text [G_msg " font color"]
     SelectColor $row.e -type menubutton -variable GmThematic::opt($id,1,tfontcolor)
     pack $row.a $row.b $row.c $row.d $row.e -side left
     pack $row -side top -fill both -expand yes
@@ -398,7 +398,7 @@ proc GmThematic::options { id frm } {
 	    -command "GmThematic::select_lfont $id $frm"
     Entry $row.c -width 15 -text "$opt($id,1,labelfont)" \
 	    -textvariable GmThematic::opt($id,1,labelfont)  
-    Label $row.d -text " font color"
+    Label $row.d -text [G_msg " font color"]
     SelectColor $row.e -type menubutton -variable GmThematic::opt($id,1,lfontcolor)
     pack $row.a $row.b $row.c $row.d $row.e -side left
     pack $row -side top -fill both -expand yes
@@ -413,7 +413,7 @@ proc GmThematic::options { id frm } {
 
     # psmap
     set row [ frame $frm.psmap ]
-    Label $row.a -text "Name for ps.map instruction files"
+    Label $row.a -text [G_msg "Name for ps.map instruction files"]
     LabelEntry $row.b -textvariable GmThematic::opt($id,1,psmap) -width 34 
     pack $row.a $row.b -side left
     pack $row -side top -fill both -expand yes
@@ -619,9 +619,9 @@ proc GmThematic::tlegend { mon id } {
 
 	if { [winfo exists .tlegend($mon,$id)] } {return}
 
-	set legendtitle "Legend for Map $mon, $opt($id,1,map)"
+	set legendtitle [format [G_msg "Legend for Map %d, %s"] $mon, $opt($id,1,map)]
 	toplevel .tlegend($mon,$id)
-    wm title .tlegend($mon,$id) [G_msg $legendtitle]
+    wm title .tlegend($mon,$id) $legendtitle
 
 
     wm withdraw .tlegend($mon,$id)
@@ -642,10 +642,10 @@ proc GmThematic::tlegend { mon id } {
 	# control buttons
 	set tleg_tb [$tlegmf addtoolbar]
 	set tlbb [ButtonBox $tleg_tb.bb -orient horizontal]
-	$tlbb add -text "clear" -command "GmThematic::tleg_erase $mon $id" -bg #dddddd \
+	$tlbb add -text [G_msg "clear"] -command "GmThematic::tleg_erase $mon $id" -bg #dddddd \
 		-highlightthickness 0 -takefocus 0 -relief raised -borderwidth 1 \
         -helptext [G_msg "Clear legend"] -highlightbackground $bgcolor
-	$tlbb add -text "save" -command "GmThematic::tleg_save $mon $id"  -bg #dddddd \
+	$tlbb add -text [G_msg "save"] -command "GmThematic::tleg_save $mon $id"  -bg #dddddd \
 		-highlightthickness 0 -takefocus 0 -relief raised -borderwidth 1 \
         -helptext [G_msg "Save legend to EPS file"] -highlightbackground $bgcolor
 

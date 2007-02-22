@@ -96,10 +96,10 @@ proc GmRnums::select_map { id } {
     variable node
     global mon
     
-    set m [GSelect cell title "Raster map" parent [winfo containing [winfo pointerx .] [winfo pointery .]]]
+    set m [GSelect cell title [G_msg "Raster map"] parent "."]
     if { $m != "" } { 
         set GmRnums::opt($id,1,map) $m
-        GmTree::autonamel "cell values for $m"
+        GmTree::autonamel [format [G_msg "cell values for %s"] $m]
     }
 }
 
@@ -112,13 +112,13 @@ proc GmRnums::options { id frm } {
 
     # Panel heading
     set row [ frame $frm.heading1 ]
-    Label $row.a -text "Display cell values from raster map or image" \
+    Label $row.a -text [G_msg "Display cell values from raster map or image"] \
     	-fg MediumBlue
     pack $row.a -side left
     pack $row -side top -fill both -expand yes
 
     set row [ frame $frm.heading2 ]
-    Label $row.a -text "  (resolution must be 100x100 or less)"
+    Label $row.a -text [G_msg "  (resolution must be 100x100 or less)"]
     pack $row.a -side left
     pack $row -side top -fill both -expand yes
 
@@ -134,7 +134,7 @@ proc GmRnums::options { id frm } {
 	
     # raster name for histogram
     set row [ frame $frm.name ]
-    Label $row.a -text "Raster to display: "
+    Label $row.a -text [G_msg "Raster to display: "]
     Button $row.b -image [image create photo -file "$iconpath/element-cell.gif"] \
         -highlightthickness 0 -takefocus 0 -relief raised -borderwidth 1  \
 		-command "GmRnums::select_map $id"
@@ -143,14 +143,14 @@ proc GmRnums::options { id frm } {
     Label $row.d -text "   "
     Button $row.e -text [G_msg "Help"] \
 		-image [image create photo -file "$iconpath/gui-help.gif"] \
-		-command "run g.manual d.rast.num" \
+		-command "spawn g.manual --q d.rast.num" \
 		-background $bgcolor -helptext [G_msg "Help"]
     pack $row.a $row.b $row.c $row.d $row.e -side left
     pack $row -side top -fill both -expand yes
 
     # grid color
     set row [ frame $frm.grid ]
-    Label $row.a -text "Color for cell grid:       "
+    Label $row.a -text [G_msg "Color for cell grid:       "]
     ComboBox $row.b -padx 2 -width 10 -textvariable GmRnums::opt($id,1,grid_color) \
 		-values {"white" "grey" "gray" "black" "brown" "red" "orange" \
 		"yellow" "green" "aqua" "cyan" "indigo" "blue" "purple" "violet" \
@@ -160,7 +160,7 @@ proc GmRnums::options { id frm } {
 
     # text color
     set row [ frame $frm.text ]
-    Label $row.a -text "Color for cell values:   "
+    Label $row.a -text [G_msg "Color for cell values:   "]
     ComboBox $row.b -padx 2 -width 10 -textvariable GmRnums::opt($id,1,text_color) \
 		-values {"white" "grey" "gray" "black" "brown" "red" "orange" \
 		"yellow" "green" "aqua" "cyan" "indigo" "blue" "purple" "violet" \
@@ -233,7 +233,7 @@ proc GmRnums::display { node mod } {
 		set mapdispht $env(GRASS_HEIGHT)
 		set mapdispwd $env(GRASS_WIDTH)
 	} elseif {$opt($id,1,_check)} {
-		set msgtxt "Cell values can only be displayed\nfor regions of < 10,000 cells" 
+		set msgtxt [G_msg "Cell values can only be displayed\nfor regions of < 10,000 cells"]
 		set answer [tk_messageBox -message $msgtxt -type ok -parent .mapcan($mon)]
 		if { $answer == "ok" } {return}
     }

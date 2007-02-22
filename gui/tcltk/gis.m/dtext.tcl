@@ -130,10 +130,10 @@ proc GmDtext::select_font { id frm } {
 
 	if { $fontdir != "" } {
 		set fontpath [tk_getOpenFile -initialdir $fontdir \
-			-title "Select font file"]
+			-title [G_msg "Select font file"]]
 	} else {
 		set fontpath [tk_getOpenFile  \
-			 -title "Select font file"]
+			 -title [G_msg "Select font file"]]
 	}
 	
 	set GmDtext::opt($id,1,font) $fontpath
@@ -186,7 +186,7 @@ proc GmDtext::options { id frm } {
 
     # Panel heading
     set row [ frame $frm.heading ]
-    Label $row.a -text "Display text" \
+    Label $row.a -text [G_msg "Display text"] \
     	-fg MediumBlue
     pack $row.a -side left
     pack $row -side top -fill both -expand yes
@@ -206,7 +206,7 @@ proc GmDtext::options { id frm } {
     LabelEntry $row.a -label [G_msg "Text to display: "] -textvariable GmDtext::opt($id,1,text) -width 51
     Button $row.b -text [G_msg "Help"] \
             -image [image create photo -file "$iconpath/gui-help.gif"] \
-            -command "run g.manual d.text.new" \
+            -command "spawn g.manual --q d.text.new" \
             -background $bgcolor \
             -helptext [G_msg "Help"]
     pack $row.a $row.b -side left

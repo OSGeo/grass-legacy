@@ -91,7 +91,7 @@ proc GmLabels::set_option { node key value } {
 }
 
 proc GmLabels::select_labels { id } {
-    set m [GSelect paint/labels title "Labels for vectors" parent [winfo containing [winfo pointerx .] [winfo pointery .]]]
+    set m [GSelect paint/labels title [G_msg "Labels for vectors"] parent "."]
     if { $m != "" } { 
         set GmLabels::opt($id,1,map) $m
         GmTree::autonamel $m
@@ -106,7 +106,7 @@ proc GmLabels::options { id frm } {
 
     # Panel heading
     set row [ frame $frm.heading ]
-    Label $row.a -text "Display labels for vector objects (created with v.label)" \
+    Label $row.a -text [G_msg "Display labels for vector objects (created with v.label)"] \
     	-fg MediumBlue
     pack $row.a -side left
     pack $row -side top -fill both -expand yes
@@ -133,7 +133,7 @@ proc GmLabels::options { id frm } {
     Label $row.d -text "   "
     Button $row.e -text [G_msg "Help"] \
 		-image [image create photo -file "$iconpath/gui-help.gif"] \
-		-command "run g.manual d.labels" \
+		-command "spawn g.manual --q d.labels" \
 		-background $bgcolor \
 		-helptext [G_msg "Help"]
     pack $row.a $row.b $row.c $row.d $row.e -side left
@@ -142,9 +142,9 @@ proc GmLabels::options { id frm } {
     # display only in limited region size range
     set row [ frame $frm.region ]
     Label $row.a -text [G_msg "Display constraints:"]
-    LabelEntry $row.b -label "min" -textvariable GmLabels::opt($id,1,minreg) \
+    LabelEntry $row.b -label [G_msg "min"] -textvariable GmLabels::opt($id,1,minreg) \
             -width 8 
-    LabelEntry $row.c -label "max" -textvariable GmLabels::opt($id,1,maxreg) \
+    LabelEntry $row.c -label [G_msg "max"] -textvariable GmLabels::opt($id,1,maxreg) \
             -width 8 
     Label $row.d -text [G_msg "region size"]
     pack $row.a $row.b $row.c $row.d -side left
@@ -159,7 +159,7 @@ proc GmLabels::options { id frm } {
 
     # launch v.label
     set row [ frame $frm.vlabel ]
-    Label $row.a -text "Launch v.label to create labels file" 
+    Label $row.a -text [G_msg "Launch v.label to create labels file"]
     Button $row.b -text [G_msg "v.label"] \
 	    -command "execute v.label"
     pack $row.a $row.b -side left

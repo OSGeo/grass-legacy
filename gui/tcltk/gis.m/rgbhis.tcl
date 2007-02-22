@@ -98,17 +98,17 @@ proc GmRgbhis::set_option { node key value } {
 proc GmRgbhis::select_map1 { id } {
     variable tree
     variable node
-    set m1 [GSelect cell title "Raster map for red or hue channel" parent [winfo containing [winfo pointerx .] [winfo pointery .]]]
+    set m1 [GSelect cell title [G_msg "Raster map for red or hue channel"] parent "."]
     if { $m1 != "" } { 
         set GmRgbhis::opt($id,1,map1) $m1
-        GmTree::autonamel "RGB-HIS $m1"
+        GmTree::autonamel [format [G_msg "RGB-HIS %s"] $m1]
     }
 }
 
 proc GmRgbhis::select_map2 { id } {
     variable tree
     variable node
-    set m2 [GSelect cell title "Raster map for green or intensity channel" parent [winfo containing [winfo pointerx .] [winfo pointery .]]]
+    set m2 [GSelect cell title [G_msg "Raster map for green or intensity channel"] parent "."]
     if { $m2 != "" } { 
         set GmRgbhis::opt($id,1,map2) $m2
     }
@@ -116,7 +116,7 @@ proc GmRgbhis::select_map2 { id } {
 proc GmRgbhis::select_map3 { id } {
     variable tree
     variable node
-    set m3 [GSelect cell title "Raster map for blue or saturation channel" parent [winfo containing [winfo pointerx .] [winfo pointery .]]]
+    set m3 [GSelect cell title [G_msg "Raster map for blue or saturation channel"] parent "."]
     if { $m3 != "" } { 
         set GmRgbhis::opt($id,1,map3) $m3
     }
@@ -130,7 +130,7 @@ proc GmRgbhis::options { id frm } {
 
     # Panel heading
     set row [ frame $frm.heading ]
-    Label $row.a -text "Display 3 raster maps as red/green/blue or hue/intensity/saturation channels" \
+    Label $row.a -text [G_msg "Display 3 raster maps as red/green/blue or hue/intensity/saturation channels"] \
     	-fg MediumBlue
     pack $row.a -side left
     pack $row -side top -fill both -expand yes
@@ -147,7 +147,7 @@ proc GmRgbhis::options { id frm } {
 	
     # raster1 name
     set row [ frame $frm.name1 ]
-    Label $row.a -text "     red (RGB) or hue (HIS):          "
+    Label $row.a -text [G_msg "\tred (RGB) or hue (HIS):\t"]
     Button $row.b -image [image create photo -file "$iconpath/channel-red.gif"] \
         -highlightthickness 0 -takefocus 0 -relief raised -borderwidth 1  \
         -helptext [G_msg "raster map for red or hue channel"]\
@@ -159,7 +159,7 @@ proc GmRgbhis::options { id frm } {
 
     # raster2 name
     set row [ frame $frm.name2 ]
-    Label $row.a -text "     green (RGB) or intensity (HIS):"
+    Label $row.a -text [G_msg "\tgreen (RGB) or intensity (HIS):"]
     Button $row.b -image [image create photo -file "$iconpath/channel-green.gif"] \
         -highlightthickness 0 -takefocus 0 -relief raised -borderwidth 1  \
         -helptext [G_msg "raster map for green or intensity channel"]\
@@ -171,7 +171,7 @@ proc GmRgbhis::options { id frm } {
 
     # raster3 name
     set row [ frame $frm.name3 ]
-    Label $row.a -text "     blue (RGB) or saturation (HIS):"
+    Label $row.a -text [G_msg "\tblue (RGB) or saturation (HIS):"]
     Button $row.b -image [image create photo -file "$iconpath/channel-blue.gif"] \
         -highlightthickness 0 -takefocus 0 -relief raised -borderwidth 1  \
         -helptext [G_msg "raster map for blue or saturation channel"]\
@@ -187,14 +187,14 @@ proc GmRgbhis::options { id frm } {
         GmRgbhis::opt($id,1,rgb) 
     Button $row.b -text [G_msg "Help"] \
             -image [image create photo -file "$iconpath/gui-help.gif"] \
-            -command "run g.manual d.rgb" \
+            -command "spawn g.manual --q d.rgb" \
             -background $bgcolor \
             -helptext [G_msg "Help for RGB"]
     checkbutton $row.c -text [G_msg "display maps as HIS"] -variable \
         GmRgbhis::opt($id,1,his) 
     Button $row.d -text [G_msg "Help"] \
             -image [image create photo -file "$iconpath/gui-help.gif"] \
-            -command "run g.manual d.his" \
+            -command "spawn g.manual --q d.his" \
             -background $bgcolor \
             -helptext [G_msg "Help for HIS"]
     pack $row.a $row.b $row.c $row.d -side left

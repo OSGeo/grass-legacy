@@ -108,7 +108,7 @@ proc GmRaster::select_map { id } {
     variable node
     global mon
 
-    set m [GSelect cell title "Raster map" parent [winfo containing [winfo pointerx .] [winfo pointery .]]]
+    set m [GSelect cell title [G_msg "Raster map"] parent "."]
     if { $m != "" } {
         set GmRaster::opt($id,1,map) $m
         GmTree::autonamel $m
@@ -121,7 +121,7 @@ proc GmRaster::select_drapemap { id } {
     variable node
     global mon
 
-    set m [GSelect cell title "Raster drape map" parent [winfo containing [winfo pointerx .] [winfo pointery .]]]
+    set m [GSelect cell title [G_msg "Raster drape map"] parent "."]
     if { $m != "" } {
         set GmRaster::opt($id,1,drapemap) $m
         GmTree::autonamel $m
@@ -138,7 +138,7 @@ proc GmRaster::options { id frm } {
 
     # Panel heading
     set row [ frame $frm.heading ]
-    Label $row.a -text "Display raster maps" \
+    Label $row.a -text [G_msg "Display raster maps"] \
         -fg MediumBlue
     pack $row.a -side left
     pack $row -side top -fill both -expand yes
@@ -155,7 +155,7 @@ proc GmRaster::options { id frm } {
 
     # raster name
     set row [ frame $frm.name ]
-    Label $row.a -text "Base map:        "
+    Label $row.a -text [G_msg "Base map:\t"]
     Button $row.b -image [image create photo -file "$iconpath/element-cell.gif"] \
         -highlightthickness 0 -takefocus 0 -relief raised -borderwidth 1  \
         -helptext [G_msg "base raster map to display"]\
@@ -165,7 +165,7 @@ proc GmRaster::options { id frm } {
     Label $row.d -text "   "
     Button $row.e -text [G_msg "Help"] \
             -image [image create photo -file "$iconpath/gui-help.gif"] \
-            -command "run g.manual d.rast" \
+            -command "spawn g.manual --q d.rast" \
             -background $bgcolor \
             -helptext [G_msg "Help"]
     pack $row.a $row.b $row.c $row.d $row.e -side left
@@ -173,24 +173,24 @@ proc GmRaster::options { id frm } {
 
     # raster query
     set row [ frame $frm.rquery ]
-    Label $row.a -text "     values to display"
+    Label $row.a -text [G_msg "\tvalues to display"]
     LabelEntry $row.b -textvariable GmRaster::opt($id,1,rastquery) -width 35
     pack $row.a $row.b -side left
     pack $row -side top -fill both -expand yes
 
     # drape name
     set row [ frame $frm.drapeinfo1 ]
-    Label $row.a -text "     Optional color draping. Use base map for shading,"
+    Label $row.a -text [G_msg "\tOptional color draping. Use base map for shading,"]
     pack $row.a -side left
     pack $row -side top -fill both -expand yes
 
     set row [ frame $frm.drapeinfo2 ]
-    Label $row.a -text "     drape map for color in color relief map or data fusion"
+    Label $row.a -text [G_msg "\tdrape map for color in color relief map or data fusion"]
     pack $row.a -side left
     pack $row -side top -fill both -expand yes
 
     set row [ frame $frm.drape ]
-    Label $row.a -text "     drape map:  "
+    Label $row.a -text [G_msg "\tdrape map:  "]
     Button $row.b -image [image create photo -file "$iconpath/element-cell.gif"] \
         -highlightthickness 0 -takefocus 0 -relief raised -borderwidth 1  \
         -helptext [G_msg "raster map to drape over base map"]\
@@ -209,7 +209,7 @@ proc GmRaster::options { id frm } {
 
     # background color
     set row [ frame $frm.bg ]
-    Label $row.a -text " Set background color (colored null value cells)"
+    Label $row.a -text [G_msg " Set background color (colored null value cells)"]
     ComboBox $row.b -padx 2 -width 10 -textvariable GmRaster::opt($id,1,bkcolor) \
                     -values {"white" "grey" "gray" "black" "brown" "red" "orange" \
                     "yellow" "green" "aqua" "cyan" "indigo" "blue" "purple" "violet" "magenta"}
