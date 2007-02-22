@@ -182,7 +182,7 @@ Vect__open_old ( struct Map_info *Map, char *name, char *mapset, int update, int
       
       G_debug ( 1, "Vector format: %d (non-native)", format);
       if ( format < 0 ) {
-	  sprintf ( errmsg, _("Cannot open old vector %s"), Vect_get_full_name(Map) ); 
+	  sprintf ( errmsg, _("Cannot open existing vector <%s>"), Vect_get_full_name(Map) ); 
 	  fatal_error (ferror, errmsg);
           return -1;
       }
@@ -192,7 +192,7 @@ Vect__open_old ( struct Map_info *Map, char *name, char *mapset, int update, int
 
   /* Read vector head */
   if ( Vect__read_head (Map) != GRASS_OK ) {
-      sprintf ( errmsg, _("Cannot open old vector %s on level %d"), Vect_get_full_name(Map), level_request ); 
+      sprintf ( errmsg, _("Cannot open existing vector <%s> on level [%d]"), Vect_get_full_name(Map), level_request ); 
       G_warning ( "Cannot read head file." );
   }
   
@@ -250,7 +250,7 @@ Vect__open_old ( struct Map_info *Map, char *name, char *mapset, int update, int
       }
 #endif
       if (level_request == 2 && level < 2) {
-	  sprintf ( errmsg, _("Cannot open old vector %s on level %d"), Vect_get_full_name(Map), level_request ); 
+	  sprintf ( errmsg, _("Cannot open existing vector <%s> on level [%d]"), Vect_get_full_name(Map), level_request ); 
 	  fatal_error (ferror, errmsg);
 	  return -1;
       }
@@ -266,7 +266,7 @@ Vect__open_old ( struct Map_info *Map, char *name, char *mapset, int update, int
 	      dig_spidx_free ( &(Map->plus) );
 	      dig_cidx_free ( &(Map->plus) );
 	  }
-	  sprintf ( errmsg, _("Cannot open old vector %s on level %d"), Vect_get_full_name(Map), level_request ); 
+	  sprintf ( errmsg, _("Cannot open existing vector <%s> on level [%d]"), Vect_get_full_name(Map), level_request ); 
 	  fatal_error (ferror, errmsg);
 	  return -1;
       }
@@ -495,7 +495,7 @@ Vect_open_new (
 	
         ret = Vect_delete ( name );
         if ( ret == -1 ) {
-            sprintf ( errmsg, _("Cannot delete existing vector %s"), name ); 
+            sprintf ( errmsg, _("Cannot delete existing vector <%s>"), name ); 
 	    fatal_error (ferror , errmsg );
 	    return (-1);
         }
