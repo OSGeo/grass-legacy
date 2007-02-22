@@ -168,9 +168,10 @@ typedef enum {
     G_OPT_R3_INPUTS,  /* old input raster3d maps */
     G_OPT_R3_OUTPUT, /* new output raster3d map */
 
-    G_OPT_V_INPUT,  /* old input vector */
-    G_OPT_V_OUTPUT, /* new output vector */
-    G_OPT_V_MAP,    /* old input vector */
+    G_OPT_V_INPUT,  /* old input vector map */
+    G_OPT_V_INPUTS, /* old input vector maps */
+    G_OPT_V_OUTPUT, /* new output vector map */
+    G_OPT_V_MAP,    /* old input vector map */
     G_OPT_V_TYPE,   /* primitive type */
     G_OPT_V_FIELD,  /* field number */
     G_OPT_V_CAT,    /* one category */
