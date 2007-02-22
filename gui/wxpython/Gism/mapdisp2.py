@@ -7,6 +7,7 @@ import os, sys, time, glob
 import render
 import gismutils
 import toolbars
+import grassenv
 
 Map = render.Map() # instantiate module to render GRASS display output to PPM file
 
@@ -47,6 +48,7 @@ class BufferedWindow(wx.Window):
     	# tempfile for display command output
     	self.MapFile = None # file with 
     	self.Img = "" # wx.Image object from self.MapFile
+        self.parent = parent
 
     	# mouse attributes like currently pressed buttons, position on
     	# the screen, begin and end of dragging, and type of drawing
@@ -181,15 +183,23 @@ class BufferedWindow(wx.Window):
     	    self.mouse['begin'] = event.GetPositionTuple()[:]
 
     	# left mouse button released and not just a pointer
-    	elif event.LeftUp() and self.mouse['box'] != "point":
-    	    # end point of zoom box or drag
-    	    self.mouse['end'] = event.GetPositionTuple()[:]
+        elif event.LeftUp():
+            if self.mouse['box'] != "point":
+                # end point of zoom box or drag
+                self.mouse['end'] = event.GetPositionTuple()[:]
 
-    	    # set region in zoom or pan
-    	    self.Zoom(self.mouse['begin'], self.mouse['end'], self.zoomtype)
+                # set region in zoom or pan
+                self.Zoom(self.mouse['begin'], self.mouse['end'], self.zoomtype)
 
-    	    # redraw map
-    	    self.UpdateMap()
+            else:
+                # digitizing
+                if self.parent.dtoolbar:
+                    if self.parent.dtoolbar.digitize == "point":
+                        east,north= self.Pixel2Cell(self.mouse['end'][0],self.mouse['end'][1])
+                        self.parent.dtoolbar.AddPoint(east,north)
+            # redraw map
+            self.render=True
+            self.UpdateMap()
 
     	# dragging or drawing box with left button
     	elif event.Dragging() and event.LeftIsDown:
@@ -489,9 +499,9 @@ class MapFrame(wx.Frame):
         tool =  event.GetString()
 
         if tool == "Digitize" and not self.dtoolbar:
-            d=toolbars.DigitToolbar(self,Map)
+            self.dtoolbar=toolbars.DigitToolbar(self,Map)
 
-            self._mgr.AddPane(d.toolbar, wx.aui.AuiPaneInfo().
+            self._mgr.AddPane(self.dtoolbar.toolbar, wx.aui.AuiPaneInfo().
                           Name("dtoolbar").Caption("Digitize Toolbar").
                           ToolbarPane().Top().
                           LeftDockable(False).RightDockable(False))
@@ -510,8 +520,8 @@ class MapApp(wx.App):
         # only for testing purpose
         if __name__ == "__main__":
             Map.AddRasterLayer(name="elevation.dem", mapset="PERMANENT")
-            Map.AddVectorLayer(name="roads", mapset="PERMANENT",
-            color="red")
+            os.system("g.copy vect=roads,tmp --o")
+            Map.AddVectorLayer(name="tmp", color="red")
             Map.AddVectorLayer(name="bugsites", mapset="PERMANENT",
                     color="blue")
 
@@ -528,3 +538,5 @@ if __name__ == "__main__":
         os.environ["GRASS_ICONPATH"]=os.getenv("GISBASE")+"/etc/gui/icons/"
     gm_map = MapApp(0)
     gm_map.MainLoop()
+    if grassenv.env.has_key("MONITOR"):
+        os.system("d.mon sel=%s" % grassenv.env["MONITOR"])
