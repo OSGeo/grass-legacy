@@ -453,6 +453,15 @@ G_define_standard_option (int opt)
 	    Opt->gisprompt    = "old,vector,vector";
 	    Opt->description  = _("Name of input vector map");
 	    break;
+	case G_OPT_V_INPUTS:
+	    Opt->key          = "input";
+	    Opt->type         = TYPE_STRING;
+	    Opt->key_desc     = "name";
+	    Opt->required     = YES;
+	    Opt->multiple     = YES;
+	    Opt->gisprompt    = "old,vector,vector";
+	    Opt->description  = _("Name of input vector map(s)");
+	    break;
 	case G_OPT_V_OUTPUT:
 	    Opt->key          = "output";
 	    Opt->type         = TYPE_STRING;
@@ -1984,17 +1993,17 @@ static int check_an_opt (char *key, int type, char *options, char *answer)
 	case 0:
 		break ;
 	case BAD_SYNTAX:
-		fprintf(stderr,_("\nError: illegal range syntax for parameter <%s>\n"),
+		fprintf(stderr,_("\nERROR: illegal range syntax for parameter <%s>\n"),
 		    key) ;
 		fprintf(stderr,_("       Presented as: %s\n"), options) ;
 		break ;
 	case OUT_OF_RANGE:
-		fprintf(stderr,_("\nError: value <%s> out of range for parameter <%s>\n"),
+		fprintf(stderr,_("\nERROR: value <%s> out of range for parameter <%s>\n"),
 		    answer, key) ;
 		fprintf(stderr,_("       Legal range: %s\n"), options) ;
 		break ;
 	case MISSING_VALUE:
-		fprintf(stderr,_("\nError: Missing value for parameter <%s>\n"),
+		fprintf(stderr,_("\nERROR: Missing value for parameter <%s>\n"),
 		    key) ;
 	}
 	return(error) ;
@@ -2257,7 +2266,7 @@ static int check_multiple_opts (void)
 			/* if not correct multiple of items */
 			if(n % n_commas)
 			{
-				fprintf(stderr,_("\nError: option <%s> must be provided in multiples of %d\n"),
+				fprintf(stderr,_("\nERROR: option <%s> must be provided in multiples of %d\n"),
 					opt->key, n_commas) ;
 				fprintf(stderr,_("       You provided %d items:\n"), n) ;
 				fprintf(stderr,"       %s\n", opt->answer) ;
@@ -2314,7 +2323,7 @@ static int check_overwrite (void)
 			    if ( G_find_file (element, opt->answer, G_mapset()) ) /* found */
 			    {
 				if ( !overwrite && !over ) { 
-				    fprintf(stderr,_("Error: option <%s>: <%s> exists.\n"), 
+				    fprintf(stderr,_("ERROR: option <%s>: <%s> exists.\n"), 
 						   opt->key, opt->answer );
 
 				    error = 1;
@@ -2336,7 +2345,7 @@ static int interactive( char *command)
 
 	if(!n_items)
 	{
-		fprintf(stderr,"Programmer error: no flags or options\n") ;
+		fprintf(stderr,"PROGRAMMER ERROR: no flags or options\n") ;
 		exit(EXIT_FAILURE) ;
 	}
 
