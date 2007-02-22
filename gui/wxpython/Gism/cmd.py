@@ -1,10 +1,11 @@
+import grassenv
 import os
 class EndOfCommand(Exception):
     def __str__(self):
        return "End of command"
 
 class Command:
-    def __init__ (self,cmd,stdin=None):
+    def __init__ (self,cmd,stdin=None,verbose=False):
         self.module_stdout = None
         self.module_stdin = None
         self.cmd = cmd
@@ -19,15 +20,10 @@ class Command:
             self.module_stdin.write(stdin)
             self.module_stdin.close()
 
-        # line = module_stderr.readline()
-        # while 1:
-        #     if not line:
-        #         break
-        #     print "##",line
-        #     line = module_stderr.readline()
+        if not verbose:
+            self.RunS()
 
-
-    def RunV(self):
+    def Run(self):
         """
         run command verbosely
         
@@ -99,4 +95,7 @@ if __name__ == "__main__":
 
     print "Running v.net.path for 0 593527.6875 4925297.0625 602083.875 4917545.8125"
     cmd=Command("v.net.path in=roads out=tmp --o", "0 593527.6875 4925297.0625 602083.875 4917545.8125")
+    cmd.RunS()
+    print "Running d.vect tmp"
+    cmd = Command("d.vect tmp")
     cmd.RunS()
