@@ -1,6 +1,6 @@
 #include <grass/gis.h>
-#include "globals.h"
 #include "local_proto.h"
+
 
 int 
 within (int samptot, int nclass, double nsamp[MC], double cov[MC][MX][MX], double w[MX][MX], int bands)
@@ -24,7 +24,6 @@ within (int samptot, int nclass, double nsamp[MC], double cov[MC][MX][MX], doubl
   return 0;
 }
 
-/****************************************************************************/
 
 int 
 between (int samptot, int nclass, double nsamp[MC], double mu[MC][MX], double p[MX][MX], int bands)
@@ -72,5 +71,3 @@ between (int samptot, int nclass, double nsamp[MC], double mu[MC][MX], double p[
 
   return 0;
 }
-
-/****************************************************************************/

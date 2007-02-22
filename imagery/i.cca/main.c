@@ -10,6 +10,7 @@
 
 */
 
+#include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
 #include <math.h>
@@ -18,18 +19,15 @@
 #include <grass/imagery.h>
 #include <grass/gmath.h>
 #include <grass/glocale.h>
-#include "globals.h"
 #include "local_proto.h"
+
 
 int main (int argc, char *argv[])
 {
         /* Global variable & function declarations */
 
-        int convert();        /* Convert character to numeric equivalent */
         int i,j,k;             /* Loop control variables */
-        int rows,cols;        /* Number of rows & columns */
         int bands;            /* Number of image bands */
-        int NN;               /* Total number of data points */
         int nclass;           /* Number of classes */
         int samptot;          /* Total number of sample points */
         double mu[MC][MX];      /* Mean vector for image classes */
@@ -53,10 +51,8 @@ int main (int argc, char *argv[])
         int datafds[MX];
         int outfds[MX];
 
-        int save_args();
-        int error = 0 ;
-		struct GModule *module;
-        struct Option *opt1, *opt2, *opt3, *opt4 ;
+        struct GModule *module;
+        struct Option *grp_opt, *subgrp_opt, *sig_opt, *out_opt;
 
         /***** Start of main *****/
         G_gisinit(argv[0]);
@@ -64,91 +60,55 @@ int main (int argc, char *argv[])
 		module = G_define_module();
 		module->keywords = _("imagery");
     module->description =
-			_("Canonical components analysis (cca) "
+			_("Canonical components analysis (cca) " \
 			"program for image processing.");
 
-        opt1 = G_define_option() ;
-        opt1->key        = "group";
-        opt1->type       = TYPE_STRING;
-        opt1->required   = YES;
-        opt1->description= _("Imagery files group");
+        grp_opt = G_define_standard_option (G_OPT_I_GROUP);
 
-        opt2 = G_define_option() ;
-        opt2->key        = "subgroup";
-        opt2->type       = TYPE_STRING;
-        opt2->required   = YES;
-        opt2->description= _("Imagery files subgroup");
+        subgrp_opt = G_define_standard_option (G_OPT_I_GROUP);
+        subgrp_opt->key        = "subgroup";
+        subgrp_opt->description= _("Name of input imagery subgroup");
 
-        opt3 = G_define_option() ;
-        opt3->key        = "signature";
-        opt3->type       = TYPE_STRING;
-        opt3->required   = YES;
-        opt3->description= _("Ascii file containing spectral signatures");
+        sig_opt = G_define_option() ;
+        sig_opt->key        = "signature";
+        sig_opt->type       = TYPE_STRING;
+        sig_opt->required   = YES;
+        sig_opt->description= _("Ascii file containing spectral signatures");
 
-        opt4 = G_define_option() ;
-        opt4->key        = "output";
-        opt4->type       = TYPE_STRING;
-        opt4->required   = YES;
-        opt4->description= _("Output raster map prefix name");
+        out_opt = G_define_standard_option (G_OPT_R_OUTPUT);
+        out_opt->description= _("Output raster map prefix name");
 
         if (G_parser(argc, argv) < 0)
                 exit(EXIT_FAILURE);
 
-        if (G_legal_filename(opt1->answer)<0)
-        {
-                G_warning(_("Warning: illegal group name <%s>."),
-                         opt1->answer);
-                error++ ;
-        }
-        else
-                strcpy(groupname, opt1->answer);
+        if (G_legal_filename (grp_opt->answer) < 0)
+            G_fatal_error (_("Illegal group name <%s>"), grp_opt->answer);
 
-        if (G_legal_filename(opt2->answer)<0)
-        {
-                G_warning(_("Warning: illegal subgroup name <%s>."),
-                         opt2->answer);
-                error++ ;
-        }
-        else
-                strcpy(subgroup, opt2->answer);
+        if (G_legal_filename (subgrp_opt->answer) < 0)
+            G_fatal_error (_("Illegal subgroup name <%s>"), subgrp_opt->answer);
 
-        if (G_legal_filename(opt3->answer)<0)
-        {
-                G_warning(_("Warning: illegal signature file name <%s>."),
-                         opt3->answer);
-                error++ ;
-        }
-        else
-                strcpy(signame, opt3->answer);
+        if (G_legal_filename (sig_opt->answer) < 0)
+            G_fatal_error (_("Illegal signature file name <%s>"), sig_opt->answer);
 
-        if (G_legal_filename(opt4->answer)<0)
-        {
-                G_warning(_("Warning: illegal output file name <%s>."),
-                         opt4->answer);
-                error++ ;
-        }
-        else
-                strcpy(outputfile, opt4->answer);
-
-        if(error)
-                exit(EXIT_FAILURE) ;
+        if (G_legal_filename (out_opt->answer) < 0)
+            G_fatal_error (_("Illegal output file name <%s>"), out_opt->answer);
 
         /* check group, subgroup */
         I_init_group_ref(&refs);
-        if (I_find_group(groupname) <=0) {
+        if (I_find_group (grp_opt->answer) <= 0)
                 G_fatal_error(_("Unknown imagery group."));
-        }
-        if (I_get_subgroup_ref(groupname, subgroup, &refs) <= 0) {
+
+        if (I_get_subgroup_ref (grp_opt->answer, subgrp_opt->answer, &refs) <= 0)
                 G_fatal_error(_("Unable to find subgroup reference information."));
-        }
 
         /* open and input the signatures file */
-        if ((sigfp = I_fopen_signature_file_old(groupname, subgroup, signame))
-            == NULL)
-                G_fatal_error(_("Unable to open the signature file."));
+        if ((sigfp = I_fopen_signature_file_old(grp_opt->answer, subgrp_opt->answer, sig_opt->answer)) == NULL)
+                G_fatal_error (_("Unable to open the signature file"));
+
         I_init_signatures(&sigs, refs.nfiles);
         if (I_read_signatures(sigfp, &sigs)<0)
                 G_fatal_error(_("Error while reading the signatures file."));
+
         fclose(sigfp);
         nclass = sigs.nsigs;
         if (nclass<2)
@@ -156,20 +116,8 @@ int main (int argc, char *argv[])
 
         /* check the number of input bands */
         bands = refs.nfiles;
-        if (bands > MX-1) {
-                G_fatal_error(_("Subgroup too large. Maximum number of "
-                      "bands is %d."), MX - 1);
-        }
-
-        /* check output file */
-        if (outputfile[0] == '\0')
-                G_fatal_error(_("An output cell map name is required."));
-        if (strlen(outputfile) >=13)
-                G_fatal_error(_("The output cell map name can not be longer than 12 characters."));
-
-        rows = G_window_rows();
-        cols = G_window_cols();
-        NN = rows * cols;
+        if (bands > MX-1)
+                G_fatal_error(_("Subgroup too large.  Maximum number of bands is %d\n."), MX - 1);
 
         /*
     Here is where the information regarding
@@ -189,8 +137,6 @@ int main (int argc, char *argv[])
                 }
         }
 
-
-
         within(samptot,nclass,nsamp,cov,w,bands);
         between(samptot,nclass,nsamp,mu,p,bands);
         jacobi(w,(long)bands,eigval,eigmat);
@@ -206,20 +152,20 @@ int main (int argc, char *argv[])
         for (i=1; i<=bands; i++) {
                 outbandmax[i] = (CELL) 0;
                 outbandmin[i] = (CELL) 0;
+
                 if ((datafds[i]=G_open_cell_old(refs.file[i-1].name,
                     refs.file[i-1].mapset)) < 0) {
-                        G_fatal_error(_("Unable to open cell map <%s> for "
-                            "input."), refs.file[i-1].name);
+                        G_fatal_error(_("Unable to open cell man <%s> for input.\n"),
+                                    refs.file[i-1].name);
                 }
-                sprintf(tempname, "%s.%d", outputfile, i);
-                if ((outfds[i]=G_open_cell_new(tempname)) < 0) {
-                        G_fatal_error(_("Unable to open cell map <%s> "
-                            "for output."), tempname);
-                }
+
+                sprintf(tempname, "%s.%d", out_opt->answer, i);
+                if ((outfds[i]=G_open_cell_new(tempname)) < 0)
+                        G_fatal_error(_("Unable to open cell map <%s> for output.\n"), tempname);
         }
 
         /* do the transform */
-        transform(datafds,outfds,rows,cols,q,bands,outbandmin,outbandmax);
+    transform(datafds, outfds, G_window_rows (), G_window_cols (), q, bands, outbandmin, outbandmax);
 
         /* make grey scale color table */
         G_init_colors(&color_tbl);
@@ -231,14 +177,15 @@ int main (int argc, char *argv[])
 
                 if (outbandmin[i] < (CELL) 0 || outbandmax[i] > (CELL) 255) {
                         G_warning(_("The output cell map <%s.%d> has values "
-                            "outside the 0-255 range."), outputfile, i);
+                            "outside the 0-255 range."), out_opt->answer, i);
                 }
+
                 G_make_grey_scale(&color_tbl, 0, outbandmax[i]);
-                sprintf(tempname, "%s.%d", outputfile, i);
+                sprintf(tempname, "%s.%d", out_opt->answer, i);
+
                 /* write a color table */
                 G_write_colors(tempname, G_mapset(), &color_tbl);
         }
-
 
         I_free_signatures(&sigs);
         I_free_group_ref(&refs);

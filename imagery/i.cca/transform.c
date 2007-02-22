@@ -1,10 +1,8 @@
 #include <stdlib.h>
 #include <grass/gis.h>
 #include <grass/glocale.h>
-#include "globals.h"
+#include "local_proto.h"
 
-
-/***************************************************************************/
 
 int 
 transform (int datafds[MX], int outfds[MX], int rows, int cols, double eigmat[MX][MX], int bands, CELL mins[MX], CELL maxs[MX])
@@ -50,5 +48,3 @@ transform (int datafds[MX], int outfds[MX], int rows, int cols, double eigmat[MX
 
   return 0;
 }
-
-/***************************************************************************/
