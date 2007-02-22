@@ -1,11 +1,8 @@
-#include <grass/gis.h>
 #include <math.h>
+#include <grass/gis.h>
 #include <grass/gmath.h>
-#include "globals.h"
 #include "local_proto.h"
 
-
-/****************************************************************************/
 
 int product (double vector[MX], double factor, double matrix1[MX][MX], int bands)
 {
@@ -18,7 +15,6 @@ int product (double vector[MX], double factor, double matrix1[MX][MX], int bands
   return 0;
 }
 
-/******************************************************************************/
 
 int 
 setdiag (double eigval[MX], int bands, double l[MX][MX])
@@ -30,7 +26,6 @@ setdiag (double eigval[MX], int bands, double l[MX][MX])
   return 0;
 }
 
-/****************************************************************************/
 
 int 
 getsqrt (double w[MX][MX], int bands, double l[MX][MX], double eigmat[MX][MX])
@@ -44,7 +39,6 @@ getsqrt (double w[MX][MX], int bands, double l[MX][MX], double eigmat[MX][MX])
   return 0;
 }
 
-/****************************************************************************/
 
 int 
 solveq (double q[MX][MX], int bands, double w[MX][MX], double p[MX][MX])
@@ -55,8 +49,6 @@ solveq (double q[MX][MX], int bands, double w[MX][MX], double p[MX][MX])
   return 0;
 }
 
-
-/***************************************************************************/
 
 int 
 matmul (double res[MX][MX], double m1[MX][MX], double m2[MX][MX], int dim)
