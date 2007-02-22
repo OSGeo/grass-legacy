@@ -247,10 +247,10 @@ int main (int argc, char *argv[])
 /* -------------------------------------------------------------------- */
     if( parm.outloc->answer != NULL )
     {
-        /* Convert projection information interactively as it is important
-	 * to set up datum etc. */
+        /* Convert projection information non-interactively as we can't
+	 * assume the user has a terminal open */
         if ( GPJ_wkt_to_grass( &cellhd, &proj_info, 
-			       &proj_units, GDALGetProjectionRef(hDS), 1) < 0 )
+			       &proj_units, GDALGetProjectionRef(hDS), 0) < 0 )
 	    G_fatal_error(_("Unable to convert input map projection to GRASS "
 			  "format; cannot create new location."));
 	else		  
@@ -566,7 +566,7 @@ static void SetupReprojector( const char *pszSrcWKT, const char *pszDstLoc,
 /* -------------------------------------------------------------------- */
 /*      Translate GCP WKT coordinate system into GRASS format.          */
 /* -------------------------------------------------------------------- */
-    GPJ_wkt_to_grass( &cellhd, &proj_info, &proj_units, pszSrcWKT, 1 );
+    GPJ_wkt_to_grass( &cellhd, &proj_info, &proj_units, pszSrcWKT, 0 );
 
     if (pj_get_kv(iproj, proj_info, proj_units) < 0)
         G_fatal_error("Can't translate projection key values of input GCPs.");

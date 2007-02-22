@@ -246,9 +246,8 @@ OGRSpatialReferenceH GPJ_grass_to_osr(struct Key_Value * proj_info,
  *                    structure allocated containing a set of GRASS PROJ_UNITS values
  * \param hSRS        OGRSpatialReferenceH object containing the co-ordinate 
  *                    system to be converted
- * \param interactive Flag to indicate whether or not the function should
- *                    interactively prompt the user for incomplete datum 
- *                    transformation data
+ * \param datumtrans  Index number of datum parameter set to use, 0 to leave
+ *                    unspecifed
  * 
  * \return            2 if a projected or lat/long co-ordinate system has been
  *                    defined; 1 if an unreferenced XY co-ordinate system has
@@ -257,7 +256,7 @@ OGRSpatialReferenceH GPJ_grass_to_osr(struct Key_Value * proj_info,
 
 int GPJ_osr_to_grass(struct Cell_head *cellhd, struct Key_Value **projinfo, 
                      struct Key_Value **projunits, OGRSpatialReferenceH hSRS,
-		     int interactive)
+		     int datumtrans)
 {
     struct Key_Value *temp_projinfo;
     char *pszProj4 = NULL, *pszRemaining;
@@ -428,57 +427,72 @@ int GPJ_osr_to_grass(struct Cell_head *cellhd, struct Key_Value **projinfo,
 	    {
 	        if( paramspresent < 2)
 		    /* Only give warning if no parameters present */
-	            G_warning("Datum '%s' not recognised by GRASS and no parameters found. "
-			      "Datum transformation will not be possible using this projection information.",
+	            G_warning("Datum '%s' not recognised by GRASS and no parameters found.",
 			      pszDatumName);
 	    }
             else
 	    {
                 G_set_key_value( "datum", datum, *projinfo );        
-       
+
                 if (paramspresent < 2)
-    	        {
-	            /* If no datum parameters were imported from the OSR
-	             * object then we may prompt the user */
-                    char *params, *chosenparams;
+                {
+                    /* If no datum parameters were imported from the OSR
+                     * object then we should use the set specified by datumtrans */
+                    char *params, *chosenparams = NULL;
                     int paramsets;
-		   
-		    fprintf(stderr, "A datum name %s (%s) was specified "
-			            "without transformation parameters.\n",
-			            datum, pszDatumName);
-                    if( (paramsets = GPJ_get_default_datum_params_by_name(datum, &params))
-		        == 1 ) 
-		        /* GRASS only knows one parameter set for this so
-			 * just use it but inform the user what we're doing */
-		        fprintf(stderr, "Note that the GRASS default for %s "
-			            "is %s.\n", datum, params);
-                    else if( paramsets < 0 )
+
+                    paramsets = GPJ_get_default_datum_params_by_name(datum, &params);
+
+                    if( paramsets < 0 )
                         G_warning("Datum '%s' apparently recognised by GRASS but no parameters found. "
                                   "You may want to look into this.", datum );
-                    else if( interactive && (GPJ_ask_datum_params(datum, &chosenparams) > 0) )
-		    {
-		        /* Force the user to think about it and make a 
-			 * decision on which set of parameters is most
-			 * appropriate for his/her location */
+                    else if( datumtrans > paramsets )
+                    {
 
+                        G_warning("Invalid tranformation number %d; valid range is 1 to %d. "
+                                  "Leaving datum transform parameters unspecified.",
+                                  datumtrans, paramsets);
+                        datumtrans = 0;
+                    }
+
+                    if( paramsets > 0 )
+                    {
+                        struct gpj_datum_transform_list *list, *old;
+                       
+                        list = GPJ_get_datum_transform_by_name( datum );
+           
+                        if( list != NULL )
+                        {
+                            do
+                            {
+                                if( list->count == datumtrans )
+                                {                            
+                                    chosenparams = G_store( list->params );
+                                    break;
+                                }
+                                old = list;
+                                list = list->next;
+                                G_free( old );
+                            } while(list != NULL);
+                        }
+                    }
+                   
+                    if( chosenparams != NULL )
+                    {
                         char *paramkey, *paramvalue;
+                       
                         paramkey = strtok(chosenparams, "=");
                         paramvalue = chosenparams + strlen(paramkey) + 1;
                         G_set_key_value( paramkey, paramvalue, *projinfo );
                         G_free( chosenparams );
-		    }
-                    else if( !interactive )
-                        G_warning("Non-interactive mode: the GRASS default "
-				  "for %s is %s.\n", datum, params);
-		    else
-		        G_warning("No parameters specified: the GRASS default "
-				  "for %s is %s.\n", datum, params);
+                    }
+                   
                     if(paramsets > 0)
                         G_free(params);
-	        }
-       
-	    }
-	}   
+                }
+
+            }
+        }
     }
 
 /* -------------------------------------------------------------------- */
@@ -661,9 +675,8 @@ int GPJ_osr_to_grass(struct Cell_head *cellhd, struct Key_Value **projinfo,
  *                    structure allocated containing a set of GRASS PROJ_UNITS values
  * \param wkt         Well-known Text (WKT) description of the co-ordinate 
  *                    system to be converted
- * \param interactive Flag to indicate whether or not the function should
- *                    interactively prompt the user for incomplete datum 
- *                    transformation data
+ * \param datumtrans  Index number of datum parameter set to use, 0 to leave
+ *                    unspecifed
  * 
  * \return            2 if a projected or lat/long co-ordinate system has been
  *                    defined; 1 if an unreferenced XY co-ordinate system has
@@ -672,12 +685,12 @@ int GPJ_osr_to_grass(struct Cell_head *cellhd, struct Key_Value **projinfo,
 
 int GPJ_wkt_to_grass(struct Cell_head *cellhd, struct Key_Value **projinfo, 
                      struct Key_Value **projunits, const char *wkt,
-		     int interactive)
+		     int datumtrans)
 {
     int retval;
 
     if( wkt == NULL )
-        retval = GPJ_osr_to_grass(cellhd, projinfo, projunits, NULL, interactive);
+        retval = GPJ_osr_to_grass(cellhd, projinfo, projunits, NULL, datumtrans);
     else
     {
         OGRSpatialReferenceH hSRS;
@@ -686,7 +699,7 @@ int GPJ_wkt_to_grass(struct Cell_head *cellhd, struct Key_Value **projinfo,
         SetCSVFilenameHook( GPJ_set_csv_loc );
        
         hSRS = OSRNewSpatialReference(wkt);
-        retval = GPJ_osr_to_grass(cellhd, projinfo, projunits, hSRS, interactive);
+        retval = GPJ_osr_to_grass(cellhd, projinfo, projunits, hSRS, datumtrans);
         OSRDestroySpatialReference(hSRS);
     }
    

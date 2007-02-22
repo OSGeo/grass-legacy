@@ -406,10 +406,10 @@ main (int argc, char *argv[])
     /* Do we need to create a new location? */
     if( outloc_opt->answer != NULL )
     {
-        /* Convert projection information interactively as it is important
-	 * to set up datum etc. */
+        /* Convert projection information non-interactively as we can't
+	 * assume the user has a terminal open */
         if ( GPJ_osr_to_grass( &cellhd, &proj_info,
-			       &proj_units, Ogr_projection, 1) < 0 )
+			       &proj_units, Ogr_projection, 0) < 0 )
 	    G_fatal_error (_("Unable to convert input map projection to GRASS "
 			  "format; cannot create new location."));
 	else
