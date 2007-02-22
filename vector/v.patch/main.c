@@ -64,19 +64,17 @@ main (int argc, char *argv[])
 
     module = G_define_module();
     module->keywords = _("vector");
-    module->description = _("Creates a new binary vector map layer "
-			    "by combining other binary vector map layers.");
-
-    old = G_define_standard_option(G_OPT_V_INPUT);
-    old->multiple	= YES;
-    old->description	= _("Vector map(s) -- source for composite");
+    module->description = _("Creates a new vector map layer "
+			    "by combining other vector map layers.");
+    
+    old = G_define_standard_option(G_OPT_V_INPUTS);
 
     new = G_define_standard_option(G_OPT_V_OUTPUT);
-    new->description	= _("New vector composite");
 
     append = G_define_flag();
     append->key = 'a';
-    append->description = _("Append files to existing file");
+    append->description = _("Append files to existing file "
+			    "(overwriting existing files must be activated)");
 
     table_flag = G_define_flag();
     table_flag->key = 'e';
