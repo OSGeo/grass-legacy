@@ -18,7 +18,8 @@ Mouse_pointer (int *x, int *y, int *button)
     *y = cury;
 
 #ifdef BUTTON3
-    if (*button == 3) quit(0);
+    if (*button == 3)
+        quit ();
 #endif
   return 0;
 }
@@ -32,7 +33,8 @@ Mouse_line_anchored (int x1, int y1, int *x2, int *y2, int *button)
   first = 0;
 
 #ifdef BUTTON3
-    if (*button == 3) quit(0);
+    if (*button == 3)
+        quit ();
 #endif
   return 0;
 }
@@ -46,7 +48,8 @@ Mouse_box_anchored (int x1, int y1, int *x2, int *y2, int *button)
     first = 0;
 
 #ifdef BUTTON3
-    if (*button == 3) quit(0);
+    if (*button == 3)
+        quit ();
 #endif
   return 0;
 }

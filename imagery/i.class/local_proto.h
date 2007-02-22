@@ -1,9 +1,10 @@
+#ifndef __LOCAL_PROTO_H__
+#define __LOCAL_PROTO_H__
+
 /* add_point.c */
 int add_point(int, int);
 /* analyze_sig.c */
 int analyze_sig(void);
-/* ask_files.c */
-int ask_files(char *);
 /* band_files.c */
 int open_band_files(void);
 int close_band_files(void);
@@ -31,7 +32,6 @@ int Curses_outline_window(Window *);
 int Curses_write_window(Window *, int, int, char *);
 int Curses_replot_screen(void);
 int Curses_prompt_gets(char *, char *);
-int Beep(void);
 int Curses_getch(int);
 /* define_reg.c */
 int define_region(void);
@@ -59,8 +59,6 @@ int Init_graphics(void);
 int Outline_box(int, int, int, int);
 int Text_width(char *);
 int Text(char *, int, int, int, int, int);
-int Uparrow(int, int, int, int);
-int Downarrow(int, int, int, int);
 /* histograms.c */
 int histograms(int, float *, float **, int **, int, int *, int *, double, int);
 /* init_reg.c */
@@ -141,11 +139,6 @@ int save_signature(void);
 int write_signatures(void);
 /* title.c */
 int display_title(View *);
-/* vask_group.c */
-int I_vask_group_new (char **,char *,char *);
-int I_vask_group_old (char **,char *,char *);
-int I_vask_subgroup_new (char **,char *,char *, int,char *);
-int I_vask_subgroup_old (char **,char *,char *, int,char *);
 /* view.c */
 int Configure_view(View *, char *, char *, double, double);
 int In_view(View *, int, int);
@@ -153,3 +146,5 @@ int Erase_view(View *);
 double magnification(View *);
 /* zoom_box.c */
 int zoom_box(void);
+
+#endif /* __LOCAL_PROTO_H__ */

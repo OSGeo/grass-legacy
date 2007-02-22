@@ -113,27 +113,3 @@ Text (char *text, int top, int bottom, int left, int right, int edge)
 
     return 0;
 }
-
-int 
-Uparrow (int top, int bottom, int left, int right)
-{
-    R_move_abs ((left+right)/2, bottom);
-    R_cont_abs ((left+right)/2, top);
-    R_cont_rel ((left-right)/2, (bottom-top)/2);
-    R_move_abs ((left+right)/2, top);
-    R_cont_rel ((right-left)/2, (bottom-top)/2);
-
-    return 0;
-}
-
-int Downarrow (int top, int bottom, int left, int right)
-{
-    R_move_abs ((left+right)/2, top);
-    R_cont_abs ((left+right)/2, bottom);
-    R_cont_rel ((left-right)/2, (top-bottom)/2);
-    R_move_abs ((left+right)/2, bottom);
-    R_cont_rel ((right-left)/2, (top-bottom)/2);
-
-    return 0;
-}
-

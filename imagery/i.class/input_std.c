@@ -53,7 +53,6 @@ other (void)
   Menu_msg("Use Keyboard on Text Terminal...");
 
   do {
-    Beep();
     Curses_prompt_gets("Enter Number of Standard Deviations: ", tmpstr);
     good = sscanf(tmpstr, " %f ", &tempflt);
     if (tempflt <= 0.0) good = 0;
