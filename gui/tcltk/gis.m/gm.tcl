@@ -408,10 +408,11 @@ proc Gm::OpenFileBox { } {
     global filename
     global mon
 
-    set types {
-	    {{[G_msg "Map Resource File"]} {{.dm} {.dmrc} {.grc}}}
-	    {{[G_msg "All Files"]} *}
-    }
+# thanks for brace tip to suchenwi from #tcl@freenode
+    set types [list \
+	    [list [G_msg "Map Resource File"] [list ".dm" ".dmrc" ".grc"]] \
+	    [list [G_msg "All Files"] "*"] \
+    ]
 
 	set filename_new [tk_getOpenFile -parent $mainwindow -filetypes $types \
 		-title [G_msg "Open File"] ]
@@ -438,11 +439,11 @@ proc Gm::SaveFileBox { } {
     if { $filename($mon) != "" } {
 	GmTree::save $filename($mon)
     } else {
-	set types {
-	    {{[G_msg "Map Resource File"]} {{.grc}}}
-	    {{[G_msg "DM Resource File"]} {{.dm} {.dmrc}}}
-	    {{[G_msg "All Files"]} *}
-		}
+	set types [list \
+	    [list [G_msg "Map Resource File"] {.grc}] \
+	    [list [G_msg "DM Resource File"] [list {.dm} {.dmrc}]] \
+	    [list [G_msg "All Files"] "*"] \
+	]
 	set filename($mon) [tk_getSaveFile -parent $mainwindow -filetypes $types \
 		-title [G_msg "Save File"] -defaultextension .grc]
 	if { $filename($mon) == "" } { return}

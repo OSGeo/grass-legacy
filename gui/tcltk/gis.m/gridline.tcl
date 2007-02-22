@@ -116,7 +116,7 @@ proc GmGridline::options { id frm } {
 
     # Panel heading
     set row [ frame $frm.heading1 ]
-    Label $row.a -text "Display grid lines, and geodesic lines or rhumblines" \
+    Label $row.a -text [G_msg "Display grid lines, and geodesic lines or rhumblines"] \
     	-fg MediumBlue
     pack $row.a -side left
     pack $row -side top -fill both -expand yes
@@ -133,14 +133,14 @@ proc GmGridline::options { id frm } {
 	
     # grid options 1
     set row [ frame $frm.grid1 ]
-    Label $row.a -text "Grid options: "
+    Label $row.a -text [G_msg "Grid options: "]
     checkbutton $row.b -text [G_msg "draw grid"] -variable GmGridline::opt($id,1,griddraw) 
     checkbutton $row.c -text [G_msg "geodetic grid  "] -variable GmGridline::opt($id,1,gridgeod) 
     SelectColor $row.d -type menubutton -variable GmGridline::opt($id,1,gridcolor)    
     Label $row.e -text [G_msg " grid & text color   "] 
     Button $row.f -text [G_msg "Help"] \
             -image [image create photo -file "$iconpath/gui-help.gif"] \
-            -command "run g.manual d.grid" \
+            -command "spawn g.manual --q d.grid" \
             -background $bgcolor \
             -helptext [G_msg "Help for grids"]
     Label $row. -text [G_msg " grid color"] 
@@ -149,7 +149,7 @@ proc GmGridline::options { id frm } {
 
     # grid options 2
     set row [ frame $frm.grid2 ]
-    Label $row.a -text [G_msg "   "]
+    Label $row.a -text "   "
     checkbutton $row.b -text [G_msg "draw grid border"] -variable GmGridline::opt($id,1,borderdraw) 
     checkbutton $row.c -text [G_msg "draw border text  "] -variable GmGridline::opt($id,1,textdraw) 
     SelectColor $row.d -type menubutton -variable GmGridline::opt($id,1,gridborder)
@@ -159,15 +159,15 @@ proc GmGridline::options { id frm } {
 
     # grid options 3
     set row [ frame $frm.grid3 ]
-    Label $row.a -text "    grid size (map units)"
+    Label $row.a -text [G_msg "    grid size (map units)"]
     LabelEntry $row.b -textvariable GmGridline::opt($id,1,gridsize) -width 7
-    Label $row.c -text " grid origin (east, north)"
+    Label $row.c -text [G_msg " grid origin (east, north)"]
     LabelEntry $row.d -textvariable GmGridline::opt($id,1,gridorigin) -width 15
     pack $row.a $row.b $row.c $row.d -side left
     pack $row -side top -fill both -expand yes
     
     set row [ frame $frm.line ]
-    Label $row.a -text "Geodesic and rhumblines for latlong locations only"
+    Label $row.a -text [G_msg "Geodesic and rhumblines for latlong locations only"]
     pack $row.a -side left
     pack $row -side top -fill both -expand yes
 
@@ -177,14 +177,14 @@ proc GmGridline::options { id frm } {
     checkbutton $row.b -text [G_msg "draw geodesic line"] -variable GmGridline::opt($id,1,geoddraw)
     Button $row.c -text [G_msg "Help"] \
             -image [image create photo -file "$iconpath/gui-help.gif"] \
-            -command "run g.manual d.geodesic" \
+            -command "spawn g.manual --q d.geodesic" \
             -background $bgcolor \
             -helptext [G_msg "Help for geodesic lines"]
-    Label $row.d -text " line color"
+    Label $row.d -text [G_msg " line color"]
     ComboBox $row.e -padx 2 -width 7 -textvariable GmGridline::opt($id,1,geodcolor) \
                     -values {"white" "grey" "gray" "black" "brown" "red" "orange" \
                     "yellow" "green" "aqua" "cyan" "indigo" "blue" "purple" "violet" "magenta"}
-    Label $row.f -text " text color"
+    Label $row.f -text [G_msg " text color"]
     ComboBox $row.g -padx 2 -width 7 -textvariable GmGridline::opt($id,1,geodtxtcolor) \
                     -values {"white" "grey" "gray" "black" "brown" "red" "orange" \
                     "yellow" "green" "aqua" "cyan" "indigo" "blue" "purple" "violet" "magenta"}
@@ -193,7 +193,7 @@ proc GmGridline::options { id frm } {
     
     # geodesic line options 2
     set row [ frame $frm.geod2 ]
-    Label $row.a -text "     line endpoints (x1,y1,x2,y2)"
+    Label $row.a -text [G_msg "     line endpoints (x1,y1,x2,y2)"]
     LabelEntry $row.b -textvariable GmGridline::opt($id,1,geodcoor) -width 35 
     pack $row.a $row.b -side left
     pack $row -side top -fill both -expand yes
@@ -204,10 +204,10 @@ proc GmGridline::options { id frm } {
     checkbutton $row.b -text [G_msg "draw rhumbline"] -variable GmGridline::opt($id,1,rhumbdraw)
     Button $row.c -text [G_msg "Help"] \
             -image [image create photo -file "$iconpath/gui-help.gif"] \
-            -command "run g.manual d.rhumbline" \
+            -command "spawn g.manual --q d.rhumbline" \
             -background $bgcolor \
             -helptext [G_msg "Help for rhumblines"]
-    Label $row.d -text " line color"
+    Label $row.d -text [G_msg " line color"]
     ComboBox $row.e -padx 2 -width 7 -textvariable GmGridline::opt($id,1,rhumbcolor) \
                     -values {"white" "grey" "gray" "black" "brown" "red" "orange" \
                     "yellow" "green" "aqua" "cyan" "indigo" "blue" "purple" "violet" "magenta"}
@@ -216,7 +216,7 @@ proc GmGridline::options { id frm } {
     
     # rhumbline options 2
     set row [ frame $frm.rhumb2 ]
-    Label $row.a -text "     line endpoints (x1,y1,x2,y2)"
+    Label $row.a -text [G_msg "     line endpoints (x1,y1,x2,y2)"]
     LabelEntry $row.b -textvariable GmGridline::opt($id,1,rhumbcoor) -width 35 
     pack $row.a $row.b -side left
     pack $row -side top -fill both -expand yes

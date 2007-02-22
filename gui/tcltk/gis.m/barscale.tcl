@@ -131,7 +131,7 @@ proc GmBarscale::options { id frm } {
 
     # Panel heading
     set row [ frame $frm.heading1 ]
-    Label $row.a -text "Display scale and north arrow" \
+    Label $row.a -text [G_msg "Display scale and north arrow"] \
     	-fg MediumBlue    
     pack $row.a -side left
     pack $row -side top -fill both -expand yes
@@ -148,13 +148,13 @@ proc GmBarscale::options { id frm } {
 	
     # at
     set row [ frame $frm.at1 ]
-    Label $row.a -text "Scale placement: 0-100% from top left of display"
+    Label $row.a -text [G_msg "Scale placement: 0-100% from top left of display"]
     pack $row.a -side left
     pack $row -side top -fill both -expand yes
         
     # at
     set row [ frame $frm.at2 ]
-    Label $row.a -text "    enter x,y of scale/arrow upper left corner"
+    Label $row.a -text [G_msg "\tenter x,y of scale/arrow upper left corner"]
     set placement [LabelEntry $row.b -width 8 \
     	-textvariable GmBarscale::opt($id,1,at)]
     checkbutton $row.c -text [G_msg "place with mouse"] \
@@ -167,10 +167,10 @@ proc GmBarscale::options { id frm } {
     set row [ frame $frm.color ]
     Label $row.a -text [G_msg "Scale appearance:  text color"] 
     SelectColor $row.b -type menubutton -variable GmBarscale::opt($id,1,tcolor)
-    Label $row.c -text [G_msg "   "] 
+    Label $row.c -text "   "
     Button $row.d -text [G_msg "Help"] \
             -image [image create photo -file "$iconpath/gui-help.gif"] \
-            -command "run g.manual d.barscale" \
+            -command "spawn g.manual --q d.barscale" \
             -background $bgcolor \
             -helptext [G_msg "Help"]
     pack $row.a $row.b $row.c $row.d -side left
@@ -178,9 +178,9 @@ proc GmBarscale::options { id frm } {
     
     # background
     set row [ frame $frm.background ]
-    Label $row.a -text [G_msg "    background color "] 
+    Label $row.a -text [G_msg "\tbackground color "] 
     SelectColor $row.b -type menubutton -variable GmBarscale::opt($id,1,bcolor)
-    Label $row.c -text [G_msg "   "] 
+    Label $row.c -text "   " 
     checkbutton $row.d -text [G_msg "transparent background"] \
     	-variable GmBarscale::opt($id,1,bcolor_none) 
     pack $row.a $row.b $row.c $row.d -side left
@@ -188,7 +188,7 @@ proc GmBarscale::options { id frm } {
 
     # arrow or scale only
     set row [ frame $frm.arrow ]
-    Label $row.a -text [G_msg "    "] 
+    Label $row.a -text "    "
     checkbutton $row.b -text [G_msg "display N. arrow only"] \
     	-variable GmBarscale::opt($id,1,arrow) 
     checkbutton $row.c -text [G_msg "display scale only"] \
@@ -198,7 +198,7 @@ proc GmBarscale::options { id frm } {
 
     # text on top
     set row [ frame $frm.textontop ]
-    Label $row.a -text [G_msg "    "] 
+    Label $row.a -text "    " 
     checkbutton $row.b -text [G_msg "text on top of scale, instead of to right"] \
     	-variable GmBarscale::opt($id,1,top) 
     pack $row.a $row.b -side left
@@ -206,7 +206,7 @@ proc GmBarscale::options { id frm } {
 
     # scale options
     set row [ frame $frm.opts ]
-    Label $row.a -text [G_msg "    "] 
+    Label $row.a -text "    " 
     checkbutton $row.b -text [G_msg "line scale instead of bar"] \
     	-variable GmBarscale::opt($id,1,line) 
     checkbutton $row.c -text [G_msg "use feet/miles instead of meters"] \

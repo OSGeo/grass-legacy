@@ -98,10 +98,10 @@ proc GmHist::select_map { id } {
     variable node
     global mon
     
-    set m [GSelect cell title "Raster map for histogram" parent [winfo containing [winfo pointerx .] [winfo pointery .]]]
+    set m [GSelect cell title [G_msg "Raster map for histogram"] parent "."]
     if { $m != "" } { 
         set GmHist::opt($id,1,map) $m
-        GmTree::autonamel "histogram of $m"
+        GmTree::autonamel [format [G_msg "histogram of %s"] $m]
     }
 }
 
@@ -113,7 +113,7 @@ proc GmHist::options { id frm } {
 
     # Panel heading
     set row [ frame $frm.heading ]
-    Label $row.a -text "Draw histogram of values from raster map or image" \
+    Label $row.a -text [G_msg "Draw histogram of values from raster map or image"] \
     	-fg MediumBlue
     pack $row.a -side left
     pack $row -side top -fill both -expand yes
@@ -130,7 +130,7 @@ proc GmHist::options { id frm } {
 	
     # raster name for histogram
     set row [ frame $frm.name ]
-    Label $row.a -text "Raster to histogram: "
+    Label $row.a -text [G_msg "Raster to histogram: "]
     Button $row.b -image [image create photo -file "$iconpath/element-cell.gif"] \
         -highlightthickness 0 -takefocus 0 -relief raised -borderwidth 1  \
 		-command "GmHist::select_map $id"
@@ -139,18 +139,18 @@ proc GmHist::options { id frm } {
     Label $row.d -text "   "
     Button $row.e -text [G_msg "Help"] \
 		-image [image create photo -file "$iconpath/gui-help.gif"] \
-		-command "run g.manual d.histogram" \
+		-command "spawn g.manual --q d.histogram" \
 		-background $bgcolor -helptext [G_msg "Help"]
     pack $row.a $row.b $row.c $row.d $row.e -side left
     pack $row -side top -fill both -expand yes
 
     # graph style and color
     set row [ frame $frm.style ]
-    Label $row.a -text "Graph style"
+    Label $row.a -text [G_msg "Graph style"]
     ComboBox $row.b -padx 2 -width 4 -textvariable GmHist::opt($id,1,style) \
 		-values {"bar" "pie"} 
     # histogram color
-    Label $row.c -text "Histogram frame and text color"
+    Label $row.c -text [G_msg "Histogram frame and text color"]
     ComboBox $row.d -padx 2 -width 10 -textvariable GmHist::opt($id,1,color) \
 		-values {"white" "grey" "gray" "black" "brown" "red" "orange" \
 		"yellow" "green" "aqua" "cyan" "indigo" "blue" "purple" "violet" \
@@ -160,7 +160,7 @@ proc GmHist::options { id frm } {
     
     # steps for fp maps and nulls
     set row [ frame $frm.steps ]
-    Label $row.a -text "Steps/bins for values (fp maps only)" 
+    Label $row.a -text [G_msg "Steps/bins for values (fp maps only)"]
     SpinBox $row.b -range {2 255 1} -textvariable GmHist::opt($id,1,nsteps) \
 		-width 4 -helptext "steps/bins"  
     Label $row.c -text "   "

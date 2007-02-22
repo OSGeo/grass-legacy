@@ -128,10 +128,10 @@ proc GmLegend::mouseset { id } {
 proc GmLegend::select_map { id } {
     variable tree
     variable node
-    set m [GSelect cell title "Raster map for legend" parent [winfo containing [winfo pointerx .] [winfo pointery .]]]
+    set m [GSelect cell title [G_msg "Raster map for legend"] parent "."]
     if { $m != "" } { 
         set GmLegend::opt($id,1,map) $m
-        GmTree::autonamel "legend for $m"
+        GmTree::autonamel [format [G_msg "legend for %s"] $m]
     }
 }
 
@@ -144,7 +144,7 @@ proc GmLegend::options { id frm } {
 
     # Panel heading
     set row [ frame $frm.heading1 ]
-    Label $row.a -text "Display legend for raster map using cat values and labels" \
+    Label $row.a -text [G_msg "Display legend for raster map using cat values and labels"] \
     	-fg MediumBlue
     pack $row.a -side left
     pack $row -side top -fill both -expand yes
@@ -161,7 +161,7 @@ proc GmLegend::options { id frm } {
 	
     # raster name
     set row [ frame $frm.map ]
-    Label $row.a -text "Raster map: "
+    Label $row.a -text [G_msg "Raster map: "]
     Button $row.b -highlightthickness 0 -takefocus 0 -relief raised -borderwidth 1  \
 		-command "GmLegend::select_map $id"
 	icon_configure $row.b element cell
@@ -169,7 +169,7 @@ proc GmLegend::options { id frm } {
           -textvariable GmLegend::opt($id,1,map) 
     Label $row.d -text "   "
     Button $row.e -text [G_msg "Help"] \
-            -command "run g.manual d.legend" \
+            -command "spawn g.manual --q d.legend" \
             -background $bgcolor \
             -helptext [G_msg "Help"]
 	icon_configure $row.e gui help
@@ -178,13 +178,13 @@ proc GmLegend::options { id frm } {
 
     # size and location
     set row [ frame $frm.at1 ]
-    Label $row.a -text "Legend placement and size as 0-100% of display"
+    Label $row.a -text [G_msg "Legend placement and size as 0-100% of display"]
     pack $row.a -side left
     pack $row -side top -fill both -expand yes
 
     # at
     set row [ frame $frm.at2 ]
-    Label $row.a -text "    x,y of lower left corner (in % from display top left)"
+    Label $row.a -text [G_msg "    x,y of lower left corner (in % from display top left)"]
     set llcorner [LabelEntry $row.b -width 8 \
     	-textvariable GmLegend::opt($id,1,at)]
     checkbutton $row.c -text [G_msg "place with mouse"] \
@@ -195,12 +195,12 @@ proc GmLegend::options { id frm } {
     
     # size
     set row [ frame $frm.size ]
-    Label $row.a -text "    legend height "
+    Label $row.a -text [G_msg "    legend height "]
     SpinBox $row.b -range {0 100 1} -textvariable GmLegend::opt($id,1,height) \
-		 -width 5 -helptext "Legend height (% of display)" 
-    Label $row.c -text "%  width" 
+		 -width 5 -helptext [G_msg "Legend height (% of display)"]
+    Label $row.c -text [G_msg "%  width"]
     SpinBox $row.d -range {0 100 1} -textvariable GmLegend::opt($id,1,width) \
-		 -width 5 -helptext "Legend width (% of display)" 
+		 -width 5 -helptext [G_msg "Legend width (% of display)"]
     Label $row.e -text "%" 
     pack $row.a $row.b $row.c $row.d $row.e -side left
     pack $row -side top -fill both -expand yes
@@ -226,9 +226,9 @@ proc GmLegend::options { id frm } {
 
     # display lines
     set row [ frame $frm.lines ]
-    Label $row.a -text "    number of lines (0=display all):" 
+    Label $row.a -text [G_msg "    number of lines (0=display all):"]
     SpinBox $row.b -range {0 1000 1} -textvariable GmLegend::opt($id,1,lines) \
-		 -width 5 -helptext "Lines to display" 
+		 -width 5 -helptext [G_msg "Lines to display"]
     Label $row.c -text "  " 
     checkbutton $row.d -text [G_msg "invert legend"] -variable \
         GmLegend::opt($id,1,flip) 
@@ -237,9 +237,9 @@ proc GmLegend::options { id frm } {
     
     # thin
     set row [ frame $frm.thin ]
-    Label $row.a -text "    interval between categories (integer maps)" 
+    Label $row.a -text [G_msg "    interval between categories (integer maps)"] 
     SpinBox $row.b -range {1 1000 1} -textvariable GmLegend::opt($id,1,thin) \
-		 -width 5 -helptext "Thinning interval" 
+		 -width 5 -helptext [G_msg "Thinning interval"]
     pack $row.a $row.b -side left
     pack $row -side top -fill both -expand yes
     
@@ -248,16 +248,16 @@ proc GmLegend::options { id frm } {
     Label $row.a -text "  " 
     checkbutton $row.b -text [G_msg "draw smooth gradient (fp maps)"] -variable \
         GmLegend::opt($id,1,smooth) 
-    Label $row.c -text "with maximum of" 
+    Label $row.c -text [G_msg "with maximum of"]
     SpinBox $row.d -range {2 100 1} -textvariable GmLegend::opt($id,1,labelnum) \
-                    -width 4 -helptext "Maximum lines to display for gradient" 
-    Label $row.e -text "lines" 
+                    -width 4 -helptext [G_msg "Maximum lines to display for gradient"]
+    Label $row.e -text [G_msg "lines"]
     pack $row.a $row.b $row.c $row.d $row.e -side left
     pack $row -side top -fill both -expand yes
             
 	# display subset of values
     set row [ frame $frm.subset ]
-    Label $row.a -text "Display legend for subset of raster values"
+    Label $row.a -text [G_msg "Display legend for subset of raster values"]
     pack $row.a -side left
     pack $row -side top -fill both -expand yes
 
@@ -271,14 +271,14 @@ proc GmLegend::options { id frm } {
 
     # use cats
     set row [ frame $frm.use ]
-    Label $row.a -text "    legend for only these categories     "
+    Label $row.a -text [G_msg "    legend for only these categories     "]
     LabelEntry $row.b -textvariable GmLegend::opt($id,1,use) -width 28
     pack $row.a $row.b -side left
     pack $row -side top -fill both -expand yes
     
     # range
     set row [ frame $frm.range ]
-    Label $row.a -text "    legend for only this range of values"
+    Label $row.a -text [G_msg "    legend for only this range of values"]
     LabelEntry $row.b -textvariable GmLegend::opt($id,1,range) -width 28
     pack $row.a $row.b -side left
     pack $row -side top -fill both -expand yes
