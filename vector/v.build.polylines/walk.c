@@ -125,9 +125,11 @@ int walk_forward_and_pick_up_coords (
       Vect_get_line_nodes ( map, line, &n1, &n2 );
 
       if ( node == n1 ) {
+	  Vect_line_delete_point (pnts, 0); /* delete duplicate nodes */
 	  Vect_append_points ( points, pnts, GV_FORWARD );
 	  next_node = n2;
       } else {
+	  Vect_line_delete_point (pnts, pnts -> n_points - 1); 
 	  Vect_append_points ( points, pnts, GV_BACKWARD );
 	  next_node = n1;
       }
