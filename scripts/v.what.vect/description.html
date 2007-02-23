@@ -1,27 +1,28 @@
 <h2>DESCRIPTION</h2>
 
-<em>v.what.vect</em> is used to transfer vector attributes from a query vector
-map into a vector point map at the point positions. The script is based on
-<em>v.distance</em>.
+<em>v.what.vect</em> transfers attributes from the <b>qvector</b>'s map
+attribute table into the attribute table of <u>points</u> present in the
+<b>vector</b> map. The script is based on <em>v.distance</em>.
 
 <h2>NOTES</h2>
 
-The upload column into which the query results are stored must be present
-in the vector point map or added with <em>v.db.addcol</em>.
+The upload <b>column</b>, into which the query results are stored, must be
+present in the <b>vector</b> map. Use <em>v.db.addcol</em> to add one if needed.
 <p>
 This module only uploads attributes which exist at the exact positions of
-the input points. For a "nearest feature" fit use <em>v.distance</em> instead.
+the input's <b>vector</b> points. For a "nearest feature" fit, use
+<em>v.distance</em> instead.
 <P>
-In case of a multipoint input map (several points having the same category number),
-it can happen that the query result is NULL if the same category number
-falls into different polygons.
+In case of a multipoint input <b>vector</b> map, with several points having the
+same category number, it can happen, that the query result is NULL, if the same
+category number falls into different <b>qvector</b> polygons.
 
 <h2>EXAMPLE</h2>
 
 In this example, the 'archsites' point map in the Spearfish location is copied
 to the current mapset, a new attribute column is added and the owner
 names from the 'fields' polygon map are transferred to the 'myarchsites'
-map at point positions:
+map at points' locations:
 
 <div class="code"><pre>
 g.copy vect=archsites,myarchsites
