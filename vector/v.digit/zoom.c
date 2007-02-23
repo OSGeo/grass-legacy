@@ -96,11 +96,11 @@ int zoom_window_end(void *closure)
     return 1;
 }
 
-int zoom_window(void)
+void zoom_window(void)
 {
-    struct zoom_window zw;
+    static struct zoom_window zw;
 
-    return do_tool(zoom_window_begin, zoom_window_update, zoom_window_end, &zw);
+    set_tool(zoom_window_begin, zoom_window_update, zoom_window_end, &zw);
 }
 
 /* Zoom - in / out (centre unchanged) */
@@ -201,11 +201,11 @@ int zoom_pan_end(void *closure)
     return 1;
 }
 
-int zoom_pan(void)
+void zoom_pan(void)
 {
-    struct zoom_pan zp;
+    static struct zoom_pan zp;
 
-    return do_tool(zoom_pan_begin, zoom_pan_update, zoom_pan_end, &zp);
+    set_tool(zoom_pan_begin, zoom_pan_update, zoom_pan_end, &zp);
 }
 
 /* Zoom - default region */

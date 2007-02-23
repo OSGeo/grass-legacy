@@ -5,57 +5,100 @@
 #include "global.h"
 #include "proto.h"
 
+static char color[16];
+static int width;
+
+void driver_rgb_color(int r, int g, int b)
+{
+    sprintf(color, "#%02x%02x%02x", r, g, b);
+}
+
+void driver_line_width(int w)
+{
+    width = w ? w : 1;
+}
+
+static int curx, cury;
+
+static int driver_move_abs(int x, int y)
+{
+    curx = x;
+    cury = y;
+    return 0;
+}
+
+static int driver_cont_abs(int x, int y)
+{
+    char buf[1024];
+
+    sprintf(buf, ".screen.canvas create line %d %d %d %d -width %d -fill %s",
+	    curx, cury, x, y, width, color);
+    Tcl_Eval(Toolbox, buf);
+
+    curx = x;
+    cury = y;
+    return 0;
+}
+
+static void get_window(int *t, int *b, int *l, int *r)
+{
+    Tcl_Eval(Toolbox, "list 0 [winfo height .screen.canvas] 0 [winfo width .screen.canvas]");
+    sscanf(Toolbox->result, "%d %d %d %d", t, b, l, r);
+
+    if (*b > 1 || *r > 1)
+	    return;
+
+    Tcl_Eval(Toolbox, "list 0 [.screen.canvas cget -height] 0 [.screen.canvas cget -width]");
+    sscanf(Toolbox->result, "%d %d %d %d", t, b, l, r);
+}
+
+static void setup(void)
+{
+    struct Cell_head region;
+    int t, b, l, r;
+
+    get_window(&t, &b, &l, &r);
+
+    /* Set the map region associated with graphics frame */
+    G_get_set_window(&region);
+    if(G_set_window(&region) < 0)
+	G_fatal_error ("Invalid graphics coordinates");
+
+    /* Determine conversion factors */
+    if (D_do_conversions(&region, t, b, l, r))
+	G_fatal_error("Error calculating graphics-region conversions") ;
+}
 
 int driver_refresh (void)
 {
-    D_setup (0);
+    setup();
     G_setup_plot (D_get_d_north(), D_get_d_south(), D_get_d_west(), D_get_d_east(),
-		                  D_move_abs, D_cont_abs);
+		  driver_move_abs, driver_cont_abs);
     return 1;
 }
-    
+   
 int driver_open (void)
 {
-    int top, bot, left, right;
     double n, s, e, w;
     
-    G_debug (5, "driver_open()");
-    if (R_open_driver() != 0) G_fatal_error ("No graphics device selected");
-    G_debug (5, " -> opened");
+    Tcl_Eval(Toolbox, "create_screen");
 
-    D_setup (0);
-    D_get_screen_window ( &top, &bot, &left, &right); 
-    G_debug (2, "top = %d bot = %d, left = %d right = %d", top, bot, left, right);
+    setup();
 
-    
-    G_debug (2, "n = %f s = %f, w = %f e = %f", D_get_d_north(), D_get_d_south(), D_get_d_west(), D_get_d_east() );
-    n = D_d_to_u_row ( D_get_d_north() ); 
-    s = D_d_to_u_row ( D_get_d_south() ); 
-    w = D_d_to_u_col ( D_get_d_west() );
-    e = D_d_to_u_col (  D_get_d_east() );
-    G_debug (2, "n = %f s = %f, w = %f e = %f", n, s, w, e );
-    
+    n = D_d_to_u_row(D_get_d_north());
+    s = D_d_to_u_row(D_get_d_south());
+    w = D_d_to_u_col(D_get_d_west());
+    e = D_d_to_u_col(D_get_d_east());
+
     Scale = (n - s) / ( D_get_d_south() - D_get_d_north() );
-    G_debug (2, "Scale = %f", Scale);
-    /*
-    Xscale = ( GRegion.east - GRegion.west ) / ( right - left );
-    Yscale = ( GRegion.north - GRegion.south ) / ( top - bot );
-
-    G_debug (2, "Xscale = %f Yscale = %f", Xscale, Yscale);
-    */
+    
     G_setup_plot (D_get_d_north(), D_get_d_south(), D_get_d_west(), D_get_d_east(),
-                  D_move_abs, D_cont_abs);
-    
-    D_set_clip_window_to_map_window ();
-    
+		  driver_move_abs, driver_cont_abs);
     return 1;
 }
 
 int driver_close (void)
 {
-    G_debug (5, "driver_close()");
-    R_close_driver();
-    G_debug (5, " -> closed");
     return 1;
 }
 

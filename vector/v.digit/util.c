@@ -47,55 +47,106 @@ void set_mode(int m)
     mode = m;
 }
 
-void get_location(int *sxn, int *syn, int *button)
+static tool_func_update *tool_update;
+static tool_func_end *tool_end;
+static void *tool_closure;
+
+static void end_tool(void)
 {
-    R_set_update_function (update);
+    Tcl_Eval(Toolbox, ".screen.canvas configure -cursor {}");
+    Tcl_Eval(Toolbox, ".screen.canvas delete active");
+
+    if (tool_end)
+	    (*tool_end)(tool_closure);
+
+    tool_update = NULL;
+    tool_end = NULL;
+    tool_closure = NULL;
+
+    driver_close();
+    next_tool();
+}
+
+void cancel_tool(void)
+{
+    end_tool();
+}
+
+int c_update_tool( ClientData cdata, Tcl_Interp *interp, int argc, char *argv[])
+{
+    char buf[100];
+    int x, y, b;
+
+    G_debug (3, "c_update_tool()");
+
+    if ( argc < 4 )
+    {
+	Tcl_SetResult(interp,"Usage: c_update_tool x y b", TCL_VOLATILE);
+	return (TCL_ERROR);
+    }
+
+    if (!tool_update)
+	return TCL_OK;
+
+    Tcl_GetInt(interp, argv[1], &x);
+    Tcl_GetInt(interp, argv[2], &y);
+    Tcl_GetInt(interp, argv[3], &b);
 
     switch (mode)
     {
     case MOUSE_POINT:
-	R_get_location_with_pointer (sxn, syn, button);
 	break;
     case MOUSE_LINE:
-	R_get_location_with_line (sxo, syo, sxn, syn, button); 
+	sprintf(buf, "get_update_line %d %d %d %d", sxo, syo, x, y);
+	Tcl_Eval(Toolbox, buf);
 	break;
     case MOUSE_BOX:
-	R_get_location_with_box (sxo, syo, sxn, syn, button); 
+	sprintf(buf, "get_update_box %d %d %d %d", sxo, syo, x, y);
+	Tcl_Eval(Toolbox, buf);
 	break;
     }
+
+    if (b < 0)
+    {
+	update(x, y);
+	return TCL_OK;
+    }
+
+    if (b == 0)
+    {
+	end_tool();
+	return TCL_OK;
+    }
+
+    if ((*tool_update)(tool_closure, x, y, b))
+    {
+	end_tool();
+	return TCL_OK;
+    }
+
+    return TCL_OK;
 }
 
-int do_tool(tool_func_begin *begin, tool_func_update *update, tool_func_end *end, void *closure)
+void set_tool(tool_func_begin *begin_fn, tool_func_update *update_fn, tool_func_end *end_fn, void *closure)
 {
-    int sxn = COOR_NULL;
-    int syn = COOR_NULL;
-    int button;
     int ret;
 
+    if (tool_update)
+	end_tool();
+
     driver_open();
-    ret = (*begin)(closure);
+    ret = (*begin_fn)(closure);
 
     if (ret)
     {
 	driver_close();
-	return ret;
+	return;
     }
+   
+    tool_update = update_fn;
+    tool_end = end_fn;
+    tool_closure = closure;
 
-    while (1)
-    {
-	/* Get next coordinate */
-        get_location(&sxn, &syn, &button); 
-
-	if (button == 0)
-	    break;
-
-	if ((*update)(closure, sxn, syn, button))
-	    break;
-    }
-
-    ret = (*end)(closure);
-    driver_close();
-
-    return ret;
+    Tcl_Eval(Toolbox, ".screen.canvas configure -cursor crosshair");
 }
 

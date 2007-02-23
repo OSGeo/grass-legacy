@@ -25,6 +25,29 @@ set prompt_middle [G_msg "Middle mouse button"]
 set prompt_right [G_msg "Right mouse button"]
 set coor ""
 
+proc get_update_line {ox oy x y} {
+    .screen.canvas delete active
+    .screen.canvas create line $ox $oy $x $y -tags active -dash {4 4}
+}
+
+proc get_update_box {ox oy x y} {
+    .screen.canvas delete active
+    .screen.canvas create line $ox $oy $ox $y $x $y $x $oy $ox $oy -tags active -dash {4 4}
+}
+
+proc create_screen {} {
+    if {[winfo exists .screen]} return
+
+    toplevel .screen
+    canvas .screen.canvas -background white -width 640 -height 480
+    pack .screen.canvas -fill both -expand yes
+    bind .screen.canvas <ButtonPress> { c_update_tool %x %y %b }
+    bind .screen.canvas <Motion> { c_update_tool %x %y -1 }
+    wm withdraw .screen.canvas
+    wm deiconify .screen.canvas
+    update
+}
+
 # GVariable stores variables by key, this variables are (should be) synchronized with
 # variables in Variable array in C (synchronization should be done somehow better). Key is
 # 'name' in VAR structure in C. Variables are initialized by var_init() on startup.
@@ -236,14 +259,10 @@ pack .coorf -fill x -side top -padx 8 -pady 5
 Label .coorf.prompt -width 50 -padx 3 -pady 2 -relief flat -anchor w -textvariable coor
 pack .coorf.prompt -fill x  -side left
 
-set destroyed 0
-bind . <Destroy> { if { "%W" == "."} { c_next_tool exit; set destroyed 1 } }
+bind . <Destroy> { if { "%W" == "."} { c_next_tool exit } }
 
-# Strart tool centre in C and wait until the end
+# Start tool centre in C
 c_tool_centre
 
-# Exit
-#puts "Exit destroyed = $destroyed"
-if { $destroyed == 0 } {
-  destroy .
-}
+tkwait window .
+exit

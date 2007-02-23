@@ -2,11 +2,15 @@
 int driver_open (void); 
 int driver_close (void); 
 int driver_refresh (void);
+void driver_rgb_color(int r, int g, int b);
+void driver_line_width(int w);
+void driver_plot_line(double x1, double y1, double x2, double y2);
 
 /* Miscellaneous */
-int update (int, int);
-int tool_centre (void);
-int end (void);
+void tool_centre (void);
+void next_tool(void);
+void update (int, int);
+void end (void);
 
 /* Symbology */
 int get_symb_code ( char *); 
@@ -29,21 +33,21 @@ void updated_lines_and_nodes_erase_refresh_display(void);
 
 /* Edit */
 int snap ( double *, double * );
-int new_line (int);
-int move_vertex (void);
-int add_vertex (void);
-int rm_vertex (void);
-int split_line (void);
-int move_line (void);
-int delete_line (void);
-int edit_line (void);
+void new_line (int);
+void move_vertex (void);
+void add_vertex (void);
+void rm_vertex (void);
+void split_line (void);
+void move_line (void);
+void delete_line (void);
+void edit_line (void);
 
 /* Attributes */
-int copy_cats (void);
-int display_cats (void);
+void copy_cats (void);
+void display_cats (void);
 int del_cat (int, int, int);
 int add_cat (int, int, int);
-int display_attributes (void);
+void display_attributes (void);
 int new_record (int, int);
 int check_record (int, int);
 
@@ -60,9 +64,9 @@ void display_erase ( void );
 void display_redraw ( void );
 
 /* Zoom */
-int zoom_window (void);
+void zoom_window (void);
 int zoom_centre (double factor);
-int zoom_pan (void);
+void zoom_pan (void);
 int zoom_default (void);
 int zoom_region (void);
 
@@ -120,13 +124,14 @@ int bg_add ( char *);
 char *get_line_type_name ( int type);
 void set_location(int x, int y);
 void set_mode(int m);
-void get_location(int *sxn, int *syn, int *button);
 
 typedef int tool_func_begin(void *closure);
 typedef int tool_func_update(void *closure, int sxn, int syn, int button);
 typedef int tool_func_end(void *closure);
 
-int do_tool(tool_func_begin *begin,
-	    tool_func_update *update,
-	    tool_func_end *end,
-	    void *closure);
+void set_tool(tool_func_begin *begin,
+	      tool_func_update *update,
+	      tool_func_end *end,
+	      void *closure);
+void cancel_tool(void);
+int c_update_tool (ClientData , Tcl_Interp *, int, char **);

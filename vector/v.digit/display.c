@@ -1,8 +1,10 @@
 /* $Id$ */
 #include <stdio.h>
 #include <stdlib.h>
+#include <string.h>
 #include <unistd.h>
 #include <time.h> 
+#include <math.h> 
 #include <grass/gis.h>
 #include <grass/Vect.h>
 #include <grass/raster.h>
@@ -24,13 +26,11 @@ void display_points ( struct line_pnts *Points, int flsh )
     
     G_debug (2, "display_points()");
 
-    R_line_width ( var_geti( VAR_LINEWIDTH ) );
+    driver_line_width ( var_geti( VAR_LINEWIDTH ) );
     for(i=1; i < Points->n_points; i++) {
         G_plot_line ( Points->x[i-1], Points->y[i-1], Points->x[i], Points->y[i]);
     }
-    R_line_width ( 0 );
-   
-    if ( flsh ) R_flush();
+    driver_line_width( 0 );
 }
 
 /* Display icon */
@@ -38,11 +38,9 @@ void display_icon ( double x, double y, int icon, double angle, int size , int f
 {
     G_debug (2, "display_icon()");
 
-    R_line_width ( var_geti( VAR_LINEWIDTH ) );
+    driver_line_width ( var_geti( VAR_LINEWIDTH ) );
     G_plot_icon(x, y, icon, angle, Scale * size);
-    R_line_width ( 0 );
-
-    if ( flsh ) R_flush();
+    driver_line_width ( 0 );
 }
 
 /* Display vector line 
@@ -91,7 +89,6 @@ display_updated_lines ( int symb )
         if ( !Vect_line_alive ( &Map, line ) ) continue;
         display_line ( line, symb, 0 );
    }
-   R_flush();
 }
 
 /* Display node, color may be given but shape and size is read from symbology table,
@@ -130,7 +127,6 @@ display_updated_nodes ( int symb )
 	if ( NodeSymb[node] == SYMB_NODE_0 ) continue;
 	display_node ( node, symb, 0);
     }
-    R_flush();
 }
 
 /* Display vector map */
@@ -155,7 +151,6 @@ void display_map ( void )
 	if ( !Symb[symb].on ) continue;
 	display_line ( i , SYMB_DEFAULT, 0 );
     }
-    R_flush();
     
     /* Nodes: first nodes with more than 1 line, then nodes with only 1 line, 
      *   so that dangles are not hidden, and nodes without lines (points, 
@@ -169,7 +164,6 @@ void display_map ( void )
 	    if ( NodeSymb[i] != SYMB_NODE_2 ) continue;
 	    display_node(i, NodeSymb[i], 0);
 	}
-	R_flush();
     }
 
     if ( Symb[SYMB_NODE_1].on ) {
@@ -180,33 +174,56 @@ void display_map ( void )
 	    if ( NodeSymb[i] != SYMB_NODE_1 ) continue;
 	    display_node(i, NodeSymb[i], 0);
         }
-	R_flush();
     }
 }
 
 /* Display bacground */
 void display_bg ( void )
 {
+    static char w_buf[] = "GRASS_WIDTH=0000000000";
+    static char h_buf[] = "GRASS_HEIGHT=0000000000";
+    static char img_buf[GPATH_MAX];
+    static char cmd_buf[GPATH_MAX];
+    char *ppmfile = G_tempfile();
     int i;
     
     G_debug (2, "display_bg()");
 
-    driver_close();
+    putenv("GRASS_RENDER_IMMEDIATE=TRUE");
+    putenv("GRASS_TRUECOLOR=TRUE");
+    putenv("GRASS_BACKGROUNDCOLOR=0xFFFFFF");
+
+    sprintf(img_buf, "GRASS_PNGFILE=%s.ppm", ppmfile);
+    putenv(img_buf);
+
+    sprintf(w_buf, "GRASS_WIDTH=%d", (int) (D_get_d_east() - D_get_d_west()));
+    putenv(w_buf);
+
+    sprintf(h_buf, "GRASS_HEIGHT=%d", (int) (D_get_d_south() - D_get_d_north()));
+    putenv(h_buf);
+
     for(i=0; i < nbgcmd; i++) {
+	putenv((i > 0) ? "GRASS_PNG_READ=TRUE" : "GRASS_PNG_READ=FALSE");
 	if ( Bgcmd[i].on ) 
 	    system ( Bgcmd[i].cmd );
     }
-    driver_open();
+
+    sprintf(cmd_buf, "image create photo bgimage -file {%s.ppm}", ppmfile);
+    Tcl_Eval(Toolbox, cmd_buf);
+
+    sprintf(cmd_buf, ".screen.canvas create image %d %d -image bgimage -anchor nw",
+	    (int) D_a_to_d_col(0), (int) D_a_to_d_row(0));
+    Tcl_Eval(Toolbox, cmd_buf);
+
+    remove(ppmfile);
+    G_free(ppmfile);
 }
 
 /* Erase */
 void display_erase ( void )
 {
-    char command[128];
-    
     driver_close();
-    sprintf(command, "d.erase color=white");
-    system( command ); /* It does everything and command is registered */
+    Tcl_Eval(Toolbox, ".screen.canvas delete all");
     driver_open();
 
     /* As erase must be run after each zoom by v.digit, here is good place to reset plot.
