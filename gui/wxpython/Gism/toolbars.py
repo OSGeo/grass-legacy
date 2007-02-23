@@ -10,6 +10,59 @@ icons= os.path.split(icons)[0]
 icons= os.path.split(icons)[0]
 #print icons
 
+class MapToolbar:
+    def __init__(self,mapdisplay,map):
+
+        global icons
+        self.mapcontent = map
+        self.mapdisplay = mapdisplay
+
+    	self.toolbar = wx.ToolBar(self.mapdisplay, -1, size=(5,100))
+    	#self.SetToolBar(self.toolbar)
+
+    	self.displaymap = self.toolbar.AddLabelTool(-1, "displaymap", 
+                            wx.Bitmap(os.path.join(gismutils.icons,"gui-display.gif"), wx.BITMAP_TYPE_ANY), 
+                            wx.NullBitmap, wx.ITEM_NORMAL, "Display map", "")
+    	self.toolbar.AddSeparator()
+    	self.pointer = self.toolbar.AddLabelTool(-1, "pointer", 
+                       wx.Bitmap(os.path.join(gismutils.icons,"gui-pointer.gif"), wx.BITMAP_TYPE_ANY), 
+                       wx.NullBitmap, wx.ITEM_RADIO, "pointer", "")
+    	self.zoomin = self.toolbar.AddLabelTool(-1, "zoom_in", 
+                        wx.Bitmap(os.path.join(gismutils.icons,"gui-zoom_in.gif"), wx.BITMAP_TYPE_ANY), 
+                        wx.NullBitmap, wx.ITEM_RADIO, "Zoom in", "")
+    	self.zoomout = self.toolbar.AddLabelTool(-1, "zoom_out", 
+                        wx.Bitmap(os.path.join(gismutils.icons,"gui-zoom_out.gif"), wx.BITMAP_TYPE_ANY), 
+                        wx.NullBitmap, wx.ITEM_RADIO, "Zoom out", "")
+    	self.pan = self.toolbar.AddLabelTool(-1, "pan", 
+                        wx.Bitmap(os.path.join(gismutils.icons,"gui-pan.gif"), wx.BITMAP_TYPE_ANY),
+                        wx.NullBitmap, wx.ITEM_RADIO, "Pan", "")
+    	self.erase = self.toolbar.AddLabelTool(-1, "erase", 
+                        wx.Bitmap(os.path.join(gismutils.icons,"gui-erase.gif"), wx.BITMAP_TYPE_ANY), 
+                        wx.NullBitmap, wx.ITEM_RADIO, "Erase display", "")
+    	self.savefile = self.toolbar.AddLabelTool(-1, "savefile", 
+                        wx.Bitmap(os.path.join(gismutils.icons,"file-save.gif"), wx.BITMAP_TYPE_ANY), 
+                        wx.NullBitmap, wx.ITEM_RADIO, "Save display to PNG file", "")
+
+        combo = wx.ComboBox(self.toolbar, 4, 'Tools',
+                choices=["","Digitize"], size=(120, -1))
+        self.combo = self.toolbar.AddControl(combo)
+
+    	self.mapdisplay.Bind(wx.EVT_TOOL, self.mapdisplay.ReDraw, self.displaymap)
+    	self.mapdisplay.Bind(wx.EVT_TOOL, self.mapdisplay.Pointer, self.pointer)
+    	self.mapdisplay.Bind(wx.EVT_TOOL, self.mapdisplay.OnZoomIn, self.zoomin)
+    	self.mapdisplay.Bind(wx.EVT_TOOL, self.mapdisplay.OnZoomOut, self.zoomout)
+    	self.mapdisplay.Bind(wx.EVT_TOOL, self.mapdisplay.OnPan, self.pan)
+    	self.mapdisplay.Bind(wx.EVT_TOOL, self.mapdisplay.OnErase, self.erase)
+    	self.mapdisplay.Bind(wx.EVT_TOOL, self.mapdisplay.SaveToFile, self.savefile)
+        self.mapdisplay.Bind(wx.EVT_COMBOBOX, self.OnSelect,self.combo)
+
+    def OnSelect(self,event):
+
+        tool =  event.GetString()
+
+        if tool == "Digitize" and not self.mapdisplay.digittoolbar:
+            self.mapdisplay.AddToolbar("digit")
+
 class DigitToolbar:
     def __init__(self,parent,map):
 

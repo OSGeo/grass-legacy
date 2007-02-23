@@ -2,11 +2,7 @@ import os,sys
 import wx
 import wx.lib.customtreectrl as CT
 import render
-
-#set path to icon directory
-if not os.getenv("GISBASE"):
-    sys.stderr.write("GISBASE not set, you have to be in running GRASS session!\n")
-    sys.exit(1)
+import grassenv
 
 icons = ""
 if not os.getenv("GRASS_ICONPATH"):
