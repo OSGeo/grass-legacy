@@ -38,20 +38,34 @@ class BufferedWindow(wx.Window):
             style=wx.NO_FULL_REPAINT_ON_RESIZE):
 
     	wx.Window.__init__(self, parent, id, pos, size, style)
+        self.parent = parent
 
+        #
+        # Flags
+        #
+    	self.render = True #re-render the map from GRASS or just redraw image
+    	self.resize = False # indicates whether or not a resize event has taken place
+    	self.dragimg = None # initialize variable for map panning
+    	self.pen = None # pen for drawing zoom boxes, etc.
+
+        # Event bindings
+        # 
     	self.Bind(wx.EVT_PAINT, self.OnPaint)
     	self.Bind(wx.EVT_SIZE, self.OnSize)
     	self.Bind(wx.EVT_IDLE, self.OnIdle)
     	self.Bind(wx.EVT_MOTION, self.MouseActions)
     	self.Bind(wx.EVT_MOUSE_EVENTS, self.MouseActions)
 
-    	# tempfile for display command output
+        #
+        # Render output objects
+    	# 
     	self.MapFile = None # file with 
     	self.Img = "" # wx.Image object from self.MapFile
-        self.parent = parent
 
+        #
     	# mouse attributes like currently pressed buttons, position on
     	# the screen, begin and end of dragging, and type of drawing
+        #
     	self.mouse = {
     	    'l': False,
     	    'r':False,
@@ -62,10 +76,6 @@ class BufferedWindow(wx.Window):
     	    'box':"point"
     	    }
     	self.zoomtype = 1	 # 1 zoom in, 0 no zoom, -1 zoom out
-    	self.resize = False # indicates whether or not a resize event has taken place
-    	self.dragimg = None # initialize variable for map panning
-    	self.pen = None # pen for drawing zoom boxes, etc.
-    	self.render = True #re-render the map from GRASS or just redraw image
 
     	# OnSize called to make sure the buffer is initialized.
     	# This might result in OnSize getting called twice on some
@@ -73,18 +83,19 @@ class BufferedWindow(wx.Window):
         #!!! self.OnSize(None)
 
     def Draw(self, dc, img=None, dctype='image', coords='0,0'):
-    	## just here as a place holder.
-    	## This method should be over-ridden when sub-classed
+    	"""just here as a place holder.
+    	This method should be over-ridden when sub-classed"""
     	pass
 
     def OnPaint(self, event):
-    	# All that is needed here is to draw the buffer to screen
+    	"""All that is needed here is to draw the buffer to screen"""
     	dc = wx.BufferedPaintDC(self, self._Buffer)
 
     def OnSize(self, event):
-    	# The Buffer init is done here, to make sure the buffer is always
-    	# the same size as the Window
+    	"""The Buffer init is done here, to make sure the buffer is always
+    	the same size as the Window"""
 
+        # set size of the input image
     	Map.Width, Map.Height = self.GetClientSize()
 
     	# Make new off screen bitmap: this bitmap will always have the
@@ -92,27 +103,31 @@ class BufferedWindow(wx.Window):
     	# a file, or whatever.
     	self._Buffer = wx.EmptyBitmap(Map.Width, Map.Height)
 
+        # get the image, render
     	self.Img = self.GetImage()
 
-
+        # update map display
     	if self.Img and Map.Width + Map.Height > 0: # scale image during resize
     	    self.Img = self.Img.Scale(Map.Width, Map.Height)
     	    self.render = False
     	    self.UpdateMap()
-    	self.resize = True # re-render image on idle
+
+        # re-render image on idle
+    	self.resize = True 
 
     def OnIdle(self, event):
     	'''Only re-render a compsite map image from GRASS during
     	idle time instead of multiple times during resizing.'''
+
     	if self.resize:
     	    self.render = True
     	    self.UpdateMap()
     	event.Skip()
 
     def SaveToFile(self, FileName, FileType):
-    	## This will save the contents of the buffer
-    	## to the specified file. See the wx.Windows docs for
-    	## wx.Bitmap::SaveFile for the details
+    	"""This will save the contents of the buffer
+    	to the specified file. See the wx.Windows docs for
+    	wx.Bitmap::SaveFile for the details"""
     	self._Buffer.SaveFile(FileName, FileType)
 
     def UpdateMap(self, img=None):
@@ -139,13 +154,14 @@ class BufferedWindow(wx.Window):
     	self.resize = False
 
     def EraseMap(self):
+        """Clears the map display"""
     	dc = wx.BufferedDC(wx.ClientDC(self), self._Buffer)
     	self.Draw(dc, dctype='clear')
 
     def DragMap(self, moveto):
     	'''drag a bitmap image for panning.'''
+
     	dc = wx.BufferedDC(wx.ClientDC(self), self._Buffer)
-    	#dc.SetBackground(wx.Brush(self.GetBackgroundColour()))
     	dc.SetBackground(wx.Brush("White"))
     	bitmap = wx.BitmapFromImage(self.Img)
     	self.dragimg = wx.DragImage(bitmap)
@@ -193,10 +209,10 @@ class BufferedWindow(wx.Window):
 
             else:
                 # digitizing
-                if self.parent.dtoolbar:
-                    if self.parent.dtoolbar.digitize == "point":
+                if self.parent.digittoolbar:
+                    if self.parent.digittoolbar.digitize == "point":
                         east,north= self.Pixel2Cell(self.mouse['end'][0],self.mouse['end'][1])
-                        self.parent.dtoolbar.AddPoint(east,north)
+                        self.parent.digittoolbar.AddPoint(east,north)
             # redraw map
             self.render=True
             self.UpdateMap()
@@ -224,6 +240,7 @@ class BufferedWindow(wx.Window):
     	self.mouse['pos'] = event.GetPositionTuple()[:]
 
     def GetImage(self):
+        """Converts files to wx.Image"""
     	if Map.MapFile and os.path.isfile(Map.MapFile):
     	    self.Img = wx.Image(Map.MapFile, wx.BITMAP_TYPE_ANY)
     	else:
@@ -243,6 +260,9 @@ class BufferedWindow(wx.Window):
 
 
     def Zoom(self, begin, end, zoomtype):
+        """
+        Calculates new region while (un)zoom/pan-ing 
+        """
     	x1, y1, x2, y2 = begin[0], begin[1], end[0], end[1]
     	newreg = {}
 
@@ -287,6 +307,8 @@ class DrawWindow(BufferedWindow):
     '''Drawing routine for double buffered drawing. Overwrites Draw method
     in the BufferedWindow class'''
     def __init__(self, parent, id = -1):
+        """
+        """
     	## Any data the Draw() function needs must be initialized before
     	## calling BufferedWindow.__init__, as it will call the Draw
     	## function.
@@ -294,6 +316,9 @@ class DrawWindow(BufferedWindow):
     	BufferedWindow.__init__(self, parent, id)
 
     def Draw(self, dc, img=None, dctype='image', coords=[0, 0]):
+        """
+        Draws image, box and line in the background
+        """
     	dc.BeginDrawing()
     	dc.SetBackground(wx.Brush(self.GetBackgroundColour()))
     	dc.Clear() # make sure you clear the bitmap!
@@ -315,97 +340,97 @@ class DrawWindow(BufferedWindow):
 class MapFrame(wx.Frame):
     '''Main frame for map display window. Drawing takes place in child double buffered
     drawing window.'''
-##    def __init__(self, *args, **kwds):
-##        kwds["style"] = wx.DEFAULT_FRAME_STYLE
-##         wx.Frame.__init__(self, *args, **kwds)
 
     def __init__(self, parent=None, id=-1, title="Map display",
             pos=wx.DefaultPosition, size=wx.DefaultSize,
-            style=wx.DEFAULT_FRAME_STYLE, cb=None, idx=-1):
+            style=wx.DEFAULT_FRAME_STYLE, toolbars=["map"]):
+        """
+            Main map display window with toolbars, statusbars and
+            DrawWindow
+
+            Parameters:
+                parent  -- parent window, None, wx.Window()
+                id      -- window ID, int, wx.NewId()
+                title   -- window title, string
+                pos     -- where to place it, tupple, wx.Position
+                size    -- window size, tupple, wx.Size
+                style   -- window style
+                toolbars-- array of default toolbars, which should appear
+                           map, digit
+        """
+
         wx.Frame.__init__(self, parent, id, title, pos, size, style)
+            
+        #
+        # set Frame (main window) content and properties
+        #
+
+        # set the size
         self.SetClientSize((600, 475))
-        self.cb_page = "" #choicebook page for each display, indexed by display ID
-        self.maptree = "" #layer tree on choicebook page for each display, indexed by display ID
-        self.mapconsole = "" #command console on choicebook page for each display, indexed by display ID
-        self.nb = "" #notebook on choicebook page for GIS mgr controls for each display, indexed by display ID
-        self.chbk = cb
-        self.disp_idx = idx
 
         # fancy gui
         self._mgr = wx.aui.AuiManager(self)
 
-        # all toolbars
-        self.mtoolbar = None
-        self.dtoolbar = None
+        # all possible toolbars
+        self.maptoolbar = None
+        self.digittoolbar = None
+        for toolb in toolbars:
+            self.AddToolbar(toolb)
 
-        #self.createGISmgr()
-
-    	#---status bar---#000000#FFFFFF-------------------------------------------------
+        # add status bars
     	self.statusbar = self.CreateStatusBar(2, 0)
     	self.statusbar.SetStatusWidths([-3, -1])
     	map_frame_statusbar_fields = [("%s,%s" %(None, None)), _("map_frame_statusbar2")]
     	for i in range(len(map_frame_statusbar_fields)):
     	    self.statusbar.SetStatusText(map_frame_statusbar_fields[i], i)
 
-    	#---tool bar---#000000#FFFFFF---------------------------------------------------
-    	self.mtoolbar = wx.ToolBar(self, -1, size=(5,100))
-    	#self.SetToolBar(self.mtoolbar)
-
-    	self.displaymap = self.mtoolbar.AddLabelTool(-1, "displaymap", 
-                            wx.Bitmap(os.path.join(gismutils.icons,"gui-display.gif"), wx.BITMAP_TYPE_ANY), 
-                            wx.NullBitmap, wx.ITEM_NORMAL, "Display map", "")
-    	self.mtoolbar.AddSeparator()
-    	self.pointer = self.mtoolbar.AddLabelTool(-1, "pointer", 
-                       wx.Bitmap(os.path.join(gismutils.icons,"gui-pointer.gif"), wx.BITMAP_TYPE_ANY), 
-                       wx.NullBitmap, wx.ITEM_RADIO, "pointer", "")
-    	self.zoomin = self.mtoolbar.AddLabelTool(-1, "zoom_in", 
-                        wx.Bitmap(os.path.join(gismutils.icons,"gui-zoom_in.gif"), wx.BITMAP_TYPE_ANY), 
-                        wx.NullBitmap, wx.ITEM_RADIO, "Zoom in", "")
-    	self.zoomout = self.mtoolbar.AddLabelTool(-1, "zoom_out", 
-                        wx.Bitmap(os.path.join(gismutils.icons,"gui-zoom_out.gif"), wx.BITMAP_TYPE_ANY), 
-                        wx.NullBitmap, wx.ITEM_RADIO, "Zoom out", "")
-    	self.pan = self.mtoolbar.AddLabelTool(-1, "pan", 
-                        wx.Bitmap(os.path.join(gismutils.icons,"gui-pan.gif"), wx.BITMAP_TYPE_ANY),
-                        wx.NullBitmap, wx.ITEM_RADIO, "Pan", "")
-    	self.erase = self.mtoolbar.AddLabelTool(-1, "erase", 
-                        wx.Bitmap(os.path.join(gismutils.icons,"gui-erase.gif"), wx.BITMAP_TYPE_ANY), 
-                        wx.NullBitmap, wx.ITEM_RADIO, "Erase display", "")
-    	self.savefile = self.mtoolbar.AddLabelTool(-1, "savefile", 
-                        wx.Bitmap(os.path.join(gismutils.icons,"file-save.gif"), wx.BITMAP_TYPE_ANY), 
-                        wx.NullBitmap, wx.ITEM_RADIO, "Save display to PNG file", "")
-
-        combo = wx.ComboBox(self.mtoolbar, 4, 'Tools',
-                choices=["","Digitize"], size=(120, -1))
-        self.combo = self.mtoolbar.AddControl(combo)
-
-    	self.Bind(wx.EVT_TOOL, self.ReDraw, self.displaymap)
-    	self.Bind(wx.EVT_TOOL, self.Pointer, self.pointer)
-    	self.Bind(wx.EVT_TOOL, self.OnZoomIn, self.zoomin)
-    	self.Bind(wx.EVT_TOOL, self.OnZoomOut, self.zoomout)
-    	self.Bind(wx.EVT_TOOL, self.OnPan, self.pan)
-    	self.Bind(wx.EVT_TOOL, self.OnErase, self.erase)
-    	self.Bind(wx.EVT_TOOL, self.SaveToFile, self.savefile)
-    	self.Bind(wx.EVT_ACTIVATE, self.OnFocus)
-    	self.Bind(wx.EVT_CLOSE, self.OnCloseWindow)
-        self.Bind(wx.EVT_COMBOBOX, self.OnSelect,self.combo)
-
     	# init map display
     	self.InitDisplay() # initialize region values
     	self.MapWindow = DrawWindow(self) # initialize buffered DC
     	self.MapWindow.Bind(wx.EVT_MOTION, self.OnMotion)
 
-        self._mgr.AddPane(self.MapWindow, wx.CENTER)
-        self._mgr.AddPane(self.mtoolbar, wx.aui.AuiPaneInfo().
-                          Name("mtoolbar").Caption("Map Tool").
-                          ToolbarPane().Top().CloseButton(False).LeftDockable(False).RightDockable(False))
+        #
+        # Bind various events
+        #
+    	self.Bind(wx.EVT_ACTIVATE, self.OnFocus)
+    	self.Bind(wx.EVT_CLOSE, self.OnCloseWindow)
 
+        #
+        # Update fancy gui style
+        #
+        self._mgr.AddPane(self.MapWindow, wx.CENTER)
+        self._mgr.Update()
+
+    def AddToolbar(self,name):
+        """Add defined toolbar to the window
+        
+        Currently known toolbars are:
+            map, digit
+        """
+
+        if name == "map":
+            self.maptoolbar = toolbars.MapToolbar(self,Map)
+            self._mgr.AddPane(self.maptoolbar.toolbar, wx.aui.AuiPaneInfo().
+                          Name("maptoolbar").Caption("Map Toolbar").
+                          ToolbarPane().Top().
+                          LeftDockable(True).RightDockable(True))
+
+        if name == "digit":
+            self.digittoolbar = toolbars.DigitToolbar(self,Map)
+            self._mgr.AddPane(self.digittoolbar.toolbar, wx.aui.AuiPaneInfo().
+                          Name("digittoolbar").Caption("Digit Toolbar").
+                          ToolbarPane().Top().
+                          LeftDockable(True).RightDockable(True))
         self._mgr.Update()
 
     def InitDisplay(self):
+        """Initialize map display, set dimensions and map region"""
         self.Width, self.Height = self.GetClientSize()
         Map.geom = self.Width, self.Height
         Map.GetRegion()
-        # This was Map.getResolution(). I'm guessing at the moment that this is replaced by Map.SetRegion()
+        #FIXME
+        #This was Map.getResolution().
+        #I'm guessing at the moment that this is replaced by Map.SetRegion()
         Map.SetRegion()
 
     def OnFocus(self, event):
@@ -414,16 +439,8 @@ class MapFrame(wx.Frame):
         page to match display'''
         title = self.GetTitle()
         num = title[12:]
-        #render.Track().SetDisp_idx(self.disp_idx)
-        #render.Track().SetDisp(event.GetEventObject(), self.disp_idx)
-        #render.Track().SetNB(self.disp_idx, self.nb)
-        #render.Track().SetTree(self.disp_idx, self.maptree)
 
-        # change choicebook page to page associted with display
-        #ctrl = render.Track().GetDispCtrl(self.disp_idx)
-        #pg = ctrl[1]
-        #pgnum = render.Track().GetCB_page(pg)
-        #self.chbk.SetSelection(pgnum)
+        # FIXME removed
         event.Skip()
 
     def SetDcommandList(self, clst):
@@ -432,7 +449,10 @@ class MapFrame(wx.Frame):
         self.MapWindow.UpdateMap()
 
     def OnMotion(self, event):
-	    # store current mouse position
+        """Mouse moved:
+        Track mouse motion, store it
+        s position to status bar"""
+        # store current mouse position
     	posx, posy = event.GetPositionTuple()
 
     	# set coordinates to status bar
@@ -441,39 +461,57 @@ class MapFrame(wx.Frame):
     	event.Skip()
 
     def ReDraw(self, event):
+        """
+        Redraw button clicked
+        """
         self.MapWindow.UpdateMap()
 
     def Pointer(self, event):
+        """Pointer button clicled"""
         self.MapWindow.mouse['box'] = "point"
 
     def OnZoomIn(self, event):
+        """ZoomIn button clicled. Set mouse pointer and zoom direction"""
     	self.MapWindow.mouse['box'] = "box"
     	self.MapWindow.zoomtype = 1
     	self.MapWindow.pen = wx.Pen('Red', 2)
 
     def OnZoomOut(self, event):
+        """ZoomOut button clicled. Set mouse pointer and zoom direction"""
     	self.MapWindow.mouse['box'] = "box"
     	self.MapWindow.zoomtype = -1
     	self.MapWindow.pen = wx.Pen('Green', 2)
 
     def OnZoomBack(self, event):
-	       pass
+        """ZoomBack button clicked, zoom to previously stored position"""
+        # FIXME
+        pass
 
     def OnPan(self, event):
+        """Panning button pressed, set mouse to drag"""
     	self.MapWindow.mouse['box'] = "drag"
     	self.MapWindow.zoomtype = 0
     	event.Skip()
 
     def OnErase(self, event):
+        """
+        Erase button pressed, erase screen
+        """
         self.MapWindow.EraseMap()
 
     def OnZoomRegion(self, event):
+        """
+        Zoom to region button clicked
+        """
     	Map.getRegion()
     	Map.getResolution()
     	self.draw(dc)
     	event.Skip()
 
     def OnAlignRegion(self, event):
+        """
+        Align button clicked
+        """
     	if not Map.alignRegion:
     	    Map.alignRegion = True
     	else:
@@ -481,6 +519,9 @@ class MapFrame(wx.Frame):
     	event.Skip()
 
     def SaveToFile(self, event):
+        """
+        Save to file clicked
+        """
     	dlg = wx.FileDialog(self, "Choose a file name to save the image as a PNG to",
     	    defaultDir = "",
     	    defaultFile = "",
@@ -491,21 +532,12 @@ class MapFrame(wx.Frame):
     	dlg.Destroy()
 
     def OnCloseWindow(self, event):
+        """
+        Window closed
+        """
         Map.Clean()
     	self.Destroy()
     
-    def OnSelect(self,event):
-
-        tool =  event.GetString()
-
-        if tool == "Digitize" and not self.dtoolbar:
-            self.dtoolbar=toolbars.DigitToolbar(self,Map)
-
-            self._mgr.AddPane(self.dtoolbar.toolbar, wx.aui.AuiPaneInfo().
-                          Name("dtoolbar").Caption("Digitize Toolbar").
-                          ToolbarPane().Top().
-                          LeftDockable(False).RightDockable(False))
-            self._mgr.Update()
 
 # end of class MapFrame
 

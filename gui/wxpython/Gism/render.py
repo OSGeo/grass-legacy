@@ -14,6 +14,7 @@ disp_idx = "" #index for each display
 
 DEBUG = False
 
+
 class Layer:
 	"""
 	This class servs for storing map layers to be displayed
@@ -129,8 +130,10 @@ class Layer:
 		os.environ["GRASS_PNGFILE"] = self.l_mapfile
 
 		if os.system("d.mon --quiet start=gism"):
-			print "Could not run d.mon start=gism"
-			return None
+                    # try again
+                    os.system("d.mon --quiet stop=gism")
+                    if os.system("d.mon --quiet start=gism"):
+                        raise CouldNotStartMonitor("gism")
 
 		os.unsetenv("GRASS_PNGFILE")
 
@@ -152,7 +155,7 @@ class Layer:
 		# Stop monitor
 		#
 		if os.system("d.mon --quiet stop=gism"):
-			print "Could not run d.mon stop=gism"
+                        raise CouldNotStopMonitor("gism")
 			return None
 
 		return self.l_mapfile
