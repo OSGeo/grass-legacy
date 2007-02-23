@@ -129,7 +129,7 @@ proc epsgOpt::epsgLocCom args {
 	LabelEntry $row2.epsgpath -label [G_msg "Path to the EPSG-codes file"] \
 		-labeljustify right -labelanchor e -labelwidth 30 -wraplength 200 \
 		-textvariable epsgOpt::browsedepsg  -width 35 \
-		-helptext [G_msg "Path to EPSG codes file"]
+		-helptext [G_msg "Path to the EPSG-codes file"]
 		
 	#browse for epsg file
 	Button $row2.browseepsgfile -justify center -width 10 -bd 1 -text [G_msg "Browse..."] \
