@@ -228,13 +228,13 @@ int new_line_end(void *closure)
     return 1;
 }
 
-int new_line(int type)
+void new_line(int type)
 {
-    struct new_line nl;
+    static struct new_line nl;
 
     nl.type = type;
 
-    return do_tool(new_line_begin, new_line_update, new_line_end, &nl);
+    set_tool(new_line_begin, new_line_update, new_line_end, &nl);
 }
 
 /* Continue work on the end of a line */
@@ -407,11 +407,11 @@ int edit_line_end(void *closure)
     return 1;
 }
 
-int edit_line(void)
+void edit_line(void)
 {
-    struct edit_line el;
+    static struct edit_line el;
 
-    return do_tool(edit_line_begin, edit_line_update, edit_line_end, &el);
+    set_tool(edit_line_begin, edit_line_update, edit_line_end, &el);
 }
 
 /* Delete line */
@@ -538,11 +538,11 @@ int delete_line_end(void *closure)
     return 1;
 }
 
-int delete_line(void)
+void delete_line(void)
 {
-    struct delete_line dl;
+    static struct delete_line dl;
 
-    return do_tool(delete_line_begin, delete_line_update, delete_line_end, &dl);
+    set_tool(delete_line_begin, delete_line_update, delete_line_end, &dl);
 }
 
 /* Move line */
@@ -669,10 +669,10 @@ int move_line_end(void *closure)
     return 1;
 }
 
-int move_line(void)
+void move_line(void)
 {
-    struct move_line ml;
+    static struct move_line ml;
 
-    return do_tool(move_line_begin, move_line_update, move_line_end, &ml);
+    set_tool(move_line_begin, move_line_update, move_line_end, &ml);
 }
 

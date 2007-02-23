@@ -77,13 +77,6 @@ int i_set_on ( char * name, int on )
     return 1;
 }
     
-/* This function should be regularly called from C to get GUI requests */
-int i_update ( void ) {
-    G_debug (5, "i_update");
-    Tcl_Eval ( Toolbox, "update" );
-    return 1;
-}
-
 /* create: 1 - create, 0 - destroy */
 void i_new_line_options ( int create ) {
     int i;

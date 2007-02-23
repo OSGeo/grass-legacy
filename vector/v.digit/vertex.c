@@ -159,11 +159,11 @@ int split_line_end(void *closure)
     return 1;
 }
 
-int split_line(void)
+void split_line(void)
 {
-    struct split_line sl;
+    static struct split_line sl;
 
-    return do_tool(split_line_begin, split_line_update, split_line_end, &sl);
+    set_tool(split_line_begin, split_line_update, split_line_end, &sl);
 }
 
 /* Remove line vertex */
@@ -309,11 +309,11 @@ int rm_vertex_end(void *closure)
     return 1;
 }
 
-int rm_vertex(void)
+void rm_vertex(void)
 {
-    struct rm_vertex rv;
+    static struct rm_vertex rv;
 
-    return do_tool(rm_vertex_begin, rm_vertex_update, rm_vertex_end, &rv);
+    set_tool(rm_vertex_begin, rm_vertex_update, rm_vertex_end, &rv);
 }
 
 /* Add new vertex to line */
@@ -487,11 +487,11 @@ int add_vertex_end(void *closure)
     return 1;
 }
 
-int add_vertex(void)
+void add_vertex(void)
 {
-    struct add_vertex av;
+    static struct add_vertex av;
 
-    return do_tool(add_vertex_begin, add_vertex_update, add_vertex_end, &av);
+    set_tool(add_vertex_begin, add_vertex_update, add_vertex_end, &av);
 }
 
 /* Move vertex */
@@ -625,10 +625,10 @@ int move_vertex_end(void *closure)
     return 1;
 }
 
-int move_vertex(void)
+void move_vertex(void)
 {
-    struct move_vertex mv;
+    static struct move_vertex mv;
 
-    return do_tool(move_vertex_begin, move_vertex_update, move_vertex_end, &mv);
+    set_tool(move_vertex_begin, move_vertex_update, move_vertex_end, &mv);
 }
 

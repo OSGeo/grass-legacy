@@ -255,11 +255,11 @@ int display_cats_end(void *closure)
     return 1;
 }
 
-int display_cats(void)
+void display_cats(void)
 {
-    struct display_cats dc;
+    static struct display_cats dc;
 
-    return do_tool(display_cats_begin, display_cats_update, display_cats_end, &dc);
+    set_tool(display_cats_begin, display_cats_update, display_cats_end, &dc);
 }
 
 /* Copy categories from one feature to another */
@@ -398,11 +398,11 @@ int copy_cats_end(void *closure)
     return 1;
 }
 
-int copy_cats(void)
+void copy_cats(void)
 {
-    struct copy_cats cc;
+    static struct copy_cats cc;
 
-    return do_tool(copy_cats_begin, copy_cats_update, copy_cats_end, &cc);
+    set_tool(copy_cats_begin, copy_cats_update, copy_cats_end, &cc);
 }
 
 /* Display attributes */
@@ -549,11 +549,11 @@ int display_attributes_end(void *closure)
     return 1;
 }
 
-int display_attributes(void)
+void display_attributes(void)
 {
-    struct display_attributes da;
+    static struct display_attributes da;
 
-    return do_tool(display_attributes_begin, display_attributes_update, display_attributes_end, &da);
+    set_tool(display_attributes_begin, display_attributes_update, display_attributes_end, &da);
 }
 
 /* 

@@ -20,7 +20,7 @@ int
 c_cancel ( ClientData cdata, Tcl_Interp *interp, int argc, char *argv[])
 {
     G_debug (3, "c_cancel()");
-    R_set_cancel ( 1 );
+    cancel_tool ();
     Tool_next = TOOL_NOTHING;
     return TCL_OK;
 }
@@ -90,8 +90,9 @@ c_next_tool ( ClientData cdata, Tcl_Interp *interp, int argc, char *argv[])
     G_debug (2, "  Tool_next = %d", Tool_next);
     
     /* Stop running if any */
-    R_set_cancel ( 1 );
-    
+    cancel_tool ();
+    next_tool();
+
     return TCL_OK;
 }
 
