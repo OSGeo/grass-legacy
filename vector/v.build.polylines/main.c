@@ -119,7 +119,7 @@ int main (int argc, char **argv)
 
   /* Open binary vector map at level 2 */
   mapset = G_find_vector2 (input->answer, "");
-  if ( mapset == NULL ) G_fatal_error ( "Could not find input map <%s>\n", input->answer);  
+  if ( mapset == NULL ) G_fatal_error (_("Could not find input vector map <%s>"), input->answer);  
   Vect_set_open_level (2);
   Vect_open_old (&map, input->answer, mapset);
 
@@ -137,9 +137,9 @@ int main (int argc, char **argv)
   /* Get the number of lines in the binary map and set up record of lines visited */
 
   lines_visited = (int*) G_calloc ( Vect_get_num_lines(&map) + 1, sizeof (int));
-  if (lines_visited == NULL) G_fatal_error ("Error allocating memory for `lines_visited' ");
+  if (lines_visited == NULL) G_fatal_error (_("Error allocating memory for `lines_visited'"));
 
-  G_message (_("The number of lines in the binary map is %d"), Vect_get_num_lines(&map) );
+  G_message (_("The number of lines in the input vector map is [%d]"), Vect_get_num_lines(&map) );
 
   /* Set up points structure and coordinate arrays */
   points = Vect_new_line_struct ();
@@ -171,7 +171,7 @@ int main (int argc, char **argv)
       polyline++;
   }
 
-  G_message (_("The number of polylines in the output map is %d "), polyline);
+  G_message (_("The number of polylines in the output vector map is [%d]"), polyline);
 
 
   /* Tidy up */
@@ -184,6 +184,3 @@ int main (int argc, char **argv)
 
   exit (EXIT_SUCCESS);
 }
-
-
-

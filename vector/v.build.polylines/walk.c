@@ -119,7 +119,7 @@ int walk_forward_and_pick_up_coords (
   /* While next line exist append coordinates */
   line = next_line;
   node = next_node;
-  while ( 1 ) {
+  while ( line != 0 && line != start_line ) {
       G_debug (2, "  line = %d", line);
       type = Vect_read_line (map, pnts, NULL, line);
       Vect_get_line_nodes ( map, line, &n1, &n2 );
@@ -136,7 +136,6 @@ int walk_forward_and_pick_up_coords (
       
       /* Find next one */
       next_line = find_next_line ( map, line, next_node );
-      if ( next_line == 0 || next_line == start_line ) return 1;
       
       line = next_line;
       node = next_node;
