@@ -234,9 +234,9 @@ proc get_map {dlg optn elem} {
 	global opt
 	global path
 	if {$opt($dlg,$optn,multi)} {
-		set val [GSelect_::create $elem multiple parent [winfo containing [winfo pointerx .] [winfo pointery .]] title $opt($dlg,pgm_name)]
+		set val [GSelect_::create $elem multiple parent $opt($dlg,root) title $opt($dlg,pgm_name)]
 	} else {
-		set val [GSelect_::create $elem parent [winfo containing [winfo pointerx .] [winfo pointery .]] title $opt($dlg,pgm_name)]
+		set val [GSelect_::create $elem parent $opt($dlg,root) title $opt($dlg,pgm_name)]
 	}
 	if {$val != ""} {
 		if {$opt($dlg,$optn,multi) && $opt($dlg,$optn,val) != ""} {
@@ -327,23 +327,24 @@ proc progress {dlg percent} {
 # Section based notebook layout
 
 # Make a frame for part of the layout tree
-proc layout_make_frame {dlg guisection optn} {
+proc layout_make_frame {dlg guisection optn glabel} {
 	global opt
 
 	if {$guisection == {}} {set guisection {{}}}
+		
 	if {[llength $guisection] == 1} {
 		# A frame for a toplevel section
 		# This uses a scrolled frame in a notebook tab
-		set label [lindex $guisection 0]
 		# Ungrouped options go under Options
-		if {$label == {}} {
-			set label [G_msg "Options"]
+		if {$glabel == {}} {
+			set glabel [G_msg "Options"]
+			set guisection {Options}
 		}
 		set path $opt($dlg,path)
-		set optpane [$path.nb insert end $label -text $label]
+		set optpane [$path.nb insert end $guisection -text $glabel]
 		# Specials don't get scrolling frames:
 		if {$optn == -1} {
-			$path.nb raise $label
+			$path.nb raise $guisection
 			return $optpane
 		}
 		# And the frames and scrollers:
@@ -358,7 +359,7 @@ proc layout_make_frame {dlg guisection optn} {
 		set suf [$optfra getframe]
 		# Binding magic to make the whole program start at an appropriate size
 		# bind $suf <Configure> {+[winfo parent %W] configure -width [winfo reqwidth %W]}
-		$path.nb raise $label
+		$path.nb raise $guisection
 
 		return $suf
 	} else {
@@ -366,7 +367,7 @@ proc layout_make_frame {dlg guisection optn} {
 		# We could add labels, but I fear it would just make a clutter
 		# tcl/tk8.0: Can't use end-1
 		set parent_section [lrange $guisection 0 [expr [llength $guisection]-2]]
-		set parent_frame [layout_get_frame $dlg $parent_section $optn]
+		set parent_frame [layout_get_frame $dlg $parent_section $optn $glabel]
 		set id [llength [winfo children $parent_frame]]
 		set suf [frame $parent_frame.fra$id]
 		pack $suf -side top -fill x
@@ -375,28 +376,29 @@ proc layout_make_frame {dlg guisection optn} {
 }
 
 # Get the frame for an option, or make it if it doesn't exist yet
-proc layout_get_frame {dlg guisection optn} {
+proc layout_get_frame {dlg guisection optn glabel} {
 	global opt
+	
 	if {! [info exists opt($dlg,layout_frame,$guisection)] } {
-		set frame [layout_make_frame $dlg $guisection $optn]
+		set frame [layout_make_frame $dlg $guisection $optn $glabel]
 		set opt($dlg,layout_frame,$guisection) $frame
 	}
 	return $opt($dlg,layout_frame,$guisection)
 }
 
-proc layout_get_special_frame {dlg guisection key} {
-	return [layout_get_frame $dlg $guisection -1]
+proc layout_get_special_frame {dlg guisection key glabel} {
+	return [layout_get_frame $dlg $guisection -1 $glabel]
 }
 
 proc layout_raise_frame {dlg guisection optn} {
 	global opt
 	set path $opt($dlg,path)
-	if {$guisection == {}} {set guisection {{}}}
-	set label [lindex $guisection 0]
-	if {$label == {}} {
-		set label [G_msg "Options"]
+	
+	if {$guisection == {}} {
+		set guisection {{}}
+		set guisection {Options}
 	}
-	$path.nb raise $label
+	$path.nb raise $guisection
 }
 
 proc layout_raise_special_frame {dlg guisection key} {
@@ -461,7 +463,7 @@ proc make_output {dlg path root} {
 	global opt
 
 	set title [G_msg "Output"]
-	set outpane [layout_get_special_frame $dlg [list $title] $title]
+	set outpane [layout_get_special_frame $dlg {Output} -1 $title]
 
 	set gronsole [Gronsole $outpane.gronsole -height 5 -width 60 -bg white]
 	pack $gronsole -expand yes -fill both
@@ -695,6 +697,8 @@ proc begin_dialog {pgm optlist} {
 		set opt($dlg,$key) $opts($key)
 	}
 
+	# Replace all non-ascii chars, spaces, $ and braces in path with undescore
+	set path [regsub -all {[][{}\$\s\u0100-\uffff]} $path "_"]
 	set root [expr {$path == "" ? "." : $path}]
 	set opt($dlg,path) $path
 	set opt($dlg,root) $root
@@ -735,6 +739,11 @@ proc add_option {optn optlist} {
 
 	foreach key {class name type multi desc required options answer prompt label guisection} {
 		set opt($dlg,$optn,$key) $opts($key)
+		if { $key == {guisection} } { 
+			set glabel $opts($key)
+			set opt($dlg,$optn,$key) [regsub -all {[][{}\$\s\u0100-\uffff]} \
+				[string trim $opt($dlg,$optn,$key)] "_"]
+		}
 	}
 
 	set opt($dlg,optn_index,$opts(name)) $optn
@@ -743,7 +752,7 @@ proc add_option {optn optlist} {
 
 	normalize_guisection $dlg $optn
 
-	set suf [layout_get_frame $dlg $opt($dlg,$optn,guisection) $optn]
+	set suf [layout_get_frame $dlg $opt($dlg,$optn,guisection) $optn $glabel]
 
 	do_label $dlg $optn $suf
 	frame $suf.val$optn
@@ -798,6 +807,11 @@ proc add_flag {optn optlist} {
 
 	foreach key {name desc label guisection} {
 		set opt($dlg,$optn,$key) $opts($key)
+		if { $key == {guisection} } { 
+			set glabel $opts($key)
+			set opt($dlg,$optn,$key) [regsub -all {[][{}\$\s\u0100-\uffff]} \
+				[string trim $opt($dlg,$optn,$key)] "_"]
+		}
 	}
 	set opt($dlg,$optn,val) $opts(answer)
 
@@ -807,7 +821,7 @@ proc add_flag {optn optlist} {
 
 	normalize_guisection $dlg $optn
 
-	set suf [layout_get_frame $dlg $opt($dlg,$optn,guisection) $optn]
+	set suf [layout_get_frame $dlg $opt($dlg,$optn,guisection) $optn $glabel]
 
 	frame $suf.val$optn
 	checkbutton $suf.val$optn.chk -text $opt($dlg,$optn,label_text) -variable opt($dlg,$optn,val) -onvalue 1 -offvalue 0 -anchor w
@@ -825,6 +839,11 @@ proc add_xflag {optn optlist} {
 
 	foreach key {name desc label guisection} {
 		set opt($dlg,$optn,$key) $opts($key)
+		if { $key == {guisection} } { 
+			set glabel $opts($key)
+			set opt($dlg,$optn,$key) [regsub -all {[][{}\$\s\u0100-\uffff]} \
+				[string trim $opt($dlg,$optn,$key)] "_"]
+		}
 	}
 	set opt($dlg,$optn,val) $opts(answer)
 
@@ -834,7 +853,7 @@ proc add_xflag {optn optlist} {
 
 	normalize_guisection $dlg $optn
 
-	set suf [layout_get_frame $dlg $opt($dlg,$optn,guisection) $optn]
+	set suf [layout_get_frame $dlg $opt($dlg,$optn,guisection) $optn $glabel]
 
 	frame $suf.val$optn
 	checkbutton $suf.val$optn.chk -text $opt($dlg,$optn,label_text) -variable opt($dlg,$optn,val) -onvalue 1 -offvalue 0 -anchor w
