@@ -30,9 +30,6 @@
 void
 tool_centre ( void )
 {
-    symb_init_gui ();
-    i_prompt ( "Select tool");
-
     /* Init variables */
     var_init ();
 
@@ -55,6 +52,9 @@ tool_centre ( void )
     display_bg ();
     display_map ();
     driver_close ();
+
+    symb_init_gui ();
+    i_prompt ( "Select tool");
 }
 
 void next_tool(void)
