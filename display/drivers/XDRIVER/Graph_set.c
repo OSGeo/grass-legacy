@@ -309,7 +309,6 @@ int XD_Graph_set(int argc, char **argv)
 	const char *privcmap;
 	char *p;
 	int win_id;
-	int i;
 
 	monitor_name = argv[1];
 

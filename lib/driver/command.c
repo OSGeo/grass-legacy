@@ -92,7 +92,6 @@ int process_command(int c)
     int t, b, l, r, ret;
     int x, y;
     unsigned char red, grn, blu;
-    int min, max;
     int number;
     int index;
     int button;
@@ -166,94 +165,26 @@ int process_command(int c)
 	REC(&b, sizeof b);
 	REC(&x, sizeof x);
 	REC(&y, sizeof y);
-	COM_Get_location_with_box(t, b, &x, &y, &button, 1); /* start */
-        while ( 1 ) {
-	    /* Check monitor and send result back */
-	    ret = COM_Get_location_with_box(t, b, &x, &y, &button, 2);
-	    if ( ret == 0 ) button = 0;
-	    /* we send back current position but button set to 0 */
-	    SEND(&x, sizeof x);
-	    SEND(&y, sizeof y);
-	    SEND(&button, sizeof button);
-	    if ( ret == 1 ) break;
-	    /* Should we continue (0) or break (1) */
-	    REC(&ret, sizeof ret );
-	    if ( ret == 1 ) { /* break */
-	        ret = COM_Get_location_with_box(t, b, &x, &y, &button, 3);
-            	break;
-	    }
-	}	
+	COM_Get_location_with_box(t, b, &x, &y, &button);
+	SEND(&x, sizeof x);
+	SEND(&y, sizeof y);
+	SEND(&button, sizeof button);
 	break;
     case GET_LOCATION_WITH_LINE:
 	REC(&t, sizeof t);
 	REC(&b, sizeof b);
 	REC(&x, sizeof x);
 	REC(&y, sizeof y);
-	COM_Get_location_with_line(t, b, &x, &y, &button, 1); /* start */
-        while ( 1 ) {
-	    /* Check monitor and send result back */
-	    ret = COM_Get_location_with_line(t, b, &x, &y, &button, 2);
-	    if ( ret == 0 ) button = 0;
-	    /* we send back current position but button set to 0 */
-	    SEND(&x, sizeof x);
-	    SEND(&y, sizeof y);
-	    SEND(&button, sizeof button);
-	    if ( ret == 1 ) break;
-	    /* Should we continue (0) or break (1) */
-	    REC(&ret, sizeof ret );
-	    if ( ret == 1 ) { /* break */
-	        ret = COM_Get_location_with_line(t, b, &x, &y, &button, 3);
-            	break;
-	    }
-	}	
+	COM_Get_location_with_line(t, b, &x, &y, &button);
+	SEND(&x, sizeof x);
+	SEND(&y, sizeof y);
+	SEND(&button, sizeof button);
 	break;
     case GET_LOCATION_WITH_POINTER:
 	REC(&x, sizeof x);
 	REC(&y, sizeof y);
 	REC(&button, sizeof button);
-	COM_Get_location_with_pointer(&x, &y, &button, 1); /* start */
-        while ( 1 ) {
-	    /* Check monitor and send result back */
-	    ret = COM_Get_location_with_pointer(&x, &y, &button, 2);
-	    if ( ret == 0 ) button = 0;
-	    /* we send back current position but button set to 0 */
-	    SEND(&x, sizeof x);
-	    SEND(&y, sizeof y);
-	    SEND(&button, sizeof button);
-	    if ( ret == 1 ) break;
-	    /* Should we continue (0) or break (1) */
-	    REC(&ret, sizeof ret );
-	    if ( ret == 1 ) { /* break */
-	        ret = COM_Get_location_with_pointer(&x, &y, &button, 3);
-            	break;
-	    }
-	}	
-	break;
-    case GET_LOCATION_WITH_BOX_OLD:
-	REC(&t, sizeof t);
-	REC(&b, sizeof b);
-	REC(&x, sizeof x);
-	REC(&y, sizeof y);
-	COM_Get_location_with_box(t, b, &x, &y, &button, 4);
-	SEND(&x, sizeof x);
-	SEND(&y, sizeof y);
-	SEND(&button, sizeof button);
-	break;
-    case GET_LOCATION_WITH_LINE_OLD:
-	REC(&t, sizeof t);
-	REC(&b, sizeof b);
-	REC(&x, sizeof x);
-	REC(&y, sizeof y);
-	COM_Get_location_with_line(t, b, &x, &y, &button, 4);
-	SEND(&x, sizeof x);
-	SEND(&y, sizeof y);
-	SEND(&button, sizeof button);
-	break;
-    case GET_LOCATION_WITH_POINTER_OLD:
-	REC(&x, sizeof x);
-	REC(&y, sizeof y);
-	REC(&button, sizeof button);
-	COM_Get_location_with_pointer(&x, &y, &button, 4);
+	COM_Get_location_with_pointer(&x, &y, &button);
 	SEND(&x, sizeof x);
 	SEND(&y, sizeof y);
 	SEND(&button, sizeof button);

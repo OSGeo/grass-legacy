@@ -3,11 +3,8 @@
 #define _TRANSPORT_H
 
 extern void LOC_get_location_with_box(int cx,int cy, int *wx, int *wy, int *button);
-extern void LOC_get_location_with_box_old(int cx,int cy, int *wx, int *wy, int *button);
 extern void LOC_get_location_with_line(int cx, int cy, int *wx, int *wy, int *button);
-extern void LOC_get_location_with_line_old(int cx, int cy, int *wx, int *wy, int *button);
 extern void LOC_get_location_with_pointer(int *wx, int *wy, int *button);
-extern void LOC_get_location_with_pointer_old(int *wx, int *wy, int *button);
 extern int  LOC_open_driver(void);
 extern int  LOC__open_quiet(void);
 extern void LOC_stabilize(void);
@@ -64,11 +61,8 @@ extern int  LOC_scaled_raster(int n, int row, unsigned char *red, unsigned char 
 extern void LOC_bitmap(int ncols, int nrows, int threshold, const unsigned char *buf);
 
 extern void REM_get_location_with_box(int cx,int cy, int *wx, int *wy, int *button);
-extern void REM_get_location_with_box_old(int cx,int cy, int *wx, int *wy, int *button);
 extern void REM_get_location_with_line(int cx, int cy, int *wx, int *wy, int *button);
-extern void REM_get_location_with_line_old(int cx, int cy, int *wx, int *wy, int *button);
 extern void REM_get_location_with_pointer(int *wx, int *wy, int *button);
-extern void REM_get_location_with_pointer_old(int *wx, int *wy, int *button);
 extern int  REM_open_driver(void);
 extern int  REM__open_quiet(void);
 extern void REM_stabilize(void);
@@ -172,11 +166,8 @@ struct transport
 	void (*bitmap)(int, int, int, const unsigned char *);
 
 	void (*get_location_with_box)(int, int, int *, int *, int *);
-	void (*get_location_with_box_old)(int, int, int *, int *, int *);
 	void (*get_location_with_line)(int, int, int *, int *, int *);
-	void (*get_location_with_line_old)(int, int, int *, int *, int *);
 	void (*get_location_with_pointer)(int *, int *, int *);
-	void (*get_location_with_pointer_old)(int *, int *, int *);
 
 	int  (*pad_create)(const char *);
 	int  (*pad_current)(char *);

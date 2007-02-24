@@ -29,9 +29,9 @@ struct driver
 	void (*Client_Open)(void);
 	void (*Client_Close)(void);
 	void (*Erase)(void);
-	int (*Get_with_box)(int,int,int *,int *,int *,int);
-	int (*Get_with_line)(int,int,int *,int *,int *,int);
-	int (*Get_with_pointer)(int *,int *,int *,int);
+	int (*Get_with_box)(int,int,int *,int *,int *);
+	int (*Get_with_line)(int,int,int *,int *,int *);
+	int (*Get_with_pointer)(int *,int *,int *);
 	int (*Graph_set)(int,char **);
 	void (*Graph_close)(void);
 	void (*Line_width)(int);
@@ -107,9 +107,9 @@ extern void COM_Font_freetype_release(void);
 extern void COM_Font_get(const char *);
 extern void COM_Font_init_charset(const char *);
 /* Get_location.c */
-extern int COM_Get_location_with_box(int,int,int *,int *,int *,int);
-extern int COM_Get_location_with_line(int,int,int *,int *,int *,int);
-extern int COM_Get_location_with_pointer(int *,int *,int *,int);
+extern int COM_Get_location_with_box(int,int,int *,int *,int *);
+extern int COM_Get_location_with_line(int,int,int *,int *,int *);
+extern int COM_Get_location_with_pointer(int *,int *,int *);
 /* Get_t_box.c */
 extern void COM_Get_text_box(const char *,int *,int *,int *,int *);
 /* Graph.c */

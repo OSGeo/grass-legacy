@@ -28,7 +28,7 @@ pid_t redraw_pid;
 
 int needs_flush;
 
-int get_xevent(long event_mask, XEvent *event, int block)
+int get_xevent(long event_mask, XEvent *event)
 {
 	int input_fd = LIB_command_get_input();
 	int display_fd = ConnectionNumber(dpy);
@@ -55,9 +55,6 @@ int get_xevent(long event_mask, XEvent *event, int block)
 
 		if (FD_ISSET(input_fd, &waitset))
 			return 0;
-
-                if ( !block )
-		    return 0;
 	}
 }
 

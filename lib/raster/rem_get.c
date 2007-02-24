@@ -8,45 +8,6 @@
 
 #include "transport.h"
 
-static void do_get(int *wx, int *wy, int *button)
-{
-	R_set_cancel(0);
-
-	while (1)
-	{
-		_get_int(wx) ;
-		_get_int(wy) ;
-		_get_int(button) ;
-	
-		G_debug(5, "button = %d wx = %d	 wy = %d", *button, *wx, *wy);
-
-		if (*button > 0)
-			break;
-
-		/* call user function */
-		R_call_update_function(*wx, *wy);
-	
-		/* check if continue or stop */
-		if (R_get_cancel())
-		{
-			int z = 1;
-			_send_int(&z) ;
-			*button = 0;
-			break;
-		}
-		else
-		{
-			int z = 0;
-			_send_int(&z) ;
-		}
-	}
-	G_debug(3, "button = %d wx = %d	 wy = %d", *button, *wx, *wy);
-
-	R_flush();
-	R_set_cancel(0);
-	R_set_update_function(NULL);
-}
-
 /*!
  * \brief get mouse location using a box
  *
@@ -59,29 +20,12 @@ static void do_get(int *wx, int *wy, int *button)
  *  \param wx
  *  \param wy
  *  \param button
- *  \return 0 function was canceled by R_set_cancel (1)
+ *  \return ~
  */
 
 void REM_get_location_with_box(int cx,int cy, int *wx, int *wy, int *button)
 {
-	if ( !R_has_update_function() )
-	{
-	    R_get_location_with_box_old ( cx, cy, wx, wy, button );
-	    return;
-	}
-
 	_send_ident(GET_LOCATION_WITH_BOX) ;
-	_send_int(&cx) ;
-	_send_int(&cy) ;
-	_send_int(wx) ;
-	_send_int(wy) ;
-
-	do_get(wx, wy, button);
-}
-
-void REM_get_location_with_box_old(int cx,int cy, int *wx, int *wy, int *button)
-{
-	_send_ident(GET_LOCATION_WITH_BOX_OLD) ;
 	_send_int(&cx) ;
 	_send_int(&cy) ;
 	_send_int(wx) ;
@@ -106,29 +50,12 @@ void REM_get_location_with_box_old(int cx,int cy, int *wx, int *wy, int *button)
  *  \param wx
  *  \param wy
  *  \param button
- *  \return 0 function was canceled by R_set_cancel (1)
+ *  \return ~
  */
 
 void REM_get_location_with_line(int cx, int cy, int *wx, int *wy, int *button)
 {
-	if ( !R_has_update_function() )
-	{
-	    R_get_location_with_line_old ( cx, cy, wx, wy, button );
-	    return;
-	}
-
 	_send_ident(GET_LOCATION_WITH_LINE) ;
-	_send_int(&cx) ;
-	_send_int(&cy) ;
-	_send_int(wx) ;
-	_send_int(wy) ;
-
-	do_get(wx, wy, button);
-}
-
-void REM_get_location_with_line_old(int cx, int cy, int *wx, int *wy, int *button)
-{
-	_send_ident(GET_LOCATION_WITH_LINE_OLD) ;
 	_send_int(&cx) ;
 	_send_int(&cy) ;
 	_send_int(wx) ;
@@ -152,32 +79,14 @@ void REM_get_location_with_line_old(int cx, int cy, int *wx, int *wy, int *butto
  *  \param wx
  *  \param wy
  *  \param button
- *  \return int
+ *  \return ~
  */
 
 void REM_get_location_with_pointer(int *wx, int *wy, int *button)
 {
-	if ( !R_has_update_function() )
-	{
-	    R_get_location_with_pointer_old ( wx, wy, button );
-	    return;
-	}
-
 	*button = 0; /* ?, how button = -1 is used (see driver) */
 
 	_send_ident(GET_LOCATION_WITH_POINTER) ;
-	_send_int(wx) ;
-	_send_int(wy) ;
-	_send_int(button) ;
-
-	do_get(wx, wy, button);
-}
-
-void REM_get_location_with_pointer_old(int *wx, int *wy, int *button)
-{
-	*button = 0; /* ?, how button = -1 is used (see driver) */
-
-	_send_ident(GET_LOCATION_WITH_POINTER_OLD) ;
 	_send_int(wx) ;
 	_send_int(wy) ;
 	_send_int(button) ;
