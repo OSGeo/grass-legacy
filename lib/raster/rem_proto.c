@@ -524,32 +524,24 @@ void REM_get_text_box(const char *sometext, int *t, int *b, int *l, int *r)
 
 void REM_font(const char *name)
 {
-	int stat;
-
 	_send_ident(FONT);
 	_send_text(name);
 }
 
 void REM_font_freetype(const char *name)
 {
-	int stat;
-
 	_send_ident(FONT_FREETYPE);
 	_send_text(name);
 }
 
 void REM_charset(const char *name)
 {
-	int stat;
-
 	_send_ident(CHARSET);
 	_send_text(name);
 }
 
 void REM_font_freetype_release(void)
 {
-	int stat;
-
 	_send_ident(FONT_FREETYPE_RELEASE);
 }
 

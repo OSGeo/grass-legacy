@@ -156,7 +156,7 @@ static int convert_str(const char *from, const char *in, unsigned char **out)
 /* 	if( (cd = iconv_open("UCS-4",from)) < 0 ) */
 /* 	if( (cd = iconv_open("UTF-8",from)) < 0 ) */
 		return -1;
-	ret = iconv(cd,(const char **)&p1,&len,(char **)&p2,&i);
+	ret = iconv(cd,(char **)&p1,&len,(char **)&p2,&i);
 	/*
 	if(ret == -1){
 		if(errno == E2BIG){

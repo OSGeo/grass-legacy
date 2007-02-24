@@ -216,7 +216,7 @@ static int build_path(char *line,char *gisbase)
 	*t++ = '/' ;
 
 	/* copy rest of line */
-	while (*t++ = *l++);
+	while ((*t++ = *l++));
 
 	/* now put it all back into the original line */
 	strcpy (line, temp);

@@ -5,21 +5,13 @@
 
 /* common.c */
 void R_flush(void);
-void R_set_update_function(int(*fnc)(int,int));
-void R_call_update_function(int,int);
-int R_has_update_function(void);
-void R_set_cancel(int);
-int R_get_cancel(void);
 void R_pad_perror(const char *,int);
 void R_pad_freelist(char **,int);
 
 /* get.c */
 void R_get_location_with_box(int,int,int *,int *,int *);
-void R_get_location_with_box_old(int,int,int *,int *,int *);
 void R_get_location_with_line(int,int,int *,int *,int *);
-void R_get_location_with_line_old(int,int,int *,int *,int *);
 void R_get_location_with_pointer(int *,int *,int *);
-void R_get_location_with_pointer_old(int *,int *,int *);
 
 /* io.c */
 int _send_ident(int);
