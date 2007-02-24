@@ -166,7 +166,6 @@ int isTrueTypeFont(char* filename) {
 }
 
 int release() {
-	R_font_freetype_release();
 	R_font("romans");
 	fprintf(stdout,_("\nSetting release of FreeType\n"));
 	return 0;

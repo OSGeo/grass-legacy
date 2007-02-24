@@ -492,11 +492,6 @@ void R_charset(const char *name)
 	trans->charset(name);
 }
 
-void R_font_freetype_release(void)
-{
-	trans->font_freetype_release();
-}
-
 void R_panel_save(const char *name, int t, int b, int l, int r)
 {
 	trans->panel_save(name, t, b, l, r);
