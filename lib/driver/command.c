@@ -129,8 +129,6 @@ int process_command(int c)
 	REC(&blu, sizeof blu);
 	COM_Color_RGB(red, grn, blu);
 	break;
-    case COLOR_PRINT:
-	break;
     case LINE_WIDTH:
 	REC(&number, sizeof number);
 	COM_Line_width(number);
@@ -330,9 +328,6 @@ int process_command(int c)
     case FONT_FREETYPE:
 	RECTEXT(text, text_size);
 	COM_Font_freetype_get(text);
-	break;
-    case FONT_FREETYPE_RELEASE:
-	COM_Font_freetype_release();
 	break;
     case CHARSET:
 	RECTEXT(text, text_size);

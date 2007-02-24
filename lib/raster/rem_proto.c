@@ -540,11 +540,6 @@ void REM_charset(const char *name)
 	_send_text(name);
 }
 
-void REM_font_freetype_release(void)
-{
-	_send_ident(FONT_FREETYPE_RELEASE);
-}
-
 void REM_panel_save(const char *name, int t, int b, int l, int r)
 {
 	close(creat(name, 0666));
