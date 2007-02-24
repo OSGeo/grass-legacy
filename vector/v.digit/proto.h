@@ -5,6 +5,7 @@ int driver_refresh (void);
 void driver_rgb_color(int r, int g, int b);
 void driver_line_width(int w);
 void driver_plot_line(double x1, double y1, double x2, double y2);
+void driver_plot_icon(double x, double y, const char *icon);
 
 /* Miscellaneous */
 void tool_centre (void);

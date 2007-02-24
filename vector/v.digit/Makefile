@@ -30,3 +30,4 @@ $(CAT): cats.tcl
 
 ico:
 	$(INSTALL) -m 644 icons/*.gif $(GISBASE)/etc/v.digit/
+	$(INSTALL) -m 644 icons/*.xbm $(GISBASE)/etc/v.digit/

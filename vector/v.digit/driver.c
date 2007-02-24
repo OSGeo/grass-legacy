@@ -40,6 +40,19 @@ static int driver_cont_abs(int x, int y)
     return 0;
 }
 
+void driver_plot_icon(double x, double y, const char *icon)
+{
+    char buf[1024];
+    int xi, yi;
+
+    G_plot_where_xy(x, y, &xi, &yi);
+
+    sprintf(buf, ".screen.canvas create bitmap %d %d -bitmap @$vdpath/%s.xbm -foreground %s -anchor center",
+	    xi, yi, icon, color);
+    if (Tcl_Eval(Toolbox, buf) != TCL_OK)
+	G_warning("driver_plot_icon: %s", Toolbox->result);
+}
+
 static void get_window(int *t, int *b, int *l, int *r)
 {
     Tcl_Eval(Toolbox, "list 0 [winfo height .screen.canvas] 0 [winfo width .screen.canvas]");
@@ -81,7 +94,9 @@ int driver_open (void)
 {
     double n, s, e, w;
     
-    Tcl_Eval(Toolbox, "create_screen");
+    if (Tcl_Eval(Toolbox, "create_screen") != TCL_OK)
+	G_warning("create_screen: %s", Toolbox->result);
+    
 
     setup();
 

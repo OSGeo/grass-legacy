@@ -35,7 +35,7 @@ proc get_update_box {ox oy x y} {
 }
 
 proc create_screen {} {
-    global map_name map_mapset
+    global vdpath map_name map_mapset
     if {[winfo exists .screen]} return
 
     toplevel .screen
@@ -47,6 +47,10 @@ proc create_screen {} {
     wm withdraw .screen
     wm deiconify .screen
     update
+
+    image create bitmap cross -file "$vdpath/cross.xbm"
+    image create bitmap cross45 -file "$vdpath/cross45.xbm"
+    image create bitmap box -file "$vdpath/box.xbm"
 }
 
 # GVariable stores variables by key, this variables are (should be) synchronized with
