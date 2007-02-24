@@ -99,15 +99,14 @@ if [ ! "$file" ] ; then
 fi
 
 table=`v.db.connect $GIS_OPT_MAP -g | grep -w $GIS_OPT_LAYER | awk '{print $2}'`
-database=`v.db.connect $GIS_OPT_MAP -g | grep -w $GIS_OPT_LAYER | awk '{print $4}'`
-driver=`v.db.connect $GIS_OPT_MAP -g | grep -w $GIS_OPT_LAYER | awk '{print $5}'`
-col="$GIS_OPT_COLUMN"
-
 if [ -z "$table" ] ; then
    echo -e "\nERROR: There is no table connected to this map! Cannot delete any column."
    cleanup
    exit 1
 fi
+database=`v.db.connect $GIS_OPT_MAP -g | grep -w $GIS_OPT_LAYER | awk '{print $4}'`
+driver=`v.db.connect $GIS_OPT_MAP -g | grep -w $GIS_OPT_LAYER | awk '{print $5}'`
+col="$GIS_OPT_COLUMN"
 
 if [ "$col" = "cat" ] ; then
    echo "ERROR: Cannot delete <$col> column as it is needed to keep table connected to vector map"
