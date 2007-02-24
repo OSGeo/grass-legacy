@@ -103,7 +103,6 @@ extern void COM_Cont_rel(int,int);
 extern void COM_Erase(void);
 /* Font.c */
 extern void COM_Font_freetype_get(const char*);
-extern void COM_Font_freetype_release(void);
 extern void COM_Font_get(const char *);
 extern void COM_Font_init_charset(const char *);
 /* Get_location.c */

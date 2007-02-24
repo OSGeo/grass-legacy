@@ -19,8 +19,6 @@
  */
 
 #define GET_NUM_COLORS              1
-/* #define COLOR                       2 */
-#define COLOR_PRINT                 3
 #define CONT_ABS                    4
 #define CONT_REL                    5
 #define RGB_COLOR                   6
@@ -29,7 +27,6 @@
 #define GET_LOCATION_WITH_LINE      9
 #define GET_LOCATION_WITH_POINTER   10
 #define GRAPH_CLOSE                 11
-#define LINEMOD                     12
 #define MOVE_ABS                    13
 #define MOVE_REL                    14
 #define POLYGON_ABS                 15
@@ -38,29 +35,15 @@
 #define POLYLINE_REL                18
 #define POLYDOTS_ABS                19
 #define POLYDOTS_REL                20
-/* #define RASTER_CHAR                 21 */
-/* #define RASTER_INT                  22 */
-/* #define RESET_COLORS                23 */
-/* #define RESET_COLOR                 24 */
 #define SCREEN_LEFT                 25
 #define SCREEN_RITE                 26
 #define SCREEN_BOT                  27
 #define SCREEN_TOP                  28
 #define TEXT                        29
 #define TEXT_SIZE                   30
-#define _____UNUSED_1               31
-#define _____UNUSED_2               32
-#define _____UNUSED_3               33
-#define _____UNUSED_4               34
-#define _____UNUSED_5               35
-/* #define COLOR_TABLE_FIXED           36 */
-/* #define COLOR_TABLE_FLOAT           37 */
-/* #define COLOR_OFFSET                38 */
 #define TEXT_ROTATION               39
 #define SET_WINDOW                  40
-#define _____UNUSED_6               41
 #define GET_TEXT_BOX                42
-#define ZRASTER                     43
 #define FONT                        44
 #define RESPOND                     45
 #define BEGIN                       46
@@ -68,7 +51,6 @@
 #define BOX_ABS                     48
 #define BOX_REL                     49
 #define RGB_RASTER                  50
-#define _____UNUSED_7               51
 #define PANEL_SAVE                  53
 #define PANEL_RESTORE               54
 #define PANEL_DELETE                55
@@ -88,7 +70,6 @@
 
 /* freetype */
 #define FONT_FREETYPE               76
-#define FONT_FREETYPE_RELEASE       77
 #define CHARSET                     78
 
 /* line attributes */

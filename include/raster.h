@@ -92,7 +92,6 @@ void R_get_text_box(const char *,int *,int *,int *,int *);
 void R_font(const char *);
 void R_font_freetype(const char *);
 void R_charset(const char *);
-void R_font_freetype_release(void);
 
 void R_panel_save(const char *,int,int,int,int);
 void R_panel_restore(const char *);
