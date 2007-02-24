@@ -294,8 +294,8 @@ int D_cont_clip(double x, double y)
 		int x1 = round(D_u_to_d_col(b.x));
 		int y1 = round(D_u_to_d_row(b.y));
 
-		R_move_abs(a.x, a.y);
-		R_cont_abs(b.x, b.y);
+		R_move_abs(x0, y0);
+		R_cont_abs(x1, y1);
 	}
 
 	return clipped;
@@ -349,7 +349,6 @@ static int clip_polygon_plane(int *pn, const double *x, const double *y, const s
 	double x0 = x[n-1];
 	double y0 = y[n-1];
 	double d0 = dist_plane(x0, y0, p);
-	int first_in = d0 < 0;
 	int i, j;
 
 	for (i = j = 0; i < n; i++)
@@ -484,6 +483,6 @@ void D_box(double x1, double y1, double x2, double y2)
 	int bi = round(D_u_to_d_row(b));
 	int ti = round(D_u_to_d_row(t));
 
-	R_box_abs(l, t, r, b);
+	R_box_abs(li, ti, ri, bi);
 }
 
