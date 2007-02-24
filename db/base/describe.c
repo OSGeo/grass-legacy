@@ -12,7 +12,8 @@
 #include <grass/glocale.h>
 
 struct {
-	char *driver, *database, *table, *printcolnames;
+	char *driver, *database, *table;
+	int printcolnames;
 } parms;
 
 void parse_command_line();

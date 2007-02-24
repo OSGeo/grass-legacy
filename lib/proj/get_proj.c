@@ -281,7 +281,7 @@ int pj_get_string(struct pj_info *info, char *str)
 	 * programmer knows what he / she is doing when using this 
 	 * function rather than reading a PROJ_INFO file       PK */
 	s = str;
-	while (s = strtok(s, " \t\n")) {
+	while (s = strtok(s, " \t\n"), s) {
 	    if (strncmp(s, "+unfact=", 8) == 0) {
 		s = s + 8;
 		info->meters = atof(s);
@@ -289,7 +289,7 @@ int pj_get_string(struct pj_info *info, char *str)
 	    else {
 		if (strncmp(s, "+", 1) == 0)
 		    ++s;
-		if (nsize = strlen(s)) {
+		if (nsize = strlen(s), nsize) {
 		    if (nopt >= MAX_PARGS) {
 			fprintf(stderr, "nopt = %d, s=%s\n", nopt, str);
 			G_fatal_error("Option input overflowed option table");

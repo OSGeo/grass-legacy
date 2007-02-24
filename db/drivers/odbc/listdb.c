@@ -3,6 +3,7 @@
 #include "globals.h"
 #include "proto.h"
 
+int
 db__driver_list_databases (dbpath, npaths, dblist, dbcount)
     dbString  *dbpath;
     int       npaths;
@@ -13,7 +14,6 @@ db__driver_list_databases (dbpath, npaths, dblist, dbcount)
     dbHandle     *list;
     char         dsn[SQL_MAX_DSN_LENGTH],desc[100];
     SQLUSMALLINT next;
-    SQLRETURN    ret; 
 
     *dblist  = NULL;
     *dbcount = 0;

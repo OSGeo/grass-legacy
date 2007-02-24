@@ -192,8 +192,6 @@ int D_raster_of_type_RGB (
 
     for (i = 0; i < ncols; i++)
     {
-	int r, g, b, x;
-
 	n_buf[i] = (G_is_null_value(r_raster, r_type) ||
 		    G_is_null_value(g_raster, g_type) ||
 		    G_is_null_value(b_raster, b_type));

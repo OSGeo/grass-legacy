@@ -164,7 +164,7 @@ int sqpPrintStmt(SQLPSTMT *st)
 
     if ( sqlpStmt->command == SQLP_SELECT ) {
        if ( sqlpStmt->orderDir ) {
-         fprintf( stderr, "ORDER BY: %s %s\n", sqlpStmt->orderCol, sqlpStmt->orderDir );
+         fprintf( stderr, "ORDER BY: %s %s\n", sqlpStmt->orderCol, sqlpStmt->orderDir == 1 ? "ASC" : "DESC" );
        } else {
          fprintf( stderr, "ORDER BY: %s\n", sqlpStmt->orderCol );
        } 

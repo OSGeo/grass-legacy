@@ -7,6 +7,7 @@
  \return 
  \param 
 */
+int
 db_update  (dbCursor *cursor)
 
 {

@@ -21,6 +21,7 @@ db_init_handle  (dbHandle *handle)
  \return 
  \param 
 */
+int
 db_set_handle  (dbHandle *handle, char *dbName, char *dbSchema)
 
 {

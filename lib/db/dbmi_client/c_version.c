@@ -9,6 +9,7 @@
  \return 
  \param 
 */
+int
 db_gversion (dbDriver *driver, dbString *client_version, dbString *driver_version)
 
 {

@@ -7,6 +7,7 @@
  \return 
  \param 
 */
+int
 db_open_database  (dbDriver *driver, dbHandle *handle)
 
 {

@@ -243,7 +243,7 @@ db_test_index_type_unique  (dbIndex *index)
  \return 
  \param 
 */
-int
+void
 db_print_index (FILE *fd, dbIndex *index)
 {
     int i, nCols;

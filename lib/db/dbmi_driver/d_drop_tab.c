@@ -9,7 +9,8 @@
  \return 
  \param 
 */
-db_d_drop_table ()
+int
+db_d_drop_table (void)
 {
     dbString name;
     int stat;

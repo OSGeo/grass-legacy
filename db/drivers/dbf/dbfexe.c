@@ -34,7 +34,7 @@
 int yyparse(void);
 void get_col_def ( SQLPSTMT *st, int col, int *type, int *width, int *decimals );
 int sel(SQLPSTMT * st, int tab, int **set);
-int eval_val(int tab, int row, int col, SQLPVALUE * inval, SQLPVALUE * result);
+void eval_val(int tab, int row, int col, SQLPVALUE * inval, SQLPVALUE * result);
 int set_val(int tab, int row, int col, SQLPVALUE * val);
 double eval_node(SQLPNODE *, int, int, SQLPVALUE *);
 int eval_node_type(SQLPNODE *, int);
@@ -334,7 +334,7 @@ void get_col_def ( SQLPSTMT *st, int col, int *type, int *width, int *decimals )
     }
 }
 
-int eval_val(int tab, int row, int col, SQLPVALUE * inval, SQLPVALUE *val)
+void eval_val(int tab, int row, int col, SQLPVALUE * inval, SQLPVALUE *val)
 {
   
   double retval;
