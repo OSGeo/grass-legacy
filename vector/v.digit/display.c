@@ -37,10 +37,18 @@ void display_points ( struct line_pnts *Points, int flsh )
 void display_icon ( double x, double y, int icon, double angle, int size , int flsh )
 {
     G_debug (2, "display_icon()");
-
+#if 0
     driver_line_width ( var_geti( VAR_LINEWIDTH ) );
     G_plot_icon(x, y, icon, angle, Scale * size);
     driver_line_width ( 0 );
+#else
+    if (icon == G_ICON_CROSS && angle == 0)
+	driver_plot_icon(x, y, "cross");
+    else if (icon == G_ICON_CROSS)
+	driver_plot_icon(x, y, "cross45");
+    else if (icon == G_ICON_BOX)
+	driver_plot_icon(x, y, "box");
+#endif
 }
 
 /* Display vector line 
