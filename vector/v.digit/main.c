@@ -64,6 +64,9 @@ int Tcl_AppInit(Tcl_Interp* interp)
     Tcl_CreateCommand(interp, "c_update_tool", (Tcl_CmdProc*) c_update_tool, (ClientData) NULL, 
 			      (Tcl_CmdDeleteProc*) NULL);
 
+    Tcl_SetVar(interp, "map_mapset", Map.mapset, TCL_GLOBAL_ONLY);
+    Tcl_SetVar(interp, "map_name", Map.name, TCL_GLOBAL_ONLY);
+
     G_debug (3, "Starting toolbox.tcl");
 
     return TCL_OK;

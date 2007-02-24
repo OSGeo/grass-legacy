@@ -4,9 +4,6 @@ package require -exact BWidget 1.2.1
 # I'm not sure how to grab the map name, so I'll leave it obviously broken
 # in the hope someone will fix it. If you comment out the following line,
 # then the toolbox window takes on the map name! argh! We want both.
-#wm title . "v.digit - \$mapname"
-#set winname [winfo atomname -displayof .]
-#puts "win name is $winname"
 
 source $env(GISBASE)/etc/gtcltk/gmsg.tcl
 source $env(GISBASE)/etc/gtcltk/select.tcl
@@ -25,6 +22,8 @@ set prompt_middle [G_msg "Middle mouse button"]
 set prompt_right [G_msg "Right mouse button"]
 set coor ""
 
+wm title . "v.digit - $map_name@$map_mapset"
+
 proc get_update_line {ox oy x y} {
     .screen.canvas delete active
     .screen.canvas create line $ox $oy $x $y -tags active -dash {4 4}
@@ -36,6 +35,7 @@ proc get_update_box {ox oy x y} {
 }
 
 proc create_screen {} {
+    global map_name map_mapset
     if {[winfo exists .screen]} return
 
     toplevel .screen
@@ -43,8 +43,9 @@ proc create_screen {} {
     pack .screen.canvas -fill both -expand yes
     bind .screen.canvas <ButtonPress> { c_update_tool %x %y %b }
     bind .screen.canvas <Motion> { c_update_tool %x %y -1 }
-    wm withdraw .screen.canvas
-    wm deiconify .screen.canvas
+    wm title .screen "v.digit - $map_name@$map_mapset"
+    wm withdraw .screen
+    wm deiconify .screen
     update
 }
 
