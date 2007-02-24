@@ -233,20 +233,20 @@ int db_convert_Cstring_to_value_datetime  (char *buf, int sqltype, dbValue *valu
 	switch(to)
 	{
 	case DB_MONTH:
-	    sscanf (buf, "%*d", &month);
+	    sscanf (buf, "%d", &month);
 	    break;
 	case DB_DAY:
-	    sscanf (buf, "%*d%*c%d", &month, &day);
+	    sscanf (buf, "%d%*c%d", &month, &day);
 	    break;
 	case DB_HOUR:
-	    sscanf (buf, "%*d%*c%d %d", &month, &day, &hour);
+	    sscanf (buf, "%d%*c%d %d", &month, &day, &hour);
 	    break;
 	case DB_MINUTE:
-	    sscanf (buf, "%*d%*c%d %d%*c%d", &month, &day, &hour, &minute);
+	    sscanf (buf, "%d%*c%d %d%*c%d", &month, &day, &hour, &minute);
 	    break;
 	case DB_SECOND:
 	case DB_FRACTION:
-	    sscanf (buf, "%*d%*c%d %d%*c%d%*c%lf",
+	    sscanf (buf, "%d%*c%d %d%*c%d%*c%lf",
 		    &month, &day, &hour, &minute, &seconds);
 	    break;
 	}
@@ -265,7 +265,7 @@ int db_convert_Cstring_to_value_datetime  (char *buf, int sqltype, dbValue *valu
 	    break;
         case DB_SECOND:
         case DB_FRACTION:
-	    sscanf (buf, "%*d%*c%d %d%*c%d%*c%lf",
+	    sscanf (buf, "%d %d%*c%d%*c%lf",
 	           &day, &hour, &minute, &seconds);
 	    break;
 	}
