@@ -1,3 +1,6 @@
+# Include the select dialog code because it defines scroll bindings
+source $env(GISBASE)/etc/gtcltk/select.tcl
+
 # Symbology table
 proc color2rgb { color } {
     regexp -- {#(..)(..)(..)} $color x r g b
