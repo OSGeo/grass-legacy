@@ -52,8 +52,6 @@
 #include <grass/display.h>
 #include <grass/raster.h>
 
-static CELL cmin = 0, cmax = -1;
-
 static unsigned char
     *red = NULL,
     *grn = NULL,

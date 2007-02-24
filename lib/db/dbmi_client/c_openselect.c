@@ -7,6 +7,7 @@
  \return 
  \param 
 */
+int
 db_open_select_cursor  (dbDriver *driver, dbString *select, dbCursor *cursor, int mode)
 
 {

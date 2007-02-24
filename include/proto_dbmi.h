@@ -207,7 +207,7 @@ int         db_open_select_cursor     P((dbDriver *driver , dbString *select , d
 int         db_open_update_cursor     P((dbDriver *driver , dbString *table_name , dbString *select , dbCursor *cursor , int mode ));
 void        db_print_column_definition P((FILE *fd , dbColumn *column ));
 void        db_print_error            P((void ));
-int         db_print_index            P((FILE *fd , dbIndex *index ));
+void        db_print_index            P((FILE *fd , dbIndex *index ));
 void        db_print_table_definition P((FILE *fd , dbTable *table ));
 void        db_procedure_not_implemented P((char *name ));
 void        db_protocol_error         P((void ));

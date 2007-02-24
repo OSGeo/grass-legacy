@@ -72,7 +72,7 @@ int V__dump_window()
 		for (atcol=0; atcol<COLS-1; atcol++)
 		{
 			move(atrow, atcol) ;
-			fprintf(file,"%c",inch()) ;
+			fprintf(file,"%c",(int)(inch() & A_CHARTEXT)) ;
 		}
 		fprintf(file,"\n") ;
 	}

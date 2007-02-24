@@ -9,7 +9,8 @@
  \return 
  \param 
 */
-db_d_drop_index ()
+int
+db_d_drop_index (void)
 {
     dbString name;
     int stat;

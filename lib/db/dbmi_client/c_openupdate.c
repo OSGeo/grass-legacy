@@ -7,6 +7,7 @@
  \return 
  \param 
 */
+int
 db_open_update_cursor  (dbDriver *driver, dbString *table_name, dbString *select, dbCursor *cursor, int mode)
 
 {

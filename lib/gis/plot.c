@@ -242,19 +242,13 @@ int G_plot_point  (double east, double north)
 int G_plot_line  (double east1, double north1, double east2, double north2)
 
 {
-    int fastline();
-    plot_line (east1, north1, east2, north2, fastline);
-
-    return 0;
+    return plot_line (east1, north1, east2, north2, fastline);
 }
 
 int G_plot_line2  (double east1, double north1, double east2, double north2)
 
 {
-    int slowline();
-    plot_line (east1, north1, east2, north2, slowline);
-
-    return 0;
+    return plot_line (east1, north1, east2, north2, slowline);
 }
 
 /* fastline converts double rows/cols to ints then plots

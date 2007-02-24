@@ -7,6 +7,7 @@
  \return 
  \param 
 */
+int
 db_open_insert_cursor  (dbDriver *driver, dbCursor *cursor)
 
 {
