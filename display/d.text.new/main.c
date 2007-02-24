@@ -386,7 +386,6 @@ int main(int argc, char **argv)
 		/* font */
 		if ((ptr = strchr(buf_ptr, ':')))
 		    *ptr = 0;
-		R_font_freetype_release();
 		R_font(buf_ptr);
 		if (ptr)
 		    R_charset(ptr + 1);

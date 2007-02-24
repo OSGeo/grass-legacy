@@ -59,10 +59,6 @@ void COM_Font_get(const char *name)
 	}
 }
 
-void COM_Font_freetype_release(void)
-{
-}
-
 void COM_Font_init_charset(const char *charset)
 {
 	font_init_charset(charset);

@@ -100,8 +100,6 @@ int main( int argc , char **argv )
         if (R_open_driver() != 0)
 		G_fatal_error (_("No graphics device selected"));
 
-	R_font_freetype_release();
-
 	if (opt2->answer)
 		R_font(opt2->answer);
 	else
