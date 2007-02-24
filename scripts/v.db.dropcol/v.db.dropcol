@@ -114,7 +114,7 @@ if [ "$col" = "cat" ] ; then
    exit 1
 fi
 
-v.info --q -c $table | cut -d'|' -f1,2 | grep "|${col}$" 2>&1 >/dev/null
+v.info --q -c $GIS_OPT_MAP layer=$GIS_OPT_LAYER | cut -d'|' -f1,2 | grep "|${col}$" 2>&1 >/dev/null
 if [ $? -ne 0 ] ; then
 	echo "ERROR: column <$col> not found in table"
 	cleanup
