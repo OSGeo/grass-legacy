@@ -112,7 +112,10 @@ proc GmGroup::vdigit_display { node digitnode } {
 		MapCanvas::request_redraw $mon 1
 		vwait commandlist
 	}
-	
+
+	# if the layer being digitized is the only one displayed, then don't
+	# make it a background layer too. This avoids a black background.
+	if {[llength $commandlist] == 1} {return $bg_command}
 
 	# add each command in display command list to background commands
 	foreach cmd $commandlist {
