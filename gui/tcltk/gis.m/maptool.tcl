@@ -40,7 +40,7 @@ proc MapToolBar::create { tb } {
 		-highlightbackground $bgcolor  -activebackground $bgcolor\
 		-helptext [G_msg "Display active layers"]
 
-	# zoom to current region
+	# re-render all layers
 	$bbox1 add -image [image create photo -file "$iconpath/gui-redraw.gif"] \
 		-command "MapCanvas::request_redraw $mon 1" \
 		-highlightthickness 0 -takefocus 0 -relief link -borderwidth 1	\
