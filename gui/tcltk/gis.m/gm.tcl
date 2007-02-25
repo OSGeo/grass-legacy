@@ -205,8 +205,9 @@ proc Gm::xmon { type cmd } {
 
 proc Gm::element_exists {elem name} {
 	global devnull
+	set exists 1
 	
-	set failure [catch {exec [list "|g.findfile" "element=$elem" "file=$name"] >& $devnull}]
+	set failure [catch {exec g.findfile element=$elem file=$name >& $devnull}]
 
 	return [expr {! $failure}]
 }
