@@ -42,12 +42,12 @@ proc add_tab_col { name type width namedit typedit widthedit } {
     set columns(type,$tabrow) $type
     set columns(width,$tabrow) $width
    
-    Entry $row.a -width 20 -textvariable columns(name,$tabrow) 
+    Entry $row.a -width 20 -textvariable columns(name,$tabrow) -bg white
     if { $namedit == 0 } { $row.a configure -state disabled }
     ComboBox $row.b -textvariable columns(type,$tabrow) -values {"integer" "double precision" "varchar"} \
-                    -modifycmd "set_col_type $tabrow"
+                    -modifycmd "set_col_type $tabrow" -entrybg white
     if { $typedit == 0 } { $row.b configure -state disabled }
-    Entry $row.c -width 10 -textvariable columns(width,$tabrow) 
+    Entry $row.c -width 10 -textvariable columns(width,$tabrow) -bg white
     if { $widthedit == 0 } { $row.c configure -state disabled }
     set_col_type $tabrow 
    
@@ -60,8 +60,11 @@ proc add_tab_col { name type width namedit typedit widthedit } {
 proc table_buttons { } {
     global table_page
     set addcol [Button $table_page.addcol -text [G_msg "Add new column"]  \
-                       -command { add_tab_col "" "integer" 50 1 1 0 }]
-    set cretab [Button $table_page.cretab -text [G_msg "Create table"]  -command { make_table } ]
+    	-borderwidth 1\
+        -command { add_tab_col "" "integer" 50 1 1 0 }]
+    set cretab [Button $table_page.cretab -text [G_msg "Create table"]  \
+    	-borderwidth 1\
+    	-command { make_table } ]
     pack $addcol $cretab  -side left -anchor s
 }
 
@@ -78,7 +81,7 @@ proc add_command { } {
 
     checkbutton $row.a -variable GBgcmd($comrow,on) -height 1 
  
-    Entry $row.b -width 40 -textvariable GBgcmd($comrow,cmd) 
+    Entry $row.b -width 40 -textvariable GBgcmd($comrow,cmd) -bg white
 
     pack $row.a $row.b -side left
 
@@ -93,7 +96,8 @@ proc add_command { } {
 proc command_buttons { } {
     global GWidget
     set addcom [Button $GWidget(bgcmd).addcom -text [G_msg "Add command"]  \
-                       -command { add_command }]
+    	-borderwidth 1 \
+		-command { add_command }]
    pack $addcom -side left -anchor s
 }
 
@@ -147,6 +151,10 @@ proc settings {} {
     set stt [toplevel .settings]
  
     set nb [NoteBook $stt.nb]  
+    set bottom [frame $stt.frm]
+    set ok [Button $bottom.ok -text "OK" -width 5 -borderwidth 1\
+    	-command "c_next_tool redraw; destroy .settings"]
+    pack $ok -side right -padx 15
     
     $nb compute_size
 
@@ -264,7 +272,7 @@ proc settings {} {
     Label $row.a -anchor w -text [G_msg "Snapping threshold in screen pixels"]  
     radiobutton $row.b -variable GVariable(snap_mode) -value 0 -height 1 -padx 0 -width 0 \
                 -command { c_var_set snap_mode $GVariable(snap_mode) }
-    Entry $row.c -width 10 -textvariable GVariable(snap_screen) \
+    Entry $row.c -width 10 -textvariable GVariable(snap_screen) -bg white \
                            -command { c_var_set snap_screen $GVariable(snap_screen) } 
     bind $row.c <KeyRelease> { c_var_set snap_screen $GVariable(snap_screen) }
     pack $row.a -side left; pack $row.c $row.b -side right; 
@@ -274,7 +282,7 @@ proc settings {} {
     Label $row.a -anchor w -text [G_msg "Snapping threshold in map units"]  
     radiobutton $row.b -variable GVariable(snap_mode) -value 1 -height 1 -padx 0 -width 0 \
                 -command { c_var_set snap_mode $GVariable(snap_mode) }
-    Entry $row.c -width 10 -textvariable GVariable(snap_map) \
+    Entry $row.c -width 10 -textvariable GVariable(snap_map) -bg white \
                            -command { c_var_set snap_map $GVariable(snap_map) }
     bind $row.c <KeyRelease> { c_var_set snap_map $GVariable(snap_map) }
     pack $row.a -side left; pack $row.c $row.b -side right; 
@@ -289,7 +297,7 @@ proc settings {} {
     # Linewidth
     set row [ frame $setf.row4 ]
     Label $row.a -anchor w -text [G_msg "Line width (pixels; 0 is finest)"]
-    Entry $row.b -width 10 -textvariable GVariable(linewidth) \
+    Entry $row.b -width 10 -textvariable GVariable(linewidth) -bg white \
                  -command { c_var_set linewidth $GVariable(linewidth) }
     pack $row.a -side left; pack $row.b -side right;
     pack $row -side top -fill x -expand no -anchor n
@@ -299,7 +307,7 @@ proc settings {} {
     set tabrow 1
     set table_page [$nb insert end table -text [G_msg "Table"]]
 
-    set tabsw [ScrolledWindow $table_page.sw -relief sunken -borderwidth 2]
+    set tabsw [ScrolledWindow $table_page.sw ]
     set tabsf [ScrollableFrame $table_page.sf -width 400]
     $tabsw setwidget $tabsf
     pack $tabsw $tabsf -fill both -expand yes
@@ -313,8 +321,10 @@ proc settings {} {
     command_buttons
     c_create_bgcmd
     
-    # -- pack notebook --
+    # -- pack notebook and bottom frame--
     pack $nb -fill both -expand yes -padx 1 -pady 1
+    pack $bottom -side bottom -expand 1 -fill x
+    
     $nb raise [$nb page 0]
 
     tkwait visibility $stt
