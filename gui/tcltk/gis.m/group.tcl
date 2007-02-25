@@ -70,6 +70,8 @@ proc GmGroup::display { node mod } {
     variable tree
 	global mon
 	global drawprog
+	global commandlist
+	set commandlist {}
 
     set tree($mon) $GmTree::tree($mon)
 	set layers ""
@@ -94,6 +96,38 @@ proc GmGroup::display { node mod } {
 
 ###############################################################################
 
+# display background maps for digitizing in v.digit
+proc GmGroup::vdigit_display { node digitnode } {
+    variable opt
+    variable tree
+    variable bg_command 
+	global mon
+	global drawprog
+	global commandlist
+	
+	set bg_command ""
+	
+	# display selected layers to create a display command list if needed
+	if {[llength $commandlist] == 0} {
+		MapCanvas::request_redraw $mon 1
+		vwait commandlist
+	}
+	
+
+	# add each command in display command list to background commands
+	foreach cmd $commandlist {
+		append bg_command "$cmd;"
+	}
+		
+	# get rid of the ; at the end of the background command list
+	set bg_command [string trimright $bg_command ";"]
+	
+	return $bg_command
+				
+}
+
+
+###############################################################################
 
 proc GmGroup::nvdisplay { node } {
     variable opt
@@ -158,8 +192,8 @@ proc GmGroup::nviz { node } {
 			GmGroup::nvdisplay $node 
 		}
 		"raster" {
-			set surf [GmRaster::addelev $node $nvelev]
-			set clr [GmRaster::addcolor $node $nvcolor]
+			set surf [GmRaster::addelev $node]
+			set clr [GmRaster::addcolor $node]
 
 			# test whether surf and clr are valid files
 			if {![catch {set rinfo [eval exec "r.info map=$surf 2> $devnull"]} err_str]} {
