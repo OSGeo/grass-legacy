@@ -21,7 +21,7 @@ set prompt_middle [G_msg "Middle button"]
 set prompt_right [G_msg "Right button"]
 set coor ""
 
-wm title . "Digitizing $map_name@$map_mapset"
+wm title . "v.digit - $map_name@$map_mapset"
 
 proc get_update_line {ox oy x y} {
     .screen.canvas delete active
@@ -42,7 +42,7 @@ proc create_screen {} {
     pack .screen.canvas -fill both -expand yes
     bind .screen.canvas <ButtonPress> { c_update_tool %x %y %b }
     bind .screen.canvas <Motion> { c_update_tool %x %y -1 }
-    wm title .screen "Digitizing $map_name@$map_mapset"
+    wm title .screen "v.digit - $map_name@$map_mapset"
     wm withdraw .screen
     wm deiconify .screen
     update
@@ -203,7 +203,7 @@ proc zoom_region { } {
 $bbox1 add -image [image create photo -file "$vdpath/zoom.region.gif"] \
         -command "zoom_region" \
         -highlightthickness 0 -takefocus 0 -relief raised -borderwidth 1 \
-        -helptext [G_msg "Zoom to region"]
+        -helptext [G_msg "Zoom to saved region"]
 
 # --- Attributes ---
 $bbox1 add -image [image create photo -file "$vdpath/display.cats.gif"] \
@@ -254,9 +254,12 @@ LabelFrame .bpf -text [G_msg "mouse button actions (left, middle, right)"] \
 #    -relief groove -borderwidth 1
 
 pack .bpf -fill x -side top -padx 8
-Label .bpf.left -width 10  -pady 5 -relief raised -anchor center -textvariable prompt_left -bg grey95 
-Label .bpf.middle -width 10 -padx 2 -pady 5 -relief raised -anchor center -textvariable prompt_middle -bg grey95
-Label .bpf.right -width 10 -pady 5 -relief raised -anchor center -textvariable prompt_right -bg grey95
+Label .bpf.left -width 10  -pady 5 -relief raised -anchor center -textvariable prompt_left \
+	-wraplength 100 -bg grey95 
+Label .bpf.middle -width 10 -padx 2 -pady 5 -relief raised -anchor center -textvariable prompt_middle \
+	-wraplength 100 -bg grey95
+Label .bpf.right -width 10 -pady 5 -relief raised -anchor center -textvariable prompt_right \
+	-wraplength 100 -bg grey95
 pack .bpf.left .bpf.middle .bpf.right -fill x -side left -expand yes -padx 4 -pady 8
 
 frame .coorf
