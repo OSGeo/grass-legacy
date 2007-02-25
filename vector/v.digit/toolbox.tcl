@@ -1,12 +1,11 @@
 lappend auto_path $env(GISBASE)/bwidget
 package require -exact BWidget 1.2.1
 
-# I'm not sure how to grab the map name, so I'll leave it obviously broken
-# in the hope someone will fix it. If you comment out the following line,
-# then the toolbox window takes on the map name! argh! We want both.
-
 source $env(GISBASE)/etc/gtcltk/gmsg.tcl
 source $env(GISBASE)/etc/gtcltk/select.tcl
+
+#fontcreate balloon-help -family Helvetica -size -12
+DynamicHelp::configure -font balloon-help -fg black -bg "#FFFF77"
 
 set vdpath $env(GISBASE)/etc/v.digit/
 source $vdpath/settings.tcl
@@ -17,12 +16,12 @@ set env(LOCATION_NAME) [exec g.gisenv get=LOCATION_NAME]
 set env(MAPSET) [exec g.gisenv get=MAPSET]
 
 set prompt [G_msg "Welcome to v.digit"]
-set prompt_left [G_msg "Left mouse button"]
-set prompt_middle [G_msg "Middle mouse button"]
-set prompt_right [G_msg "Right mouse button"]
+set prompt_left [G_msg "Left button"]
+set prompt_middle [G_msg "Middle button"]
+set prompt_right [G_msg "Right button"]
 set coor ""
 
-wm title . "v.digit - $map_name@$map_mapset"
+wm title . "Digitizing $map_name@$map_mapset"
 
 proc get_update_line {ox oy x y} {
     .screen.canvas delete active
@@ -43,7 +42,7 @@ proc create_screen {} {
     pack .screen.canvas -fill both -expand yes
     bind .screen.canvas <ButtonPress> { c_update_tool %x %y %b }
     bind .screen.canvas <Motion> { c_update_tool %x %y -1 }
-    wm title .screen "v.digit - $map_name@$map_mapset"
+    wm title .screen "Digitizing $map_name@$map_mapset"
     wm withdraw .screen
     wm deiconify .screen
     update
@@ -237,6 +236,7 @@ $bbox1 add -image [image create photo -file "$vdpath/settings.gif"] \
 $bbox1 add -image [image create photo -file "$vdpath/exit.gif"] \
         -command "c_next_tool exit" \
         -highlightthickness 0 -takefocus 0 -relief raised -borderwidth 1 \
+        -bg white \
         -helptext [G_msg "Save and exit"]
 
 pack $bbox1 -side top -anchor w
@@ -245,7 +245,7 @@ pack $bbox2 -side top -anchor w
 
 frame .pf
 pack .pf -fill x -side top
-Label .pf.prompt -padx 3 -pady 2 -relief flat -anchor w -textvariable prompt
+Label .pf.prompt -padx 3 -pady 2 -relief flat -anchor w -textvariable prompt -fg mediumblue
 pack .pf.prompt -fill x  -side left
 
 LabelFrame .bpf -text [G_msg "mouse button actions (left, middle, right)"] \
