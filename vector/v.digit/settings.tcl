@@ -44,8 +44,9 @@ proc add_tab_col { name type width namedit typedit widthedit } {
    
     Entry $row.a -width 20 -textvariable columns(name,$tabrow) -bg white
     if { $namedit == 0 } { $row.a configure -state disabled }
-    ComboBox $row.b -textvariable columns(type,$tabrow) -values {"integer" "double precision" "varchar"} \
-                    -modifycmd "set_col_type $tabrow" -entrybg white
+    ComboBox $row.b -textvariable columns(type,$tabrow) \
+    	-values {[G_msg "integer"] [G_msg "double precision"] [G_msg "varchar"]} \
+		-modifycmd "set_col_type $tabrow" -entrybg white
     if { $typedit == 0 } { $row.b configure -state disabled }
     Entry $row.c -width 10 -textvariable columns(width,$tabrow) -bg white
     if { $widthedit == 0 } { $row.c configure -state disabled }
@@ -61,7 +62,7 @@ proc table_buttons { } {
     global table_page
     set addcol [Button $table_page.addcol -text [G_msg "Add new column"]  \
     	-borderwidth 1\
-        -command { add_tab_col "" "integer" 50 1 1 0 }]
+        -command { add_tab_col "" [G_msg "integer"] 50 1 1 0 }]
     set cretab [Button $table_page.cretab -text [G_msg "Create table"]  \
     	-borderwidth 1\
     	-command { make_table } ]
@@ -141,9 +142,13 @@ proc make_table { } {
 proc settings {} {
     global symb GVariable  table_page table_frame tabrow GWidget GBgcmd
     set clw 30
+    
+    if {![info exists GVariable(linewidth)]} {
+    	set GVariable(linewidth) 3
+    }
 
     if { [winfo exists .settings] } {
-        puts "Settings already opened"
+        puts [G_msg "Settings already opened"]
         wm deiconify .settings
         raise .settings
         return
@@ -152,8 +157,9 @@ proc settings {} {
  
     set nb [NoteBook $stt.nb]  
     set bottom [frame $stt.frm]
-    set ok [Button $bottom.ok -text "OK" -width 5 -borderwidth 1\
-    	-command "c_next_tool redraw; destroy .settings"]
+    set ok [Button $bottom.ok -text [G_msg "OK"] -width 5 -borderwidth 1\
+    	-command {c_next_tool redraw
+    		destroy .settings}]
     pack $ok -side right -padx 15
     
     $nb compute_size
@@ -296,9 +302,10 @@ proc settings {} {
 
     # Linewidth
     set row [ frame $setf.row4 ]
-    Label $row.a -anchor w -text [G_msg "Line width (pixels; 0 is finest)"]
-    Entry $row.b -width 10 -textvariable GVariable(linewidth) -bg white \
-                 -command { c_var_set linewidth $GVariable(linewidth) }
+    Label $row.a -anchor w -text [G_msg "Line width in screen pixels"]
+    SpinBox $row.b -range {1 50 1} -textvariable GVariable(linewidth) \
+		   -width 2 -helptext [G_msg "Set line width in pixels"] -entrybg white \
+		   -modifycmd {c_var_set linewidth $GVariable(linewidth)}    
     pack $row.a -side left; pack $row.b -side right;
     pack $row -side top -fill x -expand no -anchor n
 
