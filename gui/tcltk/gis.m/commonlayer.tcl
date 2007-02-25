@@ -37,6 +37,8 @@ proc namespace_import_variables {namespace args} {
 # directory and add it to the compositing list)
 proc GmCommonLayer::display_commands {namespace id cmds} {
 	global mon
+	global commandlist
+	
 	namespace_import_variables $namespace lfile lfilemask opt optlist dup first
 	
 	set mapfile($mon) $MapCanvas::mapfile($mon)
@@ -104,6 +106,10 @@ proc GmCommonLayer::display_commands {namespace id cmds} {
 	} else {
 		append MapCanvas::opclist($mon) $opt($id,1,opacity)
 	}
+	
+	# create list of commands for current display
+	# used for v.digit background, but could be used for other things
+	append commandlist " $cmds"
 	
 }
 
