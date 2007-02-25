@@ -719,8 +719,11 @@ proc GmVector::WorkOnVector { node mod } {
         set cmd [list v.digit -n "map=$opt($id,1,vect)"]
     }
 
-    # Run v.digit with an xmon started first
-    guarantee_xmon
+     set bg_command [GmGroup::vdigit_display "root" "vector:$id"]
+     if {$bg_command != ""} {
+     	append cmd " {bgcmd=$bg_command}"
+     }
+
     spawn_panel $cmd
 }
 
