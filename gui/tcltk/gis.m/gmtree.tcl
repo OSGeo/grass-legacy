@@ -69,6 +69,9 @@ proc GmTree::create { mon } {
 	set pgtitle [label $pg($mon).title -text [format [G_msg "Map Layers for Display %s"] $mon] \
 		-font bolddefault -fg mediumblue -bg grey95]
 	pack $pgtitle -side top -expand 1 -fill x
+	
+	Separator $pg($mon).sep -orient horizontal
+	pack $pg($mon).sep -side top -expand 1 -fill x
 
 	set sw    [ScrolledWindow $pg($mon).sw \
 		-relief flat -borderwidth 0 ]
