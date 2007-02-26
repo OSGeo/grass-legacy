@@ -29,6 +29,7 @@ if "%GRASS_ADDON_PATH%"=="" set PATH=%WINGISBASE%\bin;%WINGISBASE%\lib;%PATH%
 if not "%GRASS_ADDON_PATH%"=="" set PATH=%WINGISBASE%\bin;%WINGISBASE%\lib;%GRASS_ADDON_PATH%;%PATH%
 
 set GRASS_VERSION=GRASS_VERSION_NUMBER
+if "%HOME%"=="" set HOME=%USERPROFILE%
 set WINGISRC=%HOME%\.grassrc6
 rem Set a temporary %GISRC% so g.dirseps will work
 rem OK to have \ dirseps here as not used for much.
