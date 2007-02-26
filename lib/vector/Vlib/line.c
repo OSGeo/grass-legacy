@@ -258,7 +258,7 @@ Vect_line_prune_thresh (struct line_pnts *Points, double threshold)
 
     ret = dig_prune(Points,threshold);
 
-    if ( ret < Points->n_points );
+    if ( ret < Points->n_points )
         Points->n_points = ret;
 	
     return ( Points->n_points );
