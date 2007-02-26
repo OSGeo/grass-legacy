@@ -236,7 +236,7 @@ proc GmRaster::save { tree depth node } {
 ###############################################################################
 
 # append elevation maps display lists for NVIZ
-proc GmRaster::addelev {node nvelev} {
+proc GmRaster::addelev {node } {
     variable opt
     variable tree
     global mon
@@ -252,7 +252,7 @@ proc GmRaster::addelev {node nvelev} {
 }
 
 # append drape colors to display lists for NVIZ
-proc GmRaster::addcolor {node nvcolor} {
+proc GmRaster::addcolor {node } {
     variable opt
     variable tree
     global mon
