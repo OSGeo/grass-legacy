@@ -23,6 +23,24 @@ multiprocess implementation. External software for quantitative measures of land
 structure is for example FRAGSTATS (McGarigal and Marks 1995).
 <p>
 The <em>r.li</em> suite offers a set of patch and diversity indices.
+It supports analysis of landscapes composed of a mosaic of
+patches, but, more generally, the modules work with any two-dimensional
+raster map whose cell values are integer (e.g., 1, 2) or floating point
+(e.g., 1.1, 3.2) values. The <em>r.li.setup</em> module has options for
+controlling the shape, size, number, and distribution of sampling
+areas used to collect information about the landscape structure.
+Sampling area shapes can be the entire map or a moving
+window of square, rectangular or with circular shape. The size of
+sampling areas can be changed, so that the landscape can be analyzed
+at a variety of spatial scales simultaneously. Sampling areas may be
+distributed across the landscape in a random, systematic, or
+stratified-random manner, or as a moving window.
+<p>
+The <em>r.li</em> modules can calculate a number of measures that produce
+single values as output (e.g. mean patch size in the sampling area),
+as well as measures that produce a distribution of values as output
+(e.g. frequency distribution of patch sizes in the sampling area). The
+results are stored as raster maps.
 
 <p>
 The general procedure to calculate an index from a raster map is two-fold:
