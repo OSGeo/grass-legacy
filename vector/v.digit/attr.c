@@ -162,7 +162,6 @@ struct display_cats
     double thresh;
     struct line_pnts *Points;
     struct line_cats *Cats;
-    int last_cat_line;
 };
 
 int display_cats_begin(void *closure)
@@ -182,7 +181,7 @@ int display_cats_begin(void *closure)
     G_debug (2, "thresh = %f", dc->thresh );
     
     F_clear ();
-    dc->last_cat_line = 0;
+    last_cat_line = 0;
 
     set_mode(MOUSE_POINT);
 
@@ -198,9 +197,9 @@ int display_cats_update(void *closure, int sxn, int syn, int button)
     G_debug (2, "button = %d x = %d = %f y = %d = %f", button, sxn, x, syn, y);
 
     /* Display last highlighted in normal color */
-    G_debug (2, "  last_cat_line = %d", dc->last_cat_line);
-    if ( dc->last_cat_line > 0 )
-	display_line ( dc->last_cat_line, SYMB_DEFAULT, 1);
+    G_debug (2, "  last_cat_line = %d", last_cat_line);
+    if ( last_cat_line > 0 )
+	display_line ( last_cat_line, SYMB_DEFAULT, 1);
 
     if (button == 3) /* Quit tool */
 	return 1;
@@ -237,7 +236,7 @@ int display_cats_update(void *closure, int sxn, int syn, int button)
 	    }
 	}
 
-	dc->last_cat_line = line;
+	last_cat_line = line;
     }
 
     return 0;
