@@ -31,6 +31,7 @@
 
 /* fft.c */
 int fft(int, double *[2], int, int, int);
+int fft2(int, double (*)[2], int, int, int);
 /* gauss.c */
 float gauss(int);
 /* max_pow2.c */

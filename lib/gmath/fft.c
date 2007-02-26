@@ -48,7 +48,7 @@
 
 
 /**
- * \fn int fft(int i_sign, double *DATA[2], int NN, int dimc, int dimr)
+ * \fn int fft2(int i_sign, double (*data)[2], int NN, int dimc, int dimr)
  *
  * \brief Fast Fourier Transform for two-dimensional array.
  *
@@ -58,7 +58,7 @@
  * the imaginary part to zero (DATA[1][i] = 0.0). Returns 0.
  *
  * \param[in] i_sign Direction of transform -1 is normal, +1 is inverse
- * \param[in,out] DATA Pointer to complex linear array in row major order 
+ * \param[in,out] data Pointer to complex linear array in row major order 
  * containing data and result
  * \param[in] NN Value of DATA dimension (dimc * dimr)
  * \param[in] dimc Value of image column dimension (max power of 2)
@@ -66,26 +66,17 @@
  * \return int always returns 0
  */
 
-int fft(int i_sign, double *DATA[2], int NN, int dimc, int dimr)
+int fft2(int i_sign, double (*data)[2], int NN, int dimc, int dimr)
 {
 #ifdef HAVE_FFTW3_H
 	fftw_plan plan;
 #else
 	fftwnd_plan plan;
 #endif
-	fftw_complex *data;
 	double norm;
 	int i;
 
 	norm = 1.0 / sqrt(NN);
-
-	data = (fftw_complex *) G_malloc(NN * sizeof(fftw_complex));
-
-	for (i = 0; i < NN; i++)
-	{
-		c_re(data[i]) = DATA[0][i];
-		c_im(data[i]) = DATA[1][i];
-	}
 
 #ifdef HAVE_FFTW3_H
 	plan = fftw_plan_dft_2d(
@@ -106,10 +97,54 @@ int fft(int i_sign, double *DATA[2], int NN, int dimc, int dimr)
 
 	fftwnd_destroy_plan(plan);
 #endif
+
 	for (i = 0; i < NN; i++)
 	{
-		DATA[0][i] = c_re(data[i]) * norm;
-		DATA[1][i] = c_im(data[i]) * norm;
+		c_re(data[i]) *= norm;
+		c_im(data[i]) *= norm;
+	}
+
+	return 0;
+}
+
+/**
+ * \fn int fft(int i_sign, double *DATA[2], int NN, int dimc, int dimr)
+ *
+ * \brief Fast Fourier Transform for two-dimensional array.
+ *
+ * Fast Fourier Transform for two-dimensional array.<br>
+ * <bNote:</b> If passing real data to fft() forward transform 
+ * (especially when using fft() in a loop), explicitly (re-)initialize 
+ * the imaginary part to zero (DATA[1][i] = 0.0). Returns 0.
+ *
+ * \param[in] i_sign Direction of transform -1 is normal, +1 is inverse
+ * \param[in,out] DATA Pointer to complex linear array in row major order 
+ * containing data and result
+ * \param[in] NN Value of DATA dimension (dimc * dimr)
+ * \param[in] dimc Value of image column dimension (max power of 2)
+ * \param[in] dimr Value of image row dimension (max power of 2)
+ * \return int always returns 0
+ */
+
+int fft(int i_sign, double *DATA[2], int NN, int dimc, int dimr)
+{
+	fftw_complex *data;
+	int i;
+
+	data = (fftw_complex *) G_malloc(NN * sizeof(fftw_complex));
+
+	for (i = 0; i < NN; i++)
+	{
+		c_re(data[i]) = DATA[0][i];
+		c_im(data[i]) = DATA[1][i];
+	}
+
+	fft2(i_sign, data, NN, dimc, dimr);
+
+	for (i = 0; i < NN; i++)
+	{
+		DATA[0][i] = c_re(data[i]);
+		DATA[1][i] = c_im(data[i]);
 	}
 
 	G_free(data);
