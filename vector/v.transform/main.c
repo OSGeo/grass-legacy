@@ -23,17 +23,18 @@
 *
 *- Modified by Dave Gerdes  1/90  for dig_head stuff
 *- Modified by Radim Blazek to work on binary files 2002
+*- Interactive functionality disabled, 2007
 */
 #define MAIN
 
 #include <stdlib.h>
 #include <string.h>
-#include "trans.h"
 #include <grass/gis.h>
 #include <grass/Vect.h>
 #include <grass/dbmi.h>
-#include "local_proto.h"
 #include <grass/glocale.h>
+#include "trans.h"
+#include "local_proto.h"
 
 int main (int argc, char *argv[])
 {
@@ -63,10 +64,11 @@ int main (int argc, char *argv[])
     tozero_flag->key		= 't';
     tozero_flag->description = _("Shift all z values to bottom=0"); 
 
+    /* remove in GRASS7 */
     shift_flag = G_define_flag();
     shift_flag->key		= 's';
     shift_flag->description = _("Instead of points use transformation options "
-		"(xshift, yshift, zshift, xscale, yscale, zscale, zrot)");
+				"(xshift, yshift, zshift, xscale, yscale, zscale, zrot)");
     shift_flag->guisection  = _("Custom");
 
     old = G_define_standard_option(G_OPT_V_INPUT);
@@ -78,7 +80,8 @@ int main (int argc, char *argv[])
     pointsfile->type		= TYPE_STRING;
     pointsfile->required	= NO;
     pointsfile->multiple	= NO;
-    pointsfile->description	= _("ASCII file holding transform coordinates");
+    pointsfile->description	= _("ASCII file holding transform coordinates (if not given transformation options "
+				    "[xshift, yshift, zshift, xscale, yscale, zscale, zrot] will be used instead)");
     pointsfile->gisprompt       = "old_file,file,points";
 
     xshift = G_define_option();
@@ -147,30 +150,32 @@ int main (int argc, char *argv[])
     if (G_parser (argc, argv))
 	exit (EXIT_FAILURE);
     
-    strcpy (Current.name, old->answer);
-    strcpy (Trans.name, new->answer);
+    G_strcpy (Current.name, old->answer);
+    G_strcpy (Trans.name, new->answer);
 
     Vect_check_input_output_name ( old->answer, new->answer, GV_FATAL_EXIT );
-   
-    if ( !shift_flag->answer ) { 
-	if (pointsfile->answer != NULL)
-	    strcpy (Coord.name, pointsfile->answer);
-	else {
-	    Coord.name[0] = '\0';
-	    G_warning(_("Requested 'read transform coordinates from file' "
-		"mode, but no file name was given."));
-	}
 
-	/* open coord file */
-	if ( Coord.name[0] != '\0' ){
-	    if ( (Coord.fp = fopen(Coord.name, "r"))  ==  NULL) 
-		G_fatal_error ( _("Could not open file with coordinates : %s\n"), Coord.name) ;
-	}
+    /* please remove in GRASS7 */
+    if (shift_flag -> answer)
+	G_warning (_("The '-s' flag is deprecated and will be removed in future. "
+		     "Transformation options are used automatically when no pointsfile is given."));
+
+    if (pointsfile->answer != NULL && !shift_flag -> answer) {
+	G_strcpy (Coord.name, pointsfile->answer);
+    }
+    else {
+	Coord.name[0] = '\0';
+    }
+
+    /* open coord file */
+    if ( Coord.name[0] != '\0' ){
+	if ( (Coord.fp = fopen(Coord.name, "r"))  ==  NULL) 
+	    G_fatal_error ( _("Could not open file with coordinates <%s>"), Coord.name) ;
     }
     
     /* open vectors */
     if ( (mapset = G_find_vector2 ( old->answer, "")) == NULL)
-	G_fatal_error ( _("Could not find input map <%s>\n"), old->answer);
+	G_fatal_error ( _("Could not find input vector map <%s>"), old->answer);
     
     Vect_open_old(&Old, old->answer, mapset);
 
@@ -196,15 +201,15 @@ int main (int argc, char *argv[])
     Vect_set_zone ( &New, 0 );
     Vect_set_thresh ( &New, 0.0 );
     
-    if ( !shift_flag->answer ) { 
-	create_transform_conversion( &Coord, quiet_flag->answer);
+    if (Coord.name[0]) { 
+	create_transform_from_file (&Coord, quiet_flag->answer);
 
 	if (Coord.name[0] != '\0')
 		fclose( Coord.fp) ;
     }
     
     if (!quiet_flag->answer)
-       G_message ( _("\nNow transforming the vectors ...\n"));
+       G_message ( _("Now transforming the vectors ..."));
     
     Vect_get_map_box (&Old, &box );
     if (tozero_flag->answer)
@@ -212,7 +217,7 @@ int main (int argc, char *argv[])
     else
        ztozero = 0;
 
-    transform_digit_file( &Old, &New, shift_flag->answer,
+    transform_digit_file( &Old, &New, Coord.name[0] ? 0 : 1,
 	    atof(xshift->answer), atof(yshift->answer), atof(zshift->answer), ztozero,
 	    atof(zrot->answer), atof(xscale->answer), atof(yscale->answer), atof(zscale->answer)) ;
 
@@ -221,16 +226,17 @@ int main (int argc, char *argv[])
 
     if (!quiet_flag->answer) Vect_build (&New, stdout); else Vect_build (&New, NULL);
 
-    Vect_get_map_box (&New, &box );
-    G_message ( _("New vector map <%s> boundary coordinates:\n"), new->answer);
-    G_message ( _(" N: %-10.3f    S: %-10.3f\n"), box.N, box.S);
-    G_message ( _(" E: %-10.3f    W: %-10.3f\n"), box.E, box.W);
-    G_message ( _(" B: %6.3f    T: %6.3f\n"), box.B, box.T);
+    if (!quiet_flag->answer) {
+	Vect_get_map_box (&New, &box );
+	G_message ( _("New vector map <%s> boundary coordinates:"), new->answer);
+	G_message ( _(" N: %-10.3f    S: %-10.3f"), box.N, box.S);
+	G_message ( _(" E: %-10.3f    W: %-10.3f"), box.E, box.W);
+	G_message ( _(" B: %6.3f    T: %6.3f"), box.B, box.T);
+    }
 
     Vect_close (&New);
 
-    if (!quiet_flag->answer)
-	    G_message ( _("'%s' has finished the transformation of the vectors.\n"), argv[0]) ;
+    G_done_msg ("");
 
     exit(EXIT_SUCCESS) ;
 }

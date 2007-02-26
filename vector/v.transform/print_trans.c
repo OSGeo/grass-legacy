@@ -25,26 +25,25 @@ print_transform_resids (int n_points)
 {
 	int i ;
 
-	G_message ( "\n");
-	G_message ( _("                          CHECK MAP RESIDUALS\n\n"));
-	G_message ( _("                Current Map                  New Map\n"));
-	G_message ( _(" POINT      X coord    Y coord  |        X coord   Y coord    |      residuals\n"));
-	G_message ( "\n");
+	fprintf (stdout,"\n");
+	fprintf (stdout, "                CHECK MAP RESIDUALS\n");
+	fprintf (stdout, "                Current Map                  New Map\n");
+	fprintf (stdout, " POINT      X coord    Y coord  |        X coord   Y coord    |      residuals\n");
+	fprintf (stdout, "\n");
 
 	for (  i = 0 ;  i < n_points;  i++ )
  	{
 
 		if ( use[i])
-			G_message ( " %2d.  %12.2f %12.2f | %12.2f   %12.2f | %12.2f\n",
+			fprintf (stdout, " %2d.  %12.2f %12.2f | %12.2f   %12.2f | %12.2f\n",
 			 i+1, ax[i], ay[i], bx[i], by[i], residuals[i]) ;
 	
  	}
 		
-	G_message ( _("\n\n  Number of points: %d\n"), n_points) ;
-	G_message ( _("  Residual mean average   : %f\n"), rms) ;
+	fprintf (stdout, "\n\n  Number of points: %d\n", n_points);
+	fprintf (stdout, "  Residual mean average: %f\n", rms);
+	fprintf (stdout, "\n");
 
 	return (0) ;
 
 }		/*  print_transform_resid()  */
-
-

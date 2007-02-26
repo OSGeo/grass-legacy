@@ -80,8 +80,6 @@ reg_cnt = 0 ;
 int 
 print_transform_error (int stat)
 {
-    char buff[128];
-
     switch(stat)
     {
 	case POINTS_NOT_SPREAD:
