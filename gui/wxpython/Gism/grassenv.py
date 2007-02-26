@@ -41,5 +41,3 @@ for key in os.environ.keys():
 for line in os.popen("g.gisenv").readlines():
     key,val = line.strip().split("=")
     env[key] = val
-
-
