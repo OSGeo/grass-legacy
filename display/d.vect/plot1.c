@@ -407,26 +407,25 @@ int plot1 (
 			
                         break;
                     case S_STRING: 
-			if ( part->color.color == S_COL_NONE ) break;
-			else {
-			  if (!table_colors_flag && !cats_color_flag) {
+			if ( part->color.color == S_COL_NONE || !color) break;
+
+			if (!table_colors_flag && !cats_color_flag) {
 			    if ( part->color.color == S_COL_DEFAULT )
 			        R_RGB_color(color->r, color->g, color->b);
 			    else R_RGB_color ( part->color.r, part->color.g, part->color.b );
-			  }
-			  else {
+			}
+			else {
 			    if (ltype == GV_CENTROID) {
-			      R_RGB_color(color->r, color->g, color->b);
+				R_RGB_color(color->r, color->g, color->b);
 			    }
 			    else {
-			      if (rgb) {
-				R_RGB_color ((unsigned char) red, (unsigned char) grn, (unsigned char) blu);
-			      }
-			      else {
-			        R_RGB_color(color->r, color->g, color->b);
-			      }
+				if (rgb) {
+				    R_RGB_color ((unsigned char) red, (unsigned char) grn, (unsigned char) blu);
+				}
+				else {
+				    R_RGB_color(color->r, color->g, color->b);
+				}
 			    }
-			  }
 			}
 			    
 			chain = part->chain[0];
