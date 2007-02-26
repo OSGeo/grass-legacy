@@ -91,7 +91,7 @@ yes_no_quest (char *s)
     char buff[200];
     while (1)
     {
-	G_message ( _("%s"),s);
+	G_message ("%s", s);
 	if (NULL == fgets(buff,200,stdin))
 		exit(-1) ;
 	switch (*buff)
@@ -124,7 +124,7 @@ create_transform_from_file (struct file_info *Coord, int quiet)
 
 	if (status != ALL_OK )
 	{
-		G_message ( _("Number of points that have been entered: %d\n"), n_points );
+		G_message ( _("Number of points that have been entered [%d]"), n_points );
 		print_transform_error(status) ;
 		exit(-1) ;
 	}
@@ -135,4 +135,3 @@ create_transform_from_file (struct file_info *Coord, int quiet)
  return(0) ;
 
 }			/*  create_transform_from_file()  */
-

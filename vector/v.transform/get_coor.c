@@ -16,6 +16,7 @@
 #include <stdio.h>
 #include "trans.h"
 #include <grass/gis.h>
+#include <grass/glocale.h>
 
 int 
 get_coor_from_file (FILE *fp)
@@ -34,7 +35,7 @@ get_coor_from_file (FILE *fp)
 	 {
 	    /* comment or illegal line found */
 	    if (! buff[0] == '#' )
-	       G_fatal_error (" ERROR:  Reading coordinates from file.");
+		G_fatal_error (_("Reading coordinates from file."));
 	    else
 	       i--; /* just comment found */
 	 }
