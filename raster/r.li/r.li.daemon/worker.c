@@ -60,7 +60,7 @@ void worker(char *raster, int f(int, char **, area_des, double *),\
 	 mapset = G_find_cell(raster, "");
 	 fd = G_open_cell_old(raster, mapset);
 	 if (G_get_cellhd(raster, mapset, &hd) == - 1){
-	 	G_message( _("CHILD[pid = %i] cannot raster map"),pid);
+	 	G_message( _("CHILD[pid = %i] cannot open raster map"),pid);
 		exit(EXIT_FAILURE);
 	 }
 	 /* read data type to allocate cache */
