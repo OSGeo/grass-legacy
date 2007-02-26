@@ -24,7 +24,7 @@
 
 
 #ifndef HAVE_OGR
-static int format () { G_fatal_error ("Requested format is not compiled in this version"); return 0; }
+static int format () { G_fatal_error (_("Requested format is not compiled in this version")); return 0; }
 #endif
 
 static int (*Build_array[]) () =
@@ -59,7 +59,8 @@ int prnmsg ( char *msg, ...) {
  \fn int Vect_build ( struct Map_info *Map, FILE *msgout ) 
  \brief build topology for vector map
  \return 1 on success, 0 on error
- \param Map_info structure, file for message output (stdout/stderr for example) or NULL
+ \param Map vector map
+ \param msgout file for message output (stdout/stderr for example) or NULL
 */
 int
 Vect_build ( struct Map_info *Map, FILE *msgout ) 
@@ -90,14 +91,14 @@ Vect_get_built ( struct Map_info *Map )
  GV_BUILD_NONE - nothing is build
  GV_BUILD_BASE - basic topology, nodes, spatial index
  GV_BUILD_AREAS - build areas and islands, but islands are not attached to areas
- GV_BUILD_ATTACH_ISLES - attache islands to areas
+ GV_BUILD_ATTACH_ISLES - attach islands to areas
  GV_BUILD_CENTROIDS - assign centroids to areas
  GV_BUILD_ALL - top level, the same as GV_BUILD_CENTROIDS
 
  If functions is called with build lower than current value of the Map, the level is downgraded to 
  requested value.
 
- All calls to Vect_write_line, Vect_rewrite_line, Vect_delete_line respect the last value of 
+ All calls to Vect_write_line(), Vect_rewrite_line(), Vect_delete_line() respect the last value of 
  build used in this function.
 
  Values lower than GV_BUILD_ALL are supported only by GV_FORMAT_NATIVE,
@@ -228,7 +229,7 @@ Vect_build_partial ( struct Map_info *Map, int build, FILE *msgout )
  \fn int Vect_save_topo ( struct Map_info *Map )
  \brief save topology file for vector map
  \return 1 on success, 0 on error
- \param Map_info structure
+ \param Map vector map
 */
 int
 Vect_save_topo ( struct Map_info *Map )
@@ -248,7 +249,7 @@ Vect_save_topo ( struct Map_info *Map )
     dig_file_init ( &fp );
     fp.file = fopen( fname, "w");
     if ( fp.file ==  NULL) {
-        G_warning(_("Can't open topo file for write: %s\n"), fname);
+        G_warning(_("Can't open topo file for write <%s>"), fname);
 	    return 0;
     }
 
@@ -256,7 +257,7 @@ Vect_save_topo ( struct Map_info *Map )
     dig_init_portable ( &(plus->port), dig__byte_order_out ());
     
     if ( 0 > dig_write_plus_file (&fp, plus) ) {
-        G_warning (_("Error writing out topo file.\n"));
+        G_warning (_("Error writing out topo file."));
 	return 0;
     }
     
@@ -266,10 +267,11 @@ Vect_save_topo ( struct Map_info *Map )
 }
 
 /*!
- \fn int Vect_topo_dump ( struct Plus_head *plus, FILE *out )
+ \fn int Vect_topo_dump ( struct Map_info *Map, FILE *out )
  \brief dump topology to file
  \return 1 on success, 0 on error
- \param Map_info structure, file for output (stdout/stderr for example)
+ \param Map vector map
+ \param out file for output (stdout/stderr for example)
 */
 int
 Vect_topo_dump ( struct Map_info *Map, FILE *out )
@@ -367,7 +369,7 @@ Vect_topo_dump ( struct Map_info *Map, FILE *out )
  \fn int Vect_save_spatial_index ( struct Map_info *Map )
  \brief save spatial index file
  \return 1 on success, 0 on error
- \param Map_info structure
+ \param Map vector map
 */
 int
 Vect_save_spatial_index ( struct Map_info *Map )
@@ -387,7 +389,7 @@ Vect_save_spatial_index ( struct Map_info *Map )
     dig_file_init ( &fp );
     fp.file = fopen( fname, "w");
     if ( fp.file ==  NULL) {
-        G_warning(_("Can't open spatial index file for write: %s\n"), fname);
+        G_warning(_("Can't open spatial index file for write <%s>"), fname);
 	    return 0;
     }
 
@@ -395,7 +397,7 @@ Vect_save_spatial_index ( struct Map_info *Map )
     dig_init_portable ( &(plus->spidx_port), dig__byte_order_out ());
     
     if ( 0 > dig_write_spidx (&fp, plus) ) {
-        G_warning (_("Error writing out spatial index file.\n"));
+        G_warning (_("Error writing out spatial index file."));
 	return 0;
     }
     
@@ -405,10 +407,11 @@ Vect_save_spatial_index ( struct Map_info *Map )
 }
 
 /*!
- \fn int Vect_spatial_index_dump ( struct Plus_head *plus, FILE *out )
+ \fn int Vect_spatial_index_dump ( struct Map_info *Map, FILE *out )
  \brief dump spatial index to file
  \return 1 on success, 0 on error
- \param Map_info structure, file for output (stdout/stderr for example)
+ \param Map vector map
+ \param out file for output (stdout/stderr for example)
 */
 int
 Vect_spatial_index_dump ( struct Map_info *Map, FILE *out ) 
