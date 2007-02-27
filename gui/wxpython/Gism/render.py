@@ -188,6 +188,7 @@ class Map:
 			"color" : "RRR:GGG:BBB",
 			"width" : 3,
 			"render": True/False
+		mapFile   - rendered final image filename
 	"""
 
 	def __init__(self):
@@ -196,17 +197,17 @@ class Map:
 		determinated and
 		"""
 
-		self.WIND      = {}  # WIND settings
-		self.Region    = {}  # region settings
-		self.Width     = 300 # map width 
-		self.Height    = 400 # map height
+		self.wind      = {}  # WIND settings
+		self.region    = {}  # region settings
+		self.width     = 300 # map width 
+		self.height    = 400 # map height
 
-		self.Layers    = []  # stack of available layer
-		self.Env       = {}  # enviroment variables, like MAPSET, LOCATION_NAME, etc.
-		self.Verbosity = 0
-		self.MapFile   = utils.GetTempfile() + ".png"
+		self.layers    = []  # stack of available layer
+		self.env       = {}  # enviroment variables, like MAPSET, LOCATION_NAME, etc.
+		self.verbosity = 0
+		self.mapFile   = utils.GetTempfile() + ".png"
 
-		self.RenderRegion = {
+		self.renderRegion = {
 			"render" : True,     # should the region be displayed?
 			"color"	 :"255:0:0",
 			"width"	 : 3
@@ -217,14 +218,14 @@ class Map:
 		self.__initRegion()
 		os.environ["GRASS_TRANSPARENT"]     = "TRUE"
 		os.environ["GRASS_BACKGROUNDCOLOR"] = "ffffff"
-		os.environ["GRASS_HEIGHT"]          = str(self.Height)
-		os.environ["GRASS_WIDTH"]           = str(self.Width)
+		os.environ["GRASS_HEIGHT"]          = str(self.height)
+		os.environ["GRASS_WIDTH"]           = str(self.width)
 		os.environ["GRASS_MESSAGE_FORMAT"]  = "gui"
 		os.environ["GRASS_PNG_AUTO_WRITE"]  = "TRUE"
 		os.environ["GRASS_TRUECOLOR"]       = "TRUE"
 		os.environ["WIND_OVERRIDE"]         = "TRUE"
 		os.environ["GRASS_COMPRESSION"]     = "0"
-		os.environ["GRASS_VERBOSE"]         = str(self.Verbosity)
+		os.environ["GRASS_VERBOSE"]         = str(self.verbosity)
 
 	def __initRegion(self):
 		"""
@@ -234,16 +235,16 @@ class Map:
 		#
 		# setting region
 		#
-		self.Region = self.GetRegion()
+		self.region = self.GetRegion()
 
 		#
 		# setting WIND
 		#
 		# FIXME: duplicated region WIND == g.region (at least some values)
 		# FIXME: cannot open WIND file -> raise exception
-		windfile = os.path.join (self.Env['GISDBASE'],
-					 self.Env['LOCATION_NAME'],
-					 self.Env['MAPSET'],
+		windfile = os.path.join (self.env['GISDBASE'],
+					 self.env['LOCATION_NAME'],
+					 self.env['MAPSET'],
 					 "WIND")
 
 		windfile = open (windfile, "r")
@@ -253,7 +254,7 @@ class Map:
 			key, value = line.split(":")
 			key = key.strip()
 			value = value.strip()
-			self.WIND[key] = value
+			self.wind[key] = value
 
 		windfile.close()
 
@@ -262,8 +263,8 @@ class Map:
 		#
 		# setting resolution
 		#
-		# self.Region['ewres'] = self.Region['nsres'] = abs(float(self.Region['e']) 
-		# - float(self.Region['w']))/self.Width
+		# self.region['ewres'] = self.region['nsres'] = abs(float(self.region['e']) 
+		# - float(self.region['w']))/self.width
 
 	def __initMonSize(self):
 		"""
@@ -272,20 +273,20 @@ class Map:
 		"""
 		
 		try:
-			self.Width = int (os.getenv("GRASS_WIDTH"))
+			self.width = int (os.getenv("GRASS_WIDTH"))
 		except:
-			self.Width = 640
+			self.width = 640
 			
 		try:
-			self.Height = int(os.getenv("GRASS_HEIGHT"))
+			self.height = int(os.getenv("GRASS_HEIGHT"))
 
 		except:
-			self.Height = 480
+			self.height = 480
 			
 			
 	def __initEnv(self):
 		"""
-		Stores environment variables to self.Env variable
+		Stores environment variables to self.env variable
 		"""
 		
 		if not os.getenv("GISBASE"):
@@ -300,7 +301,7 @@ class Map:
 			key, val = line.split("=")
 			val = val.replace(";","")
 			val = val.replace("'","")
-			self.Env[key] = val
+			self.env[key] = val
 
 	def __adjustRegion(self):
 		"""
@@ -308,42 +309,42 @@ class Map:
                 """
 
 		# adjusting region to monitor size
-		if self.Width > self.Height and \
-			self.Region["w"] - self.Region["e"] > \
-			self.Region['n'] - self.Region['s']:
+		if self.width > self.height and \
+			self.region["w"] - self.region["e"] > \
+			self.region['n'] - self.region['s']:
 
 			# changing e-w region
-			self.Region["ewres"] = self.Region["nsres"] = \
-			    (self.Region['n'] - self.Region['s']) / self.Height
+			self.region["ewres"] = self.region["nsres"] = \
+			    (self.region['n'] - self.region['s']) / self.height
 
-			center = self.Region['w'] + \
-			    (self.Region['e'] - self.Region['w']) / 2
+			center = self.region['w'] + \
+			    (self.region['e'] - self.region['w']) / 2
 
-			self.Region['w'] = center - self.Width / 2 * \
-			    self.Region["nsres"]
+			self.region['w'] = center - self.width / 2 * \
+			    self.region["nsres"]
 
-			self.Region['e'] = center + self.Width / 2 * \
-			    self.Region["nsres"]
+			self.region['e'] = center + self.width / 2 * \
+			    self.region["nsres"]
 
-			self.Region['rows'] = self.Width
-			self.Region['cols'] = self.Height
+			self.region['rows'] = self.width
+			self.region['cols'] = self.height
 
 		else:
 			# changing n-s region
-			self.Region["ewres"] = self.Region["nsres"] = \
-			    (self.Region['e'] - self.Region['w']) / self.Width
+			self.region["ewres"] = self.region["nsres"] = \
+			    (self.region['e'] - self.region['w']) / self.width
 
-			center = self.Region['s'] + \
-			    (self.Region['n'] - self.Region['s']) / 2
+			center = self.region['s'] + \
+			    (self.region['n'] - self.region['s']) / 2
 
-			self.Region['s'] = center - self.Height / 2 * \
-			    self.Region["ewres"]
+			self.region['s'] = center - self.height / 2 * \
+			    self.region["ewres"]
 
-			self.Region['n'] = center + self.Height / 2 * \
-			    self.Region["ewres"]
+			self.region['n'] = center + self.height / 2 * \
+			    self.region["ewres"]
 
-			self.Region['rows'] = self.Width
-			self.Region['cols'] = self.Height
+			self.region['rows'] = self.width
+			self.region['cols'] = self.height
 
 
 	def GetRegion(self):
@@ -383,41 +384,41 @@ class Map:
 		self.__adjustRegion()
 
 		try:
-			for key in self.WIND.keys():
+			for key in self.wind.keys():
 				if key == 'north':
 					grass_region += "north: %s; " % \
-					    (self.Region['n'])
+					    (self.region['n'])
 					continue
 				elif key == "south":
 					grass_region += "south: %s; " % \
-					    (self.Region['s'])
+					    (self.region['s'])
 					continue
 				elif key == "east":
 					grass_region += "east: %s; " % \
-					    (self.Region['e'])
+					    (self.region['e'])
 					continue
 				elif key == "west":
 					grass_region += "west: %s; " % \
-					    (self.Region['w'])
+					    (self.region['w'])
 					continue
 				elif key == "e-w resol":
 					grass_region += "e-w resol: %f; " % \
-					    (self.Region['ewres'])
+					    (self.region['ewres'])
 					continue
 				elif key == "n-s resol":
 					grass_region += "n-s resol: %f; " % \
-					    (self.Region['nsres'])
+					    (self.region['nsres'])
 					continue
 				elif key == "cols":
 					grass_region += 'cols: %d; ' % \
-					    (self.Width)
+					    (self.width)
 					continue
 				elif key == "rows":
 					grass_region += 'rows: %d; ' % \
-					    (self.Height)
+					    (self.height)
 					continue
 				else:
-					grass_region += key + ": "  + self.WIND[key] + "; "
+					grass_region += key + ": "  + self.wind[key] + "; "
 
 			return grass_region
 
@@ -442,7 +443,7 @@ class Map:
 
 		# ["raster", "vector", "wms", ... ]
 
-		for layer in self.Layers:
+		for layer in self.layers:
 
 			# specified type only
 			if l_type != None and layer.l_type != l_type:
@@ -492,13 +493,13 @@ class Map:
 
 		tmp_region = os.getenv("GRASS_REGION")
 		os.environ["GRASS_REGION"] = self.SetRegion()
-		os.environ["GRASS_WIDTH"]  = str(self.Width)
-		os.environ["GRASS_HEIGHT"] = str(self.Height)
+		os.environ["GRASS_WIDTH"]  = str(self.width)
+		os.environ["GRASS_HEIGHT"] = str(self.height)
 
 		if DEBUG:
 			print ("mapimg.py: Map: Render: force=%s" % (force))
 		try:
-			for layer in self.Layers:
+			for layer in self.layers:
 
 				# render if there is no mapfile
 				if layer.l_mapfile == None:
@@ -524,9 +525,9 @@ class Map:
 			    " mask=" + maskstr + \
 			    " opacity=" + opacstr + \
 			    " background=255:255:255" + \
-			    " width=" + str(self.Width) + \
-			    " height=" + str(self.Height) + \
-			    " output=" + self.MapFile
+			    " width=" + str(self.width) + \
+			    " height=" + str(self.height) + \
+			    " output=" + self.mapFile
 
 			# run g.composite to get composite image
 			if os.system(compcmd):
@@ -538,7 +539,7 @@ class Map:
 			if tmp_region:
 				os.environ["GRASS_REGION"] = tmp_region
 
-			return self.MapFile
+			return self.mapFile
 		except Exception, e:
 			os.unsetenv("GRASS_REGION")
 
@@ -570,7 +571,7 @@ class Map:
 		"""
 
 		if not mapset:
-			mapset = self.Env["MAPSET"]
+			mapset = self.env["MAPSET"]
 
                 layer = Layer()
 
@@ -592,14 +593,14 @@ class Map:
 		layer.l_maskfile = gtemp + ".pgm"
 		layer.l_mapfile = gtemp + ".ppm"
 
-		self.Layers.append(layer)
+		self.layers.append(layer)
 
 		if l_render:
 			if not layer.Render():
 				sys.stderr.write("Could not render layer <%s@%s>\n" % \
 							 (name,mapset))
 				
-		return self.Layers[-1]
+		return self.layers[-1]
 
 	def AddGraphLayer(self, name, graph=None, color="255:0:0",
 		coordsinmapunits=False,
@@ -640,14 +641,14 @@ class Map:
             layer.l_maskfile       = gtemp + ".pgm"
             layer.l_mapfile        = gtemp + ".ppm"
 
-            self.Layers.append(layer)
+            self.layers.append(layer)
 
             if l_render:
                     if not layer.Render():
                             sys.stderr.write ("Could not render layer <%s>\n" % \
 						      (name))
 
-            return self.Layers[-1]
+            return self.layers[-1]
 
 	def AddVectorLayer(self, name, mapset=None,
 		type = "point,line,boundary,centroid,area,face",
@@ -706,7 +707,7 @@ class Map:
             maplayer = Layer()
 
             if not mapset:
-                    mapset = self.Env["MAPSET"]
+                    mapset = self.env["MAPSET"]
 
             if l_opacity > 1:
                     l_opacity = float(l_opacity) / 100
@@ -749,14 +750,14 @@ class Map:
             maplayer.l_maskfile = gtemp+".pgm"
             maplayer.l_mapfile  = gtemp+".ppm"
 
-            self.Layers.append(maplayer)
+            self.layers.append(maplayer)
 
             if l_render:
                     if not maplayer.Render():
                             sys.stderr.write("Could not render layer <%s@%s>\n" % \
 						     (name,mapset))
 			    
-	    return self.Layers[-1]
+	    return self.layers[-1]
 
 	def PopLayer(self, name=None, mapset=None, id=None):
 		"""
@@ -773,21 +774,21 @@ class Map:
 
 		# get mapset name
 		if not mapset:
-			mapset = self.Env['MAPSET']
+			mapset = self.env['MAPSET']
 
 		# del by name
 		if name:
 			retlayer = None
-			for layer in self.Layers:
+			for layer in self.layers:
 				if layer.name == name and layer.mapset == mapset:
 					retlayer = layer
                                         os.remove(layer.l_mapfile)
                                         os.remove(layer.l_maskfile)
-					self.Layers.remove(layer)
+					self.layers.remove(layer)
 					return layer
 		# del by id
 		elif id != None:
-			return self.Layers.pop(id)
+			return self.layers.pop(id)
 
 		return None
 
@@ -804,11 +805,11 @@ class Map:
 		"""
 
 		if not mapset:
-			mapset = self.Env['MAPSET']
+			mapset = self.env['MAPSET']
 
-		for i in range(0, len(self.Layers)):
-			if self.Layers[i].name == name and \
-				    self.Layers[i].mapset == mapset:
+		for i in range(0, len(self.layers)):
+			if self.layers[i].name == name and \
+				    self.layers[i].mapset == mapset:
 				return i
 
 		return None
@@ -822,10 +823,10 @@ class Map:
             """
 
             try:
-                for layer in self.Layers:
+                for layer in self.layers:
                     os.remove(layer.l_mapfile)
                     os.remove(layer.l_maskfile)
-                    self.Layers.remove(layer)
+                    self.layers.remove(layer)
                 return
             except:
                 return 1
@@ -841,8 +842,8 @@ if __name__ == "__main__":
 	os.system("g.region -d")
 
 	map = Map()
-	map.Width = 300
-	map.Height = 400
+	map.width = 300
+	map.height = 400
 
 	map.AddRasterLayer("elevation.dem", mapset="PERMANENT")
 	map.AddVectorLayer("roads", color="red", width=3, mapset="PERMANENT",
@@ -856,13 +857,13 @@ if __name__ == "__main__":
 	#os.system("display %s" % image)
 
 	#print "Rendering only vector layer, and region, on shifted region"
-	#map.Region["n"] ="4937550"
-	#map.Region["s"] ="4904160"
-	#map.Region["w"] ="577290"
+	#map.region["n"] ="4937550"
+	#map.region["s"] ="4904160"
+	#map.region["w"] ="577290"
 	#map.Region["e"] ="621690"
 	#map.PopLayer("elevation.dem", mapset="PERMANENT")
 	#layer = map.GetLayerIndex("roads", mapset="PERMANENT")
-	#map.Layers[layer].color = "green"
-	##map.RenderRegion["render"] = True
+	#map.layers[layer].color = "green"
+	##map.renderRegion["render"] = True
 	#image = map.Render(force=True)
 	#os.system("display %s" % image)
