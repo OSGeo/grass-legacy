@@ -759,7 +759,7 @@ class Map:
 			    
 	    return self.layers[-1]
 
-	def PopLayer(self, name=None, mapset=None, id=None):
+	def RemoveLayer(self, name=None, mapset=None, id=None):
 		"""
 		Removes layer from list of layers, defined by name@mapset or id
 
@@ -861,7 +861,7 @@ if __name__ == "__main__":
 	#map.region["s"] ="4904160"
 	#map.region["w"] ="577290"
 	#map.Region["e"] ="621690"
-	#map.PopLayer("elevation.dem", mapset="PERMANENT")
+	#map.RemoveLayer("elevation.dem", mapset="PERMANENT")
 	#layer = map.GetLayerIndex("roads", mapset="PERMANENT")
 	#map.layers[layer].color = "green"
 	##map.renderRegion["render"] = True
