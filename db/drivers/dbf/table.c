@@ -308,28 +308,12 @@ save_table ( int t)
     DBFClose ( dbf );
 
     /* Copy */
-    /*
-    sprintf (cmd, "mv %s %s", name, db.tables[t].file );
-    if ( system (cmd) != 0 ) {
-	return DB_FAILED;
-    }
-    unlink ( name );
-    */
-#ifdef __MINGW32__
-    if ( CopyFile ( name, db.tables[t].file, FALSE ) == 0 ) {
-#else
-    if ( link ( name, db.tables[t].file ) < 0 ) {
-#endif
-        sprintf ( cmd, "mv %s %s", name, db.tables[t].file );
-        if ( system(cmd) ) {
+    if ( rename ( name, db.tables[t].file ) ) {
 	    append_error( "Cannot move %s\nto %s\n", 
                           name, db.tables[t].file );
             return DB_FAILED;
-        }
-    } else {
-	remove ( name );
-    }
-    
+    };
+
     return DB_OK;
 }
 
