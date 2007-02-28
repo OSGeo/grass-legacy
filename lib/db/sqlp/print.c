@@ -106,19 +106,22 @@ int sqpPrintStmt(SQLPSTMT *st)
               {
 	        case (SQLP_VARCHAR):
                     fprintf( stderr, "type:varchar width:%d", sqlpStmt->ColWidth[i] );
-	            break;			
+	            break;
 	        case (SQLP_INTEGER):
                     fprintf( stderr, "type:integer" );
-	            break;			
+	            break;
 	        case (SQLP_DOUBLE):
                     fprintf( stderr, "type:double" );
-	            break;			
+	            break;
 	        case (SQLP_DATE):
                     fprintf( stderr, "type:date" );
-	            break;			
+	            break;
+		case (SQLP_TIME):
+		    fprintf( stderr, "type:time" );
+		    break;
 	        default:
                     fprintf( stderr, "type:unknown" );
-	            break;			
+	            break;
 	      }
             fprintf( stderr, " name:%s\n", sqlpStmt->Col[i].s);
 	  }
