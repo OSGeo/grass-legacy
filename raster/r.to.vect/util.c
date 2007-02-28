@@ -10,8 +10,8 @@
 #include <grass/gis.h>
 #include <grass/dbmi.h>
 #include <grass/Vect.h>
+#include <grass/glocale.h>
 #include "global.h"
-
 
 /* function prototypes */
 static int blank_line(void *buf);
@@ -128,4 +128,39 @@ static int blank_line(void *buf)
 	G_set_null_value(buf, row_length + 2,data_type);
 	
 	return 0;
+}
+
+/* insert values into the table (cat, val | dval) */
+void insert_value (int cat, int val, double dval)
+{
+    char buf[1000];
+    
+    sprintf ( buf, "insert into %s values (%d", Fi->table, cat);
+    db_set_string ( &sql, buf );
+    
+    if ( data_type == CELL_TYPE )
+	sprintf ( buf, ", %d", val );
+    else
+	sprintf ( buf, ", %f", dval );
+    
+    db_append_string ( &sql, buf );
+    
+    if ( has_cats ) {
+	char *lab;
+	
+	lab = G_get_cat(val, &RastCats); /*cats are loaded only for CELL type */
+	
+	db_set_string (&label, lab);
+	db_double_quote_string ( &label );
+	sprintf ( buf, ", '%s'", db_get_string(&label) );
+	db_append_string ( &sql, buf );
+    }
+    
+    db_append_string ( &sql, ")" );
+    
+    G_debug ( 3, db_get_string ( &sql ) );
+    
+    if (db_execute_immediate (driver, &sql) != DB_OK )
+	G_fatal_error (_("Cannot insert new row: %s"), db_get_string(&sql));
+    
 }

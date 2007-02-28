@@ -100,8 +100,8 @@ static int write_bnd(struct COOR *line_begin, struct COOR *line_end,	/* start an
 
 	/* this should NEVER happen */
 	if ((p = move(p)) == NULPTR)
-	    G_fatal_error(_("write_line:  line terminated unexpectedly\n"
-	            "previous (%d) point %p (%d,%d,%d) %p %p"),
+	    G_fatal_error(_("Line terminated unexpectedly\n"
+			    "previous (%d) point %p (%d,%d,%d) %p %p"),
 		    direction, last, last->row, last->col, last->node,
 		    last->fptr, last->bptr);
 

@@ -208,7 +208,7 @@ static int update_list(int count)
   switch(count)
   {
     case 0:
-      G_message(_("update_list:  isolated cell (%d,%d)"), row, col);
+      G_debug (1, "Isolated cell (%d,%d)", row, col);
       break;
     case 1:				/* begin or end line */
       if (ml)
@@ -282,7 +282,7 @@ static int update_list(int count)
           if (ml)			/* join new to where came from */
           {
 	    if(h_ptr==NULL)
-                G_warning(_("h_ptr is NULL!"));
+                G_debug (1, "h_ptr is NULL!");
 
 	   /* this should never happen by the logic of algorithm */
             extend_line(h_ptr,new_ptr1);
@@ -291,7 +291,7 @@ static int update_list(int count)
           else if (tl)
           {
 	    if(v_list[col].left==NULL) 
-               G_warning(_("v_list[col].left is NULL!"));
+               G_debug (1, "v_list[col].left is NULL!");
 
 	   /* this should never happen by the logic of algorithm */
             extend_line(v_list[col].left,new_ptr1);
@@ -300,7 +300,7 @@ static int update_list(int count)
           else if (tc)
           {
 	    if(v_list[col].center==NULL) 
-               G_warning(_("v_list[col].center is NULL!"));
+               G_debug (1, "v_list[col].center is NULL!");
 
 	   /* this should never happen by the logic of algorithm */
             extend_line(v_list[col].center,new_ptr1);
@@ -309,7 +309,7 @@ static int update_list(int count)
           else/* tr */
           {
 	    if(v_list[col].right==NULL) 
-               G_warning(_("v_list[col].right is NULL!"));
+               G_debug (1, "v_list[col].right is NULL!");
 
 	   /* this should never happen by the logic of algorithm */
             extend_line(v_list[col].right,new_ptr1);
@@ -443,7 +443,7 @@ static int update_list(int count)
       break;
     case 6:
 	/* the same as case 5 */
-        G_message(_("Crowded cell %xH (%d,%d) -continuing"), count, row, col);
+        G_debug (1, "Crowded cell %xH (%d,%d), continuing", count, row, col);
 
         if (ml)                         /* end horz. and vert lines */
           h_ptr = end_line(h_ptr,1);
@@ -469,7 +469,7 @@ static int update_list(int count)
           v_list[col - 1].right = start_line(1);
       break;
     default:
-      G_message(_("Crowded cell %xH (%d,%d)"), count, row, col);
+      G_debug (1, "Crowded cell %xH (%d,%d)", count, row, col);
       G_fatal_error(_("Raster map is not thinned properly.\nPlease run r.thin."));
   }					/* switch count */
 
@@ -481,6 +481,21 @@ static struct COOR *end_line(struct COOR *ptr,int node)
   ptr->row = row;
   ptr->col = col - 1;
   ptr->node = node;
+
+  switch (data_type) {
+  case CELL_TYPE:
+      ptr -> val = ((CELL*) middle)[col];
+      break;
+  case FCELL_TYPE:
+      ptr -> dval = ((FCELL*) middle)[col];
+      break;
+  case DCELL_TYPE:
+      ptr -> dval = ((DCELL*) middle)[col];
+      break;
+  default:
+      break;
+  }
+
   ptr->fptr = ptr;
   write_line(ptr);
 
@@ -505,6 +520,20 @@ static int join_lines (struct COOR *p, struct COOR *q)
 {
   p->row = row;
   p->col = col - 1;
+
+  switch (data_type) {
+  case CELL_TYPE:
+      p -> val = ((CELL*) middle)[col];
+      break;
+  case FCELL_TYPE:
+      p -> dval = ((FCELL*) middle)[col];
+      break;
+  case DCELL_TYPE:
+      p -> dval = ((DCELL*) middle)[col];
+      break;
+  default:
+      break;
+  }
 
   if (p->fptr != NULL)
   {
@@ -541,6 +570,21 @@ static int extend_line (struct COOR *p, struct COOR *q)
 
   p->row = row;
   p->col = col - 1;
+
+  switch (data_type) {
+  case CELL_TYPE:
+      p -> val = ((CELL*) middle)[col];
+      break;
+  case FCELL_TYPE:
+      p -> dval = ((FCELL*) middle)[col];
+      break;
+  case DCELL_TYPE:
+      p -> dval = ((DCELL*) middle)[col];
+      break;
+  default:
+      break;
+  }
+
   if (p->fptr != NULL)
   {
     G_warning(_("extend_lines: p front pointer not NULL!"));
@@ -565,9 +609,24 @@ static int stop_line (struct COOR *p, struct COOR *q)
 {
   p->row = row;
   p->col = col - 1;
+
+  switch (data_type) {
+  case CELL_TYPE:
+      ptr -> val = ((CELL*) middle)[col];
+      break;
+  case FCELL_TYPE:
+      ptr -> dval = ((FCELL*) middle)[col];
+      break;
+  case DCELL_TYPE:
+      ptr -> dval = ((DCELL*) middle)[col];
+      break;
+  default:
+      break;
+  }
+
   if (p->fptr != NULL)
   {
-    G_warning(_("stop_line: p front pointer not NULL!"));
+    G_debug (1, "stop_line: p front pointer not NULL!");
     /* should never happen by the logic of algorithm */
     /* exit(EXIT_FAILURE);*/
   }
@@ -575,7 +634,7 @@ static int stop_line (struct COOR *p, struct COOR *q)
   p->fptr = q;
   if (q->bptr != NULL)
   {
-    G_warning(_("stop_line: q back pointer not NULL!"));
+    G_debug (1, "stop_line: q back pointer not NULL!");
     /* should never happen by the logic of algorithm */
     /* exit(EXIT_FAILURE);*/
   }
@@ -594,6 +653,21 @@ static struct COOR *get_ptr (void)
   p->row = row;
   p->col = col - 1;
   p->node = 0;
+
+  switch (data_type) {
+  case CELL_TYPE:
+      p -> val = ((CELL*) middle)[col];
+      break;
+  case FCELL_TYPE:
+      p -> dval = ((FCELL*) middle)[col];
+      break;
+  case DCELL_TYPE:
+      p -> dval = ((DCELL*) middle)[col];
+      break;
+  default:
+      break;
+  }
+
   p->bptr = p->fptr = NULL;
 
   return(p);
