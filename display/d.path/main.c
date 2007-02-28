@@ -31,7 +31,7 @@ int main(int argc, char **argv)
 {
     struct Option *map, *afield_opt, *nfield_opt, *afcol, *abcol, *ncol, *type_opt;
     struct Option *color_opt, *hcolor_opt, *bgcolor_opt;
-    struct Flag   *geo_f;
+    struct Flag   *geo_f, *bold_f;
     struct GModule *module;
     char   *mapset;
     struct Map_info Map;
@@ -89,28 +89,38 @@ int main(int argc, char **argv)
     color_opt->answer     = DEFAULT_FG_COLOR ;
     color_opt->description= _("Original line color");
     color_opt->gisprompt  = GISPROMPT_COLOR ;
-	
+    color_opt->guisection = _("Rendering");
+
     hcolor_opt = G_define_option() ;
     hcolor_opt->key        = "hcolor" ;
     hcolor_opt->type       = TYPE_STRING ;
     hcolor_opt->answer     = "red" ;
     hcolor_opt->description= _("Highlight color");
     hcolor_opt->gisprompt  = GISPROMPT_COLOR ;
-    
+    hcolor_opt->guisection = _("Rendering");
+
     bgcolor_opt = G_define_option() ;
     bgcolor_opt->key        = "bgcolor" ;
     bgcolor_opt->type       = TYPE_STRING ;
     bgcolor_opt->answer     = DEFAULT_BG_COLOR ;
     bgcolor_opt->description= _("Background color");
     bgcolor_opt->gisprompt  = GISPROMPT_COLOR ;
+    bgcolor_opt->guisection = _("Rendering");
 
     geo_f = G_define_flag ();
     geo_f->key             = 'g';
     geo_f->description     =
 	_("Use geodesic calculation for longitude-latitude locations");
-    
+
+    bold_f = G_define_flag ();
+    bold_f->key             = 'b';
+    bold_f->description     = _("Render bold lines");
+    bold_f->guisection      = _("Rendering");
+
+
     if(G_parser(argc,argv))
         exit(EXIT_FAILURE);
+
 
     type = Vect_option_to_types ( type_opt ); 
     afield = atoi (afield_opt->answer);
@@ -165,7 +175,7 @@ int main(int argc, char **argv)
     Vect_net_build_graph ( &Map, type , afield, nfield, afcol->answer,
 			   abcol->answer, ncol->answer, geo, 0 );
 
-    path ( &Map, &color, &hcolor, &bgcolor ); 
+    path ( &Map, &color, &hcolor, &bgcolor, bold_f->answer );
 
 
     R_close_driver();
@@ -174,6 +184,3 @@ int main(int argc, char **argv)
 
     exit(EXIT_SUCCESS);
 }
-
-
-

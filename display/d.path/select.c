@@ -12,10 +12,12 @@
 
 #define WDTH 5
 
-int display ( struct Map_info *Map, struct line_pnts *, const struct color_rgb *, int, int );
+int display ( struct Map_info *Map, struct line_pnts *,
+	      const struct color_rgb *, int, int, int );
 
 int path ( struct Map_info *Map, const struct color_rgb *color,
-	   const struct color_rgb *hcolor, const struct color_rgb *bgcolor )
+	   const struct color_rgb *hcolor, const struct color_rgb *bgcolor,
+	   int be_bold )
 {
     int button, ret;
     int screen_x, screen_y ;
@@ -29,24 +31,27 @@ int path ( struct Map_info *Map, const struct color_rgb *color,
 
     msize = 10 * ( D_d_to_u_col(2.0) - D_d_to_u_col(1.0) ); /* do it better */ 
     G_debug (1, "msize = %f\n", msize);
-    
-    fprintf (stderr, _("L: from  M: to R: quit\n"));
-    
+
+    G_message(_("\nMouse Buttons:"));
+    fprintf(stderr, _("Left:   Select From\n"));
+    fprintf(stderr, _("Middle: Select To\n"));
+    fprintf(stderr, _("Right:  Quit\n\n"));
+
     while ( 1 ) {
 	R_get_location_with_pointer(&screen_x, &screen_y, &button) ;
-	
+
         x = D_d_to_u_col ((double)(screen_x));
         y = D_d_to_u_row ((double)(screen_y));
     	/* fprintf (stderr, "%f %f\n", x, y); */
-	    
+
         x1 = D_d_to_u_col ((double)(screen_x-WDTH));
         y1 = D_d_to_u_row ((double)(screen_y-WDTH));
         x2 = D_d_to_u_col ((double)(screen_x+WDTH));
         y2 = D_d_to_u_row ((double)(screen_y+WDTH));
-			 
+
         x1 = fabs ( x2 - x1 );
         y1 = fabs ( y2 - y1 );
-			     
+
         if ( x1 > y1 ) maxdist = x1;
         else maxdist = y1;
         G_debug (1, "Maximum distance in map units = %f\n", maxdist);
@@ -61,7 +66,7 @@ int path ( struct Map_info *Map, const struct color_rgb *color,
 	if ( sp_disp ) { /* erase old */
 	    /* delete old highlight */
 	    
-            display ( Map, Points, color, from_node, to_node );
+            display ( Map, Points, color, from_node, to_node, be_bold );
 		
 	    R_RGB_color(bgcolor->r, bgcolor->g, bgcolor->b);
 	    if ( !from_node ) 
@@ -135,10 +140,11 @@ int path ( struct Map_info *Map, const struct color_rgb *color,
 		sp_disp = 0;
 	    } else { 
 		fprintf (stdout, _("Costs on the network = %f\n"), cost);
-		fprintf (stdout, _("  Distance to the network = %f, distance from the network = %f\n"),  
-			          fdist, tdist);
-		
-	        display ( Map, Points, hcolor, 1, 1 );
+		fprintf (stdout, _("  Distance to the network = %f, "
+				   "distance from the network = %f\n\n"),
+			 fdist, tdist);
+
+	        display ( Map, Points, hcolor, 1, 1, be_bold );
 		sp_disp = 1;
 	    }
 	    
@@ -149,8 +155,8 @@ int path ( struct Map_info *Map, const struct color_rgb *color,
     return 1;
 }
 
-int 
-display ( struct Map_info *Map, struct line_pnts *Points, const struct color_rgb *color, int first, int last )
+int display ( struct Map_info *Map, struct line_pnts *Points,
+	      const struct color_rgb *color, int first, int last, int be_bold )
 {
     int i, from, to;
 
@@ -158,10 +164,13 @@ display ( struct Map_info *Map, struct line_pnts *Points, const struct color_rgb
 
     if ( first ) from = 0; else from = 1;
     if ( last ) to = Points->n_points; else to = Points->n_points - 1;
-    
+
+    if(be_bold) R_line_width(2);
+
     for( i = from; i < to - 1; i++ ) 
 	G_plot_line(Points->x[i], Points->y[i], Points->x[i+1], Points->y[i+1]);
-	
+
+    if(be_bold) R_line_width(0);
+
     return 0;
 }
-
