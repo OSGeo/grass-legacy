@@ -79,6 +79,7 @@
 %token DOUBLE
 %token PRECISION
 %token DATE
+%token TIME
 %token ORDER BY
 %token IS
 %token ASC
@@ -151,6 +152,7 @@ y_columndef:
 	|	NAME DOUBLE			{ sqpColumnDef( $1, SQLP_DOUBLE,   0, 0 ); }
 	|	NAME DOUBLE PRECISION		{ sqpColumnDef( $1, SQLP_DOUBLE,   0, 0 ); }
 	|	NAME DATE			{ sqpColumnDef( $1, SQLP_DATE,     0, 0 ); }
+	|	NAME TIME			{ sqpColumnDef( $1, SQLP_TIME,     0, 0 ); }
 	;
 
 y_columns:
