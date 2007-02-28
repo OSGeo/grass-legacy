@@ -731,7 +731,7 @@ static int update_width (struct area_table *ptr, int kase)
 		  get_raster_value(buffer[bottom], j) == br; j++, w++);
 
   if(a == 0)
-    G_message(_("Area 0, %d \t%d \t%d \t%d \t%d"), kase, row, col, ptr->width, w);
+    G_debug (1, "Area 0, %d \t%d \t%d \t%d \t%d", kase, row, col, ptr->width, w);
 
   if (a < n_equiv)
   {

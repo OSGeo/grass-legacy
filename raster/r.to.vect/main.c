@@ -1,3 +1,20 @@
+/****************************************************************************
+ *
+ * MODULE:       r.to.vect
+ *
+ * AUTHOR(S):    Bill Brown, Mike Baba, Jean Ezell and Andrew Heekin,
+ *               David Satnik, Andrea Aime, Radim Blazek
+ *
+ * PURPOSE:      Converts a raster map into a vector map layer
+ *
+ * COPYRIGHT:    (C) 2007 by the GRASS Development Team
+ *
+ *               This program is free software under the GNU General Public
+ *               License (>=v2). Read the file COPYING that comes with GRASS
+ *               for details.
+ *
+ *****************************************************************************/
+
 #define MAIN
 
 #include <stdio.h> 
@@ -8,12 +25,13 @@
 #include <grass/glocale.h>
 #include "global.h"
 
-
 /* 
 * Attributes for lines are ignored. For points and area by default unique new
 * category is assigned to each and raster value is written to 'value' column.
 * Labels are written to 'label' column if exists. If value flag (-v) is used
 * and type is CELL, raster values are used as categories. 
+*
+* 2007/2: attributes for lines supported
 */
 
 int main (int argc, char *argv[])
@@ -121,8 +139,9 @@ int main (int argc, char *argv[])
     db_init_string (&label);
 
     /* Create table */
-    if ( (feature & (GV_AREA | GV_POINT)) && (!value_flag || (value_flag && has_cats)) 
-	 && !(z_flg->answer) ) 
+    if ( (feature & (GV_AREA | GV_POINT | GV_LINE)) && 
+	 (!value_flag || (value_flag && has_cats)) &&
+	 !(z_flg->answer) ) 
     {
 	char buf[1000];
 

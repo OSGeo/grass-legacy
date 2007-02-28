@@ -64,6 +64,8 @@ struct COOR
 {
   struct COOR *bptr, *fptr;		/* pointers to neighboring points */
   int row, col, node;			/* row, column of point; node flag */
+  int val;                              /* CELL value */
+  double dval;                          /* FCELL/DCELL value */
   double right, left;			/* areas to right and left of line */
 
 };
@@ -126,3 +128,4 @@ struct COOR *move(struct COOR *);
 struct COOR *find_end(struct COOR *, int, int *, int *);
 int at_end(struct COOR *);
 int read_row (void *);
+void insert_value (int, int, double);

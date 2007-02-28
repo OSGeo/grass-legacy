@@ -85,35 +85,7 @@ int extract_points(int z_flag)
 	    Vect_write_line(&Map, GV_POINT, points, Cats);
 
 	    if ((driver != NULL) && !value_flag ) {
-		char buf[1000];
-
-		sprintf ( buf, "insert into %s values (%d", Fi->table, cat);
-		db_set_string ( &sql, buf );
-
-		if ( data_type == CELL_TYPE )
-		    sprintf ( buf, ", %d", val );
-		else
-		    sprintf ( buf, ", %f", dval );
-		
-		db_append_string ( &sql, buf );
-
-		if ( has_cats ) {
-                    char *lab;
-
-		    lab = G_get_cat(val, &RastCats); /*cats are loaded only for CELL type */
-
-		    db_set_string (&label, lab);
-		    db_double_quote_string ( &label );
-		    sprintf ( buf, ", '%s'", db_get_string(&label) );
-		    db_append_string ( &sql, buf );
-		}
-		
-		db_append_string ( &sql, ")" );
-
-		G_debug ( 3, db_get_string ( &sql ) );
-
-		if (db_execute_immediate (driver, &sql) != DB_OK )
-		    G_fatal_error (_("Cannot insert new row: %s"), db_get_string(&sql));
+	      insert_value (cat, val, dval);
 	    }
 	    
 	    count++;

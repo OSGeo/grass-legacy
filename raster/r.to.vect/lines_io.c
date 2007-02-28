@@ -100,19 +100,27 @@ static int write_ln(struct COOR *begin, struct COOR *end,	/* start and end point
     struct line_pnts *points = Vect_new_line_struct();
     double x, y;
     struct COOR *p, *last;
-    int i;
-
+    int i, cat, field;
+    static int count = 1;
+	
+    field = 1;
     ++n;
 
+    Vect_reset_cats (Cats);
+    
     p = begin;
     y = cell_head.north - ((double) p->row + 0.5) * cell_head.ns_res;
     x = cell_head.west + ((double) p->col + 0.5) * cell_head.ew_res;
 
+    /* value_flag is used only for CELL type */ 
+    cat = (value_flag) ? p -> val : count; 
+
+    Vect_cat_set (Cats, field, cat);
     Vect_append_point(points, x, y, 0.0);
 
     for (i = 1; i < n; i++) {
 	last = p;
-
+	
 	/* this should NEVER happen */
 	if ((p = move(p)) == NULL)
 	    G_fatal_error(_("write_line: line terminated unexpectedly\n"
@@ -122,9 +130,31 @@ static int write_ln(struct COOR *begin, struct COOR *end,	/* start and end point
 
 	y = cell_head.north - ((double) p->row + 0.5) * cell_head.ns_res;
 	x = cell_head.west + ((double) p->col + 0.5) * cell_head.ew_res;
+	
+	if (p -> val != cat && value_flag) {
+	    Vect_append_point(points, x, y, 0.0);
 
+	    if ((driver != NULL) && !value_flag ) {
+		insert_value (cat, p -> val, p -> dval);
+	    }
+	    
+	    Vect_write_line(&Map, GV_LINE, points, Cats);
+	    Vect_reset_line (points);
+	    Vect_reset_cats (Cats);
+	    cat = (value_flag) ? p -> val : (++count); 
+	    Vect_cat_set (Cats, field, cat);
+	}
+	
 	Vect_append_point(points, x, y, 0.0);
     }
+
+    if ((driver != NULL) && !value_flag ) {
+	insert_value (cat, p -> val, p -> dval);
+    }
+
+    Vect_write_line(&Map, GV_LINE, points, Cats);
+
+    count++;
 
     /* now free all the pointers */
     p = begin;
@@ -155,8 +185,6 @@ static int write_ln(struct COOR *begin, struct COOR *end,	/* start and end point
 
     if (p != NULL)
 	G_free(p);
-
-    Vect_write_line(&Map, GV_LINE, points, Cats);
 
     return 0;
 }
