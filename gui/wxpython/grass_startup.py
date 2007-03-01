@@ -317,6 +317,7 @@ class GRASSStartup(wx.Frame):
         self.bmapset = wx.Button(self, -1, "Create new mapset", size=buttonsize)
         self.bgeoreferenced = wx.Button(self, -1, "Georeferenced file", size=buttonsize)
         self.bepsg = wx.Button(self, -1, "EPSG codes", size=buttonsize)
+        self.bwizard = wx.Button(self, -1, "Run Wizard", size=buttonsize)
 
         # textinputs
         self.tgisdbase = wx.TextCtrl(self, -1, "", size=(300, 20),
@@ -346,6 +347,7 @@ class GRASSStartup(wx.Frame):
         wx.EVT_BUTTON(self, self.bmapset.GetId(), self.OnCreateMapset)
         wx.EVT_BUTTON(self, self.bgeoreferenced.GetId(), self.OnGeoreferenced)
         wx.EVT_BUTTON(self, self.bepsg.GetId(), self.OnEpsg)
+        wx.EVT_BUTTON(self, self.bwizard.GetId(), self.OnWizard)
         self.lblocations.Bind(wx.EVT_LISTBOX, self.OnSelectLocation)
         self.lbmapsets.Bind(wx.EVT_LISTBOX, self.OnSelectMapset)
         wx.EVT_KEY_DOWN(self.tgisdbase, self.OnKeyPressedInDbase)
@@ -400,6 +402,7 @@ class GRASSStartup(wx.Frame):
         mapset_sizer.Add(self.ldefine, 0, label_style, 1)
         mapset_sizer.Add(self.bgeoreferenced, 0, label_style, 1)
         mapset_sizer.Add(self.bepsg, 0, label_style, 1)
+        mapset_sizer.Add(self.bwizard, 0, label_style, 1)
 
         grid_sizer.Add(self.llocation, 0,label_style , 1)
         grid_sizer.Add(self.lmapset, 0,label_style , 1)
@@ -427,6 +430,11 @@ class GRASSStartup(wx.Frame):
         self.Layout()
         # end wxGlade
 
+    def OnWizard(self,event):
+        import grass_wizard
+        gWizard = grass_wizard.GWizard(self,  "Define new Location")
+
+ 
     def UpdateLocations(self,dbase):
 
         self.listOfLocations = []
