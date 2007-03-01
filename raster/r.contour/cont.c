@@ -39,7 +39,7 @@ struct cell{
 static int getnewcell(struct cell *, int ,int , DCELL **);
 static void newedge (struct cell *);
 static int findcrossing (struct cell *, double,
-	struct Cell_head , struct line_pnts *);
+	struct Cell_head , struct line_pnts *, int *);
 static void getpoint (struct cell *curr, double,
         struct Cell_head , struct line_pnts *);
 
@@ -64,17 +64,21 @@ void contour (
     struct cell current;
     int p1, p2;	   	     /* indexes to end points of cell edges */
 
+    int ncrossing;           /* number of found crossing */
+
     Points = Vect_new_line_struct();
     Cats = Vect_new_cats_struct();
 
     nrow = Cell.rows;
     ncol = Cell.cols;
-
+    
     hit = (char **) G_malloc ( (nrow-1) * sizeof (char *));
     for (i = 0; i < nrow-1; i++)
 	hit[i] = (char *) G_malloc ((ncol-1) * sizeof (char));
     
-    G_message(_("Total levels: %4d   Current level:     "), nlevels);
+    ncrossing = 0;
+
+    G_message(_("Total levels: %4d"), nlevels);
     
     for (n = 0; n < nlevels; n++)
     {
@@ -117,7 +121,7 @@ void contour (
 			while ( ! outside )
 			{
 			    hit [current.r][current.c] +=
-				findcrossing(&current, level, Cell, Points);
+				findcrossing(&current, level, Cell, Points, &ncrossing);
 			    newedge (&current);
 			    outside = getnewcell(&current, nrow, ncol, z);
 			}
@@ -158,7 +162,7 @@ void contour (
 			while ( ! outside )
 			{
 			    hit[current.r][current.c] +=
-				findcrossing(&current, level, Cell, Points);
+				findcrossing(&current, level, Cell, Points, &ncrossing);
 			    newedge (&current);
 			    outside = getnewcell(&current, nrow, ncol, z);
 			}
@@ -185,20 +189,21 @@ void contour (
 		    current.c = startcol;
 		    current.edge = 0;
 		    outside = getnewcell(&current, nrow, ncol, z);
-		    if ( checkedge ( current.z[0], current.z[1], level))
+		    if ( !outside && checkedge ( current.z[0], current.z[1], level))
 		    {
 			getpoint (&current, level, Cell, Points);
 			hit[current.r][current.c] +=
-			    findcrossing(&current, level, Cell, Points);
+			    findcrossing(&current, level, Cell, Points, &ncrossing);
 			newedge (&current); 
 			outside = getnewcell(&current,nrow, ncol, z);
 
 			/* while not back to starting point, follow line */
-			while ( (current.edge != 0) || 
-			  ((current.r != startrow) || (current.c != startcol)))
+			while ( !outside &&
+			       ((current.edge != 0) || 
+				((current.r != startrow) || (current.c != startcol))))
 			{
 			    hit[current.r][current.c] += 
-				findcrossing(&current, level, Cell, Points);
+				findcrossing(&current, level, Cell, Points, &ncrossing);
 			    newedge (&current);
 			    outside = getnewcell(&current,nrow, ncol, z);
 			}
@@ -213,7 +218,12 @@ void contour (
 	    } /* for rows */
 	} /* for columns */
     } /* for levels */
-    fprintf (stderr, "       \n");
+
+    if (ncrossing > 0)
+    {
+	G_warning (_("%d crossings founds"), ncrossing);
+    }
+
     Vect_destroy_line_struct(Points);
     Vect_destroy_cats_struct(Cats);
 }
@@ -265,7 +275,7 @@ static void newedge (struct cell *current)
 			current->edge = 1;
 			break;
 		default:
-			G_fatal_error ("illegal edge number");
+			G_fatal_error (_("Illegal edge number"));
 	}
 }
 
@@ -276,7 +286,7 @@ static void newedge (struct cell *current)
   0 otherwise.
 ****************************************************************************/
 static int findcrossing (struct cell *current, double level,
-	struct Cell_head Cell, struct line_pnts *Points)
+			 struct Cell_head Cell, struct line_pnts *Points, int *ncrossing)
 {
 	int i, j;
 	int numcross; /* number of crossings found in this Cell */
@@ -323,9 +333,13 @@ static int findcrossing (struct cell *current, double level,
 	}
 	else 
 	{
-		if(1 == numcross)
-                    G_warning (_("%d crossings in Cell %d, %d"), 
-                            numcross, current->r,current->c);
+	        if(1 == numcross)
+		{
+		    G_debug (1, "%d crossings in cell %d, %d", 
+			     numcross, current->r,current->c);
+		    (*ncrossing)++;
+		}
+		
 		cellhit = 1;
 	}
 	return cellhit;
@@ -371,7 +385,7 @@ static void getpoint (struct cell *curr, double level,
 			x = curr->c;
 			break;
 		default:
-			G_fatal_error(" edge number out of range");
+			G_fatal_error(_("Edge number out of range"));
 	}
 	/* convert r/c values to x/y values */
 

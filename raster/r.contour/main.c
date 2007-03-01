@@ -46,9 +46,8 @@
 #include <grass/gis.h>
 #include <grass/dbmi.h>
 #include <grass/Vect.h>
-#include "local_proto.h"
 #include <grass/glocale.h>
-
+#include "local_proto.h"
 
 int main ( int argc, char *argv[])
 {
@@ -89,8 +88,8 @@ int main ( int argc, char *argv[])
 
     module = G_define_module();
     module->keywords = _("raster");
-    module->description = _("Produces a GRASS binary vector map of specified "
-		          "contours from GRASS raster map layer.");
+    module->description = _("Produces a vector map layer of specified "
+			    "contours from a raster map layer.");
 
     map = G_define_standard_option(G_OPT_R_INPUT);
 
@@ -127,6 +126,7 @@ int main ( int argc, char *argv[])
     cut->required   = NO;
     cut->answer = "0";
     cut->description= _("Minimum number of points for a contour line (0 -> no limit)") ;
+
     /* please, remove before GRASS 7 released */
     q_flag = G_define_flag() ;
     q_flag->key         = 'q' ;  
@@ -146,6 +146,9 @@ int main ( int argc, char *argv[])
             "in future. Please use '--quiet' instead."));
     }
 
+    if (!levels->answers && !step->answer) {
+	G_fatal_error(_("Neither \"levels\" nor \"step\" parameter specified."));
+    }
 
     name = map->answer;
     mapset = G_find_cell2 (name, "");
@@ -214,7 +217,7 @@ int main ( int argc, char *argv[])
     Vect_build (&Map, stderr);
     Vect_close (&Map);
 
-    G_message(_("Finished"));
+    G_done_msg("");
 
     exit (EXIT_SUCCESS);
 }
@@ -226,8 +229,9 @@ DCELL **get_z_array ( int fd, int nrow,int ncol)
    int i;
 
     z_array = (DCELL **) G_malloc (nrow*sizeof(DCELL *));
-    G_message (_("Reading data."));
-    G_message (_("Percent complete: "));
+
+    G_message (_("Reading data: "));
+
     for(i = 0; i < nrow; i++)
     {
 	z_array[i] = (DCELL *) G_malloc (ncol * sizeof(DCELL));
@@ -257,33 +261,35 @@ double *getlevels(
     G_get_fp_range_min_max(range,&zmin,&zmax);
 
     if(!G_is_d_null_value(&zmin) && !G_is_d_null_value(&zmax))
-        G_message(_("FPRange of data:    min =  %f max = %f"), zmin, zmax);
+        G_message(_("Range of data:    min =  %f max = %f"), zmin, zmax);
     else
-        G_message(_("FPRange of data:    empty"));
-    
+        G_message(_("Range of data:    empty"));
+
     nlevels = 0;
     if(levels->answers)
     {
-		for(n = 0; levels->answers[n] != NULL; n++)
-	    	nlevels++;
-		lev = (double *) G_malloc ((nlevels)*sizeof(double));
-		n = nlevels;
-		k = 0;
-		for(i = 0; i < n; i++)
-    	{
-	    	j = atof (levels->answers[i]);
-	        if ((j < zmin) || (j > zmax))
-    	    {
-        		nlevels--;
-		    }
-		    else
-	    	{
-				lev[k] = j;
-				k++;
-	    	}
-		}
+	for(n = 0; levels->answers[n] != NULL; n++)
+	    nlevels++;
+	
+	lev = (double *) G_malloc ((nlevels)*sizeof(double));
+
+	n = nlevels;
+	k = 0;
+	for(i = 0; i < n; i++)
+	{
+	    j = atof (levels->answers[i]);
+	    if ((j < zmin) || (j > zmax))
+	    {
+		nlevels--;
+	    }
+	    else
+	    {
+		lev[k] = j;
+		k++;
+	    }
+	}
     }
-    else if(step->answer)
+    else /* step */
     {
 		dstep = atof (step->answer);
 		/* fix if step < 1, Roger Bivand 1/2001: */
@@ -319,8 +325,7 @@ double *getlevels(
 		dmin = dmin < zmin ? zmin : dmin;
 		dmax = dmax > zmax ? zmax : dmax;
 
-                G_message (_("Minimum level will be %f"), dmin);
-                G_message (_("Maximum level will be %f"), dmax);
+                G_message (_("Range of levels: min = %f max = %f"), dmin, dmax);
 
 		nlevels = (dmax - dmin)/dstep + 2;
 		lev=(double *) G_malloc (nlevels * sizeof(double));
@@ -332,10 +337,7 @@ double *getlevels(
 		lev[nlevels] = dmax;
 		nlevels++;
 	}
- 	else
-	{
-	    G_fatal_error(_("neither \"levels\" nor \"step\" parameter specified."));
-	}
+
 	*num=nlevels;
 	return lev;
 }
@@ -352,8 +354,7 @@ void displaceMatrix(DCELL** z, int nrow, int ncol, double* lev, int nlevels)
 	double *currRow;
 	double currVal;
 	
-        G_message (_("Displacing data."));
-        G_message (_("Percent complete: "));
+        G_message (_("Displacing data: "));
 	
 	for(i = 0; i < nrow; i++)
 	{
