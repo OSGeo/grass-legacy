@@ -33,19 +33,22 @@ class EpsgCode(wx.Frame):
 
         # sizers
         self.vsizer= wx.BoxSizer(wx.VERTICAL)
-        self.sizer = wx.GridSizer(3,3,0,0)
+        self.sizer = wx.GridSizer(5,3,0,0)
 
         # labels
         self.lname= wx.StaticText(self, -1, "Name of new Location: ",
                 style=wx.ALIGN_RIGHT)
-
         self.lfile= wx.StaticText(self, -1, "Path to the EPSG-codes file: ",
+                style=wx.ALIGN_RIGHT)
+        self.lcode= wx.StaticText(self, -1, "EPSG code: ",
+                style=wx.ALIGN_RIGHT)
+        self.lsearch= wx.StaticText(self, -1, "Search in code description: ",
                 style=wx.ALIGN_RIGHT)
 
         # text input
         self.tname = wx.TextCtrl(self,-1, "newLocation", size=(150,20))
         self.tfile = wx.TextCtrl(self,-1, "/usr/share/proj/epsg", size=(150,20))
-        #self.tcode = wx.TextCtrl(self,-1, "", size=(150,20))
+        self.tcode = wx.TextCtrl(self,-1, "", size=(150,20))
 
         # buttons
         self.bbrowse = wx.Button(self, -1, "Browse ...")
@@ -54,28 +57,41 @@ class EpsgCode(wx.Frame):
         self.bcreate = wx.Button(self, -1, "Create")
 
         # empty panels
-        self.epanel = wx.Panel(self,-1) 
+        self.epanel1 = wx.Panel(self,-1) 
+        self.epanel2 = wx.Panel(self,-1) 
+
+        # search box
+        self.searchb = wx.SearchCtrl(self, size=(200,-1), style=wx.TE_PROCESS_ENTER)
 
         # table
         self.tablewidth=600
         self.epsgs = wx.ListCtrl(self, -1, style=wx.LC_REPORT,
-                size=(600,100))
+                size=(700,100))
         self.epsgs.InsertColumn(0, 'EPSG')
-        self.epsgs.InsertColumn(1, 'Description')
-        self.epsgs.InsertColumn(2, 'Parameters')
+        self.epsgs.InsertColumn(1, '                        Description                     ')
+        self.epsgs.InsertColumn(2, '                                            Parameters                                            ')
         self.epsgs.SetColumnWidth(0, 50)
-        self.epsgs.SetColumnWidth(1, 275)
-        self.epsgs.SetColumnWidth(2, 275)
+        self.epsgs.SetColumnWidth(1, wx.LIST_AUTOSIZE_USEHEADER)
+        self.epsgs.SetColumnWidth(2, wx.LIST_AUTOSIZE_USEHEADER)
         
 
+        # laout
         label_style = wx.ADJUST_MINSIZE | wx.ALIGN_CENTER_HORIZONTAL
         self.sizer.Add(self.lname, 0, wx.ALIGN_RIGHT, 1)
         self.sizer.Add(self.tname, 0, wx.ALIGN_LEFT, 1)
-        self.sizer.Add(self.epanel, 0, wx.ALIGN_LEFT, 1)
+        self.sizer.Add(self.epanel1, 0, wx.ALIGN_LEFT, 1)
 
         self.sizer.Add(self.lfile, 0 , wx.ALIGN_RIGHT, 1)
         self.sizer.Add(self.tfile, 0 , wx.ALIGN_LEFT, 1)
         self.sizer.Add(self.bbrowse, 0 , wx.ALIGN_CENTER_HORIZONTAL, 1)
+
+        self.sizer.Add(self.lcode, 0, wx.ALIGN_RIGHT,1)
+        self.sizer.Add(self.tcode, 0, wx.ALIGN_LEFT,1)
+        self.sizer.Add(self.epanel2, 0, wx.ALIGN_LEFT, 1)
+
+        self.sizer.Add(self.lsearch, 0, wx.ALIGN_RIGHT,1)
+        self.sizer.Add(self.searchb, 0, wx.ALIGN_LEFT,1)
+        self.sizer.Add(self.epanel1, 0, wx.ALIGN_LEFT, 1)
 
         self.sizer.Add(self.bbcodes, 0 , wx.ALIGN_CENTER_HORIZONTAL, 1)
         self.sizer.Add(self.bcreate, 0 , wx.ALIGN_CENTER_HORIZONTAL, 1)
@@ -84,7 +100,6 @@ class EpsgCode(wx.Frame):
         self.vsizer.Add(self.sizer,0, wx.ADJUST_MINSIZE, 1)
         self.vsizer.Add(self.epsgs, wx.EXPAND,  1)
 
-
         self.SetAutoLayout(True)
         self.SetSizer(self.vsizer)
         self.vsizer.Fit(self)
@@ -92,11 +107,27 @@ class EpsgCode(wx.Frame):
         self.Layout()
 
         
+        # events
         wx.EVT_BUTTON(self, self.bbrowse.GetId(), self.OnBrowse)
         wx.EVT_BUTTON(self, self.bcancel.GetId(), self.OnCancel)
         wx.EVT_BUTTON(self, self.bcreate.GetId(), self.OnCreate)
         wx.EVT_BUTTON(self, self.bbcodes.GetId(), self.OnBrowseCodes)
-        self.Bind(wx.EVT_LEFT_DCLICK, self.OnDoubleClick, id=self.epsgs.GetId())
+        self.Bind(wx.EVT_LIST_ITEM_SELECTED, self.OnItemSelected, self.epsgs)
+        self.searchb.Bind(wx.EVT_TEXT_ENTER, self.OnDoSearch, self.searchb)
+
+    def OnDoSearch(self,event):
+        str =  self.searchb.GetValue()
+        listItem  = self.epsgs.GetColumn(1)
+
+        for i in range(self.epsgs.GetItemCount()):
+            listItem = self.epsgs.GetItem(i,1)
+            if listItem.GetText().find(str) > -1:
+                epsgcode = self.epsgs.GetItem(i, 0)
+                self.tcode.SetValue(epsgcode.GetText())
+                break
+
+        self.OnBrowseCodes(None,str)
+        
 
     def OnBrowse(self, event): 
         
@@ -109,15 +140,22 @@ class EpsgCode(wx.Frame):
 
     def OnCancel(self, event):
         self.Destroy()
+
+    def OnItemSelected(self,event):
+        item = event.GetItem()
+        self.tcode.SetValue(str(item.GetText()))
+
     
-    def OnBrowseCodes(self,event):
+    def OnBrowseCodes(self,event,search=None):
         try:
+            self.epsgs.DeleteAllItems()
             f = open(self.tfile.GetValue(),"r")
             i=1
             j = 0
             descr = None
             code = None
             params = ""
+            #self.epsgs.ClearAll()
             for line in f.readlines():
                 line = line.strip()
                 if line.find("#") == 0:
@@ -128,14 +166,19 @@ class EpsgCode(wx.Frame):
                         params += par + " "
                     code = code[1:-1]
                 if i%2 == 0:
-                    self.epsgs.InsertStringItem(j,str(code))
-                    self.epsgs.SetStringItem(j, 1, str(descr))
-                    self.epsgs.SetStringItem(j, 2, str(params))
+                    if search and descr.find(search) > -1 or\
+                        not search:
+                        self.epsgs.InsertStringItem(j,str(code))
+                        self.epsgs.SetStringItem(j, 1, str(descr))
+                        self.epsgs.SetStringItem(j, 2, str(params))
+                        j  += 1
                     # reset 
                     descr = None; code = None; params = ""
-                    j  += 1
+                if i%2 == 0:
+                    self.epsgs.SetItemBackgroundColour(i, "grey")
                 i += 1
             f.close()
+            self.SendSizeEvent()
         except StandardError, e:
             dlg = wx.MessageDialog(self, "Could not read EPGS codes: %s "
                     % e,"Can not read file",  wx.OK|wx.ICON_INFORMATION)
@@ -266,13 +309,14 @@ class GRASSStartup(wx.Frame):
         self.ldefine = wx.StaticText(self, -1, "Define new location with ...", style=wx.ALIGN_CENTRE)
 
         # buttons
-        self.bstart = wx.Button(self, -1, "Start GRASS", style=wx.RAISED_BORDER)
-        self.bexit = wx.Button(self, -1, "Exit")
-        self.bhelp = wx.Button(self, -1, "Help")
-        self.bbrowse = wx.Button(self, -1, "Browse ...")
-        self.bmapset = wx.Button(self, -1, "Create new mapset")
-        self.bgeoreferenced = wx.Button(self, -1, "Georeferenced file")
-        self.bepsg = wx.Button(self, -1, "EPSG codes")
+        buttonsize = (150,25)
+        self.bstart = wx.Button(self, -1, "Start GRASS", style=wx.RAISED_BORDER, size=buttonsize)
+        self.bexit = wx.Button(self, -1, "Exit", size=buttonsize)
+        self.bhelp = wx.Button(self, -1, "Help", size=buttonsize)
+        self.bbrowse = wx.Button(self, -1, "Browse ...", size=buttonsize)
+        self.bmapset = wx.Button(self, -1, "Create new mapset", size=buttonsize)
+        self.bgeoreferenced = wx.Button(self, -1, "Georeferenced file", size=buttonsize)
+        self.bepsg = wx.Button(self, -1, "EPSG codes", size=buttonsize)
 
         # textinputs
         self.tgisdbase = wx.TextCtrl(self, -1, "", size=(300, 20),
