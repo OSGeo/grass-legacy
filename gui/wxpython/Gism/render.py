@@ -188,7 +188,7 @@ class Map:
 			"color" : "RRR:GGG:BBB",
 			"width" : 3,
 			"render": True/False
-		mapFile   - rendered final image filename
+		mapfile   - rendered final image filename
 	"""
 
 	def __init__(self):
@@ -205,7 +205,7 @@ class Map:
 		self.layers    = []  # stack of available layer
 		self.env       = {}  # enviroment variables, like MAPSET, LOCATION_NAME, etc.
 		self.verbosity = 0
-		self.mapFile   = utils.GetTempfile() + ".png"
+		self.mapfile   = utils.GetTempfile() + ".png"
 
 		self.renderRegion = {
 			"render" : True,     # should the region be displayed?
@@ -527,7 +527,7 @@ class Map:
 			    " background=255:255:255" + \
 			    " width=" + str(self.width) + \
 			    " height=" + str(self.height) + \
-			    " output=" + self.mapFile
+			    " output=" + self.mapfile
 
 			# run g.composite to get composite image
 			if os.system(compcmd):
@@ -539,7 +539,7 @@ class Map:
 			if tmp_region:
 				os.environ["GRASS_REGION"] = tmp_region
 
-			return self.mapFile
+			return self.mapfile
 		except Exception, e:
 			os.unsetenv("GRASS_REGION")
 

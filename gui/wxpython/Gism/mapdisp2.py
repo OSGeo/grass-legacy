@@ -59,8 +59,8 @@ class BufferedWindow(wx.Window):
         #
         # Render output objects
     	# 
-    	self.MapFile = None # file with 
-    	self.Img = "" # wx.Image object from self.MapFile
+    	self.mapfile = None # file with 
+    	self.Img = "" # wx.Image object from self.mapfile
 
         #
     	# mouse attributes like currently pressed buttons, position on
@@ -96,19 +96,19 @@ class BufferedWindow(wx.Window):
     	the same size as the Window"""
 
         # set size of the input image
-    	Map.Width, Map.Height = self.GetClientSize()
+    	Map.width, Map.height = self.GetClientSize()
 
     	# Make new off screen bitmap: this bitmap will always have the
     	# current drawing in it, so it can be used to save the image to
     	# a file, or whatever.
-    	self._Buffer = wx.EmptyBitmap(Map.Width, Map.Height)
+    	self._Buffer = wx.EmptyBitmap(Map.width, Map.height)
 
         # get the image, render
     	self.Img = self.GetImage()
 
         # update map display
-    	if self.Img and Map.Width + Map.Height > 0: # scale image during resize
-    	    self.Img = self.Img.Scale(Map.Width, Map.Height)
+    	if self.Img and Map.width + Map.height > 0: # scale image during resize
+    	    self.Img = self.Img.Scale(Map.width, Map.height)
     	    self.render = False
     	    self.UpdateMap()
 
@@ -140,8 +140,8 @@ class BufferedWindow(wx.Window):
 
     	"""
     	if self.render:
-    	    Map.Width, Map.Height = self.GetClientSize()
-    	    self.MapFile = Map.Render(force=self.render)
+    	    Map.width, Map.height = self.GetClientSize()
+    	    self.mapfile = Map.Render(force=self.render)
     	    self.Img = self.GetImage()
     	    self.resize = False
     	    if not self.Img: return
@@ -232,17 +232,17 @@ class BufferedWindow(wx.Window):
     	elif wheel != 0:
 
     	    # zoom 1/2 of the screen
-    	    begin = [Map.Width/4, Map.Height/4]
-    	    end = [Map.Width - Map.Width/4,
-    		Map.Height - Map.Height/4]
+    	    begin = [Map.width/4, Map.height/4]
+    	    end = [Map.width - Map.width/4,
+    		Map.height - Map.height/4]
 
     	# store current mouse position
     	self.mouse['pos'] = event.GetPositionTuple()[:]
 
     def GetImage(self):
         """Converts files to wx.Image"""
-    	if Map.MapFile and os.path.isfile(Map.MapFile):
-    	    self.Img = wx.Image(Map.MapFile, wx.BITMAP_TYPE_ANY)
+    	if Map.mapfile and os.path.isfile(Map.mapfile):
+    	    self.Img = wx.Image(Map.mapfile, wx.BITMAP_TYPE_ANY)
     	else:
     	    self.Img = None
     	return self.Img
@@ -254,8 +254,8 @@ class BufferedWindow(wx.Window):
     	Inputs: x,y
     	Outputs: int x, int y
     	"""
-    	newx = Map.Region['w']+x*Map.Region["ewres"]
-    	newy = Map.Region['n']-y*Map.Region["nsres"]
+    	newx = Map.region['w']+x*Map.region["ewres"]
+    	newy = Map.region['n']-y*Map.region["nsres"]
     	return newx, newy
 
 
@@ -285,23 +285,23 @@ class BufferedWindow(wx.Window):
     		    -x1*2,
     		    -y1*2)
                 newreg['e'], newreg['s'] = self.Pixel2Cell(
-    		    Map.Width+2*(Map.Width-x2),
-    		    Map.Height+2*(Map.Height-y2))
+    		    Map.width+2*(Map.width-x2),
+    		    Map.height+2*(Map.height-y2))
     	# pan
     	elif zoomtype == 0:
     	    newreg['w'], newreg['n'] = self.Pixel2Cell(
     		x1-x2,
     		y1-y2)
     	    newreg['e'], newreg['s'] = self.Pixel2Cell(
-    		Map.Width+x1-x2,
-    		Map.Height+y1-y2)
+    		Map.width+x1-x2,
+    		Map.height+y1-y2)
 
     	# if new region has been calculated, set the values
     	if newreg :
-    	    Map.Region['n'] = newreg['n']
-    	    Map.Region['s'] = newreg['s']
-    	    Map.Region['e'] = newreg['e']
-    	    Map.Region['w'] = newreg['w']
+    	    Map.region['n'] = newreg['n']
+    	    Map.region['s'] = newreg['s']
+    	    Map.region['e'] = newreg['e']
+    	    Map.region['w'] = newreg['w']
 
 class DrawWindow(BufferedWindow):
     '''Drawing routine for double buffered drawing. Overwrites Draw method
@@ -425,8 +425,8 @@ class MapFrame(wx.Frame):
 
     def InitDisplay(self):
         """Initialize map display, set dimensions and map region"""
-        self.Width, self.Height = self.GetClientSize()
-        Map.geom = self.Width, self.Height
+        self.width, self.height = self.GetClientSize()
+        Map.geom = self.width, self.height
         Map.GetRegion()
         #FIXME
         #This was Map.getResolution().
