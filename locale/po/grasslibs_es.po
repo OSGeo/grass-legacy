@@ -12,7 +12,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: grasslibs_es\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2007-02-28 19:10+0100\n"
+"POT-Creation-Date: 2007-03-02 16:27+0100\n"
 "PO-Revision-Date: 2007-03-01 09:12+0100\n"
 "Last-Translator: Carlos Davila <carluti@users.sourceforge.net>\n"
 "Language-Team: Español <grass-es@grass.itc.it>\n"
@@ -82,7 +82,8 @@ msgstr "La franja no tiene suficientes datos"
 #: ../lib/rst/interp_float/vinput2d.c:291
 #, c-format
 msgid "there are points outside specified 2D/3D region--ignored %d points"
-msgstr "Hay puntos fuera de la región 2D/3D especificada -- se ignoraron %d puntos"
+msgstr ""
+"Hay puntos fuera de la región 2D/3D especificada -- se ignoraron %d puntos"
 
 #: ../lib/rst/interp_float/vinput2d.c:293
 #, c-format
@@ -302,8 +303,8 @@ msgstr "Controlador gráfico [%s] iniciado"
 #, c-format
 msgid "%s: Unable to read FreeType definition file; use the default"
 msgstr ""
-"%s: No se pudo leer el archivo de definición FreeType; "
-"utilice configuración por defecto"
+"%s: No se pudo leer el archivo de definición FreeType; utilice configuración "
+"por defecto"
 
 #: ../lib/driver/parse_ftcap.c:27
 #, c-format
@@ -337,7 +338,8 @@ msgstr "No es posible encontrar el archivo [%s] del grupo [%s en %s]"
 #: ../lib/imagery/fopen.c:94
 #, c-format
 msgid "Unable to create file [%s] for subgroup [%s] of group [%s in %s]"
-msgstr "No es posible el archivo [%s] para el subgrupo [%s] del grupo [%s en %s]"
+msgstr ""
+"No es posible el archivo [%s] para el subgrupo [%s] del grupo [%s en %s]"
 
 #: ../lib/imagery/fopen.c:115 ../lib/imagery/fopen.c:145
 #, c-format
@@ -360,7 +362,8 @@ msgstr "No se pueden leer los símbolos de líneas de las coordenadas: %s"
 
 #: ../lib/symbol/read.c:252
 #, c-format
-msgid "Incorrect symbol name: '%s' (should be: group/name or group/name@mapset)"
+msgid ""
+"Incorrect symbol name: '%s' (should be: group/name or group/name@mapset)"
 msgstr ""
 "Nombre de símbolo incorrecto: %s (debe ser: grupo/nombre o grupo/"
 "nombre@mapset)"
@@ -429,7 +432,8 @@ msgstr "No es posible localizar un monitor gráfico como: <%s>.\n"
 #: ../lib/raster/io_fifo.c:353
 #, c-format
 msgid "Please run \"d.mon\" to select a valid graphics monitor.\n"
-msgstr "Por favor ejecute \"d.mon\" para seleccionar un monitor gráfico válido.\n"
+msgstr ""
+"Por favor ejecute \"d.mon\" para seleccionar un monitor gráfico válido.\n"
 
 #: ../lib/raster/io_fifo.c:365
 #, c-format
@@ -449,12 +453,14 @@ msgstr "Error - Monitor <%s> en uso por %s.\n"
 #: ../lib/raster/io_fifo.c:393
 #, c-format
 msgid "Error - Could not complete locking process for monitor <%s>.\n"
-msgstr "Error - No es posible completar el proceso de bloqueo del monitor <%s>.\n"
+msgstr ""
+"Error - No es posible completar el proceso de bloqueo del monitor <%s>.\n"
 
 #: ../lib/raster/io_fifo.c:407
 #, c-format
 msgid "Error - Can't set up pipe to graphics device.\n"
-msgstr "Error: No es posible inicializar el pipe del dispositivo de gráficos.\n"
+msgstr ""
+"Error: No es posible inicializar el pipe del dispositivo de gráficos.\n"
 
 #: ../lib/raster/io_fifo.c:413
 #, c-format
@@ -497,7 +503,8 @@ msgstr ""
 #: ../lib/raster/io_sock.c:132
 #, c-format
 msgid "Connect attempt timed out. Probably an error with the server.\n"
-msgstr "Tiempo de conección excedido. Probablemente un error con el servidor.\n"
+msgstr ""
+"Tiempo de conección excedido. Probablemente un error con el servidor.\n"
 
 #: ../lib/raster/io_sock.c:139
 #, c-format
@@ -782,7 +789,8 @@ msgstr "Tipo de datos empleados en el archivo de salida"
 
 #: ../lib/g3d/g3dparam.c:63
 msgid "Precision used in the output file (default, max, or 0 to 52)"
-msgstr "La precisión usada en el archivo de salida (por defecto, máximo o de 0 a 52)"
+msgstr ""
+"La precisión usada en el archivo de salida (por defecto, máximo o de 0 a 52)"
 
 #: ../lib/g3d/g3dparam.c:73
 msgid "The compression method used in the output file"
@@ -837,7 +845,8 @@ msgstr "G3d_openCellOld: error en G3d_readHeader"
 
 #: ../lib/g3d/g3dopen.c:126
 msgid "G3d_openCellOld: projection does not match window projection"
-msgstr "G3d_openCellOld: la proyección no coincide con la proyección de la ventana"
+msgstr ""
+"G3d_openCellOld: la proyección no coincide con la proyección de la ventana"
 
 #: ../lib/g3d/g3dopen.c:130
 msgid "G3d_openCellOld: zone does not match window zone"
@@ -938,7 +947,8 @@ msgstr ""
 
 #: ../lib/gis/view.c:550
 #, c-format
-msgid " Only %d%% of window saved in \"%s\" overlaps with current GRASS window."
+msgid ""
+" Only %d%% of window saved in \"%s\" overlaps with current GRASS window."
 msgstr ""
 "Sólo el  %d%% de la ventana grabada en \"%s\" se superpone a la ventana "
 "actual de GRASS"
@@ -965,7 +975,8 @@ msgstr ""
 #: ../lib/gis/timestamp.c:308
 #, c-format
 msgid "Invalid timestamp specified for %s map %s in mapset %s"
-msgstr "Archivo timestamp inválido para el %s mapa  %s en el directorio de mapas %s"
+msgstr ""
+"Archivo timestamp inválido para el %s mapa  %s en el directorio de mapas %s"
 
 #: ../lib/gis/timestamp.c:333
 #, c-format
@@ -977,7 +988,8 @@ msgstr ""
 #: ../lib/gis/timestamp.c:343
 #, c-format
 msgid "Invalid timestamp file for %s map %s in mapset %s"
-msgstr "Archivo timestamp is inválido para el %s mapa %s en el directorio de mapas %s"
+msgstr ""
+"Archivo timestamp is inválido para el %s mapa %s en el directorio de mapas %s"
 
 #: ../lib/gis/put_cellhd.c:26
 #, c-format
@@ -1313,7 +1325,8 @@ msgstr "%s: el mapa [%s] no está abierto para escritura - petición ignorada"
 #: ../lib/gis/put_row.c:256
 #, c-format
 msgid "%s: map [%s] not open for random write - request ignored"
-msgstr "%s: el mapa [%s] no está abierto para escritura aleatoria - petición ignorada"
+msgstr ""
+"%s: el mapa [%s] no está abierto para escritura aleatoria - petición ignorada"
 
 #: ../lib/gis/put_row.c:263
 #, c-format
@@ -1364,7 +1377,8 @@ msgstr "directorio de mapas %s no encontrado"
 
 #: ../lib/gis/gisinit.c:101
 #, c-format
-msgid "\aERROR: System not initialized. Programmer forgot to call G_gisinit()\n"
+msgid ""
+"\aERROR: System not initialized. Programmer forgot to call G_gisinit()\n"
 msgstr ""
 "\aERROR: Sistema no iniciado. EL programador no incluyo la llamada a "
 "G_gisinit()\n"
@@ -1564,7 +1578,8 @@ msgstr "G_gisinit() debe ser llamado primero. "
 
 #: ../lib/gis/null_val.c:117
 msgid "Please advise GRASS developers of this error.\n"
-msgstr "Por favor notifique a los desarrolladores de GRASS acerca de este error.\n"
+msgstr ""
+"Por favor notifique a los desarrolladores de GRASS acerca de este error.\n"
 
 #: ../lib/gis/null_val.c:231
 msgid "G_set_null_value: wrong data type!"
@@ -1688,7 +1703,8 @@ msgstr "no es posible leer el archivo conteniendo los rangos para [%s dans %s]"
 #: ../lib/gis/range.c:371 ../lib/gis/range.c:422
 #, c-format
 msgid "can't write range file for [%s in %s]"
-msgstr "no es posible escribir el archivo conteniendo los rangos para [%s dans %s]"
+msgstr ""
+"no es posible escribir el archivo conteniendo los rangos para [%s dans %s]"
 
 #: ../lib/gis/opencell.c:185
 #, c-format
@@ -1740,7 +1756,8 @@ msgstr "opensell: %s - nombre de archivo ilegal"
 
 #: ../lib/gis/opencell.c:709
 msgid "Can't write embedded null values for map open for random access"
-msgstr "No es posible escribir valores nulos en un mapa abierto por acceso aleatorio"
+msgstr ""
+"No es posible escribir valores nulos en un mapa abierto por acceso aleatorio"
 
 #: ../lib/gis/opencell.c:927 ../lib/gis/opencell.c:961
 #: ../lib/gis/opencell.c:993
@@ -1771,7 +1788,8 @@ msgstr "%s - ** nombre ilegal **"
 #: ../lib/gis/get_row.c:110
 #, c-format
 msgid "[%s in %s] - read request for row %d is outside region"
-msgstr "[%s en %s] - el criterio de lectura para la fila %d está fuera de la región"
+msgstr ""
+"[%s en %s] - el criterio de lectura para la fila %d está fuera de la región"
 
 #: ../lib/gis/get_row.c:378
 #, c-format
@@ -1786,7 +1804,8 @@ msgstr "cell_values_double: falló xdr_double para el índice %d."
 #: ../lib/gis/get_row.c:564
 #, c-format
 msgid "error reading compressed map [%s] in mapset [%s], row %d"
-msgstr "error al leer el mapa comprimido [%s] en el directorio de mapas [%s], fila %d"
+msgstr ""
+"error al leer el mapa comprimido [%s] en el directorio de mapas [%s], fila %d"
 
 #: ../lib/gis/get_row.c:568
 #, c-format
@@ -1813,12 +1832,14 @@ msgstr "Sin memoria en el historial para guardar la línea de comando"
 
 #: ../lib/gis/history.c:291
 msgid "Not enough room in history file for command line (truncated)."
-msgstr "Sin memoria en el historial para guardar la línea de comando (truncada)"
+msgstr ""
+"Sin memoria en el historial para guardar la línea de comando (truncada)"
 
 #: ../lib/gis/histogram.c:61
 #, c-format
 msgid "Histogram for [%s in %s] missing (run r.support)"
-msgstr "El histograma para [%s en %s] no ha sido encontrado (ejecute r.support)"
+msgstr ""
+"El histograma para [%s en %s] no ha sido encontrado (ejecute r.support)"
 
 #: ../lib/gis/histogram.c:69
 #, c-format
@@ -2007,7 +2028,8 @@ msgstr ""
 msgid ""
 "G_set_window(): projection/zone differs from that of currently open raster "
 "maps"
-msgstr "G_set_window(): la proyección/zona difiere en los archivos raster abiertos"
+msgstr ""
+"G_set_window(): la proyección/zona difiere en los archivos raster abiertos"
 
 #: ../lib/gis/get_window.c:69 ../lib/gis/get_window.c:88
 #, c-format
@@ -2044,7 +2066,8 @@ msgstr "Demasiadas categorías de reclasificación para [%s en %s]"
 #: ../lib/gis/reclass.c:159
 #, c-format
 msgid "Illegal reclass format in header file for [%s in %s]"
-msgstr "Formato de reclasificación ilegal en la cabecera del archivo para [%s en %s]"
+msgstr ""
+"Formato de reclasificación ilegal en la cabecera del archivo para [%s en %s]"
 
 #: ../lib/gis/reclass.c:236
 msgid "Illegal reclass request"
@@ -2258,7 +2281,8 @@ msgstr ""
 
 #: ../lib/gis/parser.c:1024
 msgid "Allow output files to overwrite existing files"
-msgstr "Permitir a los archivos de salida sobreescribir los archivos existentes"
+msgstr ""
+"Permitir a los archivos de salida sobreescribir los archivos existentes"
 
 #: ../lib/gis/parser.c:1026
 msgid "Verbose module output"
@@ -2475,12 +2499,14 @@ msgstr "directorio de mapas no está inicializado"
 #: ../lib/db/dbmi_base/legal_dbname.c:24
 #, c-format
 msgid "Illegal table map name <%s>. May not contain '.' or 'NULL'.\n"
-msgstr "Nombre de tabla de mapa <%s> no admitido. No puede contener '.', o 'NULL'.\n"
+msgstr ""
+"Nombre de tabla de mapa <%s> no admitido. No puede contener '.', o 'NULL'.\n"
 
 #: ../lib/db/dbmi_base/legal_dbname.c:30
 #, c-format
 msgid "Illegal table map name <%s>. Must start with a letter.\n"
-msgstr "Nombre de tabla de mapa <%s> no admitido. Debe empezar con una letra.\n"
+msgstr ""
+"Nombre de tabla de mapa <%s> no admitido. Debe empezar con una letra.\n"
 
 #: ../lib/db/dbmi_base/legal_dbname.c:36
 #, c-format
@@ -2623,7 +2649,8 @@ msgstr "Adjuntando centroides: "
 #: ../lib/vector/Vlib/legal_vname.c:22
 #, c-format
 msgid "Illegal vector map name <%s>. May not contain '.' or 'NULL'.\n"
-msgstr "Nombre del mapa vectorial es ilegal <%s>. Puede no contener '.', o 'NULL'.\n"
+msgstr ""
+"Nombre del mapa vectorial es ilegal <%s>. Puede no contener '.', o 'NULL'.\n"
 
 #: ../lib/vector/Vlib/legal_vname.c:28
 #, c-format
@@ -2633,7 +2660,8 @@ msgstr "Nombre del mapa vectorial es ilegal<%s>. Debe empezar con una letra.\n"
 #: ../lib/vector/Vlib/legal_vname.c:34
 #, c-format
 msgid "Illegal vector map name <%s>. Character <%c> not allowed.\n"
-msgstr "Nombre del mapa vectorial es ilegal<%s>. El caracter <%c> no es aceptado.\n"
+msgstr ""
+"Nombre del mapa vectorial es ilegal<%s>. El caracter <%c> no es aceptado.\n"
 
 #: ../lib/vector/Vlib/legal_vname.c:59 ../lib/vector/Vlib/legal_vname.c:61
 #, c-format
@@ -2757,12 +2785,18 @@ msgstr "No se pudo obtener información del archivo '%s'"
 
 #: ../lib/vector/Vlib/open.c:667
 msgid "Size of 'coor' file differs from value saved in topo file."
-msgstr "Tamaño del archivo 'coord' es diferente del valor grabado en el archivo topo."
+msgstr ""
+"Tamaño del archivo 'coord' es diferente del valor grabado en el archivo topo."
 
 #: ../lib/vector/Vlib/open.c:678
 #, c-format
 msgid "Please rebuild topology for vector '%s@%s'"
 msgstr "Por favor regenera la topología para el vector '%s@%s'"
+
+#: ../lib/vector/Vlib/read_nat.c:160
+#, c-format
+msgid "Attempt to read dead line [%d]"
+msgstr ""
 
 #: ../lib/vector/Vlib/build.c:135
 msgid "Building topology ...\n"
@@ -2867,4 +2901,3 @@ msgstr "No se puede abrir el archivo de índices espaciales para escritura <%s>"
 #: ../lib/vector/Vlib/build.c:400
 msgid "Error writing out spatial index file."
 msgstr "Error al escribir el archivo de índices espaciales."
-
