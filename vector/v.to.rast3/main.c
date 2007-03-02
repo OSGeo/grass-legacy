@@ -33,19 +33,13 @@ int main(int argc, char *argv[])
     dbCatValArray cvarr;
 
     module = G_define_module();
-    module->keywords = _("vector");
+    module->keywords = _("vector, volume, conversion");
     module->description = _("Converts a binary GRASS vector map "
 	"(only points) layer into a 3D GRASS raster map layer.");
 
     in_opt = G_define_standard_option(G_OPT_V_INPUT);
 
-    out_opt = G_define_option() ;
-    out_opt->key        = "output" ;
-    out_opt->type       = TYPE_STRING ;
-    out_opt->key_desc   = "name";
-    out_opt->required   = YES;
-    out_opt->description= _("Name of output 3d raster map") ;
-    out_opt->gisprompt  = "new,grid3,3d raster" ;
+    out_opt = G_define_standard_option(G_OPT_R3_OUTPUT);
 
     col_opt = G_define_option();
     col_opt->key            = "column";
