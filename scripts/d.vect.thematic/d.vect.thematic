@@ -336,15 +336,13 @@ trap "exitprocedure" 2 3 15
 # identify current monitor or start monitor
 currmon=`eval d.mon -L | grep "(selected)" | awk '{print $1}'`
 
-if [ -z "$currmon" ] ; then
+if [ -z "$currmon" -a "$GIS_FLAG_S" -ne 1 ] ; then
 	echo ""
 	echo "*** You must open a display monitor ***"
 	echo ""
 	cleanup
 	exit 2
 fi
-
-
 
 table=`v.db.connect $GIS_OPT_MAP -g | grep -w $GIS_OPT_LAYER | awk '{print $2}'`
 database=`v.db.connect $GIS_OPT_MAP -g | grep -w $GIS_OPT_LAYER | awk '{print $4}'`
@@ -679,70 +677,81 @@ if [ "$GIS_OPT_THEMETYPE" = "graduated_colors" ] ; then
 
     if [ $i -lt $xlower -o $i -ge $xupper ]; then
         let xline1=line2+2
-	let xline3=line2-1
-	echo "color $themecolor" >> "$TMP2"
+        let xline3=line2-1
+        echo "color $themecolor" >> "$TMP2"
         echo "polygon" >> "$TMP2"
         echo "5 $xline1" >> "$TMP2"
         echo "8 $xline1" >> "$TMP2"
         echo "8 $xline3" >> "$TMP2"
         echo "5 $xline3" >> "$TMP2"
         echo "color $linecolor" >> "$TMP2"
-		echo "move 5 $xline1" >> "$TMP2"
-		echo "draw 8 $xline1" >> "$TMP2"
-		echo "draw 8 $xline3" >> "$TMP2"
-		echo "draw 5 $xline3" >> "$TMP2"
-		echo "draw 5 $xline1" >> "$TMP2"
+        echo "move 5 $xline1" >> "$TMP2"
+        echo "draw 8 $xline1" >> "$TMP2"
+        echo "draw 8 $xline3" >> "$TMP2"
+        echo "draw 5 $xline3" >> "$TMP2"
+        echo "draw 5 $xline1" >> "$TMP2"
         echo "move 14 $line2" >> "$TMP2"
         echo "color 0:0:0" >> "$TMP2"
         echo "text $openbracket$rangemin - $rangemax$closebracket $extranote"  >> "$TMP2"
     else
-	if [ $i -eq $xlower ]; then
-	    echo "color 0:0:0" >>"$TMP2"
-	    echo "move 10 $line2" >> "$TMP2"
-	    echo "text ..." >> "$TMP2"
-	else
-	    #undo next increment
-	    let line2=line2+4	    
-	fi
+        if [ $i -eq $xlower ]; then
+            echo "color 0:0:0" >>"$TMP2"
+            echo "move 10 $line2" >> "$TMP2"
+            echo "text ..." >> "$TMP2"
+        else
+            #undo next increment
+            let line2=line2+4	    
+        fi
     fi
 
-		echo "area $themecolor $linecolor - {$openbracket$rangemin - $rangemax$closebracket $extranote}" >> "$TMP6"
+    if [ $i -lt $xlower -o $i -ge $xupper ]; then
+      echo "area $themecolor $linecolor - {$openbracket$rangemin - $rangemax$closebracket $extranote}" >> "$TMP6"
 
         if [ "$GIS_OPT_TYPE" = "line" -o "$GIS_OPT_TYPE" = "boundary" ] ; then
-		  echo "line 5% $line1% 8% $line1%" >> $TMP5
-		  echo "  color $linecolor" >> $TMP5
-		  echo "end" >> $TMP5
-          echo "text 14% $line1% $openbracket$rangemin - $rangemax$closebracket $extranote"  >> "$TMP5"
+          echo "line 5% $xline1% 8% $xline1%" >> $TMP5
+          echo "  color $linecolor" >> $TMP5
+          echo "end" >> $TMP5
+          echo "text 14% $xline1% $openbracket$rangemin - $rangemax$closebracket $extranote"  >> "$TMP5"
           echo "  ref center left" >> $TMP5
           echo "end" >> $TMP5
         elif [ "$GIS_OPT_TYPE" = "point" -o "$GIS_OPT_TYPE" = "centroid" ] ; then
-          echo "point 8% $line1%" >> "$TMP5"
-		  echo "  color $linecolor" >> "$TMP5"
-		  echo "  fcolor $themecolor" >> "$TMP5"
-		  echo "  size $GIS_OPT_SIZE" >> "$TMP5"
-		  echo "  symbol $GIS_OPT_ICON" >> "$TMP5"
-		  echo "end" >> "$TMP5"
-          echo "text 14% $line1% $openbracket$rangemin - $rangemax$closebracket $extranote"  >> "$TMP5"
+          echo "point 8% $xline1%" >> "$TMP5"
+          echo "  color $linecolor" >> "$TMP5"
+          echo "  fcolor $themecolor" >> "$TMP5"
+          echo "  size $GIS_OPT_SIZE" >> "$TMP5"
+          echo "  symbol $GIS_OPT_ICON" >> "$TMP5"
+          echo "end" >> "$TMP5"
+          echo "text 14% $xline1% $openbracket$rangemin - $rangemax$closebracket $extranote"  >> "$TMP5"
           echo "  ref center left" >> $TMP5
           echo "end" >> $TMP5
-		else
-          echo "rectangle 5% $line1% 8% $line3%" >> "$TMP5"
-		  echo "  color 0:0:0" >> "$TMP5"
-		  echo "  fcolor $themecolor" >> "$TMP5"
-		  echo "end" >> "$TMP5"
-          echo "text 14% $line3% $openbracket$rangemin - $rangemax$closebracket $extranote"  >> "$TMP5"
+        else
+          echo "rectangle 5% $xline1% 8% $xline3%" >> "$TMP5"
+          echo "  color 0:0:0" >> "$TMP5"
+          echo "  fcolor $themecolor" >> "$TMP5"
+          echo "end" >> "$TMP5"
+          echo "text 14% $xline3% $openbracket$rangemin - $rangemax$closebracket DCADCA $extranote"  >> "$TMP5"
           echo "  ref bottom left" >> $TMP5
           echo "end" >> $TMP5
         fi
+    else
+        if [ $i -eq $xlower ]; then
+            echo "color 0:0:0" >>"$TMP5"
+            echo "text 14% $xline3% ..." >> "$TMP5"
+            echo "  ref bottom left" >> $TMP5
+            echo "end" >> $TMP5
+
+            echo "text - - - {...}" >> "$TMP6"
+        fi
+    fi
 	
 
 
         echo $themecolor@$rangemin@$rangemax@$extranote@$openbracket@$closebracket | awk -F@ '{print $1 "\t\t" $5$2" - "$3$6" "$4}'
-		if [ -z "$GIS_OPT_WHERE" ] ; then
+        if [ -z "$GIS_OPT_WHERE" ] ; then
             sqlwhere="$GIS_OPT_COLUMN $mincomparison $rangemin and $GIS_OPT_COLUMN<=$rangemax"
-		else
+        else
             sqlwhere="$GIS_OPT_COLUMN $mincomparison $rangemin and $GIS_OPT_COLUMN<=$rangemax AND $GIS_OPT_WHERE"
-		fi
+        fi
 
         # update color to database?
         if [ $GIS_FLAG_U -eq 1 ] ; then
@@ -829,7 +838,7 @@ if [ "$GIS_OPT_THEMETYPE" = "graduated_colors" ] ; then
 		  echo "  symbol $GIS_OPT_ICON" >> $TMP4
 		  echo "  label $rangemin - $rangemax" >> $TMP4
 		  echo "end" >> $TMP4
-		else
+	else
 		  echo "vareas $GIS_OPT_MAP" >> $TMP4
 		  echo "  layer $GIS_OPT_LAYER" >> $TMP4
 		  echo "  where $sqlwhere" >> $TMP4
@@ -837,20 +846,20 @@ if [ "$GIS_OPT_THEMETYPE" = "graduated_colors" ] ; then
 		  echo "  fcolor $themecolor" >> $TMP4
 		  echo "  label $rangemin - $rangemax" >> $TMP4
 		  echo "end" >> $TMP4
-		fi
+	fi
 
 
         # increment for next theme
         let i=i+1
-		if [ $i = $numint ] ; then
-		  let color1=$endcolor1
-		  let color2=$endcolor2
-		  let color3=$endcolor3
-		else
+	if [ $i = $numint ] ; then
+	  let color1=$endcolor1
+	  let color2=$endcolor2
+	  let color3=$endcolor3
+	else
           let color1=color1-clrstep1
           let color2=color2-clrstep2
           let color3=color3-clrstep3
-		fi
+	fi
         let line1=line1-4
         let line2=line2-4
         let line3=line3-4
@@ -859,7 +868,9 @@ if [ "$GIS_OPT_THEMETYPE" = "graduated_colors" ] ; then
     # reset rendering for GUI use
 	if [ "$GIS_FLAG_S"  -eq 1 ] ; then
 		d.mon stop=PNG
-		d.mon select=$currmon
+		if [ -n "$currmon" ] ; then
+		    d.mon select=$currmon
+		fi
 		GRASS_RENDER_IMMEDIATE=$rendermodeexport
 		export GRASS_RENDER_IMMEDIATE
 		GRASS_PNG_AUTO_WRITE=$autowrite
@@ -1015,15 +1026,15 @@ if [ "$GIS_OPT_THEMETYPE" = "graduated_points" -o "$GIS_OPT_THEMETYPE" = "gradua
             lineht=4
         fi
 
-		if [ "$GIS_OPT_THEMETYPE" = "graduated_lines" ]; then
-	        echo "color $linecolor" >> "$TMP2"
-			echo "line $themecolor $linecolor $ptsize {$openbracket$rangemin - $rangemax$closebracket $extranote}" >> "$TMP6"
-	    else
-			echo "color $themecolor" >> "$TMP2"
-			echo "point $themecolor $linecolor $ptsize {$openbracket$rangemin - $rangemax$closebracket $extranote}" >> "$TMP6"
-		fi
-
     if [ $i -lt $xlower -o $i -ge $xupper ]; then
+        if [ "$GIS_OPT_THEMETYPE" = "graduated_lines" ]; then
+            echo "color $linecolor" >> "$TMP2"
+            echo "line $themecolor $linecolor $ptsize {$openbracket$rangemin - $rangemax$closebracket $extranote}" >> "$TMP6"
+        else
+	    echo "color $themecolor" >> "$TMP2"
+            echo "point $themecolor $linecolor $ptsize {$openbracket$rangemin - $rangemax$closebracket $extranote}" >> "$TMP6"
+        fi
+
         echo "icon + $iconsize 5 $line1" >> "$TMP2"
         echo "color 0:0:0" >> "$TMP2"
         echo "move 10 $line2" >> "$TMP2"
@@ -1035,21 +1046,30 @@ if [ "$GIS_OPT_THEMETYPE" = "graduated_points" -o "$GIS_OPT_THEMETYPE" = "gradua
 	    echo "color 0:0:0" >>"$TMP2"
 	    echo "move 10 $line2" >> "$TMP2"
 	    echo "text ..." >> "$TMP2"
+            echo "text - - - ..." >> "$TMP6"
 	else
 	    # undo future line increment
 	    let line2=line2+$lineht
 	fi
     fi
 
+    if [ $i -lt $xlower -o $i -ge $xupper ]; then
         echo "point 8% $line1%" >> "$TMP5"
-		echo "  color $linecolor" >> "$TMP5"
-		echo "  fcolor $themecolor" >> "$TMP5"
-		echo "  size $iconsize" >> "$TMP5"
-		echo "  symbol $GIS_OPT_ICON" >> "$TMP5"
-		echo "end" >> "$TMP5"
+	echo "  color $linecolor" >> "$TMP5"
+	echo "  fcolor $themecolor" >> "$TMP5"
+	echo "  size $iconsize" >> "$TMP5"
+	echo "  symbol $GIS_OPT_ICON" >> "$TMP5"
+	echo "end" >> "$TMP5"
         echo "text 25% $line1% $openbracket$rangemin - $rangemax$closebracket $extranote"  >> "$TMP5"
         echo "  ref center left" >> $TMP5
         echo "end" >> $TMP5
+    else
+	if [ $i -eq $xlower ]; then
+	    echo "text 25% $xline1% ..."  >> "$TMP5"
+	    echo "   ref center left"  >> "$TMP5"
+	    echo "end" >> "$TMP5"
+	fi
+    fi
 
         echo $ptsize@$rangemin@$rangemax@$extranote@$openbracket@$closebracket | awk -F@ '{print $1 "\t\t" $5$2" - "$3$6" "$4}'
 
@@ -1147,7 +1167,9 @@ if [ "$GIS_OPT_THEMETYPE" = "graduated_points" -o "$GIS_OPT_THEMETYPE" = "gradua
     # reset rendering for GUI use
 	if [ "$GIS_FLAG_S"  -eq 1 ] ; then
 		d.mon stop=PNG
-		d.mon select=$currmon
+		if [ -n "$currmon" ] ; then 
+		    d.mon select=$currmon
+		fi
 		GRASS_RENDER_IMMEDIATE=$rendermode
 		export GRASS_RENDER_IMMEDIATE
 		GRASS_PNG_AUTO_WRITE=$autowrite
@@ -1167,7 +1189,9 @@ if [ "$GIS_FLAG_L" -eq 1 -a "$GIS_OPT_MONITOR" != "none" ] ; then
         d.erase
     fi
     d.graph input=$TMP2
-    d.mon select=$currmon
+    if [ -n "$currmon" ] ; then
+      d.mon select=$currmon
+    fi
 fi
 
 # Create group file for GIS Manager
