@@ -19,7 +19,7 @@ ASSUMPTION:
 #include "globals.h"
 
 void 
-rgb2his (CELL *rowbuffer[NBANDS], int columns)
+rgb2his (CELL *rowbuffer[3], int columns)
 {
   int    sample;		/* sample indicator                      */
   double   red;			/* the red band output                   */
