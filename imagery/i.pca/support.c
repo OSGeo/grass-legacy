@@ -51,9 +51,9 @@ write_history (int bands, char *outname, double **eigmat)
         for (j = 0; j < bands; j++)
         {
             sprintf (tmpa, "%.2f ", eigmat[i][j]);
-            strcat (tmpeigen, tmpa);
+            G_strcat (tmpeigen, tmpa);
         }
-        strcat (tmpeigen, ")");
+        G_strcat (tmpeigen, ")");
 
         sprintf (hist.edhist[i+1], tmpeigen);
 
