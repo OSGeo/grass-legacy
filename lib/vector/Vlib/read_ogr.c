@@ -15,17 +15,25 @@
 *****************************************************************************/
 #include <grass/gis.h>
 #include <grass/Vect.h>
+#include <grass/glocale.h>
 
 #ifdef HAVE_OGR
 #include <ogr_api.h>
 
-/*
-*  Recursively read feature and add all elements to points_cache and types_cache.
-*  ftype : if > 0 use this type (because parts of Polygon are read as wkbLineString)
-* 
-*  return 0 OK
-*         1 Error
-*/
+/*!
+ * \fn int cache_feature ( struct Map_info *Map, OGRGeometryH hGeom, int ftype ) 
+ *
+ * \brief Recursively read feature and add all elements to points_cache and types_cache.
+ *
+ * ftype : if > 0 use this type (because parts of Polygon are read as wkbLineString)
+ * 
+ * \return 0 OK
+ * \return 1 error
+ *
+ * \param Map vector map layer
+ * \param hGeom OGR geometry
+ * \param ftype feature type
+ */
 static int cache_feature ( struct Map_info *Map, OGRGeometryH hGeom, int ftype ) 
 {
     int line, i, np, ng, tp;
@@ -99,23 +107,29 @@ static int cache_feature ( struct Map_info *Map, OGRGeometryH hGeom, int ftype )
 	    break;
 
 	default:
-	    G_warning ("OGR feature type %d not supported\n", type);
+	    G_warning (_("OGR feature type [%d] not supported"), type);
 	    return 1;
 	    break;
     }
 }
 
-/*
- *  Read next line from OGR layer. Skip empty features.
+/*!
+ * \fn int V1_read_next_line_ogr (struct Map_info *Map, struct line_pnts *line_p, struct line_cats *line_c)
  *
- *  Returns  line type
- *           -2 No more features (EOF)
- *           -1 Out of memory
+ * \brief Read next line from OGR layer. Skip empty features.
  *
  *  The action of this routine can be modified by:
  *    Vect_read_constraint_region ()
  *    Vect_read_constraint_type   ()
  *    Vect_remove_constraints     ()
+ *
+ * \return  line type
+ * \return  -2 no more features (EOF)
+ * \return  -1 out of memory
+ *
+ * \param Map vector map layer
+ * \param line_p container used to store line points within
+ * \param line_c container used to store line categories within
  */
 int
 V1_read_next_line_ogr (struct Map_info *Map, struct line_pnts *line_p, struct line_cats *line_c)
@@ -148,7 +162,7 @@ V1_read_next_line_ogr (struct Map_info *Map, struct line_pnts *line_p, struct li
 
 		Map->fInfo.ogr.feature_cache_id = (int) OGR_F_GetFID ( hFeature );
 		if ( Map->fInfo.ogr.feature_cache_id == OGRNullFID ) {
-		    G_warning ("OGR feature without ID." );
+		    G_warning (_("OGR feature without ID."));
 		}
 
 		/* Cache the feature */
@@ -197,12 +211,18 @@ V1_read_next_line_ogr (struct Map_info *Map, struct line_pnts *line_p, struct li
     return -2; /* not reached */
 }
 
-/*
- *  Read next line from OGR layer.
+/*!
+ * \fn int V2_read_next_line_ogr (struct Map_info *Map, struct line_pnts *line_p, struct line_cats *line_c)
+ * 
+ * \brief Read next line from OGR layer.
  *
- *  Returns  line type
- *           -2 no more features (EOF)
- *           -1 Out of memory
+ * \return  line type
+ * \return  -2 no more features (EOF)
+ * \return  -1 out of memory
+ *
+ * \param Map vector map layer
+ * \param line_p container used to store line points within
+ * \param line_c container used to store line categories within
  */
 int
 V2_read_next_line_ogr (struct Map_info *Map, struct line_pnts *line_p, struct line_cats *line_c)
@@ -212,9 +232,18 @@ V2_read_next_line_ogr (struct Map_info *Map, struct line_pnts *line_p, struct li
     return V2_read_line_ogr (Map, line_p, line_c, Map->next_line++);
 }
 
-/* Recursively descend to feature and read the part
- * return: 0 - OK
- *         1 - error
+/*!
+ * \fn int read_line ( struct Map_info *Map, OGRGeometryH hGeom, long offset, struct line_pnts *Points ) 
+ *
+ * \brief Recursively descend to feature and read the part
+ *
+ * \return 0 OK
+ * \return 1 error
+ *
+ * \param Map vector map layer
+ * \param hGeom OGR geometry
+ * \param offset given offset
+ * \param Points container used to store line pointes within
  */
 static int read_line ( struct Map_info *Map, OGRGeometryH hGeom, long offset, struct line_pnts *Points )
 {
@@ -257,18 +286,25 @@ static int read_line ( struct Map_info *Map, OGRGeometryH hGeom, long offset, st
 	    break;
 
 	default:
-	    G_warning ("OGR feature type %d not supported\n", eType);
+	    G_warning (_("OGR feature type [%d] not supported"), eType);
 	    break;
     }
     return 1;
 }
 
-/*
- *  Read line from layer on given offset.
+/*!
+ * \fn int V2_read_line_ogr (struct Map_info *Map, struct line_pnts *line_p,  struct line_cats *line_c, int line)
  *
- *  Returns  line type
- *           -2 End of table (last row)
- *           -1 Out of memory
+ * \brief Read line from layer on given offset.
+ *
+ * \return line type
+ * \return -2 end of table (last row)
+ * \return -1 out of memory
+ *
+ * \param Map vector map layer
+ * \param line_p container used to store line points within
+ * \param line_c container used to store line categories within
+ * \param line line id
  */
 int
 V2_read_line_ogr (struct Map_info *Map, struct line_pnts *line_p,  struct line_cats *line_c, int line)
@@ -326,7 +362,7 @@ V2_read_line_ogr (struct Map_info *Map, struct line_pnts *line_p,  struct line_c
 		
 	    hGeom =  OGR_F_GetGeometryRef ( Map->fInfo.ogr.feature_cache );
 	    if (hGeom == NULL) {
-		G_fatal_error("Cannot get feature geometry, FID = %ld", FID);
+		G_fatal_error(_("Cannot get feature geometry, FID [%ld]"), FID);
 	    }
 	    
 	    read_line ( Map, hGeom, Line->offset + 1, line_p );
