@@ -1,36 +1,45 @@
+#include <stdio.h>
 #include <grass/gis.h>
+#include <grass/glocale.h>
 #include "globals.h"
 
  
-/*****************************************************************************/
-void openfiles (CELL *rowbuf[3])
+void openfiles (char *r_name, char *g_name, char *b_name,
+                char *h_name, char *i_name, char *s_name,
+                int fd_input[3], int fd_output[3],
+                CELL *rowbuf[3])
 {
-  long             band;	/* loop index counting the bands            */
-  char tempstr[100];
-  char *mapset;
- 
-  /* open input files */
-  for (band=0; band<NBANDS; band++) {
-    if ((mapset = G_find_cell(inputfiles[band], "")) == NULL) {
-      sprintf(tempstr, "Unable to find input cell map <%s>.", 
-	      inputfiles[band]);
-      G_fatal_error(tempstr);
-    }
-    if ((fd_input[band] = G_open_cell_old(inputfiles[band],mapset)) < 0)
-      G_fatal_error("Error in opening input file");
-  }
- 
-  /* open output files */
-  for (band=0; band<NBANDS; band++) {
-    if ((fd_output[band] = G_open_cell_new(outputfiles[band])) < 0)
-      G_fatal_error("Error in opening output file");
-  }
- 
-  /* allocate the cell row buffer */
-  for (band=0; band<NBANDS; band++) {
-    if ((rowbuf[band]=G_allocate_cell_buf()) == NULL)
-      G_fatal_error("Unable to allocate the input row buffer");
-  }
+    char *mapset;
 
+    if ((mapset = G_find_cell (r_name, "")) == NULL)
+        G_fatal_error (_("Unable to find input cell map <%s>"), r_name);
+    if ((mapset = G_find_cell (g_name, "")) == NULL)
+        G_fatal_error (_("Unable to find input cell map <%s>"), g_name);
+    if ((mapset = G_find_cell (b_name, "")) == NULL)
+        G_fatal_error (_("Unable to find input cell map <%s>"), b_name);
+
+    if ((fd_input[0] = G_open_cell_old (r_name, mapset)) < 0)
+        G_fatal_error (_("Error in opening input file <%s>"), r_name);
+    if ((fd_input[1] = G_open_cell_old (g_name, mapset)) < 0)
+        G_fatal_error (_("Error in opening input file <%s>"), g_name);
+    if ((fd_input[2] = G_open_cell_old (b_name, mapset)) < 0)
+        G_fatal_error (_("Error in opening input file <%s>"), b_name);
+
+    /* open output files */
+    if ((fd_output[0] = G_open_cell_new (h_name)) < 0)
+        G_fatal_error (_("Error in opening output file <%s>"), h_name);
+    if ((fd_output[1] = G_open_cell_new (i_name)) < 0)
+        G_fatal_error (_("Error in opening output file <%s>"), i_name);
+    if ((fd_output[2] = G_open_cell_new (s_name)) < 0)
+        G_fatal_error (_("Error in opening output file <%s>"), s_name);
+
+    /* allocate the cell row buffer */
+    if ((rowbuf[0] = G_allocate_cell_buf ()) == NULL)
+        G_fatal_error (_("Unable to allocate the input row buffer"));
+    if ((rowbuf[1] = G_allocate_cell_buf ()) == NULL)
+        G_fatal_error (_("Unable to allocate the input row buffer"));
+    if ((rowbuf[2] = G_allocate_cell_buf ()) == NULL)
+        G_fatal_error (_("Unable to allocate the input row buffer"));
+
+    return;
 }
- 

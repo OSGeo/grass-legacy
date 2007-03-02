@@ -1,40 +1,13 @@
-#define NBANDS 3
+#ifndef __GLOBALS_H__
+#define __GLOBALS_H__
 
-#ifdef MAIN 
-
-int              Rgb2His;           /* flag for rgb-his/his-rgb conversion   */
-int              fd_input[NBANDS];  /* the input files                     */
-int              fd_output[NBANDS]; /* the ouput files                     */
-
-#else
-
-extern int       Rgb2His;          
-extern int       fd_input[NBANDS]; 
-extern int       fd_output[NBANDS];
-
-#endif
-
-
-
-#ifdef MAIN
-char inputfiles[NBANDS][255], outputfiles[NBANDS][255];
-
-#else
-extern char inputfiles[NBANDS][255], outputfiles[NBANDS][255];
-#endif
 
 /* closefiles.c */
-int closefiles(CELL *[NBANDS]);
-/* command.c */
-int save_args(int, char *);
-int set_default_args(void);
-/* getinput.c */
-void getinput(void);
+int closefiles(char *, char *, char *, int [3], CELL *[3]);
 /* his2rgb.c */
-void his2rgb(CELL *[NBANDS], int);
+void his2rgb(CELL *[3], int);
 /* openfiles.c */
-void openfiles(CELL *[3]);
-/* putoutput.c */
-int putoutput(void);
-/* rgb2his.c */
-void rgb2his(CELL *[NBANDS], int);
+void openfiles(char *, char *, char *, char *, char *, char *,
+               int [3], int [3], CELL *[3]);
+
+#endif /* __GLOBALS_H__ */
