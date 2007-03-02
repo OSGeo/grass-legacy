@@ -619,7 +619,7 @@ proc GmThematic::tlegend { mon id } {
 
 	if { [winfo exists .tlegend($mon,$id)] } {return}
 
-	set legendtitle [format [G_msg "Legend for Map %d, %s"] $mon, $opt($id,1,map)]
+	set legendtitle [format [G_msg "Legend for Map %d, %s"] $mon $opt($id,1,map)]
 	toplevel .tlegend($mon,$id)
     wm title .tlegend($mon,$id) $legendtitle
 
