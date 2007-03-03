@@ -100,8 +100,8 @@ int fft2(int i_sign, double (*data)[2], int NN, int dimc, int dimr)
 
 	for (i = 0; i < NN; i++)
 	{
-		c_re(data[i]) *= norm;
-		c_im(data[i]) *= norm;
+		data[i][0] *= norm;
+		data[i][1] *= norm;
 	}
 
 	return 0;
