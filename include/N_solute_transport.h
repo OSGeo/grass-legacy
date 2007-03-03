@@ -30,7 +30,8 @@ typedef struct
   N_array_3d *diff_y;		/*y part of the diffusion tensor */
   N_array_3d *diff_z;		/*z part of the diffusion tensor */
   N_array_3d *nf;		/*effective porosity*/
-  N_array_3d *q;		/*concentration sources and sinks */
+  N_array_3d *cs;		/*concentration sources and sinks */
+  N_array_3d *q;		/*well sources and sinks */
   N_array_3d *R;		/*retardation */
   N_array_3d *cin;		/*concentration input from wells */
 
@@ -51,13 +52,16 @@ typedef struct
   N_array_2d *diff_x;		/*x part of the diffusion tensor */
   N_array_2d *diff_y;		/*y part of the diffusion tensor */
   N_array_2d *nf;		/*effective porosity*/
-  N_array_2d *q;		/*concentration sources and sinks */
+  N_array_2d *cs;		/*concentration sources and sinks */
+  N_array_2d *q;		/*well sources and sinks */
   N_array_2d *R;		/*retardation */
   N_array_2d *cin;		/*concentration  */
 
   N_gradient_field_2d *grad;	/*velocity field*/
 
   N_array_2d *status;		/*active/inactive/dirichlet cell status */
+  N_array_2d *top;		/* top surface of the aquifer */
+  N_array_2d *bottom;		/* bottom surface of the aquifer */
 
   double dt;			/*calculation time */
   double ax, ay;		/*dispersivity length */

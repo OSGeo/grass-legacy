@@ -17,9 +17,17 @@
 
 #include <grass/gis.h>
 #include <grass/G3d.h>
+#include <grass/glocale.h>
 
 #ifndef _N_PDE_H_
 #define _N_PDE_H_
+
+#define N_SOLVER_DIRECT_GAUSS "gauss"
+#define N_SOLVER_DIRECT_LU "lu"
+#define N_SOLVER_ITERATIVE_JACOBI "jacobi"
+#define N_SOLVER_ITERATIVE_SOR "sor"
+#define N_SOLVER_ITERATIVE_CG "cg"
+#define N_SOLVER_ITERATIVE_BICGSTAB "bicgstab"
 
 #define N_NORMAL_LES 0
 #define N_SPARSE_LES 1
@@ -27,6 +35,7 @@
 #define N_CELL_INACTIVE 0
 #define N_CELL_ACTIVE 1
 #define N_CELL_DIRICHLET 2
+#define N_CELL_TRANSMISSION 3
 
 #define N_5_POINT_STAR 0
 #define N_7_POINT_STAR 1
@@ -40,6 +49,8 @@
 #define N_ARRAY_DIF 1 /* calc the difference between two arrays */
 #define N_ARRAY_MUL 2 /* multiply two arrays */
 #define N_ARRAY_DIV 3 /* array division, if div with 0 the NULL value is set */
+
+
 
 /* *************************************************************** */
 /* *************** LINEARE EQUATION SYSTEM PART ****************** */
@@ -91,13 +102,14 @@ extern void N_free_les (N_les * les);
  * */
 typedef struct
 {
+  int planimetric; /*If the projection is not planimetric (0), the array calculation is different for each row*/
+  double *area; /* the vector of area values for non-planimetric projection for each row*/
+  int dim; /* 2 or 3*/
 
   double dx;
   double dy;
   double dz;
 
-  double Ax;
-  double Ay;
   double Az;
 
   int depths;
@@ -107,6 +119,10 @@ typedef struct
 } N_geom_data;
 
 extern N_geom_data *N_alloc_geom_data ();
+extern void N_free_geom_data (N_geom_data *geodata);
+extern N_geom_data *N_init_geom_data_3d(G3D_Region * region3d, N_geom_data * geodata);
+extern N_geom_data *N_init_geom_data_2d(struct Cell_head * region, N_geom_data * geodata);
+extern inline double N_get_geom_data_area_of_cell(N_geom_data * geom, int row);
 
 
 /* *************************************************************** */
@@ -114,6 +130,8 @@ extern N_geom_data *N_alloc_geom_data ();
 /* *************************************************************** */
 extern int N_solver_gauss (N_les * les);
 extern int N_solver_lu (N_les * les);
+extern int N_solver_jacobi (N_les * L, int maxit, double sor, double error);
+extern int N_solver_SOR (N_les * L, int maxit, double sor, double error);
 extern int N_solver_cg (N_les * les, int maxit, double error);
 extern int N_solver_bicgstab (N_les * les, int maxit, double error);
 
@@ -121,9 +139,6 @@ extern int N_solver_bicgstab (N_les * les, int maxit, double error);
 /* *************** READING RASTER AND VOLUME DATA **************** */
 /* *************************************************************** */
 
-/*
- * \brief The 2d data array keeping the data for matrix assembling 
- * */
 typedef struct
 {
   int type;			/* which raster type CELL_TYPE, FCELL_TYPE, DCELL_TYPE */
@@ -155,9 +170,7 @@ extern N_array_2d * N_math_array_2d (N_array_2d * array1, N_array_2d * array2, N
 extern int N_convert_array_2d_null_to_zero (N_array_2d * a);
 extern N_array_2d * N_read_rast_to_array_2d (char *name, N_array_2d * array);
 extern void N_write_array_2d_to_rast (N_array_2d * array, char *name);
-/*
- * \brief The 3d data array keeping the data for matrix assembling 
- * */
+
 typedef struct
 {
   int type;			/* which raster type FCELL_TYPE, DCELL_TYPE */
@@ -318,6 +331,21 @@ extern N_les *N_assemble_les_2d (int les_type, N_geom_data * geom, N_array_2d * 
 				 void *data, N_les_callback_2d * callback);
 
 /* *************************************************************** */
+/* *************** GPDE STANDARD OPTIONS ************************* */
+/* *************************************************************** */
+
+typedef enum {
+  N_OPT_SOLVER_SYMM,     /*solver for symmetric, positive definite linear equation systems*/
+  N_OPT_SOLVER_UNSYMM,   /*solver for unsymmetric linear equation systems*/
+  N_OPT_MAX_ITERATIONS,  /*Maximum number of iteration used to solver the linear equation system*/
+  N_OPT_ITERATION_ERROR, /*Error break criteria for the iterative solver (jacobi, sor, cg or bicgstab)*/
+  N_OPT_SOR_VALUE,       /*The relaxation parameter used by the jacobi and sor solver for speedup or stabilizing*/
+  N_OPT_CALC_TIME	 /*The calculation time in seconds*/
+} N_STD_OPT;
+
+extern struct Option * N_define_standard_option (int opt);
+
+/* *************************************************************** */
 /* *************** METHODS FOR GRADIENT CALCULATION ************** */
 /* *************************************************************** */
 /*!
@@ -474,13 +502,13 @@ extern N_gradient_2d * N_alloc_gradient_2d();
 extern void N_free_gradient_2d(N_gradient_2d * grad);
 extern N_gradient_2d * N_create_gradient_2d(double NC, double SC, double WC, double EC);
 extern int N_copy_gradient_2d(N_gradient_2d * source, N_gradient_2d *target);
-extern N_gradient_2d * N_get_gradient_2d(N_gradient_field_2d *field, N_gradient_2d * gradient, int col, int row);
+extern inline N_gradient_2d * N_get_gradient_2d(N_gradient_field_2d *field, N_gradient_2d * gradient, int col, int row);
 
 extern N_gradient_3d * N_alloc_gradient_3d();
 extern void N_free_gradient_3d(N_gradient_3d * grad);
 extern N_gradient_3d * N_create_gradient_3d(double NC, double SC, double WC, double EC, double TC, double BC);
 extern int N_copy_gradient_3d(N_gradient_3d * source, N_gradient_3d *target);
-extern N_gradient_3d * N_get_gradient_3d(N_gradient_field_3d *field, N_gradient_3d * gradient, int col, int row, int depth);
+extern inline N_gradient_3d * N_get_gradient_3d(N_gradient_field_3d *field, N_gradient_3d * gradient, int col, int row, int depth);
 
 extern N_gradient_neighbours_x  * N_alloc_gradient_neighbours_x();
 extern void N_free_gradient_neighbours_x(N_gradient_neighbours_x  *grad);
@@ -513,13 +541,13 @@ extern int N_copy_gradient_neighbours_3d(N_gradient_neighbours_3d *source, N_gra
 extern N_gradient_field_2d * N_alloc_gradient_field_2d(int cols, int rows);
 extern void N_free_gradient_field_2d(N_gradient_field_2d *field);
 extern int N_copy_gradient_field_2d(N_gradient_field_2d *source, N_gradient_field_2d *target);
-extern N_gradient_field_2d * N_compute_gradient_field_2d(N_array_2d *pot, N_array_2d *relax_x,  N_array_2d *relax_y,N_geom_data *geom);
+extern N_gradient_field_2d * N_compute_gradient_field_2d(N_array_2d *pot, N_array_2d *weight_x,  N_array_2d *weight_y,N_geom_data *geom);
 extern void N_compute_gradient_field_components_2d(N_gradient_field_2d *field, N_array_2d *x_comp, N_array_2d *y_comp);
 
 extern N_gradient_field_3d * N_alloc_gradient_field_3d(int cols, int rows, int depths);
 extern void N_free_gradient_field_3d(N_gradient_field_3d *field);
 extern int N_copy_gradient_field_3d(N_gradient_field_3d *source, N_gradient_field_3d *target);
-extern N_gradient_field_3d * N_compute_gradient_field_3d(N_array_3d *pot, N_array_3d *relax_x, N_array_3d *relax_y, N_array_3d *relax_z, N_geom_data *geom);
+extern N_gradient_field_3d * N_compute_gradient_field_3d(N_array_3d *pot, N_array_3d *weight_x, N_array_3d *weight_y, N_array_3d *weight_z, N_geom_data *geom);
 extern void N_compute_gradient_field_components_3d(N_gradient_field_3d *field, N_array_3d *x_comp, N_array_3d *y_comp, N_array_3d *z_comp);
 
 extern N_gradient_neighbours_2d * N_get_gradient_neighbours_2d(N_gradient_field_2d *field, int col, int row);
