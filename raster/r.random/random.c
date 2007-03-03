@@ -5,10 +5,12 @@
 #include <grass/glocale.h>
 #include "local_proto.h"
 
-void cpvalue (struct RASTER_MAP_PTR *from, int fcol, 
-        struct RASTER_MAP_PTR *to, int tcol);
-double cell_as_dbl(struct RASTER_MAP_PTR *buf, int col);
-void set_to_null (struct RASTER_MAP_PTR *buf, int col);
+
+/* function prototypes */
+static void cpvalue (struct RASTER_MAP_PTR *, int, struct RASTER_MAP_PTR *, int);
+static double cell_as_dbl(struct RASTER_MAP_PTR *, int);
+static void set_to_null (struct RASTER_MAP_PTR *, int);
+
 
 int execute_random (struct rr_state *theState)
 {
@@ -17,7 +19,6 @@ int execute_random (struct rr_state *theState)
     struct Cell_head window;
     int nrows, ncols, row, col;
     int infd, outfd;
-    char msg[256], msg2[64];
     struct Map_info Out;
     struct field_info *fi;
     dbTable *table;
@@ -34,41 +35,34 @@ int execute_random (struct rr_state *theState)
     ncols = G_window_cols();
 
     /* open the data files, input raster should be set-up already */
-    infd = theState->fd_old;
-    if (infd < 0)
-    {
-        sprintf (msg, "%s: unable to open raster map [%s]", G_program_name(),
-                theState->inraster);
-        G_fatal_error (msg);
-        exit(1);
-    }
+    if ((infd = theState->fd_old) < 0)
+        G_fatal_error (_("%s: unable to open raster map [%s]"), 
+                    G_program_name(), theState->inraster);
+
     if (theState->outraster != NULL)
     {
-        outfd = G_open_raster_new (theState->outraster, theState->buf.type);
-        if (outfd < 0)
-        {
-            sprintf (msg, "%s: unable to create raster map [%s]", 
-                G_program_name(), theState->outraster);
-            G_fatal_error (msg);
-            exit(1);
-        }
+        if ((outfd = G_open_raster_new (theState->outraster, theState->buf.type)) < 0)
+            G_fatal_error (_("%s: unable to create raster map [%s]"), 
+                        G_program_name(), theState->outraster);
+
         theState->fd_new = outfd;
     }
-    if (theState->outsites)
+
+    if (theState->outvector)
     {
         if (theState->z_geometry)
-	  Vect_open_new (&Out, theState->outsites, 1);
+	  Vect_open_new (&Out, theState->outvector, 1);
 	else
-	  Vect_open_new (&Out, theState->outsites, 0);
+	  Vect_open_new (&Out, theState->outvector, 0);
         Vect_hist_command ( &Out );
 
         fi = Vect_default_field_info ( &Out, 1, NULL, GV_1TABLE );
 
         driver = db_start_driver_open_database ( fi->driver, Vect_subst_var(fi->database,&Out) );
         if ( !driver )
-            G_fatal_error ( "Cannot open database %s with driver %s", 
-                             Vect_subst_var(fi->database,&Out), fi->driver );
-        
+            G_fatal_error (_("Unable to open database %s with driver %s"), 
+                             Vect_subst_var(fi->database,&Out), fi->driver);
+
         Vect_map_add_dblink ( &Out, 1, NULL, fi->table, "cat", fi->database, fi->driver);
 
         table = db_alloc_table ( 2 );
@@ -92,17 +86,14 @@ int execute_random (struct rr_state *theState)
         db_init_string (&sql);
     }
 
-    sprintf (msg, _("Writing "));
-    if (theState->outraster)
-            sprintf (msg2, _("raster map [%s] "), theState->outraster);
-            strcat(msg,msg2);
-    if (theState->outsites && theState->outraster)
-            strcat (msg, "and ");
-    if (theState->outsites)
-            sprintf (msg2,_("vector map [%s] "), theState->outsites);
-            strcat(msg,msg2);
-    strcat (msg, "... ");
-    G_message(msg);
+    if (theState->outvector && theState->outraster)
+        G_message (_("Writing raster map [%s] and vector map [%s] ..."),
+                    theState->outraster, theState->outvector);
+    else if (theState->outraster)
+        G_message (_("Writing raster map [%s] ..."), theState->outraster);
+    else if (theState->outvector)
+        G_message (_("Writing vector map [%s] ..."), theState->outvector);
+
     G_percent (0, theState->nRand, 2);
 
     init_rand();
@@ -113,12 +104,8 @@ int execute_random (struct rr_state *theState)
     for (row = 0; row < nrows && nt ; row++)
     {
         if (G_get_raster_row (infd, theState->buf.data.v, row, theState->buf.type) < 0)
-        {
-            sprintf (msg, "%s: can't read raster map [%s]",
-                G_program_name(), theState->inraster);
-            G_fatal_error (msg);
-            exit(1);
-        }
+            G_fatal_error (_("%s: Unable to read raster map [%s]"),
+                        G_program_name(), theState->inraster);
 
         for (col = 0; col < ncols && nt ; col++)
         {
@@ -131,7 +118,7 @@ int execute_random (struct rr_state *theState)
                 if (is_null_value(theState->buf, col))
                         cpvalue(&theState->nulls, 0, &theState->buf, col);
 
-                if (theState->outsites)
+                if (theState->outvector)
                 {
                     double x, y, val;
                     char buf[500];
@@ -156,7 +143,7 @@ int execute_random (struct rr_state *theState)
                     db_set_string ( &sql, buf );
                     
                     if (db_execute_immediate (driver, &sql) != DB_OK )
-                        G_fatal_error ( "Cannot insert new row: %s", db_get_string ( &sql )  );
+                        G_fatal_error (_("Unable to insert new row: %s"), db_get_string (&sql));
 
                     cat++;
                 }
@@ -186,12 +173,12 @@ int execute_random (struct rr_state *theState)
     }
             
     if (nt > 0)
-        G_warning("%s: Only created %ld random sites",
+        G_warning (_("%s: Only created %ld random sites"),
                 G_program_name(), theState->nRand - nt);
 
     /* close files */
     G_close_cell(infd);
-    if (theState->outsites) {
+    if (theState->outvector) {
         db_commit_transaction ( driver );
         db_close_database_shutdown_driver ( driver );
         Vect_build (&Out, stderr);
@@ -204,7 +191,7 @@ int execute_random (struct rr_state *theState)
 } /* execute_random() */
 
 
-void cpvalue (struct RASTER_MAP_PTR *from, int fcol, 
+static void cpvalue (struct RASTER_MAP_PTR *from, int fcol, 
         struct RASTER_MAP_PTR *to, int tcol)
 {
     switch (from->type)
@@ -218,7 +205,8 @@ void cpvalue (struct RASTER_MAP_PTR *from, int fcol,
     }
 }
 
-double cell_as_dbl(struct RASTER_MAP_PTR *buf, int col)
+
+static double cell_as_dbl(struct RASTER_MAP_PTR *buf, int col)
 {
     switch(buf->type)
     {
@@ -229,10 +217,12 @@ double cell_as_dbl(struct RASTER_MAP_PTR *buf, int col)
         case DCELL_TYPE:
             return (double) buf->data.d[col];
     }
+
+    return 0.;
 }
 
 
-void set_to_null (struct RASTER_MAP_PTR *buf, int col)
+static void set_to_null (struct RASTER_MAP_PTR *buf, int col)
 {
     switch(buf->type)
     {
@@ -245,9 +235,9 @@ void set_to_null (struct RASTER_MAP_PTR *buf, int col)
     }
 }
 
+
 int
 is_null_value (struct RASTER_MAP_PTR buf, int col)
-
 {
     switch(buf.type)
     {

@@ -1,3 +1,6 @@
+#ifndef __LOCAL_PROTO_H__
+#define __LOCAL_PHOTO_H__
+
 /* raster_ptr.c: From Huidae Cho ...*/
 union RASTER_PTR
 {
@@ -18,7 +21,7 @@ int is_null_value(struct RASTER_MAP_PTR buf, int col);
 
 /* Put all the state infomation into a struct */
 struct rr_state {
-    char *inraster, *outraster, *mapset, *outsites;
+    char *inraster, *outraster, *mapset, *outvector;
     int  use_nulls, fd_old, fd_new;
     long nCells, nNulls, nRand;
     struct RASTER_MAP_PTR nulls, buf, min, max;
@@ -38,5 +41,8 @@ void init_rand(void);
 /* random.c */
 int execute_random(struct rr_state *);
 /* support.c */
-int make_support (struct rr_state *, int );
+int make_support (struct rr_state *, int, double);
+
+#endif /* __LOCAL_PROTO_H__ */
+
 /* vim: set softtabstop=4 shiftwidth=4 expandtab: */
