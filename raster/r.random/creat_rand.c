@@ -1,6 +1,9 @@
+#include <time.h>
 #include <stdlib.h>
+#include <unistd.h>
 #include <sys/types.h>
 #include <grass/config.h>
+
 
 #ifndef USE_RAND
 
@@ -9,7 +12,6 @@
 #define srand48(sv) (srand((unsigned)(sv)))
 #endif 
 
-extern time_t time();
 
 long 
 make_rand (void)
