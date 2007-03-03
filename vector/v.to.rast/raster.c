@@ -2,7 +2,6 @@
 #include <grass/Vect.h>
 #include "local.h"
 
-#define debug stderr
 
 struct Cell_head region, page;
 
@@ -11,6 +10,7 @@ static union
     CELL **cell;
     DCELL **dcell;
 } raster;
+
 static int max_rows;
 static int at_row;
 static CELL cat;
@@ -22,12 +22,14 @@ static DCELL *dcell;
 static char **null_flags;
 static char isnull;
 
+/* function prototypes */
+static int configure_plot (void);
 static int cell_dot (int,int);
 static int dcell_dot (int,int);
 static int cont (int,int);
 static int move (int,int);
-
 static int (*dot)();
+
 
 int 
 begin_rasterization (int nrows, int f)
@@ -35,8 +37,8 @@ begin_rasterization (int nrows, int f)
     int i,size;
     int pages;
 
-    G_suppress_warnings(1);
     /* otherwise get complaints about window changes */
+    G_suppress_warnings(1);
         
     format = f;
 
@@ -83,11 +85,8 @@ begin_rasterization (int nrows, int f)
     return pages;
 }
 
-#define DONE 1
-#define ERROR -1
-#define AGAIN 0
 
-int 
+static int 
 configure_plot (void)
 {
     int i,j;
@@ -96,14 +95,14 @@ configure_plot (void)
 
     nrows = region.rows - at_row;
     if (nrows <= 0)
-	return DONE;
+	return 1;
 
     if (nrows > max_rows)
 	nrows = max_rows;
     
     ncols = region.cols;
 
-/* zero the raster */
+    /* zero the raster */
     switch (format)
     {
     case USE_CELL:
@@ -122,16 +121,17 @@ configure_plot (void)
 	for (j = 0; j < ncols; j++)
 	    null_flags[i][j] = 1;
 
-/* change the region */
+    /* change the region */
     page.north = region.north - at_row * region.ns_res;
     page.south = page.north - nrows * region.ns_res;
     G_set_window (&page);
 
-/* configure the plot routines */
+    /* configure the plot routines */
     G_setup_plot (-0.5, page.rows-0.5, -0.5, page.cols-0.5, move, cont);
 
-    return AGAIN;
+    return 0;
 }
+
 
 int 
 output_raster (int fd)
@@ -144,19 +144,23 @@ output_raster (int fd)
 	{
 	case USE_CELL:
 	    cell = raster.cell[i];
+
 	    /* insert the NULL values */
 	    G_insert_c_null_values (cell, null_flags[i], page.cols);
-	    if (G_put_c_raster_row (fd, cell) < 0)  return ERROR;
+	    if (G_put_c_raster_row (fd, cell) < 0)
+                return -1;
 	    break;
-
 	case USE_DCELL:
 	    dcell = raster.dcell[i];
+
 	    /* insert the NULL values */
 	    G_insert_d_null_values (dcell, null_flags[i], page.cols);
-	    if (G_put_d_raster_row (fd, dcell) < 0)  return ERROR;
+	    if (G_put_d_raster_row (fd, dcell) < 0)
+                return -1;
 	    break;
 	}
     }
+
     return configure_plot();
 }
 
@@ -164,6 +168,7 @@ int set_cat (CELL x)
 {
     cat = x;
     if ( (isnull = ISNULL(&cat)) ) cat = 0;
+
     return 0;
 }
 
@@ -171,12 +176,7 @@ int set_dcat (DCELL x)
 {
     dcat = x;
     if ( (isnull = ISDNULL(&dcat)) ) dcat = 0;
-    return 0;
-}
 
-int raster_dot (int x, int y)
-{
-    dot(x,y);
     return 0;
 }
 
@@ -190,14 +190,24 @@ static int move (int x, int y)
 
 static int cont (int x, int y)
 {
-    if(cur_x < 0 && x < 0) goto set;
-    if(cur_y < 0 && y < 0) goto set;
-    if(cur_x >= page.cols && x >= page.cols) goto set;
-    if(cur_y >= page.rows && y >= page.rows) goto set;
+    if (cur_x < 0 && x < 0) {
+        move (x, y);
+        return 0;
+    }
+    if (cur_y < 0 && y < 0) {
+        move (x, y);
+        return 0;
+    }
+    if (cur_x >= page.cols && x >= page.cols) {
+        move (x, y);
+        return 0;
+    }
+    if (cur_y >= page.rows && y >= page.rows) {
+        move (x, y);
+        return 0;
+    }
 
     G_bresenham_line (cur_x, cur_y, x, y, dot);
-
-set:
     move (x, y);
 
     return 0;
@@ -209,6 +219,7 @@ static int cell_dot (int x, int y)
 	raster.cell[y][x] = cat;
 	null_flags[y][x] = isnull;
     }
+
     return 0;
 }
 
@@ -218,6 +229,7 @@ static int dcell_dot (int x, int y)
 	raster.dcell[y][x] = dcat;
 	null_flags[y][x] = isnull;
     }
+
     return 0;
 }
 

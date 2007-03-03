@@ -14,6 +14,7 @@
  *               for details.
  *
  *****************************************************************************/
+
 #include <stdio.h> 
 #include <stdlib.h>
 #include <grass/gis.h>
@@ -22,11 +23,11 @@
 #include "local.h"
 #include <grass/glocale.h>
 
+
 int main (int argc, char *argv[])
 {
     struct GModule *module;
     struct Option *input, *output, *rows, *col, *field_opt, *use_opt, *val_opt, *rgbcol_opt, *label_opt;
-    struct Flag *table_acolors_flag, *table_labels_flag;
     int    field, nrows, use, value_type;
     double value;
 
@@ -54,8 +55,8 @@ int main (int argc, char *argv[])
 			"\t\tz    - use z coordinate (points or contours only)\n"
 			"\t\tdir  - output as flow direction (lines only)");
 
-    col = G_define_option();
     /* for GRASS 7, IMHO this should be changed to "attrcolumn" */
+    col = G_define_option();
     col->key            = "column";
     col->type           = TYPE_STRING;
     col->key_desc       = "name";
@@ -93,8 +94,7 @@ int main (int argc, char *argv[])
     label_opt->type       = TYPE_STRING ;
     label_opt->required   = NO ;
     label_opt->multiple   = NO ;
-    label_opt->description=
-        _("Name of column used as raster category labels");
+    label_opt->description= _("Name of column used as raster category labels");
 
     if (G_parser (argc, argv))
 	exit(EXIT_FAILURE);
@@ -102,36 +102,40 @@ int main (int argc, char *argv[])
     field = atoi (field_opt->answer);
     nrows = atoi (rows->answer);
 
-    if ( use_opt->answer[0] == 'a' ) {
-	use = USE_ATTR;
-	if ( !col->answer )
-    	    G_fatal_error (_("Column parameter missing (or use value parameter)") );
-    } else if ( use_opt->answer[0] == 'c' ) {
-	if ( col->answer )
-    	    G_fatal_error (_("Column parameter cannot be combined with use of category values option") );
-	use = USE_CAT;
-    } else if ( use_opt->answer[0] == 'v' ) {
-	if ( col->answer )
-    	    G_fatal_error (_("Column parameter cannot be combined with use of value option") );
-	use = USE_VAL;
-    } else if ( use_opt->answer[0] == 'z' ) {
-	if ( col->answer )
-    	    G_fatal_error (_("Column parameter cannot be combined with use of z coordinate") );
-	use = USE_Z;
-    } else if ( use_opt->answer[0] == 'd' ) {
+    switch (use_opt->answer[0])
+    {
+    case 'a':
+        use = USE_ATTR;
+        if (!col->answer)
+    	    G_fatal_error (_("Column parameter missing (or use value parameter)"));
+    break;
+    case 'c':
+        use = USE_CAT;
+        if (col->answer)
+    	    G_fatal_error (_("Column parameter cannot be combined with use of category values option"));
+    break;
+    case 'v':
+        use = USE_VAL;
+        if (col->answer || label_opt->answer || rgbcol_opt->answer)
+    	    G_fatal_error (_("Column parameter cannot be combined with use of value option"));
+    break;
+    case 'z':
+        use = USE_Z;
+        if (col->answer || label_opt->answer || rgbcol_opt->answer)
+    	    G_fatal_error (_("Column parameter cannot be combined with use of z coordinate"));
+    break;
+    case 'd':
         use = USE_D;
+    break;
+    default:
+        G_fatal_error (_("Unknown option '%s'"), use_opt->answer);
+    break;
     }
 
     value = atof ( val_opt->answer );
-    if ( strchr ( val_opt->answer, '.') )
-	value_type = USE_DCELL;
-    else
-	value_type = USE_CELL;
-	
+    value_type = (strchr (val_opt->answer, '.')) ? USE_DCELL : USE_CELL;
 
-    exit( vect_to_rast (input->answer, output->answer, field, col->answer, nrows, use, value, value_type, rgbcol_opt->answer, label_opt->answer));
+    return vect_to_rast (input->answer, output->answer, field,
+                    col->answer, nrows, use, value, value_type,
+                    rgbcol_opt->answer, label_opt->answer);
 }
-
-
-
-
