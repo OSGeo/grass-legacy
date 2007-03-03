@@ -1,7 +1,8 @@
 <h2>DESCRIPTION</h2>
 
 <em>v.to.rast</em> transforms GRASS vector map layers into GRASS raster map
-layer format.
+layer format. Optionally, attributes can be converted into raster category
+labels.
 
 
 <h2>NOTES</h2>
@@ -56,6 +57,9 @@ resultant raster map.
 <P>
 <P>
 <b>Flow directions</b> are given in degrees counterclockwise from east.
+<P>
+<P>
+Raster category labels are supported for all of <em>use=</em> except <em>use=z</em>.
 
 <h2>EXAMPLES</h2>
 
@@ -81,6 +85,15 @@ v.to.rast in=streams out=streamsdir use=dir
 </pre></div>
 </p>
 
+<P>
+<P>
+<em>3. Convert a vector polygon map to raster including descriptive labels (Spearfish)</em><br>
+<div class="code"><pre>
+v.to.rast in=fields out=myfields use=attr col=cat labelcol=label
+r.cats myfields
+</pre></div>
+</p>
+
 <h2>SEE ALSO</h2>
 <em>
 <a HREF="db.describe.html">db.describe</a>,
@@ -92,10 +105,11 @@ v.to.rast in=streams out=streamsdir use=dir
 
 Original code: Michael Shapiro, U.S. Army Construction Engineering Research Laboratory
 <br>
-GRASS 6 updates: Radim Blazek, ITC-Irst, Trento, Italy
+GRASS 6.0 updates: Radim Blazek, ITC-irst, Trento, Italy
 <br>
 Stream directions: Jaro Hofierka and Helena Mitasova
-
+<br>
+GRASS 6.3 code cleanup and label support: Brad Douglas
 <p>
 <p><i>Last changed: $Date$</i></p>
 
