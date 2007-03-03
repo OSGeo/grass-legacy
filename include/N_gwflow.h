@@ -24,16 +24,16 @@
 #define N_GW_UNCONFINED 1	/*unconfined groundwater */
 
 /*!
- * \brief This data structure holds all data needed to make the 
+ * \brief This data structure contains all data needed to compute the 
  * groundwater mass balance in three dimension 
  * */
 typedef struct
 {
   N_array_3d *phead;		/*!piezometric head */
   N_array_3d *phead_start;	/*!start conditions */
-  N_array_3d *kf_x;		/*!x part of the permeability tensor */
-  N_array_3d *kf_y;		/*!y part of the permeability tensor */
-  N_array_3d *kf_z;		/*!z part of the permeability tensor */
+  N_array_3d *hc_x;		/*!x part of the hydraulic conductivity tensor */
+  N_array_3d *hc_y;		/*!y part of the hydraulic conductivity tensor */
+  N_array_3d *hc_z;		/*!z part of the hydraulic conductivity tensor */
   N_array_3d *q;		/*!sources and sinks */
   N_array_2d *r;		/*!reacharge at the top of the gw leayer */
   N_array_3d *s;		/*!specific yield */
@@ -46,22 +46,22 @@ typedef struct
 } N_gwflow_data3d;
 
 /*!
- * \brief This data structure holds all data needed to make the 
+ * \brief This data structure contains all data needed to compute the 
  * groundwater mass balance in two dimension 
  * */
 typedef struct
 {
   N_array_2d *phead;		/*!piezometric head */
   N_array_2d *phead_start;	/*!start conditions */
-  N_array_2d *kf_x;		/*!x part of the permeability tensor */
-  N_array_2d *kf_y;		/*!y part of the permeability tensor */
+  N_array_2d *hc_x;		/*!x part of the hydraulic conductivity tensor */
+  N_array_2d *hc_y;		/*!y part of the hydraulic conductivity tensor */
   N_array_2d *q;		/*!sources and sinks */
   N_array_2d *r;		/*!reacharge at the top of the gw leayer */
   N_array_2d *s;		/*!specific yield */
   N_array_2d *nf;		/*!effective porosity */
 
-  N_array_2d *top;		/*!effective top surface of the quifer */
-  N_array_2d *bottom;		/*!effective bottom of the aquifer */
+  N_array_2d *top;		/*!top surface of the quifer */
+  N_array_2d *bottom;		/*!bottom of the aquifer */
 
   N_array_2d *status;		/*!active/inactive/dirichlet cell status */
 
