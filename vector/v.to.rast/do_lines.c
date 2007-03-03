@@ -16,7 +16,7 @@ static double deg_angle (double, double, double, double);
 int do_lines ( struct Map_info *Map, struct line_pnts *Points, dbCatValArray *Cvarr, int ctype, int field,
 	       int use, double value, int value_type)
 {
-    double min, max, u;
+    double min = 0, max, u;
     int nlines, type, cat, no_contour = 0;
     int index;
     int count, j;
