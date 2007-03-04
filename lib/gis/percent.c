@@ -102,7 +102,7 @@ int G_percent2 (long n,long d,int s, FILE *out)
 	: (int) (100 * n / d);
 
     /* be verbose only 1> */
-    if (G_verbose() < 1)
+    if (format == G_INFO_FORMAT_SILENT || G_verbose() < 1)
         return 0;
 
     if (n <= 0 || n >= d || x > prev + s)
