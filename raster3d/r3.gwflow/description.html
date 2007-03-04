@@ -73,11 +73,11 @@ g.region res=25 res3=25 t=100 b=0 n=1000 s=0 w=0 e=1000
 r3.mapcalc "phead=if(row() == 1 && depth() == 4, 50, 40)"
 r3.mapcalc "status=if(row() == 1 && depth() == 4, 2, 1)"
 r3.mapcalc "well=if(row() == 20 && col() == 20 , -0.00025, 0)"
-r3.mapcalc "perm=0.00025"
+r3.mapcalc "hydcond=0.00025"
 r3.mapcalc "syield=0.0001"
 
-r3.gwflow --o -s solver=0 phead=phead status=status hc_x=perm hc_y=perm  \
-hc_z=perm q=well s=syield r=reacharge output=gwresult dt=8640000 velocity=gwresult_velocity
+r3.gwflow --o -s solver=cg phead=phead status=status hc_x=hydcond hc_y=hydcond  \
+hc_z=hydcond q=well s=syield r=reacharge output=gwresult dt=8640000 velocity=gwresult_velocity
 
 # The data can be visulaized with paraview when exported with r3.out.vtk
 r3.out.vtk -p in=gwresult,status vector=gwresult_velocity_x,gwresult_velocity_y,gwresult_velocity_z out=/tmp/gwdata3d.vtk

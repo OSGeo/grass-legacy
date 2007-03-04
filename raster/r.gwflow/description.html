@@ -74,7 +74,7 @@ g.region res=25 res3=25 t=100 b=0 n=1000 s=0 w=0 e=1000
 r.mapcalc "phead=if(row() == 1 , 50, 40)"
 r.mapcalc "status=if(row() == 1 , 2, 1)"
 r.mapcalc "well=if(row() == 20 && col() == 20 , -0.001, 0)"
-r.mapcalc "perm=0.00025"
+r.mapcalc "hydcond=0.00025"
 r.mapcalc "reacharge=0"
 r.mapcalc "top_conf=20.0"
 r.mapcalc "top_unconf=70.0"
@@ -84,13 +84,13 @@ r.mapcalc "poros=0.15"
 r.mapcalc "syield=0.0001"
 
 #confined groundwater flow with cg solver and sparse matrix
-r.gwflow --o -s solver=0 top=top_conf bottom=bottom phead=phead status=status \
-hc_x=perm hc_y=perm q=well s=syield r=reacharge output=gwresult_conf \
+r.gwflow --o -s solver=cg top=top_conf bottom=bottom phead=phead status=status \
+hc_x=hydcond hc_y=hydcond q=well s=syield r=reacharge output=gwresult_conf \
 dt=8640000 type=confined velocity=gwresult_conf_velocity
 
 #unconfined groundwater flow with cg solver and sparse matrix
-r.gwflow --o -s solver=0 top=top_unconf bottom=bottom phead=phead \
-status=status hc_x=perm hc_y=perm q=well s=poros r=reacharge \
+r.gwflow --o -s solver=cg top=top_unconf bottom=bottom phead=phead \
+status=status hc_x=hydcond hc_y=hydcond q=well s=poros r=reacharge \
 output=gwresult_unconf dt=8640000 type=unconfined velocity=gwresult_unconf_velocity
 
 # The data can be visulaized with paraview when exported with r.out.vtk
