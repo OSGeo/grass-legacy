@@ -59,9 +59,9 @@ int main (int argc, char **argv)
 	rows = G_window_rows();
 	cols = G_window_cols();
 
-	openfiles (opt_hue->answer, opt_int->answer, opt_sat->answer,
-                   opt_red->answer, opt_green->answer, opt_blue->answer,
-                   fd_input, fd_output, rowbuffer);
+    openfiles (opt_hue->answer, opt_int->answer, opt_sat->answer,
+               opt_red->answer, opt_green->answer, opt_blue->answer,
+               fd_input, fd_output, rowbuffer);
 
 	for (i = 0; i < rows; i++)
 	{

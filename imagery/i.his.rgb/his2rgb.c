@@ -36,7 +36,7 @@ double   hue;                   /* hue                                       */
 double   savehue;               /* save the hue for future processing        */
 
  
- for (sample = 0; sample < columns; sample++)
+    for (sample = 0; sample < columns; sample++)
     {
     red = green = blue = 0.0;
     scalei = (double) rowbuffer[1][sample];
@@ -136,4 +136,4 @@ double   savehue;               /* save the hue for future processing        */
    rowbuffer[1][sample] = (unsigned char) (green +0.5);
    rowbuffer[2][sample] = (unsigned char) (blue + 0.5);
    }
-  }
+}
