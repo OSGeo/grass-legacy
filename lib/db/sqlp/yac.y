@@ -25,6 +25,7 @@
 #include <grass/sqlp.h>
 
 #define YYDEBUG 1
+#define YYERROR_VERBOSE 1
 
 %}
 	
