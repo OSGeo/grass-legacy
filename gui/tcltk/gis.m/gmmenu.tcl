@@ -441,7 +441,7 @@ set descmenu [subst  {
 	{cascad {[G_msg "Neighborhood analysis"]} {} "" $tmenu {			
 		{command {[G_msg "Locate nearest features to points or centroids"]} {} "v.distance" {} -command {execute v.distance }}
 		{command {[G_msg "Generate Thiessen polygons around points (Voronoi diagram)"]} {} "v.voronoi" {} -command {execute v.voronoi }}
-		{command {[G_msg "Connect points to create Delaunay triangles"]} {} "v.delauney" {} -command {execute v.delaunay }}
+		{command {[G_msg "Connect points to create Delaunay triangles"]} {} "v.delaunay" {} -command {execute v.delaunay }}
 	}}
 	{cascad {[G_msg "Network analysis"]} {} "" $tmenu {			
 		{command {[G_msg "Allocate subnets"]} {} "v.net.alloc" {} -command {execute v.net.alloc }}
