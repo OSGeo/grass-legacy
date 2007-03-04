@@ -7,7 +7,7 @@ raster maps.
 <br>
 <br>
 This module calculates the piezometric head and optionally the 
-filter velocity field, based on the permeability and the piezometric head. 
+filter velocity field, based on the hydraulic conductivity and the piezometric head. 
 The vector components can be visualized with paraview if they are exported
 with r.out.vtk.
 <br>
@@ -15,14 +15,14 @@ with r.out.vtk.
 The groundwater flow will always be calculated transient. 
 If you want to calculate stady state, set the timestep 
 to a large number (billions of seconds) or set the 
-specific yield/ effective porosity raster maps to zeo.
+specific yield/ effective porosity raster maps to zero.
 
 
 <H2>NOTES</H2>
 
 The groundwater flow calculation is based on Darcy's law and a 
 finite volume discretization. The groundwater flow partial 
-differential equation is of the following form:
+differential equation has the following form:
 
 <p>
 (dh/dt)*S = (ht - b) * Kxx * (d^2h/dx^2) + (ht -b) * Kyy * (d^2h/dy^2) + q
@@ -33,8 +33,8 @@ differential equation is of the following form:
 <li>dt -- the time step for transient calculation in seconds [s]</li>
 <li>S -- the specific yield or the effective porosity no dimension [.]</li>
 <li>b -- the bottom surface of the aquifer meters [m]</li>
-<li>Kxx -- the permeability tensor part in x direction in meter per second [m/s]</li>
-<li>Kyy -- the permeability tensor part in y direction in meter per seconds [m/s]</li>
+<li>Kxx -- the hydraulic conductivity tensor part in x direction in meter per second [m/s]</li>
+<li>Kyy -- the hydraulic conductivity tensor part in y direction in meter per seconds [m/s]</li>
 <li>q - inner source in meter per second [m/s]</li>
 <li>x - distance between cells in x direction [m]</li>
 <li>y - distance between cells in y direction [m]</li>
@@ -43,7 +43,7 @@ differential equation is of the following form:
 <br>
 <br>
 Two different boundary conditions are implemented, 
-the Dirichlet and Neumann conditions. 
+the Dirichlet and Neumann conditions. By default the calculation area is surrounded by homogeneous Neumann boundary conditions.
 The calculation and boundary status of single cells can be set with the status map, 
 the following states are supportet:
 
@@ -85,12 +85,12 @@ r.mapcalc "syield=0.0001"
 
 #confined groundwater flow with cg solver and sparse matrix
 r.gwflow --o -s solver=0 top=top_conf bottom=bottom phead=phead status=status \
-kf_x=perm kf_y=perm q=well s=syield r=reacharge output=gwresult_conf \
+hc_x=perm hc_y=perm q=well s=syield r=reacharge output=gwresult_conf \
 dt=8640000 type=confined velocity=gwresult_conf_velocity
 
 #unconfined groundwater flow with cg solver and sparse matrix
 r.gwflow --o -s solver=0 top=top_unconf bottom=bottom phead=phead \
-status=status kf_x=perm kf_y=perm q=well s=poros r=reacharge \
+status=status hc_x=perm hc_y=perm q=well s=poros r=reacharge \
 output=gwresult_unconf dt=8640000 type=unconfined velocity=gwresult_unconf_velocity
 
 # The data can be visulaized with paraview when exported with r.out.vtk
@@ -98,6 +98,9 @@ r.out.vtk -p in=gwresult_conf,status vector=gwresult_conf_velocity_x,gwresult_co
 r.out.vtk -p elevation=gwresult_unconf in=gwresult_unconf,status vector=gwresult_unconf_velocity_x,gwresult_unconf_velocity_y,null out=/tmp/gwdata_unconf2d.vtk
 
 #now load the data into paraview
+paraview --data=/tmp/gwdata_conf2d.vtk &
+paraview --data=/tmp/gwdata_unconf2d.vtk &
+
 
 </pre></div>
 
