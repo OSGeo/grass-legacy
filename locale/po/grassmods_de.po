@@ -8896,7 +8896,7 @@ msgstr "Kann die aktuellen Fensterparameter nicht lesen."
 #: ../raster/r.cost/main.c:270
 msgid "Must specify exactly one of start_points, start_rast or coordinate"
 msgstr ""
-"Es muss exact entweder start_points, start_rast oder coordiante angegeben "
+"Es muss exakt entweder start_points, start_rast oder coordinate angegeben "
 "werden."
 
 #: ../raster/r.cost/main.c:275 ../raster/r.cost/main.c:526
