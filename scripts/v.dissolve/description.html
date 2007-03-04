@@ -2,7 +2,9 @@
 
 The <EM>v.dissolve</EM> module is used to merge adjacent areas in a vector
 map which share the same category value. The resulting merged area(s) retains
-this category value.
+this category value. Optionally, a column can be defined which is used
+to find adjacent polygons with identical attribute for common boundary
+dissolving.
 
 GRASS defines a vector area as composite entity consisting of a set of
 closed boundaries and a centroid. The centroids must contain a category
@@ -15,7 +17,8 @@ Refer to <em>v.category</em> for more details.
 <P>
 Merging of areas can also be accomplished using "<tt><em>v.extract</em>
 <b>-d</b></tt>" which provides some additional options. 
-In fact, <EM>v.dissolve</EM> is simply a front-end to that module.
+In fact, <EM>v.dissolve</EM> is simply a front-end to that module. The use
+of the <EM>column</EM> parameter adds a call to <EM>v.reclass</EM> before.
 
 <p>
 <EM>(GRASS Shell Script)</EM>
@@ -33,11 +36,8 @@ v.dissolve input=undissolved output=dissolved
 # check column names:
 v.info -c polbnda_italy
 
-# reclass based on desired column:
-v.reclass polbnda_italy out=polbnda_italy_recl_nam col=vmap_nam
-
-# dissolve:
-v.dissove input=polbnda_italy_recl_nam output=pol_italy_regions
+# dissolve based on column attributes:
+v.dissove input=polbnda_italy_recl_nam output=pol_italy_regions col=vmap_nam
 </pre></div>
 <br>
 
@@ -54,11 +54,8 @@ v.patch -e `g.mlist type=vect pat="clc2000_*" sep=,` out=clc2000_patched
 # remove duplicated tile boundaries:
 v.clean clc2000_patched out=clc2000_clean tool=snap,break,rmdupl thresh=.01
 
-# reclass based on desired column:
-v.reclass clc2000_clean out=clc2000_recl col=CODE_00
-
-# dissolve:
-v.dissolve input=clc2000_recl output=clc2000_final
+# dissolve based on column attributes:
+v.dissolve input=clc2000_clean output=clc2000_final col=CODE_00
 </pre></div>
 
 <H2>SEE ALSO</H2>
@@ -72,7 +69,8 @@ v.dissolve input=clc2000_recl output=clc2000_final
 
 <H2>AUTHORS</H2>
 
-module: M. Hamish Bowman, Dept. Marine Science, Otago University, New Zealand
+module: M. Hamish Bowman, Dept. Marine Science, Otago University, New Zealand<br>
+Markus Neteler for column support
 <BR>
 help page: Trevor Wiens
 
