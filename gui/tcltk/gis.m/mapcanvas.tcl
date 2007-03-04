@@ -892,7 +892,7 @@ proc MapCanvas::pointer { mon } {
 	variable can
 	variable b1east
 	variable b1north 
-	global coords($mon)
+	global coords
 	global pctentry
 	global pixelentry
 	global geogentry
