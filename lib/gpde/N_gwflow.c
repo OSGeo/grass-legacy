@@ -24,9 +24,11 @@
 /*!
  * \brief Alllocate memory for the groundwater calculation data structure in 3 dimensions
  *
- * The groundwater calculation data structure will be allocated and
- * all appendant 3d arrays. The offset for the 3d arrays  is 1 because 
- * a 7 point star scheme is used to create the mass balance.
+ * The groundwater calculation data structure will be allocated including
+ * all appendant 3d and 2d arrays. The offset for the 3d arrays is one
+ * to establish homogeneous Neumann boundary conditions at the calculation area border.
+ * This data structure is used to create a linear equation system based on the computation of
+ * groundwater flow in porous media with the finite volume method.
  *
  * \param cols   int
  * \param rows   int
@@ -42,9 +44,9 @@ N_gwflow_data3d *N_alloc_gwflow_data3d(int cols, int rows, int depths)
     data->phead = N_alloc_array_3d(cols, rows, depths, 1, DCELL_TYPE);
     data->phead_start = N_alloc_array_3d(cols, rows, depths, 1, DCELL_TYPE);
     data->status = N_alloc_array_3d(cols, rows, depths, 1, DCELL_TYPE);
-    data->kf_x = N_alloc_array_3d(cols, rows, depths, 1, DCELL_TYPE);
-    data->kf_y = N_alloc_array_3d(cols, rows, depths, 1, DCELL_TYPE);
-    data->kf_z = N_alloc_array_3d(cols, rows, depths, 1, DCELL_TYPE);
+    data->hc_x = N_alloc_array_3d(cols, rows, depths, 1, DCELL_TYPE);
+    data->hc_y = N_alloc_array_3d(cols, rows, depths, 1, DCELL_TYPE);
+    data->hc_z = N_alloc_array_3d(cols, rows, depths, 1, DCELL_TYPE);
     data->q = N_alloc_array_3d(cols, rows, depths, 1, DCELL_TYPE);
     data->s = N_alloc_array_3d(cols, rows, depths, 1, DCELL_TYPE);
     data->nf = N_alloc_array_3d(cols, rows, depths, 1, DCELL_TYPE);
@@ -57,7 +59,7 @@ N_gwflow_data3d *N_alloc_gwflow_data3d(int cols, int rows, int depths)
 /* ********************* N_free_gwflow_data3d ******************** */
 /* *************************************************************** */
 /*!
- * \brief Release the memory for the groundwater calculation data structure in 3 dimensions
+ * \brief Release the memory of the groundwater flow data structure in three dimensions
  *
  * \param data N_gwflow_data3d *
  * \return void *
@@ -68,9 +70,9 @@ void N_free_gwflow_data3d(N_gwflow_data3d * data)
     N_free_array_3d(data->phead);
     N_free_array_3d(data->phead_start);
     N_free_array_3d(data->status);
-    N_free_array_3d(data->kf_x);
-    N_free_array_3d(data->kf_y);
-    N_free_array_3d(data->kf_z);
+    N_free_array_3d(data->hc_x);
+    N_free_array_3d(data->hc_y);
+    N_free_array_3d(data->hc_z);
     N_free_array_3d(data->q);
     N_free_array_3d(data->s);
     N_free_array_3d(data->nf);
@@ -78,7 +80,7 @@ void N_free_gwflow_data3d(N_gwflow_data3d * data)
 
     G_free(data);
 
-    data = NULL;;
+    data = NULL;
 
     return;
 }
@@ -88,10 +90,12 @@ void N_free_gwflow_data3d(N_gwflow_data3d * data)
 /* *************************************************************** */
 /*!
  * \brief Alllocate memory for the groundwater calculation data structure in 2 dimensions
- *
- * The groundwater calculation data structure will be allocated and
- * all appendant 2d arrays. The offset for the 2d arrays  is 1 because 
- * a 5 point star scheme is used to create the mass balance.
+ * *
+ * The groundwater calculation data structure will be allocated including
+ * all appendant 2d arrays. The offset for the 3d arrays is one
+ * to establish homogeneous Neumann boundary conditions at the calculation area border.
+ * This data structure is used to create a linear equation system based on the computation of
+ * groundwater flow in porous media with the finite volume method.
  *
  * \param cols int
  * \param rows int
@@ -106,8 +110,8 @@ N_gwflow_data2d *N_alloc_gwflow_data2d(int cols, int rows)
     data->phead = N_alloc_array_2d(cols, rows, 1, DCELL_TYPE);
     data->phead_start = N_alloc_array_2d(cols, rows, 1, DCELL_TYPE);
     data->status = N_alloc_array_2d(cols, rows, 1, DCELL_TYPE);
-    data->kf_x = N_alloc_array_2d(cols, rows, 1, DCELL_TYPE);
-    data->kf_y = N_alloc_array_2d(cols, rows, 1, DCELL_TYPE);
+    data->hc_x = N_alloc_array_2d(cols, rows, 1, DCELL_TYPE);
+    data->hc_y = N_alloc_array_2d(cols, rows, 1, DCELL_TYPE);
     data->q = N_alloc_array_2d(cols, rows, 1, DCELL_TYPE);
     data->s = N_alloc_array_2d(cols, rows, 1, DCELL_TYPE);
     data->nf = N_alloc_array_2d(cols, rows, 1, DCELL_TYPE);
@@ -122,7 +126,7 @@ N_gwflow_data2d *N_alloc_gwflow_data2d(int cols, int rows)
 /* ****************** N_free_gwflow_data2d *********************** */
 /* *************************************************************** */
 /*!
- * \brief Release the memory for the groundwater calculation data structure in 2 dimensions
+ * \brief Release the memory of the groundwater flow data structure in two dimensions
  *
  * \param data N_gwflow_data2d *
  * \return void
@@ -132,8 +136,8 @@ void N_free_gwflow_data2d(N_gwflow_data2d * data)
     N_free_array_2d(data->phead);
     N_free_array_2d(data->phead_start);
     N_free_array_2d(data->status);
-    N_free_array_2d(data->kf_x);
-    N_free_array_2d(data->kf_y);
+    N_free_array_2d(data->hc_x);
+    N_free_array_2d(data->hc_y);
     N_free_array_2d(data->q);
     N_free_array_2d(data->s);
     N_free_array_2d(data->nf);
@@ -152,11 +156,11 @@ void N_free_gwflow_data2d(N_gwflow_data2d * data)
 /* ***************** N_callback_gwflow_3d ************************ */
 /* *************************************************************** */
 /*!
- * \brief This callback function creates the mass bilanz of a 7 point star
+ * \brief This callback function creates the mass balance of a 7 point star
  *
- * The mass balance is the the common groundwater flow equation based
- * on darcy. 
- * \f[Ss \frac{\partial h}{\partial t} = \nabla {\bf K} \nabla h - q \f]
+ * The mass balance is based on the common groundwater flow equation:
+ *
+ * \f[Ss \frac{\partial h}{\partial t} = \nabla {\bf K} \nabla h + q \f]
  *
  * This equation is discretizised with the finite volume method in three dimensions.
  *
@@ -172,11 +176,11 @@ void N_free_gwflow_data2d(N_gwflow_data2d * data)
 N_data_star *N_callback_gwflow_3d(void *gwdata, N_geom_data * geom, int col,
 				  int row, int depth)
 {
-    double kf_e = 0, kf_w = 0, kf_n = 0, kf_s = 0, kf_t = 0, kf_b = 0;
+    double hc_e = 0, hc_w = 0, hc_n = 0, hc_s = 0, hc_t = 0, hc_b = 0;
     double dx, dy, dz, Ax, Ay, Az;
-    double kf_x, kf_y, kf_z;
-    double kf_xw, kf_yn, kf_zt;
-    double kf_xe, kf_ys, kf_zb;
+    double hc_x, hc_y, hc_z;
+    double hc_xw, hc_yn, hc_zt;
+    double hc_xe, hc_ys, hc_zb;
     double hc_start;
     double Ss, r, nf, q;
     double C, W, E, N, S, T, B, V;
@@ -189,36 +193,36 @@ N_data_star *N_callback_gwflow_3d(void *gwdata, N_geom_data * geom, int col,
     dx = geom->dx;
     dy = geom->dy;
     dz = geom->dz;
-    Ax = geom->dy * geom->dz;
+    Az = N_get_geom_data_area_of_cell(geom, row);
     Ay = geom->dx * geom->dz;
-    Az = geom->dx * geom->dy;
+    Ax = geom->dz * geom->dy;
 
     /*read the data from the arrays */
     hc_start = N_get_array_3d_d_value(data->phead_start, col, row, depth);
 
-    kf_x = N_get_array_3d_d_value(data->kf_x, col, row, depth);
-    kf_y = N_get_array_3d_d_value(data->kf_y, col, row, depth);
-    kf_z = N_get_array_3d_d_value(data->kf_z, col, row, depth);
+    hc_x = N_get_array_3d_d_value(data->hc_x, col, row, depth);
+    hc_y = N_get_array_3d_d_value(data->hc_y, col, row, depth);
+    hc_z = N_get_array_3d_d_value(data->hc_z, col, row, depth);
 
-    kf_xw = N_get_array_3d_d_value(data->kf_x, col - 1, row, depth);
-    kf_xe = N_get_array_3d_d_value(data->kf_x, col + 1, row, depth);
-    kf_yn = N_get_array_3d_d_value(data->kf_y, col, row - 1, depth);
-    kf_ys = N_get_array_3d_d_value(data->kf_y, col, row + 1, depth);
-    kf_zt = N_get_array_3d_d_value(data->kf_z, col, row, depth + 1);
-    kf_zb = N_get_array_3d_d_value(data->kf_z, col, row, depth - 1);
+    hc_xw = N_get_array_3d_d_value(data->hc_x, col - 1, row, depth);
+    hc_xe = N_get_array_3d_d_value(data->hc_x, col + 1, row, depth);
+    hc_yn = N_get_array_3d_d_value(data->hc_y, col, row - 1, depth);
+    hc_ys = N_get_array_3d_d_value(data->hc_y, col, row + 1, depth);
+    hc_zt = N_get_array_3d_d_value(data->hc_z, col, row, depth + 1);
+    hc_zb = N_get_array_3d_d_value(data->hc_z, col, row, depth - 1);
 
-    if (kf_xw + kf_x != 0)
-	kf_w = 2 * kf_xw * kf_x / (kf_xw + kf_x);
-    if (kf_xe + kf_x != 0)
-	kf_e = 2 * kf_xe * kf_x / (kf_xe + kf_x);
-    if (kf_yn + kf_y != 0)
-	kf_n = 2 * kf_yn * kf_y / (kf_yn + kf_y);
-    if (kf_ys + kf_y != 0)
-	kf_s = 2 * kf_ys * kf_y / (kf_ys + kf_y);
-    if (kf_zt + kf_z != 0)
-	kf_t = 2 * kf_zt * kf_z / (kf_zt + kf_z);
-    if (kf_zb + kf_z != 0)
-	kf_b = 2 * kf_zb * kf_z / (kf_zb + kf_z);
+    if (hc_xw + hc_x != 0)
+	hc_w = 2 * hc_xw * hc_x / (hc_xw + hc_x);
+    if (hc_xe + hc_x != 0)
+	hc_e = 2 * hc_xe * hc_x / (hc_xe + hc_x);
+    if (hc_yn + hc_y != 0)
+	hc_n = 2 * hc_yn * hc_y / (hc_yn + hc_y);
+    if (hc_ys + hc_y != 0)
+	hc_s = 2 * hc_ys * hc_y / (hc_ys + hc_y);
+    if (hc_zt + hc_z != 0)
+	hc_t = 2 * hc_zt * hc_z / (hc_zt + hc_z);
+    if (hc_zb + hc_z != 0)
+	hc_b = 2 * hc_zb * hc_z / (hc_zb + hc_z);
 
     /*inner sources */
     q = N_get_array_3d_d_value(data->q, col, row, depth);
@@ -228,17 +232,17 @@ N_data_star *N_callback_gwflow_3d(void *gwdata, N_geom_data * geom, int col,
     nf = N_get_array_3d_d_value(data->nf, col, row, depth);
 
     /*mass balance center cell to western cell */
-    W = -1 * Ax * kf_w / dx;
+    W = -1 * Ax * hc_w / dx;
     /*mass balance center cell to eastern cell */
-    E = -1 * Ax * kf_e / dx;
+    E = -1 * Ax * hc_e / dx;
     /*mass balance center cell to northern cell */
-    N = -1 * Ay * kf_n / dy;
+    N = -1 * Ay * hc_n / dy;
     /*mass balance center cell to southern cell */
-    S = -1 * Ay * kf_s / dy;
+    S = -1 * Ay * hc_s / dy;
     /*mass balance center cell to top cell */
-    T = -1 * Az * kf_t / dz;
+    T = -1 * Az * hc_t / dz;
     /*mass balance center cell to bottom cell */
-    B = -1 * Az * kf_b / dz;
+    B = -1 * Az * hc_b / dz;
 
     /*specific yield */
     Ss = Az * dz * Ss;
@@ -267,11 +271,11 @@ N_data_star *N_callback_gwflow_3d(void *gwdata, N_geom_data * geom, int col,
 /* ****************** N_callback_gwflow_2d *********************** */
 /* *************************************************************** */
 /*!
- * \brief This callback function creates the mass bilanz of a 5 point star
+ * \brief This callback function creates the mass balance of a 5 point star
  *
- * The mass balance is the the common groundwater flow equation based
- * on darcy. 
- * \f[Ss \frac{\partial h}{\partial t} = \nabla {\bf K} \nabla h - q \f]
+ * The mass balance is based on the common groundwater flow equation:
+ *
+ * \f[Ss \frac{\partial h}{\partial t} = \nabla {\bf K} \nabla h + q \f]
  *
  * This equation is discretizised with the finite volume method in two dimensions.
  *
@@ -288,11 +292,11 @@ N_data_star *N_callback_gwflow_2d(void *gwdata, N_geom_data * geom, int col,
     double T_e = 0, T_w = 0, T_n = 0, T_s = 0;
     double z_e = 0, z_w = 0, z_n = 0, z_s = 0;
     double dx, dy, Az;
-    double kf_x, kf_y;
+    double hc_x, hc_y;
     double z, top;
-    double kf_xw, kf_yn;
+    double hc_xw, hc_yn;
     double z_xw, z_yn;
-    double kf_xe, kf_ys;
+    double hc_xe, hc_ys;
     double z_xe, z_ys;
     double hc, hc_start;
     double Ss, r, nf, q;
@@ -305,7 +309,7 @@ N_data_star *N_callback_gwflow_2d(void *gwdata, N_geom_data * geom, int col,
 
     dx = geom->dx;
     dy = geom->dy;
-    Az = geom->dx * geom->dy;
+    Az = N_get_geom_data_area_of_cell(geom, row);
 
     /*read the data from the arrays */
     hc_start = N_get_array_2d_d_value(data->phead_start, col, row);
@@ -315,23 +319,23 @@ N_data_star *N_callback_gwflow_2d(void *gwdata, N_geom_data * geom, int col,
 
     if (hc > top) {		/*If the aquifer is confined */
 	z = N_get_array_2d_d_value(data->top, col,
-				       row) -
+				   row) -
 	    N_get_array_2d_d_value(data->bottom, col, row);
 	z_xw =
 	    N_get_array_2d_d_value(data->top, col - 1,
-				       row) -
+				   row) -
 	    N_get_array_2d_d_value(data->bottom, col - 1, row);
 	z_xe =
 	    N_get_array_2d_d_value(data->top, col + 1,
-				       row) -
+				   row) -
 	    N_get_array_2d_d_value(data->bottom, col + 1, row);
 	z_yn =
 	    N_get_array_2d_d_value(data->top, col,
-				       row - 1) -
+				   row - 1) -
 	    N_get_array_2d_d_value(data->bottom, col, row - 1);
 	z_ys =
 	    N_get_array_2d_d_value(data->top, col,
-				       row + 1) -
+				   row + 1) -
 	    N_get_array_2d_d_value(data->bottom, col, row + 1);
 
 	if (z_xw + z != 0)
@@ -347,11 +351,16 @@ N_data_star *N_callback_gwflow_2d(void *gwdata, N_geom_data * geom, int col,
 
 	/* If the aquifer is unconfied use an explicite scheme to solve
 	 * the nonlinear equation. We use the phead from the first iteration */
-	z = N_get_array_2d_d_value(data->phead, col, row);
-	z_xw = N_get_array_2d_d_value(data->phead, col - 1, row);
-	z_xe = N_get_array_2d_d_value(data->phead, col + 1, row);
-	z_yn = N_get_array_2d_d_value(data->phead, col, row - 1);
-	z_ys = N_get_array_2d_d_value(data->phead, col, row + 1);
+	z = N_get_array_2d_d_value(data->phead, col, row) -
+	    N_get_array_2d_d_value(data->bottom, col, row);
+	z_xw = N_get_array_2d_d_value(data->phead, col - 1, row) -
+	    N_get_array_2d_d_value(data->bottom, col - 1, row);
+	z_xe = N_get_array_2d_d_value(data->phead, col + 1, row) -
+	    N_get_array_2d_d_value(data->bottom, col + 1, row);
+	z_yn = N_get_array_2d_d_value(data->phead, col, row - 1) -
+	    N_get_array_2d_d_value(data->bottom, col, row - 1);
+	z_ys = N_get_array_2d_d_value(data->phead, col, row + 1) -
+	    N_get_array_2d_d_value(data->bottom, col, row + 1);
 
 	if (z_xw + z != 0)
 	    z_w = (z_xw + z) / 2;
@@ -374,22 +383,22 @@ N_data_star *N_callback_gwflow_2d(void *gwdata, N_geom_data * geom, int col,
     r = N_get_array_2d_d_value(data->r, col, row);
 
     /*get the surrounding permeabilities */
-    kf_x = N_get_array_2d_d_value(data->kf_x, col, row);
-    kf_y = N_get_array_2d_d_value(data->kf_y, col, row);
-    kf_xw = N_get_array_2d_d_value(data->kf_x, col - 1, row);
-    kf_xe = N_get_array_2d_d_value(data->kf_x, col + 1, row);
-    kf_yn = N_get_array_2d_d_value(data->kf_y, col, row - 1);
-    kf_ys = N_get_array_2d_d_value(data->kf_y, col, row + 1);
+    hc_x = N_get_array_2d_d_value(data->hc_x, col, row);
+    hc_y = N_get_array_2d_d_value(data->hc_y, col, row);
+    hc_xw = N_get_array_2d_d_value(data->hc_x, col - 1, row);
+    hc_xe = N_get_array_2d_d_value(data->hc_x, col + 1, row);
+    hc_yn = N_get_array_2d_d_value(data->hc_y, col, row - 1);
+    hc_ys = N_get_array_2d_d_value(data->hc_y, col, row + 1);
 
     /* calculate the transmissivities */
-    if (kf_xw + kf_x != 0)
-	T_w = 2 * kf_xw * kf_x / (kf_xw + kf_x) * z_w;
-    if (kf_xe + kf_x != 0)
-	T_e = 2 * kf_xe * kf_x / (kf_xe + kf_x) * z_e;
-    if (kf_yn + kf_y != 0)
-	T_n = 2 * kf_yn * kf_y / (kf_yn + kf_y) * z_n;
-    if (kf_ys + kf_y != 0)
-	T_s = 2 * kf_ys * kf_y / (kf_ys + kf_y) * z_s;
+    if (hc_xw + hc_x != 0)
+	T_w = 2 * hc_xw * hc_x / (hc_xw + hc_x) * z_w;
+    if (hc_xe + hc_x != 0)
+	T_e = 2 * hc_xe * hc_x / (hc_xe + hc_x) * z_e;
+    if (hc_yn + hc_y != 0)
+	T_n = 2 * hc_yn * hc_y / (hc_yn + hc_y) * z_n;
+    if (hc_ys + hc_y != 0)
+	T_s = 2 * hc_ys * hc_y / (hc_ys + hc_y) * z_s;
 
     /*mass balance center cell to western cell */
     W = -1 * T_w * dy / dx;
