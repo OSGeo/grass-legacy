@@ -609,6 +609,17 @@ The <b>-p</b> (or <b>-g</b>) option is recognized
 last.  This means that all changes are applied to the
 region settings before printing occurs.
 
+<p>
+Usage example of <em>g.region</em> in a shell with external software:<br>
+Extract spatial subset of external vector map 'soils.shp' to new external vector
+map 'soils_cut.shp' using the OGR 'ogr2ogr' tool:<br>
+<div class="code"><pre>
+eval `g.region -g`
+ogr2ogr -spat $w $s $e $n soils_cut.shp soils.shp
+</pre></div>
+
+This requires that the location/SHAPE file projection match.
+
 
 <h2>NOTE</h2>
 
