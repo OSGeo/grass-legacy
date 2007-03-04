@@ -39,7 +39,7 @@ int unit_test_assemble()
 {
     int sum = 0;
 
-    G_message(_("++ Running assembling unit tests ++"));
+    G_message(_("\n++ Running assembling unit tests ++"));
 
     G_message(_("\t 1. testing 2d assembling"));
     sum += test_matrix_assemble_2d();
@@ -48,9 +48,9 @@ int unit_test_assemble()
     sum += test_matrix_assemble_3d();
 
     if (sum > 0)
-	G_warning(_("-- Assembling unit tests failure --"));
+	G_warning(_("\n-- Assembling unit tests failure --"));
     else
-	G_message(_("-- Assembling unit tests finished successfully --"));
+	G_message(_("\n-- Assembling unit tests finished successfully --"));
 
     return sum;
 }
@@ -193,8 +193,6 @@ int test_matrix_assemble_3d()
     geom->dy = 1;
     geom->dz = 1;
 
-    geom->Ax = 1;
-    geom->Ay = 1;
     geom->Az = 1;
 
     geom->depths = TEST_N_NUM_DEPTHS;
@@ -237,8 +235,6 @@ int test_matrix_assemble_2d()
     geom->dx = 1;
     geom->dy = 1;
 
-    geom->Ax = 1;
-    geom->Ay = 1;
     geom->Az = 1;
 
     geom->rows = TEST_N_NUM_ROWS;

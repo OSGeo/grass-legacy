@@ -29,16 +29,16 @@ int integration_test_heatflow()
 {
     int sum = 0;
 
-    G_message(_("++ Running heat flow integration tests ++"));
+    G_message(_("\n++ Running heat flow integration tests ++"));
 
     G_message(_("\t 1. testing 2d heat flow"));
 
     G_message(_("\t 2. testing 3d heat flow"));
 
     if (sum > 0)
-	G_warning(_("-- heat flow integration tests failure --"));
+	G_warning(_("\n-- heat flow integration tests failure --"));
     else
-	G_message(_("-- heat flow integration tests finished successfully --"));
+	G_message(_("\n-- heat flow integration tests finished successfully --"));
 
     return sum;
 }

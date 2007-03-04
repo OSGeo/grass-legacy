@@ -39,7 +39,7 @@ int unit_test_gradient()
 {
     int sum = 0;
 
-    G_message(_("++ Running gradient unit tests ++"));
+    G_message(_("\n++ Running gradient unit tests ++"));
 
     G_message(_("\t 1. testing 2d gradient"));
     sum += test_gradient_2d();
@@ -48,9 +48,9 @@ int unit_test_gradient()
     sum += test_gradient_3d();
 
     if (sum > 0)
-	G_warning(_("-- Gradient unit tests failure --"));
+	G_warning(_("\n-- Gradient unit tests failure --"));
     else
-	G_message(_("-- Gradient unit tests finished successfully --"));
+	G_message(_("\n-- Gradient unit tests finished successfully --"));
 
     return sum;
 }
@@ -189,9 +189,8 @@ int test_gradient_3d()
     geom->dy = 1;
     geom->dz = 1;
 
-    geom->Ax = 1;
-    geom->Ay = 1;
     geom->Az = 1;
+    geom->planimetric = 1;
 
     geom->depths = TEST_N_NUM_DEPTHS;
     geom->rows = TEST_N_NUM_ROWS;
@@ -347,9 +346,8 @@ int test_gradient_2d()
     geom->dy = 1;
     geom->dz = 1;
 
-    geom->Ax = 1;
-    geom->Ay = 1;
     geom->Az = 1;
+    geom->planimetric = 1;
 
     geom->depths = TEST_N_NUM_DEPTHS;
     geom->rows = TEST_N_NUM_ROWS;
