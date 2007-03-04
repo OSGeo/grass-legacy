@@ -220,16 +220,10 @@ static int close_new (int fd,int ok)
             }
             close (null_fd);
             
-#ifdef __MINGW32__
-	    if ( CopyFile ( fcb->null_temp_name, path, FALSE ) == 0 ) {
-#else
-	    if(link (fcb->null_temp_name, path) < 0) {
-#endif
-		if(rename(fcb->null_temp_name, path)) {
-	            G_warning(_("closecell: can't move %s\nto null file %s"),
-		                fcb->null_temp_name, path);
-	            stat = -1;
-	        }
+	    if(rename(fcb->null_temp_name, path)) {
+		G_warning(_("closecell: can't move %s\nto null file %s"),
+			  fcb->null_temp_name, path);
+		stat = -1;
 	    } else {
                 remove ( fcb->null_temp_name );
             }
@@ -293,16 +287,10 @@ static int close_new (int fd,int ok)
     if (ok && (fcb->temp_name != NULL)) {
 	G__file_name (path, CELL_DIR, fcb->name, fcb->mapset);
         remove ( path );
-#ifdef __MINGW32__
-        if ( CopyFile ( fcb->temp_name, path, FALSE ) == 0 ) {
-#else
-	if(link (fcb->temp_name, path) < 0) {
-#endif
-	    if(rename(fcb->temp_name, path)) {
-	        G_warning(_("closecell: can't move %s\nto cell file %s"),
-	                    fcb->temp_name, path);
-	        stat = -1;
-	    }
+	if(rename(fcb->temp_name, path)) {
+	    G_warning(_("closecell: can't move %s\nto cell file %s"),
+		      fcb->temp_name, path);
+	    stat = -1;
         } else {
             remove ( fcb->temp_name );
         }
