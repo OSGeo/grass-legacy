@@ -181,6 +181,7 @@ typedef enum {
 /* Message format */
 #define G_INFO_FORMAT_STANDARD 0  /* GRASS_MESSAGE_FORMAT=standard or not defined */
 #define G_INFO_FORMAT_GUI      1  /* GRASS_MESSAGE_FORMAT=gui */
+#define G_INFO_FORMAT_SILENT   2  /* GRASS_MESSAGE_FORMAT=silent */
 
 /* Icon types */
 #define G_ICON_CROSS  0

@@ -282,7 +282,8 @@ static int print_error(const char *msg, const int type)
 	    while (print_word(stderr,&w,&len,lead))
 		    ;
 
-	    if ( (type != MSG) && isatty(fileno(stderr))) { /* Bell */
+	    if ( (type != MSG) && isatty(fileno(stderr))
+		    && (G_info_format() == G_INFO_FORMAT_STANDARD) ) { /* Bell */
 		fprintf(stderr,"\7");
 		fflush (stderr);
 		if (!no_sleep)
@@ -503,7 +504,9 @@ int G_info_format ( void )
 
         if ( fstr && G_strcasecmp(fstr,"gui") == 0 )
 	    grass_info_format = G_INFO_FORMAT_GUI;
-        else
+	else if ( fstr && G_strcasecmp(fstr,"silent") == 0 )
+	    grass_info_format = G_INFO_FORMAT_SILENT;
+	else
 	    grass_info_format = G_INFO_FORMAT_STANDARD;
     }
 
