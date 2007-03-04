@@ -54,6 +54,12 @@ echo "UPDATE dourokukan SET testc=50 WHERE testc is NULL" | db.execute
 echo "ALTER TABLE roads ADD COLUMN length double" | db.execute
 </pre></div>
 
+<P>
+<em>Column type conversion - update new column from existing column (all drivers except for DBF):</em><br>
+<div class="code"><pre>
+# 'z_value' is varchar and 'z' is double precision:
+echo "update geodetic_pts SET z = CAST(z_value AS numeric)" | db.execute
+</pre></div>
 
 <P>
 <em>Drop column from attribute table:</em><br>
