@@ -18,7 +18,8 @@
 
 #include <math.h>
 #include <unistd.h>
-
+#include <stdio.h>
+#include <string.h>
 #include "grass/N_pde.h"
 
 /*local protos */
@@ -49,6 +50,71 @@ inline void scalar_vector_product(double *source, double *result, double skalar,
 				  int rows);
 inline void sync_vectors(double *source, double *target, int rows);
 
+inline int sparse_jacobi_gauss(N_les * L, int maxit, double sor, double error,
+			       const char *type);
+inline int jacobi(double **M, double *b, double *x, int rows, int maxit,
+		  double sor, double error);
+inline int gauss_seidel(double **M, double *b, double *x, int rows, int maxit,
+			double sor, double error);
+
+/* ******************************************************* *
+ * ******** overrelaxed jacobian ************************* *
+ * ******************************************************* */
+/*!
+ * \brief The iterative jacobian solver for regular matrices
+ *
+ * The result is written to the vector L->x of the les.
+ * This iterative solver works with sparse matrices and regular quadratic matrices.
+ *
+ * The parameter <i>maxit</i> specifies the maximum number of iterations. If the maximum is reached, the
+ * solver will abort the calculation and writes the current result into the vector L->x.
+ * The parameter <i>err</i> defines the error break criteria for the solver.
+ *
+ * \param L N_les *  -- the linear equatuin system
+ * \param maxit int -- the maximum number of iterations
+ * \param sor double -- defines the successive overrelaxion parameter [0:1]
+ * \param error double -- defines the error break criteria
+ * 
+ * */
+int N_solver_jacobi(N_les * L, int maxit, double sor, double error)
+{
+    if (L->type == N_NORMAL_LES)
+	return jacobi(L->A, L->b, L->x, L->rows, maxit, sor, error);
+    else
+	return sparse_jacobi_gauss(L, maxit, sor, error,
+				   N_SOLVER_ITERATIVE_JACOBI);
+}
+
+
+/* ******************************************************* *
+ * ********* overrelaxed gauss seidel ******************** *
+ * ******************************************************* */
+/*!
+ * \brief The iterative overrelaxed gauss seidel solver for regular matrices
+ *
+ * The result is written to the vector L->x of the les.
+ * This iterative solver works with sparse matrices and regular quadratic matrices.
+ *
+ * The parameter <i>maxit</i> specifies the maximum number of iterations. If the maximum is reached, the
+ * solver will abort the calculation and writes the current result into the vector L->x.
+ * The parameter <i>err</i> defines the error break criteria for the solver.
+ *
+ * \param L N_les *  -- the linear equatuin system
+ * \param maxit int -- the maximum number of iterations
+ * \param sor double -- defines the successive overrelaxion parameter [0:1]
+ * \param error double -- defines the error break criteria
+ * 
+ * */
+
+int N_solver_SOR(N_les * L, int maxit, double sor, double error)
+{
+    if (L->type == N_NORMAL_LES)
+	return gauss_seidel(L->A, L->b, L->x, L->rows, maxit, sor, error);
+    else
+	return sparse_jacobi_gauss(L, maxit, sor, error,
+				   N_SOLVER_ITERATIVE_SOR);
+}
+
 /* ******************************************************* *
  * ****************** conjugate gradients **************** *
  * ******************************************************* */
@@ -62,7 +128,7 @@ inline void sync_vectors(double *source, double *target, int rows);
  * solver will abort the calculation and writes the current result into the vector L->x.
  * The parameter <i>err</i> defines the error break criteria for the solver.
  *
- * \param L N_les *  -- th linear equatuin system
+ * \param L N_les *  -- the linear equatuin system
  * \param maxit int -- the maximum number of iterations
  * \param err double -- defines the error break criteria
  * 
@@ -158,9 +224,9 @@ int N_solver_cg(N_les * L, int maxit, double err)
 	}
 
 	if (L->type == N_SPARSE_LES)
-	    G_message("sparse CG -- iteration %i error  %g\n", m, a0);
+	    G_message(_("sparse CG -- iteration %i error  %g\n"), m, a0);
 	else
-	    G_message("CG -- iteration %i error  %g\n", m, a0);
+	    G_message(_("CG -- iteration %i error  %g\n"), m, a0);
 
 	if (a0 < err) {
 	    finished = 1;
@@ -188,7 +254,7 @@ int N_solver_cg(N_les * L, int maxit, double err)
  * solver will abort the calculation and writes the current result into the vector L->x.
  * The parameter <i>err</i> defines the error break criteria for the solver.
  *
- * \param L N_les *  -- th linear equatuin system
+ * \param L N_les *  -- the linear equatuin system
  * \param maxit int -- the maximum number of iterations
  * \param err double -- defines the error break criteria
  * 
@@ -299,9 +365,10 @@ int N_solver_bicgstab(N_les * L, int maxit, double err)
 
 
 	if (L->type == N_SPARSE_LES)
-	    G_message("sparse BiCGStab -- iteration %i error  %g\n", m, error);
+	    G_message(_("sparse BiCGStab -- iteration %i error  %g\n"), m,
+		      error);
 	else
-	    G_message("BiCGStab -- iteration %i error  %g\n", m, error);
+	    G_message(_("BiCGStab -- iteration %i error  %g\n"), m, error);
 
 	if (error < err) {
 	    finished = 1;
@@ -337,9 +404,10 @@ int N_solver_gauss(N_les * les)
 
     if (les->type != N_NORMAL_LES)
 	G_fatal_error
-	    ("The gauss elimination solver works only with normal quadratic matrices");
+	    (_
+	     ("The gauss elimination solver works only with normal quadratic matrices"));
 
-    G_message("Starting gauss elimination solver");
+    G_message(_("Starting gauss elimination solver"));
 
     gauss_elimination(les->A, les->b, les->rows);
     backward_solving(les->A, les->x, les->b, les->rows);
@@ -366,9 +434,9 @@ int N_solver_lu(N_les * les)
 
     if (les->type != N_NORMAL_LES)
 	G_fatal_error
-	    ("The gauss elimination solver works only with normal quadratic matrices");
+	    (_("The lu solver works only with normal quadratic matrices"));
 
-    G_message("Starting lu solver method");
+    G_message(_("Starting lu solver method"));
 
     tmpv = vectmem(les->rows);
     c = vectmem(les->rows);
@@ -836,4 +904,180 @@ void forward_solving(double **A, double *x, double *b, int rows)
     }
 
     return;
+}
+
+
+/* ******************************************************* *
+ * ***** solving a tridiagonal eq system ***************** *
+ * ******************************************************* */
+void thomalg(double **M, double *V, int rows)
+{
+    double *Vtmp;
+    double *g;
+    double b;
+    int i;
+
+    Vtmp = vectmem(rows);
+    g = vectmem(rows);
+
+    for (i = 0; i < rows; i++) {
+	if (i == 0) {
+	    b = M[i][i];
+	    Vtmp[i] = V[i] / b;
+	}
+	else {
+	    b = M[i][i] - M[i][i - 1] * g[i - 1];
+	    Vtmp[i] = (V[i] - Vtmp[i - 1] * M[i][i - 1]) / b;
+	}
+	if (i < rows - 1) {
+	    g[i] = M[i][i + 1] / b;
+	}
+    }
+
+    V[rows - 1] = Vtmp[rows - 1];
+    for (i = rows - 2; i >= 0; i--) {
+	V[i] = Vtmp[i] - g[i] * V[i + 1];
+    }
+
+    G_free(Vtmp);
+    G_free(g);
+}
+
+
+/* ******************************************************* *
+ * ****** sparse jacobi and SOR, SSOR algorithm ********** *
+ * ******************************************************* */
+int
+sparse_jacobi_gauss(N_les * L, int maxit, double sor, double error,
+		    const char *type)
+{
+    int i, j, k, rows, finished = 0;
+    double *Enew, *x, *b;
+    double E, err = 0;
+
+    x = L->x;
+    b = L->b;
+    rows = L->rows;
+
+    Enew = vectmem(rows);
+
+    for (k = 0; k < maxit; k++) {
+	err = 0;
+	{
+	    if (k == 0) {
+		for (j = 0; j < rows; j++) {
+		    Enew[j] = x[j];
+		}
+	    }
+	    for (i = 0; i < rows; i++) {
+		E = 0;
+		if (strcmp(type, N_SOLVER_ITERATIVE_JACOBI) == 0) {
+		    for (j = 0; j < L->Asp[i]->cols; j++) {
+			E += L->Asp[i]->values[j] * x[L->Asp[i]->index[j]];
+		    }
+		}
+		else {
+		    for (j = 0; j < L->Asp[i]->cols; j++) {
+			E += L->Asp[i]->values[j] * Enew[L->Asp[i]->index[j]];
+		    }
+		}
+		Enew[i] = x[i] - sor * (E - b[i]) / L->Asp[i]->values[0];
+	    }
+	    for (j = 0; j < rows; j++) {
+		err += (x[j] - Enew[j]) * (x[j] - Enew[j]);
+
+		x[j] = Enew[j];
+	    }
+	}
+
+	if (strcmp(type, N_SOLVER_ITERATIVE_JACOBI) == 0)
+	    G_message(_("sparse Jacobi -- iteration %5i error %g\n"), k, err);
+	else if (strcmp(type, N_SOLVER_ITERATIVE_SOR) == 0)
+	    G_message(_("sparse SOR -- iteration %5i error %g\n"), k, err);
+
+	if (err < error) {
+	    finished = 1;
+	    break;
+	}
+    }
+
+    G_free(Enew);
+
+    return finished;
+}
+
+/* ******************************************************* *
+ * ******* direct jacobi ********************************* *
+ * ******************************************************* */
+int jacobi(double **M, double *b, double *x, int rows, int maxit, double sor,
+	   double error)
+{
+    int i, j, k;
+    double *Enew;
+    double E, err = 0;
+
+    Enew = vectmem(rows);
+
+    for (j = 0; j < rows; j++) {
+	Enew[j] = x[j];
+    }
+
+    for (k = 0; k < maxit; k++) {
+	for (i = 0; i < rows; i++) {
+	    E = 0;
+	    for (j = 0; j < rows; j++) {
+		E += M[i][j] * x[j];
+	    }
+	    Enew[i] = x[i] - sor * (E - b[i]) / M[i][i];
+	}
+	err = 0;
+	for (j = 0; j < rows; j++) {
+	    err += (x[j] - Enew[j]) * (x[j] - Enew[j]);
+
+	    x[j] = Enew[j];
+	}
+	G_message(_("Jacobi -- iteration %5i error %g\n"), k, err);
+	if (err < error)
+	    break;
+    }
+
+    return 1;
+}
+
+/* ******************************************************* *
+ * ******* direct gauss seidel *************************** *
+ * ******************************************************* */
+int gauss_seidel(double **M, double *b, double *x, int rows, int maxit,
+		 double sor, double error)
+{
+    int i, j, k;
+    double *Enew;
+    double E, err = 0;
+
+    Enew = vectmem(rows);
+
+    for (j = 0; j < rows; j++) {
+	Enew[j] = x[j];
+    }
+
+    for (k = 0; k < maxit; k++) {
+	for (i = 0; i < rows; i++) {
+	    E = 0;
+	    for (j = 0; j < rows; j++) {
+		E += M[i][j] * Enew[j];
+	    }
+	    Enew[i] = x[i] - sor * (E - b[i]) / M[i][i];
+	}
+	err = 0;
+	for (j = 0; j < rows; j++) {
+	    err += (x[j] - Enew[j]) * (x[j] - Enew[j]);
+
+	    x[j] = Enew[j];
+	}
+	G_message(_("Gauss-Seidel -- iteration %5i error %g\n"), k, err);
+	if (err < error)
+	    break;
+    }
+
+    return 1;
 }
