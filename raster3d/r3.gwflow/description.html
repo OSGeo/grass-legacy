@@ -6,7 +6,7 @@ volume maps.
 <br>
 <br>
 This module calculates the piezometric head and optionally the 
-filter velocity field, based on the permeability and the piezometric head. 
+filter velocity field, based on the hydraulic conductivity and the piezometric head. 
 The vector components can be visualized with paraview if they are exported
 with r3.out.vtk.
 <br>
@@ -14,7 +14,7 @@ with r3.out.vtk.
 The groundwater flow will always be calculated transient. 
 If you want to calculate stady state, set the timestep 
 to a large number (billions of seconds) or set the 
-specific yield raster maps to zeo.
+specific yield raster maps to zero.
 
 
 <H2>NOTES</H2>
@@ -31,9 +31,9 @@ differential equation is of the following form:
 <li>dt -- the time step for transient calculation in seconds [s]</li>
 <li>S -- the specific yield  [1/m]</li>
 <li>b -- the bottom surface of the aquifer meters [m]</li>
-<li>Kxx -- the permeability tensor part in x direction in meter per second [m/s]</li>
-<li>Kyy -- the permeability tensor part in y direction in meter per seconds [m/s]</li>
-<li>Kzz -- the permeability tensor part in z direction in meter per seconds [m/s]</li>
+<li>Kxx -- the hydraulic conductivity tensor part in x direction in meter per second [m/s]</li>
+<li>Kyy -- the hydraulic conductivity tensor part in y direction in meter per seconds [m/s]</li>
+<li>Kzz -- the hydraulic conductivity tensor part in z direction in meter per seconds [m/s]</li>
 <li>q - inner source in [1/s]</li>
 <li>x - distance between cells in x direction [m]</li>
 <li>y - distance between cells in y direction [m]</li>
@@ -42,9 +42,9 @@ differential equation is of the following form:
 <br>
 <br>
 Two different boundary conditions are implemented, 
-the Dirichlet and Neumann conditions. 
+the Dirichlet and Neumann conditions. By default the calculation area is surrounded by homogeneous Neumann boundary conditions.
 The calculation and boundary status of single cells can be set with the status map, 
-the following states are supportet:
+the following cell states are supportet:
 
 <ul>
 <li>0 == inactive - the cell with status 0 will not be calulated, active cells will have a no flow boundary to an inactive cell</li>
@@ -76,8 +76,8 @@ r3.mapcalc "well=if(row() == 20 && col() == 20 , -0.00025, 0)"
 r3.mapcalc "perm=0.00025"
 r3.mapcalc "syield=0.0001"
 
-r3.gwflow --o -s solver=0 phead=phead status=status kf_x=perm kf_y=perm  \
-kf_z=perm q=well s=syield r=reacharge output=gwresult dt=8640000 velocity=gwresult_velocity
+r3.gwflow --o -s solver=0 phead=phead status=status hc_x=perm hc_y=perm  \
+hc_z=perm q=well s=syield r=reacharge output=gwresult dt=8640000 velocity=gwresult_velocity
 
 # The data can be visulaized with paraview when exported with r3.out.vtk
 r3.out.vtk -p in=gwresult,status vector=gwresult_velocity_x,gwresult_velocity_y,gwresult_velocity_z out=/tmp/gwdata3d.vtk
