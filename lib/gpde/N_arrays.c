@@ -26,21 +26,23 @@
  * *********************************************************
  * ********************************************************/
 /*!
- * \brief Allocate memory for a N_array_2d array structure. 
+ * \brief Allocate memory for a N_array_2d data structure. 
  *
  * This function allocates memory for an array of type N_array_2d 
  * and returns the pointer to the new allocated memory.
- *
+ * <br><br>
  * The data type of this array is set by "type" and must be 
- * CELL_TYPE, FCELL_TYPE or DCELL_TYPE accordingly to the raster map datatypes.
+ * CELL_TYPE, FCELL_TYPE or DCELL_TYPE accordingly to the raster map data types.
  * The offset sets the number of boundary cols and rows. 
  * This option is useful to generate homogeneous Neumann boundary conditions around  
- * an array. The arrays are initialized with 0 by default.
- *
+ * an array or to establish overlapping boundaries. The array is initialized with 0 by default.
+ * <br><br>
  * If the offset is greater then 0, negative indices are possible.
+ * <br><br>
  *
  * The data structure of a array with 3 rows and cols and an offset of 1 
  * will looks like this:
+ * <br><br>
  *
  \verbatim
  0 0 0 0 0
@@ -52,9 +54,9 @@
  *
  * 0 is the boundary.
  * <br><br>
- * Internal a one dimensional array is allocated to speed up the memory access.
- * To access the one dimensional array with a two dimensional indexing use the provided 
- * get and put functions. The internal representation of the above data looks like this:
+ * Internal a one dimensional array is allocated to save memory and to speed up the memory access.
+ * To access the one dimensional array with a two dimensional index use the provided 
+ * get and put functions. The internal representation of the above data will look like this:
  *
  \verbatim
  0 0 0 0 0 0 0 1 2 0 0 3 4 5 0 0 6 7 8 0 0 0 0 0 0 
@@ -89,9 +91,6 @@ N_array_2d *N_alloc_array_2d(int cols, int rows, int offset, int type)
     data->cell_array = NULL;
     data->fcell_array = NULL;
     data->dcell_array = NULL;
-
-    /*Allocation is in order array[rows*cols] */
-
 
     if (data->type == CELL_TYPE) {
 	data->cell_array =
@@ -156,20 +155,17 @@ void N_free_array_2d(N_array_2d * data)
     return;
 }
 
-/*!
- * \brief Return the data taype of the N_array_2d
- *
- * The data type can be CELL_TYPE, FCELL_TYPE or DCELL_TYPE accordingly to the raster map datatypes.
- *
- * \param array N_array_2d * 
- * \return type int
- * */
-
 /***********************************************************
  * *********************************************************
  * ********************************************************/
+
 /*!
+ * \brief Return the data type of the N_array_2d
  *
+ * The data type can be CELL_TYPE, FCELL_TYPE or DCELL_TYPE accordingly to the raster map data types.
+ *
+ * \param array N_array_2d * 
+ * \return type int
  * */
 int N_get_array_2d_type(N_array_2d * array)
 {
@@ -179,10 +175,12 @@ int N_get_array_2d_type(N_array_2d * array)
 /*!
  * \brief This function writes the value of N_array_2d data at position col, row to the variable value
  *
+ * The value must be from the same type as the array. Otherwise you will risk data losses.  
+ *
  * \param data N_array_2d * 
  * \param col int
  * \param row int
- * \param value void * 
+ * \param value void * - this variable contains the array value at col, row position
  * \return void
  * */
 
@@ -231,10 +229,13 @@ N_get_array_2d_value(N_array_2d * data, int col, int row, void *value)
  * \brief This function returns 1 if the value of N_array_2d at postion col, row 
  * is of type null, otherwise 0 
  *
+ * This function checks automatically the type of the array and checks for the
+ * data type null value.
+ *
  * \param data N_array_2d * 
  * \param col int
  * \param row int
- * \return int
+ * \return int - 1 = is null, 0 otherwise
  * */
 
 /***********************************************************
@@ -318,7 +319,7 @@ inline int N_is_array_2d_value_null(N_array_2d * data, int col, int row)
 /*!
  * \brief This function returns the value of type CELL at position col, row 
  *
- * The data array can be of type CELL, FCELL or DCELL.
+ * The data array can be of type CELL, FCELL or DCELL, the value will be casted to the CELL type.
  *
  * \param data N_array_2d * 
  * \param col int
@@ -353,7 +354,7 @@ inline CELL N_get_array_2d_c_value(N_array_2d * data, int col, int row)
 /*!
  * \brief This function returns the value of type FCELL at position col, row 
  *        
- * The data array can be of type CELL, FCELL or DCELL.
+ * The data array can be of type CELL, FCELL or DCELL, the value will be casted to the FCELL type.
  *
  * \param data N_array_2d * 
  * \param col int
@@ -388,7 +389,7 @@ inline FCELL N_get_array_2d_f_value(N_array_2d * data, int col, int row)
 /*!
  * \brief This function returns the value of type DCELL at position col, row 
  *
- * The data array can be of type CELL, FCELL or DCELL.
+ * The data array can be of type CELL, FCELL or DCELL, the value will be casted to the DCELL type.
  * 
  * \param data N_array_2d *
  * \param col int
@@ -475,7 +476,7 @@ N_put_array_2d_value(N_array_2d * data, int col, int row, char *value)
 /*!
  * \brief This function writes the null value to the N_array_2d data at position col, row
  *
- * The null value will be automatically set to the array type.
+ * The null value will be automatically set to the array data type (CELL, FCELL or DCELL).
  *
  * \param data N_array_2d *
  * \param col int
@@ -597,6 +598,8 @@ N_put_array_2d_d_value(N_array_2d * data, int col, int row, DCELL value)
 /*!
  * \brief This function writes the content of the array data to stdout
  *
+ * Offsets are ignored
+ *
  * \param data N_array_2d *
  * \return void
  * */
@@ -631,9 +634,12 @@ void N_print_array_2d(N_array_2d * data)
  *
  * The array types can be mixed, the values are automatically casted
  * and the null values are set accordingly.
- *
- * So if you copy a cell array into a dcell array, the values are casted to dcell and 
+ * <br><br>
+ * If you copy a cell array into a dcell array, the values are casted to dcell and 
  * the null values are converted from cell-null to dcell-null
+ * <br><br>
+ * This function can be called in a parallel region defined with OpenMP.
+ * The copy loop is parallelize with a openmp for pragma.
  *
  * \param source N_array_2d *
  * \param target N_array_2d *
@@ -731,6 +737,12 @@ void N_copy_array_2d(N_array_2d * source, N_array_2d * target)
 /*!
  * \brief This function calculates the norm of the two input arrays
  *
+ * The norm can be of type N_MAXIMUM_NORM or N_EUKLID_NORM.
+ * All arrays must have equal sizes and offsets.
+ * The complete data array inclusively offsets is used for norm calucaltion.
+ * Only non-null values are used to calcualte the norm.
+ *
+ 
  * \param a N_array_2d *
  * \param b N_array_2d *
  * \param type the type of the norm -> N_MAXIMUM_NORM, N_EUKLID_NORM
@@ -797,22 +809,22 @@ double N_norm_array_2d(N_array_2d * a, N_array_2d * b, int type)
  * ******************************************************* *
  * ******************************************************* */
 /*!
- * \brief This function performes calculates with two input arrays, 
+ * \brief This function performes simple computations with two input arrays, 
  * the result is written to a third array.
  *
  * All arrays must have equal sizes and offsets.
  * The complete data array inclusively offsets is used for calucaltions.
- * Only non-null values are used. If one array value is null, 
+ * Only non-null values are computed. If one array value is null, 
  * the result array value will be null too.
- * 
+ * <br><br>
  * If a division with zero is detected, the resulting arrays 
  * value will set to null and not to NaN.
- *
+ * <br><br>
  * The result array is optional, if the result arrays poins to NULL,
- * a new array will be allocated with the largest arrays datatype
- * (CELL; FCELL or DCELL) used by the input arrays.
- *
- * the calculations are of the following form:
+ * a new array will be allocated with the largest arrays data type
+ * (CELL, FCELL or DCELL) used by the input arrays.
+ * <br><br>
+ * the array computations can be of the following forms:
  *
  * <ul>
  * <li>result = a + b -> N_ARRAY_SUM</li>
@@ -939,6 +951,7 @@ N_array_2d *N_math_array_2d(N_array_2d * a, N_array_2d * b, N_array_2d * result,
  * \brief This function converts all null values into zero values
  *
  * The complete data array inclusively offsets is used.
+ * The array data types are automatically recognized.
  *
  * \param a N_array_2d *
  * \return int - number of replaced values
@@ -999,15 +1012,15 @@ int N_convert_array_2d_null_to_zero(N_array_2d * a)
 /*!
  * \brief Read a raster map into a N_array_2d structure
  *
- * The raster map is opened in the current region settings.
+ * The raster map will be opened in the current region settings.
  * If no N_array_2d structure is provided (NULL pointer), a new structure will be
- * allocated with the same datatype as the raster map and the size of the current region. 
+ * allocated with the same data type as the raster map and the size of the current region. 
  * The array offset will be set to 0.
- *
+ * <br><br>
  * If a N_array_2d structure is provided, the values from the raster map are 
  * casted to the N_array_2d type. The array must have the same size 
  * as the current region. 
- *
+ * <br><br>
  * The new created or the provided array are returned.
  * If the reading of the raster map fails, G_fatal_error() will
  * be invoked.
@@ -1042,7 +1055,7 @@ N_array_2d *N_read_rast_to_array_2d(char *name, N_array_2d * array)
 
     type = G_get_raster_map_type(map);
 
-    /*if the array is NULL create a new one with the datatype of the raster map */
+    /*if the array is NULL create a new one with the data type of the raster map */
     /*the offset is 0 by default */
     if (data == NULL) {
 	if (type == DCELL_TYPE) {
@@ -1081,36 +1094,27 @@ N_array_2d *N_read_rast_to_array_2d(char *name, N_array_2d * array)
 	     x++, ptr = G_incr_void_ptr(ptr, G_raster_size(type))) {
 	    if (type == CELL_TYPE) {
 		if (data->type == CELL_TYPE)
-		    N_put_array_2d_c_value(data, x, y,
-					      (CELL) * (CELL *) ptr);
+		    N_put_array_2d_c_value(data, x, y, (CELL) * (CELL *) ptr);
 		if (data->type == FCELL_TYPE)
-		    N_put_array_2d_f_value(data, x, y,
-					       (FCELL) * (CELL *) ptr);
+		    N_put_array_2d_f_value(data, x, y, (FCELL) * (CELL *) ptr);
 		if (data->type == DCELL_TYPE)
-		    N_put_array_2d_d_value(data, x, y,
-					       (DCELL) * (CELL *) ptr);
+		    N_put_array_2d_d_value(data, x, y, (DCELL) * (CELL *) ptr);
 	    }
 	    if (type == FCELL_TYPE) {
 		if (data->type == CELL_TYPE)
-		    N_put_array_2d_c_value(data, x, y,
-					      (CELL) * (FCELL *) ptr);
+		    N_put_array_2d_c_value(data, x, y, (CELL) * (FCELL *) ptr);
 		if (data->type == FCELL_TYPE)
-		    N_put_array_2d_f_value(data, x, y,
-					       (FCELL) * (FCELL *) ptr);
+		    N_put_array_2d_f_value(data, x, y, (FCELL) * (FCELL *) ptr);
 		if (data->type == DCELL_TYPE)
-		    N_put_array_2d_d_value(data, x, y,
-					       (DCELL) * (FCELL *) ptr);
+		    N_put_array_2d_d_value(data, x, y, (DCELL) * (FCELL *) ptr);
 	    }
 	    if (type == DCELL_TYPE) {
 		if (data->type == CELL_TYPE)
-		    N_put_array_2d_c_value(data, x, y,
-					      (CELL) * (DCELL *) ptr);
+		    N_put_array_2d_c_value(data, x, y, (CELL) * (DCELL *) ptr);
 		if (data->type == FCELL_TYPE)
-		    N_put_array_2d_f_value(data, x, y,
-					       (FCELL) * (DCELL *) ptr);
+		    N_put_array_2d_f_value(data, x, y, (FCELL) * (DCELL *) ptr);
 		if (data->type == DCELL_TYPE)
-		    N_put_array_2d_d_value(data, x, y,
-					       (DCELL) * (DCELL *) ptr);
+		    N_put_array_2d_d_value(data, x, y, (DCELL) * (DCELL *) ptr);
 	    }
 	}
     }
@@ -1132,7 +1136,9 @@ N_array_2d *N_read_rast_to_array_2d(char *name, N_array_2d * array)
  * A new raster map is created with the same type as the N_array_2d.
  * The current region is used to open the raster map.
  * The N_array_2d must have the same size as the current region.
- *
+ If the writing of the raster map fails, G_fatal_error() will
+ * be invoked.
+ 
  * \param array N_array_2d * 
  * \param name char * - the name of the raster map
  * \return void
@@ -1215,17 +1221,17 @@ void N_write_array_2d_to_rast(N_array_2d * array, char *name)
  * *********************************************************
  * ********************************************************/
 /*!
- * \brief Allocate memory for a N_array_3d array structure. 
+ * \brief Allocate memory for a N_array_3d data structure. 
  *
  * This functions allocates an array of type N_array_3d and returns a pointer 
  * to the new allocated memory.
- *
+ * <br><br>
  * The data type of this array set by "type" must be 
- * FCELL_TYPE or DCELL_TYPE accordingly to the raster3d map datatypes.
+ * FCELL_TYPE or DCELL_TYPE accordingly to the raster3d map data types.
  * The offsets sets the number of boundary cols, rows and depths. 
  * This option is useful to generate homogeneous Neumann boundary conditions around  
- * an array. The arrays are initialized with 0 by default.
- *
+ * an array or to establish overlapping boundaries. The arrays are initialized with 0 by default.
+ * <br><br>
  * If the offset is greater then 0, negative indices are possible.
  * The data structure of a array with 3 depths, rows and cols and an offset of 1 
  * will looks like this:
@@ -1267,7 +1273,7 @@ void N_write_array_2d_to_rast(N_array_2d * array, char *name)
  
  * <br><br>
  * Internal a one dimensional array is allocated to speed up the memory access.
- * To access the one dimensional array with a three dimensional indexing use the provided 
+ * To access the dimensional array with a three dimensional indexing use the provided 
  * get and put functions.
  *
  * \param cols int
@@ -1302,9 +1308,6 @@ N_array_3d *N_alloc_array_3d(int cols, int rows, int depths, int offset,
     data->depths_intern = depths + 2 * offset;
     data->fcell_array = NULL;
     data->dcell_array = NULL;
-
-    /*Allocation is in order of array[depths][rows][cols] */
-
 
     if (data->type == FCELL_TYPE) {
 	data->fcell_array =
@@ -1362,14 +1365,13 @@ void N_free_array_3d(N_array_3d * data)
  * *********************************************************
  * ********************************************************/
 /*!
- * \brief Return the data taype of the N_array_3d
+ * \brief Return the data type of the N_array_3d
  *
- * The data type can be FCELL_TYPE and DCELL_TYPE accordingly to the raster map datatypes.
+ * The data type can be FCELL_TYPE and DCELL_TYPE accordingly to the raster map data types.
  *
  * \param data N_array_3d *
  * \return type int -- FCELL_TYPE or DCELL_TYPE
  * */
-
 int N_get_array_3d_type(N_array_3d * data)
 {
     return data->type;
@@ -1382,6 +1384,8 @@ int N_get_array_3d_type(N_array_3d * data)
 /*!
  * \brief This function writes the value of N_array_3d data at position col, row, depth
  *        to the variable value
+ *
+ * The value must be from the same type as the array. Otherwise you will risk data losses.  
  *
  * \param data N_array_3d *
  * \param col int
@@ -1405,8 +1409,8 @@ N_get_array_3d_value(N_array_3d * data, int col, int row, int depth,
 	else if (data->type == DCELL_TYPE && data->dcell_array != NULL) {
 	    *((double *)value) =
 		data->dcell_array[depth *
-				   (data->rows_intern * data->cols_intern) +
-				   row * data->cols_intern + col];
+				  (data->rows_intern * data->cols_intern) +
+				  row * data->cols_intern + col];
 	}
     }
     else {
@@ -1421,9 +1425,9 @@ N_get_array_3d_value(N_array_3d * data, int col, int row, int depth,
 	else if (data->type == DCELL_TYPE && data->dcell_array != NULL) {
 	    *((double *)value) =
 		data->dcell_array[(depth + data->offset) *
-				   (data->rows_intern * data->cols_intern) +
-				   (row + data->offset) * data->cols_intern +
-				   (col + data->offset)];
+				  (data->rows_intern * data->cols_intern) +
+				  (row + data->offset) * data->cols_intern +
+				  (col + data->offset)];
 	}
     }
 
@@ -1436,6 +1440,9 @@ N_get_array_3d_value(N_array_3d * data, int col, int row, int depth,
 /*!
  * \brief This function returns 1 if value of N_array_3d data at position col, row, depth
  * is of type null, otherwise 0
+ *
+ * This function checks automatically the type of the array and checks for the
+ * data type null value.
  *
  * \param data N_array_3d *
  * \param col int
@@ -1467,10 +1474,10 @@ N_is_array_3d_value_null(N_array_3d * data, int col, int row, int depth)
 	    return G3d_isNullValueNum((void *)
 				      &(data->
 					dcell_array[depth *
-						     (data->rows_intern *
-						      data->cols_intern) +
-						     row * data->cols_intern +
-						     col]), DCELL_TYPE);
+						    (data->rows_intern *
+						     data->cols_intern) +
+						    row * data->cols_intern +
+						    col]), DCELL_TYPE);
 	}
     }
     else {
@@ -1499,14 +1506,14 @@ N_is_array_3d_value_null(N_array_3d * data, int col, int row, int depth)
 	    return G3d_isNullValueNum((void *)
 				      &(data->
 					dcell_array[(depth +
-						      data->offset) *
-						     (data->rows_intern *
-						      data->cols_intern) +
-						     (row +
-						      data->offset) *
-						     data->cols_intern + (col +
-									  data->
-									  offset)]),
+						     data->offset) *
+						    (data->rows_intern *
+						     data->cols_intern) +
+						    (row +
+						     data->offset) *
+						    data->cols_intern + (col +
+									 data->
+									 offset)]),
 				      DCELL_TYPE);
 	}
     }
@@ -1520,7 +1527,7 @@ N_is_array_3d_value_null(N_array_3d * data, int col, int row, int depth)
 /*!
  * \brief This function returns the value of type float at position col, row, depth
  *
- * The data array can be of type float or double.
+ * The data type can be FCELL_TYPE or DCELL_TYPE accordingly to the raster map data types.
  *
  * \param data N_array_3d *
  * \param col int
@@ -1553,7 +1560,7 @@ N_get_array_3d_f_value(N_array_3d * data, int col, int row, int depth)
 /*!
  * \brief This function returns the value of type float at position col, row, depth
  *
- * The data array can be of type float or double.
+ * The data type can be FCELL_TYPE or DCELL_TYPE accordingly to the raster map data types.
  *
  * \param data N_array_3d *
  * \param col int
@@ -1613,7 +1620,7 @@ N_put_array_3d_value(N_array_3d * data, int col, int row, int depth,
 	else if (data->type == DCELL_TYPE && data->dcell_array != NULL) {
 
 	    data->dcell_array[depth * (data->rows_intern * data->cols_intern) +
-			       row * data->cols_intern + col]
+			      row * data->cols_intern + col]
 		= *((double *)value);
 	}
     }
@@ -1628,10 +1635,10 @@ N_put_array_3d_value(N_array_3d * data, int col, int row, int depth,
 	}
 	else if (data->type == DCELL_TYPE && data->dcell_array != NULL) {
 	    data->dcell_array[(depth + data->offset) *
-			       (data->rows_intern * data->cols_intern) + (row +
-									  data->
-									  offset)
-			       * data->cols_intern + (col + data->offset)] =
+			      (data->rows_intern * data->cols_intern) + (row +
+									 data->
+									 offset)
+			      * data->cols_intern + (col + data->offset)] =
 		*((double *)value);
 	}
     }
@@ -1675,9 +1682,9 @@ N_put_array_3d_value_null(N_array_3d * data, int col, int row, int depth)
 	    G3d_setNullValue((void *)
 			     &(data->
 			       dcell_array[depth *
-					    (data->rows_intern *
-					     data->cols_intern) +
-					    row * data->cols_intern + col]), 1,
+					   (data->rows_intern *
+					    data->cols_intern) +
+					   row * data->cols_intern + col]), 1,
 			     DCELL_TYPE);
 	}
     }
@@ -1698,14 +1705,14 @@ N_put_array_3d_value_null(N_array_3d * data, int col, int row, int depth)
 	    G3d_setNullValue((void *)
 			     &(data->
 			       dcell_array[(depth +
-					     data->offset) *
-					    (data->rows_intern *
-					     data->cols_intern) + (row +
-								   data->
-								   offset) *
-					    data->cols_intern + (col +
-								 data->
-								 offset)]), 1,
+					    data->offset) *
+					   (data->rows_intern *
+					    data->cols_intern) + (row +
+								  data->
+								  offset) *
+					   data->cols_intern + (col +
+								data->
+								offset)]), 1,
 			     DCELL_TYPE);
 	}
     }
@@ -1728,7 +1735,7 @@ N_put_array_3d_value_null(N_array_3d * data, int col, int row, int depth)
  * */
 inline void
 N_put_array_3d_f_value(N_array_3d * data, int col, int row, int depth,
-			   float value)
+		       float value)
 {
     N_put_array_3d_value(data, col, row, depth, (void *)&value);
 
@@ -1750,7 +1757,7 @@ N_put_array_3d_f_value(N_array_3d * data, int col, int row, int depth,
  * */
 inline void
 N_put_array_3d_d_value(N_array_3d * data, int col, int row, int depth,
-			    double value)
+		       double value)
 {
     N_put_array_3d_value(data, col, row, depth, (void *)&value);
 
@@ -1763,6 +1770,8 @@ N_put_array_3d_d_value(N_array_3d * data, int col, int row, int depth,
  * ********************************************************/
 /*!
  * \brief This function writes the content of the array data to stdout
+ *
+ * Offsets are ignored
  *
  * \param data N_array_2d *
  * \return void
@@ -1777,8 +1786,7 @@ void N_print_array_3d(N_array_3d * data)
 		if (data->type == FCELL_TYPE)
 		    printf("%6.6f ", N_get_array_3d_f_value(data, i, j, k));
 		else if (data->type == DCELL_TYPE)
-		    printf("%6.6f ",
-			   N_get_array_3d_d_value(data, i, j, k));
+		    printf("%6.6f ", N_get_array_3d_d_value(data, i, j, k));
 	    }
 	    printf("\n");
 	}
@@ -1794,13 +1802,13 @@ void N_print_array_3d(N_array_3d * data)
  * *********************************************************
  * ********************************************************/
 /*!
- * \brief This function copies the source N_array_3d to the target N_array_3d
+ * \brief This function will copy the source N_array_3d to the target N_array_3d
  *
- * The array types can be mixed, the values are automatically casted
+ * The array data types can be mixed, the values are automatically casted
  * and the null values are set accordingly.
  *
- * So if you copy a float array to a double array, the values are casted to double and 
- * the null values are converted from float-null to double-null
+ * If you copy a float array to a double array, the values are casted to DCELL and 
+ * the null values are converted from FCELL-null to DCELL-null
  *
  * \param source N_array_3d *
  * \param target N_array_3d *
@@ -1873,6 +1881,7 @@ void N_copy_array_3d(N_array_3d * source, N_array_3d * target)
 /*!
  * \brief This function calculates the norm of the two input arrays
  *
+ * The norm can be of type N_MAXIMUM_NORM or N_EUKLID_NORM.
  * All arrays must have equal sizes and offsets.
  * The complete data array inclusively offsets is used for norm calucaltion.
  * Only non-null values are used to calcualte the norm.
@@ -1941,18 +1950,21 @@ double N_norm_array_3d(N_array_3d * a, N_array_3d * b, int type)
 /*!
  * \brief This function performes calculates of two input arrays, 
  * the result is written to a third array.
- *
+ * <br><br>
  * All arrays must have equal sizes and offsets.
  * The complete data array inclusively offsets is used for calucaltions.
  * Only non-null values are used. If one array value is null, 
  * the result array value will be null too.
+ * <br><br>
  *
  * If a division with zero is detected, the resulting arrays 
  * value will set to null and not to NaN.
+ * <br><br>
  *
  * The result array is optional, if the result arrays poins to NULL,
- * a new array will be allocated with the largest arrays datatype
+ * a new array will be allocated with the largest arrays data type
  * (FCELL_TYPE or DCELL_TYPE) used by the input arrays.
+ * <br><br>
  *
  * the calculations are of the following form:
  *
@@ -2130,12 +2142,14 @@ int N_convert_array_3d_null_to_zero(N_array_3d * a)
  *
  * The volume map is opened in the current region settings.
  * If no N_array_3d structure is provided (NULL pointer), a new structure will be
- * allocated with the same datatype as the volume map and the size of the current region. 
+ * allocated with the same data type as the volume map and the size of the current region. 
  * The array offset will be set to 0.
+ * <br><br>
  *
  * If a N_array_3d structure is provided, the values from the volume map are 
  * casted to the N_array_3d type. The array must have the same size 
  * as the current region. 
+ * <br><br>
  *
  * The new created or the provided array is returned.
  * If the reading of the volume map fails, G3d_fatalError() will
@@ -2177,7 +2191,7 @@ N_array_3d *N_read_rast3d_to_array_3d(char *name, N_array_3d * array, int mask)
 
     type = G3d_tileTypeMap(map);
 
-    /*if the array is NULL create a new one with the datatype of the volume map */
+    /*if the array is NULL create a new one with the data type of the volume map */
     /*the offset is 0 by default */
     if (data == NULL) {
 	if (type == FCELL_TYPE) {
@@ -2266,6 +2280,7 @@ N_array_3d *N_read_rast3d_to_array_3d(char *name, N_array_3d * array, int mask)
  *
  * \param array N_array_3d * 
  * \param name char * - the name of the volume map
+ * \param mask int - 1 = use a 3d mask, 0 do not use a 3d mask
  * \return void
  *
  * */
@@ -2350,3 +2365,4 @@ void N_write_array_3d_to_rast3d(N_array_3d * array, char *name, int mask)
 
     return;
 }
+
