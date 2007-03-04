@@ -28,8 +28,8 @@
 /*- Parameters and global variables -----------------------------------------*/
 typedef struct
 {
-    struct Option *output, *phead, *status, *kf_x, *kf_y, *kf_z, *q, *s, *r,
-	*vector, *dt, *maxit, *error, *solver;
+    struct Option *output, *phead, *status, *hc_x, *hc_y, *hc_z, *q, *s, *r,
+	*vector, *dt, *maxit, *error, *solver, *sor;
     struct Flag *mask;
     struct Flag *sparse;
 } paramType;
@@ -63,29 +63,29 @@ void set_params()
 	_
 	("The status for each cell, = 0 - inactive, 1 - active, 2 - dirichlet");
 
-    param.kf_x = G_define_option();
-    param.kf_x->key = "kf_x";
-    param.kf_x->type = TYPE_STRING;
-    param.kf_x->required = YES;
-    param.kf_x->gisprompt = "old,grid3,3d-raster";
-    param.kf_x->description =
-	_("The x-part of the permeability tensor in [m/s]");
+    param.hc_x = G_define_option();
+    param.hc_x->key = "hc_x";
+    param.hc_x->type = TYPE_STRING;
+    param.hc_x->required = YES;
+    param.hc_x->gisprompt = "old,grid3,3d-raster";
+    param.hc_x->description =
+	_("The x-part of the hydraulic conductivity tensor in [m/s]");
 
-    param.kf_y = G_define_option();
-    param.kf_y->key = "kf_y";
-    param.kf_y->type = TYPE_STRING;
-    param.kf_y->required = YES;
-    param.kf_y->gisprompt = "old,grid3,3d-raster";
-    param.kf_y->description =
-	_("The y-part of the permeability tensor in [m/s]");
+    param.hc_y = G_define_option();
+    param.hc_y->key = "hc_y";
+    param.hc_y->type = TYPE_STRING;
+    param.hc_y->required = YES;
+    param.hc_y->gisprompt = "old,grid3,3d-raster";
+    param.hc_y->description =
+	_("The y-part of the hydraulic conductivity tensor in [m/s]");
 
-    param.kf_z = G_define_option();
-    param.kf_z->key = "kf_z";
-    param.kf_z->type = TYPE_STRING;
-    param.kf_z->required = YES;
-    param.kf_z->gisprompt = "old,grid3,3d-raster";
-    param.kf_z->description =
-	_("The z-part of the permeability tensor in [m/s]");
+    param.hc_z = G_define_option();
+    param.hc_z->key = "hc_z";
+    param.hc_z->type = TYPE_STRING;
+    param.hc_z->required = YES;
+    param.hc_z->gisprompt = "old,grid3,3d-raster";
+    param.hc_z->description =
+	_("The z-part of the hydraulic conductivity tensor in [m/s]");
 
     param.q = G_define_option();
     param.q->key = "q";
@@ -127,36 +127,11 @@ void set_params()
 	("Calculate the groundwater distance velocity vector field and write the x, y, and z components to maps named name_[xyz]. name is basename for the new raster3d maps.");
 
 
-    param.dt = G_define_option();
-    param.dt->key = "dt";
-    param.dt->type = TYPE_DOUBLE;
-    param.dt->required = YES;
-    param.dt->answer = "3600";
-    param.dt->description = _("Calculation time");
-
-    param.maxit = G_define_option();
-    param.maxit->key = "maxit";
-    param.maxit->type = TYPE_INTEGER;
-    param.maxit->required = NO;
-    param.maxit->answer = "100000";
-    param.maxit->description = _("Maximum number of iteration");
-
-    param.error = G_define_option();
-    param.error->key = "error";
-    param.error->type = TYPE_DOUBLE;
-    param.error->required = NO;
-    param.error->answer = "0.0000000001";
-    param.error->description =
-	_("Break criteria for the cg and bicgstab solver");
-
-    param.solver = G_define_option();
-    param.solver->key = "solver";
-    param.solver->type = TYPE_INTEGER;
-    param.solver->required = NO;
-    param.solver->answer = "0";
-    param.solver->description =
-	_
-	("Which kind of solver should be used, 0 - cg, 1 - bicgstab, 2 - LU, 3 - Gauss");
+    param.dt = N_define_standard_option(N_OPT_CALC_TIME);
+    param.maxit = N_define_standard_option(N_OPT_MAX_ITERATIONS);
+    param.error = N_define_standard_option(N_OPT_ITERATION_ERROR);
+    param.solver = N_define_standard_option(N_OPT_SOLVER_SYMM);
+    param.sor = N_define_standard_option(N_OPT_SOR_VALUE);
 
     param.mask = G_define_flag();
     param.mask->key = 'm';
@@ -166,28 +141,28 @@ void set_params()
     param.sparse->key = 's';
     param.sparse->description =
 	_
-	("Use a sparse linear equation system, only available with cg and bicgstab solver");
+	("Use a sparse linear equation system, only available with iterative solvers");
 
 }
 
 /* ************************************************************************* */
-/* Main function, open the G3D map and create the raster maps ************** */
+/* Main function *********************************************************** */
 /* ************************************************************************* */
 int main(int argc, char *argv[])
 {
-    struct GModule *module;
-    N_gwflow_data3d *data;
-    N_geom_data *geom;
-    N_les *les;
-    N_les_callback_3d *call;
+    struct GModule *module = NULL;
+    N_gwflow_data3d *data = NULL;
+    N_geom_data *geom = NULL;
+    N_les *les = NULL;
+    N_les_callback_3d *call = NULL;
     G3D_Region region;
     N_gradient_field_3d *field = NULL;
     N_array_3d *xcomp = NULL;
     N_array_3d *ycomp = NULL;
     N_array_3d *zcomp = NULL;
-    double error;
+    double error, sor;
     int maxit;
-    int solver;
+    const char * solver;
     int x, y, z, stat;
     char *buff = NULL;
 
@@ -211,18 +186,15 @@ int main(int argc, char *argv[])
     sscanf(param.maxit->answer, "%i", &(maxit));
     /*Set the calculation error break criteria */
     sscanf(param.error->answer, "%lf", &(error));
+    sscanf(param.sor->answer, "%lf", &(sor));
     /*Set the solver */
-    sscanf(param.solver->answer, "%i", &(solver));
+    solver = param.solver->answer;
 
-    /*Some error catching */
-    if (solver > 3)
-	G3d_fatalError
-	    ("The choosen solver <%i> does not exist. Valid solvers are  0 - cg, 1 - bicgstab, 2 - LU and 3 - Gauss",
-	     solver);
+    if (strcmp(solver, N_SOLVER_DIRECT_LU) == 0 && param.sparse->answer)
+	G_fatal_error(_ ("The direct LU solver do not work with sparse matrices"));
+    if (strcmp(solver, N_SOLVER_DIRECT_GAUSS) == 0 && param.sparse->answer)
+	G_fatal_error(_ ("The direct Gauss solver do not work with sparse matrices"));
 
-    if (solver > 1 && param.sparse->answer)
-	G3d_fatalError
-	    ("The LU and Gauss solver do not work with sparse matrices");
 
 
     /*Set the defaults */
@@ -231,19 +203,8 @@ int main(int argc, char *argv[])
     /*get the current region */
     G3d_getWindow(&region);
 
-    /*allocate the geometry structure */
-    geom = N_alloc_geom_data();
-
-    /*Fill the geom structure with data */
-    geom->rows = region.rows;
-    geom->cols = region.cols;
-    geom->depths = region.depths;
-    geom->dx = region.ew_res;
-    geom->dy = region.ns_res;
-    geom->dz = region.tb_res;
-    geom->Ax = geom->dy * geom->dz;
-    geom->Ay = geom->dx * geom->dz;
-    geom->Az = geom->dy * geom->dx;
+    /*allocate the geometry structure  for geometry and area calculation*/
+    geom = N_init_geom_data_3d(&region, geom);
 
     /*Set the function callback to the groundwater flow function */
     call = N_alloc_les_callback_3d();
@@ -265,29 +226,29 @@ int main(int argc, char *argv[])
     N_read_rast3d_to_array_3d(param.status->answer, data->status,
 			      param.mask->answer);
     N_convert_array_3d_null_to_zero(data->status);
-    N_read_rast3d_to_array_3d(param.kf_x->answer, data->kf_x,
+    N_read_rast3d_to_array_3d(param.hc_x->answer, data->hc_x,
 			      param.mask->answer);
-    N_convert_array_3d_null_to_zero(data->kf_x);
-    N_read_rast3d_to_array_3d(param.kf_y->answer, data->kf_y,
+    N_convert_array_3d_null_to_zero(data->hc_x);
+    N_read_rast3d_to_array_3d(param.hc_y->answer, data->hc_y,
 			      param.mask->answer);
-    N_convert_array_3d_null_to_zero(data->kf_y);
-    N_read_rast3d_to_array_3d(param.kf_z->answer, data->kf_z,
+    N_convert_array_3d_null_to_zero(data->hc_y);
+    N_read_rast3d_to_array_3d(param.hc_z->answer, data->hc_z,
 			      param.mask->answer);
-    N_convert_array_3d_null_to_zero(data->kf_z);
+    N_convert_array_3d_null_to_zero(data->hc_z);
     N_read_rast3d_to_array_3d(param.q->answer, data->q, param.mask->answer);
     N_convert_array_3d_null_to_zero(data->q);
     N_read_rast3d_to_array_3d(param.s->answer, data->s, param.mask->answer);
     N_convert_array_3d_null_to_zero(data->s);
 
     /* Set the inactive values to zero, to assure a no flow boundary */
-    for (z = 0; z < geom->depths; z++) {	/*From the bottom to the top */
+    for (z = 0; z < geom->depths; z++) {	
 	for (y = 0; y < geom->rows; y++) {
 	    for (x = 0; x < geom->cols; x++) {
 		stat = (int)N_get_array_3d_d_value(data->status, x, y, z);
 		if (stat == N_CELL_INACTIVE) {	/*only inactive cells */
-		    N_put_array_3d_d_value(data->kf_x, x, y, z, 0);
-		    N_put_array_3d_d_value(data->kf_y, x, y, z, 0);
-		    N_put_array_3d_d_value(data->kf_z, x, y, z, 0);
+		    N_put_array_3d_d_value(data->hc_x, x, y, z, 0);
+		    N_put_array_3d_d_value(data->hc_y, x, y, z, 0);
+		    N_put_array_3d_d_value(data->hc_z, x, y, z, 0);
 		    N_put_array_3d_d_value(data->s, x, y, z, 0);
 		    N_put_array_3d_d_value(data->q, x, y, z, 0);
 		}
@@ -307,30 +268,42 @@ int main(int argc, char *argv[])
 			      (void *)data, call);
     }
 
+  
     /*solve the equation system */
-    if (solver == 0)
+    if (strcmp(solver, N_SOLVER_ITERATIVE_JACOBI) == 0) 
+	N_solver_jacobi(les, maxit, sor, error);
+
+    if (strcmp(solver, N_SOLVER_ITERATIVE_SOR) == 0) 
+	N_solver_SOR(les, maxit, sor, error);
+
+    if (strcmp(solver, N_SOLVER_ITERATIVE_CG) == 0) 
 	N_solver_cg(les, maxit, error);
-    else if (solver == 1)
+
+    if (strcmp(solver, N_SOLVER_ITERATIVE_BICGSTAB) == 0) 
 	N_solver_bicgstab(les, maxit, error);
-    else if (solver == 2)
+
+    if (strcmp(solver, N_SOLVER_DIRECT_LU) == 0) 
 	N_solver_lu(les);
-    else if (solver == 3)
+
+    if (strcmp(solver, N_SOLVER_DIRECT_GAUSS) == 0) 
 	N_solver_gauss(les);
+
+    if (les == NULL)
+	G_fatal_error(_
+		      ("Could not create and solve the linear equation system"));
+
 
     /*write the result to the output file and copy the values to the data->phead array */
     write_result(data->status, data->phead_start, data->phead, les->x, &region,
 		 param.output->answer);
-    /*release unneeded memory */
     N_free_les(les);
 
     /*Compute the the velocity field if required and write the result into three rast3d maps */
     if (param.vector->answer) {
-	/* calculate the vector field and write the interpolated components to rast3d maps */
 	field =
-	    N_compute_gradient_field_3d(data->phead, data->kf_x, data->kf_y,
-					data->kf_z, geom);
+	    N_compute_gradient_field_3d(data->phead, data->hc_x, data->hc_y,
+					data->hc_z, geom);
 
-	/*allocate the vector arrays */
 	xcomp =
 	    N_alloc_array_3d(geom->cols, geom->rows, geom->depths, 1,
 			     DCELL_TYPE);
@@ -341,10 +314,8 @@ int main(int argc, char *argv[])
 	    N_alloc_array_3d(geom->cols, geom->rows, geom->depths, 1,
 			     DCELL_TYPE);
 
-	/*compute the vector components */
 	N_compute_gradient_field_components_3d(field, xcomp, ycomp, zcomp);
 
-	/*write data to rast3d maps */
 	G_asprintf(&buff, "%s_x", param.vector->answer);
 	N_write_array_3d_to_rast3d(xcomp, buff, 1);
 	G_asprintf(&buff, "%s_y", param.vector->answer);
@@ -364,12 +335,10 @@ int main(int argc, char *argv[])
 	    N_free_gradient_field_3d(field);
     }
 
-    /*release the memory */
     if (data)
 	N_free_gwflow_data3d(data);
-
     if (geom)
-	G_free(geom);
+	N_free_geom_data(geom);
     if (call)
 	G_free(call);
 
@@ -384,7 +353,7 @@ void
 write_result(N_array_3d * status, N_array_3d * phead_start, N_array_3d * phead,
 	     double *result, G3D_Region * region, char *name)
 {
-    void *map = NULL;		/*The 3D Rastermap */
+    void *map = NULL;		
     int changemask = 0;
     int z, y, x, rows, cols, depths, count, stat;
     double d1 = 0;
@@ -413,7 +382,7 @@ write_result(N_array_3d * status, N_array_3d * phead_start, N_array_3d * phead,
     }
 
     count = 0;
-    for (z = 0; z < depths; z++) {	/*From the bottom to the top */
+    for (z = 0; z < depths; z++) {	
 	G_percent(z, depths - 1, 10);
 	for (y = 0; y < rows; y++) {
 	    for (x = 0; x < cols; x++) {
@@ -442,7 +411,6 @@ write_result(N_array_3d * status, N_array_3d * phead_start, N_array_3d * phead,
 		G3d_maskOff(map);
     }
 
-    /* Close files and exit */
     if (!G3d_closeCell(map))
 	G3d_fatalError(map, NULL, 0, _("Error closing g3d file"));
 
