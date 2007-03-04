@@ -2865,7 +2865,7 @@ msgstr "&Raster"
 #: ../gui/tcltk/gis.m/gmmenu.tcl:222 ../gui/tcltk/gis.m/gmmenu.tcl:396
 #: ../gui/tcltk/d.m/menu.tcl:219 ../gui/tcltk/d.m/menu.tcl:376
 msgid "Develop map"
-msgstr "Entwickle Karte"
+msgstr "Bearbeite Karte"
 
 #: ../gui/tcltk/gis.m/gmmenu.tcl:223 ../gui/tcltk/d.m/menu.tcl:220
 msgid "Digitize raster"
