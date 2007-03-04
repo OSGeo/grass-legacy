@@ -35,10 +35,16 @@ int unit_test_gradient();
 /* direct and iterative solvers */
 int unit_test_solvers();
 
+/* geom_data struct tests */
+int unit_test_geom_data();
+
 /* les creation */
 int unit_test_les_creation ();
 
 /*gwflow*/
 int integration_test_gwflow ();
+
+/* solute transport */
+int integration_test_solute_transport();
 
 #endif

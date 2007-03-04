@@ -31,14 +31,14 @@ int unit_test_les_creation()
 {
     int sum = 0;
 
-    G_message(_("++ Running les creation unit tests ++"));
+    G_message(_("\n++ Running les creation unit tests ++"));
 
     sum += test_les();
 
     if (sum > 0)
-	G_warning(_("-- les creation unit tests failure --"));
+	G_warning(_("\n-- les creation unit tests failure --"));
     else
-	G_message(_("-- les creation unit tests finished successfully --"));
+	G_message(_("\n-- les creation unit tests finished successfully --"));
 
     return sum;
 }

@@ -34,14 +34,14 @@ int unit_test_solvers()
 {
     int sum = 0;
 
-    G_message(_("++ Running slover unit tests ++"));
+    G_message(_("\n++ Running slover unit tests ++"));
 
     sum += test_solvers();
 
     if (sum > 0)
-	G_warning(_("-- Solver unit tests failure --"));
+	G_warning(_("\n-- Solver unit tests failure --"));
     else
-	G_message(_("-- Solver unit tests finished successfully --"));
+	G_message(_("\n-- Solver unit tests finished successfully --"));
 
     return sum;
 }
@@ -108,6 +108,34 @@ int test_solvers()
 {
     N_les *les;
     N_les *sples;
+
+    G_message("\t * testing jacobi solver\n");
+
+    les = create_normal_les(TEST_N_NUM_ROWS);
+    sples = create_sparse_les(TEST_N_NUM_ROWS);
+
+    N_solver_jacobi(les, 100, 1, 0.1e-4);
+    /*N_print_les(les); */
+    N_solver_jacobi(sples, 100, 1, 0.1e-4);
+    /*N_print_les(sples); */
+
+    N_free_les(les);
+    N_free_les(sples);
+
+
+    G_message("\t * testing SOR solver\n");
+
+    les = create_normal_les(TEST_N_NUM_ROWS);
+    sples = create_sparse_les(TEST_N_NUM_ROWS);
+
+    N_solver_SOR(les, 100, 1, 0.1e-4);
+    /*N_print_les(les); */
+    N_solver_SOR(sples, 100, 1, 0.1e-4);
+    /*N_print_les(sples); */
+
+    N_free_les(les);
+    N_free_les(sples);
+
 
     G_message("\t * testing cg solver\n");
 

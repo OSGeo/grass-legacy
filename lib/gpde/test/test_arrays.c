@@ -41,7 +41,7 @@ int unit_test_arrays()
 {
     int sum = 0;
 
-    G_message(_("++ Running array unit tests ++"));
+    G_message(_("\n++ Running array unit tests ++"));
 
     G_message(_("\t 1. testing 2d arrays"));
     sum += test_array_2d();
@@ -50,9 +50,9 @@ int unit_test_arrays()
     sum += test_array_3d();
 
     if (sum > 0)
-	G_warning(_("-- Array unit tests failure --"));
+	G_warning(_("\n-- Array unit tests failure --"));
     else
-	G_message(_("-- Array unit tests finished successfully --"));
+	G_message(_("\n-- Array unit tests finished successfully --"));
 
     return sum;
 }
@@ -79,14 +79,12 @@ int fill_array_2d(N_array_2d * a)
 	    }
 	    if (type == FCELL_TYPE) {
 		N_put_array_2d_f_value(a, i, j, (FCELL) i * (FCELL) j);
-		if (N_get_array_2d_f_value(a, i, j) !=
-		    (FCELL) i * (FCELL) j)
+		if (N_get_array_2d_f_value(a, i, j) != (FCELL) i * (FCELL) j)
 		    res++;
 	    }
 	    if (type == DCELL_TYPE) {
 		N_put_array_2d_d_value(a, i, j, (DCELL) i * (DCELL) j);
-		if (N_get_array_2d_d_value(a, i, j) !=
-		    (DCELL) i * (DCELL) j)
+		if (N_get_array_2d_d_value(a, i, j) != (DCELL) i * (DCELL) j)
 		    res++;
 	    }
 	}
@@ -173,15 +171,14 @@ int fill_array_3d(N_array_3d * a)
 	    for (i = 0; i < cols; i++) {
 		if (type == FCELL_TYPE) {
 		    N_put_array_3d_f_value(a, i, j, k,
-					       (float)i * (float)j * (float)k);
+					   (float)i * (float)j * (float)k);
 		    if (N_get_array_3d_f_value(a, i, j, k) !=
 			(float)i * (float)j * (float)k)
 			res++;
 		}
 		if (type == DCELL_TYPE) {
 		    N_put_array_3d_d_value(a, i, j, k,
-						(double)i * (double)j *
-						(double)k);
+					   (double)i * (double)j * (double)k);
 		    if (N_get_array_3d_d_value(a, i, j, k) !=
 			(double)i * (double)j * (double)k)
 			res++;
@@ -694,7 +691,8 @@ int test_array_3d()
     G3d_getWindow(&region);
 
     data1 =
-	N_alloc_array_3d(region.cols, region.rows, region.depths, 0, FCELL_TYPE);
+	N_alloc_array_3d(region.cols, region.rows, region.depths, 0,
+			 FCELL_TYPE);
     data2 =
 	N_alloc_array_3d(region.cols, region.rows, region.depths, 0,
 			 DCELL_TYPE);

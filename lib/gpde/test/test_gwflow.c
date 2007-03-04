@@ -40,7 +40,7 @@ int integration_test_gwflow()
 {
     int sum = 0;
 
-    G_message(_("++ Running gwflow integration tests ++"));
+    G_message(_("\n++ Running gwflow integration tests ++"));
 
     G_message(_("\t 1. testing 2d gwflow"));
     sum += test_gwflow_2d();
@@ -49,9 +49,9 @@ int integration_test_gwflow()
     sum += test_gwflow_3d();
 
     if (sum > 0)
-	G_warning(_("-- gwflow integration tests failure --"));
+	G_warning(_("\n-- gwflow integration tests failure --"));
     else
-	G_message(_("-- gwflow integration tests finished successfully --"));
+	G_message(_("\n-- gwflow integration tests finished successfully --"));
 
     return sum;
 }
@@ -86,9 +86,9 @@ N_gwflow_data3d *create_gwflow_data_3d()
 		    N_put_array_3d_d_value(data->phead_start, i, j, k, 40);
 		    N_put_array_3d_d_value(data->status, i, j, k, 1);
 		}
-		N_put_array_3d_d_value(data->kf_x, i, j, k, 0.0001);
-		N_put_array_3d_d_value(data->kf_y, i, j, k, 0.0001);
-		N_put_array_3d_d_value(data->kf_z, i, j, k, 0.0001);
+		N_put_array_3d_d_value(data->hc_x, i, j, k, 0.0001);
+		N_put_array_3d_d_value(data->hc_y, i, j, k, 0.0001);
+		N_put_array_3d_d_value(data->hc_z, i, j, k, 0.0001);
 		N_put_array_3d_d_value(data->q, i, j, k, 0.0);
 		N_put_array_3d_d_value(data->s, i, j, k, 0.001);
 		N_put_array_2d_d_value(data->r, i, j, 0.0);
@@ -125,8 +125,8 @@ N_gwflow_data2d *create_gwflow_data_2d()
 		N_put_array_2d_d_value(data->phead_start, i, j, 40);
 		N_put_array_2d_d_value(data->status, i, j, 1);
 	    }
-	    N_put_array_2d_d_value(data->kf_x, i, j, 30.0001);
-	    N_put_array_2d_d_value(data->kf_y, i, j, 30.0001);
+	    N_put_array_2d_d_value(data->hc_x, i, j, 30.0001);
+	    N_put_array_2d_d_value(data->hc_y, i, j, 30.0001);
 	    N_put_array_2d_d_value(data->q, i, j, 0.0);
 	    N_put_array_2d_d_value(data->s, i, j, 0.001);
 	    N_put_array_2d_d_value(data->r, i, j, 0.0);
@@ -164,8 +164,6 @@ int test_gwflow_3d()
     geom->dy = 15;
     geom->dz = 3;
 
-    geom->Ax = 45;
-    geom->Ay = 30;
     geom->Az = 150;
 
     geom->depths = TEST_N_NUM_DEPTHS_LOCAL;
@@ -245,8 +243,6 @@ int test_gwflow_2d()
     geom->dx = 10;
     geom->dy = 15;
 
-    geom->Ax = 450;
-    geom->Ay = 300;
     geom->Az = 150;
 
     geom->rows = TEST_N_NUM_ROWS_LOCAL;
