@@ -1,84 +1,31 @@
-<H2>CHANGES BETWEEN VERSION 5.0.x/5.4.x and 6.0</H2>
-<UL>
-<LI>Devices and ps.select do not exist any more. Paper is defined in <EM>paper</EM> instruction.</LI> 
-<LI><EM>vpoints</EM> are used instead of <EM>sites</EM> (points are read from vector).</LI>
-<LI><EM>vector</EM> is substituted by <EM>vpoints</EM>, <EM>vlines</EM> and <EM>vareas</EM>.</LI>
-<LI>Symbols are used instead of icons (different format and directory).</LI>
-<LI>Map legend can be printed in columns.</LI>
-</UL>
-
 <H2>DESCRIPTION</H2>
 
-<EM>ps.map</EM>
-produces an output file containing a PostScript program to
-produce hardcopy map products on your system's PostScript output
-device.  Output can include a raster map, any number of vector overlays,
-text labels, and other spatial data.
+<EM>ps.map</EM> is a cartograpic mapping program for producing high quality
+hardcopy maps in PostScript format. Output can include a raster map, any
+number of vector overlays, text labels, decorations, and other spatial data.
 
 <P>
-
-This program has two distinct modes of operation.  The command-line
-mode requires the user to prepare a file of mapping instructions prior
-to running <EM>ps.map</EM> that describes the various spatial and textual
-information to be printed.
-
-The interactive mode (i.e., no command-line arguments) will prompt the
-user for items to be mapped and does not require the user
-to prepare a file of instructions (n.b., some options are not used
-in interactive mode).
+A file of mapping instructions that describes the various spatial and textual
+information to be printed must be prepared prior to running <EM>ps.map</EM>.
 
 <P>
-
 The order of commands is generally unimportant but may affect how some layers
 are drawn. For example to plot <B>vpoints</B> above <B>vareas</B> list the
 <B>vpoints</B> entry first.
-
-<P>
-
-The command-line parameters are:
-<DL>
-
-<DT><B>input=</B><EM>name</EM> 
-<DD>File containing mapping instructions.
-(or enter <B>input=-</B> to enter from keyboard).
-These instructions are described in detail below.
-If omitted, instructions can be piped from <em>stdin</em>.
-
-<P>
-<DT><B>output=</B><EM>name</EM> 
-<DD>Name of output the file to contain the PostScript program.
-
-<P>
-<DT><B>scale=</B><EM>mapscale</EM> 
-<DD><em>(depreciated)</em><BR>
-Scale of the output map,  e.g. 1:25000
-<BR>
-Default:  Auto-sized to fit page<BR>
-This parameter is provided as a convenience.  It is identical
-to the <EM>scale</EM> mapping instruction described below.
-<em>NOTE: Using "scale" from the command line is depreciated and while
-still provided for compatibility reasons it will be removed in the future.
-Please use the "scale" mapping instruction instead.</em>
-
-<P>
-<DT><B>copies=</B><EM>n</EM>
-<DD>Number of copies to print.<BR>
-This parameter is provided as a convenience. It is identical
-to the <EM>copies</EM> mapping instruction described below.
-<em>NOTE: Using "copies" from the command line is depreciated and while
-still provided for compatibility reasons it will be removed in the future.
-Please use the "copies" mapping instruction instead.</em>
-<BR><BR>
-<P>
-
-
-</DL>
 
 <P><P>
 
 <H2>MAPPING INSTRUCTIONS</H2>
 
-Instruction keywords:<BR>
+The mapping instructions allow the user to specify various spatial data
+to be plotted. These instructions are normally prepared in a regular
+text file using a system editor. Some instructions are single line
+instructions while others are multiple line. Multiple line instructions
+consist of the main instruction followed by a subsection of one or more
+additional instructions and are terminated with an <i>end</i> instruction.
+<P>
+
+<h3>Instruction keywords:</h3>
 [ 
 <a href="#border">border</a>&nbsp;|
 <a href="#colortable">colortable</a>&nbsp;|
@@ -115,18 +62,8 @@ Instruction keywords:<BR>
 <a href="#end">end</a>
 ]
 
-<P>
-The mapping instructions allow the user to specify various spatial data
-to be plotted. These instructions are normally prepared in a regular
-text file using a system editor.
-Some instructions are single line instructions while
-others are multiple line. Multiple line instructions consist of
-the main instruction followed by a subsection of one or more additional
-instructions.
-<P>
-One "pixel" is 1/72 of an inch.
-<P>
 
+<h3>Common instructions</h3>
 Instructions that may be included in the subsection under several
 different main instructions are:
 
@@ -197,7 +134,9 @@ For vectors and some plotting commands you can also specify
 </DD>
 </DL>
 <P>
+<BR>
 
+<h3>Command usage</h3>
 
 <a name="border"></a>
 <H2>border</H2>
@@ -338,6 +277,8 @@ Specifies the number of copies to be printed.
 USAGE:	<B>copies</B> n
 </PRE>
 Each page will be printed n times.
+<P>
+This instruction is identical to the <EM>copies</EM> command line parameter.
 <P>
 
 
@@ -987,26 +928,17 @@ Selects a scale for the output map.
 USAGE:	<B>scale</B> <EM>scale</EM>
 </PRE>
 The scale can be selected either as:
-
 <DL>
 <DT> 
-
 <DD>a relative ratio, e.g. 1:25000;
-
 <DT> 
-
 <DD>an absolute width of the printed map, e.g. 10 inches;
-
 <DT> 
-
 <DD>the number of printed paper panels, e.g. 3 panels
 <EM>.I</EM>
 (at the present time, only 1 panel is supported);
-
 <DT> 
-
 <DD>the number of miles per inch, e.g. 1 inch equals 4 miles.
-
 </DD>
 </DL>
 <P>
@@ -1017,6 +949,12 @@ units.
 EXAMPLE:	
 	<B>scale</B> 1:25000
 </PRE>
+<P>
+This instruction is identical to the <EM>scale</EM> command line parameter.
+<BR>
+<em>NOTE: Using "scale" from the command line is depreciated and while
+still provided for compatibility reasons it will be removed in the future.
+Please use the "scale" mapping instruction instead.</em>
 <P>
 
 
@@ -1570,14 +1508,6 @@ More samples can be found on the
 help site.
 <P>
 
-<!-- depreciated
-<H2>INTERACTIVE MODE</H2>
-
-If the user simply enters <EM>ps.map</EM>
-without arguments, then a simple prompting session occurs.
-Some, but not all of the non-interactive requests are available
-at this level.
--->
 
 <H2>NOTES</H2> 
 <P>
@@ -1585,6 +1515,8 @@ The user can specify negative values for position of EPS-files in ps.map
 to move them outside the current region (to position a barscale or other
 legend entries).
 </P>
+<P>
+One "pixel" is 1/72 of an inch.
 <P>
 For users wanting to use special characters (such as accented characters) it
 is important to note that <em>ps.map</em> uses <tt>ISO-8859-1</tt> encoding.
@@ -1606,6 +1538,17 @@ ignored.
 Be aware that some mapping instructions require the <i>end</i> command
 and some do not. Any instruction that allows subcommands will require
 it, any instruction that does not allow subcommands will not.
+
+
+<H2>CHANGES BETWEEN VERSION 5.0.x/5.4.x and 6.0</H2>
+<UL>
+<LI>Devices and ps.select do not exist any more. Paper is defined in <EM>paper</EM> instruction.</LI> 
+<LI><EM>vpoints</EM> are used instead of <EM>sites</EM> (points are read from vector).</LI>
+<LI><EM>vector</EM> is substituted by <EM>vpoints</EM>, <EM>vlines</EM> and <EM>vareas</EM>.</LI>
+<LI>Symbols are used instead of icons (different format and directory).</LI>
+<LI>Map legend can be printed in columns.</LI>
+</UL>
+
 
 <H2>SEE ALSO</H2>
 <a href="v.label.html">v.label</a>
