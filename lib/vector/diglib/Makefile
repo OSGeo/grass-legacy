@@ -23,6 +23,7 @@ LIB_OBJS = \
     plus_node.o \
     plus_struct.o \
     poly.o \
+    port_init.o \
     portable.o \
     prune.o \
     spindex.o  \
@@ -34,7 +35,6 @@ LIB_OBJS = \
 
 include $(MODULE_TOPDIR)/include/Make/Lib.make
 
-EXTRA_CLEAN_FILES = $(ARCH_INCDIR)/portable.h
 EXTRA_INC = $(VECT_INC)
 EXTRA_CFLAGS = $(VECT_CFLAGS)
 DEPENDENCIES =  $(GRASS_INCDIR)/vect/dig_defines.h \
@@ -47,26 +47,11 @@ else
 TEST = $(OBJDIR)/test
 endif
 
-default: $(ARCH_INCDIR)/portable.h lib $(TEST)
-
-ifdef MINGW
-$(ARCH_INCDIR)/portable.h: portable/i386-pc-mingw32msvc.h
-	$(INSTALL) -m 644 portable/i386-pc-mingw32msvc.h $(ARCH_INCDIR)/portable.h
-	$(INSTALL) -m 644 portable/i386-pc-mingw32msvc.h $(ARCH_DISTDIR)/include/portable.h
-else
-#  Test the machine size and orientation for the Portable Library
-$(ARCH_INCDIR)/portable.h: $(DEPENDENCIES)
-	@test -d $(OBJDIR) || $(MKDIR) $(OBJDIR)
-	$(CC) $(LDFLAGS) $(COMPILE_FLAGS) $(VECT_CFLAGS) $(INC) $(VECT_INC) -o $(OBJDIR)/port_test port_test.c
-	echo "/* Architecture: $(ARCH) */" > $(ARCH_INCDIR)/portable.h
-	$(OBJDIR)/port_test >> $(ARCH_INCDIR)/portable.h
-	echo "/* Architecture: $(ARCH) */" > $(ARCH_DISTDIR)/include/portable.h
-	$(OBJDIR)/port_test >> $(ARCH_DISTDIR)/include/portable.h
-endif	
+default: lib $(TEST)
 
 #  Test portable read/write functions
 $(OBJDIR)/test: test.c $(DEPENDENCIES) $(ARCH_LIB_OBJS)
-	echo "**************TEST*************"
+	echo "==============TEST============="
 	$(CC) $(LDFLAGS) $(COMPILE_FLAGS) $(VECT_CFLAGS) $(INC) $(VECT_INC) -o $@ test.c $(DIG2LIB) $(RTREELIB) \
 				$(GISLIB) $(DATETIMELIB) $(MATHLIB) $(XDRLIB) 
 	cd $(OBJDIR); $(LD_LIBRARY_PATH_VAR)="$($(LD_LIBRARY_PATH_VAR)):$(GISBASE)/lib" ./test; diff ./test.tmp ../test.ok
