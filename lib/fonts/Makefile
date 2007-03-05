@@ -2,7 +2,7 @@
 MODULE_TOPDIR = ../..
 
 SUBDIRS = \
-	for_grass
+	fonts
 
 include $(MODULE_TOPDIR)/include/Make/Dir.make
 

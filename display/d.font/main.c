@@ -37,18 +37,26 @@ int main( int argc , char **argv )
 		found = 0;
                 while ((dp = readdir(dirp)) != NULL)
                 {
+			char name[16];
+
 			if(dp->d_name[0] == '.')
 				continue;
 
-			fonts_len += strlen(dp->d_name) + 1;
+			if(!strstr(dp->d_name, ".hmp"))
+				continue;
+
+			strcpy(name, dp->d_name);
+			*(strstr(name, ".hmp")) = '\0';
+
+			fonts_len += strlen(name) + 1;
 			fonts = (char *)G_realloc(fonts, fonts_len);
                         if (found)
 			{
 				strcat(fonts, ",");
-                	        strcat(fonts, dp->d_name);
+                	        strcat(fonts, name);
 			}
 			else
-				strcpy(fonts, dp->d_name);
+				strcpy(fonts, name);
 			found = 1;
                 }
                 closedir(dirp);
