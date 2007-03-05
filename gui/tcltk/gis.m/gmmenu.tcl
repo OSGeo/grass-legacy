@@ -394,7 +394,7 @@ set descmenu [subst  {
  } 
  {[G_msg "&Vector"]} all options $tmenu {
 	{cascad {[G_msg "Develop map"]} {} "" $tmenu {			
-		{command {[G_msg "Digitize"]} {} "v.digit" {} -command {guarantee_xmon; execute v.digit }}
+		{command {[G_msg "Digitize"]} {} "v.digit" {} -command {execute v.digit }}
 		{separator}
 		{command {[G_msg "Create/rebuild topology"]} {} "v.build" {} -command {execute v.build }}
 		{command {[G_msg "Clean vector files"]} {} "v.clean" {} -command {execute v.clean }}
