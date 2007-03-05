@@ -1,5 +1,6 @@
 """
-class Layer
+class GRASSLayer
+class MapLayer
 class Map
 """
 
@@ -14,12 +15,25 @@ curr_disp = {} #display ID indexed by display index number
 disp_ctrl = {} #distionary of associated choicebook pages and displays
 disp_idx = "" #index for each display
 
-# Authors: Michael Barton and Jachym Cepicky
-# COPYRIGHT:	(C) 1999 - 2007 by the GRASS Development Team
+# Authors  : Michael Barton, Jachym Cepicky, Martin Landa
+#
+# COPYRIGHT:(C) 1999 - 2007 by the GRASS Development Team
 
 DEBUG = False
 
-class Layer:
+class GRASSLayer:
+	"""
+	This class stores metainformation of GRASS layers needed
+	for creating MapLayer instance
+
+	Attributes:
+	        params - based on a given GRASS layer (raster, vector, graph, etc.)
+	"""
+
+	def __init__(self, parameters):
+		self.params = parameters
+
+class MapLayer:
 	"""
 	This class serves for storing map layers to be displayed
 	
@@ -27,13 +41,31 @@ class Layer:
 		name	- layer name
 		mapset	- mapset name
 
-		l_type     - layer type
-		l_active   - layer is active, will be rendered only if True
-		l_hidden   - layer is hidden, won't be listed in GIS Manager if True
-		l_opacity  - layer opacity [0-1]
-		l_mapfile  - file name of rendered layer
-		l_maskfile - mask name of rendered layer
+		type     - layer type
+		active   - layer is active, will be rendered only if True
+		hidden   - layer is hidden, won't be listed in GIS Manager if True
+		opacity  - layer opacity [0-1]
+		mapfile  - file name of rendered layer
+		maskfile - mask name of rendered layer
 	"""
+
+	def __init__(self, ttype, tname, tmapset,
+		     tactive, thidden, topacity,
+		     **parameters):
+		self.name   = tname
+		self.mapset = tmapset
+
+		self.type = ttype
+		self.active = tactive
+		self.hidden = thidden
+		self.opacity = topacity
+
+		self.grassLayer = GRASSLayer(parameters)
+
+		gtemp = utils.GetTempfile()
+		self.maskfile = gtemp + ".pgm"
+		self.mapfile  = gtemp + ".ppm"
+
 
 	def __renderRasterLayer(self):
 		"""
@@ -43,9 +75,17 @@ class Layer:
 		try:
 			self.cmd = "d.rast -o map=%s@%s" % (self.name, self.mapset)
 
-			if self.catlist:    self.cmd += " catlist=%s" % (self.catlist)
-			if self.vallist:    self.cmd += " vallist=%s" % (self.vallist)
-			if self.invertCats: self.cmd +=" -i"
+			for key in self.grassLayer.params.keys():
+				value = self.grassLayer.params[key]
+
+				if self.grassLayer.params[key]:
+					##FIXME: test data type not strlen
+					if type(value) == type(""):
+						self.cmd += " %s=%s" % \
+						    (key, value)
+					else:
+						self.cmd += " -%s" % key
+
 		except StandardError, e:
 			sys.stderr.write("Could not render raster layer <%s>: %s\n" %\
 						 (self.name, str(e)))
@@ -57,37 +97,17 @@ class Layer:
 		"""
 
 		try:
-			self.cmd = "d.vect"
+			self.cmd = "d.vect map=%s@%s" % (self.name, self.mapset)
 
-			if self.colorfromtable: self.cmd += " -a"
-			if self.randomcolor:    self.cmd += " -c"
-			if self.catsasid:	self.cmd += " -i"
+			for key in self.grassLayer.params:
+				if self.grassLayer.params[key]:
+					##FIXME: test data type not strlen
+					if len(key) > 1:
+						self.cmd += " %s=%s" % \
+						    (key, self.grassLayer.params[key])
+					else:
+						self.cmd += " -%s" % key
 
-			self.cmd += " map=%s@%s" % (self.name, self.mapset)
-
-			if self.type:	     self.cmd += " type=%s" % (self.type)
-			if self.display:     self.cmd += " display=%s" % (self.display)
-			if self.attrcol:     self.cmd += " attrcol=%s" % (self.attrcol)
-			if self.icon:        self.cmd += " icon=%s" % (self.icon)
-			if self.size:        self.cmd += " size=%s" % (self.size)
-			if self.layer:	     self.cmd += " layer=%s" % (self.layer)
-			if self.cats:        self.cmd += " cats=%s" % (self.cats)
-			if self.where:       self.cmd += " where=%s" % (self.where)
-			if self.width:       self.cmd += " width=%s" % (self.width)
-			if self.wcolumn:     self.cmd += " wcolumn=%s" % (self.wcolumn)
-			if self.wscale:	     self.cmd += " wscale=%s" % (self.wscale)
-			if self.color:       self.cmd += " color=%s" % (self.color)
-			if self.fcolor:      self.cmd += " fcolor=%s" % (self.fcolor)
-			if self.rgb_column : self.cmd += " rgb_column=%s" % (self.rgb_column)
-			if self.llayer:      self.cmd += " llayer=%s" % (self.llayer)
-			if self.lcolor:      self.cmd += " lcolor=%s" % (self.lcolor)
-			if self.bgcolor:     self.cmd += " bgcolor=%s" % (self.bgcolor)
-			if self.lsize:       self.cmd += " lsize=%s" % (self.lsize)
-			if self.font:        self.cmd += " font=%s" % (self.font)
-			if self.xref:        self.cmd += " xref=%s" % (self.xref)
-			if self.yref:        self.cmd += " yref=%s" % (self.yref)
-			if self.minreg:      self.cmd += " minreg=%s" % (self.minreg)
-			if self.maxreg:      self.cmd += " maxreg=%s" % (self.maxreg)
 		except StandardError, e:
 			sys.stderr.write("Could not render vector layer <%s>: %s\n" %\
 						 (self.name, str(e)))
@@ -108,30 +128,30 @@ class Layer:
 		#
 		# to be sure, set temporary file with layer and mask
 		#
-		if not self.l_mapfile:
+		if not self.mapfile:
 			gtemp = utils.GetTempfile()
-			self.l_maskfile = gtemp + ".pgm"
-			self.l_mapfile  = gtemp + ".ppm"
+			self.maskfile = gtemp + ".pgm"
+			self.mapfile  = gtemp + ".ppm"
 
 		#
 		# prepare command for each layer
 		#
-		if self.l_type == "raster":
+		if self.type == "raster":
 			self.__renderRasterLayer()
 
-		elif self.l_type == "vector":
+		elif self.type == "vector":
 			self.__renderVectorLayer()
 
-		elif self.l_type == "wms":
+		elif self.type == "wms":
 			print "Type wms is not supported yet"
 		else:
 			print "Type <%s> of layer <%s> is not supported yet" % \
-			    (self.l_type, self.name)
+			    (self.type, self.name)
 
 		#
 		# Start monitor
 		#
-		os.environ["GRASS_PNGFILE"] = self.l_mapfile
+		os.environ["GRASS_PNGFILE"] = self.mapfile
 
 		if os.system("d.mon --quiet start=gism"):
 			# try again
@@ -151,8 +171,8 @@ class Layer:
 
 		if os.system(self.cmd):
 			print "Could not execute '%s'" % (self.cmd)
-			self.l_mapfile = None
-			self.l_maskfile = None
+			self.mapfile = None
+			self.maskfile = None
 			return None
 
 		#
@@ -161,7 +181,7 @@ class Layer:
 		if os.system("d.mon --quiet stop=gism"):
                         raise CouldNotStopMonitor("gism")
 			
-		return self.l_mapfile
+		return self.mapfile
 
 class Map:
 	"""
@@ -247,18 +267,25 @@ class Map:
 					 self.env['MAPSET'],
 					 "WIND")
 
-		windfile = open (windfile, "r")
+		try:
+			windfile = open (windfile, "r")
+			
+			for line in windfile.readlines():
+				line = line.strip()
+				key, value = line.split(":")
+				key = key.strip()
+				value = value.strip()
+				self.wind[key] = value
+				
+			self.__adjustRegion()
 
-		for line in windfile.readlines():
-			line = line.strip()
-			key, value = line.split(":")
-			key = key.strip()
-			value = value.strip()
-			self.wind[key] = value
+			windfile.close()
 
-		windfile.close()
+		except StandardError:
+			sys.stderr.write("Could open file <%s>\n" % \
+						 (windfile))
+			exit(1)
 
-		self.__adjustRegion()
 
 		#
 		# setting resolution
@@ -446,24 +473,24 @@ class Map:
 		for layer in self.layers:
 
 			# specified type only
-			if l_type != None and layer.l_type != l_type:
+			if l_type != None and layer.type != l_type:
 				continue
 
 			# hidden and active layers
 			if l_active != None and \
 				    l_hidden != None:
-				if layer.l_active == l_active and \
-					    layer.l_hidden == l_hidden:
+				if layer.active == l_active and \
+					    layer.hidden == l_hidden:
 					selected.append(layer)
 
 			# active layers
 			elif l_active != None:
-				if layer.l_active == l_active:
+				if layer.active == l_active:
 					selected.append(layer)
 
 			# hidden layers
 			elif l_hidden != None:
-				if layer.l_hidden == l_hidden:
+				if layer.hidden == l_hidden:
 					selected.append(layer)
 
 			# all layers
@@ -502,7 +529,7 @@ class Map:
 			for layer in self.layers:
 
 				# render if there is no mapfile
-				if layer.l_mapfile == None:
+				if layer.mapfile == None:
 					layer.Render()
 
 				# redraw layer content
@@ -511,9 +538,9 @@ class Map:
 						continue
 
 				# add image to compositing list
-				maps.append(layer.l_mapfile)
-				masks.append(layer.l_maskfile)
-				opacities.append(str(layer.l_opacity))
+				maps.append(layer.mapfile)
+				masks.append(layer.maskfile)
+				opacities.append(str(layer.opacity))
 
 			# make arrays to strings
 			mapstr = ",".join(maps)
@@ -560,7 +587,7 @@ class Map:
 			vallist    - list of values
 			invertCats - invert catlist, True/False
 
-			l_active   - see Layer class
+			l_active   - see MapLayer class
 			l_hidden
 			l_opacity
 			l_render   - render an image
@@ -573,26 +600,18 @@ class Map:
 		if not mapset:
 			mapset = self.env["MAPSET"]
 
-                layer = Layer()
-
-		## FIXME: l_opacity must <0;1>
-		if l_opacity > 1:
+		# l_opacity must be <0;1>
+		if l_opacity < 0: l_opacity = 0
+		elif l_opacity > 1:
 			l_opacity = float(l_opacity) / 100
 
-		# FIXME: create Layer.__init__()
-		layer.l_type	= "raster"
-		layer.name	= name
-		layer.mapset	= mapset
-		layer.catlist	= catlist
-		layer.vallist	= vallist
-		layer.invertCats= invertCats
-		layer.l_active	= l_active
-		layer.l_hidden	= l_hidden
-		layer.l_opacity = l_opacity
-		gtemp = utils.GetTempfile()
-		layer.l_maskfile = gtemp + ".pgm"
-		layer.l_mapfile = gtemp + ".ppm"
+		layer = MapLayer("raster", name, mapset,
+				 l_active, l_hidden, l_opacity,
+				 catlist    = catlist,
+				 vallist    = vallist,
+				 i          = invertCats)
 
+		# add maplayer to the list of layers
 		self.layers.append(layer)
 
 		if l_render:
@@ -615,7 +634,7 @@ class Map:
 
                     coordsinmapunits - coordinates are given in map units
 
-                    l_active         - see Layer class
+                    l_active         - see MapLayer class
                     l_hidden 
                     l_opacity
                     l_render         - render an image 
@@ -624,22 +643,15 @@ class Map:
                     Added layer on success or None
             """
 
-            layer = Layer()
+	    # l_opacity must be <0;1>
+	    if l_opacity < 0: l_opacity = 0
+	    elif l_opacity > 1:
+		    l_opacity = float(l_opacity) / 100
 
-            if l_opacity > 1:
-                    l_opacity = float(l_opacity) / 100
-
-            layer.l_type	   = "graph"
-            layer.name		   = name
-            layer.graph            = graph
-            layer.color            = color
-            layer.coordsinmapunits = coordsinmapunits
-            layer.l_active	   = l_active
-            layer.l_hidden	   = l_hidden
-            layer.l_opacity        = l_opacity
-            gtemp                  = utils.GetTempfile()
-            layer.l_maskfile       = gtemp + ".pgm"
-            layer.l_mapfile        = gtemp + ".ppm"
+            layer = MapLayer("graph", name, "", # current mapset
+			     l_active, l_hidden, l_opacity,
+			     color = color,
+			     coordsinmapunits = coordsinmapunits)
 
             self.layers.append(layer)
 
@@ -695,7 +707,7 @@ class Map:
                     randomcolor    - random colors according to category number
                     catsasid       - use values from 'cats' option as line id
 
-                    l_active  - see Layer class
+                    l_active  - see MapLayer class
                     l_hidden  
                     l_opacity 
                     l_render  - render an image
@@ -704,53 +716,45 @@ class Map:
                     Added layer if succeeded or None
             """
 
-            maplayer = Layer()
-
             if not mapset:
                     mapset = self.env["MAPSET"]
 
-            if l_opacity > 1:
-                    l_opacity = float(l_opacity) / 100
+	    # l_opacity must be <0;1>
+	    if l_opacity < 0: l_opacity = 0
+	    elif l_opacity > 1:
+		    l_opacity = float(l_opacity) / 100
 
-	    maplayer.name	    = name
-            maplayer.mapset         = mapset	 
-	    maplayer.type	    = type         
-	    maplayer.display        = display
-	    maplayer.attrcol        = attrcol
-            maplayer.icon	    = icon
-	    maplayer.size	    = size
-	    maplayer.layer	    = layer
-	    maplayer.cats	    = cats
-            maplayer.where	    = where
-	    maplayer.width	    = width
-	    maplayer.wcolumn        = wcolumn
-	    maplayer.wscale	    = wscale
-            maplayer.color	    = color
-	    maplayer.fcolor	    = fcolor
-	    maplayer.rgb_column     = rgb_column
-	    maplayer.llayer	    = llayer
-	    maplayer.lcolor         = lcolor
-	    maplayer.bgcolor        = bgcolor
-	    maplayer.bcolor         = bcolor
-	    maplayer.lsize	    = lsize
-	    maplayer.font	    = font
-	    maplayer.xref	    = xref
-	    maplayer.yref	    = yref
-	    maplayer.minreg	    = minreg
-	    maplayer.maxreg         = maxreg
-	    maplayer.colorfromtable = colorfromtable
-            maplayer.randomcolor    = randomcolor
-	    maplayer.catsasid       = catsasid
 
-	    maplayer.l_type     = "vector";	
-	    maplayer.l_active   = l_active
-	    maplayer.l_hidden   = l_hidden
-            maplayer.l_opacity  = l_opacity
-            gtemp               = utils.GetTempfile()
-            maplayer.l_maskfile = gtemp+".pgm"
-            maplayer.l_mapfile  = gtemp+".ppm"
+            maplayer = MapLayer("vector", name, mapset,
+				l_active, l_hidden, l_opacity,
+				display = display,
+				attrcol = attrcol,
+				icon = icon,
+				size = size,
+				layer = layer,
+				cats = cats,
+				where = where,
+				width = width,
+				wcolumn = wcolumn,
+				wscale = wscale,
+				color = color,
+				fcolor = fcolor,
+				rgb_column = rgb_column,
+				llayer = llayer,
+				lcolor = lcolor,
+				bgcolor = bgcolor,
+				bcolor = bcolor,
+				lsize = lsize,
+				font = font,
+				xref = xref,
+				yref = yref,
+				minreg = minreg,
+				maxreg = maxreg,
+				colorfromtable = colorfromtable,
+				randomcolor = randomcolor,
+				catsasid = catsasid)
 
-            self.layers.append(maplayer)
+	    self.layers.append(maplayer)
 
             if l_render:
                     if not maplayer.Render():
@@ -782,8 +786,8 @@ class Map:
 			for layer in self.layers:
 				if layer.name == name and layer.mapset == mapset:
 					retlayer = layer
-                                        os.remove(layer.l_mapfile)
-                                        os.remove(layer.l_maskfile)
+                                        os.remove(layer.mapfile)
+                                        os.remove(layer.maskfile)
 					self.layers.remove(layer)
 					return layer
 		# del by id
@@ -824,8 +828,8 @@ class Map:
 
             try:
                 for layer in self.layers:
-                    os.remove(layer.l_mapfile)
-                    os.remove(layer.l_maskfile)
+                    os.remove(layer.mapfile)
+                    os.remove(layer.maskfile)
                     self.layers.remove(layer)
                 return
             except:
@@ -845,13 +849,16 @@ if __name__ == "__main__":
 	map.width = 300
 	map.height = 400
 
-	map.AddRasterLayer("elevation.dem", mapset="PERMANENT")
+	map.AddRasterLayer("elevation.dem", mapset="PERMANENT", catlist="1000-1500", invertCats=True)
+
 	map.AddVectorLayer("roads", color="red", width=3, mapset="PERMANENT",
 			   l_opacity=50)
 
 	image = map.Render(force=True)
-
-	os.system("display %s" % image)
+	
+	
+	if image:
+		os.system("display %s" % image)
 
 	#image = map.Render()
 	#os.system("display %s" % image)
