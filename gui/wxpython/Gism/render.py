@@ -24,8 +24,9 @@ DEBUG = False
 
 class GRASSLayer:
 	"""
-	This class stores metainformation of GRASS layers needed
-	for creating MapLayer instance
+	This class stores GRASS layer metainformation
+	(command line parameters and flags) needed for creating
+	MapLayer instance
 
 	Attributes:
 	        params - based on a given GRASS layer (raster, vector, graph, etc.)
@@ -41,25 +42,26 @@ class MapLayer:
 	Common layer attributes:
 		name	- layer name
 		mapset	- mapset name
-
 		type     - layer type
+
 		active   - layer is active, will be rendered only if True
 		hidden   - layer is hidden, won't be listed in GIS Manager if True
 		opacity  - layer opacity [0-1]
+		
 		mapfile  - file name of rendered layer
 		maskfile - mask name of rendered layer
 	"""
 
-	def __init__(self, ttype, tname, tmapset,
-		     tactive, thidden, topacity,
+	def __init__(self, type, name, mapset,
+		     active, hidden, opacity,
 		     **parameters):
-		self.name   = tname
-		self.mapset = tmapset
+		self.name   = name
+		self.mapset = mapset
 
-		self.type = ttype
-		self.active = tactive
-		self.hidden = thidden
-		self.opacity = topacity
+		self.type    = type
+		self.active  = active
+		self.hidden  = hidden
+		self.opacity = opacity
 
 		self.grassLayer = GRASSLayer(parameters)
 
