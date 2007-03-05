@@ -205,6 +205,8 @@ static int update_list(int count)
 {
   struct COOR *new_ptr1, *new_ptr2, *new_ptr3;
 
+  G_debug (3, "update_list: count:%d row:%d col:%d", count, row, col-1);
+
   switch(count)
   {
     case 0:
@@ -361,8 +363,45 @@ static int update_list(int count)
 	   }/* starting in the middle of the line */
         }
       }
+      else if (value_flag) /* horizontal or vertical line */
+      {
+	 int ml_val, mc_val, mr_val; /* horiz */
+	 int tc_val, bc_val;         /* vert */
+	 
+	 ml_val = mc_val = mr_val = tc_val = bc_val = 0;
+	 /* only CELL supported */
+	 if (data_type == CELL_TYPE)
+	 {
+	    ml_val = ((CELL*) middle)[col-1];
+	    mc_val = ((CELL*) middle)[col];
+	    mr_val = ((CELL*) middle)[col+1];
+	    
+	    tc_val = ((CELL*) top)[col];
+	    bc_val = ((CELL*) bottom)[col];
+	 }
+	 
+	 if ((mc && mr) && mc_val != mr_val)         /* break the horizontal line */
+	 {
+	    h_ptr = end_line(h_ptr,1);               
+	    h_ptr = start_line(1);                   
+	 }
+	 else if ((mc && bc) && mc_val != bc_val)   /* break the vertical line */
+	 {
+	    v_list[col].center = end_line(v_list[col].center,1);          
+	    v_list[col].center = start_line(1);
+	 }
+	 
+	 if ((mc && ml) && mc_val != ml_val)
+	 {
+	    h_ptr -> bptr -> val = mc_val;
+	 }
+	 else if ((mc && tc) && mc_val != tc_val)
+	 {
+	    v_list[col].center -> bptr -> val = mc_val;
+	 }
+      }
       break;
-    case 3:	
+     case 3:	
         if (ml || tl || tc || (tr && !mr))
         {
           if (ml)                         /* stop horz. and vert. lines */
@@ -496,6 +535,9 @@ static struct COOR *end_line(struct COOR *ptr,int node)
       break;
   }
 
+  G_debug (3, "end_line: node: %d; p: row:%d, col:%d",
+	   node, ptr -> row, ptr -> col);
+
   ptr->fptr = ptr;
   write_line(ptr);
 
@@ -505,6 +547,8 @@ static struct COOR *end_line(struct COOR *ptr,int node)
 static struct COOR *start_line(int node)
 {
   struct COOR *new_ptr1, *new_ptr2;
+
+  G_debug (3, "start_line: node %d", node);
 
   new_ptr1 = get_ptr();
   new_ptr2 = get_ptr();
@@ -534,6 +578,10 @@ static int join_lines (struct COOR *p, struct COOR *q)
   default:
       break;
   }
+
+  G_debug (3, "join_lines: p: row:%d, col:%d; q: row:%d, col:%d",
+	   p -> row, p -> col,
+	   q -> row, q -> col);
 
   if (p->fptr != NULL)
   {
@@ -567,6 +615,10 @@ static int extend_line (struct COOR *p, struct COOR *q)
      /* should never happen by the logic of algorithm */
       p = start_line(1);
   }
+
+  G_debug (3, "extend_line: p: row:%d, col:%d; q: row:%d, col:%d",
+	   p -> row, p -> col,
+	   q -> row, q -> col);
 
   p->row = row;
   p->col = col - 1;
@@ -667,6 +719,9 @@ static struct COOR *get_ptr (void)
   default:
       break;
   }
+
+  G_debug (3, "get_ptr: row:%d, col:%d",
+	   p -> row, p -> col);
 
   p->bptr = p->fptr = NULL;
 
