@@ -7,51 +7,192 @@
 #include <fcntl.h>
 #include <grass/gis.h>
 
-static long *findex, nchars;
-static unsigned char *font;
-static int first = 1;
-
-int font_init(const char *filename)
+struct glyph
 {
-	int file, size;
-	long offset;
+	unsigned int offset : 20;
+	unsigned int count : 12;
+};
 
-	if (first)
+static struct glyph *glyphs;
+static int glyphs_alloc;
+
+static unsigned char *xcoords, *ycoords;
+static int coords_offset;
+static int coords_alloc;
+
+static int fontmap[1024];
+static int num_chars;
+
+static char current_font[16];
+static int font_loaded;
+
+static struct glyph *glyph_slot(int idx)
+{
+	if (glyphs_alloc <= idx)
 	{
-		font = NULL;
-		findex = NULL;
-		first = 0;
+		int new_alloc = idx + ((glyphs_alloc > 0) ? 1000 : 4000);
+
+		glyphs = G_realloc(glyphs, new_alloc * sizeof(struct glyph));
+		memset(&glyphs[glyphs_alloc], 0,
+		       (new_alloc - glyphs_alloc) * sizeof(struct glyph));
+		glyphs_alloc = new_alloc;
 	}
 
-	file = open(filename, 0);
-	if (file < 0)
-		return -1;
+	return &glyphs[idx];
+}
 
-	/* First record: an offset to the number of character in the font. */
-	read(file, &offset, sizeof(offset));
+static int coord_slots(int count)
+{
+	int n;
 
-	/* Read entire font into memory */
-	lseek(file, 0L, 0);
-	if(font)
-		G_free(font);
-	font = G_malloc((size_t) offset);
+	if (coords_alloc < coords_offset + count)
+	{
+		coords_alloc = coords_offset + count + ((coords_alloc > 0) ? 10000 : 60000);
+		xcoords = G_realloc(xcoords, coords_alloc);
+		ycoords = G_realloc(ycoords, coords_alloc);
+	}
 
-	size = read(file, font, (size_t) offset);
-	if (size != offset)
-		G_fatal_error("can't read font! %d bytes read", size);
+	n = coords_offset;
+	coords_offset += count;
 
-	/* Read font index into memory */
-	lseek(file, offset, 0);
-	read(file, &nchars, sizeof nchars);
-	size = nchars * sizeof(*findex);
+	return n;
+}
 
-	if(findex)
-		G_free(findex);
-	findex = G_malloc((size_t) size);
-	if (read(file, findex, size) != size)
-		G_fatal_error("can't read findex!");
+static void read_hersh(const char *filename)
+{
+	FILE *fp = fopen(filename, "r");
 
-	close(file);
+	if (!fp)
+		return;
+
+	while (!feof(fp))
+	{
+		char buf[8];
+		struct glyph *glyph;
+		int coords;
+		unsigned int idx, count;
+		int c, i;
+
+		switch (c = fgetc(fp))
+		{
+		case '\r':
+			fgetc(fp);
+			continue;
+		case '\n':
+			continue;
+		default:
+			ungetc(c, fp);
+			break;
+		}
+
+		if (fread(buf, 1, 5, fp) != 5)
+			break;
+
+		buf[5] = 0;
+		idx = atoi(buf);
+
+		if (fread(buf, 1, 3, fp) != 3)
+			break;
+
+		buf[3] = 0;
+		count = atoi(buf);
+
+		glyph = glyph_slot(idx);
+		coords = coord_slots(count);
+
+		glyph->offset = coords;
+		glyph->count = count;
+
+		for (i = 0; i < count; i++)
+		{
+			if ((i + 4) % 36 == 0)
+			{
+				/* skip newlines? */
+				if (fgetc(fp) == '\r')
+					fgetc(fp);
+			}
+
+			xcoords[coords + i] = fgetc(fp);
+			ycoords[coords + i] = fgetc(fp);
+		}
+
+		if (fgetc(fp) == '\r')
+			fgetc(fp);
+	}
+
+	fclose(fp);
+}
+
+static void load_glyphs(void)
+{
+	int i;
+
+	if (glyphs)
+		return;
+
+	for (i = 1; i <= 4; i++)
+	{
+		char buf[GPATH_MAX];
+
+		sprintf(buf, "%s/fonts/hersh.oc%d", G_gisbase(), i);
+		read_hersh(buf);
+	}
+}
+
+static void read_fontmap(const char *name)
+{
+	char buf[GPATH_MAX];
+	FILE *fp;
+
+	num_chars = 0;
+	memset(fontmap, 0, sizeof(fontmap));
+
+	sprintf(buf, "%s/fonts/%s.hmp", G_gisbase(), name);
+
+	fp = fopen(buf, "r");
+	if (!fp)
+	{
+		G_warning("unable to open font map '%s'", name);
+		return;
+	}
+
+	while (fscanf(fp, "%s", buf) == 1)
+	{
+		int a, b;
+
+		if (sscanf(buf, "%d-%d", &a, &b) == 2)
+			while (a <= b)
+				fontmap[num_chars++] = a++;
+		else if (sscanf(buf, "%d", &a) == 1)
+			fontmap[num_chars++] = a;
+	}
+
+	fclose(fp);
+}
+
+static void load_font(void)
+{
+	if (font_loaded)
+		return;
+
+	if (!glyphs)
+		load_glyphs();
+
+	read_fontmap(current_font);
+
+	font_loaded = 1;
+}
+
+int font_init(const char *name)
+{
+	if (strchr(name, '/'))
+		name = strrchr(name, '/') + 1;
+
+	if (strcmp(name, current_font) == 0)
+		return 0;
+
+	strcpy(current_font, name);
+	font_loaded = 0;
 
 	return 0;
 }
@@ -60,29 +201,24 @@ int get_char_vects(
 	unsigned char achar,
 	int *n, unsigned char **X, unsigned char **Y)
 {
-	unsigned char *work_point;
+	struct glyph *glyph;
 	int i;
 
-	if (!font)
-	{
-		*n = 0;
-		return 1;
-	}
+	if (!font_loaded)
+		load_font();
 
 	i = (int) achar - 040;   /* translate achar to char# in font index */
-	if (i < 1 || i >= nchars)
+	if (i <= 0 || i >= num_chars)
 	{
 		*n = 0;
 		return 1;
 	}
-	work_point = font + findex[i];
 
-	/* n = *((int *) work_point) ; */
-	/* alignment problem, resolve by copying pseudo int to int variable */
-	memcpy(n, work_point, sizeof(int));
+	glyph = &glyphs[fontmap[i]];
 
-	*X = work_point + sizeof(int);
-	*Y = *X + *n;
+	*n = glyph->count;
+	*X = &xcoords[glyph->offset];
+	*Y = &ycoords[glyph->offset];
 
 	return 0;
 }
