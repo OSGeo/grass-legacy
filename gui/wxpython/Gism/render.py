@@ -7,13 +7,14 @@ class Map
 import os,sys
 import utils
 
-layertree = {} #layer tree in GIS Manager, indexed by display.
-nb = {} #notebook in GIS Manager, indexed by display.
-cb_page = {} #choicbook page in GIS Manager, indexed by display.
-cb_pgnum = {} #choicebook page number, indexed by page ID
-curr_disp = {} #display ID indexed by display index number
-disp_ctrl = {} #distionary of associated choicebook pages and displays
-disp_idx = "" #index for each display
+# global variables should be removed
+#layertree = {} #layer tree in GIS Manager, indexed by display.
+#nb = {} #notebook in GIS Manager, indexed by display.
+#b_page = {} #choicbook page in GIS Manager, indexed by display.
+#cb_pgnum = {} #choicebook page number, indexed by page ID
+#curr_disp = {} #display ID indexed by display index number
+#disp_ctrl = {} #distionary of associated choicebook pages and displays
+#disp_idx = "" #index for each display
 
 # Authors  : Michael Barton, Jachym Cepicky, Martin Landa
 #
