@@ -1,3 +1,15 @@
+/**
+ * \file plus_area.c
+ *
+ * \brief Lower level functions for reading/writing/manipulating vectors.
+ *
+ * This program is free software under the GNU General Public License
+ * (>=v2). Read the file COPYING that comes with GRASS for details.
+ *
+ * \author CERL (probably Dave Gerdes), Radim Blazek
+ *
+ * \date 2001-2006
+ */
 /*
 * $Id$
 *
@@ -19,38 +31,39 @@
 *****************************************************************************/
 #include <stdlib.h>
 #include <grass/Vect.h>
+#include <grass/glocale.h>
 
-/*
-** build_area_with_line ()
-** this is the real guts of build area stuff
-**
-** Area is built in clockwise order.
-** Take a given line and start off to the RIGHT/LEFT and try to complete
-** an area. 
-** 
-** Possible Scenarios:
-** I.    path runs into first line.                              : AREA!
-** II.   path runs into a dead end (no other area lines at node) : no area
-** III.  path runs into a previous line that is not 1st line    
-**                  or to 1st line but not to start node         : no area
-**
-** after we find an area then we call point_in_area to see if the
-** specified point is w/in the area
-**
-** old returns  -1:  error   0:  no area    (1:  point in area)
-**          -2: island  !!
-**
-** returns  -1:  error   
-**           0:  no area
-**           number  of lines
-**
-*/
-
+/*!
+ * \fn int dig_build_area_with_line (struct Plus_head *plus, plus_t first_line, int side, plus_t **lines)    
+ *
+ * \brief This is the real guts of build area stuff
+ *
+ * Area is built in clockwise order.
+ * Take a given line and start off to the RIGHT/LEFT and try to complete
+ * an area. 
+ * 
+ * Possible Scenarios:
+ * - I.    path runs into first line.                              : AREA!
+ * - II.   path runs into a dead end (no other area lines at node) : no area
+ * - III.  path runs into a previous line that is not 1st line or to 1st line but not to start node : no area
+ *
+ * After we find an area then we call point_in_area() to see if the
+ * specified point is w/in the area
+ *
+ * old returns  -1:  error   0:  no area    (1:  point in area)
+ *              -2: island  !!
+ *
+ * \return  -1 on error   
+ * \return   0 no area
+ *           number of lines
+ *
+ * \param[in] plus Plus_head structure
+ * \param[in] first_line always positive
+ * \param[in] side side of line to build area on (GV_LEFT | GV_RIGHT)
+ * \param[in] lines pointer to array of lines
+ */
 int 
-dig_build_area_with_line ( struct Plus_head *plus, 
-	plus_t first_line, /* always positive */
-	int side,          /* side of line to build area on */
-	plus_t **lines)    /* pointer to array of lines */
+dig_build_area_with_line (struct Plus_head *plus, plus_t first_line, int side, plus_t **lines)    
 {
   register int i;
   int prev_line, next_line;
@@ -146,19 +159,24 @@ dig_build_area_with_line ( struct Plus_head *plus,
   return 0;
 }
 
-/* dig_add_area
-*  Allocate space for new area and create boundary info from array.
-*  Then for each line in area, update line (right,left) info.
-*
-*  Neither islands nor centroids area filled.
-*
-*  Returns: number of new area
-*           -1 error
-*/
+/*!
+ * \fn int dig_add_area (struct Plus_head *plus, int n_lines, plus_t *lines)    
+ *
+ * \brief Allocate space for new area and create boundary info from array.
+ *
+ * Then for each line in area, update line (right,left) info.
+ *
+ * Neither islands nor centroids area filled.
+ *
+ * \return number of new area
+ * \return -1 on error
+ *
+ * \param[in] plus Plus_head structure
+ * \param[in] n_lines number of lines
+ * \param[in] lines array of lines, negative for reverse direction
+ */
 int 
-dig_add_area (struct Plus_head *plus, 
-	int n_lines,       /* number of lines */
-	plus_t *lines )    /* array of lines, negative for reverse direction */ 
+dig_add_area (struct Plus_head *plus, int n_lines, plus_t *lines)    
 {
     register int i;
     register int area, line;
@@ -190,7 +208,7 @@ dig_add_area (struct Plus_head *plus,
 	if ( plus->do_uplist ) dig_line_add_updated ( plus, abs(line) );
         if (line < 0) { /* revers direction -> area on left */
 	    if ( Line->left != 0 ) {
-	        G_warning ("Line %d already has area/isle %d to left.", line, Line->left);
+	        G_warning (_("Line [%d] already has area/isle [%d] to left."), line, Line->left);
 		return -1;
 	    }
 	    
@@ -198,7 +216,7 @@ dig_add_area (struct Plus_head *plus,
 	    Line->left = area;
 	} else {
 	    if ( Line->right != 0 ) {
-	        G_warning ("Line %d already has area/isle %d to right.", line, Line->right);
+	        G_warning (_("Line [%d] already has area/isle [%d] to right."), line, Line->right);
 		return -1;
 	    }
 
@@ -222,11 +240,17 @@ dig_add_area (struct Plus_head *plus,
     return (area);
 }
 
-/* dig_area_add_isle()
-*  Add isle to area if does not exist yet.
-*
-*  Returns:
-*/
+/*!
+ * \fn int dig_area_add_isle (struct Plus_head *plus, int area, int isle)
+ *
+ * \brief Add isle to area if does not exist yet.
+ *
+ * \return 0
+ *
+ * \param[in] plus Plus_head structure
+ * \param[in] area area id
+ * \param[in] isle isle id
+ */
 int 
 dig_area_add_isle (struct Plus_head *plus, int area, int isle)
 {
@@ -255,11 +279,17 @@ dig_area_add_isle (struct Plus_head *plus, int area, int isle)
     return 0;
 }
 
-/* dig_area_del_isle()
-*  Delete isle from area.
-*
-*  Returns:
-*/
+/*!
+ * \fn int dig_area_del_isle (struct Plus_head *plus, int area, int isle)
+ *
+ * \brief Delete isle from area.
+ *
+ * \return 0
+ *
+ * \param[in] plus Plus_head structure
+ * \param[in] area area id
+ * \param[in] isle isle id
+ */
 int 
 dig_area_del_isle (struct Plus_head *plus, int area, int isle)
 {
@@ -269,7 +299,7 @@ dig_area_del_isle (struct Plus_head *plus, int area, int isle)
     G_debug (3, "dig_area_del_isle(): area = %d isle = %d", area, isle );
     
     Area = plus->Area[area];
-    if ( Area == NULL ) G_fatal_error("Attempt to delete isle from dead area");
+    if ( Area == NULL ) G_fatal_error(_("Attempt to delete isle from dead area"));
     
     mv = 0;
     for ( i = 0; i < Area->n_isles; i++ ) {
@@ -283,22 +313,32 @@ dig_area_del_isle (struct Plus_head *plus, int area, int isle)
     if ( mv ) {
         Area->n_isles--;
     } else {
-        G_fatal_error("Attempt to delete not registered isle (%d) from area (%d)", isle, area);
+        G_fatal_error(_("Attempt to delete not registered isle [%d] from area [%d]"), isle, area);
     }
     
     return 0;
 }
 
-/* Delete area from topology. 
-*  This function deletes area from the topo structure and resets references
-*  to this area in lines, isles (within) to 0. 
-*  Possible new area is not created by this function, so that
-*  old boundaries participating in this area are left without area information
-*  even if form new area.
-*  Not enabled now: If area is inside other area, area info for islands within 
-*                   deleted area is reset to that area outside.
-*  (currently area info of isles is set to 0)
-*/ 
+/*!
+ * \fn int dig_del_area (struct Plus_head *plus, int area)
+ *
+ * \brief Delete area from topology. 
+ *
+ *  This function deletes area from the topo structure and resets references
+ *  to this area in lines, isles (within) to 0. 
+ *  Possible new area is not created by this function, so that
+ *  old boundaries participating in this area are left without area information
+ *  even if form new area.
+ *  Not enabled now: If area is inside other area, area info for islands within 
+ *                   deleted area is reset to that area outside.
+ *  (currently area info of isles is set to 0)
+ *
+ * \return 0 on error
+ * \return 1 on success
+ *
+ * \param[in] plus Plus_head structure
+ * \param[in] area area id
+ */ 
 int
 dig_del_area (struct Plus_head *plus, int area ) {
     int    i, line;
@@ -311,7 +351,7 @@ dig_del_area (struct Plus_head *plus, int area ) {
     Area = plus->Area[area];
 
     if ( Area == NULL ) {
-	G_warning ("Attempt to delete dead area");
+	G_warning (_("Attempt to delete dead area"));
 	return 0;
     }
 
@@ -349,7 +389,7 @@ dig_del_area (struct Plus_head *plus, int area ) {
     if ( line > 0 ) {
         Line = plus->Line[line];
 	if ( !Line ) {
-	    G_warning ( "Dead centroid (%d) registered for area (bug in the library).", line );
+	    G_warning (_("Dead centroid [%d] registered for area (bug in the library)."), line );
 	} else {
 	    Line->left = 0;           
 	    if ( plus->do_uplist ) dig_line_add_updated ( plus, line );
@@ -370,7 +410,7 @@ dig_del_area (struct Plus_head *plus, int area ) {
     for (i = 0; i < Area->n_isles; i++) {
 	Isle =  plus->Isle[Area->isles[i]];
 	if (  Isle == NULL ) {
-	    G_fatal_error ("Attempt to delete area (%d) info from dead isle (%d)", area, Area->isles[i] );
+	    G_fatal_error (_("Attempt to delete area [%d] info from dead isle [%d]"), area, Area->isles[i] );
 	} else {
 	    /* Isle->area = area_out; */
 	    Isle->area = 0;
@@ -382,10 +422,17 @@ dig_del_area (struct Plus_head *plus, int area ) {
     return 1;
 }
 
-/* 
-*  dig_area_set_box ()
-*  Set area bound box
-*/
+/*!
+ * \fn int dig_area_set_box (struct Plus_head *plus, plus_t area, BOUND_BOX *Box )
+ *
+ * \brief Set area bound box
+ *
+ * \return 1
+ *
+ * \param[in] plus Plus_head structure
+ * \param[in] area area id
+ * \param[in] Box bound box structure
+ */
 int
 dig_area_set_box (struct Plus_head *plus, plus_t area, BOUND_BOX *Box ) {
     P_AREA *Area;
@@ -403,22 +450,25 @@ dig_area_set_box (struct Plus_head *plus, plus_t area, BOUND_BOX *Box ) {
 }
 
 
-/* 
-** dig_angle_next_line ()
-**   assume that lines are sorted in increasing angle order and angles of points
-**   and degenerated lines are set to 9 (ignored).
-**
-**   Return line number of next angle to follow an line (negative if connected by node2)
-**               (number of current line may be return if dangle - this is used in build)
-**          0 on error or not found
-*/
+/*!
+ * \fn int dig_angle_next_line (struct Plus_head *plus, plus_t current_line, int side, int type)                 
+ *
+ * \brief Find number line of next angle to follow an line
+ *
+ * Assume that lines are sorted in increasing angle order and angles
+ * of points and degenerated lines are set to 9 (ignored).
+ *
+ * \return line number of next angle to follow an line (negative if connected by node2)
+ *               (number of current line may be return if dangle - this is used in build)
+ * \return 0 on error or not found
+ *
+ * \param[in] plus Plus_head structure
+ * \param[in] current_line current line number, negative if request for node 2
+ * \param[in] side GV_RIGHT or GV_LEFT
+ * \param[in] type type of line GV_LINE, GV_BOUNDARY or both
+ */
 int 
-dig_angle_next_line ( 
-      struct Plus_head *plus,
-      plus_t current_line,	/* current line number,
-                                 * negative if request for node 2 */
-      int side,                 /* GV_RIGHT or GV_LEFT */
-      int type)                 /* type of line GV_LINE, GV_BOUNDARY or both */
+dig_angle_next_line (struct Plus_head *plus, plus_t current_line, int side, int type)                 
 {
   int i, next;
   int current;
@@ -487,22 +537,24 @@ dig_angle_next_line (
   return 0;
 }
 
-/* 
-** dig_node_angle_check ()
-**   Checks if angles of adjacent lines differ.
-**   Negative line number for end point.
-**   assume that lines are sorted in increasing angle order and angles of points
-**   and degenerated lines are set to 9 (ignored).
-**
-**   Return 1 - angles differ
-**          0 - angle of a line up or down is identical
+/*!
+ * \fn int dig_node_angle_check (struct Plus_head *plus, plus_t line, int type) 
+ *
+ * \brief Checks if angles of adjacent lines differ.
+ *
+ * Negative line number for end point.  assume that lines are sorted
+ * in increasing angle order and angles of points and degenerated
+ * lines are set to 9 (ignored).
+ *
+ * \return 1 angles differ
+ * \return 0 angle of a line up or down is identical
+ *
+ * \param[in] plus Plus_head structure
+ * \param[in] line current line number, negative if request for node 2
+ * \param[in] type type of line GV_LINE, GV_BOUNDARY or both 
 */
 int 
-dig_node_angle_check ( 
-      struct Plus_head *plus,
-      plus_t line,	 	/* current line number,
-                                 * negative if request for node 2 */
-      int type)                 /* type of line GV_LINE, GV_BOUNDARY or both */
+dig_node_angle_check (struct Plus_head *plus, plus_t line, int type) 
 {
   int next, prev;
   float  angle1, angle2;
@@ -537,20 +589,24 @@ dig_node_angle_check (
   return 1; /* OK */
 }	  
 	  
-/* dig_add_isle
-*  Allocate space for new island and create boundary info from array.
-*  The order of impult lines is expected to be counter clockwise.
-*  Then for each line in isle, update line (right,left) info.
-*
-*  Area number the island is within is not filled.
-*
-*  Returns: number of new isle
-*           -1 error
+/*!
+ * \fn int dig_add_isle (struct Plus_head *plus, int n_lines, plus_t *lines )
+ *
+ * \brief Allocate space for new island and create boundary info from array.
+ *
+ * The order of impult lines is expected to be counter clockwise.
+ * Then for each line in isle, update line (right,left) info.
+ *
+ *  Area number the island is within is not filled.
+ *
+ * \return number of new isle
+ * \return -1 on error
+ * \param[in] plus Plus_head structure
+ * \param[in] n_lines number of lines
+ * \param[in] lines array of lines, negative for reverse direction 
 */
 int 
-dig_add_isle (struct Plus_head *plus, 
-	int n_lines,       /* number of lines */
-	plus_t *lines )    /* array of lines, negative for reverse direction */ 
+dig_add_isle (struct Plus_head *plus, int n_lines, plus_t *lines )
 {
     register int i;
     register int isle, line;
@@ -589,13 +645,13 @@ dig_add_isle (struct Plus_head *plus,
 	if ( plus->do_uplist ) dig_line_add_updated ( plus, abs(line) );
         if (line < 0) { /* revers direction -> isle on left */
 	    if ( Line->left != 0 ) {
-	        G_warning ("Line %d already has area/isle %d to left.", line, Line->left);
+	        G_warning (_("Line [%d] already has area/isle [%d] to left."), line, Line->left);
 		return -1;
 	    }
 	    Line->left = -isle;
 	} else {
 	    if ( Line->right != 0 ) {
-	        G_warning ("Line %d already has area/isle %d to left.", line, Line->right);
+	        G_warning (_("Line [%d] already has area/isle [%d] to left."), line, Line->right);
 		return -1;
 	    }
 	    
@@ -620,9 +676,16 @@ dig_add_isle (struct Plus_head *plus,
 }
 
 
-/* 
-*  dig_isle_set_box ()
-*  Set isle bound box
+/*!
+ * \fn int dig_isle_set_box (struct Plus_head *plus, plus_t isle, BOUND_BOX *Box )
+ *
+ * \brief Set isle bound box
+ *
+ * \return 1
+ * 
+ * \param[in] plus Plus_head structure
+ * \param[in] isle isle id
+ * \param[in] Box bound box structure
 */
 int
 dig_isle_set_box (struct Plus_head *plus, plus_t isle, BOUND_BOX *Box ) {
@@ -640,8 +703,18 @@ dig_isle_set_box (struct Plus_head *plus, plus_t isle, BOUND_BOX *Box ) {
     return (1);
 }
 
-/* Delete island from topology. Reset references to it in lines and area outside.
-*/
+/*!
+ * \fn int dig_del_isle (struct Plus_head *plus, int isle )
+ *
+ * \brief Delete island from topology.
+ *
+ * Reset references to it in lines and area outside.
+ *
+ * \return 1
+ *
+ * \param[in] plus Plus_head structure
+ * \param[in] isle isle id
+ */
 int
 dig_del_isle (struct Plus_head *plus, int isle ) {
     int    i, line;
@@ -665,7 +738,7 @@ dig_del_isle (struct Plus_head *plus, int isle ) {
     G_debug (3, "  area outside isle = %d", Isle->area);
     if ( Isle->area > 0 ) {
 	if (  plus->Area[Isle->area] == NULL ) {
-	    G_fatal_error ("Attempt to delete isle (%d) info from dead area (%d)", isle, Isle->area );
+	    G_fatal_error (_("Attempt to delete isle [%d] info from dead area [%d]"), isle, Isle->area );
 	} else { 
             dig_area_del_isle (plus, Isle->area, isle);
 	}
@@ -677,4 +750,3 @@ dig_del_isle (struct Plus_head *plus, int isle ) {
     
     return 1;
 }
-
