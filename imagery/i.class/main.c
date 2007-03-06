@@ -72,9 +72,7 @@ int main (int argc, char *argv[])
     check_files (img_grp->answer, img_subgrp->answer, out_sig->answer, in_sig->answer);
 
   /* initialize the Region structure */
-  init_region();
-
-  interrupt_char = G_intr_char();
+    init_region (Region);
 
   /* initialize the graphics */
   g_init();
@@ -178,10 +176,10 @@ static int check_files (char *img_group, char *img_subgroup,
     }
 
     if (Refer.nfiles <= 0) {
-        G_message(_("Subgroup [%s] doesn't have any files."), img_subgroup);
+        G_warning (_("Subgroup [%s] does not have any files"), img_subgroup);
         G_fatal_error (_("The subgroup must have at least 2 files to run"));
     } else if (Refer.nfiles == 1) {
-        G_message(_("Subgroup [%s] only has 1 file."), img_subgroup);
+        G_warning (_("Subgroup [%s] only has 1 file"), img_subgroup);
         G_fatal_error (_("The subgroup must have at least 2 files to run"));
     }
 
@@ -196,9 +194,8 @@ static int check_files (char *img_group, char *img_subgroup,
     if (!(outsig_fd = I_fopen_signature_file_new (img_group, img_subgroup, out_sig)))
         G_fatal_error (_("Unable to open output signature file '%s'"), out_sig );
 
-    if (!in_sig) {
-        Insigfile[0] = 0;
-    } else {
+    if (in_sig)
+    {
         FILE *insig_fd;
 
         G_message(_("\nSEED SIGNATURES"));

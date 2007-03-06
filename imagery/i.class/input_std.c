@@ -9,17 +9,6 @@ static int use = 1;
 int 
 input_std (void)
 {
-  int nstd050();
-  int nstd075();
-  int nstd100();
-  int nstd125();
-  int nstd150();
-  int nstd175();
-  int nstd200();
-  int nstd225();
-  int nstd250();
-  int other();
-
   static Objects objects[] =
     {
       INFO("Number of Std Deviations: ",&use),

@@ -26,7 +26,6 @@ static	float **Band_product;
 static	int **Band_histo;
 static	int np;			/* number of points in sample */
 static	int usable_signature = 0;
-extern	double sqrt();
 static int dont_save(void);
 static int yes_save(void);
 static int done(void);
@@ -72,8 +71,6 @@ prepare_signature (int nbands)
   int x;
   int y;
   void (*prev_sigalarm)();
-
-  extern void sigalarm();
 
   Menu_msg("Preparing signature...");
 
@@ -162,7 +159,6 @@ prepare_signature (int nbands)
 /************************** ###### ************************************/
 /**********************************************************************/
 
-static int use = 1;
 int first_display;
 extern int Display_color;
 extern char *Display_color_name;
@@ -176,11 +172,8 @@ int
 show_signature (int nbands, double default_nstd)
 {
   int b;
-  int input_std();
-  int display_signature();
-  int input_color();
-  int done();
   int selection = 0;
+  static int use = 1;
   char std_str[50], color_str[50];
   float dist, mean;
 
@@ -339,9 +332,6 @@ static int use2 = 1;
 
 int save_signature (void)
 {
-    int yes_save();
-    int dont_save();
-
     static Objects objects[] =
     {
       INFO("Do you want to save this Signature?",&use2),

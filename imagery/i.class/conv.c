@@ -1,4 +1,6 @@
 #include "globals.h"
+
+
 /* conversion routines to convert from view x,y to cell col,row
  * as well as cell col,row to cell east,north
  */
@@ -43,16 +45,3 @@ col_to_easting (struct Cell_head *cellhd, int col, double location)
 {
     return cellhd->west + (col + location) * cellhd->ew_res;
 }
-
-double 
-northing_to_row (struct Cell_head *cellhd, double north)
-{
-    return  (cellhd->north - north) / cellhd->ns_res;
-}
-
-double 
-easting_to_col (struct Cell_head *cellhd, double east)
-{
-    return  (east - cellhd->west) / cellhd->ew_res;
-}
-

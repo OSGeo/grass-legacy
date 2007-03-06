@@ -1,18 +1,16 @@
 #include "globals.h"
 #include "local_proto.h"
 
+
 static int use = 1;
-static int done(void);
+
+/* function prototypes */
+static int done (void);
+
 
 int 
 define_region (void)
 {
-  extern int really_quit();
-  extern int draw_region();
-  extern int complete_region();
-  extern int restore_region();
-  extern int erase_region();
-
   static Objects objects[] =
     {
       INFO("Region Menu:",&use),
@@ -25,11 +23,12 @@ define_region (void)
     };
   
   Input_pointer (objects);
+
   return(0);
 }
 
-static int 
-done (void)
+
+static int done (void)
 {
   return(-1);
 }

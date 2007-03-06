@@ -1,4 +1,8 @@
-int Init_graphics(void);
+#include <curses.h>
+#include <grass/gis.h>
+#include "globals.h"
+#include "local_proto.h"
+
 
 int g_init (void)
 {

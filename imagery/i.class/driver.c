@@ -1,20 +1,16 @@
 #include "globals.h"
 #include "local_proto.h"
 
+
 static int use = 1;
 static int stop(void);
 static int really_quit(void);
 static int dont_stop(void);
 
+
 int 
 driver (void)
 {
-  int really_quit();
-  int analyze_sig();
-  int define_region();
-  int redisplay();
-  int zoom_box();
-
   static Objects objects[] =
     {
       INFO("Command Menu:",&use),
@@ -35,7 +31,6 @@ driver (void)
 
 static int really_quit (void)
 {
-    int stop(), dont_stop();
     static Objects objects[] =
     {
         INFO("really quit? ",&use),
@@ -45,17 +40,18 @@ static int really_quit (void)
     };
     if (Input_pointer (objects) < 0)
         return -1;
+
     return 0; /* don't quit */
 }
 
-static int 
-dont_stop (void)
+
+static int dont_stop (void)
 {
     return 1;
 }
 
-static int 
-stop (void)
+
+static int stop (void)
 {
     return -1;
 }

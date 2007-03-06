@@ -9,11 +9,6 @@ static int use = 1;
 int 
 redisplay (void)
 {
-  int redisplay_zoom();
-  int redisplay_map();
-  int redisplay_both();
-  int cancel_redisplay();
-
   static Objects objects[] =
     {
       INFO("Redisplay Map Menu:",&use),
