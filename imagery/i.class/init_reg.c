@@ -1,10 +1,9 @@
-
+#include <grass/gis.h>
 #include "globals.h"
 
-#define R Region
 
 int 
-init_region (void)
+init_region (struct region Region)
 {
   Region.area.define = 0;
   Region.area.completed = 0;

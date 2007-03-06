@@ -1,10 +1,11 @@
-int edge_point(register int, register int);
+#include "globals.h"
+#include "local_proto.h"
 
-int edge (register int x0, register int y0, int x1, int y1)
+
+int edge (int x0, int y0, int x1, int y1)
 {
-	register float m;
-	register float x;
-
+	float m;
+	float x;
 
 	if (y0 == y1) return 0;
 

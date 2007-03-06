@@ -1,6 +1,9 @@
 #ifndef __LOCAL_PROTO_H__
 #define __LOCAL_PROTO_H__
 
+#include <grass/gis.h>
+
+
 /* add_point.c */
 int add_point(int, int);
 /* analyze_sig.c */
@@ -19,8 +22,6 @@ int col_to_view(View *, int);
 int row_to_view(View *, int);
 double row_to_northing(struct Cell_head *, int, double);
 double col_to_easting(struct Cell_head *, int, double);
-double northing_to_row(struct Cell_head *, double);
-double easting_to_col(struct Cell_head *, double);
 /* curses.c */
 int Begin_curses(void);
 int End_curses(void);
@@ -62,7 +63,7 @@ int Text(char *, int, int, int, int, int);
 /* histograms.c */
 int histograms(int, float *, float **, int **, int, int *, int *, double, int);
 /* init_reg.c */
-int init_region(void);
+int init_region(struct region Region);
 /* input.c */
 int Input_pointer(Objects *);
 int Input_box(Objects *, int, int);

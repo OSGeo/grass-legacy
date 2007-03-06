@@ -36,9 +36,12 @@ make_window (int top, int bottom, int left, int right)
     return window;
 }
 
+
+/* should only be called once at program outset */
 int Begin_curses (void)
 {
-/* should only be called once at program outset */
+    Window *INFO_WINDOW;
+    Window *MENU_WINDOW;
 
     initscr () ;       /* initialize curses standard screens   */
     raw() ;            /* set tty modes via curses calls       */
@@ -253,7 +256,7 @@ if (!inited) return 0;
     while(1)
     {
 	c = getch() & 0177;
-	if (c == interrupt_char)
+        if (c == G_intr_char ())
 	{
 	    if (kill++ >= 3)
 	    {

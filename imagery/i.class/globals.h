@@ -10,8 +10,6 @@
 #  define INIT(x) = x
 #endif
 
-GLOBAL Window *INFO_WINDOW;
-GLOBAL Window *MENU_WINDOW;
 GLOBAL Window *PROMPT_WINDOW;
 
 GLOBAL int SCREEN_TOP;
@@ -72,36 +70,16 @@ GLOBAL int THE_COLORS[10];
 		     {255,255,0}} /*yellow*/
 GLOBAL struct { int red, grn, blue; } Color_table[10] INIT( MY_COLORS );
 
-GLOBAL char Group[50];
-GLOBAL char Subgroup[50];
 GLOBAL struct Ref Refer;
-GLOBAL char Outsigfile[50];
 GLOBAL FILE *outsig_fd;
-GLOBAL char Insigfile[50];
 GLOBAL struct Signature Sigs;
 GLOBAL struct Cell_head Band_cellhd;
 
-GLOBAL char interrupt_char;
-
-/* group file list, target cell,vector files */
-GLOBAL char *group_list INIT(NULL);
-GLOBAL char *cell_list INIT(NULL);
-GLOBAL char *vect_list INIT(NULL);
-
 double row_to_northing();
 double col_to_easting();
-double northing_to_row();
-double easting_to_col();
 
-GLOBAL char EOFCHAR;
-GLOBAL char ERASECHAR;
-GLOBAL char KILLCHAR;
-GLOBAL char *tempfile;
-GLOBAL int *image;
 GLOBAL int *Bandfd;
-GLOBAL int colormap[3][256];
 GLOBAL struct region Region;
-/*GLOBAL struct mapinfo mapinfo ;*/
 GLOBAL struct signalflag signalflag;
 GLOBAL CELL **Bandbuf;
 

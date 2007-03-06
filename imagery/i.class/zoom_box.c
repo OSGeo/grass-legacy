@@ -7,9 +7,9 @@
 static int x1, y1, x2, y2;
 static View *pick_view, *zoom_view, *main_view;
 
-static int cancel();
-static int zoom1();
-static int zoom2();
+static int cancel (void);
+static int zoom1 (int, int, int);
+static int zoom2 (int, int, int);
 
 
 int 
