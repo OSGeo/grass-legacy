@@ -32,13 +32,13 @@ main (int argc, char *argv[])
 
     module = G_define_module(); 
     module->keywords = _("vector, topology");
-    module->description = "Creates topology for GRASS vector data.";
+    module->description = _("Creates topology for GRASS vector data.");
 
     map_opt = G_define_standard_option(G_OPT_V_MAP);
     
     err_opt = G_define_standard_option(G_OPT_V_OUTPUT);
     err_opt->key = "error";
-    err_opt->description  = "Name of vector map where erroneous vectors are written to";
+    err_opt->description  = _("Name of vector map where erroneous vectors are written to");
     err_opt->required = NO;
     
     opt = G_define_option();
@@ -48,14 +48,14 @@ main (int argc, char *argv[])
     opt->required = NO;
     opt->multiple = YES;
     opt->answer = "build";
-    opt->description  = "Build topology or dump topology or spatial index to stdout\n"
+    opt->description  = _("Build topology or dump topology or spatial index to stdout\n"
 	"\t\tbuild - build topology\n"
 	"\t\tdump  - write topology to stdout\n"
 	"\t\tsdump - write spatial index to stdout\n"
-	"\t\tcdump - write category index to stdout\n";
+	"\t\tcdump - write category index to stdout");
    
     if (G_parser (argc, argv))
-	exit(-1); 
+	exit(EXIT_FAILURE); 
 
     i = 0; 
     while (opt->answers[i]) {
@@ -74,7 +74,7 @@ main (int argc, char *argv[])
     if ( build ) { 
 	/* open input vector */
 	if ( G_find_vector2 (map_opt->answer, G_mapset()) == NULL)
-	     G_fatal_error ("Could not find input map <%s> in current mapset.", map_opt->answer);
+	     G_fatal_error (_("Could not find input map <%s> in current mapset."), map_opt->answer);
 	
 	Vect_set_open_level (1); 
 	Vect_open_old (&Map, map_opt->answer, G_mapset()); 
@@ -135,7 +135,5 @@ main (int argc, char *argv[])
 
     Vect_close (&Map);
     
-    exit(0) ;
+    exit(EXIT_SUCCESS);
 }
-
-
