@@ -619,6 +619,8 @@ static const char *papszDatumEquiv[] =
     "Monte_Mario",
     "Campo_Inchauspe_1969",
     "Campo_Inchauspe",
+    "S_JTSK_Ferro",
+    "Militar_Geographische_Institut",
     NULL
 };
 
