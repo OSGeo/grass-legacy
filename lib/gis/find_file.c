@@ -52,13 +52,15 @@ static char *G__find_file (
 	    if (access(G__file_name (path, element, pname, pmapset), 0) == 0) {
 		if ( !pselmapset )
 		    pselmapset = pmapset;
+		else
+		    G_warning ("'%s/%s' was found in more mapsets (also found in %s).", element, pname, pmapset);
 		cnt++;
 	    }
 	}
 	if ( cnt > 0 ) {
 	    /* If the same name exists in more mapsets and print a warning */
 	    if ( cnt > 1 ) 
-		G_warning ("'%s/%s' was found in more mapsets (also found in %s).", element, pname, pselmapset);
+		G_warning ("using '%s@%s'.", pname, pselmapset);
 	    return pselmapset;
 	}
     }
