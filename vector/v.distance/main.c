@@ -364,7 +364,7 @@ int main (int argc, char *argv[])
 	/* Check column types */
 	if ( !print_flag->answer && !all)
 	{
-	    char *fcname;
+	    char *fcname = NULL;
 	    int fctype, tctype;
 
 	    i = 0;
@@ -375,20 +375,22 @@ int main (int argc, char *argv[])
 		}
 		i++;
 	    }
-
-	    fctype = db_column_Ctype ( driver, Fi->table, fcname );
-	    tctype = db_column_Ctype ( to_driver, toFi->table, to_column_opt->answer);
+	    
+	    if (fcname) {
+		fctype = db_column_Ctype ( driver, Fi->table, fcname );
+		tctype = db_column_Ctype ( to_driver, toFi->table, to_column_opt->answer);
 		
-            if ( ( (tctype==DB_C_TYPE_STRING || tctype==DB_C_TYPE_DATETIME )
-		    && (fctype ==DB_C_TYPE_INT || fctype==DB_C_TYPE_DOUBLE) ) ||
-            	 ( (tctype==DB_C_TYPE_INT || tctype==DB_C_TYPE_DOUBLE )
-		    && (fctype ==DB_C_TYPE_STRING || fctype==DB_C_TYPE_DATETIME) )
-	    ) {
-	    	G_fatal_error(_("Incomatible column types"));
+		if ( ((tctype==DB_C_TYPE_STRING || tctype==DB_C_TYPE_DATETIME)
+		      && (fctype ==DB_C_TYPE_INT || fctype==DB_C_TYPE_DOUBLE)) ||
+		     ((tctype==DB_C_TYPE_INT || tctype==DB_C_TYPE_DOUBLE)
+		      && (fctype ==DB_C_TYPE_STRING || fctype==DB_C_TYPE_DATETIME))
+		    ) {
+		    G_fatal_error(_("Incomatible column types"));
+		}
 	    }
 	}
     } 
-
+    
     FPoints=Vect_new_line_struct();
     TPoints=Vect_new_line_struct();
     FCats = Vect_new_cats_struct ();
