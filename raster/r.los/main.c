@@ -53,6 +53,7 @@ main (int argc, char *argv[])
 	struct point *heads[16],*SEARCH_PT;
 	struct GModule *module;
 	struct Option *opt1,*opt2,*opt3,*opt5,*opt6,*opt7;
+	struct History history;
 
 	G_gisinit (argv[0]);
 
@@ -345,6 +346,10 @@ main (int argc, char *argv[])
 	G_read_cats (out_layer, current_mapset, &cats);
 	G_set_cats_fmt ("$1 degree$?s", 1.0, 0.0, 0.0, 0.0, &cats);
 	G_write_cats (out_layer, &cats);
+
+	G_short_history(out_layer, "raster", &history);
+	G_command_history(&history);
+	G_write_history(out_layer, &history);
 
 	exit(EXIT_SUCCESS);
 }
