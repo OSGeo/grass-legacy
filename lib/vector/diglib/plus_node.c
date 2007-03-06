@@ -1,3 +1,15 @@
+/**
+ * \file plus_node.c
+ *
+ * \brief Lower level functions for reading/writing/manipulating vectors.
+ *
+ * This program is free software under the GNU General Public License
+ * (>=v2). Read the file COPYING that comes with GRASS for details.
+ *
+ * \author CERL (probably Dave Gerdes), Radim Blazek
+ *
+ * \date 2001-2006
+ */
 /*
 * $Id$
 *
@@ -20,19 +32,28 @@
 #include <stdlib.h>
 #include <math.h>
 #include <grass/Vect.h>
+#include <grass/glocale.h>
 
 static double dist_squared (double, double, double, double);
 
-/* dig_node_add_line ()
-**   add 'line' info to 'node'
-**   line will be negative if END node 
-**   'node' must of course already exist
-**   space will be alloced to add 'line' to array
-**
-**   Returns -1 on error      
-**            0 line not added  (degenerate)
-**            else new number of lines in node 
-**        
+/*!
+ * \fn int dig_node_add_line ( struct Plus_head *plus, int nodeid, int lineid, struct line_pnts *points, int type)
+ *
+ * \brief Add 'line' info to 'node'
+ *
+ * Line will be negative if END node
+ *
+ * 'node' must of course already exist space will be alloced to add 'line' to array
+ *
+ * \return -1 on error      
+ * \return 0 line not added  (degenerate)
+ * \return new number of lines in node 
+ *
+ * \param[in] plus Plus_head structure
+ * \param[in] nodeid node id
+ * \param[in] lineid line id
+ * \param[in] points container used to store line points within
+ * \param[in] type line type 
 */
 int 
 dig_node_add_line ( struct Plus_head *plus, int nodeid, int lineid,
@@ -89,12 +110,17 @@ dig_node_add_line ( struct Plus_head *plus, int nodeid, int lineid,
 }
 
 
-/* dig_add_node ()
-** add new node to plus structure 
-**
-** Returns -1 on error      
-**          number of node
-*/
+/*!
+ * \fn int dig_add_node ( struct Plus_head *plus, double x, double y, double z)
+ *
+ * \brief Add new node to plus structure 
+ *
+ * \return -1 on error      
+ * \return number of node
+ *
+ * \param[in] plus Plus_head structure
+ * \param[in] x,y,z coordinates
+ */
 int 
 dig_add_node ( struct Plus_head *plus, double x, double y, double z) {
     int  nnum;
@@ -127,10 +153,18 @@ dig_add_node ( struct Plus_head *plus, double x, double y, double z) {
     return ( nnum );
 }
 
-/*  which_node returns the actual index into node arrays of the first set of
-   *    matching coordinates.  else -1;
+/*!
+ * \fn int dig_which_node ( struct Plus_head *plus, double x, double y, double thresh)
+ *
+ * \brief Return actual index into node arrays of the first set of matching coordinates
+ *
+ * \return node index
+ * \return -1 if no node found
+ *
+ * \param[in] plus Plus_head structure
+ * \param[in] x,y coordinates
+ * \param[in] thresh given threshold value
  */
-
 int 
 dig_which_node ( struct Plus_head *plus, double x, double y, double thresh) {
   register int i;
@@ -175,13 +209,21 @@ dig_which_node ( struct Plus_head *plus, double x, double y, double thresh) {
   return (winner);
 }				/*  which_node ()  */
 
-/* dig_node_get_line_angle ()
-**   Lines is specified by line ID in topology, NOT by order number.
-**   Negative ID if looking for line end point.
-**
-**   Returns  line angle <-PI,PI>
-**            9 not a line (point/degenerate)
-*/
+/*!
+ * \fn float dig_node_line_angle ( struct Plus_head *plus, int nodeid, int lineid )
+ * 
+ * \brief Return line angle
+ *
+ * Lines is specified by line ID in topology, NOT by order number.
+ * Negative ID if looking for line end point.
+ *
+ * \return line angle <-PI,PI>
+ * \return 0 not reached
+ *
+ * \param[in] plus Plus_head structure
+ * \param[in] nodeid node id
+ * \param[in] lineid line id
+ */
 float
 dig_node_line_angle ( struct Plus_head *plus, int nodeid, int lineid )
 {
@@ -199,8 +241,8 @@ dig_node_line_angle ( struct Plus_head *plus, int nodeid, int lineid )
 	  return ( node->angles[i] );
     }
 
-    G_fatal_error ("Attempt to read line angle for the line which is not connected to the node: "
-	           "node = %d line = %d", nodeid, lineid);
+    G_fatal_error (_("Attempt to read line angle for the line which is not connected to the node: "
+		     "node = [%d] line = [%d]"), nodeid, lineid);
     
     return 0.0; /* not reached */
 }
