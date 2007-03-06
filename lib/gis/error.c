@@ -270,7 +270,7 @@ static int print_error(const char *msg, const int type)
 
         format = G_info_format();
 
-	if ( format == G_INFO_FORMAT_STANDARD ) {
+	if ( format != G_INFO_FORMAT_GUI ) {
 	    if ( type == WARN || type == ERR ) { 
 		log_error (msg, fatal);
 	    }
