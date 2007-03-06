@@ -143,7 +143,7 @@ static void G_script ();
 
 
 /**
- * \fn int G_disable_ineractive (void)
+ * \fn int G_disable_interactive (void)
  *
  * \brief Disables the ability of the parser to operate interactively.
  *
@@ -311,7 +311,18 @@ G_define_option (void)
  * If an invalid parameter was specified a empty Option structure will 
  * be returned (not NULL).
  *
+ * - general: G_OPT_WHERE, G_OPT_COLUMN, G_OPT_COLUMNS
+ *
+ * - imagery: G_OPT_I_GROUP
+ *
+ * - raster: G_OPT_R_INPUT, G_OPT_R_INPUTS, G_OPT_R_OUTPUT, G_OPT_R_MAP, G_OPT_R_MAPS, G_OPT_R_BASE, G_OPT_R_COVER, G_OPT_R_ELEV, G_OPT_R_ELEVS
+ *
+ * - raster3d: G_OPT_R3_INPUT, G_OPT_R3_INPUTS, G_OPT_R3_OUTPUT
+ *
+ * - vector: G_OPT_V_INPUT, G_OPT_V_INPUTS, G_OPT_V_OUTPUT, G_OPT_V_MAP, G_OPT_V_TYPE, G_OPT_V_FIELD, G_OPT_V_CAT, G_OPT_V_CATS
+ *
  * \param[in] opt Type of Option struct to create
+ *
  * \retval Option * Pointer to an Option struct
  */
 
