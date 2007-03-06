@@ -166,7 +166,7 @@ class EpsgCode(wx.Frame):
                         params += par + " "
                     code = code[1:-1]
                 if i%2 == 0:
-                    if search and descr.find(search) > -1 or\
+                    if search and descr.lower().find(search.lower()) > -1 or\
                         not search:
                         self.epsgs.InsertStringItem(j,str(code))
                         self.epsgs.SetStringItem(j, 1, str(descr))
@@ -189,14 +189,54 @@ class EpsgCode(wx.Frame):
             self.item =  event.GetItem()
 
     def OnCreate(self, event):
-        if os.path.isfile(self.tfile.GetValue()):
-            print self.item.GetItemText()
-            print "file found, creation not supported"
-        else:
-            dlg = wx.MessageDialog(self, "Could not create new location: %s not file"
-                    % self.tfile.GetValue(),"Can not create location",  wx.OK|wx.ICON_INFORMATION)
+        if not self.tcode.GetValue():
+            dlg = wx.MessageDialog(self, "Could not create new location: EPSG Code value missing",
+                    "Can not create location",  wx.OK|wx.ICON_INFORMATION)
             dlg.ShowModal()
             dlg.Destroy()
+            return
+        
+        number = -1
+        try:
+            number = int(self.tcode.GetValue())
+        except:
+            dlg = wx.MessageDialog(self, "Could not create new location: '%s' not a number" % self.tcode.GetValue(),
+                    "Can not create location",  wx.OK|wx.ICON_INFORMATION)
+            dlg.ShowModal()
+            dlg.Destroy()
+            return
+             
+        if os.path.isdir(os.path.join(self.parent.gisdbase,self.tname.GetValue())):
+            dlg = wx.MessageDialog(self, "Could not create new location: %s exists"
+                    % os.path.join(self.parent.gisdbase,self.tname.GetValue()),"Can not create location",  wx.OK|wx.ICON_INFORMATION)
+            dlg.ShowModal()
+            dlg.Destroy()
+            return
+        
+        # creating location
+        # all credit to Michael Barton and his file_option.tcl and
+        # Markus Neteler
+        try:
+            # FIXME: this does not need to work on windows
+            os.system("g.proj -c georef=%s location=%s >&2" % (self.tfile.GetValue(), self.tname.GetValue())) 
+            datumtrans = os.popen(" g.proj epsg=%d datumtrans=-1 >&2" % (number)).readlines()
+
+            if datumtrans:
+                #os.system(" g.proj epsg=%d datumtrans=%s >&2" % (number,datumtrans[0]).readlines()
+                pass
+            else:
+                os.system("g.proj -c epsg=%d location=%s datumtrans=1" % (number, self.tname.GetValue()))
+
+                self.parent.OnSetDatabase(None)
+                self.Destroy()
+
+        except StandardError, e:
+            dlg = wx.MessageDialog(self, "Could not create new location: %s "
+                    % str(e),"Can not create location",  wx.OK|wx.ICON_INFORMATION)
+            dlg.ShowModal()
+            dlg.Destroy()
+            return
+
  
     def OnDoubleClick(self, event):
         print self.epsgs.GetValue()
@@ -287,85 +327,9 @@ class GeoreferencedFile(wx.Frame):
         # creating location
         # all credit to Michael Barton and his file_option.tcl and
         # Markus Neteler
-        
         try:
-            #test for valid WIND file
-            if os.system("g.region -p >&2"): # FIXME - this does not need to run on Windows
-
-                # Create temporary location in order to run g.proj. For 1st time use
-                GRASSRC = "grassrc6"
-                curr_gisrc = os.getenv("GISRC")
-                tempdir = os.getpid()+".tmp"
-
-                os.mkdir(os.path.join(self.parent.gisdbase,tempdir,"PERMANENT"))
-                
-                # save existing .grassrc file
-                if os.path.isfile(os.path.join(os.getenv("HOME"),GRASSRC)):
-                        shutil.copyfile(os.path.join(os.getenv("HOME"),".%s"%GRASSRC),os.path.join(self.parent.gisdbase,tempdir,GRASSRC))
-                
-                # create temporary .grassrc file to hold temporary location information
-                output = open(os.path.join(os.getenv(HOME),".%s"%GRASSRC),"w")
-                output.write("LOCATION_NAME: %s\n" % tempdir)
-                output.write("MAPSET: PERMANENT\n")
-                output.write("DIGITIZER: none\n")
-                output.write("GISDBASE: %s\n" % os.parent.gisdbase )
-                output.close()
-                
-                os.environ["GISRC"] = os.path.join(os.getenv("HOME"),".%s" % GRASSRC)
-                                
-                # Populate a temporary location with a minimal set of files
-                output = open(os.path.join(self.parent.gisdbase, tempdir,"PERMANENT","DEFAULT_WIND"),"w")
-                output.write("proj:       3\n")
-                output.write("zone:       0\n")
-                output.write("north:      72N\n")
-                output.write("south:      27N\n")
-                output.write("east:       42E\n")
-                output.write("west:       11W\n")
-                output.write("cols:       6360\n")
-                output.write("rows:       5400\n")
-                output.write("e-w resol:  0:00:30\n")
-                output.write("n-s resol:  0:00:30\n")
-                output.close()
-        
-                output = open(os.path.join(self.parent.gisdbase,tempdir,"PERMANENT","PROJ_INFO"),"w")
-                output.write("name: Lat/Lon\n")
-                output.write("datum: wgs84\n")
-                output.write("towgs84: 0.000,0.000,0.000\n")
-                output.write("proj: ll\n")
-                output.write("ellps: wgs84\n")
-                output.close()
-                
-                output = open(os.path.join(self.parent.gisdbase,tempdir,"PERMANENT","PROJ_UNITS"),"w")
-                output.write("unit: degree\n")
-                output.write("units: degrees\n")
-                output.write("meters: 1.0\n")
-                output.close()
-                                
-                # create new location from georeferenced file
-                os.system("g.proj -c georef=%s location=%s 1>&2" % (self.tfile.GetValue(), self.tname.GetValue()))
-                #if {[lindex $::errorCode 0] eq "CHILDSTATUS"} {
-                #        DialogGen .wrnDlg [G_msg "WARNING: Error creating new location"] warning \
-                #                [format [G_msg "Error creating new location from georeferenced file. \
-                #                g.proj returned following message:\n\n%s"] $errMsg] \
-                #                0 OK
-                #} else {
-                location = self.tname.GetValue()
-                mapset = "PERMANENT"
-        
-                # restore previous .$GRASSRC
-                if os.isfile(os.path.join(self.parent.gisdbase,tempdir,GRASSRC)):
-                    shutil.copyfile(os.path.join(self.parent.gisdbase,tempdir,GRASSRC),os.path.join(os.getenv("HOME"),".%s" % GRASSRC))
-                
-                try:
-                    shutil.rmtree(os.path.join(self.parent.gisdbase,tempdir),ignore_errors=True)
-                except:
-                    pass
-                os.environ["GISRC"] = curr_gisrc
-
-            # create new location from georeferenced file
-            else:
-                # FIXME: this does not need to work on windows
-                os.system("g.proj -c georef=%s location=%s >&2" % (self.tfile.GetValue(), self.tname.GetValue())) 
+            # FIXME: this does not need to work on windows
+            os.system("g.proj -c georef=%s location=%s >&2" % (self.tfile.GetValue(), self.tname.GetValue())) 
 
             self.parent.OnSetDatabase(None)
             self.Destroy()
