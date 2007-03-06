@@ -5,6 +5,7 @@
 import wx
 import os
 import glob
+import shutil
 
 
 def read_grassrc():
@@ -262,18 +263,119 @@ class GeoreferencedFile(wx.Frame):
         self.Destroy()
 
     def OnCreate(self, event):
-        if os.path.isfile(self.tfile.GetValue()):
-            print "file found, creation not supported"
-        else:
+        if not os.path.isfile(self.tfile.GetValue()):
             dlg = wx.MessageDialog(self, "Could not create new location: %s not file"
                     % self.tfile.GetValue(),"Can not create location",  wx.OK|wx.ICON_INFORMATION)
             dlg.ShowModal()
             dlg.Destroy()
- 
+            return
+
+        if not self.tname.GetValue():
+            dlg = wx.MessageDialog(self, "Could not create new location: name not set",
+                    "Can not create location",  wx.OK|wx.ICON_INFORMATION)
+            dlg.ShowModal()
+            dlg.Destroy()
+            return
+
+        if os.path.isdir(os.path.join(self.parent.gisdbase,self.tname.GetValue())):
+            dlg = wx.MessageDialog(self, "Could not create new location: %s exists"
+                    % os.path.join(self.parent.gisdbase,self.tname.GetValue()),"Can not create location",  wx.OK|wx.ICON_INFORMATION)
+            dlg.ShowModal()
+            dlg.Destroy()
+            return
+
+        # creating location
+        # all credit to Michael Barton and his file_option.tcl and
+        # Markus Neteler
         
+        try:
+            #test for valid WIND file
+            if os.system("g.region -p >&2"): # FIXME - this does not need to run on Windows
 
+                # Create temporary location in order to run g.proj. For 1st time use
+                GRASSRC = "grassrc6"
+                curr_gisrc = os.getenv("GISRC")
+                tempdir = os.getpid()+".tmp"
 
- 
+                os.mkdir(os.path.join(self.parent.gisdbase,tempdir,"PERMANENT"))
+                
+                # save existing .grassrc file
+                if os.path.isfile(os.path.join(os.getenv("HOME"),GRASSRC)):
+                        shutil.copyfile(os.path.join(os.getenv("HOME"),".%s"%GRASSRC),os.path.join(self.parent.gisdbase,tempdir,GRASSRC))
+                
+                # create temporary .grassrc file to hold temporary location information
+                output = open(os.path.join(os.getenv(HOME),".%s"%GRASSRC),"w")
+                output.write("LOCATION_NAME: %s\n" % tempdir)
+                output.write("MAPSET: PERMANENT\n")
+                output.write("DIGITIZER: none\n")
+                output.write("GISDBASE: %s\n" % os.parent.gisdbase )
+                output.close()
+                
+                os.environ["GISRC"] = os.path.join(os.getenv("HOME"),".%s" % GRASSRC)
+                                
+                # Populate a temporary location with a minimal set of files
+                output = open(os.path.join(self.parent.gisdbase, tempdir,"PERMANENT","DEFAULT_WIND"),"w")
+                output.write("proj:       3\n")
+                output.write("zone:       0\n")
+                output.write("north:      72N\n")
+                output.write("south:      27N\n")
+                output.write("east:       42E\n")
+                output.write("west:       11W\n")
+                output.write("cols:       6360\n")
+                output.write("rows:       5400\n")
+                output.write("e-w resol:  0:00:30\n")
+                output.write("n-s resol:  0:00:30\n")
+                output.close()
+        
+                output = open(os.path.join(self.parent.gisdbase,tempdir,"PERMANENT","PROJ_INFO"),"w")
+                output.write("name: Lat/Lon\n")
+                output.write("datum: wgs84\n")
+                output.write("towgs84: 0.000,0.000,0.000\n")
+                output.write("proj: ll\n")
+                output.write("ellps: wgs84\n")
+                output.close()
+                
+                output = open(os.path.join(self.parent.gisdbase,tempdir,"PERMANENT","PROJ_UNITS"),"w")
+                output.write("unit: degree\n")
+                output.write("units: degrees\n")
+                output.write("meters: 1.0\n")
+                output.close()
+                                
+                # create new location from georeferenced file
+                os.system("g.proj -c georef=%s location=%s 1>&2" % (self.tfile.GetValue(), self.tname.GetValue()))
+                #if {[lindex $::errorCode 0] eq "CHILDSTATUS"} {
+                #        DialogGen .wrnDlg [G_msg "WARNING: Error creating new location"] warning \
+                #                [format [G_msg "Error creating new location from georeferenced file. \
+                #                g.proj returned following message:\n\n%s"] $errMsg] \
+                #                0 OK
+                #} else {
+                location = self.tname.GetValue()
+                mapset = "PERMANENT"
+        
+                # restore previous .$GRASSRC
+                if os.isfile(os.path.join(self.parent.gisdbase,tempdir,GRASSRC)):
+                    shutil.copyfile(os.path.join(self.parent.gisdbase,tempdir,GRASSRC),os.path.join(os.getenv("HOME"),".%s" % GRASSRC))
+                
+                try:
+                    shutil.rmtree(os.path.join(self.parent.gisdbase,tempdir),ignore_errors=True)
+                except:
+                    pass
+                os.environ["GISRC"] = curr_gisrc
+
+            # create new location from georeferenced file
+            else:
+                # FIXME: this does not need to work on windows
+                os.system("g.proj -c georef=%s location=%s >&2" % (self.tfile.GetValue(), self.tname.GetValue())) 
+
+            self.parent.OnSetDatabase(None)
+            self.Destroy()
+
+        except StandardError, e:
+            dlg = wx.MessageDialog(self, "Could not create new location: %s "
+                    % str(e),"Can not create location",  wx.OK|wx.ICON_INFORMATION)
+            dlg.ShowModal()
+            dlg.Destroy()
+
 class GRASSStartup(wx.Frame):
     def __init__(self, *args, **kwds):
         kwds["style"] = wx.DEFAULT_FRAME_STYLE
@@ -353,6 +455,7 @@ class GRASSStartup(wx.Frame):
         self.lbmapsets.Bind(wx.EVT_LISTBOX, self.OnSelectMapset)
         wx.EVT_KEY_DOWN(self.tgisdbase, self.OnKeyPressedInDbase)
         wx.EVT_KEY_DOWN(self.tnewmapset, self.OnKeyPressedInMapset)
+        self.Bind(wx.EVT_CLOSE, self.onCloseWindow)
 
     def __set_properties(self):
         self.SetTitle("Welcome to GRASS GIS")
@@ -536,9 +639,9 @@ class GRASSStartup(wx.Frame):
 
 
     def OnStart(self, event):
-        print "GISDBASE='%s';" % self.tgisdbase.GetValue()
-        print "LOCATION_NAME='%s';" % self.listOfLocations[self.lblocations.GetSelection()]
-        print "MAPSET='%s';" % self.listOfMapsets[self.lbmapsets.GetSelection()]
+        print "g.gisenv set=GISDBASE='%s';" % self.tgisdbase.GetValue()
+        print "g.gisenv set=LOCATION_NAME='%s';" % self.listOfLocations[self.lblocations.GetSelection()]
+        print "g.gisenv set=MAPSET='%s';" % self.listOfMapsets[self.lbmapsets.GetSelection()]
         self.Destroy()
 
     def OnExit(self, event): 
@@ -547,7 +650,11 @@ class GRASSStartup(wx.Frame):
 
     def OnHelp(self, event): 
         print "Event handler `OnHelp' not implemented!"
-        #event.Skip()
+        event.Skip()
+
+    def onCloseWindow(self, event):
+        print "exit"
+        event.Skip()
 
 
 
