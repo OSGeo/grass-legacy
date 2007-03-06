@@ -331,6 +331,22 @@ G_define_standard_option (int opt)
 	    Opt->label        = _("WHERE conditions of SQL statement without 'where' keyword.");
 	    Opt->description  = _("Example: income < 1000 and inhab >= 10000");
 	    break;
+	case G_OPT_COLUMN:
+	    Opt->key          = "column";
+	    Opt->type         = TYPE_STRING;
+	    Opt->key_desc     = "name";
+	    Opt->required     = NO;
+	    Opt->multiple     = NO;
+	    Opt->description  = _("Name of attribute column");
+	    break;
+	case G_OPT_COLUMNS:
+	    Opt->key          = "column";
+	    Opt->type         = TYPE_STRING;
+	    Opt->key_desc     = "name";
+	    Opt->required     = NO;
+	    Opt->multiple     = YES;
+	    Opt->description  = _("Name of attribute column(s)");
+	    break;
         /* imagery group */
         case G_OPT_I_GROUP:
 	    Opt->key          = "group";
