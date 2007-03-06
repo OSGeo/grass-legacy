@@ -1,3 +1,16 @@
+/**
+ * \file plus_line.c
+ *
+ * \brief Lower level functions for reading/writing/manipulating vectors.
+ *
+ * This program is free software under the GNU General Public License
+ * (>=v2). Read the file COPYING that comes with GRASS for details.
+ *
+ * \author CERL (probably Dave Gerdes), Radim Blazek
+ *
+ * \date 2001-2006
+ */
+
 /*
 * $Id$
 *
@@ -20,15 +33,21 @@
 #include <stdlib.h>
 #include <grass/Vect.h>
 
-/* dig_add_line ()
-** Add new line to plus structure.
-** 
-**
-** Returns -1 on error      
-**          number of line
+/*!
+ * \fn int dig_add_line (struct Plus_head *plus, int type, struct line_pnts *Points, long offset)
+ *
+ * \brief Add new line to plus structure.
+ *
+ * \return -1 on error      
+ * \return number of line
+ *
+ * \param[in,out] plus Plus_head structure
+ * \param[in] type line type
+ * \param[in] Points container used to store line points within
+ * \param[in] offset a given offset
 */
 int 
-dig_add_line (struct Plus_head *plus, int type, struct line_pnts *Points, long offset){
+dig_add_line (struct Plus_head *plus, int type, struct line_pnts *Points, long offset) {
     int  lineid, node, lp;
     P_LINE *line;
     BOUND_BOX box;
@@ -117,14 +136,21 @@ dig_add_line (struct Plus_head *plus, int type, struct line_pnts *Points, long o
     return ( lineid );
 }
 
-/* dig_del_line ()
-** Delete line from topology. Doesn't update area/isle references
-** (dig_del_area/isle() must be run before the line is deleted if the
-**  line is part of such structure).
-** Updateis info about line in nodes. If this line is last in node then node is deleted.
-**
-** Returns -1 on error      
-**          0 OK
+/*!
+ * \fn int dig_del_line (struct Plus_head *plus, int line)
+ *
+ * \brief Delete line from topology.
+ *
+ * Doesn't update area/isle references (dig_del_area()/dig_del_isle()) must be
+ * run before the line is deleted if the ** line is part of such
+ * structure). Update is info about line in nodes. If this line is
+ * last in node then node is deleted.
+ *
+ * \return -1 on error
+ * \return  0 OK
+ *
+ * \param[in,out] plus Plus_head structure
+ * \param[in] line line id to delete
 */
 int 
 dig_del_line (struct Plus_head *plus, int line)
@@ -186,13 +212,19 @@ dig_del_line (struct Plus_head *plus, int line)
     return 0;
 }
 
-/* dig_line_get_area ()
-** Get area number on line side
-** 
-** Returns area number 
-**         0 no area
-**         -1 error
-*/
+/*!
+ * \fn plus_t dig_line_get_area (struct Plus_head *plus, plus_t line, int side)
+ *
+ * \brief Get area number on line side.
+ *
+ * \return  area number 
+ * \return  0 no area
+ * \return -1 on error
+ *
+ * \param[in] plus Plus_head structure
+ * \param[in] line line id
+ * \param[in] side side id (GV_LEFT || GV_RIGHT)
+ */
 plus_t
 dig_line_get_area (struct Plus_head *plus, plus_t line, int side) {
     P_LINE *Line;
@@ -213,9 +245,17 @@ dig_line_get_area (struct Plus_head *plus, plus_t line, int side) {
     return (-1);
 }
 
-/* dig_line_set_area ()
-** Set area number on line side
-** 
+/*!
+ * \fn int dig_line_set_area (struct Plus_head *plus, plus_t line, int side, plus_t area )
+ *
+ * \brief Set area number on line side
+ *
+ * \return always 1
+ * 
+ * \param[in] plus Plus_head structure
+ * \param[in] line line id
+ * \param[in] side side id (GV_LEFT || GV_RIGHT)
+ * \param[in] area area id
 */
 int
 dig_line_set_area (struct Plus_head *plus, plus_t line, int side, plus_t area ) {
@@ -228,9 +268,16 @@ dig_line_set_area (struct Plus_head *plus, plus_t line, int side, plus_t area ) 
     return (1);
 }
 
-/* dig_line_set_box ()
-** Set line bound box
-** 
+/*!
+ * \fn int dig_line_set_box (struct Plus_head *plus, plus_t line, BOUND_BOX *Box )
+ *
+ * \brief Set line bound box
+ *
+ * \return always 1
+ *
+ * \param[in] plus Plus_head structure
+ * \param[in] line line id
+ * \param[in] Box  bound box structure
 */
 int
 dig_line_set_box (struct Plus_head *plus, plus_t line, BOUND_BOX *Box ) {
@@ -248,9 +295,16 @@ dig_line_set_box (struct Plus_head *plus, plus_t line, BOUND_BOX *Box ) {
     return (1);
 }
 
-/* dig_line_get_box ()
-** Get line bound box saved in topo
-** 
+/*!
+ * \fn int dig_line_get_box (struct Plus_head *plus, plus_t line, BOUND_BOX *Box )
+ *
+ * \brief Get line bound box saved in topo
+ *
+ * \return always 1
+ * 
+ * \param[in] plus Plus_head structure
+ * \param[in] line line id
+ * \param[in,out] Box bound box structure
 */
 int
 dig_line_get_box (struct Plus_head *plus, plus_t line, BOUND_BOX *Box ) {
@@ -267,4 +321,3 @@ dig_line_get_box (struct Plus_head *plus, plus_t line, BOUND_BOX *Box ) {
 
     return (1);
 }
-
