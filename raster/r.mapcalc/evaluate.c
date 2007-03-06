@@ -199,6 +199,9 @@ static int error_handler(char *msg, int fatal)
 {
 	expr_list *l;
 
+	if (!fatal)
+		return 0;
+
 	for (l = exprs; l; l = l->next)
 	{
 		expression *e = l->exp;
@@ -209,6 +212,7 @@ static int error_handler(char *msg, int fatal)
 
 	G_unset_error_routine();
 	G_fatal_error("%s", msg);
+	return 0;
 }
 
 void execute(expr_list *ee)
