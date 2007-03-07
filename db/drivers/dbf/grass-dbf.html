@@ -38,8 +38,7 @@ is sometimes useful.
 </pre></div>
 
 <H2>Operators available in conditions</H2>
-<div class="code">
-<pre>
+<div class="code"><pre>
   "="  : equal
   "&lt;"  : smaller than
   "&lt;=" : smaller/equal than
@@ -65,6 +64,20 @@ Type conversion is performed if necessary (experimental). </p>
     with the usual precedence rules. </p>
 
 <p> NULLs can be tested by 'colname IS NULL' in conditions. The negation is 'colname NOT NULL'.</p>
+
+<h2>ERROR MESSAGES</h2>
+
+An error message such as:
+
+<div class="code"><pre>
+DBMI-DBF driver error:
+SQL parser error: syntax error, unexpected DESC, expecting NAME processing 'DESC'
+</pre></div>
+
+indicates that a column name corresponds to a reserved SQL word (here: 'DESC').
+A different column name should be used. If this happens during import with
+<em>v.in.ogr</em>, the <em>cnames</em> parameter can be used to assign different
+column names on the fly.
 
 <h2>SEE ALSO</h2>
 
