@@ -169,18 +169,31 @@ unique. (hint: copy and modify the list given with the error message).
 Alternatively, change the local DB with
 <em><a href="db.connect.html">db.connect</a></em>.
 
-<P>
-If a message like "<tt>WARNING: Area size 1.3e-06, area not imported.</tt>" appears,
-the <b>min_area</b> may be adjusted to a smaller value so that all
+
+<h2>WARNINGS</h2>
+
+If a message like "<tt>WARNING: Area size 1.3e-06, area not imported.</tt>"
+appears, the <b>min_area</b> may be adjusted to a smaller value so that all
 areas are imported. Otherwise tiny areas are filtered out during import
 (useful to polish digitization errors or non-topological data).
 
+<h2>ERROR MESSAGES</h2>
+
+An error message such as:
+
+<div class="code"><pre>
+DBMI-DBF driver error:
+SQL parser error: syntax error, unexpected DESC, expecting NAME processing 'DESC'
+</pre></div>
+
+indicates that a column name corresponds to a reserved SQL word (here: 'DESC').
+A different column name should be used. The <em>cnames</em> parameter can be used
+to assign different column names on the fly.
 
 <H2>REFERENCES</H2>
 
 <a href="http://www.gdal.org/ogr/">OGR vector library</a> <br>
-<a href="http://www.gdal.org/ogr/ogr__api_8h.html">OGR vector library C API</a>
-documentation
+<a href="http://www.gdal.org/ogr/ogr__api_8h.html">OGR vector library C API</a> documentation
 
 
 <h2>SEE ALSO</h2>
@@ -195,7 +208,7 @@ documentation
 
 <h2>AUTHOR</h2>
 
-Radim Blazek, ITC-Irst, Trento, Italy
+Radim Blazek, ITC-irst, Trento, Italy
 <br>
 Location and spatial extent support by Markus Neteler and Paul Kelly
 
