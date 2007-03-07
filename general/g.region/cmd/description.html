@@ -613,13 +613,28 @@ region settings before printing occurs.
 Usage example of <em>g.region</em> in a shell with external software:<br>
 Extract spatial subset of external vector map 'soils.shp' to new external vector
 map 'soils_cut.shp' using the OGR 'ogr2ogr' tool:<br>
+
 <div class="code"><pre>
 eval `g.region -g`
 ogr2ogr -spat $w $s $e $n soils_cut.shp soils.shp
 </pre></div>
 
 This requires that the location/SHAPE file projection match.
+<p>
+Usage example of <em>g.proj</em> and <em>g.region</em> in a shell with external software:<br>
+Extract spatial subset of external raster map 'p016r035_7t20020524_z17_nn30.tif'
+to new external raster map'p016r035_7t20020524_nc_spm_wake_nn30.tif using the GDAL
+'gdalwarp' tool:<br>
 
+<div class="code"><pre>
+eval `g.region -g`
+gdalwarp -t_srs "`g.proj -wf`" -te $w $s $e $n \
+         p016r035_7t20020524_z17_nn30.tif \
+         p016r035_7t20020524_nc_spm_wake_nn30.tif
+</pre></div>
+
+Here the input raster map does not have to match the location
+projection since it is reprojected on the fly.
 
 <h2>NOTE</h2>
 
