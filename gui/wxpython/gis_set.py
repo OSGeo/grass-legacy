@@ -508,7 +508,7 @@ class GRASSStartup(wx.Frame):
 
     def OnWizard(self,event):
         import grass_wizard
-        gWizard = grass_wizard.GWizard(self,  "Define new Location")
+        gWizard = grass_wizard.GWizard(self,   self.tgisdbase.GetValue())
 
  
     def UpdateLocations(self,dbase):
