@@ -1,3 +1,18 @@
+/****************************************************************************
+ *
+ * MODULE:       r3.mkdspf
+ * AUTHOR(S):    Helena Mitasova and Bill Brown  (original contributor)
+ *               Roberto Flor <flor itc.it>, Bernhard Reiter <bernhard intevation.de>, 
+ *               Brad Douglas <rez touchofmadness.com>, Glynn Clements <glynn gclements.plus.com>,
+ *               Radim Blazek <radim.blazek gmail.com>, Markus Neteler <neteler itc.it>
+ * PURPOSE:      
+ * COPYRIGHT:    (C) 2000-2006 by the GRASS Development Team
+ *
+ *               This program is free software under the GNU General Public
+ *               License (>=v2). Read the file COPYING that comes with GRASS
+ *               for details.
+ *
+ *****************************************************************************/
 /* This program implements the marching cubes surface tiler described by
  * Lorenson & Cline in the Siggraph 87 Conference Proceedings.
  *
@@ -208,3 +223,6 @@ int main(int argc, char *argv[])
 
     exit(EXIT_SUCCESS);
 }
+
+
+
