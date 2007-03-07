@@ -86,7 +86,7 @@ cleanup()
    echo "Restoring previous MASK..."
    g.rename ${TMPNAME}_origmask,MASK > /dev/null
  fi
- rm -f $TMPNAME $TMP.cats $SQLTMP
+ rm -f $TMP $TMPNAME $TMP.cats $SQLTMP
 }
 
 # what to do in case of user break:
