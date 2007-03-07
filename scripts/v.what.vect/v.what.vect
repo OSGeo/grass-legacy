@@ -21,6 +21,7 @@
 #%option
 #% key: vector
 #% type: string
+#% key_desc: name
 #% gisprompt: old,vector,vector
 #% description: Vector map with points for which to modify the attribute table
 #% required : yes
@@ -29,6 +30,7 @@
 #%option
 #% key: qvector
 #% type: string
+#% key_desc: name
 #% gisprompt: old,vector,vector
 #% description: Vector map to be queried
 #% required : yes
