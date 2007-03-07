@@ -25,12 +25,7 @@ from the raster map query:
 v.db.connect -p vectpoints
 # .. no table yet.
 
-echo 'create table vectpoints (cat integer, value integer)' | db.execute
-#link new table to vector map:
-v.db.connect table=vectpoints map=vectpoints
-
-#generate rows for each category:
-v.to.db map=vectpoints option=cat
+v.db.addtable vectpoints col="cat integer, value integer"
 
 #query raster map and write values into vector table:
 v.what.rast vect=vectpoints rast=rastmap col=value
