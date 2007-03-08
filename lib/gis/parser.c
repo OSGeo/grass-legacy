@@ -1592,7 +1592,7 @@ static void G_script(void)
 		for (flag = &first_flag; flag; flag = flag->next_flag)
 		{
 			fprintf(fp, "#%%Flag\n");
-			fprintf(fp, "#%%  key: %c\n", flag->key);
+			fprintf(fp, "#%% key: %c\n", flag->key);
 			if (flag->label)
 				fprintf(fp, "#%% label: %s\n", flag->label);
 			if (flag->description)
