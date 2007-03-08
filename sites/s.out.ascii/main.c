@@ -1,3 +1,17 @@
+/****************************************************************************
+ *
+ * MODULE:       s.out.ascii
+ * AUTHOR(S):    Michael Shapiro CERL (original contributor)
+ *               Radim Blazek <radim.blazek gmail.com> (GRASS 6)
+ *               Glynn Clements <glynn gclements.plus.com>, Markus Neteler <neteler itc.it>
+ * PURPOSE:      
+ * COPYRIGHT:    (C) 1999-2007 by the GRASS Development Team
+ *
+ *               This program is free software under the GNU General Public
+ *               License (>=v2). Read the file COPYING that comes with GRASS
+ *               for details.
+ *
+ *****************************************************************************/
 #include <stdlib.h>
 #include <string.h>
 #include <grass/gis.h>
@@ -126,3 +140,6 @@ int main(int argc, char *argv[])
     G_sites_close (fd);
     exit(0);
 }
+
+
+

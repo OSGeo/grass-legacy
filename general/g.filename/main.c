@@ -1,3 +1,20 @@
+/****************************************************************************
+ *
+ * MODULE:       g.filename
+ * AUTHOR(S):    Michael Shapiro CERL (original contributor)
+ *               Markus Neteler <neteler itc.it>,
+ *               Bernhard Reiter <bernhard intevation.de>, 
+ *               Glynn Clements <glynn gclements.plus.com>,
+ *               Hamish Bowman <hamish_nospam yahoo.com>,
+ *               Jan-Oliver Wagner <jan intevation.de>
+ * PURPOSE:      
+ * COPYRIGHT:    (C) 1999-2006 by the GRASS Development Team
+ *
+ *               This program is free software under the GNU General Public
+ *               License (>=v2). Read the file COPYING that comes with GRASS
+ *               for details.
+ *
+ *****************************************************************************/
 #include <stdio.h>
 #include <string.h>
 #include <stdlib.h>
@@ -19,7 +36,7 @@ int main( int   argc, char *argv[])
 
 	module = G_define_module();
 	module->keywords = _("general");
-    module->description =
+	module->description =
 		_("Prints GRASS data base file names.");
 
 	/* Define the different options */
@@ -63,3 +80,6 @@ int main( int   argc, char *argv[])
 	fprintf (stdout,"file='%s'\n", path);
 	exit(EXIT_SUCCESS);
 }
+
+
+

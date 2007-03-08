@@ -1,3 +1,18 @@
+/****************************************************************************
+ *
+ * MODULE:       g.tempfile
+ * AUTHOR(S):    Michael Shapiro CERL (original contributor)
+ *               Markus Neteler <neteler itc.it>,
+ *               Roberto Flor <flor itc.it>, Bernhard Reiter <bernhard intevation.de>, 
+ *               Jan-Oliver Wagner <jan intevation.de>
+ * PURPOSE:      
+ * COPYRIGHT:    (C) 1999-2006 by the GRASS Development Team
+ *
+ *               This program is free software under the GNU General Public
+ *               License (>=v2). Read the file COPYING that comes with GRASS
+ *               for details.
+ *
+ *****************************************************************************/
 #include <stdlib.h>
 #include <unistd.h>
 #include <sys/types.h>
@@ -33,12 +48,15 @@ int main (int argc, char *argv[])
     if (sscanf (pid->answer, "%d", &p) != 1)
     {
 	G_usage();
-	exit(1);
+	exit(EXIT_FAILURE);
     }
     tempfile = G__tempfile(p);
     umask(0);
 /* create tempfile so next run of this program will create a unique name */
     close(creat(tempfile,0666));
     fprintf (stdout,"%s\n", tempfile);
-    exit(0);
+    exit(EXIT_SUCCESS);
 }
+
+
+
