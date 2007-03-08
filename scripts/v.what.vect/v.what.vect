@@ -4,7 +4,7 @@
 #
 # MODULE:       v.what.vect
 # AUTHOR(S):    Markus Neteler
-# PURPOSE:      Uploads vector values at positions of vector points to the table.
+# PURPOSE:      Uploads attributes at the location of vector points to the table.
 # COPYRIGHT:    (C) 2005 by the GRASS Development Team
 #
 #               This program is free software under the GNU General Public
@@ -21,23 +21,25 @@
 #%option
 #% key: vector
 #% type: string
+#% key_desc: name
 #% gisprompt: old,vector,vector
-#% description: vector map for which to edit attribute table
+#% description: Vector map with points for which to modify the attribute table
 #% required : yes
 #%end
 
 #%option
 #% key: qvector
 #% type: string
+#% key_desc: name
 #% gisprompt: old,vector,vector
-#% description: vector map to be queried
+#% description: Vector map to be queried
 #% required : yes
 #%end
 
 #%option
 #% key: layer
 #% type: integer
-#% description: Layer where to add column
+#% description: Layer of the vector for which to modify the attribute table
 #% answer: 1
 #% required : no
 #%end
@@ -45,7 +47,7 @@
 #%option
 #% key: qlayer
 #% type: integer
-#% description: Query layer
+#% description: Layer of the vector to be queried
 #% answer: 1
 #% required : no
 #%end
@@ -53,14 +55,14 @@
 #%option
 #% key: column
 #% type: string
-#% description: Column name (will be updated by qvector values)
+#% description: Column to be updated with the query result
 #% required : yes
 #%end
 
 #%option
 #% key: qcolumn
 #% type: string
-#% description: Query column name
+#% description: Column to be queried
 #% required : yes
 #%end
 

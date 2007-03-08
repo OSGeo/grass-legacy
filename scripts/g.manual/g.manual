@@ -13,29 +13,34 @@
 #############################################################################
 
 #%Module
-#%  description: display the HTML man pages of GRASS
+#%  description: Display the HTML man pages of GRASS
 #%  keywords: general, manual, help
 #%End
 #%flag
 #%  key: i
-#%  description: display index
-#%END
+#%  description: Display index
+#%End
 #%flag
 #%  key: m
-#%  description: display as MAN text page instead of HTML page in browser
-#%END
+#%  description: Display as MAN text page instead of HTML page in browser
+#%End
 #%option
 #% key: entry
 #% type: string
-#% description: manual entry to be displayed
+#% description: Manual entry to be displayed
 #% required : no
-#%END
+#%End
 
-GRASS_DOC_BASE="$GISBASE"
+if test "$GISBASE" = ""; then
+    echo "You must be in GRASS GIS to run this program." >&2
+    exit 1
+fi
 
 if [ "$1" != "@ARGS_PARSED@" ] ; then
-  exec g.parser "$0" "$@"
+    exec g.parser "$0" "$@"
 fi
+
+GRASS_DOC_BASE="$GISBASE"
 
 #hack for MacOSX:
 if [ "$HOSTTYPE" = "macintosh" ] ; then
@@ -51,7 +56,7 @@ elif [ "$OSTYPE" = "cygwin" ] ; then
         fi
     done
     if [ "$i" = "NOT_FOUND" ] ; then
-        echo "ERROR: cannot find grass document base."
+        echo "ERROR: cannot find GRASS document base." 1>&2
         exit 1
     fi
     BROWSERNAME=`basename "$GRASS_HTML_BROWSER" | sed 's/\.exe$//i'`
@@ -63,10 +68,12 @@ fi
 start_browser()
 {
   if test ! -f "$GRASS_DOC_BASE"/docs/html/$1.html -a -n $1 ; then
-    echo "ERROR: no HTML manual page entry for <$1>."
+    echo "ERROR: no HTML manual page entry for <$1>." 1>&2
     exit 1
   else
-    echo "Starting browser <$BROWSERNAME> for module $1..."
+    if [ -z "$GRASS_VERBOSE" ] || [ "$GRASS_VERBOSE" -gt 1 ] ; then
+	echo "Starting browser <$BROWSERNAME> for module $1..." 1>&2
+    fi
     "$GRASS_HTML_BROWSER" file://"$GRASS_DOC_BASE"/docs/html/$1.html
   fi
 }
@@ -74,7 +81,7 @@ start_browser()
 start_man()
 {
   if test ! -f "$GRASS_DOC_BASE"/man/man1/$1.1 -a -n $1 ; then
-    echo "ERROR: no MAN page entry for <$1>."
+    echo "ERROR: no MAN page entry for <$1>." 1>&2
     exit 1
   else
     man "$GRASS_DOC_BASE"/man/man1/$1.1

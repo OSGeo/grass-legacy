@@ -71,7 +71,7 @@
 #%end
 
 
-if  [ -z $GISBASE ] ; then
+if  [ -z "$GISBASE" ] ; then
     echo "You must be in GRASS GIS to run this program." 1>&2
  exit 1
 fi
@@ -120,8 +120,8 @@ warpimport () {
 	TMPMAPNAME=${2}_tmp
 
 	# Warp it and convert it to geotiff with alpha band to be sure we get nulls:
-	echo "gdalwarp -s_srs \"$GIS_OPT_S_SRS\" -t_srs \"`g.proj -wf`\" \"$FILE\" \"$WARPFILE\" -co \"ALPHA=yes\" -dstalpha" $GIS_OPT_WARPOPTIONS $METHOD 1>&2
-	gdalwarp -s_srs "$GIS_OPT_S_SRS" -t_srs "`g.proj -wf`" "$FILE" "$WARPFILE" -co "ALPHA=yes" -dstalpha $GIS_OPT_WARPOPTIONS $METHOD
+	echo "gdalwarp -s_srs \"$GIS_OPT_S_SRS\" -t_srs \"`g.proj -wf`\" \"$FILE\" \"$WARPFILE\" " $GIS_OPT_WARPOPTIONS $METHOD 1>&2
+	gdalwarp -s_srs "$GIS_OPT_S_SRS" -t_srs "`g.proj -wf`" "$FILE" "$WARPFILE" $GIS_OPT_WARPOPTIONS $METHOD
 
 	#Import it into a temporary map:
 	r.in.gdal $FLAGS input="$WARPFILE" output="$TMPMAPNAME"
@@ -156,8 +156,8 @@ $CHANNEL_SUFFIXES" | sort -u`
 	for SUFFIX in $CHANNEL_SUFFIXES ; do
 		eval "$SUFFIX"
 		# Use alpha channel for nulls:
-		r.mapcalculator amap=$ALPHALAYER bmap=${TMPMAPNAME}${sfx} formula="if(A,B,null())" outfile=${MAP}${sfx}
-
+		GRASS_VERBOSE=1 \
+		  r.mapcalc "${MAP}${sfx} = if( $ALPHALAYER, ${TMPMAPNAME}${sfx}, null() )"
 		# Copy the color tables:
 		r.colors map=${MAP}${sfx} rast=${TMPMAPNAME}${sfx}
 
@@ -253,7 +253,8 @@ if [ $NUM_TILES -eq 1 ] ; then
 	for SUFFIX in $CHANNEL_SUFFIXES ; do
 		eval "$SUFFIX"
 		#Rename tile 0 to be the output
-		g.rename rast=${GIS_OPT_OUTPUT}_tile_0${sfx},${GIS_OPT_OUTPUT}${sfx}
+		GRASS_VERBOSE=1 \
+		  g.rename rast=${GIS_OPT_OUTPUT}_tile_0${sfx},${GIS_OPT_OUTPUT}${sfx}
 	done
 else
 	# Patch together each channel:
@@ -277,7 +278,7 @@ IFS=$defaultIFS
 for SUFFIX in $SUFFIXES ; do
 	eval "$SUFFIX"
 	# Keep track of colors
-	if [ -z $sfx ] ; then
+	if [ -z "$sfx" ] ; then
 		# There's already a no suffix, can't make colors
 		COLORS=4 # Can only go up from here ;)
 	fi
@@ -290,6 +291,7 @@ done
 if [ $COLORS -eq 3 ] && [ $GIS_FLAG_C -eq 1 ] ; then
 	echo "Building Color Image" 1>&2
 	r.composite red=${GIS_OPT_OUTPUT}.red green=${GIS_OPT_OUTPUT}.green blue=${GIS_OPT_OUTPUT}.blue output=${GIS_OPT_OUTPUT}
+	echo "Written: ${GIS_OPT_OUTPUT}"
 fi
 
 # Clean up:

@@ -25,6 +25,14 @@
 #% multiple : yes
 #% required : no
 #%end
+#%option
+#% key: output
+#% type: string
+#% gisprompt: output
+#% description: write output to PNG image
+#% multiple : no
+#% required : no
+#%end
 #%flag 
 #%key: i
 #%description: Use image list and not group
@@ -60,6 +68,7 @@ if [ ! -x "`which awk`" ] ; then
     echo "$PROG: awk required, please install awk or gawk first" 2>&1
     exit 1
 fi
+
 
 # setting environment, so that awk works properly in all languages
 unset LC_ALL
@@ -206,6 +215,10 @@ done
 xrange=`expr $NUMBANDS + 1`
 
 # build gnuplot script
+if [ -n "$GIS_OPT_OUTPUT" ] ; then
+  echo "set term png large" >> spectrum.gnuplot
+  echo "set output '$GIS_OPT_OUTPUT'" >> spectrum.gnuplot
+fi
 echo "set xtics ($xlabels)" >> spectrum.gnuplot
 echo "set grid" >> spectrum.gnuplot
 echo "set title 'Spectral signatures'" >> spectrum.gnuplot

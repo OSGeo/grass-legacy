@@ -137,11 +137,6 @@ else
     NAME=$E00NAME
 fi
 
-if [ ! -z `g.findfile elem=vector file="$NAME" | grep "^file" | cut -f2 -d'='` ] ; then
-	echo "GRASS vector map <$NAME> already exists! Aborting."
-	exit 1
-fi
-
 ### do import
 
 #make a temporary directory

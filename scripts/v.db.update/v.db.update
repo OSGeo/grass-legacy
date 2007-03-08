@@ -15,7 +15,7 @@
 
 
 #%Module
-#%  description: allows to assign a new value to a column in the attribute table connected to a given map
+#%  description: Allows to assign a new value to a column in the attribute table connected to a given map
 #%  keywords: vector, database, attribute table
 #%End
 
@@ -23,7 +23,7 @@
 #% key: map
 #% type: string
 #% gisprompt: old,vector,vector
-#% description: vector map for which to edit attribute table
+#% description: Vector map for which to edit attribute table
 #% required : yes
 #%end
 
@@ -38,21 +38,21 @@
 #%option
 #% key: column
 #% type: string
-#% description: column to update
+#% description: Column to update
 #% required : yes
 #%end
 
 #%option
 #% key: value
 #% type: string
-#% description: new value to assign to the column (varchar values have to be in single quotes, ex: 'grass')
+#% description: New value to assign to the column (varchar values have to be in single quotes, ex: 'grass')
 #% required : yes
 #%end
 
 #%option
 #% key: where
 #% type: string
-#% description: condition for update (everything after the 'where' sql statement; ex: cat=1 or col1/col2>1) 
+#% description: Condition for update (everything after the 'where' sql statement; ex: cat=1 or col1/col2>1) 
 #% required : no
 #%end
 
@@ -86,14 +86,12 @@ if [ ! "$file" ] ; then
 fi
 
 table=`v.db.connect $GIS_OPT_MAP -g | grep -w $GIS_OPT_LAYER | awk '{print $2}'`
-database=`v.db.connect $GIS_OPT_MAP -g | grep -w $GIS_OPT_LAYER | awk '{print $4}'`
-driver=`v.db.connect $GIS_OPT_MAP -g | grep -w $GIS_OPT_LAYER | awk '{print $5}'`
-
-if [ -z $table ] ; then
-   echo -e "\nThere is no table connected to this map !\nRun v.db.connect first.\n"
+if [ -z "$table" ] ; then
+   echo -e "\nThere is no table connected to this map !\nRun v.db.connect or v.db.addtable first.\n"
    exit 1
 fi
-
+database=`v.db.connect $GIS_OPT_MAP -g | grep -w $GIS_OPT_LAYER | awk '{print $4}'`
+driver=`v.db.connect $GIS_OPT_MAP -g | grep -w $GIS_OPT_LAYER | awk '{print $5}'`
 
 if [ -n "$GIS_OPT_WHERE" ]
   then
@@ -101,3 +99,5 @@ if [ -n "$GIS_OPT_WHERE" ]
   else
 	echo "UPDATE $table SET $GIS_OPT_COLUMN='$GIS_OPT_VALUE'" | db.execute database=$database driver=$driver
 fi
+
+exit 0

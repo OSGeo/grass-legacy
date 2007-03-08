@@ -11,13 +11,13 @@ This software is not intended as a primary means of navigation.
 <H2>EXAMPLES</H2>
 
 Import waypoint data from a Garmin GPS connected at /dev/ttyS0 and save
-to a GRASS vector file named <i>waypoints</i>.
+to a GRASS vector map named <i>waypoints</i>.
 <div class="code"><pre>
 v.in.gpsbabel -w input=/dev/ttyS0 format=garmin output=waypoints
 </pre></div>
 
 <p>
-Import track data from a GPX text file and save to a GRASS vector file 
+Import track data from a GPX text file and save to a GRASS vector map 
 named <i>tracks</i>. <!-- (currently buggy) The gpxlogger program distributed with 
 <a href="http://gpsd.berlios.de/">GPSd</a> >2.30 is a good program for 
 creating these logs. -->
@@ -27,7 +27,7 @@ v.in.gpsbabel -t input=gpslog.gpx format=gpx output=tracks
 
 <p>
 Import route data as a series of points from a Garmin GPS connected at 
-/dev/gps and save to a GRASS vector file named <i>routePoints</i>.
+/dev/gps and save to a GRASS vector map named <i>routePoints</i>.
 <div class="code"><pre>
 v.in.gpsbabel -r -p file=/dev/gps format=garmin output=routePoints
 </pre></div>
