@@ -1,3 +1,13 @@
+"""
+mapdisp2 Package
+
+Classes:
+* BufferedWindow
+* DrawWindow
+* MapFrame
+* MapApp
+"""
+
 import wx
 import wx.aui
 import os, sys, time, glob
@@ -9,14 +19,12 @@ import gismutils
 import toolbars
 import grassenv
 
-Map = render.Map() # instantiate module to render GRASS display output to PPM file
+Map = render.Map() # instance of Map class to render GRASS display output to PPM file
 
 DEBUG = False
 
 class BufferedWindow(wx.Window):
-
     """
-
     A Buffered window class.
 
     To use it, subclass it and define a Draw(DC) method that takes a DC
@@ -28,9 +36,7 @@ class BufferedWindow(wx.Window):
     UpdateMap() method. Since the drawing is stored in a bitmap, you
     can also save the drawing to file by calling the
     SaveToFile(self,file_name,file_type) method.
-
     """
-
 
     def __init__(self, parent, id, 
             pos = wx.DefaultPosition, 
@@ -43,11 +49,12 @@ class BufferedWindow(wx.Window):
         #
         # Flags
         #
-    	self.render = True #re-render the map from GRASS or just redraw image
+    	self.render = True  # re-render the map from GRASS or just redraw image
     	self.resize = False # indicates whether or not a resize event has taken place
     	self.dragimg = None # initialize variable for map panning
-    	self.pen = None # pen for drawing zoom boxes, etc.
+    	self.pen = None     # pen for drawing zoom boxes, etc.
 
+        #
         # Event bindings
         # 
     	self.Bind(wx.EVT_PAINT, self.OnPaint)
@@ -59,8 +66,8 @@ class BufferedWindow(wx.Window):
         #
         # Render output objects
     	# 
-    	self.mapfile = None # file with 
-    	self.Img = "" # wx.Image object from self.mapfile
+    	self.mapfile = None # image file to be rendered
+    	self.Img = ""       # wx.Image object (self.mapfile)
 
         #
     	# mouse attributes like currently pressed buttons, position on
@@ -68,14 +75,14 @@ class BufferedWindow(wx.Window):
         #
     	self.mouse = {
     	    'l': False,
-    	    'r':False,
-    	    'm':False,
-    	    'pos':[None, None],
-    	    'begin':[0, 0],
-    	    'end':[0, 0],
-    	    'box':"point"
+    	    'r': False,
+    	    'm': False,
+    	    'pos': [None, None],
+    	    'begin': [0, 0],
+    	    'end': [0, 0],
+    	    'box': "point"
     	    }
-    	self.zoomtype = 1	 # 1 zoom in, 0 no zoom, -1 zoom out
+        self.zoomtype = 1  # 1 zoom in, 0 no zoom, -1 zoom out
 
     	# OnSize called to make sure the buffer is initialized.
     	# This might result in OnSize getting called twice on some
@@ -103,7 +110,7 @@ class BufferedWindow(wx.Window):
     	# a file, or whatever.
     	self._Buffer = wx.EmptyBitmap(Map.width, Map.height)
 
-        # get the image, render
+        # get the image to be rendered
     	self.Img = self.GetImage()
 
         # update map display
@@ -116,8 +123,8 @@ class BufferedWindow(wx.Window):
     	self.resize = True 
 
     def OnIdle(self, event):
-    	'''Only re-render a compsite map image from GRASS during
-    	idle time instead of multiple times during resizing.'''
+    	"""Only re-render a compsite map image from GRASS during
+    	idle time instead of multiple times during resizing."""
 
     	if self.resize:
     	    self.render = True
@@ -159,7 +166,7 @@ class BufferedWindow(wx.Window):
     	self.Draw(dc, dctype='clear')
 
     def DragMap(self, moveto):
-    	'''drag a bitmap image for panning.'''
+    	"""Drag a bitmap image for panning."""
 
     	dc = wx.BufferedDC(wx.ClientDC(self), self._Buffer)
     	dc.SetBackground(wx.Brush("White"))
@@ -174,7 +181,7 @@ class BufferedWindow(wx.Window):
     ##	self.dragimg.UpdateBackingFromWindow(dc, memdc, sourcerect,destrect)
 
     def MouseDraw(self):
-    	''' mouse zoom rectangles and lines '''
+    	"""Mouse zoom rectangles and lines"""
     	img = self.Img # composite map in background
     	dc = wx.BufferedDC(wx.ClientDC(self), self._Buffer)
     	if self.mouse['box'] == "box":
@@ -254,8 +261,8 @@ class BufferedWindow(wx.Window):
     	Inputs: x,y
     	Outputs: int x, int y
     	"""
-    	newx = Map.region['w']+x*Map.region["ewres"]
-    	newy = Map.region['n']-y*Map.region["nsres"]
+    	newx = Map.region['w'] + x * Map.region["ewres"]
+    	newy = Map.region['n'] - y * Map.region["nsres"]
     	return newx, newy
 
 
@@ -304,15 +311,15 @@ class BufferedWindow(wx.Window):
     	    Map.region['w'] = newreg['w']
 
 class DrawWindow(BufferedWindow):
-    '''Drawing routine for double buffered drawing. Overwrites Draw method
-    in the BufferedWindow class'''
+    """Drawing routine for double buffered drawing. Overwrites Draw method
+    in the BufferedWindow class"""
     def __init__(self, parent, id = -1):
         """
         """
     	## Any data the Draw() function needs must be initialized before
     	## calling BufferedWindow.__init__, as it will call the Draw
     	## function.
-    	self.dcmd_list = [] #list of display commands to process
+    	self.dcmd_list = [] # list of display commands to process
     	BufferedWindow.__init__(self, parent, id)
 
     def Draw(self, dc, img=None, dctype='image', coords=[0, 0]):
@@ -338,8 +345,8 @@ class DrawWindow(BufferedWindow):
     	dc.EndDrawing()
 
 class MapFrame(wx.Frame):
-    '''Main frame for map display window. Drawing takes place in child double buffered
-    drawing window.'''
+    """Main frame for map display window. Drawing takes place in child double buffered
+    drawing window."""
 
     def __init__(self, parent=None, id=-1, title="Map display",
             pos=wx.DefaultPosition, size=wx.DefaultSize,
@@ -434,15 +441,15 @@ class MapFrame(wx.Frame):
         Map.SetRegion()
 
     def OnFocus(self, event):
-        ''' store information about active display
+        """Store information about active display
         in tracking variables and change choicebook
-        page to match display'''
+        page to match display"""
         title = self.GetTitle()
         num = title[12:]
-
+        
         # FIXME removed
         event.Skip()
-
+            
     def SetDcommandList(self, clst):
         self.MapWindow.dcmd_list = clst
         self.MapWindow.ProcessDcommand()
@@ -541,8 +548,11 @@ class MapFrame(wx.Frame):
 
 # end of class MapFrame
 
-
 class MapApp(wx.App):
+    """
+    MapApp class
+    """
+    
     def OnInit(self):
 	wx.InitAllImageHandlers()
 	Mapfrm = MapFrame(None, -1)
@@ -555,7 +565,7 @@ class MapApp(wx.App):
             os.system("g.copy vect=roads,tmp --o")
             Map.AddVectorLayer(name="tmp", color="red")
             Map.AddVectorLayer(name="bugsites", mapset="PERMANENT",
-                    color="blue")
+                               color="blue")
 
 	return 1
 
