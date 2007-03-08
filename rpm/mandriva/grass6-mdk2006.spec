@@ -100,7 +100,7 @@ rm -rf %{buildroot}
 
 %attr(0755,root,root)
 %{_prefix}/bin/grass%{shortver}
-%{_prefix}/bin/gem
+%{_prefix}/bin/gem6
 %{_prefix}/grass-%{PACKAGE_VERSION}
 /etc/ld.so.conf.d/grass-%{version}.conf
 
