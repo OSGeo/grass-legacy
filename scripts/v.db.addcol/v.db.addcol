@@ -100,7 +100,7 @@ while [ "$n" -le "$colnum" ]
       echo "ERROR: Cannot continue (problem adding column)."
       exit 1
     fi
-    let "n += 1"
+    n=`expr $n + 1` 
   done
 
 exit 0
