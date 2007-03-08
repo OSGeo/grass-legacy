@@ -21,11 +21,11 @@
 #include <grass/gis.h>
 #include <grass/dbmi.h>
 #include <grass/Vect.h>
-#include "ogr_api.h"
-#include "cpl_string.h"
 #include <grass/config.h>
 #include <grass/gprojects.h>
 #include <grass/glocale.h>
+#include "ogr_api.h"
+#include "cpl_string.h"
 
 int    fout, fskip; /* features written/ skip */
 int    nocat, noatt, nocatskip; /* number of features without cats/atts written/skip */
@@ -82,7 +82,7 @@ main (int argc, char *argv[])
 
     /* Module options */
     module = G_define_module();
-    module->keywords = _("vector");
+    module->keywords = _("vector, export");
     module->description = _("Convert to one of the supported OGR vector formats.");
 
     in_opt = G_define_standard_option(G_OPT_V_INPUT);
@@ -110,7 +110,6 @@ main (int argc, char *argv[])
 			   "\t\tMapInfo File: mapinfo file name");
     
     field_opt = G_define_standard_option(G_OPT_V_FIELD);
-    field_opt->answer = "1";
 
     frmt_opt = G_define_option();
     frmt_opt->key = "format";
@@ -119,7 +118,7 @@ main (int argc, char *argv[])
     frmt_opt->multiple = NO;
     frmt_opt->answer = "ESRI_Shapefile";
     frmt_opt->options = OGR_list_write_drivers();
-    frmt_opt->description = _("OGR format.");
+    frmt_opt->description = _("OGR format");
     
     dsco              = G_define_option();
     dsco->key         = "dsco";
