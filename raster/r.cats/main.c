@@ -19,8 +19,8 @@
 #include <stdio.h>
 #include <string.h>
 #include <grass/gis.h>
-#include "local_proto.h"
 #include <grass/glocale.h>
+#include "local_proto.h"
 
 static char fs = '\t';
 static struct Categories cats;
@@ -44,11 +44,11 @@ main (int argc, char *argv[])
 
     G_gisinit (argv[0]);
 
-	module = G_define_module();
-	module->keywords = _("raster");
+    module = G_define_module();
+    module->keywords = _("raster");
     module->description =
-		_("Prints category values and labels associated "
-		"with user-specified raster map layers.");
+      _("Prints category values and labels associated "
+	"with user-specified raster map layers.");
 
     parm.raster = G_define_standard_option(G_OPT_R_MAP);
 
@@ -95,10 +95,11 @@ main (int argc, char *argv[])
  
     mapset = G_find_cell2 (name,"");
     if (mapset == NULL)
-        G_fatal_error ( _("%s: <%s> raster map not found"), G_program_name(),name);
+        G_fatal_error (_("Raster map <%s> not found"),
+		       name);
     if (G_read_cats (name, mapset, &cats) < 0)
-        G_fatal_error ( _("%s: %s in %s - can't read category file"),
-                       G_program_name(), name, mapset);
+        G_fatal_error (_("Cannot read category file of raster map <%s> in <%s>"),
+		       name, mapset);
 
     map_type = G_raster_map_type(name, mapset);
 /* if no cats requested, use r.describe to get the cats */
