@@ -44,8 +44,8 @@ int main(int argc, char *argv[])
 
     /* Set description */
     module = G_define_module();
-    module->keywords = _("vector");
-    module->description = _("Exports GRASS vector maps to DXF file format.");
+    module->keywords = _("vector, export");
+    module->description = _("Exports GRASS vector map layers to DXF file format.");
 
     input = G_define_standard_option(G_OPT_V_INPUT);
 
