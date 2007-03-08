@@ -305,7 +305,7 @@ rm -rf %{buildroot}
 %attr(0755,root,root)
 
 %{_bindir}/grass%{shortver}
-%{_bindir}/gem
+%{_bindir}/gem6
 %{_prefix}/grass-%{version}
 %{_libdir}/pkgconfig/grass.pc
 /etc/ld.so.conf.d/grass-%{version}.conf
