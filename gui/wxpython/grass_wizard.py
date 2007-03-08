@@ -4,6 +4,8 @@ import  wx.lib.rcsizer  as rcs
 
 import os
 import sys
+import string
+
 
 class TitledPage(wiz.WizardPageSimple):
     def __init__(self, parent, title):
@@ -36,16 +38,145 @@ class TitledPage(wiz.WizardPageSimple):
                 size=size)
 
 
-class SummaryPage(TitledPage):
-    def __init__(self, parent, pages):
-        TitledPage.__init__(self, parent, "Summary")
+class DatumPage(TitledPage):
+    def __init__(self, wizard, parent):
+        TitledPage.__init__(self, wizard, "Specify geodetic datum")
 
-        self.pages = pages
+        self.parent = parent
+
+        # text input
+        self.tdatum = self.MakeTextCtrl("")
+        self.ttrans = self.MakeTextCtrl("")
+
+        # search box
+        self.searchb = wx.SearchCtrl(self, size=(200,-1), style=wx.TE_PROCESS_ENTER)
+
+        # table
+        self.tablewidth=600
+        self.datums = wx.ListCtrl(self, -1, style=wx.LC_REPORT |  wx.LC_VRULES | wx.LC_HRULES, size=(700,100))
+        self.datums.InsertColumn(0, 'Short Name ')
+        self.datums.InsertColumn(1, '                                             Description                                         ')
+        self.datums.SetColumnWidth(0, 100)
+        self.datums.SetColumnWidth(1, wx.LIST_AUTOSIZE_USEHEADER)
+
+        self.transformlist = wx.ListCtrl(self, -1, style=wx.LC_REPORT |  wx.LC_VRULES | wx.LC_HRULES, size=(700,100))
+        self.transformlist.InsertColumn(0, 'Short Name ')
+        self.transformlist.InsertColumn(1, '                                             Description                                         ')
+        self.transformlist.SetColumnWidth(0, 100)
+        self.transformlist.SetColumnWidth(1, wx.LIST_AUTOSIZE_USEHEADER)
+        
+        # laout
+        self.sizer.Add(self.MakeLabel("Geodetic datum:"), 1, col=1, row=1)
+        self.sizer.Add(self.tdatum, 0 , wx.ALIGN_LEFT, 1, row=1, col=2)
+        self.sizer.Add(self.MakeLabel("Search in description:"), 1, col=1, row=2)
+        self.sizer.Add(self.searchb, 0 , wx.ALIGN_LEFT, 1, row=2, col=2)
+        self.sizer.Add(self.datums, 0 , wx.EXPAND | wx.ALIGN_CENTER_HORIZONTAL, 1, row=3, col=1, colspan=5)
+        self.sizer.Add(self.MakeLabel("Transformation parameters:"), 1, col=2, row=4)
+        self.sizer.Add(self.ttrans, 0 , wx.ALIGN_LEFT, 1, row=4, col=3)
+        self.sizer.Add(self.transformlist, 0 , wx.EXPAND | wx.ALIGN_CENTER_HORIZONTAL, 1, row=5, col=1, colspan=5)
+
+        # events
+        #wx.EVT_BUTTON(self, self.bbrowse.GetId(), self.OnBrowse)
+        #wx.EVT_BUTTON(self, self.bbcodes.GetId(), self.OnBrowseCodes)
+        self.Bind(wx.EVT_LIST_ITEM_SELECTED, self.OnItemSelected, self.datums)
+        self.Bind(wx.EVT_LIST_ITEM_SELECTED, self.OnTransformSelected, self.transformlist)
+        self.searchb.Bind(wx.EVT_TEXT_ENTER, self.OnDoSearch, self.searchb)
+        self.tdatum.Bind(wx.EVT_TEXT_ENTER, self._onBrowseParams, self.tdatum)
+
+        self._onBrowseDatums(None,None)
+
+    def OnDoSearch(self,event):
+        str =  self.searchb.GetValue()
+        listItem  = self.datums.GetColumn(1)
+
+        for i in range(self.datums.GetItemCount()):
+            listItem = self.datums.GetItem(i,1)
+            if listItem.GetText().find(str) > -1:
+                datumcode = self.datums.GetItem(i, 0)
+                self.tdatum.SetValue(datumcode.GetText())
+                break
+
+        self._onBrowseDatums(None,str)
+        
+    def OnTransformSelected(self,event):
+        item = event.GetItem()
+        self.ttrans.SetValue(str(item.GetText()))
+
+    def OnItemSelected(self,event):
+        item = event.GetItem()
+        self.tdatum.SetValue(str(item.GetText()))
+        self._onBrowseParams()
+    
+    def _onBrowseParams(self):
+        params = ["Use whole region"]
+        file = os.path.join(os.getenv("GISBASE"), "etc","datumtransform.table")
+        search = self.tdatum.GetValue()
+
+        try:
+            f = open(file,"r")
+            for line in f.readlines():
+                line = line.strip()
+                if line[0] == "#": continue
+                id,descr = string.split(line," ",maxsplit=1)
+                descr=descr.replace('"',"")
+                if id == search:
+                    params.append(descr)
+            f.close()
+
+            self.transformlist.DeleteAllItems()
+            for i in range(len(params)):
+                self.transformlist.InsertStringItem(i,str(i+1))
+                self.transformlist.SetStringItem(i,1,params[i])
+        except:
+            self.transformlist.DeleteAllItems()
+
+
+    def _onBrowseDatums(self,event,search=None):
+        try:
+            self.datums.DeleteAllItems()
+            f = open(os.path.join(os.getenv("GISBASE"), "etc","datum.table"),"r")
+            i=1
+            j = 0
+            descr = None
+            datum = None
+            for line in f.readlines():
+                line = line.strip()
+                if not line:
+                    continue
+                if line[0] == "#":
+                    continue
+                datum,descr = string.split(line, " ", maxsplit=1)
+                descr = descr.replace('"',"")
+                descr = descr.replace("  "," ")
+                if search and (descr.lower().find(search.lower()) > -1 or\
+                              datum.lower().find(search.lower()) > -1) or\
+                        not search:
+                    self.datums.InsertStringItem(j,datum)
+                    self.datums.SetStringItem(j,1,descr)
+                    j  += 1
+                    # reset 
+                    descr = None; code = None; params = ""
+            f.close()
+            self.SendSizeEvent()
+        except StandardError, e:
+            dlg = wx.MessageDialog(self, "Could not read datums: %s "
+                    % e,"Can not read file",  wx.OK|wx.ICON_INFORMATION)
+            dlg.ShowModal()
+            dlg.Destroy()
+
+    def OnChange(self,event):
+            self.item =  event.GetItem()
+
+class SummaryPage(TitledPage):
+    def __init__(self, wizard, parent):
+        TitledPage.__init__(self, wizard, "Summary")
+
+        self.parent = parent
 
         self.sizer.Add(self.MakeLabel("GRASS database:"), 1, flag=wx.ALIGN_RIGHT, row=1, col=2)
         self.sizer.Add(self.MakeLabel("Location name:"), 1, flag=wx.ALIGN_RIGHT, row=2, col=2)
-        self.sizer.Add((200,20), 1, flag=wx.ALIGN_CENTER_HORIZONTAL, row=3, col=2)
-        self.sizer.Add(self.MakeLabel("Projection:"), 1, flag=wx.ALIGN_RIGHT, row=4, col=2)
+        self.sizer.Add((200,20), 1, flag=wx.ALIGN_CENTER_HORIZONTAL, row=4, col=2)
+        self.sizer.Add(self.MakeLabel("Projection:"), 1, flag=wx.ALIGN_RIGHT, row=5, col=2)
         self.sizer.Add(self.MakeLabel("North:"), 1, flag=wx.ALIGN_RIGHT, row=6, col=2)
         self.sizer.Add(self.MakeLabel("South:"), 1, flag=wx.ALIGN_RIGHT, row=7, col=2)
         self.sizer.Add(self.MakeLabel("East:"), 1, flag=wx.ALIGN_RIGHT, row=8, col=2)
@@ -56,22 +187,23 @@ class SummaryPage(TitledPage):
         self.sizer.Add(self.MakeLabel("Cells:"), 1, flag=wx.ALIGN_RIGHT, row=14, col=2)
 
     def FillVars(self,event=None):
-        database = self.pages[0].tgisdbase.GetValue()
-        location = self.pages[0].tlocation.GetValue()
-        projection = self.pages[1].cs
+        database = self.parent.startpage.tgisdbase.GetValue()
+        location = self.parent.startpage.tlocation.GetValue()
+        projection = self.parent.csystemspage.cs
         #zoone = self.pages
-        north = self.pages[5].ttop.GetValue()
-        south = self.pages[5].tbottom.GetValue()
-        east  = self.pages[5].tright.GetValue()
-        west  = self.pages[5].tleft.GetValue()
-        res =   self.pages[5].tres.GetValue()
+        north = self.parent.bboxpage.ttop.GetValue()
+        south = self.parent.bboxpage.tbottom.GetValue()
+        east  = self.parent.bboxpage.tright.GetValue()
+        west  = self.parent.bboxpage.tleft.GetValue()
+        res =   self.parent.bboxpage.tres.GetValue()
+        #if projection != "latlong":
         rows = int(round((float(north)-float(south))/float(res)))
         cols = int(round((float(east)-float(west))/float(res)))
         cells = int(rows*cols)
 
         self.sizer.Add(self.MakeLabel(database), 1, flag=wx.ALIGN_LEFT, row=1, col=3)
-        self.sizer.Add(self.MakeLabel(location), 1, flag=wx.ALIGN_LEFT, row=2, col=3)
-        self.sizer.Add(self.MakeLabel(projection), 1, flag=wx.ALIGN_LEFT, row=4, col=3)
+        self.sizer.Add(self.MakeLabel(location), 1, flag=wx.ALIGN_LEFT, row=4, col=3)
+        self.sizer.Add(self.MakeLabel(projection), 1, flag=wx.ALIGN_LEFT, row=5, col=3)
         self.sizer.Add(self.MakeLabel(north), 1, flag=wx.ALIGN_LEFT, row=6, col=3)
         self.sizer.Add(self.MakeLabel(south), 1, flag=wx.ALIGN_LEFT, row=7, col=3)
         self.sizer.Add(self.MakeLabel(east), 1, flag=wx.ALIGN_LEFT, row=8, col=3)
@@ -102,9 +234,10 @@ class SummaryPage(TitledPage):
         # inputs
 
 class BBoxPage(TitledPage):
-    def __init__(self, parent):
-        TitledPage.__init__(self, parent, "Set default region")
+    def __init__(self, wizard, parent):
+        TitledPage.__init__(self, wizard, "Set default region")
 
+        self.parent = parent
         # inputs
         self.ttop = self.MakeTextCtrl("1")
         self.tbottom = self.MakeTextCtrl("0")
@@ -125,6 +258,7 @@ class BBoxPage(TitledPage):
                 if line[0] == "#":
                     continue
                 state,coord = line.split(";")
+                coord = coord.replace(","," ")
                 self.states.append(state)
                 self.coords.append(coord.split())
             f.close()
@@ -157,14 +291,36 @@ class BBoxPage(TitledPage):
         self.sizer.Add(self.cstate, 0, wx.ALIGN_LEFT, row=8,col=3)
 
         self.Bind(wiz.EVT_WIZARD_PAGE_CHANGING, self.OnWizPageChange)
+        self.Bind(wx.EVT_COMBOBOX, self.OnItemSelected, self.cstate)
 
     def OnWizPageChange(self, event):
         self.GetNext().FillVars()
 
-class ProjectionsPage(TitledPage):
-    def __init__(self, parent):
-        TitledPage.__init__(self, parent, "Choose projection name")
+    def OnItemSelected(self, event):
+        item = event.GetSelection()
+        w,s,e,n = self.coords[item]
+        #  4 
+        # 1 3
+        #  2
 
+        if self.parent.csystemspage.cs == "latlong":
+            pass
+        else:
+            n = 100
+            s = 00
+            e = 100
+            w = 0
+
+        self.ttop.SetValue( str(n) )
+        self.tbottom.SetValue( str(s) ) 
+        self.tright.SetValue( str(e) )
+        self.tleft.SetValue( str(w) ) 
+
+class ProjectionsPage(TitledPage):
+    def __init__(self, wizard, parent):
+        TitledPage.__init__(self, wizard, "Choose projection name")
+
+        self.parent = parent
         # text input
         self.tproj = self.MakeTextCtrl("")
 
@@ -173,11 +329,11 @@ class ProjectionsPage(TitledPage):
 
         # table
         self.tablewidth=600
-        self.projs = wx.ListCtrl(self, -1, style=wx.LC_REPORT, size=(700,100))
-        self.projs.InsertColumn(0, 'Name')
-        self.projs.InsertColumn(1, '                        Description                     ')
-        self.projs.SetColumnWidth(0, 50)
-        self.projs.SetColumnWidth(1, wx.LIST_AUTOSIZE_USEHEADER)
+        self.list = wx.ListCtrl(self, -1, style=wx.LC_REPORT|  wx.LC_VRULES | wx.LC_HRULES, size=(700,100))
+        self.list.InsertColumn(0, 'Name')
+        self.list.InsertColumn(1, '                        Description                     ')
+        self.list.SetColumnWidth(0, 50)
+        self.list.SetColumnWidth(1, wx.LIST_AUTOSIZE_USEHEADER)
 
         # laout
         self.sizer.Add(self.MakeLabel("Projection name:"), 0, row=1, col=2)
@@ -186,19 +342,72 @@ class ProjectionsPage(TitledPage):
         self.sizer.Add(self.MakeLabel("Search in projection description"), 0, 1, row=2, col=2)
         self.sizer.Add(self.searchb, 0, wx.ALIGN_LEFT,1, row=2, col=3)
 
-        self.sizer.Add(self.projs, wx.EXPAND,  1, row=3, col=1, colspan=5)
+        self.sizer.Add(self.list, wx.EXPAND,  1, row=3, col=1, colspan=5)
 
         # events
-        #self.Bind(wx.EVT_LIST_ITEM_SELECTED, self.OnItemSelected, self.epsgs)
-        #self.searchb.Bind(wx.EVT_TEXT_ENTER, self.OnDoSearch, self.searchb)
-    def _loadProjs(self):
-        pass
+        self.Bind(wx.EVT_LIST_ITEM_SELECTED, self.OnItemSelected, self.list)
+        self.searchb.Bind(wx.EVT_TEXT_ENTER, self.OnDoSearch, self.searchb)
+
+        self._onBrowseDatums(None, None)
+
+    def OnDoSearch(self,event):
+        str =  self.searchb.GetValue()
+        listItem  = self.list.GetColumn(1)
+
+        for i in range(self.list.GetItemCount()):
+            listItem = self.list.GetItem(i,1)
+            if listItem.GetText().find(str) > -1:
+                datumcode = self.list.GetItem(i, 0)
+                self.tproj.SetValue(datumcode.GetText())
+                break
+
+        self._onBrowseDatums(None,str)
+        
+
+    def OnItemSelected(self,event):
+        item = event.GetItem()
+        self.tproj.SetValue(str(item.GetText()))
+
+    
+    def _onBrowseDatums(self,event,search=None):
+        try:
+            self.list.DeleteAllItems()
+            f = open(os.path.join(os.getenv("GISBASE"), "etc","projections"),"r")
+            i=1
+            j = 0
+            descr = None
+            proj = None
+            for line in f.readlines():
+                line = line.strip()
+                if not line:
+                    continue
+                if line[0] == "#":
+                    continue
+                proj,descr = string.split(line, ":", maxsplit=1)
+                if search and (descr.lower().find(search.lower()) > -1 or\
+                              proj.lower().find(search.lower()) > -1) or\
+                        not search:
+                    self.list.InsertStringItem(j,proj)
+                    self.list.SetStringItem(j,1,descr)
+                    j  += 1
+                    # reset 
+                    descr = None; proj = ""
+            f.close()
+            self.SendSizeEvent()
+        except StandardError, e:
+            dlg = wx.MessageDialog(self, "Could not read datums: %s "
+                    % e,"Can not read file",  wx.OK|wx.ICON_INFORMATION)
+            dlg.ShowModal()
+            dlg.Destroy()
+
+    def OnChange(self,event):
+            self.item =  event.GetItem()
 
 
 
 class GeoreferencedFilePage(TitledPage):
-    def __init__(self, parent):
-        TitledPage.__init__(self, parent, "Choose projection name")
+    def __init__(self, wizard, parent):
+        TitledPage.__init__(self, wizard, "Choose projection name")
 
         self.tfile = self.MakeTextCtrl(size=(150,20))
 
@@ -258,8 +467,8 @@ class GeoreferencedFilePage(TitledPage):
     #        dlg.Destroy()
 
 class EPSGPage(TitledPage):
-    def __init__(self, parent):
-        TitledPage.__init__(self, parent, "Choose EPSG Code")
+    def __init__(self, wizard, parent):
+        TitledPage.__init__(self, wizard, "Choose EPSG Code")
 
         # text input
         self.tfile = self.MakeTextCtrl("/usr/share/proj/epsg", size=(150,20))
@@ -274,7 +483,7 @@ class EPSGPage(TitledPage):
 
         # table
         self.tablewidth=600
-        self.epsgs = wx.ListCtrl(self, -1, style=wx.LC_REPORT,
+        self.epsgs = wx.ListCtrl(self, -1, style=wx.LC_REPORT|  wx.LC_VRULES | wx.LC_HRULES,
                 size=(700,100))
         self.epsgs.InsertColumn(0, 'EPSG')
         self.epsgs.InsertColumn(1, '                        Description                     ')
@@ -325,9 +534,6 @@ class EPSGPage(TitledPage):
                     path = dlg.GetPath()
                     self.tfile.SetValue(path)
         dlg.Destroy()
-
-    def OnCancel(self, event):
-        self.Destroy()
 
     def OnItemSelected(self,event):
         item = event.GetItem()
@@ -432,11 +638,11 @@ class EPSGPage(TitledPage):
 
 
 class CoordinateSystemPage(TitledPage):
-    def __init__(self, parent, pages):
-        TitledPage.__init__(self, parent, "Choose coordinate system for location")
+    def __init__(self, wizard, parent):
+        TitledPage.__init__(self, wizard, "Choose coordinate system for location")
 
+        self.parent = parent 
         self.cs = "xy"
-        self.pages = pages
 
         # toggles
         self.radio1 = wx.RadioButton( self, -1, " XY ", style = wx.RB_GROUP )
@@ -466,29 +672,43 @@ class CoordinateSystemPage(TitledPage):
     def SetVal(self,event):
         if event.GetId() == self.radio1.GetId():
             self.cs = "xy"
-            self.SetNext(self.pages[5])
+            self.SetNext(self.parent.bboxpage)
+            self.parent.bboxpage.cstate.Enable(False)
         elif event.GetId() == self.radio2.GetId():
             self.cs = "latlong"
+            self.SetNext(self.parent.datumpage)
+            self.parent.datumpage.SetPrev(self.parent.csystemspage)
+            self.parent.bboxpage.SetPrev(self.parent.datumpage)
         elif event.GetId() == self.radio3.GetId():
             self.cs = "utm"
+            self.SetNext(self.parent.datumpage)
+            self.parent.datumpage.SetPrev(self.parent.csystemspage)
+            self.parent.bboxpage.SetPrev(self.parent.datumpage)
         elif event.GetId() == self.radio4.GetId():
             self.cs = "custom"
-            self.SetNext(self.pages[4])
+            self.SetNext(self.parent.projpage)
+            self.parent.datumpage.SetPrev(self.parent.projpage)
+            self.parent.bboxpage.SetPrev(self.parent.datumpage)
         elif event.GetId() == self.radio5.GetId():
             self.cs = "epsg"
-            self.SetNext(self.pages[2])
+            self.SetNext(self.parent.epsgpage)
+            self.parent.datumpage.SetPrev(self.parent.epsgpage)
+            self.parent.bboxpage.SetPrev(self.parent.datumpage)
         elif event.GetId() == self.radio6.GetId():
-            self.SetNext(self.pages[3])
+            self.SetNext(self.parent.filepage)
             self.cs = "file"
 
-
     def OnWizPageChange(self,event=None):
+        if self.cs == "xy":
+            self.parent.bboxpage.cstate.Enable(False)
+        else:
+            self.parent.bboxpage.cstate.Enable(True)
         pass
 
 
 class DatabasePage(TitledPage):
-    def __init__(self, parent, grassdatabase):
-        TitledPage.__init__(self, parent, "Define GRASS database and new Location Name")
+    def __init__(self, wizard, parent, grassdatabase):
+        TitledPage.__init__(self, wizard, "Define GRASS database and new Location Name")
 
         # buttons
         self.bbrowse = self.MakeButton("Browse ...")
@@ -537,45 +757,38 @@ class DatabasePage(TitledPage):
 class GWizard:
     def __init__(self, parent, grassdatabase):
         wizard = wiz.Wizard(parent, -1, "Define new Location")
-        allpages = []
-        startpage = DatabasePage(wizard, grassdatabase)
-        csystemspage = CoordinateSystemPage(wizard,allpages)
-        epsgpage = EPSGPage(wizard)
-        bboxpage = BBoxPage(wizard)
-        filepage = GeoreferencedFilePage(wizard)
-        projpage = ProjectionsPage(wizard)
-        sumpage = SummaryPage(wizard, allpages)
+        self.startpage = DatabasePage(wizard, self, grassdatabase)
+        self.csystemspage = CoordinateSystemPage(wizard, self)
+        self.epsgpage = EPSGPage(wizard, self)
+        self.bboxpage = BBoxPage(wizard, self)
+        self.filepage = GeoreferencedFilePage(wizard, self)
+        self.projpage = ProjectionsPage(wizard, self)
+        self.sumpage = SummaryPage(wizard, self)
+        self.datumpage = DatumPage(wizard, self)
         
-        allpages.append(startpage) #0
-        allpages.append(csystemspage)#1
-        allpages.append(epsgpage)#2
-        allpages.append(filepage)#3
-        allpages.append(projpage)#4
-        allpages.append(bboxpage)#5
-        allpages.append(sumpage)#6 -1
-
         # Set the initial order of the pages
-        
-        startpage.SetNext(csystemspage)#0
+        self.startpage.SetNext(self.csystemspage)
 
-        csystemspage.SetPrev(startpage)#1
-        csystemspage.SetNext(bboxpage)
+        self.csystemspage.SetPrev(self.startpage)
+        self.csystemspage.SetNext(self.bboxpage)
 
-        epsgpage.SetNext(bboxpage)#2
-        epsgpage.SetPrev(csystemspage)
+        self.epsgpage.SetNext(self.datumpage)
+        self.epsgpage.SetPrev(self.csystemspage)
 
-        projpage.SetNext(bboxpage)#2
-        projpage.SetPrev(csystemspage)
+        self.projpage.SetNext(self.datumpage)
+        self.projpage.SetPrev(self.csystemspage)
 
-        filepage.SetPrev(csystemspage)#3
+        self.filepage.SetPrev(self.csystemspage)
 
-        bboxpage.SetPrev(csystemspage)#5
-        bboxpage.SetNext(sumpage)
+        self.datumpage.SetNext(self.bboxpage)
 
-        sumpage.SetPrev(bboxpage) #6
+        self.bboxpage.SetPrev(self.csystemspage)
+        self.bboxpage.SetNext(self.sumpage)
 
-        wizard.FitToPage(bboxpage)
-        wizard.RunWizard(startpage)
+        self.sumpage.SetPrev(self.bboxpage) 
+
+        wizard.FitToPage(self.bboxpage)
+        wizard.RunWizard(self.startpage)
         wizard.Destroy()
 
 if __name__ == "__main__":
