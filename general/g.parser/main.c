@@ -1,3 +1,20 @@
+/****************************************************************************
+ *
+ * MODULE:       g.parser
+ * AUTHOR(S):    Glynn Clements <glynn gclements.plus.com> (original contributor)
+ *               Bernhard Reiter <bernhard intevation.de>, 
+ *               Cedric Shock <cedricgrass shockfamily.net>, 
+ *               Hamish Bowman <hamish_nospam yahoo.com>, 
+ *               Paul Kelly <paul-grass stjohnspoint.co.uk>, 
+ *               Radim Blazek <radim.blazek gmail.com>
+ * PURPOSE:      
+ * COPYRIGHT:    (C) 2001-2007 by the GRASS Development Team
+ *
+ *               This program is free software under the GNU General Public
+ *               License (>=v2). Read the file COPYING that comes with GRASS
+ *               for details.
+ *
+ *****************************************************************************/
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
@@ -414,3 +431,6 @@ int main(int argc, char *argv[])
     return 1;
 #endif
 }
+
+
+

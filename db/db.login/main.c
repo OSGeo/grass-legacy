@@ -1,3 +1,16 @@
+/****************************************************************************
+ *
+ * MODULE:       db.login
+ * AUTHOR(S):    Radim Blazek <radim.blazek gmail.com> (original contributor)
+ *               Glynn Clements <glynn gclements.plus.com>, Markus Neteler <neteler itc.it>
+ * PURPOSE:      
+ * COPYRIGHT:    (C) 2004-2006 by the GRASS Development Team
+ *
+ *               This program is free software under the GNU General Public
+ *               License (>=v2). Read the file COPYING that comes with GRASS
+ *               for details.
+ *
+ *****************************************************************************/
 #include <stdio.h>
 #include <stdlib.h>
 #include <unistd.h>
@@ -100,4 +113,7 @@ main(int argc, char *argv[])
 	
     exit(EXIT_SUCCESS);
 }
+
+
+
 

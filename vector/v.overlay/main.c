@@ -1,10 +1,20 @@
-/* ****************************************************************************
+/****************************************************************************
  *
- *  MODULE: v.overlay 
+ * MODULE:       v.overlay
+ * AUTHOR(S):    Radim Blazek <radim.blazek gmail.com> (original contributor)
+ *               Glynn Clements <glynn gclements.plus.com>,
+ *               Hamish Bowman <hamish_nospam yahoo.com>,
+ *               Jachym Cepicky <jachym.cepicky centrum.cz>,
+ *               Markus Neteler <neteler itc.it>,
+ *               Paul Kelly <paul-grass stjohnspoint.co.uk>
+ * PURPOSE:      
+ * COPYRIGHT:    (C) 2003-2007 by the GRASS Development Team
  *
- *  AUTHOR(S): Radim Blazek
- *  
- ******************************************************************************/
+ *               This program is free software under the GNU General Public
+ *               License (>=v2). Read the file COPYING that comes with GRASS
+ *               for details.
+ *
+ *****************************************************************************/
 #include <stdlib.h>
 #include <string.h>
 #include <stdio.h>
@@ -434,4 +444,7 @@ main (int argc, char *argv[])
     G_done_msg("");
     exit (0);
 }
+
+
+
 

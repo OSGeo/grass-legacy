@@ -1,3 +1,19 @@
+/****************************************************************************
+ *
+ * MODULE:       g.ask
+ * AUTHOR(S):    Michael Shapiro CERL (original contributor)
+ *               Markus Neteler <neteler itc.it>,
+ *               Bernhard Reiter <bernhard intevation.de>, 
+ *               Glynn Clements <glynn gclements.plus.com>,
+ *               Jan-Oliver Wagner <jan intevation.de>
+ * PURPOSE:      
+ * COPYRIGHT:    (C) 1999-2006 by the GRASS Development Team
+ *
+ *               This program is free software under the GNU General Public
+ *               License (>=v2). Read the file COPYING that comes with GRASS
+ *               for details.
+ *
+ *****************************************************************************/
 #include <stdio.h>
 #include <string.h>
 #include <stdlib.h>
@@ -67,7 +83,7 @@ int main(int   argc, char *argv[])
 	argc = 2;
     }
     if (G_parser(argc, argv) < 0)
-        exit(-1);
+        exit(EXIT_FAILURE);
 
     prompt = opt2->answer;
 
@@ -76,7 +92,7 @@ int main(int   argc, char *argv[])
     {
     	fprintf (stderr, "%s - ", argv[0]);
     	perror (opt5->answer);
-    	exit(1);
+    	exit(EXIT_FAILURE);
     }
   
     if (strcmp (opt1->answer, "old") == 0)
@@ -106,5 +122,8 @@ int main(int   argc, char *argv[])
     }
 
     fclose (fd);
-    exit(0);
+    exit(EXIT_SUCCESS);
 }
+
+
+
