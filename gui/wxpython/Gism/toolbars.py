@@ -145,12 +145,12 @@ class DigitToolbar:
             layers.append( layer.name)
         return layers
 
-class pokus:
-    def __init__(self):
-        global icons
-        print icons
-
-if __name__=="__main__":
-    p = pokus()
+#class pokus:
+#    def __init__(self):
+#        global icons
+#        print icons
+#
+#if __name__=="__main__":
+#    p = pokus()
     
 
