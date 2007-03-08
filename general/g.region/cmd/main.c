@@ -89,6 +89,11 @@ int main (int argc, char *argv[])
 	flag.dflt->description = _("Set from default region");
 	flag.dflt->guisection  = _("Existing");
 
+	flag.savedefault = G_define_flag();
+	flag.savedefault->key         = 's';
+	flag.savedefault->description = _("Save as default region");
+	flag.savedefault->guisection  = _("Existing");
+
 	flag.print = G_define_flag();
 	flag.print->key         = 'p';
 	flag.print->description = _("Print the current region");
@@ -119,11 +124,6 @@ int main (int argc, char *argv[])
 	flag.z->key         = '3';
 	flag.z->description = _("Print also 3D settings");
 	flag.z->guisection  = _("Print");
-
-	flag.savedefault = G_define_flag();
-	flag.savedefault->key         = 's';
-	flag.savedefault->description = _("Save as default region");
-	flag.savedefault->guisection  = _("Existing");
 
 	flag.bbox = G_define_flag();
 	flag.bbox->key         = 'b';
