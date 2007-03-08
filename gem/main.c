@@ -24,23 +24,24 @@
 
 /* TODO:
 				
-	for 1.0:
-		
+	for 1.04:			
 	
 	EASY STUFF:
+	
+	
+	- tried to install GeneralStatistics w/o first installing RasterTools or anything else: attempts to install, fails because
+	  of missing raster tools headers! Even though line 379 in reg_deps.c should check for this case !!!
+	
 	- include $GISBASE/lib in linker path for compilation of extensions [NOT FIXED: see lines preceeding INSTALL action case: 693
 										-L is added to command line, but problems still exist]
 		MAYBE EXPORT LD_LIBRARY_PATH ??? (only add $GISBASE/lib if it does not already exist)
 		
-	- finish skeleton files: include necessary make stuff for most popular architectures
-	- make sure that no unnecessary stuff is installed in the top-level Makefile section
-	  for real-install
-	- lots of files in the make system still output to /dev/null (cygwin) !!!
-	- make install action to copy executable GEM to /usr/local or wherever grass61
-	  script gets installed to
-	- all files installed by GEM and the Makefile sections referring to GEM are chown'd root. Can that be a problem?
+	- version number in HTML documentation index seems to not get updated when installing a newer version of an extension
+	
+	- remember to update version number in globals.h
 		
-	for 1.2 (GRASS 6.2):
+		
+	for 1.2 (GRASS 6.4 ?):
 	- make GRASS store its ./configure command line options in a file in the GISBASE/etc directory, so that
 	  it will be possible for GEM to automatically configure extensions according to the system setup
 	  [this means that configure file needs to be kept in sync with GEM; --configure option can be used
@@ -73,7 +74,7 @@
   NEED HELP
     - GRASS' make install installs all files BENEATH top level dir with UID
 	  set to benni !!! Is this intentional?
-	- provide gem61 as link in /usr/local/bin as part of grass 61 base install
+	- provide gem61 as link in /usr/local/bin as part of grass 6.1 base install
 	- description.html should not contain </body> or </html> as Rules.Make seems
 	  to append those ?
 	- source install copies files COPYING README REQUIREMENTS.html to somewhere (but where?)
@@ -129,18 +130,18 @@
   	- remove cva, install again: WARNING: list item 'cva' exists in index.html (?)
 	- superfluous warning upon uninstall of extension w/o "entries-gisman"
 	- due to bad command line parsing, listing installed extensions only works like this:
-		./gem --grass=/usr/local/grass-6.3.cvs -q
+		./gem --grass=/usr/local/grass-6.1.cvs -q
 	  NOT like this:
-	  	./gem -q --grass=/usr/local/grass-6.3.cvs
+	  	./gem -q --grass=/usr/local/grass-6.1.cvs
 
   
 */
 
+#include <getopt.h>
+#include <fcntl.h>
+
 #define LOCAL
 #include "globals.h"
-
-#include <getopt.h>
-#include <libgen.h>
 
 
 void show_help ( void ) {
@@ -148,13 +149,13 @@ void show_help ( void ) {
 	fprintf (stdout, "Install a GRASS extension from FILE or DIR.\n");
 	fprintf (stdout, "Manage (installed) GRASS extension(s).\n");
 	fprintf (stdout, "\nPossible ACTIONs are:\n");
-	fprintf (stdout, "  -i, --install=\tinstall a GRASS extension\n");
-	fprintf (stdout, "  -u, --uninstall=\tremove an extension from GRASS\n");
-	fprintf (stdout, "  -q, --query=\t\tdisplay information about extension/list installed\n");
-	fprintf (stdout, "  -d, --details=\tdisplay additional details about an extension\n");		
-	fprintf (stdout, "  -c, --clean=\t\tclean extension's source code directories\n");
-	fprintf (stdout, "  -t, --test=\t\tconfigure and compile extension, but don't install\n");
-	fprintf (stdout, "  -l, --license=\tshow copyright information for an extension\n");
+	fprintf (stdout, "  -i, --install=EXT\tinstall a GRASS extension\n");
+	fprintf (stdout, "  -u, --uninstall=EXT\tremove an extension from GRASS\n");
+	fprintf (stdout, "  -q, --query=EXT\tdisplay information about extension/list installed\n");
+	fprintf (stdout, "  -d, --details=EXT\tdisplay additional details about an extension\n");		
+	fprintf (stdout, "  -c, --clean=EXT\tclean extension's source code directories\n");
+	fprintf (stdout, "  -t, --test=EXT\tconfigure and compile extension, but don't install\n");
+	fprintf (stdout, "  -l, --license=EXT\tshow copyright information for an extension\n");
 	fprintf (stdout, "  -r, --restore\t\trecreate HTML links and GIS Manager entries\n");	
 	fprintf (stdout, "  -h, --help\t\tdisplay this help and exit\n");
 	fprintf (stdout, "  -V, --version\t\toutput version information and exit\n\n");	
@@ -163,9 +164,11 @@ void show_help ( void ) {
 	fprintf (stdout, "  -b, --binary=NAME\tno compilation: use binary files for system NAME\n");
 	fprintf (stdout, "  -f, --force\t\tforce action, regardless of dependencies\n");
 	fprintf (stdout, "  -v, --verbose\t\tdisplay detailed status information\n");
-	fprintf (stdout, "  -x, --configure=OPTS\tpass OPTS to configure script\n");
-	fprintf (stdout, "  -s, --skip-config\tskip configure script\n");
-	fprintf (stdout, "  -o, --options\t\toptions to pass to the C compiler/linker\n");
+	fprintf (stdout, "  -s, --skip-config\tskip configure script\n");	
+	fprintf (stdout, "  -x, --config-opts=OPTS\tpass OPTS to configure script\n");
+	fprintf (stdout, "  -o, --options=OPTS\toptions to pass to the C compiler/linker\n");
+	fprintf (stdout, "  -C, --config-cmd=CMD\tDefine custom 'configure' command (default=configure)\n");	
+	fprintf (stdout, "  -m, --make-cmd=CMD\tDefine custom 'make' command (default=make)\n");	
 	fprintf (stdout, "\nWhen run from within a GRASS session, locations of libs, header files\n");
 	fprintf (stdout, "and installation target dir will be assumed to match those of the active\n");
 	fprintf (stdout, "GRASS version. ");
@@ -176,8 +179,8 @@ void show_help ( void ) {
 	fprintf (stdout, "be installed instead using the -b option. ");
 	fprintf (stdout, "For installation from source code, a C compiler and make tools are needed.\n");
 	fprintf (stdout, "\nExample:\n");
-	fprintf (stdout, "\tgem -b macosx --grass=/usr/local/grass-6.2.0 -i myExtension\n");
-	fprintf (stdout, "Installs the MacOS X binaries for 'myExtension' in /usr/local/grass-6.2.0.\n");
+	fprintf (stdout, "\tgem -b macosx --grass=/usr/local/grass-6.0.0 -i myExtension\n");
+	fprintf (stdout, "Installs the MacOS X binaries for 'myExtension' in /usr/local/grass-6.0.0.\n");
 	exit (0);	
 }
 
@@ -314,7 +317,10 @@ int main (int argc, char *argv[]) {
 		{ "force", 0, NULL, 'f' },
 		{ "verbose", 0, NULL, 'v' },
 		{ "skip-config", 0, NULL, 's' },
-		{ "configure", 1, NULL, 'x' },		
+		{ "config-opts", 1, NULL, 'x' },		
+
+		{ "config-cmd", 1, NULL, 'C' },		
+		{ "make-cmd", 1, NULL, 'm' },		
 		
 		{ 0, 0, 0, 0 }
 	};
@@ -349,6 +355,9 @@ int main (int argc, char *argv[]) {
 	
 	strcpy (CONFIG_OPTS,"");
 	
+	strcpy (CONFIG_CMD,"configure");
+	strcpy (MAKE_CMD,"make");
+	
 	getcwd ( CWD, MAXSTR );	
 	
 	/* reset terminal colors */
@@ -374,7 +383,7 @@ int main (int argc, char *argv[]) {
 	gisbase = NULL;
 	
 	opterr = 0;
-	option = getopt_long ( argc, argv, ":i:u:q:d:c:t:l:o:x:rhVg:b:fvs", long_options, &option_index );
+	option = getopt_long ( argc, argv, ":i:u:q:d:c:C:t:l:m:o:x:rhVg:b:fvs", long_options, &option_index );
 	while ( option  != -1 ) {
 											
 		if ( option == '?' ) {
@@ -485,7 +494,14 @@ int main (int argc, char *argv[]) {
 			*/			
 			strcat (coptions, optarg);
 		}
-		
+		/* define a custom configure command */
+		if ( option == 'C' ) {
+			strcpy ( CONFIG_CMD, optarg );
+		}
+		/* define a custom make command */
+		if ( option == 'm' ) {
+			strcpy ( MAKE_CMD, optarg );
+		}						
 		/* get next option from command line */
 		option = getopt_long ( argc, argv, ":i:u:q:d:c:t:l:o:x:rhVg:b:fvs", long_options, &option_index );
 	}
@@ -499,17 +515,9 @@ int main (int argc, char *argv[]) {
 	}
 	
 	/* export compiler options for use by Makefiles */
-	setenv ("GEM_C_OPTS",coptions,1);
-	
-	if ( valid > 0 ) {
-		/* export all relevant env vars for the post script */
-		if ( gisbase == NULL )	 {
-			/* try to read from GRASS environment */
-			gisbase = getenv ("GISBASE");
-		}
-		run_post ( action, bins, gisbase );
-	}
-	
+	sprintf ( GEM_C_OPTS, "GEM_C_OPTS=%s", coptions );
+	putenv ( GEM_C_OPTS );
+		
 	/* these actions can be done without any extension checking */		
 	if ( action == HELP ) {
 		/* show usage info and exit */
@@ -523,13 +531,12 @@ int main (int argc, char *argv[]) {
 		exit (0);
 	}
 
-	
-
 	if (!VERBOSE) {
 		/* set temp file to pipe output to for silent operation */
 		strcpy (TMP_NULL,"/tmp/grass.extension.log.XXXXXX"); /* TMP_NULL is a global variable */
 		
-		fd = mkstemp ( TMP_NULL );
+		mktemp ( TMP_NULL );
+		fd = open ( TMP_NULL, O_CREAT );
 		if ( fd == -1 ) {
 			print_error ( ERR_TMPFILE, "could not create temp file: %s", strerror (errno));
 			exit (ERR_TMPFILE);			
@@ -554,7 +561,7 @@ int main (int argc, char *argv[]) {
 			fprintf (stdout, "Path to GRASS is %s.\n", gisbase);
 		}
 
-		restore ( gisbase );
+		restore ( gisbase, grass_version );
 		exit (0);
 	}
 	
@@ -649,6 +656,16 @@ int main (int argc, char *argv[]) {
 	} else {		
 		get_package_name ( package, pkg_short_name );
 	}		
+
+	/* export relevant VARS for use by post script */
+	if ( valid > 0 ) {
+		/* export all relevant env vars for the post script */
+		if ( gisbase == NULL )	 {
+			/* try to read from GRASS environment */
+			gisbase = getenv ("GISBASE");
+		}
+		run_post ( package, action, bins, gisbase );
+	}
 	
 	if ( VERBOSE ) {
 		fprintf (stdout, "Extension will be installed from '%s'\n", package);
@@ -753,7 +770,7 @@ int main (int argc, char *argv[]) {
 	}	
 
 	if ( action == UNINSTALL ) {
-		uninstall ( package, pkg_short_name, gisbase );
+		uninstall ( package, pkg_short_name, gisbase, grass_version );
 		exit (0);
 	}	
 

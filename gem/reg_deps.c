@@ -89,7 +89,6 @@ void register_extension ( char *gisbase, char *bins, char *pkg_short_name,
 	int must_register;
 	int copy_thru;
 	int ext_exists;
-	int fd;
 	FILE *f_in, *f_out;
 	
 	char short_name [MAXSTR];
@@ -116,15 +115,15 @@ void register_extension ( char *gisbase, char *bins, char *pkg_short_name,
 	if ( db_exists ) {
 		/* create a temporary extensions.db file for write access */
 		strcpy (TMPDB, "/tmp/grass.extensions.db.XXXXXX"); /* TMPDB is a global variable */
-		fd = mkstemp ( TMPDB );
-		if ( fd < 0 ) {
-			close (fd);
+		mktemp ( TMPDB );
+
+		f_out = fopen ( TMPDB, "w+");		
+		if ( f_out == NULL ) {
 			print_error ( ERR_REGISTER_EXT, "could not create temp file '%s': %s\n \
 							Make sure that directory /tmp exists on your system and you have write permission.\n",
 							TMPDB, strerror (errno));
-		}
-				
-		f_out = fdopen ( fd, "w+");
+		}				
+
 		atexit ( &exit_db ); /* now need to register an at exit func to remove tmpdb automatically! */		
 
 		/* count number of extensions.db registry entries */
@@ -190,20 +189,20 @@ void register_extension ( char *gisbase, char *bins, char *pkg_short_name,
 	if ( (n_lines == 0) || (!db_exists) ) {
 		/* extensions.db file does not yet exist or is empty: just create a new one */
 		strcpy (TMPDB, "/tmp/grass.extensions.db.XXXXXX"); /* tmpdir is a global variable */
-		fd = mkstemp ( TMPDB );	
-		if ( fd < 0 ) {
-			close ( fd );
+		mktemp ( TMPDB );	
+
+		f_out = fopen ( TMPDB, "w+");		
+		if ( f_out == NULL ) {
 			print_error ( ERR_REGISTER_EXT, "could not create temp db '%s': %s\n \
 					Make sure that directory /tmp exists on your system and you have write permission.\n",
 					file, strerror (errno));
 		}		
 		atexit ( &exit_db ); /* now need to register an at exit func to remove tmpdb automatically! */
-		f_out = fdopen ( fd, "w+");
+
 		/* register brand new extension */
 		sprintf (deps, "%s", depstr ( pkg_short_name, gisbase ));
 		fprintf ( f_out, "%s\t%i.%i.%i\t%s\t%s\n", pkg_short_name, pkg_major, pkg_minor, pkg_revision, bins, deps );
 		fclose (f_out);
-		close (fd);		
 		return;
 	}		
 }
@@ -218,7 +217,6 @@ void deregister_extension ( char *package, char *pkg_short_name, char *gisbase )
 	int error;
 	int db_exists;
 	int copy_thru;
-	int fd;
 	FILE *f_in, *f_out;
 	int found_ext;
 	
@@ -252,15 +250,15 @@ void deregister_extension ( char *package, char *pkg_short_name, char *gisbase )
 		db_exists = 0;
 		/* create a temporary extensions.db file for write access */
 		strcpy (TMPDB, "/tmp/grass.extensions.db.XXXXXX"); /* tmpdir is a global variable */
-		fd = mkstemp ( TMPDB );
-		if ( ( fd < 0 ) && ( !FORCE ) ) {
-			close ( fd );
+		mktemp ( TMPDB );
+
+		f_out = fopen ( TMPDB, "w+");		
+		if ( ( f_out == NULL ) && ( !FORCE ) ) {
 			print_error ( ERR_DEREGISTER_EXT, "could not create temp db '%s': %s\n \
 							Make sure that directory /tmp exists on your system and you have write permission.\n",
 							file, strerror (errno));					
 		} else {
 			db_exists = 1;
-			f_out = fdopen ( fd, "w+");
 			atexit ( &exit_db ); /* now need to register an at exit func to remove tmpdb automatically! */							
 		}				
 	}
@@ -297,7 +295,6 @@ void deregister_extension ( char *package, char *pkg_short_name, char *gisbase )
 		/* mind the right sequence for closing these! */
 		fclose ( f_in );
 		fclose ( f_out );
-		close ( fd );			
 	}				
 }
 

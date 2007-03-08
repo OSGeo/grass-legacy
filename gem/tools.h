@@ -24,6 +24,10 @@
 #ifndef _TOOLS_H
 #define _TOOLS_H
 
+char *basename ( char *path );
+
+void mkdir_s ( char *pathname, char *mode );
+
 int chop ( char* string );
 
 int insert_str ( char *str, int pos, char **strarr );

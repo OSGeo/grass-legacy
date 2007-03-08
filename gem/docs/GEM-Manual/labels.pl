@@ -86,7 +86,7 @@ $external_latex_labels{$key} = q|4.2|;
 $noresave{$key} = "$nosave";
 
 $key = q/sub:Developers_-Guidelines/;
-$external_latex_labels{$key} = q|4.11|; 
+$external_latex_labels{$key} = q|4.12|; 
 $noresave{$key} = "$nosave";
 
 $key = q/sub:Mac-OS-X/;

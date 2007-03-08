@@ -24,6 +24,58 @@
 #include "globals.h"
 
 
+/* the following are for cross-platform compatibility. They may already exist
+   on a Linux or BSD system, but maybe absent e.g. in Win32, so we will define
+   them here. */
+
+
+char *basename ( char *path ) {
+	char *copy;
+	char *element;
+	char *backup;
+
+	copy = strdup ( path );
+
+	backup = NULL;
+	element = strtok ( copy, "/" );
+	if ( element == NULL ) {
+		if ( copy != NULL ) {
+			free ( copy );
+		}
+		return ( NULL );
+	}
+
+	backup = strdup ( element);
+	while ( element != NULL ) {
+		element = strtok ( NULL, "/" );	
+		if (( backup != NULL ) && ( element != NULL )) {
+			free ( backup );
+		}
+		if ( ( element != NULL ) && ( element != "" ) ) {
+			backup = strdup ( element);
+		}
+	}
+
+	if ( copy != NULL ) {
+		free ( copy );
+	}
+
+	return ( backup );
+}
+
+
+/* 	A shell version of mkdir () 
+	needed because the MINGW one does no accept unix style MOD specifications.
+	THIS DOES NOT CHECK FOR ERRORS !
+*/
+void mkdir_s ( char *pathname, char *mode ) {
+	char tmp [5000];
+	
+	sprintf ( tmp, "mkdir %s --mode=%s -p", pathname, mode );
+	system ( tmp );
+	
+}
+
 /* 
 	Removes all dangling white-spaces and EOL chars from the end of a string.
 	Returns total number of chopped-off characters.
@@ -488,19 +540,18 @@ void dump_plain ( char *file, char *tmpfile ) {
 	char tmp [MAXSTR];
 	FILE *f_in;
 	FILE *f_out;
-	int fd;
 	
 	/* create a temporary menu.tcl file for write access */
 	strcpy (tmpfile, "/tmp/grass.extensions.db.XXXXXX"); /* TMP_GISMAN is a global variable */
-	fd = mkstemp ( tmpfile );
-	if ( fd < 0 ) {
-		close (fd);
+	mktemp ( tmpfile );
+				
+	f_out = fopen ( tmpfile, "w+");
+	if ( f_out == NULL ) {
 		print_error ( ERR_DUMP_PLAIN_TXT, "could not create temp file '%s': %s\n \
 		Make sure that directory /tmp exists on your system and you have write permission.\n", 
 		tmpfile, strerror (errno));
-	}
-				
-	f_out = fdopen ( fd, "w+");
+	}	
+	
 	atexit ( &exit_db ); /* now need to register an at exit func to remove tmpfile automatically! */	
 
 	f_in = fopen (file, "r");
@@ -510,7 +561,6 @@ void dump_plain ( char *file, char *tmpfile ) {
 	
 	fclose (f_in);
 	fclose ( f_out );
-	close ( fd );	
 }
 
 
@@ -527,15 +577,15 @@ void dump_html ( char *file, char *tmpfile ) {
 	
 	/* create a temporary menu.tcl file for write access */
 	strcpy (tmpfile, "/tmp/grass.extensions.db.XXXXXX"); /* TMP_GISMAN is a global variable */
-	fd = mkstemp ( tmpfile );
-	if ( fd < 0 ) {
-		close (fd);
-		print_error ( ERR_DUMP_HTML, "could not create temp file '%s': %s\n \
-		Make sure that directory /tmp exists on your system and you have write permission.\n", 
-		tmpfile, strerror (errno));		
-	}
+	mktemp ( tmpfile );
 				
-	f_out = fdopen ( fd, "w+");
+	f_out = fopen ( tmpfile, "w+");
+	if ( f_out == NULL ) {
+		print_error ( ERR_DUMP_PLAIN_TXT, "could not create temp file '%s': %s\n \
+		Make sure that directory /tmp exists on your system and you have write permission.\n", 
+		tmpfile, strerror (errno));
+	}	
+
 	atexit ( &exit_db ); /* now need to register an at exit func to remove tmpfile automatically! */	
 
 	f_in = fopen (file, "r");
@@ -706,15 +756,12 @@ void wget_extension ( char *url ) {
 
 /*
 	This function checks if there is write access to the GRASS directory.
-	If not, su is called and 'cmd' is executed as the owner of 'gisbase'.
+	If not, it aborts with an error message.
 	Otherwise, 'cmd' is simply executed as currently running user.
 */
 void su ( char *gisbase, char *cmd ) {
 	char tmpfile [MAXSTR];
-	char str [MAXSTR];
 	int error;
-	struct stat buf;
-	struct passwd *user;
 	static unsigned long next;
 	FILE *f;
 
@@ -726,21 +773,8 @@ void su ( char *gisbase, char *cmd ) {
 	
 	f = fopen ( tmpfile, "w+" );
 	
-	if ( errno == EACCES ) { /* permission denied */	
-		stat ( gisbase, &buf );
-		user = getpwuid ( buf.st_uid );
-		fprintf (stdout, "\nAction requires write access to '%s'.\n", gisbase);
-		fprintf (stderr, "Please enter password for user '%s' below.\n", user->pw_name);
-	
-		sprintf (str, "su -c '%s'", cmd);
-		
-		error = system ( str );
-		if ( error == -1 ) {
-			print_error (ERR_MISSING_CMD, "could not run 'su' command. Is it installed?\n");
-		}
-		if ( error > 0 ) {
-			print_error ( ERR_SU, "running command '%s' produced at least one error (%i).\n", cmd, error);
-		}
+	if ( errno == EACCES ) { /* permission denied */
+		print_error ( ERR_INSTALL_EXT, "You don't have write access to your local GRASS installation.\nPlease consult your system administrator.\n" );
 	} else {
 		remove ( tmpfile );
 		fclose ( f );		

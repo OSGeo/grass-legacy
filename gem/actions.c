@@ -21,15 +21,16 @@
  *  Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
  */
 
-#include <libgen.h>
 #include "globals.h"
+#include <fcntl.h>
+
  
 void check_extension ( char *package, char *name, int *major, int *minor, int *revision ) {
 	int error;
 	char tmp [MAXSTR] = "";
 	FILE *f;
 
-	fprintf (stdout, "Checking extension...");
+	fprintf (stdout, "Checking extension ..." );
 
 	sprintf (tmp, "%s", package );
 	error = chdir ( tmp );
@@ -87,7 +88,8 @@ void unpack_extension ( char *package ) {
 	
 	strcpy (TMPDIR,"/tmp/grass.extension.XXXXXX"); /* tmpdir is a global variable */
 		
-	fd = mkstemp ( TMPDIR );
+	mktemp ( TMPDIR );
+	fd = open ( TMPDIR, O_CREAT );
 	if ( fd == -1 ) {
 		print_error ( ERR_UNPACK_EXT, "could not create temp directory name: %s", strerror (errno));
 		exit (ERR_UNPACK_EXT);			
@@ -100,12 +102,7 @@ void unpack_extension ( char *package ) {
 	/* remove tmp file and create a dir with the same name */
 	close ( fd );
 	remove ( TMPDIR );	
-	error = mkdir ( TMPDIR, 0700 );
-	if ( error == -1 ) {
-		print_error ( ERR_UNPACK_EXT, "could not create temp dir to extract extension: %s\n",
-				strerror (errno)); 
-		exit (ERR_UNPACK_EXT);			
-	}
+	mkdir_s ( TMPDIR, "0700" );
 
 	atexit ( &exit_tmp ); /* now need to register an at exit func to remove tmpdir automatically! */
 
@@ -239,6 +236,12 @@ void source_install ( char *package, char *gisbase, char *pkg_short_name,
 	int error;
 	struct stat buf;
 	FILE *f;		
+	
+	char *verstr;
+	char *grass_major;
+	char *grass_minor;
+	char *grass_revision;
+	int major, minor, revision;
 
 	/* check for valid install directory */
 	error = stat ( gisbase, &buf );
@@ -248,15 +251,30 @@ void source_install ( char *package, char *gisbase, char *pkg_short_name,
 	
 	/* export environment variables for GRASS 6 build system */
 	/* target dir for installation */
-	setenv ("GINSTALL_DST", gisbase, 1);		
+	sprintf ( GINSTALL_DST, "GINSTALL_DST=%s", gisbase );
+	putenv ( GINSTALL_DST );	
 	/*external include path */
 	sprintf (tmp, "%s/include", gisbase);		
-	setenv ("GINSTALL_INC", tmp, 1);
+	sprintf ( GINSTALL_INC, "GINSTALL_INC=%s", tmp );
+	putenv ( GINSTALL_INC );
 	/* external linker path */
-	sprintf (tmp, "%s/lib", gisbase);		
-	setenv ("GINSTALL_LIB", tmp, 1);
+	sprintf (tmp, "%s/lib", gisbase);	
+	sprintf ( GINSTALL_LIB, "GINSTALL_LIB=%s", tmp );	
+	putenv ( GINSTALL_LIB );
 	/* path to install files */
-	setenv ("GEM_GRASS_DIR", gisbase, 1);
+	sprintf ( GEM_GRASS_DIR, "GEM_GRASS_DIR=%s", gisbase );	
+	putenv ( GEM_GRASS_DIR );
+
+	/* extract GRASS major and minor version numbers */
+	verstr = strdup ( grass_version );	
+	grass_major = strtok ( verstr, "." );
+	grass_minor = strtok (NULL, "." );
+	grass_revision = strtok (NULL, "." );	
+	major = strtol ( grass_major, NULL, 10 );
+	minor = strtol ( grass_minor, NULL, 10 );
+	revision = strtol ( grass_revision, NULL, 10 );
+	free (verstr);
+	
 	
 	/* now need to register an exit function that unsets these env vars on termination! */
 	atexit ( &exit_tmp );
@@ -271,11 +289,11 @@ void source_install ( char *package, char *gisbase, char *pkg_short_name,
 	if ( !SKIP_CFG ) {
 		if ( VERBOSE ) {
 			fprintf (stdout, "Running configure script:\n");
-			sprintf (sysstr, "sh configure %s", CONFIG_OPTS );	
+			sprintf (sysstr, "sh %s %s", CONFIG_CMD, CONFIG_OPTS );	
 			error = system (sysstr);
 		} else {
 			fprintf (stdout, "Configuring...");
-			sprintf (sysstr, "sh configure %s --quiet &> %s", CONFIG_OPTS, TMP_NULL ); 
+			sprintf (sysstr, "sh %s %s --quiet &> %s", CONFIG_CMD, CONFIG_OPTS, TMP_NULL ); 
 			error = system (sysstr);
 		}
 		if ( error == -1 ) {
@@ -290,20 +308,27 @@ void source_install ( char *package, char *gisbase, char *pkg_short_name,
 
 	/* export environment variables for generation of HTML documentation directories */
 	/* by include/Make/Rules.make */
-	setenv ("GEM_EXT_NAME", pkg_short_name, 1);	
+	sprintf ( GEM_EXT_NAME, "GEM_EXT_NAME=%s", pkg_short_name );
+	putenv ( GEM_EXT_NAME );
 	sprintf (tmp, "%i.%i.%i", pkg_major, pkg_minor, pkg_revision);
-	setenv ("GEM_EXT_VERSION", tmp, 1);
+	sprintf ( GEM_EXT_VERSION, "GEM_EXT_VERSION=%s", tmp );
+	putenv ( GEM_EXT_VERSION );	
 	/* dump extension info text into two plain ASCII files for inclusion in HTML man page */
-	dump_plain ( "../description", TMP_DESCR );
-	dump_plain ( "../info", TMP_INFO );
-	dump_plain ( "../depends", TMP_DEPS );
-	dump_plain ( "../bugs", TMP_BUGS );
-	dump_plain ( "../authors", TMP_AUTHORS );
-	setenv ("GEM_EXT_DESCR", TMP_DESCR, 1);
-	setenv ("GEM_EXT_INFO", TMP_INFO, 1);
-	setenv ("GEM_EXT_DEPS", TMP_DEPS, 1);
-	setenv ("GEM_EXT_BUGS", TMP_BUGS, 1);
-	setenv ("GEM_EXT_AUTHORS", TMP_AUTHORS, 1);		
+	dump_html ( "../description", TMP_DESCR );
+	dump_html ( "../info", TMP_INFO );
+	dump_html ( "../depends", TMP_DEPS );
+	dump_html ( "../bugs", TMP_BUGS );
+	dump_html ( "../authors", TMP_AUTHORS );
+	sprintf ( GEM_EXT_DESCR, "GEM_EXT_DESCR=%s", TMP_DESCR );
+	putenv ( GEM_EXT_DESCR );	
+	sprintf ( GEM_EXT_INFO, "GEM_EXT_INFO=%s", TMP_INFO );
+	putenv ( GEM_EXT_INFO );
+	sprintf ( GEM_EXT_DEPS, "GEM_EXT_DEPS=%s", TMP_DEPS );
+	putenv ( GEM_EXT_DEPS );		
+	sprintf ( GEM_EXT_BUGS, "GEM_EXT_BUGS=%s", TMP_BUGS );
+	putenv ( GEM_EXT_BUGS );	
+	sprintf ( GEM_EXT_AUTHORS, "GEM_EXT_AUTHORS=%s", TMP_AUTHORS );
+	putenv ( GEM_EXT_AUTHORS );	
 	
 	/* now need to register an exit function that unsets these env vars on termination! */
 	atexit ( &exit_tmp );	
@@ -313,16 +338,17 @@ void source_install ( char *package, char *gisbase, char *pkg_short_name,
 	
 	/* now execute Makefile in top-level directory */
 	if ( VERBOSE ) {		
-		fprintf (stdout, "Running 'make':\n");	
-		error = system ("make -f Makefile");
+		fprintf (stdout, "Running '%s':\n", MAKE_CMD);	
+		sprintf ( sysstr, "%s -f Makefile", MAKE_CMD);
+		error = system ( sysstr );
 	} else {
 		fprintf (stdout, "Compiling...");
-		sprintf ( sysstr, "make -f Makefile &> %s", TMP_NULL );
+		sprintf ( sysstr, "%s -f Makefile &> %s", MAKE_CMD, TMP_NULL );
 		error = system ( sysstr );		
 	}
 	if ( error == -1 ) {
 		if ( !VERBOSE ) {
-			print_error ( ERR_MISSING_CMD, "could not run 'make' do you have make tools installed?\n");
+			print_error ( ERR_MISSING_CMD, "could not run '%s' do you have make tools installed?\n", MAKE_CMD);
 		}
 	}
 	if ( error > 0 ) {
@@ -354,7 +380,10 @@ void source_install ( char *package, char *gisbase, char *pkg_short_name,
 	
 	check_dependencies ( package, gisbase, grass_version );	
 	
-	register_entries_gisman ( pkg_short_name, gisbase );	
+	/* starting with GRASS 6.1.cvs, d.m uses the same menu system as gis.m */
+	if ( (major == 6) && (minor < 1) ) {
+		register_entries_gisman ( pkg_short_name, gisbase );
+	}
 	
 	register_entries_gisman2 ( pkg_short_name, gisbase );
 	
@@ -362,19 +391,23 @@ void source_install ( char *package, char *gisbase, char *pkg_short_name,
 
 	/* create a shell command for the make install process and installation of extension.db */
 	if ( VERBOSE ) {
-		fprintf (stdout, "Running 'make install':\n");
-		sprintf ( install_cmd, "make -f Makefile install ; \
+		fprintf (stdout, "Running '%s install':\n", MAKE_CMD);
+		sprintf ( install_cmd, "%s -f Makefile install ; \
 					cp -vf %s %s/etc/extensions.db ; chmod -v a+r %s/etc/extensions.db ;",
-					TMPDB, gisbase, gisbase );
+					MAKE_CMD, TMPDB, gisbase, gisbase );
 	} else {
-		sprintf ( install_cmd, "make -f Makefile -s install &> %s ; \
+		sprintf ( install_cmd, "%s -f Makefile -s install &> %s ; \
 					cp -f %s %s/etc/extensions.db &> %s ; chmod a+r %s/etc/extensions.db &> %s ;",
-					TMP_NULL, TMPDB, gisbase, TMP_NULL, gisbase, TMP_NULL );
+					MAKE_CMD, TMP_NULL, TMPDB, gisbase, TMP_NULL, gisbase, TMP_NULL );
 	}	
 
 	
 	/* command to run post action script */
-	sprintf ( post_cmd, "sh ../post" );	
+	if ( VERBOSE ) {
+		sprintf ( post_cmd, "sh ../post" );	
+	} else {
+		sprintf ( post_cmd, "sh ../post &> %s", TMP_NULL );
+	}
 	
 	/* make install */	
 	sprintf ( tmp, "%s %s %s %s %s %s", install_cmd, UNINSTALL_CMD, GISMAN_CMD, GISMAN2_CMD, HTML_CMD, post_cmd );
@@ -398,23 +431,44 @@ void bin_install ( char *package, char *gisbase, char *bins, char *pkg_short_nam
 	struct stat buf;
 	FILE *f;
 
+	char *verstr;
+	char *grass_major;
+	char *grass_minor;
+	char *grass_revision;
+	int major, minor, revision;
+
 	/* check for valid install directory */
 	error = stat ( gisbase, &buf );
 	if ( error < 0 ) {
 		print_error ( ERR_INSTALL_EXT, "installation directory invalid: %s\n", strerror (errno));
 	}
-	
+		
 	/* export environment variables for GRASS 6 build system */
 	/* target dir for installation */
-	setenv ("GINSTALL_DST", gisbase, 1);		
+	sprintf ( GINSTALL_DST, "GINSTALL_DST=%s", gisbase );
+	putenv ( GINSTALL_DST );	
 	/*external include path */
 	sprintf (tmp, "%s/include", gisbase);		
-	setenv ("GINSTALL_INC", tmp, 1);
+	sprintf ( GINSTALL_INC, "GINSTALL_INC=%s", tmp );
+	putenv ( GINSTALL_INC );
 	/* external linker path */
-	sprintf (tmp, "%s/lib", gisbase);		
-	setenv ("GINSTALL_LIB", tmp, 1);
+	sprintf (tmp, "%s/lib", gisbase);	
+	sprintf ( GINSTALL_LIB, "GINSTALL_LIB=%s", tmp );	
+	putenv ( GINSTALL_LIB );
 	/* path to install files */
-	setenv ("GEM_GRASS_DIR", gisbase, 1);
+	sprintf ( GEM_GRASS_DIR, "GEM_GRASS_DIR=%s", gisbase );	
+	putenv ( GEM_GRASS_DIR );
+
+	/* extract GRASS major and minor version numbers */
+	verstr = strdup ( grass_version );	
+	grass_major = strtok ( verstr, "." );
+	grass_minor = strtok (NULL, "." );
+	grass_revision = strtok (NULL, "." );	
+	major = strtol ( grass_major, NULL, 10 );
+	minor = strtol ( grass_minor, NULL, 10 );
+	revision = strtol ( grass_revision, NULL, 10 );
+	free (verstr);
+
 	
 	/* now need to register an exit function that unsets these env vars on termination! */
 	atexit ( &exit_tmp );
@@ -428,20 +482,27 @@ void bin_install ( char *package, char *gisbase, char *bins, char *pkg_short_nam
 	
 	/* export environment variables for generation of HTML documentation directories */
 	/* by include/Make/Rules.make */
-	setenv ("GEM_EXT_NAME", pkg_short_name, 1);	
+	sprintf ( GEM_EXT_NAME, "GEM_EXT_NAME=%s", pkg_short_name );
+	putenv ( GEM_EXT_NAME );
 	sprintf (tmp, "%i.%i.%i", pkg_major, pkg_minor, pkg_revision);
-	setenv ("GEM_EXT_VERSION", tmp, 1);
+	sprintf ( GEM_EXT_VERSION, "GEM_EXT_VERSION=%s", tmp );
+	putenv ( GEM_EXT_VERSION );	
 	/* dump extension info text into two plain ASCII files for inclusion in HTML man page */
 	dump_html ( "../description", TMP_DESCR );
 	dump_html ( "../info", TMP_INFO );
 	dump_html ( "../depends", TMP_DEPS );
 	dump_html ( "../bugs", TMP_BUGS );
 	dump_html ( "../authors", TMP_AUTHORS );
-	setenv ("GEM_EXT_DESCR", TMP_DESCR, 1);
-	setenv ("GEM_EXT_INFO", TMP_INFO, 1);
-	setenv ("GEM_EXT_DEPS", TMP_DEPS, 1);
-	setenv ("GEM_EXT_BUGS", TMP_BUGS, 1);
-	setenv ("GEM_EXT_AUTHORS", TMP_AUTHORS, 1);		
+	sprintf ( GEM_EXT_DESCR, "GEM_EXT_DESCR=%s", TMP_DESCR );
+	putenv ( GEM_EXT_DESCR );	
+	sprintf ( GEM_EXT_INFO, "GEM_EXT_INFO=%s", TMP_INFO );
+	putenv ( GEM_EXT_INFO );
+	sprintf ( GEM_EXT_DEPS, "GEM_EXT_DEPS=%s", TMP_DEPS );
+	putenv ( GEM_EXT_DEPS );		
+	sprintf ( GEM_EXT_BUGS, "GEM_EXT_BUGS=%s", TMP_BUGS );
+	putenv ( GEM_EXT_BUGS );	
+	sprintf ( GEM_EXT_AUTHORS, "GEM_EXT_AUTHORS=%s", TMP_AUTHORS );
+	putenv ( GEM_EXT_AUTHORS );	
 
 	/* now need to register an exit function that unsets these env vars on termination! */
 	atexit ( &exit_tmp );	
@@ -470,8 +531,12 @@ void bin_install ( char *package, char *gisbase, char *bins, char *pkg_short_nam
 	
 	register_extension ( gisbase, bins, pkg_short_name, pkg_major, pkg_minor, pkg_revision );		
 	check_dependencies ( package, gisbase, grass_version );	
+
+	/* starting with GRASS 6.1.cvs, d.m uses the same menu system as gis.m */
+	if ( (major == 6) && (minor < 1) ) {
+		register_entries_gisman ( pkg_short_name, gisbase );
+	}
 	
-	register_entries_gisman ( pkg_short_name, gisbase );
 	register_entries_gisman2 ( pkg_short_name, gisbase );	
 	
 	register_html ( pkg_short_name, gisbase, pkg_major, pkg_minor, pkg_revision );
@@ -479,18 +544,22 @@ void bin_install ( char *package, char *gisbase, char *bins, char *pkg_short_nam
 	/* create a shell command for the make install process and installation of extension.db */
 	/* we will use a local copy of the make command for this (extension author has to supply it). */
 	if ( VERBOSE ) {
-		fprintf (stdout, "Running 'make install':\n");
-		sprintf ( install_cmd, "bin/make -f Makefile install ; \
+		fprintf (stdout, "Running '%s install':\n", MAKE_CMD);
+		sprintf ( install_cmd, "bin/%s -f Makefile install ; \
 					cp -vf %s %s/etc/extensions.db ; chmod -v a+r %s/etc/extensions.db ;",
-					TMPDB, gisbase, gisbase );
+					MAKE_CMD, TMPDB, gisbase, gisbase );
 	} else {
-		sprintf ( install_cmd, "bin/make -f Makefile -s install &> %s ; \
+		sprintf ( install_cmd, "bin/%s -f Makefile -s install &> %s ; \
 					cp -f %s %s/etc/extensions.db &> %s ; chmod a+r %s/etc/extensions.db &> %s ;",
-					TMP_NULL, TMPDB, gisbase, TMP_NULL, gisbase, TMP_NULL );
+					MAKE_CMD, TMP_NULL, TMPDB, gisbase, TMP_NULL, gisbase, TMP_NULL );
 	}	
-	
+
 	/* command to run post action script */
-	sprintf ( post_cmd, "sh ../post" );	
+	if ( VERBOSE ) {
+		sprintf ( post_cmd, "sh ../post" );	
+	} else {
+		sprintf ( post_cmd, "sh ../post &> %s", TMP_NULL );
+	}
 	
 	/* make install */	
 	sprintf ( tmp, "%s %s %s %s %s %s", install_cmd, UNINSTALL_CMD, GISMAN_CMD, GISMAN2_CMD, HTML_CMD, post_cmd );
@@ -511,6 +580,12 @@ void test_install ( char *package, char *gisbase, char *pkg_short_name,
 	struct stat buf;
 	FILE *f;
 
+	char *verstr;
+	char *grass_major;
+	char *grass_minor;
+	char *grass_revision;
+	int major, minor, revision;
+
 	/* check for valid install directory */
 	error = stat ( gisbase, &buf );
 	if ( error < 0 ) {
@@ -519,15 +594,29 @@ void test_install ( char *package, char *gisbase, char *pkg_short_name,
 	
 	/* export environment variables for GRASS 6 build system */
 	/* target dir for installation */
-	setenv ("GINSTALL_DST", gisbase, 1);		
+	sprintf ( GINSTALL_DST, "GINSTALL_DST=%s", gisbase );
+	putenv ( GINSTALL_DST );	
 	/*external include path */
 	sprintf (tmp, "%s/include", gisbase);		
-	setenv ("GINSTALL_INC", tmp, 1);
+	sprintf ( GINSTALL_INC, "GINSTALL_INC=%s", tmp );
+	putenv ( GINSTALL_INC );
 	/* external linker path */
-	sprintf (tmp, "%s/lib", gisbase);		
-	setenv ("GINSTALL_LIB", tmp, 1);
+	sprintf (tmp, "%s/lib", gisbase);	
+	sprintf ( GINSTALL_LIB, "GINSTALL_LIB=%s", tmp );	
+	putenv ( GINSTALL_LIB );
 	/* path to install files */
-	setenv ("GEM_GRASS_DIR", gisbase, 1);
+	sprintf ( GEM_GRASS_DIR, "GEM_GRASS_DIR=%s", gisbase );	
+	putenv ( GEM_GRASS_DIR );
+
+	/* extract GRASS major and minor version numbers */
+	verstr = strdup ( grass_version );	
+	grass_major = strtok ( verstr, "." );
+	grass_minor = strtok (NULL, "." );
+	grass_revision = strtok (NULL, "." );	
+	major = strtol ( grass_major, NULL, 10 );
+	minor = strtol ( grass_minor, NULL, 10 );
+	revision = strtol ( grass_revision, NULL, 10 );
+	free (verstr);
 	
 	/* now need to register an exit function that unsets these env vars on termination! */
 	atexit ( &exit_tmp );
@@ -542,11 +631,11 @@ void test_install ( char *package, char *gisbase, char *pkg_short_name,
 	if ( !SKIP_CFG ) {
 		if ( VERBOSE ) {
 			fprintf (stdout, "Running configure script:\n");
-			sprintf (sysstr, "sh configure %s", CONFIG_OPTS );	
+			sprintf (sysstr, "sh %s %s", CONFIG_CMD, CONFIG_OPTS );	
 			error = system (sysstr);
 		} else {
 			fprintf (stdout, "Configuring...");
-			sprintf (sysstr, "sh configure %s --quiet &> %s", CONFIG_OPTS, TMP_NULL ); 
+			sprintf (sysstr, "sh %s %s --quiet &> %s", CONFIG_CMD, CONFIG_OPTS, TMP_NULL ); 
 			error = system (sysstr);
 		}
 		if ( error == -1 ) {
@@ -559,22 +648,29 @@ void test_install ( char *package, char *gisbase, char *pkg_short_name,
 		print_cfg ();
 	}
 
-	/* export environment variable for generation of HTML documentation directories */
+	/* export environment variables for generation of HTML documentation directories */
 	/* by include/Make/Rules.make */
-	setenv ("GEM_EXT_NAME", pkg_short_name, 1);
+	sprintf ( GEM_EXT_NAME, "GEM_EXT_NAME=%s", pkg_short_name );
+	putenv ( GEM_EXT_NAME );
 	sprintf (tmp, "%i.%i.%i", pkg_major, pkg_minor, pkg_revision);
-	setenv ("GEM_EXT_VERSION", tmp, 1);
+	sprintf ( GEM_EXT_VERSION, "GEM_EXT_VERSION=%s", tmp );
+	putenv ( GEM_EXT_VERSION );	
 	/* dump extension info text into two plain ASCII files for inclusion in HTML man page */
-	dump_html ( "../description", TMP_DESCR );
-	dump_html ( "../info", TMP_INFO );
-	dump_html ( "../depends", TMP_DEPS );
-	dump_html ( "../bugs", TMP_BUGS );
-	dump_html ( "../authors", TMP_AUTHORS );
-	setenv ("GEM_EXT_DESCR", TMP_DESCR, 1);
-	setenv ("GEM_EXT_INFO", TMP_INFO, 1);
-	setenv ("GEM_EXT_DEPS", TMP_DEPS, 1);
-	setenv ("GEM_EXT_BUGS", TMP_BUGS, 1);
-	setenv ("GEM_EXT_AUTHORS", TMP_AUTHORS, 1);		
+	dump_plain ( "../description", TMP_DESCR );
+	dump_plain ( "../info", TMP_INFO );
+	dump_plain ( "../depends", TMP_DEPS );
+	dump_plain ( "../bugs", TMP_BUGS );
+	dump_plain ( "../authors", TMP_AUTHORS );
+	sprintf ( GEM_EXT_DESCR, "GEM_EXT_DESCR=%s", TMP_DESCR );
+	putenv ( GEM_EXT_DESCR );	
+	sprintf ( GEM_EXT_INFO, "GEM_EXT_INFO=%s", TMP_INFO );
+	putenv ( GEM_EXT_INFO );		
+	sprintf ( GEM_EXT_DEPS, "GEM_EXT_DEPS=%s", TMP_DEPS );
+	putenv ( GEM_EXT_DEPS );		
+	sprintf ( GEM_EXT_BUGS, "GEM_EXT_BUGS=%s", TMP_BUGS );
+	putenv ( GEM_EXT_BUGS );		
+	sprintf ( GEM_EXT_AUTHORS, "GEM_EXT_AUTHORS=%s", TMP_AUTHORS );
+	putenv ( GEM_EXT_AUTHORS );		
 		
 	/* now need to register an exit function that unsets these env vars on termination! */
 	atexit ( &exit_tmp );
@@ -584,16 +680,18 @@ void test_install ( char *package, char *gisbase, char *pkg_short_name,
 	
 	/* now execute Makefile in top-level directory */
 	if ( VERBOSE ) {		
-		fprintf (stdout, "Running 'make':\n");	
-		error = system ("make -f Makefile");
+		fprintf (stdout, "Running '%s':\n", MAKE_CMD);	
+		sprintf ( sysstr, "%s -f Makefile", MAKE_CMD);
+		error = system ( sysstr );
+		
 	} else {
 		fprintf (stdout, "Compiling...");
-		sprintf ( sysstr, "make -f Makefile &> %s", TMP_NULL );
+		sprintf ( sysstr, "%s -f Makefile &> %s", MAKE_CMD, TMP_NULL );
 		error = system ( sysstr );		
 	}
 	if ( error == -1 ) {
 		if ( !VERBOSE ) {
-			print_error ( ERR_MISSING_CMD, "could not run 'make' do you have make tools installed?\n");
+			print_error ( ERR_MISSING_CMD, "could not run '%s' do you have make tools installed?\n", MAKE_CMD);
 		}
 	}
 	if ( error > 0 ) {
@@ -616,12 +714,16 @@ void test_install ( char *package, char *gisbase, char *pkg_short_name,
 	register_extension ( gisbase, "src", pkg_short_name, pkg_major, pkg_minor, pkg_revision );		
 	check_dependencies ( package, gisbase, grass_version );	
 	
-	register_entries_gisman ( pkg_short_name, gisbase );
+	/* starting with GRASS 6.1.cvs, d.m uses the same menu system as gis.m */
+	if ( (major == 6) && (minor < 1) ) {
+		register_entries_gisman ( pkg_short_name, gisbase );
+	}
+	
 	register_entries_gisman2 ( pkg_short_name, gisbase );	
 	
 	register_html ( pkg_short_name, gisbase, pkg_major, pkg_minor, pkg_revision );
 	
-	fprintf (stdout, "(skipping 'make install')...");
+	fprintf (stdout, "(skipping '%s install')...", MAKE_CMD);
 	
 	print_done();		
 }
@@ -631,17 +733,34 @@ void test_install ( char *package, char *gisbase, char *pkg_short_name,
 	Run the uninstall script that was (hopefully) provided by the packager.
 	Check for unsatisfied dependencies and warn/abort accordingly.
 */ 
-void uninstall ( char *package, char *pkg_short_name, char *gisbase ) {
+void uninstall ( char *package, char *pkg_short_name, char *gisbase, char *grass_version ) {
 	char tmp [MAXSTR];
 	char script [MAXSTR];
 	int error;
 	struct stat buf;
 	int no_script;
+
+	char *verstr;
+	char *grass_major;
+	char *grass_minor;
+	char *grass_revision;
+	int major, minor, revision;
 	
 	fprintf (stdout, "Un-installing...");
 			
-	/* export environment variable for uninstall script */
-	setenv ("UNINSTALL_BASE", gisbase, 1);		
+	/* export environment variables for uninstall script */
+	sprintf ( UNINSTALL_BASE, "UNINSTALL_BASE=%s", gisbase );
+	putenv ( UNINSTALL_BASE );
+	
+	/* extract GRASS major and minor version numbers */
+	verstr = strdup ( grass_version );	
+	grass_major = strtok ( verstr, "." );
+	grass_minor = strtok (NULL, "." );
+	grass_revision = strtok (NULL, "." );	
+	major = strtol ( grass_major, NULL, 10 );
+	minor = strtol ( grass_minor, NULL, 10 );
+	revision = strtol ( grass_revision, NULL, 10 );
+	free (verstr);	
 	
 	/* now need to register an exit function that unsets these env vars on termination! */
 	atexit ( &exit_tmp );
@@ -650,14 +769,17 @@ void uninstall ( char *package, char *pkg_short_name, char *gisbase ) {
 	deregister_extension ( package, pkg_short_name, gisbase );
 	
 	/* deregister menu entries in GIS Manager */
-	error = deregister_entries_gisman ( pkg_short_name, gisbase );	
-	if ( error == -1 ) {
-		print_warning ("GIS Manager menu entries could not be removed.\n");		
-		strcpy ( GISMAN_CMD, "" );
-	}
-	if ( error == 0 ) {
-		print_warning ( "no entries found to remove from GIS Manager.\n");
-		strcpy ( GISMAN_CMD, "" );
+	/* starting with GRASS 6.1.cvs, d.m uses the same menu system as gis.m */
+	if ( (major == 6) && (minor < 1) ) {	
+		error = deregister_entries_gisman ( pkg_short_name, gisbase );	
+		if ( error == -1 ) {
+			print_warning ("GIS Manager menu entries could not be removed.\n");		
+			strcpy ( GISMAN_CMD, "" );
+		}
+		if ( error == 0 ) {
+			print_warning ( "no entries found to remove from GIS Manager.\n");
+			strcpy ( GISMAN_CMD, "" );
+		}
 	}
 
 	/* deregister menu entries in GIS Manager 2 */
@@ -722,16 +844,17 @@ int source_clean ( char *package ) {
 	
 	/* now execute Makefile and 'clean' from top-level directory */
 	if ( VERBOSE ) {
-		fprintf (stdout, "Running 'make clean':\n");	
-		error = system ("make -f Makefile clean");
+		fprintf (stdout, "Running '%s clean':\n", MAKE_CMD);	
+		sprintf ( sysstr, "%s -f Makefile clean", MAKE_CMD);
+		error = system ( sysstr );
 	} else {
 		fprintf (stdout, "Cleaning up...");
-		sprintf (sysstr,"make -f Makefile -s clean &> %s", TMP_NULL);
+		sprintf (sysstr,"%s -f Makefile -s clean &> %s", MAKE_CMD, TMP_NULL);
 		error = system (sysstr);		
 	}
 	
 	if ( error == -1 ) {
-		print_error ( ERR_MISSING_CMD, "could not run 'make clean' do you have make tools installed?\n");
+		print_error ( ERR_MISSING_CMD, "could not run '%s clean' do you have make tools installed?\n", MAKE_CMD);
 	} else {
 		print_done();
 	}
@@ -746,16 +869,36 @@ int source_clean ( char *package ) {
 /* 
 	Restores HTML links and GIS Manager menus, e.g. after an update of GRASS
 */
-void restore ( char *gisbase ) {
+void restore ( char *gisbase, char *grass_version ) {
 	int num_restored;
 	char tmp [MAXSTR];
+
+	char *verstr;
+	char *grass_major;
+	char *grass_minor;
+	char *grass_revision;
+	int major, minor, revision;
+
+
+	/* extract GRASS major and minor version numbers */
+	verstr = strdup ( grass_version );	
+	grass_major = strtok ( verstr, "." );
+	grass_minor = strtok (NULL, "." );
+	grass_revision = strtok (NULL, "." );	
+	major = strtol ( grass_major, NULL, 10 );
+	minor = strtol ( grass_minor, NULL, 10 );
+	revision = strtol ( grass_revision, NULL, 10 );
+	free (verstr);	
 	
 	fprintf (stdout, "Restoring...");
-	
-	num_restored = restore_entries_gisman ( gisbase );	
-	if ( VERBOSE ) {
-		fprintf (stdout, "\nRestored entries for GIS Manager: %i\n", num_restored );
-	}	
+
+	/* starting with GRASS 6.1.cvs, d.m uses the same menu system as gis.m */
+	if ( (major == 6) && (minor < 1) ) {	
+		num_restored = restore_entries_gisman ( gisbase );	
+		if ( VERBOSE ) {
+			fprintf (stdout, "\nRestored entries for GIS Manager: %i\n", num_restored );
+		}	
+	}
 	
 	num_restored = restore_html ( gisbase );	
 	if ( VERBOSE ) {
@@ -819,54 +962,68 @@ void list_extensions ( char *gisbase ) {
 
 
 /*
-	A bit of a misnomer: this does not actually run then post
+	A bit of a misnomer: this does not actually run the post
 	script but it exports all necessary env vars.
 */
-void run_post ( int action, char *bins, char *gisbase ) {
+void run_post ( char *package, int action, char *bins, char *gisbase ) {
 	char tmp [MAXSTR];
+	char tmp2 [MAXSTR];
 	
 	switch (action) {
 		case INSTALL : 
-			setenv ("GEM_ACTION", "INSTALL", 1);
+			sprintf ( GEM_ACTION, "GEM_ACTION=INSTALL" );
 			break;
 		case BIN_INSTALL : 
-			setenv ("GEM_ACTION", "INSTALL", 1);
+			sprintf ( GEM_ACTION, "GEM_ACTION=INSTALL" );
 			break;
 		case QUERY : 
-			setenv ("GEM_ACTION", "QUERY", 1);
+			sprintf ( GEM_ACTION, "GEM_ACTION=QUERY" );
 			break;
 		case CLEAN : 
-			setenv ("GEM_ACTION", "CLEAN", 1);
+			sprintf ( GEM_ACTION, "GEM_ACTION=CLEAN" );
 			break;
 		case LICENSE : 
-			setenv ("GEM_ACTION", "LICENSE", 1);
+			sprintf ( GEM_ACTION, "GEM_ACTION=LICENSE" );
 			break;
 		case DETAILS : 
-			setenv ("GEM_ACTION", "DETAILS", 1);
+			sprintf ( GEM_ACTION, "GEM_ACTION=DETAILS" );
 			break;
 		default :
 			break;
 	}
+	putenv ( GEM_ACTION );	
 	
 	if ( gisbase != NULL ) {	
-		setenv ("INSTALL_BASE", gisbase, 1);
+		sprintf ( INSTALL_BASE, "INSTALL_BASE=%s", gisbase );		
 	} else {
-		setenv ("UNDEFINED", gisbase, 1);
+		sprintf ( INSTALL_BASE, "INSTALL_BASE=UNDEFINED" );			
 	}
+	putenv ( INSTALL_BASE );
+	
+	/* export absolute path to current working dir */
+	getcwd ( tmp, MAXSTR );
+	sprintf (tmp2, "%s/%s/src", tmp, basename (package) );
+	sprintf ( EXT_BASE, "EXT_BASE=%s", tmp2 );
+	putenv ( EXT_BASE );
 	
 	if ( bins == NULL ) {
-		setenv ("INSTALL_TYPE", "src", 1);
+		sprintf ( INSTALL_TYPE, "INSTALL_TYPE=src" );
 	} else {
-		setenv ("INSTALL_TYPE", bins, 1);
+		sprintf ( INSTALL_TYPE, "INSTALL_TYPE=%s", bins );
 	}
+	putenv ( INSTALL_TYPE );
 	
 	sprintf ( tmp, "%i", FORCE );
-	setenv ("GEM_FORCE", tmp, 1);
+	sprintf ( GEM_FORCE, "GEM_FORCE=%s", tmp );
+	putenv ( GEM_FORCE );
 	
 	sprintf ( tmp, "%i", VERBOSE );
-	setenv ("GEM_VERBOSE", tmp, 1);
+	sprintf ( GEM_VERBOSE, "GEM_VERBOSE=%s", tmp );
+	putenv ( GEM_VERBOSE );	
 	
-	setenv ("GEM_GUI", "0", 1);
+	sprintf ( GEM_GUI, "GEM_GUI=0" );
+	putenv ( GEM_GUI );	
+
 	
 	/* now need to register an exit function that unsets these env vars on termination! */
 	atexit ( &exit_tmp );	

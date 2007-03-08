@@ -1,4 +1,4 @@
-#LyX 1.4.1 created this file. For more info see http://www.lyx.org/
+#LyX 1.4.4 created this file. For more info see http://www.lyx.org/
 \lyxformat 245
 \begin_document
 \begin_header
@@ -37,7 +37,7 @@
 \begin_body
 
 \begin_layout Title
-GRASS Extensions Manager (GEM), Version 1.0
+GRASS Extensions Manager (GEM), Version 1.0.3
 \newline
 Manual
 \end_layout
@@ -79,9 +79,9 @@ This Document provides instructions for using GEM and for writing portable
 status open
 
 \begin_layout Standard
-to produce one HTML page from this manual: use lyx to export to latex format;
- run latex 3 times on the exported .tex document to get references right;
- use latex2html: latex2html -split 0 -show_section_numbers GEM-Manual.tex
+to produce one HTML page from this manual: use lyx to export to latex (plain)
+ format; run latex 3 times on the exported .tex document to get references
+ right; use latex2html: latex2html -split 0 -show_section_numbers GEM-Manual.tex
 \end_layout
 
 \begin_layout Standard
@@ -228,7 +228,7 @@ Simple outsourcing of sets of GRASS functionality from the base distribution
 \end_layout
 
 \begin_layout Standard
-GEM works on Linux/Unix, MacOS X and cygwin systems.
+GEM works on Linux/Unix, MacOS X and Win32 (Cygwin and MINGW) systems.
  There are some OS specific issues which are discussed in the appendix.
 \end_layout
 
@@ -461,7 +461,7 @@ ally have GEM available system-wide (usually
 \end_layout
 
 \begin_layout LyX-Code
-gem
+gem6
 \end_layout
 
 \begin_layout Standard
@@ -496,7 +496,7 @@ Note: please make sure that you system-wide linker path includes the location
  of the GRASS dynamic libraries (e.g.
  
 \emph on
-/usr/local/grass-6.3.cvs/libs
+/usr/local/grass-6.1.cvs/libs
 \emph default
 ).
  This is usually done by adding an appropriate entry to 
@@ -575,7 +575,7 @@ Afer a few seconds, the compilation is done and you have an executable file
 \end_layout
 
 \begin_layout LyX-Code
-./gem
+./gem6
 \end_layout
 
 \begin_layout Standard
@@ -623,7 +623,7 @@ For the impatient.
 \end_layout
 
 \begin_layout LyX-Code
-gem --install=
+gem6 --install=
 \emph on
 ExtensionName
 \emph default
@@ -741,7 +741,7 @@ This section will show you how to use GEM to perform basic things: installing,
  For the sake of simplicity, I will assume that your GRASS installation
  resides in 
 \emph on
-/usr/local/grass-6.x.y
+/usr/local/grass-6.0.0
 \emph default
  and you may have to adjust this path in the examples below, so that it
  reflects your individual setup (Mac OS X users: see notes on system specific
@@ -771,7 +771,7 @@ tar'd gzip
 I will further assume that you (or your system's administrator) have copied
  the executable 
 \emph on
-gem
+gem6
 \emph default
  into a directory from where it can be started system-wide (such as 
 \emph on
@@ -878,7 +878,7 @@ GEM understands short and long options.
 \end_layout
 
 \begin_layout LyX-Code
-gem
+gem6
 \end_layout
 
 \begin_layout Standard
@@ -917,7 +917,7 @@ options
 \begin_layout Standard
 To install a module into your GRASS installation (in this example 
 \emph on
-/usr/local/grass-6.x.y
+/usr/local/grass-6.0.0
 \emph default
 ), simply pass the name of the archive containing the extension or the directory
  with the unpacked files to the 
@@ -941,7 +941,7 @@ To install a module into your GRASS installation (in this example
 \end_layout
 
 \begin_layout LyX-Code
-gem --grass=/usr/local/grass-6.x.y --install=RasterTools.tar.gz
+gem6 --grass=/usr/local/grass-6.0.0 --install=RasterTools.tar.gz
 \end_layout
 
 \begin_layout Standard
@@ -1077,7 +1077,7 @@ RasterTools
 \end_layout
 
 \begin_layout LyX-Code
-gem --query=RasterTools
+gem6 --query=RasterTools
 \end_layout
 
 \begin_layout Standard
@@ -1100,7 +1100,7 @@ more
 \end_layout
 
 \begin_layout LyX-Code
-gem --query=RasterTools | more
+gem6 --query=RasterTools | more
 \end_layout
 
 \begin_layout Standard
@@ -1142,7 +1142,7 @@ If you want to know details about an extension before you install it, you
 \end_layout
 
 \begin_layout LyX-Code
-gem --query=RasterTools.tar.gz
+gem6 --query=RasterTools.tar.gz
 \end_layout
 
 \begin_layout Standard
@@ -1170,7 +1170,7 @@ Actions
 \end_layout
 
 \begin_layout LyX-Code
-gem -q
+gem6 -q
 \end_layout
 
 \begin_layout Standard
@@ -1218,7 +1218,7 @@ You can also un-install an extension to remove it from the system-wide GRASS
 \end_layout
 
 \begin_layout LyX-Code
-gem --uninstall=AdvancedViewshedAnalysis 
+gem6 --uninstall=AdvancedViewshedAnalysis 
 \end_layout
 
 \begin_layout Standard
@@ -1243,7 +1243,7 @@ menu.tcl
 \end_layout
 
 \begin_layout LyX-Code
-gem --restore 
+gem6 --restore 
 \end_layout
 
 \begin_layout Standard
@@ -1308,7 +1308,7 @@ You can check whether an extension provides such pre-compiled binary files
 \end_layout
 
 \begin_layout LyX-Code
-gem --query=RasterTools.tar.gz
+gem6 --query=RasterTools.tar.gz
 \end_layout
 
 \begin_layout Standard
@@ -1339,7 +1339,7 @@ Use the option "--binary=" in conjunction with the "--install=" action to
 \end_layout
 
 \begin_layout LyX-Code
-gem --binary=cygwin --install=RasterTools.tar.gz
+gem6 --binary=cygwin --install=RasterTools.tar.gz
 \end_layout
 
 \begin_layout Standard
@@ -1397,7 +1397,7 @@ wget
 \end_layout
 
 \begin_layout LyX-Code
-gem --install=http://www.uni-kiel.de/ufg/dateienDucke/RasterTools.tar.gz
+gem6 --install=http://www.uni-kiel.de/ufg/dateienDucke/RasterTools.tar.gz
 \end_layout
 
 \begin_layout Subsection
@@ -1435,7 +1435,7 @@ Dependencies
 \end_layout
 
 \begin_layout LyX-Code
-gem --query=RasterTools.tar.gz
+gem6 --query=RasterTools.tar.gz
 \end_layout
 
 \begin_layout Standard
@@ -1443,7 +1443,7 @@ Compare this with the output of
 \end_layout
 
 \begin_layout LyX-Code
-gem -q
+gem6 -q
 \end_layout
 
 \begin_layout Standard
@@ -1661,6 +1661,35 @@ Two more options exist to make life easier for developers:
  compilation of your extension.
 \end_layout
 
+\begin_layout Standard
+GEM also allows you to use any commands in place of the standard GNU 
+\emph on
+configure
+\emph default
+ and 
+\emph on
+make
+\emph default
+ tools.
+ Specifiy the programs you want to use with the 
+\begin_inset Quotes eld
+\end_inset
+
+--config-cmd=
+\begin_inset Quotes erd
+\end_inset
+
+ and 
+\begin_inset Quotes eld
+\end_inset
+
+make-cmd=
+\begin_inset Quotes erd
+\end_inset
+
+ options.
+\end_layout
+
 \begin_layout Subsection
 The Skeleton Package
 \begin_inset LatexCommand \label{sub:The-Skeleton-Package}
@@ -1693,10 +1722,10 @@ $GISBASE/etc/gem/skeleton
 \emph on
 $GISBASE
 \emph default
- with the path to your GRASS 6.x install, e.g.
+ with the path to your GRASS 6.1 install, e.g.
  
 \emph on
-/usr/local/grass-6.3.cvs
+/usr/local/grass-6.1.cvs
 \emph default
 ).
 \end_layout
@@ -2583,7 +2612,7 @@ configure
 \begin_inset Quotes eld
 \end_inset
 
---configure=
+--config-opts=
 \begin_inset Quotes erd
 \end_inset
 
@@ -2594,10 +2623,266 @@ configure
 The default configure script, that ships with the skeleton extension has
  all optional dependencies disabled (ca.
  line 2600 and following of the configure script).
- The check for the proj program and libraries (mandatory for GRASS 6) has
+ The check for the proj program and libraries (mandatory for GRASS 6.1) has
  been completely removed.
  If your extension code calls proj directly, you may want to add this part
  of the configure script back in.
+\end_layout
+
+\begin_layout Subsection
+Cross compilation support
+\end_layout
+
+\begin_layout Standard
+GEM now supports cross compilation for Win32 targets with the MINGW compiler.
+ You need the most recent version of GEM for this to work and the configure
+ and make files for the extension need to be up-to-date.
+ Copy the following files from skeleton/src into your extension's 
+\emph on
+src
+\emph default
+ directory to overwrite the old files and update them for cross compilation:
+\end_layout
+
+\begin_layout LyX-Code
+        Makefile
+\end_layout
+
+\begin_layout LyX-Code
+        configure.in
+\end_layout
+
+\begin_layout LyX-Code
+        configure
+\end_layout
+
+\begin_layout LyX-Code
+        src/include/Make/*
+\end_layout
+
+\begin_layout LyX-Code
+        lib/init/Makefile
+\end_layout
+
+\begin_layout LyX-Code
+        lib/init/prompt.sh
+\end_layout
+
+\begin_layout LyX-Code
+        tools/build_html_index.sh
+\end_layout
+
+\begin_layout Standard
+Follow the instructions on this page to setup a basic GRASS cross compilation
+ environment: 
+\begin_inset LatexCommand \url{http://wiki.qgis.org/qgiswiki/BuildingWindowsBinaryOnLinux}
+
+\end_inset
+
+.
+ You need at least a cross-compiled version of GRASS (6.2.0 works well) in
+ some directory 
+\emph on
+$WIN
+\emph default
+ for this to work.
+\end_layout
+
+\begin_layout Standard
+Create an executable shell script 
+\emph on
+wingem
+\emph default
+ to call GEM and configure the extension with the right options (export
+ 
+\emph on
+WIN
+\emph default
+ to the base directory of your cross compilation setup):
+\end_layout
+
+\begin_layout LyX-Code
+#!/bin/bash
+\end_layout
+
+\begin_layout LyX-Code
+$GEMBIN=/usr/local/bin/gem6
+\end_layout
+
+\begin_layout LyX-Code
+export WIN=/home/user/wingrass
+\end_layout
+
+\begin_layout LyX-Code
+export TARGET=i586-mingw32msvc
+\end_layout
+
+\begin_layout LyX-Code
+./$GEMBIN "$@" --config-opts="--prefix=$WIN/i586-mingw32msvc --target=$TARGET
+ 
+\backslash
+
+\end_layout
+
+\begin_layout LyX-Code
+        --without-gdal 
+\backslash
+
+\end_layout
+
+\begin_layout LyX-Code
+        --without-jpeg 
+\backslash
+
+\end_layout
+
+\begin_layout LyX-Code
+        --without-tiff 
+\backslash
+
+\end_layout
+
+\begin_layout LyX-Code
+        --without-png 
+\backslash
+
+\end_layout
+
+\begin_layout LyX-Code
+        --without-tcltk 
+\backslash
+
+\end_layout
+
+\begin_layout LyX-Code
+        --without-postgres 
+\backslash
+
+\end_layout
+
+\begin_layout LyX-Code
+        --without-mysql 
+\backslash
+
+\end_layout
+
+\begin_layout LyX-Code
+        --without-sqlite 
+\backslash
+
+\end_layout
+
+\begin_layout LyX-Code
+        --without-opengl 
+\backslash
+
+\end_layout
+
+\begin_layout LyX-Code
+        --without-odbc 
+\backslash
+
+\end_layout
+
+\begin_layout LyX-Code
+        --without-fftw 
+\backslash
+
+\end_layout
+
+\begin_layout LyX-Code
+        --without-blas 
+\backslash
+
+\end_layout
+
+\begin_layout LyX-Code
+        --without-lapack 
+\backslash
+
+\end_layout
+
+\begin_layout LyX-Code
+        --without-motif 
+\backslash
+
+\end_layout
+
+\begin_layout LyX-Code
+        --without-freetype 
+\backslash
+
+\end_layout
+
+\begin_layout LyX-Code
+        --without-glw 
+\backslash
+
+\end_layout
+
+\begin_layout LyX-Code
+        --without-nls 
+\backslash
+
+\end_layout
+
+\begin_layout LyX-Code
+        --without-readline 
+\backslash
+
+\end_layout
+
+\begin_layout LyX-Code
+        --without-opendwg 
+\backslash
+
+\end_layout
+
+\begin_layout LyX-Code
+        --without-curses 
+\backslash
+
+\end_layout
+
+\begin_layout LyX-Code
+        --without-x" 
+\backslash
+
+\end_layout
+
+\begin_layout LyX-Code
+        --config-cmd=winconfigure --make-cmd=winmake
+\end_layout
+
+\begin_layout Standard
+This makes use of GEM's new ability to use custom configure and make commands:
+\end_layout
+
+\begin_layout LyX-Code
+./wingem6 --install=<extension> --grass=<grass-install-dir>
+\end_layout
+
+\begin_layout Standard
+Don't forget to configure your extension to re-generate Platform.make and
+ Grass.make (i.e.
+ don't use the 
+\emph on
+-s
+\emph default
+ flag on the first 
+\emph on
+wingem6
+\emph default
+ run).
+\end_layout
+
+\begin_layout Standard
+You will find the cross-compiled binaries in 
+\emph on
+$WIN/i586-mingw32msvc/<grass-install-dir> 
+\emph default
+from there, you can e.g.
+ copy them to your QGIS windows installation.
 \end_layout
 
 \begin_layout Subsection
@@ -2654,7 +2939,7 @@ Compile the extension under the OS that you wish to prepare binaries for
 \end_layout
 
 \begin_layout LyX-Code
-./gem --grass=pathToGRASS -t extensionName
+./gem6 --grass=pathToGRASS -t extensionName
 \end_layout
 
 \begin_layout Standard
@@ -2978,7 +3263,7 @@ description.html
 \end_layout
 
 \begin_layout Standard
-Use an HTML manual page of an existing GRASS 6.x module for a template.
+Use an HTML manual page of an existing GRASS 6.1 module for a template.
 \end_layout
 
 \begin_layout Standard
@@ -3130,7 +3415,7 @@ If you are using Lorenzo's binaries, the path to GRASS for any GEM operation
 \begin_layout Standard
 
 \emph on
-/Applications/Grass/grass6x.app/Contents/Resources/grass-6.x.y
+/Applications/Grass/grass60.app/Contents/Resources/grass-6.0.0
 \end_layout
 
 \begin_layout Standard
@@ -3140,7 +3425,7 @@ or
 \begin_layout Standard
 
 \emph on
-/Applications/Grass/grass63cvs.app/Contents/Resources/grass-6.3.cvs
+/Applications/Grass/grass61cvs.app/Contents/Resources/grass-6.1.cvs
 \end_layout
 
 \begin_layout Standard
@@ -3507,9 +3792,9 @@ GEM exports three environment variables that point to the directories storing
  GRASS 6 headers and libs and to the install location (e.g.
  
 \emph on
-/usr/local/grass-6.3.cvs
+/usr/local/grass-6.2.
 \emph default
-):
+0):
 \end_layout
 
 \begin_layout Standard
@@ -3533,7 +3818,14 @@ GINSTALL_DST
 \begin_layout Standard
 These have been added to the makefiles so that externally compiled modules
  are able to see those GRASS headers and libs they need.
- Thus, the following files were slightly altered:
+ 
+\end_layout
+
+\begin_layout Standard
+The following is a protocoll of changes between the configure script and
+ makefiles in the GEM skeleton extension and the default GRASS files (version
+ 6.2.0, Dec.
+ 3rd 2006).
 \end_layout
 
 \begin_layout Subsubsection
@@ -3553,6 +3845,43 @@ no
 .
  This means that extensions that have to check for optional system libraries
  may have to set these defaults differently or even add custom checks.
+\end_layout
+
+\begin_layout Standard
+By default, the GRASS configure script tries to set up GDAL support and
+ fails, if the GDAL libs and headers are not present, unless --without-gdal
+ was given as a configure option.
+ Since not many extensions are expected to make direct use of the GDAL C
+ api, the GDAL check has been changed so that GDAL support is not set up
+ per default, unless explicitely specified:
+\end_layout
+
+\begin_layout LyX-Code
+# Check whether --with-gdal or --without-gdal was given.
+\end_layout
+
+\begin_layout LyX-Code
+if test "${with_gdal+set}" = set; then
+\end_layout
+
+\begin_layout LyX-Code
+  withval="$with_gdal"
+\end_layout
+
+\begin_layout LyX-Code
+  :
+\end_layout
+
+\begin_layout LyX-Code
+else
+\end_layout
+
+\begin_layout LyX-Code
+  with_gdal=no
+\end_layout
+
+\begin_layout LyX-Code
+fi
 \end_layout
 
 \begin_layout Standard
@@ -3581,7 +3910,15 @@ GINSTALL_DST
 \end_layout
 
 \begin_layout Standard
-L168: install target 
+L39: SUBDIRS =: deleted the following: doc, gem, gui, misc, 
+\end_layout
+
+\begin_layout Standard
+L61: FILES =: deleted all files from the list
+\end_layout
+
+\begin_layout Standard
+L230: install target 
 \family typewriter
 real-install
 \family default
@@ -3606,7 +3943,11 @@ error.log
 \end_layout
 
 \begin_layout Standard
-L171: commented out stuff for creating GRASS startup script
+L253: commented out stuff for creating GRASS startup script
+\end_layout
+
+\begin_layout Standard
+L256: comment out everything relating to GEM installation
 \end_layout
 
 \begin_layout Subsubsection
@@ -3614,31 +3955,49 @@ include/Make/Grass.make.in
 \end_layout
 
 \begin_layout Standard
-L32: added 
+L39: added \SpecialChar \ldots{}
+
+\end_layout
+
+\begin_layout LyX-Code
+ifdef MINGW 
+\end_layout
+
+\begin_layout LyX-Code
+EXE_SUFFIX = ".exe" 
+\end_layout
+
+\begin_layout LyX-Code
+endif
+\end_layout
+
+\begin_layout Standard
+\SpecialChar \ldots{}
+ so that Win32 modules will have the .exe suffix by default (cross-compilation).
+\end_layout
+
+\begin_layout Standard
+L45: added 
 \family typewriter
 -I$(GINSTALL_INC)
 \family default
  to 
 \family typewriter
-GRASS_INC
+ARCH_INC
 \family default
  
 \end_layout
 
 \begin_layout Standard
-L53: added 
-\family typewriter
--L$(GINSTALL_LIB)
-\family default
- to 
-\family typewriter
-ARCH_LIBPATH
-\family default
- 
+L51: change to: ARCH_LIBDIR = $(GINSTALL_LIB)
 \end_layout
 
 \begin_layout Standard
-L81: added 
+L57: ARCH_LIBPATH = -L$(ARCH_LIBDIR) -L$(GINSTALL_LIB)
+\end_layout
+
+\begin_layout Standard
+L82: added 
 \family typewriter
 $(GEM_C_OPTS)
 \family default
@@ -3649,12 +4008,33 @@ CFLAGS
  
 \end_layout
 
+\begin_layout Standard
+L91-94: commented outlinking of fmode.o object, as this currently breaks
+ cross-compilation!
+\end_layout
+
 \begin_layout Subsubsection
-include/Make/Rules.make
+include/Make/Html.make
+\begin_inset Note Note
+status collapsed
+
+\begin_layout Standard
+This file is new since GRASS 6.2.
+ It gets included by Rules.make (see comment there).
 \end_layout
 
 \begin_layout Standard
-L37: the path to the HTML docs is now expanded with 
+For cross-compilation, it currently does nothing! So no HTML pages will
+ be included!
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+L77-79: the path to the HTML docs is now expanded with 
 \emph on
 /extensions/<extensionName>.
 
@@ -3663,11 +4043,29 @@ L37: the path to the HTML docs is now expanded with
 \family typewriter
 GEM_EXT_NAME
 \family default
- which is exported by GEM 
+ which is exported by GEM.
+ A new link to the extension's main HTML index is inserted into the HTML
+ page footer.
 \end_layout
 
 \begin_layout Standard
-L55: added 
+L82-90: this makes a slightly different version of the HTML pages to go
+ into the extension's HTML folder 
+\emph on
+docs/\SpecialChar \-
+extensions/\SpecialChar \-
+$(GEM_EXT_NAME)
+\emph default
+ (with adjusted relative links).
+ 
+\family typewriter
+GEM_EXT_NAME
+\family default
+ is exported by the GEM installer tool.
+\end_layout
+
+\begin_layout Standard
+L105: added 
 \family typewriter
 $(GINSTALL_LIB)
 \family default
@@ -3678,47 +4076,33 @@ LD_LIBRARY_PATH_VAR
  .
 \end_layout
 
-\begin_layout Standard
-L49: this now makes two different copies: one to go into the extension's
- HTML folder 
-\emph on
-docs/\SpecialChar \-
-extensions/\SpecialChar \-
-$(GEM_EXT_NAME)
-\emph default
- and one -- with adjusted relative links -- to go into 
-\emph on
-docs/html
-\emph default
-.
- 
-\family typewriter
-GEM_EXT_NAME
-\family default
- is exported by the GEM installer tool 
-\end_layout
-
 \begin_layout Subsubsection
-include/Shlib.make
+include/Make/Shlib.make
 \end_layout
 
 \begin_layout Standard
-L3: 
+Replace $(GRASS_VERSION_NUMBER) with $(GEM_EXT_VERSION), as this should
+ be the version of the extension, not the GRASS base install:
+\end_layout
+
+\begin_layout Standard
+L6: SHLIB = 
 \family typewriter
-SHLIB = $(ARCH_LIBDIR)/$(SHLIB_PREFIX)$(SHLIB_NAME).$(GEM_EXT_VERSION)$(SHLIB_SUF
-FIX)
+$(ARCH_LIBDIR)/$(SHLIB_PREFIX)$(SHLIB_NAME).$(GEM_EXT_VERSION)$(SHLIB_SUFFIX)
 \family default
  
 \end_layout
 
 \begin_layout Standard
-L14: 
+L18: 
 \family typewriter
-$(SHLIB): $(SHLIB_OBJS) $(SHLIB_LD) -o $@ $(LDFLAGS) $^ $(EXTRA_LIBS) &&
- ln -sf $(notdir $@) $(patsubst %.$(GEM_EXT_VERSION)$(SHLIB_SUFFIX),%$(SHLIB_SUFF
-IX),$@)
-\family default
- 
+$(SHLIB): $(SHLIB_OBJS) 
+\end_layout
+
+\begin_layout LyX-Code
+$(SHLIB_LD) -o $@ $(LDFLAGS) $^ $(EXTRA_LIBS) && if [ -z "${MINGW}" ] ;
+ then ln -f -s $(notdir $@) $(patsubst %.$(GEM_EXT_VERSION)$(SHLIB_SUFFIX),%$(SHL
+IB_SUFFIX),$@); fi
 \end_layout
 
 \begin_layout Standard
@@ -3735,19 +4119,29 @@ version
 
 \begin_layout Subsubsection
 lib/init/Makefile
+\begin_inset Note Note
+status open
+
+\begin_layout Standard
+added prompt.sh
+\end_layout
+
+\end_inset
+
+
 \end_layout
 
 \begin_layout Standard
-L32: commented out everything that seems not strictly necessary for a module
- installation and might interfere with the user's GRASS installation.
+L40-61: commented out everything that seems not strictly necessary for a
+ module installation and might interfere with the user's GRASS installation.
 \end_layout
 
 \begin_layout Subsubsection
-build_html_index.sh 
+tools/build_html_index.sh 
 \end_layout
 
 \begin_layout Standard
-L16: expand HTML with 
+L15: expand HTML with 
 \emph on
 /extensions/$GEM_EXT_NAME
 \emph default
@@ -3755,11 +4149,30 @@ L16: expand HTML with
  The HTML default text has been altered in many places to reflect its new
  function for describing extensions.
  GEM also exports the following variables to enrich the HTML default text:
- 
 \family typewriter
 GEM_EXT_VERSION
 \family default
  (extension's version number).
+\end_layout
+
+\begin_layout Standard
+L38-67: Replaced with intro text for GRASS extensions.
+\end_layout
+
+\begin_layout Standard
+L147: Replaced GRASS with extension header for module index.
+\end_layout
+
+\begin_layout Standard
+L211: see above.
+\end_layout
+
+\begin_layout Standard
+L230: see above
+\end_layout
+
+\begin_layout Standard
+L253: comment out GEM special comment
 \end_layout
 
 \begin_layout Standard
@@ -3773,7 +4186,7 @@ GEM Synopsis
 \end_layout
 
 \begin_layout LyX-Code
-Usage: gem [OPTION] [ACTION] [FILE|DIR]
+Usage: gem6 [OPTION] [ACTION] [FILE|DIR]
 \end_layout
 
 \begin_layout LyX-Code
@@ -3785,31 +4198,31 @@ Possible ACTIONs are:
 \end_layout
 
 \begin_layout LyX-Code
-  -i, --install         install a GRASS extension
+  -i, --install=EXT     install a GRASS extension
 \end_layout
 
 \begin_layout LyX-Code
-  -u, --uninstall       remove an extension from GRASS
+  -u, --uninstall=EXT   remove an extension from GRASS
 \end_layout
 
 \begin_layout LyX-Code
-  -q, --query           display information about extension/list installed
+  -q, --query=EXT       display information about extension/list installed
 \end_layout
 
 \begin_layout LyX-Code
-  -d, --details         display additional details about an extension
+  -d, --details=EXT     display additional details about an extension
 \end_layout
 
 \begin_layout LyX-Code
-  -c, --clean           clean extension's source code directories
+  -c, --clean=EXT       clean extension's source code directories
 \end_layout
 
 \begin_layout LyX-Code
-  -t, --test            configure and compile extension, but don't install
+  -t, --test=EXT        configure and compile extension, but don't install
 \end_layout
 
 \begin_layout LyX-Code
-  -l, --license         show copyright information for an extension
+  -l, --license=EXT     show copyright information for an extension
 \end_layout
 
 \begin_layout LyX-Code
@@ -3849,15 +4262,27 @@ Possible OPTIONs are:
 \end_layout
 
 \begin_layout LyX-Code
-  -x, --configure=OPTS  pass OPTS to configure script 
-\end_layout
-
-\begin_layout LyX-Code
   -s, --skip-config     skip configure script
 \end_layout
 
 \begin_layout LyX-Code
-  -o, --options         options to pass to the C compiler/linker
+  -x, --config-opts=OPTS        pass OPTS to configure script
+\end_layout
+
+\begin_layout LyX-Code
+  -o, --options=OPTS    options to pass to the C compiler/linker
+\end_layout
+
+\begin_layout LyX-Code
+  -C, --config-cmd=CMD  Define custom 'configure' command (default=configure)
+\end_layout
+
+\begin_layout LyX-Code
+  -m, --make-cmd=CMD    Define custom 'make' command (default=make)
+\end_layout
+
+\begin_layout LyX-Code
+
 \end_layout
 
 \begin_layout LyX-Code

@@ -30,7 +30,7 @@ OBJS =	at_exit_funcs.o \
 	main.o
 
 default: $(SRCS) $(HDRS) $(OBJS)
-	$(CC) $(DEBUG) $(OBJS) -o gem $(CFLAGS) $(CLIBS) $(LDFLAGS)
+	$(CC) $(DEBUG) $(OBJS) -o gem6 $(CFLAGS) $(CLIBS) $(LDFLAGS)
 
 at_exit_funcs.o: at_exit_funcs.c at_exit_funcs.h globals.h
 	$(CC) $(DEBUG) -c at_exit_funcs.c $(CFLAGS) $(CLIBS) $(LDFLAGS)	
@@ -56,9 +56,10 @@ actions.o: actions.c actions.h globals.h
 main.o:	main.c globals.h
 	$(CC) $(DEBUG) -c main.c $(CFLAGS) $(CLIBS) $(LDFLAGS)
 
-install: gem
-	strip gem;
+install: gem6
+	strip gem6;
+	cp gem6 /usr/local/bin
 
 clean:
-	-rm -f *.o *.bak core *~ gem
+	-rm -f *.o *.bak core *~ gem6
 

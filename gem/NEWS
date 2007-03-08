@@ -1,3 +1,7 @@
+gem 1.0.1
+===========
+fixed a bug where installing GUI entries corrupts newer versions of d.m
+
 gem 1.0
 ===========
 possible to pass options to configure script of extension

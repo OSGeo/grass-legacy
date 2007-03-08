@@ -42,7 +42,6 @@ into main.c ! */
 #include <sys/types.h>
 #include <sys/stat.h>
 #include <unistd.h>
-#include <pwd.h>
 #include <dirent.h>
 
 #include "at_exit_funcs.h"
@@ -54,7 +53,7 @@ into main.c ! */
 #include "actions.h"
 
 
-#define PROGVERSION 1.0
+#define PROGVERSION 1.03
 
 #define MAXSTR 2048 /* maximum length of strings this program handles */
 
@@ -119,6 +118,30 @@ into main.c ! */
 #define TOKEN_COMMAND 2
 #define TOKEN_SEPARATOR 3
 
+
+/* ENVIRONMENT VARIABLES */
+EXTERN char GINSTALL_DST [MAXSTR];
+EXTERN char GINSTALL_INC [MAXSTR];
+EXTERN char GINSTALL_LIB [MAXSTR];
+EXTERN char UNINSTALL_BASE [MAXSTR];
+EXTERN char GEM_EXT_NAME [MAXSTR];
+EXTERN char GEM_EXT_VERSION [MAXSTR];
+EXTERN char GEM_EXT_DESCR [MAXSTR];
+EXTERN char GEM_EXT_INFO [MAXSTR];
+EXTERN char GEM_EXT_DEPS [MAXSTR];
+EXTERN char GEM_EXT_BUGS [MAXSTR];
+EXTERN char GEM_EXT_AUTHORS [MAXSTR];
+EXTERN char GEM_GRASS_DIR [MAXSTR];
+EXTERN char GEM_ACTION [MAXSTR];
+EXTERN char INSTALL_BASE [MAXSTR];
+EXTERN char INSTALL_TYPE [MAXSTR];
+EXTERN char GEM_FORCE [MAXSTR];
+EXTERN char GEM_VERBOSE [MAXSTR];
+EXTERN char GEM_GUI [MAXSTR];
+EXTERN char GEM_C_OPTS [MAXSTR];
+EXTERN char EXT_BASE [MAXSTR];
+
+
 /* GLOBAL VARIABLES */
 EXTERN int VERBOSE;
 EXTERN char TMPDIR [MAXSTR];
@@ -144,6 +167,8 @@ EXTERN char HTML_CMD [MAXSTR];
 EXTERN char QGIS_CMD [MAXSTR];
 EXTERN char UNINSTALL_CMD [MAXSTR];
 EXTERN char CONFIG_OPTS [MAXSTR];
+EXTERN char CONFIG_CMD [MAXSTR];
+EXTERN char MAKE_CMD [MAXSTR];
 
 /* stores current working directory */
 EXTERN char CWD [MAXSTR];
