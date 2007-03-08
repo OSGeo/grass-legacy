@@ -25,11 +25,11 @@
 #include <grass/gis.h>
 #include <grass/dbmi.h>
 #include <grass/Vect.h>
-#include "ogr_api.h"
-#include "global.h"
 #include <grass/gprojects.h>
 #include <grass/glocale.h>
 #include <gdal_version.h> /* needed for OFTDate */
+#include "ogr_api.h"
+#include "global.h"
 
 int geom(OGRGeometryH hGeom, struct Map_info *Map, int field, int cat, double min_area, int type, int mk_centr );
 int centroid(OGRGeometryH hGeom, CENTR *Centr, SPATIAL_INDEX *Sindex, int field, int cat, double min_area, int type);
@@ -65,7 +65,6 @@ main (int argc, char *argv[])
 
     /* OGR */
     OGRDataSourceH Ogr_ds=NULL;
-    OGRSFDriverH Ogr_driver;
     OGRLayerH Ogr_layer;
     OGRFieldDefnH Ogr_field;
     char *Ogr_fieldname;
@@ -90,19 +89,27 @@ main (int argc, char *argv[])
 
     G_begin_polygon_area_calculations(); /* Used in geom() */
 
-    OGRRegisterAll();
-    /* Module options */
-    sprintf ( buf, _("Convert OGR vectors to GRASS. Available drivers:\n"));
-    for ( i = 0; i < OGRGetDriverCount(); i++ ) {
-	Ogr_driver = OGRGetDriver( i );
-	if ( i== 0)
-	  sprintf (buf, "%s%s", buf, OGR_Dr_GetName ( Ogr_driver) );
-	else
-	  sprintf (buf, "%s,%s", buf, OGR_Dr_GetName ( Ogr_driver) );
-    }
+    /*
+      Do we really need to list all supported formats here??
+      -> there is -f flag for this purpose
+    */
+
+    /*
+      OGRRegisterAll();
+      sprintf ( buf, _("Convert OGR vectors to GRASS. Available drivers:\n"));
+      for ( i = 0; i < OGRGetDriverCount(); i++ ) {
+      Ogr_driver = OGRGetDriver( i );
+      if ( i== 0)
+      sprintf (buf, "%s%s", buf, OGR_Dr_GetName ( Ogr_driver) );
+      else
+      sprintf (buf, "%s,%s", buf, OGR_Dr_GetName ( Ogr_driver) );
+       }
+    */
+
     module = G_define_module();
-    module->keywords = _("vector");
-    module->description = G_store(buf);
+    module->keywords = _("vector, import");
+    /* module->description = G_store (buf); */
+    module->description = _("Convert OGR vector layers to GRASS.");
 
     dsn_opt = G_define_option();
     dsn_opt->key = "dsn";
@@ -145,11 +152,11 @@ main (int argc, char *argv[])
     type_opt->options = "point,line,boundary,centroid";
     type_opt->answer = "";
     type_opt->description = _("Optionaly change default input type:\n"
-	      "\t point -> import area centroids as points\n"
-	      "\t line -> import area boundaries as centroids\n"
-	      "\t boundary -> import lines as area boundaries\n"
-	      "\t centroid -> import points as centroids");
-
+			      "\t\tpoint    -> import area centroids as points\n"
+			      "\t\tline     -> import area boundaries as centroids\n"
+			      "\t\tboundary -> import lines as area boundaries\n"
+			      "\t\tcentroid -> import points as centroids");
+    
     snap_opt = G_define_option();
     snap_opt->key = "snap";
     snap_opt->type = TYPE_DOUBLE;
@@ -228,16 +235,24 @@ main (int argc, char *argv[])
 
     if (G_parser (argc, argv)) exit(EXIT_FAILURE);
 
-    if (G_legal_filename(out_opt->answer) < 0)
-        G_fatal_error(_("Illegal filename: %s"), out_opt->answer);
+    OGRRegisterAll(); 
 
-    if ( !outloc_opt->answer ) { /* Check if the map exists */
-	if ( G_find_vector2 (out_opt->answer, G_mapset()) ) {
-	    if (overwrite)
-	        G_warning ( _("The vector '%s' already exists and will be overwritten."), out_opt->answer );
+    if(formats_flag->answer) {
+	int iDriver;
+	fprintf(stdout, "Available OGR Drivers:\n" );
+
+	for(iDriver = 0; iDriver < OGRGetDriverCount(); iDriver++) {
+	    OGRSFDriverH poDriver = OGRGetDriver(iDriver);
+
+	    if (OGR_Dr_TestCapability(poDriver, ODrCCreateDataSource))
+		fprintf (stdout, "  %s (read/write)\n",
+			 OGR_Dr_GetName(poDriver));
 	    else
-	        G_fatal_error ( _("The vector '%s' already exists."), out_opt->answer );
+		fprintf (stdout, "  %s (readonly)\n",
+			 OGR_Dr_GetName(poDriver));
 	}
+
+	exit(EXIT_SUCCESS);
     }
 
     min_area = atof (min_area_opt->answer);
@@ -250,26 +265,6 @@ main (int argc, char *argv[])
 	while ( cnames_opt->answers[i++] ) {
 	    ncnames++;
 	}
-    }
-
-    if(formats_flag->answer) {
-	int iDriver;
-	fprintf(stdout, "Available OGR Drivers:\n" );
-
-	for(iDriver = 0; iDriver < OGRGetDriverCount(); iDriver++) {
-	    OGRSFDriverH *poDriver = OGRGetDriver(iDriver);
-	    fprintf(stdout, "  %s\n", OGR_Dr_GetName(poDriver));
-
-/* TODO: read/write check:
-	    if( OGR_Dr_TestCapability(poDriver, "??") )
-		fprintf(stdout, " %s (read/write)\n",
-		    OGR_Dr_GetName(poDriver) );
-	    else
-		fprintf(stdout, "  %s (read only)\n",
-		    OGR_Dr_GetName(poDriver) );
-*/
-	}
-	exit(EXIT_SUCCESS);
     }
 
     /* Open OGR DSN */
@@ -297,6 +292,18 @@ main (int argc, char *argv[])
     if ( list_flag->answer ) {
 	fprintf ( stdout, "\n" );
         exit(EXIT_SUCCESS) ;
+    }
+
+    if (G_legal_filename(out_opt->answer) < 0)
+        G_fatal_error(_("Illegal filename: %s"), out_opt->answer);
+
+    if ( !outloc_opt->answer ) { /* Check if the map exists */
+	if ( G_find_vector2 (out_opt->answer, G_mapset()) ) {
+	    if (overwrite)
+	        G_warning ( _("The vector '%s' already exists and will be overwritten."), out_opt->answer );
+	    else
+	        G_fatal_error ( _("The vector '%s' already exists."), out_opt->answer );
+	}
     }
 
     /* Make a list of layers to be imported */

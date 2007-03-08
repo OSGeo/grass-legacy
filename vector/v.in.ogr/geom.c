@@ -20,6 +20,7 @@
 #include <grass/gis.h>
 #include <grass/dbmi.h>
 #include <grass/Vect.h>
+#include <grass/glocale.h>
 #include "ogr_api.h"
 #include "global.h"
 
@@ -212,11 +213,11 @@ geom(OGRGeometryH hGeom, struct Map_info *Map, int field, int cat, double min_ar
 	/* Degenerate is not ignored because it may be useful to see where it is,
 	 * but may be eliminated by min_area option */
 	if ( Points->n_points < 4 ) 
-	    G_warning ( "Degenerate polygon (%d vertices).", Points->n_points );
+	    G_warning (_("Degenerate polygon ([%d] vertices)"), Points->n_points );
 	
 	size = G_area_of_polygon(Points->x, Points->y, Points->n_points);
 	if ( size < min_area ) {
-	    G_warning ( "Area size %.1e, area not imported.", size);
+	    G_warning (_("Area size [%.1e], area not imported"), size);
 	    return 0;
 	}
 	
@@ -238,11 +239,11 @@ geom(OGRGeometryH hGeom, struct Map_info *Map, int field, int cat, double min_ar
 	    }
 	    
 	    if ( IPoints[i-1]->n_points < 4 ) 
-	        G_warning ( "Degenerate island (%d vertices).", IPoints[i-1]->n_points );
+	        G_warning (_("Degenerate island ([%d] vertices)"), IPoints[i-1]->n_points );
 	    
 	    size = G_area_of_polygon(Points->x, Points->y, Points->n_points);
 	    if ( size < min_area ) {
-		G_warning ( "Island size %.1e, island not imported.", size);
+		G_warning (_("Island size [%.1e], island not imported"), size);
 	    } else { 
 	        if ( type & GV_LINE ) otype = GV_LINE; else otype = GV_BOUNDARY; 
                 Vect_write_line ( Map, otype, IPoints[i-1], BCats);
@@ -255,7 +256,7 @@ geom(OGRGeometryH hGeom, struct Map_info *Map, int field, int cat, double min_ar
 	    if ( Points->n_points >= 4 ) {
 		ret = Vect_get_point_in_poly_isl ( Points, IPoints, nr-1, &x, &y);
 		if ( ret == -1 ) {
-		    G_warning ( "Cannot calculate centroid" );
+		    G_warning (_("Cannot calculate centroid"));
 		} else {
 		    Vect_reset_line ( Points );
 		    Vect_append_point ( Points, x, y, 0.0 );
@@ -276,7 +277,7 @@ geom(OGRGeometryH hGeom, struct Map_info *Map, int field, int cat, double min_ar
 		if ( type & GV_POINT ) otype = GV_POINT; else otype = GV_CENTROID; 
 		Vect_write_line ( Map, otype, Points, Cats);
 	    } else { /* 0 points */
-		G_warning ( "No centroid written for polygon with 0 vertices." );
+		G_warning (_("No centroid written for polygon with 0 vertices"));
 	    } 
 	}
 	
@@ -299,13 +300,13 @@ geom(OGRGeometryH hGeom, struct Map_info *Map, int field, int cat, double min_ar
 
 	    ret = geom( hRing, Map, field, cat, min_area, type, mk_centr );
 	    if ( ret == -1 ) {
-		G_warning ("Cannot write part of geometry" );
+		G_warning (_("Cannot write part of geometry"));
 	    }
         }
     }
    
     else { 
-	G_fatal_error ("Unknown geometry type");
+	G_fatal_error (_("Unknown geometry type"));
     }
 
     return 0;
