@@ -56,6 +56,7 @@ int main (int argc, char *argv[])
 		*dist_res,
 		*dflt,
 		*z,
+                *savedefault,
 		*bbox;
 	} flag;
 	struct
@@ -118,6 +119,11 @@ int main (int argc, char *argv[])
 	flag.z->key         = '3';
 	flag.z->description = _("Print also 3D settings");
 	flag.z->guisection  = _("Print");
+
+	flag.savedefault = G_define_flag();
+	flag.savedefault->key         = 's';
+	flag.savedefault->description = _("Save as default region");
+	flag.savedefault->guisection  = _("Existing");
 
 	flag.bbox = G_define_flag();
 	flag.bbox->key         = 'b';
@@ -841,6 +847,12 @@ int main (int argc, char *argv[])
 		if (G_put_window (&window) < 0)
 			G_fatal_error (_("Unable to update current region"));
 	}
+
+        if (flag.savedefault->answer)
+            if (strcmp(G_mapset(),"PERMANENT") == 0)
+                G__put_window( &window, "../PERMANENT", "DEFAULT_WIND" );
+            else
+                G_warning(_("You are not in mapset PERMANENT, default region remains untached"));
 
 	if (print_flag)
 	    print_window (&window, print_flag);
