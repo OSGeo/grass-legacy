@@ -261,7 +261,7 @@ real-install: FORCE
 	-chmod -R a+rX ${INST_DIR} 2>/dev/null
 	#GEM installation
 	-tar cBf - gem/skeleton | (cd ${INST_DIR}/etc ; tar xBf - ) 2>/dev/null
-	-${INSTALL} gem/gem ${BINDIR} 2>/dev/null
+	-${INSTALL} gem/gem6 ${BINDIR} 2>/dev/null
 
 
 install-strip: FORCE
