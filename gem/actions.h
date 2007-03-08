@@ -42,14 +42,14 @@ void bin_install ( char *package, char *gisbase, char *bins, char *pkg_short_nam
 void test_install ( char *package, char *gisbase, char *pkg_short_name, 
 						int pkg_major, int pkg_minor, int pkg_revision, char *grass_version );
 
-void uninstall ( char *package, char *pkg_short_name, char *gisbase );
+void uninstall ( char *package, char *pkg_short_name, char *gisbase, char *grass_version );
 
 int source_clean ( char *package );
 
-void restore ( char *gisbase );
+void restore ( char *gisbase, char *grass_version );
 
 void list_extensions ( char *gisbase );
 
-void run_post ( int action, char *bins, char *gisbase );
+void run_post ( char *package, int action, char *bins, char *gisbase );
 
 #endif /* _ACTIONS_H */

@@ -33,13 +33,13 @@ int menu_created;
 	Very primitive
  */
  int is_submenu ( char *item ) {
-	 if (index ( item, '[') == NULL) {
+	 if (strchr ( item, '[') == NULL) {
 		 return (0);
 	 }
-	 if (rindex ( item, ']') == NULL) {
+	 if (strrchr ( item, ']') == NULL) {
 		 return (0);
 	 }
-	 if	( index ( item, '[') > rindex ( item, ']') ) {
+	 if	( strchr ( item, '[') > strrchr ( item, ']') ) {
 		 return (0);
 	 }
 	 return (1);
@@ -108,8 +108,8 @@ int new_submenu ( char *pkg_short_name, char *menu, char **tcl_lines ) {
 		return (-1);
 	} else {
 		/* check if a submenu with this name does already exist */
-		len = (rindex (menu,']')-index ( menu, '[' )) / sizeof (char);
-		strncpy ( tmp, index ( menu, '[' )+sizeof(char),  len);
+		len = (strrchr (menu,']')-strchr ( menu, '[' )) / sizeof (char);
+		strncpy ( tmp, strchr ( menu, '[' )+sizeof(char),  len);
 		tmp[len-1] = '\0'; /* get rid of [] */
 		sprintf ( searchstr, "{cascad \"%s\"", tmp ); /* this is what we need to look for */
 		
@@ -124,8 +124,8 @@ int new_submenu ( char *pkg_short_name, char *menu, char **tcl_lines ) {
 		idx2 = find_pos ( "{cascad ", tcl_lines, idx ); /* go through all submenus in "Extensions" */
 		while (( idx2 != -1 ) && ( idx2 < last )) {				
 				/* check for alphabetical order */				
-				first_quote = index (tcl_lines[idx2], '\"'); /* get name of submenu w/o quotation marks */
-				second_quote = index (first_quote + sizeof (char), '\"');
+				first_quote = strchr (tcl_lines[idx2], '\"'); /* get name of submenu w/o quotation marks */
+				second_quote = strchr (first_quote + sizeof (char), '\"');
 				len = (second_quote - first_quote ) / sizeof (char);
 				strncpy ( tmp2, first_quote+sizeof(char), len);
 				tmp2[len-1] = '\0'; /* get rid of "" */
@@ -225,7 +225,6 @@ void register_entries_gisman ( char *pkg_short_name, char *gisbase ) {
 	char **line;
 	int n_entries, n_lines, i;
 	int n_lines_org, n_lines_new;	
-	int fd;
 	int line_no;
 	FILE *f_gisman, *f_in, *f_out;
 		
@@ -259,15 +258,14 @@ void register_entries_gisman ( char *pkg_short_name, char *gisbase ) {
 		
 	/* create a temporary menu.tcl file for write access */
 	strcpy (TMP_GISMAN, "/tmp/grass.extensions.db.XXXXXX"); /* TMP_GISMAN is a global variable */
-	fd = mkstemp ( TMP_GISMAN );
-	if ( fd < 0 ) {
-		close (fd);
+	mktemp ( TMP_GISMAN );
+
+	f_out = fopen ( TMP_GISMAN, "w+");	
+	if ( f_out == NULL ) {
 		print_error (ERR_REGISTER_ENTRIES_GISMAN,"could not create temp file '%s': %s\n \
 			Make sure that directory /tmp exists on your system and you have write permission.\n", 
 			TMP_GISMAN, strerror (errno));
-	}
-				
-	f_out = fdopen ( fd, "w+");
+	}				
 	atexit ( &exit_db ); /* now need to register an at exit func to remove tmpdb automatically! */	
 	
 	/* everything fine: create a shell command to install gisman-entries and modified menu.tcl */
@@ -332,8 +330,8 @@ void register_entries_gisman ( char *pkg_short_name, char *gisbase ) {
 	while ( nc_fgets_nb (str, MAXSTR, f_gisman) != NULL ) {
 			if ( i == 1 ) {
 				/* store name of menu item */
-				len = (rindex (str,']')-index ( str, '[' )) / sizeof (char);
-				strncpy ( menu, index ( str, '[' )+sizeof(char),  len);
+				len = (strrchr (str,']')-strchr ( str, '[' )) / sizeof (char);
+				strncpy ( menu, strchr ( str, '[' )+sizeof(char),  len);
 				menu[len-1] = '\0'; /* get rid of [] */
 				line_no = new_submenu ( pkg_short_name, str, line );
 				if ( line_no < 0 ) {
@@ -375,7 +373,6 @@ void register_entries_gisman ( char *pkg_short_name, char *gisbase ) {
 	fclose (f_in);
 	fclose ( f_gisman );
 	fclose ( f_out );
-	close ( fd );
 	
 	/* free memory */
 	for ( i = 0; i < (n_lines + (n_entries*2) + 6); i ++ ) {
@@ -439,7 +436,6 @@ int deregister_entries_gisman ( char *pkg_short_name, char *gisbase ) {
 	char **line;
 	int n_lines, i;
 	int n_lines_org, n_lines_new;
-	int fd;
 	FILE *f_in, *f_out;
 	int pos;
 	int start, end;
@@ -463,15 +459,14 @@ int deregister_entries_gisman ( char *pkg_short_name, char *gisbase ) {
 
 	/* create a temporary menu.tcl file for write access */
 	strcpy (TMP_GISMAN, "/tmp/grass.extensions.db.XXXXXX"); /* TMP_GISMAN is a global variable */
-	fd = mkstemp ( TMP_GISMAN );
-	if ( fd < 0 ) {
-		close (fd);
+	mktemp ( TMP_GISMAN );
+
+	f_out = fopen ( TMP_GISMAN, "w+");
+	if ( f_out == NULL ) {
 		print_error (ERR_REGISTER_ENTRIES_GISMAN,"could not create temp file '%s': %s\n \
 			Make sure that directory /tmp exists on your system and you have write permission.\n", 
 			TMP_GISMAN, strerror (errno));
-	}
-				
-	f_out = fdopen ( fd, "w+");
+	}				
 	atexit ( &exit_db ); /* now need to register an at exit func to remove tmpdb automatically! */
 
 	/* everything fine: create a shell command to copy modified menu.tcl on uninstall */
@@ -523,9 +518,9 @@ int deregister_entries_gisman ( char *pkg_short_name, char *gisbase ) {
 	}
 	
 	/* copy name of submenu to search for */
-	lq = index (line[pos],'\"');
+	lq = strchr (line[pos],'\"');
 	lq ++;
-	rq = index (lq, '\"');
+	rq = strchr (lq, '\"');
 	strcpy (tmp, lq);
 	tmp [(rq-lq) / sizeof(char)] = '\0';			
 	
@@ -601,7 +596,6 @@ int deregister_entries_gisman ( char *pkg_short_name, char *gisbase ) {
 	/* close files */
 	fclose (f_in);		
 	fclose ( f_out );
-	close ( fd );		
 	
 	/* free memory */
 	for ( i = 0; i < n_lines + 1; i ++ ) {
@@ -661,7 +655,6 @@ int restore_entries_gisman ( char *gisbase ) {
 	int len;
 	char **line;
 	int n_entries, n_lines, i;
-	int fd;
 	int line_no;
 	FILE *f_gisman, *f_in, *f_out;
 	DIR *dirp;
@@ -685,15 +678,14 @@ int restore_entries_gisman ( char *gisbase ) {
 		
 	/* create a temporary menu.tcl file for write access */
 	strcpy (TMP_GISMAN, "/tmp/grass.extensions.db.XXXXXX"); /* TMP_GISMAN is a global variable */
-	fd = mkstemp ( TMP_GISMAN );
-	if ( fd < 0 ) {
-		close (fd);
+	mktemp ( TMP_GISMAN );
+
+	f_out = fopen ( TMP_GISMAN, "w+");
+	if ( f_out == NULL ) {
 		print_error (ERR_REGISTER_ENTRIES_GISMAN,"could not create temp file '%s': %s\n \
 			Make sure that directory /tmp exists on your system and you have write permission.\n", 
 			TMP_GISMAN, strerror (errno));		
-	}
-				
-	f_out = fdopen ( fd, "w+");
+	}				
 	atexit ( &exit_db ); /* now need to register an at exit func to remove tmpdb automatically! */	
 
 	/* everything fine: create a shell command to copy modified menu.tcl on uninstall */
@@ -788,8 +780,8 @@ int restore_entries_gisman ( char *gisbase ) {
 		while ( nc_fgets_nb (str, MAXSTR, f_gisman) != NULL ) {
 			if ( i == 1 ) {
 				/* store name of menu item */
-				len = (rindex (str,']')-index ( str, '[' )) / sizeof (char);
-				strncpy ( menu, index ( str, '[' )+sizeof(char),  len);
+				len = (strrchr (str,']')-strchr ( str, '[' )) / sizeof (char);
+				strncpy ( menu, strchr ( str, '[' )+sizeof(char),  len);
 				menu[len-1] = '\0'; /* get rid of [] */
 				line_no = new_submenu ( pkg_short_name, str, line );
 				if ( line_no < 0 ) {
@@ -821,7 +813,6 @@ int restore_entries_gisman ( char *gisbase ) {
 	/* close remaining files */
 	fclose (f_in);	
 	fclose ( f_out );
-	close ( fd );	
 
 	/* free memory */
 	for ( i = 0; i < (n_lines + (n_entries*2) + (n_files*5) + 1); i ++ ) {

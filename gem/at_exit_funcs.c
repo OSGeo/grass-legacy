@@ -26,6 +26,13 @@
  
 /* unset environment variables */
 void exit_env ( void ) {
+
+/*
+NOT NECESSARY, as process cannot set env vars of caller anyway and this
+gives trouble with MINGW compilation, too.
+*/
+
+/*
 	unsetenv ("GINSTALL_DST");
 	unsetenv ("GINSTALL_INC");
 	unsetenv ("GINSTALL_LIB");	
@@ -45,6 +52,8 @@ void exit_env ( void ) {
 	unsetenv ("GEM_VERBOSE");
 	unsetenv ("GEM_GUI");
 	unsetenv ("GEM_C_OPTS");
+	unsetenv ("EXT_BASE");
+*/
 }
 
 /* delete temp directory */

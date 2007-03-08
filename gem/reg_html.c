@@ -76,8 +76,8 @@ void new_ext_html ( char *ext, char *gisbase, char **html, int major, int minor,
 	pos3 = find_pos ( "<li><a href=", html, start );
 	while ( (pos3 != -1) && (pos3 < end) ) {
 		/* extract name of extension at this position */
-		first_char = rindex ( html[pos3], '"' );
-		last_char = rindex ( html[pos3], '<' );
+		first_char = strrchr ( html[pos3], '"' );
+		last_char = strrchr ( html[pos3], '<' );
 		len = (last_char - first_char ) / sizeof (char);
 		strncpy ( item, first_char + 2*sizeof(char), len);
 		item [len-1] = '\0'; /* get rid of '<' */
@@ -158,7 +158,6 @@ void register_html ( char *pkg_short_name, char *gisbase, int major, int minor, 
 	char str [MAXSTR];
 	char **line;
 	int n_lines, i;
-	int fd;
 	FILE *f_in, *f_out;
 					
 	/* check if index.html exists and is readable */
@@ -177,15 +176,15 @@ void register_html ( char *pkg_short_name, char *gisbase, int major, int minor, 
 		
 	/* create a temporary index.html copy for write access */
 	strcpy (TMP_HTML, "/tmp/grass.extensions.db.XXXXXX"); /* TMP_HTML is a global variable */
-	fd = mkstemp ( TMP_HTML );
-	if ( fd < 0 ) {
-		close (fd);
+	mktemp ( TMP_HTML );
+
+	f_out = fopen ( TMP_HTML, "w+");
+	if ( f_out == NULL ) {
 		print_error ( ERR_REGISTER_HTML,"could not create temp file '%s': %s\n \
 		Make sure that directory /tmp exists on your system and you have write permission.\n", 
 		TMP_HTML, strerror (errno));
-	}
-				
-	f_out = fdopen ( fd, "w+");
+	}				
+
 	atexit ( &exit_db ); /* now need to register an at exit func to remove tmpdb automatically! */	
 
 	/* everything fine: create a shell command to install HTML stuff */
@@ -238,7 +237,6 @@ void register_html ( char *pkg_short_name, char *gisbase, int major, int minor, 
 	/* close files */
 	fclose (f_in);
 	fclose ( f_out );
-	close ( fd );
 
 	/* free memory */	
 	for ( i = 0; i < (n_lines + 10); i++ ) {
@@ -254,7 +252,6 @@ void deregister_html ( char *pkg_short_name, char *gisbase ) {
 	char str [MAXSTR];
 	char **line;
 	int n_lines, i;
-	int fd;
 	FILE *f_in, *f_out;
 					
 	/* check if index.html exists and is readable */
@@ -273,15 +270,15 @@ void deregister_html ( char *pkg_short_name, char *gisbase ) {
 		
 	/* create a temporary index.html copy for write access */
 	strcpy (TMP_HTML, "/tmp/grass.extensions.db.XXXXXX"); /* TMP_HTML is a global variable */
-	fd = mkstemp ( TMP_HTML );
-	if ( fd < 0 ) {
-		close (fd);		
+	mktemp ( TMP_HTML );
+	
+	f_out = fopen ( TMP_HTML, "w+");	
+	if ( f_out == NULL ) {
 		print_error ( ERR_REGISTER_HTML,"could not create temp file '%s': %s\n \
 		Make sure that directory /tmp exists on your system and you have write permission.\n", 
 		TMP_HTML, strerror (errno));
 	}
 				
-	f_out = fdopen ( fd, "w+");
 	atexit ( &exit_db ); /* now need to register an at exit func to remove tmpdb automatically! */	
 
 	/* everything fine: create a shell command to copy modified HTML stuff on uninstall */
@@ -333,7 +330,6 @@ void deregister_html ( char *pkg_short_name, char *gisbase ) {
 	/* close files */
 	fclose (f_in);
 	fclose ( f_out );
-	close ( fd );
 	
 	/* free memory */	
 	for ( i = 0; i < (n_lines + 1); i++ ) {
@@ -354,7 +350,6 @@ int restore_html ( char *gisbase ) {
 	char subdir [MAXSTR];
 	char **line;
 	int n_entries, n_lines, i;
-	int fd;
 	FILE *f_in, *f_out, *f_ext;
 	DIR *dirp;
 	DIR *subdirp;
@@ -379,10 +374,11 @@ int restore_html ( char *gisbase ) {
 	}
 	
 	/* create a temporary index.html copy for write access */
-	strcpy (TMP_HTML, "/tmp/grass.extensions.db.XXXXXX"); /* TMP_HTML is a global variable */
-	fd = mkstemp ( TMP_HTML );
-	if ( fd < 0 ) {
-		close (fd);		
+	strcpy (TMP_HTML, "/tmp/grass.extensions.db.XXXXXX"); /* TMP_HTML is a global variable */	
+	mktemp ( TMP_HTML );
+	
+	f_out = fopen ( TMP_HTML, "w+");	
+	if ( f_out == NULL ) {
 		print_error ( ERR_REGISTER_HTML,"could not create temp file '%s': %s\n \
 		Make sure that directory /tmp exists on your system and you have write permission.\n", 
 		TMP_HTML, strerror (errno));
@@ -397,9 +393,7 @@ int restore_html ( char *gisbase ) {
 					TMP_HTML, gisbase, TMP_NULL, gisbase, TMP_NULL );
 	}
 	strcpy ( HTML_CMD, str );	
-	
-				
-	f_out = fdopen ( fd, "w+");
+					
 	atexit ( &exit_db ); /* now need to register an at exit func to remove tmpdb automatically! */	
 	
 	/* allocate a pointer to the directory structure */
@@ -489,7 +483,7 @@ int restore_html ( char *gisbase ) {
 		if ( i == 0 ) {
 			continue; /* not a valid index.html: skip to next extension */
 		}
-		sscanf ( index (str, '(') + sizeof (char), "%i.%i.%i" , &major, &minor, &revision );		
+		sscanf ( strchr (str, '(') + sizeof (char), "%i.%i.%i" , &major, &minor, &revision );		
 		new_ext_html ( ep->d_name, gisbase, line, major, minor, revision );
 		num_restored ++;
 		fclose ( f_ext );		
@@ -507,7 +501,6 @@ int restore_html ( char *gisbase ) {
 	/* close remaining files */
 	fclose (f_in);	
 	fclose ( f_out );
-	close ( fd );	
 	
 	/* free memory */	
 	for ( i = 0; i < (n_lines + n_subdirs + 10); i++ ) {
