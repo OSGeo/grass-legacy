@@ -8,7 +8,7 @@
 
 int vect_to_rast(char *vector_map,char *raster_map, int field, char *column, int nrows, 
 	          int use, double value, int value_type, char *rgbcolumn, 
-                  char *labelcolumn)
+                  char *labelcolumn, int ftype)
 {
 #ifdef DEBUG
     int i;
@@ -30,10 +30,12 @@ int vect_to_rast(char *vector_map,char *raster_map, int field, char *column, int
     dbCatValArray cvarr;
     int is_fp = 0;
 
+    nareas = 0;
+
     if ((vector_mapset = G_find_vector2 (vector_map, "")) == NULL)
 	G_fatal_error (_("Vector map <%s> not found"), vector_map);
 
-    G_message (_("Loading vector information ..."));
+    G_debug (1, "Loading vector information ...");
     Vect_set_open_level (2);
     Vect_open_old (&Map, vector_map, vector_mapset);
 
@@ -63,7 +65,7 @@ int vect_to_rast(char *vector_map,char *raster_map, int field, char *column, int
 	if ( nrec < 0 )
             G_fatal_error (_("Cannot select data from table"));
 
-	G_message (_("\n%d records selected from table"), nrec);
+	G_debug (1, "%d records selected from table", nrec);
 
 	db_close_database_shutdown_driver(Driver);
 
@@ -124,14 +126,12 @@ int vect_to_rast(char *vector_map,char *raster_map, int field, char *column, int
 
     Points = Vect_new_line_struct ();
 
-    if (use != USE_Z && use != USE_D)
+    if (use != USE_Z && use != USE_D && (ftype & GV_AREA))
     {
-        G_message (_("Sorting areas by size ..."));
-
         if ((nareas = sort_areas (&Map, Points, field)) < 0)
             G_fatal_error (_("Unable to process areas from vector map <%s>"), vector_map);
 
-        G_message (_("%d areas"), nareas);
+	G_debug (1, "%d areas sorted", nareas);
     }
 
     nlines = 1;
@@ -142,35 +142,29 @@ int vect_to_rast(char *vector_map,char *raster_map, int field, char *column, int
 	pass++;
 
 	if (npasses > 1)
-            G_message (_("Pass #%d (of %d)"), pass, npasses);
+            G_message (_("Pass [%d] of [%d]:"), pass, npasses);
 
 	stat = 0;
 
 	if ( (use != USE_Z && use != USE_D) && nareas ) {
-	    G_message (_("Processing areas ..."));
-
 	    if(do_areas (&Map, Points, &cvarr, ctype, field, use, value, value_type) < 0) {
 		G_warning (_("Problem processing areas from vector map <%s>...continuing..."), vector_map);
 		stat = -1;
 		break;
 	    }
-
-	    G_message (_(" %d areas"), nareas);
 	}
 
 	if (nlines) {
-	    G_message (_("Processing lines ..."));
-
-	    if((nlines = do_lines (&Map, Points, &cvarr, ctype, field, use, value, value_type)) < 0) {
-		G_warning (_("Problem processing lines from vector map <%s>...continuing..."), vector_map);
+	    if((nlines = do_lines (&Map, Points, &cvarr, ctype, field, use, value, value_type, ftype)) < 0) {
+		G_warning (_("Problem processing lines from vector map <%s>, continuing..."), vector_map);
 		stat = -1;
 		break;
 	    }
-
-	    G_message (_(" %d lines"), nlines);
 	}
 
-	G_message (_("Writing raster map ..."));
+	G_message (_("Converted areas: [%d] of [%d]"), nareas, Vect_get_num_areas (&Map));
+	G_message (_("Converted points/lines: [%d] of [%d]"), nlines, Vect_get_num_lines (&Map));
+	G_debug (1, "Writing raster map ...");
 
 	stat = output_raster(fd);
     } while (stat == 0);
@@ -187,7 +181,7 @@ int vect_to_rast(char *vector_map,char *raster_map, int field, char *column, int
 
     Vect_close ( &Map );
 
-    G_message (_("Creating support files for raster map ..."));
+    G_debug (1, "Creating support files for raster map ...");
     G_close_cell(fd);
     update_hist(raster_map, vector_map, vector_mapset, Map.head.orig_scale);
 

@@ -20,21 +20,21 @@
 #include <grass/gis.h>
 #include <grass/dbmi.h>
 #include <grass/Vect.h>
-#include "local.h"
 #include <grass/glocale.h>
-
+#include "local.h"
 
 int main (int argc, char *argv[])
 {
     struct GModule *module;
-    struct Option *input, *output, *rows, *col, *field_opt, *use_opt, *val_opt, *rgbcol_opt, *label_opt;
-    int    field, nrows, use, value_type;
+    struct Option *input, *output, *rows, *col, *field_opt, *use_opt, *val_opt,
+      *rgbcol_opt, *label_opt, *type_opt;
+    int    field, nrows, use, value_type, type;
     double value;
 
     G_gisinit (argv[0]);
 
     module = G_define_module();
-    module->keywords = _("vector");
+    module->keywords = _("vector, raster, conversion");
     module->description = _("Converts a binary GRASS vector map layer "
 		          "into a GRASS raster map layer.");
 
@@ -55,6 +55,12 @@ int main (int argc, char *argv[])
 			"\t\tz    - use z coordinate (points or contours only)\n"
 			"\t\tdir  - output as flow direction (lines only)");
 
+    type_opt = G_define_standard_option(G_OPT_V_TYPE);
+    type_opt -> options = "point,line,area";
+    type_opt -> answer = "point,line,area";
+
+    field_opt = G_define_standard_option(G_OPT_V_FIELD);
+
     /* for GRASS 7, IMHO this should be changed to "attrcolumn" */
     col = G_define_option();
     col->key            = "column";
@@ -63,8 +69,6 @@ int main (int argc, char *argv[])
     col->required       = NO;
     col->multiple       = NO;
     col->description    = _("Name of column for attr parameter (data type must be numeric)");
-
-    field_opt = G_define_standard_option(G_OPT_V_FIELD);
 
     val_opt = G_define_option();
     val_opt->key              = "value";
@@ -99,6 +103,7 @@ int main (int argc, char *argv[])
     if (G_parser (argc, argv))
 	exit(EXIT_FAILURE);
 
+    type  = Vect_option_to_types (type_opt);
     field = atoi (field_opt->answer);
     nrows = atoi (rows->answer);
 
@@ -136,6 +141,6 @@ int main (int argc, char *argv[])
     value_type = (strchr (val_opt->answer, '.')) ? USE_DCELL : USE_CELL;
 
     return vect_to_rast (input->answer, output->answer, field,
-                    col->answer, nrows, use, value, value_type,
-                    rgbcol_opt->answer, label_opt->answer);
+			 col->answer, nrows, use, value, value_type,
+			 rgbcol_opt->answer, label_opt->answer, type);
 }

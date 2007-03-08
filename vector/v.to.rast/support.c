@@ -249,7 +249,7 @@ int update_labels (char *rast_name, char *vector_map, int field,
     {
     case USE_ATTR:
     {
-        G_set_raster_cats_title ("Labels", &rast_cats);
+	G_set_raster_cats_title ("Labels", &rast_cats);
         int is_fp = G_raster_map_is_fp (rast_name, G_mapset ());
 
         /* open vector map and database driver */
@@ -276,10 +276,17 @@ int update_labels (char *rast_name, char *vector_map, int field,
         my_labels_rules = (struct My_labels_rule *)G_malloc (sizeof(struct My_labels_rule)*nrec);
 
         /* get column type */
-        if ((col_type = db_column_Ctype (Driver, Fi->table, label_column)) == -1)
-            G_fatal_error (_("Column <%s> not found"), label_column);
-
-        /* for each attribute */
+	if (!label_column) {
+	    G_warning (_("Label column was not specified, no labels will be written"));
+	    break;
+	}
+	else {
+	    if ((col_type = db_column_Ctype (Driver, Fi->table, label_column)) == -1) {
+		G_fatal_error (_("Column <%s> not found"), label_column);
+	    }
+	}
+	    
+	/* for each attribute */
         for (i = 0; i < cvarr.n_values; i++)
         {
             char tmp[64];
