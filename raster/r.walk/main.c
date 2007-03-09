@@ -1,3 +1,37 @@
+/****************************************************************************
+ *
+ * MODULE:       r.walk
+ * AUTHOR(S):    Based on r.cost written by :
+ *                 Antony Awaida,
+ *                 Intelligent Engineering
+ *                 Systems Laboratory,
+ *                 M.I.T.
+ *                 James Westervelt,
+ *                 U.S.Army Construction Engineering Research Laboratory
+ *
+ *               Updated for Grass 5
+ *                 Pierre de Mouveaux (pmx@audiovu.com)
+ *
+ *               Initial version of r.walk:
+ *                 Steno Fontanari, 2002, ITC-irst
+ *
+ *               GRASS 6.0 version of r.walk:
+ *                 Franceschetti Simone, Sorrentino Diego, Mussi Fabiano and Pasolli Mattia
+ *                 Correction by: Fontanari Steno, Napolitano Maurizio and  Flor Roberto
+ *                 In collaboration with: Franchi Matteo, Vaglia Beatrice, Bartucca Luisa,
+ *                    Fava  Valentina  and Tolotti Mathias, 2004
+ *
+ *               Updated for GRASS 6.1
+ *                 Roberto Flor and Markus Neteler
+ *                 Glynn Clements <glynn gclements.plus.com>, Soeren Gebbert <soeren.gebbert gmx.de>
+ * PURPOSE:      anisotropic movements on cost surfaces
+ * COPYRIGHT:    (C) 1999-2006 by the GRASS Development Team
+ *
+ *               This program is free software under the GNU General Public
+ *               License (>=v2). Read the file COPYING that comes with GRASS
+ *               for details.
+ *
+ *****************************************************************************/
 
 /*********************************************************************
  *

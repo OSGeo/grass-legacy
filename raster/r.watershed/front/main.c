@@ -1,3 +1,16 @@
+/****************************************************************************
+ *
+ * MODULE:       front end
+ * AUTHOR(S):    Charles Ehlschlaeger, CERL (original contributor)
+ *               Brad Douglas <rez touchofmadness.com>, Hamish Bowman <hamish_nospam yahoo.com>
+ * PURPOSE:      Watershed determination
+ * COPYRIGHT:    (C) 1999-2006 by the GRASS Development Team
+ *
+ *               This program is free software under the GNU General Public
+ *               License (>=v2). Read the file COPYING that comes with GRASS
+ *               for details.
+ *
+ *****************************************************************************/
 #include <stdlib.h>
 #include <stdio.h>
 #include <string.h>

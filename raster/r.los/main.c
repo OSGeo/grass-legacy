@@ -1,3 +1,18 @@
+/****************************************************************************
+ *
+ * MODULE:       r.los
+ * AUTHOR(S):    Kewan Q. Khawaja, Intelligent Engineering Systems Laboratory, M.I.T. (original contributor)
+ *               Markus Neteler <neteler itc.it> (original contributor)
+ *               Ron Yorston <rmy tigress co uk>, Glynn Clements <glynn gclements.plus.com>,
+ *               Hamish Bowman <hamish_nospam yahoo.com>, Jan-Oliver Wagner <jan intevation.de>
+ * PURPOSE:      line of sight
+ * COPYRIGHT:    (C) 1999-2007 by the GRASS Development Team
+ *
+ *               This program is free software under the GNU General Public
+ *               License (>=v2). Read the file COPYING that comes with GRASS
+ *               for details.
+ *
+ *****************************************************************************/
 /****************************************************************
  *      main.c
  *

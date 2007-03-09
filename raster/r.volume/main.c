@@ -1,18 +1,25 @@
-/*
- * r.volume is a program to compute the total, and average of cell values
- * within regions of a map defined by clumps or patches on a second map
- * (or MASK).  It also computes the "volume" by multiplying the total
- * within a clump by the area of each cell.  It also outputs the
- * "centroid" location of each clump.  Output is to standard out.
- */
-
-/*
- * Programmed in Dec. 1988 by Dr. James Hinthorne, GIS Lab Central
- * Washington University (revised April 1989).
+/****************************************************************************
  *
- * Revised Jul 1995 to use new sites API (McCauley)
+ * MODULE:       r.volume
+ * AUTHOR(S):    Dr. James Hinthorne, Central Washington University GIS Laboratory
+ *               December 1988, (revised April 1989) (original contributor)
+ *               Revised Jul 1995 to use new sites API (McCauley)
+ *               GRASS 6 update: Hamish Bowman <hamish_nospam yahoo.com>
+ *               Glynn Clements <glynn gclements.plus.com>, Soeren Gebbert <soeren.gebbert gmx.de>
+ * PURPOSE:      
+ *               r.volume is a program to compute the total, and average of cell values
+ *               within regions of a map defined by clumps or patches on a second map
+ *               (or MASK).  It also computes the "volume" by multiplying the total
+ *               within a clump by the area of each cell.  It also outputs the
+ *               "centroid" location of each clump.  Output is to standard out.
  *
- */
+ * COPYRIGHT:    (C) 1999-2006 by the GRASS Development Team
+ *
+ *               This program is free software under the GNU General Public
+ *               License (>=v2). Read the file COPYING that comes with GRASS
+ *               for details.
+ *
+ *****************************************************************************/
 
 #include <stdlib.h>
 #include <string.h>
@@ -254,3 +261,4 @@ int main(int argc, char *argv[])
     fprintf(stdout, "\n");
     exit(EXIT_SUCCESS);
 }				/* end of main() */
+

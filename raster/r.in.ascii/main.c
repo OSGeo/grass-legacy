@@ -1,3 +1,21 @@
+/****************************************************************************
+ *
+ * MODULE:       r.in.ascii
+ * AUTHOR(S):    Michael Shapiro, CERL (original contributor)
+ *               Markus Neteler <neteler itc.it>, Hamish Bowman <hamish_nospam yahoo.com>,
+ *               Roberto Flor <flor itc.it>, Roger Miller <rgrmill rt66 com>,
+ *               Brad Douglas <rez touchofmadness.com>, Huidae Cho <grass4u gmail.com>,
+ *               Glynn Clements <glynn gclements.plus.com>
+ *               Jachym Cepicky <jachym les-ejk.cz>, Jan-Oliver Wagner <jan intevation.de>,
+ *               Justin Hickey <jhickey hpcc.nectec.or.th>
+ * PURPOSE:      Import ASCII or SURFER files
+ * COPYRIGHT:    (C) 1999-2006 by the GRASS Development Team
+ *
+ *               This program is free software under the GNU General Public
+ *               License (>=v2). Read the file COPYING that comes with GRASS
+ *               for details.
+ *
+ *****************************************************************************/
 #include <unistd.h>
 #include <stdlib.h>
 #include <string.h>
@@ -47,12 +65,12 @@ main (int argc, char *argv[])
 
 	module = G_define_module();
 	module->keywords = _("raster");
-    module->description =
+	module->description =
 		_("Convert an ASCII raster text file into a (binary) raster map layer.");
 
 	parm.input = G_define_standard_option(G_OPT_R_INPUT);
 	parm.input->description =
-	  _("Ascii raster file to be imported (or \"-\" to read from stdin)");
+	  _("ASCII raster file to be imported (or \"-\" to read from stdin)");
 	parm.input->gisprompt = "old_file,file,input";
 
 	parm.output = G_define_standard_option(G_OPT_R_OUTPUT);
@@ -82,22 +100,22 @@ main (int argc, char *argv[])
 	flag.i = G_define_flag();
 	flag.i->key = 'i';
 	flag.i->description = 
-		_("integer values are imported");
+		_("Integer values are imported");
 
 	flag.f = G_define_flag();
 	flag.f->key = 'f';
 	flag.f->description = 
-		_("floating point values are imported");
+		_("Floating point values are imported");
 
 	flag.d = G_define_flag();
 	flag.d->key = 'd';
 	flag.d->description = 
-	     _("double floating point values are imported");
+	     _("Double floating point values are imported");
 
 	flag.s = G_define_flag();
 	flag.s->key = 's';
 	flag.s->description =
-		_("SURFER (Golden Software) ascii grid file will be imported");
+		_("SURFER (Golden Software) ASCII file will be imported");
 
 	if (G_parser(argc,argv))
 		exit(EXIT_FAILURE);

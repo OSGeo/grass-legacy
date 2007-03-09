@@ -1,3 +1,22 @@
+/****************************************************************************
+ *
+ * MODULE:       r.thin
+ * AUTHOR(S):    Olga Waupotitsch, CERL (original contributor)
+ *               The code for finding the bounding box as well as
+ *               input/output code was written by Mike Baba (DBA
+ *               Systems, 1990) and Jean Ezell (USACERL, 1988).
+ *
+ *               Roberto Flor <flor itc.it>, Markus Neteler <neteler itc.it>
+ *               Glynn Clements <glynn gclements.plus.com>, Hamish Bowman <hamish_nospam yahoo.com>,
+ *               Jan-Oliver Wagner <jan intevation.de>
+ * PURPOSE:      Cell-file line thinning
+ * COPYRIGHT:    (C) 1999-2006 by the GRASS Development Team
+ *
+ *               This program is free software under the GNU General Public
+ *               License (>=v2). Read the file COPYING that comes with GRASS
+ *               for details.
+ *
+ *****************************************************************************/
 /* Cell-file line thinning */
 
 /* Mike Baba */
