@@ -12,8 +12,6 @@ import wx
 import wx.aui
 import os, sys, time, glob
 
-#sys.path.append()
-
 import render
 import gismutils
 import toolbars
@@ -57,10 +55,10 @@ class BufferedWindow(wx.Window):
         #
         # Event bindings
         # 
-    	self.Bind(wx.EVT_PAINT, self.OnPaint)
-    	self.Bind(wx.EVT_SIZE, self.OnSize)
-    	self.Bind(wx.EVT_IDLE, self.OnIdle)
-    	self.Bind(wx.EVT_MOTION, self.MouseActions)
+    	self.Bind(wx.EVT_PAINT,        self.OnPaint)
+    	self.Bind(wx.EVT_SIZE,         self.OnSize)
+    	self.Bind(wx.EVT_IDLE,         self.OnIdle)
+    	self.Bind(wx.EVT_MOTION,       self.MouseActions)
     	self.Bind(wx.EVT_MOUSE_EVENTS, self.MouseActions)
 
         #
@@ -345,8 +343,10 @@ class DrawWindow(BufferedWindow):
     	dc.EndDrawing()
 
 class MapFrame(wx.Frame):
-    """Main frame for map display window. Drawing takes place in child double buffered
-    drawing window."""
+    """
+    Main frame for map display window. Drawing takes place in child double buffered
+    drawing window.
+    """
 
     def __init__(self, parent=None, id=-1, title="Map display",
             pos=wx.DefaultPosition, size=wx.DefaultSize,
@@ -378,16 +378,20 @@ class MapFrame(wx.Frame):
         # fancy gui
         self._mgr = wx.aui.AuiManager(self)
 
-        # all possible toolbars
+        #
+        # Add toolbars
+        #
         self.maptoolbar = None
         self.digittoolbar = None
         for toolb in toolbars:
             self.AddToolbar(toolb)
 
-        # add status bars
-    	self.statusbar = self.CreateStatusBar(2, 0)
-    	self.statusbar.SetStatusWidths([-3, -1])
-    	map_frame_statusbar_fields = [("%s,%s" %(None, None)), _("map_frame_statusbar2")]
+        #
+        # Add statusbar
+        #
+    	self.statusbar = self.CreateStatusBar(number=2, style=0)
+    	self.statusbar.SetStatusWidths([-2, -1])
+    	map_frame_statusbar_fields = ["", ("%s,%s" %(None, None))]
     	for i in range(len(map_frame_statusbar_fields)):
     	    self.statusbar.SetStatusText(map_frame_statusbar_fields[i], i)
 
@@ -408,26 +412,27 @@ class MapFrame(wx.Frame):
         self._mgr.AddPane(self.MapWindow, wx.CENTER)
         self._mgr.Update()
 
-    def AddToolbar(self,name):
-        """Add defined toolbar to the window
+    def AddToolbar(self, name):
+        """
+        Add defined toolbar to the window
         
         Currently known toolbars are:
-            map, digit
+            * map
+            * digit
         """
-
         if name == "map":
-            self.maptoolbar = toolbars.MapToolbar(self,Map)
+            self.maptoolbar = toolbars.MapToolbar(self, Map)
             self._mgr.AddPane(self.maptoolbar.toolbar, wx.aui.AuiPaneInfo().
                           Name("maptoolbar").Caption("Map Toolbar").
                           ToolbarPane().Top().
-                          LeftDockable(True).RightDockable(True))
+                          LeftDockable(True).RightDockable(True).CloseButton(False))
 
         if name == "digit":
             self.digittoolbar = toolbars.DigitToolbar(self,Map)
             self._mgr.AddPane(self.digittoolbar.toolbar, wx.aui.AuiPaneInfo().
                           Name("digittoolbar").Caption("Digit Toolbar").
                           ToolbarPane().Top().
-                          LeftDockable(True).RightDockable(True))
+                          LeftDockable(True).RightDockable(True),)
         self._mgr.Update()
 
     def InitDisplay(self):
@@ -456,15 +461,16 @@ class MapFrame(wx.Frame):
         self.MapWindow.UpdateMap()
 
     def OnMotion(self, event):
-        """Mouse moved:
-        Track mouse motion, store it
-        s position to status bar"""
+        """
+        Mouse moved
+        Track mouse motion and update status bar
+        """
         # store current mouse position
     	posx, posy = event.GetPositionTuple()
 
     	# set coordinates to status bar
     	x, y = self.MapWindow.Pixel2Cell(posx, posy)
-    	self.statusbar.SetStatusText("%.3f,%.3f" % (x, y))
+    	self.statusbar.SetStatusText("%.3f,%.3f" % (x, y), 1)
     	event.Skip()
 
     def ReDraw(self, event):
@@ -578,6 +584,7 @@ if __name__ == "__main__":
 
     if not os.getenv("GRASS_ICONPATH"):
         os.environ["GRASS_ICONPATH"]=os.getenv("GISBASE")+"/etc/gui/icons/"
+
     gm_map = MapApp(0)
     gm_map.MainLoop()
     if grassenv.env.has_key("MONITOR"):
