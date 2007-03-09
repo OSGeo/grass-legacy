@@ -1,3 +1,18 @@
+/****************************************************************************
+ *
+ * MODULE:       v.reclass
+ * AUTHOR(S):    R.L. Glenn, USDA, SCS, NHQ-CGIS (original contributor)
+ *               GRASS 6 update: Radim Blazek <radim.blazek gmail.com>
+ *               Glynn Clements <glynn gclements.plus.com>,
+ *               Jachym Cepicky <jachym les-ejk.cz>, Markus Neteler <neteler itc.it>
+ * PURPOSE:      
+ * COPYRIGHT:    (C) 1999-2007 by the GRASS Development Team
+ *
+ *               This program is free software under the GNU General Public
+ *               License (>=v2). Read the file COPYING that comes with GRASS
+ *               for details.
+ *
+ *****************************************************************************/
 #include <stdio.h>
 #include <stdlib.h>
 #include <grass/gis.h>
@@ -368,4 +383,7 @@ main (int argc, char *argv[])
 
     exit(EXIT_SUCCESS);
 }
+
+
+
 

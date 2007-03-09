@@ -1,3 +1,21 @@
+/****************************************************************************
+ *
+ * MODULE:       v.proj
+ * AUTHOR(S):    Irina Kosinovsky, US ARMY CERL,
+ *               M.L. Holko, USDA, SCS, NHQ-CGIS,
+ *               R.L. Glenn, USDA, SCS, NHQ-CGIS (original contributors
+ *               Update to GRASS 6: Radim Blazek <radim.blazek gmail.com> 
+ *               Huidae Cho <grass4u gmail.com>, Hamish Bowman <hamish_nospam yahoo.com>,
+ *               Jachym Cepicky <jachym les-ejk.cz>, Markus Neteler <neteler itc.it>,
+ *               Paul Kelly <paul-grass stjohnspoint.co.uk>
+ * PURPOSE:      
+ * COPYRIGHT:    (C) 1999-2007 by the GRASS Development Team
+ *
+ *               This program is free software under the GNU General Public
+ *               License (>=v2). Read the file COPYING that comes with GRASS
+ *               for details.
+ *
+ *****************************************************************************/
 #include <stdio.h>
 #include <unistd.h>
 #include <ctype.h>
@@ -218,4 +236,7 @@ int main (int argc, char *argv[])
 
     exit(EXIT_SUCCESS);
 }
+
+
+
 
