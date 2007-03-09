@@ -196,54 +196,52 @@ static int do_clip(struct vector *a, struct vector *b)
 	return clipped;
 }
 
+static int shift_count(double dx)
+{
+	return (int) floor(dx / 360);
+}
+
+static double shift_angle(double dx)
+{
+	return shift_count(dx) * 360;
+}
+
 static double coerce(double x)
 {
 	x += 180;
-	x -= floor(x / 360) * 360;
+	x -= shift_angle(x);
 	x -= 180;
 	return x;
 }
 
-static int euclidify(double *x, const double *y, int n)
+static int euclidify(double *x, const double *y, int n, int no_pole)
 {
-	double ux0 = D_get_u_west();
-	double ux1 = D_get_u_east();
+	double ux0 = clip.left;
+	double ux1 = clip.rite;
 	double x0, x1;
-	int base, count;
+	int lo, hi, count;
 	int i;
-
-	for (i = 0; i < n; i++)
-		x[i] = coerce(x[i]);
 
 	x0 = x1 = x[0];
 
 	for (i = 1; i < n; i++)
 	{
-		double dx = x[i] - x[i-1];
-
 		if (fabs(y[i]) < 89.9)
-		{
-			if (dx > 180)
-				x[i] -= 360;
-			if (dx < -180)
-				x[i] += 360;
-		}
+			x[i] = x[i-1] + coerce(x[i] - x[i-1]);
 
 		x0 = min(x0, x[i]);
 		x1 = max(x1, x[i]);
 	}
 
-	if (fabs(x[n-1] - x[0]) > 180)
+	if (no_pole && fabs(x[n-1] - x[0]) > 180)
 		return 0;
 
-	count = 0;
-	base = floor((x0 - ux1) / 360);
-
-	for (count = 0; ux0 + (base + count) * 360 < x1; count++)
-		;
+	lo = -shift_count(ux1 - x0);
+	hi =  shift_count(x1 - ux0);
+	count = hi - lo + 1;
 
 	for (i = 0; i < n; i++)
-		x[i] -= base * 360;
+		x[i] -= lo * 360;
 
 	return count;
 }
@@ -324,38 +322,78 @@ void D_move_clip(double x, double y)
  *  \return int
  */
 
-int D_cont_clip(double x, double y)
+static int line_clip(double x1, double y1, double x2, double y2)
 {
-	struct vector a = cur;
-	struct vector b;
+	struct vector a, b;
 	int clipped;
 
-	if (!window_set)
-		D_clip_to_map();
+	a.x = x1;
+	a.y = y1;
 
-	b.x = x;
-	b.y = y;
-
-	cur = b;
+	b.x = x2;
+	b.y = y2;
 
 	clipped = do_clip(&a, &b);
 
 	if (clipped >= 0)
 	{
-		int x0 = round(D_u_to_d_col(a.x));
-		int y0 = round(D_u_to_d_row(a.y));
-		int x1 = round(D_u_to_d_col(b.x));
-		int y1 = round(D_u_to_d_row(b.y));
+		int x1 = round(D_u_to_d_col(a.x));
+		int y1 = round(D_u_to_d_row(a.y));
+		int x2 = round(D_u_to_d_col(b.x));
+		int y2 = round(D_u_to_d_row(b.y));
 
-		R_move_abs(x0, y0);
-		R_cont_abs(x1, y1);
+		R_move_abs(x1, y1);
+		R_cont_abs(x2, y2);
 	}
 
 	return clipped;
 }
 
+static int line_clip_ll(double ax, double ay, double bx, double by)
+{
+	double ux0 = clip.left;
+	double ux1 = clip.rite;
+	double x0, x1;
+	int lo, hi, i;
+	int ret;
+
+	bx = ax + coerce(bx - ax);
+
+	x0 = min(ax, bx);
+	x1 = max(ax, bx);
+
+	lo = -shift_count(ux1 - x0);
+	hi =  shift_count(x1 - ux0);
+
+	ret = 0;
+
+	for (i = lo; i <= hi; i++)
+		ret |= line_clip(ax + i * 360, ay, bx + i * 360, by);
+
+	return ret;
+}
+
+int D_cont_clip(double x, double y)
+{
+	int ret;
+
+	if (!window_set)
+		D_clip_to_map();
+
+	if (D_is_lat_lon())
+		ret = line_clip_ll(cur.x, cur.y, x, y);
+	else
+		ret = line_clip(cur.x, cur.y, x, y);
+
+	cur.x = x;
+	cur.y = y;
+
+	return ret;
+}
+
 void D_polydots_clip(const double *x, const double *y, int n)
 {
+	double ux0 = clip.left;
 	int i, j;
 
 	if (!window_set)
@@ -365,13 +403,19 @@ void D_polydots_clip(const double *x, const double *y, int n)
 
 	for (i = j = 0; i < n; i++)
 	{
-		if (x[i] < clip.left || x[i] > clip.rite)
+		double xx = x[i];
+		double yy = y[i];
+
+		if (D_is_lat_lon())
+			xx -= shift_angle(x[i] - ux0);
+
+		if (xx < clip.left || xx > clip.rite)
 			continue;
-		if (y[i] < clip.bot  || y[i] > clip.top )
+		if (yy < clip.bot  || yy > clip.top )
 			continue;
 
-		xf[j] = x[i];
-		yf[j] = y[i];
+		xf[j] = xx;
+		yf[j] = yy;
 		j++;
 	}
 
@@ -380,20 +424,47 @@ void D_polydots_clip(const double *x, const double *y, int n)
 	R_polydots_abs(xi, yi, j);
 }
 
-void D_polyline_clip(const double *x, const double *y, int n)
+static void polyline_clip(const double *x, const double *y, int n)
 {
 	int i;
 
+	for (i = 1; i < n; i++)
+		line_clip(x[i-1], y[i-1], x[i], y[i]);
+}
+
+static void polyline_clip_ll(const double *x, const double *y, int n)
+{
+	double *xx = G_malloc(n * sizeof(double));
+	int count, i;
+
+	memcpy(xx, x, n * sizeof(double));
+	count = euclidify(xx, y, n, 0);
+
+	for (i = 0; i < count; i++)
+	{
+		int j;
+
+		polyline_clip(xx, y, n);
+
+		for (j = 0; j < n; j++)
+			xx[j] -= 360;
+	}
+
+	G_free(xx);
+}
+
+void D_polyline_clip(const double *x, const double *y, int n)
+{
 	if (n < 2)
 		return;
 
 	if (!window_set)
 		D_clip_to_map();
 
-	D_move_clip(x[0], y[0]);
-
-	for (i = 1; i < n; i++)
-		D_cont_clip(x[i], y[i]);
+	if (D_is_lat_lon())
+		polyline_clip_ll(x, y, n);
+	else
+		polyline_clip(x, y, n);
 }
 
 static int clip_polygon_plane(int *pn, const double *x, const double *y, const struct plane *p)
@@ -467,42 +538,43 @@ static void polygon_clip(const double *x, const double *y, int n)
 	R_polygon_abs(xi, yi, n);
 }
 
+static void polygon_clip_ll(const double *x, const double *y, int n)
+{
+	double *xx = G_malloc(n * sizeof(double));
+	int count, i;
+
+	memcpy(xx, x, n * sizeof(double));
+	count = euclidify(xx, y, n, 1);
+
+	for (i = 0; i < count; i++)
+	{
+		int j;
+
+		if (i > 0)
+			for (j = 0; j < n; j++)
+				xx[j] -= 360;
+
+		polygon_clip(xx, y, n);
+	}
+
+	G_free(xx);
+}
+
 void D_polygon_clip(const double *x, const double *y, int n)
 {
 	if (!window_set)
 		D_clip_to_map();
 
 	if (D_is_lat_lon())
-	{
-		double *xx = G_malloc(n * sizeof(double));
-		int count, i;
-
-		memcpy(xx, x, n * sizeof(double));
-		count = euclidify(xx, y, n);
-
-		for (i = 0; i < count; i++)
-		{
-			int j;
-
-			polygon_clip(xx, y, n);
-
-			for (j = 0; j < n; j++)
-				xx[j] -= 360;
-		}
-
-		G_free(xx);
-	}
+		polygon_clip_ll(x, y, n);
 	else
 		polygon_clip(x, y, n);
 }
 
-void D_box_clip(double x1, double y1, double x2, double y2)
+static void box_clip(double x1, double y1, double x2, double y2)
 {
 	double t, b, l, r;
 	int ti, bi, li, ri;
-
-	if (!window_set)
-		D_clip_to_map();
 
 	l = max(clip.left, min(x1, x2));
 	r = min(clip.rite, max(x1, x2));
@@ -515,6 +587,32 @@ void D_box_clip(double x1, double y1, double x2, double y2)
 	ti = round(D_u_to_d_row(t));
 
 	R_box_abs(li, ti, ri, bi);
+}
+
+static void box_clip_ll(double x1, double y1, double x2, double y2)
+{
+	double ux0 = clip.left;
+	double ux1 = clip.rite;
+	int lo, hi, i;
+
+	x2 = x1 + coerce(x2 - x1);
+
+	lo = -shift_count(ux1 - x1);
+	hi =  shift_count(x2 - ux0);
+
+	for (i = lo; i <= hi; i++)
+		box_clip(x1 + i * 360, y1, x2 + i * 360, y2);
+}
+
+void D_box_clip(double x1, double y1, double x2, double y2)
+{
+	if (!window_set)
+		D_clip_to_map();
+
+	if (D_is_lat_lon())
+		box_clip_ll(x1, y1, x2, y2);
+	else
+		box_clip(x1, y1, x2, y2);
 }
 
 void D_move(double x, double y)
