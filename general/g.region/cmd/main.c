@@ -848,11 +848,15 @@ int main (int argc, char *argv[])
 			G_fatal_error (_("Unable to update current region"));
 	}
 
-        if (flag.savedefault->answer)
-            if (strcmp(G_mapset(),"PERMANENT") == 0)
-                G__put_window( &window, "../PERMANENT", "DEFAULT_WIND" );
-            else
+        if (flag.savedefault->answer) {
+            if (strcmp(G_mapset(),"PERMANENT") == 0) {
+                G__put_window( &window, "", "DEFAULT_WIND" );
+            }
+            else {
                 G_warning(_("You are not in mapset PERMANENT, default region remains untached"));
+            }
+        } /* / flag.savedefault->answer */
+        
 
 	if (print_flag)
 	    print_window (&window, print_flag);
