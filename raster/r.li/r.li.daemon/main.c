@@ -1,4 +1,19 @@
-
+/****************************************************************************
+ *
+ * MODULE:       r.li.daemon
+ * AUTHOR(S):    Claudio Porta, Lucio D. Spano, Serena Pallecchi (original contributors)
+ *                students of Computer Science University of Pisa (Italy)
+ *               Commission from Faunalia Pontedera (PI) www.faunalia.it
+ *               Fixes: Markus Neteler <neteler itc.it>
+ *               
+ * PURPOSE:      r.li.daemon with a simple index for library debug
+ * COPYRIGHT:    (C) 2006-2007 by the GRASS Development Team
+ *
+ *               This program is free software under the GNU General Public
+ *               License (>=v2). Read the file COPYING that comes with GRASS
+ *               for details.
+ *
+ *****************************************************************************/
 
 #include <stdlib.h>
 #include <fcntl.h>
@@ -207,3 +222,6 @@ int simple_index(int fd, char ** par, area_des ad, double *result){
 		return 1;
 	}
 }
+
+
+

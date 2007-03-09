@@ -1,15 +1,24 @@
-/* main.c
+/****************************************************************************
  *
- * Generates random cell values with spatial dependence. (right?)
+ * MODULE:       r.random.cells
+ * AUTHOR(S):    Charles Ehlschlaeger; National Center for Geographic Information
+ *               and Analysis, University of California, Santa Barbara (original contributor)
+ *               Markus Neteler <neteler itc.it>
+ *               Roberto Flor <flor itc.it>,
+ *               Brad Douglas <rez touchofmadness.com>, Glynn Clements <glynn gclements.plus.com>
+ * PURPOSE:      
+ * COPYRIGHT:    (C) 1999-2006 by the GRASS Development Team
  *
- * AUTHOR: Charles Ehlschlaeger; National Center for Geographic Information
- * and Analysis, University of California, Santa Barbara.
-*/
-
+ *               This program is free software under the GNU General Public
+ *               License (>=v2). Read the file COPYING that comes with GRASS
+ *               for details.
+ *
+ *****************************************************************************/
 #undef TRACE
 #undef DEBUG
 
 #define MAIN
+#include <stdlib.h>
 #include <grass/gis.h>
 #include <grass/glocale.h>
 #include "ransurf.h"
@@ -32,5 +41,8 @@ main (int argc, char *argv[])
 	
 	Init( argc, argv);
 	Indep();
-	return 0;
+	exit(EXIT_SUCCESS);
 }
+
+
+

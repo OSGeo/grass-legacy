@@ -1,3 +1,22 @@
+/****************************************************************************
+ *
+ * MODULE:       r.neighbors
+ * AUTHOR(S):    Michael Shapiro, CERL (original contributor)
+ *               Markus Neteler <neteler itc.it>, Bob Covill <bcovill tekmap.ns.ca>,
+ *               Brad Douglas <rez touchofmadness.com>, Glynn Clements <glynn gclements.plus.com>,
+ *               Jachym Cepicky <jachym les-ejk.cz>, Jan-Oliver Wagner <jan intevation.de>,
+ *               Radim Blazek <radim.blazek gmail.com>
+ *
+ * PURPOSE:      Makes each cell category value a function of the category values 
+ *               assigned to the cells around it, and stores new cell values in an
+ *               output raster map layer
+ * COPYRIGHT:    (C) 1999-2006 by the GRASS Development Team
+ *
+ *               This program is free software under the GNU General Public
+ *               License (>=v2). Read the file COPYING that comes with GRASS
+ *               for details.
+ *
+ *****************************************************************************/
 #include <string.h>
 #include <stdlib.h>
 #include <unistd.h>
@@ -78,7 +97,7 @@ int main (int argc, char *argv[])
 
 	module = G_define_module();
 	module->keywords = _("raster");
-    module->description =
+	module->description =
 		_("Makes each cell category value a "
 		  "function of the category values assigned to the cells "
 		  "around it, and stores new cell values in an output raster "
@@ -275,3 +294,6 @@ int main (int argc, char *argv[])
 
 	exit(EXIT_SUCCESS);
 }
+
+
+

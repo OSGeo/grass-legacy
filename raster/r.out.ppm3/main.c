@@ -1,10 +1,17 @@
-/* Written by Glynn Clements
- * Mon Apr 30 02:29:23 BST 2001
- */
-
-/* Use to convert 3 grass raster layers (R,G,B) to PPM
- * uses currently selected region
-*/
+/****************************************************************************
+ *
+ * MODULE:       r.out.ppm3
+ * AUTHOR(S):    Glynn Clements <glynn gclements.plus.com> (original contributor)
+ *               Jachym Cepicky <jachym les-ejk.cz>, Markus Neteler <neteler itc.it>
+ * PURPOSE:      Use to convert 3 grass raster layers (R,G,B) to PPM
+ *               uses currently selected region
+ * COPYRIGHT:    (C) 2001-2006 by the GRASS Development Team
+ *
+ *               This program is free software under the GNU General Public
+ *               License (>=v2). Read the file COPYING that comes with GRASS
+ *               for details.
+ *
+ *****************************************************************************/
 
 #include <string.h>
 #include <stdlib.h>
@@ -45,7 +52,7 @@ int main(int argc, char **argv)
 
 	module = G_define_module();
 	module->keywords = _("raster");
-    module->description =
+	module->description =
 		_("Converts 3 GRASS raster layers (R,G,B) to a PPM image file "
 		"at the pixel resolution of the CURRENTLY DEFINED REGION.");
 
@@ -83,7 +90,7 @@ int main(int argc, char **argv)
 	comment->description = _("Add comments to describe the region");
 
 	if (G_parser (argc, argv))
-		exit (-1);
+		exit (EXIT_FAILURE);
 
         /* please, remove before GRASS 7 released */
         if(bequiet->answer) {
@@ -214,6 +221,9 @@ int main(int argc, char **argv)
 		G_close_cell(B[i].file);
 	}
 
-	return 0;
+        exit(EXIT_SUCCESS);
 }
+
+
+
 
