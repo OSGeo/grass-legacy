@@ -1,3 +1,19 @@
+/****************************************************************************
+ *
+ * MODULE:       r.in.arc
+ * AUTHOR(S):    Unknown German author,
+ *                updated by Bill Brown to floating point support (original contributors)
+ *               Markus Neteler <neteler itc.it>, Huidae Cho <grass4u gmail.com>,
+ *               Roberto Flor <flor itc.it>, Jachym Cepicky <jachym les-ejk.cz>,
+ *               Jan-Oliver Wagner <jan intevation.de>
+ * PURPOSE:      Import an ESRI ARC/INFO ascii raster file
+ * COPYRIGHT:    (C) 1999-2006 by the GRASS Development Team
+ *
+ *               This program is free software under the GNU General Public
+ *               License (>=v2). Read the file COPYING that comes with GRASS
+ *               for details.
+ *
+ *****************************************************************************/
 #include <stdlib.h>
 #include <string.h>
 #include <grass/config.h>
@@ -74,8 +90,6 @@ int main (int argc, char *argv[])
         parm.mult->answer = "1.0";
         parm.mult->required = NO;
         parm.mult->description = _("Multiplier for ascii data") ;
-                                                
-
 
 	if (G_parser(argc,argv))
 		exit(EXIT_FAILURE);
@@ -106,9 +120,7 @@ int main (int argc, char *argv[])
 		fd = fopen (input, "r");
 
 	if (fd == NULL)
-	{
 		G_fatal_error(_("Could not open input file [%s]"),input);
-	}
 
 	if(!gethead (fd, &cellhd, &missingval))
 		G_fatal_error ( _("Can't get cell header"));

@@ -1,3 +1,17 @@
+/****************************************************************************
+ *
+ * MODULE:       r.recode
+ * AUTHOR(S):    CERL
+ *               Bob Covill <bcovill tekmap.ns.ca>, Hamish Bowman <hamish_nospam yahoo.com>,
+ *               Jan-Oliver Wagner <jan intevation.de>
+ * PURPOSE:      Recode categorical raster maps
+ * COPYRIGHT:    (C) 1999-2006 by the GRASS Development Team
+ *
+ *               This program is free software under the GNU General Public
+ *               License (>=v2). Read the file COPYING that comes with GRASS
+ *               for details.
+ *
+ *****************************************************************************/
 #define MAIN
 #include <stdio.h>
 #include <stdlib.h>
