@@ -87,6 +87,8 @@ int main(int argc, char *argv[])
     dxf_endsec();
     dxf_eof();			/* puts final stuff in dxf_fp, closes file */
 
+    G_done_msg("");
+
     exit(EXIT_SUCCESS);
 }
 
@@ -186,6 +188,8 @@ int add_plines(struct Map_info *Map, double textsize)
 	    dxf_poly_end(layer);
 	}
     }
+
+    G_message (_("[%d] features written"), nlines);
 
     return 0;
 }
