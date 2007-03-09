@@ -25,9 +25,12 @@ class TitledPage(wiz.WizardPageSimple):
         self.SetSizer(tmpsizer)
         self.SetAutoLayout(True)
 
-    def MakeLabel(self, text):
-        if text[-1] != " ":
-            text += " "
+    def MakeLabel(self, text=""):
+        try:
+            if text[-1] != " ":
+                text += " "
+        except:
+            pass
         return wx.StaticText(self, -1, text, style=wx.ALIGN_RIGHT)
 
     def MakeTextCtrl(self,text='', size=(100,20)):
@@ -50,15 +53,23 @@ class DatumPage(TitledPage):
         self.ttrans = self.MakeTextCtrl("")
 
         # search box
-        self.searchb = wx.SearchCtrl(self, size=(200,-1), style=wx.TE_PROCESS_ENTER)
+        self.searchb = wx.SearchCtrl(self, size=(100,-1), style=wx.TE_PROCESS_ENTER)
+
+        # button
+        self.bupdate = self.MakeButton("Update trans. parms.",
+                size=(150,25))
 
         # table
         self.tablewidth=600
-        self.datums = wx.ListCtrl(self, -1, style=wx.LC_REPORT |  wx.LC_VRULES | wx.LC_HRULES, size=(700,100))
-        self.datums.InsertColumn(0, 'Short Name ')
-        self.datums.InsertColumn(1, '                                             Description                                         ')
-        self.datums.SetColumnWidth(0, 100)
-        self.datums.SetColumnWidth(1, wx.LIST_AUTOSIZE_USEHEADER)
+        self.datumlist = wx.ListCtrl(self, -1, style=wx.LC_REPORT |  wx.LC_VRULES | wx.LC_HRULES, size=(700,100))
+        self.datumlist.InsertColumn(0, 'Short Name ')
+        self.datumlist.InsertColumn(1, '   Full EPSG-style name   ')
+        self.datumlist.InsertColumn(2, 'Ellipsoid')
+        self.datumlist.InsertColumn(3, '        Parameters          ')
+        self.datumlist.SetColumnWidth(0, 100)
+        self.datumlist.SetColumnWidth(1, wx.LIST_AUTOSIZE_USEHEADER)
+        self.datumlist.SetColumnWidth(2, wx.LIST_AUTOSIZE_USEHEADER)
+        self.datumlist.SetColumnWidth(3, wx.LIST_AUTOSIZE_USEHEADER)
 
         self.transformlist = wx.ListCtrl(self, -1, style=wx.LC_REPORT |  wx.LC_VRULES | wx.LC_HRULES, size=(700,100))
         self.transformlist.InsertColumn(0, ' ID')
@@ -73,19 +84,21 @@ class DatumPage(TitledPage):
         # laout
         self.sizer.Add(self.MakeLabel("Geodetic datum:"), 1, col=1, row=1)
         self.sizer.Add(self.tdatum, 0 , wx.ALIGN_LEFT, 1, row=1, col=2)
+        self.sizer.Add(self.bupdate, 0 , wx.ALIGN_CENTER_VERTICAL, 1, row=1, col=3)
         self.sizer.Add(self.MakeLabel("Search in description:"), 1, col=1, row=2)
         self.sizer.Add(self.searchb, 0 , wx.ALIGN_LEFT, 1, row=2, col=2)
 
-        self.sizer.Add(self.datums, 0 , wx.EXPAND | wx.ALIGN_CENTER_HORIZONTAL, 1, row=3, col=1, colspan=5)
-        self.sizer.Add(self.MakeLabel("Transformation parameters:"), 1, col=2, row=4)
-        self.sizer.Add(self.ttrans, 0 , wx.ALIGN_LEFT, 1, row=4, col=3)
-        self.sizer.Add(self.transformlist, 0 , wx.EXPAND | wx.ALIGN_CENTER_HORIZONTAL, 1, row=5, col=1, colspan=5)
+        self.sizer.Add(self.datumlist, 0 , wx.EXPAND | wx.ALIGN_CENTER_HORIZONTAL, 1, row=3, col=1, colspan=5)
+        self.sizer.Add(self.MakeLabel("Transformation parameters:"), 1, col=1, row=5)
+        self.sizer.Add(self.ttrans, 0 , wx.ALIGN_LEFT, 1, row=5, col=2)
+        self.sizer.Add(self.transformlist, 0 , wx.EXPAND | wx.ALIGN_CENTER_HORIZONTAL, 1, row=6, col=1, colspan=5)
 
         # events
         #wx.EVT_BUTTON(self, self.bbrowse.GetId(), self.OnBrowse)
         #wx.EVT_BUTTON(self, self.bbcodes.GetId(), self.OnBrowseCodes)
-        self.Bind(wx.EVT_LIST_ITEM_SELECTED, self.OnItemSelected, self.datums)
+        self.Bind(wx.EVT_LIST_ITEM_SELECTED, self.OnItemSelected, self.datumlist)
         self.Bind(wx.EVT_LIST_ITEM_SELECTED, self.OnTransformSelected, self.transformlist)
+        self.bupdate.Bind(wx.EVT_BUTTON, self._onBrowseParams)
         self.searchb.Bind(wx.EVT_TEXT_ENTER, self.OnDoSearch, self.searchb)
         self.tdatum.Bind(wx.EVT_TEXT_ENTER, self._onBrowseParams, self.tdatum)
 
@@ -93,12 +106,12 @@ class DatumPage(TitledPage):
 
     def OnDoSearch(self,event):
         str =  self.searchb.GetValue()
-        listItem  = self.datums.GetColumn(1)
+        listItem  = self.datumlist.GetColumn(1)
 
-        for i in range(self.datums.GetItemCount()):
-            listItem = self.datums.GetItem(i,1)
+        for i in range(self.datumlist.GetItemCount()):
+            listItem = self.datumlist.GetItem(i,1)
             if listItem.GetText().find(str) > -1:
-                datumcode = self.datums.GetItem(i, 0)
+                datumcode = self.datumlist.GetItem(i, 0)
                 self.tdatum.SetValue(datumcode.GetText())
                 break
 
@@ -113,7 +126,7 @@ class DatumPage(TitledPage):
         self.tdatum.SetValue(str(item.GetText()))
         self._onBrowseParams()
     
-    def _onBrowseParams(self):
+    def _onBrowseParams(self, event=None):
         params = [["","Use whole region",""]]
         file = os.path.join(os.getenv("GISBASE"), "etc","datumtransform.table")
         search = self.tdatum.GetValue()
@@ -149,33 +162,30 @@ class DatumPage(TitledPage):
 
     def _onBrowseDatums(self,event,search=None):
         try:
-            self.datums.DeleteAllItems()
+            self.datumlist.DeleteAllItems()
             f = open(os.path.join(os.getenv("GISBASE"), "etc","datum.table"),"r")
-            i=1
-            j = 0
-            descr = None
-            datum = None
+            # shortname "Full EPSG-style name" ellipsoid dx= dy= dz=
+            rex=re.compile('^(.+)\s+"(.+)"\s+(.+)\s+(dx=.+)')
+            j=0
             for line in f.readlines():
                 line = line.strip()
-                if not line:
-                    continue
-                if line[0] == "#":
-                    continue
-                line = line.replace("\t"," ")
-                datum,descr = string.split(line, " ", maxsplit=1)
-                descr = descr.replace('"',"")
-                descr = descr.strip()
-                if search and (descr.lower().find(search.lower()) > -1 or\
-                              datum.lower().find(search.lower()) > -1) or\
+                if not line: continue
+                if line[0] == "#": continue
+                shortname, epsgname, ellps, params = rex.findall(line)[0]
+                params = params.strip()
+                ellps = ellps.strip()
+                if search and (shortname.lower().find(search.lower()) > -1 or\
+                              ellps.lower().find(search.lower()) > -1 or\
+                              epsgname.lower().find(search.lower()) > -1) or\
                         not search:
-                    self.datums.InsertStringItem(j,datum)
-                    self.datums.SetStringItem(j,1,descr)
+                    self.datumlist.InsertStringItem(j,shortname)
+                    self.datumlist.SetStringItem(j,1,epsgname)
+                    self.datumlist.SetStringItem(j,2,ellps)
+                    self.datumlist.SetStringItem(j,3,params)
                     j  += 1
-                    # reset 
-                    descr = None; code = None; params = ""
             f.close()
-            self.SendSizeEvent()
-        except StandardError, e:
+            self.datumlist.SendSizeEvent()
+        except IOError, e:
             dlg = wx.MessageDialog(self, "Could not read datums: %s "
                     % e,"Can not read file",  wx.OK|wx.ICON_INFORMATION)
             dlg.ShowModal()
@@ -203,6 +213,31 @@ class SummaryPage(TitledPage):
         self.sizer.Add(self.MakeLabel("Columns:"), 1, flag=wx.ALIGN_RIGHT, row=13, col=2)
         self.sizer.Add(self.MakeLabel("Cells:"), 1, flag=wx.ALIGN_RIGHT, row=14, col=2)
 
+        # labels
+        self.ldatabase  =	self.MakeLabel("")
+        self.llocation  =	self.MakeLabel("")
+        self.lprojection =	self.MakeLabel("")
+        self.lnorth =	self.MakeLabel("")
+        self.lsouth  =	self.MakeLabel("")
+        self.least =	self.MakeLabel("")
+        self.lwest =	self.MakeLabel("")
+        self.lres =	self.MakeLabel("")
+        self.lrows =	self.MakeLabel("")
+        self.lcols =	self.MakeLabel("")
+        self.lcells =	self.MakeLabel("")
+
+        self.sizer.Add(self.ldatabase, 1, flag=wx.ALIGN_LEFT, row=1, col=3)
+        self.sizer.Add(self.llocation, 1, flag=wx.ALIGN_LEFT, row=4, col=3)
+        self.sizer.Add(self.lprojection, 1, flag=wx.ALIGN_LEFT, row=5, col=3)
+        self.sizer.Add(self.lnorth, 1, flag=wx.ALIGN_LEFT, row=6, col=3)
+        self.sizer.Add(self.lsouth, 1, flag=wx.ALIGN_LEFT, row=7, col=3)
+        self.sizer.Add(self.least, 1, flag=wx.ALIGN_LEFT, row=8, col=3)
+        self.sizer.Add(self.lwest, 1, flag=wx.ALIGN_LEFT, row=9, col=3)
+        self.sizer.Add(self.lres, 1, flag=wx.ALIGN_LEFT, row=10, col=3)
+        self.sizer.Add(self.lrows, 1, flag=wx.ALIGN_LEFT, row=12, col=3)
+        self.sizer.Add(self.lcols, 1, flag=wx.ALIGN_LEFT, row=13, col=3)
+        self.sizer.Add(self.lcells, 1, flag=wx.ALIGN_LEFT, row=14, col=3)
+
     def FillVars(self,event=None):
         database = self.parent.startpage.tgisdbase.GetValue()
         location = self.parent.startpage.tlocation.GetValue()
@@ -218,17 +253,19 @@ class SummaryPage(TitledPage):
         cols = int(round((float(east)-float(west))/float(res)))
         cells = int(rows*cols)
 
-        self.sizer.Add(self.MakeLabel(database), 1, flag=wx.ALIGN_LEFT, row=1, col=3)
-        self.sizer.Add(self.MakeLabel(location), 1, flag=wx.ALIGN_LEFT, row=4, col=3)
-        self.sizer.Add(self.MakeLabel(projection), 1, flag=wx.ALIGN_LEFT, row=5, col=3)
-        self.sizer.Add(self.MakeLabel(north), 1, flag=wx.ALIGN_LEFT, row=6, col=3)
-        self.sizer.Add(self.MakeLabel(south), 1, flag=wx.ALIGN_LEFT, row=7, col=3)
-        self.sizer.Add(self.MakeLabel(east), 1, flag=wx.ALIGN_LEFT, row=8, col=3)
-        self.sizer.Add(self.MakeLabel(west), 1, flag=wx.ALIGN_LEFT, row=9, col=3)
-        self.sizer.Add(self.MakeLabel(res), 1, flag=wx.ALIGN_LEFT, row=10, col=3)
-        self.sizer.Add(self.MakeLabel(str(rows)), 1, flag=wx.ALIGN_LEFT, row=12, col=3)
-        self.sizer.Add(self.MakeLabel(str(cols)), 1, flag=wx.ALIGN_LEFT, row=13, col=3)
-        self.sizer.Add(self.MakeLabel(str(cells)), 1, flag=wx.ALIGN_LEFT, row=14, col=3)
+        self.ldatabase.SetLabel(database)
+        self.llocation.SetLabel(location)
+        self.lprojection.SetLabel(projection)
+        self.lnorth.SetLabel(north)
+        self.lsouth.SetLabel(south)
+        self.least.SetLabel(east)
+        self.lwest.SetLabel(west)
+        self.lres.SetLabel(res)
+        self.lrows.SetLabel(str(rows))
+        self.lcols.SetLabel(str(cols))
+        self.lcells.SetLabel(str(cells))
+
+
 
 #projection: 99 (Other Projection)
 #zone: 0
@@ -263,6 +300,9 @@ class BBoxPage(TitledPage):
         self.tres = self.MakeTextCtrl("1")
         self.tfile = self.MakeTextCtrl("")
 
+        # labels
+        self.lmessage = wx.StaticText(self,-1, "", size=(200,50))
+
         # buttons
         self.bbrowse = self.MakeButton("Browse ...")
 
@@ -281,8 +321,15 @@ class BBoxPage(TitledPage):
             f.close()
         except:
             pass
+        # NOTE: ComboCtcl should come here, but nobody knows, how to
+        # implement it
+        # self.stateslist = wx.ListCtrl(self,
+        #                    style=wx.LC_LIST|wx.LC_SINGLE_SEL|wx.SIMPLE_BORDER)
+        # self.cstate = wx.combo.ComboCtrl(self, -1, pos=(50, 170), size=(150, -1),
+        #          style=wx.CB_READONLY)
+
         self.cstate = wx.ComboBox(self, -1, pos=(50, 170), size=(150, -1),
-                choices=self.states, style=wx.CB_READONLY)
+                choices=self.states, style=wx.CB_DROPDOWN)
 
         # layout
         self.sizer.Add(self.MakeLabel("North"), 0, wx.ALIGN_RIGHT, row=1,col=2)
@@ -304,11 +351,26 @@ class BBoxPage(TitledPage):
         self.sizer.Add(self.tfile, 0, wx.ALIGN_CENTER_VERTICAL, row=6,col=3)
         self.sizer.Add(self.bbrowse, 0, wx.ALIGN_LEFT, row=6,col=4)
         self.sizer.Add(wx.StaticLine(self, -1), 0, wx.EXPAND|wx.ALL, 0, row=7, col=1, colspan=5)
-        self.sizer.Add(self.MakeLabel("Set exntent according to selected country"), 3, wx.ALIGN_RIGHT, row=8,col=2)
+        self.sizer.Add(self.MakeLabel("Set extent according to selected country"), 3, wx.ALIGN_RIGHT, row=8,col=2)
         self.sizer.Add(self.cstate, 0, wx.ALIGN_LEFT, row=8,col=3)
+
+        self.sizer.Add(self.lmessage, 0, wx.ALIGN_CENTER_VERTICAL,
+                row=10,col=3, colspan=3)
+
 
         self.Bind(wiz.EVT_WIZARD_PAGE_CHANGING, self.OnWizPageChange)
         self.Bind(wx.EVT_COMBOBOX, self.OnItemSelected, self.cstate)
+        self.Bind(wx.EVT_TEXT, self.OnStateText, self.cstate)
+
+    def OnStateText(self,event):
+        pass
+        #.log.WriteText('EvtTextEnter: %s' % event.GetString())
+        #sys.stderr.write(event.GetString()+"\n")
+        #text=event.GetString().lower()
+        #for idx in range(len(self.states)):
+        #    if self.states[idx].lower() == text:
+        #        self.cstate.Select(idx)
+        #        break
 
     def OnWizPageChange(self, event):
         self.GetNext().FillVars()
@@ -323,10 +385,24 @@ class BBoxPage(TitledPage):
         if self.parent.csystemspage.cs == "latlong":
             pass
         else:
-            n = 100
-            s = 00
-            e = 100
-            w = 0
+            if self.parent.csystemspage.cs == "epsg":
+                to="+init=epsg:%d" % (int(self.parent.epsgpage.tcode.GetValue()))
+            elif self.parent.csystemspage.cs == "custom":
+                to="+proj=%s" % (self.parent.projpage.tproj.GetValue())
+            elif self.parent.csystemspage.cs == "utm":
+                to="+proj=utm"
+
+            try:
+                sin, sout = os.popen2("cs2cs +proj=latlong +datum=WGS84 +to %s" %  (to))
+                sin.write("%s %s\n" % (w,s))
+                sin.write("%s %s\n" % (e,n))
+                sin.close()
+                w,s,t = sout.readline().split()
+                e,n,t = sout.readline().split()
+                self.lmessage.SetLabel("")
+            except:
+                n = s = w = e="NULL"
+                self.lmessage.SetLabel("Unable to calculate country extends:\n cs2cs +proj=latlong +datum=WGS84 +to %s"% to)
 
         self.ttop.SetValue( str(n) )
         self.tbottom.SetValue( str(s) ) 
