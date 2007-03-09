@@ -1,15 +1,19 @@
-/*
- * \brief calculates patch  number  index
+/****************************************************************************
  *
- *   Author: Claudio Porta and Lucio Davide Spano students of Computer Science University of Pisa (Italy)
- *			Commission from Faunalia Pontedera (PI) www.faunalia.it
+ * MODULE:       r.li.patchnum
+ * AUTHOR(S):    Claudio Porta and Lucio Davide Spano (original contributors)
+ *                students of Computer Science University of Pisa (Italy)
+ *               Commission from Faunalia Pontedera (PI) www.faunalia.it
+ *               Fixes: Markus Neteler <neteler itc.it>
  *
- *   This program is free software under the GPL (>=v2)
- *   Read the COPYING file that comes with GRASS for details.
+ * PURPOSE:      calculates patch number index
+ * COPYRIGHT:    (C) 2007-2007 by the GRASS Development Team
  *
- *  BUGS: please send bugs reports to  spano@cli.di.unipi.it, porta@cli.di.unipi.it
- */
-
+ *               This program is free software under the GNU General Public
+ *               License (>=v2). Read the file COPYING that comes with GRASS
+ *               for details.
+ *
+ *****************************************************************************/
 
 #include <stdlib.h>
 #include <fcntl.h>
@@ -167,3 +171,6 @@ int patch_number(int fd, char ** par, area_des ad, double *result){
 	*result= count;
 	return 1;
 }
+
+
+
