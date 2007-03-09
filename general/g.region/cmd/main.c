@@ -853,7 +853,7 @@ int main (int argc, char *argv[])
                 G__put_window( &window, "", "DEFAULT_WIND" );
             }
             else {
-                G_warning(_("You are not in mapset PERMANENT, default region remains untached"));
+                G_fatal_error(_("You are not in mapset PERMANENT, default region remains untached"));
             }
         } /* / flag.savedefault->answer */
         
