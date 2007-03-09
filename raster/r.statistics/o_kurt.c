@@ -8,7 +8,8 @@
 
 #define MEM  1024
 
-#define MDEBUG(a) fprintf(stderr,"%s\n",a);
+/* function prototypes */
+static int kurt (double *, int, double *);
 
 
 int
@@ -78,11 +79,10 @@ o_kurt (char *basemap, char *covermap, char *outputmap, int usecats, struct Cate
 
 
     pclose(stats);
-    pclose(reclass);/**/
+    pclose(reclass);
 
     return(0);
 }
-
 
 
 /***********************************************************************
@@ -91,7 +91,7 @@ o_kurt (char *basemap, char *covermap, char *outputmap, int usecats, struct Cate
 *
 ************************************************************************/
 
-int
+static int
 kurt (double *data, int n, double *kurto)
 {
  double ave, ep, var, s;

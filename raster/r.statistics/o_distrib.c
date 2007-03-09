@@ -5,10 +5,9 @@
 #include "method.h"
 
 #define STATS "r.stats"
-#define RECLASS "r.reclass"
 
-#define MDEBUG(a) fprintf(stderr,"%s\n",a);
-
+/* function prototypes */
+static int o_out (FILE *, long, long);
 
 
 int 
@@ -31,7 +30,6 @@ o_distrib (char *basemap, char *covermap, char *outputmap, int usecats)
     {
 	unlink(tempfile1);
 	G_fatal_error (_("%s: running %s command"), me, STATS);
-	exit(stat);
     }
 
     fd1 = fopen (tempfile1, "r");
@@ -41,7 +39,6 @@ o_distrib (char *basemap, char *covermap, char *outputmap, int usecats)
 	unlink(tempfile1);
 	unlink(tempfile2);
 	G_fatal_error (_("%s: can't open tempfile"), me);
-	exit(EXIT_FAILURE);
     }
     o_out(fd2, 0L, 0);	/* force at least one reclass rule */
 
@@ -82,7 +79,7 @@ o_distrib (char *basemap, char *covermap, char *outputmap, int usecats)
         if(basecat)
         {
           sum = (double)(100.0 * area)/total_count;
-          fprintf(stdout,"%8ld %8ld %f\n", basecat, covercat, sum);
+          fprintf (stderr, "%8ld %8ld %f\n", basecat, covercat, sum);
           /*tot+=sum;
           fprintf(stderr,"Area: %ld   Tot: %ld  totsum: %lf\n",area,total_count,tot); */
         }
@@ -92,10 +89,12 @@ o_distrib (char *basemap, char *covermap, char *outputmap, int usecats)
     fclose (fd2);
     unlink (tempfile1);
     unlink (tempfile2);
+
     return(stat);
 }
 
-int 
+
+static int 
 o_out (FILE *fd, long cat, long sum)
 {
     if (sum == 0 || cat == 0) return -1;

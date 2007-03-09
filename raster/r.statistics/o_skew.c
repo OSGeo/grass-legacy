@@ -8,7 +8,8 @@
 
 #define MEM  1024
 
-#define MDEBUG(a) fprintf(stderr,"%s\n",a);
+/* function prototypes */
+static int skew (double *, int, double *);
 
 
 int 
@@ -86,14 +87,13 @@ o_skew (char *basemap, char *covermap, char *outputmap, int usecats, struct Cate
 }
 
 
-
 /***********************************************************************
 *
 *  Given an array of data[1...n], this routine returns its skewness
 *
 ************************************************************************/
 
-int 
+static int 
 skew (double *data, int n, double *skewn)
 {      
  double ave, ep, var, s;

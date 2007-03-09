@@ -8,6 +8,10 @@
 
 #define MEM  1024
 
+/* function prototypes */
+static int a_dev (double *, int, double *);
+
+
 int
 o_adev (char *basemap, char *covermap, char *outputmap, int usecats, struct Categories *cats)
 {
@@ -82,6 +86,7 @@ o_adev (char *basemap, char *covermap, char *outputmap, int usecats, struct Cate
     return(0);
 }
 
+
 /***********************************************************************
 *
 *  Given an array of data[1...n], this routine returns its average
@@ -89,7 +94,7 @@ o_adev (char *basemap, char *covermap, char *outputmap, int usecats, struct Cate
 *
 ************************************************************************/
 
-int
+static int
 a_dev (double *data, int n, double *adev)
 {
  double ave, s;
@@ -114,5 +119,6 @@ a_dev (double *data, int n, double *adev)
    }
 
    *adev /= n;
+
    return(0);
 }
