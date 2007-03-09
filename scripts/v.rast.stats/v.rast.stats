@@ -12,10 +12,11 @@
 #		License (>=v2). Read the file COPYING that comes with GRASS
 #		for details.
 #
+# TODO: do we need layer= management?
 #############################################################################
 
 #%Module
-#%  description: Calculates univariate statistics from a GRASS raster map based on vector objects
+#%  description: Calculates univariate statistics from a GRASS raster map based on vector polygons and uploads statistics to new attribute columns
 #%  keywords: vector, raster, statistics
 #%End
 #%flag
@@ -25,6 +26,7 @@
 #%option
 #% key: vector
 #% type: string
+#% key_desc: name
 #% gisprompt: old,vector,vector
 #% description: Name of vector polygon map
 #% required : yes
@@ -32,6 +34,7 @@
 #%option
 #% key: raster
 #% type: string
+#% key_desc: name
 #% gisprompt: old,cell,raster
 #% description: Name of raster map to calculate statistics from
 #% required : yes
@@ -39,7 +42,7 @@
 #%option
 #% key: colprefix
 #% type: string
-#% description: column prefix for new attribute columns
+#% description: Column prefix for new attribute columns
 #% required : yes
 #%end
 
@@ -79,8 +82,8 @@ cleanup()
 {
  #restore settings:
  g.region region=${TMPNAME}
- g.remove region=${TMPNAME} > /dev/null
- g.remove rast=${VECTOR}_${TMPNAME} > /dev/null
+ g.remove region=${TMPNAME} 2> /dev/null
+ g.remove rast=${VECTOR}_${TMPNAME} 2> /dev/null
  g.remove MASK > /dev/null 2> /dev/null
  if [ $MASKFOUND -eq 1 ] ; then
    echo "Restoring previous MASK..."
@@ -236,6 +239,7 @@ g.remove MASK > /dev/null 2> /dev/null
 
 cleanup
 
-echo "Statistics calculated from raster map <$RASTER> and"
-echo "uploaded to attribute table of vector map <$VECTOR>."
+echo "Statistics calculated from raster map <$RASTER> and uploaded to attribute table of vector map <$VECTOR>."
 echo "Done."
+
+exit 0
