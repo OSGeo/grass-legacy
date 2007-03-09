@@ -1,3 +1,18 @@
+/****************************************************************************
+ *
+ * MODULE:       r.patch
+ * AUTHOR(S):    Michael Shapiro, CERL (original contributor)
+ *               Hamish Bowman <hamish_nospam yahoo.com>, Markus Neteler <neteler itc.it>
+ *               Glynn Clements <glynn gclements.plus.com>, Jachym Cepicky <jachym les-ejk.cz>,
+ *               Jan-Oliver Wagner <jan intevation.de>
+ * PURPOSE:      
+ * COPYRIGHT:    (C) 1999-2006 by the GRASS Development Team
+ *
+ *               This program is free software under the GNU General Public
+ *               License (>=v2). Read the file COPYING that comes with GRASS
+ *               for details.
+ *
+ *****************************************************************************/
 #include <stdlib.h>
 #include <unistd.h>
 #include <grass/gis.h>
@@ -36,7 +51,7 @@ int main (int argc, char *argv[])
     G_gisinit (argv[0]);
 
     module = G_define_module();
-	module->keywords = _("raster");
+    module->keywords = _("raster");
     module->description =
 		_("Creates a composite raster map layer by using "
 		"known category values from one (or more) map layer(s) "

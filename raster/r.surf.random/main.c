@@ -1,9 +1,17 @@
-/*
-** Code Compiled by Jo Wood [JWO] 23rd October 1991
-** Midlands Regional Research Laboratory (ASSIST)
-**
-**
-*/
+/****************************************************************************
+ *
+ * MODULE:       r.surf.random
+ * AUTHOR(S):    Jo Wood, 19th October, 23rd October 1991 (original contributor)
+ *               Midlands Regional Research Laboratory (ASSIST)
+ * AUTHOR(S):    Markus Neteler <neteler itc.it> (original contributor)
+ * PURPOSE:      produces a raster map layer of uniform random deviates
+ * COPYRIGHT:    (C) 1999-2006 by the GRASS Development Team
+ *
+ *               This program is free software under the GNU General Public
+ *               License (>=v2). Read the file COPYING that comes with GRASS
+ *               for details.
+ *
+ *****************************************************************************/
 
 #include <stdlib.h>
 #include <grass/gis.h>

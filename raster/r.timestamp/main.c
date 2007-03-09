@@ -1,3 +1,18 @@
+/****************************************************************************
+ *
+ * MODULE:       r.timestamp
+ * AUTHOR(S):    Michael Shapiro, CERL (original contributor)
+ *               Markus Neteler <neteler itc.it>, Roberto Flor <flor itc.it>,
+ *               Glynn Clements <glynn gclements.plus.com>,
+ *               Hamish Bowman <hamish_nospam yahoo.com>, Jan-Oliver Wagner <jan intevation.de>
+ * PURPOSE:      
+ * COPYRIGHT:    (C) 1999-2006 by the GRASS Development Team
+ *
+ *               This program is free software under the GNU General Public
+ *               License (>=v2). Read the file COPYING that comes with GRASS
+ *               for details.
+ *
+ *****************************************************************************/
 #include <stdlib.h>
 #include <stdio.h>
 #include <string.h>

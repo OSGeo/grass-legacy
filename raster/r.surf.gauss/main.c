@@ -1,9 +1,16 @@
-/*
-** Code Compiled by Jo Wood [JWO] 24th October 1991
-** Midlands Regional Research Laboratory (ASSIST)
-**
-**
-*/
+/****************************************************************************
+ *
+ * MODULE:       r.surf.gauss
+ * AUTHOR(S):    Jo Wood, 19th October, 24th October 1991 (original contributor)
+ *               Midlands Regional Research Laboratory (ASSIST)
+ * PURPOSE:      
+ * COPYRIGHT:    (C) 1999-2006 by the GRASS Development Team
+ *
+ *               This program is free software under the GNU General Public
+ *               License (>=v2). Read the file COPYING that comes with GRASS
+ *               for details.
+ *
+ *****************************************************************************/
 
 #include <stdlib.h>
 #include <stdio.h>
@@ -68,7 +75,7 @@ main (int argc, char *argv[])
 
 
     if (G_parser(argc,argv))
-	exit(-1);		/*	Returns a 0 if sucessful		*/
+	exit(EXIT_FAILURE);		/*	Returns a 0 if sucessful		*/
 
     sscanf(mean->answer,"%lf",&gauss_mean);
     sscanf(sigma->answer,"%lf",&gauss_sigma);
@@ -83,15 +90,12 @@ main (int argc, char *argv[])
     else
     {
 	if (G_find_cell(out->answer,"") !=NULL)
-	{
 	    G_fatal_error("Raster map [%s] already exists.\nPlease try another.",out->answer);
-	}
-
     }
 
     /****** CREATE THE RANDOM CELL FILE  ******/
 
     gaussurf(out->answer,gauss_mean,gauss_sigma);
 
-    exit(0);
+    exit(EXIT_SUCCESS);
 }

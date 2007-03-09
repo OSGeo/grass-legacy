@@ -1,3 +1,17 @@
+/****************************************************************************
+ *
+ * MODULE:       r.median
+ * AUTHOR(S):    Michael Shapiro, CERL (original contributor)
+ *               Roberto Flor <flor itc.it>, Markus Neteler <neteler itc.it>
+ *               Jan-Oliver Wagner <jan intevation.de>
+ * PURPOSE:      
+ * COPYRIGHT:    (C) 1999-2006 by the GRASS Development Team
+ *
+ *               This program is free software under the GNU General Public
+ *               License (>=v2). Read the file COPYING that comes with GRASS
+ *               for details.
+ *
+ *****************************************************************************/
 #include <stdlib.h>
 #include <unistd.h>
 #include <string.h>
@@ -54,7 +68,7 @@ int main (int argc, char *argv[])
     parm.output->gisprompt = "new,cell,raster";
 
     if(G_parser(argc,argv))
-	exit(1);
+	exit(EXIT_FAILURE);
     
     basemap = parm.base->answer;
     covermap = parm.cover->answer;
@@ -62,28 +76,18 @@ int main (int argc, char *argv[])
 
     base_mapset = G_find_cell2 (basemap, "");
     if (base_mapset == NULL)
-    {
 	G_fatal_error(_("%s: base raster map not found"), basemap);
-    }
 
     cover_mapset = G_find_cell2 (covermap, "");
     if (cover_mapset == NULL)
-    {
 	G_fatal_error(_("%s: cover raster map not found"), covermap);
-    }
     if (G_legal_filename(outmap) < 0)
-    {
 	G_fatal_error(_("%s: illegal map name"), outmap);
-    }
     if (strcmp(G_mapset(),base_mapset)==0 && strcmp(basemap, outmap) == 0)
-    {
-	G_fatal_error(("%s: base map and output map must be different"),
+	G_fatal_error(_("%s: base map and output map must be different"),
 		outmap);
-    }
     if (G_read_cats (covermap, cover_mapset, &cover_cats) < 0)
-    {
 	G_fatal_error (_("%s: can't read category labels"), covermap);
-    }
 
     strcpy (command, "r.stats -a '");
     strcat (command, G_fully_qualified_name (basemap, base_mapset));
@@ -141,5 +145,5 @@ int main (int argc, char *argv[])
     pclose (stats_fd);
     pclose (reclass_fd);
 
-    exit(0);
+    exit(EXIT_SUCCESS);
 }
