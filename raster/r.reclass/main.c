@@ -26,12 +26,10 @@ int main (int argc, char *argv[])
     struct FPRange range;
     DCELL min, max;
     int fp;
-    char *title;
     char buf[1024];
     RULE *rules, *tail;
     int any;
-    char *old_name, *old_mapset;
-    char *new_name;
+    char *old_mapset;
     struct GModule *module;
     struct
     {
@@ -64,23 +62,19 @@ int main (int argc, char *argv[])
     if (G_parser(argc, argv))
 	exit(EXIT_FAILURE);
 
-    old_name = parm.input->answer;
-    new_name = parm.output->answer;
-    title    = parm.title->answer;
-
-    old_mapset = G_find_cell2 (old_name, "");
+    old_mapset = G_find_cell2 (parm.input->answer, "");
     if (old_mapset == NULL)
-	G_fatal_error(_("Raster map [%s] not found"), old_name);
+	G_fatal_error(_("Raster map [%s] not found"), parm.input->answer);
 
-    if (G_legal_filename(new_name) < 0)
-	G_fatal_error(_("[%s] is an illegal file name"), new_name);
+    if (G_legal_filename (parm.output->answer) < 0)
+	G_fatal_error(_("[%s] is an illegal file name"), parm.output->answer);
 
-    if (strcmp(old_name,new_name)==0  &&  strcmp(old_mapset,G_mapset())==0)
+    if (strcmp(parm.input->answer , parm.output->answer ) == 0 && strcmp(old_mapset,G_mapset())==0)
 	G_fatal_error (_("input map can NOT be the same as output map"));
 
     G_init_cats (0, "", &cats);
-    fp = G_raster_map_is_fp(old_name, old_mapset);
-    G_read_fp_range (old_name, old_mapset, &range);
+    fp = G_raster_map_is_fp (parm.input->answer, old_mapset);
+    G_read_fp_range (parm.input->answer, old_mapset, &range);
     G_get_fp_range_min_max (&range, &min, &max);
     rules = tail = NULL;
     any = 0;
@@ -120,12 +114,12 @@ int main (int argc, char *argv[])
     if (!any)
     {
 	if (isatty(0))
-	    G_fatal_error(_("no rules specified. [%s] not created"), new_name);
+	    G_fatal_error(_("no rules specified. [%s] not created"), parm.output->answer);
 	else
 	    G_fatal_error(_("no rules specified"));
     }
 
-    reclass (old_name, old_mapset, new_name, rules, &cats, title);
+    reclass (parm.input->answer, old_mapset, parm.output->answer, rules, &cats, parm.title->answer);
 
     exit(EXIT_SUCCESS);
 }
