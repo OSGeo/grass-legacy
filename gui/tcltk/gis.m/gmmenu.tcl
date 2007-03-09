@@ -447,7 +447,7 @@ set descmenu [subst  {
 		{command {[G_msg "Allocate subnets"]} {} "v.net.alloc" {} -command {execute v.net.alloc }}
 		{command {[G_msg "Network maintenance"]} {} "v.net" {} -command {execute v.net }}
 		{command {[G_msg "Shortest route"]} {} "v.net.path" {} -command {execute v.net.path }}
-		{command {[G_msg "Shortest route (visualization only)"]} {} "d.path" {} -command {guarantee_xmon; execute d.path }}
+		{command {[G_msg "Shortest route (visualization only)"]} {} "d.path" {} -command {guarantee_xmon; spawn d.path.sh -b --ui }}
 		{command {[G_msg "Split net to bands between cost isolines"]} {} "v.net.iso" {} -command {execute v.net.iso }}
 		{command {[G_msg "Steiner tree"]} {} "v.net.steiner" {} -command {execute v.net.steiner }}
 		{command {[G_msg "Traveling salesman analysis"]} {} "v.net.salesman" {} -command {execute v.net.salesman }}
