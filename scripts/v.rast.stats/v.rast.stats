@@ -82,8 +82,8 @@ cleanup()
 {
  #restore settings:
  g.region region=${TMPNAME}
- g.remove region=${TMPNAME} > /dev/null
- g.remove rast=${VECTOR}_${TMPNAME} > /dev/null
+ g.remove region=${TMPNAME} 2> /dev/null
+ g.remove rast=${VECTOR}_${TMPNAME} 2> /dev/null
  g.remove MASK > /dev/null 2> /dev/null
  if [ $MASKFOUND -eq 1 ] ; then
    echo "Restoring previous MASK..."
@@ -239,6 +239,7 @@ g.remove MASK > /dev/null 2> /dev/null
 
 cleanup
 
-echo "Statistics calculated from raster map <$RASTER> and"
-echo "uploaded to attribute table of vector map <$VECTOR>."
+echo "Statistics calculated from raster map <$RASTER> and uploaded to attribute table of vector map <$VECTOR>."
 echo "Done."
+
+exit 0
