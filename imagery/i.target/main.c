@@ -68,5 +68,5 @@ main (int argc, char *argv[])
                 group->answer, loc->answer, mapset->answer);
     }
 
-    return 0;
+    return (EXIT_SUCCESS);
 }
