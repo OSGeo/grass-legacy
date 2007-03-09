@@ -26,7 +26,7 @@ class MapToolbar:
     	self.pointer = self.toolbar.AddLabelTool(-1, "pointer", 
                        wx.Bitmap(os.path.join(gismutils.icons,"gui-pointer.gif"),
                                  wx.BITMAP_TYPE_ANY), 
-                       wx.NullBitmap, wx.ITEM_RADIO, "pointer", "")
+                       wx.NullBitmap, wx.ITEM_RADIO, "Pointer", "")
     	self.zoomin = self.toolbar.AddLabelTool(-1, "zoom_in", 
                         wx.Bitmap(os.path.join(gismutils.icons,"gui-zoom_in.gif"),
                                   wx.BITMAP_TYPE_ANY), 
