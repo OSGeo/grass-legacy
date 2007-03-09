@@ -198,10 +198,13 @@ static int do_clip(struct vector *a, struct vector *b)
 
 static double coerce(double x)
 {
-	return x - floor(x / 360) * 360;
+	x += 180;
+	x -= floor(x / 360) * 360;
+	x -= 180;
+	return x;
 }
 
-static int euclidify(double *x, int n)
+static int euclidify(double *x, const double *y, int n)
 {
 	double ux0 = D_get_u_west();
 	double ux1 = D_get_u_east();
@@ -218,10 +221,13 @@ static int euclidify(double *x, int n)
 	{
 		double dx = x[i] - x[i-1];
 
-		if (dx > 180)
-			x[i] -= 360;
-		if (dx < -180)
-			x[i] += 360;
+		if (fabs(y[i]) < 89.9)
+		{
+			if (dx > 180)
+				x[i] -= 360;
+			if (dx < -180)
+				x[i] += 360;
+		}
 
 		x0 = min(x0, x[i]);
 		x1 = max(x1, x[i]);
@@ -472,7 +478,7 @@ void D_polygon_clip(const double *x, const double *y, int n)
 		int count, i;
 
 		memcpy(xx, x, n * sizeof(double));
-		count = euclidify(xx, n);
+		count = euclidify(xx, y, n);
 
 		for (i = 0; i < count; i++)
 		{
