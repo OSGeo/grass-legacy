@@ -12,10 +12,11 @@
 #		License (>=v2). Read the file COPYING that comes with GRASS
 #		for details.
 #
+# TODO: do we need layer= management?
 #############################################################################
 
 #%Module
-#%  description: Calculates univariate statistics from a GRASS raster map based on vector objects
+#%  description: Calculates univariate statistics from a GRASS raster map based on vector polygons and uploads statistics to new attribute columns
 #%  keywords: vector, raster, statistics
 #%End
 #%flag
@@ -41,7 +42,7 @@
 #%option
 #% key: colprefix
 #% type: string
-#% description: column prefix for new attribute columns
+#% description: Column prefix for new attribute columns
 #% required : yes
 #%end
 
