@@ -8,6 +8,9 @@
 
 #define MEM  1024
 
+/* function prototypes */
+static int m_var (double *, int, double *);
+
 
 int
 o_var (char *basemap, char *covermap, char *outputmap, int usecats, struct Categories *cats)
@@ -24,7 +27,6 @@ o_var (char *basemap, char *covermap, char *outputmap, int usecats, struct Categ
     tab = (double *) G_malloc(mem);
 
     sprintf(command, "r.stats -cn input='%s,%s' fs=space", basemap, covermap);
-
     stats = popen(command,"r");
 
     sprintf (command, "r.reclass i='%s' o='%s'", basemap, outputmap);
@@ -70,6 +72,7 @@ o_var (char *basemap, char *covermap, char *outputmap, int usecats, struct Categ
         }
 
     }
+
     if (first)
     {
 	catb = catc = 0;
@@ -77,15 +80,13 @@ o_var (char *basemap, char *covermap, char *outputmap, int usecats, struct Categ
 
     m_var(tab, count, &vari);
     fprintf (reclass, "%ld = %ld %f\n", catb, catb, vari);
-    /*fprintf (stdout, "2. %ld = %ld %f\n", catb, catb, vari); */
-
+    G_debug (5, "2. %ld = %ld %f", catb, catb, vari);
 
     pclose(stats);
-    pclose(reclass);/**/
+    pclose(reclass);
 
     return(0);
 }
-
 
 
 /***********************************************************************
@@ -94,7 +95,7 @@ o_var (char *basemap, char *covermap, char *outputmap, int usecats, struct Categ
 *
 ************************************************************************/
 
-int
+static int
 m_var (double *data, int n, double *vari)
 {
  double ave, ep, s;
@@ -124,5 +125,6 @@ m_var (double *data, int n, double *vari)
    }
 
    *vari = (*vari - ep * ep / n) / (n -  1);
+
    return(0);
 }

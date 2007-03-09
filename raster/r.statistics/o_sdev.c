@@ -8,6 +8,8 @@
 
 #define MEM  1024
 
+/* function prototypes */
+static int s_dev (double *, int, double *);
 
 
 int
@@ -77,11 +79,10 @@ o_sdev (char *basemap, char *covermap, char *outputmap, int usecats, struct Cate
 
     s_dev(tab, count, &sdev);
     fprintf (reclass, "%ld = %ld %f\n", catb, catb, sdev);
-    /*fprintf (stdout, "%ld = %ld %f\n", catb, catb, sdev); */
-
+    G_debug (5, "%ld = %ld %f\n", catb, catb, sdev);
 
     pclose(stats);
-    pclose(reclass);/**/
+    pclose(reclass);
 
     return(0);
 }
@@ -94,7 +95,7 @@ o_sdev (char *basemap, char *covermap, char *outputmap, int usecats, struct Cate
 *
 ************************************************************************/
 
-int
+static int
 s_dev (double *data, int n, double *sdev)
 {
  double ave, var, ep, s;

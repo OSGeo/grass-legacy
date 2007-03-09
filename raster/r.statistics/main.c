@@ -6,62 +6,37 @@
 #define MAIN
 #include "method.h"
 
-#define MDEBUG(a) fprintf(stderr,"%s\n",a);
-
-
-int 
-is_ok (char *method, char *map)
-{
-   if(map == NULL)
-   {
-     G_fatal_error(_("Sorry, with method '%s' you have to define an output map."),
-                     method);
-     exit(EXIT_FAILURE);
-    }
-
-    return 0;
-}
-
+/* function prototypes */
+static int is_ok (char *, char *);
 
 
 int 
 main (int argc, char **argv)
 {
- char *mapset,*me;
- int usecats;
- int o_method;
- struct GModule *module;
- struct Option *method, *basemap, *covermap, *outputmap;
- struct Flag *flag_c;
- struct Categories cats;
-         
-  
-    G_gisinit(me=argv[0]);
+    char *mapset;
+    int o_method;
+    struct GModule *module;
+    struct Option *method, *basemap, *covermap, *outputmap;
+    struct Flag *flag_c;
+    struct Categories cats;
+
+    G_gisinit (argv[0]);
 
     module = G_define_module();
     module->keywords = _("raster");
     module->description =
 		_("Category or object oriented statistics.");
-					        
-    basemap = G_define_option();
-    basemap->key        = "base";
-    basemap->type       = TYPE_STRING ;
-    basemap->required   = YES ;
-    basemap->gisprompt  = "old,cell,raster" ;
-    basemap->description = _("Base raster map");
 
-    covermap = G_define_option();
-    covermap->key       = "cover";
-    covermap->type      = TYPE_STRING;
-    covermap->required  = YES ;
-    covermap->gisprompt  = "old,cell,raster" ;
-    covermap->description = _("Cover raster map");
+    basemap = G_define_standard_option (G_OPT_R_BASE);
+
+    covermap = G_define_standard_option (G_OPT_R_COVER);
 
     method = G_define_option();
-    method->key          = "method";
-    method->type         = TYPE_STRING;
-    method->required     = YES;
-    method->options      = G_malloc(1024);
+    method->key         = "method";
+    method->type        = TYPE_STRING;
+    method->required    = YES;
+    method->description = _("Method of object-based statistic");
+    method->options     = G_malloc(1024);
     for (o_method = 0; menu[o_method].name; o_method++)
     {
        if (o_method)
@@ -70,16 +45,10 @@ main (int argc, char **argv)
       	  *(method->options) = 0;
 	  strcat (method->options, menu[o_method].name);
     }
-    method->description  = _("Method of object-based statistic");
     
-    outputmap = G_define_option();
-    outputmap->key       = "output";
-    outputmap->type      = TYPE_STRING;
-    outputmap->required  = NO ;
-    outputmap->gisprompt  = "new,cell,raster" ;
+    outputmap = G_define_standard_option (G_OPT_R_OUTPUT);
     outputmap->description = _("Resultant raster map (not used with 'distribution')");
-    
-    
+
     flag_c = G_define_flag();
     flag_c->key = 'c';
     flag_c->description = _("Cover values extracted from the category labels of the cover map");
@@ -87,25 +56,22 @@ main (int argc, char **argv)
     if (G_parser(argc,argv))
 	exit(EXIT_FAILURE);
 
-    usecats = flag_c->answer;
-
     if( (mapset = G_find_cell2 (basemap->answer, "")) == 0)
-    	G_fatal_error("base map <%s> not found", basemap->answer);
+        G_fatal_error (_("Unable to find base map <%s>"), basemap->answer);
 
     if( G_raster_map_is_fp(basemap->answer, mapset) != 0 )
-    	G_fatal_error("This module currently only works for integer (CELL) maps");
+        G_fatal_error (_("This module currently only works for integer (CELL) maps"));
 
     if( (mapset = G_find_cell2 (covermap->answer, "")) == 0)
-    	G_fatal_error("cover map <%s> not found", covermap->answer);
+        G_fatal_error (_("Unable to find cover map <%s>"), covermap->answer);
 
     if( G_raster_map_is_fp(covermap->answer, mapset) != 0 )
-    	G_fatal_error("This module currently only works for integer (CELL) maps");
+        G_fatal_error (_("This module currently only works for integer (CELL) maps"));
 
     if (G_read_cats (covermap->answer, mapset, &cats) < 0)
     {
        G_fatal_error (_("%s: reading category file for %s"),
-        	me, covermap->answer);
-       exit(EXIT_FAILURE);
+        	G_program_name (), covermap->answer);
     }
     
     for (o_method = 0; menu[o_method].name; o_method++)
@@ -114,79 +80,88 @@ main (int argc, char **argv)
 
     if (!menu[o_method].name)
     {
-       G_warning (_("<%s=%s> unknown %s"),
-          method->key, method->answer, method->key);
+       G_warning (_("<%s=%s> unknown %s"), method->key, method->answer, method->key);
        G_usage();
+
        exit(EXIT_FAILURE);
     }                                                                                                                                                      
- 
- 
-   switch(menu[o_method].val){
+
+    switch (menu[o_method].val)
+    {
         case DISTRIB:
              if(outputmap->answer != NULL)
                G_warning(_("Outputmap '%s' ignored!"), outputmap->answer);
 	     
 	     o_distrib(basemap->answer, covermap->answer, 
-	                  outputmap->answer,usecats); /* ,&cats);  */
+	                  outputmap->answer, flag_c->answer);
 	     break;
 	case AVERAGE:
 	     is_ok(method->answer, outputmap->answer);
 	     o_average(basemap->answer, covermap->answer, 
-	                  outputmap->answer,usecats,&cats); 
+	                  outputmap->answer, flag_c->answer, &cats); 
 	     break;
         case MODE:
              is_ok(method->answer, outputmap->answer);
 	     o_mode(basemap->answer, covermap->answer, 
-	                  outputmap->answer,usecats,&cats); 
+	                  outputmap->answer, flag_c->answer, &cats); 
 	     break;
         case ADEV:
              is_ok(method->answer, outputmap->answer);
              o_adev(basemap->answer, covermap->answer, 
-                    outputmap->answer,usecats,&cats);
+                    outputmap->answer, flag_c->answer, &cats);
              break;
         case SDEV:
              is_ok(method->answer, outputmap->answer);
              o_sdev(basemap->answer, covermap->answer,
-                    outputmap->answer,usecats,&cats);
+                    outputmap->answer, flag_c->answer, &cats);
              break;
         case VARIANC:
              is_ok(method->answer, outputmap->answer);
              o_var(basemap->answer, covermap->answer,
-                    outputmap->answer,usecats,&cats); 
+                    outputmap->answer, flag_c->answer, &cats); 
              break;       
         case SKEWNES:
              is_ok(method->answer, outputmap->answer);
              o_skew(basemap->answer, covermap->answer,
-                    outputmap->answer,usecats,&cats); 
+                    outputmap->answer, flag_c->answer, &cats); 
              break;       
         case KURTOSI:
              is_ok(method->answer, outputmap->answer);
              o_kurt(basemap->answer, covermap->answer,
-                    outputmap->answer,usecats,&cats); 
+                    outputmap->answer, flag_c->answer, &cats); 
              break;       
         case MEDIAN:
              is_ok(method->answer, outputmap->answer);
              o_median(basemap->answer, covermap->answer,
-                    outputmap->answer,usecats,&cats); 
+                    outputmap->answer, flag_c->answer, &cats); 
              break;       
         case MIN:
              is_ok(method->answer, outputmap->answer);
              o_min(basemap->answer, covermap->answer,
-                    outputmap->answer,usecats,&cats);
+                    outputmap->answer, flag_c->answer, &cats);
              break;       
         case MAX:
              is_ok(method->answer, outputmap->answer);
              o_max(basemap->answer, covermap->answer,
-                    outputmap->answer,usecats,&cats); 
+                    outputmap->answer, flag_c->answer, &cats); 
              break;
         case SUM:
              is_ok(method->answer, outputmap->answer);
              o_sum(basemap->answer, covermap->answer,
-                    outputmap->answer,usecats,&cats); 
+                    outputmap->answer, flag_c->answer, &cats); 
              break;	            
 	default:
           G_fatal_error(_("Not yet implemented!")); 
     }    		
+
+    return 0;
+}
+
+
+static int is_ok (char *method, char *map)
+{
+    if (map == NULL)
+        G_fatal_error (_("An output map needs to be defined with method '%s'"), method);
 
     return 0;
 }

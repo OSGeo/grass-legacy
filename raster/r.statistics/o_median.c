@@ -3,6 +3,10 @@
 #include <grass/gis.h>
 #include "method.h"
 
+/* function prototypes */
+static long median (struct stats *);
+
+
 int 
 o_median (char *basemap, char *covermap, char *outputmap, int usecats, struct Categories *cats)
 {
@@ -19,7 +23,6 @@ o_median (char *basemap, char *covermap, char *outputmap, int usecats, struct Ca
          
 
     sprintf (command, "r.reclass i='%s' o='%s'",basemap, outputmap);
-
     reclass_fd = popen (command, "w");
 
     first = 1;
@@ -64,11 +67,11 @@ o_median (char *basemap, char *covermap, char *outputmap, int usecats, struct Ca
     pclose (stats_fd);
     pclose (reclass_fd);
 
-    exit(0);
+    exit (EXIT_SUCCESS);
 }
 
 
-long 
+static long 
 median (struct stats *stats)
 {
     double total, sum;
@@ -88,6 +91,7 @@ median (struct stats *stats)
     }
     if (i == stats->n) i--;
     if (i < 0) return((long)0);
+
     return(stats->cat[i]);
 }
 

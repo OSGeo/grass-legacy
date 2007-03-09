@@ -7,7 +7,8 @@
 #define STATS "r.stats"
 #define RECLASS "r.reclass"
 
-#define MDEBUG(a) fprintf(stderr,"%s\n",a);
+/* function prototypes */
+static int out (FILE *, long, double, double);
 
 
 int 
@@ -15,14 +16,11 @@ o_average (char *basemap, char *covermap, char *outputmap, int usecats, struct C
 {
     char *me="o_average";
     char command[1024];
-    
     long catb, basecat, covercat;
     double x, area, sum1, sum2;
     int stat;
     char *tempfile1, *tempfile2;
     FILE *fd1, *fd2;
-
-
 
     tempfile1 = G_tempfile();
     tempfile2 = G_tempfile();
@@ -33,7 +31,6 @@ o_average (char *basemap, char *covermap, char *outputmap, int usecats, struct C
     {
 	unlink(tempfile1);
 	G_fatal_error (_("%s: running %s command"), me, STATS);
-	exit(stat);
     }
 
     fd1 = fopen (tempfile1, "r");
@@ -43,7 +40,6 @@ o_average (char *basemap, char *covermap, char *outputmap, int usecats, struct C
 	unlink(tempfile1);
 	unlink(tempfile2);
 	G_fatal_error (_("%s: can't open tempfile"), me);
-	exit(EXIT_FAILURE);
     }
     out(fd2, 0L, 0.0, 1.0);	/* force at least one reclass rule */
 
@@ -74,10 +70,12 @@ o_average (char *basemap, char *covermap, char *outputmap, int usecats, struct C
     stat = system(command);
     unlink (tempfile1);
     unlink (tempfile2);
+
     return(stat);
 }
 
-int 
+
+static int 
 out (FILE *fd, long cat, double sum1, double sum2)
 {
     char buf[80];

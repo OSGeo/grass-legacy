@@ -50,41 +50,30 @@ struct menu
     extern struct menu menu[];
 #endif
 
-/* main.c */
-int is_ok(char *, char *);
 /* o_adev.c */
 int o_adev(char *, char *, char *, int, struct Categories *);
-int a_dev(double *, int, double *);
 /* o_average.c */
 int o_average(char *, char *, char *, int, struct Categories *);
-int out(FILE *, long, double, double);
 /* o_distrib.c */
 int o_distrib(char *, char *, char *, int);
-int o_out(FILE *, long, long);
 /* o_kurt.c */
 int o_kurt(char *, char *, char *, int, struct Categories *);
-int kurt(double *, int, double *);
 /* o_max.c */
 int o_max(char *, char *, char *, int, struct Categories *);
 /* o_median.c */
 int o_median(char *, char *, char *, int, struct Categories *);
-long median(struct stats *);
 /* o_min.c */
 int o_min(char *, char *, char *, int, struct Categories *);
 /* o_mode.c */
 int o_mode(char *, char *, char *, int, struct Categories *);
 /* o_sdev.c */
 int o_sdev(char *, char *, char *, int, struct Categories *);
-int s_dev(double *, int, double *);
 /* o_skew.c */
 int o_skew(char *, char *, char *, int, struct Categories *);
-int skew(double *, int, double *);
 /* o_sum.c */
 int o_sum(char *, char *, char *, int, struct Categories *);
-int sum_out(FILE *, long, double);
 /* o_var.c */
 int o_var(char *, char *, char *, int, struct Categories *);
-int m_var(double *, int, double *);
 /* read_stats.c */
 int read_stats(FILE *, long *, long *, double *);
 /* write_rec.c */

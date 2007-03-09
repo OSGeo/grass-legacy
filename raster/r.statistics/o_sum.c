@@ -7,7 +7,8 @@
 #define STATS "r.stats"
 #define RECLASS "r.reclass"
 
-#define MDEBUG(a) fprintf(stderr,"%s\n",a);
+/* function prototypes */
+static int sum_out (FILE *, long, double);
 
 
 int
@@ -31,7 +32,6 @@ o_sum (char *basemap, char *covermap, char *outputmap, int usecats, struct Categ
     {
 	unlink(tempfile1);
 	G_fatal_error (_("%s: running %s command"), me, STATS);
-	exit(stat);
     }
 
     fd1 = fopen (tempfile1, "r");
@@ -41,7 +41,6 @@ o_sum (char *basemap, char *covermap, char *outputmap, int usecats, struct Categ
 	unlink(tempfile1);
 	unlink(tempfile2);
 	G_fatal_error (_("%s: can't open tempfile"), me);
-	exit(1);
     }
     sum_out(fd2, 0L, 0.0);	/* force at least one reclass rule */
 
@@ -73,13 +72,15 @@ o_sum (char *basemap, char *covermap, char *outputmap, int usecats, struct Categ
     stat = system(command);
     unlink (tempfile1);
     unlink (tempfile2);
+
     return(stat);
 }
 
-int
+
+static int
 sum_out (FILE *fd, long cat, double sum1)
 {
-    char buf[80];
+    char buf[64];
 
     if (cat == 0)
 	*buf = 0;
@@ -88,5 +89,6 @@ sum_out (FILE *fd, long cat, double sum1)
 	sprintf (buf, "%.10lf", sum1);
 	G_trim_decimal (buf);
     }
+
     fprintf (fd, "%ld = %ld %s\n", cat, cat, buf);
 }
