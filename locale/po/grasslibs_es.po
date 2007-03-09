@@ -12,7 +12,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: grasslibs_es\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2007-03-02 16:27+0100\n"
+"POT-Creation-Date: 2007-03-09 17:24+0100\n"
 "PO-Revision-Date: 2007-03-01 09:12+0100\n"
 "Last-Translator: Carlos Davila <carluti@users.sourceforge.net>\n"
 "Language-Team: Español <grass-es@grass.itc.it>\n"
@@ -556,67 +556,123 @@ msgstr "ERROR - el monitor de gráficos <%s> no reponde.\n"
 msgid "Unable to open file %s"
 msgstr "No es posible abrir el archivo %s "
 
-#: ../lib/gpde/N_arrays.c:1029
+#: ../lib/gpde/N_arrays.c:1042
 #, c-format
 msgid "Requested raster map <%s> not found"
 msgstr "No se encontró el mapa ráster <%s> solicitado"
 
-#: ../lib/gpde/N_arrays.c:1041 ../lib/gpde/N_arrays.c:1163
+#: ../lib/gpde/N_arrays.c:1054 ../lib/gpde/N_arrays.c:1169
 #, c-format
 msgid "Error opening raster map %s"
 msgstr "Error al abrir el mapa raster %s"
 
-#: ../lib/gpde/N_arrays.c:1070
+#: ../lib/gpde/N_arrays.c:1083
 #, c-format
 msgid "Reading raster map <%s> into memory"
 msgstr "Leyendo el mapa ráster <%s> en memoria"
 
-#: ../lib/gpde/N_arrays.c:1077
+#: ../lib/gpde/N_arrays.c:1090
 msgid "Could not get raster row"
 msgstr "No se pudo obtener la fila ráster"
 
-#: ../lib/gpde/N_arrays.c:1120 ../lib/gpde/N_arrays.c:1204
+#: ../lib/gpde/N_arrays.c:1124 ../lib/gpde/N_arrays.c:1210
 msgid "Unable to close input map"
 msgstr "No se puede cerrar el mapa de entrada"
 
-#: ../lib/gpde/N_arrays.c:1151
+#: ../lib/gpde/N_arrays.c:1157
 msgid "N_array_2d * array is empty"
 msgstr "N_array_2d * la matriz está vacía"
 
-#: ../lib/gpde/N_arrays.c:1172
+#: ../lib/gpde/N_arrays.c:1178
 #, c-format
 msgid "Write 2d array to raster map <%s>"
 msgstr "Escribir matriz 2D en el mapa ráster <%s>"
 
-#: ../lib/gpde/N_arrays.c:1188 ../lib/gpde/N_arrays.c:1193
-#: ../lib/gpde/N_arrays.c:1198
+#: ../lib/gpde/N_arrays.c:1194 ../lib/gpde/N_arrays.c:1199
+#: ../lib/gpde/N_arrays.c:1204
 #, c-format
 msgid "Unable to write rast row %i"
 msgstr "No se puede escribir la fila ráster %i"
 
-#: ../lib/gpde/N_arrays.c:2168
+#: ../lib/gpde/N_arrays.c:2182
 #, c-format
 msgid "Requested g3d map <%s> not found"
 msgstr "No se encontró el mapa g3D <%s> solicitado"
 
-#: ../lib/gpde/N_arrays.c:2176 ../lib/gpde/N_arrays.c:2308
+#: ../lib/gpde/N_arrays.c:2190 ../lib/gpde/N_arrays.c:2323
 #, c-format
 msgid "Error opening g3d map <%s>"
 msgstr "Error al abrir el mapa g3D <%s>"
 
-#: ../lib/gpde/N_arrays.c:2204
+#: ../lib/gpde/N_arrays.c:2218
 #, c-format
 msgid "Read g3d map <%s> into the memory"
 msgstr "Leer el mapa g3D <%s> en memoria"
 
-#: ../lib/gpde/N_arrays.c:2249 ../lib/gpde/N_arrays.c:2349
+#: ../lib/gpde/N_arrays.c:2263 ../lib/gpde/N_arrays.c:2364
 msgid "Error closing g3d file"
 msgstr "Error al cerrar el archivo g3D"
 
-#: ../lib/gpde/N_arrays.c:2310
+#: ../lib/gpde/N_arrays.c:2325
 #, c-format
 msgid "Write 3d array to g3d map <%s>"
 msgstr "Escribir matriz 3D en el mapa g3D <%s>"
+
+#: ../lib/gpde/N_solvers.c:227
+#, c-format
+msgid "sparse CG -- iteration %i error  %g\n"
+msgstr ""
+
+#: ../lib/gpde/N_solvers.c:229
+#, c-format
+msgid "CG -- iteration %i error  %g\n"
+msgstr ""
+
+#: ../lib/gpde/N_solvers.c:368
+#, c-format
+msgid "sparse BiCGStab -- iteration %i error  %g\n"
+msgstr ""
+
+#: ../lib/gpde/N_solvers.c:371
+#, c-format
+msgid "BiCGStab -- iteration %i error  %g\n"
+msgstr ""
+
+#: ../lib/gpde/N_solvers.c:408
+msgid "The gauss elimination solver works only with normal quadratic matrices"
+msgstr ""
+
+#: ../lib/gpde/N_solvers.c:410
+msgid "Starting gauss elimination solver"
+msgstr ""
+
+#: ../lib/gpde/N_solvers.c:437
+msgid "The lu solver works only with normal quadratic matrices"
+msgstr ""
+
+#: ../lib/gpde/N_solvers.c:439
+msgid "Starting lu solver method"
+msgstr ""
+
+#: ../lib/gpde/N_solvers.c:994
+#, c-format
+msgid "sparse Jacobi -- iteration %5i error %g\n"
+msgstr ""
+
+#: ../lib/gpde/N_solvers.c:996
+#, c-format
+msgid "sparse SOR -- iteration %5i error %g\n"
+msgstr ""
+
+#: ../lib/gpde/N_solvers.c:1039
+#, c-format
+msgid "Jacobi -- iteration %5i error %g\n"
+msgstr ""
+
+#: ../lib/gpde/N_solvers.c:1077
+#, c-format
+msgid "Gauss-Seidel -- iteration %5i error %g\n"
+msgstr ""
 
 #: ../lib/gpde/test/test_main.c:49
 msgid "Choose the unit tests to run"
@@ -647,7 +703,10 @@ msgid "Performs unit and integration tests for gpde library"
 msgstr "Realiza pruebas de unidad e integración para la biblioteca gpde"
 
 #: ../lib/gpde/test/test_arrays.c:44
-msgid "++ Running array unit tests ++"
+#, fuzzy
+msgid ""
+"\n"
+"++ Running array unit tests ++"
 msgstr "++ Ejecutando pruebas de la unidad de array ++"
 
 #: ../lib/gpde/test/test_arrays.c:46
@@ -659,24 +718,39 @@ msgid "\t 2. testing 3d arrays"
 msgstr "\t 2. probando arrays 3D"
 
 #: ../lib/gpde/test/test_arrays.c:53
-msgid "-- Array unit tests failure --"
+#, fuzzy
+msgid ""
+"\n"
+"-- Array unit tests failure --"
 msgstr "-- Las pruebas de la unidad de arrays fallaron --"
 
 #: ../lib/gpde/test/test_arrays.c:55
-msgid "-- Array unit tests finished successfully --"
+#, fuzzy
+msgid ""
+"\n"
+"-- Array unit tests finished successfully --"
 msgstr "-- Las pruebas de la unidad de arrays acabaron con éxito --"
 
 #: ../lib/gpde/test/test_les.c:34
-msgid "++ Running les creation unit tests ++"
-msgstr ""
+#, fuzzy
+msgid ""
+"\n"
+"++ Running les creation unit tests ++"
+msgstr "++ Ejecutando pruebas de la unidad de gradiente ++"
 
 #: ../lib/gpde/test/test_les.c:39
-msgid "-- les creation unit tests failure --"
-msgstr ""
+#, fuzzy
+msgid ""
+"\n"
+"-- les creation unit tests failure --"
+msgstr "-- Las pruebas de la unidad de gradiente fallaron --"
 
 #: ../lib/gpde/test/test_les.c:41
-msgid "-- les creation unit tests finished successfully --"
-msgstr ""
+#, fuzzy
+msgid ""
+"\n"
+"-- les creation unit tests finished successfully --"
+msgstr "-- Las pruebas de la unidad de gradiente acabaron con éxito --"
 
 #: ../lib/gpde/test/test_les.c:57
 msgid "\t * testing les creation in parallel\n"
@@ -687,7 +761,10 @@ msgid "\t * testing les creation in serial\n"
 msgstr ""
 
 #: ../lib/gpde/test/test_gradient.c:42
-msgid "++ Running gradient unit tests ++"
+#, fuzzy
+msgid ""
+"\n"
+"++ Running gradient unit tests ++"
 msgstr "++ Ejecutando pruebas de la unidad de gradiente ++"
 
 #: ../lib/gpde/test/test_gradient.c:44
@@ -699,15 +776,45 @@ msgid "\t 2. testing 3d gradient"
 msgstr "\t 2. probando gradiente 3D"
 
 #: ../lib/gpde/test/test_gradient.c:51
-msgid "-- Gradient unit tests failure --"
+#, fuzzy
+msgid ""
+"\n"
+"-- Gradient unit tests failure --"
 msgstr "-- Las pruebas de la unidad de gradiente fallaron --"
 
 #: ../lib/gpde/test/test_gradient.c:53
-msgid "-- Gradient unit tests finished successfully --"
+#, fuzzy
+msgid ""
+"\n"
+"-- Gradient unit tests finished successfully --"
 msgstr "-- Las pruebas de la unidad de gradiente acabaron con éxito --"
 
+#: ../lib/gpde/test/test_geom.c:36
+#, fuzzy
+msgid ""
+"\n"
+"++ Running geom_data unit tests ++"
+msgstr "++ Ejecutando pruebas de la unidad de array ++"
+
+#: ../lib/gpde/test/test_geom.c:41
+#, fuzzy
+msgid ""
+"\n"
+"-- geom_data unit tests failure --"
+msgstr "-- Las pruebas de la unidad de arrays fallaron --"
+
+#: ../lib/gpde/test/test_geom.c:43
+#, fuzzy
+msgid ""
+"\n"
+"-- geom_data unit tests finished successfully --"
+msgstr "-- Las pruebas de la unidad de arrays acabaron con éxito --"
+
 #: ../lib/gpde/test/test_heat.c:32
-msgid "++ Running heat flow integration tests ++"
+#, fuzzy
+msgid ""
+"\n"
+"++ Running heat flow integration tests ++"
 msgstr "++ Ejecutando pruebas de integración de flujo de calor ++"
 
 #: ../lib/gpde/test/test_heat.c:34
@@ -719,16 +826,25 @@ msgid "\t 2. testing 3d heat flow"
 msgstr "\t 2. probando flujo de calor 3D"
 
 #: ../lib/gpde/test/test_heat.c:39
-msgid "-- heat flow integration tests failure --"
+#, fuzzy
+msgid ""
+"\n"
+"-- heat flow integration tests failure --"
 msgstr "-- fallo en las pruebas de integración de flujo de calor --"
 
 #: ../lib/gpde/test/test_heat.c:41
-msgid "-- heat flow integration tests finished successfully --"
+#, fuzzy
+msgid ""
+"\n"
+"-- heat flow integration tests finished successfully --"
 msgstr "-- pruebas de integración de flujo de calor finalizadas con éxito --"
 
 #: ../lib/gpde/test/test_gwflow.c:43
-msgid "++ Running gwflow integration tests ++"
-msgstr ""
+#, fuzzy
+msgid ""
+"\n"
+"++ Running gwflow integration tests ++"
+msgstr "++ Ejecutando pruebas de integración de flujo de calor ++"
 
 #: ../lib/gpde/test/test_gwflow.c:45
 msgid "\t 1. testing 2d gwflow"
@@ -739,27 +855,76 @@ msgid "\t 2. testing 3d gwflow"
 msgstr ""
 
 #: ../lib/gpde/test/test_gwflow.c:52
-msgid "-- gwflow integration tests failure --"
-msgstr ""
+#, fuzzy
+msgid ""
+"\n"
+"-- gwflow integration tests failure --"
+msgstr "-- fallo en las pruebas de integración de flujo de calor --"
 
 #: ../lib/gpde/test/test_gwflow.c:54
-msgid "-- gwflow integration tests finished successfully --"
-msgstr ""
+#, fuzzy
+msgid ""
+"\n"
+"-- gwflow integration tests finished successfully --"
+msgstr "-- pruebas de integración de flujo de calor finalizadas con éxito --"
 
 #: ../lib/gpde/test/test_solvers.c:37
-msgid "++ Running slover unit tests ++"
-msgstr ""
+#, fuzzy
+msgid ""
+"\n"
+"++ Running slover unit tests ++"
+msgstr "++ Ejecutando pruebas de la unidad de array ++"
 
 #: ../lib/gpde/test/test_solvers.c:42
-msgid "-- Solver unit tests failure --"
-msgstr ""
+#, fuzzy
+msgid ""
+"\n"
+"-- Solver unit tests failure --"
+msgstr "-- Las pruebas de la unidad de arrays fallaron --"
 
 #: ../lib/gpde/test/test_solvers.c:44
-msgid "-- Solver unit tests finished successfully --"
-msgstr ""
+#, fuzzy
+msgid ""
+"\n"
+"-- Solver unit tests finished successfully --"
+msgstr "-- Las pruebas de la unidad de arrays acabaron con éxito --"
+
+#: ../lib/gpde/test/test_solute_transport.c:43
+#, fuzzy
+msgid ""
+"\n"
+"++ Running solute_transport integration tests ++"
+msgstr "++ Ejecutando pruebas de integración de flujo de calor ++"
+
+#: ../lib/gpde/test/test_solute_transport.c:45
+#, fuzzy
+msgid "\t 1. testing 2d solute_transport"
+msgstr "\t 1. probando gradiente 2D"
+
+#: ../lib/gpde/test/test_solute_transport.c:48
+#, fuzzy
+msgid "\t 2. testing 3d solute_transport"
+msgstr "\t 2. probando gradiente 3D"
+
+#: ../lib/gpde/test/test_solute_transport.c:52
+#, fuzzy
+msgid ""
+"\n"
+"-- solute_transport integration tests failure --"
+msgstr "-- fallo en las pruebas de integración de flujo de calor --"
+
+#: ../lib/gpde/test/test_solute_transport.c:55
+#, fuzzy
+msgid ""
+"\n"
+"-- solute_transport integration tests finished successfully --"
+msgstr "-- pruebas de integración de flujo de calor finalizadas con éxito --"
 
 #: ../lib/gpde/test/test_assemble.c:42
-msgid "++ Running assembling unit tests ++"
+#, fuzzy
+msgid ""
+"\n"
+"++ Running assembling unit tests ++"
 msgstr "++ Ejecutando pruebas de la unidad de ensamblaje ++"
 
 #: ../lib/gpde/test/test_assemble.c:44
@@ -771,12 +936,46 @@ msgid "\t 2. testing 3d assembling"
 msgstr "\t 2. probando ensamblanje 3D"
 
 #: ../lib/gpde/test/test_assemble.c:51
-msgid "-- Assembling unit tests failure --"
+#, fuzzy
+msgid ""
+"\n"
+"-- Assembling unit tests failure --"
 msgstr "-- Las pruebas de la unidad de ensamblaje fallaron --"
 
 #: ../lib/gpde/test/test_assemble.c:53
-msgid "-- Assembling unit tests finished successfully --"
+#, fuzzy
+msgid ""
+"\n"
+"-- Assembling unit tests finished successfully --"
 msgstr "-- Las pruebas de la unidad de ensamblaje acabaron con éxito --"
+
+#: ../lib/gpde/N_parse_options.c:59
+msgid ""
+"The type of solver which should solve the symmetric linear equation system."
+msgstr ""
+
+#: ../lib/gpde/N_parse_options.c:71
+msgid "The type of solver which should solve the linear equation system."
+msgstr ""
+
+#: ../lib/gpde/N_parse_options.c:80
+msgid "Maximum number of iteration used to solver the linear equation system"
+msgstr ""
+
+#: ../lib/gpde/N_parse_options.c:89
+msgid ""
+"Error break criteria for iterative solvers (jacobi, sor, cg or bicgstab)"
+msgstr ""
+
+#: ../lib/gpde/N_parse_options.c:98
+msgid ""
+"The relaxation parameter used by the jacobi and sor solver for speedup or "
+"stabilizing"
+msgstr ""
+
+#: ../lib/gpde/N_parse_options.c:105
+msgid "The calculation time in seconds"
+msgstr ""
 
 #: ../lib/display/tran_colr.c:132 ../lib/display/tran_colr.c:134
 #, c-format
@@ -1157,7 +1356,7 @@ msgstr "Valor ilegal de profundidad"
 msgid "Top must be larger than Bottom"
 msgstr "El superior debe ser mayor que el inferior"
 
-#: ../lib/gis/closecell.c:229
+#: ../lib/gis/closecell.c:224
 #, c-format
 msgid ""
 "closecell: can't move %s\n"
@@ -1166,12 +1365,12 @@ msgstr ""
 "closecell: no se puede mover %s\n"
 "a un archivo vacío %s"
 
-#: ../lib/gis/closecell.c:250
+#: ../lib/gis/closecell.c:244
 #, c-format
 msgid "Error writing floating point format file for map %s"
 msgstr "Error al escribir un archivo del tipo flotante en el mapa %s"
 
-#: ../lib/gis/closecell.c:302
+#: ../lib/gis/closecell.c:291
 #, c-format
 msgid ""
 "closecell: can't move %s\n"
@@ -1180,11 +1379,11 @@ msgstr ""
 "closecell: no se puede mover %s\n"
 "al archivo de celdas %s"
 
-#: ../lib/gis/closecell.c:357
+#: ../lib/gis/closecell.c:345
 msgid "unable to write quant file!"
 msgstr "¡No es posible escribir archivo quant!"
 
-#: ../lib/gis/closecell.c:406
+#: ../lib/gis/closecell.c:394
 msgid "unable to write f_format file for CELL maps"
 msgstr "No es posible crear el encabezado para el archivo [%s]"
 
@@ -2140,83 +2339,93 @@ msgstr "Ninguno"
 msgid "not known"
 msgstr "deconocido"
 
-#: ../lib/gis/parser.c:331
+#: ../lib/gis/parser.c:342
 msgid "WHERE conditions of SQL statement without 'where' keyword."
 msgstr "Condiciones DONDE de sentencia SQL sin condición 'donde'."
 
-#: ../lib/gis/parser.c:332
+#: ../lib/gis/parser.c:343
 msgid "Example: income < 1000 and inhab >= 10000"
 msgstr "Ejemplo: salario < 1000 y habitantes >=10000"
 
-#: ../lib/gis/parser.c:341
+#: ../lib/gis/parser.c:351
+#, fuzzy
+msgid "Name of attribute column"
+msgstr "Nombre del mapa vectorial de entrada"
+
+#: ../lib/gis/parser.c:359
+#, fuzzy
+msgid "Name of attribute column(s)"
+msgstr "Nombre del mapa(s) vectorial de entrada"
+
+#: ../lib/gis/parser.c:368
 msgid "Name of input imagery group"
 msgstr "Nombre del grupo de imágenes"
 
-#: ../lib/gis/parser.c:350 ../lib/gis/parser.c:375
+#: ../lib/gis/parser.c:377 ../lib/gis/parser.c:402
 msgid "Name of input raster map"
 msgstr "Nombre del raster de entrada"
 
-#: ../lib/gis/parser.c:359 ../lib/gis/parser.c:384
+#: ../lib/gis/parser.c:386 ../lib/gis/parser.c:411
 msgid "Name of input raster map(s)"
 msgstr "Nombre del raster de entrada"
 
-#: ../lib/gis/parser.c:367
+#: ../lib/gis/parser.c:394
 msgid "Name for output raster map"
 msgstr "Nombre del raster de salida"
 
-#: ../lib/gis/parser.c:392
+#: ../lib/gis/parser.c:419
 msgid "Name of base raster map"
 msgstr "Nombre del raster de entrada"
 
-#: ../lib/gis/parser.c:400
+#: ../lib/gis/parser.c:427
 msgid "Name of cover raster map"
 msgstr "Nombre del raster de salida"
 
-#: ../lib/gis/parser.c:408
+#: ../lib/gis/parser.c:435
 msgid "Name of elevation raster map"
 msgstr "Nombre del archivo raster de elevaciones"
 
-#: ../lib/gis/parser.c:417
+#: ../lib/gis/parser.c:444
 msgid "Name of elevation raster map(s)"
 msgstr "Nombre del mapa (o mapas) raster de elevaciones"
 
-#: ../lib/gis/parser.c:427
+#: ../lib/gis/parser.c:454
 msgid "Name of input raster3d map"
 msgstr "Nombre del mapa de entrada raster3d"
 
-#: ../lib/gis/parser.c:436
+#: ../lib/gis/parser.c:463
 msgid "Name of input raster3d map(s)"
 msgstr "Nombre del mapa(s) ráster 3D de entrada"
 
-#: ../lib/gis/parser.c:444
+#: ../lib/gis/parser.c:471
 msgid "Name for output raster3d map"
 msgstr "Nombre del mapa(s) ráster de salida"
 
-#: ../lib/gis/parser.c:454 ../lib/gis/parser.c:479
+#: ../lib/gis/parser.c:481 ../lib/gis/parser.c:506
 msgid "Name of input vector map"
 msgstr "Nombre del mapa vectorial de entrada"
 
-#: ../lib/gis/parser.c:463
+#: ../lib/gis/parser.c:490
 msgid "Name of input vector map(s)"
 msgstr "Nombre del mapa(s) vectorial de entrada"
 
-#: ../lib/gis/parser.c:471
+#: ../lib/gis/parser.c:498
 msgid "Name for output vector map"
 msgstr "Nombre del mapa vectorial de salida"
 
-#: ../lib/gis/parser.c:488
+#: ../lib/gis/parser.c:515
 msgid "Type"
 msgstr "Tipo vectorial"
 
-#: ../lib/gis/parser.c:489
+#: ../lib/gis/parser.c:516
 msgid "Feature type(s)"
 msgstr "Tipo(s) de elemento"
 
-#: ../lib/gis/parser.c:496
+#: ../lib/gis/parser.c:523
 msgid "Layer number"
 msgstr "Número de capa"
 
-#: ../lib/gis/parser.c:497
+#: ../lib/gis/parser.c:524
 msgid ""
 "A single vector map can be connected to multiple database tables.\n"
 "This number determines which table to use."
@@ -2224,24 +2433,24 @@ msgstr ""
 "Un solo mapa vectorial no puede conectarse a más de una tabla de datos.\n"
 "Este número determina que tabla usar"
 
-#: ../lib/gis/parser.c:504
+#: ../lib/gis/parser.c:531
 msgid "Category value"
 msgstr "Valor de la categoria"
 
-#: ../lib/gis/parser.c:511
+#: ../lib/gis/parser.c:538
 msgid "Category values"
 msgstr "Valores de categoría"
 
-#: ../lib/gis/parser.c:512
+#: ../lib/gis/parser.c:539
 msgid "Example: 1,3,7-9,13"
 msgstr "Ejemplo: 1,3,7-9,13"
 
-#: ../lib/gis/parser.c:811
+#: ../lib/gis/parser.c:838
 #, c-format
 msgid "Sorry <%s> is not a valid option\n"
 msgstr "Lo siento <%s> no es una opción válida\n"
 
-#: ../lib/gis/parser.c:921
+#: ../lib/gis/parser.c:948
 #, c-format
 msgid ""
 "\n"
@@ -2250,7 +2459,7 @@ msgstr ""
 "\n"
 "Descripción:\n"
 
-#: ../lib/gis/parser.c:925
+#: ../lib/gis/parser.c:952
 #, c-format
 msgid ""
 "\n"
@@ -2259,7 +2468,7 @@ msgstr ""
 "\n"
 "Palabras clave:\n"
 
-#: ../lib/gis/parser.c:929
+#: ../lib/gis/parser.c:956
 #, c-format
 msgid ""
 "\n"
@@ -2270,7 +2479,7 @@ msgstr ""
 "Uso:\n"
 " "
 
-#: ../lib/gis/parser.c:1001
+#: ../lib/gis/parser.c:1028
 #, c-format
 msgid ""
 "\n"
@@ -2279,20 +2488,20 @@ msgstr ""
 "\n"
 "Opciones:\n"
 
-#: ../lib/gis/parser.c:1024
+#: ../lib/gis/parser.c:1051
 msgid "Allow output files to overwrite existing files"
 msgstr ""
 "Permitir a los archivos de salida sobreescribir los archivos existentes"
 
-#: ../lib/gis/parser.c:1026
+#: ../lib/gis/parser.c:1053
 msgid "Verbose module output"
 msgstr "Salida verbal del módulo"
 
-#: ../lib/gis/parser.c:1027
+#: ../lib/gis/parser.c:1054
 msgid "Quiet module output"
 msgstr "Salida silenciosa del módulo"
 
-#: ../lib/gis/parser.c:1033
+#: ../lib/gis/parser.c:1060
 #, c-format
 msgid ""
 "\n"
@@ -2301,32 +2510,32 @@ msgstr ""
 "\n"
 "Parametros:\n"
 
-#: ../lib/gis/parser.c:1055
+#: ../lib/gis/parser.c:1082
 #, c-format
 msgid "  %*s   default: %s\n"
 msgstr "  %*s   defecto: %s\n"
 
-#: ../lib/gis/parser.c:1785
+#: ../lib/gis/parser.c:1812
 #, c-format
 msgid "  %*s   options: "
 msgstr "  %*s   opciones: "
 
-#: ../lib/gis/parser.c:1832 ../lib/gis/parser.c:1849
+#: ../lib/gis/parser.c:1859 ../lib/gis/parser.c:1876
 #, c-format
 msgid "Sorry, <%c> is not a valid flag\n"
 msgstr "Lo sentimos, <%c> no es una opción válida\n"
 
-#: ../lib/gis/parser.c:1904
+#: ../lib/gis/parser.c:1931
 #, c-format
 msgid "Sorry, <%s=> is ambiguous\n"
 msgstr "Lo sentimos, <%s=> es ambigüo\n"
 
-#: ../lib/gis/parser.c:1911
+#: ../lib/gis/parser.c:1938
 #, c-format
 msgid "Sorry, <%s> is not a valid parameter\n"
 msgstr "Lo sentimos, <%s> no es un parametro válido\n"
 
-#: ../lib/gis/parser.c:1996
+#: ../lib/gis/parser.c:2023
 #, c-format
 msgid ""
 "\n"
@@ -2335,12 +2544,12 @@ msgstr ""
 "\n"
 "ERROR: sintaxis del rango no admitida para el parámetro <%s>\n"
 
-#: ../lib/gis/parser.c:1998
+#: ../lib/gis/parser.c:2025
 #, c-format
 msgid "       Presented as: %s\n"
 msgstr "       Presentado como: %s\n"
 
-#: ../lib/gis/parser.c:2001
+#: ../lib/gis/parser.c:2028
 #, c-format
 msgid ""
 "\n"
@@ -2349,12 +2558,12 @@ msgstr ""
 "\n"
 "ERROR: valor <%s> fuera del rango para el parámetro <%s>\n"
 
-#: ../lib/gis/parser.c:2003
+#: ../lib/gis/parser.c:2030
 #, c-format
 msgid "       Legal range: %s\n"
 msgstr "       Intervalo legal: %s\n"
 
-#: ../lib/gis/parser.c:2006
+#: ../lib/gis/parser.c:2033
 #, c-format
 msgid ""
 "\n"
@@ -2363,7 +2572,7 @@ msgstr ""
 "\n"
 "ERROR: falta el valor del parametro <%s>\n"
 
-#: ../lib/gis/parser.c:2166
+#: ../lib/gis/parser.c:2193
 #, c-format
 msgid ""
 "\n"
@@ -2374,7 +2583,7 @@ msgstr ""
 "ERROR: Parametro requerido  <%s> no ha sido inicializado:\n"
 "    (%s).\n"
 
-#: ../lib/gis/parser.c:2269
+#: ../lib/gis/parser.c:2296
 #, c-format
 msgid ""
 "\n"
@@ -2383,17 +2592,17 @@ msgstr ""
 "\n"
 "ERROR: la opción <%s> debe proporcionarse en múltiplos de %d\n"
 
-#: ../lib/gis/parser.c:2271
+#: ../lib/gis/parser.c:2298
 #, c-format
 msgid "       You provided %d items:\n"
 msgstr "       Tu proporcionaste %d elementos:\n"
 
-#: ../lib/gis/parser.c:2326
+#: ../lib/gis/parser.c:2353
 #, c-format
 msgid "ERROR: option <%s>: <%s> exists.\n"
 msgstr "ERROR: la opción <%s>: <%s> existe.\n"
 
-#: ../lib/gis/parser.c:2373
+#: ../lib/gis/parser.c:2400
 #, c-format
 msgid ""
 "\n"
@@ -2402,7 +2611,7 @@ msgstr ""
 "\n"
 "OPCIÓN: ¿Definir la siguiente opción?\n"
 
-#: ../lib/gis/parser.c:2387
+#: ../lib/gis/parser.c:2414
 #, c-format
 msgid ""
 "\n"
@@ -2411,51 +2620,51 @@ msgstr ""
 "\n"
 "OPCIÓN:   %s\n"
 
-#: ../lib/gis/parser.c:2388
+#: ../lib/gis/parser.c:2415
 #, c-format
 msgid "     key: %s\n"
 msgstr "     clave: %s\n"
 
-#: ../lib/gis/parser.c:2390
+#: ../lib/gis/parser.c:2417
 #, c-format
 msgid "  format: %s\n"
 msgstr "  formato: %s\n"
 
-#: ../lib/gis/parser.c:2392
+#: ../lib/gis/parser.c:2419
 #, c-format
 msgid " default: %s\n"
 msgstr " defecto: %s\n"
 
-#: ../lib/gis/parser.c:2393
+#: ../lib/gis/parser.c:2420
 #, c-format
 msgid "required: %s\n"
 msgstr "se requiere: %s\n"
 
-#: ../lib/gis/parser.c:2395
+#: ../lib/gis/parser.c:2422
 #, c-format
 msgid "multiple: %s\n"
 msgstr "multiple: %s\n"
 
-#: ../lib/gis/parser.c:2397
+#: ../lib/gis/parser.c:2424
 #, c-format
 msgid " options: %s\n"
 msgstr " opciones: %s\n"
 
-#: ../lib/gis/parser.c:2412
+#: ../lib/gis/parser.c:2439
 #, c-format
 msgid "enter option > "
 msgstr "introduce una opción > "
 
-#: ../lib/gis/parser.c:2426 ../lib/gis/parser.c:2437
+#: ../lib/gis/parser.c:2453 ../lib/gis/parser.c:2464
 msgid "   Try again? "
 msgstr "   ¿Intentar de nuevo? "
 
-#: ../lib/gis/parser.c:2435
+#: ../lib/gis/parser.c:2462
 #, c-format
 msgid "Sorry, %s is not accepted.\n"
 msgstr "Lo siento, %s no se acepta.\n"
 
-#: ../lib/gis/parser.c:2446
+#: ../lib/gis/parser.c:2473
 #, c-format
 msgid ""
 "\n"
@@ -2466,11 +2675,11 @@ msgstr ""
 "Usted ha seleccionado:\n"
 "  %s\n"
 
-#: ../lib/gis/parser.c:2447
+#: ../lib/gis/parser.c:2474
 msgid "Is this correct? "
 msgstr "¿Es correcto? "
 
-#: ../lib/gis/parser.c:2516
+#: ../lib/gis/parser.c:2543
 msgid "to accept the default"
 msgstr "para aceptar los valores por defecto"
 
@@ -2901,3 +3110,104 @@ msgstr "No se puede abrir el archivo de índices espaciales para escritura <%s>"
 #: ../lib/vector/Vlib/build.c:400
 msgid "Error writing out spatial index file."
 msgstr "Error al escribir el archivo de índices espaciales."
+
+#: ../lib/vector/Vlib/read_ogr.c:110 ../lib/vector/Vlib/read_ogr.c:289
+#, fuzzy, c-format
+msgid "OGR feature type [%d] not supported"
+msgstr "No se soportan entidades del tipo %d OGR"
+
+#: ../lib/vector/Vlib/read_ogr.c:165
+#, fuzzy
+msgid "OGR feature without ID."
+msgstr "Entidad OGR sin ID ignorada"
+
+#: ../lib/vector/Vlib/read_ogr.c:365
+#, c-format
+msgid "Cannot get feature geometry, FID [%ld]"
+msgstr ""
+
+#: ../lib/vector/diglib/plus_node.c:244
+#, c-format
+msgid ""
+"Attempt to read line angle for the line which is not connected to the node: "
+"node = [%d] line = [%d]"
+msgstr ""
+
+#: ../lib/vector/diglib/plus.c:318
+#, fuzzy
+msgid "Cannot read topo for nodes"
+msgstr "El histograma para [%s en %s] no puede leerse"
+
+#: ../lib/vector/diglib/plus.c:324
+#, fuzzy, c-format
+msgid "Cannot read topo for node [%d]"
+msgstr "El histograma para [%s en %s] no puede leerse"
+
+#: ../lib/vector/diglib/plus.c:329
+#, fuzzy
+msgid "Cannot read topo for lines"
+msgstr "No es posible reescribir una linea"
+
+#: ../lib/vector/diglib/plus.c:335
+#, fuzzy, c-format
+msgid "Cannot read topo for line [%d]"
+msgstr "El histograma para [%s en %s] no puede leerse"
+
+#: ../lib/vector/diglib/plus.c:340
+#, fuzzy
+msgid "Cannot read topo for areas"
+msgstr "No se puede calcular el centroide para el polígono %d"
+
+#: ../lib/vector/diglib/plus.c:346
+#, fuzzy, c-format
+msgid "Cannot read topo for area [%d]"
+msgstr "No se puede calcular el centroide para el polígono %d"
+
+#: ../lib/vector/diglib/plus.c:351
+#, fuzzy
+msgid "Cannot read topo for isles"
+msgstr "El archivo temp no puede ser abierto"
+
+#: ../lib/vector/diglib/plus.c:357
+#, fuzzy, c-format
+msgid "Cannot read topo for isle [%d]"
+msgstr "El histograma para [%s en %s] no puede leerse"
+
+#: ../lib/vector/diglib/plus_area.c:211 ../lib/vector/diglib/plus_area.c:648
+#: ../lib/vector/diglib/plus_area.c:654
+#, c-format
+msgid "Line [%d] already has area/isle [%d] to left."
+msgstr ""
+
+#: ../lib/vector/diglib/plus_area.c:219
+#, c-format
+msgid "Line [%d] already has area/isle [%d] to right."
+msgstr ""
+
+#: ../lib/vector/diglib/plus_area.c:302
+msgid "Attempt to delete isle from dead area"
+msgstr ""
+
+#: ../lib/vector/diglib/plus_area.c:316
+#, c-format
+msgid "Attempt to delete not registered isle [%d] from area [%d]"
+msgstr ""
+
+#: ../lib/vector/diglib/plus_area.c:354
+msgid "Attempt to delete dead area"
+msgstr ""
+
+#: ../lib/vector/diglib/plus_area.c:392
+#, c-format
+msgid "Dead centroid [%d] registered for area (bug in the library)."
+msgstr ""
+
+#: ../lib/vector/diglib/plus_area.c:413
+#, c-format
+msgid "Attempt to delete area [%d] info from dead isle [%d]"
+msgstr ""
+
+#: ../lib/vector/diglib/plus_area.c:741
+#, c-format
+msgid "Attempt to delete isle [%d] info from dead area [%d]"
+msgstr ""
