@@ -29,6 +29,7 @@
  */
 
 #include <math.h>
+#include <string.h>
 
 #include <grass/gis.h>
 #include <grass/raster.h>
@@ -193,6 +194,52 @@ static int do_clip(struct vector *a, struct vector *b)
 		return -1;
 
 	return clipped;
+}
+
+static double coerce(double x)
+{
+	return x - floor(x / 360) * 360;
+}
+
+static int euclidify(double *x, int n)
+{
+	double ux0 = D_get_u_west();
+	double ux1 = D_get_u_east();
+	double x0, x1;
+	int base, count;
+	int i;
+
+	for (i = 0; i < n; i++)
+		x[i] = coerce(x[i]);
+
+	x0 = x1 = x[0];
+
+	for (i = 1; i < n; i++)
+	{
+		double dx = x[i] - x[i-1];
+
+		if (dx > 180)
+			x[i] -= 360;
+		if (dx < -180)
+			x[i] += 360;
+
+		x0 = min(x0, x[i]);
+		x1 = max(x1, x[i]);
+	}
+
+	if (fabs(x[n-1] - x[0]) > 180)
+		return 0;
+
+	count = 0;
+	base = floor((x0 - ux1) / 360);
+
+	for (count = 0; ux0 + (base + count) * 360 < x1; count++)
+		;
+
+	for (i = 0; i < n; i++)
+		x[i] -= base * 360;
+
+	return count;
 }
 
 /*!
@@ -385,11 +432,8 @@ static int clip_polygon_plane(int *pn, const double *x, const double *y, const s
 	return (j == 0);
 }
 
-void D_polygon_clip(const double *x, const double *y, int n)
+static void polygon_clip(const double *x, const double *y, int n)
 {
-	if (!window_set)
-		D_clip_to_map();
-
 	alloc_float(n + 10);
 
 	if (clip_polygon_plane(&n, x, y, &pl_left))
@@ -415,6 +459,35 @@ void D_polygon_clip(const double *x, const double *y, int n)
 	do_convert(x, y, n);
 
 	R_polygon_abs(xi, yi, n);
+}
+
+void D_polygon_clip(const double *x, const double *y, int n)
+{
+	if (!window_set)
+		D_clip_to_map();
+
+	if (D_is_lat_lon())
+	{
+		double *xx = G_malloc(n * sizeof(double));
+		int count, i;
+
+		memcpy(xx, x, n * sizeof(double));
+		count = euclidify(xx, n);
+
+		for (i = 0; i < count; i++)
+		{
+			int j;
+
+			polygon_clip(xx, y, n);
+
+			for (j = 0; j < n; j++)
+				xx[j] -= 360;
+		}
+
+		G_free(xx);
+	}
+	else
+		polygon_clip(x, y, n);
 }
 
 void D_box_clip(double x1, double y1, double x2, double y2)

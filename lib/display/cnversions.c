@@ -45,6 +45,7 @@ static struct vector U_to_D_conv;	/* UTM to Display   */
 static struct vector D_to_A_conv;	/* Display to Array */
 
 /* others */
+static int is_lat_lon;
 static struct vector resolution;
 
 /*!
@@ -74,6 +75,8 @@ int D_do_conversions(struct Cell_head *window , int t,int b,int l,int r)
 	WIND.south  = (double)b;
 	WIND.west   = (double)l;
 	WIND.east   = (double)r;
+
+	is_lat_lon = (window->proj == PROJECTION_LL);
 
 	resolution.y = window->ns_res;
 	resolution.x = window->ew_res;
@@ -148,6 +151,8 @@ int D_do_conversions(struct Cell_head *window , int t,int b,int l,int r)
 
 	return(0);
 }
+
+int D_is_lat_lon(void)			{	return(is_lat_lon);	}
 
 double D_get_ns_resolution(void)	{	return(resolution.y);	}
 double D_get_ew_resolution(void)	{	return(resolution.x);	}
