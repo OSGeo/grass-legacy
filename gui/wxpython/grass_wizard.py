@@ -5,6 +5,7 @@ import  wx.lib.rcsizer  as rcs
 import os
 import sys
 import string
+import re
 
 
 class TitledPage(wiz.WizardPageSimple):
@@ -60,16 +61,21 @@ class DatumPage(TitledPage):
         self.datums.SetColumnWidth(1, wx.LIST_AUTOSIZE_USEHEADER)
 
         self.transformlist = wx.ListCtrl(self, -1, style=wx.LC_REPORT |  wx.LC_VRULES | wx.LC_HRULES, size=(700,100))
-        self.transformlist.InsertColumn(0, 'Short Name ')
-        self.transformlist.InsertColumn(1, '                                             Description                                         ')
-        self.transformlist.SetColumnWidth(0, 100)
+        self.transformlist.InsertColumn(0, ' ID')
+        self.transformlist.InsertColumn(1, '        Country          ')
+        self.transformlist.InsertColumn(2, '                       Description                            ')
+        self.transformlist.InsertColumn(3, '                        Params                            ')
+        self.transformlist.SetColumnWidth(0, 30)
         self.transformlist.SetColumnWidth(1, wx.LIST_AUTOSIZE_USEHEADER)
+        self.transformlist.SetColumnWidth(2, wx.LIST_AUTOSIZE_USEHEADER)
+        self.transformlist.SetColumnWidth(3, wx.LIST_AUTOSIZE_USEHEADER)
         
         # laout
         self.sizer.Add(self.MakeLabel("Geodetic datum:"), 1, col=1, row=1)
         self.sizer.Add(self.tdatum, 0 , wx.ALIGN_LEFT, 1, row=1, col=2)
         self.sizer.Add(self.MakeLabel("Search in description:"), 1, col=1, row=2)
         self.sizer.Add(self.searchb, 0 , wx.ALIGN_LEFT, 1, row=2, col=2)
+
         self.sizer.Add(self.datums, 0 , wx.EXPAND | wx.ALIGN_CENTER_HORIZONTAL, 1, row=3, col=1, colspan=5)
         self.sizer.Add(self.MakeLabel("Transformation parameters:"), 1, col=2, row=4)
         self.sizer.Add(self.ttrans, 0 , wx.ALIGN_LEFT, 1, row=4, col=3)
@@ -108,27 +114,37 @@ class DatumPage(TitledPage):
         self._onBrowseParams()
     
     def _onBrowseParams(self):
-        params = ["Use whole region"]
+        params = [["","Use whole region",""]]
         file = os.path.join(os.getenv("GISBASE"), "etc","datumtransform.table")
         search = self.tdatum.GetValue()
 
         try:
             f = open(file,"r")
+            rex=re.compile('^(.+)\s+"(.+)"\s+"(.+)"\s+"(.+)"')
             for line in f.readlines():
                 line = line.strip()
                 if line[0] == "#": continue
-                id,descr = string.split(line," ",maxsplit=1)
-                descr=descr.replace('"',"")
+                id,parm,country,descr = rex.findall(line)[0]
+                id=id.strip()
+                parm=parm.strip()
+                country = country.strip()
+                descr=descr.strip()
                 if id == search:
-                    params.append(descr)
+                    params.append([parm,country,descr])
             f.close()
 
             self.transformlist.DeleteAllItems()
             for i in range(len(params)):
                 self.transformlist.InsertStringItem(i,str(i+1))
-                self.transformlist.SetStringItem(i,1,params[i])
-        except:
+                self.transformlist.SetStringItem(i,1,params[i][1])
+                self.transformlist.SetStringItem(i,2,params[i][2])
+                self.transformlist.SetStringItem(i,3,params[i][0])
+        except IOError, e:
             self.transformlist.DeleteAllItems()
+            dlg = wx.MessageDialog(self, "Could not read datum params: %s "
+                    % e,"Can not read file",  wx.OK|wx.ICON_INFORMATION)
+            dlg.ShowModal()
+            dlg.Destroy()
 
 
     def _onBrowseDatums(self,event,search=None):
@@ -145,9 +161,10 @@ class DatumPage(TitledPage):
                     continue
                 if line[0] == "#":
                     continue
+                line = line.replace("\t"," ")
                 datum,descr = string.split(line, " ", maxsplit=1)
                 descr = descr.replace('"',"")
-                descr = descr.replace("  "," ")
+                descr = descr.strip()
                 if search and (descr.lower().find(search.lower()) > -1 or\
                               datum.lower().find(search.lower()) > -1) or\
                         not search:
