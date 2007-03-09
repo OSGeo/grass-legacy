@@ -89,23 +89,6 @@ main (int argc, char *argv[])
 
     G_begin_polygon_area_calculations(); /* Used in geom() */
 
-    /*
-      Do we really need to list all supported formats here??
-      -> there is -f flag for this purpose
-    */
-
-    /*
-      OGRRegisterAll();
-      sprintf ( buf, _("Convert OGR vectors to GRASS. Available drivers:\n"));
-      for ( i = 0; i < OGRGetDriverCount(); i++ ) {
-      Ogr_driver = OGRGetDriver( i );
-      if ( i== 0)
-      sprintf (buf, "%s%s", buf, OGR_Dr_GetName ( Ogr_driver) );
-      else
-      sprintf (buf, "%s,%s", buf, OGR_Dr_GetName ( Ogr_driver) );
-       }
-    */
-
     module = G_define_module();
     module->keywords = _("vector, import");
     /* module->description = G_store (buf); */
@@ -114,13 +97,14 @@ main (int argc, char *argv[])
     dsn_opt = G_define_option();
     dsn_opt->key = "dsn";
     dsn_opt->type =  TYPE_STRING;
-    dsn_opt->required = YES;
+    dsn_opt->required = NO;
     dsn_opt->gisprompt = "old_file,file,dsn";
     dsn_opt->description = _("OGR datasource name. Examples:\n"
 			   "\t\tESRI Shapefile: directory containing shapefiles\n"
 			   "\t\tMapInfo File: directory containing mapinfo files");
 
     out_opt = G_define_standard_option(G_OPT_V_OUTPUT);
+    out_opt->required = NO;
 
     layer_opt = G_define_option();
     layer_opt->key = "layer";
@@ -237,6 +221,7 @@ main (int argc, char *argv[])
 
     OGRRegisterAll(); 
 
+    /* list supported formats */
     if(formats_flag->answer) {
 	int iDriver;
 	fprintf(stdout, "Available OGR Drivers:\n" );
@@ -255,6 +240,11 @@ main (int argc, char *argv[])
 	exit(EXIT_SUCCESS);
     }
 
+    if (dsn_opt -> answer == NULL) {
+	G_fatal_error (_("Required parameter <%s> not set"),
+		       dsn_opt -> key);
+    }
+
     min_area = atof (min_area_opt->answer);
     snap = atof (snap_opt->answer);
     type = Vect_option_to_types ( type_opt );
@@ -268,8 +258,12 @@ main (int argc, char *argv[])
     }
 
     /* Open OGR DSN */
-    Ogr_ds = OGROpen( dsn_opt->answer, FALSE, NULL );
-    if ( Ogr_ds == NULL ) G_fatal_error (_("Cannot open data source: %s"), dsn_opt->answer);
+    Ogr_ds = NULL;
+    if (strlen (dsn_opt -> answer) > 0)
+	Ogr_ds = OGROpen( dsn_opt->answer, FALSE, NULL );
+
+    if (Ogr_ds == NULL)
+	G_fatal_error (_("Cannot open data source: %s"), dsn_opt->answer);
 
     /* Make a list of available layers */
     navailable_layers = OGR_DS_GetLayerCount(Ogr_ds);
@@ -292,6 +286,12 @@ main (int argc, char *argv[])
     if ( list_flag->answer ) {
 	fprintf ( stdout, "\n" );
         exit(EXIT_SUCCESS) ;
+    }
+
+    /* check if output name was given */
+    if (out_opt -> answer == NULL) {
+	G_fatal_error (_("Required parameter <%s> not set"),
+		       out_opt -> key);
     }
 
     if (G_legal_filename(out_opt->answer) < 0)
