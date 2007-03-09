@@ -305,6 +305,7 @@ class BBoxPage(TitledPage):
 
         # buttons
         self.bbrowse = self.MakeButton("Browse ...")
+        self.bset = self.MakeButton("Set")
 
         # list of states
         self.states = []
@@ -345,6 +346,7 @@ class BBoxPage(TitledPage):
 
         self.sizer.Add(self.MakeLabel("Initial resolution"), 0, wx.ALIGN_RIGHT, row=4,col=2)
         self.sizer.Add(self.tres, 0, wx.ALIGN_LEFT, row=4,col=3)
+        self.sizer.Add(self.bset, 0, wx.ALIGN_CENTER_VERTICAL, row=4, col=5 )
 
         self.sizer.Add(wx.StaticLine(self, -1), 0, wx.EXPAND|wx.ALL, 0, row=5, col=1, colspan=5)
         self.sizer.Add(self.MakeLabel("Use georeferenced file"), 3, wx.ALIGN_RIGHT, row=6,col=2)
@@ -361,6 +363,72 @@ class BBoxPage(TitledPage):
         self.Bind(wiz.EVT_WIZARD_PAGE_CHANGING, self.OnWizPageChange)
         self.Bind(wx.EVT_COMBOBOX, self.OnItemSelected, self.cstate)
         self.Bind(wx.EVT_TEXT, self.OnStateText, self.cstate)
+        self.Bind(wx.EVT_BUTTON, self.OnSetButton, self.bset)
+        self.Bind(wx.EVT_BUTTON, self.OnBrowseButton, self.bbrowse)
+
+    def OnBrowseButton(self, event):
+        dlg = wx.FileDialog(self, "Choose a georeferenced file:", os.getcwd(), "", "*.*", wx.OPEN)
+        path = ""
+        if dlg.ShowModal() == wx.ID_OK:
+                    path = dlg.GetPath()
+                    self.tfile.SetValue(path)
+        dlg.Destroy()
+
+        self.OnSetButton()
+
+
+    def OnSetButton(self,event=None):
+        if self.tfile.GetValue():
+            path = self.tfile.GetValue()
+            line = ""
+            number="-?\d+\.\d+"
+            # Upper Left  (    0.0,    0.0)
+            rex=re.compile("\(\s*(%s)\s*,\s*(%s)\)" % (number, number))
+            firstset = secondset = None
+            obj = os.popen("gdalinfo %s | grep \"Upper\|Lower\"" % path)
+            line = obj.readline()
+            testogr = True
+            while 1:
+                if not line:
+                        break
+                if line.find("Upper Left")>-1:
+                    x,y = rex.findall(line)[0]
+                    self.ttop.SetValue(y)
+                    self.tleft.SetValue(x)
+                    firstset = True
+                if line.find("Lower Right")>-1:
+                    x,y = rex.findall(line)[0]
+                    self.tbottom.SetValue(y)
+                    self.tright.SetValue(x)
+                    secondset = True
+                if secondset and firstset:
+                    testogr  = False
+                    break
+                else:
+                    line = obj.readline()
+            if testogr and False: # FIXME: better use separate input for
+                                  # vector files
+                tmplayer = os.path.basename(path)
+                tmplayer = tmplayer.split(".")
+                layer = ""
+
+                #Extent: (-146.976217, -55.985484) - (72.774632, 80.594358)
+                rex = re.compile("\((%s),\s*(%s)\)\s*-\s*\((%s),\s*(%s)\)" %(number, number, number, number))
+                sys.stderr.write("ogrinfo %s %s\n" % (path ,layer))
+                cmd = os.popen("ogrinfo %s %s" % (path ,layer))
+                line = cmd.readline()
+                while 1:
+                    if not line:
+                         break
+                    if line.find("Extent")>-1:
+                        x1,y1,x2,y2 = rex.findall(line)[0]
+                        self.ttop.SetValue(y)
+                        self.tleft.SetValue(x)
+                        break
+                    line = cmd.readline()
+        elif self.cstate.GetSelection():
+            self.OnItemSelected(None)
+
 
     def OnStateText(self,event):
         pass
@@ -376,7 +444,7 @@ class BBoxPage(TitledPage):
         self.GetNext().FillVars()
 
     def OnItemSelected(self, event):
-        item = event.GetSelection()
+        item = self.cstate.GetSelection()
         w,s,e,n = self.coords[item]
         #  4 
         # 1 3
@@ -391,6 +459,8 @@ class BBoxPage(TitledPage):
                 to="+proj=%s" % (self.parent.projpage.tproj.GetValue())
             elif self.parent.csystemspage.cs == "utm":
                 to="+proj=utm"
+            else:
+                sys.stderr.write(self.parent.csystemspage.cs+"\n")
 
             try:
                 sin, sout = os.popen2("cs2cs +proj=latlong +datum=WGS84 +to %s" %  (to))
