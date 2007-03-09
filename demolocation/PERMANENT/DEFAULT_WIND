@@ -8,3 +8,11 @@ cols:       360
 rows:       180
 e-w resol:  1
 n-s resol:  1
+top:        1
+bottom:     0
+cols3:      360
+rows3:      180
+depths:     1
+e-w resol3: 1
+n-s resol3: 1
+t-b resol:  1
