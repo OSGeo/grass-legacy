@@ -81,8 +81,10 @@ proc GmVector::legend { id } {
 	set y2 [expr {$yc + $size / 2 + 1} ]
 
     if { $opt($id,1,type_point) || $opt($id,1,type_centroid) } {
+	set lwidth  $opt($id,1,lwidth)
+	if { $lwidth == 0 } { set lwidth 1 }
         $leg create line $x1 $yc $x2 $yc -fill $opt($id,1,color) -width $lwidth
-		$leg create line $xc $y1 $xc $y2 -fill $opt($id,1,color) -width $lwidth
+	$leg create line $xc $y1 $xc $y2 -fill $opt($id,1,color) -width $lwidth
     }
 
 
