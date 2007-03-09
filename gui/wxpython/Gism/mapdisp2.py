@@ -88,17 +88,23 @@ class BufferedWindow(wx.Window):
         #!!! self.OnSize(None)
 
     def Draw(self, dc, img=None, dctype='image', coords='0,0'):
-    	"""just here as a place holder.
-    	This method should be over-ridden when sub-classed"""
+    	"""
+        Just here as a place holder.
+    	This method should be over-ridden when sub-classed
+        """
     	pass
 
     def OnPaint(self, event):
-    	"""All that is needed here is to draw the buffer to screen"""
+    	"""
+        All that is needed here is to draw the buffer to screen
+        """
     	dc = wx.BufferedPaintDC(self, self._Buffer)
 
     def OnSize(self, event):
-    	"""The Buffer init is done here, to make sure the buffer is always
-    	the same size as the Window"""
+    	"""
+        The Buffer init is done here, to make sure the buffer is always
+    	the same size as the Window
+        """
 
         # set size of the input image
     	Map.width, Map.height = self.GetClientSize()
@@ -121,8 +127,10 @@ class BufferedWindow(wx.Window):
     	self.resize = True 
 
     def OnIdle(self, event):
-    	"""Only re-render a compsite map image from GRASS during
-    	idle time instead of multiple times during resizing."""
+    	"""
+        Only re-render a compsite map image from GRASS during
+    	idle time instead of multiple times during resizing.
+        """
 
     	if self.resize:
     	    self.render = True
@@ -130,9 +138,11 @@ class BufferedWindow(wx.Window):
     	event.Skip()
 
     def SaveToFile(self, FileName, FileType):
-    	"""This will save the contents of the buffer
+    	"""
+        This will save the contents of the buffer
     	to the specified file. See the wx.Windows docs for
-    	wx.Bitmap::SaveFile for the details"""
+    	wx.Bitmap::SaveFile for the details
+        """
     	self._Buffer.SaveFile(FileName, FileType)
 
     def UpdateMap(self, img=None):
@@ -159,12 +169,16 @@ class BufferedWindow(wx.Window):
     	self.resize = False
 
     def EraseMap(self):
-        """Clears the map display"""
+        """
+        Erase the map display
+        """
     	dc = wx.BufferedDC(wx.ClientDC(self), self._Buffer)
     	self.Draw(dc, dctype='clear')
 
     def DragMap(self, moveto):
-    	"""Drag a bitmap image for panning."""
+    	"""
+        Drag a bitmap image for panning.
+        """
 
     	dc = wx.BufferedDC(wx.ClientDC(self), self._Buffer)
     	dc.SetBackground(wx.Brush("White"))
@@ -179,7 +193,9 @@ class BufferedWindow(wx.Window):
     ##	self.dragimg.UpdateBackingFromWindow(dc, memdc, sourcerect,destrect)
 
     def MouseDraw(self):
-    	"""Mouse zoom rectangles and lines"""
+    	"""
+        Mouse zoom rectangles and lines
+        """
     	img = self.Img # composite map in background
     	dc = wx.BufferedDC(wx.ClientDC(self), self._Buffer)
     	if self.mouse['box'] == "box":
@@ -245,7 +261,9 @@ class BufferedWindow(wx.Window):
     	self.mouse['pos'] = event.GetPositionTuple()[:]
 
     def GetImage(self):
-        """Converts files to wx.Image"""
+        """
+        Converts files to wx.Image
+        """
     	if Map.mapfile and os.path.isfile(Map.mapfile):
     	    self.Img = wx.Image(Map.mapfile, wx.BITMAP_TYPE_ANY)
     	else:
@@ -256,8 +274,8 @@ class BufferedWindow(wx.Window):
     	"""
     	Calculates real word coordinates to image coordinates
 
-    	Inputs: x,y
-    	Outputs: int x, int y
+    	Input : x, y
+    	Output: int x, int y
     	"""
     	newx = Map.region['w'] + x * Map.region["ewres"]
     	newy = Map.region['n'] - y * Map.region["nsres"]
@@ -309,8 +327,10 @@ class BufferedWindow(wx.Window):
     	    Map.region['w'] = newreg['w']
 
 class DrawWindow(BufferedWindow):
-    """Drawing routine for double buffered drawing. Overwrites Draw method
-    in the BufferedWindow class"""
+    """
+    Drawing routine for double buffered drawing. Overwrites Draw method
+    in the BufferedWindow class
+    """
     def __init__(self, parent, id = -1):
         """
         """
@@ -327,11 +347,13 @@ class DrawWindow(BufferedWindow):
     	dc.BeginDrawing()
     	dc.SetBackground(wx.Brush(self.GetBackgroundColour()))
     	dc.Clear() # make sure you clear the bitmap!
+
     	if dctype == 'clear': # erase the display
     	    dc.EndDrawing()
     	    return
     	bitmap = wx.BitmapFromImage(img)
     	dc.DrawBitmap(bitmap, 0, 0) # draw the composite map
+
     	if dctype == 'box': # draw a box on top of the map
     	    dc.SetBrush(wx.Brush(wx.CYAN, wx.TRANSPARENT))
     	    dc.SetPen(self.pen)
@@ -340,6 +362,7 @@ class DrawWindow(BufferedWindow):
     	    dc.SetBrush(wx.Brush(wx.CYAN, wx.TRANSPARENT))
     	    dc.SetPen(self.pen)
     	    dc.DrawLine(coords[0], coords[1], coords[2], coords[3])
+
     	dc.EndDrawing()
 
 class MapFrame(wx.Frame):
@@ -352,7 +375,7 @@ class MapFrame(wx.Frame):
             pos=wx.DefaultPosition, size=wx.DefaultSize,
             style=wx.DEFAULT_FRAME_STYLE, toolbars=["map"]):
         """
-            Main map display window with toolbars, statusbars and
+            Main map display window with toolbars, statusbar and
             DrawWindow
 
             Parameters:
@@ -367,15 +390,15 @@ class MapFrame(wx.Frame):
         """
 
         wx.Frame.__init__(self, parent, id, title, pos, size, style)
-            
-        #
-        # set Frame (main window) content and properties
-        #
 
-        # set the size
+        #
+        # Set the size
+        #
         self.SetClientSize((600, 475))
 
-        # fancy gui
+        #
+        # Fancy gui
+        #
         self._mgr = wx.aui.AuiManager(self)
 
         #
@@ -391,11 +414,22 @@ class MapFrame(wx.Frame):
         #
     	self.statusbar = self.CreateStatusBar(number=2, style=0)
     	self.statusbar.SetStatusWidths([-2, -1])
-    	map_frame_statusbar_fields = ["", ("%s,%s" %(None, None))]
+    	map_frame_statusbar_fields = ["Extent: %d,%d : %d,%d" %
+                                      (Map.region["n"], Map.region["s"],
+                                       Map.region["w"], Map.region["e"]),
+                                      "%s,%s" %(None, None)]
     	for i in range(len(map_frame_statusbar_fields)):
     	    self.statusbar.SetStatusText(map_frame_statusbar_fields[i], i)
 
-    	# init map display
+        # update statusbar (extent)
+        self.statusbar.SetStatusText("Extent: %d,%d : %d,%d" %
+                                     (Map.region["n"], Map.region["s"],
+                                      Map.region["w"], Map.region["e"]), 0)
+
+            
+        #
+    	# Init map display
+        #
     	self.InitDisplay() # initialize region values
     	self.MapWindow = DrawWindow(self) # initialize buffered DC
     	self.MapWindow.Bind(wx.EVT_MOTION, self.OnMotion)
@@ -404,7 +438,7 @@ class MapFrame(wx.Frame):
         # Bind various events
         #
     	self.Bind(wx.EVT_ACTIVATE, self.OnFocus)
-    	self.Bind(wx.EVT_CLOSE, self.OnCloseWindow)
+    	self.Bind(wx.EVT_CLOSE,    self.OnCloseWindow)
 
         #
         # Update fancy gui style
@@ -436,7 +470,9 @@ class MapFrame(wx.Frame):
         self._mgr.Update()
 
     def InitDisplay(self):
-        """Initialize map display, set dimensions and map region"""
+        """
+        Initialize map display, set dimensions and map region
+        """
         self.width, self.height = self.GetClientSize()
         Map.geom = self.width, self.height
         Map.GetRegion()
@@ -446,9 +482,11 @@ class MapFrame(wx.Frame):
         Map.SetRegion()
 
     def OnFocus(self, event):
-        """Store information about active display
+        """
+        Store information about active display
         in tracking variables and change choicebook
-        page to match display"""
+        page to match display
+        """
         title = self.GetTitle()
         num = title[12:]
         
@@ -468,9 +506,11 @@ class MapFrame(wx.Frame):
         # store current mouse position
     	posx, posy = event.GetPositionTuple()
 
-    	# set coordinates to status bar
+
+    	# upsdate coordinates
     	x, y = self.MapWindow.Pixel2Cell(posx, posy)
-    	self.statusbar.SetStatusText("%.3f,%.3f" % (x, y), 1)
+    	self.statusbar.SetStatusText("%d,%d" % (x, y), 1)
+
     	event.Skip()
 
     def ReDraw(self, event):
@@ -479,42 +519,53 @@ class MapFrame(wx.Frame):
         """
         self.MapWindow.UpdateMap()
 
+
     def Pointer(self, event):
         """Pointer button clicled"""
         self.MapWindow.mouse['box'] = "point"
 
     def OnZoomIn(self, event):
-        """ZoomIn button clicled. Set mouse pointer and zoom direction"""
+        """
+        Zoom in the map.
+        Set mouse pointer and zoom direction
+        """
     	self.MapWindow.mouse['box'] = "box"
     	self.MapWindow.zoomtype = 1
     	self.MapWindow.pen = wx.Pen('Red', 2)
 
     def OnZoomOut(self, event):
-        """ZoomOut button clicled. Set mouse pointer and zoom direction"""
+        """
+        Zoom out the map.
+        Set mouse pointer and zoom direction
+        """
     	self.MapWindow.mouse['box'] = "box"
     	self.MapWindow.zoomtype = -1
     	self.MapWindow.pen = wx.Pen('Green', 2)
 
     def OnZoomBack(self, event):
-        """ZoomBack button clicked, zoom to previously stored position"""
+        """
+        Zoom last (previously stored position)
+        """
         # FIXME
         pass
 
     def OnPan(self, event):
-        """Panning button pressed, set mouse to drag"""
+        """
+        Panning, set mouse to drag
+        """
     	self.MapWindow.mouse['box'] = "drag"
     	self.MapWindow.zoomtype = 0
     	event.Skip()
-
+                
     def OnErase(self, event):
         """
-        Erase button pressed, erase screen
+        Erase the canvas
         """
         self.MapWindow.EraseMap()
 
     def OnZoomRegion(self, event):
         """
-        Zoom to region button clicked
+        Zoom to region 
         """
     	Map.getRegion()
     	Map.getResolution()
@@ -523,7 +574,7 @@ class MapFrame(wx.Frame):
 
     def OnAlignRegion(self, event):
         """
-        Align button clicked
+        Align region
         """
     	if not Map.alignRegion:
     	    Map.alignRegion = True
@@ -533,7 +584,7 @@ class MapFrame(wx.Frame):
 
     def SaveToFile(self, event):
         """
-        Save to file clicked
+        Save to file
         """
     	dlg = wx.FileDialog(self, "Choose a file name to save the image as a PNG to",
     	    defaultDir = "",
