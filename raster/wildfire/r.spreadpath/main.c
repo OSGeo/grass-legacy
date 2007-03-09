@@ -1,3 +1,20 @@
+/****************************************************************************
+ *
+ * MODULE:       r.spreadpath
+ * AUTHOR(S):    Jianping Xu 1995: WIldfire SPread Simulation, WiSpS (original contributor)
+ *               Markus Neteler <neteler itc.it>
+ *               Roberto Flor <flor itc.it>, Brad Douglas <rez touchofmadness.com>,
+ *               Glynn Clements <glynn gclements.plus.com>, Jachym Cepicky <jachym les-ejk.cz>
+ * PURPOSE:      This is the main program for tracing out the shortest path(s)
+ *               based on the raster map showing back path cells from which the   
+ *               cumulative costs were determined.
+ * COPYRIGHT:    (C) 2000-2006 by the GRASS Development Team
+ *
+ *               This program is free software under the GNU General Public
+ *               License (>=v2). Read the file COPYING that comes with GRASS
+ *               for details.
+ *
+ *****************************************************************************/
 /**********************************************************************/ 
 /*                                                                    */
 /*      This is the main program for tracing out the shortest path(s) */
@@ -52,7 +69,7 @@ int main(int argc, char **argv)
 	/* Set description */
 	module              = G_define_module();
 	module->keywords = _("raster");
-    module->description =
+	module->description =
 	_("Recursively traces the least cost path backwards to "
 	"cells from which the cumulative cost was determined.");
 
@@ -326,5 +343,5 @@ int main(int argc, char **argv)
 	unlink(in_col_file);
 	unlink(out_file);
 
-	exit(0);
+	exit(EXIT_SUCCESS);
 }

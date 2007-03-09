@@ -1,7 +1,11 @@
-/*****************************************************
- *     		r.ros
+/****************************************************************************
  *
- *	Author: Jianping Xu, Rutgers University, (1993)
+ * MODULE:       r.ros
+ * AUTHOR(S):    Jianping Xu, Rutgers University, 1993
+ *               Markus Neteler <neteler itc.it>
+ *               Roberto Flor <flor itc.it>, Brad Douglas <rez touchofmadness.com>,
+ *               Glynn Clements <glynn gclements.plus.com>, Jachym Cepicky <jachym les-ejk.cz>
+ * PURPOSE:
  *
  * This raster module creates three raster map layers:
  *	1. Base (perpendicular) rate of spread (ROS);
@@ -50,8 +54,14 @@
  * actually produce three raster maps named my_ros.base, 
  * my_ros.max, and my_ros.maxdir, or even my_ros.spotdist
  * respectively. 
+ *   
+ * COPYRIGHT:    (C) 2000-2006 by the GRASS Development Team
  *
- *****************************************************/
+ *               This program is free software under the GNU General Public
+ *               License (>=v2). Read the file COPYING that comes with GRASS
+ *               for details.
+ *
+ *****************************************************************************/
 
 #include <stdlib.h>
 #include <stdio.h>
@@ -200,7 +210,7 @@ main (int argc, char *argv[])
 	/* Set description */
 	module              = G_define_module();
 	module->keywords = _("raster");
-    module->description = 
+	module->description = 
 	_("Generates three, or four raster map layers showing 1) the base "
 	"(perpendicular) rate of spread (ROS), 2) the maximum (forward) ROS, "
 	"3) the direction of the maximum ROS, and optionally 4) the "
