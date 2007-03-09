@@ -1,26 +1,28 @@
-/**********************************************************************
+/****************************************************************************
  *
- *      This is the main program for simulating ellptical spread.
+ * MODULE:       r.spread
+ * AUTHOR(S):    Jianping Xu, 1995 (original contributor)
+ *                 Center for Remote Sensing and Spatial Analysis (CRSSA)
+ *                 Rutgers University.
+ *               Andreas.Lange <andreas.lange rhein-main.de>, Eric G. Miller <egm2 jps.net>,
+ *               Markus Neteler <neteler itc.it>, Roberto Flor <flor itc.it>,
+ *               Brad Douglas <rez touchofmadness.com>,
+ *               Glynn Clements <glynn gclements.plus.com>, Jachym Cepicky <jachym les-ejk.cz>
+ * PURPOSE:      
+ *      This is the main program for simulating elliptical spread.
  *                  
  *      It
  *      1) determines the earliest time a phenomenon REACHES to a
  *         map cell, NOT the time that cell is EXHAUSTED.
  *      3) If a cell is spread barrier, a no-data value is assigned
  *         to it.
- *      
- *      Author:
- *         Jianping Xu 
- *         Center for Remote Sensing and Spatial Analysis (CRSSA)
- *         Rutgers University.
+ * COPYRIGHT:    (C) 2000-2006 by the GRASS Development Team
  *
- *********************************************************************/
-
-/* 11/2000: I removed all the \n \t \b \g \h's from the parameter
- * definitions, as they caused problems with the xml-parser 
- * output.
- * andreas.lange@rhein-main.de
+ *               This program is free software under the GNU General Public
+ *               License (>=v2). Read the file COPYING that comes with GRASS
+ *               for details.
  *
- */
+ *****************************************************************************/
 
 #include <stdio.h>
 #include <stdlib.h>
@@ -98,7 +100,7 @@ main (int argc, char *argv[])
 	/* Set description */
 	module              = G_define_module();
 	module->keywords = _("raster");
-    module->description =
+	module->description =
 	_("Simulates elliptically anisotropic spread on a graphics window and "
 	"generates a raster map of the cumulative time of spread, "
 	"given raster maps containing the rates of spread (ROS), the ROS "
@@ -216,7 +218,7 @@ main (int argc, char *argv[])
 
 	/*   Parse command line */
 	if (G_parser(argc, argv))
-		exit(-1);
+		exit(EXIT_FAILURE);
 
 	srand(getpid()); 
 
@@ -573,5 +575,5 @@ printf ("Done\n");
 	if (display)
 		display_close ();
 
-        exit(0);
+        exit(EXIT_SUCCESS);
 } 

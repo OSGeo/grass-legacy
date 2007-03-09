@@ -1,3 +1,18 @@
+/****************************************************************************
+ *
+ * MODULE:       r.mfilter
+ * AUTHOR(S):    Michael Shapiro, CERL (original contributor)
+ *               Roberto Flor <flor itc.it>, Markus Neteler <neteler itc.it>
+ *               Glynn Clements <glynn gclements.plus.com>, Jachym Cepicky <jachym les-ejk.cz>,
+ *               Jan-Oliver Wagner <jan intevation.de>
+ * PURPOSE:      
+ * COPYRIGHT:    (C) 1999-2006 by the GRASS Development Team
+ *
+ *               This program is free software under the GNU General Public
+ *               License (>=v2). Read the file COPYING that comes with GRASS
+ *               for details.
+ *
+ *****************************************************************************/
 #define MAIN
 #include <stdlib.h>
 #include <string.h>
@@ -32,7 +47,7 @@ int main (int argc, char *argv[])
 
 	module = G_define_module();
 	module->keywords = _("raster");
-    module->description =
+	module->description =
 		_("Raster file matrix filter.");
 
     /* Define the different options */
@@ -93,7 +108,7 @@ int main (int argc, char *argv[])
     flag2->description = _("Apply filter only to zero data values") ;
 
     if (G_parser(argc, argv))
-        exit(-1);
+        exit(EXIT_FAILURE);
 
     /* please, remove before GRASS 7 released */
     if(flag1->answer) {
@@ -146,5 +161,5 @@ int main (int argc, char *argv[])
     perform_filter (in_name, in_mapset, out_name, filter, nfilters, repeat);
 
     G_put_cell_title (out_name, title);
-    exit(0);
+    exit(EXIT_SUCCESS);
 }

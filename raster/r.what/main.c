@@ -1,3 +1,18 @@
+/****************************************************************************
+ *
+ * MODULE:       r.what
+ * AUTHOR(S):    Michael Shapiro, CERL (original contributor)
+ *               Markus Neteler <neteler itc.it>,Brad Douglas <rez touchofmadness.com>,
+ *               Huidae Cho <grass4u gmail.com>, Glynn Clements <glynn gclements.plus.com>,
+ *               Hamish Bowman <hamish_nospam yahoo.com>, Soeren Gebbert <soeren.gebbert gmx.de>
+ * PURPOSE:      
+ * COPYRIGHT:    (C) 1999-2006 by the GRASS Development Team
+ *
+ *               This program is free software under the GNU General Public
+ *               License (>=v2). Read the file COPYING that comes with GRASS
+ *               for details.
+ *
+ *****************************************************************************/
 #define NFILES 150
 
 #include <stdio.h>

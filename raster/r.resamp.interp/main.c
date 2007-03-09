@@ -1,3 +1,17 @@
+/****************************************************************************
+ *
+ * MODULE:       r.resamp.interp
+ * AUTHOR(S):    Glynn Clements <glynn gclements.plus.com> (original contributor),
+ *               Paul Kelly <paul-grass stjohnspoint.co.uk>,
+ *               Dylan Beaudette, Hamish Bowman <hamish_nospam yahoo.com>
+ * PURPOSE:      
+ * COPYRIGHT:    (C) 2006-2007 by the GRASS Development Team
+ *
+ *               This program is free software under the GNU General Public
+ *               License (>=v2). Read the file COPYING that comes with GRASS
+ *               for details.
+ *
+ *****************************************************************************/
 #include <stdlib.h>
 #include <string.h>
 #include <math.h>
