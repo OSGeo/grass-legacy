@@ -1,3 +1,19 @@
+/****************************************************************************
+ *
+ * MODULE:       r.sunmask
+ * AUTHOR(S):    Janne Soimasuo, Finland 1994 (original contributor)
+ *               update to FP by Huidae Cho <grass4u gmail.com> 2001
+ *               added solpos algorithm feature by Markus Neteler 2001
+ *               Brad Douglas <rez touchofmadness.com>, Glynn Clements <glynn gclements.plus.com>,
+ *               Hamish Bowman <hamish_nospam yahoo.com>, Paul Kelly <paul-grass stjohnspoint.co.uk>
+ * PURPOSE:      
+ * COPYRIGHT:    (C) 1999-2006 by the GRASS Development Team
+ *
+ *               This program is free software under the GNU General Public
+ *               License (>=v2). Read the file COPYING that comes with GRASS
+ *               for details.
+ *
+ *****************************************************************************/
 /*
  * r.sunmask:
  *   Calculates the cast shadow areas from a DEM
@@ -223,7 +239,7 @@ int main(int argc, char *argv[])
     flag4->description = _("Print the sun position output in shell script style") ;
     
     if (G_parser(argc, argv))
-      exit(-1);
+      exit(EXIT_FAILURE);
 	
     zeros = flag1->answer;
 
@@ -402,14 +418,14 @@ int main(int argc, char *argv[])
   if (flag3->answer && (use_solpos==1) )  /* we only want the sun position */
   {
         G_message ( _("No map calculation requested. Finished.\n"));
-    	exit(0);
+    	exit(EXIT_SUCCESS);
   }
   else
     if (flag3->answer && (use_solpos==0) )
     {
         /* are you joking ? */
   	G_message ( _("You already know the sun position.\n"));
-  	exit(0);
+  	exit(EXIT_SUCCESS);
     }
 
   /* Search for output layer in all mapsets ? yes. */
@@ -518,8 +534,8 @@ int main(int argc, char *argv[])
     hist.edlinecnt = 3;
     G_write_history (outname, &hist);
 
-    G_message ( _("Finished.\n"));
-    exit(0);
+    G_done_msg ("");
+    exit(EXIT_SUCCESS);
 }
 
 #ifdef	RASTER_VALUE_FUNC
@@ -542,4 +558,7 @@ double raster_value(union RASTER_PTR buf, int data_type, int col)
 	return retval;
 }
 #endif
+
+
+
 

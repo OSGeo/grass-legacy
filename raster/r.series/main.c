@@ -1,3 +1,17 @@
+/****************************************************************************
+ *
+ * MODULE:       r.series
+ * AUTHOR(S):    Glynn Clements <glynn gclements.plus.com> (original contributor)
+ *               Hamish Bowman <hamish_nospam yahoo.com>, Jachym Cepicky <jachym les-ejk.cz>,
+ *               Martin Wegmann <wegmann biozentrum.uni-wuerzburg.de>
+ * PURPOSE:      
+ * COPYRIGHT:    (C) 2002-2006 by the GRASS Development Team
+ *
+ *               This program is free software under the GNU General Public
+ *               License (>=v2). Read the file COPYING that comes with GRASS
+ *               for details.
+ *
+ *****************************************************************************/
 #include <string.h>
 #include <stdlib.h>
 #include <unistd.h>

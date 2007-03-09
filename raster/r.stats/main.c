@@ -1,3 +1,20 @@
+/****************************************************************************
+ *
+ * MODULE:       r.stats
+ * AUTHOR(S):    Michael Shapiro, CERL (original contributor)
+ *               Markus Neteler <neteler itc.it>, Brad Douglas <rez touchofmadness.com>,
+ *               Huidae Cho <grass4u gmail.com>, Glynn Clements <glynn gclements.plus.com>,
+ *               Hamish Bowman <hamish_nospam yahoo.com>,
+ *               Jachym Cepicky <jachym les-ejk.cz>, Jan-Oliver Wagner <jan intevation.de>
+ * PURPOSE:      calculates the area present in each of the categories of
+ *               user-selected raster map layer(s)
+ * COPYRIGHT:    (C) 1999-2006 by the GRASS Development Team
+ *
+ *               This program is free software under the GNU General Public
+ *               License (>=v2). Read the file COPYING that comes with GRASS
+ *               for details.
+ *
+ *****************************************************************************/
 #define GLOBAL
 #include <stdlib.h>
 #include <string.h>
@@ -179,7 +196,7 @@ int main (int argc, char *argv[])
 	if(NULL == freopen (name, "w", stdout))
 	{
 	    perror (name);
-	    exit(1);
+	    exit(EXIT_FAILURE);
 	}
     }
     sscanf(option.nsteps->answer, "%d", &nsteps);
@@ -323,5 +340,8 @@ int main (int argc, char *argv[])
 	raw_stats (fd,  with_coordinates, with_xy, with_labels);
     else
 	cell_stats (fd, with_percents, with_counts, with_areas, with_labels, fmt);
-    exit(0);
+    exit(EXIT_SUCCESS);
 }
+
+
+

@@ -1,3 +1,18 @@
+/****************************************************************************
+ *
+ * MODULE:       r.reclass
+ * AUTHOR(S):    James Westervelt, Michael Shapiro, CERL (original contributors)
+ *               Huidae Cho <grass4u gmail.com>, Glynn Clements <glynn gclements.plus.com>,
+ *               Hamish Bowman <hamish_nospam yahoo.com>, Jan-Oliver Wagner <jan intevation.de>,
+ *               Markus Neteler <neteler itc.it>
+ * PURPOSE:      
+ * COPYRIGHT:    (C) 1999-2006 by the GRASS Development Team
+ *
+ *               This program is free software under the GNU General Public
+ *               License (>=v2). Read the file COPYING that comes with GRASS
+ *               for details.
+ *
+ *****************************************************************************/
 #include <stdlib.h>
 #include <unistd.h>
 #include <string.h>

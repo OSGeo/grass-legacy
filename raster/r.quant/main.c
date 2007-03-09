@@ -1,3 +1,18 @@
+/****************************************************************************
+ *
+ * MODULE:       r.quant
+ * AUTHOR(S):    Michael Shapiro, Olga Waupotitsch, CERL (original contributors)
+ *               Markus Neteler <neteler itc.it>, Roberto Flor <flor itc.it>,
+ *               Glynn Clements <glynn gclements.plus.com>, Jachym Cepicky <jachym les-ejk.cz>,
+ *               Jan-Oliver Wagner <jan intevation.de>
+ * PURPOSE:      
+ * COPYRIGHT:    (C) 1999-2006 by the GRASS Development Team
+ *
+ *               This program is free software under the GNU General Public
+ *               License (>=v2). Read the file COPYING that comes with GRASS
+ *               for details.
+ *
+ *****************************************************************************/
 #define MAIN
 #include <stdlib.h>
 #include <stdio.h>
@@ -68,7 +83,7 @@ main (int argc, char *argv[])
     rnd->description	= _("Round floating point data");
 
     if (G_parser(argc, argv))
-	exit(1);
+	exit(EXIT_FAILURE);
     truncate = trunc->answer;
     round = rnd->answer;
     G_quant_init(&quant_struct);
@@ -82,14 +97,12 @@ main (int argc, char *argv[])
        {
  	 sprintf (buf, "%s - not found", name[noi]);
 	 G_fatal_error (buf);
-	 exit(1);
        }
 
        if(G_raster_map_type(name[noi], mapset[noi]) == CELL_TYPE)
        {
 	 sprintf (buf, "%s is integer map, it can't be quantized", name[noi]);
 	 G_fatal_error (buf);
-	 exit(1);
        }
     }
 
@@ -116,21 +129,18 @@ main (int argc, char *argv[])
         {
  	    sprintf (buf, "%s - not found", basename);
 	    G_fatal_error (buf);
-	    exit(1);
         }
 
         if(G_raster_map_type(basename, basemapset) == CELL_TYPE)
         {
 	    sprintf (buf, "%s is integer map, it can't be used as basemap", basename);
 	    G_fatal_error (buf);
-	    exit(1);
         }
 
 	if(G_read_quant(basename, basemapset, &quant_struct)<=0)
         {
 	    sprintf (buf, "Can't read quant rules for basemap %s! Exiting.", basename);
 	    G_fatal_error (buf);
-	    exit(1);
         }
      }
 
@@ -150,8 +160,7 @@ main (int argc, char *argv[])
 	    if (isatty(0))
 	        G_message (_("No rules specified. Quant table[s] not changed."));
 	    else
-	        G_fatal_error ("no rules specified");
-	    exit(1);
+	        G_fatal_error ("No rules specified");
         }
 
     } /* use rules */
@@ -165,5 +174,5 @@ main (int argc, char *argv[])
 	   G_message(_("New quant table created for %s"), name[i]);
     }
 
-    exit(0);
+    exit(EXIT_FAILURE);
 }

@@ -1,3 +1,18 @@
+/****************************************************************************
+ *
+ * MODULE:       r.surf.idw2
+ * AUTHOR(S):    Michael Shapiro, CERL (original contributor)
+ *               Roberto Flor <flor itc.it>, Markus Neteler <neteler itc.it>,
+ *               Glynn Clements <glynn gclements.plus.com>, Jachym Cepicky <jachym les-ejk.cz>,
+ *               Jan-Oliver Wagner <jan intevation.de>, Radim Blazek <radim.blazek gmail.com>
+ * PURPOSE:      
+ * COPYRIGHT:    (C) 1999-2006 by the GRASS Development Team
+ *
+ *               This program is free software under the GNU General Public
+ *               License (>=v2). Read the file COPYING that comes with GRASS
+ *               for details.
+ *
+ *****************************************************************************/
 #include <stdlib.h>
 #include <unistd.h>
 #include <grass/gis.h>

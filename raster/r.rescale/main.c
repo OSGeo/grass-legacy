@@ -1,3 +1,16 @@
+/****************************************************************************
+ *
+ * MODULE:       r.rescale
+ * AUTHOR(S):    Michael Shapiro, CERL (original contributor)
+ *               Jachym Cepicky <jachym les-ejk.cz>, Jan-Oliver Wagner <jan intevation.de>
+ * PURPOSE:      
+ * COPYRIGHT:    (C) 1999-2006 by the GRASS Development Team
+ *
+ *               This program is free software under the GNU General Public
+ *               License (>=v2). Read the file COPYING that comes with GRASS
+ *               for details.
+ *
+ *****************************************************************************/
 #include <stdlib.h>
 #include <stdio.h>
 #include <string.h>
@@ -80,7 +93,7 @@ int main (int argc, char *argv[])
 	flag.quiet->description = _("Quietly");
 
 	if (G_parser(argc, argv))
-		exit(-1);
+		exit(EXIT_FAILURE);
 
     /* please, remove before GRASS 7 released */
     if(flag.quiet->answer) {
@@ -88,7 +101,6 @@ int main (int argc, char *argv[])
         G_warning(_("The '-q' flag is superseded and will be removed "
             "in future. Please use '--quiet' instead."));
     }
-
 
 	old_name = parm.input->answer;
 	new_name = parm.output->answer;
@@ -98,13 +110,11 @@ int main (int argc, char *argv[])
 	{
 		sprintf (buf, "%s - not found\n", old_name);
 		G_fatal_error (buf);
-		exit(1);
 	}
 	if (G_legal_filename (new_name) < 0)
 	{
 		sprintf (buf, "%s - illegal map name\n", new_name);
 		G_fatal_error (buf);
-		exit(1);
 	}
 
 	if (parm.from->answer)
