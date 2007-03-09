@@ -1,16 +1,18 @@
-/********************************************************************/
-/*                                                                  */
-/* v.to.db - load values from vector to database                    */
-/*                                                                  */
-/* Radim Blazek, 6/2000                                             */
-/*                                                                  */
-/* This file is part of GRASS GIS. It is free software. You can     */
-/* redistribute it and/or modify it under the terms of              */ 
-/* the GNU General Public License as published by the Free Software */
-/* Foundation; either version 2 of the License, or (at your option) */
-/* any later version.                                               */
-/*                                                                  */  
-/********************************************************************/
+/****************************************************************************
+ *
+ * MODULE:       v.to.db
+ * AUTHOR(S):    Radim Blazek <radim.blazek gmail.com> (original contributor)
+ *               Wolf Bergenheim <wolf+grass bergenheim net>,
+ *               Glynn Clements <glynn gclements.plus.com>,
+ *               Markus Neteler <neteler itc.it>
+ * PURPOSE:      load values from vector to database
+ * COPYRIGHT:    (C) 2000-2006 by the GRASS Development Team
+ *
+ *               This program is free software under the GNU General Public
+ *               License (>=v2). Read the file COPYING that comes with GRASS
+ *               for details.
+ *
+ *****************************************************************************/
 
 #define MAIN
 #include <grass/gis.h>
@@ -83,5 +85,8 @@ main (int argc, char *argv[])
         print_stat();
     }
 
-    exit(0);
+    exit(EXIT_SUCCESS);
 }
+
+
+

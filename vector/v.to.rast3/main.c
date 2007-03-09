@@ -1,9 +1,17 @@
-/**************************************************************
- * v.to.rast3 - read GRASS vector and writes 3D raster
+/****************************************************************************
  *
- * 9/2005 Upgrade to GRASS 6 by Radim Blazek
- * 
- **************************************************************/
+ * MODULE:       v.to.rast3
+ * AUTHOR(S):    Original s.to.rast3: Jaro Hofierka, Geomodel s.r.o. (original contributor)
+ *               9/2005 Upgrade to GRASS 6 by Radim Blazek
+ *               Soeren Gebbert <soeren.gebbert gmx.de>
+ * PURPOSE:      
+ * COPYRIGHT:    (C) 1999-2007 by the GRASS Development Team
+ *
+ *               This program is free software under the GNU General Public
+ *               License (>=v2). Read the file COPYING that comes with GRASS
+ *               for details.
+ *
+ *****************************************************************************/
 #include <stdlib.h>
 #include <stdio.h>
 #include <string.h>
@@ -150,4 +158,7 @@ int main(int argc, char *argv[])
 
     exit(EXIT_SUCCESS);
 }
+
+
+
 

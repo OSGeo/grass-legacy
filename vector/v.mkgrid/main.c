@@ -1,8 +1,20 @@
-/*
- * Written by GRASS, Fall of 88,  Michael H. Updated <02 Jun 1992> by Darrell
- * McCauley <mccauley@ecn.purdue.edu> angle option added.
- * Upgrade to 5.7 Radim Blazek 10/2004
- */
+/****************************************************************************
+ *
+ * MODULE:       v.mkgrid
+ * AUTHOR(S):    Written by GRASS, Fall of 88, Michael Higgins CERL (original contributor)
+ *               Updated <02 Jun 1992> by Darrell McCauley <mccauley@ecn.purdue.edu> angle option added.
+ *               Upgrade to 5.7 Radim Blazek 10/2004
+ *               Hamish Bowman <hamish_nospam yahoo.com>,
+ *               Jachym Cepicky <jachym les-ejk.cz>, Markus Neteler <neteler itc.it>
+ * PURPOSE:      
+ * COPYRIGHT:    (C) 1999-2007 by the GRASS Development Team
+ *
+ *               This program is free software under the GNU General Public
+ *               License (>=v2). Read the file COPYING that comes with GRASS
+ *               for details.
+ *
+ *****************************************************************************/
+
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
@@ -268,4 +280,7 @@ main (int argc, char *argv[])
 
   exit(0);
 }
+
+
+
 
