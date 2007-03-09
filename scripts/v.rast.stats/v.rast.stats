@@ -25,6 +25,7 @@
 #%option
 #% key: vector
 #% type: string
+#% key_desc: name
 #% gisprompt: old,vector,vector
 #% description: Name of vector polygon map
 #% required : yes
@@ -32,6 +33,7 @@
 #%option
 #% key: raster
 #% type: string
+#% key_desc: name
 #% gisprompt: old,cell,raster
 #% description: Name of raster map to calculate statistics from
 #% required : yes
