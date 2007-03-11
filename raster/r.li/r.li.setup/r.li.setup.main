@@ -17,6 +17,7 @@ if {[info exists env(OS)] && $env(OS) == "Windows_NT"} {
 
 # Include the select dialog code because it defines scroll bindings
 source $env(GISBASE)/etc/gtcltk/select.tcl
+source $env(GISBASE)/etc/gtcltk/gmsg.tcl
 
 # setting environment variables
 set env(GISDBASE) [exec g.gisenv get=GISDBASE]
@@ -171,15 +172,15 @@ proc createNewConfiguration {} {
 	frame .newConf.frame -relief flat
 	pack .newConf.frame -side top -fill y -anchor center
 
-	set names {{} {Configuration file name:} {Raster map to use to select areas:} {Vector map to overlay:}\
-	 {Site file to overlay:} }
+	set names {{} {Configuration file name:} {Raster map to use to select areas:} {[Vector map to overlay:]}\
+	 {[Site file to overlay:]} }
 	label .newConf.frame.label1 -text [lindex $names 1] -anchor e
 	entry .newConf.frame.entry1 -width 35 -textvariable env(CONF)
 	grid .newConf.frame.label1 .newConf.frame.entry1 -sticky ew -pady 2 -padx 1
     
 	label .newConf.frame.label2 -text [lindex $names 2] -anchor e
 	entry .newConf.frame.entry2 -width 35 -textvariable env(RASTER)
-	 button .newConf.frame.button2 -text "Files ..." -command {
+	 button .newConf.frame.button2 -text "Browse" -command {
 	 	set env(RASTER) [GSelect cell] 
 		}
 	grid .newConf.frame.label2 .newConf.frame.entry2 .newConf.frame.button2 -sticky ew -pady 2 -padx 1
@@ -187,14 +188,14 @@ proc createNewConfiguration {} {
  
 	label .newConf.frame.label3 -text [lindex $names 3] -anchor e
 	entry .newConf.frame.entry3 -width 35 -textvariable env(VECTOR)
-	button .newConf.frame.button3 -text "Files ..." -command {
+	button .newConf.frame.button3 -text "Browse" -command {
 		set env(VECTOR) [GSelect vector]
 	}
 	grid .newConf.frame.label3 .newConf.frame.entry3 .newConf.frame.button3 -sticky ew -pady 2 -padx 1
     
 	label .newConf.frame.label4 -text [lindex $names 4] -anchor e
 	entry .newConf.frame.entry4 -width 35 -textvariable env(SITE)
-	button .newConf.frame.button4 -text "Files ..." -command {
+	button .newConf.frame.button4 -text "Browse" -command {
 		set env(SITE) [GSelect vector]
 		}
 	grid .newConf.frame.label4 .newConf.frame.entry4 .newConf.frame.button4 -sticky ew -pady 2 -padx 1
