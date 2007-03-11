@@ -1,0 +1,13 @@
+#!/bin/sh
+
+if [ "$HOSTTYPE" = "macintosh" -o "$HOSTTYPE" = "powermac" -o "$HOSTTYPE" = "powerpc" -o "$HOSTTYPE" = "intel-pc" ] ; then
+	pythonw "$GISBASE/etc/wx/gism.py" -name gmism_py
+else
+	python "$GISBASE/etc/wx/gism.py" -name gmism_py
+fi
+
+
+
+
+
+
