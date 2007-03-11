@@ -16,6 +16,7 @@ int poly_to_rast (char *input_file, char *raster_map, char *title, int nrows)
     int format;
     int stat;
     int pass, npasses;
+    struct History history;
 
     ifd = fopen (input_file, "r");
     if (ifd == NULL)
@@ -76,6 +77,9 @@ int poly_to_rast (char *input_file, char *raster_map, char *title, int nrows)
 
     G_close_cell(rfd);
     G_write_cats (raster_map, &labels);
+    G_short_history(raster_map, "raster", &history);
+    G_command_history(&history);
+    G_write_history(raster_map, &history);
 
     return 0;
 }
