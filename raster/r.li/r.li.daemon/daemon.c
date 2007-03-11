@@ -39,6 +39,7 @@ int calculateIndex(char *file, int f(int, char **, area_des, double *),\
 	
 	char pathSetup[150],out[150], parsed;
 	char * reportChannelName, * random_access_name;
+	struct History history;
 	g_areas g;
 	int receiveChannel; 
 	int res;
@@ -255,6 +256,9 @@ int calculateIndex(char *file, int f(int, char **, area_des, double *),\
 		close(random_access);
 		unlink(random_access_name);
 		G_close_cell(mv_fd);
+		G_short_history(output, "raster", &history);
+		G_command_history(&history);
+		G_write_history(output, &history);
 	}
 	
 	
