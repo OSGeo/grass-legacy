@@ -153,7 +153,7 @@ int import_band(GDALDatasetH hMEMDS, int band, char *name, char *mapset,
 	    }
         }
 	
-	rcount = maxcolor;
+	rcount = G_colors_count( &sGrassColors );
 	    
 	G_debug(3, "dfCellMin: %f, dfCellMax: %f, maxcolor: %d", dfCellMin, dfCellMax, maxcolor);
 
@@ -184,10 +184,13 @@ int import_band(GDALDatasetH hMEMDS, int band, char *name, char *mapset,
 		GDALSetColorEntry( hCT, iColor, &sColor );
             }
         }
-	    
-	/* Create metadata entries for color table rules */
-	sprintf ( value, "%d", rcount );
-	GDALSetMetadataItem(hBand, "COLOR_TABLE_RULES_COUNT", value, NULL);
+
+	if (rcount > 0)
+	{
+	    /* Create metadata entries for color table rules */
+	    sprintf ( value, "%d", rcount );
+	    GDALSetMetadataItem(hBand, "COLOR_TABLE_RULES_COUNT", value, NULL);
+	}
 
 	/* Add the rules in reverse order */
 	for ( i = rcount-1; i >= 0; i-- ) {
