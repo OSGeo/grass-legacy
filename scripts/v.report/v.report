@@ -17,6 +17,14 @@
 #%  description: Reports geometry statistics for vectors
 #%  keywords: vector, report, statistics
 #%End
+#%Flag
+#% key: r
+#% description: Reverse sort the result
+#%End
+#%Flag
+#% key: s
+#% description: Sort the result
+#%End
 #%option
 #% key: map
 #% type: string
@@ -55,7 +63,6 @@ if [ "$1" != "@ARGS_PARSED@" ] ; then
   exec g.parser "$0" "$@"
 fi
 
-
 ### setup enviro vars ###
 eval `g.gisenv`
 : ${GISBASE?} ${GISDBASE?} ${LOCATION_NAME?} ${MAPSET?}
@@ -63,6 +70,17 @@ LOCATION=$GISDBASE/$LOCATION_NAME/$MAPSET
 
 ### trap <ctrl>-<c> so that we can clean up tmp and exit
 trap 'rm -f "$TMP1" "$TMP2" ; exit 1' 2 3 15
+
+# setting environment, so that sort works properly in all languages
+LC_ALL=C         # according to 'man sort'
+export LC_ALL
+LC_NUMERIC=C
+export LC_NUMERIC
+
+if [ $GIS_FLAG_R -eq 1 -a $GIS_FLAG_S -eq 1 ] ; then
+	echo "ERROR: Either -r or -s flag"
+	exit 1
+fi
 
 ### secure temporary files:
 TMP1="`g.tempfile pid=$$`"
@@ -113,10 +131,25 @@ else
 fi
 
 #make and print the table:
+NUMCOLS=`echo "$COLNAMES$EXTRACOLNAMES" | tr -s '|' ' ' | wc -w | awk '{print $1}'`
+
 echo "$COLNAMES$EXTRACOLNAMES"
-paste -d'|' "$TMP1" "$TMP2"
+if [ $GIS_FLAG_S -eq 1 ] ; then
+	# sort
+	paste -d'|' "$TMP1" "$TMP2" | sort -n -t'|' -k${NUMCOLS}
+else
+	if [ $GIS_FLAG_R -eq 1 ] ; then
+	# reverse sort
+	paste -d'|' "$TMP1" "$TMP2" | sort -n -r -t'|' -k${NUMCOLS}
+        else
+	   # no sort (order by cat)
+	   paste -d'|' "$TMP1" "$TMP2"
+        fi
+fi
+
 
 #cleanup:
 rm -f "$TMP1"
 rm -f "$TMP2"
 
+exit 0
