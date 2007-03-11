@@ -1,10 +1,6 @@
 #include <grass/gis.h>
 #include <grass/config.h>
 
-/* ask.c */
-int yes(char *);
-int just_click(char *);
-int ask(char *[]);
 /* box.c */
 int make_window_box(struct Cell_head *, double, int, int);
 /* center.c */
