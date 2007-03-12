@@ -1,4 +1,5 @@
 #!/bin/sh
+# -*- mode: tcl -*-
 
 #%Module
 #% description: Interactively edit cell values in a raster map.
@@ -123,6 +124,26 @@ proc save_map {map unchanged} {
 	exec r.colors --q $map rast=$inmap 2>@stderr
 }
 
+proc get_color {val} {
+	global colors
+
+	if {[array get colors $val] == ""} {
+		return "#ffffff"
+	} else {
+		return $colors($val)
+	}
+}
+
+proc brush_update {} {
+	global brush colors
+
+	if {$brush == "*"} {
+		.tools.color configure -bitmap gray12 -foreground black
+	} else {
+		.tools.color configure -bitmap gray75 -foreground [get_color $brush]
+	}
+}
+
 proc current_cell {} {
 	global canvas
 
@@ -172,15 +193,10 @@ proc cell_get {} {
 	set pos [current_cell]
 	set row [lindex $pos 0]
 	set col [lindex $pos 1]
-	set val $values($row,$col)
 
-	set brush $val
+	set brush $values($row,$col)
 
-	if {$val == "*"} {
-		.tools.color configure -bitmap gray12 -foreground black
-	} else {
-		.tools.color configure -bitmap gray75 -foreground $colors($val)
-	}
+	brush_update
 }
 
 proc cell_set {} {
@@ -200,7 +216,7 @@ proc cell_set {} {
 		set fill black
 		set stipple gray12 
 	} else {
-		set fill $colors($val)
+		set fill [get_color $val]
 		set stipple ""
 	}
 
@@ -300,6 +316,8 @@ proc make_ui {} {
 	    .tools.value_l .tools.value \
 	    .tools.color_l .tools.color \
 	    -side left
+
+	bind .tools.value <KeyPress-Return> brush_update
 
 	grid $canvas .yscroll -sticky nsew
 	grid .xscroll -sticky nsew
