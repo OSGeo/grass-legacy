@@ -1275,7 +1275,7 @@ echo "$ac_t"""$enable_macosx"" 1>&6
 # Set INST_DIR
 
 if test -n "$MACOSX_APP" ; then
-    INSTDIR="${prefix}/GRASS.app/Contents/Resources"
+    INSTDIR="${prefix}/GRASS-${GRASS_VERSION_MAJOR}.${GRASS_VERSION_MINOR}.app/Contents/Resources"
 else
     INSTDIR="${prefix}/grass-${GRASS_VERSION_MAJOR}.${GRASS_VERSION_MINOR}.${GRASS_VERSION_RELEASE}"
 fi
