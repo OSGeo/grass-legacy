@@ -35,14 +35,9 @@ INSTALL             = @INSTALL@
 INSTALL_DATA        = @INSTALL_DATA@
 
 ARCH                = @host@
-prefix              = @prefix@
-exec_prefix         = @exec_prefix@
 UNIX_BIN            = @BINDIR@
-INST_DIR            = @prefix@/grass-@GRASS_VERSION_MAJOR@.@GRASS_VERSION_MINOR@.@GRASS_VERSION_RELEASE@
-GRASSMANDIR         = @mandir@
+INST_DIR            = @INSTDIR@
 
-DL_LIBS             = @DL_LIBS@
-DL_OBJS             = @DL_OBJS@
 PLAT_OBJS           = @PLAT_OBJS@
 STRIPFLAG           = @STRIPFLAG@
 CC_SEARCH_FLAGS     = @CC_SEARCH_FLAGS@
@@ -157,11 +152,6 @@ TIFFINCPATH         = @TIFF_INCLUDE_DIRS@
 TIFFLIBPATH         = @TIFF_LIBRARY_DIRS@
 TIFFLIB             = @TIFFLIB@
 
-#GD library:
-#GDINC               = @GDINC@
-#GDLIB               = @GDLIB@
-#USE_GD              = @USE_GD@
-
 #openGL files for NVIZ/r3.showdspf
 OPENGLINC           = @OPENGLINC@
 OPENGLWINC          = @OPENGLWINC@
@@ -223,6 +213,7 @@ USE_LARGEFILES      = @USE_LARGEFILES@
 HAVE_SOCKET         = @HAVE_SOCKET@
 
 MINGW		    = @MINGW32@
+MACOSX_APP	    = @MACOSX_APP@
 
 # Cross compilation
 CROSS_COMPILING = @CROSS_COMPILING@ 
