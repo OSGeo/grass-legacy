@@ -13,6 +13,7 @@ void Indep(void)
 	int	Count, DRow, DCol;
 	int	Found, R, C;
 	double	RowDist, RowDistSq, ColDist;
+	struct  History history;
 
 	FUNCTION(indep);
 	Count = 0;
@@ -134,4 +135,8 @@ void Indep(void)
 		G_put_raster_row( OutFD, CellBuffer, CELL_TYPE);
         }
 	G_close_cell( OutFD);
+	G_short_history(Output->answer, "raster", &history);
+	G_command_history(&history);
+	G_write_history(Output->answer, &history);
 }
+
