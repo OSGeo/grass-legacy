@@ -122,6 +122,9 @@ static int get_field_cat(struct Map_info *Map, char *field_name, int *field,
 			 int *cat)
 {
     int i, type;
+    
+    /* make table name SQL compliant */
+    G_str_to_sql (field_name);
 
     for (i = 0; i < num_fields; i++) {
 	/* field name already exists */
@@ -173,14 +176,6 @@ static int get_field_cat(struct Map_info *Map, char *field_name, int *field,
 					 (i + 1) * sizeof(struct field_info *));
 
     Fi[i] = Vect_default_field_info(Map, *field, field_name, type);
-    {
-	char *p;
-
-	/* make table name SQL compliant */
-	for (p = Fi[i]->table; *p; p++)
-	    if (*p == '.' || *p == '-')
-		*p = '_';
-    }
 
     if (!driver) {
 	driver =

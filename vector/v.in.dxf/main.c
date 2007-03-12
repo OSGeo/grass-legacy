@@ -118,13 +118,9 @@ int main(int argc, char *argv[])
     flag_one_layer = flag.one_layer->answer;
     flag_frame = flag.frame->answer;
 
-    if (!flag_list)
-	G_message( _("Conversion of %s to vector map: "),
-		opt.input->answer);
-
     /* open DXF file */
     if (!(dxf = dxf_open(opt.input->answer)))
-	G_fatal_error(_("%s: Cannot open dxf file"), opt.input->answer);
+	G_fatal_error(_("Cannot open dxf file <%s>"), opt.input->answer);
 
     if (flag_list) {
 	num_layers = 0;
@@ -162,7 +158,7 @@ int main(int argc, char *argv[])
 	/* create vector map */
 	Map = (struct Map_info *)G_malloc(sizeof(struct Map_info));
 	if (Vect_open_new(Map, output, 1) < 0)
-	    G_fatal_error(_("%s: Cannot open new vector map"), output);
+	    G_fatal_error(_("Cannot open new vector map <%s>"), output);
 
 	Vect_set_map_name(Map, output);
 
@@ -170,8 +166,7 @@ int main(int argc, char *argv[])
     }
 
     if (!flag_list)
-	G_message (_("Conversion of [%s] to vector map ..."),
-		   opt.input->answer);
+	G_message (_("Conversion of <%s> to vector map:"), opt.input->answer);
 
     /* import */
     dxf_to_vect(dxf, Map);
@@ -199,6 +194,8 @@ int main(int argc, char *argv[])
 	G_free(output);
 	G_free(Map);
     }
+
+    G_done_msg ("");
 
     exit(EXIT_SUCCESS);
 }
