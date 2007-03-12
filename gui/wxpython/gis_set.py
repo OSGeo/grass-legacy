@@ -508,6 +508,7 @@ class GRASSStartup(wx.Frame):
 
     def OnWizard(self,event):
         import grass_wizard
+        reload(grass_wizard)
         gWizard = grass_wizard.GWizard(self,   self.tgisdbase.GetValue())
 
  

@@ -1,6 +1,7 @@
 import wx
 import wx.wizard as wiz
 import  wx.lib.rcsizer  as rcs
+from wx.lib.combotreebox import ComboTreeBox
 
 import os
 import sys
@@ -298,14 +299,17 @@ class BBoxPage(TitledPage):
         self.tleft = self.MakeTextCtrl("0")
         self.tright = self.MakeTextCtrl("1")
         self.tres = self.MakeTextCtrl("1")
-        self.tfile = self.MakeTextCtrl("")
+        self.tgdal = self.MakeTextCtrl("")
+        self.tdsn = self.MakeTextCtrl("")
 
         # labels
         self.lmessage = wx.StaticText(self,-1, "", size=(200,50))
 
         # buttons
-        self.bbrowse = self.MakeButton("Browse ...")
-        self.bset = self.MakeButton("Set")
+        self.bbrowsegdal = self.MakeButton("Browse ...")
+        self.bbrowseogr = self.MakeButton("Browse ...")
+        self.bgetlayers = self.MakeButton("Get Layers")
+        self.bset = self.MakeButton("Set coordinates")
 
         # list of states
         self.states = []
@@ -332,6 +336,12 @@ class BBoxPage(TitledPage):
         self.cstate = wx.ComboBox(self, -1, pos=(50, 170), size=(150, -1),
                 choices=self.states, style=wx.CB_DROPDOWN)
 
+        # list of layers
+        self.layers = []
+        self.llayers = wx.ComboBox(self, -1, choices=self.layers, size=(100,-1),
+                style=wx.CB_DROPDOWN)
+
+
         # layout
         self.sizer.Add(self.MakeLabel("North"), 0, wx.ALIGN_RIGHT, row=1,col=2)
         self.sizer.Add(self.ttop, 0, wx.ALIGN_LEFT, row=1,col=3)
@@ -348,89 +358,156 @@ class BBoxPage(TitledPage):
         self.sizer.Add(self.tres, 0, wx.ALIGN_LEFT, row=4,col=3)
         self.sizer.Add(self.bset, 0, wx.ALIGN_CENTER_VERTICAL, row=4, col=5 )
 
-        self.sizer.Add(wx.StaticLine(self, -1), 0, wx.EXPAND|wx.ALL, 0, row=5, col=1, colspan=5)
-        self.sizer.Add(self.MakeLabel("Use georeferenced file"), 3, wx.ALIGN_RIGHT, row=6,col=2)
-        self.sizer.Add(self.tfile, 0, wx.ALIGN_CENTER_VERTICAL, row=6,col=3)
-        self.sizer.Add(self.bbrowse, 0, wx.ALIGN_LEFT, row=6,col=4)
-        self.sizer.Add(wx.StaticLine(self, -1), 0, wx.EXPAND|wx.ALL, 0, row=7, col=1, colspan=5)
-        self.sizer.Add(self.MakeLabel("Set extent according to selected country"), 3, wx.ALIGN_RIGHT, row=8,col=2)
-        self.sizer.Add(self.cstate, 0, wx.ALIGN_LEFT, row=8,col=3)
+        self.sizer.Add(wx.StaticLine(self, -1), 0, wx.EXPAND|wx.ALL, 0, row=5, col=0, colspan=6)
+        self.sizer.Add(self.MakeLabel("Use georeferenced raster file"), 3, wx.ALIGN_RIGHT, row=6,col=0, colspan=3)
+
+        self.sizer.Add(self.MakeLabel("File name:"), 3, wx.ALIGN_RIGHT, row=7,col=2, colspan=1)
+        self.sizer.Add(self.tgdal, 0, wx.ALIGN_CENTER_VERTICAL, row=7,col=3)
+        self.sizer.Add(self.bbrowsegdal, 0, wx.ALIGN_LEFT, row=7,col=4)
+
+        self.sizer.Add(wx.StaticLine(self, -1), 0, wx.EXPAND|wx.ALL, 0,
+                row=8, col=2, colspan=3)
+
+        self.sizer.Add(self.MakeLabel("Use georeferenced vector layer"), 3, wx.ALIGN_RIGHT, row=9,col=0, colspan=3 )
+
+        self.sizer.Add(self.MakeLabel("Data source name:"), 3, wx.ALIGN_RIGHT, row=10,col=2, colspan=1)
+        self.sizer.Add(self.tdsn, 0, wx.ALIGN_CENTER_VERTICAL, row=10, col=3)
+        self.sizer.Add(self.bbrowseogr, 0, wx.ALIGN_LEFT, row=10,col=4)
+
+        self.sizer.Add(self.MakeLabel("Layer name:"), 3, wx.ALIGN_RIGHT, row=12,col=2, colspan=1)
+        self.sizer.Add(self.llayers, 0, wx.ALIGN_CENTER_VERTICAL, row=12,col=3)
+        self.sizer.Add(self.bgetlayers, 0, wx.ALIGN_LEFT, row=12,col=4)
+
+        self.sizer.Add(wx.StaticLine(self, -1), 0, wx.EXPAND|wx.ALL, 0,
+                row=13, col=0, colspan=6)
+        self.sizer.Add(self.MakeLabel("Set extent according to selected country"), 3, wx.ALIGN_RIGHT, row=14,col=2)
+        self.sizer.Add(self.cstate, 0, wx.ALIGN_LEFT, row=14,col=3)
 
         self.sizer.Add(self.lmessage, 0, wx.ALIGN_CENTER_VERTICAL,
-                row=10,col=3, colspan=3)
+                row=15,col=3, colspan=3)
 
 
         self.Bind(wiz.EVT_WIZARD_PAGE_CHANGING, self.OnWizPageChange)
         self.Bind(wx.EVT_COMBOBOX, self.OnItemSelected, self.cstate)
         self.Bind(wx.EVT_TEXT, self.OnStateText, self.cstate)
         self.Bind(wx.EVT_BUTTON, self.OnSetButton, self.bset)
-        self.Bind(wx.EVT_BUTTON, self.OnBrowseButton, self.bbrowse)
+        self.Bind(wx.EVT_BUTTON, self.OnBrowseGdal, self.bbrowsegdal)
+        self.Bind(wx.EVT_BUTTON, self.OnBrowseOGR, self.bbrowseogr)
+        self.Bind(wx.EVT_BUTTON, self.OnGetOGRLayers, self.bgetlayers)
 
-    def OnBrowseButton(self, event):
-        dlg = wx.FileDialog(self, "Choose a georeferenced file:", os.getcwd(), "", "*.*", wx.OPEN)
+    def OnBrowseGdal(self, event):
+        dlg = wx.FileDialog(self, "Choose a raster file:", os.getcwd(), "", "*.*", wx.OPEN)
         path = ""
         if dlg.ShowModal() == wx.ID_OK:
                     path = dlg.GetPath()
-                    self.tfile.SetValue(path)
+                    self.tgdal.SetValue(path)
         dlg.Destroy()
 
         self.OnSetButton()
 
+    def OnBrowseOGR(self, event):
+        dlg = wx.FileDialog(self, "Choose a data source name:", os.getcwd(), "", "*.*", wx.OPEN)
+        path = ""
+        if dlg.ShowModal() == wx.ID_OK:
+                    path = dlg.GetPath()
+                    self.tdsn.SetValue(path)
+        dlg.Destroy()
+        self.OnGetOGRLayers(None)
 
     def OnSetButton(self,event=None):
-        if self.tfile.GetValue():
-            path = self.tfile.GetValue()
-            line = ""
-            number="-?\d+\.\d+"
-            # Upper Left  (    0.0,    0.0)
-            rex=re.compile("\(\s*(%s)\s*,\s*(%s)\)" % (number, number))
-            firstset = secondset = None
-            obj = os.popen("gdalinfo %s | grep \"Upper\|Lower\"" % path)
-            line = obj.readline()
-            testogr = True
-            while 1:
-                if not line:
-                        break
-                if line.find("Upper Left")>-1:
-                    x,y = rex.findall(line)[0]
-                    self.ttop.SetValue(y)
-                    self.tleft.SetValue(x)
-                    firstset = True
-                if line.find("Lower Right")>-1:
-                    x,y = rex.findall(line)[0]
-                    self.tbottom.SetValue(y)
-                    self.tright.SetValue(x)
-                    secondset = True
-                if secondset and firstset:
-                    testogr  = False
-                    break
-                else:
-                    line = obj.readline()
-            if testogr and False: # FIXME: better use separate input for
-                                  # vector files
-                tmplayer = os.path.basename(path)
-                tmplayer = tmplayer.split(".")
-                layer = ""
-
-                #Extent: (-146.976217, -55.985484) - (72.774632, 80.594358)
-                rex = re.compile("\((%s),\s*(%s)\)\s*-\s*\((%s),\s*(%s)\)" %(number, number, number, number))
-                sys.stderr.write("ogrinfo %s %s\n" % (path ,layer))
-                cmd = os.popen("ogrinfo %s %s" % (path ,layer))
-                line = cmd.readline()
-                while 1:
-                    if not line:
-                         break
-                    if line.find("Extent")>-1:
-                        x1,y1,x2,y2 = rex.findall(line)[0]
-                        self.ttop.SetValue(y)
-                        self.tleft.SetValue(x)
-                        break
-                    line = cmd.readline()
-        elif self.cstate.GetSelection():
+        if self.tgdal.GetValue():
+            self.__setGDAL()
+        if self.tdsn.GetValue() and self.llayers.GetSelection()>-1:
+            self.__setOGR()
+        elif self.cstate.GetSelection() > -1:
+            sys.stderr.write("##############"+str(self.cstate.GetSelection())+"\n")
             self.OnItemSelected(None)
 
+    def OnGetOGRLayers(self, event):
+        path = self.tdsn.GetValue()
+        line = ""
+
+        sys.stderr.write(path+"####\n")
+        self.layers = []
+        self.llayers.Clear()
+        cmd = os.popen("ogrinfo -so %s\n" % (path))
+        line = cmd.readline()
+        # 1: cr (Polygon)
+        rex = re.compile("^(\d+):\s+(.+)\s+\(.*\)")
+        while 1:
+            if not line or line == "":
+                break
+            try:
+                sys.stderr.write("#####"+line+"####\n")
+                number, name = rex.findall(line)[0]
+                self.layers.append(name)
+            except:
+                pass
+            line = cmd.readline()
+        self.llayers.AppendItems(self.layers)
+        #sys.stderr.write(str( self.layers)+"\n")
+        #self.sizer.Remove(self.llayers)
+        #self.llayers = wx.ComboBox(self, -1, choices=self.layers, size=(100,-1),
+        #        style=wx.CB_DROPDOWN)
+        #self.sizer.Add(self.llayers, 0, wx.ALIGN_CENTER_VERTICAL, row=12,col=3)
+        #self.sizer.ShowItems(True)
+        self.OnSetButton()
+        pass
+
+    def __setOGR(self):
+        layer = self.layers[self.llayers.GetSelection()]
+        path = self.tdsn.GetValue()
+        number="-?\d+\.\d+"
+        line = ""
+        
+        #Extent: (-146.976217, -55.985484) - (72.774632, 80.594358)
+        rex = re.compile("\((%s),\s*(%s)\)\s*-\s*\((%s),\s*(%s)\)" %(number, number, number, number))
+        cmd = os.popen("ogrinfo -so %s %s" % (path ,layer))
+        line = cmd.readline()
+        while 1:
+            if not line or line == "":
+                    break
+            sys.stderr.write(line+"\n")
+            if line.find("Extent")>-1:
+                sys.stderr.write(line[0]+"#####\n")
+                x1,y1,x2,y2 = rex.findall(line)[0]
+                self.tbottom.SetValue(y1)
+                self.tleft.SetValue(x1)
+                self.ttop.SetValue(y2)
+                self.tright.SetValue(x2)
+                break
+            line = cmd.readline()
+        return
+
+    def __setGDAL(self):
+        path = self.tgdal.GetValue()
+        line = ""
+        number="-?\d+\.\d+"
+
+        # Upper Left  (    0.0,    0.0)
+        rex=re.compile("\(\s*(%s)\s*,\s*(%s)\)" % (number, number))
+        obj = os.popen("gdalinfo %s | grep \"Upper\|Lower\"" % path)
+
+        line = obj.readline()
+        while 1:
+            sys.stderr.write(line+"\n")
+            if not line:
+                    break
+            if line.find("Upper Left")>-1:
+                x,y = rex.findall(line)[0]
+                self.ttop.SetValue(y)
+                self.tleft.SetValue(x)
+            if line.find("Lower Right")>-1:
+                x,y = rex.findall(line)[0]
+                self.tbottom.SetValue(y)
+                self.tright.SetValue(x)
+            line = obj.readline()
+        return 
 
     def OnStateText(self,event):
+        item = self.llayers.FindString(event.GetString())
+        self.llayers.SetSelection(item)
+        self.llayers.SetValue(self.llayers.GetStringSelection())
         pass
         #.log.WriteText('EvtTextEnter: %s' % event.GetString())
         #sys.stderr.write(event.GetString()+"\n")
@@ -451,6 +528,8 @@ class BBoxPage(TitledPage):
         #  2
 
         if self.parent.csystemspage.cs == "latlong":
+            pass
+        if self.parent.csystemspage.cs == "xy":
             pass
         else:
             if self.parent.csystemspage.cs == "epsg":
