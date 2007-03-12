@@ -107,7 +107,8 @@ The following is a sample call of <EM>r.in.bin</EM> to import
 <a href="http://topex.ucsd.edu/WWW_html/srtm30_plus.html">SRTM30 PLUS</a> data:
 <P>
 <div class="code"><pre>
-r.in.bin -sb input=e020n40.Bathmetry.srtm output=e020n40_topex bytes=2 north=40 south=-10 east=60 west=20 r=6000 c=4800
+r.in.bin -sb input=e020n40.Bathmetry.srtm output=e020n40_topex \
+         bytes=2 north=40 south=-10 east=60 west=20 r=6000 c=4800
 r.colors e020n40_topex rules=etopo2
 </pre></div>
 
@@ -121,7 +122,8 @@ r.colors e020n40_topex rules=etopo2
 <A HREF="r.in.arc.html">r.in.arc</A>, 
 <A HREF="r.out.arc.html">r.out.arc</A>,
 <A HREF="r.in.gdal.html">r.in.gdal</A>,
-<A HREF="r.out.gdal.html">r.out.gdal</A>
+<A HREF="r.out.gdal.html">r.out.gdal</A>,
+<A HREF="r.in.srtm.html">r.in.srtm</A>
 </EM>
 
 <H2>AUTHORS</H2>
