@@ -584,7 +584,6 @@ main (int argc, char *argv[])
 	    sprintf ( buf, "create table %s (%s integer", Fi->table, cat_col_name );
 	    db_set_string ( &sql, buf);
 	    for ( i = 0; i < ncols; i++ ) {
-		char *c;
 
 		Ogr_field = OGR_FD_GetFieldDefn( Ogr_featuredefn, i );
 		Ogr_ftype = OGR_Fld_GetType( Ogr_field );
@@ -595,23 +594,11 @@ main (int argc, char *argv[])
 		    Ogr_fieldname = strdup(cnames_opt->answers[i+1]);
 		} else {
 		    /* Change column names to [A-Za-z][A-Za-z0-9_]* */
-		    Ogr_fieldname = strdup( OGR_Fld_GetNameRef( Ogr_field ) );
+		    Ogr_fieldname = G_strdup( OGR_Fld_GetNameRef( Ogr_field ) );
 		    G_debug(3, "Ogr_fieldname: '%s'", Ogr_fieldname);
 
-		    c = Ogr_fieldname;
-		    while ( *c ) {
-			*c = toascii(*c);
+		    G_str_to_sql (Ogr_fieldname);
 
-			if ( !( *c>='A' && *c<='Z' ) && !( *c>='a' && *c<='z' ) && !( *c>='0' && *c<='9' ) ) {
-			    *c = '_';
-			}
-			c++;
-		    }
-
-		    c = Ogr_fieldname;
-		    if ( !( *c>='A' && *c<='Z' ) && !( *c>='a' && *c<='z' ) ) {
-			*c = 'x';
-		    }
 		    G_debug(3, "Ogr_fieldname: '%s'", Ogr_fieldname);
 
 		}
