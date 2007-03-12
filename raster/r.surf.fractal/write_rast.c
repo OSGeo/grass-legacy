@@ -24,7 +24,8 @@ write_rast (
 
     DCELL       *row_out;   	/* Buffers to hold raster rows.		*/
 
-    char	file_name[128];	/* Name of each file to be written	*/
+    char	file_name[GNAME_MAX];	/* Name of each file to be written	*/
+    struct	History history; /* cmd line history metadata */
 
     int         nrows,          /* Will store the current number of     */
                 ncols,          /* rows and columns in the raster.      */
@@ -64,5 +65,9 @@ write_rast (
     }
 
     G_close_cell(fd_out);
+    G_short_history(file_name, "raster", &history);
+    G_command_history(&history);
+    G_write_history(file_name, &history);
+
     return 0;
 }
