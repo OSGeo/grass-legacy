@@ -40,6 +40,7 @@ int main(
     struct Flag         *flag;
     int			*int_buf;
     struct Cell_head	w;
+    struct History history;
     FILEDESC    	cellfile = (FILEDESC) NULL;
     double east, north, pt[2], cur[2], row, col, fmult;
     double fmin, fmax;
@@ -47,8 +48,8 @@ int main(
 
     G_gisinit (argv[0]);
 
-	module = G_define_module();
-	module->keywords = _("raster");
+    module = G_define_module();
+    module->keywords = _("raster");
     module->description =
 		_("Creates a raster map containing concentric "
 		"rings around a given point");
@@ -145,7 +146,9 @@ int main(
     }
     G_free(int_buf);
     G_close_cell(cellfile);
-
+    G_short_history(out_file->answer, "raster", &history);
+    G_command_history(&history);
+    G_write_history(out_file->answer, &history);
     
     return(EXIT_SUCCESS);
 }
