@@ -611,5 +611,11 @@ int G_str_to_sql (char *str)
 	c++;
     }
     
+    c = str;
+    if ( !( *c>='A' && *c<='Z' ) && !( *c>='a' && *c<='z' ) ) {
+	*c = 'x';
+	count++;
+    }
+
     return count;
 }
