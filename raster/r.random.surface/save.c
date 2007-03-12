@@ -16,9 +16,10 @@ void SaveMap(int NumMap, int MapSeed)
 	int	LowColor, HighColor;
 	double	DownInterval, UpInterval, Value=0,
 		Ratio, MeanMod;
-	struct Categories	Cats;
-    	struct Colors 		Colr;
+	struct  Categories	Cats;
+    	struct  Colors 		Colr;
 	char	String[80], Label[240];
+	struct  History history;
 	FUNCTION(SaveMap);
 
 	OutFD = G_open_cell_new( OutNames[ NumMap]);
@@ -177,6 +178,10 @@ void SaveMap(int NumMap, int MapSeed)
 	}
 
 	G_close_cell( OutFD);
+	G_short_history(OutNames[ NumMap], "raster", &history);
+	G_command_history(&history);
+	G_write_history(OutNames[ NumMap], &history);
+
 	strcpy( Label, Buf);
 	sprintf( String, " seed=%d", MapSeed);
 	strcat ( Label, String);
