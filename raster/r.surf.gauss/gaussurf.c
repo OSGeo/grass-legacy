@@ -12,19 +12,15 @@ int gaussurf (
     double mean,
     double sigma			/* Distribution parameters.		*/
 )
-
 {
-
 	int	nrows,ncols;		/* Number of cell rows and columns	*/
-
-	
 
 	DCELL	*row_out;		/* Buffer just large enough to hold one	*/
     					/* row of the raster map layer.		*/
 
 	int	fd_out;			/* File descriptor - used to identify 	*/
 					/* open raster maps.			*/
-	
+	struct	History history;	/* cmd line history metadata		*/
 
 	int	row_count,col_count;
 
@@ -59,6 +55,9 @@ int gaussurf (
 	/****** CLOSE THE CELL FILE ******/
 
 	G_close_cell(fd_out);
+	G_short_history(out, "raster", &history);
+	G_command_history(&history);
+	G_write_history(out, &history);
 
 	return 0;
 }
