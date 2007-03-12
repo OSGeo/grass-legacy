@@ -247,7 +247,11 @@ int print_window(struct Cell_head *window, int print_flag)
 		G_fatal_error(_
 			      ("Unable to update lat/long projection parameters"));
 
-	    /* do the transform
+	    /* for DEBUG
+	     pj_print_proj_params(&iproj,&oproj);
+	     */
+
+	     /* do the transform
 	     * syntax: pj_do_proj(outx, outy, in_info, out_info) 
 	     *
 	     *  1 ------ 2
