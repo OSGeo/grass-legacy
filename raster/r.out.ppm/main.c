@@ -244,7 +244,7 @@ int main( int argc, char *argv[])
 */
 	fclose(fp);
 
-    return(1);
+    return(EXIT_SUCCESS);
 }
 
 
