@@ -44,22 +44,26 @@ class MapToolbar:
         #
         # Zooming, etc.
         #
-    	self.pointer = self.toolbar.AddLabelTool(wx.ID_ANY, "pointer", 
-                       wx.Bitmap(os.path.join(gismutils.icons,"gui-pointer.gif"),
-                                 wx.BITMAP_TYPE_ANY), 
-                       wx.NullBitmap, wx.ITEM_RADIO, "Pointer", "")
-    	self.zoomin = self.toolbar.AddLabelTool(id=wx.ID_ANY, label="zoom_in", 
-                                                bitmap=wx.Bitmap(os.path.join(gismutils.icons,"gui-zoom_in.gif"),
-                                                                 wx.BITMAP_TYPE_ANY),
-                                                shortHelp="Zoom in", longHelp="Drag or click mouse to zoom")
-    	self.zoomout = self.toolbar.AddLabelTool(wx.ID_ANY, "zoom_out", 
-                        wx.Bitmap(os.path.join(gismutils.icons,"gui-zoom_out.gif"),
-                                  wx.BITMAP_TYPE_ANY), 
-                        wx.NullBitmap, wx.ITEM_RADIO, "Zoom out", "Drag or click mouse to unzoom")
-    	self.pan = self.toolbar.AddLabelTool(wx.ID_ANY, "pan", 
-                        wx.Bitmap(os.path.join(gismutils.icons,"gui-pan.gif"),
-                                  wx.BITMAP_TYPE_ANY),
-                        wx.NullBitmap, wx.ITEM_RADIO, "Pan", "Drag with mouse to pan")
+    	self.pointer = self.toolbar.AddLabelTool(id=wx.ID_ANY, label="pointer", 
+                                                 bitmap=wx.Bitmap(os.path.join(gismutils.icons,"gui-pointer.gif"),
+                                                                  wx.BITMAP_TYPE_ANY), 
+                                                 bmpDisabled=wx.NullBitmap, kind=wx.ITEM_RADIO,
+                                                 shortHelp="Pointer", longHelp="")
+        self.zoomin  = self.toolbar.AddLabelTool(id=wx.ID_ANY, label="zoom_in", 
+                                                 bitmap=wx.Bitmap(os.path.join(gismutils.icons,"gui-zoom_in.gif"),
+                                                                  wx.BITMAP_TYPE_ANY),
+                                                 bmpDisabled=wx.NullBitmap, kind=wx.ITEM_RADIO,
+                                                 shortHelp="Zoom in", longHelp="Drag or click mouse to zoom")
+    	self.zoomout = self.toolbar.AddLabelTool(id=wx.ID_ANY, label="zoom_out", 
+                                                 bitmap=wx.Bitmap(os.path.join(gismutils.icons,"gui-zoom_out.gif"),
+                                                                  wx.BITMAP_TYPE_ANY), 
+                                                 bmpDisabled=wx.NullBitmap, kind=wx.ITEM_RADIO,
+                                                 shortHelp="Zoom out", longHelp="Drag or click mouse to unzoom")
+    	self.pan     = self.toolbar.AddLabelTool(id=wx.ID_ANY, label="pan", 
+                                                 bitmap=wx.Bitmap(os.path.join(gismutils.icons,"gui-pan.gif"),
+                                                                  wx.BITMAP_TYPE_ANY),
+                                                 bmpDisabled=wx.NullBitmap, kind=wx.ITEM_RADIO,
+                                                 shortHelp="Pan", longHelp="Drag with mouse to pan")
         self.toolbar.AddSeparator()
 
         #
