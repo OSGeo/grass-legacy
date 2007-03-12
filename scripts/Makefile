@@ -12,6 +12,7 @@ SUBDIRS = \
 	d.out.png \
 	d.out.file \
 	d.polar \
+	d.rast.edit \
 	d.rast.leg \
 	d.redraw \
 	d.resize \
