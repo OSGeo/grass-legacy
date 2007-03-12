@@ -331,7 +331,7 @@ class DrawWindow(BufferedWindow):
     Drawing routine for double buffered drawing. Overwrites Draw method
     in the BufferedWindow class
     """
-    def __init__(self, parent, id = -1):
+    def __init__(self, parent, id = wx.ID_ANY):
         """
         """
     	## Any data the Draw() function needs must be initialized before
@@ -371,7 +371,7 @@ class MapFrame(wx.Frame):
     drawing window.
     """
 
-    def __init__(self, parent=None, id=-1, title="Map display",
+    def __init__(self, parent=None, id=wx.ID_ANY, title="Map display",
             pos=wx.DefaultPosition, size=wx.DefaultSize,
             style=wx.DEFAULT_FRAME_STYLE, toolbars=["map"]):
         """
@@ -421,12 +421,7 @@ class MapFrame(wx.Frame):
     	for i in range(len(map_frame_statusbar_fields)):
     	    self.statusbar.SetStatusText(map_frame_statusbar_fields[i], i)
 
-        # update statusbar (extent)
-        self.statusbar.SetStatusText("Extent: %d,%d : %d,%d" %
-                                     (Map.region["n"], Map.region["s"],
-                                      Map.region["w"], Map.region["e"]), 0)
 
-            
         #
     	# Init map display
         #
@@ -446,6 +441,15 @@ class MapFrame(wx.Frame):
         self._mgr.AddPane(self.MapWindow, wx.CENTER)
         self._mgr.Update()
 
+        #
+        # Create dictionary of available cursors
+        #
+        self.cursors = {
+            "default" : wx.StockCursor (wx.CURSOR_DEFAULT),
+            "cross"   : wx.StockCursor (wx.CURSOR_CROSS),
+            "hand"    : wx.StockCursor (wx.CURSOR_HAND)
+            }
+        
     def AddToolbar(self, name):
         """
         Add defined toolbar to the window
@@ -524,6 +528,9 @@ class MapFrame(wx.Frame):
         """Pointer button clicled"""
         self.MapWindow.mouse['box'] = "point"
 
+        # change the cursor
+        self.MapWindow.SetCursor (self.cursors["default"])
+
     def OnZoomIn(self, event):
         """
         Zoom in the map.
@@ -531,7 +538,11 @@ class MapFrame(wx.Frame):
         """
     	self.MapWindow.mouse['box'] = "box"
     	self.MapWindow.zoomtype = 1
-    	self.MapWindow.pen = wx.Pen('Red', 2)
+    	self.MapWindow.pen = wx.Pen(colour='Red', width=2, style=wx.SHORT_DASH)
+
+        # change the cursor
+        self.MapWindow.SetCursor (self.cursors["cross"])
+
 
     def OnZoomOut(self, event):
         """
@@ -540,7 +551,10 @@ class MapFrame(wx.Frame):
         """
     	self.MapWindow.mouse['box'] = "box"
     	self.MapWindow.zoomtype = -1
-    	self.MapWindow.pen = wx.Pen('Green', 2)
+    	self.MapWindow.pen = wx.Pen(colour='Red', width=2, style=wx.SHORT_DASH)
+
+        # change the cursor
+        self.MapWindow.SetCursor (self.cursors["cross"])
 
     def OnZoomBack(self, event):
         """
@@ -556,7 +570,10 @@ class MapFrame(wx.Frame):
     	self.MapWindow.mouse['box'] = "drag"
     	self.MapWindow.zoomtype = 0
     	event.Skip()
-                
+
+        # change the cursor
+        self.MapWindow.SetCursor (self.cursors["hand"])
+
     def OnErase(self, event):
         """
         Erase the canvas
@@ -612,7 +629,7 @@ class MapApp(wx.App):
     
     def OnInit(self):
 	wx.InitAllImageHandlers()
-	Mapfrm = MapFrame(None, -1)
+	Mapfrm = MapFrame(parent=None, id=wx.ID_ANY)
 	#self.SetTopWindow(Map)
 	Mapfrm.Show()
 

@@ -24,17 +24,18 @@ class MapToolbar:
         self.mapcontent = map
         self.mapdisplay = mapdisplay
 
-    	self.toolbar = wx.ToolBar(self.mapdisplay, -1, size=(5,100))
+    	self.toolbar = wx.ToolBar(parent=self.mapdisplay, id=wx.ID_ANY, size=(5,100))
     	#self.SetToolBar(self.toolbar)
 
         #
         # Draw
         #
-    	self.displaymap = self.toolbar.AddLabelTool(-1, "displaymap", 
-                                                    wx.Bitmap(os.path.join(gismutils.icons,"gui-display.gif"),
-                                                    wx.BITMAP_TYPE_ANY), 
-                                                    wx.NullBitmap, wx.ITEM_NORMAL, "Display map", "")
-    	self.erase = self.toolbar.AddLabelTool(-1, "erase", 
+    	self.displaymap = self.toolbar.AddLabelTool(id=wx.ID_ANY, label="displaymap", 
+                                                    bitmap=wx.Bitmap(name=os.path.join(gismutils.icons,"gui-display.gif"),
+                                                    type=wx.BITMAP_TYPE_ANY),
+                                                    bmpDisabled=wx.NullBitmap, kind=wx.ITEM_NORMAL,
+                                                    shortHelp="Display map", longHelp="")
+    	self.erase = self.toolbar.AddLabelTool(wx.ID_ANY, "erase", 
                                                wx.Bitmap(os.path.join(gismutils.icons,"gui-erase.gif"),
                                                wx.BITMAP_TYPE_ANY), 
                                                wx.NullBitmap, wx.ITEM_NORMAL, "Erase display", "")
@@ -43,19 +44,19 @@ class MapToolbar:
         #
         # Zooming, etc.
         #
-    	self.pointer = self.toolbar.AddLabelTool(-1, "pointer", 
+    	self.pointer = self.toolbar.AddLabelTool(wx.ID_ANY, "pointer", 
                        wx.Bitmap(os.path.join(gismutils.icons,"gui-pointer.gif"),
                                  wx.BITMAP_TYPE_ANY), 
                        wx.NullBitmap, wx.ITEM_RADIO, "Pointer", "")
-    	self.zoomin = self.toolbar.AddLabelTool(-1, "zoom_in", 
-                        wx.Bitmap(os.path.join(gismutils.icons,"gui-zoom_in.gif"),
-                                  wx.BITMAP_TYPE_ANY), 
-                        wx.NullBitmap, wx.ITEM_RADIO, "Zoom in", "Drag or click mouse to zoom")
-    	self.zoomout = self.toolbar.AddLabelTool(-1, "zoom_out", 
+    	self.zoomin = self.toolbar.AddLabelTool(id=wx.ID_ANY, label="zoom_in", 
+                                                bitmap=wx.Bitmap(os.path.join(gismutils.icons,"gui-zoom_in.gif"),
+                                                                 wx.BITMAP_TYPE_ANY),
+                                                shortHelp="Zoom in", longHelp="Drag or click mouse to zoom")
+    	self.zoomout = self.toolbar.AddLabelTool(wx.ID_ANY, "zoom_out", 
                         wx.Bitmap(os.path.join(gismutils.icons,"gui-zoom_out.gif"),
                                   wx.BITMAP_TYPE_ANY), 
                         wx.NullBitmap, wx.ITEM_RADIO, "Zoom out", "Drag or click mouse to unzoom")
-    	self.pan = self.toolbar.AddLabelTool(-1, "pan", 
+    	self.pan = self.toolbar.AddLabelTool(wx.ID_ANY, "pan", 
                         wx.Bitmap(os.path.join(gismutils.icons,"gui-pan.gif"),
                                   wx.BITMAP_TYPE_ANY),
                         wx.NullBitmap, wx.ITEM_RADIO, "Pan", "Drag with mouse to pan")
@@ -64,10 +65,13 @@ class MapToolbar:
         #
         # Misc
         #
-    	self.savefile = self.toolbar.AddLabelTool(-1, "savefile", 
-                        wx.Bitmap(os.path.join(gismutils.icons,"file-save.gif"),
-                                  wx.BITMAP_TYPE_ANY), 
-                        wx.NullBitmap, wx.ITEM_NORMAL, "Save display to PNG file", "")
+    	self.savefile = self.toolbar.AddLabelTool(id=wx.ID_ANY, label="savefile", 
+                                                  #bitmap=wx.Bitmap(os.path.join(gismutils.icons,"file-save.gif"),
+                                                  #wx.BITMAP_TYPE_ANY),
+                                                  # just testing wx.ArtProvider
+                                                  bitmap=wx.ArtProvider.GetBitmap(id=wx.ART_FILE_SAVE, client=wx.ART_BUTTON),
+                                                  bmpDisabled=wx.NullBitmap, kind=wx.ITEM_NORMAL,
+                                                  shortHelp="Save display to PNG file", longHelp="")
 
         self.toolbar.AddSeparator()
 
@@ -101,7 +105,7 @@ class DigitToolbar:
         self.mapcontent = map
         self.digitize=None
         self.parent=parent
-    	self.toolbar = wx.ToolBar(self.parent, -1)
+    	self.toolbar = wx.ToolBar(self.parent, wx.ID_ANY)
         icons = os.path.join(icons,"v.digit")
 
         self.addString = ""
@@ -118,20 +122,20 @@ class DigitToolbar:
 
         self.toolbar.AddSeparator()
 
-        self.point = self.toolbar.AddLabelTool(-1, "point", 
+        self.point = self.toolbar.AddLabelTool(wx.ID_ANY, "point", 
                             wx.Bitmap(os.path.join(icons,"new.point.gif"),
                                       wx.BITMAP_TYPE_ANY), 
                             wx.NullBitmap, wx.ITEM_RADIO, "Digitize new point", "")
-    	self.line = self.toolbar.AddLabelTool(-1, "line", 
+    	self.line = self.toolbar.AddLabelTool(wx.ID_ANY, "line", 
                         wx.Bitmap(os.path.join(icons,"new.line.gif"),
                                   wx.BITMAP_TYPE_ANY), 
                        wx.NullBitmap, wx.ITEM_RADIO, "Digitize new line",
                        "")
-    	self.boundary = self.toolbar.AddLabelTool(-1, "boundary", 
+    	self.boundary = self.toolbar.AddLabelTool(wx.ID_ANY, "boundary", 
                         wx.Bitmap(os.path.join(icons,"new.boundary.gif"),
                                   wx.BITMAP_TYPE_ANY), 
                         wx.NullBitmap, wx.ITEM_RADIO, "Digitize new boundary", "")
-    	self.centroid = self.toolbar.AddLabelTool(-1, "centroid", 
+    	self.centroid = self.toolbar.AddLabelTool(wx.ID_ANY, "centroid", 
                         wx.Bitmap(os.path.join(icons,"new.centroid.gif"),
                                   wx.BITMAP_TYPE_ANY), 
                         wx.NullBitmap, wx.ITEM_RADIO, "Digitize new centroid", "")
