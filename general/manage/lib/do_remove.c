@@ -17,7 +17,7 @@ int do_remove (int n, char *old)
     int result = 0;
     int removed = 0;
 
-    G_message ("Remove <%s>", old);
+    G_message (_("Removing %s <%s>"), list[n].maindesc, old);
 
     /* len = get_description_len(n); */
 
