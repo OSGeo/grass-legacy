@@ -1,3 +1,19 @@
+/****************************************************************************
+ *
+ * MODULE:       v.in.ascii
+ *               
+ * AUTHOR(S):    Original authors Michael Higgins, James Westervelt (CERL)
+ *               Updated to GRASS 5.7 Radim Blazek, ITC-Irst, Trento, Italy
+ * PURPOSE:      Converts a vector map in ASCII format to a vector map
+ *               in binary format
+ *
+ * COPYRIGHT:    (C) 2000-2007 by the GRASS Development Team
+ *
+ *               This program is free software under the GNU General Public
+ *               License (>=v2). Read the file COPYING that comes with GRASS
+ *               for details.
+ *
+ *****************************************************************************/
 #include <stdio.h>
 #include <string.h>
 #include <unistd.h>
@@ -28,16 +44,13 @@ main (int argc, char *argv[])
 	G_gisinit(argv[0]);
 
 	module = G_define_module();
-	module->keywords = _("vector");
+	module->keywords = _("vector, import, conversion");
 	module->description =
-	    _("Convert GRASS ascii file or points file to binary vector.");
+	    _("Convert GRASS ASCII file or points file to binary vector map layer.");
 
         /************************** Command Parser ************************************/
-	old = G_define_option();
-	old->key	 = "input";
-	old->type	 =  TYPE_STRING;
+	old = G_define_standard_option (G_OPT_V_INPUT);
 	old->required	 =  NO;
-	old->multiple	 =  NO;
 	old->gisprompt   = "old_file,file,input";
 	old->description =
 	  _("ASCII file to be converted to binary vector map, if not given reads from standard input");
@@ -75,7 +88,7 @@ main (int argc, char *argv[])
 	columns_opt->required = NO;
 	columns_opt->multiple = NO;
 	columns_opt->description =
-	  _("Columns definition for points mode in SQL style, for example:\n"
+	  _("Columns definition for points mode in SQL style, for example: "
 	    "'x double precision, y double precision, cat int, name varchar(10)'");
 
 	xcol_opt = G_define_option();
@@ -176,7 +189,7 @@ main (int argc, char *argv[])
 	if ( old->answer != NULL ) {
 	    if ( (ascii = fopen ( old->answer, "r" ) ) == NULL )
 	    {
-	        G_fatal_error(_("Could not open ascii file [%s]"), old->answer);
+	        G_fatal_error(_("Could not open ascii file <%s>"), old->answer);
 	    }
         } else {
 	    ascii = stdin;
@@ -474,5 +487,6 @@ main (int argc, char *argv[])
         }
 
 	G_done_msg("");
+
 	exit(EXIT_SUCCESS) ;
 }
