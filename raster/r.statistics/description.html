@@ -1,9 +1,12 @@
 <H2>DESCRIPTION</H2>
 
 <EM>r.statistics</EM> is a tool, where different class, resp. object
-oriented statistical analysis methods are possible.<BR>
+oriented statistical analysis methods are possible (called "zonal statistics"
+in some GIS). As data preparation, all areas of contiguous cell category values
+can be clumped with <EM>r.clump</EM>.
+<BR>
 
-The methods are the following (english - german):
+The available methods are the following (english - german):
 <ul>
 <li>distribution - Verteilung in Prozent</li>
 <li>average - Durchschnitt</li>
@@ -56,7 +59,7 @@ percentage of b from a. Example:
 To transfer the values stored as category labels into cell values,
 <em>r.mapcalc</em> can be used ('@' operator).
 
-<H2>EXAMPLE</H2>
+<H2>EXAMPLES</H2>
 
 Calculation of average elevation of each field in the Spearfish region:
 
@@ -67,19 +70,12 @@ r.mapcalc "fieldelev=@elevstats"
 r.univar fieldelev
 </pre></div>
 
-<H2>REMARK</H2>
-The source code of average, mode and median was taken from some GRASS raster
-modules.
-
-<H2>BUGS</H2>
-unkown
-
 <H2>SEE ALSO</H2>
-
 <EM>
+<A HREF="r.average.html">r.average</A>,
+<A HREF="r.clump.html">r.clump</A>,
 <A HREF="r.mode.html">r.mode</A>,
 <A HREF="r.median.html">r.median</A>,
-<A HREF="r.average.html">r.average</A>,
 <A HREF="r.mapcalc.html">r.mapcalc</A>,
 <A HREF="r.neighbors.html">r.neighbors</A>
 </EM>
