@@ -35,6 +35,8 @@ static const struct menu
 	{c_quart3, w_quart3, "quart3",    "third quartile"},
 	{c_perc90, w_perc90, "perc90",    "ninetieth percentile"},
 	{c_sum,    w_sum,    "sum",       "sum of values"},
+	{c_var,    w_var,    "variance",  "variance value"},
+	{c_stddev, w_stddev, "stddev",    "standard deviation"},
 	{NULL,     NULL,        NULL}
 };
 
