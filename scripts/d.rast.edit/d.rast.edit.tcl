@@ -12,15 +12,17 @@ if {$tcl_platform(platform) == "windows"} {
 
 set outmap $env(GIS_OPT_OUTPUT)
 set inmap $env(GIS_OPT_INPUT)
+set aspect $env(GIS_OPT_ASPECT)
 set width $env(GIS_OPT_WIDTH)
 set height $env(GIS_OPT_HEIGHT)
 set size $env(GIS_OPT_SIZE)
 
-proc load_map {map} {
-	global wind rows cols values changed colors
+proc load_map {} {
+	global wind rows cols values changed colors inmap
 	global stderr
 
-	set infile [open "|r.out.ascii --q input=$map 2>$stderr" r]
+	set infile [open "|r.out.ascii --q input=$inmap 2>$stderr" r]
+
 	regexp {^north: *([0-9]+)$} [gets $infile] dummy wind(N)
 	regexp {^south: *([0-9]+)$} [gets $infile] dummy wind(S)
 	regexp {^east: *([0-9]+)$}  [gets $infile] dummy wind(E)
@@ -42,7 +44,7 @@ proc load_map {map} {
 
 	set tempbase [exec g.tempfile pid=[pid]]
 	set tempfile $tempbase.ppm
-	exec r.out.ppm --q input=$map output=$tempfile 2>$stderr
+	exec r.out.ppm --q input=$inmap output=$tempfile 2>$stderr
 
 	image create photo colorimg -file $tempfile
 
@@ -65,11 +67,38 @@ proc load_map {map} {
 	image delete colorimg
 }
 
-proc save_map {map unchanged} {
-	global wind rows cols values changed inmap
+proc load_aspect {} {
+	global rows cols angles aspect
 	global stderr
 
-	set outfile [open "|r.in.ascii --q --o input=- output=$map 2>$stderr" w]
+	if {$aspect == ""} return
+
+	set infile [open "|r.out.ascii --q input=$aspect 2>$stderr" r]
+
+	regexp {^north: *([0-9]+)$} [gets $infile]
+	regexp {^south: *([0-9]+)$} [gets $infile]
+	regexp {^east: *([0-9]+)$}  [gets $infile]
+	regexp {^west: *([0-9]+)$}  [gets $infile]
+	regexp {^rows: *([0-9]+)$}  [gets $infile]
+	regexp {^cols: *([0-9]+)$}  [gets $infile]
+
+	for {set row 0} {$row < $rows} {incr row} {
+		gets $infile line
+		set col 0
+		foreach elem $line {
+			set angles($row,$col) $elem
+			incr col
+		}
+	}
+
+	close $infile
+}
+
+proc save_map {unchanged} {
+	global wind rows cols values changed inmap outmap
+	global stderr
+
+	set outfile [open "|r.in.ascii --q --o input=- output=$outmap 2>$stderr" w]
 
 	puts $outfile "north: $wind(N)"
 	puts $outfile "south: $wind(S)"
@@ -94,17 +123,61 @@ proc save_map {map unchanged} {
 
 	close $outfile
 
-	exec r.colors --q $map rast=$inmap 2>$stderr
+	exec r.colors --q $outmap rast=$inmap 2>$stderr
+}
+
+proc force_color {val} {
+	global colors inmap stderr env
+
+	set tempbase [exec g.tempfile pid=[pid]]
+	set tempfile $tempbase.ppm
+	set tempreg tmp.d.rast.edit
+	set tempmap tmp.d.rast.edit
+
+	exec g.region --q save=$tempreg 2>$stderr
+
+	if {[array get env WIND_OVERRIDE] != ""} {
+		set oldwind $env(WIND_OVERRIDE)
+	} else {
+		set oldwind ""
+	}
+	set env(WIND_OVERRIDE) $tempreg
+
+	exec g.region --q rows=1 cols=1 2>$stderr
+	exec r.mapcalc "$tempmap = $val" 2>$stderr
+	exec r.colors --q $tempmap rast=$inmap 2>$stderr
+	exec r.out.ppm --q $tempmap out=$tempfile 2>$stderr
+	exec g.remove --q rast=$tempmap region=$tempreg 2>$stderr
+
+	if {$oldwind == ""} {
+		unset env(WIND_OVERRIDE)
+	} else {
+		set env(WIND_OVERRIDE) $oldwind
+	}
+
+	image create photo tempimg -file $tempfile
+	set pix [tempimg get 0 0]
+	set r [lindex $pix 0]
+	set g [lindex $pix 1]
+	set b [lindex $pix 2]
+	set color [format "#%02x%02x%02x" $r $g $b]
+	set colors($val) $color
+	image delete tempimg
+
+	file delete $tempbase
+	file delete $tempfile
 }
 
 proc get_color {val} {
 	global colors
 
 	if {[array get colors $val] == ""} {
-		return "#ffffff"
-	} else {
-		return $colors($val)
+		if {[catch {force_color $val}]} {
+			set colors($val) "#ffffff"
+		}
 	}
+
+	return $colors($val)
 }
 
 proc brush_update {} {
@@ -135,7 +208,7 @@ proc current_cell {} {
 
 proc cell_enter {} {
 	global status
-	global wind rows cols values
+	global wind rows cols values angles
 
 	set pos [current_cell]
 	set row [lindex $pos 0]
@@ -148,6 +221,9 @@ proc cell_enter {} {
 	set status(x) [expr {$wind(E) + ($col + 0.5) * ($wind(E) - $wind(W)) / $cols}]
 	set status(y) [expr {$wind(N) - ($row + 0.5) * ($wind(N) - $wind(S)) / $rows}]
 	set status(value) $values($row,$col)
+	if {[array exists angles]} {
+		set status(aspect) $angles($row,$col)
+	}
 }
 
 proc cell_leave {} {
@@ -158,6 +234,7 @@ proc cell_leave {} {
 	set status(x) ""
 	set status(y) ""
 	set status(value) ""
+	set status(aspect) ""
 }
 
 proc cell_get {} {
@@ -197,19 +274,19 @@ proc cell_set {} {
 }
 
 proc make_canvas {} {
-	global canvas rows cols values colors
+	global canvas rows cols values colors angles
 	global size width height
 
 	set cx [expr $width  / $cols]
 	set cy [expr $height / $rows]
 
-	if {$cx < $size} {set cx $size}
-	if {$cy < $size} {set cy $size}
+	set sz [expr ($cx > $cy) ? $cx : $cy]
+	if {$sz < $size} {set sz $size}
 
 	set canvas .canvas
 
-	set w [expr $cols * $cx]
-	set h [expr $rows * $cy]
+	set w [expr $cols * $sz]
+	set h [expr $rows * $sz]
 
 	canvas $canvas -width $width -height $height -scrollregion [list 0 0 $w $h] \
 	    -xscrollcommand {.xscroll set} -yscrollcommand {.yscroll set}
@@ -217,12 +294,16 @@ proc make_canvas {} {
 	scrollbar .xscroll -orient horizontal -command {$canvas xview}
 	scrollbar .yscroll -orient vertical   -command {$canvas yview}
 
+	set aspect [array exists angles]
+	set pi [expr 2 * acos(0)]
+
 	for {set row 0} {$row < $rows} {incr row} {
 		for {set col 0} {$col < $cols} {incr col} {
-			set x0 [expr $col * $cx + 1]
-			set x1 [expr $x0 + $cx - 1]
-			set y0 [expr $row * $cy + 1]
-			set y1 [expr $y0 + $cy - 1]
+			set x0 [expr $col * $sz + 1]
+			set x1 [expr $x0 + $sz - 1]
+			set y0 [expr $row * $sz + 1]
+			set y1 [expr $y0 + $sz - 1]
+
 			if {$values($row,$col) == "*"} {
 				set color black
 				set stipple gray12
@@ -235,6 +316,28 @@ proc make_canvas {} {
 			    -fill $color -stipple $stipple \
 			    -outline black -activeoutline red \
 			    -tags [list cell row-$row col-$col]
+
+			if {! $aspect} continue
+
+			if {$angles($row,$col) == "*"} continue
+
+			set cx [expr ($x0 + $x1) / 2]
+			set cy [expr ($y0 + $y1) / 2]
+
+			set a [expr $angles($row,$col) * $pi / 180]
+
+			set dx [expr   cos($a) * $sz / 2]
+			set dy [expr - sin($a) * $sz / 2]
+
+			set x0 [expr $cx - $dx]
+			set y0 [expr $cy - $dy]
+			set x1 [expr $cx + $dx]
+			set y1 [expr $cy + $dy]
+
+			$canvas create line $x0 $y0 $x1 $y1 \
+			    -arrow last \
+			    -disabledfill white -state disabled \
+			    -tags [list arrow row-$row col-$col]
 		}
 	}
 
@@ -255,8 +358,8 @@ proc make_ui {} {
 	menu .menu -tearoff 0
 	menu .menu.file -tearoff 0
 	.menu add cascade -label "File" -menu .menu.file -underline 0
-	.menu.file add command -label "Save" -underline 0 -command {save_map $outmap 1}
-	.menu.file add command -label "Save Changes" -underline 5 -command {save_map $outmap 0}
+	.menu.file add command -label "Save" -underline 0 -command {save_map 1}
+	.menu.file add command -label "Save Changes" -underline 5 -command {save_map 0}
 	.menu.file add command -label "Exit" -underline 1 -command {destroy .}
 
 	. configure -menu .menu
@@ -272,6 +375,8 @@ proc make_ui {} {
 	entry .status.y -textvariable status(y) -width 10
 	label .status.value_l -text "Value:"
 	entry .status.value -textvariable status(value) -width 10
+	label .status.aspect_l -text "Aspect:"
+	entry .status.aspect -textvariable status(aspect) -width 10
 
 	pack \
 	    .status.row_l .status.row \
@@ -279,6 +384,7 @@ proc make_ui {} {
 	    .status.x_l .status.x \
 	    .status.y_l .status.y \
 	    .status.value_l .status.value \
+	    .status.aspect_l .status.aspect \
 	    -side left
 
 	frame .tools
@@ -308,10 +414,12 @@ set status(col) ""
 set status(x) ""
 set status(y) ""
 set status(value) ""
+set status(aspect) ""
 
 set brush "*"
 
-load_map $inmap
+load_map
+load_aspect
 make_canvas
 make_ui
 
