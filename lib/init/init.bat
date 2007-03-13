@@ -36,7 +36,7 @@ rem OK to have \ dirseps here as not used for much.
 set GISRC=%WINGISBASE%\demolocation\.grassrc63
 
 rem Generate GISBASE by converting dirsep characters from \ to /
-FOR /F "usebackq delims==" %%i IN (`g.dirseps -g %WINGISBASE%`) DO @set GISBASE=%%i
+FOR /F "usebackq delims==" %%i IN (`g.dirseps -g "%WINGISBASE%"`) DO @set GISBASE=%%i
 
 set GRASS_PAGER=more
 if "%GRASS_WISH%"=="" set GRASS_WISH=wish.exe
@@ -67,7 +67,7 @@ rem Create an initial GISRC file based on current directory
 :aftercreategisrc
 
 rem Now set the real GISRC
-FOR /F "usebackq delims==" %%i IN (`g.dirseps -g %WINGISRC%`) DO @set GISRC=%%i
+FOR /F "usebackq delims==" %%i IN (`g.dirseps -g "%WINGISRC%"`) DO @set GISRC=%%i
 
 rem Set GRASS_GUI
 
