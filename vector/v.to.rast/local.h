@@ -33,7 +33,7 @@ int do_areas(struct Map_info *, struct line_pnts *, dbCatValArray *, int, int, i
 int sort_areas(struct Map_info *, struct line_pnts *, int );
 
 /* do_lines.c */
-int do_lines(struct Map_info *, struct line_pnts *, dbCatValArray *, int, int, int, double, int, int);
+int do_lines(struct Map_info *, struct line_pnts *, dbCatValArray *, int, int, int, double, int, int, int*);
 
 /* raster.c */
 int begin_rasterization(int, int);
