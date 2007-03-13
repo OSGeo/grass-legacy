@@ -34,6 +34,8 @@ CHMOD               = chmod
 INSTALL             = @INSTALL@ 
 INSTALL_DATA        = @INSTALL_DATA@
 
+prefix              = @prefix@
+exec_prefix         = @exec_prefix@
 ARCH                = @host@
 UNIX_BIN            = @BINDIR@
 INST_DIR            = @INSTDIR@
