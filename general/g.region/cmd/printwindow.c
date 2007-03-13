@@ -617,17 +617,23 @@ int print_window(struct Cell_head *window, int print_flag)
 		fprintf(stdout, "ll_s=%.8f\n", sh_ll_s);
 		fprintf(stdout, "ll_w=%.8f\n", sh_ll_w);
 		fprintf(stdout, "ll_e=%.8f\n", sh_ll_e);
+		fprintf(stdout, "ll_clat=%.8f\n", (sh_ll_e - sh_ll_w)/2. + sh_ll_w);
+		fprintf(stdout, "ll_clon=%.8f\n", (sh_ll_n - sh_ll_s)/2. + sh_ll_s);
 	    }
 	    else
 	    {
 		G_format_northing(sh_ll_n, buf, PROJECTION_LL);
-		fprintf(stdout, "%-*s %s\n", width, "north longitude:", buf);
+		fprintf(stdout, "%-*s  %s\n", width, "north longitude:", buf);
 		G_format_northing(sh_ll_s, buf, PROJECTION_LL);
-		fprintf(stdout, "%-*s %s\n", width, "south longitude:", buf);
+		fprintf(stdout, "%-*s  %s\n", width, "south longitude:", buf);
 		G_format_easting(sh_ll_w, buf, PROJECTION_LL);
-		fprintf(stdout, "%-*s %s\n", width, "west latitude:", buf);
+		fprintf(stdout, "%-*s  %s\n", width, "west latitude:", buf);
 		G_format_easting(sh_ll_e, buf, PROJECTION_LL);
-		fprintf(stdout, "%-*s %s\n", width, "east latitude:", buf);
+		fprintf(stdout, "%-*s  %s\n", width, "east latitude:", buf);
+		G_format_easting((sh_ll_e - sh_ll_w)/2. + sh_ll_w, buf, PROJECTION_LL);
+		fprintf(stdout, "%-*s  %s\n", width, "center latitude:", buf);
+		G_format_northing((sh_ll_n - sh_ll_s)/2. + sh_ll_s, buf, PROJECTION_LL);
+		fprintf(stdout, "%-*s %s\n", width, "center longitude:", buf);
 	    }
 
 	    /*It should be calculated which number of rows and cols we have in LL */
