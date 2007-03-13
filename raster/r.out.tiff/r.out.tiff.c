@@ -1,3 +1,21 @@
+/****************************************************************************
+ *
+ * MODULE:       r.out.tiff
+ *   
+ * AUTHOR(S):    Sam Leffler
+ *               Updated by Marco Valagussa <marco@duffy.crcc.it>,
+ *               Markus Neteler, Eric G. Miller, Luca Cristelli
+ *
+ * PURPOSE:      Exports a GRASS raster map to a 8/24bit TIFF image file
+ *               at the pixel resolution of the currently defined region.
+
+ * COPYRIGHT:    (C) 1999-2007 by the GRASS Development Team
+ *
+ *               This program is free software under the GNU General Public
+ *               License (>=v2). Read the file COPYING that comes with GRASS
+ *               for details.
+ *
+ *****************************************************************************/
 /* 
  * $Id$
  *
@@ -26,7 +44,6 @@
  * distribute this file at will.
  */
 
-
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
@@ -53,12 +70,9 @@ typedef unsigned long u_long;
 u_short	config = PLANARCONFIG_CONTIG;
 u_short	compression = -1;
 u_short	rowsperstrip = 0;
-int DEBUG = 0;
-
 
 /* global functions */
 static int write_tfw(const char *, const struct Cell_head *);
-
 
 int 
 main (int argc, char *argv[])
@@ -83,17 +97,12 @@ main (int argc, char *argv[])
 	
 	/* Set description */
 	module              = G_define_module();
-	module->keywords = _("raster");
-    module->description = 
+	module->keywords = _("raster, export");
+	module->description = 
 	    _("Exports a GRASS raster map to a 8/24bit TIFF image file "
 	    "at the pixel resolution of the currently defined region.");
 
-	inopt = G_define_option();
-	inopt->key             = "input";
-	inopt->type            =  TYPE_STRING;
-	inopt->required        =  YES;
-	inopt->gisprompt	= "old,cell,raster";
-	inopt->description     = _("Existing raster map name");
+	inopt = G_define_standard_option(G_OPT_R_INPUT);
 
 	outopt = G_define_option();
 	outopt->key             = "output";
@@ -155,28 +164,28 @@ main (int argc, char *argv[])
 
 	mapset = G_find_cell(inopt->answer, "");
 	if (!mapset)
-		G_fatal_error(_("%s - raster map not found"), inopt->answer);
+		G_fatal_error(_("Raster map <%s> not found"), inopt->answer);
 
 	if ((G_get_cellhd(inopt->answer, mapset, &cellhd) < 0))
-		G_fatal_error(_("%s - can't read raster cellhd"), inopt->answer);
+		G_fatal_error(_("Cannot read header of raster map <%s>"), inopt->answer);
 
 	if ((G_get_window(&cellhd) < 0))
 		G_fatal_error(_("Can't set window"));
 
 	G_read_colors(inopt->answer, mapset, &colors);
 	if ((isfp = G_raster_map_is_fp(inopt->answer, mapset)))
-	    G_warning(_("The map <%s> in mapset <%s> is a floating point "
-                    "map. Decimal values will be rounded to integer!"),
-                    inopt->answer, mapset);
+	    G_warning(_("Raster map <%s> in mapset <%s> is a floating point "
+			"map. Decimal values will be rounded to integer!"),
+		      inopt->answer, mapset);
 
 	G_set_null_value_color (255, 255, 255, &colors);
 	if (palette && (colors.cmax - colors.cmin > 255))
 	    G_fatal_error (_("Color map for palette must have less "
-                           "than 256 colors for the available range of data"));
+			     "than 256 colors for the available range of data"));
 
 	cell = G_allocate_cell_buf();
 	if ((in = G_open_cell_old (inopt->answer, mapset)) < 0)
-		G_fatal_error(_("%s - can't open raster map"), inopt->answer);
+		G_fatal_error(_("Cannot open raster map <%s>"), inopt->answer);
 
 	basename = G_store(outopt->answer);
 	G_basename(basename, "tif");
@@ -185,7 +194,7 @@ main (int argc, char *argv[])
    
 	out = TIFFOpen(filename, "w");
 	if (out == NULL)
-		exit(EXIT_FAILURE);
+	    G_fatal_error (_("Cannot open TIFF file <%s>"), filename);
 
 	h.ras_width = cellhd.cols;
 	h.ras_height = cellhd.rows;
@@ -205,9 +214,8 @@ main (int argc, char *argv[])
 		register u_short *redp, *grnp, *blup, *mapptr;
 		register int i;
 
-		if (DEBUG)
-			fprintf (stderr, "max %f min %f mapsize %d\n", 
-                                     colors.cmax, colors.cmin, mapsize);
+		G_debug (1, "max %f min %f mapsize %d", 
+			 colors.cmax, colors.cmin, mapsize);
 
 		mapptr = (u_short *)G_calloc(mapsize* 3, sizeof (u_short));
 		redp = mapptr;
@@ -224,9 +232,8 @@ main (int argc, char *argv[])
 			*grnp = (u_short)(SCALE(grn));
 			*blup = (u_short)(SCALE(blu));
 
-			if (DEBUG)
-			    fprintf (stderr, " %d : %d %d %d   %d %d %d\n",
-					i, red, grn, blu, *redp, *grnp, *blup);
+			G_debug (1, " %d : %d %d %d   %d %d %d",
+				 i, red, grn, blu, *redp, *grnp, *blup);
 		}
 
 		TIFFSetField(out, TIFFTAG_COLORMAP,
@@ -259,8 +266,8 @@ main (int argc, char *argv[])
 	    TIFFSetField(out, TIFFTAG_TILEWIDTH, tilewidth);
 	    TIFFSetField(out, TIFFTAG_TILELENGTH, tilelength);
 	    obuf = (char*)_TIFFmalloc(TIFFTileSize(out));
-	    if (DEBUG)
-		fprintf (stderr, "Tile buff size: %d \n ",TIFFTileSize(out) );
+
+	    G_debug (1, "Tile buff size: %d",TIFFTileSize(out) );
 	    
 	    /* allocate cell buffers */
 	    for (i = 0; i < tilelength; i++)
@@ -275,7 +282,7 @@ main (int argc, char *argv[])
 		    for (i = 0; i < nrow; i++)
                     {
 			if (G_get_c_raster_row (in, cells[i], row + i) < 0)
-				G_fatal_error(_("error reading cell data"));
+			    G_fatal_error(_("Reading raster map"));
 		    }
 
                     for (col = 0; col < imagewidth; col += tilewidth)
@@ -289,8 +296,7 @@ main (int argc, char *argv[])
 			    oskew = 0;
 			    width = tilewidth;
 			    
-			    if (DEBUG)
-				fprintf (stderr, "Tile #: r %d, c %d, s %d \n ", row, col, s);
+			    G_debug (1, "Tile #: r %d, c %d, s %d", row, col, s);
                             
 			    /*
                              * Tile is clipped horizontally.  Calculate
@@ -327,12 +333,10 @@ main (int argc, char *argv[])
 				    tptr += oskew*3;
 				}
 
-				if (DEBUG)
-				    fprintf (stderr, "\r row #: i %d tptr %d\n", i, tptr);
+				G_debug (3, "row #: i %d tptr %d", i, tptr);
 			    }
 	    
- 			    if (DEBUG)
-				fprintf (stderr, "\n Write Tile #: col %d row %d s %d\n", col, row, s );
+			    G_debug (1, "Write Tile #: col %d row %d s %d", col, row, s);
 
                     	    if (TIFFWriteTile(out, obuf, col, row, 0, s) < 0)
                             {
@@ -349,9 +353,9 @@ main (int argc, char *argv[])
         else
         {
 		linebytes = ((h.ras_depth*h.ras_width+15) >> 3) &~ 1;
-		if (DEBUG)
-			fprintf (stderr, "linebytes = %d, TIFFscanlinesize = %d\n", linebytes,
-			    TIFFScanlineSize(out));
+		
+		G_debug (1, "linebytes = %d, TIFFscanlinesize = %d", linebytes,
+			 TIFFScanlineSize(out));
 
 		if (TIFFScanlineSize(out) > linebytes)
 			buf = (u_char *)G_malloc (linebytes);
@@ -361,13 +365,10 @@ main (int argc, char *argv[])
 		if (rowsperstrip != (u_short)-1)
 			rowsperstrip = (u_short)(8*1024/linebytes);
 
-		if (DEBUG)
-			fprintf (stderr, "rowsperstrip = %d\n", rowsperstrip);
-
+		G_debug (1, "rowsperstrip = %d", rowsperstrip);
+		
 		TIFFSetField(out, TIFFTAG_ROWSPERSTRIP,
-		    rowsperstrip == 0 ? 1 : rowsperstrip);
-
-                G_message (_("%s: complete ... "), G_program_name());
+			     rowsperstrip == 0 ? 1 : rowsperstrip);
 
 		for (row = 0; row < h.ras_height; row++)
 		{
@@ -401,7 +402,7 @@ main (int argc, char *argv[])
 
                 G_percent (row, h.ras_height, 2);
 	}
-	
+			   
 	(void) TIFFClose(out);
 	
 	if (tfw)
@@ -412,8 +413,10 @@ main (int argc, char *argv[])
 
 	G_free(filename);
 	G_free(basename);   
+
+	G_done_msg ("");
 	
-	return EXIT_SUCCESS;
+	exit (EXIT_SUCCESS);
 }
 
 
@@ -423,7 +426,7 @@ write_tfw(const char *fname, const struct Cell_head *win)
 	int  width = DBL_DIG;
 	FILE *outfile;
 	
-        G_message(_("Writing TIFF World file ..."));
+        G_message(_("Writing TIFF World file"));
 
 	if (fname == NULL)
 		G_fatal_error(_("Got null file name"));
