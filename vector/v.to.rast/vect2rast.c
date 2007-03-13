@@ -16,8 +16,9 @@ int vect_to_rast(char *vector_map,char *raster_map, int field, char *column, int
     char *vector_mapset;
     struct Map_info Map;
     struct line_pnts *Points;
-    int fd;	/* for raster map */
-    int nareas, nlines;
+    int fd;	                          /* for raster map */
+    int nareas, nlines;                   /* number of converted features */
+    int nareas_all, nplines_all;          /* number of all areas, points/lines */
     int stat;
     int format;
     int pass, npasses;
@@ -138,6 +139,8 @@ int vect_to_rast(char *vector_map,char *raster_map, int field, char *column, int
     npasses = begin_rasterization(nrows, format);
     pass = 0;
 
+    nareas_all = Vect_get_num_areas (&Map);
+
     do {
 	pass++;
 
@@ -155,15 +158,16 @@ int vect_to_rast(char *vector_map,char *raster_map, int field, char *column, int
 	}
 
 	if (nlines) {
-	    if((nlines = do_lines (&Map, Points, &cvarr, ctype, field, use, value, value_type, ftype)) < 0) {
+	    if((nlines = do_lines (&Map, Points, &cvarr, ctype, field, use, value, value_type, ftype, &nplines_all)) < 0) {
 		G_warning (_("Problem processing lines from vector map <%s>, continuing..."), vector_map);
 		stat = -1;
 		break;
 	    }
 	}
 
-	G_message (_("Converted areas: [%d] of [%d]"), nareas, Vect_get_num_areas (&Map));
-	G_message (_("Converted points/lines: [%d] of [%d]"), nlines, Vect_get_num_lines (&Map));
+	G_message (_("Converted areas: [%d] of [%d]"), nareas, nareas_all);
+	G_message (_("Converted points/lines: [%d] of [%d]"), nlines, nplines_all);
+
 	G_debug (1, "Writing raster map ...");
 
 	stat = output_raster(fd);
