@@ -617,6 +617,8 @@ int main(int argc, char *argv[])
     GDALClose(hDstDS);
     if (hMEMDS)
 	GDALClose(hMEMDS);
-    G_message(_("Done!"));
+
+    G_done_msg ("");
+
     exit(EXIT_SUCCESS);
 }
