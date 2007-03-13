@@ -278,26 +278,42 @@ class GMFrame(wx.Frame):
             ('addcmd', os.path.join(gismutils.icons,'gui-cmd.gif'), 'Add command layer', self.AddCommand)
             )
 
-
-
     #---Start display---#000000#FFFFFF----------------------------------------------
     def NewDisplay(self, event=None):
         '''Create new map display widget'''
-        #update display index
-        #start a new display, indexed by disp_idx
-        #mID = wx.NewId()
 
-# new stuff
-#        self.mapdisplays[self.disp_idx] = mapdisp.MapFrame(self,
-#                -1, pos=wx.DefaultPosition, size=wx.DefaultSize,
-#                style=wx.DEFAULT_FRAME_STYLE)
-
-        self.mapdisplays[self.disp_idx] = mapdisp.MapFrame(self,
+        newdisp = self.mapdisplays[self.disp_idx] = mapdisp.MapFrame(self,
                    -1, pos=wx.DefaultPosition, size=wx.DefaultSize,
                    style=wx.DEFAULT_FRAME_STYLE,
                    cb=self.gm_cb, idx=self.disp_idx)
         self.mapdisplays[self.disp_idx].SetTitle(_("Map Display-"+str(self.disp_idx)))
         #self.maptree[self.disp_idx] = self.mapdisplays[self.disp_idx].getTree()
+
+        #add notebook page to GIS Manager
+
+       # make a new page in the bookcontrol for the layer tree (on page 0 of the notebook)
+        self.pg_panel = wx.Panel(self.gm_cb,-1, style= wx.EXPAND)
+        self.gm_cb.AddPage(self.pg_panel, "Display "+str(self.disp_idx), select = True)
+        self.cb_page = self.gm_cb.GetCurrentPage()
+
+       #create layer tree (tree control for managing GIS layers)  and put on new notebook page
+        self.maptree = gismutils.LayerTree(self.cb_page, -1, wx.DefaultPosition, wx.DefaultSize, wx.TR_HAS_BUTTONS
+            |wx.TR_LINES_AT_ROOT|wx.TR_EDIT_LABELS|wx.TR_HIDE_ROOT
+            |wx.TR_DEFAULT_STYLE|wx.NO_BORDER|wx.FULL_REPAINT_ON_RESIZE)
+
+        #layout for controls
+        cb_boxsizer = wx.BoxSizer()
+        cb_boxsizer.Add(self.maptree, 1, wx.EXPAND)
+        self.cb_page.SetSizer(cb_boxsizer)
+        self.cb_page.SetAutoLayout(True)
+        self.Centre()
+
+        #store information about display and associated controls in a dictionary in track.py
+        track.Track().SetDisp(self.disp_idx,self)
+        track.Track().SetCtrlDict(self.disp_idx, newdisp, self.cb_page, self.maptree)
+
+
+
         self.mapdisplays[self.disp_idx].Show()
         self.mapdisplays[self.disp_idx].Refresh()
         self.mapdisplays[self.disp_idx].Update()
