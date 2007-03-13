@@ -79,14 +79,13 @@ main (int argc, char *argv[])
 	option_opt->multiple = NO;
 	option_opt->options = "add,del,chlayer,sum,report,print";
 	option_opt->answer = "add";
-        option_opt->description = _("Action to be done:\n"
-				    "\t\tadd - add a new category\n"
-				    "\t\tdel - delete category\n"
-				    "\t\tchlayer - change layer number (e.g. layer=3,1 changes layer 3 to layer 1)\n"
-				    "\t\tsum - add the value specified by cat option to the current category value\n"
-				    "\t\treport - print report (statistics), in shell style:\n"
-				    "\t\tlayer type count min max\n"
-				    "\t\tprint - print category values, more cats in the same layer are separated by '/'");
+        option_opt->description = _("Action to be done");
+	option_opt->descriptions = _("add;add a new category;"
+				     "del;delete category;"
+				     "chlayer;change layer number (e.g. layer=3,1 changes layer 3 to layer 1);"
+				     "sum;add the value specified by cat option to the current category value;"
+				     "report;print report (statistics), in shell style: layer type count min max;"
+				     "print;print category values, more cats in the same layer are separated by '/'");
 
 	cat_opt = G_define_standard_option(G_OPT_V_CAT);
 	cat_opt->answer = "1";
