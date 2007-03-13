@@ -15840,7 +15840,7 @@ msgstr "Anzahl der Textlabel für eine geglättetete Legende."
 
 #: ../display/d.legend/main.c:135
 msgid "Screen coordinates to place the legend (as percentage)"
-msgstr "Bildschirmkoordinaten, um die Legend zu plazieren (als Przentangabe)."
+msgstr "Bildschirmkoordinaten, um die Legend zu plazieren (als Prozentangabe)."
 
 #: ../display/d.legend/main.c:143
 msgid "List of discrete category numbers/values for legend"
