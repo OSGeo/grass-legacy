@@ -64,8 +64,8 @@ main (int argc, char *argv[])
 
 	module = G_define_module();
 	module->keywords = _("vector");
-    module->description = 
-		"Attach, delete or report vector categories to map geometry.";
+	module->description = 
+	    _("Attach, delete or report vector categories to map geometry.");
 
 	in_opt = G_define_standard_option(G_OPT_V_INPUT);
 	out_opt = G_define_standard_option(G_OPT_V_OUTPUT);
@@ -79,14 +79,14 @@ main (int argc, char *argv[])
 	option_opt->multiple = NO;
 	option_opt->options = "add,del,chlayer,sum,report,print";
 	option_opt->answer = "add";
-        option_opt->description = "Action to be done:\n"
-	    	"\tadd - add a new category\n"
-		"\tdel - delete category\n"
-		"\tchlayer - change layer number (e.g. layer=3,1 changes layer 3 to layer 1)\n"
-		"\tsum - add the value specified by cat option to the current category value\n"
-		"\treport - print report (statistics), in shell style:\n"
-			"\t\tlayer type count min max\n"
-		"\tprint - print category values, more cats in the same layer are separated by '/'";
+        option_opt->description = _("Action to be done:\n"
+				    "\t\tadd - add a new category\n"
+				    "\t\tdel - delete category\n"
+				    "\t\tchlayer - change layer number (e.g. layer=3,1 changes layer 3 to layer 1)\n"
+				    "\t\tsum - add the value specified by cat option to the current category value\n"
+				    "\t\treport - print report (statistics), in shell style:\n"
+				    "\t\tlayer type count min max\n"
+				    "\t\tprint - print category values, more cats in the same layer are separated by '/'");
 
 	cat_opt = G_define_standard_option(G_OPT_V_CAT);
 	cat_opt->answer = "1";
@@ -101,15 +101,16 @@ main (int argc, char *argv[])
 	step_opt->required = NO;
 	step_opt->multiple = NO;
 	step_opt->answer = "1";
-        step_opt->description = "Category increment";
+        step_opt->description = _("Category increment");
 
 	shell = G_define_flag();
         shell->key               = 'g';
-        shell->description       = "shell script style, currently only for report";
+        shell->description       = _("Shell script style, currently only for report");
 	
 	G_gisinit(argv[0]);
+
         if (G_parser (argc, argv))
-	    exit(-1); 
+	    exit(EXIT_FAILURE); 
 	
 	/* read options */
 	option = 0;
@@ -122,7 +123,7 @@ main (int argc, char *argv[])
 		break;
 	    case ( 'c' ):
 		option = O_CHFIELD;
-		G_warning("Database connection and attribute tables for concerned layers are not changed");
+		G_warning(_("Database connection and attribute tables for concerned layers are not changed"));
 		break;
 	    case ( 's' ):
 		option = O_SUM;
@@ -199,7 +200,7 @@ main (int argc, char *argv[])
 	    Vect_set_fatal_error (GV_FATAL_PRINT);
 	    if (0 > Vect_open_new (&Out, out_opt->answer, with_z)) {
 	         Vect_close (&In);
-	         exit (1);
+	         exit (EXIT_FAILURE);
 	    }
 
 	    Vect_copy_head_data (&In, &Out);
@@ -231,7 +232,7 @@ main (int argc, char *argv[])
 			if ( centr > 0 ) continue; /* Centroid exists and may be processed as line */
 			ret = Vect_get_point_in_area ( &In, i, &x, &y );
 			if ( ret < 0 ) {
-			    G_warning ("Cannot calculate area centroid" );
+			    G_warning (_("Cannot calculate area centroid"));
 			    continue;
 			}
 			Vect_reset_line ( Points );
@@ -452,11 +453,10 @@ main (int argc, char *argv[])
 	
 	if (option == O_ADD || option == O_DEL || option == O_CHFIELD || option == O_SUM) {
 	    Vect_copy_tables ( &In, &Out, 0 );
-	    Vect_build (&Out, stdout);
+	    Vect_build (&Out, stderr);
 	    Vect_close (&Out);
 	}
 	Vect_close (&In);
 
-	exit(0) ;
+	exit(EXIT_SUCCESS) ;
 }
-
