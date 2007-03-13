@@ -1,25 +1,34 @@
-"""gism.py module to manage map display window and display management tools"""
+"""
+mapdisp Package
+
+Classes:
+* BufferedWindow
+* DrawWindow
+* MapFrame
+* MapApp
+"""
+
 
 # Authors: Michael Barton and Jachym Cepicky
 # COPYRIGHT:	(C) 1999 - 2006 by the GRASS Development Team
 # Double buffered drawing concepts from the wxPython Cookbook
 
 import wx
+import wx.aui
 import os, sys, time, glob
 
-#sys.path.append()
-
 import render
-import gismutils as gmutils
+import gismutils
+import toolbars
+import grassenv
+import track
 
-Map = render.Map() # instantiate module to render GRASS display output to PPM file
+Map = render.Map() # instance of Map class to render GRASS display output to PPM file
 
 DEBUG = False
 
 class BufferedWindow(wx.Window):
-
     """
-
     A Buffered window class.
 
     To use it, subclass it and define a Draw(DC) method that takes a DC
@@ -31,90 +40,115 @@ class BufferedWindow(wx.Window):
     UpdateMap() method. Since the drawing is stored in a bitmap, you
     can also save the drawing to file by calling the
     SaveToFile(self,file_name,file_type) method.
-
     """
 
+    def __init__(self, parent, id,
+            pos = wx.DefaultPosition,
+            size = wx.DefaultSize,
+            style=wx.NO_FULL_REPAINT_ON_RESIZE):
 
-    def __init__(self, parent, id, pos = wx.DefaultPosition, size = wx.DefaultSize, style=wx.NO_FULL_REPAINT_ON_RESIZE):
     	wx.Window.__init__(self, parent, id, pos, size, style)
+        self.parent = parent
 
-    	self.Bind(wx.EVT_PAINT, self.OnPaint)
-    	self.Bind(wx.EVT_SIZE, self.OnSize)
-    	self.Bind(wx.EVT_IDLE, self.OnIdle)
-    	self.Bind(wx.EVT_MOTION, self.MouseActions)
-    	self.Bind(wx.EVT_MOUSE_EVENTS, self.MouseActions)
-
-    ##	self.dcmd_list = [] #list of display commands to process
-
-    	# tempfile for display command output
-    	self.gtemp = os.popen("g.tempfile pid=%d" % \
-    	    os.getpid()).readlines()[0].strip()
-    	self.MapFile = None
-    	self.Img = "" # wx.Image object from self.MapFile
-
-    	# mouse attributes like currently pressed buttons, position on
-    	# the screen, begin and end of dragging, and type of drawing
-    	self.mouse = {
-    	    'l': False,
-    	    'r':False,
-    	    'm':False,
-    	    'pos':[None, None],
-    	    'begin':[0, 0],
-    	    'end':[0, 0],
-    	    'box':"point"
-    	    }
-    	self.zoomtype = 1	 # 1 zoom out, 0 no zoom, -1 zoom in
+        #
+        # Flags
+        #
+    	self.render = True  # re-render the map from GRASS or just redraw image
     	self.resize = False # indicates whether or not a resize event has taken place
     	self.dragimg = None # initialize variable for map panning
-    	self.pen = None # pen for drawing zoom boxes, etc.
-    	self.render = True #re-render the map from GRASS or just redraw image
+    	self.pen = None     # pen for drawing zoom boxes, etc.
+
+        #
+        # Event bindings
+        #
+    	self.Bind(wx.EVT_PAINT,        self.OnPaint)
+    	self.Bind(wx.EVT_SIZE,         self.OnSize)
+    	self.Bind(wx.EVT_IDLE,         self.OnIdle)
+    	self.Bind(wx.EVT_MOTION,       self.MouseActions)
+    	self.Bind(wx.EVT_MOUSE_EVENTS, self.MouseActions)
+
+        #
+        # Render output objects
+    	#
+    	self.mapfile = None # image file to be rendered
+    	self.Img = ""       # wx.Image object (self.mapfile)
+
+        #
+    	# mouse attributes like currently pressed buttons, position on
+    	# the screen, begin and end of dragging, and type of drawing
+        #
+    	self.mouse = {
+    	    'l': False,
+    	    'r': False,
+    	    'm': False,
+    	    'pos': [None, None],
+    	    'begin': [0, 0],
+    	    'end': [0, 0],
+    	    'box': "point"
+    	    }
+        self.zoomtype = 1  # 1 zoom in, 0 no zoom, -1 zoom out
 
     	# OnSize called to make sure the buffer is initialized.
     	# This might result in OnSize getting called twice on some
     	# platforms at initialization, but little harm done.
-            #!!! self.OnSize(None)
+        #!!! self.OnSize(None)
 
     def Draw(self, dc, img=None, dctype='image', coords='0,0'):
-    	## just here as a place holder.
-    	## This method should be over-ridden when sub-classed
+    	"""
+        Just here as a place holder.
+    	This method should be over-ridden when sub-classed
+        """
     	pass
 
     def OnPaint(self, event):
-    	# All that is needed here is to draw the buffer to screen
+    	"""
+        All that is needed here is to draw the buffer to screen
+        """
     	dc = wx.BufferedPaintDC(self, self._Buffer)
 
     def OnSize(self, event):
-    	# The Buffer init is done here, to make sure the buffer is always
-    	# the same size as the Window
+    	"""
+        The Buffer init is done here, to make sure the buffer is always
+    	the same size as the Window
+        """
 
-    	Map.Width, Map.Height = self.GetClientSize()
+        # set size of the input image
+    	Map.width, Map.height = self.GetClientSize()
 
     	# Make new off screen bitmap: this bitmap will always have the
     	# current drawing in it, so it can be used to save the image to
     	# a file, or whatever.
-    	self._Buffer = wx.EmptyBitmap(Map.Width, Map.Height)
+    	self._Buffer = wx.EmptyBitmap(Map.width, Map.height)
 
+        # get the image to be rendered
     	self.Img = self.GetImage()
 
-
-    	if self.Img and Map.Width + Map.Height > 0: # scale image during resize
-    	    self.Img = self.Img.Scale(Map.Width, Map.Height)
+        # update map display
+    	if self.Img and Map.width + Map.height > 0: # scale image during resize
+    	    self.Img = self.Img.Scale(Map.width, Map.height)
     	    self.render = False
     	    self.UpdateMap()
-    	self.resize = True # re-render image on idle
+
+        # re-render image on idle
+    	self.resize = True
 
     def OnIdle(self, event):
-    	'''Only re-render a compsite map image from GRASS during
-    	idle time instead of multiple times during resizing.'''
+    	"""
+        Only re-render a compsite map image from GRASS during
+    	idle time instead of multiple times during resizing.
+        """
+
     	if self.resize:
     	    self.render = True
     	    self.UpdateMap()
     	event.Skip()
 
     def SaveToFile(self, FileName, FileType):
-    	## This will save the contents of the buffer
-    	## to the specified file. See the wx.Windows docs for
-    	## wx.Bitmap::SaveFile for the details
+    	"""
+        This will save the contents of the buffer
+    	to the specified file. See the wx.Windows docs for
+    	wx.Bitmap::SaveFile for the details
+        """
     	self._Buffer.SaveFile(FileName, FileType)
 
     def UpdateMap(self, img=None):
@@ -127,8 +161,8 @@ class BufferedWindow(wx.Window):
 
     	"""
     	if self.render:
-    	    Map.Width, Map.Height = self.GetClientSize()
-    	    self.MapFile = Map.Render(force=self.render)
+    	    Map.width, Map.height = self.GetClientSize()
+    	    self.mapfile = Map.Render(force=self.render)
     	    self.Img = self.GetImage()
     	    self.resize = False
     	    if not self.Img: return
@@ -141,13 +175,18 @@ class BufferedWindow(wx.Window):
     	self.resize = False
 
     def EraseMap(self):
+        """
+        Erase the map display
+        """
     	dc = wx.BufferedDC(wx.ClientDC(self), self._Buffer)
     	self.Draw(dc, dctype='clear')
 
     def DragMap(self, moveto):
-    	'''drag a bitmap image for panning.'''
+    	"""
+        Drag a bitmap image for panning.
+        """
+
     	dc = wx.BufferedDC(wx.ClientDC(self), self._Buffer)
-    	#dc.SetBackground(wx.Brush(self.GetBackgroundColour()))
     	dc.SetBackground(wx.Brush("White"))
     	bitmap = wx.BitmapFromImage(self.Img)
     	self.dragimg = wx.DragImage(bitmap)
@@ -160,7 +199,9 @@ class BufferedWindow(wx.Window):
     ##	self.dragimg.UpdateBackingFromWindow(dc, memdc, sourcerect,destrect)
 
     def MouseDraw(self):
-    	''' mouse zoom rectangles and lines '''
+    	"""
+        Mouse zoom rectangles and lines
+        """
     	img = self.Img # composite map in background
     	dc = wx.BufferedDC(wx.ClientDC(self), self._Buffer)
     	if self.mouse['box'] == "box":
@@ -185,15 +226,23 @@ class BufferedWindow(wx.Window):
     	    self.mouse['begin'] = event.GetPositionTuple()[:]
 
     	# left mouse button released and not just a pointer
-    	elif event.LeftUp() and self.mouse['box'] != "point":
-    	    # end point of zoom box or drag
-    	    self.mouse['end'] = event.GetPositionTuple()[:]
+        elif event.LeftUp():
+            if self.mouse['box'] != "point":
+                # end point of zoom box or drag
+                self.mouse['end'] = event.GetPositionTuple()[:]
 
-    	    # set region in zoom or pan
-    	    self.Zoom(self.mouse['begin'], self.mouse['end'], self.zoomtype)
+                # set region in zoom or pan
+                self.Zoom(self.mouse['begin'], self.mouse['end'], self.zoomtype)
 
-    	    # redraw map
-    	    self.UpdateMap()
+            else:
+                # digitizing
+                if self.parent.digittoolbar:
+                    if self.parent.digittoolbar.digitize == "point":
+                        east,north= self.Pixel2Cell(self.mouse['end'][0],self.mouse['end'][1])
+                        self.parent.digittoolbar.AddPoint(east,north)
+            # redraw map
+            self.render=True
+            self.UpdateMap()
 
     	# dragging or drawing box with left button
     	elif event.Dragging() and event.LeftIsDown:
@@ -210,29 +259,19 @@ class BufferedWindow(wx.Window):
     	elif wheel != 0:
 
     	    # zoom 1/2 of the screen
-    	    begin = [Map.Width/4, Map.Height/4]
-    	    end = [Map.Width - Map.Width/4,
-    		Map.Height - Map.Height/4]
-
-
-        if DEBUG:
-            print "GetClientSize: ", self.GetClientSize()
-            print "Map.Width Map.Height: ", Map.Width, Map.Height
-            print "Mouse begin: ", begin
-            print "Mouse end: ", end
-
-	    if wheel > 0:
-		self.Zoom(begin, end, 1)
-	    else:
-		self.Zoom(begin, end, -1)
-	    self.UpdateMap()
+    	    begin = [Map.width/4, Map.height/4]
+    	    end = [Map.width - Map.width/4,
+    		Map.height - Map.height/4]
 
     	# store current mouse position
     	self.mouse['pos'] = event.GetPositionTuple()[:]
 
     def GetImage(self):
-    	if Map.MapFile and os.path.isfile(Map.MapFile):
-    	    self.Img = wx.Image(Map.MapFile, wx.BITMAP_TYPE_ANY)
+        """
+        Converts files to wx.Image
+        """
+    	if Map.mapfile and os.path.isfile(Map.mapfile):
+    	    self.Img = wx.Image(Map.mapfile, wx.BITMAP_TYPE_ANY)
     	else:
     	    self.Img = None
     	return self.Img
@@ -241,15 +280,18 @@ class BufferedWindow(wx.Window):
     	"""
     	Calculates real word coordinates to image coordinates
 
-    	Inputs: x,y
-    	Outputs: int x, int y
+    	Input : x, y
+    	Output: int x, int y
     	"""
-    	newx = Map.Region['w']+x*Map.Region["ewres"]
-    	newy = Map.Region['n']-y*Map.Region["nsres"]
+    	newx = Map.region['w'] + x * Map.region["ewres"]
+    	newy = Map.region['n'] - y * Map.region["nsres"]
     	return newx, newy
 
 
     def Zoom(self, begin, end, zoomtype):
+        """
+        Calculates new region while (un)zoom/pan-ing
+        """
     	x1, y1, x2, y2 = begin[0], begin[1], end[0], end[1]
     	newreg = {}
 
@@ -270,49 +312,54 @@ class BufferedWindow(wx.Window):
     	    elif zoomtype < 0:
     		newreg['w'], newreg['n'] = self.Pixel2Cell(
     		    -x1*2,
-    		    -y1*2
-    																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																    )
-    		newreg['e'], newreg['s'] = self.Pixel2Cell(
-    		    Map.Width+2*(Map.Width-x2),
-    		    Map.Height+2*(Map.Height-y2)
-    																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																    )
+    		    -y1*2)
+                newreg['e'], newreg['s'] = self.Pixel2Cell(
+    		    Map.width+2*(Map.width-x2),
+    		    Map.height+2*(Map.height-y2))
     	# pan
     	elif zoomtype == 0:
     	    newreg['w'], newreg['n'] = self.Pixel2Cell(
     		x1-x2,
-    		y1-y2
-    																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																)
+    		y1-y2)
     	    newreg['e'], newreg['s'] = self.Pixel2Cell(
-    		Map.Width+x1-x2,
-    		Map.Height+y1-y2
-    																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																)
+    		Map.width+x1-x2,
+    		Map.height+y1-y2)
 
     	# if new region has been calculated, set the values
     	if newreg :
-    	    Map.Region['n'] = newreg['n']
-    	    Map.Region['s'] = newreg['s']
-    	    Map.Region['e'] = newreg['e']
-    	    Map.Region['w'] = newreg['w']
+    	    Map.region['n'] = newreg['n']
+    	    Map.region['s'] = newreg['s']
+    	    Map.region['e'] = newreg['e']
+    	    Map.region['w'] = newreg['w']
 
 class DrawWindow(BufferedWindow):
-    '''Drawing routine for double buffered drawing. Overwrites Draw method
-    in the BufferedWindow class'''
-    def __init__(self, parent, id = -1):
+    """
+    Drawing routine for double buffered drawing. Overwrites Draw method
+    in the BufferedWindow class
+    """
+    def __init__(self, parent, id = wx.ID_ANY):
+        """
+        """
     	## Any data the Draw() function needs must be initialized before
     	## calling BufferedWindow.__init__, as it will call the Draw
     	## function.
-    	self.dcmd_list = [] #list of display commands to process
+    	self.dcmd_list = [] # list of display commands to process
     	BufferedWindow.__init__(self, parent, id)
 
     def Draw(self, dc, img=None, dctype='image', coords=[0, 0]):
+        """
+        Draws image, box and line in the background
+        """
     	dc.BeginDrawing()
     	dc.SetBackground(wx.Brush(self.GetBackgroundColour()))
     	dc.Clear() # make sure you clear the bitmap!
+
     	if dctype == 'clear': # erase the display
     	    dc.EndDrawing()
     	    return
     	bitmap = wx.BitmapFromImage(img)
     	dc.DrawBitmap(bitmap, 0, 0) # draw the composite map
+
     	if dctype == 'box': # draw a box on top of the map
     	    dc.SetBrush(wx.Brush(wx.CYAN, wx.TRANSPARENT))
     	    dc.SetPen(self.pen)
@@ -321,130 +368,190 @@ class DrawWindow(BufferedWindow):
     	    dc.SetBrush(wx.Brush(wx.CYAN, wx.TRANSPARENT))
     	    dc.SetPen(self.pen)
     	    dc.DrawLine(coords[0], coords[1], coords[2], coords[3])
+
     	dc.EndDrawing()
 
 class MapFrame(wx.Frame):
-    '''Main frame for map display window. Drawing takes place in child double buffered
-    drawing window.'''
-##    def __init__(self, *args, **kwds):
-##        kwds["style"] = wx.DEFAULT_FRAME_STYLE
-##         wx.Frame.__init__(self, *args, **kwds)
+    """
+    Main frame for map display window. Drawing takes place in child double buffered
+    drawing window.
+    """
 
-    def __init__(self, parent=None, id=-1, title="Map display",
-            pos=wx.DefaultPosition, size=wx.DefaultSize,
-            style=wx.DEFAULT_FRAME_STYLE, cb=None, idx=-1):
+    def __init__(self, parent=None, id = wx.ID_ANY, title="Map display",
+                 pos=wx.DefaultPosition, size=wx.DefaultSize,
+                 style=wx.DEFAULT_FRAME_STYLE, toolbars=["map"], cb=None, idx=-1):
+
+#           style=wx.DEFAULT_FRAME_STYLE, toolbars=["map"]):
+
+        """
+            Main map display window with toolbars, statusbar and
+            DrawWindow
+
+            Parameters:
+                parent  -- parent window, None, wx.Window()
+                id      -- window ID, int, wx.NewId()
+                title   -- window title, string
+                pos     -- where to place it, tupple, wx.Position
+                size    -- window size, tupple, wx.Size
+                style   -- window style
+                toolbars-- array of default toolbars, which should appear
+                           map, digit
+        """
+
         wx.Frame.__init__(self, parent, id, title, pos, size, style)
+
+        #
+        # Set the size
+        #
         self.SetClientSize((600, 475))
-        self.cb_page = "" #choicebook page for each display, indexed by display ID
-        self.maptree = "" #layer tree on choicebook page for each display, indexed by display ID
-        self.mapconsole = "" #command console on choicebook page for each display, indexed by display ID
-        self.nb = "" #notebook on choicebook page for GIS mgr controls for each display, indexed by display ID
-        self.chbk = cb
+        self.cb_page = "" #bookcontrol page for each display, indexed by display ID
+        self.maptree = "" #layer tree on bookcontrol page for each display, indexed by display ID
+#        self.mapconsole = "" #command console on bookcontrol page for each display, indexed by display ID
+#        self.nb = "" #notebook on bookcontrol page for GIS mgr controls for each display, indexed by display ID
+        self.ctrlbk = cb
         self.disp_idx = idx
 
-        #self.createGISmgr()
+        self.createGISmgr()
 
-    	#---status bar---#000000#FFFFFF-------------------------------------------------
-    	self.statusbar = self.CreateStatusBar(2, 0)
-    	self.statusbar.SetStatusWidths([-3, -1])
-    	map_frame_statusbar_fields = [("%s,%s" %(None, None)), _("map_frame_statusbar2")]
+
+        # new stuff
+        #
+        # Fancy gui
+        #
+        self._mgr = wx.aui.AuiManager(self)
+
+        #
+        # Add toolbars
+        #
+        self.maptoolbar = None
+        self.digittoolbar = None
+        for toolb in toolbars:
+            self.AddToolbar(toolb)
+
+        #
+        # Add statusbar
+        #
+    	self.statusbar = self.CreateStatusBar(number=2, style=0)
+    	self.statusbar.SetStatusWidths([-2, -1])
+    	map_frame_statusbar_fields = ["Extent: %d,%d : %d,%d" %
+                                      (Map.region["n"], Map.region["s"],
+                                       Map.region["w"], Map.region["e"]),
+                                      "%s,%s" %(None, None)]
     	for i in range(len(map_frame_statusbar_fields)):
     	    self.statusbar.SetStatusText(map_frame_statusbar_fields[i], i)
 
-    	#---tool bar---#000000#FFFFFF---------------------------------------------------
-    	self.mtoolbar = wx.ToolBar(self, -1)
-    	self.SetToolBar(self.mtoolbar)
 
-    	iconpath = os.environ['GRASS_ICONPATH']
-
-    	self.displaymap = self.mtoolbar.AddLabelTool(-1, "displaymap", wx.Bitmap(iconpath+r'/gui-display.gif', wx.BITMAP_TYPE_ANY), wx.NullBitmap, wx.ITEM_NORMAL, "Display map", "")
-    	self.mtoolbar.AddSeparator()
-    	self.pointer = self.mtoolbar.AddLabelTool(-1, "pointer", wx.Bitmap(iconpath+r'/gui-pointer.gif', wx.BITMAP_TYPE_ANY), wx.NullBitmap, wx.ITEM_RADIO, "pointer", "")
-    	self.zoomin = self.mtoolbar.AddLabelTool(-1, "zoom_in", wx.Bitmap(iconpath+r'/gui-zoom_in.gif', wx.BITMAP_TYPE_ANY), wx.NullBitmap, wx.ITEM_RADIO, "Zoom in", "")
-    	self.zoomout = self.mtoolbar.AddLabelTool(-1, "zoom_out", wx.Bitmap(iconpath+r'/gui-zoom_out.gif', wx.BITMAP_TYPE_ANY), wx.NullBitmap, wx.ITEM_RADIO, "Zoom out", "")
-    	self.pan = self.mtoolbar.AddLabelTool(-1, "pan", wx.Bitmap(iconpath+r'/gui-pan.gif', wx.BITMAP_TYPE_ANY), wx.NullBitmap, wx.ITEM_RADIO, "Pan", "")
-    	self.erase = self.mtoolbar.AddLabelTool(-1, "erase", wx.Bitmap(iconpath+r'/gui-erase.gif', wx.BITMAP_TYPE_ANY), wx.NullBitmap, wx.ITEM_RADIO, "Erase display", "")
-    	self.savefile = self.mtoolbar.AddLabelTool(-1, "savefile", wx.Bitmap(iconpath+r'/file-save.gif', wx.BITMAP_TYPE_ANY), wx.NullBitmap, wx.ITEM_RADIO, "Save display to PNG file", "")
-    	self.Bind(wx.EVT_TOOL, self.ReDraw, self.displaymap)
-    	self.Bind(wx.EVT_TOOL, self.Pointer, self.pointer)
-    	self.Bind(wx.EVT_TOOL, self.OnZoomIn, self.zoomin)
-    	self.Bind(wx.EVT_TOOL, self.OnZoomOut, self.zoomout)
-    	self.Bind(wx.EVT_TOOL, self.OnPan, self.pan)
-    	self.Bind(wx.EVT_TOOL, self.OnErase, self.erase)
-    	self.Bind(wx.EVT_TOOL, self.SaveToFile, self.savefile)
-    	self.mtoolbar.Realize()
-
-    	self.Bind(wx.EVT_ACTIVATE, self.OnFocus)
-    	self.Bind(wx.EVT_CLOSE, self.OnCloseWindow)
-
-    	# init map display
+        #
+    	# Init map display
+        #
     	self.InitDisplay() # initialize region values
     	self.MapWindow = DrawWindow(self) # initialize buffered DC
     	self.MapWindow.Bind(wx.EVT_MOTION, self.OnMotion)
 
-    #def createGISmgr(self):
-    #    '''Creates choicebook page for controlling each display, with notebook for layer tree and command console'''
 
-    #   # make a new page in the choicebook for the layer tree (on page 0 of the notebook)
-    #    cb_panel= wx.Panel(self.chbk)
-    #    self.chbk.AddPage(cb_panel, "map layers for display "+str(self.disp_idx), select = True)
+        #
+        # Bind various events
+        #
+    	self.Bind(wx.EVT_ACTIVATE, self.OnFocus)
+    	self.Bind(wx.EVT_CLOSE,    self.OnCloseWindow)
 
-    #    # track which page is associated with which map display
-    #    self.cb_page = self.chbk.GetCurrentPage()
+        #
+        # Update fancy gui style
+        #
+        self._mgr.AddPane(self.MapWindow, wx.CENTER)
+        self._mgr.Update()
 
-    #    #create notebook on choicebook page to hold layer tree and command console
-    #    self.nb =  wx.Notebook(self.cb_page, -1, wx.DefaultPosition, wx.DefaultSize, wx.NB_RIGHT)
+        #
+        # Create dictionary of available cursors
+        #
+        self.cursors = {
+            "default" : wx.StockCursor (wx.CURSOR_DEFAULT),
+            "cross"   : wx.StockCursor (wx.CURSOR_CROSS),
+            "hand"    : wx.StockCursor (wx.CURSOR_HAND)
+            }
 
-    #   #create layer tree (tree control for managing GIS layers)  and put on new notebook page
-    #    self.maptree = gmutils.LayerTree(self.nb, -1, wx.DefaultPosition, wx.DefaultSize, wx.TR_HAS_BUTTONS
-    #        |wx.TR_LINES_AT_ROOT|wx.TR_EDIT_LABELS|wx.TR_HIDE_ROOT
-    #        |wx.TR_DEFAULT_STYLE|wx.NO_BORDER|wx.FULL_REPAINT_ON_RESIZE)
-    #    self.nb.AddPage(self.maptree, _("Layers"))
+    def AddToolbar(self, name):
+        """
+        Add defined toolbar to the window
 
-    #    #create command console and put on new notebook page
-    #    self.mapaconsole = gmutils.GMConsole(self.nb)
-    #    self.nb.AddPage(self.mapaconsole , _("Console"))
+        Currently known toolbars are:
+            * map
+            * digit
+        """
+        if name == "map":
+            self.maptoolbar = toolbars.MapToolbar(self, Map)
+            self._mgr.AddPane(self.maptoolbar.toolbar, wx.aui.AuiPaneInfo().
+                          Name("maptoolbar").Caption("Map Toolbar").
+                          ToolbarPane().Top().
+                          LeftDockable(True).RightDockable(True).CloseButton(False))
 
-    #    #layout for controls
-    #    cb_boxsizer = wx.BoxSizer()
-    #    cb_boxsizer.Add(self.nb, 1, wx.EXPAND)
-    #    self.cb_page.SetSizer(cb_boxsizer)
-    #    self.cb_page.SetAutoLayout(True)
-    #    self.Centre()
-
-#   #     #store information about display and controls in variables in render.py
-    #    render.Track().SetDisp_idx(self.disp_idx)
-    #    myidx = render.Track().GetDisp_idx()
-    #    render.Track().SetChbk(self.chbk)
-    #    render.Track().SetDispCtrl(self.disp_idx, self, self.cb_page)
-    #    render.Track().SetCB_idx(str(self.cb_page), self.disp_idx)
-    #    render.Track().SetCB_page(self.cb_page, self.chbk.GetSelection())
-    #    render.Track().SetNB(self.disp_idx, self.nb)
-    #    render.Track().SetTree(self.disp_idx, self.maptree)
+        if name == "digit":
+            self.digittoolbar = toolbars.DigitToolbar(self,Map)
+            self._mgr.AddPane(self.digittoolbar.toolbar, wx.aui.AuiPaneInfo().
+                          Name("digittoolbar").Caption("Digit Toolbar").
+                          ToolbarPane().Top().
+                          LeftDockable(True).RightDockable(True),)
+        self._mgr.Update()
 
     def InitDisplay(self):
-        self.Width, self.Height = self.GetClientSize()
-        Map.geom = self.Width, self.Height
+        """
+        Initialize map display, set dimensions and map region
+        """
+        self.width, self.height = self.GetClientSize()
+        Map.geom = self.width, self.height
         Map.GetRegion()
-        # This was Map.getResolution(). I'm guessing at the moment that this is replaced by Map.SetRegion()
+        #FIXME
+        #This was Map.getResolution().
+        #I'm guessing at the moment that this is replaced by Map.SetRegion()
         Map.SetRegion()
 
-    def OnFocus(self, event):
-        ''' store information about active display
-        in tracking variables and change choicebook
-        page to match display'''
-        title = self.GetTitle()
-        num = title[12:]
-        render.Track().SetDisp_idx(self.disp_idx)
-        render.Track().SetDisp(event.GetEventObject(), self.disp_idx)
-        render.Track().SetNB(self.disp_idx, self.nb)
-        render.Track().SetTree(self.disp_idx, self.maptree)
+    def createGISmgr(self):
+        '''Creates choicebook page for controlling each display, with notebook for layer tree and command console'''
 
-        # change choicebook page to page associted with display
-        ctrl = render.Track().GetDispCtrl(self.disp_idx)
-        pg = ctrl[1]
-        pgnum = render.Track().GetCB_page(pg)
-        self.chbk.SetSelection(pgnum)
+       # make a new page in the bookcontrol for the layer tree (on page 0 of the notebook)
+        self.cb_panel = wx.Panel(self.ctrlbk,-1, style= wx.EXPAND)
+        self.ctrlbk.AddPage(self.cb_panel, "Display "+str(self.disp_idx), select = True)
+        self.cb_page = self.ctrlbk.GetCurrentPage()
+
+       #create layer tree (tree control for managing GIS layers)  and put on new notebook page
+        self.maptree = gismutils.LayerTree(self.cb_page, -1, wx.DefaultPosition, wx.DefaultSize, wx.TR_HAS_BUTTONS
+            |wx.TR_LINES_AT_ROOT|wx.TR_EDIT_LABELS|wx.TR_HIDE_ROOT
+            |wx.TR_DEFAULT_STYLE|wx.NO_BORDER|wx.FULL_REPAINT_ON_RESIZE)
+
+        #layout for controls
+        cb_boxsizer = wx.BoxSizer()
+        cb_boxsizer.Add(self.maptree, 1, wx.EXPAND)
+        self.cb_page.SetSizer(cb_boxsizer)
+        self.cb_page.SetAutoLayout(True)
+        self.Centre()
+
+        #store information about display and associated controls in a dictionary in track.py
+        track.Track().SetDisp(self.disp_idx,self)
+        track.Track().SetCtrlDict(self.disp_idx, self, self.cb_page, self.maptree)
+
+    def OnFocus(self, event):
+        """
+        Store information about active display
+        in tracking variables and change choicebook
+        page to match display
+        """
+        #get index number of active display
+        self.disp_idx = int(track.Track().GetDisp_idx(self))
+
+        #set active display tuple in track
+        track.Track().SetDisp(self.disp_idx, self)
+
+       # change bookcontrol page to page associted with display if > 1 display
+        pg = track.Track().GetCtrls(self.disp_idx, 1)
+        pg_count = self.ctrlbk.GetPageCount()
+        pgnum = '1'
+        if pg_count > 1:
+            for x in range(1,pg_count):
+                if self.ctrlbk.GetPage(x) == pg:
+                    pgnum = x
+                    break
+
+        self.ctrlbk.ChangeSelection(pgnum)
         event.Skip()
 
     def SetDcommandList(self, clst):
@@ -453,48 +560,95 @@ class MapFrame(wx.Frame):
         self.MapWindow.UpdateMap()
 
     def OnMotion(self, event):
-	    # store current mouse position
+        """
+        Mouse moved
+        Track mouse motion and update status bar
+        """
+        # store current mouse position
     	posx, posy = event.GetPositionTuple()
 
-    	# set coordinates to status bar
+
+    	# upsdate coordinates
     	x, y = self.MapWindow.Pixel2Cell(posx, posy)
-    	self.statusbar.SetStatusText("%.3f,%.3f" % (x, y))
+    	self.statusbar.SetStatusText("%d,%d" % (x, y), 1)
+
     	event.Skip()
 
     def ReDraw(self, event):
+        """
+        Redraw button clicked
+        """
         self.MapWindow.UpdateMap()
 
+
     def Pointer(self, event):
+        """Pointer button clicled"""
         self.MapWindow.mouse['box'] = "point"
 
+        # change the cursor
+        self.MapWindow.SetCursor (self.cursors["default"])
+
     def OnZoomIn(self, event):
+        """
+        Zoom in the map.
+        Set mouse pointer and zoom direction
+        """
     	self.MapWindow.mouse['box'] = "box"
     	self.MapWindow.zoomtype = 1
-    	self.MapWindow.pen = wx.Pen('Red', 2)
+        self.MapWindow.pen = wx.Pen(colour='Red', width=2, style=wx.SHORT_DASH)
+
+        # change the cursor
+        self.MapWindow.SetCursor (self.cursors["cross"])
 
     def OnZoomOut(self, event):
+        """
+        Zoom out the map.
+        Set mouse pointer and zoom direction
+        """
     	self.MapWindow.mouse['box'] = "box"
     	self.MapWindow.zoomtype = -1
-    	self.MapWindow.pen = wx.Pen('Green', 2)
+        self.MapWindow.pen = wx.Pen(colour='Red', width=2, style=wx.SHORT_DASH)
+
+        # change the cursor
+        self.MapWindow.SetCursor (self.cursors["cross"])
 
     def OnZoomBack(self, event):
-	       pass
+        """
+        Zoom last (previously stored position)
+        """
+        # FIXME
+        pass
 
     def OnPan(self, event):
+        """
+        Panning, set mouse to drag
+        """
     	self.MapWindow.mouse['box'] = "drag"
     	self.MapWindow.zoomtype = 0
     	event.Skip()
 
+        # change the cursor
+        self.MapWindow.SetCursor (self.cursors["hand"])
+
     def OnErase(self, event):
+        """
+        Erase the canvas
+        """
         self.MapWindow.EraseMap()
 
     def OnZoomRegion(self, event):
+        """
+        Zoom to region
+        """
     	Map.getRegion()
     	Map.getResolution()
     	self.draw(dc)
     	event.Skip()
 
     def OnAlignRegion(self, event):
+        """
+        Align region
+        """
     	if not Map.alignRegion:
     	    Map.alignRegion = True
     	else:
@@ -502,6 +656,9 @@ class MapFrame(wx.Frame):
     	event.Skip()
 
     def SaveToFile(self, event):
+        """
+        Save to file
+        """
     	dlg = wx.FileDialog(self, "Choose a file name to save the image as a PNG to",
     	    defaultDir = "",
     	    defaultFile = "",
@@ -512,36 +669,35 @@ class MapFrame(wx.Frame):
     	dlg.Destroy()
 
     def OnCloseWindow(self, event):
-        #delete associated choicebook page
-        self.chbk.DeletePage(self.disp_idx)
-    	# delete all the temp files
-    	tmpdir, tmpfiles = os.path.split(self.MapWindow.gtemp)
-    	tmpbase = tmpfiles.split('.')[0]
-    	delfiles = glob.glob(os.path.join(tmpdir, tmpbase)+'.*')
-    	for delfile in delfiles:
-    	    os.remove(delfile)
+        """
+        Window closed
+        """
+        Map.Clean()
     	self.Destroy()
 
 
 # end of class MapFrame
 
-
 class MapApp(wx.App):
+    """
+    MapApp class
+    """
+
     def OnInit(self):
-	wx.InitAllImageHandlers()
-	Mapfrm = MapFrame(None, -1)
-	self.SetTopWindow(Map)
-	Mapfrm.Show()
+        wx.InitAllImageHandlers()
+        Mapfrm = MapFrame(parent=None, id=wx.ID_ANY)
+        #self.SetTopWindow(Map)
+        Mapfrm.Show()
 
         # only for testing purpose
         if __name__ == "__main__":
             Map.AddRasterLayer(name="elevation.dem", mapset="PERMANENT")
-            Map.AddVectorLayer(name="roads", mapset="PERMANENT",
-            color="red")
+            os.system("g.copy vect=roads,tmp --o")
+            Map.AddVectorLayer(name="tmp", color="red")
             Map.AddVectorLayer(name="bugsites", mapset="PERMANENT",
-                    color="blue")
+                               color="blue")
 
-	return 1
+        return 1
 
 # end of class MapApp
 
@@ -552,5 +708,8 @@ if __name__ == "__main__":
 
     if not os.getenv("GRASS_ICONPATH"):
         os.environ["GRASS_ICONPATH"]=os.getenv("GISBASE")+"/etc/gui/icons/"
+
     gm_map = MapApp(0)
     gm_map.MainLoop()
+    if grassenv.env.has_key("MONITOR"):
+        os.system("d.mon sel=%s" % grassenv.env["MONITOR"])
