@@ -104,17 +104,37 @@ int main(int argc, char *argv[])
 	    G_fatal_error(_("Not enough room in history file."));
 
 	/* two less than defined as if only one less a newline gets appended in the hist file. bug? */
-	if(strlen(history_opt->answer) > RECORD_LEN -2)
-	    G_warning(_("History line too long: truncating to %d characters"), RECORD_LEN-2);
+        /* Should be RECORD_LEN, but r.info truncates at > 71 chars */
+        if (strlen (history_opt->answer) > 71)
+        {
+            int i;
 
-	strncpy(hist.edhist[hist.edlinecnt], history_opt->answer, RECORD_LEN-2);
-	 /* strncpy doesn't null terminate oversized input */
-	hist.edhist[hist.edlinecnt][RECORD_LEN-2] = '\0';
+            for (i = 0; i < strlen (history_opt->answer); i += 71)
+            {
+                char *tmp = &history_opt->answer[i];
 
-	G_debug(4, "new history line= [%s]  (%d chars)", 
-	  hist.edhist[hist.edlinecnt], strlen(hist.edhist[hist.edlinecnt]) );
+                strncpy (hist.edhist[hist.edlinecnt], tmp, 71);
 
-	hist.edlinecnt++;
+                /* strncpy doesn't null terminate oversized input */
+                hist.edhist[hist.edlinecnt][RECORD_LEN - 2] = '\0';
+                hist.edlinecnt++;
+
+                G_debug (3, "new history line= [%s] (%d chars)",
+                            hist.edhist[hist.edlinecnt],
+                            strlen (hist.edhist[hist.edlinecnt]));
+            }
+        } else {
+            strncpy (hist.edhist[hist.edlinecnt], history_opt->answer, RECORD_LEN-2);
+
+            /* strncpy doesn't null terminate oversized input */
+            hist.edhist[hist.edlinecnt][RECORD_LEN-2] = '\0';
+            hist.edlinecnt++;
+
+            G_debug (3, "new history line= [%s] (%d chars)",
+                        hist.edhist[hist.edlinecnt],
+                        strlen (hist.edhist[hist.edlinecnt]));
+        }
+
 	G_write_history(raster->answer, &hist);
 	exit(EXIT_SUCCESS);
     }
@@ -234,4 +254,3 @@ int main(int argc, char *argv[])
 
     return EXIT_SUCCESS;
 }
-
