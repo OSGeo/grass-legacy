@@ -64,14 +64,15 @@ main (int argc, char *argv[])
 	G_gisinit (argv[0]);
 
 	module = G_define_module();
-	module->keywords = _("raster");
+	module->keywords = _("raster, import, conversion");
 	module->description =
-		_("Convert an ASCII raster text file into a (binary) raster map layer.");
+		_("Convert ASCII raster file to binary raster map layer.");
 
 	parm.input = G_define_standard_option(G_OPT_R_INPUT);
 	parm.input->description =
-	  _("ASCII raster file to be imported (or \"-\" to read from stdin)");
+	  _("ASCII raster file to be imported if not given reads from standard input");
 	parm.input->gisprompt = "old_file,file,input";
+	parm.input->required  = NO;
 
 	parm.output = G_define_standard_option(G_OPT_R_OUTPUT);
 
@@ -151,8 +152,9 @@ main (int argc, char *argv[])
 	  data_type = DCELL_TYPE;
 	} 
 
-	if (strcmp ("-", input) == 0)
-	{
+	if (input == NULL ||
+	    (G_strcasecmp (input, "-") == 0)) /* backward compatability */
+	  {
 		Tmp_file = G_tempfile();
 		if (NULL == (Tmp_fd = fopen (Tmp_file, "w+")))
                     G_fatal_error(_("Unable to open temp file"));
@@ -166,9 +168,7 @@ main (int argc, char *argv[])
 
 	if (fd == NULL)
 	{
-                G_warning(_("Unable to read input from '%s'"), input);
-		G_usage();
-		exit(EXIT_FAILURE);
+                G_fatal_error (_("Unable to read input from <%s>"), input);
 	}
 
 	direction=1;
@@ -204,7 +204,7 @@ main (int argc, char *argv[])
 	rast_ptr=G_allocate_raster_buf(data_type);
 	rast = rast_ptr;
 	if (G_legal_filename(output) < 0)
-	   G_fatal_error ( _("%s -- illegal output file name"), output);
+	   G_fatal_error ( _("Illegal output file name <%s>"), output);
 	cf = G_open_raster_new(output, data_type);
 	if (cf < 0)
 	   G_fatal_error ( _("Unable to create raster map %s"), output);
@@ -266,6 +266,8 @@ main (int argc, char *argv[])
 	G_close_cell (cf);
 	if (title)
 		G_put_cell_title (output, title);
+
+	G_done_msg ("");
 
         exit(EXIT_SUCCESS);
 }
