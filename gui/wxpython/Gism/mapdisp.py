@@ -544,14 +544,14 @@ class MapFrame(wx.Frame):
        # change bookcontrol page to page associted with display if > 1 display
         pg = track.Track().GetCtrls(self.disp_idx, 1)
         pg_count = self.ctrlbk.GetPageCount()
-        pgnum = '1'
-        if pg_count > 1:
-            for x in range(1,pg_count):
+        pgnum = '0'
+        if pg_count > 0:
+            for x in range(0,pg_count):
                 if self.ctrlbk.GetPage(x) == pg:
                     pgnum = x
                     break
 
-        self.ctrlbk.ChangeSelection(pgnum)
+        self.ctrlbk.SetSelection(pgnum)
         event.Skip()
 
     def SetDcommandList(self, clst):
