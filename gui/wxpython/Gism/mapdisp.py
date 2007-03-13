@@ -404,21 +404,15 @@ class MapFrame(wx.Frame):
         # Set the size
         #
         self.SetClientSize((600, 475))
-        self.cb_page = "" #bookcontrol page for each display, indexed by display ID
-        self.maptree = "" #layer tree on bookcontrol page for each display, indexed by display ID
-#        self.mapconsole = "" #command console on bookcontrol page for each display, indexed by display ID
-#        self.nb = "" #notebook on bookcontrol page for GIS mgr controls for each display, indexed by display ID
+
+        # Set variables to associate display with GIS Manager page
         self.ctrlbk = cb
         self.disp_idx = idx
 
-        self.createGISmgr()
-
-
-        # new stuff
         #
         # Fancy gui
         #
-        self._mgr = wx.aui.AuiManager(self)
+#        self._mgr = wx.aui.AuiManager(self)
 
         #
         # Add toolbars
@@ -504,30 +498,6 @@ class MapFrame(wx.Frame):
         #This was Map.getResolution().
         #I'm guessing at the moment that this is replaced by Map.SetRegion()
         Map.SetRegion()
-
-    def createGISmgr(self):
-        '''Creates choicebook page for controlling each display, with notebook for layer tree and command console'''
-
-       # make a new page in the bookcontrol for the layer tree (on page 0 of the notebook)
-        self.cb_panel = wx.Panel(self.ctrlbk,-1, style= wx.EXPAND)
-        self.ctrlbk.AddPage(self.cb_panel, "Display "+str(self.disp_idx), select = True)
-        self.cb_page = self.ctrlbk.GetCurrentPage()
-
-       #create layer tree (tree control for managing GIS layers)  and put on new notebook page
-        self.maptree = gismutils.LayerTree(self.cb_page, -1, wx.DefaultPosition, wx.DefaultSize, wx.TR_HAS_BUTTONS
-            |wx.TR_LINES_AT_ROOT|wx.TR_EDIT_LABELS|wx.TR_HIDE_ROOT
-            |wx.TR_DEFAULT_STYLE|wx.NO_BORDER|wx.FULL_REPAINT_ON_RESIZE)
-
-        #layout for controls
-        cb_boxsizer = wx.BoxSizer()
-        cb_boxsizer.Add(self.maptree, 1, wx.EXPAND)
-        self.cb_page.SetSizer(cb_boxsizer)
-        self.cb_page.SetAutoLayout(True)
-        self.Centre()
-
-        #store information about display and associated controls in a dictionary in track.py
-        track.Track().SetDisp(self.disp_idx,self)
-        track.Track().SetCtrlDict(self.disp_idx, self, self.cb_page, self.maptree)
 
     def OnFocus(self, event):
         """
