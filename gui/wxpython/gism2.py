@@ -197,17 +197,20 @@ class GMFrame(wx.Frame):
 
 
     def __createNoteBook(self):
-
+        #create main notebook widget
 #        bookStyle=FN.FNB_DEFAULT_STYLE #| FN.FNB_FANCY_TABS
 #        bookStyle=FN.FNB_DEFAULT_STYLE|FN.FNB_BOTTOM|FN.FNB_NO_X_BUTTON|FN.FNB_NO_NAV_BUTTONS
-        bookStyle=FN.FNB_FANCY_TABS|FN.FNB_BOTTOM|FN.FNB_NO_X_BUTTON|FN.FNB_NO_NAV_BUTTONS
-        self.notebook = FN.FlatNotebook(self, wx.ID_ANY, style=bookStyle)
-#        self.notebook = wx.Notebook(self, -1)
-#        self.displayNotebook = FN.FlatNotebook(self, -1, style=bookStyle)
+        nbStyle=FN.FNB_FANCY_TABS|FN.FNB_BOTTOM|FN.FNB_NO_X_BUTTON|FN.FNB_NO_NAV_BUTTONS
+        self.notebook = FN.FlatNotebook(self, wx.ID_ANY, style=nbStyle)
+
+         #create displays notebook widget and add it to main notebook page
+        cbStyle=FN.FNB_VC8|FN.FNB_BACKGROUND_GRADIENT|FN.FNB_X_ON_TAB|FN.FNB_TABS_BORDER_SIMPLE
         self.cb_panel = wx.Panel(self,-1, style = wx.EXPAND)
-        self.gm_cb = GMControlsbook(self.cb_panel, -1, wx.DefaultPosition, wx.DefaultSize, wx.CHB_TOP)
+        self.gm_cb = FN.FlatNotebook(self, wx.ID_ANY, style=cbStyle)
+        self.gm_cb.SetTabAreaColour(wx.Colour(125,200,175))
         self.notebook.AddPage(self.cb_panel, "Map layers for each display")
 
+        #create command output text area and add it to main notebook page
         self.goutput =  wx.richtext.RichTextCtrl(self,style=wx.VSCROLL|wx.HSCROLL|wx.NO_BORDER)
         self.notebook.AddPage(self.goutput, "Command output")
         #s = wx.TreeCtrl(self.notebook, -1, style=wx.SUNKEN_BORDER|wx.EXPAND)
@@ -219,21 +222,30 @@ class GMFrame(wx.Frame):
         self.cb_panel.SetSizer(boxsizer)
         self.cb_panel.SetAutoLayout(True)
         self.Centre()
-#        track.Track().SetChbk(self.gm_cb)
-        #self.choiceb = GMControlsbook(page,style=wx.CHB_TOP)
 
-        #boxsizer = wx.BoxSizer()
-        #boxsizer.Add(self.choiceb, 1, wx.EXPAND)
-        #page.SetSizer(boxsizer)
-        #page.SetAutoLayout(True)
+        self.Bind(FN.EVT_FLATNOTEBOOK_PAGE_CHANGED, self.OnCBPageChanged, self.gm_cb)
 
-
-        #for num in range(0, 5):
-        #    page = wx.TextCtrl(self.notebook, -1, "This is page %d" % num ,
-        #                       style=wx.TE_MULTILINE)
-        #    self.notebook.AddPage(page, "Tab Number %d" % num)
-        #
         return self.notebook
+
+
+    # choicebook methods
+    def OnCBPageChanged(self, event):
+        old_pgnum = event.GetOldSelection()
+        new_pgnum = event.GetSelection()
+        curr_pg = self.gm_cb.GetCurrentPage()
+        sel_pgnum = self.gm_cb.GetSelection()
+
+        # switch display if there is more than one
+#        if self.gm_cb.GetPageCount() > 0:
+         #get ID of associated display
+        disp_idx = track.Track().GetDisp_idx(curr_pg)
+        if disp_idx != None:
+            #get associated display and make it active
+            newdisp = track.Track().GetCtrls(disp_idx, 0)
+            newdisp.SetFocus()
+            newdisp.Raise()
+            event.Skip()
+
 
     def __createLayerTree(self,parent=None):
         ctstyle = CT.TR_HIDE_ROOT
@@ -353,37 +365,6 @@ class GMFrame(wx.Frame):
 
     def printmd(self):
         print 'self.disp_idx is now', self.disp_idx
-
-
-class GMControlsbook(wx.Notebook):
-    '''This class creates a choicebook widget for the GIS Manager
-    control panel. The choice book allows and controls an independent
-    ayer tree, command console, and layer options for each display
-    opened.'''
-    def __init__(self, parent, id, pos, size, style):
-        wx.Notebook.__init__(self, parent, id, pos, size, style)
-        self.Bind(wx.EVT_NOTEBOOK_PAGE_CHANGED, self.OnCBPageChanged)
-
-
-	# choicebook methods
-    def OnCBPageChanged(self, event):
-        old_pgnum = event.GetOldSelection()
-        new_pgnum = event.GetSelection()
-        curr_pg = self.GetCurrentPage()
-        sel_pgnum = self.GetSelection()
-
-        # switch display if there is more than one
-        if self.GetPageCount() > 1:
-             #get ID of associated display
-            disp_idx = track.Track().GetDisp_idx(curr_pg)
-
-            #get associated display and make it active
-            newdisp = track.Track().GetCtrls(disp_idx, 0)
-            newdisp.SetFocus()
-            newdisp.Raise()
-            event.Skip()
-
-
 
 class SetVal:
 	'''Class to store and set values needed by map, gism,
