@@ -101,14 +101,13 @@ class GMFrame(wx.Frame):
         wx.Frame.__init__(self, parent=parent, id=-1, title=title, style=wx.DEFAULT_FRAME_STYLE)
 
         # creating widgets
+        self.notebook = self.__createNoteBook()
+        self.cmdinput = self.__createCommandInput()
         self.menubar = self.__createMenuBar()
         self.toolbar = self.__createToolBar()
         self.panel = wx.Panel(self,-1, style= wx.EXPAND)
         self.sizer= wx.BoxSizer(wx.VERTICAL)
         self.cmdsizer = wx.BoxSizer(wx.HORIZONTAL)
-#        self.displayNotebook = None # will be notebook for map displays
-        self.notebook = self.__createNoteBook()
-        self.cmdinput = self.__createCommandInput()
 
         # do layout
         self.SetTitle(_("GRASS GIS Manager - wxPython Prototype"))
@@ -135,7 +134,7 @@ class GMFrame(wx.Frame):
         wx.CallAfter(self.notebook.SetSelection, 0)
 
         #start default initial display
-        self.NewDisplay()
+        self.newDisplay()
 
     def __createCommandInput(self):
         #l = wx.StaticText(self, -1, "GRASS> ")
@@ -223,21 +222,19 @@ class GMFrame(wx.Frame):
         self.cb_panel.SetAutoLayout(True)
         self.Centre()
 
-        self.Bind(FN.EVT_FLATNOTEBOOK_PAGE_CHANGED, self.OnCBPageChanged, self.gm_cb)
+        self.Bind(FN.EVT_FLATNOTEBOOK_PAGE_CHANGED, self.onCBPageChanged, self.gm_cb)
 
         return self.notebook
 
 
     # choicebook methods
-    def OnCBPageChanged(self, event):
+    def onCBPageChanged(self, event):
         old_pgnum = event.GetOldSelection()
         new_pgnum = event.GetSelection()
         curr_pg = self.gm_cb.GetCurrentPage()
         sel_pgnum = self.gm_cb.GetSelection()
 
-        # switch display if there is more than one
-#        if self.gm_cb.GetPageCount() > 0:
-         #get ID of associated display
+         #get ID of associated display if more than one
         disp_idx = track.Track().GetDisp_idx(curr_pg)
         if disp_idx != None:
             #get associated display and make it active
@@ -271,22 +268,22 @@ class GMFrame(wx.Frame):
     def toolbarData(self):
 
         return (
-            ('newdisplay', os.path.join(gismutils.icons,'gui-startmon.gif'), 'Start new display', self.NewDisplay),
+            ('newdisplay', os.path.join(gismutils.icons,'gui-startmon.gif'), 'Start new display', self.newDisplay),
             ('', '', '', ''),
-            ('addraster', os.path.join(gismutils.icons,'element-cell.gif'), 'Add raster layer', self.AddRaster),
-            ('addvect', os.path.join(gismutils.icons,'element-vector.gif'), 'Add vector layer', self.AddVector),
-            ('addcmd', os.path.join(gismutils.icons,'gui-cmd.gif'), 'Add command layer', self.AddCommand)
+            ('addRaster', os.path.join(gismutils.icons,'element-cell.gif'), 'Add raster layer', self.addRaster),
+            ('addvect', os.path.join(gismutils.icons,'element-vector.gif'), 'Add vector layer', self.addVector),
+            ('addcmd', os.path.join(gismutils.icons,'gui-cmd.gif'), 'Add command layer', self.addCommand)
             )
 
     #---Start display---#000000#FFFFFF----------------------------------------------
-    def NewDisplay(self, event=None):
+    def newDisplay(self, event=None):
         '''Create new map display widget'''
 
         newdisp = self.mapdisplays[self.disp_idx] = mapdisp.MapFrame(self,
                    -1, pos=wx.DefaultPosition, size=wx.DefaultSize,
                    style=wx.DEFAULT_FRAME_STYLE,
                    cb=self.gm_cb, idx=self.disp_idx)
-        self.mapdisplays[self.disp_idx].SetTitle(_("Map Display-"+str(self.disp_idx)))
+        newdisp.SetTitle(_("Map Display-"+str(self.disp_idx)))
         #self.maptree[self.disp_idx] = self.mapdisplays[self.disp_idx].getTree()
 
         #add notebook page to GIS Manager
@@ -302,41 +299,35 @@ class GMFrame(wx.Frame):
             |wx.TR_DEFAULT_STYLE|wx.NO_BORDER|wx.FULL_REPAINT_ON_RESIZE)
 
         #layout for controls
-        cb_boxsizer = wx.BoxSizer()
-        cb_boxsizer.Add(self.maptree, 1, wx.EXPAND)
+        cb_boxsizer = wx.BoxSizer(wx.VERTICAL)
+        cb_boxsizer.Add(self.maptree, 1, wx.EXPAND, 1)
         self.cb_page.SetSizer(cb_boxsizer)
-        self.cb_page.SetAutoLayout(True)
-        self.Centre()
+        cb_boxsizer.Fit(self.cb_page)
+        self.cb_page.Layout()
+#        self.cb_page.SetAutoLayout(True)
+#        self.Centre()
 
         #store information about display and associated controls in a dictionary in track.py
         track.Track().SetDisp(self.disp_idx,self)
         track.Track().SetCtrlDict(self.disp_idx, newdisp, self.cb_page, self.maptree)
 
-
-
+        #show new display
         self.mapdisplays[self.disp_idx].Show()
         self.mapdisplays[self.disp_idx].Refresh()
         self.mapdisplays[self.disp_idx].Update()
 
-# new stuff
-
-        # add layer tree to display notebook
-#        self.layertrees[self.disp_idx] =  self.__createLayerTree(self.displayNotebook)
-#
-#        self.displayNotebook.AddPage(self.layertrees[self.disp_idx], "Display %d" % self.disp_idx)
-
         self.disp_idx += 1
 
-    #---ToolBar button handlers---#000000#FFFFFF------------------------------------
-    def AddRaster(self, event):
+    #ToolBar button handlers
+    def addRaster(self, event):
         self.SetTree('raster')
         event.Skip()
 
-    def AddVector(self, event):
+    def addVector(self, event):
         self.SetTree('vector')
         event.Skip()
 
-    def AddCommand(self, event):
+    def addCommand(self, event):
         self.SetTree('command')
         event.Skip()
 
@@ -344,22 +335,13 @@ class GMFrame(wx.Frame):
         return self.notebook.GetSelection()
 
     def SetTree(self, layertype):
-         #get ID of active display
-         pass
-#        disp_idx = track.Track().GetDisp_idx()
-#        #get layer tree for active display
-#        layertree = track.Track().GetTree(disp_idx)
-#
-#
-#
-## new stuff
-# #       display = self.mapdisplays[self.GetSelectedDisplay()]
-# #       layertree = self.layertrees[self.GetSelectedDisplay()]
-#
-#
-#        #add new layer to tree
-#        layertree.AddLayer(disp_idx, layertype)
-#        return
+        #get ID of active display
+        curr_pg = self.gm_cb.GetCurrentPage()
+        disp_idx = track.Track().GetDisp_idx(curr_pg)
+        if disp_idx != None:
+            #get layer tree for active display
+            layertree = track.Track().GetCtrls(disp_idx, 2)
+            layertree.AddLayer(disp_idx, layertype)
 
     #---Misc methods---#000000#FFFFFF-----------------------------------------------
     def onCloseWindow(self, event):
