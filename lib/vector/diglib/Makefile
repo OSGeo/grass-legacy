@@ -41,11 +41,7 @@ DEPENDENCIES =  $(GRASS_INCDIR)/vect/dig_defines.h \
                 $(GRASS_INCDIR)/vect/dig_macros.h $(GRASS_INCDIR)/vect/dig_structs.h \
                 $(GRASS_INCDIR)/vect/dig_externs.h $(GRASS_INCDIR)/vect/dig_globs.h $(GISDEP)
 
-ifdef MINGW
-TEST =
-else
 TEST = $(OBJDIR)/test
-endif
 
 default: lib $(TEST)
 

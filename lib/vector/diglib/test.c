@@ -61,6 +61,7 @@ main (int argc, char **argv)
         dig_init_portable ( &(port), byte_order );
         for (j=0; j < 7; j++)
           {
+            dig_fseek (&fp, 0, SEEK_CUR);
 	    fprintf (fp.file, "double  ");	  
             dig__fwrite_port_D ( &(td[j]), 1, &fp);
             dig_fseek (&fp, -(PORT_DOUBLE), SEEK_CUR);
@@ -75,6 +76,7 @@ main (int argc, char **argv)
 	  }    
         for (j=0; j < 7; j++)
           {
+            dig_fseek (&fp, 0, SEEK_CUR);
 	    fprintf (fp.file, "float       ");	  
 	    dig__fwrite_port_F ( &(tf[j]), 1, &fp);
             dig_fseek (&fp, -(PORT_FLOAT), SEEK_CUR);
@@ -90,6 +92,7 @@ main (int argc, char **argv)
 
         for (j=0; j < 5; j++)
           {
+            dig_fseek (&fp, 0, SEEK_CUR);
 	    fprintf (fp.file, "long        ");	  
             dig__fwrite_port_L ( &(tl[j]), 1, &fp);
             dig_fseek (&fp, -(PORT_LONG), SEEK_CUR);
@@ -105,6 +108,7 @@ main (int argc, char **argv)
 	    
         for (j=0; j < 5; j++)
           {
+            dig_fseek (&fp, 0, SEEK_CUR);
 	    fprintf (fp.file, "int         ");	  
             dig__fwrite_port_I ( &(ti[j]), 1, &fp);
             dig_fseek (&fp, -(PORT_INT), SEEK_CUR);
@@ -120,6 +124,7 @@ main (int argc, char **argv)
 	    
         for (j=0; j < 5; j++)
           {
+            dig_fseek (&fp, 0, SEEK_CUR);
 	    fprintf (fp.file, "short         ");	  
             dig__fwrite_port_S ( &(ts[j]), 1, &fp);
             dig_fseek (&fp, -(PORT_SHORT), SEEK_CUR);
@@ -134,6 +139,7 @@ main (int argc, char **argv)
           }
         for (j=0; j < 5; j++)
           {
+            dig_fseek (&fp, 0, SEEK_CUR);
 	    fprintf (fp.file, "char           ");	  
             dig__fwrite_port_C ( &(tc[j]), 1, &fp);
             dig_fseek (&fp, -(PORT_CHAR), SEEK_CUR);
