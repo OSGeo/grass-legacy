@@ -67,26 +67,16 @@ int main(int argc, char *argv[])
     module = G_define_module();
     module->keywords = _("vector");
     module->description =
-	_("Extrudes flat vector object to 3D with defined height");
+	_("Extrudes flat vector object to 3D with defined height.");
 
     t_flag = G_define_flag();
     t_flag->key = 't';
     t_flag->description = _("Trace elevation");
 
-    old = G_define_option();
-    old->key = "input";
-    old->type = TYPE_STRING;
-    old->required = YES;
-    old->multiple = NO;
-    old->gisprompt = "old,vector,vector";
+    old = G_define_standard_option(G_OPT_V_INPUT);
     old->description = _("Name of input 2D vector map");
 
-    new = G_define_option();
-    new->key = "output";
-    new->type = TYPE_STRING;
-    new->required = YES;
-    new->multiple = NO;
-    new->gisprompt = "new,vector,vector";
+    new = G_define_standard_option(G_OPT_V_OUTPUT);
     new->description = _("Name of resulting 3D vector map");
 
     zshift = G_define_option();
@@ -95,7 +85,6 @@ int main(int argc, char *argv[])
     zshift->type = TYPE_DOUBLE;
     zshift->required = NO;
     zshift->answer = "0";
-
 
     /* raster sampling */
     elevation = G_define_option();
@@ -345,7 +334,7 @@ int main(int argc, char *argv[])
 	db_shutdown_driver(driver);
     }
 
-    Vect_build(&Out, stdout);
+    Vect_build(&Out, stderr);
     Vect_close(&In);
     Vect_close(&Out);
 
