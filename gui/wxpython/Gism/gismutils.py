@@ -4,6 +4,9 @@ import wx.lib.customtreectrl as CT
 
 import render
 import grassenv
+import optpanels.rastopt as rastopt
+import optpanels.vectopt as vectopt
+import optpanels.cmdopt as cmdopt
 
 icons = ""
 
@@ -20,7 +23,7 @@ class LayerTree(CT.CustomTreeCtrl):
     def __init__(self, parent,
                  id=wx.ID_ANY, pos=wx.DefaultPosition,
                  size=wx.DefaultSize, style=wx.SUNKEN_BORDER,
-                 ctstyle=CT.TR_HAS_BUTTONS | CT.TR_HAS_VARIABLE_ROW_HEIGHT | 
+                 ctstyle=CT.TR_HAS_BUTTONS | CT.TR_HAS_VARIABLE_ROW_HEIGHT |
                  CT.TR_HIDE_ROOT | CT.TR_ROW_LINES | CT.TR_EDIT_LABELS,
                  log=None):
         CT.CustomTreeCtrl.__init__(self, parent, id, pos, size, style,ctstyle)
@@ -43,7 +46,7 @@ class LayerTree(CT.CustomTreeCtrl):
 
         trgif = wx.Image(icons + r'/element-cell.gif', wx.BITMAP_TYPE_GIF)
         trgif.Rescale(16, 16)
-        trgif = trgif.ConvertToBitmap() 
+        trgif = trgif.ConvertToBitmap()
         self.rast_icon = il.Add(trgif)
         # print "width=",trgif.GetWidth()
         # print "height=",trgif.GetHeight()
@@ -82,9 +85,9 @@ class LayerTree(CT.CustomTreeCtrl):
 
         if layertype == 'raster':
             self.map[self.node] = wx.ComboBox(self, -1,
-                                              choices=["rast.map.1", "rast.map.2", 
+                                              choices=["rast.map.1", "rast.map.2",
                                                        "rast.map.3", "rast.map.4",
-                                                       "rast.map.5"], 
+                                                       "rast.map.5"],
                                               style=wx.CB_READONLY|wx.CB_DROPDOWN)
         elif layertype == 'vector':
             self.map[self.node]  = wx.ComboBox(self, -1,
@@ -98,7 +101,7 @@ class LayerTree(CT.CustomTreeCtrl):
                                                "Enter a GRASS command here",
                                                wx.DefaultPosition, (200,40),
                                                style=wx.TE_MULTILINE|wx.TE_WORDWRAP)
-            
+
         if self.node >0 and self.layerID:
             self.layer[self.node] = self.InsertItem(self.root, self.layerID,
                                                     layername, ct_type=1,
@@ -109,22 +112,14 @@ class LayerTree(CT.CustomTreeCtrl):
 
         self.SetPyData(self.layer[self.node], None)
 
-        # create options panels for each layer added
+#        #add icons for each layer
         if layertype == 'raster':
             self.SetItemImage(self.layer[self.node], self.rast_icon)
-
-        #self.optpage[layername] = spare.Frame(nb.page1, -1)
-        #self.optpage[layername] = rastopt.MyPanel(gm_nb_pg1, -1, style=wx.TAB_TRAVERSAL)
-
         elif layertype == 'vector':
             self.SetItemImage(self.layer[self.node], self.vect_icon)
-            #self.optpage[layername] = vectopt.MyPanel(nb.page1, -1, style=wx.TAB_TRAVERSAL)
         elif layertype == 'command':
             self.SetItemImage(self.layer[self.node], self.cmd_icon)
-            #self.optpage[layername] = cmdopt.MyPanel(nb.page1, -1, style=wx.TAB_TRAVERSAL)
-            #self.optpage[layername].Show(True)
-            #print "optpage1 = ", self.optpage[layername]
-        
+
         self.node += 1
 
     def onCollapseNode(self, event):
@@ -142,7 +137,16 @@ class LayerTree(CT.CustomTreeCtrl):
         self.layername = self.GetItemText(event.GetItem())
         # call a method to make this item display or not display?
         # change associated icon accordingly?
-        print layername,'is activated'
+        print self.layername,'is activated'
+        if self.layername[0:4] == 'rast':
+            print 'its a raster'
+            rastopt.MyFrame(self)
+        elif self.layername[0:4] == 'vect':
+            print 'its a vector'
+            vectopt.MyPanel(self)
+#        elif self.layername[0:4] == 'comm':
+#            print 'its a command'
+#            cmdopt.MyPanel(self)
         event.Skip()
 
     def onChangeSel(self, event):
@@ -244,7 +248,7 @@ class GMConsole(wx.Panel):
 				return
 			else:
 				grassgui.GUI().parseCommand(cmd, gmpath)
-				self.console_output.write(cmdlst[0] + 
+				self.console_output.write(cmdlst[0] +
                                                           "\n----------\n")
 
 		elif cmd[0:2] == "d." and len(cmdlst) > 1 and cmdlst[0] in gcmdlst:
@@ -252,7 +256,7 @@ class GMConsole(wx.Panel):
 			# to the display processor and echo to command output console.
 			# Accepts a list of d.* commands separated by commas.
 			# Display with focus receives display command(s).
-			self.console_output.write(cmd + 
+			self.console_output.write(cmd +
                                                   "\n----------\n")
 			dcmds = cmd.split(',')
 			currmap.setDcommandList(dcmds)
