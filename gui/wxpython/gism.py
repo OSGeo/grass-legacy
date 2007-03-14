@@ -16,13 +16,13 @@ import Gism
 gmpath = Gism.__path__[0]
 sys.path.append(gmpath)
 
+import Gism.track as track
 import Gism.gismutils as gismutils
-import Gism.mapdisp2 as mapdisp
+import Gism.mapdisp as mapdisp
 import Gism.render as render
 import Gism.menudata as menudata
 import Gism.menuform as menuform
-import Gism.grassenv as grassevn 
-
+import Gism.grassenv as grassevn
 
 """Main Python app to set up GIS Manager window and trap commands
 Only command console is working currently, but windows for
@@ -90,7 +90,7 @@ class GRasterDialog(wx.Frame):
         self.SetSizer(sizer)
         sizer.Fit(self)
         self.Layout()
-        
+
 
 class GMFrame(wx.Frame):
     '''GIS Manager frame with notebook widget for controlling
@@ -101,27 +101,25 @@ class GMFrame(wx.Frame):
         wx.Frame.__init__(self, parent=parent, id=-1, title=title, style=wx.DEFAULT_FRAME_STYLE)
 
         # creating widgets
-        self.menubar = self.__createMenuBar()
-        self.toolbar = self.__createToolBar()
-        #self.panel = wx.Panel(self,-1, style= wx.EXPAND)
-        self.sizer= wx.BoxSizer(wx.VERTICAL)
-        #self.cmdsizer = wx.BoxSizer(wx.HORIZONTAL)
-        self.displayNotebook = None # will be notebook for map displays
         self.notebook = self.__createNoteBook()
         self.cmdinput = self.__createCommandInput()
-        
+        self.menubar = self.__createMenuBar()
+        self.toolbar = self.__createToolBar()
+        self.panel = wx.Panel(self,-1, style= wx.EXPAND)
+        self.sizer= wx.BoxSizer(wx.VERTICAL)
+        self.cmdsizer = wx.BoxSizer(wx.HORIZONTAL)
+
         # do layout
         self.SetTitle(_("GRASS GIS Manager - wxPython Prototype"))
         self.SetSize((450, 450))
         self.SetMinSize((100, 100))
-        
-        # create choicebook for GIS controls - one page for each display
-        self.Centre()
+        self.nb_panel = wx.Panel(self)
+
 
         # initialize variables
         self.mapdisplays = {} #dictionary to index open map displays
-        self.layertrees = {}
         self.disp_idx = 0 #index value for map displays and layer trees
+        self.maptree = {} #dictionary to index a layer tree to accompanying a map display
         self.mapfocus = 0 #track which display currently has focus
 
         self.Bind(wx.EVT_CLOSE, self.onCloseWindow)
@@ -131,18 +129,18 @@ class GMFrame(wx.Frame):
         self.sizer.Add(self.notebook,1, wx.EXPAND,  1)
         self.sizer.Add(self.cmdinput,0, wx.EXPAND, 1)
         self.SetSizer(self.sizer)
-        #self.sizer.Fit(self)
+        self.sizer.Fit(self)
         self.Layout()
         wx.CallAfter(self.notebook.SetSelection, 0)
 
         #start default initial display
-        self.NewDisplay()
+        self.newDisplay()
 
     def __createCommandInput(self):
         #l = wx.StaticText(self, -1, "GRASS> ")
 
         self.cmdinput = wx.TextCtrl(self, -1, "", )
-        self.cmdinput.SetFont(wx.Font(10, wx.DEFAULT, wx.NORMAL, wx.NORMAL, 0, "Monospace"))
+        #self.cmdinput.SetFont(wx.Font(10, wx.DEFAULT, wx.NORMAL, wx.NORMAL, 0, "Monospace"))
         wx.CallAfter(self.cmdinput.SetInsertionPoint, 0)
 
         #self.cmdsizer.Add(l,0,wx.ADJUST_MINSIZE | wx.ALIGN_CENTER_VERTICAL, 1)
@@ -198,32 +196,66 @@ class GMFrame(wx.Frame):
 
 
     def __createNoteBook(self):
+        #create main notebook widget
+#        bookStyle=FN.FNB_DEFAULT_STYLE #| FN.FNB_FANCY_TABS
+#        bookStyle=FN.FNB_DEFAULT_STYLE|FN.FNB_BOTTOM|FN.FNB_NO_X_BUTTON|FN.FNB_NO_NAV_BUTTONS
+        nbStyle=FN.FNB_FANCY_TABS|FN.FNB_BOTTOM|FN.FNB_NO_X_BUTTON|FN.FNB_NO_NAV_BUTTONS
+        self.notebook = FN.FlatNotebook(self, wx.ID_ANY, style=nbStyle)
 
-        bookStyle=FN.FNB_DEFAULT_STYLE #| FN.FNB_FANCY_TABS
-        self.notebook = FN.FlatNotebook(self, wx.ID_ANY, style=bookStyle)
-        bookStyle=FN.FNB_DEFAULT_STYLE 
-        self.displayNotebook = FN.FlatNotebook(self, -1, style=bookStyle)
-        self.notebook.AddPage(self.displayNotebook, "Displays")
+         #create displays notebook widget and add it to main notebook page
+        cbStyle=FN.FNB_VC8|FN.FNB_BACKGROUND_GRADIENT|FN.FNB_X_ON_TAB|FN.FNB_TABS_BORDER_SIMPLE
+        self.cb_panel = wx.Panel(self,-1, style = wx.EXPAND)
+        self.gm_cb = FN.FlatNotebook(self, wx.ID_ANY, style=cbStyle)
+        self.gm_cb.SetTabAreaColour(wx.Colour(125,200,175))
+        self.notebook.AddPage(self.cb_panel, "Map layers for each display")
 
+        #create command output text area and add it to main notebook page
         self.goutput =  wx.richtext.RichTextCtrl(self,style=wx.VSCROLL|wx.HSCROLL|wx.NO_BORDER)
-        self.notebook.AddPage(self.goutput, "Output")
-        #s = wx.TreeCtrl(self.notebook, -1, style=wx.SUNKEN_BORDER|wx.EXPAND)   
+        self.notebook.AddPage(self.goutput, "Command output")
+        #s = wx.TreeCtrl(self.notebook, -1, style=wx.SUNKEN_BORDER|wx.EXPAND)
         #self.notebook.AddPage(page, "Layers")
 
-        #self.choiceb = GMChoicebook(page,style=wx.CHB_TOP)
+        # create choicebook for GIS controls - one page for each display
+        boxsizer = wx.BoxSizer()
+        boxsizer.Add(self.gm_cb, 1, wx.EXPAND)
+        self.cb_panel.SetSizer(boxsizer)
+        self.cb_panel.SetAutoLayout(True)
+        self.Centre()
 
-        #boxsizer = wx.BoxSizer()
-        #boxsizer.Add(self.choiceb, 1, wx.EXPAND)
-        #page.SetSizer(boxsizer)
-        #page.SetAutoLayout(True)
-        
+        self.Bind(FN.EVT_FLATNOTEBOOK_PAGE_CHANGED, self.onCBPageChanged, self.gm_cb)
+        self.Bind(FN.EVT_FLATNOTEBOOK_PAGE_CLOSING, self.onCBPageClosed, self.gm_cb)
 
-        #for num in range(0, 5):
-        #    page = wx.TextCtrl(self.notebook, -1, "This is page %d" % num ,
-        #                       style=wx.TE_MULTILINE)
-        #    self.notebook.AddPage(page, "Tab Number %d" % num)
-        #    
         return self.notebook
+
+
+    # choicebook methods
+    def onCBPageChanged(self, event):
+        old_pgnum = event.GetOldSelection()
+        new_pgnum = event.GetSelection()
+        curr_pg = self.gm_cb.GetCurrentPage()
+        sel_pgnum = self.gm_cb.GetSelection()
+
+         #get ID of associated display if more than one
+        disp_idx = track.Track().GetDisp_idx(curr_pg)
+        if disp_idx != None:
+            #get associated display and make it active
+            newdisp = track.Track().GetCtrls(disp_idx, 0)
+            newdisp.SetFocus()
+            newdisp.Raise()
+        event.Skip()
+
+    def onCBPageClosed(self, event):
+        curr_pg = self.gm_cb.GetCurrentPage()
+        disp_idx = track.Track().GetDisp_idx(curr_pg)
+        if disp_idx != None:
+            #get associated display and make it active
+            disp = track.Track().GetCtrls(disp_idx, 0)
+            try:
+                if self.mapdisplays.has_key(disp_idx):
+                    if self.mapdisplays[disp_idx].Close(False):
+                        self.mapdisplays[disp_idx].Close(True)
+            except:
+                pass
 
     def __createLayerTree(self,parent=None):
         ctstyle = CT.TR_HIDE_ROOT
@@ -249,46 +281,66 @@ class GMFrame(wx.Frame):
     def toolbarData(self):
 
         return (
-            ('newdisplay', os.path.join(gismutils.icons,'gui-startmon.gif'), 'Start new display', self.NewDisplay),
+            ('newdisplay', os.path.join(gismutils.icons,'gui-startmon.gif'), 'Start new display', self.newDisplay),
             ('', '', '', ''),
-            ('addraster', os.path.join(gismutils.icons,'element-cell.gif'), 'Add raster layer', self.AddRaster),
-            ('addvect', os.path.join(gismutils.icons,'element-vector.gif'), 'Add vector layer', self.AddVector),
-            ('addcmd', os.path.join(gismutils.icons,'gui-cmd.gif'), 'Add command layer', self.AddCommand)
+            ('addRaster', os.path.join(gismutils.icons,'element-cell.gif'), 'Add raster layer', self.addRaster),
+            ('addvect', os.path.join(gismutils.icons,'element-vector.gif'), 'Add vector layer', self.addVector),
+            ('addcmd', os.path.join(gismutils.icons,'gui-cmd.gif'), 'Add command layer', self.addCommand)
             )
 
-
-
     #---Start display---#000000#FFFFFF----------------------------------------------
-    def NewDisplay(self, event=None):
+    def newDisplay(self, event=None):
         '''Create new map display widget'''
-        #update display index
-        #start a new display, indexed by disp_idx
-        #mID = wx.NewId()
-        self.mapdisplays[self.disp_idx] = mapdisp.MapFrame(self, 
-                -1, pos=wx.DefaultPosition, size=wx.DefaultSize,
-                style=wx.DEFAULT_FRAME_STYLE)
-        self.mapdisplays[self.disp_idx].SetTitle(_("Map Display-"+str(self.disp_idx)))
+
+        newdisp = self.mapdisplays[self.disp_idx] = mapdisp.MapFrame(self,
+                   -1, pos=wx.DefaultPosition, size=wx.DefaultSize,
+                   style=wx.DEFAULT_FRAME_STYLE,
+                   cb=self.gm_cb, idx=self.disp_idx)
+        newdisp.SetTitle(_("Map Display-"+str(self.disp_idx)))
+        #self.maptree[self.disp_idx] = self.mapdisplays[self.disp_idx].getTree()
+
+        #add notebook page to GIS Manager
+
+       # make a new page in the bookcontrol for the layer tree (on page 0 of the notebook)
+        self.pg_panel = wx.Panel(self.gm_cb,-1, style= wx.EXPAND)
+        self.gm_cb.AddPage(self.pg_panel, "Display "+str(self.disp_idx), select = True)
+        self.cb_page = self.gm_cb.GetCurrentPage()
+
+       #create layer tree (tree control for managing GIS layers)  and put on new notebook page
+        self.maptree = gismutils.LayerTree(self.cb_page, -1, wx.DefaultPosition, wx.DefaultSize, wx.TR_HAS_BUTTONS
+            |wx.TR_LINES_AT_ROOT|wx.TR_EDIT_LABELS|wx.TR_HIDE_ROOT
+            |wx.TR_DEFAULT_STYLE|wx.NO_BORDER|wx.FULL_REPAINT_ON_RESIZE)
+
+        #layout for controls
+        cb_boxsizer = wx.BoxSizer(wx.VERTICAL)
+        cb_boxsizer.Add(self.maptree, 1, wx.EXPAND, 1)
+        self.cb_page.SetSizer(cb_boxsizer)
+        cb_boxsizer.Fit(self.cb_page)
+        self.cb_page.Layout()
+#        self.cb_page.SetAutoLayout(True)
+#        self.Centre()
+
+        #store information about display and associated controls in a dictionary in track.py
+        track.Track().SetDisp(self.disp_idx,self)
+        track.Track().SetCtrlDict(self.disp_idx, newdisp, self.cb_page, self.maptree)
+
+        #show new display
         self.mapdisplays[self.disp_idx].Show()
         self.mapdisplays[self.disp_idx].Refresh()
         self.mapdisplays[self.disp_idx].Update()
 
-        # add layer tree to display notebook
-        self.layertrees[self.disp_idx] =  self.__createLayerTree(self.displayNotebook)
-
-        self.displayNotebook.AddPage(self.layertrees[self.disp_idx], "Display %d" % self.disp_idx)
-
         self.disp_idx += 1
 
-    #---ToolBar button handlers---#000000#FFFFFF------------------------------------
-    def AddRaster(self, event):
+    #ToolBar button handlers
+    def addRaster(self, event):
         self.SetTree('raster')
         event.Skip()
 
-    def AddVector(self, event):
+    def addVector(self, event):
         self.SetTree('vector')
         event.Skip()
 
-    def AddCommand(self, event):
+    def addCommand(self, event):
         self.SetTree('command')
         event.Skip()
 
@@ -296,13 +348,15 @@ class GMFrame(wx.Frame):
         return self.notebook.GetSelection()
 
     def SetTree(self, layertype):
-        display = self.mapdisplays[self.GetSelectedDisplay()]
-        layertree = self.layertrees[self.GetSelectedDisplay()]
-        #add new layer to tree
-        #layertree.AddLayer(disp_idx, layertype)
-        return 
+        #get ID of active display
+        curr_pg = self.gm_cb.GetCurrentPage()
+        disp_idx = track.Track().GetDisp_idx(curr_pg)
+        if disp_idx != None:
+            #get layer tree for active display
+            layertree = track.Track().GetCtrls(disp_idx, 2)
+            layertree.AddLayer(disp_idx, layertype)
 
-    #---Misc methods---#000000#FFFFFF-----------------------------------------------
+    #Misc methods
     def onCloseWindow(self, event):
         '''Cleanup when gism.py is quit'''
         mdlist = range(0, self.disp_idx+1)
@@ -323,45 +377,6 @@ class GMFrame(wx.Frame):
     def printmd(self):
         print 'self.disp_idx is now', self.disp_idx
 
-
-class GMChoicebook(wx.Choicebook):
-    '''This class creates a choicebook widget for the GIS Manager
-    control panel. The choice book allows and controls an independent
-    ayer tree, command console, and layer options for each display
-    opened.'''
-    def __init__(self, parent, id, pos, size, style):
-        wx.Choicebook.__init__(self, parent, id, pos, size, style)
-        new = ""
-        old = ""
-        sel = ""
-
-        self.Bind(wx.EVT_CHOICEBOOK_PAGE_CHANGED, self.OnCBPageChanged)
-
-
-	# choicebook methods
-    def OnCBPageChanged(self, event):
-        old_pgnum = event.GetOldSelection()
-        new = event.GetSelection()
-        curr_pg = self.GetCurrentPage()
-        sel_pgnum = self.GetSelection()
-        #get ID of active display
-        disp_idx = render.Track().GetCB_idx(str(curr_pg))
-        #get associated display and make it active
-        newdisp = render.Track().GetDisp(disp_idx)
-        newdisp.SetFocus()
-        newdisp.Raise()
-        event.Skip()
-
-
-	# notebook methods
-	def changePage(self, pg, content, name):
-		self.DeletePage(pg)
-		self.InsertPage(pg, content, name)
-
-	def getPage():
-		pass
-
-
 class SetVal:
 	'''Class to store and set values needed by map, gism,
 	and other modules. This should work but doesn't for some reason.'''
@@ -381,11 +396,13 @@ class SetVal:
 
 
 class GMApp(wx.App):
-    def OnInit(self):
-        mainframe = GMFrame(None, -1, "")
-        self.SetTopWindow(mainframe)
-        mainframe.Show()
-        return 1
+	def OnInit(self):
+##	  reexec_with_pythonw()
+		wx.InitAllImageHandlers()
+		mainframe = GMFrame(None, -1, "")
+		self.SetTopWindow(mainframe)
+		mainframe.Show()
+		return 1
 
 def reexec_with_pythonw():
 	if sys.platform == 'darwin' and\
