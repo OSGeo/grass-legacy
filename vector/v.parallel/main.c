@@ -36,7 +36,7 @@ main (int argc, char *argv[])
 
     module = G_define_module();
     module->keywords = _("vector, geometry");
-    module->description = "Create parallel line to input lines.";
+    module->description = _("Create parallel line to input lines");
 
     in_opt = G_define_standard_option(G_OPT_V_INPUT);
     out_opt = G_define_standard_option(G_OPT_V_OUTPUT);
@@ -47,14 +47,14 @@ main (int argc, char *argv[])
     distance_opt->type =  TYPE_DOUBLE;
     distance_opt->required = YES;
     distance_opt->multiple = NO;
-    distance_opt->description = "Offset in map units, positive for right side, "
-	                        "negative for left side.";
+    distance_opt->description = _("Offset in map units, positive for right side, "
+	                        "negative for left side.");
 
-    if (G_parser (argc, argv)) exit(-1); 
+    if (G_parser (argc, argv)) exit(EXIT_FAILURE);
 
     /* layer = atoi ( layer_opt->answer ); */
     distance = atof ( distance_opt->answer );
-    tolerance = distance/10;
+    tolerance = distance/10.;
 
     Vect_set_open_level (2); 
     Vect_open_old (&In, in_opt->answer, ""); 
@@ -88,6 +88,6 @@ main (int argc, char *argv[])
     Vect_build (&Out, stderr);
     Vect_close (&Out);
 
-    exit(0) ;
+    exit(EXIT_SUCCESS) ;
 }
 
