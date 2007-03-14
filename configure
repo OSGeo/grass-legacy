@@ -1253,23 +1253,23 @@ LIB_VER=`echo ${GRASS_VERSION_NUMBER} | sed 's/^\([0-9.]*\).*$/\1/'`
 
 # Check for MacOSX App
 
-# Check whether --enable-macosx or --disable-macosx was given.
-if test "${enable_macosx+set}" = set; then
-  enableval="$enable_macosx"
+# Check whether --enable-macosx-app or --disable-macosx-app was given.
+if test "${enable_macosx_app+set}" = set; then
+  enableval="$enable_macosx_app"
   :
 else
-  enable_macosx=no
+  enable_macosx_app=no
 fi
 
 
 echo $ac_n "checking for MacOSX App""... $ac_c" 1>&6
 echo "configure:1267: checking for MacOSX App" >&5
-case "$enable_macosx" in
+case "$enable_macosx_app" in
 	yes)	MACOSX_APP=1	;;
 	no)	MACOSX_APP=	;;
 	*)	{ echo "configure: error: *** You must answer yes or no." 1>&2; exit 1; }	;;
 esac
-echo "$ac_t"""$enable_macosx"" 1>&6
+echo "$ac_t"""$enable_macosx_app"" 1>&6
 
 
 # Set INST_DIR
