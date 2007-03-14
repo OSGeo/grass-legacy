@@ -53,7 +53,8 @@ SUBDIRS = \
 	tools \
 	vector \
 	visualization \
-	man
+	man \
+	macosx
 
 ifneq ($(strip $(HAVE_NLS)),)
 	LOCALE=1
@@ -198,6 +199,10 @@ install: FORCE
 		echo "  Installation aborted, exiting Make."; \
 		exit; \
 	fi; \
+	if [ ${MACOSX_APP} = "1" ] ; then \
+		${MAKE} install-macosx; \
+		exit; \
+	fi; \
 	INST_PATH=`dirname ${INST_DIR}`; \
 	while [ ! -d $$INST_PATH ]; do \
 		INST_PATH=`dirname $$INST_PATH`; \
@@ -268,8 +273,17 @@ install-strip: FORCE
 	${MAKE} strip
 	${MAKE} install
 
+install-macosx: FORCE
+	${MAKE} -C macosx install-macosx
 
 bindist:  
+	if [ ${MACOSX_APP} = "1" ] ; then \
+		${MAKE} bindist-macosx; \
+		exit; \
+	fi; \
+	${MAKE} real-bindist
+
+real-bindist:
 	( date=`date '+%d_%m_%Y'`; cd ${ARCH_DISTDIR}; tar cBf - ${BIN_DIST_FILES} | gzip -fc > ../grass-${GRASS_VERSION_MAJOR}.${GRASS_VERSION_MINOR}.${GRASS_VERSION_RELEASE}-${ARCH}-$$date.tar.gz)
 	-date=`date '+%d_%m_%Y'`; name=grass-${GRASS_VERSION_MAJOR}.${GRASS_VERSION_MINOR}.${GRASS_VERSION_RELEASE}-${ARCH}-$$date.tar.gz; \
             size=`ls -l $$name | awk '{print $$5}'`; \
@@ -282,6 +296,9 @@ bindist:
 	    -e "s/# executable shell.*//" -e "s/# make bindist.*//" \
 	    binaryInstall.src > grass-${GRASS_VERSION_MAJOR}.${GRASS_VERSION_MINOR}.${GRASS_VERSION_RELEASE}-${ARCH}-$$date-install.sh ; \
 	    chmod a+x grass-${GRASS_VERSION_MAJOR}.${GRASS_VERSION_MINOR}.${GRASS_VERSION_RELEASE}-${ARCH}-$$date-install.sh 2>/dev/null
+
+bindist-macosx:
+	${MAKE} -C macosx bindist-macosx
 
 # make a source package for distribution:
 srcdist: FORCE distclean
