@@ -223,6 +223,7 @@ class GMFrame(wx.Frame):
         self.Centre()
 
         self.Bind(FN.EVT_FLATNOTEBOOK_PAGE_CHANGED, self.onCBPageChanged, self.gm_cb)
+        self.Bind(FN.EVT_FLATNOTEBOOK_PAGE_CLOSING, self.onCBPageClosed, self.gm_cb)
 
         return self.notebook
 
@@ -234,6 +235,8 @@ class GMFrame(wx.Frame):
         curr_pg = self.gm_cb.GetCurrentPage()
         sel_pgnum = self.gm_cb.GetSelection()
 
+        print
+
          #get ID of associated display if more than one
         disp_idx = track.Track().GetDisp_idx(curr_pg)
         if disp_idx != None:
@@ -241,8 +244,21 @@ class GMFrame(wx.Frame):
             newdisp = track.Track().GetCtrls(disp_idx, 0)
             newdisp.SetFocus()
             newdisp.Raise()
-            event.Skip()
+        event.Skip()
 
+    def onCBPageClosed(self, event):
+        curr_pg = self.gm_cb.GetCurrentPage()
+        disp_idx = track.Track().GetDisp_idx(curr_pg)
+        if disp_idx != None:
+            #get associated display and make it active
+            disp = track.Track().GetCtrls(disp_idx, 0)
+            try:
+                if self.mapdisplays.has_key(disp_idx):
+                    if self.mapdisplays[disp_idx].Close(False):
+                        self.mapdisplays[disp_idx].Close(True)
+            except:
+                pass
+        event.Skip()
 
     def __createLayerTree(self,parent=None):
         ctstyle = CT.TR_HIDE_ROOT
@@ -343,7 +359,7 @@ class GMFrame(wx.Frame):
             layertree = track.Track().GetCtrls(disp_idx, 2)
             layertree.AddLayer(disp_idx, layertype)
 
-    #---Misc methods---#000000#FFFFFF-----------------------------------------------
+    #Misc methods
     def onCloseWindow(self, event):
         '''Cleanup when gism.py is quit'''
         mdlist = range(0, self.disp_idx+1)
