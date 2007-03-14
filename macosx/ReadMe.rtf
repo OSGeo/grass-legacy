@@ -1,0 +1,414 @@
+{\rtf1\mac\ansicpg10000\cocoartf824\cocoasubrtf420
+{\fonttbl\f0\fswiss\fcharset77 Helvetica-Bold;\f1\fswiss\fcharset77 Helvetica;\f2\fswiss\fcharset77 Helvetica-Oblique;
+\f3\fnil\fcharset77 Monaco;}
+{\colortbl;\red255\green255\blue255;}
+\margl1440\margr1440\vieww8840\viewh11560\viewkind0
+\pard\tx720\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\qc\pardirnatural
+
+\f0\b\fs36 \cf0 GRASS Mac OS X Application Build\
+
+\f1\b0 (and other Mac notes)\
+\pard\tx720\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\ql\qnatural\pardirnatural
+
+\fs24 \cf0 \
+\pard\tx1080\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\ql\qnatural\pardirnatural
+
+\f2\i \cf0 2007-3-13\
+\pard\tx720\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\ql\qnatural\pardirnatural
+
+\f1\i0 \cf0 \
+\pard\tx720\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\ql\qnatural\pardirnatural
+\cf0 \ul \ulc0 Contents\
+\pard\tx720\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\ql\qnatural\pardirnatural
+\cf0 \ulnone \
+\pard\tx360\tx720\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\ql\qnatural\pardirnatural
+\cf0 About\
+Building GRASS\
+Tcl/Tk\
+Developer Notes\
+Bundling Libraries and Programs\
+Help Files*\
+Addon Modules\
+Dependency Build Notes\
+	Universal X11 Tcl/Tk*\
+	Universal GPSBabel*\
+	Universal NetPBM*\
+(* apply to any OSX build, not just an application package build)\
+\
+\pard\tx720\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\ql\qnatural\pardirnatural
+\cf0 \
+\pard\tx720\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\ql\qnatural\pardirnatural
+
+\f0\b \cf0 About\
+\pard\tx720\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\ql\qnatural\pardirnatural
+
+\f1\b0 \cf0 \
+This builds GRASS as a Mac OS X application, more or less.\
+\
+NOTE: this GRASS.app probably 
+\f2\i won't
+\f1\i0  run from a case-sensitive file system, such as a case-sensitive HFS+.  The AppleScript startup puts its script in a folder named \ul Scripts\ulnone , while the GRASS scripts folder is \ul scripts\ulnone .  'scripts' is hardwired into init.sh, and I didn't feel like patching it since I figured someone using a case-sensitive file system would be rare (and it's generally not recommended for running OSX apps from).  'Scripts' is hardwired into the AppleScript loading mechanism of the System.\
+\
+The startup wrapper is a simple AppleScript that fires up a custom grass.sh (instead of the standard grass6x) and quits, leaving grass.sh running in a new Terminal window.  The custom grass.sh takes care of some default and required environment settings (so the user doesn't have to fiddle with .bash_profile), makes sure X11 in running, then starts init.sh.\
+\
+\
+\pard\tx720\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\ql\qnatural\pardirnatural
+
+\f0\b \cf0 Building GRASS\
+\pard\tx720\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\ql\qnatural\pardirnatural
+
+\f1\b0 \cf0 \
+Building GRASS as a Mac OS X application is pretty much the same as for a unix build.  For an application, just add this option to configure:\
+\
+\pard\tx720\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\ql\qnatural\pardirnatural
+
+\f3\fs20 \cf0 --enable-macosx\
+\pard\tx720\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\ql\qnatural\pardirnatural
+
+\f1\fs24 \cf0 \
+With this option, the prefix specified is the path where GRASS.app will be installed.  The default GRASS.app prefix is 
+\f3\fs20 /Applications
+\f1\fs24 .\
+\
+The makefile tries to figure out the Tcl/Tk prefix from the configuration.  This may not work in some cases.  All that is configured are the includes and libraries locations, but the bundling step needs to know the prefix.  This will only work if they both have the same prefix.  If it has problems figuring out the Tcl/Tk prefix, set TCLTKPREFIX in the Terminal before running make:\
+\
+\pard\tx720\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\ql\qnatural\pardirnatural
+
+\f3\fs20 \cf0 export TCLTKPREFIX=[/path/to/tcltk/prefix]\
+\pard\tx720\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\ql\qnatural\pardirnatural
+
+\f1\fs24 \cf0 \
+\
+\pard\tx720\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\ql\qnatural\pardirnatural
+
+\f0\b \cf0 Tcl/Tk\
+\pard\tx720\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\ql\qnatural\pardirnatural
+
+\f1\b0 \cf0 \
+By default, the application is built expecting a local copy of Tcl/Tk inside the application package (to simplify installation).  This will override any GRASS_WISH and GRASS_TCLSH environment setting you may have in your shell startup (ie .bash_profile).\
+\
+If you want to try building GRASS using Tcl/Tk Aqua (not recommended), remove the comments from the if block for Tcl/Tk in 
+\f3\fs20 grass.sh
+\f1\fs24 .\
+\
+Tcl/Tk Aqua has some cosmetic issues in general - widgets displayed from OSX are often too big and mess up layout, some widgets don't even use OSX equivalents (sliders are an example).  There are also problems with NVIZ that come and go.\
+\
+\
+\pard\tx720\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\ql\qnatural\pardirnatural
+
+\f0\b \cf0 Developer Notes\
+\pard\tx720\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\ql\qnatural\pardirnatural
+
+\f1\b0 \cf0 \
+The applescript startup and grass.sh can be customized if desired, ie for a more complex startup that might give the user a dialog for startup options.  They just provide the basic core to build upon.\
+\
+\
+\pard\tx720\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\ql\qnatural\pardirnatural
+
+\f0\b \cf0 Bundling Libraries and Programs\
+\pard\tx720\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\ql\qnatural\pardirnatural
+
+\f1\b0 \cf0 \
+Dependent libraries and programs can be bundled with the application package to make a more portable and easily installed GRASS application.  GRASS uses DYLD_LIBRARY_PATH, which is set to the application's lib folder, so it will find any libraries that are there that are not found in their expected locations.\
+\
+It also adds the application bin folder to the PATH, so helper programs installed there will be found.\
+\
+The Tcl/Tk bundling above is an example of bundling both libraries and programs.\
+\
+There is NO need to bundle 
+\f2\i everything
+\f1\i0 .  Bundling readily available libraries and programs installed in standard locations is not necessary.  Some things you might want to bundle include:\
+\
+- GPSBabel\
+- NetPBM programs (just what is used in GRASS)\
+- ffmpeg libraries\
+\
+Things to leave out:\
+\
+- applications that duplicate the above items (ie GPSBabel.app)\
+- /Library/Frameworks stuff\
+\
+\
+\pard\tx720\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\ql\qnatural\pardirnatural
+
+\f0\b \cf0 Help Files\
+\pard\tx720\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\ql\qnatural\pardirnatural
+
+\f1\b0 \cf0 \
+(more info coming soon)\
+\
+\
+\pard\tx720\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\ql\qnatural\pardirnatural
+
+\f0\b \cf0 Addon Modules\
+\pard\tx720\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\ql\qnatural\pardirnatural
+
+\f1\b0 \cf0 \
+Do not use GEM (at this time) for building and installing addon modules.  It installs in the app dir, which is not the right thing to do in OSX.  It is still installed - the gem executable is in 
+\f3\fs20 Contents/MacOS
+\f1\fs24  - and may work, but it's untested.\
+\
+GRASS.app is setup to find addon modules in 
+\f3\fs20 /Library/GRASS/$VERSION/Modules
+\f1\fs24  and 
+\f3\fs20 ~/Library/GRASS/$VERSION/Modules
+\f1\fs24 .  The version is the Major.minor version of GRASS.  /Library modules are globally available to all users, but require admin privileges to install.  Home/Library modules are only available to the user that installed them.\
+\
+When GRASS is started, grass.sh adds these to the 
+\f3\fs20 GRASS_ADDON_PATH
+\f1\fs24  and 
+\f3\fs20 DYLD_LIBRARY_PATH
+\f1\fs24 .  It also rebuilds the html help index, and GUI menu file (soon).  Eventually there should be functions for modules to locate their etc/ files, if needed.\
+\
+Help indexes and GUI menus for both global and user modules are maintained in the user's Library/GRASS folder, so the user doesn't need admin privs to write to the global folder.\
+\
+The 
+\f0\b modbuild
+\f1\b0  target creates a GEM-like build skeleton that can be used to build modules from the Terminal.  It does not require any special setup of the module source.  It does not install, or rather I haven't tested that, but it uses standard GRASS make files so it should be able to.\
+\
+\
+\pard\tx720\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\ql\qnatural\pardirnatural
+
+\f0\b \cf0 Universal X11 Tcl/Tk\
+\pard\tx720\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\ql\qnatural\pardirnatural
+
+\f1\b0 \cf0 \
+Building a universal X11 Tcl/Tk is easy, and not worth the time to make an Xcode sub-project for.  First, you need the latest 8.4.x source (or an 8.5 alpha if you're brave) for both Tcl and Tk (they are separate packages).\
+\
+Unzip them, and in a Terminal (fill in [bracketed] items with appropriate values, drag-n-drop folders from the Finder for easy path entry), each prompt is a complete line, no returns except at the ends:\
+\
+\pard\tx720\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\ql\qnatural\pardirnatural
+
+\f3\fs20 \cf0 $ cd [/path/to/Tcl/source]/unix\
+$ CFLAGS="-arch ppc -arch i386 -isysroot /Developer/SDKs/MacOSX10.4u.sdk -mmacosx-version-min=10.3" ./configure --prefix=/usr/local/tcltk --x-includes=/usr/X11R6/include --x-libraries=/usr/X11R6/lib --enable-threads\
+$ make\
+$ sudo make install\
+\
+$ cd [/path/to/Tk/source]/unix\
+$ CFLAGS="-arch ppc -arch i386 -isysroot /Developer/SDKs/MacOSX10.4u.sdk -mmacosx-version-min=10.3" ./configure --prefix=/usr/local/tcltk --enable-threads --with-x --with-tcl=/usr/local/tcltk/lib\
+$ make\
+$ sudo make install\
+\pard\tx720\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\ql\qnatural\pardirnatural
+
+\f1\fs24 \cf0 \
+This will install Tcl and Tk in the same folder, /usr/local/tcltk, and isolates it from other libraries.\
+\
+With this method, if built on Tiger, the Tcl library will only work on Tiger.  To make it Panther-compatible while building on Tiger, after configuring Tcl, but before make, edit both the Makefile and tclConfig.sh and remove all occurrences of "-DHAVE_OSSPINLOCKLOCK=1".\
+\
+\
+\pard\tx720\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\ql\qnatural\pardirnatural
+
+\f0\b \cf0 Universal GPSBabel\
+\pard\tx720\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\ql\qnatural\pardirnatural
+
+\f1\b0 \cf0 \
+A universal GPSBabel is also possible to build without too much fuss.  First, you need the GPSBabel source from {\field{\*\fldinst{HYPERLINK "http://www.gpsbabel.org/"}}{\fldrslt www.gpsbabel.org}}.  If you need support for USB GPS units, get the libusb source from {\field{\*\fldinst{HYPERLINK "http://libusb.sourceforge.net/"}}{\fldrslt libusb.sourceforge.net}}.\
+\
+For libusb, unzip the source and cd to the source folder in a Terminal.  Then:\
+\
+\pard\tx720\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\ql\qnatural\pardirnatural
+
+\f3\fs20 \cf0 $ ./configure --disable-shared --disable-dependency-tracking CXXFLAGS="-Os -arch ppc -arch i386 -isysroot /Developer/SDKs/MacOSX10.4u.sdk" CFLAGS="-Os -arch ppc -arch i386 -isysroot /Developer/SDKs/MacOSX10.4u.sdk" LDFLAGS="-arch ppc -arch i386 -isysroot /Developer/SDKs/MacOSX10.4u.sdk"\
+$ make\
+$ sudo make install\
+\pard\tx720\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\ql\qnatural\pardirnatural
+
+\f1\fs24 \cf0 \
+Libusb will be installed in /usr/local.  GPSBabel uses the static library, so the shared libusb is not needed, and you might have problems building libusb as shared.\
+\
+For GPSBabel, unzip the source and cd to the source folder in a Terminal.  Then:\
+\
+\pard\tx720\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\ql\qnatural\pardirnatural
+
+\f3\fs20 \cf0 $ ./configure --disable-dependency-tracking --with-zlib=system --with-expathdr=/usr/X11R6/include --with-libexpat=/usr/X11R6/lib CFLAGS="-Os -arch ppc -arch i386 -isysroot /Developer/SDKs/MacOSX10.4u.sdk" LDFLAGS="-arch ppc -arch i386 -isysroot /Developer/SDKs/MacOSX10.4u.sdk"\
+$ make\
+$ sudo make install\
+\pard\tx720\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\ql\qnatural\pardirnatural
+
+\f1\fs24 \cf0 \
+If you installed libusb, it will be found and built into gpsbabel.  The gpsbabel program will be installed in /usr/local/bin.\
+\
+\
+\pard\tx720\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\ql\qnatural\pardirnatural
+
+\f0\b \cf0 Universal NetPBM\
+\pard\tx720\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\ql\qnatural\pardirnatural
+
+\f1\b0 \cf0 \
+NetPBM is not too hard to build, it's just weird.  These instructions use my UnixImageIO framework for the tiff, jpeg and png libraries.\
+\
+First, grab the {\field{\*\fldinst{HYPERLINK "http://netpbm.sourceforge.net/"}}{\fldrslt NetPBM}} source and unzip it.  Now it gets strange - it's an interactive configuration, and the various stages don't communicate with each other.  Cd to the source folder in a Terminal and:\
+\
+\pard\tx720\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\ql\qnatural\pardirnatural
+
+\f3\fs20 \cf0 $ ./configure\
+\pard\tx720\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\ql\qnatural\pardirnatural
+
+\f1\fs24 \cf0 \
+\pard\tx720\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\ql\qnatural\pardirnatural
+
+\f0\b \cf0 <enter>
+\f1\b0  to begin\
+\
+\pard\tx720\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\ql\qnatural\pardirnatural
+
+\f3\fs20 \cf0 Platform [darwin] ==> 
+\f0\b\fs24 <enter>
+\f1\b0 \
+\
+
+\f3\fs20 Netpbm shared library directory [default] ==> 
+\f0\b\fs24 /usr/local
+\f1\b0 \
+\
+\pard\tx720\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\li360\ql\qnatural\pardirnatural
+
+\f2\i \cf0 choose where you will install it\
+default is NOT /usr/local or any location at all, so you MUST set this\
+\pard\tx720\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\ql\qnatural\pardirnatural
+
+\f1\i0 \cf0 \
+\pard\tx720\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\ql\qnatural\pardirnatural
+
+\f3\fs20 \cf0 regular or merge [regular] ==> 
+\f0\b\fs24 <enter>
+\f1\b0 \
+\
+
+\f3\fs20 static or shared [shared] ==> 
+\f0\b\fs24 <enter>
+\f1\b0 \
+\
+\pard\tx720\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\li360\ql\qnatural\pardirnatural
+
+\f2\i \cf0 could use static, since GRASS only needs a few of the progs\
+\pard\tx720\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\ql\qnatural\pardirnatural
+
+\f1\i0 \cf0 \
+\pard\tx720\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\ql\qnatural\pardirnatural
+
+\f3\fs20 \cf0 '#include' argument or NONE [<inttypes.h>] ==> 
+\f0\b\fs24 <enter>
+\f1\b0 \
+\
+
+\f3\fs20 What is your JPEG (graphics format) library?\
+library filename or 'none' [libjpeg.so] ==> 
+\f0\b\fs24 /Library/Frameworks/UnixImageIO.framework/unix/lib/libjpeg.dylib
+\f1\b0 \
+\
+
+\f3\fs20 JPEG header directory [default] ==> 
+\f0\b\fs24 /Library/Frameworks/UnixImageIO.framework/Headers
+\f1\b0 \
+\
+
+\f3\fs20 What is your TIFF (graphics format) library?\
+library filename or 'none' [libtiff.so] ==> 
+\f0\b\fs24 /Library/Frameworks/UnixImageIO.framework/unix/lib/libtiff.dylib
+\f1\b0 \
+\
+
+\f3\fs20 TIFF header directory [default] ==> 
+\f0\b\fs24 /Library/Frameworks/UnixImageIO.framework/Headers
+\f1\b0 \
+\
+
+\f3\fs20 What is your PNG (graphics format) library?\
+library filename or 'none' [libpng.so] ==> 
+\f0\b\fs24 /Library/Frameworks/UnixImageIO.framework/unix/lib/libpng.dylib
+\f1\b0 \
+\
+
+\f3\fs20 PNG header directory [default] ==> 
+\f0\b\fs24 /Library/Frameworks/UnixImageIO.framework/Headers
+\f1\b0 \
+\
+
+\f3\fs20 What is your Z (compression) library?\
+library filename or 'none' [libz.so] ==> 
+\f0\b\fs24 -lz
+\f1\b0 \
+\
+
+\f3\fs20 Z header directory [default] ==> 
+\f0\b\fs24 <enter>
+\f1\b0 \
+\
+
+\f3\fs20 Documentation URL [http://netpbm.sourceforge.net/doc/] ==> 
+\f0\b\fs24 <enter>
+\f1\b0 \
+\
+\pard\tx720\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\li360\ql\qnatural\pardirnatural
+
+\f2\i \cf0 ignore warning about libz\
+\pard\tx720\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\ql\qnatural\pardirnatural
+
+\f1\i0 \cf0 \
+\pard\tx720\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\ql\qnatural\pardirnatural
+
+\f3\fs20 \cf0 $ echo "CC = /usr/bin/gcc -arch ppc -arch i386 -isysroot /Developer/SDKs/MacOSX10.4u.sdk" >> Makefile.config\
+\
+$ make\
+\
+$ make package pkgdir=/path/to/some/temp/dir\
+	it will create the folder\
+\
+$ sudo ./installnetpbm\
+\pard\tx720\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\ql\qnatural\pardirnatural
+
+\f1\fs24 \cf0 \
+then answer some more questions:\
+\
+\pard\tx720\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\ql\qnatural\pardirnatural
+
+\f3\fs20 \cf0 Where is the install package you created with 'make package'?\
+package directory (/tmp/netpbm) ==> 
+\f0\b\fs24 /path/to/some/temp/dir
+\f1\b0 \
+\pard\tx720\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\li360\ql\qnatural\pardirnatural
+
+\f2\i \cf0 same location as specified in the make package step (lack of inter-communication!)\
+\pard\tx720\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\ql\qnatural\pardirnatural
+
+\f1\i0 \cf0 \
+\pard\tx720\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\ql\qnatural\pardirnatural
+
+\f3\fs20 \cf0 install prefix (/usr/local/netpbm) ==> 
+\f0\b\fs24 /usr/local
+\f1\b0 \
+\pard\tx720\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\li360\ql\qnatural\pardirnatural
+
+\f2\i \cf0 same location used for the Netpbm shared library directory (again, lack of inter-communication!)\
+(it may ask you if you want to create the dir)\
+\pard\tx720\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\ql\qnatural\pardirnatural
+
+\f1\i0 \cf0 \
+It'll ask for subfolders for bin, lib, data, headers, man\
+\
+For data, type: 
+\f0\b /usr/local/share/netpbm
+\f1\b0 \
+\
+For man, type: 
+\f0\b /usr/local/share/man
+\f1\b0 \
+\
+For the rest, use the defaults\
+\
+don't create the manweb.conf file\
+\
+And that's it.\
+\
+\
+\pard\tx720\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\ql\qnatural
+\cf0 - William Kyngesburye\
+\pard\tx720\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\ql\qnatural
+{\field{\*\fldinst{HYPERLINK "mailto:kyngchaos@kyngchaos.com"}}{\fldrslt \cf0 kyngchaos@kyngchaos.com}}
+\fs20 \
+\pard\tx720\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\ql\qnatural
+{\field{\*\fldinst{HYPERLINK "http://www.kyngchaos.com"}}{\fldrslt 
+\fs24 \cf0 http://www.kyngchaos.com/}}
+\fs24 \
+}
