@@ -35,22 +35,23 @@ main (int argc, char *argv[])
 
     module = G_define_module();
     module->keywords = _("vector, geometry");
-    module->description = "Change the type of geometry elements.";
+    module->description = _("Change the type of geometry elements.");
 
     in_opt = G_define_standard_option(G_OPT_V_INPUT);
     out_opt = G_define_standard_option(G_OPT_V_OUTPUT);
     
-    type_opt = G_define_standard_option(G_OPT_V_TYPE) ;
+    type_opt = G_define_standard_option(G_OPT_V_TYPE);
     type_opt->options = "point,line,boundary,centroid,face,kernel";
-    type_opt->answer = "point,line,boundary,centroid";
-    type_opt->description = "Pairs for input and output type separated by comma:\n"
-	      "<input_type1>,<output_type1>,<input_type2>,<output_type2>,....\n"
-	      "Example1: line,boundary\n"
-	      "Example2: line,boundary,point,centroid"; 
+    type_opt->answer = "line,boundary,point,centroid";
+    type_opt->description = _("Pairs for input and output type separated by comma: "
+			      "<input_type1>,<output_type1>,<input_type2>,<output_type2>,...\n"
+			      "\t\tExample1: line,boundary\n"
+			      "\t\tExample2: line,boundary,point,centroid"); 
     
     G_gisinit(argv[0]);
+
     if (G_parser (argc, argv))
-	exit(-1); 
+	exit(EXIT_FAILURE); 
     
     i = 0;
     j = 0;
@@ -85,7 +86,7 @@ main (int argc, char *argv[])
 		 )  
 	       )
 	    { 
-		G_fatal_error ("Incompatible types");
+		G_fatal_error (_("Incompatible types"));
 	    }
 	    j = 0;
 	} else {
@@ -96,10 +97,10 @@ main (int argc, char *argv[])
     }
     
     if ( i < 2 )
-        G_fatal_error ("Not enough types");
+        G_fatal_error (_("Not enough types"));
     
     if ( j == 1 )
-	G_fatal_error ("Odd number of types");
+	G_fatal_error (_("Odd number of types"));
     
     ntypes = i;
 
@@ -110,7 +111,7 @@ main (int argc, char *argv[])
     
     /* open input vector */
     if ((mapset = G_find_vector2 (in_opt->answer, "")) == NULL) {
-	 G_fatal_error ( "Could not find input map <%s>\n", in_opt->answer);
+	 G_fatal_error (_("Vector map <%s> not found"), in_opt->answer);
     }
     
     Vect_set_open_level (1); 
@@ -119,7 +120,7 @@ main (int argc, char *argv[])
     Vect_set_fatal_error (GV_FATAL_PRINT);
     if (0 > Vect_open_new (&Out, out_opt->answer, Vect_is_3d (&In)) ) {
 	 Vect_close (&In);
-	 exit (1);
+	 exit (EXIT_FAILURE);
     }
 
     Vect_copy_head_data (&In, &Out);
@@ -137,11 +138,9 @@ main (int argc, char *argv[])
     }
 	
     Vect_copy_tables ( &In, &Out, 0 );
-    Vect_build (&Out, stdout);
+    Vect_build (&Out, stderr);
     Vect_close (&Out);
     Vect_close (&In);
 
-    exit(0) ;
+    exit(EXIT_SUCCESS);
 }
-
-
