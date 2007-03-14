@@ -13,6 +13,8 @@
  *               Read the file COPYING that comes with GRASS
  *               for details.
  *
+ * TODO/BUG:     The vector segments are not properly connected
+ *               and should be snapped.
  **************************************************************/
 #include <stdlib.h> 
 #include <math.h>
