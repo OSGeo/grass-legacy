@@ -13,7 +13,7 @@ ac_default_prefix=/usr/local
 # Any additions from configure.in:
 ac_default_prefix=/usr/local
 ac_help="$ac_help
-  --enable-macosx         Create a MacOSX App"
+  --enable-macosx-app     create a MacOSX application"
 ac_help="$ac_help
   --enable-shared         build and link with shared libraries [--enable-shared]"
 ac_help="$ac_help
@@ -14902,6 +14902,8 @@ echo "  Tcl/Tk support:             `if test -n "${USE_TCLTK}" ; then echo yes ;
 echo "  TIFF support:               `if test -n "${USE_TIFF}" ; then echo yes ; else echo no ; fi`"
 
 echo "  X11 support:                `if test -n "${USE_X11}" ; then echo yes ; else echo no ; fi`"
+
+echo "  MacOSX application:         `if test -n "${MACOSX_APP}" ; then echo yes ; else echo no ; fi`"
 
 echo ""
 
