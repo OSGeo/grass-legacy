@@ -10,6 +10,7 @@ DynamicHelp::configure -font balloon-help -fg black -bg "#FFFF77"
 set vdpath $env(GISBASE)/etc/v.digit/
 source $vdpath/settings.tcl
 source $vdpath/cats.tcl
+source $vdpath/form.tcl
 
 set env(GISDBASE) [exec g.gisenv get=GISDBASE]
 set env(LOCATION_NAME) [exec g.gisenv get=LOCATION_NAME]

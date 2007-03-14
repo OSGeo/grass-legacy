@@ -136,3 +136,8 @@ void set_tool(tool_func_begin *begin,
 	      void *closure);
 void cancel_tool(void);
 int c_update_tool (ClientData , Tcl_Interp *, int, char **);
+
+/* form */
+int reset_values(ClientData, Tcl_Interp *, int, char **);
+int set_value(ClientData, Tcl_Interp *, int, char **);
+int submit(ClientData, Tcl_Interp *, int, char **);
