@@ -29,23 +29,20 @@ main (int argc, char *argv[])
 {
     struct Option *opt_in, *opt_out, *opt_end;
     int    endian;
+    char*  output;
     struct GModule *module;
 
     module = G_define_module();
-    module->keywords = _("vector, import");
-    module->description = "Imports older versions of GRASS vector maps.";
+    module->keywords = _("vector, import, conversion");
+    module->description = _("Imports older versions of GRASS vector maps.");
 
     /* input vector map */
-    opt_in = G_define_option();
-    opt_in->key         = "input";
-    opt_in->type        = TYPE_STRING ;
-    opt_in->required    = YES ;
-    opt_in->multiple    = NO ;
+    opt_in = G_define_standard_option(G_OPT_V_INPUT);
     opt_in->gisprompt   = "old,dig,vector" ;
-    opt_in->description = "input vector map";
 
     /* output vector map */
     opt_out = G_define_standard_option(G_OPT_V_OUTPUT);
+    opt_out -> required = NO;
 
     /* endian of input vector map */
     opt_end = G_define_option();
@@ -54,8 +51,8 @@ main (int argc, char *argv[])
     opt_end->required    = NO;
     opt_end->multiple    = NO;
     opt_end->options     = "big,little";
-    opt_end->description = "endian of input vector map";
-    opt_end->answer = "big";
+    opt_end->description = _("Endian of input vector map");
+    opt_end->answer      = "big";
 
     G_gisinit(argv[0]);
 
@@ -68,7 +65,12 @@ main (int argc, char *argv[])
     else
 	endian = ENDIAN_BIG;
 
-    old2new (opt_in->answer, opt_out->answer, endian);
+    if (opt_out -> answer)
+	output = G_store (opt_out -> answer);
+    else
+	output = G_store (opt_in -> answer);
+
+    old2new (opt_in->answer, output, endian);
 
     exit(EXIT_SUCCESS);
 }

@@ -3,9 +3,9 @@
 #include <string.h>
 #include <grass/gis.h>
 #include <grass/Vect.h>
+#include <grass/glocale.h>
 #include "conv.h"
 #include "local_proto.h"
-#include <grass/glocale.h>
 
 int 
 old2new (char *in, char *out, int endian)
@@ -24,7 +24,7 @@ old2new (char *in, char *out, int endian)
     
     /* open in map */
     if ( NULL == (mapset = G_find_file ("dig", in, "") )) {
-	G_fatal_error( _("Input vector was not found.")) ;
+	G_fatal_error( _("Input vector map <%s> not found."), in);
     }
 
     /* open input dig file */
@@ -36,7 +36,7 @@ old2new (char *in, char *out, int endian)
     Vect_set_fatal_error (GV_FATAL_PRINT);
     if ( Vect_open_new ( &Mapout, out, WITHOUT_Z) < 0) {
 	fclose (Digin);
-    	exit(-1);
+    	exit(EXIT_FAILURE);
     }  
 
     Vect_hist_command ( &Mapout );
@@ -68,7 +68,7 @@ old2new (char *in, char *out, int endian)
      * If cat is already attached but new one is nearer
      * set cat to new one.  */
      
-     G_message ( _("Attaching categories...\n"));
+     G_message ( _("Attaching categories..."));
      
      for (i=0; i < ncats; i++){
 	 G_percent ( i, ncats - 1, 1 ); 
@@ -89,7 +89,7 @@ old2new (char *in, char *out, int endian)
                     G_warning ( _("Failed to attach an attribute (category %d) to a line."), cats[i].cat);
 		} else {
 	            if ( lines[sline].cat > -1 ) {
-                        G_warning ( _("WARNING: line %d label: %d matched another label: %d."), sline, lines[sline].cat, cats[i].cat);
+                        G_warning ( _("Line %d label: %d matched another label: %d."), sline, lines[sline].cat, cats[i].cat);
 		    }
 	            lines[sline].cat = cats[i].cat;
 		}
@@ -97,7 +97,8 @@ old2new (char *in, char *out, int endian)
     }
      
     /* Write to new file */
-    G_message ( _("Writing new file...\n"));
+    G_message ( _("Writing new file..."));
+
     pnt_out = Vect_new_line_struct ();
     cat_out = Vect_new_cats_struct();
     
@@ -118,7 +119,7 @@ old2new (char *in, char *out, int endian)
 	    j++;
             Vect_reset_cats (cat_out);
         }
-        G_message ( _("%-5d points and lines written to output file.\n"),j);
+        G_message ( _("[%d] points and lines written to output file."),j);
     }
     /* Write centroids */    
     j = 0;
@@ -132,12 +133,12 @@ old2new (char *in, char *out, int endian)
             Vect_reset_cats (cat_out);
 	}
     } 
-    G_message ( _("%-5d centroids written to output file.\n"),j);
+    G_message ( _("[%d] centroids written to output file."),j);
 
     /* Convert dig_cats to table */
     attributes ( in, &Mapout );
     
-    Vect_build ( &Mapout, stdout );  
+    Vect_build ( &Mapout, stderr );  
     Vect_close ( &Mapout );
     
     fclose (Digin);
@@ -156,5 +157,3 @@ old2new (char *in, char *out, int endian)
     
     return (1);
 }
-
-
