@@ -93,7 +93,7 @@ int main (int argc, char *argv[])
     G_gisinit(argv[0]);
 
     module = G_define_module(); 
-    module->keywords = _("vector");
+    module->keywords = _("vector, editing, digitization");
     module->description = _("Interactive editing and digitization of vector maps.");
 
     map_opt = G_define_standard_option(G_OPT_V_MAP);
@@ -142,8 +142,7 @@ int main (int argc, char *argv[])
 	   Vect_close (&Map);
 	   Vect_open_update (&Map, map_opt->answer, G_mapset());
        } else {
-	   G_message(_("Map does not exist. Add flag -n to create a new map."));
-	   exit(EXIT_FAILURE);
+	   G_fatal_error(_("Map <%s> does not exist in current mapset. Add flag -n to create a new map."), map_opt->answer);
        }
     } else {
 	Vect_set_open_level(2);
