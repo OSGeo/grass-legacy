@@ -2219,7 +2219,7 @@ msgid ""
 "A single vector map can be connected to multiple database tables.\n"
 "This number determines which table to use."
 msgstr ""
-"Eine Vektorkarte kann mit mehreren Attribudatenquellen verbinden werden.\n"
+"Eine Vektorkarte kann mit mehreren Attributdatenquellen verbinden werden.\n"
 "Diese Zahl gibt Auskunft über die zu benutzende Tabelle."
 
 #: ../lib/gis/parser.c:504
