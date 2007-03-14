@@ -235,8 +235,6 @@ class GMFrame(wx.Frame):
         curr_pg = self.gm_cb.GetCurrentPage()
         sel_pgnum = self.gm_cb.GetSelection()
 
-        print
-
          #get ID of associated display if more than one
         disp_idx = track.Track().GetDisp_idx(curr_pg)
         if disp_idx != None:
@@ -258,7 +256,6 @@ class GMFrame(wx.Frame):
                         self.mapdisplays[disp_idx].Close(True)
             except:
                 pass
-        event.Skip()
 
     def __createLayerTree(self,parent=None):
         ctstyle = CT.TR_HIDE_ROOT
