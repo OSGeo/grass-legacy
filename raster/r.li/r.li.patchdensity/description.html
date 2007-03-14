@@ -1,27 +1,50 @@
 <H2>DESCRIPTION</H2>
-<EM>r.li.patchdensity</EM> is a patch index for r.li program.<br>
-It calculates the function <br>
-<I> f(sample_area)= (Patch_Number/Area) * 1000000 </I><br>
-that is 1000000 by number of patch for area unit.
-This index is calculated using a 4 neighbour algorithm<br>
+<EM>r.li.patchdensity</EM> is a patch index for <em>r.li</em> suite.
+It calculates the function:
 
-<P><P>
-Use at your own risk. This software comes with absolutely no warranty.
+<div class="code"><pre>
+f(sample_area) = (Patch_Number/Area) * 1000000
+</pre></div>
+
+that is 1000000 by number of patch for area unit.
+This index is calculated using a 4 neighbour algorithm.
 
 <H2>EXAMPLES</H2>
-To calculate patch density index on map my_map, using 
-<em>my_conf</em> configuration file and saving results in
-my_out file run:
-<div class="code"> r.li.patchdensity map=my_map conf=my_conf out=my_out</div>
+To calculate patch density index on map <em>my_map</em>, using <em>my_conf</em>
+configuration file (previously defined with <em>r.li.setup</em>) and saving
+results in the raster map <em>my_out</em>, run:
+
+<div class="code"><pre>
+r.li.patchdensity map=my_map conf=my_conf out=my_out
+</pre></div>
+
+<p>
+Example for Spearfish forest areas:
+<div class="code"><pre>
+g.region rast=landcover.30m -p
+# extract forested areas:
+r.cats landcover.30m
+r.mapcalc "forests=if(landcover.30m >= 41 && landcover.30m <=43,1,null())"
+
+# patch density (7x7 moving window defined in r.li.setup):
+r.li.patchdensity forests conf=movwindow7 out=forests_p_dens7
+d.rast.leg forests_p_dens7
+
+r.to.vect forests out=forests feature=area
+d.vect forests type=boundary
+</pre></div>
 
 <H2>NOTES</H2>
 
-An that is full of null values is considered to have zero patch. <br>
+A map of NULL values is considered to have zero patches. <br>
 If you want to have null values instead run <br>
-<div class="code"> r.null setnull=0 map=my_map</div>
+<div class="code"><pre>
+r.null setnull=0 map=my_out
+<pre></div>
 after index calculation.<br>
-If raster area is 0, r.li.patchdensity returns -1. This is possible only if the
-raster is masked.<br>
+<!-- next ??????: -->
+If raster area is 0, <em>r.li.patchdensity</em> returns -1. This is only possible
+if the raster is masked.
 
 <H2>SEE ALSO</H2>
 <EM><A HREF="r.li.html">r.li</A></EM> package overview <BR>
@@ -38,6 +61,4 @@ Please send bugs reports to
 <a href="mailto:spano@cli.di.unipi.it">spano@cli.di.unipi.it</a>,
 <a href="mailto:porta@cli.di.unipi.it">porta@cli.di.unipi.it</a><BR>
 
-<BR>
-
-<p><i>Last changed: $Date$</i>
+<p><i>Last changed: $Date$</i<pre>
