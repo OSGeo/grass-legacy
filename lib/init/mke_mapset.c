@@ -15,15 +15,15 @@ int make_mapset (char *location, char *mapset)
 	char buffer[2048] ;
 	char *buffer2;
 	FILE *fd ;
+	struct Cell_head window;
 
 /* create the mapset directory */
 	sprintf(buffer,"%s/%s",location, mapset) ;
 	G_mkdir(buffer) ;
 
 /* give the mapset a default window for the entire location */
-	sprintf(buffer,"cat '%s'/PERMANENT/DEFAULT_WIND  > '%s'/'%s'/WIND",
-		location, location, mapset) ;
-	system(buffer) ;
+	G_get_default_window(&window);
+	G_put_window(&window);
 
 /* generate DB settings file in new mapset */
 	G_asprintf(&buffer2,"%s/%s/VAR", location, mapset);
