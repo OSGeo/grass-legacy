@@ -97,6 +97,18 @@ The makefile tries to figure out the Tcl/Tk prefix from the configuration.  This
 \pard\tx720\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\ql\qnatural\pardirnatural
 
 \f1\fs24 \cf0 \
+\pard\tx720\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\ql\qnatural\pardirnatural
+\cf0 \ul Example\ulnone \
+\
+As an example, to build GRASS using my frameworks (site link below) and Tcl/Tk as built in the build notes below, this should work:\
+\
+\pard\tx720\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\ql\qnatural\pardirnatural
+
+\f3\fs20 \cf0 ./configure --enable-sysv --with-freetype --with-freetype-includes="/Library/Frameworks/FreeType.framework/unix/include/freetype2 /Library/Frameworks/FreeType.framework/unix/include" --with-freetype-libs=/Library/Frameworks/FreeType.framework/unix/lib --with-gdal=/Library/Frameworks/GDAL.framework/Programs/gdal-config --with-proj --with-proj-includes=/Library/Frameworks/PROJ.framework/unix/include --with-proj-libs=/Library/Frameworks/PROJ.framework/unix/lib --with-proj-share=/Library/Frameworks/PROJ.framework/Resources/proj --with-jpeg-includes=/Library/Frameworks/UnixImageIO.framework/unix/include --with-jpeg-libs=/Library/Frameworks/UnixImageIO.framework/unix/lib --with-png-includes=/Library/Frameworks/UnixImageIO.framework/unix/include --with-png-libs=/Library/Frameworks/UnixImageIO.framework/unix/lib --with-tiff-includes=/Library/Frameworks/UnixImageIO.framework/unix/include --with-tiff-libs=/Library/Frameworks/UnixImageIO.framework/unix/lib --without-postgres --without-mysql --with-odbc --with-sqlite --with-sqlite-libs=/Library/Frameworks/SQLite3.framework/unix/lib --with-sqlite-includes=/Library/Frameworks/SQLite3.framework/unix/include --with-fftw-includes=/Library/Frameworks/FFTW3.framework/unix/include --with-fftw-libs=/Library/Frameworks/FFTW3.framework/unix/lib --with-cxx --with-tcltk-includes=/usr/local/tcltk/include --with-tcltk-libs=/usr/local/tcltk/lib --with-x --without-motif --without-glw --with-opengl=x11 --with-opengl-libs=/usr/X11R6/lib --without-readline --prefix=/Applications --enable-macosx-app
+\f1\fs24 \
+\
+That's a long line, but you have to be very explicit in the GRASS configure. Postgres was left out - there currently is a configure glitch when using some Postgres binaries (including mine) so it will fail.  But Postgres is not critical to GRASS, as SQLite is the preferred DB nowadays.\
+\
 \
 \pard\tx720\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\ql\qnatural\pardirnatural
 
