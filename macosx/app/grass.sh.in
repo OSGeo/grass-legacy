@@ -1,0 +1,94 @@
+#! /bin/sh
+#############################################################################
+#
+# $Id$
+#
+# MODULE:   	GRASS Initialization
+# AUTHOR(S):	Justin Hickey - Thailand - jhickey@hpcc.nectec.or.th
+# PURPOSE:  	The source file for this shell script is in
+#   	    	lib/init/grass.src and is the grass startup script. It
+#   	    	requires a source file because the definition of GISBASE
+#   	    	is not known until compile time and is substituted from the
+#   	    	Makefile. Any command line options are passed to Init.sh.
+# COPYRIGHT:    (C) 2000-2005 by the GRASS Development Team
+#
+#               This program is free software under the GNU General Public
+#   	    	License (>=v2). Read the file COPYING that comes with GRASS
+#   	    	for details.
+#
+#############################################################################
+
+# Mac app only startup shell - complete rewrite for starting from a GRASS.app
+# in Mac OS X.  Sets defaults for unset env, adds some Mac-only config.
+#   William Kyngesburye
+#   kyngchaos@kyngchaos.com
+
+trap "echo 'User break!' ; exit" 2 3 9 15
+
+# dummy for now - just saying we're starting GRASS.app on OSX
+GRASS_OS_STARTUP="Mac.app"
+export GRASS_OS_STARTUP
+
+GISBASE="`dirname $0`"
+export GISBASE
+grass_ver=`cut -d . -f 1-2 $GISBASE/etc/VERSIONNUMBER`
+
+# xterm
+if [ ! "$GRASS_XTERM" ] ; then
+	GRASS_XTERM=/usr/X11R6/bin/xterm
+	export GRASS_XTERM
+fi
+
+# default to internal X11 Tcl/Tk
+@TCLTK_INTERNAL@if [ ! "$GRASS_TCLSH" ] ; then
+	GRASS_TCLSH="$GISBASE/bin/tclsh8.4"
+	export GRASS_TCLSH
+	GRASS_WISH="$GISBASE/bin/wish8.4"
+	export GRASS_WISH
+	# internal - force osxaqua off
+	unset osxaqua
+	# override TCL_LIBRARY to internal
+	TCL_LIBRARY="$GISBASE/lib/tcl8.4"
+	export TCL_LIBRARY
+	TK_LIBRARY="$GISBASE/lib/tk8.4"
+	export TK_LIBRARY
+@TCLTK_INTERNAL@fi
+
+# make sure there is a DISPLAY set
+if [ ! "$DISPLAY" ] ; then
+	DISPLAY=:0.0
+	export DISPLAY
+fi
+
+# add some OS X style App Support paths, and create user one if missing.
+# global support folder should be created by admin user (GRASS startup
+# can't do it for lack of privs).  Use:
+# sudo mkdir -p "/Library/GRASS/$grass_ver/Modules/bin"
+# sudo mkdir -p "/Library/GRASS/$grass_ver/Modules/lib"
+# sudo mkdir -p "/Library/GRASS/$grass_ver/Modules/etc"
+# sudo mkdir -p "/Library/GRASS/$grass_ver/Modules/docs/html"
+mkdir -p "$HOME/Library/GRASS/$grass_ver/Modules/bin"
+if [ "$GRASS_ADDON_PATH" ] ; then
+	GRASS_ADDON_PATH="$GRASS_ADDON_PATH:$HOME/Library/GRASS/$grass_ver/Modules/bin:/Library/GRASS/$grass_ver/Modules/bin"
+else
+	GRASS_ADDON_PATH="$HOME/Library/GRASS/$grass_ver/Modules/bin:/Library/GRASS/$grass_ver/Modules/bin"
+	
+fi
+export GRASS_ADDON_PATH
+
+mkdir -p "$HOME/Library/GRASS/$grass_ver/Modules/lib"
+DYLD_LIBRARY_PATH="$HOME/Library/GRASS/$grass_ver/Modules/lib:/Library/GRASS/Modules/lib"
+export DYLD_LIBRARY_PATH
+mkdir -p "$HOME/Library/GRASS/$grass_ver/Modules/etc"
+mkdir -p "$HOME/Library/GRASS/$grass_ver/Modules/docs/html"
+
+# rebuild addon html index
+"$GISBASE/etc/build_html_user_index.sh" "$GISBASE"
+
+# start X11 if not running - no need to check if running by using 'open'
+# some users may be annoyed by this, but X11 required for some stuff for now
+if [ -d "/Applications/Utilities/X11.app" ] ; then
+	open /Applications/Utilities/X11.app
+fi
+
+exec "$GISBASE/etc/Init.sh" "$@"
