@@ -13,7 +13,7 @@
 \fs24 \cf0 \
 \pard\tx1080\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\ql\qnatural\pardirnatural
 
-\f2\i \cf0 2007-3-13\
+\f2\i \cf0 2007-3-14\
 \pard\tx720\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\ql\qnatural\pardirnatural
 
 \f1\i0 \cf0 \
@@ -22,7 +22,8 @@
 \pard\tx720\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\ql\qnatural\pardirnatural
 \cf0 \ulnone \
 \pard\tx360\tx720\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\ql\qnatural\pardirnatural
-\cf0 About\
+\cf0 Quickstart\
+About\
 Building GRASS\
 Tcl/Tk\
 Developer Notes\
@@ -33,8 +34,22 @@ Dependency Build Notes\
 	Universal X11 Tcl/Tk*\
 	Universal GPSBabel*\
 	Universal NetPBM*\
+\
 (* apply to any OSX build, not just an application package build)\
 \
+\
+
+\f0\b Quickstart\
+
+\f1\b0 \
+To build a Mac OS X application, add this to your configure options:\
+\
+\pard\tx720\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\ql\qnatural\pardirnatural
+
+\f3\fs20 \cf0 --prefix=/Applications --enable-macosx-app
+\f1\fs24 \
+\pard\tx360\tx720\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\ql\qnatural\pardirnatural
+\cf0 \
 \pard\tx720\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\ql\qnatural\pardirnatural
 \cf0 \
 \pard\tx720\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\ql\qnatural\pardirnatural
@@ -62,13 +77,17 @@ Building GRASS as a Mac OS X application is pretty much the same as for a unix b
 \
 \pard\tx720\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\ql\qnatural\pardirnatural
 
-\f3\fs20 \cf0 --enable-macosx\
+\f3\fs20 \cf0 --enable-macosx-app\
 \pard\tx720\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\ql\qnatural\pardirnatural
 
 \f1\fs24 \cf0 \
-With this option, the prefix specified is the path where GRASS.app will be installed.  The default GRASS.app prefix is 
+With this option, the prefix specified is the path where GRASS.app will be installed.\
+\
+The default GRASS prefix is /usr/local, but for a Mac OS X application it should be 
 \f3\fs20 /Applications
-\f1\fs24 .\
+\f1\fs24 .  It is not possible to have alternative default prefixes in configure, so you must set 
+\f3\fs20 --prefix=/Applications
+\f1\fs24  yourself for configure.\
 \
 The makefile tries to figure out the Tcl/Tk prefix from the configuration.  This may not work in some cases.  All that is configured are the includes and libraries locations, but the bundling step needs to know the prefix.  This will only work if they both have the same prefix.  If it has problems figuring out the Tcl/Tk prefix, set TCLTKPREFIX in the Terminal before running make:\
 \
