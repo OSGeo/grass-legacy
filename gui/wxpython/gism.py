@@ -207,20 +207,11 @@ class GMFrame(wx.Frame):
         self.cb_panel = wx.Panel(self,-1, style = wx.EXPAND)
         self.gm_cb = FN.FlatNotebook(self, wx.ID_ANY, style=cbStyle)
         self.gm_cb.SetTabAreaColour(wx.Colour(125,200,175))
-        self.notebook.AddPage(self.cb_panel, "Map layers for each display")
+        self.notebook.AddPage(self.gm_cb, "Map layers for each display")
 
         #create command output text area and add it to main notebook page
         self.goutput =  wx.richtext.RichTextCtrl(self,style=wx.VSCROLL|wx.HSCROLL|wx.NO_BORDER)
         self.notebook.AddPage(self.goutput, "Command output")
-        #s = wx.TreeCtrl(self.notebook, -1, style=wx.SUNKEN_BORDER|wx.EXPAND)
-        #self.notebook.AddPage(page, "Layers")
-
-        # create choicebook for GIS controls - one page for each display
-        boxsizer = wx.BoxSizer()
-        boxsizer.Add(self.gm_cb, 1, wx.EXPAND)
-        self.cb_panel.SetSizer(boxsizer)
-        self.cb_panel.SetAutoLayout(True)
-        self.Centre()
 
         self.Bind(FN.EVT_FLATNOTEBOOK_PAGE_CHANGED, self.onCBPageChanged, self.gm_cb)
         self.Bind(FN.EVT_FLATNOTEBOOK_PAGE_CLOSING, self.onCBPageClosed, self.gm_cb)
