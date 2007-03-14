@@ -412,7 +412,7 @@ class MapFrame(wx.Frame):
         #
         # Fancy gui
         #
-#        self._mgr = wx.aui.AuiManager(self)
+        self._mgr = wx.aui.AuiManager(self)
 
         #
         # Add toolbars
@@ -643,8 +643,22 @@ class MapFrame(wx.Frame):
         Window closed
         """
         Map.Clean()
-    	self.Destroy()
+        self.Destroy()
 
+        #close associated controls book page
+        #get index number of active display
+        self.disp_idx = int(track.Track().GetDisp_idx(self))
+
+       # change bookcontrol page to page associted with display if > 1 display
+        pg = track.Track().GetCtrls(self.disp_idx, 1)
+        pg_count = self.ctrlbk.GetPageCount()
+        pgnum = '0'
+        if pg_count > 0:
+            for x in range(0,pg_count):
+                if self.ctrlbk.GetPage(x) == pg:
+                    pgnum = x
+        track.Track().popCtrl(self.disp_idx)
+        self.ctrlbk.DeletePage(pgnum)
 
 # end of class MapFrame
 
