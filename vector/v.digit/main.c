@@ -64,6 +64,13 @@ int Tcl_AppInit(Tcl_Interp* interp)
     Tcl_CreateCommand(interp, "c_update_tool", (Tcl_CmdProc*) c_update_tool, (ClientData) NULL, 
 			      (Tcl_CmdDeleteProc*) NULL);
 
+    Tcl_CreateCommand(interp, "submit", (Tcl_CmdProc *) submit, (ClientData) NULL,
+		              (Tcl_CmdDeleteProc *) NULL);
+    Tcl_CreateCommand(interp, "set_value", (Tcl_CmdProc *) set_value, (ClientData) NULL,
+		              (Tcl_CmdDeleteProc *) NULL);
+    Tcl_CreateCommand(interp, "reset_values", (Tcl_CmdProc *) reset_values, (ClientData) NULL,
+		              (Tcl_CmdDeleteProc *) NULL);
+
     Tcl_SetVar(interp, "map_mapset", Map.mapset, TCL_GLOBAL_ONLY);
     Tcl_SetVar(interp, "map_name", Map.name, TCL_GLOBAL_ONLY);
 
