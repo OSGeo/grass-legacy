@@ -52,6 +52,7 @@ SUBDIRS = \
 	v.sample \
 	v.segment \
 	v.select \
+	v.support \
 	v.surf.idw \
 	v.surf.rst \
 	v.transform \
