@@ -161,7 +161,7 @@ int main(int argc, char **argv)
     start_mp_opt->required    = NO; 
     start_mp_opt->answer      = "start_mp"; 
     start_mp_opt->description = "Column containing milepost position for the beginning "
-	                       "of next segment.";
+	                       "of next segment";
     
     start_off_opt = G_define_option() ;
     start_off_opt->key         = "start_off" ;
@@ -169,7 +169,7 @@ int main(int argc, char **argv)
     start_off_opt->required    = NO; 
     start_off_opt->answer      = "start_off"; 
     start_off_opt->description = "Column containing offset from milepost for the beginning "
-	                        "of next segment.";
+	                        "of next segment";
     
     end_mp_opt = G_define_option() ;
     end_mp_opt->key         = "end_mp" ;
@@ -177,21 +177,21 @@ int main(int argc, char **argv)
     end_mp_opt->required    = NO; 
     end_mp_opt->answer      = "end_mp"; 
     end_mp_opt->description = "Column containing milepost position for the end "
-	                       "of previous segment.";
+	                       "of previous segment";
     
     end_off_opt = G_define_option() ;
     end_off_opt->key         = "end_off" ;
     end_off_opt->type        = TYPE_STRING ;
     end_off_opt->required    = NO; 
     end_off_opt->answer      = "end_off"; 
-    end_off_opt->description = "Column containing offset from milepost for the end"
+    end_off_opt->description = "Column containing offset from milepost for the end "
 	                      "of previous segment.";
     
     table_opt = G_define_option() ;
     table_opt->key         = "rstable" ;
     table_opt->type        = TYPE_STRING ;
     table_opt->required    = YES; 
-    table_opt->description = "Name of table where the reference system will be written. "
+    table_opt->description = "Name of table where the reference system will be written "
 	                     "(New table is created by this module)";
     
     thresh_opt = G_define_option() ;
