@@ -180,8 +180,8 @@ class LayerTree(CT.CustomTreeCtrl):
 
 class TreeCtrlComboPopup(wx.combo.ComboPopup):
     """
-    TODO: modify this code to use in layer tree for selecting
-    maps and other display layer objects.
+    Create a tree ComboBox for selecting maps and other GIS elements
+    in accessible mapsets within the current location
     """
 
     # overridden ComboPopup methods
@@ -232,9 +232,11 @@ class TreeCtrlComboPopup(wx.combo.ComboPopup):
         return wx.Size(minWidth, min(200, maxHeight))
 
 
-    # helpers
-
     def getElementList(self, element):
+        """
+        Get list of GIS elements in accessible mapsets and display as tree
+        with all relevant elements displayed beneath each mapset branch
+        """
         #set environmental variables
         gisdbase = os.popen('g.gisenv get=GISDBASE', "r").read().strip()
         location = os.popen('g.gisenv get=LOCATION_NAME', "r").read().strip()
@@ -265,6 +267,8 @@ class TreeCtrlComboPopup(wx.combo.ComboPopup):
                 #TODO: sort list items?
                 for elem in elem_list:
                     self.AddItem(elem, parent=dir_node)
+
+    # helpers
 
     def FindItem(self, parentItem, text):
         item, cookie = self.tree.GetFirstChild(parentItem)
@@ -307,9 +311,11 @@ class TreeCtrlComboPopup(wx.combo.ComboPopup):
         evt.Skip()
 
 
-
 class GMConsole(wx.Panel):
-
+    """
+    Create and manage output console for commands entered on the
+    GIS Manager command line.
+    """
     def __init__(self, parent, id=-1,
                      pos=wx.DefaultPosition, size=wx.DefaultSize,
                      style=wx.TAB_TRAVERSAL|wx.FULL_REPAINT_ON_RESIZE):
@@ -328,56 +334,53 @@ class GMConsole(wx.Panel):
                                                   style=wx.TE_MULTILINE|
                                                   wx.TE_READONLY|wx.HSCROLL)
 
-        #"run" button deactivated because I don't know how to get the command from gism
-#    	self.console_run = wx.Button(self, -1, _("Run"))
-#    	self.console_run.SetDefault()
     	self.console_clear = wx.Button(self, -1, _("Clear"))
     	self.console_save = wx.Button(self, -1, _("Save"))
-#		self.cmd_output.SetMinSize((100, 100))
-#		self.console_command.SetMinSize((100, 50))
 
-#    	self.Bind(wx.EVT_BUTTON, self.runCmd, self.console_run)
     	self.Bind(wx.EVT_BUTTON, self.clearHistory, self.console_clear)
     	self.Bind(wx.EVT_BUTTON, self.saveHistory, self.console_save)
-#		self.Bind(wx.EVT_TEXT_ENTER, self.runCmd, self.console_command)
 
-		# console layout
+		# output control layout
     	boxsizer1 = wx.BoxSizer(wx.VERTICAL)
     	gridsizer1 = wx.GridSizer(1, 2, 0, 0)
     	boxsizer1.Add(self.cmd_output, 1,
                               wx.EXPAND|wx.ADJUST_MINSIZE, 0)
-#		boxsizer1.Add(self.console_command, 0,
-#                              wx.EXPAND|wx.ADJUST_MINSIZE, 0)
-#    	gridsizer1.Add(self.console_run, 0,
-#                               wx.ALIGN_CENTER_HORIZONTAL|wx.ADJUST_MINSIZE, 0)
     	gridsizer1.Add(self.console_clear, 0,
                                wx.ALIGN_CENTER_HORIZONTAL|wx.ADJUST_MINSIZE, 0)
     	gridsizer1.Add(self.console_save, 0,
                                wx.ALIGN_CENTER_HORIZONTAL|wx.ADJUST_MINSIZE, 0)
 
-        boxsizer1.Add((0,10))
+        boxsizer1.Add((0,5))
     	boxsizer1.Add(gridsizer1, 0, wx.EXPAND|wx.ALIGN_CENTRE_VERTICAL)
-        boxsizer1.Add((0,10))
+        boxsizer1.Add((0,5))
         boxsizer1.Fit(self)
     	boxsizer1.SetSizeHints(self)
     	self.SetAutoLayout(True)
     	self.SetSizer(boxsizer1)
 
     def getGRASSCmds(self):
-		'''Create list of all available GRASS commands'''
+		'''
+        Create list of all available GRASS commands to use when
+        parsing string from the command line
+        '''
 		gisbase = os.environ['GISBASE']
 		self.gcmdlst = os.listdir(gisbase+r'/bin')
 		self.gcmdlst.append(os.listdir(gisbase+r'/scripts'))
 		return self.gcmdlst
 
     def runCmd(self, cmd):
-    	'''Run in GUI or shell GRASS (or other) commands typed into
-    	console command text widget, echo command to console
+    	"""
+        Run in GUI or shell GRASS (or other) commands typed into
+    	console command text widget, echo command to
     	output text widget, and send stdout output to output
-    	text widget. Display commands (*.d) are captured and
+    	text widget.
+
+        TODO: Display commands (*.d) are captured and
     	processed separately by mapdisp.py. Display commands are
     	rendered in map display widget that currently has
-    	the focus (as indicted by mdidx).'''
+    	the focus (as indicted by mdidx).
+        """
+
     	gcmdlst = self.getGRASSCmds()
     	cmdlst = []
 #    	cmd = self.console_command.GetLineText(0)
@@ -434,14 +437,27 @@ class GMConsole(wx.Panel):
 		self.cmd_output.Clear()
 
     def saveHistory(self, event):
-		self.history = self.cmd_output.GetStringSelection()
-		if self.history == "":
-			self.cmd_output.SetSelection(-1,-1)
-			self.history = self.cmd_output.GetStringSelection()
-		#could use a standard dialog for this
-		output = open("history.txt","w")
-		output.write(self.history)
-		output.close()
+        self.history = self.cmd_output.GetStringSelection()
+        if self.history == "":
+            self.cmd_output.SetSelection(-1,-1)
+            self.history = self.cmd_output.GetStringSelection()
+
+        #Use a standard dialog for this
+        wildcard = "Text file (*.txt)|*.txt"
+        dlg = wx.FileDialog(
+            self, message="Save file as ...", defaultDir=os.getcwd(),
+            defaultFile="grass_cmd_history.txt", wildcard=wildcard, style=wx.SAVE|wx.FD_OVERWRITE_PROMPT
+            )
+
+        # Show the dialog and retrieve the user response. If it is the OK response,
+        # process the data.
+        if dlg.ShowModal() == wx.ID_OK:
+            path = dlg.GetPath()
+
+        output = open(path,"w")
+        output.write(self.history)
+        output.close()
+        dlg.Destroy()
 
 
 def GetTempfile( pref=None):
