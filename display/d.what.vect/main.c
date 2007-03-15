@@ -21,7 +21,7 @@
 
 int main(int argc, char **argv)
 {
-  struct Flag *once, *terse, *topo_flag, *flash;
+  struct Flag *once, *terse, *txt, *topo_flag, *flash, *edit_flag;
   struct Option *opt1;
   struct GModule *module;
   char *mapset, *openvect();
@@ -70,6 +70,10 @@ int main(int argc, char **argv)
   terse = G_define_flag();
   terse->key = 't';
   terse->description = _("Terse output. For parsing by programs");
+ 
+  txt = G_define_flag();
+  txt->key = 'x';
+  txt->description = _("Print information as plain text to terminal window");
   
   topo_flag = G_define_flag();
   topo_flag->key = 'd';
@@ -78,6 +82,10 @@ int main(int argc, char **argv)
   flash = G_define_flag();
   flash->key = 'f';
   flash->description = _("Enable flashing (slower)");
+ 
+  edit_flag = G_define_flag();
+  edit_flag->key = 'e';
+  edit_flag->description = _("Open form in edit mode");
  
   if(!vect)
       opt1->required = YES;
@@ -134,8 +142,8 @@ int main(int argc, char **argv)
 	G_fatal_error(_("No graphics device selected"));
   D_setup(0);
 
-  what(once->answer, terse->answer, flash->answer,
-       width, mwidth, topo_flag->answer); 
+  what(once->answer, txt->answer, terse->answer, flash->answer,
+       width, mwidth, topo_flag->answer, edit_flag->answer); 
 
   for(i=0; i<nvects; i++)
       Vect_close (&Map[i]);
