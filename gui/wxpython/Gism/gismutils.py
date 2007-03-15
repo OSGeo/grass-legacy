@@ -1,12 +1,18 @@
-import os,sys
+import os,sys,subprocess
 import wx
 import wx.lib.customtreectrl as CT
 
 import render
 import grassenv
+import track
+import menuform
 import optpanels.rastopt as rastopt
 import optpanels.vectopt as vectopt
 import optpanels.cmdopt as cmdopt
+
+#FIXME??
+gmpath = os.getenv("GISBASE") + "/etc/wx/gism/"
+sys.path.append(gmpath)
 
 icons = ""
 
@@ -164,129 +170,132 @@ class LayerTree(CT.CustomTreeCtrl):
 
 class GMConsole(wx.Panel):
 
-	def __init__(self, parent, id=-1,
+    def __init__(self, parent, id=-1,
                      pos=wx.DefaultPosition, size=wx.DefaultSize,
                      style=wx.TAB_TRAVERSAL|wx.FULL_REPAINT_ON_RESIZE):
-		wx.Panel.__init__(self, parent, id, pos, size, style)
-		# initialize variables
-		self.console_output = ""
-		self.console_command = ""
-		self.console_run = ""
-		self.console_clear = ""
-		self.console_save = ""
-		self.gcmdlst = [] #list of commands in bin and scripts
+        wx.Panel.__init__(self, parent, id, pos, size, style)
+        #initialize variables
 
-		self.console_output = wx.TextCtrl(self, -1, "",
+        self.cmd_output = ""
+        self.console_command = ""
+#        self.console_run = ""
+        self.console_clear = ""
+        self.console_save = ""
+        self.gcmdlst = [] #list of commands in bin and scripts
+
+        #text control for command output
+        self.cmd_output = wx.TextCtrl(self, -1, "",
                                                   style=wx.TE_MULTILINE|
                                                   wx.TE_READONLY|wx.HSCROLL)
 
-		self.console_command = wx.TextCtrl(self, -1, "",
-                                                   style=wx.HSCROLL|wx.TE_LINEWRAP|
-                                                   wx.TE_PROCESS_ENTER)
+        #"run" button deactivated because I don't know how to get the command from gism
+#    	self.console_run = wx.Button(self, -1, _("Run"))
+#    	self.console_run.SetDefault()
+    	self.console_clear = wx.Button(self, -1, _("Clear"))
+    	self.console_save = wx.Button(self, -1, _("Save"))
+#		self.cmd_output.SetMinSize((100, 100))
+#		self.console_command.SetMinSize((100, 50))
 
-		self.console_run = wx.Button(self, -1, _("Run"))
-		self.console_run.SetDefault()
-		self.console_clear = wx.Button(self, -1, _("Clear"))
-		self.console_save = wx.Button(self, -1, _("Save"))
-		self.console_output.SetMinSize((100, 100))
-		self.console_command.SetMinSize((100, 50))
-
-		self.Bind(wx.EVT_BUTTON, self.runCmd, self.console_run)
-		self.Bind(wx.EVT_BUTTON, self.clearHistory, self.console_clear)
-		self.Bind(wx.EVT_BUTTON, self.saveHistory, self.console_save)
-		self.Bind(wx.EVT_TEXT_ENTER, self.runCmd, self.console_command)
+#    	self.Bind(wx.EVT_BUTTON, self.runCmd, self.console_run)
+    	self.Bind(wx.EVT_BUTTON, self.clearHistory, self.console_clear)
+    	self.Bind(wx.EVT_BUTTON, self.saveHistory, self.console_save)
+#		self.Bind(wx.EVT_TEXT_ENTER, self.runCmd, self.console_command)
 
 		# console layout
-		boxsizer1 = wx.BoxSizer(wx.VERTICAL)
-		gridsizer1 = wx.GridSizer(1, 3, 0, 0)
-		boxsizer1.Add(self.console_output, 3,
+    	boxsizer1 = wx.BoxSizer(wx.VERTICAL)
+    	gridsizer1 = wx.GridSizer(1, 2, 0, 0)
+    	boxsizer1.Add(self.cmd_output, 1,
                               wx.EXPAND|wx.ADJUST_MINSIZE, 0)
-		boxsizer1.Add(self.console_command, 0,
-                              wx.EXPAND|wx.ADJUST_MINSIZE, 0)
-		gridsizer1.Add(self.console_run, 0,
+#		boxsizer1.Add(self.console_command, 0,
+#                              wx.EXPAND|wx.ADJUST_MINSIZE, 0)
+#    	gridsizer1.Add(self.console_run, 0,
+#                               wx.ALIGN_CENTER_HORIZONTAL|wx.ADJUST_MINSIZE, 0)
+    	gridsizer1.Add(self.console_clear, 0,
                                wx.ALIGN_CENTER_HORIZONTAL|wx.ADJUST_MINSIZE, 0)
-		gridsizer1.Add(self.console_clear, 0,
-                               wx.ALIGN_CENTER_HORIZONTAL|wx.ADJUST_MINSIZE, 0)
-		gridsizer1.Add(self.console_save, 0,
+    	gridsizer1.Add(self.console_save, 0,
                                wx.ALIGN_CENTER_HORIZONTAL|wx.ADJUST_MINSIZE, 0)
 
-		boxsizer1.Add(gridsizer1, 0, wx.EXPAND, 0)
-		boxsizer1.Fit(self)
-		boxsizer1.SetSizeHints(self)
-		self.SetAutoLayout(True)
-		self.SetSizer(boxsizer1)
+    	boxsizer1.Add(gridsizer1, 0, wx.EXPAND|wx.BORDER, 100)
+    	boxsizer1.Fit(self)
+    	boxsizer1.SetSizeHints(self)
+    	self.SetAutoLayout(True)
+    	self.SetSizer(boxsizer1)
 
-	def getGRASSCmds(self):
+    def getGRASSCmds(self):
 		'''Create list of all available GRASS commands'''
 		gisbase = os.environ['GISBASE']
 		self.gcmdlst = os.listdir(gisbase+r'/bin')
 		self.gcmdlst.append(os.listdir(gisbase+r'/scripts'))
 		return self.gcmdlst
 
-	def runCmd(self, event):
-		'''Run in GUI or shell GRASS (or other) commands typed into
-		console command text widget, echo command to console
-		output text widget, and send stdout output to output
-		text widget. Display commands (*.d) are captured and
-		processed separately by mapdisp.py. Display commands are
-		rendered in map display widget that currently has
-		the focus (as indicted by mdidx).'''
-		gcmdlst = self.getGRASSCmds()
-		cmdlst = []
-		cmd = self.console_command.GetLineText(0)
-		cmdlst = cmd.split(' ')
-		disp_idx = int(render.Track().GetDisp_idx())
-		curr_disp = render.Track().GetCurrDisp()
+    def runCmd(self, cmd):
+    	'''Run in GUI or shell GRASS (or other) commands typed into
+    	console command text widget, echo command to console
+    	output text widget, and send stdout output to output
+    	text widget. Display commands (*.d) are captured and
+    	processed separately by mapdisp.py. Display commands are
+    	rendered in map display widget that currently has
+    	the focus (as indicted by mdidx).'''
+    	gcmdlst = self.getGRASSCmds()
+    	cmdlst = []
+#    	cmd = self.console_command.GetLineText(0)
+    	cmdlst = cmd.split(' ')
+        print 'command = ', cmd
+    	disp_idx = int(track.Track().GetDisp()[0])
+        print 'display = ', disp_idx
+    	curr_disp = track.Track().GetDisp()[1]
+        print 'Im here'
 
-		if len(cmdlst) == 1 and cmd in gcmdlst:
-			# Send GRASS command without arguments to GUI command interface
-			# except display commands (they are handled differently)
-			global gmpath
-			if cmd[0:2] == "d.":
-				print "Add map layer to GIS Manager to see " \
+    	if len(cmdlst) == 1 and cmd in gcmdlst:
+    		# Send GRASS command without arguments to GUI command interface
+    		# except display commands (they are handled differently)
+    		global gmpath
+    		if cmd[0:2] == "d.":
+    			print "Add map layer to GIS Manager to see " \
                                     "GUI for display command"
-				return
-			else:
-				grassgui.GUI().parseCommand(cmd, gmpath)
-				self.console_output.write(cmdlst[0] +
+    			return
+    		else:
+    			menuform.GUI().parseCommand(cmd, gmpath)
+    			self.cmd_output.write(cmdlst[0] +
                                                           "\n----------\n")
 
-		elif cmd[0:2] == "d." and len(cmdlst) > 1 and cmdlst[0] in gcmdlst:
-			# Send GRASS display command(s)with arguments
-			# to the display processor and echo to command output console.
-			# Accepts a list of d.* commands separated by commas.
-			# Display with focus receives display command(s).
-			self.console_output.write(cmd +
+    	elif cmd[0:2] == "d." and len(cmdlst) > 1 and cmdlst[0] in gcmdlst:
+    		# Send GRASS display command(s)with arguments
+    		# to the display processor and echo to command output console.
+    		# Accepts a list of d.* commands separated by commas.
+    		# Display with focus receives display command(s).
+    		self.cmd_output.write(cmd +
                                                   "\n----------\n")
-			dcmds = cmd.split(',')
-			currmap.setDcommandList(dcmds)
+    		dcmds = cmd.split(',')
+    		curr_disp.setDcommandList(dcmds)
 
-		else:
-			# Send any other command to the shell. Send output to
-			# console output window.
-			try:
-				retcode = subprocess.call(cmd, shell=True)
-				if retcode < 0:
-					print >> sys.stderr, "Child was terminated by signal",
-                                        -retcode
-				elif retcode > 0:
-					print >> sys.stderr, "Child returned", retcode
-			except OSError, e:
-				print >> sys.stderr, "Execution failed:", e
+    	else:
+    		# Send any other command to the shell. Send output to
+    		# console output window.
+            try:
+                retcode = subprocess.call(cmd, shell=True)
 
-			self.console_output.write(cmd+"\n----------\n")
-                        #self.out = subprocess.Popen(cmd, shell=True, stdout=Pipe).stdout
-			self.out = os.popen(cmd, "r").read()
-			self.console_output.write(self.out+"\n")
+                if retcode < 0:
+    				print >> sys.stderr, "Child was terminated by signal", retcode
+                elif retcode > 0:
+    				print >> sys.stderr, "Child returned", retcode
+            except OSError, e:
+    			print >> sys.stderr, "Execution failed:", e
 
-	def clearHistory(self, event):
-		self.console_output.Clear()
+            self.cmd_output.write(cmd+"\n----------\n")
+            #FIXME - why is PIPE not recognized?
+#            self.out = subprocess.Popen(cmd, shell=True, stdout=PIPE).stdout
+            self.out = os.popen(cmd, "r").read()
+            self.cmd_output.write(self.out+"\n")
 
-	def saveHistory(self, event):
-		self.history = self.console_output.GetStringSelection()
+    def clearHistory(self, event):
+		self.cmd_output.Clear()
+
+    def saveHistory(self, event):
+		self.history = self.cmd_output.GetStringSelection()
 		if self.history == "":
-			self.console_output.SetSelection(-1,-1)
-			self.history = self.console_output.GetStringSelection()
+			self.cmd_output.SetSelection(-1,-1)
+			self.history = self.cmd_output.GetStringSelection()
 		#could use a standard dialog for this
 		output = open("history.txt","w")
 		output.write(self.history)
