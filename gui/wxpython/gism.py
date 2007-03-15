@@ -105,7 +105,7 @@ class GMFrame(wx.Frame):
         self.cmdinput = self.__createCommandInput()
         self.menubar = self.__createMenuBar()
         self.toolbar = self.__createToolBar()
-        self.panel = wx.Panel(self,-1, style= wx.EXPAND)
+        #self.panel = wx.Panel(self,-1, style= wx.EXPAND)
         self.sizer= wx.BoxSizer(wx.VERTICAL)
         self.cmdsizer = wx.BoxSizer(wx.HORIZONTAL)
 
@@ -113,7 +113,7 @@ class GMFrame(wx.Frame):
         self.SetTitle(_("GRASS GIS Manager - wxPython Prototype"))
         self.SetMinSize((450, 450))
         #self.SetMinSize((100, 100))
-        self.nb_panel = wx.Panel(self)
+        # self.nb_panel = wx.Panel(self)
 
 
         # initialize variables
