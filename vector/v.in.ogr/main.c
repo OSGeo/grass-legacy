@@ -627,6 +627,10 @@ main (int argc, char *argv[])
 		/** Double byte string (unsupported)         OFTWideString = 6     **/
 		/** List of wide strings (unsupported)       OFTWideStringList = 7 **/
 		/** Raw Binary data (unsupported)            OFTBinary = 8         **/
+		/**                                          OFTDate = 9           **/
+		/**                                          OFTTime = 10          **/
+		/**                                          OFTDateTime = 11      **/
+
 
 		if( Ogr_ftype == OFTInteger ) {
 		    sprintf (buf, ", %s integer", Ogr_fieldname );
@@ -639,6 +643,10 @@ main (int argc, char *argv[])
 #if GDAL_VERSION_NUM >= 1320
 		} else if( Ogr_ftype == OFTDate ) {
 		    sprintf (buf, ", %s date", Ogr_fieldname );
+		} else if( Ogr_ftype == OFTTime ) {
+		    sprintf (buf, ", %s time", Ogr_fieldname );
+		} else if( Ogr_ftype == OFTDateTime ) {
+		    sprintf (buf, ", %s datetime", Ogr_fieldname );
 #endif
 		} else if( Ogr_ftype == OFTString ) {
 		    int fwidth;
@@ -714,10 +722,16 @@ main (int argc, char *argv[])
 			if( Ogr_ftype == OFTInteger || Ogr_ftype == OFTReal ) {
 			    sprintf (buf, ", %s", OGR_F_GetFieldAsString( Ogr_feature, i) );
 #if GDAL_VERSION_NUM >= 1320
-			} else if( Ogr_ftype == OFTString || Ogr_ftype == OFTIntegerList || Ogr_ftype == OFTDate ) {
-#else
-			} else if( Ogr_ftype == OFTString || Ogr_ftype == OFTIntegerList ) {
+			/* should we use OGR_F_GetFieldAsDateTime() here ? */
+			} else if( Ogr_ftype == OFTDate || Ogr_ftype == OFTTime || Ogr_ftype == OFTDateTime ) {
+			    char *newbuf;
+			    db_set_string ( &strval,  (char *) OGR_F_GetFieldAsString( Ogr_feature, i) );
+			    db_double_quote_string (&strval);
+			    sprintf (buf, ", '%s'", db_get_string(&strval) );
+			    newbuf = G_str_replace(buf, "/", "-"); /* fix 2001/10/21 to 2001-10-21 */
+			    sprintf (buf, "%s", newbuf);
 #endif
+			} else if( Ogr_ftype == OFTString || Ogr_ftype == OFTIntegerList ) {
 			    db_set_string ( &strval,  (char *) OGR_F_GetFieldAsString( Ogr_feature, i) );
 			    db_double_quote_string (&strval);
 			    sprintf (buf, ", '%s'", db_get_string(&strval) );
