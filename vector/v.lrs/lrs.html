@@ -75,7 +75,7 @@ must be entered to the system and it is done by optional MP attributes:
 <li>end_mp - end MP
 <li>end_off - end offset
 </ul>
-In this cas original MP on km 4 will have these attributes:
+In this case original MP on km 4 will have these attributes:
 <div class="code"><pre>
 start_mp:  4
 start_off: 0
@@ -124,6 +124,19 @@ with another one, but MP are used only for one:
   /                  \
  + road2/km50         + road2/km54 
 </pre></div>
+
+<h2>NOTES</h2>
+
+Explanations of selected options:
+<ul>
+<li>llayer: vector layer in line map (usually 1; see <a HREF="vectorintro.html">vectorintro</a>
+    for "layer" concept)
+<li>player: vector layer in point map (usually 1; see <a HREF="vectorintro.html">vectorintro</a>
+    for "layer" concept)
+<li>rsdriver: Driver name for reference system table - DBMI SQL driver (dbf, pg, mysql, sqlite, etc)
+<li>rsdatabase: Database name for reference system table - DBMI SQL database name (e.g., "lrsdb")
+<li>rstable: Name of the reference system table - DBMI SQL table name (e.g., "streamslrs")
+</ul>
 
 <h2>SEE ALSO</h2>
 
