@@ -27,7 +27,7 @@ int main(int argc, char *argv[])
     struct Map_info Map;
     char *mapset;
     struct GModule *module;
-    struct Option *map, *organization, *date, *person, *map_name, *map_date, *scale, *comment, *zone, *thresh;
+    struct Option *map, *organization, *date, *person, *map_name, *map_date, *scale, *comment, *zone, *thresh, *cmdhist;
     struct Flag *r_flag;
 
     /* initialize GIS environment */
@@ -102,6 +102,13 @@ int main(int argc, char *argv[])
     comment->required    = NO;
     comment->description = _("Text to append to the comment line of the map's metadata file");
 
+    cmdhist = G_define_option();
+    cmdhist->key         = "cmdhist";
+    cmdhist->key_desc   = "\"command\"";
+    cmdhist->type        = TYPE_STRING;
+    cmdhist->required    = NO;
+    cmdhist->description = _("Command line to store into vector map history file (used for vector scripts)");
+
     r_flag              = G_define_flag();
     r_flag->key         = 'r';
     r_flag->description = _("Replace comment instead of appending it");
@@ -118,6 +125,7 @@ int main(int argc, char *argv[])
     if (1 > Vect_open_old(&Map, map->answer, mapset))
 	G_fatal_error(_("Could not open vector map <%s>"), map->answer);
 
+    /* modify 'head' file */
     Vect_read_header (&Map);
 
     if ( organization->answer )
@@ -157,6 +165,31 @@ int main(int argc, char *argv[])
     }
 
     Vect_write_header (&Map);
+
+
+    /* modify 'hist' file */
+    if ( cmdhist->answer ){
+      char buf[2000]; /* derived from Vect_hist_command() */
+
+      /* Open history file for modification */
+      sprintf (buf, "%s/%s", GRASS_VECT_DIRECTORY, Map.name);
+      Map.hist_fp = G_fopen_modify (buf, GRASS_VECT_HIST_ELEMENT);
+      if ( Map.hist_fp == NULL ) {
+        G_warning ( _("Cannot open history file for vector '%s'"), Vect_get_full_name(&Map) );
+        Vect_close(&Map);
+        exit(EXIT_FAILURE);
+      }
+      fseek ( Map.hist_fp, (long)0, SEEK_END);
+      Vect_hist_write ( &Map, "---------------------------------------------------------------------------------\n");
+      Vect_hist_write ( &Map, "COMMAND: " );
+      Vect_hist_write ( &Map, cmdhist->answer );
+      Vect_hist_write ( &Map, "\n" );
+      sprintf ( buf, "GISDBASE: %s\n", G_gisdbase());
+      Vect_hist_write ( &Map, buf );
+      sprintf ( buf, "LOCATION: %s MAPSET: %s USER: %s DATE: %s\n",
+                    G_location(), G_mapset(), G_whoami(), G_date());
+      Vect_hist_write ( &Map, buf );
+    }
 
     Vect_close(&Map);
 
