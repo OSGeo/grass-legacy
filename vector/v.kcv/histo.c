@@ -19,8 +19,7 @@ make_histo (int **p, int np, int nsites)
   j = (int) floor ((double) nsites / np);
 
   *p = (int *) G_malloc (np * sizeof (int));
-  if (*p == NULL)
-    G_fatal_error ("Memory allocation error");
+
   for (i = 0; i < np; ++i)
     (*p)[i] = j;
   i = np * j;
