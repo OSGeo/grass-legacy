@@ -120,6 +120,8 @@ int Vect_cidx_open ( struct Map_info *, int);
 
 
     /* Set/get Map header info */
+int  Vect_read_header (struct Map_info *);
+int  Vect_write_header (struct Map_info *);
 char *Vect_get_name (struct Map_info *);
 char *Vect_get_mapset (struct Map_info *);
 char *Vect_get_full_name (struct Map_info *);

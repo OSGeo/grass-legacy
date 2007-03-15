@@ -43,6 +43,36 @@ Vect_print_header (struct Map_info *Map)
   return 0;
 }
 
+
+/*!
+ \fn int Vect_read_header (struct Map_info *Map)
+ \brief read vector map header from map head file
+ \return 0 on success
+ \param Map_info structure
+*/
+int
+Vect_read_header (struct Map_info *Map)
+{
+  Vect__read_head (Map);
+  return 0;
+}
+
+
+/*!
+ \fn int Vect_write_header (struct Map_info *Map)
+ \brief write vector map header to map head file
+ \return 0 on success
+ \param Map_info structure
+*/
+int 
+Vect_write_header (struct Map_info *Map)
+{
+  /* do some sanity checking here */
+  Vect__write_head (Map);
+  return 0;
+}
+
+
 /* Vect__write_head () writes head information to text file.
  * returns: GRASS_OK - success
  *          GRASS_ERR - error
