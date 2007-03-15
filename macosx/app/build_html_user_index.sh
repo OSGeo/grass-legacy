@@ -114,7 +114,7 @@ CMDLISTNO=`echo $CMDLIST | wc -w | awk '{print $1}'`
 
 #write main index:
 #echo "Generating HTML manual pages index (help system)..."
-write_html_header $FULLINDEX "GRASS GIS $GRASSVERSION Reference Manual" 1
+write_html_header $FULLINDEX "GRASS GIS $GRASSVERSION Addon Reference Manual" 1
 echo "<p>Command guide:</p>" >> $FULLINDEX
 echo "<table border=0>" >> $FULLINDEX
 echo "<tr><td>&nbsp;&nbsp;d.*  </td><td>display commands</td><td>&nbsp;&nbsp;ps.* </td><td>postscript commands</td></tr>" >> $FULLINDEX
