@@ -31,11 +31,15 @@ class LayerTree(CT.CustomTreeCtrl):
                  id=wx.ID_ANY, pos=wx.DefaultPosition,
                  size=wx.DefaultSize, style=wx.SUNKEN_BORDER,
                  ctstyle=CT.TR_HAS_BUTTONS | CT.TR_HAS_VARIABLE_ROW_HEIGHT |
-                 CT.TR_HIDE_ROOT | CT.TR_ROW_LINES | CT.TR_EDIT_LABELS,
+                 CT.TR_HIDE_ROOT | CT.TR_ROW_LINES | CT.TR_FULL_ROW_HIGHLIGHT,
                  log=None):
         CT.CustomTreeCtrl.__init__(self, parent, id, pos, size, style,ctstyle)
 
         self.SetAutoLayout(True)
+        self.SetGradientStyle(1)
+        self.EnableSelectionGradient(True)
+        self.SetFirstGradientColour(wx.Colour(150, 150, 150))
+
 
         self.root = ""      # ID of layer tree root node
         self.layer = {}     # dictionary to index layers in layer tree
@@ -44,6 +48,7 @@ class LayerTree(CT.CustomTreeCtrl):
         self.map = {}       # dictionary of map layers, indexed by tree node.
         self.layerID = ""   # ID of currently selected layer
         self.layername = "" # name off currently selected layer
+        self.layertype = {} # dictionary of layer types for each layer
 
         self.root = self.AddRoot("Map Layers")
         self.SetPyData(self.root, None)
@@ -87,44 +92,47 @@ class LayerTree(CT.CustomTreeCtrl):
         self.Bind(wx.EVT_TREE_ITEM_ACTIVATED, self.onActivateLayer)
         self.Bind(wx.EVT_TREE_SEL_CHANGED,    self.onChangeSel)
 
-    def AddLayer(self, idx, layertype):
-        layername = layertype + ':' + str(self.node)
+    def AddLayer(self, idx, type):
+#        layername = type + ':' + str(self.node)
 
-        if layertype == 'rast':
-            self.map[self.node] = wx.combo.ComboCtrl(self, size=(250,-1))
+        if type == 'rast':
+            self.map = wx.combo.ComboCtrl(self, size=(250,-1))
             tcp = TreeCtrlComboPopup()
-            self.map[self.node].SetPopupControl(tcp)
+            self.map.SetPopupControl(tcp)
             tcp.getElementList('cell')
 
-        elif layertype == 'vect':
-            self.map[self.node] = wx.combo.ComboCtrl(self, size=(250,-1))
+        elif type == 'vect':
+            self.map = wx.combo.ComboCtrl(self, size=(250,-1))
             tcp = TreeCtrlComboPopup()
-            self.map[self.node].SetPopupControl(tcp)
+            self.map.SetPopupControl(tcp)
             tcp.getElementList('vector')
 
-        elif layertype == 'cmd':
-            self.map[self.node]  = wx.TextCtrl(self, -1,
+        elif type == 'cmd':
+            self.map = wx.TextCtrl(self, -1,
                                                "Enter a GRASS command here",
                                                wx.DefaultPosition, (250,40),
                                                style=wx.TE_MULTILINE|wx.TE_WORDWRAP)
 
         if self.node >0 and self.layerID:
-            self.layer[self.node] = self.InsertItem(self.root, self.layerID,
-                                                    layername, ct_type=1,
-                                                    wnd=self.map[self.node] )
+            self.layer = self.InsertItem(self.root, self.layerID,
+                                                    '', ct_type=1,
+                                                    wnd=self.map )
         else:
-            self.layer[self.node] = self.AppendItem(self.root, layername,
-                                                    ct_type=1, wnd=self.map[self.node] )
+            self.layer = self.PrependItem(self.root, '',
+                                                    ct_type=1, wnd=self.map)
 
-        self.SetPyData(self.layer[self.node], None)
+        #add to layertype dictionary
+        self.layertype[self.layer] = type
+
+        self.SetPyData(self.layer, None)
 
 #        #add icons for each layer
-        if layertype == 'rast':
-            self.SetItemImage(self.layer[self.node], self.rast_icon)
-        elif layertype == 'vect':
-            self.SetItemImage(self.layer[self.node], self.vect_icon)
-        elif layertype == 'cmd':
-            self.SetItemImage(self.layer[self.node], self.cmd_icon)
+        if type == 'rast':
+            self.SetItemImage(self.layer, self.rast_icon)
+        elif type == 'vect':
+            self.SetItemImage(self.layer, self.vect_icon)
+        elif type == 'cmd':
+            self.SetItemImage(self.layer, self.cmd_icon)
 
         self.node += 1
 
@@ -134,21 +142,22 @@ class LayerTree(CT.CustomTreeCtrl):
 
     def onExpandNode(self, event):
         self.layerID = event.GetItem()
+        print 'layerID =',self.layerID
         self.layername = self.GetItemText(event.GetItem())
         print 'group expanded'
         event.Skip()
 
     def onActivateLayer(self, event):
         self.layerID = event.GetItem()
+        print 'layerID =',self.layerID
         self.layername = self.GetItemText(event.GetItem())
         print "##########xx"
         # call a method to make this item display or not display?
         # change associated icon accordingly?
-        print self.layername,'is activated'
-        if self.layername[0:4] == 'rast':
+        if self.layertype[self.layerID] == 'rast':
             print 'its a raster'
             rastopt.MyFrame(self)
-        elif self.layername[0:4] == 'vect':
+        elif self.layertype[self.layerID] == 'vect':
             print 'its a vector'
             vectopt.MyPanel(self)
 #        elif self.layername[0:4] == 'comm':
