@@ -106,7 +106,7 @@ int main(int argc, char *argv[])
     if (G_parser(argc, argv))
 	exit(EXIT_FAILURE);
 
-    if ((mapset = G_find_vector2(map->answer, "")) == NULL)
+    if ((mapset = G_find_vector2(map->answer, G_mapset())) == NULL)
 	G_fatal_error(_("Could not find vector map <%s> in current mapset"), map->answer);
 
     Vect_set_open_level(2);
