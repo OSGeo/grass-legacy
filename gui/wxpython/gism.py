@@ -359,7 +359,7 @@ class GMFrame(wx.Frame):
         if disp_idx != None:
             #get layer tree for active display
             layertree = track.Track().GetCtrls(disp_idx, 2)
-            layertree.AddLayer(disp_idx, layertype)
+        layertree.AddLayer(disp_idx, layertype)
 
     #Misc methods
     def onCloseWindow(self, event):
