@@ -6,7 +6,6 @@
 #include <grass/display.h>
 #include <grass/colors.h>
 #include <grass/Vect.h>
-#include <grass/form.h>
 #include <grass/dbmi.h>
 #include "what.h"
 #include <grass/glocale.h>
@@ -15,9 +14,9 @@ static int nlines = 50;
 
 #define WDTH 5
 
-int what(int once, int txt, int terse, int flash, int width, int mwidth, int topo, int edit )
+int what(int once, int terse, int flash, int width, int mwidth, int topo )
 {
-    int type, edit_mode;
+    int type;
     int row, col;
     int nrows, ncols;
     struct Cell_head window;
@@ -37,13 +36,9 @@ int what(int once, int txt, int terse, int flash, int width, int mwidth, int top
     int i;
     struct line_pnts *Points;
     struct line_cats *Cats;
-    char buf[1000], *str, title[500];
-    dbString html; 
-    char *form;
+    char buf[1000], *str;
     char *panell;
 
-    if ( terse ) txt = 1; /* force text for terse */
-    
     G_get_set_window(&window);
 
     if(flash)
@@ -60,7 +55,6 @@ int what(int once, int txt, int terse, int flash, int width, int mwidth, int top
 
     Points = Vect_new_line_struct();
     Cats = Vect_new_cats_struct();
-    db_init_string (&html);
 
     if (!isatty(fileno(stdout))) notty = 1; /* no terminal */
     else notty = 0;
@@ -116,7 +110,7 @@ int what(int once, int txt, int terse, int flash, int width, int mwidth, int top
 
 	if(flash)
 	   flash_colr = flash_basecolr;
-	F_clear ();
+
 	for (i = 0; i < nvects; i++) {
 	    Vect_reset_cats ( Cats );
 	    /* Try to find point first and only if no one was found try lines,
@@ -133,7 +127,7 @@ int what(int once, int txt, int terse, int flash, int width, int mwidth, int top
 
 	    G_debug (2, "line = %d, area = %d", line, area);
 
-	    if ( !i && txt ) {
+	    if ( !i ) {
 		G_format_easting(east, east_buf, G_projection());
 		G_format_northing(north, north_buf, G_projection());
 		fprintf(stdout, "\n%s(E) %s(N)\n", east_buf, north_buf);
@@ -144,28 +138,15 @@ int what(int once, int txt, int terse, int flash, int width, int mwidth, int top
 	    strcpy(buf, vect[i]);
 	    if ((str = strchr(buf, '@'))) *str = 0;
 
-	    if ( txt ) {
-	        fprintf(stdout, "\n%*s in %-*s  ", width, Map[i].name, mwidth, Map[i].mapset); 
-	        if (notty) fprintf(stderr, "\n%*s in %-*s  ", width, Map[i].name, mwidth, Map[i].mapset);
-	        nlines++;
-	    }
+	    fprintf(stdout, "\n%*s in %-*s  ", width, Map[i].name, mwidth, Map[i].mapset); 
+	    if (notty) fprintf(stderr, "\n%*s in %-*s  ", width, Map[i].name, mwidth, Map[i].mapset);
+	    nlines++;
 
 	    if (line + area == 0) {
-                if ( txt ) {
-		    fprintf(stdout, _("Nothing Found.\n"));
-		    if (notty) fprintf(stderr, _("Nothing Found.\n"));
-		    nlines++;
-		}
+		fprintf(stdout, _("Nothing Found.\n"));
+		if (notty) fprintf(stderr, _("Nothing Found.\n"));
+		nlines++;
 		continue;
-	    } else {
-		/* Start form */
-		db_set_string (&html, ""); 
-		if ( !txt ) {
-		    sprintf (title, "%s", Map[i].name );
-		    db_append_string (&html, "<HTML><HEAD><TITLE>Form</TITLE><BODY>"); 
-		    sprintf ( buf,"map: '%s'<BR>mapset: '%s'<BR>", Map[i].name, Map[i].mapset);
-		    db_append_string (&html, buf);
-		}
 	    }
 
 	    if ( line >  0) {
@@ -226,18 +207,9 @@ int what(int once, int txt, int terse, int flash, int width, int mwidth, int top
 			}
 		    }
 		    
-		} else if ( txt ) {
+		} else {
 		    fprintf(stdout, "%s\n", buf);
 		    if ( type & GV_LINES ) fprintf(stdout, _("length %f\n"), l);
-		} else { 
-		    db_append_string (&html, "feature type: " );
-		    db_append_string (&html, buf );
-		    db_append_string (&html, "<BR>" );
-
-		    if ( type & GV_LINES ) {  
-		        sprintf ( buf, "length: %f<BR>", l );
-		        db_append_string (&html, buf );
-		    }
 		}
 
 		/* Height */
@@ -246,11 +218,7 @@ int what(int once, int txt, int terse, int flash, int width, int mwidth, int top
 		    double min, max;
 
 		    if ( type & GV_POINTS ) {
-			if ( txt ) fprintf(stdout, _("Point height: %f\n"), Points->z[0]);
-			else {
-			    sprintf(buf, "Point height: %f<BR>", Points->z[0] );
-			    db_append_string (&html, buf);
-			}
+			fprintf(stdout, _("Point height: %f\n"), Points->z[0]);
 		    } else if ( type & GV_LINES ) {
 			min = max = Points->z[0];
 			for ( j = 1; j < Points->n_points; j++) {
@@ -258,17 +226,9 @@ int what(int once, int txt, int terse, int flash, int width, int mwidth, int top
 			    if ( Points->z[j] > max ) max = Points->z[j];
 			}
 			if ( min == max ) {
-			    if ( txt ) fprintf(stdout, _("Line height: %f\n"), min);
-			    else {
-				sprintf(buf, "Line height: %f<BR>", min);
-				db_append_string (&html, buf);
-			    }
+			    fprintf(stdout, _("Line height: %f\n"), min);
 			} else { 
-			    if ( txt ) fprintf(stdout, _("Line height min: %f max: %f\n"), min, max);
-			    else {
-				sprintf(buf, "Line height min: %f max: %f<BR>", min, max );
-				db_append_string (&html, buf);
-			    }
+			    fprintf(stdout, _("Line height min: %f max: %f\n"), min, max);
 			}
 		    }
 		}
@@ -281,18 +241,9 @@ int what(int once, int txt, int terse, int flash, int width, int mwidth, int top
 
 	    if (area > 0) {
 		if (Map[i].head.with_z && getz) {
-		    if ( txt ) fprintf(stdout, _("Area height: %f\n"), z);
-		    else {
-			sprintf(buf, "feature type: Area<BR>height: %f<BR>", z );
-		        db_append_string (&html, buf);
-		    }
+		    fprintf(stdout, _("Area height: %f\n"), z);
 		} else {
-		    if ( txt ) {
-			fprintf(stdout, _("Area\n"));
-		    } else {
-			sprintf(buf, "feature type: Area<BR>");
-		        db_append_string (&html, buf);
-		    }
+		    fprintf(stdout, _("Area\n"));
 		}
 
 		sq_meters = Vect_get_area_area(&Map[i], area);
@@ -315,7 +266,7 @@ int what(int once, int txt, int terse, int flash, int width, int mwidth, int top
 		        fprintf(stdout, _("Island: %d  In area: %d\n"), isle, isle_area );
 		    }
 
-		} else if ( txt ) {
+		} else {
 		    fprintf(stdout, _("Size - Sq Meters: %.3f\t\tHectares: %.3f\n"),
 			    sq_meters, (sq_meters / 10000.));
 
@@ -333,9 +284,6 @@ int what(int once, int txt, int terse, int flash, int width, int mwidth, int top
 				((sq_meters * 10.763649) / 43560.) / 640.);
 		    }
 		    nlines += 3;
-		} else {
-		    sprintf( buf, "area size: %f<BR>", sq_meters );
-                    db_append_string (&html, buf);
 		}
 
 		centroid = Vect_get_area_centroid(&Map[i], area);
@@ -353,55 +301,21 @@ int what(int once, int txt, int terse, int flash, int width, int mwidth, int top
 		int j;
 		for (j = 0; j < Cats->n_cats; j++) {
 		    G_debug(2, "field = %d category = %d", Cats->field[j], Cats->cat[j]);
-		    if ( txt ) {
-			fprintf( stdout, _("Layer: %d\ncategory: %d\n"), Cats->field[j], Cats->cat[j] );
-		    } else { 
-			db_append_string (&html, "<HR><BR>");
-			sprintf(buf, "Layer: %d<BR>category: %d<BR>", Cats->field[j], Cats->cat[j] );
-			db_append_string (&html, buf);
-		    }
+		    fprintf( stdout, _("Layer: %d\ncategory: %d\n"), Cats->field[j], Cats->cat[j] );
 		    Fi = Vect_get_field( &(Map[i]), Cats->field[j]);
 		    if (Fi == NULL) {
-			if ( txt ) {
-			    fprintf( stdout, _("Database connection not defined\n" ));
-			} else { 
-			    db_append_string (&html, "Database connection not defined<BR>" );
-			}
+			fprintf( stdout, _("Database connection not defined\n" ));
 		    } else {
-			int format;
+			fprintf( stdout, _("driver: %s\ndatabase: %s\ntable: %s\nkey column: %s\n"),
+				 Fi->driver, Fi->database, Fi->table, Fi->key);
 			
-			if ( txt ) {
-			    fprintf( stdout, _("driver: %s\ndatabase: %s\ntable: %s\nkey column: %s\n"),
-				     Fi->driver, Fi->database, Fi->table, Fi->key);
-			} else { 
-			    sprintf(buf, "driver: %s<BR>database: %s<BR>table: %s<BR>key column: %s<BR>",
-				         Fi->driver, Fi->database, Fi->table, Fi->key);
-			    db_append_string (&html, buf);
-			}
-			
-			if ( edit && strcmp(Map[i].mapset, G_mapset() ) == 0 ) edit_mode = F_EDIT;
-			else edit_mode = F_VIEW;
+			generate ( Fi->driver, Fi->database, Fi->table, Fi->key, Cats->cat[j]);
 
-			if ( txt ) format = F_TXT; else format = F_HTML;
-			F_generate ( Fi->driver, Fi->database, Fi->table, Fi->key, Cats->cat[j], 
-				 NULL, NULL, edit_mode, format, &form);
-			
-			if ( txt ) {
-			    fprintf( stdout, "%s", form );
-			} else { 
-			    db_append_string (&html, form); 
-			}
-			G_free (form);
 			G_free(Fi);
 		    }
 		}
 	    }
 	    fflush(stdout);
-	    if (!txt && !topo ) {
-		db_append_string (&html, "</BODY></HTML>"); 
-		G_debug ( 3, db_get_string (&html) ); 
-		F_open ( title, db_get_string(&html) );
-	    }
 	 
 	    if (flash)
 	    {
