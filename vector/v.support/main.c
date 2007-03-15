@@ -28,6 +28,7 @@ int main(int argc, char *argv[])
     char *mapset;
     struct GModule *module;
     struct Option *map, *organization, *date, *person, *map_name, *map_date, *scale, *comment, *zone, *thresh;
+    struct Flag *r_flag;
 
     /* initialize GIS environment */
     G_gisinit(argv[0]);
@@ -99,8 +100,11 @@ int main(int argc, char *argv[])
     comment->key_desc   = "\"phrase\"";
     comment->type        = TYPE_STRING;
     comment->required    = NO;
-    comment->description = _("Text to append to the next line of the map's metadata file");
+    comment->description = _("Text to append to the comment line of the map's metadata file");
 
+    r_flag              = G_define_flag();
+    r_flag->key         = 'r';
+    r_flag->description = _("Replace comment instead of appending it");
 
     /* options and flags parser */
     if (G_parser(argc, argv))
@@ -140,13 +144,16 @@ int main(int argc, char *argv[])
     if ( thresh->answer )
       Vect_set_thresh ( &Map, atof(thresh->answer) );
 
-    if ( comment->answer ){
-      if (strlen(Map.head.line_3) == 0){ /* check if new or adding */
-         Vect_set_comment ( &Map, G_store ( G_strcat(Map.head.line_3,comment->answer) ));
+    if ( comment->answer ){ /* apparently only one line comments allowed, so we use space to delimit */
+      char *temp;
+
+      if (r_flag->answer || strlen(Map.head.line_3) == 0){ /* check if new/replacing or adding */
+         G_asprintf(&temp, "%s", comment->answer);
       }
       else{
-         Vect_set_comment ( &Map, G_store ( G_strcat(Map.head.line_3,G_strcat(comment->answer, " "))) );
+         G_asprintf(&temp, "%s %s", Map.head.line_3, comment->answer);
       }
+      Vect_set_comment(&Map, temp);
     }
 
     Vect_write_header (&Map);
