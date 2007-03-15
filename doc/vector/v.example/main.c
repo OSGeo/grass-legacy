@@ -40,8 +40,8 @@ int main(int argc, char *argv[])
 
     /* initialize module */
     module = G_define_module();
-    module->keywords = _("keyword1, keyword2, keyword3");
-    module->description = _("My first raster module");
+    module->keywords = _("vector, keyword2, keyword3");
+    module->description = _("My first vector module");
 
     /* Define the different options as defined in gis.h */
     old = G_define_standard_option(G_OPT_V_INPUT);
