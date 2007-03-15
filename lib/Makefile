@@ -18,7 +18,6 @@ SUBDIRS = \
 	external \
 	fonts \
 	gtcltk \
-	form \
 	imagery \
 	proj \
 	rowio \
