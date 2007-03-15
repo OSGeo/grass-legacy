@@ -141,6 +141,7 @@ class LayerTree(CT.CustomTreeCtrl):
     def onActivateLayer(self, event):
         self.layerID = event.GetItem()
         self.layername = self.GetItemText(event.GetItem())
+        print "##########xx"
         # call a method to make this item display or not display?
         # change associated icon accordingly?
         print self.layername,'is activated'
@@ -156,7 +157,7 @@ class LayerTree(CT.CustomTreeCtrl):
         event.Skip()
 
     def onChangeSel(self, event):
-        self.layerID = event.GetItem()
+        # FIXME: this does not work :-(
         self.layername = self.GetItemText(event.GetItem())
         # old code for selecting options panels for each layer
         #        old_layername = ""
