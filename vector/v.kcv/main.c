@@ -74,7 +74,7 @@ main (int argc, char *argv[])
 
     module = G_define_module();
     module->keywords = _("vector, statistics");
-    module->description = "Randomly partition points into test/train sets.";
+    module->description = _("Randomly partition points into test/train sets.");
 
     in_opt = G_define_standard_option(G_OPT_V_INPUT);
     out_opt = G_define_standard_option(G_OPT_V_OUTPUT);
@@ -83,7 +83,7 @@ main (int argc, char *argv[])
     npart_opt->key = "k";
     npart_opt->type = TYPE_INTEGER;
     npart_opt->required = YES;
-    npart_opt->description = "number of partitions";
+    npart_opt->description = _("Number of partitions");
     npart_opt->options = "1-32767";
     
     col_opt = G_define_option();
@@ -92,20 +92,21 @@ main (int argc, char *argv[])
     col_opt->required = YES;
     col_opt->multiple = NO;
     col_opt->answer = "part";
-    col_opt->description = "Name for new column to which partition number is written";
+    col_opt->description = _("Name for new column to which partition number is written");
 
     drand48_flag = G_define_flag ();
     drand48_flag->key = 'd';
-    drand48_flag->description = "Use drand48()";
+    drand48_flag->description = _("Use drand48()");
 
+    /* please remove in GRASS 7 */
     q_flag = G_define_flag ();
     q_flag->key = 'q';
-    q_flag->description = "Quiet";
-    
+    q_flag->description = _("Quiet");
+
     G_gisinit(argv[0]);
 
     if (G_parser (argc, argv))
-	exit(-1); 
+	exit(EXIT_FAILURE); 
 
     verbose = (!q_flag->answer);
     np = atoi ( npart_opt->answer);
@@ -128,11 +129,15 @@ main (int argc, char *argv[])
     
     /* open input vector */
     if ((mapset = G_find_vector2 (in_opt->answer, "")) == NULL) {
-	 G_fatal_error ( "Could not find input map <%s>\n", in_opt->answer);
+	 G_fatal_error (_("Vector map <%s> not found"), in_opt->answer);
     }
     
-    Vect_set_open_level (2); 
-    Vect_open_old (&In, in_opt->answer, mapset); 
+    Vect_set_open_level (2);
+    if (Vect_open_old (&In, in_opt->answer, mapset) < 2) {
+	G_fatal_error (_("Cannot open vector map <%s> at topo level [%d]"),
+		       in_opt->answer, 2);
+    }
+
     Vect_get_map_box ( &In, &box );
   
     nsites = Vect_get_num_primitives(&In, GV_POINT);
@@ -143,7 +148,7 @@ main (int argc, char *argv[])
 
     Vect_set_fatal_error (GV_FATAL_PRINT);
     Vect_open_new (&Out, out_opt->answer, Vect_is_3d(&In) );
-
+	
     Vect_copy_head_data (&In, &Out);
     Vect_hist_copy (&In, &Out);
     Vect_hist_command ( &Out );
@@ -159,12 +164,14 @@ main (int argc, char *argv[])
 
     Fi = Vect_get_field( &Out, 1);
     if ( Fi == NULL ) {
-	G_fatal_error ("Cannot get layer info for vector map");
+	G_fatal_error (_("Cannot get layer info for vector map <%s>"),
+		       in_opt -> answer);
     }
 
     Driver = db_start_driver_open_database ( Fi->driver, Fi->database );
     if (Driver == NULL)
-        G_fatal_error("Cannot open database %s by driver %s", Fi->database, Fi->driver);
+        G_fatal_error(_("Cannot open database <%s> by driver <%s>"),
+			Fi->database, Fi->driver);
 
     sprintf ( buf, "alter table %s add column %s integer", Fi->table, col_opt->answer );
 
@@ -173,7 +180,7 @@ main (int argc, char *argv[])
     G_debug ( 3, "SQL: %s", db_get_string ( &sql) );
     
     if (db_execute_immediate (Driver, &sql) != DB_OK ) {
-      G_fatal_error ( "Cannot alter table: %s", db_get_string ( &sql ) );
+      G_fatal_error (_("Cannot alter table: %s"), db_get_string ( &sql ) );
     }
 
     /*
@@ -235,7 +242,7 @@ main (int argc, char *argv[])
 	      G_debug ( 3, "SQL: %s", db_get_string ( &sql ) );
 
 	      if (db_execute_immediate (Driver, &sql) != DB_OK ) {
-	          G_fatal_error ( "Cannot insert row: %s", db_get_string ( &sql ) );
+	          G_fatal_error (_("Cannot insert row: %s"), db_get_string ( &sql ) );
               }
 	      pnt_part[nearest] = i+1;
 
@@ -247,9 +254,9 @@ main (int argc, char *argv[])
   
     db_close_database_shutdown_driver(Driver);
 
-    Vect_build (&Out, stdout);
+    Vect_build (&Out, stderr);
     Vect_close (&Out);
 
-    exit(0) ;
+    exit(EXIT_SUCCESS);
 }
 
