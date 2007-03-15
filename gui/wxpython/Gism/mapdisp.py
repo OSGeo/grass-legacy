@@ -647,18 +647,19 @@ class MapFrame(wx.Frame):
 
         #close associated controls book page
         #get index number of active display
-        self.disp_idx = int(track.Track().GetDisp_idx(self))
+        self.disp_idx = track.Track().GetDisp_idx(self)
 
-       # change bookcontrol page to page associted with display if > 1 display
-        pg = track.Track().GetCtrls(self.disp_idx, 1)
-        pg_count = self.ctrlbk.GetPageCount()
-        pgnum = '0'
-        if pg_count > 0:
-            for x in range(0,pg_count):
-                if self.ctrlbk.GetPage(x) == pg:
-                    pgnum = x
-        track.Track().popCtrl(self.disp_idx)
-        self.ctrlbk.DeletePage(pgnum)
+        # delete associated bookcontrol page if it exists
+        if self.disp_idx != None:
+            pg = track.Track().GetCtrls(self.disp_idx, 1)
+            pg_count = self.ctrlbk.GetPageCount()
+            pgnum = '0'
+            if pg_count > 0:
+                for x in range(0,pg_count):
+                    if self.ctrlbk.GetPage(x) == pg:
+                        pgnum = x
+            track.Track().popCtrl(self.disp_idx)
+            self.ctrlbk.DeletePage(pgnum)
 
 # end of class MapFrame
 
