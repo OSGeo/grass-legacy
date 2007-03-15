@@ -80,6 +80,7 @@ $(OBJDIR)/grass.sh: grass.sh.in
 	@test -d $(OBJDIR) || mkdir $(OBJDIR)
 	@#-cp grass.sh $(OBJDIR)/grass.sh
 	sed -e "s,@GDAL_BIN_PATH@,$(GDAL_BIN)," -e "s,@TCLTK_INTERNAL@,$(TCLTK_INTERNAL)," grass.sh.in > $(OBJDIR)/grass.sh
+	@chmod a+x $(OBJDIR)/grass.sh
 
 clean:
 	-rm -rf $(OBJDIR) $(EXTRA_CLEAN_DIRS) $(EXTRA_CLEAN_FILES)
