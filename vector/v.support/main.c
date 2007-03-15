@@ -68,7 +68,7 @@ int main(int argc, char *argv[])
     map_name->key_desc   = "\"phrase\"";
     map_name->type        = TYPE_STRING;
     map_name->required    = NO;
-    map_name->description = _("Name of vector map");
+    map_name->description = _("Vector map title");
 
     map_date = G_define_option();
     map_date->key         = "map_date";
