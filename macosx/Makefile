@@ -43,6 +43,7 @@ real-install-macosx:
 	-cd ${GRASS_HOME} ; tar cBf - gem/skeleton | (cd ${INST_DIR}/etc ; tar xBf - ) 2>/dev/null
 	-${INSTALL} ${GRASS_HOME}/gem/gem6 ${prefix}/${MACOSX_APP_NAME}/Contents/MacOS 2>/dev/null
 	@### help file package - in the future will go in /Library/Documentation/Help
+	ln -sfh "${INST_DIR}/docs/html" /Library/Documentation/Help/GRASS-${GRASS_VERSION_MAJOR}.${GRASS_VERSION_MINOR}
 
 bindist-macosx:
 	@# OSX bindist is essentially the same as an install, and doesn't need an install script.  no tarball generated.
