@@ -1,6 +1,7 @@
 import os,sys,subprocess
 import wx
 import wx.lib.customtreectrl as CT
+import wx.combo
 
 import render
 import grassenv
@@ -89,23 +90,22 @@ class LayerTree(CT.CustomTreeCtrl):
     def AddLayer(self, idx, layertype):
         layername = layertype + ':' + str(self.node)
 
-        if layertype == 'raster':
-            self.map[self.node] = wx.ComboBox(self, -1,
-                                              choices=["rast.map.1", "rast.map.2",
-                                                       "rast.map.3", "rast.map.4",
-                                                       "rast.map.5"],
-                                              style=wx.CB_READONLY|wx.CB_DROPDOWN)
-        elif layertype == 'vector':
-            self.map[self.node]  = wx.ComboBox(self, -1,
-                                               choices=["vect.map.1", "vect.map.2",
-                                                        "vect.map.3", "vect.map.4",
-                                                        "vect.map.5"],
-                                               style=wx.CB_READONLY|wx.CB_DROPDOWN)
+        if layertype == 'rast':
+            self.map[self.node] = wx.combo.ComboCtrl(self, size=(250,-1))
+            tcp = TreeCtrlComboPopup()
+            self.map[self.node].SetPopupControl(tcp)
+            tcp.getElementList('cell')
 
-        elif layertype == 'command':
+        elif layertype == 'vect':
+            self.map[self.node] = wx.combo.ComboCtrl(self, size=(250,-1))
+            tcp = TreeCtrlComboPopup()
+            self.map[self.node].SetPopupControl(tcp)
+            tcp.getElementList('vector')
+
+        elif layertype == 'cmd':
             self.map[self.node]  = wx.TextCtrl(self, -1,
                                                "Enter a GRASS command here",
-                                               wx.DefaultPosition, (200,40),
+                                               wx.DefaultPosition, (250,40),
                                                style=wx.TE_MULTILINE|wx.TE_WORDWRAP)
 
         if self.node >0 and self.layerID:
@@ -119,11 +119,11 @@ class LayerTree(CT.CustomTreeCtrl):
         self.SetPyData(self.layer[self.node], None)
 
 #        #add icons for each layer
-        if layertype == 'raster':
+        if layertype == 'rast':
             self.SetItemImage(self.layer[self.node], self.rast_icon)
-        elif layertype == 'vector':
+        elif layertype == 'vect':
             self.SetItemImage(self.layer[self.node], self.vect_icon)
-        elif layertype == 'command':
+        elif layertype == 'cmd':
             self.SetItemImage(self.layer[self.node], self.cmd_icon)
 
         self.node += 1
@@ -167,6 +167,136 @@ class LayerTree(CT.CustomTreeCtrl):
         #            self.optpage[old_layername].Show(False)
         #        self.optpage[new_layername].Show(True)
         event.Skip()
+
+class TreeCtrlComboPopup(wx.combo.ComboPopup):
+    """
+    TODO: modify this code to use in layer tree for selecting
+    maps and other display layer objects.
+    """
+
+    # overridden ComboPopup methods
+
+    def Init(self):
+        self.value = None
+        self.curitem = None
+
+
+    def Create(self, parent):
+        self.tree = wx.TreeCtrl(parent, style=wx.TR_HIDE_ROOT
+                                |wx.TR_HAS_BUTTONS
+                                |wx.TR_SINGLE
+                                |wx.TR_LINES_AT_ROOT
+                                |wx.SIMPLE_BORDER)
+        self.tree.Bind(wx.EVT_MOTION, self.OnMotion)
+        self.tree.Bind(wx.EVT_LEFT_DOWN, self.OnLeftDown)
+
+
+    def GetControl(self):
+        return self.tree
+
+
+    def GetStringValue(self):
+        if self.value:
+            return self.tree.GetItemText(self.value)
+        return ""
+
+
+    def OnPopup(self):
+        if self.value:
+            self.tree.EnsureVisible(self.value)
+            self.tree.SelectItem(self.value)
+
+
+    def SetStringValue(self, value):
+        # this assumes that item strings are unique...
+        root = self.tree.GetRootItem()
+        if not root:
+            return
+        found = self.FindItem(root, value)
+        if found:
+            self.value = found
+            self.tree.SelectItem(found)
+
+
+    def GetAdjustedSize(self, minWidth, prefHeight, maxHeight):
+        return wx.Size(minWidth, min(200, maxHeight))
+
+
+    # helpers
+
+    def getElementList(self, element):
+        #set environmental variables
+        gisdbase = os.popen('g.gisenv get=GISDBASE', "r").read().strip()
+        location = os.popen('g.gisenv get=LOCATION_NAME', "r").read().strip()
+        curr_mapset = os.popen('g.gisenv get=MAPSET', "r").read().strip()
+        location_path = os.path.join (gisdbase,location)
+        windfile = os.path.join (location_path,'PERMANENT','WIND')
+        symbol_path = os.path.join (os.environ['GISBASE'],'etc','symbol')
+
+        #valid location test if needed
+        if windfile != None:
+            pass
+
+        #mapsets in current location
+        mapsets = os.popen('g.mapsets -p', "r").read().lstrip().rstrip().split(' ')
+
+        #Get directory tree nodes
+        for dir in mapsets:
+            if dir == curr_mapset:
+                #TODO: make current mapset node expanded
+                dir_node = self.AddItem(dir)
+                elem_list = os.listdir(os.path.join (location_path, dir, element))
+                #TODO: sort list items?
+                for elem in elem_list:
+                    self.AddItem(elem, parent=dir_node)
+            else:
+                dir_node = self.AddItem(dir)
+                elem_list = os.listdir(os.path.join (location_path, dir, element))
+                #TODO: sort list items?
+                for elem in elem_list:
+                    self.AddItem(elem, parent=dir_node)
+
+    def FindItem(self, parentItem, text):
+        item, cookie = self.tree.GetFirstChild(parentItem)
+        while item:
+            if self.tree.GetItemText(item) == text:
+                return item
+            if self.tree.ItemHasChildren(item):
+                item = self.FindItem(item, text)
+            item, cookie = self.tree.GetNextChild(parentItem, cookie)
+        return wx.TreeItemId();
+
+
+    def AddItem(self, value, parent=None):
+        if not parent:
+            root = self.tree.GetRootItem()
+            if not root:
+                root = self.tree.AddRoot("<hidden root>")
+            parent = root
+
+        item = self.tree.AppendItem(parent, value)
+        return item
+
+
+    def OnMotion(self, evt):
+        # have the selection follow the mouse, like in a real combobox
+        item, flags = self.tree.HitTest(evt.GetPosition())
+        if item and flags & wx.TREE_HITTEST_ONITEMLABEL:
+            self.tree.SelectItem(item)
+            self.curitem = item
+        evt.Skip()
+
+
+    def OnLeftDown(self, evt):
+        # do the combobox selection
+        item, flags = self.tree.HitTest(evt.GetPosition())
+        if item and flags & wx.TREE_HITTEST_ONITEMLABEL:
+            self.curitem = item
+            self.value = item
+            self.Dismiss()
+        evt.Skip()
+
+
 
 class GMConsole(wx.Panel):
 
@@ -215,8 +345,10 @@ class GMConsole(wx.Panel):
     	gridsizer1.Add(self.console_save, 0,
                                wx.ALIGN_CENTER_HORIZONTAL|wx.ADJUST_MINSIZE, 0)
 
-    	boxsizer1.Add(gridsizer1, 0, wx.EXPAND|wx.BORDER, 100)
-    	boxsizer1.Fit(self)
+        boxsizer1.Add((0,10))
+    	boxsizer1.Add(gridsizer1, 0, wx.EXPAND|wx.ALIGN_CENTRE_VERTICAL)
+        boxsizer1.Add((0,10))
+        boxsizer1.Fit(self)
     	boxsizer1.SetSizeHints(self)
     	self.SetAutoLayout(True)
     	self.SetSizer(boxsizer1)

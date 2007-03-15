@@ -111,8 +111,8 @@ class GMFrame(wx.Frame):
 
         # do layout
         self.SetTitle(_("GRASS GIS Manager - wxPython Prototype"))
-        self.SetSize((450, 450))
-        self.SetMinSize((100, 100))
+        self.SetMinSize((450, 450))
+        #self.SetMinSize((100, 100))
         self.nb_panel = wx.Panel(self)
 
 
@@ -123,7 +123,6 @@ class GMFrame(wx.Frame):
         self.mapfocus = 0 #track which display currently has focus
 
         self.Bind(wx.EVT_CLOSE, self.onCloseWindow)
-        self.Bind(wx.EVT_TEXT_ENTER, self.RunCmd, self.cmdinput)
 
         #item, proportion, flag, border, userData)
         self.sizer.Add(self.notebook,1, wx.EXPAND,  1)
@@ -139,12 +138,15 @@ class GMFrame(wx.Frame):
     def __createCommandInput(self):
         #l = wx.StaticText(self, -1, "GRASS> ")
 
-        self.cmdinput = wx.TextCtrl(self, -1, "", )
+        self.cmdinput = wx.TextCtrl(self, -1, "", style=wx.HSCROLL|wx.TE_LINEWRAP|
+                                                   wx.TE_PROCESS_ENTER)
         #self.cmdinput.SetFont(wx.Font(10, wx.DEFAULT, wx.NORMAL, wx.NORMAL, 0, "Monospace"))
         wx.CallAfter(self.cmdinput.SetInsertionPoint, 0)
 
         #self.cmdsizer.Add(l,0,wx.ADJUST_MINSIZE | wx.ALIGN_CENTER_VERTICAL, 1)
         #self.cmdsizer.Add(self.cmdinput, 0, wx.EXPAND, 0)
+
+        self.Bind(wx.EVT_TEXT_ENTER, self.runCmd, self.cmdinput)
 
         return self.cmdinput
 
@@ -181,20 +183,6 @@ class GMFrame(wx.Frame):
         rhandler = eval(handler)
         self.Bind(wx.EVT_MENU, rhandler, menuItem)
 
-    def RunCmd(self,event):
-        #global gmpath
-        print self.cmdinput.GetValue()
-        #menuform.GUI().parseCommand(cmd, gmpath)
-
-    def runMenuCmd(self, event):
-        '''Run menu command'''
-        menuitem = self.menubar.FindItemById(event.GetId())
-        itemtext = menuitem.GetText()
-        cmd = menucmd[itemtext]
-        global gmpath
-        menuform.GUI().parseCommand(cmd, gmpath)
-
-
     def __createNoteBook(self):
         #create main notebook widget
 #        bookStyle=FN.FNB_DEFAULT_STYLE #| FN.FNB_FANCY_TABS
@@ -204,18 +192,27 @@ class GMFrame(wx.Frame):
 
          #create displays notebook widget and add it to main notebook page
         cbStyle=FN.FNB_VC8|FN.FNB_BACKGROUND_GRADIENT|FN.FNB_X_ON_TAB|FN.FNB_TABS_BORDER_SIMPLE
-        self.cb_panel = wx.Panel(self,-1, style = wx.EXPAND)
+#        self.cb_panel = wx.Panel(self,-1, style = wx.EXPAND)
         self.gm_cb = FN.FlatNotebook(self, wx.ID_ANY, style=cbStyle)
         self.gm_cb.SetTabAreaColour(wx.Colour(125,200,175))
         self.notebook.AddPage(self.gm_cb, "Map layers for each display")
 
         #create command output text area and add it to main notebook page
-        self.goutput =  wx.richtext.RichTextCtrl(self,style=wx.VSCROLL|wx.HSCROLL|wx.NO_BORDER)
-        self.notebook.AddPage(self.goutput, "Command output")
+#        self.outpanel = wx.Panel(self,-1, style = wx.EXPAND)
+        self.goutput = gismutils.GMConsole(self)
+#        self.goutput =  wx.richtext.RichTextCtrl(self,style=wx.VSCROLL|wx.HSCROLL|wx.NO_BORDER)
+        self.outpage = self.notebook.AddPage(self.goutput, "Command output")
 
         self.Bind(FN.EVT_FLATNOTEBOOK_PAGE_CHANGED, self.onCBPageChanged, self.gm_cb)
         self.Bind(FN.EVT_FLATNOTEBOOK_PAGE_CLOSING, self.onCBPageClosed, self.gm_cb)
 
+        self.out_sizer = wx.BoxSizer(wx.VERTICAL)
+        self.out_sizer.Add(self.goutput,1, wx.EXPAND,  1)
+        self.SetSizer(self.out_sizer)
+#        self.out_sizer.Fit(self.outpage)
+#        self.outpage.Layout()
+
+        self.Centre()
         return self.notebook
 
 
@@ -248,12 +245,29 @@ class GMFrame(wx.Frame):
             except:
                 pass
 
-    def __createLayerTree(self,parent=None):
-        ctstyle = CT.TR_HIDE_ROOT
-        ctrltree = CT.CustomTreeCtrl(parent, -1,style=ctstyle)
-        ctrltree.AddRoot("Map Layers")
+    def runCmd(self,event):
+        #global gmpath
+        print 'the command = ',self.cmdinput.GetValue()
+        cmd = self.cmdinput.GetLineText(0)
 
-        return ctrltree
+
+        self.goutput.runCmd(cmd)
+        #menuform.GUI().parseCommand(cmd, gmpath)
+
+    def runMenuCmd(self, event):
+        '''Run menu command'''
+        menuitem = self.menubar.FindItemById(event.GetId())
+        itemtext = menuitem.GetText()
+        cmd = menucmd[itemtext]
+        global gmpath
+        menuform.GUI().parseCommand(cmd, gmpath)
+
+#    def __createLayerTree(self,parent=None):
+#        ctstyle = CT.TR_HIDE_ROOT
+#        ctrltree = CT.CustomTreeCtrl(parent, -1,style=ctstyle)
+#        ctrltree.AddRoot("Map Layers")
+#
+#        return ctrltree
 
     def __createToolBar(self):
         toolbar = self.CreateToolBar()
@@ -324,15 +338,15 @@ class GMFrame(wx.Frame):
 
     #ToolBar button handlers
     def addRaster(self, event):
-        self.SetTree('raster')
+        self.SetTree('rast')
         event.Skip()
 
     def addVector(self, event):
-        self.SetTree('vector')
+        self.SetTree('vect')
         event.Skip()
 
     def addCommand(self, event):
-        self.SetTree('command')
+        self.SetTree('cmd')
         event.Skip()
 
     def GetSelectedDisplay(self):
