@@ -55,6 +55,22 @@
 #% description: Minimum size of each cell
 #% answer: 12
 #%End
+#%Option
+#% key: rows
+#% type: integer
+#% required: no
+#% multiple: no
+#% description: Maximum number of rows to load
+#% answer: 100
+#%End
+#%Option
+#% key: cols
+#% type: integer
+#% required: no
+#% multiple: no
+#% description: Maximum number of columns to load
+#% answer: 100
+#%End
 
 if test "$GISBASE" = ""; then
     echo "You must be in GRASS GIS to run this program." >&2
