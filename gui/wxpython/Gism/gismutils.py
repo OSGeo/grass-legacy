@@ -185,12 +185,14 @@ class LayerTree(CT.CustomTreeCtrl):
 
     def createLayerList(self):
         for layer in self.layertype.keys():
-            if self.IsItemChecked(layer) == True and self.GetItemWindow(layer).GetValue()[0:7] != 'Mapset:':
+            if self.IsItemChecked(layer) == True and \
+                self.GetItemWindow(layer).GetValue() != '' and \
+                self.GetItemWindow(layer).GetValue()[0:7] != 'Mapset:':
                 if self.layertype[layer] == 'rast':
-                    render.Map.AddRasterLayer(name = self.GetItemWindow(layer).GetValue())
+                    render.Map().AddRasterLayer(name = self.GetItemWindow(layer).GetValue())
                     #TODO: need to add options for layer
                 elif self.layertype[layer] == 'vect':
-                    render.Map.AddVectorLayer(name = self.GetItemWindow(layer).GetValue())
+                    render.Map().AddVectorLayer(name = self.GetItemWindow(layer).GetValue())
 
 class TreeCtrlComboPopup(wx.combo.ComboPopup):
     """
