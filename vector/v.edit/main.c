@@ -20,50 +20,42 @@
 #define MAIN
 #include "global.h"
 
-/* static int error_routine(const char*msg, int fatal); */
-
 int main (int argc, char *argv[])
 {
     int ret;
-    FILE *output=stdout;
+    FILE *output=stderr;
 
     G_gisinit(argv[0]);
 
     module = G_define_module();
-    module->keywords = _("vector, editing");
-    module->description = _("Edits a vector map; allows adding, deleting "
+    module->keywords = _("vector, editing, geometry");
+    module->description = _("Edits a vector map - allows adding, deleting "
 			    "and modifying objects in a vector map.");
 
     if(!parser(argc, argv))
 	exit(EXIT_FAILURE);
 
+    /* open selected vector file */    
     mapset = G_find_vector2 (map_opt->answer, G_mapset()); 
-
-    /* open selected vector file */
     if ( mapset == NULL ) {
-	if ( action_mode == MODE_CREATE ) {
-	    Vect_open_new (&Map, map_opt->answer, 0 );
-	    Vect_build ( &Map, NULL );
-	    Vect_close (&Map);
-	    Vect_open_update (&Map, map_opt->answer, G_mapset());
-	    G_message(_("New empty map created."));
-	    Vect_close(&Map);
-	    G_debug (1, "Map closed");
-	    exit(EXIT_SUCCESS);
-	} else {
-	    G_message(_("Map does not exist. Add flag -n to create a new map."));
-	    exit(EXIT_FAILURE);
-	}
+	G_fatal_error (_("Cannot open vector map <%s>"),
+		       map_opt->answer);
     }
     else {
         if (action_mode != MODE_SELECT)
-            Vect_open_update (&Map, map_opt->answer, mapset);
+            ret = Vect_open_update (&Map, map_opt->answer, mapset);
         else
-            Vect_open_old (&Map, map_opt->answer, mapset);
+            ret = Vect_open_old (&Map, map_opt->answer, mapset);
+	
+	if (ret < 2)
+	    G_fatal_error (_("Cannot open vector map <%s> at topo level [%d]"),
+			   map_opt -> answer, 2);
     }
 
     G_debug (1, "Map opened");
 
+    /* FIXME, functions should return number of modified features or -1 on error */
+    /* currently only in do_merge () implemented */
     /* perform requested editation */
     switch(action_mode) {
       case MODE_ADD:
@@ -108,12 +100,14 @@ int main (int argc, char *argv[])
         ret = do_snap(&Map);
         break;
       default:
-	G_warning("Sorry this is not yet implemented");
-	ret=0;
+	G_warning(_("Operation not implemented."));
+	ret=-1;
 	break;
     }
 
-    
+    G_message (_("[%d] features modified"),
+	       ret);
+
     if(ret == 0)
 	output=NULL;
     else
