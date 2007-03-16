@@ -20,8 +20,10 @@ int do_rename (int n, char *old, char *new)
     /* verbosity: --quiet is completely quiet.
 		   GRASS_VERBOSE=1 shows only map names.
 		   normal and --verbose show map names and elements. */
+    /* there should be used G_message or other derived fn */
     if (G_verbose() > G_verbose_min())
-	fprintf (stderr, _("Rename <%s> to <%s>\n"), old, new);
+	fprintf (stderr, _("Rename %s <%s> to <%s>\n"),
+		 list[n].maindesc, old, new);
     
     if (G_strcasecmp (old,new) == 0) return 1;
     
