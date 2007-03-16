@@ -12,12 +12,12 @@ void openfiles (char *h_name, char *i_name, char *s_name,
     char *mapset;
 
     /* open input files */
-    if ((fd_output[0] = G_open_cell_new (h_name)) < 0)
-        G_fatal_error (_("Error in opening output file <%s>"), h_name);
-    if ((fd_output[1] = G_open_cell_new (i_name)) < 0)
-        G_fatal_error (_("Error in opening output file <%s>"), i_name);
-    if ((fd_output[2] = G_open_cell_new (s_name)) < 0)
-        G_fatal_error (_("Error in opening output file <%s>"), s_name);
+    if ((fd_output[0] = G_open_cell_new (r_name)) < 0)
+        G_fatal_error (_("Error in opening output file <%s>"), r_name);
+    if ((fd_output[1] = G_open_cell_new (g_name)) < 0)
+        G_fatal_error (_("Error in opening output file <%s>"), g_name);
+    if ((fd_output[2] = G_open_cell_new (b_name)) < 0)
+        G_fatal_error (_("Error in opening output file <%s>"), b_name);
 
     /* allocate the cell row buffer */
     if ((rowbuf[0] = G_allocate_cell_buf ()) == NULL)
