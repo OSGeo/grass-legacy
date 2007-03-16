@@ -134,6 +134,8 @@ class LayerTree(CT.CustomTreeCtrl):
         elif type == 'cmd':
             self.SetItemImage(self.layer, self.cmd_icon)
 
+        #layer is initially checked as active
+        self.CheckItem(self.layer)
         self.node += 1
 
     def onCollapseNode(self, event):
