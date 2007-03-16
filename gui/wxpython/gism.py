@@ -308,11 +308,11 @@ class GMFrame(wx.Frame):
     def toolbarData(self):
         
         return (
-            ('New display', os.path.join(gismutils.icons,'gui-startmon.gif'), 'Start new display', self.newDisplay),
+            ('newdisplay', os.path.join(gismutils.icons,'gui-startmon.gif'), 'Start new display', self.newDisplay),
             ('', '', '', ''),
-            ('Add raster layer', os.path.join(gismutils.icons,'element-cell.gif'), 'Add raster layer', self.addRaster),
-            ('Add vector layer', os.path.join(gismutils.icons,'element-vector.gif'), 'Add vector layer', self.addVector),
-            ('Add command layer', os.path.join(gismutils.icons,'gui-cmd.gif'), 'Add command layer', self.addCommand)
+            ('addRaster', os.path.join(gismutils.icons,'element-cell.gif'), 'Add raster layer', self.addRaster),
+            ('addvect', os.path.join(gismutils.icons,'element-vector.gif'), 'Add vector layer', self.addVector),
+            ('addcmd', os.path.join(gismutils.icons,'gui-cmd.gif'), 'Add command layer', self.addCommand)
             )
 
     def newDisplay(self, event=None):
@@ -334,8 +334,8 @@ class GMFrame(wx.Frame):
         self.cb_page = self.gm_cb.GetCurrentPage()
 
         # create layer tree (tree control for managing GIS layers)  and put on new notebook page
-        self.maptree = gismutils.LayerTree(self.cb_page, id=wx.ID_ANY, pos=wx.DefaultPosition,
-                                           size=wx.DefaultSize, ctstyle=wx.TR_HAS_BUTTONS
+        self.maptree = gismutils.LayerTree(self.cb_page, wx.ID_ANY, wx.DefaultPosition,
+                                           wx.DefaultSize, wx.TR_HAS_BUTTONS
                                            |wx.TR_LINES_AT_ROOT|wx.TR_EDIT_LABELS|wx.TR_HIDE_ROOT
                                            |wx.TR_DEFAULT_STYLE|wx.NO_BORDER|wx.FULL_REPAINT_ON_RESIZE)
 
