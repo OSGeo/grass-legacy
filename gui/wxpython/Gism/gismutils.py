@@ -103,7 +103,7 @@ class LayerTree(CT.CustomTreeCtrl):
 #        layername = type + ':' + str(self.node)
 
         if type == 'rast':
-            self.map = wx.combo.ComboCtrl(self, size=(250,-1),style=wx.CB_READONLY)
+            self.map = wx.combo.ComboCtrl(self, size=(250,-1))
             tcp = TreeCtrlComboPopup()
             self.map.SetPopupControl(tcp)
             tcp.getElementList('cell')
@@ -179,6 +179,7 @@ class LayerTree(CT.CustomTreeCtrl):
     def onMapChanged(self, event):
         map = event.GetString()
         self.createLayerList()
+        event.Skip()
 
     def createLayerList(self):
         for layer in self.layertype.keys():
@@ -190,6 +191,7 @@ class LayerTree(CT.CustomTreeCtrl):
                     #TODO: need to add options for layer
                 elif self.layertype[layer] == 'vect':
                     render.Map().AddVectorLayer(name = self.GetItemWindow(layer).GetValue())
+#        print 'current layer list: ', render.Map().layers
 
 class TreeCtrlComboPopup(wx.combo.ComboPopup):
     """
@@ -400,11 +402,8 @@ class GMConsole(wx.Panel):
     	cmdlst = []
 #    	cmd = self.console_command.GetLineText(0)
     	cmdlst = cmd.split(' ')
-        print 'command = ', cmd
     	disp_idx = int(track.Track().GetDisp()[0])
-        print 'display = ', disp_idx
     	curr_disp = track.Track().GetDisp()[1]
-        print 'Im here'
 
     	if len(cmdlst) == 1 and cmd in gcmdlst:
     		# Send GRASS command without arguments to GUI command interface
