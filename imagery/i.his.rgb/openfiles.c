@@ -28,18 +28,18 @@ void openfiles (char *h_name, char *i_name, char *s_name,
         G_fatal_error (_("Unable to allocate the input row buffer"));
 
     /* open output files */
-    if ((mapset = G_find_cell (r_name, "")) == NULL)
+    if ((mapset = G_find_cell (h_name, "")) == NULL)
         G_fatal_error (_("Unable to find input cell map <%s>"), r_name);
-    if ((mapset = G_find_cell (g_name, "")) == NULL)
+    if ((mapset = G_find_cell (i_name, "")) == NULL)
         G_fatal_error (_("Unable to find input cell map <%s>"), g_name);
-    if ((mapset = G_find_cell (b_name, "")) == NULL)
+    if ((mapset = G_find_cell (s_name, "")) == NULL)
         G_fatal_error (_("Unable to find input cell map <%s>"), b_name);
 
-    if ((fd_input[0] = G_open_cell_old (r_name, mapset)) < 0)
+    if ((fd_input[0] = G_open_cell_old (h_name, mapset)) < 0)
         G_fatal_error (_("Error in opening input file <%s>"), r_name);
-    if ((fd_input[1] = G_open_cell_old (g_name, mapset)) < 0)
+    if ((fd_input[1] = G_open_cell_old (i_name, mapset)) < 0)
         G_fatal_error (_("Error in opening input file <%s>"), g_name);
-    if ((fd_input[2] = G_open_cell_old (b_name, mapset)) < 0)
+    if ((fd_input[2] = G_open_cell_old (s_name, mapset)) < 0)
         G_fatal_error (_("Error in opening input file <%s>"), b_name);
 
     return;
