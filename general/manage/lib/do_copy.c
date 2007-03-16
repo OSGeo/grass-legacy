@@ -23,8 +23,8 @@ int do_copy (int n, char *old, char *mapset, char *new)
 
     G_debug (3, "Copy %s", list[n].alias );
     
-    G_message ("Copy <%s> to current mapset as <%s>",
-	       G_fully_qualified_name (old, mapset), new);
+    G_message (_("Copy %s <%s> to current mapset as <%s>"),
+	       list[n].maindesc, G_fully_qualified_name (old, mapset), new);
 
     len = get_description_len(n);
 
