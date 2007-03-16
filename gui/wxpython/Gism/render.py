@@ -285,7 +285,7 @@ class Map:
 			windfile.close()
 
 		except StandardError, e :
-                    sys.stderr.write("Could open file <%s>: %s\n" % \
+			sys.stderr.write("Could open file <%s>: %s\n" % \
 						 (windfile,e))
 			sys.exit(1)
 
