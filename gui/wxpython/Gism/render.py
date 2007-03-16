@@ -38,7 +38,7 @@ class GRASSLayer:
 class MapLayer:
 	"""
 	This class serves for storing map layers to be displayed
-	
+
 	Common layer attributes:
 		name	- layer name
 		mapset	- mapset name
@@ -47,7 +47,7 @@ class MapLayer:
 		active   - layer is active, will be rendered only if True
 		hidden   - layer is hidden, won't be listed in GIS Manager if True
 		opacity  - layer opacity [0-1]
-		
+
 		mapfile  - file name of rendered layer
 		maskfile - mask name of rendered layer
 	"""
@@ -183,7 +183,7 @@ class MapLayer:
 		#
 		if os.system("d.mon --quiet stop=gism"):
                         raise CouldNotStopMonitor("gism")
-			
+
 		return self.mapfile
 
 class Map:
@@ -222,7 +222,7 @@ class Map:
 
 		self.wind      = {}  # WIND settings
 		self.region    = {}  # region settings
-		self.width     = 300 # map width 
+		self.width     = 300 # map width
 		self.height    = 400 # map height
 
 		self.layers    = []  # stack of available layer
@@ -272,14 +272,14 @@ class Map:
 
 		try:
 			windfile = open (windfile, "r")
-			
+
 			for line in windfile.readlines():
 				line = line.strip()
 				key, value = line.split(":")
 				key = key.strip()
 				value = value.strip()
 				self.wind[key] = value
-				
+
 			self.__adjustRegion()
 
 			windfile.close()
@@ -293,7 +293,7 @@ class Map:
 		#
 		# setting resolution
 		#
-		# self.region['ewres'] = self.region['nsres'] = abs(float(self.region['e']) 
+		# self.region['ewres'] = self.region['nsres'] = abs(float(self.region['e'])
 		# - float(self.region['w']))/self.width
 
 	def __initMonSize(self):
@@ -301,31 +301,31 @@ class Map:
 		Reads current GRASS monitor dimensions from env or
 		use the default values [640x480]
 		"""
-		
+
 		try:
 			self.width = int (os.getenv("GRASS_WIDTH"))
 		except:
 			self.width = 640
-			
+
 		try:
 			self.height = int(os.getenv("GRASS_HEIGHT"))
 
 		except:
 			self.height = 480
-			
-			
+
+
 	def __initEnv(self):
 		"""
 		Stores environment variables to self.env variable
 		"""
-		
+
 		if not os.getenv("GISBASE"):
 			sys.stderr.write("GISBASE not set, you must be "
 					 "in GRASS GIS to run this program\n")
 			sys.exit(1)
-			
+
 		#os.system("d.mon --quiet stop=gism")
-			
+
 		for line in os.popen("g.gisenv").readlines():
 			line = line.strip()
 			key, val = line.split("=")
@@ -605,8 +605,10 @@ class Map:
 
 		# l_opacity must be <0;1>
 		if l_opacity < 0: l_opacity = 0
-		elif l_opacity > 1:
-			l_opacity = float(l_opacity) / 100
+		elif l_opacity > 1: l_opacity = 1
+			# the following won't work in all situations. What
+			# if opacity had somehow been set to 1000?
+#			l_opacity = float(l_opacity) / 100
 
 		layer = MapLayer("raster", name, mapset,
 				 l_active, l_hidden, l_opacity,
@@ -621,7 +623,7 @@ class Map:
 			if not layer.Render():
 				sys.stderr.write("Could not render layer <%s@%s>\n" % \
 							 (name,mapset))
-				
+
 		return self.layers[-1]
 
 	def AddGraphLayer(self, name, graph=None, color="255:0:0",
@@ -638,9 +640,9 @@ class Map:
                     coordsinmapunits - coordinates are given in map units
 
                     l_active         - see MapLayer class
-                    l_hidden 
+                    l_hidden
                     l_opacity
-                    l_render         - render an image 
+                    l_render         - render an image
 
             Returns:
                     Added layer on success or None
@@ -648,8 +650,7 @@ class Map:
 
 	    # l_opacity must be <0;1>
 	    if l_opacity < 0: l_opacity = 0
-	    elif l_opacity > 1:
-		    l_opacity = float(l_opacity) / 100
+	    elif l_opacity > 1: l_opacity = 1
 
             layer = MapLayer("graph", name, "", # current mapset
 			     l_active, l_hidden, l_opacity,
@@ -711,8 +712,8 @@ class Map:
                     catsasid       - use values from 'cats' option as line id
 
                     l_active  - see MapLayer class
-                    l_hidden  
-                    l_opacity 
+                    l_hidden
+                    l_opacity
                     l_render  - render an image
 
             Returns:
@@ -724,8 +725,7 @@ class Map:
 
 	    # l_opacity must be <0;1>
 	    if l_opacity < 0: l_opacity = 0
-	    elif l_opacity > 1:
-		    l_opacity = float(l_opacity) / 100
+	    elif l_opacity > 1: l_opacity = 1
 
 
             maplayer = MapLayer("vector", name, mapset,
@@ -763,7 +763,7 @@ class Map:
                     if not maplayer.Render():
                             sys.stderr.write("Could not render layer <%s@%s>\n" % \
 						     (name,mapset))
-			    
+
 	    return self.layers[-1]
 
 	def RemoveLayer(self, name=None, mapset=None, id=None):
@@ -820,12 +820,12 @@ class Map:
 				return i
 
 		return None
-        
+
         def Clean(self):
             """
             Go trough all layers and remove them from layer list
             Removes also l_mapfile and l_maskfile
-            
+
             Returns 1 if failed or None if ok"
             """
 
@@ -858,8 +858,8 @@ if __name__ == "__main__":
 			   l_opacity=50)
 
 	image = map.Render(force=True)
-	
-	
+
+
 	if image:
 		os.system("display %s" % image)
 
