@@ -29,18 +29,18 @@ void openfiles (char *h_name, char *i_name, char *s_name,
 
     /* open output files */
     if ((mapset = G_find_cell (h_name, "")) == NULL)
-        G_fatal_error (_("Unable to find input cell map <%s>"), r_name);
+        G_fatal_error (_("Unable to find input cell map <%s>"), h_name);
     if ((mapset = G_find_cell (i_name, "")) == NULL)
-        G_fatal_error (_("Unable to find input cell map <%s>"), g_name);
+        G_fatal_error (_("Unable to find input cell map <%s>"), i_name);
     if ((mapset = G_find_cell (s_name, "")) == NULL)
-        G_fatal_error (_("Unable to find input cell map <%s>"), b_name);
+        G_fatal_error (_("Unable to find input cell map <%s>"), s_name);
 
     if ((fd_input[0] = G_open_cell_old (h_name, mapset)) < 0)
-        G_fatal_error (_("Error in opening input file <%s>"), r_name);
+        G_fatal_error (_("Error in opening input file <%s>"), h_name);
     if ((fd_input[1] = G_open_cell_old (i_name, mapset)) < 0)
-        G_fatal_error (_("Error in opening input file <%s>"), g_name);
+        G_fatal_error (_("Error in opening input file <%s>"), i_name);
     if ((fd_input[2] = G_open_cell_old (s_name, mapset)) < 0)
-        G_fatal_error (_("Error in opening input file <%s>"), b_name);
+        G_fatal_error (_("Error in opening input file <%s>"), s_name);
 
     return;
 }
