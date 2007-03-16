@@ -7,7 +7,7 @@ import wx.lib.flatnotebook as FN
 import wx.stc
 import wx.richtext
 
-#try:
+# try:
 #    import subprocess
 #except:
 #    from compat import subprocess
