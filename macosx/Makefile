@@ -39,7 +39,8 @@ real-install-macosx:
 	-cd ${GISBASE} ; tar cBf - include | (cd ${INST_DIR} ; tar xBf - ) 2>/dev/null
 	-cd ${GISBASE} ; tar cBf - lib | (cd ${INST_DIR} ; tar xBf - ) 2>/dev/null
 	-sed 's#'${GISBASE}'#'${INST_DIR}'#g' ${GISBASE}/etc/monitorcap > ${INST_DIR}/etc/monitorcap
-	-chmod -R a+rX ${INST_DIR} 2>/dev/null
+	-chmod -R a+rX ${prefix}/${MACOSX_APP_NAME} 2>/dev/null
+	-touch ${prefix}/${MACOSX_APP_NAME}
 	-cd ${GRASS_HOME} ; tar cBf - gem/skeleton | (cd ${INST_DIR}/etc ; tar xBf - ) 2>/dev/null
 	-${INSTALL} ${GRASS_HOME}/gem/gem6 ${prefix}/${MACOSX_APP_NAME}/Contents/MacOS 2>/dev/null
 	@### help file package - in the future will go in /Library/Documentation/Help
