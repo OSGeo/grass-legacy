@@ -168,8 +168,6 @@ class LayerTree(CT.CustomTreeCtrl):
             vectopt.MyPanel(self)
         self.createLayerList()
 
-#        event.Skip()
-
     def onLayerChecked(self, event):
         Layer = event.GetItem()
         self.createLayerList()
@@ -178,10 +176,9 @@ class LayerTree(CT.CustomTreeCtrl):
         layer = event.GetItem()
         self.layer_selected = layer
 
-#        event.Skip()
-
     def onMapChanged(self, event):
         map = event.GetString()
+        self.createLayerList()
 
     def createLayerList(self):
         for layer in self.layertype.keys():
