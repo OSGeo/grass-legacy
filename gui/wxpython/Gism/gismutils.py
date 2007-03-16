@@ -146,6 +146,7 @@ class LayerTree(CT.CustomTreeCtrl):
         #layer is initially checked as active
         self.CheckItem(self.layer)
         self.node += 1
+        self.createLayerList()
 
     def onCollapseNode(self, event):
         print 'group collapsed'
@@ -159,18 +160,19 @@ class LayerTree(CT.CustomTreeCtrl):
     def onActivateLayer(self, event):
         layer = event.GetItem()
         self.layer_selected = layer
-        self.createLayerList()
        # When double clicked, open options dialog
         if self.layertype[layer] == 'rast':
             rastopt.MyFrame(self)
         elif self.layertype[layer] == 'vect':
             print 'its a vector'
             vectopt.MyPanel(self)
+        self.createLayerList()
 
 #        event.Skip()
 
     def onLayerChecked(self, event):
         Layer = event.GetItem()
+        self.createLayerList()
 
     def onChangeSel(self, event):
         layer = event.GetItem()
@@ -184,7 +186,11 @@ class LayerTree(CT.CustomTreeCtrl):
     def createLayerList(self):
         for layer in self.layertype.keys():
             if self.IsItemChecked(layer) == True and self.GetItemWindow(layer).GetValue()[0:7] != 'Mapset:':
-                print 'map = ',self.GetItemWindow(layer).GetValue(),', type =', self.layertype[layer]
+                if self.layertype[layer] == 'rast':
+                    render.Map.AddRasterLayer(name = self.GetItemWindow(layer).GetValue())
+                    #TODO: need to add options for layer
+                elif self.layertype[layer] == 'vect':
+                    render.Map.AddVectorLayer(name = self.GetItemWindow(layer).GetValue())
 
 class TreeCtrlComboPopup(wx.combo.ComboPopup):
     """
