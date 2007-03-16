@@ -1,4 +1,4 @@
-import os,sys,subprocess
+import os,sys
 import wx
 import wx.lib.customtreectrl as CT
 import wx.combo
@@ -12,6 +12,12 @@ import optpanels.vectopt as vectopt
 import optpanels.cmdopt as cmdopt
 
 #FIXME??
+try:
+   import subprocess
+except:
+   from compat import subprocess
+
+
 gmpath = os.getenv("GISBASE") + "/etc/wx/gism/"
 sys.path.append(gmpath)
 
