@@ -46,7 +46,7 @@ class LayerTree(CT.CustomTreeCtrl):
         self.node = 0       # index value for layers
         self.optpage = {}   # dictionary of notebook option pages for each map layer
         self.map = {}       # dictionary of map layers, indexed by tree node.
-        self.layerID = ""   # ID of currently selected layer
+        self.layer_selected = ""   # ID of currently selected layer
         self.layername = "" # name off currently selected layer
         self.layertype = {} # dictionary of layer types for each layer
 
@@ -91,12 +91,13 @@ class LayerTree(CT.CustomTreeCtrl):
         self.Bind(wx.EVT_TREE_ITEM_COLLAPSED, self.onCollapseNode)
         self.Bind(wx.EVT_TREE_ITEM_ACTIVATED, self.onActivateLayer)
         self.Bind(wx.EVT_TREE_SEL_CHANGED,    self.onChangeSel)
+        self.Bind(CT.EVT_TREE_ITEM_CHECKED, self.onLayerChecked)
 
     def AddLayer(self, idx, type):
 #        layername = type + ':' + str(self.node)
 
         if type == 'rast':
-            self.map = wx.combo.ComboCtrl(self, size=(250,-1))
+            self.map = wx.combo.ComboCtrl(self, size=(250,-1),style=wx.CB_READONLY)
             tcp = TreeCtrlComboPopup()
             self.map.SetPopupControl(tcp)
             tcp.getElementList('cell')
@@ -113,8 +114,10 @@ class LayerTree(CT.CustomTreeCtrl):
                                                wx.DefaultPosition, (250,40),
                                                style=wx.TE_MULTILINE|wx.TE_WORDWRAP)
 
-        if self.node >0 and self.layerID:
-            self.layer = self.InsertItem(self.root, self.layerID,
+        self.map.Bind(wx.EVT_TEXT, self.onMapChanged)
+
+        if self.node >0 and self.layer_selected:
+            self.layer = self.InsertItem(self.root, self.layer_selected,
                                                     '', ct_type=1,
                                                     wnd=self.map )
         else:
@@ -143,42 +146,39 @@ class LayerTree(CT.CustomTreeCtrl):
         event.Skip()
 
     def onExpandNode(self, event):
-        self.layerID = event.GetItem()
-        print 'layerID =',self.layerID
-        self.layername = self.GetItemText(event.GetItem())
+        self.layer_selected = event.GetItem()
         print 'group expanded'
         event.Skip()
 
     def onActivateLayer(self, event):
-        self.layerID = event.GetItem()
-        print 'layerID =',self.layerID
-        self.layername = self.GetItemText(event.GetItem())
-        print "##########xx"
-        # call a method to make this item display or not display?
-        # change associated icon accordingly?
-        if self.layertype[self.layerID] == 'rast':
-            print 'its a raster'
+        layer = event.GetItem()
+        self.layer_selected = layer
+        self.createLayerList()
+       # When double clicked, open options dialog
+        if self.layertype[layer] == 'rast':
             rastopt.MyFrame(self)
-        elif self.layertype[self.layerID] == 'vect':
+        elif self.layertype[layer] == 'vect':
             print 'its a vector'
             vectopt.MyPanel(self)
-#        elif self.layername[0:4] == 'comm':
-#            print 'its a command'
-#            cmdopt.MyPanel(self)
-        event.Skip()
+
+#        event.Skip()
+
+    def onLayerChecked(self, event):
+        Layer = event.GetItem()
 
     def onChangeSel(self, event):
-        # FIXME: this does not work :-(
-        self.layername = self.GetItemText(event.GetItem())
-        # old code for selecting options panels for each layer
-        #        old_layername = ""
-        #        if str(event.GetOldItem()) != str(event.GetItem()):
-        #            old_layername = self.GetItemText(event.GetOldItem())
-        #        new_layername = self.GetItemText(event.GetItem())
-        #        if old_layername:
-        #            self.optpage[old_layername].Show(False)
-        #        self.optpage[new_layername].Show(True)
-        event.Skip()
+        layer = event.GetItem()
+        self.layer_selected = layer
+
+#        event.Skip()
+
+    def onMapChanged(self, event):
+        map = event.GetString()
+
+    def createLayerList(self):
+        for layer in self.layertype.keys():
+            if self.IsItemChecked(layer) == True and self.GetItemWindow(layer).GetValue()[0:7] != 'Mapset:':
+                print 'map = ',self.GetItemWindow(layer).GetValue(),', type =', self.layertype[layer]
 
 class TreeCtrlComboPopup(wx.combo.ComboPopup):
     """
@@ -258,17 +258,19 @@ class TreeCtrlComboPopup(wx.combo.ComboPopup):
         for dir in mapsets:
             if dir == curr_mapset:
                 #TODO: make current mapset node expanded
-                dir_node = self.AddItem(dir)
+                dir_node = self.AddItem('Mapset: '+dir)
+                self.tree.SetItemTextColour(dir_node,wx.Colour(50,50,200))
                 elem_list = os.listdir(os.path.join (location_path, dir, element))
                 #TODO: sort list items?
                 for elem in elem_list:
                     self.AddItem(elem, parent=dir_node)
             else:
-                dir_node = self.AddItem(dir)
+                dir_node = self.AddItem('Mapset: '+dir)
+                self.tree.SetItemTextColour(dir_node,wx.Colour(50,50,200))
                 elem_list = os.listdir(os.path.join (location_path, dir, element))
                 #TODO: sort list items?
                 for elem in elem_list:
-                    self.AddItem(elem, parent=dir_node)
+                    self.AddItem(elem+'@'+dir, parent=dir_node)
 
     # helpers
 
