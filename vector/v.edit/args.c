@@ -4,58 +4,66 @@ int parser(int argc, char*argv[])
 {
     map_opt = G_define_standard_option(G_OPT_V_MAP);
 
+    fld_opt = G_define_standard_option(G_OPT_V_FIELD);
+
+    type_opt = G_define_standard_option(G_OPT_V_TYPE);
+    type_opt->answer           = "point,line,boundary,centroid" ;
+    type_opt->options          = "point,line,boundary,centroid" ;
+
     tool_opt = G_define_option();
     tool_opt->key         = "tool";
     tool_opt->type        = TYPE_STRING;
     tool_opt->required    = YES;
     tool_opt->multiple    = NO;
-    tool_opt->description = _("The edit tool to take.\n"
-			      "\t\tcreate - "
-			      "Create new vector file\n"
-			      "\t\tadd    - "
-			      "Add new vector feature to existing vector file\n"
-			      "\t\tdelete - "
-			      "Delete feature from vector file\n"
-			      "\t\tmove   - "
-			      "Move feature in vector file\n"
-			      "\t\tvertex - "
-			      "Move one vertex\n"
-			      "\t\tstraight - "
-			      "Remove vertex\n"
-			      "\t\tbreak  - "
-			      "Add new vertex to existing vector line\n"
-			      "\t\tmerge  - "
-			      "Merge two vector lines togher\n"
-			      "\t\tsplit  - "
-			      "Split line into two separate lines\n"
-			      "\t\tselect - "
-			      "Select lines and print their ID's\n"
-			      "\t\tcatadd - "
-			      "Set new category to selected lines for defined layer\n"
-			      "\t\tcatdel - "
-			      "Delete category to selected lines for defined layer\n"
-			      "\t\tcopy   - "
-			      "Copy selected features\n"
-			      "\t\tsnap   - "
-			      "Snap one line to another");
-    tool_opt->options     = "create,add,delete,move,vertex,straight,merge,"
-	"break,split,select,catadd,catdel,copy,snap";
+    tool_opt->description = _("The edit tool to take");
+    tool_opt->descriptions = _("add;"
+			       "Add new vector feature to existing vector file;"
+			       "delete;"
+			       "Delete feature from vector file;"
+			       "move;"
+			       "Move feature in vector file;"
+			       "vertex;"
+			       "Move one vertex;"
+			       "straight;"
+			       "Remove vertex;"
+			       "break;"
+			       "Add new vertex to existing vector line;"
+			       "merge;"
+			       "Merge two vector lines;"
+			       "split;"
+			       "Split line into two separate lines;"
+			       "select;"
+			       "Select lines and print their ID's;"
+			       "catadd;"
+			       "Set new category to selected lines for defined layer;"
+			       "catdel;"
+			       "Delete category to selected lines for defined layer;"
+			       "copy;"
+			       "Copy selected features;"
+			      "snap;"
+			       "Snap one line to another");
+    tool_opt->options     = "add,delete,move,vertex,straight,merge,"
+      "break,split,select,catadd,catdel,copy,snap";
 
-    input_opt = G_define_option();
-    input_opt->key      = "input";
-    input_opt->type     = TYPE_STRING;
-    input_opt->required = NO;
-    input_opt->multiple = NO;
-    input_opt->description = _("ASCII file to be converted to binary vector file, "
-			       "if not given reads from standard input");
+    move_opt = G_define_option();
+    move_opt->key         = "move";
+    move_opt->key_desc    = "x,y";
+    move_opt->type        = TYPE_DOUBLE;
+    move_opt->required    = NO;
+    move_opt->multiple    = NO;
+    move_opt->description = _("Difference in x,y direction for moving feature or vertex");
     
-    type_opt = G_define_standard_option(G_OPT_V_TYPE);
-    type_opt->answer           = "point,line,boundary,centroid" ;
-    type_opt->options          = "point,line,boundary,centroid" ;
+    maxdist_opt = G_define_option();
+    maxdist_opt->key         = "thresh";
+    maxdist_opt->type        = TYPE_DOUBLE;
+    maxdist_opt->required    = NO;
+    maxdist_opt->multiple    = NO;
+    maxdist_opt->description = _("Threshold distance");
+    maxdist_opt->answer      = "0";
 
     cat_opt = G_define_standard_option(G_OPT_V_CATS);
     cat_opt->required    = NO;
-
+    
     id_opt = G_define_standard_option(G_OPT_V_CATS);
     id_opt->required    = NO;
     id_opt->key         = "ids";
@@ -67,7 +75,7 @@ int parser(int argc, char*argv[])
     coord_opt->type        = TYPE_DOUBLE;
     coord_opt->required    = NO;
     coord_opt->multiple    = YES;
-    coord_opt->description = _("An x,y list of points. "
+    coord_opt->description = _("List of point coordinates. "
 			       "Required for add and move actions.");
     
     bbox_opt =  G_define_option();
@@ -86,35 +94,17 @@ int parser(int argc, char*argv[])
     poly_opt->multiple    = YES;
     poly_opt->description = _("Polygon for selecting features");
 
-    move_opt = G_define_option();
-    move_opt->key         = "move";
-    move_opt->key_desc    = "x,y";
-    move_opt->type        = TYPE_DOUBLE;
-    move_opt->required    = NO;
-    move_opt->multiple    = NO;
-    move_opt->description = _("Difference in x,y direction for moving feature or vertex");
-    
-    maxdist_opt = G_define_option();
-    maxdist_opt->key         = "distance";
-    maxdist_opt->type        = TYPE_DOUBLE;
-    maxdist_opt->required    = NO;
-    maxdist_opt->multiple    = NO;
-    maxdist_opt->description = _("Threshold distance");
-    maxdist_opt->answer      = "0";
- 
-    fld_opt = G_define_standard_option(G_OPT_V_FIELD);
-
     t_flg = G_define_flag();
     t_flg->key = 't';
-    t_flg->description = _("Do not build topology.");
+    t_flg->description = _("Do not build topology");
 
     i_flg = G_define_flag();
     i_flg->key = 'i';
-    i_flg->description = _("Print id's of edited features");
+    i_flg->description = _("Print ID's of edited features");
 
     b_flg = G_define_flag();
     b_flg->key = 'b';
-    b_flg->description = _("Give cats to boundaries too.");
+    b_flg->description = _("Assign cats to boundaries too");
 
     c_flg = G_define_flag();
     c_flg->key = 'c';
@@ -122,23 +112,10 @@ int parser(int argc, char*argv[])
 
     n_flg = G_define_flag();
     n_flg->key          = 'n';
-    n_flg->description  = _("Don't expect a header");
+    n_flg->description  = _("Do not expect a header");
 
     if(G_parser(argc, argv))
-	return 0;
-
-    /*
-     * check that the given arguments makes sense together 
-     */
-    if ( input_opt->answer != NULL ) {
-        if ( (ascii = fopen ( input_opt->answer, "r" ) ) == NULL )
-        {
-            G_warning(_("Could not open ascii file <%s>"), input_opt->answer);
-            G_usage();
-        }
-    } else {
-        ascii = stdin;
-    }
+	exit (EXIT_FAILURE);
 
     /* check for polygon param */
     if (poly_opt->answers != NULL) {
@@ -146,21 +123,14 @@ int parser(int argc, char*argv[])
         while (poly_opt->answers[i++])
             ;
 
-	if (i < 6) {
-            G_warning(_("Polygon must have at least 3 coordinate pairs"));
-            G_usage();
-	    return 0;
-        }
+	if (i < 6)
+            G_fatal_error (_("Polygon must have at least 3 coordinate pairs"));
     }
     
     /*
       check that the given arguments makes sense together
     */
-    if(G_strcasecmp (tool_opt->answer, "create") == 0) { 
-	/* create requires nothing extra*/
-	action_mode = MODE_CREATE;
-    }
-    else if(G_strcasecmp (tool_opt->answer, "add") == 0) { 
+    if(G_strcasecmp (tool_opt->answer, "add") == 0) { 
 	/* add requires a points argument */
 	action_mode = MODE_ADD;
     }
@@ -214,10 +184,8 @@ int parser(int argc, char*argv[])
     }
     else
     {
-	G_warning(_("Operation <%s> not implemented."),
-		  tool_opt->answer);
-	G_usage();
-	return 0;
+	G_fatal_error (_("Operation <%s> not implemented."),
+		       tool_opt->answer);
     }
 
     if (action_mode == MODE_DEL ||
@@ -232,10 +200,8 @@ int parser(int argc, char*argv[])
            (poly_opt->answers == NULL) &&
            (id_opt->answers == NULL) &&
            (bbox_opt->answers == NULL)) {
-	    G_warning(_("At least one option from <%s> must be specified"),
-		      "cats, coords, bbox, polygon, id");
-            G_usage();
-	    return 0;
+	    G_fatal_error (_("At least one option from <%s> must be specified"),
+			   "cats, coords, bbox, polygon, id");
 	}
     }
 
@@ -243,10 +209,8 @@ int parser(int argc, char*argv[])
 	action_mode == MODE_VERTEX)
     {
 	if(move_opt->answers == NULL) { 
-            G_warning(_("Option <%s> must be set"),
-		      "move");
-            G_usage();
-	    return 0;
+            G_fatal_error (_("Option <%s> must be set"),
+			   "move");
         }
     }
 
@@ -256,10 +220,8 @@ int parser(int argc, char*argv[])
 	action_mode == MODE_STRAIGHTEN)
     {
 	if(coord_opt->answers == NULL) {
-	    G_warning(_("Required parameter <%s> not set"),
-		      "coords");
-            G_usage();
-	    return 0;
+	    G_fatal_error (_("Required parameter <%s> not set"),
+			   "coords");
 	}
     }
 
@@ -267,9 +229,8 @@ int parser(int argc, char*argv[])
 	action_mode == MODE_CATDEL)
     {
         if (cat_opt->answers == NULL) {
-            G_warning(_("Required parameter <%s> not set"),
-		      "cats");
-            return 0;
+            G_fatal_error (_("Required parameter <%s> not set"),
+			   "cats");
         }
     }
 

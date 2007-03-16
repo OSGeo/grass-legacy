@@ -19,6 +19,7 @@
  ****************************************************************/
 
 #include "global.h"
+
 struct ilist *select_lines(struct Map_info *Map)
 {
     struct ilist *List;
@@ -45,9 +46,10 @@ struct ilist *select_lines(struct Map_info *Map)
     }
     else {
         /* this case should not happen, see args.c for details */
-        G_warning("cats, coord or bbox must be specified");
+	G_warning(_("At least one option from <%s> must be specified"),
+		  "cats, coords, bbox, polygon, id");
     }
-
+    
     G_debug ( 1, "  %d lines selected", List->n_values );
     return List;
 }
@@ -75,6 +77,8 @@ int do_print_selected(struct Map_info *Map)
     else {
         G_warning(_("No lines found"));
     }
+
+    return 1;
 }
 
 /*
@@ -84,21 +88,21 @@ int do_print_selected(struct Map_info *Map)
 struct ilist *sel_by_cat(struct Map_info *Map)
 {
     struct ilist *List;
-    List = Vect_new_list ();
     struct cat_list *cl;
-    int field_idx;
-    int i;
-    int layer=atoi(fld_opt->answer);
-    int type = Vect_option_to_types ( type_opt );
 
-    cl = Vect_new_cat_list();
-    Vect_str_to_cat_list(cat_opt->answer, cl);
-    field_idx = Vect_cidx_get_field_index( Map, layer );
-    
+    int i, layer, type;
+
+    layer = atoi (fld_opt->answer);
+    type  = Vect_option_to_types (type_opt);
+    cl    = Vect_new_cat_list();
+    List  = Vect_new_list ();
+
+    Vect_str_to_cat_list (cat_opt->answer, cl);
+
     for(i=0;i<cl->n_ranges;i++) {
         int cat;
         for(cat=cl->min[i]; cat <= cl->max[i]; cat++) {
-            Vect_cidx_find_all(Map, field_idx, type, cat,  List);
+            Vect_cidx_find_all(Map, layer, type, cat,  List);
         }
     }
 
@@ -175,7 +179,6 @@ struct ilist *sel_by_polygon(struct Map_info *Map)
     struct ilist *List;
     struct line_pnts *Polygon;
     int i;
-    int npoints;
     int type = Vect_option_to_types ( type_opt );
 
     List = Vect_new_list ();
@@ -203,8 +206,6 @@ struct ilist *sel_by_id(struct Map_info *Map)
 {
     struct ilist *List;
     int i,j;
-    int npoints;
-    int type = Vect_option_to_types ( type_opt );
     struct cat_list *il; /* NOTE: this is not cat list, but list of id's */
 
     il = Vect_new_cat_list();
