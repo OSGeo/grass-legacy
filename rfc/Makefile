@@ -1,8 +1,7 @@
 MODULE_TOPDIR = ..
 
-include $(MODULE_TOPDIR)/include/Make/Doxygen.make
+all:
+	doxygen $(MODULE_TOPDIR)/include/Make/Doxyfile_arch_html
 
-default: htmldocs-single
-
-DOXNAME=rfc
-DOXINPUT=rfc_list.dox
+clean:
+	rm -fr latex/ html/

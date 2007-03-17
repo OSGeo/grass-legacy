@@ -1,5 +1,5 @@
 /*!
-\page rfc_list RFC List
+\mainpage rfc_list RFC List of the GRASS Project Steering Committee
 
 \link psc_motions Motions of the GRASS Project Steering Committee\endlink
 
@@ -13,5 +13,7 @@ A list of all GRASS RFC documents, with status.
 <li> \link rfc3_psc RFC 3: PSC Voting Procedures\endlink (Proposed)
 </ul>
 
+<hr>
+<a href="http://grass.itc.it/">GRASS GIS</a>
 */
  
