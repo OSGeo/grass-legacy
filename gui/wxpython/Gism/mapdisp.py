@@ -661,7 +661,28 @@ class MapFrame(wx.Frame):
             track.Track().popCtrl(self.disp_idx)
             self.ctrlbk.DeletePage(pgnum)
 
+    def addMapsToList(self,type,map):
+        if type == 'raster':
+            Map.AddRasterLayer(name=map)
+        elif type == 'vector':
+            Map.AddVectorLayer(name=map)
+
 # end of class MapFrame
+
+class MapLayer:
+    """
+    class to hold method to allow layer tree to
+    add maps to layer list in the display's
+    instance of render.Map
+    """
+
+    def addMapsToList(self,type,map):
+        if type == raster:
+            Map.AddRasterLayer(name=map)
+        elif type == vector:
+            Map.AddVectorLayer(name=map)
+
+
 
 class MapApp(wx.App):
     """

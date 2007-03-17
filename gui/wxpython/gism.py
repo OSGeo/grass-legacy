@@ -143,7 +143,7 @@ class GMFrame(wx.Frame):
 
         self.cmdinput = wx.TextCtrl(self, id=wx.ID_ANY, value="", style=wx.HSCROLL|wx.TE_LINEWRAP|
                                     wx.TE_PROCESS_ENTER)
-        
+
         #self.cmdinput.SetFont(wx.Font(10, wx.DEFAULT, wx.NORMAL, wx.NORMAL, 0, "Monospace"))
         wx.CallAfter(self.cmdinput.SetInsertionPoint, 0)
 
@@ -156,7 +156,7 @@ class GMFrame(wx.Frame):
 
     def __createMenuBar(self):
         """Creates menubar"""
-        
+
         self.menubar = wx.MenuBar()
         menud = menudata.Data()
         for eachMenuData in menud.GetMenu():
@@ -170,7 +170,7 @@ class GMFrame(wx.Frame):
 
     def __createMenu(self, menuData):
         """Cretes menu"""
-        
+
         menu = wx.Menu()
         for eachItem in menuData:
             if len(eachItem) == 2:
@@ -183,7 +183,7 @@ class GMFrame(wx.Frame):
 
     def __createMenuItem(self, menu, label, help, handler, gcmd, kind=wx.ITEM_NORMAL):
         """Creates menu items"""
-        
+
         if not label:
             menu.AppendSeparator()
             return
@@ -195,7 +195,7 @@ class GMFrame(wx.Frame):
 
     def __createNoteBook(self):
         """Creates notebook widgets"""
-        
+
         # create main notebook widget
         #bookStyle=FN.FNB_DEFAULT_STYLE #| FN.FNB_FANCY_TABS
         #bookStyle=FN.FNB_DEFAULT_STYLE|FN.FNB_BOTTOM|FN.FNB_NO_X_BUTTON|FN.FNB_NO_NAV_BUTTONS
@@ -231,7 +231,7 @@ class GMFrame(wx.Frame):
     # choicebook methods
     def onCBPageChanged(self, event):
         """Page in notebook changed"""
-        
+
         old_pgnum = event.GetOldSelection()
         new_pgnum = event.GetSelection()
         curr_pg   = self.gm_cb.GetCurrentPage()
@@ -248,7 +248,7 @@ class GMFrame(wx.Frame):
 
     def onCBPageClosed(self, event):
         """Page of notebook closed"""
-        
+
         curr_pg = self.gm_cb.GetCurrentPage()
         disp_idx = track.Track().GetDisp_idx(curr_pg)
         if disp_idx != None:
@@ -263,7 +263,7 @@ class GMFrame(wx.Frame):
 
     def runCmd(self,event):
         """Run command"""
-        
+
         #global gmpath
         print 'the command = ',self.cmdinput.GetValue()
         cmd = self.cmdinput.GetLineText(0)
@@ -273,23 +273,16 @@ class GMFrame(wx.Frame):
 
     def runMenuCmd(self, event):
         """Run menu command"""
-        
+
         menuitem = self.menubar.FindItemById(event.GetId())
         itemtext = menuitem.GetText()
         cmd = menucmd[itemtext]
         global gmpath
         menuform.GUI().parseCommand(cmd, gmpath)
 
-#    def __createLayerTree(self,parent=None):
-#        ctstyle = CT.TR_HIDE_ROOT
-#        ctrltree = CT.CustomTreeCtrl(parent, -1,style=ctstyle)
-#        ctrltree.AddRoot("Map Layers")
-#
-#        return ctrltree
-
     def __createToolBar(self):
         """Creates toolbar"""
-        
+
         toolbar = self.CreateToolBar()
         for each in self.toolbarData():
             self.addToolbarButton(toolbar, *each)
@@ -297,7 +290,7 @@ class GMFrame(wx.Frame):
 
     def addToolbarButton(self, toolbar, label, iconfile, help, handler):
         """Adds button to the given toolbar"""
-        
+
         if not label:
             toolbar.AddSeparator()
             return
@@ -306,7 +299,7 @@ class GMFrame(wx.Frame):
         self.Bind(wx.EVT_TOOL, handler, tool)
 
     def toolbarData(self):
-        
+
         return (
             ('newdisplay', os.path.join(gismutils.icons,'gui-startmon.gif'), 'Start new display', self.newDisplay),
             ('', '', '', ''),
@@ -334,10 +327,11 @@ class GMFrame(wx.Frame):
         self.cb_page = self.gm_cb.GetCurrentPage()
 
         # create layer tree (tree control for managing GIS layers)  and put on new notebook page
-        self.maptree = gismutils.LayerTree(self.cb_page, wx.ID_ANY, wx.DefaultPosition,
-                                           wx.DefaultSize, wx.TR_HAS_BUTTONS
+        self.maptree = gismutils.LayerTree(self.cb_page, id=wx.ID_ANY, pos=wx.DefaultPosition,
+                                           size=wx.DefaultSize, style=wx.TR_HAS_BUTTONS
                                            |wx.TR_LINES_AT_ROOT|wx.TR_EDIT_LABELS|wx.TR_HIDE_ROOT
-                                           |wx.TR_DEFAULT_STYLE|wx.NO_BORDER|wx.FULL_REPAINT_ON_RESIZE)
+                                           |wx.TR_DEFAULT_STYLE|wx.NO_BORDER|wx.FULL_REPAINT_ON_RESIZE,
+                                           disp=newdisp)
 
         # layout for controls
         cb_boxsizer = wx.BoxSizer(wx.VERTICAL)
@@ -362,17 +356,17 @@ class GMFrame(wx.Frame):
     # toolBar button handlers
     def addRaster(self, event):
         """Add raster layer"""
-        self.SetTree('rast')
+        self.SetTree('raster')
         event.Skip()
 
     def addVector(self, event):
         """Add vector layer"""
-        self.SetTree('vect')
+        self.SetTree('vector')
         event.Skip()
 
     def addCommand(self, event):
         """Add command line layer"""
-        self.SetTree('cmd')
+        self.SetTree('command')
         event.Skip()
 
     def GetSelectedDisplay(self):
@@ -422,11 +416,11 @@ class SetVal:
             mdfocus = mdnum
         else:
             return mdfocus
-        
+
 	def getMdFocus(self):
             global mdfocus
             return mdfocus
-        
+
 class GMApp(wx.App):
     """
     GMApp class
@@ -440,7 +434,7 @@ class GMApp(wx.App):
         self.SetTopWindow(mainframe)
         mainframe.Show()
         return 1
-    
+
 def reexec_with_pythonw():
 	if sys.platform == 'darwin' and\
 		not sys.executable.endswith('MacOS/Python'):
