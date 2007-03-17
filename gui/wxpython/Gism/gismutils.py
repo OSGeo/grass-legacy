@@ -108,20 +108,21 @@ class LayerTree(CT.CustomTreeCtrl):
             tcp = TreeCtrlComboPopup()
             self.map.SetPopupControl(tcp)
             tcp.getElementList('cell')
+            self.map.Bind(wx.EVT_TEXT, self.onMapChanged)
 
         elif type == 'vector':
             self.map = wx.combo.ComboCtrl(self, size=(250,-1))
             tcp = TreeCtrlComboPopup()
             self.map.SetPopupControl(tcp)
             tcp.getElementList('vector')
+            self.map.Bind(wx.EVT_TEXT, self.onMapChanged)
 
         elif type == 'command':
             self.map = wx.TextCtrl(self, -1,
-                                               "Enter a GRASS command here",
+                                               '',
                                                wx.DefaultPosition, (250,40),
                                                style=wx.TE_MULTILINE|wx.TE_WORDWRAP)
-
-        self.map.Bind(wx.EVT_TEXT, self.onMapChanged)
+            self.map.Bind(wx.EVT_TEXT_ENTER, self.onMapChanged)
 
         if self.node >0 and self.layer_selected:
             self.layer = self.InsertItem(self.root, self.layer_selected,
@@ -180,9 +181,10 @@ class LayerTree(CT.CustomTreeCtrl):
     def onMapChanged(self, event):
         map = event.GetString()
         self.createLayerList()
-        event.Skip()
+#        event.Skip()
 
     def createLayerList(self):
+        self.display.cleanLayersList()
         for layer in self.layertype.keys():
             name = self.GetItemWindow(layer).GetValue()
             if '@' in name:
@@ -194,10 +196,12 @@ class LayerTree(CT.CustomTreeCtrl):
                 self.GetItemWindow(layer).GetValue() != '' and \
                 self.GetItemWindow(layer).GetValue()[0:7] != 'Mapset:':
                 if self.layertype[layer] == 'raster':
-                    self.display.addMapsToList(type = 'raster', map = name, mset = msname)
+                    self.display.addMapsToList(type='raster', map=name, mset=msname)
                     #TODO: need to add options for layer
                 elif self.layertype[layer] == 'vector':
-                    self.display.addMapsToList(type = 'vector', map = name, mset = msname)
+                    self.display.addMapsToList(type='vector', map=name, mset=msname)
+                elif self.layertype[layer] == 'command':
+                    self.display.addMapsToList(type='command', map=name, mset=msname)
 
 class TreeCtrlComboPopup(wx.combo.ComboPopup):
     """
@@ -425,14 +429,17 @@ class GMConsole(wx.Panel):
                                                           "\n----------\n")
 
     	elif cmd[0:2] == "d." and len(cmdlst) > 1 and cmdlst[0] in gcmdlst:
-    		# Send GRASS display command(s)with arguments
-    		# to the display processor and echo to command output console.
-    		# Accepts a list of d.* commands separated by commas.
-    		# Display with focus receives display command(s).
-    		self.cmd_output.write(cmd +
+            """
+            Send GRASS display command(s)with arguments
+            to the display processor and echo to command output console.
+            Accepts a list of d.* commands separated by commas.
+            Display with focus receives display command(s).
+            """
+            self.cmd_output.write(cmd +
                                                   "\n----------\n")
-    		dcmds = cmd.split(',')
-    		curr_disp.setDcommandList(dcmds)
+            dcmds = cmd.split(',')
+            curr_disp.addMapsToList(type='command', map=dcmds, mset=None)
+            curr_disp.ReDrawCommand()
 
     	else:
     		# Send any other command to the shell. Send output to
