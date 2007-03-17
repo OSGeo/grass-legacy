@@ -97,8 +97,11 @@ db__driver_fetch (dbCursor *cn, int position, int *more)
 	col = c->kcols[i]; /* known cols */
  		
 	column = db_get_table_column (table, i);
-	litetype  = db_get_column_host_type(column);
 	sqltype = db_get_column_sqltype(column);
+/*	fails for dates: 
+        litetype  = db_get_column_host_type(column); 
+*/
+	litetype = sqlite3_column_type ( c->statement, col );
 
 	value  = db_get_column_value (column);
 	db_zero_string (&value->s);
@@ -114,6 +117,14 @@ db__driver_fetch (dbCursor *cn, int position, int *more)
 	G_debug (3, "col %d, litetype %d, sqltype %d: val = '%s'", 
 		    col, litetype, sqltype, 
 		    sqlite3_column_text ( c->statement, col) );
+
+       /* http://www.sqlite.org/capi3ref.html#sqlite3_column_type
+           SQLITE_INTEGER  1
+           SQLITE_FLOAT    2
+           SQLITE_TEXT     3
+           SQLITE_BLOB     4
+           SQLITE_NULL     5
+        */
 	
 	switch ( litetype ) {
 	    case SQLITE_TEXT:
