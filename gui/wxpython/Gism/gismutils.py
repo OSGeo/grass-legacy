@@ -38,15 +38,14 @@ class LayerTree(CT.CustomTreeCtrl):
                  size=wx.DefaultSize, style=wx.SUNKEN_BORDER,
                  ctstyle=CT.TR_HAS_BUTTONS | CT.TR_HAS_VARIABLE_ROW_HEIGHT |
                  CT.TR_HIDE_ROOT | CT.TR_ROW_LINES | CT.TR_FULL_ROW_HIGHLIGHT,
-                 log=None):
+                 disp=None,log=None):
         CT.CustomTreeCtrl.__init__(self, parent, id, pos, size, style,ctstyle)
-
         self.SetAutoLayout(True)
         self.SetGradientStyle(1)
         self.EnableSelectionGradient(True)
         self.SetFirstGradientColour(wx.Colour(150, 150, 150))
 
-
+        self.display = ""   # ID of map display associated with layer tree
         self.root = ""      # ID of layer tree root node
         self.layer = {}     # dictionary to index layers in layer tree
         self.node = 0       # index value for layers
@@ -55,6 +54,9 @@ class LayerTree(CT.CustomTreeCtrl):
         self.layer_selected = ""   # ID of currently selected layer
         self.layername = "" # name off currently selected layer
         self.layertype = {} # dictionary of layer types for each layer
+
+        self.display = disp
+        print 'self.display =', self.display
 
         self.root = self.AddRoot("Map Layers")
         self.SetPyData(self.root, None)
@@ -102,19 +104,19 @@ class LayerTree(CT.CustomTreeCtrl):
     def AddLayer(self, idx, type):
 #        layername = type + ':' + str(self.node)
 
-        if type == 'rast':
+        if type == 'raster':
             self.map = wx.combo.ComboCtrl(self, size=(250,-1))
             tcp = TreeCtrlComboPopup()
             self.map.SetPopupControl(tcp)
             tcp.getElementList('cell')
 
-        elif type == 'vect':
+        elif type == 'vector':
             self.map = wx.combo.ComboCtrl(self, size=(250,-1))
             tcp = TreeCtrlComboPopup()
             self.map.SetPopupControl(tcp)
             tcp.getElementList('vector')
 
-        elif type == 'cmd':
+        elif type == 'command':
             self.map = wx.TextCtrl(self, -1,
                                                "Enter a GRASS command here",
                                                wx.DefaultPosition, (250,40),
@@ -136,11 +138,11 @@ class LayerTree(CT.CustomTreeCtrl):
         self.SetPyData(self.layer, None)
 
 #        #add icons for each layer
-        if type == 'rast':
+        if type == 'raster':
             self.SetItemImage(self.layer, self.rast_icon)
-        elif type == 'vect':
+        elif type == 'vector':
             self.SetItemImage(self.layer, self.vect_icon)
-        elif type == 'cmd':
+        elif type == 'command':
             self.SetItemImage(self.layer, self.cmd_icon)
 
         #layer is initially checked as active
@@ -161,9 +163,9 @@ class LayerTree(CT.CustomTreeCtrl):
         layer = event.GetItem()
         self.layer_selected = layer
        # When double clicked, open options dialog
-        if self.layertype[layer] == 'rast':
+        if self.layertype[layer] == 'raster':
             rastopt.MyFrame(self)
-        elif self.layertype[layer] == 'vect':
+        elif self.layertype[layer] == 'vector':
             print 'its a vector'
             vectopt.MyPanel(self)
         self.createLayerList()
@@ -186,12 +188,11 @@ class LayerTree(CT.CustomTreeCtrl):
             if self.IsItemChecked(layer) == True and \
                 self.GetItemWindow(layer).GetValue() != '' and \
                 self.GetItemWindow(layer).GetValue()[0:7] != 'Mapset:':
-                if self.layertype[layer] == 'rast':
-                    render.Map().AddRasterLayer(name = self.GetItemWindow(layer).GetValue())
+                if self.layertype[layer] == 'raster':
+                    self.display.addMapsToList(type = 'raster', map = self.GetItemWindow(layer).GetValue())
                     #TODO: need to add options for layer
-                elif self.layertype[layer] == 'vect':
-                    render.Map().AddVectorLayer(name = self.GetItemWindow(layer).GetValue())
-#        print 'current layer list: ', render.Map().layers
+                elif self.layertype[layer] == 'vector':
+                    self.display.addMapsToList(type = 'vector', map = self.GetItemWindow(layer).GetValue())
 
 class TreeCtrlComboPopup(wx.combo.ComboPopup):
     """
