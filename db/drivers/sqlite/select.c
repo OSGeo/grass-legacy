@@ -22,7 +22,8 @@ int db__driver_open_select_cursor (dbString *sel, dbCursor *dbc, int mode)
 {
     cursor   *c;
     dbTable  *table;
-    char     *str, *rest;
+    char     *str;
+    const char *rest;
     int      ret;
 
     init_error();
