@@ -26,6 +26,7 @@ db__driver_fetch (dbCursor *cn, int position, int *more)
     dbToken    token;    
     dbTable    *table;
     int        i, ret;
+    int        ns;
 
     /* get cursor token */
     token = db_get_cursor_token(cn);
@@ -128,8 +129,24 @@ db__driver_fetch (dbCursor *cn, int position, int *more)
 	
 	switch ( litetype ) {
 	    case SQLITE_TEXT:
-		db_set_string ( &(value->s), 
+		if (sqltype == 6 ) { /* date string */
+		   /* Example: '1999-01-25' */
+		   G_debug(3, "sqlite fetched date: %s",sqlite3_column_text ( c->statement, col));
+		   ns = sscanf( sqlite3_column_text ( c->statement, col), "%4d-%2d-%2d",
+                             &(value->t.year), &(value->t.month), &(value->t.day) );
+		   if ( ns != 3 ) {
+			append_error ( "Cannot scan date:");
+			append_error ( sqlite3_column_text ( c->statement, col) );
+			report_error();
+			return DB_FAILED;
+                   }
+                   value->t.hour = 0;
+                   value->t.minute = 0;
+                   value->t.seconds = 0.0;
+		} else { /* other string */
+		    db_set_string ( &(value->s),
 				sqlite3_column_text ( c->statement, col) );
+		}
 		break;
 
 	    case SQLITE_INTEGER:
