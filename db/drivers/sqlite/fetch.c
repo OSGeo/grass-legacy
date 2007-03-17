@@ -126,7 +126,10 @@ db__driver_fetch (dbCursor *cn, int position, int *more)
            SQLITE_BLOB     4
            SQLITE_NULL     5
         */
-	
+
+	/* Note: we have set DATESTYLE TO ISO in db_driver_open_select_cursor() so datetime
+	 *       format should be ISO */
+
 	switch ( litetype ) {
 	    case SQLITE_TEXT:
 		if (sqltype == 6 ) { /* date string */
