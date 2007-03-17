@@ -14,20 +14,28 @@ ARCH="`cat ../include/Make/Platform.make | grep '^ARCH'  | sed 's+ ++g' | cut -d
 GEMDIR="../gem"
 HTMLDIR="../dist.$ARCH/docs/html"
 GRASSVERSION=`cat ../dist.$ARCH/etc/VERSIONNUMBER`
+GRASS_MMVER=`cut -d . -f 1-2 ../dist.$ARCH/etc/VERSIONNUMBER`
+MACOSX=`echo $ARCH | grep -i darwin`
 
 
 write_html_header()
 {
 # $1: filename
 # $2: page title
+# $3: is it main index
 
 echo "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0 Transitional//EN\">
 <html>
 <head>
  <title>$2</title>
  <meta http-equiv=\"Content-Type\" content=\"text/html; charset=iso-8859-1\">
- <meta name=\"Author\" content=\"GRASS Development Team\">
- <link rel=\"stylesheet\" href=\"grassdocs.css\" type=\"text/css\">
+ <meta name=\"Author\" content=\"GRASS Development Team\">" > $1
+if [ "$3" ] && [ "$MACOSX" ] ; then
+	echo " <meta name=\"AppleTitle\" content=\"GRASS GIS $GRASSVERSION Help\">
+ <meta name=\"AppleIcon\" content=\"GRASS-$GRASS_MMVER/grass_icon.png\">
+ <meta name=\"robots\" content=\"anchors\">" >> $1
+fi
+echo " <link rel=\"stylesheet\" href=\"grassdocs.css\" type=\"text/css\">
 </head>
 <body bgcolor=\"#FFFFFF\">
 
@@ -71,7 +79,7 @@ GPL'ed), image processing and geographic information system (GIS).</p>
 </ul>
 <P>
 
-" > $1
+" >> $1
 }
 
 write_html_footer()
@@ -134,6 +142,10 @@ chmod a+r $HTMLDIR/grassdocs.css $HTMLDIR/nviz/grassdocs.css
 cp -f grass_logo.png $HTMLDIR/
 cp -f grass_logo.png $HTMLDIR/nviz/
 chmod a+r $HTMLDIR/grass_logo.png $HTMLDIR/nviz/grass_logo.png
+if [ "$MACOSX" ] ; then
+  cp -f grass_icon.png $HTMLDIR/
+  chmod a+r $HTMLDIR/grass_icon.png
+fi
 #copy over GEM docs:
 mkdir -p $HTMLDIR/gem
 cp -f $GEMDIR/docs/GEM-Manual/*.html $HTMLDIR/gem/
@@ -230,7 +242,7 @@ done
 
 #next write main page:
 FILENAME=index.html
-write_html_header $FILENAME "GRASS GIS $GRASSVERSION Reference Manual"
+write_html_header $FILENAME "GRASS GIS $GRASSVERSION Reference Manual" 1
 
 #modules:
 echo "<h3>Manual sections:</h3>" >> $FILENAME
