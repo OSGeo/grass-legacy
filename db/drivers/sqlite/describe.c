@@ -199,11 +199,7 @@ void get_column_info ( sqlite3_stmt *statement, int col,
 	*litetype = sqlite3_column_type ( statement, col );
     }
 
-    /* Date support hack */
-    if ( strcmp(decltype, "date") == 0 ) {
-	*litetype = SQLITE_TEXT;
-	G_debug ( 4, " date found, new litetype = %d", *litetype );
-    }
+    G_debug ( 3, "litetype = %d", *litetype );
 
     switch ( *litetype) {
 	case SQLITE_INTEGER:
