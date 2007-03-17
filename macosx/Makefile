@@ -5,6 +5,8 @@ include $(MODULE_TOPDIR)/include/Make/Dir.make
 MACOSX_APP_NAME = GRASS-${GRASS_VERSION_MAJOR}.${GRASS_VERSION_MINOR}.app
 MACOSX_APPDIR = ${MACOSX_APP_NAME}/Contents/Resources
 INST_DIR_MACOSX = ${prefix}/${MACOSX_APPDIR}
+MACOSX_SUPPDIR = /Library/GRASS/${GRASS_VERSION_MAJOR}.${GRASS_VERSION_MINOR}
+MAKE_DIR_CMD = mkdir -p -m 755
 SUBDIRS = 
 
 ifeq ($(MACOSX_APP),1)
@@ -23,9 +25,10 @@ install-macosx:
 	${MAKE} real-install-macosx
 
 real-install-macosx:
-	@# Duplicated, mostly, from the top-level makefile.  There are some
-	@# differences, and it makes it easy to backport to earlier versions of
-	@# GRASS where the main makefile doesn't know about macosx.
+	@# Duplicated, mostly, from the top-level makefile.  There are enough
+	@# differences that make it simpler to have a separate install target.
+	test -d ${INST_DIR} || ${MAKE_DIR_CMD} ${INST_DIR}
+	${MAKE} macosx-support-dir
 	-cd ${GISBASE} ; tar cBf - ${MACOSX_APP_NAME} | (cd ${prefix} ; tar xBf - ) 2>/dev/null
 	-cd ${GISBASE} ; tar cBf - bin | (cd ${INST_DIR} ; tar xBf - ) 2>/dev/null
 	-cd ${GISBASE} ; tar cBf - bwidget | (cd ${INST_DIR} ; tar xBf - ) 2>/dev/null
@@ -42,7 +45,8 @@ real-install-macosx:
 	-chmod -R a+rX ${prefix}/${MACOSX_APP_NAME} 2>/dev/null
 	-touch ${prefix}/${MACOSX_APP_NAME}
 	-cd ${GRASS_HOME} ; tar cBf - gem/skeleton | (cd ${INST_DIR}/etc ; tar xBf - ) 2>/dev/null
-	-${INSTALL} ${GRASS_HOME}/gem/gem6 ${prefix}/${MACOSX_APP_NAME}/Contents/MacOS 2>/dev/null
+	-cp -f ${GRASS_HOME}/gem/gem6 ${prefix}/${MACOSX_APP_NAME}/Contents/MacOS 2>/dev/null
+	-cd ${GISBASE} ; tar cBf - modbuild | (cd ${MACOSX_SUPPDIR} ; tar xBf - ) 2>/dev/null
 	@### help file package - in the future will go in /Library/Documentation/Help
 	/bin/ln -sfh "${INST_DIR}/docs/html" /Library/Documentation/Help/GRASS-${GRASS_VERSION_MAJOR}.${GRASS_VERSION_MINOR}
 
@@ -63,7 +67,14 @@ bindist-macosx:
 	-sed 's#'${GISBASE}'#'${INST_DIR_MACOSX}'#g' ${GISBASE}/etc/monitorcap > ${GRASS_HOME}/macosx/${MACOSX_APPDIR}/etc/monitorcap
 	-chmod -R a+rX ${GRASS_HOME}/macosx/${MACOSX_APPDIR} 2>/dev/null
 	-cd ${GRASS_HOME} ; tar cBf - gem/skeleton | (cd ${GRASS_HOME}/macosx/${MACOSX_APPDIR}/etc ; tar xBf - ) 2>/dev/null
-	-${INSTALL} ${GRASS_HOME}/gem/gem6 ${GRASS_HOME}/macosx/${MACOSX_APP_NAME}/Contents/MacOS 2>/dev/null
+	-cp -f ${GRASS_HOME}/gem/gem6 ${GRASS_HOME}/macosx/${MACOSX_APP_NAME}/Contents/MacOS 2>/dev/null
+
+macosx-support-dir:
+	test -d ${MACOSX_SUPPDIR} || ${MAKE_DIR_CMD} ${MACOSX_SUPPDIR}
+	test -d ${MACOSX_SUPPDIR}/Modules/bin || ${MAKE_DIR_CMD} ${MACOSX_SUPPDIR}/Modules/bin
+	test -d ${MACOSX_SUPPDIR}/Modules/docs/html || ${MAKE_DIR_CMD} ${MACOSX_SUPPDIR}/Modules/docs/html
+	test -d ${MACOSX_SUPPDIR}/Modules/etc || ${MAKE_DIR_CMD} ${MACOSX_SUPPDIR}/Modules/etc
+	test -d ${MACOSX_SUPPDIR}/Modules/lib || ${MAKE_DIR_CMD} ${MACOSX_SUPPDIR}/Modules/lib
 
 clean: cleansubdirs
 	-rm -rf ${ARCH_DISTDIR}/${MACOSX_APP_NAME}/ 2>/dev/null
