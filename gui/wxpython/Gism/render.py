@@ -272,22 +272,22 @@ class Map:
 
 		try:
 			windfile = open (windfile, "r")
-
-			for line in windfile.readlines():
-				line = line.strip()
-				key, value = line.split(":")
-				key = key.strip()
-				value = value.strip()
-				self.wind[key] = value
-
-			self.__adjustRegion()
-
-			windfile.close()
-
 		except StandardError, e :
 			sys.stderr.write("Could open file <%s>: %s\n" % \
 						 (windfile,e))
 			sys.exit(1)
+
+		for line in windfile.readlines():
+			line = line.strip()
+			key, value = line.split(":")
+			key = key.strip()
+			value = value.strip()
+			self.wind[key] = value
+
+		self.__adjustRegion()
+
+		windfile.close()
+
 
 
 		#
