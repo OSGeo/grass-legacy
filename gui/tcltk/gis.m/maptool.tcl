@@ -175,22 +175,22 @@ proc MapToolBar::create { tb } {
 #	set zdimg [image create photo -file "$iconpath/gui-zoom_default.gif"]
 
 	$zoommenu add command \
-		-label {Zoom to selected map} \
+		-label [G_msg "Zoom to selected map"] \
 		-command {MapCanvas::zoom_map $mon}
 	$zoommenu add command \
-		-label {Zoom to saved region} \
+		-label [G_msg "Zoom to saved region"] \
 		-command {MapCanvas::zoom_region $mon}
 	$zoommenu add command \
-		-label {Save display geometry to named region} \
+		-label [G_msg "Save display geometry to named region"] \
 		-command {MapCanvas::save_region $mon}
 	$zoommenu add command \
-		-label {Zoom to current region (set with g.region)} \
+		-label [G_msg "Zoom to current region (set with g.region)"] \
 		-command {MapCanvas::zoom_current $mon}
 	$zoommenu add command \
-		-label {Zoom to default region} \
+		-label [G_msg "Zoom to default region"] \
 		-command {MapCanvas::zoom_default $mon}
 	$zoommenu add command \
-		-label {Set current region (WIND file) to match display} \
+		-label [G_msg "Set current region (WIND file) to match display"] \
 		-command {MapCanvas::set_wind $mon "" 0}
 
 	$mapzoom configure -menu $zoommenu
@@ -280,18 +280,18 @@ proc MapToolBar::create { tb } {
 
 	$savefile add command -label "BMP*" -command {MapToolBar::savefile bmp 0}
 	$savefile add cascade -label "JPG*" -menu $jpgfile
-		$jpgfile add command -label "low quality (50)"	\
+		$jpgfile add command -label [G_msg "low quality (50)"]	\
 			-command {MapToolBar::savefile jpg 50}
-		$jpgfile add command -label "mid quality (75)" \
+		$jpgfile add command -label [G_msg "mid quality (75)"] \
 			-command {MapToolBar::savefile jpg 75}
-		$jpgfile add command -label "high quality (95)" \
+		$jpgfile add command -label [G_msg "high quality (95)"] \
 			-command {MapToolBar::savefile jpg 95}
-		$jpgfile add command -label "very high resolution (300% your current resolution)" \
+		$jpgfile add command -label [G_msg "very high resolution (300% your current resolution)"] \
 			-command {MapToolBar::savefile jpg 300}
 	$savefile add command -label "PPM/PNM" -command {MapToolBar::savefile ppm 0}
 	$savefile add command -label "PNG" -command {MapToolBar::savefile png 0}
 	$savefile add command -label "TIF*" -command {MapToolBar::savefile tif 0}
-	$savefile add command -label "(* requires gdal)" -state disabled
+	$savefile add command -label [G_msg "(* requires gdal)"] -state disabled
 
 	$mapsave configure -menu $savefile
 
