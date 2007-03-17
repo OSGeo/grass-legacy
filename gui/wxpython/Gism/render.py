@@ -114,6 +114,20 @@ class MapLayer:
 		except StandardError, e:
 			sys.stderr.write("Could not render vector layer <%s>: %s\n" %\
 						 (self.name, str(e)))
+			self.cmd = None
+
+	def __renderCommandLayer(self):
+		"""
+		Stores generic command with all parameters in the self.cmd variable
+		"""
+
+		try:
+			self.cmd = self.name
+
+		except StandardError, e:
+			sys.stderr.write("Could not render command layer <%s>: %s\n" %\
+						 (self.name, str(e)))
+			self.cmd = None
 
 	def Render(self):
 		"""
@@ -144,6 +158,9 @@ class MapLayer:
 
 		elif self.type == "vector":
 			self.__renderVectorLayer()
+
+		elif self.type == "command":
+			self.__renderCommandLayer()
 
 		elif self.type == "wms":
 			print "Type wms is not supported yet"
@@ -766,6 +783,47 @@ class Map:
 
 	    return self.layers[-1]
 
+	def AddCommandLayer(self, name, mapset=None, l_active=True, l_hidden=False,
+		l_opacity=1, l_render=False):
+		"""
+		Adds generic layer to list of layers
+
+		Layer Attributes:
+			name	   - raster layer name
+			mapset	   - mapset name, default: current
+
+			l_active   - see MapLayer class
+			l_hidden
+			l_opacity
+			l_render   - render an image
+
+		Returns:
+                    Added layer on success or None
+
+		"""
+		if not mapset:
+			mapset = self.env["MAPSET"]
+
+		# l_opacity must be <0;1>
+		if l_opacity < 0: l_opacity = 0
+		elif l_opacity > 1: l_opacity = 1
+			# the following won't work in all situations. What
+			# if opacity had somehow been set to 1000?
+#			l_opacity = float(l_opacity) / 100
+
+		layer = MapLayer("command", name, mapset,
+				 l_active, l_hidden, l_opacity)
+
+		# add maplayer to the list of layers
+		self.layers.append(layer)
+
+		if l_render:
+			if not layer.Render():
+				sys.stderr.write("Could not render layer <%s@%s>\n" % \
+							 (name,mapset))
+
+		return self.layers[-1]
+
 	def RemoveLayer(self, name=None, mapset=None, id=None):
 		"""
 		Removes layer from list of layers, defined by name@mapset or id
@@ -821,22 +879,22 @@ class Map:
 
 		return None
 
-        def Clean(self):
-            """
-            Go trough all layers and remove them from layer list
-            Removes also l_mapfile and l_maskfile
+	def Clean(self):
+		"""
+		Go trough all layers and remove them from layer list
+		Removes also l_mapfile and l_maskfile
 
-            Returns 1 if failed or None if ok"
-            """
+		Returns 1 if failed or None if ok"
+		"""
 
-            try:
-                for layer in self.layers:
-                    os.remove(layer.mapfile)
-                    os.remove(layer.maskfile)
-                    self.layers.remove(layer)
-                return
-            except:
-                return 1
+		try:
+			for layer in self.layers:
+				if layer.mapfile: os.remove(layer.mapfile)
+				if layer.maskfile: os.remove(layer.maskfile)
+				self.layers.remove(layer)
+			return None
+		except:
+			return 1
 
 
 if __name__ == "__main__":
@@ -858,7 +916,6 @@ if __name__ == "__main__":
 			   l_opacity=50)
 
 	image = map.Render(force=True)
-
 
 	if image:
 		os.system("display %s" % image)

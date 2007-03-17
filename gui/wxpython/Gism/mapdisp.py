@@ -550,6 +550,11 @@ class MapFrame(wx.Frame):
         """
         self.MapWindow.UpdateMap()
 
+    def ReDrawCommand(self):
+        """
+        d.* command on command line and enter pressed.
+        """
+        self.MapWindow.UpdateMap()
 
     def Pointer(self, event):
         """Pointer button clicled"""
@@ -661,28 +666,18 @@ class MapFrame(wx.Frame):
             track.Track().popCtrl(self.disp_idx)
             self.ctrlbk.DeletePage(pgnum)
 
+    def cleanLayersList(self):
+        Map.Clean()
+
     def addMapsToList(self,type,map, mset):
         if type == 'raster':
             Map.AddRasterLayer(name=map, mapset=mset)
         elif type == 'vector':
             Map.AddVectorLayer(name=map, mapset=mset)
+        elif type == 'command':
+            Map.AddCommandLayer(name=map, mapset=mset)
 
 # end of class MapFrame
-
-class MapLayer:
-    """
-    class to hold method to allow layer tree to
-    add maps to layer list in the display's
-    instance of render.Map
-    """
-
-    def addMapsToList(self,type,map):
-        if type == raster:
-            Map.AddRasterLayer(name=map)
-        elif type == vector:
-            Map.AddVectorLayer(name=map)
-
-
 
 class MapApp(wx.App):
     """
