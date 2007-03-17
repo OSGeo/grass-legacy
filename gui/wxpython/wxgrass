@@ -1,6 +1,7 @@
 #!/bin/sh
 
-if [ "$HOSTTYPE" = "macintosh" -o "$HOSTTYPE" = "powermac" -o "$HOSTTYPE" = "powerpc" -o "$HOSTTYPE" = "intel-pc" ] ; then
+SYSTEM=`uname -s`
+if [ "$SYSTEM" = "Darwin" ] ; then
 	pythonw "$GISBASE/etc/wx/gism.py" -name gmism_py
 else
 	python "$GISBASE/etc/wx/gism.py" -name gmism_py
