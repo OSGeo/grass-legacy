@@ -4,17 +4,8 @@ class MapLayer
 class Map
 """
 
-import os,sys
+import os,sys,glob
 import utils
-
-# global variables should be removed
-#layertree = {} #layer tree in GIS Manager, indexed by display.
-#nb = {} #notebook in GIS Manager, indexed by display.
-#b_page = {} #choicbook page in GIS Manager, indexed by display.
-#cb_pgnum = {} #choicebook page number, indexed by page ID
-#curr_disp = {} #display ID indexed by display index number
-#disp_ctrl = {} #distionary of associated choicebook pages and displays
-#disp_idx = "" #index for each display
 
 # Authors  : Michael Barton, Jachym Cepicky, Martin Landa
 #
@@ -234,7 +225,7 @@ class Map:
 	def __init__(self):
 		"""
 		While initalization, necessary variables are set, monitor size is
-		determinated and
+		determined and
 		"""
 
 		self.wind      = {}  # WIND settings
@@ -245,13 +236,13 @@ class Map:
 		self.layers    = []  # stack of available layer
 		self.env       = {}  # enviroment variables, like MAPSET, LOCATION_NAME, etc.
 		self.verbosity = 0
-		self.mapfile   = utils.GetTempfile() + ".png"
+		self.mapfile   = utils.GetTempfile()+'.png'
 
-		self.renderRegion = {
-			"render" : True,     # should the region be displayed?
-			"color"	 :"255:0:0",
-			"width"	 : 3
-			}
+#		self.renderRegion = {
+#			"render" : True,     # should the region be displayed?
+#			"color"	 :"255:0:0",
+#			"width"	 : 3
+#			}
 
 		# setting some initial env. variables
 		self.__initEnv()
@@ -886,11 +877,16 @@ class Map:
 
 		Returns 1 if failed or None if ok"
 		"""
-
 		try:
 			for layer in self.layers:
-				if layer.mapfile: os.remove(layer.mapfile)
-				if layer.maskfile: os.remove(layer.maskfile)
+				if layer.mapfile:
+					base = os.path.split(layer.mapfile)[0]
+					mapfile = os.path.split(layer.mapfile)[1]
+					tempbase = mapfile.split('.')[0]
+					basefile = os.path.join(base,tempbase)+r'.*'
+					for f in glob.glob(basefile):
+						os.remove(f)
+#				if layer.maskfile: os.remove(layer.maskfile)
 				self.layers.remove(layer)
 			return None
 		except:
