@@ -10153,7 +10153,7 @@ msgstr ""
 
 #: ../raster/r.support/front/front.c:67
 msgid "Text to use for new map title"
-msgstr "Tex für einen neuen Kartentitel."
+msgstr "Text für einen neuen Kartentitel."
 
 #: ../raster/r.support/front/front.c:74
 msgid "Text to append to the next line of the map's metadata file"
@@ -12606,7 +12606,7 @@ msgstr ""
 #: ../locale/scriptstrings/d.vect.thematic_to_translate.c:16
 #, fuzzy
 msgid "Layer to use for thematic display"
-msgstr "Tex für einen neuen Kartentitel."
+msgstr "Text für einen neuen Kartentitel."
 
 #: ../locale/scriptstrings/d.vect.thematic_to_translate.c:17
 #: ../locale/scriptstrings/d.vect.thematic_to_translate.c:19
