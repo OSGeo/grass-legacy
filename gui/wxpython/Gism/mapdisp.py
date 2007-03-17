@@ -661,11 +661,11 @@ class MapFrame(wx.Frame):
             track.Track().popCtrl(self.disp_idx)
             self.ctrlbk.DeletePage(pgnum)
 
-    def addMapsToList(self,type,map):
+    def addMapsToList(self,type,map, mset):
         if type == 'raster':
-            Map.AddRasterLayer(name=map)
+            Map.AddRasterLayer(name=map, mapset=mset)
         elif type == 'vector':
-            Map.AddVectorLayer(name=map)
+            Map.AddVectorLayer(name=map, mapset=mset)
 
 # end of class MapFrame
 

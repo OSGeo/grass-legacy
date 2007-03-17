@@ -56,7 +56,6 @@ class LayerTree(CT.CustomTreeCtrl):
         self.layertype = {} # dictionary of layer types for each layer
 
         self.display = disp
-        print 'self.display =', self.display
 
         self.root = self.AddRoot("Map Layers")
         self.SetPyData(self.root, None)
@@ -185,14 +184,20 @@ class LayerTree(CT.CustomTreeCtrl):
 
     def createLayerList(self):
         for layer in self.layertype.keys():
+            name = self.GetItemWindow(layer).GetValue()
+            if '@' in name:
+                msname = name.split('@')[1]
+                name = name.split('@')[0]
+            else:
+                msname = None
             if self.IsItemChecked(layer) == True and \
                 self.GetItemWindow(layer).GetValue() != '' and \
                 self.GetItemWindow(layer).GetValue()[0:7] != 'Mapset:':
                 if self.layertype[layer] == 'raster':
-                    self.display.addMapsToList(type = 'raster', map = self.GetItemWindow(layer).GetValue())
+                    self.display.addMapsToList(type = 'raster', map = name, mset = msname)
                     #TODO: need to add options for layer
                 elif self.layertype[layer] == 'vector':
-                    self.display.addMapsToList(type = 'vector', map = self.GetItemWindow(layer).GetValue())
+                    self.display.addMapsToList(type = 'vector', map = name, mset = msname)
 
 class TreeCtrlComboPopup(wx.combo.ComboPopup):
     """
