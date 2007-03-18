@@ -83,8 +83,6 @@ main (int argc, char *argv[])
 	    mapset = *ptr;
 	    if (G__mapset_permissions (mapset) < 0)
 	    {
-		char command[1024];
-
 		fprintf (stderr, "\7ERROR: [%s] - no such mapset\n", mapset);
 		fprintf (stderr, "\nAvailable mapsets:\n\n");
 		G_ls(G_location_path(), stderr);
@@ -117,8 +115,6 @@ main (int argc, char *argv[])
 	    mapset = *ptr;
 	    if (G__mapset_permissions (mapset) < 0)
 	    {
-		char command[1024];
-
 		fprintf (stderr, "\7ERROR: [%s] - no such mapset\n", mapset);
 		fprintf (stderr, "\nAvailable mapsets:\n\n");
 		G_ls(G_location_path(), stderr);
