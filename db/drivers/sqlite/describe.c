@@ -251,7 +251,7 @@ int affinity_type ( const char *declared )
         aff = SQLITE_INTEGER;
     }
     else if ( strstr(lc,"char") || strstr(lc,"clob")
-              || strstr(lc,"text") )
+              || strstr(lc,"text") || strstr(lc,"date") )
     {
         aff = SQLITE_TEXT;
     }
