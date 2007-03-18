@@ -34,7 +34,7 @@ int unit_test_solvers()
 {
     int sum = 0;
 
-    G_message(_("\n++ Running slover unit tests ++"));
+    G_message(_("\n++ Running solver unit tests ++"));
 
     sum += test_solvers();
 
