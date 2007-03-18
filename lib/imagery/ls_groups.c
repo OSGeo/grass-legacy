@@ -66,8 +66,7 @@ int I_list_groups (int full)
 	fprintf (temp, "no group files available\n");
     fprintf (temp, "---------------------------------\n");
     fclose (temp);
-    sprintf (buf, "$GRASS_PAGER %s", tempfile);
-    G_system(buf);
+    G_spawn(getenv("GRASS_PAGER"), getenv("GRASS_PAGER"), tempfile, NULL);
     remove ( tempfile );
     fprintf (stdout,"hit RETURN to continue -->");
     fflush(stdout);
@@ -125,8 +124,7 @@ int I_list_subgroups (char *group,int full)
 	fprintf (temp, "no subgroup files available\n");
     fprintf (temp, "---------------------------------\n");
     fclose (temp);
-    sprintf (buf, "$GRASS_PAGER %s", tempfile);
-    G_system(buf);
+    G_spawn(getenv("GRASS_PAGER"), getenv("GRASS_PAGER"), tempfile, NULL);
     remove ( tempfile );
     fprintf (stdout,"hit RETURN to continue -->");
     fflush(stdout);
