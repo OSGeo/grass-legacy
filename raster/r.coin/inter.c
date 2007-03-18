@@ -26,6 +26,7 @@ int interactive_version (void)
     char key;
     char line[128],outname[128],command[256];
     char ans[80];
+    char path[254];
 
     setbuf(stderr,NULL);
 
@@ -83,8 +84,7 @@ int interactive_version (void)
 	default: continue;
 	}
 
-	sprintf(command,"$GRASS_PAGER %s",dumpname);
-	G_system(command);
+	G_spawn(getenv("GRASS_PAGER"), getenv("GRASS_PAGER"), dumpname, NULL);
 
 	while(1)
 	{
@@ -98,14 +98,14 @@ int interactive_version (void)
 	    if (!G_gets(line)) continue;
 	    if(sscanf(line,"%s",outname) != 1) continue;
 	    if(outname[0] != '/'){
-		sprintf(command,"cp %s %s/%s",dumpname,G_home(),outname);
+		sprintf(path, "%s/%s", G_home(), outname);
 		fprintf(stderr, _("'%s' being saved in your home directory"), outname);
 	    }
 	    else{
-		sprintf(command,"cp %s %s", dumpname, outname);
+  	    	sprintf(path, "%s", outname);
 		fprintf(stderr, _("'%s' being saved"), outname);
 	    }
-	    G_system(command);
+	    G_spawn("cp", "cp", dumpname, path, NULL);
 	    fprintf(stderr,"\n");
 	    break;
 	}
@@ -126,8 +126,7 @@ ask132:
 	    if(sscanf(ans,"%d",&cols) != 1) goto ask132;
 	    if(cols == 132) print_coin(key,132,1);
 	    else if (cols != 80) goto ask132;
-	    sprintf(command,"lpr %s",dumpname);
-	    G_system(command);
+	    G_spawn("lpr", "lpr", dumpname, NULL);
 	    break;
 	}
 
