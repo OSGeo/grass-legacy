@@ -87,8 +87,7 @@ main (int argc, char *argv[])
 
 		fprintf (stderr, "\7ERROR: [%s] - no such mapset\n", mapset);
 		fprintf (stderr, "\nAvailable mapsets:\n\n");
-		sprintf (command, "ls -C %s/%s 1>&2", G_gisdbase(), G_location());
-		system (command);
+		G_ls(G_location_path(), stderr);
 		exit(EXIT_FAILURE);
 	    }
 	    nchoices++;
@@ -122,8 +121,7 @@ main (int argc, char *argv[])
 
 		fprintf (stderr, "\7ERROR: [%s] - no such mapset\n", mapset);
 		fprintf (stderr, "\nAvailable mapsets:\n\n");
-		sprintf (command, "ls -C %s/%s 1>&2", G_gisdbase(), G_location());
-		system (command);
+		G_ls(G_location_path(), stderr);
 		exit(EXIT_FAILURE);
 	    }
 
