@@ -1,4 +1,9 @@
 """
+To be used either from GIS Manager or as p.mon backend
+
+Usage: 
+    mapdisp.py /path/to/command/file
+
 mapdisp Package
 
 Classes:
@@ -24,8 +29,65 @@ import grassenv
 import track
 
 Map = render.Map() # instance of Map class to render GRASS display output to PPM file
-
 DEBUG = False
+
+# for cmdline
+from threading import Thread
+import time
+cmdfilename = None
+
+class Command(Thread):
+    """
+    Creates  thread, which will observe the command file and see, if there
+    is new command to be executed
+    """
+    def __init__ (self,parent,Map):
+      Thread.__init__(self)
+
+      global cmdfilename
+
+      self.parent = parent
+      self.map = Map # 
+      self.cmdfile = open(cmdfilename,"r")
+
+    def run(self):
+        """
+        Run this in thread
+        """
+        dispcmd = []
+        while 1:
+            self.parent.redraw = False
+            line = self.cmdfile.readline().strip()
+            if line == "quit": 
+                break
+            
+            if line:
+                try:
+                    #oper, lname, mapset, catlist, vallist, invert, opacity 
+                    # 0     1       2       3       4          5        6 
+                    dispcmd = list(line.strip().split())
+                    try: mapset = eval(dispcmd[2])
+                    except: pass
+                    try: catlist = eval(dispcmd[3])
+                    except: pass
+                    try: vallist = eval(dispcmd[4])
+                    except: pass
+                    try: invert = eval(dispcmd[5])
+                    except: pass
+                    opacity = float(dispcmd[6])
+
+                    if dispcmd[0]=="addraster":
+                        self.map.AddRasterLayer(name="%s" % (dispcmd[1]),
+                                mapset="PERMANENT", vallist=vallist,
+                                l_opacity=opacity)
+                        self.parent.redraw =True
+                except Exception, e:
+                    print "Command Thread: ",e
+                    pass
+                
+            time.sleep(0.1)
+
+        sys.exit()
 
 class BufferedWindow(wx.Window):
     """
@@ -445,9 +507,11 @@ class MapFrame(wx.Frame):
 
         #
         # Bind various events
+        # ONLY if we are running from GIS manager
         #
-    	self.Bind(wx.EVT_ACTIVATE, self.OnFocus)
-    	self.Bind(wx.EVT_CLOSE,    self.OnCloseWindow)
+        if self.disp_idx > -1: 
+            self.Bind(wx.EVT_ACTIVATE, self.OnFocus)
+            self.Bind(wx.EVT_CLOSE,    self.OnCloseWindow)
 
         #
         # Update fancy gui style
@@ -686,23 +750,43 @@ class MapApp(wx.App):
 
     def OnInit(self):
         wx.InitAllImageHandlers()
-        Mapfrm = MapFrame(parent=None, id=wx.ID_ANY)
+        self.Mapfrm = MapFrame(parent=None, id=wx.ID_ANY)
         #self.SetTopWindow(Map)
-        Mapfrm.Show()
+        self.Mapfrm.Show()
 
         # only for testing purpose
         if __name__ == "__main__":
-            Map.AddRasterLayer(name="elevation.dem", mapset="PERMANENT")
-            os.system("g.copy vect=roads,tmp --o")
-            Map.AddVectorLayer(name="tmp", color="red")
-            Map.AddVectorLayer(name="bugsites", mapset="PERMANENT",
-                               color="blue")
 
+            # redraw map, if new command appears
+            self.redraw = False
+            status = Command(self,Map)
+            status.start()
+            self.timer = wx.PyTimer(self.watcher)
+            # chec each 0.1s
+            self.timer.Start(100)
+
+            
         return 1
+    
+    def watcher(self):
+        """Redraw, if new layer appears"""
+        if self.redraw:
+            self.Mapfrm.ReDraw(None)
+        self.redraw = False
+        return
+
 
 # end of class MapApp
 
 if __name__ == "__main__":
+
+    ###### SET command variable
+    if len(sys.argv) != 2:
+        print __doc__
+        sys.exit()
+
+    cmdfilename = sys.argv[1]
+
     import gettext
     gettext.install("gm_map") # replace with the appropriate catalog name
 
@@ -714,3 +798,7 @@ if __name__ == "__main__":
     gm_map.MainLoop()
     if grassenv.env.has_key("MONITOR"):
         os.system("d.mon sel=%s" % grassenv.env["MONITOR"])
+    
+    os.remove(cmdfilename)
+    os.system("""g.gisenv set="GRASS_PYCMDFILE" """)
+
