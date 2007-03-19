@@ -72,13 +72,13 @@ ok=yes
 for f in $GIS_OPT_LAYER1 $GIS_OPT_LAYER2 $GIS_OPT_LAYER3 $GIS_OPT_LAYER4
 do
   eval `g.findfile element=cell file=$f`
-  if [ "$name" == "" ] ; then
+  if [ -z "$name" ] ; then
 	echo $f not found
 	ok=no
   fi
 done
 
-if [ "$ok" == "no" ] ; then
+if [ "$ok" = "no" ] ; then
  exit 1
 fi
 
