@@ -57,6 +57,7 @@ class LayerTree(CT.CustomTreeCtrl):
         self.layername = "" # name off currently selected layer
         self.layertype = {} # dictionary of layer types for each layer
         self.saveitem = {} # dictionary to preserve layer attributes for drag and drop
+        self.dcmdopts = ''
 
         self.display = disp
 
@@ -197,11 +198,11 @@ class LayerTree(CT.CustomTreeCtrl):
        # When double clicked, open options dialog
         if self.layertype[layer] == 'raster':
 #            raster_prop.MyFrame(self)
-            menuform.GUI().parseCommand('d.rast', gmpath, self)
+            menuform.GUI().parseCommand('d.rast', gmpath)
         elif self.layertype[layer] == 'vector':
 #            print 'its a vector'
 #            vectopt.MyPanel(self)
-            menuform.GUI().parseCommand('d.vect', gmpath, self)
+            menuform.GUI().parseCommand('d.vect', gmpath)
         self.createLayerList()
 
     def onLayerChecked(self, event):
@@ -216,6 +217,9 @@ class LayerTree(CT.CustomTreeCtrl):
         map = event.GetString()
         self.createLayerList()
 #        event.Skip()
+
+    def getOptData(self, dcmdopts):
+        print 'the options are =',dcmdopts
 
     def createLayerList(self):
         self.display.cleanLayersList()
