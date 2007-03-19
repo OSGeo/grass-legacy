@@ -205,6 +205,7 @@ class mainFrame(wx.Frame):
 
 		self.CreateStatusBar()
 		self.SetStatusText("Enter parameters for " + grass_task['name'])
+        self.parent = parent
 
 		menu = wx.Menu()
 		menu.Append(ID_ABOUT, "&About GrassGUI",
@@ -308,6 +309,7 @@ class mainFrame(wx.Frame):
 		p_count = 0
 		errors = 0
 		errStr = ""
+            
 		while p_count < len(grass_task['params']):
 			if (grass_task['params'][p_count]['type'] != 'flag' and grass_task['params'][p_count]['value'] == '' and grass_task['params'][p_count]['required'] != 'no'):
 				errStr = errStr + "Parameter " + grass_task['params'][p_count]['name'] + "(" +grass_task['params'][p_count]['description']	+ ") is missing\n"
@@ -334,14 +336,22 @@ class mainFrame(wx.Frame):
 ##
 ##			else:
 				# Send any other command to the shell.
-			try:
-				retcode = subprocess.call(cmd, shell=True)
-				if retcode < 0:
-					print >>sys.stderr, "Child was terminated by signal", -retcode
-				elif retcode > 0:
-					print >>sys.stderr, "Child returned", retcode
-			except OSError, e:
-				print >>sys.stderr, "Execution failed:", e
+
+            if self.parent > -1: # we are child of some other window (probably
+                                # gism.py
+                #self.parent....
+                # Michael, we have the command here, what to do?
+                                
+                pass
+            else:
+                try:
+                    retcode = subprocess.call(cmd, shell=True)
+                    if retcode < 0:
+                        print >>sys.stderr, "Child was terminated by signal", -retcode
+                    elif retcode > 0:
+                        print >>sys.stderr, "Child returned", retcode
+                except OSError, e:
+                    print >>sys.stderr, "Execution failed:", e
 
 	##			  self.console_output.write(cmd+"\n----------\n") #need to echo this back to gism.py console
 	##				  self.out = subprocess.Popen(cmd, shell=True, stdout=Pipe).stdout
@@ -388,11 +398,12 @@ class GrassGUIApp(wx.App):
 		return True
 
 class GUI:
-	def __init__(self):
+	def __init__(self,parent=-1):
 		'''Parses GRASS commands when module is imported and used
 		from gism.py'''
 		self.w = HSPACE + STRING_ENTRY_WIDTH + HSPACE
 		self.h = MENU_HEIGHT + VSPACE + grass_task['lines'] * ENTRY_HEIGHT + VSPACE	 + BUTTON_HEIGHT + VSPACE + STATUSBAR_HEIGHT
+        self.parent = parent
 
 	def parseCommand(self, cmd, gmpath):
 		cmdlst = []
@@ -409,7 +420,7 @@ class GUI:
 			handler = processTask()
 			xml.sax.parseString(cmdout2, handler)
 
-		frame = mainFrame(None, -1, self.w, self.h)
+		frame = mainFrame(None, self.parent , self.w, self.h)
 		frame.Show(True)
 
 if __name__ == "__main__":
