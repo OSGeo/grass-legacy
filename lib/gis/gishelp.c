@@ -31,6 +31,7 @@
 #include <grass/glocale.h>
 #include <unistd.h>
 #include <stdlib.h>
+#include <grass/spawn.h>
 #define GEN_HELP	"gen_help"
 
 int G_gishelp( char *helpfile , char *request )
