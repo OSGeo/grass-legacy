@@ -39,7 +39,6 @@ int main(int argc, char **argv)
     module->description = "Create a new vector from current region.";
 
     out_opt = G_define_standard_option(G_OPT_V_OUTPUT); 
-    out_opt->description = "Output map where points will be written";
 
     type_opt = G_define_standard_option(G_OPT_V_TYPE) ;
     type_opt->multiple = NO;
