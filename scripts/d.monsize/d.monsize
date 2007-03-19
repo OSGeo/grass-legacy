@@ -47,7 +47,7 @@
 
 
 
-if test "$GISBASE" = ""; then
+if test -z "$GISBASE"; then
  echo "You must be in GRASS GIS to run this program." >&2
  exit 1
 fi   
