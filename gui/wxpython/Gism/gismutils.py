@@ -2,12 +2,13 @@ import os,sys
 import wx
 import wx.lib.customtreectrl as CT
 import wx.combo
+from wx.lib.combotreebox import ComboTreeBox
 
 import render
 import grassenv
 import track
 import menuform
-import optpanels.rastopt as rastopt
+import optpanels.raster_prop as raster_prop
 import optpanels.vectopt as vectopt
 import optpanels.cmdopt as cmdopt
 
@@ -38,7 +39,7 @@ class LayerTree(CT.CustomTreeCtrl):
                  size=wx.DefaultSize, style=wx.SUNKEN_BORDER,
                  ctstyle=CT.TR_HAS_BUTTONS | CT.TR_HAS_VARIABLE_ROW_HEIGHT |
                  CT.TR_HIDE_ROOT | CT.TR_ROW_LINES | CT.TR_FULL_ROW_HIGHLIGHT,
-                 disp=None,log=None):
+                 disp=None, log=None):
         CT.CustomTreeCtrl.__init__(self, parent, id, pos, size, style,ctstyle)
         self.SetAutoLayout(True)
         self.SetGradientStyle(1)
@@ -54,6 +55,7 @@ class LayerTree(CT.CustomTreeCtrl):
         self.layer_selected = ""   # ID of currently selected layer
         self.layername = "" # name off currently selected layer
         self.layertype = {} # dictionary of layer types for each layer
+        self.saveitem = {} # dictionary to preserve layer attributes for drag and drop
 
         self.display = disp
 
@@ -67,8 +69,6 @@ class LayerTree(CT.CustomTreeCtrl):
         trgif.Rescale(16, 16)
         trgif = trgif.ConvertToBitmap()
         self.rast_icon = il.Add(trgif)
-        # print "width=",trgif.GetWidth()
-        # print "height=",trgif.GetHeight()
         trgif = wx.Image(icons + r'/element-vector.gif', wx.BITMAP_TYPE_GIF)
         trgif.Rescale(16, 16)
         trgif = trgif.ConvertToBitmap()
@@ -81,24 +81,19 @@ class LayerTree(CT.CustomTreeCtrl):
 
         checksize = il.GetSize(0)
         checkbmp = il.GetBitmap(0)
-        # print "checksize=",checksize
         self.AssignImageList(il)
 
+        # use when groups implemented
         # self.tree.SetItemImage(self.root, fldridx, wx.TreeItemIcon_Normal)
         # self.tree.SetItemImage(self.root, fldropenidx, wx.TreeItemIcon_Expanded)
-
-
-        #        for x in range(15):
-        #            child = self.AppendItem(self.root, "Item %d" % x)
-        #            self.SetPyData(child, None)
-        #            self.tree.SetItemImage(child, fldridx, wx.TreeItemIcon_Normal)
-        #            self.tree.SetItemImage(child, fldropenidx, wx.TreeItemIcon_Expanded)
 
         self.Bind(wx.EVT_TREE_ITEM_EXPANDING, self.onExpandNode)
         self.Bind(wx.EVT_TREE_ITEM_COLLAPSED, self.onCollapseNode)
         self.Bind(wx.EVT_TREE_ITEM_ACTIVATED, self.onActivateLayer)
         self.Bind(wx.EVT_TREE_SEL_CHANGED,    self.onChangeSel)
         self.Bind(CT.EVT_TREE_ITEM_CHECKED, self.onLayerChecked)
+        self.Bind(wx.EVT_TREE_BEGIN_DRAG, self.onBeginDrag)
+        self.Bind(wx.EVT_TREE_END_DRAG, self.onEndDrag)
 
     def AddLayer(self, idx, type):
 #        layername = type + ':' + str(self.node)
@@ -124,13 +119,12 @@ class LayerTree(CT.CustomTreeCtrl):
                                                style=wx.TE_MULTILINE|wx.TE_WORDWRAP)
             self.map.Bind(wx.EVT_TEXT_ENTER, self.onMapChanged)
 
-        if self.node >0 and self.layer_selected:
-            self.layer = self.InsertItem(self.root, self.layer_selected,
+        if self.layer_selected and self.layer_selected != self.GetRootItem():
+            self.layer = self.InsertItem(self.root, self.GetPrevSibling(self.layer_selected),
                                                     '', ct_type=1,
                                                     wnd=self.map )
         else:
-            self.layer = self.PrependItem(self.root, '',
-                                                    ct_type=1, wnd=self.map)
+            self.layer = self.PrependItem(self.root, '', ct_type=1, wnd=self.map)
 
         #add to layertype dictionary
         self.layertype[self.layer] = type
@@ -159,12 +153,54 @@ class LayerTree(CT.CustomTreeCtrl):
         print 'group expanded'
         event.Skip()
 
+    def onBeginDrag(self, event):
+        '''Allow drag-and-drop for leaf nodes.'''
+        if self.GetChildrenCount(event.GetItem()) == 0:
+            event.Allow()
+            self.dragItem = event.GetItem()
+            self.saveitem['check'] = self.IsItemChecked(self.dragItem)
+            self.saveitem['image'] = self.GetItemImage(self.dragItem, 0)
+            self.saveitem['text'] = self.GetItemText(self.dragItem)
+            self.saveitem['wind'] = self.GetItemWindow(self.dragItem)
+            self.saveitem['windval'] = self.GetItemWindow(self.dragItem).GetValue()
+            self.saveitem['data'] = self.GetPyData(self.dragItem)
+        else:
+            print ("Cant drag a node that has children")
+
+    def onEndDrag(self, event):
+        '''Do the re-organization if possible'''
+
+        #If we dropped somewhere that isn't on top of an item, ignore the event
+        if not event.GetItem():
+            return
+
+        # Make sure this memeber exists.
+        try:
+            old = self.dragItem
+        except:
+            return
+
+        # Get the other IDs that are involved
+        afteritem = event.GetItem()
+        parent = self.GetItemParent(afteritem)
+        if not parent:
+            return
+
+        newwind = self.saveitem['wind']
+        new = self.InsertItem(parent, afteritem, text=self.saveitem['text'], \
+                              ct_type=1, wnd=newwind, image=self.saveitem['image'], \
+                              data=self.saveitem['data'])
+        self.CheckItem(new, checked=self.saveitem['check'])
+        newwind.SetValue(self.saveitem['windval'])
+
+        self.Delete(old)
+
     def onActivateLayer(self, event):
         layer = event.GetItem()
         self.layer_selected = layer
        # When double clicked, open options dialog
         if self.layertype[layer] == 'raster':
-            rastopt.MyFrame(self)
+            raster_prop.MyFrame(self)
         elif self.layertype[layer] == 'vector':
             print 'its a vector'
             vectopt.MyPanel(self)
@@ -186,22 +222,24 @@ class LayerTree(CT.CustomTreeCtrl):
     def createLayerList(self):
         self.display.cleanLayersList()
         for layer in self.layertype.keys():
-            name = self.GetItemWindow(layer).GetValue()
-            if '@' in name:
-                msname = name.split('@')[1]
-                name = name.split('@')[0]
-            else:
-                msname = None
-            if self.IsItemChecked(layer) == True and \
-                self.GetItemWindow(layer).GetValue() != '' and \
-                self.GetItemWindow(layer).GetValue()[0:7] != 'Mapset:':
-                if self.layertype[layer] == 'raster':
-                    self.display.addMapsToList(type='raster', map=name, mset=msname)
-                    #TODO: need to add options for layer
-                elif self.layertype[layer] == 'vector':
-                    self.display.addMapsToList(type='vector', map=name, mset=msname)
-                elif self.layertype[layer] == 'command':
-                    self.display.addMapsToList(type='command', map=name, mset=msname)
+            if self.GetItemWindow(layer) != None:
+                name = self.GetItemWindow(layer).GetValue()
+                if '@' in name:
+                    msname = name.split('@')[1]
+                    name = name.split('@')[0]
+                else:
+                    msname = None
+                if self.IsItemChecked(layer) == True and \
+                    self.GetItemWindow(layer).GetValue() != '' and \
+                    self.GetItemWindow(layer).GetValue()[0:7] != 'Mapset:':
+                    if self.layertype[layer] == 'raster':
+                        self.display.addMapsToList(type='raster', map=name, mset=msname)
+                        #TODO: need to add options for layer
+                    elif self.layertype[layer] == 'vector':
+                        self.display.addMapsToList(type='vector', map=name, mset=msname)
+                    elif self.layertype[layer] == 'command':
+                        self.display.addMapsToList(type='command', map=name, mset=msname)
+
 
 class TreeCtrlComboPopup(wx.combo.ComboPopup):
     """
@@ -221,7 +259,8 @@ class TreeCtrlComboPopup(wx.combo.ComboPopup):
                                 |wx.TR_HAS_BUTTONS
                                 |wx.TR_SINGLE
                                 |wx.TR_LINES_AT_ROOT
-                                |wx.SIMPLE_BORDER)
+                                |wx.SIMPLE_BORDER
+                                |wx.TR_FULL_ROW_HIGHLIGHT)
         self.tree.Bind(wx.EVT_MOTION, self.OnMotion)
         self.tree.Bind(wx.EVT_LEFT_DOWN, self.OnLeftDown)
 
@@ -283,6 +322,7 @@ class TreeCtrlComboPopup(wx.combo.ComboPopup):
                 #TODO: make current mapset node expanded
                 dir_node = self.AddItem('Mapset: '+dir)
                 self.tree.SetItemTextColour(dir_node,wx.Colour(50,50,200))
+                self.tree.Expand(dir_node)
                 elem_list = os.listdir(os.path.join (location_path, dir, element))
                 #TODO: sort list items?
                 for elem in elem_list:
@@ -338,6 +378,7 @@ class TreeCtrlComboPopup(wx.combo.ComboPopup):
         evt.Skip()
 
 
+
 class GMConsole(wx.Panel):
     """
     Create and manage output console for commands entered on the
@@ -351,7 +392,6 @@ class GMConsole(wx.Panel):
 
         self.cmd_output = ""
         self.console_command = ""
-#        self.console_run = ""
         self.console_clear = ""
         self.console_save = ""
         self.gcmdlst = [] #list of commands in bin and scripts
@@ -418,14 +458,25 @@ class GMConsole(wx.Panel):
     	if len(cmdlst) == 1 and cmd in gcmdlst:
     		# Send GRASS command without arguments to GUI command interface
     		# except display commands (they are handled differently)
-    		global gmpath
-    		if cmd[0:2] == "d.":
-    			print "Add map layer to GIS Manager to see " \
-                                    "GUI for display command"
-    			return
-    		else:
-    			menuform.GUI().parseCommand(cmd, gmpath)
-    			self.cmd_output.write(cmdlst[0] +
+            global gmpath
+            if cmd[0:2] == "d.":
+                if cmd == 'd.rast':
+                    layertype = 'raster'
+                elif cmd == 'd.vect':
+                    layertype = 'vector'
+                else:
+                    print 'Command type not yet implemented'
+                    return
+
+                if disp_idx != None:
+                    # get layer tree for active display
+                    layertree = track.Track().GetCtrls(disp_idx, 2)
+                    # add layer
+                    layertree.AddLayer(disp_idx, layertype)
+
+            else:
+                menuform.GUI().parseCommand(cmd, gmpath)
+                self.cmd_output.write(cmdlst[0] +
                                                           "\n----------\n")
 
     	elif cmd[0:2] == "d." and len(cmdlst) > 1 and cmdlst[0] in gcmdlst:
@@ -485,7 +536,6 @@ class GMConsole(wx.Panel):
         output.write(self.history)
         output.close()
         dlg.Destroy()
-
 
 def GetTempfile( pref=None):
     """
