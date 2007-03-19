@@ -8,6 +8,7 @@ import render
 import grassenv
 import track
 import menuform
+import select
 import optpanels.raster_prop as raster_prop
 import optpanels.vectopt as vectopt
 import optpanels.cmdopt as cmdopt
@@ -99,17 +100,11 @@ class LayerTree(CT.CustomTreeCtrl):
 #        layername = type + ':' + str(self.node)
 
         if type == 'raster':
-            self.map = wx.combo.ComboCtrl(self, size=(250,-1))
-            tcp = TreeCtrlComboPopup()
-            self.map.SetPopupControl(tcp)
-            tcp.getElementList('cell')
+            self.map = select.Select(self, (250,-1), 'cell')
             self.map.Bind(wx.EVT_TEXT, self.onMapChanged)
 
         elif type == 'vector':
-            self.map = wx.combo.ComboCtrl(self, size=(250,-1))
-            tcp = TreeCtrlComboPopup()
-            self.map.SetPopupControl(tcp)
-            tcp.getElementList('vector')
+            self.map = select.Select(self, (250,-1), 'vector')
             self.map.Bind(wx.EVT_TEXT, self.onMapChanged)
 
         elif type == 'command':
