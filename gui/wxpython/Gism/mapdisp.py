@@ -66,21 +66,26 @@ class Command(Thread):
                     #oper, lname, mapset, catlist, vallist, invert, opacity 
                     # 0     1       2       3       4          5        6 
                     dispcmd = list(line.strip().split())
-                    try: mapset = eval(dispcmd[2])
-                    except: pass
-                    try: catlist = eval(dispcmd[3])
-                    except: pass
-                    try: vallist = eval(dispcmd[4])
-                    except: pass
-                    try: invert = eval(dispcmd[5])
-                    except: pass
-                    opacity = float(dispcmd[6])
-
+                    #print dispcmd
                     if dispcmd[0]=="addraster":
+                        try: mapset = eval(dispcmd[2])
+                        except: pass
+                        try: catlist = eval(dispcmd[3])
+                        except: pass
+                        try: vallist = eval(dispcmd[4])
+                        except: pass
+                        try: invert = eval(dispcmd[5])
+                        except: pass
+                        opacity = float(dispcmd[6])
+
                         self.map.AddRasterLayer(name="%s" % (dispcmd[1]),
-                                mapset="PERMANENT", vallist=vallist,
+                                mapset=dispcmd[2], vallist=vallist,
                                 l_opacity=opacity)
-                        self.parent.redraw =True
+
+                    if dispcmd[0]=="addvector":
+                        self.map.AddVectorLayer(name="%s" % (dispcmd[1]),
+                                        mapset=dispcmd[2])
+                    self.parent.redraw =True
                 except Exception, e:
                     print "Command Thread: ",e
                     pass
