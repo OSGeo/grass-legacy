@@ -13,7 +13,7 @@ import cmd
 icons= os.path.split(gismutils.icons)[0]
 icons= os.path.split(icons)[0]
 icons= os.path.split(icons)[0]
-print icons
+#print icons
 
 class MapToolbar:
     """
