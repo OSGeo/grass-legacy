@@ -265,8 +265,8 @@ class GMFrame(wx.Frame):
         """Run command"""
 
         #global gmpath
-        print 'the command = ',self.cmdinput.GetValue()
-        cmd = self.cmdinput.GetLineText(0)
+        cmd = self.cmdinput.GetValue()
+        print 'the command = ',cmd
 
         self.goutput.runCmd(cmd)
         #menuform.GUI().parseCommand(cmd, gmpath)
@@ -288,25 +288,25 @@ class GMFrame(wx.Frame):
             self.addToolbarButton(toolbar, *each)
         toolbar.Realize()
 
-    def addToolbarButton(self, toolbar, label, iconfile, help, handler):
+    def addToolbarButton(self, toolbar, label, icon, help, handler):
         """Adds button to the given toolbar"""
 
         if not label:
             toolbar.AddSeparator()
             return
-        icon = wx.Bitmap(iconfile, wx.BITMAP_TYPE_ANY)
-        tool = toolbar.AddSimpleTool(-1, icon, label, help)
+        tool = toolbar.AddLabelTool(id=wx.ID_ANY, label=label, bitmap=icon, shortHelp=help)
         self.Bind(wx.EVT_TOOL, handler, tool)
 
     def toolbarData(self):
 
-        return (
-            ('newdisplay', os.path.join(gismutils.icons,'gui-startmon.gif'), 'Start new display', self.newDisplay),
-            ('', '', '', ''),
-            ('addRaster', os.path.join(gismutils.icons,'element-cell.gif'), 'Add raster layer', self.addRaster),
-            ('addvect', os.path.join(gismutils.icons,'element-vector.gif'), 'Add vector layer', self.addVector),
-            ('addcmd', os.path.join(gismutils.icons,'gui-cmd.gif'), 'Add command layer', self.addCommand)
-            )
+        return   (
+                 ('newdisplay', wx.Bitmap(os.path.join(gismutils.icons,'gui-startmon.gif'), wx.BITMAP_TYPE_ANY), 'Start new display', self.newDisplay),
+                 ('', '', '', ''),
+                 ('addrast', wx.Bitmap(os.path.join(gismutils.icons,'element-cell.gif'), wx.BITMAP_TYPE_ANY), 'Add raster layer', self.addRaster),
+                 ('addvect', wx.Bitmap(os.path.join(gismutils.icons,'element-vector.gif'), wx.BITMAP_TYPE_ANY), 'Add vector layer', self.addVector),
+                 ('addcmd', wx.Bitmap(os.path.join(gismutils.icons,'gui-cmd.gif'), wx.BITMAP_TYPE_ANY), 'Add command layer', self.addCommand),
+                 ('delcmd', wx.ArtProvider.GetBitmap(wx.ART_DELETE, wx.ART_TOOLBAR, (16,16)), 'Delete selected layer', self.deleteLayer),
+                 )
 
     def newDisplay(self, event=None):
         """Create new map display frame"""
@@ -373,13 +373,18 @@ class GMFrame(wx.Frame):
         return self.notebook.GetSelection()
 
     def SetTree(self, layertype):
-        #get ID of active display
-        curr_pg = self.gm_cb.GetCurrentPage()
-        disp_idx = track.Track().GetDisp_idx(curr_pg)
+        """
+        Add map display layer in GIS Manager tree widget
+        """
+        disp_idx = track.Track().GetDisp_idx(self.maptree)
         if disp_idx != None:
-            #get layer tree for active display
-            layertree = track.Track().GetCtrls(disp_idx, 2)
-        layertree.AddLayer(disp_idx, layertype)
+            self.maptree.AddLayer(disp_idx, layertype)
+
+    def deleteLayer(self, event):
+        """
+        Delete selected map display layer in GIS Manager tree widget
+        """
+        self.maptree.Delete(self.maptree.GetSelection())
 
     #Misc methods
     def onCloseWindow(self, event):
