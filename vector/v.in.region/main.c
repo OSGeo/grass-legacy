@@ -32,14 +32,14 @@ int main(int argc, char **argv)
     struct line_pnts *Points;
     double diff_long, mid_long;
 
-    G_gisinit (argv[0]) ;
+    G_gisinit(argv[0]);
 
     module = G_define_module();
     module->keywords = _("vector");
-    module->description = "Create a new vector from current region.";
+    module->description =
+	_("Create a new vector from the current region.");
 
-    out_opt = G_define_standard_option(G_OPT_V_OUTPUT); 
-    out_opt->description = "Output map where points will be written";
+    out_opt = G_define_standard_option(G_OPT_V_OUTPUT);
 
     type_opt = G_define_standard_option(G_OPT_V_TYPE) ;
     type_opt->multiple = NO;
@@ -47,23 +47,24 @@ int main(int argc, char **argv)
     type_opt->answer = "area";
     type_opt->description  = _("Select type: line or area");
 
-    if(G_parser(argc,argv)) exit(1);
+    if(G_parser(argc,argv))
+	exit(EXIT_FAILURE);
 
     Cats = Vect_new_cats_struct ();
     Points = Vect_new_line_struct ();
-    
+
     type = Vect_option_to_types ( type_opt );
 
     G_get_window (&window);
     diff_long = window.east - window.west;
     mid_long = (window.west + window.east) / 2;
-    
+
     /* Open output segments */
     Vect_open_new ( &Out, out_opt->answer, 0 );
     Vect_hist_command ( &Out );
 
     /* Rectangle */
-    
+
     Vect_append_point ( Points, window.west, window.south, 0.0 );
     if (window.proj == PROJECTION_LL && diff_long >= 179)
 	    Vect_append_point ( Points, mid_long, window.south, 0.0 );
@@ -74,7 +75,6 @@ int main(int argc, char **argv)
     Vect_append_point ( Points, window.west, window.north, 0.0 );
     Vect_append_point ( Points, window.west, window.south, 0.0 );
 
-    
 
     if ( type == GV_AREA ) {
         Vect_write_line ( &Out, GV_BOUNDARY, Points, Cats );
@@ -87,10 +87,9 @@ int main(int argc, char **argv)
     } else { /* GV_LINE */
         Vect_write_line ( &Out, GV_LINE, Points, Cats );
     }
-	
+
     Vect_build (&Out, stderr);
     Vect_close (&Out);
 
-    exit(0);
+    exit(EXIT_SUCCESS);
 }
-
