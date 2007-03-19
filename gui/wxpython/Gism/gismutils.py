@@ -197,11 +197,11 @@ class LayerTree(CT.CustomTreeCtrl):
        # When double clicked, open options dialog
         if self.layertype[layer] == 'raster':
 #            raster_prop.MyFrame(self)
-            menuform.GUI().parseCommand('d.rast', gmpath)
+            menuform.GUI().parseCommand('d.rast', gmpath, self)
         elif self.layertype[layer] == 'vector':
 #            print 'its a vector'
 #            vectopt.MyPanel(self)
-            menuform.GUI().parseCommand('d.vect', gmpath)
+            menuform.GUI().parseCommand('d.vect', gmpath, self)
         self.createLayerList()
 
     def onLayerChecked(self, event):
