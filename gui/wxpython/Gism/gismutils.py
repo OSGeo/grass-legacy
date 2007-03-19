@@ -196,14 +196,17 @@ class LayerTree(CT.CustomTreeCtrl):
         self.Delete(old)
 
     def onActivateLayer(self, event):
+        global gmpath
         layer = event.GetItem()
         self.layer_selected = layer
        # When double clicked, open options dialog
         if self.layertype[layer] == 'raster':
-            raster_prop.MyFrame(self)
+#            raster_prop.MyFrame(self)
+            menuform.GUI().parseCommand('d.rast', gmpath)
         elif self.layertype[layer] == 'vector':
-            print 'its a vector'
-            vectopt.MyPanel(self)
+#            print 'its a vector'
+#            vectopt.MyPanel(self)
+            menuform.GUI().parseCommand('d.vect', gmpath)
         self.createLayerList()
 
     def onLayerChecked(self, event):
