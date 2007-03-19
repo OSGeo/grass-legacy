@@ -4239,7 +4239,7 @@ msgstr "Kann Rasterkarte [%s] in [%s] nicht öffnen."
 #, c-format
 msgid "min computed aspect %.4f  max computed aspect %.4f"
 msgstr ""
-"minimale berechnete Exposition%.4f  maximale berechnete Exposition %.4f."
+"minimale berechnete Exposition %.4f  maximale berechnete Exposition %.4f."
 
 #: ../raster/r.slope.aspect/main.c:1085
 #: ../swig/perl/R_slope_aspect/r_slope_aspect/r_slope_aspect.c:1060
