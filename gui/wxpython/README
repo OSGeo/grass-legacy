@@ -1,8 +1,74 @@
 GRASS graphical user interface
+==============================
 
+AUTHORS: Jachym, Markus, Michael
+LAST CHANGE: 2007-3-19
+
+---------------------------------------------------------------------
 Requirements:
- Python 2.5 and wxPython 2.8.1.1
+ Python >=2.3 and wxPython 2.8.1.1
+---------------------------------------------------------------------
 
 How to start:
- ...
 
+Before you start
+----------------
+Download fresh source from subversion:
+$~ svn co https://grasssvn.itc.it/svn/grassaddons/trunk/grassaddons/gui grassaddons/gui
+
+Or update your local repository
+
+$~ svn up grassaddons/gui
+
+Change to GUI devel directory:
+
+$~ cd grassaddons/gui
+
+1 - CLI MapDisplay
+------------------
+This is going to be replacement for command line tools like d.rast and d.vect 
+
+Now add directory "scripts" in gui directory to your $PATH. This small
+programms should later go to GRASS Scripts directory or became Python
+scripts or C programs. Now they are small bash wrappers, which can be
+easily and fast costumized.
+
+$~ export PATH=scripts/:$PATH
+
+Lounch GRASS, if you didn't it yet
+
+$~ grass63 ~/grassdata/spearfish60/user1
+
+Use command p.mon (shell script in gui/scripts direcotory) to start map
+display:
+
+GRASS> p.mon anything
+
+After a while, new window should appear.  If this is your case, add some
+raster layer to the map display:
+
+GRASS> p.rast aspect
+
+What about a bit transparency?
+
+GRASS> p.rast elevation.dem opacity=0.5
+
+And try the vector layer too
+
+GRASS> p.vect roads
+
+NOTE: only map name is currently supported. No other option will influence
+      the map apperience
+
+
+You should be abple to zoom && pan through the map, ones the layers are
+displayed. You should be also able to store the display content as well as
+clear the display and start from scratch.
+
+2 - GIS Manager
+---------------
+This is a bit tricky
+
+3 - Start-up screen with Location wizard
+----------------------------------------
+This is even more complicated :-)
