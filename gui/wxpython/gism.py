@@ -357,6 +357,7 @@ class GMFrame(wx.Frame):
     def addRaster(self, event):
         """Add raster layer"""
         self.SetTree('raster')
+        self.mapdisplays[self.disp_idx]
         event.Skip()
 
     def addVector(self, event):
