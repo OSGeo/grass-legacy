@@ -188,7 +188,7 @@ void get_column_info ( sqlite3_stmt *statement, int col,
     decltype = sqlite3_column_decltype ( statement, col );
     if ( decltype ) 
     {
-	G_debug ( 4, "decltype = %s", decltype );
+	G_debug ( 4, "column: %s, decltype = %s", sqlite3_column_name ( statement, col), decltype );
 	*litetype = affinity_type ( decltype );
     }
     else
@@ -245,6 +245,7 @@ int affinity_type ( const char *declared )
 
     lc = strdup ( declared );
     G_tolcase ( lc );
+    G_debug(4, "affinity_type: %s", lc);
 
     if ( strstr(lc,"int") )
     {
