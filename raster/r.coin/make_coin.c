@@ -48,11 +48,11 @@ make_coin (void)
     G_message(_("Tabulating Coincidence between '%s' and '%s'"),
                                 map1name, map2name);
 
-    sprintf (buf, "r.stats -anrc fs=: input='");
+    sprintf (buf, "r.stats -anrc fs=: input=\"");
     strcat(buf, G_fully_qualified_name(map1name, mapset1));
     strcat(buf, ",");
     strcat(buf, G_fully_qualified_name(map2name, mapset2));
-    strcat(buf, "'");
+    strcat(buf, "\"");
     statfd = fopen (statname, "w");
     if (statfd == NULL)
 	G_fatal_error (_("Unable to create any tempfiles"));

@@ -1,5 +1,6 @@
 #include <string.h>
 #include <stdlib.h>
+#include <stdio.h>
 #include <sys/types.h>
 #include <sys/stat.h>
 #include <grass/gis.h>
@@ -14,6 +15,7 @@ make_location (char *gisdbase, char *location_name)
     char myname[75];
     char *mapset;
     char *name, c;
+    FILE *fp;
 
     G_clear_screen();
     fprintf (stderr, "To create a new LOCATION, you will need the following information:\n");
@@ -174,9 +176,11 @@ make_location (char *gisdbase, char *location_name)
     /* later after calling g.setrpj we will let user create a real default window */
     G__put_window (&window, "", "DEFAULT_WIND");
     G__put_window (&window, "", "WIND");
-    sprintf (buf, "echo %s >  \"%s/%s/%s/MYNAME\"", myname, gisdbase, location_name, mapset);
-    G_convert_dirseps_to_host(buf);
-    system(buf);
+       
+    sprintf (buf, "%s/%s/%s/MYNAME", gisdbase, location_name, mapset);
+    fp = fopen(buf, "w");
+    fputs(myname, fp);
+    fclose(fp);
+   
     return 1;
 }
-
