@@ -196,14 +196,15 @@ class LayerTree(CT.CustomTreeCtrl):
         global gmpath
         layer = event.GetItem()
         self.layer_selected = layer
+        completed = ''
        # When double clicked, open options dialog
         if self.layertype[layer] == 'raster':
 #            raster_prop.MyFrame(self)
-            self.dcmdopts = menuform.GUI().parseCommand('d.rast', gmpath, completed=self.getOptData)
+            menuform.GUI().parseCommand('d.rast', gmpath, completed=(self.getOptData,layer))
         elif self.layertype[layer] == 'vector':
 #            print 'its a vector'
 #            vectopt.MyPanel(self)
-            self.dcmdopts = menuform.GUI().parseCommand('d.vect', gmpath, completed=self.getOptData)
+            menuform.GUI().parseCommand('d.vect', gmpath, completed=(self.getOptData,layer))
         self.createLayerList()
 
     def onLayerChecked(self, event):
@@ -219,8 +220,13 @@ class LayerTree(CT.CustomTreeCtrl):
         self.createLayerList()
 #        event.Skip()
 
-    def getOptData(self):
-        print 'the options are =', self.dcmdopts
+    def getOptData(self, dcmd, layer):
+        print 'the options are =', dcmd
+        for item in dcmd.split(' '):
+            if 'map=' in item:
+                mapname = item.split('=')[1]
+        print 'mapname = ', mapname
+        print 'layer = ', layer
 
     def createLayerList(self):
         self.display.cleanLayersList()
