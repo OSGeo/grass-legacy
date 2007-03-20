@@ -1,7 +1,7 @@
 """
 To be used either from GIS Manager or as p.mon backend
 
-Usage: 
+Usage:
     mapdisp.py /path/to/command/file
 
 mapdisp Package
@@ -46,7 +46,7 @@ class Command(Thread):
       global cmdfilename
 
       self.parent = parent
-      self.map = Map # 
+      self.map = Map #
       self.cmdfile = open(cmdfilename,"r")
 
     def run(self):
@@ -57,13 +57,13 @@ class Command(Thread):
         while 1:
             self.parent.redraw = False
             line = self.cmdfile.readline().strip()
-            if line == "quit": 
+            if line == "quit":
                 break
-            
+
             if line:
                 try:
-                    #oper, lname, mapset, catlist, vallist, invert, opacity 
-                    # 0     1       2       3       4          5        6 
+                    #oper, lname, mapset, catlist, vallist, invert, opacity
+                    # 0     1       2       3       4          5        6
                     dispcmd = list(line.strip().split())
                     #print dispcmd
                     if dispcmd[0]=="addraster":
@@ -88,7 +88,7 @@ class Command(Thread):
                 except Exception, e:
                     print "Command Thread: ",e
                     pass
-                
+
             time.sleep(0.1)
 
         sys.exit()
@@ -514,7 +514,7 @@ class MapFrame(wx.Frame):
         # Bind various events
         # ONLY if we are running from GIS manager
         #
-        if self.disp_idx > -1: 
+        if self.disp_idx > -1:
             self.Bind(wx.EVT_ACTIVATE, self.OnFocus)
             self.Bind(wx.EVT_CLOSE,    self.OnCloseWindow)
 
@@ -738,13 +738,8 @@ class MapFrame(wx.Frame):
     def cleanLayersList(self):
         Map.Clean()
 
-    def addMapsToList(self,type,map, mset):
-        if type == 'raster':
-            Map.AddRasterLayer(name=map, mapset=mset)
-        elif type == 'vector':
-            Map.AddVectorLayer(name=map, mapset=mset)
-        elif type == 'command':
-            Map.AddCommandLayer(name=map, mapset=mset)
+    def addMapsToList(self, type, command, opacity):
+        Map.AddCommandLayer(name=command, l_opacity=opacity)
 
 # end of class MapFrame
 
@@ -770,9 +765,9 @@ class MapApp(wx.App):
             # chec each 0.1s
             self.timer.Start(100)
 
-            
+
         return 1
-    
+
     def watcher(self):
         """Redraw, if new layer appears"""
         if self.redraw:
@@ -803,7 +798,7 @@ if __name__ == "__main__":
     gm_map.MainLoop()
     if grassenv.env.has_key("MONITOR"):
         os.system("d.mon sel=%s" % grassenv.env["MONITOR"])
-    
+
     os.remove(cmdfilename)
     os.system("""g.gisenv set="GRASS_PYCMDFILE" """)
 

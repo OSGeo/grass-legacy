@@ -53,7 +53,6 @@ class LayerTree(CT.CustomTreeCtrl):
         self.layer = {}     # dictionary to index layers in layer tree
         self.node = 0       # index value for layers
         self.optpage = {}   # dictionary of notebook option pages for each map layer
-        self.map = {}       # dictionary of map layers, indexed by tree node.
         self.layer_selected = ""   # ID of currently selected layer
         self.layername = "" # name off currently selected layer
         self.layertype = {} # dictionary of layer types for each layer
@@ -101,25 +100,23 @@ class LayerTree(CT.CustomTreeCtrl):
     def AddLayer(self, idx, type):
 #        layername = type + ':' + str(self.node)
 
-        if type == 'raster':
-            self.map = None
-
-        elif type == 'vector':
-            self.map = None
-
-        elif type == 'command':
-            self.map = wx.TextCtrl(self, -1,
-                                               '',
-                                               wx.DefaultPosition, (250,40),
-                                               style=wx.TE_MULTILINE|wx.TE_WORDWRAP)
-            self.map.Bind(wx.EVT_TEXT_ENTER, self.onMapChanged)
+        if type == 'command':
+            self.ctrl = wx.TextCtrl(self, id=wx.ID_ANY, value='',
+                               pos=wx.DefaultPosition, size=(250,40),
+                               style=wx.TE_MULTILINE|wx.TE_WORDWRAP)
+            self.ctrl.Bind(wx.EVT_TEXT_ENTER, self.onCmdChanged)
+        else:
+            self.ctrl = wx.SpinCtrl(self, id=wx.ID_ANY, value="", pos=(30, 50),
+                                    style=wx.SP_ARROW_KEYS)
+            self.ctrl.SetRange(1,100)
+            self.ctrl.SetValue(100)
+            self.ctrl.Bind(wx.EVT_SPINCTRL, self.onOpacity)
 
         if self.layer_selected and self.layer_selected != self.GetRootItem():
             self.layer = self.InsertItem(self.root, self.GetPrevSibling(self.layer_selected),
-                                                    '', ct_type=1,
-                                                    wnd=self.map )
+                                '', ct_type=1, wnd=self.ctrl )
         else:
-            self.layer = self.PrependItem(self.root, '', ct_type=1, wnd=self.map)
+            self.layer = self.PrependItem(self.root, '', ct_type=1, wnd=self.ctrl)
 
         #add to layertype dictionary
         self.layertype[self.layer] = type
@@ -211,10 +208,11 @@ class LayerTree(CT.CustomTreeCtrl):
         layer = event.GetItem()
         self.layer_selected = layer
 
-    def onMapChanged(self, event):
-        map = event.GetString()
+    def onCmdChanged(self, event):
         self.createLayerList()
-#        event.Skip()
+
+    def onOpacity(self, event):
+        self.createLayerList()
 
     def getOptData(self, dcmd, layer):
         for item in dcmd.split(' '):
@@ -231,18 +229,24 @@ class LayerTree(CT.CustomTreeCtrl):
 
 
     def createLayerList(self):
+        """
+        add commands from data associated with
+        any valid and checked layers to layer list
+        """
+        # first empty the list of old layers
         self.display.cleanLayersList()
-        command = None
+        cmd = None
         for layer in self.layertype.keys():
-
             if self.layertype[layer] == 'command':
                 if self.GetItemWindow(layer) != None:
-                    command = self.GetItemWindow(layer).GetValue()
+                    cmd = self.GetItemWindow(layer).GetValue()
+                    opac = 1.0
             else:
                 if self.GetPyData(layer) != None:
-                    command = self.GetPyData(layer)
-            if command != None and self.IsItemChecked(layer) == True:
-                self.display.addMapsToList(type='command', map=command, mset=None)
+                    cmd = self.GetPyData(layer)
+                    opac = float(self.GetItemWindow(layer).GetValue())/100
+            if cmd != None and self.IsItemChecked(layer) == True:
+                 self.display.addMapsToList(type='command', command=cmd, opacity=opac)
 
 
 class TreeCtrlComboPopup(wx.combo.ComboPopup):
