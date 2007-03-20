@@ -357,7 +357,6 @@ class mainFrame(wx.Frame):
             else:
                 tasktype = 'params'
                 num = param_num-ID_PARAM_START
-            print 'tasktype, num, param_val :', tasktype, num, param_val
             grass_task[tasktype][num]['value'] = param_val
 
     def EvtText(self, event):
@@ -401,7 +400,6 @@ class mainFrame(wx.Frame):
             if (grass_task['params'][p_count]['type'] != 'flag' and grass_task['params'][p_count]['value'] != ''):
                 cmd = cmd + ' ' + grass_task['params'][p_count]['name'] + '=' + grass_task['params'][p_count]['value']
 
-        print 'the command =', cmd
         if errors:
             self.OnError(errStr)
         else:
@@ -442,7 +440,7 @@ class mainFrame(wx.Frame):
     ##                self.out = subprocess.Popen(cmd, shell=True, stdout=Pipe).stdout
     ##            self.out = os.popen(cmd, "r").read() #need to echo this back to gism.py console
     ##            self.console_output.write(self.out+"\n") #need to echo this back to gism.py console
-        
+
 
 
     def OnError(self, errMsg):
