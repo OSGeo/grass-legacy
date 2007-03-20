@@ -83,31 +83,26 @@ int main (int argc, char *argv[])
   module->description =        
                   _("Randomly generate a 2D/3D GRASS vector points map.");
                   
-  parm.output = G_define_option ();
-  parm.output->key = "output";
-  parm.output->type = TYPE_STRING;
-  parm.output->required = YES;
-  parm.output->gisprompt = "new,vector,vector";
-  parm.output->description = _("vector map to be created");
+  parm.output = G_define_standard_option(G_OPT_V_OUTPUT);
 
   parm.nsites = G_define_option ();
   parm.nsites->key = "n";
   parm.nsites->type = TYPE_INTEGER;
   parm.nsites->required = YES;
-  parm.nsites->description = _("number of points to be created");
+  parm.nsites->description = _("Number of points to be created");
 
   parm.zmin = G_define_option ();
   parm.zmin->key = "zmin";
   parm.zmin->type = TYPE_DOUBLE;
   parm.zmin->required = NO;
-  parm.zmin->description = _("minimum z height (needs -z flag)");
+  parm.zmin->description = _("Minimum z height (needs -z flag)");
   parm.zmin->answer = "0.0";
 
   parm.zmax = G_define_option ();
   parm.zmax->key = "zmax";
   parm.zmax->type = TYPE_DOUBLE;
   parm.zmax->required = NO;
-  parm.zmax->description = _("maximum z height (needs -z flag)");
+  parm.zmax->description = _("Maximum z height (needs -z flag)");
   parm.zmax->answer = "0.0";
 
   flag.z = G_define_flag ();
@@ -119,14 +114,14 @@ int main (int argc, char *argv[])
   flag.drand48->description = _("Use drand48() function (default=rand() )");
 
   if (G_parser (argc, argv))
-    exit (1);
+    exit (EXIT_FAILURE);
 
   output = parm.output->answer;
   n = atoi(parm.nsites->answer);
   b = (flag.drand48->answer == '\0') ? 0 : 1;
 
   if (n <= 0) {
-    G_fatal_error ( _("%s given an illegal number of sites [%d]"), G_program_name (), n);
+    G_fatal_error ( _("%s given an illegal number of points [%d]"), G_program_name (), n);
   }
 
   if ( flag.z->answer )
@@ -178,7 +173,7 @@ int main (int argc, char *argv[])
   Vect_build (&Out, stderr);
   Vect_close (&Out);
 
-  return (0);
+  return (EXIT_SUCCESS);
 }
 
 double myrand()
