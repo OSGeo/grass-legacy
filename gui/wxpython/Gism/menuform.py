@@ -231,6 +231,10 @@ class mainFrame(wx.Frame):
         self.CreateStatusBar()
         self.SetStatusText("Enter parameters for " + grass_task['name'])
         self.parent = parent
+        self.onrunhook = '' #variable to store callback procedure for returning option data to layer manager
+        self.selection = '' #selection from GIS element selector
+        self.paramdict = {} # dictionary of controls and their parameter values
+        global grass_task
 
         menu = wx.Menu()
         menu.Append(ID_ABOUT, "&About GrassGUI",
@@ -256,7 +260,7 @@ class mainFrame(wx.Frame):
             title = escape_ampersand(p['description'])
             if p['required'] == 'no':
                 title = "[optional] " + title
-            if p['multiple'] == 'yes':
+            if p['multiple'] == 'yes' and len( p['values'] ) == 0:
                 title = "[multiple] " + title
             p['value'] = p['default']
             if (len(p['values']) > 0):
@@ -281,74 +285,90 @@ class mainFrame(wx.Frame):
                 else:
                     txt1 = wx.StaticText(self.panel, -1, title + ':', wx.Point(-1, -1), wx.Size(-1, -1))
                     self.guisizer.Add(txt1, 0, wx.ADJUST_MINSIZE | wx.ALL, 5)
-                    cb = wx.ComboBox(self.panel, ID_PARAM_START + p_count, p['default'],
+                    self.cb = wx.ComboBox(self.panel, -1, p['default'],
                                      wx.Point(-1, -1), wx.Size(STRING_ENTRY_WIDTH, -1),
                                      valuelist, wx.CB_DROPDOWN)
-                    self.guisizer.Add(cb, 0, wx.ADJUST_MINSIZE | wx.ALL, 5)
-                    wx.EVT_COMBOBOX(self, ID_PARAM_START + p_count, self.EvtComboBox)
+                    self.guisizer.Add(self.cb, 0, wx.ADJUST_MINSIZE | wx.ALL, 5)
+                    self.paramdict[self.cb] = ID_PARAM_START + p_count
+                    self.cb.Bind( wx.EVT_COMBOBOX, self.EvtComboBox)
 
             if (p['type'] in ('string','integer','float') and
                 len(p['values']) == 0 and
                 p['gisprompt'] == False ):
+
                 txt2 = wx.StaticText(self.panel, -1, title + ':',
                     wx.Point(-1, -1), wx.Size(-1, -1))
                 self.guisizer.Add(txt2, 0, wx.ADJUST_MINSIZE | wx.ALL, 5)
                 l_count = l_count + 1
-                txt3 = wx.TextCtrl(self.panel, ID_PARAM_START + p_count,
+
+                self.txt3 = wx.TextCtrl(self.panel, -1,
                     p['default'], wx.Point(-1, -1),
                     wx.Size(STRING_ENTRY_WIDTH, ENTRY_HEIGHT))
-                self.guisizer.Add(txt3, 0, wx.ADJUST_MINSIZE | wx.ALL, 5)
-                wx.EVT_TEXT(self, ID_PARAM_START + p_count, self.EvtText)
+                self.guisizer.Add(self.txt3, 0, wx.ADJUST_MINSIZE | wx.ALL, 5)
+                self.paramdict[self.txt3] = ID_PARAM_START + p_count
+                self.txt3.Bind(wx.EVT_TEXT, self.EvtText)
 
             if p['type'] == 'string' and p['gisprompt'] == True:
                 txt4 = wx.StaticText(self.panel, -1, title + ':',
                     wx.Point(-1, -1), wx.Size(-1, -1))
                 self.guisizer.Add(txt4, 0, wx.ADJUST_MINSIZE | wx.ALL, 5)
                 l_count = l_count + 1
-                sel = select.Select(self.panel, (250,-1), p['element'])
-                self.guisizer.Add(sel, 0, wx.ADJUST_MINSIZE | wx.ALL, 5)
-                wx.EVT_TEXT(self, ID_PARAM_START + p_count, self.EvtText)
+                self.selection = select.Select(self.panel, id=wx.ID_ANY, size=(250,-1),
+                                    type=grass_task['params'][p_count]['element'])
+                self.guisizer.Add(self.selection, 0, wx.ADJUST_MINSIZE | wx.ALL, 5)
+                self.paramdict[self.selection] = ID_PARAM_START + p_count
+                self.selection.Bind(wx.EVT_TEXT, self.EvtText)
 
             l_count = l_count + 1
 
         for f_count in range(0, len(grass_task['flags'])):
             title = escape_ampersand(grass_task['flags'][f_count]['description'])
-            chk = wx.CheckBox(self.panel,ID_FLAG_START + f_count, title,
+            self.chk = wx.CheckBox(self.panel,-1, title,
                 wx.Point(-1, -1), wx.Size(-1, -1), wx.NO_BORDER)
-            self.guisizer.Add(chk, 0, wx.ALL, 5)
-            wx.EVT_CHECKBOX(self, ID_FLAG_START + f_count, self.EvtCheckBox)
+            self.guisizer.Add(self.chk, 0, wx.ALL, 5)
+            self.paramdict[self.chk] = ID_FLAG_START + f_count
+            self.chk.Bind(wx.EVT_CHECKBOX, self.EvtCheckBox)
 
             l_count = l_count + 1
 
-#        p_count = p_count + f_count
         btnsizer = wx.BoxSizer(wx.HORIZONTAL)
-        btn1 = wx.Button(self.panel, ID_CANCEL, "Cancel")
-        btnsizer.Add(btn1, 0, wx.ALL| wx.ALIGN_CENTER, 10)
-        btn2 = wx.Button(self.panel, ID_RUN, "Run")
-        btnsizer.Add(btn2, 0, wx.ALL| wx.ALIGN_CENTER, 10)
-        btn2.SetDefault()
+        self.btn1 = wx.Button(self.panel, ID_CANCEL, "Cancel")
+        btnsizer.Add(self.btn1, 0, wx.ALL| wx.ALIGN_CENTER, 10)
+        self.btn2 = wx.Button(self.panel, ID_RUN, "Run")
+        btnsizer.Add(self.btn2, 0, wx.ALL| wx.ALIGN_CENTER, 10)
+        self.btn2.SetDefault()
         self.guisizer.Add(btnsizer, 0, wx.EXPAND)
         wx.EVT_MENU(self, ID_ABOUT, self.OnAbout)
         wx.EVT_MENU(self, ID_ABOUT_COMMAND, self.OnAboutCommand)
         wx.EVT_MENU(self, ID_EXIT,  self.OnCancel)
-        wx.EVT_BUTTON(self.panel, ID_CANCEL, self.OnCancel)
-        wx.EVT_BUTTON(self.panel, ID_RUN, self.OnRun)
+        self.btn1.Bind(wx.EVT_BUTTON, self.OnCancel)
+        self.btn2.Bind(wx.EVT_BUTTON, self.OnRun)
         self.Bind(wx.EVT_CLOSE, self.onCloseWindow)
 
         self.panel.SetSizer(self.guisizer)
         self.guisizer.Fit(self.panel)
 
+    def getValues(self):
+        for item in self.paramdict.items():
+            param_num = item[1]
+            param_val = item[0].GetValue()
+            if 'CheckBox' in str(item[0]):
+                tasktype = 'flags'
+                num = param_num-ID_FLAG_START
+            else:
+                tasktype = 'params'
+                num = param_num-ID_PARAM_START
+            print 'tasktype, num, param_val :', tasktype, num, param_val
+            grass_task[tasktype][num]['value'] = param_val
+
     def EvtText(self, event):
-        grass_task['params'][event.GetId()-ID_PARAM_START]['value'] = event.GetString()
+        self.getValues()
 
     def EvtCheckBox(self, event):
-        if (event.Checked()):
-            grass_task['flags'][event.GetId()-ID_FLAG_START]['value'] = 'checked'
-        else:
-            grass_task['flags'][event.GetId()-ID_FLAG_START]['value'] = 'not checked'
+        self.getValues()
 
     def EvtComboBox(self, event):
-        grass_task['params'][event.GetId()-ID_PARAM_START]['value'] = event.GetString()
+        self.getValues()
 
     def EvtCheckBoxMulti(self, event):
         theParamId = (event.GetId()-ID_MULTI_START ) / 20
@@ -381,16 +401,16 @@ class mainFrame(wx.Frame):
                     cmd = cmd + ' -' + grass_task['params'][p_count]['name']
             if (grass_task['params'][p_count]['type'] != 'flag' and grass_task['params'][p_count]['value'] != ''):
                 cmd = cmd + ' ' + grass_task['params'][p_count]['name'] + '=' + grass_task['params'][p_count]['value']
-##           p_count = p_count + 1
-        print ">>>"+cmd
 
-
+        print 'the command =', cmd
         if errors:
             self.OnError(errStr)
         else:
             if cmd[0:2] == "d.":
                 print 'in command parser'
                 return cmd
+                if self.onrunhook != None:
+                    eval(self.onrunhook()) # run it
 
                 # Send GRASS display command(s)with arguments
                 # to the display processor.
@@ -424,6 +444,7 @@ class mainFrame(wx.Frame):
     ##            self.out = os.popen(cmd, "r").read() #need to echo this back to gism.py console
     ##            self.console_output.write(self.out+"\n") #need to echo this back to gism.py console
         
+
 
     def OnError(self, errMsg):
         dlg = wx.MessageDialog(self, errMsg, "Error", wx.OK | wx.ICON_ERROR)
@@ -474,6 +495,7 @@ class GUI:
         self.parent = parent
 
     def parseCommand(self, cmd, gmpath, completed=None):
+        self.onrunhook = completed
         cmdlst = []
         cmdlst = cmd.split(' ')
 
@@ -488,8 +510,8 @@ class GUI:
             handler = processTask()
             xml.sax.parseString(cmdout2, handler)
 
-        completed = mainFrame(None, self.parent , self.w, self.h)
-        completed.Show(True)
+        mf = mainFrame(None, self.parent , self.w, self.h)
+        mf.Show(True)
 
 if __name__ == "__main__":
     # Create the application
