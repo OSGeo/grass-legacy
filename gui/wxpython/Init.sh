@@ -26,10 +26,10 @@
 trap "echo 'User break!' ; exit" 2 3 15
 
 # Set the GRASS_PERL variable
-GRASS_PERL=/usr/local/bin/perl
+GRASS_PERL=/usr/bin/perl
 export GRASS_PERL
 
-# GRASS_SH is normally just for Windows when not started from a bourne 
+# GRASS_SH is normally just for Windows when not started from a bourne
 # shell. But when starting from Init.sh is still needed for Tcl/Tk.
 GRASS_SH=/bin/sh
 export GRASS_SH
@@ -55,10 +55,10 @@ esac
 
 # Go through the command line options
 for i in "$@" ; do
-    
+
     # Use a case to check the command line options
     case "$i" in
-    
+
     	# Check if the user asked for the version
 	-v|--version)
 	    cat "$GISBASE/etc/license"
@@ -85,7 +85,7 @@ for i in "$@" ; do
             echo "  GISDBASE/LOCATION_NAME/MAPSET  fully qualified initial mapset directory"
             echo
             echo "Environment variables relevant for startup:"
-            echo "  GRASS_GUI                      select GUI (text, gis.m, d.m)" # wx
+            echo "  GRASS_GUI                      select GUI (text, gis.m, d.m, wx)" # wx
             echo "  GRASS_TCLSH                    set tclsh shell name to override 'tclsh'"
             echo "  GRASS_WISH                     set wish shell name to override 'wish'"
             echo "  GRASS_HTML_BROWSER             set html web browser for help pages"
@@ -94,13 +94,13 @@ for i in "$@" ; do
             echo "  GRASS_PYTHON                   set python shell name to override 'python'"
 	    exit
 	    ;;
-	
+
 	# Check if the -text flag was given
 	-text)
 	    GRASS_GUI="text"
 	    shift
 	    ;;
-	
+
 	# Check if the -tcltk flag was given
 	# change -gui to wxpython as needed
 	-gui | -tcltk)
@@ -174,7 +174,7 @@ fi
 # Copy global grassrc file to session grassrc
 
 # At this point the GRASS user interface variable has been set from the
-# command line, been set from an external environment variable, or is 
+# command line, been set from an external environment variable, or is
 # not set. So we check if it is not set
 if [ ! "$GRASS_GUI" ] ; then
 
@@ -182,7 +182,7 @@ if [ ! "$GRASS_GUI" ] ; then
     if [ -f "$GISRC" ] ; then
     	GRASS_GUI=`awk '/GRASS_GUI/ {print $2}' "$GISRC"`
     fi
-    
+
     # Set the GRASS user interface to the default if needed - currently tcltk
     if [ ! "$GRASS_GUI" ] ; then
 	GRASS_GUI="tcltk"
@@ -214,14 +214,14 @@ fi
 export PATH
 
 # Set LD_LIBRARY_PATH to find GRASS shared libraries
-if [ ! "$LD_LIBRARY_PATH" ] ; then
-  LD_LIBRARY_PATH="$GISBASE/lib"
+if [ ! "$DYLD_LIBRARY_PATH" ] ; then
+  DYLD_LIBRARY_PATH="$GISBASE/lib"
 else
-  LD_LIBRARY_PATH="$GISBASE/lib:$LD_LIBRARY_PATH"
+  DYLD_LIBRARY_PATH="$GISBASE/lib:$DYLD_LIBRARY_PATH"
 fi
-export LD_LIBRARY_PATH
+export DYLD_LIBRARY_PATH
 # Additional copy of variable to use with grass-run.sh
-GRASS_LD_LIBRARY_PATH="$LD_LIBRARY_PATH"
+GRASS_LD_LIBRARY_PATH="$DYLD_LIBRARY_PATH"
 export GRASS_LD_LIBRARY_PATH
 
 # Set some environment variables if they are not set
@@ -239,7 +239,7 @@ if [ ! "$GRASS_PAGER" ] ; then
 fi
 
 
-# Set up tcltk and wish environment 
+# Set up tcltk and wish environment
 # with options for aqua tcltk with Mac OSX
 
 
@@ -254,7 +254,7 @@ if [ ! "$GRASS_TCLSH" ] ; then
       GRASS_TCLSH=tclsh
    fi
    export GRASS_TCLSH
-fi   
+fi
 
 
 #WISH_OS=`echo 'puts $tcl_platform(platform) ; exit 0' | wish`
@@ -276,7 +276,7 @@ if [ ! "$GRASS_WISH" ] ; then
       fi
    else
       GRASS_WISH=wish
-   fi   
+   fi
 fi
 export GRASS_WISH
 
@@ -292,10 +292,10 @@ if [ ! "$GRASS_HTML_BROWSER" ] ; then
                                 s/:$/:./
                                 s/:/ /g'`
     do
-        if [ -f "$i/htmlview" ] ; then  
-            GRASS_HTML_BROWSER=htmlview  
-            break  
-        elif [ -f "$i/konqueror" ] ; then  
+        if [ -f "$i/htmlview" ] ; then
+            GRASS_HTML_BROWSER=htmlview
+            break
+        elif [ -f "$i/konqueror" ] ; then
             GRASS_HTML_BROWSER=konqueror
             break
         elif [ -f "$i/mozilla" ] ; then
@@ -377,7 +377,7 @@ if [ ! -f "$GISRC" ] ; then
     # This is a hack for not having a good initial gui - should be removed
     # with next version of initialization gui
     #GRASS_GUI="text"
-    
+
 else
     echo "Cleaning up temporary files....."
     ("$ETC/clean_temp" > /dev/null &)
@@ -411,7 +411,7 @@ if [ "$DISPLAY" -o "$MINGW" ] ; then
     else
 
         # Wish was not found - switch to text interface mode
-        echo 
+        echo
         echo "WARNING: The wish command does not work as expected!"
         echo "Please check your GRASS_WISH environment variable."
         echo "Use the -help option for details."
@@ -423,7 +423,7 @@ if [ "$DISPLAY" -o "$MINGW" ] ; then
         GRASS_GUI="text"
     fi
 else
-    
+
     # Display a message if a graphical interface was expected
     if [ "$GRASS_GUI" != "text" ] ; then
         # Set the interface mode to text
@@ -456,9 +456,9 @@ else
 
     # Try non-interactive startup
     L=
-    
+
     if [ "$1" = "-" ] ; then
-    
+
     	if [ "$LOCATION" ] ; then
     	    L="$LOCATION"
     	fi
@@ -475,11 +475,11 @@ else
 
     	MAPSET=`basename "$L"`
     	L=`dirname "$L"`
-    
+
     	if [ "$L" != "." ] ; then
     	    LOCATION_NAME=`basename "$L"`
     	    L=`dirname "$L"`
-    
+
     	    if [ "$L" != "." ] ; then
     	    	GISDBASE="$L"
     	    fi
@@ -492,7 +492,7 @@ else
 
     if [ "$GISDBASE" -a "$LOCATION_NAME" -a "$MAPSET" ] ; then
     	LOCATION="$GISDBASE/$LOCATION_NAME/$MAPSET"
-    
+
     	if [ ! -r "$LOCATION/WIND" ] ; then
 		if [ "$LOCATION_NAME" = "PERMANENT" ] ; then
 		   echo "$LOCATION: Not a valid GRASS location"
@@ -509,12 +509,12 @@ else
 		   fi
 		fi
     	fi
-    
+
     	if [ -s "$GISRC" ] ; then
     	    sed -e "s|^GISDBASE:.*$|GISDBASE: $GISDBASE|; \
     	    	s|^LOCATION_NAME:.*$|LOCATION_NAME: $LOCATION_NAME|; \
     	    	s|^MAPSET:.*$|MAPSET: $MAPSET|" "$GISRC" > "$GISRC.$$"
-    
+
     	    if [ $? -eq 0 ] ; then
     	    	mv -f "$GISRC.$$" "$GISRC"
     	    else
@@ -545,7 +545,7 @@ if [ ! "$LOCATION" ] ; then
 
 	    case $? in
      	    	0) ;;
-     	    	*) 
+     	    	*)
 		    # Check for an invalid GISRC file
 		    if [ -f "$GISRC" ] ; then
 			VALUE=`grep "GISDBASE" "$GISRC"`
@@ -554,12 +554,12 @@ if [ ! "$LOCATION" ] ; then
 			    rm -f "$GISRC"
 			fi
 		    fi
-		    
+
 		    exit
 		    ;;
     	    esac
 	    ;;
-	
+
 	# Check for tcltk interface
 	tcltk | gis.m | d.m | wx)
 
@@ -573,7 +573,7 @@ if [ ! "$LOCATION" ] ; then
                 thetest=$?
 	        #0: failure
 	        #1: successfully read environment
-        
+
 		###########################################################################
 		# at the moment when the EPSG facility is used, the eval returns "1"
 		# whereas everything should be ok, therefore til that problem is not solved
@@ -588,7 +588,7 @@ if [ ! "$LOCATION" ] ; then
                 eval `"$GRASS_PYTHON" "$WXPYTHONGRASSBASE/gis_set.py"`
                 thetest=$?
             fi
-            
+
 
 	    case $thetest in
      	    	1)
@@ -600,7 +600,7 @@ if [ ! "$LOCATION" ] ; then
 		    echo "Switching to text mode now."
 		    echo "Hit RETURN to continue..."
 		    read ans
-		    
+
 		    GRASS_GUI="text"
 
                     if [ -f "$GISRC" ] ; then
@@ -613,12 +613,12 @@ if [ ! "$LOCATION" ] ; then
 
 		    case $? in
      	    		0) ;;
-     	    		*) 
+     	    		*)
 			    # Check for an invalid GISRC file
 			    if [ -f "$GISRC" ] ; then
 				VALUE=`grep "GISDBASE" "$GISRC"`
 				if [ "$VALUE" = "" ] ; then
-    				    echo "Invalid resource file, removing $GISRC" 
+    				    echo "Invalid resource file, removing $GISRC"
 				    rm -f "$GISRC"
 				fi
 			    fi
@@ -627,7 +627,7 @@ if [ ! "$LOCATION" ] ; then
 			    ;;
     		    esac
 		    ;;
-	    
+
      	    	0)
 		    # These checks should not be necessary with real init stuff
 		    if [ "$LOCATION_NAME" = "##NONE##" ] ; then
@@ -646,16 +646,16 @@ if [ ! "$LOCATION" ] ; then
 		    fi
 
 		    ;;
-		    
+
 		*)
 		    echo "ERROR: Invalid return code from gis_set.tcl."
 		    echo "Please advise GRASS developers of this error."
 		    ;;
     	    esac
-	    
+
 	    ;;
 
-            
+
 	*)
 	    # Shouldn't need this but you never know
 	    echo "ERROR: Invalid user interface specified - $GRASS_GUI."
@@ -695,7 +695,7 @@ if [ "$CYGWIN" ] ; then
     shellname="GNU Bash (Cygwin)"
     export SHELL=/usr/bin/bash.exe
     export OSTYPE=cygwin
-else 
+else
     sh=`basename "$SHELL"`
     case "$sh" in
         ksh)  shellname="Korn Shell";;
@@ -737,29 +737,30 @@ if [ -n "$GRASS_BATCH_JOB" ] ; then
 fi
 
 # Start the chosen GUI but ignore text
+echo "GRASS GUI should be $GRASS_GUI"
 case "$GRASS_GUI" in
-    
+
     # Check for tcltk interface
-    tcltk | gis.m | wx)
+    tcltk | gis.m )
 	if [ "$osxaqua" ] ; then
 		"$GISBASE/scripts/gis.m" | sh &
 	else
 		"$GISBASE/scripts/gis.m"
-	fi	
+	fi
 	;;
     d.m)
 	if [ "$osxaqua" ] ; then
 		"$GISBASE/scripts/d.m" | sh &
 	else
 		"$GISBASE/scripts/d.m"
-	fi	
+	fi
 	;;
 
     wx)
         # comming soon, see ^
-	echo "TODO: wxPython GUI" 1>&2
+        "$GISBASE/scripts/wxgrass"
 	;;
-    
+
     # Ignore others
     *)
     	;;
@@ -772,7 +773,8 @@ if [ "$MINGW" ] ; then
 #	cls
 else
 	if [ -z "$GRASS_BATCH_JOB" ] ; then
-	   tput clear
+		echo ""
+	   #tput clear
 	fi
 fi
 
@@ -790,7 +792,7 @@ echo "See the licence terms with:              g.version -c"
 if [ "$GRASS_GUI" = "text" ] ; then
     echo "Start the graphical user interface with: gis.m"
 else
-    echo "If required, restart the graphical user interface with: gis.m"
+    echo "If required, restart the graphical user interface with: wxgrass"
 fi
 
 echo "When ready to quit enter:                exit"
@@ -854,7 +856,7 @@ bash|msh)
     echo "umask 022" >> "$bashrc"
     echo "PS1='GRASS 6.3.cvs ($LOCATION_NAME):\w > '" >> "$bashrc"
     echo "PROMPT_COMMAND=$GISBASE/etc/prompt.sh" >> "$bashrc"
-    
+
     if [ -r "$USERHOME/.grass.bashrc" ]
     then
         cat "$USERHOME/.grass.bashrc" >> "$bashrc"
@@ -922,15 +924,16 @@ if [ "$MINGW" ] ; then
 #	cls
 else
 	if [ -z "$GRASS_BATCH_JOB" ] ; then
-	   tput clear
+	   echo ""
+	   #tput clear
 	fi
 fi
 
 echo "Closing monitors....."
 for MON  in `d.mon -L | grep running | grep -v "not running" | sed 's/ .*//'`
-do 
+do
     echo d.mon stop=$MON
-    d.mon stop=$MON 
+    d.mon stop=$MON
 done
 
 echo "Cleaning up temporary files....."
@@ -943,9 +946,9 @@ cp "$GISRC" "$GISRCRC"
 rm -rf "$tmp"  # remove session files from tmpdir
 
 echo "done"
-echo 
-echo 
-echo 
+echo
+echo
+echo
 echo "Goodbye from GRASS GIS"
 echo
 if [ -x "$GRASS_BATCH_JOB" ] ; then
