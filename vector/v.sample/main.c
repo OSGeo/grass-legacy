@@ -84,7 +84,7 @@ int main(int argc, char **argv)
 
     module = G_define_module();
     module->keywords = _("vector");
-    module->description = _("Sample a raster map at site locations");
+    module->description = _("Sample a raster map at vector point locations");
 
     parm.input = G_define_option();
     parm.input->key = "input";
