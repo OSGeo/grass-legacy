@@ -230,7 +230,7 @@ class Map:
 		self.layers    = []  # stack of available layer
 		self.env       = {}  # enviroment variables, like MAPSET, LOCATION_NAME, etc.
 		self.verbosity = 0
-		self.mapfile   = utils.GetTempfile()+'.ppm'
+		self.mapfile   = utils.GetTempfile()
 
 #		self.renderRegion = {
 #			"render" : True,     # should the region be displayed?
