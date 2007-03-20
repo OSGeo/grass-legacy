@@ -86,6 +86,23 @@ class TreeCtrlComboPopup(wx.combo.ComboPopup):
         #mapsets in current location
         mapsets = os.popen('g.mapsets -p', "r").read().lstrip().rstrip().split(' ')
 
+        elementlist = ['cell',
+                       'grid3d',
+                       'vector',
+                       'dig',
+                       'dig_ascii',
+                       'icons',
+                       'paint/labels',
+                       'site_lists',
+                       'windows',
+                       'windows3d',
+                       'group',
+                       '3d.view']
+
+        if element not in elementlist:
+            self.AddItem('Not selectable element')
+            return
+
         #Get directory tree nodes
         for dir in mapsets:
             if dir == curr_mapset:
