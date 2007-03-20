@@ -226,7 +226,7 @@ class processTask(HandlerBase):
 
 
 class mainFrame(wx.Frame):
-    def __init__(self, parent, ID, w, h, get_dcmd):
+    def __init__(self, parent, ID, w, h, get_dcmd, layer):
         global grass_task
         wx.Frame.__init__(self, parent, ID, grass_task['name'],
             wx.DefaultPosition, style=wx.DEFAULT_FRAME_STYLE | wx.TAB_TRAVERSAL)
@@ -237,6 +237,7 @@ class mainFrame(wx.Frame):
         self.selection = '' #selection from GIS element selector
         self.paramdict = {} # dictionary of controls and their parameter values
         self.get_dcmd = get_dcmd
+        self.layer = layer
 
         menu = wx.Menu()
         menu.Append(ID_ABOUT, "&About GrassGUI",
@@ -393,7 +394,6 @@ class mainFrame(wx.Frame):
         errors = 0
         errStr = ""
 
-
         for p_count in range(0, len(grass_task['params'])):
             if (grass_task['params'][p_count]['type'] != 'flag' and grass_task['params'][p_count]['value'] == '' and grass_task['params'][p_count]['required'] != 'no'):
                 errStr = errStr + "Parameter " + grass_task['params'][p_count]['name'] + "(" +grass_task['params'][p_count]['description']  + ") is missing\n"
@@ -412,22 +412,20 @@ class mainFrame(wx.Frame):
 
         if cmd[0:2] == "d.":
             if self.get_dcmd != None:
-                self.get_dcmd(cmd) # run it
-            #return cmd
+                self.get_dcmd(cmd, self.layer) # run it
 
-            # Send GRASS display command(s)with arguments
-            # to the display processor.
-            # Display with focus receives display command(s).
+        # Send GRASS display command(s)with arguments
+        # to the display processor.
+        # Display with focus receives display command(s).
 ##                self.console_output.write(cmd+"\n----------\n") #need to echo this back to gism.py console
 #               currmap = render.Track().getMD()
 #               currmap.setDcommandList(cmd)
-
 
         else:
             # print 'self.parent in menuform = ',self.parent
             # Send any other command to parent window (probably gism.py)
             if self.parent > -1:
-                # put to parents 
+                # put to parents
                 try:
                     self.parent.goutput.runCmd(cmd)
                 except AttributeError,e:
@@ -444,8 +442,6 @@ class mainFrame(wx.Frame):
                 except OSError, e:
                     print >>sys.stderr, "Execution failed:", e
 
-        
-
 
     def OnError(self, errMsg):
         dlg = wx.MessageDialog(self, errMsg, "Error", wx.OK | wx.ICON_ERROR)
@@ -456,6 +452,7 @@ class mainFrame(wx.Frame):
         self.Close(True)
 
     def onCloseWindow(self, event):
+        global grass_task
         grass_task = { 'name' : 'unknown',
             'description' : 'No description available.',
             'lines' : 0, 'params' : [], 'flags' : [] }
@@ -481,6 +478,9 @@ class mainFrame(wx.Frame):
 class GrassGUIApp(wx.App):
     def OnInit(self):
         global grass_task
+        grass_task = { 'name' : 'unknown',
+            'description' : 'No description available.',
+            'lines' : 0, 'params' : [], 'flags' : [] }
         self.w = HSPACE + STRING_ENTRY_WIDTH + HSPACE
         self.h = MENU_HEIGHT + VSPACE + grass_task['lines'] * ENTRY_HEIGHT + VSPACE + BUTTON_HEIGHT + VSPACE + STATUSBAR_HEIGHT
         frame = mainFrame(None, -1, self.w, self.h)
@@ -493,12 +493,21 @@ class GUI:
         '''Parses GRASS commands when module is imported and used
         from gism.py'''
         global grass_task
+        grass_task = { 'name' : 'unknown',
+            'description' : 'No description available.',
+            'lines' : 0, 'params' : [], 'flags' : [] }
         self.w = HSPACE + STRING_ENTRY_WIDTH + HSPACE
         self.h = MENU_HEIGHT + VSPACE + grass_task['lines'] * ENTRY_HEIGHT + VSPACE + BUTTON_HEIGHT + VSPACE + STATUSBAR_HEIGHT
         self.parent = parent
 
     def parseCommand(self, cmd, gmpath, completed=None, parentframe=-1 ):
-        self.get_dcmd = completed
+        print 'completed :', completed
+        if completed == None:
+            self.get_dcmd = None
+            layer = None
+        else:
+            self.get_dcmd = completed[0]
+            layer = completed[1]
         cmdlst = []
         cmdlst = cmd.split(' ')
 
@@ -516,7 +525,7 @@ class GUI:
             handler = processTask()
             xml.sax.parseString(cmdout2, handler)
 
-        mf = mainFrame(self.parent , -1, self.w, self.h, self.get_dcmd)
+        mf = mainFrame(None, self.parent , self.w, self.h, self.get_dcmd, layer)
         mf.Show(True)
 
 if __name__ == "__main__":
