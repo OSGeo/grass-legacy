@@ -3,8 +3,7 @@
 ## Use this to change absolute icon paths in glade-generated code to portable stuff
 ## use like this: perl this_file glade-emitted.py > portable-equivalent.py
 
-# This is the hardcoded path in current (200703) svn version
-$glade_path = q|/Applications/Grass/GRASS.app/Contents/Resources/etc/gui/icons/|; 
+## Guesses the hardcoded path from the existence of a wxBitmap call
 
 # Be careful below: make sure os is imported but don't do it twice
 $prelude = <<ENDP;
@@ -16,6 +15,8 @@ else:
     icons = os.getenv("GISBASE") + "/etc/gui/icons/"
 ENDP
 
+$out="";
+$glade_path="";
 $has_import_os = 0;
 $in_headers = 1;
 while(<>){
@@ -25,7 +26,11 @@ while(<>){
     print $prelude if $in_headers;
     $in_headers = 0;
     };
-  s|"$glade_path|icons+"|o;
+  /wx.Bitmap\("([^"]+)",/ && $glade_path eq "" and do {
+    $glade_path=$1;
+    $glade_path =~ s|/[^/]+$|/|; # Strip off the filename
+    };
+  s|"$glade_path|icons+"|;
   print;
 }
 
