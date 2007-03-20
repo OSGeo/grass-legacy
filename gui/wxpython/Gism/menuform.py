@@ -194,12 +194,6 @@ class processTask(HandlerBase):
                 "values" : self.param_values,
                 "value" : '' })
 
-#        if name == 'gisprompt':
-#            self.inGispromptContent = 0
-#            grass_task['params'].append({
-##                'age' : self.param_age,
-#                'element' :self.param_element })
-##                'prompt' : self.param_prompt })
 
         if name == 'flag':
             self.inFlag = 0;
@@ -390,7 +384,6 @@ class mainFrame(wx.Frame):
 
     def OnRun(self, event):
         cmd = grass_task['name']
-#       p_count = 0
         errors = 0
         errStr = ""
 
@@ -405,25 +398,19 @@ class mainFrame(wx.Frame):
             if (grass_task['params'][p_count]['type'] != 'flag' and grass_task['params'][p_count]['value'] != ''):
                 cmd = cmd + ' ' + grass_task['params'][p_count]['name'] + '=' + grass_task['params'][p_count]['value']
 
-        print 'the command =', cmd
         if errors:
             self.OnError(errStr)
             return
 
         if cmd[0:2] == "d.":
             if self.get_dcmd != None:
-                self.get_dcmd(cmd, self.layer) # run it
-
-        # Send GRASS display command(s)with arguments
-        # to the display processor.
-        # Display with focus receives display command(s).
-##                self.console_output.write(cmd+"\n----------\n") #need to echo this back to gism.py console
-#               currmap = render.Track().getMD()
-#               currmap.setDcommandList(cmd)
+                # return d.* command to layer tree for rendering
+                self.get_dcmd(cmd, self.layer)
+                # echo d.* command to output console
+                self.parent.writeDCommand(cmd)
 
         else:
-            # print 'self.parent in menuform = ',self.parent
-            # Send any other command to parent window (probably gism.py)
+             # Send any other command to parent window (probably gism.py)
             if self.parent > -1:
                 # put to parents
                 try:
@@ -501,7 +488,6 @@ class GUI:
         self.parent = parent
 
     def parseCommand(self, cmd, gmpath, completed=None, parentframe=-1 ):
-        print 'completed :', completed
         if completed == None:
             self.get_dcmd = None
             layer = None
@@ -526,6 +512,7 @@ class GUI:
             xml.sax.parseString(cmdout2, handler)
 
         mf = mainFrame(self.parent ,-1, self.w, self.h, self.get_dcmd, layer)
+#        mf = mainFrame(None, self.parent , self.w, self.h, self.get_dcmd, layer)
         mf.Show(True)
 
 if __name__ == "__main__":
