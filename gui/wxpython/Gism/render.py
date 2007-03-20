@@ -163,14 +163,8 @@ class MapLayer:
 		# Start monitor
 		#
 		os.environ["GRASS_PNGFILE"] = self.mapfile
+		os.environ["GRASS_RENDER_IMMEDIATE"] = "TRUE"
 
-		if os.system("d.mon --quiet start=gism"):
-			# try again
-			# os.system("d.mon --quiet stop=gism")
-			# if os.system("d.mon --quiet start=gism"):
-                        raise CouldNotStartMonitor ("gism")
-
-		os.unsetenv("GRASS_PNGFILE")
 
 		#
 		# execute command
@@ -189,8 +183,8 @@ class MapLayer:
 		#
 		# Stop monitor
 		#
-		if os.system("d.mon --quiet stop=gism"):
-                        raise CouldNotStopMonitor("gism")
+		os.unsetenv("GRASS_PNGFILE")
+		os.unsetenv("GRASS_RENDER_IMMEDIATE")
 
 		return self.mapfile
 
@@ -236,7 +230,7 @@ class Map:
 		self.layers    = []  # stack of available layer
 		self.env       = {}  # enviroment variables, like MAPSET, LOCATION_NAME, etc.
 		self.verbosity = 0
-		self.mapfile   = utils.GetTempfile()+'.png'
+		self.mapfile   = utils.GetTempfile()+'.ppm'
 
 #		self.renderRegion = {
 #			"render" : True,     # should the region be displayed?
