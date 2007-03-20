@@ -114,6 +114,8 @@ class processTask(HandlerBase):
 
 
     def startElement(self, name, attrs):
+        global grass_task
+
         if name == 'task':
             grass_task['name'] = attrs.get('name', None)
 
@@ -174,6 +176,7 @@ class processTask(HandlerBase):
             self.value_tmp = self.value_tmp + ch
 
     def endElement(self, name):
+        global grass_task
         # If it's not a parameter element, ignore it
         if name == 'parameter':
             self.inParameter = 0;
@@ -190,6 +193,13 @@ class processTask(HandlerBase):
                 "default" : self.param_default,
                 "values" : self.param_values,
                 "value" : '' })
+
+#        if name == 'gisprompt':
+#            self.inGispromptContent = 0
+#            grass_task['params'].append({
+##                'age' : self.param_age,
+#                'element' :self.param_element })
+##                'prompt' : self.param_prompt })
 
         if name == 'flag':
             self.inFlag = 0;
@@ -216,16 +226,17 @@ class processTask(HandlerBase):
 
 
 class mainFrame(wx.Frame):
-    def __init__(self, parent, ID, w, h, get_dcmd):
+    def __init__(self, parent, ID, w, h):
+        global grass_task
         wx.Frame.__init__(self, parent, ID, grass_task['name'],
             wx.DefaultPosition, style=wx.DEFAULT_FRAME_STYLE | wx.TAB_TRAVERSAL)
 
         self.CreateStatusBar()
         self.SetStatusText("Enter parameters for " + grass_task['name'])
         self.parent = parent
+        self.onrunhook = '' #variable to store callback procedure for returning option data to layer manager
         self.selection = '' #selection from GIS element selector
         self.paramdict = {} # dictionary of controls and their parameter values
-        self.get_dcmd = get_dcmd
 
         menu = wx.Menu()
         menu.Append(ID_ABOUT, "&About GrassGUI",
@@ -285,7 +296,7 @@ class mainFrame(wx.Frame):
 
             if (p['type'] in ('string','integer','float') and
                 len(p['values']) == 0 and
-                (p['gisprompt'] == False or p['prompt'] == 'color')):
+                p['gisprompt'] == False ):
 
                 txt2 = wx.StaticText(self.panel, -1, title + ':',
                     wx.Point(-1, -1), wx.Size(-1, -1))
@@ -299,8 +310,7 @@ class mainFrame(wx.Frame):
                 self.paramdict[self.txt3] = ID_PARAM_START + p_count
                 self.txt3.Bind(wx.EVT_TEXT, self.EvtText)
 
-            if (p['type'] == 'string' and p['gisprompt'] == True and
-                    p['prompt'] != 'color'):
+            if p['type'] == 'string' and p['gisprompt'] == True:
                 txt4 = wx.StaticText(self.panel, -1, title + ':',
                     wx.Point(-1, -1), wx.Size(-1, -1))
                 self.guisizer.Add(txt4, 0, wx.ADJUST_MINSIZE | wx.ALL, 5)
@@ -350,6 +360,7 @@ class mainFrame(wx.Frame):
             else:
                 tasktype = 'params'
                 num = param_num-ID_PARAM_START
+            print 'tasktype, num, param_val :', tasktype, num, param_val
             grass_task[tasktype][num]['value'] = param_val
 
     def EvtText(self, event):
@@ -381,6 +392,8 @@ class mainFrame(wx.Frame):
 #       p_count = 0
         errors = 0
         errStr = ""
+
+
         for p_count in range(0, len(grass_task['params'])):
             if (grass_task['params'][p_count]['type'] != 'flag' and grass_task['params'][p_count]['value'] == '' and grass_task['params'][p_count]['required'] != 'no'):
                 errStr = errStr + "Parameter " + grass_task['params'][p_count]['name'] + "(" +grass_task['params'][p_count]['description']  + ") is missing\n"
@@ -392,45 +405,47 @@ class mainFrame(wx.Frame):
             if (grass_task['params'][p_count]['type'] != 'flag' and grass_task['params'][p_count]['value'] != ''):
                 cmd = cmd + ' ' + grass_task['params'][p_count]['name'] + '=' + grass_task['params'][p_count]['value']
 
+        print 'the command =', cmd
         if errors:
             self.OnError(errStr)
+            return
+
+        if cmd[0:2] == "d.":
+            print 'in command parser'
+            #return cmd
+            if self.onrunhook != None:
+                eval(self.onrunhook()) # run it
+
+            # Send GRASS display command(s)with arguments
+            # to the display processor.
+            # Display with focus receives display command(s).
+##                self.console_output.write(cmd+"\n----------\n") #need to echo this back to gism.py console
+#               currmap = render.Track().getMD()
+#               currmap.setDcommandList(cmd)
+
+
         else:
-            if cmd[0:2] == "d.":
-                if self.get_dcmd != None:
-                    self.get_dcmd(cmd) # run it
-
-                # Send GRASS display command(s)with arguments
-                # to the display processor.
-                # Display with focus receives display command(s).
-    ##                self.console_output.write(cmd+"\n----------\n") #need to echo this back to gism.py console
-    #               currmap = render.Track().getMD()
-    #               currmap.setDcommandList(cmd)
-
-
+            # print 'self.parent in menuform = ',self.parent
+            # Send any other command to parent window (probably gism.py)
+            if self.parent > -1:
+                # put to parents 
+                try:
+                    self.parent.goutput.runCmd(cmd)
+                except AttributeError,e:
+                    print >>sys.stderr, "%s: Propably not running in gism.py session?" % (e)
+                    print >>sys.stderr, "parent window is: %s" % (str(self.parent))
+            # Send any other command to the shell.
             else:
-                # Send any other command to the shell.
+                try:
+                    retcode = subprocess.call(cmd, shell=True)
+                    if retcode < 0:
+                        print >>sys.stderr, "Child was terminated by signal", -retcode
+                    elif retcode > 0:
+                        print >>sys.stderr, "Child returned", retcode
+                except OSError, e:
+                    print >>sys.stderr, "Execution failed:", e
 
-                if self.parent > -1:
-                    print 'self.parent in menuform = ',self.parent
-                    # we are child of some other window (probably gism.py)
-                    #self.parent....
-                    # Michael, we have the command here, what to do?
-
-                else:
-                    try:
-                        retcode = subprocess.call(cmd, shell=True)
-                        if retcode < 0:
-                            print >>sys.stderr, "Child was terminated by signal", -retcode
-                        elif retcode > 0:
-                            print >>sys.stderr, "Child returned", retcode
-                    except OSError, e:
-                        print >>sys.stderr, "Execution failed:", e
-
-    ##            self.console_output.write(cmd+"\n----------\n") #need to echo this back to gism.py console
-    ##                self.out = subprocess.Popen(cmd, shell=True, stdout=Pipe).stdout
-    ##            self.out = os.popen(cmd, "r").read() #need to echo this back to gism.py console
-    ##            self.console_output.write(self.out+"\n") #need to echo this back to gism.py console
-
+        
 
 
     def OnError(self, errMsg):
@@ -466,7 +481,6 @@ class mainFrame(wx.Frame):
 
 class GrassGUIApp(wx.App):
     def OnInit(self):
-        global grass_task
         self.w = HSPACE + STRING_ENTRY_WIDTH + HSPACE
         self.h = MENU_HEIGHT + VSPACE + grass_task['lines'] * ENTRY_HEIGHT + VSPACE + BUTTON_HEIGHT + VSPACE + STATUSBAR_HEIGHT
         frame = mainFrame(None, -1, self.w, self.h)
@@ -478,15 +492,17 @@ class GUI:
     def __init__(self,parent=-1):
         '''Parses GRASS commands when module is imported and used
         from gism.py'''
-        global grass_task
         self.w = HSPACE + STRING_ENTRY_WIDTH + HSPACE
         self.h = MENU_HEIGHT + VSPACE + grass_task['lines'] * ENTRY_HEIGHT + VSPACE + BUTTON_HEIGHT + VSPACE + STATUSBAR_HEIGHT
         self.parent = parent
 
-    def parseCommand(self, cmd, gmpath, completed=None):
-        self.get_dcmd = completed
+    def parseCommand(self, cmd, gmpath, completed=None, parentframe=-1 ):
+        self.onrunhook = completed
         cmdlst = []
         cmdlst = cmd.split(' ')
+
+        if parentframe > -1:
+            self.parent = parentframe
 
         if len(cmdlst) > 1:
             print "usage: <grass command> --task-description | " + cmdlst[0]
@@ -499,7 +515,7 @@ class GUI:
             handler = processTask()
             xml.sax.parseString(cmdout2, handler)
 
-        mf = mainFrame(None, self.parent , self.w, self.h, self.get_dcmd)
+        mf = mainFrame(self.parent , -1, self.w, self.h)
         mf.Show(True)
 
 if __name__ == "__main__":
