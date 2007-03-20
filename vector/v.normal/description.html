@@ -29,15 +29,22 @@ giving an index, ranges of indices, or multiple thereof.
 
 <H2>EXAMPLE</H2>
 
+<!-- do a meaning ful example -->
 <div class="code"><pre>
-v.normal map=soils tests=1-3,14 col=flt1
+v.random random n=200
+v.db.addtable random col="elev double precision"
+v.what.rast random rast=elevation.10m col=elev
+v.normal random tests=1-3,14 col=elev
 </pre></div>
-
 
 computes the sample skewness and kurtosis, Geary's
 a-statistic and an approximate normal transformation,
 extreme normal deviates, and Royston's W for the
-<EM>soils</EM> vector points.
+<EM>random</EM> vector points.
+
+<!-- TODO: find references , e.g.
+     http://www.itl.nist.gov/div898/handbook/eda/section3/eda35.htm
+-->
 
 <H2>SEE ALSO</H2>
 <A HREF="v.univar.html">v.univar</A>
