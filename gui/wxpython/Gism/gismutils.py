@@ -2,7 +2,6 @@ import os,sys
 import wx
 import wx.lib.customtreectrl as CT
 import wx.combo
-from wx.lib.combotreebox import ComboTreeBox
 
 import track
 import select
@@ -103,12 +102,10 @@ class LayerTree(CT.CustomTreeCtrl):
 #        layername = type + ':' + str(self.node)
 
         if type == 'raster':
-            self.map = select.Select(self, id=wx.ID_ANY, size=(250,-1), type='cell')
-            self.map.Bind(wx.EVT_TEXT, self.onMapChanged)
+            self.map = None
 
         elif type == 'vector':
-            self.map = select.Select(self, id=wx.ID_ANY, size=(250,-1), type='vector')
-            self.map.Bind(wx.EVT_TEXT, self.onMapChanged)
+            self.map = None
 
         elif type == 'command':
             self.map = wx.TextCtrl(self, -1,
@@ -132,8 +129,10 @@ class LayerTree(CT.CustomTreeCtrl):
 #        #add icons for each layer
         if type == 'raster':
             self.SetItemImage(self.layer, self.rast_icon)
+            self.SetItemText(self.layer, 'raster (double click to set properties)')
         elif type == 'vector':
             self.SetItemImage(self.layer, self.vect_icon)
+            self.SetItemText(self.layer, 'vector (double click to set properties)')
         elif type == 'command':
             self.SetItemImage(self.layer, self.cmd_icon)
 
@@ -200,13 +199,9 @@ class LayerTree(CT.CustomTreeCtrl):
         completed = ''
        # When double clicked, open options dialog
         if self.layertype[layer] == 'raster':
-#            raster_prop.MyFrame(self)
             menuform.GUI().parseCommand('d.rast', gmpath, completed=(self.getOptData,layer))
         elif self.layertype[layer] == 'vector':
-#            print 'its a vector'
-#            vectopt.MyPanel(self)
             menuform.GUI().parseCommand('d.vect', gmpath, completed=(self.getOptData,layer))
-        self.createLayerList()
 
     def onLayerChecked(self, event):
         Layer = event.GetItem()
@@ -222,33 +217,26 @@ class LayerTree(CT.CustomTreeCtrl):
 #        event.Skip()
 
     def getOptData(self, dcmd, layer):
-        print 'the options are =', dcmd
         for item in dcmd.split(' '):
             if 'map=' in item:
                 mapname = item.split('=')[1]
-        print 'mapname = ', mapname
-        print 'layer = ', layer
+        self.SetItemText(layer, mapname)
+        self.SetPyData(self.layer, dcmd)
+        self.createLayerList()
 
     def createLayerList(self):
         self.display.cleanLayersList()
+        command = None
         for layer in self.layertype.keys():
-            if self.GetItemWindow(layer) != None:
-                name = self.GetItemWindow(layer).GetValue()
-                if '@' in name:
-                    msname = name.split('@')[1]
-                    name = name.split('@')[0]
-                else:
-                    msname = None
-                if self.IsItemChecked(layer) == True and \
-                    self.GetItemWindow(layer).GetValue() != '' and \
-                    self.GetItemWindow(layer).GetValue()[0:7] != 'Mapset:':
-                    if self.layertype[layer] == 'raster':
-                        self.display.addMapsToList(type='raster', map=name, mset=msname)
-                        #TODO: need to add options for layer
-                    elif self.layertype[layer] == 'vector':
-                        self.display.addMapsToList(type='vector', map=name, mset=msname)
-                    elif self.layertype[layer] == 'command':
-                        self.display.addMapsToList(type='command', map=name, mset=msname)
+
+            if self.layertype[layer] == 'command':
+                if self.GetItemWindow(layer) != None:
+                    command = self.GetItemWindow(layer).GetValue()
+            else:
+                if self.GetPyData(layer) != None:
+                    command = self.GetPyData(layer)
+            if command != None and self.IsItemChecked(layer) == True:
+                self.display.addMapsToList(type='command', map=command, mset=None)
 
 
 class TreeCtrlComboPopup(wx.combo.ComboPopup):
