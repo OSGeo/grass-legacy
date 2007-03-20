@@ -525,7 +525,7 @@ class GUI:
             handler = processTask()
             xml.sax.parseString(cmdout2, handler)
 
-        mf = mainFrame(None, self.parent , self.w, self.h, self.get_dcmd, layer)
+        mf = mainFrame(self.parent ,-1, self.w, self.h, self.get_dcmd, layer)
         mf.Show(True)
 
 if __name__ == "__main__":
