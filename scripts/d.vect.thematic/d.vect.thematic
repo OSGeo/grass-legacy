@@ -326,7 +326,7 @@ if [ -z "$table" ]
 # update color values to the table?
 if [ "$GIS_FLAG_U" -eq 1 ] ; then
     # test, if the column GRASSRGB is in the table
-    if [ "`db.columns table=$table database=$database | grep -i grassrgb`" == "" ] ; then
+    if [ -z "`db.columns table=$table database=$database | grep -i grassrgb`" ] ; then
         echo "Creating column 'grassrgb' in table '$table'"
         echo "ALTER TABLE $table ADD COLUMN grassrgb varchar(11)" | db.execute database=$database
     fi
@@ -786,19 +786,19 @@ if [ "$GIS_OPT_THEMETYPE" = "graduated_colors" ] ; then
 
 
         # increment for next theme
-        let i=i+1
+        i=`expr $i + 1`
 		if [ $i = $numint ] ; then
-		  let color1=$endcolor1
-		  let color2=$endcolor2
-		  let color3=$endcolor3
+		  color1=$endcolor1
+		  color2=$endcolor2
+		  color3=$endcolor3
 		else
-          let color1=color1-clrstep1
-          let color2=color2-clrstep2
-          let color3=color3-clrstep3
+          color1=`expr $color1 - $clrstep1`
+          color2=`expr $color2 - $clrstep2`
+          color3=`expr $color3 - $clrstep3`
 		fi
-        let line1=line1-4
-        let line2=line2-4
-        let line3=line3-4
+        line1=`expr $line1 - 4`
+        line2=`expr $line2 - 4`
+        line3=`expr $line3 - 4`
     done
     
     # reset rendering for GUI use
@@ -1074,9 +1074,9 @@ if [ "$GIS_OPT_THEMETYPE" = "graduated_points" -o "$GIS_OPT_THEMETYPE" = "gradua
 
         ptsize=`echo $ptsize $pointstep | awk '{print $1 - $2}'`
 
-        let line1=line1-$lineht
-        let line2=line2-$lineht
-        let i=i-1
+        line1=`expr $line1 - $lineht`
+        line2=`expr $line2 - $lineht`
+        i=`expr $i - 1`
     done
     # reset rendering for GUI use
 	if [ "$GIS_FLAG_S"  -eq 1 ] ; then
