@@ -216,16 +216,16 @@ class processTask(HandlerBase):
 
 
 class mainFrame(wx.Frame):
-    def __init__(self, parent, ID, w, h):
+    def __init__(self, parent, ID, w, h, get_dcmd):
         wx.Frame.__init__(self, parent, ID, grass_task['name'],
             wx.DefaultPosition, style=wx.DEFAULT_FRAME_STYLE | wx.TAB_TRAVERSAL)
 
         self.CreateStatusBar()
         self.SetStatusText("Enter parameters for " + grass_task['name'])
         self.parent = parent
-        self.onrunhook = '' #variable to store callback procedure for returning option data to layer manager
         self.selection = '' #selection from GIS element selector
         self.paramdict = {} # dictionary of controls and their parameter values
+        self.get_dcmd = get_dcmd
 
         menu = wx.Menu()
         menu.Append(ID_ABOUT, "&About GrassGUI",
@@ -285,7 +285,7 @@ class mainFrame(wx.Frame):
 
             if (p['type'] in ('string','integer','float') and
                 len(p['values']) == 0 and
-                p['gisprompt'] == False ):
+                (p['gisprompt'] == False or p['prompt'] == 'color')):
 
                 txt2 = wx.StaticText(self.panel, -1, title + ':',
                     wx.Point(-1, -1), wx.Size(-1, -1))
@@ -299,7 +299,8 @@ class mainFrame(wx.Frame):
                 self.paramdict[self.txt3] = ID_PARAM_START + p_count
                 self.txt3.Bind(wx.EVT_TEXT, self.EvtText)
 
-            if p['type'] == 'string' and p['gisprompt'] == True:
+            if (p['type'] == 'string' and p['gisprompt'] == True and
+                    p['prompt'] != 'color'):
                 txt4 = wx.StaticText(self.panel, -1, title + ':',
                     wx.Point(-1, -1), wx.Size(-1, -1))
                 self.guisizer.Add(txt4, 0, wx.ADJUST_MINSIZE | wx.ALL, 5)
@@ -380,7 +381,6 @@ class mainFrame(wx.Frame):
 #       p_count = 0
         errors = 0
         errStr = ""
-
         for p_count in range(0, len(grass_task['params'])):
             if (grass_task['params'][p_count]['type'] != 'flag' and grass_task['params'][p_count]['value'] == '' and grass_task['params'][p_count]['required'] != 'no'):
                 errStr = errStr + "Parameter " + grass_task['params'][p_count]['name'] + "(" +grass_task['params'][p_count]['description']  + ") is missing\n"
@@ -396,11 +396,8 @@ class mainFrame(wx.Frame):
             self.OnError(errStr)
         else:
             if cmd[0:2] == "d.":
-                print 'in command parser'
-                return cmd
-                if self.onrunhook != None:
-                    print 'trying runhook', self.runhook
-                    self.onrunhook() # run it
+                if self.get_dcmd != None:
+                    self.get_dcmd(cmd) # run it
 
                 # Send GRASS display command(s)with arguments
                 # to the display processor.
@@ -487,7 +484,7 @@ class GUI:
         self.parent = parent
 
     def parseCommand(self, cmd, gmpath, completed=None):
-        self.onrunhook = completed
+        self.get_dcmd = completed
         cmdlst = []
         cmdlst = cmd.split(' ')
 
@@ -502,7 +499,7 @@ class GUI:
             handler = processTask()
             xml.sax.parseString(cmdout2, handler)
 
-        mf = mainFrame(None, self.parent , self.w, self.h)
+        mf = mainFrame(None, self.parent , self.w, self.h, self.get_dcmd)
         mf.Show(True)
 
 if __name__ == "__main__":
