@@ -49,19 +49,8 @@ int main (int argc, char *argv[])
 	    "function of the attribute values assigned to the vector points or centroids "
 	    "around it, and stores new cell values in an output raster map layer.";
 
-    in_opt              = G_define_option() ;
-    in_opt->key         = "input" ;
-    in_opt->type        = TYPE_STRING ;
-    in_opt->required    = YES ;
-    in_opt->gisprompt   = "old,vector,vector" ;
-    in_opt->description = "Name of existing vector map" ;
-
-    out_opt	  	 = G_define_option() ;
-    out_opt->key         = "output" ;
-    out_opt->type        = TYPE_STRING ;
-    out_opt->required    = YES ;
-    out_opt->gisprompt   = "any,cell,raster" ;
-    out_opt->description = "Name of the new raster map" ;
+    in_opt                = G_define_standard_option(G_OPT_V_INPUT);
+    out_opt               = G_define_standard_option(G_OPT_R_OUTPUT);
 
     method_opt		    = G_define_option() ;
     method_opt->key         = "method" ;
@@ -78,13 +67,13 @@ int main (int argc, char *argv[])
     size_opt->description = "Neighborhood diameter in map units" ;
 
     if (G_parser(argc,argv))
-	exit(1);
+	exit(EXIT_FAILURE);
 
     radius = atof(size_opt->answer) / 2;
 
     /* open input vector */
     if ((mapset = G_find_vector2 (in_opt->answer, "")) == NULL) {
-        G_fatal_error ( "Could not find input map '%s\n", in_opt->answer);
+        G_fatal_error ( _("Could not find vector map <%s> in current mapset"), in_opt->answer);
     }
 
     Vect_set_open_level (2);
@@ -158,5 +147,5 @@ int main (int argc, char *argv[])
     Vect_close (&In);
     G_close_cell (out_fd);
 
-    exit(0);
+    exit(EXIT_SUCCESS);
 }
