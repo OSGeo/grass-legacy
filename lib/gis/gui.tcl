@@ -283,7 +283,7 @@ proc run_cmd {dlg} {
 	set gronsole $opt($dlg,gronsole)
 
 	set title [G_msg "Output"]
-	layout_raise_special_frame $dlg [list $title] $title]
+	layout_raise_special_frame $dlg {Output} $title]
 
 	set cmd [mkcmd $dlg]
 
