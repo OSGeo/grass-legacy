@@ -1,5 +1,4 @@
 #! /usr/bin/python
-## vim:ts=4:et:sts=4:sw=4:ai:
 """ Construct simple wx.Python GUI from a GRASS command interface description.
 
 # Copyright (C) 2000 by the GRASS Development Team
