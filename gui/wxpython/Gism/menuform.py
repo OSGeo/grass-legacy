@@ -226,7 +226,7 @@ class processTask(HandlerBase):
 
 
 class mainFrame(wx.Frame):
-    def __init__(self, parent, ID, w, h):
+    def __init__(self, parent, ID, w, h, get_dcmd):
         global grass_task
         wx.Frame.__init__(self, parent, ID, grass_task['name'],
             wx.DefaultPosition, style=wx.DEFAULT_FRAME_STYLE | wx.TAB_TRAVERSAL)
@@ -234,9 +234,9 @@ class mainFrame(wx.Frame):
         self.CreateStatusBar()
         self.SetStatusText("Enter parameters for " + grass_task['name'])
         self.parent = parent
-        self.onrunhook = '' #variable to store callback procedure for returning option data to layer manager
         self.selection = '' #selection from GIS element selector
         self.paramdict = {} # dictionary of controls and their parameter values
+        self.get_dcmd = get_dcmd
 
         menu = wx.Menu()
         menu.Append(ID_ABOUT, "&About GrassGUI",
@@ -296,7 +296,7 @@ class mainFrame(wx.Frame):
 
             if (p['type'] in ('string','integer','float') and
                 len(p['values']) == 0 and
-                p['gisprompt'] == False ):
+                (p['gisprompt'] == False or p['prompt'] == 'color')):
 
                 txt2 = wx.StaticText(self.panel, -1, title + ':',
                     wx.Point(-1, -1), wx.Size(-1, -1))
@@ -310,7 +310,8 @@ class mainFrame(wx.Frame):
                 self.paramdict[self.txt3] = ID_PARAM_START + p_count
                 self.txt3.Bind(wx.EVT_TEXT, self.EvtText)
 
-            if p['type'] == 'string' and p['gisprompt'] == True:
+            if (p['type'] == 'string' and p['gisprompt'] == True and
+                    p['prompt'] != 'color'):
                 txt4 = wx.StaticText(self.panel, -1, title + ':',
                     wx.Point(-1, -1), wx.Size(-1, -1))
                 self.guisizer.Add(txt4, 0, wx.ADJUST_MINSIZE | wx.ALL, 5)
@@ -360,7 +361,6 @@ class mainFrame(wx.Frame):
             else:
                 tasktype = 'params'
                 num = param_num-ID_PARAM_START
-            print 'tasktype, num, param_val :', tasktype, num, param_val
             grass_task[tasktype][num]['value'] = param_val
 
     def EvtText(self, event):
@@ -411,10 +411,9 @@ class mainFrame(wx.Frame):
             return
 
         if cmd[0:2] == "d.":
-            print 'in command parser'
+            if self.get_dcmd != None:
+                self.get_dcmd(cmd) # run it
             #return cmd
-            if self.onrunhook != None:
-                eval(self.onrunhook()) # run it
 
             # Send GRASS display command(s)with arguments
             # to the display processor.
@@ -481,6 +480,7 @@ class mainFrame(wx.Frame):
 
 class GrassGUIApp(wx.App):
     def OnInit(self):
+        global grass_task
         self.w = HSPACE + STRING_ENTRY_WIDTH + HSPACE
         self.h = MENU_HEIGHT + VSPACE + grass_task['lines'] * ENTRY_HEIGHT + VSPACE + BUTTON_HEIGHT + VSPACE + STATUSBAR_HEIGHT
         frame = mainFrame(None, -1, self.w, self.h)
@@ -492,12 +492,13 @@ class GUI:
     def __init__(self,parent=-1):
         '''Parses GRASS commands when module is imported and used
         from gism.py'''
+        global grass_task
         self.w = HSPACE + STRING_ENTRY_WIDTH + HSPACE
         self.h = MENU_HEIGHT + VSPACE + grass_task['lines'] * ENTRY_HEIGHT + VSPACE + BUTTON_HEIGHT + VSPACE + STATUSBAR_HEIGHT
         self.parent = parent
 
     def parseCommand(self, cmd, gmpath, completed=None, parentframe=-1 ):
-        self.onrunhook = completed
+        self.get_dcmd = completed
         cmdlst = []
         cmdlst = cmd.split(' ')
 
@@ -515,7 +516,7 @@ class GUI:
             handler = processTask()
             xml.sax.parseString(cmdout2, handler)
 
-        mf = mainFrame(self.parent , -1, self.w, self.h)
+        mf = mainFrame(self.parent , -1, self.w, self.h, self.get_dcmd)
         mf.Show(True)
 
 if __name__ == "__main__":
