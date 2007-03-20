@@ -4,10 +4,7 @@ import wx.lib.customtreectrl as CT
 import wx.combo
 from wx.lib.combotreebox import ComboTreeBox
 
-import render
-import grassenv
 import track
-import menuform
 import select
 import optpanels.raster_prop as raster_prop
 import optpanels.vectopt as vectopt
@@ -42,6 +39,10 @@ class LayerTree(CT.CustomTreeCtrl):
                  CT.TR_HIDE_ROOT | CT.TR_ROW_LINES | CT.TR_FULL_ROW_HIGHLIGHT,
                  disp=None, log=None):
         CT.CustomTreeCtrl.__init__(self, parent, id, pos, size, style,ctstyle)
+
+        # we need this only for GIS Manager, but not for e.g. mapdisp
+        import menuform
+
         self.SetAutoLayout(True)
         self.SetGradientStyle(1)
         self.EnableSelectionGradient(True)
