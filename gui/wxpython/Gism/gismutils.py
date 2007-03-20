@@ -199,9 +199,9 @@ class LayerTree(CT.CustomTreeCtrl):
         completed = ''
        # When double clicked, open options dialog
         if self.layertype[layer] == 'raster':
-            menuform.GUI().parseCommand('d.rast', gmpath, completed=(self.getOptData,layer))
+            menuform.GUI().parseCommand('d.rast', gmpath, completed=(self.getOptData,layer), parentframe=self)
         elif self.layertype[layer] == 'vector':
-            menuform.GUI().parseCommand('d.vect', gmpath, completed=(self.getOptData,layer))
+            menuform.GUI().parseCommand('d.vect', gmpath, completed=(self.getOptData,layer), parentframe=self)
 
     def onLayerChecked(self, event):
         Layer = event.GetItem()
@@ -223,6 +223,12 @@ class LayerTree(CT.CustomTreeCtrl):
         self.SetItemText(layer, mapname)
         self.SetPyData(self.layer, dcmd)
         self.createLayerList()
+
+    def writeDCommand(self, dcmd):
+        # echos d.* command to output console
+        global goutput
+        goutput.write(dcmd+"\n----------\n")
+
 
     def createLayerList(self):
         self.display.cleanLayersList()
@@ -399,6 +405,8 @@ class GMConsole(wx.Panel):
                                                   style=wx.TE_MULTILINE|
                                                   wx.TE_READONLY|wx.HSCROLL)
 
+        global goutput
+        goutput = self.cmd_output
     	self.console_clear = wx.Button(self, -1, _("Clear"))
     	self.console_save = wx.Button(self, -1, _("Save"))
 
