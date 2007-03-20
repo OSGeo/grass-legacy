@@ -30,8 +30,8 @@ v.db.addtable vectpoints col="cat integer, value integer"
 #query raster map and write values into vector table:
 v.what.rast vect=vectpoints rast=rastmap col=value
 
-#verify uploaded values:
-v.univar map=vectpoints col=value
+#verify statistics of uploaded values:
+v.univar map=vectpoints col=value type=point
 </pre></div>
 
 <H2>SEE ALSO</H2>
