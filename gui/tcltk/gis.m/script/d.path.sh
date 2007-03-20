@@ -51,6 +51,14 @@
 #% answer: line,boundary
 #%End
 #%Option
+#% key: coor
+#% type: string
+#% required: no
+#% multiple: no
+#% key_desc: x1,y1,x2,y2
+#% description: Starting and ending coordinates
+#%End
+#%Option
 #% key: alayer
 #% type: integer
 #% required: no
