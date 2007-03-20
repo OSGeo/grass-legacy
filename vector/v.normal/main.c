@@ -203,10 +203,10 @@ int main (int argc, char **argv)
   } 
 
   if (verbose)
-    fprintf (stdout,"Number of sites: %d\n", nsites);
+    fprintf (stdout,"Number of points: %d\n", nsites);
 
   if (nsites <= 0)
-    G_fatal_error ("No sites found");
+    G_fatal_error ("No points found");
 
   if (nsites < 4)
     fprintf (stdout,"WARNING: I'm not so sure of myself for small samples\n");
@@ -221,7 +221,7 @@ int main (int argc, char **argv)
 	z[i] = log10 (z[i]);
       else if (!warn_once)
       {
-	G_warning ("Negative or very small sites set to -10.0");
+	G_warning ("Negative or very small point values set to -10.0");
 	z[i] = -10.0;
 	warn_once = 1;
       }
