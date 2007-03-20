@@ -53,6 +53,7 @@ int main(int argc, char *argv[])
     CELL  *mask;
     DCELL *dcell;
     struct GModule *module;
+    struct History history;
     int row, col;
     int searchrow, searchcolumn, pointsfound;
     int *shortlistrows=NULL, *shortlistcolumns=NULL;
@@ -373,6 +374,10 @@ int main(int argc, char *argv[])
         G_put_d_raster_row(fd,dcell);
     }
     G_close_cell(fd);
+    /* writing history file */
+    G_short_history(parm.output->answer, "raster", &history);
+    G_command_history(&history);
+    G_write_history(parm.output->answer, &history);
     G_message ( _("Done          "));
     exit(EXIT_SUCCESS);
 }
