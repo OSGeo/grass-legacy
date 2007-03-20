@@ -5,8 +5,8 @@
 
 # William Kyngesburye:
 #    This one builds the addon index, from both the global
-#    /Library/Application Support/GRASS/Modules and the user's
-#    $HOME/Library/Application Support/GRASS/Modules
+#    /Library/GRASS/$GRASS_MMVER/Modules and the user's
+#    $HOME/Library/$GRASS_MMVER/GRASS/Modules
 #    Each is in their own section, in the same index file.
 # 
 #    global help pages are symlinked to the user dir, so user doesn't need perms
@@ -16,17 +16,17 @@
 
 ############# nothing to configure below ############
 
+GRASS_MMVER=`cut -d . -f 1-2 "$GISBASE/etc/VERSIONNUMBER"`
+GRASSVERSION=`cat "$GISBASE/etc/VERSIONNUMBER"`
+HTMLDIR="$HOME/Library/GRASS/$GRASS_MMVER/Modules/docs/html"
+HTMLDIRG="/Library/GRASS/$GRASS_MMVER/Modules/docs/html"
+
 # $1 is current path to GRASS.app/Contents/Resources, defaults to /Applications
 if [ "$1" != "" ] ; then
 	GISBASE=$1
 else
-	GISBASE="/Applications/GRASS.app/Contents/Resources"
+	GISBASE="/Applications/GRASS-$GRASS_MMVER.app/Contents/Resources"
 fi
-GRASS_MMVER=`cut -d . -f 1-2 "$GISBASE/etc/VERSIONNUMBER"`
-GRASSVERSION=`cat "$GISBASE/etc/VERSIONNUMBER"`
-HTMLDIR="$HOME/Library/GRASS/$GRASS_MMVER/Modules/docs/html"
-HTMLDIRV="$HOME/Library/GRASS/Modules/docs/html"
-HTMLDIRG="/Library/GRASS/$GRASS_MMVER/Modules/docs/html"
 
 write_html_header()
 {
@@ -95,10 +95,8 @@ cd "$HTMLDIRG"
 
 #get list of available GRASS modules:
 CMDLISTG=`ls -1 *.*.html 2> /dev/null | grep -v index.html | cut -d'.' -f1 | sort -u`
-CMDLISTGNO=`echo $CMDLIST | wc -w | awk '{print $1}'`
 else
 CMDLISTG=""
-CMDLISTGNO=""
 fi
 
 #process all user HTML pages:
@@ -110,7 +108,6 @@ cd "$HTMLDIR"
 
 #get list of available GRASS modules:
 CMDLIST=`ls -1 *.*.html 2> /dev/null | grep -v index.html | cut -d'.' -f1 | sort -u`
-CMDLISTNO=`echo $CMDLIST | wc -w | awk '{print $1}'`
 
 #write main index:
 #echo "Generating HTML manual pages index (help system)..."
@@ -127,7 +124,7 @@ echo "</table>" >> $FULLINDEX
 # global commands:
 echo "<h3>Global addon command index:</h3>" >> $FULLINDEX
 echo "<table>" >> $FULLINDEX
-if [ "$CMDLISTG" == "" ] ; then
+if [ "$CMDLISTG" = "" ] ; then
   echo "<tr><td valign=\"top\"><td>[There are no global addon help pages.]</td></tr>" >> $FULLINDEX
 else
   for i in $CMDLISTG
@@ -151,7 +148,7 @@ echo "</table>" >> $FULLINDEX
 # user commands:
 echo "<h3>User addon command index:</h3>" >> $FULLINDEX
 echo "<table>" >> $FULLINDEX
-if [ "$CMDLIST" == "" ] ; then
+if [ "$CMDLIST" = "" ] ; then
   echo "<tr><td valign=\"top\"><td>[There are no user addon help pages.]</td></tr>" >> $FULLINDEX
 else
   for i in $CMDLIST
