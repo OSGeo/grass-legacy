@@ -6685,7 +6685,7 @@ msgstr ""
 #: ../raster/r.le/r.le.setup/main.c:66
 #, fuzzy
 msgid "Raster map to use to setup sampling"
-msgstr "Rasterkarte, die umgeschlüsselt werden soll."
+msgstr "Rasterkarte, um sampling zu definieren."
 
 #: ../raster/r.le/r.le.setup/main.c:70
 #, fuzzy
@@ -12937,9 +12937,8 @@ msgid "raster, mask"
 msgstr "Rasterkarte [%s] "
 
 #: ../locale/scriptstrings/r.mask_to_translate.c:3
-#, fuzzy
 msgid "Raster map to use as MASK"
-msgstr "Rasterkarte, die umgeschlüsselt werden soll."
+msgstr "Rasterkarte, die als MASK verwendet werden soll."
 
 #: ../locale/scriptstrings/r.mask_to_translate.c:4
 msgid "Category values to use for MASK (format: 1 2 3 thru 7 *)"
@@ -19825,7 +19824,7 @@ msgstr "Vektorkarte, die die Unterschiede beinhalten soll."
 
 #: ../vector/v.sample/main.c:114
 msgid "Raster map to be sampled"
-msgstr "Rasterkarte, die umgeschlüsselt werden soll."
+msgstr "Rasterkarte, die gesampled werden soll."
 
 #: ../vector/v.sample/main.c:123
 #, fuzzy
