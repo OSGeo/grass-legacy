@@ -84,7 +84,7 @@ int interactive_version (void)
 	default: continue;
 	}
 
-	sprintf(command, "%s %s", getenv("GRASS_PAGER"), 
+	sprintf(command, "%s \"%s\"", getenv("GRASS_PAGER"), 
 		G_convert_dirseps_to_host(dumpname));
 	G_system(command);
 
