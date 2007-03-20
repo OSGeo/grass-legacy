@@ -105,7 +105,7 @@ class LayerTree(CT.CustomTreeCtrl):
             self.map.Bind(wx.EVT_TEXT, self.onMapChanged)
 
         elif type == 'vector':
-            self.map = select.Select(self, size=(250,-1), type='vector')
+            self.map = select.Select(self, id=wx.ID_ANY, size=(250,-1), type='vector')
             self.map.Bind(wx.EVT_TEXT, self.onMapChanged)
 
         elif type == 'command':
