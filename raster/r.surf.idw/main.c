@@ -33,6 +33,7 @@ int main(int argc, char **argv)
     SHORT datarows;
     int npoints;
     struct GModule *module;
+    struct History history;
     struct
     {
 	struct Option *input, *output, *npoints;
@@ -140,6 +141,10 @@ int main(int argc, char **argv)
     if (ll)
 	free_dist_params();
     G_close_cell(fd);
+    /* writing history file */
+    G_short_history(output, "raster", &history);
+    G_command_history(&history);
+    G_write_history(output, &history);
 
     G_done_msg("");
     exit(EXIT_SUCCESS);

@@ -46,7 +46,8 @@ main (int argc, char *argv[])
     double maxdist,dist;
     double sum1, sum2;
     int i,n,max;
-	struct GModule *module;
+    struct GModule *module;
+    struct History history;
     struct
     {
 	struct Option *input, *npoints, *output;
@@ -192,6 +193,10 @@ main (int argc, char *argv[])
     G_free(points);
     G_free(cell);
     G_close_cell(fd);
+    /* writing history file */
+    G_short_history(parm.output->answer, "raster", &history);
+    G_command_history(&history);
+    G_write_history(parm.output->answer, &history);
     G_done_msg("");
 
     exit(EXIT_SUCCESS);
