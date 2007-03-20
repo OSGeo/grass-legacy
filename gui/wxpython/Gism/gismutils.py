@@ -6,6 +6,7 @@ from wx.lib.combotreebox import ComboTreeBox
 
 import track
 import select
+import menuform
 import optpanels.raster_prop as raster_prop
 import optpanels.vectopt as vectopt
 import optpanels.cmdopt as cmdopt
