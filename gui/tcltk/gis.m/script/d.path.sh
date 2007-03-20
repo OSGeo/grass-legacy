@@ -151,6 +151,11 @@ else
     flag_b=""
 fi
 
+if [ -n "$GIS_OPT_COOR" ] ; then
+    opt_coor="coor=$GIS_OPT_COOR"
+else
+    opt_coor=""
+fi
 if [ -n "$GIS_OPT_AFCOL" ] ; then
     opt_afcol="afcol=$GIS_OPT_AFCOL"
 else
@@ -171,9 +176,11 @@ fi
 exec d.path $flag_g $flag_b \
 	map="$GIS_OPT_MAP" \
 	type="$GIS_OPT_TYPE" \
+	$opt_coor \
 	alayer="$GIS_OPT_ALAYER" \
 	nlayer="$GIS_OPT_NLAYER" \
 	$opt_afcol $opt_abcol $opt_ncol \
 	color="$GIS_OPT_COLOR" \
 	hcolor="$GIS_OPT_HCOLOR" \
 	bgcolor="$GIS_OPT_BGCOLOR"
+
