@@ -278,7 +278,7 @@ class GMFrame(wx.Frame):
         itemtext = menuitem.GetText()
         cmd = menucmd[itemtext]
         global gmpath
-        menuform.GUI().parseCommand(cmd, gmpath)
+        menuform.GUI().parseCommand(cmd,gmpath, parentframe=self)
 
     def __createToolBar(self):
         """Creates toolbar"""
