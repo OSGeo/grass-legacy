@@ -401,6 +401,9 @@ int G_remove_commas(char *);
 /* copy.c */
 int G_copy(void *, void *, int);
 
+/* copy_file.c */
+int G_copy_file(const char *infile, const char *outfile);
+
 /* dalloc.c */
 double *G_alloc_vector(size_t);
 double **G_alloc_matrix(int, int);

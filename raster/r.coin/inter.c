@@ -17,6 +17,7 @@
 
 #include <stdlib.h>
 #include "coin.h"
+#include <grass/spawn.h>
 #include <grass/glocale.h>
 
 
@@ -24,13 +25,12 @@ int interactive_version (void)
 {
     int  cols;
     char key;
-    char line[128],outname[128],command[256];
+    char line[128],outname[128],command[1024];
     char ans[80];
-    char path[254];
 
     setbuf(stderr,NULL);
 
-    G_system("clear");
+    G_clear_screen();
     G_message(_("GIS Coincidence Tabulation Facility\n"));
     G_message(_("This utility will allow you to compare the "
                 "coincidence of two map layers\n"));
@@ -49,7 +49,7 @@ int interactive_version (void)
 
     while(1)
     {
-	G_system("clear");
+	G_clear_screen();
 	G_message(_("The report can be made in one of 8 units."));
 	G_message(_("Please choose a unit by entering one of the "
                     "following letter codes:"));
@@ -84,7 +84,9 @@ int interactive_version (void)
 	default: continue;
 	}
 
-	G_spawn(getenv("GRASS_PAGER"), getenv("GRASS_PAGER"), dumpname, NULL);
+	sprintf(command, "%s %s", getenv("GRASS_PAGER"), 
+		G_convert_dirseps_to_host(dumpname));
+	G_system(command);
 
 	while(1)
 	{
@@ -94,26 +96,19 @@ int interactive_version (void)
 	    G_strip (ans);
 	    if(ans[0] != 'y' && ans[0] != 'Y') break;
 
-	    fprintf(stderr, _("Enter the file name\n> "));
+	    fprintf(stderr, _("Enter the file name or path\n> "));
 	    if (!G_gets(line)) continue;
 	    if(sscanf(line,"%s",outname) != 1) continue;
-	    if(outname[0] != '/'){
-		sprintf(path, "%s/%s", G_home(), outname);
-		fprintf(stderr, _("'%s' being saved in your home directory"), outname);
-	    }
-	    else{
-  	    	sprintf(path, "%s", outname);
-		fprintf(stderr, _("'%s' being saved"), outname);
-	    }
-	    G_spawn("cp", "cp", dumpname, path, NULL);
-	    fprintf(stderr,"\n");
-	    break;
+	    fprintf(stderr, _("'%s' being saved\n"), outname);
+	    if( G_copy_file(dumpname, outname) )
+	       /* Break out if file copy was successful otherwise try again */
+	       break;
 	}
 
 	while(1)
 	{
 	    *ans = 0;
-	    fprintf(stderr, _("Do you wish to print this report? (y/n) [n] "));
+	    fprintf(stderr, _("Do you wish to print this report (requires Unix lpr command)? (y/n) [n] "));
 	    if(!G_gets(ans)) continue;
 	    G_strip (ans);
 	    if(ans[0] != 'y' && ans[0] != 'Y') break;
