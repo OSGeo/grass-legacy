@@ -3,20 +3,21 @@
 <em>d.path</em> enables shortest path vector networking - based on DGLib
 (Directed Graph Library) vector network library  
 (see <a href="http://grass.gdf-hannover.de/wiki/Vector_network_analysis">screenshot</a>).
-Costs may be either line lengths, or attributes saved in a database 
-table. Supported are cost assignments for both arcs and nodes, and also different in both 
-directions of a vector line. For areas cost will be calculated along boundary
-lines. 
+Costs may be either line lengths, or attributes saved in a database table.
+Supported are cost assignments for both arcs and nodes, and also different
+in both directions of a vector line. For areas cost will be calculated along
+boundary lines. 
 
 <h2>NOTE</h2>
 
 The user needs to display a vector map before using d.path. The 'from' and 'to'
-points are entered by mouse into the map displayed in the GRASS monitor.
+points are entered by mouse into the map displayed in the GRASS monitor, or
+if the <b>coor</b> option is used they can be specified non-interactively.
 The actions bound to the mouse buttons are described in the terminal
 window when running the command.
 <P>
-To calculate shortest path non-interactively, the module <em>v.net.path</em>
-must be used.
+To calculate shortest path non-interactively and save the path to a new vector
+map, use the <em>v.net.path</em> module.
 
 <h2>SEE ALSO</h2>
 
