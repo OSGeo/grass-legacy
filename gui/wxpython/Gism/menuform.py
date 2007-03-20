@@ -191,13 +191,6 @@ class processTask(HandlerBase):
                 "values" : self.param_values,
                 "value" : '' })
 
-#        if name == 'gisprompt':
-#            self.inGispromptContent = 0
-#            grass_task['params'].append({
-##                'age' : self.param_age,
-#                'element' :self.param_element })
-##                'prompt' : self.param_prompt })
-
         if name == 'flag':
             self.inFlag = 0;
             grass_task['flags'].append({
@@ -233,7 +226,6 @@ class mainFrame(wx.Frame):
         self.onrunhook = '' #variable to store callback procedure for returning option data to layer manager
         self.selection = '' #selection from GIS element selector
         self.paramdict = {} # dictionary of controls and their parameter values
-        global grass_task
 
         menu = wx.Menu()
         menu.Append(ID_ABOUT, "&About GrassGUI",
@@ -407,7 +399,8 @@ class mainFrame(wx.Frame):
                 print 'in command parser'
                 return cmd
                 if self.onrunhook != None:
-                    eval(self.onrunhook()) # run it
+                    print 'trying runhook', self.runhook
+                    self.onrunhook() # run it
 
                 # Send GRASS display command(s)with arguments
                 # to the display processor.
@@ -476,6 +469,7 @@ class mainFrame(wx.Frame):
 
 class GrassGUIApp(wx.App):
     def OnInit(self):
+        global grass_task
         self.w = HSPACE + STRING_ENTRY_WIDTH + HSPACE
         self.h = MENU_HEIGHT + VSPACE + grass_task['lines'] * ENTRY_HEIGHT + VSPACE + BUTTON_HEIGHT + VSPACE + STATUSBAR_HEIGHT
         frame = mainFrame(None, -1, self.w, self.h)
@@ -487,6 +481,7 @@ class GUI:
     def __init__(self,parent=-1):
         '''Parses GRASS commands when module is imported and used
         from gism.py'''
+        global grass_task
         self.w = HSPACE + STRING_ENTRY_WIDTH + HSPACE
         self.h = MENU_HEIGHT + VSPACE + grass_task['lines'] * ENTRY_HEIGHT + VSPACE + BUTTON_HEIGHT + VSPACE + STATUSBAR_HEIGHT
         self.parent = parent
