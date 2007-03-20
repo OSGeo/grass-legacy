@@ -30,7 +30,7 @@
 int main(int argc, char **argv)
 {
     struct Option *map, *afield_opt, *nfield_opt, *afcol, *abcol, *ncol, *type_opt;
-    struct Option *color_opt, *hcolor_opt, *bgcolor_opt;
+    struct Option *color_opt, *hcolor_opt, *bgcolor_opt, *coor_opt;
     struct Flag   *geo_f, *bold_f;
     struct GModule *module;
     char   *mapset;
@@ -38,7 +38,8 @@ int main(int argc, char **argv)
     int    type, afield, nfield, geo;
     struct color_rgb color, hcolor, bgcolor;
     int    r, g, b;
-
+    int    use_mouse;
+    double x1,y1,x2,y2;
 
     /* Initialize the GIS calls */
     G_gisinit (argv[0]) ;
@@ -54,6 +55,13 @@ int main(int argc, char **argv)
     type_opt->options    = "line,boundary";
     type_opt->answer     = "line,boundary";
     type_opt->description = _("Arc type");
+
+    coor_opt = G_define_option() ;
+    coor_opt->key        = "coor" ;
+    coor_opt->key_desc   = "x1,y1,x2,y2";
+    coor_opt->type       = TYPE_STRING ;
+    coor_opt->required   = NO ;
+    coor_opt->description= _("Starting and ending coordinates");
 
     afield_opt = G_define_standard_option(G_OPT_V_FIELD);
     afield_opt->key = "alayer";
@@ -126,6 +134,26 @@ int main(int argc, char **argv)
     afield = atoi (afield_opt->answer);
     nfield = atoi (nfield_opt->answer);
 
+
+    use_mouse = TRUE;
+    if (coor_opt->answer)
+    {
+        if(coor_opt->answers[0] == NULL)
+            G_fatal_error(_("No coordinates given"));
+
+        if (!G_scan_easting (coor_opt->answers[0], &x1, G_projection())) 
+            G_fatal_error (_("%s - illegal x value"), coor_opt->answers[0]);
+        if (!G_scan_northing (coor_opt->answers[1], &y1, G_projection())) 
+            G_fatal_error (_("%s - illegal y value"), coor_opt->answers[1]);
+        if (!G_scan_easting (coor_opt->answers[2], &x2, G_projection())) 
+            G_fatal_error (_("%s - illegal x value"), coor_opt->answers[2]);
+        if (!G_scan_northing (coor_opt->answers[3], &y2, G_projection())) 
+            G_fatal_error (_("%s - illegal y value"), coor_opt->answers[3]);
+
+        use_mouse = FALSE;
+    }
+
+
     if (R_open_driver() != 0)
        G_fatal_error (_("No graphics device selected"));
 
@@ -175,7 +203,10 @@ int main(int argc, char **argv)
     Vect_net_build_graph ( &Map, type , afield, nfield, afcol->answer,
 			   abcol->answer, ncol->answer, geo, 0 );
 
-    path ( &Map, &color, &hcolor, &bgcolor, bold_f->answer );
+    if(use_mouse)
+	path ( &Map, &color, &hcolor, &bgcolor, bold_f->answer );
+    else
+	coor_path(&Map, &hcolor, bold_f->answer, x1, y1, x2, y2);
 
 
     R_close_driver();
