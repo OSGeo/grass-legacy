@@ -23,7 +23,6 @@ import wx.aui
 import os, sys, time, glob
 
 import render
-import gismutils
 import toolbars
 import grassenv
 import track
@@ -337,7 +336,8 @@ class BufferedWindow(wx.Window):
         """
         Converts files to wx.Image
         """
-    	if Map.mapfile and os.path.isfile(Map.mapfile):
+    	if Map.mapfile and os.path.isfile(Map.mapfile) and \
+                os.path.getsize(Map.mapfile):
     	    self.Img = wx.Image(Map.mapfile, wx.BITMAP_TYPE_ANY)
     	else:
     	    self.Img = None
