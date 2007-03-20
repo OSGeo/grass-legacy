@@ -4,7 +4,7 @@
 
 # Copyright (C) 2000 by the GRASS Development Team
 # Author: Jan-Oliver Wagner <jan@intevation.de>
-# improved by: Bernhard Reiter	 <bernhard@intevation.de>
+# improved by: Bernhard Reiter   <bernhard@intevation.de>
 # Improved by: Michael Barton, Arizona State University
 #
 # This program is free software under the GPL (>=v2)
@@ -51,21 +51,22 @@ import re
 
 
 def reexec_with_pythonw():
-	if sys.platform == 'darwin' and\
-		not sys.executable.endswith('MacOS/Python'):
-		print >>sys.stderr,'re-executing using pythonw'
-		os.execvp('pythonw',['pythonw',__file__] + sys.argv[1:])
+    if sys.platform == 'darwin' and\
+        not sys.executable.endswith('MacOS/Python'):
+        print >>sys.stderr,'re-executing using pythonw'
+        os.execvp('pythonw',['pythonw',__file__] + sys.argv[1:])
 
 reexec_with_pythonw()
 
-ID_RUN	  = 10
+ID_RUN    = 10
 ID_CANCEL = 11
 ID_PARAM_START = 800
 ID_FLAG_START  = 900
+ID_MULTI_START = 1000
 
 ID_ABOUT = 101
 ID_ABOUT_COMMAND = 102
-ID_EXIT	 = 103
+ID_EXIT  = 103
 
 VSPACE = 4
 HSPACE = 4
@@ -77,31 +78,31 @@ BUTTON_HEIGHT = 44
 BUTTON_WIDTH = 100
 
 grass_task = { 'name' : 'unknown',
-	'description' : 'No description available.',
-	'lines' : 0, 'params' : [], 'flags' : [] }
+    'description' : 'No description available.',
+    'lines' : 0, 'params' : [], 'flags' : [] }
 
 def normalize_whitespace(text):
-	"Remove redundant whitespace from a string"
-	return string.join( string.split(text), ' ')
+    "Remove redundant whitespace from a string"
+    return string.join( string.split(text), ' ')
 
 def escape_ampersand(text):
-	"Escapes ampersands with additional ampersand for GUI"
-	return string.replace(text, "&", "&&")
+    "Escapes ampersands with additional ampersand for GUI"
+    return string.replace(text, "&", "&&")
 
 class testSAXContentHandler(HandlerBase):
 # SAX compliant
-	def characters(self, ch, start, length):
-		pass
+    def characters(self, ch, start, length):
+        pass
 
 def test_for_broken_SAX():
-	ch=testSAXContentHandler()
-	try:
-		xml.sax.parseString("""<?xml version="1.0"?>
-			<child1 name="paul">Text goes here</child1>
-			""",ch)
-	except TypeError:
-		return 1
-	return 0
+    ch=testSAXContentHandler()
+    try:
+        xml.sax.parseString("""<?xml version="1.0"?>
+            <child1 name="paul">Text goes here</child1>
+            """,ch)
+    except TypeError:
+        return 1
+    return 0
 
 class processTask(HandlerBase):
     def __init__(self):
@@ -126,24 +127,24 @@ class processTask(HandlerBase):
             self.param_age = ''
             self.param_element = ''
             self.param_prompt = ''
-        	# Look for the parameter name, type, requiredness
+            # Look for the parameter name, type, requiredness
             self.param_name = attrs.get('name', None)
             self.param_type = attrs.get('type', None)
             if type == 'flag':
-        		grass_task['lines'] = grass_task['lines'] + 1
+                grass_task['lines'] = grass_task['lines'] + 1
             else:
-        		grass_task['lines'] = grass_task['lines'] + 2
+                grass_task['lines'] = grass_task['lines'] + 2
             self.param_required = attrs.get('required', None)
             self.param_multiple = attrs.get('multiple', None)
 
         if name == 'flag':
-			self.inFlag = 1;
-			self.flag_description = ''
-			self.flag_default = ''
-			self.flag_values = []
-			# Look for the flag name
-			self.flag_name = attrs.get('name', None)
-			grass_task['lines'] = grass_task['lines'] + 1
+            self.inFlag = 1;
+            self.flag_description = ''
+            self.flag_default = ''
+            self.flag_values = []
+            # Look for the flag name
+            self.flag_name = attrs.get('name', None)
+            grass_task['lines'] = grass_task['lines'] + 1
 
         if name == 'description':
             self.inDescriptionContent = 1
@@ -161,35 +162,34 @@ class processTask(HandlerBase):
             self.param_element = attrs.get('element', None)
             self.param_prompt = attrs.get('prompt', None)
 
-	# works with python 2.0, but is not SAX compliant
-	def characters(self, ch):
-		self.my_characters(ch)
+    # works with python 2.0, but is not SAX compliant
+    def characters(self, ch):
+        self.my_characters(ch)
 
-	def my_characters(self, ch):
-		if self.inDescriptionContent:
-			self.description = self.description + ch
+    def my_characters(self, ch):
+        if self.inDescriptionContent:
+            self.description = self.description + ch
         if self.inDefaultContent:
-			self.param_default = self.param_default + ch
+            self.param_default = self.param_default + ch
         if self.inValueContent:
-			self.value_tmp = self.value_tmp + ch
+            self.value_tmp = self.value_tmp + ch
 
     def endElement(self, name):
         # If it's not a parameter element, ignore it
-        global grass_task
         if name == 'parameter':
-			self.inParameter = 0;
-			grass_task['params'].append({
-				"name" : self.param_name,
-				"type" : self.param_type,
-				"required" : self.param_required,
-				"multiple" : self.param_multiple,
-				"description" : self.param_description,
+            self.inParameter = 0;
+            grass_task['params'].append({
+                "name" : self.param_name,
+                "type" : self.param_type,
+                "required" : self.param_required,
+                "multiple" : self.param_multiple,
+                "description" : self.param_description,
                 'gisprompt' : self.param_gisprompt,
                 'age' : self.param_age,
                 'element' :self.param_element,
                 'prompt' : self.param_prompt,
-				"default" : self.param_default,
-				"values" : self.param_values,
+                "default" : self.param_default,
+                "values" : self.param_values,
                 "value" : '' })
 
 #        if name == 'gisprompt':
@@ -226,18 +226,17 @@ class processTask(HandlerBase):
 class mainFrame(wx.Frame):
     def __init__(self, parent, ID, w, h):
         wx.Frame.__init__(self, parent, ID, grass_task['name'],
-        	wx.DefaultPosition, style=wx.DEFAULT_FRAME_STYLE | wx.TAB_TRAVERSAL)
+            wx.DefaultPosition, style=wx.DEFAULT_FRAME_STYLE | wx.TAB_TRAVERSAL)
 
         self.CreateStatusBar()
         self.SetStatusText("Enter parameters for " + grass_task['name'])
         self.parent = parent
-        global grass_task
 
         menu = wx.Menu()
         menu.Append(ID_ABOUT, "&About GrassGUI",
-        	"Information about GrassGUI")
+            "Information about GrassGUI")
         menu.Append(ID_ABOUT_COMMAND, "&About " + grass_task['name'],
-        	"Short descripton of GRASS command " + grass_task['name'])
+            "Short descripton of GRASS command " + grass_task['name'])
         menu.AppendSeparator()
         menu.Append(ID_EXIT, "E&xit", "Terminate the program")
 
@@ -253,62 +252,73 @@ class mainFrame(wx.Frame):
 
         l_count = 0
         for p_count in range(0,len(grass_task['params'])):
-            title = escape_ampersand(grass_task['params'][p_count]['description'])
-            if grass_task['params'][p_count]['required'] == 'no':
-        		title = "[optional] " + title
-            if grass_task['params'][p_count]['multiple'] == 'yes':
-        		title = "[multiple] " + title
-            grass_task['params'][p_count]['value'] = grass_task['params'][p_count]['default']
-            if (len(grass_task['params'][p_count]['values']) > 0):
-        		txt1 = wx.StaticText(self.panel, -1, title + ':', wx.Point(-1, -1), wx.Size(-1, -1))
-        		self.guisizer.Add(txt1, 0, wx.ADJUST_MINSIZE | wx.ALL, 5)
-        		l_count = l_count + 1
+            p = grass_task['params'][p_count]
+            title = escape_ampersand(p['description'])
+            if p['required'] == 'no':
+                title = "[optional] " + title
+            if p['multiple'] == 'yes':
+                title = "[multiple] " + title
+            p['value'] = p['default']
+            if (len(p['values']) > 0):
+                l_count = l_count + 1
 
-        		valuelist=map(str,grass_task['params'][p_count]['values'])
-        		cb = wx.ComboBox(self.panel, ID_PARAM_START + p_count, grass_task['params'][p_count]['default'],
-        			wx.Point(-1, -1), wx.Size(STRING_ENTRY_WIDTH, -1), valuelist, wx.CB_DROPDOWN)
-        		self.guisizer.Add(cb, 0, wx.ADJUST_MINSIZE | wx.ALL, 5)
-        		wx.EVT_COMBOBOX(self, ID_PARAM_START + p_count, self.EvtComboBox)
+                valuelist=map(str,p['values'])
+                if p['multiple'] == 'yes':
+                    hSizer=wx.StaticBoxSizer( wx.StaticBox(self.panel,0,title+":"),
+                                              wx.HORIZONTAL )
+                    v_count = 0
+                    isDefault = {}
+                    for defval in p['value'].split(','):
+                        isDefault[ defval ] = 'yes'
+                    for val in valuelist:
+                        idForWX =  ID_MULTI_START + p_count*20 + v_count
+                        chkbox = wx.CheckBox( self.panel, idForWX, val+" " )
+                        if isDefault.has_key(val): chkbox.SetValue( True )
+                        hSizer.Add( chkbox,0,wx.ADJUST_MINSIZE,0 )
+                        wx.EVT_CHECKBOX(self, idForWX, self.EvtCheckBoxMulti)
+                        v_count += 1
+                    self.guisizer.Add( hSizer, 0, wx.ADJUST_MINSIZE |wx.ALL, 5)
+                else:
+                    txt1 = wx.StaticText(self.panel, -1, title + ':', wx.Point(-1, -1), wx.Size(-1, -1))
+                    self.guisizer.Add(txt1, 0, wx.ADJUST_MINSIZE | wx.ALL, 5)
+                    cb = wx.ComboBox(self.panel, ID_PARAM_START + p_count, p['default'],
+                                     wx.Point(-1, -1), wx.Size(STRING_ENTRY_WIDTH, -1),
+                                     valuelist, wx.CB_DROPDOWN)
+                    self.guisizer.Add(cb, 0, wx.ADJUST_MINSIZE | wx.ALL, 5)
+                    wx.EVT_COMBOBOX(self, ID_PARAM_START + p_count, self.EvtComboBox)
 
-            if ((grass_task['params'][p_count]['type'] == 'string' or
-        		grass_task['params'][p_count]['type'] == 'integer' or
-        		grass_task['params'][p_count]['type'] == 'float') and
-        		len(grass_task['params'][p_count]['values']) == 0 and
-                grass_task['params'][p_count]['gisprompt'] == False ):
+            if (p['type'] in ('string','integer','float') and
+                len(p['values']) == 0 and
+                p['gisprompt'] == False ):
                 txt2 = wx.StaticText(self.panel, -1, title + ':',
-        			wx.Point(-1, -1), wx.Size(-1, -1))
+                    wx.Point(-1, -1), wx.Size(-1, -1))
                 self.guisizer.Add(txt2, 0, wx.ADJUST_MINSIZE | wx.ALL, 5)
                 l_count = l_count + 1
                 txt3 = wx.TextCtrl(self.panel, ID_PARAM_START + p_count,
-        			grass_task['params'][p_count]['default'], wx.Point(-1, -1),
-        			wx.Size(STRING_ENTRY_WIDTH, ENTRY_HEIGHT))
+                    p['default'], wx.Point(-1, -1),
+                    wx.Size(STRING_ENTRY_WIDTH, ENTRY_HEIGHT))
                 self.guisizer.Add(txt3, 0, wx.ADJUST_MINSIZE | wx.ALL, 5)
                 wx.EVT_TEXT(self, ID_PARAM_START + p_count, self.EvtText)
 
-            if (grass_task['params'][p_count]['type'] == 'string' and
-                grass_task['params'][p_count]['gisprompt'] == True):
+            if p['type'] == 'string' and p['gisprompt'] == True:
                 txt4 = wx.StaticText(self.panel, -1, title + ':',
                     wx.Point(-1, -1), wx.Size(-1, -1))
                 self.guisizer.Add(txt4, 0, wx.ADJUST_MINSIZE | wx.ALL, 5)
                 l_count = l_count + 1
-                sel = select.Select(self.panel, (250,-1),
-                                    grass_task['params'][p_count]['element'])
+                sel = select.Select(self.panel, (250,-1), p['element'])
                 self.guisizer.Add(sel, 0, wx.ADJUST_MINSIZE | wx.ALL, 5)
                 wx.EVT_TEXT(self, ID_PARAM_START + p_count, self.EvtText)
 
-#            p_count = p_count + 1
             l_count = l_count + 1
 
-#        f_count = 0
         for f_count in range(0, len(grass_task['flags'])):
-        	title = escape_ampersand(grass_task['flags'][f_count]['description'])
-        	chk = wx.CheckBox(self.panel,ID_FLAG_START + f_count, title,
-        		wx.Point(-1, -1), wx.Size(-1, -1), wx.NO_BORDER)
-        	self.guisizer.Add(chk, 0, wx.ALL, 5)
-        	wx.EVT_CHECKBOX(self, ID_FLAG_START + f_count, self.EvtCheckBox)
+            title = escape_ampersand(grass_task['flags'][f_count]['description'])
+            chk = wx.CheckBox(self.panel,ID_FLAG_START + f_count, title,
+                wx.Point(-1, -1), wx.Size(-1, -1), wx.NO_BORDER)
+            self.guisizer.Add(chk, 0, wx.ALL, 5)
+            wx.EVT_CHECKBOX(self, ID_FLAG_START + f_count, self.EvtCheckBox)
 
-#        	f_count = f_count + 1
-        	l_count = l_count + 1
+            l_count = l_count + 1
 
 #        p_count = p_count + f_count
         btnsizer = wx.BoxSizer(wx.HORIZONTAL)
@@ -320,7 +330,7 @@ class mainFrame(wx.Frame):
         self.guisizer.Add(btnsizer, 0, wx.EXPAND)
         wx.EVT_MENU(self, ID_ABOUT, self.OnAbout)
         wx.EVT_MENU(self, ID_ABOUT_COMMAND, self.OnAboutCommand)
-        wx.EVT_MENU(self, ID_EXIT,	self.OnCancel)
+        wx.EVT_MENU(self, ID_EXIT,  self.OnCancel)
         wx.EVT_BUTTON(self.panel, ID_CANCEL, self.OnCancel)
         wx.EVT_BUTTON(self.panel, ID_RUN, self.OnRun)
         self.Bind(wx.EVT_CLOSE, self.onCloseWindow)
@@ -329,53 +339,65 @@ class mainFrame(wx.Frame):
         self.guisizer.Fit(self.panel)
 
     def EvtText(self, event):
-        global grass_task
         grass_task['params'][event.GetId()-ID_PARAM_START]['value'] = event.GetString()
 
     def EvtCheckBox(self, event):
-        global grass_task
-    	if (event.Checked()):
-    		grass_task['flags'][event.GetId()-ID_FLAG_START]['value'] = 'checked'
-    	else:
-    		grass_task['flags'][event.GetId()-ID_FLAG_START]['value'] = 'not checked'
+        if (event.Checked()):
+            grass_task['flags'][event.GetId()-ID_FLAG_START]['value'] = 'checked'
+        else:
+            grass_task['flags'][event.GetId()-ID_FLAG_START]['value'] = 'not checked'
 
     def EvtComboBox(self, event):
-        global grass_task
-    	grass_task['params'][event.GetId()-ID_PARAM_START]['value'] = event.GetString()
+        grass_task['params'][event.GetId()-ID_PARAM_START]['value'] = event.GetString()
 
+    def EvtCheckBoxMulti(self, event):
+        theParamId = (event.GetId()-ID_MULTI_START ) / 20
+        theCheckedId = (event.GetId()-ID_MULTI_START ) % 20
+        # Unpack current value list
+        currentValues={}
+        for isThere in grass_task['params'][theParamId]['value'].split(','):
+            currentValues[isThere] = 1
+        theValue = grass_task['params'][theParamId]['values'][theCheckedId]
+        if event.Checked():
+            currentValues[ theValue ] = 1
+        else:
+            del currentValues[ theValue ]
+        # Pack it back
+        grass_task['params'][theParamId]['value'] = ','.join( currentValues.keys() )
 
     def OnRun(self, event):
-        global grass_task
-    	cmd = grass_task['name']
-#    	p_count = 0
-    	errors = 0
-    	errStr = ""
+        cmd = grass_task['name']
+#       p_count = 0
+        errors = 0
+        errStr = ""
 
-    	for p_count in range(0, len(grass_task['params'])):
-    		if (grass_task['params'][p_count]['type'] != 'flag' and grass_task['params'][p_count]['value'] == '' and grass_task['params'][p_count]['required'] != 'no'):
-    			errStr = errStr + "Parameter " + grass_task['params'][p_count]['name'] + "(" +grass_task['params'][p_count]['description']	+ ") is missing\n"
-    			errors = errors + 1
+        for p_count in range(0, len(grass_task['params'])):
+            if (grass_task['params'][p_count]['type'] != 'flag' and grass_task['params'][p_count]['value'] == '' and grass_task['params'][p_count]['required'] != 'no'):
+                errStr = errStr + "Parameter " + grass_task['params'][p_count]['name'] + "(" +grass_task['params'][p_count]['description']  + ") is missing\n"
+                errors = errors + 1
 
-    		if (grass_task['params'][p_count]['type'] == 'flag'):
-    			if (grass_task['params'][p_count]['value'] == 'checked'):
-    				cmd = cmd + ' -' + grass_task['params'][p_count]['name']
-    		if (grass_task['params'][p_count]['type'] != 'flag' and grass_task['params'][p_count]['value'] != ''):
-    			cmd = cmd + ' ' + grass_task['params'][p_count]['name'] + '=' + grass_task['params'][p_count]['value']
-#    		p_count = p_count + 1
+            if (grass_task['params'][p_count]['type'] == 'flag'):
+                if (grass_task['params'][p_count]['value'] == 'checked'):
+                    cmd = cmd + ' -' + grass_task['params'][p_count]['name']
+            if (grass_task['params'][p_count]['type'] != 'flag' and grass_task['params'][p_count]['value'] != ''):
+                cmd = cmd + ' ' + grass_task['params'][p_count]['name'] + '=' + grass_task['params'][p_count]['value']
+##           p_count = p_count + 1
+        print ">>>"+cmd
 
-    	if errors:
-    		self.OnError(errStr)
+
+        if errors:
+            self.OnError(errStr)
         else:
             if cmd[0:2] == "d.":
                 print 'in command parser'
                 return cmd
 
-    			# Send GRASS display command(s)with arguments
-    			# to the display processor.
-    			# Display with focus receives display command(s).
-    ##				  self.console_output.write(cmd+"\n----------\n") #need to echo this back to gism.py console
-    #				currmap = render.Track().getMD()
-    #				currmap.setDcommandList(cmd)
+                # Send GRASS display command(s)with arguments
+                # to the display processor.
+                # Display with focus receives display command(s).
+    ##                self.console_output.write(cmd+"\n----------\n") #need to echo this back to gism.py console
+    #               currmap = render.Track().getMD()
+    #               currmap.setDcommandList(cmd)
 
 
             else:
@@ -397,48 +419,45 @@ class mainFrame(wx.Frame):
                     except OSError, e:
                         print >>sys.stderr, "Execution failed:", e
 
-    ##			  self.console_output.write(cmd+"\n----------\n") #need to echo this back to gism.py console
-    ##				  self.out = subprocess.Popen(cmd, shell=True, stdout=Pipe).stdout
-    ##			  self.out = os.popen(cmd, "r").read() #need to echo this back to gism.py console
-    ##			  self.console_output.write(self.out+"\n") #need to echo this back to gism.py console
-
+    ##            self.console_output.write(cmd+"\n----------\n") #need to echo this back to gism.py console
+    ##                self.out = subprocess.Popen(cmd, shell=True, stdout=Pipe).stdout
+    ##            self.out = os.popen(cmd, "r").read() #need to echo this back to gism.py console
+    ##            self.console_output.write(self.out+"\n") #need to echo this back to gism.py console
+        
 
     def OnError(self, errMsg):
-    	dlg = wx.MessageDialog(self, errMsg, "Error", wx.OK | wx.ICON_ERROR)
-    	dlg.ShowModal()
-    	dlg.Destroy()
+        dlg = wx.MessageDialog(self, errMsg, "Error", wx.OK | wx.ICON_ERROR)
+        dlg.ShowModal()
+        dlg.Destroy()
 
     def OnCancel(self, event):
-    	self.Close(True)
+        self.Close(True)
 
     def onCloseWindow(self, event):
-        global grass_task
         grass_task = { 'name' : 'unknown',
             'description' : 'No description available.',
             'lines' : 0, 'params' : [], 'flags' : [] }
-    	self.Destroy()
+        self.Destroy()
 
     def OnAbout(self, event):
-    	dlg = wx.MessageDialog(self, "This is a sample program for\n"
-    		"GRASS command interface parsing\n"
-    		"and automatic GUI building. \n%s" %(__version__),
-    		"About GrassGUI", wx.OK | wx.ICON_INFORMATION)
-    	dlg.ShowModal()
-    	dlg.Destroy()
+        dlg = wx.MessageDialog(self, "This is a sample program for\n"
+            "GRASS command interface parsing\n"
+            "and automatic GUI building. \n%s" %(__version__),
+            "About GrassGUI", wx.OK | wx.ICON_INFORMATION)
+        dlg.ShowModal()
+        dlg.Destroy()
 
     def OnAboutCommand(self, event):
-        global grass_task
-    	dlg = wx.MessageDialog(self,
-    		grass_task['name']+": "+grass_task['description'],
-    		"About " + grass_task['name'],
-    		wx.OK | wx.ICON_INFORMATION)
-    	dlg.ShowModal()
-    	dlg.Destroy()
+        dlg = wx.MessageDialog(self,
+            grass_task['name']+": "+grass_task['description'],
+            "About " + grass_task['name'],
+            wx.OK | wx.ICON_INFORMATION)
+        dlg.ShowModal()
+        dlg.Destroy()
 
 
 class GrassGUIApp(wx.App):
     def OnInit(self):
-        global grass_task
         self.w = HSPACE + STRING_ENTRY_WIDTH + HSPACE
         self.h = MENU_HEIGHT + VSPACE + grass_task['lines'] * ENTRY_HEIGHT + VSPACE + BUTTON_HEIGHT + VSPACE + STATUSBAR_HEIGHT
         frame = mainFrame(None, -1, self.w, self.h)
@@ -447,22 +466,21 @@ class GrassGUIApp(wx.App):
         return True
 
 class GUI:
-	def __init__(self,parent=-1):
-		'''Parses GRASS commands when module is imported and used
-		from gism.py'''
-        global grass_task
+    def __init__(self,parent=-1):
+        '''Parses GRASS commands when module is imported and used
+        from gism.py'''
         self.w = HSPACE + STRING_ENTRY_WIDTH + HSPACE
         self.h = MENU_HEIGHT + VSPACE + grass_task['lines'] * ENTRY_HEIGHT + VSPACE + BUTTON_HEIGHT + VSPACE + STATUSBAR_HEIGHT
         self.parent = parent
 
-	def parseCommand(self, cmd, gmpath, completed=None):
-		cmdlst = []
-		cmdlst = cmd.split(' ')
+    def parseCommand(self, cmd, gmpath, completed=None):
+        cmdlst = []
+        cmdlst = cmd.split(' ')
 
         if len(cmdlst) > 1:
-			print "usage: <grass command> --task-description | " + cmdlst[0]
+            print "usage: <grass command> --task-description | " + cmdlst[0]
         else:
-			# parse the interface decription
+            # parse the interface decription
             cmd = cmd + r' --interface-description'
             cmdout = os.popen(cmd, "r").read()
             p = re.compile( '(grass-interface.dtd)')
@@ -474,17 +492,17 @@ class GUI:
         completed.Show(True)
 
 if __name__ == "__main__":
-	# Create the application
+    # Create the application
 
-	# Parsing if run from command line: find out the command to run
-	if len(sys.argv) > 1:
-		print "usage: <grass command> --task-description | " + sys.argv[0]
-	else:
-		# parse the interface decription
-		handler = processTask()
+    # Parsing if run from command line: find out the command to run
+    if len(sys.argv) > 1:
+        print "usage: <grass command> --task-description | " + sys.argv[0]
+    else:
+        # parse the interface decription
+        handler = processTask()
 
-		xml.sax.parse(sys.stdin,handler)
+        xml.sax.parse(sys.stdin,handler)
 
-	app = GrassGUIApp(0)
-	app.MainLoop()
+    app = GrassGUIApp(0)
+    app.MainLoop()
 
