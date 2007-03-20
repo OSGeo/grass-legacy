@@ -115,7 +115,7 @@ search="$GIS_OPT_PATTERN"
 types=`echo $type | sed 's/,/ /g'`
 for itype in $types
 do
-  if [ "$itype" == "all" ] ; then
+  if [ "$itype" = "all" ] ; then
       type="rast,rast3d,oldvect,vect,asciivect,icon,labels,sites,region,region3d,group,3dview"
   fi
 done 
