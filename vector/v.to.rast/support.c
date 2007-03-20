@@ -454,6 +454,9 @@ int update_labels (char *rast_name, char *vector_map, int field,
         }
     }
     break;
+    case USE_Z:
+    /* TODO or not TODO */
+    break;
     default:
         G_fatal_error (_("Unknown use type: %d"), use);
     break;
