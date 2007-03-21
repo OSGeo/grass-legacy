@@ -159,9 +159,13 @@ class LayerTree(CT.CustomTreeCtrl):
         self.layertype.pop(layer)
 
     def onBeginDrag(self, event):
-        '''Allow drag-and-drop for leaf nodes.'''
+        """ Drag and drop of single tree nodes
+        """
+        # node cannot be a parent
         if self.GetChildrenCount(event.GetItem()) == 0:
             event.Allow()
+
+            # save everthing associated with item to drag
             self.dragItem = event.GetItem()
             self.saveitem['type'] = self.layertype[self.dragItem]
             self.saveitem['check'] = self.IsItemChecked(self.dragItem)
@@ -174,7 +178,10 @@ class LayerTree(CT.CustomTreeCtrl):
             print ("Cant drag a node that has children")
 
     def onEndDrag(self, event):
-        '''Do the re-organization if possible'''
+        """
+        Insert copy of layer in new position and
+        delete original at old position
+        """
 
         #If we dropped somewhere that isn't on top of an item, ignore the event
         if not event.GetItem():
@@ -192,6 +199,7 @@ class LayerTree(CT.CustomTreeCtrl):
         if not parent:
             return
 
+        # recreate old layer at new position
         if self.layertype[old] == 'command':
             self.dragctrl = wx.TextCtrl(self, id=wx.ID_ANY, value='',
                                pos=wx.DefaultPosition, size=(250,40),
@@ -211,7 +219,11 @@ class LayerTree(CT.CustomTreeCtrl):
         self.CheckItem(new, checked=self.saveitem['check'])
         self.GetItemWindow(new).SetValue(self.saveitem['windval'])
 
+        # delete layer at original position
         self.Delete(old)
+
+        # rebuild layer list in render
+        self.createLayerList()
 
     def onActivateLayer(self, event):
         global gmpath
