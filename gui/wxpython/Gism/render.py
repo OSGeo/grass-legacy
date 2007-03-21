@@ -247,7 +247,6 @@ class Map:
 		os.environ["GRASS_MESSAGE_FORMAT"]  = "gui"
 		os.environ["GRASS_PNG_AUTO_WRITE"]  = "TRUE"
 		os.environ["GRASS_TRUECOLOR"]       = "TRUE"
-		os.environ["WIND_OVERRIDE"]         = "TRUE"
 		os.environ["GRASS_COMPRESSION"]     = "0"
 		os.environ["GRASS_VERBOSE"]         = str(self.verbosity)
 
