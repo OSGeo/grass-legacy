@@ -2,8 +2,8 @@
 
 <b>r.support</b> allows the user to create and/or edit raster map support 
 information. Editing of raster map color tables, category labels, header, 
-history, and title is supported.
-
+history, and title is supported. Category labels can also be copied from
+another raster map.
 
 <h2>NOTES</h2>
 
@@ -15,10 +15,12 @@ input.
 Map metadata information is stored in a "hist" file which may be 
 appended to by using the <b>history</b> option. Currently this is limited to
 50 lines of text with a maximum line length of 78 characters. Any input
-larger than this will be truncated.
+larger than this will be wrapped to the next line.
 
 
 <h2>SEE ALSO</h2>
+<em>
+<a href="r.cats.html">r.cats</a>,
 <a href="r.describe.html">r.describe</a>,
 <a href="r.info.html">r.info</a>,
 <a href="r.null.html">r.null</a>,
@@ -31,6 +33,7 @@ larger than this will be truncated.
 
 Micharl Shapiro, CERL: Original author<BR>
 <a href="MAILTO:rez@touchofmadness.com">Brad Douglas</a>: GRASS 6 Port<BR>
-M. Hamish Bowman: command line enhancements
+M. Hamish Bowman: command line enhancements<br>
+Markus Neteler: category copy from other map
 
 <p><i>Last changed: $Date$</i> </p>
