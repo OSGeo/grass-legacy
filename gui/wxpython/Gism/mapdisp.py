@@ -738,8 +738,8 @@ class MapFrame(wx.Frame):
     def cleanLayersList(self):
         Map.Clean()
 
-    def addMapsToList(self, type, command, opacity):
-        Map.AddCommandLayer(name=command, l_opacity=opacity)
+    def addMapsToList(self, type, command, opacity, render):
+        Map.AddCommandLayer(name=command, l_opacity=opacity, l_render=render)
 
 # end of class MapFrame
 

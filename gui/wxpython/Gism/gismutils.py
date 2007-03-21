@@ -50,11 +50,9 @@ class LayerTree(CT.CustomTreeCtrl):
 
         self.display = ""   # ID of map display associated with layer tree
         self.root = ""      # ID of layer tree root node
-        self.layer = {}     # dictionary to index layers in layer tree
         self.node = 0       # index value for layers
         self.optpage = {}   # dictionary of notebook option pages for each map layer
         self.layer_selected = ""   # ID of currently selected layer
-        self.layername = "" # name off currently selected layer
         self.layertype = {} # dictionary of layer types for each layer
         self.saveitem = {} # dictionary to preserve layer attributes for drag and drop
         self.dcmdopts = ''
@@ -92,51 +90,60 @@ class LayerTree(CT.CustomTreeCtrl):
         self.Bind(wx.EVT_TREE_ITEM_EXPANDING, self.onExpandNode)
         self.Bind(wx.EVT_TREE_ITEM_COLLAPSED, self.onCollapseNode)
         self.Bind(wx.EVT_TREE_ITEM_ACTIVATED, self.onActivateLayer)
-        self.Bind(wx.EVT_TREE_SEL_CHANGED,    self.onChangeSel)
+        self.Bind(wx.EVT_TREE_SEL_CHANGED, self.onChangeSel)
         self.Bind(CT.EVT_TREE_ITEM_CHECKED, self.onLayerChecked)
+        self.Bind(wx.EVT_TREE_DELETE_ITEM, self.onDeleteLayer)
         self.Bind(wx.EVT_TREE_BEGIN_DRAG, self.onBeginDrag)
         self.Bind(wx.EVT_TREE_END_DRAG, self.onEndDrag)
 
     def AddLayer(self, idx, type):
-#        layername = type + ':' + str(self.node)
 
         if type == 'command':
+            # generic command layer
             self.ctrl = wx.TextCtrl(self, id=wx.ID_ANY, value='',
                                pos=wx.DefaultPosition, size=(250,40),
                                style=wx.TE_MULTILINE|wx.TE_WORDWRAP)
             self.ctrl.Bind(wx.EVT_TEXT_ENTER, self.onCmdChanged)
+            self.ctrl.Bind(wx.EVT_TEXT, self.onCmdChanged)
         else:
+            # all other layers
             self.ctrl = wx.SpinCtrl(self, id=wx.ID_ANY, value="", pos=(30, 50),
                                     style=wx.SP_ARROW_KEYS)
             self.ctrl.SetRange(1,100)
             self.ctrl.SetValue(100)
             self.ctrl.Bind(wx.EVT_SPINCTRL, self.onOpacity)
+            self.ctrl.Bind(wx.EVT_TEXT, self.onOpacity)
 
         if self.layer_selected and self.layer_selected != self.GetRootItem():
-            self.layer = self.InsertItem(self.root, self.GetPrevSibling(self.layer_selected),
+            layer = self.InsertItem(self.root, self.GetPrevSibling(self.layer_selected),
                                 '', ct_type=1, wnd=self.ctrl )
         else:
-            self.layer = self.PrependItem(self.root, '', ct_type=1, wnd=self.ctrl)
+            layer = self.PrependItem(self.root, '', ct_type=1, wnd=self.ctrl)
 
-        #add to layertype dictionary
-        self.layertype[self.layer] = type
+        self.SelectItem(layer)
 
-        self.SetPyData(self.layer, None)
+        # add to type layertype dictionary
+        self.layertype[layer] = type
 
-#        #add icons for each layer
+        # add a data object to hold the layer's command (does not apply to generic command layers)
+        self.SetPyData(layer, None)
+
+        #layer is initially unchecked as inactive
+        self.CheckItem(layer, checked=False)
+
+        # add text and icons for each layer type
         if type == 'raster':
-            self.SetItemImage(self.layer, self.rast_icon)
-            self.SetItemText(self.layer, 'raster (double click to set properties)')
+            self.SetItemImage(layer, self.rast_icon)
+            self.SetItemText(layer, 'raster (double click to set properties)')
+            # launch the properties dialog
+            menuform.GUI().parseCommand('d.rast', gmpath, completed=(self.getOptData,layer), parentframe=self)
         elif type == 'vector':
-            self.SetItemImage(self.layer, self.vect_icon)
-            self.SetItemText(self.layer, 'vector (double click to set properties)')
+            self.SetItemImage(layer, self.vect_icon)
+            self.SetItemText(layer, 'vector (double click to set properties)')
+            # launch the properties dialog
+            menuform.GUI().parseCommand('d.vect', gmpath, completed=(self.getOptData,layer), parentframe=self)
         elif type == 'command':
-            self.SetItemImage(self.layer, self.cmd_icon)
-
-        #layer is initially checked as active
-        self.CheckItem(self.layer)
-        self.node += 1
-        self.createLayerList()
+            self.SetItemImage(layer, self.cmd_icon)
 
     def onCollapseNode(self, event):
         print 'group collapsed'
@@ -147,11 +154,16 @@ class LayerTree(CT.CustomTreeCtrl):
         print 'group expanded'
         event.Skip()
 
+    def onDeleteLayer(self, event):
+        layer = event.GetItem()
+        self.layertype.pop(layer)
+
     def onBeginDrag(self, event):
         '''Allow drag-and-drop for leaf nodes.'''
         if self.GetChildrenCount(event.GetItem()) == 0:
             event.Allow()
             self.dragItem = event.GetItem()
+            self.saveitem['type'] = self.layertype[self.dragItem]
             self.saveitem['check'] = self.IsItemChecked(self.dragItem)
             self.saveitem['image'] = self.GetItemImage(self.dragItem, 0)
             self.saveitem['text'] = self.GetItemText(self.dragItem)
@@ -180,12 +192,24 @@ class LayerTree(CT.CustomTreeCtrl):
         if not parent:
             return
 
-        newwind = self.saveitem['wind']
+        if self.layertype[old] == 'command':
+            self.dragctrl = wx.TextCtrl(self, id=wx.ID_ANY, value='',
+                               pos=wx.DefaultPosition, size=(250,40),
+                               style=wx.TE_MULTILINE|wx.TE_WORDWRAP)
+            self.dragctrl.Bind(wx.EVT_TEXT_ENTER, self.onCmdChanged)
+        else:
+            self.dragctrl = wx.SpinCtrl(self, id=wx.ID_ANY, value="", pos=(30, 50),
+                                    style=wx.SP_ARROW_KEYS)
+            self.dragctrl.SetRange(1,100)
+            self.dragctrl.SetValue(100)
+            self.dragctrl.Bind(wx.EVT_SPINCTRL, self.onOpacity)
+
         new = self.InsertItem(parent, afteritem, text=self.saveitem['text'], \
-                              ct_type=1, wnd=newwind, image=self.saveitem['image'], \
+                              ct_type=1, wnd=self.dragctrl, image=self.saveitem['image'], \
                               data=self.saveitem['data'])
+        self.layertype[new] = self.saveitem['type']
         self.CheckItem(new, checked=self.saveitem['check'])
-        newwind.SetValue(self.saveitem['windval'])
+        self.GetItemWindow(new).SetValue(self.saveitem['windval'])
 
         self.Delete(old)
 
@@ -201,7 +225,8 @@ class LayerTree(CT.CustomTreeCtrl):
             menuform.GUI().parseCommand('d.vect', gmpath, completed=(self.getOptData,layer), parentframe=self)
 
     def onLayerChecked(self, event):
-        Layer = event.GetItem()
+        layer = event.GetItem()
+        # rebuild layer list in render
         self.createLayerList()
 
     def onChangeSel(self, event):
@@ -209,24 +234,37 @@ class LayerTree(CT.CustomTreeCtrl):
         self.layer_selected = layer
 
     def onCmdChanged(self, event):
+        # rebuild layer list in render
         self.createLayerList()
+        event.Skip()
 
     def onOpacity(self, event):
-        self.createLayerList()
+         # rebuild layer list in render
+         self.createLayerList()
+         event.Skip()
 
     def getOptData(self, dcmd, layer):
         for item in dcmd.split(' '):
             if 'map=' in item:
                 mapname = item.split('=')[1]
+
+        # set layer text to map name
         self.SetItemText(layer, mapname)
-        self.SetPyData(self.layer, dcmd)
+
+        # add command and render state to layer's data
+        data = [dcmd,True]
+        self.SetPyData(layer, data)
+
+        # check layer as active
+        self.CheckItem(layer, checked=True)
+
+        # rebuild layers list in render
         self.createLayerList()
 
     def writeDCommand(self, dcmd):
         # echos d.* command to output console
         global goutput
         goutput.write(dcmd+"\n----------\n")
-
 
     def createLayerList(self):
         """
@@ -235,18 +273,31 @@ class LayerTree(CT.CustomTreeCtrl):
         """
         # first empty the list of old layers
         self.display.cleanLayersList()
+        # make a list of visible layers
+        treelayers = []
+        vislayer = self.GetFirstVisibleItem()
+        for item in range(0,self.GetCount()):
+            if self.IsItemChecked(vislayer):
+                treelayers.append(vislayer)
+            if self.GetNextVisible(vislayer) == None:
+                break
+            else:
+                vislayer = self.GetNextVisible(vislayer)
+        treelayers.reverse()
+
         cmd = None
-        for layer in self.layertype.keys():
+        for layer in treelayers:
             if self.layertype[layer] == 'command':
-                if self.GetItemWindow(layer) != None:
+                if self.GetItemWindow(layer).GetValue() != None:
                     cmd = self.GetItemWindow(layer).GetValue()
                     opac = 1.0
+                    self.display.addMapsToList(type='command', command=cmd, opacity=opac, render=True)
             else:
                 if self.GetPyData(layer) != None:
-                    cmd = self.GetPyData(layer)
+                    cmd = self.GetPyData(layer)[0]
+                    rend =  self.GetPyData(layer)[1]
                     opac = float(self.GetItemWindow(layer).GetValue())/100
-            if cmd != None and self.IsItemChecked(layer) == True:
-                 self.display.addMapsToList(type='command', command=cmd, opacity=opac)
+                    self.display.addMapsToList(type='command', command=cmd, opacity=opac, render=rend)
 
 
 class TreeCtrlComboPopup(wx.combo.ComboPopup):
