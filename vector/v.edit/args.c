@@ -4,6 +4,11 @@ int parser(int argc, char*argv[])
 {
     map_opt = G_define_standard_option(G_OPT_V_MAP);
 
+    in_opt = G_define_standard_option (G_OPT_F_INPUT);
+    in_opt -> required = NO;
+    in_opt -> description = _("ASCII file to be converted to binary vector map, "
+			      "if not given reads from standard input");
+
     fld_opt = G_define_standard_option(G_OPT_V_FIELD);
 
     type_opt = G_define_standard_option(G_OPT_V_TYPE);
@@ -16,7 +21,9 @@ int parser(int argc, char*argv[])
     tool_opt->required    = YES;
     tool_opt->multiple    = NO;
     tool_opt->description = _("The edit tool to take");
-    tool_opt->descriptions = _("add;"
+    tool_opt->descriptions = _("create;"
+			       "Create new vector map;"
+			       "add;"
 			       "Add new vector feature to existing vector file;"
 			       "delete;"
 			       "Delete feature from vector file;"
@@ -42,7 +49,7 @@ int parser(int argc, char*argv[])
 			       "Copy selected features;"
 			      "snap;"
 			       "Snap one line to another");
-    tool_opt->options     = "add,delete,move,vertex,straight,merge,"
+    tool_opt->options     = "create,add,delete,move,vertex,straight,merge,"
       "break,split,select,catadd,catdel,copy,snap";
 
     move_opt = G_define_option();
@@ -94,6 +101,8 @@ int parser(int argc, char*argv[])
     poly_opt->multiple    = YES;
     poly_opt->description = _("Polygon for selecting features");
 
+    where_opt = G_define_standard_option(G_OPT_WHERE);
+
     t_flg = G_define_flag();
     t_flg->key = 't';
     t_flg->description = _("Do not build topology");
@@ -130,7 +139,11 @@ int parser(int argc, char*argv[])
     /*
       check that the given arguments makes sense together
     */
-    if(G_strcasecmp (tool_opt->answer, "add") == 0) { 
+    if(G_strcasecmp (tool_opt->answer, "create") == 0) { 
+	/* add requires a points argument */
+	action_mode = MODE_CREATE;
+    }
+    else if(G_strcasecmp (tool_opt->answer, "add") == 0) { 
 	/* add requires a points argument */
 	action_mode = MODE_ADD;
     }
@@ -195,13 +208,14 @@ int parser(int argc, char*argv[])
 	action_mode == MODE_COPY ||
 	action_mode == MODE_SNAP)
     {
-	if((cat_opt->answers == NULL) && 
-           (coord_opt->answers == NULL) &&
-           (poly_opt->answers == NULL) &&
-           (id_opt->answers == NULL) &&
-           (bbox_opt->answers == NULL)) {
+	if((cat_opt   -> answers  == NULL) && 
+           (coord_opt -> answers  == NULL) &&
+           (poly_opt  -> answers  == NULL) &&
+           (id_opt    -> answers  == NULL) &&
+           (bbox_opt  -> answers  == NULL) &&
+	   (where_opt -> answer   == NULL)) {
 	    G_fatal_error (_("At least one option from <%s> must be specified"),
-			   "cats, coords, bbox, polygon, id");
+			   "cats, coords, bbox, polygon, id, where");
 	}
     }
 

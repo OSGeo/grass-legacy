@@ -18,7 +18,6 @@
  *
  **************************************************************/
 
-#include <grass/glocale.h>
 #include "global.h"
 
 /* cats 
@@ -36,8 +35,7 @@ int cats (struct Map_info *Map, int del)
     int layer=atoi(fld_opt->answer);
     int field_idx;
     int ret;
-    char buf[1024];
-
+    
     /* get list of categories */
     Clist = Vect_new_cat_list();
     if ( Vect_str_to_cat_list(cat_opt->answer, Clist)) 
@@ -122,5 +120,6 @@ int cats (struct Map_info *Map, int del)
         G_message(_("Category [%d] and layer [%d] deleted from features"), cat,layer);
     else
         G_message(_("Category [%d] and layer [%d] set to selected features"), cat,layer);
+
     return 1;
 }

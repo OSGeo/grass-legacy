@@ -32,9 +32,9 @@ enum mode {
 };
 
 /* options */
-global struct Option *map_opt, *maxdist_opt, *tool_opt,
+global struct Option *map_opt, *in_opt, *maxdist_opt, *tool_opt,
   *coord_opt, *cat_opt, *move_opt, *bbox_opt, *fld_opt,
-  *poly_opt, *type_opt, *id_opt;
+  *poly_opt, *type_opt, *id_opt, *where_opt;
 global struct Flag *n_flg, *t_flg, *i_flg, *b_flg, *c_flg;
 
 /* global variables */
@@ -72,11 +72,12 @@ int do_snap(struct Map_info *Map);
 /* select.c */
 int do_print_selected(struct Map_info *Map);
 struct ilist *select_lines(struct Map_info *Map);
-struct ilist *sel_by_cat(struct Map_info *Map);
+struct ilist *sel_by_cat(struct Map_info *Map, struct cat_list* cl_orig);
 struct ilist *sel_by_coordinates(struct Map_info *Map);
 struct ilist *sel_by_bbox(struct Map_info *Map);
 struct ilist *sel_by_polygon(struct Map_info *Map);
 struct ilist *sel_by_id(struct Map_info *Map);
+struct ilist *sel_by_where(struct Map_info *Map);
 
 /* max_distance.c */
 double max_distance(double maxdistance);
