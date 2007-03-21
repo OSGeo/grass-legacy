@@ -6,6 +6,7 @@
 #include <unistd.h>
 #include <stdlib.h>
 #include <grass/imagery.h>
+#include <grass/spawn.h>
 
 static char *tempfile = NULL;
 
