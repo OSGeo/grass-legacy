@@ -72,12 +72,12 @@ int quiet)
 	      G_fatal_error("Can't read frange file");
     }
     if(cat_ranges) {
-        cmd = mk_command ("r.stats -Cr%s%s '%s' > '%s'\n", 4, 
+        cmd = mk_command ("r.stats -Cr%s%s \"%s\" > \"%s\"\n", 4, 
                 type==COUNT?"c":"a", quiet?"q":"", fullname, tempfile);
     }
     else {
         sprintf (buf, "%d", nsteps);
-        cmd = mk_command ("r.stats -r%s%s '%s' nsteps=%s > '%s'\n", 5, 
+        cmd = mk_command ("r.stats -r%s%s \"%s\" nsteps=%s > \"%s\"\n", 5, 
                 type==COUNT?"c":"a", quiet?"q":"", fullname, 
                 buf, tempfile);
     }
