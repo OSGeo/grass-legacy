@@ -1,31 +1,30 @@
-#include <unistd.h>
-#include <stdlib.h>
-#include <string.h>
-#include <grass/gis.h>
-#include <grass/glocale.h>
-#include "local_proto.h"
-
-
 /*
 **********************************************************************
 *
 * MODULE:       r.support (GRASS core)
 *
 * AUTHOR(S):    Original by Michael Shapiro - CERL
-*               Preliminary parser support by Markus Neteler
+*               Preliminary parser support by Markus Neteler, rast parameter
 *               Port to 6.x by Brad Douglas
 *
 * PURPOSE:      Build support files for raster map
 *               - Edit header
 *               - Update status (histogram, range)
 *
-* COPYRIGHT:    (C) 2000-2005 by the GRASS Development Team
+* COPYRIGHT:    (C) 2000-2007 by the GRASS Development Team
 *
 *               This program is free software under the GNU General 
 *               Public License (>=v2). Read the file COPYING that comes
 *               with GRASS for details.
 *
 **********************************************************************/
+
+#include <unistd.h>
+#include <stdlib.h>
+#include <string.h>
+#include <grass/gis.h>
+#include <grass/glocale.h>
+#include "local_proto.h"
 
 /* two less than lib/gis/put_title.c  G_put_cell_title()
     if only one less a newline gets appended in the cats file. bug? */
@@ -38,12 +37,12 @@ int main(int argc, char *argv[])
     char *mapset;		/* Raster mapset      */
     struct Cell_head cellhd;
     struct GModule *module;
-    struct Option *raster, *title_opt, *history_opt;
+    struct Option *raster, *title_opt, *history_opt, *map_opt;
     char element[255];
     char buf[512];
     int cellhd_ok;		/* Is cell header OK? */
     int is_reclass;		/* Is raster reclass? */
-    char *infile;
+    char *infile, *cmapset;
     char title[MAX_TITLE_LEN+1];
     struct History hist;
 
@@ -72,6 +71,13 @@ int main(int argc, char *argv[])
     history_opt->type        = TYPE_STRING;
     history_opt->required    = NO;
     history_opt->description = _("Text to append to the next line of the map's metadata file");
+
+    map_opt = G_define_option();
+    map_opt->key = "rast";
+    map_opt->type = TYPE_STRING;
+    map_opt->required = NO;
+    map_opt->gisprompt = "old,cell,raster";
+    map_opt->description = _("Raster map name from which to copy category table");
 
     /* Parse command-line options */
     if (G_parser(argc,argv))
@@ -136,6 +142,27 @@ int main(int argc, char *argv[])
         }
 
 	G_write_history(raster->answer, &hist);
+	exit(EXIT_SUCCESS);
+    }
+
+    if (map_opt->answer) {	/* use cats from another map */
+	int fd;
+	struct Categories cats;
+
+	cmapset = G_find_cell2(map_opt->answer, "");
+	if (cmapset == NULL)
+	    G_fatal_error(_("%s - map not found"), map_opt->answer);
+
+	if((fd = G_open_cell_old(infile,mapset)) < 0)
+		G_fatal_error(_("Unable to open raster map [%s]"), infile);
+	G_init_cats ((CELL)0, "", &cats);
+	if (0 > G_read_cats(map_opt->answer, cmapset, &cats))
+	    G_fatal_error(_("Unable to read cats table for %s"), map_opt->answer);
+
+	if (G_write_cats(infile, &cats) >= 0)
+	    G_message(_("cats table for [%s] set to %s"), infile, map_opt->answer);
+	G_close_cell(fd);
+	G_free_cats(&cats);
 	exit(EXIT_SUCCESS);
     }
 
