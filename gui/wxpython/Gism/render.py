@@ -165,7 +165,6 @@ class MapLayer:
 		os.environ["GRASS_PNGFILE"] = self.mapfile
 		os.environ["GRASS_RENDER_IMMEDIATE"] = "TRUE"
 
-
 		#
 		# execute command
 		#
@@ -805,7 +804,7 @@ class Map:
 		if l_render:
 			if not layer.Render():
 				sys.stderr.write("Could not render layer <%s@%s>\n" % \
-							 (name,mapset))
+							 (name, mapset))
 
 		return self.layers[-1]
 
@@ -885,6 +884,7 @@ class Map:
 			return None
 		except:
 			return 1
+		self.layers = []
 
 
 if __name__ == "__main__":
