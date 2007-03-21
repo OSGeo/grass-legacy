@@ -15,9 +15,9 @@ This document describes how the GRASS Project Steering Committee
 determines membership, and makes decisions on GRASS project issues.
 
 "The GRASS Project" is defined as the GPL-licenced GIS software known as the 
-Geographic Resources Analysis Support System, together with the surrounding 
-development, distribution and promotion infrastructure currently headquarted 
-at ITC-irst, Trento, Italy.
+Geographic Resources Analysis Support System, which at the time of this writing
+has code hosted in a CVS repository at Intevation GmbH, and a web and mailing
+list presence at http://grass.itc.it.
 
 \section tor Terms of Reference
 
@@ -115,12 +115,14 @@ decision is reached:
 
 \section composition Composition of the Committee
 
-Michael Barton, Dylan Beaudette, Hamish Bowman, Massimiliano Cannata, Brad 
-Douglas, Paul Kelly, Helena Mitasova, Scott Mitchell, Markus Neteler, and 
-Maciej Sieczka are declared to be the founding Project Steering Committee.
+Initial PSC membership was decided based on a nomination and informal voting 
+period on the community's mailing lists.  Michael Barton, Dylan Beaudette, 
+Hamish Bowman, Massimiliano Cannata, Brad Douglas, Paul Kelly, Helena Mitasova,
+Scott Mitchell, Markus Neteler, and Maciej Sieczka are declared to be the 
+founding Project Steering Committee.
 
 Addition and removal of members from the committee, as well as selection 
-of a Chair is handled as a proposal to the committee as described above.
+of Chair is handled as a proposal to the committee as described above.
 
 The Chair is responsible for keeping track of the membership of the PSC.
 
