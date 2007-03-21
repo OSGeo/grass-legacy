@@ -44,16 +44,15 @@ main (int argc, char *argv[])
 	G_gisinit(argv[0]);
 
 	module = G_define_module();
-	module->keywords = _("vector, import, conversion");
+	module->keywords = _("vector, import");
 	module->description =
-	    _("Convert GRASS ASCII file or points file to binary vector map layer.");
+	    _("Create a vector map from ASCII points file or ASCII vector file.");
 
         /************************** Command Parser ************************************/
-	old = G_define_standard_option (G_OPT_V_INPUT);
+	old = G_define_standard_option (G_OPT_F_INPUT);
 	old->required	 =  NO;
-	old->gisprompt   = "old_file,file,input";
 	old->description =
-	  _("ASCII file to be converted to binary vector map, if not given reads from standard input");
+	  _("ASCII file to be imported, if not given reads from standard input");
 
 	new = G_define_standard_option(G_OPT_V_OUTPUT);
 
@@ -80,15 +79,15 @@ main (int argc, char *argv[])
 	skip_opt->multiple = NO;
 	skip_opt->answer = "0";
 	skip_opt->description =
-	  _("Number of header lines to skip at top of input file (written to map history)");
+	  _("Number of header lines to skip at top of input file (points mode)");
 
 	columns_opt = G_define_option();
 	columns_opt->key = "columns";
 	columns_opt->type = TYPE_STRING;
 	columns_opt->required = NO;
 	columns_opt->multiple = NO;
-	columns_opt->description =
-	  _("Columns definition for points mode in SQL style, for example: "
+	columns_opt->label = _("Column definition in SQL style (points mode)");
+	columns_opt->description = _("for example:\n"
 	    "'x double precision, y double precision, cat int, name varchar(10)'");
 
 	xcol_opt = G_define_option();
