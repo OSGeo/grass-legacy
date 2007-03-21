@@ -152,6 +152,9 @@ int do_merge(struct Map_info *Map)
 
     Vect_destroy_list(List);
 
+    G_message (_("[%d] features merged"),
+	       nlines_merged);
+
     return nlines_merged;
 }
 

@@ -22,34 +22,38 @@
 
 int do_move_vertex(struct Map_info *Map)
 {
-    int res = 0;
+    int res;
 
     double east, north;
-    int line = 0,j;
-    double maxdist = 0.;
+    int line, j;
+    double maxdist;
     char buff[16] = "";
     float move[2];
 
+    int cat;
     int type;
+    int field;
+
     struct line_pnts *Points;
     struct line_cats *Cats;
-    int cat;
-    int field=atoi(fld_opt->answer);
-    int moved = 0;
 
     /* for easier selection of points */
     BOUND_BOX bbox;
     struct ilist *List;
 
+    line = res = 0;
+    maxdist = 0.;
+    field = atoi(fld_opt->answer);
+
     if (coord_opt->answers){
-        east = atof(coord_opt->answers[0]);
+        east  = atof(coord_opt->answers[0]);
         north = atof(coord_opt->answers[1]);
     }
 
     move[0] = atof(move_opt->answers[0]);
     move[1] = atof(move_opt->answers[1]);
 
-    maxdist =  max_distance(atof(maxdist_opt->answer));
+    maxdist =  max_distance (atof(maxdist_opt->answer));
 
     List = Vect_new_list ();
 
@@ -80,14 +84,19 @@ int do_move_vertex(struct Map_info *Map)
 
     /* select by coordinate */
     if (coord_opt->answer) 
-        line = Vect_find_line(Map, east, north, 0.0, GV_POINT | GV_CENTROID | GV_LINE | GV_BOUNDARY | GV_FACE, maxdist, 0, 0);
+        line = Vect_find_line (Map, east, north, 0.0,
+			      GV_POINT | GV_CENTROID | GV_LINE | GV_BOUNDARY | GV_FACE,
+			       maxdist, 0, 0);
 
     /* select by bounding box */
     if (line == 0) {
 
-        G_debug(1,"Vect_find_line found nothing, trying bbox: n=%f s=%f w=%f e=%f\n", bbox.N, bbox.S, bbox.W, bbox.E);
+        G_debug(1, "Vect_find_line found nothing, trying bbox: n=%f s=%f w=%f e=%f\n",
+		bbox.N, bbox.S, bbox.W, bbox.E);
 
-        Vect_select_lines_by_box ( Map, &bbox, GV_POINTS | GV_LINES | GV_BOUNDARY | GV_CENTROID | GV_FACE, List );
+        Vect_select_lines_by_box (Map, &bbox,
+				  GV_POINTS | GV_LINES | GV_BOUNDARY | GV_CENTROID | GV_FACE,
+				  List);
 
         /* get the only first one */
         if (List->n_values < 1)
@@ -100,119 +109,116 @@ int do_move_vertex(struct Map_info *Map)
     G_debug (2, "line = %d", line);
 
 
-    if (line == 0) {
-        G_warning(_("No line found."));
-        return 0;
-    }
-
     Points = Vect_new_line_struct();
     Cats = Vect_new_cats_struct();
+    
     type = Vect_read_line(Map, Points, Cats, line);
-    if ((cat = Vect_get_line_cat(Map, line, field )) > 0) 
-        sprintf(buff,_("category [%d]"),cat);
+
+    cat = Vect_get_line_cat (Map, line, field);
+
+    if (cat > 0) 
+      sprintf(buff,_("category [%d]"),cat);
         
     G_debug(2, "Moving type [%d] number [%d] %s", type, line, buff);
+
     /* move */
     for (j = 0; j < Points->n_points; j++) {
-
         if ((bbox.W <= Points->x[j] && Points->x[j] <= bbox.E) && 
             (bbox.S <= Points->y[j] && Points->y[j] <= bbox.N)){
             Points->x[j]+=move[0];
             Points->y[j]+=move[1];
             res++;
         }
+    } /* for each point at line */
 
-    }/* /for each point at line */
-
-    if ( Vect_rewrite_line (Map, line, type, Points, Cats) < 0)  {
-        G_warning("Feature could not be moved");
-        return 0;
+    if (Vect_rewrite_line (Map, line, type, Points, Cats) < 0)  {
+	G_warning("Feature could not be moved");
+        return -1;
     }
 
+    if (i_flg->answer) 
+	fprintf(stdout,"%d\n", line);
 
-    if (res) {
-        if (i_flg->answer) 
-            fprintf(stdout,"%d\n", line);
-        G_message(_("[%d] vertexes moved"),res);
-        return 1;
-    }
-    else {
-        G_message(_("Nothing moved"));
-        return 0;
-    }
+    G_message(_("[%d] vertexes moved"), res);
+
+    return res;
 }
 
 int do_break(struct Map_info *Map)
 {
-    int res = 0;
+    int res;
     double east, north;
-    int line,j;
-    double maxdist = 0.;
+    int line, j;
+    double maxdist;
     char buff[16] = "";
 
+    int cat;
     int type;
+    int field;
+
+    int seg;
+    double px, py;
+
     struct line_pnts *Points,*NPoints;
     struct line_cats *Cats;
-    int cat;
-    int field=atoi(fld_opt->answer);
-    int seg = 0;
-    double px,py;
 
-    east = atof(coord_opt->answers[0]);
-    north = atof(coord_opt->answers[1]);
-    maxdist =  max_distance(atof(maxdist_opt->answer));
+    res = seg = 0;
+    maxdist = 0.0;
 
-    line = Vect_find_line(Map, east, north, 0.0, GV_LINE | GV_BOUNDARY | GV_FACE, maxdist, 0, 0);
+    field   = atoi(fld_opt->answer);
+    east    = atof(coord_opt->answers[0]);
+    north   = atof(coord_opt->answers[1]);
+    maxdist = max_distance(atof(maxdist_opt->answer));
+
+    line = Vect_find_line(Map, east, north, 0.0,
+			  GV_LINE | GV_BOUNDARY | GV_FACE,
+			  maxdist, 0, 0);
 
 
     G_debug (2, "line = %d", line);
 
-    if (line == 0) {
-        G_warning(_("Nothing Found."));
-        return 0;
-
-    }
-    else {
-	Points = Vect_new_line_struct();
+    if (line > 1) {
+	Points  = Vect_new_line_struct();
 	NPoints = Vect_new_line_struct();
-	Cats = Vect_new_cats_struct();
-        Vect_reset_line(NPoints);
+	Cats    = Vect_new_cats_struct();
+        
         type = Vect_read_line(Map, Points, Cats, line);
-        if ((cat = Vect_get_line_cat(Map, line, field )) > 0) 
+
+	cat = Vect_get_line_cat(Map, line, field);
+
+        if (cat > 0) 
             sprintf(buff,"category [%d]",cat);
 
         G_debug(2, "Spliting type [%d] number [%d] %s", type, line, buff);
 
-        seg = Vect_line_distance ( Points, east, north, 0, 0, &px, &py, NULL, NULL, NULL, NULL );
+        seg = Vect_line_distance ( Points, east, north, 0, 0,
+				   &px, &py, NULL, NULL, NULL, NULL);
 
         /* copy first line part */
         for (j = 0; j < seg; j++) {
-
-            Vect_append_point(NPoints,Points->x[j],Points->y[j], Points->z[j]);
-
+            Vect_append_point(NPoints, Points->x[j],Points->y[j], Points->z[j]);
         }
 
         /* add split vertex */
-        Vect_append_point(NPoints,east,north,0.0);
-
+        Vect_append_point(NPoints, east, north, 0.0);
 
         /* copy second line part */
         for (j = seg; j < Points->n_points; j++) {
-
-            Vect_append_point(NPoints,Points->x[j],Points->y[j], Points->z[j]);
-
+            Vect_append_point(NPoints, Points->x[j], Points->y[j], Points->z[j]);
         }
 
         /* rewrite the line */
-        if ( Vect_rewrite_line (Map, line, type, NPoints, Cats) < 0)  {
+        if (Vect_rewrite_line (Map, line, type, NPoints, Cats) < 0) {
             G_warning("Line could not be split");
-            return 0;
+            return -1;
         }
     }
 
     if (i_flg->answer) 
         fprintf(stdout,"%d\n", line);
+
     G_message(_("Line [%d] broken"), line);
+
     return 1;
 }
 
@@ -239,12 +245,7 @@ int do_remove_vertex(struct Map_info *Map)
 
     G_debug (2, "line = %d", line);
 
-    if (line == 0) {
-        G_warning(_("Nothing Found."));
-        return 0;
-
-    }
-    else {
+    if (line > 1) {
 	Points = Vect_new_line_struct();
 	NPoints = Vect_new_line_struct();
 	Cats = Vect_new_cats_struct();
@@ -279,7 +280,7 @@ int do_remove_vertex(struct Map_info *Map)
         /* rewrite the line */
         if ( Vect_rewrite_line (Map, line, type, NPoints, Cats) < 0)  {
             G_warning("Vertex could not be removed");
-            return 0;
+            return -1;
         }
         /* attr_del(Map, layer, cat);*/
     }
@@ -287,6 +288,7 @@ int do_remove_vertex(struct Map_info *Map)
     if (i_flg->answer) 
         fprintf(stdout,"%d\n", line);
     G_message(_("Vertex on line [%d] removed"), line);
+
     return 1;
 }
 
@@ -315,12 +317,7 @@ int do_split(struct Map_info *Map)
 
     G_debug (2, "line = %d", line);
 
-    if (line == 0) {
-        G_warning(_("Nothing Found."));
-        return 0;
-
-    }
-    else {
+    if (line > 1) {
 	Points = Vect_new_line_struct();
 	NPoints = Vect_new_line_struct();
 	Cats = Vect_new_cats_struct();
@@ -346,7 +343,7 @@ int do_split(struct Map_info *Map)
         /* rewrite the line */
         if ( Vect_rewrite_line (Map, line, type, NPoints, Cats) < 0)  {
             G_warning("Line could not be broken");
-            return 0;
+            return -1;
         }
         /* attr_del(Map, layer, cat);*/
 
@@ -365,12 +362,13 @@ int do_split(struct Map_info *Map)
         /* rewrite the line */
         if ( Vect_write_line (Map, type, NPoints, Cats) < 0)  {
             G_warning("Line could not be split");
-            return 0;
+            return -1;
         }
     }
 
     if (i_flg->answer) 
         fprintf(stdout,"%d\n", line);
     G_message(_("Line [%d] split"), line);
+
     return 1;
 }

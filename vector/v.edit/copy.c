@@ -22,17 +22,16 @@
 
 int do_copy (struct Map_info *Map)
 {
-    int i, j, line;
     struct ilist *List;
     struct line_cats *Cats;
     struct line_pnts *Points;
     struct line_pnts *NPoints;
-    struct cat_list *Clist;
-    int type;
-    int cat ;
-    int layer=atoi(fld_opt->answer);
-    int field_idx;
-
+    int i, j;
+    int type, cat;
+    int layer;
+    
+    layer = atoi(fld_opt->answer);
+    
     /* Select features */
     List = select_lines(Map);
 

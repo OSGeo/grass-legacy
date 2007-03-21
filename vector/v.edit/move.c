@@ -23,13 +23,15 @@
 int do_move(struct Map_info *Map)
 {
     struct ilist *List;
-    int i,j;
-    double move_x,move_y;
+    int i, j;
+    double move_x, move_y;
     int type;
     struct line_pnts *Points;
     struct line_cats *Cats;
-    int moved=0;
+    int moved;
     int newline;
+
+    moved = 0;
 
     move_x = atof(move_opt->answers[0]);
     move_y = atof(move_opt->answers[1]);
@@ -37,36 +39,43 @@ int do_move(struct Map_info *Map)
     /* cats or coord or bbox */
     List = select_lines(Map);
 
-    if (List->n_values == 0) {
-        G_message(_("No features found"));
-        return 0;
-    }
-
     Points = Vect_new_line_struct();
     Cats = Vect_new_cats_struct();
 
-    for ( i = 0; i < List->n_values; i++) {
+    for (i = 0; i < List->n_values; i++) {
 
         type = Vect_read_line(Map, Points, Cats, List->value[i]);
+
         G_debug(2, "Moving type [%d] number [%d]", type, List->value[i]);
+
         /* move */
-        for (j = 0; j < Points->n_points; j++) {
+        for (j = 0; j < Points -> n_points; j++) {
 
-            Points->x[j]+=move_x;
-            Points->y[j]+=move_y;
+            Points->x[j] += move_x;
+            Points->y[j] += move_y;
 
-        }/* /for each point at line */
+        } /* for each point at line */
 
-        if ( (newline = Vect_rewrite_line (Map, List->value[i], type, Points, Cats)) < 0)  {
-            G_warning("Feature [%d] could not be moved",List->value[i]);
-            return 0;
+	newline = Vect_rewrite_line (Map, List->value[i], type, Points, Cats);
+
+        if (newline < 0)  {
+            G_warning("Feature [%d] could not be moved",
+		      List->value[i]);
+            return -1;
         }
+
         moved++;
         
         if (i_flg->answer) 
-            fprintf(stdout,"%d%s", List->value[i], i < List->n_values-1 ? "," : "\n");
+            fprintf(stdout, "%d%s", List->value[i], i < List->n_values-1 ? "," : "\n");
     }
         
     G_message(_("[%d] features moved"), moved);
-    return 1;
+
+    Vect_destroy_line_struct (Points);
+    Vect_destroy_cats_struct (Cats);
+    
+    Vect_destroy_list (List);
+
+    return moved;
 }

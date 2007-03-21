@@ -35,6 +35,35 @@ int main (int argc, char *argv[])
     if(!parser(argc, argv))
 	exit(EXIT_FAILURE);
 
+    /* open input file */
+    if (in_opt -> answer) {
+	ascii = fopen (in_opt -> answer, "r");
+	if (ascii == NULL) {
+	    G_fatal_error(_("Could not open ASCII file <%s>"),
+			  in_opt -> answer);
+	}
+    }
+    else {
+	ascii = stdin;
+    }
+
+    if (action_mode == MODE_CREATE) {
+	/* 3D vector maps? */
+	if (-1 == Vect_open_new (&Map, map_opt -> answer, 0)) {
+	    G_fatal_error (_("Cannot create vector map <%s>"),
+			   map_opt -> answer);
+	}
+
+	G_debug(1, "Map created");
+	
+	Vect_hist_command (&Map);
+	
+	Vect_build (&Map, output);
+	Vect_close (&Map);
+
+	exit (EXIT_SUCCESS);
+    }
+
     /* open selected vector file */    
     mapset = G_find_vector2 (map_opt->answer, G_mapset()); 
     if ( mapset == NULL ) {
@@ -54,8 +83,6 @@ int main (int argc, char *argv[])
 
     G_debug (1, "Map opened");
 
-    /* FIXME, functions should return number of modified features or -1 on error */
-    /* currently only in do_merge () implemented */
     /* perform requested editation */
     switch(action_mode) {
       case MODE_ADD:
@@ -101,12 +128,12 @@ int main (int argc, char *argv[])
         break;
       default:
 	G_warning(_("Operation not implemented."));
-	ret=-1;
+	ret = -1;
 	break;
     }
 
-    G_message (_("[%d] features modified"),
-	       ret);
+    if(ret == -1)
+	exit(EXIT_FAILURE);
 
     if(ret == 0)
 	output=NULL;
@@ -116,14 +143,14 @@ int main (int argc, char *argv[])
     /* build topology only if requested or if tool!=select */
     if  (!(action_mode == MODE_SELECT || t_flg->answer == 1)) {
         Vect_build_partial(&Map, GV_BUILD_NONE, NULL);
-        Vect_build(&Map, output );
+        Vect_build (&Map, output);
     }
 
     Vect_close(&Map);
     G_debug(1, "Map closed");
 
-    if(ret)
-	exit(EXIT_SUCCESS);
-    else
-	exit(EXIT_FAILURE);
+    G_done_msg ("");
+
+
+    exit(EXIT_SUCCESS);
 }
