@@ -48,7 +48,7 @@ class LayerTree(CT.CustomTreeCtrl):
         self.EnableSelectionGradient(True)
         self.SetFirstGradientColour(wx.Colour(150, 150, 150))
 
-        self.display = ""   # ID of map display associated with layer tree
+        self.Map = "" # instance of render.Map associated with display
         self.root = ""      # ID of layer tree root node
         self.node = 0       # index value for layers
         self.optpage = {}   # dictionary of notebook option pages for each map layer
@@ -57,7 +57,7 @@ class LayerTree(CT.CustomTreeCtrl):
         self.saveitem = {} # dictionary to preserve layer attributes for drag and drop
         self.dcmdopts = ''
 
-        self.display = disp
+        self.Map = disp.getRender()
 
         self.root = self.AddRoot("Map Layers")
         self.SetPyData(self.root, None)
@@ -284,7 +284,7 @@ class LayerTree(CT.CustomTreeCtrl):
         any valid and checked layers to layer list
         """
         # first empty the list of old layers
-        self.display.cleanLayersList()
+        self.Map.Clean()
         # make a list of visible layers
         treelayers = []
         vislayer = self.GetFirstVisibleItem()
@@ -303,13 +303,13 @@ class LayerTree(CT.CustomTreeCtrl):
                 if self.GetItemWindow(layer).GetValue() != None:
                     cmd = self.GetItemWindow(layer).GetValue()
                     opac = 1.0
-                    self.display.addMapsToList(type='command', command=cmd, opacity=opac, render=True)
+                    self.Map.AddCommandLayer(name=cmd, l_opacity=opac, l_render=True)
             else:
                 if self.GetPyData(layer) != None:
                     cmd = self.GetPyData(layer)[0]
                     rend =  self.GetPyData(layer)[1]
                     opac = float(self.GetItemWindow(layer).GetValue())/100
-                    self.display.addMapsToList(type='command', command=cmd, opacity=opac, render=rend)
+                    self.Map.AddCommandLayer(name=cmd, l_opacity=opac, l_render=rend)
 
 
 class TreeCtrlComboPopup(wx.combo.ComboPopup):

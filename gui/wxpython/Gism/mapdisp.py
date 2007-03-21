@@ -735,11 +735,11 @@ class MapFrame(wx.Frame):
             track.Track().popCtrl(self.disp_idx)
             self.ctrlbk.DeletePage(pgnum)
 
-    def cleanLayersList(self):
-        Map.Clean()
-
-    def addMapsToList(self, type, command, opacity, render):
-        Map.AddCommandLayer(name=command, l_opacity=opacity, l_render=render)
+    def getRender(self):
+        """
+        returns the current instance of render.Map()
+        """
+        return Map
 
 # end of class MapFrame
 
