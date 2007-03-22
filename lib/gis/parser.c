@@ -1928,7 +1928,7 @@ static int set_option (char *string)
 	key_len = strlen(the_key) ;
 	for(at_opt= &first_option; at_opt != NULL; at_opt=at_opt->next_opt)
 	{
-		if (strncmp(the_key,at_opt->key,key_len))
+		if (at_opt->key == NULL || strncmp(the_key,at_opt->key,key_len))
 			continue ;
 
 		got_one++;
