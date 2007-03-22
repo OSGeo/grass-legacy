@@ -1,7 +1,7 @@
 /* ****************************************************************************
  *
  * MODULE:       v.label 
- * AUTHOR(S):    Philip Verhagen (original s.label), Radim Blazek 
+ * AUTHOR(S):    Philip Verhagen (original s.label), Radim Blazek, Hamish Bowman 
  * PURPOSE:      Create paint labels    
  * COPYRIGHT:    (C) 2000 by the GRASS Development Team
  *
