@@ -140,6 +140,7 @@ class MapLayer:
 			self.maskfile = gtemp + ".pgm"
 			self.mapfile  = gtemp + ".ppm"
 
+
 		#
 		# prepare command for each layer
 		#
@@ -529,9 +530,7 @@ class Map:
 		if DEBUG:
 			print ("mapimg.py: Map: Render: force=%s" % (force))
 		try:
-#			for layer in self.layers:
 			for layer in self.layers:
-
 				# skip if hidden or not active
 				if layer.active == False or layer.hidden == True:
 					continue
@@ -611,9 +610,6 @@ class Map:
 		# l_opacity must be <0;1>
 		if l_opacity < 0: l_opacity = 0
 		elif l_opacity > 1: l_opacity = 1
-			# the following won't work in all situations. What
-			# if opacity had somehow been set to 1000?
-#			l_opacity = float(l_opacity) / 100
 
 		layer = MapLayer("raster", name, mapset,
 				 l_active, l_hidden, l_opacity,
@@ -845,10 +841,10 @@ class Map:
 		# add item and layer to lookup dictionary
 		self.lookup[item] = layer
 
-#		if l_render:
-#			if not layer.Render():
-#				sys.stderr.write("Could not render layer <%s@%s>\n" % \
-#							 (name, mapset))
+		if l_render:
+			if not layer.Render():
+				sys.stderr.write("Could not render layer <%s@%s>\n" % \
+							 (name, mapset))
 
 		return self.layers[-1]
 
@@ -919,10 +915,10 @@ class Map:
 			self.lookup[item] = newlayer
 
 
-#		if l_render:
-#			if not layer.Render():
-#				sys.stderr.write("Could not render layer <%s@%s>\n" % \
-#							 (name, mapset))
+		if l_render:
+			if not layer.Render():
+				sys.stderr.write("Could not render layer <%s@%s>\n" % \
+							 (name, mapset))
 
 		return self.layers[-1]
 
