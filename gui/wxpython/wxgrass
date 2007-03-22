@@ -2,9 +2,9 @@
 
 SYSTEM=`uname -s`
 if [ "$SYSTEM" = "Darwin" ] ; then
-	pythonw "$GISBASE/etc/wx/gism.py" -name gmism_py
+	pythonw "$GISBASE/etc/wx/gism.py &" -name gmism_py
 else
-	python "$GISBASE/etc/wx/gism.py" -name gmism_py
+	python "$GISBASE/etc/wx/gism.py &" -name gmism_py
 fi
 
 
