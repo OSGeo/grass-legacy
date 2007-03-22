@@ -189,7 +189,10 @@ class LayerTree(CT.CustomTreeCtrl):
         event.Skip()
 
     def onOpacity(self, event):
-        layer = self.layerctrl[event.GetEventObject().GetParent()]
+        if 'Spin' in str(event.GetEventObject()):
+            layer = self.layerctrl[event.GetEventObject()]
+        else:
+            layer = self.layerctrl[event.GetEventObject().GetParent()]
         opacity = float(event.GetString())/100
 
         if self.drag == False:
