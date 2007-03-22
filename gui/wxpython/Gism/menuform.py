@@ -330,17 +330,26 @@ class mainFrame(wx.Frame):
             l_count = l_count + 1
 
         btnsizer = wx.BoxSizer(wx.HORIZONTAL)
-        self.btn1 = wx.Button(self.panel, ID_CANCEL, "Cancel")
-        btnsizer.Add(self.btn1, 0, wx.ALL| wx.ALIGN_CENTER, 10)
-        self.btn2 = wx.Button(self.panel, ID_RUN, "Run")
-        btnsizer.Add(self.btn2, 0, wx.ALL| wx.ALIGN_CENTER, 10)
-        self.btn2.SetDefault()
+        self.btn_cancel = wx.Button(self.panel, ID_CANCEL, "Cancel")
+        btnsizer.Add(self.btn_cancel, 0, wx.ALL| wx.ALIGN_CENTER, 10)
+        if self.get_dcmd != None:
+            self.btn_apply = wx.Button(self.panel, ID_RUN, "Apply")
+            btnsizer.Add(self.btn_apply, 0, wx.ALL| wx.ALIGN_CENTER, 10)
+            self.btn_ok = wx.Button(self.panel, ID_RUN, "OK")
+            btnsizer.Add(self.btn_ok, 0, wx.ALL| wx.ALIGN_CENTER, 10)
+            self.btn_ok.SetDefault()
+            self.btn_apply.Bind(wx.EVT_BUTTON, self.onApply)
+            self.btn_ok.Bind(wx.EVT_BUTTON, self.onOK)
+        else:
+            self.btn_run = wx.Button(self.panel, ID_RUN, "Run")
+            btnsizer.Add(self.btn_run, 0, wx.ALL| wx.ALIGN_CENTER, 10)
+            self.btn_run.SetDefault()
+            self.btn_run.Bind(wx.EVT_BUTTON, self.OnRun)
         self.guisizer.Add(btnsizer, 0, wx.EXPAND)
         wx.EVT_MENU(self, ID_ABOUT, self.OnAbout)
         wx.EVT_MENU(self, ID_ABOUT_COMMAND, self.OnAboutCommand)
         wx.EVT_MENU(self, ID_EXIT,  self.OnCancel)
-        self.btn1.Bind(wx.EVT_BUTTON, self.OnCancel)
-        self.btn2.Bind(wx.EVT_BUTTON, self.OnRun)
+        self.btn_cancel.Bind(wx.EVT_BUTTON, self.OnCancel)
         self.Bind(wx.EVT_CLOSE, self.onCloseWindow)
 
         self.panel.SetSizer(self.guisizer)
@@ -382,7 +391,7 @@ class mainFrame(wx.Frame):
         # Pack it back
         grass_task['params'][theParamId]['value'] = ','.join( currentValues.keys() )
 
-    def OnRun(self, event):
+    def createCmd(self):
         cmd = grass_task['name']
         errors = 0
         errStr = ""
@@ -397,20 +406,36 @@ class mainFrame(wx.Frame):
                     cmd = cmd + ' -' + grass_task['params'][p_count]['name']
             if (grass_task['params'][p_count]['type'] != 'flag' and grass_task['params'][p_count]['value'] != ''):
                 cmd = cmd + ' ' + grass_task['params'][p_count]['name'] + '=' + grass_task['params'][p_count]['value']
-
         if errors:
             self.OnError(errStr)
-            return
+            return None
 
-        if cmd[0:2] == "d.":
-            if self.get_dcmd != None:
-                # return d.* command to layer tree for rendering
-                self.get_dcmd(cmd, self.layer)
-                # echo d.* command to output console
-                self.parent.writeDCommand(cmd)
+        return cmd
 
-        else:
-             # Send any other command to parent window (probably gism.py)
+    def onOK(self, event):
+        cmd = self.createCmd()
+
+        if cmd != None and self.get_dcmd != None:
+            # return d.* command to layer tree for rendering
+            self.get_dcmd(cmd, self.layer)
+            # echo d.* command to output console
+            self.parent.writeDCommand(cmd)
+            self.Close(True)
+
+    def onApply(self, event):
+        cmd = self.createCmd()
+
+        if cmd != None and self.get_dcmd != None:
+            # return d.* command to layer tree for rendering
+            self.get_dcmd(cmd, self.layer)
+            # echo d.* command to output console
+            self.parent.writeDCommand(cmd)
+
+    def OnRun(self, event):
+        cmd = self.createCmd()
+
+        if cmd != None and cmd[0:2] != "d.":
+             # Send any non-display command to parent window (probably gism.py)
             if self.parent > -1:
                 # put to parents
                 try:
@@ -428,7 +453,6 @@ class mainFrame(wx.Frame):
                         print >>sys.stderr, "Child returned", retcode
                 except OSError, e:
                     print >>sys.stderr, "Execution failed:", e
-
 
     def OnError(self, errMsg):
         dlg = wx.MessageDialog(self, errMsg, "Error", wx.OK | wx.ICON_ERROR)
