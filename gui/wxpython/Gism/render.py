@@ -60,7 +60,6 @@ class MapLayer:
 		self.maskfile = gtemp + ".pgm"
 		self.mapfile  = gtemp + ".ppm"
 
-
 	def __renderRasterLayer(self):
 		"""
 		Stores d.rast command with all parameters in the self.cmd variable
@@ -227,6 +226,7 @@ class Map:
 		self.height    = 400 # map height
 
 		self.layers    = []  # stack of available layer
+		self.lookup   = {}  # lookup dictionary for tree items and layers
 		self.env       = {}  # enviroment variables, like MAPSET, LOCATION_NAME, etc.
 		self.verbosity = 0
 		self.mapfile   = utils.GetTempfile()
@@ -529,7 +529,12 @@ class Map:
 		if DEBUG:
 			print ("mapimg.py: Map: Render: force=%s" % (force))
 		try:
+#			for layer in self.layers:
 			for layer in self.layers:
+
+				# skip if hidden or not active
+				if layer.active == False or layer.hidden == True:
+					continue
 
 				# render if there is no mapfile
 				if layer.mapfile == None:
@@ -807,6 +812,120 @@ class Map:
 
 		return self.layers[-1]
 
+	def addLayer(self, item, command, mapset=None, l_active=True, l_hidden=False,
+		l_opacity=1, l_render=False):
+		"""
+		Adds generic layer to list of layers
+
+		Layer Attributes:
+			name	   - display command
+			mapset	   - mapset name, default: current
+
+			l_active   - see MapLayer class
+			l_hidden
+			l_opacity
+			l_render   - render an image
+
+		Returns:
+                    Added layer on success or None
+
+		"""
+		if not mapset:
+			mapset = self.env["MAPSET"]
+
+		# l_opacity must be <0;1>
+		if l_opacity < 0: l_opacity = 0
+		elif l_opacity > 1: l_opacity = 1
+
+		layer = MapLayer("command", command, mapset,
+				 l_active, l_hidden, l_opacity)
+
+		# add maplayer to the list of layers
+		self.layers.append(layer)
+		# add item and layer to lookup dictionary
+		self.lookup[item] = layer
+
+#		if l_render:
+#			if not layer.Render():
+#				sys.stderr.write("Could not render layer <%s@%s>\n" % \
+#							 (name, mapset))
+
+		return self.layers[-1]
+
+	def delLayer(self, item):
+		"""
+		Removes layer from list of layers, defined by name@mapset or id
+
+		Parameters:
+			name	- map name
+			mapset	- mapset name, default: current
+			id	- index of the layer in layer list
+
+		Returns:
+			Removed layer on success or None
+		"""
+		layer = self.lookup[item]
+
+		if layer in self.layers:
+			if layer.mapfile:
+				base = os.path.split(layer.mapfile)[0]
+				mapfile = os.path.split(layer.mapfile)[1]
+				tempbase = mapfile.split('.')[0]
+				basefile = os.path.join(base,tempbase)+r'.*'
+				for f in glob.glob(basefile):
+					os.remove(f)
+			self.layers.remove(layer)
+			del self.lookup[item]
+			return layer
+
+		return None
+
+	def reorderLayers(self, item_list):
+
+		# make a new reordered list
+		temp = []
+
+		for item in item_list:
+			temp.append(self.lookup[item])
+
+		# replace original layers list with reordered one
+		self.layers = temp
+
+
+	def changeLayer(self, item, command, mapset=None, l_active=True, l_hidden=False,
+		l_opacity=1, l_render=False):
+
+		if not mapset:
+			mapset = self.env["MAPSET"]
+
+		# l_opacity must be <0;1>
+		if l_opacity < 0: l_opacity = 0
+		elif l_opacity > 1: l_opacity = 1
+
+		newlayer = MapLayer("command", command, mapset,
+				 l_active, l_hidden, l_opacity)
+
+		oldlayer = self.lookup[item]
+		oldlayerindex = self.layers.index(oldlayer)
+
+		# add maplayer to the list of layers
+		if self.lookup[item]:
+			del self.layers[oldlayerindex]
+			del self.lookup[item]
+			if oldlayerindex == 0:
+				self.layers.append(newlayer)
+			else:
+				self.layers.insert(oldlayerindex, newlayer)
+			self.lookup[item] = newlayer
+
+
+#		if l_render:
+#			if not layer.Render():
+#				sys.stderr.write("Could not render layer <%s@%s>\n" % \
+#							 (name, mapset))
+
+		return self.layers[-1]
+
 	def RemoveLayer(self, name=None, mapset=None, id=None):
 		"""
 		Removes layer from list of layers, defined by name@mapset or id
@@ -830,8 +949,8 @@ class Map:
 			for layer in self.layers:
 				if layer.name == name and layer.mapset == mapset:
 					retlayer = layer
-                                        os.remove(layer.mapfile)
-                                        os.remove(layer.maskfile)
+					os.remove(layer.mapfile)
+					os.remove(layer.maskfile)
 					self.layers.remove(layer)
 					return layer
 		# del by id
