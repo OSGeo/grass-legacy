@@ -16,8 +16,8 @@ endif
 default: subdirs
 
 install-macosx:
-	echo ${ARCH_BINDIR}/${MACOSX_APP_NAME}
-	@ if [ ! -d ${ARCH_BINDIR}/${MACOSX_APP_NAME} ] ; then \
+	echo ${ARCH_DISTDIR}/${MACOSX_APP_NAME}
+	@ if [ ! -d ${ARCH_DISTDIR}/${MACOSX_APP_NAME} ] ; then \
 		echo "ERROR: GRASS.app has not been compiled. Try \"make\" in the top level source dir first."; \
 		echo "  Installation aborted, exiting Make."; \
 		exit; \
