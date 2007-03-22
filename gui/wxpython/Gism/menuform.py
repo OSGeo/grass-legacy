@@ -265,9 +265,6 @@ class mainFrame(wx.Frame):
         self.SetMenuBar(menuBar)
         self.guisizer = wx.BoxSizer(wx.VERTICAL)
 
-        self.panel = wx.ScrolledWindow(self, -1, style=wx.TAB_TRAVERSAL)
-        self.panel.SetScrollRate(10,10)
-
         is_section = {}
         for task in grass_task['params']+grass_task['flags']:
             if task.has_key('guisection') and task['guisection'] != '':
@@ -275,16 +272,22 @@ class mainFrame(wx.Frame):
         sections = is_section.keys()
         sections.sort()
 
-        nbStyle=FN.FNB_NO_X_BUTTON|FN.FNB_NO_NAV_BUTTONS
-        self.notebook = FN.FlatNotebook(self, id=wx.ID_ANY, style=nbStyle|wx.EXPAND)
+        self.notebookpanel = wx.ScrolledWindow( self, id=wx.ID_ANY )
+        self.notebookpanel.SetScrollRate(10,10)
+        self.panelsizer = wx.BoxSizer(wx.VERTICAL)
+
+        nbStyle=FN.FNB_NO_X_BUTTON|FN.FNB_NO_NAV_BUTTONS|FN.FNB_VC8
+        self.notebook = FN.FlatNotebook(self.notebookpanel, id=wx.ID_ANY, style=nbStyle)
         self.tab = {}
         self.tabsizer = {}
         for section in ['Main']+sections:
-            self.tab[section] = wx.ScrolledWindow(self.notebook, id = wx.ID_ANY )
+            self.tab[section] = wx.Panel(self.notebook, id = wx.ID_ANY )
+#            self.tab[section].SetScrollRate(10,10)
             self.tabsizer[section] = wx.BoxSizer(wx.VERTICAL)
             self.notebook.AddPage( self.tab[section], text = section )
 
-        self.guisizer.Add( self.notebook, flag=wx.EXPAND )
+        self.panelsizer.Add( self.notebook, flag=wx.EXPAND )
+        self.guisizer.Add( self.notebookpanel, flag = wx.EXPAND )
 
         for p_count in range(0,len(grass_task['params'])):
             p = grass_task['params'][p_count]
@@ -317,7 +320,7 @@ class mainFrame(wx.Frame):
                         hSizer.Add( chkbox,0,wx.ADJUST_MINSIZE,0 )
                         wx.EVT_CHECKBOX(self, idForWX, self.EvtCheckBoxMulti)
                         v_count += 1
-                    which_sizer.Add( hSizer, 0, wx.ADJUST_MINSIZE |wx.EXPAND, 5)
+                    which_sizer.Add( hSizer, 0, wx.ADJUST_MINSIZE, 5)
                 else:
                     txt1 = wx.StaticText(which_panel, -1, title + ':', wx.Point(-1, -1), wx.Size(-1, -1))
                     which_sizer.Add(txt1, 0, wx.ADJUST_MINSIZE | wx.ALL, 5)
@@ -330,7 +333,8 @@ class mainFrame(wx.Frame):
 
             if (p['type'] in ('string','integer','float') and
                 len(p['values']) == 0 and
-                (p['gisprompt'] == False or p['prompt'] == 'color')):
+                (p['gisprompt'] == False
+                 or p['prompt'] == 'color')): # Do this with a color selector below
 #                (p['gisprompt'] == False and p['prompt'] != 'color')):
 
                 txt2 = wx.StaticText(which_panel, -1, title + ':',
@@ -345,11 +349,11 @@ class mainFrame(wx.Frame):
                 self.txt3.Bind(wx.EVT_TEXT, self.EvtText)
 
             if p['type'] == 'string' and p['gisprompt'] == True:
-                txt4 = wx.StaticText(which_panel, -1, title + ':',
-                    wx.Point(-1, -1), wx.Size(-1, -1))
-                which_sizer.Add(txt4, 0, wx.ADJUST_MINSIZE | wx.ALL, 5)
-
                 if p['prompt'] != 'color':
+                    txt4 = wx.StaticText(which_panel, -1, title + ':',
+                                         wx.Point(-1, -1), wx.Size(-1, -1))
+                    which_sizer.Add(txt4, 0, wx.ADJUST_MINSIZE | wx.ALL, 5)
+
                     self.selection = select.Select(which_panel, id=wx.ID_ANY, size=(250,-1),
                                                    type=p['element'])
                     which_sizer.Add(self.selection, 0, wx.ADJUST_MINSIZE, 5)
@@ -401,25 +405,28 @@ class mainFrame(wx.Frame):
         self.btn_cancel.Bind(wx.EVT_BUTTON, self.OnCancel)
         self.Bind(wx.EVT_CLOSE, self.OnCloseWindow)
 
-        for section in ['Main']+sections:
+        for section in sections+['Main']:
             self.tabsizer[section].SetSizeHints( self.tab[section] )
             self.tabsizer[section].Fit( self.tab[section] )
             self.tab[section].SetAutoLayout(True)
             self.tab[section].SetSizer( self.tabsizer[section] )
 
+        self.panelsizer.Fit( self.notebookpanel )
+        self.panelsizer.SetSizeHints( self.notebookpanel )
+        self.notebookpanel.SetSizer(self.panelsizer)
+        self.notebookpanel.SetAutoLayout(True)
+        self.notebookpanel.SetSize( (300, self.GetSize()[1]) ) # XXX Argh...
+
         self.guisizer.SetSizeHints(self)
         self.SetAutoLayout(True)
         self.SetSizer(self.guisizer)
         self.guisizer.Fit(self)
-#        self.guisizer.SetSizeHints( self )
-#        self.Layout()
 
     def onColorButton(self, event):
         data = event.GetValue()
         color = str(data[0])+':'+str(data[1])+':'+str(data[2])
         print 'color = ',color
         self.getValues()
-
 
     def getValues(self):
         for item in self.paramdict.items():
@@ -577,7 +584,6 @@ class GUI:
             'description' : 'No description available.',
             'lines' : 0, 'params' : [], 'flags' : [] }
         self.w = HSPACE + STRING_ENTRY_WIDTH + HSPACE
-        self.h = MENU_HEIGHT + VSPACE + grass_task['lines'] * ENTRY_HEIGHT + VSPACE + BUTTON_HEIGHT + VSPACE + STATUSBAR_HEIGHT
         self.parent = parent
 
     def parseCommand(self, cmd, gmpath, completed=None, parentframe=-1 ):
@@ -604,8 +610,8 @@ class GUI:
             handler = processTask()
             xml.sax.parseString(cmdout2, handler)
 
+        self.h = MENU_HEIGHT + VSPACE + grass_task['lines'] * ENTRY_HEIGHT + VSPACE + BUTTON_HEIGHT + VSPACE + STATUSBAR_HEIGHT
         mf = mainFrame(self.parent ,-1, self.w, self.h, self.get_dcmd, layer)
-#        mf = mainFrame(None, self.parent , self.w, self.h, self.get_dcmd, layer)
         mf.Show(True)
 
 if __name__ == "__main__":
@@ -618,6 +624,6 @@ if __name__ == "__main__":
     app = GrassGUIApp(0)
     # Parsing if run from command line: find out the command to run
     gui = GUI(app.frame)
-    gui.parseCommand( sys.argv[1], os.getenv("GISBASE") + "/etc/wx/Gism" )
+    gui.parseCommand( sys.argv[1], os.getenv("GISBASE") + "/etc/wx/Gism")
     app.MainLoop()
 
