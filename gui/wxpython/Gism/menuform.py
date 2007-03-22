@@ -330,8 +330,8 @@ class mainFrame(wx.Frame):
 
             if (p['type'] in ('string','integer','float') and
                 len(p['values']) == 0 and
-                (p['gisprompt'] == False and p['prompt'] != 'color')):
-#                (p['gisprompt'] == False or p['prompt'] == 'color')):
+                (p['gisprompt'] == False or p['prompt'] == 'color')):
+#                (p['gisprompt'] == False and p['prompt'] != 'color')):
 
                 txt2 = wx.StaticText(which_panel, -1, title + ':',
                     wx.Point(-1, -1), wx.Size(-1, -1))
