@@ -275,11 +275,11 @@ class mainFrame(wx.Frame):
         sections.sort()
 
         nbStyle=FN.FNB_NO_X_BUTTON|FN.FNB_NO_NAV_BUTTONS
-        self.notebook = FN.FlatNotebook(self.panel, id=wx.ID_ANY, style=nbStyle|wx.EXPAND)
+        self.notebook = FN.FlatNotebook(self, id=wx.ID_ANY, style=nbStyle|wx.EXPAND)
         self.tab = {}
         self.tabsizer = {}
         for section in ['Main']+sections:
-            self.tab[section] = wx.Panel(self.notebook, id = wx.ID_ANY, style = wx.EXPAND )
+            self.tab[section] = wx.ScrolledWindow(self.notebook, id = wx.ID_ANY )
             self.tabsizer[section] = wx.BoxSizer(wx.VERTICAL)
             self.notebook.AddPage( self.tab[section], text = section )
 
@@ -316,14 +316,14 @@ class mainFrame(wx.Frame):
                         hSizer.Add( chkbox,0,wx.ADJUST_MINSIZE,0 )
                         wx.EVT_CHECKBOX(self, idForWX, self.EvtCheckBoxMulti)
                         v_count += 1
-                    which_sizer.Add( hSizer, 0, wx.ADJUST_MINSIZE |wx.ALL, 5)
+                    which_sizer.Add( hSizer, 0, wx.ADJUST_MINSIZE |wx.EXPAND, 5)
                 else:
                     txt1 = wx.StaticText(which_panel, -1, title + ':', wx.Point(-1, -1), wx.Size(-1, -1))
                     which_sizer.Add(txt1, 0, wx.ADJUST_MINSIZE | wx.ALL, 5)
                     self.cb = wx.ComboBox(which_panel, -1, p['default'],
                                      wx.Point(-1, -1), wx.Size(STRING_ENTRY_WIDTH, -1),
                                      valuelist, wx.CB_DROPDOWN)
-                    which_sizer.Add(self.cb, 0, wx.ADJUST_MINSIZE | wx.ALL, 5)
+                    which_sizer.Add(self.cb, 0, wx.ADJUST_MINSIZE, 5)
                     self.paramdict[self.cb] = ID_PARAM_START + p_count
                     self.cb.Bind( wx.EVT_COMBOBOX, self.EvtComboBox)
 
@@ -338,7 +338,7 @@ class mainFrame(wx.Frame):
                 self.txt3 = wx.TextCtrl(which_panel, -1,
                     p['default'], wx.Point(-1, -1),
                     wx.Size(STRING_ENTRY_WIDTH, ENTRY_HEIGHT))
-                which_sizer.Add(self.txt3, 0, wx.ADJUST_MINSIZE | wx.ALL, 5)
+                which_sizer.Add(self.txt3, 0, wx.ADJUST_MINSIZE| wx.ALL, 5)
                 self.paramdict[self.txt3] = ID_PARAM_START + p_count
                 self.txt3.Bind(wx.EVT_TEXT, self.EvtText)
 
@@ -350,7 +350,7 @@ class mainFrame(wx.Frame):
                 if p['prompt'] != 'color':
                     self.selection = select.Select(which_panel, id=wx.ID_ANY, size=(250,-1),
                                                    type=p['element'])
-                    which_sizer.Add(self.selection, 0, wx.ADJUST_MINSIZE | wx.ALL, 5)
+                    which_sizer.Add(self.selection, 0, wx.ADJUST_MINSIZE, 5)
                     self.paramdict[self.selection] = ID_PARAM_START + p_count
                     self.selection.Bind(wx.EVT_TEXT, self.EvtText)
                 else:
@@ -367,23 +367,23 @@ class mainFrame(wx.Frame):
             title = escape_ampersand(f['description'])
             self.chk = wx.CheckBox(which_panel,-1, title,
                 wx.Point(-1, -1), wx.Size(-1, -1), wx.NO_BORDER)
-            which_sizer.Add(self.chk, 0, wx.ALL, 5)
+            which_sizer.Add(self.chk, 0, wx.EXPAND, 5)
             self.paramdict[self.chk] = ID_FLAG_START + f_count
             self.chk.Bind(wx.EVT_CHECKBOX, self.EvtCheckBox)
 
         btnsizer = wx.BoxSizer(wx.HORIZONTAL)
-        self.btn_cancel = wx.Button(self.panel, ID_CANCEL, "Cancel")
+        self.btn_cancel = wx.Button(self, ID_CANCEL, "Cancel")
         btnsizer.Add(self.btn_cancel, 0, wx.ALL| wx.ALIGN_CENTER, 10)
         if self.get_dcmd is not None: # A callback has been set up
-            self.btn_apply = wx.Button(self.panel, ID_RUN, "Apply")
+            self.btn_apply = wx.Button(self, ID_RUN, "Apply")
             btnsizer.Add(self.btn_apply, 0, wx.ALL| wx.ALIGN_CENTER, 10)
-            self.btn_ok = wx.Button(self.panel, ID_RUN, "OK")
+            self.btn_ok = wx.Button(self, ID_RUN, "OK")
             btnsizer.Add(self.btn_ok, 0, wx.ALL| wx.ALIGN_CENTER, 10)
             self.btn_ok.SetDefault()
             self.btn_apply.Bind(wx.EVT_BUTTON, self.OnApply)
             self.btn_ok.Bind(wx.EVT_BUTTON, self.OnOK)
         else: # We're standalone
-            self.btn_run = wx.Button(self.panel, ID_RUN, "Run")
+            self.btn_run = wx.Button(self, ID_RUN, "Run")
             btnsizer.Add(self.btn_run, 0, wx.ALL| wx.ALIGN_CENTER, 10)
             self.btn_run.SetDefault()
             self.btn_run.Bind(wx.EVT_BUTTON, self.OnRun)
@@ -395,13 +395,15 @@ class mainFrame(wx.Frame):
         self.Bind(wx.EVT_CLOSE, self.OnCloseWindow)
 
         for section in ['Main']+sections:
-            self.tab[section].SetAutoLayout(True)
             self.tabsizer[section].SetSizeHints( self.tab[section] )
-            self.tab[section].SetSizer( self.tabsizer[section] )
             self.tabsizer[section].Fit( self.tab[section] )
+            self.tab[section].SetAutoLayout(True)
+            self.tab[section].SetSizer( self.tabsizer[section] )
 
+        self.guisizer.SetSizeHints(self)
+        self.SetAutoLayout(True)
         self.SetSizer(self.guisizer)
-        self.guisizer.Fit(self.panel)
+        self.guisizer.Fit(self)
 #        self.guisizer.SetSizeHints( self )
 #        self.Layout()
 
