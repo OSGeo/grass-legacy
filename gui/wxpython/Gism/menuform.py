@@ -35,6 +35,7 @@ import sys
 import string
 import select
 import wx.lib.flatnotebook as FN
+import  wx.lib.colourselect as csel
 
 # Do the python 2.0 standard xml thing and map it on the old names
 import xml.sax
@@ -225,7 +226,7 @@ class processTask(HandlerBase):
         if name == 'default':
             self.param_default = normalize_whitespace(self.param_default)
             self.inDefaultContent = 0
-            
+
         if name == 'value':
             v = normalize_whitespace(self.value_tmp)
             self.param_values = self.param_values + [ normalize_whitespace(self.value_tmp) ]
@@ -329,7 +330,8 @@ class mainFrame(wx.Frame):
 
             if (p['type'] in ('string','integer','float') and
                 len(p['values']) == 0 and
-                (p['gisprompt'] == False or p['prompt'] == 'color')):
+                (p['gisprompt'] == False and p['prompt'] != 'color')):
+#                (p['gisprompt'] == False or p['prompt'] == 'color')):
 
                 txt2 = wx.StaticText(which_panel, -1, title + ':',
                     wx.Point(-1, -1), wx.Size(-1, -1))
@@ -353,8 +355,13 @@ class mainFrame(wx.Frame):
                     which_sizer.Add(self.selection, 0, wx.ADJUST_MINSIZE, 5)
                     self.paramdict[self.selection] = ID_PARAM_START + p_count
                     self.selection.Bind(wx.EVT_TEXT, self.EvtText)
-                else:
-                    pass # TODO: color selector
+                elif p['prompt'] == 'color':
+                    # TODO: color selector
+                    pass
+#                    btn_colour = csel.ColourSelect(which_panel, -1, "Select color", (200, 200, 200), size = (-1,-1))
+#                    which_sizer.Add(btn_colour, 0, wx.ADJUST_MINSIZE, 5)
+#                    self.paramdict[btn_colour] = ID_PARAM_START + p_count
+#                    self.Bind(csel.EVT_COLOURSELECT, self.onColorButton, btn_colour)
 
         for f_count in range(0, len(grass_task['flags'])):
             f = grass_task['flags'][f_count]
@@ -407,16 +414,28 @@ class mainFrame(wx.Frame):
 #        self.guisizer.SetSizeHints( self )
 #        self.Layout()
 
+    def onColorButton(self, event):
+        data = event.GetValue()
+        color = str(data[0])+':'+str(data[1])+':'+str(data[2])
+        print 'color = ',color
+        self.getValues()
+
+
     def getValues(self):
         for item in self.paramdict.items():
             param_num = item[1]
-            param_val = item[0].GetValue()
+
             if 'CheckBox' in str(item[0]):
                 tasktype = 'flags'
                 num = param_num-ID_FLAG_START
+                param_val = item[0].GetValue()
+            elif 'ColourSelect' in str(item[0]):
+                data = item[0].GetValue()
+                param_val = str(data[0])+':'+str(data[1])+':'+str(data[2])
             else:
                 tasktype = 'params'
                 num = param_num-ID_PARAM_START
+                param_val = item[0].GetValue()
             grass_task[tasktype][num]['value'] = param_val
 
     def EvtText(self, event):
@@ -591,7 +610,7 @@ class GUI:
 
 if __name__ == "__main__":
     # Just for testing purposes
-    
+
     # Create the application
     if len(sys.argv) != 2:
         print "Usage: %s <grass command>" % sys.argv[0]
