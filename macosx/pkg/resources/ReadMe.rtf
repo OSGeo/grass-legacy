@@ -12,12 +12,6 @@
 \
 NOTE: for now, this version will probably NOT run on a case-sensitive file system, such as the optional case-sensitive HFS+ or UFS.\
 \
-Drag GRASS.app to wherever you like (ie 
-\f2\fs24 /Applications
-\f1\fs28 ).  For now, make sure there are no spaces in the path to where you install it.  Make sure you have installed dependencies.  
-\f2\fs24 /Applications
-\f1\fs28  is a must if you want to use GRASS from within QGIS (without running GRASS).\
-\
 The X11 Tcl/Tk libraries are included.\
 \
 GRASS.app opens a Terminal window to start GRASS in the normal commandline way.  After starting the Terminal it quits, leaving GRASS running in the Terminal.  While a GRASS session is running you can run GRASS.app again to start another session.\
@@ -29,7 +23,7 @@ X11 is also started regardless of the Tcl/Tk you use.\
 \f0\b Setup\
 
 \f1\b0 \
-See GRASS {\field{\*\fldinst{HYPERLINK "http://grass.itc.it/gdp/"}}{\fldrslt documentation}} for details on setup and use.\
+See GRASS {\field{\*\fldinst{HYPERLINK "http://grass.gdf-hannover.de/"}}{\fldrslt documentation}} for details on setup and use.\
 \
 By default the startup uses the included X11 Tcl/Tk for the GUI.  If you have used GRASS before, 
 \f0\b it will pick up your preferences for GUI/Text
@@ -74,7 +68,9 @@ Where
 \f0\b Addon Modules\
 
 \f1\b0 \
-To install extra modules, see the included modbuild folder.\
+To install extra modules, see the modbuild folder in 
+\f2\fs24 /Library/GRASS/$VERSION
+\f1\fs28 .\
 \
 \
 
@@ -136,27 +132,6 @@ Then connect the GPS (with the serial-USB adaptor, if needed), and type that
 \f1\fs28  command again.  Note what was added, that should be the port to use (with 
 \f2\fs24 /dev/
 \f1\fs28  prefixed to it).\
-\
-\
-
-\f0\b Notes and Problems\
-
-\f1\b0 \
-\'a5 Motif is not enabled.  That means xganim is not available, but similar functionality is in NVIZ and r.out.mpeg.\
-\
-\'a5 I thought about OpenDWG membership, but the whole "Alliance" thing doesn't sit well with me.\
-\
-\
-
-\f0\b Hacks and Patches\
-
-\f1\b0 \
-One major thing I had to overcome for a Universal package is installation of support data files.  The stroke font files are constructed at build-time, which made them architecture-specific (PPC/Intel) due to endian issues.  Without an installer, I couldn't install for the architecture (like my old GRASS installer did).  I've patched the font loading routines to load only little-endian font files (since I'm building on a MacBook), regardless of the architecture GRASS is run on, so on a PPC Mac, it will do byte-swapping on load.  The font files are so tiny, this has no noticeable impact on speed.\
-\
-Another set of files with endian issues are the NAD grid files.  I've symlinked these to the PROJ framework files, and PROJ does the same byte-swapping to load little-endian grids.\
-\
-The app uses a custom grass startup shell, instead of the normal grass6 startup.  This is to setup some Mac-specific environment and set some defaults.\
-\
 \
 \
 - William Kyngesburye\
