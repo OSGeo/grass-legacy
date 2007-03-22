@@ -513,7 +513,7 @@ class GMConsole(wx.Panel):
         #text control for command output
         self.cmd_output = wx.TextCtrl(self, -1, "",
                                                   style=wx.TE_MULTILINE|
-                                                  wx.TE_READONLY|wx.HSCROLL)
+                                                  wx.TE_READONLY)
 
         global goutput
         goutput = self.cmd_output
