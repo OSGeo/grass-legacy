@@ -1,10 +1,11 @@
 #! /usr/bin/python
 """ Construct simple wx.Python GUI from a GRASS command interface description.
 
-# Copyright (C) 2000 by the GRASS Development Team
+# Copyright (C) 2000-2007 by the GRASS Development Team
 # Author: Jan-Oliver Wagner <jan@intevation.de>
 # improved by: Bernhard Reiter   <bernhard@intevation.de>
 # Improved by: Michael Barton, Arizona State University
+# Improved by: Daniel Calvelo <dca@users.sf.net>
 #
 # This program is free software under the GPL (>=v2)
 # Read the file COPYING coming with GRASS for details.
@@ -111,7 +112,6 @@ class processTask(HandlerBase):
         self.inParameter = 0
         self.inFlag = 0
         self.inGispromptContent = 0
-
 
     def startElement(self, name, attrs):
         global grass_task
@@ -220,7 +220,8 @@ class processTask(HandlerBase):
 
 
 class mainFrame(wx.Frame):
-    def __init__(self, parent, ID, w, h, get_dcmd, layer):
+    """This is the Frame containing the dialog for options input."""
+    def __init__(self, parent, ID, w, h, get_dcmd=None, layer=None):
         global grass_task
         wx.Frame.__init__(self, parent, ID, grass_task['name'],
             wx.DefaultPosition, style=wx.DEFAULT_FRAME_STYLE | wx.TAB_TRAVERSAL)
@@ -261,7 +262,7 @@ class mainFrame(wx.Frame):
                 title = "[multiple] " + title
             p['value'] = p['default']
             if (len(p['values']) > 0):
-                l_count = l_count + 1
+                l_count += 1
 
                 valuelist=map(str,p['values'])
                 if p['multiple'] == 'yes':
@@ -296,7 +297,7 @@ class mainFrame(wx.Frame):
                 txt2 = wx.StaticText(self.panel, -1, title + ':',
                     wx.Point(-1, -1), wx.Size(-1, -1))
                 self.guisizer.Add(txt2, 0, wx.ADJUST_MINSIZE | wx.ALL, 5)
-                l_count = l_count + 1
+                l_count += 1
 
                 self.txt3 = wx.TextCtrl(self.panel, -1,
                     p['default'], wx.Point(-1, -1),
@@ -310,14 +311,14 @@ class mainFrame(wx.Frame):
                 txt4 = wx.StaticText(self.panel, -1, title + ':',
                     wx.Point(-1, -1), wx.Size(-1, -1))
                 self.guisizer.Add(txt4, 0, wx.ADJUST_MINSIZE | wx.ALL, 5)
-                l_count = l_count + 1
+                l_count += 1
                 self.selection = select.Select(self.panel, id=wx.ID_ANY, size=(250,-1),
                                     type=grass_task['params'][p_count]['element'])
                 self.guisizer.Add(self.selection, 0, wx.ADJUST_MINSIZE | wx.ALL, 5)
                 self.paramdict[self.selection] = ID_PARAM_START + p_count
                 self.selection.Bind(wx.EVT_TEXT, self.EvtText)
 
-            l_count = l_count + 1
+            l_count += 1
 
         for f_count in range(0, len(grass_task['flags'])):
             title = escape_ampersand(grass_task['flags'][f_count]['description'])
@@ -327,20 +328,20 @@ class mainFrame(wx.Frame):
             self.paramdict[self.chk] = ID_FLAG_START + f_count
             self.chk.Bind(wx.EVT_CHECKBOX, self.EvtCheckBox)
 
-            l_count = l_count + 1
+            l_count += 1
 
         btnsizer = wx.BoxSizer(wx.HORIZONTAL)
         self.btn_cancel = wx.Button(self.panel, ID_CANCEL, "Cancel")
         btnsizer.Add(self.btn_cancel, 0, wx.ALL| wx.ALIGN_CENTER, 10)
-        if self.get_dcmd != None:
+        if self.get_dcmd is not None: # A callback has been set up
             self.btn_apply = wx.Button(self.panel, ID_RUN, "Apply")
             btnsizer.Add(self.btn_apply, 0, wx.ALL| wx.ALIGN_CENTER, 10)
             self.btn_ok = wx.Button(self.panel, ID_RUN, "OK")
             btnsizer.Add(self.btn_ok, 0, wx.ALL| wx.ALIGN_CENTER, 10)
             self.btn_ok.SetDefault()
             self.btn_apply.Bind(wx.EVT_BUTTON, self.onApply)
-            self.btn_ok.Bind(wx.EVT_BUTTON, self.onOK)
-        else:
+            self.btn_ok.Bind(wx.EVT_BUTTON, self.OnOK)
+        else: # We're standalone
             self.btn_run = wx.Button(self.panel, ID_RUN, "Run")
             btnsizer.Add(self.btn_run, 0, wx.ALL| wx.ALIGN_CENTER, 10)
             self.btn_run.SetDefault()
@@ -350,7 +351,7 @@ class mainFrame(wx.Frame):
         wx.EVT_MENU(self, ID_ABOUT_COMMAND, self.OnAboutCommand)
         wx.EVT_MENU(self, ID_EXIT,  self.OnCancel)
         self.btn_cancel.Bind(wx.EVT_BUTTON, self.OnCancel)
-        self.Bind(wx.EVT_CLOSE, self.onCloseWindow)
+        self.Bind(wx.EVT_CLOSE, self.OnCloseWindow)
 
         self.panel.SetSizer(self.guisizer)
         self.guisizer.Fit(self.panel)
@@ -377,6 +378,7 @@ class mainFrame(wx.Frame):
         self.getValues()
 
     def EvtCheckBoxMulti(self, event):
+        """Fill the values ,-separated string according to current status of the checkboxes."""
         theParamId = (event.GetId()-ID_MULTI_START ) / 20
         theCheckedId = (event.GetId()-ID_MULTI_START ) % 20
         # Unpack current value list
@@ -392,44 +394,41 @@ class mainFrame(wx.Frame):
         grass_task['params'][theParamId]['value'] = ','.join( currentValues.keys() )
 
     def createCmd(self):
+        """Produce a command line string for feeding into GRASS."""
         cmd = grass_task['name']
         errors = 0
         errStr = ""
 
         for p_count in range(0, len(grass_task['params'])):
-            if (grass_task['params'][p_count]['type'] != 'flag' and grass_task['params'][p_count]['value'] == '' and grass_task['params'][p_count]['required'] != 'no'):
-                errStr = errStr + "Parameter " + grass_task['params'][p_count]['name'] + "(" +grass_task['params'][p_count]['description']  + ") is missing\n"
-                errors = errors + 1
-
-            if (grass_task['params'][p_count]['type'] == 'flag'):
+            p = grass_task['params'][p_count]
+            if (p['type'] != 'flag' and p['value'] == '' and p['required'] != 'no'):
+                errStr += "Parameter " + p['name'] + "(" + p['description'] + ") is missing\n"
+                errors += 1
+            if (p['type'] == 'flag'):
                 if (grass_task['params'][p_count]['value'] == 'checked'):
-                    cmd = cmd + ' -' + grass_task['params'][p_count]['name']
-            if (grass_task['params'][p_count]['type'] != 'flag' and grass_task['params'][p_count]['value'] != ''):
-                cmd = cmd + ' ' + grass_task['params'][p_count]['name'] + '=' + grass_task['params'][p_count]['value']
+                    cmd += ' -' + grass_task['params'][p_count]['name']
+            if (p['type'] != 'flag' and p['value'] != ''):
+                cmd += ' ' + p['name'] + '=' + p['value']
         if errors:
             self.OnError(errStr)
             return None
 
         return cmd
 
-    def onOK(self, event):
+    def OnOK(self, event):
+        cmd = self.OnApply(event)
+        if cmd is not None and self.get_dcmd is not None:
+            self.OnCancel(event)
+
+    def OnApply(self, event):
         cmd = self.createCmd()
 
-        if cmd != None and self.get_dcmd != None:
+        if cmd is not None and self.get_dcmd is not None:
             # return d.* command to layer tree for rendering
             self.get_dcmd(cmd, self.layer)
             # echo d.* command to output console
             self.parent.writeDCommand(cmd)
-            self.Close(True)
-
-    def onApply(self, event):
-        cmd = self.createCmd()
-
-        if cmd != None and self.get_dcmd != None:
-            # return d.* command to layer tree for rendering
-            self.get_dcmd(cmd, self.layer)
-            # echo d.* command to output console
-            self.parent.writeDCommand(cmd)
+        return cmd
 
     def OnRun(self, event):
         cmd = self.createCmd()
@@ -462,7 +461,7 @@ class mainFrame(wx.Frame):
     def OnCancel(self, event):
         self.Close(True)
 
-    def onCloseWindow(self, event):
+    def OnCloseWindow(self, event):
         global grass_task
         grass_task = { 'name' : 'unknown',
             'description' : 'No description available.',
@@ -494,9 +493,9 @@ class GrassGUIApp(wx.App):
             'lines' : 0, 'params' : [], 'flags' : [] }
         self.w = HSPACE + STRING_ENTRY_WIDTH + HSPACE
         self.h = MENU_HEIGHT + VSPACE + grass_task['lines'] * ENTRY_HEIGHT + VSPACE + BUTTON_HEIGHT + VSPACE + STATUSBAR_HEIGHT
-        frame = mainFrame(None, -1, self.w, self.h)
-        frame.Show(True)
-        self.SetTopWindow(frame)
+        self.frame = mainFrame(None, -1, self.w, self.h)
+        self.frame.Show(True)
+        self.SetTopWindow(self.frame)
         return True
 
 class GUI:
@@ -525,7 +524,7 @@ class GUI:
             self.parent = parentframe
 
         if len(cmdlst) > 1:
-            print "usage: <grass command> --task-description | " + cmdlst[0]
+            print "usage: %s <grass command> " % cmdlst[0]
         else:
             # parse the interface decription
             cmd = cmd + r' --interface-description'
@@ -540,17 +539,15 @@ class GUI:
         mf.Show(True)
 
 if __name__ == "__main__":
+    # Just for testing purposes
+    
     # Create the application
-
-    # Parsing if run from command line: find out the command to run
-    if len(sys.argv) > 1:
-        print "usage: <grass command> --task-description | " + sys.argv[0]
-    else:
-        # parse the interface decription
-        handler = processTask()
-
-        xml.sax.parse(sys.stdin,handler)
-
+    if len(sys.argv) != 2:
+        print "Usage: %s <grass command>" % sys.argv[0]
+        sys.exit()
     app = GrassGUIApp(0)
+    # Parsing if run from command line: find out the command to run
+    gui = GUI(app.frame)
+    gui.parseCommand( sys.argv[1], os.getenv("GISBASE") + "/etc/wx/Gism" )
     app.MainLoop()
 
