@@ -266,7 +266,6 @@ class GMFrame(wx.Frame):
 
         #global gmpath
         cmd = self.cmdinput.GetValue()
-        print 'the command = ',cmd
 
         self.goutput.runCmd(cmd)
         #menuform.GUI().parseCommand(cmd, gmpath)
@@ -396,13 +395,6 @@ class GMFrame(wx.Frame):
             self.DestroyChildren()
         self.Destroy()
 
-    def Nomethod(self, event):
-        '''Stub for testing'''
-        pass
-        event.Skip()
-
-    def printmd(self):
-        print 'self.disp_idx is now', self.disp_idx
 
 class SetVal:
     """
