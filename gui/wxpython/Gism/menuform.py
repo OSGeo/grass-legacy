@@ -34,6 +34,7 @@ import wx
 import sys
 import string
 import select
+import wx.lib.flatnotebook as FN
 
 # Do the python 2.0 standard xml thing and map it on the old names
 import xml.sax
@@ -112,6 +113,7 @@ class processTask(HandlerBase):
         self.inParameter = 0
         self.inFlag = 0
         self.inGispromptContent = 0
+        self.inGuisection = 0
 
     def startElement(self, name, attrs):
         global grass_task
@@ -128,6 +130,7 @@ class processTask(HandlerBase):
             self.param_age = ''
             self.param_element = ''
             self.param_prompt = ''
+            self.param_guisection = ''
             # Look for the parameter name, type, requiredness
             self.param_name = attrs.get('name', None)
             self.param_type = attrs.get('type', None)
@@ -150,9 +153,11 @@ class processTask(HandlerBase):
         if name == 'description':
             self.inDescriptionContent = 1
             self.description = ''
+
         if name == 'default':
             self.inDefaultContent = 1
             self.param_default = ''
+
         if name == 'value':
             self.inValueContent = 1
             self.value_tmp = ''
@@ -162,6 +167,10 @@ class processTask(HandlerBase):
             self.param_age = attrs.get('age', None)
             self.param_element = attrs.get('element', None)
             self.param_prompt = attrs.get('prompt', None)
+
+        if name == 'guisection':
+            self.inGuisection = 1
+            self.param_guisection = ''
 
     # works with python 2.0, but is not SAX compliant
     def characters(self, ch):
@@ -174,6 +183,8 @@ class processTask(HandlerBase):
             self.param_default = self.param_default + ch
         if self.inValueContent:
             self.value_tmp = self.value_tmp + ch
+        if self.inGuisection:
+            self.param_guisection = self.param_guisection + ch
 
     def endElement(self, name):
         global grass_task
@@ -190,6 +201,7 @@ class processTask(HandlerBase):
                 'age' : self.param_age,
                 'element' :self.param_element,
                 'prompt' : self.param_prompt,
+                "guisection" : self.param_guisection,
                 "default" : self.param_default,
                 "values" : self.param_values,
                 "value" : '' })
@@ -213,11 +225,15 @@ class processTask(HandlerBase):
         if name == 'default':
             self.param_default = normalize_whitespace(self.param_default)
             self.inDefaultContent = 0
+            
         if name == 'value':
             v = normalize_whitespace(self.value_tmp)
             self.param_values = self.param_values + [ normalize_whitespace(self.value_tmp) ]
             self.inValueContent = 0
 
+        if name == 'guisection':
+            self.param_guisection = normalize_whitespace(self.param_guisection)
+            self.inGuisection = 0
 
 class mainFrame(wx.Frame):
     """This is the Frame containing the dialog for options input."""
@@ -246,15 +262,37 @@ class mainFrame(wx.Frame):
         menuBar.Append(menu, "&File");
 
         self.SetMenuBar(menuBar)
-
         self.guisizer = wx.BoxSizer(wx.VERTICAL)
 
         self.panel = wx.ScrolledWindow(self, -1, style=wx.TAB_TRAVERSAL)
         self.panel.SetScrollRate(10,10)
 
-        l_count = 0
+        is_section = {}
+        for task in grass_task['params']+grass_task['flags']:
+            if task.has_key('guisection') and task['guisection'] != '':
+                is_section[task['guisection']] = 1
+        sections = is_section.keys()
+        sections.sort()
+
+        nbStyle=FN.FNB_NO_X_BUTTON|FN.FNB_NO_NAV_BUTTONS
+        self.notebook = FN.FlatNotebook(self.panel, id=wx.ID_ANY, style=nbStyle|wx.EXPAND)
+        self.tab = {}
+        self.tabsizer = {}
+        for section in ['Main']+sections:
+            self.tab[section] = wx.Panel(self.notebook, id = wx.ID_ANY, style = wx.EXPAND )
+            self.tabsizer[section] = wx.BoxSizer(wx.VERTICAL)
+            self.notebook.AddPage( self.tab[section], text = section )
+
+        self.guisizer.Add( self.notebook, flag=wx.EXPAND )
+
         for p_count in range(0,len(grass_task['params'])):
             p = grass_task['params'][p_count]
+            if p.has_key('guisection') and p['guisection'] != '':
+                which_sizer = self.tabsizer[ p['guisection'] ]
+                which_panel = self.tab[ p['guisection'] ]
+            else:
+                which_sizer = self.tabsizer[ 'Main' ]
+                which_panel = self.tab[ 'Main' ]
             title = escape_ampersand(p['description'])
             if p['required'] == 'no':
                 title = "[optional] " + title
@@ -262,11 +300,10 @@ class mainFrame(wx.Frame):
                 title = "[multiple] " + title
             p['value'] = p['default']
             if (len(p['values']) > 0):
-                l_count += 1
 
                 valuelist=map(str,p['values'])
                 if p['multiple'] == 'yes':
-                    hSizer=wx.StaticBoxSizer( wx.StaticBox(self.panel,0,title+":"),
+                    hSizer=wx.StaticBoxSizer( wx.StaticBox(which_panel,0,title+":"),
                                               wx.HORIZONTAL )
                     v_count = 0
                     isDefault = {}
@@ -274,19 +311,19 @@ class mainFrame(wx.Frame):
                         isDefault[ defval ] = 'yes'
                     for val in valuelist:
                         idForWX =  ID_MULTI_START + p_count*20 + v_count
-                        chkbox = wx.CheckBox( self.panel, idForWX, val+" " )
+                        chkbox = wx.CheckBox( which_panel, idForWX, val+" " )
                         if isDefault.has_key(val): chkbox.SetValue( True )
                         hSizer.Add( chkbox,0,wx.ADJUST_MINSIZE,0 )
                         wx.EVT_CHECKBOX(self, idForWX, self.EvtCheckBoxMulti)
                         v_count += 1
-                    self.guisizer.Add( hSizer, 0, wx.ADJUST_MINSIZE |wx.ALL, 5)
+                    which_sizer.Add( hSizer, 0, wx.ADJUST_MINSIZE |wx.ALL, 5)
                 else:
-                    txt1 = wx.StaticText(self.panel, -1, title + ':', wx.Point(-1, -1), wx.Size(-1, -1))
-                    self.guisizer.Add(txt1, 0, wx.ADJUST_MINSIZE | wx.ALL, 5)
-                    self.cb = wx.ComboBox(self.panel, -1, p['default'],
+                    txt1 = wx.StaticText(which_panel, -1, title + ':', wx.Point(-1, -1), wx.Size(-1, -1))
+                    which_sizer.Add(txt1, 0, wx.ADJUST_MINSIZE | wx.ALL, 5)
+                    self.cb = wx.ComboBox(which_panel, -1, p['default'],
                                      wx.Point(-1, -1), wx.Size(STRING_ENTRY_WIDTH, -1),
                                      valuelist, wx.CB_DROPDOWN)
-                    self.guisizer.Add(self.cb, 0, wx.ADJUST_MINSIZE | wx.ALL, 5)
+                    which_sizer.Add(self.cb, 0, wx.ADJUST_MINSIZE | wx.ALL, 5)
                     self.paramdict[self.cb] = ID_PARAM_START + p_count
                     self.cb.Bind( wx.EVT_COMBOBOX, self.EvtComboBox)
 
@@ -294,41 +331,45 @@ class mainFrame(wx.Frame):
                 len(p['values']) == 0 and
                 (p['gisprompt'] == False or p['prompt'] == 'color')):
 
-                txt2 = wx.StaticText(self.panel, -1, title + ':',
+                txt2 = wx.StaticText(which_panel, -1, title + ':',
                     wx.Point(-1, -1), wx.Size(-1, -1))
-                self.guisizer.Add(txt2, 0, wx.ADJUST_MINSIZE | wx.ALL, 5)
-                l_count += 1
+                which_sizer.Add(txt2, 0, wx.ADJUST_MINSIZE | wx.ALL, 5)
 
-                self.txt3 = wx.TextCtrl(self.panel, -1,
+                self.txt3 = wx.TextCtrl(which_panel, -1,
                     p['default'], wx.Point(-1, -1),
                     wx.Size(STRING_ENTRY_WIDTH, ENTRY_HEIGHT))
-                self.guisizer.Add(self.txt3, 0, wx.ADJUST_MINSIZE | wx.ALL, 5)
+                which_sizer.Add(self.txt3, 0, wx.ADJUST_MINSIZE | wx.ALL, 5)
                 self.paramdict[self.txt3] = ID_PARAM_START + p_count
                 self.txt3.Bind(wx.EVT_TEXT, self.EvtText)
 
-            if (p['type'] == 'string' and p['gisprompt'] == True and
-                    p['prompt'] != 'color'):
-                txt4 = wx.StaticText(self.panel, -1, title + ':',
+            if p['type'] == 'string' and p['gisprompt'] == True:
+                txt4 = wx.StaticText(which_panel, -1, title + ':',
                     wx.Point(-1, -1), wx.Size(-1, -1))
-                self.guisizer.Add(txt4, 0, wx.ADJUST_MINSIZE | wx.ALL, 5)
-                l_count += 1
-                self.selection = select.Select(self.panel, id=wx.ID_ANY, size=(250,-1),
-                                    type=grass_task['params'][p_count]['element'])
-                self.guisizer.Add(self.selection, 0, wx.ADJUST_MINSIZE | wx.ALL, 5)
-                self.paramdict[self.selection] = ID_PARAM_START + p_count
-                self.selection.Bind(wx.EVT_TEXT, self.EvtText)
+                which_sizer.Add(txt4, 0, wx.ADJUST_MINSIZE | wx.ALL, 5)
 
-            l_count += 1
+                if p['prompt'] != 'color':
+                    self.selection = select.Select(which_panel, id=wx.ID_ANY, size=(250,-1),
+                                                   type=p['element'])
+                    which_sizer.Add(self.selection, 0, wx.ADJUST_MINSIZE | wx.ALL, 5)
+                    self.paramdict[self.selection] = ID_PARAM_START + p_count
+                    self.selection.Bind(wx.EVT_TEXT, self.EvtText)
+                else:
+                    pass # TODO: color selector
 
         for f_count in range(0, len(grass_task['flags'])):
-            title = escape_ampersand(grass_task['flags'][f_count]['description'])
-            self.chk = wx.CheckBox(self.panel,-1, title,
+            f = grass_task['flags'][f_count]
+            if f.has_key('guisection') and f['guisection'] != '':
+                which_sizer = self.tabsizer[ f['guisection'] ]
+                which_panel = self.tab[ f['guisection'] ]
+            else:
+                which_sizer = self.tabsizer[ 'Main' ]
+                which_panel = self.tab[ 'Main' ]
+            title = escape_ampersand(f['description'])
+            self.chk = wx.CheckBox(which_panel,-1, title,
                 wx.Point(-1, -1), wx.Size(-1, -1), wx.NO_BORDER)
-            self.guisizer.Add(self.chk, 0, wx.ALL, 5)
+            which_sizer.Add(self.chk, 0, wx.ALL, 5)
             self.paramdict[self.chk] = ID_FLAG_START + f_count
             self.chk.Bind(wx.EVT_CHECKBOX, self.EvtCheckBox)
-
-            l_count += 1
 
         btnsizer = wx.BoxSizer(wx.HORIZONTAL)
         self.btn_cancel = wx.Button(self.panel, ID_CANCEL, "Cancel")
@@ -339,7 +380,7 @@ class mainFrame(wx.Frame):
             self.btn_ok = wx.Button(self.panel, ID_RUN, "OK")
             btnsizer.Add(self.btn_ok, 0, wx.ALL| wx.ALIGN_CENTER, 10)
             self.btn_ok.SetDefault()
-            self.btn_apply.Bind(wx.EVT_BUTTON, self.onApply)
+            self.btn_apply.Bind(wx.EVT_BUTTON, self.OnApply)
             self.btn_ok.Bind(wx.EVT_BUTTON, self.OnOK)
         else: # We're standalone
             self.btn_run = wx.Button(self.panel, ID_RUN, "Run")
@@ -353,8 +394,16 @@ class mainFrame(wx.Frame):
         self.btn_cancel.Bind(wx.EVT_BUTTON, self.OnCancel)
         self.Bind(wx.EVT_CLOSE, self.OnCloseWindow)
 
-        self.panel.SetSizer(self.guisizer)
+        for section in ['Main']+sections:
+            self.tab[section].SetAutoLayout(True)
+            self.tabsizer[section].SetSizeHints( self.tab[section] )
+            self.tab[section].SetSizer( self.tabsizer[section] )
+            self.tabsizer[section].Fit( self.tab[section] )
+
+        self.SetSizer(self.guisizer)
         self.guisizer.Fit(self.panel)
+#        self.guisizer.SetSizeHints( self )
+#        self.Layout()
 
     def getValues(self):
         for item in self.paramdict.items():
