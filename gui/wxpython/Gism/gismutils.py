@@ -135,7 +135,7 @@ class LayerTree(CT.CustomTreeCtrl):
 
         # add layer to layers list in render.Map
         self.Map.addLayer(item=layer, command='', l_active=False,
-                                      l_hidden=False, l_opacity=1, l_render=True)
+                                      l_hidden=False, l_opacity=1, l_render=False)
 
         # add text and icons for each layer type
         if type == 'raster':
@@ -281,10 +281,10 @@ class LayerTree(CT.CustomTreeCtrl):
         # update layers list in render.Map
         if self.saveitem['type'] == 'command':
             self.Map.addLayer(item=new, command=self.saveitem['windval'], l_active=self.saveitem['check'],
-                                      l_hidden=False, l_opacity=1, l_render=True)
+                                      l_hidden=False, l_opacity=1, l_render=False)
         else:
             self.Map.addLayer(item=new, command=self.saveitem['data'], l_active=self.saveitem['check'],
-                                      l_hidden=False, l_opacity=self.saveitem['windval'], l_render=True)
+                                      l_hidden=False, l_opacity=self.saveitem['windval'], l_render=False)
 
         self.reorderLayers()
         self.drag = False
@@ -317,7 +317,7 @@ class LayerTree(CT.CustomTreeCtrl):
         any valid and checked layers to layer list
         """
         # first empty the list of old layers
-        self.Map.Clean()
+#        self.Map.Clean()
         # make a list of visible layers
         treelayers = []
         vislayer = self.GetFirstVisibleItem()
@@ -345,7 +345,7 @@ class LayerTree(CT.CustomTreeCtrl):
                 chk = self.IsItemChecked(layer)
                 hidden = not self.IsVisible(layer)
                 self.Map.changeLayer(item=layer, command=cmd, l_active=chk,
-                                  l_hidden=hidden, l_opacity=opac, l_render=True)
+                                  l_hidden=hidden, l_opacity=opac, l_render=False)
         else:
             if self.GetPyData(layer) != None:
                 cmd = self.GetPyData(layer)
@@ -353,7 +353,7 @@ class LayerTree(CT.CustomTreeCtrl):
                 chk = self.IsItemChecked(layer)
                 hidden = not self.IsVisible(layer)
                 self.Map.changeLayer(item=layer, command=cmd, l_active=chk,
-                                  l_hidden=hidden, l_opacity=opac, l_render=True)
+                                  l_hidden=hidden, l_opacity=opac, l_render=False)
 
 class TreeCtrlComboPopup(wx.combo.ComboPopup):
     """
