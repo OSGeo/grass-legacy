@@ -63,7 +63,7 @@
 	If multiple is "yes", then many values for the
 	parameter may be given in a comma-seperated list
 -->
-<!ELEMENT parameter     (description?, keydesc?, gisprompt?, default?, values?)>
+<!ELEMENT parameter     (description?, keydesc?, gisprompt?, default?, values?, guisection?)>
 <!ATTLIST parameter	name		CDATA #REQUIRED
 			type		(string | integer | float) "string"
 			required	(yes | no) "no"
@@ -111,7 +111,9 @@
 -->
 <!ELEMENT default    (#PCDATA)>
 
-
+<!--	the GUI section where the parameter would appear
+-->
+<!ELEMENT guisection	(#PCDATA)>
 
 <!--	contains a number of single values.
 -->
