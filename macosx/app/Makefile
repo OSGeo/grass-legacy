@@ -29,7 +29,7 @@ endif
 
 default: macosxapp
 
-macosxapp: PkgInfo app.icns English.lproj/MainMenu.nib build_html_user_index.sh $(ARCH_OBJS)
+macosxapp: PkgInfo app.icns English.lproj/MainMenu.nib build_html_user_index.sh build_gui_user_menu.sh $(ARCH_OBJS)
 	@test -d $(APPDIR)/MacOS || mkdir -p $(APPDIR)/MacOS
 	$(CC) $(LDFLAGS) -o $(APPDIR)/MacOS/GRASS $(OBJDIR)/main.o $(XTRA_LDFLAGS)
 	@test -d $(APPDIR)/Resources/Scripts || mkdir -p $(APPDIR)/Resources/Scripts
@@ -41,6 +41,7 @@ macosxapp: PkgInfo app.icns English.lproj/MainMenu.nib build_html_user_index.sh 
 	-cp -f $(OBJDIR)/grass.sh $(APPDIR)/Resources/
 	-cp -f $(OBJDIR)/GRASS.scpt $(APPDIR)/Resources/Scripts/
 	-cp -f build_html_user_index.sh $(APPDIR)/Resources/etc/
+	-cp -f build_gui_user_menu.sh $(APPDIR)/Resources/etc/
 	-cp -f grass_icon.png $(APPDIR)/Resources/docs/html/
 	@# TclTk embedding:
 ifdef OPENGL_X11

@@ -61,12 +61,6 @@ if [ ! "$DISPLAY" ] ; then
 fi
 
 # add some OS X style App Support paths, and create user one if missing.
-# global support folder should be created by admin user (GRASS startup
-# can't do it for lack of privs).  Use:
-# sudo mkdir -p "/Library/GRASS/$grass_ver/Modules/bin"
-# sudo mkdir -p "/Library/GRASS/$grass_ver/Modules/lib"
-# sudo mkdir -p "/Library/GRASS/$grass_ver/Modules/etc"
-# sudo mkdir -p "/Library/GRASS/$grass_ver/Modules/docs/html"
 mkdir -p "$HOME/Library/GRASS/$grass_ver/Modules/bin"
 if [ "$GRASS_ADDON_PATH" ] ; then
 	GRASS_ADDON_PATH="$GRASS_ADDON_PATH:$HOME/Library/GRASS/$grass_ver/Modules/bin:/Library/GRASS/$grass_ver/Modules/bin"
@@ -82,8 +76,9 @@ export DYLD_LIBRARY_PATH
 mkdir -p "$HOME/Library/GRASS/$grass_ver/Modules/etc"
 mkdir -p "$HOME/Library/GRASS/$grass_ver/Modules/docs/html"
 
-# rebuild addon html index
+# rebuild addon html index and gui menus
 "$GISBASE/etc/build_html_user_index.sh" "$GISBASE"
+"$GISBASE/etc/build_gui_user_menu.sh"
 
 # start X11 if not running - no need to check if running by using 'open'
 # some users may be annoyed by this, but X11 required for some stuff for now
