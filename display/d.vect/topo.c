@@ -169,6 +169,7 @@ int topo ( struct Map_info *Map, int type, int do_area, LATTR *lattr ) {
 	    
 	R_move_abs(X + Xoffset, Y + Yoffset) ;
 	R_text(text);
+	G_plot_icon(xl, yl, G_ICON_BOX, 0, 10);
     }
 
     Vect_destroy_line_struct (Points);
