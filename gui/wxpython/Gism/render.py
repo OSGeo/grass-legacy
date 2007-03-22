@@ -112,7 +112,7 @@ class MapLayer:
 		"""
 
 		try:
-			self.cmd = self.name
+			self.cmd = self.name + " --q"
 
 		except StandardError, e:
 			sys.stderr.write("Could not render command layer <%s>: %s\n" %\
