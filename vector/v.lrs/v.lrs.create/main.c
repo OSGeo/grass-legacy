@@ -217,12 +217,12 @@ int main(int argc, char **argv)
     
     /* Open input lines */
     mapset = G_find_vector2 (in_lines_opt->answer, NULL); 
-    if(mapset == NULL) G_fatal_error ("Could not find input %s\n", in_lines_opt->answer);
+    if(mapset == NULL) G_fatal_error ("Could not find input %s", in_lines_opt->answer);
     Vect_open_old (&In, in_lines_opt->answer, mapset); 
     
     /* Open input ipoints */
     mapset = G_find_vector2 (points_opt->answer, NULL); 
-    if(mapset == NULL) G_fatal_error ("Could not find input %s\n", points_opt->answer);
+    if(mapset == NULL) G_fatal_error ("Could not find input %s", points_opt->answer);
     
     Vect_open_old (&PMap, points_opt->answer, mapset); 
 
@@ -271,7 +271,7 @@ int main(int argc, char **argv)
     sprintf ( buf, "create table %s (rsid int, lcat int, lid int, start_map double precision, "
 	    "end_map double precision, start_mp double precision, start_off double precision, "
 	    "end_mp double precision, end_off double precision, end_type int)", table_opt->answer);
-    G_debug(1, "  SQL: %s", buf);
+    G_debug(2, "ref tab SQL: %s", buf);
     db_init_string ( &rsstmt );
     db_append_string ( &rsstmt, buf);
     if ( db_execute_immediate (rsdriver, &rsstmt) != DB_OK )
@@ -279,7 +279,7 @@ int main(int argc, char **argv)
 
     /* Select all lid from line table */
     sprintf ( buf, "select %s from %s", lidcol_opt->answer, Lfi->table );
-    G_debug(2, "SQL: %s", buf);
+    G_debug(2, "line tab lid SQL: %s", buf);
     db_append_string ( &lstmt, buf);
     if (db_open_select_cursor(ldriver, &lstmt, &lcursor, DB_SEQUENTIAL) != DB_OK)
         G_fatal_error ("Cannot select line id values from %s.%s.", Lfi->table, lidcol_opt->answer);
