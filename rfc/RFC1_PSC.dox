@@ -71,9 +71,9 @@ quality of the GRASS project.
 Control over the codebase also extends to ensuring that it complies with 
 all relevant legal requirements. This includes copyright and licensing 
 amongst other issues. The PSC is responsible for developing rules and 
-procedures to cover this. These are outlined in a separate document: "RFC 
-2: Legal aspects of code contributions". This document will be updated and 
-revised by the PSC as required.
+procedures to cover this. These are outlined in a separate document: 
+\link rfc2_psc "RFC 2: Legal aspects of code contributions".\endlink
+This document will be updated and revised by the PSC as required.
 
 \subsection projectman Project Management
 
@@ -94,14 +94,16 @@ delegation to interested helpers.
 
 \section operation Operation of the PSC
 
-A dedicated mailing list exists for the purpose of PSC discussions. When a 
+A dedicated <a href="http://grass.itc.it/mailman/listinfo/grass-psc">mailing list</a>
+exists for the purpose of PSC discussions. When a 
 decision is required of the PSC, it will be presented by any member to the 
 mailing list in the form of a proposal. A decision will then be achieved 
 by discussion of the proposal on the mailing list until a consensus is 
 reached. Voting on issues is also permissable and may be used as a means 
 to reach a consensus or, only in case of extreme cases of disagreement, to 
 force a decision. Any member may call a vote on any proposal. The voting 
-procedure is outlined in a separate document: "RFC 3: PSC Voting Procedures".
+procedure is outlined in a separate document: 
+\link rfc3_psc "RFC 3: PSC Voting Procedures".\endlink
 
 The Chair is the ultimate adjudicator in case of deadlock or irretrievable 
 break down of decision-making, or in case of disputes over voting.
