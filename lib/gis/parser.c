@@ -1304,7 +1304,11 @@ static void G_usage_xml (void)
 				}
 				fprintf(stdout, "\t\t</values>\n");
 			}
-
+			if( opt->guisection) {
+				fprintf(stdout, "\t\t<guisection>\n\t\t\t");
+				print_escaped_for_xml(stdout, opt->guisection);
+				fprintf(stdout, "\n\t\t</guisection>\n");
+			}
 			/* TODO:
 			 * add something like
 			 * 	 <range min="xxx" max="xxx"/>
@@ -1336,6 +1340,11 @@ static void G_usage_xml (void)
 				fprintf(stdout, "\t\t<description>\n\t\t\t");
 				print_escaped_for_xml(stdout, flag->description);
 				fprintf(stdout, "\n\t\t</description>\n");
+			}
+			if (flag->guisection) {
+				fprintf(stdout, " \t\t<guisection>\n\t\t\t");
+				print_escaped_for_xml(stdout, flag->guisection);
+				fprintf(stdout, "\n\t\t</guisection>\n");
 			}
 			flag = flag->next_flag ;
 			fprintf (stdout, "\t</flag>\n");
