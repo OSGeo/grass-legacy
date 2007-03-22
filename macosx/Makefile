@@ -16,9 +16,9 @@ endif
 default: subdirs
 
 install-macosx:
-	echo ${ARCH_BINDIR}/grass${GRASS_VERSION_MAJOR}${GRASS_VERSION_MINOR}
-	@ if [ ! -f ${ARCH_BINDIR}/grass${GRASS_VERSION_MAJOR}${GRASS_VERSION_MINOR} ] ; then \
-		echo "ERROR: GRASS has not been compiled. Try \"make\" in the top level source dir first."; \
+	echo ${ARCH_BINDIR}/${MACOSX_APP_NAME}
+	@ if [ ! -d ${ARCH_BINDIR}/${MACOSX_APP_NAME} ] ; then \
+		echo "ERROR: GRASS.app has not been compiled. Try \"make\" in the top level source dir first."; \
 		echo "  Installation aborted, exiting Make."; \
 		exit; \
 	fi; \
