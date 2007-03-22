@@ -10,6 +10,7 @@ SUBDIRS = \
 	g.gisenv \
 	g.mapset \
 	g.mapsets \
+	g.message \
 	g.parser \
 	g.proj \
 	g.pnmcomp \
