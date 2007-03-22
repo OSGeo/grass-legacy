@@ -1287,6 +1287,10 @@ static void G_usage_xml (void)
 			}
 
 			if(opt->options) {
+			/* TODO:
+			 * add something like
+			 * 	 <range min="xxx" max="xxx"/>
+			 * to <values> */
 			        i = 0;
 				fprintf(stdout, "\t\t<values>\n");
 			        while ( opt->opts[i] ) {
@@ -1310,9 +1314,6 @@ static void G_usage_xml (void)
 				fprintf(stdout, "\n\t\t</guisection>\n");
 			}
 			/* TODO:
-			 * add something like
-			 * 	 <range min="xxx" max="xxx"/>
-			 * to <values>
 			 * - key_desc?
 			 * - there surely are some more. which ones?
 			 */
