@@ -17,7 +17,7 @@ except:
    from compat import subprocess
 
 
-gmpath = os.getenv("GISBASE") + "/etc/wx/gism/"
+gmpath = os.getenv("GISBASE") + "/etc/wx/Gism/"
 sys.path.append(gmpath)
 
 icons = ""
