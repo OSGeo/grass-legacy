@@ -99,7 +99,7 @@ class LayerTree(CT.CustomTreeCtrl):
         self.Bind(wx.EVT_TREE_END_DRAG, self.onEndDrag)
 
     def AddLayer(self, idx, type):
-
+        self.first = True
         if type == 'command':
             # generic command layer
             self.ctrl = wx.TextCtrl(self, id=wx.ID_ANY, value='',
@@ -113,7 +113,6 @@ class LayerTree(CT.CustomTreeCtrl):
                                     style=wx.SP_ARROW_KEYS)
             self.ctrl.SetRange(1,100)
             self.ctrl.SetValue(100)
-            self.ctrl.Bind(wx.EVT_SPINCTRL, self.onOpacity)
             self.ctrl.Bind(wx.EVT_TEXT, self.onOpacity)
 
         if self.layer_selected and self.layer_selected != self.GetRootItem():
@@ -151,6 +150,7 @@ class LayerTree(CT.CustomTreeCtrl):
             menuform.GUI().parseCommand('d.vect', gmpath, completed=(self.getOptData,layer), parentframe=self)
         elif type == 'command':
             self.SetItemImage(layer, self.cmd_icon)
+        self.first = False
 
     def onActivateLayer(self, event):
         global gmpath
@@ -173,11 +173,11 @@ class LayerTree(CT.CustomTreeCtrl):
 
     def onLayerChecked(self, event):
         layer = event.GetItem()
-#        checked = self.IsItemChecked(layer)
+        checked = self.IsItemChecked(layer)
 
-        if self.drag == False:
-            # change parameters for item in layers list in render.Map
-            self.changeLayer(layer)
+        if self.drag == False and self.first == False:
+            # change active parameter for item in layers list in render.Map
+            self.changeChecked(layer, checked)
 
     def onCmdChanged(self, event):
         layer = self.layerctrl[event.GetEventObject()]
@@ -189,15 +189,13 @@ class LayerTree(CT.CustomTreeCtrl):
         event.Skip()
 
     def onOpacity(self, event):
-        if 'SpinCtrl' in str(event.GetEventObject()):
-            layer = self.layerctrl[event.GetEventObject()]
-        else:
-            layer = self.layerctrl[event.GetEventObject().GetParent()]
-#        opac = event.GetValue()
+        layer = self.layerctrl[event.GetEventObject().GetParent()]
+        opacity = float(event.GetString())/100
 
         if self.drag == False:
-            # change parameters for item in layers list in render.Map
-            self.changeLayer(layer)
+            # change opacity parameter for item in layers list in render.Map
+            self.changeOpacity(layer, opacity)
+        event.Skip()
 
     def onChangeSel(self, event):
         layer = event.GetItem()
@@ -329,6 +327,12 @@ class LayerTree(CT.CustomTreeCtrl):
                 vislayer = self.GetNextVisible(vislayer)
         treelayers.reverse()
         self.Map.reorderLayers(treelayers)
+
+    def changeOpacity(self, layer, opacity):
+        self.Map.changeOpacity(layer, opacity)
+
+    def changeChecked(self, layer, check):
+        self.Map.changeActive(layer, check)
 
     def changeLayer(self, layer):
         if self.layertype[layer] == 'command':

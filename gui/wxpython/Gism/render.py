@@ -926,6 +926,17 @@ class Map:
 
 		return self.layers[-1]
 
+	def changeOpacity(self, item, l_opacity):
+		# l_opacity must be <0;1>
+		if l_opacity < 0: l_opacity = 0
+		elif l_opacity > 1: l_opacity = 1
+		layer = self.lookup[item]
+		layer.opacity = l_opacity
+
+	def changeActive(self, item, activ):
+		layer = self.lookup[item]
+		layer.active = activ
+
 	def RemoveLayer(self, name=None, mapset=None, id=None):
 		"""
 		Removes layer from list of layers, defined by name@mapset or id
