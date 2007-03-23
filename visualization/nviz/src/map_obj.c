@@ -830,7 +830,8 @@ int get_drawmode(int type, int id, Nv_data * data, Tcl_Interp * interp)
     }
 
     /* Parse mode returned for shade style and surface style */
-    if (mode & DM_GOURAUD)
+    G_debug(3,"drawmode: %d",mode);
+    if (mode & DM_GOURAUD || mode == 0x904) /* DM_GRID_SURF|DM_GOURAUD|DM_POLY*/
     strcpy(shade, "gouraud");
     else if (mode & DM_FLAT)
     strcpy(shade, "flat");
