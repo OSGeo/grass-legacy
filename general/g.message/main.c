@@ -6,7 +6,7 @@
  * PURPOSE:      Provides a means of reporting the contents of GRASS
  *               projection information files and creating
  *               new projection information files.
- * COPYRIGHT:    (C) 2003-2007 by the GRASS Development Team
+ * COPYRIGHT:    (C) 2007 by the GRASS Development Team
  *
  *               This program is free software under the GNU General Public
  *               License (>=v2). Read the file COPYING that comes with GRASS
@@ -35,19 +35,19 @@ int main(int argc, char *argv[])
     warning->key = 'w';
     warning->guisection = "Input";
     warning->description =
-      _("Print GRASS warning");
+      _("Print message as GRASS warning");
 
     fatal = G_define_flag();
-    fatal->key = 'f';
+    fatal->key = 'e';
     fatal->guisection = "Input";
     fatal->description =
-      _("Print GRASS fatal error");
+      _("Print message as GRASS fatal error");
 
     debug = G_define_flag();
     debug->key = 'd';
     debug->guisection = "Input";
     debug->description =
-      _("Print GRASS debug message (level 1)");
+      _("Print message as GRASS debug message (level 1)");
 
     message = G_define_option();
     message->key = "message";
