@@ -80,7 +80,7 @@ please take care of following rules:
 
 	# check if we have awk
 	if [ ! -x "`which awk`" ] ; then
-	    echo "ERROR: awk required, please install awk or gawk first" 1>&2
+	    g.message -e "awk required, please install awk or gawk first" 
 	    exit 1
 	fi
 </?>
@@ -93,13 +93,16 @@ please take care of following rules:
 	    exit 1
 	fi
 
+    This is the only case, where g.message module (see below) can not be used.
+    In all other cases, you should prefer it's usage over the 'echo' command.
+
 7.  Create and use secure temporary files and directories. Use the g.tempfile
     module to do this. e.g.
 
 	# setup temporary file
 	TMP="`g.tempfile pid=$$`"
 	if [ $? -ne 0 ] || [ -z "$TMP" ] ; then
-	    echo "ERROR: unable to create temporary files" 1>&2
+	    g.message -e "unable to create temporary files"
 	    exit 1
 	fi
 
@@ -136,12 +139,20 @@ please take care of following rules:
 	# test for input raster map
 	g.findfile element=cell file="$INPUT" > /dev/null
 	if [ $? -eq 0 ] ; then
-	  echo "Input map not found" 1>&2
+	  g.message -e "Input map not found"
 	  exit 1
 	fi
 
-11. Send solely informational output to stderr, not stdout.
-	echo "Done." 1>&2
+11. For any informational output, use the g.message modul. This module should
+    be also used for error messages and warnings. You can also use it for
+    debugging purposes. 
+
+	g.message "Done."
+        g.message -w "No input values found, using default values"
+        g.message -e "No map found, exiting."
+        g.message -d "Our calculated value is: $value"
+
+    Try to omit any usage of the 'echo' command for informational output.
 
 12. For consistency, use README rather than README.txt for any README files.
 
