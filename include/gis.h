@@ -556,8 +556,8 @@ struct Option                	    /* Structure that stores option info */
     char *key_desc;                 /* one word describing the key      */
     char *label;                    /* Optional short label, used in GUI as item label */
     char *description;              /* String describing option         */
-    char *descriptions;             /* Pairs of ';' separated pairs of option and description for multi = YES */
-    				    /* For example: 
+    char *descriptions;             /* ';' separated pairs of option and option descriptions */
+				    /* For example: (with ->options = "break,rmdupl")
 				     * "break;break lines on intersections;"
 				     * "rmdupl;remove duplicates"
 				     */
