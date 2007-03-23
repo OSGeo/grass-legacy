@@ -33,7 +33,7 @@ class EpsgCode(wx.Frame):
 
         # sizers
         self.vsizer= wx.BoxSizer(wx.VERTICAL)
-        self.sizer = wx.GridSizer(5,3,0,0)
+        self.sizer = wx.GridSizer(5,3,5,5)
 
         # labels
         self.lname= wx.StaticText(self, -1, "Name of new Location: ",
@@ -75,8 +75,7 @@ class EpsgCode(wx.Frame):
         self.epsgs.SetColumnWidth(2, wx.LIST_AUTOSIZE_USEHEADER)
 
 
-        # laout
-        label_style = wx.ADJUST_MINSIZE | wx.ALIGN_CENTER_HORIZONTAL
+        # layout
         self.sizer.Add(self.lname, 0, wx.ALIGN_RIGHT, 1)
         self.sizer.Add(self.tname, 0, wx.ALIGN_LEFT, 1)
         self.sizer.Add(self.epanel1, 0, wx.ALIGN_LEFT, 1)
@@ -249,7 +248,7 @@ class GeoreferencedFile(wx.Frame):
 
         self.parent = parent
 
-        self.sizer = wx.GridSizer(3,3,0,0)
+        self.sizer = wx.FlexGridSizer(3,3,5,5)
 
         self.lname= wx.StaticText(self, -1, "Name of new Location: ",
                 style=wx.ALIGN_RIGHT)
@@ -260,25 +259,37 @@ class GeoreferencedFile(wx.Frame):
         self.tname = wx.TextCtrl(self,-1, "newLocation", size=(150,20))
         self.tfile = wx.TextCtrl(self,-1, "", size=(150,20))
 
-        self.bbrowse = wx.Button(self, -1, "Browse ...")
-        self.bcancel = wx.Button(self, -1, "Cancel")
-        self.bcreate = wx.Button(self, -1, "Create")
+        self.bbrowse = wx.Button(self, -1, "Browse ...", size=(100,-1))
+        self.bcancel = wx.Button(self, -1, "Cancel", size=(100,-1))
+        self.bcreate = wx.Button(self, -1, "Create", size=(100,-1))
 
-        self.epanel = wx.Panel(self,-1)
+        self.gpanel1 = wx.Panel(self,-1)
+        self.gpanel2 = wx.Panel(self,-1)
 
-        label_style = wx.ADJUST_MINSIZE | wx.ALIGN_CENTER_HORIZONTAL
-        self.sizer.Add(self.lname, 0, wx.ALIGN_RIGHT, 1)
-        self.sizer.Add(self.tname, 0, wx.ALIGN_LEFT, 1)
-        self.sizer.Add(self.epanel, 0, wx.ALIGN_LEFT, 1)
+        self.sizer.Add(self.lname, 0, wx.ALIGN_RIGHT |
+                       wx.ALIGN_CENTRE_VERTICAL |
+                       wx.TOP|wx.LEFT , 10)
+        self.sizer.Add(self.tname, 0, wx.ALIGN_LEFT |
+                       wx.ALIGN_CENTRE_VERTICAL |
+                       wx.TOP , 10)
+        self.sizer.Add(self.gpanel1, 0, wx.ALIGN_LEFT |
+                       wx.ALIGN_CENTRE, 5)
 
-        self.sizer.Add(self.lfile, 0 , wx.ALIGN_RIGHT, 1)
-        self.sizer.Add(self.tfile, 0 , wx.ALIGN_LEFT, 1)
-        self.sizer.Add(self.bbrowse, 0 , wx.ALIGN_CENTER_HORIZONTAL, 1)
+        self.sizer.Add(self.lfile, 0 , wx.ALIGN_RIGHT |
+                       wx.ALIGN_CENTRE_VERTICAL |
+                       wx.TOP , 5)
+        self.sizer.Add(self.tfile, 0 , wx.ALIGN_LEFT |
+                       wx.ALIGN_CENTRE_VERTICAL |
+                       wx.TOP , 5)
+        self.sizer.Add(self.bbrowse, 0 , wx.ALIGN_CENTER, 10)
 
-        self.sizer.Add(self.bcreate, 0 , wx.ALIGN_CENTER_HORIZONTAL, 1)
-        self.sizer.Add(self.epanel, 0 , wx.ALIGN_CENTER_HORIZONTAL, 1)
+        self.sizer.Add(self.bcreate, 0 , wx.ALIGN_CENTER |
+                       wx.ALL, 10)
+        self.sizer.Add(self.gpanel2, 0 , wx.ALIGN_CENTER |
+                       wx.ALL, 10)
 
-        self.sizer.Add(self.bcancel, 0 , wx.ALIGN_CENTER_HORIZONTAL, 1)
+        self.sizer.Add(self.bcancel, 0 , wx.ALIGN_CENTER |
+                       wx.ALL, 10)
 
         self.SetAutoLayout(True)
         self.SetSizer(self.sizer)
