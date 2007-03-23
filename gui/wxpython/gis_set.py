@@ -33,40 +33,47 @@ class EpsgCode(wx.Frame):
 
         # sizers
         self.vsizer= wx.BoxSizer(wx.VERTICAL)
-        self.sizer = wx.GridSizer(5,3,5,5)
+        self.sizer = wx.FlexGridSizer(5,4,5,5)
 
         # labels
         self.lname= wx.StaticText(self, -1, "Name of new Location: ",
                 style=wx.ALIGN_RIGHT)
         self.lfile= wx.StaticText(self, -1, "Path to the EPSG-codes file: ",
                 style=wx.ALIGN_RIGHT)
+
+
         self.lcode= wx.StaticText(self, -1, "EPSG code: ",
                 style=wx.ALIGN_RIGHT)
         self.lsearch= wx.StaticText(self, -1, "Search in code description: ",
                 style=wx.ALIGN_RIGHT)
 
         # text input
-        self.tname = wx.TextCtrl(self,-1, "newLocation", size=(150,20))
-        self.tfile = wx.TextCtrl(self,-1, "/usr/share/proj/epsg", size=(150,20))
-        self.tcode = wx.TextCtrl(self,-1, "", size=(150,20))
+        self.tname = wx.TextCtrl(self,-1, "newLocation", size=(200,20))
+        epsgdir = os.path.join(os.environ["GRASS_PROJSHARE"], 'epsg')
+        self.tfile = wx.TextCtrl(self,-1, epsgdir, size=(200,20))
+
+        self.tcode = wx.TextCtrl(self,-1, "", size=(200,20))
 
         # buttons
-        self.bbrowse = wx.Button(self, -1, "Browse ...")
+        self.bbrowse = wx.Button(self, -1, "Browse ...", size=(100,-1))
         self.bbcodes = wx.Button(self, -1, "Browse Codes")
-        self.bcancel = wx.Button(self, -1, "Cancel")
-        self.bcreate = wx.Button(self, -1, "Create")
+        self.bcancel = wx.Button(self, -1, "Cancel", size=(100,-1))
+        self.bcreate = wx.Button(self, -1, "Create", size=(100,-1))
 
         # empty panels
         self.epanel1 = wx.Panel(self,-1)
         self.epanel2 = wx.Panel(self,-1)
+        self.epanel3 = wx.Panel(self,-1)
+        self.epanel4 = wx.Panel(self,-1)
 
         # search box
         self.searchb = wx.SearchCtrl(self, size=(200,-1), style=wx.TE_PROCESS_ENTER)
 
         # table
         self.tablewidth=600
-        self.epsgs = wx.ListCtrl(self, -1, style=wx.LC_REPORT,
-                size=(700,100))
+        self.epsgs = wx.ListCtrl(self, -1,
+                     style=wx.LC_REPORT|wx.LC_HRULES,
+                     size=(700,100))
         self.epsgs.InsertColumn(0, 'EPSG')
         self.epsgs.InsertColumn(1, '                        Description                     ')
         self.epsgs.InsertColumn(2, '                                            Parameters                                            ')
@@ -76,28 +83,52 @@ class EpsgCode(wx.Frame):
 
 
         # layout
-        self.sizer.Add(self.lname, 0, wx.ALIGN_RIGHT, 1)
-        self.sizer.Add(self.tname, 0, wx.ALIGN_LEFT, 1)
+        self.sizer.Add(self.lname, 0, wx.ALIGN_RIGHT |
+                       wx.ALIGN_CENTER_VERTICAL |
+                       wx.TOP, 10)
+        self.sizer.Add(self.tname, 0, wx.ALIGN_LEFT |
+                       wx.ALIGN_CENTER_VERTICAL |
+                       wx.TOP, 10)
         self.sizer.Add(self.epanel1, 0, wx.ALIGN_LEFT, 1)
-
-        self.sizer.Add(self.lfile, 0 , wx.ALIGN_RIGHT, 1)
-        self.sizer.Add(self.tfile, 0 , wx.ALIGN_LEFT, 1)
-        self.sizer.Add(self.bbrowse, 0 , wx.ALIGN_CENTER_HORIZONTAL, 1)
-
-        self.sizer.Add(self.lcode, 0, wx.ALIGN_RIGHT,1)
-        self.sizer.Add(self.tcode, 0, wx.ALIGN_LEFT,1)
         self.sizer.Add(self.epanel2, 0, wx.ALIGN_LEFT, 1)
 
-        self.sizer.Add(self.lsearch, 0, wx.ALIGN_RIGHT,1)
-        self.sizer.Add(self.searchb, 0, wx.ALIGN_LEFT,1)
-        self.sizer.Add(self.epanel1, 0, wx.ALIGN_LEFT, 1)
+        self.sizer.Add(self.lfile, 0 , wx.ALIGN_RIGHT |
+                       wx.ALIGN_CENTER_VERTICAL |
+                       wx.TOP, 5)
+        self.sizer.Add(self.tfile, 0 , wx.ALIGN_LEFT |
+                       wx.ALIGN_CENTER_VERTICAL |
+                       wx.TOP, 5)
+        self.sizer.Add(self.bbrowse, 0 , wx.ALIGN_LEFT  |
+                       wx.ALIGN_CENTER_VERTICAL |
+                       wx.TOP|wx.LEFT, 5)
+        self.sizer.Add(self.epanel3, 0, wx.ALIGN_LEFT, 1)
 
-        self.sizer.Add(self.bbcodes, 0 , wx.ALIGN_CENTER_HORIZONTAL, 1)
-        self.sizer.Add(self.bcreate, 0 , wx.ALIGN_CENTER_HORIZONTAL, 1)
-        self.sizer.Add(self.bcancel, 0 , wx.ALIGN_CENTER_HORIZONTAL, 1)
+        self.sizer.Add(self.lcode, 0, wx.ALIGN_RIGHT |
+                       wx.ALIGN_CENTER_VERTICAL |
+                       wx.TOP, 5)
+        self.sizer.Add(self.tcode, 0, wx.ALIGN_LEFT |
+                       wx.ALIGN_CENTER_VERTICAL |
+                       wx.TOP, 5)
+        self.sizer.Add(self.bcreate, 0 , wx.ALIGN_LEFT |
+                       wx.ALIGN_CENTER_VERTICAL |
+                       wx.TOP|wx.LEFT, 5)
+        self.sizer.Add(self.bcancel, 0 , wx.ALIGN_RIGHT |
+                       wx.ALIGN_CENTER_VERTICAL |
+                       wx.TOP|wx.RIGHT, 5)
+
+        self.sizer.Add(self.lsearch, 0, wx.ALIGN_RIGHT |
+                       wx.ALIGN_CENTER_VERTICAL |
+                       wx.TOP|wx.BOTTOM, 5)
+        self.sizer.Add(self.searchb, 0, wx.ALIGN_LEFT |
+                       wx.ALIGN_CENTER_VERTICAL |
+                       wx.TOP|wx.BOTTOM, 5)
+        self.sizer.Add(self.bbcodes, 0 , wx.ALIGN_LEFT |
+                       wx.ALIGN_CENTER_VERTICAL |
+                       wx.TOP|wx.LEFT|wx.BOTTOM, 5)
+        self.sizer.Add(self.epanel4, 0, wx.ALIGN_LEFT, 1)
 
         self.vsizer.Add(self.sizer,0, wx.ADJUST_MINSIZE, 1)
-        self.vsizer.Add(self.epsgs, wx.EXPAND,  1)
+        self.vsizer.Add(self.epsgs, wx.ALIGN_LEFT|wx.EXPAND,  2)
 
         self.SetAutoLayout(True)
         self.SetSizer(self.vsizer)
@@ -130,7 +161,7 @@ class EpsgCode(wx.Frame):
 
     def OnBrowse(self, event):
 
-        dlg = wx.FileDialog(self, "Choose a georeferenced file:",
+        dlg = wx.FileDialog(self, "Locate EPSG codes file:",
         "/", "", "*.*", wx.OPEN)
         if dlg.ShowModal() == wx.ID_OK:
                     path = dlg.GetPath()
@@ -158,7 +189,7 @@ class EpsgCode(wx.Frame):
             for line in f.readlines():
                 line = line.strip()
                 if line.find("#") == 0:
-                    descr= line[1:].strip()
+                    descr = line[1:].strip()
                 elif line.find("<") == 0:
                     code = line.split(" ")[0]
                     for par in line.split(" ")[1:]:
