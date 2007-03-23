@@ -33,7 +33,6 @@ SUBDIRS = \
 	d.profile \
 	d.rast \
 	d.rast.arrow \
-	d.rast.edit \
 	d.rast.num \
 	d.rgb \
 	d.rhumbline \
