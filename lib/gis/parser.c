@@ -522,7 +522,7 @@ G_define_standard_option (int opt)
 	    Opt->answer       = "1";
 	    Opt->label        = _("Layer number");
 	    Opt->description  = _("A single vector map can be connected to multiple database "
-				  "tables.\nThis number determines which table to use.");
+				  "tables. This number determines which table to use.");
 	    break;
 	case G_OPT_V_CAT:
 	    Opt->key          = "cat";
@@ -962,9 +962,12 @@ int G_usage (void)
 	if (!pgm_name)
 	    pgm_name = "??";
 
-	if (module_info.description) {
+	if (module_info.label || module_info.description) {
 		fprintf (stderr, _("\nDescription:\n"));
-		fprintf (stderr, " %s\n", module_info.description);
+		if(module_info.label)
+		    fprintf (stderr, " %s\n", module_info.label);
+		if(module_info.description)
+		    fprintf (stderr, " %s\n", module_info.description);
 	}
 	if (module_info.keywords) {
 		fprintf (stderr, _("\nKeywords:\n"));
@@ -1055,7 +1058,7 @@ int G_usage (void)
 		        if ( flag->label ) {
 			    fprintf (stderr, "%s\n", flag->label );
 			    if ( flag->description )
-			        fprintf (stderr, "      %s\n", flag->description);
+			        fprintf (stderr, "        %s\n", flag->description);
 
 			} else if ( flag->description ) {
 			    fprintf (stderr, "%s\n", flag->description);
@@ -1083,9 +1086,10 @@ int G_usage (void)
 
 		        if ( opt->label ) {
 			    fprintf (stderr, "%s\n", opt->label );
-			    if ( opt->description )
-			        fprintf (stderr, "           %*s\n", maxlen, opt->description);
-
+			    if ( opt->description ) {
+			        fprintf(stderr, "  %*s    %s\n",
+					maxlen, " ", opt->description);
+			    }
 			} else if ( opt->description ) {
 			    fprintf (stderr, "%s\n", opt->description);
 			}
