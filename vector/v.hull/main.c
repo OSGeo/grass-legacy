@@ -24,15 +24,12 @@
 #include <assert.h>
 #include <grass/gis.h>
 #include <grass/Vect.h>
-#include <grass/site.h>
 #include <grass/glocale.h>
-
 
 struct Point {
    double x;
    double y;
 };
-
 
 int rightTurn(struct Point *P, int i, int j, int k) {
     double a, b, c, d;
@@ -42,7 +39,6 @@ int rightTurn(struct Point *P, int i, int j, int k) {
     d = P[k].y - P[j].y;
     return a*d - b*c < 0;	
 }
-
 
 int cmpPoints(const void* v1, const void* v2) {
     struct Point *p1, *p2;
@@ -55,7 +51,6 @@ int cmpPoints(const void* v1, const void* v2) {
     else
         return 0;
 }
-
 
 int convexHull(struct Point* P, const int numPoints, int **hull) {
     int pointIdx, upPoints, loPoints;
@@ -124,25 +119,42 @@ int convexHull(struct Point* P, const int numPoints, int **hull) {
 
 
 #define ALLOC_CHUNK 256
-int loadSiteCoordinates(FILE* fdsite, struct Point **points , int all, struct Cell_head *window) {
+int loadSiteCoordinates(struct Map_info *Map, struct Point **points, int all,
+			struct Cell_head *window)
+{
     int pointIdx = 0;
-    Site *site;
-    int n, s, d;
-    RASTER_MAP_TYPE c;
+    struct line_pnts* sites;
+    struct line_cats* cats;
+    BOUND_BOX box;
+    int cat, type;
 
-    if(G_site_describe(fdsite, &n, &c, &s, &d) != 0) return -1;
-    site = G_site_new_struct (c, n, s, d);
+    sites = Vect_new_line_struct();
+    cats = Vect_new_cats_struct ();
 
     *points = NULL;
-    while( G_site_get(fdsite, site) == 0 )
-    {
-        if(all || G_site_in_region(site, window) )
-        {
-            if ((pointIdx % ALLOC_CHUNK) == 0)
-               *points = (struct Point *) G_realloc(*points, (pointIdx + ALLOC_CHUNK) * sizeof(struct Point));
 
-            (*points)[pointIdx].x = site->east;
-            (*points)[pointIdx].y = site->north;
+    /* copy window to box */
+    Vect_region_box (window, &box);
+
+    while ((type = Vect_read_next_line (Map, sites, cats)) > -1) {
+	
+	if (type != GV_POINT)
+	    continue;
+
+	Vect_cat_get (cats, 1, &cat);
+	
+	G_debug (4, "Point: %f|%f|%f|#%d", sites->x[0], sites->y[0], sites->z[0], cat);
+	
+	if (all || 
+	    Vect_point_in_box(sites->x[0], sites->y[0], sites->z[0], &box)) {
+	    
+	    G_debug (4, "Point in the box");
+	    
+	    if ((pointIdx % ALLOC_CHUNK) == 0)
+		*points = (struct Point *) G_realloc(*points, (pointIdx + ALLOC_CHUNK) * sizeof(struct Point));
+	    
+            (*points)[pointIdx].x = sites->x[0];
+            (*points)[pointIdx].y = sites->y[0];
             pointIdx++;
         }
     }
@@ -165,7 +177,7 @@ int outputHull(struct Map_info *Map, struct Point* P, int *hull,
     double *tmpx, *tmpy;
     int i, pointIdx;
     double xc, yc;
-
+    
     tmpx = (double *) G_malloc((numPoints + 1) * sizeof(double));
     tmpy = (double *) G_malloc((numPoints + 1) * sizeof(double));
 
@@ -198,11 +210,8 @@ int outputHull(struct Map_info *Map, struct Point* P, int *hull,
     Vect_write_line (Map, GV_CENTROID, Points, Cats);
     Vect_destroy_line_struct (Points);
 
-
     return 0;
 }
-
-
 
 int main(int argc, char **argv) {
     struct GModule *module;
@@ -213,7 +222,6 @@ int main(int argc, char **argv) {
     char *mapset;
     char *sitefile;
 
-    FILE* fdsite;
     struct Map_info Map;
     struct Point *points;  /* point loaded from site file */
     int *hull;   /* index of points located on the convex hull */
@@ -223,53 +231,46 @@ int main(int argc, char **argv) {
 
     module = G_define_module();
     module->keywords = _("vector, geometry");
-    module->description = "Uses a GRASS vector points map to produce a convex hull vector map";
+    module->description = _("Uses a GRASS vector points map to produce a convex hull vector map.");
 
-    input = G_define_option ();
-    input->key = "input";
-    input->type = TYPE_STRING;
-    input->required = YES;
-    input->description = "name of a vector points map to be input";
-    input->gisprompt = "old,vector,vector,input";
+    input = G_define_standard_option (G_OPT_V_INPUT);
+    input->description = _("Name of input vector points map");
 
-    output = G_define_option ();
-    output->key = "output";
-    output->type = TYPE_STRING;
-    output->required = YES;
-    output->description = "name of a vector area map to be output";
-    output->gisprompt = "new,dig,binary file,output";
+    output = G_define_standard_option (G_OPT_V_OUTPUT);
+    output->description = _("Name of output vector area map");
 
     all = G_define_flag ();
     all->key = 'a';
-    all->description = "Use all vector points (do not limit to current region)";
+    all->description = _("Use all vector points (do not limit to current region)");
 
-    if (G_parser (argc, argv)) exit (1);
+    if (G_parser (argc, argv))
+	exit (EXIT_FAILURE);
 
-    Vect_check_input_output_name ( input->answer, output->answer, GV_FATAL_EXIT );
-
-    /* look for mapset containing site file */
     sitefile = input->answer;
-    mapset = G_find_sites (sitefile, "");
+
+    mapset = G_find_vector2 (sitefile, "");
     if (mapset == NULL)
-        G_fatal_error ("Vector points map [%s] not found", sitefile);
+        G_fatal_error (_("Vector map <%s> not found"), sitefile);
+
+    Vect_check_input_output_name (input->answer, output->answer,
+				  GV_FATAL_EXIT);
 
     /* open site file */
-    fdsite = G_sites_open_old (sitefile, mapset);
-    if (fdsite == NULL)
-        G_fatal_error ("Cannot open vector points map [%s]", sitefile);
+    if (Vect_open_old(&Map, sitefile, mapset) < 0)
+        G_fatal_error (_("Cannot open vector map <%s>"), sitefile);
 
     /* load site coordinates */
     G_get_window (&window);
-    numSitePoints = loadSiteCoordinates(fdsite, &points, all->answer, &window);
+    numSitePoints = loadSiteCoordinates(&Map, &points, all->answer, &window);
     if(numSitePoints < 0 )
-        G_fatal_error ("Error loading vector points map [%s]", sitefile);
+        G_fatal_error (_("Error loading vector points map <%s>"), sitefile);
 
     if(numSitePoints < 3 )
-        G_fatal_error ("Convex hull calculation requires at least three points");
+        G_fatal_error (_("Convex hull calculation requires at least three points"));
 
     /* create vector map */
     if (0 > Vect_open_new (&Map, output->answer, 0) )
-        G_fatal_error ("Unable to open vector map <%s>\n", output->answer);
+        G_fatal_error (_("Cannot open vector map <%s>"), output->answer);
 
     Vect_hist_command ( &Map );
 
@@ -280,8 +281,8 @@ int main(int argc, char **argv) {
     outputHull(&Map, points, hull, numHullPoints);
 
     /* clean up and bye bye */
-    Vect_build (&Map, stdout);
+    Vect_build (&Map, stderr);
     Vect_close (&Map);
 
-    return 0;
+    exit (EXIT_SUCCESS);
 }
