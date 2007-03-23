@@ -515,7 +515,7 @@ class mainFrame(wx.Frame):
         errors = 0
         errStr = ""
         for flag in grass_task.flags:
-            if 'value' in flag:
+            if 'value' in flag and flag['value'] == True:
                 cmd += ' -' + flag['name']
         for p in grass_task.params:
             if p['value'] == '' and p['required'] != 'no':
