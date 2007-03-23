@@ -95,9 +95,11 @@ t_rgb = ( # From lib/gis/col_str.c
   (128,  0,128)
 )
 t_color = t_colors.split(',')
-named_color = {}
+color_str2rgb = {}
+color_rgb2str = {}
 for c in range(0,len(t_rgb)):
-    named_color[ t_color[c] ] = t_rgb[ c ]
+    color_str2rgb[ t_color[c] ] = t_rgb[ c ]
+    color_rgb2str[ t_rgb[ c ] ] = t_color[ c ]
 
 
 def normalize_whitespace(text):
@@ -387,7 +389,7 @@ class mainFrame(wx.Frame):
                         else:
                             # Convert color names to RGB
                             try:
-                                default_color = named_color[ p['default'] ]
+                                default_color = color_str2rgb[ p['default'] ]
                                 label_color = p['default']
                                 label_color_pad = ' '*(11-len(label_color)/2)
                                 label_color = label_color_pad + label_color + label_color_pad
@@ -446,8 +448,8 @@ class mainFrame(wx.Frame):
             self.tab[section].SetSizer( self.tabsizer[section] )
             self.tab[section].Layout()
 
-#        self.panelsizer.Fit( self.notebookpanel )
         self.panelsizer.SetSizeHints( self.notebookpanel )
+        self.panelsizer.Fit( self.notebookpanel )
         self.notebookpanel.SetSizer(self.panelsizer)
         self.notebookpanel.SetAutoLayout(True)
         self.notebookpanel.Layout()
@@ -455,14 +457,16 @@ class mainFrame(wx.Frame):
         self.guisizer.SetSizeHints(self)
         self.SetAutoLayout(True)
         self.SetSizer(self.guisizer)
-#        self.guisizer.Fit(self)
         self.Layout()
 
 
     def OnColorButton(self, event):
         colorchooser = wx.FindWindowById( event.GetId() )
         new_color = colorchooser.GetValue()
-        colorchooser.SetLabel( ':'.join(map(str,new_color)) )
+        # This is weird: new_color is a 4-tuple and new_color[:] is a 3-tuple
+        # under wx2.8.1
+        new_label = color_rgb2str.get( new_color[:], ':'.join(map(str,new_color)) )
+        colorchooser.SetLabel( new_label )
         colorchooser.SetColour( new_color )
         colorchooser.Refresh()
         self.getValues()
@@ -515,7 +519,7 @@ class mainFrame(wx.Frame):
         errors = 0
         errStr = ""
         for flag in grass_task.flags:
-            if 'value' in flag and flag['value'] == True:
+            if 'value' in flag and flag['value']:
                 cmd += ' -' + flag['name']
         for p in grass_task.params:
             if p['value'] == '' and p['required'] != 'no':
