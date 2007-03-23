@@ -280,7 +280,7 @@ class Map:
 
 		for line in windfile.readlines():
 			line = line.strip()
-			key, value = line.split(":")
+			key, value = line.split(":",1)
 			key = key.strip()
 			value = value.strip()
 			self.wind[key] = value
@@ -393,8 +393,11 @@ class Map:
 
 		for reg in os.popen("g.region -gp").readlines():
 			reg = reg.strip()
-			key, val = reg.split("=")
-			region[key] = float(val)
+			key, val = reg.split("=",1)
+			try:
+                            region[key] = float(val)
+                        except ValueError:
+                            region[key] = val        
 
 		if tmpreg:
 			os.environ["GRASS_REGION"] = tmpreg
