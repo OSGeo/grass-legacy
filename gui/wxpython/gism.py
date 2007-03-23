@@ -9,10 +9,18 @@ Classes:
 import sys
 import os
 import wx
+import wx.combo
 import wx.lib.customtreectrl as CT
 import wx.lib.flatnotebook as FN
 import wx.stc
 import wx.richtext
+
+import sys, os, time, traceback, types
+
+import wx                  # This module uses the new wx namespace
+import wx.html
+
+import images
 
 # try:
 #    import subprocess
@@ -108,7 +116,7 @@ class GMFrame(wx.Frame):
         self.notebook = self.__createNoteBook()
         self.cmdinput = self.__createCommandInput()
         self.menubar = self.__createMenuBar()
-        self.toolbar = self.__createToolBar()
+        toolbar = self.__createToolBar()
         #self.panel = wx.Panel(self,-1, style= wx.EXPAND)
         self.sizer= wx.BoxSizer(wx.VERTICAL)
         self.cmdsizer = wx.BoxSizer(wx.HORIZONTAL)
@@ -125,6 +133,7 @@ class GMFrame(wx.Frame):
         self.mapfocus = 0 #track which display currently has focus
 
         self.Bind(wx.EVT_CLOSE, self.onCloseWindow)
+        self.Bind(wx.EVT_LEFT_DOWN, self.addRaster)
 
         # item, proportion, flag, border, userData
         self.sizer.Add(self.notebook, proportion=1, flag=wx.EXPAND, border=1)
@@ -301,11 +310,42 @@ class GMFrame(wx.Frame):
         return   (
                  ('newdisplay', wx.Bitmap(os.path.join(gismutils.icons,'gui-startmon.gif'), wx.BITMAP_TYPE_ANY), 'Start new display', self.newDisplay),
                  ('', '', '', ''),
-                 ('addrast', wx.Bitmap(os.path.join(gismutils.icons,'element-cell.gif'), wx.BITMAP_TYPE_ANY), 'Add raster layer', self.addRaster),
-                 ('addvect', wx.Bitmap(os.path.join(gismutils.icons,'element-vector.gif'), wx.BITMAP_TYPE_ANY), 'Add vector layer', self.addVector),
+                 ('addrast', wx.Bitmap(os.path.join(gismutils.icons,'element-cell.gif'), wx.BITMAP_TYPE_ANY), 'Add raster layer', self.onRaster),
+                 ('addvect', wx.Bitmap(os.path.join(gismutils.icons,'element-vector.gif'), wx.BITMAP_TYPE_ANY), 'Add vector layer', self.onVector),
                  ('addcmd', wx.Bitmap(os.path.join(gismutils.icons,'gui-cmd.gif'), wx.BITMAP_TYPE_ANY), 'Add command layer', self.addCommand),
                  ('delcmd', wx.ArtProvider.GetBitmap(wx.ART_DELETE, wx.ART_TOOLBAR, (16,16)), 'Delete selected layer', self.deleteLayer),
                  )
+
+    def addToolbarCombo(self, toolbar, indx, type):
+        tbcb = wx.combo.BitmapComboBox(toolbar, pos=(25,25), size=(100,-1), style=wx.TE_PROCESS_ENTER)
+        self.comboItems(tbcb, type)
+        toolbar.InsertControl(indx, tbcb)
+        toolbar.Realize()
+
+        self.Bind(wx.EVT_COMBOBOX, self.onCombo, tbcb)
+        self.Bind(wx.EVT_TEXT_ENTER, self.onCombo, tbcb)
+
+    def onCombo(self, event):
+        bcb = event.GetEventObject()
+        idx = event.GetInt()
+        st  = bcb.GetString(idx)
+        cd  = bcb.GetClientData(idx)
+        if 'Add raster map' in st:
+            self.addRaster()
+        elif 'Add RGB' in st:
+            self.addRGB()
+        elif 'Add raster legend' in st:
+            self.addRastLeg()
+        elif 'Add vector map' in st:
+            self.addVector()
+        elif 'Add thematic map' in st:
+            self.addThemeMap()
+        elif 'Add thematic chart' in st:
+            self.addThemeChart()
+
+#        self.log.write("EVT_COMBOBOX: Id %d, string '%s', clientData '%s'" % (idx, st, cd))
+        evt.Skip()
+
 
     def newDisplay(self, event=None):
         """Create new map display frame"""
@@ -353,13 +393,107 @@ class GMFrame(wx.Frame):
         self.disp_idx += 1
 
     # toolBar button handlers
+    def onRaster(self, event):
+        """Add raster item menu"""
+        point = wx.GetMousePosition()
+        rastmenu = wx.Menu()
+        # Add items to the menu
+        addrast = wx.MenuItem(rastmenu, -1,'Add raster map layer')
+        bmp = wx.Image(os.path.join(gismutils.icons,'element-cell.gif'), wx.BITMAP_TYPE_GIF)
+        bmp.Rescale(16, 16)
+        bmp = bmp.ConvertToBitmap()
+        addrast.SetBitmap(bmp)
+        rastmenu.AppendItem(addrast)
+        self.Bind(wx.EVT_MENU, self.addRaster, addrast)
+
+        addrgb = wx.MenuItem(rastmenu, -1,'Add RGB layer')
+        bmp = wx.Image(os.path.join(gismutils.icons,'module-d.rgb.gif'), wx.BITMAP_TYPE_GIF)
+        bmp.Rescale(16, 16)
+        bmp = bmp.ConvertToBitmap()
+        addrgb.SetBitmap(bmp)
+        rastmenu.AppendItem(addrgb)
+        self.Bind(wx.EVT_MENU, self.addRGB, addrgb)
+
+        addhis = wx.MenuItem(rastmenu, -1,'Add HIS layer')
+        bmp = wx.Image(os.path.join(gismutils.icons,'channel-his.gif'), wx.BITMAP_TYPE_GIF)
+        bmp.Rescale(16, 16)
+        bmp = bmp.ConvertToBitmap()
+        addhis.SetBitmap(bmp)
+        rastmenu.AppendItem(addhis)
+        self.Bind(wx.EVT_MENU, self.addHIS, addhis)
+
+        addrleg = wx.MenuItem(rastmenu, -1,'Add raster legend layer')
+        bmp = wx.Image(os.path.join(gismutils.icons,'module-d.legend.gif'), wx.BITMAP_TYPE_GIF)
+        bmp.Rescale(16, 16)
+        bmp = bmp.ConvertToBitmap()
+        addrleg.SetBitmap(bmp)
+        rastmenu.AppendItem(addrleg)
+        self.Bind(wx.EVT_MENU, self.addRastLeg, addrleg)
+
+        # Popup the menu.  If an item is selected then its handler
+        # will be called before PopupMenu returns.
+        self.PopupMenu(rastmenu)
+        rastmenu.Destroy()
+
+    def onVector(self, event):
+        """Add raster item menu"""
+        point = wx.GetMousePosition()
+        vectmenu = wx.Menu()
+
+        addvect = wx.MenuItem(vectmenu, -1,'Add vector map layer')
+        bmp = wx.Image(os.path.join(gismutils.icons,'element-vector.gif'), wx.BITMAP_TYPE_GIF)
+        bmp.Rescale(16, 16)
+        bmp = bmp.ConvertToBitmap()
+        addvect.SetBitmap(bmp)
+        vectmenu.AppendItem(addvect)
+        self.Bind(wx.EVT_MENU, self.addVector, addvect)
+
+        addtheme = wx.MenuItem(vectmenu, -1,'Add thematic map layer')
+        bmp = wx.Image(os.path.join(gismutils.icons,'module-d.vect.thematic.gif'), wx.BITMAP_TYPE_GIF)
+        bmp.Rescale(16, 16)
+        bmp = bmp.ConvertToBitmap()
+        addtheme.SetBitmap(bmp)
+        vectmenu.AppendItem(addtheme)
+        self.Bind(wx.EVT_MENU, self.addThemeMap, addtheme)
+
+        addchart = wx.MenuItem(vectmenu, -1,'Add thematic chart layer')
+        bmp = wx.Image(os.path.join(gismutils.icons,'module-d.vect.chart.gif'), wx.BITMAP_TYPE_GIF)
+        bmp.Rescale(16, 16)
+        bmp = bmp.ConvertToBitmap()
+        addchart.SetBitmap(bmp)
+        vectmenu.AppendItem(addchart)
+        self.Bind(wx.EVT_MENU, self.addThemeChart, addchart)
+        # Popup the menu.  If an item is selected then its handler
+        # will be called before PopupMenu returns.
+        self.PopupMenu(vectmenu)
+        vectmenu.Destroy()
+
     def addRaster(self, event):
-        """Add raster layer"""
         self.SetTree('raster')
+
+    def addRGB(self, event):
+        """Add RGB layer"""
+        self.SetTree('rgb')
+
+    def addHIS(self, event):
+        """Add HIS layer"""
+        self.SetTree('his')
+
+    def addRastLeg(self, event):
+        """Add raster legend"""
+        self.SetTree('rastleg')
 
     def addVector(self, event):
         """Add vector layer"""
         self.SetTree('vector')
+
+    def addThemeMap(self, event):
+        """Add thematic map layer"""
+        self.SetTree('thememap')
+
+    def addThemeChart(self, event):
+        """Add thematic chart layer"""
+        self.SetTree('themechart')
 
     def addCommand(self, event):
         """Add command line layer"""
@@ -395,25 +529,10 @@ class GMFrame(wx.Frame):
             self.DestroyChildren()
         self.Destroy()
 
-
-class SetVal:
-    """
-    Class to store and set values needed by map, gism,
-    and other modules. This should work but doesn't for some reason.
-    """
-
-    def setMdFocus(self, mdnum=-1):
-        #get the id number of map display that has the focus
-        #and use it to set md
-        global mdfocus
-        if mdnum > -1:
-            mdfocus = mdnum
-        else:
-            return mdfocus
-
-	def getMdFocus(self):
-            global mdfocus
-            return mdfocus
+    def Nomethod(self, event):
+        '''Stub for testing'''
+        pass
+        event.Skip()
 
 class GMApp(wx.App):
     """

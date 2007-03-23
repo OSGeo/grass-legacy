@@ -71,10 +71,36 @@ class LayerTree(CT.CustomTreeCtrl):
         trgif.Rescale(16, 16)
         trgif = trgif.ConvertToBitmap()
         self.rast_icon = il.Add(trgif)
+
+        trgif = wx.Image(icons + r'/module-d.rgb.gif', wx.BITMAP_TYPE_GIF)
+        trgif.Rescale(16, 16)
+        trgif = trgif.ConvertToBitmap()
+        self.rgb_icon = il.Add(trgif)
+
+        trgif = wx.Image(icons + r'/channel-his.gif', wx.BITMAP_TYPE_GIF)
+        trgif.Rescale(16, 16)
+        trgif = trgif.ConvertToBitmap()
+        self.his_icon = il.Add(trgif)
+
+        trgif = wx.Image(icons + r'/module-d.legend.gif', wx.BITMAP_TYPE_GIF)
+        trgif.Rescale(16, 16)
+        trgif = trgif.ConvertToBitmap()
+        self.leg_icon = il.Add(trgif)
+
         trgif = wx.Image(icons + r'/element-vector.gif', wx.BITMAP_TYPE_GIF)
         trgif.Rescale(16, 16)
         trgif = trgif.ConvertToBitmap()
         self.vect_icon = il.Add(trgif)
+
+        trgif = wx.Image(icons + r'/module-d.vect.thematic.gif', wx.BITMAP_TYPE_GIF)
+        trgif.Rescale(16, 16)
+        trgif = trgif.ConvertToBitmap()
+        self.theme_icon = il.Add(trgif)
+
+        trgif = wx.Image(icons + r'/module-d.vect.chart.gif', wx.BITMAP_TYPE_GIF)
+        trgif.Rescale(16, 16)
+        trgif = trgif.ConvertToBitmap()
+        self.chart_icon = il.Add(trgif)
 
         trgif = wx.Image(icons + r'/gui-cmd.gif', wx.BITMAP_TYPE_GIF)
         trgif.Rescale(16, 16)
@@ -120,11 +146,13 @@ class LayerTree(CT.CustomTreeCtrl):
                                 '', ct_type=1, wnd=self.ctrl )
         else:
             layer = self.PrependItem(self.root, '', ct_type=1, wnd=self.ctrl)
+        print 'layer added'
 
         self.SelectItem(layer)
 
         # add to layertype and layerctrl dictionaries
         self.layertype[layer] = type
+        print 'layertype =', self.layertype[layer]
         self.layerctrl[self.ctrl] = layer
 
         # add a data object to hold the layer's command (does not apply to generic command layers)
@@ -143,11 +171,37 @@ class LayerTree(CT.CustomTreeCtrl):
             self.SetItemText(layer, 'raster (double click to set properties)')
             # launch the properties dialog
             menuform.GUI().parseCommand('d.rast', gmpath, completed=(self.getOptData,layer), parentframe=self)
+        elif type == 'rgb':
+            print 'in rgb'
+            self.SetItemImage(layer, self.rgb_icon)
+            self.SetItemText(layer, 'RGB (double click to set properties)')
+            # launch the properties dialog
+            menuform.GUI().parseCommand('d.rgb', gmpath, completed=(self.getOptData,layer), parentframe=self)
+        elif type == 'his':
+            self.SetItemImage(layer, self.his_icon)
+            self.SetItemText(layer, 'HIS (double click to set properties)')
+            # launch the properties dialog
+            menuform.GUI().parseCommand('d.his', gmpath, completed=(self.getOptData,layer), parentframe=self)
+        elif type == 'rastleg':
+            self.SetItemImage(layer, self.leg_icon)
+            self.SetItemText(layer, 'legend (double click to set properties)')
+            # launch the properties dialog
+            menuform.GUI().parseCommand('d.legend', gmpath, completed=(self.getOptData,layer), parentframe=self)
         elif type == 'vector':
             self.SetItemImage(layer, self.vect_icon)
             self.SetItemText(layer, 'vector (double click to set properties)')
             # launch the properties dialog
             menuform.GUI().parseCommand('d.vect', gmpath, completed=(self.getOptData,layer), parentframe=self)
+        elif type == 'thememap':
+            self.SetItemImage(layer, self.theme_icon)
+            self.SetItemText(layer, 'thematic map (double click to set properties)')
+            # launch the properties dialog
+            menuform.GUI().parseCommand('d.vect.thematic', gmpath, completed=(self.getOptData,layer), parentframe=self)
+        elif type == 'themechart':
+            self.SetItemImage(layer, self.chart_icon)
+            self.SetItemText(layer, 'thematic charts (double click to set properties)')
+            # launch the properties dialog
+            menuform.GUI().parseCommand('d.vect.chart', gmpath, completed=(self.getOptData,layer), parentframe=self)
         elif type == 'command':
             self.SetItemImage(layer, self.cmd_icon)
         self.first = False
@@ -292,6 +346,10 @@ class LayerTree(CT.CustomTreeCtrl):
     def getOptData(self, dcmd, layer):
         for item in dcmd.split(' '):
             if 'map=' in item:
+                mapname = item.split('=')[1]
+            elif 'red=' in item:
+                mapname = item.split('=')[1]
+            elif 'h_map=' in item:
                 mapname = item.split('=')[1]
 
         # set layer text to map name
