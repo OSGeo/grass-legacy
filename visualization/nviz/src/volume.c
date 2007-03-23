@@ -86,19 +86,20 @@ int isosurf_get_drawmode(int id, Tcl_Interp *interp, int argc, char *argv[])
     char shade[32];
 
     if (GVL_isosurf_get_drawmode(id, &mode) == -1) {
-        Tcl_SetResult(interp, "Error: id in get_drawmode is invalid.",
+        Tcl_SetResult(interp, "Error: id in GVL_isosurf_get_drawmode is invalid.",
             TCL_VOLATILE);
         return (TCL_ERROR);
     }
 
     /* Parse mode returned for shade style */
+    G_debug(3,"isosurf_get_drawmode: mode %d", mode);
     if (mode & DM_GOURAUD)
     strcpy(shade, "gouraud");
     else if (mode & DM_FLAT)
     strcpy(shade, "flat");
     else {
     Tcl_SetResult(interp,
-              "Internal Error: unknown shade style returned in get_drawmode",
+              "Internal Error: unknown shade style returned in GVL_isosurf_get_drawmode",
               TCL_VOLATILE);
     return (TCL_ERROR);
     }
@@ -493,19 +494,20 @@ int slice_get_drawmode(int id, Tcl_Interp *interp, int argc, char *argv[])
     char shade[32];
 
 	if (GVL_slice_get_drawmode(id, &mode) == -1) {
-        Tcl_SetResult(interp, "Error: id in get_drawmode is invalid.",
+        Tcl_SetResult(interp, "Error: id in GVL_slice_get_drawmode() is invalid.",
             TCL_VOLATILE);
         return (TCL_ERROR);
     }
 
     /* Parse mode returned for shade style */
+    G_debug(3,"slice_get_drawmode: mode %d", mode);
     if (mode & DM_GOURAUD)
     strcpy(shade, "gouraud");
     else if (mode & DM_FLAT)
     strcpy(shade, "flat");
     else {
     Tcl_SetResult(interp,
-              "Internal Error: unknown shade style returned in get_drawmode",
+              "Internal Error: unknown shade style returned in GVL_slice_get_get_drawmode",
               TCL_VOLATILE);
     return (TCL_ERROR);
     }

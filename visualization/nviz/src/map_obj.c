@@ -830,14 +830,14 @@ int get_drawmode(int type, int id, Nv_data * data, Tcl_Interp * interp)
     }
 
     /* Parse mode returned for shade style and surface style */
-    G_debug(3,"drawmode: %d",mode);
-    if (mode & DM_GOURAUD || mode == 0x904) /* DM_GRID_SURF|DM_GOURAUD|DM_POLY*/
+    G_debug(0,"drawmode: %d",mode);
+    if (mode & DM_GOURAUD || mode == 2308) /* DM_GRID_SURF|DM_GOURAUD|DM_POLY*/
     strcpy(shade, "gouraud");
     else if (mode & DM_FLAT)
     strcpy(shade, "flat");
     else {
     Tcl_SetResult(interp,
-              "Internal Error: unknown shade style returned in get_drawmode",
+              "Internal Error map_obj.c: unknown shade style returned in get_drawmode",
               TCL_VOLATILE);
     return (TCL_ERROR);
     }
