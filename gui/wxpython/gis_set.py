@@ -57,8 +57,8 @@ class EpsgCode(wx.Frame):
         self.bcreate = wx.Button(self, -1, "Create")
 
         # empty panels
-        self.epanel1 = wx.Panel(self,-1) 
-        self.epanel2 = wx.Panel(self,-1) 
+        self.epanel1 = wx.Panel(self,-1)
+        self.epanel2 = wx.Panel(self,-1)
 
         # search box
         self.searchb = wx.SearchCtrl(self, size=(200,-1), style=wx.TE_PROCESS_ENTER)
@@ -73,7 +73,7 @@ class EpsgCode(wx.Frame):
         self.epsgs.SetColumnWidth(0, 50)
         self.epsgs.SetColumnWidth(1, wx.LIST_AUTOSIZE_USEHEADER)
         self.epsgs.SetColumnWidth(2, wx.LIST_AUTOSIZE_USEHEADER)
-        
+
 
         # laout
         label_style = wx.ADJUST_MINSIZE | wx.ALIGN_CENTER_HORIZONTAL
@@ -106,7 +106,7 @@ class EpsgCode(wx.Frame):
         self.vsizer.SetSizeHints(self)
         self.Layout()
 
-        
+
         # events
         wx.EVT_BUTTON(self, self.bbrowse.GetId(), self.OnBrowse)
         wx.EVT_BUTTON(self, self.bcancel.GetId(), self.OnCancel)
@@ -127,10 +127,10 @@ class EpsgCode(wx.Frame):
                 break
 
         self.OnBrowseCodes(None,str)
-        
 
-    def OnBrowse(self, event): 
-        
+
+    def OnBrowse(self, event):
+
         dlg = wx.FileDialog(self, "Choose a georeferenced file:",
         "/", "", "*.*", wx.OPEN)
         if dlg.ShowModal() == wx.ID_OK:
@@ -145,7 +145,7 @@ class EpsgCode(wx.Frame):
         item = event.GetItem()
         self.tcode.SetValue(str(item.GetText()))
 
-    
+
     def OnBrowseCodes(self,event,search=None):
         try:
             self.epsgs.DeleteAllItems()
@@ -172,7 +172,7 @@ class EpsgCode(wx.Frame):
                         self.epsgs.SetStringItem(j, 1, str(descr))
                         self.epsgs.SetStringItem(j, 2, str(params))
                         j  += 1
-                    # reset 
+                    # reset
                     descr = None; code = None; params = ""
                 if i%2 == 0:
                     self.epsgs.SetItemBackgroundColour(i, "grey")
@@ -195,7 +195,7 @@ class EpsgCode(wx.Frame):
             dlg.ShowModal()
             dlg.Destroy()
             return
-        
+
         number = -1
         try:
             number = int(self.tcode.GetValue())
@@ -205,20 +205,20 @@ class EpsgCode(wx.Frame):
             dlg.ShowModal()
             dlg.Destroy()
             return
-             
+
         if os.path.isdir(os.path.join(self.parent.gisdbase,self.tname.GetValue())):
             dlg = wx.MessageDialog(self, "Could not create new location: %s exists"
                     % os.path.join(self.parent.gisdbase,self.tname.GetValue()),"Can not create location",  wx.OK|wx.ICON_INFORMATION)
             dlg.ShowModal()
             dlg.Destroy()
             return
-        
+
         # creating location
         # all credit to Michael Barton and his file_option.tcl and
         # Markus Neteler
         try:
             # FIXME: this does not need to work on windows
-            os.system("g.proj -c georef=%s location=%s >&2" % (self.tfile.GetValue(), self.tname.GetValue())) 
+            os.system("g.proj -c georef=%s location=%s >&2" % (self.tfile.GetValue(), self.tname.GetValue()))
             datumtrans = os.popen(" g.proj epsg=%d datumtrans=-1 >&2" % (number)).readlines()
 
             if datumtrans:
@@ -237,7 +237,7 @@ class EpsgCode(wx.Frame):
             dlg.Destroy()
             return
 
- 
+
     def OnDoubleClick(self, event):
         print self.epsgs.GetValue()
         pass
@@ -286,13 +286,13 @@ class GeoreferencedFile(wx.Frame):
         self.sizer.SetSizeHints(self)
         self.Layout()
 
-        
+
         wx.EVT_BUTTON(self, self.bbrowse.GetId(), self.OnBrowse)
         wx.EVT_BUTTON(self, self.bcancel.GetId(), self.OnCancel)
         wx.EVT_BUTTON(self, self.bcreate.GetId(), self.OnCreate)
 
-    def OnBrowse(self, event): 
-        
+    def OnBrowse(self, event):
+
         dlg = wx.FileDialog(self, "Choose a georeferenced file:", os.getcwd(), "", "*.*", wx.OPEN)
         if dlg.ShowModal() == wx.ID_OK:
                     path = dlg.GetPath()
@@ -329,7 +329,7 @@ class GeoreferencedFile(wx.Frame):
         # Markus Neteler
         try:
             # FIXME: this does not need to work on windows
-            os.system("g.proj -c georef=%s location=%s >&2" % (self.tfile.GetValue(), self.tname.GetValue())) 
+            os.system("g.proj -c georef=%s location=%s >&2" % (self.tfile.GetValue(), self.tname.GetValue()))
 
             self.parent.OnSetDatabase(None)
             self.Destroy()
@@ -358,17 +358,20 @@ class GRASSStartup(wx.Frame):
         # graphical elements
         #
         try:
-            self.hbitmap = wx.StaticBitmap(self, -1, 
+            self.hbitmap = wx.StaticBitmap(self, -1,
                     wx.Bitmap(os.path.join(self.gisbase,"etc","gintro.gif"), wx.BITMAP_TYPE_ANY))
         except:
-            self.hbitmap = wx.StaticBitmap(self,  -1, wx.EmptyBitmap(530,150)) 
+            self.hbitmap = wx.StaticBitmap(self,  -1, wx.EmptyBitmap(530,150))
 
         # labels
-        self.lwelcome = wx.StaticText(self, -1, 
+        self.lwelcome = wx.StaticText(self, -1,
                 "Welcome to GRASS GIS Version 6.3.cvs\n"+\
-                "The world's leading open source GIS\n\n"+\
+                "The world's leading open source GIS",
+                style=wx.ALIGN_CENTRE)
+        self.ltitle = wx.StaticText(self, -1,
                 "Select an existing project location and mapset\n"+\
-                "or define a new location", style=wx.ALIGN_CENTRE)
+                "or define a new location",
+                style=wx.ALIGN_CENTRE)
         self.ldbase = wx.StaticText(self, -1, "GIS Data Directory:")
         self.llocation = wx.StaticText(self, -1, "Project Location\n(projection/coordinate system)", style=wx.ALIGN_CENTRE)
         self.lmapset = wx.StaticText(self, -1, "Accessible Mapsets\n(directories of GIS files)", style=wx.ALIGN_CENTRE)
@@ -376,29 +379,33 @@ class GRASSStartup(wx.Frame):
         self.ldefine = wx.StaticText(self, -1, "Define new location with ...", style=wx.ALIGN_CENTRE)
 
         # buttons
-        buttonsize = (150,25)
-        self.bstart = wx.Button(self, -1, "Start GRASS", style=wx.RAISED_BORDER, size=buttonsize)
-        self.bexit = wx.Button(self, -1, "Exit", size=buttonsize)
-        self.bhelp = wx.Button(self, -1, "Help", size=buttonsize)
-        self.bbrowse = wx.Button(self, -1, "Browse ...", size=buttonsize)
-        self.bmapset = wx.Button(self, -1, "Create new mapset", size=buttonsize)
-        self.bgeoreferenced = wx.Button(self, -1, "Georeferenced file", size=buttonsize)
-        self.bepsg = wx.Button(self, -1, "EPSG codes", size=buttonsize)
-        self.bwizard = wx.Button(self, -1, "Run Wizard", size=buttonsize)
+        buttonsize1 = (150,-1)
+        buttonsize2 = (150, -1)
+
+        self.bstart = wx.Button(self, -1, "Start GRASS", size=buttonsize2)
+        self.bstart.SetDefault()
+        self.bexit = wx.Button(self, -1, "Exit", size=buttonsize2)
+        self.bhelp = wx.Button(self, -1, "Help", size=buttonsize2)
+        self.bbrowse = wx.Button(self, -1, "Browse ...", size=(-1,-1))
+        self.bmapset = wx.Button(self, -1, "Create new mapset", size=buttonsize1)
+        self.bgeoreferenced = wx.Button(self, -1, "Georeferenced file", size=buttonsize1)
+        self.bepsg = wx.Button(self, -1, "EPSG codes", size=buttonsize1)
+        self.bwizard = wx.Button(self, -1, "Run Wizard", size=buttonsize1)
+
 
         # textinputs
         self.tgisdbase = wx.TextCtrl(self, -1, "", size=(300, 20),
                 style=wx.TE_LEFT)
         self.tnewmapset = wx.TextCtrl(self,-1, "", size=(150,20))
-        
+
         # Locations
         self.lpanel = wx.Panel(self,-1)
-        self.lblocations = wx.ListBox(self.lpanel, 
+        self.lblocations = wx.ListBox(self.lpanel,
                 26, wx.DefaultPosition, (150, 200), self.listOfLocations, wx.LB_SINGLE)
 
         # Mapsets
         self.mpanel = wx.Panel(self,-1)
-        self.lbmapsets = wx.ListBox(self.mpanel, 
+        self.lbmapsets = wx.ListBox(self.mpanel,
                 26, wx.DefaultPosition, (150, 200), self.listOfMapsets, wx.LB_SINGLE)
 
 
@@ -426,7 +433,7 @@ class GRASSStartup(wx.Frame):
         self.SetIcon(wx.Icon(os.path.join(self.gisbase,"etc","dm","grass.gif"),
             wx.BITMAP_TYPE_GIF))
         self.lwelcome.SetForegroundColour(wx.Colour(35, 142, 35))
-        self.lwelcome.SetFont(wx.Font(10, wx.DEFAULT, wx.NORMAL, wx.BOLD, 0, ""))
+        self.lwelcome.SetFont(wx.Font(14, wx.DEFAULT, wx.NORMAL, wx.BOLD, 0, ""))
         self.bstart.SetForegroundColour(wx.Colour(35, 142, 35))
         self.bstart.SetToolTipString("Enter GRASS session")
         #self.bstart.Enable(False)
@@ -442,13 +449,13 @@ class GRASSStartup(wx.Frame):
         location = self._getRCValue("LOCATION_NAME")
         if location == "<UNKNOWN>":
             location = None
-        if location: 
+        if location:
             self.lblocations.SetSelection(self.listOfLocations.index(location))
 
             # list of mapsets
             self.UpdateMapsets(os.path.join(self.tgisdbase.GetValue(),self.listOfLocations[0]))
             mapset =self._getRCValue("MAPSET")
-            if  mapset: 
+            if  mapset:
                 self.lbmapsets.SetSelection(self.listOfMapsets.index(mapset))
                 #self.bstart.Enable(True)
 
@@ -460,38 +467,72 @@ class GRASSStartup(wx.Frame):
         mapset_sizer = wx.BoxSizer(wx.VERTICAL)
 
         dbase_sizer.Add(self.ldbase, 0, wx.ALIGN_CENTER_VERTICAL|
-                wx.ALIGN_CENTER_HORIZONTAL, 1)
+                wx.ALIGN_CENTER_HORIZONTAL|wx.ALL, 5)
         dbase_sizer.Add(self.tgisdbase, 0,  wx.ALIGN_CENTER_VERTICAL
-                |wx.ALIGN_CENTER_HORIZONTAL, 1)
+                |wx.ALIGN_CENTER_HORIZONTAL|wx.ALL, 5)
         dbase_sizer.Add(self.bbrowse, 0, wx.ALIGN_CENTER_VERTICAL |
-                wx.ALIGN_CENTER_HORIZONTAL, 1)
+                wx.ALIGN_CENTER_HORIZONTAL|wx.ALL, 5)
 
-        mapset_sizer.Add(self.tnewmapset, 0, label_style, 1)
-        mapset_sizer.Add(self.bmapset, 0, label_style, 1)
-        mapset_sizer.Add(self.ldefine, 0, label_style, 1)
-        mapset_sizer.Add(self.bgeoreferenced, 0, label_style, 1)
-        mapset_sizer.Add(self.bepsg, 0, label_style, 1)
-        mapset_sizer.Add(self.bwizard, 0, label_style, 1)
+        mapset_sizer.Add(self.tnewmapset, 0, label_style|wx.BOTTOM, 5)
+        mapset_sizer.Add(self.bmapset, 0, label_style|wx.BOTTOM, 10)
+        mapset_sizer.Add(self.ldefine, 0, label_style|wx.RIGHT|wx.LEFT, 5)
+        mapset_sizer.Add(self.bgeoreferenced, 0, label_style|wx.TOP, 5)
+        mapset_sizer.Add(self.bepsg, 0, label_style|wx.TOP, 5)
+        mapset_sizer.Add(self.bwizard, 0, label_style|wx.TOP, 5)
+        mapset_sizer.Add((5,0))
 
-        grid_sizer.Add(self.llocation, 0,label_style , 1)
-        grid_sizer.Add(self.lmapset, 0,label_style , 1)
-        grid_sizer.Add(self.lcreate, 0,label_style , 1)
+        grid_sizer.Add(self.llocation, 0,label_style|wx.ALL, 5)
+        grid_sizer.Add(self.lmapset, 0,label_style|wx.ALL, 5)
+        grid_sizer.Add(self.lcreate, 0,label_style|wx.ALL, 5)
 
-        grid_sizer.Add(self.lpanel, 0, wx.TOP |wx.ADJUST_MINSIZE, 0)
-        grid_sizer.Add(self.mpanel, 0, wx.TOP |wx.ADJUST_MINSIZE, 0)
-        grid_sizer.Add(mapset_sizer, 0, wx.TOP | wx.ADJUST_MINSIZE, 0)
+        grid_sizer.Add(self.lpanel, 0, wx.ADJUST_MINSIZE|
+                       wx.ALIGN_CENTER_VERTICAL|
+                       wx.ALIGN_CENTER_HORIZONTAL, 0)
+        grid_sizer.Add(self.mpanel, 0, wx.ADJUST_MINSIZE|
+                       wx.ALIGN_CENTER_VERTICAL|
+                       wx.ALIGN_CENTER_HORIZONTAL, 0)
+        grid_sizer.Add(mapset_sizer, 0, wx.ADJUST_MINSIZE|
+                       wx.ALIGN_CENTER_VERTICAL|
+                       wx.ALIGN_CENTER_HORIZONTAL, 0)
 
-        grid_sizer.Add(self.bstart, 0, wx.ADJUST_MINSIZE, 5)
-        grid_sizer.Add(self.bexit, 0, wx.ADJUST_MINSIZE, 0)
-        grid_sizer.Add(self.bhelp, 0, wx.ADJUST_MINSIZE, 0)
+        grid_sizer.Add(self.bstart, 0, wx.ADJUST_MINSIZE|
+                       wx.ALIGN_TOP|
+                       wx.ALIGN_CENTER_HORIZONTAL|
+                       wx.BOTTOM, 10)
+        grid_sizer.Add(self.bexit, 0, wx.ADJUST_MINSIZE|
+                       wx.ALIGN_CENTER_VERTICAL|
+                       wx.ALIGN_CENTER_HORIZONTAL|
+                       wx.BOTTOM, 10)
+        grid_sizer.Add(self.bhelp, 0, wx.ADJUST_MINSIZE|
+                       wx.ALIGN_CENTER_VERTICAL|
+                       wx.ALIGN_CENTER_HORIZONTAL|
+                       wx.BOTTOM, 10)
 
         # adding to main VERTICAL sizer
-        sizer.Add(self.hbitmap, 0, wx.ADJUST_MINSIZE | wx.ALIGN_CENTER_VERTICAL | wx.ALIGN_CENTER_HORIZONTAL, 1) # image
-        sizer.Add(self.lwelcome, # wellcomme message
-                0,wx.ADJUST_MINSIZE | wx.ALIGN_CENTER_VERTICAL | wx.ALIGN_CENTER_HORIZONTAL, 1)  
+        sizer.Add(self.hbitmap, 0, wx.ADJUST_MINSIZE |
+                wx.ALIGN_CENTER_VERTICAL |
+                wx.ALIGN_CENTER_HORIZONTAL |
+                wx.BOTTOM, 5) # image
+        sizer.Add(self.lwelcome, # welcome message
+                0,wx.ADJUST_MINSIZE |
+                wx.ALIGN_CENTER_VERTICAL |
+                wx.ALIGN_CENTER_HORIZONTAL |
+                wx.EXPAND |
+                wx.BOTTOM, 10)
+        sizer.Add(self.ltitle, # controls title
+                0,wx.ADJUST_MINSIZE |
+                wx.ALIGN_CENTER_VERTICAL |
+                wx.ALIGN_CENTER_HORIZONTAL |
+                wx.EXPAND |
+                wx.BOTTOM, 5)
         sizer.Add(dbase_sizer,0,wx.ADJUST_MINSIZE |
-                wx.ALIGN_CENTER_VERTICAL | wx.ALIGN_CENTER_HORIZONTAL,0) # GISDBASE setting
-        sizer.Add(grid_sizer, 1, wx.ADJUST_MINSIZE | wx.ALIGN_CENTER_VERTICAL | wx.ALIGN_CENTER_HORIZONTAL, 0)
+                wx.ALIGN_CENTER_VERTICAL |
+                wx.ALIGN_CENTER_HORIZONTAL |
+                wx.RIGHT | wx.LEFT, 5) # GISDBASE setting
+        sizer.Add(grid_sizer, 1, wx.ADJUST_MINSIZE |
+                wx.ALIGN_CENTER_VERTICAL |
+                wx.ALIGN_CENTER_HORIZONTAL |
+                wx.RIGHT | wx.LEFT, 5)
         self.SetAutoLayout(True)
         self.SetSizer(sizer)
         sizer.Fit(self)
@@ -511,7 +552,7 @@ class GRASSStartup(wx.Frame):
         reload(grass_wizard)
         gWizard = grass_wizard.GWizard(self,   self.tgisdbase.GetValue())
 
- 
+
     def UpdateLocations(self,dbase):
 
         self.listOfLocations = []
@@ -531,7 +572,7 @@ class GRASSStartup(wx.Frame):
             if os.path.isdir(mapset):
                 self.listOfMapsets.append(os.path.basename(mapset))
         return self.listOfMapsets
-    
+
     def OnSelectLocation(self,event):
         if self.lblocations.GetSelection() > -1:
             self.UpdateMapsets(os.path.join(
@@ -552,11 +593,11 @@ class GRASSStartup(wx.Frame):
         self.lblocations.SetSelection(0)
         self.OnSelectLocation(event)
 
-    def OnBrowse(self, event): 
-        
+    def OnBrowse(self, event):
+
         grassdata = None
 
-        dlg = wx.DirDialog(self, "Choose a GRASS directory:", 
+        dlg = wx.DirDialog(self, "Choose a GRASS directory:",
                 style=wx.DD_DEFAULT_STYLE | wx.DD_NEW_DIR_BUTTON)
         if dlg.ShowModal() == wx.ID_OK:
             grassdata = dlg.GetDirectory()
@@ -570,7 +611,7 @@ class GRASSStartup(wx.Frame):
             self.OnSetDatabase(event)
         else:
             event.Skip()
-    
+
     def OnCreateMapset(self,event):
 
         try:
@@ -609,11 +650,11 @@ class GRASSStartup(wx.Frame):
         print "g.gisenv set=MAPSET='%s';" % self.listOfMapsets[self.lbmapsets.GetSelection()]
         self.Destroy()
 
-    def OnExit(self, event): 
+    def OnExit(self, event):
         print "exit"
         self.Destroy()
 
-    def OnHelp(self, event): 
+    def OnHelp(self, event):
         print "Event handler `OnHelp' not implemented!"
         event.Skip()
 
