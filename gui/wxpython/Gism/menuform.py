@@ -60,15 +60,11 @@ def reexec_with_pythonw():
 
 reexec_with_pythonw()
 
-ID_RUN    = 10
-ID_CANCEL = 11
 ID_PARAM_START = 800
 ID_FLAG_START  = 900
 ID_MULTI_START = 1000
 
-ID_ABOUT = 101
 ID_ABOUT_COMMAND = 102
-ID_EXIT  = 103
 
 VSPACE = 4
 HSPACE = 4
@@ -207,7 +203,6 @@ class processTask(HandlerBase):
                 "values" : self.param_values,
                 "value" : '' })
 
-
         if name == 'flag':
             self.inFlag = 0;
             grass_task['flags'].append({
@@ -238,7 +233,10 @@ class processTask(HandlerBase):
 
 
 class mainFrame(wx.Frame):
-    """This is the Frame containing the dialog for options input."""
+    """This is the Frame containing the dialog for options input.
+
+    The dialog is organized in a notebook according to the guisections
+    defined by each GRASS command."""
     def __init__(self, parent, ID, w, h, get_dcmd=None, layer=None):
         global grass_task
         wx.Frame.__init__(self, parent, ID, grass_task['name'],
@@ -253,12 +251,12 @@ class mainFrame(wx.Frame):
         self.layer = layer
 
         menu = wx.Menu()
-        menu.Append(ID_ABOUT, "&About GrassGUI",
+        menu.Append(wx.ID_ABOUT, "&About GrassGUI",
             "Information about GrassGUI")
         menu.Append(ID_ABOUT_COMMAND, "&About " + grass_task['name'],
             "Short descripton of GRASS command " + grass_task['name'])
         menu.AppendSeparator()
-        menu.Append(ID_EXIT, "E&xit", "Terminate the program")
+        menu.Append(wx.ID_EXIT, "E&xit", "Terminate the program")
 
         menuBar = wx.MenuBar()
         menuBar.Append(menu, "&File");
@@ -320,11 +318,11 @@ class mainFrame(wx.Frame):
                         chkbox = wx.CheckBox( which_panel, idForWX, val+" " )
                         if isDefault.has_key(val): chkbox.SetValue( True )
                         hSizer.Add( chkbox,0,wx.ADJUST_MINSIZE,0 )
-                        wx.EVT_CHECKBOX(self, idForWX, self.EvtCheckBoxMulti)
+                        self.Bind(wx.EVT_CHECKBOX, self.EvtCheckBoxMulti)
                         v_count += 1
                     which_sizer.Add( hSizer, 0, wx.ADJUST_MINSIZE, 5)
                 else:
-                    txt1 = wx.StaticText(which_panel, -1, title + ':', wx.Point(-1, -1), wx.Size(-1, -1))
+                    txt1 = wx.StaticText(which_panel, label = title + ':' )
                     which_sizer.Add(txt1, 0, wx.ADJUST_MINSIZE | wx.ALL, 5)
                     self.cb = wx.ComboBox(which_panel, -1, p['default'],
                                      wx.Point(-1, -1), wx.Size(STRING_ENTRY_WIDTH, -1),
@@ -338,20 +336,17 @@ class mainFrame(wx.Frame):
                 and p['gisprompt'] == False
                 and p['prompt'] != 'color'):
 
-                txt2 = wx.StaticText(which_panel, -1, title + ':',
-                    wx.Point(-1, -1), wx.Size(-1, -1))
+                txt2 = wx.StaticText(which_panel, label = title + ':' )
                 which_sizer.Add(txt2, 0, wx.ADJUST_MINSIZE | wx.ALL, 5)
 
-                self.txt3 = wx.TextCtrl(which_panel, -1,
-                    p['default'], wx.Point(-1, -1),
-                    wx.Size(STRING_ENTRY_WIDTH, ENTRY_HEIGHT))
+                self.txt3 = wx.TextCtrl(which_panel, value = p['default'],
+                    size = (STRING_ENTRY_WIDTH, ENTRY_HEIGHT))
                 which_sizer.Add(self.txt3, 0, wx.ADJUST_MINSIZE| wx.ALL, 5)
                 self.paramdict[self.txt3] = ID_PARAM_START + p_count
                 self.txt3.Bind(wx.EVT_TEXT, self.EvtText)
 
             if p['type'] == 'string' and p['gisprompt'] == True:
-                txt4 = wx.StaticText(which_panel, -1, title + ':',
-                                     wx.Point(-1, -1), wx.Size(-1, -1))
+                txt4 = wx.StaticText(which_panel, label = title + ':')
                 which_sizer.Add(txt4, 0, wx.ADJUST_MINSIZE | wx.ALL, 5)
                 if p['prompt'] != 'color':
                     self.selection = select.Select(which_panel, id=wx.ID_ANY, size=(250,-1),
@@ -381,32 +376,31 @@ class mainFrame(wx.Frame):
                 which_sizer = self.tabsizer[ 'Main' ]
                 which_panel = self.tab[ 'Main' ]
             title = escape_ampersand(f['description'])
-            self.chk = wx.CheckBox(which_panel,-1, title,
-                wx.Point(-1, -1), wx.Size(-1, -1), wx.NO_BORDER)
+            self.chk = wx.CheckBox(which_panel,-1, label = title, style = wx.NO_BORDER)
             which_sizer.Add(self.chk, 0, wx.EXPAND, 5)
             self.paramdict[self.chk] = ID_FLAG_START + f_count
             self.chk.Bind(wx.EVT_CHECKBOX, self.EvtCheckBox)
 
         btnsizer = wx.BoxSizer(wx.HORIZONTAL)
-        self.btn_cancel = wx.Button(self, ID_CANCEL, "Cancel")
+        self.btn_cancel = wx.Button(self, wx.ID_CANCEL, "Cancel")
         btnsizer.Add(self.btn_cancel, 0, wx.ALL| wx.ALIGN_CENTER, 10)
         if self.get_dcmd is not None: # A callback has been set up
-            self.btn_apply = wx.Button(self, ID_RUN, "Apply")
+            self.btn_apply = wx.Button(self, wx.ID_APPLY, "Apply")
             btnsizer.Add(self.btn_apply, 0, wx.ALL| wx.ALIGN_CENTER, 10)
-            self.btn_ok = wx.Button(self, ID_RUN, "OK")
+            self.btn_ok = wx.Button(self, wx.ID_OK, "OK")
             btnsizer.Add(self.btn_ok, 0, wx.ALL| wx.ALIGN_CENTER, 10)
             self.btn_ok.SetDefault()
             self.btn_apply.Bind(wx.EVT_BUTTON, self.OnApply)
             self.btn_ok.Bind(wx.EVT_BUTTON, self.OnOK)
         else: # We're standalone
-            self.btn_run = wx.Button(self, ID_RUN, "Run")
+            self.btn_run = wx.Button(self, wx.ID_OK, "Run")
             btnsizer.Add(self.btn_run, 0, wx.ALL| wx.ALIGN_CENTER, 10)
             self.btn_run.SetDefault()
             self.btn_run.Bind(wx.EVT_BUTTON, self.OnRun)
         self.guisizer.Add(btnsizer, 0, wx.EXPAND)
-        wx.EVT_MENU(self, ID_ABOUT, self.OnAbout)
+        wx.EVT_MENU(self, wx.ID_ABOUT, self.OnAbout)
         wx.EVT_MENU(self, ID_ABOUT_COMMAND, self.OnAboutCommand)
-        wx.EVT_MENU(self, ID_EXIT,  self.OnCancel)
+        wx.EVT_MENU(self, wx.ID_EXIT,  self.OnCancel)
         self.btn_cancel.Bind(wx.EVT_BUTTON, self.OnCancel)
         self.Bind(wx.EVT_CLOSE, self.OnCloseWindow)
 
@@ -420,7 +414,6 @@ class mainFrame(wx.Frame):
         self.panelsizer.SetSizeHints( self.notebookpanel )
         self.notebookpanel.SetSizer(self.panelsizer)
         self.notebookpanel.SetAutoLayout(True)
-        self.notebookpanel.SetSize( (300, self.GetSize()[1]) ) # XXX Argh...
 
         self.guisizer.SetSizeHints(self)
         self.SetAutoLayout(True)
