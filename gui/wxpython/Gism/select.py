@@ -109,13 +109,13 @@ class TreeCtrlComboPopup(wx.combo.ComboPopup):
                 #TODO: make current mapset node expanded
                 dir_node = self.AddItem('Mapset: '+dir)
                 self.tree.SetItemTextColour(dir_node,wx.Colour(50,50,200))
-                self.tree.Expand(dir_node)
                 try:
                     elem_list = os.listdir(os.path.join (location_path, dir, element))
                     for elem in elem_list:
-                        self.AddItem(elem, parent=dir_node)
+                        self.AddItem(elem+'@'+dir, parent=dir_node)
                 except:
                     continue
+                self.tree.Expand(dir_node)
             else:
                 dir_node = self.AddItem('Mapset: '+dir)
                 self.tree.SetItemTextColour(dir_node,wx.Colour(50,50,200))
