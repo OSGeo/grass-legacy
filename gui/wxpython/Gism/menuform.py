@@ -236,6 +236,7 @@ class processTask(HandlerBase):
             self.param_guisection = normalize_whitespace(self.param_guisection)
             self.inGuisection = 0
 
+
 class mainFrame(wx.Frame):
     """This is the Frame containing the dialog for options input."""
     def __init__(self, parent, ID, w, h, get_dcmd=None, layer=None):
@@ -280,11 +281,12 @@ class mainFrame(wx.Frame):
         self.notebook = FN.FlatNotebook(self.notebookpanel, id=wx.ID_ANY, style=nbStyle)
         self.tab = {}
         self.tabsizer = {}
+        is_first = True
         for section in ['Main']+sections:
             self.tab[section] = wx.Panel(self.notebook, id = wx.ID_ANY )
-#            self.tab[section].SetScrollRate(10,10)
             self.tabsizer[section] = wx.BoxSizer(wx.VERTICAL)
-            self.notebook.AddPage( self.tab[section], text = section )
+            self.notebook.AddPage( self.tab[section], text = section, select = is_first )
+            is_first = False
 
         self.panelsizer.Add( self.notebook, flag=wx.EXPAND )
         self.guisizer.Add( self.notebookpanel, flag = wx.EXPAND )
@@ -331,11 +333,10 @@ class mainFrame(wx.Frame):
                     self.paramdict[self.cb] = ID_PARAM_START + p_count
                     self.cb.Bind( wx.EVT_COMBOBOX, self.EvtComboBox)
 
-            if (p['type'] in ('string','integer','float') and
-                len(p['values']) == 0 and
-                (p['gisprompt'] == False
-                 or p['prompt'] == 'color')): # Do this with a color selector below
-#                (p['gisprompt'] == False and p['prompt'] != 'color')):
+            if (p['type'] in ('string','integer','float')
+                and len(p['values']) == 0
+                and p['gisprompt'] == False
+                and p['prompt'] != 'color'):
 
                 txt2 = wx.StaticText(which_panel, -1, title + ':',
                     wx.Point(-1, -1), wx.Size(-1, -1))
@@ -349,23 +350,27 @@ class mainFrame(wx.Frame):
                 self.txt3.Bind(wx.EVT_TEXT, self.EvtText)
 
             if p['type'] == 'string' and p['gisprompt'] == True:
+                txt4 = wx.StaticText(which_panel, -1, title + ':',
+                                     wx.Point(-1, -1), wx.Size(-1, -1))
+                which_sizer.Add(txt4, 0, wx.ADJUST_MINSIZE | wx.ALL, 5)
                 if p['prompt'] != 'color':
-                    txt4 = wx.StaticText(which_panel, -1, title + ':',
-                                         wx.Point(-1, -1), wx.Size(-1, -1))
-                    which_sizer.Add(txt4, 0, wx.ADJUST_MINSIZE | wx.ALL, 5)
-
                     self.selection = select.Select(which_panel, id=wx.ID_ANY, size=(250,-1),
                                                    type=p['element'])
                     which_sizer.Add(self.selection, 0, wx.ADJUST_MINSIZE, 5)
                     self.paramdict[self.selection] = ID_PARAM_START + p_count
                     self.selection.Bind(wx.EVT_TEXT, self.EvtText)
                 elif p['prompt'] == 'color':
-                    # TODO: color selector
-                    pass
-#                    btn_colour = csel.ColourSelect(which_panel, -1, "Select color", (200, 200, 200), size = (-1,-1))
-#                    which_sizer.Add(btn_colour, 0, wx.ADJUST_MINSIZE, 5)
-#                    self.paramdict[btn_colour] = ID_PARAM_START + p_count
-#                    self.Bind(csel.EVT_COLOURSELECT, self.onColorButton, btn_colour)
+                    if p['default'] != ''and p['default'][0] in "0123456789":
+                        default_color = tuple(p['default'].split( ':' ))
+                        label_color = p['default']
+                        # TODO: Convert color names to RGB
+                    else:
+                        default_color = (200,200,200)
+                        label_color = 'Select Color'
+                    btn_colour = csel.ColourSelect(which_panel, -1, label_color, default_color )
+                    which_sizer.Add(btn_colour, 0, wx.ADJUST_MINSIZE, 5)
+                    self.paramdict[btn_colour] = ID_PARAM_START + p_count
+                    self.Bind(csel.EVT_COLOURSELECT, self.OnColorButton, btn_colour)
 
         for f_count in range(0, len(grass_task['flags'])):
             f = grass_task['flags'][f_count]
@@ -422,10 +427,13 @@ class mainFrame(wx.Frame):
         self.SetSizer(self.guisizer)
         self.guisizer.Fit(self)
 
-    def onColorButton(self, event):
-        data = event.GetValue()
-        color = str(data[0])+':'+str(data[1])+':'+str(data[2])
-        print 'color = ',color
+
+    def OnColorButton(self, event):
+        colorchooser = wx.FindWindowById( event.GetId() )
+        new_color = colorchooser.GetValue()
+        colorchooser.SetLabel( ':'.join(map(str,new_color)) )
+        colorchooser.SetColour( new_color )
+        colorchooser.Refresh()
         self.getValues()
 
     def getValues(self):
@@ -436,13 +444,14 @@ class mainFrame(wx.Frame):
                 tasktype = 'flags'
                 num = param_num-ID_FLAG_START
                 param_val = item[0].GetValue()
-            elif 'ColourSelect' in str(item[0]):
-                data = item[0].GetValue()
-                param_val = str(data[0])+':'+str(data[1])+':'+str(data[2])
             else:
                 tasktype = 'params'
                 num = param_num-ID_PARAM_START
-                param_val = item[0].GetValue()
+                if 'ColourSelect' in str(item[0]):
+                    data = item[0].GetValue()
+                    param_val = str(data[0])+':'+str(data[1])+':'+str(data[2])
+                else:
+                    param_val = item[0].GetValue()
             grass_task[tasktype][num]['value'] = param_val
 
     def EvtText(self, event):
