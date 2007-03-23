@@ -45,7 +45,7 @@ proc add_tab_col { name type width namedit typedit widthedit } {
     Entry $row.a -width 20 -textvariable columns(name,$tabrow) -bg white
     if { $namedit == 0 } { $row.a configure -state disabled }
     ComboBox $row.b -textvariable columns(type,$tabrow) \
-    	-values {[G_msg "integer"] [G_msg "double precision"] [G_msg "varchar"]} \
+    	-values {"integer" "double precision" "varchar"} \
 		-modifycmd "set_col_type $tabrow" -entrybg white
     if { $typedit == 0 } { $row.b configure -state disabled }
     Entry $row.c -width 10 -textvariable columns(width,$tabrow) -bg white
@@ -62,7 +62,7 @@ proc table_buttons { } {
     global table_page
     set addcol [Button $table_page.addcol -text [G_msg "Add new column"]  \
     	-borderwidth 1\
-        -command { add_tab_col "" [G_msg "integer"] 50 1 1 0 }]
+        -command { add_tab_col "" "integer" 50 1 1 0 }]
     set cretab [Button $table_page.cretab -text [G_msg "Create table"]  \
     	-borderwidth 1\
     	-command { make_table } ]
