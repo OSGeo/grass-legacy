@@ -75,9 +75,30 @@ STRING_ENTRY_WIDTH = 300
 BUTTON_HEIGHT = 44
 BUTTON_WIDTH = 100
 
-grass_task = { 'name' : 'unknown',
-    'description' : 'No description available.',
-    'lines' : 0, 'params' : [], 'flags' : [] }
+t_colors = "red,orange,yellow,green,blue,indigo,violet,white,black,gray,brown,magenta,aqua,grey,cyan,purple"
+t_rgb = ( # From lib/gis/col_str.c
+  (255,  0,  0),
+  (255,128,  0),
+  (255,255,  0),
+  (  0,255,  0),
+  (  0,  0,255),
+  (  0,128,255),
+  (128,  0,255),
+  (255,255,255),
+  (  0,  0,  0),
+  (128,128,128),
+  (180, 77, 25),
+  (255,  0,255),
+  (100,128,255),
+  (128,128,128),
+  (  0,255,255),
+  (128,  0,128)
+)
+t_color = t_colors.split(',')
+named_color = {}
+for c in range(0,len(t_rgb)):
+    named_color[ t_color[c] ] = t_rgb[ c ]
+
 
 def normalize_whitespace(text):
     "Remove redundant whitespace from a string"
@@ -102,6 +123,14 @@ def test_for_broken_SAX():
         return 1
     return 0
 
+class grass_task:
+    pass
+
+grass_task.name = 'unknown'
+grass_task.params = []
+grass_task.description = ''
+grass_task.flags = []
+
 class processTask(HandlerBase):
     def __init__(self):
         self.inDescriptionContent = 0
@@ -113,10 +142,9 @@ class processTask(HandlerBase):
         self.inGuisection = 0
 
     def startElement(self, name, attrs):
-        global grass_task
 
         if name == 'task':
-            grass_task['name'] = attrs.get('name', None)
+            grass_task.name = attrs.get('name', None)
 
         if name == 'parameter':
             self.inParameter = 1;
@@ -131,10 +159,6 @@ class processTask(HandlerBase):
             # Look for the parameter name, type, requiredness
             self.param_name = attrs.get('name', None)
             self.param_type = attrs.get('type', None)
-            if type == 'flag':
-                grass_task['lines'] = grass_task['lines'] + 1
-            else:
-                grass_task['lines'] = grass_task['lines'] + 2
             self.param_required = attrs.get('required', None)
             self.param_multiple = attrs.get('multiple', None)
 
@@ -145,7 +169,6 @@ class processTask(HandlerBase):
             self.flag_values = []
             # Look for the flag name
             self.flag_name = attrs.get('name', None)
-            grass_task['lines'] = grass_task['lines'] + 1
 
         if name == 'description':
             self.inDescriptionContent = 1
@@ -184,11 +207,10 @@ class processTask(HandlerBase):
             self.param_guisection = self.param_guisection + ch
 
     def endElement(self, name):
-        global grass_task
         # If it's not a parameter element, ignore it
         if name == 'parameter':
             self.inParameter = 0;
-            grass_task['params'].append({
+            grass_task.params.append({
                 "name" : self.param_name,
                 "type" : self.param_type,
                 "required" : self.param_required,
@@ -205,8 +227,8 @@ class processTask(HandlerBase):
 
         if name == 'flag':
             self.inFlag = 0;
-            grass_task['flags'].append({
-                "name" : self.param_name,
+            grass_task.flags.append({
+                "name" : self.flag_name,
                 "description" : self.flag_description } )
 
         if name == 'description':
@@ -215,7 +237,7 @@ class processTask(HandlerBase):
             elif self.inFlag:
                 self.flag_description = normalize_whitespace(self.description)
             else:
-                grass_task['description'] = normalize_whitespace(self.description)
+                grass_task.description = normalize_whitespace(self.description)
             self.inDescriptionContent = 0
 
         if name == 'default':
@@ -237,13 +259,12 @@ class mainFrame(wx.Frame):
 
     The dialog is organized in a notebook according to the guisections
     defined by each GRASS command."""
-    def __init__(self, parent, ID, w, h, get_dcmd=None, layer=None):
-        global grass_task
-        wx.Frame.__init__(self, parent, ID, grass_task['name'],
+    def __init__(self, parent, ID, get_dcmd=None, layer=None):
+        wx.Frame.__init__(self, parent, ID, grass_task.name,
             wx.DefaultPosition, style=wx.DEFAULT_FRAME_STYLE | wx.TAB_TRAVERSAL)
 
         self.CreateStatusBar()
-        self.SetStatusText("Enter parameters for " + grass_task['name'])
+        self.SetStatusText("Enter parameters for " + grass_task.name)
         self.parent = parent
         self.selection = '' #selection from GIS element selector
         self.paramdict = {} # dictionary of controls and their parameter values
@@ -253,8 +274,8 @@ class mainFrame(wx.Frame):
         menu = wx.Menu()
         menu.Append(wx.ID_ABOUT, "&About GrassGUI",
             "Information about GrassGUI")
-        menu.Append(ID_ABOUT_COMMAND, "&About " + grass_task['name'],
-            "Short descripton of GRASS command " + grass_task['name'])
+        menu.Append(ID_ABOUT_COMMAND, "&About " + grass_task.name,
+            "Short descripton of GRASS command " + grass_task.name)
         menu.AppendSeparator()
         menu.Append(wx.ID_EXIT, "E&xit", "Terminate the program")
 
@@ -265,7 +286,7 @@ class mainFrame(wx.Frame):
         self.guisizer = wx.BoxSizer(wx.VERTICAL)
 
         is_section = {}
-        for task in grass_task['params']+grass_task['flags']:
+        for task in grass_task.params + grass_task.flags:
             if task.has_key('guisection') and task['guisection'] != '':
                 is_section[task['guisection']] = 1
         sections = is_section.keys()
@@ -289,8 +310,9 @@ class mainFrame(wx.Frame):
         self.panelsizer.Add( self.notebook, flag=wx.EXPAND )
         self.guisizer.Add( self.notebookpanel, flag = wx.EXPAND )
 
-        for p_count in range(0,len(grass_task['params'])):
-            p = grass_task['params'][p_count]
+        p_count = -1
+        for p in grass_task.params:
+            p_count += 1 # Needed for checkboxes hack
             if p.has_key('guisection') and p['guisection'] != '':
                 which_sizer = self.tabsizer[ p['guisection'] ]
                 which_panel = self.tab[ p['guisection'] ]
@@ -314,6 +336,7 @@ class mainFrame(wx.Frame):
                     for defval in p['value'].split(','):
                         isDefault[ defval ] = 'yes'
                     for val in valuelist:
+                        # This is the checkboxes hack
                         idForWX =  ID_MULTI_START + p_count*20 + v_count
                         chkbox = wx.CheckBox( which_panel, idForWX, val+" " )
                         if isDefault.has_key(val): chkbox.SetValue( True )
@@ -355,10 +378,20 @@ class mainFrame(wx.Frame):
                     self.paramdict[self.selection] = ID_PARAM_START + p_count
                     self.selection.Bind(wx.EVT_TEXT, self.EvtText)
                 elif p['prompt'] == 'color':
-                    if p['default'] != ''and p['default'][0] in "0123456789":
-                        default_color = tuple(p['default'].split( ':' ))
-                        label_color = p['default']
-                        # TODO: Convert color names to RGB
+                    if p['default'] != '':
+                        if p['default'][0] in "0123456789":
+                            default_color = tuple(map(int,p['default'].split( ':' )))
+                            label_color = p['default']
+                        else:
+                            # Convert color names to RGB
+                            try:
+                                default_color = named_color[ p['default'] ]
+                                label_color = p['default']
+                                label_color_pad = ' '*(11-len(label_color)/2)
+                                label_color = label_color_pad + label_color + label_color_pad
+                            except KeyError:
+                                default_color = (200,200,200)
+                                label_color = '  Select Color  '
                     else:
                         default_color = (200,200,200)
                         label_color = 'Select Color'
@@ -366,9 +399,9 @@ class mainFrame(wx.Frame):
                     which_sizer.Add(btn_colour, 0, wx.ADJUST_MINSIZE, 5)
                     self.paramdict[btn_colour] = ID_PARAM_START + p_count
                     self.Bind(csel.EVT_COLOURSELECT, self.OnColorButton, btn_colour)
-
-        for f_count in range(0, len(grass_task['flags'])):
-            f = grass_task['flags'][f_count]
+        f_count = -1
+        for f in grass_task.flags:
+            f_count += 1
             if f.has_key('guisection') and f['guisection'] != '':
                 which_sizer = self.tabsizer[ f['guisection'] ]
                 which_panel = self.tab[ f['guisection'] ]
@@ -432,20 +465,19 @@ class mainFrame(wx.Frame):
     def getValues(self):
         for item in self.paramdict.items():
             param_num = item[1]
-
             if 'CheckBox' in str(item[0]):
-                tasktype = 'flags'
+                tasktype = grass_task.flags
                 num = param_num-ID_FLAG_START
                 param_val = item[0].GetValue()
             else:
-                tasktype = 'params'
+                tasktype = grass_task.params
                 num = param_num-ID_PARAM_START
                 if 'ColourSelect' in str(item[0]):
                     data = item[0].GetValue()
                     param_val = str(data[0])+':'+str(data[1])+':'+str(data[2])
                 else:
                     param_val = item[0].GetValue()
-            grass_task[tasktype][num]['value'] = param_val
+            tasktype[num]['value'] = param_val
 
     def EvtText(self, event):
         self.getValues()
@@ -462,36 +494,34 @@ class mainFrame(wx.Frame):
         theCheckedId = (event.GetId()-ID_MULTI_START ) % 20
         # Unpack current value list
         currentValues={}
-        for isThere in grass_task['params'][theParamId]['value'].split(','):
+        for isThere in grass_task.params[theParamId]['value'].split(','):
             currentValues[isThere] = 1
-        theValue = grass_task['params'][theParamId]['values'][theCheckedId]
+        theValue = grass_task.params[theParamId]['values'][theCheckedId]
         if event.Checked():
             currentValues[ theValue ] = 1
         else:
             del currentValues[ theValue ]
         # Pack it back
-        grass_task['params'][theParamId]['value'] = ','.join( currentValues.keys() )
+        grass_task.params[theParamId]['value'] = ','.join( currentValues.keys() )
 
     def createCmd(self):
         """Produce a command line string for feeding into GRASS."""
-        cmd = grass_task['name']
+        cmd = grass_task.name
         errors = 0
         errStr = ""
-
-        for p_count in range(0, len(grass_task['params'])):
-            p = grass_task['params'][p_count]
-            if (p['type'] != 'flag' and p['value'] == '' and p['required'] != 'no'):
+        for flag in grass_task.flags:
+            if flag['value']:
+                cmd += ' -' + flag['name']
+        for p in grass_task.params:
+            if p['value'] == '' and p['required'] != 'no':
                 errStr += "Parameter " + p['name'] + "(" + p['description'] + ") is missing\n"
                 errors += 1
-            if (p['type'] == 'flag'):
-                if (grass_task['params'][p_count]['value'] == 'checked'):
-                    cmd += ' -' + grass_task['params'][p_count]['name']
-            if (p['type'] != 'flag' and p['value'] != ''):
+            if p['value'] != '' and p['value'] != p['default'] :
                 cmd += ' ' + p['name'] + '=' + p['value']
         if errors:
             self.OnError(errStr)
             return None
-
+#        print cmd
         return cmd
 
     def OnOK(self, event):
@@ -539,12 +569,13 @@ class mainFrame(wx.Frame):
 
     def OnCancel(self, event):
         self.Close(True)
+        for t in self.tab.values(): t = None
+        for t in self.tabsizer.values(): t.Clear(True)
+        self.notebook.Destroy()
+        self.guisizer.Clear(True)
+        self.Destroy()
 
     def OnCloseWindow(self, event):
-        global grass_task
-        grass_task = { 'name' : 'unknown',
-            'description' : 'No description available.',
-            'lines' : 0, 'params' : [], 'flags' : [] }
         self.Destroy()
 
     def OnAbout(self, event):
@@ -557,8 +588,8 @@ class mainFrame(wx.Frame):
 
     def OnAboutCommand(self, event):
         dlg = wx.MessageDialog(self,
-            grass_task['name']+": "+grass_task['description'],
-            "About " + grass_task['name'],
+            grass_task.name+": "+grass_task.description,
+            "About " + grass_task.name,
             wx.OK | wx.ICON_INFORMATION)
         dlg.ShowModal()
         dlg.Destroy()
@@ -566,26 +597,15 @@ class mainFrame(wx.Frame):
 
 class GrassGUIApp(wx.App):
     def OnInit(self):
-        global grass_task
-        grass_task = { 'name' : 'unknown',
-            'description' : 'No description available.',
-            'lines' : 0, 'params' : [], 'flags' : [] }
-        self.w = HSPACE + STRING_ENTRY_WIDTH + HSPACE
-        self.h = MENU_HEIGHT + VSPACE + grass_task['lines'] * ENTRY_HEIGHT + VSPACE + BUTTON_HEIGHT + VSPACE + STATUSBAR_HEIGHT
-        self.frame = mainFrame(None, -1, self.w, self.h)
+        self.frame = mainFrame(None, -1)
         self.frame.Show(True)
         self.SetTopWindow(self.frame)
         return True
 
 class GUI:
-    def __init__(self,parent=-1):
+    def __init__(self, parent=-1):
         '''Parses GRASS commands when module is imported and used
         from gism.py'''
-        global grass_task
-        grass_task = { 'name' : 'unknown',
-            'description' : 'No description available.',
-            'lines' : 0, 'params' : [], 'flags' : [] }
-        self.w = HSPACE + STRING_ENTRY_WIDTH + HSPACE
         self.parent = parent
 
     def parseCommand(self, cmd, gmpath, completed=None, parentframe=-1 ):
@@ -612,8 +632,7 @@ class GUI:
             handler = processTask()
             xml.sax.parseString(cmdout2, handler)
 
-        self.h = MENU_HEIGHT + VSPACE + grass_task['lines'] * ENTRY_HEIGHT + VSPACE + BUTTON_HEIGHT + VSPACE + STATUSBAR_HEIGHT
-        mf = mainFrame(self.parent ,-1, self.w, self.h, self.get_dcmd, layer)
+        mf = mainFrame(self.parent ,-1, self.get_dcmd, layer)
         mf.Show(True)
 
 if __name__ == "__main__":
