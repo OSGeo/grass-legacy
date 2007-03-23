@@ -27,6 +27,11 @@
 #   HMreset_win .text
 # See "sample.tcl" for sample usage
 ##################################################################
+
+# Include the select dialog code because it defines scroll bindings
+source $env(GISBASE)/etc/gtcltk/select.tcl
+
+
 ############################################
 # mapping of html tags to text tag properties
 # properties beginning with "T" map directly to text tags
