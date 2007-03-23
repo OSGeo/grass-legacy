@@ -444,16 +444,19 @@ class mainFrame(wx.Frame):
             self.tabsizer[section].Fit( self.tab[section] )
             self.tab[section].SetAutoLayout(True)
             self.tab[section].SetSizer( self.tabsizer[section] )
+            self.tab[section].Layout()
 
-        self.panelsizer.Fit( self.notebookpanel )
+#        self.panelsizer.Fit( self.notebookpanel )
         self.panelsizer.SetSizeHints( self.notebookpanel )
         self.notebookpanel.SetSizer(self.panelsizer)
         self.notebookpanel.SetAutoLayout(True)
+        self.notebookpanel.Layout()
 
         self.guisizer.SetSizeHints(self)
         self.SetAutoLayout(True)
         self.SetSizer(self.guisizer)
-        self.guisizer.Fit(self)
+#        self.guisizer.Fit(self)
+        self.Layout()
 
 
     def OnColorButton(self, event):
@@ -512,7 +515,7 @@ class mainFrame(wx.Frame):
         errors = 0
         errStr = ""
         for flag in grass_task.flags:
-            if flag['value']:
+            if 'value' in flag:
                 cmd += ' -' + flag['name']
         for p in grass_task.params:
             if p['value'] == '' and p['required'] != 'no':
@@ -523,7 +526,6 @@ class mainFrame(wx.Frame):
         if errors:
             self.OnError(errStr)
             return None
-#        print cmd
         return cmd
 
     def OnOK(self, event):
