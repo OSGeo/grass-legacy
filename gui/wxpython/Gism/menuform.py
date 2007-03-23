@@ -126,10 +126,12 @@ def test_for_broken_SAX():
 class grass_task:
     pass
 
-grass_task.name = 'unknown'
-grass_task.params = []
-grass_task.description = ''
-grass_task.flags = []
+def grass_task_init():
+    grass_task.name = 'unknown'
+    grass_task.params = []
+    grass_task.description = ''
+    grass_task.flags = []
+grass_task_init()
 
 class processTask(HandlerBase):
     def __init__(self):
@@ -573,9 +575,11 @@ class mainFrame(wx.Frame):
         for t in self.tabsizer.values(): t.Clear(True)
         self.notebook.Destroy()
         self.guisizer.Clear(True)
+        grass_task_init()
         self.Destroy()
 
     def OnCloseWindow(self, event):
+        grass_task_init()
         self.Destroy()
 
     def OnAbout(self, event):
