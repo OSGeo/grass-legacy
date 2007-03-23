@@ -34,7 +34,7 @@ Input coordinates may be given directly from <tt>stdin</tt>, for example:
 <BR> (input data appears between the "<tt>EOF</tt>" markers)
 
 <div class="code"><pre>
-<b> r.what input=</b>soils,aspect << EOF
+r.what input=soils,aspect << EOF
 635342.21 7654321.09 site 1
 653324.88 7563412.42 site 2
 EOF
@@ -44,7 +44,7 @@ EOF
 </pre></div>
 
 <div class="code"><pre>
- echo "635342.21 7654321.09" | <b>r.what input=</b>soils,aspect
+echo "635342.21 7654321.09" | r.what input=soils,aspect
 
 635342.21|7654321.09|45|21
 </pre></div>
@@ -57,7 +57,7 @@ as follows. If we have a file called <i>input_coord.txt</i> containing the
 coordinates and labels given in the example above:
 
 <div class="code"><pre>
-<b> r.what input</B>=soils,aspect < <i>input_coord.txt</i>
+r.what input=soils,aspect < input_coord.txt
 
 635342.21|7654321.09|site 1|45|21
 653324.88|7563412.42|site 2|44|20
@@ -71,7 +71,7 @@ pairs directly. The maximum number of pairs will be limited by your system's
 maximum input line length (e.g. 4096 characters).
 
 <div class="code"><pre>
-<B> r.what input=</B>soils,aspect <B>east_north=</B>635342.21,7654321.09,653324.88,7563412.42
+r.what input=soils,aspect east_north=635342.21,7654321.09,653324.88,7563412.42
 
 635342.21|7654321.09|45|21
 653324.88|7563412.42|44|20
@@ -84,7 +84,7 @@ The input coordinates may be "piped" from the <tt>stdout</tt> of another program
 For example:
 
 <div class="code"><pre>
-<b> d.where | r.what input</B>=soils,aspect
+d.where | r.what input=soils,aspect
 
 635342.21|7654321.09|45|21
 653324.88|7563412.42|44|20
@@ -97,7 +97,7 @@ spaces for <em>r.what</em>.
 
 
 <div class="code"><pre>
-<b> v.out.ascii</b> bugsites | tr '|' ' ' | <b>r.what input</B>=soils,aspect
+v.out.ascii bugsites fs=' ' | r.what input=soils,aspect
 </pre></div>
 
 <h4>Output containing raster map category labels</h4>
@@ -106,7 +106,7 @@ Here we use the <B>-f</B> label flag to enable the output of category labels
 associated with the raster cell(s), as well as values. (categorical maps only)
 
 <div class="code"><pre>
-<B> r.what -f input=</B>soils,aspect << EOF
+r.what -f input=soils,aspect << EOF
 635342.21 7654321.09 site 1
 653324.88 7563412.42 site 2
 EOF
