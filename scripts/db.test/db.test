@@ -45,21 +45,21 @@ do
     echo "$SQL"
 
     # Copy expected result to temp file
-    
+
     cat /dev/null > $expected
 
     if [ $TYPE = "X" ]
     then
         echo "$SQL" | db.execute
-    else 
+    else
         echo "$SQL" | db.select -c > $result
     fi
-    
+
     if [ $? -ne 0 ]
     then
-        echo "EXECUTE: ******** ERROR ********"
+        g.message -e "EXECUTE: ******** ERROR ********" 
     else
-        echo "EXECUTE: OK"
+        g.message "EXECUTE: OK" 
     fi
 
     while read RES
@@ -71,15 +71,15 @@ do
 	echo $RES >> $expected
     done
 
-    if [ $TYPE = "S" ] 
-    then 
+    if [ $TYPE = "S" ]
+    then
 	diff $result $expected
 
 	if [ $? -ne 0 ]
 	then
-	    echo "RESULT: ******** ERROR ********"
+            g.message -e "RESULT: ******** ERROR ********" 
 	else
-	    echo "RESULT: OK"
+            g.message "RESULT: OK" 
 	fi
     fi
 
