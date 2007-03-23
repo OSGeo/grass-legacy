@@ -22,6 +22,12 @@
 #include <grass/dbmi.h>
 #include <grass/glocale.h>
 
+/*
+ * local macros
+ */
+#define GV_NODE   1
+#define GV_VERTEX 2
+
 static int point_cat;
 static struct line_cats *PCats; 
 static struct line_pnts *PPoints;
@@ -51,7 +57,7 @@ void write_point ( struct Map_info *Out, double x, double y, double z, int line_
 	db_append_string ( &stmt, buf);
 
 	if (db_execute_immediate (driver, &stmt) != DB_OK ) {
-	    G_warning ( _("Cannot insert new row: %s"), db_get_string ( &stmt ) );
+	    G_warning ( _("Cannot insert new record: %s"), db_get_string ( &stmt ) );
 	}
     }
     point_cat++;
@@ -60,7 +66,7 @@ void write_point ( struct Map_info *Out, double x, double y, double z, int line_
 void write_line ( struct Map_info *Out, struct line_pnts *LPoints, int cat, 
 	          int vertex, int interpolate, double dmax, int table )
 { 
-    if ( vertex ) { /* use line vertices */
+    if ( vertex == GV_VERTEX || vertex == GV_NODE ) { /* use line vertices */
 	double along;
 	int vert;
 
@@ -68,8 +74,11 @@ void write_line ( struct Map_info *Out, struct line_pnts *LPoints, int cat,
 	for ( vert = 0; vert < LPoints->n_points; vert++ ) {
 	    G_debug ( 3, "vert = %d", vert );
 
-	    write_point ( Out, LPoints->x[vert], LPoints->y[vert], LPoints->z[vert], cat, along, 
-			  table );
+	    if (vertex == GV_VERTEX ||
+		(vertex == GV_NODE && (vert == 0 || vert == LPoints -> n_points - 1))) {
+		write_point ( Out, LPoints->x[vert], LPoints->y[vert], LPoints->z[vert], cat, along, 
+			      table );
+	    }
 
 	    if ( vert < LPoints->n_points - 1) {  
 		double dx, dy, dz, len;
@@ -135,10 +144,10 @@ void write_line ( struct Map_info *Out, struct line_pnts *LPoints, int cat,
 
 int main(int argc, char **argv)
 {
-    int    field, type;
+    int    field, type, vertex_type;
     double dmax;
     struct Option *in_opt, *out_opt, *type_opt, *dmax_opt, *lfield_opt;
-    struct Flag *inter_flag, *vertex_flag, *table_flag;
+    struct Flag *inter_flag, *vertex_flag, *table_flag, *node_flag;
     struct GModule *module;
     char   *mapset;
     struct Map_info In, Out;
@@ -153,37 +162,41 @@ int main(int argc, char **argv)
     module->description = _("Create points along input lines in new vector with 2 layers.");
 
     in_opt = G_define_standard_option(G_OPT_V_INPUT);
-    in_opt->description = _("Input map containing lines");
+    in_opt->description = _("Input vector map containing lines");
+
+    out_opt = G_define_standard_option(G_OPT_V_OUTPUT); 
+    out_opt->description = _("Output vector map where points will be written");
 
     type_opt = G_define_standard_option(G_OPT_V_TYPE) ;
     type_opt->answer = "point,line,boundary,centroid";
-    
-    out_opt = G_define_standard_option(G_OPT_V_OUTPUT); 
-    out_opt->description = _("Output map where points will be written");
 
     lfield_opt = G_define_standard_option(G_OPT_V_FIELD);
     lfield_opt->key = "llayer";
     lfield_opt->answer = "1";
     lfield_opt->description = "Line layer";
 
+    node_flag = G_define_flag ();
+    node_flag->key = 'n';
+    node_flag->description = _("Write line nodes");
+
     vertex_flag = G_define_flag ();
     vertex_flag->key = 'v';
-    vertex_flag->description = _("Write line vertices.");
+    vertex_flag->description = _("Write line vertices");
 
     inter_flag = G_define_flag ();
     inter_flag->key = 'i';
-    inter_flag->description = _("Interpolate points between line vertices.");
+    inter_flag->description = _("Interpolate points between line vertices");
 
     dmax_opt = G_define_option ();
     dmax_opt->key = "dmax";
     dmax_opt->type = TYPE_DOUBLE;
     dmax_opt->required = NO;
     dmax_opt->answer = "100";
-    dmax_opt->description = _("Maximum distance between points in map units.");
+    dmax_opt->description = _("Maximum distance between points in map units");
     
     table_flag = G_define_flag ();
     table_flag->key = 't';
-    table_flag->description = _("Do not create attribute table.");
+    table_flag->description = _("Do not create attribute table");
     
     if(G_parser(argc,argv)) exit(EXIT_FAILURE);
 
@@ -196,12 +209,25 @@ int main(int argc, char **argv)
     field = atoi (lfield_opt->answer);
     type = Vect_option_to_types ( type_opt );
     dmax = atof ( dmax_opt->answer );
+ 
+    if (node_flag -> answer && vertex_flag -> answer)
+	G_fatal_error (_("Use either -n or -v flag, not both"));
+
+    if (node_flag -> answer)
+	vertex_type = GV_NODE;
+    else if (vertex_flag -> answer)
+	vertex_type = GV_VERTEX;
+    else
+	vertex_type = 0;
 
     Vect_check_input_output_name ( in_opt->answer, out_opt->answer, GV_FATAL_EXIT );
 
     /* Open input lines */
     mapset = G_find_vector2 (in_opt->answer, NULL); 
-    if(mapset == NULL) G_fatal_error ( _("Could not find input %s\n"), in_opt->answer);
+    if(mapset == NULL)
+	G_fatal_error (_("Vector map <%s> not found"),
+		       in_opt->answer);
+
     Vect_set_open_level ( 2 );
     Vect_open_old (&In, in_opt->answer, mapset); 
     
@@ -237,7 +263,7 @@ int main(int argc, char **argv)
 	/* Open driver */
 	driver = db_start_driver_open_database ( Fi->driver, Fi->database );
 	if ( driver == NULL )
-	      G_fatal_error ( _("Cannot open database %s by driver %s"), Fi->database, Fi->driver );
+	      G_fatal_error ( _("Cannot open database <%s> by driver <%s>"), Fi->database, Fi->driver );
 
 	sprintf ( buf, "create table %s ( cat int, lcat int, along double precision )", Fi->table );
 	db_append_string ( &stmt, buf);
@@ -251,7 +277,8 @@ int main(int argc, char **argv)
 	    G_warning ( _("Cannot create index") );
 
 	if (db_grant_on_table (driver, Fi->table, DB_PRIV_SELECT, DB_GROUP|DB_PUBLIC ) != DB_OK )
-	    G_fatal_error ( _("Cannot grant privileges on table %s"), Fi->table );
+	    G_fatal_error ( _("Cannot grant privileges on table <%s>"),
+			    Fi->table );
 
 	db_begin_transaction ( driver );
     }
@@ -274,7 +301,7 @@ int main(int argc, char **argv)
 	    if (  LPoints->n_points <= 1 ) {
 		write_point ( &Out, LPoints->x[0], LPoints->y[0], LPoints->z[0], cat, 0.0, table_flag->answer);
 	    } else { /* lines */
-                write_line ( &Out, LPoints, cat, vertex_flag->answer, inter_flag->answer, 
+                write_line ( &Out, LPoints, cat, vertex_type, inter_flag->answer, 
 			     dmax, table_flag->answer );
 	    }
 	}
@@ -296,7 +323,7 @@ int main(int argc, char **argv)
 	    
 	    Vect_get_area_points ( &In, area, LPoints );
 
-	    write_line ( &Out, LPoints, cat, vertex_flag->answer, inter_flag->answer, 
+	    write_line ( &Out, LPoints, cat, vertex_type, inter_flag->answer, 
 			 dmax, table_flag->answer );
 
 	    nisles = Vect_get_area_num_isles (&In, area);
@@ -305,7 +332,7 @@ int main(int argc, char **argv)
 		isle = Vect_get_area_isle (&In, area, i);
 		Vect_get_isle_points ( &In, isle, LPoints );
 
-		write_line ( &Out, LPoints, cat, vertex_flag->answer, inter_flag->answer, 
+		write_line ( &Out, LPoints, cat, vertex_type, inter_flag->answer, 
 			     dmax, table_flag->answer );
 	    }
 	}
@@ -322,8 +349,8 @@ int main(int argc, char **argv)
     Vect_close(&In);
     Vect_close(&Out);
 
-    G_message ( _("%d points written to output map\n"), point_cat - 1);
+    G_message (_("[%d] points written to output vector map"),
+	       point_cat - 1);
 
     exit(EXIT_SUCCESS);
 }
-
