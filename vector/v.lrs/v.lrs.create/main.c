@@ -109,6 +109,7 @@ int main(int argc, char **argv)
     dbColumn *lcolumn, *pcolumn;
     dbValue  *lvalue, *pvalue;
     int lcoltype, lccoltype;
+    int debug=2;
 
     G_gisinit (argv[0]) ;
 
@@ -213,7 +214,7 @@ int main(int argc, char **argv)
     pfield = atoi (pfield_opt->answer);
     thresh = atof (thresh_opt->answer);
 
-    G_debug(2, "Creating LRS ...");
+    G_debug(debug, "Creating LRS ...");
     
     /* Open input lines */
     mapset = G_find_vector2 (in_lines_opt->answer, NULL); 
@@ -271,7 +272,7 @@ int main(int argc, char **argv)
     sprintf ( buf, "create table %s (rsid int, lcat int, lid int, start_map double precision, "
 	    "end_map double precision, start_mp double precision, start_off double precision, "
 	    "end_mp double precision, end_off double precision, end_type int)", table_opt->answer);
-    G_debug(2, "ref tab SQL: %s", buf);
+    G_debug(debug, "ref tab SQL: %s", buf);
     db_init_string ( &rsstmt );
     db_append_string ( &rsstmt, buf);
     if ( db_execute_immediate (rsdriver, &rsstmt) != DB_OK )
@@ -279,7 +280,7 @@ int main(int argc, char **argv)
 
     /* Select all lid from line table */
     sprintf ( buf, "select %s from %s", lidcol_opt->answer, Lfi->table );
-    G_debug(2, "line tab lid SQL: %s", buf);
+    G_debug(debug, "line tab lid SQL: %s", buf);
     db_append_string ( &lstmt, buf);
     if (db_open_select_cursor(ldriver, &lstmt, &lcursor, DB_SEQUENTIAL) != DB_OK)
         G_fatal_error ("Cannot select line id values from %s.%s.", Lfi->table, lidcol_opt->answer);
@@ -296,7 +297,7 @@ int main(int argc, char **argv)
     lvalue  = db_get_column_value(lcolumn);
 
     /* Fetch all line id and store it as unique value */
-    G_debug(2, "Fetch all line id");
+    G_debug(debug, "Fetch all line id");
     nLid = 0;
     aLid = 1;
     Lid_int = (int *) G_malloc ( aLid * sizeof (int) );
@@ -310,13 +311,13 @@ int main(int argc, char **argv)
 	found = 0;
 	for ( i = 0; i < nLid; i++ ) {
 	    if ( Lid_int[i] == lid ) {
-                G_debug(2, "lid = %d (duplicate)", lid);
+                G_debug(debug, "lid = %d (duplicate)", lid);
                 found = 1;
 		break;
 	    }
 	}
 	if ( !found ) { /* add new lid */
-            G_debug(2, "lid = %d (new)", lid);
+            G_debug(debug, "lid = %d (new)", lid);
 	    if ( nLid == aLid ) {
 	        aLid += 1;
 		Lid_int = (int *) G_realloc ( Lid_int, aLid * sizeof (int) );
@@ -333,17 +334,17 @@ int main(int argc, char **argv)
     mposts = (MILEPOST *) G_malloc ( Vect_get_num_lines(&PMap) * sizeof(MILEPOST) );
     
     /* Go throuhg each line id */
-    G_debug(2, "Process each line id");
+    G_debug(debug, "Process each line id");
     rsid = 1;
     for ( i = 0; i < nLid; i++ ) {
 	lid = Lid_int[i];
-        G_debug(2, "lid = %d", lid);
+        G_debug(debug, "lid = %d", lid);
 
 	/* Select all LINES for current lid */
 	
         sprintf ( buf, "%s = %d", lidcol_opt->answer, lid );
 	ncat = db_select_int( ldriver, Lfi->table, Lfi->key, buf, &cats);
-        G_debug(2, "  %d cats selected:", ncat);
+        G_debug(debug, "  %d cats selected:", ncat);
 	
 	/* Go through all lines and store numbers of those matching category */
 	nrlines = 0;
@@ -366,7 +367,7 @@ int main(int argc, char **argv)
 		}
 	    }
 	} 
-	G_debug(2, "  %d lines selected for line id %d", nrlines, lid);
+	G_debug(debug, "  %d lines selected for line id %d", nrlines, lid);
         free ( cats );
 
 	if ( nrlines == 0 ) {
@@ -384,7 +385,7 @@ int main(int argc, char **argv)
 	       start_mp_opt->answer, start_off_opt->answer, 
 	       end_mp_opt->answer, end_off_opt->answer,
 	       Pfi->table, pidcol_opt->answer, lid );
-        G_debug(2, "  SQL: %s", buf);
+        G_debug(debug, "  SQL: %s", buf);
 	db_init_string ( &pstmt );
         db_append_string ( &pstmt, buf);
 
@@ -454,7 +455,7 @@ int main(int argc, char **argv)
 	}
         db_close_cursor(&pcursor); 
 
-        G_debug(2, "  %d mileposts selected from db", nmposts);
+        G_debug(debug, "  %d mileposts selected from db", nmposts);
 	
 	/* Go through all points and store numbers of those matching category and within
 	*  threshold of any line*/
@@ -473,7 +474,7 @@ int main(int argc, char **argv)
 		}
 	    }
 	    if ( mpost >= 0 ) {
-	        G_debug(2, "  Point %d:", point);
+	        G_debug(debug, "  Point %d:", point);
 		mposts[mpost].line_idx = ERR_OK;
 		mposts[mpost].x = PPoints->x[0];
 		mposts[mpost].y = PPoints->y[0];
@@ -485,7 +486,7 @@ int main(int argc, char **argv)
 	            Vect_read_line ( &In, LPoints, NULL, line);
 		    Vect_line_distance ( LPoints, PPoints->x[0], PPoints->y[0], 0, 0,
 			                 NULL, NULL, NULL, &dist_to, NULL, &dist_along);
-		    G_debug(2, " line %d dist to line = %f, dist along line = %f", 
+		    G_debug(debug, " line %d dist to line = %f, dist along line = %f", 
 			                 line, dist_to, dist_along); 
 		    if ( dist_to < distance_to ) {
 			distance_to = dist_to;
@@ -495,9 +496,9 @@ int main(int argc, char **argv)
 		}
 		/* Check if in threshold*/
 		if ( distance_to <= thresh ) {
-		    G_debug(2, "Point = %d cat = %d line = %d, distance = %f", 
+		    G_debug(debug, "Point = %d cat = %d line = %d, distance = %f", 
 			         point, cat, mposts[mpost].line_idx, distance_to );
-		    G_debug(2, "  start_mp = %f start_off = %f end_mp = %f end_off = %f", 
+		    G_debug(debug, "  start_mp = %f start_off = %f end_mp = %f end_off = %f", 
 			       mposts[mpost].start_mp, mposts[mpost].start_off,
 			       mposts[mpost].end_mp, mposts[mpost].end_off);
 		} else {
@@ -508,7 +509,7 @@ int main(int argc, char **argv)
 		}
 	    }  
 	} 
-	G_debug(2, "  %d points attached to line(s) of line id %d", nmposts, lid);
+	G_debug(debug, "  %d points attached to line(s) of line id %d", nmposts, lid);
 	
 	/* Sort MPs according to line_idx, and dist_along */
 	qsort ( (void *)mposts, nmposts, sizeof(MILEPOST), cmp_along );
@@ -521,12 +522,12 @@ int main(int argc, char **argv)
 		break;
 	    }
 	}
-        G_debug(2, "  %d mileposts attached to line(s)", nmposts);
+        G_debug(debug, "  %d mileposts attached to line(s)", nmposts);
 	
 	/* Go thourough all attached MPs and fill in info about MPs to 'lines' table */
 	last = -1;
 	for (j = 0; j < nmposts; j++ ) {
-            G_debug(2, " line_idx = %d, point cat = %d dist_along = %f", mposts[j].line_idx,
+            G_debug(debug, " line_idx = %d, point cat = %d dist_along = %f", mposts[j].line_idx,
                                        mposts[j].cat, mposts[j].dist_along );
 	    
 	    if ( mposts[j].line_idx != last) { /* line_index changed */
@@ -542,7 +543,7 @@ int main(int argc, char **argv)
 	 * 2) Guess direction: find direction for each segment between 2 MPs and at the end
 	 *  compare number of segmnets in both directions, if equal assign DIR_UNKNOWN. */
 	for (j = 0; j < nrlines; j++ ) {
-            G_debug(2, " Guess direction line_idx = %d, cat = %d, nmposts = %d first_mpost_idx = %d", 
+            G_debug(debug, " Guess direction line_idx = %d, cat = %d, nmposts = %d first_mpost_idx = %d", 
 		              j, rlines[j].cat, rlines[j].nmposts, rlines[j].first_mpost_idx);
 
 	    forward = 0; backward = 0;
@@ -566,26 +567,26 @@ int main(int argc, char **argv)
 		       ( mposts[k].start_off < mposts[k+1].start_off) ) )
 		{
 		    forward++;      
-		    G_debug(2, "    segment direction forward"); 
+		    G_debug(debug, "    segment direction forward %d", mposts[k].cat);
 		} else {
 		    backward++;
-		    G_debug(2, "    segment direction backward"); 
+		    G_debug(debug, "    segment direction backward %d", mposts[k].cat);
 		}
 	    }
-	    G_debug(2, "  forward = %d backward = %d", forward, backward); 
+	    G_debug(debug, "  forward = %d backward = %d", forward, backward); 
 	    if ( forward > backward ) {
 		rlines[j].direction = DIR_FORWARD;      
-		G_debug(2, "  line direction forward"); 
+		G_debug(debug, "  line direction forward"); 
 	    } else if ( forward < backward ){
 		rlines[j].direction = DIR_BACKWARD;      
 		/* Recalculate distances from the other end */
 		for (k = first; k <= last; k++ )
 		    mposts[k].dist_along = rlines[j].length - mposts[k].dist_along;
 			
-		G_debug(2, "  line direction backward"); 
+		G_debug(debug, "  line direction backward"); 
 	    } else {
 		rlines[j].err = ERR_NO_DIR;
-		G_debug(2, "  line direction unknown"); 
+		G_debug(debug, "  line direction unknown"); 
 	    }
 	}
 	
@@ -594,7 +595,7 @@ int main(int argc, char **argv)
 
         /* Check order of MPs along the line and write LRS for line */
 	for (j = 0; j < nrlines; j++ ) {
-            G_debug(2, "MAKE LR: line_idx = %d, nmposts = %d first_mpost_idx = %d", 
+            G_debug(debug, "MAKE LR: line_idx = %d, nmposts = %d first_mpost_idx = %d", 
 		              j, rlines[j].nmposts, rlines[j].first_mpost_idx);
 
 
@@ -605,12 +606,12 @@ int main(int argc, char **argv)
 	    order = 0; /* wrong order in case nmposts < 2 or DIR_UNKNOWN */
 	    if (  rlines[j].nmposts >= 2 && rlines[j].direction != DIR_UNKNOWN ) {
 		/* Note: some MP could have more errors at the time, only first is recorded */
-		G_debug(2, "Check order of MPs along the line"); 
+		G_debug(debug, "Check order of MPs along the line"); 
 		order = 1; /* first we expect that MP order is OK */
 		for (k = first; k <= last; k++ ) {
-		    G_debug(2, "  point cat = %d dist_along = %f", mposts[k].cat, 
+		    G_debug(debug, "  point cat = %d dist_along = %f", mposts[k].cat, 
 					       mposts[k].dist_along );
-		    G_debug(2, "    start_mp = %f start_off = %f end_mp = %f end_off = %f", 
+		    G_debug(debug, "    start_mp = %f start_off = %f end_mp = %f end_off = %f", 
 			       mposts[k].start_mp, mposts[k].start_off,
 			       mposts[k].end_mp, mposts[k].end_off);
 
@@ -688,7 +689,7 @@ int main(int argc, char **argv)
 	    }
 
 	    /* Order is correct and we can store reference records for this line */
-	    G_debug(2, "  lcat |   lid | start_map |   end_map |  start_mp | start_off |    end_mp |   end_off | end type"); 
+	    G_debug(debug, "  lcat |   lid | start_map |   end_map |  start_mp | start_off |    end_mp |   end_off | end type"); 
 	    for (k = first; k < last; k++ ) {
 		/* Decide which value to use for end */
 		if ( mposts[k+1].end_mp > 0 ||  mposts[k+1].end_off > 0 ) { /* TODO: use NULL ? */
@@ -700,7 +701,7 @@ int main(int argc, char **argv)
 		   end_mp = mposts[k+1].start_mp;
 		   end_off = mposts[k+1].start_off;
 		}  
-		G_debug(2, " %5d | %5d | %9.3f | %9.3f | %9.3f | %9.3f | %9.3f | %9.3f | %1d", 
+		G_debug(debug, " %5d | %5d | %9.3f | %9.3f | %9.3f | %9.3f | %9.3f | %9.3f | %1d", 
 			   rlines[j].cat, lid,
 			   mposts[k].dist_along, mposts[k+1].dist_along,
 			   mposts[k].start_mp, mposts[k].start_off,
@@ -713,7 +714,7 @@ int main(int argc, char **argv)
 			   mposts[k].dist_along, mposts[k+1].dist_along,
 			   mposts[k].start_mp, mposts[k].start_off,
 			   end_mp, end_off, totype);
-		G_debug(2, "  SQL: %s", buf);
+		G_debug(debug, "  SQL: %s", buf);
 		db_init_string ( &rsstmt );
 		db_append_string ( &rsstmt, buf);
 		if ( db_execute_immediate (rsdriver, &rsstmt) != DB_OK )
