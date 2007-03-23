@@ -1,9 +1,9 @@
-#!/bin/sh
+ #!/bin/sh
 ############################################################################
 #
-# MODULE:	d.monsize, v 1.6 for GRASS 6.0 (2004/12/07) 
+# MODULE:	d.monsize, v 1.6 for GRASS 6.0 (2004/12/07)
 #		based on d.monsize for GRASS 5
-# AUTHOR(S):	Unknown; 
+# AUTHOR(S):	Unknown;
 #		updated to GRASS 5.7 by Michael Barton (michael.barton@asu.edu)
 # PURPOSE:	selects/starts specified monitor at specified window size
 # COPYRIGHT:	(C) 2004 by the GRASS Development Team
@@ -50,7 +50,7 @@
 if test -z "$GISBASE"; then
  echo "You must be in GRASS GIS to run this program." >&2
  exit 1
-fi   
+fi
 
 if [ "$1" != "@ARGS_PARSED@" ] ; then
   exec g.parser "$0" "$@"
@@ -72,24 +72,21 @@ st3=`echo $st2|perl -pne 's/^\s+//g'`
 if [ -z "$st3" ]
 then
   # No monitor running so start a new one....
-  echo
-  echo "No monitor selected"
-  echo "Starting monitor $GIS_OPT_SETMONITOR of size $GIS_OPT_SETWIDTHX$GIS_OPT_SETHEIGHT ..."
+    g.message "No monitor selected"
+    g.message "Starting monitor $GIS_OPT_SETMONITOR of size $GIS_OPT_SETWIDTHX$GIS_OPT_SETHEIGHT ..."
   d.mon start=$GIS_OPT_SETMONITOR
 else
   if [ "$GIS_OPT_SETMONITOR" = "$st3" ]
   then
     # Monitor is already running...stop it and start new one
     d.mon stop=$GIS_OPT_SETMONITOR
-    echo
-    echo "Monitor already running and selected"
-    echo "Restarting monitor $GIS_OPT_SETMONITORAT size $GIS_OPT_SETWIDTHX$GIS_OPT_SETHEIGHT ..."
+    g.message "Monitor already running and selected"
+    g.message "Restarting monitor $GIS_OPT_SETMONITORAT size $GIS_OPT_SETWIDTHX$GIS_OPT_SETHEIGHT ..."
     sleep 4
     d.mon start=$GIS_OPT_SETMONITOR
   else
-    echo
-    echo "A different monitor is selected"
-    echo "Selecting and restarting monitor $GIS_OPT_SETWIDTHX$GIS_OPT_SETHEIGHT..."
+    g.message "A different monitor is selected"
+    g.message "Selecting and restarting monitor $GIS_OPT_SETWIDTHX$GIS_OPT_SETHEIGHT..."
     #d.mon select=$GIS_OPT_SETMONITOR
     d.mon stop=$GIS_OPT_SETMONITOR
     sleep 4
