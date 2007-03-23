@@ -233,6 +233,10 @@ sub DoFont {
   s#</I> *<I># #ig;
   s#<I>#\\fI#ig;
   s#</I>#\\fR#ig;
+  s# *</CODE> *_ *<CODE> *#_#ig;
+  s#</CODE> *<CODE># #ig;
+  s#<CODE>#\\fI#ig;
+  s#</CODE>#\\fR#ig;
   s# *</EM> *_ *<EM> *#_#ig;
   s#</EM> *<EM># #ig;
   s#<EM>#\\fI#ig;
