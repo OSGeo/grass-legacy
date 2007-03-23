@@ -1,4 +1,4 @@
-# translation of grasstcl_es.po to español
+# translation of grasstcl_es.po to Español
 # translation of grasstcl_es.po to
 # This file is distributed under the same license as the GRASS package.
 # Copyright (C) 2006, GRASS Development Team
@@ -12,10 +12,10 @@ msgid ""
 msgstr ""
 "Project-Id-Version: grasstcl_es\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2007-03-16 16:53+0100\n"
-"PO-Revision-Date: 2007-03-13 09:18+0100\n"
+"POT-Creation-Date: 2007-03-23 16:35+0100\n"
+"PO-Revision-Date: 2007-03-16 23:57+0100\n"
 "Last-Translator: Carlos Davila <carluti@users.sourceforge.net>\n"
-"Language-Team: español <grass-es@itc.it.org>\n"
+"Language-Team: Español <grass-es@grass.itc.it>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -1716,7 +1716,7 @@ msgstr "Refrescar todas las capas"
 
 #: ../gui/tcltk/gis.m/maptool.tcl:55
 msgid "Start NVIZ using active layers in current region"
-msgstr "Empezar NVIZ usando las capas activas en la región actual"
+msgstr "Iniciar NVIZ usando las capas activas en la región actual"
 
 #: ../gui/tcltk/gis.m/maptool.tcl:88
 msgid "Pointer"
@@ -1725,6 +1725,31 @@ msgstr "Puntero"
 #: ../gui/tcltk/gis.m/maptool.tcl:166
 msgid "Zoom to..."
 msgstr "Zum a..."
+
+#: ../gui/tcltk/gis.m/maptool.tcl:178
+msgid "Zoom to selected map"
+msgstr "Zum al mapa seleccionado"
+
+#: ../gui/tcltk/gis.m/maptool.tcl:181 ../vector/v.digit/toolbox.tcl:207
+msgid "Zoom to saved region"
+msgstr "Zum a una región guardada"
+
+#: ../gui/tcltk/gis.m/maptool.tcl:184
+msgid "Save display geometry to named region"
+msgstr "Guardar las límites de la visualización en la región indicada"
+
+#: ../gui/tcltk/gis.m/maptool.tcl:187
+msgid "Zoom to current region (set with g.region)"
+msgstr "Zum a la región actual (establecida con g.region)"
+
+#: ../gui/tcltk/gis.m/maptool.tcl:190 ../vector/v.digit/toolbox.tcl:194
+msgid "Zoom to default region"
+msgstr "Zum a la región por defecto"
+
+#: ../gui/tcltk/gis.m/maptool.tcl:193
+msgid "Set current region (WIND file) to match display"
+msgstr ""
+"Establecer la región actual (archivo WIND) para ajustar a la visualización"
 
 #: ../gui/tcltk/gis.m/maptool.tcl:222 ../gui/tcltk/gis.m/mapcanvas.tcl:1698
 #: ../gui/tcltk/gis.m/gmmenu.tcl:583 ../gui/tcltk/d.m/menu.tcl:554
@@ -1746,6 +1771,26 @@ msgstr "Imprimir mapas ráster y vectoriales en archivo EPS"
 #: ../gui/tcltk/gis.m/maptool.tcl:272
 msgid "Export display to graphics file"
 msgstr "Exportar pantalla a fichero gráfico (png, tiff, ...)"
+
+#: ../gui/tcltk/gis.m/maptool.tcl:283
+msgid "low quality (50)"
+msgstr "calidad baja (50)"
+
+#: ../gui/tcltk/gis.m/maptool.tcl:285
+msgid "mid quality (75)"
+msgstr "calidad media (75)"
+
+#: ../gui/tcltk/gis.m/maptool.tcl:287
+msgid "high quality (95)"
+msgstr "calidad alta (95)"
+
+#: ../gui/tcltk/gis.m/maptool.tcl:289
+msgid "very high resolution (300% your current resolution)"
+msgstr "resolución muy alta (300% la resolución actual)"
+
+#: ../gui/tcltk/gis.m/maptool.tcl:294
+msgid "(* requires gdal)"
+msgstr "(* requiere gdal)"
 
 #: ../gui/tcltk/gis.m/maptool.tcl:319
 msgid "Constrain map to region geometry"
@@ -4493,18 +4538,6 @@ msgstr "Introducir nuevo registro en tabla"
 msgid "Add new"
 msgstr "Añadir nuevo"
 
-#: ../vector/v.digit/settings.tcl:48 ../vector/v.digit/settings.tcl:65
-msgid "integer"
-msgstr "entero"
-
-#: ../vector/v.digit/settings.tcl:48
-msgid "double precision"
-msgstr "precisión doble"
-
-#: ../vector/v.digit/settings.tcl:48
-msgid "varchar"
-msgstr "varchar"
-
 #: ../vector/v.digit/settings.tcl:63
 msgid "Add new column"
 msgstr "Añadir nueva columna"
@@ -4689,14 +4722,6 @@ msgstr "Acercar mediante ventana"
 msgid "Zoom out"
 msgstr "Alejar"
 
-#: ../vector/v.digit/toolbox.tcl:194
-msgid "Zoom to default region"
-msgstr "Zum a la región por defecto"
-
-#: ../vector/v.digit/toolbox.tcl:207
-msgid "Zoom to saved region"
-msgstr "Zum a la región guardada"
-
 #: ../vector/v.digit/toolbox.tcl:213
 msgid "Display categories"
 msgstr "Visualizar categorías"
@@ -4720,3 +4745,12 @@ msgstr "Guardar y salir"
 #: ../vector/v.digit/toolbox.tcl:252
 msgid "mouse button actions (left, middle, right)"
 msgstr "Acciones de los botones del ratón (izquierda, central, derecha)"
+
+#~ msgid "integer"
+#~ msgstr "entero"
+
+#~ msgid "double precision"
+#~ msgstr "precisión doble"
+
+#~ msgid "varchar"
+#~ msgstr "varchar"

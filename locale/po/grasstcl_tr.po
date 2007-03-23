@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: grasstcl_tr\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2007-03-02 16:27+0100\n"
+"POT-Creation-Date: 2007-03-23 16:35+0100\n"
 "PO-Revision-Date: 2006-06-20 16:04+0300\n"
 "Last-Translator: Osman Yalçın YILMAZ\n"
 "Language-Team: Turkish <translations@grass.itc.it>\n"
@@ -207,7 +207,7 @@ msgstr "Uyarı: <%s> geçerli harita takımı değil"
 #: ../gui/tcltk/gis.m/raster.tcl:166 ../gui/tcltk/gis.m/raster.tcl:170
 #: ../gui/tcltk/gis.m/rgbhis.tcl:188 ../gui/tcltk/gis.m/rgbhis.tcl:195
 #: ../gui/tcltk/gis.m/barscale.tcl:171 ../gui/tcltk/gis.m/barscale.tcl:175
-#: ../gui/tcltk/gis.m/vector.tcl:307 ../gui/tcltk/gis.m/vector.tcl:311
+#: ../gui/tcltk/gis.m/vector.tcl:309 ../gui/tcltk/gis.m/vector.tcl:313
 #: ../gui/tcltk/gis.m/gridline.tcl:141 ../gui/tcltk/gis.m/gridline.tcl:178
 #: ../gui/tcltk/gis.m/gridline.tcl:205 ../gui/tcltk/gis.m/runandoutput.tcl:47
 #: ../gui/tcltk/gis.m/frames.tcl:115 ../gui/tcltk/gis.m/frames.tcl:119
@@ -495,7 +495,7 @@ msgstr "seçimlik"
 msgid "multiple"
 msgstr ""
 
-#: ../gui/tcltk/gis.m/thematic.tcl:127 ../gui/tcltk/gis.m/vector.tcl:216
+#: ../gui/tcltk/gis.m/thematic.tcl:127 ../gui/tcltk/gis.m/vector.tcl:218
 #: ../gui/tcltk/gis.m/gmmenu.tcl:109 ../gui/tcltk/gis.m/gmmenu.tcl:149
 #: ../gui/tcltk/d.m/menu.tcl:94 ../gui/tcltk/d.m/menu.tcl:134
 msgid "Vector map"
@@ -518,7 +518,7 @@ msgstr ""
 msgid "Select font"
 msgstr "Renk seç"
 
-#: ../gui/tcltk/gis.m/thematic.tcl:190 ../gui/tcltk/gis.m/vector.tcl:264
+#: ../gui/tcltk/gis.m/thematic.tcl:190 ../gui/tcltk/gis.m/vector.tcl:266
 #, fuzzy
 msgid "Vector point symbol"
 msgstr "Vektör çizgiden noktalara"
@@ -534,7 +534,7 @@ msgstr ""
 #: ../gui/tcltk/gis.m/thematic.tcl:219 ../gui/tcltk/gis.m/rastarrows.tcl:145
 #: ../gui/tcltk/gis.m/dtext.tcl:196 ../gui/tcltk/gis.m/raster.tcl:148
 #: ../gui/tcltk/gis.m/rgbhis.tcl:140 ../gui/tcltk/gis.m/barscale.tcl:141
-#: ../gui/tcltk/gis.m/vector.tcl:289 ../gui/tcltk/gis.m/gridline.tcl:126
+#: ../gui/tcltk/gis.m/vector.tcl:291 ../gui/tcltk/gis.m/gridline.tcl:126
 #: ../gui/tcltk/gis.m/chart.tcl:162 ../gui/tcltk/gis.m/cmd.tcl:103
 #: ../gui/tcltk/gis.m/labels.tcl:116 ../gui/tcltk/gis.m/legend.tcl:154
 #: ../gui/tcltk/gis.m/histogram.tcl:123 ../gui/tcltk/gis.m/rastnums.tcl:127
@@ -544,14 +544,14 @@ msgstr ""
 #: ../gui/tcltk/gis.m/thematic.tcl:223 ../gui/tcltk/gis.m/rastarrows.tcl:149
 #: ../gui/tcltk/gis.m/dtext.tcl:200 ../gui/tcltk/gis.m/raster.tcl:152
 #: ../gui/tcltk/gis.m/rgbhis.tcl:144 ../gui/tcltk/gis.m/barscale.tcl:145
-#: ../gui/tcltk/gis.m/vector.tcl:293 ../gui/tcltk/gis.m/gridline.tcl:130
+#: ../gui/tcltk/gis.m/vector.tcl:295 ../gui/tcltk/gis.m/gridline.tcl:130
 #: ../gui/tcltk/gis.m/chart.tcl:166 ../gui/tcltk/gis.m/cmd.tcl:107
 #: ../gui/tcltk/gis.m/labels.tcl:120 ../gui/tcltk/gis.m/legend.tcl:158
 #: ../gui/tcltk/gis.m/histogram.tcl:127 ../gui/tcltk/gis.m/rastnums.tcl:131
 msgid " Transparent"
 msgstr "Saydam"
 
-#: ../gui/tcltk/gis.m/thematic.tcl:229 ../gui/tcltk/gis.m/vector.tcl:299
+#: ../gui/tcltk/gis.m/thematic.tcl:229 ../gui/tcltk/gis.m/vector.tcl:301
 #: ../gui/tcltk/d.m/thematic.tcl:116
 msgid "Vector map:"
 msgstr "Vektör harita:"
@@ -573,18 +573,18 @@ msgstr "etiket için öznitelik sütunu"
 msgid "    NUMERIC attribute column to use for thematic map"
 msgstr ""
 
-#: ../gui/tcltk/gis.m/thematic.tcl:264 ../gui/tcltk/gis.m/vector.tcl:460
+#: ../gui/tcltk/gis.m/thematic.tcl:264 ../gui/tcltk/gis.m/vector.tcl:462
 #: ../gui/tcltk/d.m/thematic.tcl:150 ../gui/tcltk/d.m/vector.tcl:348
 msgid "    show attribute columns"
 msgstr "     öznitelik sütunlarını göster"
 
-#: ../gui/tcltk/gis.m/thematic.tcl:265 ../gui/tcltk/gis.m/vector.tcl:461
+#: ../gui/tcltk/gis.m/thematic.tcl:265 ../gui/tcltk/gis.m/vector.tcl:463
 #: ../gui/tcltk/gis.m/chart.tcl:209 ../gui/tcltk/d.m/thematic.tcl:151
 #: ../gui/tcltk/d.m/vector.tcl:349 ../gui/tcltk/d.m/chart.tcl:121
 msgid "columns"
 msgstr "sütunlar"
 
-#: ../gui/tcltk/gis.m/thematic.tcl:269 ../gui/tcltk/gis.m/vector.tcl:465
+#: ../gui/tcltk/gis.m/thematic.tcl:269 ../gui/tcltk/gis.m/vector.tcl:467
 #: ../gui/tcltk/gis.m/chart.tcl:213 ../gui/tcltk/d.m/thematic.tcl:155
 #: ../gui/tcltk/d.m/vector.tcl:353 ../gui/tcltk/d.m/chart.tcl:125
 msgid "Show columns"
@@ -594,13 +594,13 @@ msgstr "Sütunları göster"
 msgid "   show data"
 msgstr "   veriyi göster"
 
-#: ../gui/tcltk/gis.m/thematic.tcl:271 ../gui/tcltk/gis.m/vector.tcl:467
+#: ../gui/tcltk/gis.m/thematic.tcl:271 ../gui/tcltk/gis.m/vector.tcl:469
 #: ../gui/tcltk/gis.m/chart.tcl:215 ../gui/tcltk/d.m/thematic.tcl:157
 #: ../gui/tcltk/d.m/vector.tcl:355
 msgid "data"
 msgstr "veri"
 
-#: ../gui/tcltk/gis.m/thematic.tcl:275 ../gui/tcltk/gis.m/vector.tcl:471
+#: ../gui/tcltk/gis.m/thematic.tcl:275 ../gui/tcltk/gis.m/vector.tcl:473
 #: ../gui/tcltk/gis.m/chart.tcl:219 ../gui/tcltk/d.m/thematic.tcl:161
 #: ../gui/tcltk/d.m/vector.tcl:359
 msgid "Show data"
@@ -630,7 +630,7 @@ msgstr ""
 msgid "Graduated points & lines: "
 msgstr ""
 
-#: ../gui/tcltk/gis.m/thematic.tcl:316 ../gui/tcltk/gis.m/vector.tcl:350
+#: ../gui/tcltk/gis.m/thematic.tcl:316 ../gui/tcltk/gis.m/vector.tcl:352
 #: ../gui/tcltk/d.m/thematic.tcl:205 ../gui/tcltk/d.m/vector.tcl:245
 msgid "icon"
 msgstr "simge"
@@ -1276,7 +1276,7 @@ msgid "Zoom Out"
 msgstr "Küçült"
 
 #: ../gui/tcltk/gis.m/georecttool.tcl:130 ../gui/tcltk/gis.m/maptool.tcl:145
-#: ../vector/v.digit/toolbox.tcl:188
+#: ../vector/v.digit/toolbox.tcl:189
 msgid "Pan"
 msgstr "Kaydır"
 
@@ -1330,197 +1330,197 @@ msgstr ""
 msgid "You can digitize raster or vector maps only"
 msgstr ""
 
-#: ../gui/tcltk/gis.m/vector.tcl:225
+#: ../gui/tcltk/gis.m/vector.tcl:227
 #, fuzzy
 msgid "Vector output map"
 msgstr "Vektör harita"
 
-#: ../gui/tcltk/gis.m/vector.tcl:282
+#: ../gui/tcltk/gis.m/vector.tcl:284
 #, fuzzy
 msgid "Display vector maps"
 msgstr "Kategorileri göster"
 
-#: ../gui/tcltk/gis.m/vector.tcl:302
+#: ../gui/tcltk/gis.m/vector.tcl:304
 msgid "vector map to display"
 msgstr "Görüntülenecek vektör harita"
 
-#: ../gui/tcltk/gis.m/vector.tcl:317
+#: ../gui/tcltk/gis.m/vector.tcl:319
 msgid "Display: "
 msgstr "Görüntü:"
 
-#: ../gui/tcltk/gis.m/vector.tcl:318 ../gui/tcltk/d.m/vector.tcl:213
+#: ../gui/tcltk/gis.m/vector.tcl:320 ../gui/tcltk/d.m/vector.tcl:213
 msgid "shapes"
 msgstr ""
 
-#: ../gui/tcltk/gis.m/vector.tcl:320 ../gui/tcltk/d.m/vector.tcl:215
+#: ../gui/tcltk/gis.m/vector.tcl:322 ../gui/tcltk/d.m/vector.tcl:215
 msgid "categories"
 msgstr "kategoriler"
 
-#: ../gui/tcltk/gis.m/vector.tcl:322 ../gui/tcltk/d.m/vector.tcl:217
+#: ../gui/tcltk/gis.m/vector.tcl:324 ../gui/tcltk/d.m/vector.tcl:217
 msgid "topology"
 msgstr "topoloji"
 
-#: ../gui/tcltk/gis.m/vector.tcl:324 ../gui/tcltk/d.m/vector.tcl:219
+#: ../gui/tcltk/gis.m/vector.tcl:326 ../gui/tcltk/d.m/vector.tcl:219
 msgid "line directions"
 msgstr "çizgi doğrultusu"
 
-#: ../gui/tcltk/gis.m/vector.tcl:332 ../gui/tcltk/gis.m/chart.tcl:191
+#: ../gui/tcltk/gis.m/vector.tcl:334 ../gui/tcltk/gis.m/chart.tcl:191
 #: ../gui/tcltk/d.m/vector.tcl:227 ../gui/tcltk/d.m/chart.tcl:107
 msgid "points"
 msgstr "noktalar"
 
-#: ../gui/tcltk/gis.m/vector.tcl:334 ../gui/tcltk/gis.m/chart.tcl:192
+#: ../gui/tcltk/gis.m/vector.tcl:336 ../gui/tcltk/gis.m/chart.tcl:192
 #: ../gui/tcltk/gis.m/legend.tcl:254 ../gui/tcltk/d.m/vector.tcl:229
 #: ../gui/tcltk/d.m/chart.tcl:108
 msgid "lines"
 msgstr "çizgiler"
 
-#: ../gui/tcltk/gis.m/vector.tcl:336 ../gui/tcltk/gis.m/chart.tcl:193
+#: ../gui/tcltk/gis.m/vector.tcl:338 ../gui/tcltk/gis.m/chart.tcl:193
 #: ../gui/tcltk/d.m/vector.tcl:231 ../gui/tcltk/d.m/chart.tcl:109
 msgid "boundaries"
 msgstr "sınırlar"
 
-#: ../gui/tcltk/gis.m/vector.tcl:338 ../gui/tcltk/gis.m/chart.tcl:195
+#: ../gui/tcltk/gis.m/vector.tcl:340 ../gui/tcltk/gis.m/chart.tcl:195
 #: ../gui/tcltk/d.m/vector.tcl:235 ../gui/tcltk/d.m/chart.tcl:111
 msgid "areas"
 msgstr "alanlar"
 
-#: ../gui/tcltk/gis.m/vector.tcl:340 ../gui/tcltk/gis.m/chart.tcl:194
+#: ../gui/tcltk/gis.m/vector.tcl:342 ../gui/tcltk/gis.m/chart.tcl:194
 #: ../gui/tcltk/d.m/vector.tcl:233 ../gui/tcltk/d.m/chart.tcl:110
 msgid "centroids"
 msgstr "alan merkezleri"
 
-#: ../gui/tcltk/gis.m/vector.tcl:342 ../gui/tcltk/d.m/vector.tcl:237
+#: ../gui/tcltk/gis.m/vector.tcl:344 ../gui/tcltk/d.m/vector.tcl:237
 msgid "faces"
 msgstr "yüzeyler"
 
-#: ../gui/tcltk/gis.m/vector.tcl:349
+#: ../gui/tcltk/gis.m/vector.tcl:351
 msgid "Point symbols:"
 msgstr ""
 
-#: ../gui/tcltk/gis.m/vector.tcl:354 ../gui/tcltk/d.m/vector.tcl:297
+#: ../gui/tcltk/gis.m/vector.tcl:356 ../gui/tcltk/d.m/vector.tcl:297
 msgid " size"
 msgstr "boyut"
 
-#: ../gui/tcltk/gis.m/vector.tcl:356
+#: ../gui/tcltk/gis.m/vector.tcl:358
 #, fuzzy
 msgid "Icon size"
 msgstr "boyut"
 
-#: ../gui/tcltk/gis.m/vector.tcl:362 ../gui/tcltk/d.m/vector.tcl:259
+#: ../gui/tcltk/gis.m/vector.tcl:364 ../gui/tcltk/d.m/vector.tcl:259
 msgid "Draw lines:"
 msgstr "Çizgileri çiz:"
 
-#: ../gui/tcltk/gis.m/vector.tcl:365 ../gui/tcltk/gis.m/vector.tcl:381
+#: ../gui/tcltk/gis.m/vector.tcl:367 ../gui/tcltk/gis.m/vector.tcl:383
 #: ../gui/tcltk/d.m/vector.tcl:262 ../gui/tcltk/d.m/vector.tcl:278
 #: ../gui/tcltk/d.m/vector.tcl:294
 msgid "color"
 msgstr "Renk"
 
-#: ../gui/tcltk/gis.m/vector.tcl:368
+#: ../gui/tcltk/gis.m/vector.tcl:370
 #, fuzzy
 msgid " width"
 msgstr "genişlik:"
 
-#: ../gui/tcltk/gis.m/vector.tcl:370
+#: ../gui/tcltk/gis.m/vector.tcl:372
 #, fuzzy
 msgid "Line width"
 msgstr "Çizgi Kalınlığı"
 
-#: ../gui/tcltk/gis.m/vector.tcl:372
+#: ../gui/tcltk/gis.m/vector.tcl:374
 msgid "(pixels) "
 msgstr ""
 
-#: ../gui/tcltk/gis.m/vector.tcl:378 ../gui/tcltk/d.m/vector.tcl:275
+#: ../gui/tcltk/gis.m/vector.tcl:380 ../gui/tcltk/d.m/vector.tcl:275
 msgid "Fill areas:"
 msgstr "Alanları doldur:"
 
-#: ../gui/tcltk/gis.m/vector.tcl:385 ../gui/tcltk/d.m/vector.tcl:282
+#: ../gui/tcltk/gis.m/vector.tcl:387 ../gui/tcltk/d.m/vector.tcl:282
 msgid "random colors"
 msgstr "rasgele renkler"
 
-#: ../gui/tcltk/gis.m/vector.tcl:387 ../gui/tcltk/d.m/vector.tcl:284
+#: ../gui/tcltk/gis.m/vector.tcl:389 ../gui/tcltk/d.m/vector.tcl:284
 msgid "GRASSRGB column colors"
 msgstr "GRASSKYM sütun renkleri"
 
-#: ../gui/tcltk/gis.m/vector.tcl:394 ../gui/tcltk/d.m/vector.tcl:291
+#: ../gui/tcltk/gis.m/vector.tcl:396 ../gui/tcltk/d.m/vector.tcl:291
 msgid "Label vectors:"
 msgstr "Etiket vektörleri:"
 
-#: ../gui/tcltk/gis.m/vector.tcl:395 ../gui/tcltk/d.m/vector.tcl:292
+#: ../gui/tcltk/gis.m/vector.tcl:397 ../gui/tcltk/d.m/vector.tcl:292
 msgid "label"
 msgstr "etiket"
 
-#: ../gui/tcltk/gis.m/vector.tcl:397
+#: ../gui/tcltk/gis.m/vector.tcl:399
 msgid "text color"
 msgstr "metin rengi"
 
-#: ../gui/tcltk/gis.m/vector.tcl:400
+#: ../gui/tcltk/gis.m/vector.tcl:402
 msgid " text size"
 msgstr " metin boyutu"
 
-#: ../gui/tcltk/gis.m/vector.tcl:402 ../gui/tcltk/d.m/vector.tcl:299
+#: ../gui/tcltk/gis.m/vector.tcl:404 ../gui/tcltk/d.m/vector.tcl:299
 msgid "text size"
 msgstr "metin boyutu"
 
-#: ../gui/tcltk/gis.m/vector.tcl:410
+#: ../gui/tcltk/gis.m/vector.tcl:412
 msgid "label part to align with vector point"
 msgstr ""
 
-#: ../gui/tcltk/gis.m/vector.tcl:414
+#: ../gui/tcltk/gis.m/vector.tcl:416
 msgid " justification"
 msgstr "Hizalama"
 
-#: ../gui/tcltk/gis.m/vector.tcl:423 ../gui/tcltk/d.m/vector.tcl:315
+#: ../gui/tcltk/gis.m/vector.tcl:425 ../gui/tcltk/d.m/vector.tcl:315
 msgid "     layer for labels"
 msgstr "      etiket katmanı"
 
-#: ../gui/tcltk/gis.m/vector.tcl:425 ../gui/tcltk/d.m/vector.tcl:318
+#: ../gui/tcltk/gis.m/vector.tcl:427 ../gui/tcltk/d.m/vector.tcl:318
 msgid " attribute col for labels"
 msgstr "etiket için öznitelik sütunu"
 
-#: ../gui/tcltk/gis.m/vector.tcl:432
+#: ../gui/tcltk/gis.m/vector.tcl:434
 msgid "Query vectors for display: "
 msgstr "Vektörü görüntüleme için sorgula"
 
-#: ../gui/tcltk/gis.m/vector.tcl:433 ../gui/tcltk/d.m/vector.tcl:327
+#: ../gui/tcltk/gis.m/vector.tcl:435 ../gui/tcltk/d.m/vector.tcl:327
 msgid "layer for query"
 msgstr "sorgu katmanı"
 
-#: ../gui/tcltk/gis.m/vector.tcl:441
+#: ../gui/tcltk/gis.m/vector.tcl:443
 msgid "query cat values    "
 msgstr "kategori değerlerini sorgula"
 
-#: ../gui/tcltk/gis.m/vector.tcl:452
+#: ../gui/tcltk/gis.m/vector.tcl:454
 msgid "use SQL query"
 msgstr "SQL sorgusunu kullan"
 
-#: ../gui/tcltk/gis.m/vector.tcl:466 ../gui/tcltk/gis.m/chart.tcl:214
+#: ../gui/tcltk/gis.m/vector.tcl:468 ../gui/tcltk/gis.m/chart.tcl:214
 msgid "   show attribute data"
 msgstr "   öznitelik verisini göster"
 
-#: ../gui/tcltk/gis.m/vector.tcl:478
+#: ../gui/tcltk/gis.m/vector.tcl:480
 #, fuzzy
 msgid "save displayed objects to new vector file "
 msgstr "görüntülenen objeleri yeni vektör dosyaya kaydet "
 
-#: ../gui/tcltk/gis.m/vector.tcl:480
+#: ../gui/tcltk/gis.m/vector.tcl:482
 msgid "overwrite existing"
 msgstr "varolanın üstüne yaz"
 
-#: ../gui/tcltk/gis.m/vector.tcl:487
+#: ../gui/tcltk/gis.m/vector.tcl:489
 msgid "     new vector"
 msgstr "yeni vektör"
 
-#: ../gui/tcltk/gis.m/vector.tcl:491
+#: ../gui/tcltk/gis.m/vector.tcl:493
 msgid "select existing vector for saving queried objects"
 msgstr "sorgulanan objelerin kaydedileceği varolan vektörü seç"
 
-#: ../gui/tcltk/gis.m/vector.tcl:499 ../gui/tcltk/d.m/vector.tcl:376
+#: ../gui/tcltk/gis.m/vector.tcl:501 ../gui/tcltk/d.m/vector.tcl:376
 msgid "Display when avg. region dimension is"
 msgstr ""
 
-#: ../gui/tcltk/gis.m/vector.tcl:502
+#: ../gui/tcltk/gis.m/vector.tcl:504
 msgid " or <"
 msgstr ""
 
@@ -1742,6 +1742,33 @@ msgstr "İmleç"
 msgid "Zoom to..."
 msgstr "Küçült"
 
+#: ../gui/tcltk/gis.m/maptool.tcl:178
+#, fuzzy
+msgid "Zoom to selected map"
+msgstr "Bölgeye uyarla"
+
+#: ../gui/tcltk/gis.m/maptool.tcl:181 ../vector/v.digit/toolbox.tcl:207
+#, fuzzy
+msgid "Zoom to saved region"
+msgstr "Bölgeye uyarla"
+
+#: ../gui/tcltk/gis.m/maptool.tcl:184
+#, fuzzy
+msgid "Save display geometry to named region"
+msgstr "Görünüşü görüntü dosyasına kaydet"
+
+#: ../gui/tcltk/gis.m/maptool.tcl:187
+msgid "Zoom to current region (set with g.region)"
+msgstr ""
+
+#: ../gui/tcltk/gis.m/maptool.tcl:190 ../vector/v.digit/toolbox.tcl:194
+msgid "Zoom to default region"
+msgstr "Varsayılan bölgeye uyarla"
+
+#: ../gui/tcltk/gis.m/maptool.tcl:193
+msgid "Set current region (WIND file) to match display"
+msgstr ""
+
 #: ../gui/tcltk/gis.m/maptool.tcl:222 ../gui/tcltk/gis.m/mapcanvas.tcl:1698
 #: ../gui/tcltk/gis.m/gmmenu.tcl:583 ../gui/tcltk/d.m/menu.tcl:554
 msgid "Query"
@@ -1764,6 +1791,27 @@ msgstr ""
 #, fuzzy
 msgid "Export display to graphics file"
 msgstr "Görünüşü görüntü dosyasına kaydet"
+
+#: ../gui/tcltk/gis.m/maptool.tcl:283
+msgid "low quality (50)"
+msgstr ""
+
+#: ../gui/tcltk/gis.m/maptool.tcl:285
+msgid "mid quality (75)"
+msgstr ""
+
+#: ../gui/tcltk/gis.m/maptool.tcl:287
+msgid "high quality (95)"
+msgstr ""
+
+#: ../gui/tcltk/gis.m/maptool.tcl:289
+msgid "very high resolution (300% your current resolution)"
+msgstr ""
+
+#: ../gui/tcltk/gis.m/maptool.tcl:294
+#, fuzzy
+msgid "(* requires gdal)"
+msgstr "gereken"
 
 #: ../gui/tcltk/gis.m/maptool.tcl:319
 msgid "Constrain map to region geometry"
@@ -4513,20 +4561,6 @@ msgstr "Tabloya yeni kayıt gir"
 msgid "Add new"
 msgstr "Yeni ekle"
 
-#: ../vector/v.digit/settings.tcl:48 ../vector/v.digit/settings.tcl:65
-#, fuzzy
-msgid "integer"
-msgstr "İmleç"
-
-#: ../vector/v.digit/settings.tcl:48
-msgid "double precision"
-msgstr ""
-
-#: ../vector/v.digit/settings.tcl:48
-#, fuzzy
-msgid "varchar"
-msgstr "Ara"
-
 #: ../vector/v.digit/settings.tcl:63
 msgid "Add new column"
 msgstr "Yeni sütun ekle"
@@ -4625,131 +4659,130 @@ msgstr ""
 msgid "Table"
 msgstr "Tablo"
 
-#: ../vector/v.digit/toolbox.tcl:18
+#: ../vector/v.digit/toolbox.tcl:19
 msgid "Welcome to v.digit"
 msgstr "v.digit'e hoşgeldiniz"
 
-#: ../vector/v.digit/toolbox.tcl:19
+#: ../vector/v.digit/toolbox.tcl:20
 #, fuzzy
 msgid "Left button"
 msgstr "Sol fare tuşu"
 
-#: ../vector/v.digit/toolbox.tcl:20
+#: ../vector/v.digit/toolbox.tcl:21
 #, fuzzy
 msgid "Middle button"
 msgstr "Orta fare tuşu"
 
-#: ../vector/v.digit/toolbox.tcl:21
+#: ../vector/v.digit/toolbox.tcl:22
 #, fuzzy
 msgid "Right button"
 msgstr "Sağ fare tuşu"
 
-#: ../vector/v.digit/toolbox.tcl:74
+#: ../vector/v.digit/toolbox.tcl:75
 #, fuzzy
 msgid "  Layer"
 msgstr "Katman"
 
-#: ../vector/v.digit/toolbox.tcl:78
+#: ../vector/v.digit/toolbox.tcl:79
 #, fuzzy
 msgid "  Category"
 msgstr "Kategori"
 
-#: ../vector/v.digit/toolbox.tcl:82
+#: ../vector/v.digit/toolbox.tcl:83
 msgid "  Mode "
 msgstr ""
 
-#: ../vector/v.digit/toolbox.tcl:94
+#: ../vector/v.digit/toolbox.tcl:95
 msgid "Insert new record into table"
 msgstr "Tabloya yeni kayıt gir"
 
-#: ../vector/v.digit/toolbox.tcl:111
+#: ../vector/v.digit/toolbox.tcl:112
 msgid "Digitize new point"
 msgstr "Yeni nokta sayısallaştır"
 
-#: ../vector/v.digit/toolbox.tcl:116
+#: ../vector/v.digit/toolbox.tcl:117
 msgid "Digitize new line"
 msgstr "Yeni çizgi sayısallaştır"
 
-#: ../vector/v.digit/toolbox.tcl:121
+#: ../vector/v.digit/toolbox.tcl:122
 msgid "Digitize new boundary"
 msgstr "Yeni sınır sayısallaştır"
 
-#: ../vector/v.digit/toolbox.tcl:126
+#: ../vector/v.digit/toolbox.tcl:127
 msgid "Digitize new centroid"
 msgstr "Yeni alan merkezi sayısallaştır"
 
-#: ../vector/v.digit/toolbox.tcl:132
+#: ../vector/v.digit/toolbox.tcl:133
 msgid "Move vertex"
 msgstr ""
 
-#: ../vector/v.digit/toolbox.tcl:137
+#: ../vector/v.digit/toolbox.tcl:138
 msgid "Add vertex"
 msgstr ""
 
-#: ../vector/v.digit/toolbox.tcl:142
+#: ../vector/v.digit/toolbox.tcl:143
 msgid "Remove vertex"
 msgstr ""
 
-#: ../vector/v.digit/toolbox.tcl:147
+#: ../vector/v.digit/toolbox.tcl:148
 msgid "Split line"
 msgstr "Çizgiyi parçala"
 
-#: ../vector/v.digit/toolbox.tcl:152
+#: ../vector/v.digit/toolbox.tcl:153
 msgid "Edit line/boundary"
 msgstr "Çizgi/sınırı düzelt"
 
-#: ../vector/v.digit/toolbox.tcl:157
+#: ../vector/v.digit/toolbox.tcl:158
 msgid "Move point, line, boundary, or centroid"
 msgstr "Nokta, çizgi, sınır, veya alan merkezini taşı"
 
-#: ../vector/v.digit/toolbox.tcl:162
+#: ../vector/v.digit/toolbox.tcl:163
 msgid "Delete point, line, boundary, or centroid"
 msgstr "Nokta, çizgi, sınır, veya alan merkezi sil"
 
-#: ../vector/v.digit/toolbox.tcl:173
+#: ../vector/v.digit/toolbox.tcl:174
 msgid "Redraw"
 msgstr "Yeniden çiz"
 
-#: ../vector/v.digit/toolbox.tcl:178
+#: ../vector/v.digit/toolbox.tcl:179
 msgid "Zoom in by window"
 msgstr "Pencere ile büyüt"
 
-#: ../vector/v.digit/toolbox.tcl:183
+#: ../vector/v.digit/toolbox.tcl:184
 msgid "Zoom out"
 msgstr "Küçült"
 
-#: ../vector/v.digit/toolbox.tcl:193
-msgid "Zoom to default region"
-msgstr "Varsayılan bölgeye uyarla"
-
-#: ../vector/v.digit/toolbox.tcl:206
-#, fuzzy
-msgid "Zoom to saved region"
-msgstr "Bölgeye uyarla"
-
-#: ../vector/v.digit/toolbox.tcl:212
+#: ../vector/v.digit/toolbox.tcl:213
 msgid "Display categories"
 msgstr "Kategorileri göster"
 
-#: ../vector/v.digit/toolbox.tcl:217
+#: ../vector/v.digit/toolbox.tcl:218
 msgid "Copy categories"
 msgstr "Kategorileri kopyala"
 
-#: ../vector/v.digit/toolbox.tcl:222
+#: ../vector/v.digit/toolbox.tcl:223
 msgid "Display attributes"
 msgstr "Öznitelikleri göster"
 
-#: ../vector/v.digit/toolbox.tcl:234
+#: ../vector/v.digit/toolbox.tcl:235
 msgid "Open settings"
 msgstr "Ayarları aç"
 
-#: ../vector/v.digit/toolbox.tcl:240
+#: ../vector/v.digit/toolbox.tcl:241
 msgid "Save and exit"
 msgstr "Kaydet ve çık"
 
-#: ../vector/v.digit/toolbox.tcl:251
+#: ../vector/v.digit/toolbox.tcl:252
 msgid "mouse button actions (left, middle, right)"
 msgstr ""
+
+#, fuzzy
+#~ msgid "integer"
+#~ msgstr "İmleç"
+
+#, fuzzy
+#~ msgid "varchar"
+#~ msgstr "Ara"
 
 #~ msgid "     chart outline color:"
 #~ msgstr "Çizelge çerçeve rengi:"

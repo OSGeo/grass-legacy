@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: grasstcl_mr\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2007-03-16 21:31+0100\n"
+"POT-Creation-Date: 2007-03-23 16:35+0100\n"
 "PO-Revision-Date: 2007-03-16 21:31+0100\n"
 "Last-Translator: Carlos Davila <carluti@users.sourceforge.net>\n"
 "Language-Team: Marathi <www.janabhaaratii.org.in>\n"
@@ -4390,18 +4390,6 @@ msgstr ""
 
 #: ../vector/v.digit/cats.tcl:63
 msgid "Add new"
-msgstr ""
-
-#: ../vector/v.digit/settings.tcl:48 ../vector/v.digit/settings.tcl:65
-msgid "integer"
-msgstr ""
-
-#: ../vector/v.digit/settings.tcl:48
-msgid "double precision"
-msgstr ""
-
-#: ../vector/v.digit/settings.tcl:48
-msgid "varchar"
 msgstr ""
 
 #: ../vector/v.digit/settings.tcl:63
