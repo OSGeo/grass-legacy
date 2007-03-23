@@ -86,8 +86,9 @@ main (int argc, char *argv[])
 	columns_opt->type = TYPE_STRING;
 	columns_opt->required = NO;
 	columns_opt->multiple = NO;
+	columns_opt->guisection = _("Columns");
 	columns_opt->label = _("Column definition in SQL style (points mode)");
-	columns_opt->description = _("for example:\n"
+	columns_opt->description = _("for example: "
 	    "'x double precision, y double precision, cat int, name varchar(10)'");
 
 	xcol_opt = G_define_option();
@@ -96,6 +97,7 @@ main (int argc, char *argv[])
 	xcol_opt->required = NO;
 	xcol_opt->multiple = NO;
 	xcol_opt->answer = "1";
+	xcol_opt->guisection = _("Columns");
 	xcol_opt->description =
 	  _("Number of column used as x coordinate (first column is 1) for points mode");
 
@@ -105,6 +107,7 @@ main (int argc, char *argv[])
 	ycol_opt->required = NO;
 	ycol_opt->multiple = NO;
 	ycol_opt->answer = "2";
+	ycol_opt->guisection = _("Columns");
 	ycol_opt->description =
 	  _("Number of column used as y coordinate (first column is 1) for points mode");
 
@@ -114,6 +117,7 @@ main (int argc, char *argv[])
 	zcol_opt->required = NO;
 	zcol_opt->multiple = NO;
 	zcol_opt->answer = "0";
+	zcol_opt->guisection = _("Columns");
 	zcol_opt->description =
 	  _("Number of column used as z coordinate (first column is 1) for "
 	    "points mode. If 0, z coordinate is not used.");
@@ -124,6 +128,7 @@ main (int argc, char *argv[])
 	catcol_opt->required = NO;
 	catcol_opt->multiple = NO;
 	catcol_opt->answer = "0";
+	catcol_opt->guisection = _("Columns");
 	catcol_opt->description =
 	  _("Number of column used as category (first column is 1) for points mode. "
 	    "If 0, unique category is assigned to each row and written to new column 'cat'.");
