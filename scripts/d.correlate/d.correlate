@@ -1,5 +1,5 @@
 #!/bin/sh
-# 
+#
 # updated to GRASS 6 by Markus Neteler 5/2005
 #            neteler itc it
 #
@@ -52,7 +52,7 @@ PROG=`basename $0`
 
 #### check if we have awk
 if [ ! -x "`which awk`" ] ; then
-    echo "$PROG: awk required, please install awk or gawk first" 2>&1
+    g.message -e "awk required, please install awk or gawk first"
     exit 1
 fi
 
@@ -62,7 +62,7 @@ LC_NUMERIC=C
 export LC_NUMERIC
 
 if [ $# -gt 4 ] ; then
-	echo max 4 layers allowed
+        g.message -e "max 4 layers allowed"
 	exit 1
 fi
 
@@ -73,7 +73,7 @@ for f in $GIS_OPT_LAYER1 $GIS_OPT_LAYER2 $GIS_OPT_LAYER3 $GIS_OPT_LAYER4
 do
   eval `g.findfile element=cell file=$f`
   if [ -z "$name" ] ; then
-	echo $f not found
+        g.message -e "$f not found"
 	ok=no
   fi
 done
@@ -111,10 +111,10 @@ do
      m3=`echo $m | cut -d' ' -f3`
      m4=`echo $m | cut -d' ' -f4`
      awk '{print "move",($1-min1+1)*100.0/(max1-min1+1),($2-min2+1)*100.0/(max2-min2+1);print "draw",($1-min1+1)*100.0/(max1-min1+1),($2-min2+1)*100.0/(max2-min2+1) }' min1=$m1 max1=$m2 min2=$m3 max2=$m4 "$TMP1" | d.graph color=`echo $colors | cut -d' ' -f1`
-   
+
     fi
    done
    jloop=0
 done
 
-rm -f "$TMP1" 
+rm -f "$TMP1"
