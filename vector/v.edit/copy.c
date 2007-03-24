@@ -33,7 +33,7 @@ int do_copy (struct Map_info *Map)
     layer = atoi(fld_opt->answer);
     
     /* Select features */
-    List = select_lines(Map);
+    List = select_lines (Map);
 
     if (List->n_values <1) {
         G_warning(_("No lines found"),List->n_values);

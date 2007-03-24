@@ -15,7 +15,7 @@
  *             Read the file COPYING that comes with GRASS
  *             for details.
  *
- * TODO:       3D
+ * TODO:       
  ****************************************************************/
 
 #include <grass/dbmi.h>
@@ -25,34 +25,36 @@ struct ilist *select_lines(struct Map_info *Map)
 {
     struct ilist *List;
 
+    List = Vect_new_list();
+
     /* select by category */
     if(cat_opt->answer != NULL) {
-        List = sel_by_cat(Map, NULL);
+        sel_by_cat(Map, NULL, List);
     }
+
     /* select by id's */
-    else if (id_opt->answer != NULL) {
-        List = sel_by_id(Map);
+    if (id_opt->answer != NULL) {
+	sel_by_id(Map, List);
     }
+    
     /* select by coordinates */
-    else if (coord_opt->answer != NULL) {
-        List = sel_by_coordinates(Map);
+    if (coord_opt->answer != NULL) {
+        sel_by_coordinates(Map, List);
     }
+    
     /* select by bbox */
-    else if (bbox_opt->answer != NULL) {
-        List = sel_by_bbox(Map);
+    if (bbox_opt->answer != NULL) {
+        sel_by_bbox(Map, List);
     }
+    
     /* select by polygon */
-    else if (poly_opt->answer != NULL) {
-        List = sel_by_polygon(Map);
+    if (poly_opt->answer != NULL) {
+        sel_by_polygon(Map, List);
     }
+    
     /* select by where statement */
-    else if (where_opt->answer != NULL) {
-        List = sel_by_where(Map);
-    }
-    else {
-        /* this case should not happen, see args.c for details */
-	G_warning(_("At least one option from <%s> must be specified"),
-		  "cats, coords, bbox, polygon, id");
+    if (where_opt->answer != NULL) {
+        sel_by_where(Map, List);
     }
     
     G_message (_("[%d] of [%d] features selected"),
@@ -75,22 +77,12 @@ int do_print_selected(struct Map_info *Map)
 
     List = select_lines(Map);
 
-    if ( List->n_values == 0 ) {
-        /* this case should not happen, see args.c for details */
-        G_warning(_("At least one option from <%s> must be specified"),
-		  "cats, coords, bbox, polygon, id");
-    }
-    
     G_debug ( 1, "  %d lines selected", List->n_values );
 
     /* print the result */
-    if (List->n_values > 0) {
-        for (i = 0; i <= List->n_values-1; i++)
-            fprintf(stdout,"%d%s", List->value[i], i < List->n_values-1 ? "," : "\n");
-    }
-    else {
-        G_warning(_("No lines found"));
-	return 0;
+    for (i = 0; i < List->n_values; i++) {
+	fprintf(stdout,"%d%s", List->value[i],
+		(i < List->n_values-1) ? "," : "\n");
     }
 
     return 1;
@@ -99,20 +91,29 @@ int do_print_selected(struct Map_info *Map)
 /*
  * select lines by category
  *
- * return line List ilist
+ * return number of selected lines
  */
-struct ilist *sel_by_cat(struct Map_info *Map, struct cat_list *cl_orig)
+int sel_by_cat(struct Map_info *Map, struct cat_list *cl_orig,
+	       struct ilist* List)
 {
-    struct ilist *List, *List_tmp;
+    struct ilist *List_tmp, *List_tmp1;
     struct cat_list *cl;
 
-    int i, layer, type;
+    int i, layer, type, cat, nlines;
+
+    nlines = List -> n_values;
+
+    if (nlines == 0) {
+	List_tmp = List;
+    }
+    else {
+	List_tmp = Vect_new_list();
+    }
+
+    List_tmp1 = Vect_new_list();
 
     layer = atoi (fld_opt->answer);
     type  = Vect_option_to_types (type_opt);
-
-    List      = Vect_new_list();
-    List_tmp  = Vect_new_list();
 
     if (cl_orig == NULL) {
 	cl = Vect_new_cat_list();
@@ -124,44 +125,56 @@ struct ilist *sel_by_cat(struct Map_info *Map, struct cat_list *cl_orig)
     }
 
     for(i = 0; i < cl -> n_ranges; i++) {
-        int cat;
         for(cat = cl->min[i]; cat <= cl->max[i]; cat++) {
-            Vect_cidx_find_all (Map, layer, type, cat, List_tmp);
-	    Vect_list_append_list (List, List_tmp);
+            Vect_cidx_find_all (Map, layer, type, cat, List_tmp1);
+	    Vect_list_append_list (List_tmp, List_tmp1);
         }
     }
 
-    Vect_destroy_list (List_tmp);
+    /* merge lists (only duplicate items) */
+    if (List_tmp != List) {
+	merge_lists (List, List_tmp);
+	Vect_destroy_list (List_tmp);
+    }
+
+    Vect_destroy_list (List_tmp1);
 
     G_debug (1, "  %d lines selected (by category)", List->n_values);
 
-    return List;
+    return List -> n_values;
 }
 
- /*
- * Select lines by coordinates, 
- * return line List ilist
+/*
+ * select lines by coordinates
+ *
+ * return number of selected lines
  */
-struct ilist *sel_by_coordinates(struct Map_info *Map)
+int sel_by_coordinates(struct Map_info *Map,
+		       struct ilist* List)
 {
-    int id;
-    double east,north;
+    int id, i, type, nlines;
+    double east, north, maxdist;
 
-    struct ilist *List;
+    struct ilist* List_tmp;
 
-    double maxdist;
-    int i;
-    int type = Vect_option_to_types (type_opt);
+    nlines = List -> n_values;
 
+    if (nlines == 0) {
+	List_tmp = List;
+    }
+    else {
+	List_tmp = Vect_new_list();
+    }
+    
+    type    = Vect_option_to_types (type_opt);
     maxdist = max_distance (atof(maxdist_opt->answer));
 
-    List = Vect_new_list();
-
     for (i = 0; coord_opt->answers[i]; i+=2) {
-        east = atof(coord_opt->answers[i]);
+        east  = atof(coord_opt->answers[i]);
         north = atof(coord_opt->answers[i+1]);
 
 	/* TODO: 3D */
+	/* TODO: find all lines in given threshold */
 	id = Vect_find_line (Map, east, north, 0.0, type, maxdist, 0, 0);
 
         if (id > 0) {
@@ -169,26 +182,41 @@ struct ilist *sel_by_coordinates(struct Map_info *Map)
         }
     }
 
+    /* merge lists (only duplicate items) */
+    if (List_tmp != List) {
+	merge_lists (List, List_tmp);
+	Vect_destroy_list (List_tmp);
+    }
+
     G_debug (1, "  %d lines selected (by coordinates)", List->n_values);
 
-    return List;
+    return List -> n_values;
 }
 
 /*
  * select lines by bbox
  *
- * return line List ilist
+ * return number of selected lines
  */
-struct ilist *sel_by_bbox(struct Map_info *Map)
+int sel_by_bbox(struct Map_info *Map,
+		struct ilist* List)
 {
     BOUND_BOX bbox;
-    double x1,x2,y1,y2;
-    struct ilist *List;
-    int type;
+    double x1, x2, y1, y2;
+    int type, nlines;
 
+    struct ilist* List_tmp;
+
+    nlines = List -> n_values;
+
+    if (nlines == 0) {
+	List_tmp = List;
+    }
+    else {
+	List_tmp = Vect_new_list();
+    }
+    
     type = Vect_option_to_types (type_opt);
-
-    List = Vect_new_list ();
 
     /* bounding box */
     x1 = atof(bbox_opt->answers[0]);
@@ -202,30 +230,44 @@ struct ilist *sel_by_bbox(struct Map_info *Map)
     bbox.T = 0.0;
     bbox.B = 0.0;
 
-    Vect_select_lines_by_box (Map, &bbox, type, List);
+    Vect_select_lines_by_box (Map, &bbox, type, List_tmp);
+
+    /* merge lists (only duplicate items) */
+    if (List_tmp != List) {
+	merge_lists (List, List_tmp);
+	Vect_destroy_list (List_tmp);
+    }
     
     G_debug (1, "  %d lines selected (by bbox)", List->n_values);
 
-    return List;
+    return List -> n_values;
 }
 
 /*
  * select lines by polygon
  *
- * return line List ilist
+ * return number of selected lines
  */
-struct ilist *sel_by_polygon(struct Map_info *Map)
+int sel_by_polygon(struct Map_info *Map,
+		   struct ilist* List)
 {
-    struct ilist *List;
+    struct ilist *List_tmp;
     struct line_pnts *Polygon;
-    int i;
-    int type;
+
+    int i, type, nlines;
+
+    nlines = List -> n_values;
+
+    if (nlines == 0) {
+	List_tmp = List;
+    }
+    else {
+	List_tmp = Vect_new_list();
+    }
 
     type = Vect_option_to_types (type_opt);
 
-    List = Vect_new_list ();
     Polygon = Vect_new_line_struct();
-
     
     for (i = 0; poly_opt->answers[i]; i+=2){
         Vect_append_point(Polygon,
@@ -243,61 +285,95 @@ struct ilist *sel_by_polygon(struct Map_info *Map)
     }
 
     /* no isles */
-    Vect_select_lines_by_polygon (Map, Polygon, 0, NULL, type, List);
+    Vect_select_lines_by_polygon (Map, Polygon, 0, NULL, type, List_tmp);
+
+    /* merge lists (only duplicate items) */
+    if (List_tmp != List) {
+	merge_lists (List, List_tmp);
+	Vect_destroy_list (List_tmp);
+    }
 
     G_debug (1, "  %d lines selected (by polygon)", List->n_values);
 
-    return List;
+    return List -> n_values;
 }
 
 /*
- * select lines by polygon
+ * select lines by id
  *
- * return line List ilist
+ * return number of selected lines
  */
-struct ilist *sel_by_id(struct Map_info *Map)
+int sel_by_id(struct Map_info *Map,
+	      struct ilist* List)
 {
-    struct ilist *List;
-    int i,j;
+    int i, j;
+    int nlines, num, id;
     struct cat_list *il; /* NOTE: this is not cat list, but list of id's */
+    struct ilist *List_tmp;
+
+    nlines = List -> n_values;
+
+    if (nlines == 0) {
+	List_tmp = List;
+    }
+    else {
+	List_tmp = Vect_new_list();
+    }
 
     il = Vect_new_cat_list();
-    Vect_str_to_cat_list(id_opt->answer, il);
+    Vect_str_to_cat_list (id_opt->answer, il);
 
-    List = Vect_new_list ();
-    
-    for ( i = 1; i <= Vect_get_num_lines (Map); i++) {
-        for(j = 0;j < il->n_ranges; j++) {
-            int id;
-            for(id = il->min[j]; id <= il->max[j]; id++) {
-                if (id == i)
-                    Vect_list_append (List, id);
+    num = Vect_get_num_lines (Map);
+
+    for (i = 1; i <= num; i++) {
+        for(j = 0; j < il->n_ranges; j++) {
+	    for(id = il->min[j]; id <= il->max[j]; id++) {
+                if (id == i) {
+		    Vect_list_append (List_tmp, id);
+		}
             }
         }
     }
     
     G_debug (1, "  %d lines selected (by id)", List->n_values);
 
-    return List;
+    /* merge lists (only duplicate items) */
+    if (List_tmp != List) {
+	merge_lists (List, List_tmp);
+	Vect_destroy_list (List_tmp);
+    }
+
+    Vect_destroy_cat_list (il);
+
+    return List -> n_values; 
 }
 
 /*
  * select lines according to SQL where statement
  *
- * return line List ilist
+ * return number of selected lines
  */
-struct ilist *sel_by_where (struct Map_info *Map)
+int sel_by_where (struct Map_info *Map,
+		  struct ilist* List)
 {
-    struct ilist *List;
     struct cat_list *cat_list;
-
+    struct ilist *List_tmp;
     struct field_info* Fi;
     dbDriver* driver;
     dbHandle handle;
 
-    int *cats, ncats, field;
+    int *cats, ncats, field, nlines;
 
-    List = Vect_new_list ();
+    nlines = List -> n_values;
+
+    if (nlines == 0) {
+	List_tmp = List;
+    }
+    else {
+	List_tmp = Vect_new_list();
+    }
+
+    cat_list = Vect_new_cat_list();
 
     field = atoi (fld_opt -> answer);
 
@@ -337,9 +413,37 @@ struct ilist *sel_by_where (struct Map_info *Map)
     if (ncats >= 0)
 	G_free (cats);
     
-    List = sel_by_cat (Map, cat_list);
+    sel_by_cat (Map, cat_list, List_tmp);
+
+    /* merge lists (only duplicate items) */
+    if (List_tmp != List) {
+	merge_lists (List, List_tmp);
+	Vect_destroy_list (List_tmp);
+    }
+
+    Vect_destroy_cat_list (cat_list);
 
     G_debug (1, "  %d lines selected (by id)", List->n_values);
 
-    return List;
+    return List -> n_values;
 }
+
+int merge_lists (struct ilist* alist, struct ilist* blist)
+{
+    int i;
+
+    struct ilist* list_del;
+    
+    list_del = Vect_new_list();
+
+    for (i = 0; i < alist -> n_values; i++) {
+	if (!Vect_val_in_list (blist, alist -> value[i]))
+	    Vect_list_append (list_del, alist -> value[i]);
+    }
+
+    Vect_list_delete_list (alist, list_del);
+
+    Vect_destroy_list (list_del);
+
+    return alist -> n_values;
+} 
