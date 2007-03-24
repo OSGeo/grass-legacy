@@ -434,13 +434,19 @@ class mainFrame(wx.Frame):
         self.btn_cancel.Bind(wx.EVT_BUTTON, self.OnCancel)
         self.Bind(wx.EVT_CLOSE, self.OnCloseWindow)
 
+        xsizelist = []
+        ysizelist = []
         for section in sections:
             self.tabsizer[section].SetSizeHints( self.tab[section] )
             self.tabsizer[section].Fit( self.tab[section] )
             self.tab[section].SetAutoLayout(True)
             self.tab[section].SetSizer( self.tabsizer[section] )
             self.tab[section].Layout()
+            xsizelist.append(self.tabsizer[section].GetMinSize()[0])
+            ysizelist.append(self.tabsizer[section].GetMinSize()[1])
 
+        maxminsize = (max(xsizelist),max(ysizelist))
+        self.notebook.SetInitialSize(maxminsize)
         self.panelsizer.SetSizeHints( self.notebookpanel )
         self.panelsizer.Fit( self.notebookpanel )
         self.notebookpanel.SetSizer(self.panelsizer)
@@ -448,6 +454,7 @@ class mainFrame(wx.Frame):
         self.notebookpanel.Layout()
 
         self.guisizer.SetSizeHints(self)
+#        self.guisizer.SetMinSize(maxminsize)
         self.SetAutoLayout(True)
         self.SetSizer(self.guisizer)
         self.Layout()
