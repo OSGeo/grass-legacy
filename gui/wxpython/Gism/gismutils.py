@@ -212,8 +212,18 @@ class LayerTree(CT.CustomTreeCtrl):
        # When double clicked or first added, open options dialog
         if self.layertype[layer] == 'raster':
             menuform.GUI().parseCommand('d.rast', gmpath, completed=(self.getOptData,layer), parentframe=self)
+        elif self.layertype[layer] == 'rgb':
+            menuform.GUI().parseCommand('d.rgb', gmpath, completed=(self.getOptData,layer), parentframe=self)
+        elif self.layertype[layer] == 'his':
+             menuform.GUI().parseCommand('d.his', gmpath, completed=(self.getOptData,layer), parentframe=self)
+        elif self.layertype[layer] == 'rastleg':
+            menuform.GUI().parseCommand('d.legend', gmpath, completed=(self.getOptData,layer), parentframe=self)
         elif self.layertype[layer] == 'vector':
             menuform.GUI().parseCommand('d.vect', gmpath, completed=(self.getOptData,layer), parentframe=self)
+        elif self.layertype[layer] == 'thememap':
+            menuform.GUI().parseCommand('d.vect.thematic', gmpath, completed=(self.getOptData,layer), parentframe=self)
+        elif self.layertype[layer] == 'themechart':
+            menuform.GUI().parseCommand('d.vect.chart', gmpath, completed=(self.getOptData,layer), parentframe=self)
 
     def onDeleteLayer(self, event):
         layer = event.GetItem()
