@@ -399,7 +399,7 @@ class mainFrame(wx.Frame):
                     else:
                         default_color = (200,200,200)
                         label_color = 'Select Color'
-                    btn_colour = csel.ColourSelect(which_panel, -1, label_color, default_color )
+                    btn_colour = csel.ColourSelect(which_panel, -1, label_color, default_color, wx.DefaultPosition, (150,-1) )
                     which_sizer.Add(btn_colour, 0, wx.ADJUST_MINSIZE| wx.ALL, 5)
                     self.paramdict[btn_colour] = ID_PARAM_START + p_count
                     self.Bind(csel.EVT_COLOURSELECT, self.OnColorButton, btn_colour)
