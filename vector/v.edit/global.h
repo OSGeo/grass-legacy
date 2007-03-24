@@ -71,13 +71,14 @@ int do_snap(struct Map_info *Map);
 
 /* select.c */
 int do_print_selected(struct Map_info *Map);
-struct ilist *select_lines(struct Map_info *Map);
-struct ilist *sel_by_cat(struct Map_info *Map, struct cat_list* cl_orig);
-struct ilist *sel_by_coordinates(struct Map_info *Map);
-struct ilist *sel_by_bbox(struct Map_info *Map);
-struct ilist *sel_by_polygon(struct Map_info *Map);
-struct ilist *sel_by_id(struct Map_info *Map);
-struct ilist *sel_by_where(struct Map_info *Map);
+struct ilist* select_lines(struct Map_info *Map);
+int sel_by_cat(struct Map_info *Map, struct cat_list* cl_orig, struct ilist *List);
+int sel_by_coordinates(struct Map_info *Map, struct ilist *List);
+int sel_by_bbox(struct Map_info *Map, struct ilist *List);
+int sel_by_polygon(struct Map_info *Map, struct ilist *List);
+int sel_by_id(struct Map_info *Map, struct ilist *List);
+int sel_by_where(struct Map_info *Map, struct ilist *List);
+int merge_lists (struct ilist* alist, struct ilist* blist);
 
 /* max_distance.c */
 double max_distance(double maxdistance);

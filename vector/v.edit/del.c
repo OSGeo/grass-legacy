@@ -8,7 +8,7 @@ int do_del(struct Map_info *Map)
 
     removed = 0;
 
-    List = select_lines(Map);
+    List = select_lines (Map);
 
     G_debug ( 1, "  %d lines selected", List->n_values );
 
@@ -27,7 +27,7 @@ int do_del(struct Map_info *Map)
 
     G_message(_("[%d] features deleted"), removed);
 
-    Vect_destroy_line_struct (List);
+    Vect_destroy_list (List);
 
     return removed;
 }

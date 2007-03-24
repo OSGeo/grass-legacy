@@ -66,19 +66,21 @@ int cats (struct Map_info *Map, int del)
     }
     if (coord_opt->answer != NULL) {
 
-        List = sel_by_coordinates(Map);
+	sel_by_coordinates(Map, List);
     }
     else if (bbox_opt->answer != NULL) {
 
-        List = sel_by_bbox(Map);
+	sel_by_bbox(Map, List);
     }
     else if (poly_opt->answer != NULL) {
-
-        List = sel_by_polygon(Map);
+	
+	sel_by_polygon(Map, List);
     }
     else if (Clist->n_ranges < 2){
         /* this case should not happen, see args.c for details */
-        G_fatal_error("cats, coord, bbox or polygon must be specified");
+	G_fatal_error (_("At least one option from <%s> must be specified"),
+		       "cats, coords, bbox, polygon, id, where");
+
     }
 
     if (List->n_values <1) {

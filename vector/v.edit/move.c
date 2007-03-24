@@ -36,7 +36,7 @@ int do_move(struct Map_info *Map)
     move_x = atof(move_opt->answers[0]);
     move_y = atof(move_opt->answers[1]);
 
-    /* cats or coord or bbox */
+    /* select lines */
     List = select_lines(Map);
 
     Points = Vect_new_line_struct();

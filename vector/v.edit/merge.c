@@ -65,7 +65,7 @@ int do_merge(struct Map_info *Map)
     thresh = atof (maxdist_opt -> answer);
 
     /* select lines */
-    List = select_lines(Map);
+    List = select_lines (Map);
     
     if (List->n_values < 2) {
 	G_message(_("Only [%d] lines found, at least two needed"), List->n_values);

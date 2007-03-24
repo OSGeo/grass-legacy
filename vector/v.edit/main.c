@@ -14,7 +14,7 @@
  *             Read the file COPYING that comes with GRASS
  *             for details.
  *
- * TODO:       
+ * TODO:       3D support
  ****************************************************************/
 
 #define MAIN
@@ -67,7 +67,7 @@ int main (int argc, char *argv[])
     /* open selected vector file */    
     mapset = G_find_vector2 (map_opt->answer, G_mapset()); 
     if ( mapset == NULL ) {
-	G_fatal_error (_("Cannot open vector map <%s>"),
+	G_fatal_error (_("Vector map <%s> not found in the current mapset"),
 		       map_opt->answer);
     }
     else {
