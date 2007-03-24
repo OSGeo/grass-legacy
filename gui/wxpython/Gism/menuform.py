@@ -378,7 +378,7 @@ class mainFrame(wx.Frame):
                 if p['prompt'] != 'color':
                     self.selection = select.Select(which_panel, id=wx.ID_ANY, size=(250,-1),
                                                    type=p['element'])
-                    which_sizer.Add(self.selection, 0, wx.ADJUST_MINSIZE, 5)
+                    which_sizer.Add(self.selection, 0, wx.ADJUST_MINSIZE| wx.ALL, 5)
                     self.paramdict[self.selection] = ID_PARAM_START + p_count
                     self.selection.Bind(wx.EVT_TEXT, self.EvtText)
                 elif p['prompt'] == 'color':
@@ -400,7 +400,7 @@ class mainFrame(wx.Frame):
                         default_color = (200,200,200)
                         label_color = 'Select Color'
                     btn_colour = csel.ColourSelect(which_panel, -1, label_color, default_color )
-                    which_sizer.Add(btn_colour, 0, wx.ADJUST_MINSIZE, 5)
+                    which_sizer.Add(btn_colour, 0, wx.ADJUST_MINSIZE| wx.ALL, 5)
                     self.paramdict[btn_colour] = ID_PARAM_START + p_count
                     self.Bind(csel.EVT_COLOURSELECT, self.OnColorButton, btn_colour)
         f_count = -1
@@ -414,7 +414,7 @@ class mainFrame(wx.Frame):
                 which_panel = self.tab[ 'Main' ]
             title = escape_ampersand(f['description'])
             self.chk = wx.CheckBox(which_panel,-1, label = title, style = wx.NO_BORDER)
-            which_sizer.Add(self.chk, 0, wx.EXPAND, 5)
+            which_sizer.Add(self.chk, 0, wx.EXPAND| wx.ALL, 5)
             self.paramdict[self.chk] = ID_FLAG_START + f_count
             self.chk.Bind(wx.EVT_CHECKBOX, self.EvtCheckBox)
 
