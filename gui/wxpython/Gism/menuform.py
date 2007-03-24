@@ -300,8 +300,9 @@ class mainFrame(wx.Frame):
         self.notebookpanel.SetScrollRate(10,10)
         self.panelsizer = wx.BoxSizer(wx.VERTICAL)
 
-        nbStyle=FN.FNB_NO_X_BUTTON|FN.FNB_NO_NAV_BUTTONS|FN.FNB_VC8
+        nbStyle=FN.FNB_NO_X_BUTTON|FN.FNB_NO_NAV_BUTTONS|FN.FNB_VC8|FN.FNB_BACKGROUND_GRADIENT
         self.notebook = FN.FlatNotebook(self.notebookpanel, id=wx.ID_ANY, style=nbStyle)
+        self.notebook.SetTabAreaColour(wx.Colour(125,200,175))
         self.tab = {}
         self.tabsizer = {}
         is_first = True
