@@ -263,7 +263,7 @@ class mainFrame(wx.Frame):
 
     The dialog is organized in a notebook according to the guisections
     defined by each GRASS command."""
-    def __init__(self, parent, ID, get_dcmd=None, layer=None):
+    def __init__(self, parent, ID, get_dcmd=None, layer=None, dcmd_params=None):
         wx.Frame.__init__(self, parent, ID, grass_task.name,
             wx.DefaultPosition, style=wx.DEFAULT_FRAME_STYLE | wx.TAB_TRAVERSAL)
 
@@ -273,6 +273,7 @@ class mainFrame(wx.Frame):
         self.selection = '' #selection from GIS element selector
         self.paramdict = {} # dictionary of controls and their parameter values
         self.get_dcmd = get_dcmd
+        self.dcmd_params = dcmd_params #this should be passed from the layer tree eventually
         self.layer = layer
 
         menu = wx.Menu()
@@ -328,6 +329,11 @@ class mainFrame(wx.Frame):
             if p['multiple'] == 'yes' and len( p['values'] ) == 0:
                 title = "[multiple] " + title
             p['value'] = p['default']
+            # inserting existing values from d.* command in layer tree
+            if self.dcmd_params != None:
+                for dparam in self.dcmd_params:
+                    if p == dparam:
+                        p['value'] = self.dcmd_params[dparam]
             if (len(p['values']) > 0):
 
                 valuelist=map(str,p['values'])
@@ -400,6 +406,7 @@ class mainFrame(wx.Frame):
                     which_sizer.Add(btn_colour, 0, wx.ADJUST_MINSIZE| wx.ALL, 5)
                     self.paramdict[btn_colour] = ID_PARAM_START + p_count
                     self.Bind(csel.EVT_COLOURSELECT, self.OnColorButton, btn_colour)
+
         f_count = -1
         for f in grass_task.flags:
             f_count += 1
