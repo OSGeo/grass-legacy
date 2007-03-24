@@ -170,7 +170,6 @@ class LayerTree(CT.CustomTreeCtrl):
             # launch the properties dialog
             menuform.GUI().parseCommand('d.rast', gmpath, completed=(self.getOptData,layer), parentframe=self)
         elif type == 'rgb':
-            print 'in rgb'
             self.SetItemImage(layer, self.rgb_icon)
             self.SetItemText(layer, 'RGB (double click to set properties)')
             # launch the properties dialog
@@ -598,14 +597,15 @@ class GMConsole(wx.Panel):
     	self.SetSizer(boxsizer1)
 
     def getGRASSCmds(self):
-		'''
+        '''
         Create list of all available GRASS commands to use when
         parsing string from the command line
         '''
-		gisbase = os.environ['GISBASE']
-		self.gcmdlst = os.listdir(gisbase+r'/bin')
-		self.gcmdlst.append(os.listdir(gisbase+r'/scripts'))
-		return self.gcmdlst
+        self.gcmdlst = []
+        gisbase = os.environ['GISBASE']
+        self.gcmdlst = os.listdir(gisbase+r'/bin')
+        self.gcmdlst = self.gcmdlst + os.listdir(gisbase+r'/scripts')
+        return self.gcmdlst
 
     def runCmd(self, cmd):
     	"""
