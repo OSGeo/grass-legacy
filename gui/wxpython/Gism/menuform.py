@@ -35,7 +35,7 @@ import sys
 import string
 import select
 import wx.lib.flatnotebook as FN
-import  wx.lib.colourselect as csel
+import wx.lib.colourselect as csel
 
 # Do the python 2.0 standard xml thing and map it on the old names
 import xml.sax
@@ -289,12 +289,14 @@ class mainFrame(wx.Frame):
         self.SetMenuBar(menuBar)
         self.guisizer = wx.BoxSizer(wx.VERTICAL)
 
+        sections = []
         is_section = {}
         for task in grass_task.params + grass_task.flags:
-            if task.has_key('guisection') and task['guisection'] != '':
+            if not task.has_key('guisection') or task['guisection']=='':
+                task['guisection'] = 'Options'
+            if not is_section.has_key(task['guisection']):
                 is_section[task['guisection']] = 1
-        sections = is_section.keys()
-        sections.sort()
+                sections.append( task['guisection'] )
 
         self.notebookpanel = wx.ScrolledWindow( self, id=wx.ID_ANY )
         self.notebookpanel.SetScrollRate(10,10)
@@ -306,7 +308,7 @@ class mainFrame(wx.Frame):
         self.tab = {}
         self.tabsizer = {}
         is_first = True
-        for section in ['Main']+sections:
+        for section in sections:
             self.tab[section] = wx.Panel(self.notebook, id = wx.ID_ANY )
             self.tabsizer[section] = wx.BoxSizer(wx.VERTICAL)
             self.notebook.AddPage( self.tab[section], text = section, select = is_first )
@@ -318,12 +320,8 @@ class mainFrame(wx.Frame):
         p_count = -1
         for p in grass_task.params:
             p_count += 1 # Needed for checkboxes hack
-            if p.has_key('guisection') and p['guisection'] != '':
-                which_sizer = self.tabsizer[ p['guisection'] ]
-                which_panel = self.tab[ p['guisection'] ]
-            else:
-                which_sizer = self.tabsizer[ 'Main' ]
-                which_panel = self.tab[ 'Main' ]
+            which_sizer = self.tabsizer[ p['guisection'] ]
+            which_panel = self.tab[ p['guisection'] ]
             title = escape_ampersand(p['description'])
             if p['required'] == 'no':
                 title = "[optional] " + title
@@ -392,11 +390,9 @@ class mainFrame(wx.Frame):
                             try:
                                 default_color = color_str2rgb[ p['default'] ]
                                 label_color = p['default']
-                                label_color_pad = ' '*(11-len(label_color)/2)
-                                label_color = label_color_pad + label_color + label_color_pad
                             except KeyError:
                                 default_color = (200,200,200)
-                                label_color = '  Select Color  '
+                                label_color = 'Select Color'
                     else:
                         default_color = (200,200,200)
                         label_color = 'Select Color'
@@ -407,12 +403,8 @@ class mainFrame(wx.Frame):
         f_count = -1
         for f in grass_task.flags:
             f_count += 1
-            if f.has_key('guisection') and f['guisection'] != '':
-                which_sizer = self.tabsizer[ f['guisection'] ]
-                which_panel = self.tab[ f['guisection'] ]
-            else:
-                which_sizer = self.tabsizer[ 'Main' ]
-                which_panel = self.tab[ 'Main' ]
+            which_sizer = self.tabsizer[ f['guisection'] ]
+            which_panel = self.tab[ f['guisection'] ]
             title = escape_ampersand(f['description'])
             self.chk = wx.CheckBox(which_panel,-1, label = title, style = wx.NO_BORDER)
             which_sizer.Add(self.chk, 0, wx.EXPAND| wx.ALL, 5)
@@ -442,7 +434,7 @@ class mainFrame(wx.Frame):
         self.btn_cancel.Bind(wx.EVT_BUTTON, self.OnCancel)
         self.Bind(wx.EVT_CLOSE, self.OnCloseWindow)
 
-        for section in sections+['Main']:
+        for section in sections:
             self.tabsizer[section].SetSizeHints( self.tab[section] )
             self.tabsizer[section].Fit( self.tab[section] )
             self.tab[section].SetAutoLayout(True)
