@@ -71,16 +71,15 @@ class EpsgCode(wx.Frame):
 
         # table
         self.tablewidth=600
-        self.epsgs = wx.ListCtrl(self, -1,
-                     style=wx.LC_REPORT|wx.LC_HRULES,
-                     size=(700,100))
-        self.epsgs.InsertColumn(0, 'EPSG')
-        self.epsgs.InsertColumn(1, '                        Description                     ')
-        self.epsgs.InsertColumn(2, '                                            Parameters                                            ')
+        self.epsgs = wx.ListCtrl(self, id = wx.ID_ANY,
+                     size=(750,200),
+                     style=wx.LC_REPORT|wx.LC_HRULES|wx.EXPAND)
+        self.epsgs.InsertColumn(0, 'EPSG', wx.LIST_FORMAT_CENTRE)
+        self.epsgs.InsertColumn(1, 'Description', wx.LIST_FORMAT_LEFT)
+        self.epsgs.InsertColumn(2, 'Parameters', wx.LIST_FORMAT_LEFT)
         self.epsgs.SetColumnWidth(0, 50)
-        self.epsgs.SetColumnWidth(1, wx.LIST_AUTOSIZE_USEHEADER)
-        self.epsgs.SetColumnWidth(2, wx.LIST_AUTOSIZE_USEHEADER)
-
+        self.epsgs.SetColumnWidth(1, 300)
+        self.epsgs.SetColumnWidth(2, 400)
 
         # layout
         self.sizer.Add(self.lname, 0, wx.ALIGN_RIGHT |
@@ -128,14 +127,13 @@ class EpsgCode(wx.Frame):
         self.sizer.Add(self.epanel4, 0, wx.ALIGN_LEFT, 1)
 
         self.vsizer.Add(self.sizer,0, wx.ADJUST_MINSIZE, 1)
-        self.vsizer.Add(self.epsgs, wx.ALIGN_LEFT|wx.EXPAND,  2)
+        self.vsizer.Add(self.epsgs, wx.ALIGN_LEFT|wx.EXPAND, 0)
 
         self.SetAutoLayout(True)
         self.SetSizer(self.vsizer)
         self.vsizer.Fit(self)
         self.vsizer.SetSizeHints(self)
         self.Layout()
-
 
         # events
         wx.EVT_BUTTON(self, self.bbrowse.GetId(), self.OnBrowse)
@@ -195,19 +193,24 @@ class EpsgCode(wx.Frame):
                     for par in line.split(" ")[1:]:
                         params += par + " "
                     code = code[1:-1]
+                if code == None: code = 'no code'
+                if descr == None: descr = 'no description'
+                if params == None: params = 'no parameters'
                 if i%2 == 0:
                     if search and descr.lower().find(search.lower()) > -1 or\
                         not search:
-                        self.epsgs.InsertStringItem(j,str(code))
-                        self.epsgs.SetStringItem(j, 1, str(descr))
-                        self.epsgs.SetStringItem(j, 2, str(params))
+                        index = self.epsgs.InsertStringItem(j, code)
+                        self.epsgs.SetStringItem(index, 1, descr)
+                        self.epsgs.SetStringItem(index, 2, params)
                         j  += 1
                     # reset
                     descr = None; code = None; params = ""
-                if i%2 == 0:
-                    self.epsgs.SetItemBackgroundColour(i, "grey")
+#                if i%2 == 0:
+#                    self.epsgs.SetItemBackgroundColour(i, "grey")
                 i += 1
             f.close()
+            self.epsgs.SetColumnWidth(1, wx.LIST_AUTOSIZE)
+            self.epsgs.SetColumnWidth(2, wx.LIST_AUTOSIZE)
             self.SendSizeEvent()
         except StandardError, e:
             dlg = wx.MessageDialog(self, "Could not read EPGS codes: %s "
@@ -228,16 +231,16 @@ class EpsgCode(wx.Frame):
 
         number = -1
         try:
-            number = int(self.tcode.GetValue())
+            code = self.tcode.GetValue()
         except:
-            dlg = wx.MessageDialog(self, "Could not create new location: '%s' not a number" % self.tcode.GetValue(),
+            dlg = wx.MessageDialog(self, "Could not create new location: '%s' is not a valid EPSG code" % code,
                     "Can not create location",  wx.OK|wx.ICON_INFORMATION)
             dlg.ShowModal()
             dlg.Destroy()
             return
 
         if os.path.isdir(os.path.join(self.parent.gisdbase,self.tname.GetValue())):
-            dlg = wx.MessageDialog(self, "Could not create new location: %s exists"
+            dlg = wx.MessageDialog(self, "Could not create new location: %s already exists"
                     % os.path.join(self.parent.gisdbase,self.tname.GetValue()),"Can not create location",  wx.OK|wx.ICON_INFORMATION)
             dlg.ShowModal()
             dlg.Destroy()
@@ -247,18 +250,24 @@ class EpsgCode(wx.Frame):
         # all credit to Michael Barton and his file_option.tcl and
         # Markus Neteler
         try:
-            # FIXME: this does not need to work on windows
-            os.system("g.proj -c georef=%s location=%s >&2" % (self.tfile.GetValue(), self.tname.GetValue()))
-            datumtrans = os.popen(" g.proj epsg=%d datumtrans=-1 >&2" % (number)).readlines()
+            dtoptions = os.popen3(" g.proj epsg=%s datumtrans=-1" % (code))[1].read()
+            if dtoptions != None:
+                # open a dialog to select datum transform number
+                dtoptions = 'Select the number of a datum transformation to use: \n'+dtoptions
+                dlg = wx.TextEntryDialog(self, dtoptions)
+                dlg.SetValue('1')
 
-            if datumtrans:
-                #os.system(" g.proj epsg=%d datumtrans=%s >&2" % (number,datumtrans[0]).readlines()
-                pass
+                if dlg.ShowModal() == wx.ID_OK:
+                    dtrans = dlg.GetValue()
+
+                dlg.Destroy()
+
+                cmd = os.system("g.proj -c epsg=%s location=%s datumtrans=%s" % (code, self.tname.GetValue(), dtrans))
             else:
-                os.system("g.proj -c epsg=%d location=%s datumtrans=1" % (number, self.tname.GetValue()))
+                os.system("g.proj -c epsg=%s location=%s datumtrans=1" % (code, self.tname.GetValue()))
 
-                self.parent.OnSetDatabase(None)
                 self.Destroy()
+            self.parent.OnSetDatabase(None)
 
         except StandardError, e:
             dlg = wx.MessageDialog(self, "Could not create new location: %s "
@@ -266,7 +275,6 @@ class EpsgCode(wx.Frame):
             dlg.ShowModal()
             dlg.Destroy()
             return
-
 
     def OnDoubleClick(self, event):
         print self.epsgs.GetValue()
