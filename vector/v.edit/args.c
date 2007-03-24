@@ -4,11 +4,6 @@ int parser(int argc, char*argv[])
 {
     map_opt = G_define_standard_option(G_OPT_V_MAP);
 
-    in_opt = G_define_standard_option (G_OPT_F_INPUT);
-    in_opt -> required = NO;
-    in_opt -> description = _("ASCII file to be converted to binary vector map, "
-			      "if not given reads from standard input");
-
     fld_opt = G_define_standard_option(G_OPT_V_FIELD);
 
     type_opt = G_define_standard_option(G_OPT_V_TYPE);
@@ -20,7 +15,7 @@ int parser(int argc, char*argv[])
     tool_opt->type        = TYPE_STRING;
     tool_opt->required    = YES;
     tool_opt->multiple    = NO;
-    tool_opt->description = _("The edit tool to take");
+    tool_opt->description = _("Editing tool");
     tool_opt->descriptions = _("create;"
 			       "Create empty vector map;"
 			       "add;"
@@ -52,6 +47,11 @@ int parser(int argc, char*argv[])
     tool_opt->options     = "create,add,delete,move,vertex,straight,merge,"
       "break,split,select,catadd,catdel,copy,snap";
 
+    in_opt = G_define_standard_option (G_OPT_F_INPUT);
+    in_opt -> required = NO;
+    in_opt -> description = _("ASCII file to be converted to binary vector map, "
+			      "if not given reads from standard input");
+
     move_opt = G_define_option();
     move_opt->key         = "move";
     move_opt->key_desc    = "x,y";
@@ -74,7 +74,7 @@ int parser(int argc, char*argv[])
     id_opt = G_define_standard_option(G_OPT_V_CATS);
     id_opt->required    = NO;
     id_opt->key         = "ids";
-    id_opt->description = _("ID's of selected features");
+    id_opt->label = _("ID values");
     
     coord_opt = G_define_option();
     coord_opt->key         = "coords";
@@ -82,8 +82,8 @@ int parser(int argc, char*argv[])
     coord_opt->type        = TYPE_DOUBLE;
     coord_opt->required    = NO;
     coord_opt->multiple    = YES;
-    coord_opt->description = _("List of point coordinates. "
-			       "Required for add and move actions.");
+    coord_opt->description = _("List of point coordinates "
+			       "(required for add and move actions)");
     
     bbox_opt =  G_define_option();
     bbox_opt->key         = "bbox";
