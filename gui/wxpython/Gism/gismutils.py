@@ -146,13 +146,11 @@ class LayerTree(CT.CustomTreeCtrl):
                                 '', ct_type=1, wnd=self.ctrl )
         else:
             layer = self.PrependItem(self.root, '', ct_type=1, wnd=self.ctrl)
-        print 'layer added'
 
         self.SelectItem(layer)
 
         # add to layertype and layerctrl dictionaries
         self.layertype[layer] = type
-        print 'layertype =', self.layertype[layer]
         self.layerctrl[self.ctrl] = layer
 
         # add a data object to hold the layer's command (does not apply to generic command layers)
@@ -636,8 +634,18 @@ class GMConsole(wx.Panel):
             if cmd[0:2] == "d.":
                 if cmd == 'd.rast':
                     layertype = 'raster'
+                elif cmd == 'd.rgb':
+                    layertype = 'rgb'
+                elif cmd == 'd.his':
+                    layertype = 'his'
+                elif cmd == 'd.legend':
+                    layertype = 'rastleg'
                 elif cmd == 'd.vect':
                     layertype = 'vector'
+                elif cmd == 'd.vect.thematic':
+                    layertype = 'thememap'
+                elif cmd == 'd.vect.chart':
+                    layertype = 'themechart'
                 else:
                     print 'Command type not yet implemented'
                     return
