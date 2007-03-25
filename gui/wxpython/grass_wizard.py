@@ -34,7 +34,7 @@ class TitledPage(wiz.WizardPageSimple):
             pass
         return wx.StaticText(self, -1, text, style=wx.ALIGN_RIGHT)
 
-    def MakeTextCtrl(self,text='', size=(100,20)):
+    def MakeTextCtrl(self,text='', size=(100,-1)):
         return wx.TextCtrl(self,-1, text, size=size)
 
     def MakeButton(self,text, size=(75,25)):
@@ -50,11 +50,11 @@ class DatumPage(TitledPage):
         self.parent = parent
 
         # text input
-        self.tdatum = self.MakeTextCtrl("", size=(200,20))
-        self.ttrans = self.MakeTextCtrl("", size=(200,20))
+        self.tdatum = self.MakeTextCtrl("", size=(200,-1))
+        self.ttrans = self.MakeTextCtrl("", size=(200,-1))
 
         # search box
-        self.searchb = wx.SearchCtrl(self, size=(200,20),
+        self.searchb = wx.SearchCtrl(self, size=(200,-1),
                                      style=wx.TE_PROCESS_ENTER)
 
         # button
@@ -96,7 +96,7 @@ class DatumPage(TitledPage):
         self.transformlist.SetColumnWidth(2, 250)
         self.transformlist.SetColumnWidth(3, 250)
 
-        # laout
+        # layout
         self.sizer.Add(self.MakeLabel("Geodetic datum:"), 0,
                        wx.ALIGN_RIGHT |
                        wx.ALIGN_CENTER_VERTICAL |
@@ -356,26 +356,33 @@ class SummaryPage(TitledPage):
 
 class BBoxPage(TitledPage):
     def __init__(self, wizard, parent):
-        TitledPage.__init__(self, wizard, "Set default region")
+        TitledPage.__init__(self, wizard, "Set default region extents and resolution")
 
         self.parent = parent
         # inputs
-        self.ttop = self.MakeTextCtrl("1")
-        self.tbottom = self.MakeTextCtrl("0")
-        self.tleft = self.MakeTextCtrl("0")
-        self.tright = self.MakeTextCtrl("1")
-        self.tres = self.MakeTextCtrl("1")
-        self.tgdal = self.MakeTextCtrl("")
-        self.tdsn = self.MakeTextCtrl("")
+        self.ttop = self.MakeTextCtrl("1", size=(150, -1))
+        self.tbottom = self.MakeTextCtrl("0", size=(150, -1))
+        self.tleft = self.MakeTextCtrl("0", size=(150, -1))
+        self.tright = self.MakeTextCtrl("1", size=(150, -1))
+        self.tres = self.MakeTextCtrl("1", size=(150, -1))
+
+        self.tgdal = self.MakeTextCtrl("", size=(250, -1))
+        self.tdsn = self.MakeTextCtrl("", size=(250, -1))
+        # list of layers
+        self.layers = []
+        self.llayers = wx.ComboBox(self, -1,
+                       choices=self.layers,
+                       size=(250,-1),
+                       style=wx.CB_DROPDOWN)
 
         # labels
-        self.lmessage = wx.StaticText(self,-1, "", size=(200,50))
+        self.lmessage = wx.StaticText(self,-1, "", size=(300,50))
 
         # buttons
-        self.bbrowsegdal = self.MakeButton("Browse ...")
-        self.bbrowseogr = self.MakeButton("Browse ...")
-        self.bgetlayers = self.MakeButton("Get Layers")
-        self.bset = self.MakeButton("Set coordinates")
+        self.bbrowsegdal = self.MakeButton("Browse ...", size=(150,-1))
+        self.bbrowseogr = self.MakeButton("Browse ...", size=(150,-1))
+        self.bgetlayers = self.MakeButton("Get Layers", size=(150,-1))
+        self.bset = self.MakeButton("Set coordinates", size=(150,-1))
 
         # list of states
         self.states = []
@@ -399,59 +406,135 @@ class BBoxPage(TitledPage):
         # self.cstate = wx.combo.ComboCtrl(self, -1, pos=(50, 170), size=(150, -1),
         #          style=wx.CB_READONLY)
 
-        self.cstate = wx.ComboBox(self, -1, pos=(50, 170), size=(150, -1),
-                choices=self.states, style=wx.CB_DROPDOWN)
-
-        # list of layers
-        self.layers = []
-        self.llayers = wx.ComboBox(self, -1, choices=self.layers, size=(100,-1),
-                style=wx.CB_DROPDOWN)
-
+        self.cstate = wx.ComboBox(self, -1,
+                       size=(250,-1),
+                       choices=self.states,
+                       style=wx.CB_DROPDOWN)
 
         # layout
-        self.sizer.Add(self.MakeLabel("North"), 0, wx.ALIGN_RIGHT, row=1,col=2)
-        self.sizer.Add(self.ttop, 0, wx.ALIGN_LEFT, row=1,col=3)
+        self.sizer.Add(self.MakeLabel("North"), 0,
+                       wx.ALIGN_CENTER_HORIZONTAL |
+                       wx.ALIGN_CENTER_VERTICAL |
+                       wx.ALL, 0, row=1,col=2)
+        self.sizer.Add(self.ttop, 0,
+                       wx.ALIGN_CENTER_HORIZONTAL |
+                       wx.ALIGN_CENTER_VERTICAL |
+                       wx.ALL, 5, row=2,col=2)
 
-        self.sizer.Add(self.MakeLabel("West"), 0, wx.ALIGN_RIGHT, row=2,col=1)
-        self.sizer.Add(self.tleft, 0, wx.ALIGN_LEFT,  row=2,col=2)
-        self.sizer.Add(self.MakeLabel("East"), 0, wx.ALIGN_RIGHT, row=2,col=4)
-        self.sizer.Add(self.tright, 0, wx.ALIGN_LEFT,  row=2,col=5)
+        self.sizer.Add(self.MakeLabel("West"), 0,
+                       wx.ALIGN_RIGHT |
+                       wx.ALIGN_CENTER_VERTICAL |
+                       wx.ALL, 0, row=3,col=0)
+        self.sizer.Add(self.tleft, 0,
+                       wx.ALIGN_RIGHT |
+                       wx.ALIGN_CENTER_VERTICAL |
+                       wx.ALL, 5,  row=3,col=1)
 
-        self.sizer.Add(self.MakeLabel("South"), 0, wx.ALIGN_RIGHT, row=3,col=2)
-        self.sizer.Add(self.tbottom, 0, wx.ALIGN_LEFT, row=3,col=3)
+        self.sizer.Add(self.tright, 0,
+                       wx.ALIGN_CENTER_HORIZONTAL |
+                       wx.ALIGN_CENTER_VERTICAL |
+                       wx.ALL, 5,  row=3,col=3)
+        self.sizer.Add(self.MakeLabel("East"), 0,
+                       wx.ALIGN_LEFT |
+                       wx.ALIGN_CENTER_VERTICAL |
+                       wx.ALL, 0, row=3,col=4)
 
-        self.sizer.Add(self.MakeLabel("Initial resolution"), 0, wx.ALIGN_RIGHT, row=4,col=2)
-        self.sizer.Add(self.tres, 0, wx.ALIGN_LEFT, row=4,col=3)
-        self.sizer.Add(self.bset, 0, wx.ALIGN_CENTER_VERTICAL, row=4, col=5 )
+        self.sizer.Add(self.tbottom, 0,
+                       wx.ALIGN_CENTER_HORIZONTAL |
+                       wx.ALIGN_CENTER_VERTICAL |
+                       wx.ALL, 5, row=4,col=2)
+        self.sizer.Add(self.MakeLabel("South"), 0,
+                       wx.ALIGN_CENTER_HORIZONTAL |
+                       wx.ALIGN_CENTER_VERTICAL |
+                       wx.ALL, 0, row=5,col=2)
 
-        self.sizer.Add(wx.StaticLine(self, -1), 0, wx.EXPAND|wx.ALL, 0, row=5, col=0, colspan=6)
-        self.sizer.Add(self.MakeLabel("Use georeferenced raster file"), 3, wx.ALIGN_RIGHT, row=6,col=0, colspan=3)
+        self.sizer.Add(self.MakeLabel("Initial resolution"), 0,
+                       wx.ALIGN_RIGHT |
+                       wx.ALIGN_CENTER_VERTICAL |
+                       wx.ALL, 5, row=6,col=1)
+        self.sizer.Add(self.tres, 0,
+                       wx.ALIGN_CENTER_HORIZONTAL |
+                       wx.ALIGN_CENTER_VERTICAL |
+                       wx.ALL, 5, row=6,col=2)
+        self.sizer.Add(self.bset, 0,
+                       wx.ALIGN_LEFT |
+                       wx.ALIGN_CENTER_VERTICAL |
+                       wx.ALL, 5, row=6, col=3 )
 
-        self.sizer.Add(self.MakeLabel("File name:"), 3, wx.ALIGN_RIGHT, row=7,col=2, colspan=1)
-        self.sizer.Add(self.tgdal, 0, wx.ALIGN_CENTER_VERTICAL, row=7,col=3)
-        self.sizer.Add(self.bbrowsegdal, 0, wx.ALIGN_LEFT, row=7,col=4)
+        self.sizer.Add(wx.StaticLine(self, -1), 0, wx.EXPAND|wx.ALL, 0, row=7, col=0, colspan=6)
 
-        self.sizer.Add(wx.StaticLine(self, -1), 0, wx.EXPAND|wx.ALL, 0,
-                row=8, col=2, colspan=3)
+        self.sizer.Add(self.MakeLabel("Match extents of georeferenced raster map or image"), 3,
+                       wx.ALIGN_LEFT |
+                       wx.ALIGN_CENTER_VERTICAL |
+                       wx.ALL, 5, row=8,col=0, colspan=3)
 
-        self.sizer.Add(self.MakeLabel("Use georeferenced vector layer"), 3, wx.ALIGN_RIGHT, row=9,col=0, colspan=3 )
+        self.sizer.Add(self.MakeLabel("File:"), 0,
+                       wx.ALIGN_RIGHT |
+                       wx.ALIGN_CENTER_VERTICAL |
+                       wx.ALL, 5, row=9,col=0, colspan=1)
+        self.sizer.Add(self.tgdal, 0,
+                       wx.ALIGN_LEFT |
+                       wx.ALIGN_CENTER_VERTICAL |
+                       wx.ALL, 5, row=9,col=1, colspan=2)
+        self.sizer.Add(self.bbrowsegdal, 0,
+                       wx.ALIGN_LEFT |
+                       wx.ALIGN_CENTER_VERTICAL |
+                       wx.ALL, 5, row=9,col=3)
 
-        self.sizer.Add(self.MakeLabel("Data source name:"), 3, wx.ALIGN_RIGHT, row=10,col=2, colspan=1)
-        self.sizer.Add(self.tdsn, 0, wx.ALIGN_CENTER_VERTICAL, row=10, col=3)
-        self.sizer.Add(self.bbrowseogr, 0, wx.ALIGN_LEFT, row=10,col=4)
+        self.sizer.Add(wx.StaticLine(self, -1), 0,
+                       wx.EXPAND|wx.ALL, 0,
+                       row=10, col=0, colspan=6)
 
-        self.sizer.Add(self.MakeLabel("Layer name:"), 3, wx.ALIGN_RIGHT, row=12,col=2, colspan=1)
-        self.sizer.Add(self.llayers, 0, wx.ALIGN_CENTER_VERTICAL, row=12,col=3)
-        self.sizer.Add(self.bgetlayers, 0, wx.ALIGN_LEFT, row=12,col=4)
+        self.sizer.Add(self.MakeLabel("Match extents of georeferenced vector map"), 0,
+                       wx.ALIGN_LEFT |
+                       wx.ALIGN_CENTER_VERTICAL |
+                       wx.ALL, 5, row=11,col=0, colspan=3 )
 
-        self.sizer.Add(wx.StaticLine(self, -1), 0, wx.EXPAND|wx.ALL, 0,
-                row=13, col=0, colspan=6)
-        self.sizer.Add(self.MakeLabel("Set extent according to selected country"), 3, wx.ALIGN_RIGHT, row=14,col=2)
-        self.sizer.Add(self.cstate, 0, wx.ALIGN_LEFT, row=14,col=3)
+        self.sizer.Add(self.MakeLabel("Data source/directory:"), 0,
+                       wx.ALIGN_RIGHT |
+                       wx.ALIGN_CENTER_VERTICAL |
+                       wx.ALL, 5, row=12,col=0, colspan=1)
+        self.sizer.Add(self.tdsn, 0,
+                       wx.ALIGN_LEFT |
+                       wx.ALIGN_CENTER_VERTICAL |
+                       wx.ALL, 5, row=12, col=1, colspan=2)
+        self.sizer.Add(self.bbrowseogr, 0,
+                       wx.ALIGN_LEFT |
+                       wx.ALIGN_CENTER_VERTICAL |
+                       wx.ALL, 5, row=12, col=3)
 
-        self.sizer.Add(self.lmessage, 0, wx.ALIGN_CENTER_VERTICAL,
-                row=15,col=3, colspan=3)
+        self.sizer.Add(self.MakeLabel("Layer/file:"), 0,
+                       wx.ALIGN_RIGHT |
+                       wx.ALIGN_CENTER_VERTICAL |
+                       wx.ALL, 5, row=13,col=0, colspan=1)
+        self.sizer.Add(self.llayers, 0,
+                       wx.ALIGN_LEFT |
+                       wx.ALIGN_CENTER_VERTICAL |
+                       wx.ALL, 5, row=13,col=1, colspan=2)
+        self.sizer.Add(self.bgetlayers, 0,
+                       wx.ALIGN_LEFT |
+                       wx.ALIGN_CENTER_VERTICAL |
+                       wx.ALL, 5, row=13,col=3)
 
+        self.sizer.Add(wx.StaticLine(self, -1), 0,
+                       wx.EXPAND|wx.ALL |
+                       wx.ALIGN_CENTER_VERTICAL |
+                       wx.ALL, 5,
+                       row=14, col=0, colspan=6)
+        self.sizer.Add(self.MakeLabel("Match extents of selected country"), 0,
+                       wx.ALIGN_LEFT |
+                       wx.ALIGN_CENTER_VERTICAL |
+                       wx.ALL, 5, row=15,col=0, colspan=3)
+        self.sizer.Add(self.cstate, 0,
+                       wx.ALIGN_LEFT |
+                       wx.ALIGN_CENTER_VERTICAL |
+                       wx.ALL, 5, row=16,col=1, colspan=2)
+
+        self.sizer.Add(self.lmessage, 0,
+                       wx.ALIGN_LEFT |
+                       wx.ALIGN_CENTER_VERTICAL |
+                       wx.ALL, 5,
+                       row=17,col=1, colspan=3)
 
         self.Bind(wiz.EVT_WIZARD_PAGE_CHANGING, self.OnWizPageChange)
         self.Bind(wx.EVT_COMBOBOX, self.OnItemSelected, self.cstate)
@@ -526,6 +609,10 @@ class BBoxPage(TitledPage):
         number="-?\d+\.\d+"
         line = ""
 
+        #test values
+        self.ttop.SetValue(500)
+        self.tleft.SetValue(500)
+
         #Extent: (-146.976217, -55.985484) - (72.774632, 80.594358)
         rex = re.compile("\((%s),\s*(%s)\)\s*-\s*\((%s),\s*(%s)\)" %(number, number, number, number))
         cmd = os.popen("ogrinfo -so %s %s" % (path ,layer))
@@ -549,6 +636,10 @@ class BBoxPage(TitledPage):
         path = self.tgdal.GetValue()
         line = ""
         number="-?\d+\.\d+"
+
+        #test values
+        self.ttop.SetValue(500)
+        self.tleft.SetValue(500)
 
         # Upper Left  (    0.0,    0.0)
         rex=re.compile("\(\s*(%s)\s*,\s*(%s)\)" % (number, number))
@@ -630,10 +721,10 @@ class ProjectionsPage(TitledPage):
 
         self.parent = parent
         # text input
-        self.tproj = self.MakeTextCtrl("", size=(200,20))
+        self.tproj = self.MakeTextCtrl("", size=(200,-1))
 
         # search box
-        self.searchb = wx.SearchCtrl(self, size=(200,20),
+        self.searchb = wx.SearchCtrl(self, size=(200,-1),
                                      style=wx.TE_PROCESS_ENTER)
 
         # table
@@ -744,7 +835,7 @@ class GeoreferencedFilePage(TitledPage):
         # create controls
         self.lfile= wx.StaticText(self, -1, "Georeferenced file: ",
                 style=wx.ALIGN_RIGHT)
-        self.tfile = wx.TextCtrl(self,-1, "", size=(150,20))
+        self.tfile = wx.TextCtrl(self,-1, "", size=(150,-1))
         self.bbrowse = self.MakeButton("Browse ...")
 
         # do layout
@@ -820,8 +911,8 @@ class EPSGPage(TitledPage):
 
         # text input
         epsgdir = os.path.join(os.environ["GRASS_PROJSHARE"], 'epsg')
-        self.tfile = wx.TextCtrl(self,-1, epsgdir, size=(200,20))
-        self.tcode = wx.TextCtrl(self,-1, "", size=(200,20))
+        self.tfile = wx.TextCtrl(self,-1, epsgdir, size=(200,-1))
+        self.tcode = wx.TextCtrl(self,-1, "", size=(200,-1))
 
         # buttons
         self.bbrowse = wx.Button(self, -1, "Browse ...", size=(100,-1))
@@ -1087,8 +1178,8 @@ class DatabasePage(TitledPage):
         self.bbrowse = self.MakeButton("Browse ...", size=wx.DefaultSize)
 
         # text controls
-        self.tgisdbase = self.MakeTextCtrl(grassdatabase, size=(300, 20))
-        self.tlocation = self.MakeTextCtrl("newLocation", size=(300, 20))
+        self.tgisdbase = self.MakeTextCtrl(grassdatabase, size=(300, -1))
+        self.tlocation = self.MakeTextCtrl("newLocation", size=(300, -1))
 
         # layout
         self.sizer.Add(self.MakeLabel("GIS Data Directory:"), 0,
