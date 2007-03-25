@@ -28,7 +28,6 @@ class EpsgCode(wx.Frame):
     def __init__(self, parent, id, title, ):
         wx.Frame.__init__(self,parent, id , title, size=(50,600))
 
-
         self.parent = parent
 
         # sizers
@@ -40,8 +39,6 @@ class EpsgCode(wx.Frame):
                 style=wx.ALIGN_RIGHT)
         self.lfile= wx.StaticText(self, -1, "Path to the EPSG-codes file: ",
                 style=wx.ALIGN_RIGHT)
-
-
         self.lcode= wx.StaticText(self, -1, "EPSG code: ",
                 style=wx.ALIGN_RIGHT)
         self.lsearch= wx.StaticText(self, -1, "Search in code description: ",
@@ -71,9 +68,11 @@ class EpsgCode(wx.Frame):
 
         # table
         self.tablewidth=600
-        self.epsgs = wx.ListCtrl(self, id = wx.ID_ANY,
+        self.epsgs = wx.ListCtrl(self, id=wx.ID_ANY,
                      size=(750,200),
-                     style=wx.LC_REPORT|wx.LC_HRULES|wx.EXPAND)
+                     style=wx.LC_REPORT|
+                     wx.LC_HRULES|
+                     wx.EXPAND)
         self.epsgs.InsertColumn(0, 'EPSG', wx.LIST_FORMAT_CENTRE)
         self.epsgs.InsertColumn(1, 'Description', wx.LIST_FORMAT_LEFT)
         self.epsgs.InsertColumn(2, 'Parameters', wx.LIST_FORMAT_LEFT)
@@ -295,8 +294,8 @@ class GeoreferencedFile(wx.Frame):
         self.lfile= wx.StaticText(self, -1, "Georeferenced file: ",
                 style=wx.ALIGN_RIGHT)
 
-        self.tname = wx.TextCtrl(self,-1, "newLocation", size=(150,20))
-        self.tfile = wx.TextCtrl(self,-1, "", size=(150,20))
+        self.tname = wx.TextCtrl(self,-1, "newLocation", size=(200,20))
+        self.tfile = wx.TextCtrl(self,-1, "", size=(200,20))
 
         self.bbrowse = wx.Button(self, -1, "Browse ...", size=(100,-1))
         self.bcancel = wx.Button(self, -1, "Cancel", size=(100,-1))
