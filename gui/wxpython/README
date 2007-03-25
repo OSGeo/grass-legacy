@@ -2,11 +2,11 @@ GRASS graphical user interface
 ==============================
 
 AUTHORS: Jachym, Michael
-LAST CHANGE: 2007-3-19
+LAST CHANGE: 2007-3-25
 
 ---------------------------------------------------------------------
 Requirements:
- Python >=2.3 and wxPython 2.8.1.1
+ Python >=2.4 and wxPython 2.8.1.1
 ---------------------------------------------------------------------
 
 How to start:
@@ -24,9 +24,29 @@ Change to GUI devel directory:
 
 $~ cd grassaddons/gui
 
-1 - CLI MapDisplay
+1 - INSTALLATION
+
+Put everthing from gui into a new directory $GISBASE/etc/wx.
+
+Move the script "wxgrass" into $GISBASE/scripts
+
+
+2 - STARTUP WITH GRASS INITIALIZATION
+
+If you want to start the wxgrass GUI automatically when you start GRASS, replace your $GRASS/etc/init.sh with the one that accompanies wxgrass. Rename your original init.sh to avoid overwriting it.
+
+***NOTE***
+You may need to edit init.sh to match your settings for LD_DISPLAY
+
+
+3 - STARTUP FROM GRASS TERMINAL
+
+Do not use the wxgrass init.sh. Simply type wxgrass& from the GRASS terminal to start the GUI using the wxgrass script.
+
+
+4 - CLI MapDisplay scripts
 ------------------
-This is going to be replacement for command line tools like d.rast and d.vect 
+This is going to be replacement for command line tools like d.rast and d.vect
 
 Now add directory "scripts" in gui directory to your $PATH. This small
 programms should later go to GRASS Scripts directory or became Python
@@ -65,10 +85,4 @@ You should be abple to zoom && pan through the map, ones the layers are
 displayed. You should be also able to store the display content as well as
 clear the display and start from scratch.
 
-2 - GIS Manager
----------------
-This is a bit tricky
 
-3 - Start-up screen with Location wizard
-----------------------------------------
-This is even more complicated :-)
