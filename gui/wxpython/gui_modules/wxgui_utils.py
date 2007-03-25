@@ -9,10 +9,10 @@ import menuform
 
 #FIXME??
 try:
-   import subprocess
+   from subprocess import *
 except:
    from compat import subprocess
-
+   from subprocess import *
 
 gmpath = os.getenv("GISBASE") + "/etc/wx/gui_modules/"
 sys.path.append(gmpath)
@@ -577,6 +577,7 @@ class GMConsole(wx.Panel):
         self.cmd_output = wx.TextCtrl(self, -1, "",
                                                   style=wx.TE_MULTILINE|
                                                   wx.TE_READONLY)
+        self.cmd_output.SetFont(wx.Font(10, wx.FONTFAMILY_MODERN, wx.NORMAL, wx.NORMAL, 0, ''))
 
         global goutput
         goutput = self.cmd_output
@@ -686,20 +687,17 @@ class GMConsole(wx.Panel):
     		# Send any other command to the shell. Send output to
     		# console output window.
             try:
-                retcode = subprocess.call(cmd, shell=True)
+                self.cmd_output.write(cmd+"\n----------\n")
+                self.out = Popen(cmd, shell=True, stdout=PIPE, stderr=STDOUT).communicate()[0]
+                self.cmd_output.write(self.out+"\n")
 
-                if retcode < 0:
-    				print >> sys.stderr, "Child was terminated by signal", retcode
-                elif retcode > 0:
-    				print >> sys.stderr, "Child returned", retcode
+                if self.out < 0:
+    				print >> sys.stderr, "Child was terminated by signal", self.out
+                elif self.out > 0:
+    				print >> sys.stderr, "Child returned", self.out
             except OSError, e:
     			print >> sys.stderr, "Execution failed:", e
 
-            self.cmd_output.write(cmd+"\n----------\n")
-            #FIXME - why is PIPE not recognized?
-#            self.out = subprocess.Popen(cmd, shell=True, stdout=PIPE).stdout
-            self.out = os.popen(cmd, "r").read()
-            self.cmd_output.write(self.out+"\n")
 
     def clearHistory(self, event):
 		self.cmd_output.Clear()
