@@ -558,13 +558,13 @@ class mainFrame(wx.Frame):
         cmd = self.createCmd()
 
         if cmd != None and cmd[0:2] != "d.":
-             # Send any non-display command to parent window (probably gism.py)
+             # Send any non-display command to parent window (probably wxgui.py)
             if self.parent > -1:
                 # put to parents
                 try:
                     self.parent.goutput.runCmd(cmd)
                 except AttributeError,e:
-                    print >>sys.stderr, "%s: Propably not running in gism.py session?" % (e)
+                    print >>sys.stderr, "%s: Propably not running in wxgui.py session?" % (e)
                     print >>sys.stderr, "parent window is: %s" % (str(self.parent))
             # Send any other command to the shell.
             else:
@@ -622,7 +622,7 @@ class GrassGUIApp(wx.App):
 class GUI:
     def __init__(self, parent=-1):
         '''Parses GRASS commands when module is imported and used
-        from gism.py'''
+        from wxgui.py'''
         self.parent = parent
 
     def parseCommand(self, cmd, gmpath, completed=None, parentframe=-1 ):
@@ -662,6 +662,6 @@ if __name__ == "__main__":
     app = GrassGUIApp(0)
     # Parsing if run from command line: find out the command to run
     gui = GUI(app.frame)
-    gui.parseCommand( sys.argv[1], os.getenv("GISBASE") + "/etc/wx/Gism")
+    gui.parseCommand( sys.argv[1], os.getenv("GISBASE") + "/etc/wx/gui_modules")
     app.MainLoop()
 
