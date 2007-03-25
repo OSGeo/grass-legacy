@@ -135,9 +135,7 @@ int main (int argc, char *argv[])
     if(ret == -1)
 	exit(EXIT_FAILURE);
 
-    if(ret == 0)
-	output=NULL;
-    else
+    if(ret > 0)
 	Vect_hist_command(&Map);
 
     /* build topology only if requested or if tool!=select */

@@ -46,40 +46,43 @@ int do_merge(struct Map_info *Map)
 
     struct line_pnts *Points1, *Points2, *Points;
     struct line_cats *Cats1, *Cats2;
-    
-    int type1, type2;
-    int line, line1, line2;
-    int i, nlines_merged;
+
+    int line_i, i, j;    
+    int line, line1, type1, line2, type2;
+    int nlines, nlines_merged, merge;
 
     double thresh;
     
-    Points1 = Vect_new_line_struct();
-    Cats1   = Vect_new_cats_struct();
-    Points2 = Vect_new_line_struct();
-    Cats2   = Vect_new_cats_struct();
-    Points = Vect_new_line_struct();
-
-    List_in_box = Vect_new_list();
-
     nlines_merged = 0;
+
     thresh = atof (maxdist_opt -> answer);
 
     /* select lines */
     List = select_lines (Map);
     
     if (List->n_values < 2) {
-	G_message(_("Only [%d] lines found, at least two needed"), List->n_values);
-        return 0;
+	G_message(_("Editing: Only [%d] lines found, at least two needed"),
+		  List->n_values);
+
+	Vect_destroy_list (List);
+	return 0;
     }
     
-    /* snap lines 
-       if (thresh > 0)
-       Vect_snap_lines (Map, GV_LINES, thresh, NULL, NULL);
-    */
+    Points1 = Vect_new_line_struct();
+    Cats1   = Vect_new_cats_struct();
+    Points2 = Vect_new_line_struct();
+    Cats2   = Vect_new_cats_struct();
+    Points  = Vect_new_line_struct();
+
+    List_in_box = Vect_new_list();
+
+    nlines = List -> n_values;
 
     /* merge lines */
-    for (line1 = 0; line1 < List -> n_values; line1++) {
-	G_percent (line1, List -> n_values, 2);
+    for (line_i = 0; line_i < List -> n_values; line_i++) {
+	G_percent (line_i, List -> n_values, 2);
+
+	line1 = List -> value[line_i];
 	
 	if (!Vect_line_alive (Map, line1))
 	    continue;
@@ -96,22 +99,41 @@ int do_merge(struct Map_info *Map)
 	    
 	    /* define searching region */
 	    Vect_reset_line (Points2);
-	    Vect_append_point (Points2, Points1 -> x[i] - thresh , Points1 -> y[i] + thresh, Points1 -> z[i]);
-	    Vect_append_point (Points2, Points1 -> x[i] + thresh , Points1 -> y[i] + thresh, Points1 -> z[i]);
-	    Vect_append_point (Points2, Points1 -> x[i] + thresh , Points1 -> y[i] - thresh, Points1 -> z[i]);
-	    Vect_append_point (Points2, Points1 -> x[i] - thresh , Points1 -> y[i] - thresh, Points1 -> z[i]);
+	    Vect_append_point (Points2, Points1 -> x[i] - thresh,
+			       Points1 -> y[i] + thresh, Points1 -> z[i]);
+	    Vect_append_point (Points2, Points1 -> x[i] + thresh,
+			       Points1 -> y[i] + thresh, Points1 -> z[i]);
+	    Vect_append_point (Points2, Points1 -> x[i] + thresh,
+			       Points1 -> y[i] - thresh, Points1 -> z[i]);
+	    Vect_append_point (Points2, Points1 -> x[i] - thresh,
+			       Points1 -> y[i] - thresh, Points1 -> z[i]);
 
 	    /* 
 	     * merge lines only if two lines found in the region
 	     * i.e. the current line and an adjacent line
 	     */
-	    if (2 == Vect_select_lines_by_polygon (Map, Points2, 0, NULL, GV_LINES, List_in_box)) {
-		if (List_in_box -> value [0] == line1)
-		    line2 = List_in_box -> value [1];
-		else
-		    line2 = List_in_box -> value [0];
-		
-		if (!Vect_val_in_list (List, line2))
+	    if (1 < Vect_select_lines_by_polygon (Map, Points2, 0, NULL,
+						  GV_LINES, List_in_box)) {
+		merge = 1;
+		line2 = -1;
+		for (j = 0; merge && j < List -> n_values; j++) {
+		    if (List -> value[j] == line1)
+			continue;
+
+		    if (Vect_val_in_list (List_in_box, List -> value[j])) {
+			if (line2 > 0) {
+			    /* three lines found
+			     * selected lines will be not merged
+			     */
+			    merge = 0;
+			}
+			else {
+			    line2 = List -> value[j];
+			}
+		    }
+		}
+
+		if (!merge || line2 < 0)
 		    continue;
 
 		type2 = Vect_read_line (Map, Points2, Cats2, line2);
@@ -123,24 +145,41 @@ int do_merge(struct Map_info *Map)
 			     thresh,  &Points);
 
 		if (Points -> n_points > 0) {
-		    if (i_flg->answer)
-			fprintf(stdout,"%d%s", List->value[line1], line1 < List->n_values-1 ? "," : "\n");
+		    if (Vect_delete_line(Map, line2) == -1) {
+			G_fatal_error (_("Cannot delete line [%d]"),
+				       line2);
+		    }
 
-		    Vect_delete_line(Map, line2);
+		    if (i_flg->answer) {
+			fprintf(stdout,"%d,", line2);
+			fflush (stdout);
+		    }
+
 		    nlines_merged++;
 		}
 	    }
-	}	      
+	} /* for each node */
 	
 	if (Points -> n_points > 0) {
 	    line = Vect_rewrite_line (Map, line1, type1, Points, Cats1);
 	    if (line < 0)
-		G_fatal_error (_("Lines could not be merged"));
+		G_fatal_error (_("Cannot rewrite line [%d]"),
+			       line1);
+
+	    if (i_flg->answer) {
+		fprintf(stdout,"%d,", line1);
+		fflush (stdout);
+	    }
+
+	    nlines_merged++;
 
 	    /* update number of lines */
 	    Vect_list_append (List, line);
 	}
-    } /* line1 */
+    } /* for each line */
+
+    if (i_flg->answer && nlines_merged > 0)
+	fprintf(stdout,"\n");
 
     /* destroy stuctures */
     Vect_destroy_line_struct(Points1);
@@ -152,8 +191,13 @@ int do_merge(struct Map_info *Map)
 
     Vect_destroy_list(List);
 
-    G_message (_("[%d] features merged"),
-	       nlines_merged);
+    /*
+     * number of lines which has been merged
+     * can be greater then number of selected lines
+     * do not confuse the user;-)
+     */
+    G_message (_("Editing: [%d] lines merged"),
+	       (nlines_merged > nlines) ? nlines : nlines_merged);
 
     return nlines_merged;
 }
@@ -178,13 +222,21 @@ static int merge_lines (struct line_pnts *Points1, struct line_cats *Cats1,
 					Points2->x[0], Points2->y[0], Points2->z[0], 0);
     
     distances[1] = Vect_points_distance(Points1->x[0], Points1->y[0], Points1->z[0],
-					Points2->x[Points2->n_points-1], Points2->y[Points2->n_points-1], Points2->z[Points2->n_points-1], 0);
+					Points2->x[Points2->n_points-1],
+					Points2->y[Points2->n_points-1],
+					Points2->z[Points2->n_points-1], 0);
     
-    distances[2] = Vect_points_distance(Points1->x[Points1->n_points-1], Points1->y[Points1->n_points-1], Points1->z[Points1->n_points-1],
+    distances[2] = Vect_points_distance(Points1->x[Points1->n_points-1],
+					Points1->y[Points1->n_points-1],
+					Points1->z[Points1->n_points-1],
 					Points2->x[0], Points2->y[0], Points2->z[0], 0);
     
-    distances[3] = Vect_points_distance(Points1->x[Points1->n_points-1], Points1->y[Points1->n_points-1], Points1->z[Points1->n_points-1],
-					Points2->x[Points2->n_points-1], Points2->y[Points2->n_points-1], Points2->z[Points2->n_points-1], 0);
+    distances[3] = Vect_points_distance(Points1->x[Points1->n_points-1],
+					Points1->y[Points1->n_points-1],
+					Points1->z[Points1->n_points-1],
+					Points2->x[Points2->n_points-1],
+					Points2->y[Points2->n_points-1],
+					Points2->z[Points2->n_points-1], 0);
     
     /* find the minimal distance between first or last point of both lines */
     mindistidx = 0;
