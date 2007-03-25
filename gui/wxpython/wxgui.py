@@ -153,11 +153,8 @@ class GMFrame(wx.Frame):
         self.cmdinput = wx.TextCtrl(self, id=wx.ID_ANY, value="", style=wx.HSCROLL|wx.TE_LINEWRAP|
                                     wx.TE_PROCESS_ENTER)
 
-        #self.cmdinput.SetFont(wx.Font(10, wx.DEFAULT, wx.NORMAL, wx.NORMAL, 0, "Monospace"))
+        self.cmdinput.SetFont(wx.Font(10, wx.FONTFAMILY_MODERN, wx.NORMAL, wx.NORMAL, 0, ''))
         wx.CallAfter(self.cmdinput.SetInsertionPoint, 0)
-
-        #self.cmdsizer.Add(l,0,wx.ADJUST_MINSIZE | wx.ALIGN_CENTER_VERTICAL, 1)
-        #self.cmdsizer.Add(self.cmdinput, 0, wx.EXPAND, 0)
 
         self.Bind(wx.EVT_TEXT_ENTER, self.runCmd, self.cmdinput)
 
@@ -543,7 +540,7 @@ class GMApp(wx.App):
         # initialize all available image handlers
         wx.InitAllImageHandlers()
         # create and show main frame
-        mainframe = GMFrame(None, -1, "")
+        mainframe = GMFrame(None, -1, "" )
         self.SetTopWindow(mainframe)
         mainframe.Show()
         return 1
