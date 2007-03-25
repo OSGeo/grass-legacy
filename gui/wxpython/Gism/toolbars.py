@@ -6,11 +6,11 @@ class:
 """
 import wx
 import os
-import gismutils
+import wxgui_utils
 
 import cmd
 
-icons= os.path.split(gismutils.icons)[0]
+icons= os.path.split(wxgui_utils.icons)[0]
 icons= os.path.split(icons)[0]
 icons= os.path.split(icons)[0]
 #print icons
@@ -31,12 +31,12 @@ class MapToolbar:
         # Draw
         #
     	self.displaymap = self.toolbar.AddLabelTool(id=wx.ID_ANY, label="displaymap",
-                                                    bitmap=wx.Bitmap(name=os.path.join(gismutils.icons,"gui-display.gif"),
+                                                    bitmap=wx.Bitmap(name=os.path.join(wxgui_utils.icons,"gui-display.gif"),
                                                     type=wx.BITMAP_TYPE_ANY),
                                                     bmpDisabled=wx.NullBitmap, kind=wx.ITEM_NORMAL,
                                                     shortHelp="Display map", longHelp="")
     	self.erase = self.toolbar.AddLabelTool(wx.ID_ANY, "erase",
-                                               wx.Bitmap(os.path.join(gismutils.icons,"gui-erase.gif"),
+                                               wx.Bitmap(os.path.join(wxgui_utils.icons,"gui-erase.gif"),
                                                wx.BITMAP_TYPE_ANY),
                                                wx.NullBitmap, wx.ITEM_NORMAL, "Erase display", "")
     	self.toolbar.AddSeparator()
@@ -45,22 +45,22 @@ class MapToolbar:
         # Zooming, etc.
         #
     	self.pointer = self.toolbar.AddLabelTool(id=wx.ID_ANY, label="pointer",
-                                                 bitmap=wx.Bitmap(os.path.join(gismutils.icons,"gui-pointer.gif"),
+                                                 bitmap=wx.Bitmap(os.path.join(wxgui_utils.icons,"gui-pointer.gif"),
                                                                   wx.BITMAP_TYPE_ANY),
                                                  bmpDisabled=wx.NullBitmap, kind=wx.ITEM_RADIO,
                                                  shortHelp="Pointer", longHelp="")
         self.zoomin  = self.toolbar.AddLabelTool(id=wx.ID_ANY, label="zoom_in",
-                                                 bitmap=wx.Bitmap(os.path.join(gismutils.icons,"gui-zoom_in.gif"),
+                                                 bitmap=wx.Bitmap(os.path.join(wxgui_utils.icons,"gui-zoom_in.gif"),
                                                                   wx.BITMAP_TYPE_ANY),
                                                  bmpDisabled=wx.NullBitmap, kind=wx.ITEM_RADIO,
                                                  shortHelp="Zoom in", longHelp="Drag or click mouse to zoom")
     	self.zoomout = self.toolbar.AddLabelTool(id=wx.ID_ANY, label="zoom_out",
-                                                 bitmap=wx.Bitmap(os.path.join(gismutils.icons,"gui-zoom_out.gif"),
+                                                 bitmap=wx.Bitmap(os.path.join(wxgui_utils.icons,"gui-zoom_out.gif"),
                                                                   wx.BITMAP_TYPE_ANY),
                                                  bmpDisabled=wx.NullBitmap, kind=wx.ITEM_RADIO,
                                                  shortHelp="Zoom out", longHelp="Drag or click mouse to unzoom")
     	self.pan     = self.toolbar.AddLabelTool(id=wx.ID_ANY, label="pan",
-                                                 bitmap=wx.Bitmap(os.path.join(gismutils.icons,"gui-pan.gif"),
+                                                 bitmap=wx.Bitmap(os.path.join(wxgui_utils.icons,"gui-pan.gif"),
                                                                   wx.BITMAP_TYPE_ANY),
                                                  bmpDisabled=wx.NullBitmap, kind=wx.ITEM_RADIO,
                                                  shortHelp="Pan", longHelp="Drag with mouse to pan")
@@ -70,7 +70,7 @@ class MapToolbar:
         # Misc
         #
     	self.savefile = self.toolbar.AddLabelTool(id=wx.ID_ANY, label="savefile",
-                                                  #bitmap=wx.Bitmap(os.path.join(gismutils.icons,"file-save.gif"),
+                                                  #bitmap=wx.Bitmap(os.path.join(wxgui_utils.icons,"file-save.gif"),
                                                   #wx.BITMAP_TYPE_ANY),
                                                   # just testing wx.ArtProvider
                                                   bitmap=wx.ArtProvider.GetBitmap(id=wx.ART_FILE_SAVE, client=wx.ART_BUTTON),

@@ -1,5 +1,5 @@
 class Data:
-    '''Data object that returns menu descriptions to be used in gism.py.
+    '''Data object that returns menu descriptions to be used in wxgui.py.
     Probably could be changed to XML or *.dtd file.'''
     def GetMenu(self):
 	return [(
@@ -7,7 +7,7 @@ class Data:
 	    ("Import", "Import files", "self.runMenuCmd", "r.in.gdal"),
 	    ("Export", "Export files", "self.runMenuCmd", "r.out.gdal"),
 	    ("","","", ""),
-	    ("E&xit", "Exit from gism.py", "self.onCloseWindow", "")
+	    ("E&xit", "Exit from wxgui.py", "self.onCloseWindow", "")
 	    )),
 	("Config", (
 	    ("Region", "Set region", "self.runMenuCmd", "g.region"),
