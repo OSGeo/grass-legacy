@@ -50,49 +50,92 @@ class DatumPage(TitledPage):
         self.parent = parent
 
         # text input
-        self.tdatum = self.MakeTextCtrl("")
-        self.ttrans = self.MakeTextCtrl("")
+        self.tdatum = self.MakeTextCtrl("", size=(200,20))
+        self.ttrans = self.MakeTextCtrl("", size=(200,20))
 
         # search box
-        self.searchb = wx.SearchCtrl(self, size=(100,-1), style=wx.TE_PROCESS_ENTER)
+        self.searchb = wx.SearchCtrl(self, size=(200,20),
+                                     style=wx.TE_PROCESS_ENTER)
 
         # button
         self.bupdate = self.MakeButton("Update trans. parms.",
-                size=(150,25))
+                                       size=(-1,-1))
 
         # table
-        self.tablewidth=600
-        self.datumlist = wx.ListCtrl(self, -1, style=wx.LC_REPORT |  wx.LC_VRULES | wx.LC_HRULES, size=(700,100))
-        self.datumlist.InsertColumn(0, 'Short Name ')
-        self.datumlist.InsertColumn(1, '   Full EPSG-style name   ')
+        self.tablewidth=675
+
+        # create list control for datum/elipsoid list
+        self.datumlist = wx.ListCtrl(self, id=wx.ID_ANY,
+                                     size=(675,150),
+                                     style=wx.LC_REPORT |
+                                     wx.LC_VRULES |
+                                     wx.LC_HRULES |
+                                     wx.EXPAND)
+        self.datumlist.InsertColumn(0, 'Short Name')
+        self.datumlist.InsertColumn(1, 'Full EPSG-style name')
         self.datumlist.InsertColumn(2, 'Ellipsoid')
-        self.datumlist.InsertColumn(3, '        Parameters          ')
+        self.datumlist.InsertColumn(3, 'Parameters')
         self.datumlist.SetColumnWidth(0, 100)
-        self.datumlist.SetColumnWidth(1, wx.LIST_AUTOSIZE_USEHEADER)
-        self.datumlist.SetColumnWidth(2, wx.LIST_AUTOSIZE_USEHEADER)
-        self.datumlist.SetColumnWidth(3, wx.LIST_AUTOSIZE_USEHEADER)
+        self.datumlist.SetColumnWidth(1, 225)
+        self.datumlist.SetColumnWidth(2, 100)
+        self.datumlist.SetColumnWidth(3, 250)
 
-        self.transformlist = wx.ListCtrl(self, -1, style=wx.LC_REPORT |  wx.LC_VRULES | wx.LC_HRULES, size=(700,100))
-        self.transformlist.InsertColumn(0, ' ID')
-        self.transformlist.InsertColumn(1, '        Country          ')
-        self.transformlist.InsertColumn(2, '                       Description                            ')
-        self.transformlist.InsertColumn(3, '                        Params                            ')
-        self.transformlist.SetColumnWidth(0, 30)
-        self.transformlist.SetColumnWidth(1, wx.LIST_AUTOSIZE_USEHEADER)
-        self.transformlist.SetColumnWidth(2, wx.LIST_AUTOSIZE_USEHEADER)
-        self.transformlist.SetColumnWidth(3, wx.LIST_AUTOSIZE_USEHEADER)
-        
+        # create list control for datum transformation parameters list
+        self.transformlist = wx.ListCtrl(self, id=wx.ID_ANY,
+                                     size=(675,125),
+                                     style=wx.LC_REPORT |
+                                     wx.LC_VRULES |
+                                     wx.LC_HRULES |
+                                     wx.EXPAND)
+        self.transformlist.InsertColumn(0, 'ID')
+        self.transformlist.InsertColumn(1, 'Country')
+        self.transformlist.InsertColumn(2, 'Description ')
+        self.transformlist.InsertColumn(3, 'Parameters')
+        self.transformlist.SetColumnWidth(0, 50)
+        self.transformlist.SetColumnWidth(1, 125)
+        self.transformlist.SetColumnWidth(2, 250)
+        self.transformlist.SetColumnWidth(3, 250)
+
         # laout
-        self.sizer.Add(self.MakeLabel("Geodetic datum:"), 1, col=1, row=1)
-        self.sizer.Add(self.tdatum, 0 , wx.ALIGN_LEFT, 1, row=1, col=2)
-        self.sizer.Add(self.bupdate, 0 , wx.ALIGN_CENTER_VERTICAL, 1, row=1, col=3)
-        self.sizer.Add(self.MakeLabel("Search in description:"), 1, col=1, row=2)
-        self.sizer.Add(self.searchb, 0 , wx.ALIGN_LEFT, 1, row=2, col=2)
+        self.sizer.Add(self.MakeLabel("Geodetic datum:"), 0,
+                       wx.ALIGN_RIGHT |
+                       wx.ALIGN_CENTER_VERTICAL |
+                       wx.ALL, 5, col=1, row=1)
+        self.sizer.Add(self.tdatum, 0 ,
+                       wx.ALIGN_LEFT |
+                       wx.ALIGN_CENTER_VERTICAL |
+                       wx.ALL, 5, row=1, col=2)
+        self.sizer.Add(self.bupdate, 0 ,
+                       wx.ALIGN_LEFT |
+                       wx.ALIGN_CENTER_VERTICAL |
+                       wx.ALL, 5, row=1, col=3)
+        self.sizer.Add(self.MakeLabel("Search in description:"), 0,
+                       wx.ALIGN_RIGHT |
+                       wx.ALIGN_CENTER_VERTICAL |
+                       wx.ALL, 5, col=1, row=2)
+        self.sizer.Add(self.searchb, 0 ,
+                       wx.ALIGN_LEFT |
+                       wx.ALIGN_CENTER_VERTICAL |
+                       wx.ALL, 5, row=2, col=2)
 
-        self.sizer.Add(self.datumlist, 0 , wx.EXPAND | wx.ALIGN_CENTER_HORIZONTAL, 1, row=3, col=1, colspan=5)
-        self.sizer.Add(self.MakeLabel("Transformation parameters:"), 1, col=1, row=5)
-        self.sizer.Add(self.ttrans, 0 , wx.ALIGN_LEFT, 1, row=5, col=2)
-        self.sizer.Add(self.transformlist, 0 , wx.EXPAND | wx.ALIGN_CENTER_HORIZONTAL, 1, row=6, col=1, colspan=5)
+        self.sizer.Add(self.datumlist, 0 ,
+                       wx.EXPAND |
+                       wx.ALIGN_LEFT |
+                       wx.ALL, 5, row=3, col=1, colspan=5)
+
+        self.sizer.Add(self.MakeLabel("Transformation parameters:"), 0,
+                       wx.ALIGN_RIGHT |
+                       wx.ALIGN_CENTER_VERTICAL |
+                       wx.ALL, 5, col=1, row=5)
+        self.sizer.Add(self.ttrans, 0 ,
+                       wx.ALIGN_LEFT |
+                       wx.ALIGN_CENTER_VERTICAL |
+                       wx.ALL, 5, row=5, col=2)
+
+        self.sizer.Add(self.transformlist, 0 ,
+                       wx.EXPAND |
+                       wx.ALIGN_LEFT |
+                       wx.ALL, 5, row=6, col=1, colspan=5)
 
         # events
         #wx.EVT_BUTTON(self, self.bbrowse.GetId(), self.OnBrowse)
@@ -104,6 +147,10 @@ class DatumPage(TitledPage):
         self.tdatum.Bind(wx.EVT_TEXT_ENTER, self._onBrowseParams, self.tdatum)
 
         self._onBrowseDatums(None,None)
+        self.datumlist.SetColumnWidth(0, wx.LIST_AUTOSIZE)
+        self.datumlist.SetColumnWidth(1, wx.LIST_AUTOSIZE)
+        self.datumlist.SetColumnWidth(2, wx.LIST_AUTOSIZE)
+        self.datumlist.SetColumnWidth(3, wx.LIST_AUTOSIZE)
 
     def OnDoSearch(self,event):
         str =  self.searchb.GetValue()
@@ -117,7 +164,7 @@ class DatumPage(TitledPage):
                 break
 
         self._onBrowseDatums(None,str)
-        
+
     def OnTransformSelected(self,event):
         item = event.GetItem()
         self.ttrans.SetValue(str(item.GetText()))
@@ -126,7 +173,7 @@ class DatumPage(TitledPage):
         item = event.GetItem()
         self.tdatum.SetValue(str(item.GetText()))
         self._onBrowseParams()
-    
+
     def _onBrowseParams(self, event=None):
         params = [["","Use whole region",""]]
         file = os.path.join(os.getenv("GISBASE"), "etc","datumtransform.table")
@@ -149,10 +196,29 @@ class DatumPage(TitledPage):
 
             self.transformlist.DeleteAllItems()
             for i in range(len(params)):
-                self.transformlist.InsertStringItem(i,str(i+1))
-                self.transformlist.SetStringItem(i,1,params[i][1])
-                self.transformlist.SetStringItem(i,2,params[i][2])
-                self.transformlist.SetStringItem(i,3,params[i][0])
+                # fill datum transformation parameters list control
+                index = self.transformlist.InsertStringItem(i,str(i+1))
+                dtp1 = self.transformlist.SetStringItem(index,1,params[i][1])
+                dtp2 = self.transformlist.SetStringItem(index,2,params[i][2])
+                dtp3 = self.transformlist.SetStringItem(index,3,params[i][0])
+                # format list control columns
+                if index != '':
+                    self.transformlist.SetColumnWidth(0, wx.LIST_AUTOSIZE)
+                else:
+                    self.transformlist.SetColumnWidth(0, 30)
+                if dtp1 != '':
+                    self.transformlist.SetColumnWidth(1, wx.LIST_AUTOSIZE)
+                else:
+                    self.transformlist.SetColumnWidth(1, 150)
+                if dtp2 != '':
+                    self.transformlist.SetColumnWidth(2, wx.LIST_AUTOSIZE)
+                else:
+                    self.transformlist.SetColumnWidth(2, 250)
+                if dtp3 != '':
+                    self.transformlist.SetColumnWidth(3, wx.LIST_AUTOSIZE)
+                else:
+                    self.transformlist.SetColumnWidth(3, 320)
+
         except IOError, e:
             self.transformlist.DeleteAllItems()
             dlg = wx.MessageDialog(self, "Could not read datum params: %s "
@@ -179,10 +245,10 @@ class DatumPage(TitledPage):
                               ellps.lower().find(search.lower()) > -1 or\
                               epsgname.lower().find(search.lower()) > -1) or\
                         not search:
-                    self.datumlist.InsertStringItem(j,shortname)
-                    self.datumlist.SetStringItem(j,1,epsgname)
-                    self.datumlist.SetStringItem(j,2,ellps)
-                    self.datumlist.SetStringItem(j,3,params)
+                    index = self.datumlist.InsertStringItem(j,shortname)
+                    self.datumlist.SetStringItem(index,1,epsgname)
+                    self.datumlist.SetStringItem(index,2,ellps)
+                    self.datumlist.SetStringItem(index,3,params)
                     j  += 1
             f.close()
             self.datumlist.SendSizeEvent()
@@ -459,7 +525,7 @@ class BBoxPage(TitledPage):
         path = self.tdsn.GetValue()
         number="-?\d+\.\d+"
         line = ""
-        
+
         #Extent: (-146.976217, -55.985484) - (72.774632, 80.594358)
         rex = re.compile("\((%s),\s*(%s)\)\s*-\s*\((%s),\s*(%s)\)" %(number, number, number, number))
         cmd = os.popen("ogrinfo -so %s %s" % (path ,layer))
@@ -502,7 +568,7 @@ class BBoxPage(TitledPage):
                 self.tbottom.SetValue(y)
                 self.tright.SetValue(x)
             line = obj.readline()
-        return 
+        return
 
     def OnStateText(self,event):
         item = self.llayers.FindString(event.GetString())
@@ -523,7 +589,7 @@ class BBoxPage(TitledPage):
     def OnItemSelected(self, event):
         item = self.cstate.GetSelection()
         w,s,e,n = self.coords[item]
-        #  4 
+        #  4
         # 1 3
         #  2
 
@@ -554,9 +620,9 @@ class BBoxPage(TitledPage):
                 self.lmessage.SetLabel("Unable to calculate country extends:\n cs2cs +proj=latlong +datum=WGS84 +to %s"% to)
 
         self.ttop.SetValue( str(n) )
-        self.tbottom.SetValue( str(s) ) 
+        self.tbottom.SetValue( str(s) )
         self.tright.SetValue( str(e) )
-        self.tleft.SetValue( str(w) ) 
+        self.tleft.SetValue( str(w) )
 
 class ProjectionsPage(TitledPage):
     def __init__(self, wizard, parent):
@@ -564,33 +630,57 @@ class ProjectionsPage(TitledPage):
 
         self.parent = parent
         # text input
-        self.tproj = self.MakeTextCtrl("")
+        self.tproj = self.MakeTextCtrl("", size=(200,20))
 
         # search box
-        self.searchb = wx.SearchCtrl(self, size=(200,-1), style=wx.TE_PROCESS_ENTER)
+        self.searchb = wx.SearchCtrl(self, size=(200,20),
+                                     style=wx.TE_PROCESS_ENTER)
 
         # table
-        self.tablewidth=600
-        self.list = wx.ListCtrl(self, -1, style=wx.LC_REPORT|  wx.LC_VRULES | wx.LC_HRULES, size=(700,100))
+        self.tablewidth=675
+        self.list = wx.ListCtrl(self, id=wx.ID_ANY,
+                                     size=(675,275),
+                                     style=wx.LC_REPORT |
+                                     wx.LC_VRULES |
+                                     wx.LC_HRULES |
+                                     wx.EXPAND)
         self.list.InsertColumn(0, 'Name')
-        self.list.InsertColumn(1, '                        Description                     ')
-        self.list.SetColumnWidth(0, 50)
-        self.list.SetColumnWidth(1, wx.LIST_AUTOSIZE_USEHEADER)
+        self.list.InsertColumn(1, 'Description')
+        self.list.SetColumnWidth(0, 100)
+        self.list.SetColumnWidth(1, 575)
 
-        # laout
-        self.sizer.Add(self.MakeLabel("Projection name:"), 0, row=1, col=2)
-        self.sizer.Add(self.tproj, 0, wx.ALIGN_LEFT, 1, row=1, col=3)
+        # layout
+        self.sizer.Add(self.MakeLabel("Projection name:"), 0,
+                       wx.ALIGN_RIGHT |
+                       wx.ALIGN_CENTER_VERTICAL |
+                       wx.ALL, 5, row=1, col=2)
+        self.sizer.Add(self.tproj, 0,
+                       wx.ALIGN_LEFT |
+                       wx.ALIGN_CENTER_VERTICAL |
+                       wx.ALL, 5, row=1, col=3)
 
-        self.sizer.Add(self.MakeLabel("Search in projection description"), 0, 1, row=2, col=2)
-        self.sizer.Add(self.searchb, 0, wx.ALIGN_LEFT,1, row=2, col=3)
+        self.sizer.Add(self.MakeLabel("Search in projection description"), 0,
+                       wx.ALIGN_RIGHT |
+                       wx.ALIGN_CENTER_VERTICAL |
+                       wx.ALL, 5, row=2, col=2)
+        self.sizer.Add(self.searchb, 0,
+                       wx.ALIGN_LEFT |
+                       wx.ALIGN_CENTER_VERTICAL |
+                       wx.ALL, 5, row=2, col=3)
 
-        self.sizer.Add(self.list, wx.EXPAND,  1, row=3, col=1, colspan=5)
+        self.sizer.Add(self.list,
+                       wx.EXPAND |
+                       wx.ALIGN_LEFT |
+                       wx.ALL, 5, row=3, col=1, colspan=4)
 
         # events
         self.Bind(wx.EVT_LIST_ITEM_SELECTED, self.OnItemSelected, self.list)
         self.searchb.Bind(wx.EVT_TEXT_ENTER, self.OnDoSearch, self.searchb)
 
         self._onBrowseDatums(None, None)
+
+        self.list.SetColumnWidth(0, wx.LIST_AUTOSIZE)
+        self.list.SetColumnWidth(1, wx.LIST_AUTOSIZE)
 
     def OnDoSearch(self,event):
         str =  self.searchb.GetValue()
@@ -604,13 +694,13 @@ class ProjectionsPage(TitledPage):
                 break
 
         self._onBrowseDatums(None,str)
-        
+
 
     def OnItemSelected(self,event):
         item = event.GetItem()
         self.tproj.SetValue(str(item.GetText()))
 
-    
+
     def _onBrowseDatums(self,event,search=None):
         try:
             self.list.DeleteAllItems()
@@ -632,7 +722,7 @@ class ProjectionsPage(TitledPage):
                     self.list.InsertStringItem(j,proj)
                     self.list.SetStringItem(j,1,descr)
                     j  += 1
-                    # reset 
+                    # reset
                     descr = None; proj = ""
             f.close()
             self.SendSizeEvent()
@@ -649,20 +739,28 @@ class ProjectionsPage(TitledPage):
 
 class GeoreferencedFilePage(TitledPage):
     def __init__(self, wizard, parent):
-        TitledPage.__init__(self, wizard, "Choose projection name")
+        TitledPage.__init__(self, wizard, "Select georeferenced file")
 
-        self.tfile = self.MakeTextCtrl(size=(150,20))
-
+        # create controls
+        self.lfile= wx.StaticText(self, -1, "Georeferenced file: ",
+                style=wx.ALIGN_RIGHT)
+        self.tfile = wx.TextCtrl(self,-1, "", size=(150,20))
         self.bbrowse = self.MakeButton("Browse ...")
 
-        self.sizer.Add(self.MakeLabel("Georeferenced file:"), 1, row=1, col=2)
-        self.sizer.Add(self.tfile, 0, wx.ALIGN_LEFT, 1, row=1, col=3)
-        self.sizer.Add(self.bbrowse, 0, wx.ALIGN_LEFT, 1, row=1, col=4)
+        # do layout
+        self.sizer.Add(self.lfile, 0, wx.ALIGN_RIGHT |
+                       wx.ALIGN_CENTRE_VERTICAL |
+                       wx.ALL, 5, row=1, col=2)
+        self.sizer.Add(self.tfile, 0, wx.ALIGN_LEFT |
+                       wx.ALIGN_CENTRE_VERTICAL |
+                       wx.ALL, 5, row=1, col=3)
+        self.sizer.Add(self.bbrowse, 0, wx.ALIGN_LEFT |
+                       wx.ALL, 5, row=1, col=4)
 
         wx.EVT_BUTTON(self, self.bbrowse.GetId(), self.OnBrowse)
 
-    def OnBrowse(self, event): 
-        
+    def OnBrowse(self, event):
+
         dlg = wx.FileDialog(self, "Choose a georeferenced file:", os.getcwd(), "", "*.*", wx.OPEN)
         if dlg.ShowModal() == wx.ID_OK:
                     path = dlg.GetPath()
@@ -697,7 +795,7 @@ class GeoreferencedFilePage(TitledPage):
     #    # Markus Neteler
     #    try:
     #        # FIXME: this does not need to work on windows
-    #        os.system("g.proj -c georef=%s location=%s >&2" % (self.tfile.GetValue(), self.tname.GetValue())) 
+    #        os.system("g.proj -c georef=%s location=%s >&2" % (self.tfile.GetValue(), self.tname.GetValue()))
 
     #        self.parent.OnSetDatabase(None)
     #        self.Destroy()
@@ -712,41 +810,69 @@ class EPSGPage(TitledPage):
     def __init__(self, wizard, parent):
         TitledPage.__init__(self, wizard, "Choose EPSG Code")
 
+        # labels
+        self.lfile= wx.StaticText(self, -1, "Path to the EPSG-codes file: ",
+                style=wx.ALIGN_RIGHT)
+        self.lcode= wx.StaticText(self, -1, "EPSG code: ",
+                style=wx.ALIGN_RIGHT)
+        self.lsearch= wx.StaticText(self, -1, "Search in code description: ",
+                style=wx.ALIGN_RIGHT)
+
         # text input
-        self.tfile = self.MakeTextCtrl("/usr/share/proj/epsg", size=(150,20))
-        self.tcode = self.MakeTextCtrl("")
+        epsgdir = os.path.join(os.environ["GRASS_PROJSHARE"], 'epsg')
+        self.tfile = wx.TextCtrl(self,-1, epsgdir, size=(200,20))
+        self.tcode = wx.TextCtrl(self,-1, "", size=(200,20))
 
         # buttons
-        self.bbrowse = self.MakeButton("Browse ...")
-        self.bbcodes = self.MakeButton("Browse Codes")
+        self.bbrowse = wx.Button(self, -1, "Browse ...", size=(100,-1))
+        self.bbcodes = wx.Button(self, -1, "Browse Codes")
 
         # search box
         self.searchb = wx.SearchCtrl(self, size=(200,-1), style=wx.TE_PROCESS_ENTER)
 
         # table
-        self.tablewidth=600
-        self.epsgs = wx.ListCtrl(self, -1, style=wx.LC_REPORT|  wx.LC_VRULES | wx.LC_HRULES,
-                size=(700,100))
-        self.epsgs.InsertColumn(0, 'EPSG')
-        self.epsgs.InsertColumn(1, '                        Description                     ')
-        self.epsgs.InsertColumn(2, '                                            Parameters                                            ')
+        self.tablewidth=675
+        self.epsgs = wx.ListCtrl(self, id=wx.ID_ANY,
+                     size=(675,275),
+                     style=wx.LC_REPORT|
+                     wx.LC_HRULES|
+                     wx.EXPAND)
+        self.epsgs.InsertColumn(0, 'EPSG', wx.LIST_FORMAT_CENTRE)
+        self.epsgs.InsertColumn(1, 'Description', wx.LIST_FORMAT_LEFT)
+        self.epsgs.InsertColumn(2, 'Parameters', wx.LIST_FORMAT_LEFT)
         self.epsgs.SetColumnWidth(0, 50)
-        self.epsgs.SetColumnWidth(1, wx.LIST_AUTOSIZE_USEHEADER)
-        self.epsgs.SetColumnWidth(2, wx.LIST_AUTOSIZE_USEHEADER)
-        
-        # laout
-        self.sizer.Add(self.MakeLabel("Path to the EPSG-codes file:"), 1, col=1, row=1)
-        self.sizer.Add(self.tfile, 0 , wx.ALIGN_LEFT, 1, row=1, col=2)
-        self.sizer.Add(self.bbrowse, 0 , wx.ALIGN_CENTER_HORIZONTAL, 1, row=1, col=3)
+        self.epsgs.SetColumnWidth(1, 300)
+        self.epsgs.SetColumnWidth(2, 325)
 
-        self.sizer.Add(self.MakeLabel("EPSG code:"), 0, col=1, row=2)
-        self.sizer.Add(self.tcode, 0, wx.ALIGN_LEFT,1, row=2, col=2)
+        # layout
+        self.sizer.Add(self.lfile, 0, wx.ALIGN_RIGHT |
+                       wx.ALIGN_CENTER_VERTICAL |
+                       wx.ALL, 5, col=1, row=1)
+        self.sizer.Add(self.tfile, 0, wx.ALIGN_LEFT |
+                       wx.ALIGN_CENTER_VERTICAL |
+                       wx.ALL, 5, row=1, col=2)
+        self.sizer.Add(self.bbrowse, 0, wx.ALIGN_LEFT |
+                       wx.ALIGN_CENTER_VERTICAL |
+                       wx.ALL, 5, row=1, col=3)
 
-        self.sizer.Add(self.MakeLabel("Search in code description:"), 0, col=1, row=3)
-        self.sizer.Add(self.searchb, 0, wx.ALIGN_LEFT,1, row=3, col=2)
-        self.sizer.Add(self.bbcodes, 0 , wx.ALIGN_CENTER_HORIZONTAL, row=3, col=3)
+        self.sizer.Add(self.lcode, 0, wx.ALIGN_RIGHT |
+                       wx.ALIGN_CENTER_VERTICAL |
+                       wx.ALL, 5, col=1, row=2)
+        self.sizer.Add(self.tcode, 0, wx.ALIGN_LEFT |
+                       wx.ALIGN_CENTER_VERTICAL |
+                       wx.ALL, 5, row=2, col=2)
 
-        self.sizer.Add(self.epsgs, wx.EXPAND,  0, row=4, col=1, colspan=5)
+        self.sizer.Add(self.lsearch, 0, wx.ALIGN_RIGHT |
+                       wx.ALIGN_CENTER_VERTICAL |
+                       wx.ALL, 5, col=1, row=3)
+        self.sizer.Add(self.searchb, 0, wx.ALIGN_LEFT |
+                       wx.ALIGN_CENTER_VERTICAL |
+                       wx.ALL, 5, row=3, col=2)
+        self.sizer.Add(self.bbcodes, 0 , wx.ALIGN_LEFT |
+                       wx.ALIGN_CENTER_VERTICAL |
+                       wx.ALL, 5, row=3, col=3)
+
+        self.sizer.Add(self.epsgs, wx.ALIGN_LEFT|wx.EXPAND, 0, row=4, col=1, colspan=5)
 
         # events
         wx.EVT_BUTTON(self, self.bbrowse.GetId(), self.OnBrowse)
@@ -766,10 +892,10 @@ class EPSGPage(TitledPage):
                 break
 
         self.OnBrowseCodes(None,str)
-        
 
-    def OnBrowse(self, event): 
-        
+
+    def OnBrowse(self, event):
+
         dlg = wx.FileDialog(self, "Choose a georeferenced file:",
         "/", "", "*.*", wx.OPEN)
         if dlg.ShowModal() == wx.ID_OK:
@@ -781,7 +907,7 @@ class EPSGPage(TitledPage):
         item = event.GetItem()
         self.tcode.SetValue(str(item.GetText()))
 
-    
+
     def OnBrowseCodes(self,event,search=None):
         try:
             self.epsgs.DeleteAllItems()
@@ -795,25 +921,30 @@ class EPSGPage(TitledPage):
             for line in f.readlines():
                 line = line.strip()
                 if line.find("#") == 0:
-                    descr= line[1:].strip()
+                    descr = line[1:].strip()
                 elif line.find("<") == 0:
                     code = line.split(" ")[0]
                     for par in line.split(" ")[1:]:
                         params += par + " "
                     code = code[1:-1]
+                if code == None: code = 'no code'
+                if descr == None: descr = 'no description'
+                if params == None: params = 'no parameters'
                 if i%2 == 0:
                     if search and descr.lower().find(search.lower()) > -1 or\
                         not search:
-                        self.epsgs.InsertStringItem(j,str(code))
-                        self.epsgs.SetStringItem(j, 1, str(descr))
-                        self.epsgs.SetStringItem(j, 2, str(params))
+                        index = self.epsgs.InsertStringItem(j, code)
+                        self.epsgs.SetStringItem(index, 1, descr)
+                        self.epsgs.SetStringItem(index, 2, params)
                         j  += 1
-                    # reset 
+                    # reset
                     descr = None; code = None; params = ""
-                if i%2 == 0:
-                    self.epsgs.SetItemBackgroundColour(i, "grey")
+#                if i%2 == 0:
+#                    self.epsgs.SetItemBackgroundColour(i, "grey")
                 i += 1
             f.close()
+            self.epsgs.SetColumnWidth(1, wx.LIST_AUTOSIZE)
+            self.epsgs.SetColumnWidth(2, wx.LIST_AUTOSIZE)
             self.SendSizeEvent()
         except StandardError, e:
             dlg = wx.MessageDialog(self, "Could not read EPGS codes: %s "
@@ -831,7 +962,7 @@ class EPSGPage(TitledPage):
     #        dlg.ShowModal()
     #        dlg.Destroy()
     #        return
-    #    
+    #
     #    number = -1
     #    try:
     #        number = int(self.tcode.GetValue())
@@ -841,20 +972,20 @@ class EPSGPage(TitledPage):
     #        dlg.ShowModal()
     #        dlg.Destroy()
     #        return
-    #         
+    #
     #    if os.path.isdir(os.path.join(self.parent.gisdbase,self.tname.GetValue())):
     #        dlg = wx.MessageDialog(self, "Could not create new location: %s exists"
     #                % os.path.join(self.parent.gisdbase,self.tname.GetValue()),"Can not create location",  wx.OK|wx.ICON_INFORMATION)
     #        dlg.ShowModal()
     #        dlg.Destroy()
     #        return
-    #    
+    #
     #    # creating location
     #    # all credit to Michael Barton and his file_option.tcl and
     #    # Markus Neteler
     #    try:
     #        # FIXME: this does not need to work on windows
-    #        os.system("g.proj -c georef=%s location=%s >&2" % (self.tfile.GetValue(), self.tname.GetValue())) 
+    #        os.system("g.proj -c georef=%s location=%s >&2" % (self.tfile.GetValue(), self.tname.GetValue()))
     #        datumtrans = os.popen(" g.proj epsg=%d datumtrans=-1 >&2" % (number)).readlines()
 
     #        if datumtrans:
@@ -873,7 +1004,7 @@ class EPSGPage(TitledPage):
     #        dlg.Destroy()
     #        return
 
- 
+
     def OnDoubleClick(self, event):
         print self.epsgs.GetValue()
         pass
@@ -883,7 +1014,7 @@ class CoordinateSystemPage(TitledPage):
     def __init__(self, wizard, parent):
         TitledPage.__init__(self, wizard, "Choose coordinate system for location")
 
-        self.parent = parent 
+        self.parent = parent
         self.cs = "xy"
 
         # toggles
@@ -901,7 +1032,7 @@ class CoordinateSystemPage(TitledPage):
         self.sizer.Add(self.radio4, 0, wx.ALIGN_LEFT, row=4, col=2)
         self.sizer.Add(self.radio5, 0, wx.ALIGN_LEFT, row=5, col=2)
         self.sizer.Add(self.radio6, 0, wx.ALIGN_LEFT, row=6, col=2)
-        
+
         # bindings
         self.Bind(wx.EVT_RADIOBUTTON, self.SetVal, id=self.radio1.GetId())
         self.Bind(wx.EVT_RADIOBUTTON, self.SetVal, id=self.radio2.GetId())
@@ -953,23 +1084,47 @@ class DatabasePage(TitledPage):
         TitledPage.__init__(self, wizard, "Define GRASS database and new Location Name")
 
         # buttons
-        self.bbrowse = self.MakeButton("Browse ...")
+        self.bbrowse = self.MakeButton("Browse ...", size=wx.DefaultSize)
 
         # text controls
         self.tgisdbase = self.MakeTextCtrl(grassdatabase, size=(300, 20))
-        self.tlocation = self.MakeTextCtrl("newLocation")
- 
+        self.tlocation = self.MakeTextCtrl("newLocation", size=(300, 20))
+
         # layout
-        self.sizer.Add(self.MakeLabel("GIS Data Directory:"), 0, wx.ALIGN_RIGHT, row=1, col=2)
-        self.sizer.Add(self.tgisdbase,0,wx.ALIGN_LEFT, row=1, col=3)
-        self.sizer.Add(self.bbrowse, 0, wx.ALIGN_CENTER_HORIZONTAL, row=1, col=4)
+        self.sizer.Add(self.MakeLabel("GIS Data Directory:"), 0,
+                       wx.ALIGN_RIGHT |
+                       wx.ALIGN_CENTER_VERTICAL |
+                       wx.ALL, 5,
+                       row=1, col=2)
+        self.sizer.Add(self.tgisdbase,0,
+                       wx.ALIGN_LEFT |
+                       wx.ALIGN_CENTER_VERTICAL |
+                       wx.ALL, 5,
+                       row=1, col=3)
+        self.sizer.Add(self.bbrowse, 0,
+                       wx.ALIGN_LEFT |
+                       wx.ALIGN_CENTER_VERTICAL |
+                       wx.ALL, 5,
+                       row=1, col=4)
         #
-        self.sizer.Add(self.MakeLabel("Project Location\n(projection/coordinate system)"), 0, wx.ALIGN_RIGHT, row=2, col=2)
-        self.sizer.Add(self.tlocation,0,wx.ALIGN_LEFT, row=2, col=3)
-        
+        self.sizer.Add(self.MakeLabel("Project Location"), 0,
+                       wx.ALIGN_RIGHT |
+                       wx.ALIGN_CENTER_VERTICAL |
+                       wx.ALL, 5,
+                       row=2, col=2)
+        self.sizer.Add(self.tlocation,0,
+                       wx.ALIGN_LEFT |
+                       wx.ALIGN_CENTER_VERTICAL |
+                       wx.ALL, 5,
+                       row=2, col=3)
+        self.sizer.Add(self.MakeLabel("(projection/coordinate system)"), 0,
+                       wx.ALIGN_LEFT |
+                       wx.ALIGN_CENTER_VERTICAL |
+                       wx.ALL, 5,
+                       row=2, col=4)
+
         # bindings
         self.Bind(wiz.EVT_WIZARD_PAGE_CHANGING, self.OnWizPageChanging)
-
 
     def OnWizPageChanging(self,event=None):
         if os.path.isdir(os.path.join(self.tgisdbase.GetValue(),self.tlocation.GetValue())):
@@ -994,11 +1149,15 @@ class DatabasePage(TitledPage):
     def OnWizPageChange(self,event=None):
         self.grassdatabase = self.tgisdbase.GetValue()
         self.location = self.tlocation.GetValue()
-        
+
 
 class GWizard:
     def __init__(self, parent, grassdatabase):
-        wizard = wiz.Wizard(parent, -1, "Define new Location")
+        wizbmp = wx.Image(os.path.join(os.getenv("GISBASE"),"etc","wx","Gism","grasslogo_small.gif"), wx.BITMAP_TYPE_GIF)
+        wizbmp.Rescale(50,60)
+        wizbmp = wizbmp.ConvertToBitmap()
+        wizard = wiz.Wizard(parent, -1, "Define new Location",
+                bitmap=wizbmp)
         self.startpage = DatabasePage(wizard, self, grassdatabase)
         self.csystemspage = CoordinateSystemPage(wizard, self)
         self.epsgpage = EPSGPage(wizard, self)
@@ -1007,7 +1166,7 @@ class GWizard:
         self.projpage = ProjectionsPage(wizard, self)
         self.sumpage = SummaryPage(wizard, self)
         self.datumpage = DatumPage(wizard, self)
-        
+
         # Set the initial order of the pages
         self.startpage.SetNext(self.csystemspage)
 
@@ -1027,7 +1186,7 @@ class GWizard:
         self.bboxpage.SetPrev(self.csystemspage)
         self.bboxpage.SetNext(self.sumpage)
 
-        self.sumpage.SetPrev(self.bboxpage) 
+        self.sumpage.SetPrev(self.bboxpage)
 
         wizard.FitToPage(self.bboxpage)
         wizard.RunWizard(self.startpage)
