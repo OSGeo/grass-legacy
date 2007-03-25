@@ -35,6 +35,14 @@ Move the script "wxgrass" into $GISBASE/scripts
 
 If you want to start the wxgrass GUI automatically when you start GRASS, replace your $GRASS/etc/init.sh with the one that accompanies wxgrass. Rename your original init.sh to avoid overwriting it.
 
+Edit your .grassrc6 file to replace...
+
+GRASS_GUI: tcktk (or whatever you have here)
+
+...with...
+
+GRASS_GUI: wx
+
 ***NOTE***
 You may need to edit init.sh to match your settings for LD_DISPLAY
 
