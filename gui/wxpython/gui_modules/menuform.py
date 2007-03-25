@@ -144,6 +144,7 @@ class processTask(HandlerBase):
         self.inFlag = 0
         self.inGispromptContent = 0
         self.inGuisection = 0
+	grass_task_init()
 
     def startElement(self, name, attrs):
 
@@ -324,8 +325,11 @@ class mainFrame(wx.Frame):
             which_sizer = self.tabsizer[ p['guisection'] ]
             which_panel = self.tab[ p['guisection'] ]
             title = escape_ampersand(p['description'])
+	    text_style = wx.FONTWEIGHT_BOLD
+	    txt = None
             if p['required'] == 'no':
                 title = "[optional] " + title
+		text_style = wx.FONTWEIGHT_NORMAL
             if p['multiple'] == 'yes' and len( p['values'] ) == 0:
                 title = "[multiple] " + title
             p['value'] = p['default']
@@ -334,12 +338,13 @@ class mainFrame(wx.Frame):
                 for dparam in self.dcmd_params:
                     if p == dparam:
                         p['value'] = self.dcmd_params[dparam]
+
             if (len(p['values']) > 0):
 
                 valuelist=map(str,p['values'])
                 if p['multiple'] == 'yes':
-                    hSizer=wx.StaticBoxSizer( wx.StaticBox(which_panel,0,title+":"),
-                                              wx.HORIZONTAL )
+                    txt = wx.StaticBox(which_panel,0,title+":")
+                    hSizer=wx.StaticBoxSizer( txt, wx.HORIZONTAL )
                     v_count = 0
                     isDefault = {}
                     for defval in p['value'].split(','):
@@ -354,8 +359,8 @@ class mainFrame(wx.Frame):
                         v_count += 1
                     which_sizer.Add( hSizer, 0, wx.ADJUST_MINSIZE, 5)
                 else:
-                    txt1 = wx.StaticText(which_panel, label = title + ':' )
-                    which_sizer.Add(txt1, 0, wx.ADJUST_MINSIZE | wx.ALL, 5)
+                    txt = wx.StaticText(which_panel, label = title + ':' )
+                    which_sizer.Add(txt, 0, wx.ADJUST_MINSIZE | wx.ALL, 5)
                     self.cb = wx.ComboBox(which_panel, -1, p['default'],
                                      wx.Point(-1, -1), wx.Size(STRING_ENTRY_WIDTH, -1),
                                      valuelist, wx.CB_DROPDOWN)
@@ -368,8 +373,8 @@ class mainFrame(wx.Frame):
                 and p['gisprompt'] == False
                 and p['prompt'] != 'color'):
 
-                txt2 = wx.StaticText(which_panel, label = title + ':' )
-                which_sizer.Add(txt2, 0, wx.ADJUST_MINSIZE | wx.ALL, 5)
+                txt = wx.StaticText(which_panel, label = title + ':' )
+                which_sizer.Add(txt, 0, wx.ADJUST_MINSIZE | wx.ALL, 5)
 
                 self.txt3 = wx.TextCtrl(which_panel, value = p['default'],
                     size = (STRING_ENTRY_WIDTH, ENTRY_HEIGHT))
@@ -378,8 +383,8 @@ class mainFrame(wx.Frame):
                 self.txt3.Bind(wx.EVT_TEXT, self.EvtText)
 
             if p['type'] == 'string' and p['gisprompt'] == True:
-                txt4 = wx.StaticText(which_panel, label = title + ':')
-                which_sizer.Add(txt4, 0, wx.ADJUST_MINSIZE | wx.ALL, 5)
+                txt = wx.StaticText(which_panel, label = title + ':')
+                which_sizer.Add(txt, 0, wx.ADJUST_MINSIZE | wx.ALL, 5)
                 if p['prompt'] != 'color':
                     self.selection = select.Select(which_panel, id=wx.ID_ANY, size=(250,-1),
                                                    type=p['element'])
@@ -406,6 +411,8 @@ class mainFrame(wx.Frame):
                     which_sizer.Add(btn_colour, 0, wx.ADJUST_MINSIZE| wx.ALL, 5)
                     self.paramdict[btn_colour] = ID_PARAM_START + p_count
                     self.Bind(csel.EVT_COLOURSELECT, self.OnColorButton, btn_colour)
+	    if txt is not None:
+                txt.SetFont( wx.Font( 10, wx.FONTFAMILY_DEFAULT, wx.NORMAL, text_style, 0, ''))
 
         f_count = -1
         for f in grass_task.flags:
@@ -417,6 +424,7 @@ class mainFrame(wx.Frame):
             which_sizer.Add(self.chk, 0, wx.EXPAND| wx.ALL, 5)
             self.paramdict[self.chk] = ID_FLAG_START + f_count
             self.chk.Bind(wx.EVT_CHECKBOX, self.EvtCheckBox)
+	
 
         btnsizer = wx.BoxSizer(wx.HORIZONTAL)
         self.btn_cancel = wx.Button(self, wx.ID_CANCEL, "Cancel")
@@ -452,7 +460,10 @@ class mainFrame(wx.Frame):
             xsizelist.append(self.tabsizer[section].GetMinSize()[0])
             ysizelist.append(self.tabsizer[section].GetMinSize()[1])
 
-        maxminsize = (max(xsizelist),max(ysizelist))
+	if xsizelist != []:
+            maxminsize = (max(xsizelist),max(ysizelist))
+        else:
+            maxminsize = (0,0)
         self.notebook.SetInitialSize(maxminsize)
         self.panelsizer.SetSizeHints( self.notebookpanel )
         self.panelsizer.Fit( self.notebookpanel )
@@ -588,11 +599,9 @@ class mainFrame(wx.Frame):
         for t in self.tabsizer.values(): t.Clear(True)
         self.notebook.Destroy()
         self.guisizer.Clear(True)
-        grass_task_init()
         self.Destroy()
 
     def OnCloseWindow(self, event):
-        grass_task_init()
         self.Destroy()
 
     def OnAbout(self, event):
