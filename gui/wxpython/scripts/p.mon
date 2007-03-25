@@ -68,4 +68,4 @@ fi
 command_file="`g.tempfile pid=$$`"
 g.gisenv set=GRASS_PYCMDFILE=${command_file}
 
-python Gism/mapdisp.py ${command_file} &
+python gui_modules/mapdisp.py ${command_file} &
