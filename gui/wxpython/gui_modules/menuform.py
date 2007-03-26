@@ -291,7 +291,7 @@ class mainFrame(wx.Frame):
         self.SetMenuBar(menuBar)
         self.guisizer = wx.BoxSizer(wx.VERTICAL)
 
-        sections = []
+        sections = ['Main']
         is_section = {}
         for task in grass_task.params + grass_task.flags:
             if not task.has_key('guisection') or task['guisection']=='':
@@ -299,6 +299,14 @@ class mainFrame(wx.Frame):
             if not is_section.has_key(task['guisection']):
                 is_section[task['guisection']] = 1
                 sections.append( task['guisection'] )
+        there_is_main = False
+        for i in grass_task.params+grass_task.flags:
+            if i.has_key('required') and i['required'] == 'yes':
+                i['guisection'] = 'Main'
+                there_is_main = True
+        if not there_is_main:
+            sections = sections[1:]
+
 
         self.notebookpanel = wx.ScrolledWindow( self, id=wx.ID_ANY )
         self.notebookpanel.SetScrollRate(10,10)
@@ -307,6 +315,7 @@ class mainFrame(wx.Frame):
         nbStyle=FN.FNB_NO_X_BUTTON|FN.FNB_NO_NAV_BUTTONS|FN.FNB_VC8|FN.FNB_BACKGROUND_GRADIENT
         self.notebook = FN.FlatNotebook(self.notebookpanel, id=wx.ID_ANY, style=nbStyle)
         self.notebook.SetTabAreaColour(wx.Colour(125,200,175))
+        self.notebook.Bind( FN.EVT_FLATNOTEBOOK_PAGE_CHANGED, self.OnPageChange )
         self.tab = {}
         self.tabsizer = {}
         is_first = True
@@ -328,7 +337,6 @@ class mainFrame(wx.Frame):
             text_style = wx.FONTWEIGHT_BOLD
             txt = None
             if p['required'] == 'no':
-#                title = "[optional] " + title
                 text_style = wx.FONTWEIGHT_NORMAL
             if p['multiple'] == 'yes' and len( p['values'] ) == 0:
                 title = "[multiple] " + title
@@ -354,7 +362,7 @@ class mainFrame(wx.Frame):
                         idForWX =  ID_MULTI_START + p_count*20 + v_count
                         chkbox = wx.CheckBox( which_panel, idForWX, val+" " )
                         if isDefault.has_key(val): chkbox.SetValue( True )
-                        hSizer.Add( chkbox,0,wx.ADJUST_MINSIZE,0 )
+                        hSizer.Add( chkbox,0,wx.ADJUST_MINSIZE,5 )
                         self.Bind(wx.EVT_CHECKBOX, self.EvtCheckBoxMulti)
                         v_count += 1
                     which_sizer.Add( hSizer, 0, wx.ADJUST_MINSIZE, 5)
@@ -443,41 +451,34 @@ class mainFrame(wx.Frame):
             btnsizer.Add(self.btn_run, 0, wx.ALL| wx.ALIGN_CENTER, 10)
             self.btn_run.SetDefault()
             self.btn_run.Bind(wx.EVT_BUTTON, self.OnRun)
-        self.guisizer.Add(btnsizer, 0, wx.EXPAND)
+        self.guisizer.Add(btnsizer, 0, wx.ALIGN_BOTTOM)
         wx.EVT_MENU(self, wx.ID_ABOUT, self.OnAbout)
         wx.EVT_MENU(self, ID_ABOUT_COMMAND, self.OnAboutCommand)
         wx.EVT_MENU(self, wx.ID_EXIT,  self.OnCancel)
         self.btn_cancel.Bind(wx.EVT_BUTTON, self.OnCancel)
         self.Bind(wx.EVT_CLOSE, self.OnCloseWindow)
 
-        xsizelist = []
-        ysizelist = []
+        maxsizes = (0,0)
         for section in sections:
             self.tabsizer[section].SetSizeHints( self.tab[section] )
             self.tabsizer[section].Fit( self.tab[section] )
             self.tab[section].SetAutoLayout(True)
             self.tab[section].SetSizer( self.tabsizer[section] )
             self.tab[section].Layout()
-            xsizelist.append(self.tabsizer[section].GetMinSize()[0])
-            ysizelist.append(self.tabsizer[section].GetMinSize()[1])
+            minsecsizes = self.tabsizer[section].GetMinSize()
+            maxsizes = map( lambda x: max( maxsizes[x], minsecsizes[x] ), (0,1) )
 
-	if xsizelist != []:
-            maxminsize = (max(xsizelist),max(ysizelist))
-        else:
-            maxminsize = (0,0)
-        self.notebook.SetInitialSize(maxminsize)
-        self.panelsizer.SetSizeHints( self.notebookpanel )
-        self.panelsizer.Fit( self.notebookpanel )
+        self.notebookpanel.SetSize( (min(600, maxsizes[0]), min(600, maxsizes[1]) ) )
         self.notebookpanel.SetSizer(self.panelsizer)
-        self.notebookpanel.SetAutoLayout(True)
-        self.notebookpanel.Layout()
-
+ 
         self.guisizer.SetSizeHints(self)
-#        self.guisizer.SetMinSize(maxminsize)
         self.SetAutoLayout(True)
         self.SetSizer(self.guisizer)
         self.Layout()
 
+
+    def OnPageChange(self, event):
+        self.Layout()
 
     def OnColorButton(self, event):
         colorchooser = wx.FindWindowById( event.GetId() )
