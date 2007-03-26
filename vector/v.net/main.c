@@ -37,24 +37,13 @@ int main (int argc, char **argv)
 
     module = G_define_module();
     module->keywords = _("vector, networking");
-    module->description = "Network maintenance.";
+    module->description = _("Network maintenance.");
 
     /* Define the options */
-    input = G_define_option ();
-    input->key = "input";
-    input->type = TYPE_STRING;
-    input->required = YES;
-    input->multiple = NO;
-    input->gisprompt = "old,vector,vector";
-    input->description = "Input vector map";
+    input = G_define_standard_option (G_OPT_V_INPUT);
 
-    output = G_define_option ();
-    output->key = "output";
-    output->type = TYPE_STRING;
+    output = G_define_standard_option (G_OPT_V_OUTPUT);
     output->required = NO;
-    output->multiple = NO;
-    output->gisprompt = "new,vector,vector";
-    output->description = "Output vector map";
 
     action = G_define_option ();
     action->key = "operation";
@@ -63,28 +52,30 @@ int main (int argc, char **argv)
     action->multiple = NO;
     action->answer = "nodes";
     action->options = "nodes,report,nreport";
-    action->description = "Operation to be performed\n"
-	    "\t\tnodes - new point is placed on each node (line end) if doesn't exist\n"
-	    "\t\treport - print to standard output: line_category start_point_category end_point_category"
-	    "\t\tnreport - print to standard output: point_category line_category[,line_category...]";
+    action->description = _("Operation to be performed");
+    action->descriptions = _("nodes;new point is placed on each node (line end) "
+			     "if doesn't exist;"
+			     "report;print to standard output "
+			     "{line_category start_point_category end_point_category};"
+			     "nreport;print to standard output "
+			     "{point_category line_category[,line_category...]}");
 
     afield_opt = G_define_standard_option(G_OPT_V_FIELD);
     afield_opt->key = "alayer";
-    afield_opt->answer = "1";
-    afield_opt->description = "Arc layer";
+    afield_opt->description = _("Arc layer");
 
     nfield_opt = G_define_standard_option(G_OPT_V_FIELD);
     nfield_opt->key = "nlayer";
     nfield_opt->answer = "2";
-    nfield_opt->description = "Node layer";    
+    nfield_opt->description = _("Node layer");    
 
     cats_flag = G_define_flag();
     cats_flag->key = 'c';
     cats_flag->description =
-        _("Assign unique categories to new points (operation=nodes)");
+      _("Assign unique categories to new points (operation=nodes)");
   
     if (G_parser(argc, argv))
-        exit (-1);
+        exit (EXIT_FAILURE);
   
     afield = atoi (afield_opt->answer);
     nfield = atoi (nfield_opt->answer);
@@ -93,7 +84,7 @@ int main (int argc, char **argv)
 	Vect_check_input_output_name ( input->answer, output->answer, GV_FATAL_EXIT );
 	
         if ( output->answer == NULL ) 
-	    G_fatal_error("Output vector map must be specified");
+	    G_fatal_error(_("Output vector map must be specified"));
 
         nodes ( input->answer, output->answer, cats_flag->answer, nfield);
     } 
@@ -113,5 +104,5 @@ int main (int argc, char **argv)
 	report ( input->answer, afield, nfield, act);
     }
 
-  return (0);
+  return (EXIT_SUCCESS);
 }

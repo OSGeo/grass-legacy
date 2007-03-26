@@ -32,7 +32,7 @@ int nodes ( char *in, char *out, int add_cats, int nfield)
 
     mapset = G_find_vector2 (in, "");
     if (mapset == NULL) 
-        G_fatal_error( "Vector file [%s] not available", in );
+	G_fatal_error(_("Vector map <%s> not found"), in );
 
     Vect_set_open_level (2);
     Vect_open_old (&In, in, mapset);
@@ -40,7 +40,7 @@ int nodes ( char *in, char *out, int add_cats, int nfield)
     Vect_set_fatal_error (GV_FATAL_PRINT);
     if (1 > Vect_open_new (&Out, out, In.head.with_z)){
         Vect_close (&In);
-	G_fatal_error ("Failed opening output vector map");
+	G_fatal_error (_("Cannot open vector map <%s>"), out);
     }
 
     Vect_copy_head_data (&In, &Out);
@@ -104,7 +104,7 @@ int nodes ( char *in, char *out, int add_cats, int nfield)
 	    count++;
 	}
     }
-    G_message (_("%d new points written to output."), count );
+    G_message (_("[%d] new points written to output"), count );
     
     Vect_destroy_line_struct (Points);
     Vect_destroy_line_struct (Pout);
@@ -113,7 +113,7 @@ int nodes ( char *in, char *out, int add_cats, int nfield)
     Vect_copy_tables ( &In, &Out, 0 );
     
     /* Support */    
-    Vect_build (&Out, stdout); 
+    Vect_build (&Out, stderr); 
     
     Vect_close (&In);
     Vect_close (&Out);

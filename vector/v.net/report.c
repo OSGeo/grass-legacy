@@ -17,6 +17,7 @@
 #include <stdlib.h>
 #include <grass/gis.h>
 #include <grass/Vect.h>
+#include <grass/glocale.h>
 #include "proto.h"
 
 int report ( char *in, int afield, int nfield, int action)
@@ -34,11 +35,11 @@ int report ( char *in, int afield, int nfield, int action)
     
     mapset = G_find_vector2 (in, "");
     if (mapset == NULL) 
-        G_fatal_error( "Vector file [%s] not available", in );
+	G_fatal_error(_("Vector map <%s> not found"), in );
 
     Vect_set_open_level (2);
     if (2 > Vect_open_old (&In, in, mapset))
-	G_fatal_error ("Topology is not available");
+	G_fatal_error (_("Topology is not available"));
 
     if ( action == REPORT )
     { 
@@ -51,7 +52,7 @@ int report ( char *in, int afield, int nfield, int action)
 	    
 	    cat_line = 0;
 	    if ( !Vect_cat_get(Cats, afield, &cat_line) )
-		G_warning ("Line has no category");
+		G_warning (_("Line has no category"));
 	    
 	    cat_node[0] = cat_node[1] = 0;
 	    for (j=0; j<2; j++) {
@@ -74,9 +75,11 @@ int report ( char *in, int afield, int nfield, int action)
 		    nnodes++;
 		}
 		if (nnodes == 0)
-		    G_warning ("Point not found: %.3lf %.3lf %.3lf line category: %d\n", x, y, z, cat_line);   
+		    G_warning (_("Point not found: %.3lf %.3lf %.3lf line category: %d"),
+			       x, y, z, cat_line);   
 		else if (nnodes > 1)
-		    G_warning ("%d points found: %.3lf %.3lf %.3lf line category: %d\n", nnodes, x, y, z, cat_line);	      
+		    G_warning (_("[%d] points found: %.3lf %.3lf %.3lf line category: %d"),
+			nnodes, x, y, z, cat_line);	      
 	      }	  
 	      fprintf (stdout, "%d %d %d\n", cat_line, cat_node[0], cat_node[1]);	  
 	  }
