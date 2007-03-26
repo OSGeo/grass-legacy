@@ -27,6 +27,11 @@ import toolbars
 import grassenv
 import track
 
+import images
+imagepath = images.__path__[0]
+sys.path.append(imagepath)
+
+
 Map = render.Map() # instance of Map class to render GRASS display output to PPM file
 DEBUG = False
 
@@ -480,7 +485,7 @@ class MapFrame(wx.Frame):
         # Fancy gui
         #
         self._mgr = wx.aui.AuiManager(self)
-        self.SetIcon(wx.Icon(os.path.join("images",'grass.map.gif'), wx.BITMAP_TYPE_ANY))
+        self.SetIcon(wx.Icon(os.path.join(imagepath,'grass.map.gif'), wx.BITMAP_TYPE_ANY))
 
         #
         # Add toolbars

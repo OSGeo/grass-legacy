@@ -30,6 +30,11 @@ import gui_modules
 gmpath = gui_modules.__path__[0]
 sys.path.append(gmpath)
 
+import images
+imagepath = images.__path__[0]
+sys.path.append(imagepath)
+
+
 import gui_modules.track as track
 import gui_modules.wxgui_utils as wxgui_utils
 import gui_modules.mapdisp as mapdisp
@@ -123,7 +128,7 @@ class GMFrame(wx.Frame):
         # do layout
         self.SetTitle(_("GRASS GIS Manager - wxPython Prototype"))
         self.SetMinSize((450, 450))
-        self.SetIcon(wx.Icon(os.path.join("images",'grass.smlogo.gif'), wx.BITMAP_TYPE_ANY))
+        self.SetIcon(wx.Icon(os.path.join(imagepath,'grass.smlogo.gif'), wx.BITMAP_TYPE_ANY))
         # self.nb_panel = wx.Panel(self)
 
         # initialize variables
