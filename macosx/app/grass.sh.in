@@ -33,6 +33,11 @@ GISBASE="`dirname $0`"
 export GISBASE
 grass_ver=`cut -d . -f 1-2 $GISBASE/etc/VERSIONNUMBER`
 
+# for GDAL utils
+# hack - ideally user should have this in their PATH
+PATH="@GDAL_BIN_PATH@:$PATH"
+export PATH
+
 # xterm
 if [ ! "$GRASS_XTERM" ] ; then
 	GRASS_XTERM=/usr/X11R6/bin/xterm
