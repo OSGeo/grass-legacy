@@ -21,7 +21,10 @@ main (int argc, char **argv)
     char *mapset;
     char buff[500];
 
-/* Initialize the GIS calls */
+    /* must run in a term window */
+    G_putenv("GRASS_UI_TERM","1");
+
+    /* Initialize the GIS calls */
     G_gisinit(argv[0]) ;
 
     /* Try to get default raster name, don't fail so --interface-description works */
