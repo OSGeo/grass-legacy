@@ -99,25 +99,25 @@ int main(int argc, char **argv)
 
     module = G_define_module();
     module->keywords = _("vector, LRS, networking");
-    module->description = "Create stationing from input lines, "
-	   "and linear reference system";
+    module->description = _("Create stationing from input lines, "
+			    "and linear reference system");
 
     in_opt = G_define_standard_option(G_OPT_V_INPUT);
-    in_opt->description = "Input map containing lines";
+    in_opt->description = _("Input vector map containing lines");
     
     out_opt = G_define_standard_option(G_OPT_V_OUTPUT); 
-    out_opt->description = "Output map where stationing will be written";
+    out_opt->description = _("Output vector map where stationing will be written");
 
     lfield_opt = G_define_standard_option(G_OPT_V_FIELD);
     lfield_opt->key = "llayer";
     lfield_opt->answer = "1";
-    lfield_opt->description = "Line layer";
+    lfield_opt->description = _("Line layer");
     
     table_opt = G_define_option() ;
     table_opt->key         = "rstable" ;
     table_opt->type        = TYPE_STRING ;
     table_opt->required    = YES; 
-    table_opt->description = "Name of the reference system table";
+    table_opt->description = _("Name of the reference system table");
     
     labels_opt = G_define_option();
     labels_opt->key               = "labels";
@@ -125,7 +125,7 @@ int main(int argc, char **argv)
     labels_opt->required          = NO;
     labels_opt->multiple          = NO;
     labels_opt->gisprompt         = "new,paint/labels,Labels";
-    labels_opt->description       = "Label file";
+    labels_opt->description       = _("Label file");
     
     offset_opt = G_define_option() ;
     offset_opt->key         = "offset" ;
@@ -133,90 +133,98 @@ int main(int argc, char **argv)
     offset_opt->required    = NO; 
     offset_opt->multiple    = YES; 
     offset_opt->answer      = "50,100,25,25"; 
-    offset_opt->description = "PM left, MP right, stationing left, stationing right offset";
+    offset_opt->description = _("PM left, MP right, stationing left, stationing right offset");
 
     Xoffset = G_define_option();
     Xoffset->key = "xoffset";
-    Xoffset->description = "Offset label in label x-direction in map units";
+    Xoffset->description = _("Offset label in label x-direction in map units");
     Xoffset->type = TYPE_DOUBLE;
     Xoffset->answer = "25";
 
     Yoffset = G_define_option();
     Yoffset->key = "yoffset";
-    Yoffset->description = "Offset label in label y-direction in map units";
+    Yoffset->description = _("Offset label in label y-direction in map units");
     Yoffset->type = TYPE_DOUBLE;
     Yoffset->answer = "5";
 
     Reference = G_define_option();
     Reference->key = "reference";
-    Reference->description = "Reference position";
+    Reference->description = _("Reference position");
     Reference->type = TYPE_STRING;
     Reference->answer = "center";
     Reference->options = "center,left,right,upper,lower";
 
     Font = G_define_option();
     Font->key = "font";
-    Font->description = "Font";
+    Font->description = _("Font");
     Font->type = TYPE_STRING;
     Font->answer = "standard";
 
     Size = G_define_option();
     Size->key = "size";
-    Size->description = "Label size (in map-units)";
+    Size->description = _("Label size (in map-units)");
     Size->type = TYPE_INTEGER;
     Size->answer = "100";
     Size->options = "1-1000";
 
     Color = G_define_option();
     Color->key = "color";
-    Color->description = "Text color";
+    Color->description = _("Text color");
     Color->type = TYPE_STRING;
     Color->answer = "black";
-    Color->options = "aqua,black,blue,brown,cyan,gray,green,grey,indigo,magenta, orange,purple,red,violet,white,yellow";
+    Color->options = "aqua,black,blue,brown,cyan,gray,green,grey,indigo,magenta,"
+      "orange,purple,red,violet,white,yellow";
 
     Width = G_define_option();
     Width->key = "width";
-    Width->description = "Line width of text (only for p.map output)";
+    Width->label = _("Line width of text");
+    Width->description = _("Only for p.map output");
     Width->type = TYPE_INTEGER;
     Width->answer = "1";
     Width->options = "1-100";
 
     Hcolor = G_define_option();
     Hcolor->key = "hcolor";
-    Hcolor->description = "Highlight color for text (only for p.map output)";
+    Hcolor->label = _("Highlight color for text");
+    Hcolor->description = _("Only for p.map output");
     Hcolor->type = TYPE_STRING;
     Hcolor->answer = "none";
-    Hcolor->options = "none,aqua,black,blue,brown,cyan,gray,green,grey,indigo,magenta, orange,purple,red,violet,white,yellow";
+    Hcolor->options = "none,aqua,black,blue,brown,cyan,gray,green,grey,indigo,magenta,"
+      "orange,purple,red,violet,white,yellow";
 
     Hwidth = G_define_option();
     Hwidth->key = "hwidth";
-    Hwidth->description = "Line width of highlight color (only for p.map output)";
+    Hwidth->label = _("Line width of highlight color");
+    Hwidth->description = _("Only for p.map output");
     Hwidth->type = TYPE_INTEGER;
     Hwidth->answer = "0";
     Hwidth->options = "0-100";
 
     Bcolor = G_define_option();
     Bcolor->key = "background";
-    Bcolor->description = "Background color";
+    Bcolor->description = _("Background color");
     Bcolor->type = TYPE_STRING;
     Bcolor->answer = "none";
-    Bcolor->options = "none,aqua,black,blue,brown,cyan,gray,green,grey,indigo,magenta, orange,purple,red,violet,white,yellow";
+    Bcolor->options = "none,aqua,black,blue,brown,cyan,gray,green,grey,indigo,magenta,"
+      "orange,purple,red,violet,white,yellow";
 
     Border = G_define_option();
     Border->key = "border";
-    Border->description = "Border color";
+    Border->description = _("Border color");
     Border->type = TYPE_STRING;
     Border->answer = "none";
-    Border->options = "none,aqua,black,blue,brown,cyan,gray,green,grey,indigo,magenta, orange,purple,red,violet,white,yellow";
+    Border->options = "none,aqua,black,blue,brown,cyan,gray,green,grey,indigo,magenta,"
+      "orange,purple,red,violet,white,yellow";
 
     Opaque = G_define_option();
     Opaque->key = "opaque";
-    Opaque->description = "Opaque to vector (only relevant if background color is selected)";
+    Opaque->label = _("Opaque to vector");
+    Opaque->description = _("Only relevant if background color is selected");
     Opaque->type = TYPE_STRING;
     Opaque->answer = "yes";
     Opaque->options = "yes,no";
 
-    if(G_parser(argc,argv)) exit(1);
+    if(G_parser(argc,argv)) exit(EXIT_FAILURE);
 
     LCats = Vect_new_cats_struct ();
     SCats = Vect_new_cats_struct ();
@@ -244,7 +252,9 @@ int main(int argc, char **argv)
 
     /* Open input lines */
     mapset = G_find_vector2 (in_opt->answer, NULL); 
-    if(mapset == NULL) G_fatal_error ("Could not find input %s\n", in_opt->answer);
+    if(mapset == NULL)
+	G_fatal_error (_("Vector map <%s> not found"), in_opt->answer);
+
     Vect_set_open_level ( 2 );
     Vect_open_old (&In, in_opt->answer, mapset); 
     
@@ -255,7 +265,9 @@ int main(int argc, char **argv)
     labels = NULL;
     if ( labels_opt->answer ) {
         labels = G_fopen_new ("paint/labels", labels_opt->answer);
-	if ( labels == NULL ) G_fatal_error ("Cannot open labels" );
+	if ( labels == NULL )
+	    G_fatal_error (_("Cannot open labels <%s>"),
+			   labels_opt->answer);
     }
     
     db_init_handle (&handle);
@@ -263,7 +275,7 @@ int main(int argc, char **argv)
     driver = db_start_driver(NULL);
     db_set_handle (&handle, NULL, NULL);
     if (db_open_database(driver, &handle) != DB_OK)
-        G_fatal_error("Cannot open database for reference table");
+        G_fatal_error(_("Cannot open database for reference table"));
 
     /* For each line select all existeng reference segments, sort them along the line
     *  and fcreate stationing. */
@@ -289,7 +301,7 @@ int main(int argc, char **argv)
 	
 	G_debug(1, "    select");
 	if (db_open_select_cursor(driver, &stmt, &cursor, DB_SEQUENTIAL) != DB_OK)
-	    G_fatal_error ("Cannot select records from LRS table:\n%s", buf);
+	    G_fatal_error (_("Cannot select records from LRS table: %s"), buf);
 
 	table = db_get_cursor_table (&cursor);
 
@@ -297,7 +309,7 @@ int main(int argc, char **argv)
 	nrseg = 0;
 	while(1) {
 	    if( db_fetch(&cursor, DB_NEXT, &more) != DB_OK)
-		G_fatal_error ("Cannot fetch data from table");
+		G_fatal_error (_("Cannot fetch data from table"));
 			 
 	    if (!more) break;
 	    
@@ -372,11 +384,11 @@ int main(int argc, char **argv)
 	        G_debug(1, "      get offset");
 		
                 if ( ret == 0 ) {
-		    G_warning ( "No record in LR table");
+		    G_warning (_("No record in LR table"));
 		    break;
 		}
 		if ( ret == -1 ) {
-		    G_warning ( "More than one record in LR");
+		    G_warning (_("More than one record in LR table"));
                     break;
                 }			
                 G_debug(2, "map_offset = %f", map_offset );
@@ -454,13 +466,13 @@ int main(int argc, char **argv)
     }
 
     db_close_database(driver);
-    Vect_build (&Out, stdout);
+    Vect_build (&Out, stderr);
 
     /* Free, close ... */
     Vect_close(&In);
     Vect_close(&Out);
 
-    exit(0);
+    exit(EXIT_SUCCESS);
 }
 
 int cmp_along ( const void *pa, const void *pb)
