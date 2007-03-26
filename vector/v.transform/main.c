@@ -224,7 +224,7 @@ int main (int argc, char *argv[])
     Vect_copy_tables ( &Old, &New, 0 );
     Vect_close (&Old);
 
-    if (!quiet_flag->answer) Vect_build (&New, stdout); else Vect_build (&New, NULL);
+    if (!quiet_flag->answer) Vect_build (&New, stderr); else Vect_build (&New, NULL);
 
     if (!quiet_flag->answer) {
 	Vect_get_map_box (&New, &box );
