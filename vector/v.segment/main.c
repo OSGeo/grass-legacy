@@ -45,6 +45,7 @@ int main(int argc, char **argv)
 
     module = G_define_module();
     module->keywords = _("vector, geometry");
+    module->label = _("Create points/segments from input lines and and positions.");
     module->description = "Create points/segments from input lines, "
 	   "and positions read from stdin in format:\n"
            "P <point id> <line cat> <offset> [<side offset>]\n"
