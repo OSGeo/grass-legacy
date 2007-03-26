@@ -245,35 +245,35 @@ main (int argc, char **argv)
    G_gisinit(argv[0]);
 
    module                  = G_define_module();
-   module->keywords = _("miscellaneous");
-    module->description     = "A simple utility for converting bearing and distance "\
-                             "measurements to coordinates\n and vice versa. "
-                             "It assumes a cartesian coordinate system";
-   
+   module->keywords        = _("miscellaneous");
+   module->description     = _("A simple utility for converting bearing and "
+	"distance measurements to coordinates and vice versa. "
+	"It assumes a cartesian coordinate system");
+
    format                  = G_define_flag();
    format->key             = 'l';
-   format->description     = "Lines are labelled";
+   format->description     = _("Lines are labelled");
    
    quiet                   = G_define_flag();
    quiet->key              = 'q';
-   quiet->description      = "Suppress warnings";
+   quiet->description      = _("Suppress warnings");
 
    reverse                 = G_define_flag();
    reverse->key            = 'r';
-   reverse->description    = "Convert from coordinates to bearing and distance";
+   reverse->description    = _("Convert from coordinates to bearing and distance");
 
    input                   = G_define_option();
    input->key              = "input";
    input->type             = TYPE_STRING;
    input->required         = NO;
-   input->description      = "Path to the input file";
+   input->description      = _("Path to the input file");
    input->answer           = "-";
 
    output                  = G_define_option();
    output->key             = "output";
    output->type            = TYPE_STRING;
    output->required        = NO;
-   output->description     = "Path to an output file";
+   output->description     = _("Path to an output file");
    output->answer          = "-";
    
    coords                  = G_define_option();
@@ -281,17 +281,18 @@ main (int argc, char **argv)
    coords->key_desc        = "x,y";
    coords->type            = TYPE_DOUBLE;
    coords->required        = NO;
-   coords->description     = "Starting coordinate pair";
+   coords->description     = _("Starting coordinate pair");
    coords->answer          = "0.0,0.0";
 
    if (G_parser(argc,argv) != 0)
       exit(EXIT_FAILURE);
 
+
    if (input->answer && input->answer[0] != '-')
    {
       infile = fopen (input->answer, "r");
       if (infile == NULL)
-         G_fatal_error ("Couldn't open COGO file \"%s\"", input->answer);
+         G_fatal_error (_("Couldn't open COGO file <%s>"), input->answer);
    }
    else
    {
@@ -302,7 +303,7 @@ main (int argc, char **argv)
    {
       outfile = fopen (output->answer, "w");
       if (outfile == NULL)
-         G_fatal_error ("Couldn't open output file \"%s\"", output->answer);
+         G_fatal_error (_("Couldn't open output file <%s>"), output->answer);
    }
    else
    {
@@ -337,10 +338,10 @@ main (int argc, char **argv)
    {
       record.x = strtod (coords->answers[0], &ss);
       if (ss == coords->answers[0])
-         G_fatal_error ("Converting starting coordinate pair");
+         G_fatal_error (_("Converting starting coordinate pair"));
       record.y = strtod (coords->answers[1], &ss);
       if (ss == coords->answers[1])
-         G_fatal_error ("Converting starting coordinate pair");
+         G_fatal_error (_("Converting starting coordinate pair"));
    }
    else
    {  
@@ -353,7 +354,7 @@ main (int argc, char **argv)
       if (!parse_line(cptr, &record))
       {
          if (verbose)
-            G_warning ("Input parse error on line %d", linenum);
+            G_warning (_("Input parse error on line %d"), linenum);
          continue;
       }
       print_func (outfile, &record);
@@ -364,7 +365,5 @@ main (int argc, char **argv)
    if (outfile != stdout)
       fclose (stdout);
    
-   return 0;
+   exit(EXIT_SUCCESS);
 }
-
-/* vim: set softtabstop=3 shiftwidth=3 expandtab : */
