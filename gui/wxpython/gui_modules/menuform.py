@@ -33,6 +33,7 @@ __version__ ="$Date: 2006/08/06 21:21:01 $"
 import wx
 import sys
 import string
+import textwrap
 import select
 import wx.lib.flatnotebook as FN
 import wx.lib.colourselect as csel
@@ -353,15 +354,21 @@ class mainFrame(wx.Frame):
                 valuelist=map(str,p['values'])
                 if p['multiple'] == 'yes':
                     txt = wx.StaticBox(which_panel,0,title+":")
-                    hSizer=wx.StaticBoxSizer( txt, wx.HORIZONTAL )
+                    hSizer=wx.StaticBoxSizer( txt, wx.VERTICAL )
                     v_count = 0
                     isDefault = {}
                     for defval in p['value'].split(','):
                         isDefault[ defval ] = 'yes'
                     for val in valuelist:
+                        # make some descriptions short:
+                        nval = ""
+                        for lval in textwrap.wrap(val, 60):
+                            nval += lval+"\n"
+                        nval = nval[:-1]
+
                         # This is the checkboxes hack
                         idForWX =  ID_MULTI_START + p_count*20 + v_count
-                        chkbox = wx.CheckBox( which_panel, idForWX, val+" " )
+                        chkbox = wx.CheckBox( which_panel, idForWX, nval+" " )
                         if isDefault.has_key(val): chkbox.SetValue( True )
                         hSizer.Add( chkbox,0,wx.ADJUST_MINSIZE,5 )
                         self.Bind(wx.EVT_CHECKBOX, self.EvtCheckBoxMulti)
