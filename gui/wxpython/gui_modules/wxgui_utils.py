@@ -688,13 +688,26 @@ class GMConsole(wx.Panel):
     		# console output window.
             try:
                 self.cmd_output.write(cmd+"\n----------\n")
-                self.out = Popen(cmd, shell=True, stdout=PIPE, stderr=STDOUT).communicate()[0]
+                # self.out = Popen(cmd, shell=True, stdout=PIPE, stderr=STDOUT).communicate()[0]
+                p = Popen(cmd, shell=True, stdin=PIPE, stdout=PIPE, stderr=PIPE, close_fds=True)
+                (child_stdin, child_stdout, child_stderr) = (p.stdin, p.stdout, p.stderr)
+                
+                oline = child_stderr.readline()
+                while 1:
+                    if oline == '':
+                        break
+                    print >>sys.stderr, "MSG: ",oline
+                    oline = child_stderr.readline()
+                self.out=p.communicate()[0]
                 self.cmd_output.write(self.out+"\n")
+                child_stderr.close()
+                child_stdout.close()
+                child_stdin.close()
 
                 if self.out < 0:
     				print >> sys.stderr, "Child was terminated by signal", self.out
                 elif self.out > 0:
-    				print >> sys.stderr, "Child returned", self.out
+    				print >> sys.stderr, self.out
             except OSError, e:
     			print >> sys.stderr, "Execution failed:", e
 
