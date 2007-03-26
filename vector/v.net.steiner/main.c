@@ -317,9 +317,10 @@ int main(int argc, char **argv)
 
     module = G_define_module();
     module->keywords = _("vector, networking");
-    module->description = "Create Steiner tree for the network and given terminals. "
-	    "Note that 'Minimum Steiner Tree' problem is NP-hard "
-	    "and heuristic algorithm is used in this module so the the result may be sub optimal.";
+    module->label = _("Create Steiner tree for the network and given terminals");
+    module->description = _("Note that 'Minimum Steiner Tree' problem is NP-hard "
+			    "and heuristic algorithm is used in this module so "
+			    "the result may be sub optimal");
 
     map = G_define_standard_option(G_OPT_V_INPUT);
     output = G_define_standard_option(G_OPT_V_OUTPUT); 
@@ -327,28 +328,28 @@ int main(int argc, char **argv)
     type_opt =  G_define_standard_option(G_OPT_V_TYPE);
     type_opt->options    = "line,boundary";
     type_opt->answer     = "line,boundary";
-    type_opt->description = "Arc type";
+    type_opt->description = _("Arc type");
 
     afield_opt = G_define_standard_option(G_OPT_V_FIELD);
     afield_opt->key = "alayer";
     afield_opt->answer = "1";
-    afield_opt->description = "Arc layer";
+    afield_opt->description = _("Arc layer");
     
     tfield_opt = G_define_standard_option(G_OPT_V_FIELD);
     tfield_opt->key = "nlayer";
     tfield_opt->answer = "2";
-    tfield_opt->description = "Node layer (used for terminals)";
+    tfield_opt->description = _("Node layer (used for terminals)");
     
     afcol = G_define_option() ;
     afcol->key         = "acolumn" ;
     afcol->type        = TYPE_STRING ;
     afcol->required    = NO ; 
-    afcol->description = "Arcs' cost column (for both directions)" ;
+    afcol->description = _("Arcs' cost column (for both directions)");
     
     term_opt = G_define_standard_option(G_OPT_V_CATS);
     term_opt->key         = "tcats" ;
     term_opt->required    = YES ; 
-    term_opt->description = "Categories of points on terminals (layer is specified by nlayer)" ;
+    term_opt->description = _("Categories of points on terminals (layer is specified by nlayer)");
     
     nsp_opt = G_define_option() ;
     nsp_opt->key         = "nsp" ;
@@ -356,13 +357,13 @@ int main(int argc, char **argv)
     nsp_opt->required    = NO ; 
     nsp_opt->multiple    = NO ; 
     nsp_opt->answer      = "-1"; 
-    nsp_opt->description = "Number of steiner poins. (-1 for all possible)";
+    nsp_opt->description = _("Number of steiner poins (-1 for all possible)");
     
     geo_f = G_define_flag ();
     geo_f->key             = 'g';
-    geo_f->description     = "Use geodesic calculation for longitude-latitude locations";
+    geo_f->description     = _("Use geodesic calculation for longitude-latitude locations");
     
-    if(G_parser(argc,argv)) exit (-1);
+    if(G_parser(argc,argv)) exit (EXIT_FAILURE);
 
     Cats = Vect_new_cats_struct ();
     Points = Vect_new_line_struct ();
@@ -390,7 +391,7 @@ int main(int argc, char **argv)
     mapset = G_find_vector2 (map->answer, NULL); 
       
     if ( mapset == NULL) 
-      G_fatal_error ("Could not find input map <%s>\n", map->answer);
+	G_fatal_error (_("Vector map <%s> not found"), map->answer);
 
     Vect_set_open_level(2);
     Vect_open_old (&Map, map->answer, mapset); 
@@ -411,17 +412,19 @@ int main(int argc, char **argv)
     } 
     nterms = TList->n_values;
     fprintf ( stdout, "Number of terminals: %d\n", nterms );
+
     if (nterms < 2 )
-        G_fatal_error("Not enough terminals (< 2)\n");
+        G_fatal_error(_("Not enough terminals (< 2)"));
 
     /* Number of steiner points */
     nsp = atoi ( nsp_opt->answer);
     if ( nsp > nterms - 2) {
 	nsp = nterms - 2;
-	G_warning ( "Requested number of Steiner points > than possible.\n" );
+	G_warning (_("Requested number of Steiner points > than possible"));
     } else if ( nsp == -1 ) {
 	nsp = nterms - 2;
     } 
+
     fprintf ( stdout, "Number of Steiner points set to %d\n", nsp );
     
     testnode = (int *) G_malloc ( (nnodes + 1) * sizeof(int) );
@@ -466,8 +469,9 @@ int main(int argc, char **argv)
     for (i = 1; i < nterms; i++) {
 	ret = get_node_costs( terms[0], terms[i], &cost );
 	if ( ret == 0 ) {
-	    G_fatal_error ("Terminal at node %d cannot be connected to terminal at node %d", 
-		    terms[0], terms[i] );
+	    G_fatal_error (_("Terminal at node [%d] cannot be connected "
+			     "to terminal at node [%d]"), 
+			   terms[0], terms[i] );
 	}
     }
     
@@ -481,17 +485,19 @@ int main(int argc, char **argv)
 	    j++;
 	}
     }
-    G_message (_( "%d (not reachable) nodes removed from list of Steiner point candidates"), j );
+
+    G_message (_("[%d] (not reachable) nodes removed from list "
+		 "of Steiner point candidates"), j );
     
     /* calc costs for terminals MST */
     ret = mst ( &Map, terms, nterms, &cost, PORT_DOUBLE_MAX, NULL, NULL, 0, 1); /* no StP, rebuild */
-    G_message (_( "MST costs = %f"), cost );
+    G_message (_("MST costs = %f"), cost );
     
     /* Go through all nodes and try to use as steiner poins -> find that which saves most costs */
     nspused = 0;
     for ( j = 0; j < nsp; j++ ) {
         sp = 0;
-            G_message (_("Search for %d. Steiner point"), j + 1);
+            G_message (_("Search for [%d]. Steiner point"), j + 1);
 	    
 	for ( i = 1; i <= nnodes; i++ ) {
 	    G_percent ( i, nnodes, 1 );
@@ -508,8 +514,9 @@ int main(int argc, char **argv)
 	    }
 	}
 	if ( sp > 0 ) {
-	    G_message ( _( "Steiner point at node %d was added to terminals (MST costs = %f)"), 
-		               sp, cost );
+	    G_message ( _("Steiner point at node [%d] was added "
+			  "to terminals (MST costs = %f)"), 
+			sp, cost );
 	    terms[nterms + j] = sp;
             init_node_costs(&Map, sp);
 	    testnode[sp] = 0;
@@ -517,12 +524,14 @@ int main(int argc, char **argv)
 	    /* rebuild for nex cycle */
             ret = mst ( &Map, terms, nterms + nspused, &tmpcost, PORT_DOUBLE_MAX, NULL, NULL, 0, 1);
 	} else { /* no steiner found */
-	    G_message (_( "No Steiner point found -> leaving cycle"));
+	    G_message (_("No Steiner point found -> leaving cycle"));
 	    break;
 	}
     }
-    fprintf (stdout, "\nNumber of added Steiner points: %d (theoretic max is %d).\n", nspused, nterms - 2);
 
+    fprintf (stdout, "\nNumber of added Steiner points: %d "
+	     "(theoretic max is %d).\n", nspused, nterms - 2);
+    
     /* Build lists of arcs and nodes for final version */
     ret = mst ( &Map, terms, nterms + nspused, &cost, PORT_DOUBLE_MAX, StArcs, StNodes, 0, 0);
     
@@ -540,6 +549,7 @@ int main(int argc, char **argv)
     
     fprintf (stdout, "\nSteiner tree:\n" );
     fprintf (stdout, "Arcs' categories (layer %d, %d arcs):\n", afield, StArcs->n_values );
+
     for (i = 0; i < StArcs->n_values; i++) {
 	line = StArcs->value[i] ;
         ltype = Vect_read_line ( &Map, Points, Cats, line);
@@ -548,9 +558,11 @@ int main(int argc, char **argv)
 	if ( i > 0 ) printf (",");
         fprintf ( stdout, "%d", cat );
     }
+
     fprintf (stdout, "\n\n" );
 
     fprintf (stdout, "Nodes' categories (layer %d, %d nodes):\n", tfield, StNodes->n_values );
+
     k = 0;
     for (i = 0; i < StNodes->n_values; i++) {
 	node = StNodes->value[i] ;
@@ -566,9 +578,10 @@ int main(int argc, char **argv)
 	    k++;
         }
     }
+
     fprintf (stdout, "\n\n" );
 
-    Vect_build (&Out, stdout);
+    Vect_build (&Out, stderr);
 
     /* Free, ... */
     Vect_destroy_list ( StArcs );
@@ -592,4 +605,3 @@ int cmp ( const void *pa, const void *pb)
 		    
     return 0;
 }
-
