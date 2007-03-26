@@ -395,6 +395,10 @@ proc GmProfile::pdraw { } {
 	set key ""
 	set value ""
 	while {[gets $input line] >= 0} {
+	    if { [string equal "XY location (unprojected)" "$line"] } {
+		set mapunits "map units"
+		break
+	    }
 	    regexp -nocase {^(.*):(.*)$} $line trash key value
 	    set key [string trim $key]
 	    set value [string trim $value]
@@ -408,7 +412,10 @@ proc GmProfile::pdraw { } {
 
     # r.profile always returns meters, but here profile length is calculated
     #  from the map canvas arrows and so is measured & plotted in map units.
-    set mapunits $prj(units)
+    # May already be set above if locn was XY.
+    if { ! [ info exist mapunits ] } {
+	set mapunits $prj(units)
+    }
 
 	if {$pmap == ""} {
 	   # get currently selected raster map as default to profile if nothing else chosen
@@ -469,9 +476,12 @@ proc GmProfile::pdraw { } {
 
 	# format axis labels in a nice way, as a function of range
 	if { $elevrange >= 100 } {
-	   set outfmt "%.0f"
+	    set outfmt "%.0f"
+	} elseif { $elevrange > 0 } {
+	    set outfmt "%.[expr {int(ceil(2 - log10($elevrange)))}]f"
 	} else {
-	   set outfmt "%.[expr {int(ceil(2 - log10($elevrange)))}]f"
+	    # error: no range (nan?)
+	    set outfmt "%g"
 	}
 
 	# add scale to y axis
@@ -538,8 +548,11 @@ proc GmProfile::pdraw { } {
 	   set outfmt "%.0f"
 	} elseif { [expr $tottlength/$divisor ] >= 100 } {
 	    set outfmt "%.1f"
-	} else {
+	} elseif { [expr $tottlength/$divisor ] > 0 } {
 	    set outfmt "%.[expr {int(ceil(2 - log10($tottlength/$divisor)))}]f"
+	} else {
+	    # error: no range (nan?)
+	    set outfmt "%g"
 	}
 
 	# add axis label
