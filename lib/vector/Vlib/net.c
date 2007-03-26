@@ -19,6 +19,7 @@
 #include <grass/gis.h>
 #include <grass/dbmi.h>
 #include <grass/Vect.h>
+#include <grass/glocale.h>
 
 static int From_node;   /* from node set in SP and used by clipper for first arc */  
 
@@ -116,7 +117,7 @@ Vect_net_build_graph (  struct Map_info *Map,
     G_debug (1, "Vect_build_graph(): ltype = %d, afield = %d, nfield = %d", ltype, afield, nfield); 
     G_debug (1, "    afcol = %s, abcol = %s, ncol = %s", afcol, abcol, ncol); 
 
-    fprintf ( stderr, "Building graph:\n");
+    G_message (_("Building graph ..."));
 
     Map->graph_line_type = ltype;
 
@@ -152,35 +153,36 @@ Vect_net_build_graph (  struct Map_info *Map,
     else
         dglInitialize(gr, (dglByte_t)1, (dglInt32_t)0, (dglInt32_t)0, opaqueset);
 
-    if ( gr == NULL ) G_fatal_error ("Cannot build network graph"); 
+    if ( gr == NULL ) G_fatal_error (_("Cannot build network graph")); 
 
     db_init_handle (&handle);
     db_init_string ( &stmt);
     
     if ( abcol != NULL && afcol == NULL )
-	G_fatal_error ("Forward costs column not specified");
+	G_fatal_error (_("Forward costs column not specified"));
 
     /* --- Add arcs --- */
     /* Open db connection */
     if ( afcol != NULL ) {
 	/* Get field info */
-	if ( afield < 1 ) G_fatal_error ("Arc field < 1");
+	if ( afield < 1 ) G_fatal_error (_("Arc field < 1"));
         Fi = Vect_get_field( Map, afield);
-	if ( Fi == NULL ) G_fatal_error ("Cannot get field info");
+	if ( Fi == NULL ) G_fatal_error (_("Cannot get field info"));
 	
 	/* Open database */
 	driver = db_start_driver_open_database ( Fi->driver, Fi->database );
 	if ( driver == NULL )
-	    G_fatal_error("Cannot open database %s by driver %s", Fi->database, Fi->driver) ;
+	    G_fatal_error(_("Cannot open database <%s> by driver <%s>"),
+			  Fi->database, Fi->driver) ;
 
 	/* Load costs to array */
 	if ( db_get_column ( driver, Fi->table, afcol, &Column ) != DB_OK) 
-            G_fatal_error("Cannot get column info");
+            G_fatal_error(_("Cannot get column info"));
 
 	fctype = db_sqltype_to_Ctype ( db_get_column_sqltype(Column) );
 	
 	if ( fctype != DB_C_TYPE_INT && fctype != DB_C_TYPE_DOUBLE )
-	    G_fatal_error ( "Column type not supported" );
+	    G_fatal_error (_("Column type not supported"));
 
 	db_CatValArray_init ( &fvarr );
 	nrec = db_select_CatValArray ( driver, Fi->table, Fi->key, afcol, NULL, &fvarr );
@@ -188,12 +190,12 @@ Vect_net_build_graph (  struct Map_info *Map,
 
 	if ( abcol != NULL ) { 
 	    if ( db_get_column ( driver, Fi->table, abcol, &Column ) != DB_OK) 
-		G_fatal_error("Cannot get column info");
+		G_fatal_error(_("Cannot get column info"));
 
 	    bctype = db_sqltype_to_Ctype ( db_get_column_sqltype(Column) );
 	    
 	    if ( bctype != DB_C_TYPE_INT && bctype != DB_C_TYPE_DOUBLE )
-		G_fatal_error ( "Column type not supported" );
+		G_fatal_error (_("Column type not supported"));
 
 	    db_CatValArray_init ( &bvarr );
 	    nrec = db_select_CatValArray ( driver, Fi->table, Fi->key, abcol, NULL, &bvarr );
@@ -202,7 +204,9 @@ Vect_net_build_graph (  struct Map_info *Map,
     }
 	
     skipped = 0;
-    fprintf ( stderr, "Registering arcs ... ");
+    
+    G_message (_("Registering arcs ..."));
+    
     for ( i = 1; i <= nlines; i++ ) {
 	G_percent ( i, nlines, 1 ); /* must be before any continue */
 	dofw = dobw = 1;
@@ -223,8 +227,9 @@ Vect_net_build_graph (  struct Map_info *Map,
                     ret = db_CatValArray_get_value_double ( &fvarr, cat, &dcost );
 		}
 		if ( ret != DB_OK ) { 
-		    G_warning ("Database record for line %d (cat = %d, forward/both direction(s)) not found " 
-			       "(forward/both direction(s) of line skipped)", i, cat);
+		    G_warning (_("Database record for line %d (cat = %d, "
+				 "forward/both direction(s)) not found " 
+				 "(forward/both direction(s) of line skipped)"), i, cat);
 		    dofw = 0;
 		}
 		    
@@ -236,8 +241,9 @@ Vect_net_build_graph (  struct Map_info *Map,
 			ret = db_CatValArray_get_value_double ( &bvarr, cat, &bdcost );
 		    }
 		    if ( ret != DB_OK ) { 
-			G_warning ( "Database record for line %d (cat = %d, backword direction) not found"
-				    "(direction of line skipped)", i, cat);
+			G_warning (_("Database record for line %d (cat = %d, "
+				     "backword direction) not found"
+				     "(direction of line skipped)"), i, cat);
 			dobw = 0;
 		    }
 		} else {
@@ -268,7 +274,7 @@ Vect_net_build_graph (  struct Map_info *Map,
             G_debug (5, "Add arc %d from %d to %d bcost = %d", -i, to, from, bcost); 
 	    ret = dglAddEdge(gr, (dglInt32_t)to, (dglInt32_t)from, (dglInt32_t)bcost, (dglInt32_t)-i);
 	    Map->edge_bcosts[i] = bdcost;
-            if ( ret < 0 ) G_fatal_error ("Cannot add network arc");
+            if ( ret < 0 ) G_fatal_error (_("Cannot add network arc"));
         }
     }
     
@@ -290,23 +296,24 @@ Vect_net_build_graph (  struct Map_info *Map,
         G_debug ( 2, "Set nodes' costs");
 	if ( nfield < 1 ) G_fatal_error ("Node field < 1");
 
-        fprintf ( stderr, "Setting node costs ... ");
+        G_message (_("Setting node costs ..."));
 
         Fi = Vect_get_field( Map, nfield);
-	if ( Fi == NULL ) G_fatal_error ("Cannot get field info");
+	if ( Fi == NULL ) G_fatal_error (_("Cannot get field info"));
 	
 	driver = db_start_driver_open_database ( Fi->driver, Fi->database );
 	if ( driver == NULL )
-	    G_fatal_error("Cannot open database %s by driver %s", Fi->database, Fi->driver) ;
+	    G_fatal_error(_("Cannot open database <%s> by driver <%s>"),
+			  Fi->database, Fi->driver) ;
 
 	/* Load costs to array */
 	if ( db_get_column ( driver, Fi->table, ncol, &Column ) != DB_OK) 
-            G_fatal_error("Cannot get column info");
+            G_fatal_error(_("Cannot get column info"));
 
 	fctype = db_sqltype_to_Ctype ( db_get_column_sqltype(Column) );
 	
 	if ( fctype != DB_C_TYPE_INT && fctype != DB_C_TYPE_DOUBLE )
-	    G_fatal_error ( "Column type not supported" );
+	    G_fatal_error (_("Column type not supported"));
 
 	db_CatValArray_init ( &fvarr );
 	nrec = db_select_CatValArray ( driver, Fi->table, Fi->key, ncol, NULL, &fvarr );
@@ -334,8 +341,8 @@ Vect_net_build_graph (  struct Map_info *Map,
 			ret = db_CatValArray_get_value_double ( &fvarr, cat, &dcost );
 		    }
 		    if ( ret != DB_OK ) { 
-			G_warning ( "Database record for node %d (cat = %d) not found " 
-				    "(cost set to 0)", i, cat);
+			G_warning (_("Database record for node %d (cat = %d) not found " 
+				     "(cost set to 0)"), i, cat);
 		    }
 		    cfound = 1;
 		    break;
@@ -356,20 +363,18 @@ Vect_net_build_graph (  struct Map_info *Map,
 	}
 	db_close_database_shutdown_driver ( driver );
 	db_CatValArray_free ( &fvarr);
-        fprintf ( stderr, "done.\n");
     }
     
-    fprintf ( stderr, "Flattening the graph ... "); 
+    G_message (_("Flattening the graph ...")); 
     ret = dglFlatten ( gr );
-    if ( ret < 0 ) G_fatal_error ("GngFlatten error");
-    fprintf ( stderr, "done.\n");
+    if ( ret < 0 ) G_fatal_error (_("GngFlatten error"));
     
     /* init SP cache */
     /* Disabled because of BUG1 in dglib. Without cache it is terribly slow, but with cache there
     *  are too many errors. */
     /* dglInitializeSPCache( gr, &(Map->spCache) ); */
 
-    fprintf ( stderr, "Graph was built.\n");
+    G_message (_("Graph was built"));
 
     return 0;
 }
@@ -493,7 +498,7 @@ Vect_net_get_line_cost ( struct Map_info *Map, int line, int direction, double *
 	} else *cost = Map->edge_bcosts[line];
         G_debug (5, "Vect_net_get_line_cost(): edge_bcosts = %f", Map->edge_bcosts[line] ); 
     } else { 
-	G_fatal_error ("Wrong line direction in Vect_net_get_line_cost()" );
+	G_fatal_error (_("Wrong line direction in Vect_net_get_line_cost()"));
     }
 
     return 1;
@@ -900,4 +905,3 @@ Vect_net_shortest_path_coor ( struct Map_info *Map,
     
     return reachable;
 }
-
