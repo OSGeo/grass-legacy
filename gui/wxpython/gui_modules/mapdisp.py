@@ -480,6 +480,7 @@ class MapFrame(wx.Frame):
         # Fancy gui
         #
         self._mgr = wx.aui.AuiManager(self)
+        self.SetIcon(wx.Icon(os.path.join("images",'grass.map.gif'), wx.BITMAP_TYPE_ANY))
 
         #
         # Add toolbars

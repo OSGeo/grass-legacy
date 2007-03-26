@@ -276,6 +276,7 @@ class mainFrame(wx.Frame):
         self.get_dcmd = get_dcmd
         self.dcmd_params = dcmd_params #this should be passed from the layer tree eventually
         self.layer = layer
+        self.SetIcon(wx.Icon(os.path.join("images",'grass.form.gif'), wx.BITMAP_TYPE_ANY))
 
         menu = wx.Menu()
         menu.Append(wx.ID_ABOUT, "&About GrassGUI",

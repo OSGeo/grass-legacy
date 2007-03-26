@@ -123,6 +123,7 @@ class GMFrame(wx.Frame):
         # do layout
         self.SetTitle(_("GRASS GIS Manager - wxPython Prototype"))
         self.SetMinSize((450, 450))
+        self.SetIcon(wx.Icon(os.path.join("images",'grass.smlogo.gif'), wx.BITMAP_TYPE_ANY))
         # self.nb_panel = wx.Panel(self)
 
         # initialize variables
