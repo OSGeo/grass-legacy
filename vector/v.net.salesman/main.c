@@ -89,9 +89,10 @@ int main(int argc, char **argv)
 
     module = G_define_module();
     module->keywords = _("vector, networking");
-    module->description = "Create a cycle connecting given nodes (Traveling salesman problem). "
-	    "Note that TSP is NP-hard, heuristic algorithm is used by this module "
-	    "and created cycle may be sub optimal.";
+    module->label = _("Create a cycle connecting given nodes (Traveling salesman problem)");
+    module->description = _("Note that TSP is NP-hard, heuristic algorithm is used by "
+			    "this module "
+			    "and created cycle may be sub optimal");
 
     map = G_define_standard_option(G_OPT_V_INPUT);
     output = G_define_standard_option(G_OPT_V_OUTPUT); 
@@ -99,34 +100,34 @@ int main(int argc, char **argv)
     type_opt =  G_define_standard_option(G_OPT_V_TYPE);
     type_opt->options    = "line,boundary";
     type_opt->answer     = "line,boundary";
-    type_opt->description = "Arc type";
+    type_opt->description = _("Arc type");
 
     afield_opt = G_define_standard_option(G_OPT_V_FIELD);
     afield_opt->key = "alayer";
-    afield_opt->answer = "1";
-    afield_opt->description = "Arc layer";
+    afield_opt->description = _("Arc layer");
     
     tfield_opt = G_define_standard_option(G_OPT_V_FIELD);
     tfield_opt->key = "nlayer";
     tfield_opt->answer = "2";
-    tfield_opt->description = "Node layer (used for cities)";
+    tfield_opt->description = _("Node layer (used for cities)");
     
     afcol = G_define_option() ;
     afcol->key         = "acolumn" ;
     afcol->type        = TYPE_STRING ;
     afcol->required    = NO ; 
-    afcol->description = "Arcs' cost column (for both directions)";
+    afcol->description = _("Arcs' cost column (for both directions)");
     
     term_opt = G_define_standard_option(G_OPT_V_CATS);
     term_opt->key         = "ccats" ;
     term_opt->required    = YES ;
-    term_opt->description = "Categories of points ('cities') on nodes (layer is specified by nlayer)" ;
+    term_opt->description = _("Categories of points ('cities') on nodes "
+			      "(layer is specified by nlayer)");
     
     geo_f = G_define_flag ();
     geo_f->key             = 'g';
-    geo_f->description     = "Use geodesic calculation for longitude-latitude locations";
+    geo_f->description     = _("Use geodesic calculation for longitude-latitude locations");
     
-    if(G_parser(argc,argv)) exit (-1);
+    if(G_parser(argc,argv)) exit (EXIT_FAILURE);
 
     Cats = Vect_new_cats_struct ();
     Points = Vect_new_line_struct ();
@@ -155,7 +156,7 @@ int main(int argc, char **argv)
     mapset = G_find_vector2 (map->answer, NULL); 
       
     if ( mapset == NULL) 
-      G_fatal_error ("Could not find input map <%s>\n", map->answer);
+      G_fatal_error (_("Vector map <%s> not found"), map->answer);
 
     Vect_set_open_level(2);
     Vect_open_old (&Map, map->answer, mapset); 
@@ -175,9 +176,9 @@ int main(int argc, char **argv)
         }
     } 
     ncities = TList->n_values;
-    fprintf ( stdout, "Number of cities: %d\n", ncities );
+    G_message (_("Number of cities: [%d]"), ncities );
     if (ncities < 2 )
-        G_fatal_error("Not enough cities (< 2)\n");
+	G_fatal_error(_("Not enough cities (< 2)"));
 
     /* Alloc memory */
     cities = (int *) G_malloc ( ncities * sizeof(int) );
@@ -206,7 +207,8 @@ int main(int argc, char **argv)
 	    if ( i == j ) continue;
             ret = Vect_net_shortest_path ( &Map, cities[i], cities[j], NULL, &cost); 
 	    if (ret == -1)
-		G_fatal_error ( "Destination node %d is unreachable from node %d\n", cities[i], cities[j]);
+		G_fatal_error (_("Destination node [%d] is unreachable "
+				 "from node [%d]"), cities[i], cities[j]);
 	    
 	    costs[i][k].city = j;
 	    costs[i][k].cost = cost;
@@ -346,7 +348,7 @@ int main(int argc, char **argv)
     }
     fprintf (stdout, "\n\n" );
 
-    Vect_build (&Out, stdout);
+    Vect_build (&Out, stderr);
 
     /* Free, ... */
     Vect_destroy_list ( StArcs );
@@ -354,7 +356,7 @@ int main(int argc, char **argv)
     Vect_close(&Map);
     Vect_close(&Out);
 
-    exit(0);
+    exit(EXIT_SUCCESS);
 }
 
 int cmp ( const void *pa, const void *pb)
@@ -370,4 +372,3 @@ int cmp ( const void *pa, const void *pb)
 		    
     return 0;
 }
-
