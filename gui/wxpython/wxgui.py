@@ -20,7 +20,6 @@ import sys, os, time, traceback, types
 import wx                  # This module uses the new wx namespace
 import wx.html
 
-import images
 
 # try:
 #    import subprocess
