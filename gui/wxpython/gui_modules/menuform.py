@@ -269,7 +269,7 @@ class mainFrame(wx.Frame):
             wx.DefaultPosition, style=wx.DEFAULT_FRAME_STYLE | wx.TAB_TRAVERSAL)
 
         self.CreateStatusBar()
-        self.SetStatusText("Enter parameters for " + grass_task.name)
+        self.SetStatusText("Enter parameters for " + grass_task.name + " (bold=required)")
         self.parent = parent
         self.selection = '' #selection from GIS element selector
         self.paramdict = {} # dictionary of controls and their parameter values
@@ -325,11 +325,11 @@ class mainFrame(wx.Frame):
             which_sizer = self.tabsizer[ p['guisection'] ]
             which_panel = self.tab[ p['guisection'] ]
             title = escape_ampersand(p['description'])
-	    text_style = wx.FONTWEIGHT_BOLD
-	    txt = None
+            text_style = wx.FONTWEIGHT_BOLD
+            txt = None
             if p['required'] == 'no':
-                title = "[optional] " + title
-		text_style = wx.FONTWEIGHT_NORMAL
+#                title = "[optional] " + title
+                text_style = wx.FONTWEIGHT_NORMAL
             if p['multiple'] == 'yes' and len( p['values'] ) == 0:
                 title = "[multiple] " + title
             p['value'] = p['default']
@@ -412,7 +412,7 @@ class mainFrame(wx.Frame):
                     self.paramdict[btn_colour] = ID_PARAM_START + p_count
                     self.Bind(csel.EVT_COLOURSELECT, self.OnColorButton, btn_colour)
 	    if txt is not None:
-                txt.SetFont( wx.Font( 10, wx.FONTFAMILY_DEFAULT, wx.NORMAL, text_style, 0, ''))
+                txt.SetFont( wx.Font( 12, wx.FONTFAMILY_DEFAULT, wx.NORMAL, text_style, 0, ''))
 
         f_count = -1
         for f in grass_task.flags:
@@ -421,10 +421,11 @@ class mainFrame(wx.Frame):
             which_panel = self.tab[ f['guisection'] ]
             title = escape_ampersand(f['description'])
             self.chk = wx.CheckBox(which_panel,-1, label = title, style = wx.NO_BORDER)
+            self.chk.SetFont( wx.Font( 12, wx.FONTFAMILY_DEFAULT, wx.NORMAL, text_style, 0, ''))
             which_sizer.Add(self.chk, 0, wx.EXPAND| wx.ALL, 5)
             self.paramdict[self.chk] = ID_FLAG_START + f_count
             self.chk.Bind(wx.EVT_CHECKBOX, self.EvtCheckBox)
-	
+
 
         btnsizer = wx.BoxSizer(wx.HORIZONTAL)
         self.btn_cancel = wx.Button(self, wx.ID_CANCEL, "Cancel")
