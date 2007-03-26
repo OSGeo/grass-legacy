@@ -32,9 +32,11 @@ main (int argc, char *argv[])
 
     module = G_define_module();
     module->keywords = _("vector");
-    module->description = _("Load values from vector to database. In uploaded/printed category values "
-			"'-1' is used for 'no category' and 'null'/'-' if category cannot be found or "
-                        "multiple categories were found.");
+    module->label    = _("Populate database values from vector features.");
+    module->description = _("Load values from vector to database. For "
+	"uploaded/printed category values '-1' is used for 'no category' "
+	"and 'null'/'-' if category cannot be found or multiple categories "
+	"were found.");
 
     parse_command_line (argc, argv);
 
