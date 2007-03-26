@@ -1,7 +1,8 @@
 /****************************************************************************
  *
  * MODULE:       v.patch
- * AUTHOR(S):    Dave Gerdes, U.S.Army Construction Engineering Research Laboratory (original contributor)
+ * AUTHOR(S):    Dave Gerdes, U.S.Army Construction Engineering Research Laboratory
+ *               (original contributor)
  *               Radim Blazek <radim.blazek gmail.com> (update to GRASS 6)
  *               Glynn Clements <glynn gclements.plus.com>, Markus Neteler <neteler itc.it>
  * PURPOSE:      
@@ -191,14 +192,14 @@ main (int argc, char *argv[])
 
                 if ( G_strcasecmp( fi_in->key, key ) != 0 )
                 {
-		  G_fatal_error (_("Key columns differ."));
+		  G_fatal_error (_("Key columns differ"));
                 }
 
 		ncols = db_get_table_number_of_columns(table_out);
 
 		if ( ncols != db_get_table_number_of_columns(table_in ) )
 		{
-		  G_fatal_error (_("Number of columns differ."));
+		  G_fatal_error (_("Number of columns differ"));
 		}
 
 		for (col = 0; col < ncols; col++)
@@ -212,19 +213,19 @@ main (int argc, char *argv[])
 		    if ( G_strcasecmp( db_get_column_name(column_in),
 			 db_get_column_name(column_out) ) != 0 )
 		    {
-		      G_fatal_error (_("Column names differ."));
+		      G_fatal_error (_("Column names differ"));
 		    }
 		    ctype_in = db_sqltype_to_Ctype( db_get_column_sqltype (column_in));
 		    ctype_out = db_sqltype_to_Ctype( db_get_column_sqltype (column_out));
 		    if ( ctype_in != ctype_out )
 		    {
-		      G_fatal_error (_("Column types differ."));
+		      G_fatal_error (_("Column types differ"));
 		    }
 		    if ( ctype_in == DB_C_TYPE_STRING &&
 			 db_get_column_length(column_in) !=
 			 db_get_column_length(column_out) )
 		    {
-		      G_fatal_error (_("Length of string columns differ."));
+		      G_fatal_error (_("Length of string columns differ"));
 		    }
 		    if ( G_strcasecmp( key,
 			 db_get_column_name(column_out) ) == 0 )
@@ -248,7 +249,7 @@ main (int argc, char *argv[])
 	Vect_open_update ( &OutMap, out_name,  G_mapset() );
 	if (out_is_3d == WITH_Z && !Vect_is_3d (&OutMap))
 	  {
-	    G_warning (_("The output map is not 3D."));
+	    G_warning (_("The output map is not 3D"));
 	  }
 	maxcat = max_cat ( &OutMap, 1 );
     } else {
@@ -297,7 +298,8 @@ main (int argc, char *argv[])
     {
         int add_cat;
 	in_name = old->answers[i++];
-	G_message (_("    Patching file %s"), in_name);
+	G_message (_("Patching file <%s@%s>"), in_name,
+		   G_find_vector2 (in_name, ""));
 	Vect_set_open_level (1);
 	Vect_open_old ( &InMap, in_name, "" );
 
@@ -356,13 +358,13 @@ main (int argc, char *argv[])
     Vect_set_map_name ( &OutMap, "Output from v.patch");
     Vect_set_person ( &OutMap, G_whoami ());
 
-    Vect_build (&OutMap, stdout);
+    Vect_build (&OutMap, stderr);
     Vect_close (&OutMap);
 
-    G_message (_("Patch complete. %d files patched."), n_files);
-    G_message (_("Intersections at borders will have to be snapped."));
-    G_message (_("Lines common between files will have to be edited."));
-    G_message (_("The header information also may have to be edited."));
+    G_done_msg (_("[%d] files patched"), n_files);
+    G_message (_("Intersections at borders will have to be snapped"));
+    G_message (_("Lines common between files will have to be edited"));
+    G_message (_("The header information also may have to be edited"));
 
     exit (EXIT_SUCCESS);
 }
