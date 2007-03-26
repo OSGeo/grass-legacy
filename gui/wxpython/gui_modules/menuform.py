@@ -37,6 +37,7 @@ import textwrap
 import select
 import wx.lib.flatnotebook as FN
 import wx.lib.colourselect as csel
+import wx.html
 
 # Do the python 2.0 standard xml thing and map it on the old names
 import xml.sax
@@ -54,6 +55,7 @@ import re
 
 import images
 imagepath = images.__path__[0]
+#imagepath = os.sep.join( os.getcwd().split(os.sep) [:-1] + ['images'] )
 sys.path.append(imagepath)
 
 
@@ -134,7 +136,7 @@ class grass_task:
     pass
 
 def grass_task_init():
-    grass_task.name = 'unknown'
+    grass_task.name = 'index'
     grass_task.params = []
     grass_task.description = ''
     grass_task.flags = []
@@ -264,6 +266,35 @@ class processTask(HandlerBase):
             self.inGuisection = 0
 
 
+class helpPanel(wx.html.HtmlWindow):
+    """This panel holds the text from GRASS docs."""
+    def __init__(self, parent, id, grass_command = "index"):
+        wx.html.HtmlWindow.__init__(self, parent, id)
+        self.fspath = os.getenv( "GISBASE" ) + "/docs/html/"
+        self.fillContentsFromFile( self.fspath + grass_command + ".html" )
+
+    def fillContentsFromFile( self, htmlFile ):
+        aLink = re.compile( r'(<a href="?)(.+\.html?["\s]*>)', re.IGNORECASE )
+        try:
+            contents = [ '<head><base href="%s"></head>' % self.fspath ]
+            dont_skip = True
+            for l in file( htmlFile, "rb" ).readlines():
+                if "DESCRIPTION" in l: dont_skip = True
+                if dont_skip:
+                    if "SYNOPSIS" in l: dont_skip = False # do skip the options description
+                    else:
+                        findLink = aLink.search( l )
+                        if findLink is not None:
+                            contents.append( aLink.sub(findLink.group(1)+self.fspath+findLink.group(2),l) )
+                        else:
+                            contents.append( l )
+            self.SetPage( "".join( contents ) )
+            self.Ok = True
+        except:
+            raise
+            self.Ok = False
+
+
 class mainFrame(wx.Frame):
     """This is the Frame containing the dialog for options input.
 
@@ -314,8 +345,7 @@ class mainFrame(wx.Frame):
             sections = sections[1:]
 
 
-        self.notebookpanel = wx.ScrolledWindow( self, id=wx.ID_ANY )
-        self.notebookpanel.SetScrollRate(10,10)
+        self.notebookpanel = wx.Panel( self, id=wx.ID_ANY )
         self.panelsizer = wx.BoxSizer(wx.VERTICAL)
 
         nbStyle=FN.FNB_NO_X_BUTTON|FN.FNB_NO_NAV_BUTTONS|FN.FNB_VC8|FN.FNB_BACKGROUND_GRADIENT
@@ -326,10 +356,15 @@ class mainFrame(wx.Frame):
         self.tabsizer = {}
         is_first = True
         for section in sections:
-            self.tab[section] = wx.Panel(self.notebook, id = wx.ID_ANY )
+            self.tab[section] = wx.ScrolledWindow(self.notebook, id = wx.ID_ANY )
+            self.tab[section].SetScrollRate(10,10)
             self.tabsizer[section] = wx.BoxSizer(wx.VERTICAL)
             self.notebook.AddPage( self.tab[section], text = section, select = is_first )
             is_first = False
+
+        manual_tab =  helpPanel( self.notebook, id = wx.ID_ANY, grass_command = grass_task.name)
+        if manual_tab.Ok:
+            self.notebook.AddPage( manual_tab, text = "Manual"  )
 
         self.panelsizer.Add( self.notebook, flag=wx.EXPAND )
         self.guisizer.Add( self.notebookpanel, flag = wx.EXPAND )
@@ -483,7 +518,13 @@ class mainFrame(wx.Frame):
             minsecsizes = self.tabsizer[section].GetMinSize()
             maxsizes = map( lambda x: max( maxsizes[x], minsecsizes[x] ), (0,1) )
 
-        self.notebookpanel.SetSize( (min(600, maxsizes[0]), min(600, maxsizes[1]+60) ) ) # 60 takes the tabbar into account
+        constrained_size = (min(600, maxsizes[0]), min(600, maxsizes[1]) )
+        for section in sections:
+            self.tab[section].SetMinSize( constrained_size )
+        if manual_tab.Ok:
+            manual_tab.SetMinSize( constrained_size )
+
+        self.notebookpanel.SetSize( (constrained_size[0],constrained_size[1]+80) ) # 80 takes the tabbar into account
         self.notebookpanel.SetSizer(self.panelsizer)
         self.notebookpanel.Layout()
 
