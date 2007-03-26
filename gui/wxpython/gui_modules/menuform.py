@@ -52,6 +52,10 @@ except:
     from compat import subprocess
 import re
 
+import images
+imagepath = images.__path__[0]
+sys.path.append(imagepath)
+
 
 def reexec_with_pythonw():
     if sys.platform == 'darwin' and\
@@ -277,7 +281,7 @@ class mainFrame(wx.Frame):
         self.get_dcmd = get_dcmd
         self.dcmd_params = dcmd_params #this should be passed from the layer tree eventually
         self.layer = layer
-        self.SetIcon(wx.Icon(os.path.join("images",'grass.form.gif'), wx.BITMAP_TYPE_ANY))
+        self.SetIcon(wx.Icon(os.path.join(imagepath,'grass.form.gif'), wx.BITMAP_TYPE_ANY))
 
         menu = wx.Menu()
         menu.Append(wx.ID_ABOUT, "&About GrassGUI",
@@ -481,7 +485,7 @@ class mainFrame(wx.Frame):
 
         self.notebookpanel.SetSize( (min(600, maxsizes[0]), min(600, maxsizes[1]+60) ) ) # 60 takes the tabbar into account
         self.notebookpanel.SetSizer(self.panelsizer)
- 
+
         self.guisizer.SetSizeHints(self)
         self.SetAutoLayout(True)
         self.SetSizer(self.guisizer)
@@ -524,7 +528,7 @@ class mainFrame(wx.Frame):
                     param_val = gui_object.GetValue()
             tasktype[num]['value'] = param_val
         self.updateStatusLine()
-        
+
     def EvtText(self, event):
         self.getValues()
 
