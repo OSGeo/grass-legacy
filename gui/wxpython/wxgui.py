@@ -315,47 +315,17 @@ class GMFrame(wx.Frame):
                  ('addrast', wx.Bitmap(os.path.join(wxgui_utils.icons,'element-cell.gif'), wx.BITMAP_TYPE_ANY), 'Add raster layer', self.onRaster),
                  ('addvect', wx.Bitmap(os.path.join(wxgui_utils.icons,'element-vector.gif'), wx.BITMAP_TYPE_ANY), 'Add vector layer', self.onVector),
                  ('addcmd', wx.Bitmap(os.path.join(wxgui_utils.icons,'gui-cmd.gif'), wx.BITMAP_TYPE_ANY), 'Add command layer', self.addCommand),
+                 ('addgrp', wx.ArtProvider.GetBitmap(wx.ART_FOLDER, wx.ART_TOOLBAR, (16,16)), 'Add layer group', self.addGroup),
                  ('delcmd', wx.ArtProvider.GetBitmap(wx.ART_DELETE, wx.ART_TOOLBAR, (16,16)), 'Delete selected layer', self.deleteLayer),
                  )
-
-    def addToolbarCombo(self, toolbar, indx, type):
-        tbcb = wx.combo.BitmapComboBox(toolbar, pos=(25,25), size=(100,-1), style=wx.TE_PROCESS_ENTER)
-        self.comboItems(tbcb, type)
-        toolbar.InsertControl(indx, tbcb)
-        toolbar.Realize()
-
-        self.Bind(wx.EVT_COMBOBOX, self.onCombo, tbcb)
-        self.Bind(wx.EVT_TEXT_ENTER, self.onCombo, tbcb)
-
-    def onCombo(self, event):
-        bcb = event.GetEventObject()
-        idx = event.GetInt()
-        st  = bcb.GetString(idx)
-        cd  = bcb.GetClientData(idx)
-        if 'Add raster map' in st:
-            self.addRaster()
-        elif 'Add RGB' in st:
-            self.addRGB()
-        elif 'Add raster legend' in st:
-            self.addRastLeg()
-        elif 'Add vector map' in st:
-            self.addVector()
-        elif 'Add thematic map' in st:
-            self.addThemeMap()
-        elif 'Add thematic chart' in st:
-            self.addThemeChart()
-
-#        self.log.write("EVT_COMBOBOX: Id %d, string '%s', clientData '%s'" % (idx, st, cd))
-        evt.Skip()
-
 
     def newDisplay(self, event=None):
         """Create new map display frame"""
 
         newdisp = self.mapdisplays[self.disp_idx] = mapdisp.MapFrame(self,
-                                                                     id=wx.ID_ANY, pos=wx.DefaultPosition, size=wx.DefaultSize,
-                                                                     style=wx.DEFAULT_FRAME_STYLE,
-                                                                     cb=self.gm_cb, idx=self.disp_idx)
+                                  id=wx.ID_ANY, pos=wx.DefaultPosition, size=wx.DefaultSize,
+                                  style=wx.DEFAULT_FRAME_STYLE,
+                                  cb=self.gm_cb, idx=self.disp_idx)
         # title
         newdisp.SetTitle(_("Map Display " + str(self.disp_idx)))
         #self.maptree[self.disp_idx] = self.mapdisplays[self.disp_idx].getTree()
@@ -500,6 +470,10 @@ class GMFrame(wx.Frame):
     def addCommand(self, event):
         """Add command line layer"""
         self.SetTree('command')
+
+    def addGroup(self, event):
+        """Add layer group"""
+        self.SetTree('group')
 
     def GetSelectedDisplay(self):
         return self.notebook.GetSelection()
