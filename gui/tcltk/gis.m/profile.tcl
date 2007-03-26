@@ -388,26 +388,28 @@ proc GmProfile::pdraw { } {
     variable status
     global mon
     global devnull
-    
+
     set cumdist 0.0
-    
-	if {![catch {open "|g.proj -p" r} input]} {
-		set key ""
-		set value ""
-		while {[gets $input line] >= 0} {
-			regexp -nocase {^(.*):(.*)$} $line trash key value
-			set key [string trim $key]
-			set value [string trim $value]
-			set prj($key) $value	
-		}
-		if {[catch {close $input} error]} {
-			puts $error
-			exit 1
-		} 
+
+    if {![catch {open "|g.proj -p" r} input]} {
+	set key ""
+	set value ""
+	while {[gets $input line] >= 0} {
+	    regexp -nocase {^(.*):(.*)$} $line trash key value
+	    set key [string trim $key]
+	    set value [string trim $value]
+	    set prj($key) $value    
 	}
-	
-	set mapunits $prj(units)
-    
+	if {[catch {close $input} error]} {
+	    puts $error
+	    exit 1
+	} 
+    }
+
+    # r.profile always returns meters, but here profile length is calculated
+    #  from the map canvas arrows and so is measured & plotted in map units.
+    set mapunits $prj(units)
+
 	if {$pmap == ""} {
 	   # get currently selected raster map as default to profile if nothing else chosen
 		set tree($mon) $GmTree::tree($mon)
@@ -464,31 +466,38 @@ proc GmProfile::pdraw { } {
 	
 	# create y axis (from 20%x10% to 20%x80% - top to bottom)
 	$pcan create line $left $top $left [expr $bottom + 5]
-		
+
+	# format axis labels in a nice way, as a function of range
+	if { $elevrange >= 100 } {
+	   set outfmt "%.0f"
+	} else {
+	   set outfmt "%.[expr {int(ceil(2 - log10($elevrange)))}]f"
+	}
+
 	# add scale to y axis
 	$pcan create text $yscaleright $top \
-		-text $elevmax \
+		-text "[format $outfmt $elevmax]" \
 		-anchor e \
 		-justify right
-		
+
 	$pcan create text $yscaleright $bottom \
-		-text $elevmin \
+		-text "[format $outfmt $elevmin]" \
 		-anchor e \
 		-justify right
-			
+
 	# create x axis (from 20%x80% to 90%x80% - left to right)
 	$pcan create line [expr $left - 5] $bottom $right $bottom
-		
+
 	# add scale to x axis
 	$pcan create text $left $xscaletop \
 		-text "0" \
 		-anchor n \
 		-justify center
-		
+
 	# add tick marks
 	$pcan create line $right $bottom $right [expr $bottom + 5]
 	$pcan create line [expr $left - 5] $top $left $top
-	
+
 	# run r.profile first time to calculate total transect distance (needed for lat lon regions)
    	if {![catch {open "|r.profile input=$pmap profile=$pcoords 2> $devnull" r} input]} {
 		while {[gets $input line] >= 0} {
@@ -501,27 +510,57 @@ proc GmProfile::pdraw { } {
 			exit 1
 		}
 	}
-	
+
+	set divisor "1.0"
+	if { [string equal "meters" "$mapunits"] } {
+	    if { $tottlength > 2500 } {
+		set mapunits "km"
+		set divisor "1000.0"
+	    }
+	} elseif { [string first "feet" "$mapunits"] >= 0 } {
+	    # nano-bug: we match any "feet", but US Survey feet is really 
+	    #  5279.9894 per statute mile, or 1.06' per 100 miles. As >100
+	    #  miles the tick markers are rounded to the nearest 10th of a
+	    #  mile (528'), the difference in foot flavours is ignored.
+	    if { $tottlength > 5280 } {
+		set mapunits "miles"
+		set divisor "5280.0"
+	    }
+	} elseif { [string first "degree" "$mapunits"] >= 0 } {
+	    if { $tottlength < 1 } {
+		set mapunits "minutes"
+		set divisor [expr 1/60.0]
+	    }
+	}
+
+	# format axis labels in a nice way, as a function of range
+	if { [expr $tottlength/$divisor ] >= 500 } {
+	   set outfmt "%.0f"
+	} elseif { [expr $tottlength/$divisor ] >= 100 } {
+	    set outfmt "%.1f"
+	} else {
+	    set outfmt "%.[expr {int(ceil(2 - log10($tottlength/$divisor)))}]f"
+	}
+
 	# add axis label
 	$pcan create text $center $xscaletop \
 		-text [G_msg "distance along transect ($mapunits)"] \
 		-anchor n \
 		-justify center
-	
+
 	# add transect segment markers
 	foreach {x} $pcoordslist {
 		if { $tottlength > 0.0 } {
 			set segx [expr $left + (($x * $width) / $tottlength)]
 			$pcan create line $segx $bottom $segx $top -fill grey
-			$pcan create text $segx $top -text "[format %g $x]" \
+			$pcan create text $segx $top -text "[format $outfmt [expr $x/$divisor]]" \
 				-anchor s -justify center -fill grey
 		}
 	}
 
-
 	# add label for total transect distance
 	$pcan create text $right $xscaletop \
-		-text "[format %g $tottlength]" \
+		-text "[format $outfmt [expr $tottlength/$divisor]]" \
 		-anchor n \
 		-justify center
 
@@ -540,7 +579,7 @@ proc GmProfile::pdraw { } {
 			exit 1
 		}
 	}
-	
+
 	# draw profile line
 	if { [llength $profilelist] > 3 } {
 		$pcan create line $profilelist -fill blue
