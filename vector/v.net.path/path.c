@@ -5,6 +5,7 @@
 #include <grass/gis.h>
 #include <grass/Vect.h>
 #include <grass/dbmi.h>
+#include <grass/glocale.h>
 
 /* Result code */
 #define SP_OK          0  /* Path found */
@@ -66,7 +67,8 @@ int path ( struct Map_info *In, struct Map_info *Out, int nfield, double maxdist
     }
 
     if ( count < npoints ) 
-	G_warning ( "%d points without category (nfield: %d).", npoints - count, nfield );
+	G_warning (_("[%d] points without category (nfield: [%d])"),
+		   npoints - count, nfield );
 
     npoints = count;
 
@@ -78,7 +80,8 @@ int path ( struct Map_info *In, struct Map_info *Out, int nfield, double maxdist
     
     driver = db_start_driver_open_database ( Fi->driver, Fi->database );
     if ( driver == NULL )
-	G_fatal_error ( "Cannot open database %s by driver %s", Fi->database, Fi->driver );
+	G_fatal_error (_("Cannot open database <%s> by driver <%s>"),
+			 Fi->database, Fi->driver );
     
     sprintf ( buf, "create table %s ( cat integer, id integer, fcat integer, tcat integer, " 
 	      "sp integer, cost double precision, fdist double precision, tdist double precision )", 
@@ -89,14 +92,14 @@ int path ( struct Map_info *In, struct Map_info *Out, int nfield, double maxdist
     
     if (db_execute_immediate (driver, &sql) != DB_OK ) {
         db_close_database_shutdown_driver ( driver );
-	G_fatal_error ( "Cannot create table: %s", db_get_string ( &sql )  );
+	G_fatal_error (_("Cannot create table: %s"), db_get_string ( &sql )  );
     }
 
     if ( db_create_index2(driver, Fi->table, "cat" ) != DB_OK )
-	G_warning ( "Cannot create index" );
+	G_warning (_("Cannot create index"));
 
     if (db_grant_on_table (driver, Fi->table, DB_PRIV_SELECT, DB_GROUP|DB_PUBLIC ) != DB_OK )
-	G_fatal_error ( "Cannot grant privileges on table %s", Fi->table );
+	G_fatal_error (_("Cannot grant privileges on table <%s>"), Fi->table );
 
     db_begin_transaction ( driver );
 
@@ -114,7 +117,7 @@ int path ( struct Map_info *In, struct Map_info *Out, int nfield, double maxdist
 	} else {
 	    ret = sscanf ( buf, "%d %d %d %s", &id, &fcat, &tcat, dummy);
 	    if ( ret != 3 ) {
-		G_warning ( "Wrong input format: %s", buf);
+		G_warning (_("Wrong input format: %s"), buf);
 		formaterr++;
 		continue;
 	    }
@@ -131,7 +134,7 @@ int path ( struct Map_info *In, struct Map_info *Out, int nfield, double maxdist
 	    /* From */
 	    Citem = (CIDX *) bsearch( (void *) &fcat, Cidx, npoints, sizeof(CIDX), cmp);
 	    if ( Citem == NULL ) {
-		G_warning ( "No point with category %d", fcat);
+		G_warning (_("No point with category [%d]"), fcat);
 		sp = SP_NOPOINT; 
 		fline = 0;
 		fnode = 0;
@@ -145,7 +148,7 @@ int path ( struct Map_info *In, struct Map_info *Out, int nfield, double maxdist
 	    /* To */
 	    Citem = (CIDX *) bsearch( (void *) &tcat, Cidx, npoints, sizeof(CIDX), cmp);
 	    if ( Citem == NULL ) {
-		G_warning ( "No point with category %d", tcat);
+		G_warning (_("No point with category [%d]"), tcat);
 		sp = SP_NOPOINT;
 		tline = 0;
 		tnode = 0;
@@ -162,8 +165,9 @@ int path ( struct Map_info *In, struct Map_info *Out, int nfield, double maxdist
 		if ( ret == -1 ) {
 		    sp = SP_UNREACHABLE;
 		    unreachable++;
-		    G_warning ( "Point with category %d is not reachable from point with category %d\n", 
-				tcat, fcat );
+		    G_warning (_("Point with category [%d] is not reachable "
+				 "from point with category [%d]"), 
+			       tcat, fcat );
 		} else {
 		    /* Write new line connecting 'from' and 'to' */
 		    G_debug ( 3, "Number of arcs = %d, total costs = %f",  AList->n_values, cost);
@@ -208,7 +212,8 @@ int path ( struct Map_info *In, struct Map_info *Out, int nfield, double maxdist
 	    if ( ret == 0 ) {
 		sp = SP_UNREACHABLE;
 		unreachable++;
-		G_warning ( "Point %f,%f is not reachable from point %f,%f\n", tx, ty, fx, fy );
+		G_warning (_("Point %f,%f is not reachable from "
+			     "point %f,%f"), tx, ty, fx, fy );
 	    } else {
 		Vect_reset_cats ( Cats );
 		Vect_cat_set ( Cats, 1, cat );
@@ -250,7 +255,8 @@ int path ( struct Map_info *In, struct Map_info *Out, int nfield, double maxdist
 	
 	if (db_execute_immediate (driver, &sql) != DB_OK ) {
 	    db_close_database_shutdown_driver ( driver );
-	    G_fatal_error ( "Insert new row: %s", db_get_string ( &sql )  );
+	    G_fatal_error (_("Cannot insert new record: %s"),
+			   db_get_string ( &sql )  );
 	}
     }
 
@@ -264,11 +270,12 @@ int path ( struct Map_info *In, struct Map_info *Out, int nfield, double maxdist
     Vect_destroy_cats_struct(Cats);
 
     if ( formaterr )
-       G_warning ( "%d input format errors", formaterr );
+	G_warning (_("[%d] input format errors"), formaterr );
     if ( nopoint )
-       G_warning ( "%d points of given category missing", nopoint );
+	G_warning (_("[%d] points of given category missing"), nopoint );
     if ( unreachable )
-       G_warning ( "%d destinations unreachable (including points out of threshold)", unreachable );
+	G_warning (_("[%d] destinations unreachable (including points out"
+		     "of threshold)"), unreachable );
 
     return 1;
 }
@@ -282,4 +289,3 @@ int cmp ( const void *pa, const void *pb)
     if( p1->cat > p2->cat) return 1;
     return 0;
 }
-

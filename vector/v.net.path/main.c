@@ -80,10 +80,12 @@ int main(int argc, char **argv)
     max_dist->type = TYPE_DOUBLE;
     max_dist->required = NO;
     max_dist->answer = "1000";
-    max_dist->description = _("Maximum distance to the network if start/end are given as coordinates. "
-			    "If start/end point is outside this threshold, the path is not found "
-			    "and error message is printed. To speed up the process, keep this "
-			    "value as low as possible.");
+    max_dist->label = _("Maximum distance to the network");
+    max_dist->description = _("If start/end are given as coordinates. "
+			      "If start/end point is outside this threshold, "
+			      "the path is not found "
+			      "and error message is printed. To speed up the process, keep this "
+			      "value as low as possible.");
     
     geo_f = G_define_flag ();
     geo_f->key             = 'g';
@@ -91,7 +93,8 @@ int main(int argc, char **argv)
     
     segments_f = G_define_flag ();
     segments_f->key             = 's';
-    segments_f->description     = _("Write output as original input segments, not each path as one line.");
+    segments_f->description     = _("Write output as original input segments, "
+				    "not each path as one line.");
     
     if(G_parser(argc,argv))
         exit(EXIT_FAILURE);
@@ -104,7 +107,7 @@ int main(int argc, char **argv)
     if ( geo_f->answer ) {
        geo = 1; 
        if (G_projection () != PROJECTION_LL)
-          G_warning("The current projection is not longitude-latitude");
+	   G_warning(_("The current projection is not longitude-latitude"));
     }
     else geo = 0;
 
@@ -113,7 +116,7 @@ int main(int argc, char **argv)
     mapset = G_find_vector2 (input_opt->answer, NULL); 
       
     if ( mapset == NULL) 
-      G_fatal_error (_("Could not find input vector '%s'"), input_opt->answer);
+      G_fatal_error (_("Vector map <%s> not found"), input_opt->answer);
 
     Vect_set_open_level(2);
     Vect_open_old (&In, input_opt->answer, mapset); 
@@ -121,7 +124,7 @@ int main(int argc, char **argv)
     Vect_set_fatal_error (GV_FATAL_PRINT);
     if (1 > Vect_open_new (&Out, output_opt->answer, Vect_is_3d(&In) )){
         Vect_close (&In);
-	G_fatal_error (_("Failed opening output vector map '%s'"), output_opt->answer);
+	G_fatal_error (_("Cannot open vector map <%s>"), output_opt->answer);
     }
     Vect_hist_command ( &Out );
 
@@ -132,7 +135,7 @@ int main(int argc, char **argv)
 
     Vect_close(&In);
 
-    Vect_build (&Out, stdout);
+    Vect_build (&Out, stderr);
     Vect_close(&Out);
 
     exit(EXIT_SUCCESS);
