@@ -55,56 +55,56 @@ int main(int argc, char **argv)
 
     module = G_define_module();
     module->keywords = _("vector, networking");
-    module->description = "Allocate subnets for nearest centres (direction from centre). "
-           "Centre node must be opened (costs >= 0). Costs of centre node are used in calculation";
-
+    module->description = _("Allocate subnets for nearest centres (direction from centre).");
+    
     map = G_define_standard_option(G_OPT_V_INPUT);
     output = G_define_standard_option(G_OPT_V_OUTPUT); 
 
     type_opt =  G_define_standard_option(G_OPT_V_TYPE);
     type_opt->options    = "line,boundary";
     type_opt->answer     = "line,boundary";
-    type_opt->description = "Arc type";
+    type_opt->description = _("Arc type");
 
     afield_opt = G_define_standard_option(G_OPT_V_FIELD);
     afield_opt->key = "alayer";
     afield_opt->answer = "1";
-    afield_opt->description = "Arc layer";
+    afield_opt->description = _("Arc layer");
     
     nfield_opt = G_define_standard_option(G_OPT_V_FIELD);
     nfield_opt->key = "nlayer";
     nfield_opt->answer = "2";
-    nfield_opt->description = "Node layer";
+    nfield_opt->description = _("Node layer");
     
     afcol = G_define_option() ;
     afcol->key         = "afcolumn" ;
     afcol->type        = TYPE_STRING ;
     afcol->required    = NO ; 
-    afcol->description = "Arc forward/both direction(s) cost column (number)" ;
+    afcol->description = _("Arc forward/both direction(s) cost column (number)");
     
     abcol = G_define_option() ;
     abcol->key         = "abcolumn" ;
     abcol->type        = TYPE_STRING ;
     abcol->required    = NO ; 
-    abcol->description = "Arc backward direction cost column (number)" ;
+    abcol->description = _("Arc backward direction cost column (number)");
     
     ncol = G_define_option() ;
     ncol->key         = "ncolumn" ;
     ncol->type        = TYPE_STRING ;
     ncol->required    = NO ;
-    ncol->description = "Node cost column (number)" ;
+    ncol->description = _("Node cost column (number)");
     
     term_opt = G_define_standard_option(G_OPT_V_CATS);
     term_opt->key         = "ccats";
     term_opt->required    = YES;
-    term_opt->description = "Categories of centres (points on nodes) to which net will be allocated, "
-                            "layer for this categories is given by nlayer option.";
+    term_opt->description = _("Categories of centres (points on nodes) to which net "
+			      "will be allocated, "
+			      "layer for this categories is given by nlayer option");
     
     geo_f = G_define_flag ();
     geo_f->key             = 'g';
-    geo_f->description     = "Use geodesic calculation for longitude-latitude locations";
+    geo_f->description     = _("Use geodesic calculation for longitude-latitude locations");
     
-    if(G_parser(argc,argv)) exit (-1);
+    if(G_parser(argc,argv)) exit (EXIT_FAILURE);
 
     Vect_check_input_output_name ( map->answer, output->answer, GV_FATAL_EXIT );
 
@@ -123,12 +123,15 @@ int main(int argc, char **argv)
     
     mapset = G_find_vector2 (map->answer, NULL); 
       
-    if ( mapset == NULL) G_fatal_error ("Could not find input map <%s>\n", map->answer);
+    if ( mapset == NULL)
+	G_fatal_error (_("Vector map <%s> not fould"), map->answer);
+
     Vect_set_open_level(2);
     Vect_open_old (&Map, map->answer, mapset); 
 
     /* Build graph */
-    Vect_net_build_graph ( &Map, type , afield, nfield, afcol->answer, abcol->answer, ncol->answer, geo, 0 );
+    Vect_net_build_graph ( &Map, type , afield, nfield, afcol->answer,
+			   abcol->answer, ncol->answer, geo, 0 );
     
     nnodes = Vect_get_num_nodes ( &Map );
 
@@ -157,8 +160,12 @@ int main(int argc, char **argv)
 	    }  
         }
     } 
-    fprintf ( stdout, "Number of centres: %d (nlayer: %d)\n", ncentres, nfield );
-    if ( ncentres == 0 ) G_warning ("Not enough centres for selected nlayer. Nothing will be allocated.");
+    
+    G_message (_("Number of centres: [%d] (nlayer: [%d])"), ncentres, nfield );
+
+    if ( ncentres == 0 )
+	G_warning (_("Not enough centres for selected nlayer. "
+		     "Nothing will be allocated."));
     
     /* alloc and reset space for all nodes */
     Nodes = (NODE *) G_calloc ( ( nnodes + 1 ), sizeof(NODE) );
@@ -168,7 +175,8 @@ int main(int argc, char **argv)
     
 
     /* Fill Nodes by neares centre and costs from that centre */
-    G_message ( _( "Calculating costs from centres ..." ));
+    G_message ( _("Calculating costs from centres ..." ));
+
     for ( centre = 0; centre < ncentres;  centre++ ) {
 	G_percent ( centre, ncentres, 1 );
 	node1 = Centers[centre].node;
@@ -285,7 +293,7 @@ int main(int argc, char **argv)
 		    /* First segment */
 		    ret = Vect_line_segment ( Points, 0, l1, SPoints );
 		    if ( ret == 0 ) {
-			G_warning ( "Cannot get line segment, segment out of line" );
+			G_warning (_("Cannot get line segment, segment out of line"));
 		    } else {
 			cat = Centers[centre1].cat;
 			Vect_cat_set ( Cats, 1, cat );
@@ -295,7 +303,7 @@ int main(int argc, char **argv)
 		    /* Second segment */
 		    ret = Vect_line_segment ( Points, l1, l, SPoints );
 		    if ( ret == 0 ) {
-			G_warning ( "Cannot get line segment, segment out of line" );
+			G_warning (_("Cannot get line segment, segment out of line"));
 		    } else {
 			Vect_reset_cats ( Cats );
 			cat = Centers[centre2].cat;
@@ -311,7 +319,7 @@ int main(int argc, char **argv)
 	}
     }
 
-    Vect_build (&Out, stdout);
+    Vect_build (&Out, stderr);
 
     /* Free, ... */
     G_free ( Nodes );
@@ -319,5 +327,5 @@ int main(int argc, char **argv)
     Vect_close(&Map);
     Vect_close(&Out);
 
-    exit(0);
+    exit(EXIT_SUCCESS);
 }
