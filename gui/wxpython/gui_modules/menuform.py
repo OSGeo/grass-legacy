@@ -485,6 +485,7 @@ class mainFrame(wx.Frame):
 
         self.notebookpanel.SetSize( (min(600, maxsizes[0]), min(600, maxsizes[1]+60) ) ) # 60 takes the tabbar into account
         self.notebookpanel.SetSizer(self.panelsizer)
+        self.notebookpanel.Layout()
 
         self.guisizer.SetSizeHints(self)
         self.SetAutoLayout(True)
@@ -493,7 +494,7 @@ class mainFrame(wx.Frame):
 
 
     def OnPageChange(self, event):
-        self.Layout()
+        self.notebookpanel.Layout()
 
     def OnColorButton(self, event):
         colorchooser = wx.FindWindowById( event.GetId() )
