@@ -53,8 +53,7 @@ except:
     from compat import subprocess
 import re
 
-import images
-imagepath = images.__path__[0]
+imagepath = os.getenv("GISBASE") + "/etc/wx/images/"
 #imagepath = os.sep.join( os.getcwd().split(os.sep) [:-1] + ['images'] )
 sys.path.append(imagepath)
 
@@ -271,6 +270,7 @@ class helpPanel(wx.html.HtmlWindow):
     def __init__(self, parent, id, grass_command = "index"):
         wx.html.HtmlWindow.__init__(self, parent, id)
         self.fspath = os.getenv( "GISBASE" ) + "/docs/html/"
+        self.SetStandardFonts( size = 8 )
         self.fillContentsFromFile( self.fspath + grass_command + ".html" )
 
     def fillContentsFromFile( self, htmlFile ):
@@ -364,7 +364,7 @@ class mainFrame(wx.Frame):
 
         manual_tab =  helpPanel( self.notebook, id = wx.ID_ANY, grass_command = grass_task.name)
         if manual_tab.Ok:
-            self.notebook.AddPage( manual_tab, text = "Manual"  )
+            self.notebook.AddPage( manual_tab, text = "Manual" , select = False )
 
         self.panelsizer.Add( self.notebook, flag=wx.EXPAND )
         self.guisizer.Add( self.notebookpanel, flag = wx.EXPAND )
