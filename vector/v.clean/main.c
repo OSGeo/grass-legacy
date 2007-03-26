@@ -19,14 +19,15 @@
 #include <stdio.h> 
 #include <grass/gis.h>
 #include <grass/Vect.h>
-#include "proto.h"
 #include <grass/glocale.h>
+#include "proto.h"
 
+#define SEP \
+    "--------------------------------------------------"
 
 int rmdac ( struct Map_info *Out );
 void remove_bridges ( struct Map_info *Map, struct Map_info *Err );
 int prune ( struct Map_info *, int, double );
-
 
 int 
 main (int argc, char *argv[])
@@ -46,8 +47,8 @@ main (int argc, char *argv[])
 	G_gisinit(argv[0]);
 
 	module = G_define_module();
-	module->keywords = _("vector");
-    module->description = _("Toolset for cleaning the vector topology");
+	module->keywords = _("vector, topology");
+	module->description = _("Toolset for cleaning the vector topology");
 
 	in_opt = G_define_standard_option(G_OPT_V_INPUT);
 	out_opt = G_define_standard_option(G_OPT_V_OUTPUT);
@@ -67,32 +68,34 @@ main (int argc, char *argv[])
 	                    "rmarea,rmsa";
         tool_opt->description = _("Cleaning tool");
         tool_opt->descriptions = 
-	    	_("break;break lines at each intersection;"
-	    	"rmdupl;remove duplicate lines (pay attention to categories!);"
-	    	"rmdangle;remove dangles, threshold ignored if < 0;"
-		"chdangle;change the type of boundary dangle to line, "
-	              	"threshold ignored if < 0, input line type is ignored;"
-        	"rmbridge;remove bridges connecting area and island or 2 islands;"
-		"chbridge;change the type of bridges connecting area and island "
-		    	"or 2 islands from boundary to line;"
-		"snap;snap lines to vertex in threshold;"
-		"rmdac;remove duplicate area centroids ('type' option ignored);"
-		"bpol;break (topologically clean) polygons (imported from "
-		      	"non topological format (like shapefile). Boundaries are broken on each "
-		      	"point shared between 2 and more polygons where angles of segments are different;"
-		"prune;remove vertices in threshold from lines and boundaries, "
-			"boundary is pruned only if topology is not damaged (new intersection, "
-       			"changed attachement of centroid), first and last segment of the boundary "
-			"is never changed;"
-		"rmarea;remove small areas, the longest boundary with adjacent area is removed;"
-		"rmsa;remove small angles between lines at nodes");
+	    _("break;break lines at each intersection;"
+	      "rmdupl;remove duplicate lines (pay attention to categories!);"
+	      "rmdangle;remove dangles, threshold ignored if < 0;"
+	      "chdangle;change the type of boundary dangle to line, "
+	      "threshold ignored if < 0, input line type is ignored;"
+	      "rmbridge;remove bridges connecting area and island or 2 islands;"
+	      "chbridge;change the type of bridges connecting area and island "
+	      "or 2 islands from boundary to line;"
+	      "snap;snap lines to vertex in threshold;"
+	      "rmdac;remove duplicate area centroids ('type' option ignored);"
+	      "bpol;break (topologically clean) polygons (imported from "
+	      "non topological format (like shapefile). Boundaries are broken on each "
+	      "point shared between 2 and more polygons where angles of segments are different;"
+	      "prune;remove vertices in threshold from lines and boundaries, "
+	      "boundary is pruned only if topology is not damaged (new intersection, "
+	      "changed attachement of centroid), first and last segment of the boundary "
+	      "is never changed;"
+	      "rmarea;remove small areas, the longest boundary with adjacent area is removed;"
+	      "rmsa;remove small angles between lines at nodes");
+
 	thresh_opt = G_define_option();
 	thresh_opt ->key = "thresh";
 	thresh_opt ->type =  TYPE_DOUBLE;
 	thresh_opt ->required = NO;
 	thresh_opt ->multiple = YES;
         thresh_opt ->label       = "Threshold";
-        thresh_opt ->description = _("Threshold in map units, one value for each tool (default: 0.0[,0.0,...])");
+        thresh_opt ->description = _("Threshold in map units, one value for each tool "
+				     "(default: 0.0[,0.0,...])");
 
         no_build_flag = G_define_flag ();
         no_build_flag->key             = 'b';
@@ -171,57 +174,55 @@ main (int argc, char *argv[])
 	}
 
         /* Print tool table */
-	G_message(_("+---------------------------------+---------------+"));
-	G_message(_("| Tool                            | Threshold     |"));
-	G_message(_("+---------------------------------+---------------+"));
+	G_message(SEP);
+	G_message(_("Tool : Threshold"));
+
 	for ( i = 0; i < ntools; i++ ) {
 	    switch ( tools[i] ) {
 		case ( TOOL_BREAK ) :
-	            fprintf(stderr, _("| Break                           |  "));
+		    G_message("%s : %13e", _("Break"), threshs[i]);
 		    break;
 		case ( TOOL_RMDUPL ) :
-	            fprintf(stderr, _("| Remove duplicates               |  "));
+	            G_message("%s : %13e", _("Remove duplicates"), threshs[i]);
 		    break;
 		case ( TOOL_RMDANGLE ) :
-	            fprintf(stderr, _("| Remove dangles                  |  "));
+	            G_message("%s : %13e", _("Remove dangles"), threshs[i]);
 		    break;
 		case ( TOOL_CHDANGLE ) :
-	            fprintf(stderr, _("| Change type of boundary dangles |  "));
+	            G_message("%s : %13e", _("Change type of boundary dangles"), threshs[i]);
 		    break;
 		case ( TOOL_RMBRIDGE ) :
-	            fprintf(stderr, _("| Remove bridges                  |  "));
+	            G_message("%s : %13e", _("Remove bridges"), threshs[i]);
 		    break;
 		case ( TOOL_CHBRIDGE ) :
-	            fprintf(stderr, _("| Change type of boundary bridges |  "));
+	            G_message("%s : %13e", _("Change type of boundary bridges"), threshs[i]);
 		    break;
 		case ( TOOL_SNAP ) :
-	            fprintf(stderr, _("| Snap vertices                   |  "));
+	            G_message("%s : %13e", _("Snap vertices"), threshs[i]);
 		    break;
 		case ( TOOL_RMDAC ) :
-	            fprintf(stderr, _("| Remove duplicate area centroids |  "));
+	            G_message("%s : %13e", _("Remove duplicate area centroids"), threshs[i]);
 		    break;
 		case ( TOOL_BPOL ) :
-	            fprintf(stderr, _("| Break polygons                  |  "));
+	            G_message("%s : %13e", _("Break polygons"), threshs[i]);
 		    break;
 		case ( TOOL_PRUNE ) :
-	            fprintf(stderr, _("| Prune                           |  "));
+	            G_message("%s : %13e", _("Prune"), threshs[i]);
 		    break;
 		case ( TOOL_RMAREA ) :
-	            fprintf(stderr, _("| Remove small areas              |  "));
+	            G_message("%s : %13e", _("Remove small areas"), threshs[i]);
 		    break;
 		case ( TOOL_RMSA ) :
-	            fprintf(stderr, _("| Remove small angles at nodes    |  "));
+	            G_message("%s : %13e", _("Remove small angles at nodes"), threshs[i]);
 		    break;
 	    }
-
-	    G_message(_(" %13e |"), threshs[i]);
 	}
 
-	G_message(_("+---------------------------------+---------------+"));
+	G_message(SEP);
 
 	/* open input vector */
         if ((mapset = G_find_vector2 (in_opt->answer, "")) == NULL) {
-	     G_fatal_error (_("Could not find input map <%s>"), in_opt->answer);
+	     G_fatal_error (_("Vector map <%s> not found"), in_opt->answer);
 	}
 
         /* Input vector may be both on level 1 and 2. Level 2 is necessary for 
@@ -264,7 +265,7 @@ main (int argc, char *argv[])
 	Vect_close (&In);
 
 	/* Start with GV_BUILD_NONE and for each tool use unly the necessary level! */
-	G_message(_("--------------------------------------------------"));
+
 	for ( i = 0; i < ntools ; i++ ) { 
 	    if (  tools[i] == TOOL_RMDAC || tools[i] == TOOL_PRUNE || tools[i] == TOOL_RMAREA ) {
 	        if ( Vect_get_built ( &Out ) >= GV_BUILD_CENTROIDS ) {
@@ -272,7 +273,7 @@ main (int argc, char *argv[])
 		} else {
 	            G_message(_("Rebuilding parts of topology ..."));
 		    Vect_build_partial ( &Out, GV_BUILD_CENTROIDS, stderr );
-	            G_message(_("--------------------------------------------------"));
+	            G_message(SEP);
 		}
 	    } else {
 	        if ( Vect_get_built ( &Out ) >= GV_BUILD_BASE )	{
@@ -280,7 +281,7 @@ main (int argc, char *argv[])
 		} else {
 	            G_message(_("Rebuilding parts of topology ..."));
 		    Vect_build_partial ( &Out, GV_BUILD_BASE, stderr );
-	            G_message(_("--------------------------------------------------"));
+	            G_message(SEP);
 		}
 	    }
 
@@ -337,7 +338,7 @@ main (int argc, char *argv[])
 		    break;
 	    }
 
-	    G_message(_("--------------------------------------------------"));
+	    G_message(SEP);
 	}
 
 	if ( !no_build_flag->answer ) {
@@ -350,8 +351,8 @@ main (int argc, char *argv[])
 	Vect_close (&Out);
 
 	if ( pErr ) {
-	    G_message(_("--------------------------------------------------"));
-	    G_message(_("Building topology for error vector ..."));
+	    G_message (SEP);
+	    G_message (_("Building topology for error vector ..."));
 	    Vect_build (pErr, stderr);
 	    Vect_close (pErr);
 	}
