@@ -482,10 +482,10 @@ class mainFrame(wx.Frame):
 
     def OnColorButton(self, event):
         colorchooser = wx.FindWindowById( event.GetId() )
-        new_color = colorchooser.GetValue()
+        new_color = colorchooser.GetValue()[:]
         # This is weird: new_color is a 4-tuple and new_color[:] is a 3-tuple
         # under wx2.8.1
-        new_label = color_rgb2str.get( new_color[:], ':'.join(map(str,new_color)) )
+        new_label = color_rgb2str.get( new_color, ':'.join(map(str,new_color)) )
         colorchooser.SetLabel( new_label )
         colorchooser.SetColour( new_color )
         colorchooser.Refresh()
@@ -495,20 +495,22 @@ class mainFrame(wx.Frame):
         self.SetStatusText( self.createCmd(ignoreErrors = True) )
 
     def getValues(self):
-        for item in self.paramdict.items():
-            param_num = item[1]
-            if 'CheckBox' in str(item[0]):
+        for (gui_object,param_num) in self.paramdict.items():
+            if 'CheckBox' in str( gui_object ):
                 tasktype = grass_task.flags
                 num = param_num-ID_FLAG_START
-                param_val = item[0].GetValue()
+                param_val = gui_object.GetValue()
             else:
                 tasktype = grass_task.params
                 num = param_num-ID_PARAM_START
-                if 'ColourSelect' in str(item[0]):
-                    data = item[0].GetValue()
-                    param_val = str(data[0])+':'+str(data[1])+':'+str(data[2])
+                if 'ColourSelect' in str( gui_object ):
+                    if 'Select' in gui_object.GetLabel():
+                        param_val = ''
+                    else:
+                        data = gui_object.GetValue()[:]
+                        param_val = color_rgb2str.get( data , ':'.join( map(str, data) ) )
                 else:
-                    param_val = item[0].GetValue()
+                    param_val = gui_object.GetValue()
             tasktype[num]['value'] = param_val
         self.updateStatusLine()
         
@@ -534,8 +536,12 @@ class mainFrame(wx.Frame):
             currentValues[ theValue ] = 1
         else:
             del currentValues[ theValue ]
+        currentValueList=[] # Keep the original order, so that some defaults may be recovered
+        for v in grass_task.params[theParamId]['values']:
+            if currentValues.has_key(v):
+                currentValueList.append( v )
         # Pack it back
-        grass_task.params[theParamId]['value'] = ','.join( currentValues.keys() )
+        grass_task.params[theParamId]['value'] = ','.join( currentValueList )
         self.updateStatusLine()
 
     def createCmd(self, ignoreErrors = False):
