@@ -45,12 +45,8 @@ int main(int argc, char **argv)
 
     module = G_define_module();
     module->keywords = _("vector, geometry");
-    module->label = _("Create points/segments from input lines and and positions.");
-    module->description = "Create points/segments from input lines, "
-	   "and positions read from stdin in format:\n"
-           "P <point id> <line cat> <offset> [<side offset>]\n"
-           "L <segment id> <line cat> <start offset> <end offset> [<side offset>]\n"
-	   "Segment is created for the first found line of that category only.";
+    module->description =
+	_("Create points/segments from input lines and and positions.");
 
     in_opt = G_define_standard_option(G_OPT_V_INPUT);
     in_opt->description = "Input map containing lines";
