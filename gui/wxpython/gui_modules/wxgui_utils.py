@@ -12,7 +12,7 @@ try:
    from subprocess import *
 except:
    from compat import subprocess
-   from subprocess import *
+   from compat.subprocess import *
 
 gmpath = os.getenv("GISBASE") + "/etc/wx/gui_modules/"
 sys.path.append(gmpath)
