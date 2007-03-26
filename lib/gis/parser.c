@@ -1394,11 +1394,15 @@ static void G_usage_html (void)
 	fprintf(stdout, "<h2>NAME</h2>\n"),
 	fprintf(stdout, "<em><b>%s</b></em> ", pgm_name);
 
-	if (module_info.description) {
+	if (module_info.label || module_info.description)
 		fprintf(stdout, " - ");
-		fprintf(stdout, "%s", module_info.description);
-		fprintf(stdout, "\n");
-	}
+
+	if (module_info.label)
+		fprintf(stdout, "%s<BR>\n", module_info.label);
+
+	if (module_info.description)
+		fprintf(stdout, "%s\n", module_info.description);
+
 
 	fprintf(stdout, "<h2>KEYWORDS</h2>\n");
 	if (module_info.keywords) {
