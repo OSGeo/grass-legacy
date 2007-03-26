@@ -666,7 +666,7 @@ class GMConsole(wx.Panel):
                     layertree.AddLayer(disp_idx, layertype)
 
             else:
-                menuform.GUI().parseCommand(cmd, gmpath)
+                menuform.GUI().parseCommand(cmd, gmpath, parentframe=self)
                 self.cmd_output.write(cmdlst[0] +
                                                           "\n----------\n")
 
