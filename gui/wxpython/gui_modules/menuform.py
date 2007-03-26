@@ -269,7 +269,7 @@ class mainFrame(wx.Frame):
             wx.DefaultPosition, style=wx.DEFAULT_FRAME_STYLE | wx.TAB_TRAVERSAL)
 
         self.CreateStatusBar()
-        self.SetStatusText("Enter parameters for " + grass_task.name + " (bold=required)")
+        self.SetStatusText("Enter parameters for " + grass_task.name + " (those in Main are required)")
         self.parent = parent
         self.selection = '' #selection from GIS element selector
         self.paramdict = {} # dictionary of controls and their parameter values
@@ -468,7 +468,7 @@ class mainFrame(wx.Frame):
             minsecsizes = self.tabsizer[section].GetMinSize()
             maxsizes = map( lambda x: max( maxsizes[x], minsecsizes[x] ), (0,1) )
 
-        self.notebookpanel.SetSize( (min(600, maxsizes[0]), min(600, maxsizes[1]) ) )
+        self.notebookpanel.SetSize( (min(600, maxsizes[0]), min(600, maxsizes[1]+60) ) ) # 60 takes the tabbar into account
         self.notebookpanel.SetSizer(self.panelsizer)
  
         self.guisizer.SetSizeHints(self)
@@ -491,6 +491,9 @@ class mainFrame(wx.Frame):
         colorchooser.Refresh()
         self.getValues()
 
+    def updateStatusLine(self):
+        self.SetStatusText( self.createCmd(ignoreErrors = True) )
+
     def getValues(self):
         for item in self.paramdict.items():
             param_num = item[1]
@@ -507,7 +510,8 @@ class mainFrame(wx.Frame):
                 else:
                     param_val = item[0].GetValue()
             tasktype[num]['value'] = param_val
-
+        self.updateStatusLine()
+        
     def EvtText(self, event):
         self.getValues()
 
@@ -532,8 +536,9 @@ class mainFrame(wx.Frame):
             del currentValues[ theValue ]
         # Pack it back
         grass_task.params[theParamId]['value'] = ','.join( currentValues.keys() )
+        self.updateStatusLine()
 
-    def createCmd(self):
+    def createCmd(self, ignoreErrors = False):
         """Produce a command line string for feeding into GRASS."""
         cmd = grass_task.name
         errors = 0
@@ -543,11 +548,12 @@ class mainFrame(wx.Frame):
                 cmd += ' -' + flag['name']
         for p in grass_task.params:
             if p['value'] == '' and p['required'] != 'no':
+                cmd += ' ' + p['name'] + '=' + '<required>'
                 errStr += "Parameter " + p['name'] + "(" + p['description'] + ") is missing\n"
                 errors += 1
             if p['value'] != '' and p['value'] != p['default'] :
                 cmd += ' ' + p['name'] + '=' + p['value']
-        if errors:
+        if errors and not ignoreErrors:
             self.OnError(errStr)
             return None
         return cmd
