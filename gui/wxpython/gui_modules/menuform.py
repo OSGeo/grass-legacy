@@ -459,6 +459,9 @@ class mainFrame(wx.Frame):
             btnsizer.Add(self.btn_run, 0, wx.ALL| wx.ALIGN_CENTER, 10)
             self.btn_run.SetDefault()
             self.btn_run.Bind(wx.EVT_BUTTON, self.OnRun)
+            self.btn_clipboard = wx.Button(self, wx.ID_OK, "Copy")
+            btnsizer.Add(self.btn_clipboard, 0, wx.ALL| wx.ALIGN_CENTER, 10)
+            self.btn_clipboard.Bind(wx.EVT_BUTTON, self.OnCopy)
         self.guisizer.Add(btnsizer, 0, wx.ALIGN_BOTTOM)
         wx.EVT_MENU(self, wx.ID_ABOUT, self.OnAbout)
         wx.EVT_MENU(self, ID_ABOUT_COMMAND, self.OnAboutCommand)
@@ -609,6 +612,16 @@ class mainFrame(wx.Frame):
                         print >>sys.stderr, "Child returned", retcode
                 except OSError, e:
                     print >>sys.stderr, "Execution failed:", e
+
+    def OnCopy(self, event):
+        cmddata = wx.TextDataObject()
+        cmddata.SetText(self.createCmd(ignoreErrors=True))
+        if wx.TheClipboard.Open():
+            wx.TheClipboard.UsePrimarySelection(True)
+            wx.TheClipboard.SetData(cmddata)
+            wx.TheClipboard.Close()
+            self.SetStatusText("'%s' copied to clipboard" %\
+                            (self.createCmd(ignoreErrors=True)))
 
     def OnError(self, errMsg):
         dlg = wx.MessageDialog(self, errMsg, "Error", wx.OK | wx.ICON_ERROR)
