@@ -47,7 +47,7 @@ class LayerTree(CT.CustomTreeCtrl):
 
         self.Map = "" # instance of render.Map associated with display
         self.root = ""      # ID of layer tree root node
-        self.node = 0       # index value for layers
+        self.groupnode = 0       # index value for layers
         self.optpage = {}   # dictionary of notebook option pages for each map layer
         self.layer_selected = ""   # ID of currently selected layer
         self.layertype = {} # dictionary of layer types for each layer
@@ -64,6 +64,11 @@ class LayerTree(CT.CustomTreeCtrl):
 
         #create image list to use with layer tree
         il = wx.ImageList(16, 16, False)
+
+        trart = wx.ArtProvider.GetBitmap(wx.ART_FOLDER_OPEN, wx.ART_OTHER, (16,16))
+        self.folder_open = il.Add(trart)
+        trart = wx.ArtProvider.GetBitmap(wx.ART_FOLDER, wx.ART_OTHER, (16,16))
+        self.folder = il.Add(trart)
 
         trgif = wx.Image(icons + r'/element-cell.gif', wx.BITMAP_TYPE_GIF)
         trgif.Rescale(16, 16)
@@ -131,6 +136,10 @@ class LayerTree(CT.CustomTreeCtrl):
                                style=wx.TE_MULTILINE|wx.TE_WORDWRAP)
             self.ctrl.Bind(wx.EVT_TEXT_ENTER, self.onCmdChanged)
             self.ctrl.Bind(wx.EVT_TEXT, self.onCmdChanged)
+        elif type == 'group':
+            self.ctrl = None
+            grouptext = 'Layer group:'+str(self.groupnode)
+            self.groupnode += 1
         else:
             # all other layers
             self.ctrl = wx.SpinCtrl(self, id=wx.ID_ANY, value="", pos=(30, 50),
@@ -139,9 +148,16 @@ class LayerTree(CT.CustomTreeCtrl):
             self.ctrl.SetValue(100)
             self.ctrl.Bind(wx.EVT_TEXT, self.onOpacity)
 
-        if self.layer_selected and self.layer_selected != self.GetRootItem():
-            layer = self.InsertItem(self.root, self.GetPrevSibling(self.layer_selected),
+        if (self.layer_selected and self.layer_selected != self.GetRootItem() and
+                self.layertype[self.layer_selected] != 'group'):
+            parent = self.GetItemParent(self.layer_selected)
+            layer = self.InsertItem(parent, self.GetPrevSibling(self.layer_selected),
                                 '', ct_type=1, wnd=self.ctrl )
+        elif (self.layer_selected and self.layer_selected != self.GetRootItem() and
+                self.layertype[self.layer_selected] == 'group'):
+            layer = self.InsertItem(self.layer_selected, self.GetPrevSibling(self.layer_selected),
+                                '', ct_type=1, wnd=self.ctrl )
+            self.Expand(self.layer_selected)
         else:
             layer = self.PrependItem(self.root, '', ct_type=1, wnd=self.ctrl)
 
@@ -199,6 +215,11 @@ class LayerTree(CT.CustomTreeCtrl):
             menuform.GUI().parseCommand('d.vect.chart', gmpath, completed=(self.getOptData,layer,self.params), parentframe=self)
         elif type == 'command':
             self.SetItemImage(layer, self.cmd_icon)
+        elif type == 'group':
+            self.SetItemImage(layer, self.folder)
+            self.SetItemText(layer, grouptext)
+            self.CheckItem(layer, checked=True)
+
         self.first = False
 
     def onActivateLayer(self, event):
@@ -222,6 +243,11 @@ class LayerTree(CT.CustomTreeCtrl):
             menuform.GUI().parseCommand('d.vect.thematic', gmpath, completed=(self.getOptData,layer,self.params), parentframe=self)
         elif self.layertype[layer] == 'themechart':
             menuform.GUI().parseCommand('d.vect.chart', gmpath, completed=(self.getOptData,layer,self.params), parentframe=self)
+        elif self.layertype[layer] == 'group':
+            if self.IsExpanded(layer):
+                self.Collapse(layer)
+            else:
+                self.Expand(layer)
 
     def onDeleteLayer(self, event):
         layer = event.GetItem()
@@ -232,11 +258,24 @@ class LayerTree(CT.CustomTreeCtrl):
 
     def onLayerChecked(self, event):
         layer = event.GetItem()
-        checked = self.IsItemChecked(layer)
+        checked = layer.IsChecked()
 
         if self.drag == False and self.first == False:
             # change active parameter for item in layers list in render.Map
-            self.changeChecked(layer, checked)
+            if self.layertype[layer] == 'group':
+                childitem = self.GetFirstChild(layer)
+                child = childitem[0]
+                cookie = childitem[1]
+                for n in range(0,self.GetChildrenCount(layer)):
+                    if checked == False:
+                        childchecked = False
+                    else:
+                        childchecked = child.IsChecked()
+                    self.changeChecked(child, childchecked)
+                    child = self.GetNextChild(layer, cookie)[0]
+            else:
+                self.changeChecked(layer, checked)
+
 
     def onCmdChanged(self, event):
         layer = self.layerctrl[event.GetEventObject()]
@@ -264,13 +303,13 @@ class LayerTree(CT.CustomTreeCtrl):
         self.layer_selected = layer
 
     def onCollapseNode(self, event):
-        print 'group collapsed'
-        event.Skip()
+        if self.layertype[self.layer_selected] == 'group':
+            self.SetItemImage(self.layer_selected, self.folder)
 
     def onExpandNode(self, event):
         self.layer_selected = event.GetItem()
-        print 'group expanded'
-        event.Skip()
+        if self.layertype[self.layer_selected] == 'group':
+            self.SetItemImage(self.layer_selected, self.folder_open)
 
     def onBeginDrag(self, event):
         """ Drag and drop of single tree nodes
@@ -298,20 +337,11 @@ class LayerTree(CT.CustomTreeCtrl):
         delete original at old position
         """
 
-        #If we dropped somewhere that isn't on top of an item, ignore the event
-        if not event.GetItem():
-            return
 
         # Make sure this memeber exists.
         try:
             old = self.dragItem
         except:
-            return
-
-        # Get the other IDs that are involved
-        afteritem = event.GetItem()
-        parent = self.GetItemParent(afteritem)
-        if not parent:
             return
 
         # recreate old layer at new position
@@ -327,9 +357,31 @@ class LayerTree(CT.CustomTreeCtrl):
             self.dragctrl.SetValue(100)
             self.dragctrl.Bind(wx.EVT_SPINCTRL, self.onOpacity)
 
-        new = self.InsertItem(parent, afteritem, text=self.saveitem['text'], \
+
+        #If we dropped somewhere that isn't on top of an item, ignore the event
+        flag = self.HitTest(event.GetPoint())[1]
+
+        if flag & wx.TREE_HITTEST_ABOVE:
+            new = self.PrependItem(self.root, text=self.saveitem['text'], \
                               ct_type=1, wnd=self.dragctrl, image=self.saveitem['image'], \
                               data=self.saveitem['data'])
+        elif (flag &  wx.TREE_HITTEST_BELOW) or (flag & wx.TREE_HITTEST_NOWHERE):
+            new = self.AppendItem(self.root, text=self.saveitem['text'], \
+                              ct_type=1, wnd=self.dragctrl, image=self.saveitem['image'], \
+                              data=self.saveitem['data'])
+        else:
+            if not event.GetItem():
+                return
+            else:
+                afteritem = event.GetItem()
+                parent = self.GetItemParent(afteritem)
+                new = self.InsertItem(parent, afteritem, text=self.saveitem['text'], \
+                              ct_type=1, wnd=self.dragctrl, image=self.saveitem['image'], \
+                              data=self.saveitem['data'])
+
+
+
+
         self.layertype[new] = self.saveitem['type']
         self.CheckItem(new, checked=self.saveitem['check'])
         self.GetItemWindow(new).SetValue(self.saveitem['windval'])
@@ -691,7 +743,7 @@ class GMConsole(wx.Panel):
                 # self.out = Popen(cmd, shell=True, stdout=PIPE, stderr=STDOUT).communicate()[0]
                 p = Popen(cmd, shell=True, stdin=PIPE, stdout=PIPE, stderr=PIPE, close_fds=True)
                 (child_stdin, child_stdout, child_stderr) = (p.stdin, p.stdout, p.stderr)
-                
+
                 oline = child_stderr.readline()
                 while 1:
                     if oline == '':
