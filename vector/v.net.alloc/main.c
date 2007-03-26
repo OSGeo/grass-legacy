@@ -55,7 +55,10 @@ int main(int argc, char **argv)
 
     module = G_define_module();
     module->keywords = _("vector, networking");
-    module->description = _("Allocate subnets for nearest centres (direction from centre).");
+    module->label = _("Allocate subnets for nearest centres (direction from centre).");
+    module->description = _("Centre node must be opened (costs >= 0). "
+			    "Costs of centre node are used in calculation");
+
     
     map = G_define_standard_option(G_OPT_V_INPUT);
     output = G_define_standard_option(G_OPT_V_OUTPUT); 
