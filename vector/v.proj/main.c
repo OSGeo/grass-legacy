@@ -57,13 +57,14 @@ int main (int argc, char *argv[])
     G_gisinit (argv[0]);
  
     module = G_define_module();
-    module->keywords = _("vector");
+    module->keywords = _("vector, projection");
     module->description = _("Allows projection conversion of vector maps.");
 
     /* set up the options and flags for the command line parser */
 
     mapopt = G_define_standard_option(G_OPT_V_INPUT);
     mapopt->gisprompt = "";
+    mapopt->required = NO;
 
     ilocopt = G_define_option();
     ilocopt->key             =  "location";
@@ -88,11 +89,13 @@ int main (int argc, char *argv[])
 
     flag.list = G_define_flag();
     flag.list->key = 'l';
-    flag.list->description = _("List vector maps in input location and exit (a dummy value must be given for input)");
+    flag.list->label = _("List vector maps in input location and exit");
 
     flag.transformz = G_define_flag();
     flag.transformz->key = 'z';
-    flag.transformz->description = _("(3-D vectors only) Assume z co-ordinate is ellipsoidal height and transform if possible");
+    flag.transformz->label = _("3D vector maps only");
+    flag.transformz->description = _("Assume z co-ordinate is ellipsoidal height and "
+				     "transform if possible");
    
     if (G_parser (argc, argv)) exit (EXIT_FAILURE);
 		 
@@ -131,16 +134,23 @@ int main (int argc, char *argv[])
     if (stat >= 0) {  /* yes, we can access the mapset */
 	/* if requested, list the vector maps in source location - MN 5/2001*/
 	if (flag.list->answer) {
-	   G_message(_("Checking location %s, mapset %s:"), iloc_name, iset_name);
+	   G_message(_("Checking location <%s>, mapset <%s>:"),
+		     iloc_name, iset_name);
 	   G_list_element ("vector", "vector", iset_name, 0);
 	   exit(EXIT_SUCCESS); /* leave v.proj after listing*/
+	}
+
+	if (mapopt -> answer == NULL) {
+	    G_fatal_error (_("Parameter <%s> not set"),
+			   mapopt -> key);
 	}
 
 	G__setenv ("MAPSET", iset_name);
 	/* Make sure map is available */
 	mapset = G_find_vector2 (map_name, iset_name) ;
 	if (mapset == NULL)
-	    G_fatal_error(_("Vector file [%s] in location [%s] in mapset [%s] not available"), map_name, iloc_name, iset_name);
+	    G_fatal_error(_("Vector map <%s> in location <%s> in mapset <%s> not available"),
+			  map_name, iloc_name, iset_name);
 
 	 /*** Get projection info for input mapset ***/
 	 in_proj_keys = G_get_projinfo();
@@ -159,9 +169,11 @@ int main (int argc, char *argv[])
 			    /* need to be able to read from others */
     {
 	 if (stat == 0)
-	     G_fatal_error(_("Mapset [%s] in input location [%s] - permission denied"), iset_name, iloc_name);
+	     G_fatal_error(_("Mapset <%s> in input location <%s> - permission denied"),
+			   iset_name, iloc_name);
 	 else
-	     G_fatal_error(_("Mapset [%s] in input location [%s] - not found"), iset_name, iloc_name);
+	     G_fatal_error(_("Mapset <%s> in input location <%s> not found"),
+			   iset_name, iloc_name);
     }
 
     select_current_env();
@@ -200,7 +212,7 @@ int main (int argc, char *argv[])
     sprintf(date,"%s %d %d",mon,day,yr);
     Vect_set_date ( &Out_Map, date );
 
-    G_message(_("Creating vector map..."));
+    G_message(_("Re-projecting vector map..."));
 
     /* Initialize the Point / Cat structure */
     Points = Vect_new_line_struct();
@@ -214,7 +226,7 @@ int main (int argc, char *argv[])
 	type = Vect_read_next_line (&Map, Points, Cats); /* read line */
 	if ( type == 0 ) continue; /* Dead */
 
-	if (type == -1) G_fatal_error(_("Reading input vector map.")) ;
+	if (type == -1) G_fatal_error(_("Reading input vector map")) ;
 	if ( type == -2) break;
 	if(pj_do_transform( Points->n_points, Points->x, Points->y, 
 			    flag.transformz->answer? Points->z : NULL,
@@ -231,12 +243,8 @@ int main (int argc, char *argv[])
 
     Vect_close (&Map); 
 
-    Vect_build (&Out_Map, stdout);
+    Vect_build (&Out_Map, stderr);
     Vect_close (&Out_Map); 
 
     exit(EXIT_SUCCESS);
 }
-
-
-
-
