@@ -46,7 +46,7 @@ main (int argc, char *argv[])
     OGRRegisterAll();
 
     /* Module options */
-    sprintf ( buf, "Create a new vector as a read-only link to OGR layer. Available drivers:\n" );
+    sprintf ( buf, "Available drivers: " );
     for ( i = 0; i < OGRGetDriverCount(); i++ ) {
 	Ogr_driver = OGRGetDriver( i );
 	if ( i == 0) 
@@ -56,6 +56,7 @@ main (int argc, char *argv[])
     }
     module = G_define_module();
     module->keywords = _("vector");
+    module->label    = _("Create a new vector as a read-only link to OGR layer.");
     module->description = G_store(buf);
 
     dsn_opt = G_define_option();
