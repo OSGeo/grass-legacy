@@ -409,16 +409,11 @@ set descmenu [subst  {
 		{command {[G_msg "Convert 2D vector to 3D by sampling raster"]} {} "v.drape" {} -command {execute v.drape }}
 		{command {[G_msg "Extrude 2D vector into 3D vector"]} {} "v.extrude" {} -command {execute v.extrude }}
 		{separator}
+		{command {[G_msg "Create new vector as link to external OGR layer"]} {} "v.external" {} -command {execute v.external }}
+		{separator}
 		{command {[G_msg "Create text label file for vector features"]} {} "v.label" {} -command {execute v.label }}
 		{separator}
 		{command {[G_msg "Reproject vector from other location"]} {} "v.proj" {} -command {execute v.proj }}
-	}}
-	{cascad {[G_msg "Vector<->database connections"]} {} "" $tmenu {			
-		{command {[G_msg "Create and add new attribute table to vector map"]} {} "v.db.addtable" {} -command {execute v.db.addtable }}
-		{command {[G_msg "Create new vector as link to external OGR layer"]} {} "v.external" {} -command {execute v.external }}
-		{command {[G_msg "Reconnect vector map to attribute database"]} {} "v.db.reconnect.all" {} -command {execute v.db.reconnect.all }}
-		{command {[G_msg "Remove existing table for vector map"]} {} "v.db.droptable" {} -command {execute v.db.droptable }}
-		{command {[G_msg "Set database connection for vector attributes"]} {} "v.db.connect" {} -command {execute v.db.connect }}
 	}}
 	{command {[G_msg "Rectify and georeference vector map"]} {} "v.transform" {} -command {execute v.transform }}
 	{separator}
@@ -568,9 +563,12 @@ set descmenu [subst  {
 		{command {[G_msg "Connect to database"]} {} "db.connect" {} -command {execute db.connect }}
 		{command {[G_msg "Login to database"]} {} "db.login" {} -command {execute db.login }}
 		{separator}
+		{command {[G_msg "Create and add new attribute table to vector map"]} {} "v.db.addtable" {} -command {execute v.db.addtable }}
 		{command {[G_msg "Copy table"]} {} "db.copy" {} -command {execute db.copy }}
 		{command {[G_msg "Add columns to table"]} {} "v.db.addcol" {} -command {execute v.db.addcol }}
 		{command {[G_msg "Change values in a column"]} {} "v.db.update" {} -command {execute v.db.update }}
+		{command {[G_msg "Remove existing table for vector map"]} {} "v.db.droptable" {} -command {execute v.db.droptable }}
+		{separator}
 		{command {[G_msg "Test database"]} {} "db.test" {} -command {execute db.test }}
 	}}
 	{cascad {[G_msg "Database information"]} {} "" $tmenu {			
@@ -581,8 +579,13 @@ set descmenu [subst  {
 	}}
 	{separator}
 	{cascad {[G_msg "Query"]} {} "" $tmenu {			
-		{command {[G_msg "Query data (SQL select)"]} {} "db.select" {} -command {execute db.select }}
+		{command {[G_msg "Query data in any table"]} {} "db.select" {} -command {execute db.select }}
+		{command {[G_msg "Query vector attribute data"]} {} "db.select" {} -command {execute v.db.select }}
 		{command {[G_msg "Execute SQL statement"]} {} "db.execute" {} -command {execute db.execute }}
+	}}
+	{cascad {[G_msg "Vector<->database connections"]} {} "" $tmenu {			
+		{command {[G_msg "Reconnect vector map to attribute database"]} {} "v.db.reconnect.all" {} -command {execute v.db.reconnect.all }}
+		{command {[G_msg "Set database connection for vector attributes"]} {} "v.db.connect" {} -command {execute v.db.connect }}
 	}}
  } 
 {[G_msg "&Help"]} all options $tmenu {
