@@ -746,7 +746,6 @@ class GMConsole(wx.Panel):
     		# console output window.
             try:
                 os.environ["GRASS_MESSAGE_FORMAT"] = "gui"
-                os.system("g.gisenv set=GRASS_MESSAGE_FORMAT=gui")
                 self.cmd_output.write(cmd+"\n----------\n")
                 p = Popen(cmd, shell=True, stdin=PIPE, stdout=PIPE, stderr=PIPE, close_fds=True)
 
@@ -754,7 +753,13 @@ class GMConsole(wx.Panel):
                 while oline:
                     oline = oline.strip()
                     print "MSG: ", oline
+                    print >> sys.stderr, oline+"#####"
                     oline = p.stderr.readline()
+                    # make some progress
+                    #GRASS_INFO_PERCENT: 100
+                    if oline.find("GRASS_INFO_PERCENT")>-1:
+                        self.console_progressbar.SetValue(int(oline.split()[1]))
+
 
                 oline = p.stdout.readline()
                 while oline:
@@ -766,7 +771,8 @@ class GMConsole(wx.Panel):
                 if p.stdout < 0:
     				print >> sys.stderr, "Child was terminated by signal", p.stdout
                 elif p.stdout > 0:
-    				print >> sys.stderr, p.stdout
+    				#print >> sys.stderr, p.stdout
+                                pass
             except OSError, e:
     			print >> sys.stderr, "Execution failed:", e
 
