@@ -51,23 +51,39 @@ real-install-macosx:
 	/bin/ln -sfh "${INST_DIR}/docs/html" /Library/Documentation/Help/GRASS-${GRASS_VERSION_MAJOR}.${GRASS_VERSION_MINOR}
 
 bindist-macosx:
-	@# OSX bindist is essentially the same as an install, and doesn't need an install script.  no tarball generated.
-	-cd ${GISBASE} ; tar cBf - ${MACOSX_APP_NAME} | (cd ${GRASS_HOME}/macosx ; tar xBf - ) 2>/dev/null
-	-cd ${GISBASE} ; tar cBf - bin | (cd ${GRASS_HOME}/macosx/${MACOSX_APPDIR} ; tar xBf - ) 2>/dev/null
-	-cd ${GISBASE} ; tar cBf - bwidget | (cd ${GRASS_HOME}/macosx/${MACOSX_APPDIR} ; tar xBf - ) 2>/dev/null
-	-cd ${GISBASE} ; tar cBf - docs | (cd ${GRASS_HOME}/macosx/${MACOSX_APPDIR} ; tar xBf - ) 2>/dev/null
-	-cd ${GISBASE} ; tar cBf - driver | (cd ${GRASS_HOME}/macosx/${MACOSX_APPDIR} ; tar xBf - ) 2>/dev/null
-	-cd ${GISBASE} ; tar cBf - etc | (cd ${GRASS_HOME}/macosx/${MACOSX_APPDIR} ; tar xBf - ) 2>/dev/null
-	-cd ${GISBASE} ; tar cBf - fonts | (cd ${GRASS_HOME}/macosx/${MACOSX_APPDIR} ; tar xBf - ) 2>/dev/null
-	-cd ${GISBASE} ; tar cBf - man | (cd ${GRASS_HOME}/macosx/${MACOSX_APPDIR} ; tar xBf - ) 2>/dev/null
-	-cd ${GISBASE} ; tar cBf - scripts | (cd ${GRASS_HOME}/macosx/${MACOSX_APPDIR} ; tar xBf - ) 2>/dev/null
-	if [ ${LOCALE} -eq 1 ] ; then cd ${GISBASE} ; tar cBf - locale | (cd ${GRASS_HOME}/macosx/${MACOSX_APPDIR} ; tar xBf - ) 2>/dev/null ; fi
-	-cd ${GISBASE} ; tar cBf - include | (cd ${GRASS_HOME}/macosx/${MACOSX_APPDIR} ; tar xBf - ) 2>/dev/null
-	-cd ${GISBASE} ; tar cBf - lib | (cd ${GRASS_HOME}/macosx/${MACOSX_APPDIR} ; tar xBf - ) 2>/dev/null
-	-sed 's#'${GISBASE}'#'${INST_DIR_MACOSX}'#g' ${GISBASE}/etc/monitorcap > ${GRASS_HOME}/macosx/${MACOSX_APPDIR}/etc/monitorcap
-	-chmod -R a+rX ${GRASS_HOME}/macosx/${MACOSX_APPDIR} 2>/dev/null
-	-cd ${GRASS_HOME} ; tar cBf - gem/skeleton | (cd ${GRASS_HOME}/macosx/${MACOSX_APPDIR}/etc ; tar xBf - ) 2>/dev/null
-	-cp -f ${GRASS_HOME}/gem/gem6 ${GRASS_HOME}/macosx/${MACOSX_APP_NAME}/Contents/MacOS 2>/dev/null
+	@# create a packagemaker installer package.
+	${MAKE_DIR_CMD} ${GRASS_HOME}/macosx/dist
+	-cd ${GISBASE} ; tar cBf - ${MACOSX_APP_NAME} | (cd ${GRASS_HOME}/macosx/dist ; tar xBf - ) 2>/dev/null
+	-cd ${GISBASE} ; tar cBf - bin | (cd ${GRASS_HOME}/macosx/dist/${MACOSX_APPDIR} ; tar xBf - ) 2>/dev/null
+	-cd ${GISBASE} ; tar cBf - bwidget | (cd ${GRASS_HOME}/macosx/dist/${MACOSX_APPDIR} ; tar xBf - ) 2>/dev/null
+	-cd ${GISBASE} ; tar cBf - docs | (cd ${GRASS_HOME}/macosx/dist/${MACOSX_APPDIR} ; tar xBf - ) 2>/dev/null
+	-cd ${GISBASE} ; tar cBf - driver | (cd ${GRASS_HOME}/macosx/dist/${MACOSX_APPDIR} ; tar xBf - ) 2>/dev/null
+	-cd ${GISBASE} ; tar cBf - etc | (cd ${GRASS_HOME}/macosx/dist/${MACOSX_APPDIR} ; tar xBf - ) 2>/dev/null
+	-cd ${GISBASE} ; tar cBf - fonts | (cd ${GRASS_HOME}/macosx/dist/${MACOSX_APPDIR} ; tar xBf - ) 2>/dev/null
+	-cd ${GISBASE} ; tar cBf - man | (cd ${GRASS_HOME}/macosx/dist/${MACOSX_APPDIR} ; tar xBf - ) 2>/dev/null
+	-cd ${GISBASE} ; tar cBf - scripts | (cd ${GRASS_HOME}/macosx/dist/${MACOSX_APPDIR} ; tar xBf - ) 2>/dev/null
+	if [ ${LOCALE} -eq 1 ] ; then cd ${GISBASE} ; tar cBf - locale | (cd ${GRASS_HOME}/macosx/dist/${MACOSX_APPDIR} ; tar xBf - ) 2>/dev/null ; fi
+	-cd ${GISBASE} ; tar cBf - include | (cd ${GRASS_HOME}/macosx/dist/${MACOSX_APPDIR} ; tar xBf - ) 2>/dev/null
+	-cd ${GISBASE} ; tar cBf - lib | (cd ${GRASS_HOME}/macosx/dist/${MACOSX_APPDIR} ; tar xBf - ) 2>/dev/null
+	-sed 's#'${GISBASE}'#'${INST_DIR_MACOSX}'#g' ${GISBASE}/etc/monitorcap > dist/${MACOSX_APPDIR}/etc/monitorcap
+	-chmod -R a+rX dist/${MACOSX_APPDIR} 2>/dev/null
+	-cd ${GRASS_HOME} ; tar cBf - gem/skeleton | (cd ${GRASS_HOME}/macosx/dist/${MACOSX_APPDIR}/etc ; tar xBf - ) 2>/dev/null
+	-cp -f ${GRASS_HOME}/gem/gem6 dist/${MACOSX_APP_NAME}/Contents/MacOS 2>/dev/null
+	@# extras to bundle
+	@# TODO
+	@# pkg resources
+	${MAKE_DIR_CMD} dist/resources
+	-sed -e "s#@INST_DIR@#${INST_DIR}#g" -e "s#@MACOSX_SUPPDIR@#${MACOSX_SUPPDIR}#g" -e "s#@GRASS_VER@#${GRASS_VERSION_MAJOR}.${GRASS_VERSION_MINOR}#g" pkg/resources/postflight.in > dist/resources/postflight
+	-chmod a+rx dist/resources/postflight
+	-sed -e "s#@GRASS_VER@#${GRASS_VERSION_MAJOR}.${GRASS_VERSION_MINOR}#g" pkg/resources/Description.plist.in > dist/Description.plist
+	-sed -e "s#@GRASS_VERSION_MAJOR@#${GRASS_VERSION_MAJOR}#g" -e "s#@GRASS_VERSION_MINOR@#${GRASS_VERSION_MINOR}#g" -e "s#@GRASS_VERSION_RELEASE@#${GRASS_VERSION_RELEASE}#g" -e "s#@PKG_INST_DIR@#${prefix}/${MACOSX_APP_NAME}#g" pkg/resources/Info.plist.in > dist/Info.plist
+	-cp -f pkg/resources/License.rtf dist/resources/
+	-cp -f pkg/resources/ReadMe.rtf dist/resources/
+	-cd ${GISBASE} ; tar cBf - modbuild | (cd ${GRASS_HOME}/macosx/dist/resources ; tar xBf - ) 2>/dev/null
+	@# build the package
+	/Developer/Tools/packagemaker -build -ds -p "GRASS-${GRASS_VERSION_MAJOR}.${GRASS_VERSION_MINOR}.pkg" -f dist/${MACOSX_APP_NAME} -r dist/resources -i dist/Info.plist -d dist/Description.plist
+	@# remove intermediate files
+	@# -rm -rf dist 2>/dev/null
 
 macosx-support-dir:
 	test -d ${MACOSX_SUPPDIR} || ${MAKE_DIR_CMD} ${MACOSX_SUPPDIR}
