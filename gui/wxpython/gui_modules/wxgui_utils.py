@@ -148,12 +148,12 @@ class LayerTree(CT.CustomTreeCtrl):
             self.ctrl.SetValue(100)
             self.ctrl.Bind(wx.EVT_TEXT, self.onOpacity)
 
-        if (self.layer_selected and self.layer_selected != self.GetRootItem() and
+        if (self.layer_selected and self.layer_selected != self.GetRootItem() and \
                 self.layertype[self.layer_selected] != 'group'):
             parent = self.GetItemParent(self.layer_selected)
             layer = self.InsertItem(parent, self.GetPrevSibling(self.layer_selected),
                                 '', ct_type=1, wnd=self.ctrl )
-        elif (self.layer_selected and self.layer_selected != self.GetRootItem() and
+        elif (self.layer_selected and self.layer_selected != self.GetRootItem() and \
                 self.layertype[self.layer_selected] == 'group'):
             layer = self.InsertItem(self.layer_selected, self.GetPrevSibling(self.layer_selected),
                                 '', ct_type=1, wnd=self.ctrl )
