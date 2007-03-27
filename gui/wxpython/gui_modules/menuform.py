@@ -16,11 +16,10 @@
 #
 # You need to have Python 2.4, wx.Python 2.6 and python-xml.
 #
-# The XML stream is read from stdin, thus you
-# may call it for instance this way:
-# r.basins.fill --interface-description | python grassgui.py
-# or
-# r.basins.fill --interface-description | ./grassgui.py
+# The XML stream is read from executing the command given in the
+# command line, thus you may call it for instance this way:
+#
+# python <this file.py> r.basins.fill
 #
 # Or you set an alias or wrap the call up in a nice
 # shell script, GUI environment ... please contribute your idea.
@@ -131,18 +130,15 @@ def test_for_broken_SAX():
         return 1
     return 0
 
-class grass_task:
-    pass
-
-def grass_task_init():
-    grass_task.name = 'index'
-    grass_task.params = []
-    grass_task.description = ''
-    grass_task.flags = []
-grass_task_init()
+class grassTask:
+    def __init__(self):
+        self.name = 'index'
+        self.params = []
+        self.description = ''
+        self.flags = []
 
 class processTask(HandlerBase):
-    def __init__(self):
+    def __init__(self, task_description):
         self.inDescriptionContent = 0
         self.inDefaultContent = 0
         self.inValueContent = 0
@@ -150,12 +146,12 @@ class processTask(HandlerBase):
         self.inFlag = 0
         self.inGispromptContent = 0
         self.inGuisection = 0
-	grass_task_init()
+        self.task = task_description
 
     def startElement(self, name, attrs):
 
         if name == 'task':
-            grass_task.name = attrs.get('name', None)
+            self.task.name = attrs.get('name', None)
 
         if name == 'parameter':
             self.inParameter = 1;
@@ -221,7 +217,7 @@ class processTask(HandlerBase):
         # If it's not a parameter element, ignore it
         if name == 'parameter':
             self.inParameter = 0;
-            grass_task.params.append({
+            self.task.params.append({
                 "name" : self.param_name,
                 "type" : self.param_type,
                 "required" : self.param_required,
@@ -238,7 +234,7 @@ class processTask(HandlerBase):
 
         if name == 'flag':
             self.inFlag = 0;
-            grass_task.flags.append({
+            self.task.flags.append({
                 "name" : self.flag_name,
                 "description" : self.flag_description } )
 
@@ -248,7 +244,7 @@ class processTask(HandlerBase):
             elif self.inFlag:
                 self.flag_description = normalize_whitespace(self.description)
             else:
-                grass_task.description = normalize_whitespace(self.description)
+                self.task.description = normalize_whitespace(self.description)
             self.inDescriptionContent = 0
 
         if name == 'default':
@@ -300,12 +296,15 @@ class mainFrame(wx.Frame):
 
     The dialog is organized in a notebook according to the guisections
     defined by each GRASS command."""
-    def __init__(self, parent, ID, get_dcmd=None, layer=None, dcmd_params=None):
-        wx.Frame.__init__(self, parent, ID, grass_task.name,
+    def __init__(self, parent, ID, task_description, get_dcmd=None, layer=None, dcmd_params=None):
+
+        self.task = task_description
+
+        wx.Frame.__init__(self, parent, ID, self.task.name,
             wx.DefaultPosition, style=wx.DEFAULT_FRAME_STYLE | wx.TAB_TRAVERSAL)
 
         self.CreateStatusBar()
-        self.SetStatusText("Enter parameters for " + grass_task.name + " (those in Main are required)")
+        self.SetStatusText("Enter parameters for " + self.task.name + " (those in Main are required)")
         self.parent = parent
         self.selection = '' #selection from GIS element selector
         self.paramdict = {} # dictionary of controls and their parameter values
@@ -317,8 +316,8 @@ class mainFrame(wx.Frame):
         menu = wx.Menu()
         menu.Append(wx.ID_ABOUT, "&About GrassGUI",
             "Information about GrassGUI")
-        menu.Append(ID_ABOUT_COMMAND, "&About " + grass_task.name,
-            "Short descripton of GRASS command " + grass_task.name)
+        menu.Append(ID_ABOUT_COMMAND, "&About " + self.task.name,
+            "Short descripton of GRASS command " + self.task.name)
         menu.AppendSeparator()
         menu.Append(wx.ID_EXIT, "E&xit", "Terminate the program")
 
@@ -330,14 +329,14 @@ class mainFrame(wx.Frame):
 
         sections = ['Main']
         is_section = {}
-        for task in grass_task.params + grass_task.flags:
+        for task in self.task.params + self.task.flags:
             if not task.has_key('guisection') or task['guisection']=='':
                 task['guisection'] = 'Options'
             if not is_section.has_key(task['guisection']):
                 is_section[task['guisection']] = 1
                 sections.append( task['guisection'] )
         there_is_main = False
-        for i in grass_task.params+grass_task.flags:
+        for i in self.task.params+self.task.flags:
             if i.has_key('required') and i['required'] == 'yes':
                 i['guisection'] = 'Main'
                 there_is_main = True
@@ -362,7 +361,7 @@ class mainFrame(wx.Frame):
             self.notebook.AddPage( self.tab[section], text = section, select = is_first )
             is_first = False
 
-        manual_tab =  helpPanel( self.notebook, id = wx.ID_ANY, grass_command = grass_task.name)
+        manual_tab =  helpPanel( self.notebook, id = wx.ID_ANY, grass_command = self.task.name)
         if manual_tab.Ok:
             manual_tabsizer = wx.BoxSizer(wx.VERTICAL)
             self.notebook.AddPage( manual_tab, text = "Manual" , select = False )
@@ -371,7 +370,7 @@ class mainFrame(wx.Frame):
         self.guisizer.Add( self.notebookpanel, 1, flag = wx.EXPAND )
 
         p_count = -1
-        for p in grass_task.params:
+        for p in self.task.params:
             p_count += 1 # Needed for checkboxes hack
             which_sizer = self.tabsizer[ p['guisection'] ]
             which_panel = self.tab[ p['guisection'] ]
@@ -471,7 +470,7 @@ class mainFrame(wx.Frame):
                 txt.SetFont( wx.Font( 12, wx.FONTFAMILY_DEFAULT, wx.NORMAL, text_style, 0, ''))
 
         f_count = -1
-        for f in grass_task.flags:
+        for f in self.task.flags:
             f_count += 1
             which_sizer = self.tabsizer[ f['guisection'] ]
             which_panel = self.tab[ f['guisection'] ]
@@ -555,11 +554,11 @@ class mainFrame(wx.Frame):
     def getValues(self):
         for (gui_object,param_num) in self.paramdict.items():
             if 'CheckBox' in str( gui_object ):
-                tasktype = grass_task.flags
+                tasktype = self.task.flags
                 num = param_num-ID_FLAG_START
                 param_val = gui_object.GetValue()
             else:
-                tasktype = grass_task.params
+                tasktype = self.task.params
                 num = param_num-ID_PARAM_START
                 if 'ColourSelect' in str( gui_object ):
                     if 'Select' in gui_object.GetLabel():
@@ -587,30 +586,30 @@ class mainFrame(wx.Frame):
         theCheckedId = (event.GetId()-ID_MULTI_START ) % 20
         # Unpack current value list
         currentValues={}
-        for isThere in grass_task.params[theParamId]['value'].split(','):
+        for isThere in self.task.params[theParamId]['value'].split(','):
             currentValues[isThere] = 1
-        theValue = grass_task.params[theParamId]['values'][theCheckedId]
+        theValue = self.task.params[theParamId]['values'][theCheckedId]
         if event.Checked():
             currentValues[ theValue ] = 1
         else:
             del currentValues[ theValue ]
         currentValueList=[] # Keep the original order, so that some defaults may be recovered
-        for v in grass_task.params[theParamId]['values']:
+        for v in self.task.params[theParamId]['values']:
             if currentValues.has_key(v):
                 currentValueList.append( v )
         # Pack it back
-        grass_task.params[theParamId]['value'] = ','.join( currentValueList )
+        self.task.params[theParamId]['value'] = ','.join( currentValueList )
         self.updateStatusLine()
 
     def createCmd(self, ignoreErrors = False):
         """Produce a command line string for feeding into GRASS."""
-        cmd = grass_task.name
+        cmd = self.task.name
         errors = 0
         errStr = ""
-        for flag in grass_task.flags:
+        for flag in self.task.flags:
             if 'value' in flag and flag['value']:
                 cmd += ' -' + flag['name']
-        for p in grass_task.params:
+        for p in self.task.params:
             if p['value'] == '' and p['required'] != 'no':
                 cmd += ' ' + p['name'] + '=' + '<required>'
                 errStr += "Parameter " + p['name'] + "(" + p['description'] + ") is missing\n"
@@ -696,8 +695,8 @@ class mainFrame(wx.Frame):
 
     def OnAboutCommand(self, event):
         dlg = wx.MessageDialog(self,
-            grass_task.name+": "+grass_task.description,
-            "About " + grass_task.name,
+            self.task.name+": "+self.task.description,
+            "About " + self.task.name,
             wx.OK | wx.ICON_INFORMATION)
         dlg.ShowModal()
         dlg.Destroy()
@@ -705,7 +704,7 @@ class mainFrame(wx.Frame):
 
 class GrassGUIApp(wx.App):
     def OnInit(self):
-        self.frame = mainFrame(None, -1)
+        self.frame = mainFrame(None, -1, grassTask() )
         self.frame.Show(True)
         self.SetTopWindow(self.frame)
         return True
@@ -726,7 +725,7 @@ class GUI:
         cmdlst = []
         cmdlst = cmd.split(' ')
 
-        if parentframe > -1:
+        if parentframe != -1:
             self.parent = parentframe
 
         if len(cmdlst) > 1:
@@ -737,22 +736,24 @@ class GUI:
             cmdout = os.popen(cmd, "r").read()
             p = re.compile( '(grass-interface.dtd)')
             cmdout2 = p.sub( gmpath+r'/grass-interface.dtd', cmdout)
-            handler = processTask()
+            grass_task = grassTask()
+            handler = processTask(grass_task)
             xml.sax.parseString(cmdout2, handler)
 
-        mf = mainFrame(self.parent ,-1, self.get_dcmd, layer)
-        mf.Show(True)
+        self.mf = mainFrame(self.parent ,-1, grass_task, self.get_dcmd, layer)
+        self.mf.Show(True)
 
 if __name__ == "__main__":
     # Just for testing purposes
 
     # Create the application
-    if len(sys.argv) != 2:
+    if len(sys.argv) == 1:
         print "Usage: %s <grass command>" % sys.argv[0]
         sys.exit()
     app = GrassGUIApp(0)
     # Parsing if run from command line: find out the command to run
     gui = GUI(app.frame)
     gui.parseCommand( sys.argv[1], os.getenv("GISBASE") + "/etc/wx/gui_modules")
+    app.SetTopWindow( gui.mf )
     app.MainLoop()
 
