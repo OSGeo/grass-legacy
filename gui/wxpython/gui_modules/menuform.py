@@ -270,7 +270,7 @@ class helpPanel(wx.html.HtmlWindow):
     def __init__(self, parent, id, grass_command = "index"):
         wx.html.HtmlWindow.__init__(self, parent, id)
         self.fspath = os.getenv( "GISBASE" ) + "/docs/html/"
-        self.SetStandardFonts( size = 8 )
+        self.SetStandardFonts( size = 11 )
         self.fillContentsFromFile( self.fspath + grass_command + ".html" )
 
     def fillContentsFromFile( self, htmlFile ):
@@ -364,10 +364,11 @@ class mainFrame(wx.Frame):
 
         manual_tab =  helpPanel( self.notebook, id = wx.ID_ANY, grass_command = grass_task.name)
         if manual_tab.Ok:
+            manual_tabsizer = wx.BoxSizer(wx.VERTICAL)
             self.notebook.AddPage( manual_tab, text = "Manual" , select = False )
 
-        self.panelsizer.Add( self.notebook, flag=wx.EXPAND )
-        self.guisizer.Add( self.notebookpanel, flag = wx.EXPAND )
+        self.panelsizer.Add( self.notebook, 1, flag=wx.EXPAND )
+        self.guisizer.Add( self.notebookpanel, 1, flag = wx.EXPAND )
 
         p_count = -1
         for p in grass_task.params:
