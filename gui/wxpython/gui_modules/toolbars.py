@@ -66,6 +66,15 @@ class MapToolbar:
                                                  shortHelp="Pan", longHelp="Drag with mouse to pan")
         self.toolbar.AddSeparator()
 
+        self.dec     = self.toolbar.AddLabelTool(id=wx.ID_ANY, label="dec",
+                                                 bitmap=wx.Bitmap(os.path.join(wxgui_utils.icons,"module-d.barscale.gif"),
+                                                                  wx.BITMAP_TYPE_ANY),
+                                                 bmpDisabled=wx.NullBitmap,
+                                                 shortHelp="Decoration", longHelp="Add graphic overlays to map")
+
+
+        self.toolbar.AddSeparator()
+
         #
         # Misc
         #
@@ -93,6 +102,7 @@ class MapToolbar:
     	self.mapdisplay.Bind(wx.EVT_TOOL,     self.mapdisplay.OnZoomIn,   self.zoomin)
     	self.mapdisplay.Bind(wx.EVT_TOOL,     self.mapdisplay.OnZoomOut,  self.zoomout)
     	self.mapdisplay.Bind(wx.EVT_TOOL,     self.mapdisplay.OnPan,      self.pan)
+        self.mapdisplay.Bind(wx.EVT_TOOL,     self.mapdisplay.onDecoration, self.dec)
     	self.mapdisplay.Bind(wx.EVT_TOOL,     self.mapdisplay.OnErase,    self.erase)
     	self.mapdisplay.Bind(wx.EVT_TOOL,     self.mapdisplay.SaveToFile, self.savefile)
         self.mapdisplay.Bind(wx.EVT_COMBOBOX, self.OnSelect,              self.combo)

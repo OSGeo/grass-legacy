@@ -31,6 +31,12 @@ import images
 imagepath = images.__path__[0]
 sys.path.append(imagepath)
 
+icons = ""
+
+if not os.getenv("GRASS_ICONPATH"):
+    icons = os.getenv("GISBASE") + "/etc/gui/icons/"
+else:
+    icons = os.environ["GRASS_ICONPATH"]
 
 Map = render.Map() # instance of Map class to render GRASS display output to PPM file
 DEBUG = False
@@ -694,6 +700,41 @@ class MapFrame(wx.Frame):
     	Map.getResolution()
     	self.draw(dc)
     	event.Skip()
+
+    # toolBar button handlers
+    def onDecoration(self, event):
+        """Add decorations item menu"""
+        point = wx.GetMousePosition()
+        decmenu = wx.Menu()
+        # Add items to the menu
+        addscale = wx.MenuItem(decmenu, -1,'Add scalebar and north arrow')
+        bmp = wx.Image(os.path.join(icons,'module-d.barscale.gif'), wx.BITMAP_TYPE_GIF)
+        bmp.Rescale(16, 16)
+        bmp = bmp.ConvertToBitmap()
+        addscale.SetBitmap(bmp)
+        decmenu.AppendItem(addscale)
+        self.Bind(wx.EVT_MENU, self.addBarscale, addscale)
+
+        addgrid = wx.MenuItem(decmenu, -1,'Add grid')
+        bmp = wx.Image(os.path.join(icons,'module-d.grid.gif'), wx.BITMAP_TYPE_GIF)
+        bmp.Rescale(16, 16)
+        bmp = bmp.ConvertToBitmap()
+        addgrid.SetBitmap(bmp)
+        decmenu.AppendItem(addgrid)
+        self.Bind(wx.EVT_MENU, self.addGrid, addgrid)
+
+        # Popup the menu.  If an item is selected then its handler
+        # will be called before PopupMenu returns.
+        self.PopupMenu(decmenu)
+        decmenu.Destroy()
+
+    def addBarscale(self):
+        # need to run d.barscale options and then add the command
+        #to the top (last rendered) of the command stack
+        pass
+
+    def addGrid(self):
+        pass
 
     def OnAlignRegion(self, event):
         """
