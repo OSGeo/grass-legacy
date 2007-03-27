@@ -13,7 +13,7 @@
 \fs24 \cf0 \
 \pard\tx1080\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\ql\qnatural\pardirnatural
 
-\f2\i \cf0 2007-3-14\
+\f2\i \cf0 2007-3-26\
 \pard\tx720\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\ql\qnatural\pardirnatural
 
 \f1\i0 \cf0 \
@@ -25,6 +25,7 @@
 \cf0 Quickstart\
 About\
 Building GRASS\
+Building an Installer Package\
 Tcl/Tk\
 Developer Notes\
 Bundling Libraries and Programs\
@@ -97,6 +98,15 @@ The makefile tries to figure out the Tcl/Tk prefix from the configuration.  This
 \pard\tx720\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\ql\qnatural\pardirnatural
 
 \f1\fs24 \cf0 \
+It also tries to figure out the location of the GDAL programs, from the configured GDAL libs.  This is set in grass.sh, and if it doesn't correctly figure it out, set GDAL_BIN before running make:\
+\pard\tx720\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\ql\qnatural\pardirnatural
+\cf0 \
+\pard\tx720\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\ql\qnatural\pardirnatural
+
+\f3\fs20 \cf0 export GDAL_BIN=[/path/to/gdal/bin]\
+\pard\tx720\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\ql\qnatural\pardirnatural
+
+\f1\fs24 \cf0 \
 \pard\tx720\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\ql\qnatural\pardirnatural
 \cf0 \ul Example\ulnone \
 \
@@ -109,10 +119,28 @@ As an example, to build GRASS using my frameworks (site link below) and Tcl/Tk a
 \
 That's a long line, but you have to be very explicit in the GRASS configure (and yes, the UnixImageIO framework is used multiple times).\
 \
+If you don't have the PROJ framework programs folder in your shell PATH, it will fail to find nad2bin.  To correct this set NAD2BIN before running configure:\
+\
+
+\f3\fs20 export NAD2BIN=/Library/Frameworks/PROJ.framework/Programs/nad2bin\
+\pard\tx720\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\ql\qnatural\pardirnatural
+
+\f1\fs24 \cf0 \
 \
 \pard\tx720\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\ql\qnatural\pardirnatural
 
-\f0\b \cf0 Tcl/Tk\
+\f0\b \cf0 Building an Installer Package
+\f1\b0 \
+\
+After running make, 
+\f3\fs20 make bindist
+\f1\fs24  will assemble an installer package.  This will have the name "GRASS-[version].pkg" and will be found in the macosx folder in the GRASS source.\
+\
+This installer currently does NOT do any verification of installed dependencies.\
+\
+\
+
+\f0\b Tcl/Tk\
 \pard\tx720\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\ql\qnatural\pardirnatural
 
 \f1\b0 \cf0 \
@@ -167,7 +195,11 @@ Things to leave out:\
 \pard\tx720\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\ql\qnatural\pardirnatural
 
 \f1\b0 \cf0 \
-(more info coming soon)\
+Help files are linked into the OSX help system.  Independent of what browser you choose to open help files (
+\f3\fs20 GRASS_HTML_BROWSER
+\f1\fs24 ), you can open Help Viewer from almost any application's Help menu (it's best to use Mac Help from the Finder Help menu), and GRASS Help will be available in the Library menu.\
+\
+Since they are linked to the help system, if GRASS.app is moved, the link will be broken.  This may change in the future.\
 \
 \
 \pard\tx720\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\ql\qnatural\pardirnatural
