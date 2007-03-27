@@ -25,7 +25,10 @@
 \cf0 Quickstart\
 About\
 Building GRASS\
-Building an Installer Package\
+	Build\
+	Universal Build*\
+	Example Configure*\
+	Building an Installer Package\
 Tcl/Tk\
 Developer Notes\
 Bundling Libraries and Programs\
@@ -99,8 +102,7 @@ The makefile tries to figure out the Tcl/Tk prefix from the configuration.  This
 
 \f1\fs24 \cf0 \
 It also tries to figure out the location of the GDAL programs, from the configured GDAL libs.  This is set in grass.sh, and if it doesn't correctly figure it out, set GDAL_BIN before running make:\
-\pard\tx720\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\ql\qnatural\pardirnatural
-\cf0 \
+\
 \pard\tx720\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\ql\qnatural\pardirnatural
 
 \f3\fs20 \cf0 export GDAL_BIN=[/path/to/gdal/bin]\
@@ -108,9 +110,87 @@ It also tries to figure out the location of the GDAL programs, from the configur
 
 \f1\fs24 \cf0 \
 \pard\tx720\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\ql\qnatural\pardirnatural
-\cf0 \ul Example\ulnone \
+\cf0 \ul Universal Build\
+\pard\tx720\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\ql\qnatural\pardirnatural
+\cf0 \ulnone \
+The GRASS build system is very friendly to a Universal build (unlike libtool-based builds).  
+\f2\i This applies to a standard unix build as well as the app build.
+\f1\i0   First, a couple things to check:\
 \
-As an example, to build GRASS using my frameworks (site link below) and Tcl/Tk as built in the build notes below, this should work:\
+\'a5 The Universal SDK.  
+\f2\i This is only needed when building on OSX 10.4 PPC - the Intel system is all Universal, and so is/will be 10.5 for both architechtures.
+\f1\i0   Using the SDK forces GCC to use an alternate root for everything, so if a dependency is not in the SDK (/usr/local is NOT in the SDK), you will get configure, compile and link errors about missing stuff.  To fix this, create symlinks in the SDK to where you have your extra dependencies.\
+\
+\pard\tx720\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\ql\qnatural\pardirnatural
+\cf0 For example, /usr/local:\
+\
+\pard\tx720\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\ql\qnatural\pardirnatural
+
+\f3\fs20 \cf0 sudo ln -s /usr/local /Developer/SDKs/MacOSX10.4u.sdk/usr/local\
+\pard\tx720\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\ql\qnatural\pardirnatural
+
+\f1\fs24 \cf0 \
+If there are subfolders involved that are not already in the SDK, add them first.  Say you have some libraries in /Users/Shared/unix (I put my static libraries there):\
+\
+\pard\tx720\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\ql\qnatural\pardirnatural
+
+\f3\fs20 \cf0 sudo mkdir -p /Developer/SDKs/MacOSX10.4u.sdk/Users/Shared\
+ln -s /Users/Shared/unix /Developer/SDKs/MacOSX10.4u.sdk/Users/Shared/unix
+\f1\fs24 \
+\
+For /Library/Frameworks:\
+\
+
+\f3\fs20 sudo mkdir -p /Developer/SDKs/MacOSX10.4u.sdk/Library\
+sudo ln -s /Library/Frameworks /Developer/SDKs/MacOSX10.4u.sdk/Library/Frameworks
+\f1\fs24 \
+\
+\'a5 Universal Dependencies.  Make sure all your extra dependencies are Universal.\
+\
+\'a5\'ca Tiger.  This will NOT work on anything less than OSX 10.4.\
+\
+If those check OK, here's what to do.  Simply add the universal flags to all compile and link commands.  This is done by setting CFLAGS, CXXFLAGS and LDFLAGS before configuring the build.  The basic flags are:\
+\
+
+\f3\fs20 -arch ppc -arch i386\
+\pard\tx720\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\ql\qnatural\pardirnatural
+
+\f1\fs24 \cf0 \
+If you are building on OSX 10.4 PPC, also add this:\
+\
+\pard\tx720\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\ql\qnatural\pardirnatural
+
+\f3\fs20 \cf0 -isysroot /Developer/SDKs/MacOSX10.4u.sdk\
+\pard\tx720\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\ql\qnatural\pardirnatural
+
+\f1\fs24 \cf0 \
+Put it all together, for an Intel Mac or 10.5+:\
+\
+\pard\tx720\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\ql\qnatural\pardirnatural
+
+\f3\fs20 \cf0 export CFLAGS="-arch ppc -arch i386"\
+export CXXFLAGS="-arch ppc -arch i386"\
+export LDFLAGS="-arch ppc -arch i386"\
+\pard\tx720\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\ql\qnatural\pardirnatural
+
+\f1\fs24 \cf0 \
+Or for OSX 10.4 PPC:\
+\
+\pard\tx720\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\ql\qnatural\pardirnatural
+
+\f3\fs20 \cf0 export SDKROOT=/Developer/SDKs/MacOSX10.4u.sdk\
+export CFLAGS="-arch ppc -arch i386 -isysroot $SDKROOT"\
+export CXXFLAGS="-arch ppc -arch i386 -isysroot $SDKROOT"\
+export LDFLAGS="-arch ppc -arch i386 -isysroot $SDKROOT"\
+\pard\tx720\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\ql\qnatural\pardirnatural
+
+\f1\fs24 \cf0 \
+\pard\tx720\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\ql\qnatural\pardirnatural
+\cf0 \ul Example Configure\ulnone \
+\
+As an example, to build GRASS using my frameworks (site link below) and Tcl/Tk as built in the build notes below, this should work 
+\f2\i (for a unix build, just remove the --prefix and --enable-macosx-app flags)
+\f1\i0 :\
 \
 \pard\tx720\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\ql\qnatural\pardirnatural
 
@@ -126,21 +206,22 @@ If you don't have the PROJ framework programs folder in your shell PATH, it will
 \pard\tx720\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\ql\qnatural\pardirnatural
 
 \f1\fs24 \cf0 \
-\
 \pard\tx720\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\ql\qnatural\pardirnatural
-
-\f0\b \cf0 Building an Installer Package
-\f1\b0 \
-\
+\cf0 \ul Building an Installer Package\
+\pard\tx720\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\ql\qnatural\pardirnatural
+\cf0 \ulnone \
 After running make, 
 \f3\fs20 make bindist
 \f1\fs24  will assemble an installer package.  This will have the name "GRASS-[version].pkg" and will be found in the macosx folder in the GRASS source.\
 \
+The installer takes care of binary installation, and creating the /Library/GRASS support folder and Help Viewer link.\
+\
 This installer currently does NOT do any verification of installed dependencies.\
 \
 \
+\pard\tx720\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\ql\qnatural\pardirnatural
 
-\f0\b Tcl/Tk\
+\f0\b \cf0 Tcl/Tk\
 \pard\tx720\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\ql\qnatural\pardirnatural
 
 \f1\b0 \cf0 \
