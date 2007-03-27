@@ -703,10 +703,22 @@ class mainFrame(wx.Frame):
 
 
 class GrassGUIApp(wx.App):
+    def __init__(self, cmd):
+        gmpath =  os.getenv("GISBASE") + "/etc/wx/gui_modules"
+        cmd = cmd + r' --interface-description'
+        cmdout = os.popen(cmd, "r").read()
+        p = re.compile( '(grass-interface.dtd)')
+        p.search( cmdout )
+        cmdout2 = p.sub( gmpath+r'/grass-interface.dtd', cmdout)
+        self.grass_task = grassTask()
+        handler = processTask(self.grass_task)
+        xml.sax.parseString(cmdout2, handler)
+        wx.App.__init__(self)
+        
     def OnInit(self):
-        self.frame = mainFrame(None, -1, grassTask() )
-        self.frame.Show(True)
-        self.SetTopWindow(self.frame)
+        self.mf = mainFrame(None ,-1, self.grass_task )
+        self.mf.Show(True)
+        self.SetTopWindow(self.mf)
         return True
 
 class GUI:
@@ -722,7 +734,6 @@ class GUI:
         else:
             self.get_dcmd = completed[0]
             layer = completed[1]
-        cmdlst = []
         cmdlst = cmd.split(' ')
 
         if parentframe != -1:
@@ -735,6 +746,7 @@ class GUI:
             cmd = cmd + r' --interface-description'
             cmdout = os.popen(cmd, "r").read()
             p = re.compile( '(grass-interface.dtd)')
+            p.search( cmdout )
             cmdout2 = p.sub( gmpath+r'/grass-interface.dtd', cmdout)
             grass_task = grassTask()
             handler = processTask(grass_task)
@@ -750,10 +762,6 @@ if __name__ == "__main__":
     if len(sys.argv) == 1:
         print "Usage: %s <grass command>" % sys.argv[0]
         sys.exit()
-    app = GrassGUIApp(0)
-    # Parsing if run from command line: find out the command to run
-    gui = GUI(app.frame)
-    gui.parseCommand( sys.argv[1], os.getenv("GISBASE") + "/etc/wx/gui_modules")
-    app.SetTopWindow( gui.mf )
+    app = GrassGUIApp(sys.argv[1])
     app.MainLoop()
 
