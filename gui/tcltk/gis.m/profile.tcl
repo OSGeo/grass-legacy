@@ -1,7 +1,7 @@
 ##########################################################################
 # profile.tcl - Dialog to create profile of raster surface for GRASS GIS Manager
 # May 2006 Michael Barton, Arizona State University
-# COPYRIGHT:	(C) 1999 - 2006 by the GRASS Development Team
+# COPYRIGHT:	(C) 1999 - 2007 by the GRASS Development Team
 #
 #		This program is free software under the GNU General Public
 #		License (>=v2). Read the file COPYING that comes with GRASS
@@ -518,9 +518,9 @@ proc GmProfile::pdraw { } {
 	$pcan create line [expr $left - 5] $top $left $top
 
 	# run r.profile first time to calculate total transect distance (needed for lat lon regions)
-   	if {![catch {open "|r.profile input=$pmap profile=$pcoords 2> $devnull" r} input]} {
+   	if {![catch {open "|r.profile input=$pmap profile=$pcoords null=nan 2> $devnull" r} input]} {
 		while {[gets $input line] >= 0} {
-			if { [regexp -nocase {^([0-9].*) ([[.-.]0-9].*)$} $line trash dist elev] } {
+			if { [regexp -nocase {^([0-9].*) ([[.-.]0-9na].*)$} $line trash dist elev] } {
 				set cumdist $dist
 			}
 		}
@@ -588,12 +588,26 @@ proc GmProfile::pdraw { } {
 
 	# run r.profile again to
 	# convert dist elev (stdout) to xy coordinates of profile line
-   	if {![catch {open "|r.profile input=$pmap profile=$pcoords 2> $devnull" r} input]} {
+   	if {![catch {open "|r.profile input=$pmap profile=$pcoords null=nan 2> $devnull" r} input]} {
 		while {[gets $input line] >= 0} {
-			if { [regexp -nocase {^([0-9].*) ([[.-.]0-9].*)$} $line trash dist elev] } {
+			if { [regexp -nocase {^([0-9].*) ([[.-.]0-9na].*)$} $line trash dist elev] } {
+			    if { [string equal "$elev" "nan" ]  } {
+				# draw profile line
+				if { [ info exist profilelist ] } {
+				    if { [llength $profilelist] >= 4 } {
+					$pcan create line $profilelist -fill blue
+				    } elseif { [llength $profilelist] == 2 } {
+					# plot a dot
+					$pcan create oval [concat $profilelist $profilelist] \
+					    -fill blue -outline blue -width 1
+				    }
+				    unset profilelist
+				}
+			    } else {
 				set pelev [expr $bottom - ($height * ($elev - $elevmin) / $elevrange)] 
 				set pdist [expr $left + (($dist * $width) / $cumdist)]
-				lappend profilelist $pdist $pelev 
+				lappend profilelist $pdist $pelev
+			    }
 			}
 		}
 		if {[catch {close $input} error]} {
@@ -603,10 +617,10 @@ proc GmProfile::pdraw { } {
 	}
 
 	# draw profile line
-	if { [llength $profilelist] > 3 } {
+	if { [ info exist profilelist ] && [llength $profilelist] >= 4 } {
 		$pcan create line $profilelist -fill blue
 	}
-	
+
 }
 ###############################################################################
 # erase profile and clear transects
