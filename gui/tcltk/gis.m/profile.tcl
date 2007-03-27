@@ -91,7 +91,7 @@ proc GmProfile::create { mapcan } {
 	set pcan [canvas $profile_frame.can -bg white\
 		-borderwidth 0 -closeenough 1.0 \
         -relief ridge -selectbackground #c4c4c4 \
-        -width 600 -height 200 ]
+        -width 600 -height 300 ]
         	   
     # setting geometry
     place $pcan \
@@ -461,7 +461,7 @@ proc GmProfile::pdraw { } {
 	set h [winfo height $pcan]
 	
 	#calculate graph box and scale extents
-	set top [expr 0.10 * $h]
+	set top [expr 0.20 * $h]
 	set bottom [expr 0.80 * $h]
 	set height [expr $bottom - $top]
 	set left [expr 0.2 * $w]
@@ -470,8 +470,17 @@ proc GmProfile::pdraw { } {
 	set width [expr $right - $left]
 	set yscaleright [expr $left - 10]
 	set xscaletop [expr $bottom	+ 10]
+	set titlebottom [expr 0.10 * $h]
+	set titleleft [expr $left + 15]
 	
-	# create y axis (from 20%x10% to 20%x80% - top to bottom)
+	# create title
+	$pcan create text $center $titlebottom \
+		-text [G_msg "Profile for $pmap"] \
+		-font {-size 14 -weight bold} \
+		-anchor s \
+		-justify center
+	
+	# create y axis (from 20%x20% to 20%x80% - top to bottom)
 	$pcan create line $left $top $left [expr $bottom + 5]
 
 	# format axis labels in a nice way, as a function of range
