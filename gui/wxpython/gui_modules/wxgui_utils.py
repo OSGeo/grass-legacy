@@ -619,6 +619,7 @@ class GMConsole(wx.Panel):
         wx.Panel.__init__(self, parent, id, pos, size, style)
         #initialize variables
 
+        self.parent = parent
         self.cmd_output = ""
         self.console_command = ""
         self.console_clear = ""
@@ -636,6 +637,8 @@ class GMConsole(wx.Panel):
     	self.console_clear = wx.Button(self, -1, _("Clear"))
     	self.console_save = wx.Button(self, -1, _("Save"))
 
+        self.console_progressbar = wx.Gauge(self, -1, 100, (110, 50), (250, 25))
+
     	self.Bind(wx.EVT_BUTTON, self.clearHistory, self.console_clear)
     	self.Bind(wx.EVT_BUTTON, self.saveHistory, self.console_save)
 
@@ -649,9 +652,12 @@ class GMConsole(wx.Panel):
     	gridsizer1.Add(self.console_save, 0,
                                wx.ALIGN_CENTER_HORIZONTAL|wx.ADJUST_MINSIZE, 0)
 
+
         boxsizer1.Add((0,5))
     	boxsizer1.Add(gridsizer1, 0, wx.EXPAND|wx.ALIGN_CENTRE_VERTICAL)
         boxsizer1.Add((0,5))
+    	boxsizer1.Add(self.console_progressbar, 0,
+                              wx.EXPAND|wx.ADJUST_MINSIZE, 0)
         boxsizer1.Fit(self)
     	boxsizer1.SetSizeHints(self)
     	self.SetAutoLayout(True)
@@ -739,27 +745,28 @@ class GMConsole(wx.Panel):
     		# Send any other command to the shell. Send output to
     		# console output window.
             try:
+                os.environ["GRASS_MESSAGE_FORMAT"] = "gui"
+                os.system("g.gisenv set=GRASS_MESSAGE_FORMAT=gui")
                 self.cmd_output.write(cmd+"\n----------\n")
-                # self.out = Popen(cmd, shell=True, stdout=PIPE, stderr=STDOUT).communicate()[0]
                 p = Popen(cmd, shell=True, stdin=PIPE, stdout=PIPE, stderr=PIPE, close_fds=True)
-                (child_stdin, child_stdout, child_stderr) = (p.stdin, p.stdout, p.stderr)
 
-                oline = child_stderr.readline()
-                while 1:
-                    if oline == '':
-                        break
-                    print >>sys.stderr, "MSG: ",oline
-                    oline = child_stderr.readline()
-                self.out=p.communicate()[0]
-                self.cmd_output.write(self.out+"\n")
-                child_stderr.close()
-                child_stdout.close()
-                child_stdin.close()
+                oline = p.stderr.readline()
+                while oline:
+                    oline = oline.strip()
+                    print "MSG: ", oline
+                    oline = p.stderr.readline()
 
-                if self.out < 0:
-    				print >> sys.stderr, "Child was terminated by signal", self.out
-                elif self.out > 0:
-    				print >> sys.stderr, self.out
+                oline = p.stdout.readline()
+                while oline:
+                    oline = oline.strip()
+                    self.cmd_output.write(oline+"\n")
+                    print >> sys.stderr, oline
+                    oline = p.stdout.readline()
+
+                if p.stdout < 0:
+    				print >> sys.stderr, "Child was terminated by signal", p.stdout
+                elif p.stdout > 0:
+    				print >> sys.stderr, p.stdout
             except OSError, e:
     			print >> sys.stderr, "Execution failed:", e
 
