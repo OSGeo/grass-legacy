@@ -662,13 +662,16 @@ class GRASSStartup(wx.Frame):
             event.Skip()
 
     def OnCreateMapset(self,event):
+        database = self.tgisdbase.GetValue()
+        location = self.listOfLocations[self.lblocations.GetSelection()]
 
         try:
             mapset = self.tnewmapset.GetValue()
-            os.mkdir(os.path.join(
-                self.tgisdbase.GetValue(),
-                self.listOfLocations[self.lblocations.GetSelection()],
-                mapset))
+            os.mkdir(os.path.join(database,location,mapset))
+            # copy WIND file and its permissions from PERMANENT and set permissions to u+rw,go+r
+            shutil.copy(os.path.join(database,location,'PERMANENT','WIND'),
+                        os.path.join(database,location,mapset))
+#            os.chmod(os.path.join(database,location,mapset,'WIND'), ?????)
             self.OnSelectLocation(None)
             self.lbmapsets.SetSelection(self.listOfMapsets.index(mapset))
         except StandardError, e:
