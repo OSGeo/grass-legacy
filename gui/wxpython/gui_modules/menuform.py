@@ -326,6 +326,7 @@ class mainFrame(wx.Frame):
 
     The command is checked and sent to the clipboard when clicking "Copy". """
     def __init__(self, parent, ID, task_description, get_dcmd=None, layer=None, dcmd_params=None):
+        print parent
 
         self.get_dcmd = get_dcmd
         self.dcmd_params = dcmd_params #this should be passed from the layer tree eventually
