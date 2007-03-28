@@ -37,9 +37,6 @@ class LayerTree(CT.CustomTreeCtrl):
                  disp=None, log=None):
         CT.CustomTreeCtrl.__init__(self, parent, id, pos, size, style,ctstyle)
 
-        # we need this only for GIS Manager, but not for e.g. mapdisp
-        import menuform
-
         self.SetAutoLayout(True)
         self.SetGradientStyle(1)
         self.EnableSelectionGradient(True)
@@ -634,8 +631,8 @@ class GMConsole(wx.Panel):
 
         global goutput
         goutput = self.cmd_output
-    	self.console_clear = wx.Button(self, -1, _("Clear"))
-    	self.console_save = wx.Button(self, -1, _("Save"))
+    	self.console_clear = wx.Button(self, -1, "Clear")
+    	self.console_save = wx.Button(self, -1, "Save")
 
         self.console_progressbar = wx.Gauge(self, -1, 100, (110, 50), (250, 25))
 
