@@ -57,19 +57,19 @@ fi
 
 if [ "$from" = "$to" ]
 then
-	echo "Target monitor cannot be the same as source monitor" >& 2
+        g.message -e "Target monitor cannot be the same as source monitor" 
 	exit 1
 fi
 
 if ! d.mon -L | grep "^$from .*  running" > /dev/null 2>&1
 then
-	echo "$from: No such monitor or not running" >&2
+        g.message -e "$from: No such monitor or not running" 
 	exit 1
 fi
 
 if ! d.mon -l | grep "^$to " > /dev/null 2>&1
 then
-	echo "$to: No such monitor" >&2
+        g.message -e "$to: No such monitor" 
 	exit 1
 fi
 
