@@ -31,6 +31,8 @@ import images
 imagepath = images.__path__[0]
 sys.path.append(imagepath)
 
+from threading import Thread
+
 icons = ""
 
 if not os.getenv("GRASS_ICONPATH"):
@@ -43,7 +45,7 @@ DEBUG = False
 
 # for cmdlinef
 if __name__ == "__main__":
-    from threading import Thread
+
     import time
     cmdfilename = None
 
@@ -89,9 +91,13 @@ class Command(Thread):
                         except: pass
                         opacity = float(dispcmd[6])
 
+                        print "# %s" % dispcmd[3]
+
                         self.map.AddRasterLayer(name="%s" % (dispcmd[1]),
-                                mapset=dispcmd[2], vallist=vallist,
-                                l_opacity=opacity)
+                                                mapset=dispcmd[2],
+                                                catlist=1,
+                                                vallist=vallist,
+                                                l_opacity=opacity)
 
                     if dispcmd[0]=="addvector":
                         self.map.AddVectorLayer(name="%s" % (dispcmd[1]),
