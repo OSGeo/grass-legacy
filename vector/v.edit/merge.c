@@ -49,12 +49,14 @@ int do_merge(struct Map_info *Map)
 
     int line_i, i, j;    
     int line, line1, type1, line2, type2;
-    int nlines, nlines_merged, merge;
+    int do_merge;
+    /* number of lines (original, selected, merged) */
+    int nlines, nlines_selected, nlines_merged;
 
     double thresh;
     
     nlines_merged = 0;
-
+    
     thresh = atof (maxdist_opt -> answer);
 
     /* select lines */
@@ -76,7 +78,8 @@ int do_merge(struct Map_info *Map)
 
     List_in_box = Vect_new_list();
 
-    nlines = List -> n_values;
+    nlines          = Vect_get_num_lines (Map);
+    nlines_selected = List -> n_values;
 
     /* merge lines */
     for (line_i = 0; line_i < List -> n_values; line_i++) {
@@ -114,9 +117,9 @@ int do_merge(struct Map_info *Map)
 	     */
 	    if (1 < Vect_select_lines_by_polygon (Map, Points2, 0, NULL,
 						  GV_LINES, List_in_box)) {
-		merge = 1;
+		do_merge = 1;
 		line2 = -1;
-		for (j = 0; merge && j < List -> n_values; j++) {
+		for (j = 0; do_merge && j < List -> n_values; j++) {
 		    if (List -> value[j] == line1)
 			continue;
 
@@ -125,7 +128,7 @@ int do_merge(struct Map_info *Map)
 			    /* three lines found
 			     * selected lines will be not merged
 			     */
-			    merge = 0;
+			    do_merge = 0;
 			}
 			else {
 			    line2 = List -> value[j];
@@ -133,7 +136,7 @@ int do_merge(struct Map_info *Map)
 		    }
 		}
 
-		if (!merge || line2 < 0)
+		if (!do_merge || line2 < 0)
 		    continue;
 
 		type2 = Vect_read_line (Map, Points2, Cats2, line2);
@@ -154,8 +157,9 @@ int do_merge(struct Map_info *Map)
 			fprintf(stdout,"%d,", line2);
 			fflush (stdout);
 		    }
-
-		    nlines_merged++;
+		    
+		    if (line2 <= nlines)
+		      nlines_merged++;
 		}
 	    }
 	} /* for each node */
@@ -170,8 +174,9 @@ int do_merge(struct Map_info *Map)
 		fprintf(stdout,"%d,", line1);
 		fflush (stdout);
 	    }
-
-	    nlines_merged++;
+	    
+	    if (line1 <= nlines)
+	      nlines_merged++;
 
 	    /* update number of lines */
 	    Vect_list_append (List, line);
@@ -191,13 +196,8 @@ int do_merge(struct Map_info *Map)
 
     Vect_destroy_list(List);
 
-    /*
-     * number of lines which has been merged
-     * can be greater then number of selected lines
-     * do not confuse the user;-)
-     */
     G_message (_("Editing: [%d] lines merged"),
-	       (nlines_merged > nlines) ? nlines : nlines_merged);
+	       nlines_merged);
 
     return nlines_merged;
 }
