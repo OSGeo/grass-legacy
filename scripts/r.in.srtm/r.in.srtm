@@ -69,7 +69,7 @@
 # what to do in case of user break:
 exitprocedure()
 {
- echo "User break!"
+ g.message -e "User break!"
  exit 1
 }
 trap "exitprocedure" 2 3 15
@@ -87,13 +87,13 @@ PROG=`basename $0`
 
 #### check if we have awk
 if [ ! -x "`which awk`" ] ; then
-    echo "$PROG: awk required, please install awk or gawk first" 2>&1
+    g.message -e "awk required, please install awk or gawk first"
     exit 1
 fi
 
 #### check if we have unzip
 if [ ! -x "`which unzip`" ] ; then
-    echo "$PROG: unzip required, please install first" 2>&1
+    g.message  -e "unzip required, please install first"
     exit 1
 fi
 
@@ -109,8 +109,8 @@ PERM=$GISDBASE/$LOCATION_NAME/PERMANENT
 
 grep -i 'proj: ll' $PERM/PROJ_INFO > /dev/null
 if [ $? -ne 0 ] ; then
- echo "SRTM data are in Latitude/Longitude. The current"
- echo "location projection differs. STOP."
+ g.message -e "SRTM data are in Latitude/Longitude. The current"
+ g.message -e "location projection differs. STOP."
  exit 1
 fi
 
@@ -127,20 +127,20 @@ fi
 
 # file there?
 if test ! -f $FILE.hgt.zip ; then
- echo "File '$FILE.hgt.zip' not found"
+ g.message -e "File '$FILE.hgt.zip' not found"
  exit 1
 fi
 
 # really a ZIP file?
 if [ "`file -ib $FILE.hgt.zip`" != "application/x-zip" ] ; then
-  echo "$FILE.hgt.zip is no zip file."
+  g.message -e "$FILE.hgt.zip is no zip file."
   exit 1
 fi
 
 #make a temporary directory
 TMPDIR="`g.tempfile pid=$$`"
 if [ $? -ne 0 ] || [ -z "$TMPDIR" ] ; then
-    echo "ERROR: unable to create temporary files" 1>&2
+    g.message "Unable to create temporary files"
     exit 1
 fi
 rm -f "$TMPDIR"
@@ -152,14 +152,14 @@ install -m 644 $FILE.hgt.zip "$TMPDIR"
 cd "$TMPDIR"
 
 #unzip & rename data file:
-echo "Extracting $FILE..."
+g.message  "Extracting $FILE..."
 unzip $FILE.hgt.zip
 if [ $? -gt 0 ] ; then
- echo "An ERROR occurred."
+    g.message -e "Unable to unzip files."
  exit 1
 fi
 
-echo "Converting input file to BIL..."
+g.message "Converting input file to BIL..."
 mv $TILE.hgt "$TMPDIR"/$TILE.bil
 
 LL_LATITUDE=`echo $TILE  | cut -b2-3`
@@ -200,7 +200,7 @@ ULYMAP $ULYMAP
 XDIM 0.000833333333333
 YDIM 0.000833333333333"> $TILE.hdr
 else
-  echo "Attempting to import 1-arcsec data."
+  g.message "Attempting to import 1-arcsec data."
   echo "BYTEORDER M
 LAYOUT BIL
 NROWS 3601
@@ -231,5 +231,5 @@ rmdir "$TMPDIR"
 r.colors rul=srtm map=$TILEOUT
 #g.region rast=$TILEOUT
 
-echo "Done: generated map $TILEOUT"
-echo "(Note: Holes in the data can be closed with 'r.fillnulls' using splines)"
+g.message "Done: generated map $TILEOUT"
+g.message "(Note: Holes in the data can be closed with 'r.fillnulls' using splines)"

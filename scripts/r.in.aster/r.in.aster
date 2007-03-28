@@ -49,9 +49,7 @@
 
 if  [ -z "$GISBASE" ]
 then
-	echo ""
-	echo "You must be in GRASS GIS to run this program"
-	echo ""
+	echo "You must be in GRASS GIS to run this program" >&2
 	exit 1
 fi
 
@@ -142,27 +140,19 @@ tempfile=`g.tempfile $$`.tif
 
 #run gdalwarp with selected options (must be in $PATH)
 #to translate aster image to geotiff
-echo ""
-echo "georeferencing aster image"
-echo gdalwarp -t_srs "`g.proj -jf`" $srcfile $tempfile
-echo ""
+g.message "Georeferencing aster image"
+g.message -d "gdalwarp -t_srs \"`g.proj -jf`\" $srcfile $tempfile"
 
 gdalwarp -t_srs "`g.proj -jf`" $srcfile $tempfile
 
 #import geotiff to GRASS
-echo ""
-echo "importing into GRASS"
-echo ""
+g.message "Importing into GRASS"
 
 r.in.gdal input=$tempfile output=$GIS_OPT_OUTPUT
 
 #cleanup
-echo ""
-echo "cleaning up"
-echo ""
+g.message "Cleaning up"
 rm -f $tempfile
 
-echo ""
-echo ""
-echo "DONE"
+g.message "Done"
 
