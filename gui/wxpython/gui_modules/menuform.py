@@ -26,6 +26,11 @@
 #
 # Updated to wxPython 2.6 syntax. Methods added to make it callable by gui.
 # Method added to automatically re-run with pythonw on a Mac.
+#
+# TODO:
+#
+# - verify option value types
+# - add tooltips
 """
 __version__ ="$Date: 2006/08/06 21:21:01 $"
 
@@ -111,6 +116,12 @@ def normalize_whitespace(text):
     "Remove redundant whitespace from a string"
     return string.join( string.split(text), ' ')
 
+def text_beautify( someString ):
+    "Make really long texts shorter"
+    # TODO: remove magic number (calculate a correct value from
+    # pixelSize of text and the magic number for maximum size
+    return escape_ampersand( "\n".join( textwrap.wrap( normalize_whitespace(someString), 72 ) ) )
+
 def escape_ampersand(text):
     "Escapes ampersands with additional ampersand for GUI"
     return string.replace(text, "&", "&&")
@@ -131,13 +142,18 @@ def test_for_broken_SAX():
     return 0
 
 class grassTask:
+    """This class holds the structures needed for both filling by the parser and
+    use by the interface constructor."""
     def __init__(self):
-        self.name = 'index'
+        self.name = 'unknown'
         self.params = []
         self.description = ''
         self.flags = []
 
 class processTask(HandlerBase):
+    """A SAX handler for the --interface-description output, as
+    defined in grass-interface.dtd. Extend or modify this and the
+    DTD if the XML output of GRASS' parser is extended or modified."""
     def __init__(self, task_description):
         self.inDescriptionContent = 0
         self.inDefaultContent = 0
@@ -262,7 +278,11 @@ class processTask(HandlerBase):
 
 
 class helpPanel(wx.html.HtmlWindow):
-    """This panel holds the text from GRASS docs."""
+    """This panel holds the text from GRASS docs.
+
+    GISBASE must be set in the environment to find the html docs dir.
+    The SYNOPSIS section is skipped, since this Panel is supposed to
+    be integrated into the cmdPanel."""
     def __init__(self, parent, id, grass_command = "index"):
         wx.html.HtmlWindow.__init__(self, parent, id)
         self.fspath = os.getenv( "GISBASE" ) + "/docs/html/"
@@ -295,7 +315,14 @@ class mainFrame(wx.Frame):
     """This is the Frame containing the dialog for options input.
 
     The dialog is organized in a notebook according to the guisections
-    defined by each GRASS command."""
+    defined by each GRASS command.
+
+    If run with a parent, it may Apply, Ok or Cancel; the latter two close the dialog.
+    The former two trigger a callback.
+
+    If run standalone, it will allow execution of the command.
+
+    The command is checked and sent to the clipboard when clicking "Copy". """
     def __init__(self, parent, ID, task_description, get_dcmd=None, layer=None, dcmd_params=None):
 
         self.get_dcmd = get_dcmd
@@ -313,7 +340,6 @@ class mainFrame(wx.Frame):
             wx.DefaultPosition, style=wx.DEFAULT_FRAME_STYLE | wx.TAB_TRAVERSAL)
 
         self.CreateStatusBar()
-        self.SetStatusText("Enter parameters for " + self.task.name + " (those in Main are required)")
         self.parent = parent
         self.SetIcon(wx.Icon(os.path.join(imagepath,'grass.form.gif'), wx.BITMAP_TYPE_ANY))
 
@@ -333,7 +359,14 @@ class mainFrame(wx.Frame):
         
         self.notebookpanel = cmdPanel( self, self.task )
         self.guisizer.Add( self.notebookpanel, 1, flag = wx.EXPAND )
-        
+
+        status_text = "Enter parameters for " + self.task.name
+        if self.notebookpanel.tab.has_key('Main'):
+            # We have to wait for the notebookpanel to be filled in order
+            # to know if there actually is a Main tab
+            status_text += " (those of Main in bold typeface are required)"
+        self.SetStatusText( status_text )
+
         btnsizer = wx.BoxSizer(wx.HORIZONTAL)
         self.btn_cancel = wx.Button(self, wx.ID_CANCEL, "Cancel")
         btnsizer.Add(self.btn_cancel, 0, wx.ALL| wx.ALIGN_CENTER, 10)
@@ -451,6 +484,7 @@ class mainFrame(wx.Frame):
 
 
 class cmdPanel(wx.Panel):
+    """A panel containing a notebook dividing in tabs the different guisections of the GRASS cmd."""
     def __init__( self, parent, task, *args, **kwargs ):
         wx.Panel.__init__( self, parent, *args, **kwargs )
 
@@ -502,7 +536,7 @@ class cmdPanel(wx.Panel):
             p_count += 1 # Needed for checkboxes hack
             which_sizer = self.tabsizer[ p['guisection'] ]
             which_panel = self.tab[ p['guisection'] ]
-            title = escape_ampersand(p['description'])
+            title = text_beautify(p['description'])
             text_style = wx.FONTWEIGHT_BOLD
             txt = None
             if p['required'] == 'no':
@@ -522,15 +556,9 @@ class cmdPanel(wx.Panel):
                     for defval in p['value'].split(','):
                         isDefault[ defval ] = 'yes'
                     for val in valuelist:
-                        # make some descriptions short:
-                        nval = ""
-                        for lval in textwrap.wrap(val, 60):
-                            nval += lval+"\n"
-                        nval = nval[:-1]
-
                         # This is the checkboxes hack
                         idForWX =  ID_MULTI_START + p_count*20 + v_count
-                        chkbox = wx.CheckBox( which_panel, idForWX, nval+" " )
+                        chkbox = wx.CheckBox( which_panel, idForWX, text_beautify(val) )
                         if isDefault.has_key(val): chkbox.SetValue( True )
                         hSizer.Add( chkbox,0,wx.ADJUST_MINSIZE,5 )
                         self.Bind(wx.EVT_CHECKBOX, self.EvtCheckBoxMulti)
@@ -597,7 +625,7 @@ class cmdPanel(wx.Panel):
             f_count += 1
             which_sizer = self.tabsizer[ f['guisection'] ]
             which_panel = self.tab[ f['guisection'] ]
-            title = escape_ampersand(f['description'])
+            title = text_beautify(f['description'])
             self.chk = wx.CheckBox(which_panel,-1, label = title, style = wx.NO_BORDER)
             self.chk.SetFont( wx.Font( 12, wx.FONTFAMILY_DEFAULT, wx.NORMAL, text_style, 0, ''))
             which_sizer.Add(self.chk, 0, wx.EXPAND| wx.ALL, 5)
@@ -614,6 +642,7 @@ class cmdPanel(wx.Panel):
             minsecsizes = self.tabsizer[section].GetMinSize()
             maxsizes = map( lambda x: max( maxsizes[x], minsecsizes[x] ), (0,1) )
 
+        # TODO: be less arbitrary with these 600
         constrained_size = (min(600, maxsizes[0]), min(600, maxsizes[1]) )
         for section in sections:
             self.tab[section].SetMinSize( constrained_size )
@@ -636,6 +665,8 @@ class cmdPanel(wx.Panel):
         self.getValues()
 
     def updateStatusLine(self):
+        """If we were part of a richer interface, report back the current command being built."""
+        # TODO: don't tie this to a StatusLine
         try:
             self.GetParent().SetStatusText( self.createCmd(ignoreErrors = True) )
         except:
@@ -692,7 +723,11 @@ class cmdPanel(wx.Panel):
         self.updateStatusLine()
 
     def createCmd(self, ignoreErrors = False):
-        """Produce a command line string for feeding into GRASS."""
+        """Produce a command line string for feeding into GRASS.
+
+        If ignoreErrors==True then it will return whatever has been
+        built so far, even though it would not be a correct command
+        for GRASS."""
         cmd = self.task.name
         errors = 0
         errStr = ""
@@ -712,6 +747,10 @@ class cmdPanel(wx.Panel):
         return cmd
 
 def getInterfaceDescription( cmd ):
+    """Returns the XML description for the GRASS cmd.
+
+    The DTD must be located in $GISBASE/etx/wx/gui_modules/grass-interface.dtd,
+    otherwise the parser will not succeed."""
     gmpath =  os.getenv("GISBASE") + "/etc/wx/gui_modules"
     cmd = cmd + r' --interface-description'
     cmdout = os.popen(cmd, "r").read()
@@ -721,6 +760,7 @@ def getInterfaceDescription( cmd ):
     return cmdout
 
 class GrassGUIApp(wx.App):
+    """Stand-alone GRASS command GUI"""
     def __init__(self, cmd):
         self.grass_task = grassTask()
         handler = processTask(self.grass_task)
