@@ -65,7 +65,7 @@ PROG=`basename $0`
 
 #### check if we have awk
 if [ ! -x "`which awk`" ] ; then
-    echo "$PROG: awk required, please install awk or gawk first" 2>&1
+    g.message -e "awk required, please install awk or gawk first"
     exit 1
 fi
 
@@ -81,7 +81,7 @@ LOCATION=$GISDBASE/$LOCATION_NAME/$MAPSET
 # what to do in case of user break:
 exitprocedure()
 {
- echo "User break!"
+ g.message -e "User break!"
  #delete internal mask and any TMP files:
  g.remove rast=$TMP1,$TMP1.buf,${TMP1}_filled > /dev/null
  g.remove vect=${VECTTMP} > /dev/null
@@ -101,19 +101,19 @@ program=`basename $0`
 #test:
 if [ ! $GIS_OPT_INPUT ]
 then
- echo "Please provide an input map name."
+ g.message "Please provide an input map name."
  exit 1
 fi
 if [ ! $GIS_OPT_OUTPUT ]
 then
- echo "Please provide an output name."
+ g.message "Please provide an output name."
  exit 1
 fi
 
 #check if input file exists
 #if test -f $LOCATION/cell/$GIS_OPT_INPUT
 if [ -z `g.findfile elem=cell file="$GIS_OPT_INPUT" | grep ^file | cut -f2 -d=` ] ; then
-    echo "<$GIS_OPT_INPUT> does not exist! Aborting."
+    g.message -e "<$GIS_OPT_INPUT> does not exist! Aborting."
     exit 1
 fi
 
@@ -122,7 +122,7 @@ MASKTMP=mask.$$
 USERMASK=usermask_${MASKTMP}
 if test -f $LOCATION/cell/MASK
 then
- echo "A user raster mask (MASK) is present. Saving it..."
+ g.message "A user raster mask (MASK) is present. Saving it..."
  g.rename MASK,$USERMASK > /dev/null
 fi
 
@@ -133,7 +133,7 @@ TMP1=r_fillnulls_$$
 # idea: filter all NULLS and grow that area(s) by 3 pixel, then
 # interpolate from these surrounding 3 pixel edge
 
-echo "Locating and isolating NULL areas..."
+g.message "Locating and isolating NULL areas..."
 #creating 0/1 map:
 r.mapcalc $TMP1="if(isnull($GIS_OPT_INPUT),1,null())"
 
@@ -149,7 +149,7 @@ RES="`echo $nsres $ewres | awk '{printf "%f", ($1+$2) * 3. / 2.}'`"  # avg*3
 
 r.buffer input=$TMP1 dist=$RES out=$TMP1.buf
 if [ $? -ne 0 ] ; then
-    echo "ERROR detected: $0 abandoned. Removing temporary map, restoring user mask if needed:"
+    g.message -e "$0 abandoned. Removing temporary map, restoring user mask if needed:"
     g.remove rast=MASK,$TMP1,$TMP1.buf,${TMP1}_filled > /dev/null
     g.remove vect=${VECTTMP} > /dev/null
     g.rename $USERMASK,MASK > /dev/null
@@ -161,10 +161,10 @@ r.mapcalc "MASK=if($TMP1.buf==2,1,null())"
 # now we only see the outlines of the NULL areas if looking at INPUT.
 # Use this outline (raster border) for interpolating the fill data:
 VECTTMP=vecttmp_fillnulls_$$
-echo "Creating interpolation points..."
+g.message -e  "Creating interpolation points..."
 r.to.vect input=$GIS_OPT_INPUT output=${VECTTMP} feature=point
 if [ $? -ne 0 ] ; then
-    echo "ERROR detected: $0 abandoned. Removing temporary maps, restoring user mask if needed:"
+    g.message -e "$0 abandoned. Removing temporary maps, restoring user mask if needed:"
     g.remove rast=MASK,$TMP1,$TMP1.buf,${TMP1}_filled > /dev/null
     g.remove vect=${VECTTMP} > /dev/null
     g.rename $USERMASK,MASK > /dev/null
@@ -174,19 +174,17 @@ fi
 #count number of points to control segmax parameter for interpolation:
 POINTSNUMBER="`v.info map=${VECTTMP} | grep 'Number of points' | awk '{print $5}'`"
 
-echo ""
-echo "Interpolating $POINTSNUMBER points"
-echo ""
+g.message "Interpolating $POINTSNUMBER points"
 
 if [ $POINTSNUMBER -lt 2 ] ; then
-  echo "Not sufficient points to interpolate. Maybe no hole(s) to fill in the current map region?"
+  g.message -w "Not sufficient points to interpolate. Maybe no hole(s) to fill in the current map region?"
   #remove internal MASK first
   g.remove MASK > /dev/null
 
   #restoring user's mask, if present:
   if test -f $LOCATION/cell/$USERMASK
   then
-   echo "Restoring user mask (MASK)..."
+   g.message "Restoring user mask (MASK)..."
    g.rename $USERMASK,MASK > /dev/null
   fi
   
@@ -196,17 +194,14 @@ if [ $POINTSNUMBER -lt 2 ] ; then
   exit 1
 fi
 
-echo ""
-echo "Note: Below warnings may be ignored."
-echo "------------------------------------"
-echo ""
+g.message "Note: Below warnings may be ignored."
 
 #remove internal MASK first -- WHY???? MN 10/2005
 g.remove MASK > /dev/null
 
 if test -f $LOCATION/cell/$USERMASK
 then
-  echo "Using user mask while interpolating"
+  g.message "Using user mask while interpolating"
   RST_CMD="v.surf.rst zcol=value tension=$GIS_OPT_TENSION smooth=$GIS_OPT_SMOOTH maskmap=$USERMASK"
 else
   RST_CMD="v.surf.rst zcol=value tension=$GIS_OPT_TENSION smooth=$GIS_OPT_SMOOTH"
@@ -214,28 +209,26 @@ fi
 
 SEGMAX=600
 if [ $POINTSNUMBER  -ge $SEGMAX ] ; then
-  echo "Using segmentation for interpolation..."
+  g.message "Using segmentation for interpolation..."
   $RST_CMD input=${VECTTMP} elev=${TMP1}_filled #2> /dev/null
 else
   #if less than $SEGMAX points, use no segmentation for speedup:
-  echo "Using no segmentation for interpolation as not needed..."
+  g.message "Using no segmentation for interpolation as not needed..."
   $RST_CMD input=${VECTTMP} elev=${TMP1}_filled segmax=$SEGMAX #2> /dev/null
 fi
 
-echo "------------------------------------"
-echo "Note: Above warnings may be ignored."
-echo ""
+g.message "Note: Above warnings may be ignored."
 
 
 #restoring user's mask, if present:
 if test -f $LOCATION/cell/$USERMASK
 then
- echo "Restoring user mask (MASK)..."
+ g.message "Restoring user mask (MASK)..."
  g.rename $USERMASK,MASK > /dev/null
 fi
 
 #patch orig and fill map
-echo "Patching fill data into NULL areas..."
+g.message "Patching fill data into NULL areas..."
 # we can use --o here as g.parser already checks on startup
 r.patch in=$GIS_OPT_INPUT,${TMP1}_filled out=$GIS_OPT_OUTPUT --o
 
@@ -243,7 +236,5 @@ r.patch in=$GIS_OPT_INPUT,${TMP1}_filled out=$GIS_OPT_OUTPUT --o
 g.remove rast=$TMP1,$TMP1.buf,${TMP1}_filled > /dev/null
 g.remove vect=${VECTTMP} > /dev/null
 
-echo ""
-echo "Filled raster map is: $GIS_OPT_OUTPUT"
-echo
-echo "Done."
+g.message "Filled raster map is: $GIS_OPT_OUTPUT"
+g.message "Done."
