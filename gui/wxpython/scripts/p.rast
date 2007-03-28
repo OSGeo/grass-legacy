@@ -58,7 +58,7 @@ cmdfile="`g.gisenv get=GRASS_PYCMDFILE`"
 if [ -e ${cmdfile} ] && [ -n "${cmdfile}" ]; then
     echo -n
 else
-    echo "WARNING: GRASS_PYCMDFILE File not existing. Run p.mon" >&2
+    g.message -e "GRASS_PYCMDFILE File not found. Run p.mon"
     exit 1
 fi
 
