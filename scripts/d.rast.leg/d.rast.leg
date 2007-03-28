@@ -73,7 +73,7 @@ fi
 #for -n flag of d.legend
 eval `g.findfile el=cell file=$GIS_OPT_MAP`
 if [ ! "$file" ] ; then
-   echo "Raster map '$GIS_OPT_MAP' not found in mapset search path"
+   g.message -e "Raster map '$GIS_OPT_MAP' not found in mapset search path"
    exit 1
 fi
 filemapset="${mapset}"
@@ -133,5 +133,5 @@ fi
 
 
 #d.frame -s frame=full_screen
-echo "Clear screen with:"
-echo "                  d.erase -f"
+g.message "Clear screen with:"
+g.message "d.erase -f"

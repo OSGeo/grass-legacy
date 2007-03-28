@@ -124,7 +124,7 @@ do
 done
 if [ "$mapsets" = "" ]
 then
-	echo "$MAPSETS: No such mapset(s) found" 1>&2
+	g.message -e "$MAPSETS: No such mapset(s) found"
 	exit 1
 fi
 MAPSETS=$mapsets
@@ -133,7 +133,7 @@ drawframes()
 {
  d.frame -e
  if [ $? -ne 0 ] ; then
-   echo "An error occured." 1>&2
+   g.message -e "An error occured while running 'd.frame -e'"
    exit 1
  fi
 
@@ -252,10 +252,10 @@ atnum=0
 totmaps=`expr $ACROSS \* $DOWN`
 
 if [ $SHOW_VECT -eq 0 ] ; then
-   echo "Displaying raster maps..." 1>&2
+   g.message "Displaying raster maps..." 
    drawraster
 else
-   echo "Displaying vector maps..." 1>&2
+   g.message "Displaying vector maps..."
    drawvector
 fi
 
