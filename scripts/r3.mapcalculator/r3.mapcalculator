@@ -84,30 +84,28 @@
 
 
 display_help(){
-	echo ""
-	echo "***** BRIEF HELP *****"
-	echo ""
-	echo "Enter an r3.mapcalc expression in the"
-	echo "formula field using this format:"
-	echo "A+C or (more complex:) exp(A+C)+(B-2)*7"
-	echo "Where A, B, C are grid3D volumes entered"
-	echo "in the A field, B field, and C field."
-	echo ""
-	echo "Do not enter output file in the formula field:"
-	echo "Correct: A+B"
-	echo "Incorrect: newfile = A+B"
-	echo "Use no blanks!"
-	echo ""
-	echo "For details on creating an r3.mapcalc expression,"
-	echo "select 'man' in the help field to see the r3.mapcalc manual page"
-	echo "(or type g.manual r3.mapcalc from the command line)."
+	echo "" >&2
+	echo "BRIEF HELP" >&2
+	echo "" >&2
+	echo "Enter an r3.mapcalc expression in the" >&2
+	echo "formula field using this format:" >&2
+	echo "A+C or (more complex:) exp(A+C)+(B-2)*7" >&2
+	echo "Where A, B, C are grid3D volumes entered" >&2
+	echo "in the A field, B field, and C field." >&2
+	echo "" >&2
+	echo "Do not enter output file in the formula field:" >&2
+	echo "Correct: A+B" >&2
+	echo "Incorrect: newfile = A+B" >&2
+	echo "Use no blanks!" >&2
+	echo "" >&2
+	echo "For details on creating an r3.mapcalc expression," >&2
+	echo "select 'man' in the help field to see the r3.mapcalc manual page" >&2
+	echo "(or type g.manual r3.mapcalc from the command line)." >&2
 }
 
 if  [ -z "$GISBASE" ]
 then
-	echo ""
-	echo "You must be in GRASS GIS to run this program"
-	echo ""
+	echo "You must be in GRASS GIS to run this program" >&2
 	exit 1
 fi
 
@@ -137,20 +135,20 @@ fi
 
 # Check for required arguments
 if [ -z "$GIS_OPT_FORMULA" ]; then
-	echo "ERROR: Missing formula!"
-	echo "Please enter a formula in the field formula"
+	g.message -e "Missing formula."
+	g.message -e "Please enter a formula in the field formula"
 	exit 1
 fi
 
 if [ -z "$GIS_OPT_OUTFILE" ]; then
-	echo "ERROR: Missing name of outputfile!"
-	echo "Please enter a name for the resulting map and try again."
+	g.message -e "Missing name of outputfile."
+	g.message -e "Please enter a name for the resulting map and try again."
 	exit 1
 elif [ "$GIS_FLAG_O" = 1 ]; then
 	echo `g.list type=rast | grep -w "$GIS_OPT_OUTFILE" `
 	outtest=`g.list type=rast | grep -w $GIS_OPT_OUTFILE`
 	if [ -n "$outtest" ]; then
-		echo "File $GIS_OPT_OUTFILE exists. Exiting."
+		g.message -e "File $GIS_OPT_OUTFILE exists. Exiting."
 		exit 0
 	fi
 fi
@@ -173,18 +171,16 @@ echo "(${GIS_OPT_FORMULA})" | sed \
 	-e "s/\([^a-zA-Z0-9]\)F\([^a-zA-Z0-9]\)/\1 \"$GIS_OPT_FGRID\" \2/g"
 `
 
-echo r3.mapcalc "$GIS_OPT_OUTFILE" = "$command" # Show the resulting commandline
+g.message "r3.mapcalc \"$GIS_OPT_OUTFILE\" = \"$command\"" # Show the resulting commandline
 
 r3.mapcalc "$GIS_OPT_OUTFILE" = "$command" # Start the command
 
 # Check for errors
 if [ $? -ne 0 ]; then
-	echo "Error calculating $GIS_OPT_OUTFILE. Try expert mode."
+	g.message -e  "Calculating $GIS_OPT_OUTFILE. Try expert mode."
 	exit 1
 fi
 
-echo ""
-echo ""
-echo "Done"
+g.message "Done"
 
 exit 0
