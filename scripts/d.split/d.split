@@ -60,7 +60,7 @@
 
 
 if  [ -z "$GISBASE" ] ; then
- echo "You must be in GRASS GIS to run this program."
+ echo "You must be in GRASS GIS to run this program." >&2
  exit 1
 fi   
 
@@ -87,17 +87,16 @@ then
 fi
 
 
-echo "VIEW DISPLAYED: $GIS_OPT_VIEW"
-echo ""
+g.message "View displayed: $GIS_OPT_VIEW"
 
 if [ "$GIS_OPT_MAP1" != "" ]
 then
 	d.frame -s frame=win1
-	echo "WINDOW 1: $GIS_OPT_CMD1 $GIS_OPT_MAP1"
+	g.message "Window 1: $GIS_OPT_CMD1 $GIS_OPT_MAP1"
 	d.rast $GIS_OPT_MAP1
 else
 	d.frame -s frame=win1
-	echo "WINDOW 1: $GIS_OPT_CMD1 $GIS_OPT_MAP1"
+	g.message "Window 1: $GIS_OPT_CMD1 $GIS_OPT_MAP1"
 	$GIS_OPT_CMD1
 fi
 
@@ -105,13 +104,13 @@ fi
 if [ "$GIS_OPT_MAP2" != "" ]
 then
 	d.frame -s frame=win2
-	echo "WINDOW 2: $GIS_OPT_CMD2 $GIS_OPT_MAP2"
+	g.message "Window 2: $GIS_OPT_CMD2 $GIS_OPT_MAP2"
 	d.rast $GIS_OPT_MAP2
 else
 	d.frame -s frame=win2
-	echo "WINDOW 2: $GIS_OPT_CMD2 $GIS_OPT_MAP2"
+	g.message "Window 2: $GIS_OPT_CMD2 $GIS_OPT_MAP2"
 	$GIS_OPT_CMD2
 fi
 
-echo DONE
-echo "Use 'd.erase -f' to clear frames from display monitor."
+g.message "Done."
+g.message "Use 'd.erase -f' to clear frames from display monitor."
