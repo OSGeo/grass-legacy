@@ -81,7 +81,7 @@
 # what to do in case of user break:
 exitprocedure()
 {
- echo "User break!"
+ g.message -e "User break"
  cleanup
  exit 1
 }
@@ -101,7 +101,7 @@ PROG=`basename $0`
 
 #### check if we have awk
 if [ ! -x "`which awk`" ] ; then
-    echo "$PROG: awk required, please install awk or gawk first" 2>&1
+    g.message -e "$PROG: awk required, please install awk or gawk first" 
     exit 1
 fi
 
@@ -120,24 +120,24 @@ cleanup()
 TMP=$$
 
 if [ $GIS_FLAG_S -eq 0 -a $GIS_FLAG_L -eq 0 -a $GIS_FLAG_Q -eq 0 ] ; then
-   echo "Please select a flag to specify the satellite sensor"
+   g.message -e "Please select a flag to specify the satellite sensor"
    exit 1
 fi
 
 #get PAN resolution:
 PANRES=`r.info $GIS_OPT_PAN | grep Res | tr -s ' ' ' ' | cut -d':' -f4 | cut -d' ' -f2 | tr '\n' ' '  | awk '{printf "%f\n", ($1+$2) / 2.}'`
 if [ $? -ne 0 ] ; then
- echo "An error occurred."
+ g.message -e "An error occurred while parsing r.info output"
  exit 1
 fi
 
 #save current settings:
 g.region save=i.fusion.brovey.$TMP > /dev/null
 
-echo "Temporarily setting raster resolution to PAN resolution: $PANRES"
+g.message "Temporarily setting raster resolution to PAN resolution: $PANRES"
 g.region res=$PANRES -ap > /dev/null
 
-echo "Performing Brovey transformation..."
+g.message "Performing Brovey transformation..."
 
 # The formula was originally developed for LANDSAT-TM5 and SPOT, 
 # but it also works well with LANDSAT-TM7
@@ -152,24 +152,24 @@ echo "Performing Brovey transformation..."
 # r.mapcalc "brov.blue= 1. * spot.ms.1 / (spot.ms.1 + spot.ms.2 + spot.ms.3) * spot.p"
 # note: for RGB composite then revert brov.red and brov.green!
 
-echo -n "  Calculating $GIS_OPT_OUTPUTPREFIX.red: ...(step 1/4)"
+g.message  "Calculating $GIS_OPT_OUTPUTPREFIX.red: ...(step 1/4)"
 r.mapcalc   $GIS_OPT_OUTPUTPREFIX.red="1. * $GIS_OPT_MS3 / ($GIS_OPT_MS1 + $GIS_OPT_MS2 + $GIS_OPT_MS3) * $GIS_OPT_PAN"
 if [ $? -ne 0 ] ; then
- echo "An error occurred."
+ g.message -e "An error occurred while running r.mapcalc"
  exit 1
 fi
 
-echo -n "  Calculating $GIS_OPT_OUTPUTPREFIX.green: ...(step 2/4)"
+g.message "Calculating $GIS_OPT_OUTPUTPREFIX.green: ...(step 2/4)"
 r.mapcalc   $GIS_OPT_OUTPUTPREFIX.green="1. * $GIS_OPT_MS2 / ($GIS_OPT_MS1 + $GIS_OPT_MS2 + $GIS_OPT_MS3) * $GIS_OPT_PAN"
 if [ $? -ne 0 ] ; then
- echo "An error occurred."
+ g.message -e "An error occurred while running r.mapcalc"
  exit 1
 fi
 
-echo -n "  Calculating $GIS_OPT_OUTPUTPREFIX.blue: ...(step 3/4)"
+g.message  "Calculating $GIS_OPT_OUTPUTPREFIX.blue: ...(step 3/4)"
 r.mapcalc   $GIS_OPT_OUTPUTPREFIX.blue="1. * $GIS_OPT_MS1 / ($GIS_OPT_MS1 + $GIS_OPT_MS2 + $GIS_OPT_MS3) * $GIS_OPT_PAN"
 if [ $? -ne 0 ] ; then
- echo "An error occurred."
+ g.message -e "An error occurred while running r.mapcalc"
  exit 1
 fi
 
@@ -187,33 +187,31 @@ fi
 
 if [ $GIS_FLAG_S -eq 1 ] ; then
  #apect table is nice for SPOT:
- echo "Assigning color tables for SPOT ...(step 4/4)"
+ g.message "Assigning color tables for SPOT ...(step 4/4)"
  r.colors $GIS_OPT_OUTPUTPREFIX.blue col=aspect
  r.colors $GIS_OPT_OUTPUTPREFIX.green col=aspect
  r.colors $GIS_OPT_OUTPUTPREFIX.red col=aspect
- echo "Fixing output names..."
+ g.message "Fixing output names..."
  g.rename $GIS_OPT_OUTPUTPREFIX.green,$GIS_OPT_OUTPUTPREFIX.$TMP > /dev/null
  g.rename $GIS_OPT_OUTPUTPREFIX.red,$GIS_OPT_OUTPUTPREFIX.green > /dev/null
  g.rename $GIS_OPT_OUTPUTPREFIX.$TMP,$GIS_OPT_OUTPUTPREFIX.red > /dev/null
 else
  #aspect table is nice for LANDSAT and QuickBird:
- echo "Assigning color tables for LANDSAT or QuickBird ...(step 4/4)"
+ g.messge "Assigning color tables for LANDSAT or QuickBird ...(step 4/4)"
  r.colors $GIS_OPT_OUTPUTPREFIX.blue col=aspect
  r.colors $GIS_OPT_OUTPUTPREFIX.green col=aspect
  r.colors $GIS_OPT_OUTPUTPREFIX.red col=aspect
 fi
 
-echo "Restoring region settings."
+g.message "Restoring region settings."
 cleanup
 
-echo "Following pan-sharpened output maps have been generated:"
-echo "  $GIS_OPT_OUTPUTPREFIX.red"
-echo "  $GIS_OPT_OUTPUTPREFIX.green"
-echo "  $GIS_OPT_OUTPUTPREFIX.blue"
-echo ""
-echo "To visualize output, run:"
-echo "  g.region -p rast=$GIS_OPT_OUTPUTPREFIX.red ; d.erase"
-echo "  d.rgb r=$GIS_OPT_OUTPUTPREFIX.red g=$GIS_OPT_OUTPUTPREFIX.green b=$GIS_OPT_OUTPUTPREFIX.blue"
-echo ""
-echo "If desired, combine channels with 'r.composite' to a single map"
+g.message "Following pan-sharpened output maps have been generated:"
+echo "$GIS_OPT_OUTPUTPREFIX.red"
+echo "$GIS_OPT_OUTPUTPREFIX.green"
+echo "$GIS_OPT_OUTPUTPREFIX.blue"
+g.message "To visualize output, run:"
+g.message "g.region -p rast=$GIS_OPT_OUTPUTPREFIX.red ; d.erase"
+g.message "d.rgb r=$GIS_OPT_OUTPUTPREFIX.red g=$GIS_OPT_OUTPUTPREFIX.green b=$GIS_OPT_OUTPUTPREFIX.blue"
+g.message "If desired, combine channels with 'r.composite' to a single map"
 
