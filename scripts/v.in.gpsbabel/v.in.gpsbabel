@@ -109,28 +109,28 @@ PROG=`basename $0`
 
 #### check for gpsbabel 
  if [ ! -x "`which gpsbabel`" ] ; then
-    echo "$PROG: The gpsbabel program was not found, please install it first." 1>&2
-    echo "       http://gpsbabel.sourceforge.net" 1>&2
+    g.message -e "The gpsbabel program was not found, please install it first."
+    g.message -e "       http://gpsbabel.sourceforge.net"
     exit 1
 fi
 
 #### check for cs2cs
 if [ ! -x "`which cs2cs`" ] ; then
-    echo "$PROG: The cs2cs program was not found, please install it first." 1>&2
-    echo "       http://proj.maptools.org" 1>&2
+    g.message -e "The cs2cs program was not found, please install it first." 
+    g.message -e "http://proj.maptools.org" 
     exit 1
 fi
 
 #### check if we have awk
 if [ ! -x "`which awk`" ] ; then
-    echo "$PROG: awk is required, please install awk or gawk first." 1>&2
+    g.message -e "awk is required, please install awk or gawk first."
     exit 1
 fi
 
 #### set temporary files
 TMP="`g.tempfile pid=$$`"
 if [ $? -ne 0 ] || [ -z "$TMP" ] ; then
-    echo "ERROR: unable to create temporary files" 1>&2
+    g.message -e "Unable to create temporary files"
     exit 1
 fi
 
@@ -252,7 +252,7 @@ fi
 
 #### check success/failure
 if [ $EXITCODE -ne 0 ] ; then
-    echo "$PROG: Error retrieving data" 1>&2
+    g.message -e "Error retrieving data"
     rm -f ${TMP}.*
     exit 1
 fi
@@ -282,10 +282,10 @@ if [ $CREATE_POINTS -eq 1 ] ; then
     # linea modificata
 
     if [ "$IN_PROJ" = "$OUT_PROJ" ] || [ $KEEP_WGS84 -eq 1 ] ; then
-	echo "No projection transformation performed" 1>&2
+	g.message "No projection transformation performed" 
 	cp "${TMP}.base" "${TMP}.P_base"
     else
-	echo "Attempting waypoint projection transform with cs2cs" 1>&2
+	g.message "Attempting waypoint projection transform with cs2cs" 
 	cs2cs -f %.7f $IN_PROJ +to $OUT_PROJ < "${TMP}.base" > "${TMP}.P_base"
 	EXITCODE=$?
 	# check if transform REALLY worked (e.g. when the grid file is not found)
@@ -293,7 +293,7 @@ if [ $CREATE_POINTS -eq 1 ] ; then
 	    EXITCODE=1
 	fi
 	if [ $EXITCODE -ne 0 ] ; then
-	    echo "Projection transform failed, retaining WGS84" 1>&2
+	    g.message -w "Projection transform failed, retaining WGS84"
 	    cp -f "${TMP}.base" "${TMP}.P_base"
 	fi
     fi
@@ -306,12 +306,12 @@ if [ $CREATE_POINTS -eq 1 ] ; then
 
 
     if [ -z "$NAME" ] ; then
-	echo "ASCII file redirected to stdout" 1>&2
+	g.message "ASCII file redirected to stdout" 
 	cat "${TMP}.asc" 2> /dev/null
     else
 	#### import into new ascii points file
 	if [ $WPT -eq 1 ] ; then
-	    echo "Importing Waypoints..."
+	    g.message "Importing Waypoints..."
 	    #linea modificata
 	    cat "${TMP}.asc" | v.in.ascii output="$NAME" cat=0 \
 #HB#???? fix:: see v.in.garmin & edit grass.style
@@ -319,14 +319,14 @@ if [ $CREATE_POINTS -eq 1 ] ; then
 	    EXITCODE=$?
 	fi
 	if [ $RTE -eq 1 ] ; then
-	    echo "Importing Routes as points..."
+	    g.message "Importing Routes as points..."
 	    #linea modificata
 	    cat "${TMP}.asc" | v.in.ascii output="$NAME" cat=0 \
 		columns='x double precision, y double precision, altitude double precision, creatdate varchar(10), time varchar(11), comments varchar(40)'
 	    EXITCODE=$?
 	fi
 	if [ $TRK -eq 1 ] ; then
-	    echo "Importing Track as points..."
+	    g.message "Importing Track as points..."
 	    #linea modificata
 	    cat "${TMP}.asc" | v.in.ascii output="$NAME" cat=0 \
 		columns='x double precision, y double precision, altitude double precision, creatdate varchar(10), time varchar(11), comments varchar(40)'
@@ -334,7 +334,7 @@ if [ $CREATE_POINTS -eq 1 ] ; then
 	fi
 
 	if [ $EXITCODE -ne 0 ] ; then
-	    echo "$PROG: Error importing data" 1>&2
+	    g.message "$PROG: Error importing data" 1>&2
 	    rm -f ${TMP}.*
 	    exit 1
 	fi
