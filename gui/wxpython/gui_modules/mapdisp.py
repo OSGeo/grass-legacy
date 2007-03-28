@@ -2,7 +2,7 @@
 To be used either from GIS Manager or as p.mon backend
 
 Usage:
-    mapdisp.py /path/to/command/file
+    python mapdisp.py monitor-identifier /path/to/command/file
 
 mapdisp Package
 
@@ -797,28 +797,16 @@ class MapApp(wx.App):
 
     def OnInit(self):
         wx.InitAllImageHandlers()
-        self.Mapfrm = MapFrame(parent=None, id=wx.ID_ANY)
+        self.mapFrm = MapFrame(parent=None, id=wx.ID_ANY)
         #self.SetTopWindow(Map)
-        self.Mapfrm.Show()
-
-        # only for testing purpose
-        if __name__ == "__main__":
-
-            # redraw map, if new command appears
-            self.redraw = False
-            status = Command(self,Map)
-            status.start()
-            self.timer = wx.PyTimer(self.watcher)
-            # chec each 0.1s
-            self.timer.Start(100)
-
+        self.mapFrm.Show()
 
         return 1
 
     def watcher(self):
         """Redraw, if new layer appears"""
         if self.redraw:
-            self.Mapfrm.ReDraw(None)
+            self.mapFrm.ReDraw(None)
         self.redraw = False
         return
 
@@ -828,11 +816,12 @@ class MapApp(wx.App):
 if __name__ == "__main__":
 
     ###### SET command variable
-    if len(sys.argv) != 2:
+    if len(sys.argv) != 3:
         print __doc__
         sys.exit()
 
-    cmdfilename = sys.argv[1]
+    title = sys.argv[1]
+    cmdfilename = sys.argv[2]
 
     import gettext
     gettext.install("gm_map") # replace with the appropriate catalog name
@@ -841,11 +830,19 @@ if __name__ == "__main__":
     if not os.getenv("GRASS_ICONPATH"):
         os.environ["GRASS_ICONPATH"]=os.getenv("GISBASE")+"/etc/gui/icons/"
 
+    print "Starting monitor <%s>" % (title)
+
     gm_map = MapApp(0)
+    # set title
+    gm_map.mapFrm.SetTitle ("Map display " + title)
     gm_map.MainLoop()
+
     if grassenv.env.has_key("MONITOR"):
         os.system("d.mon sel=%s" % grassenv.env["MONITOR"])
 
     os.remove(cmdfilename)
     os.system("""g.gisenv set="GRASS_PYCMDFILE" """)
 
+    print "Stoping monitor <%s>" % (title)
+
+    sys.exit()
