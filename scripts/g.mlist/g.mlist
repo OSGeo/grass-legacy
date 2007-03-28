@@ -147,7 +147,7 @@ do
 done
 
 if [ "$start" ] ; then
-    echo ""
+    echo -e ""
 fi
 
 exit 0
