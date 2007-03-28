@@ -51,9 +51,11 @@ from xml.sax import make_parser
 
 import os
 from os import system
+
 try:
     import subprocess
 except:
+    sys.path.append(os.path.join(os.getenv("GISBASE"),"etc","wx"))
     from compat import subprocess
 import re
 
