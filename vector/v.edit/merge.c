@@ -58,6 +58,11 @@ int do_merge(struct Map_info *Map)
     nlines_merged = 0;
     
     thresh = atof (maxdist_opt -> answer);
+    
+    if (thresh) {
+	G_warning (_("Ignoring threshold value"));
+	thresh = 0.0;
+    }
 
     /* select lines */
     List = select_lines (Map);
@@ -102,6 +107,7 @@ int do_merge(struct Map_info *Map)
 	    
 	    /* define searching region */
 	    Vect_reset_line (Points2);
+	    /*
 	    Vect_append_point (Points2, Points1 -> x[i] - thresh,
 			       Points1 -> y[i] + thresh, Points1 -> z[i]);
 	    Vect_append_point (Points2, Points1 -> x[i] + thresh,
@@ -110,6 +116,9 @@ int do_merge(struct Map_info *Map)
 			       Points1 -> y[i] - thresh, Points1 -> z[i]);
 	    Vect_append_point (Points2, Points1 -> x[i] - thresh,
 			       Points1 -> y[i] - thresh, Points1 -> z[i]);
+	    */
+	    Vect_append_point (Points2, Points1 -> x[i],
+			       Points1 -> y[i], Points1 -> z[i]);
 
 	    /* 
 	     * merge lines only if two lines found in the region
