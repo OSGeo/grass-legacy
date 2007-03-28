@@ -49,7 +49,7 @@
 
 
 if  [ -z "$GISBASE" ] ; then
-    echo "You must be in GRASS GIS to run this program." 1>&2
+    g.message -e "You must be in GRASS GIS to run this program." 1>&2
     exit 1
 fi
 
@@ -61,13 +61,13 @@ PROG=`basename $0`
 
 #### check if we have awk
 if [ ! -x "`which awk`" ] ; then
-    echo "$PROG: awk required, please install awk or gawk first" 1>&2
+    g.message -e "$PROG: awk required, please install awk or gawk first"
     exit 1
 fi
 
 
 if [ -n "$GIS_OPT_EPS" ] && [ $GIS_FLAG_X -eq 1 ] ; then
-    echo "$PROG: Please select only one output method" 1>&2
+    g.message -e "$PROG: Please select only one output method"
     exit 1
 fi
 
@@ -75,7 +75,7 @@ fi
 #### check if we have xgraph (if no EPS output requested)
 if [ $GIS_FLAG_X -eq 1 ] ; then
   if [ ! -x "`which xgraph`" ] ; then
-    echo "$PROG: xgraph required, please install first (www.xgraph.org)" 1>&2
+    g.message -e "$PROG: xgraph required, please install first (www.xgraph.org)"
     exit 1
   fi
 fi
@@ -88,7 +88,7 @@ export LC_NUMERIC
 
 TMP="`g.tempfile pid=$$`"
 if [ $? -ne 0 ] || [ -z "${TMP}" ] ; then
-    echo "ERROR: unable to create temporary files" 1>&2
+    g.message -e "unable to create temporary files"
     exit 1
 fi
 #TMP=`dirname $TMP`
@@ -102,7 +102,7 @@ wordcount()
              freq[$i]++
 	     total++
      }
- 
+
      END {
          for (word in freq)
              printf "%s %d\n", word, freq[word]
@@ -119,7 +119,7 @@ cleanup()
 r.stats -1 "$GIS_OPT_MAP" > ${TMP}_raw
 TOTALNUMBER=`wc -l ${TMP}_raw | awk '{print $1}'`
 
-echo "Calculating statistics for polar diagram... (be patient)" 1>&2
+g.message "Calculating statistics for polar diagram... (be patient)"
 
 #wipe out NULL data and undef data if defined by user
 # - generate degree binned to integer, eliminate NO DATA (NULL):
@@ -135,7 +135,7 @@ cat ${TMP}_binned | awk '{printf "%f\n", (3.14159265 * $1 ) / 180.}'  > ${TMP}_b
 TOTALVALIDNUMBER=`wc -l ${TMP}_binned_radians | awk '{print $1}'`
 
 if [ "$TOTALVALIDNUMBER" -eq 0 ] ; then
-   echo "No data pixel found" 1>&2
+   g.message -e "No data pixel found"
    cleanup
    exit 1
 fi
@@ -176,7 +176,7 @@ echo $REPLICATE >> ${TMP}_sine_cosine_replic
 PI=3.14159265358979323846
 if [ -n "$GIS_OPT_EPS" ] || [ $GIS_FLAG_X -eq 1 ] ; then
   rm -f ${TMP}_outercircle
-  echo "\"All Data incl. NULLs"           > ${TMP}_outercircle
+    echo "\"All Data incl. NULLs"           > ${TMP}_outercircle
 
   awk -v PI=$PI -v TOTAL=$TOTALNUMBER -v TOTALVALID=$TOTALVALIDNUMBER \
       -v MAXRADIUS=$MAXRADIUS 'BEGIN {
@@ -356,7 +356,7 @@ d.frame -s frame="$ORIG_FRAME"
 plot_eps()
 {
 # EPS output (by M.Neteler and Bruno Caprile, ITC-irst)
-echo "Generating $PSOUT ..." 1>&2
+g.message "Generating $PSOUT ..."
 
 OUTERRADIUS=$MAXRADIUS
 EPSSCALE=0.1
@@ -380,12 +380,12 @@ AVERAGEDIRECTIONCOLOR=1 #(blue)
 DIAGRAMCOLOR=4 #(red)
 CIRCLECOLOR=2 #(green)
 AXESCOLOR=0 #(black)
-  
+
 NORTHJUSTIFICATION=2
 EASTJUSTIFICATION=6
 SOUTHJUSTIFICATION=8
 WESTJUSTIFICATION=8
-  
+
 NORTHXSHIFT=`echo 1.02 $HALFFRAME | awk '{printf "%.1f", $1 * $2}'`
 NORTHYSHIFT=`echo 1.98 $HALFFRAME | awk '{printf "%.1f", $1 * $2}'`
 EASTXSHIFT=`echo 1.98 $HALFFRAME  | awk '{printf "%.1f", $1 * $2}'`
@@ -394,11 +394,11 @@ SOUTHXSHIFT=`echo 1.02 $HALFFRAME | awk '{printf "%.1f", $1 * $2}'`
 SOUTHYSHIFT=`echo 0.02 $HALFFRAME | awk '{printf "%.1f", $1 * $2}'`
 WESTXSHIFT=`echo 0.01 $HALFFRAME  | awk '{printf "%.1f", $1 * $2}'`
 WESTYSHIFT=`echo 1.02 $HALFFRAME  | awk '{printf "%.1f", $1 * $2}'`
-  
+
 ALLDATASTRING="All Data (NULL included)"
 REALDATASTRING="Real Data Angles"
 AVERAGEDIRECTIONSTRING="Avg. Direction"
-  
+
 LEGENDSX=`echo "1.95 $HALFFRAME" | awk '{printf "%.1f", $1 * $2}'`
 ALLDATALEGENDY=`echo "1.95 $HALFFRAME" | awk '{printf "%.1f", $1 * $2}'`
 REALDATALEGENDY=`echo "1.90 $HALFFRAME" | awk '{printf "%.1f", $1 * $2}'`
@@ -522,7 +522,7 @@ col1                                    %% colAVERAGE-DIRECTION-COLOR
 ($AVERAGEDIRECTIONSTRING) $LEGENDSX $AVERAGEDIRECTIONLEGENDY 4 just-string
 " >> $PSOUT
 
-echo "Done." 1>&2
+g.message "Done."
 }
 
 
@@ -540,7 +540,7 @@ else
 fi
 
 
-echo "Average vector:"  1>&2
+g.message "Average vector:"
 echo "direction: `echo "$UNITVECTOR" | \
   awk -v PI=$PI '{ print atan2($2, $1) * 180/PI }'` degrees CCW from East"
 echo "magnitude: `echo "$UNITVECTOR " | \
