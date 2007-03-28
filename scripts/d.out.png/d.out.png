@@ -3,8 +3,8 @@
 ############################################################################
 #
 # MODULE:	d.out.png for GRASS 6.0; based on d.out.png for GRASS 5 (2004/12/07)
-# AUTHOR(S):	Michael Barton 
-#		 Routine to read current display geometry written by 
+# AUTHOR(S):	Michael Barton
+#		 Routine to read current display geometry written by
 #		 Hamish Bowman & Glynn Clements
 # PURPOSE:	To redraw current displayed maps to 24 bit PNG output
 # COPYRIGHT:	(C) 2004 by the GRASS Development Team
@@ -38,7 +38,7 @@
 if  [ -z "$GISBASE" ] ; then
  echo "You must be in GRASS GIS to run this program."
  exit 1
-fi   
+fi
 
 if [ "$1" != "@ARGS_PARSED@" ] ; then
   exec g.parser "$0" "$@"
@@ -48,7 +48,7 @@ PROG=`basename $0`
 
 #### check if we have awk
 if [ ! -x "`which awk`" ] ; then
-    echo "$PROG: awk required, please install awk or gawk first" 2>&1
+    g.message -e "$PROG: awk required, please install awk or gawk first" 
     exit 1
 fi
 
@@ -62,12 +62,10 @@ monitorcheck=`d.mon -p|sed s/'No monitor currently selected for output'//`
 
 if  [ "$monitorcheck" = "" ]
 then
-	echo ""
-	echo "***You must select a display monitor***"
-	echo ""
+        g.message -e "You must select a display monitor"
 	exit 1
 fi
-     
+
 
 # Save old settings
 old_GRASSW=`eval g.gisenv get=GRASS_WIDTH`
@@ -88,7 +86,7 @@ GRASS_VER=`g.version | awk '{printf "%s", $1 " " $2}'`
 curr_width=`d.frame -D | sed -n -e '1,/^FRAME: full_screen/d' -e 's/d_win://p' | awk '{printf $4}'`
 curr_height=`d.frame -D | sed -n -e '1,/^FRAME: full_screen/d' -e 's/d_win://p' | awk '{printf $2}'`
 
-echo "width = $curr_width  height = $curr_height"
+g.message "width = $curr_width  height = $curr_height"
 
 #set resolution for PNG output
 out_width=`expr $res \* $curr_width`
@@ -106,8 +104,8 @@ export GRASS_HEIGHT
 GRASS_TRUECOLOR=TRUE
 export GRASS_TRUECOLOR
 
-echo "Saving display to $output.png from [$GRASS_VER- Monitor: $curr_mon]"
-echo "at $out_width x $out_height resolution"
+g.message "Saving display to $output.png from [$GRASS_VER- Monitor: $curr_mon]"
+g.message "at $out_width x $out_height resolution"
 
 #set PNG output file name
 GRASS_PNGFILE="$output".png
@@ -130,6 +128,6 @@ export GRASS_TRUECOLOR
 GRASS_PNGFILE=map.png
 export GRASS_PNGFILE
 
-echo "Done (writing the file may take a small amount of time)"
+g.message "Done (writing the file may take a small amount of time)"
 exit 0
 
