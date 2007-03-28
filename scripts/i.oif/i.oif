@@ -71,9 +71,7 @@
 
 if  [ -z "$GISBASE" ]
 then
-	echo ""
-	echo "You must be in GRASS GIS to run this program"
-	echo ""
+	echo "You must be in GRASS GIS to run this program" >&2
 	exit 1
 fi
 
@@ -100,112 +98,109 @@ temp_result2="`g.tempfile $$`"
 temp_bands="`g.tempfile $$`"
 
 # save the Stddev for TM bands
-echo "Calculating Standard deviations for all bands:"
-echo band 1
+g.message "Calculating Standard deviations for all bands:"
+g.message "band 1"
 r.univar -g "$GIS_OPT_IMAGE1" | grep stddev | cut -f2 -d= > "$temp_stddev"
-echo band 2
+g.message "band 2"
 r.univar -g "$GIS_OPT_IMAGE2" | grep stddev | cut -f2 -d= >> "$temp_stddev"
-echo band 3
+g.message "band 3"
 r.univar -g "$GIS_OPT_IMAGE3" | grep stddev | cut -f2 -d= >> "$temp_stddev"
-echo band 4
+g.message "band 4"
 r.univar -g "$GIS_OPT_IMAGE4" | grep stddev | cut -f2 -d= >> "$temp_stddev"
-echo band 5
+g.message "band 5"
 r.univar -g "$GIS_OPT_IMAGE5" | grep stddev | cut -f2 -d= >> "$temp_stddev"
-echo band 7
+g.message "band 7"
 r.univar -g "$GIS_OPT_IMAGE7" | grep stddev | cut -f2 -d= >> "$temp_stddev"
 
-echo "Calculating Correlation Matrix"
+g.message "Calculating Correlation Matrix"
 r.covar -r map=$GIS_OPT_IMAGE1,$GIS_OPT_IMAGE2,$GIS_OPT_IMAGE3,$GIS_OPT_IMAGE4,$GIS_OPT_IMAGE5,$GIS_OPT_IMAGE7 |tail -6 > "$temp_correlation"
 
 # Calculate all combinations
-echo
-echo "Calculating OIF for the 20 band combinations..."
-echo
-echo "Calculate OIF for combination 123"
+g.message "Calculating OIF for the 20 band combinations..."
+g.message "Calculate OIF for combination 123"
 echo "123: "> "$temp_bands"
 $GISBASE/etc/i.oif/i.oifcalc 1 2 3 >  "$temp_result"
 
-echo "Calculate OIF for combination 124"
+g.message "Calculate OIF for combination 124"
 echo "124: " >> "$temp_bands"
 $GISBASE/etc/i.oif/i.oifcalc 1 2 4 >> "$temp_result"
 
-echo "Calculate OIF for combination 125"
+g.message "Calculate OIF for combination 125"
 echo "125: " >> "$temp_bands"
 $GISBASE/etc/i.oif/i.oifcalc 1 2 5 >> "$temp_result"
 
-echo "Calculate OIF for combination 127"   
+g.message "Calculate OIF for combination 127"   
 echo "127: " >> "$temp_bands"
 $GISBASE/etc/i.oif/i.oifcalc 1 2 7 >> "$temp_result"
 
-echo "Calculate OIF for combination 134"   
+g.message "Calculate OIF for combination 134"   
 echo "134: " >> "$temp_bands"
 $GISBASE/etc/i.oif/i.oifcalc 1 3 4 >> "$temp_result"
 
-echo "Calculate OIF for combination 135"   
+g.message "Calculate OIF for combination 135"   
 echo "135: " >> "$temp_bands"
 $GISBASE/etc/i.oif/i.oifcalc 1 3 5 >> "$temp_result"
 
-echo "Calculate OIF for combination 137"   
+g.message "Calculate OIF for combination 137"   
 echo "137: " >> "$temp_bands"
 $GISBASE/etc/i.oif/i.oifcalc 1 3 7 >> "$temp_result"
 
-echo "Calculate OIF for combination 145"   
+g.message "Calculate OIF for combination 145"   
 echo "145: " >> "$temp_bands"
 $GISBASE/etc/i.oif/i.oifcalc 1 4 5 >> "$temp_result"
 
-echo "Calculate OIF for combination 147"   
+g.message "Calculate OIF for combination 147"   
 echo "147: " >> "$temp_bands"
 $GISBASE/etc/i.oif/i.oifcalc 1 4 7 >> "$temp_result"
 
-echo "Calculate OIF for combination 157"   
+g.message "Calculate OIF for combination 157"   
 echo "157: " >> "$temp_bands"
 $GISBASE/etc/i.oif/i.oifcalc 1 5 7 >> "$temp_result"
 
-echo "Calculate OIF for combination 234"   
+g.message "Calculate OIF for combination 234"   
 echo "234: " >> "$temp_bands"
 $GISBASE/etc/i.oif/i.oifcalc 2 3 4 >> "$temp_result"
 
-echo "Calculate OIF for combination 235"   
+g.message "Calculate OIF for combination 235"   
 echo "235: " >> "$temp_bands"
 $GISBASE/etc/i.oif/i.oifcalc 2 3 5 >> "$temp_result"
 
-echo "Calculate OIF for combination 237"   
+g.message "Calculate OIF for combination 237"   
 echo "237: " >> "$temp_bands"
 $GISBASE/etc/i.oif/i.oifcalc 2 3 7 >> "$temp_result"
 
-echo "Calculate OIF for combination 245"   
+g.message "Calculate OIF for combination 245"   
 echo "245: " >> "$temp_bands"
 $GISBASE/etc/i.oif/i.oifcalc 2 4 5 >> "$temp_result"
 
-echo "Calculate OIF for combination 247"   
+g.message "Calculate OIF for combination 247"   
 echo "247: " >> "$temp_bands"
 $GISBASE/etc/i.oif/i.oifcalc 2 4 7 >> "$temp_result"
 
-echo "Calculate OIF for combination 257"   
+g.message "Calculate OIF for combination 257"   
 echo "257: " >> "$temp_bands"
 $GISBASE/etc/i.oif/i.oifcalc 2 5 7 >> "$temp_result"
 
-echo "Calculate OIF for combination 345"   
+g.message "Calculate OIF for combination 345"   
 echo "345: " >> "$temp_bands"
 $GISBASE/etc/i.oif/i.oifcalc 3 4 5 >> "$temp_result"
 
-echo "Calculate OIF for combination 347"   
+g.message "Calculate OIF for combination 347"   
 echo "347: " >> "$temp_bands"
 $GISBASE/etc/i.oif/i.oifcalc 3 4 7 >> "$temp_result"
 
-echo "Calculate OIF for combination 357"   
+g.message "Calculate OIF for combination 357"   
 echo "357: " >> "$temp_bands"
 $GISBASE/etc/i.oif/i.oifcalc 3 5 7 >> "$temp_result"
 
-echo "Calculate OIF for combination 457"   
+g.message "Calculate OIF for combination 457"   
 echo "457: " >> "$temp_bands"
 $GISBASE/etc/i.oif/i.oifcalc 4 5 7 >> "$temp_result"
 
 paste -d' ' "$temp_bands" "$temp_result" > "$temp_result2"
-echo "Ready."
-echo ""
-echo "The Optimum Index Factor analysis result:"
-echo "    (Best combination comes first.)"
+g.message "Ready."
+g.message "The Optimum Index Factor analysis result:"
+g.message "    (Best combination comes first.)"
 sort -k 2 -n -r "$temp_result2" | tee ./i.oif.result
 
 rm -f "$temp_stddev"

@@ -49,9 +49,7 @@
 
 if  [ -z "$GISBASE" ]
 then
-	echo ""
-	echo "You must be in GRASS GIS to run this program"
-	echo ""
+	echo "You must be in GRASS GIS to run this program" >&2
 	exit 1
 fi
 
@@ -64,7 +62,7 @@ PROG=`basename $0`
 
 #### check if we have awk
 if [ ! -x "`which awk`" ] ; then
-    echo "$PROG: awk required, please install awk or gawk first" 2>&1
+    g.message -e "$PROG: awk required, please install awk or gawk first"
     exit 1
 fi
 
@@ -77,13 +75,11 @@ eval `g.gisenv`
 : ${GISBASE?} ${GISDBASE?} ${LOCATION_NAME?} ${MAPSET?}
 CURRLOCATION=$GISDBASE/$LOCATION_NAME/$MAPSET
 
-echo ""
-echo "ATTENTION: Do not forget to set region properly to cover all images!"
-echo ""
+g.message -w "Do not forget to set region properly to cover all images!"
 
 # two images to patch
 if [ -z "$GIS_OPT_IMAGE3" -a  -z "$GIS_OPT_IMAGE4" ]; then
-     echo "Mosaicing two images..."
+     g.message "Mosaicing two images..."
      r.mapcalc "$GIS_OPT_IMAGE1.$GIS_OPT_IMAGE2.mosaic = if(isnull($GIS_OPT_IMAGE1),\
 					$GIS_OPT_IMAGE2+256,\
 					$GIS_OPT_IMAGE1)"
@@ -98,26 +94,26 @@ if [ -z "$GIS_OPT_IMAGE3" -a  -z "$GIS_OPT_IMAGE4" ]; then
      mapset2="${mapset}"
      cat $GISDBASE/$LOCATION_NAME/$mapset2/colr/$GIS_OPT_IMAGE2 | grep -v '%' | tr -s ' ' '\012' | awk -F':' '{print $1+256":"$2":"$3":"$4}'>>$CURRLOCATION/colr/$GIS_OPT_IMAGE1.$GIS_OPT_IMAGE2.mosaic
      
-     echo "Ready. File $GIS_OPT_IMAGE1.$GIS_OPT_IMAGE2.mosaic created."
+     g.message "Ready. File $GIS_OPT_IMAGE1.$GIS_OPT_IMAGE2.mosaic created."
      exit
 fi
 
 # three images to patch
 if [ -z "$GIS_OPT_IMAGE3" -o  -z "$GIS_OPT_IMAGE4" ]; then
-     echo "Mosaicing three images..."
+     g.message "Mosaicing three images..."
      r.mapcalc "$GIS_OPT_IMAGE1.$GIS_OPT_IMAGE2.$GIS_OPT_IMAGE3.mosaic = eval(t1=if($GIS_OPT_IMAGE1,$GIS_OPT_IMAGE1,$GIS_OPT_IMAGE2+256), t2=if(t1 % 256,t1,$GIS_OPT_IMAGE3+512), t2)"
      #modify the color table:
      echo '% 0 1024' > $CURRLOCATION/colr/$GIS_OPT_IMAGE1.$GIS_OPT_IMAGE2.$GIS_OPT_IMAGE3.mosaic
      tail -256 $CURRLOCATION/colr/$GIS_OPT_IMAGE1 >> $CURRLOCATION/colr/$GIS_OPT_IMAGE1.$GIS_OPT_IMAGE2.$GIS_OPT_IMAGE3.mosaic
      tail -256 $CURRLOCATION/colr/$GIS_OPT_IMAGE2 |awk -F':' '{print $1+256":"$2":"$3":"$4}'>>$CURRLOCATION/colr/$GIS_OPT_IMAGE1.$GIS_OPT_IMAGE2.$GIS_OPT_IMAGE3.mosaic
      tail -256 $CURRLOCATION/colr/$GIS_OPT_IMAGE3 |awk -F':' '{print $1+512":"$2":"$3":"$4}'>>$CURRLOCATION/colr/$GIS_OPT_IMAGE1.$GIS_OPT_IMAGE2.$GIS_OPT_IMAGE3.mosaic
-     echo "Ready. File $GIS_OPT_IMAGE1.$GIS_OPT_IMAGE2.$GIS_OPT_IMAGE3.mosaic created."
+     g.message "Ready. File $GIS_OPT_IMAGE1.$GIS_OPT_IMAGE2.$GIS_OPT_IMAGE3.mosaic created."
      exit
 fi
 
 # four images to patch
 if [ $GIS_OPT_IMAGE3 != "" -a  $GIS_OPT_IMAGE4 != "" ]; then
-     echo "Mosaicing four images..."
+     g.message "Mosaicing four images..."
      r.mapcalc "$GIS_OPT_IMAGE1.$GIS_OPT_IMAGE2.$GIS_OPT_IMAGE3.$GIS_OPT_IMAGE4.mosaic = eval(t1=if($GIS_OPT_IMAGE1,$GIS_OPT_IMAGE1,$GIS_OPT_IMAGE2+256), t2=if(t1 % 256,t1,$GIS_OPT_IMAGE3+512), t3=if(t2 % 256,t2,$GIS_OPT_IMAGE4+768),t3)"
      #modify the color table:
      echo '% 0 1024' > $CURRLOCATION/colr/$GIS_OPT_IMAGE1.$GIS_OPT_IMAGE2.$GIS_OPT_IMAGE3.$GIS_OPT_IMAGE4.mosaic
@@ -125,6 +121,6 @@ if [ $GIS_OPT_IMAGE3 != "" -a  $GIS_OPT_IMAGE4 != "" ]; then
      tail -256 $CURRLOCATION/colr/$GIS_OPT_IMAGE2 |awk -F':' '{print $1+256":"$2":"$3":"$4}'>>$CURRLOCATION/colr/$GIS_OPT_IMAGE1.$GIS_OPT_IMAGE2.$GIS_OPT_IMAGE3.$GIS_OPT_IMAGE4.mosaic
      tail -256 $CURRLOCATION/colr/$GIS_OPT_IMAGE3 |awk -F':' '{print $1+512":"$2":"$3":"$4}'>>$CURRLOCATION/colr/$GIS_OPT_IMAGE1.$GIS_OPT_IMAGE2.$GIS_OPT_IMAGE3.$GIS_OPT_IMAGE4.mosaic
      tail -256 $CURRLOCATION/colr/$GIS_OPT_IMAGE4 |awk -F':' '{print $1+768":"$2":"$3":"$4}'>>$CURRLOCATION/colr/$GIS_OPT_IMAGE1.$GIS_OPT_IMAGE2.$GIS_OPT_IMAGE3.$GIS_OPT_IMAGE4.mosaic
-     echo "Ready. File $GIS_OPT_IMAGE1.$GIS_OPT_IMAGE2.$GIS_OPT_IMAGE3.$GIS_OPT_IMAGE4.mosaic created."
+     g.message "Ready. File $GIS_OPT_IMAGE1.$GIS_OPT_IMAGE2.$GIS_OPT_IMAGE3.$GIS_OPT_IMAGE4.mosaic created."
      exit
 fi

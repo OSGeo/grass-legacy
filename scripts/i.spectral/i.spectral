@@ -59,13 +59,13 @@ fi
 
 #check if present
 if [ ! -x "`which gnuplot`" ] ; then
-    echo "$PROG: gnuplot required, please install first" 2>&1
+    g.message -e "$PROG: gnuplot required, please install first"
     exit 1
 fi
 
 #### check if we have awk
 if [ ! -x "`which awk`" ] ; then
-    echo "$PROG: awk required, please install awk or gawk first" 2>&1
+    g.message -e "$PROG: awk required, please install awk or gawk first"
     exit 1
 fi
 
@@ -85,7 +85,7 @@ xlabels=""
 
 if [ ! "$GIS_OPT_GROUP" ] ; then
    if [ $GIS_FLAG_I -eq 0 ] ; then
-      echo "Please use -i if you don't use the 'group' parameter"
+      g.message -e "Please use -i if you don't use the 'group' parameter"
       exit 1
    fi
 fi
@@ -139,14 +139,14 @@ rm -f "$TMP2"
 
 if [ "$GIS_FLAG_M" -eq "0" ]; then
   if [ `d.mon -L | grep -v 'not running' | wc -l | awk '{print $1}'` -eq 2 ] ; then
-	  echo "Error: no graphic device open (d.mon)"
+	  g.message -e "No graphic device open (d.mon)"
 	  exit 1
   fi
   d.where -1 | r.what input=$RASTERMAPS > "$TMP1"
 else 
   asss=0
   if [ `d.mon -L | grep -v 'not running' | wc -l | awk '{print $1}'` -eq 2 ] ; then
-	  echo "Error: no graphic device open (d.mon)"
+	  g.message -e  "No graphic device open (d.mon)"
 	  exit 1
   fi
   d.where | r.what input=$RASTERMAPS > "$TMP1"
