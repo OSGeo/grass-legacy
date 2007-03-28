@@ -44,10 +44,7 @@ Map = render.Map() # instance of Map class to render GRASS display output to PPM
 DEBUG = False
 
 # for cmdlinef
-if __name__ == "__main__":
-
-    import time
-    cmdfilename = None
+cmdfilename = None
 
 class Command(Thread):
     """
