@@ -2,6 +2,7 @@ import os,sys
 import wx
 import wx.lib.customtreectrl as CT
 import wx.combo
+import string
 
 import track
 import select
@@ -748,18 +749,22 @@ class GMConsole(wx.Panel):
             try:
                 os.environ["GRASS_MESSAGE_FORMAT"] = "gui"
                 self.cmd_output.write(cmd+"\n----------\n")
-                p = Popen(cmd, shell=True, stdin=PIPE, stdout=PIPE, stderr=PIPE, close_fds=True)
+                p = Popen(cmd +" --verbose", shell=True, stdin=PIPE, stdout=PIPE, stderr=PIPE, close_fds=True)
 
                 oline = p.stderr.readline()
                 while oline:
                     oline = oline.strip()
-                    print "MSG: ", oline
-                    print >> sys.stderr, oline+"#####"
                     oline = p.stderr.readline()
                     # make some progress
                     #GRASS_INFO_PERCENT: 100
                     if oline.find("GRASS_INFO_PERCENT")>-1:
                         self.console_progressbar.SetValue(int(oline.split()[1]))
+                    elif oline.find("GRASS_INFO_MESSAGE")>-1:
+                        self.cmd_output.write(string.split(oline,maxsplit=1)[1]+"\n")
+                    elif oline.find("GRASS_INFO_WARNING")>-1:
+                        self.cmd_output.write("WARNING: "+string.split(oline,maxsplit=1)[1]+"\n")
+                    elif oline.find("GRASS_INFO_ERROR")>-1:
+                        self.cmd_output.write("ERROR: "+string.split(oline,maxsplit=1)[1]+"\n")
 
 
                 oline = p.stdout.readline()
@@ -780,6 +785,7 @@ class GMConsole(wx.Panel):
 
     def clearHistory(self, event):
 		self.cmd_output.Clear()
+                self.console_progressbar.SetValue(0)
 
     def saveHistory(self, event):
         self.history = self.cmd_output.GetStringSelection()
