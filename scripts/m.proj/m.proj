@@ -93,26 +93,26 @@ export LC_NUMERIC
 
 #### check for cs2cs
 if [ ! -x "`which cs2cs`" ] ; then
-   echo "ERROR: cs2cs program not found, install it first" 1>&2
-   echo "       http://proj.maptools.org" 1>&2
+   g.message -e "cs2cs program not found, install it first"
+   g.message "http://proj.maptools.org"
    exit 1
 fi
 
 #### check for overenthusiasm
 if [ -n "$GIS_OPT_PROJ_IN" ] && [ $GIS_FLAG_I -eq 1 ] ; then
-   echo "Chose only one input parameter method" 1>&2
+   g.message -e "Chose only one input parameter method"
    exit 1
 fi
 if [ -n "$GIS_OPT_PROJ_OUT" ] && [ $GIS_FLAG_O -eq 1 ] ; then
-   echo "Chose only one output parameter method" 1>&2
+   g.message -e "Chose only one output parameter method" 
    exit 1
 fi
 if [ $GIS_FLAG_I -eq 1 ] && [ $GIS_FLAG_O -eq 1 ] ; then
-   echo "Chose only one auto-projection parameter method" 1>&2
+   g.message -e "Chose only one auto-projection parameter method"
    exit 1
 fi
 if [ -n "$GIS_OPT_OUTPUT" ] && [ -e "$GIS_OPT_OUTPUT" ] ; then
-   echo "Output file already exists" 1>&2
+   g.message -e "Output file already exists" 
    exit 1
 fi
 
@@ -126,7 +126,7 @@ fi
 #### setup projection params
 PROJ_TYPE=`g.region -p | grep '^proj' | cut -f2 -d" "`
 if [ $PROJ_TYPE -eq 0 ] && ( [ $GIS_FLAG_I -eq 1 ] || [ $GIS_FLAG_O -eq 1 ] ) ; then
-    echo "Cannot project to or from a XY location." 1>&2
+    g.message -e "Cannot project to or from a XY location." 
     exit 1
 fi
 
@@ -134,7 +134,7 @@ unset IN_PROJ
 if [ $GIS_FLAG_I -eq 1 ] ; then
    IN_PROJ="+proj=longlat +towgs84=0.000,0.000,0.000"
    if [ $GIS_FLAG_V -eq 1 ] ; then
-     echo "Assuming LL WGS84 as input, current projection as output." 1>&2
+     g.message "Assuming LL WGS84 as input, current projection as output."
    fi
 fi
 if [ $GIS_FLAG_O -eq 1 ] ; then
@@ -144,7 +144,7 @@ if [ -n "$GIS_OPT_PROJ_IN" ] ; then
    IN_PROJ="$GIS_OPT_PROJ_IN"
 fi
 if [ -z "$IN_PROJ" ] ; then
-   echo "Missing input projection parameters." 1>&2
+   g.message -e "Missing input projection parameters."
    rm -f "$TMP"
    exit 1
 fi
@@ -153,7 +153,7 @@ unset OUT_PROJ
 if [ $GIS_FLAG_O -eq 1 ] ; then
    OUT_PROJ="+proj=longlat +towgs84=0.000,0.000,0.000"
    if [ $GIS_FLAG_V -eq 1 ] ; then
-     echo "Assuming current projection as input, LL WGS84 as output." 1>&2
+     g.message "Assuming current projection as input, LL WGS84 as output."
    fi
 fi
 if [ $GIS_FLAG_I -eq 1 ] ; then
@@ -163,19 +163,17 @@ if [ -n "$GIS_OPT_PROJ_OUT" ] ; then
    OUT_PROJ="$GIS_OPT_PROJ_OUT"
 fi
 if [ -z "$OUT_PROJ" ] ; then
-   echo "Missing output projection parameters." 1>&2
+   g.message -e "Missing output projection parameters."
    exit 1
 fi
-if [ $GIS_FLAG_V -eq 1 ] ; then
-   echo "input parameters=[$IN_PROJ]" 1>&2
-   echo "output parameters=[$OUT_PROJ]" 1>&2
-fi
 
+g.message "input parameters=[$IN_PROJ]"
+g.message "output parameters=[$OUT_PROJ]"
 
 #### setup temporary file
 TMP="`g.tempfile pid=$$`"
 if [ $? -ne 0 ] || [ -z "$TMP" ] ; then
-   echo "ERROR: unable to create temporary file" 1>&2
+   g.message -e "Unable to create temporary file" 
    exit 1
 fi
 
@@ -194,7 +192,7 @@ if [ -z "$GIS_OPT_INPUT" ] || [ "$GIS_OPT_INPUT" = "-" ] ; then
 
    # make sure we have at least one line of data
    if [ "`wc -l "$TMP" | cut -f1 -d' '`" -eq 0 ] ; then
-      echo "ERROR reading data from stdin"
+      g.message -e "ERROR reading data from stdin"
       exit 1
    fi
    infile="$TMP"
@@ -203,20 +201,18 @@ else
 fi
 
 if [ ! -f "$infile" ] ; then
-   echo "Couldn't read input data." 1>&2
+   g.message -e "Couldn't read input data." 
    exit 1
 fi
 
 #### setup output file
 outfile="$GIS_OPT_OUTPUT"
 
-if [ $GIS_FLAG_V -eq 1 ] ; then
-   if [ -n "$infile" ] ; then
-      echo "input file=[$infile]" 1>&2
-   fi
-   if [ -n "$outfile" ] ; then
-      echo "output file=[$outfile]" 1>&2
-   fi
+if [ -n "$infile" ] ; then
+    g.message "input file=[$infile]"
+fi
+if [ -n "$outfile" ] ; then
+    g.message "output file=[$outfile]" 
 fi
 
 #### setup output style
@@ -244,7 +240,7 @@ else
 fi
 
 if [ $EXITCODE -ne 0 ] ; then
-   echo "Projection transform probably failed, please investigate." 1>&2
+   g.message -w "Projection transform probably failed, please investigate."
 fi
 
 #### cleanup
