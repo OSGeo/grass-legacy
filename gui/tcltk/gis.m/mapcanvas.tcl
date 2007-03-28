@@ -1501,6 +1501,34 @@ proc MapCanvas::measurebind { mon } {
 	variable linex2 
 	variable liney2
 	variable msg
+	variable mapunits
+
+	# get map units from PROJ_UNITS
+	if {![catch {open "|g.proj -p" r} input]} {
+	    set key ""
+	    set value ""
+	    while {[gets $input line] >= 0} {
+	    	if { [string equal "XY location (unprojected)" "$line"] } {
+	    	    set mapunits "map units"
+	    	    break
+	    	}
+	    	regexp -nocase {^(.*):(.*)$} $line trash key value
+	    	set key [string trim $key]
+	    	set value [string trim $value]
+	    	set prj($key) $value	
+	    }
+	    if {[catch {close $input} error]} {
+	    	puts $error
+	    	exit 1
+	    } 
+	}
+	# Length is calculated from the map canvas arrows
+	#  and so is measured & plotted in map units.
+	# May already be set above if locn was XY.
+	if { ! [ info exist mapunits ] } {
+	    set mapunits $prj(units)
+	}
+
 
 	# Make the output for the measurement
 	set measurement_annotation_handle [monitor_annotation_start $mon [G_msg "Measurement"] {}]
@@ -1581,6 +1609,7 @@ proc MapCanvas::measure { mon x y } {
 	variable liney1 
 	variable linex2 
 	variable liney2
+	variable mapunits
 
 	set xc [$can($mon) canvasx $x]
 	set yc [$can($mon) canvasy $y]
@@ -1607,8 +1636,8 @@ proc MapCanvas::measure { mon x y } {
 	set mlength [expr {sqrt(pow(($east1 - $east2), 2) + pow(($north1 - $north2), 2))}]
 	set totmlength [expr {$totmlength + $mlength}]
 
-	monitor_annotate $measurement_annotation_handle [format [G_msg " --segment length = %f\n"] $mlength]
-	monitor_annotate $measurement_annotation_handle [format [G_msg "cumulative length = %f\n"] $totmlength]
+	monitor_annotate $measurement_annotation_handle [format [G_msg " --segment length = %f $mapunits\n"] $mlength]
+	monitor_annotate $measurement_annotation_handle [format [G_msg "cumulative length = %f $mapunits\n"] $totmlength]
 
 	set linex1 $linex2
 	set liney1 $liney2
