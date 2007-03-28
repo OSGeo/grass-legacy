@@ -41,10 +41,11 @@ else:
 Map = render.Map() # instance of Map class to render GRASS display output to PPM file
 DEBUG = False
 
-# for cmdline
-from threading import Thread
-import time
-cmdfilename = None
+# for cmdlinef
+if __name__ == "__main__":
+    from threading import Thread
+    import time
+    cmdfilename = None
 
 class Command(Thread):
     """
@@ -801,7 +802,23 @@ class MapApp(wx.App):
         #self.SetTopWindow(Map)
         self.mapFrm.Show()
 
+        if __name__ == "__main__":
+            # redraw map, if new command appears
+            self.redraw = False
+            status = Command(self, Map)
+            status.start()
+            self.timer = wx.PyTimer(self.watcher)
+            # check each 0.1s
+            self.timer.Start(100)
+
         return 1
+
+    def OnExit(self):
+        if __name__ == "__main__":
+            # stop the timer
+            self.timer.Stop()
+            # terminate thread (a bit ugly)
+            os.system("""echo "quit" >> %s""" % (cmdfilename))
 
     def watcher(self):
         """Redraw, if new layer appears"""
