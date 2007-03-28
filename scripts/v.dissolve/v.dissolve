@@ -72,7 +72,7 @@ cleanup()
 # what to do in case of user break:
 exitprocedure()
 {
- echo "User break!"
+ g.message -e "User break!"
  cleanup
  exit 1
 }
@@ -82,7 +82,7 @@ trap "exitprocedure" 2 3 15
 # does map exist?
 eval `g.findfile element=vector file=$GIS_OPT_INPUT`
 if [ ! "$file" ] ; then
-   echo "Vector map '$GIS_OPT_INPUT' not found in mapset search path"
+   g.message -e "Vector map '$GIS_OPT_INPUT' not found in mapset search path"
    exit 1
 fi
 
@@ -92,7 +92,7 @@ if [ -z "$GIS_OPT_COLUMN" ] ; then
 else
    table=`v.db.connect $GIS_OPT_INPUT -g | grep -w $GIS_OPT_LAYER | awk '{print $2}'`
    if [ -z "$table" ] ; then
-      echo -e "\nERROR: There is no table connected to this map!"
+      g.message -e "There is no table connected to this map!"
       cleanup
       exit 1
    fi

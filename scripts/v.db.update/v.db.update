@@ -57,7 +57,7 @@
 #%end
 
 if  [ -z "$GISBASE" ] ; then
-    echo "You must be in GRASS GIS to run this program."
+    echo "You must be in GRASS GIS to run this program." >&2
  exit 1
 fi
 
@@ -69,7 +69,7 @@ PROG=`basename $0`
 
 #### check if we have awk
 if [ ! -x "`which awk`" ] ; then
-    echo "$PROG: awk required, please install awk or gawk first" 2>&1
+    g.message -e "awk required, please install awk or gawk first"
     exit 1
 fi
 
@@ -81,13 +81,13 @@ export LC_NUMERIC
 # does map exist?
 eval `g.findfile element=vector file=$GIS_OPT_MAP`
 if [ ! "$file" ] ; then
-   echo "Vector map '$GIS_OPT_MAP' not found in mapset search path"
+   g.message -e "Vector map '$GIS_OPT_MAP' not found in mapset search path"
    exit 1
 fi
 
 table=`v.db.connect $GIS_OPT_MAP -g | grep -w $GIS_OPT_LAYER | awk '{print $2}'`
 if [ -z "$table" ] ; then
-   echo -e "\nThere is no table connected to this map !\nRun v.db.connect or v.db.addtable first.\n"
+   g.message -e "There is no table connected to this map !\nRun v.db.connect or v.db.addtable first."
    exit 1
 fi
 database=`v.db.connect $GIS_OPT_MAP -g | grep -w $GIS_OPT_LAYER | awk '{print $4}'`
