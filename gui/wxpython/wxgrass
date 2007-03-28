@@ -8,9 +8,9 @@ fi
 SYSTEM=`uname -s`
 
 if [ "$SYSTEM" = "Darwin" ] ; then
-	pythonw "$GISBASE/etc/wx/wxgui.py" -name wxgui_py
+	pythonw "$GISBASE/etc/wx/wxgui.py" -name wxgui_py &
 else
-	python "$GISBASE/etc/wx/wxgui.py" -name wxgui_py
+	python "$GISBASE/etc/wx/wxgui.py" -name wxgui_py &
 fi
 
 exit 0
