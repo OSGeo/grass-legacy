@@ -326,7 +326,6 @@ class mainFrame(wx.Frame):
 
     The command is checked and sent to the clipboard when clicking "Copy". """
     def __init__(self, parent, ID, task_description, get_dcmd=None, layer=None, dcmd_params=None):
-        print parent
 
         self.get_dcmd = get_dcmd
         self.dcmd_params = dcmd_params #this should be passed from the layer tree eventually
@@ -802,7 +801,7 @@ class GUI:
             handler = processTask(self.grass_task)
             xml.sax.parseString( getInterfaceDescription( cmd ) , handler )
 
-            self.mf = mainFrame(self.parent ,-1, grass_task, self.get_dcmd, layer)
+            self.mf = mainFrame(self.parent ,-1, self.grass_task, self.get_dcmd, layer)
             self.mf.Show(True)
 
 if __name__ == "__main__":
