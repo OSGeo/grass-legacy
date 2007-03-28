@@ -64,8 +64,14 @@ fi
 
 # CODE GOES HERE
 
+PYTHONPATH="$GISBASE/etc/wx"
+
+export PYTHONPATH
+
 # create the command file
 command_file="`g.tempfile pid=$$`"
 g.gisenv set=GRASS_PYCMDFILE=${command_file}
 
-python gui_modules/mapdisp.py ${command_file} &
+python $PYTHONPATH/gui_modules/mapdisp.py ${command_file} &
+
+exit 0
