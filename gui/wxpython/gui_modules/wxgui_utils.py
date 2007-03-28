@@ -688,8 +688,12 @@ class GMConsole(wx.Panel):
     	cmdlst = []
 #    	cmd = self.console_command.GetLineText(0)
     	cmdlst = cmd.split(' ')
-    	disp_idx = int(track.Track().GetDisp()[0])
-    	curr_disp = track.Track().GetDisp()[1]
+        try:
+            disp_idx = int(track.Track().GetDisp()[0])
+            curr_disp = track.Track().GetDisp()[1]
+        except:
+            disp_idx = None
+            curr_disp = None
 
     	if len(cmdlst) == 1 and cmd in gcmdlst:
     		# Send GRASS command without arguments to GUI command interface

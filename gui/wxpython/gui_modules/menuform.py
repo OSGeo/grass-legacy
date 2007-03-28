@@ -278,7 +278,6 @@ class processTask(HandlerBase):
             self.param_guisection = normalize_whitespace(self.param_guisection)
             self.inGuisection = 0
 
-
 class helpPanel(wx.html.HtmlWindow):
     """This panel holds the text from GRASS docs.
 
@@ -359,7 +358,16 @@ class mainFrame(wx.Frame):
         self.SetMenuBar(menuBar)
         self.guisizer = wx.BoxSizer(wx.VERTICAL)
         
-        self.notebookpanel = cmdPanel( self, self.task )
+        # set apropriate output window
+        if self.parent:
+            standalone=False
+            self.goutput = self.parent.goutput
+        else:
+            standalone=True
+        self.notebookpanel = cmdPanel( self, self.task, standalone)
+        if standalone:
+            self.goutput = self.notebookpanel.goutput
+
         self.guisizer.Add( self.notebookpanel, 1, flag = wx.EXPAND )
 
         status_text = "Enter parameters for " + self.task.name
@@ -425,24 +433,23 @@ class mainFrame(wx.Frame):
         cmd = self.createCmd()
 
         if cmd != None and cmd[0:2] != "d.":
-             # Send any non-display command to parent window (probably wxgui.py)
-            if self.parent > -1:
-                # put to parents
-                try:
-                    self.parent.goutput.runCmd(cmd)
-                except AttributeError,e:
-                    print >>sys.stderr, "%s: Propably not running in wxgui.py session?" % (e)
-                    print >>sys.stderr, "parent window is: %s" % (str(self.parent))
+            # Send any non-display command to parent window (probably wxgui.py)
+            # put to parents
+            try:
+                self.goutput.runCmd(cmd)
+            except AttributeError,e:
+                print >>sys.stderr, "%s: Propably not running in wxgui.py session?" % (e)
+                print >>sys.stderr, "parent window is: %s" % (str(self.parent))
             # Send any other command to the shell.
-            else:
-                try:
-                    retcode = subprocess.call(cmd, shell=True)
-                    if retcode < 0:
-                        print >>sys.stderr, "Child was terminated by signal", -retcode
-                    elif retcode > 0:
-                        print >>sys.stderr, "Child returned", retcode
-                except OSError, e:
-                    print >>sys.stderr, "Execution failed:", e
+        else:
+            try:
+                retcode = subprocess.call(cmd, shell=True)
+                if retcode < 0:
+                    print >>sys.stderr, "Child was terminated by signal", -retcode
+                elif retcode > 0:
+                    print >>sys.stderr, "Child returned", retcode
+            except OSError, e:
+                print >>sys.stderr, "Execution failed:", e
 
     def OnCopy(self, event):
         cmddata = wx.TextDataObject()
@@ -487,7 +494,7 @@ class mainFrame(wx.Frame):
 
 class cmdPanel(wx.Panel):
     """A panel containing a notebook dividing in tabs the different guisections of the GRASS cmd."""
-    def __init__( self, parent, task, *args, **kwargs ):
+    def __init__( self, parent, task, standalone, *args, **kwargs ):
         wx.Panel.__init__( self, parent, *args, **kwargs )
 
         self.task = task
@@ -526,11 +533,18 @@ class cmdPanel(wx.Panel):
             self.notebook.AddPage( self.tab[section], text = section, select = is_first )
             is_first = False
 
+        # are we running from command line?
+        if standalone:
+            from gui_modules import wxgui_utils
+            self.goutput = wxgui_utils.GMConsole(self)
+            self.outpage = self.notebook.AddPage(self.goutput, text="Command output")
+
         manual_tab =  helpPanel( self.notebook, id = wx.ID_ANY, grass_command = self.task.name)
         if manual_tab.Ok:
             manual_tabsizer = wx.BoxSizer(wx.VERTICAL)
             self.notebook.AddPage( manual_tab, text = "Manual" , select = False )
 
+        self.notebook.SetSelection(0)
         self.panelsizer.Add( self.notebook, 1, flag=wx.EXPAND )
 
         p_count = -1
