@@ -56,7 +56,7 @@ elif [ "$OSTYPE" = "cygwin" ] ; then
         fi
     done
     if [ "$i" = "NOT_FOUND" ] ; then
-        echo "ERROR: cannot find GRASS document base." 1>&2
+        g.messge -e "Cannot find GRASS document base."
         exit 1
     fi
     BROWSERNAME=`basename "$GRASS_HTML_BROWSER" | sed 's/\.exe$//i'`
@@ -68,11 +68,11 @@ fi
 start_browser()
 {
   if test ! -f "$GRASS_DOC_BASE"/docs/html/$1.html -a -n $1 ; then
-    echo "ERROR: no HTML manual page entry for <$1>." 1>&2
+    g.message -e "No HTML manual page entry for <$1>."
     exit 1
   else
     if [ -z "$GRASS_VERBOSE" ] || [ "$GRASS_VERBOSE" -gt 1 ] ; then
-	echo "Starting browser <$BROWSERNAME> for module $1..." 1>&2
+	g.message "Starting browser <$BROWSERNAME> for module $1..."
     fi
     "$GRASS_HTML_BROWSER" file://"$GRASS_DOC_BASE"/docs/html/$1.html
   fi
@@ -81,7 +81,7 @@ start_browser()
 start_man()
 {
   if test ! -f "$GRASS_DOC_BASE"/man/man1/$1.1 -a -n $1 ; then
-    echo "ERROR: no MAN page entry for <$1>." 1>&2
+    g.message -e "No MAN page entry for <$1>."
     exit 1
   else
     man "$GRASS_DOC_BASE"/man/man1/$1.1
