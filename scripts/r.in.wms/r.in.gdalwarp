@@ -83,7 +83,7 @@ fi
 #### setup temporary file
 TMP="`g.tempfile pid=$$`"
 if [ $? -ne 0 ] || [ -z "$TMP" ] ; then
-    echo "ERROR: unable to create temporary files" 1>&2
+    g.message -e "ERROR: unable to create temporary files"
     exit 1
 fi
 
@@ -93,7 +93,7 @@ fi
 #
 exitprocedure()
 {
-	echo "User break!" 1>&2
+	g.message -e "User break!"
 	rm -f ${TMP}*
 	exit 1
 }
@@ -102,7 +102,7 @@ trap "exitprocedure" 2 3 15
 # check if we have gdalwarp
 if [ $GIS_FLAG_P -ne 1 ] ; then
     if [ ! -x "`which gdalwarp`" ] ; then
-        echo "gdalwarp is required, please install it first" 2>&1
+        g.message -e "gdalwarp is required, please install it first" 
         exit 1
     fi
 fi
@@ -120,7 +120,7 @@ warpimport () {
 	TMPMAPNAME=${2}_tmp
 
 	# Warp it and convert it to geotiff with alpha band to be sure we get nulls:
-	echo "gdalwarp -s_srs \"$GIS_OPT_S_SRS\" -t_srs \"`g.proj -wf`\" \"$FILE\" \"$WARPFILE\" " $GIS_OPT_WARPOPTIONS $METHOD 1>&2
+	g.message "gdalwarp -s_srs \"$GIS_OPT_S_SRS\" -t_srs \"`g.proj -wf`\" \"$FILE\" \"$WARPFILE\" $GIS_OPT_WARPOPTIONS $METHOD "
 	gdalwarp -s_srs "$GIS_OPT_S_SRS" -t_srs "`g.proj -wf`" "$FILE" "$WARPFILE" $GIS_OPT_WARPOPTIONS $METHOD
 
 	#Import it into a temporary map:
@@ -243,7 +243,7 @@ for input in $GIS_OPT_INPUT ; do
 		fi
 		((TITER++))
 	else
-		echo "Missing input $input" 1>&2
+		g.message -w "Missing input $input" 
 	fi
 done
 NUM_TILES=$TITER
@@ -264,7 +264,7 @@ else
 		sfx2=`echo $sfx | sed "s/\./_/"`
 		eval "PATCHES=\${PATCHES_$sfx2}"
 		# Patch these together (using nulls only):
-		echo "Patching [$sfx] channel" 1>&2
+		g.message "Patching [$sfx] channel" 
 		r.patch input=$PATCHES output=${GIS_OPT_OUTPUT}${sfx}
 		# Remove the temporary patches we made
 		g.remove rast=$PATCHES
@@ -289,9 +289,9 @@ done
 
 # Make a composite image if asked for and colors exist
 if [ $COLORS -eq 3 ] && [ $GIS_FLAG_C -eq 1 ] ; then
-	echo "Building Color Image" 1>&2
+	g.message "Building Color Image" 
 	r.composite red=${GIS_OPT_OUTPUT}.red green=${GIS_OPT_OUTPUT}.green blue=${GIS_OPT_OUTPUT}.blue output=${GIS_OPT_OUTPUT}
-	echo "Written: ${GIS_OPT_OUTPUT}"
+	g.message "Written: ${GIS_OPT_OUTPUT}"
 fi
 
 # Clean up:
