@@ -450,13 +450,14 @@ class GRASSStartup(wx.Frame):
         # Locations
         self.lpanel = wx.Panel(self,-1)
         self.lblocations = wx.ListBox(self.lpanel,
-                26, wx.DefaultPosition, (150, 200), self.listOfLocations, wx.LB_SINGLE)
+                id=26, pos=wx.DefaultPosition, size=(150, 200),
+                choices=self.listOfLocations, style=wx.LB_SINGLE)
 
         # Mapsets
         self.mpanel = wx.Panel(self,-1)
         self.lbmapsets = wx.ListBox(self.mpanel,
-                26, wx.DefaultPosition, (150, 200), self.listOfMapsets, wx.LB_SINGLE)
-
+                id=26, pos=wx.DefaultPosition, size=(150, 200),
+                choices=self.listOfMapsets, style=wx.LB_SINGLE)
 
         # layout & properties
         self.__set_properties()
@@ -489,20 +490,25 @@ class GRASSStartup(wx.Frame):
         #self.bmapset.Enable(False)
 
         # set database
-        if not self.gisdbase: self.gisdbase = os.getenv("HOME")
+        if not self.gisdbase:
+            # sets an initial path for gisdbase if nothing in GISRC
+            if os.path.isdir(os.getenv("HOME")):
+                self.gisdbase = os.getenv("HOME")
+            else:
+                self.gisdbase = os.getcwd()
         self.tgisdbase.SetValue(self.gisdbase)
 
-        # list of locations
-        self.UpdateLocations(self.tgisdbase.GetValue())
         self.OnSetDatabase(None)
         location = self._getRCValue("LOCATION_NAME")
         if location == "<UNKNOWN>":
             location = None
         if location:
+            # list of locations
+            self.UpdateLocations(self.gisdbase)
             self.lblocations.SetSelection(self.listOfLocations.index(location))
 
             # list of mapsets
-            self.UpdateMapsets(os.path.join(self.tgisdbase.GetValue(),self.listOfLocations[0]))
+            self.UpdateMapsets(os.path.join(self.gisdbase,location))
             mapset =self._getRCValue("MAPSET")
             if  mapset:
                 self.lbmapsets.SetSelection(self.listOfMapsets.index(mapset))
@@ -607,11 +613,12 @@ class GRASSStartup(wx.Frame):
         self.listOfLocations = []
         for location in glob.glob(os.path.join(dbase,"*")):
             try:
-                glob.glob(os.path.join(location,"*")).index(os.path.join(location,"PERMANENT"))
-                self.listOfLocations.append(os.path.basename(location))
+                if os.path.join(location,"PERMANENT") in glob.glob(os.path.join(location,"*")):
+                    self.listOfLocations.append(os.path.basename(location))
             except:
                 pass
-        self.listOfLocations
+        self.lblocations.Clear()
+        self.lblocations.InsertItems(self.listOfLocations,0)
         return self.listOfLocations
 
     def UpdateMapsets(self,location):
@@ -620,12 +627,14 @@ class GRASSStartup(wx.Frame):
         for mapset in glob.glob(os.path.join(location,"*")):
             if os.path.isdir(mapset):
                 self.listOfMapsets.append(os.path.basename(mapset))
+        self.lbmapsets.Clear()
+        self.lbmapsets.InsertItems(self.listOfMapsets,0)
         return self.listOfMapsets
 
     def OnSelectLocation(self,event):
         if self.lblocations.GetSelection() > -1:
             self.UpdateMapsets(os.path.join(
-                    self.tgisdbase.GetValue(),self.listOfLocations[self.lblocations.GetSelection()]))
+                    self.gisbase,self.listOfLocations[self.lblocations.GetSelection()]))
         else:
             self.listOfMapsets = []
         self.lbmapsets.Clear()
@@ -636,10 +645,11 @@ class GRASSStartup(wx.Frame):
         pass
 
     def OnSetDatabase(self,event):
-        self.UpdateLocations(self.tgisdbase.GetValue())
+        self.gisbase = self.tgisdbase.GetValue()
+        self.UpdateLocations(self.gisbase)
         self.lblocations.Clear()
         self.lblocations.InsertItems(self.listOfLocations,0)
-        self.lblocations.SetSelection(0)
+        if self.listOfLocations != []: self.lblocations.SetSelection(0)
         self.OnSelectLocation(event)
 
     def OnBrowse(self, event):
@@ -649,8 +659,8 @@ class GRASSStartup(wx.Frame):
         dlg = wx.DirDialog(self, "Choose a GRASS directory:",
                 style=wx.DD_DEFAULT_STYLE | wx.DD_NEW_DIR_BUTTON)
         if dlg.ShowModal() == wx.ID_OK:
-            grassdata = dlg.GetDirectory()
-            self.tgisdbase.SetValue(grassdata)
+            self.gisbase = dlg.GetPath()
+            self.tgisdbase.SetValue(self.gisbase)
         dlg.Destroy()
 
         self.OnSetDatabase(event)
@@ -662,16 +672,16 @@ class GRASSStartup(wx.Frame):
             event.Skip()
 
     def OnCreateMapset(self,event):
-        database = self.tgisdbase.GetValue()
+        self.gisbase = self.tgisdbase.GetValue()
         location = self.listOfLocations[self.lblocations.GetSelection()]
 
         try:
             mapset = self.tnewmapset.GetValue()
-            os.mkdir(os.path.join(database,location,mapset))
+            os.mkdir(os.path.join(self.gisbase,location,mapset))
             # copy WIND file and its permissions from PERMANENT and set permissions to u+rw,go+r
-            shutil.copy(os.path.join(database,location,'PERMANENT','WIND'),
-                        os.path.join(database,location,mapset))
-#            os.chmod(os.path.join(database,location,mapset,'WIND'), ?????)
+            shutil.copy(os.path.join(self.gisbase,location,'PERMANENT','WIND'),
+                        os.path.join(self.gisbase,location,mapset))
+#            os.chmod(os.path.join(database,location,mapset,'WIND'), 0644)
             self.OnSelectLocation(None)
             self.lbmapsets.SetSelection(self.listOfMapsets.index(mapset))
         except StandardError, e:
