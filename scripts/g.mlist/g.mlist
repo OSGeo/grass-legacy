@@ -146,9 +146,5 @@ do
     do_list
 done
 
-if [ "$start" ] ; then
-    echo -e ""
-fi
-
 exit 0
 
