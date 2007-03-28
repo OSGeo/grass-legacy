@@ -105,7 +105,7 @@ LOCATION=$GISDBASE/$LOCATION_NAME/$MAPSET
 
 program=`basename $0`
 
-echo "Collecting map names for current mapset <$MAPSET>..." 1>&2
+g.message "Collecting map names for current mapset <$MAPSET>..."
 
 if [ $GIS_FLAG_R -eq 1 ] ; then
    regex="-r"
@@ -116,7 +116,7 @@ fi
 force=$GIS_FLAG_F
 
 if [ $force -eq 1 ] ; then
-   echo forcing ......
+   g.message "Forcing ..."
 fi
 
 r=$GIS_OPT_RAST
@@ -202,15 +202,14 @@ if [ "$dview" ] ; then
 fi
 
 if [ ! "$found" ] ; then
-	echo "No data found."
+	g.message -e "No data found."
 	exit 1
 fi
 
 if [ $force -eq 0 ] ; then
-    echo "The following files would be deleted:" 1>&2
+    g.message "The following files would be deleted:"
     echo "g.remove $rast $rast3d $vect $icon $labels $region $group $dview"
-    echo 1>&2
-    echo "You must use the force flag to actually remove them. Exiting." 1>&2
+    g.message "You must use the force flag to actually remove them. Exiting."
     exit 0
 fi
 
