@@ -298,7 +298,16 @@ class mainFrame(wx.Frame):
     defined by each GRASS command."""
     def __init__(self, parent, ID, task_description, get_dcmd=None, layer=None, dcmd_params=None):
 
+        self.get_dcmd = get_dcmd
+        self.dcmd_params = dcmd_params #this should be passed from the layer tree eventually
+        self.layer = layer
         self.task = task_description
+        # inserting existing values from d.* command in layer tree
+        for p in self.task.params:
+            if self.dcmd_params != None:
+                for dparam in self.dcmd_params:
+                    if p == dparam:
+                        p['value'] = self.dcmd_params[dparam]
 
         wx.Frame.__init__(self, parent, ID, self.task.name,
             wx.DefaultPosition, style=wx.DEFAULT_FRAME_STYLE | wx.TAB_TRAVERSAL)
@@ -306,11 +315,6 @@ class mainFrame(wx.Frame):
         self.CreateStatusBar()
         self.SetStatusText("Enter parameters for " + self.task.name + " (those in Main are required)")
         self.parent = parent
-        self.selection = '' #selection from GIS element selector
-        self.paramdict = {} # dictionary of controls and their parameter values
-        self.get_dcmd = get_dcmd
-        self.dcmd_params = dcmd_params #this should be passed from the layer tree eventually
-        self.layer = layer
         self.SetIcon(wx.Icon(os.path.join(imagepath,'grass.form.gif'), wx.BITMAP_TYPE_ANY))
 
         menu = wx.Menu()
@@ -326,6 +330,133 @@ class mainFrame(wx.Frame):
 
         self.SetMenuBar(menuBar)
         self.guisizer = wx.BoxSizer(wx.VERTICAL)
+        
+        self.notebookpanel = cmdPanel( self, self.task )
+        self.guisizer.Add( self.notebookpanel, 1, flag = wx.EXPAND )
+        
+        btnsizer = wx.BoxSizer(wx.HORIZONTAL)
+        self.btn_cancel = wx.Button(self, wx.ID_CANCEL, "Cancel")
+        btnsizer.Add(self.btn_cancel, 0, wx.ALL| wx.ALIGN_CENTER, 10)
+        if self.get_dcmd is not None: # A callback has been set up
+            self.btn_apply = wx.Button(self, wx.ID_APPLY, "Apply")
+            btnsizer.Add(self.btn_apply, 0, wx.ALL| wx.ALIGN_CENTER, 10)
+            self.btn_ok = wx.Button(self, wx.ID_OK, "OK")
+            btnsizer.Add(self.btn_ok, 0, wx.ALL| wx.ALIGN_CENTER, 10)
+            self.btn_ok.SetDefault()
+            self.btn_apply.Bind(wx.EVT_BUTTON, self.OnApply)
+            self.btn_ok.Bind(wx.EVT_BUTTON, self.OnOK)
+        else: # We're standalone
+            self.btn_run = wx.Button(self, wx.ID_OK, "Run")
+            btnsizer.Add(self.btn_run, 0, wx.ALL| wx.ALIGN_CENTER, 10)
+            self.btn_run.SetDefault()
+            self.btn_run.Bind(wx.EVT_BUTTON, self.OnRun)
+            self.btn_clipboard = wx.Button(self, wx.ID_OK, "Copy")
+            btnsizer.Add(self.btn_clipboard, 0, wx.ALL| wx.ALIGN_CENTER, 10)
+            self.btn_clipboard.Bind(wx.EVT_BUTTON, self.OnCopy)
+        self.guisizer.Add(btnsizer, 0, wx.ALIGN_BOTTOM)
+        wx.EVT_MENU(self, wx.ID_ABOUT, self.OnAbout)
+        wx.EVT_MENU(self, ID_ABOUT_COMMAND, self.OnAboutCommand)
+        wx.EVT_MENU(self, wx.ID_EXIT,  self.OnCancel)
+        self.btn_cancel.Bind(wx.EVT_BUTTON, self.OnCancel)
+        self.Bind(wx.EVT_CLOSE, self.OnCloseWindow)
+
+        constrained_size = self.notebookpanel.GetSize()
+        self.notebookpanel.SetSize( (constrained_size[0],constrained_size[1]+80) ) # 80 takes the tabbar into account
+        self.notebookpanel.SetSizer( self.notebookpanel.panelsizer )
+        self.notebookpanel.Layout()
+
+        self.guisizer.SetSizeHints(self)
+        self.SetAutoLayout(True)
+        self.SetSizer(self.guisizer)
+        self.Layout()
+
+
+    def OnOK(self, event):
+        cmd = self.OnApply(event)
+        if cmd is not None and self.get_dcmd is not None:
+            self.OnCancel(event)
+
+    def OnApply(self, event):
+        cmd = self.createCmd()
+
+        if cmd is not None and self.get_dcmd is not None:
+            # return d.* command to layer tree for rendering
+            self.get_dcmd(cmd, self.layer)
+            # echo d.* command to output console
+            self.parent.writeDCommand(cmd)
+        return cmd
+
+    def OnRun(self, event):
+        cmd = self.createCmd()
+
+        if cmd != None and cmd[0:2] != "d.":
+             # Send any non-display command to parent window (probably wxgui.py)
+            if self.parent > -1:
+                # put to parents
+                try:
+                    self.parent.goutput.runCmd(cmd)
+                except AttributeError,e:
+                    print >>sys.stderr, "%s: Propably not running in wxgui.py session?" % (e)
+                    print >>sys.stderr, "parent window is: %s" % (str(self.parent))
+            # Send any other command to the shell.
+            else:
+                try:
+                    retcode = subprocess.call(cmd, shell=True)
+                    if retcode < 0:
+                        print >>sys.stderr, "Child was terminated by signal", -retcode
+                    elif retcode > 0:
+                        print >>sys.stderr, "Child returned", retcode
+                except OSError, e:
+                    print >>sys.stderr, "Execution failed:", e
+
+    def OnCopy(self, event):
+        cmddata = wx.TextDataObject()
+        cmddata.SetText(self.createCmd(ignoreErrors=True))
+        if wx.TheClipboard.Open():
+            wx.TheClipboard.UsePrimarySelection(True)
+            wx.TheClipboard.SetData(cmddata)
+            wx.TheClipboard.Close()
+            self.SetStatusText("'%s' copied to clipboard" %\
+                            (self.createCmd(ignoreErrors=True)))
+
+    def OnError(self, errMsg):
+        dlg = wx.MessageDialog(self, errMsg, "Error", wx.OK | wx.ICON_ERROR)
+        dlg.ShowModal()
+        dlg.Destroy()
+
+    def OnCancel(self, event):
+        self.Destroy()
+
+    def OnCloseWindow(self, event):
+        self.Destroy()
+
+    def OnAbout(self, event):
+        dlg = wx.MessageDialog(self, "This is a sample program for\n"
+            "GRASS command interface parsing\n"
+            "and automatic GUI building. \n%s" %(__version__),
+            "About GrassGUI", wx.OK | wx.ICON_INFORMATION)
+        dlg.ShowModal()
+        dlg.Destroy()
+
+    def OnAboutCommand(self, event):
+        dlg = wx.MessageDialog(self,
+            self.task.name+": "+self.task.description,
+            "About " + self.task.name,
+            wx.OK | wx.ICON_INFORMATION)
+        dlg.ShowModal()
+        dlg.Destroy()
+
+    def createCmd(self, ignoreErrors = False):
+        return self.notebookpanel.createCmd(ignoreErrors=ignoreErrors)
+
+
+class cmdPanel(wx.Panel):
+    def __init__( self, parent, task, *args, **kwargs ):
+        wx.Panel.__init__( self, parent, *args, **kwargs )
+
+        self.task = task
+        self.selection = '' #selection from GIS element selector
+        self.paramdict = {} # dictionary of controls and their parameter values
 
         sections = ['Main']
         is_section = {}
@@ -343,12 +474,10 @@ class mainFrame(wx.Frame):
         if not there_is_main:
             sections = sections[1:]
 
-
-        self.notebookpanel = wx.Panel( self, id=wx.ID_ANY )
         self.panelsizer = wx.BoxSizer(wx.VERTICAL)
 
         nbStyle=FN.FNB_NO_X_BUTTON|FN.FNB_NO_NAV_BUTTONS|FN.FNB_VC8|FN.FNB_BACKGROUND_GRADIENT
-        self.notebook = FN.FlatNotebook(self.notebookpanel, id=wx.ID_ANY, style=nbStyle)
+        self.notebook = FN.FlatNotebook( self, id=wx.ID_ANY, style=nbStyle)
         self.notebook.SetTabAreaColour(wx.Colour(125,200,175))
         self.notebook.Bind( FN.EVT_FLATNOTEBOOK_PAGE_CHANGED, self.OnPageChange )
         self.tab = {}
@@ -367,7 +496,6 @@ class mainFrame(wx.Frame):
             self.notebook.AddPage( manual_tab, text = "Manual" , select = False )
 
         self.panelsizer.Add( self.notebook, 1, flag=wx.EXPAND )
-        self.guisizer.Add( self.notebookpanel, 1, flag = wx.EXPAND )
 
         p_count = -1
         for p in self.task.params:
@@ -381,13 +509,8 @@ class mainFrame(wx.Frame):
                 text_style = wx.FONTWEIGHT_NORMAL
             if p['multiple'] == 'yes' and len( p['values'] ) == 0:
                 title = "[multiple] " + title
-            p['value'] = p['default']
-            # inserting existing values from d.* command in layer tree
-            if self.dcmd_params != None:
-                for dparam in self.dcmd_params:
-                    if p == dparam:
-                        p['value'] = self.dcmd_params[dparam]
-
+            if p[ 'value'] ==  '' :
+                p['value'] = p['default']
             if (len(p['values']) > 0):
 
                 valuelist=map(str,p['values'])
@@ -481,33 +604,6 @@ class mainFrame(wx.Frame):
             self.paramdict[self.chk] = ID_FLAG_START + f_count
             self.chk.Bind(wx.EVT_CHECKBOX, self.EvtCheckBox)
 
-
-        btnsizer = wx.BoxSizer(wx.HORIZONTAL)
-        self.btn_cancel = wx.Button(self, wx.ID_CANCEL, "Cancel")
-        btnsizer.Add(self.btn_cancel, 0, wx.ALL| wx.ALIGN_CENTER, 10)
-        if self.get_dcmd is not None: # A callback has been set up
-            self.btn_apply = wx.Button(self, wx.ID_APPLY, "Apply")
-            btnsizer.Add(self.btn_apply, 0, wx.ALL| wx.ALIGN_CENTER, 10)
-            self.btn_ok = wx.Button(self, wx.ID_OK, "OK")
-            btnsizer.Add(self.btn_ok, 0, wx.ALL| wx.ALIGN_CENTER, 10)
-            self.btn_ok.SetDefault()
-            self.btn_apply.Bind(wx.EVT_BUTTON, self.OnApply)
-            self.btn_ok.Bind(wx.EVT_BUTTON, self.OnOK)
-        else: # We're standalone
-            self.btn_run = wx.Button(self, wx.ID_OK, "Run")
-            btnsizer.Add(self.btn_run, 0, wx.ALL| wx.ALIGN_CENTER, 10)
-            self.btn_run.SetDefault()
-            self.btn_run.Bind(wx.EVT_BUTTON, self.OnRun)
-            self.btn_clipboard = wx.Button(self, wx.ID_OK, "Copy")
-            btnsizer.Add(self.btn_clipboard, 0, wx.ALL| wx.ALIGN_CENTER, 10)
-            self.btn_clipboard.Bind(wx.EVT_BUTTON, self.OnCopy)
-        self.guisizer.Add(btnsizer, 0, wx.ALIGN_BOTTOM)
-        wx.EVT_MENU(self, wx.ID_ABOUT, self.OnAbout)
-        wx.EVT_MENU(self, ID_ABOUT_COMMAND, self.OnAboutCommand)
-        wx.EVT_MENU(self, wx.ID_EXIT,  self.OnCancel)
-        self.btn_cancel.Bind(wx.EVT_BUTTON, self.OnCancel)
-        self.Bind(wx.EVT_CLOSE, self.OnCloseWindow)
-
         maxsizes = (0,0)
         for section in sections:
             self.tabsizer[section].SetSizeHints( self.tab[section] )
@@ -524,18 +620,9 @@ class mainFrame(wx.Frame):
         if manual_tab.Ok:
             manual_tab.SetMinSize( constrained_size )
 
-        self.notebookpanel.SetSize( (constrained_size[0],constrained_size[1]+80) ) # 80 takes the tabbar into account
-        self.notebookpanel.SetSizer(self.panelsizer)
-        self.notebookpanel.Layout()
-
-        self.guisizer.SetSizeHints(self)
-        self.SetAutoLayout(True)
-        self.SetSizer(self.guisizer)
-        self.Layout()
-
 
     def OnPageChange(self, event):
-        self.notebookpanel.Layout()
+        self.Layout()
 
     def OnColorButton(self, event):
         colorchooser = wx.FindWindowById( event.GetId() )
@@ -549,7 +636,10 @@ class mainFrame(wx.Frame):
         self.getValues()
 
     def updateStatusLine(self):
-        self.SetStatusText( self.createCmd(ignoreErrors = True) )
+        try:
+            self.GetParent().SetStatusText( self.createCmd(ignoreErrors = True) )
+        except:
+            pass
 
     def getValues(self):
         for (gui_object,param_num) in self.paramdict.items():
@@ -621,98 +711,20 @@ class mainFrame(wx.Frame):
             return None
         return cmd
 
-    def OnOK(self, event):
-        cmd = self.OnApply(event)
-        if cmd is not None and self.get_dcmd is not None:
-            self.OnCancel(event)
-
-    def OnApply(self, event):
-        cmd = self.createCmd()
-
-        if cmd is not None and self.get_dcmd is not None:
-            # return d.* command to layer tree for rendering
-            self.get_dcmd(cmd, self.layer)
-            # echo d.* command to output console
-            self.parent.writeDCommand(cmd)
-        return cmd
-
-    def OnRun(self, event):
-        cmd = self.createCmd()
-
-        if cmd != None and cmd[0:2] != "d.":
-             # Send any non-display command to parent window (probably wxgui.py)
-            if self.parent > -1:
-                # put to parents
-                try:
-                    self.parent.goutput.runCmd(cmd)
-                except AttributeError,e:
-                    print >>sys.stderr, "%s: Propably not running in wxgui.py session?" % (e)
-                    print >>sys.stderr, "parent window is: %s" % (str(self.parent))
-            # Send any other command to the shell.
-            else:
-                try:
-                    retcode = subprocess.call(cmd, shell=True)
-                    if retcode < 0:
-                        print >>sys.stderr, "Child was terminated by signal", -retcode
-                    elif retcode > 0:
-                        print >>sys.stderr, "Child returned", retcode
-                except OSError, e:
-                    print >>sys.stderr, "Execution failed:", e
-
-    def OnCopy(self, event):
-        cmddata = wx.TextDataObject()
-        cmddata.SetText(self.createCmd(ignoreErrors=True))
-        if wx.TheClipboard.Open():
-            wx.TheClipboard.UsePrimarySelection(True)
-            wx.TheClipboard.SetData(cmddata)
-            wx.TheClipboard.Close()
-            self.SetStatusText("'%s' copied to clipboard" %\
-                            (self.createCmd(ignoreErrors=True)))
-
-    def OnError(self, errMsg):
-        dlg = wx.MessageDialog(self, errMsg, "Error", wx.OK | wx.ICON_ERROR)
-        dlg.ShowModal()
-        dlg.Destroy()
-
-    def OnCancel(self, event):
-        self.Close(True)
-        for t in self.tab.values(): t = None
-        for t in self.tabsizer.values(): t.Clear(True)
-        self.notebook.Destroy()
-        self.guisizer.Clear(True)
-        self.Destroy()
-
-    def OnCloseWindow(self, event):
-        self.Destroy()
-
-    def OnAbout(self, event):
-        dlg = wx.MessageDialog(self, "This is a sample program for\n"
-            "GRASS command interface parsing\n"
-            "and automatic GUI building. \n%s" %(__version__),
-            "About GrassGUI", wx.OK | wx.ICON_INFORMATION)
-        dlg.ShowModal()
-        dlg.Destroy()
-
-    def OnAboutCommand(self, event):
-        dlg = wx.MessageDialog(self,
-            self.task.name+": "+self.task.description,
-            "About " + self.task.name,
-            wx.OK | wx.ICON_INFORMATION)
-        dlg.ShowModal()
-        dlg.Destroy()
-
+def getInterfaceDescription( cmd ):
+    gmpath =  os.getenv("GISBASE") + "/etc/wx/gui_modules"
+    cmd = cmd + r' --interface-description'
+    cmdout = os.popen(cmd, "r").read()
+    p = re.compile( '(grass-interface.dtd)')
+    p.search( cmdout )
+    cmdout = p.sub( gmpath+r'/grass-interface.dtd', cmdout)
+    return cmdout
 
 class GrassGUIApp(wx.App):
     def __init__(self, cmd):
-        gmpath =  os.getenv("GISBASE") + "/etc/wx/gui_modules"
-        cmd = cmd + r' --interface-description'
-        cmdout = os.popen(cmd, "r").read()
-        p = re.compile( '(grass-interface.dtd)')
-        p.search( cmdout )
-        cmdout2 = p.sub( gmpath+r'/grass-interface.dtd', cmdout)
         self.grass_task = grassTask()
         handler = processTask(self.grass_task)
-        xml.sax.parseString(cmdout2, handler)
+        xml.sax.parseString( getInterfaceDescription( cmd ) , handler )
         wx.App.__init__(self)
         
     def OnInit(self):
@@ -743,22 +755,15 @@ class GUI:
             print "usage: %s <grass command> " % cmdlst[0]
         else:
             # parse the interface decription
-            cmd = cmd + r' --interface-description'
-            cmdout = os.popen(cmd, "r").read()
-            p = re.compile( '(grass-interface.dtd)')
-            p.search( cmdout )
-            cmdout2 = p.sub( gmpath+r'/grass-interface.dtd', cmdout)
-            grass_task = grassTask()
-            handler = processTask(grass_task)
-            xml.sax.parseString(cmdout2, handler)
+            self.grass_task = grassTask()
+            handler = processTask(self.grass_task)
+            xml.sax.parseString( getInterfaceDescription( cmd ) , handler )
 
-        self.mf = mainFrame(self.parent ,-1, grass_task, self.get_dcmd, layer)
-        self.mf.Show(True)
+            self.mf = mainFrame(self.parent ,-1, grass_task, self.get_dcmd, layer)
+            self.mf.Show(True)
 
 if __name__ == "__main__":
-    # Just for testing purposes
 
-    # Create the application
     if len(sys.argv) == 1:
         print "Usage: %s <grass command>" % sys.argv[0]
         sys.exit()
