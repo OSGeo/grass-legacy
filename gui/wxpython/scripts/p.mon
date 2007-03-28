@@ -29,7 +29,7 @@
 #% type: string
 #% required: no
 #% multiple: no
-#% description: Name of graphics monitor to start (p0-pX)
+#% description: Name of graphics monitor to start (p0-p9)
 #%End
 #%Option
 #% key: stop
@@ -68,10 +68,21 @@ PYTHONPATH="$GISBASE/etc/wx"
 
 export PYTHONPATH
 
+start="$GIS_OPT_START"
+select="$GIS_OPT_SELECT"
+stop="$GIS_OPT_STOP"
+unlock="$GIS_OPT_UNLOCK"
+
 # create the command file
 command_file="`g.tempfile pid=$$`"
 g.gisenv set=GRASS_PYCMDFILE=${command_file}
 
-python $PYTHONPATH/gui_modules/mapdisp.py ${command_file} &
+if [ -n "$start" ] ; then
+    python $PYTHONPATH/gui_modules/mapdisp.py "$start" ${command_file} &
+fi
+
+if [[ -n "$stop" || -n "$select" || -n "$unlock" ]] ; then
+    g.message -w "Not implemented yet"
+fi
 
 exit 0
