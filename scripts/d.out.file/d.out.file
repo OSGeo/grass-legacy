@@ -3,8 +3,8 @@
 ############################################################################
 #
 # MODULE:	d.out.file for GRASS 6 (2005/9/3)
-# AUTHOR(S):	Michael Barton 
-#		 Routine to read current display geometry written by 
+# AUTHOR(S):	Michael Barton
+#		 Routine to read current display geometry written by
 #		 Hamish Bowman & Glynn Clements
 # PURPOSE:	To redraw current displayed maps to graphics file output
 # COPYRIGHT:	(C) 2005 by the GRASS Development Team
@@ -56,20 +56,20 @@
 #% description: Size/quality for JPEG files (10=smallest/worst, 100=largest/best)
 #% required : no
 #%end
-#%flag 
+#%flag
 #%key: t
 #%description: Transparent background
 #%end
-#%flag 
+#%flag
 #%key: b
 #%description: Set background color to black (white default)
 #%end
 
 
 if  [ -z "$GISBASE" ] ; then
- echo "You must be in GRASS GIS to run this program."
+  echo "You must be in GRASS GIS to run this program."
  exit 1
-fi   
+fi
 
 if [ "$1" != "@ARGS_PARSED@" ] ; then
   exec g.parser "$0" "$@"
@@ -85,12 +85,10 @@ monitorcheck=`d.mon -p|sed s/'No monitor currently selected for output'//`
 
 if  [ "$monitorcheck" = "" ]
 then
-	echo ""
-	echo "***You must select a display monitor***"
-	echo ""
+	g.message -e "You must select a display monitor"
 	exit 1
 fi
-     
+
 
 # Save old settings
 old_GRASSW=`eval g.gisenv get=GRASS_WIDTH`
@@ -162,10 +160,8 @@ if [ "$GIS_OPT_FORMAT" != "png" ] ; then
     output=$GIS_OPT_OUTPUT".ppm"
 fi
 
-echo "******************"
-echo "Saving display from [$GRASS_VER- Monitor: $curr_mon] to $output"
-echo "in home directory at $out_width x $out_height resolution"
-echo "******************"
+g.message "Saving display from [$GRASS_VER- Monitor: $curr_mon] to $output"
+g.message "in home directory at $out_width x $out_height resolution"
 
 GRASS_PNGFILE=$output
 export GRASS_PNGFILE
@@ -195,41 +191,37 @@ GRASS_PNG_COMPRESSION=$old_COMPRESSION
 export GRASS_PNG_COMPRESSION
 
 
-echo " "
-echo "Screen export complete (writing the file may take a small amount of time)"
+g.message "Screen export complete (writing the file may take a small amount of time)"
 
 
 if [ "$GIS_OPT_FORMAT" != "png" -a  "$GIS_OPT_FORMAT" != "ppm" ] ; then
     output2=$GIS_OPT_OUTPUT"."$GIS_OPT_FORMAT
     sleep 5
-else 
+else
     exit 1
 fi
 #size=`ls -s $output | awk '{printf $1}'`
 
-echo " "
-echo "******************"
-echo "Waiting for file to write"
-echo " "
+g.message "Waiting for file to write"
 
 if [ "$GIS_OPT_FORMAT" = "tif" ] ; then
-    echo "Translating to TIFF format"
+    g.message "Translating to TIFF format" 
     gdal_translate $output $output2 -of GTIFF
     rm $output
 fi
 
 if [ "$GIS_OPT_FORMAT" = "jpg" ] ; then
-    echo "Translating to JPEG format"
+    g.message "Translating to JPEG format" 
     gdal_translate $output $output2 -of JPEG -co QUALITY=$GIS_OPT_QUALITY
     rm $output
 fi
 
 if [ "$GIS_OPT_FORMAT" = "bmp" ] ; then
-    echo "Translating to BMP format"
+    g.message "Translating to BMP format" 
     gdal_translate $output $output2 -of BMP
     rm $output
 fi
 
-    echo "Done"
+    g.message "Done" 
 
 
