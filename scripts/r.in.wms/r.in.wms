@@ -163,7 +163,7 @@
 #%end
 
 if  [ -z "$GISBASE" ] ; then
-    echo "You must be in GRASS GIS to run this program." 1>&2
+    g.message -e "You must be in GRASS GIS to run this program."
  exit 1
 fi
 
@@ -174,32 +174,32 @@ fi
 #### setup temporary file
 TMP="`g.tempfile pid=$$`"
 if [ $? -ne 0 ] || [ -z "$TMP" ] ; then
-    echo "ERROR: unable to create temporary files" 1>&2
+    g.message -e "Unable to create temporary files" 
     exit 1
 fi
 
 # check if we have wget
 if [ ! -x "`which wget`" ] ; then
-    echo "wget is required, please install it first" 1>&2
+    g.message -e "wget is required, please install it first" 
     exit 1
 fi
 
 # check if we have bc -> used in wms.request and wms.download
 if [ ! -x "`which bc`" ] ; then
-    echo "bc is required, please install it first" 1>&2
+    g.message -e "bc is required, please install it first"
     exit 1
 fi
 
 # check if we have sed
 if [ ! -x "`which sed`" ] ; then
-    echo "sed is required, please install it first" 1>&2
+    g.message -e "sed is required, please install it first" 
     exit 1
 fi
 
 # check if we have gdalwarp -> used in r.in.gdalwarp
 if [ $GIS_FLAG_P -ne 1 ] ; then
     if [ ! -x "`which gdalwarp`" ] ; then
-        echo "gdalwarp is required, please install it first" 1>&2
+        g.message -e "gdalwarp is required, please install it first" 
         exit 1
     fi
 fi
@@ -286,7 +286,7 @@ listLayers() {
 	STRING="service=WMS&request=GetCapabilities&${GIS_OPT_WMSQUERY}";
 
 	### wget the XML and grep the lines with layer names
-	echo "List of layers for server ${GIS_OPT_MAPSERVER}:"
+	g.message "List of layers for server ${GIS_OPT_MAPSERVER}:"
 	wget ${GIS_OPT_WGETOPT} --post-data=${STRING} $GIS_OPT_MAPSERVER -O $CAPABILITIES_FILE;
 	message 1 wget ${GIS_OPT_WGETOPT} --post-data=${STRING} $GIS_OPT_MAPSERVER -O $CAPABILITIES_FILE;
 
@@ -302,7 +302,7 @@ listLayers() {
 		sed -e "s/.*Layer\\/Style\\/Title=/    Style title: /"
 
 	else : # xml2 is not available
-		echo "Note: xml2 NOT avaliable"
+		g.message -w "xml2 NOT avaliable"
 		cat $CAPABILITIES_FILE | \
 		grep "Name\|Title\|Style\|Layer" | \
 		sed -e "s/<Layer .*>/LAYER:/i"| \
@@ -333,7 +333,7 @@ fi
 # It would be a good idea to test if the map already exists here too
 
 if [ -z "${GIS_OPT_OUTPUT}" ] ; then
-	echo "No output map specified" 1>&2
+	g.message -e "No output map specified"
 	exit 1;
 fi
 
@@ -354,7 +354,7 @@ REQUESTFILE=${GIS_OPT_FOLDER}/${PREFIX}_${GIS_OPT_REGION}.wget
 if [ ! -z "$GIS_OPT_REGION" ] ; then
    eval `g.findfile element=windows file=$GIS_OPT_REGION`
    if [ ! "$file" ] ; then
-      echo "Region file '$GIS_OPT_REGION' not found." 1>&2
+      g.message -e "Region file '$GIS_OPT_REGION' not found."
       exit 1
    fi
 fi
@@ -379,7 +379,7 @@ if [ $GIS_FLAG_D -eq 0 ] ; then
 	message 0 "wms.request $REQUEST"
 	eval "wms.request $REQUEST"
 	if [ $? -ne 0 ] ; then
-	   echo "ERROR: wms.request failure" 1>&2
+	   g.message -e "wms.request failure" 
 	   exit 1
 	fi
 fi
@@ -417,7 +417,7 @@ addargument GDALWARP s_srs ${GIS_OPT_SRS}
 # check for error like 'Service Exception Report'
 file "$FILES" | grep HTML > /dev/null
 if [ $? -eq 0 ] ; then
-  echo "#################################"
+  g.message "#################################"
   cat "$FILES"
   rm -f ${TMP}*
   exit 1
