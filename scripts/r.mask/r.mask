@@ -53,25 +53,16 @@ fi
 if [ "$GIS_FLAG_R" -eq 1 ]; then
 	if test -f `g.gisenv GISDBASE`/`g.gisenv LOCATION_NAME`/`g.gisenv MAPSET`/cell/MASK ; then
  		g.remove rast=MASK
- 		echo " "
-		echo "*************************************************"
- 		echo "Raster MASK removed"
-		echo "*************************************************"
+ 		g.message "Raster MASK removed"
  	else
- 		echo " "
-		echo "*************************************************"
- 		echo "No existing MASK to remove"
-		echo "*************************************************"
+ 		g.message -w "No existing MASK to remove"
 	fi
 else
 
- 	echo " "
-	echo "*************************************************"
-	echo "MASK created. All subsequent raster operations" 
-	echo "will be limited to MASK area"
-	echo "Removing or renaming raster file named MASK will"
-	echo "restore raster operations to normal"
-	echo "*************************************************"
+	g.message "MASK created. All subsequent raster operations" 
+	g.message "will be limited to MASK area"
+	g.message "Removing or renaming raster file named MASK will"
+	g.message "restore raster operations to normal"
 
 	if [ "$GIS_FLAG_O" -eq 1 ]; then
 		echo "$GIS_OPT_MASKCATS = 1" | r.reclass input=$GIS_OPT_INPUT output=MASK --o
