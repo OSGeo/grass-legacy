@@ -6,12 +6,12 @@
 
 # submodule of i.oif
 if [ $# -ne 3 ] ; then
-    echo "You must use i.oif instead of i.oifcalc (this is a submodule)"
+    g.message -e "You must use i.oif instead of i.oifcalc (this is a submodule)"
     exit 1
 fi
 
 if [ $1 -lt 1 ] || [ $1 -gt 7 ] || [ $2 -lt 1 ] || [ $2 -gt 7 ] || [ $3 -lt 1 ] || [ $3 -gt 7 ] ; then
-    echo "Invalid channel combination ($1 $2 $3)"
+    g.message -e "Invalid channel combination ($1 $2 $3)"
     exit 1
 fi
 
@@ -19,7 +19,7 @@ PROG=`basename $0`
 
 #### check if we have awk
 if [ ! -x "`which awk`" ] ; then
-    echo "$PROG: awk required, please install awk or gawk first" 2>&1
+    g.message -e "awk required, please install awk or gawk first" 
     exit 1
 fi
 

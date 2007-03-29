@@ -60,7 +60,7 @@ PROG=`basename $0`
 
 #### check if we have awk
 if [ ! -x "`which awk`" ] ; then
-    echo "$PROG: awk required, please install awk or gawk first" 2>&1
+    echo "awk required, please install awk or gawk first" 2>&1
     exit 1
 fi
 
@@ -76,7 +76,7 @@ LOCATION="$GISDBASE"/"$LOCATION_NAME"/"$MAPSET"
 
 #### check for gdalinfo (just to check if installation is complete)
 if [ ! -x "`which gdalinfo`" ] ; then
-    echo "$PROG: 'gdalinfo' program not found, install GDAL first" 1>&2
+    echo "'gdalinfo' program not found, install GDAL first" 1>&2
     echo "       http://www.gdal.org" 1>&2
     exit 1
 fi

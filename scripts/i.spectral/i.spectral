@@ -59,13 +59,13 @@ fi
 
 #check if present
 if [ ! -x "`which gnuplot`" ] ; then
-    g.message -e "$PROG: gnuplot required, please install first"
+    g.message -e "gnuplot required, please install first"
     exit 1
 fi
 
 #### check if we have awk
 if [ ! -x "`which awk`" ] ; then
-    g.message -e "$PROG: awk required, please install awk or gawk first"
+    g.message -e "awk required, please install awk or gawk first"
     exit 1
 fi
 

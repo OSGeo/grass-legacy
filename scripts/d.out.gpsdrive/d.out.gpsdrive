@@ -80,14 +80,14 @@ PROG=`basename $0`
 
 #### check if we have awk
 if [ ! -x "`which awk`" ] ; then
-    g.message -e "$PROG: awk required, please install awk/gawk first" 
+    g.message -e "awk required, please install awk/gawk first" 
     exit 1
 fi
 
 #### check if we have NetPBM
 if [ "$GIS_FLAG_J" -eq 1 ] ; then
   if [ ! -x "`which pngtopnm`" ] || [ ! -x "`which pnmtojpeg`" ] ; then
-    g.message -e "$PROG: NetPBM tools are required for JPEG output"
+    g.message -e "NetPBM tools are required for JPEG output"
     exit 1
   fi
 fi
