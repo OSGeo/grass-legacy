@@ -17,7 +17,8 @@ Support System</i> from the programming perspective. Design theory, system
 support libraries, system maintenance, and system enhancement are all 
 presented. Standard GRASS 4.x conventions are still used in much of the
 code. This work is part of ongoing research being performed by the 
-GRASS Development Team coordinated at <a href="http://mpa.itc.it/">ITC-irst</a>, Trento, Italy), 
+GRASS Development Team coordinated at 
+<a href="http://mpa.itc.it/">FBK-irst</A>(formerly ITC-irst), Trento, Italy, 
 an international team of programmers,
 GRASS module authors are cited within their module's source code and the 
 contributed manual pages.
