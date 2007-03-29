@@ -86,7 +86,7 @@ GRASS_VER=`g.version | awk '{printf "%s", $1 " " $2}'`
 curr_width=`d.frame -D | sed -n -e '1,/^FRAME: full_screen/d' -e 's/d_win://p' | awk '{printf $4}'`
 curr_height=`d.frame -D | sed -n -e '1,/^FRAME: full_screen/d' -e 's/d_win://p' | awk '{printf $2}'`
 
-g.message "width = $curr_width  height = $curr_height"
+g.message -d message="width = $curr_width  height = $curr_height"
 
 #set resolution for PNG output
 out_width=`expr $res \* $curr_width`
@@ -104,8 +104,8 @@ export GRASS_HEIGHT
 GRASS_TRUECOLOR=TRUE
 export GRASS_TRUECOLOR
 
-g.message "Saving display to $output.png from [$GRASS_VER- Monitor: $curr_mon]"
-g.message "at $out_width x $out_height resolution"
+g.message "Saving display to <$output.png> from [$GRASS_VER- Monitor: $curr_mon] \
+    at $out_width x $out_height resolution"
 
 #set PNG output file name
 GRASS_PNGFILE="$output".png
@@ -129,5 +129,6 @@ GRASS_PNGFILE=map.png
 export GRASS_PNGFILE
 
 g.message "Done (writing the file may take a small amount of time)"
+
 exit 0
 
