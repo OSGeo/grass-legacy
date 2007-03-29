@@ -316,6 +316,7 @@ class GMFrame(wx.Frame):
                  ('addvect', wx.Bitmap(os.path.join(wxgui_utils.icons,'element-vector.gif'), wx.BITMAP_TYPE_ANY), 'Add vector layer', self.onVector),
                  ('addcmd', wx.Bitmap(os.path.join(wxgui_utils.icons,'gui-cmd.gif'), wx.BITMAP_TYPE_ANY), 'Add command layer', self.addCommand),
                  ('addgrp', wx.ArtProvider.GetBitmap(wx.ART_FOLDER, wx.ART_TOOLBAR, (16,16)), 'Add layer group', self.addGroup),
+                 ('addovl', wx.Bitmap(os.path.join(wxgui_utils.icons,'module-d.grid.gif'), wx.BITMAP_TYPE_ANY), 'Add grid or vector labels overlay', self.onOverlay),
                  ('delcmd', wx.ArtProvider.GetBitmap(wx.ART_DELETE, wx.ART_TOOLBAR, (16,16)), 'Delete selected layer', self.deleteLayer),
                  )
 
@@ -366,7 +367,7 @@ class GMFrame(wx.Frame):
 
     # toolBar button handlers
     def onRaster(self, event):
-        """Add raster item menu"""
+        """Add raster menu"""
         point = wx.GetMousePosition()
         rastmenu = wx.Menu()
         # Add items to the menu
@@ -408,7 +409,7 @@ class GMFrame(wx.Frame):
         rastmenu.Destroy()
 
     def onVector(self, event):
-        """Add raster item menu"""
+        """Add vector menu"""
         point = wx.GetMousePosition()
         vectmenu = wx.Menu()
 
@@ -439,6 +440,33 @@ class GMFrame(wx.Frame):
         # will be called before PopupMenu returns.
         self.PopupMenu(vectmenu)
         vectmenu.Destroy()
+
+    def onOverlay(self, event):
+        """Add overlay menu"""
+        point = wx.GetMousePosition()
+        ovlmenu = wx.Menu()
+
+        addgrid = wx.MenuItem(ovlmenu, -1,'Add grid overlay')
+        bmp = wx.Image(os.path.join(wxgui_utils.icons,'module-d.grid.gif'), wx.BITMAP_TYPE_GIF)
+        bmp.Rescale(16, 16)
+        bmp = bmp.ConvertToBitmap()
+        addgrid.SetBitmap(bmp)
+        ovlmenu.AppendItem(addgrid)
+        self.Bind(wx.EVT_MENU, self.addGrid, addgrid)
+
+        addlbl = wx.MenuItem(ovlmenu, -1,'Add vector labels overlay (create with v.label)')
+        bmp = wx.Image(os.path.join(wxgui_utils.icons,'module-d.labels.gif'), wx.BITMAP_TYPE_GIF)
+        bmp.Rescale(16, 16)
+        bmp = bmp.ConvertToBitmap()
+        addlbl.SetBitmap(bmp)
+        ovlmenu.AppendItem(addlbl)
+        self.Bind(wx.EVT_MENU, self.addLabels, addlbl)
+
+        # Popup the menu.  If an item is selected then its handler
+        # will be called before PopupMenu returns.
+        self.PopupMenu(ovlmenu)
+        ovlmenu.Destroy()
+
 
     def addRaster(self, event):
         self.SetTree('raster')
@@ -474,6 +502,15 @@ class GMFrame(wx.Frame):
     def addGroup(self, event):
         """Add layer group"""
         self.SetTree('group')
+
+    def addGrid(self, event):
+        """Add layer grid"""
+        self.SetTree('grid')
+
+    def addLabels(self, event):
+        """Add layer vector labels"""
+        print 'labels 1', event
+        self.SetTree('labels')
 
     def GetSelectedDisplay(self):
         return self.notebook.GetSelection()

@@ -103,6 +103,16 @@ class LayerTree(CT.CustomTreeCtrl):
         trgif = trgif.ConvertToBitmap()
         self.chart_icon = il.Add(trgif)
 
+        trgif = wx.Image(icons + r'/module-d.grid.gif', wx.BITMAP_TYPE_GIF)
+        trgif.Rescale(16, 16)
+        trgif = trgif.ConvertToBitmap()
+        self.grid_icon = il.Add(trgif)
+
+        trgif = wx.Image(icons + r'/module-d.labels.gif', wx.BITMAP_TYPE_GIF)
+        trgif.Rescale(16, 16)
+        trgif = trgif.ConvertToBitmap()
+        self.labels_icon = il.Add(trgif)
+
         trgif = wx.Image(icons + r'/gui-cmd.gif', wx.BITMAP_TYPE_GIF)
         trgif.Rescale(16, 16)
         trgif = trgif.ConvertToBitmap()
@@ -211,6 +221,16 @@ class LayerTree(CT.CustomTreeCtrl):
             self.SetItemText(layer, 'thematic charts (double click to set properties)')
             # launch the properties dialog
             menuform.GUI().parseCommand('d.vect.chart', gmpath, completed=(self.getOptData,layer,self.params), parentframe=self)
+        elif type == 'grid':
+            self.SetItemImage(layer, self.grid_icon)
+            self.SetItemText(layer, 'grid (double click to set properties)')
+            # launch the properties dialog
+            menuform.GUI().parseCommand('d.grid', gmpath, completed=(self.getOptData,layer,self.params), parentframe=self)
+        elif type == 'labels':
+            self.SetItemImage(layer, self.labels_icon)
+            self.SetItemText(layer, 'vector labels (double click to set properties)')
+            # launch the properties dialog
+            menuform.GUI().parseCommand('d.labels', gmpath, completed=(self.getOptData,layer,self.params), parentframe=self)
         elif type == 'command':
             self.SetItemImage(layer, self.cmd_icon)
         elif type == 'group':
@@ -241,6 +261,10 @@ class LayerTree(CT.CustomTreeCtrl):
             menuform.GUI().parseCommand('d.vect.thematic', gmpath, completed=(self.getOptData,layer,self.params), parentframe=self)
         elif self.layertype[layer] == 'themechart':
             menuform.GUI().parseCommand('d.vect.chart', gmpath, completed=(self.getOptData,layer,self.params), parentframe=self)
+        elif self.layertype[layer] == 'grid':
+            menuform.GUI().parseCommand('d.grid', gmpath, completed=(self.getOptData,layer,self.params), parentframe=self)
+        elif self.layertype[layer] == 'labels':
+            menuform.GUI().parseCommand('d.labels', gmpath, completed=(self.getOptData,layer,self.params), parentframe=self)
         elif self.layertype[layer] == 'group':
             if self.IsExpanded(layer):
                 self.Collapse(layer)
@@ -406,6 +430,10 @@ class LayerTree(CT.CustomTreeCtrl):
                 mapname = item.split('=')[1]
             elif 'h_map=' in item:
                 mapname = item.split('=')[1]
+            elif 'd.grid' in item:
+                mapname = 'grid'
+            elif 'labels=' in item:
+                mapname = item.split('=')[1]+' labels'
 
         # set layer text to map name
         self.SetItemText(layer, mapname)
@@ -715,6 +743,10 @@ class GMConsole(wx.Panel):
                     layertype = 'thememap'
                 elif cmd == 'd.vect.chart':
                     layertype = 'themechart'
+                elif cmd == 'd.grid':
+                    layertype = 'grid'
+                elif cmd == 'd.labels':
+                    layertype = 'labels'
                 else:
                     print 'Command type not yet implemented'
                     return
