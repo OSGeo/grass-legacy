@@ -45,21 +45,21 @@ do
   OUTPUT=`echo $INPUT | sed 's+\.+_+g'`_points
 
   #do it:
-  echo "Processing $INPUT -> $OUTPUT" >&2
+  g.message "Processing $INPUT -> $OUTPUT" 
   v.in.sites in=$INPUT out=$OUTPUT
   if [ $? -ne 0 ] ; then
-    echo "ERROR converting map $INPUT to $OUTPUT" >&2
+    g.message -w "Error converting map $INPUT to $OUTPUT" 
   else
     CONVERTEDMAPS=`expr $CONVERTEDMAPS + 1`
   fi
 done
 
 if [ $CONVERTEDMAPS -lt 1 ] ; then
-  echo "No sites maps converted as no old sites maps present in current mapset <$MAPSET>." >&2
+  g.message -e "No sites maps converted as no old sites maps present in current mapset <$MAPSET>." 
 else
-  echo "Total $CONVERTEDMAPS number of sites maps in current mapset converted to vector" >&2
-  echo "maps (original names extended by '_points'). Please verify new vector map(s)" >&2
-  echo "before deleting old sites map(s)." >&2
+  g.message "Total $CONVERTEDMAPS number of sites maps in current mapset converted to vector" 
+  g.message "maps (original names extended by '_points'). Please verify new vector map(s)" 
+  g.message "before deleting old sites map(s)." 
 fi
 
 exit 0

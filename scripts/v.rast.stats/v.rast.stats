@@ -47,7 +47,7 @@
 #%end
 
 if  [ -z "$GISBASE" ] ; then
-    echo "You must be in GRASS GIS to run this program."
+    echo "You must be in GRASS GIS to run this program." >&2
  exit 1
 fi
 
@@ -59,7 +59,7 @@ PROG=`basename $0`
 
 #### check if we have awk
 if [ ! -x "`which awk`" ] ; then
-    echo "$PROG: awk required, please install awk or gawk first" 2>&1
+    g.message "awk required, please install awk or gawk first" 
     exit 1
 fi
 
@@ -71,7 +71,7 @@ export LC_NUMERIC
 #### setup temporary file
 TMP="`g.tempfile pid=$$`"
 if [ $? -ne 0 ] || [ -z "$TMP" ] ; then
-    echo "ERROR: unable to create temporary files" 1>&2
+    g.message -e "Unable to create temporary files" 
     exit 1
 fi
 SQLTMP=$TMP.sql
@@ -86,7 +86,7 @@ cleanup()
  g.remove rast=${VECTOR}_${TMPNAME} 2> /dev/null
  g.remove MASK > /dev/null 2> /dev/null
  if [ $MASKFOUND -eq 1 ] ; then
-   echo "Restoring previous MASK..."
+   g.message "Restoring previous MASK..."
    g.rename ${TMPNAME}_origmask,MASK > /dev/null
  fi
  rm -f $TMP $TMPNAME $TMP.cats $SQLTMP
@@ -95,7 +95,7 @@ cleanup()
 # what to do in case of user break:
 exitprocedure()
 {
- echo "User break!"
+ g.message -e "User break!"
  cleanup
  exit 1
 }
@@ -110,13 +110,13 @@ COLPREFIX="$GIS_OPT_COLPREFIX"
 #check the input vector map
 eval `g.findfile element=vector file=$VECTOR`
 if [ ! "$file" ] ; then
-  echo "Input vector map $VECTOR not found"
+  g.message -e "Input vector map $VECTOR not found"
   exit 1
 fi
 #check the input raster map
 eval `g.findfile element=cell file=$RASTER`
 if [ ! "$file" ] ; then
-  echo "Input raster map $RASTER not found"
+  g.message -e "Input raster map $RASTER not found"
   exit 1
 fi
 
@@ -124,7 +124,7 @@ fi
 MASKFOUND=0
 eval `g.findfile element=cell file=MASK`
 if [ "$file" ] ; then
-  echo "Raster MASK found, temporarily disabled"
+  g.message "Raster MASK found, temporarily disabled"
   g.rename MASK,${TMPNAME}_origmask > /dev/null
   MASKFOUND=1
 fi
@@ -133,7 +133,7 @@ fi
 #fetch separated to permit for non-square cells (latlong etc)
 NSRES=`r.info -s $RASTER | grep nsres | cut -d'=' -f2`
 if [ $? -ne 0 ] ; then
- echo "An error occurred reading the input raster map resolution."
+ g.message -e "An error occurred reading the input raster map resolution."
  exit 1
 fi
 EWRES=`r.info -s $RASTER | grep ewres | cut -d'=' -f2`
@@ -148,7 +148,7 @@ g.region nsres=$NSRES ewres=$EWRES -a
 #prepare raster MASK
 v.to.rast in=$VECTOR out=${VECTOR}_${TMPNAME} use=cat > /dev/null 2> /dev/null
 if [ $? -ne 0 ] ; then
- echo "An error occurred."
+ g.message -e "An error occurred while converting vector to raster"
  exit 1
 fi
 
@@ -158,7 +158,7 @@ r.cats ${VECTOR}_${TMPNAME} fs=';' 2> /dev/null | cut -d';' -f1 > $TMP.cats
 #echo "List of categories found: $CATSLIST"
 NUMBER=`cat $TMP.cats | wc -l | awk '{print $1}'`
 if [ $NUMBER -lt 1 ] ; then
-   echo "ERROR: No categories found in raster map"
+   g.message -e "No categories found in raster map"
    exit 1
 fi
 
@@ -185,14 +185,14 @@ for i in n min max range mean stddev variance cf_var sum ; do
   v.info -c $VECTOR 2> /dev/null | sed 's+^+|+g' |sed 's+$+|+g' | grep "|$CURRCOLUMN|" > /dev/null
   if [ $? -eq 0 ] ; then
     if [ $GIS_FLAG_C -ne 1 ] ; then
-       echo "ERROR: Cannot create column <$CURRCOLUMN> (already present). Use -c flag to update values in this column."
+       g.message -e "Cannot create column <$CURRCOLUMN> (already present). Use -c flag to update values in this column."
        exit 1
     fi
   else
-    echo "Adding column <$CURRCOLUMN>"
+    g.message "Adding column <$CURRCOLUMN>"
     v.db.addcol map=$VECTOR columns="$CURRCOLUMN double precision"
     if [ $? -eq 1 ] ; then
-      echo "ERROR: Cannot continue (problem to add column)."
+      g.message "Cannot continue (problem to add column)."
       exit 1
     fi
   fi
@@ -201,7 +201,7 @@ done
 #loop over cats and calculate statistics:
 CURRNUM=1
 for i in `cat $TMP.cats` ; do
- echo "Processing category $i ($CURRNUM/$NUMBER)"
+ g.message "Processing category $i ($CURRNUM/$NUMBER)"
  g.remove MASK > /dev/null 2> /dev/null
  r.mapcalc "MASK=if(${VECTOR}_${TMPNAME} == $i, 1, null())" 2> /dev/null
 
@@ -239,7 +239,7 @@ g.remove MASK > /dev/null 2> /dev/null
 
 cleanup
 
-echo "Statistics calculated from raster map <$RASTER> and uploaded to attribute table of vector map <$VECTOR>."
-echo "Done."
+g.message "Statistics calculated from raster map <$RASTER> and uploaded to attribute table of vector map <$VECTOR>."
+g.message "Done"
 
 exit 0

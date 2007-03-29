@@ -55,7 +55,7 @@
 #%end
 
 if  [ -z $GISBASE ] ; then
- echo "You must be in GRASS GIS to run this program."
+ echo "You must be in GRASS GIS to run this program." >&2
  exit 1
 fi   
 
@@ -78,7 +78,7 @@ LC_NUMERIC=C
 export LC_NUMERIC
 
 if [ $GIS_FLAG_R -eq 1 -a $GIS_FLAG_S -eq 1 ] ; then
-	echo "ERROR: Either -r or -s flag"
+	g.message -e "Either -r or -s flag"
 	exit 1
 fi
 
@@ -93,7 +93,7 @@ LAYER=$GIS_OPT_LAYER
 # does map exist?
 eval `g.findfile element=vector file=$GIS_OPT_MAP`
 if [ ! "$file" ] ; then
-   echo "Vector map '$GIS_OPT_MAP' not found in mapset search path"
+   g.message -e "Vector map '$GIS_OPT_MAP' not found in mapset search path"
    exit 1
 fi
 

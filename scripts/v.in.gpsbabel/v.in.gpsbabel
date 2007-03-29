@@ -150,25 +150,25 @@ fi
 if [ -n "$GIS_OPT_OUTPUT" ] ; then
     NAME="$GIS_OPT_OUTPUT"
     if [ $VERBOSE -eq 1 ] ; then
-	echo "output=$NAME" 1>&2
+	g.message "output=$NAME" 
     fi
 fi
 if [ -n "$GIS_OPT_INPUT" ] ; then
     GPSdevice="-f $GIS_OPT_INPUT"
     if [ $VERBOSE -eq 1 ] ; then
-	echo "file=$GIS_OPT_INPUT" 1>&2
+	g.message "file=$GIS_OPT_INPUT"
     fi
 fi
 
 
 if [ $GIS_FLAG_W -eq 1 ] && ([ $GIS_FLAG_R -eq 1 ] || [ $GIS_FLAG_T -eq 1 ]) ; then
-    echo "One feature at a time please. Use v.patch if you need to combine them."
+    g.message -e "One feature at a time please. Use v.patch if you need to combine them."
     rm -f ${TMP}.*
     exit 1
 fi
 # logic eludes me at pressent..  [combine with above]
 if [ $GIS_FLAG_R -eq 1 ] && [ $GIS_FLAG_T -eq 1 ] ; then
-    echo "One feature at a time please. Use v.patch if you need to combine them."
+    g.message -e "One feature at a time please. Use v.patch if you need to combine them."
     rm -f ${TMP}.*
     exit 1
 fi
@@ -216,7 +216,7 @@ g.region -p | grep projection | cut -f2 -d" " > $TMP.tmp
 read PROJ_TYPE < $TMP.tmp
 
 if [ $PROJ_TYPE -eq 0 ] && [ $KEEP_WGS84 -ne 1 ] ; then
-    echo "Cannot project to a XY location." 1>&2
+    g.message -e "Cannot project to a XY location." 
     rm -f ${TMP}.*
     exit 1
 fi
@@ -234,17 +234,17 @@ STYLE="$GISBASE/etc/grass_write_ascii.style"
 #### receive data ... modificato
 
 if [ $CREATE_POINTS -eq 1 ] ; then
-    echo "Downloading Waypoints from GPS" 1>&2
+    g.message "Downloading Waypoints from GPS" 
     gpsbabel -w -i $GIS_OPT_FORMAT $GPSdevice $PROGVERBOSE -o xcsv,style="$STYLE" -F "$TMP".gpst
     EXITCODE=$?
 else
     if [ $RTE -eq 1 ] ; then
-	echo "Downloading Routes from GPS" 1>&2
+	g.message "Downloading Routes from GPS" 
 	gpsbabel -r -i $GIS_OPT_FORMAT $GPSdevice $PROGVERBOSE -o gpx,style="$STYLE" -F "$TMP".gpx
 	EXITCODE=$?
     fi
     if [ $TRK -eq 1 ] ; then
-	echo "Downloading Tracks from GPS" 1>&2
+	g.message "Downloading Tracks from GPS" 
 	gpsbabel -t -i $GIS_OPT_FORMAT $GPSdevice $PROGVERBOSE -o gpx,style="$STYLE" -F "$TMP".gpx
 	EXITCODE=$?
     fi
@@ -494,11 +494,11 @@ else # CREATE_LINES
 
     #### reproject if needed
     if [ "$IN_PROJ" = "$OUT_PROJ" ] || [ $KEEP_WGS84 -eq 1 ] ; then
-	echo "No projection transformation performed" 1>&2
+	g.message "No projection transformation performed" 
 	cat "${TMP}.base" | awk 'BEGIN {;} $1=="L" { print } ; \
 	    $1!="L" { " %s %s\n", $1, $2) } END {;}' > "${TMP}.P_base"
     else
-	echo "Attempting waypoint projection transform with cs2cs" 1>&2
+	g.messge "Attempting waypoint projection transform with cs2cs" 
 	cs2cs -tL -f %.7f $IN_PROJ +to $OUT_PROJ < "${TMP}.base" > "${TMP}.P_mid"
 	EXITCODE=$?
 	 # check if transform REALLY worked (e.g. grid file not found)
@@ -506,7 +506,7 @@ else # CREATE_LINES
 	    EXITCODE=1
 	fi
 	if [ $EXITCODE -ne 0 ] ; then
-	    echo "Projection transform failed, retaining WGS84" 1>&2
+	    g.message "Projection transform failed, retaining WGS84" 
 	    cat "${TMP}.base" | awk 'BEGIN {;} $1=="L" { print } ; \
 		$1!="L" { printf(" %s %s\n", $1, $2) } END {;}' > "${TMP}.P_base"
 	else
@@ -541,19 +541,18 @@ EOF
 
     #### if no name for vector file given, cat to stdout
     if [ -z "$NAME" ] ; then
-	echo "ASCII file redirected to stdout" 1>&2
+	g.message "ASCII file redirected to stdout" 
 	cat "${TMP}.dig" 2> /dev/null
     else
 	#### import to binary vector file 
-	echo "Importing with v.in.ascii" 1>&2
+	g.message "Importing with v.in.ascii" 
 	v.in.ascii format=standard output="$NAME" input="${TMP}.dig"
 
 	#### check success/failure
 	if [ $? -eq 0 ] ; then
-	    echo "$PROG: line vector \"$NAME@$MAPSET\" successfully created" 1>&2
+	    g.message "Line vector \"$NAME@$MAPSET\" successfully created"
 	else
-	    echo "$PROG: An error occured on creating \"$NAME\" in mapset \"$MAPSET\"," 1>&2
-	    echo "please check!" 1>&2
+	    g.message -e "An error occured on creating \"$NAME\" in mapset \"$MAPSET\", please check!" 
 	    exit 1
 	fi
 
@@ -561,7 +560,7 @@ EOF
 	DRIVER="`db.connect -p | grep '^driver:' | cut -f2 -d:`"
 	DATABASE="`db.connect -p | grep '^database:' | cut -f2 -d:`"
 	if [ "$DRIVER" = "(null)" ] || [ "$DATABASE" = "(null)" ] ; then
-	    echo "Setting default database driver to DBF."
+	    g.message "Setting default database driver to DBF."
 	    db.connect driver=dbf database='$GISDBASE/$LOCATION_NAME/$MAPSET/dbf/'
 	fi
 	DRIVER="`db.connect -p | grep '^driver:' | cut -f2 -d:`"
@@ -569,10 +568,10 @@ EOF
 	    mkdir "$LOCATION/dbf/"
 	fi
 
-	echo "Creating new table.."
+	g.message "Creating new table.."
 	echo "CREATE TABLE $NAME ($ATTR_COLS)" | db.execute
 
-	echo "Populating table with attributes.."
+	g.message "Populating table with attributes.."
 	# echo "COPY $NAME FROM '$ATTR_FILE'" | db.execute
 
 	# "COPY table FROM 'filename.txt'" does not work for DBF and there is no
@@ -595,7 +594,7 @@ EOF
 	. "$ATTR_FILE"_exe
 ### </hack>
 
-	echo "Connecting attribute table to vector file.."
+	g.message "Connecting attribute table to vector file.."
 	v.db.connect map="$NAME" table="$NAME"
     fi
 
@@ -604,8 +603,7 @@ fi  # if CREATE_POINTS or CREATE_LINES
 
 # list column names
 if [ $VERBOSE -eq 1 ] && [ -n "$NAME" ] ; then
-    echo
-    echo "<$NAME> columns:"
+    g.message "<$NAME> columns:"
     db.columns "$NAME"
 fi
 
@@ -614,7 +612,6 @@ fi
 rm -f ${TMP}.* 1>&2 > /dev/null
 
 #### end
-echo 1>&2
-echo "Done." 1>&2
+g.message "Done" 
 
 exit 0
