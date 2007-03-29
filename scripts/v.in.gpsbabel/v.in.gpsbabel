@@ -334,7 +334,7 @@ if [ $CREATE_POINTS -eq 1 ] ; then
 	fi
 
 	if [ $EXITCODE -ne 0 ] ; then
-	    g.message "$PROG: Error importing data" 1>&2
+	    g.message -e "Error importing data"
 	    rm -f ${TMP}.*
 	    exit 1
 	fi

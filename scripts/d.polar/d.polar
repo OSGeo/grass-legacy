@@ -61,13 +61,13 @@ PROG=`basename $0`
 
 #### check if we have awk
 if [ ! -x "`which awk`" ] ; then
-    g.message -e "$PROG: awk required, please install awk or gawk first"
+    g.message -e "awk required, please install awk or gawk first"
     exit 1
 fi
 
 
 if [ -n "$GIS_OPT_EPS" ] && [ $GIS_FLAG_X -eq 1 ] ; then
-    g.message -e "$PROG: Please select only one output method"
+    g.message -e "Please select only one output method"
     exit 1
 fi
 
@@ -75,7 +75,7 @@ fi
 #### check if we have xgraph (if no EPS output requested)
 if [ $GIS_FLAG_X -eq 1 ] ; then
   if [ ! -x "`which xgraph`" ] ; then
-    g.message -e "$PROG: xgraph required, please install first (www.xgraph.org)"
+    g.message -e "xgraph required, please install first (www.xgraph.org)"
     exit 1
   fi
 fi

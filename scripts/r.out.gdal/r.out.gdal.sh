@@ -85,7 +85,7 @@ if [ -z "`which gdal_translate`" ] ; then
 fi
 #check that gdal's grass plugin exists
 if [ -z "`gdalinfo --formats | grep -i GRASS`" ] ; then
-   g.message -e "ERROR: Required GRASS plugin for GDAL is missing. GDAL must be built with GRASS support to use $PROG."
+   g.message -e "Required GRASS plugin for GDAL is missing. GDAL must be built with GRASS support to use $PROG."
    exit 1
 fi
 
