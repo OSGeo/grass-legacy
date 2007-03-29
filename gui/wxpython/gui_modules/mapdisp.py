@@ -544,8 +544,15 @@ class MapFrame(wx.Frame):
     	for i in range(len(map_frame_statusbar_fields)):
     	    self.statusbar.SetStatusText(map_frame_statusbar_fields[i], i)
 
+        # variables for overlay menu
         self.decmenu = '' #decorations menu
+        self.addscale = '' #barscale overlay menu item
+        self.addgrid = '' #grid overlay menu item
         self.ovlchk = False
+        self.bmpscale = wx.ArtProvider.GetBitmap(wx.ART_CROSS_MARK, wx.ART_OTHER, (16,16))
+        self.bmpgrid = wx.ArtProvider.GetBitmap(wx.ART_CROSS_MARK, wx.ART_OTHER, (16,16))
+        Map.addOverlay(type=0, command='', l_active=False, l_render=True)
+        Map.addOverlay(type=1, command='', l_active=False, l_render=True)
 
         #
     	# Init map display
@@ -740,25 +747,21 @@ class MapFrame(wx.Frame):
         point = wx.GetMousePosition()
         self.decmenu = wx.Menu()
         # Add items to the menu
-        addscale = wx.MenuItem(self.decmenu, -1,'Add scalebar and north arrow')
+        self.addscale = wx.MenuItem(self.decmenu, -1,'Add scalebar and north arrow')
 #        bmp = wx.Image(os.path.join(icons,'module-d.barscale.gif'), wx.BITMAP_TYPE_GIF)
 #        bmp.Rescale(16, 16)
 #        bmp = bmp.ConvertToBitmap()
-        bmp = wx.ArtProvider.GetBitmap(wx.ART_CROSS_MARK, wx.ART_OTHER, (16,16))
-        addscale.SetBitmap(bmp)
-        self.decmenu.AppendItem(addscale)
-        Map.addOverlay(type=0, command='', l_active=False, l_render=True)
-        self.Bind(wx.EVT_MENU, self.addBarscale, addscale)
+        self.addscale.SetBitmap(self.bmpscale)
+        self.decmenu.AppendItem(self.addscale)
+        self.Bind(wx.EVT_MENU, self.addBarscale, self.addscale)
 
-        addgrid = wx.MenuItem(self.decmenu, -1,'Add grid')
+        self.addgrid = wx.MenuItem(self.decmenu, -1,'Add grid')
 #        bmp = wx.Image(os.path.join(icons,'module-d.grid.gif'), wx.BITMAP_TYPE_GIF)
 #        bmp.Rescale(16, 16)
 #        bmp = bmp.ConvertToBitmap()
-        bmp = wx.ArtProvider.GetBitmap(wx.ART_CROSS_MARK, wx.ART_OTHER, (16,16))
-        addgrid.SetBitmap(bmp)
-        self.decmenu.AppendItem(addgrid)
-        Map.addOverlay(type=1, command='', l_active=False, l_render=True)
-        self.Bind(wx.EVT_MENU, self.addGrid, addgrid)
+        self.addgrid.SetBitmap(self.bmpgrid)
+        self.decmenu.AppendItem(self.addgrid)
+        self.Bind(wx.EVT_MENU, self.addGrid, self.addgrid)
 
         # Popup the menu.  If an item is selected then its handler
         # will be called before PopupMenu returns.
@@ -770,10 +773,10 @@ class MapFrame(wx.Frame):
         layer = 0
         if self.ovlchk == True:
             self.ovlchk = False
-            bmp = wx.ArtProvider.GetBitmap(wx.ART_CROSS_MARK, wx.ART_OTHER, (16,16))
+            self.bmpscale = wx.ArtProvider.GetBitmap(wx.ART_CROSS_MARK, wx.ART_OTHER, (16,16))
         else:
             self.ovlchk = True
-            bmp = wx.ArtProvider.GetBitmap(wx.ART_TICK_MARK, wx.ART_OTHER, (16,16))
+            self.bmpscale = wx.ArtProvider.GetBitmap(wx.ART_TICK_MARK, wx.ART_OTHER, (16,16))
         menuform.GUI().parseCommand('d.barscale', gmpath, completed=(self.getOptData,layer,self.params), parentframe=None)
         pass
 
@@ -782,19 +785,15 @@ class MapFrame(wx.Frame):
         layer = 1
         if self.ovlchk == True:
             self.ovlchk = False
-            bmp = wx.ArtProvider.GetBitmap(wx.ART_CROSS_MARK, wx.ART_TOOLBAR, (16,16))
+            self.bmpgrid = wx.ArtProvider.GetBitmap(wx.ART_CROSS_MARK, wx.ART_TOOLBAR, (16,16))
         else:
             self.ovlchk = True
-            bmp = wx.ArtProvider.GetBitmap(wx.ART_TICK_MARK, wx.ART_TOOLBAR, (16,16))
+            self.bmpgrid = wx.ArtProvider.GetBitmap(wx.ART_TICK_MARK, wx.ART_TOOLBAR, (16,16))
         menuform.GUI().parseCommand('d.grid', gmpath, completed=(self.getOptData,layer,self.params), parentframe=None)
 
         pass
 
     def getOptData(self, dcmd, layer):
-
-        print 'dcmd: ', dcmd
-        print 'layer: ', layer
-        print 'check: ', self.ovlchk
 
         Map.changeOverlay(type=layer, command=dcmd, l_active=self.ovlchk, l_render=False)
 
