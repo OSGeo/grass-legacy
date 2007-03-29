@@ -755,14 +755,6 @@ class MapFrame(wx.Frame):
         self.decmenu.AppendItem(self.addscale)
         self.Bind(wx.EVT_MENU, self.addBarscale, self.addscale)
 
-        self.addgrid = wx.MenuItem(self.decmenu, -1,'Add grid')
-#        bmp = wx.Image(os.path.join(icons,'module-d.grid.gif'), wx.BITMAP_TYPE_GIF)
-#        bmp.Rescale(16, 16)
-#        bmp = bmp.ConvertToBitmap()
-        self.addgrid.SetBitmap(self.bmpgrid)
-        self.decmenu.AppendItem(self.addgrid)
-        self.Bind(wx.EVT_MENU, self.addGrid, self.addgrid)
-
         # Popup the menu.  If an item is selected then its handler
         # will be called before PopupMenu returns.
         self.PopupMenu(self.decmenu)
