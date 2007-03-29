@@ -84,7 +84,7 @@ if [ "$GIS_OPT_OPTION" = "add" ] ; then
    NUM_BOUND=`v.info "$GIS_OPT_INPUT" | grep "Number of boundaries:" | cut -f2 -d: | awk '{print $1}'`
 
    if [ $NUM_BOUND -eq 0 ] ; then
-       echo "ERROR: Input vector map contains no boundaries." 1>&2
+       g.message -e "Input vector map contains no boundaries."
        exit 1
    fi
 

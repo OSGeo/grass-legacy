@@ -36,9 +36,9 @@ LOCATION=$GISDBASE/$LOCATION_NAME/$MAPSET
 
 for VECT in `g.list type=vect mapset=${MAPSET} | sed 1,2d | grep -v '^-*$'`
 do
-    echo "Build topology for vector '${VECT}@${MAPSET}'" 1>&2
+    g.message "Build topology for vector '${VECT}@${MAPSET}'" 
     CMD="v.build map=${VECT}@${MAPSET}"
-    echo "$CMD" 1>&2
+    g.message "$CMD" 
     $CMD
 done
 
