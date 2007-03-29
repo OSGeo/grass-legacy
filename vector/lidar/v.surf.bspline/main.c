@@ -79,7 +79,7 @@ main (int argc,char *argv[])
     module = G_define_module(); {
 	module->keywords = _("vector, interpolation");
 	module->description = 
-	   _("Bicubic or bilineal interpolation with Tykhonov regularization");
+	   _("Bicubic or bilinear interpolation with Tykhonov regularization");
     }
 
     cross_corr_flag = G_define_flag (); {
