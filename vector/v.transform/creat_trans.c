@@ -63,7 +63,7 @@ while (! ok)
 		exit(-1) ;
 #endif
 
-	G_system("clear") ;
+	G_clear_screen() ;
 
 	status =  setup_transform( n_points) ;
 
