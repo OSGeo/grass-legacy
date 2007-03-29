@@ -107,7 +107,7 @@
 
 if  [ -z $GISBASE ] ; then
     echo "You must be in GRASS GIS to run this program." 1>&2
- exit 1
+    exit 1
 fi
 
 if [ "$1" != "@ARGS_PARSED@" ] ; then
@@ -124,25 +124,25 @@ CS2CS="cs2cs"
 
 # check if we have bc
 if [ ! -x "`which $BC`" ] ; then
-    echo "$BC is required, please install it first" 2>&1
+    g.message -e "$BC is required, please install it first" 
     exit 1
 fi
 
 # check if we have sed
 if [ ! -x "`which $SED`" ] ; then
-    echo "$SED is required, please install it first" 2>&1
+    g.message -e  "$SED is required, please install it first" 
     exit 1
 fi
 
 # check if we have grep
 if [ ! -x "`which $GREP`" ] ; then
-    echo "$GREP is required, please install it first" 2>&1
+    g.message -e  "$GREP is required, please install it first" 
     exit 1
 fi
 
 # check if we have cs2cs
 if [ ! -x "`which $CS2CS`" ] ; then
-    echo "$CS2CS is required, please install it first" 2>&1
+    g.message -e  "$CS2CS is required, please install it first" 
     exit 1
 fi
 
@@ -157,18 +157,6 @@ defaultIFS=$IFS
 # An array of points indexed by 0 for "x" and 4 for "y" + by number 0, 1, 2, and 3
 # A reprojector [0] is name of source projection, [1] is name of destination
 # A projection - [0] is proj.4 text, [1] is scale
-
-#####################
-# name:     message
-# purpose:  displays messages to the user
-# usage: message level text
-
-message () {
-	if [ $1 -lt $GIS_OPT_V ] ; then
-		shift
-		echo "$@"  
-	fi
-}
 
 #########################
 # name: lookup
@@ -203,7 +191,7 @@ lookup () {
 # usage: varname "expr"
 
 calculate() {
-	message 3 "$2"
+	g.message "$2"
 	c_tmp=`echo "$2" | $BC $BCARGS`
 	eval $1=$c_tmp
 }
@@ -239,10 +227,10 @@ project() {
 	calculate p_x1 "$1 * $p_source_units"
 	calculate p_y1 "$2 * $p_source_units"
 
-	message 3 "echo \"$p_x1 $p_y1\" | $CS2CS -f \"%f\" $p_source_proj +to $p_dest_proj"
+	g.message "echo \"$p_x1 $p_y1\" | $CS2CS -f \"%f\" $p_source_proj +to $p_dest_proj"
 
 	answer=`echo "$p_x1 $p_y1" | $CS2CS -f "%f" $p_source_proj +to $p_dest_proj`
-	message 3 "$answer"
+	g.message "$answer"
 	eval `echo $answer | $SED "s/^/p_x2=/" | $SED "s/ /;p_y2=/" | $SED "s/ /;p_z2=/"`
 	
 	calculate p_x2 "$p_x2 / $p_dest_units"
@@ -382,7 +370,7 @@ OVERLAP=$GIS_OPT_OVERLAP
 calculate MAX_COLS "$GIS_OPT_MAXCOLS - $OVERLAP"
 calculate MAX_ROWS "$GIS_OPT_MAXROWS - $OVERLAP"
 
-message 0 "Getting destination projection:"
+g.message "Getting destination projection:"
 
 if [ -z "$GIS_OPT_DESTPROJ" ] ; then
 	DEST_PROJ=`g.proj -j`
@@ -390,7 +378,7 @@ else
 	DEST_PROJ=`echo $GIS_OPT_DESTPROJ`
 fi
 
-	message 0 "Getting projection scale:"
+	g.message "Getting projection scale:"
 
 if [ -z "$GIS_OPT_DESTSCALE" ] ; then
 	eval `g.proj -p | $GREP '^meters' | $SED -e "s/:/=/" -e "s/ //g"`
@@ -407,7 +395,7 @@ SOURCE_PROJ=`echo $SOURCE_PROJ`
 makeProjector SOURCE_PROJ $SOURCE_SCALE DEST_PROJ $DEST_SCALE SOURCE_TO_DEST
 makeProjector DEST_PROJ $DEST_SCALE SOURCE_PROJ $SOURCE_SCALE DEST_TO_SOURCE
 
-message 0 "Getting destination region:"
+g.message "Getting destination region:"
 if [ -z $GIS_OPT_REGION ] ; then
 	eval `g.region -g`
 else
@@ -424,14 +412,14 @@ DEST_EWRES=$ewres
 calculate DEST_ROWS "($n - $s) / $nsres"
 calculate DEST_COLS "($e - $w) / $ewres"
 
-message 1 "Rows: $DEST_ROWS, Cols: $DEST_COLS"
+g.message "Rows: $DEST_ROWS, Cols: $DEST_COLS"
 
 ### Project the destination region into the source:
-message 0 "Projecting destination region into source:"
+g.message "Projecting destination region into source:"
 
 bboxToPoints DEST_BBOX DEST_BBOX_POINTS
 
-message 1 "${DEST_BBOX_POINTS[@]}"
+g.message "${DEST_BBOX_POINTS[@]}"
 
 # echo "${DEST_TO_SOURCE[@]}"
 # echo "${DEST_TO_SOURCE[0]}"
@@ -443,30 +431,30 @@ message 1 "${DEST_BBOX_POINTS[@]}"
 
 projectPoints DEST_BBOX_POINTS DEST_BBOX_SOURCE_POINTS DEST_TO_SOURCE 
 
-message 1 "${DEST_BBOX_SOURCE_POINTS[@]}"
+g.message "${DEST_BBOX_SOURCE_POINTS[@]}"
 
 pointsToBbox DEST_BBOX_SOURCE_POINTS SOURCE_BBOX
 
-message 1 "${SOURCE_BBOX[@]}"
+g.message "${SOURCE_BBOX[@]}"
 
-message 0 "Projecting source bounding box into destination:"
+g.message "Projecting source bounding box into destination:"
 
 bboxToPoints SOURCE_BBOX SOURCE_BBOX_POINTS
 
-message 1 "${SOURCE_BBOX_POINTS[@]}"
+g.message "${SOURCE_BBOX_POINTS[@]}"
 
 projectPoints SOURCE_BBOX_POINTS SOURCE_BBOX_DEST_POINTS SOURCE_TO_DEST 
 
-message 1 "${SOURCE_BBOX_DEST_POINTS[@]}"
+g.message "${SOURCE_BBOX_DEST_POINTS[@]}"
 
 calculate X_METRIC "1 / $DEST_EWRES"
 calculate Y_METRIC "1 / $DEST_NSRES"
 
-message 0 "Computing length of sides of source bounding box:"
+g.message "Computing length of sides of source bounding box:"
 
 sideLengths  SOURCE_BBOX_DEST_POINTS $X_METRIC $Y_METRIC SOURCE_BBOX_DEST_LENGTHS
 
-message 1 "${SOURCE_BBOX_DEST_LENGTHS[@]}"
+g.message "${SOURCE_BBOX_DEST_LENGTHS[@]}"
 
 # Find the skewedness of the two directions.
 # Define it to be greater than one
@@ -495,7 +483,7 @@ MAX[1]=$MAX_ROWS
 # I'm going to make the numbers all simpler and add this extra cell to
 # every tile.
 
-message 0 "Computing tiling:"
+g.message "Computing tiling:"
 
 for i in 0 1 ; do
 	# Make these into integers.
@@ -512,7 +500,7 @@ for i in 0 1 ; do
 	calculate TILE_SIZE_OVERLAP[$i] "${TILE_SIZE[$i]} + $OVERLAP"
 done;
 
-message 0 "There will be ${TILES[0]} by ${TILES[1]} tiles each ${TILE_SIZE[0]} by ${TILE_SIZE[1]} cells."
+g.message "There will be ${TILES[0]} by ${TILES[1]} tiles each ${TILE_SIZE[0]} by ${TILE_SIZE[1]} cells."
 
 ximax=${TILES[0]}
 yimax=${TILES[1]}

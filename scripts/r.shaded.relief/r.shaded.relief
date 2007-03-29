@@ -102,9 +102,7 @@
 
 if  [ -z "$GISBASE" ]
 then
-	echo ""
-	echo "You must be in GRASS GIS to run this program"
-	echo ""
+	echo "You must be in GRASS GIS to run this program" >&2
 	exit 1
 fi
 
@@ -132,13 +130,12 @@ scale=$GIS_OPT_SCALE
 
 eval `g.findfile element=cell file=$elev`
 if [ -z "$name" ] ; then
-   echo "ERROR: map <$elev> not found."
+   g.message -e  "Nap <$elev> not found."
    exit 1
 fi
 
 if [ "$GIS_OPT_MAP" = "$GIS_OPT_SHADEDMAP" ]; then
-	echo ""
-	echo "Input elevation map and output relief map must have different names"
+	g.message -e "Input elevation map and output relief map must have different names"
 	exit 1
 fi
 
@@ -167,7 +164,7 @@ fi
 #correct azimuth to East (GRASS convention):
 az=`expr $az - 90`
 
-echo "Calculating shading, please stand by."
+g.message "Calculating shading, please stand by."
 
 # Note: no space allowed after \\:
 
@@ -187,7 +184,7 @@ $elev_out = eval( \\
 EOF
 
 if [ $? -ne 0 ] ; then 
-   echo "ERROR: in calculation, script aborted."
+   g.message "In calculation, script aborted."
    exit 1
 fi
 
@@ -201,11 +198,10 @@ if [ -n "$GIS_OPT_UNITS" ] ; then
    r.support map="$ELEVSHADE" history="  units=$GIS_OPT_UNITS  (adjusted scale=$scale)"
 fi
 
-echo ""
 if [ -n "$GIS_OPT_SHADEDMAP" ] ; then
-    echo "Shaded relief map created and named [$ELEVSHADE]."
+    g.message "Shaded relief map created and named <$ELEVSHADE>."
 else
-    echo "Shaded relief map created and named [$ELEVSHADE]. Consider renaming."
+    g.message "Shaded relief map created and named <$ELEVSHADE>. Consider renaming."
 fi
 
 exit 0

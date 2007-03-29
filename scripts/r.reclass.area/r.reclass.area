@@ -61,7 +61,7 @@ PROG=`basename $0`
 
 #### check if we have awk
 if [ ! -x "`which awk`" ] ; then
-    echo "$PROG: awk required, please install awk or gawk first" 2>&1
+    g.message -e "awk required, please install awk or gawk first"
     exit 1
 fi
 
@@ -75,10 +75,9 @@ outfile="$GIS_OPT_OUTPUT"
 
 g.region -p | head -n 1 |grep 0 > /dev/null
 if [ $? -eq 0 ] ; then
- echo ""
- echo "Sorry: xy-locations are not supported."
- echo "Need projected data with grids in meter."
- exit
+ g.message -e "xy-locations are not supported."
+ g.message -e "Need projected data with grids in meter."
+ exit 1
 fi
 
 if [ -n "$GIS_OPT_LESSER" ] ; then
@@ -90,7 +89,7 @@ if [ -n "$GIS_OPT_GREATER" ] ; then
   limit=$GIS_OPT_GREATER
 fi
 if [ -z "$GIS_OPT_GREATER" -a -z "$GIS_OPT_LESSER" ] ; then
-  echo "ERROR: you have to specify either lesser= or greater="
+  g "ERROR: you have to specify either lesser= or greater="
   exit 1
 fi
  
@@ -101,7 +100,7 @@ eval `g.findfile element=cell file=$infile`
 filename="${fullname}"
 BASE="${name}"
 if [ "$filename" = "" ] ; then
-  echo "ERROR: raster map [$infile] does not exist."
+  g.message -e "Raster map [$infile] does not exist."
   exit 1
 else
   infile=$filename
@@ -111,11 +110,10 @@ eval `g.findfile element=cell file=$file2`
 filename2="${fullname}"
 BASE="${name}"
 if test "$filename2" ; then
-  echo "ERROR: temporal raster map [$filename2] exists."
+  g.message -e "Temporal raster map [$filename2] exists."
   exit 1
 else
- echo
- echo "Generating a clumped raster file.............................."
+ g.message "Generating a clumped raster file ..."
  r.clump input=$infile output=$file2
 fi
 
@@ -146,13 +144,11 @@ fi
 # printf("%d = %d %.4f\n",$1,hectares,hectares)}' > $infile.rules
 # else
 if test $op = 0; then
-   echo 
-   echo "Generating a reclass rules file with area size less than or equal to $limit hectares"
+   g.message "Generating a reclass rules file with area size less than or equal to $limit hectares"
    r.stats -aln in=$file2,$infile fs='|' | awk -F'|' '{limit='$limit'; hectares=$5 * 0.0001; 
      {if (hectares <= limit) printf("%d = %d %s\n",$1,$3,$4)}}' > $infile.rules
   else
-   echo 
-   echo "Generating a reclass rules file with area size greater than or equal to $limit hectares"
+   g.messge  "Generating a reclass rules file with area size greater than or equal to $limit hectares"
    r.stats -aln in=$file2,$infile fs='|' | awk -F'|' '{limit='$limit'; hectares=$5 * 0.0001; 
      {if (hectares >= limit) printf("%d = %d %s\n",$1,$3,$4)}}' > $infile.rules
 fi
@@ -161,11 +157,10 @@ fi
 if test "$outfile" = ""; then
 outfile=${infile}_${limit}
 fi
-echo
-echo "Generating reclass raster map <$outfile>"
+g.message "Generating reclass raster map <$outfile>"
 cat $infile.rules | r.reclass i=$file2 o=$outfile.recl
 r.mapcalc "$outfile=$outfile.recl"
-echo "Written: $outfile"
+g.message "Written: $outfile"
 g.remove rast=$outfile.recl,$file2 > /dev/null 2> /dev/null
 
 #####cleanup

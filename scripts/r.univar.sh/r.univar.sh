@@ -45,15 +45,14 @@ if [ "$1" != "@ARGS_PARSED@" ] ; then
   exec g.parser "$0" "$@"
 fi
 
-echo "WARNING: This module is superseded and will be removed in future versions" 1>&2
-echo "         of GRASS. Use the much faster r.univar instead." 1>&2
+g.message -w "This module is superseded and will be removed in future versions of GRASS. Use the much faster r.univar instead." 
 
 
 PROG=`basename $0`
 
 #### check if we have awk
 if [ ! -x "`which awk`" ] ; then
-    echo "$PROG: awk required, please install awk or gawk first" 1>&2
+    g.message -e "awk required, please install awk or gawk first" 
     exit 1
 fi
 
@@ -66,19 +65,19 @@ COVER="$GIS_OPT_MAP"
 
 TMP="`g.tempfile pid=$$`"
 if [ $? -ne 0 ] || [ -z "$TMP" ] ; then
-    echo "ERROR: unable to create temporary files" 1>&2
+    g.messge -e "Unable to create temporary files"
     exit 1
 fi
 
 echo "$GIS_OPT_PERCENTILE" | grep '\.' > /dev/null
 if [ $? -eq 0 ] || [ -z "$GIS_OPT_PERCENTILE" ] ; then
-	echo "Sorry, percentile must be between 0 and 100" 1>&2
+	g.message -e  "Percentile must be between 0 and 100"
         exit 1
 fi
 
 if test $GIS_OPT_PERCENTILE -lt 0 -o $GIS_OPT_PERCENTILE -gt 100
 then
-        echo "Sorry, percentile must be between 0 and 100" 1>&2
+        g.message -e "Percentile must be between 0 and 100" 
         exit 1
 fi
 
@@ -90,28 +89,27 @@ cleanup()
 # what to do in case of user break:
 exitprocedure()
 {
- echo "User break!" 1>&2
+ g.message -e "User break!" 
  cleanup
  exit 1
 }
 # shell check for user break (signal list: trap -l)
 trap "exitprocedure" 2 3 15
 
-echo "Calculation for map $COVER (ignoring NULL cells)..." 1>&2
-echo "Reading raster map..." 1>&2
+g.message "Calculation for map $COVER (ignoring NULL cells)..."
+g.message "Reading raster map..."
 r.stats -1n input=$COVER > "$TMP"
 
 #check if map contains only NULL's in current region
 LINES=`wc -l "$TMP" | awk '{print $1}'`
 if [ "$LINES" -eq 0 ] ; then
- echo "" 1>&2
- echo "ERROR: Map $COVER contains only NULL data in current region." 1>&2
+ g.message -e "Map $COVER contains only NULL data in current region."
  cleanup
  exit 1
 fi
 
 # calculate statistics
-echo "Calculating statistics..." 1>&2
+g.message "Calculating statistics..."
 cat $TMP | awk 'BEGIN {sum = 0.0 ; sum2 = 0.0}
 function abs(x){return x < 0 ? -x : x}
 NR == 1{min = $1 ; max = $1}

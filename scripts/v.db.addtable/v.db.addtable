@@ -62,7 +62,7 @@ PROG=`basename $0`
 
 #### check if we have awk
 if [ ! -x "`which awk`" ] ; then
-    echo "$PROG: awk required, please install awk or gawk first" 1>&2
+    g.message -e "awk required, please install awk or gawk first"
     exit 1
 fi
 
@@ -78,21 +78,21 @@ eval `g.gisenv`
 # does map exist in CURRENT mapset?
 eval `g.findfile element=vector file=$GIS_OPT_MAP mapset=$MAPSET`
 if [ ! "$file" ] ; then
-   echo "Vector map '$GIS_OPT_MAP' not found in current mapset"
+   g.message -e  "Vector map '$GIS_OPT_MAP' not found in current mapset"
    exit 1
 fi
 
 if [ -z "$GIS_OPT_TABLE" ] ; then
     if [ $GIS_OPT_LAYER -eq 1 ] ; then
-       echo "Using vector map name as table name: ${GIS_OPT_MAP}" 1>&2
+       g.message "Using vector map name as table name: ${GIS_OPT_MAP}" 
        table=${GIS_OPT_MAP}
     else
        # two avoid tables with identical names on higher layers
-       echo "Using vector map name extended by layer number as table name: ${GIS_OPT_MAP}_$GIS_OPT_LAYER" 1>&2
+       g.message "Using vector map name extended by layer number as table name: ${GIS_OPT_MAP}_$GIS_OPT_LAYER" 
        table=${GIS_OPT_MAP}_$GIS_OPT_LAYER
     fi
 else
-    echo "Using user specified table name: $GIS_OPT_TABLE"
+    g.message "Using user specified table name: $GIS_OPT_TABLE"
     table=$GIS_OPT_TABLE
 fi
 
@@ -103,15 +103,15 @@ QUERYLAYER=1
 v.db.connect $GIS_OPT_MAP -g layer=1 2> /dev/null | grep '^1 ' > /dev/null
 if [ $? -ne 0 ] ; then
    # nothing defined for layer 1
-   echo "Creating new DB connection based on default mapset settings..." 1>&2
+   g.message "Creating new DB connection based on default mapset settings..." 
    database=`db.connect -p | grep database | cut -d':' -f2`
    if [ $? -ne 0 ] ; then  # this tests the result of cut? what if "(null)"? grep -v '(null)'?
-       echo "An error occured. Stop." 1>&2
+       g.message -e "An error occured while running db.connect" 
        exit 1
    fi
    driver=`db.connect -p | grep driver | cut -d':' -f2`
    if [ "$driver" = "(null)" ] || [ "$database" = "(null)" ] ; then
-      echo "Setting default database driver to DBF." 1>&2
+      g.message "Setting default database driver to DBF."
       database='$GISDBASE/$LOCATION_NAME/$MAPSET/dbf/'
       driver=dbf
       db.connect driver=$driver database=$database
@@ -132,7 +132,7 @@ fi
 if [ $GIS_OPT_LAYER -eq 1 ] ; then
   v.db.connect $GIS_OPT_MAP -g 2> /dev/null | grep -w $GIS_OPT_LAYER > /dev/null
   if [ $? -eq 0 ] ; then
-     echo "ERROR: there is already a table linked to layer <$GIS_OPT_LAYER>" 1>&2
+     g.message -e "There is already a table linked to layer <$GIS_OPT_LAYER>" 
      exit 1
   fi
 fi
@@ -151,7 +151,7 @@ if [ $? -ne 0 ] ; then
 	-e 's/cat integer, cat int,/cat integer, /' \
 	-e 's/cat integer, cat INT,/cat integer, /'`
    fi
-   echo "Creating table with columns ($COLUMN_DEF)" 1>&2
+   g.message "Creating table with columns ($COLUMN_DEF)"
 
    echo "CREATE TABLE $table ($COLUMN_DEF)" | db.execute database=$database driver=$driver
    if [ $? -ne 0 ] ; then
@@ -163,18 +163,18 @@ if [ $? -ne 0 ] ; then
         GISDBASE=`g.gisenv GISDBASE`
         LOCATION_NAME=`g.gisenv LOCATION_NAME`
         MAPSET=`g.gisenv MAPSET`
-        echo "Creating missing DBF directory in MAPSET <${MAPSET}>" 1>&2
+        g.message "Creating missing DBF directory in MAPSET <${MAPSET}>" 
         mkdir -p ${GISDBASE}/${LOCATION_NAME}/${MAPSET}/dbf
         db.connect driver=dbf database='$GISDBASE/$LOCATION_NAME/$MAPSET/dbf/'
         echo "CREATE TABLE $table ($COLUMN_DEF)" | db.execute
         if [ $? -ne 0 ] ; then
-          echo "An error occured. Stop." 1>&2
+          g.message -e "An error occured while running db.connect"
           exit 1
         fi
       fi
    fi
 else
-   echo "ERROR: A table of the name <$table> already exists in <$database>." 1>&2
+   g.message -e "A table of the name <$table> already exists in <$database>."
    exit 1
 fi
 
@@ -185,8 +185,7 @@ v.db.connect map=$GIS_OPT_MAP database=$database driver=$driver layer=$GIS_OPT_L
 # (creates new row for each vector line):
 v.to.db $GIS_OPT_MAP layer=$GIS_OPT_LAYER option=cat col=cat
 
-echo "" 1>&2
-echo "Current attribute table links:" 1>&2
+g.message "Current attribute table links:"
 v.db.connect -p $GIS_OPT_MAP
 
 exit 0
