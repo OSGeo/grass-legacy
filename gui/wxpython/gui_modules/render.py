@@ -126,10 +126,13 @@ class MapLayer:
 		"""
 
 		try:
-			self.cmd = self.name + " --q"
+			if self.name != '':
+				self.cmd = self.name + " --q"
+			else:
+				self.cmd = None
 
 		except StandardError, e:
-			sys.stderr.write("Could not render command layer <%s>: %s\n" %\
+			sys.stderr.write("Could not render overlay <%s>: %s\n" %\
 						 (self.name, str(e)))
 			self.cmd = None
 
@@ -1061,7 +1064,7 @@ class Map:
 		self.overlays.append(overlay)
 		# add item and layer to lookup dictionary
 
-		if l_render:
+		if l_render and command != '':
 			if not overlay.Render():
 				sys.stderr.write("Could not render overlay <%s>\n" % (command))
 
@@ -1076,7 +1079,7 @@ class Map:
 		# add maplayer to the list of layers
 		self.overlays[type] = overlay
 
-		if l_render:
+		if l_render and command != '':
 			if not overlay.Render():
 				sys.stderr.write("Could not render overlay <%s>\n" % (command))
 
