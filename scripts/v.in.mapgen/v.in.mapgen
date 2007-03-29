@@ -56,7 +56,7 @@ PROG=`basename $0`
 
 #### check if we have awk
 if [ ! -x "`which awk`" ] ; then
-    echo "$PROG: awk required, please install awk or gawk first" 1>&2
+    g.message -e "awk required, please install awk or gawk first" 
     exit 1
 fi
 
@@ -74,7 +74,7 @@ export LC_NUMERIC
 
 FILE="$GIS_OPT_INPUT"
 if [ ! -e "$FILE" ] ; then
-   echo "ERROR: input file [$FILE] not found." 1>&2
+   g.message -e "input file [$FILE] not found."
    exit 1
 fi
 
@@ -88,7 +88,7 @@ fi
 #### setup temporary file
 TMP="`g.tempfile pid=$$`"
 if [ $? -ne 0 ] || [ -z "$TMP" ] ; then
-    echo "ERROR: unable to create temporary files" 1>&2
+    g.mesage -e "unable to create temporary files"
     exit 1
 fi
 
@@ -142,19 +142,18 @@ cat "${TMP}" >> "${TMP}.dig"
 
 #### if no name for vector file given, cat to stdout
 if [ "$NAME" = "" ] ; then
-    echo "output to stdout" 1>&2
+    g.message "output to stdout" 
     cat "${TMP}.dig" 2>/dev/null
 else
     #### import to binary vector file
-    echo "Importing with v.in.ascii ..." 1>&2
+    g.message "Importing with v.in.ascii ..." 
     v.in.ascii input="${TMP}.dig" output="$NAME" format=standard
 
     #### check success/failure
     if [ $? -eq 0 ] ; then
-	echo "$PROG: \"$NAME@$MAPSET\" successfully created." 1>&2
+	g.message "\"$NAME@$MAPSET\" successfully created." 
     else
-	echo "$PROG: An error occured on creating \"$NAME\" in mapset \"$MAPSET\"," 1>&2
-	echo "please check!" 1>&2
+	g.message -e "An error occured on creating \"$NAME\" in mapset \"$MAPSET\", please check!"
     fi
 fi
 

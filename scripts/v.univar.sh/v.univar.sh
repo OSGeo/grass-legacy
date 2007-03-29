@@ -63,14 +63,13 @@ if [ "$1" != "@ARGS_PARSED@" ] ; then
   exec g.parser "$0" "$@"
 fi
 
-echo "WARNING: This module is superseded and will be removed in future versions" 1>&2
-echo "         of GRASS. Use the v.univar instead." 1>&2
+g.message -w "This module is superseded and will be removed in future versions of GRASS. Use the v.univar instead."
 
 PROG=`basename $0`
 
 #### check if we have awk
 if [ ! -x "`which awk`" ] ; then
-    echo "$PROG: awk required, please install awk/gawk first" 1>&2
+    g.message -e "awk required, please install awk/gawk first"
     exit 1
 fi
 
@@ -82,7 +81,7 @@ export LC_NUMERIC
 
 TMP="`g.tempfile pid=$$`"
 if [ $? -ne 0 ] || [ -z "$TMP" ] ; then
-    echo "ERROR: unable to create temporary files" 1>&2
+    g.message -e "Unable to create temporary files"
     exit 1
 fi
 
@@ -94,7 +93,7 @@ cleanup()
 # what to do in case of user break:
 exitprocedure()
 {
- echo "User break!"
+ g.message -e "User break!"
  cleanup
  exit 1
 }
@@ -102,8 +101,8 @@ exitprocedure()
 trap "exitprocedure" 2 3 15
 
 
-echo "Calculation for column $GIS_OPT_COLUMN of table $GIS_OPT_TABLE..."
-echo "Reading column values..."
+g.message "Calculation for column $GIS_OPT_COLUMN of table $GIS_OPT_TABLE..."
+g.message "Reading column values..."
 
 if [ -z "$GIS_OPT_DATABASE" ] ; then
     db=""
@@ -135,14 +134,13 @@ fi
 #check if map contains only NULL's in current region
 LINES=`wc -l "$TMP" | awk '{print $1}'`
 if [ "$LINES" -eq 0 ] ; then
- echo ""
- echo "ERROR: Table $GIS_OPT_TABLE contains no data." 1>&2
+ g.message -e "Table $GIS_OPT_TABLE contains no data." 
  cleanup
  exit 1
 fi
 
 # calculate statistics
-echo "Calculating statistics..."
+g.message "Calculating statistics..."
 cat $TMP | awk 'BEGIN {sum = 0.0 ; sum2 = 0.0; min = 10e10 ; max = -min}
 function abs(x){return x < 0 ? -x : x}
 (NF>0) {
