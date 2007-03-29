@@ -357,13 +357,13 @@ class mainFrame(wx.Frame):
 
         self.SetMenuBar(menuBar)
         self.guisizer = wx.BoxSizer(wx.VERTICAL)
-        
+
         # set apropriate output window
-        if self.parent:
-            standalone=False
-            self.goutput = self.parent.goutput
-        else:
-            standalone=True
+#        if self.parent:
+#            standalone=False
+#            self.goutput = self.parent.goutput
+#        else:
+        standalone=True
         self.notebookpanel = cmdPanel( self, self.task, standalone)
         if standalone:
             self.goutput = self.notebookpanel.goutput
@@ -426,7 +426,7 @@ class mainFrame(wx.Frame):
             # return d.* command to layer tree for rendering
             self.get_dcmd(cmd, self.layer)
             # echo d.* command to output console
-            self.parent.writeDCommand(cmd)
+#            self.parent.writeDCommand(cmd)
         return cmd
 
     def OnRun(self, event):
@@ -782,7 +782,7 @@ class GrassGUIApp(wx.App):
         handler = processTask(self.grass_task)
         xml.sax.parseString( getInterfaceDescription( cmd ) , handler )
         wx.App.__init__(self)
-        
+
     def OnInit(self):
         self.mf = mainFrame(None ,-1, self.grass_task )
         self.mf.Show(True)
