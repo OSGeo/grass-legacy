@@ -66,6 +66,7 @@ class MapToolbar:
                                                  shortHelp="Pan", longHelp="Drag with mouse to pan")
         self.toolbar.AddSeparator()
 
+
         self.dec     = self.toolbar.AddLabelTool(id=wx.ID_ANY, label="dec",
                                                  bitmap=wx.Bitmap(os.path.join(wxgui_utils.icons,"module-d.barscale.gif"),
                                                                   wx.BITMAP_TYPE_ANY),

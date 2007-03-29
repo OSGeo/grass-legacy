@@ -26,12 +26,16 @@ import render
 import toolbars
 import grassenv
 import track
+import menuform
 
 import images
 imagepath = images.__path__[0]
 sys.path.append(imagepath)
 
 from threading import Thread
+
+gmpath = os.getenv("GISBASE") + "/etc/wx/gui_modules/"
+sys.path.append(gmpath)
 
 icons = ""
 
@@ -153,6 +157,7 @@ class BufferedWindow(wx.Window):
     	#
     	self.mapfile = None # image file to be rendered
     	self.Img = ""       # wx.Image object (self.mapfile)
+        self.ovlist = []     # list of images for overlays
 
         #
     	# mouse attributes like currently pressed buttons, position on
@@ -203,6 +208,7 @@ class BufferedWindow(wx.Window):
 
         # get the image to be rendered
     	self.Img = self.GetImage()
+        self.ovlist = self.GetOverlay()
 
         # update map display
     	if self.Img and Map.width + Map.height > 0: # scale image during resize
@@ -247,12 +253,20 @@ class BufferedWindow(wx.Window):
     	    self.Img = self.GetImage()
     	    self.resize = False
     	    if not self.Img: return
+            self.ovlist = self.GetOverlay()
     	    dc = wx.BufferedDC(wx.ClientDC(self), self._Buffer)
     	    self.Draw(dc, self.Img)
+            if self.ovlist != []:
+                for overlay in self.ovlist:
+                    self.Draw(dc, overlay)
     	else:
     	    if not self.Img: return
+            self.ovlist = self.GetOverlay()
     	    dc = wx.BufferedDC(wx.ClientDC(self), self._Buffer)
     	    self.Draw(dc, self.Img)
+            if self.ovlist != []:
+                for overlay in self.ovlist:
+                    self.Draw(dc, overlay)
     	self.resize = False
 
     def EraseMap(self):
@@ -347,16 +361,29 @@ class BufferedWindow(wx.Window):
     	# store current mouse position
     	self.mouse['pos'] = event.GetPositionTuple()[:]
 
+    def GetOverlay(self):
+        """
+        Converts overlay files to wx.Image
+        """
+        ovlist = []
+        if Map.ovlist:
+             for ovlfile in Map.ovlist:
+                 if os.path.isfile(ovlfile) and os.path.getsize(ovlfile):
+                     ovlist.append(wx.Image(ovlfile, wx.BITMAP_TYPE_ANY))
+
+        return ovlist
+
+
     def GetImage(self):
         """
         Converts files to wx.Image
         """
     	if Map.mapfile and os.path.isfile(Map.mapfile) and \
                 os.path.getsize(Map.mapfile):
-    	    self.Img = wx.Image(Map.mapfile, wx.BITMAP_TYPE_ANY)
+    	    img = wx.Image(Map.mapfile, wx.BITMAP_TYPE_ANY)
     	else:
-    	    self.Img = None
-    	return self.Img
+    	    img = None
+    	return img
 
     def Pixel2Cell(self, x, y):
     	"""
@@ -440,7 +467,7 @@ class DrawWindow(BufferedWindow):
     	    dc.EndDrawing()
     	    return
     	bitmap = wx.BitmapFromImage(img)
-    	dc.DrawBitmap(bitmap, 0, 0) # draw the composite map
+    	dc.DrawBitmap(bitmap, 0, 0, True) # draw the composite map
 
     	if dctype == 'box': # draw a box on top of the map
     	    dc.SetBrush(wx.Brush(wx.CYAN, wx.TRANSPARENT))
@@ -517,6 +544,8 @@ class MapFrame(wx.Frame):
     	for i in range(len(map_frame_statusbar_fields)):
     	    self.statusbar.SetStatusText(map_frame_statusbar_fields[i], i)
 
+        self.decmenu = '' #decorations menu
+        self.ovlchk = False
 
         #
     	# Init map display
@@ -709,36 +738,65 @@ class MapFrame(wx.Frame):
     def onDecoration(self, event):
         """Add decorations item menu"""
         point = wx.GetMousePosition()
-        decmenu = wx.Menu()
+        self.decmenu = wx.Menu()
         # Add items to the menu
-        addscale = wx.MenuItem(decmenu, -1,'Add scalebar and north arrow')
-        bmp = wx.Image(os.path.join(icons,'module-d.barscale.gif'), wx.BITMAP_TYPE_GIF)
-        bmp.Rescale(16, 16)
-        bmp = bmp.ConvertToBitmap()
+        addscale = wx.MenuItem(self.decmenu, -1,'Add scalebar and north arrow')
+#        bmp = wx.Image(os.path.join(icons,'module-d.barscale.gif'), wx.BITMAP_TYPE_GIF)
+#        bmp.Rescale(16, 16)
+#        bmp = bmp.ConvertToBitmap()
+        bmp = wx.ArtProvider.GetBitmap(wx.ART_CROSS_MARK, wx.ART_OTHER, (16,16))
         addscale.SetBitmap(bmp)
-        decmenu.AppendItem(addscale)
+        self.decmenu.AppendItem(addscale)
+        Map.addOverlay(type=0, command='', l_active=False, l_render=True)
         self.Bind(wx.EVT_MENU, self.addBarscale, addscale)
 
-        addgrid = wx.MenuItem(decmenu, -1,'Add grid')
-        bmp = wx.Image(os.path.join(icons,'module-d.grid.gif'), wx.BITMAP_TYPE_GIF)
-        bmp.Rescale(16, 16)
-        bmp = bmp.ConvertToBitmap()
+        addgrid = wx.MenuItem(self.decmenu, -1,'Add grid')
+#        bmp = wx.Image(os.path.join(icons,'module-d.grid.gif'), wx.BITMAP_TYPE_GIF)
+#        bmp.Rescale(16, 16)
+#        bmp = bmp.ConvertToBitmap()
+        bmp = wx.ArtProvider.GetBitmap(wx.ART_CROSS_MARK, wx.ART_OTHER, (16,16))
         addgrid.SetBitmap(bmp)
-        decmenu.AppendItem(addgrid)
+        self.decmenu.AppendItem(addgrid)
+        Map.addOverlay(type=1, command='', l_active=False, l_render=True)
         self.Bind(wx.EVT_MENU, self.addGrid, addgrid)
 
         # Popup the menu.  If an item is selected then its handler
         # will be called before PopupMenu returns.
-        self.PopupMenu(decmenu)
-        decmenu.Destroy()
+        self.PopupMenu(self.decmenu,point)
+        self.decmenu.Destroy()
 
-    def addBarscale(self):
-        # need to run d.barscale options and then add the command
-        #to the top (last rendered) of the command stack
+    def addBarscale(self, event):
+        self.params = []
+        layer = 0
+        if self.ovlchk == True:
+            self.ovlchk = False
+            bmp = wx.ArtProvider.GetBitmap(wx.ART_CROSS_MARK, wx.ART_OTHER, (16,16))
+        else:
+            self.ovlchk = True
+            bmp = wx.ArtProvider.GetBitmap(wx.ART_TICK_MARK, wx.ART_OTHER, (16,16))
+        menuform.GUI().parseCommand('d.barscale', gmpath, completed=(self.getOptData,layer,self.params), parentframe=None)
         pass
 
-    def addGrid(self):
+    def addGrid(self, event):
+        self.params = []
+        layer = 1
+        if self.ovlchk == True:
+            self.ovlchk = False
+            bmp = wx.ArtProvider.GetBitmap(wx.ART_CROSS_MARK, wx.ART_TOOLBAR, (16,16))
+        else:
+            self.ovlchk = True
+            bmp = wx.ArtProvider.GetBitmap(wx.ART_TICK_MARK, wx.ART_TOOLBAR, (16,16))
+        menuform.GUI().parseCommand('d.grid', gmpath, completed=(self.getOptData,layer,self.params), parentframe=None)
+
         pass
+
+    def getOptData(self, dcmd, layer):
+
+        print 'dcmd: ', dcmd
+        print 'layer: ', layer
+        print 'check: ', self.ovlchk
+
+        Map.changeOverlay(type=layer, command=dcmd, l_active=self.ovlchk, l_render=False)
 
     def OnAlignRegion(self, event):
         """

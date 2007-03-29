@@ -59,6 +59,7 @@ class MapLayer:
 		gtemp = utils.GetTempfile()
 		self.maskfile = gtemp + ".pgm"
 		self.mapfile  = gtemp + ".ppm"
+		self.ovlfile = gtemp + ".png"
 
 	def __renderRasterLayer(self):
 		"""
@@ -119,6 +120,19 @@ class MapLayer:
 						 (self.name, str(e)))
 			self.cmd = None
 
+	def __renderOverlay(self):
+		"""
+		Stores overlay command with all parameters in the self.cmd variable
+		"""
+
+		try:
+			self.cmd = self.name + " --q"
+
+		except StandardError, e:
+			sys.stderr.write("Could not render command layer <%s>: %s\n" %\
+						 (self.name, str(e)))
+			self.cmd = None
+
 	def Render(self):
 		"""
 		Runs all d.* commands.
@@ -135,10 +149,16 @@ class MapLayer:
 		#
 		# to be sure, set temporary file with layer and mask
 		#
-		if not self.mapfile:
-			gtemp = utils.GetTempfile()
-			self.maskfile = gtemp + ".pgm"
-			self.mapfile  = gtemp + ".ppm"
+
+		if self.type == 'overlay':
+			if not self.ovlfile:
+				gtemp = utils.GetTempfile()
+				self.ovlfile  = gtemp + ".png"
+		else:
+			if not self.mapfile:
+				gtemp = utils.GetTempfile()
+				self.maskfile = gtemp + ".pgm"
+				self.mapfile  = gtemp + ".ppm"
 
 
 		#
@@ -153,6 +173,9 @@ class MapLayer:
 		elif self.type == "command":
 			self.__renderCommandLayer()
 
+		elif self.type == "overlay":
+			self.__renderOverlay()
+
 		elif self.type == "wms":
 			print "Type wms is not supported yet"
 		else:
@@ -162,7 +185,10 @@ class MapLayer:
 		#
 		# Start monitor
 		#
-		os.environ["GRASS_PNGFILE"] = self.mapfile
+		if self.type == 'overlay':
+			os.environ["GRASS_PNGFILE"] = self.ovlfile
+		else:
+			os.environ["GRASS_PNGFILE"] = self.mapfile
 		os.environ["GRASS_RENDER_IMMEDIATE"] = "TRUE"
 
 		#
@@ -185,7 +211,11 @@ class MapLayer:
 		os.unsetenv("GRASS_PNGFILE")
 		os.unsetenv("GRASS_RENDER_IMMEDIATE")
 
-		return self.mapfile
+		if self.type == 'overlay':
+			pass
+			return self.ovlfile
+		else:
+			return self.mapfile
 
 class Map:
 	"""
@@ -227,10 +257,12 @@ class Map:
 		self.height    = 400 # map height
 
 		self.layers    = []  # stack of available layer
-		self.lookup   = {}  # lookup dictionary for tree items and layers
+		self.overlays  = []
+		self.lookup    = {}  # lookup dictionary for tree items and layers
 		self.env       = {}  # enviroment variables, like MAPSET, LOCATION_NAME, etc.
 		self.verbosity = 0
 		self.mapfile   = utils.GetTempfile()
+		self.ovlist = []
 
 #		self.renderRegion = {
 #			"render" : True,     # should the region be displayed?
@@ -397,7 +429,7 @@ class Map:
 			try:
                             region[key] = float(val)
                         except ValueError:
-                            region[key] = val        
+                            region[key] = val
 
 		if tmpreg:
 			os.environ["GRASS_REGION"] = tmpreg
@@ -533,6 +565,23 @@ class Map:
 		if DEBUG:
 			print ("mapimg.py: Map: Render: force=%s" % (force))
 		try:
+			# render overlays
+			self.ovlist = []
+			for overlay in self.overlays:
+				if overlay == None or overlay.active == False:
+					continue
+
+				# render if there is no mapfile
+				if overlay.ovlfile == None:
+					overlay.Render()
+
+				# redraw layer content
+				if force:
+					if not overlay.Render():
+						continue
+				self.ovlist.append(overlay.ovlfile)
+
+			# render map layers
 			for layer in self.layers:
 				# skip if hidden or not active
 				if layer.active == False or layer.hidden == True:
@@ -566,17 +615,20 @@ class Map:
 			    " height=" + str(self.height) + \
 			    " output=" + self.mapfile
 
-			# run g.composite to get composite image
-			if os.system(compcmd):
-				sys.stderr.write("Could not run g.pnmcomp\n")
-				raise Exception (compcmd)
+			# render overlays
 
 			os.unsetenv("GRASS_REGION")
 
 			if tmp_region:
 				os.environ["GRASS_REGION"] = tmp_region
 
-			return self.mapfile
+			# run g.composite to get composite image
+			if os.system(compcmd):
+				sys.stderr.write("Could not run g.pnmcomp\n")
+				raise Exception (compcmd)
+
+			return self.mapfile, self.ovlist
+
 		except Exception, e:
 			os.unsetenv("GRASS_REGION")
 
@@ -817,7 +869,7 @@ class Map:
 		Adds generic layer to list of layers
 
 		Layer Attributes:
-			name	   - display command
+			command	   - display command
 			mapset	   - mapset name, default: current
 
 			l_active   - see MapLayer class
@@ -904,17 +956,11 @@ class Map:
 		newlayer = MapLayer("command", command, mapset,
 				 l_active, l_hidden, l_opacity)
 
-		oldlayer = self.lookup[item]
-		oldlayerindex = self.layers.index(oldlayer)
+		oldlayerindex = self.layers.index(self.lookup[item])
 
 		# add maplayer to the list of layers
 		if self.lookup[item]:
-			del self.layers[oldlayerindex]
-			del self.lookup[item]
-			if oldlayerindex == 0:
-				self.layers.append(newlayer)
-			else:
-				self.layers.insert(oldlayerindex, newlayer)
+			self.layers[oldlayerindex] = newlayer
 			self.lookup[item] = newlayer
 
 
@@ -991,6 +1037,53 @@ class Map:
 
 		return None
 
+	def addOverlay(self, type, command, mapset=None, l_active=True,
+				   l_hidden=False, l_opacity=1, l_render=False):
+
+		"""
+		Adds overlay (grid, barscale, others?) to list of overlays
+
+		Overlay Attributes:
+			command	   - display command
+			l_active   - see MapLayer class
+			l_render   - render an image
+
+		Returns:
+                    Added layer on success or None
+
+		"""
+
+		overlay = MapLayer("overlay", command, mapset,
+				 l_active, l_hidden, l_opacity)
+
+
+		# add maplayer to the list of layers
+		self.overlays.append(overlay)
+		# add item and layer to lookup dictionary
+
+		if l_render:
+			if not overlay.Render():
+				sys.stderr.write("Could not render overlay <%s>\n" % (command))
+
+		return self.overlays[-1]
+
+	def changeOverlay(self, type, command, mapset=None, l_active=True,
+				   l_hidden=False, l_opacity=1, l_render=False):
+
+		overlay = MapLayer('overlay', command, mapset,
+				 l_active, l_hidden, l_opacity)
+
+		# add maplayer to the list of layers
+		self.overlays[type] = overlay
+
+		if l_render:
+			if not overlay.Render():
+				sys.stderr.write("Could not render overlay <%s>\n" % (command))
+
+		return self.overlays[-1]
+
+
+
 	def Clean(self):
 		"""
 		Go trough all layers and remove them from layer list
@@ -1007,8 +1100,16 @@ class Map:
 					basefile = os.path.join(base,tempbase)+r'.*'
 					for f in glob.glob(basefile):
 						os.remove(f)
-#				if layer.maskfile: os.remove(layer.maskfile)
 				self.layers.remove(layer)
+			for overlay in self.overlays:
+				if overlay.ovlfile:
+					base = os.path.split(overlay.ovlfile)[0]
+					mapfile = os.path.split(overlay.ovlfile)[1]
+					tempbase = mapfile.split('.')[0]
+					basefile = os.path.join(base,tempbase)+r'.*'
+					for f in glob.glob(basefile):
+						os.remove(f)
+				self.overlays.remove(overlay)
 			return None
 		except:
 			return 1
