@@ -59,7 +59,7 @@ PROG=`basename $0`
 
 #### check if we have awk
 if [ ! -x "`which awk`" ] ; then
-    echo "$PROG: awk required, please install awk/gawk first" 1>&2
+    g.message -e "awk required, please install awk/gawk first" 
     exit 1
 fi
 
@@ -72,21 +72,21 @@ export LC_NUMERIC
 if [ -z "$GIS_OPT_TABLE" ] ; then
     table=`v.db.connect $GIS_OPT_MAP -g`
     if [ $? -ne 0 ] ; then
-       echo "An error occured. Stop." 1>&2
+       g.message -e "An error occured while running v.db.connect"
        exit 1
     fi
     table=`v.db.connect $GIS_OPT_MAP -g | grep -w $GIS_OPT_LAYER | awk '{print $2}'`
     if [ -z $table ] ; then
-       echo "No table assigned to layer <$GIS_OPT_LAYER>" 1>&2
+       g.message -e "No table assigned to layer <$GIS_OPT_LAYER>"
        exit 1
     fi
-    echo "Removing following table name connected to selected layer: ${GIS_OPT_MAP}" 1>&2
+    g.message "Removing following table name connected to selected layer: ${GIS_OPT_MAP}" 
 else
-    echo "Removing user specified table name: $GIS_OPT_TABLE" 1>&2
+    g.message "Removing user specified table name: $GIS_OPT_TABLE" 
     existingtable=`v.db.connect $GIS_OPT_MAP -g | grep -w $GIS_OPT_LAYER | awk '{print $2}'`
     table=$GIS_OPT_TABLE
     if [ "$existingtable" != "$table" ] ; then
-       echo "User selected table <$table> but the table <$existingtable> is linked to layer <$GIS_OPT_LAYER>" 1>&2
+       g.message -e "User selected table <$table> but the table <$existingtable> is linked to layer <$GIS_OPT_LAYER>" 
        exit 1
     fi		  
 fi
@@ -94,13 +94,13 @@ fi
 # we use the DB settings selected layer 
 database=`v.db.connect $GIS_OPT_MAP -g`
 if [ $? -ne 0 ] ; then
-   echo "An error occured. Stop." 1>&2
+   g.message -e "An error occured while running v.db.connect" 
    exit 1
 fi
 database=`v.db.connect $GIS_OPT_MAP -g | grep -w $GIS_OPT_LAYER | awk '{print $4}'`
 driver=`v.db.connect $GIS_OPT_MAP -g | grep -w $GIS_OPT_LAYER | awk '{print $5}'`
 
-echo "Removing table <$table> linked to layer <$GIS_OPT_LAYER> of vector map <$GIS_OPT_MAP>" 1>&2
+g.message "Removing table <$table> linked to layer <$GIS_OPT_LAYER> of vector map <$GIS_OPT_MAP>" 
 
 # this may not work in GUI mode:
 if [ $GIS_FLAG_f -eq 0 ] ; then
@@ -113,24 +113,23 @@ else
 fi
 
 if [ "$ans" = "y" -o "$ans" = "Y" ] ; then
-   echo "Dropping table <$table>..." 1>&2
+   g.message "Dropping table <$table>..."
    echo "DROP TABLE $table" | db.execute
    if [ $? -ne 0 ] ; then
-      echo "An error occured. Stop." 1>&2
+      g.message -e "An error occured while running db.execute"
       exit 1
    fi
 
    v.db.connect -d map=$GIS_OPT_MAP layer=$GIS_OPT_LAYER
 
-   echo 1>&2
-   echo "Current attribute table link(s):" 1>&2
+   g.message "Current attribute table link(s):" 
    v.db.connect -p $GIS_OPT_MAP
    if [ $? -ne 0 ] ; then
-      echo "       (No database links remaining)" 1>&2
+      g.message "(No database links remaining)"
    fi
 
    exit 0
 else
-   echo "Leaving map/table unchanged." 1>&2
+   g.message "Leaving map/table unchanged." 
    exit 1
 fi
