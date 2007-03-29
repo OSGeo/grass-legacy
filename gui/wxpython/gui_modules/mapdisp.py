@@ -765,7 +765,7 @@ class MapFrame(wx.Frame):
 
         # Popup the menu.  If an item is selected then its handler
         # will be called before PopupMenu returns.
-        self.PopupMenu(self.decmenu,point)
+        self.PopupMenu(self.decmenu)
         self.decmenu.Destroy()
 
     def addBarscale(self, event):
