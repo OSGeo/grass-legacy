@@ -326,7 +326,7 @@ cleanup()
 # what to do in case of user break:
 exitprocedure()
 {
-    g.message -e "User break"
+    g.message -e "User break!"
     cleanup
     exit 1
 }
