@@ -76,19 +76,16 @@ fi
 
 PROG=`basename $0`
 
-echo "WARNING: This module is superseded and will be removed in future versions" 1>&2
-echo "         of GRASS. Use the much faster r.out.gdal instead." 1>&2
+g.message -w "This module is superseded and will be removed in future versions of GRASS. Use the much faster r.out.gdal instead."
 
 #check gdal_translate exists
 if [ -z "`which gdal_translate`" ] ; then
-   echo "ERROR: Required program gdal_translate is missing."
-   echo "       Full GDAL binaries with GDAL/GRASS support are needed to use $PROG."
+   g.messge -e "Required program gdal_translate is missing.Full GDAL binaries with GDAL/GRASS support are needed to use $PROG."
    exit 1
 fi
 #check that gdal's grass plugin exists
 if [ -z "`gdalinfo --formats | grep -i GRASS`" ] ; then
-   echo "ERROR: Required GRASS plugin for GDAL is missing."
-   echo "       GDAL must be built with GRASS support to use $PROG."
+   g.message -e "ERROR: Required GRASS plugin for GDAL is missing. GDAL must be built with GRASS support to use $PROG."
    exit 1
 fi
 
@@ -119,12 +116,12 @@ fi
 #fetch the input raster map
 eval `g.findfile element=cell file=$INPUT` 
 if [ ! "$file" ] ; then
-  echo "Input map not found"
+  g.message -e "Input map not found"
   exit 1
 fi
 
 if [ -z "$FORMAT" ] ; then
-  echo "ERROR: output format not specified"
+  g.message -e "Output format not specified"
   exit 1
 fi
 
@@ -134,8 +131,8 @@ if [ -z "$OUTPUT" ] ; then
 fi
 
 if [ -z "$TYPE" ] ; then
-  echo "ERROR: output TYPE not specified"
-  echo "(Raster map type is `r.info -t $INPUT | cut -d'=' -f2`)"
+  g.messge -e  "Output TYPE not specified"
+  g.message -e "(Raster map type is `r.info -t $INPUT | cut -d'=' -f2`)"
   exit 1
 fi
 
@@ -148,8 +145,8 @@ fi
 
 #do it
 CELLHD=`echo $file | sed 's+/cell/+/cellhd/+g'`
-echo "Writing format: $FORMAT"
-echo "Writing type:   $TYPE"
+g.message "Writing format: $FORMAT"
+g.message "Writing type:   $TYPE"
 gdal_translate -of $FORMAT -ot $TYPE $CREATEKEY $METAKEY $CELLHD $OUTPUT 
 
 if [ $GIS_FLAG_R -eq 1 ] ; then
