@@ -8,6 +8,7 @@ SUBDIRS = \
 	linkm \
 	driver \
 	pngdriver \
+	psdriver \
 	raster \
 	bitmap \
 	btree \
