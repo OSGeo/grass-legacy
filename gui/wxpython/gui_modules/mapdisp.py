@@ -300,23 +300,23 @@ class BufferedWindow(wx.Window):
         if self.render:
             Map.width, Map.height = self.GetClientSize()
             self.mapfile = Map.Render(force=self.render)
-            self.Img = self.GetImage()
+            self.img = self.GetImage()
             self.resize = False
-            if not self.Img: return
+            if not self.img: return
             self.ovlist = self.GetOverlay()
             if self.ovlist != []:
                 for overlay in self.ovlist:
                     self.DrawOvl(self.pdc, overlay)
             dc = wx.BufferedDC(wx.ClientDC(self), self._Buffer)
-            self.Draw(dc, self.Img)
+            self.Draw(dc, self.img)
         else:
-            if not self.Img: return
+            if not self.img: return
             self.ovlist = self.GetOverlay()
             if self.ovlist != []:
                 for overlay in self.ovlist:
                     self.DrawOvl(self.pdc, overlay)
             dc = wx.BufferedDC(wx.ClientDC(self), self._Buffer)
-            self.Draw(dc, self.Img)
+            self.Draw(dc, self.img)
 
     	self.resize = False
 
@@ -356,7 +356,7 @@ class BufferedWindow(wx.Window):
         self.pdc.TranslateId(self.dragid, dx, dy)
         dc = wx.BufferedDC(wx.ClientDC(self), self._Buffer)
         dc.SetBackground(wx.Brush(self.GetBackgroundColour()))
-        bitmap = wx.BitmapFromImage(self.Img)
+        bitmap = wx.BitmapFromImage(self.img)
         dc.Clear() # make sure you clear the bitmap!
         dc.DrawBitmap(bitmap, 0, 0, True) # draw the composite map
         self.pdc.DrawToDC(dc)
