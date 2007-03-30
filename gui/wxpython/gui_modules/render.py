@@ -11,7 +11,7 @@ import utils
 #
 # COPYRIGHT:(C) 1999 - 2007 by the GRASS Development Team
 
-DEBUG = True
+DEBUG = False
 
 class GRASSLayer:
 	"""
