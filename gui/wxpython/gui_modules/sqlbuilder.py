@@ -27,7 +27,8 @@ class SQLFrame(wx.Frame):
         #
         self.tablename = table   # name of the table "select * from #self.tablename# "
         self.qtype = qtype        # type of the uqery: SELECT, UPDATE, DELETE, ...
-        self.columns = []       # array with column names
+        self.column_names = []       # array with column names
+        self.columns = {}       # array with colum properties
         self.colvalues = []     # arrya with uniqe values in selected column
 
         # Init
@@ -72,7 +73,7 @@ class SQLFrame(wx.Frame):
         # 
         # List Boxes
         #
-        self.list_columns = wx.ListBox(self, -1, wx.DefaultPosition, (130, 130), self.columns, wx.LB_MULTIPLE|wx.LB_SORT)
+        self.list_columns = wx.ListBox(self, -1, wx.DefaultPosition, (130, 130), self.column_names, wx.LB_MULTIPLE|wx.LB_SORT)
         self.list_values = wx.ListBox(self, -1, wx.DefaultPosition, (130, 130), self.colvalues, wx.LB_MULTIPLE|wx.LB_SORT)
         
         #
@@ -91,6 +92,9 @@ class SQLFrame(wx.Frame):
         self.btn_brackets.Bind(wx.EVT_BUTTON, self.AddMark)
         self.btn_prc.Bind(wx.EVT_BUTTON, self.AddMark)
         self.btn_and.Bind(wx.EVT_BUTTON, self.AddMark)
+
+        self.list_columns.Bind(wx.EVT_LISTBOX, self.AddColumnName)
+        self.list_values.Bind(wx.EVT_LISTBOX, self.AddValue)
 
         #
         # Layout
@@ -148,7 +152,10 @@ class SQLFrame(wx.Frame):
 
     def GetColumns(self):
         for line in os.popen("db.columns table=%s" % (self.tablename)):
-            self.columns.append(line.strip())
+            self.column_names.append(line.strip())
+        for line in os.popen("db.describe -c table=%s" % (self.tablename)).readlines()[1:]:
+            x,name,ctype = line.strip().split(":")
+            self.columns[name] = {'type':ctype}
         return
 
     def GetUniqueValues(self,event):
@@ -163,18 +170,57 @@ class SQLFrame(wx.Frame):
                 (column,self.tablename)):
                 self.list_values.Insert(line.strip(),0)
 
+    def AddColumnName(self,event):
+        idx = self.list_columns.GetSelections()[0]
+        column = self.list_columns.GetString(idx)
+        self.__addSomething(column)
+
+    def AddValue(self,event):
+        idx = self.list_values.GetSelections()[0]
+        value = self.list_values.GetString(idx)
+        idx = self.list_columns.GetSelections()[0]
+        column = self.list_columns.GetString(idx)
+
+        if self.columns[column]['type'].lower().find("chara") > -1:
+            value = "'%s'" % value
+        self.__addSomething(value)
+
     def AddMark(self,event):
+
+
+        if event.GetId() == self.btn_is.GetId(): mark = "="
+        elif event.GetId() == self.btn_isnot.GetId(): mark = "!="
+        elif event.GetId() == self.btn_like.GetId(): mark = "LIKE"
+        elif event.GetId() == self.btn_gt.GetId(): mark = ">"
+        elif event.GetId() == self.btn_gtis.GetId(): mark = ">="
+        elif event.GetId() == self.btn_lt.GetId(): mark = "<"
+        elif event.GetId() == self.btn_ltis.GetId(): mark =  "<="
+        elif event.GetId() == self.btn_or.GetId(): mark =  "OR"
+        elif event.GetId() == self.btn_not.GetId(): mark = "NOT"
+        elif event.GetId() == self.btn_and.GetId(): mark = "AND"
+        elif event.GetId() == self.btn_brackets.GetId(): mark = "()"
+        elif event.GetId() == self.btn_prc.GetId(): mark = "%"
+        self.__addSomething(mark)
+
+            
+    def __addSomething(self,what):
         sqlstr = self.text_sql.GetValue()
         newsqlstr = ''
         position = self.text_sql.GetLastPosition()
         selection = self.text_sql.GetSelection()
 
         newsqlstr = sqlstr[:position]
-        newsqlstr += event.GetValue()
+        try:
+            if newsqlstr[-1] != " ":
+                newsqlstr += " "
+        except:
+            pass
+        newsqlstr += what
         newsqlstr += " "+sqlstr[position:]
 
         self.text_sql.SetValue(newsqlstr)
-            
+        self.text_sql.SetInsertionPoint(position)
+
 
 if __name__ == "__main__":
 
