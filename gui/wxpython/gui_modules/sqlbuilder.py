@@ -79,6 +79,18 @@ class SQLFrame(wx.Frame):
         # Bindings
         # 
         self.btn_uniqe.Bind(wx.EVT_BUTTON, self.GetUniqueValues)
+        self.btn_is.Bind(wx.EVT_BUTTON, self.AddMark)
+        self.btn_isnot.Bind(wx.EVT_BUTTON, self.AddMark)
+        self.btn_like.Bind(wx.EVT_BUTTON, self.AddMark)
+        self.btn_gt.Bind(wx.EVT_BUTTON, self.AddMark)
+        self.btn_gtis.Bind(wx.EVT_BUTTON, self.AddMark)
+        self.btn_or.Bind(wx.EVT_BUTTON, self.AddMark)
+        self.btn_lt.Bind(wx.EVT_BUTTON, self.AddMark)
+        self.btn_ltis.Bind(wx.EVT_BUTTON, self.AddMark)
+        self.btn_not.Bind(wx.EVT_BUTTON, self.AddMark)
+        self.btn_brackets.Bind(wx.EVT_BUTTON, self.AddMark)
+        self.btn_prc.Bind(wx.EVT_BUTTON, self.AddMark)
+        self.btn_and.Bind(wx.EVT_BUTTON, self.AddMark)
 
         #
         # Layout
@@ -150,6 +162,18 @@ class SQLFrame(wx.Frame):
         for line in os.popen("""db.select -c sql="SELECT %s FROM %s" """ %\
                 (column,self.tablename)):
                 self.list_values.Insert(line.strip(),0)
+
+    def AddMark(self,event):
+        sqlstr = self.text_sql.GetValue()
+        newsqlstr = ''
+        position = self.text_sql.GetLastPosition()
+        selection = self.text_sql.GetSelection()
+
+        newsqlstr = sqlstr[:position]
+        newsqlstr += event.GetValue()
+        newsqlstr += " "+sqlstr[position:]
+
+        self.text_sql.SetValue(newsqlstr)
             
 
 if __name__ == "__main__":
