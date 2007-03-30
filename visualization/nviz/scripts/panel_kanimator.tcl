@@ -145,9 +145,9 @@ proc mkkanimatorPanel { BASE } {
     menu $rname.menu1.m1
     $rname.menu1.m1 add checkbutton -label "Path" -variable keyanimPathState \
         -command {Nshow_path $keyanimPathState} -onvalue on -offvalue off
-    $rname.menu1.m1 add checkbutton -label "Vect" -variable keyanimVectState \
+    $rname.menu1.m1 add checkbutton -label "Vect Lines/Polygons" -variable keyanimVectState \
         -command {Nshow_vect $keyanimVectState} -onvalue on -offvalue off
-    $rname.menu1.m1 add checkbutton -label "Site" -variable keyanimSiteState \
+    $rname.menu1.m1 add checkbutton -label "Vect Points" -variable keyanimSiteState \
         -command {Nshow_site $keyanimSiteState} -onvalue on -offvalue off
     $rname.menu1.m1 add checkbutton -label "Volume" -variable keyanimVolState \
         -command {Nshow_vol $keyanimVolState} -onvalue on -offvalue off
