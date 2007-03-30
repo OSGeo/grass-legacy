@@ -229,9 +229,6 @@ main (int argc, char **argv)
     space = size;  /* default: set spacing according to letter size (map units) */
     rotate = atof (Rotation->answer);
 
-    if( 0 != strcmp("0", Rotation->answer) )
-	G_warning("Currently the rotation option only works correctly for left justified text.");
-
     if(FontSize->answer) {
 	fontsize = atoi(FontSize->answer);
 
