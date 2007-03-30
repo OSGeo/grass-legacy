@@ -253,7 +253,7 @@ class BufferedWindow(wx.Window):
 
         # get the image to be rendered
     	self.img = self.GetImage()
-        self.ovlist = self.GetOverlay()
+#        self.ovlist = self.GetOverlay()
 
         # update map display
     	if self.img and Map.width + Map.height > 0: # scale image during resize
@@ -305,10 +305,10 @@ class BufferedWindow(wx.Window):
             if not self.img: return
             self.ovlist = self.GetOverlay()
             # redraw decorations on resize event
-            self.DrawOvl(self.pdc, data=None, pdctype='clear')
             if self.ovlist != []:
                 for overlay in self.ovlist:
-                    self.DrawOvl(self.pdc, data=overlay, pdctype='image')
+                    self.DrawOvl(self.pdc, type=0, data=None, pdctype='clear')
+                    self.DrawOvl(self.pdc, type=0, data=overlay, pdctype='image')
             dc = wx.BufferedDC(wx.ClientDC(self), self._Buffer)
             self.Draw(dc, self.img)
         else:
@@ -316,7 +316,8 @@ class BufferedWindow(wx.Window):
             self.ovlist = self.GetOverlay()
             if self.ovlist != []:
                 for overlay in self.ovlist:
-                    self.DrawOvl(self.pdc, overlay)
+                    self.DrawOvl(self.pdc, type=self.ovlist.index[overlay], data=None, pdctype='clear')
+                    self.DrawOvl(self.pdc, type=self.ovlist.index[overlay], data=overlay, pdctype='image')
             dc = wx.BufferedDC(wx.ClientDC(self), self._Buffer)
             self.Draw(dc, self.img)
 
@@ -548,7 +549,7 @@ class BufferedWindow(wx.Window):
     	    Map.region['w'] = newreg['w']
 
 
-    def DrawOvl(self, pdc, data, pdctype='image', coords=[0, 0]):
+    def DrawOvl(self, pdc, type, data, pdctype='image', coords=[0, 0]):
         """
         Draws map decorations on top of map
         """
@@ -557,12 +558,13 @@ class BufferedWindow(wx.Window):
 #        pdc.Clear() # make sure you clear the bitmap!
 
         if pdctype == 'clear': # erase the display
-            pdc.Clear()
+            if type > -1:
+                pdc.ClearId(type)
             pdc.EndDrawing()
             return
 
-        if pdctype == 'image':
-            id = wx.NewId()
+        elif pdctype == 'image':
+            id = type
             pdc.SetId(id)
             bitmap = wx.BitmapFromImage(data)
             w,h = bitmap.GetSize()
@@ -570,6 +572,8 @@ class BufferedWindow(wx.Window):
             pdc.SetIdBounds(id,wx.Rect(coords[0], coords[1], w, h))
 
         elif pdctype == 'box': # draw a box on top of the map
+            id = type
+            pdc.SetId(id)
             pdc.SetBrush(wx.Brush(wx.CYAN, wx.TRANSPARENT))
             pdc.SetPen(self.pen)
             pdc.DrawRectangle(coords[0],coords[1],coords[2]-coords[0],coords[2]-coords[1])
@@ -578,6 +582,8 @@ class BufferedWindow(wx.Window):
             pdc.SetIdBounds(id,r)
 
         elif pdctype == 'line': # draw a line on top of the map
+            id = type
+            pdc.SetId(id)
             pdc.SetBrush(wx.Brush(wx.CYAN, wx.TRANSPARENT))
             pdc.SetPen(self.pen)
             dc.DrawLine(coords[0], coords[1], coords[2], coords[3])
@@ -586,6 +592,8 @@ class BufferedWindow(wx.Window):
             pdc.SetIdBounds(id,r)
 
         elif pdctype == 'point': #draw point
+            id = type
+            pdc.SetId(id)
             pen = self.RandomPen()
             pdc.SetPen(pen)
             pdc.DrawPoint(coords[0], coords[1])
@@ -594,6 +602,8 @@ class BufferedWindow(wx.Window):
             pdc.SetIdBounds(id,r)
 
         elif pdctype == 'text': # draw text on top of map
+            id = type
+            pdc.SetId(id)
             text = data
             w,h = self.GetFullTextExtent(text)[0:2]
             pdc.SetFont(self.GetFont())
@@ -927,6 +937,7 @@ class MapFrame(wx.Frame):
         self.decmenu.Destroy()
 
     def addBarscale(self, event):
+        type = 0
         DecDialog(self, wx.ID_ANY, 'Scale and arrow')
 
         dlg = DecDialog(self, wx.ID_ANY, 'Scale and North arrow', size=(350, 200),
@@ -943,9 +954,9 @@ class MapFrame(wx.Frame):
         if val == wx.ID_OK:
             ovlist = self.MapWindow.GetOverlay()
             if ovlist != []:
-                self.MapWindow.DrawOvl(self.MapWindow.pdc, data=None, pdctype='clear')
                 for overlay in ovlist:
-                    self.MapWindow.DrawOvl(self.MapWindow.pdc, overlay)
+                    self.MapWindow.DrawOvl(self.MapWindow.pdc, type=0, data=None, pdctype='clear')
+                    self.MapWindow.DrawOvl(self.MapWindow.pdc, type=0, data=overlay, pdctype='image')
 
         dlg.Destroy()
 
