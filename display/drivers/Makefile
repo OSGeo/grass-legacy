@@ -1,7 +1,7 @@
 
 MODULE_TOPDIR = ../..
 
-SUBDIRS = HTMLMAP
+SUBDIRS = HTMLMAP PS
 
 include $(MODULE_TOPDIR)/include/Make/Dir.make
 

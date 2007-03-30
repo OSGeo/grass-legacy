@@ -1,0 +1,94 @@
+%!PS
+/GRAY {
+  255.0 div
+  setgray
+} bind def
+/COLOR {
+  3 2 roll 255 div
+  3 2 roll 255 div
+  3 2 roll 255 div
+  setrgbcolor
+} bind def
+/BOX {
+  newpath
+  3 index 3 index moveto
+  1 index 3 index lineto
+  1 index 1 index lineto
+  3 index 1 index lineto
+  closepath fill
+  pop pop pop pop
+} bind def
+/LINE {
+  newpath
+  4 2 roll moveto
+  lineto
+  stroke
+} bind def
+/POINT {
+  newpath
+  moveto
+  currentpoint lineto
+  stroke
+} bind def
+/ERASE {
+  erasepage
+} bind def
+/WIDTH {
+  setlinewidth
+} bind def
+/BITMAP {
+  gsave
+    4 2 roll translate
+    1 index string /tmpstr exch def
+    true [1 0 0 1 0 0] {currentfile tmpstr readhexstring pop} imagemask
+  grestore
+} bind def
+/RASTERGRAY {
+  8 exch
+  3 index string /tmpstr exch def
+  {currentfile tmpstr readhexstring pop} image
+} bind def
+/RASTERRGB {
+  8 exch
+  3 index 3 mul string /tmpstr exch def
+  {currentfile tmpstr readhexstring pop}
+  false 3 colorimage
+} bind def
+/RASTERMASK {
+  4 dict begin
+    /mat exch def
+    /rows exch def
+    /cols exch def
+    /imgdict 4 dict def
+    imgdict begin
+      /ImageType 3 def
+      /InterleaveType 1 def
+      /DataDict 7 dict def
+      /MaskDict 7 dict def
+      DataDict begin
+	/ImageType 1 def
+	/Width cols def
+	/Height rows def
+	/ImageMatrix mat def
+	/DataSource currentfile /ASCIIHexDecode filter def
+	/BitsPerComponent 8 def
+	/Decode [0 1] def
+      end
+      DataDict MaskDict copy
+      MaskDict /DataSource undef
+    end
+    imgdict image
+  end
+} bind def
+/RASTERGRAYMASK {
+  gsave
+    /DeviceGray setcolorspace
+    RASTERMASK
+  grestore
+} bind def
+/RASTERRGBMASK {
+  gsave
+    /DeviceRGB setcolorspace
+    RASTERMASK
+  grestore
+} bind def
