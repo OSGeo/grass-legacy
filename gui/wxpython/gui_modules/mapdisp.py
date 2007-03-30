@@ -7,6 +7,7 @@ Usage:
 mapdisp Package
 
 Classes:
+* Command
 * BufferedWindow
 * DrawWindow
 * MapFrame
@@ -155,9 +156,9 @@ class BufferedWindow(wx.Window):
     """
 
     def __init__(self, parent, id,
-            pos = wx.DefaultPosition,
-            size = wx.DefaultSize,
-            style=wx.NO_FULL_REPAINT_ON_RESIZE):
+                 pos = wx.DefaultPosition,
+                 size = wx.DefaultSize,
+                 style=wx.NO_FULL_REPAINT_ON_RESIZE):
 
     	wx.Window.__init__(self, parent, id, pos, size, style)
         self.parent = parent
@@ -183,7 +184,7 @@ class BufferedWindow(wx.Window):
         # Render output objects
     	#
     	self.mapfile = None # image file to be rendered
-    	self.Img = ""       # wx.Image object (self.mapfile)
+    	self.img = ""       # wx.Image object (self.mapfile)
         self.ovlist = []     # list of images for overlays
 
         #
@@ -199,6 +200,7 @@ class BufferedWindow(wx.Window):
     	    'end': [0, 0],
     	    'box': "point"
     	    }
+
         self.zoomtype = 1  # 1 zoom in, 0 no zoom, -1 zoom out
 
     	# OnSize called to make sure the buffer is initialized.
@@ -234,12 +236,12 @@ class BufferedWindow(wx.Window):
     	self._Buffer = wx.EmptyBitmap(Map.width, Map.height)
 
         # get the image to be rendered
-    	self.Img = self.GetImage()
+    	self.img = self.GetImage()
         self.ovlist = self.GetOverlay()
 
         # update map display
-    	if self.Img and Map.width + Map.height > 0: # scale image during resize
-    	    self.Img = self.Img.Scale(Map.width, Map.height)
+    	if self.img and Map.width + Map.height > 0: # scale image during resize
+    	    self.img = self.img.Scale(Map.width, Map.height)
     	    self.render = False
     	    self.UpdateMap()
 
@@ -274,27 +276,36 @@ class BufferedWindow(wx.Window):
     	be updated.
 
     	"""
+        if DEBUG:
+            print "Buffered Window.UpdateMap(%s): render=%s" % (img, self.render)
+
     	if self.render:
     	    Map.width, Map.height = self.GetClientSize()
     	    self.mapfile = Map.Render(force=self.render)
-    	    self.Img = self.GetImage()
+    	    self.img = self.GetImage()
     	    self.resize = False
-    	    if not self.Img: return
+    	    if not self.img: return
             self.ovlist = self.GetOverlay()
     	    dc = wx.BufferedDC(wx.ClientDC(self), self._Buffer)
-    	    self.Draw(dc, self.Img)
+    	    self.Draw(dc, self.img)
             if self.ovlist != []:
                 for overlay in self.ovlist:
                     self.Draw(dc, overlay)
     	else:
-    	    if not self.Img: return
+    	    if not self.img: return
             self.ovlist = self.GetOverlay()
     	    dc = wx.BufferedDC(wx.ClientDC(self), self._Buffer)
-    	    self.Draw(dc, self.Img)
+    	    self.Draw(dc, self.img)
             if self.ovlist != []:
                 for overlay in self.ovlist:
                     self.Draw(dc, overlay)
+
     	self.resize = False
+
+        # update statusbar
+        self.parent.statusbar.SetStatusText("Extent: %d,%d : %d,%d" %
+                                            (Map.region["w"], Map.region["e"],
+                                             Map.region["n"], Map.region["s"]), 0)
 
     def EraseMap(self):
         """
@@ -310,7 +321,7 @@ class BufferedWindow(wx.Window):
 
     	dc = wx.BufferedDC(wx.ClientDC(self), self._Buffer)
     	dc.SetBackground(wx.Brush("White"))
-    	bitmap = wx.BitmapFromImage(self.Img)
+    	bitmap = wx.BitmapFromImage(self.img)
     	self.dragimg = wx.DragImage(bitmap)
     	self.dragimg.BeginDrag((0, 0), self)
     	self.dragimg.GetImageRect(moveto)
@@ -324,7 +335,7 @@ class BufferedWindow(wx.Window):
     	"""
         Mouse zoom rectangles and lines
         """
-    	img = self.Img # composite map in background
+    	img = self.img # composite map in background
     	dc = wx.BufferedDC(wx.ClientDC(self), self._Buffer)
     	if self.mouse['box'] == "box":
     	    mousecoords = [self.mouse['begin'][0], self.mouse['begin'][1], \
@@ -565,8 +576,8 @@ class MapFrame(wx.Frame):
     	self.statusbar = self.CreateStatusBar(number=2, style=0)
     	self.statusbar.SetStatusWidths([-2, -1])
     	map_frame_statusbar_fields = ["Extent: %d,%d : %d,%d" %
-                                      (Map.region["n"], Map.region["s"],
-                                       Map.region["w"], Map.region["e"]),
+                                      (Map.region["w"], Map.region["e"],
+                                       Map.region["n"], Map.region["s"]),
                                       "%s,%s" %(None, None)]
     	for i in range(len(map_frame_statusbar_fields)):
     	    self.statusbar.SetStatusText(map_frame_statusbar_fields[i], i)
@@ -587,7 +598,6 @@ class MapFrame(wx.Frame):
     	self.InitDisplay() # initialize region values
     	self.MapWindow = DrawWindow(self) # initialize buffered DC
     	self.MapWindow.Bind(wx.EVT_MOTION, self.OnMotion)
-
 
         #
         # Bind various events
@@ -659,7 +669,7 @@ class MapFrame(wx.Frame):
         #set active display tuple in track
         track.Track().SetDisp(self.disp_idx, self)
 
-       # change bookcontrol page to page associted with display if > 1 display
+        # change bookcontrol page to page associted with display if > 1 display
         pg = track.Track().GetCtrls(self.disp_idx, 1)
         pg_count = self.ctrlbk.GetPageCount()
         pgnum = '0'
@@ -720,7 +730,7 @@ class MapFrame(wx.Frame):
     	self.MapWindow.zoomtype = 1
         self.MapWindow.pen = wx.Pen(colour='Red', width=2, style=wx.SHORT_DASH)
 
-        # change the cursor
+       # change the cursor
         self.MapWindow.SetCursor (self.cursors["cross"])
 
     def OnZoomOut(self, event):
