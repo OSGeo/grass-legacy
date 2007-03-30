@@ -15,9 +15,9 @@ This document describes how the GRASS Project Steering Committee
 determines membership, and makes decisions on GRASS project issues.
 
 "The GRASS Project" is defined as the GPL-licenced GIS software known as the 
-Geographic Resources Analysis Support System, which at the time of this writing
-has code hosted in a CVS repository at Intevation GmbH, and a web and mailing
-list presence at http://grass.itc.it.
+Geographic Resources Analysis Support System, together with the surrounding 
+development, distribution and promotion infrastructure currently headquarted 
+at FBK-irst (formerly ITC), Trento, Italy.
 
 \section tor Terms of Reference
 
@@ -65,6 +65,9 @@ referred to the PSC for more structured efforts to build consensus.
 As a last resort, if lack of consensus continues, the developer  
 community can request the PSC to choose options best preserving the  
 quality of the GRASS project.
+
+Removal of write access to the source code repository is handled as a
+proposal to the committee as \link operation described below.
 
 \subsubsection legal Compliance with Legal Measures
 
