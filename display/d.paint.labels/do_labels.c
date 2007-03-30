@@ -140,14 +140,20 @@ do_labels (FILE *infile, int do_rotation)
 
 	else if (! strncmp(text, "tex", 3))
 		show_it() ;
-	
-	  
+
+
 	else
 	{
 		if (sscanf (text, "%1s", buff) == 1)
 		    fprintf(stderr,_("Error: %s\n"), text) ;
 	}
     }
+
+    /* Only check last entry so you don't get a zillion warnings. May *
+     *  miss some cases, but don't worry as it is only informational  */
+    if( xref != LEFT && yref != TOP && rotation != 0.0 )
+	G_warning("Currently the rotation option only works correctly "
+		  "for upper-left justified text.");
 
     return 0;
 }
