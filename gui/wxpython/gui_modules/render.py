@@ -1029,6 +1029,9 @@ class Map:
 
 		return self.overlays[-1]
 
+	def changeOverlayActive(self, type, activ):
+		overlay = self.overlays[type]
+		overlay.active = activ
 
 
 	def Clean(self):
