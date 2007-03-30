@@ -86,7 +86,7 @@ class Command(Thread):
                     cmd = list(line.strip().split())
                     action = cmd[0]
                     cmd = cmd[1:]
-                    
+
                     for kv in cmd:
                         if kv[0] == '-': # flag
                             dispcmd[kv[1:]] = True
@@ -112,8 +112,8 @@ class Command(Thread):
                                     mapset = None
                             else:
                                 dispcmd[key] = value
-                                
-                                    
+
+
                     if DEBUG:
                         print "Command.run(): ",
                         print "opacity=%d name=%s mapset=%s" % (opacity, name, mapset),
@@ -208,6 +208,16 @@ class BufferedWindow(wx.Window):
     	# platforms at initialization, but little harm done.
         #!!! self.OnSize(None)
 
+        # create a PseudoDC for map decorations like scales and legends
+        self.pdc = wx.PseudoDC()
+
+        self.Bind(wx.EVT_ERASE_BACKGROUND, lambda x:None)
+
+        # vars for handling mouse clicks
+        self.dragid = -1
+        self.lastpos = (0,0)
+
+
     def Draw(self, dc, img=None, dctype='image', coords='0,0'):
     	"""
         Just here as a place holder.
@@ -220,6 +230,12 @@ class BufferedWindow(wx.Window):
         All that is needed here is to draw the buffer to screen
         """
     	dc = wx.BufferedPaintDC(self, self._Buffer)
+
+        # pseudoDC for map decorations like scale and legend
+        rgn = self.GetUpdateRegion()
+        rgn.Offset(0,0)
+        r = rgn.GetBox()
+        self.pdc.DrawToDCClipped(dc,r)
 
     def OnSize(self, event):
     	"""
@@ -268,7 +284,7 @@ class BufferedWindow(wx.Window):
     	self._Buffer.SaveFile(FileName, FileType)
 
     def UpdateMap(self, img=None):
-    	"""
+        """
     	This would get called if the drawing needed to change, for whatever reason.
 
     	The idea here is that the drawing is based on some data generated
@@ -276,29 +292,31 @@ class BufferedWindow(wx.Window):
     	be updated.
 
     	"""
+
         if DEBUG:
             print "Buffered Window.UpdateMap(%s): render=%s" % (img, self.render)
 
-    	if self.render:
-    	    Map.width, Map.height = self.GetClientSize()
-    	    self.mapfile = Map.Render(force=self.render)
-    	    self.img = self.GetImage()
-    	    self.resize = False
-    	    if not self.img: return
+
+        if self.render:
+            Map.width, Map.height = self.GetClientSize()
+            self.mapfile = Map.Render(force=self.render)
+            self.Img = self.GetImage()
+            self.resize = False
+            if not self.Img: return
             self.ovlist = self.GetOverlay()
-    	    dc = wx.BufferedDC(wx.ClientDC(self), self._Buffer)
-    	    self.Draw(dc, self.img)
             if self.ovlist != []:
                 for overlay in self.ovlist:
-                    self.Draw(dc, overlay)
-    	else:
-    	    if not self.img: return
+                    self.DrawOvl(self.pdc, overlay)
+            dc = wx.BufferedDC(wx.ClientDC(self), self._Buffer)
+            self.Draw(dc, self.Img)
+        else:
+            if not self.Img: return
             self.ovlist = self.GetOverlay()
-    	    dc = wx.BufferedDC(wx.ClientDC(self), self._Buffer)
-    	    self.Draw(dc, self.img)
             if self.ovlist != []:
                 for overlay in self.ovlist:
-                    self.Draw(dc, overlay)
+                    self.DrawOvl(self.pdc, overlay)
+            dc = wx.BufferedDC(wx.ClientDC(self), self._Buffer)
+            self.Draw(dc, self.Img)
 
     	self.resize = False
 
@@ -329,7 +347,21 @@ class BufferedWindow(wx.Window):
     	dc.Clear()
     	self.dragimg.DoDrawImage(dc, moveto)
     	self.dragimg.EndDrag()
-    ##	self.dragimg.UpdateBackingFromWindow(dc, memdc, sourcerect,destrect)
+
+    def DragItem(self, lastpos, event):
+        x,y = lastpos
+        dx = event.GetX() - x
+        dy = event.GetY() - y
+        r = self.pdc.GetIdBounds(self.dragid)
+        self.pdc.TranslateId(self.dragid, dx, dy)
+        dc = wx.BufferedDC(wx.ClientDC(self), self._Buffer)
+        dc.SetBackground(wx.Brush(self.GetBackgroundColour()))
+        bitmap = wx.BitmapFromImage(self.Img)
+        dc.Clear() # make sure you clear the bitmap!
+        dc.DrawBitmap(bitmap, 0, 0, True) # draw the composite map
+        self.pdc.DrawToDC(dc)
+        self.RefreshRect(r, True)
+        self.lastpos = (event.GetX(),event.GetY())
 
     def MouseDraw(self):
     	"""
@@ -352,11 +384,12 @@ class BufferedWindow(wx.Window):
     	"""
     	Mouse motion and button click notifier
     	"""
-    	wheel = event.GetWheelRotation() # +- int
+        wheel = event.GetWheelRotation() # +- int
     	# left mouse button pressed
-    	if event.LeftDown():
+        hitradius = 5 # distance for selecting map decorations
+        if event.LeftDown():
     	    # start point of zoom box or drag
-    	    self.mouse['begin'] = event.GetPositionTuple()[:]
+            self.mouse['begin'] = event.GetPositionTuple()[:]
 
     	# left mouse button released and not just a pointer
         elif event.LeftUp():
@@ -366,27 +399,58 @@ class BufferedWindow(wx.Window):
 
                 # set region in zoom or pan
                 self.Zoom(self.mouse['begin'], self.mouse['end'], self.zoomtype)
+                # redraw map
+                self.render=True
+                self.UpdateMap()
 
-            else:
                 # digitizing
-                if self.parent.digittoolbar:
-                    if self.parent.digittoolbar.digitize == "point":
-                        east,north= self.Pixel2Cell(self.mouse['end'][0],self.mouse['end'][1])
-                        self.parent.digittoolbar.AddPoint(east,north)
-            # redraw map
-            self.render=True
-            self.UpdateMap()
+            elif self.parent.digittoolbar:
+                if self.parent.digittoolbar.digitize == "point":
+                    east,north= self.Pixel2Cell(self.mouse['end'][0],self.mouse['end'][1])
+                    self.parent.digittoolbar.AddPoint(east,north)
+                # redraw map
+                self.render=True
+                self.UpdateMap()
+            else:
+                self.dragid = -1
 
-    	# dragging or drawing box with left button
-    	elif event.Dragging() and event.LeftIsDown:
-    	    currpos = event.GetPositionTuple()[:]
-    	    end = (currpos[0]-self.mouse['begin'][0], \
-    		currpos[1]-self.mouse['begin'][1])
-    	    if self.mouse['box'] == 'drag':
-    		self.DragMap(end)
-    	    else:
-    		self.mouse['end'] = event.GetPositionTuple()[:]
-    		self.MouseDraw()
+        elif event.ButtonDClick():
+            x,y = event.GetPositionTuple()[:]
+            #l = self.pdc.FindObjectsByBBox(x, y)
+            l = self.pdc.FindObjects(x, y, hitradius)
+            if l:
+                self.pdc.SetIdGreyedOut(l[0], not self.pdc.GetIdGreyedOut(l[0]))
+                r = self.pdc.GetIdBounds(l[0])
+                r.Inflate(4,4)
+                r.OffsetXY(0,0)
+                self.RefreshRect(r, False)
+
+        elif  event.RightDown():
+            x,y = event.GetPositionTuple()[:]
+            #l = self.pdc.FindObjectsByBBox(x, y)
+            l = self.pdc.FindObjects(x, y, hitradius)
+            for id in l:
+                if not self.pdc.GetIdGreyedOut(id):
+                    self.dragid = id
+                    self.lastpos = (event.GetX(),event.GetY())
+                    break
+
+        elif event.Dragging():
+            currpos = event.GetPositionTuple()[:]
+            end = (currpos[0]-self.mouse['begin'][0], \
+                             currpos[1]-self.mouse['begin'][1])
+            # dragging or drawing box with left button
+            if event.LeftIsDown():
+                if self.mouse['box'] == 'drag':
+                    self.DragMap(end)
+                else:
+                    self.mouse['end'] = event.GetPositionTuple()[:]
+                    self.MouseDraw()
+
+            elif event.RightIsDown():
+                # dragging item with right button
+                if self.dragid != -1:
+                    self.DragItem(self.lastpos,event)
 
     	# zoom on mouse wheel
     	elif wheel != 0:
@@ -407,7 +471,9 @@ class BufferedWindow(wx.Window):
         if Map.ovlist:
              for ovlfile in Map.ovlist:
                  if os.path.isfile(ovlfile) and os.path.getsize(ovlfile):
-                     ovlist.append(wx.Image(ovlfile, wx.BITMAP_TYPE_ANY))
+                     img = wx.Image(ovlfile, wx.BITMAP_TYPE_ANY)
+                     img.ConvertAlphaToMask()
+                     ovlist.append(img)
 
         return ovlist
 
@@ -478,6 +544,66 @@ class BufferedWindow(wx.Window):
     	    Map.region['s'] = newreg['s']
     	    Map.region['e'] = newreg['e']
     	    Map.region['w'] = newreg['w']
+
+
+    def DrawOvl(self, pdc, data, pdctype='image', coords=[0, 0]):
+        """
+        Draws map decorations on top of map
+        """
+        pdc.BeginDrawing()
+#        pdc.SetBackground(wx.Brush(self.GetBackgroundColour()))
+#        pdc.Clear() # make sure you clear the bitmap!
+
+        if pdctype == 'clear': # erase the display
+            pdc.Clear()
+            pdc.EndDrawing()
+            return
+
+        if pdctype == 'image':
+            id = wx.NewId()
+            pdc.SetId(id)
+            bitmap = wx.BitmapFromImage(data)
+            w,h = bitmap.GetSize()
+            pdc.DrawBitmap(bitmap, coords[0], coords[1], True) # draw the composite map
+            pdc.SetIdBounds(id,wx.Rect(coords[0], coords[1], w, h))
+
+        elif pdctype == 'box': # draw a box on top of the map
+            pdc.SetBrush(wx.Brush(wx.CYAN, wx.TRANSPARENT))
+            pdc.SetPen(self.pen)
+            pdc.DrawRectangle(coords[0],coords[1],coords[2]-coords[0],coords[2]-coords[1])
+            r = wx.Rect(coords[0],coords[1],coords[2]-coords[0],coords[2]-coords[1])
+            r.Inflate(pen.GetWidth(),pen.GetWidth())
+            pdc.SetIdBounds(id,r)
+
+        elif pdctype == 'line': # draw a line on top of the map
+            pdc.SetBrush(wx.Brush(wx.CYAN, wx.TRANSPARENT))
+            pdc.SetPen(self.pen)
+            dc.DrawLine(coords[0], coords[1], coords[2], coords[3])
+            r = wx.Rect(coords[0],coords[1],coords[2]-coords[0],coords[2]-coords[1])
+            r.Inflate(pen.GetWidth(),pen.GetWidth())
+            pdc.SetIdBounds(id,r)
+
+        elif pdctype == 'point': #draw point
+            pen = self.RandomPen()
+            pdc.SetPen(pen)
+            pdc.DrawPoint(coords[0], coords[1])
+            r = wx.Rect(coords[0], coords[1], 1, 1)
+            r.Inflate(pen.GetWidth(),pen.GetWidth())
+            pdc.SetIdBounds(id,r)
+
+        elif pdctype == 'text': # draw text on top of map
+            text = data
+            w,h = self.GetFullTextExtent(text)[0:2]
+            pdc.SetFont(self.GetFont())
+            pdc.SetTextForeground(self.RandomColor())
+            pdc.SetTextBackground(self.RandomColor())
+            pdc.DrawText(text, coords[0], coords[1])
+            r = wx.Rect(coords[0], coords[1], w, h)
+            r.Inflate(2,2)
+            pdc.SetIdBounds(id, r)
+
+        pdc.EndDrawing()
+
 
 class DrawWindow(BufferedWindow):
     """
@@ -592,6 +718,7 @@ class MapFrame(wx.Frame):
         Map.addOverlay(type=0, command='', l_active=False, l_render=True)
         Map.addOverlay(type=1, command='', l_active=False, l_render=True)
 
+
         #
     	# Init map display
         #
@@ -682,10 +809,10 @@ class MapFrame(wx.Frame):
         self.ctrlbk.SetSelection(pgnum)
         event.Skip()
 
-    def SetDcommandList(self, clst):
-        self.MapWindow.dcmd_list = clst
-        self.MapWindow.ProcessDcommand()
-        self.MapWindow.UpdateMap()
+#    def SetDcommandList(self, clst):
+#        self.MapWindow.dcmd_list = clst
+#        self.MapWindow.ProcessDcommand()
+#        self.MapWindow.UpdateMap()
 
     def OnMotion(self, event):
         """
@@ -708,11 +835,11 @@ class MapFrame(wx.Frame):
         """
         self.MapWindow.UpdateMap()
 
-    def ReDrawCommand(self):
-        """
-        d.* command on command line and enter pressed.
-        """
-        self.MapWindow.UpdateMap()
+#    def ReDrawCommand(self):
+#        """
+#        d.* command on command line and enter pressed.
+#        """
+#        self.MapWindow.UpdateMap()
 
     def Pointer(self, event):
         """Pointer button clicled"""
@@ -785,10 +912,10 @@ class MapFrame(wx.Frame):
         self.decmenu = wx.Menu()
         # Add items to the menu
         self.addscale = wx.MenuItem(self.decmenu, -1,'Add scalebar and north arrow')
-#        bmp = wx.Image(os.path.join(icons,'module-d.barscale.gif'), wx.BITMAP_TYPE_GIF)
-#        bmp.Rescale(16, 16)
-#        bmp = bmp.ConvertToBitmap()
-        self.addscale.SetBitmap(self.bmpscale)
+        bmp = wx.Image(os.path.join(icons,'module-d.barscale.gif'), wx.BITMAP_TYPE_GIF)
+        bmp.Rescale(16, 16)
+        bmp = bmp.ConvertToBitmap()
+        self.addscale.SetBitmap(bmp)
         self.decmenu.AppendItem(self.addscale)
         self.Bind(wx.EVT_MENU, self.addBarscale, self.addscale)
 
@@ -800,14 +927,38 @@ class MapFrame(wx.Frame):
     def addBarscale(self, event):
         self.params = []
         layer = 0
-        if self.ovlchk == True:
-            self.ovlchk = False
-            self.bmpscale = wx.ArtProvider.GetBitmap(wx.ART_CROSS_MARK, wx.ART_OTHER, (16,16))
+        DecDialog(self, wx.ID_ANY, 'Scale and arrow')
+
+        dlg = DecDialog(self, wx.ID_ANY, 'Scale and North arrow', size=(350, 200),
+                         style=wx.DEFAULT_DIALOG_STYLE,
+                         togletxt = "Show/hide scale and arrow",
+                         ctrltxt = "scale object")
+
+        dlg.CenterOnScreen()
+
+        # this does not return until the dialog is closed.
+        val = dlg.ShowModal()
+
+        if val == wx.ID_OK:
+            print "You pressed OK"
+            ovlist = self.MapWindow.GetOverlay()
+            if ovlist != []:
+                for overlay in ovlist:
+                    self.MapWindow.DrawOvl(self.MapWindow.pdc, overlay)
         else:
-            self.ovlchk = True
-            self.bmpscale = wx.ArtProvider.GetBitmap(wx.ART_TICK_MARK, wx.ART_OTHER, (16,16))
-        menuform.GUI().parseCommand('d.barscale', gmpath, completed=(self.getOptData,layer,self.params), parentframe=None)
-        pass
+            print "You pressed Cancel"
+
+        dlg.Destroy()
+
+
+#        if self.ovlchk == True:
+#            self.ovlchk = False
+#            self.bmpscale = wx.ArtProvider.GetBitmap(wx.ART_CROSS_MARK, wx.ART_OTHER, (16,16))
+#        else:
+#            self.ovlchk = True
+#            self.bmpscale = wx.ArtProvider.GetBitmap(wx.ART_TICK_MARK, wx.ART_OTHER, (16,16))
+#        menuform.GUI().parseCommand('d.barscale', gmpath, completed=(self.getOptData,layer,self.params), parentframe=None)
+#        pass
 
     def addGrid(self, event):
         self.params = []
@@ -880,6 +1031,67 @@ class MapFrame(wx.Frame):
 
 # end of class MapFrame
 
+class DecDialog(wx.Dialog):
+    def __init__(self, parent, id, title, pos=wx.DefaultPosition, size=wx.DefaultSize,
+            style=wx.DEFAULT_DIALOG_STYLE, togletxt='', ctrltxt=''):
+        wx.Dialog.__init__(self, parent, id, title, pos, size, style)
+
+        sizer = wx.BoxSizer(wx.VERTICAL)
+
+        box = wx.BoxSizer(wx.HORIZONTAL)
+        chkbox = wx.CheckBox(self, wx.ID_ANY, togletxt )
+        box.Add(chkbox, 0, wx.ALIGN_CENTRE|wx.ALL, 5)
+        sizer.Add(box, 0, wx.GROW|wx.ALIGN_CENTER_VERTICAL|wx.ALL, 5)
+
+        box = wx.BoxSizer(wx.HORIZONTAL)
+        optnbtn = wx.Button(self, wx.ID_ANY, "Set options")
+        box.Add(optnbtn, 0, wx.ALIGN_CENTRE|wx.ALL, 5)
+        sizer.Add(box, 0, wx.GROW|wx.ALIGN_CENTER_VERTICAL|wx.ALL, 5)
+
+        box = wx.BoxSizer(wx.HORIZONTAL)
+        label = wx.StaticText(self, -1, ("Double-click %s and drag with mouse to position" % ctrltxt))
+        box.Add(label, 0, wx.ALIGN_CENTRE|wx.ALL, 5)
+        sizer.Add(box, 0, wx.GROW|wx.ALIGN_CENTER_VERTICAL|wx.ALL, 5)
+
+        line = wx.StaticLine(self, -1, size=(20,-1), style=wx.LI_HORIZONTAL)
+        sizer.Add(line, 0, wx.GROW|wx.ALIGN_CENTER_VERTICAL|wx.RIGHT|wx.TOP, 5)
+
+        btnsizer = wx.StdDialogButtonSizer()
+
+#        if wx.Platform != "__WXMSW__":
+#            btn = wx.ContextHelpButton(self)
+#            btnsizer.AddButton(btn)
+
+        btn = wx.Button(self, wx.ID_OK)
+        btn.SetHelpText("The OK button completes the dialog")
+        btn.SetDefault()
+        btnsizer.AddButton(btn)
+
+        btn = wx.Button(self, wx.ID_CANCEL)
+        btn.SetHelpText("The Cancel button cnacels the dialog.")
+        btnsizer.AddButton(btn)
+        btnsizer.Realize()
+
+        sizer.Add(btnsizer, 0, wx.ALIGN_CENTER_VERTICAL|wx.ALL, 5)
+
+        self.SetSizer(sizer)
+        sizer.Fit(self)
+
+        self.Bind(wx.EVT_CHECKBOX, self.onToggle, chkbox)
+        self.Bind(wx.EVT_BUTTON, self.onOptions, optnbtn)
+
+
+    def onToggle(self, event):
+        check = event.IsChecked()
+        Map.changeOverlayActive(0, check)
+
+    def onOptions(self, event):
+        self.params = []
+        layer = 0
+        menuform.GUI().parseCommand('d.barscale', gmpath,
+                                    completed=(self.Parent.getOptData,layer,self.params),
+                                    parentframe=None)
+
 class MapApp(wx.App):
     """
     MapApp class
@@ -915,8 +1127,6 @@ class MapApp(wx.App):
             self.mapFrm.ReDraw(None)
         self.redraw = False
         return
-
-
 # end of class MapApp
 
 if __name__ == "__main__":
