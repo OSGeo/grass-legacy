@@ -14,7 +14,7 @@ Classes:
 * MapApp
 """
 
-DEBUG = True
+DEBUG = False
 
 # Authors: Michael Barton and Jachym Cepicky
 # COPYRIGHT:	(C) 1999 - 2006 by the GRASS Development Team
@@ -304,9 +304,11 @@ class BufferedWindow(wx.Window):
             self.resize = False
             if not self.img: return
             self.ovlist = self.GetOverlay()
+            # redraw decorations on resize event
+            self.DrawOvl(self.pdc, data=None, pdctype='clear')
             if self.ovlist != []:
                 for overlay in self.ovlist:
-                    self.DrawOvl(self.pdc, overlay)
+                    self.DrawOvl(self.pdc, data=overlay, pdctype='image')
             dc = wx.BufferedDC(wx.ClientDC(self), self._Buffer)
             self.Draw(dc, self.img)
         else:
@@ -925,12 +927,11 @@ class MapFrame(wx.Frame):
         self.decmenu.Destroy()
 
     def addBarscale(self, event):
-        self.params = []
-        layer = 0
         DecDialog(self, wx.ID_ANY, 'Scale and arrow')
 
         dlg = DecDialog(self, wx.ID_ANY, 'Scale and North arrow', size=(350, 200),
                          style=wx.DEFAULT_DIALOG_STYLE,
+                         type=0,
                          togletxt = "Show/hide scale and arrow",
                          ctrltxt = "scale object")
 
@@ -940,25 +941,13 @@ class MapFrame(wx.Frame):
         val = dlg.ShowModal()
 
         if val == wx.ID_OK:
-            print "You pressed OK"
             ovlist = self.MapWindow.GetOverlay()
             if ovlist != []:
+                self.MapWindow.DrawOvl(self.MapWindow.pdc, data=None, pdctype='clear')
                 for overlay in ovlist:
                     self.MapWindow.DrawOvl(self.MapWindow.pdc, overlay)
-        else:
-            print "You pressed Cancel"
 
         dlg.Destroy()
-
-
-#        if self.ovlchk == True:
-#            self.ovlchk = False
-#            self.bmpscale = wx.ArtProvider.GetBitmap(wx.ART_CROSS_MARK, wx.ART_OTHER, (16,16))
-#        else:
-#            self.ovlchk = True
-#            self.bmpscale = wx.ArtProvider.GetBitmap(wx.ART_TICK_MARK, wx.ART_OTHER, (16,16))
-#        menuform.GUI().parseCommand('d.barscale', gmpath, completed=(self.getOptData,layer,self.params), parentframe=None)
-#        pass
 
     def addGrid(self, event):
         self.params = []
@@ -973,9 +962,9 @@ class MapFrame(wx.Frame):
 
         pass
 
-    def getOptData(self, dcmd, layer):
+    def getOptData(self, dcmd, type):
 
-        Map.changeOverlay(type=layer, command=dcmd, l_active=self.ovlchk, l_render=False)
+        Map.changeOverlay(type=type, command=dcmd, l_active=self.ovlchk, l_render=False)
 
     def OnAlignRegion(self, event):
         """
@@ -1033,14 +1022,17 @@ class MapFrame(wx.Frame):
 
 class DecDialog(wx.Dialog):
     def __init__(self, parent, id, title, pos=wx.DefaultPosition, size=wx.DefaultSize,
-            style=wx.DEFAULT_DIALOG_STYLE, togletxt='', ctrltxt=''):
+            style=wx.DEFAULT_DIALOG_STYLE, type=None, togletxt='', ctrltxt=''):
         wx.Dialog.__init__(self, parent, id, title, pos, size, style)
 
+        self.check = {} #tracks toggling of decorations
+        self.type = type
         sizer = wx.BoxSizer(wx.VERTICAL)
 
         box = wx.BoxSizer(wx.HORIZONTAL)
-        chkbox = wx.CheckBox(self, wx.ID_ANY, togletxt )
-        box.Add(chkbox, 0, wx.ALIGN_CENTRE|wx.ALL, 5)
+        self.chkbox = wx.CheckBox(self, wx.ID_ANY, togletxt )
+        if self.type in self.check: self.chkbox.SetValue(self.check[self.type])
+        box.Add(self.chkbox, 0, wx.ALIGN_CENTRE|wx.ALL, 5)
         sizer.Add(box, 0, wx.GROW|wx.ALIGN_CENTER_VERTICAL|wx.ALL, 5)
 
         box = wx.BoxSizer(wx.HORIZONTAL)
@@ -1058,10 +1050,6 @@ class DecDialog(wx.Dialog):
 
         btnsizer = wx.StdDialogButtonSizer()
 
-#        if wx.Platform != "__WXMSW__":
-#            btn = wx.ContextHelpButton(self)
-#            btnsizer.AddButton(btn)
-
         btn = wx.Button(self, wx.ID_OK)
         btn.SetHelpText("The OK button completes the dialog")
         btn.SetDefault()
@@ -1077,19 +1065,21 @@ class DecDialog(wx.Dialog):
         self.SetSizer(sizer)
         sizer.Fit(self)
 
-        self.Bind(wx.EVT_CHECKBOX, self.onToggle, chkbox)
+        self.Bind(wx.EVT_CHECKBOX, self.onToggle, self.chkbox)
         self.Bind(wx.EVT_BUTTON, self.onOptions, optnbtn)
 
 
     def onToggle(self, event):
         check = event.IsChecked()
         Map.changeOverlayActive(0, check)
+        self.Parent.ovlchk = check
+        self.check[self.type] = check
+        self.chkbox.SetValue(self.check[self.type])
 
     def onOptions(self, event):
-        self.params = []
-        layer = 0
+        self.params = [] # parameters to insert into dialog (not working)
         menuform.GUI().parseCommand('d.barscale', gmpath,
-                                    completed=(self.Parent.getOptData,layer,self.params),
+                                    completed=(self.Parent.getOptData,self.type,self.params),
                                     parentframe=None)
 
 class MapApp(wx.App):
