@@ -92,3 +92,24 @@
     RASTERMASK
   grestore
 } bind def
+/POLYGONSTART {
+  newpath
+  moveto
+} bind def
+/POLYGONVERTEX {
+  lineto
+} bind def
+/POLYGONEND {
+  closepath
+  eofill
+} bind def
+/POLYLINESTART {
+  newpath
+  moveto
+} bind def
+/POLYLINEVERTEX {
+  lineto
+} bind def
+/POLYLINEEND {
+  stroke
+} bind def

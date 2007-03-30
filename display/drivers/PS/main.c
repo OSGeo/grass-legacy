@@ -22,9 +22,9 @@ int main(int argc, char **argv)
 	drv.Panel_delete	= NULL;
 	drv.Polydots_abs	= NULL;
 	drv.Polydots_rel	= NULL;
-	drv.Polyline_abs	= NULL;
+	drv.Polyline_abs	= PS_Polyline_abs;
 	drv.Polyline_rel	= NULL;
-	drv.Polygon_abs		= NULL;
+	drv.Polygon_abs		= PS_Polygon_abs;
 	drv.Polygon_rel		= NULL;
 	drv.RGB_raster		= PS_RGB_raster;
 	drv.Begin_scaled_raster	= PS_begin_scaled_raster;
