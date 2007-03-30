@@ -10,7 +10,7 @@
 #% required: yes
 #% multiple: no
 #% label: Command to be performed
-#% description: Example: "d.rast elevation.dem catlist=1000-1500 -i"
+#% description: Example: "d.rast map=elevation.dem@PERMANENT catlist=1300-1400 -i"
 #%end
 #%option
 #% key: opacity

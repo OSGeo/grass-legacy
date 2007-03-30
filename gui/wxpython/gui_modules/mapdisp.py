@@ -90,7 +90,13 @@ class Command(Thread):
                         if kv[0] == '-': # flag
                             dispcmd[kv[1:]] = True
                         else: # option
-                            key,value = kv.split('=')
+                            try:
+                                key,value = kv.split('=')
+                            except:
+                                # fisrt option
+                                key = "map"
+                                value = kv
+
                             if key == "opacity":
                                 try:
                                     # opacity in [%]
@@ -104,7 +110,8 @@ class Command(Thread):
                                     name = value
                                     mapset = None
                             else:
-                                    dispcmd[key] = value
+                                dispcmd[key] = value
+                                
                                     
                     if DEBUG:
                         print "Command.run(): ",

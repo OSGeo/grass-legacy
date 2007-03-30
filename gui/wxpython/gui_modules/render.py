@@ -573,7 +573,8 @@ class Map:
 		os.environ["GRASS_HEIGHT"] = str(self.height)
 
 		if DEBUG:
-			print ("mapimg.py: Map: Render: force=%s" % (force))
+			print ("Map.Render() force=%s" % (force))
+
 		try:
 			# render overlays
 			self.ovlist = []
