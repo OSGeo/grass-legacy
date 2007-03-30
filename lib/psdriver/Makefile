@@ -21,6 +21,8 @@ LIB_OBJS =	\
 	Graph_close.o		\
 	Graph_set.o		\
 	Line_width.o		\
+	Polygon.o		\
+	Polyline.o		\
 	Raster_RGB.o		\
 	Respond.o		\
 	Scale.o
