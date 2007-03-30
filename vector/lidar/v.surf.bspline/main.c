@@ -289,7 +289,7 @@ main (int argc,char *argv[])
 	if (cross != TRUE)
 	    G_fatal_error (_("Cross validation didn't finish correctly"));
 	else { 
-	    G_debug (0, _("Cross validation finished correctly"));
+	    G_debug (1, _("Cross validation finished correctly"));
 
 	    Vect_close (&In);
 	    if (ext != FALSE) Vect_close (&In_ext);
@@ -589,7 +589,7 @@ main (int argc,char *argv[])
 	    /* Dropping auxiliar table */
 	    G_debug (1, _("%s: Dropping <s>"), argv[0], table_name);
 	    if (P_Drop_Aux_Table (driver, table_name) != DB_OK)
-		G_fatal_error(_("%s: Dropping: Auxiliar Table could not be drop"), argv[0]);
+		G_fatal_error(_("%s: Dropping: Auxiliar Table could not be dropped"), argv[0]);
 	}
 	else {
 	    P_Aux_to_Raster (raster_matrix, raster);
