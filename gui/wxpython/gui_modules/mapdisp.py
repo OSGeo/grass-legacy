@@ -13,6 +13,7 @@ Classes:
 * MapApp
 """
 
+DEBUG = True
 
 # Authors: Michael Barton and Jachym Cepicky
 # COPYRIGHT:	(C) 1999 - 2006 by the GRASS Development Team
@@ -45,7 +46,6 @@ else:
     icons = os.environ["GRASS_ICONPATH"]
 
 Map = render.Map() # instance of Map class to render GRASS display output to PPM file
-DEBUG = False
 
 # for cmdlinef
 cmdfilename = None
@@ -77,33 +77,53 @@ class Command(Thread):
 
             if line:
                 try:
-                    #oper, lname, mapset, catlist, vallist, invert, opacity
-                    # 0     1       2       3       4          5        6
-                    dispcmd = list(line.strip().split())
-                    #print dispcmd
-                    if dispcmd[0]=="addraster":
-                        try: mapset = eval(dispcmd[2])
-                        except: pass
-                        try: catlist = eval(dispcmd[3])
-                        except: pass
-                        try: vallist = eval(dispcmd[4])
-                        except: pass
-                        try: invert = eval(dispcmd[5])
-                        except: pass
-                        opacity = float(dispcmd[6])
+                    dispcmd = {}
+                    name = None
+                    mapset = None
+                    opacity = 1
 
-                        print "# %s" % dispcmd[3]
+                    cmd = list(line.strip().split())
+                    action = cmd[0]
+                    cmd = cmd[1:]
+                    
+                    for kv in cmd:
+                        if kv[0] == '-': # flag
+                            dispcmd[kv[1:]] = True
+                        else: # option
+                            key,value = kv.split('=')
+                            if key == "opacity":
+                                try:
+                                    # opacity in [%]
+                                    opacity = int (value) / 100.
+                                except:
+                                    pass
+                            elif key == "map":
+                                try:
+                                    name,mapset = value.split('@')
+                                except:
+                                    name = value
+                                    mapset = None
+                            else:
+                                    dispcmd[key] = value
+                                    
+                    if DEBUG:
+                        print "Command.run(): ",
+                        print "opacity=%d name=%s mapset=%s" % (opacity, name, mapset),
+                        print dispcmd
 
-                        self.map.AddRasterLayer(name="%s" % (dispcmd[1]),
-                                                mapset=dispcmd[2],
-                                                catlist=1,
-                                                vallist=vallist,
-                                                l_opacity=opacity)
+                    if action == "d.rast":
+                        self.map.AddRasterLayer(name=name,
+                                                mapset=mapset,
+                                                l_opacity=opacity,
+                                                dispcmd=dispcmd)
+                    elif action == "d.vect":
+                        self.map.AddVectorLayer(name=name,
+                                                mapset=mapset,
+                                                l_opacity=opacity,
+                                                dispcmd=dispcmd)
 
-                    if dispcmd[0]=="addvector":
-                        self.map.AddVectorLayer(name="%s" % (dispcmd[1]),
-                                        mapset=dispcmd[2])
                     self.parent.redraw =True
+
                 except Exception, e:
                     print "Command Thread: ",e
                     pass

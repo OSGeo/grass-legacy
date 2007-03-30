@@ -11,7 +11,7 @@ import utils
 #
 # COPYRIGHT:(C) 1999 - 2007 by the GRASS Development Team
 
-DEBUG = False
+DEBUG = True
 
 class GRASSLayer:
 	"""
@@ -45,7 +45,7 @@ class MapLayer:
 
 	def __init__(self, type, name, mapset,
 		     active, hidden, opacity,
-		     **parameters):
+		     dispcmd={}):
 		self.name   = name
 		self.mapset = mapset
 
@@ -54,7 +54,12 @@ class MapLayer:
 		self.hidden  = hidden
 		self.opacity = opacity
 
-		self.grassLayer = GRASSLayer(parameters)
+		self.grassLayer = GRASSLayer(dispcmd)
+
+		if DEBUG:
+			print "MapLayer.__init__(): name=%s, mapset=%s, opacity=%d" % \
+			    (name, mapset, opacity),
+			print dispcmd
 
 		gtemp = utils.GetTempfile()
 		self.maskfile = gtemp + ".pgm"
@@ -69,16 +74,16 @@ class MapLayer:
 		try:
 			self.cmd = "d.rast -o map=%s@%s" % (self.name, self.mapset)
 
-			for key in self.grassLayer.params.keys():
-				value = self.grassLayer.params[key]
+			for key,value in self.grassLayer.params.iteritems():
+				if type(value) == type(""):
+					self.cmd += " %s=%s" % \
+					    (key, value)
+				else:
+					self.cmd += " -%s" % key
 
-				if self.grassLayer.params[key]:
-					##FIXME: test data type not strlen
-					if type(value) == type(""):
-						self.cmd += " %s=%s" % \
-						    (key, value)
-					else:
-						self.cmd += " -%s" % key
+			if DEBUG:
+				print "MapLayer.__renderRasterLayer():",
+				print self.cmd
 
 		except StandardError, e:
 			sys.stderr.write("Could not render raster layer <%s>: %s\n" %\
@@ -93,14 +98,16 @@ class MapLayer:
 		try:
 			self.cmd = "d.vect map=%s@%s" % (self.name, self.mapset)
 
-			for key in self.grassLayer.params:
-				if self.grassLayer.params[key]:
-					##FIXME: test data type not strlen
-					if len(key) > 1:
-						self.cmd += " %s=%s" % \
-						    (key, self.grassLayer.params[key])
-					else:
-						self.cmd += " -%s" % key
+			for key,value in self.grassLayer.params.iteritems():
+				if type(value) == type(""):
+					self.cmd += " %s=%s" % \
+					    (key, value)
+				else:
+					self.cmd += " -%s" % key
+
+			if DEBUG:
+				print "MapLayer.__renderVectorLayer():",
+				print self.cmd
 
 		except StandardError, e:
 			sys.stderr.write("Could not render vector layer <%s>: %s\n" %\
@@ -639,18 +646,16 @@ class Map:
 				os.environ["GRASS_REGION"] = tmp_region
 			return None
 
-	def AddRasterLayer(self, name, mapset=None, catlist=None,
-		vallist=None, invertCats=False, l_active=True, l_hidden=False,
-		l_opacity=1, l_render=False):
+	def AddRasterLayer(self, name, mapset=None,
+			   dispcmd = {},
+			   l_active=True, l_hidden=False, l_opacity=1, l_render=False):
 		"""
 		Adds raster layer to list of layers
 
 		Layer Attributes:
 			name	   - raster layer name
 			mapset	   - mapset name, default: current
-			catlist    - list of categories
-			vallist    - list of values
-			invertCats - invert catlist, True/False
+			dicpcmd    - display parameters (catlist, vallist, -i, etc.)
 
 			l_active   - see MapLayer class
 			l_hidden
@@ -669,11 +674,9 @@ class Map:
 		if l_opacity < 0: l_opacity = 0
 		elif l_opacity > 1: l_opacity = 1
 
-		layer = MapLayer("raster", name, mapset,
-				 l_active, l_hidden, l_opacity,
-				 catlist    = catlist,
-				 vallist    = vallist,
-				 i          = invertCats)
+		layer = MapLayer(type="raster", name=name, mapset=mapset,
+				 active=l_active, hidden=l_hidden, opacity=l_opacity,
+				 dispcmd=dispcmd)
 
 		# add maplayer to the list of layers
 		self.layers.append(layer)
@@ -726,51 +729,17 @@ class Map:
             return self.layers[-1]
 
 	def AddVectorLayer(self, name, mapset=None,
-		type = "point,line,boundary,centroid,area,face",
-		display= "shape", attrcol= None, icon = "basic/circle",
-		size = 8, layer = 1, cats = None, where = None, width = 1,
-		wcolumn = None, wscale = 1, color = "000:000:000",
-		fcolor = "200:200:200", rgb_column = "GRASSRGB", llayer = 1,
-		lcolor = "256:000:000", bgcolor = None, bcolor = None,
-		lsize = 8, font = None, xref = "left", yref = "center",
-		minreg = None, maxreg = None, colorfromtable=False,
-		randomcolor=False, catsasid=False, l_active=True,
-		l_hidden=False, l_opacity=1, l_render=False):
+			   dispcmd={},
+			   l_active=True, l_hidden=False, l_opacity=1, l_render=False):
             """
             Adds vector layer to list of layers
 
             Layer attributes:
                     name	- raster layer name
                     mapset	- mapset name, default: current
-                    type	- feature type
-                    display     - display
-                    attrcol     - name of column to be displayed
-                    icon	- point and centroid symbol
-                    size	- symbol size
-                    layer	- layer number
-                    cats	- category values
-                    where	- WHERE conditions of SQL statement
-                    width	- line width
-                    wcolumn     - name of column for line widths
-                    wscale	- scale factor for wcolumn
-                    color	- line color
-                    fcolor	- area fill color
-                    rgb_column  - name of color definition column
-                    llayer	- layer number
-                    lcolor	- label color
-                    bgcolor     - lable border color
-                    lsize	- label size
-                    font	- font name
-                    xref	- label horizontal justification, default: left
-                    yref	- label horizontal justification, default: center
-                    minreg	- minimum region size when map is displayed
-                    maxreg	- maximum region size when map is displayed
+                    dispcmd     - see d.vect
 
-                    colorfromtable - get colors from map table column
-                    randomcolor    - random colors according to category number
-                    catsasid       - use values from 'cats' option as line id
-
-                    l_active  - see MapLayer class
+		    l_active  - see MapLayer class
                     l_hidden
                     l_opacity
                     l_render  - render an image
@@ -786,35 +755,9 @@ class Map:
 	    if l_opacity < 0: l_opacity = 0
 	    elif l_opacity > 1: l_opacity = 1
 
-
-            maplayer = MapLayer("vector", name, mapset,
-				l_active, l_hidden, l_opacity,
-				display = display,
-				attrcol = attrcol,
-				icon = icon,
-				size = size,
-				layer = layer,
-				cats = cats,
-				where = where,
-				width = width,
-				wcolumn = wcolumn,
-				wscale = wscale,
-				color = color,
-				fcolor = fcolor,
-				rgb_column = rgb_column,
-				llayer = llayer,
-				lcolor = lcolor,
-				bgcolor = bgcolor,
-				bcolor = bcolor,
-				lsize = lsize,
-				font = font,
-				xref = xref,
-				yref = yref,
-				minreg = minreg,
-				maxreg = maxreg,
-				colorfromtable = colorfromtable,
-				randomcolor = randomcolor,
-				catsasid = catsasid)
+            maplayer = MapLayer(type="vector", name=name, mapset=mapset,
+				dispcmd=dispcmd,
+				active=l_active, hidden=l_hidden, opacity=l_opacity)
 
 	    self.layers.append(maplayer)
 
@@ -1056,8 +999,8 @@ class Map:
 
 		"""
 
-		overlay = MapLayer("overlay", command, mapset,
-				 l_active, l_hidden, l_opacity)
+		overlay = MapLayer(type="overlay", name=command, mapset=mapset,
+				   active=l_active, hidden=l_hidden, opacity=l_opacity)
 
 
 		# add maplayer to the list of layers
