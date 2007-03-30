@@ -1,7 +1,7 @@
 #!/bin/sh
 
 #%module
-#% description: Wrapper for display commands and px monitors
+#% description: Wrapper for display commands and pX monitors
 #% keywords: display
 #%end
 #%option
@@ -10,15 +10,15 @@
 #% required: yes
 #% multiple: no
 #% label: Command to be performed
-#% description: Example: d.rast elevation.dem catlist=1000-1500
+#% description: Example: "d.rast elevation.dem catlist=1000-1500 -i"
 #%end
 #%option
 #% key: opacity
 #% type: string
 #% required: no
 #% multiple: no
-#% key_desc: val[-val]
-#% description: Set opacity between 0-100%
+#% key_desc: val
+#% description: Opacity level in percentage
 #% answer: 100
 #%end
 
@@ -42,8 +42,8 @@ fi
 
 cmd="${GIS_OPT_CMD}"
 
-echo "p.cmd: ${cmd}"
-echo ${cmd} >>${cmdfile}
+g.message -d message="$0: ${cmd}"
+
+echo ${cmd} >> ${cmdfile}
 
 exit 0
-
