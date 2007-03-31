@@ -6,6 +6,7 @@
 #include <grass/gis.h>
 #include <grass/site.h>
 #include <grass/bitmap.h>
+#include <grass/glocale.h>
 #include <grass/linkm.h>
 
 #include <grass/waterglobs.h>
@@ -154,64 +155,64 @@ fclose(fdsfile);
    printf("Running MAY 10 version\n");
 
   if((mapset=G_find_cell(elevin,""))==NULL)
-  printf("cell file not found\n");
+  G_fatal_error(_("Raster map [%s] not found"), elevin);
 
   fd1 = G_open_cell_old(elevin,mapset);
 
   if((mapset=G_find_cell(dxin,""))==NULL)
-  printf("cell file not found\n");
+  G_fatal_error(_("Raster map [%s] not found"), dxin);
 
   fd2 = G_open_cell_old(dxin,mapset);
 
   if((mapset=G_find_cell(dyin,""))==NULL)
-  printf("cell file not found\n");
+  G_fatal_error(_("Raster map [%s] not found"), dyin);
 
   fd3 = G_open_cell_old(dyin,mapset);
 
   if((mapset=G_find_cell(manin,""))==NULL)
-  printf("cell file not found\n");
+  G_fatal_error(_("Raster map [%s] not found"), manin);
 
   fd5 = G_open_cell_old(manin,mapset);
 
   if(rain != NULL){
 	  if((mapset=G_find_cell(rain,""))==NULL)
-	  printf("cell file not found\n");
+	  G_fatal_error(_("Raster map [%s] not found"), rain);
 	  fd4 = G_open_cell_old(rain,mapset);
   }
 
   if(infil != NULL){
           if((mapset=G_find_cell(infil,""))==NULL)
-          printf("cell file not found\n");
+          G_fatal_error(_("Raster map [%s] not found"), infil);
           fd4a = G_open_cell_old(infil,mapset);
   }
 
   if(traps != NULL){
           if((mapset=G_find_cell(traps,""))==NULL)
-          printf("cell file not found\n");
+          G_fatal_error(_("Raster map [%s] not found"), traps);
           fd4b = G_open_cell_old(traps,mapset);
   }
 
   if(detin != NULL){
           if((mapset=G_find_cell(detin,""))==NULL)
-          printf("cell file not found\n");
+          G_fatal_error(_("Raster map [%s] not found"), detin);
           fd9 = G_open_cell_old(detin,mapset);
   }
 
   if(tranin != NULL){
           if((mapset=G_find_cell(tranin,""))==NULL)
-          printf("cell file not found\n");
+          G_fatal_error(_("Raster map [%s] not found"), tranin);
           fd10 = G_open_cell_old(tranin,mapset);
   }
 
   if(tauin != NULL){
           if((mapset=G_find_cell(tauin,""))==NULL)
-          printf("cell file not found\n");
+          G_fatal_error(_("Raster map [%s] not found"), tauin);
           fd11 = G_open_cell_old(tauin,mapset);
   }
 
   if(wdepth != NULL){
           if((mapset=G_find_cell(wdepth,""))==NULL)
-          printf("cell file not found\n");
+          G_fatal_error(_("Raster map [%s] not found"), wdepth);
           fd12 = G_open_cell_old(wdepth,mapset);
   }
 
