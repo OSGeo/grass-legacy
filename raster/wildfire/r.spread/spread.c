@@ -70,10 +70,8 @@ spread (void)
         G_message("Finding spread time - number of cells visited in percentage ...  %3d%%", 0);
 	pres_cell = (struct costHa *) G_malloc (sizeof(struct costHa));
 	get_minHa(heap, pres_cell, heap_len);
-#ifdef DEBUG
-printf("\nbegin spread: cost(%d,%d)=%f",pres_cell->row, pres_cell->col, pres_cell->min_cost);
-printf("\n              heap_len=%d pres_cell->min_cost=%f time_lag=%d", heap_len, pres_cell->min_cost, time_lag);
-#endif
+	G_debug(2, "begin spread: cost(%d,%d)=%f",pres_cell->row, pres_cell->col, pres_cell->min_cost);
+	G_debug(2, "              heap_len=%d pres_cell->min_cost=%f time_lag=%d", heap_len, pres_cell->min_cost, time_lag);
 	while ( heap_len-- > 0 && pres_cell->min_cost < init_time + time_lag + 1.0 ) {
 		ros_max = DATA(map_max, pres_cell->row, pres_cell->col);
 		ros_base= DATA(map_base,pres_cell->row, pres_cell->col);
@@ -101,9 +99,7 @@ while (to_cell!=NULL) {printf("(%d,%d) ",to_cell->row,to_cell->col); to_cell=to_
 				continue; 
         		}
 
-#ifdef DEBUG
-printf("\n	finish a link: cost(%d,%d)->(%d,%d)=%f",pres_cell->row, pres_cell->col, to_cell->row, to_cell->col, min_cost);
-#endif
+			G_debug(2, "	finish a link: cost(%d,%d)->(%d,%d)=%f",pres_cell->row, pres_cell->col, to_cell->row, to_cell->col, min_cost);
 	                /*update the cumulative time/cost*/
 			update (pres_cell, to_cell->row, to_cell->col, to_cell->angle, min_cost);                        
    		        old_to_cell = to_cell;
@@ -128,9 +124,7 @@ printf("\n	finish a link: cost(%d,%d)->(%d,%d)=%f",pres_cell->row, pres_cell->co
                 }
 
 		get_minHa(heap, pres_cell, heap_len);
-#ifdef DEBUG
-printf("\nin while:     heap_len=%d pres_cell->min_cost=%f time_lag=%d", heap_len, pres_cell->min_cost, time_lag);
-#endif
+		G_debug(2, "in while:     heap_len=%d pres_cell->min_cost=%f time_lag=%d", heap_len, pres_cell->min_cost, time_lag);
 	} /*end 'while (heap_len-- >0)'*/
         G_free (pres_cell); 
 
@@ -146,9 +140,7 @@ printf("\nin while:     heap_len=%d pres_cell->min_cost=%f time_lag=%d", heap_le
                         }
                 }
         }  
-#ifdef DEBUG
-printf("\nend spread");
-#endif
+	G_debug(2, "end spread");
 } /*end spread ()*/
 
 
@@ -206,14 +198,10 @@ cumulative (struct costHa *pres_cell, struct cell_ptrHa *to_cell,
                 xcol = pres_cell->col + count*xstep_len*sin_angle + 0.5;
                 count ++;
        	} /*end'while (count<= ..)'*/
-#ifdef DEBUG
-printf ("\n		in cumulatvie() cost=%.2f pre min_cost=%.2f", cost, *min_cost);
-#endif
+	G_debug(2, "		in cumulatvie() cost=%.2f pre min_cost=%.2f", cost, *min_cost);
 	/*from the origin, cumulative time/cost of the end cell of one link*/
        *min_cost = pres_cell->min_cost + cost;
-#ifdef DEBUG
-printf ("\n		in cumulatvie() 	 post min_cost=%.2f", *min_cost);
-#endif
+	G_debug(2, "		in cumulatvie() 	 post min_cost=%.2f", *min_cost);
 
         return 0;
 }
@@ -227,9 +215,7 @@ update (struct costHa *pres_cell, int row, int col, double angle, float min_cost
 {
         if ( DATA(map_out, row, col) < -1.0 ) 
         {
-#ifdef DEBUG
-printf("\n	insert: out(%d,%d)=%f min_cost=%f", row, col, DATA(map_out, row, col), min_cost);
-#endif
+	G_debug(2, "	insert: out(%d,%d)=%f min_cost=%f", row, col, DATA(map_out, row, col), min_cost);
 		DATA(map_out, row, col) = min_cost;
                 if (x_out) DATA(map_x_out, row, col) = pres_cell->col;
                 if (y_out) DATA(map_y_out, row, col) = pres_cell->row;
@@ -241,9 +227,7 @@ printf("\n	insert: out(%d,%d)=%f min_cost=%f", row, col, DATA(map_out, row, col)
 	else 
         {	if (DATA(map_out, row, col) > min_cost + 0.001)
                 {
-#ifdef DEBUG
-printf("\n	replace: out(%d,%d)=%f min_cost=%f", row, col, DATA(map_out, row, col), min_cost);
-#endif
+	G_debug(2, "	replace: out(%d,%d)=%f min_cost=%f", row, col, DATA(map_out, row, col), min_cost);
 			DATA(map_out, row, col) = min_cost;
            	     	if (x_out) DATA(map_x_out, row, col) = pres_cell->col;
            	     	if (y_out) DATA(map_y_out, row, col) = pres_cell->row;
