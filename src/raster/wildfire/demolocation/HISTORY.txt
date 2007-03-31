@@ -1,0 +1,4 @@
+Sat Mar 31 18:04:20 CEST 2007
+
+* PERMANENT MAPSET added - Markus Neteler
+  - usure if NAD83 or WGS84, selected NAD83 (doesn't really matter)
