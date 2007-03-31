@@ -49,7 +49,7 @@ void main_loop()
 	maxwa = maxwa / nblock;
 	}
 
-printf("\n maxwa, nblock %d %d", maxwa, nblock);
+G_debug(2, " maxwa, nblock %d %d", maxwa, nblock);
 
     for (iblock = 1; iblock <= nblock; iblock++) {
 	++icoub;
@@ -58,7 +58,7 @@ printf("\n maxwa, nblock %d %d", maxwa, nblock);
 	walkwe = 0.;
 	barea = stepx * stepy;
 	sarea = bresx * bresy;
-printf("\n barea,sarea,rwalk,sisum: %f %f %f %f",barea,sarea,rwalk,sisum);
+G_debug(2, " barea,sarea,rwalk,sisum: %f %f %f %f",barea,sarea,rwalk,sisum);
 	lwwfin = 0;
 /* write hh.walkers0 */
 
@@ -90,7 +90,7 @@ printf("\n barea,sarea,rwalk,sisum: %f %f %f %f",barea,sarea,rwalk,sisum);
 		    fprintf(stderr, "\n zero rainfall excess in cell"); 
 		}*/
 
-/*printf("\n gen,gen2,wei,wei2,mgen3,nmult: %f %f %f %f %d %d",gen,gen2,wei,wei2,mgen3,nmult);
+/*G_debug(2, " gen,gen2,wei,wei2,mgen3,nmult: %f %f %f %f %d %d",gen,gen2,wei,wei2,mgen3,nmult);
 */
 		for (iw = 1; iw <= mgen+1; iw++) { /* assign walkers */
 		    ++lw;
@@ -125,9 +125,9 @@ printf("\n barea,sarea,rwalk,sisum: %f %f %f %f",barea,sarea,rwalk,sisum);
 	    }
 	}
 	nwalk = lw;
-printf("\n number of written walkers: %d",lwwfin);
-printf("\n nwalk, maxw %d %d", nwalk, MAXW);
-printf("\n walkwe (walk weight),frac %f %f",walkwe,frac);
+G_debug(2, " number of written walkers: %d",lwwfin);
+G_debug(2, " nwalk, maxw %d %d", nwalk, MAXW);
+G_debug(2, " walkwe (walk weight),frac %f %f",walkwe,frac);
 
 	stxm = stepx * (double) (mx+1) - xmin;
 	stym = stepy * (double) (my+1) - ymin;
@@ -137,23 +137,23 @@ printf("\n walkwe (walk weight),frac %f %f",walkwe,frac);
 
 	factor = deltap*sisum/(rwalk * (double) nblock); 
 
-printf("\n deldif,factor %f %e",deldif,factor);
+G_debug(2, " deldif,factor %f %e",deldif,factor);
 
 /* ********************************************************** */
 /*       main loop over the projection time */
 /* *********************************************************** */
 
 
-printf("\n ");
+G_debug(2, "main loop over the projection time... ");
 
 	for (i = 1; i <= miter; i++) { /* iteration loop depending on simulation time and deltap */
-		G_percent(i,miter,2);
+		G_percent(i,miter,1);
 	    iter1 = i / iterout;
 	    iter1 *= iterout;
 	    if (iter1 == i) {
 		nfiterw = i / iterout + 10;
 		nfiterh = i / iterout + 40;
-                G_message("iblock=%d i=%d miter=%d nwalk=%d nwalka=%d",iblock,i,miter,nwalk,nwalka);
+                G_debug(2, "iblock=%d i=%d miter=%d nwalk=%d nwalka=%d",iblock,i,miter,nwalk,nwalka);
 	    }
 	
 	    if (nwalka == 0 && i > 1) goto L_800;
@@ -177,13 +177,13 @@ printf("\n ");
 
 		    if (l > mx-1 || k > my-1 || k < 0 || l < 0) {
 
-	printf("\n k,l=%d,%d",k,l); 
+	G_debug(2, " k,l=%d,%d",k,l); 
 	printf("    lw,w=%d %f %f",lw,w[lw][1],w[lw][2]);
-        printf("\n    stxym=%f %f",stxm,stym);
+        G_debug(2, "    stxym=%f %f",stxm,stym);
 	printf("    step=%f %f",stepx,stepy);
-        printf("\n    m=%d %d",my,mx);
+        G_debug(2, "    m=%d %d",my,mx);
 	printf("    nwalka,nwalk=%d %d",nwalka,nwalk);
-        printf("\n  ");
+        G_debug(2, "  ");
 		    }
 
 		    if (zz[k][l] != UNDEF) {
@@ -327,7 +327,7 @@ printf("\n ");
 		 } else
            points[p].z1 = gama[k][l] * slope[k][l]; /* sediment */
 
-/*	printf("\n k,l,z1 %d %d %f",k,l,points[p].z1);*/
+	G_debug(2, " k,l,z1 %d %d %f",k,l,points[p].z1);
 
 	fprintf(fw,"%f %f %f\n",points[p].east/conv,points[p].north/conv,points[p].z1);
 	} /*defined area*/
@@ -366,7 +366,7 @@ if (err != NULL)
               if (erdep != NULL)
                erod(gama);
 
-printf("\n");
+G_debug(2, "");
 
     } 
 /*                       ........ end of iblock loop */

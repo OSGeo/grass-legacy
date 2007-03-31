@@ -424,6 +424,6 @@ int main ( int argc, char *argv[])
   if (sfile != NULL)
                 fclose(fw);
 
-  exit (0);
+  exit (EXIT_SUCCESS);
 }
 
