@@ -51,10 +51,6 @@ Map = render.Map() # instance of Map class to render GRASS display output to PPM
 # for cmdlinef
 cmdfilename = None
 
-ovlchk = {} # track whether decoration overlay item is drawn or not
-ovlcoords = {} # positioning coordinates for decoration overlay
-
-
 class Command(Thread):
     """
     Creates  thread, which will observe the command file and see, if there
@@ -190,7 +186,10 @@ class BufferedWindow(wx.Window):
     	self.mapfile = None # image file to be rendered
     	self.img = ""       # wx.Image object (self.mapfile)
         self.ovlist = []     # list of images for overlays
-        ovlcoords = {} # coordinates for positioning decorative overlays
+        self.ovlcoords = {} # positioning coordinates for decoration overlay
+        self.imagedict = {} # images and their ID's for painting and dragging
+        self.select = {} # selecting/unselecting decorations for dragging
+        self.ovlchk = {} # showing/hiding decorations
 
         #
     	# mouse attributes like currently pressed buttons, position on
@@ -223,12 +222,107 @@ class BufferedWindow(wx.Window):
         self.lastpos = (0,0)
 
 
-    def Draw(self, dc, img=None, dctype='image', coords='0,0'):
-    	"""
-        Just here as a place holder.
-    	This method should be over-ridden when sub-classed
+#    def Draw(self, dc, img=None, pdctype='image', coords='0,0'):
+#    	"""
+#        Just here as a place holder.
+#    	This method should be over-ridden when sub-classed
+#        """
+#    	pass
+#
+#    def DrawOvl(self, pdc, type, data, pdctype='image', coords=wx.Rect(0,0,0,0)):
+#        """
+#        Draws map decorations on top of map
+#        Just here as a place holder.
+#        This method should be over-ridden when sub-classed
+#        """
+#        pass
+
+#    def Draw(self, dc, img=None, pdctype='image', coords=[0, 0]):
+#        """
+#        Draws image, box and line in the background
+#        """
+#        dc.BeginDrawing()
+#        dc.SetBackground(wx.Brush(self.GetBackgroundColour()))
+#        dc.Clear() # make sure you clear the bitmap!
+#
+#        if dctype == 'clear': # erase the display
+#            dc.EndDrawing()
+#            return
+#        bitmap = wx.BitmapFromImage(img)
+#        dc.DrawBitmap(bitmap, 0, 0, True) # draw the composite map
+#
+#        if dctype == 'box': # draw a box on top of the map
+#            dc.SetBrush(wx.Brush(wx.CYAN, wx.TRANSPARENT))
+#            dc.SetPen(self.pen)
+#            dc.DrawRectangle(coords[0], coords[1], coords[2], coords[3])
+#        elif dctype == 'line': # draw a line on top of the map
+#            dc.SetBrush(wx.Brush(wx.CYAN, wx.TRANSPARENT))
+#            dc.SetPen(self.pen)
+#            dc.DrawLine(coords[0], coords[1], coords[2], coords[3])
+#
+#        dc.EndDrawing()
+
+    def Draw(self, pdc, img=None, drawid=None, pdctype='image', coords=[0,0,0,0]):
         """
-    	pass
+        Draws map decorations on top of map
+        """
+
+        if drawid == None:
+            if pdctype == 'image' :
+                drawid = imagedict[img]
+            elif pdctype == 'clear':
+                drawid == None
+            else:
+                drawid = wx.NewId()
+
+        self.ovlcoords[drawid] = coords
+        self.ovlchk[drawid] = True
+        pdc.SetId(drawid)
+        self.select[drawid] = False
+
+        if pdctype == 'clear': # erase the display
+            pdc.EndDrawing()
+            return
+
+        if pdctype == 'image':
+            bitmap = wx.BitmapFromImage(img)
+            w,h = bitmap.GetSize()
+            pdc.DrawBitmap(bitmap, coords[0], coords[1], True) # draw the composite map
+            pdc.SetIdBounds(drawid, (coords[0],coords[1],w,h))
+
+        elif pdctype == 'box': # draw a box on top of the map
+            pdc.SetBrush(wx.Brush(wx.CYAN, wx.TRANSPARENT))
+            pdc.SetPen(self.pen)
+            pdc.DrawRectangle(coords[0], coords[1], coords[2], coords[3])
+            pdc.SetIdBounds(drawid,(coords[0], coords[1], coords[2], coords[3]))
+            self.ovlcoords[drawid] = coords
+
+        elif pdctype == 'line': # draw a line on top of the map
+            pdc.SetBrush(wx.Brush(wx.CYAN, wx.TRANSPARENT))
+            pdc.SetPen(self.pen)
+            dc.DrawLine(coords[0], coords[1], coords[2], coords[3])
+            pdc.SetIdBounds(drawid,(coords[0], coords[1], coords[2], coords[3]))
+            self.ovlcoords[drawid] = coords
+
+        elif pdctype == 'point': #draw point
+            pen = self.RandomPen()
+            pdc.SetPen(pen)
+            pdc.DrawPoint(coords[0], coords[1])
+            pdc.SetIdBounds(drawid,(coords[0], coords[1], coords[2], coords[3]))
+            self.ovlcoords[drawid] = coords
+
+        elif pdctype == 'text': # draw text on top of map
+            text = img
+            w,h = self.GetFullTextExtent(text)[0:2]
+            pdc.SetFont(self.GetFont())
+            pdc.SetTextForeground(self.RandomColor())
+            pdc.SetTextBackground(self.RandomColor())
+            pdc.DrawText(text, coords[0], coords[1])
+            pdc.SetIdBounds(drawid, (coords[0], coords[1], coords[2], coords[3]))
+            self.ovlcoords[drawid] = coords
+
+        pdc.EndDrawing()
+        self.Refresh()
 
     def OnPaint(self, event):
     	"""
@@ -236,11 +330,20 @@ class BufferedWindow(wx.Window):
         """
     	dc = wx.BufferedPaintDC(self, self._Buffer)
 
-        # pseudoDC for map decorations like scale and legend
+        # use PrepateDC to set position correctly
+        self.PrepareDC(dc)
+        # we need to clear the dc BEFORE calling PrepareDC
+#        bg = wx.TRANSPARENT_BRUSH
+        bg = wx.Brush(self.GetBackgroundColour())
+        dc.SetBackground(bg)
+        dc.Clear()
+        # create a clipping rect from our position and size
+        # and the Update Region
         rgn = self.GetUpdateRegion()
-        rgn.Offset(0,0)
         r = rgn.GetBox()
+        # draw to the dc using the calculated clipping rect
         self.pdc.DrawToDCClipped(dc,r)
+
 
     def OnSize(self, event):
     	"""
@@ -258,7 +361,7 @@ class BufferedWindow(wx.Window):
 
         # get the image to be rendered
     	self.img = self.GetImage()
-#        self.ovlist = self.GetOverlay()
+
 
         # update map display
     	if self.img and Map.width + Map.height > 0: # scale image during resize
@@ -288,6 +391,34 @@ class BufferedWindow(wx.Window):
         """
     	self._Buffer.SaveFile(FileName, FileType)
 
+    def GetOverlay(self):
+        """
+        Converts overlay files to wx.Image
+        """
+        ovlist = []
+        if Map.ovlist:
+             for ovlfile in Map.ovlist:
+                 if os.path.isfile(ovlfile) and os.path.getsize(ovlfile):
+                     img = wx.Image(ovlfile, wx.BITMAP_TYPE_ANY)
+                     img.ConvertAlphaToMask()
+                     ovlist.append(img)
+                     self.imagedict[img] = ovlist.index(img) # set image PeudoDC ID
+        return ovlist
+
+
+    def GetImage(self):
+        """
+        Converts files to wx.Image
+        """
+        if Map.mapfile and os.path.isfile(Map.mapfile) and \
+                os.path.getsize(Map.mapfile):
+            img = wx.Image(Map.mapfile, wx.BITMAP_TYPE_ANY)
+        else:
+            img = None
+        self.imagedict[img] = 99 # set image PeudoDC ID
+        return img
+
+
     def UpdateMap(self, img=None):
         """
     	This would get called if the drawing needed to change, for whatever reason.
@@ -301,38 +432,31 @@ class BufferedWindow(wx.Window):
         if DEBUG:
             print "Buffered Window.UpdateMap(%s): render=%s" % (img, self.render)
 
-
         if self.render:
+            # render new map images
             Map.width, Map.height = self.GetClientSize()
             self.mapfile = Map.Render(force=self.render)
             self.img = self.GetImage()
             self.resize = False
-            if not self.img: return
-            self.ovlist = self.GetOverlay()
-            # redraw decorations on resize event
-            if self.ovlist != []:
-                for overlay in self.ovlist:
-                    ovltype = self.ovlist.index(overlay)
-                    if ovltype not in ovlcoords:
-                        ovlcoords[ovltype] = wx.Rect(0,0,0,0)
-                    self.DrawOvl(self.pdc, type=ovltype, data=None, pdctype='clear')
-                    if ovlchk[ovltype] == True:
-                        self.DrawOvl(self.pdc, type=ovltype, data=overlay, pdctype='image', rect=ovlcoords[ovltype])
-            dc = wx.BufferedDC(wx.ClientDC(self), self._Buffer)
-            self.Draw(dc, self.img)
-        else:
-            if not self.img: return
-            self.ovlist = self.GetOverlay()
-            if self.ovlist != []:
-                for overlay in self.ovlist:
-                    ovltype = self.ovlist.index(overlay)
-                    if ovltype not in ovlcoords:
-                        ovlcoords[ovltype] = wx.Rect(0,0,0,0)
-                    self.DrawOvl(self.pdc, type=ovltype, data=None, pdctype='clear')
-                    if ovlchk[ovltype] == True:
-                        self.DrawOvl(self.pdc, type=ovltype, data=overlay, pdctype='image', rect=ovlcoords[ovltype])
-            dc = wx.BufferedDC(wx.ClientDC(self), self._Buffer)
-            self.Draw(dc, self.img)
+
+        if not self.img: return
+        id = self.imagedict[self.img]
+        if not id: return
+
+        # paint images to PseudoDC
+        self.pdc.Clear()
+        self.pdc.RemoveAll()
+        self.Draw(self.pdc, self.img, drawid=id) # draw map image background
+        self.ovlist = self.GetOverlay() # list of decoration overlay images
+        if self.ovlist != []:
+            for img in self.ovlist:
+                id = self.imagedict[img]
+                if id not in self.ovlcoords: self.ovlcoords[id] = wx.Rect(0,0,0,0)
+                if id == None: return # ID has not yet been assigned (image not painted)
+                if id not in self.ovlchk: self.ovlchk[id] = False
+                if self.ovlchk[id] == True: # draw any active and defined overlays
+                    self.Draw(self.pdc, img=img, drawid=id,
+                                 pdctype='image', coords=self.ovlcoords[id])
 
     	self.resize = False
 
@@ -345,8 +469,9 @@ class BufferedWindow(wx.Window):
         """
         Erase the map display
         """
-    	dc = wx.BufferedDC(wx.ClientDC(self), self._Buffer)
-    	self.Draw(dc, dctype='clear')
+#    	dc = wx.BufferedDC(wx.ClientDC(self), self._Buffer)
+#    	self.Draw(dc, dctype='clear')
+        self.Draw(self.pdc, pdctype='clear')
 
     def DragMap(self, moveto):
     	"""
@@ -364,75 +489,80 @@ class BufferedWindow(wx.Window):
     	self.dragimg.DoDrawImage(dc, moveto)
     	self.dragimg.EndDrag()
 
-    def DragItem(self, lastpos, event):
-        x,y = lastpos
+    def DragItem(self, id, event):
+        x,y = self.lastpos
         dx = event.GetX() - x
         dy = event.GetY() - y
-        r = self.pdc.GetIdBounds(self.dragid)
-        self.pdc.TranslateId(self.dragid, dx, dy)
-        dc = wx.BufferedDC(wx.ClientDC(self), self._Buffer)
-        dc.SetBackground(wx.Brush(self.GetBackgroundColour()))
-        bitmap = wx.BitmapFromImage(self.img)
-        dc.Clear() # make sure you clear the bitmap!
-        dc.DrawBitmap(bitmap, 0, 0, True) # draw the composite map
-        self.pdc.DrawToDC(dc)
-        self.RefreshRect(r, True)
+        r = self.pdc.GetIdBounds(id)
+        self.pdc.TranslateId(id, dx, dy)
+        r2 = self.pdc.GetIdBounds(id)
+        r = r.Union(r2)
+        r.Inflate(4,4)
+        self.RefreshRect(r, False)
         self.lastpos = (event.GetX(),event.GetY())
-        ovlcoords[self.dragid] = self.pdc.GetIdBounds(self.dragid)
 
     def MouseDraw(self):
     	"""
         Mouse zoom rectangles and lines
         """
-    	img = self.img # composite map in background
-    	dc = wx.BufferedDC(wx.ClientDC(self), self._Buffer)
+        boxid = wx.ID_NEW
     	if self.mouse['box'] == "box":
     	    mousecoords = [self.mouse['begin'][0], self.mouse['begin'][1], \
     		self.mouse['end'][0] - self.mouse['begin'][0], \
     		self.mouse['end'][1] - self.mouse['begin'][1]]
-    	    self.Draw(dc, img, dctype='box', coords=mousecoords)
+            r = self.pdc.GetIdBounds(boxid)
+            r.Inflate(4,4)
+            self.pdc.ClearId(boxid)
+            self.RefreshRect(r, False)
+            self.pdc.SetId(boxid)
+            self.Draw(self.pdc, drawid=boxid, pdctype='box', coords=mousecoords)
     	elif self.mouse['box'] == "line":
     	    mousecoords = [self.mouse['begin'][0], self.mouse['begin'][1], \
     		self.mouse['end'][0] - self.mouse['begin'][0], \
     		self.mouse['end'][1] - self.mouse['begin'][1]]
-    	    self.Draw(dc, img, dctype='line', coords=mousecoords)
+            r = self.pdc.GetIdBounds(boxid)
+            r.Inflate(4,4)
+            self.pdc.ClearId(boxid)
+            self.RefreshRect(r, False)
+            self.pdc.SetId(boxid)
+            self.Draw(self.pdc, drawid=boxid, pdctype='line', coords=mousecoords)
 
     def MouseActions(self, event):
     	"""
     	Mouse motion and button click notifier
     	"""
         wheel = event.GetWheelRotation() # +- int
-    	# left mouse button pressed
-        hitradius = 0 # distance for selecting map decorations
+        hitradius = 5 # distance for selecting map decorations
+
+        # left mouse button pressed
         if event.LeftDown():
-            l = []
-            id = ''
-    	    # start point of zoom box or drag
             self.mouse['begin'] = event.GetPositionTuple()[:]
-            #l = self.pdc.FindObjectsByBBox(x, y)
-            l = self.pdc.FindObjects(self.mouse['begin'][0], self.mouse['begin'][1], hitradius)
-            for id in l:
-                self.pdc.SetIdGreyedOut(id, True)
+
+        # double click to select decoration for dragging
+        elif event.ButtonDClick():
+            # start point of drag
+            self.lastpos = event.GetPositionTuple()[:]
+
+            # select decoration and get its ID
+#            l = self.pdc.FindObjectsByBBox(self.mouse['begin'][0], self.mouse['begin'][1])
+            idlist  = self.pdc.FindObjects(self.lastpos[0], self.lastpos[1], hitradius)
+            if idlist == []: return
+            id = idlist[0]
+            self.select[id] = not self.select[id]
+            if self.select[id] == True:
                 self.dragid = id
-                self.lastpos = (event.GetX(),event.GetY())
-                break
+            else:
+                self.ovlcoords[self.dragid] = self.pdc.GetIdBounds(self.dragid)
+                self.dragid = None
+                self.UpdateMap()
+            id = None
 
     	# left mouse button released and not just a pointer
         elif event.LeftUp():
-            # dragging map decoration
-            if self.mouse['box'] == "point" and self.dragid > -1:
-                self.pdc.SetIdGreyedOut(self.dragid, False)
-#
-#                r = self.pdc.GetIdBounds(self.dragid)
-#                r.Inflate(4,4)
-#                self.OffsetRect(r)
-#                self.RefreshRect(r, True)
-                self.dragid = -1
-                self.UpdateMap()
 
-            elif self.mouse['box'] != "point":
+            if self.mouse['box'] != "point":
                 # end point of zoom box or drag
-                self.mouse['end'] = event.SetPositionTuple()[:]
+                self.mouse['end'] = event.GetPositionTuple()[:]
 
                 # set region in zoom or pan
                 self.Zoom(self.mouse['begin'], self.mouse['end'], self.zoomtype)
@@ -448,6 +578,9 @@ class BufferedWindow(wx.Window):
                 # redraw map
                 self.render=True
                 self.UpdateMap()
+            elif self.dragid:
+                self.Refresh()
+                self.Update()
 
         elif event.Dragging():
             currpos = event.GetPositionTuple()[:]
@@ -456,14 +589,17 @@ class BufferedWindow(wx.Window):
             # dragging or drawing box with left button
             if self.mouse['box'] == 'drag':
                 self.DragMap(end)
+
             # dragging decoration overlay item
+            elif self.mouse['box'] == 'point' and self.dragid != None:
+                self.DragItem(self.dragid, event)
+
+            # dragging something else?
             else:
-                if self.dragid != -1:
-                    self.DragItem(self.lastpos,event)
                 self.mouse['end'] = event.GetPositionTuple()[:]
                 self.MouseDraw()
 
-    	# zoom on mouse wheel
+    	# zoom with mouse wheel
     	elif wheel != 0:
 
     	    # zoom 1/2 of the screen
@@ -471,34 +607,20 @@ class BufferedWindow(wx.Window):
     	    end = [Map.width - Map.width/4,
     		Map.height - Map.height/4]
 
+        elif event.RightDown():
+            x,y = event.GetPositionTuple()[:]
+            #l = self.pdc.FindObjectsByBBox(x, y)
+            l = self.pdc.FindObjects(x, y, hitradius)
+            if l:
+                self.pdc.SetIdGreyedOut(id=l[0], greyout=(not self.pdc.GetIdGreyedOut(id=l[0])))
+                self.Refresh()
+                self.Update()
+#                r = self.pdc.GetIdBounds(l[0])
+#                r.Inflate(4,4)
+#                self.RefreshRect(r, False)
+
     	# store current mouse position
     	self.mouse['pos'] = event.GetPositionTuple()[:]
-
-    def GetOverlay(self):
-        """
-        Converts overlay files to wx.Image
-        """
-        ovlist = []
-        if Map.ovlist:
-             for ovlfile in Map.ovlist:
-                 if os.path.isfile(ovlfile) and os.path.getsize(ovlfile):
-                     img = wx.Image(ovlfile, wx.BITMAP_TYPE_ANY)
-                     img.ConvertAlphaToMask()
-                     ovlist.append(img)
-
-        return ovlist
-
-
-    def GetImage(self):
-        """
-        Converts files to wx.Image
-        """
-    	if Map.mapfile and os.path.isfile(Map.mapfile) and \
-                os.path.getsize(Map.mapfile):
-    	    img = wx.Image(Map.mapfile, wx.BITMAP_TYPE_ANY)
-    	else:
-    	    img = None
-    	return img
 
     def Pixel2Cell(self, x, y):
     	"""
@@ -557,100 +679,105 @@ class BufferedWindow(wx.Window):
     	    Map.region['w'] = newreg['w']
 
 
-    def DrawOvl(self, pdc, type, data, pdctype='image', rect=wx.Rect(0,0,0,0)):
-        """
-        Draws map decorations on top of map
-        """
-        pdc.BeginDrawing()
-        id = type
-        pdc.SetId(id)#        pdc.SetBackground(wx.Brush(self.GetBackgroundColour()))
-#        pdc.Clear() # make sure you clear the bitmap!
+#class DrawWindow(BufferedWindow):
+#    """
+#    Drawing routine for double buffered drawing. Overwrites Draw method
+#    in the BufferedWindow class
+#    """
+#    def __init__(self, parent, id = wx.ID_ANY):
+#        """
+#        """
+#    	## Any data the Draw() function needs must be initialized before
+#    	## calling BufferedWindow.__init__, as it will call the Draw
+#    	## function.
+#    	self.dcmd_list = [] # list of display commands to process
+#    	BufferedWindow.__init__(self, parent, id)
+#
+#    def Draw(self, dc, img=None, pdctype='image', coords=[0, 0]):
+#        """
+#        Draws image, box and line in the background
+#        """
+#    	dc.BeginDrawing()
+#    	dc.SetBackground(wx.Brush(self.GetBackgroundColour()))
+#    	dc.Clear() # make sure you clear the bitmap!
+#
+#    	if dctype == 'clear': # erase the display
+#    	    dc.EndDrawing()
+#    	    return
+#    	bitmap = wx.BitmapFromImage(img)
+#    	dc.DrawBitmap(bitmap, 0, 0, True) # draw the composite map
+#
+#    	if dctype == 'box': # draw a box on top of the map
+#    	    dc.SetBrush(wx.Brush(wx.CYAN, wx.TRANSPARENT))
+#    	    dc.SetPen(self.pen)
+#    	    dc.DrawRectangle(coords[0], coords[1], coords[2], coords[3])
+#    	elif dctype == 'line': # draw a line on top of the map
+#    	    dc.SetBrush(wx.Brush(wx.CYAN, wx.TRANSPARENT))
+#    	    dc.SetPen(self.pen)
+#    	    dc.DrawLine(coords[0], coords[1], coords[2], coords[3])
+#
+#    	dc.EndDrawing()
+#
+#    def DrawOvl(self, pdc, img=None, id=None, pdctype='image', coords=[0,0,0,0]):
+#        """
+#        Draws map decorations on top of map
+#        """
+#        pdc.BeginDrawing()
+#
+#        if id == None:
+#            if pdctype == 'image' :
+#                id = imagedict[img]
+#            else:
+#                id = wx.NewId()
+#        pdc.SetId(id)
+#        self.select[id] = False
+#
+#        if pdctype == 'clear': # erase the display
+##            if type > -1:
+##                pdc.RemoveId(id)
+#            pdc.EndDrawing()
+#            return
+#
+#        elif pdctype == 'image':
+#            bitmap = wx.BitmapFromImage(img)
+#            w,h = bitmap.GetSize()
+#            pdc.DrawBitmap(bitmap, coords[0], coords[1], True) # draw the composite map
+#            pdc.SetIdBounds(id, (coords[0],coords[1],w,h))
+#
+#        elif pdctype == 'box': # draw a box on top of the map
+#            pdc.SetBrush(wx.Brush(wx.CYAN, wx.TRANSPARENT))
+#            pdc.SetPen(self.pen)
+#            pdc.DrawRectangle(coords[0], coords[1], coords[2], coords[3])
+#            rect.Inflate(pen.GetWidth(),pen.GetWidth())
+#            pdc.SetIdBounds(id,(coords[0], coords[1], coords[2], coords[3]))
+#
+#        elif pdctype == 'line': # draw a line on top of the map
+#            pdc.SetBrush(wx.Brush(wx.CYAN, wx.TRANSPARENT))
+#            pdc.SetPen(self.pen)
+#            dc.DrawLine(rect)
+#            rect.Inflate(pen.GetWidth(),pen.GetWidth())
+#            pdc.SetIdBounds(id,(coords[0], coords[1], coords[2], coords[3]))
+#
+#        elif pdctype == 'point': #draw point
+#            pen = self.RandomPen()
+#            pdc.SetPen(pen)
+#            pdc.DrawPoint(coords[0], coords[1])
+#            rect.Inflate(pen.GetWidth(),pen.GetWidth())
+#            pdc.SetIdBounds(id,(coords[0], coords[1], coords[2], coords[3]))
+#
+#        elif pdctype == 'text': # draw text on top of map
+#            text = img
+#            w,h = self.GetFullTextExtent(text)[0:2]
+#            pdc.SetFont(self.GetFont())
+#            pdc.SetTextForeground(self.RandomColor())
+#            pdc.SetTextBackground(self.RandomColor())
+#            pdc.DrawText(text, coords[0], coords[1])
+#            rect.Inflate(2,2)
+#            pdc.SetIdBounds(id, (coords[0], coords[1], coords[2], coords[3]))
+#
+#        pdc.EndDrawing()
+#        self.Refresh()
 
-        if pdctype == 'clear': # erase the display
-            if type > -1:
-                pdc.ClearId(type)
-            pdc.EndDrawing()
-            return
-
-        elif pdctype == 'image':
-            bitmap = wx.BitmapFromImage(data)
-            w,h = bitmap.GetSize()
-            pdc.DrawBitmap(bitmap, rect.x, rect.y, True) # draw the composite map
-            pdc.SetIdBounds(id, (rect[0],rect[1],w,h))
-
-        elif pdctype == 'box': # draw a box on top of the map
-            pdc.SetBrush(wx.Brush(wx.CYAN, wx.TRANSPARENT))
-            pdc.SetPen(self.pen)
-            pdc.DrawRectangleRect(rect)
-            rect.Inflate(pen.GetWidth(),pen.GetWidth())
-            pdc.SetIdBounds(id,rect)
-
-        elif pdctype == 'line': # draw a line on top of the map
-            pdc.SetBrush(wx.Brush(wx.CYAN, wx.TRANSPARENT))
-            pdc.SetPen(self.pen)
-            dc.DrawLine(rect)
-            rect.Inflate(pen.GetWidth(),pen.GetWidth())
-            pdc.SetIdBounds(id,rect)
-
-        elif pdctype == 'point': #draw point
-            pen = self.RandomPen()
-            pdc.SetPen(pen)
-            pdc.DrawPoint(rect.x, rect.y)
-            rect.Inflate(pen.GetWidth(),pen.GetWidth())
-            pdc.SetIdBounds(id,rect)
-
-        elif pdctype == 'text': # draw text on top of map
-            text = data
-            w,h = self.GetFullTextExtent(text)[0:2]
-            pdc.SetFont(self.GetFont())
-            pdc.SetTextForeground(self.RandomColor())
-            pdc.SetTextBackground(self.RandomColor())
-            pdc.DrawText(text, rect.x, rect.y)
-            rect.Inflate(2,2)
-            pdc.SetIdBounds(id, rect)
-
-        pdc.EndDrawing()
-        self.Refresh()
-
-
-class DrawWindow(BufferedWindow):
-    """
-    Drawing routine for double buffered drawing. Overwrites Draw method
-    in the BufferedWindow class
-    """
-    def __init__(self, parent, id = wx.ID_ANY):
-        """
-        """
-    	## Any data the Draw() function needs must be initialized before
-    	## calling BufferedWindow.__init__, as it will call the Draw
-    	## function.
-    	self.dcmd_list = [] # list of display commands to process
-    	BufferedWindow.__init__(self, parent, id)
-
-    def Draw(self, dc, img=None, dctype='image', coords=[0, 0]):
-        """
-        Draws image, box and line in the background
-        """
-    	dc.BeginDrawing()
-    	dc.SetBackground(wx.Brush(self.GetBackgroundColour()))
-    	dc.Clear() # make sure you clear the bitmap!
-
-    	if dctype == 'clear': # erase the display
-    	    dc.EndDrawing()
-    	    return
-    	bitmap = wx.BitmapFromImage(img)
-    	dc.DrawBitmap(bitmap, 0, 0, True) # draw the composite map
-
-    	if dctype == 'box': # draw a box on top of the map
-    	    dc.SetBrush(wx.Brush(wx.CYAN, wx.TRANSPARENT))
-    	    dc.SetPen(self.pen)
-    	    dc.DrawRectangle(coords[0], coords[1], coords[2], coords[3])
-    	elif dctype == 'line': # draw a line on top of the map
-    	    dc.SetBrush(wx.Brush(wx.CYAN, wx.TRANSPARENT))
-    	    dc.SetPen(self.pen)
-    	    dc.DrawLine(coords[0], coords[1], coords[2], coords[3])
-
-    	dc.EndDrawing()
 
 class MapFrame(wx.Frame):
     """
@@ -716,19 +843,23 @@ class MapFrame(wx.Frame):
     	for i in range(len(map_frame_statusbar_fields)):
     	    self.statusbar.SetStatusText(map_frame_statusbar_fields[i], i)
 
-        # decoration overlays
-        ovlchk[0] = False
-        ovlchk[1] = False
-        Map.addOverlay(type=0, command='d.barscale', l_active=True, l_render=False) # d.barscale overlay
-        Map.addOverlay(type=1, command='d.barscale', l_active=True, l_render=False) # d.legend overlay
 
+        # d.barscale overlay added to rendering overlay list
+        Map.addOverlay(type=0, command='d.barscale', l_active=True, l_render=False)
+        # d.barscale overlay added to rendering overlay list as placeholder for d.legend
+        Map.addOverlay(type=1, command='d.barscale', l_active=True, l_render=False)
 
         #
     	# Init map display
         #
     	self.InitDisplay() # initialize region values
-    	self.MapWindow = DrawWindow(self) # initialize buffered DC
+#    	self.MapWindow = DrawWindow(self) # initialize buffered DC
+        self.MapWindow = BufferedWindow(self, id = wx.ID_ANY) # initialize buffered DC
     	self.MapWindow.Bind(wx.EVT_MOTION, self.OnMotion)
+
+        # decoration overlays
+        self.ovlchk = self.MapWindow.ovlchk
+        self.ovlcoords = self.MapWindow.ovlcoords
 
         #
         # Bind various events
@@ -906,120 +1037,32 @@ class MapFrame(wx.Frame):
         """
     	Map.getRegion()
     	Map.getResolution()
-    	self.draw(dc)
+    	self.UpdateMap()
+#        self.draw(dc)
     	event.Skip()
-
-    # toolBar button handlers
-    def onDecoration(self, event):
-        """Add decorations item menu"""
-        point = wx.GetMousePosition()
-        decmenu = wx.Menu()
-        # Add items to the menu
-        addscale = wx.MenuItem(decmenu, -1,'Add scalebar and north arrow')
-        bmp = wx.Image(os.path.join(icons,'module-d.barscale.gif'), wx.BITMAP_TYPE_GIF)
-        bmp.Rescale(16, 16)
-        bmp = bmp.ConvertToBitmap()
-        addscale.SetBitmap(bmp)
-        decmenu.AppendItem(addscale)
-        self.Bind(wx.EVT_MENU, self.addBarscale, addscale)
-
-        addlegend = wx.MenuItem(decmenu, -1,'Add legend')
-        bmp = wx.Image(os.path.join(icons,'module-d.legend.gif'), wx.BITMAP_TYPE_GIF)
-        bmp.Rescale(16, 16)
-        bmp = bmp.ConvertToBitmap()
-        addlegend.SetBitmap(bmp)
-        decmenu.AppendItem(addlegend)
-        self.Bind(wx.EVT_MENU, self.addLegend, addlegend)
-
-        # Popup the menu.  If an item is selected then its handler
-        # will be called before PopupMenu returns.
-        self.PopupMenu(decmenu)
-        decmenu.Destroy()
-
-    def addBarscale(self, event):
-        ovltype = 0
-        DecDialog(self, wx.ID_ANY, 'Scale and arrow')
-
-        dlg = DecDialog(self, wx.ID_ANY, 'Scale and North arrow', size=(350, 200),
-                         style=wx.DEFAULT_DIALOG_STYLE,
-                         cmd='d.barscale',
-                         type=ovltype,
-                         togletxt = "Show/hide scale and arrow",
-                         ctrltxt = "scale object")
-
-        dlg.CenterOnScreen()
-
-        # this does not return until the dialog is closed.
-        val = dlg.ShowModal()
-        self.MapWindow.UpdateMap()
-        if ovltype not in ovlcoords:
-            ovlcoords[ovltype] = wx.Rect(0,0,0,0)
-
-        if val == wx.ID_OK:
-            ovlist = self.MapWindow.GetOverlay()
-            if ovlist != []:
-                self.MapWindow.DrawOvl(self.MapWindow.pdc, type=ovltype, data=None, pdctype='clear')
-                if ovlchk[ovltype] == True:
-                    self.MapWindow.DrawOvl(self.MapWindow.pdc, type=ovltype,
-                                           data=ovlist[ovltype], pdctype='image', rect=ovlcoords[ovltype])
-
-        dlg.Destroy()
-
-    def addLegend(self, event):
-        ovltype = 1
-        DecDialog(self, wx.ID_ANY, 'Legend')
-
-        dlg = DecDialog(self, wx.ID_ANY, 'Legend', size=(350, 200),
-                         style=wx.DEFAULT_DIALOG_STYLE,
-                         cmd='d.legend',
-                         type=ovltype,
-                         togletxt = "Show/hide legend",
-                         ctrltxt = "legend object")
-
-        dlg.CenterOnScreen()
-
-        # this does not return until the dialog is closed.
-        val = dlg.ShowModal()
-        self.MapWindow.UpdateMap()
-        if ovltype not in ovlcoords:
-            ovlcoords[ovltype] = wx.Rect(0,0,0,0)
-
-        if val == wx.ID_OK:
-            ovlist = self.MapWindow.GetOverlay()
-            if ovlist != []:
-                self.MapWindow.DrawOvl(self.MapWindow.pdc, type=ovltype, data=None, pdctype='clear')
-                if ovlchk[ovltype] == True:
-                    self.MapWindow.DrawOvl(self.MapWindow.pdc, type=ovltype,
-                                           data=ovlist[ovltype], pdctype='image', rect=ovlcoords[ovltype])
-
-        dlg.Destroy()
-
-    def getOptData(self, dcmd, type):
-
-        Map.changeOverlay(type=type, command=dcmd, l_active=ovlchk, l_render=False)
 
     def OnAlignRegion(self, event):
         """
         Align region
         """
-    	if not Map.alignRegion:
-    	    Map.alignRegion = True
-    	else:
-    	    Map.alignRegion = False
-    	event.Skip()
+        if not Map.alignRegion:
+            Map.alignRegion = True
+        else:
+            Map.alignRegion = False
+        event.Skip()
 
     def SaveToFile(self, event):
         """
         Save to file
         """
-    	dlg = wx.FileDialog(self, "Choose a file name to save the image as a PNG to",
-    	    defaultDir = "",
-    	    defaultFile = "",
-    	    wildcard = "*.png",
-    	    style=wx.SAVE)
-    	if dlg.ShowModal() == wx.ID_OK:
-    	    self.MapWindow.SaveToFile(dlg.GetPath(), wx.BITMAP_TYPE_PNG)
-    	dlg.Destroy()
+        dlg = wx.FileDialog(self, "Choose a file name to save the image as a PNG to",
+            defaultDir = "",
+            defaultFile = "",
+            wildcard = "*.png",
+            style=wx.SAVE)
+        if dlg.ShowModal() == wx.ID_OK:
+            self.MapWindow.SaveToFile(dlg.GetPath(), wx.BITMAP_TYPE_PNG)
+        dlg.Destroy()
 
     def OnCloseWindow(self, event):
         """
@@ -1050,25 +1093,133 @@ class MapFrame(wx.Frame):
         """
         return Map
 
+    # toolBar button handlers
+    def onDecoration(self, event):
+        """
+        Decorations overlay menu"
+        """
+        point = wx.GetMousePosition()
+        decmenu = wx.Menu()
+        # Add items to the menu
+        addscale = wx.MenuItem(decmenu, -1,'Scalebar and north arrow')
+        bmp = wx.Image(os.path.join(icons,'module-d.barscale.gif'), wx.BITMAP_TYPE_GIF)
+        bmp.Rescale(16, 16)
+        bmp = bmp.ConvertToBitmap()
+        addscale.SetBitmap(bmp)
+        decmenu.AppendItem(addscale)
+        self.Bind(wx.EVT_MENU, self.addBarscale, addscale)
+
+        addlegend = wx.MenuItem(decmenu, -1,'Legend')
+        bmp = wx.Image(os.path.join(icons,'module-d.legend.gif'), wx.BITMAP_TYPE_GIF)
+        bmp.Rescale(16, 16)
+        bmp = bmp.ConvertToBitmap()
+        addlegend.SetBitmap(bmp)
+        decmenu.AppendItem(addlegend)
+        self.Bind(wx.EVT_MENU, self.addLegend, addlegend)
+
+        # Popup the menu.  If an item is selected then its handler
+        # will be called before PopupMenu returns.
+        self.PopupMenu(decmenu)
+        decmenu.Destroy()
+
+    def addBarscale(self, event):
+        """
+        Handler for scale/arrow map decoration menu selection.
+        """
+        ovltype = 0 # index for overlay layer in render
+        ovlist = self.MapWindow.GetOverlay()
+        if ovlist == []: return
+        img = ovlist[0]
+        id = self.MapWindow.imagedict[img]
+        if id == None: return
+        if id not in self.ovlcoords: self.ovlcoords[id] = wx.Rect(0,0,0,0)
+
+        # Decoration overlay control dialog
+        dlg = DecDialog(self, wx.ID_ANY, 'Scale and North arrow', size=(350, 200),
+                         style=wx.DEFAULT_DIALOG_STYLE,
+                         ovltype=ovltype,
+                         cmd='d.barscale',
+                         drawid=id,
+                         checktxt = "Show/hide scale and arrow",
+                         ctrltxt = "scale object")
+
+        dlg.CenterOnScreen()
+
+        # If OK button pressed in decoration control dialog
+        val = dlg.ShowModal()
+        if val == wx.ID_OK:
+            if self.ovlchk[id] == True:
+                self.MapWindow.Draw(self.MapWindow.pdc, drawid=id,
+                                       img=img, pdctype='image',
+                                       coords=self.ovlcoords[id])
+
+        self.MapWindow.UpdateMap()
+        dlg.Destroy()
+
+    def addLegend(self, event):
+        """
+        Handler for legend map decoration menu selection.
+        """
+        ovltype = 1 # index for overlay layer in render
+        ovlist = self.MapWindow.GetOverlay()
+        if ovlist == []: return
+        img = ovlist[1]
+        id = self.MapWindow.imagedict[img]
+        if id == None: return
+        if id not in self.ovlcoords: self.ovlcoords[id] = wx.Rect(0,0,0,0)
+
+        # Decoration overlay control dialog
+        dlg = DecDialog(self, wx.ID_ANY, 'Legend', size=(350, 200),
+                         style=wx.DEFAULT_DIALOG_STYLE,
+                         ovltype=ovltype,
+                         cmd='d.legend',
+                         drawid=id,
+                         checktxt = "Show/hide legend",
+                         ctrltxt = "legend object")
+
+        dlg.CenterOnScreen()
+
+        # If OK button pressed in decoration control dialog
+        val = dlg.ShowModal()
+        if val == wx.ID_OK:
+            if self.ovlchk[id] == True:
+                self.MapWindow.Draw(self.MapWindow.pdc, drawid=id,
+                                       img=img, pdctype='image',
+                                       coords=self.ovlcoords[id])
+
+        self.MapWindow.UpdateMap()
+        dlg.Destroy()
+
+    def getOptData(self, dcmd, type):
+        """
+        Callback method for decoration overlay command generated by
+        dialog created in menuform.py
+        """
+
+        # Reset comand and rendering options in render.Map. Always render decoration.
+        # Showing/hiding handled by PseudoDC
+        Map.changeOverlay(type=type, command=dcmd, l_active=True, l_render=False)
+
 # end of class MapFrame
 
 class DecDialog(wx.Dialog):
     def __init__(self, parent, id, title, pos=wx.DefaultPosition, size=wx.DefaultSize,
-            style=wx.DEFAULT_DIALOG_STYLE, cmd=None, type=None, togletxt='', ctrltxt=''):
+            style=wx.DEFAULT_DIALOG_STYLE, ovltype=0, cmd='d.barscale', drawid=None, checktxt='', ctrltxt=''):
         wx.Dialog.__init__(self, parent, id, title, pos, size, style)
+        """
+        Controls setting options and displaying/hiding map overlay decorations
+        """
 
-        self.type = type
+        self.ovltype = ovltype
+        self.drawid = drawid
         self.ovlcmd = cmd
-        if type > -1 and type in ovlchk: #tracks toggling of decorations
-            check = ovlchk[type]
-        else:
-            check = False
+        self.ovlchk = self.Parent.MapWindow.ovlchk
 
         sizer = wx.BoxSizer(wx.VERTICAL)
 
         box = wx.BoxSizer(wx.HORIZONTAL)
-        self.chkbox = wx.CheckBox(self, wx.ID_ANY, togletxt )
-        self.chkbox.SetValue(check)
+        self.chkbox = wx.CheckBox(self, wx.ID_ANY, checktxt)
+        if drawid in self.ovlchk: self.chkbox.SetValue(self.ovlchk[drawid])
         box.Add(self.chkbox, 0, wx.ALIGN_CENTRE|wx.ALL, 5)
         sizer.Add(box, 0, wx.GROW|wx.ALIGN_CENTER_VERTICAL|wx.ALL, 5)
 
@@ -1078,7 +1229,7 @@ class DecDialog(wx.Dialog):
         sizer.Add(box, 0, wx.GROW|wx.ALIGN_CENTER_VERTICAL|wx.ALL, 5)
 
         box = wx.BoxSizer(wx.HORIZONTAL)
-        label = wx.StaticText(self, -1, ("Drag %s with mouse in pointer mode to position" % ctrltxt))
+        label = wx.StaticText(self, -1, ("Double-click %s with mouse in\npointer mode and drag to position.\nDouble-click again to set" % ctrltxt))
         box.Add(label, 0, wx.ALIGN_CENTRE|wx.ALL, 5)
         sizer.Add(box, 0, wx.GROW|wx.ALIGN_CENTER_VERTICAL|wx.ALL, 5)
 
@@ -1088,12 +1239,10 @@ class DecDialog(wx.Dialog):
         btnsizer = wx.StdDialogButtonSizer()
 
         btn = wx.Button(self, wx.ID_OK)
-        btn.SetHelpText("The OK button completes the dialog")
         btn.SetDefault()
         btnsizer.AddButton(btn)
 
         btn = wx.Button(self, wx.ID_CANCEL)
-        btn.SetHelpText("The Cancel button cnacels the dialog.")
         btnsizer.AddButton(btn)
         btnsizer.Realize()
 
@@ -1102,18 +1251,23 @@ class DecDialog(wx.Dialog):
         self.SetSizer(sizer)
         sizer.Fit(self)
 
-        self.Bind(wx.EVT_CHECKBOX, self.onToggle, self.chkbox)
+        self.Bind(wx.EVT_CHECKBOX, self.onCheck, self.chkbox)
         self.Bind(wx.EVT_BUTTON, self.onOptions, optnbtn)
 
-
-    def onToggle(self, event):
+    def onCheck(self, event):
+        """
+        Handler for checkbox for displaying/hiding decoration
+        """
         check = event.IsChecked()
-        ovlchk[self.type] = check
+        self.ovlchk[self.drawid] = check
 
     def onOptions(self, event):
+        """
+        Sets option for decoration map overlays
+        """
         self.params = [] # parameters to insert into dialog (not working)
         menuform.GUI().parseCommand(self.ovlcmd, gmpath,
-                                    completed=(self.Parent.getOptData,self.type,self.params),
+                                    completed=(self.Parent.getOptData,self.ovltype,self.params),
                                     parentframe=None)
 
 class MapApp(wx.App):
