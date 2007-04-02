@@ -78,7 +78,7 @@ from GRASS 5 Programmer's manual or are simply undocumented</I>
 <li>linkm:	linked list memory manager - \ref linkmlib
 <li>ogsf:	openGL (R) ported gsurf library (required for NVIZ) - \ref ogsflib
 <li>proj:	wrapper to PROJ4 projection library - \ref projlib
-<li>raster:	Raster Graphics Library (raster map functions are in \refgislib) - \ref rastergraphicslib
+<li>raster:	Raster Graphics Library (note: raster map functions are in \ref gislib) - \ref rastergraphicslib
 <li>rowio:	row in/out library - \ref rowiolib
 <li>rst:	library for interpolation with regularized splines with tension - \ref rstlib
 <li>segment:	segment library for segmented raster reading - \ref segmentlib
@@ -90,7 +90,7 @@ from GRASS 5 Programmer's manual or are simply undocumented</I>
 
 <h3>Interfaces</h3>
 <ul>
-<li> GRASS-SWIG interface: \ref GRASS_SWIG_interface
+<li> GRASS-SWIG interface: <a href=swig/>see here</a>
 </ul>
 
 <h3>File structure of GRASS Location</h3>
