@@ -53,12 +53,12 @@ class LayerTree(CT.CustomTreeCtrl):
         self.saveitem = {} # dictionary to preserve layer attributes for drag and drop
         self.first = True # indicates if a layer is just added or not
         self.drag = False # flag to indicate a drag event is in process
-        self.params = {} # dictionary of existing command parameters
+        self.params = '' # existing command parameters to pass back to options dialog
 
         self.Map = disp.getRender()
 
         self.root = self.AddRoot("Map Layers")
-        self.SetPyData(self.root, None)
+        self.SetPyData(self.root, (None,None))
 
         #create image list to use with layer tree
         il = wx.ImageList(16, 16, False)
@@ -176,7 +176,7 @@ class LayerTree(CT.CustomTreeCtrl):
         self.layerctrl[self.ctrl] = layer
 
         # add a data object to hold the layer's command (does not apply to generic command layers)
-        self.SetPyData(layer, None)
+        self.SetPyData(layer, (None,None))
 
         #layer is initially unchecked as inactive
         self.CheckItem(layer, checked=False)
@@ -424,7 +424,7 @@ class LayerTree(CT.CustomTreeCtrl):
         self.reorderLayers()
         self.drag = False
 
-    def getOptData(self, dcmd, layer):
+    def getOptData(self, dcmd, layer, params):
         for item in dcmd.split(' '):
             if 'map=' in item:
                 mapname = item.split('=')[1]
@@ -441,13 +441,16 @@ class LayerTree(CT.CustomTreeCtrl):
         self.SetItemText(layer, mapname)
 
         # add command to layer's data
-        self.SetPyData(layer, dcmd)
+        self.SetPyData(layer, (dcmd,params))
 
         # check layer as active
         self.CheckItem(layer, checked=True)
 
         # change parameters for item in layers list in render.Map
         self.changeLayer(layer)
+
+        self.params = params
+
 
     def writeDCommand(self, dcmd):
         # echos d.* command to output console
@@ -490,8 +493,8 @@ class LayerTree(CT.CustomTreeCtrl):
                 self.Map.changeLayer(item=layer, command=cmd, l_active=chk,
                                   l_hidden=hidden, l_opacity=opac, l_render=False)
         else:
-            if self.GetPyData(layer) != None:
-                cmd = self.GetPyData(layer)
+            if self.GetPyData(layer)[0] != None:
+                cmd = self.GetPyData(layer)[0]
                 opac = float(self.GetItemWindow(layer).GetValue())/100
                 chk = self.IsItemChecked(layer)
                 hidden = not self.IsVisible(layer)

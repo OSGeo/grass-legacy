@@ -324,18 +324,11 @@ class mainFrame(wx.Frame):
     If run standalone, it will allow execution of the command.
 
     The command is checked and sent to the clipboard when clicking "Copy". """
-    def __init__(self, parent, ID, task_description, get_dcmd=None, layer=None, dcmd_params=None):
+    def __init__(self, parent, ID, task_description, get_dcmd=None, layer=None):
 
         self.get_dcmd = get_dcmd
-        self.dcmd_params = dcmd_params #this should be passed from the layer tree eventually
         self.layer = layer
         self.task = task_description
-        # inserting existing values from d.* command in layer tree
-        for p in self.task.params:
-            if self.dcmd_params != None:
-                for dparam in self.dcmd_params:
-                    if p == dparam:
-                        p['value'] = self.dcmd_params[dparam]
 
         wx.Frame.__init__(self, parent, ID, self.task.name,
             wx.DefaultPosition, style=wx.DEFAULT_FRAME_STYLE | wx.TAB_TRAVERSAL)
@@ -420,17 +413,17 @@ class mainFrame(wx.Frame):
             self.OnCancel(event)
 
     def OnApply(self, event):
-        cmd = self.createCmd()
+        cmd,params = self.createCmd()
 
         if cmd is not None and self.get_dcmd is not None:
             # return d.* command to layer tree for rendering
-            self.get_dcmd(cmd, self.layer)
+            self.get_dcmd(cmd, self.layer,params)
             # echo d.* command to output console
 #            self.parent.writeDCommand(cmd)
         return cmd
 
     def OnRun(self, event):
-        cmd = self.createCmd()
+        cmd = self.createCmd()[0]
 
         if cmd != None and cmd[0:2] != "d.":
             # Send any non-display command to parent window (probably wxgui.py)
@@ -503,12 +496,14 @@ class cmdPanel(wx.Panel):
 
         sections = ['Main']
         is_section = {}
+
         for task in self.task.params + self.task.flags:
             if not task.has_key('guisection') or task['guisection']=='':
                 task['guisection'] = 'Options'
             if not is_section.has_key(task['guisection']):
                 is_section[task['guisection']] = 1
-                sections.append( task['guisection'] )
+                if task['guisection'] != 'Main': # check for pre-existing parameters passed from layer tree
+                    sections.append( task['guisection'] )
         there_is_main = False
         for i in self.task.params+self.task.flags:
             if i.has_key('required') and i['required'] == 'yes':
@@ -586,10 +581,12 @@ class cmdPanel(wx.Panel):
                     self.cb = wx.ComboBox(which_panel, -1, p['default'],
                                      wx.Point(-1, -1), wx.Size(STRING_ENTRY_WIDTH, -1),
                                      valuelist, wx.CB_DROPDOWN)
+                    if p['value'] != '': self.cb.SetValue(p['value']) # parameter previously set
                     which_sizer.Add(self.cb, 0, wx.ADJUST_MINSIZE, 5)
                     self.paramdict[self.cb] = ID_PARAM_START + p_count
                     self.cb.Bind( wx.EVT_COMBOBOX, self.EvtComboBox)
 
+            # text entry
             if (p['type'] in ('string','integer','float')
                 and len(p['values']) == 0
                 and p['gisprompt'] == False
@@ -600,6 +597,7 @@ class cmdPanel(wx.Panel):
 
                 self.txt3 = wx.TextCtrl(which_panel, value = p['default'],
                     size = (STRING_ENTRY_WIDTH, ENTRY_HEIGHT))
+                if p['value'] != '': self.txt3.SetValue(p['value']) # parameter previously set
                 which_sizer.Add(self.txt3, 0, wx.ADJUST_MINSIZE| wx.ALL, 5)
                 self.paramdict[self.txt3] = ID_PARAM_START + p_count
                 self.txt3.Bind(wx.EVT_TEXT, self.EvtText)
@@ -607,12 +605,15 @@ class cmdPanel(wx.Panel):
             if p['type'] == 'string' and p['gisprompt'] == True:
                 txt = wx.StaticText(which_panel, label = title + ':')
                 which_sizer.Add(txt, 0, wx.ADJUST_MINSIZE | wx.ALL, 5)
+                # element selection tree combobox (maps, icons, regions, etc.)
                 if p['prompt'] != 'color':
                     self.selection = select.Select(which_panel, id=wx.ID_ANY, size=(250,-1),
                                                    type=p['element'])
+                    if p['value'] != '': self.selection.SetValue(p['value']) # parameter previously set
                     which_sizer.Add(self.selection, 0, wx.ADJUST_MINSIZE| wx.ALL, 5)
                     self.paramdict[self.selection] = ID_PARAM_START + p_count
                     self.selection.Bind(wx.EVT_TEXT, self.EvtText)
+                # color entry
                 elif p['prompt'] == 'color':
                     if p['default'] != '':
                         if p['default'][0] in "0123456789":
@@ -629,6 +630,18 @@ class cmdPanel(wx.Panel):
                     else:
                         default_color = (200,200,200)
                         label_color = 'Select Color'
+                    if p['value'] != '': # parameter previously set
+                        if p['value'][0] in "0123456789":
+                            default_color = tuple(map(int,p['value'].split( ':' )))
+                            label_color = p['value']
+                        else:
+                            # Convert color names to RGB
+                            try:
+                                default_color = color_str2rgb[ p['value'] ]
+                                label_color = p['value']
+                            except KeyError:
+                                default_color = (200,200,200)
+                                label_color = 'Select Color'
                     btn_colour = csel.ColourSelect(which_panel, -1, label_color, default_color, wx.DefaultPosition, (150,-1) )
                     which_sizer.Add(btn_colour, 0, wx.ADJUST_MINSIZE| wx.ALL, 5)
                     self.paramdict[btn_colour] = ID_PARAM_START + p_count
@@ -643,6 +656,7 @@ class cmdPanel(wx.Panel):
             which_panel = self.tab[ f['guisection'] ]
             title = text_beautify(f['description'])
             self.chk = wx.CheckBox(which_panel,-1, label = title, style = wx.NO_BORDER)
+            if 'value' in f: self.chk.SetValue(f['value'])
             self.chk.SetFont( wx.Font( 12, wx.FONTFAMILY_DEFAULT, wx.NORMAL, text_style, 0, ''))
             which_sizer.Add(self.chk, 0, wx.EXPAND| wx.ALL, 5)
             self.paramdict[self.chk] = ID_FLAG_START + f_count
@@ -747,6 +761,8 @@ class cmdPanel(wx.Panel):
         cmd = self.task.name
         errors = 0
         errStr = ""
+        dcmd_params = {}
+
         for flag in self.task.flags:
             if 'value' in flag and flag['value']:
                 cmd += ' -' + flag['name']
@@ -760,7 +776,13 @@ class cmdPanel(wx.Panel):
         if errors and not ignoreErrors:
             self.OnError(errStr)
             return None
-        return cmd
+
+        # create paramater dictionary to return to layer tree
+        dcmd_params['flags'] = self.task.flags
+        dcmd_params['params'] = self.task.params
+
+
+        return cmd,dcmd_params
 
 def getInterfaceDescription( cmd ):
     """Returns the XML description for the GRASS cmd.
@@ -796,12 +818,16 @@ class GUI:
         self.parent = parent
 
     def parseCommand(self, cmd, gmpath, completed=None, parentframe=-1 ):
+
+        dcmd_params = {}
         if completed == None:
-            self.get_dcmd = None
+            get_dcmd = None
             layer = None
+            dcmd_params = None
         else:
-            self.get_dcmd = completed[0]
+            get_dcmd = completed[0]
             layer = completed[1]
+            dcmd_params.update(completed[2])
         cmdlst = cmd.split(' ')
 
         if parentframe != -1:
@@ -815,7 +841,11 @@ class GUI:
             handler = processTask(self.grass_task)
             xml.sax.parseString( getInterfaceDescription( cmd ) , handler )
 
-            self.mf = mainFrame(self.parent ,-1, self.grass_task, self.get_dcmd, layer)
+            # if layer parameters previously set, re-insert them into dialog
+            if 'params' in dcmd_params: self.grass_task.params = dcmd_params['params']
+            if 'flags' in dcmd_params: self.grass_task.flags = dcmd_params['flags']
+
+            self.mf = mainFrame(self.parent ,-1, self.grass_task, get_dcmd, layer)
             self.mf.Show(True)
 
 if __name__ == "__main__":
