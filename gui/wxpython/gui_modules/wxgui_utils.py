@@ -330,6 +330,8 @@ class LayerTree(CT.CustomTreeCtrl):
 
     def onExpandNode(self, event):
         self.layer_selected = event.GetItem()
+        print "###",self.layertype
+        print "###",self.layer_selected
         if self.layertype[self.layer_selected] == 'group':
             self.SetItemImage(self.layer_selected, self.folder_open)
 
