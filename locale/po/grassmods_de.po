@@ -17397,7 +17397,7 @@ msgid ""
 "Font name (not supported interactively, see also -l flag) or path to "
 "TrueType font (including file name)"
 msgstr ""
-"Schriftname oder Pfad zu den TrueType-Schriften inkiusive Dateiname. Eine "
+"Schriftname oder Pfad zu den TrueType-Schriften inklusive Dateiname. Eine "
 "interaktive Auswahl ist nicht möglich. Siehe auch Schalter -l."
 
 #: ../display/d.font.freetype/main.c:72 ../display/d.font/main.c:98
