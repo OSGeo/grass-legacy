@@ -136,7 +136,7 @@ class LayerTree(CT.CustomTreeCtrl):
 
     def AddLayer(self, idx, type):
         self.first = True
-        params = '' # no initial options parameters
+        params = {} # no initial options parameters
 
         if type == 'command':
             # generic command layer
