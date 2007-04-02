@@ -420,7 +420,7 @@ class LayerTree(CT.CustomTreeCtrl):
             self.Map.addLayer(item=new, command=self.saveitem['windval'], l_active=self.saveitem['check'],
                                       l_hidden=False, l_opacity=1, l_render=False)
         else:
-            self.Map.addLayer(item=new, command=self.saveitem['data'], l_active=self.saveitem['check'],
+            self.Map.addLayer(item=new, command=self.saveitem['data'][0], l_active=self.saveitem['check'],
                                       l_hidden=False, l_opacity=self.saveitem['windval'], l_render=False)
 
         self.reorderLayers()
