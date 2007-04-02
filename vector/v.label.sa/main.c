@@ -11,6 +11,7 @@
  *   	    	 for details.
  *
  *****************************************************************************/
+#include <time.h>
 #include "labels.h"
 #define DEFAULT_CHARSET "UTF-8"
 
@@ -31,7 +32,8 @@ int main (int argc, char *argv[])
 	label_t *labels;
 	int n_labels, i;
     struct GModule *module;
-	
+
+	srand((unsigned int)time(NULL));
 	G_gisinit(argv[0]);
     module = G_define_module();
     module->keywords = _("vector, paint labels");
@@ -44,23 +46,22 @@ printf("parsing options and flags\n");
 printf("initialize labels\n");
 	/* initialize labels (get text from database, and get features)*/
 	labels = labels_init(&p, &n_labels);
-	for(i=0; i < n_labels;i++) {
-		printf("Label(%d): %s cat=%d type=%d shape=%d skylight=%d\n",
-			   i, labels[i].text, labels[i].cat, labels[i].type,
-			   labels[i].shape->n_points, labels[i].skylight->n_points);
-		if(i==34) {
-			printf("Skylight points are:\n");
-			int j;
-			for(j=0; j<labels[i].skylight->n_points; j++) {
-				printf("(%lf,%lf)\n",labels[i].skylight->x[j],
-					   labels[i].skylight->y[j]);
-			}
-		}
-	}
 	/* start algorithm */
 	/*   1. candidate position generation */
-	label_candidates(labels);
+	label_candidates(labels, n_labels);
+	for(i=0; i < n_labels;i++) {
+		int j;
+		for(j=0; j < labels[i].n_candidates; j++) {
+			printf("Label(%d), candidate(%d): %s cat=%d type=%d score=%lf (%.8lg,%.8lg)\n",
+				   i, j, labels[i].text, labels[i].cat, labels[i].type,
+				   labels[i].candidates[j].score,
+				   labels[i].candidates[j].point.x,
+				   labels[i].candidates[j].point.y);
+		}
+	}
+	
 	/*   2. position evaluation */
+/*	label_candidate_overlap(labels, n_labels);*/
 	/*   3. position selection */
 	/* write lables to file */
 	return EXIT_SUCCESS;
@@ -90,7 +91,7 @@ int parse_args(int argc, char *argv[], struct params *p)
     p->labels->key_desc = "name";
 
 	p->font = G_define_option();
-	p->font->key         = "font";
+	p->font->key         = "path";
 	p->font->type        = TYPE_STRING;
 	p->font->required    = YES;
 	p->font->description = _("Path to TrueType font (including file name)");
