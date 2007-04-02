@@ -575,7 +575,7 @@ class cmdPanel(wx.Panel):
                         self.Bind(wx.EVT_CHECKBOX, self.EvtCheckBoxMulti)
                         v_count += 1
                     which_sizer.Add( hSizer, 0, wx.ADJUST_MINSIZE, 5)
-                else:
+                elif len(valuelist) == 1:
                     txt = wx.StaticText(which_panel, label = title +
                                         '. Valid range=' + str(valuelist).strip("[]'") + ':' )
                     which_sizer.Add(txt, 0, wx.ADJUST_MINSIZE | wx.ALL, 5)
@@ -586,6 +586,16 @@ class cmdPanel(wx.Panel):
                     which_sizer.Add(self.txt2, 0, wx.ADJUST_MINSIZE, 5)
                     self.paramdict[self.txt2] = ID_PARAM_START + p_count
                     self.txt2.Bind(wx.EVT_TEXT, self.EvtText)
+                else:
+                    txt = wx.StaticText(which_panel, label = title + ':' )
+                    which_sizer.Add(txt, 0, wx.ADJUST_MINSIZE | wx.ALL, 5)
+                    self.cb = wx.ComboBox(which_panel, -1, p['default'],
+                                     wx.Point(-1, -1), wx.Size(STRING_ENTRY_WIDTH, -1),
+                                     valuelist, wx.CB_DROPDOWN)
+                    if p['value'] != '': self.cb.SetValue(p['value']) # parameter previously set
+                    which_sizer.Add(self.cb, 0, wx.ADJUST_MINSIZE, 5)
+                    self.paramdict[self.cb] = ID_PARAM_START + p_count
+                    self.cb.Bind( wx.EVT_COMBOBOX, self.EvtComboBox)
 
             # text entry
             if (p['type'] in ('string','integer','float')
