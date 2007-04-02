@@ -21,13 +21,23 @@
 typedef struct _label label_t;
 typedef struct _label_candidate label_candidate_t;
 typedef struct _label_intersection label_intersection_t;
+typedef struct _label_point label_point_t;
+
+/**
+ * A structure representing a point location */
+struct _label_point {
+	double x; /**< The X coordinate */
+	double y; /**< The Y coordinate */
+};
 
 /**
  * This structure represents a label for a vector feature */
 struct _label {
-    struct line_pnts * skylight; /**< The skylight of the text, as an offest
+    struct line_pnts * skyline; /**< The skyline of the text, as an offest
 								  *  from the label point */
-    float current_score;         /**< The current score of the label. */
+	BOUND_BOX bb;
+	double size;
+    double current_score;         /**< The current score of the label. */
     label_candidate_t * candidates; /**< A list of candidate positions */
     int n_candidates;            /**< The size of the candidates array */
     int current_candidate;       /**< An index into the candidates array
@@ -42,12 +52,14 @@ struct _label {
  * This structure represents a label candidate position.
  */
 struct _label_candidate {
-    double x; /**< The x coordinate of the label position (lower left corner)*/
-    double y; /**< The y coordinate of the label position (lower left corner)*/
+	label_point_t point; /**< The point of the label position (lower left corner)*/
     float score; /**< The base score of this position (sans overlap metric) */
 	float rotation; /**< The mount the label is rotated in this position */
     label_intersection_t * intersections; /**< A list of all label candidate positions which intersect with this position. */
     int n_intersections; /**< Number of items in the intersections array */
+	struct line_pnts *baseline;
+	struct line_pnts *swathline;
+	int above;
 };
 
 struct _label_intersection {
@@ -78,5 +90,5 @@ label_t * labels_init(struct params *p, int *n_labels);
  * @param labels The array of label structures.
  * @param n_labels The size of the array
  */
-void labels_candidates(label_t *labels, int n_labels);
+void label_candidates(label_t *labels, int n_labels);
 #endif /* _LABELS_H */
