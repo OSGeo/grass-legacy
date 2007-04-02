@@ -17,7 +17,7 @@ MENUDIR="$HOME/Library/GRASS/$GRASS_MMVER/Modules/etc/gm/addons"
 echo "Rebuilding Addon menu..."
 
 mkdir -p "$MENUDIR"
-rm "$MENUDIR/"*.menu
+rm -f "$MENUDIR/"*.menu
 
 # global addons:
 if [ -d "$BINDIRG" ] ; then
