@@ -199,7 +199,7 @@ install: FORCE
 		echo "  Installation aborted, exiting Make."; \
 		exit; \
 	fi; \
-	if [ ${MACOSX_APP} = "1" ] ; then \
+	if [ "${MACOSX_APP}" = "1" ] ; then \
 		${MAKE} install-macosx; \
 		exit; \
 	fi; \
@@ -279,7 +279,7 @@ install-macosx: FORCE
 	${MAKE} -C macosx install-macosx
 
 bindist:  
-	if [ ${MACOSX_APP} = "1" ] ; then \
+	if [ "${MACOSX_APP}" = "1" ] ; then \
 		${MAKE} bindist-macosx; \
 		exit; \
 	fi; \
