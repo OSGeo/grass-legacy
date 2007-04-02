@@ -41,7 +41,7 @@ import gui_modules.mapdisp as mapdisp
 import gui_modules.render as render
 import gui_modules.menudata as menudata
 import gui_modules.menuform as menuform
-import gui_modules.grassenv as grassevn
+import gui_modules.grassenv as grassenv
 
 """Main Python app to set up GIS Manager window and trap commands
 Only command console is working currently, but windows for
@@ -322,7 +322,16 @@ class GMFrame(wx.Frame):
                  )
 
     def ShowAttributeTable(self,event):
-        print self.maptree.GetSelection().GetText()
+        mapsel = self.maptree.GetSelection()
+
+        name = mapsel.GetText()
+        if name.find("@") >-1:
+            map,mapset = name.strip().split("@")
+            
+            print "#%s#%s#%s" % (map,mapset,grassenv.env["MAPSET"])
+            if mapset == grassenv.env["MAPSET"]:
+                from gui_modules import dbm
+                self.dbmanager = gui_modules.dbm.DBHunter(None, -1,"GRASS Attribute Table Manager: %s" % map,map)
 
 
     def newDisplay(self, event=None):
