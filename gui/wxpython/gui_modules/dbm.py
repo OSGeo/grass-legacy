@@ -1,195 +1,204 @@
-#!/usr/bin/python
 """
 Database browser for GRASS GIS >= 7
 
 This program is based on FileHunter, publicated in "The wxPython Linux
 Tutorial" on wxPython WIKI pages.
 
+It also uses some functions from http://aspn.activestate.com/ASPN/Cookbook/Python/Recipe/426407
+
 Usage:
     dbm.py table_name
 
 """
-############################################################################
-#
-# MODULE:       dbm.py
-# AUTHOR(S):    Jachym Cepicky jachym les-ejk cz
-# PURPOSE:      Database manager for vector attribute tables stored in
-#               GRASS GIS
-# COPYRIGHT:    (C) 2007 by the GRASS Development Team
-#
-#               This program is free software under the GNU General Public
-#               License (>=v2). Read the file COPYING that comes with GRASS
-#               for details.
-#
-############################################################################
-
-# discussion:
-# using database drivers is IMHO impossible
-# so, first step: parsing output form db.* commands and using SQL for
-# manipulation
-
 import wx
-import os,sys
-import time
+import wx.lib.mixins.listctrl  as  listmix
 
-import grassenv
-import images
-imagepath = images.__path__[0]
-sys.path.append(imagepath)
+import sys,os
+        
+#----------------------------------------------------------------------
+class Log:
+    r"""\brief Needed by the wxdemos.
+    The log output is redirected to the status bar of the containing frame.
+    """
 
-ID_BUTTON=100
-ID_EXIT=200
+    def WriteText(self,text_string):
+        self.write(text_string)
 
-class MyListCtrl(wx.ListCtrl):
-    def __init__(self, parent, id, tablename=None):
-        wx.ListCtrl.__init__(self, parent, id, style=wx.LC_REPORT, )
+    def write(self,text_string):
+        wx.GetApp().GetTopWindow().SetStatusText(text_string)
 
-        lengths =[]
+#----------------------------------------------------------------------
+# The panel you want to test (TestVirtualList)
+#----------------------------------------------------------------------
+
+class TestVirtualList(wx.ListCtrl, listmix.ListCtrlAutoWidthMixin, listmix.ColumnSorterMixin):
+    def __init__(self, parent,log,tablename):
+        wx.ListCtrl.__init__( self, parent, -1, style=wx.LC_REPORT|wx.LC_VIRTUAL|wx.LC_HRULES|wx.LC_VRULES)
+        self.log=log
+        self.tablename = tablename
+
+        #adding some attributes (colourful background for each item rows)
+        self.attr1 = wx.ListItemAttr()
+        self.attr1.SetBackgroundColour("light blue")
+        self.attr2 = wx.ListItemAttr()
+        self.attr2.SetBackgroundColour("white")
+
+        #building the columns
+        i = 0
         # FIXME: subprocess.Popen should be used
         # FIXME: Maximal number of columns, when the GUI is still usable
-        i = 0
         for column in os.popen("db.columns table=%s" %
-                (tablename)).readlines():
+                (self.tablename)).readlines():
 
             column = column.strip()
             self.InsertColumn(i, column)
-            self.SetColumnWidth(i, 5)
+            self.SetColumnWidth(i, 50)
             i += 1
-            lengths.append(1) #
 
-
+        #These two should probably be passed to init more cleanly
+        #setting the numbers of items = number of elements in the dictionary
+        self.itemDataMap = {}
+        self.itemIndexMap = []
         # FIXME: subprocess.Popen should be used
         # FIXME: Max. number of rows, while the GUI is still usable
-        j = 0
-        for line in os.popen("""db.select -c sql="SELECT * FROM %s" """ % tablename):
-            attributes = line.strip().split("|")
-
-            k = 0
-            for attribute in attributes:
-                if len(attribute) > lengths[k]:
-                    lengths[k] = len(attribute)
-                if k == 0:
-                    self.InsertStringItem(j, attribute)
-                else:
-                    self.SetStringItem(j, k, attribute)
-                k += 1
-
-            if (j % 2) == 0:
-                self.SetItemBackgroundColour(j, '#e6f1f5')
-            j = j + 1
-
-        # setting column widths
         i = 0
-        for length in lengths:
-            self.SetColumnWidth(i, (length+5)*12)
+        for line in os.popen("""db.select -c sql="SELECT * FROM %s" """ % self.tablename):
+            attributes = line.strip().split("|")
+            self.itemDataMap[i] = []
+            for attribute in attributes:
+                self.itemDataMap[i].append(attribute)
+                self.itemIndexMap.append(i)
             i += 1
+        self.SetItemCount(len(self.itemDataMap))
+        
+        #mixins
+        listmix.ListCtrlAutoWidthMixin.__init__(self)
+        listmix.ColumnSorterMixin.__init__(self, 3)
 
+        #sort by genre (column 2), A->Z ascending order (1)
+        self.SortListItems(0, 1)
 
-class DBHunter(wx.Frame):
-    def __init__(self, parent, id, title, tablename):
-        wx.Frame.__init__(self, parent, -1, title)
+        #events
+        self.Bind(wx.EVT_LIST_ITEM_SELECTED, self.OnItemSelected)
+        self.Bind(wx.EVT_LIST_ITEM_ACTIVATED, self.OnItemActivated)
+        self.Bind(wx.EVT_LIST_ITEM_DESELECTED, self.OnItemDeselected)
+        self.Bind(wx.EVT_LIST_COL_CLICK, self.OnColClick)
 
-        global imagepath
-        self.tablename = tablename
-        self.SetIcon(wx.Icon(os.path.join(imagepath,'grass_db.png'), wx.BITMAP_TYPE_ANY))
-
-
-        self.table = MyListCtrl(self, -1, self.tablename)
-
-
-        self.Bind(wx.EVT_SIZE, self.OnSize)
-
-        filemenu= wx.Menu()
-        filemenu.Append(ID_EXIT,"E&xit"," Terminate the program")
-        editmenu = wx.Menu()
-        netmenu = wx.Menu()
-        showmenu = wx.Menu()
-        configmenu = wx.Menu()
-        helpmenu = wx.Menu()
-
-        menuBar = wx.MenuBar()
-        menuBar.Append(filemenu,"&File")
-        menuBar.Append(editmenu, "&Edit")
-        menuBar.Append(netmenu, "&Net")
-        menuBar.Append(showmenu, "&Show")
-        menuBar.Append(configmenu, "&Config")
-        menuBar.Append(helpmenu, "&Help")
-        self.SetMenuBar(menuBar)
-        self.Bind(wx.EVT_MENU, self.OnExit, id=ID_EXIT)
-
-        tb = self.CreateToolBar( wx.TB_HORIZONTAL | wx.NO_BORDER | wx.TB_FLAT | wx.TB_TEXT)
-        tb.AddSimpleTool(10, wx.Bitmap(os.path.join(imagepath, 'db_open_table.png')), 'Open table')
-        #tb.AddSimpleTool(20, wx.Bitmap('images/up.png'), 'Up one directory')
-        #tb.AddSimpleTool(30, wx.Bitmap('images/home.png'), 'Home')
-        #tb.AddSimpleTool(40, wx.Bitmap('images/refresh.png'), 'Refresh')
-        #tb.AddSeparator()
-        #tb.AddSimpleTool(50, wx.Bitmap('images/write.png'), 'Editor')
-        #tb.AddSimpleTool(60, wx.Bitmap('images/terminal.png'), 'Terminal')
-        #tb.AddSeparator()
-        #tb.AddSimpleTool(70, wx.Bitmap('images/help.png'), 'Help')
-        tb.Realize()
-
-        #self.sizer2 = wx.BoxSizer(wx.HORIZONTAL)
-
-        #button1 = wx.Button(self, ID_BUTTON + 1, "F3 View")
-        #button2 = wx.Button(self, ID_BUTTON + 2, "F4 Edit")
-        #button3 = wx.Button(self, ID_BUTTON + 3, "F5 Copy")
-        #button4 = wx.Button(self, ID_BUTTON + 4, "F6 Move")
-        #button5 = wx.Button(self, ID_BUTTON + 5, "F7 Mkdir")
-        #button6 = wx.Button(self, ID_BUTTON + 6, "F8 Delete")
-        #button7 = wx.Button(self, ID_BUTTON + 7, "F9 Rename")
-        #button8 = wx.Button(self, ID_EXIT, "F10 Quit")
-
-        # self.sizer2.Add(button1, 1, wx.EXPAND)
-        # self.sizer2.Add(button2, 1, wx.EXPAND)
-        # self.sizer2.Add(button3, 1, wx.EXPAND)
-        # self.sizer2.Add(button4, 1, wx.EXPAND)
-        # self.sizer2.Add(button5, 1, wx.EXPAND)
-        # self.sizer2.Add(button6, 1, wx.EXPAND)
-        # self.sizer2.Add(button7, 1, wx.EXPAND)
-        # self.sizer2.Add(button8, 1, wx.EXPAND)
-
-        self.Bind(wx.EVT_BUTTON, self.OnExit, id=ID_EXIT)
-
-        self.sizer = wx.BoxSizer(wx.VERTICAL)
-        #self.sizer.Add(self.splitter,1,wx.EXPAND)
-        self.sizer.Add(self.table,1, wx.EXPAND | wx.ALL, 3)
-        #self.sizer.Add(self.sizer2,0,wx.EXPAND)
-        self.SetSizer(self.sizer)
-
-        #size = (wx
-        #self.SetSize(size)
-
-        self.sb = self.CreateStatusBar()
-        self.dbcon  = "table: %s; " % self.tablename
-        for line in os.popen("db.connect -p").readlines():
-            self.dbcon += line.strip() +"; "
-        self.sb.SetStatusText(self.dbcon)
-        self.Center()
-        self.Show(True)
-
-
-    def OnExit(self,e):
-        self.Close(True)
-
-    def OnSize(self, event):
-        size = self.GetSize()
-        #self.splitter.SetSashPosition(size.x / 2)
-        self.sb.SetStatusText(self.dbcon)
+    def OnColClick(self,event):
         event.Skip()
 
+    def OnItemSelected(self, event):
+        self.currentItem = event.m_itemIndex
+        self.log.WriteText('OnItemSelected: "%s", "%s"\n' %
+                           (self.currentItem,
+                            self.GetItemText(self.currentItem)))
 
-    def OnDoubleClick(self, event):
-        size =  self.GetSize()
-        #self.splitter.SetSashPosition(size.x / 2)
+    def OnItemActivated(self, event):
+        self.currentItem = event.m_itemIndex
+        self.log.WriteText("OnItemActivated: %s\nTopItem: %s\n" %
+                           (self.GetItemText(self.currentItem), self.GetTopItem()))
 
-if __name__ == "__main__":
+    def getColumnText(self, index, col):
+        item = self.GetItem(index, col)
+        return item.GetText()
 
-    if len(sys.argv) != 2:
+    def OnItemDeselected(self, evt):
+        self.log.WriteText("OnItemDeselected: %s" % evt.m_itemIndex)
+
+
+    #---------------------------------------------------
+    # These methods are callbacks for implementing the
+    # "virtualness" of the list...
+
+    def OnGetItemText(self, item, col):
+        index=self.itemIndexMap[item]
+        s = self.itemDataMap[index][col]
+        return s
+
+    # def OnGetItemImage(self, item):
+    #     index=self.itemIndexMap[item]
+    #     if ( index % 2) == 0:
+
+    def OnGetItemAttr(self, item):
+        index=self.itemIndexMap[item]
+
+        return self.attr2
+        #if ( index % 2) == 0:
+        #    return self.attr2
+        #else:
+        #    return self.attr1
+
+    #---------------------------------------------------
+    # Matt C, 2006/02/22
+    # Here's a better SortItems() method --
+    # the ColumnSorterMixin.__ColumnSorter() method already handles the ascending/descending,
+    # and it knows to sort on another column if the chosen columns have the same value.
+
+    def SortItems(self,sorter=cmp):
+        items = list(self.itemDataMap.keys())
+        items.sort(sorter)
+        self.itemIndexMap = items
+        
+        # redraw the list
+        self.Refresh()
+
+    # Used by the ColumnSorterMixin, see wx/lib/mixins/listctrl.py
+    def GetListCtrl(self):
+        return self
+
+    # Used by the ColumnSorterMixin, see wx/lib/mixins/listctrl.py
+    #def GetSortImages(self):
+    #    return (self.sm_dn, self.sm_up)
+
+    #XXX Looks okay to remove this one (was present in the original demo)
+    #def getColumnText(self, index, col):
+    #    item = self.GetItem(index, col)
+    #    return item.GetText()
+
+#----------------------------------------------------------------------
+# The main window
+#----------------------------------------------------------------------
+# This is where you populate the frame with a panel from the demo.
+#  original line in runTest (in the demo source):
+#    win = TestPanel(nb, log)
+#  this is changed to:
+#    self.win=TestPanel(self,log)
+#----------------------------------------------------------------------
+
+class AttributeManager(wx.Frame):
+
+    def __init__(self, parent, id, title, size, style = wx.DEFAULT_FRAME_STYLE, table=None ):
+
+        wx.Frame.__init__(self, parent, id, title, size=size, style=style)
+
+        self.CreateStatusBar(1)
+
+        log=Log()
+
+        self.win = TestVirtualList(self, log,tablename=table)
+        self.Show()
+
+def main(argv=None):
+    if argv is None:
+        argv = sys.argv
+
+    if len(argv) != 2:
         print >>sys.stderr, __doc__
         sys.exit()
 
-    app = wx.App(0)
-    dbmanager = DBHunter(None, -1, 'GRASS Attribute Table Manager',sys.argv[1])
+    # Command line arguments of the script to be run are preserved by the
+    # hotswap.py wrapper but hotswap.py and its options are removed that
+    # sys.argv looks as if no wrapper was present.
+    #print "argv:", `argv`
+
+    #some applications might require image handlers
+    #wx.InitAllImageHandlers()
+
+    app = wx.PySimpleApp()
+    f = AttributeManager(None, -1, "GRASS Attribute Table Manager",wx.Size(500,300),table=argv[1])
     app.MainLoop()
 
+
+
+if __name__ == '__main__':
+    main()

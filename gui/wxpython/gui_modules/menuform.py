@@ -827,6 +827,7 @@ class GUI:
         else:
             get_dcmd = completed[0]
             layer = completed[1]
+            print completed
             dcmd_params.update(completed[2])
         cmdlst = cmd.split(' ')
 
