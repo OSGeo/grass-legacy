@@ -53,7 +53,6 @@ class LayerTree(CT.CustomTreeCtrl):
         self.saveitem = {} # dictionary to preserve layer attributes for drag and drop
         self.first = True # indicates if a layer is just added or not
         self.drag = False # flag to indicate a drag event is in process
-        self.params = '' # existing command parameters to pass back to options dialog
 
         self.Map = disp.getRender()
 
@@ -137,6 +136,8 @@ class LayerTree(CT.CustomTreeCtrl):
 
     def AddLayer(self, idx, type):
         self.first = True
+        params = '' # no initial options parameters
+
         if type == 'command':
             # generic command layer
             self.ctrl = wx.TextCtrl(self, id=wx.ID_ANY, value='',
@@ -190,47 +191,47 @@ class LayerTree(CT.CustomTreeCtrl):
             self.SetItemImage(layer, self.rast_icon)
             self.SetItemText(layer, 'raster (double click to set properties)')
             # launch the properties dialog
-            menuform.GUI().parseCommand('d.rast', gmpath, completed=(self.getOptData,layer,self.params), parentframe=self)
+            menuform.GUI().parseCommand('d.rast', gmpath, completed=(self.getOptData,layer,params), parentframe=self)
         elif type == 'rgb':
             self.SetItemImage(layer, self.rgb_icon)
             self.SetItemText(layer, 'RGB (double click to set properties)')
             # launch the properties dialog
-            menuform.GUI().parseCommand('d.rgb', gmpath, completed=(self.getOptData,layer,self.params), parentframe=self)
+            menuform.GUI().parseCommand('d.rgb', gmpath, completed=(self.getOptData,layer,params), parentframe=self)
         elif type == 'his':
             self.SetItemImage(layer, self.his_icon)
             self.SetItemText(layer, 'HIS (double click to set properties)')
             # launch the properties dialog
-            menuform.GUI().parseCommand('d.his', gmpath, completed=(self.getOptData,layer,self.params), parentframe=self)
+            menuform.GUI().parseCommand('d.his', gmpath, completed=(self.getOptData,layer,params), parentframe=self)
         elif type == 'rastleg':
             self.SetItemImage(layer, self.leg_icon)
             self.SetItemText(layer, 'legend (double click to set properties)')
             # launch the properties dialog
-            menuform.GUI().parseCommand('d.legend', gmpath, completed=(self.getOptData,layer,self.params), parentframe=self)
+            menuform.GUI().parseCommand('d.legend', gmpath, completed=(self.getOptData,layer,params), parentframe=self)
         elif type == 'vector':
             self.SetItemImage(layer, self.vect_icon)
             self.SetItemText(layer, 'vector (double click to set properties)')
             # launch the properties dialog
-            menuform.GUI().parseCommand('d.vect', gmpath, completed=(self.getOptData,layer,self.params), parentframe=self)
+            menuform.GUI().parseCommand('d.vect', gmpath, completed=(self.getOptData,layer,params), parentframe=self)
         elif type == 'thememap':
             self.SetItemImage(layer, self.theme_icon)
             self.SetItemText(layer, 'thematic map (double click to set properties)')
             # launch the properties dialog
-            menuform.GUI().parseCommand('d.vect.thematic', gmpath, completed=(self.getOptData,layer,self.params), parentframe=self)
+            menuform.GUI().parseCommand('d.vect.thematic', gmpath, completed=(self.getOptData,layer,params), parentframe=self)
         elif type == 'themechart':
             self.SetItemImage(layer, self.chart_icon)
             self.SetItemText(layer, 'thematic charts (double click to set properties)')
             # launch the properties dialog
-            menuform.GUI().parseCommand('d.vect.chart', gmpath, completed=(self.getOptData,layer,self.params), parentframe=self)
+            menuform.GUI().parseCommand('d.vect.chart', gmpath, completed=(self.getOptData,layer,params), parentframe=self)
         elif type == 'grid':
             self.SetItemImage(layer, self.grid_icon)
             self.SetItemText(layer, 'grid (double click to set properties)')
             # launch the properties dialog
-            menuform.GUI().parseCommand('d.grid', gmpath, completed=(self.getOptData,layer,self.params), parentframe=self)
+            menuform.GUI().parseCommand('d.grid', gmpath, completed=(self.getOptData,layer,params), parentframe=self)
         elif type == 'labels':
             self.SetItemImage(layer, self.labels_icon)
             self.SetItemText(layer, 'vector labels (double click to set properties)')
             # launch the properties dialog
-            menuform.GUI().parseCommand('d.labels', gmpath, completed=(self.getOptData,layer,self.params), parentframe=self)
+            menuform.GUI().parseCommand('d.labels', gmpath, completed=(self.getOptData,layer,params), parentframe=self)
         elif type == 'command':
             self.SetItemImage(layer, self.cmd_icon)
         elif type == 'group':
@@ -245,26 +246,27 @@ class LayerTree(CT.CustomTreeCtrl):
         layer = event.GetItem()
         self.layer_selected = layer
         completed = ''
+        params = self.GetPyData(layer)[1]
 
        # When double clicked or first added, open options dialog
         if self.layertype[layer] == 'raster':
-            menuform.GUI().parseCommand('d.rast', gmpath, completed=(self.getOptData,layer,self.params), parentframe=self)
+            menuform.GUI().parseCommand('d.rast', gmpath, completed=(self.getOptData,layer,params), parentframe=self)
         elif self.layertype[layer] == 'rgb':
-            menuform.GUI().parseCommand('d.rgb', gmpath, completed=(self.getOptData,layer,self.params), parentframe=self)
+            menuform.GUI().parseCommand('d.rgb', gmpath, completed=(self.getOptData,layer,params), parentframe=self)
         elif self.layertype[layer] == 'his':
-             menuform.GUI().parseCommand('d.his', gmpath, completed=(self.getOptData,layer,self.params), parentframe=self)
+             menuform.GUI().parseCommand('d.his', gmpath, completed=(self.getOptData,layer,params), parentframe=self)
         elif self.layertype[layer] == 'rastleg':
-            menuform.GUI().parseCommand('d.legend', gmpath, completed=(self.getOptData,layer,self.params), parentframe=self)
+            menuform.GUI().parseCommand('d.legend', gmpath, completed=(self.getOptData,layer,params), parentframe=self)
         elif self.layertype[layer] == 'vector':
-            menuform.GUI().parseCommand('d.vect', gmpath, completed=(self.getOptData,layer,self.params), parentframe=self)
+            menuform.GUI().parseCommand('d.vect', gmpath, completed=(self.getOptData,layer,params), parentframe=self)
         elif self.layertype[layer] == 'thememap':
-            menuform.GUI().parseCommand('d.vect.thematic', gmpath, completed=(self.getOptData,layer,self.params), parentframe=self)
+            menuform.GUI().parseCommand('d.vect.thematic', gmpath, completed=(self.getOptData,layer,params), parentframe=self)
         elif self.layertype[layer] == 'themechart':
-            menuform.GUI().parseCommand('d.vect.chart', gmpath, completed=(self.getOptData,layer,self.params), parentframe=self)
+            menuform.GUI().parseCommand('d.vect.chart', gmpath, completed=(self.getOptData,layer,params), parentframe=self)
         elif self.layertype[layer] == 'grid':
-            menuform.GUI().parseCommand('d.grid', gmpath, completed=(self.getOptData,layer,self.params), parentframe=self)
+            menuform.GUI().parseCommand('d.grid', gmpath, completed=(self.getOptData,layer,params), parentframe=self)
         elif self.layertype[layer] == 'labels':
-            menuform.GUI().parseCommand('d.labels', gmpath, completed=(self.getOptData,layer,self.params), parentframe=self)
+            menuform.GUI().parseCommand('d.labels', gmpath, completed=(self.getOptData,layer,params), parentframe=self)
         elif self.layertype[layer] == 'group':
             if self.IsExpanded(layer):
                 self.Collapse(layer)
@@ -448,8 +450,6 @@ class LayerTree(CT.CustomTreeCtrl):
 
         # change parameters for item in layers list in render.Map
         self.changeLayer(layer)
-
-        self.params = params
 
 
     def writeDCommand(self, dcmd):
