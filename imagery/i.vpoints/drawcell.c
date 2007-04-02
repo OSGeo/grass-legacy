@@ -11,7 +11,7 @@ int drawcell (View *view, int initflag)
     int ncols, nrows;
     int row;
     DCELL *dcell;
-    int read_colors, repeat;
+    int read_colors;
     struct Colors *colors;
     char msg[100];
 
@@ -71,13 +71,12 @@ int drawcell (View *view, int initflag)
     sprintf (msg, "Displaying %s ...", view->cell.name);
     Menu_msg(msg);
 
-    for (row = 0; row < nrows; row += repeat)
+    D_cell_draw_setup(top, top + nrows, left, left + ncols);
+    for (row = 0; row < nrows; row++)
     {
-	R_move_abs (left, top+row);
 	if(G_get_d_raster_row_nomask(fd, dcell, row) < 0)
 	    break;
-	repeat = G_row_repeat_nomask (fd, row);
-	D_d_raster (dcell, ncols, repeat, colors);
+	D_draw_d_raster (row, dcell, colors);
     }
 
     /* only set if cell is on the target side (always a group map on the source side) */
