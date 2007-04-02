@@ -318,7 +318,12 @@ class GMFrame(wx.Frame):
                  ('addgrp', wx.ArtProvider.GetBitmap(wx.ART_FOLDER, wx.ART_TOOLBAR, (16,16)), 'Add layer group', self.addGroup),
                  ('addovl', wx.Bitmap(os.path.join(wxgui_utils.icons,'module-d.grid.gif'), wx.BITMAP_TYPE_ANY), 'Add grid or vector labels overlay', self.onOverlay),
                  ('delcmd', wx.ArtProvider.GetBitmap(wx.ART_DELETE, wx.ART_TOOLBAR, (16,16)), 'Delete selected layer', self.deleteLayer),
+                 ('attributetable',wx.Bitmap(os.path.join(imagepath,'db_open_table.png'),wx.BITMAP_TYPE_ANY), 'Show attribute table', self.ShowAttributeTable),
                  )
+
+    def ShowAttributeTable(self,event):
+        print self.maptree.GetSelection().GetText()
+
 
     def newDisplay(self, event=None):
         """Create new map display frame"""
