@@ -328,7 +328,6 @@ class GMFrame(wx.Frame):
         if name.find("@") >-1:
             map,mapset = name.strip().split("@")
             
-            print "#%s#%s#%s" % (map,mapset,grassenv.env["MAPSET"])
             if mapset == grassenv.env["MAPSET"]:
                 from gui_modules import dbm
                 self.dbmanager = gui_modules.dbm.DBHunter(None, -1,"GRASS Attribute Table Manager: %s" % map,map)

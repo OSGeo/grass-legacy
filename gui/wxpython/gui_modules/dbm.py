@@ -157,8 +157,8 @@ class DBHunter(wx.Frame):
         #self.sizer.Add(self.sizer2,0,wx.EXPAND)
         self.SetSizer(self.sizer)
 
-        size = wx.DisplaySize()
-        self.SetSize(size)
+        #size = (wx
+        #self.SetSize(size)
 
         self.sb = self.CreateStatusBar()
         self.dbcon  = "table: %s; " % self.tablename
