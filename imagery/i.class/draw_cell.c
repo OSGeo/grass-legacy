@@ -13,7 +13,6 @@ int draw_cell (View *view, int overlay)
   int row;
   DCELL *dcell;
   struct Colors colr;
-  int repeat;
   char msg[100];
 
 
@@ -53,13 +52,12 @@ int draw_cell (View *view, int overlay)
   Menu_msg(msg);
 
   D_set_overlay_mode(!overlay);
-  for (row = 0; row < nrows; row += repeat)
+  D_cell_draw_setup(top, top + nrows, left, left + ncols);
+  for (row = 0; row < nrows; row++)
     {
-      R_move_abs (left, top+row);
       if(G_get_d_raster_row_nomask(fd, dcell, row) < 0)
         break;
-      repeat = G_row_repeat_nomask (fd, row);
-      D_d_raster (dcell, ncols, repeat, &colr);
+      D_draw_d_raster (row, dcell, &colr);
     }
   G_close_cell (fd);
   G_free (dcell);
