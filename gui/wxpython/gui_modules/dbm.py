@@ -55,7 +55,7 @@ class MyListCtrl(wx.ListCtrl):
             self.InsertColumn(i, column)
             self.SetColumnWidth(i, 5)
             i += 1
-            lengths.append(1) # 
+            lengths.append(1) #
 
 
         # FIXME: subprocess.Popen should be used
@@ -77,7 +77,7 @@ class MyListCtrl(wx.ListCtrl):
             if (j % 2) == 0:
                 self.SetItemBackgroundColour(j, '#e6f1f5')
             j = j + 1
-        
+
         # setting column widths
         i = 0
         for length in lengths:
@@ -95,7 +95,7 @@ class DBHunter(wx.Frame):
 
 
         self.table = MyListCtrl(self, -1, self.tablename)
-        
+
 
         self.Bind(wx.EVT_SIZE, self.OnSize)
 
@@ -118,7 +118,7 @@ class DBHunter(wx.Frame):
         self.Bind(wx.EVT_MENU, self.OnExit, id=ID_EXIT)
 
         tb = self.CreateToolBar( wx.TB_HORIZONTAL | wx.NO_BORDER | wx.TB_FLAT | wx.TB_TEXT)
-        tb.AddSimpleTool(10, wx.Bitmap('images/db_open_table.png'), 'Open table')
+        tb.AddSimpleTool(10, wx.Bitmap(os.path.join(imagepath, 'db_open_table.png')), 'Open table')
         #tb.AddSimpleTool(20, wx.Bitmap('images/up.png'), 'Up one directory')
         #tb.AddSimpleTool(30, wx.Bitmap('images/home.png'), 'Home')
         #tb.AddSimpleTool(40, wx.Bitmap('images/refresh.png'), 'Refresh')
