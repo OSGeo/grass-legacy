@@ -415,6 +415,7 @@ class BufferedWindow(wx.Window):
             img = wx.Image(Map.mapfile, wx.BITMAP_TYPE_ANY)
         else:
             img = None
+            
         self.imagedict[img] = 99 # set image PeudoDC ID
         return img
 
@@ -440,8 +441,10 @@ class BufferedWindow(wx.Window):
             self.resize = False
 
         if not self.img: return
-        id = self.imagedict[self.img]
-        if not id: return
+        try:
+            id = self.imagedict[self.img]
+        except:
+            return
 
         # paint images to PseudoDC
         self.pdc.Clear()
