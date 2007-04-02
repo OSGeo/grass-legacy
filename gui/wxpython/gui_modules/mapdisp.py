@@ -400,7 +400,6 @@ class BufferedWindow(wx.Window):
              for ovlfile in Map.ovlist:
                  if os.path.isfile(ovlfile) and os.path.getsize(ovlfile):
                      img = wx.Image(ovlfile, wx.BITMAP_TYPE_ANY)
-                     img.ConvertAlphaToMask()
                      ovlist.append(img)
                      self.imagedict[img] = ovlist.index(img) # set image PeudoDC ID
         return ovlist
@@ -415,7 +414,7 @@ class BufferedWindow(wx.Window):
             img = wx.Image(Map.mapfile, wx.BITMAP_TYPE_ANY)
         else:
             img = None
-            
+
         self.imagedict[img] = 99 # set image PeudoDC ID
         return img
 
@@ -496,11 +495,13 @@ class BufferedWindow(wx.Window):
         x,y = self.lastpos
         dx = event.GetX() - x
         dy = event.GetY() - y
+        self.pdc.SetBackground(wx.Brush(self.GetBackgroundColour()))
         r = self.pdc.GetIdBounds(id)
         self.pdc.TranslateId(id, dx, dy)
-        r2 = self.pdc.GetIdBounds(id)
-        r = r.Union(r2)
-        r.Inflate(4,4)
+        if id != 99:
+            r2 = self.pdc.GetIdBounds(id)
+            r = r.Union(r2)
+            r.Inflate(4,4)
         self.RefreshRect(r, False)
         self.lastpos = (event.GetX(),event.GetY())
 
@@ -590,11 +591,12 @@ class BufferedWindow(wx.Window):
             end = (currpos[0]-self.mouse['begin'][0], \
                              currpos[1]-self.mouse['begin'][1])
             # dragging or drawing box with left button
-            if self.mouse['box'] == 'drag':
+            if self.mouse['box'] == 'pan':
                 self.DragMap(end)
+                self.DragItem(99, event)
 
             # dragging decoration overlay item
-            elif self.mouse['box'] == 'point' and self.dragid != None:
+            elif self.mouse['box'] == 'point' and self.dragid != None and self.dragid != 99:
                 self.DragItem(self.dragid, event)
 
             # dragging something else?
@@ -615,12 +617,15 @@ class BufferedWindow(wx.Window):
             #l = self.pdc.FindObjectsByBBox(x, y)
             l = self.pdc.FindObjects(x, y, hitradius)
             if l:
-                self.pdc.SetIdGreyedOut(id=l[0], greyout=(not self.pdc.GetIdGreyedOut(id=l[0])))
-                self.Refresh()
-                self.Update()
-#                r = self.pdc.GetIdBounds(l[0])
-#                r.Inflate(4,4)
-#                self.RefreshRect(r, False)
+                id = l[0]
+                self.pdc.SetId(id)
+                if self.pdc.GetIdGreyedOut(id) == True:
+                    self.pdc.SetIdGreyedOut(id, False)
+                else:
+                    self.pdc.SetIdGreyedOut(id, True)
+                r = self.pdc.GetIdBounds(id)
+                r.Inflate(4,4)
+                self.RefreshRect(r, False)
 
     	# store current mouse position
     	self.mouse['pos'] = event.GetPositionTuple()[:]
@@ -863,7 +868,7 @@ class MapFrame(wx.Frame):
         # decoration overlays
         self.ovlchk = self.MapWindow.ovlchk
         self.ovlcoords = self.MapWindow.ovlcoords
-
+        self.params = {} # previously set decoration options parameters to insert into options dialog
         #
         # Bind various events
         # ONLY if we are running from GIS manager
@@ -1021,7 +1026,7 @@ class MapFrame(wx.Frame):
         """
         Panning, set mouse to drag
         """
-    	self.MapWindow.mouse['box'] = "drag"
+    	self.MapWindow.mouse['box'] = "pan"
     	self.MapWindow.zoomtype = 0
     	event.Skip()
 
@@ -1130,6 +1135,11 @@ class MapFrame(wx.Frame):
         Handler for scale/arrow map decoration menu selection.
         """
         ovltype = 0 # index for overlay layer in render
+        if ovltype in self.params:
+            params = self.params[ovltype]
+        else:
+            params = ''
+
         ovlist = self.MapWindow.GetOverlay()
         if ovlist == []: return
         img = ovlist[0]
@@ -1144,7 +1154,8 @@ class MapFrame(wx.Frame):
                          cmd='d.barscale',
                          drawid=id,
                          checktxt = "Show/hide scale and arrow",
-                         ctrltxt = "scale object")
+                         ctrltxt = "scale object",
+                         params = params)
 
         dlg.CenterOnScreen()
 
@@ -1164,6 +1175,11 @@ class MapFrame(wx.Frame):
         Handler for legend map decoration menu selection.
         """
         ovltype = 1 # index for overlay layer in render
+        if ovltype in self.params:
+            params = self.params[ovltype]
+        else:
+            params = ''
+
         ovlist = self.MapWindow.GetOverlay()
         if ovlist == []: return
         img = ovlist[1]
@@ -1178,7 +1194,8 @@ class MapFrame(wx.Frame):
                          cmd='d.legend',
                          drawid=id,
                          checktxt = "Show/hide legend",
-                         ctrltxt = "legend object")
+                         ctrltxt = "legend object",
+                         params = params)
 
         dlg.CenterOnScreen()
 
@@ -1193,7 +1210,7 @@ class MapFrame(wx.Frame):
         self.MapWindow.UpdateMap()
         dlg.Destroy()
 
-    def getOptData(self, dcmd, type):
+    def getOptData(self, dcmd, type, params):
         """
         Callback method for decoration overlay command generated by
         dialog created in menuform.py
@@ -1202,12 +1219,14 @@ class MapFrame(wx.Frame):
         # Reset comand and rendering options in render.Map. Always render decoration.
         # Showing/hiding handled by PseudoDC
         Map.changeOverlay(type=type, command=dcmd, l_active=True, l_render=False)
+        self.params[type] = params
 
 # end of class MapFrame
 
 class DecDialog(wx.Dialog):
     def __init__(self, parent, id, title, pos=wx.DefaultPosition, size=wx.DefaultSize,
-            style=wx.DEFAULT_DIALOG_STYLE, ovltype=0, cmd='d.barscale', drawid=None, checktxt='', ctrltxt=''):
+            style=wx.DEFAULT_DIALOG_STYLE, ovltype=0, cmd='d.barscale',
+            drawid=None, checktxt='', ctrltxt='', params=''):
         wx.Dialog.__init__(self, parent, id, title, pos, size, style)
         """
         Controls setting options and displaying/hiding map overlay decorations
@@ -1217,6 +1236,7 @@ class DecDialog(wx.Dialog):
         self.drawid = drawid
         self.ovlcmd = cmd
         self.ovlchk = self.Parent.MapWindow.ovlchk
+        self.params = params #previously set decoration options to pass back to options dialog
 
         sizer = wx.BoxSizer(wx.VERTICAL)
 
@@ -1268,7 +1288,7 @@ class DecDialog(wx.Dialog):
         """
         Sets option for decoration map overlays
         """
-        self.params = [] # parameters to insert into dialog (not working)
+
         menuform.GUI().parseCommand(self.ovlcmd, gmpath,
                                     completed=(self.Parent.getOptData,self.ovltype,self.params),
                                     parentframe=None)
