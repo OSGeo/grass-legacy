@@ -40,9 +40,9 @@ modbuild: ReadMe.rtf
 	@#GISBASE = $(INST_DIR_MACOSX)\
 	@#endif#g'
 	@# html.make needs a little change
-	sed -e "s,GISRC=$$(RUN_GISBASE),GISRC=$$(ARCH_DISTDIR),g" ../../include/Make/Html.make > $(ARCH_DISTDIR)/modbuild/include/Make/Html.make
+	sed -e 's,GISRC=$$(RUN_GISBASE),GISRC=$$(ARCH_DISTDIR),g' ../../include/Make/Html.make > $(ARCH_DISTDIR)/modbuild/include/Make/Html.make
 	-cp $(ARCH_DISTDIR)/include/Make/Lib.make $(ARCH_DISTDIR)/modbuild/include/Make/
-	sed -e "s,\$\(DEPENDENCIES\),,g" $(ARCH_DISTDIR)/include/Make/Module.make > $(ARCH_DISTDIR)/modbuild/include/Make/Module.make
+	sed -e 's,$$(DEPENDENCIES),,g' $(ARCH_DISTDIR)/include/Make/Module.make > $(ARCH_DISTDIR)/modbuild/include/Make/Module.make
 	@# platform.make changes
 	sed -e 's,^GRASS_HOME.*,GRASS_HOME = $$(GRASS_HOME),g' \
 	-e 's,^RUN_GISBASE.*,RUN_GISBASE = $$(GISBASE),g' \
