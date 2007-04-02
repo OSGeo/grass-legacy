@@ -44,7 +44,7 @@ CMDLIST=`ls -1 2> /dev/null | sort -u`
 if [ "$CMDLIST" != "" ] ; then
   for i in $CMDLIST
   do
-    ftype="`file $BINDIRG/$i`"
+    ftype="`file $BINDIR/$i`"
     if [ "`echo $ftype | grep 'Mach-O'`" ] || [ "`grep '#%Module' $BINDIR/$i`" ] ; then
       echo "{command {[G_msg \"\"]} {} \"$i\" {} -command {execute $i }}" > $MENUDIR/$i.menu
     fi
