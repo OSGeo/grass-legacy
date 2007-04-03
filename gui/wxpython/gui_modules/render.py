@@ -813,16 +813,17 @@ class Map:
 	def addLayer(self, item, command, mapset=None, l_active=True, l_hidden=False,
 		l_opacity=1, l_render=False):
 		"""
-		Adds generic layer to list of layers
+		Adds generic display command layer to list of layers
 
 		Layer Attributes:
-			command	   - display command
-			mapset	   - mapset name, default: current
+			command	   	- display command
+			mapset	   	- mapset name for backward compatibility.
+						- included in mapname in command
 
-			l_active   - see MapLayer class
-			l_hidden
-			l_opacity
-			l_render   - render an image
+			l_active   	- checked/not checked for display in layer tree
+			l_hidden	- not used here
+			l_opacity	- range from 0-1
+			l_render   	- render an image if False
 
 		Returns:
                     Added layer on success or None
@@ -852,12 +853,11 @@ class Map:
 
 	def delLayer(self, item):
 		"""
-		Removes layer from list of layers, defined by layer ID
+		Removes layer from list of layers, defined by layer
+		tree item ID
 
 		Parameters:
-			name	- map name
-			mapset	- mapset name, default: current
-			id	- index of the layer in layer list
+			item	- wxPython ID for layer tree item
 
 		Returns:
 			Removed layer on success or None
@@ -879,19 +879,35 @@ class Map:
 		return None
 
 	def reorderLayers(self, item_list):
-
-		# make a new reordered list
+		"""
+		Make a new reordered list to match reordered
+		layer tree - for drag and drop
+		"""
 		temp = []
 
 		for item in item_list:
-			temp.append(self.lookup[item])
+			layer = self.lookup[item]
+			temp.append(layer)
 
 		# replace original layers list with reordered one
 		self.layers = temp
+		return self.layers[-1]
 
+	def updateLookup(self, olditem, newitem):
+		"""
+		Changes layer tree item associatd with rendering layer
+		in the lookup dictionary. Used with layer drag and drop.
+		"""
+		layer = self.lookup[olditem]
+		self.lookup[newitem] = layer
+
+		# old lookup item will be deleted when layer is deleted
 
 	def changeLayer(self, item, command, mapset=None, l_active=True, l_hidden=False,
 		l_opacity=1, l_render=False):
+		"""
+		Change the command and other other options for a layer
+		"""
 
 		if not mapset:
 			mapset = self.env["MAPSET"]
@@ -919,6 +935,9 @@ class Map:
 		return self.layers[-1]
 
 	def changeOpacity(self, item, l_opacity):
+		"""
+		Changes opacity value for rendering.
+		"""
 		# l_opacity must be <0;1>
 		if l_opacity < 0: l_opacity = 0
 		elif l_opacity > 1: l_opacity = 1
@@ -926,6 +945,9 @@ class Map:
 		layer.opacity = l_opacity
 
 	def changeActive(self, item, activ):
+		"""
+		Change the active state of a layer
+		"""
 		layer = self.lookup[item]
 		layer.active = activ
 
