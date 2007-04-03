@@ -436,6 +436,9 @@ When the user enters input to <EM>r3.mapcalc</EM> non-interactively on
 the command line, the program will not warn the user not to overwrite existing
 3D grids. Users should therefore take care to assign program outputs 3D
 grid file names that do not yet exist in their current mapsets.
+<P>
+The environment variable GRASS_RND_SEED is read to initialise the
+random number generator.
 <H2>BUGS</H2>
 Continuation lines must end with a \ and have NO trailing white space
 (blanks or tabs).  If the user does leave white space at the end of
