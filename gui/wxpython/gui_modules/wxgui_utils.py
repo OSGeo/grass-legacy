@@ -298,10 +298,10 @@ class LayerTree(CT.CustomTreeCtrl):
                         childchecked = False
                     else:
                         childchecked = child.IsChecked()
-                    self.changeChecked(child, childchecked)
+                    self.Map.changeActive(child, childchecked)
                     child = self.GetNextChild(layer, cookie)[0]
             else:
-                self.changeChecked(layer, checked)
+                self.Map.changeActive(layer, checked)
 
 
     def onCmdChanged(self, event):
@@ -367,6 +367,7 @@ class LayerTree(CT.CustomTreeCtrl):
         delete original at old position
         """
 
+        self.drag = True
         # Make sure this memeber exists.
         try:
             old = self.dragItem
@@ -395,10 +396,12 @@ class LayerTree(CT.CustomTreeCtrl):
             new = self.PrependItem(self.root, text=self.saveitem['text'], \
                               ct_type=1, wnd=newctrl, image=self.saveitem['image'], \
                               data=self.saveitem['data'])
-        elif (flag &  wx.TREE_HITTEST_BELOW) or (flag & wx.TREE_HITTEST_NOWHERE):
+        elif (flag &  wx.TREE_HITTEST_BELOW) or (flag & wx.TREE_HITTEST_NOWHERE) \
+            or (flag & wx.TREE_HITTEST_TOLEFT) or (flag & wx.TREE_HITTEST_TORIGHT):
             new = self.AppendItem(self.root, text=self.saveitem['text'], \
                               ct_type=1, wnd=newctrl, image=self.saveitem['image'], \
                               data=self.saveitem['data'])
+
         else:
             if not event.GetItem():
                 return
@@ -409,6 +412,7 @@ class LayerTree(CT.CustomTreeCtrl):
                     new = self.AppendItem(parent, text=self.saveitem['text'], \
                                   ct_type=1, wnd=newctrl, image=self.saveitem['image'], \
                                   data=self.saveitem['data'])
+                    self.Expand(afteritem)
                 else:
                     parent = self.GetItemParent(afteritem)
                     new = self.InsertItem(parent, afteritem, text=self.saveitem['text'], \
@@ -422,7 +426,7 @@ class LayerTree(CT.CustomTreeCtrl):
             newctrl.SetValue(self.saveitem['windval'])
 
         # update lookup dictionary in render.Map
-        if self.saveitem['type'] != 'group':
+        if self.layertype[new] != 'group':
             self.Map.updateLookup(old, new)
 
         # delete layer at original position
@@ -468,14 +472,15 @@ class LayerTree(CT.CustomTreeCtrl):
     def reorderLayers(self):
         """
         add commands from data associated with
-        any valid and checked layers to layer list
+        any valid layers (checked or not) to layer list in order to
+        match layers in layer tree
         """
 
         # make a list of visible layers
         treelayers = []
         vislayer = self.GetFirstVisibleItem()
         for item in range(0,self.GetCount()):
-            if self.IsItemChecked(vislayer) and self.layertype[vislayer] != 'group':
+            if self.layertype[vislayer] != 'group':
                 treelayers.append(vislayer)
             if self.GetNextVisible(vislayer) == None:
                 break
@@ -483,13 +488,6 @@ class LayerTree(CT.CustomTreeCtrl):
                 vislayer = self.GetNextVisible(vislayer)
         treelayers.reverse()
         self.Map.reorderLayers(treelayers)
-
-    def changeOpacity(self, layer, opacity):
-        self.Map.changeOpacity(layer, opacity)
-
-    def changeChecked(self, layer, check):
-        if self.layertype[layer] != 'group':
-            self.Map.changeActive(layer, check)
 
     def changeLayer(self, layer):
         if self.layertype[layer] == 'command':
