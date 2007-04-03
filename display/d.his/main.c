@@ -94,7 +94,7 @@ main (int argc, char **argv)
 
 	/* Prepare the raster cell drawing functions */
 	D_get_screen_window(&t, &b, &l, &r) ;
-	D_cell_draw_setup_RGB(t, b, l, r) ;
+	D_cell_draw_setup(t, b, l, r) ;
 
 	/* Get name of layer to be used for hue */
 	name_h = opt_h->answer;
@@ -230,9 +230,11 @@ main (int argc, char **argv)
 		}
 
 		if (atrow == next_row)
-			next_row = D_draw_cell_RGB(next_row,
-						   r_array, g_array, b_array,
-						   &gray_colors, &gray_colors, &gray_colors);
+			next_row = D_draw_raster_RGB(
+				next_row,
+				r_array, g_array, b_array,
+				&gray_colors, &gray_colors, &gray_colors,
+				CELL_TYPE, CELL_TYPE, CELL_TYPE);
 
 		if (next_row > 0)
 			atrow = next_row;

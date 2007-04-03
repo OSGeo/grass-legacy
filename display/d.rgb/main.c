@@ -69,7 +69,7 @@ int main(int argc, char **argv)
 	    G_fatal_error(_("No graphics device selected"));
 
 	D_get_screen_window(&t, &b, &l, &r) ;
-	D_cell_draw_setup_RGB(t, b, l, r) ;
+	D_cell_draw_setup(t, b, l, r) ;
 
 	for (i = 0; i < 3; i++)
 	{
