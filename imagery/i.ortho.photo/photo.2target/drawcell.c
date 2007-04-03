@@ -12,7 +12,6 @@ int drawcell (View *view)
     int row;
     CELL *cell;
     struct Colors *colors;
-    int repeat;
     int read_colors;
     char msg[100];
 
@@ -61,13 +60,12 @@ int drawcell (View *view)
     sprintf (msg, "Plotting %s ...", view->cell.name);
     Menu_msg(msg);
 
-    for (row = 0; row < nrows; row += repeat)
+    D_cell_draw_setup(top, top + nrows, left, left + ncols);
+    for (row = 0; row < nrows; row++)
     {
-	R_move_abs (left, top+row);
 	if(G_get_map_row_nomask(fd, cell, row) < 0)
 	    break;
-	repeat = G_row_repeat_nomask (fd, row);
-	D_raster (cell, ncols, repeat, colors);
+	D_draw_c_raster (row, cell, colors);
     }
     G_close_cell (fd);
     G_free (cell);
