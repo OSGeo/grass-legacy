@@ -44,36 +44,36 @@ main (int argc, char *argv[])
 
     module = G_define_module();
     module->keywords = _("general");
-    module->description = "Change current mapset";
+    module->description = _("Change current mapset");
 
     mapset_opt = G_define_option() ;
     mapset_opt->key         = "mapset" ;
     mapset_opt->type        = TYPE_STRING ;
     mapset_opt->required    = YES ;
     mapset_opt->multiple    = NO ;
-    mapset_opt->description = "New MAPSET name" ;
+    mapset_opt->description = _("New MAPSET name") ;
 
     location_opt = G_define_option() ;
     location_opt->key         = "location" ;
     location_opt->type        = TYPE_STRING ;
     location_opt->required    = NO ;
     location_opt->multiple    = NO ;
-    location_opt->description = "New LOCATION name (not location path)" ;
+    location_opt->description = _("New LOCATION name (not location path)") ;
 
     gisdbase_opt = G_define_option() ;
     gisdbase_opt->key         = "gisdbase" ;
     gisdbase_opt->type        = TYPE_STRING ;
     gisdbase_opt->required    = NO ;
     gisdbase_opt->multiple    = NO ;
-    gisdbase_opt->description = "New GISDBASE (full path to the directory where the new location is)" ;
+    gisdbase_opt->description = _("New GISDBASE (full path to the directory where the new location is)") ;
 
     f_add = G_define_flag() ;
     f_add->key         = 'c' ;
-    f_add->description = "Create mapset if it doesn't exist";
+    f_add->description = _("Create mapset if it doesn't exist");
     f_add->answer      = FALSE;
 
     if (G_parser(argc, argv))
-    	exit(1);
+    	exit(EXIT_FAILURE);
 
     /* Store original values */
     gisdbase_old = G__getenv ("GISDBASE");
@@ -100,7 +100,7 @@ main (int argc, char *argv[])
 
     /* TODO: this should be checked better (repeated '/' etc.) */
     if ( strcmp(mapset_old_path, mapset_new_path) == 0 )
-	G_fatal_error ( "%s is already the current mapset", mapset_new );
+	G_fatal_error ( _("%s is already the current mapset"), mapset_new );
     
     /* Check if the mapset exists and user is owner */
     G_debug ( 2, "check : %s", mapset_new_path );
@@ -108,7 +108,7 @@ main (int argc, char *argv[])
     ret = G__mapset_permissions2 ( gisdbase_new, location_new, mapset_new );
     switch ( ret ) {
 	case 0:
-	    G_fatal_error ( "You don't have permission to use this mapset." );
+	    G_fatal_error ( _("You don't have permission to use this mapset.") );
 	    break;
 	case -1:
 	    if ( f_add->answer == TRUE ) {
@@ -116,7 +116,7 @@ main (int argc, char *argv[])
 	        G_make_mapset( gisdbase_new, location_new, mapset_new );
 	    }
 	    else
-	    	G_fatal_error ( "The mapset does not exist. Use -c flag to create it." );
+	    	G_fatal_error ( _("The mapset does not exist. Use -c flag to create it.") );
 	    break;
 	default:
 	    break;
@@ -125,7 +125,7 @@ main (int argc, char *argv[])
     /* Check if the mapset is in use */
     gis_lock = getenv ( "GIS_LOCK" );
     if ( !gis_lock )
-	G_fatal_error ( "Cannot read GIS_LOCK enviroment variable." );
+	G_fatal_error ( _("Cannot read GIS_LOCK enviroment variable.") );
 
     G_asprintf ( &lock_prog, "%s/etc/lock", G_gisbase() );
     
@@ -140,11 +140,11 @@ main (int argc, char *argv[])
     /* Warning: the value returned by system() is not that returned by exit() in executed program
      *          e.g. exit(1) -> 256 (multiplied by 256) */
     if ( ret != 0 )
-	G_fatal_error ( "%s is currently running GRASS in selected mapset or lock file cannot be checked.",
+	G_fatal_error ( _("%s is currently running GRASS in selected mapset or lock file cannot be checked."),
 	        	G_whoami());
 
     /* Erase monitors */
-    fprintf (stderr, "Erasing monitors ...\n" );
+    G_message ( _("Erasing monitors ..." ));
     while ((cap = R_parse_monitorcap(MON_NEXT,"")) != NULL) {
 	G__setenv("MONITOR",cap->name);
 	R__open_quiet();
@@ -161,7 +161,7 @@ main (int argc, char *argv[])
     /* Clean temporary directory */
     G_asprintf ( &buf, "/bin/sh -c \"%s/etc/clean_temp > /dev/null\"", 
 		G_gisbase() );
-    fprintf (stderr, "Cleaning up temporary files ...\n" );
+    G_message ( _("Cleaning up temporary files ..." ));
     system( buf );
     G_free( buf );
     
@@ -177,21 +177,21 @@ main (int argc, char *argv[])
     G_free( buf );
     G_free( mapset_old_path );
 
-    G_warning ( "Your shell continues to use the history for the old mapset." );
+    G_warning ( _("Your shell continues to use the history for the old mapset.") );
     
     if ( (shell=getenv("SHELL")) ) {
 	if ( strstr(shell,"bash") ) {
-            fprintf (stderr, "You can switch the history by commands:\n"
-	         "history -w; history -r %s/.bash_history; HISTFILE=%s/.bash_history\n",
+            G_message ( _("You can switch the history by commands:\n"
+	         "history -w; history -r %s/.bash_history; HISTFILE=%s/.bash_history"),
 		 mapset_new_path, mapset_new_path );
 	} else if ( strstr(shell,"tcsh") ) {
-            fprintf (stderr, "You can switch the history by commands:\n"
-	         "history -S; history -L %s/.history; setenv histfile=%s/.history\n",
+            G_message ( _("You can switch the history by commands:\n"
+	         "history -S; history -L %s/.history; setenv histfile=%s/.history"),
 		 mapset_new_path, mapset_new_path );
 	}
     }
     G_free( mapset_new_path );
 
-    return (0);
+    return (EXIT_SUCCESS);
 }
 
