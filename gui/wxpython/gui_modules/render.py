@@ -75,7 +75,7 @@ class MapLayer:
 			self.cmd = "d.rast -o map=%s@%s" % (self.name, self.mapset)
 
 			for key,value in self.grassLayer.params.iteritems():
-				if type(value) == type(""):
+				if type(value) != type(None):
 					self.cmd += " %s=%s" % \
 					    (key, value)
 				else:
@@ -99,7 +99,7 @@ class MapLayer:
 			self.cmd = "d.vect map=%s@%s" % (self.name, self.mapset)
 
 			for key,value in self.grassLayer.params.iteritems():
-				if type(value) == type(""):
+				if type(value) != type(None):
 					self.cmd += " %s=%s" % \
 					    (key, value)
 				else:
@@ -678,9 +678,11 @@ class Map:
 		layer = MapLayer(type="raster", name=name, mapset=mapset,
 				 active=l_active, hidden=l_hidden, opacity=l_opacity,
 				 dispcmd=dispcmd)
+                layer.id = len(self.layers)-1
 
 		# add maplayer to the list of layers
 		self.layers.append(layer)
+
 
 		if l_render:
 			if not layer.Render():
@@ -721,6 +723,7 @@ class Map:
 			     coordsinmapunits = coordsinmapunits)
 
             self.layers.append(layer)
+            layer.id = len(self.layers)-1
 
             if l_render:
                     if not layer.Render():
@@ -761,6 +764,7 @@ class Map:
 				active=l_active, hidden=l_hidden, opacity=l_opacity)
 
 	    self.layers.append(maplayer)
+            maplayer.id = len(self.layers)-1
 
             if l_render:
                     if not maplayer.Render():
