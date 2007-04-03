@@ -855,7 +855,7 @@ class Map:
 
 		return self.layers[-1]
 
-	def delLayer(self, item):
+	def delLayer(self, item, name=None):
 		"""
 		Removes layer from list of layers, defined by layer
 		tree item ID
@@ -866,7 +866,6 @@ class Map:
 		Returns:
 			Removed layer on success or None
 		"""
-		layer = self.lookup[item]
 
 		if layer in self.layers:
 			if layer.mapfile:

@@ -52,6 +52,7 @@ class TestVirtualList(wx.ListCtrl, listmix.ListCtrlAutoWidthMixin, listmix.Colum
         self.columns = []
         self.columnNumber = 0
         self.parent = parent
+        self.qlayer = None
 
         #adding some attributes (colourful background for each item rows)
         self.attr1 = wx.ListItemAttr()
@@ -127,6 +128,7 @@ class TestVirtualList(wx.ListCtrl, listmix.ListCtrlAutoWidthMixin, listmix.Colum
                            (self.currentItem,
                             self.GetItemText(self.currentItem)))
 
+        # show us the result in map display
         if self.parent.gismanager:
 
             gism = self.parent.gismanager
@@ -135,13 +137,11 @@ class TestVirtualList(wx.ListCtrl, listmix.ListCtrlAutoWidthMixin, listmix.Colum
 
             mapdisp =  self.parent.gismanager.mapdisplays[disp_idx]
             map = gism.maptree.Map
-            print map.GetListOfLayers()
-            try:
-                map.RemoveLayer(id=self.querylayer.id)
-            except:
-                pass
+            if self.qlayer:
+                map.RemoveLayer(id=map.layers.index(self.qlayer))
+            
             cat =  self.GetItemText(self.currentItem)
-            self.querylayer = map.addLayer(item=None, command="d.vect map=%s@%s color=yellow fcolor=yellow cats=%s width=3" % (self.tablename, self.mapset, cat), l_active=True,
+            self.qlayer = map.addLayer(item=None, command="d.vect map=%s@%s color=yellow fcolor=yellow cats=%s width=3" % (self.tablename, self.mapset, cat), l_active=True,
                                       l_hidden=False, l_opacity=1, l_render=False)
             mapdisp.ReDraw(None)
 
