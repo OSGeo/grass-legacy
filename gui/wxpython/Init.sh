@@ -758,7 +758,7 @@ case "$GRASS_GUI" in
 
     wx)
         # comming soon, see ^
-        "$GISBASE/scripts/wxgrass &"
+        "$GISBASE/scripts/wxgrass" &
 	;;
 
     # Ignore others
