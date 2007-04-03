@@ -20,12 +20,11 @@ class Log:
     r"""\brief Needed by the wxdemos.
     The log output is redirected to the status bar of the containing frame.
     """
-
-    def WriteText(self,text_string):
-        self.write(text_string)
+    def __init__(self,parent):
+        self.parent = parent
 
     def write(self,text_string):
-        wx.GetApp().GetTopWindow().SetStatusText(text_string)
+        self.parent.SetStatusText(text_string.strip())
 
 #----------------------------------------------------------------------
 # The panel you want to test (TestVirtualList)
@@ -89,13 +88,13 @@ class TestVirtualList(wx.ListCtrl, listmix.ListCtrlAutoWidthMixin, listmix.Colum
 
     def OnItemSelected(self, event):
         self.currentItem = event.m_itemIndex
-        self.log.WriteText('OnItemSelected: "%s", "%s"\n' %
+        self.log.write('OnItemSelected: "%s", "%s"\n' %
                            (self.currentItem,
                             self.GetItemText(self.currentItem)))
 
     def OnItemActivated(self, event):
         self.currentItem = event.m_itemIndex
-        self.log.WriteText("OnItemActivated: %s\nTopItem: %s\n" %
+        self.log.write("OnItemActivated: %s\nTopItem: %s\n" %
                            (self.GetItemText(self.currentItem), self.GetTopItem()))
 
     def getColumnText(self, index, col):
@@ -103,7 +102,7 @@ class TestVirtualList(wx.ListCtrl, listmix.ListCtrlAutoWidthMixin, listmix.Colum
         return item.GetText()
 
     def OnItemDeselected(self, evt):
-        self.log.WriteText("OnItemDeselected: %s" % evt.m_itemIndex)
+        self.log.write("OnItemDeselected: %s" % evt.m_itemIndex)
 
 
     #---------------------------------------------------
@@ -173,7 +172,7 @@ class AttributeManager(wx.Frame):
 
         self.CreateStatusBar(1)
 
-        log=Log()
+        log=Log(self)
 
         self.win = TestVirtualList(self, log,tablename=table)
         self.Show()
