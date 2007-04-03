@@ -835,7 +835,7 @@ proc MapCanvas::check_saveregion {mon saveregion} {
 		set overwrite 1
 	}
 
-	set args "save=$saveregion"
+	set args "-u save=$saveregion"
 
 	MapCanvas::set_wind $mon $args $overwrite
 	destroy .saveregion
