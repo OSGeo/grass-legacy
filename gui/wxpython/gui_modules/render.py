@@ -852,7 +852,7 @@ class Map:
 
 	def delLayer(self, item):
 		"""
-		Removes layer from list of layers, defined by name@mapset or id
+		Removes layer from list of layers, defined by layer ID
 
 		Parameters:
 			name	- map name
