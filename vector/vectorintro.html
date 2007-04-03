@@ -66,20 +66,21 @@ other module which works with level 1 data is
 <a href="v.surf.rst.html">v.surf.rst</a> which enables spatial
 approximation and topographic analysis from a point or isoline file.
 
-<p> In GRASS, the following vector object types are available:
+<p> In GRASS, the following vector objects are defined:
 
-<ul>
-<li> <b>point:</b> a point</li>
-<li> <b>line:</b> a sequence of vertices connected by line(s) with two endpoints
-     called nodes</li>
-<li> <b>boundary:</b> the border line of an area</li>
-<li> <b>centroid:</b> the label point of an area</li>
-<li> <b>area:</b> the topological composition of centroid and boundary</li>
-<li> <b>face:</b> a 3D area</li>
-<li> <b>kernel:</b> a 3D centroid in a volume (not yet implemented)</li>
-<li> <b>volume:</b> a 3D corpus (not yet implemented)</li>
+<li> point: a point; </li>
+<li> line: a directed sequence of connected vertices with two endpoints called nodes; </li>
+<li> boundary: the border line to describe an area; </li>
+<li> centroid: a point within a closed boundary; </li>
+<li> area: the topological composition of centroid and boundary; </li>
+<li> face: a 3D area; </li>
+<li> kernel: a 3D centroid in a volume (not yet implemented); </li>
+<li> volume: a 3D corpus, the topological composition of faces and kernel (not yet implemented). </li>
 </ul>
+<p>
+Note that all lines and boundaries can be polylines (with nodes in between).
 
+<P>
 The <a href="v.type.html">v.type</a> module can be used to convert
 between vector types if possible. The <a href="v.build.html">v.build</a>
 module is used to generate topology. It optionally allows to extract
@@ -100,22 +101,25 @@ on the vector map.
 <ul>
 <li><b>Categories:</b> The category number is the vector ID. It is
 used to link attribute(s) to each vector object. A vector object can
-have zero, one, two, or more categories. The category number is stored
-within the geometry file for each vector object. Using 
-<a href="v.category.html">v.category</a> the category numbers can be
-printed or maintained.</li>
+have zero, one, two, or more categories. Category numbers are stored
+both within the geometry file and within the attribute table(s) for each
+vector object (usually the "cat" column).
+Using <a href="v.category.html">v.category</a>, category numbers can be
+printed or maintained. In order to link one vector object to several
+attribute tables, several category numbers per vector object are needed.
+</li>
 
 <li><b>Layers:</b> It is possible to link the geographic objects in
-one vector map to one or more tables. Each link to a distinct
+a vector map to one or more tables. Each link to a distinct
 attribute table is called a layer. GRASS layers do not contain any
 geographic objects, but consist of links to attribute tables in which
-vector objects can have zero or more categories. If a vector object
+vector objects can have zero, one or more categories. If a vector object
 has zero categories in a layer, then it does not appear in that
-layer. In this fasion some vector objects may appear in some layers
+layer. In this fashion some vector objects may appear in some layers
 but not in others. The practical benefit of this system is that it
 allows placement of thematically distinct but topologically related
-objects in a single file (e.g. forests and lakes). These virtual
-layers also are useful for linking time series attribute data to a
+objects into a single map (e.g. forests and lakes). These virtual
+layers are also useful for linking time series attribute data to a
 series of locations that did not change over time. By default the
 first layer is active, i.e. the first table corresponds to the first
 layer. Further tables are linked to subsequent layers.  Using
