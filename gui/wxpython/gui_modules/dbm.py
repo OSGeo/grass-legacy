@@ -10,6 +10,18 @@ Usage:
     dbm.py table_name
 
 """
+############################################################################
+#
+# MODULE:       dbm.py
+# AUTHOR(S):    Jachym Cepicky <jachym les-ejk cz>
+# PURPOSE:      GRASS attribute table manager
+# COPYRIGHT:    (C) 2007 by the GRASS Development Team
+#
+#               This program is free software under the GNU General Public
+#               License (>=v2). Read the file COPYING that comes with GRASS
+#               for details.
+#
+#############################################################################
 import wx
 import wx.lib.mixins.listctrl  as  listmix
 
@@ -33,8 +45,12 @@ class Log:
 class TestVirtualList(wx.ListCtrl, listmix.ListCtrlAutoWidthMixin, listmix.ColumnSorterMixin):
     def __init__(self, parent,log,tablename):
         wx.ListCtrl.__init__( self, parent, -1, style=wx.LC_REPORT|wx.LC_VIRTUAL|wx.LC_HRULES|wx.LC_VRULES)
+
         self.log=log
         self.tablename = tablename
+        self.columns = []
+        self.columnNumber = 0
+        self.parent = parent
 
         #adding some attributes (colourful background for each item rows)
         self.attr1 = wx.ListItemAttr()
@@ -46,13 +62,26 @@ class TestVirtualList(wx.ListCtrl, listmix.ListCtrlAutoWidthMixin, listmix.Colum
         i = 0
         # FIXME: subprocess.Popen should be used
         # FIXME: Maximal number of columns, when the GUI is still usable
-        for column in os.popen("db.columns table=%s" %
-                (self.tablename)).readlines():
+        for line in os.popen("db.describe -c table=%s" %
+                (self.tablename)).readlines()[1:]:
 
-            column = column.strip()
+            x,column,type = line.strip().split(":")
+            # FIXME: here will be more types
+            if type.lower().find("integer") > -1:
+                self.columns.append({"name":column,"type":int})
+            elif type.lower().find("double") > -1:
+                self.columns.append({"name":column,"type":float})
+            elif type.lower().find("float") > -1:
+                self.columns.append({"name":column,"type":float})
+            else:
+                self.columns.append({"name":column,"type":str})
+
             self.InsertColumn(i, column)
             self.SetColumnWidth(i, 50)
             i += 1
+            if i >= 256:
+                self.log.write("Can display only 256 columns")
+                break
 
         #These two should probably be passed to init more cleanly
         #setting the numbers of items = number of elements in the dictionary
@@ -68,6 +97,10 @@ class TestVirtualList(wx.ListCtrl, listmix.ListCtrlAutoWidthMixin, listmix.Colum
                 self.itemDataMap[i].append(attribute)
                 self.itemIndexMap.append(i)
             i += 1
+            if i >= 32000:
+                self.log.write("Can display only 32000 lines")
+                break
+
         self.SetItemCount(len(self.itemDataMap))
         
         #mixins
@@ -84,6 +117,7 @@ class TestVirtualList(wx.ListCtrl, listmix.ListCtrlAutoWidthMixin, listmix.Colum
         self.Bind(wx.EVT_LIST_COL_CLICK, self.OnColClick)
 
     def OnColClick(self,event):
+        self.columnNumber = event.GetColumn()
         event.Skip()
 
     def OnItemSelected(self, event):
@@ -91,6 +125,7 @@ class TestVirtualList(wx.ListCtrl, listmix.ListCtrlAutoWidthMixin, listmix.Colum
         self.log.write('OnItemSelected: "%s", "%s"\n' %
                            (self.currentItem,
                             self.GetItemText(self.currentItem)))
+        print self.parent.gismanager 
 
     def OnItemActivated(self, event):
         self.currentItem = event.m_itemIndex
@@ -135,7 +170,12 @@ class TestVirtualList(wx.ListCtrl, listmix.ListCtrlAutoWidthMixin, listmix.Colum
 
     def SortItems(self,sorter=cmp):
         items = list(self.itemDataMap.keys())
-        items.sort(sorter)
+        # for i in range(len(items)):
+        #     items[i] =  self.columns[self.columnNumber]["type"](items[i])
+        items.sort(self.Sorter)
+        #items.sort(sorter)
+        # for i in range(len(items)):
+        #     items[i] =  str(items[i])
         self.itemIndexMap = items
         
         # redraw the list
@@ -144,6 +184,33 @@ class TestVirtualList(wx.ListCtrl, listmix.ListCtrlAutoWidthMixin, listmix.Colum
     # Used by the ColumnSorterMixin, see wx/lib/mixins/listctrl.py
     def GetListCtrl(self):
         return self
+
+    # stolen from python2.4/site-packages/wx-2.8-gtk2-unicode/wx/lib/mixins/listctrl.py
+    def Sorter(self, key1,key2):
+         col = self._col
+         ascending = self._colSortFlag[col]
+         # convert, because the it is allways string
+         item1 = self.columns[col]["type"](self.itemDataMap[key1][col])
+         item2 = self.columns[col]["type"](self.itemDataMap[key2][col])
+
+         #--- Internationalization of string sorting with locale module
+         if type(item1) == type('') or type(item2) == type(''):
+             cmpVal = locale.strcoll(str(item1), str(item2))
+         else:
+             cmpVal = cmp(item1, item2)
+         #---
+
+         # If the items are equal then pick something else to make the sort v    ->alue unique
+         if cmpVal == 0:
+             cmpVal = apply(cmp, self.GetSecondarySortValues(col, key1, key2))
+
+         if ascending:
+             return cmpVal
+         else:
+             return -cmpVal
+
+        #return cmp(self.columns[self.columnNumber]["type"](a),
+        #           self.columns[self.columnNumber]["type"](b))
 
     # Used by the ColumnSorterMixin, see wx/lib/mixins/listctrl.py
     #def GetSortImages(self):
@@ -173,6 +240,9 @@ class AttributeManager(wx.Frame):
         self.CreateStatusBar(1)
 
         log=Log(self)
+            
+        # probably
+        self.gismanager = parent
 
         self.win = TestVirtualList(self, log,tablename=table)
         self.Show()
