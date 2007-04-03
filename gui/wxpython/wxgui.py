@@ -331,7 +331,9 @@ class GMFrame(wx.Frame):
             
             if mapset == grassenv.env["MAPSET"]:
                 from gui_modules import dbm
-                self.dbmanager = gui_modules.dbm.AttributeManager(self, -1,"GRASS Attribute Table Manager: %s" % map, size=wx.Size(500,300),table=map)
+                self.dbmanager = gui_modules.dbm.AttributeManager(self,
+                        -1,"GRASS Attribute Table Manager: %s" % map,
+                        size=wx.Size(500,300),table=map,mapset=mapset)
 
 
     def newDisplay(self, event=None):
