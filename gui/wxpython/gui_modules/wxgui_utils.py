@@ -34,8 +34,8 @@ class LayerTree(CT.CustomTreeCtrl):
                  id=wx.ID_ANY, pos=wx.DefaultPosition,
                  size=wx.DefaultSize, style=wx.SUNKEN_BORDER,
                  ctstyle=CT.TR_HAS_BUTTONS | CT.TR_HAS_VARIABLE_ROW_HEIGHT |
-                 CT.TR_HIDE_ROOT | CT.TR_ROW_LINES | CT.TR_FULL_ROW_HIGHLIGHT,
-                 disp=None, log=None):
+                 CT.TR_HIDE_ROOT | CT.TR_ROW_LINES | CT.TR_FULL_ROW_HIGHLIGHT|
+                 CT.TR_EDIT_LABELS, disp=None, log=None):
         CT.CustomTreeCtrl.__init__(self, parent, id, pos, size, style,ctstyle)
 
         self.SetAutoLayout(True)
@@ -164,7 +164,7 @@ class LayerTree(CT.CustomTreeCtrl):
                                 '', ct_type=1, wnd=self.ctrl )
         elif (self.layer_selected and self.layer_selected != self.GetRootItem() and \
                 self.layertype[self.layer_selected] == 'group'):
-            layer = self.InsertItem(self.layer_selected, self.GetPrevSibling(self.layer_selected),
+            layer = self.InsertItem(self.layer_selected, self.layer_selected,
                                 '', ct_type=1, wnd=self.ctrl )
             self.Expand(self.layer_selected)
         else:
@@ -183,7 +183,8 @@ class LayerTree(CT.CustomTreeCtrl):
         self.CheckItem(layer, checked=False)
 
         # add layer to layers list in render.Map
-        self.Map.addLayer(item=layer, command='', l_active=False,
+        if self.layertype[layer] != 'group':
+            self.Map.addLayer(item=layer, command='', l_active=False,
                                       l_hidden=False, l_opacity=1, l_render=False)
 
         # add text and icons for each layer type
@@ -275,10 +276,12 @@ class LayerTree(CT.CustomTreeCtrl):
 
     def onDeleteLayer(self, event):
         layer = event.GetItem()
-        self.layertype.pop(layer)
 
         # delete layer in render.Map
-        self.Map.delLayer(item=layer)
+        if self.layertype[layer] != 'group':
+            self.Map.delLayer(item=layer)
+
+        self.layertype.pop(layer)
 
     def onLayerChecked(self, event):
         layer = event.GetItem()
@@ -311,6 +314,7 @@ class LayerTree(CT.CustomTreeCtrl):
         event.Skip()
 
     def onOpacity(self, event):
+        print 'opacity event:', event.GetString()
         if 'Spin' in str(event.GetEventObject()):
             layer = self.layerctrl[event.GetEventObject()]
         else:
@@ -332,8 +336,6 @@ class LayerTree(CT.CustomTreeCtrl):
 
     def onExpandNode(self, event):
         self.layer_selected = event.GetItem()
-        print "###",self.layertype
-        print "###",self.layer_selected
         if self.layertype[self.layer_selected] == 'group':
             self.SetItemImage(self.layer_selected, self.folder_open)
 
@@ -352,10 +354,14 @@ class LayerTree(CT.CustomTreeCtrl):
             self.saveitem['image'] = self.GetItemImage(self.dragItem, 0)
             self.saveitem['text'] = self.GetItemText(self.dragItem)
             self.saveitem['wind'] = self.GetItemWindow(self.dragItem)
-            self.saveitem['windval'] = self.GetItemWindow(self.dragItem).GetValue()
-            self.saveitem['data'] = self.GetPyData(self.dragItem)
+            if self.layertype[self.dragItem] == 'group':
+                self.saveitem['windval'] = None
+                self.saveitem['data'] = None
+            else:
+                self.saveitem['windval'] = self.GetItemWindow(self.dragItem).GetValue()
+                self.saveitem['data'] = self.GetPyData(self.dragItem)
         else:
-            print ("Cant drag a node that has children")
+            print ("Can't drag a node that has children")
 
     def onEndDrag(self, event):
         """
@@ -363,68 +369,77 @@ class LayerTree(CT.CustomTreeCtrl):
         delete original at old position
         """
 
-
         # Make sure this memeber exists.
         try:
             old = self.dragItem
         except:
             return
 
-        # recreate old layer at new position
+        # recreate spin/text control for layer
         if self.layertype[old] == 'command':
-            self.dragctrl = wx.TextCtrl(self, id=wx.ID_ANY, value='',
+            newctrl = wx.TextCtrl(self, id=wx.ID_ANY, value='',
                                pos=wx.DefaultPosition, size=(250,40),
                                style=wx.TE_MULTILINE|wx.TE_WORDWRAP)
-            self.dragctrl.Bind(wx.EVT_TEXT_ENTER, self.onCmdChanged)
+            newctrl.Bind(wx.EVT_TEXT_ENTER, self.onCmdChanged)
+        elif self.layertype[old] == 'group':
+            newctrl = None
         else:
-            self.dragctrl = wx.SpinCtrl(self, id=wx.ID_ANY, value="", pos=(30, 50),
+            newctrl = wx.SpinCtrl(self, id=wx.ID_ANY, value="", pos=(30, 50),
                                     style=wx.SP_ARROW_KEYS)
-            self.dragctrl.SetRange(1,100)
-            self.dragctrl.SetValue(100)
-            self.dragctrl.Bind(wx.EVT_SPINCTRL, self.onOpacity)
+            newctrl.SetRange(1,100)
+            newctrl.SetValue(100)
+            newctrl.Bind(wx.EVT_TEXT, self.onOpacity)
 
-
-        #If we dropped somewhere that isn't on top of an item, ignore the event
+        # Decide where to put new layer and put it there
         flag = self.HitTest(event.GetPoint())[1]
 
         if flag & wx.TREE_HITTEST_ABOVE:
             new = self.PrependItem(self.root, text=self.saveitem['text'], \
-                              ct_type=1, wnd=self.dragctrl, image=self.saveitem['image'], \
+                              ct_type=1, wnd=newctrl, image=self.saveitem['image'], \
                               data=self.saveitem['data'])
         elif (flag &  wx.TREE_HITTEST_BELOW) or (flag & wx.TREE_HITTEST_NOWHERE):
             new = self.AppendItem(self.root, text=self.saveitem['text'], \
-                              ct_type=1, wnd=self.dragctrl, image=self.saveitem['image'], \
+                              ct_type=1, wnd=newctrl, image=self.saveitem['image'], \
                               data=self.saveitem['data'])
         else:
             if not event.GetItem():
                 return
             else:
                 afteritem = event.GetItem()
-                parent = self.GetItemParent(afteritem)
-                new = self.InsertItem(parent, afteritem, text=self.saveitem['text'], \
-                              ct_type=1, wnd=self.dragctrl, image=self.saveitem['image'], \
-                              data=self.saveitem['data'])
-
-
-
+                if self.layertype[afteritem] == 'group':
+                    parent = afteritem
+                    new = self.AppendItem(parent, text=self.saveitem['text'], \
+                                  ct_type=1, wnd=newctrl, image=self.saveitem['image'], \
+                                  data=self.saveitem['data'])
+                else:
+                    parent = self.GetItemParent(afteritem)
+                    new = self.InsertItem(parent, afteritem, text=self.saveitem['text'], \
+                                  ct_type=1, wnd=newctrl, image=self.saveitem['image'], \
+                                  data=self.saveitem['data'])
 
         self.layertype[new] = self.saveitem['type']
         self.CheckItem(new, checked=self.saveitem['check'])
-        self.GetItemWindow(new).SetValue(self.saveitem['windval'])
+        if self.layertype[new] != 'group':
+            self.layerctrl[newctrl] = new
+            newctrl.SetValue(self.saveitem['windval'])
 
         # delete layer at original position
-        self.Delete(old)
+        self.Delete(old) # entry in render.Map layers list automatically deleted by onDeleteLayer handler
 
-        # update layers list in render.Map
+        # Add new layer to layers list in render.Map
         if self.saveitem['type'] == 'command':
             self.Map.addLayer(item=new, command=self.saveitem['windval'], l_active=self.saveitem['check'],
                                       l_hidden=False, l_opacity=1, l_render=False)
-        else:
+
+        elif self.saveitem['type'] != 'group':
             self.Map.addLayer(item=new, command=self.saveitem['data'][0], l_active=self.saveitem['check'],
                                       l_hidden=False, l_opacity=self.saveitem['windval'], l_render=False)
 
-        self.reorderLayers()
+        # completed drag and drop
         self.drag = False
+
+        # reorder layers in render.Map to match new order after drag and drop
+        self.reorderLayers()
 
     def getOptData(self, dcmd, layer, params):
         for item in dcmd.split(' '):
@@ -462,13 +477,12 @@ class LayerTree(CT.CustomTreeCtrl):
         add commands from data associated with
         any valid and checked layers to layer list
         """
-        # first empty the list of old layers
-#        self.Map.Clean()
+
         # make a list of visible layers
         treelayers = []
         vislayer = self.GetFirstVisibleItem()
         for item in range(0,self.GetCount()):
-            if self.IsItemChecked(vislayer):
+            if self.IsItemChecked(vislayer) and self.layertype[vislayer] != 'group':
                 treelayers.append(vislayer)
             if self.GetNextVisible(vislayer) == None:
                 break
@@ -481,7 +495,8 @@ class LayerTree(CT.CustomTreeCtrl):
         self.Map.changeOpacity(layer, opacity)
 
     def changeChecked(self, layer, check):
-        self.Map.changeActive(layer, check)
+        if self.layertype[layer] != 'group':
+            self.Map.changeActive(layer, check)
 
     def changeLayer(self, layer):
         if self.layertype[layer] == 'command':
@@ -492,7 +507,7 @@ class LayerTree(CT.CustomTreeCtrl):
                 hidden = not self.IsVisible(layer)
                 self.Map.changeLayer(item=layer, command=cmd, l_active=chk,
                                   l_hidden=hidden, l_opacity=opac, l_render=False)
-        else:
+        elif self.layertype[layer] != 'group':
             if self.GetPyData(layer)[0] != None:
                 cmd = self.GetPyData(layer)[0]
                 opac = float(self.GetItemWindow(layer).GetValue())/100
