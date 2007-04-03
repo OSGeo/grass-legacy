@@ -437,6 +437,7 @@ int Nnew_map_obj_cmd(Nv_data * data, Tcl_Interp * interp, int argc,
     char const_string[] = "constant";
     char zero_string[] = "0";
     int new_id;
+    int rows, cols, depths, max;
     int *surf_list, num_surfs, i;
     Nv_clientData *new_data;
     int file_used = 0;
@@ -571,6 +572,27 @@ int Nnew_map_obj_cmd(Nv_data * data, Tcl_Interp * interp, int argc,
 		}
 		file_used = 1;
     }
+
+	/** Initilaze defaults for GUI **/
+        /** should proably be called seperately with set_att **/
+        GVL_get_dims(new_id, &rows, &cols, &depths);
+        max = (rows > cols) ? rows : cols;
+        max = (depths > max) ? depths : max;
+        max = max / 35;
+        if (max < 1)
+            max = 1;
+
+        if (max > cols) max = cols / 2;
+        if (max > rows) max = rows / 2;
+        if (max > depths) max = depths / 2;
+
+        /* set default drawres and drawmode for isosurfaces */
+        GVL_isosurf_set_drawres(new_id, max, max, max);
+        GVL_isosurf_set_drawmode(new_id, DM_GOURAUD);
+
+        /* set default drawres and drawmode for slices */
+        GVL_slice_set_drawres(new_id, 1., 1., 1.);
+        GVL_slice_set_drawmode(new_id, DM_GOURAUD | DM_POLY);
 
     sprintf(id, "Nvol%d", new_id);
 
