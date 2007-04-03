@@ -64,6 +64,11 @@ class MapToolbar:
                                                                   wx.BITMAP_TYPE_ANY),
                                                  bmpDisabled=wx.NullBitmap, kind=wx.ITEM_RADIO,
                                                  shortHelp="Pan", longHelp="Drag with mouse to pan")
+    	self.query     = self.toolbar.AddLabelTool(id=wx.ID_ANY, label="query",
+                                                 bitmap=wx.Bitmap(os.path.join(wxgui_utils.icons,"gui-query.gif"),
+                                                                  wx.BITMAP_TYPE_ANY),
+                                                 bmpDisabled=wx.NullBitmap, kind=wx.ITEM_RADIO,
+                                                 shortHelp="Query", longHelp="Query selected map")
         self.toolbar.AddSeparator()
 
 
@@ -72,7 +77,6 @@ class MapToolbar:
                                                                   wx.BITMAP_TYPE_ANY),
                                                  bmpDisabled=wx.NullBitmap,
                                                  shortHelp="Decoration", longHelp="Add graphic overlays to map")
-
 
         self.toolbar.AddSeparator()
 
@@ -104,6 +108,7 @@ class MapToolbar:
     	self.mapdisplay.Bind(wx.EVT_TOOL,     self.mapdisplay.OnZoomOut,  self.zoomout)
     	self.mapdisplay.Bind(wx.EVT_TOOL,     self.mapdisplay.OnPan,      self.pan)
         self.mapdisplay.Bind(wx.EVT_TOOL,     self.mapdisplay.onDecoration, self.dec)
+        self.mapdisplay.Bind(wx.EVT_TOOL,     self.mapdisplay.OnQuery, self.query)
     	self.mapdisplay.Bind(wx.EVT_TOOL,     self.mapdisplay.OnErase,    self.erase)
     	self.mapdisplay.Bind(wx.EVT_TOOL,     self.mapdisplay.SaveToFile, self.savefile)
         self.mapdisplay.Bind(wx.EVT_COMBOBOX, self.OnSelect,              self.combo)
