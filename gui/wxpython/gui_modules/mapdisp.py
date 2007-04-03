@@ -158,10 +158,11 @@ class BufferedWindow(wx.Window):
     def __init__(self, parent, id,
                  pos = wx.DefaultPosition,
                  size = wx.DefaultSize,
-                 style=wx.NO_FULL_REPAINT_ON_RESIZE):
+                 style=wx.NO_FULL_REPAINT_ON_RESIZE,map=Map):
 
     	wx.Window.__init__(self, parent, id, pos, size, style)
         self.parent = parent
+        self.Map = map
 
         #
         # Flags
@@ -352,20 +353,20 @@ class BufferedWindow(wx.Window):
         """
 
         # set size of the input image
-    	Map.width, Map.height = self.GetClientSize()
+    	self.Map.width, self.Map.height = self.GetClientSize()
 
     	# Make new off screen bitmap: this bitmap will always have the
     	# current drawing in it, so it can be used to save the image to
     	# a file, or whatever.
-    	self._Buffer = wx.EmptyBitmap(Map.width, Map.height)
+    	self._Buffer = wx.EmptyBitmap(self.Map.width, self.Map.height)
 
         # get the image to be rendered
     	self.img = self.GetImage()
 
 
         # update map display
-    	if self.img and Map.width + Map.height > 0: # scale image during resize
-    	    self.img = self.img.Scale(Map.width, Map.height)
+    	if self.img and self.Map.width + self.Map.height > 0: # scale image during resize
+    	    self.img = self.img.Scale(self.Map.width, self.Map.height)
     	    self.render = False
     	    self.UpdateMap()
 
@@ -396,8 +397,8 @@ class BufferedWindow(wx.Window):
         Converts overlay files to wx.Image
         """
         ovlist = []
-        if Map.ovlist:
-             for ovlfile in Map.ovlist:
+        if self.Map.ovlist:
+             for ovlfile in self.Map.ovlist:
                  if os.path.isfile(ovlfile) and os.path.getsize(ovlfile):
                      img = wx.Image(ovlfile, wx.BITMAP_TYPE_ANY)
                      ovlist.append(img)
@@ -409,9 +410,9 @@ class BufferedWindow(wx.Window):
         """
         Converts files to wx.Image
         """
-        if Map.mapfile and os.path.isfile(Map.mapfile) and \
-                os.path.getsize(Map.mapfile):
-            img = wx.Image(Map.mapfile, wx.BITMAP_TYPE_ANY)
+        if self.Map.mapfile and os.path.isfile(self.Map.mapfile) and \
+                os.path.getsize(self.Map.mapfile):
+            img = wx.Image(self.Map.mapfile, wx.BITMAP_TYPE_ANY)
         else:
             img = None
 
@@ -434,8 +435,8 @@ class BufferedWindow(wx.Window):
 
         if self.render:
             # render new map images
-            Map.width, Map.height = self.GetClientSize()
-            self.mapfile = Map.Render(force=self.render)
+            self.Map.width, self.Map.height = self.GetClientSize()
+            self.mapfile = self.Map.Render(force=self.render)
             self.img = self.GetImage()
             self.resize = False
 
@@ -464,8 +465,8 @@ class BufferedWindow(wx.Window):
 
         # update statusbar
         self.parent.statusbar.SetStatusText("Extent: %d,%d : %d,%d" %
-                                            (Map.region["w"], Map.region["e"],
-                                             Map.region["n"], Map.region["s"]), 0)
+                                            (self.Map.region["w"], self.Map.region["e"],
+                                             self.Map.region["n"], self.Map.region["s"]), 0)
 
     def EraseMap(self):
         """
@@ -621,9 +622,9 @@ class BufferedWindow(wx.Window):
     	elif wheel != 0:
 
     	    # zoom 1/2 of the screen
-    	    begin = [Map.width/4, Map.height/4]
-    	    end = [Map.width - Map.width/4,
-    		Map.height - Map.height/4]
+    	    begin = [self.Map.width/4, self.Map.height/4]
+    	    end = [self.Map.width - self.Map.width/4,
+    		self.Map.height - self.Map.height/4]
 
         elif event.RightDown():
             x,y = event.GetPositionTuple()[:]
@@ -650,8 +651,8 @@ class BufferedWindow(wx.Window):
     	Input : x, y
     	Output: int x, int y
     	"""
-    	newx = Map.region['w'] + x * Map.region["ewres"]
-    	newy = Map.region['n'] - y * Map.region["nsres"]
+    	newx = self.Map.region['w'] + x * self.Map.region["ewres"]
+    	newy = self.Map.region['n'] - y * self.Map.region["nsres"]
     	return newx, newy
 
 
@@ -681,23 +682,23 @@ class BufferedWindow(wx.Window):
     		    -x1*2,
     		    -y1*2)
                 newreg['e'], newreg['s'] = self.Pixel2Cell(
-    		    Map.width+2*(Map.width-x2),
-    		    Map.height+2*(Map.height-y2))
+    		    self.Map.width+2*(self.Map.width-x2),
+    		    self.Map.height+2*(self.Map.height-y2))
     	# pan
     	elif zoomtype == 0:
     	    newreg['w'], newreg['n'] = self.Pixel2Cell(
     		x1-x2,
     		y1-y2)
     	    newreg['e'], newreg['s'] = self.Pixel2Cell(
-    		Map.width+x1-x2,
-    		Map.height+y1-y2)
+    		self.Map.width+x1-x2,
+    		self.Map.height+y1-y2)
 
     	# if new region has been calculated, set the values
     	if newreg :
-    	    Map.region['n'] = newreg['n']
-    	    Map.region['s'] = newreg['s']
-    	    Map.region['e'] = newreg['e']
-    	    Map.region['w'] = newreg['w']
+    	    self.Map.region['n'] = newreg['n']
+    	    self.Map.region['s'] = newreg['s']
+    	    self.Map.region['e'] = newreg['e']
+    	    self.Map.region['w'] = newreg['w']
 
 
 #class DrawWindow(BufferedWindow):
@@ -831,6 +832,7 @@ class MapFrame(wx.Frame):
 
         # most of the thime, this will be the gis manager
         self.gismanager = parent
+        self.Map = Map
 
         #
         # Set the size
@@ -861,24 +863,24 @@ class MapFrame(wx.Frame):
     	self.statusbar = self.CreateStatusBar(number=2, style=0)
     	self.statusbar.SetStatusWidths([-2, -1])
     	map_frame_statusbar_fields = ["Extent: %d,%d : %d,%d" %
-                                      (Map.region["w"], Map.region["e"],
-                                       Map.region["n"], Map.region["s"]),
+                                      (self.Map.region["w"], self.Map.region["e"],
+                                       self.Map.region["n"], self.Map.region["s"]),
                                       "%s,%s" %(None, None)]
     	for i in range(len(map_frame_statusbar_fields)):
     	    self.statusbar.SetStatusText(map_frame_statusbar_fields[i], i)
 
 
         # d.barscale overlay added to rendering overlay list
-        Map.addOverlay(type=0, command='d.barscale', l_active=True, l_render=False)
+        self.Map.addOverlay(type=0, command='d.barscale', l_active=True, l_render=False)
         # d.barscale overlay added to rendering overlay list as placeholder for d.legend
-        Map.addOverlay(type=1, command='d.barscale', l_active=True, l_render=False)
+        self.Map.addOverlay(type=1, command='d.barscale', l_active=True, l_render=False)
 
         #
     	# Init map display
         #
     	self.InitDisplay() # initialize region values
 #    	self.MapWindow = DrawWindow(self) # initialize buffered DC
-        self.MapWindow = BufferedWindow(self, id = wx.ID_ANY) # initialize buffered DC
+        self.MapWindow = BufferedWindow(self, id = wx.ID_ANY,map=self.Map) # initialize buffered DC
     	self.MapWindow.Bind(wx.EVT_MOTION, self.OnMotion)
 
         # decoration overlays
@@ -917,14 +919,14 @@ class MapFrame(wx.Frame):
             * digit
         """
         if name == "map":
-            self.maptoolbar = toolbars.MapToolbar(self, Map)
+            self.maptoolbar = toolbars.MapToolbar(self, self.Map)
             self._mgr.AddPane(self.maptoolbar.toolbar, wx.aui.AuiPaneInfo().
                           Name("maptoolbar").Caption("Map Toolbar").
                           ToolbarPane().Top().LeftDockable(False).RightDockable(False).
                           BottomDockable(True).CloseButton(False))
 
         if name == "digit":
-            self.digittoolbar = toolbars.DigitToolbar(self,Map)
+            self.digittoolbar = toolbars.DigitToolbar(self,self.Map)
             self._mgr.AddPane(self.digittoolbar.toolbar, wx.aui.AuiPaneInfo().
                           Name("digittoolbar").Caption("Digit Toolbar").
                           ToolbarPane().Top().LeftDockable(False).RightDockable(False).
@@ -936,12 +938,12 @@ class MapFrame(wx.Frame):
         Initialize map display, set dimensions and map region
         """
         self.width, self.height = self.GetClientSize()
-        Map.geom = self.width, self.height
-        Map.GetRegion()
+        self.Map.geom = self.width, self.height
+        self.Map.GetRegion()
         #FIXME
         #This was Map.getResolution().
         #I'm guessing at the moment that this is replaced by Map.SetRegion()
-        Map.SetRegion()
+        self.Map.SetRegion()
 
     def OnFocus(self, event):
         """
@@ -1059,8 +1061,8 @@ class MapFrame(wx.Frame):
         """
         Zoom to region
         """
-    	Map.getRegion()
-    	Map.getResolution()
+    	self.Map.getRegion()
+    	self.Map.getResolution()
     	self.UpdateMap()
 #        self.draw(dc)
     	event.Skip()
@@ -1069,10 +1071,10 @@ class MapFrame(wx.Frame):
         """
         Align region
         """
-        if not Map.alignRegion:
-            Map.alignRegion = True
+        if not self.Map.alignRegion:
+            self.Map.alignRegion = True
         else:
-            Map.alignRegion = False
+            self.Map.alignRegion = False
         event.Skip()
 
     def SaveToFile(self, event):
@@ -1092,7 +1094,7 @@ class MapFrame(wx.Frame):
         """
         Window closed
         """
-        Map.Clean()
+        self.Map.Clean()
         self.Destroy()
 
         #close associated controls book page
@@ -1115,7 +1117,7 @@ class MapFrame(wx.Frame):
         """
         returns the current instance of render.Map()
         """
-        return Map
+        return self.Map
 
     def OnQuery(self, event):
         """
@@ -1263,7 +1265,7 @@ class MapFrame(wx.Frame):
 
         # Reset comand and rendering options in render.Map. Always render decoration.
         # Showing/hiding handled by PseudoDC
-        Map.changeOverlay(type=type, command=dcmd, l_active=True, l_render=False)
+        self.Map.changeOverlay(type=type, command=dcmd, l_active=True, l_render=False)
         self.params[type] = params
 
 # end of class MapFrame
