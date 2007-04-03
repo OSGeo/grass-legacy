@@ -43,11 +43,12 @@ class Log:
 #----------------------------------------------------------------------
 
 class TestVirtualList(wx.ListCtrl, listmix.ListCtrlAutoWidthMixin, listmix.ColumnSorterMixin):
-    def __init__(self, parent,log,tablename):
+    def __init__(self, parent,log,tablename,mapset=None):
         wx.ListCtrl.__init__( self, parent, -1, style=wx.LC_REPORT|wx.LC_VIRTUAL|wx.LC_HRULES|wx.LC_VRULES)
 
         self.log=log
         self.tablename = tablename
+        self.mapset = mapset
         self.columns = []
         self.columnNumber = 0
         self.parent = parent
@@ -127,12 +128,22 @@ class TestVirtualList(wx.ListCtrl, listmix.ListCtrlAutoWidthMixin, listmix.Colum
                             self.GetItemText(self.currentItem)))
 
         if self.parent.gismanager:
+
             gism = self.parent.gismanager
             curr_pg = gism.gm_cb.GetCurrentPage()
             disp_idx = gism.track.Track().GetDisp_idx(curr_pg)
 
-            print self.parent.gismanager.mapdisplays#[self.parent.gismanager.disp_idx]
-            print self.parent.gismanager.disp_idx
+            mapdisp =  self.parent.gismanager.mapdisplays[disp_idx]
+            map = gism.maptree.Map
+            print map.GetListOfLayers()
+            try:
+                map.RemoveLayer(id=self.querylayer.id)
+            except:
+                pass
+            cat =  self.GetItemText(self.currentItem)
+            self.querylayer = map.addLayer(item=None, command="d.vect map=%s@%s color=yellow fcolor=yellow cats=%s width=3" % (self.tablename, self.mapset, cat), l_active=True,
+                                      l_hidden=False, l_opacity=1, l_render=False)
+            mapdisp.ReDraw(None)
 
     def OnItemActivated(self, event):
         self.currentItem = event.m_itemIndex
@@ -240,7 +251,7 @@ class TestVirtualList(wx.ListCtrl, listmix.ListCtrlAutoWidthMixin, listmix.Colum
 
 class AttributeManager(wx.Frame):
 
-    def __init__(self, parent, id, title, size, style = wx.DEFAULT_FRAME_STYLE, table=None ):
+    def __init__(self, parent, id, title, size, style = wx.DEFAULT_FRAME_STYLE, table=None,mapset=None ):
 
         wx.Frame.__init__(self, parent, id, title, size=size, style=style)
 
@@ -251,7 +262,7 @@ class AttributeManager(wx.Frame):
         # probably
         self.gismanager = parent
 
-        self.win = TestVirtualList(self, log,tablename=table)
+        self.win = TestVirtualList(self, log,tablename=table,mapset=mapset)
         self.Show()
 
 def main(argv=None):
