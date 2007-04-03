@@ -124,6 +124,7 @@ class GMFrame(wx.Frame):
         #self.panel = wx.Panel(self,-1, style= wx.EXPAND)
         self.sizer= wx.BoxSizer(wx.VERTICAL)
         self.cmdsizer = wx.BoxSizer(wx.HORIZONTAL)
+        self.track = track
 
         # do layout
         self.SetTitle(_("GRASS GIS Manager - wxPython Prototype"))
@@ -330,7 +331,7 @@ class GMFrame(wx.Frame):
             
             if mapset == grassenv.env["MAPSET"]:
                 from gui_modules import dbm
-                self.dbmanager = gui_modules.dbm.AttributeManager(None, -1,"GRASS Attribute Table Manager: %s" % map, size=wx.Size(500,300),table=map)
+                self.dbmanager = gui_modules.dbm.AttributeManager(self, -1,"GRASS Attribute Table Manager: %s" % map, size=wx.Size(500,300),table=map)
 
 
     def newDisplay(self, event=None):

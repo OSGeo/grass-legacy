@@ -125,7 +125,15 @@ class TestVirtualList(wx.ListCtrl, listmix.ListCtrlAutoWidthMixin, listmix.Colum
         self.log.write('OnItemSelected: "%s", "%s"\n' %
                            (self.currentItem,
                             self.GetItemText(self.currentItem)))
-        print self.parent.gismanager 
+
+        print self.parent.gismanager
+        if self.parent.gismanager:
+            gism = self.parent.gismanager
+            curr_pg = gism.gm_cb.GetCurrentPage()
+            disp_idx = gism.track.Track().GetDisp_idx(curr_pg)
+
+            print self.parent.gismanager.mapdisplays#[self.parent.gismanager.disp_idx]
+            print self.parent.gismanager.disp_idx
 
     def OnItemActivated(self, event):
         self.currentItem = event.m_itemIndex
@@ -243,6 +251,7 @@ class AttributeManager(wx.Frame):
             
         # probably
         self.gismanager = parent
+        print self.gismanager
 
         self.win = TestVirtualList(self, log,tablename=table)
         self.Show()
