@@ -126,7 +126,6 @@ class TestVirtualList(wx.ListCtrl, listmix.ListCtrlAutoWidthMixin, listmix.Colum
                            (self.currentItem,
                             self.GetItemText(self.currentItem)))
 
-        print self.parent.gismanager
         if self.parent.gismanager:
             gism = self.parent.gismanager
             curr_pg = gism.gm_cb.GetCurrentPage()
@@ -251,7 +250,6 @@ class AttributeManager(wx.Frame):
             
         # probably
         self.gismanager = parent
-        print self.gismanager
 
         self.win = TestVirtualList(self, log,tablename=table)
         self.Show()
