@@ -164,7 +164,7 @@ class LayerTree(CT.CustomTreeCtrl):
                                 '', ct_type=1, wnd=self.ctrl )
         elif (self.layer_selected and self.layer_selected != self.GetRootItem() and \
                 self.layertype[self.layer_selected] == 'group'):
-            layer = self.InsertItem(self.layer_selected, self.layer_selected,
+            layer = self.PrependItem(self.layer_selected,
                                 '', ct_type=1, wnd=self.ctrl )
             self.Expand(self.layer_selected)
         else:
@@ -314,7 +314,6 @@ class LayerTree(CT.CustomTreeCtrl):
         event.Skip()
 
     def onOpacity(self, event):
-        print 'opacity event:', event.GetString()
         if 'Spin' in str(event.GetEventObject()):
             layer = self.layerctrl[event.GetEventObject()]
         else:
@@ -323,8 +322,7 @@ class LayerTree(CT.CustomTreeCtrl):
 
         if self.drag == False:
             # change opacity parameter for item in layers list in render.Map
-            self.changeOpacity(layer, opacity)
-        event.Skip()
+            self.Map.changeOpacity(layer, opacity)
 
     def onChangeSel(self, event):
         layer = event.GetItem()
@@ -423,23 +421,18 @@ class LayerTree(CT.CustomTreeCtrl):
             self.layerctrl[newctrl] = new
             newctrl.SetValue(self.saveitem['windval'])
 
+        # update lookup dictionary in render.Map
+        if self.saveitem['type'] != 'group':
+            self.Map.updateLookup(old, new)
+
         # delete layer at original position
         self.Delete(old) # entry in render.Map layers list automatically deleted by onDeleteLayer handler
 
-        # Add new layer to layers list in render.Map
-        if self.saveitem['type'] == 'command':
-            self.Map.addLayer(item=new, command=self.saveitem['windval'], l_active=self.saveitem['check'],
-                                      l_hidden=False, l_opacity=1, l_render=False)
-
-        elif self.saveitem['type'] != 'group':
-            self.Map.addLayer(item=new, command=self.saveitem['data'][0], l_active=self.saveitem['check'],
-                                      l_hidden=False, l_opacity=self.saveitem['windval'], l_render=False)
+        # reorder layers in render.Map to match new order after drag and drop
+        self.reorderLayers()
 
         # completed drag and drop
         self.drag = False
-
-        # reorder layers in render.Map to match new order after drag and drop
-        self.reorderLayers()
 
     def getOptData(self, dcmd, layer, params):
         for item in dcmd.split(' '):
