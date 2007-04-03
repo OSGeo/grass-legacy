@@ -50,7 +50,7 @@
 #%option
 #% key: pattern
 #% type: string
-#% description: map name search pattern, must be 'quoted'. (default: all)
+#% description: map name search pattern (default: all)
 #% answer: *
 #% required : no
 #%end
