@@ -564,7 +564,7 @@ class BufferedWindow(wx.Window):
     	# left mouse button released and not just a pointer
         elif event.LeftUp():
 
-            if self.mouse['box'] != "point":
+            if self.mouse['box'] != "point" and self.mouse['box'] != "query":
                 # end point of zoom box or drag
                 self.mouse['end'] = event.GetPositionTuple()[:]
 
@@ -582,6 +582,19 @@ class BufferedWindow(wx.Window):
                 # redraw map
                 self.render=True
                 self.UpdateMap()
+
+            # quering
+            elif self.mouse["box"] == "query":
+                east,north = self.Pixel2Cell(self.mouse['end'][0],self.mouse['end'][1])
+                if self.parent.gismanager:
+                    layer =  self.parent.gismanager.maptree.GetSelection()
+                    type =   self.parent.gismanager.maptree.layertype[layer]
+                    map,mapset =  layer.GetText().split("@")
+                    self.parent.QueryMap(map,mapset,type,east,north)
+                else:
+                    print "Quering without gis manager not implemented yet"
+                
+
             elif self.dragid:
                 self.Refresh()
                 self.Update()
@@ -815,6 +828,9 @@ class MapFrame(wx.Frame):
         """
 
         wx.Frame.__init__(self, parent, id, title, pos, size, style)
+
+        # most of the thime, this will be the gis manager
+        self.gismanager = parent
 
         #
         # Set the size
@@ -1100,6 +1116,35 @@ class MapFrame(wx.Frame):
         returns the current instance of render.Map()
         """
         return Map
+
+    def OnQuery(self, event):
+        """
+        Query currrent or last map
+        """
+        print "Quering"
+    	self.MapWindow.mouse['box'] = "query"
+    	self.MapWindow.zoomtype = 0
+    	#event.Skip()
+
+        # change the cursor
+        self.MapWindow.SetCursor (self.cursors["cross"])
+
+    def QueryMap(self,name,mapset,type,x,y):
+        """
+        Run *.what command in gis manager output window
+        """
+        if type == "raster":
+            cmd = "r.what input=%s east_north=%f,%f" %\
+                    (name+"@"+mapset, float(x), float(y))
+
+        elif type == "vector":
+            cmd = "v.what map=%s east_north=%f,%f"%\
+                    (name+"@"+mapset, float(x), float(y))
+
+        if self.gismanager:
+            self.gismanager.goutput.runCmd(cmd)
+        else:
+            os.system(cmd)
 
     # toolBar button handlers
     def onDecoration(self, event):
