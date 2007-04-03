@@ -758,7 +758,7 @@ case "$GRASS_GUI" in
 
     wx)
         # comming soon, see ^
-        "$GISBASE/scripts/wxgrass"
+        "$GISBASE/scripts/wxgrass &"
 	;;
 
     # Ignore others
@@ -792,7 +792,7 @@ echo "See the licence terms with:              g.version -c"
 if [ "$GRASS_GUI" = "text" ] ; then
     echo "Start the graphical user interface with: gis.m"
 else
-    echo "If required, restart the graphical user interface with: wxgrass"
+    echo "If required, restart the graphical user interface with: wxgrass &"
 fi
 
 echo "When ready to quit enter:                exit"
