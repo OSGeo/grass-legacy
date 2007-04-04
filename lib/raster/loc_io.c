@@ -79,9 +79,8 @@ int LOC_open_driver(void)
 	drv.Polyline_rel	= NULL;
 	drv.Polygon_abs		= NULL;
 	drv.Polygon_rel		= NULL;
-	drv.RGB_raster		= PNG_RGB_raster;
-	drv.Begin_scaled_raster	= NULL;
-	drv.Scaled_raster	= NULL;
+	drv.Begin_scaled_raster	= PNG_begin_scaled_raster;
+	drv.Scaled_raster	= PNG_scaled_raster;
 	drv.Respond		= PNG_Respond;
 	drv.Work_stream		= NULL;
 	drv.Do_work		= NULL;

@@ -24,7 +24,7 @@ LIB_OBJS =\
 	Polydots.o\
 	Polyline.o\
 	Polygon.o\
-	Raster_RGB.o\
+	Raster.o\
 	Respond.o\
 	Returns.o\
 	Set_window.o\
@@ -38,7 +38,6 @@ LIB_OBJS =\
 	init.o\
 	pad.o\
 	parse_ftcap.o\
-	scale.o\
 	text2.o\
 	text3.o
 

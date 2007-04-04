@@ -97,7 +97,6 @@ void R_panel_save(const char *,int,int,int,int);
 void R_panel_restore(const char *);
 void R_panel_delete(const char *);
 
-void R_RGB_raster(int,int,unsigned char *,unsigned char *,unsigned char *,unsigned char *);
 void R_begin_scaled_raster(int [2][2], int [2][2]);
 int R_scaled_raster(int, int,
 	unsigned char *, unsigned char *, unsigned char *, unsigned char *);

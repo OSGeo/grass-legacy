@@ -23,9 +23,8 @@ LIB_OBJS =	\
 	Line_width.o		\
 	Polygon.o		\
 	Polyline.o		\
-	Raster_RGB.o		\
-	Respond.o		\
-	Scale.o
+	Raster.o		\
+	Respond.o
 
 include $(MODULE_TOPDIR)/include/Make/Lib.make
 

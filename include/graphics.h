@@ -50,7 +50,6 @@
 #define STANDARD_COLOR              47
 #define BOX_ABS                     48
 #define BOX_REL                     49
-#define RGB_RASTER                  50
 #define PANEL_SAVE                  53
 #define PANEL_RESTORE               54
 #define PANEL_DELETE                55
