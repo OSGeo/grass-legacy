@@ -34,6 +34,8 @@ extern void write_png(void);
 
 extern void init_color_table(void);
 
+extern const struct driver *PNG_Driver(void);
+
 extern void PNG_Box_abs(int,int,int,int);
 extern void PNG_Client_Close(void);
 extern void PNG_Erase(void);

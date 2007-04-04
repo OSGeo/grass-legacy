@@ -13,7 +13,7 @@
 #include <grass/raster.h>
 #include <grass/graphics.h>
 
-#include "driverlib.h"
+#include "driver.h"
 #include "transport.h"
 
 struct transport loc_trans =
@@ -140,22 +140,40 @@ struct transport rem_trans =
 
 const struct transport *trans;
 
+static const struct transport *get_trans(void)
+{
+	const char *p = getenv("GRASS_RENDER_IMMEDIATE");
+
+#ifndef HAVE_SOCKET
+	return &loc_trans;
+#endif
+
+	if (!p)
+		return &rem_trans;
+
+	if (G_strcasecmp(p, "TRUE") == 0)
+		return &loc_trans;
+
+	if (G_strcasecmp(p, "FALSE") == 0)
+		return &rem_trans;
+
+	if (G_strcasecmp(p, "PNG") == 0)
+		return &loc_trans;
+
+	if (G_strcasecmp(p, "PS") == 0)
+		return &loc_trans;
+
+	G_warning("Unrecognised GRASS_RENDER_IMMEDIATE setting: %s", p);
+
+	return &rem_trans;
+}
+
 static void init_transport(void)
 {
-	const char *p;
-
 	if (trans)
 		return;
 
-	p = getenv("GRASS_RENDER_IMMEDIATE");
-
-#ifdef HAVE_SOCKET
-	trans = (p && strcmp(p, "TRUE") == 0)
-		? &loc_trans
-		: &rem_trans;
-#else
-	trans = &loc_trans;
-#endif
+	trans = get_trans();
 }
 
 int R_open_driver(void)

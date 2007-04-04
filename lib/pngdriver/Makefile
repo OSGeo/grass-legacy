@@ -17,6 +17,7 @@ LIB_OBJS =	\
 	Draw_bitmap.o		\
 	Draw_line.o		\
 	Draw_point.o		\
+	Driver.o		\
 	Erase.o			\
 	Graph_close.o		\
 	Graph_set.o		\
