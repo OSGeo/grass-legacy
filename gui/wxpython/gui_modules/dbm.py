@@ -182,7 +182,7 @@ class TestVirtualList(wx.ListCtrl, listmix.ListCtrlAutoWidthMixin, listmix.Colum
 
             # FIXME: width=1, because of maybe bug in PNG driver elusion
             # should be width=3 or something like this
-            cmd = "d.vect map=%s@%s color=yellow fcolor=yellow cats=%s width=1" % (self.tablename, self.self.mapset, cat)
+            cmd = "d.vect map=%s color=yellow fcolor=yellow cats=%s width=1" % (self.vectmap, cat)
             if self.icon: cmd = cmd +"  icon=%s" % (self.icon)
             if self.pointsize: cmd = cmd + " size=%s" % (self.pointsize)
 
