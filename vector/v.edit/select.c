@@ -152,10 +152,11 @@ int sel_by_cat(struct Map_info *Map, struct cat_list *cl_orig,
 int sel_by_coordinates(struct Map_info *Map,
 		       struct ilist* List)
 {
-    int id, i, type, nlines;
+    int i, type, nlines;
     double east, north, maxdist;
 
-    struct ilist* List_tmp;
+    struct ilist* List_tmp, *List_in_box;
+    BOUND_BOX box;
 
     nlines = List -> n_values;
 
@@ -166,6 +167,8 @@ int sel_by_coordinates(struct Map_info *Map,
 	List_tmp = Vect_new_list();
     }
     
+    List_in_box = Vect_new_list();
+
     type    = Vect_option_to_types (type_opt);
     maxdist = max_distance (atof(maxdist_opt->answer));
 
@@ -174,12 +177,17 @@ int sel_by_coordinates(struct Map_info *Map,
         north = atof(coord_opt->answers[i+1]);
 
 	/* TODO: 3D */
-	/* TODO: find all lines in given threshold */
-	id = Vect_find_line (Map, east, north, 0.0, type, maxdist, 0, 0);
-
-        if (id > 0) {
-            Vect_list_append (List, id);
-        }
+	box.N = north + maxdist;
+	box.S = north - maxdist;
+	box.E = east + maxdist;
+	box.W = east - maxdist;
+	box.T = PORT_DOUBLE_MAX;
+	box.B = -PORT_DOUBLE_MAX;
+	
+	Vect_select_lines_by_box (Map, &box, type, List_in_box);
+	
+	if (List_in_box -> n_values > 0) 
+	    Vect_list_append_list (List_tmp, List_in_box);
     }
 
     /* merge lists (only duplicate items) */
@@ -187,6 +195,8 @@ int sel_by_coordinates(struct Map_info *Map,
 	merge_lists (List, List_tmp);
 	Vect_destroy_list (List_tmp);
     }
+
+    Vect_destroy_list (List_in_box);
 
     G_debug (1, "  %d lines selected (by coordinates)", List->n_values);
 
