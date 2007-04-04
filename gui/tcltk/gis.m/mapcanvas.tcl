@@ -1168,10 +1168,12 @@ proc MapCanvas::set_wind {mon args overwrite} {
 	}
 
 	if {$overwrite == 1} {
-		open [concat "|g.region --o" $options $args "2> $devnull"]
+	
+		set cmd "g.region --o" 
 	} else {
-		open [concat "|g.region" $options $args "2> $devnull"]
+		set cmd "g.region"
 	}
+	eval [list exec -- $cmd] $args >& $devnull
 }
 
 # zoom bindings
