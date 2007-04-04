@@ -180,7 +180,9 @@ class TestVirtualList(wx.ListCtrl, listmix.ListCtrlAutoWidthMixin, listmix.Colum
 
             cat =  self.GetItemText(self.currentItem)
 
-            cmd = "d.vect map=%s@%s color=yellow fcolor=yellow cats=%s width=3" % (self.tablename, self.self.mapset, cat)
+            # FIXME: width=1, because of maybe bug in PNG driver elusion
+            # should be width=3 or something like this
+            cmd = "d.vect map=%s@%s color=yellow fcolor=yellow cats=%s width=1" % (self.tablename, self.self.mapset, cat)
             if self.icon: cmd = cmd +"  icon=%s" % (self.icon)
             if self.pointsize: cmd = cmd + " size=%s" % (self.pointsize)
 
