@@ -37,17 +37,17 @@ struct ilist *select_lines(struct Map_info *Map)
 	sel_by_id(Map, List);
     }
     
-    /* select by coordinates */
+    /* select by coordinates (+threshold) */
     if (coord_opt->answer != NULL) {
         sel_by_coordinates(Map, List);
     }
     
-    /* select by bbox */
+    /* select by bbox (TODO: threshold) */
     if (bbox_opt->answer != NULL) {
         sel_by_bbox(Map, List);
     }
     
-    /* select by polygon */
+    /* select by polygon (TODO: threshold) */
     if (poly_opt->answer != NULL) {
         sel_by_polygon(Map, List);
     }
