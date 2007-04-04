@@ -594,6 +594,8 @@ class Map:
 
 			# render map layers
 			for layer in self.layers:
+                                if DEBUG:
+                                    print "rendering", layer.name
 				# skip if hidden or not active
 				if layer.active == False or layer.hidden == True:
 					continue
@@ -611,6 +613,8 @@ class Map:
 				maps.append(layer.mapfile)
 				masks.append(layer.maskfile)
 				opacities.append(str(layer.opacity))
+                                if DEBUG:
+                                    print "rendered", layer.name
 
 			# make arrays to strings
 			mapstr = ",".join(maps)
