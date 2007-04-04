@@ -276,10 +276,16 @@ class BufferedWindow(wx.Window):
             else:
                 drawid = wx.NewId()
 
-        self.ovlcoords[drawid] = coords
-        self.ovlchk[drawid] = True
-        pdc.SetId(drawid)
-        self.select[drawid] = False
+        if drawid:
+            self.ovlcoords[drawid] = coords
+            self.ovlchk[drawid] = True
+            pdc.SetId(drawid)
+            self.select[drawid] = False
+
+        pdc.BeginDrawing()
+        pdc.SetBackground(wx.Brush(self.GetBackgroundColour()))
+        pdc.Clear()
+        self.Refresh()
 
         if pdctype == 'clear': # erase the display
             pdc.EndDrawing()
@@ -594,7 +600,7 @@ class BufferedWindow(wx.Window):
                     self.parent.QueryMap(map,mapset,type,east,north)
                 else:
                     print "Quering without gis manager not implemented yet"
-                
+
 
             elif self.dragid:
                 self.Refresh()
