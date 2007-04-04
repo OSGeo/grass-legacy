@@ -530,35 +530,6 @@ void LOC_panel_delete(const char *name)
 	remove(name);
 }
 
-/*!
- * \brief draw a raster
- *
- * This is useful
- * only in fixed color mode (see <i>R_color_table_fixed</i>). Starting at
- * the current location, the <b>num</b> colors represented by the intensities
- * described in the <b>red, grn</b>, and <b>blu</b> arrays are drawn for
- * <b>nrows</b> consecutive pixel rows. The values in these arrays are in
- * the range of 0-255. The <b>withzero</b> flag is
- * used to indicate whether 0 values are to be treated as a color (1) or should
- * be ignored (0). If ignored, those screen pixels in these locations are not
- * modified. This option is useful for graphic overlays.
- *
- *  \param n num
- *  \param nrows
- *  \param red
- *  \param grn
- *  \param blu
- *  \param nul withzero
- *  \return int
- */
-
-void LOC_RGB_raster(int n, int nrows,
-	unsigned char *red, unsigned char *grn, unsigned char *blu,
-	unsigned char *nul)
-{
-	COM_RGB_raster(n, nrows, red, grn, blu, nul);
-}
-
 void LOC_begin_scaled_raster(int src[2][2], int dst[2][2])
 {
 	COM_begin_scaled_raster(src, dst);

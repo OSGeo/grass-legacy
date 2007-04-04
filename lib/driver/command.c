@@ -208,20 +208,6 @@ int process_command(int c)
 	REC(blua, x * y * sizeof(char));
 	COM_Bitmap(x, y, index, blua);
 	break;
-    case RGB_RASTER:
-	REC(&x, sizeof x);
-	REC(&y, sizeof y);
-	reda = (unsigned char *) xalloc(reda, &red_alloc, x, sizeof(*reda));
-	grna = (unsigned char *) xalloc(grna, &grn_alloc, x, sizeof(*grna));
-	blua = (unsigned char *) xalloc(blua, &blu_alloc, x, sizeof(*blua));
-	nula = (unsigned char *) xalloc(nula, &nul_alloc, x, sizeof(*nula));
-	REC(reda, x * sizeof(char));
-	REC(grna, x * sizeof(char));
-	REC(blua, x * sizeof(char));
-	REC(nula, x * sizeof(char));
-	REC(&t, sizeof t);
-	COM_RGB_raster(x, y, reda, grna, blua, t ? nula : NULL);
-	break;
     case BEGIN_SCALED_RASTER:
 	REC(&src[0][0], 4 * sizeof(int));
 	REC(&dst[0][0], 4 * sizeof(int));

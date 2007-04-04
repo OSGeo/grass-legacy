@@ -3,8 +3,8 @@
 #include <math.h>
 #include <grass/gis.h>
 #include "driver.h"
+#include "pngdriver.h"
 
-static unsigned char *d_red, *d_grn, *d_blu, *d_nul;
 static int *trans;
 static int ncols;
 static int nalloc;
@@ -45,14 +45,10 @@ static void alloc_buffers(void)
 		return;
 
 	nalloc = ncols;
-	d_red = G_realloc(d_red, nalloc);
-	d_grn = G_realloc(d_grn, nalloc);
-	d_blu = G_realloc(d_blu, nalloc);
-	d_nul = G_realloc(d_nul, nalloc);
 	trans = G_realloc(trans, nalloc * sizeof(int));
 }
 
-void LIB_begin_scaled_raster(int s[2][2], int d[2][2])
+void PNG_begin_scaled_raster(int s[2][2], int d[2][2])
 {
 	int i;
 
@@ -67,32 +63,38 @@ void LIB_begin_scaled_raster(int s[2][2], int d[2][2])
 		trans[i] = scale_rev_x(d[0][0] + i);
 }
 
-int LIB_scaled_raster(
+int PNG_scaled_raster(
 	int n, int row,
-	unsigned char *red, unsigned char *grn, unsigned char *blu, unsigned char *nul)
+	const unsigned char *red, const unsigned char *grn, const unsigned char *blu, const unsigned char *nul)
 {
 	int d_y0 = scale_fwd_y(row + 0);
 	int d_y1 = scale_fwd_y(row + 1);
 	int d_rows = d_y1 - d_y0;
-	int i;
+	int x, y;
 
 	if (d_rows <= 0)
 		return next_row(row, d_y0);
 
-	/* Make the screen raster */
-	for (i = 0; i < ncols; i++)
+	for (x = 0; x < ncols; x++)
 	{
-		int j = trans[i];
+		int xx = dst[0][0] + x;
+		int j = trans[x];
+		int c;
 
-		d_red[i] = red[j];
-		d_grn[i] = grn[j];
-		d_blu[i] = blu[j];
-		if (nul)
-			d_nul[i] = nul[j];
+		if (nul && nul[j])
+			continue;
+
+		c = PNG_lookup_color(red[j], grn[j], blu[j]);
+
+		for (y = 0; y < d_rows; y++)
+		{
+			int yy = d_y0 + y;
+
+			grid[yy * width + xx] = c;
+		}
 	}
 
-	COM_Move_abs(dst[0][0], d_y0);
-	COM_RGB_raster(ncols, d_rows, d_red, d_grn, d_blu, nul ? d_nul : nul);
+	modified = 1;
 
 	return next_row(row, d_y1);
 }

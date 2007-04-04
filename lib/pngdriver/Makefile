@@ -21,7 +21,7 @@ LIB_OBJS =	\
 	Graph_close.o		\
 	Graph_set.o		\
 	Line_width.o		\
-	Raster_RGB.o		\
+	Raster.o		\
 	Respond.o		\
 	read.o			\
 	read_ppm.o		\

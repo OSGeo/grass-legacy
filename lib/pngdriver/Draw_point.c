@@ -6,5 +6,7 @@ void PNG_draw_point(int x, int y)
 		return;
 
 	grid[y * width + x] = currentColor;
+
+	modified = 1;
 }
 

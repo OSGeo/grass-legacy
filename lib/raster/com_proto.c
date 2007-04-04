@@ -507,35 +507,6 @@ void R_panel_delete(const char *name)
 	trans->panel_delete(name);
 }
 
-/*!
- * \brief draw a raster
- *
- * This is useful
- * only in fixed color mode (see <i>R_color_table_fixed</i>). Starting at
- * the current location, the <b>num</b> colors represented by the intensities
- * described in the <b>red, grn</b>, and <b>blu</b> arrays are drawn for
- * <b>nrows</b> consecutive pixel rows. The values in these arrays are in
- * the range of 0-255. The <b>withzero</b> flag is
- * used to indicate whether 0 values are to be treated as a color (1) or should
- * be ignored (0). If ignored, those screen pixels in these locations are not
- * modified. This option is useful for graphic overlays.
- *
- *  \param n num
- *  \param nrows
- *  \param red
- *  \param grn
- *  \param blu
- *  \param nul withzero
- *  \return int
- */
-
-void R_RGB_raster(int n, int nrows,
-	unsigned char *red, unsigned char *grn, unsigned char *blu,
-	unsigned char *nul)
-{
-	trans->RGB_raster(n, nrows, red, grn, blu, nul);
-}
-
 void R_begin_scaled_raster(int s[2][2], int d[2][2])
 {
 	return trans->begin_scaled_raster(s, d);
@@ -547,38 +518,6 @@ int R_scaled_raster(int n, int row,
 {
 	return trans->scaled_raster(n, row, red, grn, blu, nul);
 }
-
-/*!
- * \brief Send arguments to the driver
- *
- * Sends arguments to the driver, preceded by the RASTER_CHAR opcode; 
- * the actual work is done by the driver. A raster drawing operation is
- * performed. The result is that a rectangular area of width <b>num</b> 
- * and height <b>nrows</b>, with its top-left corner at the current location,
- * is filled with <b>nrows</b> copies of the data pointed to by <b>ras</b>.
- *
- * \param num is the number of columns.
- * \param nrows is the number of rows to be drawn, all of which are identical
- *        (this is used for vertical scaling).
- * \param withzero should be true (non-zero) if zero pixels are to be drawn in
- *        color zero, false (zero) if they are to be transparent (i.e.
- *        not drawn).
- * \param ras should point to <b>num</b> bytes of data, which constitute the 
- *        pixels for a single row of a raster image.
- *
- * Example: to draw a byte-per-pixel image:
-  \code
-   unsigned char image[HEIGHT][WIDTH];
-
-   for (y = 0; y < HEIGHT; y++)
-   {
-       R_move_abs(x_left, y_top + y);
-       R_raster_char(WIDTH, 1, 1, image[y]);
-   }
-  \endcode
- *
- */
-
 
 void R_bitmap(int ncols, int nrows, int threshold, const unsigned char *buf)
 {
