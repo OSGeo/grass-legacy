@@ -89,6 +89,22 @@ char *G_convert_dirseps_from_host(char *path)
  * Returns information about the specified file.
  *
  * \param file_name file name
+ * \param stat
+ *
+ * \return Return value from system lstat function
+ **/
+
+int G_stat(const char *file_name, struct stat *buf)
+{
+    return stat(file_name, buf);
+}
+
+/**
+ * \brief Get file status
+ *
+ * Returns information about the specified file.
+ *
+ * \param file_name file name
  * \param stat in the case of a symbolic link, the link itself is
  *             stat-ed, not the file that it refers to
  *

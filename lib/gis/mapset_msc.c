@@ -68,7 +68,7 @@ int G__mapset_permissions (char *mapset)
 
     G__file_name (path,"","",mapset);
 
-    if (G_lstat (path, &info) != 0)
+    if (G_stat (path, &info) != 0)
 	    return -1;
     if (!S_ISDIR(info.st_mode))
 	    return -1;
@@ -99,7 +99,7 @@ int G__mapset_permissions2 ( char * gisdbase, char * location, char *mapset )
 
     sprintf ( path, "%s/%s/%s", gisdbase, location, mapset );
 
-    if (G_lstat (path, &info) != 0)
+    if (G_stat (path, &info) != 0)
 	    return -1;
     if (!S_ISDIR(info.st_mode))
 	    return -1;
