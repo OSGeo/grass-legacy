@@ -32,7 +32,7 @@
 */
 static int merge_lines (struct line_pnts *Points1, struct line_cats *Cats1, 
 			struct line_pnts *Points2, struct line_cats *Cats2,
-			int thresh, struct line_pnts **Points);
+			double thresh, struct line_pnts **Points);
 
 /*
  * merge lines in vector map
@@ -52,18 +52,9 @@ int do_merge(struct Map_info *Map)
     int do_merge;
     /* number of lines (original, selected, merged) */
     int nlines, nlines_selected, nlines_merged;
-
-    double thresh;
     
     nlines_merged = 0;
     
-    thresh = atof (maxdist_opt -> answer);
-    
-    if (thresh) {
-	G_warning (_("Ignoring threshold value"));
-	thresh = 0.0;
-    }
-
     /* select lines */
     List = select_lines (Map);
     
@@ -129,7 +120,8 @@ int do_merge(struct Map_info *Map)
 		do_merge = 1;
 		line2 = -1;
 		for (j = 0; do_merge && j < List -> n_values; j++) {
-		    if (List -> value[j] == line1)
+		    if (List -> value[j] == line1 ||
+			!Vect_line_alive(Map, List -> value[j]))
 			continue;
 
 		    if (Vect_val_in_list (List_in_box, List -> value[j])) {
@@ -150,11 +142,11 @@ int do_merge(struct Map_info *Map)
 
 		type2 = Vect_read_line (Map, Points2, Cats2, line2);
 
-		G_debug (3, "merge lines: %d, %d", line1, line2);
-		
 		merge_lines (Points1, Cats1,
 			     Points2, Cats2,
-			     thresh,  &Points);
+			     -1.0,  &Points); /* do not use threshold value */
+
+		G_debug (3, "merge lines: %d, %d", line1, line2);
 
 		if (Points -> n_points > 0) {
 		    if (Vect_delete_line(Map, line2) == -1) {
@@ -213,7 +205,7 @@ int do_merge(struct Map_info *Map)
 
 static int merge_lines (struct line_pnts *Points1, struct line_cats *Cats1, 
 			struct line_pnts *Points2, struct line_cats *Cats2,
-			int thresh, struct line_pnts **Points)
+			double thresh, struct line_pnts **Points)
 {
     struct line_pnts *ps = *Points;
     struct line_cats *cs = Cats1;
@@ -253,10 +245,10 @@ static int merge_lines (struct line_pnts *Points1, struct line_cats *Cats1,
 	if (distances[i] < distances[mindistidx])
 	    mindistidx = i;
 
-    G_debug (3, "merge line ? mindist: %g, thresh: %g",
-	     distances[mindistidx], thresh);
+    G_debug (3, "merge line ? index: %d, mindist: %g, thresh: %g",
+	     mindistidx, distances[mindistidx], thresh);
     
-    if (distances[mindistidx] > thresh) {
+    if (thresh > 0 && distances[mindistidx] > thresh) {
 	return 0;
     }
     
@@ -265,18 +257,22 @@ static int merge_lines (struct line_pnts *Points1, struct line_cats *Cats1,
 	/* for each mindistidx create new line */
     case 0: 
 	Vect_append_points (ps, Points2, GV_BACKWARD);
-	Vect_append_points (ps, Points1, GV_FORWARD);
+	if (ps -> n_points == Points2 -> n_points)
+	    Vect_append_points (ps, Points1, GV_FORWARD);
 	break;
     case 1: 
 	Vect_append_points (ps, Points2, GV_FORWARD);
-	Vect_append_points (ps, Points1, GV_FORWARD);
+	if (ps -> n_points == Points2 -> n_points)
+	    Vect_append_points (ps, Points1, GV_FORWARD);
 	break;
     case 2: 
-	Vect_append_points (ps, Points1, GV_FORWARD);
+	if (ps -> n_points == 0)
+	    Vect_append_points (ps, Points1, GV_FORWARD);
 	Vect_append_points (ps, Points2, GV_FORWARD);
 	break;
     case 3: 
-	Vect_append_points (ps, Points1, GV_FORWARD);
+	if (ps -> n_points == 0)
+	    Vect_append_points (ps, Points1, GV_FORWARD);
 	Vect_append_points (ps, Points2, GV_BACKWARD);
 	break;
     default:

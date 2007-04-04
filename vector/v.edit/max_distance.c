@@ -32,7 +32,11 @@ double max_distance(double maxdistance)
     double ew_dist1, ew_dist2, ns_dist1, ns_dist2;
     double xres, yres, maxd;
 
-    if (maxdistance == 0.0) {
+    if (maxdistance < 0.0) {
+	G_warning ("Threshold distance must be >= 0.0, using value 0.0");
+    }
+
+    if (maxdistance <= 0.0) {
         G_get_window (&window);
 
         ew_dist1 = G_distance(window.east, window.north, window.west, window.north);
@@ -50,10 +54,14 @@ double max_distance(double maxdistance)
 	    maxd = xres;
 	else
 	    maxd = yres;
+
+	G_message ("Threshold distance set to [%g] (based on 2D resolution)", maxd);
     }
     else {
         maxd = maxdistance;
     }
+
+    G_debug (3, "max_distance(): threshold is %g", maxd);
 
     return maxd;
 }
