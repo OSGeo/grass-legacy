@@ -323,7 +323,12 @@ class GMFrame(wx.Frame):
                  )
 
     def ShowAttributeTable(self,event):
-#        mapsel = self.maptree.GetSelection()
+
+        maptype = self.maptree.layertype[self.maptree.GetSelection()]
+        if maptype != 'vector':
+            print 'Attribute management only available for vector files'
+            return
+
         dcmd = self.maptree.GetPyData(self.maptree.GetSelection())[0]
         mapname = map = mapset = size = icon = None
         for item in dcmd.split(' '):
@@ -342,15 +347,6 @@ class GMFrame(wx.Frame):
                 print 'icon=',icon
 
         pointdata = (icon,size)
-#
-#        name = mapsel.GetText()
-#        if name.find("@") >-1:
-#            map,mapset = name.strip().split("@")
-#            if mapset == grassenv.env["MAPSET"]:
-#                from gui_modules import dbm
-#                self.dbmanager = gui_modules.dbm.AttributeManager(self,
-#                        -1,"GRASS Attribute Table Manager: %s" % map,
-#                        size=wx.Size(500,300),table=map,mapset=mapset)
 
         if mapset == grassenv.env["MAPSET"]:
             from gui_modules import dbm
