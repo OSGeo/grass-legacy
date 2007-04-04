@@ -249,7 +249,6 @@ if [ ! "$GRASS_WISH" ] ; then
 fi
 
 
-
 # try and find a web browser if one isn't already specified
 if [ ! "$GRASS_HTML_BROWSER" ] ; then
 
@@ -257,7 +256,7 @@ if [ ! "$GRASS_HTML_BROWSER" ] ; then
 	GRASS_HTML_BROWSER=open
 
     elif [ "$MINGW" -o "$CYGWIN" ] ; then
-	# MinGW startup moved to into.bat
+	# MinGW startup moved to into init.bat
 	iexplore="$SYSTEMDRIVE/Program Files/Internet Explorer/iexplore.exe"
 	if [ -f "$iexplore" ] ; then
 	    GRASS_HTML_BROWSER=$iexplore
@@ -302,7 +301,6 @@ if [ ! "$GRASS_HTML_BROWSER" ] ; then
     GRASS_HTML_BROWSER=konqueror
 fi
 export GRASS_HTML_BROWSER
-
 
 
 #predefine monitor size for certain architectures
