@@ -27,6 +27,12 @@ import wx.lib.mixins.listctrl  as  listmix
 
 import sys,os,locale
 
+try:
+   from subprocess import *
+except:
+   from compat import subprocess
+   from compat.subprocess import *
+
 #----------------------------------------------------------------------
 class Log:
     r"""\brief Needed by the wxdemos.
@@ -74,6 +80,17 @@ class TestVirtualList(wx.ListCtrl, listmix.ListCtrlAutoWidthMixin, listmix.Colum
         self.sm_up = self.il.Add(wx.ArtProvider_GetBitmap(wx.ART_GO_UP,wx.ART_TOOLBAR,(16,16)))
         self.sm_dn = self.il.Add(wx.ArtProvider_GetBitmap(wx.ART_GO_DOWN,wx.ART_TOOLBAR,(16,16)))
         self.SetImageList(self.il, wx.IMAGE_LIST_SMALL)
+
+        # show us the result in map display
+        if self.parent.gismanager:
+
+            self.gism = self.parent.gismanager
+            curr_pg = self.gism.gm_cb.GetCurrentPage()
+            disp_idx = self.gism.track.Track().GetDisp_idx(curr_pg)
+
+            self.mapdisp =  self.parent.gismanager.mapdisplays[disp_idx]
+            self.map = self.gism.maptree.Map
+
 
         #building the columns
         i = 0
@@ -134,9 +151,11 @@ class TestVirtualList(wx.ListCtrl, listmix.ListCtrlAutoWidthMixin, listmix.Colum
         self.Bind(wx.EVT_LIST_ITEM_DESELECTED, self.OnItemDeselected)
         self.Bind(wx.EVT_LIST_COL_CLICK, self.OnColClick)
         self.Bind(wx.EVT_CLOSE, self.OnCloseWindow)
+        self.mapdisp.MapWindow.Bind(wx.EVT_LEFT_DOWN, self.onMapClick)
+
 
     def OnCloseWindow(self, event):
-        if self.qlayer: map.delLayer(item='qlayer')
+        if self.qlayer: self.map.delLayer(item='qlayer')
 
     def OnColClick(self,event):
         self._col = event.GetColumn()
@@ -151,23 +170,23 @@ class TestVirtualList(wx.ListCtrl, listmix.ListCtrlAutoWidthMixin, listmix.Colum
         # show us the result in map display
         if self.parent.gismanager:
 
-            gism = self.parent.gismanager
-            curr_pg = gism.gm_cb.GetCurrentPage()
-            disp_idx = gism.track.Track().GetDisp_idx(curr_pg)
+#            gism = self.parent.gismanager
+#            curr_pg = gism.gm_cb.GetCurrentPage()
+#            disp_idx = gism.track.Track().GetDisp_idx(curr_pg)
 
-            mapdisp =  self.parent.gismanager.mapdisplays[disp_idx]
-            map = gism.maptree.Map
-            if self.qlayer: map.delLayer(item='qlayer')
+#            mapdisp =  self.parent.gismanager.mapdisplays[disp_idx]
+#            map = gism.maptree.Map
+            if self.qlayer: self.map.delLayer(item='qlayer')
 
             cat =  self.GetItemText(self.currentItem)
 
-            cmd = "d.vect map=%s@%s color=yellow fcolor=yellow cats=%s width=3" % (self.tablename, self.mapset, cat)
+            cmd = "d.vect map=%s@%s color=yellow fcolor=yellow cats=%s width=3" % (self.tablename, self.self.mapset, cat)
             if self.icon: cmd = cmd +"  icon=%s" % (self.icon)
             if self.pointsize: cmd = cmd + " size=%s" % (self.pointsize)
 
-            self.qlayer = map.addLayer(item='qlayer', command=cmd, l_active=True,
+            self.qlayer = self.map.addLayer(item='qlayer', command=cmd, l_active=True,
                                       l_hidden=False, l_opacity=1, l_render=False)
-            mapdisp.ReDraw(None)
+            self.mapdisp.ReDraw(None)
 
     def OnItemActivated(self, event):
         self.currentItem = event.m_itemIndex
@@ -268,6 +287,64 @@ class TestVirtualList(wx.ListCtrl, listmix.ListCtrlAutoWidthMixin, listmix.Colum
     #def getColumnText(self, index, col):
     #    item = self.GetItem(index, col)
     #    return item.GetText()
+
+    def onMapClick(self, event):
+        """
+        Gets coordinates from mouse clicking on display window
+        """
+        # screen coordinates
+        posx, posy = event.GetPositionTuple()
+
+        # map coordinates
+        x, y = self.mapdisp.MapWindow.Pixel2Cell(posx, posy)
+        print 'coordinates =',x,y
+
+
+#        try:
+#            os.environ["GRASS_MESSAGE_FORMAT"] = "gui"
+#            cmd = "v.what -a east_north=%d,%d distance=%d map=%@%" % (x,y,100,self.tablename, self.self.mapset)
+##            self.cmd_output.write(cmd+"\n----------\n")
+#            p = Popen(cmd +" --verbose", shell=True, stdin=PIPE, stdout=PIPE, stderr=PIPE, close_fds=True)
+#
+#            oline = p.stderr.readline()
+#            while oline:
+#                oline = oline.strip()
+#                oline = p.stderr.readline()
+#                if oline.find("GRASS_INFO_MESSAGE")>-1:
+#                    self.cmd_output.write(string.split(oline,maxsplit=1)[1]+"\n")
+#                elif oline.find("GRASS_INFO_WARNING")>-1:
+#                    self.cmd_output.write("WARNING: "+string.split(oline,maxsplit=1)[1]+"\n")
+#                elif oline.find("GRASS_INFO_ERROR")>-1:
+#                    self.cmd_output.write("ERROR: "+string.split(oline,maxsplit=1)[1]+"\n")
+#
+#            oline = p.stdout.readline()
+#            while oline:
+#                oline = oline.strip()
+##                self.cmd_output.write(oline+"\n")
+#                print oline+"\n"
+#                print >> sys.stderr, oline
+#                oline = p.stdout.readline()
+#
+#            if p.stdout < 0:
+#                print >> sys.stderr, "Child was terminated by signal", p.stdout
+#            elif p.stdout > 0:
+#                print >> sys.stderr, p.stdout
+#                pass
+#        except OSError, e:
+#            print >> sys.stderr, "Execution failed:", e
+
+
+
+        event.Skip()
+
+
+
+
+
+
+
+
+
 
 #----------------------------------------------------------------------
 # The main window
