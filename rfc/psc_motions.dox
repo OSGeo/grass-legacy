@@ -3,9 +3,15 @@
 
 See also: <a href="http://grass.gdf-hannover.de/wiki/PSC_Agenda">PSC Agenda</a>.
 
-\section motions Motions of 2007
+\section motions2007 Motions of 2007
 
-\section motions Motions of 2006
+<!--
+<ul>
+<li> \link rfc1_psc RFC 1: Project Steering Committee Guidelines\endlink (adopted [day] [month] 2007)
+</ul>
+-->
+
+\section motions2006 Motions of 2006
 
 <ul>
 <li> CVS write access to S. Pallecchi (granted, 12 Dec 2006)
@@ -17,4 +23,3 @@ See also: <a href="http://grass.gdf-hannover.de/wiki/PSC_Agenda">PSC Agenda</a>.
 
 <p><i>Last changed: $Date$</i></p>
 */
- 
