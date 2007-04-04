@@ -230,47 +230,19 @@ if [ ! "$GRASS_PAGER" ] ; then
     export GRASS_PAGER
 fi
 
-
 # Set up tcltk and wish environment 
-# with options for aqua tcltk with Mac OSX
-
 
 if [ ! "$GRASS_TCLSH" ] ; then
-   if [ "$HOSTTYPE" = "macintosh" ] ; then
-      if [ -d "/usr/local/grasslib" ]; then
-            GRASS_TCLSH=/usr/local/grasslib/bin/tclsh
-      else
-         GRASS_TCLSH=tclsh
-      fi
-   else
-      GRASS_TCLSH=tclsh
-   fi
+   GRASS_TCLSH=tclsh
    export GRASS_TCLSH
 fi   
-
 
 #WISH_OS=`echo 'puts $tcl_platform(platform) ; exit 0' | wish`
 
 if [ ! "$GRASS_WISH" ] ; then
-   if [ "$HOSTTYPE" = "macintosh" ] ; then
-      if [ "$osxaqua" ] ; then
-         if [ -d "/usr/local/grasslib/bin/Grass.app" ] ; then
-            GRASS_WISH=/usr/local/grasslib/bin/Grass.app/Contents/MacOS/Grass
-         else
-            GRASS_WISH=/usr/bin/wish
-         fi
-         export osxaqua
-      elif [ -d "/usr/local/grasslib" ] ; then
-         GRASS_WISH=/usr/local/grasslib/bin/wish
-      else
-         #force X11 tcl on Mac without grasslib directory:
-         GRASS_WISH=/usr/bin/wish
-      fi
-   else
-      GRASS_WISH=wish
-   fi   
+   GRASS_WISH=wish
+   export GRASS_WISH
 fi
-export GRASS_WISH
 
 if [ ! "$GRASS_HTML_BROWSER" ] ; then
     for i in `echo "$PATH" | sed 's/^:/.:/
