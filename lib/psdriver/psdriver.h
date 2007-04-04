@@ -14,6 +14,8 @@ extern void output(const char *, ...);
 
 extern void init_color_table(void);
 
+extern const struct driver *PS_Driver(void);
+
 extern void PS_Box_abs(int,int,int,int);
 extern void PS_Client_Close(void);
 extern void PS_Erase(void);
