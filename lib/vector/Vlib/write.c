@@ -191,7 +191,7 @@ Vect_delete_line (
 {
     int ret;
     
-    G_debug (3, "Vect_delete_line(): name = %s", Map->name);
+    G_debug (3, "Vect_delete_line(): name = %s, line=%d", Map->name, line);
     
     if ( Map->level < 2 ) {
 	G_fatal_error ( _("Cannot delete the line, map '%s' is not opened on level 2"), Map->name );
