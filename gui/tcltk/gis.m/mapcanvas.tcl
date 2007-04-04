@@ -1626,7 +1626,6 @@ proc MapCanvas::measure { mon x y } {
 		-fill green -arrow both -width 2]
 
 	# get line endpoints in map coordinates
-
 	set east1  [scrx2mape $mon $linex1]
 	set north1 [scry2mapn $mon $liney1]
 	set east2  [scrx2mape $mon $linex2]
@@ -1636,12 +1635,69 @@ proc MapCanvas::measure { mon x y } {
 	set mlength [expr {sqrt(pow(($east1 - $east2), 2) + pow(($north1 - $north2), 2))}]
 	set totmlength [expr {$totmlength + $mlength}]
 
-	monitor_annotate $measurement_annotation_handle [format [G_msg " --segment length = %f $mapunits\n"] $mlength]
-	monitor_annotate $measurement_annotation_handle [format [G_msg "cumulative length = %f $mapunits\n"] $totmlength]
+	# format length numbers and units in a nice way
+	set out_seg [ fmt_length $mlength ]
+	set out_tot [ fmt_length $totmlength ]
+
+
+	monitor_annotate $measurement_annotation_handle \
+		[G_msg " --segment length = $out_seg\n"]
+	monitor_annotate $measurement_annotation_handle \
+		[G_msg "cumulative length = $out_tot\n"]
 
 	set linex1 $linex2
 	set liney1 $liney2
 }
+
+
+
+# format length numbers and units in a nice way, as a function of length
+proc MapCanvas::fmt_length { dist } {
+    variable mapunits
+
+
+    set divisor "1.0"
+    set outunits $mapunits
+
+    # figure out which units to use
+    if { [string equal "meters" "$mapunits"] } {
+    	if { $dist > 2500 } {
+    	    set outunits "km"
+    	    set divisor "1000.0"
+    	}
+    } elseif { [string first "feet" "$mapunits"] >= 0 } {
+    	# nano-bug: we match any "feet", but US Survey feet is really 
+    	#  5279.9894 per statute mile, or 10.6' per 1000 miles. As >1000
+    	#  miles the tick markers are rounded to the nearest 10th of a
+    	#  mile (528'), the difference in foot flavours is ignored.
+    	if { $dist > 5280 } {
+    	    set outunits "miles"
+    	    set divisor "5280.0"
+    	}
+    } elseif { [string first "degree" "$mapunits"] >= 0 } {
+    	if { $dist < 1 } {
+    	    set outunits "minutes"
+    	    set divisor [expr 1/60.0]
+    	}
+    }
+
+    # format numbers in a nice way
+    if { [expr $dist/$divisor ] >= 2500 } {
+       set outfmt "%.0f"
+    } elseif { [expr $dist/$divisor ] >= 1000 } {
+    	set outfmt "%.1f"
+    } elseif { [expr $dist/$divisor ] > 0 } {
+    	set outfmt "%.[expr {int(ceil(3 - log10($dist/$divisor)))}]f"
+    } else {
+    	# error: no range (nan?)
+    	set outfmt "%g"
+    }
+
+    set outdist [format $outfmt [expr $dist/$divisor ] ]
+
+    return [concat $outdist $outunits ]
+}
+
 
 
 ###############################################################################
