@@ -341,10 +341,8 @@ class GMFrame(wx.Frame):
                     map = mapname
             elif 'size=' in item:
                 size = item.split('=')[1]
-                print 'size=',size
             elif 'icon=' in item:
                 icon = item.split('=')[1]
-                print 'icon=',icon
 
         pointdata = (icon,size)
 
