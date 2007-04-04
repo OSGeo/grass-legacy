@@ -167,7 +167,7 @@ int show_it (void)
     char *lptr, *tptr ;
     double line_size ;
     int text_size ;
-    int X, Y ;
+    int X, Y, Y0 ;
     int T, B, L, R ;
     int scrT, scrB, scrL, scrR ;
     int t, b, l, r ;
@@ -175,9 +175,13 @@ int show_it (void)
     int yarr[5] ;
     int Xoffset ;
     int Yoffset ;
+#ifdef NOTYET
+    int X1, Y1;
+#endif
 
     G_debug ( 3, "Doing '%s'", text) ;
     X = (int)(D_u_to_d_col(east)) ;
+    Y0= (int)(D_u_to_d_row(north));
 
 /* Set font */
     R_font (font);
@@ -248,14 +252,76 @@ int show_it (void)
     Xoffset = xoffset ;
     Yoffset = -yoffset ;
 
-    if (xref == CENT)
-	    Xoffset -= (R - L) / 2 ;
-    if (xref == RITE)
-	    Xoffset -= R - L ;
-    if (yref == CENT)
-	    Yoffset -= (B - T) / 2 ;
-    if (yref == BOT)
+
+    if (xref == LEFT) {
+/*   	if (yref == TOP) {;} */
+
+	if (yref == CENT)
+	    Yoffset -= (B - T) / 2;
+	if (yref == BOT)
 	    Yoffset -= B - T ;
+    }
+
+    if (xref == CENT) {
+	Xoffset -= (R - L) / 2 ;
+
+	if (yref == CENT)
+	    Yoffset -= (B - T) / 2 ;
+	if (yref == BOT)
+	    Yoffset -= B - T ;
+    }
+
+    if (xref == RITE) {
+	Xoffset -= R - L ;
+
+	if (yref == CENT)
+	    Yoffset -= (B - T) / 2 ;
+	if (yref == BOT)
+	    Yoffset -= B - T ;
+    }
+
+
+#ifdef NOTYET
+/**** get+set new box for clipping ****/
+/* STILL INCOMPLETE
+ * The border+background box coords given by R_get_text_box() expand to
+ * cover (and clip!) the area of the rotated text, but the bottom left
+ * corner of that box is not always the ref=lower,left spot (rot>90), and
+ * middle|upper left of the text do not match the middle|upper left of the
+ * expanded text box when rotated.
+ * 
+ * The basic solution is to calculate the position and dimensions of
+ * the text without rotation, then rotate those points about the point's
+ * coord, and replot. For text we must calculate the corners of the text
+ * independent of the text box, and I fear it might not work correctly with
+ * TrueType fonts. We'll see.
+ *
+ * rotate_around_pt() is fully functional.
+ */
+
+
+/* origin         (X, Y0)
+   starting ray   (L-X, B-Y0)
+   rotated ray    (X1-X, Y1-Y0) */
+
+    X1 = L;
+    Y1 = B;
+
+    G_debug(0, "X0=%d  Y0=%d\n", X, Y0);
+    G_debug(0, "X1=%d  Y1=%d\n", X1, Y1);
+    R_standard_color(D_translate_color("grey"));
+    D_move_abs(X, Y0);
+    D_cont_abs(X1, Y1);
+
+    /* axis coord, point to be rotated, angle */
+    rotate_around_pt(X, Y0, &X1, &Y1, rotation);
+
+    G_debug(0, "X1=%d  Y1=%d\n", X1, Y1);
+    R_standard_color(D_translate_color("green"));
+    D_move_abs(X, Y0);
+    D_cont_abs(X1, Y1);
+#endif
+
 
 /* Draw box */
     scrL = L + Xoffset ;
