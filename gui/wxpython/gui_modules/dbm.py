@@ -25,7 +25,7 @@ Usage:
 import wx
 import wx.lib.mixins.listctrl  as  listmix
 
-import sys,os
+import sys,os,locale
 
 #----------------------------------------------------------------------
 class Log:
@@ -43,20 +43,25 @@ class Log:
 #----------------------------------------------------------------------
 
 class TestVirtualList(wx.ListCtrl, listmix.ListCtrlAutoWidthMixin, listmix.ColumnSorterMixin):
-    def __init__(self, parent,log,tablename,mapset=None,pointdata=None):
+    def __init__(self, parent,log,vectmap,pointdata=None):
         wx.ListCtrl.__init__( self, parent, -1, style=wx.LC_REPORT|wx.LC_VIRTUAL|wx.LC_HRULES|wx.LC_VRULES)
 
         self.log=log
-        self.tablename = tablename
-        self.mapset = mapset
+
+        self.vectmap = vectmap
+        self.mapname, self.mapset = self.vectmap.split("@")
+        self.layer,self.tablename, self.column, self.database, self.driver =\
+                 os.popen("v.db.connect -g map=%s" %\
+                (self.vectmap)).readlines()[0].strip().split()
+
         self.icon = ''
         self.pointsize = ''
 
-        self.icon = pointdata[0]
-        self.pointsize = pointdata[1]
+        if pointdata:
+            self.icon = pointdata[0]
+            self.pointsize = pointdata[1]
 
         self.columns = []
-        self.columnNumber = 0
         self.parent = parent
         self.qlayer = None
 
@@ -65,13 +70,17 @@ class TestVirtualList(wx.ListCtrl, listmix.ListCtrlAutoWidthMixin, listmix.Colum
         self.attr1.SetBackgroundColour("light blue")
         self.attr2 = wx.ListItemAttr()
         self.attr2.SetBackgroundColour("white")
+        self.il = wx.ImageList(16, 16)
+        self.sm_up = self.il.Add(wx.ArtProvider_GetBitmap(wx.ART_GO_UP,wx.ART_TOOLBAR,(16,16)))
+        self.sm_dn = self.il.Add(wx.ArtProvider_GetBitmap(wx.ART_GO_DOWN,wx.ART_TOOLBAR,(16,16)))
+        self.SetImageList(self.il, wx.IMAGE_LIST_SMALL)
 
         #building the columns
         i = 0
         # FIXME: subprocess.Popen should be used
         # FIXME: Maximal number of columns, when the GUI is still usable
-        for line in os.popen("db.describe -c table=%s" %
-                (self.tablename)).readlines()[1:]:
+        for line in os.popen("db.describe -c table=%s driver=%s database=%s" %\
+                (self.tablename, self.driver, self.database)).readlines()[1:]:
 
             x,column,type = line.strip().split(":")
             # FIXME: here will be more types
@@ -98,7 +107,8 @@ class TestVirtualList(wx.ListCtrl, listmix.ListCtrlAutoWidthMixin, listmix.Colum
         # FIXME: subprocess.Popen should be used
         # FIXME: Max. number of rows, while the GUI is still usable
         i = 0
-        for line in os.popen("""db.select -c sql="SELECT * FROM %s" """ % self.tablename):
+        for line in os.popen("""db.select -c table=%s database=%s driver=%s """ %\
+                (self.tablename,self.database,self.driver)):
             attributes = line.strip().split("|")
             self.itemDataMap[i] = []
             for attribute in attributes:
@@ -113,7 +123,7 @@ class TestVirtualList(wx.ListCtrl, listmix.ListCtrlAutoWidthMixin, listmix.Colum
 
         #mixins
         listmix.ListCtrlAutoWidthMixin.__init__(self)
-        listmix.ColumnSorterMixin.__init__(self, 3)
+        listmix.ColumnSorterMixin.__init__(self, len(self.columns))
 
         #sort by genre (column 2), A->Z ascending order (1)
         self.SortListItems(0, 1)
@@ -129,7 +139,7 @@ class TestVirtualList(wx.ListCtrl, listmix.ListCtrlAutoWidthMixin, listmix.Colum
         if self.qlayer: map.delLayer(item='qlayer')
 
     def OnColClick(self,event):
-        self.columnNumber = event.GetColumn()
+        self._col = event.GetColumn()
         event.Skip()
 
     def OnItemSelected(self, event):
@@ -222,8 +232,14 @@ class TestVirtualList(wx.ListCtrl, listmix.ListCtrlAutoWidthMixin, listmix.Colum
          col = self._col
          ascending = self._colSortFlag[col]
          # convert, because the it is allways string
-         item1 = self.columns[col]["type"](self.itemDataMap[key1][col])
-         item2 = self.columns[col]["type"](self.itemDataMap[key2][col])
+         try:
+            item1 = self.columns[col]["type"](self.itemDataMap[key1][col])
+         except:
+             item1 = ''
+         try:
+            item2 = self.columns[col]["type"](self.itemDataMap[key2][col])
+         except:
+             item2 = ''
 
          #--- Internationalization of string sorting with locale module
          if type(item1) == type('') or type(item2) == type(''):
@@ -245,8 +261,8 @@ class TestVirtualList(wx.ListCtrl, listmix.ListCtrlAutoWidthMixin, listmix.Colum
         #           self.columns[self.columnNumber]["type"](b))
 
     # Used by the ColumnSorterMixin, see wx/lib/mixins/listctrl.py
-    #def GetSortImages(self):
-    #    return (self.sm_dn, self.sm_up)
+    def GetSortImages(self):
+        return (self.sm_dn, self.sm_up)
 
     #XXX Looks okay to remove this one (was present in the original demo)
     #def getColumnText(self, index, col):
@@ -266,7 +282,7 @@ class TestVirtualList(wx.ListCtrl, listmix.ListCtrlAutoWidthMixin, listmix.Colum
 class AttributeManager(wx.Frame):
 
     def __init__(self, parent, id, title, size, style = wx.DEFAULT_FRAME_STYLE,
-                 table=None,mapset=None,pointdata=None):
+                 vectmap=None,pointdata=None):
 
         wx.Frame.__init__(self, parent, id, title, size=size, style=style)
 
@@ -277,7 +293,7 @@ class AttributeManager(wx.Frame):
         # probably
         self.gismanager = parent
 
-        self.win = TestVirtualList(self, log,tablename=table,mapset=mapset,pointdata=pointdata)
+        self.win = TestVirtualList(self, log,vectmap=vectmap,pointdata=pointdata)
         self.Show()
 
 def main(argv=None):
@@ -297,7 +313,7 @@ def main(argv=None):
     #wx.InitAllImageHandlers()
 
     app = wx.PySimpleApp()
-    f = AttributeManager(None, -1, "GRASS Attribute Table Manager",wx.Size(500,300),table=argv[1])
+    f = AttributeManager(None, -1, "GRASS Attribute Table Manager",wx.Size(500,300),vectmap=argv[1])
     app.MainLoop()
 
 
