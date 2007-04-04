@@ -26,7 +26,7 @@ import wx
 import wx.lib.mixins.listctrl  as  listmix
 
 import sys,os
-        
+
 #----------------------------------------------------------------------
 class Log:
     r"""\brief Needed by the wxdemos.
@@ -43,12 +43,18 @@ class Log:
 #----------------------------------------------------------------------
 
 class TestVirtualList(wx.ListCtrl, listmix.ListCtrlAutoWidthMixin, listmix.ColumnSorterMixin):
-    def __init__(self, parent,log,tablename,mapset=None):
+    def __init__(self, parent,log,tablename,mapset=None,pointdata=None):
         wx.ListCtrl.__init__( self, parent, -1, style=wx.LC_REPORT|wx.LC_VIRTUAL|wx.LC_HRULES|wx.LC_VRULES)
 
         self.log=log
         self.tablename = tablename
         self.mapset = mapset
+        self.icon = ''
+        self.pointsize = ''
+
+        self.icon = pointdata[0]
+        self.pointsize = pointdata[1]
+
         self.columns = []
         self.columnNumber = 0
         self.parent = parent
@@ -104,7 +110,7 @@ class TestVirtualList(wx.ListCtrl, listmix.ListCtrlAutoWidthMixin, listmix.Colum
                 break
 
         self.SetItemCount(len(self.itemDataMap))
-        
+
         #mixins
         listmix.ListCtrlAutoWidthMixin.__init__(self)
         listmix.ColumnSorterMixin.__init__(self, 3)
@@ -117,6 +123,10 @@ class TestVirtualList(wx.ListCtrl, listmix.ListCtrlAutoWidthMixin, listmix.Colum
         self.Bind(wx.EVT_LIST_ITEM_ACTIVATED, self.OnItemActivated)
         self.Bind(wx.EVT_LIST_ITEM_DESELECTED, self.OnItemDeselected)
         self.Bind(wx.EVT_LIST_COL_CLICK, self.OnColClick)
+        self.Bind(wx.EVT_CLOSE, self.OnCloseWindow)
+
+    def OnCloseWindow(self, event):
+        if self.qlayer: map.delLayer(item='qlayer')
 
     def OnColClick(self,event):
         self.columnNumber = event.GetColumn()
@@ -137,11 +147,15 @@ class TestVirtualList(wx.ListCtrl, listmix.ListCtrlAutoWidthMixin, listmix.Colum
 
             mapdisp =  self.parent.gismanager.mapdisplays[disp_idx]
             map = gism.maptree.Map
-            if self.qlayer:
-                map.RemoveLayer(id=map.layers.index(self.qlayer))
-            
+            if self.qlayer: map.delLayer(item='qlayer')
+
             cat =  self.GetItemText(self.currentItem)
-            self.qlayer = map.addLayer(item=None, command="d.vect map=%s@%s color=yellow fcolor=yellow cats=%s width=3" % (self.tablename, self.mapset, cat), l_active=True,
+
+            cmd = "d.vect map=%s@%s color=yellow fcolor=yellow cats=%s width=3" % (self.tablename, self.mapset, cat)
+            if self.icon: cmd = cmd +"  icon=%s" % (self.icon)
+            if self.pointsize: cmd = cmd + " size=%s" % (self.pointsize)
+
+            self.qlayer = map.addLayer(item='qlayer', command=cmd, l_active=True,
                                       l_hidden=False, l_opacity=1, l_render=False)
             mapdisp.ReDraw(None)
 
@@ -195,7 +209,7 @@ class TestVirtualList(wx.ListCtrl, listmix.ListCtrlAutoWidthMixin, listmix.Colum
         # for i in range(len(items)):
         #     items[i] =  str(items[i])
         self.itemIndexMap = items
-        
+
         # redraw the list
         self.Refresh()
 
@@ -251,18 +265,19 @@ class TestVirtualList(wx.ListCtrl, listmix.ListCtrlAutoWidthMixin, listmix.Colum
 
 class AttributeManager(wx.Frame):
 
-    def __init__(self, parent, id, title, size, style = wx.DEFAULT_FRAME_STYLE, table=None,mapset=None ):
+    def __init__(self, parent, id, title, size, style = wx.DEFAULT_FRAME_STYLE,
+                 table=None,mapset=None,pointdata=None):
 
         wx.Frame.__init__(self, parent, id, title, size=size, style=style)
 
         self.CreateStatusBar(1)
 
         log=Log(self)
-            
+
         # probably
         self.gismanager = parent
 
-        self.win = TestVirtualList(self, log,tablename=table,mapset=mapset)
+        self.win = TestVirtualList(self, log,tablename=table,mapset=mapset,pointdata=pointdata)
         self.Show()
 
 def main(argv=None):

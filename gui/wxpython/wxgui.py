@@ -323,17 +323,41 @@ class GMFrame(wx.Frame):
                  )
 
     def ShowAttributeTable(self,event):
-        mapsel = self.maptree.GetSelection()
+#        mapsel = self.maptree.GetSelection()
+        dcmd = self.maptree.GetPyData(self.maptree.GetSelection())[0]
+        mapname = map = mapset = size = icon = None
+        for item in dcmd.split(' '):
+            if 'map=' in item:
+                mapname = item.split('=')[1]
+                if '@' in mapname:
+                    map = mapname.split('@')[0]
+                    mapset = mapname.split('@')[1]
+                else:
+                    map = mapname
+            elif 'size=' in item:
+                size = item.split('=')[1]
+                print 'size=',size
+            elif 'icon=' in item:
+                icon = item.split('=')[1]
+                print 'icon=',icon
 
-        name = mapsel.GetText()
-        if name.find("@") >-1:
-            map,mapset = name.strip().split("@")
-            
-            if mapset == grassenv.env["MAPSET"]:
-                from gui_modules import dbm
-                self.dbmanager = gui_modules.dbm.AttributeManager(self,
+        pointdata = (icon,size)
+#
+#        name = mapsel.GetText()
+#        if name.find("@") >-1:
+#            map,mapset = name.strip().split("@")
+#            if mapset == grassenv.env["MAPSET"]:
+#                from gui_modules import dbm
+#                self.dbmanager = gui_modules.dbm.AttributeManager(self,
+#                        -1,"GRASS Attribute Table Manager: %s" % map,
+#                        size=wx.Size(500,300),table=map,mapset=mapset)
+
+        if mapset == grassenv.env["MAPSET"]:
+            from gui_modules import dbm
+            self.dbmanager = gui_modules.dbm.AttributeManager(self,
                         -1,"GRASS Attribute Table Manager: %s" % map,
-                        size=wx.Size(500,300),table=map,mapset=mapset)
+                        size=wx.Size(500,300),table=map,mapset=mapset,
+                        pointdata=pointdata)
 
 
     def newDisplay(self, event=None):
