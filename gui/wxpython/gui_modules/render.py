@@ -866,6 +866,7 @@ class Map:
 		Returns:
 			Removed layer on success or None
 		"""
+		layer = self.lookup[item]
 
 		if layer in self.layers:
 			if layer.mapfile:
