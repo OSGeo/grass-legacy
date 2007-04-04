@@ -18,9 +18,10 @@
 /**
  * This function writes the label information to the label file.
  * @param labelf An opened label file to append the label to.
- * @param l The label
+ * @param label The label
+ * @param p The parameters
  */
-void print_label ( FILE *labelf, label_t *l);
+void print_label (FILE *labelf, label_t *label, struct params *p);
 
 /**
  * This function defines the parameters and calls the command-line parser */
@@ -32,6 +33,7 @@ int main (int argc, char *argv[])
 	label_t *labels;
 	int n_labels, i;
     struct GModule *module;
+	FILE *labelf;
 
 	srand((unsigned int)time(NULL));
 	G_gisinit(argv[0]);
@@ -49,21 +51,19 @@ printf("initialize labels\n");
 	/* start algorithm */
 	/*   1. candidate position generation */
 	label_candidates(labels, n_labels);
-	for(i=0; i < n_labels;i++) {
-		int j;
-		for(j=0; j < labels[i].n_candidates; j++) {
-			printf("Label(%d), candidate(%d): %s cat=%d type=%d score=%lf (%.8lg,%.8lg)\n",
-				   i, j, labels[i].text, labels[i].cat, labels[i].type,
-				   labels[i].candidates[j].score,
-				   labels[i].candidates[j].point.x,
-				   labels[i].candidates[j].point.y);
-		}
-	}
-	
 	/*   2. position evaluation */
-/*	label_candidate_overlap(labels, n_labels);*/
+	label_candidate_overlap(labels, n_labels);
 	/*   3. position selection */
+/*	simulate_annealing(labels, n_labels);*/
 	/* write lables to file */
+	fprintf(stderr, "Writing labels to file: ...");
+    labelf = G_fopen_new ("paint/labels", p.labels->answer);
+	for(i=0; i < n_labels;i++) {
+		if(labels[i].n_candidates > 0)
+			print_label(labelf, &labels[i], &p);
+		G_percent(i, (n_labels-1), 1);
+	}
+    fclose(labelf);
 	return EXIT_SUCCESS;
 }
 
@@ -114,6 +114,35 @@ int parse_args(int argc, char *argv[], struct params *p)
 
     return G_parser (argc, argv);
 }
+
+
+void print_label (FILE *labelf, label_t *label, struct params *p)
+{
+	int cc;
+	cc = label->current_candidate;
+
+    fprintf (labelf, "east: %f\n", label->candidates[cc].point.x);
+    fprintf (labelf, "north: %f\n", label->candidates[cc].point.y);
+    fprintf (labelf, "xoffset: 0\nyoffset: 0\n");
+    fprintf (labelf, "ref: %s\n", "lower left");
+    fprintf (labelf, "font: %s\n", "standard");
+    fprintf (labelf, "color: %s\n", "black");
+
+	fprintf (labelf, "size: %s\n", p->size->answer);
+
+    fprintf (labelf, "width: %d\n", 1);
+    fprintf (labelf, "hcolor: %s\n", "none");
+    fprintf (labelf, "hwidth: %d\n", 0);
+    fprintf (labelf, "background: %s\n", "none");
+    fprintf (labelf, "border: %s\n", "none");
+    fprintf (labelf, "opaque: %s\n", "yes");
+    if ( label->candidates[cc].rotation != 0 )
+        fprintf (labelf, "rotate: %f\n",
+				 label->candidates[cc].rotation*180.0/M_PI);
+    fprintf (labelf, "text: %s\n\n", label->text);
+	return;
+}
+
 
 #if 0
     int    i, cnt, nrows, txtlength, field, more;
@@ -379,30 +408,6 @@ int parse_args(int argc, char *argv[], struct params *p)
     G_message( _("Labeled %d lines."), cnt);
 
     exit (EXIT_SUCCESS);
-}
-
-void print_label ( FILE *labels, double x, double y, double rotate, char *label) {
-    fprintf (labels, "east: %f\n", x);
-    fprintf (labels, "north: %f\n", y);
-    fprintf (labels, "xoffset: %s\n", Xoffset->answer);
-    fprintf (labels, "yoffset: %s\n", Yoffset->answer);
-    fprintf (labels, "ref: %s\n", ref_pt);
-    fprintf (labels, "font: %s\n", Font->answer);
-    fprintf (labels, "color: %s\n", Color->answer);
-
-    if(fontsize) fprintf (labels, "fontsize: %d\n", fontsize);
-    else fprintf (labels, "size: %s\n", Size->answer);
-
-    fprintf (labels, "width: %s\n", Width->answer);
-    fprintf (labels, "hcolor: %s\n", Hcolor->answer);
-    fprintf (labels, "hwidth: %s\n", Hwidth->answer);
-    fprintf (labels, "background: %s\n", Bcolor->answer);
-    fprintf (labels, "border: %s\n", Border->answer);
-    fprintf (labels, "opaque: %s\n", Opaque->answer);
-    if ( rotate != 0 ) 
-        fprintf (labels, "rotate: %f\n", rotate);
-
-    fprintf (labels, "text: %s\n\n", label);
 }
 
 /* Enable these later?

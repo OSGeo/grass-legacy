@@ -91,4 +91,5 @@ label_t * labels_init(struct params *p, int *n_labels);
  * @param n_labels The size of the array
  */
 void label_candidates(label_t *labels, int n_labels);
+void label_candidate_overlap(label_t *labels, int n_labels);
 #endif /* _LABELS_H */
