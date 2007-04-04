@@ -9,6 +9,7 @@
 #   	    	Huidae Cho - Korea - grass4u@gmail.com
 #   	    	Justin Hickey - Thailand - jhickey@hpcc.nectec.or.th
 #   	    	Markus Neteler - Germany/Italy - neteler@itc.it
+#		Hamish Bowman - New Zealand - hamish_nospam at yahoo,com
 # PURPOSE:  	The source file for this shell script is in
 #   	    	src/general/init/init.sh. It sets up some environment
 #   	    	variables and the lock file. It also parses any remaining
@@ -49,6 +50,9 @@ MINGW*)
 	;;
 CYGWIN*)
 	CYGWIN=1
+	;;
+Darwin*)
+	MACOSX=1
 	;;
 esac
 
@@ -244,12 +248,29 @@ if [ ! "$GRASS_WISH" ] ; then
    export GRASS_WISH
 fi
 
+
+
+# try and find a web browser if one isn't already specified
 if [ ! "$GRASS_HTML_BROWSER" ] ; then
-    for i in `echo "$PATH" | sed 's/^:/.:/
+
+    if [ "$MACOSX" ] ; then
+	GRASS_HTML_BROWSER=open
+
+    elif [ "$MINGW" -o "$CYGWIN" ] ; then
+	# MinGW startup moved to into.bat
+	iexplore="$SYSTEMDRIVE/Program Files/Internet Explorer/iexplore.exe"
+	if [ -f "$iexplore" ] ; then
+	    GRASS_HTML_BROWSER=$iexplore
+	else
+	    GRASS_HTML_BROWSER="iexplore"
+	fi
+
+    else
+      for i in `echo "$PATH" | sed 's/^:/.:/
                                 s/::/:.:/g
                                 s/:$/:./
                                 s/:/ /g'`
-    do
+      do
         if [ -f "$i/htmlview" ] ; then  
             GRASS_HTML_BROWSER=htmlview  
             break  
@@ -268,32 +289,21 @@ if [ ! "$GRASS_HTML_BROWSER" ] ; then
         elif [ -f "$i/netscape" ] ; then
             GRASS_HTML_BROWSER=netscape
             break
-        elif [ "$HOSTTYPE" = "macintosh" -o "$HOSTTYPE" = "powermac" -o "$HOSTTYPE" = "powerpc" ] ; then
-            GRASS_HTML_BROWSER=open
-            break
-        elif [ "$HOSTTYPE" = "arm" ] ; then
+        elif [ -f "$i/dillo" ] ; then
             GRASS_HTML_BROWSER=dillo
             break
-        elif [ "$HOSTTYPE" = "arm" ] ; then
-            GRASS_HTML_BROWSER=dillo2
-            break
-	elif [ "$MINGW" -o "$CYGWIN" ] ; then
-	    iexplore="$SYSTEMDRIVE/Program Files/Internet Explorer/iexplore.exe"
-	    if [ -f "$iexplore" ] ; then
-		GRASS_HTML_BROWSER=$iexplore
-	    else
-		GRASS_HTML_BROWSER="iexplore"
-	    fi
-	    break
         fi
-    done
+      done
+    fi
 fi
 if [ ! "$GRASS_HTML_BROWSER" ] ; then
-    echo "Searching for web browser, but neither konqueror, nor mozilla, opera, netscape found."
-    # so we set konqueror, though, to make lib/gis/parser.c happy:
+    echo "WARNING: Searched for a web browser, but none found." 1>&2
+    # even so we set konqueror to make lib/gis/parser.c happy:
     GRASS_HTML_BROWSER=konqueror
 fi
 export GRASS_HTML_BROWSER
+
+
 
 #predefine monitor size for certain architectures
 if [ "$HOSTTYPE" = "arm" ] ; then
