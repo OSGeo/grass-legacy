@@ -151,7 +151,9 @@ class TestVirtualList(wx.ListCtrl, listmix.ListCtrlAutoWidthMixin, listmix.Colum
         self.Bind(wx.EVT_LIST_ITEM_DESELECTED, self.OnItemDeselected)
         self.Bind(wx.EVT_LIST_COL_CLICK, self.OnColClick)
         self.Bind(wx.EVT_CLOSE, self.OnCloseWindow)
-        self.mapdisp.MapWindow.Bind(wx.EVT_LEFT_DOWN, self.onMapClick)
+
+        if self.parent.gismanager:
+            self.mapdisp.MapWindow.Bind(wx.EVT_LEFT_DOWN, self.onMapClick)
 
 
     def OnCloseWindow(self, event):
@@ -162,12 +164,14 @@ class TestVirtualList(wx.ListCtrl, listmix.ListCtrlAutoWidthMixin, listmix.Colum
         event.Skip()
 
     def OnItemSelected(self, event):
+        print "Selecting"
         self.currentItem = event.m_itemIndex
         self.log.write('OnItemSelected: "%s", "%s"\n' %
                            (self.currentItem,
                             self.GetItemText(self.currentItem)))
 
         # show us the result in map display
+        #print self.par
         if self.parent.gismanager:
 
 #            gism = self.parent.gismanager
@@ -299,7 +303,62 @@ class TestVirtualList(wx.ListCtrl, listmix.ListCtrlAutoWidthMixin, listmix.Colum
 
         # map coordinates
         x, y = self.mapdisp.MapWindow.Pixel2Cell(posx, posy)
-        print 'coordinates =',x,y
+        #print 'coordinates =',x,y
+
+        category = ""
+        for line in os.popen("v.what east_north=%f,%f map=%s" %\
+                (x,y,self.vectmap)).readlines():
+            if "Category:" in line:
+                category = line.strip().split(" ")[1]
+
+        #print category
+        
+        for idx in range(self.GetItemCount()):
+            item = self.GetItem(idx, 0)
+            if item.GetText() == category:
+                #print idx
+                self.Select(idx,True)
+            else:
+                self.Select(idx,False)
+
+
+#        try:
+#            os.environ["GRASS_MESSAGE_FORMAT"] = "gui"
+#            cmd = "v.what -a east_north=%d,%d distance=%d map=%@%" % (x,y,100,self.tablename, self.self.mapset)
+##            self.cmd_output.write(cmd+"\n----------\n")
+#            p = Popen(cmd +" --verbose", shell=True, stdin=PIPE, stdout=PIPE, stderr=PIPE, close_fds=True)
+#
+#            oline = p.stderr.readline()
+#            while oline:
+#                oline = oline.strip()
+#                oline = p.stderr.readline()
+#                if oline.find("GRASS_INFO_MESSAGE")>-1:
+#                    self.cmd_output.write(string.split(oline,maxsplit=1)[1]+"\n")
+#                elif oline.find("GRASS_INFO_WARNING")>-1:
+#                    self.cmd_output.write("WARNING: "+string.split(oline,maxsplit=1)[1]+"\n")
+#                elif oline.find("GRASS_INFO_ERROR")>-1:
+#                    self.cmd_output.write("ERROR: "+string.split(oline,maxsplit=1)[1]+"\n")
+#
+#            oline = p.stdout.readline()
+#            while oline:
+#                oline = oline.strip()
+##                self.cmd_output.write(oline+"\n")
+#                print oline+"\n"
+#                print >> sys.stderr, oline
+#                oline = p.stdout.readline()
+#
+#            if p.stdout < 0:
+#                print >> sys.stderr, "Child was terminated by signal", p.stdout
+#            elif p.stdout > 0:
+#                print >> sys.stderr, p.stdout
+#                pass
+#        except OSError, e:
+#            print >> sys.stderr, "Execution failed:", e
+
+
+
+        event.Skip()
+
 
 
 #        try:
