@@ -408,6 +408,38 @@ proc MapCanvas::shrinkwrap {sense nsew1 ar2 } {
 	return $result
 }
 
+
+proc MapCanvas::get_mapunits {} {
+	# get map units from PROJ_UNITS
+	if {![catch {open "|g.proj -p" r} input]} {
+	    set key ""
+	    set value ""
+	    while {[gets $input line] >= 0} {
+	    	if { [string equal "XY location (unprojected)" "$line"] } {
+	    	    set mapunits "map units"
+	    	    break
+	    	}
+	    	regexp -nocase {^(.*):(.*)$} $line trash key value
+	    	set key [string trim $key]
+	    	set value [string trim $value]
+	    	set prj($key) $value	
+	    }
+	    if {[catch {close $input} error]} {
+	    	puts $error
+	    	exit 1
+	    } 
+	}
+	# Length is calculated from the map canvas arrows
+	#  and so is measured & plotted in map units.
+	# May already be set above if locn was XY.
+	if { ! [ info exist mapunits ] } {
+	    set mapunits $prj(units)
+	}
+	
+	return $mapunits
+}
+
+
 ###############################################################################
 # map display procedures
 
@@ -898,15 +930,24 @@ proc MapCanvas::pointer { mon } {
 	global geogentry
 	global geoentry
 	global llvert llhoriz
+	global outfmt_coords
 	
 	set pctentry ""
 	set pixelentry ""
 	set geogentry ""
 
+	set mapunits [MapCanvas::get_mapunits]
+	if { [string first "degree" $mapunits ] >= 0 } {
+	    set outfmt_coords {%.6f}
+	} else {
+	    set outfmt_coords {%.3f}
+	}
+
+
 	bind $can($mon) <ButtonPress-1> {
 		global b1coords mon
 		global screenpct pctentry pixelentry geoentry geogentry llvert llhoriz
-		set b1east	[MapCanvas::scrx2mape $mon %x]
+		set b1east [MapCanvas::scrx2mape $mon %x]
 		set b1north [MapCanvas::scry2mapn $mon %y]
 		set b1coords "$b1east $b1north"
 		# grab coordinates at mouse click for georectification
@@ -944,13 +985,13 @@ proc MapCanvas::pointer { mon } {
 			$mapdisp create line [expr %x-5] %y [expr %x+5] %y -width 2
 		}
 	}
-	
+
 	bind $can($mon) <Motion> {
 		global mon
 		set scrxmov %x
 		set scrymov %y
-		set eastcoord [eval MapCanvas::scrx2mape $mon %x]
-		set northcoord [eval MapCanvas::scry2mapn $mon %y]
+		set eastcoord  [format $outfmt_coords [eval MapCanvas::scrx2mape $mon %x] ]
+		set northcoord [format $outfmt_coords [eval MapCanvas::scry2mapn $mon %y] ]
 		set coords($mon) "$eastcoord $northcoord"
 	}
 }
@@ -970,6 +1011,8 @@ proc MapCanvas::currentzoom { mon } {
 	variable msg
 	variable canvas_w
 	variable canvas_h
+
+	set mapunits [MapCanvas::get_mapunits]
 
 	# Fetch the current zoom settings if explorer mode not enabled
 	set region {}
@@ -999,8 +1042,15 @@ proc MapCanvas::currentzoom { mon } {
 	set cols [lindex $region 7]
 	set nsres [lindex $region 4]
 	set ewres [lindex $region 5]
-	set MapCanvas::regionstr [format [G_msg "Display: rows=%d cols=%d N-S res=%f E-W res=%f"] \
+
+	if { $nsres == $ewres } {
+	    set MapCanvas::regionstr [format [G_msg "Display: rows=%d columns=%d  resolution=%g $mapunits"] \
+		$rows $cols $nsres]
+	} else {
+	    set MapCanvas::regionstr [format [G_msg "Display: rows=%d cols=%d  N-S res=%g  E-W res=%g"] \
 		$rows $cols $nsres $ewres]
+	}
+
 	set MapCanvas::msg($mon) $regionstr
 
 	# region contains values for n s e w ewres nsres rows cols
@@ -1501,34 +1551,8 @@ proc MapCanvas::measurebind { mon } {
 	variable linex2 
 	variable liney2
 	variable msg
-	variable mapunits
 
-	# get map units from PROJ_UNITS
-	if {![catch {open "|g.proj -p" r} input]} {
-	    set key ""
-	    set value ""
-	    while {[gets $input line] >= 0} {
-	    	if { [string equal "XY location (unprojected)" "$line"] } {
-	    	    set mapunits "map units"
-	    	    break
-	    	}
-	    	regexp -nocase {^(.*):(.*)$} $line trash key value
-	    	set key [string trim $key]
-	    	set value [string trim $value]
-	    	set prj($key) $value	
-	    }
-	    if {[catch {close $input} error]} {
-	    	puts $error
-	    	exit 1
-	    } 
-	}
-	# Length is calculated from the map canvas arrows
-	#  and so is measured & plotted in map units.
-	# May already be set above if locn was XY.
-	if { ! [ info exist mapunits ] } {
-	    set mapunits $prj(units)
-	}
-
+	set mapunits [MapCanvas::get_mapunits]
 
 	# Make the output for the measurement
 	set measurement_annotation_handle [monitor_annotation_start $mon [G_msg "Measurement"] {}]
@@ -1609,7 +1633,6 @@ proc MapCanvas::measure { mon x y } {
 	variable liney1 
 	variable linex2 
 	variable liney2
-	variable mapunits
 
 	set xc [$can($mon) canvasx $x]
 	set yc [$can($mon) canvasy $y]
@@ -1653,11 +1676,11 @@ proc MapCanvas::measure { mon x y } {
 
 # format length numbers and units in a nice way, as a function of length
 proc MapCanvas::fmt_length { dist } {
-    variable mapunits
 
+    set mapunits [MapCanvas::get_mapunits]
 
-    set divisor "1.0"
     set outunits $mapunits
+    set divisor "1.0"
 
     # figure out which units to use
     if { [string equal "meters" "$mapunits"] } {
