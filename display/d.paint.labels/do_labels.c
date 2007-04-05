@@ -176,7 +176,7 @@ int show_it (void)
     int Xoffset ;
     int Yoffset ;
 #ifdef NOTYET
-    int X1, Y1;
+    int ll_x, ll_y, ul_x, ul_y, lr_x, lr_y, ur_x, ur_y, text_x, text_y;
 #endif
 
     G_debug ( 3, "Doing '%s'", text) ;
@@ -198,9 +198,11 @@ int show_it (void)
 
     R_text_size(text_size, text_size);
 
+#ifndef NOTYET
 /* Set font rotation */
     R_text_rotation((float)rotation);
     G_debug(3, "  rotation = %.2f", rotation);
+#endif NOTYET
 
 /* Find extent of all text (assume ref point is upper left) */
     T = 999999 ;
@@ -252,7 +254,6 @@ int show_it (void)
     Xoffset = xoffset ;
     Yoffset = -yoffset ;
 
-
     if (xref == LEFT) {
 /*   	if (yref == TOP) {;} */
 
@@ -272,7 +273,7 @@ int show_it (void)
     }
 
     if (xref == RITE) {
-	Xoffset -= R - L ;
+	Xoffset -= R - L + text_size;
 
 	if (yref == CENT)
 	    Yoffset -= (B - T) / 2 ;
@@ -299,28 +300,69 @@ int show_it (void)
  * rotate_around_pt() is fully functional.
  */
 
+    /* get unrotated corners of text box, and rotate them */
+    ul_y = ur_y = T + Yoffset;
+    ll_y = lr_y = B + Yoffset;
+    ll_x = ul_x = L + Xoffset;
+    lr_x = ur_x = R + Xoffset;
+    rotate_around_pt(X, Y0, &ll_x, &ll_y, rotation);
+    rotate_around_pt(X, Y0, &ul_x, &ul_y, rotation);
+    rotate_around_pt(X, Y0, &ur_x, &ur_y, rotation);
+    rotate_around_pt(X, Y0, &lr_x, &lr_y, rotation);
 
-/* origin         (X, Y0)
-   starting ray   (L-X, B-Y0)
-   rotated ray    (X1-X, Y1-Y0) */
+    text_x = X + Xoffset;
+    text_y = Y + Yoffset;
+    rotate_around_pt(X, Y0, &text_x, &text_y, rotation);
 
-    X1 = L;
-    Y1 = B;
-
-    G_debug(0, "X0=%d  Y0=%d\n", X, Y0);
-    G_debug(0, "X1=%d  Y1=%d\n", X1, Y1);
+/* <DEBUG CODE>
     R_standard_color(D_translate_color("grey"));
     D_move_abs(X, Y0);
-    D_cont_abs(X1, Y1);
+    D_cont_abs(X, Y);
 
-    /* axis coord, point to be rotated, angle */
-    rotate_around_pt(X, Y0, &X1, &Y1, rotation);
-
-    G_debug(0, "X1=%d  Y1=%d\n", X1, Y1);
     R_standard_color(D_translate_color("green"));
     D_move_abs(X, Y0);
-    D_cont_abs(X1, Y1);
-#endif
+    D_cont_abs(text_x, text_y);
+ </DEBUG CODE> */
+
+    /* define bounding box */
+    xarr[0] = ll_x;
+    xarr[1] = ul_x;
+    xarr[2] = ur_x;
+    xarr[3] = lr_x;
+    xarr[4] = ll_x;
+    yarr[0] = ll_y;
+    yarr[1] = ul_y;
+    yarr[2] = ur_y;
+    yarr[3] = lr_y;
+    yarr[4] = ll_y;
+
+/* TODO: clip labels which will go offscreen (partial or total?) */
+
+    if(background)
+    {
+	R_standard_color(background) ;
+	R_polygon_abs(xarr, yarr, 5) ;
+    }
+
+    if(border)
+    {
+	R_standard_color(border) ;
+	R_polyline_abs(xarr, yarr, 5) ;
+    }
+
+    /* Set font rotation */
+    R_text_rotation((float)rotation);
+    G_debug(3, "  rotation = %.2f", rotation);
+
+/* TODO: highlight */
+/* TODO: multi-line */
+
+    /* place the text */
+    R_standard_color(color);
+    R_move_abs(text_x, text_y);
+    R_text(line);
+
+#else
 
 
 /* Draw box */
@@ -452,6 +494,8 @@ int show_it (void)
 		break ;
 	tptr++ ; tptr++ ;
     }
+
+#endif
 
     return 0;
 }
