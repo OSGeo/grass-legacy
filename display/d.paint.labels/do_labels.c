@@ -173,8 +173,8 @@ int show_it (void)
     int t, b, l, r ;
     int xarr[5] ;
     int yarr[5] ;
-    int Xoffset ;
-    int Yoffset ;
+    int Xoffset, Yoffset ; /* in XY plane */
+    int X_just_offset, Y_just_offset ; /* in rotated label plane */
 #ifdef NOTYET
     int ll_x, ll_y, ul_x, ul_y, lr_x, lr_y, ur_x, ur_y, text_x, text_y;
 #endif
@@ -234,6 +234,9 @@ int show_it (void)
 	Y = (int)(D_u_to_d_row(north - (line_size*1.2) - ((n_lines-1)*line_size) ));
 
 	R_move_abs(X, Y) ;
+#ifdef NOTYET
+	R_text_rotation(0.0); /* reset */
+#endif
 	R_get_text_box(line, &t, &b, &l, &r) ;
 	if (t < T) T = t ;
 	if (b > B) B = b ;
@@ -256,27 +259,27 @@ int show_it (void)
 
     if (xref == LEFT) {
 	if (yref == CENT)
-	    Yoffset -= ((B - Y0) / 2) - (Y0 - T) ;
+	    Y_just_offset -= ((B - Y0) / 2) - (Y0 - T) ;
 	if (yref == BOT)
-	    Yoffset -= (B - Y0) - (Y0 - T) ;
+	    Y_just_offset -= (B - Y0) - (Y0 - T) ;
     }
 
     if (xref == CENT) {
-	Xoffset -= (R - L) / 2 ;
+	X_just_offset -= (R - L) / 2 ;
 
 	if (yref == CENT)
-	    Yoffset -= ((B - Y0) / 2) - (Y0 - T) ;
+	    Y_just_offset -= ((B - Y0) / 2) - (Y0 - T) ;
 	if (yref == BOT)
-	    Yoffset -= (B - Y0) - (Y0 - T) ;
+	    Y_just_offset -= (B - Y0) - (Y0 - T) ;
     }
 
     if (xref == RITE) {
-	Xoffset -= R - L + text_size;
+	X_just_offset -= R - L + text_size;
 
 	if (yref == CENT)
-	    Yoffset -= ((B - Y0) / 2) - (Y0 - T) ;
+	    Y_just_offset -= ((B - Y0) / 2) - (Y0 - T) ;
 	if (yref == BOT)
-	    Yoffset -= (B - Y0) - (Y0 - T) ;
+	    Y_just_offset -= (B - Y0) - (Y0 - T) ;
     }
 
 
@@ -299,51 +302,48 @@ int show_it (void)
  */
 
     /* get unrotated corners of text box, and rotate them */
-    ul_y = ur_y = T + Yoffset;
-    ll_y = lr_y = B + Yoffset;
-    ll_x = ul_x = L + Xoffset;
-    lr_x = ur_x = R + Xoffset;
+    ul_y = ur_y = T + Y_just_offset;
+    ll_y = lr_y = B + Y_just_offset;
+    ll_x = ul_x = L + X_just_offset;
+    lr_x = ur_x = R + X_just_offset;
     rotate_around_pt(X, Y0, &ll_x, &ll_y, rotation);
     rotate_around_pt(X, Y0, &ul_x, &ul_y, rotation);
     rotate_around_pt(X, Y0, &ur_x, &ur_y, rotation);
     rotate_around_pt(X, Y0, &lr_x, &lr_y, rotation);
 
-    text_x = X + Xoffset;
-    text_y = Y + Yoffset;
+    /* rotate lower starting corner of text */
+    text_x = X + X_just_offset;
+    text_y = Y + Y_just_offset;
     rotate_around_pt(X, Y0, &text_x, &text_y, rotation);
 
-/* <DEBUG CODE>
-    R_standard_color(D_translate_color("grey"));
-    D_move_abs(X, Y0);
-    D_cont_abs(X, Y);
+    /* define rotated bounding box */
+    xarr[0] = ll_x + Xoffset;
+    xarr[1] = ul_x + Xoffset;
+    xarr[2] = ur_x + Xoffset;
+    xarr[3] = lr_x + Xoffset;
+    xarr[4] = ll_x + Xoffset;
+    yarr[0] = ll_y + Yoffset;
+    yarr[1] = ul_y + Yoffset;
+    yarr[2] = ur_y + Yoffset;
+    yarr[3] = lr_y + Yoffset;
+    yarr[4] = ll_y + Yoffset;
 
-    R_standard_color(D_translate_color("green"));
-    D_move_abs(X, Y0);
-    D_cont_abs(text_x, text_y);
- </DEBUG CODE> */
+    /* skip labels which will go offscreen (even partially) */
+    for (i = 0; i < 5; i++) {
+	if( (xarr[i] > D_get_d_east()) || (xarr[i] < D_get_d_west()) )
+	    return 0;
+	if( (yarr[i] < D_get_d_north()) || (yarr[i] > D_get_d_south()) )
+	    return 0;
+	if( (xarr[i] < 0) || (yarr[i] < 0) )
+	    return 0;
+    }
 
-    /* define bounding box */
-    xarr[0] = ll_x;
-    xarr[1] = ul_x;
-    xarr[2] = ur_x;
-    xarr[3] = lr_x;
-    xarr[4] = ll_x;
-    yarr[0] = ll_y;
-    yarr[1] = ul_y;
-    yarr[2] = ur_y;
-    yarr[3] = lr_y;
-    yarr[4] = ll_y;
-
-/* TODO: clip labels which will go offscreen (partial or total?) */
-
-    if(background)
-    {
+    /* draw boxes */
+    if(background) {
 	R_standard_color(background) ;
 	R_polygon_abs(xarr, yarr, 5) ;
     }
-
-    if(border)
-    {
+    if(border) {
 	R_standard_color(border) ;
 	R_polyline_abs(xarr, yarr, 5) ;
     }
@@ -352,18 +352,45 @@ int show_it (void)
     R_text_rotation((float)rotation);
     G_debug(3, "  rotation = %.2f", rotation);
 
-/* TODO: highlight */
+    /* draw highlighted text background */
+    if(highlight_width && highlight_color) {
+	R_standard_color(highlight_color);
+
+	for(i = 1; i <= highlight_width; i++) {
+	    /* smear it around. probably a better way (knight's move? rand?) */
+	    R_move_abs(text_x + Xoffset, text_y + Yoffset + i);
+	    R_text(line);
+	    R_move_abs(text_x + Xoffset, text_y + Yoffset - i);
+	    R_text(line);
+	    R_move_abs(text_x + Xoffset + i, text_y + Yoffset);
+	    R_text(line);
+	    R_move_abs(text_x + Xoffset - i, text_y + Yoffset);
+	    R_text(line);
+
+	    R_move_abs(text_x + Xoffset +i, text_y + Yoffset +i);
+	    R_text(line);
+	    R_move_abs(text_x + Xoffset -i, text_y + Yoffset -i);
+	    R_text(line);
+	    R_move_abs(text_x + Xoffset +i, text_y + Yoffset -i);
+	    R_text(line);
+	    R_move_abs(text_x + Xoffset -i, text_y + Yoffset +i);
+	    R_text(line);
+	}
+    }
+
 /* TODO: multi-line */
 
     /* place the text */
     R_standard_color(color);
-    R_move_abs(text_x, text_y);
+    R_move_abs(text_x + Xoffset, text_y + Yoffset);
     R_text(line);
 
 #else
 
+    Xoffset += X_just_offset;
+    Yoffset += Y_just_offset;
 
-/* Draw box */
+    /* Draw box */
     scrL = L + Xoffset ;
     scrR = R + Xoffset ;
     scrT = T + Yoffset ;
