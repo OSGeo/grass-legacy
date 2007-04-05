@@ -9,12 +9,13 @@ Requirements:
  Python >=2.4 and wxPython 2.8.1.1
 
  Get wxPython 2.8.x packages from:
- * Debian:
+ * Debian: http://www.bitpim.org/developer.html -> "Install wxPython"
  * Fedora: 
  * Mandriva 2007: http://mpa.itc.it/markus/wxpython_rpms/
  * MS-Windows:
  * SuSe: 
- * Ubuntu: 
+ * Ubuntu: deb http://wxpython.wxcommunity.com/apt/ubuntu/dapper /
+           deb http://wxpython.wxcommunity.com/apt/ubuntu/feisty /
 ---------------------------------------------------------------------
 
 How to start:
