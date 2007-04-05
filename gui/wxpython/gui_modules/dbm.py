@@ -26,6 +26,7 @@ import wx
 import wx.lib.mixins.listctrl  as  listmix
 
 import sys,os,locale,string
+import grassenv
 
 try:
    from subprocess import *
@@ -54,6 +55,8 @@ class TestVirtualList(wx.ListCtrl, listmix.ListCtrlAutoWidthMixin, listmix.Colum
         self.log=log
 
         self.vectmap = vectmap
+        if not "@" in self.vectmap:
+            self.vectmap = self.vectmap+"@"+grassenv.env["MAPSET"]
         self.mapname, self.mapset = self.vectmap.split("@")
         self.layer,self.tablename, self.column, self.database, self.driver =\
                  os.popen("v.db.connect -g map=%s" %\
@@ -252,7 +255,7 @@ class TestVirtualList(wx.ListCtrl, listmix.ListCtrlAutoWidthMixin, listmix.Colum
             # FIXME: width=1, because of maybe bug in PNG driver elusion
             # should be width=3 or something like this
             cmd = "d.vect map=%s color=yellow fcolor=yellow cats=%s width=1" % (self.vectmap, catstr)
-            print cmd
+            #print cmd
             if self.icon: cmd = cmd +"  icon=%s" % (self.icon)
             if self.pointsize: cmd = cmd + " size=%s" % (self.pointsize)
 
@@ -388,8 +391,11 @@ class TestVirtualList(wx.ListCtrl, listmix.ListCtrlAutoWidthMixin, listmix.Colum
             item = self.GetItem(idx, 0)
             if item.GetText() == category:
                 #print idx
-                self.Select(idx,True)
+                #self.Select(idx,True)
+                self.EnsureVisible( idx )
+                self.SetItemState(idx, wx.LIST_STATE_SELECTED, wx.LIST_STATE_SELECTED)
             else:
+                #self.SetItemState(idx, wx.LIST_STATE_DESELECTED, wx.LIST_STATE_DESELECTED)
                 self.Select(idx,False)
 
 
