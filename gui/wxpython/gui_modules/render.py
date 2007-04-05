@@ -682,6 +682,7 @@ class Map:
 		layer = MapLayer(type="raster", name=name, mapset=mapset,
 				 active=l_active, hidden=l_hidden, opacity=l_opacity,
 				 dispcmd=dispcmd)
+		
                 layer.id = len(self.layers)-1
 
 		# add maplayer to the list of layers
@@ -1069,7 +1070,7 @@ class Map:
 		Go trough all layers and remove them from layer list
 		Removes also l_mapfile and l_maskfile
 
-		Returns 1 if failed or None if ok"
+		Returns 1 if failed or None if ok
 		"""
 		try:
 			for layer in self.layers:
@@ -1109,15 +1110,15 @@ if __name__ == "__main__":
 	map.width = 300
 	map.height = 400
 
-	map.AddRasterLayer("elevation.dem", mapset="PERMANENT", catlist="1000-1500", invertCats=True)
+	map.AddRasterLayer(name="elevation.dem", mapset="PERMANENT", dispcmd = {"catlist" : "1000-1500", "i" : None},
+			   l_opacity=.7)
 
-	map.AddVectorLayer("roads", color="red", width=3, mapset="PERMANENT",
-			   l_opacity=50)
+	map.AddVectorLayer(name="streams", mapset="PERMANENT", dispcmd = {"color" : "red", "width" : 3, "type" : "line"})
 
 	image = map.Render(force=True)
 
 	if image:
-		os.system("display %s" % image)
+		os.system("display %s" % image[0])
 
 	#image = map.Render()
 	#os.system("display %s" % image)
