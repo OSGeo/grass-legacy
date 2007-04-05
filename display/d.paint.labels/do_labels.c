@@ -255,30 +255,28 @@ int show_it (void)
     Yoffset = -yoffset ;
 
     if (xref == LEFT) {
-/*   	if (yref == TOP) {;} */
-
 	if (yref == CENT)
-	    Yoffset -= (B - T) / 2;
+	    Yoffset -= ((B - Y0) / 2) - (Y0 - T) ;
 	if (yref == BOT)
-	    Yoffset -= B - T ;
+	    Yoffset -= (B - Y0) - (Y0 - T) ;
     }
 
     if (xref == CENT) {
 	Xoffset -= (R - L) / 2 ;
 
 	if (yref == CENT)
-	    Yoffset -= (B - T) / 2 ;
+	    Yoffset -= ((B - Y0) / 2) - (Y0 - T) ;
 	if (yref == BOT)
-	    Yoffset -= B - T ;
+	    Yoffset -= (B - Y0) - (Y0 - T) ;
     }
 
     if (xref == RITE) {
 	Xoffset -= R - L + text_size;
 
 	if (yref == CENT)
-	    Yoffset -= (B - T) / 2 ;
+	    Yoffset -= ((B - Y0) / 2) - (Y0 - T) ;
 	if (yref == BOT)
-	    Yoffset -= B - T ;
+	    Yoffset -= (B - Y0) - (Y0 - T) ;
     }
 
 
