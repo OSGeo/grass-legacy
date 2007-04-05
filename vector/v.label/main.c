@@ -151,7 +151,8 @@ main (int argc, char **argv)
     Color->description = _("Text color");
     Color->type = TYPE_STRING;
     Color->answer = "black";
-    Color->options = "aqua,black,blue,brown,cyan,gray,green,grey,indigo,magenta, orange,purple,red,violet,white,yellow";
+    Color->options = "aqua,black,blue,brown,cyan,gray,green,grey,indigo,"
+	"magenta,orange,purple,red,violet,white,yellow";
     Color->guisection = _("Colors");
 
     Rotation = G_define_option();
@@ -176,7 +177,8 @@ main (int argc, char **argv)
     Hcolor->description = _("Highlight color for text");
     Hcolor->type = TYPE_STRING;
     Hcolor->answer = "none";
-    Hcolor->options = "none,aqua,black,blue,brown,cyan,gray,green,grey,indigo,magenta, orange,purple,red,violet,white,yellow";
+    Hcolor->options = "none,aqua,black,blue,brown,cyan,gray,green,grey,indigo,"
+	"magenta,orange,purple,red,violet,white,yellow";
     Hcolor->guisection = _("Colors");
 
     Hwidth = G_define_option();
@@ -191,7 +193,8 @@ main (int argc, char **argv)
     Bcolor->description = _("Background color");
     Bcolor->type = TYPE_STRING;
     Bcolor->answer = "none";
-    Bcolor->options = "none,aqua,black,blue,brown,cyan,gray,green,grey,indigo,magenta, orange,purple,red,violet,white,yellow";
+    Bcolor->options = "none,aqua,black,blue,brown,cyan,gray,green,grey,"
+	"indigo,magenta,orange,purple,red,violet,white,yellow";
     Bcolor->guisection = _("Colors");
 
     Border = G_define_option();
@@ -199,7 +202,8 @@ main (int argc, char **argv)
     Border->description = _("Border color");
     Border->type = TYPE_STRING;
     Border->answer = "none";
-    Border->options = "none,aqua,black,blue,brown,cyan,gray,green,grey,indigo,magenta, orange,purple,red,violet,white,yellow";
+    Border->options = "none,aqua,black,blue,brown,cyan,gray,green,grey,indigo,"
+	"magenta,orange,purple,red,violet,white,yellow";
     Border->guisection = _("Colors");
 
     Opaque = G_define_option();
