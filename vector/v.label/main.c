@@ -142,7 +142,7 @@ main (int argc, char **argv)
     Color->description = _("Text color");
     Color->type = TYPE_STRING;
     Color->answer = "black";
-    Color->options = "aqua,black,blue,brown,cyan,gray,green,grey,indigo,magenta, orange,purple,red,violet,white,yellow";
+    Color->options = "aqua,black,blue,brown,cyan,gray,green,grey,indigo,magenta,orange,purple,red,violet,white,yellow";
 
     Rotation = G_define_option();
     Rotation->key = "rotation";
@@ -164,7 +164,7 @@ main (int argc, char **argv)
     Hcolor->description = _("Highlight color for text");
     Hcolor->type = TYPE_STRING;
     Hcolor->answer = "none";
-    Hcolor->options = "none,aqua,black,blue,brown,cyan,gray,green,grey,indigo,magenta, orange,purple,red,violet,white,yellow";
+    Hcolor->options = "none,aqua,black,blue,brown,cyan,gray,green,grey,indigo,magenta,orange,purple,red,violet,white,yellow";
 
     Hwidth = G_define_option();
     Hwidth->key = "hwidth";
@@ -177,14 +177,14 @@ main (int argc, char **argv)
     Bcolor->description = _("Background color");
     Bcolor->type = TYPE_STRING;
     Bcolor->answer = "none";
-    Bcolor->options = "none,aqua,black,blue,brown,cyan,gray,green,grey,indigo,magenta, orange,purple,red,violet,white,yellow";
+    Bcolor->options = "none,aqua,black,blue,brown,cyan,gray,green,grey,indigo,magenta,orange,purple,red,violet,white,yellow";
 
     Border = G_define_option();
     Border->key = "border";
     Border->description = _("Border color");
     Border->type = TYPE_STRING;
     Border->answer = "none";
-    Border->options = "none,aqua,black,blue,brown,cyan,gray,green,grey,indigo,magenta, orange,purple,red,violet,white,yellow";
+    Border->options = "none,aqua,black,blue,brown,cyan,gray,green,grey,indigo,magenta,orange,purple,red,violet,white,yellow";
 
     Opaque = G_define_option();
     Opaque->key = "opaque";
@@ -212,9 +212,6 @@ main (int argc, char **argv)
     size = atof (Size->answer);
     space = size;  /* default: set spacing according to letter size (map units) */
     rotate = atof (Rotation->answer);
-
-    if( 0 != strcmp("0", Rotation->answer) )
-	G_warning("Currently the rotation option only works correctly for left justified text.");
 
     if(FontSize->answer) {
 	fontsize = atoi(FontSize->answer);
