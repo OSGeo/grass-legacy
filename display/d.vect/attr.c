@@ -16,10 +16,10 @@ int attr ( struct Map_info *Map, int type, char *attrcol,
     struct line_cats *Cats;
     int X, Y, T, B, L, R, Xoffset, Yoffset, xarr[5], yarr[5];
     int cat;
-    char buf[2000], text[100];
+    char buf[2000];
     struct field_info *fi;
     dbDriver *driver;
-    dbString stmt, valstr;
+    dbString stmt, valstr, text;
     dbCursor cursor;
     dbTable  *table;
     dbColumn *column;
@@ -34,6 +34,7 @@ int attr ( struct Map_info *Map, int type, char *attrcol,
     Cats = Vect_new_cats_struct ();
     db_init_string (&stmt);
     db_init_string (&valstr);
+    db_init_string (&text);
 
     fi = Vect_get_field(Map, lattr->field);
     if ( fi == NULL ) return 1;
@@ -88,7 +89,7 @@ int attr ( struct Map_info *Map, int type, char *attrcol,
 	  {	    
 	    int ncats = 0;
 	    /* Read attribute from db */
-	    text[0] = '\0';
+	    db_free_string (&text);
 	    for ( i = 0; i < Cats->n_cats; i++ ) {
 		int nrows;
 		
@@ -103,8 +104,8 @@ int attr ( struct Map_info *Map, int type, char *attrcol,
 
 		nrows = db_get_num_rows ( &cursor );
 
-		if (ncats > 0)
-		    sprintf (text, "%s/", text);
+		if (ncats > 0) 
+		    db_append_string (&text, "/");
 
 		if ( nrows > 0 ) {
 		    table = db_get_cursor_table (&cursor);
@@ -113,7 +114,7 @@ int attr ( struct Map_info *Map, int type, char *attrcol,
 		    if(db_fetch (&cursor, DB_NEXT, &more) != DB_OK) continue;
 		    db_convert_column_value_to_string (column, &valstr); 
 
-		    sprintf (text, "%s%s", text, db_get_string(&valstr));
+		    db_append_string (&text, db_get_string(&valstr));
 		} else {
 		    G_warning (_("No attribute found for cat %d: %s"), cat, db_get_string(&stmt));
 		}
@@ -146,7 +147,7 @@ int attr ( struct Map_info *Map, int type, char *attrcol,
             Y = Y + 1.5 * lattr->size;
 	
             R_move_abs(X, Y) ;
-            R_get_text_box(text, &T, &B, &L, &R);
+            R_get_text_box(db_get_string (&text), &T, &B, &L, &R);
 		
             /* Expand border 1/2 of text size */
 	    T = T - lattr->size / 2 ;
@@ -183,7 +184,7 @@ int attr ( struct Map_info *Map, int type, char *attrcol,
 	      }
 		
 	    R_move_abs(X + Xoffset, Y + Yoffset) ;
-  	    R_text(text);
+  	    R_text(db_get_string (&text));
 	}
     }
 
