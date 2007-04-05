@@ -84,7 +84,7 @@ class TreeCtrlComboPopup(wx.combo.ComboPopup):
             pass
 
         #mapsets in current location
-        mapsets = os.popen('g.mapsets -p', "r").read().lstrip().rstrip().split(' ')
+        mapsets = os.popen('g.mapsets -p').read().strip().split(' ')
 
         elementlist = ['cell',
                        'grid3d',
@@ -106,7 +106,6 @@ class TreeCtrlComboPopup(wx.combo.ComboPopup):
         #Get directory tree nodes
         for dir in mapsets:
             if dir == curr_mapset:
-                #TODO: make current mapset node expanded
                 dir_node = self.AddItem('Mapset: '+dir)
                 self.tree.SetItemTextColour(dir_node,wx.Colour(50,50,200))
                 try:
@@ -115,7 +114,15 @@ class TreeCtrlComboPopup(wx.combo.ComboPopup):
                         self.AddItem(elem+'@'+dir, parent=dir_node)
                 except:
                     continue
-                self.tree.Expand(dir_node)
+                # FIXME: This introduces error and so it is commented out
+                # -------- ERROR BEGIN --------------
+                # Traceback (most recent call last):
+                # File "/hardmnt/moll0/ssi/cepicky/src/gis/grass/grass6/dist.x86_64-unknown-linux-gnu/etc/wx/gui_modules/wxgui_utils.py", line 348, in onExpandNode
+                # if self.layertype[self.layer_selected] == 'group':
+                # KeyError: <wx._controls.TreeItemId; proxy of <Swig Object of type 'wxTreeItemId *' at 0xeac7d0> >
+                # -------- ERROR END --------------
+                #self.tree.Expand(dir_node)
+                    
             else:
                 dir_node = self.AddItem('Mapset: '+dir)
                 self.tree.SetItemTextColour(dir_node,wx.Colour(50,50,200))
