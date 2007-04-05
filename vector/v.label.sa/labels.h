@@ -53,8 +53,8 @@ struct _label {
  */
 struct _label_candidate {
 	label_point_t point; /**< The point of the label position (lower left corner)*/
-    float score; /**< The base score of this position (sans overlap metric) */
-	float rotation; /**< The mount the label is rotated in this position */
+    double score; /**< The base score of this position (sans overlap metric) */
+	double rotation; /**< The mount the label is rotated in this position */
     label_intersection_t * intersections; /**< A list of all label candidate positions which intersect with this position. */
     int n_intersections; /**< Number of items in the intersections array */
 	struct line_pnts *baseline;
@@ -92,4 +92,15 @@ label_t * labels_init(struct params *p, int *n_labels);
  */
 void label_candidates(label_t *labels, int n_labels);
 void label_candidate_overlap(label_t *labels, int n_labels);
+
+
+void simulate_annealing(label_t *labels, int n_labels, struct params *p);
+
+/**
+ * This function writes the label information to the label file.
+ * @param labelf An opened label file to append the label to.
+ * @param label The label
+ * @param p The parameters
+ */
+void print_label (FILE *labelf, label_t *label, struct params *p);
 #endif /* _LABELS_H */
