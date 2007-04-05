@@ -68,7 +68,7 @@ class TestVirtualList(wx.ListCtrl, listmix.ListCtrlAutoWidthMixin, listmix.Colum
 
         self.columns = []
         self.selectedCats  = []
-        self.lastTurnSelectedCats = []
+        self.lastTurnSelectedCats = [] # just temporary, for comparation
         self.parent = parent
         self.qlayer = None
 
@@ -193,10 +193,15 @@ class TestVirtualList(wx.ListCtrl, listmix.ListCtrlAutoWidthMixin, listmix.Colum
 
     def OnItemSelected(self, event):
         self.currentItem = event.m_itemIndex
-        self.log.write('OnItemSelected: "%s", "%s"\n' %
-                           (self.currentItem,
-                            self.GetItemText(self.currentItem)))
-        self.selectedCats.append(self.GetItemText(self.currentItem))
+        #self.log.write('OnItemSelected: "%s", "%s"\n' %
+        #                   (self.currentItem,
+        #                    self.GetItemText(self.currentItem)))
+
+        # now the funny part:
+        # make 1,2,3,4 to 1-4
+
+        self.selectedCats.append(int(self.GetItemText(self.currentItem)))
+        self.selectedCats.sort()
 
         event.Skip() 
 
@@ -212,9 +217,42 @@ class TestVirtualList(wx.ListCtrl, listmix.ListCtrlAutoWidthMixin, listmix.Colum
         if self.lastTurnSelectedCats[:] != self.selectedCats[:]:
             if self.qlayer: self.map.delLayer(item='qlayer')
 
+            cats = self.selectedCats
+            catstr = ""
+            i = 0
+            while 1:
+                next = 0
+                j = 0
+                while 1:
+                    try:
+                        if cats[i+j]+1 == cats[i+j+1]:
+                            next +=1
+                        else:
+                            break
+                    except IndexError:
+                        next = 0
+                    if j+i >= len(cats)-2:
+                        break
+                    else:
+                        j += 1
+                if next > 1:
+                    catstr += "%d-%d," % (cats[i], cats[i+next])
+                    i += next
+                else:
+                    catstr += "%d," % (cats[i])
+
+                i += 1
+                if i >= len(cats):
+                    break
+
+            if catstr[-1] == ",":
+                catstr = string.join(catstr[:-1],"")
+                
+
             # FIXME: width=1, because of maybe bug in PNG driver elusion
             # should be width=3 or something like this
-            cmd = "d.vect map=%s color=yellow fcolor=yellow cats=%s width=1" % (self.vectmap, string.join(self.selectedCats,sep=","))
+            cmd = "d.vect map=%s color=yellow fcolor=yellow cats=%s width=1" % (self.vectmap, catstr)
+            print cmd
             if self.icon: cmd = cmd +"  icon=%s" % (self.icon)
             if self.pointsize: cmd = cmd + " size=%s" % (self.pointsize)
 
@@ -234,8 +272,9 @@ class TestVirtualList(wx.ListCtrl, listmix.ListCtrlAutoWidthMixin, listmix.Colum
         return item.GetText()
 
     def OnItemDeselected(self, event):
-        self.log.write("OnItemDeselected: %s" % event.m_itemIndex)
-        self.selectedCats.remove(self.GetItemText(event.m_itemIndex))
+        #self.log.write("OnItemDeselected: %s" % event.m_itemIndex)
+        self.selectedCats.remove(int(self.GetItemText(event.m_itemIndex)))
+        self.selectedCats.sort()
         event.Skip() 
 
 
