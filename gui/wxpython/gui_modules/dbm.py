@@ -50,7 +50,7 @@ class Log:
 
 class TestVirtualList(wx.ListCtrl, listmix.ListCtrlAutoWidthMixin, listmix.ColumnSorterMixin):
     def __init__(self, parent,log,vectmap,pointdata=None):
-        wx.ListCtrl.__init__( self, parent, -1, style=wx.LC_REPORT|wx.LC_VIRTUAL|wx.LC_HRULES|wx.LC_VRULES)
+        wx.ListCtrl.__init__( self, parent, -1, style=wx.LC_REPORT|wx.LC_HRULES|wx.LC_VRULES) #wx.VIRTUAL
 
         self.log=log
 
@@ -124,19 +124,35 @@ class TestVirtualList(wx.ListCtrl, listmix.ListCtrlAutoWidthMixin, listmix.Colum
         # FIXME: subprocess.Popen should be used
         # FIXME: Max. number of rows, while the GUI is still usable
         i = 0
+        # read data
         for line in os.popen("""db.select -c table=%s database=%s driver=%s """ %\
                 (self.tablename,self.database,self.driver)):
             attributes = line.strip().split("|")
             self.itemDataMap[i] = []
-            for attribute in attributes:
-                self.itemDataMap[i].append(attribute)
-                self.itemIndexMap.append(i)
+
+            # convert to appropriate type
+            for j in range(len(attributes)):
+                try:
+                    attributes[j] = self.columns[j]["type"](attributes[j])
+                except:
+                    pass
+
+            # insert to table
+            index = self.InsertStringItem(sys.maxint, str(attributes[0]))
+            self.itemDataMap[i].append(attributes[0])
+            for j in range(len(attributes[1:])):
+                self.SetStringItem(index, j+1, str(attributes[j+1]))
+                self.itemDataMap[i].append(attributes[j+1])
+
+            self.SetItemData(index, i)
+            self.itemIndexMap.append(i)
+
             i += 1
             if i >= 32000:
                 self.log.write("Can display only 32000 lines")
                 break
 
-        self.SetItemCount(len(self.itemDataMap))
+        #self.SetItemCount(len(self.itemDataMap))
 
         #mixins
         listmix.ListCtrlAutoWidthMixin.__init__(self)
@@ -146,11 +162,19 @@ class TestVirtualList(wx.ListCtrl, listmix.ListCtrlAutoWidthMixin, listmix.Colum
         self.SortListItems(0, 1)
 
         #events
-        self.Bind(wx.EVT_LIST_ITEM_SELECTED, self.OnItemSelected)
-        self.Bind(wx.EVT_LIST_ITEM_ACTIVATED, self.OnItemActivated)
-        self.Bind(wx.EVT_LIST_ITEM_DESELECTED, self.OnItemDeselected)
-        self.Bind(wx.EVT_LIST_COL_CLICK, self.OnColClick)
-        self.Bind(wx.EVT_CLOSE, self.OnCloseWindow)
+        self.Bind(wx.EVT_LIST_ITEM_SELECTED, self.OnItemSelected, self)
+        self.Bind(wx.EVT_LIST_ITEM_DESELECTED, self.OnItemDeselected, self)
+        self.Bind(wx.EVT_LIST_ITEM_ACTIVATED, self.OnItemActivated, self)
+        #self.Bind(wx.EVT_LIST_DELETE_ITEM, self.OnItemDelete, self.list)
+        self.Bind(wx.EVT_LIST_COL_CLICK, self.OnColClick, self)
+        #self.Bind(wx.EVT_LIST_COL_RIGHT_CLICK, self.OnColRightClick, self.list)
+        #self.Bind(wx.EVT_LIST_COL_BEGIN_DRAG, self.OnColBeginDrag, self.list)
+        #self.Bind(wx.EVT_LIST_COL_DRAGGING, self.OnColDragging, self.list)
+        #self.Bind(wx.EVT_LIST_COL_END_DRAG, self.OnColEndDrag, self.list)
+        #self.Bind(wx.EVT_LIST_BEGIN_LABEL_EDIT, self.OnBeginEdit, self.list)
+
+        #self.list.Bind(wx.EVT_LEFT_DCLICK, self.OnDoubleClick)
+        #self.list.Bind(wx.EVT_RIGHT_DOWN, self.OnRightDown)
 
         if self.parent.gismanager:
             self.mapdisp.MapWindow.Bind(wx.EVT_LEFT_DOWN, self.onMapClick)
@@ -193,28 +217,31 @@ class TestVirtualList(wx.ListCtrl, listmix.ListCtrlAutoWidthMixin, listmix.Colum
             self.qlayer = self.map.addLayer(item='qlayer', command=cmd, l_active=True,
                                       l_hidden=False, l_opacity=1, l_render=False)
             self.mapdisp.ReDraw(None)
+        event.Skip() 
 
     def OnItemActivated(self, event):
         self.currentItem = event.m_itemIndex
         self.log.write("OnItemActivated: %s\nTopItem: %s\n" %
                            (self.GetItemText(self.currentItem), self.GetTopItem()))
+        event.Skip() 
 
     def getColumnText(self, index, col):
         item = self.GetItem(index, col)
         return item.GetText()
 
-    def OnItemDeselected(self, evt):
+    def OnItemDeselected(self, event):
         self.log.write("OnItemDeselected: %s" % evt.m_itemIndex)
+        event.Skip() 
 
 
     #---------------------------------------------------
     # These methods are callbacks for implementing the
     # "virtualness" of the list...
 
-    def OnGetItemText(self, item, col):
-        index=self.itemIndexMap[item]
-        s = self.itemDataMap[index][col]
-        return s
+    # def OnGetItemText(self, item, col):
+    #     index=self.itemIndexMap[item]
+    #     s = self.itemDataMap[index][col]
+    #     return s
 
     # def OnGetItemImage(self, item):
     #     index=self.itemIndexMap[item]
@@ -235,55 +262,55 @@ class TestVirtualList(wx.ListCtrl, listmix.ListCtrlAutoWidthMixin, listmix.Colum
     # the ColumnSorterMixin.__ColumnSorter() method already handles the ascending/descending,
     # and it knows to sort on another column if the chosen columns have the same value.
 
-    def SortItems(self,sorter=cmp):
-        items = list(self.itemDataMap.keys())
-        # for i in range(len(items)):
-        #     items[i] =  self.columns[self.columnNumber]["type"](items[i])
-        items.sort(self.Sorter)
-        #items.sort(sorter)
-        # for i in range(len(items)):
-        #     items[i] =  str(items[i])
-        self.itemIndexMap = items
+    # def SortItems(self,sorter=cmp):
+    #     items = list(self.itemDataMap.keys())
+    #     # for i in range(len(items)):
+    #     #     items[i] =  self.columns[self.columnNumber]["type"](items[i])
+    #     items.sort(self.Sorter)
+    #     #items.sort(sorter)
+    #     # for i in range(len(items)):
+    #     #     items[i] =  str(items[i])
+    #     self.itemIndexMap = items
 
-        # redraw the list
-        self.Refresh()
+    #     # redraw the list
+    #     self.Refresh()
 
     # Used by the ColumnSorterMixin, see wx/lib/mixins/listctrl.py
     def GetListCtrl(self):
         return self
 
-    # stolen from python2.4/site-packages/wx-2.8-gtk2-unicode/wx/lib/mixins/listctrl.py
-    def Sorter(self, key1,key2):
-         col = self._col
-         ascending = self._colSortFlag[col]
-         # convert, because the it is allways string
-         try:
-            item1 = self.columns[col]["type"](self.itemDataMap[key1][col])
-         except:
-             item1 = ''
-         try:
-            item2 = self.columns[col]["type"](self.itemDataMap[key2][col])
-         except:
-             item2 = ''
+    # # stolen from python2.4/site-packages/wx-2.8-gtk2-unicode/wx/lib/mixins/listctrl.py
+    # def Sorter(self, key1,key2):
+    #     col = self._col
+    #     ascending = self._colSortFlag[col]
+    #     # convert, because the it is allways string
+    #     try:
+    #         item1 = self.columns[col]["type"](self.itemDataMap[key1][col])
+    #     except:
+    #         item1 = ''
+    #     try:
+    #         item2 = self.columns[col]["type"](self.itemDataMap[key2][col])
+    #     except:
+    #         item2 = ''
 
-         #--- Internationalization of string sorting with locale module
-         if type(item1) == type('') or type(item2) == type(''):
-             cmpVal = locale.strcoll(str(item1), str(item2))
-         else:
-             cmpVal = cmp(item1, item2)
-         #---
+    #     #--- Internationalization of string sorting with locale module
+    #     if type(item1) == type('') or type(item2) == type(''):
+    #         cmpVal = locale.strcoll(str(item1), str(item2))
+    #     else:
+    #         cmpVal = cmp(item1, item2)
+    #     #---
 
-         # If the items are equal then pick something else to make the sort v    ->alue unique
-         if cmpVal == 0:
-             cmpVal = apply(cmp, self.GetSecondarySortValues(col, key1, key2))
+    #     # If the items are equal then pick something else to make the sort v    ->alue unique
+    #     if cmpVal == 0:
+    #         cmpVal = apply(cmp, self.GetSecondarySortValues(col, key1, key2))
 
-         if ascending:
-             return cmpVal
-         else:
-             return -cmpVal
+    #     if ascending:
+    #         return cmpVal
+    #     else:
+    #         return -cmpVal
 
-        #return cmp(self.columns[self.columnNumber]["type"](a),
-        #           self.columns[self.columnNumber]["type"](b))
+    #return cmp(self.columns[self.columnNumber]["type"](a),
+    #           self.columns[self.columnNumber]["type"](b))
 
     # Used by the ColumnSorterMixin, see wx/lib/mixins/listctrl.py
     def GetSortImages(self):
