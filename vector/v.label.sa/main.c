@@ -16,16 +16,8 @@
 #define DEFAULT_CHARSET "UTF-8"
 
 /**
- * This function writes the label information to the label file.
- * @param labelf An opened label file to append the label to.
- * @param label The label
- * @param p The parameters
- */
-void print_label (FILE *labelf, label_t *label, struct params *p);
-
-/**
  * This function defines the parameters and calls the command-line parser */
-int parse_args(int argc, char *argv[], struct params *p);
+static int parse_args(int argc, char *argv[], struct params *p);
 
 int main (int argc, char *argv[])
 {
@@ -54,7 +46,7 @@ printf("initialize labels\n");
 	/*   2. position evaluation */
 	label_candidate_overlap(labels, n_labels);
 	/*   3. position selection */
-/*	simulate_annealing(labels, n_labels);*/
+	simulate_annealing(labels, n_labels, &p);
 	/* write lables to file */
 	fprintf(stderr, "Writing labels to file: ...");
     labelf = G_fopen_new ("paint/labels", p.labels->answer);
@@ -67,7 +59,7 @@ printf("initialize labels\n");
 	return EXIT_SUCCESS;
 }
 
-int parse_args(int argc, char *argv[], struct params *p)
+static int parse_args(int argc, char *argv[], struct params *p)
 {
 	p->map = G_define_standard_option(G_OPT_V_MAP);
 
@@ -120,14 +112,18 @@ void print_label (FILE *labelf, label_t *label, struct params *p)
 {
 	int cc;
 	cc = label->current_candidate;
-
+/*	double size;
+	size = atof(p->size->answer); */
+	
     fprintf (labelf, "east: %f\n", label->candidates[cc].point.x);
     fprintf (labelf, "north: %f\n", label->candidates[cc].point.y);
     fprintf (labelf, "xoffset: 0\nyoffset: 0\n");
     fprintf (labelf, "ref: %s\n", "lower left");
-    fprintf (labelf, "font: %s\n", "standard");
+    fprintf (labelf, "font: %s\n", p->font->answer);
     fprintf (labelf, "color: %s\n", "black");
 
+	
+/*	fprintf (labelf, "size: %d\n", (int)(size * 0.75));*/
 	fprintf (labelf, "size: %s\n", p->size->answer);
 
     fprintf (labelf, "width: %d\n", 1);
@@ -140,6 +136,11 @@ void print_label (FILE *labelf, label_t *label, struct params *p)
         fprintf (labelf, "rotate: %f\n",
 				 label->candidates[cc].rotation*180.0/M_PI);
     fprintf (labelf, "text: %s\n\n", label->text);
+/*fprintf (labelf, "current_candidate: %d\n", label->current_candidate);
+fprintf (labelf, "label_width: %lf\n", label->bb.E-label->bb.W);
+fprintf (labelf, "label_height: %lf\n\n", label->bb.N-label->bb.S);
+*/
+	
 	return;
 }
 

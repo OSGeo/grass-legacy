@@ -70,7 +70,7 @@ label_t * labels_init(struct params *p, int *n_labels)
 	font_size = atof(p->size->answer);
 	
 	/* use 1 dot = 1 map unit */
-	if(FT_Set_Char_Size(face, (int)(font_size*64.0), 0, 72, 72)) 
+	if(FT_Set_Char_Size(face, (int)(font_size*font_size), 0, 72, 72)) 
 		G_fatal_error(_("Unable to set font size"));
 
 	/* start reading the map */
@@ -163,7 +163,7 @@ label_t * labels_init(struct params *p, int *n_labels)
 		glyph_index = FT_Get_Char_Index(face, 'X');
 		if(FT_Load_Glyph(face, glyph_index, FT_LOAD_DEFAULT))
 			G_fatal_error("Cannot determin ideal height");
-		ideal_distance = 0.3 * face->glyph->metrics.height/64.0;
+		ideal_distance = 0.3 * face->glyph->metrics.height/font_size;
 	}
 
 	FT_Done_Face(face);
@@ -196,7 +196,7 @@ static int label_skyline(FT_Face face, const char *charset, label_t *label)
 		{
 			label_point_t top_left, top_right, bottom_right, bottom_left;
 
-			G_debug(5, "horiBearingX=%ld horiBearingY=%ld width=%ld hight=%ld advance=%ld",
+			G_debug(5, "horiBearingX=%ld horiBearingY=%ld width=%ld height=%ld advance=%ld",
 					face->glyph->metrics.horiBearingX,
 					face->glyph->metrics.horiBearingY,
 					face->glyph->metrics.width,
@@ -204,18 +204,18 @@ static int label_skyline(FT_Face face, const char *charset, label_t *label)
 					face->glyph->metrics.horiAdvance);
 
 			top_left.x = advance;
-			top_left.y = face->glyph->metrics.horiBearingY / 64.0;
+			top_left.y = face->glyph->metrics.horiBearingY / font_size;
 
-			top_right.x = advance + face->glyph->metrics.horiAdvance / 64.0; 
-			top_right.y = face->glyph->metrics.horiBearingY / 64.0;
+			top_right.x = advance + face->glyph->metrics.horiAdvance / font_size; 
+			top_right.y = face->glyph->metrics.horiBearingY / font_size;
 
-			bottom_right.x = advance + face->glyph->metrics.horiAdvance / 64.0;
+			bottom_right.x = advance + face->glyph->metrics.horiAdvance / font_size;
 			bottom_right.y = (face->glyph->metrics.horiBearingY -
-							  face->glyph->metrics.height) / 64.0;
+							  face->glyph->metrics.height) / font_size;
 
 			bottom_left.x = advance;
 			bottom_left.y = (face->glyph->metrics.horiBearingY -
-							 face->glyph->metrics.height) / 64.0;
+							 face->glyph->metrics.height) / font_size;
 
 			if(i==0) {
 				G_debug(5, "Character(%d) '%c': Adding UL point (%8.8lg,%8.8lg)",
@@ -260,7 +260,7 @@ static int label_skyline(FT_Face face, const char *charset, label_t *label)
 									   bottom_left.x, bottom_left.y, 0.0);
 			}
 		
-			advance += face->glyph->metrics.horiAdvance / 64.0;
+			advance += face->glyph->metrics.horiAdvance / font_size;
 			G_debug(5,"Total advance  %8.8lg", advance);
 		}
 	}
@@ -312,92 +312,91 @@ static void label_point_candidates(label_t *label)
 	}
 	
 	height = label->bb.N - label->bb.S;
-	width = label->bb.E - label->bb.N;
-	
+	width = label->bb.E - label->bb.W;
 	/* 2 upper left-hand side labels are placed so that they are 
 	 * 1/3 and 2/3 of label height above point, and right aligned */
-	candidates[0].point.x = label->shape->x[0] - 0.1 * height - width;
+	candidates[0].point.x = label->shape->x[0] - 1.5 * width;
 	candidates[0].point.y = label->shape->y[0] + (2.0/3.0) * height;
 	candidates[0].score = 0.63;
 
-	candidates[1].point.x = label->shape->x[0] - 0.1 * height - width;
+	candidates[1].point.x = label->shape->x[0] - 1.5 * width;
 	candidates[1].point.y = label->shape->y[0] + (1.0/3.0) * height;
 	candidates[1].score = 0.44;
 	/* same height as label point */
-	candidates[2].point.x = label->shape->x[0] - 0.1 * height - width;
+	candidates[2].point.x = label->shape->x[0] - 1.5 * width;
 	candidates[2].point.y = label->shape->y[0];
 	candidates[2].score = 0.07;
 	/* 3 lower left-hand side labels are placed so that they are 
 	 * 1/3, 2/3 and 3/3 of label height below point, and right aligned */
-	candidates[3].point.x = label->shape->x[0] - 0.1 * height - width;
+	candidates[3].point.x = label->shape->x[0] - 1.5 * width;
 	candidates[3].point.y = label->shape->y[0] - (1.0/3.0) * height;
 	candidates[3].score = 0.10;
 
-	candidates[4].point.x = label->shape->x[0] - 0.1 * height - width;
+	candidates[4].point.x = label->shape->x[0] - 1.5 * width;
 	candidates[4].point.y = label->shape->y[0] - (2.0/3.0) * height;
 	candidates[4].score = 0.02;
 
-	candidates[5].point.x = label->shape->x[0] - 0.1 * height - width;
+	candidates[5].point.x = label->shape->x[0] - 1.5 * width;
 	candidates[5].point.y = label->shape->y[0] - height;
 	candidates[5].score = 0.37;
 
 	/* 2 upper right-hand side labels are placed so that they are 
 	 * 1/3 and 2/3 of label height above point*/
-	candidates[6].point.x = label->shape->x[0] + 0.1 * height;
+	candidates[6].point.x = label->shape->x[0] + 0.1 * width;
 	candidates[6].point.y = label->shape->y[0] + (2.0/3.0) * height;
 	candidates[6].score = 0.41;
 
-	candidates[7].point.x = label->shape->x[0] + 0.1 * height;
+	candidates[7].point.x = label->shape->x[0] + 0.1 * width;
 	candidates[7].point.y = label->shape->y[0] + (1.0/3.0) * height;
 	candidates[7].score = 0.33;
 	/* same height as label point */
-	candidates[8].point.x = label->shape->x[0] + 0.1 * height;
+	candidates[8].point.x = label->shape->x[0] + 0.1 * width;
 	candidates[8].point.y = label->shape->y[0];
 	candidates[8].score = 0.00;
 	/* 4 lower left-hand side labels are placed so that they are 
 	 * 1/4, 2/4 3/4 and 4/4 of label height below point*/
-	candidates[9].point.x = label->shape->x[0] + 0.1 * height;
+	candidates[9].point.x = label->shape->x[0] + 0.1 * width;
 	candidates[9].point.y = label->shape->y[0] - 0.25 * height;
 	candidates[9].score = 0.04;
 
-	candidates[10].point.x = label->shape->x[0] + 0.1 * height;
+	candidates[10].point.x = label->shape->x[0] + 0.1 * width;
 	candidates[10].point.y = label->shape->y[0] - 0.5 * height;
 	candidates[10].score = 0.3;
 
-	candidates[11].point.x = label->shape->x[0] + 0.1 * height;
+	candidates[11].point.x = label->shape->x[0] + 0.1 * width;
 	candidates[11].point.y = label->shape->y[0] - 0.75 * height;
 	candidates[11].score = 0.12;
 
-	candidates[12].point.x = label->shape->x[0] + 0.1 * height;
+	candidates[12].point.x = label->shape->x[0] + 0.1 * width;
 	candidates[12].point.y = label->shape->y[0] - height;
 	candidates[12].score = 0.59;
 
 	/* 3 labels above, centered, centered on left 1/3 and centered 
 	 * on right 1/3 of the label */
 	candidates[13].point.x = label->shape->x[0] - (1.0/3.0) * width;
-	candidates[13].point.y = label->shape->y[0] + height;
+	candidates[13].point.y = label->shape->y[0] + 2.0 * fabs(label->bb.S) + 0.1 * height;
 	candidates[13].score = 0.70;
 
 	candidates[14].point.x = label->shape->x[0] - 0.5 * width;
-	candidates[14].point.y = label->shape->y[0] + height;
+	candidates[14].point.y = label->shape->y[0] + 2.0 * fabs(label->bb.S) + 0.1 * height;
 	candidates[14].score = 0.89;
 
 	candidates[15].point.x = label->shape->x[0] - (2.0/3.0) * width;
-	candidates[15].point.y = label->shape->y[0] + height;
+	candidates[15].point.y = label->shape->y[0] + 2.0 * fabs(label->bb.S) + 0.1 * height;
 	candidates[15].score = 0.74;
 
 	/* 3 labels below, centered, centered on left 1/3 and centered 
 	 * on right 1/3 of the label */
 	candidates[16].point.x = label->shape->x[0] - (1.0/3.0) * width;
-	candidates[16].point.y = label->shape->y[0] - 1.1 * height;
+	candidates[16].point.y = label->shape->y[0] - 2.0 * label->bb.N;
 	candidates[16].score = 0.74;
 
 	candidates[17].point.x = label->shape->x[0] - 0.5 * width;
-	candidates[17].point.y = label->shape->y[0] - 1.1 * height;
+	candidates[17].point.y = label->shape->y[0] - 2.0 * label->bb.N;
 	candidates[17].score = 0.89;
 
 	candidates[18].point.x = label->shape->x[0] - (2.0/3.0) * width;
-	candidates[18].point.y = label->shape->y[0] - 1.1 * height;
+	candidates[18].point.y = label->shape->y[0] - 2.0 * label->bb.N;
 	candidates[18].score = 1.0;
 
 	for(i=0; i<19; i++) {
@@ -411,7 +410,7 @@ static void label_point_candidates(label_t *label)
 				candidates[i].point.y);
 	}
 
-	label->current_candidate = rand() % 19;
+	label->current_candidate = (int)(19.0 * (rand() / (RAND_MAX + 1.0)));
 	label->candidates = candidates;
 	label->n_candidates = 19;
 }
@@ -623,7 +622,7 @@ static void label_line_candidates(label_t *label)
 	free(above_candidates);
 	free(below_candidates);
 	
-	label->current_candidate = rand() % n_c;
+	label->current_candidate = (int)((double)(n_c) * (rand() / (RAND_MAX + 1.0)));
 	label->candidates = candidates;
 	label->n_candidates = n_c;
 }
@@ -952,7 +951,10 @@ void label_candidate_overlap(label_t *labels, int n_labels)
 								G_fatal_error("\nUnable to allocate memory\n");
 							li[n-1].label = &labels[k];
 							li[n-1].candidate = l;
-
+							if(labels[k].current_candidate == l) {
+								labels[i].current_score += 40;
+							}
+							labels[i].candidates[j].intersections = li;
 							n = ++(labels[k].candidates[l].n_intersections);
 							li = realloc(labels[k].candidates[l].intersections,
 										 n*sizeof(label_intersection_t));
@@ -960,6 +962,10 @@ void label_candidate_overlap(label_t *labels, int n_labels)
 								G_fatal_error("\nUnable to allocate memory\n");
 							li[n-1].label = &labels[i];
 							li[n-1].candidate = j;
+							if(labels[i].current_candidate == j) {
+								labels[k].current_score += 40;
+							}
+							labels[k].candidates[l].intersections = li;
 							break;
 						}
 					}
