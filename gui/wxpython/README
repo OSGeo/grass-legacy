@@ -7,6 +7,14 @@ LAST CHANGE: 2007-3-25
 ---------------------------------------------------------------------
 Requirements:
  Python >=2.4 and wxPython 2.8.1.1
+
+ Get wxPython 2.8.x packages from:
+ * Debian:
+ * Fedora: 
+ * Mandriva 2007: http://mpa.itc.it/markus/wxpython_rpms/
+ * MS-Windows:
+ * SuSe: 
+ * Ubuntu: 
 ---------------------------------------------------------------------
 
 How to start:
