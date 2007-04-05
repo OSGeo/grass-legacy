@@ -25,7 +25,7 @@ Usage:
 import wx
 import wx.lib.mixins.listctrl  as  listmix
 
-import sys,os,locale
+import sys,os,locale,string
 
 try:
    from subprocess import *
@@ -33,7 +33,6 @@ except:
    from compat import subprocess
    from compat.subprocess import *
 
-#----------------------------------------------------------------------
 class Log:
     r"""\brief Needed by the wxdemos.
     The log output is redirected to the status bar of the containing frame.
@@ -68,6 +67,8 @@ class TestVirtualList(wx.ListCtrl, listmix.ListCtrlAutoWidthMixin, listmix.Colum
             self.pointsize = pointdata[1]
 
         self.columns = []
+        self.selectedCats  = []
+        self.lastTurnSelectedCats = []
         self.parent = parent
         self.qlayer = None
 
@@ -179,6 +180,9 @@ class TestVirtualList(wx.ListCtrl, listmix.ListCtrlAutoWidthMixin, listmix.Colum
         if self.parent.gismanager:
             self.mapdisp.MapWindow.Bind(wx.EVT_LEFT_DOWN, self.onMapClick)
 
+            self.timer = wx.PyTimer(self.RedrawMap)
+            # check each 0.1s
+            self.timer.Start(100)
 
     def OnCloseWindow(self, event):
         if self.qlayer: self.map.delLayer(item='qlayer')
@@ -188,15 +192,15 @@ class TestVirtualList(wx.ListCtrl, listmix.ListCtrlAutoWidthMixin, listmix.Colum
         event.Skip()
 
     def OnItemSelected(self, event):
-        print "Selecting"
         self.currentItem = event.m_itemIndex
         self.log.write('OnItemSelected: "%s", "%s"\n' %
                            (self.currentItem,
                             self.GetItemText(self.currentItem)))
+        self.selectedCats.append(self.GetItemText(self.currentItem))
 
-        # show us the result in map display
-        #print self.par
-        if self.parent.gismanager:
+        event.Skip() 
+
+    def RedrawMap(self):
 
 #            gism = self.parent.gismanager
 #            curr_pg = gism.gm_cb.GetCurrentPage()
@@ -204,20 +208,20 @@ class TestVirtualList(wx.ListCtrl, listmix.ListCtrlAutoWidthMixin, listmix.Colum
 
 #            mapdisp =  self.parent.gismanager.mapdisplays[disp_idx]
 #            map = gism.maptree.Map
-            if self.qlayer: self.map.delLayer(item='qlayer')
 
-            cat =  self.GetItemText(self.currentItem)
+        if self.lastTurnSelectedCats[:] != self.selectedCats[:]:
+            if self.qlayer: self.map.delLayer(item='qlayer')
 
             # FIXME: width=1, because of maybe bug in PNG driver elusion
             # should be width=3 or something like this
-            cmd = "d.vect map=%s color=yellow fcolor=yellow cats=%s width=1" % (self.vectmap, cat)
+            cmd = "d.vect map=%s color=yellow fcolor=yellow cats=%s width=1" % (self.vectmap, string.join(self.selectedCats,sep=","))
             if self.icon: cmd = cmd +"  icon=%s" % (self.icon)
             if self.pointsize: cmd = cmd + " size=%s" % (self.pointsize)
 
             self.qlayer = self.map.addLayer(item='qlayer', command=cmd, l_active=True,
-                                      l_hidden=False, l_opacity=1, l_render=False)
+                                        l_hidden=False, l_opacity=1, l_render=False)
             self.mapdisp.ReDraw(None)
-        event.Skip() 
+            self.lastTurnSelectedCats = self.selectedCats[:]
 
     def OnItemActivated(self, event):
         self.currentItem = event.m_itemIndex
@@ -230,7 +234,8 @@ class TestVirtualList(wx.ListCtrl, listmix.ListCtrlAutoWidthMixin, listmix.Colum
         return item.GetText()
 
     def OnItemDeselected(self, event):
-        self.log.write("OnItemDeselected: %s" % evt.m_itemIndex)
+        self.log.write("OnItemDeselected: %s" % event.m_itemIndex)
+        self.selectedCats.remove(self.GetItemText(event.m_itemIndex))
         event.Skip() 
 
 
