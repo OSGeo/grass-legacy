@@ -254,8 +254,10 @@ int show_it (void)
     L = L - (text_size * 0.2) - .5;
     R = R + (text_size * 0.2) + .5;
 
-    Xoffset = xoffset ;
-    Yoffset = -yoffset ;
+    Xoffset = xoffset;
+    Yoffset = -yoffset;
+    X_just_offset = 0;
+    Y_just_offset = 0;
 
     if (xref == LEFT) {
 	if (yref == CENT)
