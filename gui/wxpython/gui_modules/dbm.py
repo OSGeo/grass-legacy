@@ -115,7 +115,7 @@ class TestVirtualList(wx.ListCtrl, listmix.ListCtrlAutoWidthMixin, listmix.Colum
                 self.columns.append({"name":column,"type":str})
 
             self.InsertColumn(i, column)
-            self.SetColumnWidth(i, 50)
+            self.SetColumnWidth(i,  wx.LIST_AUTOSIZE_USEHEADER)
             i += 1
             if i >= 256:
                 self.log.write("Can display only 256 columns")
@@ -206,7 +206,7 @@ class TestVirtualList(wx.ListCtrl, listmix.ListCtrlAutoWidthMixin, listmix.Colum
         self.selectedCats.append(int(self.GetItemText(self.currentItem)))
         self.selectedCats.sort()
 
-        event.Skip() 
+        event.Skip()
 
     def RedrawMap(self):
 
@@ -250,7 +250,7 @@ class TestVirtualList(wx.ListCtrl, listmix.ListCtrlAutoWidthMixin, listmix.Colum
 
             if catstr[-1] == ",":
                 catstr = string.join(catstr[:-1],"")
-                
+
 
             # FIXME: width=1, because of maybe bug in PNG driver elusion
             # should be width=3 or something like this
@@ -268,7 +268,7 @@ class TestVirtualList(wx.ListCtrl, listmix.ListCtrlAutoWidthMixin, listmix.Colum
         self.currentItem = event.m_itemIndex
         self.log.write("OnItemActivated: %s\nTopItem: %s\n" %
                            (self.GetItemText(self.currentItem), self.GetTopItem()))
-        event.Skip() 
+        event.Skip()
 
     def getColumnText(self, index, col):
         item = self.GetItem(index, col)
@@ -278,7 +278,7 @@ class TestVirtualList(wx.ListCtrl, listmix.ListCtrlAutoWidthMixin, listmix.Colum
         #self.log.write("OnItemDeselected: %s" % event.m_itemIndex)
         self.selectedCats.remove(int(self.GetItemText(event.m_itemIndex)))
         self.selectedCats.sort()
-        event.Skip() 
+        event.Skip()
 
 
     #---------------------------------------------------
@@ -386,7 +386,7 @@ class TestVirtualList(wx.ListCtrl, listmix.ListCtrlAutoWidthMixin, listmix.Colum
                 category = line.strip().split(" ")[1]
 
         #print category
-        
+
         for idx in range(self.GetItemCount()):
             item = self.GetItem(idx, 0)
             if item.GetText() == category:
@@ -434,7 +434,6 @@ class TestVirtualList(wx.ListCtrl, listmix.ListCtrlAutoWidthMixin, listmix.Colum
 
 
 
-        event.Skip()
 
 
 
@@ -472,8 +471,6 @@ class TestVirtualList(wx.ListCtrl, listmix.ListCtrlAutoWidthMixin, listmix.Colum
 #            print >> sys.stderr, "Execution failed:", e
 
 
-
-        event.Skip()
 
 
 
