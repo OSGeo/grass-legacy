@@ -39,7 +39,7 @@
 /BITMAP {
   gsave
     4 2 roll translate
-    1 index string /tmpstr exch def
+    1 index 7 add 8 idiv string /tmpstr exch def
     true [1 0 0 1 0 0] {currentfile tmpstr readhexstring pop} imagemask
   grestore
 } bind def
