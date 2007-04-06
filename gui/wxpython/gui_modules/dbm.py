@@ -125,37 +125,8 @@ class TestVirtualList(wx.ListCtrl, listmix.ListCtrlAutoWidthMixin, listmix.Colum
         #setting the numbers of items = number of elements in the dictionary
         self.itemDataMap = {}
         self.itemIndexMap = []
-        # FIXME: subprocess.Popen should be used
-        # FIXME: Max. number of rows, while the GUI is still usable
-        i = 0
-        # read data
-        for line in os.popen("""db.select -c table=%s database=%s driver=%s """ %\
-                (self.tablename,self.database,self.driver)):
-            attributes = line.strip().split("|")
-            self.itemDataMap[i] = []
 
-            # convert to appropriate type
-            for j in range(len(attributes)):
-                try:
-                    attributes[j] = self.columns[j]["type"](attributes[j])
-                except:
-                    pass
-
-            # insert to table
-            index = self.InsertStringItem(sys.maxint, str(attributes[0]))
-            self.itemDataMap[i].append(attributes[0])
-            for j in range(len(attributes[1:])):
-                self.SetStringItem(index, j+1, str(attributes[j+1]))
-                self.itemDataMap[i].append(attributes[j+1])
-
-            self.SetItemData(index, i)
-            self.itemIndexMap.append(i)
-
-            i += 1
-            if i >= 32000:
-                self.log.write("Can display only 32000 lines")
-                break
-
+        self.LoadData()
         #self.SetItemCount(len(self.itemDataMap))
 
         #mixins
@@ -186,6 +157,47 @@ class TestVirtualList(wx.ListCtrl, listmix.ListCtrlAutoWidthMixin, listmix.Colum
             self.timer = wx.PyTimer(self.RedrawMap)
             # check each 0.1s
             self.timer.Start(100)
+
+    def LoadData(self,where=None):
+        
+        cmd = """db.select -c table=%s database=%s driver=%s """ %\
+                (self.tablename,self.database,self.driver)
+
+        if where:
+            self.ClearAll()
+            cmd = """db.select -c sql="SELECT * FROM %s WHERE %s" database=%s driver=%s """ %\
+                (self.tablename,where,self.database,self.driver)
+
+
+        # FIXME: subprocess.Popen should be used
+        # FIXME: Max. number of rows, while the GUI is still usable
+        i = 0
+        # read data
+        for line in os.popen(cmd):
+            attributes = line.strip().split("|")
+            self.itemDataMap[i] = []
+
+            # convert to appropriate type
+            for j in range(len(attributes)):
+                try:
+                    attributes[j] = self.columns[j]["type"](attributes[j])
+                except:
+                    pass
+
+            # insert to table
+            index = self.InsertStringItem(sys.maxint, str(attributes[0]))
+            self.itemDataMap[i].append(attributes[0])
+            for j in range(len(attributes[1:])):
+                self.SetStringItem(index, j+1, str(attributes[j+1]))
+                self.itemDataMap[i].append(attributes[j+1])
+
+            self.SetItemData(index, i)
+            self.itemIndexMap.append(i)
+
+            i += 1
+            if i >= 32000:
+                self.log.write("Can display only 32000 lines")
+                break
 
     def OnCloseWindow(self, event):
         if self.qlayer: self.map.delLayer(item='qlayer')
@@ -254,7 +266,7 @@ class TestVirtualList(wx.ListCtrl, listmix.ListCtrlAutoWidthMixin, listmix.Colum
 
             # FIXME: width=1, because of maybe bug in PNG driver elusion
             # should be width=3 or something like this
-            cmd = "d.vect map=%s color=yellow fcolor=yellow cats=%s width=1" % (self.vectmap, catstr)
+            cmd = "d.vect map=%s color=yellow fcolor=yellow cats=%s width=3" % (self.vectmap, catstr)
             #print cmd
             if self.icon: cmd = cmd +"  icon=%s" % (self.icon)
             if self.pointsize: cmd = cmd + " size=%s" % (self.pointsize)
@@ -499,14 +511,80 @@ class AttributeManager(wx.Frame):
         wx.Frame.__init__(self, parent, id, title, size=size, style=style)
 
         self.CreateStatusBar(1)
+        self.vectmap=vectmap
 
         log=Log(self)
 
         # probably
         self.gismanager = parent
-
+        
+        # most importand part
         self.win = TestVirtualList(self, log,vectmap=vectmap,pointdata=pointdata)
+
+        # buttons
+        self.btn_apply = wx.Button(self, -1, "Apply")
+        #self.btn_unselect = wx.Button(self, -1, "Unselect")
+        self.btn_sqlbuilder = wx.Button(self, -1, "SQL Builder")
+        
+        # check
+        #self.check_add_to_selection = wx.CheckBox(self, -1, "Add to selection")
+        # textarea
+        self.text_query = wx.TextCtrl(self,-1,"")
+        # label
+        self.sqlabel=wx.StaticText(self,-1,"SELECT * FROM %s WHERE " % self.win.tablename)
+        self.label_query = wx.StaticText(self,-1,"")
+        
+        # box
+        self.sqlbox = wx.StaticBox(self, -1, "SQL Query:")
+
+
+        self.btn_sqlbuilder.Bind(wx.EVT_BUTTON, self.OnBuilder)
+
+        self.__layout()
         self.Show()
+
+    def OnBuilder(self,event):
+        import sqlbuilder
+        self.builder = sqlbuilder.SQLFrame(self,-1,"SQL Builder",self.vectmap)
+
+
+    def OnApply(self,event):
+        self.win.LoadData(where=self.text_query.GetValue().strip())
+
+
+    def OnTextEnter(self, event):
+        pass
+
+    def OnSQLBuilder(self, event):
+        pass
+
+    def __layout(self):
+        #self.panel = wx.Panel(self,-1, style=wx.SUNKEN_BORDER)
+
+        self.label_query.SetMinSize((500,50))
+        self.text_query.SetMinSize((500,-1))
+
+        bsizer = wx.StaticBoxSizer(self.sqlbox, wx.VERTICAL)
+        bsizer.Add(self.label_query, flag=wx.EXPAND)
+
+
+        pagesizer= wx.BoxSizer(wx.VERTICAL)
+        toolsizer1 = wx.BoxSizer(wx.HORIZONTAL)
+        #toolsizer2 = wx.BoxSizer(wx.HORIZONTAL)
+
+        toolsizer1.Add(self.sqlabel, flag=wx.ALIGN_CENTER_VERTICAL,
+                proportion=1)
+        toolsizer1.Add(self.text_query,flag=wx.SHAPED|wx.GROW, proportion=2,)
+        toolsizer1.Add(self.btn_sqlbuilder,flag=wx.ALIGN_RIGHT,proportion=0)
+        toolsizer1.Add(self.btn_apply,flag=wx.ALIGN_RIGHT,proportion=0)
+
+        pagesizer.Add(bsizer,flag=wx.EXPAND)
+        pagesizer.Add(self.win, proportion=1, flag=wx.EXPAND, border=1)
+        pagesizer.Add(toolsizer1)
+
+        self.SetSizer(pagesizer)
+        pagesizer.Fit(self)
+        self.Layout()
 
 def main(argv=None):
     if argv is None:
@@ -525,7 +603,7 @@ def main(argv=None):
     #wx.InitAllImageHandlers()
 
     app = wx.PySimpleApp()
-    f = AttributeManager(None, -1, "GRASS Attribute Table Manager",wx.Size(500,300),vectmap=argv[1])
+    f = AttributeManager(None, -1, "GRASS Attribute Table Manager",wx.Size(700,600),vectmap=argv[1])
     app.MainLoop()
 
 
