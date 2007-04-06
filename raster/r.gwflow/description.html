@@ -36,8 +36,6 @@ differential equation has the following form:
 <li>Kxx -- the hydraulic conductivity tensor part in x direction in meter per second [m/s]</li>
 <li>Kyy -- the hydraulic conductivity tensor part in y direction in meter per seconds [m/s]</li>
 <li>q - inner source in meter per second [m/s]</li>
-<li>x - distance between cells in x direction [m]</li>
-<li>y - distance between cells in y direction [m]</li>
 </ul>
 
 <br>
@@ -55,10 +53,10 @@ the following states are supportet:
 
 <br>
 <br>
-The groundwater flow equation can be solved with different solvers.
+The groundwater flow equation can be solved with several solvers.
 Two iterative solvers with sparse and quadratic matrices support are implemented.
 The conjugate gradients (cg) method and the biconjugate gradients-stabilized (bicgstab) method. 
-Aditionally two GUASS and LU solvers are available. Those direct solvers
+Aditionally a direct Gauss solver and LU solver are available. Those direct solvers
 only work with quadratic matrices, so be careful using them with large maps 
 (maps of size 10.000 cells will need more than one gigabyte of ram).
 

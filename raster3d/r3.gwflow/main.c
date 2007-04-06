@@ -142,7 +142,6 @@ void set_params()
     param.sparse->description =
 	_
 	("Use a sparse linear equation system, only available with iterative solvers");
-
 }
 
 /* ************************************************************************* */
@@ -302,7 +301,7 @@ int main(int argc, char *argv[])
     if (param.vector->answer) {
 	field =
 	    N_compute_gradient_field_3d(data->phead, data->hc_x, data->hc_y,
-					data->hc_z, geom);
+					data->hc_z, geom, NULL);
 
 	xcomp =
 	    N_alloc_array_3d(geom->cols, geom->rows, geom->depths, 1,

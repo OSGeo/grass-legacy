@@ -1,12 +1,12 @@
 <H2>DESCRIPTION</H2>
 This numerical program calculates transient, confined groundwater flow in three dimensions
 based on volume maps and the current 3d region resolution.
-All starting- and boundary-conditions must be provided as 
+All initial- and boundary-conditions must be provided as 
 volume maps.
 <br>
 <br>
 This module calculates the piezometric head and optionally the 
-filter velocity field, based on the hydraulic conductivity and the piezometric head. 
+groundwater velocity field.
 The vector components can be visualized with paraview if they are exported
 with r3.out.vtk.
 <br>
@@ -35,8 +35,6 @@ differential equation is of the following form:
 <li>Kyy -- the hydraulic conductivity tensor part in y direction in meter per seconds [m/s]</li>
 <li>Kzz -- the hydraulic conductivity tensor part in z direction in meter per seconds [m/s]</li>
 <li>q - inner source in [1/s]</li>
-<li>x - distance between cells in x direction [m]</li>
-<li>y - distance between cells in y direction [m]</li>
 </ul>
 
 <br>
@@ -54,10 +52,9 @@ the following cell states are supportet:
 
 <br>
 <br>
-The groundwater flow equation can be solved with different solvers.
-Two iterative solvers with sparse and quadratic matrices support are implemented.
-The conjugate gradients (cg) method and the biconjugate gradients-stabilized (bicgstab) method. 
-Aditionally two GUASS and LU solvers are available. Those direct solvers
+The groundwater flow equation can be solved with several solvers.
+
+Aditionally a direct Gauss solver and LU solver are available. Those direct solvers
 only work with quadratic matrices, so be careful using them with large maps 
 (maps of size 10.000 cells will need more than one gigabyte of ram).
 
