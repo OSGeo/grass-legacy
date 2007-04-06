@@ -543,6 +543,38 @@ N_geom_data *#N_init_geom_data_2d(struct Cell_head * region, N_geom_data * geoda
 Get the area of a cell in row<br>
 double #N_get_geom_data_area_of_cell(N_geom_data * geom, int row);
 
+\section mathtools Mathematical tools
+
+Several mean calculation algorithms are implemented.
+Two versions of each algorithm are available working 
+with two values or a vector of values.
+
+<p>
+double #N_calc_arith_mean(double a, double b)
+<p>
+double #N_calc_arith_mean_n(double *a, int size)
+<p>
+double #N_calc_geom_mean(double a, double b)
+<p>
+double #N_calc_geom_mean_n(double *a, int size)
+<p>
+double #N_calc_harmonic_mean(double a, double b)
+<p>
+double #N_calc_harmonic_mean_n(double *a, int size)
+<p>
+double #N_calc_quad_mean(double a, double b)
+<p>
+double #N_calc_quad_mean_n(double *a, int size)
+<p>
+
+Two methods for upwinding stabilization are implemented.
+
+double #N_full_upwinding(double vector, double distance, double D)
+<p>
+double #N_exp_upwinding(double vector, double distance, double D)
+
+
+
 \section gradient Calculating and managing gradient and vector field data
 
 To compute and manage gradient and vector field data, specific data structures with access and management functions
