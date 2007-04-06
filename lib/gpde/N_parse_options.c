@@ -29,7 +29,7 @@
  * It allocates memory for the Option structure and returns a pointer to
  * this memory (of <i>type struct Option *</i>).<br>
  *
- * If an invalid parameter was specified a empty Option structure will
+ * If an invalid parameter was specified an empty Option structure will
  * be returned (not NULL).
  *
  * This function is related to the gpde library, general standard options can be 

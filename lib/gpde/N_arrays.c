@@ -1369,12 +1369,12 @@ void N_free_array_3d(N_array_3d * data)
  *
  * The data type can be FCELL_TYPE and DCELL_TYPE accordingly to the raster map data types.
  *
- * \param data N_array_3d *
+ * \param array N_array_3d *
  * \return type int -- FCELL_TYPE or DCELL_TYPE
  * */
-int N_get_array_3d_type(N_array_3d * data)
+int N_get_array_3d_type(N_array_3d * array)
 {
-    return data->type;
+    return array->type;
 }
 
 
@@ -2274,7 +2274,7 @@ N_array_3d *N_read_rast3d_to_array_3d(char *name, N_array_3d * array, int mask)
  * A new volume map is created with the same type as the N_array_3d.
  * The current region is used to open the volume map.
  * The N_array_3d must have the same size as the current region.
- * If the wrting of the volume map fails, G3d_fatalError() will
+ * If the writing of the volume map fails, G3d_fatalError() will
  * be invoked.
  *
  *

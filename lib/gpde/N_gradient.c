@@ -134,9 +134,9 @@ N_gradient_2d *N_get_gradient_2d(N_gradient_field_2d * field,
     N_gradient_2d *grad = gradient;
 
 
-    NC = -1 * N_get_array_2d_d_value(field->y_array, col, row);
+    NC = N_get_array_2d_d_value(field->y_array, col, row);
     SC = N_get_array_2d_d_value(field->y_array, col, row + 1);
-    WC = -1 * N_get_array_2d_d_value(field->x_array, col, row);
+    WC = N_get_array_2d_d_value(field->x_array, col, row);
     EC = N_get_array_2d_d_value(field->x_array, col + 1, row);
 
     G_debug(5,
@@ -282,11 +282,11 @@ N_gradient_3d *N_get_gradient_3d(N_gradient_field_3d * field,
     double NC, SC, WC, EC, TC, BC;
     N_gradient_3d *grad = gradient;
 
-    NC = -1 * N_get_array_3d_d_value(field->y_array, col, row, depth);
+    NC = N_get_array_3d_d_value(field->y_array, col, row, depth);
     SC = N_get_array_3d_d_value(field->y_array, col, row + 1, depth);
-    WC = -1 * N_get_array_3d_d_value(field->x_array, col, row, depth);
+    WC = N_get_array_3d_d_value(field->x_array, col, row, depth);
     EC = N_get_array_3d_d_value(field->x_array, col + 1, row, depth);
-    BC = -1 * N_get_array_3d_d_value(field->z_array, col, row, depth);
+    BC = N_get_array_3d_d_value(field->z_array, col, row, depth);
     TC = N_get_array_3d_d_value(field->z_array, col, row, depth + 1);
 
     G_debug(6,
@@ -944,6 +944,9 @@ N_gradient_field_2d *N_alloc_gradient_field_2d(int cols, int rows)
     field->x_array = N_alloc_array_2d(cols, rows, 1, DCELL_TYPE);
     field->y_array = N_alloc_array_2d(cols, rows, 1, DCELL_TYPE);
 
+    field->cols = cols;
+    field->rows = rows;
+
     return field;
 }
 
@@ -1005,6 +1008,8 @@ N_copy_gradient_field_2d(N_gradient_field_2d * source,
  * saved in the N_geom_data struct.
  *
  * The gradient is calculated between cells for each cell and direction.
+ * An existing gradient field can be filled with new data or, if a NULL pointer is
+ * given, a new gradient field will be allocated with the appropriate size.
  *
  *
  \verbatim
@@ -1030,7 +1035,7 @@ N_copy_gradient_field_2d(N_gradient_field_2d * source,
  r = 2 * weight[row][col]*weight[row + 1][col] / (weight[row][col]*weight[row + 1][col])
  SC = r * (pot[row][col] - pot[row + 1][col])/dy
  
- the values SC and EC are the negative values of the next row/col
+ the values SC and EC are the values of the next row/col
  
  
  \endverbatim
@@ -1038,18 +1043,20 @@ N_copy_gradient_field_2d(N_gradient_field_2d * source,
  * \param weight_x N_array_2d * - the weighting factor N_array_2d used to modify the gradient in x-direction
  * \param weight_y N_array_2d * - the weighting factor N_array_2d used to modify the gradient in y-direction
  * \param geom N_geom_data * - geometry data structure
- * \return N_gradient_field_2d * - this field is new allocated
+ * \param gradfield N_gradient_field_2d * - a gradient field of the correct size, if a NULL pointer is provided this gradient field will be new allocated
+ * \return N_gradient_field_2d * - the pointer to the computed gradient field
+
  *
  * */
 N_gradient_field_2d *N_compute_gradient_field_2d(N_array_2d * pot,
 						 N_array_2d * weight_x,
 						 N_array_2d * weight_y,
-						 N_geom_data * geom)
+						 N_geom_data * geom, N_gradient_field_2d *gradfield)
 {
     int i, j;
     int rows, cols;
     double dx, dy, p1, p2, r1, r2, mean, grad, res;
-    N_gradient_field_2d *field;
+    N_gradient_field_2d *field = gradfield;
 
 
     if (pot->cols != weight_x->cols || pot->cols != weight_y->cols)
@@ -1060,6 +1067,11 @@ N_gradient_field_2d *N_compute_gradient_field_2d(N_array_2d * pot,
 	G_fatal_error
 	    ("N_compute_gradient_field_2d: the arrays are not of equal size");
 
+    if(pot->cols != geom->cols || pot->rows != geom->rows)
+	G_fatal_error
+	    ("N_compute_gradient_field_2d: array sizes and geometry data are different");
+
+
     G_debug(3, "N_compute_gradient_field_2d: compute gradient field");
 
     rows = pot->rows;
@@ -1067,7 +1079,15 @@ N_gradient_field_2d *N_compute_gradient_field_2d(N_array_2d * pot,
     dx = geom->dx;
     dy = geom->dy;
 
-    field = N_alloc_gradient_field_2d(cols, rows);
+    if(field == NULL)
+    {
+        field = N_alloc_gradient_field_2d(cols, rows);
+    } else {
+ 	if(field->cols != geom->cols || field->rows != geom->rows)
+	G_fatal_error
+	    ("N_compute_gradient_field_2d: gradient field sizes and geometry data are different");
+    }
+
 
     for (j = 0; j < rows; j++)
 	for (i = 0; i < cols - 1; i++) {
@@ -1085,7 +1105,7 @@ N_gradient_field_2d *N_compute_gradient_field_2d(N_array_2d * pot,
 		!N_is_array_2d_value_null(weight_x, i + 1, j)) {
 		r1 = N_get_array_2d_d_value(weight_x, i, j);
 		r2 = N_get_array_2d_d_value(weight_x, i + 1, j);
-		mean = 2 * (r1 * r2) / (r1 + r2);	/*harmonical mean */
+		mean = N_calc_harmonic_mean(r1, r2);/*harmonical mean */
 	    }
 
 	    res = mean * grad;
@@ -1110,10 +1130,10 @@ N_gradient_field_2d *N_compute_gradient_field_2d(N_array_2d * pot,
 		!N_is_array_2d_value_null(weight_y, i, j + 1)) {
 		r1 = N_get_array_2d_d_value(weight_y, i, j);
 		r2 = N_get_array_2d_d_value(weight_y, i, j + 1);
-		mean = 2 * (r1 * r2) / (r1 + r2);	/*harmonical mean */
+		mean = N_calc_harmonic_mean(r1, r2);/*harmonical mean */
 	    }
 
-	    res = mean * grad;
+	    res = -1 * mean * grad;
 
 	    N_put_array_2d_d_value(field->y_array, i, j + 1, res);
 
@@ -1123,7 +1143,8 @@ N_gradient_field_2d *N_compute_gradient_field_2d(N_array_2d * pot,
 }
 
 /*! 
- * \brief Calculate the x and y vector components from a gradient field for each cell and stores them in the provided N_array_2d structures
+ * \brief Calculate the x and y vector components from a gradient field for each 
+ * cell and stores them in the provided N_array_2d structures
  *
  * The arrays must have the same size as the gradient field.
  
@@ -1144,11 +1165,11 @@ N_gradient_field_2d *N_compute_gradient_field_2d(N_array_2d * pot,
  
  x vector component:
  
- x = (-1 * WC + EC) / 2
+ x = (WC + EC) / 2
  
  y vector component:
  
- y = -1 * (-1 * NC + SC) / 2
+ y = (NC + SC) / 2
  
  \endverbatim
  *
@@ -1189,8 +1210,8 @@ N_compute_gradient_field_components_2d(N_gradient_field_2d * field,
     for (j = 0; j < rows; j++)
 	for (i = 0; i < cols; i++) {
 	    N_get_gradient_2d(field, &grad, i, j);
-	    vx = (-1 * grad.WC + grad.EC) / 2;
-	    vy = -1 * (-1 * grad.NC + grad.SC) / 2;	/*the gradient must be inverted, because grass counts the rows from north to south */
+	    vx = (grad.WC + grad.EC) / 2;
+	    vy = (grad.NC + grad.SC) / 2;	/*the gradient must be inverted, because grass counts the rows from north to south */
 	    N_put_array_2d_d_value(x, i, j, vx);
 	    N_put_array_2d_d_value(y, i, j, vy);
 	}
@@ -1224,6 +1245,10 @@ N_gradient_field_3d *N_alloc_gradient_field_3d(int cols, int rows, int depths)
     field->x_array = N_alloc_array_3d(cols, rows, depths, 1, DCELL_TYPE);
     field->y_array = N_alloc_array_3d(cols, rows, depths, 1, DCELL_TYPE);
     field->z_array = N_alloc_array_3d(cols, rows, depths, 1, DCELL_TYPE);
+
+    field->cols = cols;
+    field->rows = rows;
+    field->depths = depths;
 
     return field;
 }
@@ -1290,9 +1315,21 @@ N_copy_gradient_field_3d(N_gradient_field_3d * source,
  * saved in the N_geom_data struct.
  *
  * The gradient is calculated between cells for each cell and direction.
+ * An existing gradient field can be filled with new data or, if a NULL pointer is
+ * given, a new gradient field will be allocated with the appropriate size.
+ *
+ *
  *
  *
  \verbatim
+
+      |  /
+     TC NC
+      |/
+--WC-----EC--
+     /|
+   SC BC
+   /  |
  
  x - direction:
  
@@ -1309,7 +1346,7 @@ N_copy_gradient_field_3d(N_gradient_field_3d * source,
  r = 2 * weight_z[depth][row][col]*weight_z[depth + 1][row][col] / (weight_z[depth][row][col]*weight_z[depth + 1][row][col])
  TC = r * (pot[depth][row][col] - pot[depth + 1][row][col])/dy
  
- the values BC, NC, WC are the negative values of the next depth/row/col
+ the values BC, NC, WC are the values of the next depth/row/col
  
  
  \endverbatim
@@ -1318,19 +1355,20 @@ N_copy_gradient_field_3d(N_gradient_field_3d * source,
  * \param weight_y N_array_3d * - the weighting factor N_array_3d used to modify the gradient in y-direction
  * \param weight_z N_array_3d * - the weighting factor N_array_3d used to modify the gradient in z-direction
  * \param geom N_geom_data * - geometry data structure
- * \return N_gradient_field_3d * - this field is new allocated
+ * \param gradfield N_gradient_field_3d * - a gradient field of the correct size, if a NULL pointer is provided this gradient field will be new allocated
+ * \return N_gradient_field_3d * - the pointer to the computed gradient field
  *
  * */
 N_gradient_field_3d *N_compute_gradient_field_3d(N_array_3d * pot,
 						 N_array_3d * weight_x,
 						 N_array_3d * weight_y,
 						 N_array_3d * weight_z,
-						 N_geom_data * geom)
+						 N_geom_data * geom, N_gradient_field_3d *gradfield)
 {
     int i, j, k;
     int cols, rows, depths;
     double dx, dy, dz, p1, p2, r1, r2, mean, grad, res;
-    N_gradient_field_3d *field;
+    N_gradient_field_3d *field = gradfield;
 
 
     if (pot->cols != weight_x->cols || pot->cols != weight_y->cols ||
@@ -1348,16 +1386,27 @@ N_gradient_field_3d *N_compute_gradient_field_3d(N_array_3d * pot,
 	G_fatal_error
 	    ("N_compute_gradient_field_3d: the arrays are not of equal size");
 
+    if(pot->cols != geom->cols || pot->rows != geom->rows || pot->depths != geom->depths)
+	G_fatal_error
+	    ("N_compute_gradient_field_3d: array sizes and geometry data are different");
+
     G_debug(3, "N_compute_gradient_field_3d: compute gradient field");
 
-    rows = pot->rows;
-    cols = pot->cols;
-    depths = pot->depths;
+    cols = geom->cols;
+    rows = geom->rows;
+    depths = geom->depths;
     dx = geom->dx;
     dy = geom->dy;
     dz = geom->dz;
 
-    field = N_alloc_gradient_field_3d(cols, rows, depths);
+    if(gradfield == NULL)
+    {
+        field = N_alloc_gradient_field_3d(cols, rows, depths);
+    } else {
+ 	if(field->cols != geom->cols || field->rows != geom->rows || field->depths != geom->depths)
+	G_fatal_error
+	    ("N_compute_gradient_field_3d: gradient field sizes and geometry data are different");
+    }
 
     for (k = 0; k < depths; k++)
 	for (j = 0; j < rows; j++)
@@ -1376,8 +1425,7 @@ N_gradient_field_3d *N_compute_gradient_field_3d(N_array_3d * pot,
 		    !N_is_array_3d_value_null(weight_x, i + 1, j, k)) {
 		    r1 = N_get_array_3d_d_value(weight_x, i, j, k);
 		    r2 = N_get_array_3d_d_value(weight_x, i + 1, j, k);
-		    if ((r1 + r2) != 0)
-			mean = 2 * (r1 * r2) / (r1 + r2);	/*harmonical mean */
+		    mean = N_calc_harmonic_mean(r1, r2);/*harmonical mean */
 		}
 
 		res = mean * grad;
@@ -1407,11 +1455,11 @@ N_gradient_field_3d *N_compute_gradient_field_3d(N_array_3d * pot,
 		    !N_is_array_3d_value_null(weight_y, i, j + 1, k)) {
 		    r1 = N_get_array_3d_d_value(weight_y, i, j, k);
 		    r2 = N_get_array_3d_d_value(weight_y, i, j + 1, k);
-		    if ((r1 + r2) != 0)
-			mean = 2 * (r1 * r2) / (r1 + r2);	/*harmonical mean */
+		    mean = N_calc_harmonic_mean(r1, r2);/*harmonical mean */
 		}
 
-		res = mean * grad;
+		res = -1 * mean * grad; /*invert the direction, because we count from north to south,
+					  but the gradient is defined in y direction */
 
 		G_debug(6,
 			"N_compute_gradient_field_3d: Y-direction insert value %6.5g at %i %i %i ",
@@ -1438,8 +1486,7 @@ N_gradient_field_3d *N_compute_gradient_field_3d(N_array_3d * pot,
 		    !N_is_array_3d_value_null(weight_z, i, j, k + 1)) {
 		    r1 = N_get_array_3d_d_value(weight_z, i, j, k);
 		    r2 = N_get_array_3d_d_value(weight_z, i, j, k + 1);
-		    if ((r1 + r2) != 0)
-			mean = 2 * (r1 * r2) / (r1 + r2);	/*harmonical mean */
+		    mean = N_calc_harmonic_mean(r1, r2);/*harmonical mean */
 		}
 
 		res = mean * grad;
@@ -1456,7 +1503,8 @@ N_gradient_field_3d *N_compute_gradient_field_3d(N_array_3d * pot,
 }
 
 /*! 
- * \brief Calculate the x, y and z vector components from a gradient field for each cell and store them in the provided N_array_3d structures
+ * \brief Calculate the x, y and z vector components from a gradient field for each cell 
+ *  and store them in the provided N_array_3d structures
  *
  * The arrays must have the same size as the gradient field.
  *
@@ -1464,28 +1512,28 @@ N_gradient_field_3d *N_compute_gradient_field_3d(N_array_3d * pot,
  
  Based on this storages scheme (this is a 2d slice) the gradient vector for each cell is 
  calculated and stored in the provided  N_array_3d structures
-  ______________ 
- |    |    |    |
- |    |    |    |
- |----|-NC-|----|
- |    |    |    |
- |   WC    EC   |
- |    |    |    |
- |----|-SC-|----|
- |    |    |    |
- |____|____|____|
+
+
+      |  /
+     TC NC
+      |/
+--WC-----EC--
+     /|
+   SC BC
+   /  |
  
+
  x vector component:
  
- x = (-1 * WC + EC) / 2
+ x = (WC + EC) / 2
  
  y vector component:
  
- y = -1 * (-1 * NC + SC) / 2
+ y = (NC + SC) / 2
  
  z vector component:
  
- z = (TC + -1 * BC) / 2
+ z = (TC + BC) / 2
  
  \endverbatim
  
@@ -1536,9 +1584,9 @@ N_compute_gradient_field_components_3d(N_gradient_field_3d * field,
 	for (j = 0; j < rows; j++)
 	    for (i = 0; i < cols; i++) {
 		N_get_gradient_3d(field, &grad, i, j, k);
-		vx = (-1 * grad.WC + grad.EC) / 2;
-		vy = -1 * (-1 * grad.NC + grad.SC) / 2;	/*the gradient must be inverted, because grass counts the rows from north to south */
-		vz = (grad.TC + -1 * grad.BC) / 2;
+		vx = (grad.WC + grad.EC) / 2;
+		vy = (grad.NC + grad.SC) / 2;	
+		vz = (grad.TC + grad.BC) / 2;
 		N_put_array_3d_d_value(x, i, j, k, vx);
 		N_put_array_3d_d_value(y, i, j, k, vy);
 		N_put_array_3d_d_value(z, i, j, k, vz);

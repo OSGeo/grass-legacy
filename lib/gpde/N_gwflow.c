@@ -90,7 +90,7 @@ void N_free_gwflow_data3d(N_gwflow_data3d * data)
 /* *************************************************************** */
 /*!
  * \brief Alllocate memory for the groundwater calculation data structure in 2 dimensions
- * *
+ * 
  * The groundwater calculation data structure will be allocated including
  * all appendant 2d arrays. The offset for the 3d arrays is one
  * to establish homogeneous Neumann boundary conditions at the calculation area border.
@@ -211,19 +211,13 @@ N_data_star *N_callback_gwflow_3d(void *gwdata, N_geom_data * geom, int col,
     hc_zt = N_get_array_3d_d_value(data->hc_z, col, row, depth + 1);
     hc_zb = N_get_array_3d_d_value(data->hc_z, col, row, depth - 1);
 
-    if (hc_xw + hc_x != 0)
-	hc_w = 2 * hc_xw * hc_x / (hc_xw + hc_x);
-    if (hc_xe + hc_x != 0)
-	hc_e = 2 * hc_xe * hc_x / (hc_xe + hc_x);
-    if (hc_yn + hc_y != 0)
-	hc_n = 2 * hc_yn * hc_y / (hc_yn + hc_y);
-    if (hc_ys + hc_y != 0)
-	hc_s = 2 * hc_ys * hc_y / (hc_ys + hc_y);
-    if (hc_zt + hc_z != 0)
-	hc_t = 2 * hc_zt * hc_z / (hc_zt + hc_z);
-    if (hc_zb + hc_z != 0)
-	hc_b = 2 * hc_zb * hc_z / (hc_zb + hc_z);
-
+    hc_w = N_calc_harmonic_mean(hc_xw, hc_x);
+    hc_e = N_calc_harmonic_mean(hc_xe, hc_x);
+    hc_n = N_calc_harmonic_mean(hc_yn, hc_y);
+    hc_s = N_calc_harmonic_mean(hc_ys, hc_y);
+    hc_t = N_calc_harmonic_mean(hc_zt, hc_z);
+    hc_b = N_calc_harmonic_mean(hc_zb, hc_z);
+  
     /*inner sources */
     q = N_get_array_3d_d_value(data->q, col, row, depth);
     /*specific yield */
@@ -337,16 +331,7 @@ N_data_star *N_callback_gwflow_2d(void *gwdata, N_geom_data * geom, int col,
 	    N_get_array_2d_d_value(data->top, col,
 				   row + 1) -
 	    N_get_array_2d_d_value(data->bottom, col, row + 1);
-
-	if (z_xw + z != 0)
-	    z_w = (z_xw + z) / 2;
-	if (z_xe + z != 0)
-	    z_e = (z_xe + z) / 2;
-	if (z_yn + z != 0)
-	    z_n = (z_yn + z) / 2;
-	if (z_ys + z != 0)
-	    z_s = (z_ys + z) / 2;
-    }
+       }
     else {			/* the aquifer is unconfined */
 
 	/* If the aquifer is unconfied use an explicite scheme to solve
@@ -361,17 +346,13 @@ N_data_star *N_callback_gwflow_2d(void *gwdata, N_geom_data * geom, int col,
 	    N_get_array_2d_d_value(data->bottom, col, row - 1);
 	z_ys = N_get_array_2d_d_value(data->phead, col, row + 1) -
 	    N_get_array_2d_d_value(data->bottom, col, row + 1);
-
-	if (z_xw + z != 0)
-	    z_w = (z_xw + z) / 2;
-	if (z_xe + z != 0)
-	    z_e = (z_xe + z) / 2;
-	if (z_yn + z != 0)
-	    z_n = (z_yn + z) / 2;
-	if (z_ys + z != 0)
-	    z_s = (z_ys + z) / 2;
-
     }
+
+    /*geometrical mean of cell height*/
+    z_w = N_calc_geom_mean(z_xw, z);
+    z_e = N_calc_geom_mean(z_xe, z);
+    z_n = N_calc_geom_mean(z_yn, z);
+    z_s = N_calc_geom_mean(z_ys, z);
 
     /* Inner sources */
     q = N_get_array_2d_d_value(data->q, col, row);
@@ -391,14 +372,10 @@ N_data_star *N_callback_gwflow_2d(void *gwdata, N_geom_data * geom, int col,
     hc_ys = N_get_array_2d_d_value(data->hc_y, col, row + 1);
 
     /* calculate the transmissivities */
-    if (hc_xw + hc_x != 0)
-	T_w = 2 * hc_xw * hc_x / (hc_xw + hc_x) * z_w;
-    if (hc_xe + hc_x != 0)
-	T_e = 2 * hc_xe * hc_x / (hc_xe + hc_x) * z_e;
-    if (hc_yn + hc_y != 0)
-	T_n = 2 * hc_yn * hc_y / (hc_yn + hc_y) * z_n;
-    if (hc_ys + hc_y != 0)
-	T_s = 2 * hc_ys * hc_y / (hc_ys + hc_y) * z_s;
+    T_w = N_calc_harmonic_mean(hc_xw, hc_x) * z_w;
+    T_e = N_calc_harmonic_mean(hc_xe, hc_x) * z_e;
+    T_n = N_calc_harmonic_mean(hc_yn, hc_y) * z_n;
+    T_s = N_calc_harmonic_mean(hc_ys, hc_y) * z_s;
 
     /*mass balance center cell to western cell */
     W = -1 * T_w * dy / dx;

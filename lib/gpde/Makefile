@@ -6,7 +6,10 @@ LIB_NAME = $(GPDE_LIBNAME)
 include $(MODULE_TOPDIR)/include/Make/Lib.make
 include $(MODULE_TOPDIR)/include/Make/Doxygen.make
 
-default: lib
+default: headers lib
+
+headers:
+	for file in ./*.h ; do $(INSTALL_DATA) $$file $(GISBASE)/include/grass/ ; done
 
 #doxygen:
 DOXNAME=gpde

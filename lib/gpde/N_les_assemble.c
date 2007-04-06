@@ -989,13 +989,13 @@ N_data_star *N_callback_template_3d(void *data, N_geom_data * geom, int col,
 {
     N_data_star *star = N_alloc_7star();
 
-    star->E = 1 * geom->dx;
-    star->W = 1 * geom->dx;
-    star->N = 1 * geom->dy;
-    star->S = 1 * geom->dy;
-    star->T = 1 * geom->dz;
-    star->B = 1 * geom->dz;
-    star->C = -4 * geom->dx * geom->dy * geom->dz;
+    star->E = 1 / geom->dx;
+    star->W = 1 / geom->dx;
+    star->N = 1 / geom->dy;
+    star->S = 1 / geom->dy;
+    star->T = 1 / geom->dz;
+    star->B = 1 / geom->dz;
+    star->C = -1* (2/geom->dx + 2/geom->dy + 2/geom->dz);
     star->V = -1;
 
     G_debug(5,
@@ -1028,11 +1028,11 @@ N_data_star *N_callback_template_2d(void *data, N_geom_data * geom, int col,
 {
     N_data_star *star = N_alloc_5star();
 
-    star->E = 1 * geom->dx;
-    star->W = 1 * geom->dx;
-    star->N = 1 * geom->dy;
-    star->S = 1 * geom->dy;
-    star->C = -4 * geom->dx * geom->dy;
+    star->E = 1 / geom->dx;
+    star->W = 1 / geom->dx;
+    star->N = 1 / geom->dy;
+    star->S = 1 / geom->dy;
+    star->C = -1 * (2/geom->dx + 2/geom->dy);
     star->V = -1;
 
     G_debug(5, "N_callback_template_2d:  w %g e %g n %g s %g c %g v %g\n",
