@@ -217,24 +217,33 @@ int show_it (void)
     for(;;)
     {
 	n_chars = 0 ;
+
 	for(lptr = line; *tptr && *tptr != NL; *lptr++ = *tptr++)
 	{
-		if ((*tptr == BACK) && (*(tptr+1) == 'n'))
-			break ;
-		n_chars++ ;
+	    /* R_get_text_box() seems to skip leading spaces?, so for
+	       multiline we need to append a space to secondary lines
+	       to get the placement right (??) */
+	    if( (lptr == line) && (n_lines > 0) )
+		*lptr++ = ' ';
+
+	    if ((*tptr == BACK) && (*(tptr+1) == 'n'))
+		break ;
+	    n_chars++ ;
 	}
 	n_lines++ ;
 
 	if (n_chars == 0)
-		break ;
+	    break ;
 
 	*lptr = '\0' ;
 
-	Y = (int)(D_u_to_d_row(north - (line_size*1.2) - ((n_lines-1)*line_size) ));
+	G_debug(3, "line %d ='%s'", n_lines, line);
 
+	Y = (int)(D_u_to_d_row(north - (line_size*1.2) - ((n_lines-1)*line_size) ));
 	R_move_abs(X, Y) ;
 	R_text_rotation(0.0); /* reset */
 	R_get_text_box(line, &t, &b, &l, &r) ;
+
 	if (t < T) T = t ;
 	if (b > B) B = b ;
 	if (l < L) L = l ;
@@ -318,16 +327,34 @@ int show_it (void)
     R_text_rotation((float)rotation);
     G_debug(3, "  rotation = %.2f", rotation);
 
-    /* draw highlighted text background */
+    /**** draw highlighted text background ****/
     if(highlight_width && highlight_color) {
 	R_standard_color(highlight_color);
 
+	/* Scan to beginning of text string */
+	for(tptr=text; *tptr != ':'; tptr++) ;
+	tptr++;
+
 	for( i=1; i <= n_lines; i++ ) {
+	    /* get line of text from full label text string */
+	    n_chars = 0 ;
+	    for(lptr = line; *tptr && *tptr != NL; *lptr++ = *tptr++) {
+		if( (lptr == line) && (i > 1) ) /* see comment above */
+		    *lptr++ = ' ';
+		if ((*tptr == BACK) && (*(tptr+1) == 'n'))
+		    break ;
+		n_chars++ ;
+	    }
+	    if (n_chars == 0)
+		break ;
+	    *lptr = '\0' ;
+
+	    /* figure out text placement */
 	    Y = (int)(D_u_to_d_row(north - (line_size*1.2) - ((i-1)*line_size) ));
 	    text_x = X + X_just_offset; /* reset after rotate_around_pt() */
 	    text_y = Y + Y_just_offset;
 	    rotate_around_pt(X, Y0, &text_x, &text_y, rotation);
-/* FIXME: use indexed line, not just the last one */
+
 	    for(j = 1; j <= highlight_width; j++) {
 		/* smear it around. probably a better way (knight's move? rand?) */
 		R_move_abs(text_x + Xoffset, text_y + Yoffset + j);
@@ -348,72 +375,6 @@ int show_it (void)
 		R_move_abs(text_x + Xoffset -j, text_y + Yoffset +j);
 		R_text(line);
 	    }
-	}
-    }
-
-    /* place the text */
-    R_standard_color(color);
-    for( i=1; i <= n_lines; i++ ) {
-	Y = (int)(D_u_to_d_row(north - (line_size*1.2) - ((i-1)*line_size) ));
-	text_x = X + X_just_offset; /* reset after rotate_around_pt() */
-	text_y = Y + Y_just_offset;
-	rotate_around_pt(X, Y0, &text_x, &text_y, rotation);
-/* FIXME: use indexed line, not just the last one */
-	R_move_abs(text_x + Xoffset, text_y + Yoffset);
-	R_text(line);
-    }
-
-
-#ifdef OLDCODE
-/* remove once multiline labels are working in the new code */
-
-    for(tptr=text; *tptr != ':'; tptr++) ;
-    tptr++ ;
-
-/* Draw text */
-
-    /* draw highlighted text background */
-    if(highlight_width && highlight_color) {
-	R_standard_color(highlight_color);
-
-	n_lines = 0 ;
-	for(;;) {
-	    n_chars = 0 ;
-	    for(lptr = line; *tptr && *tptr != NL; *lptr++ = *tptr++) {
-		if ((*tptr == BACK) && (*(tptr+1) == 'n'))
-		    break ;
-		n_chars++ ;
-	    }
-
-	    n_lines++ ;
-	    if (n_chars == 0)
-		break ;
-
-	    *lptr = '\0' ;
-
-	    Y = (int)(D_u_to_d_row(north - (line_size*1.2) - ((n_lines-1)*line_size) ));
-	    R_set_window(scrT, scrB, scrL, scrR) ;
-
-	    for(i = 1; i <= highlight_width; i++) {
-		/* smear it around. probably a better way (knight's move? rand?) */
-		R_move_abs(X + Xoffset, Y + Yoffset + i);
-		R_text(line);
-		R_move_abs(X + Xoffset, Y + Yoffset - i);
-		R_text(line);
-		R_move_abs(X + Xoffset + i, Y + Yoffset);
-		R_text(line);
-		R_move_abs(X + Xoffset - i, Y + Yoffset);
-		R_text(line);
-
-		R_move_abs(X + Xoffset +i, Y + Yoffset +i);
-		R_text(line);
-		R_move_abs(X + Xoffset -i, Y + Yoffset -i);
-		R_text(line);
-		R_move_abs(X + Xoffset +i, Y + Yoffset -i);
-		R_text(line);
-		R_move_abs(X + Xoffset -i, Y + Yoffset +i);
-		R_text(line);
-	    }
 
 	    if ( (*tptr == '\0') || (*tptr == NL) )
 		break ;
@@ -421,40 +382,42 @@ int show_it (void)
 	}
     }
 
-    /* reset pointer for main text draw */
+
+    /**** place the text ****/
+    R_standard_color(color);
+
+    /* Scan to beginning of text string */
     for(tptr=text; *tptr != ':'; tptr++) ;
-    tptr++ ;
+    tptr++;
 
-    R_standard_color(color) ;
-
-    n_lines = 0 ;
-    for(;;)
-    {
+    for( i=1; i <= n_lines; i++ ) {
+	/* get line of text from full label text string */
 	n_chars = 0 ;
-	for(lptr = line; *tptr && *tptr != NL; *lptr++ = *tptr++)
-	{
-		if ((*tptr == BACK) && (*(tptr+1) == 'n'))
-			break ;
-		n_chars++ ;
-	}
-
-	n_lines++ ;
-	if (n_chars == 0)
+	for(lptr = line; *tptr && *tptr != NL; *lptr++ = *tptr++) {
+	    if( (lptr == line) && (i > 1) ) /* see comment above */
+		*lptr++ = ' ';
+	    if ((*tptr == BACK) && (*(tptr+1) == 'n'))
 		break ;
-
+	    n_chars++ ;
+	}
+	if (n_chars == 0)
+	    break ;
 	*lptr = '\0' ;
 
-	Y = (int)(D_u_to_d_row(north - (line_size*1.2) - ((n_lines-1)*line_size) ));
-	R_set_window(scrT, scrB, scrL, scrR) ;
-	R_move_abs(X + Xoffset, Y + Yoffset) ;
-	R_text(line) ;
+	/* figure out text placement */
+	Y = (int)(D_u_to_d_row(north - (line_size*1.2) - ((i-1)*line_size) ));
+	text_x = X + X_just_offset; /* reset after rotate_around_pt() */
+	text_y = Y + Y_just_offset;
+	rotate_around_pt(X, Y0, &text_x, &text_y, rotation);
+
+	R_move_abs(text_x + Xoffset, text_y + Yoffset);
+	R_text(line);
 
 	if ( (*tptr == '\0') || (*tptr == NL) )
-		break ;
+	    break ;
 	tptr++ ; tptr++ ;
     }
 
-#endif
 
     return 0;
 }
