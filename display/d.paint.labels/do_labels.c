@@ -73,6 +73,8 @@ do_labels (FILE *infile, int do_rotation)
 
     while (G_getl2(text, MTEXT, infile))
     {
+	if(text[0] == '#') continue;
+
 	if (! strncmp(text, "eas", 3))
 		sscanf(text,"%*s %lf",&east) ;
 	else if (! strncmp(text, "nor", 3))
