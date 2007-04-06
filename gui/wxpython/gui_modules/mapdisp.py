@@ -584,7 +584,7 @@ class BufferedWindow(wx.Window):
                 # digitizing
             elif self.parent.digittoolbar:
                 if self.parent.digittoolbar.digitize == "point":
-                    east,north= self.Pixel2Cell(self.mouse['end'][0],self.mouse['end'][1])
+                    east,north= self.Pixel2Cell(self.mouse['begin'][0],self.mouse['begin'][1])
                     self.parent.digittoolbar.AddPoint(east,north)
                 # redraw map
                 self.render=True
@@ -592,12 +592,17 @@ class BufferedWindow(wx.Window):
 
             # quering
             elif self.mouse["box"] == "query":
-                east,north = self.Pixel2Cell(self.mouse['end'][0],self.mouse['end'][1])
+                east,north = self.Pixel2Cell(self.mouse['begin'][0],self.mouse['begin'][1])
                 if self.parent.gismanager:
                     layer =  self.parent.gismanager.maptree.GetSelection()
                     type =   self.parent.gismanager.maptree.layertype[layer]
-                    map,mapset =  layer.GetText().split("@")
-                    self.parent.QueryMap(map,mapset,type,east,north)
+                    dcmd = self.parent.gismanager.maptree.GetPyData(layer)[0]
+                    mapname = None
+                    for item in dcmd.split(' '):
+                        if 'map=' in item:
+                            mapname = item.split('=')[1]
+
+                    self.parent.QueryMap(mapname,type,east,north)
                 else:
                     print "Quering without gis manager not implemented yet"
 
@@ -660,7 +665,6 @@ class BufferedWindow(wx.Window):
     	newx = self.Map.region['w'] + x * self.Map.region["ewres"]
     	newy = self.Map.region['n'] - y * self.Map.region["nsres"]
     	return newx, newy
-
 
     def Zoom(self, begin, end, zoomtype):
         """
@@ -817,7 +821,6 @@ class MapFrame(wx.Frame):
                  pos=wx.DefaultPosition, size=wx.DefaultSize,
                  style=wx.DEFAULT_FRAME_STYLE, toolbars=["map"], cb=None, idx=-1):
 
-#           style=wx.DEFAULT_FRAME_STYLE, toolbars=["map"]):
 
         """
             Main map display window with toolbars, statusbar and
@@ -1137,17 +1140,20 @@ class MapFrame(wx.Frame):
         # change the cursor
         self.MapWindow.SetCursor (self.cursors["cross"])
 
-    def QueryMap(self,name,mapset,type,x,y):
+    def QueryMap(self,mapname,type,x,y):
         """
         Run *.what command in gis manager output window
         """
+        #set query snap distance for v.what at mapunit equivalent of 10 pixels
+        qdist = 10.0 * ((self.Map.region['e'] - self.Map.region['w'])/self.Map.width)
+
         if type == "raster":
-            cmd = "r.what input=%s east_north=%f,%f" %\
-                    (name+"@"+mapset, float(x), float(y))
+            cmd = "r.what -f input=%s east_north=%f,%f" %\
+                    (mapname, float(x), float(y))
 
         elif type == "vector":
-            cmd = "v.what map=%s east_north=%f,%f"%\
-                    (name+"@"+mapset, float(x), float(y))
+            cmd = "v.what -a map=%s east_north=%f,%f distance=%f" %\
+                    (mapname, float(x), float(y), qdist)
 
         if self.gismanager:
             self.gismanager.goutput.runCmd(cmd)
