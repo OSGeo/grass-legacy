@@ -1,8 +1,8 @@
 GRASS graphical user interface
 ==============================
 
-AUTHORS: Jachym, Michael
-LAST CHANGE: 2007-3-25
+AUTHORS: Jachym, Michael, MartinL
+LAST CHANGE: 2007-04-06
 
 ---------------------------------------------------------------------
 Requirements:
@@ -20,9 +20,7 @@ Requirements:
 
 How to start:
 
-Before you start
-----------------
-Download fresh source from subversion:
+Download fresh source code from subversion:
 $~ svn co https://grasssvn.itc.it/svn/grassaddons/trunk/grassaddons/gui grassaddons/gui
 
 Or update your local repository
@@ -33,16 +31,19 @@ Change to GUI devel directory:
 
 $~ cd grassaddons/gui
 
+
 1 - INSTALLATION
 
-Put everthing from gui into a new directory $GISBASE/etc/wx.
+Put everything from gui into a new directory $GISBASE/etc/wx.
 
 Move the script "wxgrass" into $GISBASE/scripts
 
 
 2 - STARTUP WITH GRASS INITIALIZATION
 
-If you want to start the wxgrass GUI automatically when you start GRASS, replace your $GRASS/etc/init.sh with the one that accompanies wxgrass. Rename your original init.sh to avoid overwriting it.
+If you want to start the wxgrass GUI automatically when you start
+GRASS, replace your $GRASS/etc/init.sh with the one that accompanies
+wxgrass. Rename your original init.sh to avoid overwriting it.
 
 Edit your .grassrc6 file to replace...
 
@@ -58,25 +59,27 @@ You may need to edit init.sh to match your settings for LD_DISPLAY
 
 3 - STARTUP FROM GRASS TERMINAL
 
-Do not use the wxgrass init.sh. Simply type wxgrass& from the GRASS terminal to start the GUI using the wxgrass script.
+Do not use the wxgrass init.sh. Simply type wxgrass& from the GRASS
+terminal to start the GUI using the wxgrass script.
 
 
-4 - CLI MapDisplay scripts
-------------------
-This is going to be replacement for command line tools like d.rast and d.vect
+4 - CLI Display scripts
 
-Now add directory "scripts" in gui directory to your $PATH. This small
-programms should later go to GRASS Scripts directory or became Python
-scripts or C programs. Now they are small bash wrappers, which can be
-easily and fast costumized.
+This is going to be replacement for command line tools like d.rast and
+d.vect.
+
+Now add directory "scripts" in gui directory to your $PATH. These
+little programs should later go to GRASS Scripts directory or became
+Python scripts or C programs. Now they are only small BASH wrappers
+which can be easily and fast customized.
 
 $~ export PATH=scripts/:$PATH
 
-Lounch GRASS, if you didn't it yet
+Start GRASS:
 
 $~ grass63 ~/grassdata/spearfish60/user1
 
-Use command p.mon (shell script in gui/scripts direcotory) to start map
+Use command p.mon (shell script in gui/scripts directory) to start map
 display:
 
 GRASS> p.mon anything
@@ -95,10 +98,13 @@ And try the vector layer too
 GRASS> p.vect roads
 
 NOTE: only map name is currently supported. No other option will influence
-      the map apperience
+      the map layout
 
+Alternatively you can use more universal p.cmd:
 
-You should be abple to zoom && pan through the map, ones the layers are
+GRASS> p.cmd "d.rast map=elevation.dem@PERMANENT catlist=1300-1400 -i"
+
+You should be able to zoom && pan through the map, once the layers are
 displayed. You should be also able to store the display content as well as
 clear the display and start from scratch.
 
