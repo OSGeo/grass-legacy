@@ -265,8 +265,8 @@ int execute(char *sql, cursor * c)
 
 	/* update rows */
 	for (i = 0; i < nrows; i++) {
-	  SQLPVALUE *temp_p;
-	  calctmp = (SQLPVALUE*)G_malloc((st->nVal) * sizeof(SQLPVALUE));
+	    SQLPVALUE *temp_p;
+	    calctmp = (SQLPVALUE*)G_malloc((st->nVal) * sizeof(SQLPVALUE));
 	    row = selset[i];
 	    for (j = 0; j < st->nVal; j++) {
 		col = cols[j];
@@ -440,6 +440,13 @@ int set_val(int tab, int row, int col, SQLPVALUE * val)
 		    dbval->d = val->i;
 		else if (val->type == SQLP_D)
 		    dbval->d = val->d;
+		else if (val->type == SQLP_S) {
+		    char* tailptr;
+		    double dval = strtod (val->s, &tailptr);
+		    if (!(*tailptr)) {
+			dbval->d = dval;
+		    }
+		}
 		break;
 	}
     }
