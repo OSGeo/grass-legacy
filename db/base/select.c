@@ -23,12 +23,12 @@
 
 struct {
 	char *driver, *database, *table, *sql, *fs, *vs, *nv, *input;
-	int c,d,h;
+	int c,d,h, test_only;
 } parms;
 
 void parse_command_line();
 
-int sel ( dbDriver *driver, dbString *stmt );
+int sel ( dbDriver *driver, dbString *stmt);
 int get_stmt( FILE *fd, dbString *stmt );
 int stmt_is_empty ( dbString *stmt );
 void print_column_definition ( dbColumn *column );
@@ -71,7 +71,7 @@ main (int argc, char *argv[])
 
     if ( parms.sql ) {
 	db_set_string ( &stmt, parms.sql );
-	stat = sel(driver, &stmt);
+	stat = sel(driver, &stmt );
     } else if ( parms.table ) {
 	db_set_string ( &stmt, "select * from "); 
 	db_append_string ( &stmt, parms.table); 
@@ -105,6 +105,9 @@ sel (dbDriver *driver,
 
     if (db_open_select_cursor(driver, stmt, &cursor, DB_SEQUENTIAL) != DB_OK)
 	return ERROR;
+    if (parms.test_only) {
+        return OK;
+    }
     table = db_get_cursor_table (&cursor);
     ncols = db_get_table_number_of_columns (table);
     if(parms.d)
@@ -168,7 +171,7 @@ void
 parse_command_line(int argc, char *argv[])
 {
     struct Option *driver, *database, *table, *sql, *fs, *vs, *nv, *input;
-    struct Flag *c,*d,*v;
+    struct Flag *c,*d,*v, *flag_test;
     struct GModule *module;
     char *drv, *db;
 
@@ -243,6 +246,10 @@ parse_command_line(int argc, char *argv[])
     v->key		= 'v';
     v->description	= _("vertical output (instead of horizontal)");
 
+    flag_test			= G_define_flag();
+    flag_test->key		= 't';
+    flag_test->description	= _("Only test query, do not execute");
+
     /* Set description */
     module              = G_define_module();
     module->keywords = _("database, SQL");
@@ -263,6 +270,7 @@ parse_command_line(int argc, char *argv[])
     if ( !c->answer )  parms.c = 1; else  parms.c = 0;
     parms.d		= d->answer;
     if ( !v->answer )  parms.h = 1; else  parms.h = 0;
+    parms.test_only     = flag_test->answer;
 
     if (!parms.fs) parms.fs = "";
     if (parms.input && *parms.input == 0)
