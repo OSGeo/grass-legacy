@@ -423,14 +423,6 @@ class GMFrame(wx.Frame):
         rastmenu.AppendItem(addhis)
         self.Bind(wx.EVT_MENU, self.addHIS, addhis)
 
-        addrleg = wx.MenuItem(rastmenu, -1,'Add raster legend layer')
-        bmp = wx.Image(os.path.join(wxgui_utils.icons,'module-d.legend.gif'), wx.BITMAP_TYPE_GIF)
-        bmp.Rescale(16, 16)
-        bmp = bmp.ConvertToBitmap()
-        addrleg.SetBitmap(bmp)
-        rastmenu.AppendItem(addrleg)
-        self.Bind(wx.EVT_MENU, self.addRastLeg, addrleg)
-
         # Popup the menu.  If an item is selected then its handler
         # will be called before PopupMenu returns.
         self.PopupMenu(rastmenu)
