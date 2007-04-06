@@ -19,7 +19,7 @@ void PS_begin_scaled_raster(int s[2][2], int d[2][2])
 	oy = dst[1][0];
 
 	output("gsave\n");
-	output("%d %d moveto %d %d scale\n", ox, oy, sx, sy);
+	output("%d %d translate %d %d scale\n", ox, oy, sx, sy);
 }
 
 int PS_scaled_raster(
