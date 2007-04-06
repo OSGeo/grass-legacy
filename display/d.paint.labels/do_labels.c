@@ -167,8 +167,7 @@ int show_it (void)
  * independent of the text box, once for each line of text (if multiline).
  *
  */
-
-    int i;
+    int i, j;
     int n_lines ;
     int n_chars ;
     char line[256] ;
@@ -245,6 +244,7 @@ int show_it (void)
 		break ;
 	tptr++ ; tptr++ ;
     }
+    G_debug(3, "nlines=%d", n_lines);
 
     /* Expand border 1/2 of text size */
     T = T - (text_size * 0.2) - .5;
@@ -322,34 +322,46 @@ int show_it (void)
     if(highlight_width && highlight_color) {
 	R_standard_color(highlight_color);
 
-	for(i = 1; i <= highlight_width; i++) {
-	    /* smear it around. probably a better way (knight's move? rand?) */
-	    R_move_abs(text_x + Xoffset, text_y + Yoffset + i);
-	    R_text(line);
-	    R_move_abs(text_x + Xoffset, text_y + Yoffset - i);
-	    R_text(line);
-	    R_move_abs(text_x + Xoffset + i, text_y + Yoffset);
-	    R_text(line);
-	    R_move_abs(text_x + Xoffset - i, text_y + Yoffset);
-	    R_text(line);
+	for( i=1; i <= n_lines; i++ ) {
+	    Y = (int)(D_u_to_d_row(north - (line_size*1.2) - ((i-1)*line_size) ));
+	    text_x = X + X_just_offset; /* reset after rotate_around_pt() */
+	    text_y = Y + Y_just_offset;
+	    rotate_around_pt(X, Y0, &text_x, &text_y, rotation);
+/* FIXME: use indexed line, not just the last one */
+	    for(j = 1; j <= highlight_width; j++) {
+		/* smear it around. probably a better way (knight's move? rand?) */
+		R_move_abs(text_x + Xoffset, text_y + Yoffset + j);
+		R_text(line);
+		R_move_abs(text_x + Xoffset, text_y + Yoffset - j);
+		R_text(line);
+		R_move_abs(text_x + Xoffset + j, text_y + Yoffset);
+		R_text(line);
+		R_move_abs(text_x + Xoffset - j, text_y + Yoffset);
+		R_text(line);
 
-	    R_move_abs(text_x + Xoffset +i, text_y + Yoffset +i);
-	    R_text(line);
-	    R_move_abs(text_x + Xoffset -i, text_y + Yoffset -i);
-	    R_text(line);
-	    R_move_abs(text_x + Xoffset +i, text_y + Yoffset -i);
-	    R_text(line);
-	    R_move_abs(text_x + Xoffset -i, text_y + Yoffset +i);
-	    R_text(line);
+		R_move_abs(text_x + Xoffset +j, text_y + Yoffset +j);
+		R_text(line);
+		R_move_abs(text_x + Xoffset -j, text_y + Yoffset -j);
+		R_text(line);
+		R_move_abs(text_x + Xoffset +j, text_y + Yoffset -j);
+		R_text(line);
+		R_move_abs(text_x + Xoffset -j, text_y + Yoffset +j);
+		R_text(line);
+	    }
 	}
     }
 
-/* TODO: multi-line */
-
     /* place the text */
     R_standard_color(color);
-    R_move_abs(text_x + Xoffset, text_y + Yoffset);
-    R_text(line);
+    for( i=1; i <= n_lines; i++ ) {
+	Y = (int)(D_u_to_d_row(north - (line_size*1.2) - ((i-1)*line_size) ));
+	text_x = X + X_just_offset; /* reset after rotate_around_pt() */
+	text_y = Y + Y_just_offset;
+	rotate_around_pt(X, Y0, &text_x, &text_y, rotation);
+/* FIXME: use indexed line, not just the last one */
+	R_move_abs(text_x + Xoffset, text_y + Yoffset);
+	R_text(line);
+    }
 
 
 #ifdef OLDCODE
