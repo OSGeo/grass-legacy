@@ -16,7 +16,7 @@ sys.path.append(imagepath)
 
 
 class SQLFrame(wx.Frame):
-    def __init__(self, parent, id, title, table, qtype="select"):
+    def __init__(self, parent, id, title, vectmap, qtype="select"):
         wx.Frame.__init__(self, parent, -1, title)
 
         self.SetTitle("SQL Builder for GRASS GIS - %s " % (qtype.upper()))
@@ -25,11 +25,24 @@ class SQLFrame(wx.Frame):
         # 
         # variables
         #
-        self.tablename = table   # name of the table "select * from #self.tablename# "
+        self.vectmap = vectmap
+        if not "@" in self.vectmap:
+            self.vectmap = self.vectmap+"@"+grassenv.env["MAPSET"]
+        self.mapname, self.mapset = self.vectmap.split("@")
+        self.layer,self.tablename, self.column, self.database, self.driver =\
+                 os.popen("v.db.connect -g map=%s" %\
+                (self.vectmap)).readlines()[0].strip().split()
+
         self.qtype = qtype        # type of the uqery: SELECT, UPDATE, DELETE, ...
         self.column_names = []       # array with column names
         self.columns = {}       # array with colum properties
         self.colvalues = []     # arrya with uniqe values in selected column
+        self.heading = ""
+        self.parent = parent
+
+        if self.qtype.lower()=="select":
+            self.heading = "SELECT * FROM %s WHERE" % self.tablename
+
 
         # Init
         self.GetColumns()
@@ -40,12 +53,13 @@ class SQLFrame(wx.Frame):
         #
         self.btn_clear = wx.Button(self, -1, "Clear")
         self.btn_verify = wx.Button(self, -1, "Verify")
-        self.btn_help = wx.Button(self, -1, "Help")
-        self.btn_load = wx.Button(self, -1, "Load")
-        self.btn_save = wx.Button(self, -1, "Save")
+        #self.btn_help = wx.Button(self, -1, "Help")
+        # self.btn_load = wx.Button(self, -1, "Load")
+        # self.btn_save = wx.Button(self, -1, "Save")
         self.btn_apply = wx.Button(self, -1, "Apply")
         self.btn_close = wx.Button(self, -1, "Close")
-        self.btn_uniqe = wx.Button(self, -1, "Get unique values")
+        self.btn_uniqe = wx.Button(self, -1, "Get all values")
+        self.btn_uniqesample = wx.Button(self, -1, "Get sample")
 
         self.btn_is = wx.Button(self, -1, "=")
         self.btn_isnot = wx.Button(self, -1, "!=")
@@ -68,18 +82,19 @@ class SQLFrame(wx.Frame):
         #
         # Textareas
         # 
-        self.text_sql = wx.TextCtrl(self, -1, '', size=(-1,50),style=wx.TE_MULTILINE)
+        self.text_sql = wx.TextCtrl(self, -1, '', size=(-1,75),style=wx.TE_MULTILINE)
 
         # 
         # List Boxes
         #
-        self.list_columns = wx.ListBox(self, -1, wx.DefaultPosition, (130, 130), self.column_names, wx.LB_MULTIPLE|wx.LB_SORT)
-        self.list_values = wx.ListBox(self, -1, wx.DefaultPosition, (130, 130), self.colvalues, wx.LB_MULTIPLE|wx.LB_SORT)
+        self.list_columns = wx.ListBox(self, -1, wx.DefaultPosition, (-1, -1), self.column_names, wx.LB_MULTIPLE|wx.LB_SORT)
+        self.list_values = wx.ListBox(self, -1, wx.DefaultPosition, (-1, -1), self.colvalues, wx.LB_MULTIPLE|wx.LB_SORT)
         
         #
         # Bindings
         # 
         self.btn_uniqe.Bind(wx.EVT_BUTTON, self.GetUniqueValues)
+        self.btn_uniqesample.Bind(wx.EVT_BUTTON, self.GetSampleValues)
         self.btn_is.Bind(wx.EVT_BUTTON, self.AddMark)
         self.btn_isnot.Bind(wx.EVT_BUTTON, self.AddMark)
         self.btn_like.Bind(wx.EVT_BUTTON, self.AddMark)
@@ -92,22 +107,38 @@ class SQLFrame(wx.Frame):
         self.btn_brackets.Bind(wx.EVT_BUTTON, self.AddMark)
         self.btn_prc.Bind(wx.EVT_BUTTON, self.AddMark)
         self.btn_and.Bind(wx.EVT_BUTTON, self.AddMark)
+        self.btn_close.Bind(wx.EVT_BUTTON, self.OnClose)
+        self.btn_clear.Bind(wx.EVT_BUTTON, self.OnClear)
+        self.btn_verify.Bind(wx.EVT_BUTTON, self.OnVerify)
+        self.btn_apply.Bind(wx.EVT_BUTTON, self.OnApply)
 
         self.list_columns.Bind(wx.EVT_LISTBOX, self.AddColumnName)
         self.list_values.Bind(wx.EVT_LISTBOX, self.AddValue)
+        
+        self.__doLayout()
 
-        #
-        # Layout
-        #
+    def __doLayout(self):
+        databasebox = wx.StaticBox(self, -1, "Database connection")
+        databaseboxsizer = wx.StaticBoxSizer(databasebox,wx.VERTICAL)
+        dbstr = "Database: %s\n" % (self.database)
+        dbstr += "Driver: %s\n" % (self.driver)
+        dbstr += "Table: %s" % (self.tablename)
+        databaseboxsizer.Add(wx.StaticText(self,-1,dbstr), flag=wx.EXPAND)
+
+        sqlbox = wx.StaticBox(self, -1, "%s" % self.heading)
+        sqlboxsizer = wx.StaticBoxSizer(sqlbox,wx.VERTICAL)
+        sqlboxsizer.Add(self.text_sql, flag=wx.EXPAND)
+
+
         pagesizer = wx.BoxSizer(wx.VERTICAL)
 
-        buttonsizer1 = wx.BoxSizer(wx.HORIZONTAL)
-        buttonsizer1.Add(self.btn_clear, 0, wx.LEFT|wx.RIGHT, 5)
-        buttonsizer1.Add(self.btn_verify, 0, wx.LEFT|wx.RIGHT, 5 )
-        buttonsizer1.Add(self.btn_help, 0, wx.LEFT|wx.RIGHT, 5, )
-        buttonsizer1.Add(self.btn_load, 0, wx.LEFT|wx.RIGHT, 5,)
-        buttonsizer1.Add(self.btn_save, 0, wx.LEFT|wx.RIGHT, 5, )
-        buttonsizer1.Add(self.btn_apply, 0, wx.LEFT|wx.RIGHT, 5, )
+        buttonsizer1 = wx.GridBagSizer(2,2)
+        buttonsizer1.Add(self.btn_clear, (0,0))
+        buttonsizer1.Add(self.btn_verify, (0,1))
+        #buttonsizer1.Add(self.btn_help,  (0,2))
+        #buttonsizer1.Add(self.btn_load,  (0,2))
+        # buttonsizer1.Add(self.btn_save,  (0,3))
+        buttonsizer1.Add(self.btn_apply, (0,2))
 
         buttonsizer2 = wx.GridBagSizer(2, 2)
         buttonsizer2.Add(self.btn_is, (0,0))
@@ -130,18 +161,33 @@ class SQLFrame(wx.Frame):
         buttonsizer3.Add(self.btn_apply,0,wx.RIGHT,5)
         buttonsizer3.Add(self.btn_close,0,wx.RIGHT,5)
 
-        hsizer1 = wx.GridSizer(2, 2, 0, 0)
-        hsizer1.Add((wx.StaticText(self,-1,"Columns: ",size=(-1,22))), proportion=0,border=0)
-        hsizer1.Add((wx.StaticText(self,-1,"Unique values: ", size=(-1,22))), proportion=0,border=0)
-        hsizer1.Add(self.list_columns, 1, wx.EXPAND)
-        hsizer1.Add(self.list_values, 1, wx.EXPAND)
+        buttonsizer4 = wx.BoxSizer(wx.HORIZONTAL)
+        buttonsizer4.Add(self.btn_uniqesample,0,flag=wx.ALIGN_CENTER_HORIZONTAL,border=5)
+        buttonsizer4.Add(self.btn_uniqe,0,flag=wx.ALIGN_CENTER_HORIZONTAL,border=5)
 
-        pagesizer.Add((wx.StaticText(self,-1,self.qtype,size=(-1,22))), 0, 0)
-        pagesizer.Add(hsizer1, 1, wx.EXPAND, 0)
-        pagesizer.Add(self.btn_uniqe,0,wx.ALIGN_LEFT|wx.TOP,border=5)
+        hsizer1 = wx.BoxSizer(wx.HORIZONTAL)
+        #hsizer2 = wx.BoxSizer(wx.HORIZONTAL)
+        
+        columnsbox = wx.StaticBox(self,-1,"Columns: ")
+        valuesbox = wx.StaticBox(self,-1,"Values: ")
+        #hsizer1.Add(wx.StaticText(self,-1, "Unique values: "), border=0, proportion=1)
+        columnsizer = wx.StaticBoxSizer(columnsbox,wx.VERTICAL)
+        valuesizer = wx.StaticBoxSizer(valuesbox,wx.VERTICAL)
+        columnsizer.Add(self.list_columns,  flag=wx.EXPAND,)
+        valuesizer.Add(self.list_values,  flag=wx.EXPAND)
+        self.list_columns.SetMinSize((-1,130))
+        self.list_values.SetMinSize((-1,100))
+        valuesizer.Add(buttonsizer4)
+        hsizer1.Add(columnsizer,border=0, proportion=1)
+        hsizer1.Add(valuesizer,border=0, proportion=1)
+
+        pagesizer.Add(databaseboxsizer,flag=wx.EXPAND,border=5)
+        pagesizer.Add(hsizer1, 1,flag=wx.EXPAND,border=5)
+        #pagesizer.Add(self.btn_uniqe,0,wx.ALIGN_LEFT|wx.TOP,border=5)
+        #pagesizer.Add(self.btn_uniqesample,0,wx.ALIGN_LEFT|wx.TOP,border=5)
         pagesizer.Add(buttonsizer2, 0, wx.ALIGN_CENTER_HORIZONTAL|wx.TOP, border=5)
-        pagesizer.Add(self.text_sql, proportion=1,  flag=wx.EXPAND|wx.TOP, border=5)
-        pagesizer.Add(buttonsizer1, 0, wx.ALIGN_CENTER_HORIZONTAL|wx.TOP, 5)
+        pagesizer.Add(sqlboxsizer, flag=wx.EXPAND,border=5)
+        pagesizer.Add(buttonsizer1, 0, wx.ALIGN_CENTER_HORIZONTAL|wx.TOP, border=5)
         pagesizer.Add(buttonsizer3, proportion=0, flag=wx.TOP, border=5)
         self.SetAutoLayout(True)
         self.SetSizer(pagesizer)
@@ -158,7 +204,7 @@ class SQLFrame(wx.Frame):
             self.columns[name] = {'type':ctype}
         return
 
-    def GetUniqueValues(self,event):
+    def GetUniqueValues(self,event,justsample=False):
         vals = []
         try:
             idx = self.list_columns.GetSelections()[0]
@@ -166,9 +212,18 @@ class SQLFrame(wx.Frame):
             return
         self.list_values.Clear()
         column = self.list_columns.GetString(idx)
-        for line in os.popen("""db.select -c sql="SELECT %s FROM %s" """ %\
-                (column,self.tablename)):
-                self.list_values.Insert(line.strip(),0)
+        i = 0
+        for line in os.popen("""db.select -c database=%s driver=%s sql="SELECT %s FROM %s" """ %\
+                (self.database,self.driver,column,self.tablename)):
+                if justsample and i < 256 or \
+                   not justsample:
+                    self.list_values.Insert(line.strip(),0)
+                else:
+                    break
+                i += 1
+    
+    def GetSampleValues(self,event):
+        self.GetUniqueValues(None,True)
 
     def AddColumnName(self,event):
         idx = self.list_columns.GetSelections()[0]
@@ -206,7 +261,7 @@ class SQLFrame(wx.Frame):
     def __addSomething(self,what):
         sqlstr = self.text_sql.GetValue()
         newsqlstr = ''
-        position = self.text_sql.GetLastPosition()
+        position = self.text_sql.GetPosition()[0]
         selection = self.text_sql.GetSelection()
 
         newsqlstr = sqlstr[:position]
@@ -221,6 +276,24 @@ class SQLFrame(wx.Frame):
         self.text_sql.SetValue(newsqlstr)
         self.text_sql.SetInsertionPoint(position)
 
+    def OnApply(self,event):
+        if self.parent:
+            try:
+                self.parent.text_query.SetValue= self.text_sql.GetValue().strip().replace("\n"," ")
+            except:
+                pass
+    def OnVerify(self,event):
+        if self.text_sql.GetValue():
+            if os.system("""db.select -t driver=%s database=%s sql="SELECT * FROM %s WHERE %s" """ % \
+                    (self.driver, self.database,self.tablename,
+                        self.text_sql.GetValue().strip().replace("\n"," "))):
+                # FIXME: LOG
+                print self.text_sql.GetValue().strip().replace("\n"," "), "not correct!"
+    def OnClear(self, event):
+        self.text_sql.SetValue("")
+
+    def OnClose(self,event):
+        self.Destroy()
 
 if __name__ == "__main__":
 
@@ -229,7 +302,7 @@ if __name__ == "__main__":
         sys.exit()
 
     app = wx.App(0)
-    sqlb = SQLFrame(None, -1, 'SQL Buiilder',sys.argv[1])
+    sqlb = SQLFrame(None, -1, 'SQL Builder',sys.argv[1])
     app.MainLoop()
 
 
