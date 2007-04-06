@@ -259,30 +259,15 @@ int show_it (void)
     X_just_offset = 0;
     Y_just_offset = 0;
 
-    if (xref == LEFT) {
-	if (yref == CENT)
-	    Y_just_offset -= ((B - Y0) / 2) - (Y0 - T) ;
-	if (yref == BOT)
-	    Y_just_offset -= (B - Y0) - (Y0 - T) ;
-    }
-
-    if (xref == CENT) {
-	X_just_offset -= (R - L) / 2 ;
-
-	if (yref == CENT)
-	    Y_just_offset -= ((B - Y0) / 2) - (Y0 - T) ;
-	if (yref == BOT)
-	    Y_just_offset -= (B - Y0) - (Y0 - T) ;
-    }
-
-    if (xref == RITE) {
-	X_just_offset -= R - L + text_size;
-
-	if (yref == CENT)
-	    Y_just_offset -= ((B - Y0) / 2) - (Y0 - T) ;
-	if (yref == BOT)
-	    Y_just_offset -= (B - Y0) - (Y0 - T) ;
-    }
+    /* shift to match justification */
+    if (xref == CENT)
+	X_just_offset -= (R - L + text_size) / 2 ;
+    if (xref == RITE)
+	X_just_offset -= R - L + text_size ;
+    if (yref == CENT)
+	Y_just_offset -= ((B - Y0) / 2) - (Y0 - T) ;
+    if (yref == BOT)
+	Y_just_offset -= (B - Y0) - (Y0 - T) ;
 
 
 #ifdef NOTYET
