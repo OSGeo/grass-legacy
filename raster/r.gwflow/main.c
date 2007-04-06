@@ -343,7 +343,7 @@ int main(int argc, char *argv[])
     if (param.vector->answer) {
 	field =
 	    N_compute_gradient_field_2d(data->phead, data->hc_x, data->hc_y,
-					geom);
+					geom, NULL);
 
 	xcomp = N_alloc_array_2d(geom->cols, geom->rows, 1, DCELL_TYPE);
 	ycomp = N_alloc_array_2d(geom->cols, geom->rows, 1, DCELL_TYPE);
