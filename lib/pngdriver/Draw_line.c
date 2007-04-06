@@ -6,39 +6,19 @@
  *     Cont_abs() in ../lib/Cont_abs.c
  */
 
-#include <math.h>
+#include <stdlib.h>
 
 #include "pngdriver.h"
 
 static void store_xy(int x, int y)
 {
-	int xi, xi_end, yi, yi_end;
-	double theta;
-
 	if (x < 0 || x >= width || y < 0 || y >= height)
 		return;
 
 	grid[y * width + x] = currentColor;
-
-	if(linewidth <= 1)
-		return;
-
-	xi = linewidth / 2;
-	xi_end = x + xi;
-	for(xi = x - xi; xi < xi_end; xi++){
-		theta = acos(((double)(xi - x)) / (((double)linewidth) / 2.0));
-		yi = (int)(((double)(xi - x)) * tan(theta));
-		if(xi == x)
-			yi = linewidth / 2;
-		yi_end = y + yi;
-		for(yi = y - yi; yi < yi_end; yi++){
-			if(xi >= 0 && xi < width && yi >= 0 && yi < height)
-				grid[yi * width + xi] = currentColor;
-		}
-	}
 }
 
-void PNG_draw_line(int x1, int y1, int x2, int y2)
+static void draw_line(int x1, int y1, int x2, int y2)
 {
 	int x, y, x_end, y_end;
 	int xinc, yinc, error;
@@ -127,5 +107,30 @@ void PNG_draw_line(int x1, int y1, int x2, int y2)
 	store_xy(x, y);
 
 	modified = 1;
+}
+
+void PNG_draw_line(int x1, int y1, int x2, int y2)
+{
+	int dx, dy;
+	int i;
+
+	if (linewidth <= 1)
+	{
+		draw_line(x1, y1, x2, y2);
+		return;
+	}
+
+	dx = abs(x2 - x1);
+	dy = abs(y2 - y1);
+
+	for (i = 0; i < linewidth; i++)
+	{
+		int k = i - linewidth/2;
+
+		if (dy > dx)
+			draw_line(x1 + k, y1, x2 + k, y2);
+		else
+			draw_line(x1, y1 + k, x2, y2 + k);
+	}
 }
 
