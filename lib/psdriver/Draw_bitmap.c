@@ -25,6 +25,7 @@ void PS_draw_bitmap(int ncols, int nrows, int threshold, const unsigned char *bu
 			{
 				output("%02X", acc);
 				bit = 0x80;
+				acc = 0;
 			}
 		}
 
