@@ -18,10 +18,6 @@
 
 #include "grass/N_solute_transport.h"
 
-
-/* local Prototypes */
-int local_peclet(double z);
-
 /* ************************************************************************* *
  * ************************************************************************* *
  * ************************************************************************* */
@@ -32,11 +28,134 @@ N_data_star *N_callback_solute_transport_3d(void *solutedata,
 					    N_geom_data * geom, int col,
 					    int row, int depth)
 {
-    N_data_star *mat_pos = NULL;
-    double C = 4, W = -1, E = -1, N = -1, S = -1, T = -1, B = -1, V = 0;
+    double Df_e = 0, Df_w = 0, Df_n = 0, Df_s = 0, Df_t = 0, Df_b = 0;
+    double dx, dy, dz, Az;
+    double diff_x, diff_y, diff_z;
+    double diff_xw, diff_yn;
+    double diff_xe, diff_ys;
+    double diff_zt, diff_zb;
+    double cin = 0, cg, cg_start;
+    double R, nf, cs, q;
+    double C, W, E, N, S, T, B, V;
+    double vw = 0, ve = 0, vn = 0, vs = 0, vt = 0, vb = 0;
+    double Ds_w = 0, Ds_e = 0, Ds_n = 0, Ds_s = 0,  Ds_t = 0, Ds_b = 0;
+    double Dw = 0, De = 0, Dn = 0, Ds = 0, Dt = 0, Db = 0;
+    double rw = 0.5, re = 0.5, rn = 0.5, rs = 0.5, rt = 0.5, rb = 0.5;
 
+    N_solute_transport_data3d *data = NULL;
+    N_data_star *mat_pos;
+    N_gradient_3d grad;
 
-    /*create the 5 point star entries */
+    /*cast the void pointer to the right data structure */
+    data = (N_solute_transport_data3d *) solutedata;
+
+    N_get_gradient_3d(data->grad, &grad, col, row, depth);
+
+    dx = geom->dx;
+    dy = geom->dy;
+    dz = geom->dz;
+    Az = N_get_geom_data_area_of_cell(geom, row);
+
+    /*read the data from the arrays */
+    cg_start = N_get_array_3d_d_value(data->c_start, col, row, depth);
+    cg = N_get_array_3d_d_value(data->c, col, row, depth);
+
+    /*get the surrounding diffusion tensor entries */
+    diff_x = N_get_array_3d_d_value(data->diff_x, col, row, depth);
+    diff_y = N_get_array_3d_d_value(data->diff_y, col, row, depth);
+    diff_z = N_get_array_3d_d_value(data->diff_z, col, row, depth);
+    diff_xw = N_get_array_3d_d_value(data->diff_x, col - 1, row, depth);
+    diff_xe = N_get_array_3d_d_value(data->diff_x, col + 1, row, depth);
+    diff_yn = N_get_array_3d_d_value(data->diff_y, col, row - 1, depth);
+    diff_ys = N_get_array_3d_d_value(data->diff_y, col, row + 1, depth);
+    diff_zt = N_get_array_3d_d_value(data->diff_z, col, row, depth + 1);
+    diff_zb = N_get_array_3d_d_value(data->diff_z, col, row, depth - 1);
+
+    /* calculate the diffusion on the cell borders using the harmonical mean */
+    Df_w = N_calc_harmonic_mean(diff_xw, diff_x);
+    Df_e = N_calc_harmonic_mean(diff_xe, diff_x);
+    Df_n = N_calc_harmonic_mean(diff_yn, diff_y);
+    Df_s = N_calc_harmonic_mean(diff_ys, diff_y);
+    Df_t = N_calc_harmonic_mean(diff_zt, diff_z);
+    Df_b = N_calc_harmonic_mean(diff_zb, diff_z);
+
+    /* calculate the dispersion */
+    /*todo */
+
+    /* calculate the velocity parts  with full upwinding scheme */
+    vw = grad.WC;
+    ve = grad.EC;
+    vn = grad.NC;
+    vs = grad.SC;
+    vt = grad.TC;
+    vb = grad.BC;
+
+    /* put the diffusion and dispersion together */
+    Dw = ((Df_w + Ds_w)) / dx;
+    De = ((Df_e + Ds_e)) / dx;
+    Dn = ((Df_n + Ds_n)) / dy;
+    Ds = ((Df_s + Ds_s)) / dy;
+    Dt = ((Df_t + Ds_t)) / dz;
+    Db = ((Df_b + Ds_b)) / dz;
+
+    rw = N_exp_upwinding(-1 * vw, dx, Dw);
+    re = N_exp_upwinding(ve, dx, De);
+    rs = N_exp_upwinding(-1 * vs, dy, Ds);
+    rn = N_exp_upwinding(vn, dy, Dn);
+    rb = N_exp_upwinding(-1 * vb, dz, Dn);
+    rt = N_exp_upwinding(vt, dz, Dn);
+ 
+    /*mass balance center cell to western cell */
+    W = -1 * (Dw)* dy * dz - vw * (1 - rw) * dy * dz;
+    /*mass balance center cell to eastern cell */
+    E = -1 * (De)* dy * dz + ve * (1 - re) * dy * dz;
+    /*mass balance center cell to southern cell */
+    S = -1 * (Ds)* dx * dz - vs * (1 - rs) * dx * dz;
+    /*mass balance center cell to northern cell */
+    N = -1 * (Dn)* dx * dz + vn * (1 - rn) * dx * dz;
+    /*mass balance center cell to bottom cell */
+    B = -1 * (Db) * Az - vb * (1 - rb) * Az;
+     /*mass balance center cell to top cell */
+    T = -1 * (Dt) * Az + vt * (1 - rt) * Az;
+
+    /* Retardation */
+    R = N_get_array_3d_d_value(data->R, col, row, depth);
+    /* Inner sources */
+    cs = N_get_array_3d_d_value(data->cs, col, row, depth);
+    /* effective porosity */
+    nf = N_get_array_3d_d_value(data->nf, col, row, depth);
+    /* groundwater sources and sinks */
+    q = N_get_array_3d_d_value(data->q, col, row, depth);
+    /* concentration of influent water*/
+    cin = N_get_array_3d_d_value(data->cin, col, row, depth);
+
+    /*the diagonal entry of the matrix */
+    C = ((Dw - vw) * dy * dz +
+	 (De + ve) * dy * dz +
+	 (Ds - vs) * dx * dz + 
+	 (Dn + vn) * dx * dz +
+	 (Db - vb) * Az + 
+	 (Dt + vt) * Az + 
+	  Az * dz * R / data->dt - q/nf);
+
+    /*the entry in the right side b of Ax = b */
+    V = (cs + cg_start * Az * dz * R / data->dt - q/nf*cin);
+
+    /*
+    printf("nf %g\n", nf);
+    printf("q %g\n", q);
+    printf("cs %g\n", cs);
+    printf("cin %g\n", cin);
+    printf("cg %g\n", cg);
+    printf("cg_start %g\n", cg_start);
+    printf("Az %g\n", Az);
+    printf("z %g\n", z);
+    printf("R %g\n", R);
+    printf("dt %g\n", data->dt);
+    */
+    G_debug(6, "N_callback_solute_transport_3d: called [%i][%i][%i]", row, col, depth);
+
+    /*create the 7 point star entries */
     mat_pos = N_create_7star(C, W, E, N, S, T, B, V);
 
     return mat_pos;
@@ -78,10 +197,10 @@ N_data_star *N_callback_solute_transport_2d(void *solutedata,
     double cin = 0, cg, cg_start;
     double R, nf, cs, q;
     double C, W, E, N, S, V;
-    double rw = 0.5, re = 0.5, rn = 0.5, rs = 0.5;
     double vw = 0, ve = 0, vn = 0, vs = 0;
     double Ds_w = 0, Ds_e = 0, Ds_n = 0, Ds_s = 0;
     double Dw = 0, De = 0, Dn = 0, Ds = 0;
+    double rw = 0.5, re = 0.5, rn = 0.5, rs = 0.5;
 
     N_solute_transport_data2d *data = NULL;
     N_data_star *mat_pos;
@@ -94,7 +213,7 @@ N_data_star *N_callback_solute_transport_2d(void *solutedata,
 
     dx = geom->dx;
     dy = geom->dy;
-    Az = geom->dx * geom->dy;
+    Az = N_get_geom_data_area_of_cell(geom, row);
 
     /*read the data from the arrays */
     cg_start = N_get_array_2d_d_value(data->c_start, col, row);
@@ -121,14 +240,11 @@ N_data_star *N_callback_solute_transport_2d(void *solutedata,
 			       row + 1) -
 	N_get_array_2d_d_value(data->bottom, col, row + 1);
 
-    if (z_xw + z != 0)
-	z_w = (z_xw + z) / 2;
-    if (z_xe + z != 0)
-	z_e = (z_xe + z) / 2;
-    if (z_yn + z != 0)
-	z_n = (z_yn + z) / 2;
-    if (z_ys + z != 0)
-	z_s = (z_ys + z) / 2;
+    /*geometrical mean of cell height*/
+    z_w = N_calc_geom_mean(z_xw, z);
+    z_e = N_calc_geom_mean(z_xe, z);
+    z_n = N_calc_geom_mean(z_yn, z);
+    z_s = N_calc_geom_mean(z_ys, z);
 
     /*get the surrounding diffusion tensor entries */
     diff_x = N_get_array_2d_d_value(data->diff_x, col, row);
@@ -139,51 +255,38 @@ N_data_star *N_callback_solute_transport_2d(void *solutedata,
     diff_ys = N_get_array_2d_d_value(data->diff_y, col, row + 1);
 
     /* calculate the diffusion on the cell borders using the harmonical mean */
-    if (diff_xw + diff_x != 0)
-	Df_w = 2 * diff_xw * diff_x / (diff_xw + diff_x);
-    if (diff_xe + diff_x != 0)
-	Df_e = 2 * diff_xe * diff_x / (diff_xe + diff_x);
-    if (diff_yn + diff_y != 0)
-	Df_n = 2 * diff_yn * diff_y / (diff_yn + diff_y);
-    if (diff_ys + diff_y != 0)
-	Df_s = 2 * diff_ys * diff_y / (diff_ys + diff_y);
+    Df_w = N_calc_harmonic_mean(diff_xw, diff_x);
+    Df_e = N_calc_harmonic_mean(diff_xe, diff_x);
+    Df_n = N_calc_harmonic_mean(diff_yn, diff_y);
+    Df_s = N_calc_harmonic_mean(diff_ys, diff_y);
 
 
     /* calculate the dispersion */
     /*todo */
-
-    /* calculate the velocity parts */
-    vw = grad.WC;
-    if ((Df_w + Ds_w) != 0)
-	rw = local_peclet(dx * vw / (Df_w + Ds_w));
-
-    ve = grad.EC;
-    if ((Df_e + Ds_e) != 0)
-	re = local_peclet(dx * ve / (Df_e + Ds_e));
-
-    vn = grad.NC;
-    if ((Df_n + Ds_n) != 0)
-	rn = local_peclet(dy * vn / (Df_n + Ds_n));
-
-    vs = grad.SC;
-    if ((Df_s + Ds_s) != 0)
-	rs = local_peclet(dy * vs / (Df_s + Ds_s));
-
+   
     /* put the diffusion and dispersion together */
-    Dw = ((Df_w + Ds_w));
-    De = ((Df_e + Ds_e));
-    Dn = ((Df_n + Ds_n));
-    Ds = ((Df_s + Ds_s));
+    Dw = ((Df_w + Ds_w)) / dx;
+    De = ((Df_e + Ds_e)) / dx;
+    Ds = ((Df_s + Ds_s)) / dy;
+    Dn = ((Df_n + Ds_n)) / dy;
 
-
+    vw = grad.WC;
+    rw = N_exp_upwinding(-1 * vw, dx, Dw);
+    ve = grad.EC;
+    re = N_exp_upwinding(ve, dx, De);
+    vs = grad.SC;
+    rs = N_exp_upwinding(-1 * vs, dy, Ds);
+    vn = grad.NC;
+    rn = N_exp_upwinding(vn, dy, Dn);
+ 
     /*mass balance center cell to western cell */
-    W = -1 * (Dw - vw * (1 - rw)) * dy * z_w / dx;
+    W = -1 * (Dw)* dy * z_w - vw * (1 - rw) * dy * z_w;
     /*mass balance center cell to eastern cell */
-    E = -1 * (De - ve * (1 - re)) * dy * z_e / dx;
-    /*mass balance center cell to northern cell */
-    N = -1 * (Dn - vn * (1 - rn)) * dx * z_n / dy;
+    E = -1 * (De)* dy * z_e + ve * (1 - re) * dy * z_e;
     /*mass balance center cell to southern cell */
-    S = -1 * (Ds - vs * (1 - rs)) * dx * z_s / dy;
+    S = -1 * (Ds)* dx * z_s - vs * (1 - rs) * dx * z_s;
+    /*mass balance center cell to northern cell */
+    N = -1 * (Dn)* dx * z_n + vn * (1 - rn) * dx * z_n;
 
     /* Retardation */
     R = N_get_array_2d_d_value(data->R, col, row);
@@ -193,19 +296,32 @@ N_data_star *N_callback_solute_transport_2d(void *solutedata,
     nf = N_get_array_2d_d_value(data->nf, col, row);
     /* groundwater sources and sinks */
     q = N_get_array_2d_d_value(data->q, col, row);
-
-
+    /* concentration of influent water*/
+    cin = N_get_array_2d_d_value(data->cin, col, row);
 
     /*the diagonal entry of the matrix */
-    C = ((Dw - vw * (rw)) * dy * z_w / dx +
-	 (De - ve * (re)) * dy * z_e / dx +
-	 (Dn - vn * (rn)) * dx * z_n / dy +
-	 (Ds - vs * (rs)) * dx * z_s / dy + Az * z * R / data->dt);
+     C = (Dw - vw * rw) * dy * z_w +
+	 (De + ve * re) * dy * z_e +
+	 (Ds - vs * rs) * dx * z_s + 
+	 (Dn + vn * rn) * dx * z_n +
+	       Az * z * R / data->dt - q/nf;
 
     /*the entry in the right side b of Ax = b */
-    V = (cs + cg_start * Az * z * R / data->dt);
+    V = (cs + cg_start * Az * z * R / data->dt - q/nf*cin);
 
-    G_debug(5, "N_callback_solute_transport_2d: called [%i][%i]", row, col);
+    /*
+    printf("nf %g\n", nf);
+    printf("q %g\n", q);
+    printf("cs %g\n", cs);
+    printf("cin %g\n", cin);
+    printf("cg %g\n", cg);
+    printf("cg_start %g\n", cg_start);
+    printf("Az %g\n", Az);
+    printf("z %g\n", z);
+    printf("R %g\n", R);
+    printf("dt %g\n", data->dt);
+    */
+    G_debug(6, "N_callback_solute_transport_2d: called [%i][%i]", row, col);
 
     /*create the 5 point star entries */
     mat_pos = N_create_5star(C, W, E, N, S, V);
@@ -364,17 +480,4 @@ void N_free_solute_transport_data2d(N_solute_transport_data2d * data)
     return;
 }
 
-/* **************************************************************** *
- * **************************************************************** *
- * **************************************************************** */
-int local_peclet(double z)
-{
-    if (z > 0)
-	return 1;
-    if (z == 0)
-	return 0.5;
-    if (z < 0)
-	return 0;
 
-    return 0;
-}

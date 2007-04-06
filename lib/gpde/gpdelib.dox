@@ -245,7 +245,7 @@ N_array_3d *#N_alloc_array_3d(int depths, int rows, int cols, int offset, int ty
 <p>
 void #N_free_array_3d(N_array_3d * data_array);
 <p>
-int #N_get_array_3d_type(N_array_2d * array2d);
+int #N_get_array_3d_type(N_array_3d * array);
 <p>
 To access the 3d arrays use the following functions for reading and writing of data values
 <p>
@@ -855,12 +855,12 @@ The creation of a 2d gradient field is based on the following scheme:
  r = 2 * weight[row][col]*weight[row + 1][col] / (weight[row][col]*weight[row + 1][col])
  SC = r * (pot[row][col] - pot[row + 1][col])/dy
  
- the values SC and EC are the negative values of the next row/col
+ the values SC and EC are the values of the next row/col
 \endverbatim
  
 
 <p>
-N_gradient_field_2d * #N_compute_gradient_field_2d(N_array_2d *pot, N_array_2d *weight_x,  N_array_2d *weight_y,N_geom_data *geom);
+N_gradient_field_2d * #N_compute_gradient_field_2d(N_array_2d *pot, N_array_2d *weight_x, N_array_2d *weight_y, N_geom_data *geom, N_gradient_field_2d *gradfield);
 <p>
 The computation of the gradient vectors for each cell is based on this scheme
  \verbatim
@@ -877,11 +877,11 @@ The computation of the gradient vectors for each cell is based on this scheme
  
  x vector component:
  
- x = (-1 * WC + EC) / 2
+ x = (WC + EC) / 2
  
  y vector component:
  
- y = -1 * (-1 * NC + SC) / 2
+ y = (NC + SC) / 2
  
  \endverbatim
 <p>
@@ -899,7 +899,16 @@ int #N_copy_gradient_field_3d(N_gradient_field_3d *source, N_gradient_field_3d *
 The gradient is calculated between cells for each cell and direction.
 The creation of a 2d gradient field is based on the following scheme:
  \verbatim
- 
+
+      |  /
+     TC NC
+      |/
+--WC-----EC--
+     /|
+   SC BC
+   /  |
+
+
  x - direction:
  
  r = 2 * weight_x[depth][row][col]*weight_x[depth][row][col + 1] / (weight_X[depth][row][col]*weight_x[depth][row][col + 1])
@@ -915,40 +924,37 @@ The creation of a 2d gradient field is based on the following scheme:
  r = 2 * weight_z[depth][row][col]*weight_z[depth + 1][row][col] / (weight_z[depth][row][col]*weight_z[depth + 1][row][col])
  TC = r * (pot[depth][row][col] - pot[depth + 1][row][col])/dy
  
- the values BC, NC, WC are the negative values of the next depth/row/col
+ the values BC, NC, WC are the values of the next depth/row/col
  
  
  \endverbatim
 
 <p>
-N_gradient_field_3d *#N_compute_gradient_field_3d(N_array_3d * pot, N_array_3d * weight_x, N_array_3d * weight_y, N_array_3d * weight_z, N_geom_data * geom)
+N_gradient_field_3d *#N_compute_gradient_field_3d(N_array_3d * pot, N_array_3d * weight_x, N_array_3d * weight_y, N_array_3d * weight_z, N_geom_data * geom, N_gradient_field_3d *gradfield)
 <p>
 Based on this storages scheme (this is a 2d slice) the gradient vector for each cell is 
  calculated and stored in the provided  N_array_3d structures
  \verbatim
  
- ______________ 
- |    |    |    |
- |    |    |    |
- |----|-NC-|----|
- |    |    |    |
- |   WC    EC   |
- |    |    |    |
- |----|-SC-|----|
- |    |    |    |
- |____|____|____|
+      |  /
+     TC NC
+      |/
+--WC-----EC--
+     /|
+   SC BC
+   /  | 
  
  x vector component:
  
- x = (-1 * WC + EC) / 2
+ x = (WC + EC) / 2
  
  y vector component:
  
- y = -1 * (-1 * NC + SC) / 2
+ y = (NC + SC) / 2
  
  z vector component:
  
- z = (TC + -1 * BC) / 2
+ z = (TC + BC) / 2
  
  \endverbatim
 

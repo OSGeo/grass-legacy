@@ -1074,7 +1074,7 @@ int gauss_seidel(double **M, double *b, double *x, int rows, int maxit,
 
 	    x[j] = Enew[j];
 	}
-	G_message(_("Gauss-Seidel -- iteration %5i error %g\n"), k, err);
+	G_message(_("SOR -- iteration %5i error %g\n"), k, err);
 	if (err < error)
 	    break;
     }
