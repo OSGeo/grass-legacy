@@ -986,7 +986,7 @@ dnl AC_CHECK_TOOL(AR, ar)
 	    ;;
 	Rhapsody-*|Darwin-*)
 	    SHLIB_CFLAGS="-fno-common"
-	    SHLIB_LD="cc -dynamiclib -flat_namespace -compatibility_version \${GRASS_VERSION_MAJOR}.\${GRASS_VERSION_MINOR} -current_version \${GRASS_VERSION_MAJOR}.\${GRASS_VERSION_MINOR} -install_name \${INST_DIR}/lib/lib\${LIB_NAME}\${SHLIB_SUFFIX}"
+	    SHLIB_LD="cc -dynamiclib -compatibility_version \${GRASS_VERSION_MAJOR}.\${GRASS_VERSION_MINOR} -current_version \${GRASS_VERSION_MAJOR}.\${GRASS_VERSION_MINOR} -install_name \${INST_DIR}/lib/lib\${LIB_NAME}\${SHLIB_SUFFIX}"
 	    GRASS_SHLIB_LD_EXTRAS=""
 	    SHLIB_LD_LIBS='${LIBS}'
 	    SHLIB_SUFFIX=".dylib"
