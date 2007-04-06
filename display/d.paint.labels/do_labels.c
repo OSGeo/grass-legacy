@@ -149,17 +149,25 @@ do_labels (FILE *infile, int do_rotation)
 	}
     }
 
-    /* Only check last entry so you don't get a zillion warnings. May *
-     *  miss some cases, but don't worry as it is only informational  */
-    if( xref != LEFT && yref != TOP && rotation != 0.0 )
-	G_warning("Currently the rotation option only works correctly "
-		  "for upper-left justified text.");
-
     return 0;
 }
 
 int show_it (void)
 {
+/*
+ * The border+background box coords given by R_get_text_box() expand to
+ * cover the area of the rotated text, but the bottom left corner of that
+ * box is not always the ref=lower,left spot (rot>90), and middle|upper
+ * left of the text do not match the middle|upper left of the expanded 
+ * text box when rotated.
+ * 
+ * The solution is to calculate the position and dimensions of the text
+ * without rotation, then rotate those points about the point's coord,
+ * and replot. For text we must calculate the starting coord of the text
+ * independent of the text box, once for each line of text (if multiline).
+ *
+ */
+
     int i;
     int n_lines ;
     int n_chars ;
@@ -169,15 +177,12 @@ int show_it (void)
     int text_size ;
     int X, Y, Y0 ;
     int T, B, L, R ;
-    int scrT, scrB, scrL, scrR ;
     int t, b, l, r ;
     int xarr[5] ;
     int yarr[5] ;
     int Xoffset, Yoffset ; /* in XY plane */
     int X_just_offset, Y_just_offset ; /* in rotated label plane */
-#ifdef NOTYET
     int ll_x, ll_y, ul_x, ul_y, lr_x, lr_y, ur_x, ur_y, text_x, text_y;
-#endif
 
     G_debug ( 3, "Doing '%s'", text) ;
     X = (int)(D_u_to_d_col(east)) ;
@@ -198,12 +203,6 @@ int show_it (void)
 
     R_text_size(text_size, text_size);
 
-#ifndef NOTYET
-/* Set font rotation */
-    R_text_rotation((float)rotation);
-    G_debug(3, "  rotation = %.2f", rotation);
-#endif NOTYET
-
 /* Find extent of all text (assume ref point is upper left) */
     T = 999999 ;
     B = 0 ;
@@ -214,6 +213,7 @@ int show_it (void)
     for(tptr=text; *tptr != ':'; tptr++) ;
     tptr++ ;
 
+    /* get the box size for each line of text and expand the bounding box as needed */
     n_lines = 0 ;
     for(;;)
     {
@@ -234,9 +234,7 @@ int show_it (void)
 	Y = (int)(D_u_to_d_row(north - (line_size*1.2) - ((n_lines-1)*line_size) ));
 
 	R_move_abs(X, Y) ;
-#ifdef NOTYET
 	R_text_rotation(0.0); /* reset */
-#endif
 	R_get_text_box(line, &t, &b, &l, &r) ;
 	if (t < T) T = t ;
 	if (b > B) B = b ;
@@ -268,25 +266,6 @@ int show_it (void)
 	Y_just_offset -= ((B - Y0) / 2) - (Y0 - T) ;
     if (yref == BOT)
 	Y_just_offset -= (B - Y0) - (Y0 - T) ;
-
-
-#ifdef NOTYET
-/**** get+set new box for clipping ****/
-/* STILL INCOMPLETE
- * The border+background box coords given by R_get_text_box() expand to
- * cover (and clip!) the area of the rotated text, but the bottom left
- * corner of that box is not always the ref=lower,left spot (rot>90), and
- * middle|upper left of the text do not match the middle|upper left of the
- * expanded text box when rotated.
- * 
- * The basic solution is to calculate the position and dimensions of
- * the text without rotation, then rotate those points about the point's
- * coord, and replot. For text we must calculate the corners of the text
- * independent of the text box, and I fear it might not work correctly with
- * TrueType fonts. We'll see.
- *
- * rotate_around_pt() is fully functional.
- */
 
     /* get unrotated corners of text box, and rotate them */
     ul_y = ur_y = T + Y_just_offset;
@@ -372,53 +351,9 @@ int show_it (void)
     R_move_abs(text_x + Xoffset, text_y + Yoffset);
     R_text(line);
 
-#else
 
-    Xoffset += X_just_offset;
-    Yoffset += Y_just_offset;
-
-    /* Draw box */
-    scrL = L + Xoffset ;
-    scrR = R + Xoffset ;
-    scrT = T + Yoffset ;
-    scrB = B + Yoffset ;
-
-    /* If the window is outside of current map window, ignore */;
-    if (scrR < (int)D_get_d_west())   return 0;
-    if (scrL > (int)D_get_d_east())   return 0;
-    if (scrB < (int)D_get_d_north())  return 0;
-    if (scrT > (int)D_get_d_south())  return 0;
-    if (scrT < 0)  return 0;
-    if (scrL < 0)  return 0;
-
-    /* Clip parts of label to inside map window */
-    if (scrL < (int)D_get_d_west()) scrL = (int)D_get_d_west() ;
-    if (scrR > (int)D_get_d_east()) scrR = (int)D_get_d_east() ;
-    if (scrT < (int)D_get_d_north())  scrT = (int)D_get_d_north()  ;
-    if (scrB > (int)D_get_d_south())  scrB = (int)D_get_d_south()  ;
-
-    xarr[0] = scrL ;
-    xarr[1] = scrL ;
-    xarr[2] = scrR ;
-    xarr[3] = scrR ;
-    xarr[4] = scrL ;
-    yarr[0] = scrB ;
-    yarr[1] = scrT ;
-    yarr[2] = scrT ;
-    yarr[3] = scrB ;
-    yarr[4] = scrB ;
-    if(background)
-    {
-	    R_standard_color(background) ;
-	    R_polygon_abs(xarr, yarr, 5) ;
-    }
-
-/* Draw border */
-    if(border)
-    {
-	    R_standard_color(border) ;
-	    R_polyline_abs(xarr, yarr, 5) ;
-    }
+#ifdef OLDCODE
+/* remove once multiline labels are working in the new code */
 
     for(tptr=text; *tptr != ':'; tptr++) ;
     tptr++ ;
