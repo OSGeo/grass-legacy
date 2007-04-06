@@ -174,14 +174,14 @@ N_array_3d *create_potential_array_3d()
 /* *************************************************************** */
 int test_gradient_3d()
 {
-    N_array_3d *relax;
-    N_array_3d *pot;
-    N_array_3d *xcomp;
-    N_array_3d *ycomp;
-    N_array_3d *zcomp;
-    N_gradient_field_3d *field;
-    N_gradient_3d *grad;
-    N_geom_data *geom;
+    N_array_3d *relax = NULL;
+    N_array_3d *pot = NULL;
+    N_array_3d *xcomp = NULL;
+    N_array_3d *ycomp = NULL;
+    N_array_3d *zcomp = NULL;
+    N_gradient_field_3d *field = NULL;
+    N_gradient_3d *grad = NULL;
+    N_geom_data *geom = NULL;
 
     geom = N_alloc_geom_data();
 
@@ -200,7 +200,8 @@ int test_gradient_3d()
     relax = create_relax_array_3d();
     pot = create_potential_array_3d();
 
-    field = N_compute_gradient_field_3d(pot, relax, relax, relax, geom);
+    field = N_compute_gradient_field_3d(pot, relax, relax, relax, geom, NULL);
+    field = N_compute_gradient_field_3d(pot, relax, relax, relax, geom, field);
     N_free_gradient_field_3d(field);
 
     N_free_array_3d(relax);
@@ -248,8 +249,8 @@ int test_gradient_3d()
 
   /**
    * 1 2 6        5
-   * 3 7 10 ==  4  -3
-   * 8 15 25     -8
+   * 3 7 10 == -4  -3
+   * 8 15 25      8
    * */
 
     N_put_array_3d_d_value(pot, 0, 0, 0, 1.0);
@@ -285,33 +286,38 @@ int test_gradient_3d()
 
     N_print_array_3d(pot);
 
-    field = N_compute_gradient_field_3d(pot, relax, relax, relax, geom);
+    geom->depths = 3;
+    geom->rows = 3;
+    geom->cols = 3;
+
+    field = N_compute_gradient_field_3d(pot, relax, relax, relax, geom, NULL);
+    field = N_compute_gradient_field_3d(pot, relax, relax, relax, geom, field);
 
     grad = N_get_gradient_3d(field, NULL, 0, 0, 0);
     printf
-	("Gradient 3d: NC %g == 0 ; SC %g == -2 ; WC %g == 0 ; EC %g == -1 BC %g == 0 TC %g == -0.2\n",
+	("Gradient 3d: NC %g == 0 ; SC %g == 2 ; WC %g == 0 ; EC %g == -1 BC %g == 0 TC %g == -0.2\n",
 	 grad->NC, grad->SC, grad->WC, grad->EC, grad->BC, grad->TC);
 
     grad = N_get_gradient_3d(field, grad, 1, 0, 0);
     printf
-	("Gradient 3d: NC %g == 0 ; SC %g == -5 ; WC %g == 1 ; EC %g == -4 BC %g == 0 TC %g == -0.2\n",
+	("Gradient 3d: NC %g == 0 ; SC %g == 5 ; WC %g == -1 ; EC %g == -4 BC %g == 0 TC %g == -0.2\n",
 	 grad->NC, grad->SC, grad->WC, grad->EC, grad->BC, grad->TC);
     N_free_gradient_3d(grad);
 
     grad = N_get_gradient_3d(field, NULL, 1, 1, 1);
     printf
-	("Gradient 3d: NC %g == 5 ; SC %g == -8 ; WC %g == 4 ; EC %g == -3 BC %g == 0.2 TC %g == -0.3\n",
+	("Gradient 3d: NC %g == 5 ; SC %g == 8 ; WC %g == -4 ; EC %g == -3 BC %g == -0.2 TC %g == -0.3\n",
 	 grad->NC, grad->SC, grad->WC, grad->EC, grad->BC, grad->TC);
 
     grad = N_get_gradient_3d(field, grad, 1, 2, 2);
     printf
-	("Gradient 3d: NC %g == 8 ; SC %g ==  0 ; WC %g == 7 ; EC %g == 10 BC %g == 0.3 TC %g == 0\n",
+	("Gradient 3d: NC %g == 8 ; SC %g ==  0 ; WC %g == -7 ; EC %g == -10 BC %g == -0.3 TC %g == 0\n",
 	 grad->NC, grad->SC, grad->WC, grad->EC, grad->BC, grad->TC);
     N_free_gradient_3d(grad);
 
     grad = N_get_gradient_3d(field, NULL, 2, 2, 2);
     printf
-	("Gradient 3d: NC %g ==15 ; SC %g ==  0 ; WC %g ==10 ; EC %g ==  0 BC %g == 0.3 TC %g == 0\n",
+	("Gradient 3d: NC %g ==15 ; SC %g ==  0 ; WC %g == -10 ; EC %g ==  0 BC %g == -0.3 TC %g == 0\n",
 	 grad->NC, grad->SC, grad->WC, grad->EC, grad->BC, grad->TC);
     N_free_gradient_3d(grad);
 
@@ -332,13 +338,13 @@ int test_gradient_3d()
 /* *************************************************************** */
 int test_gradient_2d()
 {
-    N_array_2d *relax;
-    N_array_2d *pot;
-    N_array_2d *xcomp;
-    N_array_2d *ycomp;
-    N_gradient_field_2d *field;
-    N_geom_data *geom;
-    N_gradient_2d *grad;
+    N_array_2d *relax = NULL;
+    N_array_2d *pot = NULL;
+    N_array_2d *xcomp = NULL;
+    N_array_2d *ycomp = NULL;
+    N_gradient_field_2d *field = NULL;
+    N_geom_data *geom = NULL;
+    N_gradient_2d *grad = NULL;
 
     geom = N_alloc_geom_data();
 
@@ -358,7 +364,8 @@ int test_gradient_2d()
     pot = create_potential_array_2d();
 
 
-    field = N_compute_gradient_field_2d(pot, relax, relax, geom);
+    field = N_compute_gradient_field_2d(pot, relax, relax, geom, field);
+    field = N_compute_gradient_field_2d(pot, relax, relax, geom, field);
     N_free_gradient_field_2d(field);
 
     N_free_array_2d(relax);
@@ -383,8 +390,8 @@ int test_gradient_2d()
 
   /**
    * 1 2 6        5
-   * 3 7 10 ==  4  -3
-   * 8 15 25     -8
+   * 3 7 10 == -4  -3
+   * 8 15 25      8
    * */
 
     N_put_array_2d_d_value(pot, 0, 0, 1.0);
@@ -399,28 +406,32 @@ int test_gradient_2d()
 
     N_print_array_2d(pot);
 
-    field = N_compute_gradient_field_2d(pot, relax, relax, geom);
+    geom->rows = 3;
+    geom->cols = 3;
+
+    field = N_compute_gradient_field_2d(pot, relax, relax, geom, NULL);
+    field = N_compute_gradient_field_2d(pot, relax, relax, geom, field);
 
     grad = N_get_gradient_2d(field, NULL, 0, 0);
-    printf("Gradient 2d: NC %g == 0 ; SC %g == -2 ; WC %g == 0 ; EC %g == -1\n",
+    printf("Gradient 2d: NC %g == 0 ; SC %g == 2 ; WC %g == 0 ; EC %g == -1\n",
 	   grad->NC, grad->SC, grad->WC, grad->EC);
 
     grad = N_get_gradient_2d(field, grad, 1, 0);
-    printf("Gradient 2d: NC %g == 0 ; SC %g == -5 ; WC %g == 1 ; EC %g == -4\n",
+    printf("Gradient 2d: NC %g == 0 ; SC %g == 5 ; WC %g == -1 ; EC %g == -4\n",
 	   grad->NC, grad->SC, grad->WC, grad->EC);
     N_free_gradient_2d(grad);
 
     grad = N_get_gradient_2d(field, NULL, 1, 1);
-    printf("Gradient 2d: NC %g == 5 ; SC %g == -8 ; WC %g == 4 ; EC %g == -3\n",
+    printf("Gradient 2d: NC %g == 5 ; SC %g == 8 ; WC %g == -4 ; EC %g == -3\n",
 	   grad->NC, grad->SC, grad->WC, grad->EC);
 
     grad = N_get_gradient_2d(field, grad, 1, 2);
-    printf("Gradient 2d: NC %g == 8 ; SC %g ==  0 ; WC %g == 7 ; EC %g == 10\n",
+    printf("Gradient 2d: NC %g == 8 ; SC %g ==  0 ; WC %g == -7 ; EC %g == -10\n",
 	   grad->NC, grad->SC, grad->WC, grad->EC);
     N_free_gradient_2d(grad);
 
     grad = N_get_gradient_2d(field, NULL, 2, 2);
-    printf("Gradient 2d: NC %g ==15 ; SC %g ==  0 ; WC %g ==10 ; EC %g ==  0\n",
+    printf("Gradient 2d: NC %g ==15 ; SC %g ==  0 ; WC %g == -10 ; EC %g ==  0\n",
 	   grad->NC, grad->SC, grad->WC, grad->EC);
     N_free_gradient_2d(grad);
 

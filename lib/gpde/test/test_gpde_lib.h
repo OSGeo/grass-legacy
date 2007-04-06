@@ -35,6 +35,9 @@ int unit_test_gradient();
 /* direct and iterative solvers */
 int unit_test_solvers();
 
+/* test the meth tools of gpde */
+int unit_test_tools();
+
 /* geom_data struct tests */
 int unit_test_geom_data();
 

@@ -59,7 +59,7 @@ int integration_test_solute_transport()
 
 
 /* *************************************************************** */
-/* Create valid groundwater flow data **************************** */
+/* Create valid solute transport data **************************** */
 /* *************************************************************** */
 N_solute_transport_data3d *create_solute_transport_data_3d()
 {
@@ -80,7 +80,7 @@ N_solute_transport_data3d *create_solute_transport_data_3d()
 		if (j == 0) {
 		    N_put_array_3d_d_value(data->c, i, j, k, 1);
 		    N_put_array_3d_d_value(data->c_start, i, j, k, 1);
-		    N_put_array_3d_d_value(data->status, i, j, k, 2);
+		    N_put_array_3d_d_value(data->status, i, j, k, 3);
 		}
 		else {
 
@@ -106,7 +106,7 @@ N_solute_transport_data3d *create_solute_transport_data_3d()
 
 
 /* *************************************************************** */
-/* Create valid groundwater flow data **************************** */
+/* Create valid solute transport data **************************** */
 /* *************************************************************** */
 N_solute_transport_data2d *create_solute_transport_data_2d()
 {
@@ -122,8 +122,8 @@ N_solute_transport_data2d *create_solute_transport_data_2d()
 	for (i = 0; i < TEST_N_NUM_COLS_LOCAL; i++) {
 
 	    if (j == 0) {
-		N_put_array_2d_d_value(data->c, i, j, 1);
-		N_put_array_2d_d_value(data->c_start, i, j, 1);
+		N_put_array_2d_d_value(data->c, i, j, 0);
+		N_put_array_2d_d_value(data->c_start, i, j, 0);
 		N_put_array_2d_d_value(data->status, i, j, 2);
 	    }
 	    else {
@@ -141,7 +141,7 @@ N_solute_transport_data2d *create_solute_transport_data_2d()
 	    N_put_array_2d_d_value(data->top, i, j, 20.0);
 	    N_put_array_2d_d_value(data->bottom, i, j, 0.0);
 	    if (j == 1 && i == 1)
-		N_put_array_2d_d_value(data->cs, i, j, 5.0);
+		N_put_array_2d_d_value(data->cs, i, j, 1.0);
 	}
     }
 
@@ -149,7 +149,7 @@ N_solute_transport_data2d *create_solute_transport_data_2d()
 }
 
 /* *************************************************************** */
-/* Test the groundwater flow in 3d with diff_erent solvers ******** */
+/* Test the solute transport in 3d with different solvers ******** */
 /* *************************************************************** */
 int test_solute_transport_3d()
 {
@@ -180,17 +180,31 @@ int test_solute_transport_3d()
     /*Assemble the matrix */
     /*  
      */
-     /*CG*/ les =
+     /*Jacobi*/ les =
 	N_assemble_les_3d(N_SPARSE_LES, geom, data->status, data->c_start,
 			  (void *)data, call);
-    N_solver_cg(les, 100, 0.1e-8);
+    N_solver_jacobi(les, 100, 1, 0.1e-8);
     N_print_les(les);
     N_free_les(les);
 
-     /*CG*/ les =
+     /*jacobi*/ les =
 	N_assemble_les_3d(N_NORMAL_LES, geom, data->status, data->c_start,
 			  (void *)data, call);
-    N_solver_cg(les, 100, 0.1e-8);
+    N_solver_jacobi(les, 100, 1, 0.1e-8);
+    N_print_les(les);
+    N_free_les(les);
+   
+     /*SOR*/ les =
+	N_assemble_les_3d(N_SPARSE_LES, geom, data->status, data->c_start,
+			  (void *)data, call);
+    N_solver_SOR(les, 100, 1, 0.1e-8);
+    N_print_les(les);
+    N_free_les(les);
+
+     /*SOR*/ les =
+	N_assemble_les_3d(N_NORMAL_LES, geom, data->status, data->c_start,
+			  (void *)data, call);
+    N_solver_SOR(les, 100, 1, 0.1e-8);
     N_print_les(les);
     N_free_les(les);
 
@@ -230,14 +244,16 @@ int test_solute_transport_3d()
 }
 
 /* *************************************************************** */
+/* Test the solute transport in 2d with different solvers ******** */
+/* *************************************************************** */
 int test_solute_transport_2d()
 {
-    N_solute_transport_data2d *data;
-    N_geom_data *geom;
-    N_les *les;
-    N_les_callback_2d *call;
-    N_array_2d *pot, *relax;
-    N_gradient_field_2d *field;
+    N_solute_transport_data2d *data = NULL;
+    N_geom_data *geom = NULL;
+    N_les *les = NULL;
+    N_les_callback_2d *call = NULL;
+    N_array_2d *pot, *relax = NULL;
+    N_gradient_field_2d *field = NULL;
     int i, j;
 
     /*set the callback */
@@ -274,7 +290,8 @@ int test_solute_transport_2d()
 	}
     }
 
-    field = N_compute_gradient_field_2d(pot, relax, relax, geom);
+    field = N_compute_gradient_field_2d(pot, relax, relax, geom, NULL);
+    field = N_compute_gradient_field_2d(pot, relax, relax, geom, field);
 
     N_copy_gradient_field_2d(field, data->grad);
     N_free_gradient_field_2d(field);
@@ -282,17 +299,31 @@ int test_solute_transport_2d()
     /*Assemble the matrix */
     /*  
      */
-     /*CG*/ les =
+   /*Jacobi*/ les =
 	N_assemble_les_2d(N_SPARSE_LES, geom, data->status, data->c_start,
 			  (void *)data, call);
-    N_solver_cg(les, 100, 0.1e-8);
+    N_solver_jacobi(les, 100, 1, 0.1e-8);
     N_print_les(les);
     N_free_les(les);
 
-     /*CG*/ les =
+     /*jacobi*/ les =
 	N_assemble_les_2d(N_NORMAL_LES, geom, data->status, data->c_start,
 			  (void *)data, call);
-    N_solver_cg(les, 100, 0.1e-8);
+    N_solver_jacobi(les, 100, 1, 0.1e-8);
+    N_print_les(les);
+    N_free_les(les);
+   
+     /*SOR*/ les =
+	N_assemble_les_2d(N_SPARSE_LES, geom, data->status, data->c_start,
+			  (void *)data, call);
+    N_solver_SOR(les, 100, 1, 0.1e-8);
+    N_print_les(les);
+    N_free_les(les);
+
+     /*SOR*/ les =
+	N_assemble_les_2d(N_NORMAL_LES, geom, data->status, data->c_start,
+			  (void *)data, call);
+    N_solver_SOR(les, 100, 1, 0.1e-8);
     N_print_les(les);
     N_free_les(les);
 
