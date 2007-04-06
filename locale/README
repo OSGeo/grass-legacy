@@ -19,8 +19,8 @@ message strings in GRASS must be modified from
  fprintf ( ..., "...\n", ...);
 to either
  fprintf ( ..., _("...\n"), ...);
-or
- G_message ( _("...\n"), ...);
+or (omit \n)
+ G_message ( _("..."), ...);
 
 Careful:
   G_message should be used for messages - informations about
