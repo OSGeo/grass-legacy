@@ -813,10 +813,18 @@ class GMConsole(wx.Panel):
                 oline = p.stdout.readline()
                 while oline:
                     oline = oline.strip()
-                    self.cmd_output.write(oline+"\n")
+                    if cmd.split(' ')[0] == 'r.what':
+                        rastqlist = oline.split('|')
+                        self.cmd_output.write('East: '+rastqlist[0]+"\n")
+                        self.cmd_output.write('North: '+rastqlist[1]+"\n")
+                        self.cmd_output.write(rastqlist[2]+"\n")
+                        self.cmd_output.write('Category: '+rastqlist[3]+"\n")
+                        self.cmd_output.write('Label: '+rastqlist[4]+"\n")
+                    else:
+                        self.cmd_output.write(oline+"\n")
                     print >> sys.stderr, oline
                     oline = p.stdout.readline()
-
+                self.cmd_output.write("\n==========\n")
                 if p.stdout < 0:
     				print >> sys.stderr, "Child was terminated by signal", p.stdout
                 elif p.stdout > 0:
