@@ -9,7 +9,8 @@ If the <em>fontsize</em> option is given then the <em>space</em> option
 is determined automatically <em>from the current display window</em>, 
 otherwise the <em>space</em> option should be set roughly the same
 as the <em>size</em> option.
-<P><BR>
+<P>
+<BR>
 A description of the labels file follows.<P> 
 The file is located in <tt>$MAPSET/paint/labels/</tt>.
 The file is a plain-text ASCII file containing the following fields:
@@ -73,22 +74,24 @@ may be specified as:
 
 <DT><B>FONT</B>:
 
-<DD>This specifies the font to use. The following fonts are
-available:
-<P><tt>
-cyrilc gothgbt gothgrt gothitt greekc greekcs greekp greeks
-italicc italiccs italict romanc romancs romand romans romant
-scriptc scripts
-</tt>
+<DD>This specifies the font to use.
+<P>
+The following fonts are available for use with
+  <a href="d.labels.html"><i>d.labels</i></a>:
+<P><pre>
+  cyrilc gothgbt gothgrt gothitt greekc greekcs greekp greeks
+  italicc italiccs italict romanc romancs romand romans romant
+  scriptc scripts
+</pre>
+<P>
+Alternatively the path to a FreeType (.ttf) font may be given.
+(for <em>d.labels</em> only)
 <P>
 The word <EM>standard</EM> can be used to specify the default font 
 (which is <EM>romans</EM>).
 <P>
 Note <a href="ps.map.html"><em>ps.map</em></a> can override this setting
-to use other fonts; and <a href="d.labels.html"><i>d.labels</i></a>
-can be used with <a href="d.font.html"><em>d.font</em></a> to change the 
-default font, or <a href="d.font.freetype.html"><em>d.font.freetype</em></a>
-can be used to make the standard GRASS font something prettier.
+to use other fonts. Its default font is Helvetica.
 
 
 <DT><B>TEXT SIZE</B>:
