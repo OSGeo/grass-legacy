@@ -52,5 +52,6 @@ typedef struct {
 #define RENDER_RPA	1
 #define RENDER_DP	2
 #define RENDER_DPC	3
+#define RENDER_DPL	4
 
 extern int render;
