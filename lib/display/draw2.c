@@ -137,6 +137,15 @@ static double interpolate(double a, double b, double ka, double kb)
 	return (a * kb - b * ka) / (kb - ka);
 }
 
+static int clip_point(double x, double y)
+{
+	if (x < clip.left || x > clip.rite)
+		return 1;
+	if (y < clip.bot || y > clip.top)
+		return 1;
+	return 0;
+}
+
 static int clip_plane(struct vector *a, struct vector *b, const struct plane *p, int *clipped)
 {
 	double ka = dist_plane(a->x, a->y, p);
@@ -244,6 +253,27 @@ static int euclidify(double *x, const double *y, int n, int no_pole)
 		x[i] -= lo * 360;
 
 	return count;
+}
+
+static void do_ll_wrap(const double *x, const double *y, int n, void (*func)(const double *, const double *, int))
+{
+	double *xx = G_malloc(n * sizeof(double));
+	int count, i;
+
+	memcpy(xx, x, n * sizeof(double));
+	count = euclidify(xx, y, n, 0);
+
+	for (i = 0; i < count; i++)
+	{
+		int j;
+
+		(*func)(xx, y, n);
+
+		for (j = 0; j < n; j++)
+			xx[j] -= 360;
+	}
+
+	G_free(xx);
 }
 
 /*!
@@ -424,33 +454,47 @@ void D_polydots_clip(const double *x, const double *y, int n)
 	R_polydots_abs(xi, yi, j);
 }
 
+static void polyline_cull(const double *x, const double *y, int n)
+{
+	int t0 = clip_point(x[0], y[0]);
+	int start = 0;
+	int i;
+
+	for (i = 1; i < n; i++)
+	{
+		int t = clip_point(x[i], y[i]);
+
+		if (t)
+		{
+			if (!t0 || i == n - 1)
+				D_polyline(&x[start], &y[start], i - start);
+			start = i;
+		}
+
+		t0 = t;
+	}
+}
+
+void D_polyline_cull(const double *x, const double *y, int n)
+{
+	if (n < 2)
+		return;
+
+	if (!window_set)
+		D_clip_to_map();
+
+	if (D_is_lat_lon())
+		do_ll_wrap(x, y, n, polyline_cull);
+	else
+		polyline_cull(x, y, n);
+}
+
 static void polyline_clip(const double *x, const double *y, int n)
 {
 	int i;
 
 	for (i = 1; i < n; i++)
 		line_clip(x[i-1], y[i-1], x[i], y[i]);
-}
-
-static void polyline_clip_ll(const double *x, const double *y, int n)
-{
-	double *xx = G_malloc(n * sizeof(double));
-	int count, i;
-
-	memcpy(xx, x, n * sizeof(double));
-	count = euclidify(xx, y, n, 0);
-
-	for (i = 0; i < count; i++)
-	{
-		int j;
-
-		polyline_clip(xx, y, n);
-
-		for (j = 0; j < n; j++)
-			xx[j] -= 360;
-	}
-
-	G_free(xx);
 }
 
 void D_polyline_clip(const double *x, const double *y, int n)
@@ -462,7 +506,7 @@ void D_polyline_clip(const double *x, const double *y, int n)
 		D_clip_to_map();
 
 	if (D_is_lat_lon())
-		polyline_clip_ll(x, y, n);
+		do_ll_wrap(x, y, n, polyline_clip);
 	else
 		polyline_clip(x, y, n);
 }
@@ -538,35 +582,13 @@ static void polygon_clip(const double *x, const double *y, int n)
 	R_polygon_abs(xi, yi, n);
 }
 
-static void polygon_clip_ll(const double *x, const double *y, int n)
-{
-	double *xx = G_malloc(n * sizeof(double));
-	int count, i;
-
-	memcpy(xx, x, n * sizeof(double));
-	count = euclidify(xx, y, n, 1);
-
-	for (i = 0; i < count; i++)
-	{
-		int j;
-
-		if (i > 0)
-			for (j = 0; j < n; j++)
-				xx[j] -= 360;
-
-		polygon_clip(xx, y, n);
-	}
-
-	G_free(xx);
-}
-
 void D_polygon_clip(const double *x, const double *y, int n)
 {
 	if (!window_set)
 		D_clip_to_map();
 
 	if (D_is_lat_lon())
-		polygon_clip_ll(x, y, n);
+		do_ll_wrap(x, y, n, polygon_clip);
 	else
 		polygon_clip(x, y, n);
 }

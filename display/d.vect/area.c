@@ -325,7 +325,7 @@ int darea ( struct Map_info *Map, struct cat_list *Clist,
 
 	/* boundary */
 	if ( bcolor ) {
-	    int i, j;
+	    int i;
 	    Vect_get_area_points ( Map, area, Points );   
 	    if (rgb) {
 	      R_RGB_color ((unsigned char) red, (unsigned char) grn, (unsigned char) blu);
@@ -333,15 +333,13 @@ int darea ( struct Map_info *Map, struct cat_list *Clist,
 	    else {
 	      R_RGB_color(bcolor->r, bcolor->g, bcolor->b);
 	    }
-	    for ( i = 0; i < Points->n_points - 1; i++) { 
-		G_plot_line (Points->x[i], Points->y[i], Points->x[i+1], Points->y[i+1]);
-	    }
+	    /*use different user defined render methods*/
+	    plot_polyline ( Points->x, Points->y, Points->n_points);
 	    for ( i = 0; i < n_isles; i++) {
 		isle = Vect_get_area_isle ( Map, area, i );   
 		Vect_get_isle_points ( Map, isle, Points );
-		for ( j = 0; j < Points->n_points - 1; j++) { 
-		    G_plot_line (Points->x[j], Points->y[j], Points->x[j+1], Points->y[j+1]);
-		}
+	        /*use different user defined render methods*/
+	        plot_polyline ( Points->x, Points->y, Points->n_points);
 	    }
 	}
     } /* end for */
