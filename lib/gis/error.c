@@ -438,8 +438,8 @@ static int print_word (FILE *fd, char **word, int *len, const int lead)
 
     *len = start + wlen;
 
-    while (wlen-- > 0)
-	fprintf (fd, "%c", *w++);
+    fwrite(w, 1, wlen, fd);
+    w += wlen;
 
     *word = w;
 
@@ -449,8 +449,8 @@ static int print_word (FILE *fd, char **word, int *len, const int lead)
 /* Print one message, prefix inserted before each new line */
 static void print_sentence (FILE *fd, const int type, const char *msg)
 {
-    char *start;
-    static char prefix[100];
+    char prefix[100];
+    const char *start;
 
     switch ( type ) {
 	case MSG: 
@@ -464,22 +464,26 @@ static void print_sentence (FILE *fd, const int type, const char *msg)
 	    break;
     }
 
-    start = (char *)msg;
+    start = msg;
 
     fprintf(stderr, "\n" );
     while ( *start != '\0' ) {
+	const char *next = start;
+
 	fprintf ( fd, "%s", prefix);
 
-	while ( *start != '\0' ) {
-	    fprintf (fd, "%c", *start++);
+	while ( *next != '\0' ) {
+	    next++;
 		
-	    if ( *start == '\n' ) {
-	        *start++;
+	    if ( *next == '\n' ) {
+	        *next++;
 		break;
 	    }
 	}
 	
+	fwrite (start, 1, next - start, fd);
 	fprintf (fd, "\n" );
+	start = next;
     }
     fprintf(stderr, "GRASS_INFO_END(%d,%d)\n", getpid(), message_id );
     message_id++;
