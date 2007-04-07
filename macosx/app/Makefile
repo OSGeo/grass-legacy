@@ -13,6 +13,8 @@ MACOSX_APP_NAME = GRASS-${GRASS_VERSION_MAJOR}.${GRASS_VERSION_MINOR}.app
 endif
 APPDIR = $(ARCH_DISTDIR)/${MACOSX_APP_NAME}/Contents
 TCLTK_INTERNAL = \#
+MAKE_DIR_CMD = mkdir -p -m 755
+INSTALL_BIN = ${INSTALL} -m 755
 
 OBJS = Info.plist GRASS.scpt grass.sh main.o
 
@@ -30,36 +32,35 @@ endif
 default: macosxapp
 
 macosxapp: PkgInfo app.icns English.lproj/MainMenu.nib build_html_user_index.sh build_gui_user_menu.sh $(ARCH_OBJS)
-	@test -d $(APPDIR)/MacOS || mkdir -p $(APPDIR)/MacOS
-	$(CC) $(LDFLAGS) -o $(APPDIR)/MacOS/GRASS $(OBJDIR)/main.o $(XTRA_LDFLAGS)
-	@test -d $(APPDIR)/Resources/Scripts || mkdir -p $(APPDIR)/Resources/Scripts
-	@test -d $(APPDIR)/Resources/etc || mkdir -p $(APPDIR)/Resources/etc
-	-cp -f app.icns $(APPDIR)/Resources/
-	-cp -rf English.lproj $(APPDIR)/Resources/
-	-cp -f $(OBJDIR)/Info.plist $(APPDIR)/
-	-cp -f PkgInfo $(APPDIR)/
-	-cp -f $(OBJDIR)/grass.sh $(APPDIR)/Resources/
-	-cp -f $(OBJDIR)/GRASS.scpt $(APPDIR)/Resources/Scripts/
-	-cp -f build_html_user_index.sh $(APPDIR)/Resources/etc/
-	-cp -f build_gui_user_menu.sh $(APPDIR)/Resources/etc/
-	-cp -f grass_icon.png $(APPDIR)/Resources/docs/html/
+	-${MAKE_DIR_CMD} ${APPDIR}/MacOS
+	$(CC) $(LDFLAGS) -o ${APPDIR}/MacOS/GRASS $(OBJDIR)/main.o $(XTRA_LDFLAGS)
+	-${MAKE_DIR_CMD} ${APPDIR}/Resources/Scripts
+	-${MAKE_DIR_CMD} ${APPDIR}/Resources/etc
+	-${INSTALL_DATA} app.icns ${APPDIR}/Resources
+	-tar cBf - English.lproj --exclude CVS | (cd ${APPDIR}/Resources ; tar xBf - ) 2>/dev/null
+	-${INSTALL_DATA} $(OBJDIR)/Info.plist ${APPDIR}
+	-${INSTALL_DATA} PkgInfo ${APPDIR}
+	-${INSTALL_BIN} $(OBJDIR)/grass.sh ${APPDIR}/Resources
+	-${INSTALL_DATA} $(OBJDIR)/GRASS.scpt ${APPDIR}/Resources/Scripts
+	-${INSTALL_BIN} build_html_user_index.sh ${APPDIR}/Resources/etc
+	-${INSTALL_BIN} build_gui_user_menu.sh ${APPDIR}/Resources/etc
 	@# TclTk embedding:
 ifdef OPENGL_X11
-	@test -d $(APPDIR)/Resources/bin || mkdir -p $(APPDIR)/Resources/bin
-	-cp -f ${TCLTKPREFIX}/bin/tclsh8.4 $(APPDIR)/Resources/bin/
-	-cp -f ${TCLTKPREFIX}/bin/wish8.4 $(APPDIR)/Resources/bin/
-	@test -d $(APPDIR)/Resources/lib || mkdir -p $(APPDIR)/Resources/lib
-	-cp -f ${TCLTKPREFIX}/lib/libtcl8.4.dylib $(APPDIR)/Resources/lib/
-	-cp -f ${TCLTKPREFIX}/lib/libtk8.4.dylib $(APPDIR)/Resources/lib/
-	-cp -rf ${TCLTKPREFIX}/lib/tcl8.4 $(APPDIR)/Resources/lib/
-	-cp -rf ${TCLTKPREFIX}/lib/tk8.4 $(APPDIR)/Resources/lib/
-	@test -d $(APPDIR)/Resources/include || mkdir -p $(APPDIR)/Resources/include
-	-cp -f ${TCLTKPREFIX}/include/tcl.h $(APPDIR)/Resources/include/
-	-cp -f ${TCLTKPREFIX}/include/tclDecls.h $(APPDIR)/Resources/include/
-	-cp -f ${TCLTKPREFIX}/include/tclPlatDecls.h $(APPDIR)/Resources/include/
-	-cp -f ${TCLTKPREFIX}/include/tk.h $(APPDIR)/Resources/include/
-	-cp -f ${TCLTKPREFIX}/include/tkDecls.h $(APPDIR)/Resources/include/
-	-cp -f ${TCLTKPREFIX}/include/tkPlatDecls.h $(APPDIR)/Resources/include/
+	-${MAKE_DIR_CMD} ${APPDIR}/Resources/bin
+	-${INSTALL_BIN} ${TCLTKPREFIX}/bin/tclsh8.4 ${APPDIR}/Resources/bin
+	-${INSTALL_BIN} ${TCLTKPREFIX}/bin/wish8.4 ${APPDIR}/Resources/bin
+	-${MAKE_DIR_CMD} ${APPDIR}/Resources/lib
+	-${INSTALL_BIN} ${TCLTKPREFIX}/lib/libtcl8.4.dylib ${APPDIR}/Resources/lib
+	-${INSTALL_BIN} ${TCLTKPREFIX}/lib/libtk8.4.dylib ${APPDIR}/Resources/lib
+	-cd ${TCLTKPREFIX}/lib ; tar cBf - tcl8.4 | (cd ${APPDIR}/Resources/lib ; tar xBf - ) 2>/dev/null
+	-cd ${TCLTKPREFIX}/lib ; tar cBf - tk8.4 | (cd ${APPDIR}/Resources/lib ; tar xBf - ) 2>/dev/null
+	-${MAKE_DIR_CMD} ${APPDIR}/Resources/include
+	-${INSTALL_DATA} ${TCLTKPREFIX}/include/tcl.h ${APPDIR}/Resources/include
+	-${INSTALL_DATA} ${TCLTKPREFIX}/include/tclDecls.h ${APPDIR}/Resources/include
+	-${INSTALL_DATA} ${TCLTKPREFIX}/include/tclPlatDecls.h ${APPDIR}/Resources/include
+	-${INSTALL_DATA} ${TCLTKPREFIX}/include/tk.h ${APPDIR}/Resources/include
+	-${INSTALL_DATA} ${TCLTKPREFIX}/include/tkDecls.h ${APPDIR}/Resources/include
+	-${INSTALL_DATA} ${TCLTKPREFIX}/include/tkPlatDecls.h ${APPDIR}/Resources/include
 endif
 
 $(OBJDIR)/main.o: main.m
@@ -79,9 +80,7 @@ $(OBJDIR)/GRASS.scpt: GRASS.applescript
 
 $(OBJDIR)/grass.sh: grass.sh.in
 	@test -d $(OBJDIR) || mkdir $(OBJDIR)
-	@#-cp grass.sh $(OBJDIR)/grass.sh
 	sed -e "s,@GDAL_BIN_PATH@,$(GDAL_BIN)," -e "s,@TCLTK_INTERNAL@,$(TCLTK_INTERNAL)," grass.sh.in > $(OBJDIR)/grass.sh
-	@chmod a+x $(OBJDIR)/grass.sh
 
 clean:
 	-rm -rf $(OBJDIR) $(EXTRA_CLEAN_DIRS) $(EXTRA_CLEAN_FILES)
