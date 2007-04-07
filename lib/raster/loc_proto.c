@@ -498,11 +498,6 @@ void LOC_font(const char *name)
 	COM_Font_get(name);
 }
 
-void LOC_font_freetype(const char *name)
-{
-	COM_Font_freetype_get(name);
-}
-
 void LOC_charset(const char *name)
 {
 	COM_Font_init_charset(name);

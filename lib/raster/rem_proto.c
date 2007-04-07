@@ -528,12 +528,6 @@ void REM_font(const char *name)
 	_send_text(name);
 }
 
-void REM_font_freetype(const char *name)
-{
-	_send_ident(FONT_FREETYPE);
-	_send_text(name);
-}
-
 void REM_charset(const char *name)
 {
 	_send_ident(CHARSET);

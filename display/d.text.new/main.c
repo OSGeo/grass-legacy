@@ -88,6 +88,9 @@ int main(int argc, char **argv)
 	struct Option *rotation;
 	struct Option *align;
 	struct Option *linespacing;
+	struct Option *font;
+	struct Option *path;
+	struct Option *charset;
     } opt;
     struct
     {
@@ -97,6 +100,7 @@ int main(int argc, char **argv)
 	struct Flag *r;
 	struct Flag *s;
 	struct Flag *m;
+	struct Flag *c;
     } flag;
 
     /* options and flags */
@@ -200,6 +204,25 @@ int main(int argc, char **argv)
     opt.linespacing->answer = "1.25";
     opt.linespacing->description = _("Line spacing");
 
+    opt.font = G_define_option();
+    opt.font->key = "font";
+    opt.font->type = TYPE_STRING;
+    opt.font->required = NO;
+    opt.font->description = _("Font name");
+
+    opt.path = G_define_option();
+    opt.path->key = "path";
+    opt.path->type = TYPE_STRING;
+    opt.path->required = NO;
+    opt.path->description = _("Path to font file");
+    opt.path->gisprompt = "old_file,file,font";
+
+    opt.charset = G_define_option();
+    opt.charset->key = "charset";
+    opt.charset->type = TYPE_STRING;
+    opt.charset->required = NO;
+    opt.charset->description = "Text encoding (only applicable to TrueType fonts)";
+
     flag.m = G_define_flag();
     flag.m->key = 'm';
     flag.m->description = _("Use mouse to interactively place text");
@@ -223,6 +246,10 @@ int main(int argc, char **argv)
     flag.s = G_define_flag();
     flag.s->key = 's';
     flag.s->description = _("Font size is height in pixels");
+
+    flag.c = G_define_flag();
+    flag.c->key         = 'c';
+    flag.c->description = _("Ignored (compatibility with d.text.freetype)");
 
     /* check command line */
     if (G_parser(argc, argv))
@@ -255,6 +282,15 @@ int main(int argc, char **argv)
 
     if (R_open_driver() != 0)
 	G_fatal_error(_("No graphics device selected"));
+
+
+    if (opt.font->answer)
+	R_font(opt.font->answer);
+    else if (opt.path->answer)
+	R_font(opt.path->answer);
+
+    if (opt.charset->answer)
+	R_charset(opt.charset->answer);
 
     D_setup(0);
 

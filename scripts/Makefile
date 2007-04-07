@@ -18,6 +18,7 @@ SUBDIRS = \
 	d.resize \
 	d.slide.show \
 	d.split \
+	d.text.freetype \
 	d.vect.thematic \
 	db.test \
 	g.manual \
