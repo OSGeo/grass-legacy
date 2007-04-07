@@ -1611,6 +1611,23 @@ static void G_script(void)
 	char *type;
 
 	fprintf(fp, "#!/bin/sh\n\n");
+	fprintf(fp, "############################################################################\n");
+	fprintf(fp, "#\n");
+	fprintf(fp, "# MODULE:       \n");
+	fprintf(fp, "# AUTHOR(S):    %s\n", G_whoami());
+	fprintf(fp, "# COPYRIGHT:    (C) 2007 GRASS Development Team/%s\n", G_whoami());
+	fprintf(fp, "#\n");
+	fprintf(fp, "#  This program is free software; you can redistribute it and/or modify\n");
+	fprintf(fp, "#  it under the terms of the GNU General Public License as published by\n");
+	fprintf(fp, "#  the Free Software Foundation; either version 2 of the License, or\n");
+	fprintf(fp, "#  (at your option) any later version.\n");
+	fprintf(fp, "#\n");
+	fprintf(fp, "#  This program is distributed in the hope that it will be useful,\n");
+	fprintf(fp, "#  but WITHOUT ANY WARRANTY; without even the implied warranty of\n");
+	fprintf(fp, "#  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the\n");
+	fprintf(fp, "#  GNU General Public License for more details.\n");
+	fprintf(fp, "#\n");
+	fprintf(fp, "#############################################################################/\n");
 
 	fprintf(fp, "#%%Module\n");
 	if (module_info.label)
