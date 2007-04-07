@@ -11,3 +11,4 @@ clean:
 	rm -fr latex/ html/
 cleandocs: clean
 
+htmldocs:
