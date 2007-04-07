@@ -13,14 +13,13 @@ Currently, it works only on 2D region.
 </p>
 
 <p>
-<em>v.edit</em> does not edit attribute tables connected to vector files. For this purpose, <code>db.*</code>commands shall be used.
+<em>v.edit</em> does not edit attribute tables connected to vector maps. For this purpose, <code>db.*</code>commands shall be used.
 </p>
 
 
 <h2>NOTES</h2>
 <p>
-Still in development, no thing is added to the database. Only points can be
-added.
+Still in development, nothing is added to the database. Only points can be added.
 </p>
 <p>
 This manual page should be updated according to vectors used in Spearfish dataset. This examples are only imaginar.
@@ -39,7 +38,7 @@ Vector features, which shall be edited, can be selected in several ways:
     <li><code>polygon</code> Selecting multiple features using polygon (at least 3 coordinate pairs have to be set)</li>
 </ul>
 <p>
-Aditional parameters for vector feature specifiation are
+Additional parameters for vector feature specifiation are
 </p>
 <ul>
     <li><code>layer</code> -- Number of connection to attribute table</li>
@@ -49,9 +48,9 @@ Aditional parameters for vector feature specifiation are
 <h3>Tool description</h3>
 
 <ul>
-    <li>create -- Creates new empty vector file, just like <code><a href="v.in.ascii.html">v.in.ascii -e</a></code>. I is possible to define new vector features using STDIN or the <code>input</code> option, in <a href="v.in.ascii.html">GRASS ASCII format</a>.</li>
+    <li>create -- Creates new empty vector map, just like <code><a href="v.in.ascii.html">v.in.ascii -e</a></code>. It is possible to define new vector features using STDIN or the <code>input</code> option, in <a href="v.in.ascii.html">GRASS ASCII format</a>.</li>
 
-    <li>add -- Adds new features to existing vector file. It is possible to have header with the input. New features have to be specified in  <a href="v.in.ascii.html">GRASS ASCII format</a> and <code>v.edit</code> is able to read the input from STDIN or from text file. 
+    <li>add -- Adds new features to existing vector map. It is possible to have header with the input. New features have to be specified in  <a href="v.in.ascii.html">GRASS ASCII format</a> and <code>v.edit</code> is able to read the input from STDIN or from text file. 
     <div class="code">
         <pre>
         v.out.ascii in=geology format=standard | v.edit map=soils tool=add
@@ -65,9 +64,9 @@ Aditional parameters for vector feature specifiation are
     </div>
     </li>
 
-    <li>delete -- Deletes selected features from existing vector file.</li>
+    <li>delete -- Deletes selected features from existing vector map.</li>
 
-    <li>move -- Moves selected features in existing vector file relatively to their current location. For this purpose, option <code>move</code> must be used. This option spefies x,y coordinates of the movement direction.</li>
+    <li>move -- Moves selected features in existing vector map relatively to their current location. For this purpose, option <code>move</code> must be used. This option spefies x,y coordinates of the movement direction.</li>
 
     <li>vertex -- Moves only vertex speficied by <code>coords</code> option. No other option is accepted for the selection. Direction of the movement is specified by the <code>move</code> option.</li>
 
@@ -77,7 +76,7 @@ Aditional parameters for vector feature specifiation are
 
     <li>merge -- Merges two vector lines (boundary or line) together, so that second selected line will be deleted and it's coordinates will be clipped to the first line. <code>v.edit</code> tryes to find nearest distance between start and end nodes of both lines. The second line can eventualy be flipped in it's direction.</li>
 
-    <li>split -- Splits one vector file to two on location specified by <code>coords</code> option. No other option is accepted for the selection.</li>
+    <li>split -- Splits one vector map to two on location specified by <code>coords</code> option. No other option is accepted for the selection.</li>
 
     <li>select -- Prints comma separated list of line ID's selected by one of selection option. This is handy for example for checking, if the selection definition coresponds with user's needs or by definition of multiple selection areas.</li>
 
@@ -92,19 +91,19 @@ Aditional parameters for vector feature specifiation are
 
 <h2>EXAMPLES</h2>
 
-<h3>Create new vector file</h3>
+<h3>Create new vector map</h3>
 <p>
 Creates new vector map, eventualy will read data from standard inputs in default format (standard/point)
 </p>
 <div class="code"><pre>
-v.edit tool=create map=vectfile
+v.edit tool=create map=vectmap
 </pre></div>
 
 <p>
 Creates new vector map and reads data from file file.txt in default format
 </p>
 <div class="code"><pre>
-v.edit tool=create map=vectfile input=file.txt
+v.edit tool=create map=vectmap input=file.txt
 </pre></div>
 
 <h3>Add new feature to existing vector</h3>
@@ -114,24 +113,24 @@ v.edit tool=create map=vectfile input=file.txt
 Read data from standard inputs in standard format
 </p>
 <div class="code"><pre>
-v.edit tool=add map=vectfile
+v.edit tool=add map=vectmap
 </pre></div>
 
-<h3>Remove feature from vector file</h3>
+<h3>Remove feature from vector map</h3>
 
 <p>
-Remove features with category 34 and 24 from file vectfile
+Remove features with category 34 and 24 from map vectmap
 </p>
 
 <div class="code"><pre>
-v.edit tool=delete map=vectfile cat=34,24
+v.edit tool=delete map=vectmap cat=34,24
 </pre></div>
 
 <p>
 Remove feature located on coordinates 344556.23,23445.2345
 </p>
 <div class="code"><pre>
-v.edit tool=delete map=vectfile coords=344556.23,23445.2345 
+v.edit tool=delete map=vectmap coords=344556.23,23445.2345 
 </pre></div>
 
 
@@ -140,7 +139,7 @@ Remove features defined by bounding box 344556.23,234455.2345,567566.34,456455.3
 </p>
 
 <div class="code"><pre>
-v.edit tool=delete map=vectifle bbox=344556.23,234455.2345,567566.34,456455.34
+v.edit tool=delete map=vectmap bbox=344556.23,234455.2345,567566.34,456455.34
 </pre></div>
 
 
@@ -149,7 +148,7 @@ v.edit tool=delete map=vectifle bbox=344556.23,234455.2345,567566.34,456455.34
 Move feature located on coordinates 344556.23,23445.2345 to coordinates 644556.23,43445.2345
 </p>
 <div class="code"><pre>
-v.edit tool=move map=vectifle coords=344556.23,23445.2345 move=100000,-100000
+v.edit tool=move map=vectmap coords=344556.23,23445.2345 move=100000,-100000
 </pre></div>
 
 
@@ -157,14 +156,14 @@ v.edit tool=move map=vectifle coords=344556.23,23445.2345 move=100000,-100000
 Move all points of feature of category 45 to coordinates about 1000 map units to the west and 1000 map units to the south
 </p>
 <div class="code"><pre>
-v.edit tool=move map=vectifle cat=45 move=1000,-1000
+v.edit tool=move map=vectmap cat=45 move=1000,-1000
 </pre></div>
 
 <p>
 Move all points of features defined by bounding box 344556.23,234455.2345,567566.34,456455.34 about 1000 map units to the west and 1000 map units to the south
 </p>
 <div class="code"><pre>
-v.edit tool=move map=vectifle bbox=344556.23,234455.2345,567566.34,456455.34 to=1000,-1000
+v.edit tool=move map=vectmap bbox=344556.23,234455.2345,567566.34,456455.34 to=1000,-1000
 </pre></div>
 
 <h3>Moving vertex</h3>
@@ -172,7 +171,7 @@ v.edit tool=move map=vectifle bbox=344556.23,234455.2345,567566.34,456455.34 to=
 Move vertex on coordinates 344556.23,23445.2345 to 545556.23,22445.2345
 </p>
 <div class="code"><pre>
-v.edit tool=vertex map=vectifile coords=344556.23,23445.2345 move=1000,-1000
+v.edit tool=vertex map=vectmap coords=344556.23,23445.2345 move=1000,-1000
 </pre></div>
 
 
@@ -181,7 +180,7 @@ v.edit tool=vertex map=vectifile coords=344556.23,23445.2345 move=1000,-1000
 Break line on coordinates 344556.23,23445.2345 at coords 345433.3,34567.32
 </p>
 <div class="code"><pre>
-v.edit tool=break map=vectifile coords=344556.23,23445.2345
+v.edit tool=break map=vectmap coords=344556.23,23445.2345
 </pre></div>
 
 <p>
@@ -189,7 +188,7 @@ Break line of category 45 at coords 345433.3,34567.32
 </p>
 
 <div class="code"><pre>
-v.edit tool=break map=vectifile cat=45 coords=345433.3,34567.32
+v.edit tool=break map=vectmap cat=45 coords=345433.3,34567.32
 </pre></div>
 
 <h3>Remove vertex -- straight line</h3>
@@ -197,32 +196,32 @@ v.edit tool=break map=vectifile cat=45 coords=345433.3,34567.32
 Remove vertex at coordinates 344556.23,23445.2345
 </p>
 <div class="code"><pre>
-v.edit tool=straight map=vectifile coords=344556.23,23445.2345
+v.edit tool=straight map=vectmap coords=344556.23,23445.2345
 </pre></div>
 
 
 
-<h3>Spliting line</h3>
+<h3>Splitting line</h3>
 <p>
 Split line on coordinates 344556.23,23445.2345 at coords 345433.3,34567.32
 </p>
 <div class="code"><pre>
-v.edit tool=split map=vectifile coords=344556.23,23445.2345
+v.edit tool=split map=vectmap coords=344556.23,23445.2345
 </pre></div>
 
 <p>
 Split line of category 45 at coords 345433.3,34567.32
 </p>
 <div class="code"><pre>
-v.edit tool=split map=vectifile cat=45 coords=345433.3,34567.32
+v.edit tool=split map=vectmap cat=45 coords=345433.3,34567.32
 </pre></div>
 
-<h3>Mergin two lines</h3>
+<h3>Merging two lines</h3>
 <p>
 Merge first line defined by coordinates 606853.875,4921332 with second line, defined by coordinates 603216.75,4922763. Define nearest distance between line first and last points and move first (last) point of second line to first line -- First line will remain untached.
 </p>
 <div class="code"><pre>
-v.edit tool=merge map=vectfile coords=606853.875,4921332,603216.75,4922763 
+v.edit tool=merge map=vectmap coords=606853.875,4921332,603216.75,4922763 
 </pre></div>
 
 
@@ -230,11 +229,11 @@ v.edit tool=merge map=vectfile coords=606853.875,4921332,603216.75,4922763
 Merge two lines defined by bounding box
 </p>
 <div class="code"><pre>
-v.edit tool=merge map=vectfile bbox=344556.23,23445.2345
+v.edit tool=merge map=vectmap bbox=344556.23,23445.2345
 </pre></div>
 
 <div class="code"><pre>
-v.edit tool=merge map=vectfile cat=43,45
+v.edit tool=merge map=vectmap cat=43,45
 </pre></div>
 
 
@@ -274,5 +273,6 @@ d.vect col=red width=2 -i cat="`v.edit map=soils@PERMANENT tool=select bbox=5957
 <h2>AUTHOR</h2>
 
 Wolf Bergenheim - independent developer, <br>
-Jachym Cepicky, Department of Geoinformation Technologies, Mendel University of Agriculture and Forestry in Brno 
+Jachym Cepicky, Department of Geoinformation Technologies, Mendel University of Agriculture and Forestry in Brno<br>
+Martin Landa
 <p><i>Last changed: $Date$</i>
