@@ -52,10 +52,10 @@ from xml.sax import make_parser
 import os
 from os import system
 
+sys.path.append(os.path.join(os.getenv("GISBASE"),"etc","wx"))
 try:
     import subprocess
 except:
-    sys.path.append(os.path.join(os.getenv("GISBASE"),"etc","wx"))
     from compat import subprocess
 import re
 
@@ -122,7 +122,7 @@ def text_beautify( someString ):
     "Make really long texts shorter"
     # TODO: remove magic number (calculate a correct value from
     # pixelSize of text and the magic number for maximum size
-    return escape_ampersand( "\n".join( textwrap.wrap( normalize_whitespace(someString), 72 ) ) )
+    return escape_ampersand( os.linesep.join( textwrap.wrap( normalize_whitespace(someString), 72 ) ) )
 
 def escape_ampersand(text):
     "Escapes ampersands with additional ampersand for GUI"
@@ -853,8 +853,9 @@ class GUI:
             xml.sax.parseString( getInterfaceDescription( cmd ) , handler )
 
             # if layer parameters previously set, re-insert them into dialog
-            if 'params' in dcmd_params: self.grass_task.params = dcmd_params['params']
-            if 'flags' in dcmd_params: self.grass_task.flags = dcmd_params['flags']
+            if completed is not None:
+                if 'params' in dcmd_params: self.grass_task.params = dcmd_params['params']
+                if 'flags' in dcmd_params: self.grass_task.flags = dcmd_params['flags']
 
             self.mf = mainFrame(self.parent ,-1, self.grass_task, get_dcmd, layer)
             self.mf.Show(True)
