@@ -6,4 +6,4 @@ include $(MODULE_TOPDIR)/include/Make/Script.make
 
 default: script
 	$(MKDIR) $(GISBASE)/etc/r.in.wms/
-	$(INSTALL) -m 755 r.in.gdalwarp wms.request wms.download $(GISBASE)/etc/r.in.wms/
+	for file in r.in.gdalwarp wms.request wms.download ; do $(INSTALL) -m 755 $$file $(GISBASE)/etc/r.in.wms/ ; done
