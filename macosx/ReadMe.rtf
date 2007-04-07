@@ -13,7 +13,7 @@
 \fs24 \cf0 \
 \pard\tx1080\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\ql\qnatural\pardirnatural
 
-\f2\i \cf0 2007-3-26\
+\f2\i \cf0 2007-4-7\
 \pard\tx720\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\ql\qnatural\pardirnatural
 
 \f1\i0 \cf0 \
@@ -29,9 +29,9 @@ Building GRASS\
 	Universal Build*\
 	Example Configure*\
 	Building an Installer Package\
+	Bundling Libraries and Programs\
 Tcl/Tk\
 Developer Notes\
-Bundling Libraries and Programs\
 Help Files*\
 Addon Modules\
 Dependency Build Notes\
@@ -42,10 +42,12 @@ Dependency Build Notes\
 (* apply to any OSX build, not just an application package build)\
 \
 \
+\pard\tx360\tx720\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\ql\qnatural\pardirnatural
 
-\f0\b Quickstart\
+\f0\b \cf0 Quickstart\
+\pard\tx360\tx720\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\ql\qnatural\pardirnatural
 
-\f1\b0 \
+\f1\b0 \cf0 \
 To build a Mac OS X application, add this to your configure options:\
 \
 \pard\tx720\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\ql\qnatural\pardirnatural
@@ -121,8 +123,7 @@ The GRASS build system is very friendly to a Universal build (unlike libtool-bas
 \f2\i This is only needed when building on OSX 10.4 PPC - the Intel system is all Universal, and so is/will be 10.5 for both architechtures.
 \f1\i0   Using the SDK forces GCC to use an alternate root for everything, so if a dependency is not in the SDK (/usr/local is NOT in the SDK), you will get configure, compile and link errors about missing stuff.  To fix this, create symlinks in the SDK to where you have your extra dependencies.\
 \
-\pard\tx720\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\ql\qnatural\pardirnatural
-\cf0 For example, /usr/local:\
+For example, /usr/local:\
 \
 \pard\tx720\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\ql\qnatural\pardirnatural
 
@@ -178,7 +179,7 @@ Or for OSX 10.4 PPC:\
 \
 \pard\tx720\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\ql\qnatural\pardirnatural
 
-\f3\fs20 \cf0 export SDKROOT=/Developer/SDKs/MacOSX10.4u.sdk\
+\f3\fs20 \cf0 export SDKROOT=/Developer/SDKs/MacOSX10.4u.sdk\
 export CFLAGS="-arch ppc -arch i386 -isysroot $SDKROOT"\
 export CXXFLAGS="-arch ppc -arch i386 -isysroot $SDKROOT"\
 export LDFLAGS="-arch ppc -arch i386 -isysroot $SDKROOT"\
@@ -212,11 +213,41 @@ If you don't have the PROJ framework programs folder in your shell PATH, it will
 \cf0 \ulnone \
 After running make, 
 \f3\fs20 make bindist
-\f1\fs24  will assemble an installer package.  This will have the name "GRASS-[version].pkg" and will be found in the macosx folder in the GRASS source.\
+\f1\fs24  will assemble an installer package.  This will have the name "GRASS-[version].pkg" and will be found in the macosx folder in the GRASS source.  There will be some non-fatal errors - this is normal and the installer package is still generated correctly.\
 \
 The installer takes care of binary installation, and creating the /Library/GRASS support folder and Help Viewer link.\
 \
 This installer currently does NOT do any verification of installed dependencies.\
+\
+\pard\tx720\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\ql\qnatural\pardirnatural
+\cf0 \ul Bundling Libraries and Programs\
+\pard\tx720\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\ql\qnatural\pardirnatural
+\cf0 \ulnone \
+With the installer package, additional dependent libraries and programs can be bundled with the application package to make a more portable and easily installed GRASS application.  See 
+\f3\fs20 macosx/pkg/bundle.make
+\f1\fs24  for details.\
+\
+GRASS uses 
+\f3\fs20 DYLD_LIBRARY_PATH
+\f1\fs24 , which is set to the application's lib folder, so it will find any libraries that are there that are not found in their expected locations.  It also adds the application bin folder to the 
+\f3\fs20 PATH
+\f1\fs24 , so helper programs installed there will be found.\
+\
+The Tcl/Tk bundling below is an example of bundling both libraries and programs.\
+\
+There is NO need to bundle 
+\f2\i everything
+\f1\i0 .  Bundling readily available libraries and programs installed in standard locations is not necessary.  Some things you might want to bundle include:\
+\
+- GPSBabel\
+- NetPBM programs (just what is used in GRASS)\
+- ffmpeg libraries\
+- Postgres library (libpq)\
+\
+Things to leave out:\
+\
+- applications that duplicate the above items (ie GPSBabel.app)\
+- /Library/Frameworks stuff\
 \
 \
 \pard\tx720\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\ql\qnatural\pardirnatural
@@ -225,7 +256,9 @@ This installer currently does NOT do any verification of installed dependencies.
 \pard\tx720\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\ql\qnatural\pardirnatural
 
 \f1\b0 \cf0 \
-By default, the application is built expecting a local copy of Tcl/Tk inside the application package (to simplify installation).  This will override any GRASS_WISH and GRASS_TCLSH environment setting you may have in your shell startup (ie .bash_profile).\
+By default, the application is built expecting a local copy of Tcl/Tk inside the application package (to simplify installation).  This will override any GRASS_WISH and GRASS_TCLSH environment setting you may have in your shell startup (ie .bash_profile).  
+\f2\i This is currently hardwired to Tcl/Tk 8.4.
+\f1\i0 \
 \
 If you want to try building GRASS using Tcl/Tk Aqua (not recommended), remove the comments from the if block for Tcl/Tk in 
 \f3\fs20 grass.sh
@@ -241,33 +274,6 @@ Tcl/Tk Aqua has some cosmetic issues in general - widgets displayed from OSX are
 
 \f1\b0 \cf0 \
 The applescript startup and grass.sh can be customized if desired, ie for a more complex startup that might give the user a dialog for startup options.  They just provide the basic core to build upon.\
-\
-\
-\pard\tx720\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\ql\qnatural\pardirnatural
-
-\f0\b \cf0 Bundling Libraries and Programs\
-\pard\tx720\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\ql\qnatural\pardirnatural
-
-\f1\b0 \cf0 \
-Dependent libraries and programs can be bundled with the application package to make a more portable and easily installed GRASS application.  GRASS uses DYLD_LIBRARY_PATH, which is set to the application's lib folder, so it will find any libraries that are there that are not found in their expected locations.\
-\
-It also adds the application bin folder to the PATH, so helper programs installed there will be found.\
-\
-The Tcl/Tk bundling above is an example of bundling both libraries and programs.\
-\
-There is NO need to bundle 
-\f2\i everything
-\f1\i0 .  Bundling readily available libraries and programs installed in standard locations is not necessary.  Some things you might want to bundle include:\
-\
-- GPSBabel\
-- NetPBM programs (just what is used in GRASS)\
-- ffmpeg libraries\
-- Postgres library (libpq)\
-\
-Things to leave out:\
-\
-- applications that duplicate the above items (ie GPSBabel.app)\
-- /Library/Frameworks stuff\
 \
 \
 \pard\tx720\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\ql\qnatural\pardirnatural
@@ -318,7 +324,9 @@ The
 \pard\tx720\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\ql\qnatural\pardirnatural
 
 \f1\b0 \cf0 \
-Building a universal X11 Tcl/Tk is easy, and not worth the time to make an Xcode sub-project for.  First, you need the latest 8.4.x source (or an 8.5 alpha if you're brave) for both Tcl and Tk (they are separate packages).\
+Building a universal X11 Tcl/Tk is easy, and not worth the time to make an Xcode sub-project for.  First, you need the latest 
+\f0\b 8.4.x
+\f1\b0  source for both Tcl and Tk (they are separate packages).\
 \
 Unzip them, and in a Terminal (fill in [bracketed] items with appropriate values, drag-n-drop folders from the Finder for easy path entry), each prompt is a complete line, no returns except at the ends:\
 \
