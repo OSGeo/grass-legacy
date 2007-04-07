@@ -22,9 +22,3 @@
 
 bundle-macosx:
 	@# add custom bundle commands here:
-	${INSTALL_BIN} /usr/local/pgsql/lib/libpq.5.0.dylib ${MACOSX_BUNDLE_PREFIX}/lib
-	${LN} libpq.5.0.dylib ${MACOSX_BUNDLE_PREFIX}/lib/libpq.5.dylib
-	${INSTALL_BIN} /usr/local/bin/gpsbabel ${MACOSX_BUNDLE_PREFIX}/bin
-	${INSTALL_BIN} /Users/Shared/unix/netpbm/bin/ppmtompeg ${MACOSX_BUNDLE_PREFIX}/bin
-	${INSTALL_BIN} /Users/Shared/unix/netpbm/bin/pngtopnm ${MACOSX_BUNDLE_PREFIX}/bin
-	${INSTALL_BIN} /Users/Shared/unix/netpbm/bin/pnmtojpeg ${MACOSX_BUNDLE_PREFIX}/bin
