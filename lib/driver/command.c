@@ -311,10 +311,6 @@ int process_command(int c)
 	RECTEXT(text, text_size);
 	COM_Font_get(text);
 	break;
-    case FONT_FREETYPE:
-	RECTEXT(text, text_size);
-	COM_Font_freetype_get(text);
-	break;
     case CHARSET:
 	RECTEXT(text, text_size);
 	COM_Font_init_charset(text);

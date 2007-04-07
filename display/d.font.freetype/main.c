@@ -3,9 +3,6 @@
 #include <unistd.h>
 
 #include <grass/config.h>
-#ifdef HAVE_ICONV_H
-#include <iconv.h>
-#endif
 
 #include <ft2build.h>
 #include FT_FREETYPE_H
@@ -17,11 +14,9 @@
 #include <stdio.h>
 /* #define DEBUG_LOG(S) {FILE *fp = fopen("debug.TXT","a");fputs(S,fp);fclose(fp);} */
 
-int isTrueTypeFont(char*);
-int release();
+static int isTrueTypeFont(const char*);
+static int release(void);
 
-#define	USE_FREETYPECAP
-#ifdef	USE_FREETYPECAP
 typedef struct	{
 	char	*font, *path, *charset;
 } capinfo;
@@ -29,7 +24,6 @@ typedef struct	{
 static int read_capfile(char *capfile, capinfo **fonts, int *fonts_count,
 		int *cur_font, char **font_names);
 static int find_font(capinfo *fonts, int fonts_count, char *name);
-#endif
 
 int
 main( int argc , char **argv )
@@ -37,12 +31,10 @@ main( int argc , char **argv )
     struct GModule *module;
     struct Option *opt1;
     struct Option *opt2;
-#ifdef	USE_FREETYPECAP
     struct Flag *flag1;
 
     capinfo *fonts;
     int fonts_count, i;
-#endif
     char *font, *charset;
 
 	G_gisinit(argv[0]);
@@ -57,12 +49,7 @@ main( int argc , char **argv )
     opt1->key        = "font";
     opt1->type       = TYPE_STRING;
     opt1->required   = NO;
-#ifdef	USE_FREETYPECAP
-    opt1->description= _("Font name (not supported interactively, see also -l flag) or path to TrueType font (including file name)");
-#else
-    opt1->description= _("Path to TrueType font (including file name)");
-    opt1->gisprompt  = "old_file,file,font";
-#endif
+    opt1->description= _("Font name or pathname of TTF file");
 
     opt2 = G_define_option() ;
     opt2->key        = "charset" ;
@@ -71,11 +58,9 @@ main( int argc , char **argv )
     opt2->answer     = "UTF-8";
     opt2->description= _("Character encoding");
 
-#ifdef	USE_FREETYPECAP
     flag1 = G_define_flag();
     flag1->key         = 'l';
     flag1->description = "list fonts defined in freetypecap";
-#endif
 
     /* Initialize the GIS calls */
     G_gisinit(argv[0]) ;
@@ -84,7 +69,6 @@ main( int argc , char **argv )
     if (G_parser(argc, argv))
             exit(-1);
 
-#ifdef	USE_FREETYPECAP
     read_capfile(getenv("GRASS_FREETYPECAP"), &fonts, &fonts_count, NULL, NULL);
     if(flag1->answer){
 	    if(fonts_count){
@@ -93,7 +77,6 @@ main( int argc , char **argv )
 	    }
 	    exit(0);
     }
-#endif
 
     font = opt1->answer;
     charset = opt2->answer;
@@ -111,7 +94,6 @@ main( int argc , char **argv )
 			release();
 			exit(-1);
 		}
-#ifdef	USE_FREETYPECAP
 		if(fonts_count){
 			i = find_font(fonts, fonts_count, font);
 			if(i >= 0){
@@ -119,7 +101,6 @@ main( int argc , char **argv )
 				charset = fonts[i].charset;
 			}
 		}
-#endif
 	}
 
 	if(isTrueTypeFont(font)==-1) {
@@ -127,7 +108,7 @@ main( int argc , char **argv )
 		exit(-1);
 	}
 
-	R_font_freetype(font) ;
+	R_font(font) ;
 	R_charset(charset) ;
 
     /* add this command to the list */
@@ -138,7 +119,7 @@ main( int argc , char **argv )
     exit(0);
 }
 
-int isTrueTypeFont(char* filename) {
+static int isTrueTypeFont(const char* filename) {
 
 	FT_Library		library;
 	FT_Face			face;
@@ -165,13 +146,12 @@ int isTrueTypeFont(char* filename) {
 	return 0;
 }
 
-int release() {
+static int release(void) {
 	R_font("romans");
-	fprintf(stdout,_("\nSetting release of FreeType\n"));
+	G_message(_("Setting release of FreeType"));
 	return 0;
 }
 
-#ifdef	USE_FREETYPECAP
 static int
 read_capfile(char *capfile, capinfo **fonts, int *fonts_count, int *cur_font,
 		char **font_names)
@@ -274,4 +254,3 @@ find_font(capinfo *fonts, int fonts_count, char *name)
 
 	return -1;
 }
-#endif

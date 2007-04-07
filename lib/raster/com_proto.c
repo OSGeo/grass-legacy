@@ -482,11 +482,6 @@ void R_font(const char *name)
 	trans->font(name);
 }
 
-void R_font_freetype(const char *name)
-{
-	trans->font_freetype(name);
-}
-
 void R_charset(const char *name)
 {
 	trans->charset(name);

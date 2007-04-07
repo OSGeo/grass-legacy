@@ -34,7 +34,7 @@ static void LOC_init(void)
 	char buff[256];
 
 	if (ftfont)
-		R_font_freetype(ftfont);
+		R_font(ftfont);
 	else if (font)
 		R_font(font);
 	else

@@ -5,18 +5,18 @@
 #include "driver.h"
 #include "driverlib.h"
 
-#define NORMAL      0
+#define STROKE      0
 #define FREETYPE    1
 
-static int font_type = NORMAL;
+static int font_type = STROKE;
 
-void COM_Font_stroke_get(const char *filename)
+static void stroke_set(const char *filename)
 {
 	if (font_init(filename) == 0)
-		font_type = NORMAL;
+		font_type = STROKE;
 }
 
-void COM_Font_freetype_get(const char *filename)
+static void freetype_set(const char *filename)
 {
 	if (font_init_freetype(filename) == 0)
 		font_type = FREETYPE;
@@ -37,9 +37,9 @@ void COM_Font_get(const char *name)
 		sprintf(prefix, "%s/fonts/", G_gisbase());
 
 		if (strncmp(name, prefix, strlen(prefix)) == 0)
-			COM_Font_stroke_get(name);
+			stroke_set(name);
 		else
-			COM_Font_freetype_get(name);
+			freetype_set(name);
 	}
 	else
 	{
@@ -50,12 +50,12 @@ void COM_Font_get(const char *name)
 		for (i = 0; ftcap[i].name; i++)
 			if (strcmp(name, ftcap[i].name) == 0)
 			{
-				COM_Font_freetype_get(ftcap[i].path);
+				freetype_set(ftcap[i].path);
 				return;
 			}
 
 		sprintf(filename, "%s/fonts/%s", G_gisbase(), name);
-		COM_Font_stroke_get(filename);
+		stroke_set(filename);
 	}
 }
 
