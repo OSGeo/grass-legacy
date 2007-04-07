@@ -54,6 +54,7 @@ void D_clip_to_map(void);
 void D_move_clip(double, double);
 int D_cont_clip(double, double);
 void D_polydots_clip(const double *, const double *, int);
+void D_polyline_cull(const double *, const double *, int);
 void D_polyline_clip(const double *, const double *, int);
 void D_polygon_clip(const double *, const double *, int);
 void D_box_clip(double, double, double, double);

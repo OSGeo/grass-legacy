@@ -11,9 +11,20 @@
 #include <grass/glocale.h>
 #include <grass/dbmi.h>
 
+#define RENDER_POLYLINE 0
+#define RENDER_POLYGON  1
+
+/*local functions*/
+static void local_plot_poly(double *xf, double *yf, int n, int type);
+
+/*global render switch*/
 int render;
 
-static void local_plot_polygon(double *xf, double *yf, int n)
+/* *************************************************************** */
+/* function to plot polygons and polylines       ***************** */
+/* the parameter type switches render mode       ***************** */
+/* *************************************************************** */
+static void local_plot_poly(double *xf, double *yf, int n, int type)
 {
 	static int *xi, *yi;
 	static int nalloc;
@@ -32,9 +43,41 @@ static void local_plot_polygon(double *xf, double *yf, int n)
 		yi[i] = (int) floor(0.5 + D_u_to_d_row(yf[i]));
 	}
 
-	R_polygon_abs(xi, yi, n);
+	if (type == RENDER_POLYGON)
+		R_polygon_abs(xi, yi, n);
+	else
+		R_polyline_abs(xi, yi, n);
 }
 
+/* *************************************************************** */
+/* function to use different render methods for polylines ******** */
+/* *************************************************************** */
+void plot_polyline(double *xf, double *yf, int n)
+{
+	int i;
+
+	switch (render)
+	{
+	case RENDER_DP:
+		D_polyline(xf, yf, n);
+		break;
+	case RENDER_DPC:
+		D_polyline_clip(xf, yf, n);
+		break;
+	case RENDER_RPA:
+		local_plot_poly(xf, yf, n, RENDER_POLYLINE);
+		break;
+	case RENDER_GPP:
+	default:
+		for (i = 1; i < n; i++)
+			G_plot_line(xf[i-1], yf[i-1], xf[i], yf[i]);
+		break;
+	}
+}
+
+/* *************************************************************** */
+/* function to use different render methods for polygons  ******** */
+/* *************************************************************** */
 void plot_polygon(double *xf, double *yf, int n)
 {
 	switch (render)
@@ -49,7 +92,7 @@ void plot_polygon(double *xf, double *yf, int n)
 		D_polygon_clip(xf, yf, n);
 		break;
 	case RENDER_RPA:
-		local_plot_polygon(xf, yf, n);
+		local_plot_poly(xf, yf, n, RENDER_POLYGON);
 		break;
 	default:
 		G_plot_polygon(xf, yf, n);
@@ -57,6 +100,9 @@ void plot_polygon(double *xf, double *yf, int n)
 	}
 }
 
+/* *************************************************************** */
+/* *************************************************************** */
+/* *************************************************************** */
 int plot1 (
     struct Map_info *Map, int type, int area,  struct cat_list *Clist,
     const struct color_rgb *color, const struct color_rgb *fcolor,
@@ -452,14 +498,12 @@ int plot1 (
 	      R_RGB_color(color->r, color->g, color->b);
 	    }
 	  }
+	    /* Plot the lines */
 	    if ( Points->n_points == 1 ) { /* line with one coor */
-	        G_plot_line(x[0], y[0], x[0], y[0]);
+		D_polydots_clip(x, y, Points->n_points);
 	    } else {
-		for(i=1; i < Points->n_points; i++) {
-		    G_plot_line(x[0], y[0], x[1], y[1]);
-		    x++;
-		    y++;
-		  }
+	        /*use different user defined render methods*/
+	        plot_polyline(x, y, Points->n_points);
 	    }
 	}
     }

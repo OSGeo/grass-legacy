@@ -12,4 +12,5 @@ int attr(struct Map_info *, int, char *, struct cat_list *, LATTR *, int);
 int zcoor(struct Map_info *, int, LATTR *);
 int test_bg_color (const char*);
 void plot_polygon(double *, double *, int);
+void plot_polyline(double *, double *, int);
 
