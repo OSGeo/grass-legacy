@@ -8,5 +8,5 @@ include $(MODULE_TOPDIR)/include/Make/Script.make
 default: script $(ETC)/$(CAPFILE)
 
 $(ETC)/$(CAPFILE): $(CAPFILE)
-	$(INSTALL_DATA) $(CAPFILE) $(ETC)/$(CAPFILE)
+	$(INSTALL_DATA) $< $@
 
