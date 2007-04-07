@@ -137,15 +137,6 @@ static double interpolate(double a, double b, double ka, double kb)
 	return (a * kb - b * ka) / (kb - ka);
 }
 
-static int clip_point(double x, double y)
-{
-	if (x < clip.left || x > clip.rite)
-		return 1;
-	if (y < clip.bot || y > clip.top)
-		return 1;
-	return 0;
-}
-
 static int clip_plane(struct vector *a, struct vector *b, const struct plane *p, int *clipped)
 {
 	double ka = dist_plane(a->x, a->y, p);
@@ -454,25 +445,80 @@ void D_polydots_clip(const double *x, const double *y, int n)
 	R_polydots_abs(xi, yi, j);
 }
 
-static void polyline_cull(const double *x, const double *y, int n)
+static int cull_polyline_plane(int *pn, const double *x, const double *y, const struct plane *p)
 {
-	int t0 = clip_point(x[0], y[0]);
-	int start = 0;
-	int i;
+	int n = *pn;
+	int last = 0;
+	int prev = 0;
+	double x0 = x[prev];
+	double y0 = y[prev];
+	double d0 = dist_plane(x0, y0, p);
+	int i, j;
 
-	for (i = 1; i < n; i++)
+	for (i = 0, j = 0; i < n; i++)
 	{
-		int t = clip_point(x[i], y[i]);
+		double x1 = x[i];
+		double y1 = y[i];
+		double d1 = dist_plane(x1, y1, p);
+		int in0 = d0 < 0;
+		int in1 = d1 < 0;
 
-		if (t)
+		if (!in0 && in1 && last != prev)	/* entering */
 		{
-			if (!t0 || i == n - 1)
-				D_polyline(&x[start], &y[start], i - start);
-			start = i;
+			alloc_float(j + 1);
+			xf[j] = x0;
+			yf[j] = y0;
+			j++;
+			last = prev;
 		}
 
-		t0 = t;
+		if (in1 || in0)				/* inside or leaving */
+		{
+			alloc_float(j + 1);
+			xf[j] = x1;
+			yf[j] = y1;
+			j++;
+			last = i;
+		}
+
+		x0 = x1;
+		y0 = y1;
+		d0 = d1;
+		prev = i;
 	}
+
+	*pn = j;
+
+	return (j == 0);
+}
+
+static void polyline_cull(const double *x, const double *y, int n)
+{
+	alloc_float(n + 10);
+
+	if (cull_polyline_plane(&n, x, y, &pl_left))
+		return;
+
+	dealloc_float(&x, &y, 0);
+
+	if (cull_polyline_plane(&n, x, y, &pl_rite))
+		return;
+
+	dealloc_float(&x, &y, 1);
+
+	if (cull_polyline_plane(&n, x, y, &pl_bot ))
+		return;
+
+	dealloc_float(&x, &y, 1);
+
+	if (cull_polyline_plane(&n, x, y, &pl_top ))
+		return;
+
+	dealloc_float(&x, &y, 1);
+
+	do_convert(x, y, n);
+
+	R_polyline_abs(xi, yi, n);
 }
 
 void D_polyline_cull(const double *x, const double *y, int n)
@@ -509,6 +555,93 @@ void D_polyline_clip(const double *x, const double *y, int n)
 		do_ll_wrap(x, y, n, polyline_clip);
 	else
 		polyline_clip(x, y, n);
+}
+
+static int cull_polygon_plane(int *pn, const double *x, const double *y, const struct plane *p)
+{
+	int n = *pn;
+	int last = n-1;
+	int prev = n-1;
+	double x0 = x[prev];
+	double y0 = y[prev];
+	double d0 = dist_plane(x0, y0, p);
+	int i, j;
+
+	for (i = j = 0; i < n; i++)
+	{
+		double x1 = x[i];
+		double y1 = y[i];
+		double d1 = dist_plane(x1, y1, p);
+		int in0 = d0 < 0;
+		int in1 = d1 < 0;
+
+		if (!in0 && in1 && last != prev)	/* entering */
+		{
+			alloc_float(j + 1);
+			xf[j] = x0;
+			yf[j] = y0;
+			j++;
+			last = prev;
+		}
+
+		if (in1 || in0)				/* inside or leaving */
+		{
+			alloc_float(j + 1);
+			xf[j] = x1;
+			yf[j] = y1;
+			j++;
+			last = i;
+		}
+
+		x0 = x1;
+		y0 = y1;
+		d0 = d1;
+		prev = i;
+	}
+
+	*pn = j;
+
+	return (j == 0);
+}
+
+static void polygon_cull(const double *x, const double *y, int n)
+{
+	alloc_float(n + 10);
+
+	if (cull_polygon_plane(&n, x, y, &pl_left))
+		return;
+
+	dealloc_float(&x, &y, 0);
+
+	if (cull_polygon_plane(&n, x, y, &pl_rite))
+		return;
+
+	dealloc_float(&x, &y, 1);
+
+	if (cull_polygon_plane(&n, x, y, &pl_bot ))
+		return;
+
+	dealloc_float(&x, &y, 1);
+
+	if (cull_polygon_plane(&n, x, y, &pl_top ))
+		return;
+
+	dealloc_float(&x, &y, 1);
+
+	do_convert(x, y, n);
+
+	R_polygon_abs(xi, yi, n);
+}
+
+void D_polygon_cull(const double *x, const double *y, int n)
+{
+	if (!window_set)
+		D_clip_to_map();
+
+	if (D_is_lat_lon())
+		do_ll_wrap(x, y, n, polygon_cull);
+	else
+		polygon_cull(x, y, n);
 }
 
 static int clip_polygon_plane(int *pn, const double *x, const double *y, const struct plane *p)

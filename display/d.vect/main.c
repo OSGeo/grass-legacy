@@ -304,13 +304,14 @@ main (int argc, char **argv)
 	render_opt->required   = NO;
 	render_opt->multiple   = NO;
 	render_opt->answer     = "g" ;
-	render_opt->options    = "g,r,d,c";
+	render_opt->options    = "g,r,d,c,l";
 	render_opt->description= _("Rendering method for filled polygons");
 	render_opt->descriptions= _(
-		"g;use the libgis render functions (features: clipping support);"
-		"r;use the raster graphics library functions (features: uses polylines);"
-		"d;use the display library non-clipping functions (features: uses polylines);"
-		"c;use the display library clipping functions (features: clipping support)"
+		"g;use the libgis render functions (features: clipping);"
+		"r;use the raster graphics library functions (features: polylines);"
+		"d;use the display library basic functions (features: polylines);"
+		"c;use the display library clipping functions (features: clipping);"
+		"l;use the display library culling functions (features: culling, polylines)"
 		);
 
 	/* please remove before GRASS 7 released */
@@ -354,6 +355,8 @@ main (int argc, char **argv)
 		render = RENDER_DP;
 	else if (G_strcasecmp(render_opt->answer, "c") == 0)
 		render = RENDER_DPC;
+	else if (G_strcasecmp(render_opt->answer, "l") == 0)
+		render = RENDER_DPL;
 	else
 		render = RENDER_GPP;
 

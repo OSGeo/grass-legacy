@@ -64,6 +64,9 @@ void plot_polyline(double *xf, double *yf, int n)
 	case RENDER_DPC:
 		D_polyline_clip(xf, yf, n);
 		break;
+	case RENDER_DPL:
+		D_polyline_cull(xf, yf, n);
+		break;
 	case RENDER_RPA:
 		local_plot_poly(xf, yf, n, RENDER_POLYLINE);
 		break;
@@ -90,6 +93,9 @@ void plot_polygon(double *xf, double *yf, int n)
 		break;
 	case RENDER_DPC:
 		D_polygon_clip(xf, yf, n);
+		break;
+	case RENDER_DPL:
+		D_polygon_cull(xf, yf, n);
 		break;
 	case RENDER_RPA:
 		local_plot_poly(xf, yf, n, RENDER_POLYGON);
