@@ -47,13 +47,6 @@ SUBDIRS = \
 	d.where \
 	d.zoom
 
-FREETYPEBASED = d.font.freetype
-
-#compile if FreeType Lib present:
-ifneq ($(strip $(FTLIB)),)
-    SUBDIRS += $(FREETYPEBASED)
-endif
-
 default: subdirs
 
 clean: cleansubdirs

@@ -7,18 +7,20 @@
 #include <grass/raster.h>
 #include <grass/glocale.h>
 
-static char *read_ftcap(void);
+static char **fonts;
+static int max_fonts;
+static int num_fonts;
+
+static void read_stroke_fonts(void);
+static void read_freetype_fonts(void);
+static char *make_font_list(void);
+static void print_font_list(FILE *fp);
 
 int main( int argc , char **argv )
 {
-        char *fonts, *ftfonts;
-	int fonts_len;
-	int found;
-        char buf[1024];
-	DIR *dirp;
-	struct dirent *dp;
 	struct GModule *module;
-        struct Option *opt1, *opt2, *opt3;
+	struct Option *opt1, *opt2, *opt3;
+	struct Flag *flag1;
 
 	G_gisinit(argv[0]);
 
@@ -28,84 +30,49 @@ int main( int argc , char **argv )
 			_("Selects the font in which text will be displayed "
 			"on the user's graphics monitor.");
 
-        /* find out what fonts we have */
-        fonts = NULL;
-	fonts_len = 0;
-        sprintf (buf, "%s/fonts", G_gisbase());
-	if ((dirp = opendir(buf)) != NULL)
-        {
-		found = 0;
-                while ((dp = readdir(dirp)) != NULL)
-                {
-			char name[16];
+	/* find out what fonts we have */
+	read_stroke_fonts();
+	read_freetype_fonts();
 
-			if(dp->d_name[0] == '.')
-				continue;
-
-			if(!strstr(dp->d_name, ".hmp"))
-				continue;
-
-			strcpy(name, dp->d_name);
-			*(strstr(name, ".hmp")) = '\0';
-
-			fonts_len += strlen(name) + 1;
-			fonts = (char *)G_realloc(fonts, fonts_len);
-                        if (found)
-			{
-				strcat(fonts, ",");
-                	        strcat(fonts, name);
-			}
-			else
-				strcpy(fonts, name);
-			found = 1;
-                }
-                closedir(dirp);
-        }
-	if ((ftfonts = read_ftcap()))
-	{
-		if(fonts)
-			found = 1;
-		else
-			found = 0;
-		fonts_len += strlen(ftfonts) + 1;
-		fonts = (char *)G_realloc(fonts, fonts_len);
-		if (found)
-			strcat(fonts, ",");
-		strcat(fonts, ftfonts);
-		G_free(ftfonts);
-	}
-
-        opt1 = G_define_option();
-        opt1->key        = "font";
-        opt1->type       = TYPE_STRING;
-        opt1->required   = NO;
-	opt1->options    = fonts;
-        opt1->answer     = "romans";
-        opt1->description= _("Choose new current font");
+	opt1 = G_define_option();
+	opt1->key	= "font";
+	opt1->type	= TYPE_STRING;
+	opt1->required	= NO;
+	opt1->options	= make_font_list();
+	opt1->answer	= "romans";
+	opt1->description = _("Choose new current font");
 
 	opt2 = G_define_option();
-	opt2->key        = "path";
-	opt2->type       = TYPE_STRING;
-	opt2->required   = NO;
-	opt2->description= _("Path to TrueType font including file name");
-	opt2->gisprompt  = "old_file,file,font";
+	opt2->key	= "path";
+	opt2->type	= TYPE_STRING;
+	opt2->required	= NO;
+	opt2->description = _("Path to TrueType font including file name");
+	opt2->gisprompt	= "old_file,file,font";
 
 	opt3 = G_define_option();
-	opt3->key        = "charset";
-	opt3->type       = TYPE_STRING;
-	opt3->required   = NO;
-	opt3->answer     = "UTF-8";
-	opt3->description= _("Character encoding");
+	opt3->key	= "charset";
+	opt3->type	= TYPE_STRING;
+	opt3->required	= NO;
+	opt3->answer	= "UTF-8";
+	opt3->description = _("Character encoding");
 
-        /* Initialize the GIS calls */
-        G_gisinit(argv[0]);
+	flag1 = G_define_flag();
+	flag1->key	= 'l';
+	flag1->description = _("List fonts");
 
-        /* Check command line */
-        if (G_parser(argc, argv))
-                exit(EXIT_FAILURE);
+	G_gisinit(argv[0]);
 
-        /* load the font */
-        if (R_open_driver() != 0)
+	if (G_parser(argc, argv))
+		exit(EXIT_FAILURE);
+
+	if (flag1->answer)
+	{
+		print_font_list(stdout);
+		exit(EXIT_SUCCESS);
+	}
+
+	/* load the font */
+	if (R_open_driver() != 0)
 		G_fatal_error (_("No graphics device selected"));
 
 	if (opt2->answer)
@@ -117,76 +84,145 @@ int main( int argc , char **argv )
 	if (opt3->answer)
 		R_charset(opt3->answer);
 
-        /* add this command to the list */
+	/* add this command to the list */
 	D_add_to_list(G_recreate_command());
-        R_close_driver();
+	R_close_driver();
 
-	if (fonts)
-		G_free(fonts);
-
-        exit(EXIT_SUCCESS);
+	exit(EXIT_SUCCESS);
 }
 
-static char *
-read_ftcap(void)
+static void read_stroke_fonts(void)
 {
-	char *capfile, file[4096];
-	int fonts_count;
-	int font_names_len;
-	char *font_names;
-	char buf[4096], ifont[128], ipath[4096];
-	FILE *fp, *fp2;
+	char buf[GPATH_MAX];
+	DIR *dirp;
 
-	fp = NULL;
-	if((capfile = getenv("GRASS_FT_CAP")))
+	sprintf (buf, "%s/fonts", G_gisbase());
+	dirp = opendir(buf);
+
+	if (!dirp)
+		return;
+
+	for (;;)
 	{
-		if((fp = fopen(capfile, "r")) == NULL)
+		struct dirent *dp = readdir(dirp);
+		char *name;
+
+		if (!dp)
+			break;
+
+		if(dp->d_name[0] == '.')
+			continue;
+
+		if (!strstr(dp->d_name, ".hmp"))
+			continue;
+
+		name = G_store(dp->d_name);
+		*(strstr(name, ".hmp")) = '\0';
+
+		if (num_fonts >= max_fonts)
+		{
+			max_fonts += 20;
+			fonts = G_realloc(fonts, max_fonts * sizeof(char *));
+		}
+
+		fonts[num_fonts++] = name;
+	}
+
+	closedir(dirp);
+}
+
+static void read_freetype_fonts(void)
+{
+	char *capfile;
+	FILE *fp = NULL;
+
+	capfile = getenv("GRASS_FT_CAP");
+	if (capfile)
+	{
+		fp = fopen(capfile, "r");
+		if(!fp)
 			G_warning("%s: Unable to read FreeType definition file; use the default", capfile);
 	}
-	if(fp == NULL)
+
+	if (!fp)
 	{
-		sprintf(file, "%s/etc/freetypecap", G_gisbase());
-		if((fp = fopen(file, "r")) == NULL)
-		{
-			G_warning("%s: No FreeType definition file", file);
-			return NULL;
-		}
+		const char *gisbase = G_gisbase();
+
+		capfile = G_malloc(strlen(gisbase) + 16 + 1);
+		sprintf(capfile, "%s/etc/freetypecap", gisbase);
+
+		fp = fopen(capfile, "r");
+		if (!fp)
+			G_warning("Missing FreeType definition file: %s", capfile);
 	}
 
-	font_names = NULL;
-	font_names_len = 0;
-	fonts_count = 0;
+	if (!fp)
+		return;
 
-	while(fgets(buf, sizeof(buf), fp) && !feof(fp))
+	for (;;)
 	{
-		char *p;
+		char buf[1024], ifont[256], ipath[1024];
+		FILE *fontfp;
 
-		p = strchr(buf, '#');
-		if(p)
-			*p = 0;
+		if (!fgets(buf, sizeof(buf), fp))
+			break;
+
+		if (buf[0] == '#')
+			continue;
 
 		if(sscanf(buf, "%[^:]:%[^:]", ifont, ipath) != 2)
 			continue;
 
-		if((fp2 = fopen(ipath, "r")) == NULL)
+		fontfp = fopen(ipath, "r");
+		if (!fontfp)
 			continue;
-		fclose(fp2);
+		fclose(fontfp);
 
-		font_names_len += strlen(ifont) + 1;
-		font_names = (char *)G_realloc(font_names, font_names_len);
-
-		if(fonts_count > 0)
+		if (num_fonts >= max_fonts)
 		{
-			strcat(font_names, ",");
-			strcat(font_names, ifont);
+			max_fonts += 20;
+			fonts = G_realloc(fonts, max_fonts * sizeof(char *));
 		}
-		else
-			strcpy(font_names, ifont);
 
-		fonts_count++;
+		fonts[num_fonts++] = G_store(ifont);
 	}
 
 	fclose(fp);
-
-	return font_names;
 }
+
+static char *make_font_list(void)
+{
+	char *list, *p;
+	int len = 0;
+	int i;
+
+	for (i = 0; i < num_fonts; i++)
+		len += strlen(fonts[i]) + 1;
+
+	list = G_malloc(len);
+	p = list;
+
+	for (i = 0; i < num_fonts; i++)
+	{
+		char *q;
+
+		if (i > 0)
+			*p++ = ',';
+
+		for (q = fonts[i]; *q; )
+			*p++ = *q++;
+	}
+
+	*p++ = '\0';
+
+	return list;
+}
+
+static void print_font_list(FILE *fp)
+{
+	int i;
+
+	for (i = 0; i < num_fonts; i++)
+		fprintf(fp, "%s\n", fonts[i]);
+}
+
