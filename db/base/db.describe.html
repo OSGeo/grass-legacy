@@ -12,28 +12,32 @@ do not need to be spcified each time.
 <h2>EXAMPLE</h2>
 
 <div class="code"><pre>
-db.describe -c table=test driver=dbf
-
+db.describe -c table=roads database='$GISDBASE/$LOCATION_NAME/PERMANENT/dbf/' \
+            driver=dbf
 ncols:2
-Column 1: CAT
-Column 2: BACK
-Column 3: TIME
+Column 1:cat:INTEGER:11
+Column 2:label:CHARACTER:43
 </pre></div>
 
 <div class="code"><pre>
-db.describe table=test
+db.describe table=roads database='$GISDBASE/$LOCATION_NAME/PERMANENT/dbf/' \
+            driver=dbf
+table:roads
+description:
+insert:yes
+delete:yes
+ncols:2
 
-column:CAT
+column:cat
 description:
 type:INTEGER
 len:11
 scale:0
 precision:10
-default:0
+default:
 nullok:yes
 select:yes
 update:yes
-
 [...]
 </pre></div>
 
