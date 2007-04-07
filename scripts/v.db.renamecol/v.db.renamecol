@@ -147,7 +147,7 @@ if [ "$driver" = "sqlite" -o "$driver" = "dbf" ] ; then
 	echo "UPDATE $table SET $newcol=$oldcol" | db.execute database=$database driver=$driver
 	v.db.dropcol $GIS_OPT_MAP layer=$GIS_OPT_LAYER col=$oldcol
 else
-	echo "ALTER TABLE $table RENAME COLUMN $col TO $newcol" | db.execute database=$database driver=$driver || error
+	echo "ALTER TABLE $table RENAME $oldcol TO $newcol" | db.execute database=$database driver=$driver || error
 fi
 
 # cleanup
