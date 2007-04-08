@@ -103,7 +103,7 @@ class TestVirtualList(wx.ListCtrl, listmix.ListCtrlAutoWidthMixin, listmix.Colum
         for line in os.popen("db.describe -c table=%s driver=%s database=%s" %\
                 (self.tablename, self.driver, self.database)).readlines()[1:]:
 
-            x,column,type = line.strip().split(":")
+            x,column,type,length = line.strip().split(":")
             # FIXME: here will be more types
             if type.lower().find("integer") > -1:
                 self.columns.append({"name":column,"type":int})
@@ -159,7 +159,7 @@ class TestVirtualList(wx.ListCtrl, listmix.ListCtrlAutoWidthMixin, listmix.Colum
             self.timer.Start(100)
 
     def LoadData(self,where=None):
-        
+
         cmd = """db.select -c table=%s database=%s driver=%s """ %\
                 (self.tablename,self.database,self.driver)
 
@@ -517,7 +517,7 @@ class AttributeManager(wx.Frame):
 
         # probably
         self.gismanager = parent
-        
+
         # most importand part
         self.win = TestVirtualList(self, log,vectmap=vectmap,pointdata=pointdata)
 
@@ -525,7 +525,7 @@ class AttributeManager(wx.Frame):
         self.btn_apply = wx.Button(self, -1, "Apply")
         #self.btn_unselect = wx.Button(self, -1, "Unselect")
         self.btn_sqlbuilder = wx.Button(self, -1, "SQL Builder")
-        
+
         # check
         #self.check_add_to_selection = wx.CheckBox(self, -1, "Add to selection")
         # textarea
@@ -533,7 +533,7 @@ class AttributeManager(wx.Frame):
         # label
         self.sqlabel=wx.StaticText(self,-1,"SELECT * FROM %s WHERE " % self.win.tablename)
         self.label_query = wx.StaticText(self,-1,"")
-        
+
         # box
         self.sqlbox = wx.StaticBox(self, -1, "SQL Query:")
 
