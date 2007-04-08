@@ -23,6 +23,12 @@ void COM_Color_RGB(unsigned char r, unsigned char g, unsigned char b)
 
 void COM_Standard_color(int number)
 {
-	DRV_color(get_standard_color(number));
+	struct color_rgb rgb;
+
+	if (number < 0 || number >= G_num_standard_colors())
+		return;
+
+	rgb = G_standard_color_rgb(number);
+	COM_color_RGB(rgb.r, rgb.g, rgb.b);
 }
 

@@ -216,9 +216,7 @@ static Colormap ramp_colormap(void)
 Colormap init_color_table(Colormap cmap)
 {
 	int n_colors = use_visual->map_entries;
-	int n_std_colors = G_num_standard_colors();
 	int r, g, b, y, i;
-	int colorindex;
 
 	switch (use_visual->class)
 	{
@@ -295,16 +293,6 @@ Colormap init_color_table(Colormap cmap)
 	default:
 		G_fatal_error("Unknown visual class %d\n", use_visual->class);
 		break;
-	}
-
-	/* Generate lookup for "standard" colors */
-	for (colorindex = 1; colorindex < n_std_colors; colorindex++)
-	{
-		struct color_rgb rgb = G_standard_color_rgb(colorindex);
-
-		LIB_assign_standard_color(
-			colorindex,
-			DRV_lookup_color(rgb.r, rgb.g, rgb.b));
 	}
 
 	return cmap;

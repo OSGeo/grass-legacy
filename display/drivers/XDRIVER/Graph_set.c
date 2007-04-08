@@ -92,7 +92,7 @@ XAllocClassHint(void)
 static RETSIGTYPE
 sigint(int sig)
 {
-	COM_Graph_close();
+	XD_Graph_close();
 	exit(1);
 }
 

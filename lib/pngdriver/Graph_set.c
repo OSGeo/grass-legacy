@@ -8,12 +8,6 @@
  * in the upper left-hand corner.  Hence,
  *    screen_left < screen_right
  *    screen_top  < screen_bottom 
- *
- * NCOLORS is set to the total number of colors available on the device.  This
- * most certainly needs to be more than 100 (or so).  If you are writing a
- * driver with fewer colors you probably need to provide your own Color(),
- * Color_table_float(), Color_table_fixed(), and
- * Reset_color() routines (see ../lib/{Color.c,Reset_clr.c,Clr_table.c}).
  */
 
 #include <string.h>
@@ -68,8 +62,6 @@ int PNG_Graph_set(int argc, char **argv)
 
 	grid = G_malloc(width * height * sizeof(unsigned int));
 
-	NCOLORS = true_color ? (1<<24) : 256;
-
 	p = getenv("GRASS_BACKGROUNDCOLOR");
 	if (!p || !*p || sscanf(p, "%x", &background) != 1)
 	{
@@ -91,7 +83,7 @@ int PNG_Graph_set(int argc, char **argv)
 
 	init_color_table();
 
-	COM_Erase();
+	PNG_Erase();
 
 	G_message("PNG: collecting to file: %s,\n     GRASS_WIDTH=%d, GRASS_HEIGHT=%d",
 		file_name, width, height);
