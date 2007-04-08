@@ -73,5 +73,7 @@ void PNG_draw_bitmap(int ncols, int nrows, int threshold, const unsigned char *b
 			}
 		}
 	}
+
+	modified = 1;
 }
 

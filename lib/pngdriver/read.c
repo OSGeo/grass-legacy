@@ -23,5 +23,7 @@ void read_image(void)
 #endif
 	else
 		G_fatal_error("read_image: unknown file type: %s", p);
+
+	modified = 0;
 }
 
