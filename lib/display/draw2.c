@@ -56,6 +56,7 @@ struct plane
 static struct vector cur;
 
 static struct rectangle clip;
+static double clip_margin;
 
 static struct plane pl_left = {-1,  0, 0};
 static struct plane pl_rite = { 1,  0, 0};
@@ -295,6 +296,27 @@ void D_set_clip(double t, double b, double l, double r)
 }
 
 /*!
+ * \brief set clip margin
+ *
+ * Sets the clip margin, i.e. the distance by which a line must extend
+ * beyond the frame before it will be clipped.
+ *
+ * D_clip_to_map() enlarges the clip window beyond the frame by this
+ * value.
+ *
+ * This function unsets the clip window, so it will be recalculated by
+ * the next drawing operation.
+ *
+ *  \param d
+ */
+
+void D_set_clip_margin(double d)
+{
+	clip_margin = d;
+	window_set = 0;
+}
+
+/*!
  * \brief set clipping window to map window
  *
  * Sets the clipping window to the pixel window that corresponds to the
@@ -305,11 +327,13 @@ void D_set_clip(double t, double b, double l, double r)
 
 void D_clip_to_map(void)
 {
+	double d = clip_margin;
+
 	D_set_clip(
-		D_get_u_north(),
-		D_get_u_south(),
-		D_get_u_west(),
-		D_get_u_east());
+		D_get_u_north() - d,
+		D_get_u_south() + d,
+		D_get_u_west()  - d,
+		D_get_u_east()  + d);
 }
 
 /*!
@@ -816,5 +840,21 @@ void D_box(double x1, double y1, double x2, double y2)
 	int ti = round(D_u_to_d_row(t));
 
 	R_box_abs(li, ti, ri, bi);
+}
+
+void D_line_width(double d)
+{
+	int w = round(d);
+	double m;
+
+	if (w < 1)
+		w = 1;
+
+	R_line_width(w);
+
+	m = ceil(w / 2.0);
+	m /= D_get_u_to_d_xconv();
+
+	D_set_clip_margin(m);
 }
 
