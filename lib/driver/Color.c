@@ -29,6 +29,6 @@ void COM_Standard_color(int number)
 		return;
 
 	rgb = G_standard_color_rgb(number);
-	COM_color_RGB(rgb.r, rgb.g, rgb.b);
+	COM_Color_RGB(rgb.r, rgb.g, rgb.b);
 }
 
