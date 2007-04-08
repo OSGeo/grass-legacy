@@ -191,6 +191,8 @@ class BufferedWindow(wx.Window):
         self.imagedict = {} # images and their ID's for painting and dragging
         self.select = {} # selecting/unselecting decorations for dragging
         self.ovlchk = {} # showing/hiding decorations
+        self.textdict = {} # text, font, and color indexed by id
+        self.currtxtid = None # PseudoDC id for currently selected text
 
         #
     	# mouse attributes like currently pressed buttons, position on
@@ -221,47 +223,6 @@ class BufferedWindow(wx.Window):
         # vars for handling mouse clicks
         self.dragid = -1
         self.lastpos = (0,0)
-
-
-#    def Draw(self, dc, img=None, pdctype='image', coords='0,0'):
-#    	"""
-#        Just here as a place holder.
-#    	This method should be over-ridden when sub-classed
-#        """
-#    	pass
-#
-#    def DrawOvl(self, pdc, type, data, pdctype='image', coords=wx.Rect(0,0,0,0)):
-#        """
-#        Draws map decorations on top of map
-#        Just here as a place holder.
-#        This method should be over-ridden when sub-classed
-#        """
-#        pass
-
-#    def Draw(self, dc, img=None, pdctype='image', coords=[0, 0]):
-#        """
-#        Draws image, box and line in the background
-#        """
-#        dc.BeginDrawing()
-#        dc.SetBackground(wx.Brush(self.GetBackgroundColour()))
-#        dc.Clear() # make sure you clear the bitmap!
-#
-#        if dctype == 'clear': # erase the display
-#            dc.EndDrawing()
-#            return
-#        bitmap = wx.BitmapFromImage(img)
-#        dc.DrawBitmap(bitmap, 0, 0, True) # draw the composite map
-#
-#        if dctype == 'box': # draw a box on top of the map
-#            dc.SetBrush(wx.Brush(wx.CYAN, wx.TRANSPARENT))
-#            dc.SetPen(self.pen)
-#            dc.DrawRectangle(coords[0], coords[1], coords[2], coords[3])
-#        elif dctype == 'line': # draw a line on top of the map
-#            dc.SetBrush(wx.Brush(wx.CYAN, wx.TRANSPARENT))
-#            dc.SetPen(self.pen)
-#            dc.DrawLine(coords[0], coords[1], coords[2], coords[3])
-#
-#        dc.EndDrawing()
 
     def Draw(self, pdc, img=None, drawid=None, pdctype='image', coords=[0,0,0,0]):
         """
@@ -466,7 +427,7 @@ class BufferedWindow(wx.Window):
         self.pdc.RemoveAll()
         self.Draw(self.pdc, self.img, drawid=id) # draw map image background
         self.ovlist = self.GetOverlay() # list of decoration overlay images
-        if self.ovlist != []:
+        if self.ovlist != []: # draw scale and legend overlays
             for img in self.ovlist:
                 id = self.imagedict[img]
                 if id not in self.ovlcoords: self.ovlcoords[id] = wx.Rect(0,0,0,0)
@@ -474,7 +435,12 @@ class BufferedWindow(wx.Window):
                 if id not in self.ovlchk: self.ovlchk[id] = False
                 if self.ovlchk[id] == True: # draw any active and defined overlays
                     self.Draw(self.pdc, img=img, drawid=id,
-                                 pdctype='image', coords=self.ovlcoords[id])
+                             pdctype='image', coords=self.ovlcoords[id])
+
+        if self.textdict != None: # draw text overlays
+            for id in self.textdict:
+                self.Draw(self.pdc, img=self.textdict[id], drawid=id,
+                          pdctype='text', coords=self.ovlcoords[id])
 
     	self.resize = False
 
@@ -571,9 +537,11 @@ class BufferedWindow(wx.Window):
             self.select[id] = not self.select[id]
             if self.select[id] == True:
                 self.dragid = id
+                if id > 100: self.currtxtid = id
             else:
                 self.ovlcoords[self.dragid] = self.pdc.GetIdBounds(self.dragid)
                 self.dragid = None
+                self.currtxtid = None
                 self.UpdateMap()
             id = None
 
@@ -719,107 +687,6 @@ class BufferedWindow(wx.Window):
     	    self.Map.region['e'] = newreg['e']
     	    self.Map.region['w'] = newreg['w']
 
-
-#class DrawWindow(BufferedWindow):
-#    """
-#    Drawing routine for double buffered drawing. Overwrites Draw method
-#    in the BufferedWindow class
-#    """
-#    def __init__(self, parent, id = wx.ID_ANY):
-#        """
-#        """
-#    	## Any data the Draw() function needs must be initialized before
-#    	## calling BufferedWindow.__init__, as it will call the Draw
-#    	## function.
-#    	self.dcmd_list = [] # list of display commands to process
-#    	BufferedWindow.__init__(self, parent, id)
-#
-#    def Draw(self, dc, img=None, pdctype='image', coords=[0, 0]):
-#        """
-#        Draws image, box and line in the background
-#        """
-#    	dc.BeginDrawing()
-#    	dc.SetBackground(wx.Brush(self.GetBackgroundColour()))
-#    	dc.Clear() # make sure you clear the bitmap!
-#
-#    	if dctype == 'clear': # erase the display
-#    	    dc.EndDrawing()
-#    	    return
-#    	bitmap = wx.BitmapFromImage(img)
-#    	dc.DrawBitmap(bitmap, 0, 0, True) # draw the composite map
-#
-#    	if dctype == 'box': # draw a box on top of the map
-#    	    dc.SetBrush(wx.Brush(wx.CYAN, wx.TRANSPARENT))
-#    	    dc.SetPen(self.pen)
-#    	    dc.DrawRectangle(coords[0], coords[1], coords[2], coords[3])
-#    	elif dctype == 'line': # draw a line on top of the map
-#    	    dc.SetBrush(wx.Brush(wx.CYAN, wx.TRANSPARENT))
-#    	    dc.SetPen(self.pen)
-#    	    dc.DrawLine(coords[0], coords[1], coords[2], coords[3])
-#
-#    	dc.EndDrawing()
-#
-#    def DrawOvl(self, pdc, img=None, id=None, pdctype='image', coords=[0,0,0,0]):
-#        """
-#        Draws map decorations on top of map
-#        """
-#        pdc.BeginDrawing()
-#
-#        if id == None:
-#            if pdctype == 'image' :
-#                id = imagedict[img]
-#            else:
-#                id = wx.NewId()
-#        pdc.SetId(id)
-#        self.select[id] = False
-#
-#        if pdctype == 'clear': # erase the display
-##            if type > -1:
-##                pdc.RemoveId(id)
-#            pdc.EndDrawing()
-#            return
-#
-#        elif pdctype == 'image':
-#            bitmap = wx.BitmapFromImage(img)
-#            w,h = bitmap.GetSize()
-#            pdc.DrawBitmap(bitmap, coords[0], coords[1], True) # draw the composite map
-#            pdc.SetIdBounds(id, (coords[0],coords[1],w,h))
-#
-#        elif pdctype == 'box': # draw a box on top of the map
-#            pdc.SetBrush(wx.Brush(wx.CYAN, wx.TRANSPARENT))
-#            pdc.SetPen(self.pen)
-#            pdc.DrawRectangle(coords[0], coords[1], coords[2], coords[3])
-#            rect.Inflate(pen.GetWidth(),pen.GetWidth())
-#            pdc.SetIdBounds(id,(coords[0], coords[1], coords[2], coords[3]))
-#
-#        elif pdctype == 'line': # draw a line on top of the map
-#            pdc.SetBrush(wx.Brush(wx.CYAN, wx.TRANSPARENT))
-#            pdc.SetPen(self.pen)
-#            dc.DrawLine(rect)
-#            rect.Inflate(pen.GetWidth(),pen.GetWidth())
-#            pdc.SetIdBounds(id,(coords[0], coords[1], coords[2], coords[3]))
-#
-#        elif pdctype == 'point': #draw point
-#            pen = self.RandomPen()
-#            pdc.SetPen(pen)
-#            pdc.DrawPoint(coords[0], coords[1])
-#            rect.Inflate(pen.GetWidth(),pen.GetWidth())
-#            pdc.SetIdBounds(id,(coords[0], coords[1], coords[2], coords[3]))
-#
-#        elif pdctype == 'text': # draw text on top of map
-#            text = img
-#            w,h = self.GetFullTextExtent(text)[0:2]
-#            pdc.SetFont(self.GetFont())
-#            pdc.SetTextForeground(self.RandomColor())
-#            pdc.SetTextBackground(self.RandomColor())
-#            pdc.DrawText(text, coords[0], coords[1])
-#            rect.Inflate(2,2)
-#            pdc.SetIdBounds(id, (coords[0], coords[1], coords[2], coords[3]))
-#
-#        pdc.EndDrawing()
-#        self.Refresh()
-
-
 class MapFrame(wx.Frame):
     """
     Main frame for map display window. Drawing takes place in child double buffered
@@ -844,6 +711,8 @@ class MapFrame(wx.Frame):
                 style   -- window style
                 toolbars-- array of default toolbars, which should appear
                            map, digit
+                cb      -- control book ID in GIS Manager
+                idx     -- index of display
         """
 
         wx.Frame.__init__(self, parent, id, title, pos, size, style)
@@ -905,6 +774,7 @@ class MapFrame(wx.Frame):
         self.ovlchk = self.MapWindow.ovlchk
         self.ovlcoords = self.MapWindow.ovlcoords
         self.params = {} # previously set decoration options parameters to insert into options dialog
+
         #
         # Bind various events
         # ONLY if we are running from GIS manager
@@ -1293,10 +1163,15 @@ class MapFrame(wx.Frame):
         maptext = ''
         textfont = self.GetFont()
         textcolor = wx.BLACK
+        textcoords = [0,0,0,0]
 
-        id = wx.NewId()+100
+        if self.MapWindow.currtxtid == None: # text doesn't already exist
+            id = wx.NewId()+100
+        else: # text already exists
+            id = self.MapWindow.currtxtid
+            textcoords=self.ovlcoords[id]
 
-        dlg = TextDialog(self, wx.ID_ANY, 'Text', size=(350, 200),
+        dlg = TextDialog(self, wx.ID_ANY, 'Text', size=(400, 200),
                          style=wx.DEFAULT_DIALOG_STYLE,
                          ovltype=ovltype,
                          drawid=id)
@@ -1310,8 +1185,10 @@ class MapFrame(wx.Frame):
             textfont = dlg.currFont
             textcolor = dlg.currClr
 
-            self.MapWindow.Draw(self.MapWindow.pdc, img=(maptext,textfont,textcolor), drawid=id, pdctype='text')
-
+        self.MapWindow.textdict[id] = (maptext,textfont,textcolor)
+        self.MapWindow.Draw(self.MapWindow.pdc, img=self.MapWindow.textdict[id],
+                            drawid=id, pdctype='text', coords=textcoords)
+        self.MapWindow.Update()
 
 
     def getOptData(self, dcmd, type, params):
@@ -1400,9 +1277,7 @@ class DecDialog(wx.Dialog):
 class TextDialog(wx.Dialog):
     def __init__(self, parent, id, title, pos=wx.DefaultPosition, size=wx.DefaultSize,
             style=wx.DEFAULT_DIALOG_STYLE,
-            ovltype=2,drawid=None,currText='',
-            currClr=wx.BLACK,
-            currFont=''):
+            ovltype=2,drawid=None):
         wx.Dialog.__init__(self, parent, id, title, pos, size, style)
         """
         Controls setting options and displaying/hiding map overlay decorations
@@ -1410,12 +1285,13 @@ class TextDialog(wx.Dialog):
 
         self.ovltype = ovltype
         self.drawid = drawid
-        self.currClr = currClr
-        self.currText = currText
-        self.currFont = currFont
-#        self.ovlcmd = cmd
-#        self.ovlchk = self.Parent.MapWindow.ovlchk
-#        self.params = params #previously set decoration options to pass back to options dialog
+
+        if drawid in self.Parent.MapWindow.textdict:
+            self.currText,self.currFont,self.currClr = self.Parent.MapWindow.textdict[drawid]
+        else:
+          self.currClr = wx.BLACK
+          self.currText = ''
+          self.currFont = self.GetFont()
 
         sizer = wx.BoxSizer(wx.VERTICAL)
 
@@ -1424,8 +1300,10 @@ class TextDialog(wx.Dialog):
         label = wx.StaticText(self, -1, "Enter text:")
         box.Add(label, 0, wx.ALIGN_CENTRE|wx.ALL, 5)
 
-        self.textentry = wx.TextCtrl(self, -1, "", size=(80,-1))
-        self.currFont = self.textentry.GetFont()
+        self.textentry = wx.TextCtrl(self, -1, "", size=(200,-1))
+        self.textentry.SetFont(self.currFont)
+        self.textentry.SetForegroundColour(self.currClr)
+        self.textentry.SetValue(self.currText)
         box.Add(self.textentry, 0, wx.ALIGN_CENTRE|wx.ALL, 5)
         sizer.Add(box, 0, wx.GROW|wx.ALIGN_CENTER_VERTICAL|wx.ALL, 5)
 
@@ -1435,7 +1313,10 @@ class TextDialog(wx.Dialog):
         sizer.Add(box, 0, wx.GROW|wx.ALIGN_CENTER_VERTICAL|wx.ALL, 5)
 
         box = wx.BoxSizer(wx.HORIZONTAL)
-        label = wx.StaticText(self, -1, ("Double-click text with mouse in\npointer mode and drag to position.\nDouble-click again to set"))
+        label = wx.StaticText(self, -1, ("Double-click text with mouse in\
+            \npointer mode and drag to position.\
+            \nEdit by selecting text from overlay menu.\
+            \nDouble-click again to set"))
         box.Add(label, 0, wx.ALIGN_CENTRE|wx.ALL, 5)
         sizer.Add(box, 0, wx.GROW|wx.ALIGN_CENTER_VERTICAL|wx.ALL, 5)
 
@@ -1482,30 +1363,15 @@ class TextDialog(wx.Dialog):
 
         if dlg.ShowModal() == wx.ID_OK:
             data = dlg.GetFontData()
-            font = data.GetChosenFont()
-            face = font.GetFaceName()
-            ptsize = font.GetPointSize()
-            colour = data.GetColour()
+            self.currFont = data.GetChosenFont()
+            self.currClr = data.GetColour()
 
-            self.currFont = font
-            self.currClr = colour
-            self.UpdateUI()
+            self.textentry.SetFont(self.currFont)
+            self.textentry.SetForegroundColour(self.currClr)
 
-        # Don't destroy the dialog until you get everything you need from the
-        # dialog!
+            self.Layout()
+
         dlg.Destroy()
-
-    def UpdateUI(self):
-        self.textentry.SetFont(self.currFont)
-        self.textentry.SetForegroundColour(self.currClr)
-#        self.ps.SetLabel(str(self.currFont.GetPointSize()))
-#        self.family.SetLabel(self.currFont.GetFamilyString())
-#        self.style.SetLabel(self.currFont.GetStyleString())
-#        self.weight.SetLabel(self.currFont.GetWeightString())
-#        self.face.SetLabel(self.currFont.GetFaceName())
-#        self.nfi.SetLabel(self.currFont.GetNativeFontInfo().ToString())
-        self.Layout()
-
 
 class MapApp(wx.App):
     """
