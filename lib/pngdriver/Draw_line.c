@@ -105,8 +105,6 @@ static void draw_line(int x1, int y1, int x2, int y2)
 	}
 
 	store_xy(x, y);
-
-	modified = 1;
 }
 
 void PNG_draw_line(int x1, int y1, int x2, int y2)
@@ -117,6 +115,7 @@ void PNG_draw_line(int x1, int y1, int x2, int y2)
 	if (linewidth <= 1)
 	{
 		draw_line(x1, y1, x2, y2);
+		modified = 1;
 		return;
 	}
 
@@ -132,5 +131,7 @@ void PNG_draw_line(int x1, int y1, int x2, int y2)
 		else
 			draw_line(x1, y1 + k, x2, y2 + k);
 	}
+
+	modified = 1;
 }
 

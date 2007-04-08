@@ -16,5 +16,7 @@ void PNG_Erase(void)
 
 	for (i = 0; i < n; i++)
 		grid[i] = color;
+
+	modified = 1;
 }
 
