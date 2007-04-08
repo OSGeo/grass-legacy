@@ -144,11 +144,11 @@ static int clip_plane(struct vector *a, struct vector *b, const struct plane *p,
 	double kab;
 
 	/* both outside */
-	if (ka >= 0 && kb >= 0)
+	if (ka > 0 && kb > 0)
 		return 1;
 
 	/* both inside */
-	if (ka < 0 && kb < 0)
+	if (ka <= 0 && kb <= 0)
 		return 0;
 
 	*clipped = 1;
@@ -460,8 +460,8 @@ static int cull_polyline_plane(int *pn, const double *x, const double *y, const 
 		double x1 = x[i];
 		double y1 = y[i];
 		double d1 = dist_plane(x1, y1, p);
-		int in0 = d0 < 0;
-		int in1 = d1 < 0;
+		int in0 = d0 <= 0;
+		int in1 = d1 <= 0;
 
 		if (!in0 && in1 && last != prev)	/* entering */
 		{
@@ -572,8 +572,8 @@ static int cull_polygon_plane(int *pn, const double *x, const double *y, const s
 		double x1 = x[i];
 		double y1 = y[i];
 		double d1 = dist_plane(x1, y1, p);
-		int in0 = d0 < 0;
-		int in1 = d1 < 0;
+		int in0 = d0 <= 0;
+		int in1 = d1 <= 0;
 
 		if (!in0 && in1 && last != prev)	/* entering */
 		{
@@ -657,8 +657,8 @@ static int clip_polygon_plane(int *pn, const double *x, const double *y, const s
 		double x1 = x[i];
 		double y1 = y[i];
 		double d1 = dist_plane(x1, y1, p);
-		int in0 = d0 < 0;
-		int in1 = d1 < 0;
+		int in0 = d0 <= 0;
+		int in1 = d1 <= 0;
 
 		if (in0 != in1)		/* edge crossing */
 		{
