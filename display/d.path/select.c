@@ -166,7 +166,7 @@ int display ( struct Map_info *Map, struct line_pnts *Points,
     if ( first ) from = 0; else from = 1;
     if ( last ) to = Points->n_points; else to = Points->n_points - 1;
 
-    if(be_bold) R_line_width(2);
+    if(be_bold) D_line_width(2);
 
     for( i = from; i < to - 1; i++ ) 
 	G_plot_line(Points->x[i], Points->y[i], Points->x[i+1], Points->y[i+1]);

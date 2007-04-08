@@ -377,7 +377,7 @@ int plot1 (
 	    width = default_width;
 	  } 
 
-	  R_line_width(width);
+	  D_line_width(width);
 	} /* end if nrec_width */
 
 	x = Points->x;

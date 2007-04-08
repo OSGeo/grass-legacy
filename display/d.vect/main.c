@@ -632,7 +632,7 @@ main (int argc, char **argv)
 
 	    /* default line width */
 	    if ( !wcolumn_opt->answer )
-	        R_line_width(default_width);
+	        D_line_width(default_width);
 
 	    if ( area ) {
 		if ( level >= 2 ) {
@@ -642,7 +642,7 @@ main (int argc, char **argv)
 			cats_acolors_flag->answer, &window, rgbcol_opt->answer,
 			default_width, wcolumn_opt->answer, width_scale );
 	            if ( wcolumn_opt->answer )
-	                R_line_width(default_width);
+	                D_line_width(default_width);
 		} else
 		    G_warning(_("Cannot display areas, topology not available"));
 	    }
@@ -657,7 +657,7 @@ main (int argc, char **argv)
 			cats_acolors_flag->answer, rgbcol_opt->answer, default_width,
 			wcolumn_opt->answer, width_scale) ;
 	            if ( wcolumn_opt->answer )
-	                R_line_width(default_width);
+	                D_line_width(default_width);
 		}
 	    }
 

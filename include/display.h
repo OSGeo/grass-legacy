@@ -50,6 +50,7 @@ int D_move_abs(int, int);
 int D_move_rel(int, int);
 /* draw2.c */
 void D_set_clip(double, double, double, double);
+void D_set_clip_margin(double);
 void D_clip_to_map(void);
 void D_move_clip(double, double);
 int D_cont_clip(double, double);
@@ -65,6 +66,7 @@ void D_polydots(const double *, const double *, int);
 void D_polyline(const double *, const double *, int);
 void D_polygon(const double *, const double *, int);
 void D_box(double, double, double, double);
+void D_line_width(double);
 /* get_win.c */
 int get_win_w_mouse(float *, float *, float *, float *);
 /* ident_win.c */

@@ -302,7 +302,7 @@ int darea ( struct Map_info *Map, struct cat_list *Clist,
 	    width = default_width;
 	  } 
 
-	  R_line_width(width);
+	  D_line_width(width);
 	} /* end if nrec_width */
 
 	if ( fcolor ) {

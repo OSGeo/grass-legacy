@@ -133,7 +133,7 @@ int do_linewidth(char *buff)
 	    return(-1);
 	}
 
-	R_line_width(width);
+	D_line_width(width);
 	G_debug(3,"line width set to %d pixels", width);	
 
 	return(0);
