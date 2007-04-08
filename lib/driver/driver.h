@@ -66,8 +66,6 @@ struct driver
 
 /* Library Functions */
 
-/* color_supp.c */
-extern void LIB_assign_standard_color(int,int);
 /* command.c */
 extern int LIB_command_get_input(void);
 /* init.c */

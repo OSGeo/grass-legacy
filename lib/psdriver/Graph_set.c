@@ -8,12 +8,6 @@
  * in the upper left-hand corner.  Hence,
  *    screen_left < screen_right
  *    screen_top  < screen_bottom 
- *
- * NCOLORS is set to the total number of colors available on the device.  This
- * most certainly needs to be more than 100 (or so).  If you are writing a
- * driver with fewer colors you probably need to provide your own Color(),
- * Color_table_float(), Color_table_fixed(), and
- * Reset_color() routines (see ../lib/{Color.c,Reset_clr.c,Clr_table.c}).
  */
 
 #include <string.h>
@@ -73,8 +67,6 @@ int PS_Graph_set(int argc, char **argv)
 	width = screen_right - screen_left;
 	height = screen_bottom - screen_top;
 
-	NCOLORS = true_color ? (1<<24) : (1<<8);
-
 	init_color_table();
 
 	outfp = fopen(file_name, "w");
@@ -86,7 +78,7 @@ int PS_Graph_set(int argc, char **argv)
 
 	output("0 %d translate 1 -1 scale\n", height);
 
-	COM_Erase();
+	PS_Erase();
 
 	G_message("PS: collecting to file: %s,\n     GRASS_WIDTH=%d, GRASS_HEIGHT=%d",
 		file_name, width, height);

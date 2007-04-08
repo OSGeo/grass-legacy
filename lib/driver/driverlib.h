@@ -8,8 +8,6 @@ extern const struct driver *driver;
 
 /* Utility Functions */
 
-/* Color.c */
-void color(int);
 /* Font.c */
 int font_is_freetype(void);
 /* Text2.c */
@@ -23,11 +21,7 @@ void soft_text_freetype(int,int,double,double,double,const char *);
 void soft_text_ext_freetype(int,int,double,double,double,const char *);
 void get_text_ext_freetype(int*,int*,int*,int*);
 
-/* color_support.c */
-void assign_standard_color(int,int);
-int get_standard_color(int);
-int get_max_std_colors(void);
-/* font.c */
+/* font2.c */
 int font_init(const char *);
 int get_char_vects(unsigned char,int *,unsigned char **,unsigned char **);
 /* font_freetype.c */

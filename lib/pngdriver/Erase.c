@@ -9,7 +9,7 @@ void PNG_Erase(void)
 
 	color = (has_alpha && true_color)
 		? 0xff000000 :
-		DRV_lookup_color(
+		PNG_lookup_color(
 			(background >> 16) & 0xff,
 			(background >>  8) & 0xff,
 			(background >>  0) & 0xff);

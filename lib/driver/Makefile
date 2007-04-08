@@ -31,7 +31,6 @@ LIB_OBJS =\
 	Text.o\
 	Text_size.o\
 	Work.o\
-	color_support.o\
 	font2.o\
 	font_freetype.o\
 	init.o\

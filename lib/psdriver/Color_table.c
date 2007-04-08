@@ -8,18 +8,7 @@
 
 void init_color_table(void)
 {
-	int n_std_colors = G_num_standard_colors();
-	int colorindex;
-
-	/* Generate lookup for "standard" colors */
-	for (colorindex = 1; colorindex < n_std_colors; colorindex++)
-	{
-		struct color_rgb rgb = G_standard_color_rgb(colorindex);
-
-		LIB_assign_standard_color(
-			colorindex,
-			DRV_lookup_color(rgb.r, rgb.g, rgb.b));
-	}
+	NCOLORS = true_color ? (1<<24) : (1<<8);
 }
 
 static int get_color_rgb(int r, int g, int b)

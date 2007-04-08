@@ -83,7 +83,7 @@ int service_xevent(int opened)
 						       "WM_DELETE_WINDOW", False);
 			if (event.xclient.data.l[0] != WM_DELETE_WINDOW)
 				break;
-			COM_Graph_close();
+			XD_Graph_close();
 			exit(0);
 			break;
 		}
@@ -267,10 +267,6 @@ static void handle_resize_event(void)
 
 	curpad = NULL;
 
-	/* set standard color to black and erase */
-	COM_Standard_color(BLACK);
-	COM_Erase();
-
 	/* Dnew("full_screen") */
 	/* find a pad called "full_screen" */
 	create_pad("full_screen");
@@ -287,7 +283,7 @@ static void handle_resize_event(void)
 	_time_stamp(curpad);
 
 	/* set the window */
-	COM_Set_window(screen_top, screen_bottom, screen_left, screen_right);
+	XD_Set_window(screen_top, screen_bottom, screen_left, screen_right);
 
 	/* Handle backing store */
 	XFreePixmap(dpy, bkupmap);
