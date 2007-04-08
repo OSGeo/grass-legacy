@@ -19,6 +19,7 @@ extern void XD_Polygon_abs(const int *,const int *,int);
 extern void XD_Polygon_rel(const int *,const int *,int);
 extern void XD_Polyline_abs(const int *,const int *,int);
 extern void XD_Polyline_rel(const int *,const int *,int);
+extern void XD_Set_window(int, int, int, int);
 extern void XD_begin_scaled_raster(int [2][2], int [2][2]);
 extern int XD_scaled_raster(int, int, const unsigned char *, const unsigned char *, const unsigned char *, const unsigned char *);
 extern void XD_Respond(void);

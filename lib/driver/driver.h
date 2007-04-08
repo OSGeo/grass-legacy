@@ -44,6 +44,7 @@ struct driver
 	void (*Polyline_rel)(const int *,const int *,int);
 	void (*Polygon_abs)(const int *,const int *,int);
 	void (*Polygon_rel)(const int *,const int *,int);
+	void (*Set_window)(int, int, int, int);
 	void (*Begin_scaled_raster)(int [2][2], int [2][2]);
 	int (*Scaled_raster)(
 		int,int,

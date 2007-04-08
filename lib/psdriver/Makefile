@@ -25,7 +25,8 @@ LIB_OBJS =	\
 	Polygon.o		\
 	Polyline.o		\
 	Raster.o		\
-	Respond.o
+	Respond.o		\
+	Set_window.o
 
 include $(MODULE_TOPDIR)/include/Make/Lib.make
 

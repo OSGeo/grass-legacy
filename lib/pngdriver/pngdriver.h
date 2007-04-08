@@ -13,6 +13,7 @@ extern int true_color;
 extern int auto_write;
 extern int has_alpha;
 
+extern int clip_top, clip_bot, clip_left, clip_rite;
 extern int width, height;
 extern unsigned int *grid;
 extern unsigned char palette[256][4];
@@ -45,6 +46,7 @@ extern void PNG_Line_width(int);
 extern void PNG_begin_scaled_raster(int [2][2], int [2][2]);
 extern int PNG_scaled_raster(int, int, const unsigned char *, const unsigned char *, const unsigned char *, const unsigned char *);
 extern void PNG_Respond(void);
+extern void PNG_Set_window(int, int, int, int);
 extern void PNG_color(int);
 extern void PNG_draw_bitmap(int,int,int,const unsigned char *);
 extern void PNG_draw_line(int,int,int,int);

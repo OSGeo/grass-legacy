@@ -448,7 +448,7 @@ void D_polydots_clip(const double *x, const double *y, int n)
 static int cull_polyline_plane(int *pn, const double *x, const double *y, const struct plane *p)
 {
 	int n = *pn;
-	int last = 0;
+	int last = -1;
 	int prev = 0;
 	double x0 = x[prev];
 	double y0 = y[prev];
@@ -560,7 +560,7 @@ void D_polyline_clip(const double *x, const double *y, int n)
 static int cull_polygon_plane(int *pn, const double *x, const double *y, const struct plane *p)
 {
 	int n = *pn;
-	int last = n-1;
+	int last = -1;
 	int prev = n-1;
 	double x0 = x[prev];
 	double y0 = y[prev];

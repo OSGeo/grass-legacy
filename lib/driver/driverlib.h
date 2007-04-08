@@ -12,9 +12,6 @@ extern const struct driver *driver;
 void color(int);
 /* Font.c */
 int font_is_freetype(void);
-/* Set_window.c */
-int window_clip(double *,double *,double *,double *);
-int window_box_clip(double *,double *,double *,double *);
 /* Text2.c */
 void drawchar(double,double,double,double,unsigned char);
 void soft_text_ext(int x,int,double,double,double,const char *);
@@ -26,8 +23,6 @@ void soft_text_freetype(int,int,double,double,double,const char *);
 void soft_text_ext_freetype(int,int,double,double,double,const char *);
 void get_text_ext_freetype(int*,int*,int*,int*);
 
-/* clip.c */
-int clip(double,double,double,double,double *,double *,double *,double *);
 /* color_support.c */
 void assign_standard_color(int,int);
 int get_standard_color(int);

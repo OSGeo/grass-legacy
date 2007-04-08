@@ -2,7 +2,7 @@
 
 void PNG_draw_point(int x, int y)
 {
-	if (x < 0 || x >= width || y < 0 || y >= height)
+	if (x < clip_left || x >= clip_rite || y < clip_top || y >= clip_bot)
 		return;
 
 	grid[y * width + x] = currentColor;

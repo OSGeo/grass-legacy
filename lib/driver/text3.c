@@ -247,7 +247,6 @@ static void draw_bitmap(FT_Bitmap *bitmap, FT_Int x, FT_Int y)
 	y1 = (double)y;
 	x2 = x1 + (double)bw;
 	y2 = y1 + (double)bh;
-	window_box_clip(&x1, &y1, &x2, &y2);
 
 	w = x2 - x1;
 	h = y2 - y1;

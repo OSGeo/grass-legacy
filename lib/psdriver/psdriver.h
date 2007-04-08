@@ -23,6 +23,7 @@ extern void PS_Graph_close(void);
 extern int PS_Graph_set(int,char **);
 extern void PS_Line_width(int);
 extern void PS_Respond(void);
+extern void PS_Set_window(int, int, int, int);
 extern void PS_color(int);
 extern void PS_draw_bitmap(int,int,int,const unsigned char *);
 extern void PS_draw_line(int,int,int,int);

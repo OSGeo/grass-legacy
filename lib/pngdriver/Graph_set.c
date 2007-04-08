@@ -29,6 +29,7 @@ int true_color;
 int auto_write;
 int has_alpha;
 
+int clip_top, clip_bot, clip_left, clip_rite;
 int width, height;
 unsigned int *grid;
 unsigned char palette[256][4];
@@ -59,6 +60,11 @@ int PNG_Graph_set(int argc, char **argv)
 
 	width = screen_right - screen_left;
 	height = screen_bottom - screen_top;
+
+	clip_top = screen_top;
+	clip_bot = screen_bottom;
+	clip_left = screen_left;
+	clip_rite = screen_right;
 
 	grid = G_malloc(width * height * sizeof(unsigned int));
 

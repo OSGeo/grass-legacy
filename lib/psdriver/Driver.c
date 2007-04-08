@@ -46,6 +46,7 @@ const struct driver *PS_Driver(void)
 	drv.Polyline_rel	= NULL;
 	drv.Polygon_abs		= PS_Polygon_abs;
 	drv.Polygon_rel		= NULL;
+	drv.Set_window		= PS_Set_window;
 	drv.Begin_scaled_raster	= PS_begin_scaled_raster;
 	drv.Scaled_raster	= PS_scaled_raster;
 	drv.Respond		= PS_Respond;

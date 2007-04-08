@@ -18,17 +18,17 @@ void PNG_Box_abs(int x1, int y1, int x2, int y2)
 	if (y2 < 0 || y1 > height)
 		return;
 
-	if (x1 < 0)
-		x1 = 0;
+	if (x1 < clip_left)
+		x1 = clip_left;
 
-	if (x2 > width)
-		x2 = width;
+	if (x2 > clip_rite)
+		x2 = clip_rite;
 
-	if (y1 < 0)
-		y1 = 0;
+	if (y1 < clip_top)
+		y1 = clip_top;
 
-	if (y2 > height)
-		y2 = height;
+	if (y2 > clip_bot)
+		y2 = clip_bot;
 
 	for (y = y1; y < y2; y++)
 	{

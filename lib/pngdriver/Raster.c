@@ -5,6 +5,13 @@
 #include "driver.h"
 #include "pngdriver.h"
 
+#ifndef min
+#define min(a,b) ((a)<(b)?(a):(b))
+#endif
+#ifndef max
+#define max(a,b) ((a)>(b)?(a):(b))
+#endif
+
 static int *trans;
 static int ncols;
 static int nalloc;
@@ -70,12 +77,16 @@ int PNG_scaled_raster(
 	int d_y0 = scale_fwd_y(row + 0);
 	int d_y1 = scale_fwd_y(row + 1);
 	int d_rows = d_y1 - d_y0;
+	int x0 = max(clip_left - dst[0][0], 0);
+	int x1 = min(clip_rite - dst[0][0], ncols);
+	int y0 = max(clip_top  - d_y0, 0);
+	int y1 = min(clip_bot  - d_y0, d_rows);
 	int x, y;
 
-	if (d_rows <= 0)
+	if (y1 <= y0)
 		return next_row(row, d_y0);
 
-	for (x = 0; x < ncols; x++)
+	for (x = x0; x < x1; x++)
 	{
 		int xx = dst[0][0] + x;
 		int j = trans[x];
@@ -86,7 +97,7 @@ int PNG_scaled_raster(
 
 		c = PNG_lookup_color(red[j], grn[j], blu[j]);
 
-		for (y = 0; y < d_rows; y++)
+		for (y = y0; y < y1; y++)
 		{
 			int yy = d_y0 + y;
 
