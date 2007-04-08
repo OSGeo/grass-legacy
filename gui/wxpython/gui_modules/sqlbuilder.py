@@ -22,7 +22,7 @@ class SQLFrame(wx.Frame):
         self.SetTitle("SQL Builder for GRASS GIS - %s " % (qtype.upper()))
         self.SetIcon(wx.Icon(os.path.join(imagepath,'grass_sql.png'), wx.BITMAP_TYPE_ANY))
 
-        # 
+        #
         # variables
         #
         self.vectmap = vectmap
@@ -73,26 +73,26 @@ class SQLFrame(wx.Frame):
         self.btn_and = wx.Button(self, -1, "AND")
         self.btn_brackets = wx.Button(self, -1, "()")
         self.btn_prc = wx.Button(self, -1, "%")
-        
-        # 
+
+        #
         # Text labels
         #
         #self.label_headding = wx.StaticText(self, -1, '')
 
         #
         # Textareas
-        # 
+        #
         self.text_sql = wx.TextCtrl(self, -1, '', size=(-1,75),style=wx.TE_MULTILINE)
 
-        # 
+        #
         # List Boxes
         #
         self.list_columns = wx.ListBox(self, -1, wx.DefaultPosition, (-1, -1), self.column_names, wx.LB_MULTIPLE|wx.LB_SORT)
         self.list_values = wx.ListBox(self, -1, wx.DefaultPosition, (-1, -1), self.colvalues, wx.LB_MULTIPLE|wx.LB_SORT)
-        
+
         #
         # Bindings
-        # 
+        #
         self.btn_uniqe.Bind(wx.EVT_BUTTON, self.GetUniqueValues)
         self.btn_uniqesample.Bind(wx.EVT_BUTTON, self.GetSampleValues)
         self.btn_is.Bind(wx.EVT_BUTTON, self.AddMark)
@@ -114,7 +114,7 @@ class SQLFrame(wx.Frame):
 
         self.list_columns.Bind(wx.EVT_LISTBOX, self.AddColumnName)
         self.list_values.Bind(wx.EVT_LISTBOX, self.AddValue)
-        
+
         self.__doLayout()
 
     def __doLayout(self):
@@ -167,7 +167,7 @@ class SQLFrame(wx.Frame):
 
         hsizer1 = wx.BoxSizer(wx.HORIZONTAL)
         #hsizer2 = wx.BoxSizer(wx.HORIZONTAL)
-        
+
         columnsbox = wx.StaticBox(self,-1,"Columns: ")
         valuesbox = wx.StaticBox(self,-1,"Values: ")
         #hsizer1.Add(wx.StaticText(self,-1, "Unique values: "), border=0, proportion=1)
@@ -200,7 +200,7 @@ class SQLFrame(wx.Frame):
         for line in os.popen("db.columns table=%s" % (self.tablename)):
             self.column_names.append(line.strip())
         for line in os.popen("db.describe -c table=%s" % (self.tablename)).readlines()[1:]:
-            x,name,ctype = line.strip().split(":")
+            x,name,ctype,length = line.strip().split(":")
             self.columns[name] = {'type':ctype}
         return
 
@@ -221,7 +221,7 @@ class SQLFrame(wx.Frame):
                 else:
                     break
                 i += 1
-    
+
     def GetSampleValues(self,event):
         self.GetUniqueValues(None,True)
 
@@ -257,7 +257,7 @@ class SQLFrame(wx.Frame):
         elif event.GetId() == self.btn_prc.GetId(): mark = "%"
         self.__addSomething(mark)
 
-            
+
     def __addSomething(self,what):
         sqlstr = self.text_sql.GetValue()
         newsqlstr = ''
