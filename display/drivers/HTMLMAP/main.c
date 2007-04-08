@@ -27,6 +27,7 @@ int main(int argc, char **argv)
 	drv.Polyline_rel	= NULL;
 	drv.Polygon_abs		= HTML_Polygon_abs;
 	drv.Polygon_rel		= NULL;
+	drv.Set_window		= NULL;
 	drv.Begin_scaled_raster	= NULL;
 	drv.Scaled_raster	= NULL;
 	drv.Respond		= NULL;

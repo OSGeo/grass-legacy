@@ -26,6 +26,7 @@ int main(int argc, char **argv)
 	drv.Polyline_rel	= XD_Polyline_rel;
 	drv.Polygon_abs		= XD_Polygon_abs;
 	drv.Polygon_rel		= XD_Polygon_rel;
+	drv.Set_window		= XD_Set_window;
 	drv.Begin_scaled_raster	= XD_begin_scaled_raster;
 	drv.Scaled_raster	= XD_scaled_raster;
 	drv.Respond		= XD_Respond;

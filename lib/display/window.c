@@ -87,6 +87,8 @@ int D_new_window(char *name , int t,int  b,int  l,int  r)
 /* Display outline of new window */
 	D_show_window(GRAY) ;
 
+	R_set_window(t, b, l, r) ;
+
 	return(0) ;
 
 pad_error:
@@ -265,6 +267,8 @@ int D_show_window( int color )
 	if ((stat = D_get_screen_window(&t, &b, &l, &r)))
 		return(stat) ;
 
+	R_set_window(t-1, b+1, l-1, r+1) ;
+
 	R_standard_color(color) ;
 	R_move_abs(l-1, b) ;
 	R_cont_abs(l-1, t-1) ;
@@ -272,6 +276,8 @@ int D_show_window( int color )
 	R_cont_abs(r, b) ;
 	R_cont_abs(l-1, b) ;
 	R_flush() ;
+
+	R_set_window(t, b, l, r) ;
 
 	return(0) ;
 }
@@ -520,10 +526,11 @@ void D_remove_windows(void)
 void D_full_screen(void)
 {
 	D_remove_windows();
-	R_standard_color(D_translate_color(DEFAULT_BG_COLOR)) ;
-	R_erase() ;
 
 	D_new_window_percent("full_screen", 0.0, 100.0, 0.0, 100.0);
 	if (D_set_cur_wind("full_screen") == 0)
 		D_timestamp();
+
+	R_standard_color(D_translate_color(DEFAULT_BG_COLOR)) ;
+	R_erase() ;
 }

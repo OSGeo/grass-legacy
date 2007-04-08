@@ -54,6 +54,7 @@ OBJS =  \
 	Raster.o\
 	Respond.o\
 	Serve_Xevent.o\
+	Set_window.o\
 	Work.o\
 	alloc.o\
 	main.o

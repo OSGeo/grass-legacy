@@ -24,6 +24,7 @@ LIB_OBJS =	\
 	Line_width.o		\
 	Raster.o		\
 	Respond.o		\
+	Set_window.o		\
 	read.o			\
 	read_ppm.o		\
 	write.o			\

@@ -23,31 +23,20 @@ static void remember(double x, double y)
 
 static void text_draw(double x, double y)
 {
-	double X1, Y1;
-	double X2, Y2;
-	int mod;
-
-	X1 = x;
-	Y1 = y;
-	X2 = curx;
-	Y2 = cury;
-
-	mod = window_clip(&X1, &Y1, &X2, &Y2);
+	int X1 = (int) x;
+	int Y1 = (int) y;
+	int X2 = (int) curx;
+	int Y2 = (int) cury;
 
 	if (am_inside)
 	{
-		COM_Cont_abs((int) X1, (int) Y1);
-		if (mod)
-			am_inside = 0;
+		COM_Cont_abs(X1, Y1);
 	}
 	else
 	{
-		if (!mod)
-		{
-			COM_Move_abs((int)X2, (int)Y2);
-			COM_Cont_abs((int)X1, (int)Y1);
-			am_inside = 1;
-		}
+		COM_Move_abs(X2, Y2);
+		COM_Cont_abs(X1, Y1);
+		am_inside = 1;
 	}
 
 	curx = x;
@@ -56,22 +45,11 @@ static void text_draw(double x, double y)
 
 static void text_move(double x, double y)
 {
-	double X1, Y1;
-	double X2, Y2;
-	int mod;
+	int X1 = (int) x;
+	int Y1 = (int) y;
 
-	X1 = x;
-	Y1 = y;
-	X2 = curx;
-	Y2 = cury;
-
-	mod = window_clip(&X1, &Y1, &X2, &Y2);
-	
 	if (am_inside)
-		COM_Move_abs((int) X1, (int) Y1);
-
-	if (mod)
-		am_inside = 0;
+		COM_Move_abs(X1, Y1);
 
 	curx = x;
 	cury = y;
