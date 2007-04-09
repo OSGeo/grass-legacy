@@ -54,7 +54,7 @@ parse_command_line (int argc, char *argv[])
 		 "cat;insert new row for each category if doesn't exist yet;"
 		 "area;area size;"
     		 "compact;compactness of an area, calculated as \n"
-		 "              compactness = perimeter / 2 * sqrt(PI * area);"
+		 "              compactness = perimeter / (2 * sqrt(PI * area));"
 		 "perimeter;perimeter length of an area;"
 		 "length;line length;"
 		 "count;number of features for each category;"
