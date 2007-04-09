@@ -964,7 +964,7 @@ The creation of a 2d gradient field is based on the following scheme:
 <p>
 N_gradient_field_3d *#N_compute_gradient_field_3d(N_array_3d * pot, N_array_3d * weight_x, N_array_3d * weight_y, N_array_3d * weight_z, N_geom_data * geom, N_gradient_field_3d *gradfield)
 <p>
-Based on this storages scheme (this is a 2d slice) the gradient vector for each cell is 
+Based on this storages scheme the gradient vector for each cell is 
  calculated and stored in the provided  N_array_3d structures
  \verbatim
  

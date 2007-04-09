@@ -164,12 +164,14 @@ extern inline void N_put_array_2d_d_value (N_array_2d * array2d, int col, int ro
 extern inline int N_is_array_2d_value_null (N_array_2d * array2d, int col, int row);
 extern inline void N_put_array_2d_value_null (N_array_2d * array2d, int col, int row);
 extern void N_print_array_2d (N_array_2d * data);
+extern void N_print_array_2d_info(N_array_2d * data);
 extern void N_copy_array_2d (N_array_2d * source, N_array_2d * target);
 extern double N_norm_array_2d (N_array_2d * array1, N_array_2d * array2, int type);
 extern N_array_2d * N_math_array_2d (N_array_2d * array1, N_array_2d * array2, N_array_2d * result, int type);
 extern int N_convert_array_2d_null_to_zero (N_array_2d * a);
 extern N_array_2d * N_read_rast_to_array_2d (char *name, N_array_2d * array);
 extern void N_write_array_2d_to_rast (N_array_2d * array, char *name);
+extern void N_calc_array_2d_stats(N_array_2d * a, double *min, double *max, double *sum, int *nonzero, int withoffset);
 
 typedef struct
 {
@@ -193,12 +195,14 @@ extern inline void N_put_array_3d_d_value (N_array_3d * array3d, int col, int ro
 extern inline int N_is_array_3d_value_null (N_array_3d * array3d, int col, int row, int depth);
 extern inline void N_put_array_3d_value_null (N_array_3d * array3d, int col, int row, int depth);
 extern void N_print_array_3d (N_array_3d * data);
+extern void N_print_array_3d_info(N_array_3d * data);
 extern void N_copy_array_3d (N_array_3d * source, N_array_3d * target);
 extern double N_norm_array_3d (N_array_3d * array1, N_array_3d * array2, int type);
 extern N_array_3d * N_math_array_3d (N_array_3d * array1, N_array_3d * array2, N_array_3d * result, int type);
 extern int N_convert_array_3d_null_to_zero (N_array_3d * a);
 extern N_array_3d * N_read_rast3d_to_array_3d (char *name, N_array_3d * array, int mask);
 extern void N_write_array_3d_to_rast3d (N_array_3d * array, char *name, int mask);
+extern void N_calc_array_3d_stats(N_array_3d * a, double *min, double *max, double *sum, int *nonzero, int withoffset);
 
 /* *************************************************************** */
 /* *************** MATRIX ASSEMBLING METHODS ********************* */
@@ -509,6 +513,8 @@ typedef struct {
   N_array_2d *x_array;
   N_array_2d *y_array;
   int cols, rows;
+  double min, max, mean, sum;
+  int nonull;
 
 } N_gradient_field_2d;
 
@@ -519,6 +525,8 @@ typedef struct {
   N_array_3d *y_array;
   N_array_3d *z_array;
   int cols, rows, depths;
+  double min, max, mean, sum;
+  int nonull;
 
 } N_gradient_field_3d;
 
@@ -555,6 +563,9 @@ extern N_gradient_neighbours_2d * N_alloc_gradient_neighbours_2d();
 extern void N_free_gradient_neighbours_2d(N_gradient_neighbours_2d *grad);
 extern N_gradient_neighbours_2d * N_create_gradient_neighbours_2d(N_gradient_neighbours_x *x, N_gradient_neighbours_y *y);
 extern int N_copy_gradient_neighbours_2d(N_gradient_neighbours_2d *source, N_gradient_neighbours_2d *target);
+extern N_gradient_neighbours_2d *N_get_gradient_neighbours_2d(N_gradient_field_2d * field,
+				 N_gradient_neighbours_2d * gradient, int col, int row);
+
 
 extern N_gradient_neighbours_3d * N_alloc_gradient_neighbours_3d();
 extern void N_free_gradient_neighbours_3d(N_gradient_neighbours_3d *grad);
@@ -563,19 +574,23 @@ extern N_gradient_neighbours_3d * N_create_gradient_neighbours_3d(N_gradient_nei
 				     N_gradient_neighbours_z *zt, N_gradient_neighbours_z *zb);
 extern int N_copy_gradient_neighbours_3d(N_gradient_neighbours_3d *source, N_gradient_neighbours_3d *target);
 
+extern void N_print_gradient_field_2d_info(N_gradient_field_2d *field);
+extern void N_calc_gradient_field_2d_stats(N_gradient_field_2d *field);
+
+
 extern N_gradient_field_2d * N_alloc_gradient_field_2d(int cols, int rows);
 extern void N_free_gradient_field_2d(N_gradient_field_2d *field);
 extern int N_copy_gradient_field_2d(N_gradient_field_2d *source, N_gradient_field_2d *target);
 extern N_gradient_field_2d * N_compute_gradient_field_2d(N_array_2d *pot, N_array_2d *weight_x,  N_array_2d *weight_y,N_geom_data *geom, N_gradient_field_2d *gradfield);
 extern void N_compute_gradient_field_components_2d(N_gradient_field_2d *field, N_array_2d *x_comp, N_array_2d *y_comp);
 
+extern void N_print_gradient_field_3d_info(N_gradient_field_3d *field);
+extern void N_calc_gradient_field_3d_stats(N_gradient_field_3d *field);
+
 extern N_gradient_field_3d * N_alloc_gradient_field_3d(int cols, int rows, int depths);
 extern void N_free_gradient_field_3d(N_gradient_field_3d *field);
 extern int N_copy_gradient_field_3d(N_gradient_field_3d *source, N_gradient_field_3d *target);
 extern N_gradient_field_3d * N_compute_gradient_field_3d(N_array_3d *pot, N_array_3d *weight_x, N_array_3d *weight_y, N_array_3d *weight_z, N_geom_data *geom, N_gradient_field_3d * gradfield);
 extern void N_compute_gradient_field_components_3d(N_gradient_field_3d *field, N_array_3d *x_comp, N_array_3d *y_comp, N_array_3d *z_comp);
-
-extern N_gradient_neighbours_2d * N_get_gradient_neighbours_2d(N_gradient_field_2d *field, int col, int row);
-extern N_gradient_neighbours_3d * N_get_gradient_neighbours_3d(N_gradient_field_3d *field, int col, int row, int depth);
 
 #endif
