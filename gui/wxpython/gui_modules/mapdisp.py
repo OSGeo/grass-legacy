@@ -22,7 +22,7 @@ DEBUG = False
 
 import wx
 import wx.aui
-import os, sys, time, glob
+import os, sys, time, glob, math
 
 import render
 import toolbars
@@ -292,18 +292,37 @@ class BufferedWindow(wx.Window):
             self.ovlcoords[drawid] = coords
 
         elif pdctype == 'text': # draw text on top of map
-
             text = img[0]
+            rotation = float(img[3])
             w,h = self.GetFullTextExtent(img[0])[0:2]
-            coords[2], coords[3] = coords[0] + w, coords[1] + h
             pdc.SetFont(img[1])
             pdc.SetTextForeground(img[2])
-            pdc.DrawText(img[0], coords[0], coords[1])
-            pdc.SetIdBounds(drawid, (coords[0], coords[1], coords[2], coords[3]))
+            coords,w,h = self.textBounds(img,coords)
+            if rotation == 0:
+                pdc.DrawText(img[0], coords[0], coords[1])
+            else:
+                pdc.DrawRotatedText(img[0], coords[0], coords[1], rotation)
+            pdc.SetIdBounds(drawid, (coords[0], coords[1], w, h))
             self.ovlcoords[drawid] = coords
 
         pdc.EndDrawing()
         self.Refresh()
+
+    def textBounds(self, textinfo, coords):
+        rotation = float(textinfo[3])
+        self.Update()
+        self.Refresh()
+        self.SetFont(textinfo[1])
+        w,h = self.GetTextExtent(textinfo[0])
+        if rotation == 0:
+            coords[2], coords[3] = coords[0] + w, coords[1] + h
+            return coords,w,h
+        else:
+            boxh = math.fabs(math.sin(math.radians(rotation)) * w) + h
+            boxw = math.fabs(math.cos(math.radians(rotation)) * w) + h
+            coords[2] = coords[0] + boxw
+            coords[3] = coords[1] + boxh
+            return coords,boxw,boxh
 
     def OnPaint(self, event):
     	"""
@@ -526,10 +545,16 @@ class BufferedWindow(wx.Window):
         dy = event.GetY() - y
         self.pdc.SetBackground(wx.Brush(self.GetBackgroundColour()))
         r = self.pdc.GetIdBounds(id)
+        if self.dragid > 100: # text dragging
+            rtop = (r[0],r[1]-r[3],r[2],r[3])
+            r = r.Union(rtop)
+            rleft = (r[0]-r[2],r[1],r[2],r[3])
+            r = r.Union(rleft)
         self.pdc.TranslateId(id, dx, dy)
         r2 = self.pdc.GetIdBounds(id)
         r = r.Union(r2)
         r.Inflate(4,4)
+        self.Update()
         self.RefreshRect(r, False)
         self.lastpos = (event.GetX(),event.GetY())
 
@@ -564,12 +589,13 @@ class BufferedWindow(wx.Window):
     	Mouse motion and button click notifier
     	"""
         wheel = event.GetWheelRotation() # +- int
-        hitradius = 5 # distance for selecting map decorations
+        hitradius = 10 # distance for selecting map decorations
 
         # left mouse button pressed; get decoration ID
         if event.LeftDown():
             self.lastpos = self.mouse['begin'] = event.GetPositionTuple()[:]
-            idlist  = self.pdc.FindObjects(self.mouse['begin'][0], self.mouse['begin'][1], hitradius)
+#            idlist = self.pdc.FindObjectsByBBox(self.lastpos[0],self.lastpos[1])
+            idlist  = self.pdc.FindObjects(self.lastpos[0],self.lastpos[1], hitradius)
             if idlist != []:
                 self.dragid = idlist[0]
 
@@ -579,7 +605,7 @@ class BufferedWindow(wx.Window):
             clickposition = event.GetPositionTuple()[:]
 
             # get decoration ID
-#            l = self.pdc.FindObjectsByBBox(self.mouse['begin'][0], self.mouse['begin'][1])
+#            idlist = self.pdc.FindObjectsByBBox(clickposition[0], clickposition[1])
             idlist  = self.pdc.FindObjects(clickposition[0], clickposition[1], hitradius)
             if idlist == []: return
             self.dragid = idlist[0]
@@ -1128,7 +1154,7 @@ class MapFrame(wx.Frame):
         if id not in ovldict: return
         img = ovldict[id]
 
-        if id not in self.ovlcoords: self.ovlcoords[id] = wx.Rect(0,0,0,0)
+        if id not in self.ovlcoords: self.ovlcoords[id] = [10,10]
 
         # Decoration overlay control dialog
         dlg = DecDialog(self, wx.ID_ANY, 'Scale and North arrow', size=(350, 200),
@@ -1167,6 +1193,8 @@ class MapFrame(wx.Frame):
         if id not in ovldict: return
         img = ovldict[id]
 
+        if id not in self.ovlcoords: self.ovlcoords[id] = [10,10]
+
         # Decoration overlay control dialog
         dlg = DecDialog(self, wx.ID_ANY, 'Legend', size=(350, 200),
                          style=wx.DEFAULT_DIALOG_STYLE,
@@ -1198,7 +1226,8 @@ class MapFrame(wx.Frame):
         maptext = ''
         textfont = self.GetFont()
         textcolor = wx.BLACK
-        textcoords = [0,0,0,0]
+        textcoords = [10,10,10,10]
+        rotation = 0
 
         if self.MapWindow.currtxtid == None: # text doesn't already exist
             id = wx.NewId()+100
@@ -1219,10 +1248,20 @@ class MapFrame(wx.Frame):
             maptext = dlg.currText
             textfont = dlg.currFont
             textcolor = dlg.currClr
+            rotation = dlg.currRot
+            coords,w,h = self.MapWindow.textBounds((maptext,textfont,textcolor,rotation),textcoords)
+
+        # delete object if if it has no text
+        if maptext == '':
+            self.MapWindow.pdc.ClearId(id)
+            self.MapWindow.pdc.RemoveId(id)
+            del self.MapWindow.textdict[id]
+            del self.ovlcoords[id]
+            return
 
         self.MapWindow.pdc.ClearId(id)
         self.MapWindow.pdc.SetId(id)
-        self.MapWindow.textdict[id] = (maptext,textfont,textcolor)
+        self.MapWindow.textdict[id] = (maptext,textfont,textcolor,rotation)
         self.MapWindow.Draw(self.MapWindow.pdc, img=self.MapWindow.textdict[id],
                             drawid=id, pdctype='text', coords=textcoords)
         self.MapWindow.Update()
@@ -1324,24 +1363,33 @@ class TextDialog(wx.Dialog):
         self.drawid = drawid
 
         if drawid in self.Parent.MapWindow.textdict:
-            self.currText,self.currFont,self.currClr = self.Parent.MapWindow.textdict[drawid]
+            self.currText,self.currFont,self.currClr,self.currRot = self.Parent.MapWindow.textdict[drawid]
         else:
           self.currClr = wx.BLACK
           self.currText = ''
           self.currFont = self.GetFont()
+          self.currRot = 0
 
         sizer = wx.BoxSizer(wx.VERTICAL)
 
         box = wx.BoxSizer(wx.HORIZONTAL)
-
         label = wx.StaticText(self, -1, "Enter text:")
         box.Add(label, 0, wx.ALIGN_CENTRE|wx.ALL, 5)
-
         self.textentry = wx.TextCtrl(self, -1, "", size=(200,-1))
         self.textentry.SetFont(self.currFont)
         self.textentry.SetForegroundColour(self.currClr)
         self.textentry.SetValue(self.currText)
         box.Add(self.textentry, 0, wx.ALIGN_CENTRE|wx.ALL, 5)
+        sizer.Add(box, 0, wx.GROW|wx.ALIGN_CENTER_VERTICAL|wx.ALL, 5)
+
+        box = wx.BoxSizer(wx.HORIZONTAL)
+        label = wx.StaticText(self, -1, "Rotation:")
+        box.Add(label, 0, wx.ALIGN_CENTRE|wx.ALL, 5)
+        self.rotation = wx.SpinCtrl(self, id=wx.ID_ANY, value="", pos=(30, 50),
+                        size=(75,-1), style=wx.SP_ARROW_KEYS)
+        self.rotation.SetRange(-360,360)
+        self.rotation.SetValue(int(self.currRot))
+        box.Add(self.rotation, 0, wx.ALIGN_CENTRE|wx.ALL, 5)
         sizer.Add(box, 0, wx.GROW|wx.ALIGN_CENTER_VERTICAL|wx.ALL, 5)
 
         box = wx.BoxSizer(wx.HORIZONTAL)
@@ -1374,9 +1422,13 @@ class TextDialog(wx.Dialog):
 
         self.Bind(wx.EVT_BUTTON, self.onSelectFont, fontbtn)
         self.textentry.Bind(wx.EVT_TEXT, self.onText)
+        self.rotation.Bind(wx.EVT_TEXT, self.onRotation)
 
     def onText(self, event):
         self.currText = event.GetString()
+
+    def onRotation(self, event):
+        self.currRot = event.GetString()
 
     def onSelectFont(self, event):
         data = wx.FontData()
