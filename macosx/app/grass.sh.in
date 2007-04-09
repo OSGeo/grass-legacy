@@ -5,11 +5,10 @@
 #
 # MODULE:   	GRASS Initialization
 # AUTHOR(S):	Justin Hickey - Thailand - jhickey@hpcc.nectec.or.th
+#               William Kyngesburye - kyngchaos@kyngchaos.com
 # PURPOSE:  	The source file for this shell script is in
-#   	    	lib/init/grass.src and is the grass startup script. It
-#   	    	requires a source file because the definition of GISBASE
-#   	    	is not known until compile time and is substituted from the
-#   	    	Makefile. Any command line options are passed to Init.sh.
+#   	    	macosx/app/grass.sh.in and is the grass startup script for
+#               the Mac OS X application build.
 # COPYRIGHT:    (C) 2000-2005 by the GRASS Development Team
 #
 #               This program is free software under the GNU General Public
@@ -20,8 +19,6 @@
 
 # Mac app only startup shell - complete rewrite for starting from a GRASS.app
 # in Mac OS X.  Sets defaults for unset env, adds some Mac-only config.
-#   William Kyngesburye
-#   kyngchaos@kyngchaos.com
 
 trap "echo 'User break!' ; exit" 2 3 9 15
 
@@ -34,11 +31,12 @@ export GISBASE
 grass_ver=`cut -d . -f 1-2 $GISBASE/etc/VERSIONNUMBER`
 
 # for GDAL utils
-# hack - ideally user should have this in their PATH
+# hack - ideally user should have this in their PATH, but make sure here
 PATH="@GDAL_BIN_PATH@:$PATH"
 export PATH
 
-# xterm
+# xterm - make sure to use xterm instead of Terminal,
+# use path in case X11 not in users PATH
 if [ ! "$GRASS_XTERM" ] ; then
 	GRASS_XTERM=/usr/X11R6/bin/xterm
 	export GRASS_XTERM
@@ -65,7 +63,7 @@ if [ ! "$DISPLAY" ] ; then
 	export DISPLAY
 fi
 
-# add some OS X style App Support paths, and create user one if missing.
+# add some OS X style app support paths, and create user one if missing.
 mkdir -p "$HOME/Library/GRASS/$grass_ver/Modules/bin"
 if [ "$GRASS_ADDON_PATH" ] ; then
 	GRASS_ADDON_PATH="$GRASS_ADDON_PATH:$HOME/Library/GRASS/$grass_ver/Modules/bin:/Library/GRASS/$grass_ver/Modules/bin"
