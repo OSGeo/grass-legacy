@@ -33,7 +33,7 @@ N_array_2d *create_potential_array_2d();
 N_array_3d *create_potential_array_3d();
 
 /* *************************************************************** */
-/* Performe the les assmbling tests ****************************** */
+/* Performe the gradient tests *********************************** */
 /* *************************************************************** */
 int unit_test_gradient()
 {
@@ -68,13 +68,7 @@ N_array_2d *create_relax_array_2d()
 #pragma omp parallel for private (i, j) shared (data)
     for (j = 0; j < TEST_N_NUM_ROWS; j++) {
 	for (i = 0; i < TEST_N_NUM_COLS; i++) {
-
-	    if (j == 0) {
 		N_put_array_2d_c_value(data, i, j, 1);
-	    }
-	    else {
-		N_put_array_2d_c_value(data, i, j, 1);
-	    }
 	}
     }
     return data;
@@ -93,13 +87,7 @@ N_array_2d *create_potential_array_2d()
 #pragma omp parallel for private (i, j) shared (data)
     for (j = 0; j < TEST_N_NUM_ROWS; j++) {
 	for (i = 0; i < TEST_N_NUM_COLS; i++) {
-
-	    if (j == 0) {
-		N_put_array_2d_d_value(data, i, j, 40);
-	    }
-	    else {
-		N_put_array_2d_d_value(data, i, j, 40);
-	    }
+		N_put_array_2d_d_value(data, i, j, (double)i*j);
 	}
     }
     return data;
@@ -118,16 +106,9 @@ N_array_3d *create_relax_array_3d()
 			 FCELL_TYPE);
 
 #pragma omp parallel for private (i, j, k) shared (data)
-    for (k = 0; k < TEST_N_NUM_DEPTHS; k++)
+    for (k = 0; k < TEST_N_NUM_DEPTHS; k++) {
 	for (j = 0; j < TEST_N_NUM_ROWS; j++) {
 	    for (i = 0; i < TEST_N_NUM_COLS; i++) {
-
-
-		if (i == 0) {
-		    N_put_array_3d_f_value(data, i, j, k, 1.0);
-		}
-		else {
-
 		    N_put_array_3d_f_value(data, i, j, k, 1.0);
 		}
 	    }
@@ -153,17 +134,9 @@ N_array_3d *create_potential_array_3d()
     for (k = 0; k < TEST_N_NUM_DEPTHS; k++)
 	for (j = 0; j < TEST_N_NUM_ROWS; j++) {
 	    for (i = 0; i < TEST_N_NUM_COLS; i++) {
-
-
-		if (j == 0) {
-		    N_put_array_3d_f_value(data, i, j, k, 50);
-		}
-		else {
-
-		    N_put_array_3d_f_value(data, i, j, k, 50);
+		    N_put_array_3d_f_value(data, i, j, k, (double)i*j*k);
 		}
 	    }
-	}
 
     return data;
 
@@ -202,13 +175,18 @@ int test_gradient_3d()
 
     field = N_compute_gradient_field_3d(pot, relax, relax, relax, geom, NULL);
     field = N_compute_gradient_field_3d(pot, relax, relax, relax, geom, field);
+
+    /*compute stats*/
+    N_calc_gradient_field_3d_stats(field);
+    N_print_gradient_field_3d_info(field);
+
     N_free_gradient_field_3d(field);
 
     N_free_array_3d(relax);
     N_free_array_3d(pot);
 
     relax = N_alloc_array_3d(3, 3, 3, 0, DCELL_TYPE);
-    pot = N_alloc_array_3d(3, 3, 3, 0, DCELL_TYPE);
+    pot =   N_alloc_array_3d(3, 3, 3, 0, DCELL_TYPE);
     xcomp = N_alloc_array_3d(3, 3, 3, 0, DCELL_TYPE);
     ycomp = N_alloc_array_3d(3, 3, 3, 0, DCELL_TYPE);
     zcomp = N_alloc_array_3d(3, 3, 3, 0, DCELL_TYPE);
@@ -243,8 +221,6 @@ int test_gradient_3d()
     N_put_array_3d_d_value(relax, 2, 0, 2, 1);
     N_put_array_3d_d_value(relax, 2, 1, 2, 1);
     N_put_array_3d_d_value(relax, 2, 2, 2, 1);
-
-    N_print_array_3d(relax);
 
 
   /**
@@ -284,7 +260,6 @@ int test_gradient_3d()
     N_put_array_3d_d_value(pot, 1, 2, 2, 15.5);
     N_put_array_3d_d_value(pot, 2, 2, 2, 25.5);
 
-    N_print_array_3d(pot);
 
     geom->depths = 3;
     geom->rows = 3;
@@ -292,6 +267,7 @@ int test_gradient_3d()
 
     field = N_compute_gradient_field_3d(pot, relax, relax, relax, geom, NULL);
     field = N_compute_gradient_field_3d(pot, relax, relax, relax, geom, field);
+    N_print_gradient_field_3d_info(field);
 
     grad = N_get_gradient_3d(field, NULL, 0, 0, 0);
     printf
@@ -323,11 +299,20 @@ int test_gradient_3d()
 
     N_compute_gradient_field_components_3d(field, xcomp, ycomp, zcomp);
 
+    /*
     N_print_array_3d(xcomp);
     N_print_array_3d(ycomp);
     N_print_array_3d(zcomp);
+    */
 
+    N_free_gradient_field_3d(field);
     G_free(geom);
+
+    N_free_array_3d(xcomp);
+    N_free_array_3d(ycomp);
+    N_free_array_3d(zcomp);
+    N_free_array_3d(relax);
+    N_free_array_3d(pot);
 
     return 0;
 }
@@ -345,6 +330,7 @@ int test_gradient_2d()
     N_gradient_field_2d *field = NULL;
     N_geom_data *geom = NULL;
     N_gradient_2d *grad = NULL;
+    N_gradient_neighbours_2d *grad_2d = NULL;
 
     geom = N_alloc_geom_data();
 
@@ -355,7 +341,6 @@ int test_gradient_2d()
     geom->Az = 1;
     geom->planimetric = 1;
 
-    geom->depths = TEST_N_NUM_DEPTHS;
     geom->rows = TEST_N_NUM_ROWS;
     geom->cols = TEST_N_NUM_COLS;
 
@@ -366,13 +351,18 @@ int test_gradient_2d()
 
     field = N_compute_gradient_field_2d(pot, relax, relax, geom, field);
     field = N_compute_gradient_field_2d(pot, relax, relax, geom, field);
+
+    /*compute stats*/
+    N_calc_gradient_field_2d_stats(field);
+    N_print_gradient_field_2d_info(field);
+
     N_free_gradient_field_2d(field);
 
     N_free_array_2d(relax);
     N_free_array_2d(pot);
 
     relax = N_alloc_array_2d(3, 3, 0, DCELL_TYPE);
-    pot = N_alloc_array_2d(3, 3, 0, DCELL_TYPE);
+    pot =   N_alloc_array_2d(3, 3, 0, DCELL_TYPE);
     xcomp = N_alloc_array_2d(3, 3, 0, DCELL_TYPE);
     ycomp = N_alloc_array_2d(3, 3, 0, DCELL_TYPE);
 
@@ -385,8 +375,6 @@ int test_gradient_2d()
     N_put_array_2d_d_value(relax, 2, 0, 1.0);
     N_put_array_2d_d_value(relax, 2, 1, 1.0);
     N_put_array_2d_d_value(relax, 2, 2, 1.0);
-
-    N_print_array_2d(relax);
 
   /**
    * 1 2 6        5
@@ -404,45 +392,59 @@ int test_gradient_2d()
     N_put_array_2d_d_value(pot, 1, 2, 15.0);
     N_put_array_2d_d_value(pot, 2, 2, 25.0);
 
-    N_print_array_2d(pot);
-
     geom->rows = 3;
     geom->cols = 3;
 
     field = N_compute_gradient_field_2d(pot, relax, relax, geom, NULL);
     field = N_compute_gradient_field_2d(pot, relax, relax, geom, field);
+    N_print_gradient_field_2d_info(field);
 
+    /*common gradient calculation*/
     grad = N_get_gradient_2d(field, NULL, 0, 0);
-    printf("Gradient 2d: NC %g == 0 ; SC %g == 2 ; WC %g == 0 ; EC %g == -1\n",
+    G_message("Gradient 2d: pos 0,0 NC %g == 0 ; SC %g == 2 ; WC %g == 0 ; EC %g == -1\n",
 	   grad->NC, grad->SC, grad->WC, grad->EC);
 
     grad = N_get_gradient_2d(field, grad, 1, 0);
-    printf("Gradient 2d: NC %g == 0 ; SC %g == 5 ; WC %g == -1 ; EC %g == -4\n",
+    G_message("Gradient 2d: pos 1,0 NC %g == 0 ; SC %g == 5 ; WC %g == -1 ; EC %g == -4\n",
 	   grad->NC, grad->SC, grad->WC, grad->EC);
     N_free_gradient_2d(grad);
 
     grad = N_get_gradient_2d(field, NULL, 1, 1);
-    printf("Gradient 2d: NC %g == 5 ; SC %g == 8 ; WC %g == -4 ; EC %g == -3\n",
+    G_message("Gradient 2d: pos 1,1 NC %g == 5 ; SC %g == 8 ; WC %g == -4 ; EC %g == -3\n",
 	   grad->NC, grad->SC, grad->WC, grad->EC);
 
     grad = N_get_gradient_2d(field, grad, 1, 2);
-    printf("Gradient 2d: NC %g == 8 ; SC %g ==  0 ; WC %g == -7 ; EC %g == -10\n",
+    G_message("Gradient 2d: pos 1,2 NC %g == 8 ; SC %g ==  0 ; WC %g == -7 ; EC %g == -10\n",
 	   grad->NC, grad->SC, grad->WC, grad->EC);
     N_free_gradient_2d(grad);
 
     grad = N_get_gradient_2d(field, NULL, 2, 2);
-    printf("Gradient 2d: NC %g ==15 ; SC %g ==  0 ; WC %g == -10 ; EC %g ==  0\n",
+    G_message("Gradient 2d: pos 2,2 NC %g ==15 ; SC %g ==  0 ; WC %g == -10 ; EC %g ==  0\n",
 	   grad->NC, grad->SC, grad->WC, grad->EC);
     N_free_gradient_2d(grad);
 
     N_compute_gradient_field_components_2d(field, xcomp, ycomp);
 
+    /*gradient neighbour calculation*/
+    grad_2d = N_get_gradient_neighbours_2d(field, NULL, 1, 1);
+    grad_2d = N_get_gradient_neighbours_2d(field, grad_2d, 1, 1);
+    G_message("N_gradient_neighbours_x; pos 1,1 NWN %g NEN %g WC %g EC %g SWS %g SES %g\n",
+	   grad_2d->x->NWN, grad_2d->x->NEN, grad_2d->x->WC, grad_2d->x->EC, grad_2d->x->SWS, grad_2d->x->SES);
+    G_message("N_gradient_neighbours_y: pos 1,1 NWW %g NEE %g NC %g SC %g SWW %g SEE %g\n",
+	   grad_2d->y->NWW, grad_2d->y->NEE, grad_2d->y->NC, grad_2d->y->SC, grad_2d->y->SWW, grad_2d->y->SEE);
+	   
+    N_free_gradient_neighbours_2d(grad_2d);
+
+    /*
     N_print_array_2d(xcomp);
     N_print_array_2d(ycomp);
+    */
 
     N_free_gradient_field_2d(field);
     G_free(geom);
 
+    N_free_array_2d(xcomp);
+    N_free_array_2d(ycomp);
     N_free_array_2d(relax);
     N_free_array_2d(pot);
 

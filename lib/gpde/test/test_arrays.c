@@ -19,7 +19,6 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-#include <assert.h>
 #include <grass/glocale.h>
 #include <grass/N_pde.h>
 #include "test_gpde_lib.h"
@@ -267,15 +266,20 @@ int test_array_2d()
     N_array_2d *data3;
     N_array_2d *data33;
     char buff[1024];
+    double min, max, ssum;
+    int nonzero;
 
     N_array_2d *tmp;
 
     /*Alloacte memory for all arrays */
     data1 = N_alloc_array_2d(TEST_N_NUM_COLS, TEST_N_NUM_ROWS, 1, CELL_TYPE);
+    N_print_array_2d_info(data1);
     data11 = N_alloc_array_2d(TEST_N_NUM_COLS, TEST_N_NUM_ROWS, 1, CELL_TYPE);
     data2 = N_alloc_array_2d(TEST_N_NUM_COLS, TEST_N_NUM_ROWS, 1, FCELL_TYPE);
+    N_print_array_2d_info(data2);
     data22 = N_alloc_array_2d(TEST_N_NUM_COLS, TEST_N_NUM_ROWS, 1, FCELL_TYPE);
     data3 = N_alloc_array_2d(TEST_N_NUM_COLS, TEST_N_NUM_ROWS, 1, DCELL_TYPE);
+    N_print_array_2d_info(data3);
     data33 = N_alloc_array_2d(TEST_N_NUM_COLS, TEST_N_NUM_ROWS, 1, DCELL_TYPE);
 
     /*Fill the first arrays with data */
@@ -311,6 +315,56 @@ int test_array_2d()
     if (res != 0)
 	G_warning("test_array_2d: error in  N_copy_array_2d");
     sum += res;
+
+    /*compute statistics*/
+    N_calc_array_2d_stats(data1, &min, &max, &ssum, &nonzero, 0);
+    G_message("CELL Min %g Max %g Sum %g  nonzero %i\n", min, max, ssum, nonzero);
+    if(min != 0 || max != 81 || ssum != 2025 || nonzero != 100)
+    {
+	G_warning("test_array_2d: error in  N_calc_array_2d_stats");
+	sum++;
+    }
+    N_calc_array_2d_stats(data1, &min, &max, &ssum, &nonzero, 1);
+    G_message("CELL Min %g Max %g Sum %g  nonzero %i\n", min, max, ssum, nonzero);
+    if(min != 0 || max != 81 || ssum != 2025 || nonzero != 144)
+    {
+	G_warning("test_array_2d: error in  N_calc_array_2d_stats");
+	sum++;
+    }
+
+    N_calc_array_2d_stats(data2, &min, &max, &ssum, &nonzero, 0);
+    G_message("FCELL Min %g Max %g Sum %g  nonzero %i\n", min, max, ssum, nonzero);
+    if(min != 0 || max != 81 || ssum != 2025 || nonzero != 100)
+    {
+	G_warning("test_array_2d: error in  N_calc_array_2d_stats");
+	sum++;
+    }
+
+    N_calc_array_2d_stats(data2, &min, &max, &ssum, &nonzero, 1);
+    G_message("FCELL Min %g Max %g Sum %g  nonzero %i\n", min, max, ssum, nonzero);
+    if(min != 0 || max != 81 || ssum != 2025 || nonzero != 144)
+    {
+	G_warning("test_array_2d: error in  N_calc_array_2d_stats");
+	sum++;
+    }
+
+    N_calc_array_2d_stats(data3, &min, &max, &ssum, &nonzero, 0);
+    G_message("DCELL Min %g Max %g Sum %g  nonzero %i\n", min, max, ssum, nonzero);
+    if(min != 0 || max != 81 || ssum != 2025 || nonzero != 100)
+    {
+	G_warning("test_array_2d: error in  N_calc_array_2d_stats");
+	sum++;
+    }
+
+    N_calc_array_2d_stats(data3, &min, &max, &ssum, &nonzero, 1);
+    G_message("DCELL Min %g Max %g Sum %g  nonzero %i\n", min, max, ssum, nonzero);
+    if(min != 0 || max != 81 || ssum != 2025 || nonzero != 144)
+    {
+	G_warning("test_array_2d: error in  N_calc_array_2d_stats");
+	sum++;
+    }
+
+
 
     /*test the array math functions */
     tmp = N_math_array_2d(data1, data2, NULL, N_ARRAY_SUM);
@@ -510,17 +564,21 @@ int test_array_3d()
     N_array_3d *data22;
 
     N_array_3d *tmp;
+    double min, max, ssum;
+    int nonzero;
 
     /*Alloacte memory for all arrays */
     data1 =
 	N_alloc_array_3d(TEST_N_NUM_COLS, TEST_N_NUM_ROWS, TEST_N_NUM_DEPTHS, 2,
 			 FCELL_TYPE);
+    N_print_array_3d_info(data1);
     data11 =
 	N_alloc_array_3d(TEST_N_NUM_COLS, TEST_N_NUM_ROWS, TEST_N_NUM_DEPTHS, 2,
 			 FCELL_TYPE);
     data2 =
 	N_alloc_array_3d(TEST_N_NUM_COLS, TEST_N_NUM_ROWS, TEST_N_NUM_DEPTHS, 2,
 			 DCELL_TYPE);
+    N_print_array_3d_info(data2);
     data22 =
 	N_alloc_array_3d(TEST_N_NUM_COLS, TEST_N_NUM_ROWS, TEST_N_NUM_DEPTHS, 2,
 			 DCELL_TYPE);
@@ -550,6 +608,40 @@ int test_array_3d()
     if (res != 0)
 	G_warning("test_array_3d: error in  N_copy_array_2d");
     sum += res;
+
+
+
+    /*compute statistics*/
+    N_calc_array_3d_stats(data1, &min, &max, &ssum, &nonzero, 0);
+    G_message("FELL Min %g Max %g Sum %g  nonzero %i\n", min, max, ssum, nonzero);
+    if(min != 0 || max != 729 || ssum != 91125 || nonzero != 1000)
+    {
+	G_warning("test_array_3d: error in  N_calc_array_3d_stats");
+	sum++;
+    }
+    N_calc_array_3d_stats(data1, &min, &max, &ssum, &nonzero, 1);
+    G_message("FELL Min %g Max %g Sum %g  nonzero %i\n", min, max, ssum, nonzero);
+    if(min != 0 || max != 729 || ssum != 91125 || nonzero != 2744)
+    {
+	G_warning("test_array_3d: error in  N_calc_array_3d_stats");
+	sum++;
+    }
+
+    N_calc_array_3d_stats(data2, &min, &max, &ssum, &nonzero, 0);
+    G_message("DCELL Min %g Max %g Sum %g  nonzero %i\n", min, max, ssum, nonzero);
+    if(min != 0 || max != 729 || ssum != 91125 || nonzero != 1000)
+    {
+	G_warning("test_array_3d: error in  N_calc_array_3d_stats");
+	sum++;
+    }
+
+    N_calc_array_3d_stats(data2, &min, &max, &ssum, &nonzero, 1);
+    G_message("DCELL Min %g Max %g Sum %g  nonzero %i\n", min, max, ssum, nonzero);
+    if(min != 0 || max != 729 || ssum != 91125 || nonzero != 2744)
+    {
+	G_warning("test_array_3d: error in  N_calc_array_3d_stats");
+	sum++;
+    }
 
 
     /*test the array math functions */
