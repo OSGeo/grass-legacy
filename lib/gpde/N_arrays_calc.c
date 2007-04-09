@@ -198,27 +198,27 @@ double N_norm_array_2d(N_array_2d * a, N_array_2d * b, int type)
 }
 
 /*!
- * \brief Calculate basic statistics of the array 
+ * \brief Calculate basic statistics of the N_array_2d struct 
  *
  * Calculates the minimum, maximum, sum and the number of 
- * non null values. The offset can be included in the calculation.
+ * non null values. The array offset can be included in the calculation.
  *
- * \param a N_array_2d * - first input array
- * \param min *double - variable to store the computed minimum
- * \param min *double - variable to store the computed maximum
- * \param sum *double - variable to store the computed sum
- * \param nonzero *int - variable to store the number of non zero values
- * \param withoffset - include offset values for statistic calculation 
+ * \param a N_array_2d * - input array
+ * \param min double* - variable to store the computed minimum
+ * \param max double* - variable to store the computed maximum
+ * \param sum double* - variable to store the computed sum
+ * \param nonull int* - variable to store the number of non null values
+ * \param withoffset - if 1 include offset values in statistic calculation, 0 otherwise 
  * \return void
  * */
 void N_calc_array_2d_stats(N_array_2d * a, double *min, double *max,
-			   double *sum, int *nonzero, int withoffset)
+			   double *sum, int *nonull, int withoffset)
 {
     int i, j;
     double val;
 
     *sum = 0.0;
-    *nonzero = 0;
+    *nonull = 0;
 
     if (withoffset == 1) {
 
@@ -234,7 +234,7 @@ void N_calc_array_2d_stats(N_array_2d * a, double *min, double *max,
 		    if (*max < val)
 			*max = val;
 		    *sum += val;
-		    (*nonzero)++;
+		    (*nonull)++;
 		}
 	    }
 	}
@@ -254,19 +254,19 @@ void N_calc_array_2d_stats(N_array_2d * a, double *min, double *max,
 		    if (*max < val)
 			*max = val;
 		    *sum += val;
-		    (*nonzero)++;
+		    (*nonull)++;
 		}
 	    }
 	}
     }
 
-  G_debug(3, "N_calc_array_2d_stats: compute array stats, min %g, max %g, sum %g, nonzero %i", *min, *max, *sum, *nonzero);
+  G_debug(3, "N_calc_array_2d_stats: compute array stats, min %g, max %g, sum %g, nonull %i", *min, *max, *sum, *nonull);
     return;
 }
 
 
 /*!
- * \brief Performe simple computations with two input arrays, 
+ * \brief Performe calculations with two input arrays, 
  * the result is written to a third array.
  *
  * All arrays must have equal sizes and offsets.
@@ -609,27 +609,27 @@ double N_norm_array_3d(N_array_3d * a, N_array_3d * b, int type)
 }
 
 /*!
- * \brief Calculate basic statistics of the N_array_3d array 
+ * \brief Calculate basic statistics of the N_array_3d struct
  *
  * Calculates the minimum, maximum, sum and the number of 
- * non null values. The offset can be included in the calculation.
+ * non null values. The array offset can be included in the statistical calculation.
  *
- * \param a N_array_3d * - first input array
- * \param min *double - variable to store the computed minimum
- * \param min *double - variable to store the computed maximum
- * \param sum *double - variable to store the computed sum
- * \param nonzero *int - variable to store the number of non zero values
- * \param withoffset - include offset values for statistic calculation 
+ * \param a N_array_3d * - input array
+ * \param min double* - variable to store the computed minimum
+ * \param max double* - variable to store the computed maximum
+ * \param sum double* - variable to store the computed sum
+ * \param nonull int* - variable to store the number of non null values
+ * \param withoffset - if 1 include offset values in statistic calculation, 0 otherwise 
  * \return void
  * */
 void N_calc_array_3d_stats(N_array_3d * a, double *min, double *max,
-			   double *sum, int *nonzero, int withoffset)
+			   double *sum, int *nonull, int withoffset)
 {
     int i, j, k;
     double val;
 
     *sum = 0.0;
-    *nonzero = 0;
+    *nonull = 0;
 
     if (withoffset == 1) {
 
@@ -650,7 +650,7 @@ void N_calc_array_3d_stats(N_array_3d * a, double *min, double *max,
 			if (*max < val)
 			    *max = val;
 			*sum += val;
-			(*nonzero)++;
+			(*nonull)++;
 		    }
 		}
 	    }
@@ -660,7 +660,6 @@ void N_calc_array_3d_stats(N_array_3d * a, double *min, double *max,
 
 	*min = (double)N_get_array_3d_d_value(a, 0, 0, 0);
 	*max = (double)N_get_array_3d_d_value(a, 0, 0, 0);
-
 
 	for (k = 0; k < a->depths; k++) {
 	    for (j = 0; j < a->rows; j++) {
@@ -672,22 +671,22 @@ void N_calc_array_3d_stats(N_array_3d * a, double *min, double *max,
 			if (*max < val)
 			    *max = val;
 			*sum += val;
-			(*nonzero)++;
+			(*nonull)++;
 		    }
 		}
 	    }
 	}
     }
 
-  G_debug(3, "N_calc_array_3d_stats: compute array stats, min %g, max %g, sum %g, nonzero %i", *min, *max, *sum, *nonzero);
+  G_debug(3, "N_calc_array_3d_stats: compute array stats, min %g, max %g, sum %g, nonull %i", *min, *max, *sum, *nonull);
 
     return;
 }
 
 /*!
- * \brief Performe calculations of two input arrays, 
+ * \brief Performe calculations with two input arrays, 
  * the result is written to a third array.
- * <br><br>
+ *
  * All arrays must have equal sizes and offsets.
  * The complete data array inclusively offsets is used for calucaltions.
  * Only non-null values are used. If one array value is null, 
