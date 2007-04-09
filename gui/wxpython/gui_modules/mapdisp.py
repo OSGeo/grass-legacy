@@ -632,7 +632,7 @@ class BufferedWindow(wx.Window):
                     print "Quering without gis manager not implemented yet"
 
             # end drag of overlay decoration
-            elif self.dragid:
+            elif self.dragid != None:
                 self.ovlcoords[self.dragid] = self.pdc.GetIdBounds(self.dragid)
                 self.dragid = None
                 self.currtxtid = None
