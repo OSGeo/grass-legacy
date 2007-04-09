@@ -132,7 +132,7 @@ int main( int argc, char **argv )
 	opt7->type       = TYPE_DOUBLE;		/* needs to be TYPE_DOUBLE to get past options check */
 	opt7->required   = NO;
 	opt7->options    = "0-100" ;
-	opt7->description= _("Screen coordinates to place the legend (as percentage)");
+	opt7->description= _("Legend top, bottom, left, right as percentage screen coordinates from lower left");
 	opt7->answer     = NULL;
 	
 	opt8 = G_define_option() ;
