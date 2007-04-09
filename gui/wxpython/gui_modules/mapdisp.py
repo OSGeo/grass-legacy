@@ -186,9 +186,10 @@ class BufferedWindow(wx.Window):
     	#
     	self.mapfile = None # image file to be rendered
     	self.img = ""       # wx.Image object (self.mapfile)
-        self.ovlist = []     # list of images for overlays
+        self.ovldict = {}     # list of images for overlays
         self.ovlcoords = {} # positioning coordinates for decoration overlay
-        self.imagedict = {} # images and their ID's for painting and dragging
+        self.imagedict = {} # images and their PseudoDC ID's for painting and dragging
+        self.crop = {} # coordinates to crop overlays to their data, indexed by image ID
         self.select = {} # selecting/unselecting decorations for dragging
         self.ovlchk = {} # showing/hiding decorations
         self.textdict = {} # text, font, and color indexed by id
@@ -258,6 +259,9 @@ class BufferedWindow(wx.Window):
         if pdctype == 'image':
             mask = None
             bitmap = wx.BitmapFromImage(img)
+#            if drawid in self.ovldict:
+#                w,h = self.ovldict[drawid][1]
+#            else:
             w,h = bitmap.GetSize()
             pdc.DrawBitmap(bitmap, coords[0], coords[1], True) # draw the composite map
             pdc.SetIdBounds(drawid, (coords[0],coords[1],w,h))
@@ -371,15 +375,59 @@ class BufferedWindow(wx.Window):
         """
         Converts overlay files to wx.Image
         """
-        ovlist = []
+        self.ovldict = {}
         if self.Map.ovlist:
              for ovlfile in self.Map.ovlist:
                  if os.path.isfile(ovlfile) and os.path.getsize(ovlfile):
                      img = wx.Image(ovlfile, wx.BITMAP_TYPE_ANY)
-#                     img.ConvertAlphaToMask()
-                     ovlist.append(img)
-                     self.imagedict[img] = ovlist.index(img) # set image PeudoDC ID
-        return ovlist
+
+                     left = right = top = bottom = 0
+                     breakout = False
+#                     # auto-crop scales and legends
+#                     for w in range(img.GetWidth()): # set left edge
+#                         for h in range(img.GetHeight()-1):
+#                             if img.IsTransparent(w,h) == False:
+#                                 left = w
+#                                 breakout = True
+#                                 break
+#                         if breakout:
+#                             breakout = False
+#                             break
+#                     for w in range(img.GetWidth()-1, 0, -1): # set right edge
+#                         for h in range(img.GetHeight()-1):
+#                             if img.IsTransparent(w,h) == False:
+#                                 right = w
+#                                 breakout = True
+#                                 break
+#                         if breakout:
+#                             breakout = False
+#                             break
+#                     for h in range(img.GetHeight()): # set top edge
+#                         for w in range(left,right):
+#                             if img.IsTransparent(w,h) == False:
+#                                 top = h
+#                                 breakout = True
+#                                 break
+#                         if breakout:
+#                             breakout = False
+#                             break
+#                     for h in range(img.GetHeight()-1, 0, - 1): # set top edge
+#                         for w in range(left,right):
+#                             if img.IsTransparent(w,h) == False:
+#                                 bottom = h
+#                                 breakout = True
+#                                 break
+#                         if breakout:
+#                             breakout = False
+#                             break
+#                     cropwidth = right - left
+#                     cropheight = bottom - top
+                     pdc_id = self.Map.ovlist.index(ovlfile)
+#                     self.ovldict[pdc_id] = img,(cropwidth,cropheight)  # image and cropping information for each overlay image
+                     self.ovldict[pdc_id] = img  # image information for each overlay image
+                     self.imagedict[img] = pdc_id # set image PeudoDC ID
+
+        return self.ovldict
 
 
     def GetImage(self):
@@ -426,12 +474,11 @@ class BufferedWindow(wx.Window):
         self.pdc.Clear()
         self.pdc.RemoveAll()
         self.Draw(self.pdc, self.img, drawid=id) # draw map image background
-        self.ovlist = self.GetOverlay() # list of decoration overlay images
-        if self.ovlist != []: # draw scale and legend overlays
-            for img in self.ovlist:
-                id = self.imagedict[img]
+        self.ovldict = self.GetOverlay() # list of decoration overlay images
+        if self.ovldict != {}: # draw scale and legend overlays
+            for id in self.ovldict:
+                img = self.ovldict[id]
                 if id not in self.ovlcoords: self.ovlcoords[id] = wx.Rect(0,0,0,0)
-                if id == None: return # ID has not yet been assigned (image not painted)
                 if id not in self.ovlchk: self.ovlchk[id] = False
                 if self.ovlchk[id] == True: # draw any active and defined overlays
                     self.Draw(self.pdc, img=img, drawid=id,
@@ -480,10 +527,9 @@ class BufferedWindow(wx.Window):
         self.pdc.SetBackground(wx.Brush(self.GetBackgroundColour()))
         r = self.pdc.GetIdBounds(id)
         self.pdc.TranslateId(id, dx, dy)
-        if id != 99:
-            r2 = self.pdc.GetIdBounds(id)
-            r = r.Union(r2)
-            r.Inflate(4,4)
+        r2 = self.pdc.GetIdBounds(id)
+        r = r.Union(r2)
+        r.Inflate(4,4)
         self.RefreshRect(r, False)
         self.lastpos = (event.GetX(),event.GetY())
 
@@ -520,30 +566,32 @@ class BufferedWindow(wx.Window):
         wheel = event.GetWheelRotation() # +- int
         hitradius = 5 # distance for selecting map decorations
 
-        # left mouse button pressed
+        # left mouse button pressed; get decoration ID
         if event.LeftDown():
-            self.mouse['begin'] = event.GetPositionTuple()[:]
+            self.lastpos = self.mouse['begin'] = event.GetPositionTuple()[:]
+            idlist  = self.pdc.FindObjects(self.mouse['begin'][0], self.mouse['begin'][1], hitradius)
+            if idlist != []:
+                self.dragid = idlist[0]
 
-        # double click to select decoration for dragging
+        # double click to select overlay decoration options dialog
         elif event.ButtonDClick():
             # start point of drag
-            self.lastpos = event.GetPositionTuple()[:]
+            clickposition = event.GetPositionTuple()[:]
 
-            # select decoration and get its ID
+            # get decoration ID
 #            l = self.pdc.FindObjectsByBBox(self.mouse['begin'][0], self.mouse['begin'][1])
-            idlist  = self.pdc.FindObjects(self.lastpos[0], self.lastpos[1], hitradius)
+            idlist  = self.pdc.FindObjects(clickposition[0], clickposition[1], hitradius)
             if idlist == []: return
-            id = idlist[0]
-            self.select[id] = not self.select[id]
-            if self.select[id] == True:
-                self.dragid = id
-                if id > 100: self.currtxtid = id
-            else:
-                self.ovlcoords[self.dragid] = self.pdc.GetIdBounds(self.dragid)
-                self.dragid = None
-                self.currtxtid = None
-                self.UpdateMap()
-            id = None
+            self.dragid = idlist[0]
+
+            self.ovlcoords[self.dragid] = self.pdc.GetIdBounds(self.dragid)
+            if self.dragid > 100:
+                self.currtxtid = self.dragid
+                self.Parent.addText(None)
+            elif self.dragid == 0:
+                self.Parent.addBarscale(None)
+            elif self.dragid == 1:
+                self.Parent.addLegend(None)
 
     	# left mouse button released and not just a pointer
         elif event.LeftUp():
@@ -558,7 +606,7 @@ class BufferedWindow(wx.Window):
                 self.render=True
                 self.UpdateMap()
 
-                # digitizing
+            # digitizing
             elif self.parent.digittoolbar:
                 if self.parent.digittoolbar.digitize == "point":
                     east,north= self.Pixel2Cell(self.mouse['begin'][0],self.mouse['begin'][1])
@@ -567,7 +615,7 @@ class BufferedWindow(wx.Window):
                 self.render=True
                 self.UpdateMap()
 
-            # quering
+            # querying
             elif self.mouse["box"] == "query":
                 east,north = self.Pixel2Cell(self.mouse['begin'][0],self.mouse['begin'][1])
                 if self.parent.gismanager:
@@ -583,15 +631,19 @@ class BufferedWindow(wx.Window):
                 else:
                     print "Quering without gis manager not implemented yet"
 
-
+            # end drag of overlay decoration
             elif self.dragid:
-                self.Refresh()
+                self.ovlcoords[self.dragid] = self.pdc.GetIdBounds(self.dragid)
+                self.dragid = None
+                self.currtxtid = None
+                id = None
                 self.Update()
 
         elif event.Dragging():
             currpos = event.GetPositionTuple()[:]
             end = (currpos[0]-self.mouse['begin'][0], \
                              currpos[1]-self.mouse['begin'][1])
+
             # dragging or drawing box with left button
             if self.mouse['box'] == 'pan':
                 self.DragMap(end)
@@ -618,16 +670,15 @@ class BufferedWindow(wx.Window):
             x,y = event.GetPositionTuple()[:]
             #l = self.pdc.FindObjectsByBBox(x, y)
             l = self.pdc.FindObjects(x, y, hitradius)
-            if l:
-                id = l[0]
-                self.pdc.SetId(id)
-                if self.pdc.GetIdGreyedOut(id) == True:
-                    self.pdc.SetIdGreyedOut(id, False)
-                else:
-                    self.pdc.SetIdGreyedOut(id, True)
-                r = self.pdc.GetIdBounds(id)
-                r.Inflate(4,4)
-                self.RefreshRect(r, False)
+            if not l: return
+            id = l[0]
+            if self.pdc.GetIdGreyedOut(id) == True:
+                self.pdc.SetIdGreyedOut(id, False)
+            else:
+                self.pdc.SetIdGreyedOut(id, True)
+            r = self.pdc.GetIdBounds(id)
+            r.Inflate(4,4)
+            self.RefreshRect(r, False)
 
     	# store current mouse position
     	self.mouse['pos'] = event.GetPositionTuple()[:]
@@ -858,11 +909,6 @@ class MapFrame(wx.Frame):
         self.ctrlbk.SetSelection(pgnum)
         event.Skip()
 
-#    def SetDcommandList(self, clst):
-#        self.MapWindow.dcmd_list = clst
-#        self.MapWindow.ProcessDcommand()
-#        self.MapWindow.UpdateMap()
-
     def OnMotion(self, event):
         """
         Mouse moved
@@ -883,12 +929,6 @@ class MapFrame(wx.Frame):
         Redraw button clicked
         """
         self.MapWindow.UpdateMap()
-
-#    def ReDrawCommand(self):
-#        """
-#        d.* command on command line and enter pressed.
-#        """
-#        self.MapWindow.UpdateMap()
 
     def Pointer(self, event):
         """Pointer button clicled"""
@@ -952,7 +992,6 @@ class MapFrame(wx.Frame):
     	self.Map.getRegion()
     	self.Map.getResolution()
     	self.UpdateMap()
-#        self.draw(dc)
     	event.Skip()
 
     def OnAlignRegion(self, event):
@@ -1079,17 +1118,16 @@ class MapFrame(wx.Frame):
         """
         Handler for scale/arrow map decoration menu selection.
         """
-        ovltype = 0 # index for overlay layer in render
+        ovltype = id = 0 # index for overlay layer in render
         if ovltype in self.params:
             params = self.params[ovltype]
         else:
             params = ''
 
-        ovlist = self.MapWindow.GetOverlay()
-        if ovlist == []: return
-        img = ovlist[0]
-        id = self.MapWindow.imagedict[img]
-        if id == None: return
+        ovldict = self.MapWindow.GetOverlay()
+        if id not in ovldict: return
+        img = ovldict[id]
+
         if id not in self.ovlcoords: self.ovlcoords[id] = wx.Rect(0,0,0,0)
 
         # Decoration overlay control dialog
@@ -1119,18 +1157,15 @@ class MapFrame(wx.Frame):
         """
         Handler for legend map decoration menu selection.
         """
-        ovltype = 1 # index for overlay layer in render
+        ovltype = id = 1 # index for overlay layer in render
         if ovltype in self.params:
             params = self.params[ovltype]
         else:
             params = ''
 
-        ovlist = self.MapWindow.GetOverlay()
-        if ovlist == []: return
-        img = ovlist[1]
-        id = self.MapWindow.imagedict[img]
-        if id == None: return
-        if id not in self.ovlcoords: self.ovlcoords[id] = wx.Rect(0,0,0,0)
+        ovldict = self.MapWindow.GetOverlay()
+        if id not in ovldict: return
+        img = ovldict[id]
 
         # Decoration overlay control dialog
         dlg = DecDialog(self, wx.ID_ANY, 'Legend', size=(350, 200),
@@ -1185,6 +1220,8 @@ class MapFrame(wx.Frame):
             textfont = dlg.currFont
             textcolor = dlg.currClr
 
+        self.MapWindow.pdc.ClearId(id)
+        self.MapWindow.pdc.SetId(id)
         self.MapWindow.textdict[id] = (maptext,textfont,textcolor)
         self.MapWindow.Draw(self.MapWindow.pdc, img=self.MapWindow.textdict[id],
                             drawid=id, pdctype='text', coords=textcoords)
@@ -1233,7 +1270,7 @@ class DecDialog(wx.Dialog):
         sizer.Add(box, 0, wx.GROW|wx.ALIGN_CENTER_VERTICAL|wx.ALL, 5)
 
         box = wx.BoxSizer(wx.HORIZONTAL)
-        label = wx.StaticText(self, -1, ("Double-click %s with mouse in\npointer mode and drag to position.\nDouble-click again to set" % ctrltxt))
+        label = wx.StaticText(self, -1, ("Drag %s with mouse in pointer mode\nto position. Double-click to change options" % ctrltxt))
         box.Add(label, 0, wx.ALIGN_CENTRE|wx.ALL, 5)
         sizer.Add(box, 0, wx.GROW|wx.ALIGN_CENTER_VERTICAL|wx.ALL, 5)
 
@@ -1313,10 +1350,7 @@ class TextDialog(wx.Dialog):
         sizer.Add(box, 0, wx.GROW|wx.ALIGN_CENTER_VERTICAL|wx.ALL, 5)
 
         box = wx.BoxSizer(wx.HORIZONTAL)
-        label = wx.StaticText(self, -1, ("Double-click text with mouse in\
-            \npointer mode and drag to position.\
-            \nEdit by selecting text from overlay menu.\
-            \nDouble-click again to set"))
+        label = wx.StaticText(self, -1, ("Drag text with mouse in pointer mode\nto position. Double-click to change options"))
         box.Add(label, 0, wx.ALIGN_CENTRE|wx.ALL, 5)
         sizer.Add(box, 0, wx.GROW|wx.ALIGN_CENTER_VERTICAL|wx.ALL, 5)
 
@@ -1338,17 +1372,8 @@ class TextDialog(wx.Dialog):
         self.SetSizer(sizer)
         sizer.Fit(self)
 
-#        self.Bind(wx.EVT_CHECKBOX, self.onCheck, self.chkbox)
         self.Bind(wx.EVT_BUTTON, self.onSelectFont, fontbtn)
         self.textentry.Bind(wx.EVT_TEXT, self.onText)
-
-
-#    def onCheck(self, event):
-#        """
-#        Handler for checkbox for displaying/hiding decoration
-#        """
-#        check = event.IsChecked()
-#        self.ovlchk[self.drawid] = check
 
     def onText(self, event):
         self.currText = event.GetString()
