@@ -18,9 +18,6 @@
 
 #include <grass/N_pde.h>
 
-/* ************************************************************************ */
-/* ************************************************************************ */
-/* ************************************************************************ */
 /*!
  * \brief Allocate a N_gradient_2d structure
  *
@@ -36,9 +33,6 @@ N_gradient_2d *N_alloc_gradient_2d()
     return grad;
 }
 
-/* ************************************************************************ */
-/* ************************************************************************ */
-/* ************************************************************************ */
 /*!
  * \brief Free's a N_gradient_2d structure
  *
@@ -53,10 +47,6 @@ void N_free_gradient_2d(N_gradient_2d * grad)
     return;
 }
 
-
-/* ************************************************************************ */
-/* ************************************************************************ */
-/* ************************************************************************ */
 /*!
  * \brief allocate and initialize a N_gradient_2d structure
  *
@@ -83,9 +73,6 @@ N_gradient_2d *N_create_gradient_2d(double NC, double SC, double WC, double EC)
     return grad;
 }
 
-/* ************************************************************************ */
-/* ************************************************************************ */
-/* ************************************************************************ */
 /*!
  * \brief copy a N_gradient_2d structure
  *
@@ -109,9 +96,6 @@ int N_copy_gradient_2d(N_gradient_2d * source, N_gradient_2d * target)
     return 1;
 }
 
-/* ************************************************************************ */
-/* ************************************************************************ */
-/* ************************************************************************ */
 /*!
  * \brief Return a N_gradient_2d structure calculated from the input gradient field
  * at position [row][col]
@@ -157,9 +141,6 @@ N_gradient_2d *N_get_gradient_2d(N_gradient_field_2d * field,
     return grad;
 }
 
-/* ************************************************************************ */
-/* ************************************************************************ */
-/* ************************************************************************ */
 /*!
  * \brief Allocate a N_gradient_3d structure
  *
@@ -175,9 +156,6 @@ N_gradient_3d *N_alloc_gradient_3d()
     return grad;
 }
 
-/* ************************************************************************ */
-/* ************************************************************************ */
-/* ************************************************************************ */
 /*!
  * \brief Free's a N_gradient_3d structure
  *
@@ -193,9 +171,6 @@ void N_free_gradient_3d(N_gradient_3d * grad)
 }
 
 
-/* ************************************************************************ */
-/* ************************************************************************ */
-/* ************************************************************************ */
 /*!
  * \brief allocate and initialize a N_gradient_3d structure
  *
@@ -227,9 +202,6 @@ N_gradient_3d *N_create_gradient_3d(double NC, double SC, double WC, double EC,
     return grad;
 }
 
-/* ************************************************************************ */
-/* ************************************************************************ */
-/* ************************************************************************ */
 /*!
  * \brief copy a N_gradient_3d structure
  *
@@ -256,9 +228,6 @@ int N_copy_gradient_3d(N_gradient_3d * source, N_gradient_3d * target)
 }
 
 
-/* ************************************************************************ */
-/* ************************************************************************ */
-/* ************************************************************************ */
 /*!
  * \brief Return a N_gradient_3d structure calculated from the input gradient field
  * at position [depth][row][col]
@@ -309,9 +278,6 @@ N_gradient_3d *N_get_gradient_3d(N_gradient_field_3d * field,
     return grad;
 }
 
-/* ************************************************************************ */
-/* ************************************************************************ */
-/* ************************************************************************ */
 /*!
  * \brief Allocate a N_gradient_neighbours_x structure
  *
@@ -331,9 +297,6 @@ N_gradient_neighbours_x *N_alloc_gradient_neighbours_x()
     return grad;
 }
 
-/* ************************************************************************ */
-/* ************************************************************************ */
-/* ************************************************************************ */
 /*!
  * \brief Free's a N_gradient_neighbours_x structure
  *
@@ -349,9 +312,6 @@ void N_free_gradient_neighbours_x(N_gradient_neighbours_x * grad)
 }
 
 
-/* ************************************************************************ */
-/* ************************************************************************ */
-/* ************************************************************************ */
 /*!
  * \brief Allocate and initialize a N_gradient_neighbours_x structure
  *
@@ -386,9 +346,6 @@ N_gradient_neighbours_x *N_create_gradient_neighbours_x(double NWN, double NEN,
     return grad;
 }
 
-/* ************************************************************************ */
-/* ************************************************************************ */
-/* ************************************************************************ */
 /*!
  * \brief copy a N_gradient_neighbours_x structure
  *
@@ -416,9 +373,6 @@ N_copy_gradient_neighbours_x(N_gradient_neighbours_x * source,
     return 1;
 }
 
-/* ************************************************************************ */
-/* ************************************************************************ */
-/* ************************************************************************ */
 /*!
  * \brief Allocate a N_gradient_neighbours_y structure
  *
@@ -438,9 +392,6 @@ N_gradient_neighbours_y *N_alloc_gradient_neighbours_y()
     return grad;
 }
 
-/* ************************************************************************ */
-/* ************************************************************************ */
-/* ************************************************************************ */
 /*!
  * \brief Free's a N_gradient_neighbours_y structure
  *
@@ -455,9 +406,6 @@ void N_free_gradient_neighbours_y(N_gradient_neighbours_y * grad)
     return;
 }
 
-/* ************************************************************************ */
-/* ************************************************************************ */
-/* ************************************************************************ */
 /*!
  * \brief Allocate and initialize a N_gradient_neighbours_y structure
  *
@@ -492,9 +440,6 @@ N_gradient_neighbours_y *N_create_gradient_neighbours_y(double NWW, double NEE,
     return grad;
 }
 
-/* ************************************************************************ */
-/* ************************************************************************ */
-/* ************************************************************************ */
 /*!
  * \brief copy a N_gradient_neighbours_y structure
  *
@@ -522,9 +467,6 @@ N_copy_gradient_neighbours_y(N_gradient_neighbours_y * source,
     return 1;
 }
 
-/* ************************************************************************ */
-/* ************************************************************************ */
-/* ************************************************************************ */
 /*!
  * \brief Allocate a N_gradient_neighbours_z structure
  *
@@ -544,9 +486,6 @@ N_gradient_neighbours_z *N_alloc_gradient_neighbours_z()
     return grad;
 }
 
-/* ************************************************************************ */
-/* ************************************************************************ */
-/* ************************************************************************ */
 /*!
  * \brief Free's a N_gradient_neighbours_z structure
  *
@@ -561,9 +500,6 @@ void N_free_gradient_neighbours_z(N_gradient_neighbours_z * grad)
     return;
 }
 
-/* ************************************************************************ */
-/* ************************************************************************ */
-/* ************************************************************************ */
 /*!
  * \brief Allocate and initialize a N_gradient_neighbours_z structure
  *
@@ -606,9 +542,6 @@ N_gradient_neighbours_z *N_create_gradient_neighbours_z(double NWZ, double NZ,
     return grad;
 }
 
-/* ************************************************************************ */
-/* ************************************************************************ */
-/* ************************************************************************ */
 /*!
  * \brief copy a N_gradient_neighbours_z structure
  *
@@ -639,9 +572,6 @@ N_copy_gradient_neighbours_z(N_gradient_neighbours_z * source,
     return 1;
 }
 
-/* ************************************************************************ */
-/* ************************************************************************ */
-/* ************************************************************************ */
 /*!
  * \brief Allocate a N_gradient_neighbours_2d structure
  *
@@ -665,10 +595,6 @@ N_gradient_neighbours_2d *N_alloc_gradient_neighbours_2d()
     return grad;
 }
 
-
-/* ************************************************************************ */
-/* ************************************************************************ */
-/* ************************************************************************ */
 /*!
  * \brief Free's a N_gradient_neighbours_2d structure
  *
@@ -687,9 +613,6 @@ void N_free_gradient_neighbours_2d(N_gradient_neighbours_2d * grad)
     return;
 }
 
-/* ************************************************************************ */
-/* ************************************************************************ */
-/* ************************************************************************ */
 /*!
  * \brief Allocate and initialize a N_gradient_neighbours_2d structure
  *
@@ -724,9 +647,6 @@ N_gradient_neighbours_2d
     return grad;
 }
 
-/* ************************************************************************ */
-/* ************************************************************************ */
-/* ************************************************************************ */
 /*!
  * \brief copy a N_gradient_neighbours_2d structure
  *
@@ -758,10 +678,80 @@ N_copy_gradient_neighbours_2d(N_gradient_neighbours_2d * source,
     return 1;
 }
 
+/*!
+ * \brief Return a N_gradient_neighbours_2d structure calculated from the input gradient field
+ * at position [row][col]
+ *
+ *  This function returns the gradient neighbours in x and y dierection 
+ *  of a cell at position [row][col] from the input gradient field.
+ *  Returend is a pointer to a structure of type N_gradient_neighbours_2d.
+ *
+ *  \param field N_gradient_field_2d * - A two dimensional gradient field
+ *  \param gradient N_gradient_neighbours_2d * - the gradient structure which should be filled with data, if a NULL pointer is given, a new structure will be created
+ *  \param col int
+ *  \param row int
+ *  \return N_gradient_neighbours_2d * - the new or filled gradient structure
+ *  
+ *
+ * */
+N_gradient_neighbours_2d *N_get_gradient_neighbours_2d(N_gradient_field_2d *
+						       field,
+						       N_gradient_neighbours_2d
+						       * gradient, int col,
+						       int row)
+{
+    double NWN, NEN, WC, EC, SWS, SES;
+    double NWW, NEE, NC, SC, SWW, SEE;
+    N_gradient_neighbours_2d *grad = NULL;
+    N_gradient_neighbours_x *grad_x = NULL;
+    N_gradient_neighbours_y *grad_y = NULL;
 
-/* ************************************************************************ */
-/* ************************************************************************ */
-/* ************************************************************************ */
+
+    NWN = N_get_array_2d_d_value(field->x_array, col, row - 1);
+    NEN = N_get_array_2d_d_value(field->x_array, col + 1, row - 1);
+    WC = N_get_array_2d_d_value(field->x_array, col, row);
+    EC = N_get_array_2d_d_value(field->x_array, col + 1, row);
+    SWS = N_get_array_2d_d_value(field->x_array, col, row + 1);
+    SES = N_get_array_2d_d_value(field->x_array, col + 1, row + 1);
+
+    NWW = N_get_array_2d_d_value(field->y_array, col - 1, row);
+    NEE = N_get_array_2d_d_value(field->y_array, col + 1, row);
+    NC = N_get_array_2d_d_value(field->y_array, col, row);
+    SC = N_get_array_2d_d_value(field->y_array, col, row + 1);
+    SWW = N_get_array_2d_d_value(field->y_array, col - 1, row + 1);
+    SEE = N_get_array_2d_d_value(field->y_array, col + 1, row + 1);
+
+
+    grad_x = N_create_gradient_neighbours_x(NWN, NEN, WC, EC, SWS, SES);
+    grad_y = N_create_gradient_neighbours_y(NWW, NEE, NC, SC, SWW, SEE);
+
+    G_debug(5,
+	    "N_get_gradient_neighbours_2d: calculate N_gradient_neighbours_x NWN %g NEN %g WC %g EC %g SWS %g SES %g",
+	    NWN, NEN, WC, EC, SWS, SES);
+
+    G_debug(5,
+	    "N_get_gradient_neighbours_2d: calculate N_gradient_neighbours_y NWW %g NEE %g NC %g SC %g SWW %g SEE %g",
+	    NWW, NEE, NC, SC, SWW, SEE);
+
+
+    /*if gradient is a NULL pointer, create a new one */
+    if (!gradient) {
+	grad = N_create_gradient_neighbours_2d(grad_x, grad_y);
+	gradient = grad;
+    }
+    else {
+	grad = N_create_gradient_neighbours_2d(grad_x, grad_y);
+	N_copy_gradient_neighbours_2d(grad, gradient);
+	N_free_gradient_neighbours_2d(grad);
+    }
+
+    N_free_gradient_neighbours_x(grad_x);
+    N_free_gradient_neighbours_y(grad_y);
+
+    return gradient;
+}
+
+
 /*!
  * \brief Allocate a N_gradient_neighbours_3d structure
  *
@@ -791,9 +781,6 @@ N_gradient_neighbours_3d *N_alloc_gradient_neighbours_3d()
     return grad;
 }
 
-/* ************************************************************************ */
-/* ************************************************************************ */
-/* ************************************************************************ */
 /*!
  * \brief Free's a N_gradient_neighbours_3d structure
  *
@@ -818,9 +805,6 @@ void N_free_gradient_neighbours_3d(N_gradient_neighbours_3d * grad)
     return;
 }
 
-/* ************************************************************************ */
-/* ************************************************************************ */
-/* ************************************************************************ */
 /*!
  * \brief Allocate and initialize a N_gradient_neighbours_3d structure
  *
@@ -873,8 +857,6 @@ N_gradient_neighbours_3d
     return grad;
 }
 
-/* ************************************************************************ */
-/* ************************************************************************ */
 /*!
  * \brief copy a N_gradient_neighbours_3d structure
  *
@@ -918,10 +900,6 @@ N_copy_gradient_neighbours_3d(N_gradient_neighbours_3d * source,
     return 1;
 }
 
-
-/* ************************************************************************ */
-/* ************************************************************************ */
-/* ************************************************************************ */
 /*!
  * \brief Allocate a N_gradient_field_2d
  *
@@ -950,10 +928,6 @@ N_gradient_field_2d *N_alloc_gradient_field_2d(int cols, int rows)
     return field;
 }
 
-
-/* ************************************************************************ */
-/* ************************************************************************ */
-/* ************************************************************************ */
 /*!
  * \brief Free's a N_gradient_neighbours_2d structure
  *
@@ -973,9 +947,6 @@ void N_free_gradient_field_2d(N_gradient_field_2d * field)
     return;
 }
 
-/* ************************************************************************ */
-/* ************************************************************************ */
-/* ************************************************************************ */
 /*!
  * \brief Copy N_gradient_field_2d structure from source to target
  *
@@ -999,229 +970,33 @@ N_copy_gradient_field_2d(N_gradient_field_2d * source,
     return 1;
 }
 
-/* ************************************************************************ */
-/* ************************************************************************ */
-/* ************************************************************************ */
-/*!
- * \brief This function computes the gradient based on the input N_array_2d pot
- * (potential), a weighting factor N_array_2d named weight and the distance between two cells 
- * saved in the N_geom_data struct.
+/*! \brief Print gradient field information to stdout
  *
- * The gradient is calculated between cells for each cell and direction.
- * An existing gradient field can be filled with new data or, if a NULL pointer is
- * given, a new gradient field will be allocated with the appropriate size.
- *
- *
- \verbatim
- ______________ 
- |    |    |    |
- |    |    |    |
- |----|-NC-|----|
- |    |    |    |
- |   WC    EC   |
- |    |    |    |
- |----|-SC-|----|
- |    |    |    |
- |____|____|____|
- 
- 
- x - direction:
- 
- r = 2 * weight[row][col]*weight[row][col + 1] / (weight[row][col]*weight[row][col + 1])
- EC = r * (pot[row][col] - pot[row][col + 1])/dx
- 
- y - direction:
- 
- r = 2 * weight[row][col]*weight[row + 1][col] / (weight[row][col]*weight[row + 1][col])
- SC = r * (pot[row][col] - pot[row + 1][col])/dy
- 
- the values SC and EC are the values of the next row/col
- 
- 
- \endverbatim
- * \param pot N_array_2d * - the potential N_array_2d 
- * \param weight_x N_array_2d * - the weighting factor N_array_2d used to modify the gradient in x-direction
- * \param weight_y N_array_2d * - the weighting factor N_array_2d used to modify the gradient in y-direction
- * \param geom N_geom_data * - geometry data structure
- * \param gradfield N_gradient_field_2d * - a gradient field of the correct size, if a NULL pointer is provided this gradient field will be new allocated
- * \return N_gradient_field_2d * - the pointer to the computed gradient field
-
- *
- * */
-N_gradient_field_2d *N_compute_gradient_field_2d(N_array_2d * pot,
-						 N_array_2d * weight_x,
-						 N_array_2d * weight_y,
-						 N_geom_data * geom, N_gradient_field_2d *gradfield)
-{
-    int i, j;
-    int rows, cols;
-    double dx, dy, p1, p2, r1, r2, mean, grad, res;
-    N_gradient_field_2d *field = gradfield;
-
-
-    if (pot->cols != weight_x->cols || pot->cols != weight_y->cols)
-	G_fatal_error
-	    ("N_compute_gradient_field_2d: the arrays are not of equal size");
-
-    if (pot->rows != weight_x->rows || pot->rows != weight_y->rows)
-	G_fatal_error
-	    ("N_compute_gradient_field_2d: the arrays are not of equal size");
-
-    if(pot->cols != geom->cols || pot->rows != geom->rows)
-	G_fatal_error
-	    ("N_compute_gradient_field_2d: array sizes and geometry data are different");
-
-
-    G_debug(3, "N_compute_gradient_field_2d: compute gradient field");
-
-    rows = pot->rows;
-    cols = pot->cols;
-    dx = geom->dx;
-    dy = geom->dy;
-
-    if(field == NULL)
-    {
-        field = N_alloc_gradient_field_2d(cols, rows);
-    } else {
- 	if(field->cols != geom->cols || field->rows != geom->rows)
-	G_fatal_error
-	    ("N_compute_gradient_field_2d: gradient field sizes and geometry data are different");
-    }
-
-
-    for (j = 0; j < rows; j++)
-	for (i = 0; i < cols - 1; i++) {
-	    grad = 0;
-	    mean = 0;
-
-	    //Only compute if the arrays are not null
-	    if (!N_is_array_2d_value_null(pot, i, j) &&
-		!N_is_array_2d_value_null(pot, i + 1, j)) {
-		p1 = N_get_array_2d_d_value(pot, i, j);
-		p2 = N_get_array_2d_d_value(pot, i + 1, j);
-		grad = (p1 - p2) / dx;	/* gradient */
-	    }
-	    if (!N_is_array_2d_value_null(weight_x, i, j) &&
-		!N_is_array_2d_value_null(weight_x, i + 1, j)) {
-		r1 = N_get_array_2d_d_value(weight_x, i, j);
-		r2 = N_get_array_2d_d_value(weight_x, i + 1, j);
-		mean = N_calc_harmonic_mean(r1, r2);/*harmonical mean */
-	    }
-
-	    res = mean * grad;
-
-	    N_put_array_2d_d_value(field->x_array, i + 1, j, res);
-
-	}
-
-    for (j = 0; j < rows - 1; j++)
-	for (i = 0; i < cols; i++) {
-	    grad = 0;
-	    mean = 0;
-
-	    //Only compute if the arrays are not null
-	    if (!N_is_array_2d_value_null(pot, i, j) &&
-		!N_is_array_2d_value_null(pot, i, j + 1)) {
-		p1 = N_get_array_2d_d_value(pot, i, j);
-		p2 = N_get_array_2d_d_value(pot, i, j + 1);
-		grad = (p1 - p2) / dy;	/* gradient */
-	    }
-	    if (!N_is_array_2d_value_null(weight_y, i, j) &&
-		!N_is_array_2d_value_null(weight_y, i, j + 1)) {
-		r1 = N_get_array_2d_d_value(weight_y, i, j);
-		r2 = N_get_array_2d_d_value(weight_y, i, j + 1);
-		mean = N_calc_harmonic_mean(r1, r2);/*harmonical mean */
-	    }
-
-	    res = -1 * mean * grad;
-
-	    N_put_array_2d_d_value(field->y_array, i, j + 1, res);
-
-	}
-
-    return field;
-}
-
-/*! 
- * \brief Calculate the x and y vector components from a gradient field for each 
- * cell and stores them in the provided N_array_2d structures
- *
- * The arrays must have the same size as the gradient field.
- 
- \verbatim
- 
- Based on this storages scheme the gradient vector for each cell is 
- calculated and stored in the provided  N_array_2d structures
-  ______________ 
- |    |    |    |
- |    |    |    |
- |----|-NC-|----|
- |    |    |    |
- |   WC    EC   |
- |    |    |    |
- |----|-SC-|----|
- |    |    |    |
- |____|____|____|
- 
- x vector component:
- 
- x = (WC + EC) / 2
- 
- y vector component:
- 
- y = (NC + SC) / 2
- 
- \endverbatim
- *
- * \param field N_gradient_field_2d *
- * \param x_comp N_array_2d * - the array in which the x component will be written
- * \param y_comp N_array_2d * - the array in which the y component will be written
- *
+ * \param field N_gradient_2d_field *
  * \return void
+ *
  * */
-void
-N_compute_gradient_field_components_2d(N_gradient_field_2d * field,
-				       N_array_2d * x_comp, N_array_2d * y_comp)
+void N_print_gradient_field_2d_info(N_gradient_field_2d * field)
 {
-    int i, j;
-    int rows, cols;
-    double vx, vy;
-    N_array_2d *x = x_comp;
-    N_array_2d *y = y_comp;
-    N_gradient_2d grad;
-
-
-    if (!x)
-	G_fatal_error("N_compute_gradient_components_2d: x array is empty");
-    if (!y)
-	G_fatal_error("N_compute_gradient_components_2d: y array is empty");
-
-    cols = field->x_array->cols;
-    rows = field->x_array->rows;
-
-    /*Check the array sizes */
-    if (x->cols != cols || x->rows != rows)
-	G_fatal_error
-	    ("N_compute_gradient_components_2d: the size of the x array dont fit the gradient field size");
-    if (y->cols != cols || y->rows != rows)
-	G_fatal_error
-	    ("N_compute_gradient_components_2d: the size of the y array dont fit the gradient field size");
-
-    for (j = 0; j < rows; j++)
-	for (i = 0; i < cols; i++) {
-	    N_get_gradient_2d(field, &grad, i, j);
-	    vx = (grad.WC + grad.EC) / 2;
-	    vy = (grad.NC + grad.SC) / 2;	/*the gradient must be inverted, because grass counts the rows from north to south */
-	    N_put_array_2d_d_value(x, i, j, vx);
-	    N_put_array_2d_d_value(y, i, j, vy);
-	}
+    fprintf(stdout, "N_gradient_field_2d \n");
+    fprintf(stdout, "Cols %i\n", field->cols);
+    fprintf(stdout, "Rows: %i\n", field->rows);
+    fprintf(stdout, "X array pointer: %p\n", field->x_array);
+    fprintf(stdout, "Y array pointer: %p\n", field->y_array);
+    fprintf(stdout, "Min %g\n", field->min);
+    fprintf(stdout, "Max %g\n", field->max);
+    fprintf(stdout, "Sum %g\n", field->sum);
+    fprintf(stdout, "Mean %g\n", field->mean);
+    fprintf(stdout, "Nonull %i\n", field->nonull);
+    fprintf(stdout, "X array info \n");
+    N_print_array_2d_info(field->x_array);
+    fprintf(stdout, "Y array info \n");
+    N_print_array_2d_info(field->y_array);
 
     return;
 }
 
-/* ************************************************************************ */
-/* ************************************************************************ */
-/* ************************************************************************ */
+
 /*!
  * \brief Allocate a N_gradient_field_3d
  *
@@ -1254,9 +1029,6 @@ N_gradient_field_3d *N_alloc_gradient_field_3d(int cols, int rows, int depths)
 }
 
 
-/* ************************************************************************ */
-/* ************************************************************************ */
-/* ************************************************************************ */
 /*!
  * \brief Free's a N_gradient_neighbours_3d structure
  *
@@ -1278,9 +1050,6 @@ void N_free_gradient_field_3d(N_gradient_field_3d * field)
 }
 
 
-/* ************************************************************************ */
-/* ************************************************************************ */
-/* ************************************************************************ */
 /*!
  * \brief Copy N_gradient_field_3d structure from source to target
  *
@@ -1305,293 +1074,33 @@ N_copy_gradient_field_3d(N_gradient_field_3d * source,
     return 1;
 }
 
-
-/* ************************************************************************ */
-/* ************************************************************************ */
-/* ************************************************************************ */
-/*!
- * \brief This function computes the gradient based on the input N_array_3d pot
- * (that means potential), a weighting factor N_array_3d named weight and the distance between two cells 
- * saved in the N_geom_data struct.
+/*! \brief Print gradient field information to stdout
  *
- * The gradient is calculated between cells for each cell and direction.
- * An existing gradient field can be filled with new data or, if a NULL pointer is
- * given, a new gradient field will be allocated with the appropriate size.
- *
- *
- *
- *
- \verbatim
-
-      |  /
-     TC NC
-      |/
---WC-----EC--
-     /|
-   SC BC
-   /  |
- 
- x - direction:
- 
- r = 2 * weight_x[depth][row][col]*weight_x[depth][row][col + 1] / (weight_X[depth][row][col]*weight_x[depth][row][col + 1])
- EC = r * (pot[depth][row][col] - pot[depth][row][col + 1])/dx
- 
- y - direction:
- 
- r = 2 * weight_y[depth][row][col]*weight_y[depth][row + 1][col] / (weight_y[depth][row][col]*weight_y[depth][row + 1][col])
- SC = r * (pot[depth][row][col] - pot[depth][row + 1][col])/dy
- 
- z - direction:
- 
- r = 2 * weight_z[depth][row][col]*weight_z[depth + 1][row][col] / (weight_z[depth][row][col]*weight_z[depth + 1][row][col])
- TC = r * (pot[depth][row][col] - pot[depth + 1][row][col])/dy
- 
- the values BC, NC, WC are the values of the next depth/row/col
- 
- 
- \endverbatim
- * \param pot N_array_3d * - the potential N_array_2d 
- * \param weight_x N_array_3d * - the weighting factor N_array_3d used to modify the gradient in x-direction
- * \param weight_y N_array_3d * - the weighting factor N_array_3d used to modify the gradient in y-direction
- * \param weight_z N_array_3d * - the weighting factor N_array_3d used to modify the gradient in z-direction
- * \param geom N_geom_data * - geometry data structure
- * \param gradfield N_gradient_field_3d * - a gradient field of the correct size, if a NULL pointer is provided this gradient field will be new allocated
- * \return N_gradient_field_3d * - the pointer to the computed gradient field
- *
- * */
-N_gradient_field_3d *N_compute_gradient_field_3d(N_array_3d * pot,
-						 N_array_3d * weight_x,
-						 N_array_3d * weight_y,
-						 N_array_3d * weight_z,
-						 N_geom_data * geom, N_gradient_field_3d *gradfield)
-{
-    int i, j, k;
-    int cols, rows, depths;
-    double dx, dy, dz, p1, p2, r1, r2, mean, grad, res;
-    N_gradient_field_3d *field = gradfield;
-
-
-    if (pot->cols != weight_x->cols || pot->cols != weight_y->cols ||
-	pot->cols != weight_z->cols)
-	G_fatal_error
-	    ("N_compute_gradient_field_3d: the arrays are not of equal size");
-
-    if (pot->rows != weight_x->rows || pot->rows != weight_y->rows ||
-	pot->rows != weight_z->rows)
-	G_fatal_error
-	    ("N_compute_gradient_field_3d: the arrays are not of equal size");
-
-    if (pot->depths != weight_x->depths || pot->depths != weight_y->depths ||
-	pot->depths != weight_z->depths)
-	G_fatal_error
-	    ("N_compute_gradient_field_3d: the arrays are not of equal size");
-
-    if(pot->cols != geom->cols || pot->rows != geom->rows || pot->depths != geom->depths)
-	G_fatal_error
-	    ("N_compute_gradient_field_3d: array sizes and geometry data are different");
-
-    G_debug(3, "N_compute_gradient_field_3d: compute gradient field");
-
-    cols = geom->cols;
-    rows = geom->rows;
-    depths = geom->depths;
-    dx = geom->dx;
-    dy = geom->dy;
-    dz = geom->dz;
-
-    if(gradfield == NULL)
-    {
-        field = N_alloc_gradient_field_3d(cols, rows, depths);
-    } else {
- 	if(field->cols != geom->cols || field->rows != geom->rows || field->depths != geom->depths)
-	G_fatal_error
-	    ("N_compute_gradient_field_3d: gradient field sizes and geometry data are different");
-    }
-
-    for (k = 0; k < depths; k++)
-	for (j = 0; j < rows; j++)
-	    for (i = 0; i < cols - 1; i++) {
-		grad = 0;
-		mean = 0;
-
-		//Only compute if the arrays are not null
-		if (!N_is_array_3d_value_null(pot, i, j, k) &&
-		    !N_is_array_3d_value_null(pot, i + 1, j, k)) {
-		    p1 = N_get_array_3d_d_value(pot, i, j, k);
-		    p2 = N_get_array_3d_d_value(pot, i + 1, j, k);
-		    grad = (p1 - p2) / dx;	/* gradient */
-		}
-		if (!N_is_array_3d_value_null(weight_x, i, j, k) &&
-		    !N_is_array_3d_value_null(weight_x, i + 1, j, k)) {
-		    r1 = N_get_array_3d_d_value(weight_x, i, j, k);
-		    r2 = N_get_array_3d_d_value(weight_x, i + 1, j, k);
-		    mean = N_calc_harmonic_mean(r1, r2);/*harmonical mean */
-		}
-
-		res = mean * grad;
-
-		G_debug(6,
-			"N_compute_gradient_field_3d: X-direction insert value %6.5g at %i %i %i ",
-			res, k, j, i + 1);
-
-		N_put_array_3d_d_value(field->x_array, i + 1, j, k, res);
-
-	    }
-
-    for (k = 0; k < depths; k++)
-	for (j = 0; j < rows - 1; j++)
-	    for (i = 0; i < cols; i++) {
-		grad = 0;
-		mean = 0;
-
-		//Only compute if the arrays are not null
-		if (!N_is_array_3d_value_null(pot, i, j, k) &&
-		    !N_is_array_3d_value_null(pot, i, j + 1, k)) {
-		    p1 = N_get_array_3d_d_value(pot, i, j, k);
-		    p2 = N_get_array_3d_d_value(pot, i, j + 1, k);
-		    grad = (p1 - p2) / dy;	/* gradient */
-		}
-		if (!N_is_array_3d_value_null(weight_y, i, j, k) &&
-		    !N_is_array_3d_value_null(weight_y, i, j + 1, k)) {
-		    r1 = N_get_array_3d_d_value(weight_y, i, j, k);
-		    r2 = N_get_array_3d_d_value(weight_y, i, j + 1, k);
-		    mean = N_calc_harmonic_mean(r1, r2);/*harmonical mean */
-		}
-
-		res = -1 * mean * grad; /*invert the direction, because we count from north to south,
-					  but the gradient is defined in y direction */
-
-		G_debug(6,
-			"N_compute_gradient_field_3d: Y-direction insert value %6.5g at %i %i %i ",
-			res, k, j + 1, i);
-
-		N_put_array_3d_d_value(field->y_array, i, j + 1, k, res);
-
-	    }
-
-    for (k = 0; k < depths - 1; k++)
-	for (j = 0; j < rows; j++)
-	    for (i = 0; i < cols; i++) {
-		grad = 0;
-		mean = 0;
-
-		//Only compute if the arrays are not null
-		if (!N_is_array_3d_value_null(pot, i, j, k) &&
-		    !N_is_array_3d_value_null(pot, i, j, k + 1)) {
-		    p1 = N_get_array_3d_d_value(pot, i, j, k);
-		    p2 = N_get_array_3d_d_value(pot, i, j, k + 1);
-		    grad = (p1 - p2) / dz;	/* gradient */
-		}
-		if (!N_is_array_3d_value_null(weight_z, i, j, k) &&
-		    !N_is_array_3d_value_null(weight_z, i, j, k + 1)) {
-		    r1 = N_get_array_3d_d_value(weight_z, i, j, k);
-		    r2 = N_get_array_3d_d_value(weight_z, i, j, k + 1);
-		    mean = N_calc_harmonic_mean(r1, r2);/*harmonical mean */
-		}
-
-		res = mean * grad;
-
-		G_debug(6,
-			"N_compute_gradient_field_3d: Z-direction insert value %6.5g at %i %i %i ",
-			res, k + 1, j, i);
-
-		N_put_array_3d_d_value(field->z_array, i, j, k + 1, res);
-
-	    }
-
-    return field;
-}
-
-/*! 
- * \brief Calculate the x, y and z vector components from a gradient field for each cell 
- *  and store them in the provided N_array_3d structures
- *
- * The arrays must have the same size as the gradient field.
- *
- \verbatim
- 
- Based on this storages scheme (this is a 2d slice) the gradient vector for each cell is 
- calculated and stored in the provided  N_array_3d structures
-
-
-      |  /
-     TC NC
-      |/
---WC-----EC--
-     /|
-   SC BC
-   /  |
- 
-
- x vector component:
- 
- x = (WC + EC) / 2
- 
- y vector component:
- 
- y = (NC + SC) / 2
- 
- z vector component:
- 
- z = (TC + BC) / 2
- 
- \endverbatim
- 
- * \param field N_gradient_field_3d *
- * \param x_comp N_array_3d * - the array in which the x component will be written
- * \param y_comp N_array_3d * - the array in which the y component will be written
- * \param z_comp N_array_3d * - the array in which the z component will be written
- *
+ * \param field N_gradient_3d_field *
  * \return void
+ *
  * */
-void
-N_compute_gradient_field_components_3d(N_gradient_field_3d * field,
-				       N_array_3d * x_comp, N_array_3d * y_comp,
-				       N_array_3d * z_comp)
+void N_print_gradient_field_3d_info(N_gradient_field_3d * field)
 {
-    int i, j, k;
-    int rows, cols, depths;
-    double vx, vy, vz;
-    N_array_3d *x = x_comp;
-    N_array_3d *y = y_comp;
-    N_array_3d *z = z_comp;
-    N_gradient_3d grad;
 
-
-    if (!x)
-	G_fatal_error("N_compute_gradient_components_3d: x array is empty");
-    if (!y)
-	G_fatal_error("N_compute_gradient_components_3d: y array is empty");
-    if (!z)
-	G_fatal_error("N_compute_gradient_components_3d: z array is empty");
-
-    cols = field->x_array->cols;
-    rows = field->x_array->rows;
-    depths = field->x_array->depths;
-
-    /*Check the array sizes */
-    if (x->cols != cols || x->rows != rows || x->depths != depths)
-	G_fatal_error
-	    ("N_compute_gradient_components_3d: the size of the x array dont fit the gradient field size");
-    if (y->cols != cols || y->rows != rows || y->depths != depths)
-	G_fatal_error
-	    ("N_compute_gradient_components_3d: the size of the y array dont fit the gradient field size");
-    if (z->cols != cols || z->rows != rows || z->depths != depths)
-	G_fatal_error
-	    ("N_compute_gradient_components_3d: the size of the z array dont fit the gradient field size");
-
-    for (k = 0; k < depths; k++)
-	for (j = 0; j < rows; j++)
-	    for (i = 0; i < cols; i++) {
-		N_get_gradient_3d(field, &grad, i, j, k);
-		vx = (grad.WC + grad.EC) / 2;
-		vy = (grad.NC + grad.SC) / 2;	
-		vz = (grad.TC + grad.BC) / 2;
-		N_put_array_3d_d_value(x, i, j, k, vx);
-		N_put_array_3d_d_value(y, i, j, k, vy);
-		N_put_array_3d_d_value(z, i, j, k, vz);
-	    }
-
+    fprintf(stdout, "N_gradient_field_3d \n");
+    fprintf(stdout, "Cols %i\n", field->cols);
+    fprintf(stdout, "Rows: %i\n", field->rows);
+    fprintf(stdout, "Depths %i\n", field->depths);
+    fprintf(stdout, "X array pointer: %p\n", field->x_array);
+    fprintf(stdout, "Y array pointer: %p\n", field->y_array);
+    fprintf(stdout, "Z array pointer: %p\n", field->z_array);
+    fprintf(stdout, "Min %g\n", field->min);
+    fprintf(stdout, "Max %g\n", field->max);
+    fprintf(stdout, "Sum %g\n", field->sum);
+    fprintf(stdout, "Mean %g\n", field->mean);
+    fprintf(stdout, "Nonull %i\n", field->nonull);
+    fprintf(stdout, "X array info \n");
+    N_print_array_3d_info(field->x_array);
+    fprintf(stdout, "Y array info \n");
+    N_print_array_3d_info(field->y_array);
+    fprintf(stdout, "Z array info \n");
+    N_print_array_3d_info(field->z_array);
 
     return;
 }
