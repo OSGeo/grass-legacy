@@ -31,7 +31,7 @@ if [ "$CMDLISTG" != "" ] ; then
   for i in $CMDLISTG
   do
     ftype="`file $BINDIRG/$i`"
-    if [ "`echo $ftype | grep 'Mach-O'`" ] || [ "`grep '#%Module' $BINDIRG/$i`" ] ; then
+    if [ "`echo $ftype | grep 'Mach-O'`" ] || [ "`grep '#% *Module' $BINDIRG/$i`" ] ; then
       echo "{command {[G_msg \"\"]} {} \"$i\" {} -command {execute $i }}" > $MENUDIR/$i.menu
     fi
   done
@@ -45,7 +45,7 @@ if [ "$CMDLIST" != "" ] ; then
   for i in $CMDLIST
   do
     ftype="`file $BINDIR/$i`"
-    if [ "`echo $ftype | grep 'Mach-O'`" ] || [ "`grep '#%Module' $BINDIR/$i`" ] ; then
+    if [ "`echo $ftype | grep 'Mach-O'`" ] || [ "`grep '#% *Module' $BINDIR/$i`" ] ; then
       echo "{command {[G_msg \"\"]} {} \"$i\" {} -command {execute $i }}" > $MENUDIR/$i.menu
     fi
   done
