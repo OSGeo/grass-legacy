@@ -140,11 +140,10 @@ const struct transport *trans;
 
 static const struct transport *get_trans(void)
 {
-	const char *p = getenv("GRASS_RENDER_IMMEDIATE");
-
 #ifndef HAVE_SOCKET
 	return &loc_trans;
-#endif
+#else
+	const char *p = getenv("GRASS_RENDER_IMMEDIATE");
 
 	if (!p)
 		return &rem_trans;
@@ -164,6 +163,7 @@ static const struct transport *get_trans(void)
 	G_warning("Unrecognised GRASS_RENDER_IMMEDIATE setting: %s", p);
 
 	return &rem_trans;
+#endif
 }
 
 static void init_transport(void)
