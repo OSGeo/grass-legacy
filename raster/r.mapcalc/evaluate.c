@@ -231,7 +231,7 @@ static void setup_rand(void)
 #if defined(HAVE_DRAND48)
 	srand48(seed_value);
 #else
-	srand((unsigned int) seed_value)
+	srand((unsigned int) seed_value);
 #endif
 }
 
