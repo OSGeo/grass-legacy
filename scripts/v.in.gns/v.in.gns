@@ -45,10 +45,16 @@
 if  [ -z "$GISBASE" ] ; then
     echo "You must be in GRASS GIS to run this program." >&2
  exit 1
-fi   
+fi
 
+# save command line
 if [ "$1" != "@ARGS_PARSED@" ] ; then
-  exec g.parser "$0" "$@"
+    CMDLINE="`basename $0`"
+    for arg in "$@" ; do
+        CMDLINE="$CMDLINE \"$arg\""
+    done
+    export CMDLINE
+    exec g.parser "$0" "$@"
 fi
 
 PROG=`basename $0`
@@ -122,3 +128,8 @@ g.message "Converted `wc -l ${TMPFILE}_ascii.csv | awk '{print $1}'` place names
 # pump data into GRASS:
 cat ${TMPFILE}_ascii.csv | v.in.ascii cat=0 x=5 y=4 fs=';' out=$FILE columns='rc integer,uf1 integer,uni integer,lat double precision,lon double precision,dms_lat varchar(6),dms_long varchar(7),utm varchar(4),jog varchar(7),fc varchar(1),dsg varchar(5),pc integer,cci varchar(2),adm1 varchar(2),adm2 varchar(200),dim integer,cc2 varchar(2),nt varchar(1),lc varchar(2),shortform varchar(128),generic varchar(128),sortname varchar(200),fullname varchar(200),funamesd varchar(200),mod_date date' 
 rm -f ${TMPFILE}_ascii.csv
+
+# write cmd history:
+v.support $FILE cmdhist="${CMDLINE}"
+
+exit 0

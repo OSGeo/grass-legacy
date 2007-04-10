@@ -51,7 +51,13 @@ if  [ -z "$GISBASE" ] ; then
  exit 1
 fi
 
+# save command line
 if [ "$1" != "@ARGS_PARSED@" ] ; then
+    CMDLINE="`basename $0`"
+    for arg in "$@" ; do
+        CMDLINE="$CMDLINE \"$arg\""
+    done
+    export CMDLINE
     exec g.parser "$0" "$@"
 fi
 
@@ -152,6 +158,9 @@ fi
 
 # cleanup
 cleanup
+
+# write cmd history:
+v.support ${GIS_OPT_MAP} cmdhist="${CMDLINE}"
 
 exit 0
 
