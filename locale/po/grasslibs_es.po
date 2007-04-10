@@ -772,11 +772,11 @@ msgstr "\n"
 
 #: ../lib/gpde/test/test_les.c:57
 msgid "\t * testing les creation in parallel\n"
-msgstr "\t *Comprobando la creación de "les" en paralelo\n"
+msgstr "\t *Comprobando la creación de'les' en paralelo\n"
 
 #: ../lib/gpde/test/test_les.c:92
 msgid "\t * testing les creation in serial\n"
-msgstr "\t *Comprobando la creación de "les" en serie\n"
+msgstr "\t *Comprobando la creación de'les' en serie\n"
 
 #: ../lib/gpde/test/test_gradient.c:42
 msgid ""
