@@ -163,18 +163,6 @@ LDFLAGS="${ac_save_ldflags} $LDFLAGS"
 
 # Enable options
 
-AC_ARG_ENABLE(sysv,
-[  --enable-sysv           define the compiler macro SYSV],,
-[enable_sysv=no])
-
-AC_ARG_ENABLE(socket,
-[  --enable-socket         use socket XDriver (default)],,
-[enable_socket=no])
-
-AC_ARG_ENABLE(fifo,
-[  --enable-fifo           use FIFO XDriver instead of sockets],,
-[enable_fifo=no])
-
 AC_ARG_ENABLE(w11,
 [  --enable-w11            use W11 library for Windows X11 emulation],,
 [enable_w11=no])
@@ -274,43 +262,6 @@ LOC_ARG_WITH_SHARE(proj, External PROJ.4)
 
 LOC_ARG_WITH_INC(opendwg, openDWG)
 LOC_ARG_WITH_LIB(opendwg, openDWG)
-
-# Enable SysV option
-
-AC_MSG_CHECKING(for SysV)
-case "$enable_sysv" in
-	yes)	SYSV=-DSYSV	;;
-	no)	SYSV=		;;
-	*)	AC_MSG_ERROR([*** You must answer yes or no.])	;;
-esac
-AC_MSG_RESULT("$enable_sysv")
-AC_SUBST(SYSV)
-
-# XDRIVER connection type
-
-AC_MSG_CHECKING(for XDriver)
-
-XDRIVER=socket
-case "$enable_fifo" in
-	no)			;;
-	yes)	XDRIVER=fifo	;;
-	*)	AC_MSG_ERROR([*** You must answer yes or no.])	;;
-esac
-case "$enable_socket" in
-	no)			;;
-	yes)	XDRIVER=socket	;;
-	*)	AC_MSG_ERROR([*** You must answer yes or no.])	;;
-esac
-
-AC_MSG_RESULT($XDRIVER)
-
-if test "$XDRIVER" = "socket"; then
-	AC_DEFINE(USE_G_SOCKS)
-fi
-
-AC_SUBST(XDRIVER)
-
-# Done checking XDRIVER
 
 # Put this early on so CPPFLAGS and LDFLAGS have any additional dirs
 
@@ -535,9 +486,10 @@ AC_SUBST(ICONVLIB)
 have_socket=1
 AC_CHECK_FUNC(socket, SOCKLIB=, [
 AC_CHECK_LIB(socket, socket, SOCKLIB=-lsocket, [
+AC_CHECK_LIB(wsock32, socket, SOCKLIB=-lwsock32, [
     have_socket=0
     AC_MSG_WARN([*** Unable to locate socket() function.])
-])])
+])])])
 AC_SUBST(SOCKLIB)
 if test "$have_socket" = 1 ; then
   HAVE_SOCKET=1
@@ -734,7 +686,16 @@ else
     fi
   fi
 
-  GDAL_LIBS="$GDAL_LIBS $GDAL_DEP_LIBS"
+  GDAL=
+  ac_save_ldflags="$LDFLAGS"
+  LDFLAGS="$LDFLAGS $GDAL_LIBS"
+  AC_CHECK_FUNC(GDALOpen, , [
+  LDFLAGS="$LDFLAGS $GDAL_DEP_LIBS"
+  AC_CHECK_FUNC(GDALOpen, GDAL_LIBS="$GDAL_LIBS $GDAL_DEP_LIBS", [
+  AC_MSG_ERROR([*** couldn't find GDAL])
+  ])
+  ])
+  LDFLAGS=${ac_save_ldflags}
 
   AC_SUBST(GDAL_LIBS)
   AC_SUBST(GDAL_CFLAGS)
