@@ -57,10 +57,15 @@ if test "$GISBASE" = ""; then
  exit 1
 fi   
 
+# save command line
 if [ "$1" != "@ARGS_PARSED@" ] ; then
-  exec g.parser "$0" "$@"
+    CMDLINE="`basename $0`"
+    for arg in "$@" ; do
+        CMDLINE="$CMDLINE \"$arg\""
+    done
+    export CMDLINE
+    exec g.parser "$0" "$@"
 fi
-
 PROG=`basename $0`
 
 #### check if we have awk
@@ -219,7 +224,6 @@ fi
 
 g.message "Note: Above warnings may be ignored."
 
-
 #restoring user's mask, if present:
 if test -f $LOCATION/cell/$USERMASK
 then
@@ -237,4 +241,8 @@ g.remove rast=$TMP1,$TMP1.buf,${TMP1}_filled > /dev/null
 g.remove vect=${VECTTMP} > /dev/null
 
 g.message "Filled raster map is: $GIS_OPT_OUTPUT"
+
+# write cmd history:
+r.support $GIS_OPT_OUTPUT history="${CMDLINE}"
+
 g.message "Done."

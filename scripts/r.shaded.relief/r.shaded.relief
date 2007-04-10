@@ -100,15 +100,19 @@
 #%  options: meters,feet
 #% end
 
-if  [ -z "$GISBASE" ]
-then
-	echo "You must be in GRASS GIS to run this program" >&2
-	exit 1
+if  [ -z "$GISBASE" ] ; then
+    echo "You must be in GRASS GIS to run this program." >&2
+ exit 1
 fi
 
-if   [ "$1" != "@ARGS_PARSED@" ]
-then
-	exec g.parser "$0" "$@"
+# save command line
+if [ "$1" != "@ARGS_PARSED@" ] ; then
+    CMDLINE="`basename $0`"
+    for arg in "$@" ; do
+        CMDLINE="$CMDLINE \"$arg\""
+    done
+    export CMDLINE
+    exec g.parser "$0" "$@"
 fi
 
 # set nsres and ewres (unneeded because functions in r.mapcalc)
@@ -184,7 +188,7 @@ $elev_out = eval( \\
 EOF
 
 if [ $? -ne 0 ] ; then 
-   g.message "In calculation, script aborted."
+   g.message -e "In calculation, script aborted."
    exit 1
 fi
 
@@ -203,5 +207,8 @@ if [ -n "$GIS_OPT_SHADEDMAP" ] ; then
 else
     g.message "Shaded relief map created and named <$ELEVSHADE>. Consider renaming."
 fi
+
+# write cmd history:
+r.support $ELEVSHADE history="${CMDLINE}"
 
 exit 0
