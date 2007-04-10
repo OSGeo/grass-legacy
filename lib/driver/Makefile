@@ -43,7 +43,6 @@ ifneq ($(HAVE_SOCKET),)
   LIB_OBJS += \
 	main.o\
 	command.o\
-	connect_fifo.o\
 	connect_sock.o
 endif
 

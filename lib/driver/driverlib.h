@@ -30,14 +30,9 @@ int font_init_charset(const char *);
 const char *font_get_freetype_name(void);
 const char *font_get_charset(void);
 
-/* connect_{sock,fifo}.c */
-#ifdef USE_G_SOCKS
+/* connect_sock.c */
 int get_connection_sock(int,int *,int *,int);
-int prepare_connection_sock(const char *,const char *);
-#else
-int get_connection_fifo(const char *,int *,int *,int);
-#endif /* USE_G_SOCKS */
-int check_connection(const char *,const char *);
+int prepare_connection_sock(const char *);
 
 /* command.c */
 void command_init(int,int);

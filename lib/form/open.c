@@ -6,26 +6,29 @@
 #include <grass/dbmi.h>
 #include <grass/form.h>
 
-#ifdef USE_G_SOCKS
+#ifdef HAVE_SOCKET
 #include <sys/types.h>
 #ifdef __MINGW32__
 #include <winsock.h>
 #else /*__MINGW32__*/
 #include <sys/socket.h> 
+#include <netinet/in.h> 
 #endif /*__MINGW32__*/
-#endif /*USE_G_SOCKS*/
+#endif /*HAVE_SOCKET*/
+
+static int make_socketpair(int *);
 
 int first = 1;
 /* the pipe to send data to GUI */
 FILE *parent_send, *parent_recv;
 
-#ifdef USE_G_SOCKS
+#ifdef HAVE_SOCKET
 int			pipefd[2];
 
 #define	pfd	pipefd[1]	/* parent's end */
 #define	cfd	pipefd[0]	/* child's end */
 
-#endif /*USE_G_SOCKS*/
+#endif /*HAVE_SOCKET*/
 
 /* Open new form
 *
@@ -46,22 +49,22 @@ F_open ( char *title,  char *html )
     int c;
     /* common */
     static int pid;
-#ifndef USE_G_SOCKS
+#ifndef HAVE_SOCKET
     static int p1[2], p2[2];
-#endif /*USE_G_SOCKS*/
+#endif /*HAVE_SOCKET*/
     int        length;
     /* child */
     
     G_debug ( 2, "F_open(): title = %s", title);
     
     if ( first ) {
-#ifdef USE_G_SOCKS    	
-	if ( G_sock_socketpair(AF_UNIX, SOCK_STREAM, 0, pipefd) < 0) 
+#ifdef HAVE_SOCKET    	
+	if ( make_socketpair(pipefd) < 0) 
 		G_fatal_error ("Cannot make socket pair");
 #else 
 	if ( pipe(p1) < 0 || pipe(p2) < 0 ) 
 		G_fatal_error ("Cannot open pipe");
-#endif /*USE_G_SOCKS*/
+#endif /*HAVE_SOCKET*/
 
         if ((pid = fork()) < 0) G_fatal_error ("Cannot create fork"); 
     }
@@ -78,7 +81,7 @@ F_open ( char *title,  char *html )
 	close (0);
         close (1);
 
-#ifndef USE_G_SOCKS
+#ifndef HAVE_SOCKET
 	close(p1[1]);
 	close(p2[0]);
 	if (dup(p1[0]) != 0) G_fatal_error ("Form: cannot dup() input");
@@ -89,7 +92,7 @@ F_open ( char *title,  char *html )
 	if (dup(cfd) != 0) G_fatal_error ("Form: cannot dup() input");
         if (dup(cfd) != 1) G_fatal_error ("Form: cannot dup() output");
 
-#endif /*USE_G_SOCKS*/	
+#endif /*HAVE_SOCKET*/	
 
 
 	
@@ -105,7 +108,7 @@ F_open ( char *title,  char *html )
         G_debug ( 2, "PARENT" );
 
 	if ( first ) {
-#ifndef USE_G_SOCKS
+#ifndef HAVE_SOCKET
             parent_send = fdopen (p1[1], "w");
 	    close(p1[0]);
             parent_recv = fdopen (p2[0], "r");
@@ -114,7 +117,7 @@ F_open ( char *title,  char *html )
  	    close(cfd);
 	    parent_send = fdopen (pfd, "w");
 	    parent_recv = fdopen (pfd, "r");
-#endif /*USE_G_SOCKS*/
+#endif /*HAVE_SOCKET*/
  	    first = 0;
 	}
 		  
@@ -173,3 +176,15 @@ F_close ( void )
     
     first = 1;
 }
+
+static int
+make_socketpair(int *fd)
+{
+	int		n;
+
+	if ( (n = socketpair(AF_UNIX, SOCK_STREAM, IPPROTO_IP, fd)) < 0)
+		return -1;
+	else 
+		return 0;
+}
+

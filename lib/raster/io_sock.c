@@ -1,8 +1,7 @@
 
 #include <grass/config.h>
 
-#ifdef USE_G_SOCKS
-#ifndef __MINGW32__
+#ifdef HAVE_SOCKET
 
 #include <stdio.h>
 #include <stdlib.h>
@@ -39,16 +38,9 @@ static char *sockpath;
  *  \return int
  */
 
-int unlock_driver(int wipeout)
-{
-	return -1;
-}
-
-
 int REM_open_driver(void)
 {
     int verbose;
-    int try;
     char *name;
 
     verbose = !_quiet;
@@ -60,11 +52,10 @@ int REM_open_driver(void)
 
     if (!name)
     {
-        if (verbose)           /* #31 Aug 87 - want error stuff */
+        if (verbose)
         {
-            fprintf(stderr,_("No graphics monitor has been selected for output.\n"));
-            fprintf(stderr,_("Please run \"d.mon\" to select a graphics monitor.\n"));
-            exit(-1);
+            G_warning(_("No graphics monitor has been selected for output."));
+            G_warning(_("Please run \"d.mon\" to select a graphics monitor."));
         }
         return(NO_MON);
     }
@@ -73,10 +64,7 @@ int REM_open_driver(void)
     if ((sockpath = G_sock_get_fname(name)) == NULL)
     {
         if (verbose)
-        {
-            fprintf(stderr, _("Failed to get socket name for monitor <%s>.\n"),
-                            name);
-        }
+            G_warning(_("Failed to get socket name for monitor <%s>."), name);
         return (NO_MON);
     }
 
@@ -86,75 +74,54 @@ int REM_open_driver(void)
     if (!G_sock_exists(sockpath))
     {
         if (verbose)
-        {
-            fprintf(stderr, _("No socket to connect to for monitor <%s>.\n"),
-                            name);
-        }
+            G_warning(_("No socket to connect to for monitor <%s>."), name);
         return (NO_MON);
     }
 
-    /** Used to be a bunch of stuff about locking here.  This is not
-     * necessary with sockets, since the server will only accept
-     * one connection at a time, all other connections will be refused
-     * until it closes it's current connection.
-     */
-
     /** We try to make a connection now **/
-    for (try = 0; try < 2; try++)
+
+    _wfd = G_sock_connect(sockpath);
+    if (_wfd > 0) /* success */
     {
-        _wfd = G_sock_connect(sockpath);
-        if (_wfd > 0) /* success */
-        {
-            _rfd = dup(_wfd);
-            sync_driver(name);
-            return (OK);
-        }
-        switch (errno)
-        {
-            case ECONNREFUSED:
-            case EADDRINUSE:
-                    if (verbose)
-                        fprintf(stderr, _("Socket is already in use or not "
-				 "accepting connections.\n"
-				 "Use d.mon to select a monitor\n"));
-                    return (NO_RUN);
-                    break;
-            case EBADF:
-            case ENOTSOCK:
-                    if (verbose)
-                        fprintf(stderr, _("Trying to connect to something "
-				 "not a socket.\nProbably program "
-				 "error.\n"));
-                    return (NO_RUN);
-                    break;
-            case ETIMEDOUT:
-                    if (verbose)
-                        fprintf(stderr, _("Connect attempt timed out. "
-				 "Probably an error with the server.\n"));
-                    return (NO_RUN);
-                    break;
-            default:
-                    break;
-        }
-        fprintf(stderr, _("Not connected...\n"));
-        if (verbose && try < 1)
-        {
-            fprintf(stderr, _("Couldn't connect to monitor. "
-		     "Will try once more.\n"));
-            G_sleep(1);
-        }
-        else if (verbose && try > 0)
-        {
-            fprintf(stderr, _("Connection failed.\n"));
-        }
+	_rfd = dup(_wfd);
+	sync_driver(name);
+	return (OK);
     }
+
+    switch (errno)
+    {
+    case ECONNREFUSED:
+    case EADDRINUSE:
+	if (verbose)
+	{
+	    G_warning(_("Socket is already in use or not accepting connections."));
+	    G_warning(_("Use d.mon to select a monitor"));
+	}
+	return (NO_RUN);
+    case EBADF:
+    case ENOTSOCK:
+	if (verbose)
+	{
+	    G_warning(_("Trying to connect to something not a socket."));
+	    G_warning(_("Probably program error."));
+	}
+	return (NO_RUN);
+    case ETIMEDOUT:
+	if (verbose)
+	{
+	    G_warning(_("Connect attempt timed out."));
+	    G_warning(_("Probably an error with the server."));
+	}
+	return (NO_RUN);
+    default:
+	break;
+    }
+
+    if (verbose)
+	G_warning(_("Connection failed."));
             
     /* We couldn't connect... */
     return (NO_RUN);
 }
 
-#else /* __MINGW32__ */
-
-
-#endif /* __MINGW32__ */
-#endif /* USE_G_SOCKS */
+#endif /* HAVE_SOCKET */

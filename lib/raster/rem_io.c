@@ -312,7 +312,6 @@ void REM_close_driver(void)
     close(_rfd);
     close(_wfd);
     _wfd = _rfd = -1;
-    unlock_driver(0);
 }
 
 void REM_release_driver(void)
@@ -320,7 +319,6 @@ void REM_release_driver(void)
     close(_rfd);
     close(_wfd);
     _wfd = _rfd = -1;
-    unlock_driver(1);
 }
 
 #endif /* HAVE_SOCKET */

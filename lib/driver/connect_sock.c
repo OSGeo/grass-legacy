@@ -1,6 +1,8 @@
 
 #include <grass/config.h>
 
+#ifdef HAVE_SOCKET
+
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
@@ -12,7 +14,51 @@
 #include <grass/gis.h>
 #include "driverlib.h"
 
-#ifdef USE_G_SOCKS
+int
+prepare_connection_sock(const char *me)
+{
+	const char *connpath;
+	int fd;
+
+	connpath = G_sock_get_fname(me);
+	if (!connpath)
+		G_fatal_error("Couldn't get socket path");
+
+	/* Now we must check and see whether or not someone */
+	/* (possibly another invocation of ourself) is using our socket.    */
+
+	if (G_sock_exists(connpath))
+	{
+		if ((fd = G_sock_connect(connpath)) >= 0)
+		{
+			close(fd);
+			G_warning("Graphics driver [%s] is already running", me);
+			G_fatal_error("Unable to start monitor <%s>", me);
+		}
+
+		if (unlink(connpath) < 0)
+		{
+			G_warning("Failed to remove stale socket file: %s", connpath);
+			G_fatal_error("Unable to start monitor <%s>", me);
+		}
+	}
+
+	/* We are free to run now.  No one is using our socket.                   */
+	if ((fd = G_sock_bind(connpath)) < 0)
+	{
+		G_fatal_error("Can't bind to socket: error \"%s\"\n",
+			      strerror(errno));
+	}
+
+	/* Now set up listen */
+	if (G_sock_listen(fd, 1) != 0)
+	{
+		G_fatal_error("G_sock_listen: error \"%s\"\n", 
+			      strerror(errno));
+	}
+
+	return fd;
+}
 
 int
 get_connection_sock(int listenfd, int *rfd, int *wfd, int other_fd)
@@ -54,50 +100,5 @@ get_connection_sock(int listenfd, int *rfd, int *wfd, int other_fd)
 	exit(EXIT_FAILURE);
 }
 
-int
-prepare_connection_sock(const char *me, const char *sockpath)
-{
-	int fd;
-
-	if ((fd = G_sock_bind(sockpath)) < 0)
-	{
-		G_fatal_error("Can't bind to socket: error \"%s\"\n",
-			      strerror(errno));
-	}
-
-	/* Now set up listen */
-	if (G_sock_listen(fd, 1) != 0)
-	{
-		G_fatal_error("G_sock_listen: error \"%s\"\n", 
-			      strerror(errno));
-	}
-
-	return fd;
-}
-
-int
-check_connection(const char *me, const char *link)
-{
-	int fd;
-
-	if (G_sock_exists(link))
-	{
-		if ((fd = G_sock_connect(link)) >= 0)
-		{
-			close(fd);
-			G_warning("Graphics driver [%s] is already running", me);
-			return(-1);
-		}
-		if (unlink(link) < 0)
-		{
-			G_warning("Failed to remove stale socket file:"
-				"\t%s\n", link);
-			return(-2);
-		}
-	}
-
-	return(0);
-}
-
-#endif /* USE_G_SOCKS */
+#endif /* HAVE_SOCKET */
 

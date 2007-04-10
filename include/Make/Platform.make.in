@@ -81,7 +81,6 @@ LINK_FLAGS          = @LDFLAGS@
 
 DLLIB               = @DLLIB@
 XCFLAGS             = @X_CFLAGS@
-XLDFLAGS            = @SYSV@
 XMINC               = @XMINC@
 XLIBPATH            = @X_LIBS@
 XLIB                = @X_PRE_LIBS@ @XLIB@

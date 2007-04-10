@@ -24,7 +24,9 @@
  * \date 1999-2006
  */
 
-#ifndef __MINGW32__
+#include <grass/config.h>
+
+#ifdef HAVE_SOCKET
 
 #include <grass/gis.h>
 #include <grass/version.h>
@@ -36,19 +38,18 @@
 #include <unistd.h>
 #include <sys/types.h>
 #include <sys/stat.h>
+#ifdef __MINGW32__
+#define USE_TCP
+#include <winsock.h>
+#else
 #include <sys/socket.h>
 #include <sys/un.h>
+#endif
+#include <netinet/in.h>
 
 /** For systems where the *_LOCAL (POSIX 1g) is not defined 
  ** There's not really any difference between PF and AF in practice.
  **/
-#ifndef AF_LOCAL
-#define AF_LOCAL AF_UNIX
-#endif
-#ifndef PF_LOCAL
-#define PF_LOCAL PF_UNIX
-#endif
-
 
 static char *_get_make_sock_path (void);
 
@@ -110,6 +111,88 @@ _get_make_sock_path (void)
     return path;
 }
 
+#ifdef USE_TCP
+
+#define PROTO PF_INET
+typedef struct sockaddr_in sockaddr_t;
+
+static int set_port(const char *name, int port)
+{
+    FILE *fp = fopen(name, "w");
+
+    if (!fp)
+	return -1;
+
+    fprintf(fp, "%d\n", port);
+
+    fclose(fp);
+
+    return 0;
+}
+
+static int get_port(const char *name)
+{
+    FILE *fp = fopen(name, "r");
+    int port;
+
+    if (!fp)
+	return -1;
+
+    if (fscanf(fp, "%d", &port) != 1)
+	port = -1;
+
+    fclose(fp);
+
+    return port;
+}
+
+static int save_port(int sockfd, const char *name)
+{
+    sockaddr_t addr;
+    socklen_t size = sizeof(addr);
+
+    if (getsockname(sockfd, (struct sockaddr *) &addr, &size) != 0)
+	return -1;
+
+    if (set_port(name, ntohs(addr.sin_port)) < 0)
+	return -1;
+
+    return 0;
+}
+
+static int make_address(sockaddr_t *addr, const char *name, int exists)
+{
+    int port = exists ? get_port(name) : 0;
+
+    if (port < 0)
+	return -1;
+
+    addr->sin_family = AF_INET;
+    addr->sin_addr.s_addr = htonl(INADDR_LOOPBACK);
+    addr->sin_port = htons((unsigned short) port);
+
+    return 0;
+}
+
+#else
+
+#define PROTO PF_UNIX
+typedef struct sockaddr_un sockaddr_t;
+
+static int make_address(sockaddr_t *addr, const char *name, int exists)
+{
+    addr->sun_family = AF_UNIX;
+
+    /* The path to the unix socket must fit in sun_path[] */
+    if (sizeof(addr->sun_path) < strlen(name) + 1)
+        return -1;
+    
+    strncpy(addr->sun_path, name, sizeof(addr->sun_path) - 1);
+
+    return 0;
+}
+
+#endif
         
 /**
  * \fn char *G_sock_get_fname (const char *name)
@@ -165,7 +248,11 @@ G_sock_exists (const char *name)
     if (name == NULL || stat (name, &theStat) != 0)
         return 0;
 
+#ifdef USE_TCP
+    if (S_ISREG (theStat.st_mode))
+#else
     if (S_ISSOCK (theStat.st_mode))
+#endif
         return 1;
     else
         return 0;
@@ -188,13 +275,13 @@ G_sock_exists (const char *name)
 int
 G_sock_bind (const char *name)
 {
-    int    sockfd;
-    size_t size;
-    struct sockaddr_un addr;
+    int sockfd;
+    sockaddr_t addr;
+    socklen_t size;
 
     if (name == NULL)
         return -1;
-
+    
     /* Bind requires that the file does not exist. Force the caller
      * to make sure the socket is not in use.  The only way to test,
      * is a call to connect().
@@ -208,25 +295,25 @@ G_sock_bind (const char *name)
     /* must always zero socket structure */
     memset (&addr, 0, sizeof(addr));
 
-    /* The path to the unix socket must fit in sun_path[] */
-    if (sizeof (addr.sun_path) < strlen(name) + 1)
+    size = sizeof(addr);
+
+    if (make_address(&addr, name, 0) < 0)
+	return -1;
+
+    sockfd = socket (PROTO, SOCK_STREAM, 0);
+    if (sockfd < 0)
+	    return -1;
+
+    if (bind (sockfd, (const struct sockaddr *) &addr, size) != 0)
         return -1;
-    
-    strncpy (addr.sun_path, name, sizeof (addr.sun_path) - 1);
-    
-    addr.sun_family = AF_LOCAL;
 
-    sockfd = socket (PF_LOCAL, SOCK_STREAM, 0);
-
-    size = (offsetof (struct sockaddr_un, sun_path) 
-            + strlen (addr.sun_path) + 1);
-
-    if (bind (sockfd, (struct sockaddr *) &addr, size) != 0)
-        return -1;
+#ifdef USE_TCP
+    if (save_port(sockfd, name) < 0)
+	return -1;
+#endif
 
     return sockfd;
 }
-
 
 /**
  * \fn int G_sock_listen (int sockfd, unsigned int queue_len)
@@ -262,8 +349,9 @@ G_sock_listen (int sockfd, unsigned int queue_len)
 int
 G_sock_accept (int sockfd)
 {
-    struct sockaddr_un addr;
-    int len = sizeof(addr);
+    sockaddr_t addr;
+    socklen_t len = sizeof(addr);
+
     return accept (sockfd, (struct sockaddr *) &addr, &len);
 }
  
@@ -281,8 +369,8 @@ G_sock_accept (int sockfd)
 int
 G_sock_connect (const char *name)
 {
-    int    sockfd;
-    struct sockaddr_un addr;
+    int sockfd;
+    sockaddr_t addr;
 
     if (!G_sock_exists (name))
         return -1;
@@ -290,44 +378,17 @@ G_sock_connect (const char *name)
     /* must always zero socket structure */
     memset (&addr, 0, sizeof(addr));
 
-    /* The path to the unix socket must fit in sun_path[] */
-    if (sizeof (addr.sun_path) < strlen(name) + 1)
-        return -1;
-    
-    strncpy (addr.sun_path, name, sizeof (addr.sun_path) - 1);
-    
-    addr.sun_family = AF_LOCAL;
+    if (make_address(&addr, name, 1) < 0)
+	return -1;
 
-    sockfd = socket (PF_LOCAL, SOCK_STREAM, 0);
+    sockfd = socket (PROTO, SOCK_STREAM, 0);
+    if (sockfd < 0)
+	return -1;
 
-    if (connect (sockfd, (struct sockaddr *) &addr, sizeof (addr)) != 0)
+    if (connect (sockfd, (struct sockaddr *) &addr, sizeof(addr)) != 0)
         return -1;
     else
-        return sockfd;
-}
-
-
-/**
- * \fn int G_sock_socketpair (int family, int type, int protocol, int *fd)
- *
- * \brief Creates an unnamed pair of connected sockets.
- *
- * \param[in] family
- * \param[in] protocol
- * \param[in] fd
- * \return -1 and "errno" set on error
- * \return 0 on success
- */
-
-int
-G_sock_socketpair(int family, int type, int protocol, int *fd)
-{
-	int		n;
-
-	if ( (n = socketpair(family, type, protocol, fd)) < 0)
-		return -1;
-	else 
-		return 0;
+	return sockfd;
 }
 
 /* vim: set softtabstop=4 shiftwidth=4 expandtab : */
