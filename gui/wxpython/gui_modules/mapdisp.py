@@ -1043,6 +1043,29 @@ class MapFrame(wx.Frame):
             self.MapWindow.SaveToFile(dlg.GetPath(), wx.BITMAP_TYPE_PNG)
         dlg.Destroy()
 
+    def PrintMap(self, event):
+        """
+        Print map display
+        """
+
+        pdata = wx.PrintDialogData()
+
+        pdata.EnableSelection(True)
+        pdata.EnablePrintToFile(True)
+        pdata.EnablePageNumbers(True)
+        pdata.SetMinPage(1)
+        pdata.SetMaxPage(5)
+        pdata.SetAllPages(True)
+
+        dlg = wx.PrintDialog(self, pdata)
+
+        if dlg.ShowModal() == wx.ID_OK:
+#            data = dlg.GetPrintDialogData()
+            print 'printing not yet enabled'
+#            self.log.WriteText('GetAllPages: %d\n' % data.GetAllPages())
+
+        dlg.Destroy()
+
     def OnCloseWindow(self, event):
         """
         Window closed

@@ -91,6 +91,14 @@ class MapToolbar:
                                                   bmpDisabled=wx.NullBitmap, kind=wx.ITEM_NORMAL,
                                                   shortHelp="Save display to PNG file", longHelp="")
 
+        self.printmap = self.toolbar.AddLabelTool(id=wx.ID_ANY, label="printmap",
+                                                  #bitmap=wx.Bitmap(os.path.join(wxgui_utils.icons,"file-save.gif"),
+                                                  #wx.BITMAP_TYPE_ANY),
+                                                  # just testing wx.ArtProvider
+                                                  bitmap=wx.ArtProvider.GetBitmap(id=wx.ART_PRINT, client=wx.ART_BUTTON),
+                                                  bmpDisabled=wx.NullBitmap, kind=wx.ITEM_NORMAL,
+                                                  shortHelp="Print display", longHelp="")
+
         self.toolbar.AddSeparator()
 
         #
@@ -111,6 +119,7 @@ class MapToolbar:
         self.mapdisplay.Bind(wx.EVT_TOOL,     self.mapdisplay.OnQuery, self.query)
     	self.mapdisplay.Bind(wx.EVT_TOOL,     self.mapdisplay.OnErase,    self.erase)
     	self.mapdisplay.Bind(wx.EVT_TOOL,     self.mapdisplay.SaveToFile, self.savefile)
+        self.mapdisplay.Bind(wx.EVT_TOOL,     self.mapdisplay.PrintMap, self.printmap)
         self.mapdisplay.Bind(wx.EVT_COMBOBOX, self.OnSelect,              self.combo)
 
     def OnSelect(self,event):
