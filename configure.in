@@ -486,10 +486,9 @@ AC_SUBST(ICONVLIB)
 have_socket=1
 AC_CHECK_FUNC(socket, SOCKLIB=, [
 AC_CHECK_LIB(socket, socket, SOCKLIB=-lsocket, [
-AC_CHECK_LIB(wsock32, socket, SOCKLIB=-lwsock32, [
     have_socket=0
     AC_MSG_WARN([*** Unable to locate socket() function.])
-])])])
+])])
 AC_SUBST(SOCKLIB)
 if test "$have_socket" = 1 ; then
   HAVE_SOCKET=1
@@ -687,15 +686,15 @@ else
   fi
 
   GDAL=
-  ac_save_ldflags="$LDFLAGS"
-  LDFLAGS="$LDFLAGS $GDAL_LIBS"
+  ac_save_libs="$LIBS"
+  LIBS="$LIBS $GDAL_LIBS"
   AC_CHECK_FUNC(GDALOpen, , [
-  LDFLAGS="$LDFLAGS $GDAL_DEP_LIBS"
+  LIBS="$LIBS $GDAL_DEP_LIBS"
   AC_CHECK_FUNC(GDALOpen, GDAL_LIBS="$GDAL_LIBS $GDAL_DEP_LIBS", [
   AC_MSG_ERROR([*** couldn't find GDAL])
   ])
   ])
-  LDFLAGS=${ac_save_ldflags}
+  LIBS=${ac_save_libs}
 
   AC_SUBST(GDAL_LIBS)
   AC_SUBST(GDAL_CFLAGS)

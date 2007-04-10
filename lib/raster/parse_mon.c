@@ -12,7 +12,6 @@
 static FILE *monitors = NULL;
 static struct MON_CAP cap;
 
-static int build_path(char *,char *);
 static char *substr(char *,char *);
 static int read_line(FILE *,char *,int);
 
@@ -56,7 +55,6 @@ struct MON_CAP *R_parse_monitorcap(int field, char *key)
 				return(NULL);
 			rewound = -1;
 		}
-		build_path (line, gisbase);
 		cap.path = cap.comment = cap.link = cap.tty = cap.where = NULL;
 		if ((cap.name = G_malloc(strlen(line)+1)) == NULL)
 			return(NULL);
@@ -92,6 +90,9 @@ struct MON_CAP *R_parse_monitorcap(int field, char *key)
 		   G_free(cap.name);
                 else
 		{
+		   sprintf(line, "%s/%s", gisbase, cap.path);
+		   cap.path = G_store(line);
+
   		   if (field == MON_NEXT || (field == MON_NAME && !strcmp(key,cap.name))
 		       || (field == MON_PATH && !strcmp(key, cap.path))
 		       || (field == MON_LINK && !strcmp(key,cap.link)))
@@ -184,42 +185,3 @@ static char *substr(char *string,char *buffer)
 		return(NULL);
 }
 
-static int build_path(char *line,char *gisbase)
-{
-	char temp[1024];
-	char *t, *l;
-
-	/* second field is monitor program
- * if it doesn't start with / then prepend gisbase
- */
-
-	t = substr (":", line);
-	if (t == NULL)
-	{
-		return 1;
-	}
-	if (t[1] == '/')
-	{
-		return 1;	/* aready a full path name */
-	}
-
-	/* copy up to first : */
-	t = temp;
-	l = line;
-	while (*l != ':')
-		*t++ = *l++;
-	*t++ = *l++;
-
-	/* prepend gisbase */
-	while (*gisbase)
-		*t++ = *gisbase++;
-	*t++ = '/' ;
-
-	/* copy rest of line */
-	while ((*t++ = *l++));
-
-	/* now put it all back into the original line */
-	strcpy (line, temp);
-
-	return 0;
-}

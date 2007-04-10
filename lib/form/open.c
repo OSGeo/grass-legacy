@@ -16,7 +16,9 @@
 #endif /*__MINGW32__*/
 #endif /*HAVE_SOCKET*/
 
+#ifdef HAVE_SOCKET
 static int make_socketpair(int *);
+#endif
 
 int first = 1;
 /* the pipe to send data to GUI */
@@ -177,6 +179,7 @@ F_close ( void )
     first = 1;
 }
 
+#ifdef HAVE_SOCKET
 static int
 make_socketpair(int *fd)
 {
@@ -188,3 +191,4 @@ make_socketpair(int *fd)
 		return 0;
 }
 
+#endif

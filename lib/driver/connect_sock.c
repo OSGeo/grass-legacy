@@ -65,6 +65,7 @@ get_connection_sock(int listenfd, int *rfd, int *wfd, int other_fd)
 {
 	int fd;
 
+#ifndef __MINGW32__
 	if (other_fd >= 0)
 	{
 		fd_set waitset;
@@ -81,6 +82,7 @@ get_connection_sock(int listenfd, int *rfd, int *wfd, int other_fd)
 		if (!FD_ISSET(listenfd, &waitset))
 			return -1;
 	}
+#endif
 
 	/* G_sock_accept will block until a connection is requested */
 	fd = G_sock_accept(listenfd);

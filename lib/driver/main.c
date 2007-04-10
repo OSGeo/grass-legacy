@@ -34,7 +34,9 @@ int LIB_main(int argc, char **argv)
 	pid_t pid;
 	int foreground;
 	int listenfd;
+#ifndef __MINGW32__
 	struct sigaction sigact;
+#endif
 
 	/* The calling syntax is as follows:
 	   monitor_name [-] ["input_fifo output_fifo"]
@@ -56,6 +58,7 @@ int LIB_main(int argc, char **argv)
 
 	foreground = (argc >= 3 && argv[2][0] == '-');
 
+#ifndef __MINGW32__
 #ifdef SIGPIPE
 	sigact.sa_handler = handle_sigpipe;
 	sigemptyset(&sigact.sa_mask);
@@ -66,11 +69,13 @@ int LIB_main(int argc, char **argv)
 	sigemptyset(&sigact.sa_mask);
 	sigact.sa_flags = 0;
 	sigaction(SIGTERM, &sigact, NULL);
+#endif
 
 	listenfd = prepare_connection_sock(me);
 
 	G_message(_("Graphics driver [%s] started"), me);
 
+#ifndef __MINGW32__
 	if (!foreground)
 	{
 		pid = fork();
@@ -96,6 +101,7 @@ int LIB_main(int argc, char **argv)
 #endif
 		}
 	}               /* monitor runs */
+#endif
 
 	while (1)   /* re-open upon EOF */
 	{
