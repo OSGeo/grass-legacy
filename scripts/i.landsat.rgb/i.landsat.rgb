@@ -9,7 +9,6 @@
 #
 # PURPOSE:      create pretty LANDSAT RGBs: the trick is to remove outliers 
 #               using percentiles (area under the histogram curve)
-#               Needs GRASS 6.1-CVS.
 #
 # COPYRIGHT:	(C) 2006 by the GRASS Development Team
 #
@@ -72,8 +71,14 @@ if [ -z "$GISBASE" ] ; then
  exit 1
 fi
 
+# save command line
 if [ "$1" != "@ARGS_PARSED@" ] ; then
-  exec g.parser "$0" "$@"
+    CMDLINE="`basename $0`"
+    for arg in "$@" ; do
+        CMDLINE="$CMDLINE \"$arg\""
+    done
+    export CMDLINE
+    exec g.parser "$0" "$@"
 fi
 
 # setting environment, so that awk works properly in all languages (unused?)
@@ -147,5 +152,10 @@ else
 EOF
    done
 fi
+
+# write cmd history:
+r.support ${GIS_OPT_BLUE} history="${CMDLINE}"
+r.support ${GIS_OPT_GREEN} history="${CMDLINE}"
+r.support ${GIS_OPT_RED} history="${CMDLINE}"
 
 exit 0

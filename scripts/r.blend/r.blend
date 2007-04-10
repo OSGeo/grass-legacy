@@ -54,8 +54,14 @@ if  [ -z "$GISBASE" ] ; then
    exit 1
 fi   
 
+# save command line
 if [ "$1" != "@ARGS_PARSED@" ] ; then
-   exec g.parser "$0" "$@"
+    CMDLINE="`basename $0`"
+    for arg in "$@" ; do
+        CMDLINE="$CMDLINE \"$arg\""
+    done
+    export CMDLINE
+    exec g.parser "$0" "$@"
 fi
 
 if [ "$GRASS_OVERWRITE" != 1 ] ; then
@@ -84,6 +90,11 @@ for MAP in r g b ; do
    r.support map=${GIS_OPT_OUTPUT}.$MAP history="r.blend \"$MAP\" channel."
    r.support map=${GIS_OPT_OUTPUT}.$MAP history="  ${GIS_OPT_PERCENT}% of $GIS_OPT_FIRST, ${PERC_INV}% of $GIS_OPT_SECOND"
 done
+
+# write cmd history:
+r.support ${GIS_OPT_OUTPUT}.r history="${CMDLINE}"
+r.support ${GIS_OPT_OUTPUT}.g history="${CMDLINE}"
+r.support ${GIS_OPT_OUTPUT}.b history="${CMDLINE}"
 
 g.message "Done. Use the following command to visualize the result:"
 g.message "d.rgb r=${GIS_OPT_OUTPUT}.r g=${GIS_OPT_OUTPUT}.g b=${GIS_OPT_OUTPUT}.b"

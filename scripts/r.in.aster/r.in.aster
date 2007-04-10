@@ -47,17 +47,20 @@
 #%end
 
 
-if  [ -z "$GISBASE" ]
-then
-	echo "You must be in GRASS GIS to run this program" >&2
-	exit 1
+if  [ -z "$GISBASE" ] ; then
+    echo "You must be in GRASS GIS to run this program." >&2
+ exit 1
 fi
 
-if   [ "$1" != "@ARGS_PARSED@" ]
-then
-	exec g.parser "$0" "$@"
+# save command line
+if [ "$1" != "@ARGS_PARSED@" ] ; then
+    CMDLINE="`basename $0`"
+    for arg in "$@" ; do
+        CMDLINE="$CMDLINE \"$arg\""
+    done
+    export CMDLINE
+    exec g.parser "$0" "$@"
 fi
-
 
 #initialize datasets for L1A and L1B
 
@@ -153,6 +156,9 @@ r.in.gdal input=$tempfile output=$GIS_OPT_OUTPUT
 #cleanup
 g.message "Cleaning up"
 rm -f $tempfile
+
+# write cmd history:
+r.support $GIS_OPT_OUTPUT history="${CMDLINE}"
 
 g.message "Done"
 

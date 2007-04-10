@@ -93,8 +93,14 @@ if test "$GISBASE" = ""; then
  exit 1
 fi
 
+# save command line
 if [ "$1" != "@ARGS_PARSED@" ] ; then
-  exec g.parser "$0" "$@"
+    CMDLINE="`basename $0`"
+    for arg in "$@" ; do
+        CMDLINE="$CMDLINE \"$arg\""
+    done
+    export CMDLINE
+    exec g.parser "$0" "$@"
 fi
 
 PROG=`basename $0`
@@ -215,3 +221,7 @@ g.message "g.region -p rast=$GIS_OPT_OUTPUTPREFIX.red ; d.erase"
 g.message "d.rgb r=$GIS_OPT_OUTPUTPREFIX.red g=$GIS_OPT_OUTPUTPREFIX.green b=$GIS_OPT_OUTPUTPREFIX.blue"
 g.message "If desired, combine channels with 'r.composite' to a single map"
 
+# write cmd history:
+r.support $GIS_OPT_OUTPUTPREFIX.red history="${CMDLINE}"
+r.support $GIS_OPT_OUTPUTPREFIX.green history="${CMDLINE}"
+r.support $GIS_OPT_OUTPUTPREFIX.blue history="${CMDLINE}"

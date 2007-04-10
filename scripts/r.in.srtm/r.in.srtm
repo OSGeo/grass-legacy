@@ -79,8 +79,14 @@ if test "$GISBASE" = ""; then
  exit 1
 fi
 
+# save command line
 if [ "$1" != "@ARGS_PARSED@" ] ; then
-  exec g.parser "$0" "$@"
+    CMDLINE="`basename $0`"
+    for arg in "$@" ; do
+        CMDLINE="$CMDLINE \"$arg\""
+    done
+    export CMDLINE
+    exec g.parser "$0" "$@"
 fi
 
 PROG=`basename $0`
@@ -230,6 +236,9 @@ rmdir "$TMPDIR"
 #nice color table #and zoom to tile
 r.colors rul=srtm map=$TILEOUT
 #g.region rast=$TILEOUT
+
+# write cmd history:
+r.support $TILEOUT history="${CMDLINE}"
 
 g.message "Done: generated map $TILEOUT"
 g.message "(Note: Holes in the data can be closed with 'r.fillnulls' using splines)"
