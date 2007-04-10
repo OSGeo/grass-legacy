@@ -10,7 +10,8 @@
 #		This program is free software under the GNU General Public
 #		License (>=v2). Read the file COPYING that comes with GRASS
 #		for details.
-#
+# TODO: Check if MODIS Tasseled Cap makes sense to be added
+#       http://ieeexplore.ieee.org/xpls/abs_all.jsp?arnumber=1025776
 #############################################################################
 # References:
 # LANDSAT-4/LANDSAT-5:
