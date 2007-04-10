@@ -7,6 +7,7 @@
 
 void PS_Graph_close(void)
 {
+	output("END\n");
 	fclose(outfp);
 }
 
