@@ -55,8 +55,14 @@ if  [ -z "$GISBASE" ] ; then
  exit 1
 fi   
 
+# save command line
 if [ "$1" != "@ARGS_PARSED@" ] ; then
-  exec g.parser "$0" "$@"
+    CMDLINE="`basename $0`"
+    for arg in "$@" ; do
+        CMDLINE="$CMDLINE \"$arg\""
+    done
+    export CMDLINE
+    exec g.parser "$0" "$@"
 fi
 
 PROG=`basename $0`
@@ -216,7 +222,7 @@ if [ "$GIS_OPT_TYPE" = "area" ] ; then
         # we must reconstruct topology and cleanup polygons:
         v.in.ogr -o dsn=$E00SHORTNAME layer=LAB,ARC type=centroid,boundary output=$NAME
 	if [ $? -eq 1 ] ; then
-   	g.message "An error occurred. Stop."
+   	g.message -e "An error occurred. Stop."
    	rm -rf $E00TMP.e00 $E00SHORTNAME info 2>&1 > /dev/null
    	exit 1
 	fi
@@ -232,5 +238,8 @@ rmdir "$TMPDIR"
 
 #### end
 g.message "Done"
+
+# write cmd history:
+v.support $NAME cmdhist="${CMDLINE}"
 
 exit 0

@@ -192,7 +192,7 @@ for i in n min max range mean stddev variance cf_var sum ; do
     g.message "Adding column <$CURRCOLUMN>"
     v.db.addcol map=$VECTOR columns="$CURRCOLUMN double precision"
     if [ $? -eq 1 ] ; then
-      g.message "Cannot continue (problem to add column)."
+      g.message -e "Cannot continue (problem to add column)."
       exit 1
     fi
   fi

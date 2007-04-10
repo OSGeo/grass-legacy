@@ -2,7 +2,7 @@
 ############################################################################
 #
 # MODULE:	v.in.sites.all
-# AUTHOR(S):	MN 
+# AUTHOR(S):	Markus Neteler
 # PURPOSE:	converts all old GRASS < V5.7 sites maps to vector maps
 #		in current mapset
 # COPYRIGHT:	(C) 2004 by the GRASS Development Team
