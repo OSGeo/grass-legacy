@@ -17,9 +17,12 @@
 The module <a href="r3.in.ascii.html">r3.in.ascii</a> supports
 generic x,y,z import. Alternatively, voxels are be interpolated
 from 3D point clouds as transformed from 3D point vector data
-(<a href="v.to.rast3.html">v.to.rast3</a>).
-Always the full map is imported.
-
+(<a href="v.to.rast3.html">v.to.rast3</a>). Always the full map is
+imported.
+Volumes can also be created based on 2D elevation and value raster maps
+(<a href="r.to.rast3elev.html">r.to.rast3elev</a>). Alternatively,
+a volume can be composed of several 2D raster map slices into one
+3D raster volume map (<a href="r.to.rast3.html">r.to.rast3</a>).
 
 <h3>Voxel region settings and 3D MASK</h3>
 
@@ -42,7 +45,13 @@ Powerful 3D map algebra is implemented in <a href="r3.mapcalc.html">r3.mapcalc</
 (<a href="v.to.rast3.html">v.to.rast3</a>).
 Layers from a 3D raster map can be converted to a 2D raster map
 (<a href="r3.to.rast.html">r3.to.rast</a>).
+Cross sectional 2D raster map can be generated from 3D raster map based
+on a 2D elevation map (<a href="r3.cross.rast.html">r3.cross.rast</a>).
 
+<h3>Voxel statistics</h3>
+
+Volume statistics can be calculated with <a href="r3.stats.html">r3.stats</a>
+and <a href="r3.univar.html">r3.univar</a>.
 
 <h3>Voxel interpolation</h3>
 
