@@ -53,7 +53,8 @@ default: $(ARCH_BINDIR)/$(START_UP) \
 	$(ETC)/gintro.gif \
 	$(ETC)/grass-run.sh \
 	$(ETC)/grass-run.bat \
-	$(ETC)/grass-xterm-wrapper
+	$(ETC)/grass-xterm-wrapper \
+	$(ETC)/html_browser_mac.sh
 	$(MKDIR) $(GISBASE)/docs/html
 	$(INSTALL) -m 644 variables.html $(GISBASE)/docs/html/variables.html
 	$(INSTALL) -m 644 grass6.html $(GISBASE)/docs/html/grass6.html
@@ -176,4 +177,8 @@ $(ETC)/grass-xterm-wrapper: grass-xterm-wrapper
 $(ETC)/prompt.sh: prompt.sh
 	rm -f $@
 	$(INSTALL) -m 755 prompt.sh $(ETC)
+
+$(ETC)/html_browser_mac.sh: html_browser_mac.sh
+	rm -f $@
+	@if [ "`cat ../../include/Make/Platform.make | grep -i '^ARCH.*darwin'`" ] ; then $(INSTALL) -m 755 html_browser_mac.sh $(ETC) ; fi
 

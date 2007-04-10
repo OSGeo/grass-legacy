@@ -121,8 +121,17 @@ to the last GUI used.
 <br>&nbsp; defines the height of GRASS monitor, see also GRASS_WIDTH
 
 <P>GRASS_HTML_BROWSER
-<br>[init.sh, d.m]
-<br>&nbsp; defines name of HTML browser
+<br>[init.sh, d.m, gis.m]
+<br>&nbsp; defines name of HTML browser.  For most platforms this should be
+an executable in your PATH, or the full path to an executable.<br>
+&nbsp; Mac OS X runs applications differently from the CLI.  Therefore,
+GRASS_HTML_BROWSER should be the application's signature, which is a domain-like
+name, just reversed. ie: com.apple.Safari.  To find an application's signature,
+type the following in a Terminal (fill in the path to the application you are
+interested in, for example: /Applications/Safari.app):<br>
+&nbsp; &nbsp; <code>grep -A 1 &quot;CFBundleIdentifier&quot;</code> <i>/path/to/application.app</i><code>/Contents/Info.plist</code><br>
+&nbsp; The signature is the &lt;string&gt;
+following the &lt;key&gt;, without the bracketing &lt;string&gt; tags.
 
 <P>GRASS_INT_ZLIB
 <br>[libgis]
