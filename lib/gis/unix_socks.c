@@ -40,12 +40,15 @@
 #include <sys/stat.h>
 #ifdef __MINGW32__
 #define USE_TCP
-#include <winsock.h>
+#include <winsock2.h>
+#include <ws2tcpip.h>
+#define EADDRINUSE WSAEADDRINUSE
 #else
 #include <sys/socket.h>
 #include <sys/un.h>
-#endif
 #include <netinet/in.h>
+#define INVALID_SOCKET (-1)
+#endif
 
 /** For systems where the *_LOCAL (POSIX 1g) is not defined 
  ** There's not really any difference between PF and AF in practice.
@@ -53,6 +56,20 @@
 
 static char *_get_make_sock_path (void);
 
+static void init_sockets(void)
+{
+#ifdef __MINGW32__
+    static int ready;
+    WSADATA wsadata;
+
+    if (ready)
+	return;
+
+    ready = 1;
+
+    WSAStartup(0x0001, &wsadata);
+#endif
+}
 
 /* ---------------------------------------------------------------------
  * _get_make_sock_path(), builds and tests the path for the socket
@@ -281,6 +298,8 @@ G_sock_bind (const char *name)
 
     if (name == NULL)
         return -1;
+
+    init_sockets();
     
     /* Bind requires that the file does not exist. Force the caller
      * to make sure the socket is not in use.  The only way to test,
@@ -301,7 +320,7 @@ G_sock_bind (const char *name)
 	return -1;
 
     sockfd = socket (PROTO, SOCK_STREAM, 0);
-    if (sockfd < 0)
+    if (sockfd == INVALID_SOCKET)
 	    return -1;
 
     if (bind (sockfd, (const struct sockaddr *) &addr, size) != 0)
@@ -372,6 +391,8 @@ G_sock_connect (const char *name)
     int sockfd;
     sockaddr_t addr;
 
+    init_sockets();
+
     if (!G_sock_exists (name))
         return -1;
 
@@ -382,7 +403,7 @@ G_sock_connect (const char *name)
 	return -1;
 
     sockfd = socket (PROTO, SOCK_STREAM, 0);
-    if (sockfd < 0)
+    if (sockfd == INVALID_SOCKET)
 	return -1;
 
     if (connect (sockfd, (struct sockaddr *) &addr, sizeof(addr)) != 0)

@@ -190,7 +190,9 @@ int REM__open_quiet(void)
 
 int sync_driver(char *name)
 {
+#ifndef __MINGW32__
     RETSIGTYPE (*sigalarm)(int);
+#endif
     int try;
     int count;
     unsigned char c;
@@ -205,11 +207,15 @@ int sync_driver(char *name)
  * try twice. first timeout is warning, second is fatal
  */
     count = 0;
+#ifndef __MINGW32__
     sigalarm = signal(SIGALRM, dead);
+#endif
     for (try = 0; try < 2; try++)
     {
         no_mon = 0;
+#ifndef __MINGW32__
         alarm(try?10:5);
+#endif
         while(no_mon == 0)
         {
             if (read(_rfd, &c, (size_t) 1) != 1)
@@ -226,8 +232,10 @@ int sync_driver(char *name)
             else
                 count = 0;  /* start over */
         }
+#ifndef __MINGW32__
         alarm(0);
         signal(SIGALRM, sigalarm);
+#endif
         if (no_mon == 0)
             return 1;   /* ok! */
         if (try)
@@ -236,7 +244,9 @@ int sync_driver(char *name)
         fprintf(stderr, _("Warning - no response from graphics monitor <%s>.\n"),
             name);
         fprintf(stderr, _("Check to see if the mouse is still active.\n"));
+#ifndef __MINGW32__
         signal(SIGALRM, dead);
+#endif
     }
     fprintf(stderr, _("ERROR - no response from graphics monitor <%s>.\n"),
         name);
@@ -251,17 +261,23 @@ static RETSIGTYPE dead(int sig)
 void _hold_signals(int hold)
 {
     static RETSIGTYPE (*sigint)(int);
+#ifdef SIGQUIT
     static RETSIGTYPE (*sigquit)(int);
+#endif
 
     if (hold)
     {
         sigint  = signal(SIGINT, SIG_IGN);
+#ifdef SIGQUIT
         sigquit = signal(SIGQUIT, SIG_IGN);
+#endif
     }
     else
     {
         signal(SIGINT, sigint);
+#ifdef SIGQUIT
         signal(SIGQUIT, sigquit);
+#endif
     }
 }
 

@@ -10,6 +10,14 @@
 #include <unistd.h>
 #include <errno.h>
 
+#ifdef __MINGW32__
+#include <winsock2.h>
+#define ECONNREFUSED WSAECONNREFUSED
+#define EADDRINUSE   WSAEADDRINUSE  
+#define ENOTSOCK     WSAENOTSOCK    
+#define ETIMEDOUT    WSAETIMEDOUT   
+#endif
+
 #include <grass/gis.h>
 #include <grass/glocale.h>
 #include <grass/raster.h>

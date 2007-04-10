@@ -71,6 +71,7 @@ int start_mon (char *name)
 		G_fatal_error("Error:  must start %s from %s\n You are on %s",name,mon->where,ttyname(0));
 #endif
 
+	G_convert_dirseps_to_host(mon->path);
 	execl(	mon->path,
 		mon->path,
 		name,
