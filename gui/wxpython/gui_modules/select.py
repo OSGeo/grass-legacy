@@ -39,12 +39,23 @@ class TreeCtrlComboPopup(wx.combo.ComboPopup):
         self.seltree.Bind(wx.EVT_LEFT_DOWN, self.OnLeftDown)
         self.seltree.Bind(wx.EVT_TREE_ITEM_EXPANDING, self.mapsetExpanded)
         self.seltree.Bind(wx.EVT_TREE_ITEM_COLLAPSED, self.mapsetCollapsed)
+        self.seltree.Bind(wx.EVT_TREE_ITEM_ACTIVATED, self.mapsetActivated)
+        self.seltree.Bind(wx.EVT_TREE_SEL_CHANGED, self.mapsetSelected)
 
+    # the following dummy handler are needed to keep tree events from propagating up to
+    # the parent GIS Manager layer tree
     def mapsetExpanded(self, event):
         pass
 
     def mapsetCollapsed(self, event):
         pass
+
+    def mapsetActivated(self, event):
+        pass
+
+    def mapsetSelected(self, event):
+        pass
+    # end of dummy events
 
     def GetControl(self):
         return self.seltree
