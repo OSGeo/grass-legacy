@@ -12,6 +12,7 @@ class Select(wx.combo.ComboCtrl):
         wx.combo.ComboCtrl.__init__(self, parent=parent, id=id, size=size)
         tcp = TreeCtrlComboPopup()
         self.SetPopupControl(tcp)
+        self.SetPopupExtents(0,100)
         tcp.getElementList(type)
 
 class TreeCtrlComboPopup(wx.combo.ComboPopup):
@@ -128,7 +129,7 @@ class TreeCtrlComboPopup(wx.combo.ComboPopup):
                 # if self.layertype[self.layer_selected] == 'group':
                 # KeyError: <wx._controls.TreeItemId; proxy of <Swig Object of type 'wxTreeItemId *' at 0xeac7d0> >
                 # -------- ERROR END --------------
-                #self.seltree.Expand(dir_node)
+#                self.seltree.Expand(dir_node)
 
             else:
                 dir_node = self.AddItem('Mapset: '+dir)
