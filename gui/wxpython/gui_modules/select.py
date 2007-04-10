@@ -28,40 +28,47 @@ class TreeCtrlComboPopup(wx.combo.ComboPopup):
 
 
     def Create(self, parent):
-        self.tree = wx.TreeCtrl(parent, style=wx.TR_HIDE_ROOT
+        self.seltree = wx.TreeCtrl(parent, style=wx.TR_HIDE_ROOT
                                 |wx.TR_HAS_BUTTONS
                                 |wx.TR_SINGLE
                                 |wx.TR_LINES_AT_ROOT
                                 |wx.SIMPLE_BORDER
                                 |wx.TR_FULL_ROW_HIGHLIGHT)
-        self.tree.Bind(wx.EVT_MOTION, self.OnMotion)
-        self.tree.Bind(wx.EVT_LEFT_DOWN, self.OnLeftDown)
+        self.seltree.Bind(wx.EVT_MOTION, self.OnMotion)
+        self.seltree.Bind(wx.EVT_LEFT_DOWN, self.OnLeftDown)
+        self.seltree.Bind(wx.EVT_TREE_ITEM_EXPANDING, self.mapsetExpanded)
+        self.seltree.Bind(wx.EVT_TREE_ITEM_COLLAPSED, self.mapsetCollapsed)
 
+    def mapsetExpanded(self, event):
+        pass
+
+    def mapsetCollapsed(self, event):
+        pass
 
     def GetControl(self):
-        return self.tree
+        return self.seltree
 
 
     def GetStringValue(self):
         if self.value:
-            return self.tree.GetItemText(self.value)
+            return self.seltree.GetItemText(self.value)
         return ""
 
 
     def OnPopup(self):
         if self.value:
-            self.tree.EnsureVisible(self.value)
-            self.tree.SelectItem(self.value)
+            self.seltree.EnsureVisible(self.value)
+            self.seltree.SelectItem(self.value)
 
     def SetStringValue(self, value):
         # this assumes that item strings are unique...
-        root = self.tree.GetRootItem()
+        root = self.seltree.GetRootItem()
         if not root:
             return
         found = self.FindItem(root, value)
         if found:
             self.value = found
-            self.tree.SelectItem(found)
+            self.seltree.SelectItem(found)
 
     def GetAdjustedSize(self, minWidth, prefHeight, maxHeight):
         return wx.Size(minWidth, min(200, maxHeight))
@@ -107,7 +114,7 @@ class TreeCtrlComboPopup(wx.combo.ComboPopup):
         for dir in mapsets:
             if dir == curr_mapset:
                 dir_node = self.AddItem('Mapset: '+dir)
-                self.tree.SetItemTextColour(dir_node,wx.Colour(50,50,200))
+                self.seltree.SetItemTextColour(dir_node,wx.Colour(50,50,200))
                 try:
                     elem_list = os.listdir(os.path.join (location_path, dir, element))
                     for elem in elem_list:
@@ -121,11 +128,11 @@ class TreeCtrlComboPopup(wx.combo.ComboPopup):
                 # if self.layertype[self.layer_selected] == 'group':
                 # KeyError: <wx._controls.TreeItemId; proxy of <Swig Object of type 'wxTreeItemId *' at 0xeac7d0> >
                 # -------- ERROR END --------------
-                #self.tree.Expand(dir_node)
-                    
+                #self.seltree.Expand(dir_node)
+
             else:
                 dir_node = self.AddItem('Mapset: '+dir)
-                self.tree.SetItemTextColour(dir_node,wx.Colour(50,50,200))
+                self.seltree.SetItemTextColour(dir_node,wx.Colour(50,50,200))
                 try:
                     elem_list = os.listdir(os.path.join (location_path, dir, element))
                     for elem in elem_list:
@@ -135,37 +142,37 @@ class TreeCtrlComboPopup(wx.combo.ComboPopup):
 
     # helpers
     def FindItem(self, parentItem, text):
-        item, cookie = self.tree.GetFirstChild(parentItem)
+        item, cookie = self.seltree.GetFirstChild(parentItem)
         while item:
-            if self.tree.GetItemText(item) == text:
+            if self.seltree.GetItemText(item) == text:
                 return item
-            if self.tree.ItemHasChildren(item):
+            if self.seltree.ItemHasChildren(item):
                 item = self.FindItem(item, text)
-            item, cookie = self.tree.GetNextChild(parentItem, cookie)
+            item, cookie = self.seltree.GetNextChild(parentItem, cookie)
         return wx.TreeItemId();
 
 
     def AddItem(self, value, parent=None):
         if not parent:
-            root = self.tree.GetRootItem()
+            root = self.seltree.GetRootItem()
             if not root:
-                root = self.tree.AddRoot("<hidden root>")
+                root = self.seltree.AddRoot("<hidden root>")
             parent = root
 
-        item = self.tree.AppendItem(parent, value)
+        item = self.seltree.AppendItem(parent, value)
         return item
 
     def OnMotion(self, evt):
         # have the selection follow the mouse, like in a real combobox
-        item, flags = self.tree.HitTest(evt.GetPosition())
+        item, flags = self.seltree.HitTest(evt.GetPosition())
         if item and flags & wx.TREE_HITTEST_ONITEMLABEL:
-            self.tree.SelectItem(item)
+            self.seltree.SelectItem(item)
             self.curitem = item
         evt.Skip()
 
     def OnLeftDown(self, evt):
         # do the combobox selection
-        item, flags = self.tree.HitTest(evt.GetPosition())
+        item, flags = self.seltree.HitTest(evt.GetPosition())
         if item and flags & wx.TREE_HITTEST_ONITEMLABEL:
             self.curitem = item
             self.value = item
