@@ -248,12 +248,14 @@ if [ ! "$GRASS_WISH" ] ; then
    export GRASS_WISH
 fi
 
-
 # try and find a web browser if one isn't already specified
 if [ ! "$GRASS_HTML_BROWSER" ] ; then
 
     if [ "$MACOSX" ] ; then
-	GRASS_HTML_BROWSER=open
+        # OSX doesn't execute browsers from the shell PATH - route thru a script
+        GRASS_HTML_BROWSER="$ETC/html_browser_mac.sh"
+        GRASS_HTML_BROWSER_MACOSX="-b com.apple.helpviewer"
+        export GRASS_HTML_BROWSER_MACOSX
 
     elif [ "$MINGW" -o "$CYGWIN" ] ; then
 	# MinGW startup moved to into init.bat
@@ -294,7 +296,14 @@ if [ ! "$GRASS_HTML_BROWSER" ] ; then
         fi
       done
     fi
+            
+elif [ "$MACOSX" ] ; then
+    # OSX doesn't execute browsers from the shell PATH - route thru a script
+    GRASS_HTML_BROWSER_MACOSX="-b $GRASS_HTML_BROWSER"
+    export GRASS_HTML_BROWSER_MACOSX
+    GRASS_HTML_BROWSER="$ETC/html_browser_mac.sh"
 fi
+
 if [ ! "$GRASS_HTML_BROWSER" ] ; then
     echo "WARNING: Searched for a web browser, but none found." 1>&2
     # even so we set konqueror to make lib/gis/parser.c happy:
