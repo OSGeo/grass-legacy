@@ -1076,6 +1076,10 @@ class MapFrame(wx.Frame):
         """
         Query currrent or last map
         """
+        # switch GIS Manager to output console to show query results
+
+        self.Parent.notebook.SetSelection(1)
+
     	self.MapWindow.mouse['box'] = "query"
     	self.MapWindow.zoomtype = 0
     	#event.Skip()
