@@ -87,7 +87,7 @@ int main(int argc, char *argv[])
     infile = raster->answer;
     mapset = G_find_cell2(infile, "");
     if (mapset == NULL)
-        G_fatal_error(_("Unable to find [%s]."), infile);
+        G_fatal_error(_("Raster map <%s> not found"), infile);
 
     cellhd_ok = (G_get_cellhd(raster->answer, mapset, &cellhd) >= 0);
     is_reclass = (G_is_reclass(raster->answer, mapset, rname, rmapset) > 0);
@@ -107,7 +107,7 @@ int main(int argc, char *argv[])
 	G_read_history (raster->answer, mapset, &hist);
 
 	if(hist.edlinecnt >= MAXEDLINES)
-	    G_fatal_error(_("Not enough room in history file."));
+	    G_fatal_error(_("Not enough room in history file"));
 
 	/* two less than defined as if only one less a newline gets appended in the hist file. bug? */
         /* Should be RECORD_LEN, but r.info truncates at > 71 chars */
@@ -151,13 +151,14 @@ int main(int argc, char *argv[])
 
 	cmapset = G_find_cell2(map_opt->answer, "");
 	if (cmapset == NULL)
-	    G_fatal_error(_("%s - map not found"), map_opt->answer);
+	    G_fatal_error(_("Raster map <%s> not found"), map_opt->answer);
 
 	if((fd = G_open_cell_old(infile,mapset)) < 0)
-		G_fatal_error(_("Unable to open raster map [%s]"), infile);
+		G_fatal_error(_("Cannot open raster map <%s>"), infile);
 	G_init_cats ((CELL)0, "", &cats);
 	if (0 > G_read_cats(map_opt->answer, cmapset, &cats))
-	    G_fatal_error(_("Unable to read cats table for %s"), map_opt->answer);
+	    G_fatal_error(_("Cannot read category file of raster map <%s>"),
+			  map_opt->answer);
 
 	if (G_write_cats(infile, &cats) >= 0)
 	    G_message(_("cats table for [%s] set to %s"), infile, map_opt->answer);
