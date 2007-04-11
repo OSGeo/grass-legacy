@@ -177,10 +177,11 @@ class DatumPage(TitledPage):
         self.datumlist.SetColumnWidth(3, wx.LIST_AUTOSIZE)
 
     def onPageChange(self,event):
-            global datum
-            datum = self.tdatum.GetValue()
-            global transform
-            transform = self.ttrans.GetValue()
+        self.GetNext().SetPrev(self)
+        global datum
+        datum = self.tdatum.GetValue()
+        global transform
+        transform = self.ttrans.GetValue()
 
     def OnDoSearch(self,event):
         str =  self.searchb.GetValue()
@@ -343,20 +344,33 @@ class SummaryPage(TitledPage):
         global west
         global resolution
 
+        if not coordsys:
+            coordsys = 0
+        if not north:
+            north  = 0
+        if not south:
+            south = 0
+        if not east:
+            east = 0
+        if not west:
+            west = 0
+        if not resolution:
+            resolution = 1
+
 
         #if projection != "latlong":
         rows = int(round((float(north)-float(south))/float(resolution)))
         cols = int(round((float(east)-float(west))/float(resolution)))
         cells = int(rows*cols)
 
-        self.ldatabase.SetLabel(database)
-        self.llocation.SetLabel(location)
-        self.lprojection.SetLabel(coordsys)
-        self.lnorth.SetLabel(north)
-        self.lsouth.SetLabel(south)
-        self.least.SetLabel(east)
-        self.lwest.SetLabel(west)
-        self.lres.SetLabel(resolution)
+        self.ldatabase.SetLabel(str(database))
+        self.llocation.SetLabel(str(location))
+        self.lprojection.SetLabel(str(coordsys))
+        self.lnorth.SetLabel(str(north))
+        self.lsouth.SetLabel(str(south))
+        self.least.SetLabel(str(east))
+        self.lwest.SetLabel(str(west))
+        self.lres.SetLabel(str(resolution))
         self.lrows.SetLabel(str(rows))
         self.lcols.SetLabel(str(cols))
         self.lcells.SetLabel(str(cells))
@@ -684,6 +698,7 @@ class BBoxPage(TitledPage):
 
     def onPageChange(self, event):
         self.GetNext().FillVars()
+        self.GetNext().SetPrev(self)
 
         global north
         north = self.ttop.GetValue()
@@ -888,7 +903,8 @@ class GeoreferencedFilePage(TitledPage):
 class EPSGPage(TitledPage):
     def __init__(self, wizard, parent):
         TitledPage.__init__(self, wizard, "Choose EPSG Code")
-        wx.MessageBox("in epsgpage")
+        #wx.MessageBox("in epsgpage")
+        self.parent = parent
 
         # labels
         self.lfile= wx.StaticText(self, -1, "Path to the EPSG-codes file: ",
@@ -963,8 +979,9 @@ class EPSGPage(TitledPage):
 
     def onPageChange(self, event):
         global epsgcode
-        epsgcode = self.tcode
-        wx.MessageBox("setting epsgcode to %" % (epsgcode))
+        epsgcode = self.tcode.GetValue()
+        self.parent.datumpage.SetPrev(self)
+        #wx.MessageBox("setting epsgcode to %s" % (epsgcode))
 
     def OnDoSearch(self,event):
         str =  self.searchb.GetValue()
@@ -1038,7 +1055,7 @@ class EPSGPage(TitledPage):
             dlg.Destroy()
 
     def OnChange(self,event):
-            self.item =  event.GetItem()
+        self.item =  event.GetItem()
 
     def OnDoubleClick(self, event):
         print self.epsgs.GetValue()
@@ -1090,13 +1107,13 @@ class CoordinateSystemPage(TitledPage):
             self.parent.bboxpage.SetPrev(self.parent.datumpage)
         elif event.GetId() == self.radio3.GetId():
             coordsys = "utm"
-            self.SetNext(self.parent.datumpage)
-            self.parent.datumpage.SetPrev(self.parent.csystemspage)
-            self.parent.bboxpage.SetPrev(self.parent.datumpage)
+            self.SetNext(self.parent.utmpage)
+            self.parent.datumpage.SetPrev(self.parent.utmpage)
         elif event.GetId() == self.radio4.GetId():
             coordsys = "custom"
             self.SetNext(self.parent.projpage)
-            self.parent.bboxpage.SetPrev(self.parent.projpage)
+            self.parent.datumpage.SetPrev(self.parent.projpage)
+            self.parent.bboxpage.SetPrev(self.parent.datumpage)
         elif event.GetId() == self.radio5.GetId():
             coordsys = "epsg"
             self.SetNext(self.parent.epsgpage)
@@ -1112,6 +1129,23 @@ class CoordinateSystemPage(TitledPage):
             self.parent.bboxpage.cstate.Enable(False)
         else:
             self.parent.bboxpage.cstate.Enable(True)
+ 
+class UTMPage(TitledPage):
+    def __init__(self, wizard, parent):
+        TitledPage.__init__(self, wizard, "Choose zone for UTM coordinate system")
+
+        self.parent = parent
+        self.text_utm = self.MakeTextCtrl(size=(300,-1))
+        self.label_utm= self.MakeLabel("Set your UTM zone: ")
+
+        self.sizer.Add(self.label_utm, 0, wx.ALIGN_LEFT, 5, row=1,col=1)
+        self.sizer.Add(self.text_utm, 0, wx.ALIGN_LEFT, 5, row=1,col=2)
+
+
+    def GetUtm(self):
+        return int(self.text_utm.GetValue())
+
+
 
 class DatabasePage(TitledPage):
     def __init__(self, wizard, parent, grassdatabase):
@@ -1189,8 +1223,8 @@ class DatabasePage(TitledPage):
 
 class GWizard:
     def __init__(self, parent, grassdatabase):
-        wizbmp = wx.Image(os.path.join(os.getenv("GISBASE"),"etc","wx","images","grasslogo_small.gif"), wx.BITMAP_TYPE_GIF)
-        wizbmp.Rescale(50,60)
+        wizbmp = wx.Image(os.path.join(os.getenv("GISBASE"),"etc","wx","images","wizard.png"), wx.BITMAP_TYPE_PNG)
+        wizbmp.Rescale(250,600)
         wizbmp = wizbmp.ConvertToBitmap()
         wizard = wiz.Wizard(parent, -1, "Define new Location",
                 bitmap=wizbmp)
@@ -1202,15 +1236,17 @@ class GWizard:
         self.projpage = ProjectionsPage(wizard, self)
         self.sumpage = SummaryPage(wizard, self)
         self.datumpage = DatumPage(wizard, self)
+        self.utmpage = UTMPage(wizard,self)
 
         # Set the initial order of the pages
+        # it should follow the epsg line
         self.startpage.SetNext(self.csystemspage)
 
         self.csystemspage.SetPrev(self.startpage)
         self.csystemspage.SetNext(self.bboxpage)
 
         self.epsgpage.SetPrev(self.csystemspage)
-        self.epsgpage.SetNext(self.sumpage)
+        self.epsgpage.SetNext(self.datumpage)
 
         self.projpage.SetPrev(self.csystemspage)
         self.projpage.SetNext(self.datumpage)
@@ -1224,6 +1260,9 @@ class GWizard:
         self.bboxpage.SetNext(self.sumpage)
 
         self.sumpage.SetPrev(self.bboxpage)
+
+        self.utmpage.SetPrev(self.csystemspage)
+        self.utmpage.SetNext(self.datumpage)
 
         wizard.FitToPage(self.bboxpage)
         if wizard.RunWizard(self.startpage):
