@@ -134,7 +134,9 @@ int main (int argc, char *argv[])
 {
     int overwrite;
     int have_colors;
-    struct Colors colors;
+    struct Colors colors, colors_tmp;
+    struct Cell_stats statf;
+    int have_stats = 0;
     struct FPRange range;
     DCELL min, max;
     char *name, *mapset;
@@ -142,7 +144,7 @@ int main (int argc, char *argv[])
     char *rules;
     int fp;
     struct GModule *module;
-    struct Flag *flag1, *flag3;
+    struct Flag *flag1, *flag3, *g_flag, *e_flag;
     struct Option *opt1, *opt2, *opt3, *opt4;
 
     /* please, remove before GRASS 7 released */
@@ -201,6 +203,13 @@ int main (int argc, char *argv[])
     flag3->key = 'l';
     flag3->description = _("List rules");
 
+    g_flag = G_define_flag() ;
+    g_flag->key         = 'g' ;  
+    g_flag->description = _("Logarithmic scaling") ;
+
+    e_flag = G_define_flag() ;
+    e_flag->key         = 'e' ;  
+    e_flag->description = _("Histogram equalization") ;
 
     /* please, remove before GRASS 7 released */
     q_flag = G_define_flag() ;
@@ -246,6 +255,12 @@ int main (int argc, char *argv[])
     if (rules && cmap)
 	G_warning(_("Both options \"rast\" AND \"rules\" specified - ignoring rast"));
 
+    if (cmap && g_flag->answer)
+	G_warning(_("Both \"rast=\" AND \"-l\" specified - ignoring -l"));
+
+    if (cmap && e_flag->answer)
+	G_warning(_("Both \"rast=\" AND \"-e\" specified - ignoring -e"));
+
     mapset = G_find_cell2 (name, "");
     if (mapset == NULL)
 	G_fatal_error(_("%s - map not found"), name);
@@ -286,13 +301,17 @@ int main (int argc, char *argv[])
 	{
 	    if(fp)
 		G_fatal_error(_("Can't make grey.eq color table for floating point map"));
-	    eq_grey_colors (name, mapset, &colors);
+	    if (!have_stats)
+		have_stats = get_stats (name, mapset, &statf);
+	    G_make_histogram_eq_colors (&colors, &statf);
 	}
 	else if (strcmp (type, "grey.log") == 0)
 	{
 	    if(fp)
 		G_fatal_error(_("Can't make logarithmic color table for floating point map"));
-	    log_grey_colors (name, mapset, &colors, (CELL) min, (CELL) max);
+	    if (!have_stats)
+		have_stats = get_stats (name, mapset, &statf);
+	    G_make_histogram_log_colors (&colors, &statf, (CELL) min, (CELL) max);
 	}
 	else if (strcmp (type, "aspect") == 0)
 	    G_make_aspect_fp_colors (&colors, min, max);
@@ -316,6 +335,20 @@ int main (int argc, char *argv[])
 	
 	if(fp) G_mark_colors_as_fp(&colors);
 
+	if (e_flag->answer)
+	{
+	    if (!have_stats)
+		have_stats = get_stats(name, mapset, &statf);
+	    G_histogram_eq_colors(&colors_tmp, &colors, &statf);
+	    colors = colors_tmp;
+	}
+
+	if (g_flag->answer)
+	{
+	    G_log_colors(&colors_tmp, &colors, 100);
+	    colors = colors_tmp;
+	}
+
 	if (G_write_colors (name, mapset, &colors) >= 0 )
 	    G_message(_("Color table for [%s] set to %s"), name, type);
     }
@@ -334,6 +367,20 @@ int main (int argc, char *argv[])
 
 	fclose(rules_fp);
 	if(fp) G_mark_colors_as_fp(&colors);
+
+	if (e_flag->answer)
+	{
+	    if (!have_stats)
+		have_stats = get_stats(name, mapset, &statf);
+	    G_histogram_eq_colors(&colors_tmp, &colors, &statf);
+	    colors = colors_tmp;
+	}
+
+	if (g_flag->answer)
+	{
+	    G_log_colors(&colors_tmp, &colors, 100);
+	    colors = colors_tmp;
+	}
 
 	if (G_write_colors (name, mapset, &colors) >= 0 )
 	    G_message(_("Color table for [%s] set to %s"), name, rules);

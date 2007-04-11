@@ -19,10 +19,10 @@
 #ifndef __LOCAL_PROTO_H__
 #define __LOCAL_PROTO_H__
 
-/* eq.c */
-int eq_grey_colors(char *, char *, struct Colors *);
-/* log.c */
-int log_grey_colors(char *, char *, struct Colors *,  int, int);
+#include <grass/gis.h>
+
+/* stats.c */
+int get_stats(char *, char *, struct Cell_stats *);
 /* main.c */
 int main(int, char *[]);
 int more_usage(void);
