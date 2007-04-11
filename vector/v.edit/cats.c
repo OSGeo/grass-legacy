@@ -1,20 +1,19 @@
 /***************************************************************
  *
- * MODULE:       v.digit
+ * MODULE:     v.edit
  * 
  * AUTHOR(S):  GRASS Development Team
  *             Jachym Cepicky <jachym  les-ejk cz>
- *             Radim Blazek
+ *             Radim Blazek, Martin Landa
  *               
- * PURPOSE:    This module edits vector maps. It is inteded to be mainly
- * 	       used by the the new v.digit GUI.
+ * PURPOSE:    This module edits vector maps.
  *
- * COPYRIGHT:    (C) 2001 by the GRASS Development Team
+ * COPYRIGHT:  (C) 2001-2007 The GRASS Development Team
  *
- *               This program is free software under the 
- *               GNU General Public License (>=v2). 
- *               Read the file COPYING that comes with GRASS
- *               for details.
+ *             This program is free software under the 
+ *             GNU General Public License (>=v2). 
+ *             Read the file COPYING that comes with GRASS
+ *             for details.
  *
  **************************************************************/
 
@@ -22,106 +21,91 @@
 
 /* cats 
  * edit category numbers of selected vector features
- * */
+ * return number of modified features
+ */
 int cats (struct Map_info *Map, int del)
 {
-    int i, line;
+    int i, j;
     struct ilist *List;
     struct line_cats *Cats;
     struct line_pnts *Points;
     struct cat_list *Clist;
-    int type;
-    int cat ;
-    int layer=atoi(fld_opt->answer);
-    int field_idx;
-    int ret;
+    int line, type, cat, layer;
+    int nlines_modified, rewrite;
     
+    layer = atoi(fld_opt->answer);
+    nlines_modified = 0;
+
     /* get list of categories */
     Clist = Vect_new_cat_list();
-    if ( Vect_str_to_cat_list(cat_opt->answer, Clist)) 
-        G_fatal_error(_("Could not get cat list <%s>"), cat_opt->answer);
-
+    if (Vect_str_to_cat_list(cat_opt->answer, Clist)) 
+	G_fatal_error(_("Could not get cat list <%s>"), cat_opt->answer);
     
-    /* set resulting category number */
-    cat = Clist->max[Clist->n_ranges-1];
-
-    /* featuers defined by cats */
-    if(cat_opt->answer != NULL && Clist->n_ranges > 1) {
-        
-        /* last category is the default one */
-        int maxrange= Clist->n_ranges >= 2 ? Clist->n_ranges -1 : Clist->n_ranges;
-        int tmpcat;
-
-        if (maxrange >= 2)
-            maxrange -=1;
-
-        List = Vect_new_list ();
-        field_idx = Vect_cidx_get_field_index( Map, layer );
-        for(i=0;i<maxrange;i++) {
-            for(tmpcat=Clist->min[i]; tmpcat <= Clist->max[i]; tmpcat++) {
-                printf("%d\n",tmpcat);
-                Vect_cidx_find_all(Map, field_idx,  GV_POINT | GV_CENTROID | GV_LINES | GV_BOUNDARY | GV_FACE, tmpcat,  List);
-            }
-        }
-    }
-    if (coord_opt->answer != NULL) {
-
-	sel_by_coordinates(Map, List);
-    }
-    else if (bbox_opt->answer != NULL) {
-
-	sel_by_bbox(Map, List);
-    }
-    else if (poly_opt->answer != NULL) {
+    /* features defined by cats */
+    if(cat_opt->answer != NULL && Clist->n_ranges > 0) {
+	/* select lines */
+	List = select_lines (Map);
 	
-	sel_by_polygon(Map, List);
+	if (List -> n_values < 1)
+	    return 0;
+
+	Cats   = Vect_new_cats_struct (); 
+	Points = Vect_new_line_struct();
+
+	/* for each line, set new category */
+	for (i = 0; i < List->n_values; i++) {
+	    line = List->value[i];
+            type = Vect_read_line(Map, Points, Cats, line);
+
+	    if (!Vect_line_alive (Map, line))
+		continue;
+
+	    rewrite = 0;
+	    for (j = 0; j < Clist -> n_ranges; j++) {
+		for (cat = Clist -> min[j]; cat <= Clist -> max[j]; cat++) {
+		    /* add new category */
+		    if (!del) {
+			if(Vect_cat_set (Cats, layer, cat) < 1) {
+			    G_warning (_("Cannot set category [%d] line [%d]"),
+				       cat, line);
+			}
+			else {
+			    rewrite = 1;
+			}
+		    }
+		    else { /* delete old category */
+			if(Vect_field_cat_del (Cats, layer, cat) == 0) {
+			    G_warning (_("Cannot delete layer/category [%d/%d] line [%d]"), 
+				       layer, cat, line);
+			}
+			else {
+			    rewrite = 1;
+			}
+		    }
+		}
+	    }
+
+	    if (rewrite == 0)
+		continue;
+
+	    if (Vect_rewrite_line (Map, line, type, Points, Cats) < 0)  {
+		G_fatal_error (_("Cannot rewrite line [%d]"), line);
+	    }
+
+	    nlines_modified++;
+
+	    if (i_flg->answer) {
+		fprintf (stdout,"%d", line);
+		fflush (stdout);
+	    }
+	}
+	/* destroy structures */
+	Vect_destroy_line_struct(Points);
+	Vect_destroy_cats_struct(Cats);
+	Vect_destroy_list(List);
     }
-    else if (Clist->n_ranges < 2){
-        /* this case should not happen, see args.c for details */
-	G_fatal_error (_("At least one option from <%s> must be specified"),
-		       "cats, coords, bbox, polygon, id, where");
 
-    }
+    G_message(_("Editing: [%d] lines modified"), nlines_modified);
 
-    if (List->n_values <1) {
-        G_warning(_("No lines found"),List->n_values);
-        return 0;
-    }
-
-    Cats = Vect_new_cats_struct (); 
-    Points = Vect_new_line_struct();
-
-    /* for each line, set new category */
-    for ( line = 0; line < List->n_values; line++ ) {
-            type = Vect_read_line(Map, Points, Cats, List->value[line]);
-
-        /* add new category */
-        if (!del) {
-            if((ret=Vect_cat_set (Cats,	layer, 	cat)) ==0) {
-                G_warning(_("Could not set category [%d] to line number [%d]"), cat, List->value[line]);
-                return 0;
-            }
-        }
-        /* delete old category */
-        else {
-            if((ret=Vect_field_cat_del ( Cats, layer, cat)) == 0) {
-                G_warning(_("Could not del category line  [%d]"), List->value[line]);
-                return 0;
-            }
-        }
-
-        if ((ret =Vect_rewrite_line (Map, List->value[line], type, Points, Cats) < 0) == -1)  {
-            G_warning("Line could not be saved");
-            return 0;
-        }
-
-        if (i_flg->answer) 
-            fprintf(stdout,"%d%s", List->value[line], line < List->n_values-1 ? "," : "\n");
-    }
-    if (del) 
-        G_message(_("Category [%d] and layer [%d] deleted from features"), cat,layer);
-    else
-        G_message(_("Category [%d] and layer [%d] set to selected features"), cat,layer);
-
-    return 1;
+    return nlines_modified;
 }
