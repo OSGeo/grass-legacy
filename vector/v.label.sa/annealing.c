@@ -8,6 +8,8 @@
 static double calc_label_overlap(label_t *label, int cc, int nc);
 static void do_label_overlap(label_t *label, int cc, int nc);
 
+static unsigned int overlaps_created=0, overlaps_removed=0;
+
 void simulate_annealing(label_t *labels, int n_labels, struct params *p)
 {
 	double T, dE;
@@ -18,24 +20,28 @@ void simulate_annealing(label_t *labels, int n_labels, struct params *p)
 	for(t=0;t<TEMP_DECS;t++) {
 		int i;
 		unsigned int successes=0;
-		for(i=0; i < (n_labels * 20); i++) {
+		for(i=0; i < (n_labels * 30); i++) {
 			int l,c,cc, r;
 			label_t *lp;
+			
 			/* pick a random label*/
+//			do {
 			r = rand();
 			l = (int)((double)(n_labels) * (r / (RAND_MAX + 1.0)));
 			lp = &labels[l];
+			if(!lp->n_candidates) continue; /* skip labels without candidates */
+
+			cc = lp->current_candidate;
+//			} while(lp->candidates[cc].score < 0.1);
 			/*, and a random new candidate place */
 			c = (int)((double)(lp->n_candidates) * 
 					  (rand() / (RAND_MAX + 1.0)));
-			cc = lp->current_candidate;
 			if(c == cc) {
 				if(c==0) c++;
 				else c--;
 			}
 			/* calc dE */
-			dE = lp->current_score - lp->candidates[cc].score +
-				lp->candidates[c].score;
+			dE = lp->candidates[c].score - lp->candidates[cc].score;
 			dE += calc_label_overlap(lp, cc, c);
 /*			printf("%s:\n"
 				   "\tPoint at (%lf,%lf), candidate %d at (%lf,%lf)\n"
@@ -47,21 +53,21 @@ void simulate_annealing(label_t *labels, int n_labels, struct params *p)
 					T,dE,i,l,cc,c);*/
 			
 			/* if dE < 0 accept */
-			if(dE < 0) {
+			if(dE < 0.0) {
 				do_label_overlap(lp, cc, c);
 				lp->current_score += lp->candidates[c].score;
 				lp->current_candidate=c;
 				successes++;
 				tot_better++;
 			}
-			/* else revert with probability p=1-e^(-dE/T) */
+			/* else keep with probability p=e^(-dE/T) */
 			else {
 				double p,r;
-				p = 1.0 - pow(M_E, -dE/T);
+				p = pow(M_E, -dE/T);
 				r = rand() / (RAND_MAX + 1.0);
-				if(p < r) {
-/*					printf("p<r: dE=%lf, p=%lf, T=%lf, r=%lf\n",
-						dE, p, T, r);*/
+				if(r < p) {
+//					printf("r<p: dE=%lf, p=%lf, T=%lf, r=%lf\n",
+//						   dE, p, T, r);
 					do_label_overlap(lp, cc, c);
 					lp->current_score += lp->candidates[c].score;
 					lp->current_candidate=c;
@@ -102,6 +108,8 @@ void simulate_annealing(label_t *labels, int n_labels, struct params *p)
 	G_percent(TEMP_DECS, TEMP_DECS, 1);
 	fprintf(stderr, "%u moves improving placing %u moves worsening placing %d ignored moves in %d rounds\n",
 			tot_better, tot_worse, tot_ign, t);
+	fprintf(stderr, "%u overlaps removed %u overlaps created\n",
+			overlaps_removed, overlaps_created);
 }
 
 static double calc_label_overlap(label_t *label, int cc, int nc)
@@ -129,7 +137,7 @@ static double calc_label_overlap(label_t *label, int cc, int nc)
 			new_overlaps++;
 		}
 	}
-	return (double)(new_overlaps - old_overlaps) * 40.0;
+	return (double)((new_overlaps*2) - old_overlaps) * 40.0;
 }
 
 static void do_label_overlap(label_t *label, int cc, int nc)
@@ -145,6 +153,7 @@ static void do_label_overlap(label_t *label, int cc, int nc)
 		oc = label->candidates[cc].intersections[i].candidate;
 		if(ol->current_candidate == oc) {
 			ol->current_score -= 40.0;
+			overlaps_removed++;
 		}
 	}
 	for(i=0;i<label->candidates[nc].n_intersections;i++) {
@@ -154,8 +163,9 @@ static void do_label_overlap(label_t *label, int cc, int nc)
 		ol = label->candidates[nc].intersections[i].label;
 		oc = label->candidates[nc].intersections[i].candidate;
 		if(ol->current_candidate == oc) {
-			label->current_score += 40.0;
-			ol->current_score += 40.0;
+			label->current_score += 80.0;
+			ol->current_score += 80.0;
+			overlaps_created++;
 		}
 	}
 }
