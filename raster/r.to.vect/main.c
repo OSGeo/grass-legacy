@@ -105,10 +105,10 @@ int main (int argc, char *argv[])
 
     /* Open files */
     if ( (mapset = G_find_cell(in_opt->answer,"")) == NULL )
-	G_fatal_error (_("Raster <%s> not found"), in_opt->answer);
+	G_fatal_error (_("Raster map <%s> not found"), in_opt->answer);
 
     if ( (input_fd = G_open_cell_old(in_opt->answer,mapset)) < 0 )
-	G_fatal_error (_("Could not open raster <%s>"), in_opt->answer);
+	G_fatal_error (_("Cannot open raster map <%s>"), in_opt->answer);
 
     data_type = G_get_raster_map_type(input_fd);
     data_size = G_raster_size(data_type);
@@ -150,7 +150,8 @@ int main (int argc, char *argv[])
 
         driver = db_start_driver_open_database ( Fi->driver, Fi->database );
 	if ( driver == NULL ) 
-	    G_fatal_error (_("Cannot open database %s by driver %s"), Fi->database, Fi->driver );
+	    G_fatal_error (_("Cannot open database <%s> by driver <%s>"),
+			   Fi->database, Fi->driver );
 	    
 	/* Create new table */
 	db_zero_string (&sql);
