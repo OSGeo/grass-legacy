@@ -317,7 +317,7 @@ int main(int argc, char *argv[])
 	    }
 
 	    G_message(_
-		      ("Maximum difference between this and last inkrement: %g"),
+		      ("Maximum difference between this and last increment: %g"),
 		      max_norm);
 
 	    /* copy the result into the phead array */
