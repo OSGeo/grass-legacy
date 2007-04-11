@@ -51,6 +51,9 @@ from xml.sax import make_parser
 
 import os
 from os import system
+import gettext
+#from gettext import _
+gettext.install("wxgrass")
 
 sys.path.append(os.path.join(os.getenv("GISBASE"),"etc","wx"))
 try:
@@ -107,11 +110,25 @@ t_rgb = ( # From lib/gis/col_str.c
   (128,  0,128)
 )
 t_color = t_colors.split(',')
-color_str2rgb = {}
-color_rgb2str = {}
+str2rgb = {}
+rgb2str = {}
 for c in range(0,len(t_rgb)):
-    color_str2rgb[ t_color[c] ] = t_rgb[ c ]
-    color_rgb2str[ t_rgb[ c ] ] = t_color[ c ]
+    str2rgb[ t_color[c] ] = t_rgb[ c ]
+    rgb2str[ t_rgb[ c ] ] = t_color[ c ]
+
+def color_resolve(color):
+    if color[0] in "0123456789":
+        rgb = tuple(map(int,color.split( ':' )))
+        label = color
+    else:
+        # Convert color names to RGB
+        try:
+            rgb = str2rgb[ color ]
+            label = color
+        except KeyError:
+            rgb = (200,200,200)
+            label = 'Select Color'
+    return (rgb, label)
 
 
 def normalize_whitespace(text):
@@ -151,6 +168,10 @@ class grassTask:
         self.params = []
         self.description = ''
         self.flags = []
+
+    def buildCmd(self): # TODO: It should be this class' responsibility to build the command, not the gui's.
+        pass
+
 
 class processTask(HandlerBase):
     """A SAX handler for the --interface-description output, as
@@ -308,8 +329,8 @@ class helpPanel(wx.html.HtmlWindow):
             self.SetPage( "".join( contents ) )
             self.Ok = True
         except:
-            raise
             self.Ok = False
+            raise
 
 
 class mainFrame(wx.Frame):
@@ -413,11 +434,11 @@ class mainFrame(wx.Frame):
             self.OnCancel(event)
 
     def OnApply(self, event):
-        cmd,params = self.createCmd()
+        cmd = self.createCmd()
 
         if cmd is not None and self.get_dcmd is not None:
             # return d.* command to layer tree for rendering
-            self.get_dcmd(cmd, self.layer,params)
+            self.get_dcmd(cmd, self.layer, {"params":self.task.params,"flags":self.task.flags} )
             # echo d.* command to output console
 #            self.parent.writeDCommand(cmd)
         return cmd
@@ -492,11 +513,10 @@ class cmdPanel(wx.Panel):
 
         self.task = task
         self.selection = '' #selection from GIS element selector
-        self.paramdict = {} # dictionary of controls and their parameter values
 
+        # Determine tab layout
         sections = ['Main']
         is_section = {}
-
         for task in self.task.params + self.task.flags:
             if not task.has_key('guisection') or task['guisection']=='':
                 task['guisection'] = 'Options'
@@ -513,20 +533,18 @@ class cmdPanel(wx.Panel):
             sections = sections[1:]
 
         self.panelsizer = wx.BoxSizer(wx.VERTICAL)
-
+        # Build notebook
         nbStyle=FN.FNB_NO_X_BUTTON|FN.FNB_NO_NAV_BUTTONS|FN.FNB_VC8|FN.FNB_BACKGROUND_GRADIENT
         self.notebook = FN.FlatNotebook( self, id=wx.ID_ANY, style=nbStyle)
         self.notebook.SetTabAreaColour(wx.Colour(125,200,175))
         self.notebook.Bind( FN.EVT_FLATNOTEBOOK_PAGE_CHANGED, self.OnPageChange )
         self.tab = {}
         self.tabsizer = {}
-        is_first = True
         for section in sections:
             self.tab[section] = wx.ScrolledWindow(self.notebook, id = wx.ID_ANY )
             self.tab[section].SetScrollRate(10,10)
             self.tabsizer[section] = wx.BoxSizer(wx.VERTICAL)
-            self.notebook.AddPage( self.tab[section], text = section, select = is_first )
-            is_first = False
+            self.notebook.AddPage( self.tab[section], text = section )
 
         # are we running from command line?
         if standalone:
@@ -542,9 +560,8 @@ class cmdPanel(wx.Panel):
         self.notebook.SetSelection(0)
         self.panelsizer.Add( self.notebook, 1, flag=wx.EXPAND )
 
-        p_count = -1
+
         for p in self.task.params:
-            p_count += 1 # Needed for checkboxes hack
             which_sizer = self.tabsizer[ p['guisection'] ]
             which_panel = self.tab[ p['guisection'] ]
             title = text_beautify(p['description'])
@@ -562,18 +579,18 @@ class cmdPanel(wx.Panel):
                 if p['multiple'] == 'yes':
                     txt = wx.StaticBox(which_panel,0,title+":")
                     hSizer=wx.StaticBoxSizer( txt, wx.VERTICAL )
-                    v_count = 0
                     isDefault = {}
                     for defval in p['value'].split(','):
                         isDefault[ defval ] = 'yes'
+                    # for multi checkboxes, this is an array of all wx IDs
+                    # for each individual checkbox
+                    p[ 'wxId' ]=[]
                     for val in valuelist:
-                        # This is the checkboxes hack
-                        idForWX =  ID_MULTI_START + p_count*20 + v_count
-                        chkbox = wx.CheckBox( which_panel, idForWX, text_beautify(val) )
+                        chkbox = wx.CheckBox( which_panel, label = text_beautify(val) )
+                        p[ 'wxId' ].append( chkbox.GetId() )
                         if isDefault.has_key(val): chkbox.SetValue( True )
                         hSizer.Add( chkbox,0,wx.ADJUST_MINSIZE,5 )
-                        self.Bind(wx.EVT_CHECKBOX, self.EvtCheckBoxMulti)
-                        v_count += 1
+                        self.Bind(wx.EVT_CHECKBOX, self.OnCheckBoxMulti)
                     which_sizer.Add( hSizer, 0, wx.ADJUST_MINSIZE, 5)
                 elif len(valuelist) == 1:
                     txt = wx.StaticText(which_panel, label = title +
@@ -584,8 +601,8 @@ class cmdPanel(wx.Panel):
                     if p['value'] != '': self.txt2.SetValue(p['value']) # parameter previously set
 
                     which_sizer.Add(self.txt2, 0, wx.ADJUST_MINSIZE, 5)
-                    self.paramdict[self.txt2] = ID_PARAM_START + p_count
-                    self.txt2.Bind(wx.EVT_TEXT, self.EvtText)
+                    p['wxId'] = self.txt2.GetId()
+                    self.txt2.Bind(wx.EVT_TEXT, self.OnSetValue)
                 else:
                     txt = wx.StaticText(which_panel, label = title + ':' )
                     which_sizer.Add(txt, 0, wx.ADJUST_MINSIZE | wx.ALL, 5)
@@ -594,8 +611,8 @@ class cmdPanel(wx.Panel):
                                      valuelist, wx.CB_DROPDOWN)
                     if p['value'] != '': self.cb.SetValue(p['value']) # parameter previously set
                     which_sizer.Add(self.cb, 0, wx.ADJUST_MINSIZE, 5)
-                    self.paramdict[self.cb] = ID_PARAM_START + p_count
-                    self.cb.Bind( wx.EVT_COMBOBOX, self.EvtComboBox)
+                    p['wxId'] = self.cb.GetId()
+                    self.cb.Bind( wx.EVT_COMBOBOX, self.OnSetValue)
 
             # text entry
             if (p['type'] in ('string','integer','float')
@@ -610,8 +627,8 @@ class cmdPanel(wx.Panel):
                     size = (STRING_ENTRY_WIDTH, ENTRY_HEIGHT))
                 if p['value'] != '': self.txt3.SetValue(p['value']) # parameter previously set
                 which_sizer.Add(self.txt3, 0, wx.ADJUST_MINSIZE| wx.ALL, 5)
-                self.paramdict[self.txt3] = ID_PARAM_START + p_count
-                self.txt3.Bind(wx.EVT_TEXT, self.EvtText)
+                p['wxId'] = self.txt3.GetId()
+                self.txt3.Bind(wx.EVT_TEXT, self.OnSetValue)
 
             if p['type'] == 'string' and p['gisprompt'] == True:
                 txt = wx.StaticText(which_panel, label = title + ':')
@@ -622,57 +639,41 @@ class cmdPanel(wx.Panel):
                                                    type=p['element'])
                     if p['value'] != '': self.selection.SetValue(p['value']) # parameter previously set
                     which_sizer.Add(self.selection, 0, wx.ADJUST_MINSIZE| wx.ALL, 5)
-                    self.paramdict[self.selection] = ID_PARAM_START + p_count
-                    self.selection.Bind(wx.EVT_TEXT, self.EvtText)
+                    p['wxId'] = self.selection.GetId()
+                    self.selection.Bind(wx.EVT_TEXT, self.OnSetValue)
                 # color entry
                 elif p['prompt'] == 'color':
                     if p['default'] != '':
-                        if p['default'][0] in "0123456789":
-                            default_color = tuple(map(int,p['default'].split( ':' )))
-                            label_color = p['default']
-                        else:
-                            # Convert color names to RGB
-                            try:
-                                default_color = color_str2rgb[ p['default'] ]
-                                label_color = p['default']
-                            except KeyError:
-                                default_color = (200,200,200)
-                                label_color = 'Select Color'
-                    else:
-                        default_color = (200,200,200)
-                        label_color = 'Select Color'
+                        default_color, label_color = color_resolve( p['default'] )
                     if p['value'] != '': # parameter previously set
-                        if p['value'][0] in "0123456789":
-                            default_color = tuple(map(int,p['value'].split( ':' )))
-                            label_color = p['value']
+                        default_color, label_color = color_resolve( p['value'] )
+                    if "none" in title:
+                        this_sizer = wx.BoxSizer( wx.HORIZONTAL )
+                    else:
+                        this_sizer = which_sizer
+                    btn_colour = csel.ColourSelect(which_panel, wx.ID_ANY, label_color, default_color, wx.DefaultPosition, (150,-1) )
+                    this_sizer.Add(btn_colour, 0, wx.ADJUST_MINSIZE| wx.ALL, 5)
+                    # For color selectors, this is a two-member array, holding the IDs of
+                    # the selector proper and either a "transparent" button or None
+                    p['wxId'] = [btn_colour.GetId(),]
+                    btn_colour.Bind(csel.EVT_COLOURSELECT,  self.OnColorChange )
+                    if "none" in title:
+                        none_check = wx.CheckBox(which_panel, wx.ID_ANY, "Transparent")
+                        if p['value'] != '' and p['value'][0] == "none":
+                            none_check.SetValue(True)
                         else:
-                            # Convert color names to RGB
-                            try:
-                                default_color = color_str2rgb[ p['value'] ]
-                                label_color = p['value']
-                            except KeyError:
-                                default_color = (200,200,200)
-                                label_color = 'Select Color'
-                    btn_colour = csel.ColourSelect(which_panel, -1, label_color, default_color, wx.DefaultPosition, (150,-1) )
-                    which_sizer.Add(btn_colour, 0, wx.ADJUST_MINSIZE| wx.ALL, 5)
-                    self.paramdict[btn_colour] = ID_PARAM_START + p_count
-                    self.Bind(csel.EVT_COLOURSELECT, self.OnColorButton, btn_colour)
-#                    if "none" in title:
-#                        none_check = wx.CheckBox(which_panel, wx.ID_ANY, "Transparent")
-#                        if p['value'] != '' and p['value'][0] == "none":
-#                            none_check.SetValue(True)
-#                        else:
-#                            none_check.SetValue(False)
-#                        none_check.SetFont( wx.Font( 12, wx.FONTFAMILY_DEFAULT, wx.NORMAL, text_style, 0, ''))
-#                        which_sizer.Add(none_check, 0, wx.ADJUST_MINSIZE| wx.ALL, 5)
-#                        self.paramdict[none_check] = ID_PARAM_START + p_count
-#                        self.Bind(wx.EVT_CHECKBOX, self.EvtCheckBox, none_check)
+                            none_check.SetValue(False)
+                        none_check.SetFont( wx.Font( 12, wx.FONTFAMILY_DEFAULT, wx.NORMAL, text_style, 0, ''))
+                        this_sizer.Add(none_check, 0, wx.ADJUST_MINSIZE| wx.ALL, 5)
+                        which_sizer.Add( this_sizer )
+                        none_check.Bind(wx.EVT_CHECKBOX, self.OnColorChange)
+                        p['wxId'].append( none_check.GetId() )
+                    else:
+                        p['wxId'].append(None)
 	    if txt is not None:
                 txt.SetFont( wx.Font( 12, wx.FONTFAMILY_DEFAULT, wx.NORMAL, text_style, 0, ''))
 
-        f_count = -1
         for f in self.task.flags:
-            f_count += 1
             which_sizer = self.tabsizer[ f['guisection'] ]
             which_panel = self.tab[ f['guisection'] ]
             title = text_beautify(f['description'])
@@ -680,8 +681,8 @@ class cmdPanel(wx.Panel):
             if 'value' in f: self.chk.SetValue(f['value'])
             self.chk.SetFont( wx.Font( 12, wx.FONTFAMILY_DEFAULT, wx.NORMAL, text_style, 0, ''))
             which_sizer.Add(self.chk, 0, wx.EXPAND| wx.ALL, 5)
-            self.paramdict[self.chk] = ID_FLAG_START + f_count
-            self.chk.Bind(wx.EVT_CHECKBOX, self.EvtCheckBox)
+            f['wxId'] = self.chk.GetId()
+            self.chk.Bind(wx.EVT_CHECKBOX, self.OnSetValue)
 
         maxsizes = (0,0)
         for section in sections:
@@ -704,16 +705,24 @@ class cmdPanel(wx.Panel):
     def OnPageChange(self, event):
         self.Layout()
 
-    def OnColorButton(self, event):
-        colorchooser = wx.FindWindowById( event.GetId() )
-        new_color = colorchooser.GetValue()[:]
-        # This is weird: new_color is a 4-tuple and new_color[:] is a 3-tuple
-        # under wx2.8.1
-        new_label = color_rgb2str.get( new_color, ':'.join(map(str,new_color)) )
-        colorchooser.SetLabel( new_label )
-        colorchooser.SetColour( new_color )
-        colorchooser.Refresh()
-        self.getValues()
+    def OnColorChange( self, event ):
+        myId = event.GetId()
+        for p in self.task.params:
+            if type( p['wxId'] ) == type( [] ) and myId in p['wxId']:
+                has_button = p['wxId'][1] is not None
+                if has_button and wx.FindWindowById( p['wxId'][1] ).GetValue() == True:
+                    p[ 'value' ] = 'none'
+                else:
+                    colorchooser = wx.FindWindowById( p['wxId'][0] )
+                    new_color = colorchooser.GetValue()[:]
+                    # This is weird: new_color is a 4-tuple and new_color[:] is a 3-tuple
+                    # under wx2.8.1
+                    new_label = rgb2str.get( new_color, ':'.join(map(str,new_color)) )
+                    colorchooser.SetLabel( new_label )
+                    colorchooser.SetColour( new_color )
+                    colorchooser.Refresh()
+                    p[ 'value' ] = colorchooser.GetLabel()
+        self.updateStatusLine()
 
     def updateStatusLine(self):
         """If we were part of a richer interface, report back the current command being built."""
@@ -723,56 +732,39 @@ class cmdPanel(wx.Panel):
         except:
             pass
 
-    def getValues(self):
-        for (gui_object,param_num) in self.paramdict.items():
-            if 'CheckBox' in str( gui_object ):
-                tasktype = self.task.flags
-                num = param_num-ID_FLAG_START
-                param_val = gui_object.GetValue()
-            else:
-                tasktype = self.task.params
-                num = param_num-ID_PARAM_START
-                if 'ColourSelect' in str( gui_object ):
-                    if 'Select' in gui_object.GetLabel():
-                        param_val = ''
-                    else:
-                        data = gui_object.GetValue()[:]
-                        param_val = color_rgb2str.get( data , ':'.join( map(str, data) ) )
-                else:
-                    param_val = gui_object.GetValue()
-            tasktype[num]['value'] = param_val
-        self.updateStatusLine()
-
-    def EvtText(self, event):
-        self.getValues()
-
-    def EvtCheckBox(self, event):
-        self.getValues()
-
-    def EvtComboBox(self, event):
-        self.getValues()
-
-    def EvtCheckBoxMulti(self, event):
+    def OnCheckBoxMulti(self, event):
         """Fill the values ,-separated string according to current status of the checkboxes."""
-        theParamId = (event.GetId()-ID_MULTI_START ) / 20
-        theCheckedId = (event.GetId()-ID_MULTI_START ) % 20
+        me = event.GetId()
+        theParam = None
+        for p in self.task.params:
+            if type( p['wxId'] ) == type( [] ) and me in p['wxId']:
+                theParam = p
+                myIndex = p['wxId'].index( me )
         # Unpack current value list
         currentValues={}
-        for isThere in self.task.params[theParamId]['value'].split(','):
+        for isThere in theParam['value'].split(','):
             currentValues[isThere] = 1
-        theValue = self.task.params[theParamId]['values'][theCheckedId]
+        theValue = theParam['values'][myIndex]
         if event.Checked():
             currentValues[ theValue ] = 1
         else:
             del currentValues[ theValue ]
         currentValueList=[] # Keep the original order, so that some defaults may be recovered
-        for v in self.task.params[theParamId]['values']:
+        for v in theParam['values']:
             if currentValues.has_key(v):
                 currentValueList.append( v )
         # Pack it back
-        self.task.params[theParamId]['value'] = ','.join( currentValueList )
+        theParam['value'] = ','.join( currentValueList )
         self.updateStatusLine()
 
+    def OnSetValue(self, event):
+        myId = event.GetId()
+        me = wx.FindWindowById( myId )
+        for porf in self.task.params + self.task.flags:
+            if type( porf[ 'wxId' ] ) == type( 1 ) and porf['wxId'] == myId:
+                porf[ 'value' ] = me.GetValue()
+        self.updateStatusLine()
+                
     def createCmd(self, ignoreErrors = False):
         """Produce a command line string for feeding into GRASS.
 
@@ -798,12 +790,7 @@ class cmdPanel(wx.Panel):
             self.OnError(errStr)
             return None
 
-        # create paramater dictionary to return to layer tree
-        dcmd_params['flags'] = self.task.flags
-        dcmd_params['params'] = self.task.params
-
-
-        return cmd,dcmd_params
+        return cmd
 
 def getInterfaceDescription( cmd ):
     """Returns the XML description for the GRASS cmd.
@@ -855,7 +842,7 @@ class GUI:
             self.parent = parentframe
 
         if len(cmdlst) > 1:
-            print "usage: %s <grass command> " % cmdlst[0]
+            raise ValueError, "usage: %s <grass command> " % cmdlst[0]
         else:
             # parse the interface decription
             self.grass_task = grassTask()
