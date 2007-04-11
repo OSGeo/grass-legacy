@@ -91,7 +91,7 @@ int main (int argc, char **argv)
 	/* read in a row from each cell map */
 	for (band=0; band<3; band++)
 	    if(G_get_map_row(fd_input[band], rowbuffer[band], i) < 0)
-		G_fatal_error (_("Cannot read row from raster map");
+		G_fatal_error (_("Cannot read row from raster map"));
 
 	/* process this row of the map */
 	his2rgb(rowbuffer, cols);
@@ -99,7 +99,7 @@ int main (int argc, char **argv)
 	/* write out the new row for each cell map */
 	for (band=0; band<3; band++)
 	    if(G_put_raster_row(fd_output[band], rowbuffer[band], CELL_TYPE) < 0)
-		G_fatal_error (_("Cannot write row to raster map");
+		G_fatal_error (_("Cannot write row to raster map"));
     }
 
     closefiles (opt_red->answer, opt_green->answer, opt_blue->answer, fd_output, rowbuffer);
