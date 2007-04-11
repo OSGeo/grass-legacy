@@ -59,6 +59,11 @@ class MapToolbar:
                                                                   wx.BITMAP_TYPE_ANY),
                                                  bmpDisabled=wx.NullBitmap, kind=wx.ITEM_RADIO,
                                                  shortHelp="Zoom out", longHelp="Drag or click mouse to unzoom")
+        self.zoomback = self.toolbar.AddLabelTool(id=wx.ID_ANY, label="zoom_back",
+                                                 bitmap=wx.Bitmap(os.path.join(wxgui_utils.icons,"gui-zoom_back.gif"),
+                                                                  wx.BITMAP_TYPE_ANY),
+                                                 bmpDisabled=wx.NullBitmap, kind=wx.ITEM_NORMAL,
+                                                 shortHelp="Zoom back", longHelp="Zoom to previous display region")
     	self.pan     = self.toolbar.AddLabelTool(id=wx.ID_ANY, label="pan",
                                                  bitmap=wx.Bitmap(os.path.join(wxgui_utils.icons,"gui-pan.gif"),
                                                                   wx.BITMAP_TYPE_ANY),
@@ -69,11 +74,6 @@ class MapToolbar:
                                                                   wx.BITMAP_TYPE_ANY),
                                                  bmpDisabled=wx.NullBitmap, kind=wx.ITEM_RADIO,
                                                  shortHelp="Query", longHelp="Query selected map")
-        self.zoomback = self.toolbar.AddLabelTool(id=wx.ID_ANY, label="zoom_back",
-                                                 bitmap=wx.Bitmap(os.path.join(wxgui_utils.icons,"gui-zoom_back.gif"),
-                                                                  wx.BITMAP_TYPE_ANY),
-                                                 bmpDisabled=wx.NullBitmap, kind=wx.ITEM_NORMAL,
-                                                 shortHelp="Zoom back", longHelp="Zoom to previous display region")
         self.toolbar.AddSeparator()
 
 
