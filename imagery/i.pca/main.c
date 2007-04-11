@@ -59,7 +59,8 @@ int main (int argc, char *argv[])
 
     module = G_define_module();
     module->keywords = _("imagery");
-    module->description =	_("Principal components analysis (pca) program for image processing");
+    module->description = _("Principal components analysis (pca) program"
+			    "for image processing");
 
     /* Define options */
     opt_in  = G_define_standard_option (G_OPT_R_INPUTS);
@@ -118,10 +119,10 @@ int main (int argc, char *argv[])
         G_check_input_output_name (opt_in->answers[i], tmpbuf, GR_FATAL_EXIT);
 
         if ((mapset = G_find_cell (opt_in->answers[i], "")) == NULL)
-            G_fatal_error (_("Unable to find cell map <%s>"), opt_in->answers[i]);
+            G_fatal_error (_("Raster map <%s> not found"), opt_in->answers[i]);
 
         if ((inp_fd[i] = G_open_cell_old (opt_in->answers[i], mapset)) < 0)
-            G_fatal_error (_("Unable to open map <%s>"), opt_in->answers[i]);
+            G_fatal_error (_("Cannot open raster map <%s>"), opt_in->answers[i]);
     }
 
     G_message (_("Calculating covariance matrix:"));
@@ -240,7 +241,7 @@ calc_mu (int *fds, double *mu, int bands)
         /* don't assume each image is of the same type */
         if (rowbuf) G_free (rowbuf);
         if ((rowbuf = G_allocate_raster_buf (maptype)) == NULL)
-            G_fatal_error (_("Unable to allocate memory for row buffer"));
+            G_fatal_error (_("Cannot allocate memory for row buffer"));
 
         G_message (_("Computing Means for band %d:"), i+1);
         for (row = 0; row < rows; row++)
@@ -250,7 +251,7 @@ calc_mu (int *fds, double *mu, int bands)
             G_percent (row, rows - 1, 2);
 
             if (G_get_raster_row (fds[i], rowbuf, row, maptype) < 0)
-                G_fatal_error (_("Unable to read raster row %d"), row);
+                G_fatal_error (_("Cannot read raster row [%d]"), row);
 
             for (col = 0; col < cols; col++)
             {
@@ -291,7 +292,7 @@ calc_covariance (int *fds, double **covar, double *mu, int bands)
         /* don't assume each image is of the same type */
         if (rowbuf1) G_free (rowbuf1);
         if ((rowbuf1 = G_allocate_raster_buf (maptype)) == NULL)
-            G_fatal_error (_("Unable to allocate memory for row buffer"));
+            G_fatal_error (_("Cannot allocate memory for row buffer"));
 
         G_message (_("Computing row %d of covariance matrix:"), j+1);
         for (row = 0; row < rows; row++)
@@ -301,7 +302,7 @@ calc_covariance (int *fds, double **covar, double *mu, int bands)
             G_percent (row, rows - 1, 2);
 
             if (G_get_raster_row (fds[j], rowbuf1, row, maptype) < 0)
-                G_fatal_error (_("Unable to read map raster row %d"), row);
+                G_fatal_error (_("Cannot read raster row [%d]"), row);
 
             for (k = j; k < bands; k++)
             {
@@ -310,10 +311,10 @@ calc_covariance (int *fds, double **covar, double *mu, int bands)
                 /* don't assume each image is of the same type */
                 if (rowbuf2) G_free (rowbuf2);
                 if ((rowbuf2 = G_allocate_raster_buf (maptype2)) == NULL)
-                    G_fatal_error (_("Unable to allocate memory for row buffer"));
+                    G_fatal_error (_("Cannot allocate memory for row buffer"));
 
                 if (G_get_raster_row (fds[k], rowbuf2, row, maptype2) < 0)
-                    G_fatal_error (_("Unable to read map raster row %d"), row);
+                    G_fatal_error (_("Cannot read raster row [%d]"), row);
 
                 ptr1 = rowbuf1;
                 ptr2 = rowbuf2;
@@ -370,7 +371,7 @@ write_pca (double **eigmat, int *inp_fd, char *out_basename,
                        G_allocate_raster_buf (DCELL_TYPE);
 
     if (!outbuf)
-        G_fatal_error (_("Unable to allocate memory for raster row"));
+        G_fatal_error (_("Cannot allocate memory for raster row"));
 
     for (i = 0; i < bands; i++) 
     {
@@ -391,7 +392,8 @@ write_pca (double **eigmat, int *inp_fd, char *out_basename,
         }
 
         if (out_fd < 0)
-            G_fatal_error (_("Unable to create raster map <%s>"), G_fully_qualified_name (name, G_mapset ()));
+            G_fatal_error (_("Cannot create raster map <%s>"),
+			   G_fully_qualified_name (name, G_mapset ()));
 
         for (pass = 1; pass <= PASSES; pass++)
         {
@@ -424,10 +426,10 @@ write_pca (double **eigmat, int *inp_fd, char *out_basename,
                     /* don't assume each image is of the same type */
                     if (rowbuf) G_free (rowbuf);
                     if (!(rowbuf = G_allocate_raster_buf (maptype)))
-                        G_fatal_error (_("Unable to allocate memory for row buffer"));
+                        G_fatal_error (_("Cannot allocate memory for row buffer"));
 
                     if (G_get_raster_row (inp_fd[j], rowbuf, row, maptype) < 0)
-                        G_fatal_error (_("Unable to get row %d from raster map"), row);
+                        G_fatal_error (_("Cannot read raster row [%d]"), row);
 
                     rowptr = rowbuf;
                     outptr = outbuf;
