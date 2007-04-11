@@ -36,14 +36,14 @@ int execute_random (struct rr_state *theState)
 
     /* open the data files, input raster should be set-up already */
     if ((infd = theState->fd_old) < 0)
-        G_fatal_error (_("%s: unable to open raster map [%s]"), 
-                    G_program_name(), theState->inraster);
+        G_fatal_error (_("Cannot open raster map <%s>"), 
+		       theState->inraster);
 
     if (theState->outraster != NULL)
     {
         if ((outfd = G_open_raster_new (theState->outraster, theState->buf.type)) < 0)
-            G_fatal_error (_("%s: unable to create raster map [%s]"), 
-                        G_program_name(), theState->outraster);
+            G_fatal_error (_("Cannot create raster map <%s>"), 
+			   theState->outraster);
 
         theState->fd_new = outfd;
     }
@@ -60,7 +60,7 @@ int execute_random (struct rr_state *theState)
 
         driver = db_start_driver_open_database ( fi->driver, Vect_subst_var(fi->database,&Out) );
         if ( !driver )
-            G_fatal_error (_("Unable to open database %s with driver %s"), 
+            G_fatal_error (_("Cannot open database <%s> by driver <%s>"), 
                              Vect_subst_var(fi->database,&Out), fi->driver);
 
         Vect_map_add_dblink ( &Out, 1, NULL, fi->table, "cat", fi->database, fi->driver);
@@ -77,7 +77,7 @@ int execute_random (struct rr_state *theState)
         db_set_column_sqltype ( column, DB_SQL_TYPE_DOUBLE_PRECISION ); 
 
         if ( db_create_table ( driver, table ) != DB_OK )
-            G_warning ( "Cannot create new table" );
+	    G_warning (_("Cannot create new table"));
 
         db_begin_transaction ( driver );
         
@@ -87,12 +87,12 @@ int execute_random (struct rr_state *theState)
     }
 
     if (theState->outvector && theState->outraster)
-        G_message (_("Writing raster map [%s] and vector map [%s] ..."),
+        G_message (_("Writing raster map <%s> and vector map <%s> ..."),
                     theState->outraster, theState->outvector);
     else if (theState->outraster)
-        G_message (_("Writing raster map [%s] ..."), theState->outraster);
+        G_message (_("Writing raster map <%s> ..."), theState->outraster);
     else if (theState->outvector)
-        G_message (_("Writing vector map [%s] ..."), theState->outvector);
+        G_message (_("Writing vector map <%s> ..."), theState->outvector);
 
     G_percent (0, theState->nRand, 2);
 
@@ -104,8 +104,8 @@ int execute_random (struct rr_state *theState)
     for (row = 0; row < nrows && nt ; row++)
     {
         if (G_get_raster_row (infd, theState->buf.data.v, row, theState->buf.type) < 0)
-            G_fatal_error (_("%s: Unable to read raster map [%s]"),
-                        G_program_name(), theState->inraster);
+            G_fatal_error (_("Cannot read raster row [%d] from raster map <%s>"),
+			   row, theState->inraster);
 
         for (col = 0; col < ncols && nt ; col++)
         {
@@ -143,7 +143,7 @@ int execute_random (struct rr_state *theState)
                     db_set_string ( &sql, buf );
                     
                     if (db_execute_immediate (driver, &sql) != DB_OK )
-                        G_fatal_error (_("Unable to insert new row: %s"), db_get_string (&sql));
+                        G_fatal_error (_("Cannot insert new record: %s"), db_get_string (&sql));
 
                     cat++;
                 }
@@ -173,8 +173,8 @@ int execute_random (struct rr_state *theState)
     }
             
     if (nt > 0)
-        G_warning (_("%s: Only created %ld random sites"),
-                G_program_name(), theState->nRand - nt);
+        G_warning (_("Only [%ld] random points created"),
+		   theState->nRand - nt);
 
     /* close files */
     G_close_cell(infd);
@@ -255,5 +255,3 @@ is_null_value (struct RASTER_MAP_PTR buf, int col)
     return -1;
 }
 
-
-/* vim: set softtabstop=4 shiftwidth=4 expandtab: */

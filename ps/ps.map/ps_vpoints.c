@@ -179,7 +179,7 @@ int PS_vpoints_plot (struct Map_info *P_map, int vec, int type)
 	    if( ctype == DB_C_TYPE_DOUBLE ) {
 		ret = db_CatValArray_get_value_double(&cvarr, cat, &size_val);
 		if ( ret != DB_OK ) {
-		    G_warning(_("No record for category for [%d]"), cat );
+		    G_warning(_("No record for category [%d]"), cat );
 		    continue;
 		}
 	    }

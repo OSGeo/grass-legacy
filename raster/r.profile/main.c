@@ -127,7 +127,7 @@ int main(int argc, char *argv[])
     screen_x = ((int)D_get_d_west() + (int)D_get_d_east()) / 2;
     screen_y = ((int)D_get_d_north() + (int)D_get_d_south()) / 2;
 
-    G_message(_("Using resolution %g"), res);
+    G_message(_("Using resolution [%g]"), res);
 
     G_begin_distance_calculations();
 
@@ -139,9 +139,9 @@ int main(int argc, char *argv[])
 
     /* Open Raster File */
     if (NULL == (mapset = G_find_cell2(name, "")))
-	G_fatal_error(_("Cannot find map %s"), name);
+	G_fatal_error(_("Raster map <%s> not found"), name);
     if (0 > (fd = G_open_cell_old(name, mapset)))
-	G_fatal_error(_("Cannot open map %s"), name);
+	G_fatal_error(_("Cannot open raster map <%s>"), name);
 
     /* initialize color structure */
     if (clr)
@@ -154,7 +154,7 @@ int main(int argc, char *argv[])
 	fp = stdout;
     }
     else if (NULL == (fp = fopen(outfile, "w")))
-	G_fatal_error(_("Not able to open file for [%s]"), outfile);
+	G_fatal_error(_("Cannot open file for <%s>"), outfile);
 
     /* Get Raster Type */
     data_type = G_get_raster_map_type(fd);
@@ -205,16 +205,16 @@ int main(int argc, char *argv[])
 	dist = 0;
 
 	fprintf(stderr, "\n\n");
-	fprintf(stderr, "Use mouse to select Start Point\n");
+	fprintf(stderr, _("Use mouse to select Start Point\n"));
 	R_get_location_with_pointer(&screen_x, &screen_y, &button);
 	e1 = D_d_to_u_col((double)screen_x);
 	n1 = D_d_to_u_row((double)screen_y);
 
-	fprintf(stderr, "\nUse mouse to draw profile line\n");
-	fprintf(stderr, "Buttons:\n");
-	fprintf(stderr, "Left:   Mark next point\n");
-	fprintf(stderr, "Middle: Mark next point\n");
-	fprintf(stderr, "Right:  Finish profile and exit\n\n");
+	fprintf(stderr, _("\nUse mouse to draw profile line\n"));
+	fprintf(stderr, _("Buttons:\n"));
+	fprintf(stderr, _("Left:   Mark next point\n"));
+	fprintf(stderr, _("Middle: Mark next point\n"));
+	fprintf(stderr, _("Right:  Finish profile and exit\n\n"));
 
 	while (button != 3) {
 	    R_get_location_with_line( (int)(0.5+ D_u_to_d_col(e1)),
@@ -294,10 +294,10 @@ int do_profile(double e1, double e2, double n1, double n2, char *name, int coord
     rows = n1 - n2;
 
     LEN = G_distance(e1, n1, e2, n2);
-    G_message(_("Approx. transect length %f m."), LEN);
+    G_message(_("Approx. transect length [%f] m"), LEN);
 
     if (!G_point_in_region(e2, n2))
-	G_warning(_("Endpoint coordinates are outside of current region settings."));
+	G_warning(_("Endpoint coordinates are outside of current region settings"));
 
     /* Calculate Azimuth of Line */
     if (rows == 0 && cols == 0) {
@@ -420,4 +420,3 @@ static int cont(int x, int y)
 
     return 0;
 }
-

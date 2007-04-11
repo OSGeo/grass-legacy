@@ -21,12 +21,10 @@
 
 #include <stdlib.h>
 #include <grass/gis.h>
-#include "local_proto.h"
 #include <grass/glocale.h>
-
+#include "local_proto.h"
 
 static int has_percent(char *);
-
 
 int 
 main (int argc, char *argv[])
@@ -116,13 +114,13 @@ main (int argc, char *argv[])
     
     if (myState.outraster)
         if (G_legal_filename (myState.outraster) < 0)
-            G_fatal_error( _("%s: <%s> illegal file name"),
-                        G_program_name(), myState.outraster);
+            G_fatal_error(_("<%s> is illegal file name"),
+			  myState.outraster);
 
     if (myState.outvector)
         if (G_legal_filename (myState.outvector) < 0)
-            G_fatal_error (_("%s: <%s> illegal file name"),
-                        G_program_name(), myState.outvector);
+            G_fatal_error (_("<%s> is illegal file name"),
+			   myState.outvector);
 
     /* look for n[%] */
     percent = has_percent(parm.npoints->answer);
@@ -153,16 +151,15 @@ main (int argc, char *argv[])
         if (targets > count)
         {
             if (zero)
-                G_fatal_error (_("%s: There aren't %ld cells in the current region"),
-                    G_program_name(), targets);
+                G_fatal_error (_("There aren't [%ld] cells in the current region"),
+			       targets);
             else
-            G_fatal_error (_("%s: There aren't %ld non-zero cells in the current region"),
-                    G_program_name(), targets);
+		G_fatal_error (_("There aren't [%ld] non-zero cells in the current region"),
+			       targets);
         }
 
         if (targets <= 0)
-            G_fatal_error (_("%s: There aren't any valid locations in the current region"),
-                    G_program_name());
+            G_fatal_error (_("There aren't any valid locations in the current region"));
 
         myState.nRand = targets;
     }
@@ -185,4 +182,3 @@ static int has_percent(char *s)
     return 0;
 }
 
-/* vim: set softtabstop=4 shiftwidth=4 expandtab: */

@@ -46,4 +46,4 @@ init_rand (void)
 }
 
 #endif
-/* vim: set softtabstop=4 shiftwidth=4 expandtab: */
+

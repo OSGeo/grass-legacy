@@ -28,7 +28,7 @@ input (char *blank1, char *word1, char *blank2, char *word2, char *rest)
     /* note ebuf and nbuf in main.c (w1 and w2 here) are only 256 chars, we
        check here to make sure we don't move the pointer past sizeof(buf) */
     if(strlen(buf) >= 1023)
-	G_fatal_error(_("One coordinate pair per line, please."));
+	G_fatal_error(_("One coordinate pair per line, please"));
 
     b = buf;
     w1 = word1;
@@ -45,7 +45,7 @@ input (char *blank1, char *word1, char *blank2, char *word2, char *rest)
     string_size = strlen(w1);
     G_debug(5, "strlen w1=%d  [%s]", string_size, w1);
     if(string_size > 255)
-	G_fatal_error(_("One coordinate pair per line, please."));
+	G_fatal_error(_("One coordinate pair per line, please"));
 
     while(*b == ' ' || *b == '\t' || *b == ',')
 	*blank2++ = *b++;
@@ -58,7 +58,7 @@ input (char *blank1, char *word1, char *blank2, char *word2, char *rest)
     string_size = strlen(w2);
     G_debug(5, "strlen w2=%d  [%s]", string_size, w2);
     if(string_size > 255)
-	G_fatal_error(_("One coordinate pair per line, please."));
+	G_fatal_error(_("One coordinate pair per line, please"));
 
     /* bug? really = and not ==? */
     /* not a bug: we are filling "rest" with the remaining fgets buffer. 

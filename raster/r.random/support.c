@@ -65,5 +65,3 @@ int make_support (struct rr_state *theState, int percent, double percentage)
         
     return 0;
 }
-
-/* vim: set softtabstop=4 shiftwidth=4 expandtab: */

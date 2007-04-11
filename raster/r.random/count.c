@@ -21,8 +21,8 @@ void get_stats (struct rr_state *theState)
 
     theState->fd_old = G_open_cell_old (theState->inraster, theState->mapset);
     if (theState->fd_old < 0)
-        G_fatal_error (_("%s: unable to open raster map <%s>"),
-                G_program_name(), theState->inraster);
+        G_fatal_error (_("Cannot open raster map <%s>"),
+		       theState->inraster);
 
     theState->buf.type = G_get_raster_map_type (theState->fd_old);
     theState->buf.data.v = G_allocate_raster_buf (theState->buf.type);
@@ -42,13 +42,13 @@ void get_stats (struct rr_state *theState)
     set_min (NULL, 0, &theState->min);
     set_max (NULL, 0, &theState->max);
 
-    G_message(_("Collecting Stats ... "));
+    G_message(_("Collecting Stats ..."));
     for (row = 0; row < nrows; row++)
     {
         if (G_get_raster_row(theState->fd_old, theState->buf.data.v, 
                             row, theState->buf.type) < 0)
-            G_fatal_error (_("%s: Failed to read raster row %d"), 
-                    G_program_name(), row);
+            G_fatal_error (_("Cannot read raster row [%d]"), 
+			   row);
 
         for (col = 0; col < ncols; col++)
         {
@@ -64,7 +64,7 @@ void get_stats (struct rr_state *theState)
         
         G_percent(row, nrows, 2);
     }
-        
+       
     G_percent(1, 1, 1);
 
     /* rewind the in raster map descriptor for later use */
@@ -80,8 +80,7 @@ void get_stats (struct rr_state *theState)
         case DCELL_TYPE:
             *theState->nulls.data.d = floor(*theState->min.data.d - 1); break;
         default: /* Huh? */
-            G_fatal_error (_("%s: Programmer error in get_stats/switch"),
-                    G_program_name());
+            G_fatal_error (_("Programmer error in get_stats/switch"));
     }
 } /* get_stats() */
 
@@ -142,5 +141,3 @@ static void set_max (struct RASTER_MAP_PTR *from, int col, struct RASTER_MAP_PTR
         }
     }
 }
-
-/* vim: set softtabstop=4 shiftwidth=4 expandtab: */
