@@ -51,8 +51,18 @@ printf("initialize labels\n");
 	fprintf(stderr, "Writing labels to file: ...");
     labelf = G_fopen_new ("paint/labels", p.labels->answer);
 	for(i=0; i < n_labels;i++) {
-		if(labels[i].n_candidates > 0)
+		if(labels[i].n_candidates > 0) {
+/*			if(labels[i].cat>=1) {
+				int k;
+				for(k=0;k < labels[i].n_candidates; k++) {
+					labels[i].current_candidate=k;
+					print_label(labelf, &labels[i], &p);					
+				}
+			}
+			else {*/
 			print_label(labelf, &labels[i], &p);
+//			}
+		}
 		G_percent(i, (n_labels-1), 1);
 	}
     fclose(labelf);
@@ -83,7 +93,7 @@ static int parse_args(int argc, char *argv[], struct params *p)
     p->labels->key_desc = "name";
 
 	p->font = G_define_option();
-	p->font->key         = "path";
+	p->font->key         = "font";
 	p->font->type        = TYPE_STRING;
 	p->font->required    = YES;
 	p->font->description = _("Path to TrueType font (including file name)");
@@ -96,6 +106,12 @@ static int parse_args(int argc, char *argv[], struct params *p)
     p->size->type = TYPE_DOUBLE;
     p->size->answer = "100";
     p->size->guisection = _("Font");
+
+    p->isize = G_define_option();
+    p->isize->key = "isize";
+    p->isize->description = _("Icon size of point features (in map-units)");
+    p->isize->type = TYPE_DOUBLE;
+    p->isize->answer = "10";
 
 	p->charset = G_define_option();
 	p->charset->key         = "charset";
@@ -112,19 +128,20 @@ void print_label (FILE *labelf, label_t *label, struct params *p)
 {
 	int cc;
 	cc = label->current_candidate;
-/*	double size;
-	size = atof(p->size->answer); */
+	double size;
+	size = atof(p->size->answer);
 	
-    fprintf (labelf, "east: %f\n", label->candidates[cc].point.x);
-    fprintf (labelf, "north: %f\n", label->candidates[cc].point.y);
-    fprintf (labelf, "xoffset: 0\nyoffset: 0\n");
-    fprintf (labelf, "ref: %s\n", "lower left");
+    fprintf (labelf, "east: %lf\n", label->candidates[cc].point.x);
+    fprintf (labelf, "north: %lf\n", label->candidates[cc].point.y);
+    fprintf (labelf, "xoffset: %lf\n", -0.0*(size));
+    fprintf (labelf, "yoffset: %lf\n", -0.0*(size));
+    fprintf (labelf, "ref: %s\n", "none none");
+//    fprintf (labelf, "ref: %s\n", "lower left");
     fprintf (labelf, "font: %s\n", p->font->answer);
     fprintf (labelf, "color: %s\n", "black");
-
 	
-/*	fprintf (labelf, "size: %d\n", (int)(size * 0.75));*/
-	fprintf (labelf, "size: %s\n", p->size->answer);
+	fprintf (labelf, "size: %lf\n", size);
+//	fprintf (labelf, "size: %s\n", p->size->answer);
 
     fprintf (labelf, "width: %d\n", 1);
     fprintf (labelf, "hcolor: %s\n", "none");
@@ -135,7 +152,11 @@ void print_label (FILE *labelf, label_t *label, struct params *p)
     if ( label->candidates[cc].rotation != 0 )
         fprintf (labelf, "rotate: %f\n",
 				 label->candidates[cc].rotation*180.0/M_PI);
-    fprintf (labelf, "text: %s\n\n", label->text);
+/*	if(label->cat == 195)
+		fprintf (labelf, "text:%s (%d)\n\n", label->text,
+				 label->current_candidate);
+	else*/
+	fprintf (labelf, "text:%s\n\n", label->text);
 /*fprintf (labelf, "current_candidate: %d\n", label->current_candidate);
 fprintf (labelf, "label_width: %lf\n", label->bb.E-label->bb.W);
 fprintf (labelf, "label_height: %lf\n\n", label->bb.N-label->bb.S);

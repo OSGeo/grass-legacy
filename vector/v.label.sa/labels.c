@@ -10,10 +10,12 @@ static double label_pointover(label_t *label, label_candidate_t *candidate);
 static double label_lineover(label_t *label, label_candidate_t *candidate, int linetype);
 static label_point_t *lineover_intersection(struct bound_box *bb, struct line_pnts *line);
 static double min_dist_2_lines(struct line_pnts *skyline, struct line_pnts *swathline, label_point_t *p);
+static int box_overlap(BOUND_BOX *a, BOUND_BOX *b);
 
 static double font_size = 0.0;
 static double ideal_distance;
 static struct Map_info Map;
+static double buffer=0.0;
 
 label_t * labels_init(struct params *p, int *n_labels)
 {
@@ -68,9 +70,10 @@ label_t * labels_init(struct params *p, int *n_labels)
 	}
 	
 	font_size = atof(p->size->answer);
+	buffer = atof(p->isize->answer);
 	
-	/* use 1 dot = 1 map unit */
-	if(FT_Set_Char_Size(face, (int)(font_size*font_size), 0, 72, 72)) 
+	/* use 1 point = 1 map unit */
+	if(FT_Set_Char_Size(face, (int)(font_size*64.0), 0, 100, 100)) 
 		G_fatal_error(_("Unable to set font size"));
 
 	/* start reading the map */
@@ -162,8 +165,8 @@ label_t * labels_init(struct params *p, int *n_labels)
 		FT_UInt glyph_index;
 		glyph_index = FT_Get_Char_Index(face, 'X');
 		if(FT_Load_Glyph(face, glyph_index, FT_LOAD_DEFAULT))
-			G_fatal_error("Cannot determin ideal height");
-		ideal_distance = 0.3 * face->glyph->metrics.height/font_size;
+			G_fatal_error("Cannot determine ideal height");
+		ideal_distance = 0.3 * face->glyph->metrics.height/64.0;
 	}
 
 	FT_Done_Face(face);
@@ -204,35 +207,35 @@ static int label_skyline(FT_Face face, const char *charset, label_t *label)
 					face->glyph->metrics.horiAdvance);
 
 			top_left.x = advance;
-			top_left.y = face->glyph->metrics.horiBearingY / font_size;
+			top_left.y = face->glyph->metrics.horiBearingY / 64.0;
 
-			top_right.x = advance + face->glyph->metrics.horiAdvance / font_size; 
-			top_right.y = face->glyph->metrics.horiBearingY / font_size;
+			top_right.x = advance + face->glyph->metrics.horiAdvance / 64.0;
+			top_right.y = face->glyph->metrics.horiBearingY / 64.0;
 
-			bottom_right.x = advance + face->glyph->metrics.horiAdvance / font_size;
+			bottom_right.x = advance + face->glyph->metrics.horiAdvance / 64.0;
 			bottom_right.y = (face->glyph->metrics.horiBearingY -
-							  face->glyph->metrics.height) / font_size;
+							  face->glyph->metrics.height) / 64.0;
 
 			bottom_left.x = advance;
 			bottom_left.y = (face->glyph->metrics.horiBearingY -
-							 face->glyph->metrics.height) / font_size;
+							face->glyph->metrics.height) / 64.0;
 
 			if(i==0) {
-				G_debug(5, "Character(%d) '%c': Adding UL point (%8.8lg,%8.8lg)",
+				G_debug(5, "Character(%d) '%c': Adding UL point (%lf,%lf)",
 						i, label->text[i], top_left.x, top_left.y);
 				Vect_append_point(label->skyline,
 								  top_left.x, top_left.y, 0.0);
-				G_debug(5, "Character(%d) '%c': Adding UR point (%8.8lg,%8.8lg)",
+				G_debug(5, "Character(%d) '%c': Adding UR point (%lf,%lf)",
 						i, label->text[i], top_right.x, top_right.y);
 				Vect_append_point(label->skyline,
 									   top_right.x, top_right.y, 0.0);
 				
-				G_debug(5, "Character(%d) '%c': Adding LR point (%8.8lg,%8.8lg)",
+				G_debug(5, "Character(%d) '%c': Adding LR point (%lf,%lf)",
 						i, label->text[i], bottom_right.x, bottom_right.y);
 				Vect_append_point(label->skyline,
 									   bottom_right.x, bottom_right.y, 0.0);
 				
-				G_debug(5, "Character(%d) '%c': Adding LL point (%8.8lg,%8.8lg)",
+				G_debug(5, "Character(%d) '%c': Adding LL point (%lf,%lf)",
 						i, label->text[i], bottom_left.x, bottom_left.y);
 				Vect_append_point(label->skyline,
 									   bottom_left.x, bottom_left.y, 0.0);
@@ -240,35 +243,39 @@ static int label_skyline(FT_Face face, const char *charset, label_t *label)
 								  top_left.x, top_left.y, 0.0);
 			}
 			else { 
-				G_debug(5, "Character(%d) '%c': Adding UL point (%8.8lg,%8.8lg)",
+				G_debug(5, "Character(%d) '%c': Adding UL point (%lf,%lf)",
 						i, label->text[i], top_left.x, top_left.y);
 				Vect_line_insert_point(label->skyline, i*2,
 									   top_left.x, top_left.y, 0.0);
-				G_debug(5, "Character(%d) '%c': Adding UR point (%8.8lg,%8.8lg)",
+				G_debug(5, "Character(%d) '%c': Adding UR point (%lf,%lf)",
 						i, label->text[i], top_right.x, top_right.y);
 				Vect_line_insert_point(label->skyline, i*2+1,
 									   top_right.x, top_right.y, 0.0);
 				
-				G_debug(5, "Character(%d) '%c': Adding LR point (%8.8lg,%8.8lg)",
+				G_debug(5, "Character(%d) '%c': Adding LR point (%lf,%lf)",
 						i, label->text[i], bottom_right.x, bottom_right.y);
 				Vect_line_insert_point(label->skyline, i*2+2,
 									   bottom_right.x, bottom_right.y, 0.0);
 				
-				G_debug(5, "Character(%d) '%c': Adding LL point (%8.8lg,%8.8lg)",
+				G_debug(5, "Character(%d) '%c': Adding LL point (%lf,%lf)",
 						i, label->text[i], bottom_left.x, bottom_left.y);
 				Vect_line_insert_point(label->skyline, i*2+3,
 									   bottom_left.x, bottom_left.y, 0.0);
 			}
 		
-			advance += face->glyph->metrics.horiAdvance / font_size;
-			G_debug(5,"Total advance  %8.8lg", advance);
+			advance += face->glyph->metrics.horiAdvance / 64.0;
+			G_debug(5,"Total advance  %lf", advance);
 		}
 	}
 	/* remove duplicate points */
 	Vect_line_prune(label->skyline);
 	/* get the boundingbox */
 	Vect_line_box(label->skyline, &label->bb);
-
+/*	if(label->cat==195)
+	{
+		printf("BB of label '%s' N:%lf E:%lf W:%lfS:%lf \n", label->text,
+			   label->bb.N, label->bb.E, label->bb.W,label->bb.S);
+	}*/
 	return 1;
 }
 
@@ -277,7 +284,7 @@ void label_candidates(label_t *labels, int n_labels)
 	int i;
 	/* generate candidate location for each label based on feture type
 	 * see chapter 5 of MERL-TR-96-04 */
-	fprintf(stderr, "Generating label candidates: ...");
+//	fprintf(stderr, "Generating label candidates: ...");
 	for(i=0; i < n_labels; i++) {
 		G_percent(i, n_labels-1, 1);
 		switch(labels[i].type) {
@@ -315,102 +322,109 @@ static void label_point_candidates(label_t *label)
 	width = label->bb.E - label->bb.W;
 	/* 2 upper left-hand side labels are placed so that they are 
 	 * 1/3 and 2/3 of label height above point, and right aligned */
-	candidates[0].point.x = label->shape->x[0] - 1.5 * width;
-	candidates[0].point.y = label->shape->y[0] + (2.0/3.0) * height;
+	candidates[0].point.x = label->shape->x[0] - width - buffer*0.75;
+	candidates[0].point.y = label->shape->y[0] + (5.0/9.0) * height;
 	candidates[0].score = 0.63;
 
-	candidates[1].point.x = label->shape->x[0] - 1.5 * width;
+	candidates[1].point.x = label->shape->x[0] - width - buffer*0.85;
 	candidates[1].point.y = label->shape->y[0] + (1.0/3.0) * height;
 	candidates[1].score = 0.44;
 	/* same height as label point */
-	candidates[2].point.x = label->shape->x[0] - 1.5 * width;
+	candidates[2].point.x = label->shape->x[0] - width - buffer*0.95;
 	candidates[2].point.y = label->shape->y[0];
 	candidates[2].score = 0.07;
 	/* 3 lower left-hand side labels are placed so that they are 
 	 * 1/3, 2/3 and 3/3 of label height below point, and right aligned */
-	candidates[3].point.x = label->shape->x[0] - 1.5 * width;
+	candidates[3].point.x = label->shape->x[0] - width - buffer*0.95;
 	candidates[3].point.y = label->shape->y[0] - (1.0/3.0) * height;
 	candidates[3].score = 0.10;
 
-	candidates[4].point.x = label->shape->x[0] - 1.5 * width;
-	candidates[4].point.y = label->shape->y[0] - (2.0/3.0) * height;
+	candidates[4].point.x = label->shape->x[0] - width - buffer*0.95;
+	candidates[4].point.y = label->shape->y[0] - (5.0/9.0) * height;
 	candidates[4].score = 0.02;
 
-	candidates[5].point.x = label->shape->x[0] - 1.5 * width;
+	candidates[5].point.x = label->shape->x[0] - width - buffer*0.95;
 	candidates[5].point.y = label->shape->y[0] - height;
 	candidates[5].score = 0.37;
 
 	/* 2 upper right-hand side labels are placed so that they are 
 	 * 1/3 and 2/3 of label height above point*/
-	candidates[6].point.x = label->shape->x[0] + 0.1 * width;
-	candidates[6].point.y = label->shape->y[0] + (2.0/3.0) * height;
+	candidates[6].point.x = label->shape->x[0] + buffer*0.85;
+	candidates[6].point.y = label->shape->y[0] + (5.0/9.0) * height;
 	candidates[6].score = 0.41;
 
-	candidates[7].point.x = label->shape->x[0] + 0.1 * width;
+	candidates[7].point.x = label->shape->x[0] + buffer*0.95;
 	candidates[7].point.y = label->shape->y[0] + (1.0/3.0) * height;
 	candidates[7].score = 0.33;
 	/* same height as label point */
-	candidates[8].point.x = label->shape->x[0] + 0.1 * width;
+	candidates[8].point.x = label->shape->x[0] + buffer;
 	candidates[8].point.y = label->shape->y[0];
 	candidates[8].score = 0.00;
 	/* 4 lower left-hand side labels are placed so that they are 
 	 * 1/4, 2/4 3/4 and 4/4 of label height below point*/
-	candidates[9].point.x = label->shape->x[0] + 0.1 * width;
+	candidates[9].point.x = label->shape->x[0] + buffer;
 	candidates[9].point.y = label->shape->y[0] - 0.25 * height;
 	candidates[9].score = 0.04;
 
-	candidates[10].point.x = label->shape->x[0] + 0.1 * width;
+	candidates[10].point.x = label->shape->x[0] + buffer;
 	candidates[10].point.y = label->shape->y[0] - 0.5 * height;
 	candidates[10].score = 0.3;
 
-	candidates[11].point.x = label->shape->x[0] + 0.1 * width;
+	candidates[11].point.x = label->shape->x[0] + buffer;
 	candidates[11].point.y = label->shape->y[0] - 0.75 * height;
 	candidates[11].score = 0.12;
 
-	candidates[12].point.x = label->shape->x[0] + 0.1 * width;
+	candidates[12].point.x = label->shape->x[0] + buffer;
 	candidates[12].point.y = label->shape->y[0] - height;
 	candidates[12].score = 0.59;
 
 	/* 3 labels above, centered, centered on left 1/3 and centered 
 	 * on right 1/3 of the label */
 	candidates[13].point.x = label->shape->x[0] - (1.0/3.0) * width;
-	candidates[13].point.y = label->shape->y[0] + 2.0 * fabs(label->bb.S) + 0.1 * height;
+	candidates[13].point.y = label->shape->y[0] + fabs(label->bb.S) + buffer;
 	candidates[13].score = 0.70;
 
 	candidates[14].point.x = label->shape->x[0] - 0.5 * width;
-	candidates[14].point.y = label->shape->y[0] + 2.0 * fabs(label->bb.S) + 0.1 * height;
+	candidates[14].point.y = label->shape->y[0] + fabs(label->bb.S) + buffer;
 	candidates[14].score = 0.89;
 
 	candidates[15].point.x = label->shape->x[0] - (2.0/3.0) * width;
-	candidates[15].point.y = label->shape->y[0] + 2.0 * fabs(label->bb.S) + 0.1 * height;
+	candidates[15].point.y = label->shape->y[0] + fabs(label->bb.S) + buffer;
 	candidates[15].score = 0.74;
 
 	/* 3 labels below, centered, centered on left 1/3 and centered 
 	 * on right 1/3 of the label */
 	candidates[16].point.x = label->shape->x[0] - (1.0/3.0) * width;
-	candidates[16].point.y = label->shape->y[0] - 2.0 * label->bb.N;
+	candidates[16].point.y = label->shape->y[0] - height - buffer;
 	candidates[16].score = 0.74;
 
 	candidates[17].point.x = label->shape->x[0] - 0.5 * width;
-	candidates[17].point.y = label->shape->y[0] - 2.0 * label->bb.N;
+	candidates[17].point.y = label->shape->y[0] - height - buffer;
 	candidates[17].score = 0.89;
 
 	candidates[18].point.x = label->shape->x[0] - (2.0/3.0) * width;
-	candidates[18].point.y = label->shape->y[0] - 2.0 * label->bb.N;
+	candidates[18].point.y = label->shape->y[0] - height - buffer;
 	candidates[18].score = 1.0;
 
 	for(i=0; i<19; i++) {
+/*		if(label->cat==195)
+		{
+			printf("Label '%s' Candidate %d", label->text, i);
+		}*/
 		candidates[i].score += 10.0 * label_pointover(label, &candidates[i]);
 		candidates[i].score += 15.0 * label_lineover(label, &candidates[i],
 													 GV_POINT);
 		candidates[i].score += 10.0 * label_lineover(label, &candidates[i],
 													 GV_BOUNDARY);
-		G_debug(1, "candidate (%d): score: %lf at (%8.8lg,%8.8lg)", i,
-				candidates[i].score, candidates[i].point.x,
-				candidates[i].point.y);
+/*		if(label->cat==195) {
+			printf("candidate (%d): score: %lf at (%lf,%lf)\n", i,
+				   candidates[i].score, candidates[i].point.x,
+				   candidates[i].point.y);
+		}*/
 	}
 
 	label->current_candidate = (int)(19.0 * (rand() / (RAND_MAX + 1.0)));
+//	label->current_candidate = 8;
 	label->candidates = candidates;
 	label->n_candidates = 19;
 }
@@ -437,6 +451,7 @@ static void label_line_candidates(label_t *label)
 		G_fatal_error("Cannot allocate memory.");
 	}
 
+//	fprintf(stderr, "label '%s':\n", label->text);
 	/* find all candidate labels */
 	for(pos=width, i=0; pos < (length - width); pos+=inc) {
 		label_point_t p1, p2, minimum_above_distance_p,
@@ -450,8 +465,11 @@ static void label_line_candidates(label_t *label)
 		seg1 = Vect_point_on_line(label->shape, pos, &p1.x, &p1.y, NULL, NULL, NULL);
 		seg2 = Vect_point_on_line(label->shape, pos+width, &p2.x, &p2.y, NULL, NULL, NULL);
 
-		G_debug(1,"pos=%.8lg i=%d p1 at (%8.8lg,%8.8lg), p2 at (%8.8lg,%8.8lg)",
+		G_debug(1,"pos=%lf i=%d p1 at (%lf,%lf), p2 at (%lf,%lf)",
 				pos, i, p1.x,p1.y,p2.x,p2.y);
+//		if(label->cat==4)
+//			fprintf(stderr,"label=%s pos=%lf i=%d p1 at (%lf,%lf), p2 at (%lf,%lf)\n",
+//					label->text, pos, i, p1.x,p1.y,p2.x,p2.y);
 
 	/* find the maximum above_distance and below_distance from the swath
 	 * "diagonal" to determine maximum deviation from a straight line 
@@ -459,6 +477,9 @@ static void label_line_candidates(label_t *label)
 	 */
 		above_candidates[i].swathline = Vect_new_line_struct();
 		below_candidates[i].swathline = Vect_new_line_struct();
+		if((above_candidates[i].swathline==NULL) ||
+		   (below_candidates[i].swathline==NULL))
+			G_fatal_error("Cannot allocate memory!");
 		Vect_append_point(above_candidates[i].swathline, p1.x, p1.y, 0);
 		Vect_append_point(below_candidates[i].swathline, p1.x, p1.y, 0);
 
@@ -482,12 +503,14 @@ static void label_line_candidates(label_t *label)
 					above_distance = d;
 				}
 			}
-			Vect_append_point(above_candidates[i].swathline, x, y, 0);
-			Vect_append_point(below_candidates[i].swathline, x, y, 0);
+			Vect_append_point(above_candidates[i].swathline, 
+							  label->shape->x[j], label->shape->y[j], 0);
+			Vect_append_point(below_candidates[i].swathline,
+							  label->shape->x[j], label->shape->y[j], 0);
 		}
 
-		Vect_append_point(above_candidates[i].swathline, p2.x, p1.y, 0);
-		Vect_append_point(below_candidates[i].swathline, p2.x, p1.y, 0);
+		Vect_append_point(above_candidates[i].swathline, p2.x, p2.y, 0);
+		Vect_append_point(below_candidates[i].swathline, p2.x, p2.y, 0);
 		Vect_destroy_line_struct(baseline);
 
 		if(above_distance == 0.0) {
@@ -548,7 +571,7 @@ static void label_line_candidates(label_t *label)
 		below_candidates[i].point.x = p1.x - above_distance * sin(angle);
 		below_candidates[i].point.y = p1.y + above_distance * cos(angle);
 
-		G_debug(1, "above at (%8.8lg,%8.8lg) below at (%8.8lg,%8.8lg)",
+		G_debug(1, "above at (%lf,%lf) below at (%lf,%lf)",
 				above_candidates[i].point.x,above_candidates[i].point.y,
 				below_candidates[i].point.x,below_candidates[i].point.y);
 		
@@ -581,15 +604,30 @@ static void label_line_candidates(label_t *label)
 			label_lineover(label, &below_candidates[i], GV_BOUNDARY);
 
 		below_candidates[i].score+=0.25;
-		G_debug(1,"above candidate (%d): score: %lf at (%8.8lg,%8.8lg)", i,
+/*		if(angle < 0) {
+			above_candidates[i].score+=40.0*fabs(angle);
+			below_candidates[i].score+=40.0*fabs(angle);
+		}*/
+/*		fprintf(stderr, "\tabove candidate (%d): score: %lf at (%lf,%lf)\n", i,
 				above_candidates[i].score, above_candidates[i].point.x,
 				above_candidates[i].point.y);
-		G_debug(1,"below candidate (%d): score: %lf at (%8.8lg,%8.8lg)", i,
+		fprintf(stderr, "\tbelow candidate (%d): score: %lf at (%lf,%lf)\n", i,
 				below_candidates[i].score, below_candidates[i].point.x,
-				below_candidates[i].point.y);
+				below_candidates[i].point.y);*/
+/*		fprintf(stderr, "\tabove candidate: %d\n\tscore: %lf\n", i,above_candidates[i].score);
+		fprintf(stderr, "\tavedist: %lf\n\tflatness: %lf\n\tlineover: %lf\n",
+				label_avedist(label, &above_candidates[i]),
+				label_flatness(label, &above_candidates[i]),
+				15.0 * label_lineover(label, &above_candidates[i], GV_LINE));
+		fprintf(stderr, "\tbelow candidate: %d\n\tscore: %lf\n", i,below_candidates[i].score);
+		fprintf(stderr, "\tavedist: %lf\n\tflatness: %lf\n\tlineover: %lf\n",
+				label_avedist(label, &below_candidates[i]),
+				label_flatness(label, &below_candidates[i]),
+				15.0 * label_lineover(label, &below_candidates[i], GV_LINE));*/
 		i++;
 	}
 	n = i;
+//	fprintf(stderr, "++++++++++++++++++\n");
 	
 	/* pick the 32 best candidates */
 	qsort(above_candidates, n, sizeof(label_candidate_t), candidate_compare);
@@ -601,7 +639,6 @@ static void label_line_candidates(label_t *label)
 	else n_c = n;
 
 	candidates = calloc(n_c, sizeof(label_candidate_t));
-
 	for(i=0; i < n_c; i++) {
 		if(candidate_compare(&below_candidates[i], &above_candidates[i]) < 0) {
 			memcpy(&candidates[i], &below_candidates[i], sizeof(label_candidate_t));
@@ -611,6 +648,26 @@ static void label_line_candidates(label_t *label)
 			memcpy(&candidates[i], &above_candidates[i], sizeof(label_candidate_t));
 			memset(&above_candidates[i], 0, sizeof(label_candidate_t));
 		}
+/*		if(label->cat==4) {
+			printf("candidate (%d): score: %lf at (%lf,%lf) angle=%lf height=%lf width=%lf\n", i,
+				   candidates[i].score, candidates[i].point.x,
+				   candidates[i].point.y, candidates[i].rotation,
+				   height, width);
+			fprintf(stderr, "\tcandidate: %d\n\tscore: %lf\n", i,candidates[i].score);
+			fprintf(stderr, "\tavedist: %lf\n\tflatness: %lf\n\tlineover: %lf\n",
+					label_avedist(label, &candidates[i]),
+					label_flatness(label, &candidates[i]),
+					15.0 * label_lineover(label, &candidates[i], GV_LINE));
+			fprintf(stderr, "\tpoints for swath line:\n");
+			{
+				int j;
+				for(j=0;j<candidates[i].swathline->n_points; j++) {
+					fprintf(stderr, "\t\t(%lf,%lf)\n",
+							candidates[i].swathline->x[j],
+							candidates[i].swathline->y[j]);
+				}
+			}
+		}*/
 	}
 	for(;i<n;i++) {
 		Vect_destroy_line_struct(above_candidates[i].baseline);
@@ -664,7 +721,7 @@ static struct line_pnts * skyline_trans_rot(struct line_pnts *skyline,
 		x=skyline->x[i] * cos(angle) - skyline->y[i] * sin(angle);
 		y=skyline->x[i] * sin(angle) + skyline->y[i] * sin(angle);
 		Vect_append_point(Points, x+p->x, y+p->y, 0);
-		G_debug(3, "Skyline point %d was: (%8.8lg,%8.8lg) is: (%8.8lg,%8.8lg)",
+		G_debug(5, "Skyline point %d was: (%lf,%lf) is: (%lf,%lf)",
 				i, skyline->x[i], skyline->y[i], x+p->x, y+p->y);
 	}
 	return Points;
@@ -682,7 +739,7 @@ static double label_avedist(label_t *label, label_candidate_t *candidate)
 	double avedist =0.0;
 	int i;
 	
-	G_debug(3, "Candidate point is: (%8.8lg,%8.8lg)",
+	G_debug(3, "Candidate point is: (%lf,%lf)",
 				candidate->point.x, candidate->point.y);
 	trsk = skyline_trans_rot(label->skyline, &candidate->point,
 							 candidate->rotation);
@@ -704,7 +761,7 @@ static double label_avedist(label_t *label, label_candidate_t *candidate)
 
 	avedist /= (candidate->swathline->n_points + trsk->n_points);
 	Vect_destroy_line_struct(trsk);
-	
+
 	return ((avedist - ideal_distance)*(avedist - ideal_distance)) / 
 		(ideal_distance*ideal_distance);
 }
@@ -748,14 +805,33 @@ static double label_pointover(label_t *label, label_candidate_t *candidate)
 	double pointover;
 	struct ilist *il;
 	struct line_pnts *trsk;
+	BOUND_BOX bb;
 	
 	il = Vect_new_list();
 	trsk = skyline_trans_rot(label->skyline, &candidate->point,
 							 candidate->rotation);
-	Vect_select_lines_by_polygon(&Map, trsk, 0, NULL, GV_POINT, il);
+
+
+//	Vect_select_lines_by_polygon(&Map, trsk, 0, NULL, GV_POINT, il);
+//	Vect_line_box(trsk, &bb);
+	
+	bb.N = label->bb.N + candidate->point.y+buffer;
+	bb.E = label->bb.E + candidate->point.x+buffer;
+	bb.W = label->bb.W + candidate->point.x-buffer;
+	bb.S = label->bb.S + candidate->point.y-buffer;
+	bb.T = label->bb.T;
+	bb.B = label->bb.B;
+	Vect_select_lines_by_box(&Map, &bb, GV_POINT, il);
 	
 	pointover = (double)il->n_values;
 	Vect_destroy_list(il);
+
+/*	if(label->cat == 195) {
+		printf(" bb is N:%lf E:%lf W:%lf S:%lf T:%lf B:%lf - ",
+			   bb.N,bb.E,bb.W,bb.S, bb.T, bb.B);
+
+		printf("is over %d points\n", (int)pointover);
+	}*/
 	
 	return pointover;
 }
@@ -771,33 +847,47 @@ static double label_lineover(label_t *label, label_candidate_t *candidate,
 	BOUND_BOX bb;
 	
 	il = Vect_new_list();
-	G_debug(3, "Candidate point is: (%8.8lg,%8.8lg)",
+	G_debug(3, "Candidate point is: (%lf,%lf)",
 				candidate->point.x, candidate->point.y);
 	trsk = skyline_trans_rot(label->skyline, &candidate->point,
 							 candidate->rotation);
 	b.x = (label->bb.E-label->bb.W)* cos(candidate->rotation);
 	b.y = (label->bb.E-label->bb.W)* sin(candidate->rotation);
+
 	Vect_select_lines_by_polygon(&Map, trsk, 0, NULL, linetype, il);
+
 	bb.N = label->bb.N + candidate->point.y;
 	bb.E = label->bb.E + candidate->point.x;
 	bb.W = label->bb.W + candidate->point.x;
 	bb.S = label->bb.S + candidate->point.y;
-	bb.T = label->bb.T + candidate->point.y;
-	bb.B = label->bb.B + candidate->point.y;
-	
+	bb.T = label->bb.T;
+	bb.B = label->bb.B;
+
+//	Vect_select_lines_by_box(&Map, &bb, linetype, il);
+
+/*	fprintf(stderr, "\t%d lines intersect with candidate at (%lf,%lf)\n",
+			il->n_values, candidate->point.x,candidate->point.y);*/
+
 	for(i=0; i < il->n_values; i++) {
 		struct line_pnts *line;
 		label_point_t *v;
+
+//		fprintf(stderr, "\t    line:%d\n",i);
 		line = Vect_new_line_struct();
 		Vect_read_line(&Map, line, NULL, il->value[i]);
 		v = lineover_intersection(&bb, line);
-		if(v == NULL) continue; /* no overlap */
+		if(v == NULL) {
+//			fprintf(stderr, "\t\tv=NULL!\n");
+			continue; /* no overlap */
+		}
 		if((v->x == 0.0) && (v->y == 0.0)) {
-			lineover += 10.0;
+//			fprintf(stderr, "\t\tv=(0,0)!\n");
+			lineover += 0.0;
 		}
 		else {
-			lineover += 1.0 + 9.0 * ((v->x * b.x + v->y * b.y) / 
+			lineover += 1.0 + 9.0 * fabs((v->x * b.x + v->y * b.y) / 
 				(sqrt(v->x*v->x+v->y*v->y)*sqrt(b.x*b.x+b.y*b.y)));
+//			fprintf(stderr, "\t\tlineover=%lf\n", lineover);
 		}
 		free(v);
 	}
@@ -817,25 +907,25 @@ static label_point_t * lineover_intersection(BOUND_BOX *bb, struct line_pnts *li
 	ret->x = 0.0;
 	ret->y = 0.0;
 
-	dx1[0] = bb->W;
 	dy1[0] = bb->N;
-	dx2[0] = bb->E;
+	dx1[0] = bb->W;
 	dy2[0] = bb->N;
+	dx2[0] = bb->E;
 
-	dx1[1] = bb->E;
 	dy1[1] = bb->S;
-	dx2[1] = bb->E;
+	dx1[1] = bb->E;
 	dy2[1] = bb->N;
+	dx2[1] = bb->E;
 
-	dx1[2] = bb->W;
 	dy1[2] = bb->S;
-	dx2[2] = bb->E;
+	dx1[2] = bb->W;
 	dy2[2] = bb->S;
+	dx2[2] = bb->E;
 
-	dx1[3] = bb->W;
 	dy1[3] = bb->S;
-	dx2[3] = bb->W;
+	dx1[3] = bb->W;
 	dy2[3] = bb->N;
+	dx2[3] = bb->W;
 
 	/* simply check each segment for intersection with each edge of the bb */
 	for(i=1; i<line->n_points; i++) {
@@ -851,21 +941,29 @@ static label_point_t * lineover_intersection(BOUND_BOX *bb, struct line_pnts *li
 					found++;
 					ret->x = x1;
 					ret->y = y1;
+//					fprintf(stderr, "\t\ti=%d j=%d found=%d ret.x=%lf ret.y=%lf\n",
+//						   i,j,found, ret->x, ret->y);
 				}
 				else {
 					found++;
 					ret->x -= x1;
 					ret->y -= y1;
+//					fprintf(stderr, "\t\ti=%d j=%d found=%d ret.x=%lf ret.y=%lf\n",
+//						   i,j,found, ret->x, ret->y);
 					break;
 				}
 			}
 		}
 		if(found) break;
 	}
+//	fprintf(stderr, "\t\tfound=%d ret.x=%lf ret.y=%lf\n",
+//		   found, ret->x, ret->y);
 	if(!found) {
 		free(ret);
 		return NULL;
 	}
+//	fprintf(stderr, "\t\tfound=%d ret.x=%lf ret.y=%lf\n",
+//		   found, ret->x, ret->y);
 	if(found==1) {
 		ret->x = 0;
 		ret->y = 0;
@@ -874,6 +972,8 @@ static label_point_t * lineover_intersection(BOUND_BOX *bb, struct line_pnts *li
 		ret->x = fabs(ret->x);
 		ret->y = fabs(ret->y);
 	}
+//	fprintf(stderr, "\t\tfound=%d ret.x=%lf ret.y=%lf\n",
+//		   found, ret->x, ret->y);
 
 	return ret;
 }
@@ -913,7 +1013,8 @@ static double min_dist_2_lines(struct line_pnts *skyline, struct line_pnts *swat
 void label_candidate_overlap(label_t *labels, int n_labels)
 {
 	int i;
-	fprintf(stderr, "Finding label overlap: ...");
+/*	int cnt=0; */
+//	fprintf(stderr, "Finding label overlap: ...");
 	for(i=0; i < n_labels; i++) {
 		int j;
 		for(j=0; j < labels[i].n_candidates; j++) {
@@ -922,25 +1023,20 @@ void label_candidate_overlap(label_t *labels, int n_labels)
 /*				label_find_overlap(&labels[i], j, &labels[k]); */
 				int l;
 				for(l=0; l < labels[k].n_candidates; l++) {
-					BOUND_BOX bb;
-					label_point_t p[4];
+					BOUND_BOX a,b;
 					int m;
-					bb.N=labels[i].bb.N + labels[i].candidates[j].point.y;
-					bb.E=labels[i].bb.E + labels[i].candidates[j].point.x;
-					bb.W=labels[i].bb.W + labels[i].candidates[j].point.x;
-					bb.S=labels[i].bb.S + labels[i].candidates[j].point.y;
+					a.N=labels[i].bb.N + labels[i].candidates[j].point.y;
+					a.E=labels[i].bb.E + labels[i].candidates[j].point.x;
+					a.W=labels[i].bb.W + labels[i].candidates[j].point.x;
+					a.S=labels[i].bb.S + labels[i].candidates[j].point.y;
 
-					p[0].y = labels[k].bb.N + labels[k].candidates[l].point.y;
-					p[0].x = labels[k].bb.W + labels[k].candidates[l].point.x;
-					p[1].y = labels[k].bb.N + labels[k].candidates[l].point.y;
-					p[1].x = labels[k].bb.E + labels[k].candidates[l].point.x;
-					p[2].y = labels[k].bb.S + labels[k].candidates[l].point.y;
-					p[2].x = labels[k].bb.E + labels[k].candidates[l].point.x;
-					p[3].y = labels[k].bb.S + labels[k].candidates[l].point.y;
-					p[3].x = labels[k].bb.W + labels[k].candidates[l].point.x;
+					b.N = labels[k].bb.N + labels[k].candidates[l].point.y;
+					b.E = labels[k].bb.E + labels[k].candidates[l].point.x;
+					b.W = labels[k].bb.W + labels[k].candidates[l].point.x;
+					b.S = labels[k].bb.S + labels[k].candidates[l].point.y;
+
 					for(m=0; m < 4; m++) {
-						if((p[m].x >= bb.W) && (p[m].x <= bb.E) && 
-							(p[m].y >= bb.S) && (p[m].y <= bb.N))
+						if(box_overlap(&a,&b))
 						{
 							int n;
 							label_intersection_t *li;
@@ -951,8 +1047,11 @@ void label_candidate_overlap(label_t *labels, int n_labels)
 								G_fatal_error("\nUnable to allocate memory\n");
 							li[n-1].label = &labels[k];
 							li[n-1].candidate = l;
-							if(labels[k].current_candidate == l) {
+							if((labels[k].current_candidate == l) &&
+							   (labels[i].current_candidate == j) )
+							{
 								labels[i].current_score += 40;
+								labels[k].current_score += 40;
 							}
 							labels[i].candidates[j].intersections = li;
 							n = ++(labels[k].candidates[l].n_intersections);
@@ -962,19 +1061,51 @@ void label_candidate_overlap(label_t *labels, int n_labels)
 								G_fatal_error("\nUnable to allocate memory\n");
 							li[n-1].label = &labels[i];
 							li[n-1].candidate = j;
-							if(labels[i].current_candidate == j) {
-								labels[k].current_score += 40;
-							}
+
 							labels[k].candidates[l].intersections = li;
 							break;
 						}
 					}
 				}
-/*		G_percent(i, n_labels, 1); */
 			}
 		}
 		G_percent(i, (n_labels-1), 1);
+/*		if(labels[i].cat==195) {
+			int c;
+			printf("cnt=%d\n",cnt);
+			for(c=0; c < labels[i].n_candidates; c++) {
+				int o;
+				for(o=0; o < labels[i].candidates[c].n_intersections; o++) {						
+					printf("Label %s (%d)[%d] is over label %s candidate %d\n",
+						   labels[i].text, c, o,
+						   labels[i].candidates[c].intersections[o].label->text,
+						   labels[i].candidates[c].intersections[o].candidate);
+				}
+			}
+			cnt++;
+		}
+*/
 	}
+}
+
+static int box_overlap(BOUND_BOX *a, BOUND_BOX *b)
+{
+	int vert=0, hori=0;
+	if( ((a->W < b->W) && (b->W < a->E)) ||
+		((a->W < b->E) && (b->E < a->E)) )
+		vert = 1;
+	if( ((b->W < a->W) && (a->W < b->E)) ||
+		((b->W < a->E) && (a->E < b->E)) )
+		vert = 1;
+
+	if( ((a->S < b->S) && (b->S < a->N)) ||
+		((a->S < b->N) && (b->N < a->N)) )
+		hori = 1;
+	if( ((b->S < a->S) && (a->S < b->N)) ||
+		((b->S < a->N) && (a->N < b->N)) )
+		hori = 1;
+	
+	return (hori && vert);
 }
 
 #if 0

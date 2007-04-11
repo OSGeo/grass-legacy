@@ -76,6 +76,7 @@ struct params {
 	struct Option *font;
 	struct Option *size;
 	struct Option *charset;
+	struct Option *isize;
 /*	struct Option *where;*/ /* later */
 };
 
