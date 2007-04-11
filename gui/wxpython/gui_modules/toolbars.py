@@ -69,6 +69,11 @@ class MapToolbar:
                                                                   wx.BITMAP_TYPE_ANY),
                                                  bmpDisabled=wx.NullBitmap, kind=wx.ITEM_RADIO,
                                                  shortHelp="Query", longHelp="Query selected map")
+        self.zoomback = self.toolbar.AddLabelTool(id=wx.ID_ANY, label="zoom_back",
+                                                 bitmap=wx.Bitmap(os.path.join(wxgui_utils.icons,"gui-zoom_back.gif"),
+                                                                  wx.BITMAP_TYPE_ANY),
+                                                 bmpDisabled=wx.NullBitmap, kind=wx.ITEM_NORMAL,
+                                                 shortHelp="Zoom back", longHelp="Zoom to previous display region")
         self.toolbar.AddSeparator()
 
 
@@ -115,6 +120,7 @@ class MapToolbar:
     	self.mapdisplay.Bind(wx.EVT_TOOL,     self.mapdisplay.OnZoomIn,   self.zoomin)
     	self.mapdisplay.Bind(wx.EVT_TOOL,     self.mapdisplay.OnZoomOut,  self.zoomout)
     	self.mapdisplay.Bind(wx.EVT_TOOL,     self.mapdisplay.OnPan,      self.pan)
+        self.mapdisplay.Bind(wx.EVT_TOOL,     self.mapdisplay.OnZoomBack,  self.zoomback)
         self.mapdisplay.Bind(wx.EVT_TOOL,     self.mapdisplay.onDecoration, self.dec)
         self.mapdisplay.Bind(wx.EVT_TOOL,     self.mapdisplay.OnQuery, self.query)
     	self.mapdisplay.Bind(wx.EVT_TOOL,     self.mapdisplay.OnErase,    self.erase)

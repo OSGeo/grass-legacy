@@ -196,6 +196,13 @@ class BufferedWindow(wx.Window):
         self.currtxtid = None # PseudoDC id for currently selected text
 
         #
+        # Zoom objects
+        #
+        self.zoomhistory = [] # list of past zoom extents
+        self.currzoom = 0 # current set of extents in zoom history being used
+
+
+        #
     	# mouse attributes like currently pressed buttons, position on
     	# the screen, begin and end of dragging, and type of drawing
         #
@@ -253,11 +260,14 @@ class BufferedWindow(wx.Window):
         self.Refresh()
 
         if pdctype == 'clear': # erase the display
+            bg = wx.Brush(self.GetBackgroundColour())
+            pdc.SetBackground(bg)
+            pdc.Clear()
+            self.Refresh()
             pdc.EndDrawing()
             return
 
         if pdctype == 'image':
-            mask = None
             bitmap = wx.BitmapFromImage(img)
 #            if drawid in self.ovldict:
 #                w,h = self.ovldict[drawid][1]
@@ -400,8 +410,8 @@ class BufferedWindow(wx.Window):
                  if os.path.isfile(ovlfile) and os.path.getsize(ovlfile):
                      img = wx.Image(ovlfile, wx.BITMAP_TYPE_ANY)
 
-                     left = right = top = bottom = 0
-                     breakout = False
+#                     left = right = top = bottom = 0
+#                     breakout = False
 #                     # auto-crop scales and legends
 #                     for w in range(img.GetWidth()): # set left edge
 #                         for h in range(img.GetHeight()-1):
@@ -511,9 +521,9 @@ class BufferedWindow(wx.Window):
     	self.resize = False
 
         # update statusbar
-        self.parent.statusbar.SetStatusText("Extent: %d,%d : %d,%d" %
-                                            (self.Map.region["w"], self.Map.region["e"],
-                                             self.Map.region["n"], self.Map.region["s"]), 0)
+        self.parent.statusbar.SetStatusText("Extents: %d(W)-%d(E), %d(N)-%d(S)" %
+                              (self.Map.region["w"], self.Map.region["e"],
+                               self.Map.region["n"], self.Map.region["s"]), 0)
 
     def EraseMap(self):
         """
@@ -764,6 +774,30 @@ class BufferedWindow(wx.Window):
     	    self.Map.region['e'] = newreg['e']
     	    self.Map.region['w'] = newreg['w']
 
+            self.ZoomHistory(newreg['n'],newreg['s'],newreg['e'],newreg['w'])
+
+    def ZoomBack(self):
+
+        if len(self.zoomhistory) > 0:
+            self.zoomhistory.pop()
+            zoom = self.zoomhistory[len(self.zoomhistory)-1]
+
+        if zoom:
+            self.Map.region['n'] = zoom[0]
+            self.Map.region['s'] = zoom[1]
+            self.Map.region['e'] = zoom[2]
+            self.Map.region['w'] = zoom[3]
+            self.render=True
+            self.UpdateMap()
+
+    def ZoomHistory(self, n,s,e,w):
+        """
+        Manages a list of last 10 zoom extents
+        """
+        self.zoomhistory.append((n,s,e,w))
+        if len(self.zoomhistory) > 10:
+            self.zoomhistory.pop(0)
+
 class MapFrame(wx.Frame):
     """
     Main frame for map display window. Drawing takes place in child double buffered
@@ -826,7 +860,7 @@ class MapFrame(wx.Frame):
         #
     	self.statusbar = self.CreateStatusBar(number=2, style=0)
     	self.statusbar.SetStatusWidths([-2, -1])
-    	map_frame_statusbar_fields = ["Extent: %d,%d : %d,%d" %
+    	map_frame_statusbar_fields = ["Extents: %d(W)-%d(E), %d(N)-%d(S)" %
                                       (self.Map.region["w"], self.Map.region["e"],
                                        self.Map.region["n"], self.Map.region["s"]),
                                       "%s,%s" %(None, None)]
@@ -846,6 +880,11 @@ class MapFrame(wx.Frame):
 #    	self.MapWindow = DrawWindow(self) # initialize buffered DC
         self.MapWindow = BufferedWindow(self, id = wx.ID_ANY) # initialize buffered DC
     	self.MapWindow.Bind(wx.EVT_MOTION, self.OnMotion)
+
+        #
+        # Init zoomhistory
+        #
+        self.MapWindow.ZoomHistory(self.Map.region['n'],self.Map.region['s'],self.Map.region['e'],self.Map.region['w'])
 
         # decoration overlays
         self.ovlchk = self.MapWindow.ovlchk
@@ -905,9 +944,6 @@ class MapFrame(wx.Frame):
         self.width, self.height = self.GetClientSize()
         self.Map.geom = self.width, self.height
         self.Map.GetRegion()
-        #FIXME
-        #This was Map.getResolution().
-        #I'm guessing at the moment that this is replaced by Map.SetRegion()
         self.Map.SetRegion()
 
     def OnFocus(self, event):
@@ -991,8 +1027,7 @@ class MapFrame(wx.Frame):
         """
         Zoom last (previously stored position)
         """
-        # FIXME
-        pass
+        self.MapWindow.ZoomBack()
 
     def OnPan(self, event):
         """
