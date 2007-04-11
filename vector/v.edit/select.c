@@ -27,8 +27,9 @@ struct ilist *select_lines(struct Map_info *Map)
 
     List = Vect_new_list();
 
-    /* select by category */
-    if(cat_opt->answer != NULL) {
+    /* select by category (ignore tools catdel and catadd) */
+    if((action_mode != MODE_CATADD && action_mode != MODE_CATDEL) &&
+       cat_opt->answer != NULL) {
         sel_by_cat(Map, NULL, List);
     }
 
