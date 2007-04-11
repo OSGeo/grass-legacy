@@ -26,6 +26,7 @@ class SQLFrame(wx.Frame):
         # variables
         #
         self.vectmap = vectmap
+        print self.vectmap
         if not "@" in self.vectmap:
             self.vectmap = self.vectmap+"@"+grassenv.env["MAPSET"]
         self.mapname, self.mapset = self.vectmap.split("@")
