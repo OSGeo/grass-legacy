@@ -14,13 +14,13 @@ int closefiles (char *r_name, char *g_name, char *b_name,
     struct Range range;
     CELL min, max;
     char *mapset;
-
+    
     for (i = 0; i < 3; i++)
     {
         G_close_cell (fd_output[i]);
         G_free (rowbuf[i]);
     }
-
+    
     mapset = G_mapset ();
 
     G_read_range (r_name, mapset, &range);
