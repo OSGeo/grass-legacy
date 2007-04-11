@@ -379,7 +379,7 @@ class Map:
 	def __adjustRegion(self):
 		"""
 		Adjust region according to monitor size
-                """
+		"""
 
 		# adjusting region to monitor size
 		if self.width > self.height and \
@@ -682,7 +682,7 @@ class Map:
 		layer = MapLayer(type="raster", name=name, mapset=mapset,
 				 active=l_active, hidden=l_hidden, opacity=l_opacity,
 				 dispcmd=dispcmd)
-		
+
                 layer.id = len(self.layers)-1
 
 		# add maplayer to the list of layers
