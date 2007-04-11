@@ -69,13 +69,13 @@ RASTER_MAP_TYPE o_open_file (char *cell)
 
     /* open raster map */
     if ((mapset = G_find_cell(cell,"")) == NULL)
-	G_fatal_error (_("%s: o_open_file: raster map %s not found"),
-		       error_prefix, cell);
+	G_fatal_error (_("Raster map <%s> not found"),
+		       cell);
 
     sscanf(cell,"%s",cell_name);
     if ((in_file_d = G_open_cell_old(cell_name,mapset)) < 0)
-	G_fatal_error (_("%s: o_open_file: could not open raster map %s in %s"),
-		       error_prefix,cell_name,mapset);
+	G_fatal_error (_("Cannot open raster map <%s> in <%s>"),
+		       cell_name, mapset);
 
     map_type = G_get_raster_map_type(in_file_d);
     raster_size = G_raster_size(map_type);
