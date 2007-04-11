@@ -14,28 +14,26 @@
 
 <H2>Creating a SQLite database</H2>
 
-A new database is created with 'sqlite3 test.db' (you can use a different database
-name if you like and also specify a path, i.e. store the database in the related
-mapset path), see the <a href="http://www.sqlite.org/quickstart.html">SQLite manual</a>
-for details.
+GRASS is automatically creating the SQLite database if it is not yet
+existing. It is sufficient to define the connection (see next step).
 
 <H2>Connecting GRASS to SQLite</H2>
 
-The table name 'sqlite.db' is at user's choice.
-Also the file storage location can be freely chosen.
+The database name 'sqlite.db' is at user's choice.
+Also the file storage location can be freely chosen. If the database
+does not exist, it will be automatically created:
 
 <div class="code"><pre>
-# example for storing DB in mapset directory:
+# example for storing DB in mapset directory (keep single quotes):
 db.connect driver=sqlite database='$GISDBASE/$LOCATION_NAME/$MAPSET/sqlite.db'
 db.connect -p
 </pre></div>
 
 <H2>Supported SQL commands</H2>
 
-All SQL commands supported by SQLite.
-<P>
+All SQL commands supported by SQLite (for limitations, see
 SQLite help page:
-"<a href="http://www.sqlite.org/lang_expr.html">SQL As Understood By SQLite</a>"
+<a href="http://www.sqlite.org/lang_expr.html">SQL As Understood By SQLite</a>).
 
 
 <H2>Operators available in conditions</H2>
@@ -47,10 +45,11 @@ All SQL operators supported by SQLite.
 
 A convenient SQLite front-end is <a href="http://sqlitebrowser.sourceforge.net/">sqlitebrowser</a>.
 To open a DB file stored within the current mapset,
-the following way is suggested:
+the following way is suggested (corresponds to above database connection):
 
 <div class="code"><pre>
 eval `g.gisenv`
+# use double quotes:
 sqlitebrowser "$GISDBASE/$LOCATION_NAME/$MAPSET"/sqlite.db
 </pre></div>
 
@@ -74,6 +73,7 @@ echo "
 <H2>SEE ALSO</H2>
 
 <em><a href="http://www.sqlite.org">SQLite web site</a>,
+<a href="http://www.sqlite.org/quickstart.html">SQLite manual</a>,
 <a HREF="db.execute.html">db.execute</a>,
 <a HREF="sql.html">SQL support in GRASS GIS</a>,
 <a HREF="http://www.sqlite.org/cvstrac/wiki?p=ManagementTools">sqlite - Management Tools</a>
