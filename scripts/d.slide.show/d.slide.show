@@ -19,45 +19,43 @@
 #%End
 #%flag
 #%  key: v
-#%  description: show vector maps rather than raster maps
+#%  description: Show vector maps rather than raster maps
 #%END
 #%option
 #% key: prefix
 #% type: string
-#% description: map prefix. Specify character(s) to view selected maps only
+#% description: Map prefix. Specify character(s) to view selected maps only
 #% required : no
 #%end
 #%option
 #% key: across
 #% type: integer
-#% description: map number show across the monitor
+#% description: Map number show across the monitor
 #% gisprompt: 4
 #% required : no
 #%end
 #%option
 #% key: down
 #% type: integer
-#% description: map number show down the monitor
+#% description: Map number show down the monitor
 #% gisprompt: 3
 #% required : no
 #%end
 #%option
 #% key: mapsets
 #% type: string
-#% description: mapsets to use. Specify multiple mapsets comma separated
+#% description: Mapsets to use. Specify multiple mapsets comma separated
 #% multiple : yes
 #% required : no
 #%end
 #%option
 #% key: delay
 #% type: integer
-#% description: number of seconds to pause between slides
+#% description: Number of seconds to pause between slides
 #% options: 0-60
 #% answer: 0
 #% required: no
 #%end
-
-
 
 if test "$GISBASE" = ""; then
  echo "You must be in GRASS GIS to run this program." >&2
@@ -261,3 +259,5 @@ fi
 
 cd $CWD
 d.frame -s full_screen
+
+exit 0
