@@ -72,7 +72,7 @@ cross_correlation (struct Map_info* Map, double passWE, double passNS)
     extern char *bspline_column;
     dbCatValArray cvarr;
 
-    G_debug (5, _("CrossCorrelation: Some tests using different lambda_i values will be done"));
+    G_debug (5, "CrossCorrelation: Some tests using different lambda_i values will be done");
 
     ndata = Vect_get_num_lines (Map);
 
@@ -85,14 +85,14 @@ cross_correlation (struct Map_info* Map, double passWE, double passNS)
 
     /* Current region is read and points recorded into observ */
     observ = P_Read_Vector_Region_Map (Map, &region, &ndata, 1024);
-    G_debug (5, _("CrossCorrelation: %d points read in region. "), ndata);
+    G_debug (5, "CrossCorrelation: %d points read in region. ", ndata);
     fprintf (stdout, _("CrossCorrelation: %d points read in region.\n"), ndata);
     
     if (ndata > 50) 
 	G_warning (_("CrossCorrelation: Maybe, it takes too long. "
 		    "It will depend on how many points you are considering"));
     else 
-	G_debug (5, _("CrossCorrelation: It shouldn't take too long."));
+	G_debug (5, "CrossCorrelation: It shouldn't take too long.");
 
     if (ndata > 0) {			/* If at least one point is in the region */	
 	int i, j, lbd;			/* lbd: lambda index */
@@ -252,7 +252,7 @@ cross_correlation (struct Map_info* Map, double passWE, double passNS)
 
 		/*Difference between estimated and observated i-point*/
 		stat_vect.error[j] = out_z - stat_vect.estima[j];
-		G_debug (1, _("CrossCorrelation: stat_vect.error[%d]  =  %lf"), j, stat_vect.error[j]);
+		G_debug (1, "CrossCorrelation: stat_vect.error[%d]  =  %lf", j, stat_vect.error[j]);
 
 		observ = swap (observ, j, ndata-1);	/* Once the last value is let out, it is swap with j-value */
 	    } 
@@ -406,4 +406,3 @@ swap (struct Point *point, int a, int b) {
 
     return point;
 }
-  

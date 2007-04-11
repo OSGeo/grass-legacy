@@ -186,18 +186,19 @@ main (int argc,char *argv[])
 	G_fatal_error (_("Driver's name couldn't be read"));
 
     if (vector && map) 
-	G_fatal_error (_("Choose either vector or raster output, not both."));
+	G_fatal_error (_("Choose either vector or raster output, not both"));
 #ifdef nodef
     if (!vector && !map && !cross_corr_flag->answer)
 	G_fatal_error (_("No raster nor vector output"));
 #endif
     /* Open input vector */
     if ((mapset = G_find_vector2 (in_opt->answer, "")) == NULL) 
-	G_fatal_error ( _("Could not find input map <%s>"), in_opt->answer);
+	G_fatal_error ( _("Vector map <%s> not found"), in_opt->answer);
 
     Vect_set_open_level (1); 		/* WITHOUT TOPOLOGY */
     if (1 > Vect_open_old (&In, in_opt->answer, mapset)) 
-	G_fatal_error (_("Vector <%s> could not be open at the topological level"), in_opt->answer);
+	G_fatal_error (_("Cannot open vector map <%s> at the topological level"),
+		       in_opt->answer);
 
     /* Open input ext vector */
     if (!in_ext_opt->answer){
@@ -209,11 +210,12 @@ main (int argc,char *argv[])
 	G_warning (_("<%s> vector map will be interpolated"), in_ext_opt->answer);
 
 	if ((mapset = G_find_vector2 (in_ext_opt->answer, "")) == NULL) 
-	    G_fatal_error ( _("Could not find input map <%s>"), in_ext_opt->answer);
+	    G_fatal_error ( _("Vector map <%s> not found"), in_ext_opt->answer);
 
 	Vect_set_open_level (1); 		/* WITHOUT TOPOLOGY */
 	if (1 > Vect_open_old (&In_ext, in_ext_opt->answer, mapset)) 
-	    G_fatal_error (_("Vector <%s> could not be open at the topological level"), in_opt->answer);
+	    G_fatal_error (_("Cannot open vector map <%s> at the topological level"),
+			   in_opt->answer);
     }
 
     /* Open output map */
@@ -227,7 +229,7 @@ main (int argc,char *argv[])
 	grid = FALSE;
 
 	if (0 > Vect_open_new (&Out, out_opt->answer, WITH_Z)) 
-	    G_fatal_error (_("Vector <%s> could not be open"), out_opt->answer);
+	    G_fatal_error (_("Cannot create vector map <%s>"), out_opt->answer);
 
 	/* Copy vector Head File */
 	if (ext == FALSE) {
@@ -251,7 +253,7 @@ main (int argc,char *argv[])
 	    */
 
 	if ((raster = G_open_fp_cell_new (out_map_opt->answer)) < 0) 
-	    G_fatal_error (_("Raster <%s> could not be open."), out_map_opt->answer);
+	    G_fatal_error (_("Cannot create raster map <%s>"), out_map_opt->answer);
     }
 
     if (bspline_field > 0) {
@@ -264,7 +266,7 @@ main (int argc,char *argv[])
 	/*G_debug (0, _("driver=%s db=%s"), Fi->driver, Fi->database);*/
 	
 	if ( driver_cats == NULL )
-    	G_fatal_error (_("Cannot open database %s by driver %s"), Fi->database, Fi->driver);
+    	G_fatal_error (_("Cannot open database <%s> by driver <%s>"), Fi->database, Fi->driver);
     
         nrec = db_select_CatValArray ( driver_cats, Fi->table, Fi->key, col_opt->answer, NULL, &cvarr );
         G_debug (3, "nrec = %d", nrec );
@@ -276,20 +278,20 @@ main (int argc,char *argv[])
         if ( nrec < 0 )
 	    G_fatal_error (_("Cannot select data from table"));
     
-        G_message ( _("%d records selected from table"), nrec);
+        G_message ( _("[%d] records selected from table"), nrec);
 
 	db_close_database_shutdown_driver (driver_cats);
     }
 
     if (cross_corr_flag->answer) {		/* CROSS-CORRELATION WILL BE DONE*/
-	G_debug (1, _("CrossCorrelation()"));
+	G_debug (1, "CrossCorrelation()");
 	/*cross = cross_correlation (&In, &passoE, &passoN, &lambda);*/
 	cross = cross_correlation (&In, passoE, passoN);
 	
 	if (cross != TRUE)
 	    G_fatal_error (_("Cross validation didn't finish correctly"));
 	else { 
-	    G_debug (1, _("Cross validation finished correctly"));
+	    G_debug (1, "Cross validation finished correctly");
 
 	    Vect_close (&In);
 	    if (ext != FALSE) Vect_close (&In_ext);
@@ -305,7 +307,7 @@ main (int argc,char *argv[])
     }
 
     /* Interpolation begins */
-    G_debug (1, _("Interpolation()"));
+    G_debug (1, "Interpolation()");
 
     /* Open driver and database */
     driver = db_start_driver_open_database (dvr, db);
@@ -318,7 +320,7 @@ main (int argc,char *argv[])
 	sprintf (table_name, "%s_aux", out_opt->answer);
 
     /* Setting regions and boxes */    
-    G_debug (1, _("Interpolation: Setting regions and boxes"));
+    G_debug (1, "Interpolation: Setting regions and boxes");
     G_get_window (&original_reg);
     G_get_window (&elaboration_reg);
     Vect_region_box (&elaboration_reg, &overlap_box);
@@ -371,7 +373,7 @@ main (int argc,char *argv[])
 
 	    P_set_regions(&elaboration_reg, &general_box, &overlap_box, dims, FIRST_ROW);
 	    nsply = ceil((elaboration_reg.north - elaboration_reg.south)/passoN);
-	    G_debug (1, _("Interpolation: nsply = %d"), nsply);
+	    G_debug (1, "Interpolation: nsply = %d", nsply);
 	    if (nsply > NSPLY_MAX) 
 		nsply = NSPLY_MAX;
 	}
@@ -381,7 +383,7 @@ main (int argc,char *argv[])
 	    P_set_regions(&elaboration_reg, &general_box, &overlap_box, dims, LAST_ROW);
 	    nsply=ceil((elaboration_reg.north - elaboration_reg.south)/passoN);
 	    last_row = TRUE;
-	    G_debug (1, _("Interpolation: nsply = %d"), nsply);
+	    G_debug (1, "Interpolation: nsply = %d", nsply);
 	    if (nsply > NSPLY_MAX) 
 		nsply = NSPLY_MAX;
 	}
@@ -400,7 +402,7 @@ main (int argc,char *argv[])
 
 		P_set_regions(&elaboration_reg, &general_box, &overlap_box, dims, FIRST_COLUMN);
 		nsplx=ceil((elaboration_reg.east - elaboration_reg.west)/passoE);
-		G_debug (1, _("Interpolation: nsply = %d"), nsply);
+		G_debug (1, "Interpolation: nsply = %d", nsply);
 		if (nsplx > NSPLX_MAX) 
 		    nsplx = NSPLX_MAX;
 	    }
@@ -410,20 +412,24 @@ main (int argc,char *argv[])
 		P_set_regions(&elaboration_reg, &general_box, &overlap_box, dims, LAST_COLUMN);
 		last_column = TRUE;
 		nsplx=ceil((elaboration_reg.east - elaboration_reg.west)/passoE);
-		G_debug (1, _("Interpolation: nsply = %d"), nsply);
+		G_debug (1, "Interpolation: nsply = %d", nsply);
 		if (nsplx > NSPLX_MAX) 
 		    nsplx = NSPLX_MAX;
 	    }
-	    G_debug (1,_("Interpolation: (%d,%d): subregion bounds"), subregion_row, subregion_col);
-	    G_debug (1,_("Interpolation: \t\tNORTH:%.2f\t"), elaboration_reg.north);
-	    G_debug (1,_("Interpolation: WEST:%.2f\t\tEAST:%.2f"), elaboration_reg.west, elaboration_reg.east);
-	    G_debug (1,_("Interpolation: \t\tSOUTH:%.2f"), elaboration_reg.south);
+	    G_debug (1, "Interpolation: (%d,%d): subregion bounds",
+		     subregion_row, subregion_col);
+	    G_debug (1, "Interpolation: \t\tNORTH:%.2f\t",
+		     elaboration_reg.north);
+	    G_debug (1, "Interpolation: WEST:%.2f\t\tEAST:%.2f",
+		     elaboration_reg.west, elaboration_reg.east);
+	    G_debug (1, "Interpolation: \t\tSOUTH:%.2f",
+		     elaboration_reg.south);
 
 	    /*Setting the active region*/
 	    dim_vect = nsplx * nsply;
 	    observ = P_Read_Vector_Region_Map (&In, &elaboration_reg, &npoints, dim_vect);
-	    G_debug (1, _("Interpolation: (%d,%d): Number of points in <elaboration_box> is %d"), 
-		    subregion_row, subregion_col, npoints);
+	    G_debug (1, "Interpolation: (%d,%d): Number of points in <elaboration_box> is %d", 
+		     subregion_row, subregion_col, npoints);
 	
 	    if (npoints > 0) {				/*  */
 		int i;
@@ -488,7 +494,8 @@ main (int argc,char *argv[])
 		if (bspline_field > 0)
 		    mean = calc_mean (obs_mean, npoints);
 
-		G_debug (0,"Interpolation: (%d,%d): mean=%lf", subregion_row, subregion_col, mean);
+		G_debug (1 ,"Interpolation: (%d,%d): mean=%lf",
+			 subregion_row, subregion_col, mean);
 		
 		for (i=0; i<npoints; i++)
 		    obsVect[i][2] -= mean;
@@ -496,13 +503,15 @@ main (int argc,char *argv[])
 		G_free (observ);
 
 		if (bilin) {		/* Bilinear interpolation */
-		    G_debug (0,_("Interpolation: (%d,%d): Bilinear interpolation..."), subregion_row, subregion_col);
+		    G_debug (1 , "Interpolation: (%d,%d): Bilinear interpolation...",
+			     subregion_row, subregion_col);
 		    normalDefBilin (N, TN, Q, obsVect, passoE, passoN, nsplx, nsply, elaboration_reg.west, 
 			    elaboration_reg.south, npoints, nparameters, BW);
 		    nCorrectGrad (N, lambda, nsplx, nsply, passoE, passoN);
 		} 
 		else{	
-		    G_debug (0,_("Interpolation: (%d,%d): Bicubic interpolation..."), subregion_row, subregion_col);
+		    G_debug (1, "Interpolation: (%d,%d): Bicubic interpolation...",
+			     subregion_row, subregion_col);
 		    normalDefBicubic(N, TN, Q, obsVect, passoE, passoN, nsplx, nsply, elaboration_reg.west, 
 			    elaboration_reg.south, npoints, nparameters, BW);
 		    nCorrectGrad(N, lambda, nsplx, nsply, passoE, passoN);
@@ -517,7 +526,8 @@ main (int argc,char *argv[])
 		if (grid == FALSE) {		/*OBSERVATION POINTS INTERPOLATION*/
 		    /* Auxiliar table creation */
 		    if (flag_auxiliar == FALSE) {
-			G_debug (1, _("Interpolation: Creating auxiliar table for archiving overlapping zones"));
+			G_debug (1, "Interpolation: Creating auxiliar table for archiving "
+				 "overlapping zones");
 			if ((flag_auxiliar = P_Create_Aux_Table (driver, table_name)) == FALSE) {
 			    P_Drop_Aux_Table (driver, table_name);
 			    G_fatal_error (_("Interpolation: Creating table: "
@@ -526,7 +536,8 @@ main (int argc,char *argv[])
 		    }
 
 		    if (ext == FALSE) {
-			G_debug (0,_("Interpolation: (%d,%d): Sparse_Points..."), subregion_row, subregion_col);
+			G_debug (1 , "Interpolation: (%d,%d): Sparse_Points...",
+				 subregion_row, subregion_col);
 			P_Sparse_Points (&Out, &elaboration_reg, general_box, overlap_box, obsVect, 
 				parVect, lineVect, passoE, passoN, dims.overlap, nsplx, nsply, npoints, 
 				bilin, Cats, driver, mean, table_name);
@@ -554,7 +565,8 @@ main (int argc,char *argv[])
 
 			G_free (observ_ext);
 			
-			G_debug (0,_("Interpolation: (%d,%d): Sparse_Points..."), subregion_row, subregion_col);
+			G_debug (1, "Interpolation: (%d,%d): Sparse_Points...",
+				 subregion_row, subregion_col);
 			P_Sparse_Points (&Out, &elaboration_reg, general_box, overlap_box, obsVect_ext, 
 				parVect, lineVect_ext, passoE, passoN, dims.overlap, nsplx, nsply, npoints_ext, 
 				bilin, Cats, driver, mean, table_name);
@@ -568,7 +580,8 @@ main (int argc,char *argv[])
 		else {			/*GRID INTERPOLATION ==> INTERPOLATION INTO A RASTER*/ 
 		    G_free_matrix (obsVect);
 		    flag_auxiliar = TRUE;
-		    G_debug (0,_("Interpolation: (%d,%d): Regular_Points..."), subregion_row, subregion_col);
+		    G_debug (1, "Interpolation: (%d,%d): Regular_Points...",
+			     subregion_row, subregion_col);
 		    raster_matrix = P_Regular_Points (&elaboration_reg, general_box, overlap_box, raster_matrix, 
 			    parVect, passoN, passoE, dims.overlap, mean, nsplx, nsply, nrows, ncols, bilin);
 		    G_free_vector (parVect);
@@ -587,9 +600,9 @@ main (int argc,char *argv[])
 		P_Aux_to_Vector (&In_ext, &Out, driver, table_name);
 
 	    /* Dropping auxiliar table */
-	    G_debug (1, _("%s: Dropping <s>"), argv[0], table_name);
+	    G_debug (1, "%s: Dropping <s>", argv[0], table_name);
 	    if (P_Drop_Aux_Table (driver, table_name) != DB_OK)
-		G_fatal_error(_("%s: Dropping: Auxiliar Table could not be dropped"), argv[0]);
+		G_fatal_error(_("Auxiliar Table could not be dropped"));
 	}
 	else {
 	    P_Aux_to_Raster (raster_matrix, raster);
@@ -616,7 +629,7 @@ main (int argc,char *argv[])
 	G_write_history(out_map_opt->answer, &history);
     }
 
-    G_done_msg (_("Interpolation was a success!"));
+    G_done_msg ("");
+
     exit (EXIT_SUCCESS);
 }	/*END MAIN*/
-
