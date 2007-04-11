@@ -63,7 +63,8 @@ int G_histogram_eq_colors(
     DCELL min, max;
     int red, grn, blu;
     long count, total, sum;
-    CELL cat;
+    CELL cat, prev;
+    int first;
 
     G_init_colors(dst);
 
@@ -86,6 +87,8 @@ int G_histogram_eq_colors(
 	return 0;
 
     sum = 0;
+    prev = 0;
+    first = 1;
 
     G_get_d_raster_color(&min, &red, &grn, &blu, src);
 
@@ -93,18 +96,21 @@ int G_histogram_eq_colors(
     while (G_next_cell_stat(&cat, &count, statf))
     {
 	int red2, grn2, blu2;
-	int sum2 = sum + count;
 	DCELL x;
 
 	if (count <= 0)
 	    continue;
 
-	x = min + (max - min) * sum2 / total;
+	x = min + (max - min) * (sum + count/2.0) / total;
 	G_get_d_raster_color(&x, &red2, &grn2, &blu2, src);
 
-	G_add_color_rule(sum, red, grn, blu, sum2, red2, grn2, blu2, dst);
+	if (!first)
+	    G_add_color_rule(prev, red, grn, blu, cat, red2, grn2, blu2, dst);
 
-	sum = sum2;
+	sum += count;
+	first = 0;
+
+	prev = cat;
 	red = red2;
 	grn = grn2;
 	blu = blu2;
