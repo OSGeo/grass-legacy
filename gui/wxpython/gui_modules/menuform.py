@@ -618,7 +618,7 @@ class cmdPanel(wx.Panel):
                 which_sizer.Add(txt, 0, wx.ADJUST_MINSIZE | wx.ALL, 5)
                 # element selection tree combobox (maps, icons, regions, etc.)
                 if p['prompt'] != 'color':
-                    self.selection = select.Select(which_panel, id=wx.ID_ANY, size=(250,-1),
+                    self.selection = select.Select(which_panel, id=wx.ID_ANY, size=(300,-1),
                                                    type=p['element'])
                     if p['value'] != '': self.selection.SetValue(p['value']) # parameter previously set
                     which_sizer.Add(self.selection, 0, wx.ADJUST_MINSIZE| wx.ALL, 5)
@@ -657,6 +657,16 @@ class cmdPanel(wx.Panel):
                     which_sizer.Add(btn_colour, 0, wx.ADJUST_MINSIZE| wx.ALL, 5)
                     self.paramdict[btn_colour] = ID_PARAM_START + p_count
                     self.Bind(csel.EVT_COLOURSELECT, self.OnColorButton, btn_colour)
+#                    if "none" in title:
+#                        none_check = wx.CheckBox(which_panel, wx.ID_ANY, "Transparent")
+#                        if p['value'] != '' and p['value'][0] == "none":
+#                            none_check.SetValue(True)
+#                        else:
+#                            none_check.SetValue(False)
+#                        none_check.SetFont( wx.Font( 12, wx.FONTFAMILY_DEFAULT, wx.NORMAL, text_style, 0, ''))
+#                        which_sizer.Add(none_check, 0, wx.ADJUST_MINSIZE| wx.ALL, 5)
+#                        self.paramdict[none_check] = ID_PARAM_START + p_count
+#                        self.Bind(wx.EVT_CHECKBOX, self.EvtCheckBox, none_check)
 	    if txt is not None:
                 txt.SetFont( wx.Font( 12, wx.FONTFAMILY_DEFAULT, wx.NORMAL, text_style, 0, ''))
 
