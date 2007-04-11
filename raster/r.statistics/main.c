@@ -1,3 +1,19 @@
+/****************************************************************************
+ *
+ * MODULE:       r.statistics
+ *               
+ * AUTHOR(S):    Martin Schroeder, Geographisches Institut Heidelberg, Germany
+ *
+ * PURPOSE:      Category or object oriented statistics
+ *
+ * COPYRIGHT:    (C) 2007 by the GRASS Development Team
+ *
+ *               This program is free software under the GNU General Public
+ *               License (>=v2). Read the file COPYING that comes with GRASS
+ *               for details.
+ *
+ *****************************************************************************/
+
 #include <string.h>
 #include <stdlib.h>
 #include <grass/gis.h>
@@ -8,7 +24,6 @@
 
 /* function prototypes */
 static int is_ok (char *, char *);
-
 
 int 
 main (int argc, char **argv)
@@ -23,9 +38,9 @@ main (int argc, char **argv)
     G_gisinit (argv[0]);
 
     module = G_define_module();
-    module->keywords = _("raster");
+    module->keywords = _("raster, statistics");
     module->description =
-		_("Category or object oriented statistics.");
+		_("Calculates category or object oriented statistics.");
 
     basemap = G_define_standard_option (G_OPT_R_BASE);
 
@@ -57,21 +72,21 @@ main (int argc, char **argv)
 	exit(EXIT_FAILURE);
 
     if( (mapset = G_find_cell2 (basemap->answer, "")) == 0)
-        G_fatal_error (_("Unable to find base map <%s>"), basemap->answer);
+        G_fatal_error (_("Raster map <%s> not found"), basemap->answer);
 
     if( G_raster_map_is_fp(basemap->answer, mapset) != 0 )
         G_fatal_error (_("This module currently only works for integer (CELL) maps"));
 
     if( (mapset = G_find_cell2 (covermap->answer, "")) == 0)
-        G_fatal_error (_("Unable to find cover map <%s>"), covermap->answer);
+        G_fatal_error (_("Raster map <%s> not found"), covermap->answer);
 
     if( G_raster_map_is_fp(covermap->answer, mapset) != 0 )
         G_fatal_error (_("This module currently only works for integer (CELL) maps"));
 
     if (G_read_cats (covermap->answer, mapset, &cats) < 0)
     {
-       G_fatal_error (_("%s: reading category file for %s"),
-        	G_program_name (), covermap->answer);
+       G_fatal_error (_("Cannot read category file of raster map <%s>"),
+		      covermap->answer);
     }
     
     for (o_method = 0; menu[o_method].name; o_method++)
@@ -90,7 +105,7 @@ main (int argc, char **argv)
     {
         case DISTRIB:
              if(outputmap->answer != NULL)
-               G_warning(_("Outputmap '%s' ignored!"), outputmap->answer);
+               G_warning(_("Output map <%s> ignored"), outputmap->answer);
 	     
 	     o_distrib(basemap->answer, covermap->answer, 
 	                  outputmap->answer, flag_c->answer);
