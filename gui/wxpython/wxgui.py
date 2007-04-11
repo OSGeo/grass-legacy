@@ -343,7 +343,7 @@ class GMFrame(wx.Frame):
 
         from gui_modules import dbm
         self.dbmanager = gui_modules.dbm.AttributeManager(self,
-                    -1,"GRASS Attribute Table Manager: %s" % map,
+                    -1,"GRASS Attribute Table Manager: %s" % mapname,
                     size=wx.Size(500,300),vectmap=mapname,
                     pointdata=pointdata)
 
