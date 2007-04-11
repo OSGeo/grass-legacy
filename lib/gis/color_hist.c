@@ -105,6 +105,7 @@ int G_make_histogram_log_colors (
     int min, int max)
 {
     long count, total;
+    double lmin, lmax;
     CELL prev=0,cat;
     int first;
     int x, grey;
@@ -127,6 +128,9 @@ int G_make_histogram_log_colors (
     first = 1;
     grey = 0;
 
+    lmin = log(min);
+    lmax = log(max);
+
     G_rewind_cell_stats (statf);
     while (G_next_cell_stat (&cat, &count, statf))
     {
@@ -134,7 +138,7 @@ int G_make_histogram_log_colors (
 	    continue;
 	    
 	/* log transform normalized */
-	x = (int) ( log(cat)* 255. / log(max) );
+	x = (int) ( 255 * (log(cat) - lmin) / (lmax - lmin) );
 	
        	if (x < 0) x = 0;
 	else if (x > 255) x = 255;
