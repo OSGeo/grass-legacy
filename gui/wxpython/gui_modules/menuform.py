@@ -444,7 +444,7 @@ class mainFrame(wx.Frame):
         return cmd
 
     def OnRun(self, event):
-        cmd = self.createCmd()[0]
+        cmd = self.createCmd()
 
         if cmd != None and cmd[0:2] != "d.":
             # Send any non-display command to parent window (probably wxgui.py)
@@ -474,11 +474,6 @@ class mainFrame(wx.Frame):
             wx.TheClipboard.Close()
             self.SetStatusText("'%s' copied to clipboard" %\
                             (self.createCmd(ignoreErrors=True)))
-
-    def OnError(self, errMsg):
-        dlg = wx.MessageDialog(self, errMsg, "Error", wx.OK | wx.ICON_ERROR)
-        dlg.ShowModal()
-        dlg.Destroy()
 
     def OnCancel(self, event):
         self.Destroy()
@@ -791,6 +786,12 @@ class cmdPanel(wx.Panel):
             return None
 
         return cmd
+
+    def OnError(self, errMsg):
+        dlg = wx.MessageDialog(self, errMsg, "Error", wx.OK | wx.ICON_ERROR)
+        dlg.ShowModal()
+        dlg.Destroy()
+
 
 def getInterfaceDescription( cmd ):
     """Returns the XML description for the GRASS cmd.
