@@ -9,7 +9,7 @@
 #   	    	Huidae Cho - Korea - grass4u@gmail.com
 #   	    	Justin Hickey - Thailand - jhickey@hpcc.nectec.or.th
 #   	    	Markus Neteler - Germany/Italy - neteler@itc.it
-#		Hamish Bowman - New Zealand - hamish_nospam at yahoo,com
+#				Hamish Bowman - New Zealand - hamish_nospam at yahoo,com
 # PURPOSE:  	The source file for this shell script is in
 #   	    	src/general/init/init.sh. It sets up some environment
 #   	    	variables and the lock file. It also parses any remaining
@@ -89,15 +89,16 @@ for i in "$@" ; do
             echo "  GISDBASE/LOCATION_NAME/MAPSET  fully qualified initial mapset directory"
             echo
             echo "Environment variables relevant for startup:"
-            echo "  GRASS_GUI                      select GUI (text, gis.m, d.m)" # wxpython
+            echo "  GRASS_GUI                      select GUI (text, gis.m, d.m, wx)"
             echo "  GRASS_TCLSH                    set tclsh shell name to override 'tclsh'"
             echo "  GRASS_WISH                     set wish shell name to override 'wish'"
             echo "  GRASS_HTML_BROWSER             set html web browser for help pages"
             echo "  GRASS_ADDON_PATH               set additional path(s) to local GRASS modules"
             echo "  GRASS_BATCH_JOB                shell script to be processed as batch job"
+            echo "  GRASS_PYTHON                   set python shell name to override 'python'"
 	    exit
 	    ;;
-	
+
 	# Check if the -text flag was given
 	-text)
 	    GRASS_GUI="text"
@@ -114,6 +115,12 @@ for i in "$@" ; do
 	# Check if the -oldgui flag was given
 	-oldgui)
 	    GRASS_GUI="d.m"
+	    shift
+	    ;;
+
+	# Check if the -wx flag was given
+	-wx)
+	    GRASS_GUI="wx"
 	    shift
 	    ;;
     esac
@@ -248,6 +255,12 @@ if [ ! "$GRASS_WISH" ] ; then
    export GRASS_WISH
 fi
 
+if [ ! "$GRASS_PYTHON" ] ; then
+      GRASS_PYTHON=python
+fi
+export GRASS_PYTHON
+
+
 # try and find a web browser if one isn't already specified
 if [ ! "$GRASS_HTML_BROWSER" ] ; then
 
@@ -364,34 +377,41 @@ echo "Starting GRASS ..."
 # Check if we are running X windows by checking the DISPLAY variable
 if [ "$DISPLAY" -o "$MINGW" ] ; then
 
+    # Check if python is working properly
+    if [ "$GRASS_GUI" = "wx" ]; then
+        echo 'variable=True' | "$GRASS_PYTHON" >/dev/null 2>&1
+    fi
     # Check if we need to find wish
     if [ "$GRASS_GUI" = "tcltk" ] || \
-	[ "$GRASS_GUI" = "gis.m" ] || \
-	[ "$GRASS_GUI" = "d.m" ] ; then
+        [ "$GRASS_GUI" = "gis.m" ] || \
+        [ "$GRASS_GUI" = "d.m" ] ; then
 
 	# Check if wish is working properly
 	echo 'exit 0' | "$GRASS_WISH" >/dev/null 2>&1
-	if [ "$?" = 0 ] ; then
+    fi
 
-	    # Set the tcltkgrass base directory
-	    TCLTKGRASSBASE="$ETC"
-	else
+    # ok
+    if [ "$?" = 0 ] ; then
+        # Set the tcltkgrass base directory
+        TCLTKGRASSBASE="$ETC"
+        # Set the wxpython base directory
+        WXPYTHONGRASSBASE="$ETC/wx"
+    else
 
-	    # Wish was not found - switch to text interface mode
-	    echo 
-    	    echo "WARNING: The wish command does not work as expected!"
-	    echo "Please check your GRASS_WISH environment variable."
-	    echo "Use the -help option for details."
-	    echo "Switching to text based interface mode."
-	    echo
-	    echo "Hit RETURN to continue."
-	    read ans
+        # Wish was not found - switch to text interface mode
+        echo
+        echo "WARNING: The wish command does not work as expected!"
+        echo "Please check your GRASS_WISH environment variable."
+        echo "Use the -help option for details."
+        echo "Switching to text based interface mode."
+        echo
+        echo "Hit RETURN to continue."
+        read ans
 
-	    GRASS_GUI="text"
-	fi
+        GRASS_GUI="text"
     fi
 else
-    
+
     # Display a message if a graphical interface was expected
     if [ "$GRASS_GUI" != "text" ] ; then
         # Set the interface mode to text
@@ -529,9 +549,16 @@ if [ ! "$LOCATION" ] ; then
 	    ;;
 	
 	# Check for tcltk interface
-	tcltk | gis.m | d.m)
-	    eval `"$GRASS_WISH" -file "$TCLTKGRASSBASE/gis_set.tcl"`
-	    thetest=$?
+	tcltk | gis.m | d.m | wx)
+
+        if [ "$GRASS_GUI" = "tcltk" ] || \
+			[ "$GRASS_GUI" = "gis.m" ] || \
+			[ "$GRASS_GUI" = "d.m" ] ; then
+
+			#"$GRASS_WISH" -file "$TCLTKGRASSBASE/gis_set.tcl"
+			#exit
+			eval `"$GRASS_WISH" -file "$TCLTKGRASSBASE/gis_set.tcl"`
+			thetest=$?
 	        #0: failure
 	        #1: successfully read environment
         
@@ -539,11 +566,18 @@ if [ ! "$LOCATION" ] ; then
 		# at the moment when the EPSG facility is used, the eval returns "1"
 		# whereas everything should be ok, therefore til that problem is not solved
 		# the return is forced to be ok ("0")
-	    if [ "$EPSGSCRIPT" = "yes" ] ; then
-		thetest=0
-	    fi
+			if [ "$EPSGSCRIPT" = "yes" ] ; then
+				thetest=0
+			fi
 		############################################################################
-            
+		else
+			#"$GRASS_PYTHON" "$WXPYTHONGRASSBASE/gis_set.py"
+			#exit
+			eval `"$GRASS_PYTHON" "$WXPYTHONGRASSBASE/gis_set.py"`
+			thetest=$?
+		fi
+
+
 	    case $thetest in
      	    	1)
 
@@ -689,6 +723,7 @@ if [ -n "$GRASS_BATCH_JOB" ] ; then
 fi
 
 # Start the chosen GUI but ignore text
+echo "GRASS GUI should be $GRASS_GUI"
 case "$GRASS_GUI" in
     
     # Check for tcltk interface
@@ -704,13 +739,14 @@ case "$GRASS_GUI" in
 		"$GISBASE/scripts/d.m" | sh &
 	else
 		"$GISBASE/scripts/d.m"
-	fi	
+	fi
 	;;
 
-    wxpython)
-	echo "TODO: wxPython GUI" 1>&2
+    wx)
+        # comming soon, see ^
+        "$GISBASE/scripts/wxgrass" &
 	;;
-    
+
     # Ignore others
     *)
     	;;
