@@ -360,6 +360,17 @@ int G_add_modular_raster_color_rule(void *, int, int, int, void *, int, int,
 int G_add_modular_color_rule(CELL, int, int, int, CELL, int, int, int,
     struct Colors *);
 
+/* color_rules.c */
+typedef int read_rule_fn(
+    void *, DCELL, DCELL,
+    DCELL *, int *, int *, int *,
+    int *, int *, int *);
+int G_parse_color_rule(DCELL, DCELL, const char *, DCELL *, int *, int *, int *, int *, int *, int *);
+const char *G_parse_color_rule_error(int);
+int G_read_color_rule(void *, DCELL, DCELL, DCELL *, int *, int *, int *, int *, int *, int *);
+int G_read_color_rules(struct Colors *, DCELL, DCELL, int, read_rule_fn *, void *);
+
+
 /* color_rule_get.c */
 int G_colors_count ( struct Colors *);
 int G_get_f_color_rule ( DCELL *, unsigned char *, unsigned char *, unsigned char *,
