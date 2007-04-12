@@ -36,6 +36,12 @@ sys.path.append(imagepath)
 
 from threading import Thread
 
+try:
+   from subprocess import *
+except:
+   from compat import subprocess
+   from compat.subprocess import *
+
 gmpath = os.getenv("GISBASE") + "/etc/wx/gui_modules/"
 sys.path.append(gmpath)
 
@@ -777,8 +783,12 @@ class BufferedWindow(wx.Window):
             self.ZoomHistory(newreg['n'],newreg['s'],newreg['e'],newreg['w'])
 
     def ZoomBack(self):
+        """
+        Zoom to previous extents in zoomhistory list
+        """
 
-        if len(self.zoomhistory) > 0:
+        zoom = []
+        if len(self.zoomhistory) > 1:
             self.zoomhistory.pop()
             zoom = self.zoomhistory[len(self.zoomhistory)-1]
 
@@ -797,6 +807,135 @@ class BufferedWindow(wx.Window):
         self.zoomhistory.append((n,s,e,w))
         if len(self.zoomhistory) > 10:
             self.zoomhistory.pop(0)
+
+    def ZoomToMap(self, event):
+        """
+        Set display extents to match selected raster
+        or vector map.
+        """
+
+        if not self.parent.gismanager: return
+        if not self.parent.gismanager.maptree.GetSelection(): return
+        layer =  self.parent.gismanager.maptree.GetSelection()
+        type =   self.parent.gismanager.maptree.layertype[layer]
+        dcmd = self.parent.gismanager.maptree.GetPyData(layer)[0]
+        mapname = None
+        for item in dcmd.split(' '):
+            if 'map=' in item:
+                mapname = item.split('=')[1]
+
+        # selected layer must be a valid map
+        if type in ('raster', 'rgb', 'his'):
+            cmd = "r.info -g map=%s" % mapname
+        elif type in ('vector', 'thememap', 'themechart'):
+            cmd = "v.info -g map=%s" % mapname
+        else:
+            return
+        try:
+            p = Popen(cmd, shell=True, stdin=PIPE, stdout=PIPE, stderr=PIPE, close_fds=True)
+
+            output = p.stdout.read().split('\n')
+            for oline in output:
+                extent = oline.split('=')
+                if extent[0] == 'north':
+                    self.Map.region['n'] = float(extent[1])
+                elif extent[0] == 'south':
+                    self.Map.region['s'] = float(extent[1])
+                elif extent[0] == 'east':
+                    self.Map.region['e'] = float(extent[1])
+                elif extent[0] == 'west':
+                    self.Map.region['w'] = float(extent[1])
+
+            self.ZoomHistory(self.Map.region['n'],self.Map.region['s'],self.Map.region['e'],self.Map.region['w'])
+            self.UpdateMap()
+
+            if p.stdout < 0:
+                print >> sys.stderr, "Child was terminated by signal", p.stdout
+            elif p.stdout > 0:
+                #print >> sys.stderr, p.stdout
+                pass
+        except OSError, e:
+            print >> sys.stderr, "Execution failed:", e
+
+    def ZoomToWind(self, event):
+        """
+        Set display geometry to match computational
+        region extents (set with g.region)
+        """
+
+        self.Map.region = self.Map.GetRegion()
+        self.Map.SetRegion()
+        self.ZoomHistory(self.Map.region['n'],self.Map.region['s'],self.Map.region['e'],self.Map.region['w'])
+        self.UpdateMap()
+
+    def DisplayToWind(self, event):
+        """
+        Set computational region (WIND file) to
+        match display extents
+        """
+        tmpreg = os.getenv("GRASS_REGION")
+        os.unsetenv("GRASS_REGION")
+
+        # get current resolution
+        grass_region = self.Map.GetRegion()
+        ewres = grass_region['ewres']
+        nsres = grass_region['nsres']
+
+        # set extents to even increments of resolution
+        self.Map.region['n'] = round(self.Map.region['n']/nsres) * nsres
+        self.Map.region['s'] = round(self.Map.region['s']/nsres) * nsres
+        self.Map.region['e'] = round(self.Map.region['e']/nsres) * ewres
+        self.Map.region['w'] = round(self.Map.region['w']/nsres) * ewres
+
+        cols = math.fabs(round(self.Map.region['n'] - self.Map.region['s']))
+        rows = math.fabs(round(self.Map.region['e'] - self.Map.region['w']))
+
+        os.popen("g.region n=%d s=%d e=%d w=%d nsres=30.0 ewres=30.0" % (
+                     self.Map.region['n'],
+                     self.Map.region['s'],
+                     self.Map.region['e'],
+                     self.Map.region['w']) )
+
+        if tmpreg:
+            os.environ["GRASS_REGION"] = tmpreg
+
+        self.ZoomHistory(self.Map.region['n'],self.Map.region['s'],self.Map.region['e'],self.Map.region['w'])
+        self.UpdateMap()
+
+    def ZoomToSaved(self, event):
+        """
+        Set display geometry to match extents in
+        saved region file
+        """
+
+        print 'not yet functional'
+        pass
+
+    def SaveDisplayRegion(self, event):
+        """
+        Save display extents to named region file.
+        """
+
+        print 'not yet functional'
+        pass
+
+#        tmpreg = os.getenv("GRASS_REGION")
+#        os.unsetenv("GRASS_REGION")
+#
+#        # set extents to even increments of resolution
+#        self.Map.region['n'] = round(self.Map.region['n']/self.Map.region['nsres']) * self.Map.region['nsres']
+#        self.Map.region['s'] = round(self.Map.region['s']/self.Map.region['nsres']) * self.Map.region['nsres']
+#        self.Map.region['e'] = round(self.Map.region['e']/self.Map.region['ewres']) * self.Map.region['ewres']
+#        self.Map.region['w'] = round(self.Map.region['w']/self.Map.region['ewres']) * self.Map.region['ewres']
+#
+#        os.popen("g.region n=%d s=%d e=%d w=%d" % (
+#                     self.Map.region['n'],
+#                     self.Map.region['s'],
+#                     self.Map.region['e'],
+#                     self.Map.region['w']) )
+#
+#        if tmpreg:
+#            os.environ["GRASS_REGION"] = tmpreg
 
 class MapFrame(wx.Frame):
     """
@@ -1339,6 +1478,59 @@ class MapFrame(wx.Frame):
         # Showing/hiding handled by PseudoDC
         self.Map.changeOverlay(type=type, command=dcmd, l_active=True, l_render=False)
         self.params[type] = params
+
+    def onZoomMenu(self, event):
+        """
+        Decorations overlay menu"
+        """
+        point = wx.GetMousePosition()
+        zoommenu = wx.Menu()
+        # Add items to the menu
+        zoommap = wx.MenuItem(zoommenu, -1,'Zoom to selected map')
+#        bmp = wx.Image(os.path.join(icons,'module-d.barscale.gif'), wx.BITMAP_TYPE_GIF)
+#        bmp.Rescale(16, 16)
+#        bmp = bmp.ConvertToBitmap()
+#        zoommap.SetBitmap(bmp)
+        zoommenu.AppendItem(zoommap)
+        self.Bind(wx.EVT_MENU, self.MapWindow.ZoomToMap, zoommap)
+
+        zoomwind = wx.MenuItem(zoommenu, -1,'Zoom to computational region (set with g.region)')
+#        bmp = wx.Image(os.path.join(icons,'module-d.barscale.gif'), wx.BITMAP_TYPE_GIF)
+#        bmp.Rescale(16, 16)
+#        bmp = bmp.ConvertToBitmap()
+#        zoomwind.SetBitmap(bmp)
+        zoommenu.AppendItem(zoomwind)
+        self.Bind(wx.EVT_MENU, self.MapWindow.ZoomToWind, zoomwind)
+
+        savewind = wx.MenuItem(zoommenu, -1,'Set computational region from display')
+#        bmp = wx.Image(os.path.join(icons,'module-d.legend.gif'), wx.BITMAP_TYPE_GIF)
+#        bmp.Rescale(16, 16)
+#        bmp = bmp.ConvertToBitmap()
+#        savewind.SetBitmap(bmp)
+        zoommenu.AppendItem(savewind)
+        self.Bind(wx.EVT_MENU, self.MapWindow.DisplayToWind, savewind)
+
+        zoomsaved = wx.MenuItem(zoommenu, -1,'Zoom to saved region')
+#        bmp = wx.Image(os.path.join(icons,'gui-font.gif'), wx.BITMAP_TYPE_GIF)
+#        bmp.Rescale(16, 16)
+#        bmp = bmp.ConvertToBitmap()
+#        zoomsaved.SetBitmap(bmp)
+        zoommenu.AppendItem(zoomsaved)
+        self.Bind(wx.EVT_MENU, self.MapWindow.ZoomToSaved, zoomsaved)
+
+        savezoom = wx.MenuItem(zoommenu, -1,'Save display geometry to named region')
+#        bmp = wx.Image(os.path.join(icons,'gui-font.gif'), wx.BITMAP_TYPE_GIF)
+#        bmp.Rescale(16, 16)
+#        bmp = bmp.ConvertToBitmap()
+#        savezoom.SetBitmap(bmp)
+        zoommenu.AppendItem(savezoom)
+        self.Bind(wx.EVT_MENU, self.MapWindow.SaveDisplayRegion, savezoom)
+
+        # Popup the menu.  If an item is selected then its handler
+        # will be called before PopupMenu returns.
+        self.PopupMenu(zoommenu)
+        zoommenu.Destroy()
+
 
 # end of class MapFrame
 
