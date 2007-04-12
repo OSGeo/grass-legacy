@@ -43,7 +43,7 @@ int main (int argc, char *argv[])
             G_fatal_error(_("Unable to find file [%s]."), name);
     }
 
-    if ((stat = G_make_colors(name, mapset, &pcolr)) >= 0) {
+    if ((stat = G_ask_colors(name, mapset, &pcolr)) >= 0) {
         if (stat > 0)
             stat = G_write_colors(name, mapset, &pcolr);
 

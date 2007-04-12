@@ -232,3 +232,32 @@ int G_read_color_rules(struct Colors *colors, DCELL min, DCELL max, int is_fp, r
     return 1;
 }
 
+static int load_color_rules(struct Colors *colors, const char *name, DCELL min, DCELL max, int is_fp)
+{
+    char path[GPATH_MAX];
+    FILE *fp;
+    int ret;
+
+    sprintf(path, "%s/etc/colors/%s", G_gisbase(), name);
+    fp = fopen(path, "r");
+
+    if (!fp)
+	return 0;
+
+    ret = G_read_color_rules(colors, min, max, is_fp, G_read_color_rule, (void *) fp);
+
+    fclose(fp);
+
+    return ret;
+}
+
+int G_make_colors(struct Colors *colors, const char *name, CELL min, CELL max)
+{
+    return load_color_rules(colors, name, (DCELL) min, (DCELL) max, 0);
+}
+
+int G_make_fp_colors(struct Colors *colors, const char *name, DCELL min, DCELL max)
+{
+    return load_color_rules(colors, name, min, max, 1);
+}
+

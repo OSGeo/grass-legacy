@@ -8,21 +8,29 @@ include $(MODULE_TOPDIR)/include/Make/Lib.make
 include $(MODULE_TOPDIR)/include/Make/Doxygen.make
 
 DATAFILES := $(patsubst %,$(ETC)/%,$(DATASRC))
+COLORSRC := $(wildcard colors/[a-z]*)
+COLORFILES := $(patsubst colors/%,$(ETC)/colors/%,$(COLORSRC))
 
 #compile if LFS Large File Support present:
 ifneq ($(USE_LARGEFILES),)
 	EXTRA_CFLAGS = -D_FILE_OFFSET_BITS=64
 endif
 
-default: lib $(FMODE_OBJ) $(DATAFILES)
+default: lib $(FMODE_OBJ) $(DATAFILES) $(COLORFILES)
 
 $(FMODE_OBJ):
 	@test -d $(OBJDIR) || mkdir $(OBJDIR)
 	echo -e "#include <stdlib.h>\n#include <fcntl.h>\n#undef _fmode\nint _fmode = _O_BINARY;" > $(OBJDIR)/fmode.c
 	$(CC) $(CFLAGS) $(INC) -o $(FMODE_OBJ) -c $(OBJDIR)/fmode.c
 
+$(ETC)/colors:
+	$(MKDIR) $@
+
+$(ETC)/colors/%: colors/% $(ETC)/colors
+	$(INSTALL) -m 644 $< $@
+
 $(ETC)/%: %
-	$(INSTALL) -m 644 $? $@
+	$(INSTALL) -m 644 $< $@
 
 #doxygen:
 DOXNAME=gis

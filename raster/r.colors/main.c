@@ -25,38 +25,28 @@
 #include <stdlib.h>
 #include <string.h>
 #include <sys/types.h>
-#include <dirent.h>
 #include <grass/gis.h>
-#include "local_proto.h"
 #include <grass/glocale.h>
-
+#include "local_proto.h"
 
 static char *rules_files(void)
 {
-	char path[4096];
+	char path[GPATH_MAX];
+	char **names;
+	int count;
 	char *list = NULL;
 	int size = 0;
 	int len = 0;
-	DIR *dir;
+	int i;
 
 	sprintf(path, "%s/etc/colors", G_gisbase());
 
-	dir = opendir(path);
-	if (!dir)
-		return NULL;
+	names = G__ls(path, &count);
 
-	for (;;)
+	for (i = 0; i < count; i++)
 	{
-		struct dirent *d = readdir(dir);
-		int n;
-
-		if (!d)
-			break;
-
-		if (d->d_name[0] == '.')
-			continue;
-
-		n = strlen(d->d_name);
+		char *name = names[i];
+		int n = strlen(name);
 
 		if (size < len + n + 2)
 		{
@@ -67,67 +57,35 @@ static char *rules_files(void)
 		if (len > 0)
 			list[len++] = ',';
 
-		memcpy(&list[len], d->d_name, n + 1);
+		memcpy(&list[len], name, n + 1);
 		len += n;
+
+		G_free(name);
 	}
 
-	closedir(dir);
+	G_free(names);
 
 	return list;
 }
 
-static int cmp_names(const void *aa, const void *bb)
-{
-	char * const *a = aa;
-	char * const *b = bb;
-
-	return strcmp(*a, *b);
-}
-
 static void list_rules_files(void)
 {
-	static char **names;
-	static int names_size;
-	char path[4096];
-	DIR *dir;
-	int names_len = 0;
+	char path[GPATH_MAX];
+	char **names;
+	int names_len;
 	int i;
 
 	sprintf(path, "%s/etc/colors", G_gisbase());
 
-	dir = opendir(path);
-	if (!dir)
-		G_fatal_error("Rules directory doesn't exist");
-
-	for (;;)
-	{
-		struct dirent *d = readdir(dir);
-
-		if (!d)
-			break;
-
-		if (d->d_name[0] == '.')
-			continue;
-
-		if (names_len >= names_size)
-		{
-			names_size = names_len + 20;
-			names = G_realloc(names, names_size * sizeof(char *));
-		}
-
-		names[names_len++] = G_store(d->d_name);
-	}
-
-	closedir(dir);
-
-	qsort(names, names_len, sizeof(char *), cmp_names);
+	names = G__ls(path, &names_len);
 
 	for (i = 0; i < names_len; i++)
 	{
 		printf("%s\n", names[i]);
 		G_free(names[i]);
-		names[i] = NULL;
 	}
+
+	G_free(names);
 }
 
 int main (int argc, char *argv[])
@@ -332,7 +290,7 @@ int main (int argc, char *argv[])
 	}
 	else
 	    G_fatal_error(_("%s - unknown color request"), type);
-	
+
 	if(fp) G_mark_colors_as_fp(&colors);
 
 	if (e_flag->answer)
@@ -348,24 +306,17 @@ int main (int argc, char *argv[])
 	    G_log_colors(&colors_tmp, &colors, 100);
 	    colors = colors_tmp;
 	}
+
+	if(fp) G_mark_colors_as_fp(&colors);
 
 	if (G_write_colors (name, mapset, &colors) >= 0 )
 	    G_message(_("Color table for [%s] set to %s"), name, type);
     }
     else if (rules)
     {
-	char path[4096];
-	FILE *rules_fp;
+	if (!G_make_fp_colors(&colors, rules, min, max))
+	    G_fatal_error(_("Unable to load rules file %s"), rules);
 
-	sprintf(path, "%s/etc/colors/%s", G_gisbase(), rules);
-	rules_fp = fopen(path, "r");
-	if (!rules_fp)
-	    G_fatal_error(_("Unable to open rules file %s in %s"), rules, path);
-
-	if (!read_color_rules(rules_fp, &colors, min, max, fp))
-	    exit(EXIT_FAILURE); 
-
-	fclose(rules_fp);
 	if(fp) G_mark_colors_as_fp(&colors);
 
 	if (e_flag->answer)
@@ -381,6 +332,8 @@ int main (int argc, char *argv[])
 	    G_log_colors(&colors_tmp, &colors, 100);
 	    colors = colors_tmp;
 	}
+
+	if(fp) G_mark_colors_as_fp(&colors);
 
 	if (G_write_colors (name, mapset, &colors) >= 0 )
 	    G_message(_("Color table for [%s] set to %s"), name, rules);

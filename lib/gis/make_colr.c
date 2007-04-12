@@ -22,7 +22,7 @@
 #include <grass/gis.h>
 #include <grass/glocale.h>
 
-int G_make_colors  (char *name, char *mapset, struct Colors *pcolr)
+int G_ask_colors  (char *name, char *mapset, struct Colors *pcolr)
 
 {
     char buff[128] ;
