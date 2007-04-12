@@ -74,10 +74,6 @@ def reexec_with_pythonw():
 
 reexec_with_pythonw()
 
-ID_PARAM_START = 800
-ID_FLAG_START  = 900
-ID_MULTI_START = 1000
-
 ID_ABOUT_COMMAND = 102
 
 VSPACE = 4
@@ -631,7 +627,9 @@ class cmdPanel(wx.Panel):
                                                    type=p['element'])
                     if p['value'] != '': selection.SetValue(p['value']) # parameter previously set
                     which_sizer.Add( selection, 0, wx.ADJUST_MINSIZE| wx.ALL, 5)
-                    p['wxId'] = selection.GetId()
+                    # A select.Select is a combobox with two children: a textctl and a popupwindow;
+                    # we target the textctl here
+                    p['wxId'] = selection.GetChildren()[0].GetId()
                     selection.Bind(wx.EVT_TEXT, self.OnSetValue)
                 # color entry
                 elif p['prompt'] == 'color':
