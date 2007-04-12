@@ -2,61 +2,26 @@ MODULE_TOPDIR = ../..
 
 LIB_NAME = $(GIS_LIBNAME)
 EXTRA_LIBS = $(XDRLIB) $(DATETIMELIB) $(INTLLIB)
+DATASRC = ellipse.table datum.table datumtransform.table FIPS.code state27 state83 projections gui.tcl
 
 include $(MODULE_TOPDIR)/include/Make/Lib.make
 include $(MODULE_TOPDIR)/include/Make/Doxygen.make
+
+DATAFILES := $(patsubst %,$(ETC)/%,$(DATASRC))
 
 #compile if LFS Large File Support present:
 ifneq ($(USE_LARGEFILES),)
 	EXTRA_CFLAGS = -D_FILE_OFFSET_BITS=64
 endif
 
-default: lib \
-	$(FMODE_OBJ) \
-	$(ETC)/ellipse.table \
-	$(ETC)/datum.table \
-	$(ETC)/datumtransform.table \
-	$(ETC)/projections \
-	$(ETC)/FIPS.code \
-	$(ETC)/state27 \
-	$(ETC)/state83 \
-	$(ETC)/gui.tcl
+default: lib $(FMODE_OBJ) $(DATAFILES)
 
 $(FMODE_OBJ):
 	@test -d $(OBJDIR) || mkdir $(OBJDIR)
 	echo -e "#include <stdlib.h>\n#include <fcntl.h>\n#undef _fmode\nint _fmode = _O_BINARY;" > $(OBJDIR)/fmode.c
 	$(CC) $(CFLAGS) $(INC) -o $(FMODE_OBJ) -c $(OBJDIR)/fmode.c
 
-$(ETC)/ellipse.table: ellipse.table
-	rm -f $@
-	$(INSTALL) -m 644 $? $@
-
-$(ETC)/datum.table: datum.table
-	rm -f $@
-	$(INSTALL) -m 644 $? $@
-
-$(ETC)/datumtransform.table: datumtransform.table
-	rm -f $@
-	$(INSTALL) -m 644 $? $@
-
-$(ETC)/FIPS.code: FIPS.code
-	rm -f $@
-	$(INSTALL) -m 644 $? $@
-
-$(ETC)/state27: state27
-	rm -f $@
-	$(INSTALL) -m 644 $? $@
-
-$(ETC)/state83: state83
-	rm -f $@
-	$(INSTALL) -m 644 $? $@
-
-$(ETC)/projections: projections
-	rm -f $@
-	$(INSTALL) -m 644 $? $@
-
-$(ETC)/gui.tcl: gui.tcl
-	rm -f $@
+$(ETC)/%: %
 	$(INSTALL) -m 644 $? $@
 
 #doxygen:
