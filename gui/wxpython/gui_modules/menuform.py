@@ -52,7 +52,6 @@ from xml.sax import make_parser
 import os
 from os import system
 import gettext
-#from gettext import _
 gettext.install("wxgrass")
 
 sys.path.append(os.path.join(os.getenv("GISBASE"),"etc","wx"))
@@ -139,7 +138,7 @@ def text_beautify( someString ):
     "Make really long texts shorter"
     # TODO: remove magic number (calculate a correct value from
     # pixelSize of text and the magic number for maximum size
-    return escape_ampersand( os.linesep.join( textwrap.wrap( normalize_whitespace(someString), 72 ) ) )
+    return escape_ampersand( os.linesep.join( textwrap.wrap( normalize_whitespace(someString), 70 ) ) )
 
 def escape_ampersand(text):
     "Escapes ampersands with additional ampersand for GUI"
@@ -305,8 +304,8 @@ class helpPanel(wx.html.HtmlWindow):
     GISBASE must be set in the environment to find the html docs dir.
     The SYNOPSIS section is skipped, since this Panel is supposed to
     be integrated into the cmdPanel."""
-    def __init__(self, parent, id, grass_command = "index"):
-        wx.html.HtmlWindow.__init__(self, parent, id)
+    def __init__(self, grass_command = "index", *args, **kwargs):
+        wx.html.HtmlWindow.__init__(self, *args, **kwargs)
         self.fspath = os.getenv( "GISBASE" ) + "/docs/html/"
         self.SetStandardFonts( size = 11 )
         self.fillContentsFromFile( self.fspath + grass_command + ".html" )
@@ -370,7 +369,7 @@ class mainFrame(wx.Frame):
         menuBar.Append(menu, "&File");
 
         self.SetMenuBar(menuBar)
-        self.guisizer = wx.BoxSizer(wx.VERTICAL)
+        guisizer = wx.BoxSizer(wx.VERTICAL)
 
         # set apropriate output window
 #        if self.parent:
@@ -378,53 +377,52 @@ class mainFrame(wx.Frame):
 #            self.goutput = self.parent.goutput
 #        else:
         standalone=True
-        self.notebookpanel = cmdPanel( self, self.task, standalone)
+        self.notebookpanel = cmdPanel( parent=self, task=self.task, standalone=standalone )
         if standalone:
             self.goutput = self.notebookpanel.goutput
 
-        self.guisizer.Add( self.notebookpanel, 1, flag = wx.EXPAND )
+        guisizer.Add( self.notebookpanel, 1, flag = wx.EXPAND )
 
-        status_text = "Enter parameters for " + self.task.name
-        if self.notebookpanel.tab.has_key('Main'):
+        status_text = _("Enter parameters for ") + self.task.name
+        if self.notebookpanel.hasMain:
             # We have to wait for the notebookpanel to be filled in order
             # to know if there actually is a Main tab
-            status_text += " (those of Main in bold typeface are required)"
+            status_text += _(" (those of Main in bold typeface are required)")
         self.SetStatusText( status_text )
 
         btnsizer = wx.BoxSizer(wx.HORIZONTAL)
-        self.btn_cancel = wx.Button(self, wx.ID_CANCEL, "Cancel")
-        btnsizer.Add(self.btn_cancel, 0, wx.ALL| wx.ALIGN_CENTER, 10)
+        btn_cancel = wx.Button(self, wx.ID_CANCEL, _("Cancel") )
+        btnsizer.Add( btn_cancel, 0, wx.ALL| wx.ALIGN_CENTER, 10)
         if self.get_dcmd is not None: # A callback has been set up
-            self.btn_apply = wx.Button(self, wx.ID_APPLY, "Apply")
-            btnsizer.Add(self.btn_apply, 0, wx.ALL| wx.ALIGN_CENTER, 10)
-            self.btn_ok = wx.Button(self, wx.ID_OK, "OK")
-            btnsizer.Add(self.btn_ok, 0, wx.ALL| wx.ALIGN_CENTER, 10)
-            self.btn_ok.SetDefault()
-            self.btn_apply.Bind(wx.EVT_BUTTON, self.OnApply)
-            self.btn_ok.Bind(wx.EVT_BUTTON, self.OnOK)
+            btn_apply = wx.Button(self, wx.ID_APPLY, _("Apply") )
+            btnsizer.Add( btn_apply, 0, wx.ALL| wx.ALIGN_CENTER, 10)
+            btn_ok = wx.Button(self, wx.ID_OK, _("OK") )
+            btnsizer.Add( btn_ok, 0, wx.ALL| wx.ALIGN_CENTER, 10)
+            btn_ok.SetDefault()
+            btn_apply.Bind(wx.EVT_BUTTON, self.OnApply)
+            btn_ok.Bind(wx.EVT_BUTTON, self.OnOK)
         else: # We're standalone
-            self.btn_run = wx.Button(self, wx.ID_OK, "Run")
-            btnsizer.Add(self.btn_run, 0, wx.ALL| wx.ALIGN_CENTER, 10)
-            self.btn_run.SetDefault()
-            self.btn_run.Bind(wx.EVT_BUTTON, self.OnRun)
-            self.btn_clipboard = wx.Button(self, wx.ID_OK, "Copy")
-            btnsizer.Add(self.btn_clipboard, 0, wx.ALL| wx.ALIGN_CENTER, 10)
-            self.btn_clipboard.Bind(wx.EVT_BUTTON, self.OnCopy)
-        self.guisizer.Add(btnsizer, 0, wx.ALIGN_BOTTOM)
+            btn_run = wx.Button(self, wx.ID_OK, _("Run") )
+            btnsizer.Add( btn_run, 0, wx.ALL| wx.ALIGN_CENTER, 10)
+            btn_run.SetDefault()
+            btn_run.Bind(wx.EVT_BUTTON, self.OnRun)
+            btn_clipboard = wx.Button(self, wx.ID_OK, _("Copy") )
+            btnsizer.Add(btn_clipboard, 0, wx.ALL| wx.ALIGN_CENTER, 10)
+            btn_clipboard.Bind(wx.EVT_BUTTON, self.OnCopy)
+        guisizer.Add(btnsizer, 0, wx.ALIGN_BOTTOM)
         wx.EVT_MENU(self, wx.ID_ABOUT, self.OnAbout)
         wx.EVT_MENU(self, ID_ABOUT_COMMAND, self.OnAboutCommand)
         wx.EVT_MENU(self, wx.ID_EXIT,  self.OnCancel)
-        self.btn_cancel.Bind(wx.EVT_BUTTON, self.OnCancel)
+        btn_cancel.Bind(wx.EVT_BUTTON, self.OnCancel)
         self.Bind(wx.EVT_CLOSE, self.OnCloseWindow)
 
         constrained_size = self.notebookpanel.GetSize()
         self.notebookpanel.SetSize( (constrained_size[0],constrained_size[1]+80) ) # 80 takes the tabbar into account
-        self.notebookpanel.SetSizer( self.notebookpanel.panelsizer )
         self.notebookpanel.Layout()
 
-        self.guisizer.SetSizeHints(self)
+        guisizer.SetSizeHints(self)
         self.SetAutoLayout(True)
-        self.SetSizer(self.guisizer)
+        self.SetSizer(guisizer)
         self.Layout()
 
 
@@ -507,7 +505,6 @@ class cmdPanel(wx.Panel):
         wx.Panel.__init__( self, parent, *args, **kwargs )
 
         self.task = task
-        self.selection = '' #selection from GIS element selector
 
         # Determine tab layout
         sections = ['Main']
@@ -527,45 +524,45 @@ class cmdPanel(wx.Panel):
         if not there_is_main:
             sections = sections[1:]
 
-        self.panelsizer = wx.BoxSizer(wx.VERTICAL)
+        panelsizer = wx.BoxSizer(wx.VERTICAL)
         # Build notebook
         nbStyle=FN.FNB_NO_X_BUTTON|FN.FNB_NO_NAV_BUTTONS|FN.FNB_VC8|FN.FNB_BACKGROUND_GRADIENT
-        self.notebook = FN.FlatNotebook( self, id=wx.ID_ANY, style=nbStyle)
-        self.notebook.SetTabAreaColour(wx.Colour(125,200,175))
-        self.notebook.Bind( FN.EVT_FLATNOTEBOOK_PAGE_CHANGED, self.OnPageChange )
-        self.tab = {}
-        self.tabsizer = {}
+        notebook = FN.FlatNotebook( self, id=wx.ID_ANY, style=nbStyle)
+        notebook.SetTabAreaColour(wx.Colour(125,200,175))
+        notebook.Bind( FN.EVT_FLATNOTEBOOK_PAGE_CHANGED, self.OnPageChange )
+        tab = {}
+        tabsizer = {}
         for section in sections:
-            self.tab[section] = wx.ScrolledWindow(self.notebook, id = wx.ID_ANY )
-            self.tab[section].SetScrollRate(10,10)
-            self.tabsizer[section] = wx.BoxSizer(wx.VERTICAL)
-            self.notebook.AddPage( self.tab[section], text = section )
+            tab[section] = wx.ScrolledWindow( notebook )
+            tab[section].SetScrollRate(10,10)
+            tabsizer[section] = wx.BoxSizer(wx.VERTICAL)
+            notebook.AddPage( tab[section], text = section )
 
         # are we running from command line?
         if standalone:
             from gui_modules import wxgui_utils
             self.goutput = wxgui_utils.GMConsole(self)
-            self.outpage = self.notebook.AddPage(self.goutput, text="Command output")
+            self.outpage = notebook.AddPage(self.goutput, text=_("Command output") )
 
-        manual_tab =  helpPanel( self.notebook, id = wx.ID_ANY, grass_command = self.task.name)
+        manual_tab =  helpPanel( parent = notebook, grass_command = self.task.name)
         if manual_tab.Ok:
             manual_tabsizer = wx.BoxSizer(wx.VERTICAL)
-            self.notebook.AddPage( manual_tab, text = "Manual" , select = False )
+            notebook.AddPage( manual_tab, text = _("Manual") )
 
-        self.notebook.SetSelection(0)
-        self.panelsizer.Add( self.notebook, 1, flag=wx.EXPAND )
+        notebook.SetSelection(0)
+        panelsizer.Add( notebook, 1, flag=wx.EXPAND )
 
 
         for p in self.task.params:
-            which_sizer = self.tabsizer[ p['guisection'] ]
-            which_panel = self.tab[ p['guisection'] ]
+            which_sizer = tabsizer[ p['guisection'] ]
+            which_panel = tab[ p['guisection'] ]
             title = text_beautify(p['description'])
             text_style = wx.FONTWEIGHT_BOLD
             txt = None
             if p['required'] == 'no':
                 text_style = wx.FONTWEIGHT_NORMAL
             if p['multiple'] == 'yes' and len( p['values'] ) == 0:
-                title = "[multiple] " + title
+                title = _("[multiple]") + " " + title
             if p[ 'value'] ==  '' :
                 p['value'] = p['default']
             if (len(p['values']) > 0):
@@ -585,29 +582,29 @@ class cmdPanel(wx.Panel):
                         p[ 'wxId' ].append( chkbox.GetId() )
                         if isDefault.has_key(val): chkbox.SetValue( True )
                         hSizer.Add( chkbox,0,wx.ADJUST_MINSIZE,5 )
-                        self.Bind(wx.EVT_CHECKBOX, self.OnCheckBoxMulti)
+                        chkbox.Bind(wx.EVT_CHECKBOX, self.OnCheckBoxMulti)
                     which_sizer.Add( hSizer, 0, wx.ADJUST_MINSIZE, 5)
                 elif len(valuelist) == 1:
                     txt = wx.StaticText(which_panel, label = title +
                                         '. Valid range=' + str(valuelist).strip("[]'") + ':' )
                     which_sizer.Add(txt, 0, wx.ADJUST_MINSIZE | wx.ALL, 5)
-                    self.txt2 = wx.TextCtrl(which_panel, value = p['default'],
+                    txt2 = wx.TextCtrl(which_panel, value = p['default'],
                                             size = (STRING_ENTRY_WIDTH, ENTRY_HEIGHT))
-                    if p['value'] != '': self.txt2.SetValue(p['value']) # parameter previously set
+                    if p['value'] != '': txt2.SetValue(p['value']) # parameter previously set
 
-                    which_sizer.Add(self.txt2, 0, wx.ADJUST_MINSIZE, 5)
-                    p['wxId'] = self.txt2.GetId()
-                    self.txt2.Bind(wx.EVT_TEXT, self.OnSetValue)
+                    which_sizer.Add( txt2, 0, wx.ADJUST_MINSIZE, 5)
+                    p['wxId'] = txt2.GetId()
+                    txt2.Bind(wx.EVT_TEXT, self.OnSetValue)
                 else:
                     txt = wx.StaticText(which_panel, label = title + ':' )
                     which_sizer.Add(txt, 0, wx.ADJUST_MINSIZE | wx.ALL, 5)
-                    self.cb = wx.ComboBox(which_panel, -1, p['default'],
+                    cb = wx.ComboBox(which_panel, -1, p['default'],
                                      wx.Point(-1, -1), wx.Size(STRING_ENTRY_WIDTH, -1),
                                      valuelist, wx.CB_DROPDOWN)
-                    if p['value'] != '': self.cb.SetValue(p['value']) # parameter previously set
-                    which_sizer.Add(self.cb, 0, wx.ADJUST_MINSIZE, 5)
-                    p['wxId'] = self.cb.GetId()
-                    self.cb.Bind( wx.EVT_COMBOBOX, self.OnSetValue)
+                    if p['value'] != '': cb.SetValue(p['value']) # parameter previously set
+                    which_sizer.Add( cb, 0, wx.ADJUST_MINSIZE, 5)
+                    p['wxId'] = cb.GetId()
+                    cb.Bind( wx.EVT_COMBOBOX, self.OnSetValue)
 
             # text entry
             if (p['type'] in ('string','integer','float')
@@ -618,24 +615,24 @@ class cmdPanel(wx.Panel):
                 txt = wx.StaticText(which_panel, label = title + ':' )
                 which_sizer.Add(txt, 0, wx.ADJUST_MINSIZE | wx.ALL, 5)
 
-                self.txt3 = wx.TextCtrl(which_panel, value = p['default'],
+                txt3 = wx.TextCtrl(which_panel, value = p['default'],
                     size = (STRING_ENTRY_WIDTH, ENTRY_HEIGHT))
-                if p['value'] != '': self.txt3.SetValue(p['value']) # parameter previously set
-                which_sizer.Add(self.txt3, 0, wx.ADJUST_MINSIZE| wx.ALL, 5)
-                p['wxId'] = self.txt3.GetId()
-                self.txt3.Bind(wx.EVT_TEXT, self.OnSetValue)
+                if p['value'] != '': txt3.SetValue(p['value']) # parameter previously set
+                which_sizer.Add( txt3, 0, wx.ADJUST_MINSIZE| wx.ALL, 5)
+                p['wxId'] = txt3.GetId()
+                txt3.Bind(wx.EVT_TEXT, self.OnSetValue)
 
             if p['type'] == 'string' and p['gisprompt'] == True:
                 txt = wx.StaticText(which_panel, label = title + ':')
                 which_sizer.Add(txt, 0, wx.ADJUST_MINSIZE | wx.ALL, 5)
                 # element selection tree combobox (maps, icons, regions, etc.)
                 if p['prompt'] != 'color':
-                    self.selection = select.Select(which_panel, id=wx.ID_ANY, size=(300,-1),
+                    selection = select.Select(which_panel, id=wx.ID_ANY, size=(300,-1),
                                                    type=p['element'])
-                    if p['value'] != '': self.selection.SetValue(p['value']) # parameter previously set
-                    which_sizer.Add(self.selection, 0, wx.ADJUST_MINSIZE| wx.ALL, 5)
-                    p['wxId'] = self.selection.GetId()
-                    self.selection.Bind(wx.EVT_TEXT, self.OnSetValue)
+                    if p['value'] != '': selection.SetValue(p['value']) # parameter previously set
+                    which_sizer.Add( selection, 0, wx.ADJUST_MINSIZE| wx.ALL, 5)
+                    p['wxId'] = selection.GetId()
+                    selection.Bind(wx.EVT_TEXT, self.OnSetValue)
                 # color entry
                 elif p['prompt'] == 'color':
                     if p['default'] != '':
@@ -669,32 +666,35 @@ class cmdPanel(wx.Panel):
                 txt.SetFont( wx.Font( 12, wx.FONTFAMILY_DEFAULT, wx.NORMAL, text_style, 0, ''))
 
         for f in self.task.flags:
-            which_sizer = self.tabsizer[ f['guisection'] ]
-            which_panel = self.tab[ f['guisection'] ]
+            which_sizer = tabsizer[ f['guisection'] ]
+            which_panel = tab[ f['guisection'] ]
             title = text_beautify(f['description'])
-            self.chk = wx.CheckBox(which_panel,-1, label = title, style = wx.NO_BORDER)
-            if 'value' in f: self.chk.SetValue(f['value'])
-            self.chk.SetFont( wx.Font( 12, wx.FONTFAMILY_DEFAULT, wx.NORMAL, text_style, 0, ''))
-            which_sizer.Add(self.chk, 0, wx.EXPAND| wx.ALL, 5)
-            f['wxId'] = self.chk.GetId()
-            self.chk.Bind(wx.EVT_CHECKBOX, self.OnSetValue)
+            chk = wx.CheckBox(which_panel,-1, label = title, style = wx.NO_BORDER)
+            if 'value' in f: chk.SetValue(f['value'])
+            chk.SetFont( wx.Font( 12, wx.FONTFAMILY_DEFAULT, wx.NORMAL, text_style, 0, ''))
+            which_sizer.Add( chk, 0, wx.EXPAND| wx.ALL, 5)
+            f['wxId'] = chk.GetId()
+            chk.Bind(wx.EVT_CHECKBOX, self.OnSetValue)
 
         maxsizes = (0,0)
         for section in sections:
-            self.tabsizer[section].SetSizeHints( self.tab[section] )
-            self.tabsizer[section].Fit( self.tab[section] )
-            self.tab[section].SetAutoLayout(True)
-            self.tab[section].SetSizer( self.tabsizer[section] )
-            self.tab[section].Layout()
-            minsecsizes = self.tabsizer[section].GetMinSize()
+            tabsizer[section].SetSizeHints( tab[section] )
+            tabsizer[section].Fit( tab[section] )
+            tab[section].SetAutoLayout(True)
+            tab[section].SetSizer( tabsizer[section] )
+            tab[section].Layout()
+            minsecsizes = tabsizer[section].GetMinSize()
             maxsizes = map( lambda x: max( maxsizes[x], minsecsizes[x] ), (0,1) )
 
         # TODO: be less arbitrary with these 600
         constrained_size = (min(600, maxsizes[0]), min(600, maxsizes[1]) )
         for section in sections:
-            self.tab[section].SetMinSize( constrained_size )
+            tab[section].SetMinSize( constrained_size )
         if manual_tab.Ok:
             manual_tab.SetMinSize( constrained_size )
+
+        self.SetSizer( panelsizer )
+        self.hasMain = tab.has_key( 'Main' ) # publish, to enclosing Frame for instance
 
 
     def OnPageChange(self, event):
