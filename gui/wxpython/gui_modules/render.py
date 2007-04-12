@@ -437,9 +437,9 @@ class Map:
 			reg = reg.strip()
 			key, val = reg.split("=",1)
 			try:
-                            region[key] = float(val)
-                        except ValueError:
-                            region[key] = val
+				region[key] = float(val)
+			except ValueError:
+				region[key] = val
 
 		if tmpreg:
 			os.environ["GRASS_REGION"] = tmpreg
