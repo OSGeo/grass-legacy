@@ -369,7 +369,8 @@ int G_parse_color_rule(DCELL, DCELL, const char *, DCELL *, int *, int *, int *,
 const char *G_parse_color_rule_error(int);
 int G_read_color_rule(void *, DCELL, DCELL, DCELL *, int *, int *, int *, int *, int *, int *);
 int G_read_color_rules(struct Colors *, DCELL, DCELL, int, read_rule_fn *, void *);
-
+int G_make_colors(struct Colors *, const char *, CELL, CELL);
+int G_make_fp_colors(struct Colors *, const char *, DCELL, DCELL);
 
 /* color_rule_get.c */
 int G_colors_count ( struct Colors *);
@@ -776,7 +777,7 @@ int G_lzw_transfer_expand(int, int, int);
 char *G__machine_name(void);
 
 /* make_colr.c */
-int G_make_colors(char *, char *, struct Colors *);
+int G_ask_colors(char *, char *, struct Colors *);
 
 /* make_loc.c */
 int G__make_location(char *, struct Cell_head *, struct Key_Value *, struct Key_Value *, FILE *);
