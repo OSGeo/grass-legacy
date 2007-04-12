@@ -792,7 +792,17 @@ class GMConsole(wx.Panel):
             try:
                 os.environ["GRASS_MESSAGE_FORMAT"] = "gui"
                 self.cmd_output.write(cmd+"\n----------\n")
+
+                # activate compuational region (set with g.region) for all non-display commands.
+                tmpreg = os.getenv("GRASS_REGION")
+                os.unsetenv("GRASS_REGION")
+
                 p = Popen(cmd +" --verbose", shell=True, stdin=PIPE, stdout=PIPE, stderr=PIPE, close_fds=True)
+
+                # deactivate computational region and return to display settings
+                if tmpreg:
+                    os.environ["GRASS_REGION"] = tmpreg
+
 
                 oline = p.stderr.readline()
                 while oline:
@@ -869,8 +879,7 @@ def GetTempfile( pref=None):
         Path to file name (string) or None
     """
 
-    tempfile = os.popen("g.tempfile pid=%d" %
-                        os.getpid()).readlines()[0].strip()
+    tempfile = os.popen("g.tempfile pid=%d" % os.getpid()).readlines()[0].strip()
 
     if not tempfile:
         return None
