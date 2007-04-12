@@ -1,19 +1,24 @@
 /**************************************************************
- *									*
- * MODULE:       v.lidar.edgedetection				*
- * 									*
- * AUTHOR(S):    Roberto Antolin & Gonzalo Moreno			*
- *               							*
- * PURPOSE:      Detection of object's edges on a LIDAR data set	*
- *               							*
- * COPYRIGHT:    (C) 2006 by Politecnico di Milano - 			*
- *			     Polo Regionale di Como			*
- *									*
- *               This program is free software under the 		*
- *               GNU General Public License (>=v2). 			*
- *               Read the file COPYING that comes with GRASS		*
- *               for details.						*
- *									*
+ *									
+ * MODULE:       v.lidar.edgedetection				
+ * 								
+ * AUTHOR(S):    Original version in GRASS 5.4 (s.edgedetection):
+ * 		 Maria Antonia Brovelli, Massimiliano Cannata, 
+ *		 Ulisse Longoni and Mirko Reguzzoni
+ *
+ *		 Update for GRASS 6.X and improvements:
+ * 		 Roberto Antolin and Gonzalo Moreno
+ *               							
+ * PURPOSE:      Detection of object's edges on a LIDAR data set	
+ *               							
+ * COPYRIGHT:    (C) 2006 by Politecnico di Milano - 			
+ *			     Polo Regionale di Como			
+ *									
+ *               This program is free software under the 		
+ *               GNU General Public License (>=v2). 			
+ *               Read the file COPYING that comes with GRASS		
+ *               for details.					
+ *							
  **************************************************************/
 
 /*INCLUDES*/
@@ -51,7 +56,7 @@ main (int argc,char *argv[])
 
     /* Structs' declarations */
     struct Map_info In, Out;
-    struct Option *in_opt, *out_opt, *dbdriver, *dbdatabase, *passoE_opt, *passoN_opt, \
+    struct Option *in_opt, *out_opt, *passoE_opt, *passoN_opt, \
     	*lambdaF_opt, *lambdaB_opt, *gradH_opt, *gradL_opt, *alfa_opt; 
     struct GModule *module;
 
@@ -73,31 +78,13 @@ main (int argc,char *argv[])
 
     out_opt = G_define_standard_option(G_OPT_V_OUTPUT);
 
-    dbdatabase = G_define_option () ;
-    	dbdatabase->key        	= "database";
-    	dbdatabase->type       	= TYPE_STRING;
-    	dbdatabase->required   	= NO;
-    	dbdatabase->multiple   	= NO;
-    	dbdatabase->description	= _("Database name");
-    if ( (db=G__getenv2 ("DB_DATABASE",G_VAR_MAPSET)) )
-	    dbdatabase->answer = G_store ( db );
-
-    dbdriver = G_define_option () ;
-   	dbdriver->key         = "driver" ;
-    	dbdriver->type        = TYPE_STRING;
-    	dbdriver->options     = db_list_drivers();
-    	dbdriver->required    = NO;
-    	dbdriver->multiple    = NO;
-    	dbdriver->description = _("Driver name");
-    if ( (dvr = G__getenv2 ("DB_DRIVER",G_VAR_MAPSET)) )
-	    dbdriver->answer = G_store (dvr);
-
     passoE_opt = G_define_option ();
     	passoE_opt->key = "see";
     	passoE_opt->type = TYPE_DOUBLE;
     	passoE_opt->required = NO;
     	passoE_opt->answer = "4";
     	passoE_opt->description = _("Interpolation spline step value in east direction");
+	passoE_opt->guisection = _("Settings");
 
     passoN_opt = G_define_option ();
     	passoN_opt->key = "sen";
@@ -105,6 +92,7 @@ main (int argc,char *argv[])
     	passoN_opt->required = NO;
     	passoN_opt->answer = "4";
     	passoN_opt->description = _("Interpolation spline step value in north direction");
+	passoN_opt->guisection = _("Settings");
 
     lambdaB_opt = G_define_option ();
     	lambdaB_opt->key = "lambda_g";
@@ -112,6 +100,7 @@ main (int argc,char *argv[])
     	lambdaB_opt->required = NO;
     	lambdaB_opt->description = _("Regularization weight in gradient evaluation");
     	lambdaB_opt->answer = "0.01";
+	lambdaB_opt->guisection = _("Settings");
 
     gradH_opt = G_define_option ();
     	gradH_opt->key = "tgh";
@@ -119,6 +108,7 @@ main (int argc,char *argv[])
     	gradH_opt->required = NO;
     	gradH_opt->description = _("High gradient threshold for edge classification");
     	gradH_opt->answer = "6";
+	gradH_opt->guisection = _("Settings");
 
     gradL_opt = G_define_option ();
     	gradL_opt->key = "tgl";
@@ -126,6 +116,7 @@ main (int argc,char *argv[])
     	gradL_opt->required = NO;
     	gradL_opt->description = _("Low gradient threshold for edge classification");
     	gradL_opt->answer = "3";
+	gradL_opt->guisection = _("Settings");
 
     alfa_opt = G_define_option ();
     	alfa_opt->key = "theta_g";
@@ -133,6 +124,7 @@ main (int argc,char *argv[])
     	alfa_opt->required = NO;
     	alfa_opt->description = _("Angle range for same direction detection");
     	alfa_opt->answer = "0.26";
+	alfa_opt->guisection = _("Settings");
 
     lambdaF_opt = G_define_option ();
     	lambdaF_opt->key = "lambda_r";
@@ -140,6 +132,7 @@ main (int argc,char *argv[])
     	lambdaF_opt->required = NO;
     	lambdaF_opt->description = _("Regularization weight in residual evaluation");
     	lambdaF_opt->answer = "2";
+	lambdaF_opt->guisection = _("Settings");
 
 /* Parsing */	
     G_gisinit (argv[0]);
@@ -155,6 +148,11 @@ main (int argc,char *argv[])
     grad_H = atof (gradH_opt->answer);
     grad_L = atof (gradL_opt->answer);
     alpha = atof (alfa_opt->answer);
+    if ( !(db=G__getenv2 ("DB_DATABASE",G_VAR_MAPSET)) )
+	G_fatal_error (_("Database's name couldn't be read"));
+
+    if ( !(dvr = G__getenv2 ("DB_DRIVER",G_VAR_MAPSET)) )
+	G_fatal_error (_("Driver's name couldn't be read"));
 
 /* Setting auxiliar table's name */
     sprintf (table_name, "%s_aux", out_opt->answer);
@@ -181,9 +179,9 @@ main (int argc,char *argv[])
     Vect_hist_command (&Out);
     
 /* Start driver and open db*/
-    driver = db_start_driver_open_database (dbdriver->answer, dbdatabase->answer);
+    driver = db_start_driver_open_database (dvr, db);
     if (driver == NULL) 
-	G_fatal_error (_("No database connection for driver <%s> is defined. Run db.connect"), dbdriver->answer);
+	G_fatal_error (_("No database connection for driver <%s> is defined. Run db.connect"), dvr);
 
     if (Create_Interpolation_Table (out_opt->answer, driver) != DB_OK) 
 	G_fatal_error (_("It was impossible to create <%s> interpolation table in database."), out_opt->answer);
@@ -288,6 +286,8 @@ main (int argc,char *argv[])
 		    Q[i] = 1;					/* Q=I */
 		}
 		
+		/*G_free (observ);*/
+
 		G_debug (1, _("Bilinear interpolation"));
 		normalDefBilin (N, TN, Q, obsVect, passoE, passoN, nsplx, nsply, elaboration_reg.west, elaboration_reg.south, \
 					npoints, nparameters, BW);
@@ -314,10 +314,8 @@ main (int argc,char *argv[])
 
 		if (flag_auxiliar == FALSE) {
 		    G_debug (1, _("Creating auxiliar table for archiving overlaping zones"));
-		    if ((flag_auxiliar = Create_AuxEdge_Table (driver, table_name)) == FALSE) {
-			P_Drop_Aux_Table (driver, table_name);
+		    if ((flag_auxiliar = Create_AuxEdge_Table (driver)) == FALSE) 
 			G_fatal_error (_("It was impossible to create <%s>."), table_name);
-		    }
 		}
 		G_debug (1, _("Point classification"));
 		classification (&Out, elaboration_reg, general_box, overlap_box, obsVect, parVect_bilin, parVect_bicub, \
@@ -337,7 +335,7 @@ main (int argc,char *argv[])
 /* Dropping auxiliar table */
     if (npoints > 0) {
        G_debug (1, _("Dropping <%s>"), table_name);
-       if (P_Drop_Aux_Table (driver, table_name) != DB_OK)
+       if (Drop_Aux_Table (driver) != DB_OK)
 	  G_warning (_("Auxiliar Table could not be dropped."));
     }
 
@@ -346,7 +344,7 @@ main (int argc,char *argv[])
     Vect_close (&In);
 
     sprintf (table_interpolation, "%s_edge_Interpolation", out_opt->answer);
-    Vect_map_add_dblink ( &Out, F_INTERPOLATION, NULL, table_interpolation, "id", dbdatabase->answer, dbdriver->answer);
+    Vect_map_add_dblink ( &Out, F_INTERPOLATION, NULL, table_interpolation, "id", db, dvr);
 
     Vect_close (&Out);
 

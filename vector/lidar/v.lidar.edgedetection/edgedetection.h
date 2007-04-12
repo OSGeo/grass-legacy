@@ -1,8 +1,13 @@
 /**************************************************************
- *								
- * MODULE:       v.lidar.edgedetection			
- * 									
- * AUTHOR(S):    Roberto Antolin & Gonzalo Moreno			
+ *									
+ * MODULE:       v.lidar.edgedetection				
+ * 								
+ * AUTHOR(S):    Original version in GRASS 5.4 (s.edgedetection):
+ * 		 Maria Antonia Brovelli, Massimiliano Cannata, 
+ *		 Ulisse Longoni and Mirko Reguzzoni
+ *
+ *		 Update for GRASS 6.X and improvements:
+ * 		 Roberto Antolin and Gonzalo Moreno
  *               							
  * PURPOSE:      Detection of object's edges on a LIDAR data set	
  *               							
@@ -12,8 +17,8 @@
  *               This program is free software under the 		
  *               GNU General Public License (>=v2). 			
  *               Read the file COPYING that comes with GRASS		
- *               for details.						
- *									
+ *               for details.					
+ *							
  **************************************************************/
 
 /*INCLUDES*/
@@ -79,6 +84,7 @@ int Select (double *,				/**/
 	    int, 				/**/
 	    dbDriver *				/**/);
 
-int Create_AuxEdge_Table (dbDriver *, char*);
+int Create_AuxEdge_Table (dbDriver *);
 int Create_Interpolation_Table (char *, dbDriver *);
 int Insert_Interpolation (double, int, dbDriver *, char *);
+int Drop_Aux_Table (dbDriver *);
