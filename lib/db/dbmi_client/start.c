@@ -13,14 +13,19 @@
 #define READ  0
 #define WRITE 1
 
-extern char *getenv();
 
-/*!
- \fn 
- \brief 
- \return 
- \param 
-*/
+/**
+ * \fn dbDriver *db_start_driver (char *name)
+ *
+ * \brief Initialize a new dbDriver for db transaction.
+ *
+ * If <b>name</b> is NULL, the db name will be assigned 
+ * connection.driverName.
+ *
+ * \param[in] char * driver name
+ * \return NULL on error
+ */
+
 dbDriver *
 db_start_driver (char *name)
 
@@ -33,9 +38,6 @@ db_start_driver (char *name)
     int stat;
     dbConnection connection;
     char ebuf[5];
-    int stdin_orig, stdout_orig;
-    int have_stdin, have_stdout;
-    int stdin_fd, stdout_fd;
 
     /* Set some enviroment variables which are later read by driver.
      * This is necessary when application is running without GISRC file and all
@@ -313,6 +315,7 @@ db_start_driver (char *name)
 	db__set_protocol_fds (driver->send, driver->recv);
 	if(db__recv_return_code(&stat) !=DB_OK || stat != DB_OK)
 	    driver =  NULL;
+
 	return driver;
     }
     else        /* child process */
@@ -326,16 +329,16 @@ db_start_driver (char *name)
         if (dup(p1[READ]) != 0)
         {
             db_syserror("dup r");
-            _exit(127) ;
+            _exit (EXIT_FAILURE);
         }
 
         if (dup(p2[WRITE]) != 1)
         {
             db_syserror("dup w");
-            _exit(127) ;
+            _exit (EXIT_FAILURE);
         }
 
-	execl ("/bin/sh", "sh", "-c", startup, 0);
+	execl ("/bin/sh", "sh", "-c", startup, NULL);
 
         db_syserror ("execl");
 	return NULL; /* to keep lint, et. al. happy */
