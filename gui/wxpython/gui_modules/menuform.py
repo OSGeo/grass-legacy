@@ -522,7 +522,7 @@ class cmdPanel(wx.Panel):
 
         panelsizer = wx.BoxSizer(wx.VERTICAL)
         # Build notebook
-        nbStyle=FN.FNB_NO_X_BUTTON|FN.FNB_NO_NAV_BUTTONS|FN.FNB_VC8|FN.FNB_BACKGROUND_GRADIENT
+        nbStyle=FN.FNB_NO_X_BUTTON|FN.FNB_VC8|FN.FNB_BACKGROUND_GRADIENT
         notebook = FN.FlatNotebook( self, id=wx.ID_ANY, style=nbStyle)
         notebook.SetTabAreaColour(wx.Colour(125,200,175))
         notebook.Bind( FN.EVT_FLATNOTEBOOK_PAGE_CHANGED, self.OnPageChange )
