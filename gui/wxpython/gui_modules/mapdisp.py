@@ -1335,7 +1335,7 @@ class MapFrame(wx.Frame):
     # toolBar button handlers
     def onDecoration(self, event):
         """
-        Decorations overlay menu"
+        Decorations overlay menu
         """
         point = wx.GetMousePosition()
         decmenu = wx.Menu()
@@ -1509,7 +1509,7 @@ class MapFrame(wx.Frame):
 
     def onZoomMenu(self, event):
         """
-        Decorations overlay menu"
+        Decorations overlay menu
         """
         point = wx.GetMousePosition()
         zoommenu = wx.Menu()
