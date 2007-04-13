@@ -546,11 +546,8 @@ class Map:
 			else:
 				selected.append(layer)
 
-		if len(selected) > 0:
-			return selected
-		else:
-			return None
-
+		return selected
+		
 	def Render(self, force=False):
 		"""
 		Creates final image composite
