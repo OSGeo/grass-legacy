@@ -1,183 +1,245 @@
 <h2>DESCRIPTION</h2>
 
 <p>
-<em>v.edit</em> allows a user to edit a vector map. Vector features can be selected either by category number <code>cats</code>, coordinates <code>coords</code>, bounding box <code>bbox</code> or polygon <code>polygon</code>. Coords will always select only one vector feature.
+<em>v.edit</em> allows the user to edit a vector map via Command Line
+Interface. This can be very useful in scripts.
 </p>
 
 <p>
-<em>v.edit</em> recognises only "simple" vector features: points, centroids, lines, boundaries and faces. Areas will be not found.
+<em>v.edit</em> works only with "simple" vector features: points,
+centroids, lines, boundaries and faces. Currently, only 2D region is supported.
+
+<p>
+<em>v.edit</em> is not allowed to edit attribute tables connected to
+the vector map. For this purpose, <code>db.*</code> commands shall be
+used.
 </p>
 
 <p>
-Currently, it works only on 2D region. 
+Vector features can be selected either by category number
+<code>cats</code>, id's <code>id</code>, coordinates
+<code>coords</code>, bounding box <code>bbox</code>, polygon
+<code>polygon</code> or 'where' statement (attribute table)
+<code>where</code>. Selecting features by coordinates is affected by
+the current 2D resolution. It can be changed using threshold distance
+<code>thresh</code>. These options are <em>orthogonal</em>, i.e. can
+be used together. For example:
 </p>
 
-<p>
-<em>v.edit</em> does not edit attribute tables connected to vector maps. For this purpose, <code>db.*</code>commands shall be used.
-</p>
+<div class="code"><pre>
+v.edit map=roads tool=select coord=599505,4921010,603389.0625,4918292.1875 thresh=10000 where="label='interstate'"
+</pre></div>
+
+selects all features covered by two bounding boxes (center at
+599505,4921010 and 603389.0625,4918292.1875, size 2*10000) with
+attribute "label='interstate'".
+
 
 
 <h2>NOTES</h2>
 <p>
-Still in development, nothing is added to the database. Only points can be added.
-</p>
-<p>
-This manual page should be updated according to vectors used in Spearfish dataset. This examples are only imaginar.
+This module can be buggy, still under development. So please feel free
+to report all bugs or wanted features. Also this manual page should be
+updated.
 </p>
 
 <h2>USAGE</h2>
+
 <h3>Feature definition</h3>
+
 <p>
-Vector features, which shall be edited, can be selected in several ways:
+Vector features, which shall be modified, can be selected in several
+ways:
 </p>
 <ul>
-    <li><code>cats</code> -- Using line categories</li>
-    <li><code>ids</code> -- Using directly line id's</li>
-    <li><code>coords</code> -- Selecting features by list of x,y coordinate pairs</li>
-    <li><code>bbox</code> -- Selecting multiple features using boundig box</li>
-    <li><code>polygon</code> Selecting multiple features using polygon (at least 3 coordinate pairs have to be set)</li>
+    <li><code>cats</code> - using category numbers</li>
+    <li><code>ids</code> - using internal line id's</li>
+    <li><code>coords</code> - using x,y coordinate pairs</li>
+    <li><code>bbox</code> - using bounding box</li>
+    <li><code>polygon</code> - using polygon (at least 3 coordinate pairs have to be set)</li>
+    <li><code>where</code> - using 'where' statement (attribute table)
 </ul>
+
 <p>
-Additional parameters for vector feature specifiation are
+Additional parameters for vector feature specification are:
 </p>
 <ul>
-    <li><code>layer</code> -- Number of connection to attribute table</li>
-    <li><code>distance</code> -- Threshold distance for selecting vector features by coordinates</li>
+    <li><code>layer</code> - layer number</li>
+    <li><code>thresh</code> - threshold distance used for selecting vector features by coordinates</li>
 </ul>
 
 <h3>Tool description</h3>
 
 <ul>
-    <li>create -- Creates new empty vector map, just like <code><a href="v.in.ascii.html">v.in.ascii -e</a></code>. It is possible to define new vector features using STDIN or the <code>input</code> option, in <a href="v.in.ascii.html">GRASS ASCII format</a>.</li>
+    <li>create - Creates empty vector map (see <code><a
+    href="v.in.ascii.html">v.in.ascii -e</a></code>). It is possible
+    to add vector features using STDIN or the <code>input</code>
+    option in <a href="v.in.ascii.html">GRASS ASCII format</a>, see also
+    <code>add</code> tool.</li>
 
-    <li>add -- Adds new features to existing vector map. It is possible to have header with the input. New features have to be specified in  <a href="v.in.ascii.html">GRASS ASCII format</a> and <code>v.edit</code> is able to read the input from STDIN or from text file. 
-    <div class="code">
-        <pre>
-        v.out.ascii in=geology format=standard | v.edit map=soils tool=add
-        </pre>
-    </div>
-    does something similar to
-    <div class="code">
-        <pre>
-        v.patch in=soils,geology out=soils
-        </pre>
-    </div>
+    <li>add - Adds new features to existing vector map. New features
+    have to be stored in <a href="v.in.ascii.html">GRASS ASCII
+    format</a>. <code>v.edit</code> is able to read the input from
+    STDIN or from the text file.
+    <!--
+    <div class="code"><pre>
+    v.out.ascii in=geology format=standard | v.edit map=soils tool=add
+    </pre></div>
+    an alternative way for patching two vector maps
+    <div class="code"><pre>
+    v.patch in=soils,geology out=soils
+    </pre></div>
     </li>
+    -->
+    <li>delete - Deletes selected features from existing vector
+    map. See <code>add</code> option.</li>
 
-    <li>delete -- Deletes selected features from existing vector map.</li>
+    <li>move - Moves selected features in existing vector map
+    relatively to their current location. For this purpose, option
+    <code>move</code> must be used. This option defines x,y
+    coordinates of the movement direction.</li>
 
-    <li>move -- Moves selected features in existing vector map relatively to their current location. For this purpose, option <code>move</code> must be used. This option spefies x,y coordinates of the movement direction.</li>
+    <li>vertex - Moves vertex specified by <code>coords</code>
+    option. No other options are accepted for the selection. Direction
+    of the movement is specified by the <code>move</code> option.
+    Action is performed only if one vertex is selected.</li>
 
-    <li>vertex -- Moves only vertex speficied by <code>coords</code> option. No other option is accepted for the selection. Direction of the movement is specified by the <code>move</code> option.</li>
+    <li>straight - Removes vertex specified by <code>coords</code>
+    option. See <code>vertex</code> for detailed information.</li>
 
-    <li>straight -- Removes vertex speficied by <code>coords</code> option. No other option is accepted for the selection.</li>
+    <li>merge - Merges all (at least two) selected vector lines
+    (boundary or line). The nearest distance between start and end
+    nodes of both lines is found. The second line from two selected
+    lines can eventually be flipped in it's direction.</li>
 
-    <li>break -- Adds new vertex to existing lines on location specified by <code>coords</code> option. No other option is accepted for the selection.</li>
+    <li>break - Adds new vertex to existing lines on location
+    specified by <code>coords</code> option. No other options are
+    accepted for the selection. Action is performed only if one
+    line is selected.</li>
 
-    <li>merge -- Merges two vector lines (boundary or line) together, so that second selected line will be deleted and it's coordinates will be clipped to the first line. <code>v.edit</code> tryes to find nearest distance between start and end nodes of both lines. The second line can eventualy be flipped in it's direction.</li>
+    <li>split - Splits one vector line to two on location specified by
+    <code>coords</code> option. No other options are accepted for the
+    selection.</li>
 
-    <li>split -- Splits one vector map to two on location specified by <code>coords</code> option. No other option is accepted for the selection.</li>
+    <li>select - Prints comma separated list of line ID's selected by selection options. 
 
-    <li>select -- Prints comma separated list of line ID's selected by one of selection option. This is handy for example for checking, if the selection definition coresponds with user's needs or by definition of multiple selection areas.</li>
+    <li>catadd - Adds new layer category(ies) to selected vector
+    feature(s). Category can be later used for new database
+    entry.</li>
 
-    <li>catadd -- Adds new layer category to selected vector feature(s). Category can be later used for new database entry.</li>
+    <li>catdel - Deletes layer category(ies) of selected vector
+    feature(s).</li>
 
-    <li>catdel -- Deletes layer category of selected vector feature(s). </li>
+    <li>copy - Makes identical copy of selected vector
+    feature(s).</li>
 
-    <li>copy -- Makes identical copy of selected vector feauter(s).</li>
-
-    <li>snap -- Works like tool "merge", but the second line is only snaped to the first line, without deleting it.</li>
+    <li>snap - Snap one to another.</li>
 </ul>
 
 <h2>EXAMPLES</h2>
 
 <h3>Create new vector map</h3>
 <p>
-Creates new vector map, eventualy will read data from standard inputs in default format (standard/point)
+Create new vector map, eventually will read data from standard input
+in <a href="v.in.ascii.html">GRASS ASCII format</a> (standard/point)
 </p>
 <div class="code"><pre>
 v.edit tool=create map=vectmap
 </pre></div>
 
 <p>
-Creates new vector map and reads data from file file.txt in default format
+Create new vector map and reads data from file 'file.txt' in <a
+href="v.in.ascii.html">GRASS ASCII format</a>
 </p>
 <div class="code"><pre>
-v.edit tool=create map=vectmap input=file.txt
+v.out.ascii in=roads format=standard > roads.txt
+v.edit tool=create map=vectmap input=roads.txt
 </pre></div>
 
-<h3>Add new feature to existing vector</h3>
-
+<h3>Add new features to existing vector map</h3>
 
 <p>
-Read data from standard inputs in standard format
+Read data from standard input in <a href="v.in.ascii.html">GRASS ASCII
+format</a>
 </p>
 <div class="code"><pre>
-v.edit tool=add map=vectmap
+v.out.ascii in=railroads format=standard | v.edit tool=add map=vectmap
 </pre></div>
 
-<h3>Remove feature from vector map</h3>
+<h3>Remove features from vector map</h3>
 
 <p>
-Remove features with category 34 and 24 from map vectmap
+Remove all features with category 1 and 2 with attribute
+label='interstate' from vector map
 </p>
 
 <div class="code"><pre>
-v.edit tool=delete map=vectmap cat=34,24
+db.copy from_table=roads to_table=vectmap
+v.db.connect map=vectmap table=vectmap -o
+v.edit tool=delete map=vectmap cat=1,2 where="label='interstate'"
 </pre></div>
 
 <p>
-Remove feature located on coordinates 344556.23,23445.2345
+Remove features located on coordinates 599500,4921000 (bounding
+box based on the current 2D resolution)
 </p>
 <div class="code"><pre>
-v.edit tool=delete map=vectmap coords=344556.23,23445.2345 
+v.edit tool=delete map=vectmap coords=599500,4921000
 </pre></div>
 
-
 <p>
-Remove features defined by bounding box 344556.23,234455.2345,567566.34,456455.34
+Remove features defined by the given bounding box (W,E,S,N)
 </p>
 
 <div class="code"><pre>
-v.edit tool=delete map=vectmap bbox=344556.23,234455.2345,567566.34,456455.34
+v.edit tool=delete map=vectmap bbox=600100,602800,4922600,4924200
 </pre></div>
 
 
 <h3>Move feature</h3>
+
 <p>
-Move feature located on coordinates 344556.23,23445.2345 to coordinates 644556.23,43445.2345
+Move feature located on coordinates 344556.23,23445.2345 to
+coordinates 644556.23,43445.2345
 </p>
+
 <div class="code"><pre>
 v.edit tool=move map=vectmap coords=344556.23,23445.2345 move=100000,-100000
 </pre></div>
 
 
 <p>
-Move all points of feature of category 45 to coordinates about 1000 map units to the west and 1000 map units to the south
+Move all points of feature of category 45 to coordinates about 1000
+map units to the west and 1000 map units to the south
 </p>
+
 <div class="code"><pre>
 v.edit tool=move map=vectmap cat=45 move=1000,-1000
 </pre></div>
 
 <p>
-Move all points of features defined by bounding box 344556.23,234455.2345,567566.34,456455.34 about 1000 map units to the west and 1000 map units to the south
+Move all points of features defined by bounding box
+344556.23,234455.2345,567566.34,456455.34 about 1000 map units to the
+west and 1000 map units to the south
 </p>
+
 <div class="code"><pre>
 v.edit tool=move map=vectmap bbox=344556.23,234455.2345,567566.34,456455.34 to=1000,-1000
 </pre></div>
 
 <h3>Moving vertex</h3>
 <p>
-Move vertex on coordinates 344556.23,23445.2345 to 545556.23,22445.2345
+Move vertex on coordinates 344556.23,23445.2345 to
+545556.23,22445.2345
 </p>
+
 <div class="code"><pre>
 v.edit tool=vertex map=vectmap coords=344556.23,23445.2345 move=1000,-1000
 </pre></div>
 
-
 <h3>Breaking line</h3>
 <p>
-Break line on coordinates 344556.23,23445.2345 at coords 345433.3,34567.32
+Break line on coordinates 344556.23,23445.2345.
 </p>
 <div class="code"><pre>
 v.edit tool=break map=vectmap coords=344556.23,23445.2345
@@ -191,55 +253,62 @@ Break line of category 45 at coords 345433.3,34567.32
 v.edit tool=break map=vectmap cat=45 coords=345433.3,34567.32
 </pre></div>
 
-<h3>Remove vertex -- straight line</h3>
+<h3>Remove vertex - straight line</h3>
+
 <p>
 Remove vertex at coordinates 344556.23,23445.2345
 </p>
+
 <div class="code"><pre>
 v.edit tool=straight map=vectmap coords=344556.23,23445.2345
 </pre></div>
 
-
-
 <h3>Splitting line</h3>
+
 <p>
-Split line on coordinates 344556.23,23445.2345 at coords 345433.3,34567.32
+Split line on coordinates 344556.23,23445.2345.
 </p>
+
 <div class="code"><pre>
 v.edit tool=split map=vectmap coords=344556.23,23445.2345
 </pre></div>
 
 <p>
-Split line of category 45 at coords 345433.3,34567.32
+Split line of category 45 at coords 345433.3,34567.32.
 </p>
+
 <div class="code"><pre>
 v.edit tool=split map=vectmap cat=45 coords=345433.3,34567.32
 </pre></div>
 
 <h3>Merging two lines</h3>
+
 <p>
-Merge first line defined by coordinates 606853.875,4921332 with second line, defined by coordinates 603216.75,4922763. Define nearest distance between line first and last points and move first (last) point of second line to first line -- First line will remain untached.
+Merge first line defined by coordinates 606853.875,4921332 with second
+line defined by coordinates 603216.75,4922763. Define nearest
+distance between line first and last points and move first (last)
+point of second line to first line - first line will remain untouched.
 </p>
+
 <div class="code"><pre>
 v.edit tool=merge map=vectmap coords=606853.875,4921332,603216.75,4922763 
 </pre></div>
 
-
 <p>
-Merge two lines defined by bounding box
+Merge all lines defined by the given bounding box
 </p>
+
 <div class="code"><pre>
 v.edit tool=merge map=vectmap bbox=344556.23,23445.2345
 </pre></div>
 
+<p>
+Merge two lines defined by category
+</p>
+
 <div class="code"><pre>
 v.edit tool=merge map=vectmap cat=43,45
 </pre></div>
-
-
-</p>
-Merge two lines defined by category
-</p>
 
 <h3>Selecting features</h3>
 
@@ -251,13 +320,11 @@ Print line id's selected by coords, bbox or cat. Example:
 v.edit map=soils@PERMANENT tool=select bbox=595733.8125,4919781.75,598536.1875,4917396.75
 </pre></div>
 
-
 Example with d.vect:
 
 <div class="code"><pre>
 d.vect col=red width=2 -i cat="`v.edit map=soils@PERMANENT tool=select bbox=595733.8125,4919781.75,598536.1875,4917396.75`" map=soils
 </pre></div>
-
 
 <h2>SEE ALSO</h2>
 
@@ -274,5 +341,6 @@ d.vect col=red width=2 -i cat="`v.edit map=soils@PERMANENT tool=select bbox=5957
 
 Wolf Bergenheim - independent developer, <br>
 Jachym Cepicky, Department of Geoinformation Technologies, Mendel University of Agriculture and Forestry in Brno<br>
-Martin Landa
+Martin Landa, FBK-irst (ITC-irst), Trento, Italy
+
 <p><i>Last changed: $Date$</i>
