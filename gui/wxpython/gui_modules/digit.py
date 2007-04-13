@@ -52,7 +52,7 @@ class VEdit(Digit):
             pass
         else:
             print "FAILURE"
-            for msg in vedit.msg:
+            for msg in vedit.module_msg:
                 print msg[1]
 
 #
