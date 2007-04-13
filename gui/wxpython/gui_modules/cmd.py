@@ -1,101 +1,172 @@
-import grassenv
+"""
+PACKAGE: digit
+
+CLASSES:
+ * EndOfCommand
+ * Command
+
+PURPOSE: Command interface 
+
+AUTHORS: The GRASS Development Team
+         Jachym Cepicky, Martin Landa
+
+COPYRIGHT: (C) 2007 by the GRASS Development Team
+           This program is free software under the GNU General Public
+           License (>=v2). Read the file COPYING that comes with GRASS
+           for details.
+"""
+
 import os
+try:
+   import subprocess
+except:
+   import combat.subprocess as subprocess
+
+import grassenv
+
 class EndOfCommand(Exception):
+    """
+    End of command indicator
+    """
     def __str__(self):
        return "End of command"
 
 class Command:
-    def __init__ (self,cmd,stdin=None,verbose=False):
-        self.module_stdout = None
-        self.module_stdin = None
-        self.cmd = cmd
-        self.line = None
+    """
+    Run command on the background
+    
+    Usage:
+        cmd = Command(cmd="d.rast elevation.dem", verbose=True, wait=True)
 
+        if cmd.returncode == None:
+            print "RUNNING"
+        elif cmd.returncode == 0:
+            print "SUCCESS"
+        else:
+            print "FAILURE (%d)" % cmd.returncode
+        
+        for msg in cmd.module_msg:
+            if msg[0] == "GRASS_INFO_PERCENT":
+                print "Percent done: %d" % (int(msg[1]))
+            else:
+                print "General message:", msg[1]
+    """
+    def __init__ (self, cmd, stdin=None, verbose=False, wait=True):
+        # input
+        self.module_stdin = None
+        self.cmd    = cmd
+
+        self.module = None
+            
+        # output
+        self.module_stderr = None
+        self.module_msg    = [] # list of messages (msgtype, content)
 
         os.environ["GRASS_MESSAGE_FORMAT"] = "gui"
-        (self.module_stdin, self.module_stdout, self.module_stderr) = os.popen3(self.cmd)
+        # run command
+        if 0:
+            (self.module_stdin, self.module_stdout, self.module_stderr) = \
+                os.popen3(self.cmd)
+        else:
+            self.module = subprocess.Popen(self.cmd, shell=True,
+                                           stdin=subprocess.PIPE,
+                                           stdout=subprocess.PIPE,
+                                           stderr=subprocess.PIPE,
+                                           close_fds=True)
+
         os.environ["GRASS_MESSAGE_FORMAT"] = "text"
-       
+
+        if self.module:
+            self.module_stdin  = self.module.stdin
+            self.module_stderr = self.module.stderr
+
         if stdin:
             self.module_stdin.write(stdin)
             self.module_stdin.close()
 
-        if not verbose:
-            self.RunS()
+            
+        try:
+            self.Run(verbose)
+        except EndOfCommand:
+            pass
 
-    def Run(self):
+        if self.module:
+            if wait:
+                self.module.wait()
+            self.returncode = self.module.returncode
+        else:
+            self.returncode = None
+
+
+    def Run(self, verbose=False):
         """
-        run command verbosely
-        
-        Returns: (msgtype, content)
-
-        Usage:
-            cmd = Command("d.rast elevation.dem")
-            try:
-                (msgtype,content) = cmd.RunV()
-                while 1:
-                    if msgtype == "GRASS_INFO_PERCENT":
-                        print "Percent done: %d" % (int(content))
-                    else:
-                        print "General message:", content
-                    (msgtype,content) = cmd.RunV()
-            except EndOfCommand:
-                print "end"
+        Process messages read from stderr
         """
         msgtype = None
-        cont = None
-        line = None
+        content = None
+        line    = None
 
-        line = self.module_stderr.readline()
         while 1:
-            if not line:
-                raise EndOfCommand()
-            if line.find(':') > -1:
-                break
             line = self.module_stderr.readline()
-        msgtype, cont = line.split(":")
+            if not line or line.find("GRASS_INFO_END") > -1:
+                raise EndOfCommand 
+            if line.find(':') > -1:
+                msgtype, content = line.split(":", 1)
+                if verbose:
+                    self.module_msg.append((msgtype, content.strip()))
+                else: # write only fatal errors and warnigs
+                    if msgtype.find("GRASS_INFO_ERROR") > -1 or \
+                            msgtype.find("GRASS_INFO_WARNING") > -1: 
+                        self.module_msg.append((msgtype, content.strip()))
 
-        cont=cont.strip()
-        return (msgtype,cont.strip())
-
-    def RunS(self):
-        """
-        run command silently
-        
-        Returns: 
-            None if OK
-        Usage:
-            cmd = Command("d.rast elevation.dem")
-            if cmd.RunS():
-                print "ERRRROR"
-
-        FIXME: maybe use os.system instead?
-        """
-
-        line = self.module_stderr.readline()
-        while 1:
-            if not line:
-                break
-            line =self.module_stderr.readline()
         return
 
+# testing ...
 if __name__ == "__main__":
-    print "Running d.rast"
-    cmd=Command("d.rast elevation.dem")
-    try:
-        (msgtype,content) = cmd.RunV()
-        while 1:
-            if msgtype == "GRASS_INFO_PERCENT":
-                print "Percent done: %d" % (int(content))
-            else:
-                print "General message:", content
-            (msgtype,content) = cmd.RunV()
-    except EndOfCommand:
-        print "konec"
+    #print __doc__
 
-    print "Running v.net.path for 0 593527.6875 4925297.0625 602083.875 4917545.8125"
-    cmd=Command("v.net.path in=roads out=tmp --o", "0 593527.6875 4925297.0625 602083.875 4917545.8125")
-    cmd.RunS()
-    print "Running d.vect tmp"
-    cmd = Command("d.vect tmp")
-    cmd.RunS()
+    # d.rast verbosely, wait for process termination
+    print "Running d.rast..."
+
+    cmd = Command(cmd="d.rast elevation.dem", verbose=True, wait=True)
+
+    if cmd.returncode == None:
+        print "RUNNING"
+    elif cmd.returncode == 0:
+        print "SUCCESS"
+    else:
+        print "FAILURE (%d)" % cmd.returncode
+        
+    for msg in cmd.module_msg:
+        if msg[0] == "GRASS_INFO_PERCENT":
+            print "Percent done: %d" % (int(msg[1]))
+        else:
+            print "General message:", msg[1]
+           
+    # v.net.path silently, wait for process termination
+    print "Running v.net.path for 0 593527.6875 4925297.0625 602083.875 4917545.8125..."
+
+    cmd = Command(cmd="v.net.path in=roads@PERMANENT out=tmp --o",
+                  stdin="0 593527.6875 4925297.0625 602083.875 4917545.8125",
+                  verbose=False,
+                  wait=True)
+
+    if cmd.returncode == None:
+        print "RUNNING"
+    elif cmd.returncode == 0:
+        print "SUCCESS"
+    else:
+        print "FAILURE (%d)" % cmd.returncode
+
+    # d.vect silently, do not wait for process termination
+    # returncode will be None
+    print "Running d.vect tmp..."
+
+    cmd = Command("d.vect tmp", verbose=False, wait=False)
+
+    if cmd.returncode == None:
+        print "RUNNING"
+    elif cmd.returncode == 0:
+        print "SUCCESS"
+    else:
+        print "FAILURE (%d)" % cmd.returncode
