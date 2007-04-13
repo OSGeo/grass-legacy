@@ -29,6 +29,7 @@ enum mode {
     MODE_CATDEL,
     MODE_COPY,
     MODE_SNAP,
+    MODE_FLIP,
 };
 
 /* options */
@@ -88,5 +89,8 @@ int cats (struct Map_info *Map, int del);
 
 /* copy.c */
 int do_copy (struct Map_info *Map);
+
+/* flip.c */
+int do_flip (struct Map_info *Map);
 
 #endif
