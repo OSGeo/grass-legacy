@@ -16,11 +16,16 @@ COPYRIGHT: (C) 2007 by the GRASS Development Team
            for details.
 """
 
-import os
+import os, sys
+
+usePopenClass = True
+
 try:
    import subprocess
 except:
-   import combat.subprocess as subprocess
+   CombatPath = os.getenv("GISBASE") + "/etc/wx"
+   sys.path.append(CombatPath)
+   from compat import subprocess
 
 import grassenv
 
@@ -64,26 +69,23 @@ class Command:
 
         os.environ["GRASS_MESSAGE_FORMAT"] = "gui"
         # run command
-        if 0:
-            (self.module_stdin, self.module_stdout, self.module_stderr) = \
-                os.popen3(self.cmd)
+        if not usePopenClass:
+           (self.module_stdin, self.module_stdout, self.module_stderr) = \
+                               os.popen3(self.cmd)
         else:
-            self.module = subprocess.Popen(self.cmd, shell=True,
-                                           stdin=subprocess.PIPE,
-                                           stdout=subprocess.PIPE,
-                                           stderr=subprocess.PIPE,
-                                           close_fds=True)
-
-        os.environ["GRASS_MESSAGE_FORMAT"] = "text"
-
-        if self.module:
-            self.module_stdin  = self.module.stdin
-            self.module_stderr = self.module.stderr
+           self.module = subprocess.Popen(self.cmd, shell=True,
+                                          stdin=subprocess.PIPE,
+                                          stdout=subprocess.PIPE,
+                                          stderr=subprocess.PIPE,
+                                          close_fds=True)
+           self.module_stdin  = self.module.stdin
+           self.module_stderr = self.module.stderr
 
         if stdin:
-            self.module_stdin.write(stdin)
-            self.module_stdin.close()
+           self.module_stdin.write(stdin)
+           self.module_stdin.close()
 
+        os.environ["GRASS_MESSAGE_FORMAT"] = "text"
             
         try:
             self.Run(verbose)
@@ -146,7 +148,7 @@ if __name__ == "__main__":
     # v.net.path silently, wait for process termination
     print "Running v.net.path for 0 593527.6875 4925297.0625 602083.875 4917545.8125..."
 
-    cmd = Command(cmd="v.net.path in=roads@PERMANENT out=tmp --o",
+    cmd = Command(cmd="v.net.path in=roads@PERMANENT out=tmp dmax=100000 --o",
                   stdin="0 593527.6875 4925297.0625 602083.875 4917545.8125",
                   verbose=False,
                   wait=True)
