@@ -29,6 +29,7 @@ import toolbars
 import grassenv
 import track
 import menuform
+from digit import Digit as Digit
 
 import images
 imagepath = images.__path__[0]
@@ -650,9 +651,11 @@ class BufferedWindow(wx.Window):
 
             # digitizing
             elif self.parent.digittoolbar:
-                if self.parent.digittoolbar.digitize == "point":
+                if self.parent.digittoolbar.action == "addpoint":
+                    #self.SetCursor (self.parent.cursors["cross"])
                     east,north= self.Pixel2Cell(self.mouse['begin'][0],self.mouse['begin'][1])
-                    self.parent.digittoolbar.AddPoint(east,north)
+                    Digit.AddPoint(self.parent.digittoolbar.layers[self.parent.digittoolbar.layerID],
+                                         east,north)
                 # redraw map
                 self.render=True
                 self.UpdateMap()
@@ -1016,7 +1019,9 @@ class MapFrame(wx.Frame):
     	# Init map display
         #
     	self.InitDisplay() # initialize region values
-#    	self.MapWindow = DrawWindow(self) # initialize buffered DC
+
+        # initialize buffered DC
+        # self.MapWindow = DrawWindow(self)
         self.MapWindow = BufferedWindow(self, id = wx.ID_ANY) # initialize buffered DC
     	self.MapWindow.Bind(wx.EVT_MOTION, self.OnMotion)
 
@@ -1063,17 +1068,40 @@ class MapFrame(wx.Frame):
         """
         if name == "map":
             self.maptoolbar = toolbars.MapToolbar(self, self.Map)
-            self._mgr.AddPane(self.maptoolbar.toolbar, wx.aui.AuiPaneInfo().
-                          Name("maptoolbar").Caption("Map Toolbar").
-                          ToolbarPane().Top().LeftDockable(False).RightDockable(False).
-                          BottomDockable(True).CloseButton(False))
 
-        if name == "digit":
-            self.digittoolbar = toolbars.DigitToolbar(self,self.Map)
+            self._mgr.AddPane(self.maptoolbar.toolbar,
+                              wx.aui.AuiPaneInfo().
+                              Name("maptoolbar").Caption("Map Toolbar").
+                              ToolbarPane().Top().LeftDockable(True).RightDockable(False).
+                              BottomDockable(False).TopDockable(False).CloseButton(False))
+
+        elif name == "digit":
+            self.digittoolbar = toolbars.DigitToolbar(self, self.Map)
+
             self._mgr.AddPane(self.digittoolbar.toolbar, wx.aui.AuiPaneInfo().
-                          Name("digittoolbar").Caption("Digit Toolbar").
-                          ToolbarPane().Top().LeftDockable(False).RightDockable(False).
-                          BottomDockable(True).CloseButton(False))
+                              Name("digittoolbar").Caption("Digit Toolbar").
+                              ToolbarPane().Top().Row(1).LeftDockable(False).RightDockable(True).
+                              BottomDockable(False).TopDockable(False).CloseButton(False))
+
+        self._mgr.Update()
+
+    def RemoveToolbar (self, name):
+        """
+        Removes toolbar from the window
+
+        TODO: Only hide, activate by calling AddToolbar()
+        """
+
+        # cannot hide main toolbar
+        if name == "map":
+            return
+        elif name == "digit":
+            # TODO: not destroy only hide
+            self._mgr.DetachPane (self.digittoolbar.toolbar)
+            self.digittoolbar.toolbar.Destroy()
+            self.digittoolbar = None
+            
+        self.maptoolbar.combo.SetValue ("");
         self._mgr.Update()
 
     def InitDisplay(self):
