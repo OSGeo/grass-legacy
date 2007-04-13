@@ -13,24 +13,24 @@
 
 #include <grass/gis.h>
 
-
 /**
- * \fn int G_copy (void *a,void *b, int n)
+ * \fn int G_copy (void *a, void *b, int n)
  *
  * \brief Copies <b>n</b> bytes starting at address <b>b</b> into 
  * address <b>a</b>.
  *
- * \param[in,out] a
- * \param[in] b
- * \param[in] n
+ * \param[out] a destination (to)
+ * \param[in]  b source (from)
+ * \param[in]  n number of bytes to copy
+ *
  * \return always returns 0
  */
-
-int G_copy ( void *a,void *b,int n)
+int G_copy (void *a, void *b, int n)
 {
-	char *ap,*bp;
-	ap = a;
-	bp = b;
+    char *ap,*bp;
+    
+    ap = a;
+    bp = b;
 
     while (n-- > 0)
 	*ap++ = *bp++;

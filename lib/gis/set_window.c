@@ -1,23 +1,32 @@
-/*
- *******************************************************************
- * G_set_window (window)
- *     Cell_head *window          window to become operative window
+/**
+ * \file set_window.c
  *
- *   Establishes 'window' as the current working window.  Any opened
- *   cell files has its file-to-window mapping reworked.
+ * \brief Set window
  *
- *******************************************************************
- * G_get_set_window (window)
- *     Cell_head *window
- * 
- *   The current working window values are returned in the structure
- *   'window'.
- *******************************************************************/
+ * This program is free software under the GNU General Public License
+ * (>=v2). Read the file COPYING that comes with GRASS for details.
+ *
+ * \author GRASS GIS Development Team
+ *
+ * \date 1999-2007
+ */
 
 #include <grass/gis.h>
 #include <grass/glocale.h>
 #include "G.h"
 
+/**
+ * \fn int G_get_set_window (struct Cell_head *window)
+ *
+ * \brief Get the current working window.
+ *
+ * The current working window values are returned in the structure
+ * 'window'.
+ *
+ * \return 1
+ *
+ * \param[out] window window structure to be set
+ */
 int G_get_set_window (struct Cell_head *window)
 {
     G__init_window() ;
@@ -26,17 +35,30 @@ int G_get_set_window (struct Cell_head *window)
     return 1;
 }
 
+
+/**
+ * \fn int G_set_window (struct Cell_head *window)
+ *
+ * \brief Establishes 'window' as the current working window.
+ * 
+ * Any opened cell files has its file-to-window mapping reworked.
+ *
+ * \return -1 on error
+ * \return  1 on success
+ *
+ * \param[in] window window to become operative window
+ */
 int G_set_window (struct Cell_head *window)
 {
     int i;
     int maskfd;
     char *err;
 
-/* adjust window, check for valid window */
-/* adjust the real one, not a copy
-    G_copy (&twindow, window, sizeof(struct Cell_head));
-    window = &twindow;
-*/
+    /* adjust window, check for valid window */
+    /* adjust the real one, not a copy
+       G_copy (&twindow, window, sizeof(struct Cell_head));
+       window = &twindow;
+    */
 
     if ((err = G_adjust_Cell_head (window, 0,0)))
     {
@@ -44,9 +66,9 @@ int G_set_window (struct Cell_head *window)
 	return -1;
     }
 
-/* except for MASK, cell files open for read must have same projection
- * and zone as new window
- */
+    /* except for MASK, cell files open for read must have same projection
+     * and zone as new window
+     */
     maskfd = G__.auto_mask > 0 ? G__.mask_fd : - 1;
     for (i = 0; i < G__.fileinfo_count; i++)
     {
@@ -57,31 +79,32 @@ int G_set_window (struct Cell_head *window)
 		    continue;
 	    if (i != maskfd)
 	    {
-		G_warning (_("G_set_window(): projection/zone differs from that of currently open raster maps"));
+		G_warning (_("G_set_window(): projection/zone differs from that of "
+			     "currently open raster maps"));
 		return -1;
 	    }
 	}
     }
-
-/* close the mask */
+    
+    /* close the mask */
     if (G__.auto_mask > 0)
     {
 	G_close_cell (maskfd);
-/*	G_free (G__.mask_buf);*/
+        /* G_free (G__.mask_buf); */
 	G__.mask_fd = -1;
 	G__.auto_mask = -1;	/* turn off masking */
     }
 
-/* copy the window to the current window */
+    /* copy the window to the current window */
     G_copy ((char *) &G__.window, (char *) window, sizeof (*window));
 
     G__.window_set = 1;
 
-/* now for each possible open cell file, recreate the window mapping */
-/*
- * also the memory for reading and writing must be reallocated for all opened
- * cell files
-*/
+    /* now for each possible open cell file, recreate the window mapping */
+    /*
+     * also the memory for reading and writing must be reallocated for all opened
+     * cell files
+     */
     for (i = 0; i < G__.fileinfo_count; i++)
     {
         if(G__.fileinfo[i].open_mode != OPEN_OLD &&
@@ -121,10 +144,10 @@ int G_set_window (struct Cell_head *window)
 */
     }
 
-/* turn masking (back) on if necessary */
+    /* turn masking (back) on if necessary */
     G__check_for_auto_masking ();
 
-/* reallocate/enlarge the G__. buffers for reading raster maps */
+    /* reallocate/enlarge the G__. buffers for reading raster maps */
     G__reallocate_null_buf();
     G__reallocate_mask_buf();
     G__reallocate_temp_buf();
