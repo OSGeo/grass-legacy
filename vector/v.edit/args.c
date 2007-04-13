@@ -33,7 +33,7 @@ int parser(int argc, char*argv[])
 			       "merge;"
 			       "Merge vector line(s);"
 			       "split;"
-			       "Split line(s) into two separate lines;"
+			       "Split line into two separate lines;"
 			       "select;"
 			       "Select lines and print their ID's;"
 			       "catadd;"
@@ -43,14 +43,16 @@ int parser(int argc, char*argv[])
 			       "copy;"
 			       "Copy selected features;"
 			       "snap;"
-			       "Snap one line to another");
-    tool_opt->options     = "create,add,delete,move,vertex,straight,merge,"
-      "break,split,select,catadd,catdel,copy,snap";
+			       "Snap one line to another;"
+			       "flip;"
+			       "Flip direction of selected vector lines");
+    tool_opt->options     = "create,add,delete,copy,move,select,catadd,catdel,flip,merge,"
+      "break,split,snap,vertex,straight";
 
     in_opt = G_define_standard_option (G_OPT_F_INPUT);
     in_opt -> required = NO;
     in_opt -> description = _("ASCII file to be converted to binary vector map, "
-			      "if not given reads from standard input");
+			      "if not given (or \"-\") reads from standard input");
 
     move_opt = G_define_option();
     move_opt->key         = "move";
@@ -121,7 +123,7 @@ int parser(int argc, char*argv[])
 
     n_flg = G_define_flag();
     n_flg->key          = 'n';
-    n_flg->description  = _("Do not expect a header");
+    n_flg->description  = _("Do not expect header of input data");
 
     if(G_parser(argc, argv))
 	exit (EXIT_FAILURE);
@@ -194,6 +196,10 @@ int parser(int argc, char*argv[])
     else if(G_strcasecmp (tool_opt->answer, "snap") == 0) {
 	/* del requires a cats or or bbox or coords */ 
 	action_mode = MODE_SNAP;
+    }
+    else if(G_strcasecmp (tool_opt->answer, "flip") == 0) {
+	/* del requires a cats or or bbox or coords */ 
+	action_mode = MODE_FLIP;
     }
     else
     {

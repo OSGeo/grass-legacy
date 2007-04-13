@@ -88,48 +88,51 @@ int main (int argc, char *argv[])
     switch(action_mode) {
     case MODE_CREATE:
 	break;
-      case MODE_ADD:
+    case MODE_ADD:
         if ( ! n_flg->answer )
             read_head(ascii, &Map);
         ret = asc_to_bin(ascii, &Map) ;
 	break;
-      case MODE_DEL:
+    case MODE_DEL:
 	ret = do_del(&Map);
 	break;
-      case MODE_MOVE:
+    case MODE_MOVE:
         ret = do_move(&Map);
         break;
-      case MODE_VERTEX:
+    case MODE_VERTEX:
         ret = do_move_vertex(&Map);
         break;
-      case MODE_BREAK:
+    case MODE_BREAK:
         ret = do_break(&Map);
         break;
-      case MODE_STRAIGHTEN:
+    case MODE_STRAIGHTEN:
         ret = do_remove_vertex(&Map);
         break;
-      case MODE_SPLIT:
+    case MODE_SPLIT:
         ret = do_split(&Map);
         break;
-      case MODE_MERGE:
+    case MODE_MERGE:
         ret = do_merge(&Map);
         break;
-      case MODE_SELECT:
+    case MODE_SELECT:
         ret = do_print_selected(&Map);
         break;
-      case MODE_CATADD:
+    case MODE_CATADD:
         ret = cats(&Map, 0);
         break;
-      case MODE_CATDEL:
+    case MODE_CATDEL:
         ret = cats(&Map, 1);
         break;
-      case MODE_COPY:
+    case MODE_COPY:
         ret = do_copy(&Map);
         break;
-      case MODE_SNAP:
-        ret = do_snap(&Map);
-        break;
-      default:
+    case MODE_SNAP:
+	ret = do_snap(&Map);
+	break;
+    case MODE_FLIP:
+	ret = do_flip(&Map);
+	break;
+    default:
 	G_warning(_("Operation not implemented."));
 	ret = -1;
 	break;
