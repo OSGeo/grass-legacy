@@ -45,10 +45,10 @@ class Log:
         self.parent.SetStatusText(text_string.strip())
 
 #----------------------------------------------------------------------
-# The panel you want to test (TestVirtualList)
+# The panel you want to test (VirtualAttributeList)
 #----------------------------------------------------------------------
 
-class TestVirtualList(wx.ListCtrl, listmix.ListCtrlAutoWidthMixin, listmix.ColumnSorterMixin):
+class VirtualAttributeList(wx.ListCtrl, listmix.ListCtrlAutoWidthMixin, listmix.ColumnSorterMixin):
     def __init__(self, parent,log,vectmap,pointdata=None):
         wx.ListCtrl.__init__( self, parent, -1, style=wx.LC_REPORT|wx.LC_HRULES|wx.LC_VRULES) #wx.VIRTUAL
 
@@ -86,14 +86,10 @@ class TestVirtualList(wx.ListCtrl, listmix.ListCtrlAutoWidthMixin, listmix.Colum
         self.SetImageList(self.il, wx.IMAGE_LIST_SMALL)
 
         # show us the result in map display
-        if self.parent.gismanager:
+        if self.Parent.gismanager:
 
-            self.gism = self.parent.gismanager
-            curr_pg = self.gism.gm_cb.GetCurrentPage()
-            disp_idx = self.gism.track.Track().GetDisp_idx(curr_pg)
-
-            self.mapdisp =  self.parent.gismanager.mapdisplays[disp_idx]
-            self.map = self.gism.maptree.Map
+            self.mapdisp =  self.Parent.gismanager.curr_page.maptree.mapdisplay
+            self.map = self.Parent.gismanager.curr_page.maptree.Map
 
 
         #building the columns
@@ -151,7 +147,7 @@ class TestVirtualList(wx.ListCtrl, listmix.ListCtrlAutoWidthMixin, listmix.Colum
         #self.list.Bind(wx.EVT_LEFT_DCLICK, self.OnDoubleClick)
         #self.list.Bind(wx.EVT_RIGHT_DOWN, self.OnRightDown)
 
-        if self.parent.gismanager:
+        if self.Parent.gismanager:
             self.mapdisp.MapWindow.Bind(wx.EVT_LEFT_DOWN, self.onMapClick)
 
             self.timer = wx.PyTimer(self.RedrawMap)
@@ -519,7 +515,7 @@ class AttributeManager(wx.Frame):
         self.gismanager = parent
 
         # most importand part
-        self.win = TestVirtualList(self, log,vectmap=vectmap,pointdata=pointdata)
+        self.win = VirtualAttributeList(self, log,vectmap=vectmap,pointdata=pointdata)
 
         # buttons
         self.btn_apply = wx.Button(self, -1, "Apply")

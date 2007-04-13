@@ -8,14 +8,20 @@ class:
 
 import wx
 import os
-import wxgui_utils
+#import wxgui_utils
 
 import cmd
 
-icons= os.path.split(wxgui_utils.icons)[0]
-icons= os.path.split(icons)[0]
-icons= os.path.split(icons)[0]
+#icons= os.path.split(icons)[0]
+#icons= os.path.split(icons)[0]
+#icons= os.path.split(icons)[0]
 #print icons
+
+if not os.getenv("GRASS_ICONPATH"):
+    icons = os.getenv("GISBASE") + "/etc/gui/icons/"
+else:
+    icons = os.environ["GRASS_ICONPATH"]
+
 
 class MapToolbar:
     """
@@ -30,7 +36,7 @@ class MapToolbar:
         self.mapdisplay = mapdisplay
 
     	self.toolbar = wx.ToolBar(parent=self.mapdisplay, id=wx.ID_ANY)
-                                  
+
     	#self.SetToolBar(self.toolbar)
         tsize = (24, 24)
         self.toolbar.SetToolBitmapSize(tsize)
@@ -38,14 +44,14 @@ class MapToolbar:
         #
         # Draw
         #
-   	self.displaymap = self.toolbar.AddLabelTool(id=wx.ID_ANY, label="displaymap",
-                                                    bitmap=wx.Bitmap(name=os.path.join(wxgui_utils.icons, "gui-display.gif")),
-                                                    bmpDisabled=wx.NullBitmap,
-                                                    kind=wx.ITEM_NORMAL,
-                                                    shortHelp="Display map",
-                                                    longHelp="")
+
+    	self.displaymap = self.toolbar.AddLabelTool(id=wx.ID_ANY, label="displaymap",
+                                                    bitmap=wx.Bitmap(name=os.path.join(icons,"gui-display.gif"),
+                                                    type=wx.BITMAP_TYPE_ANY),
+                                                    bmpDisabled=wx.NullBitmap, kind=wx.ITEM_NORMAL,
+                                                    shortHelp="Display map", longHelp="")
     	self.erase = self.toolbar.AddLabelTool(wx.ID_ANY, "erase",
-                                               wx.Bitmap(os.path.join(wxgui_utils.icons,"gui-erase.gif"),
+                                               wx.Bitmap(os.path.join(icons,"gui-erase.gif"),
                                                wx.BITMAP_TYPE_ANY),
                                                wx.NullBitmap, wx.ITEM_NORMAL, "Erase display", "")
     	self.toolbar.AddSeparator()
@@ -54,44 +60,44 @@ class MapToolbar:
         # Zooming, etc.
         #
     	self.pointer = self.toolbar.AddLabelTool(id=wx.ID_ANY, label="pointer",
-                                                 bitmap=wx.Bitmap(os.path.join(wxgui_utils.icons,"gui-pointer.gif"),
+                                                 bitmap=wx.Bitmap(os.path.join(icons,"gui-pointer.gif"),
                                                                   wx.BITMAP_TYPE_ANY),
                                                  bmpDisabled=wx.NullBitmap,
                                                  kind=wx.ITEM_RADIO,
                                                  shortHelp="Pointer", longHelp="")
         self.zoomin  = self.toolbar.AddLabelTool(id=wx.ID_ANY, label="zoom_in",
-                                                 bitmap=wx.Bitmap(os.path.join(wxgui_utils.icons,"gui-zoom_in.gif"),
+                                                 bitmap=wx.Bitmap(os.path.join(icons,"gui-zoom_in.gif"),
                                                                   wx.BITMAP_TYPE_ANY),
                                                  bmpDisabled=wx.NullBitmap, kind=wx.ITEM_RADIO,
                                                  shortHelp="Zoom in", longHelp="Drag or click mouse to zoom")
     	self.zoomout = self.toolbar.AddLabelTool(id=wx.ID_ANY, label="zoom_out",
-                                                 bitmap=wx.Bitmap(os.path.join(wxgui_utils.icons,"gui-zoom_out.gif"),
+                                                 bitmap=wx.Bitmap(os.path.join(icons,"gui-zoom_out.gif"),
                                                                   wx.BITMAP_TYPE_ANY),
                                                  bmpDisabled=wx.NullBitmap,
                                                  kind=wx.ITEM_RADIO,
                                                  shortHelp="Zoom out", longHelp="Drag or click mouse to unzoom")
     	self.pan     = self.toolbar.AddLabelTool(id=wx.ID_ANY, label="pan",
-                                                 bitmap=wx.Bitmap(os.path.join(wxgui_utils.icons,"gui-pan.gif"),
+                                                 bitmap=wx.Bitmap(os.path.join(icons,"gui-pan.gif"),
                                                                   wx.BITMAP_TYPE_ANY),
                                                  bmpDisabled=wx.NullBitmap,
                                                  kind=wx.ITEM_RADIO,
                                                  shortHelp="Pan", longHelp="Drag with mouse to pan")
     	self.query     = self.toolbar.AddLabelTool(id=wx.ID_ANY, label="query",
-                                                   bitmap=wx.Bitmap(os.path.join(wxgui_utils.icons,"gui-query.gif"),
-                                                                  wx.BITMAP_TYPE_ANY),
-                                                   bmpDisabled=wx.NullBitmap,
-                                                   kind=wx.ITEM_RADIO,
-                                                   shortHelp="Query", longHelp="Query selected map")
+                                                 bitmap=wx.Bitmap(os.path.join(icons,"gui-query.gif"),
+                                                 wx.BITMAP_TYPE_ANY),
+                                                 bmpDisabled=wx.NullBitmap,
+                                                 kind=wx.ITEM_RADIO,
+                                                 shortHelp="Query", longHelp="Query selected map")
         self.toolbar.AddSeparator()
 
 
         self.zoomback = self.toolbar.AddLabelTool(id=wx.ID_ANY, label="zoom_back",
-                                                 bitmap=wx.Bitmap(os.path.join(wxgui_utils.icons,"gui-zoom_back.gif"),
+                                                 bitmap=wx.Bitmap(os.path.join(icons,"gui-zoom_back.gif"),
                                                                   wx.BITMAP_TYPE_ANY),
                                                  bmpDisabled=wx.NullBitmap, kind=wx.ITEM_NORMAL,
                                                  shortHelp="Zoom options", longHelp="Display zoom management")
         self.zoommenu     = self.toolbar.AddLabelTool(id=wx.ID_ANY, label="zoommenu",
-                                                 bitmap=wx.Bitmap(os.path.join(wxgui_utils.icons,"gui-mapzoom.gif"),
+                                                 bitmap=wx.Bitmap(os.path.join(icons,"gui-mapzoom.gif"),
                                                                   wx.BITMAP_TYPE_ANY),
                                                  bmpDisabled=wx.NullBitmap,
                                                  shortHelp="Decoration", longHelp="Add graphic overlays to map")
@@ -99,10 +105,10 @@ class MapToolbar:
 
 
         self.dec     = self.toolbar.AddLabelTool(id=wx.ID_ANY, label="dec",
-                                                 bitmap=wx.Bitmap(os.path.join(wxgui_utils.icons,"module-d.barscale.gif"),
+                                                 bitmap=wx.Bitmap(os.path.join(icons,"module-d.barscale.gif"),
                                                                   wx.BITMAP_TYPE_ANY),
                                                  bmpDisabled=wx.NullBitmap,
-                                                 shortHelp="Decoration", 
+                                                 shortHelp="Decoration",
                                                  longHelp="Add graphic overlays to map")
 
         self.toolbar.AddSeparator()
@@ -111,7 +117,7 @@ class MapToolbar:
         # Misc
         #
     	self.savefile = self.toolbar.AddLabelTool(id=wx.ID_ANY, label="savefile",
-                                                  #bitmap=wx.Bitmap(os.path.join(wxgui_utils.icons,"file-save.gif"),
+                                                  #bitmap=wx.Bitmap(os.path.join(icons,"file-save.gif"),
                                                   #wx.BITMAP_TYPE_ANY),
                                                   # just testing wx.ArtProvider
                                                   bitmap=wx.ArtProvider.GetBitmap(id=wx.ART_FILE_SAVE, client=wx.ART_BUTTON, size=tsize),
@@ -121,7 +127,7 @@ class MapToolbar:
                                                   longHelp="")
 
         self.printmap = self.toolbar.AddLabelTool(id=wx.ID_ANY, label="printmap",
-                                                  #bitmap=wx.Bitmap(os.path.join(wxgui_utils.icons,"file-save.gif"),
+                                                  #bitmap=wx.Bitmap(os.path.join(icons,"file-save.gif"),
                                                   #wx.BITMAP_TYPE_ANY),
                                                   # just testing wx.ArtProvider
                                                   bitmap=wx.ArtProvider.GetBitmap(id=wx.ART_PRINT, client=wx.ART_BUTTON),
@@ -183,7 +189,7 @@ class DigitToolbar:
         # create toolbar
     	self.toolbar = wx.ToolBar(parent=self.parent, id=wx.ID_ANY)
         self.toolbar.SetToolBitmapSize(wx.Size(24,24))
-        
+
         self.initToolbar()
 
     def initToolbar(self):
@@ -191,9 +197,9 @@ class DigitToolbar:
                                  choices=self.layers, size=(150, -1))
 
         self.comboid = self.toolbar.AddControl(self.combo)
-        
+
         self.toolbar.AddSeparator()
-        
+
         self.point = self.toolbar.AddLabelTool(id=wx.ID_ANY, label="point",
                                                bitmap=wx.Bitmap(os.path.join(self.icons,"new.point.gif"),
                                                                 wx.BITMAP_TYPE_ANY),
@@ -240,7 +246,7 @@ class DigitToolbar:
     	self.parent.Bind(wx.EVT_TOOL,     self.OnAddPoint,  self.point)
         self.parent.Bind(wx.EVT_TOOL,     self.OnExit,      self.exit)
         self.parent.Bind(wx.EVT_COMBOBOX, self.OnSelectMap, self.comboid)
-        
+
     def OnAddPoint(self,event):
 
         self.action="addpoint"
@@ -250,7 +256,7 @@ class DigitToolbar:
         """
         Quit digitization tool
         """
-        
+
         self.parent.RemoveToolbar ("digit")
 
     def OnSelectMap (self, event):
@@ -258,11 +264,11 @@ class DigitToolbar:
         Select vector map to digitize
 
         If any vector map is activated for digitization this action
-        is firstly terminated 
+        is firstly terminated
         """
 
         self.layerID = self.combo.GetCurrentSelection()
-        
+
         # digitize (self.layers[self.layerID], mapset)
 
     def _getListOfLayers(self):

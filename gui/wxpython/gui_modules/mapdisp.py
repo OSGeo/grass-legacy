@@ -53,7 +53,7 @@ if not os.getenv("GRASS_ICONPATH"):
 else:
     icons = os.environ["GRASS_ICONPATH"]
 
-Map = render.Map() # instance of Map class to render GRASS display output to PPM file
+#Map = render.Map() # instance of Map class to render GRASS display output to PPM file
 
 # for cmdlinef
 cmdfilename = None
@@ -69,7 +69,7 @@ class Command(Thread):
       global cmdfilename
 
       self.parent = parent
-      self.map = Map #
+      self.map = render.Map() # instance of Map class to render GRASS display output to PPM file
       self.cmdfile = open(cmdfilename,"r")
 
     def run(self):
@@ -165,11 +165,13 @@ class BufferedWindow(wx.Window):
     def __init__(self, parent, id,
                  pos = wx.DefaultPosition,
                  size = wx.DefaultSize,
-                 style=wx.NO_FULL_REPAINT_ON_RESIZE):
+                 style=wx.NO_FULL_REPAINT_ON_RESIZE,
+                 Map=None, tree=None):
 
     	wx.Window.__init__(self, parent, id, pos, size, style)
         self.parent = parent
         self.Map = Map
+        self.tree = tree
 
         #
         # Flags
@@ -345,7 +347,7 @@ class BufferedWindow(wx.Window):
     	"""
         All that is needed here is to draw the buffer to screen
         """
-    	dc = wx.BufferedPaintDC(self, self._Buffer)
+    	dc = wx.BufferedPaintDC(self)
 
         # use PrepateDC to set position correctly
         self.PrepareDC(dc)
@@ -630,11 +632,11 @@ class BufferedWindow(wx.Window):
             self.ovlcoords[self.dragid] = self.pdc.GetIdBounds(self.dragid)
             if self.dragid > 100:
                 self.currtxtid = self.dragid
-                self.Parent.addText(None)
+                self.parent.addText(None)
             elif self.dragid == 0:
-                self.Parent.addBarscale(None)
+                self.parent.addBarscale(None)
             elif self.dragid == 1:
-                self.Parent.addLegend(None)
+                self.parent.addLegend(None)
 
     	# left mouse button released and not just a pointer
         elif event.LeftUp():
@@ -663,10 +665,10 @@ class BufferedWindow(wx.Window):
             # querying
             elif self.mouse["box"] == "query":
                 east,north = self.Pixel2Cell(self.mouse['begin'][0],self.mouse['begin'][1])
-                if self.parent.gismanager:
-                    layer =  self.parent.gismanager.maptree.GetSelection()
-                    type =   self.parent.gismanager.maptree.layertype[layer]
-                    dcmd = self.parent.gismanager.maptree.GetPyData(layer)[0]
+                if self.tree.GetSelection():
+                    layer =  self.tree.GetSelection()
+                    type =   self.tree.layertype[layer]
+                    dcmd = self.tree.GetPyData(layer)[0]
                     mapname = None
                     for item in dcmd.split(' '):
                         if 'map=' in item:
@@ -817,11 +819,10 @@ class BufferedWindow(wx.Window):
         or vector map.
         """
 
-        if not self.parent.gismanager: return
-        if not self.parent.gismanager.maptree.GetSelection(): return
-        layer =  self.parent.gismanager.maptree.GetSelection()
-        type =   self.parent.gismanager.maptree.layertype[layer]
-        dcmd = self.parent.gismanager.maptree.GetPyData(layer)[0]
+        if not self.tree.GetSelection(): return
+        layer =  self.tree.GetSelection()
+        type =   self.tree.layertype[layer]
+        dcmd = self.tree.GetPyData(layer)[0]
         mapname = None
         for item in dcmd.split(' '):
             if 'map=' in item:
@@ -948,7 +949,8 @@ class MapFrame(wx.Frame):
 
     def __init__(self, parent=None, id = wx.ID_ANY, title="Map display",
                  pos=wx.DefaultPosition, size=wx.DefaultSize,
-                 style=wx.DEFAULT_FRAME_STYLE, toolbars=["map"], cb=None, idx=-1):
+                 style=wx.DEFAULT_FRAME_STYLE, toolbars=["map"],
+                 cb=None, gismgr=None, Map=None):
 
 
         """
@@ -971,8 +973,9 @@ class MapFrame(wx.Frame):
         wx.Frame.__init__(self, parent, id, title, pos, size, style)
 
         # most of the thime, this will be the gis manager
-        self.gismanager = parent
+        self.gismanager = gismgr
         self.Map = Map
+        self.tree = parent
 
         #
         # Set the size
@@ -1022,7 +1025,7 @@ class MapFrame(wx.Frame):
 
         # initialize buffered DC
         # self.MapWindow = DrawWindow(self)
-        self.MapWindow = BufferedWindow(self, id = wx.ID_ANY) # initialize buffered DC
+        self.MapWindow = BufferedWindow(self, id = wx.ID_ANY, Map=self.Map, tree=self.tree) # initialize buffered DC
     	self.MapWindow.Bind(wx.EVT_MOTION, self.OnMotion)
 
         #
@@ -1303,7 +1306,7 @@ class MapFrame(wx.Frame):
         """
         # switch GIS Manager to output console to show query results
 
-        self.Parent.notebook.SetSelection(1)
+        self.gismanager.notebook.SetSelection(1)
 
     	self.MapWindow.mouse['box'] = "query"
     	self.MapWindow.zoomtype = 0
@@ -1629,7 +1632,7 @@ class DecDialog(wx.Dialog):
         """
 
         menuform.GUI().parseCommand(self.ovlcmd, gmpath,
-                                    completed=(self.Parent.getOptData,self.ovltype,self.params),
+                                    completed=(self.parent.getOptData,self.ovltype,self.params),
                                     parentframe=None)
 
 class TextDialog(wx.Dialog):

@@ -7,6 +7,10 @@ import string
 import track
 import select
 import menuform
+import mapdisp
+import render
+
+
 
 #FIXME??
 try:
@@ -35,7 +39,7 @@ class LayerTree(CT.CustomTreeCtrl):
                  size=wx.DefaultSize, style=wx.SUNKEN_BORDER,
                  ctstyle=CT.TR_HAS_BUTTONS | CT.TR_HAS_VARIABLE_ROW_HEIGHT |
                  CT.TR_HIDE_ROOT | CT.TR_ROW_LINES | CT.TR_FULL_ROW_HIGHLIGHT|
-                 CT.TR_EDIT_LABELS, disp=None, log=None):
+                 CT.TR_EDIT_LABELS, idx=None, gismgr=None, gm_cb=None):
         CT.CustomTreeCtrl.__init__(self, parent, id, pos, size, style,ctstyle)
 
         self.SetAutoLayout(True)
@@ -43,7 +47,7 @@ class LayerTree(CT.CustomTreeCtrl):
         self.EnableSelectionGradient(True)
         self.SetFirstGradientColour(wx.Colour(150, 150, 150))
 
-        self.Map = "" # instance of render.Map associated with display
+        self.Map = render.Map() # instance of render.Map to be associated with display
         self.root = ""      # ID of layer tree root node
         self.groupnode = 0       # index value for layers
         self.optpage = {}   # dictionary of notebook option pages for each map layer
@@ -53,8 +57,33 @@ class LayerTree(CT.CustomTreeCtrl):
         self.saveitem = {} # dictionary to preserve layer attributes for drag and drop
         self.first = True # indicates if a layer is just added or not
         self.drag = False # flag to indicate a drag event is in process
+        self.disp_idx = idx
+        self.gismgr = gismgr
+        self.gm_cb = gm_cb # GIS Manager notebook for layer tree
+        self.treepg = parent # notebook page holding layer tree
 
-        self.Map = disp.getRender()
+        # init associated map display
+        self.mapdisplay = mapdisp.MapFrame(self,
+                          id=wx.ID_ANY, pos=wx.DefaultPosition, size=wx.DefaultSize,
+                          style=wx.DEFAULT_FRAME_STYLE,
+                          cb=self.gm_cb, gismgr=self.gismgr, Map=self.Map)
+
+
+        # title
+        self.mapdisplay.SetTitle(_("Map Display " + str(self.disp_idx)))
+        #self.maptree[self.disp_idx] = self.mapdisplays[self.disp_idx].getTree()
+
+        # store information about display and associated controls in a dictionary in track.py
+        track.Track().SetDisp(self.disp_idx,self.mapdisplay)
+        track.Track().SetCtrlDict(self.disp_idx, self.mapdisplay, self.treepg, self)
+
+        #show new display
+        self.mapdisplay.Show()
+        self.mapdisplay.Refresh()
+        self.mapdisplay.Update()
+
+
+        self.Map = self.mapdisplay.getRender()
 
         self.root = self.AddRoot("Map Layers")
         self.SetPyData(self.root, (None,None))
@@ -134,7 +163,7 @@ class LayerTree(CT.CustomTreeCtrl):
         self.Bind(wx.EVT_TREE_BEGIN_DRAG, self.onBeginDrag)
         self.Bind(wx.EVT_TREE_END_DRAG, self.onEndDrag)
 
-    def AddLayer(self, idx, type):
+    def AddLayer(self, type):
         self.first = True
         params = {} # no initial options parameters
 
@@ -507,6 +536,9 @@ class LayerTree(CT.CustomTreeCtrl):
                 self.Map.changeLayer(item=layer, command=cmd, l_active=chk,
                                   l_hidden=hidden, l_opacity=opac, l_render=False)
 
+    def setNotebookPage(self,pg):
+        self.Parent.notebook.SetSelection(pg)
+
 class TreeCtrlComboPopup(wx.combo.ComboPopup):
     """
     Create a tree ComboBox for selecting maps and other GIS elements
@@ -729,10 +761,11 @@ class GMConsole(wx.Panel):
 #    	cmd = self.console_command.GetLineText(0)
     	cmdlst = cmd.split(' ')
         try:
-            disp_idx = int(track.Track().GetDisp()[0])
-            curr_disp = track.Track().GetDisp()[1]
+#            disp_idx = int(track.Track().GetDisp()[0])
+#            curr_disp = track.Track().GetDisp()[1]
+            curr_disp = self.Parent.Parent.curr_page.maptree.mapdisplay
         except:
-            disp_idx = None
+#            disp_idx = None
             curr_disp = None
 
     	if len(cmdlst) == 1 and cmd in gcmdlst:
@@ -762,11 +795,11 @@ class GMConsole(wx.Panel):
                     print 'Command type not yet implemented'
                     return
 
-                if disp_idx != None:
-                    # get layer tree for active display
-                    layertree = track.Track().GetCtrls(disp_idx, 2)
+#                if disp_idx != None:
+#                    # get layer tree for active display
+#                    layertree = track.Track().GetCtrls(disp_idx, 2)
                     # add layer
-                    layertree.AddLayer(disp_idx, layertype)
+                self.Parent.Parent.curr_page.maptree.AddLayer(layertype)
 
             else:
                 menuform.GUI().parseCommand(cmd, gmpath, parentframe=None)
