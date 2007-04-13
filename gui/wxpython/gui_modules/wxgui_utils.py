@@ -66,7 +66,7 @@ class LayerTree(CT.CustomTreeCtrl):
         self.mapdisplay = mapdisp.MapFrame(self,
                           id=wx.ID_ANY, pos=wx.DefaultPosition, size=wx.DefaultSize,
                           style=wx.DEFAULT_FRAME_STYLE,
-                          cb=self.gm_cb, gismgr=self.gismgr, Map=self.Map)
+                          cb=self.gm_cb, gismgr=self.gismgr, idx=self.disp_idx, Map=self.Map)
 
 
         # title

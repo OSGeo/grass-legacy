@@ -950,7 +950,7 @@ class MapFrame(wx.Frame):
     def __init__(self, parent=None, id = wx.ID_ANY, title="Map display",
                  pos=wx.DefaultPosition, size=wx.DefaultSize,
                  style=wx.DEFAULT_FRAME_STYLE, toolbars=["map"],
-                 cb=None, gismgr=None, Map=None):
+                 cb=None, gismgr=None, idx=None, Map=None):
 
 
         """
@@ -1103,7 +1103,7 @@ class MapFrame(wx.Frame):
             self._mgr.DetachPane (self.digittoolbar.toolbar)
             self.digittoolbar.toolbar.Destroy()
             self.digittoolbar = None
-            
+
         self.maptoolbar.combo.SetValue ("");
         self._mgr.Update()
 
