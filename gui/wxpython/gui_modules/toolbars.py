@@ -133,8 +133,8 @@ class MapToolbar:
         #
         # Optional toolbars
         #
-        self.combo = wx.ComboBox(self.toolbar, id=wx.ID_ANY, value='',
-                choices=['Digitize'], size=(-1, -1), style=wx.CB_READONLY , name='Tools')
+        self.combo = wx.ComboBox(parent=self.toolbar, id=wx.ID_ANY, value='Tools',
+                choices=['Digitize'], style=wx.CB_READONLY, size=(110, -1))
 
         self.comboid = self.toolbar.AddControl(self.combo)
 
@@ -187,8 +187,8 @@ class DigitToolbar:
         self.initToolbar()
 
     def initToolbar(self):
-        self.combo = wx.ComboBox(self.toolbar, id=4, value='Select vector map',
-                                 choices=self.layers, size=(-1, -1))
+        self.combo = wx.ComboBox(self.toolbar, id=wx.ID_ANY, value='Select vector map',
+                                 choices=self.layers, size=(150, -1))
 
         self.comboid = self.toolbar.AddControl(self.combo)
         
