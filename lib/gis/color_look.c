@@ -36,7 +36,7 @@
  */
 
 int G_lookup_colors (
-    CELL *cell,
+    const CELL *cell,
     unsigned char *red,unsigned char *grn,unsigned char *blu,
     unsigned char *set,
     int n,
@@ -76,7 +76,7 @@ int G_lookup_rgb_colors(map, mapset, r, g, b)
  */
 
 int G_lookup_c_raster_colors (
-    CELL *cell,
+    const CELL *cell,
     unsigned char *red, unsigned char *grn, unsigned char *blu,
     unsigned char *set,
     int n,
@@ -118,7 +118,7 @@ int G_lookup_c_raster_colors (
  */
 
 int G_lookup_raster_colors (
-    void *raster,
+    const void *raster,
     unsigned char *red, unsigned char *grn, unsigned char *blu,
     unsigned char *set,
     int n,
@@ -157,7 +157,7 @@ int G_lookup_raster_colors (
  *  \return int
  */
 
-int G_lookup_f_raster_colors  (FCELL *fcell, unsigned char *red, unsigned char *grn, unsigned char *blu, unsigned char *set, int n, struct Colors *colors)
+int G_lookup_f_raster_colors  (const FCELL *fcell, unsigned char *red, unsigned char *grn, unsigned char *blu, unsigned char *set, int n, struct Colors *colors)
 
 {
     G__organize_colors (colors); /* make sure the lookup tables are in place */
@@ -192,7 +192,7 @@ int G_lookup_f_raster_colors  (FCELL *fcell, unsigned char *red, unsigned char *
  *  \return int
  */
 
-int G_lookup_d_raster_colors  (DCELL *dcell, unsigned char *red, unsigned char *grn, unsigned char *blu, unsigned char *set, int n, struct Colors *colors)
+int G_lookup_d_raster_colors  (const DCELL *dcell, unsigned char *red, unsigned char *grn, unsigned char *blu, unsigned char *set, int n, struct Colors *colors)
 
 {
     G__organize_colors (colors); /* make sure the lookup tables are in place */
@@ -225,14 +225,14 @@ static int less (double x, double y)
 }
 		
 
-int G__lookup_colors  (void *raster, unsigned char *red, unsigned char *grn, unsigned char *blu, unsigned char *set, int n, struct Colors *colors, int  mod, int  rules_only, RASTER_MAP_TYPE data_type)
+int G__lookup_colors  (const void *raster, unsigned char *red, unsigned char *grn, unsigned char *blu, unsigned char *set, int n, struct Colors *colors, int  mod, int  rules_only, RASTER_MAP_TYPE data_type)
 
 {
     struct _Color_Info_ *cp;
     struct _Color_Rule_ *rule;
     DCELL dmin, dmax, val, dmod=0L, shift;
     CELL cat, min, max;
-    register void *ptr, *last_ptr=NULL;
+    register const void *ptr, *last_ptr=NULL;
     int invert;
     int found, r, g, b;
     int cell_type;
@@ -454,7 +454,7 @@ int G__lookup_colors  (void *raster, unsigned char *red, unsigned char *grn, uns
     return 0;
 }
 
-int G__interpolate_color_rule  (DCELL val, unsigned char *red, unsigned char *grn, unsigned char *blu, struct _Color_Rule_ *rule)
+int G__interpolate_color_rule  (DCELL val, unsigned char *red, unsigned char *grn, unsigned char *blu, const struct _Color_Rule_ *rule)
 
 {
     DCELL delta;

@@ -115,7 +115,7 @@ int G__create_window_mapping (int fd)
 
 
 /**
- * \fn double G_northing_to_row (double north, struct Cell_head *window)
+ * \fn double G_northing_to_row (double north, const struct Cell_head *window)
  *
  * \brief Northing to row.
  *
@@ -129,7 +129,7 @@ int G__create_window_mapping (int fd)
  */
 
 double G_northing_to_row (double north,
-    struct Cell_head *window)
+    const struct Cell_head *window)
 {
     return (window->north - north) / window->ns_res;
 }
@@ -164,7 +164,7 @@ double G_adjust_east_longitude (
 
 
 /**
- * \fn double G_adjust_easting (double east, struct Cell_head *window)
+ * \fn double G_adjust_easting (double east, const struct Cell_head *window)
  *
  * \brief Returns east larger than west.
  *
@@ -180,7 +180,7 @@ double G_adjust_east_longitude (
  */
 
 double G_adjust_easting ( double east,
-    struct Cell_head *window)
+    const struct Cell_head *window)
 {
     if (window->proj == PROJECTION_LL)
     {
@@ -194,7 +194,7 @@ double G_adjust_easting ( double east,
 
 
 /**
- * \fn double G_easting_to_col (double east, struct Cell_head *window)
+ * \fn double G_easting_to_col (double east, const struct Cell_head *window)
  *
  * \brief Easting to column.
  *
@@ -208,7 +208,7 @@ double G_adjust_easting ( double east,
  */
 
 double G_easting_to_col ( double east,
-    struct Cell_head *window)
+    const struct Cell_head *window)
 {
     east = G_adjust_easting (east, window);
 
@@ -217,7 +217,7 @@ double G_easting_to_col ( double east,
 
 
 /**
- * \fn double G_row_to_northing (double row, struct Cell_head *window)
+ * \fn double G_row_to_northing (double row, const struct Cell_head *window)
  *
  * \brief Row to northing.
  *
@@ -236,14 +236,14 @@ double G_easting_to_col ( double east,
  */
 
 double G_row_to_northing ( double row,
-    struct Cell_head *window)
+    const struct Cell_head *window)
 {
     return window->north - row * window->ns_res;
 }
 
 
 /**
- * \fn double G_col_to_easting (double col, struct Cell_head *window)
+ * \fn double G_col_to_easting (double col, const struct Cell_head *window)
  *
  * \brief Column to easting.
  *
@@ -259,7 +259,7 @@ double G_row_to_northing ( double row,
  */
 
 double G_col_to_easting (double col,
-    struct Cell_head *window)
+    const struct Cell_head *window)
 {
     return window->west + col * window->ew_res;
 }
@@ -291,7 +291,7 @@ double G_col_to_easting (double col,
  *  \return int number of rows
  */
 
-int G_window_rows ()
+int G_window_rows (void)
 {
     G__init_window () ;
 
@@ -326,7 +326,7 @@ int G_window_rows ()
  * \return int number of columns
  */
 
-int G_window_cols ()
+int G_window_cols (void)
 {
     G__init_window () ;
     
@@ -342,7 +342,7 @@ int G_window_cols ()
  * \return always returns 0
  */
 
-int G__init_window ()
+int G__init_window (void)
 {
     if (!G__.window_set)
     {

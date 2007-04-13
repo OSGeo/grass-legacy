@@ -17,7 +17,7 @@
 
 
 /**
- * \fn char *G_align_window (struct Cell_head *window, struct Cell_head *ref)
+ * \fn char *G_align_window (struct Cell_head *window, const struct Cell_head *ref)
  *
  * \brief Align two regions.
  *
@@ -38,7 +38,7 @@
  */
 
 char *
-G_align_window  (struct Cell_head *window, struct Cell_head *ref)
+G_align_window  (struct Cell_head *window, const struct Cell_head *ref)
 {
     int preserve;
 

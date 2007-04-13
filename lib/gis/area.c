@@ -24,11 +24,11 @@ static double units_to_meters_squared = 0.0;
 static int next_row;
 static double north_value;
 static double north;
-static double (*darea0)();
+static double (*darea0)(double);
 
 
 /**
- * \fn int G_begin_cell_area_calculations ()
+ * \fn int G_begin_cell_area_calculations (void)
  *
  * \brief Begin cell area calculations.
  *
@@ -46,7 +46,7 @@ static double (*darea0)();
  * \return 2 if the projection is non-planimetric (ie. latitude-longitude)
  */
 
-int G_begin_cell_area_calculations()
+int G_begin_cell_area_calculations(void)
 {
     double a, e2;
     double factor;
@@ -115,7 +115,7 @@ G_area_of_cell_at_row (int row)
 
 
 /**
- * \fn int G_begin_polygon_area_calculations ()
+ * \fn int G_begin_polygon_area_calculations (void)
  *
  * \brief Begin polygon area calculations.
  *
@@ -127,7 +127,7 @@ G_area_of_cell_at_row (int row)
  * \return 2 if the projection is non-planimetric (ie. latitude-longitude)
  */
 
-int G_begin_polygon_area_calculations()
+int G_begin_polygon_area_calculations(void)
 {
     double a, e2;
     double factor;
@@ -150,7 +150,7 @@ int G_begin_polygon_area_calculations()
 
 
 /**
- * \fn double G_area_of_polygon (double *x, double *y, int n)
+ * \fn double G_area_of_polygon (const double *x, const double *y, int n)
  *
  * \brief Area in square meters of polygon.
  *
@@ -173,7 +173,7 @@ int G_begin_polygon_area_calculations()
  * \return area in coordinate units of the polygon
  */
 
-double G_area_of_polygon(double *x,double *y,int n)
+double G_area_of_polygon(const double *x, const double *y, int n)
 {
     double area;
 

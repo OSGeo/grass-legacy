@@ -6,7 +6,7 @@
  \return number of rules in color table
  \param colors pointer to color table structure
 */
-int G_colors_count ( struct Colors *colors )
+int G_colors_count ( const struct Colors *colors )
 {
     int count = 0;
     struct _Color_Rule_ *rule;
@@ -43,11 +43,11 @@ int G_colors_count ( struct Colors *colors )
 */
 int G_get_f_color_rule ( DCELL *val1, unsigned char *r1, unsigned char *g1, unsigned char *b1,
 			 DCELL *val2, unsigned char *r2, unsigned char *g2, unsigned char *b2, 
-			 struct Colors *colors, int rule )
+			 const struct Colors *colors, int rule )
 {
     int index = -1;
     int found = 0;
-    struct _Color_Rule_ *rl;
+    const struct _Color_Rule_ *rl;
 
     *val1 = *val2 = 0.0;
     *r1 = *g1 = *b1 = *r2 = *g2 = *b2 = 0;

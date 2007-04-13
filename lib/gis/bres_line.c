@@ -19,9 +19,9 @@
  */
 
 int G_bresenham_line (
-    register int x0, register int y0 ,
+    int x0, int y0 ,
     int x1,int y1 ,
-    int	(*point)())
+    int	(*point)(int,int))
 {
     int dx, dy;
     int xinc, yinc;

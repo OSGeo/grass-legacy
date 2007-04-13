@@ -87,7 +87,7 @@ int G_begin_ellipsoid_polygon_area (double a,double e2)
 
 
 /**
- * \fn double G_ellipsoid_polygon_area (double *lon,double *lat,int n)
+ * \fn double G_ellipsoid_polygon_area (const double *lon, const double *lat, int n)
  *
  * \brief Area of lat-long polygon.
  *
@@ -104,7 +104,7 @@ int G_begin_ellipsoid_polygon_area (double a,double e2)
  * \return double Area in square meters
  */
 
-double G_ellipsoid_polygon_area (double *lon,double *lat,int n)
+double G_ellipsoid_polygon_area (const double *lon, const double *lat, int n)
 {
     double x1,y1,x2,y2,dx,dy;
     double Qbar1, Qbar2;

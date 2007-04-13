@@ -122,7 +122,7 @@ void quit (void)
     exit (EXIT_SUCCESS);
 }
 
-int error (char *msg, int fatal) 
+int error (const char *msg, int fatal) 
 {
   char buf[200]; 
   int x,y,button;

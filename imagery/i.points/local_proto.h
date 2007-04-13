@@ -71,7 +71,7 @@ int Menu_msg(char *);
 int Start_mouse_in_menu(void);
 /* main.c */
 int quit(int);
-int error(char *, int);
+int error(const char *, int);
 /* mark.c */
 int mark(int, int, int);
 int mark_point(View *, int, int);

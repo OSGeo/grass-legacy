@@ -16,7 +16,7 @@
 
 #ifndef COMMENTED_OUT
 int G__name_in_mapset (
-    char *name_in,
+    const char *name_in,
     char *name_out,
     char *mapset)
 {
@@ -29,10 +29,11 @@ int G__name_in_mapset (
 #endif
 
 int G__name_is_fully_qualified (
-    char *fullname,
+    const char *fullname,
     char *name,char *mapset)
 {
-    char *p,*q;
+    const char *p;
+    char *q;
 
 /* search for name@mapset */
 
@@ -91,7 +92,7 @@ int G__name_is_fully_qualified (
  */
 
 char *
-G_fully_qualified_name  (char *name, char *mapset)
+G_fully_qualified_name  (const char *name, const char *mapset)
 
 {
     char fullname[1024];

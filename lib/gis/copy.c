@@ -12,9 +12,10 @@
  */
 
 #include <grass/gis.h>
+#include <string.h>
 
 /**
- * \fn int G_copy (void *a, void *b, int n)
+ * \fn int G_copy (void *a, const void *b, int n)
  *
  * \brief Copies <b>n</b> bytes starting at address <b>b</b> into 
  * address <b>a</b>.
@@ -25,15 +26,8 @@
  *
  * \return always returns 0
  */
-int G_copy (void *a, void *b, int n)
+int G_copy (void *a, const void *b, int n)
 {
-    char *ap,*bp;
-    
-    ap = a;
-    bp = b;
-
-    while (n-- > 0)
-	*ap++ = *bp++;
-
+    memcpy(a, b, n);
     return 0;
 }

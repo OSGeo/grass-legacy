@@ -36,7 +36,7 @@ char *G_adjust_Cell_head(struct Cell_head *, int, int);
 char *G_adjust_Cell_head3(struct Cell_head *, int, int, int);
 
 /* align_window.c */
-char *G_align_window(struct Cell_head *, struct Cell_head *);
+char *G_align_window(struct Cell_head *, const struct Cell_head *);
 
 /* alloc.c */
 void *G_malloc(size_t);
@@ -57,55 +57,55 @@ int G__null_bitstream_size(int);
 
 /* area.c */
 int G_begin_cell_area_calculations(void);
-double G_area_of_cell_at_row(register int);
+double G_area_of_cell_at_row(int);
 int G_begin_polygon_area_calculations(void);
-double G_area_of_polygon(double *, double *, int);
+double G_area_of_polygon(const double *, const double *, int);
 
 /* area_ellipse.c */
 int G_begin_zone_area_on_ellipsoid(double, double, double);
-double G_darea0_on_ellipsoid(register double);
-double G_area_for_zone_on_ellipsoid(register double, register double);
+double G_darea0_on_ellipsoid(double);
+double G_area_for_zone_on_ellipsoid(double, double);
 
 /* area_poly1.c */
 int G_begin_ellipsoid_polygon_area(double, double);
-double G_ellipsoid_polygon_area(double *, double *, int);
+double G_ellipsoid_polygon_area(const double *, const double *, int);
 
 /* area_poly2.c */
-double G_planimetric_polygon_area(double *, double *, int);
+double G_planimetric_polygon_area(const double *, const double *, int);
 
 /* area_sphere.c */
 int G_begin_zone_area_on_sphere(double, double);
-double G_darea0_on_sphere(register double);
-double G_area_for_zone_on_sphere(register double, register double);
+double G_darea0_on_sphere(double);
+double G_area_for_zone_on_sphere(double, double);
 
 /* ascii_chk.c */
 int G_ascii_check(char *);
 
 /* ask.c */
-char *G_ask_new(char *, char *, char *, char *);
-char *G_ask_new_ext(char *, char *, char *, char *, char *, int (*)());
-char *G_ask_old(char *, char *, char *, char *);
-char *G_ask_old_ext(char *, char *, char *, char *, char *, int (*)());
-char *G_ask_any(char *, char *, char *, char *, int);
-char *G_ask_any_ext(char *, char *, char *, char *, int, char *, int (*)());
-char *G_ask_in_mapset(char *, char *, char *, char *);
-char *G_ask_in_mapset_ext(char *, char *, char *, char *, char *, int (*)());
-char *G_ask_new_file(char *, char *, char *, char *);
-char *G_ask_old_file(char *, char *, char *, char *);
-int G_set_ask_return_msg(char *);
+char *G_ask_new(const char *, char *, char *, char *);
+char *G_ask_new_ext(const char *, char *, char *, char *, char *, int (*)());
+char *G_ask_old(const char *, char *, char *, char *);
+char *G_ask_old_ext(const char *, char *, char *, char *, char *, int (*)());
+char *G_ask_any(const char *, char *, char *, char *, int);
+char *G_ask_any_ext(const char *, char *, char *, char *, int, char *, int (*)());
+char *G_ask_in_mapset(const char *, char *, char *, char *);
+char *G_ask_in_mapset_ext(const char *, char *, char *, char *, char *, int (*)());
+char *G_ask_new_file(const char *, char *, char *, char *);
+char *G_ask_old_file(const char *, char *, char *, char *);
+int G_set_ask_return_msg(const char *);
 char *G_get_ask_return_msg(void);
 
 /* ask_cell.c */
-char *G_ask_cell_new(char *, char *);
-char *G_ask_cell_old(char *, char *);
-char *G_ask_cell_in_mapset(char *, char *);
-char *G_ask_cell_any(char *, char *);
+char *G_ask_cell_new(const char *, char *);
+char *G_ask_cell_old(const char *, char *);
+char *G_ask_cell_in_mapset(const char *, char *);
+char *G_ask_cell_any(const char *, char *);
 
 /* ask_vctrs.c */
-char *G_ask_vector_new(char *, char *);
-char *G_ask_vector_old(char *, char *);
-char *G_ask_vector_any(char *, char *);
-char *G_ask_vector_in_mapset(char *, char *);
+char *G_ask_vector_new(const char *, char *);
+char *G_ask_vector_old(const char *, char *);
+char *G_ask_vector_any(const char *, char *);
+char *G_ask_vector_in_mapset(const char *, char *);
 
 /* asprintf.c */
 /* Do it better if you know how */
@@ -152,7 +152,7 @@ int G_unsuppress_masking(void);
 char *G_basename(char *, const char *);
   
 /* bres_line.c */
-int G_bresenham_line(register int, register int, int, int, int (*)());
+int G_bresenham_line(int, int, int, int, int (*)(int,int));
 
 /* cats.c */
 int G_read_cats(char *, char *, struct Categories *);
@@ -160,8 +160,8 @@ int G_read_raster_cats(char *, char *, struct Categories *);
 int G_read_vector_cats(char *, char *, struct Categories *);
 CELL G_number_of_cats(char *, char *);
 CELL G__read_cats(char *, char *, char *, struct Categories *, int);
-char *G_get_cats_title(struct Categories *);
-char *G_get_raster_cats_title(struct Categories *);
+char *G_get_cats_title(const struct Categories *);
+char *G_get_raster_cats_title(const struct Categories *);
 char *G_get_cat(CELL, struct Categories *);
 char *G_get_c_raster_cat(CELL *, struct Categories *);
 char *G_get_f_raster_cat(FCELL *, struct Categories *);
@@ -191,31 +191,31 @@ int G_write_cats(char *, struct Categories *);
 int G_write_raster_cats(char *, struct Categories *);
 int G_write_vector_cats(char *, struct Categories *);
 int G__write_cats(char *, char *, struct Categories *);
-char *G_get_ith_d_raster_cat(struct Categories *, int, DCELL *, DCELL *);
-char *G_get_ith_f_raster_cat(struct Categories *, int, void *, void *);
-char *G_get_ith_c_raster_cat(struct Categories *, int, void *, void *);
-char *G_get_ith_raster_cat(struct Categories *, int, void *, void *,
+char *G_get_ith_d_raster_cat(const struct Categories *, int, DCELL *, DCELL *);
+char *G_get_ith_f_raster_cat(const struct Categories *, int, void *, void *);
+char *G_get_ith_c_raster_cat(const struct Categories *, int, void *, void *);
+char *G_get_ith_raster_cat(const struct Categories *, int, void *, void *,
     RASTER_MAP_TYPE);
-int G_init_cats(CELL, char *, struct Categories *);
-int G_init_raster_cats(char *, struct Categories *);
-int G_set_cats_title(char *, struct Categories *);
-int G_set_raster_cats_title(char *, struct Categories *);
-int G_set_cats_fmt(char *, double, double, double, double, struct Categories *);
-int G_set_raster_cats_fmt(char *, double, double, double, double,
+int G_init_cats(CELL, const char *, struct Categories *);
+int G_init_raster_cats(const char *, struct Categories *);
+int G_set_cats_title(const char *, struct Categories *);
+int G_set_raster_cats_title(const char *, struct Categories *);
+int G_set_cats_fmt(const char *, double, double, double, double, struct Categories *);
+int G_set_raster_cats_fmt(const char *, double, double, double, double,
     struct Categories *);
 int G_free_cats(struct Categories *);
 int G_free_raster_cats(struct Categories *);
-int G_copy_raster_cats(struct Categories *, struct Categories *);
+int G_copy_raster_cats(struct Categories *, const struct Categories *);
 int G_number_of_raster_cats(struct Categories *);
 int G_sort_cats(struct Categories *);
 
 /* cell_stats.c */
 int G_init_cell_stats(struct Cell_stats *);
 int G_update_cell_stats(CELL *, int, struct Cell_stats *);
-int G_find_cell_stat(CELL, long *, struct Cell_stats *);
+int G_find_cell_stat(CELL, long *, const struct Cell_stats *);
 int G_rewind_cell_stats(struct Cell_stats *);
 int G_next_cell_stat(CELL *, long *, struct Cell_stats *);
-int G_get_stats_for_null_value(long *, struct Cell_stats *);
+int G_get_stats_for_null_value(long *, const struct Cell_stats *);
 int G_free_cell_stats(struct Cell_stats *);
 
 /* cell_title.c */
@@ -239,21 +239,25 @@ int G_close_cell(int);
 int G_unopen_cell(int);
 int G__write_fp_format(int);
 
-/* color_asp.c */
+/* color_compat.c */
+int G_make_ryg_colors(struct Colors *, CELL, CELL);
+int G_make_ryg_fp_colors(struct Colors *, DCELL, DCELL);
 int G_make_aspect_colors(struct Colors *, CELL, CELL);
 int G_make_aspect_fp_colors(struct Colors *, DCELL, DCELL);
-int G_add_aspect_colors(struct Colors *, CELL, CELL);
-
-/* color_byr.c */
 int G_make_byr_colors(struct Colors *, CELL, CELL);
 int G_make_byr_fp_colors(struct Colors *, DCELL, DCELL);
-int G_add_byr_colors(struct Colors *, CELL, CELL);
-
-/* color_byg.c */
 int G_make_byg_colors(struct Colors *, CELL, CELL);
 int G_make_byg_fp_colors(struct Colors *, DCELL, DCELL);
-int G_make_blue_yel_grn(struct Colors *, CELL, CELL);
-int G_add_byg_colors(struct Colors *, CELL, CELL);
+int G_make_grey_scale_colors(struct Colors *, CELL, CELL);
+int G_make_grey_scale_fp_colors(struct Colors *, double, double);
+int G_make_gyr_colors(struct Colors *, CELL, CELL);
+int G_make_gyr_fp_colors(struct Colors *, DCELL, DCELL);
+int G_make_rainbow_colors(struct Colors *, CELL, CELL);
+int G_make_rainbow_fp_colors(struct Colors *, DCELL, DCELL);
+int G_make_ramp_colors(struct Colors *, CELL, CELL);
+int G_make_ramp_fp_colors(struct Colors *, DCELL, DCELL);
+int G_make_wave_colors(struct Colors *, CELL, CELL);
+int G_make_wave_fp_colors(struct Colors *, DCELL, DCELL);
 
 /* color_free.c */
 int G_free_colors(struct Colors *);
@@ -269,19 +273,8 @@ int G_get_raster_color(void *, int *, int *, int *, struct Colors *,
 int G_get_c_raster_color(CELL *, int *, int *, int *, struct Colors *);
 int G_get_f_raster_color(FCELL *, int *, int *, int *, struct Colors *);
 int G_get_d_raster_color(DCELL *, int *, int *, int *, struct Colors *);
-int G_get_null_value_color(int *, int *, int *, struct Colors *);
-int G_get_default_color(int *, int *, int *, struct Colors *);
-
-/* color_grey.c */
-int G_make_grey_scale_colors(struct Colors *, CELL, CELL);
-int G_make_grey_scale_fp_colors(struct Colors *, double, double);
-int G_make_grey_scale(struct Colors *, CELL, CELL);
-int G_add_grey_scale_colors(struct Colors *, CELL, CELL);
-
-/* color_gyr.c */
-int G_make_gyr_colors(struct Colors *, CELL, CELL);
-int G_make_gyr_fp_colors(struct Colors *, DCELL, DCELL);
-int G_add_gyr_colors(struct Colors *, CELL, CELL);
+int G_get_null_value_color(int *, int *, int *, const struct Colors *);
+int G_get_default_color(int *, int *, int *, const struct Colors *);
 
 /* color_hist.c */
 int G_make_histogram_eq_colors(struct Colors *, struct Cell_stats *);
@@ -297,34 +290,23 @@ int G__insert_color_into_lookup(CELL, int, int, int, struct _Color_Info_ *);
 int G_invert_colors(struct Colors *);
 
 /* color_look.c */
-int G_lookup_colors(CELL *, unsigned char *, unsigned char *, unsigned char *,
+int G_lookup_colors(const CELL *, unsigned char *, unsigned char *, unsigned char *,
     unsigned char *, int, struct Colors *);
-int G_lookup_c_raster_colors(CELL *, unsigned char *, unsigned char *,
+int G_lookup_c_raster_colors(const CELL *, unsigned char *, unsigned char *,
     unsigned char *, unsigned char *, int, struct Colors *);
-int G_lookup_raster_colors(void *, unsigned char *, unsigned char *,
+int G_lookup_raster_colors(const void *, unsigned char *, unsigned char *,
     unsigned char *, unsigned char *, int, struct Colors *, RASTER_MAP_TYPE);
-int G_lookup_f_raster_colors(FCELL *, unsigned char *, unsigned char *,
+int G_lookup_f_raster_colors(const FCELL *, unsigned char *, unsigned char *,
     unsigned char *, unsigned char *, int, struct Colors *);
-int G_lookup_d_raster_colors(DCELL *, unsigned char *, unsigned char *,
+int G_lookup_d_raster_colors(const DCELL *, unsigned char *, unsigned char *,
     unsigned char *, unsigned char *, int, struct Colors *);
-int G__lookup_colors(void *, unsigned char *, unsigned char *, unsigned char *,
+int G__lookup_colors(const void *, unsigned char *, unsigned char *, unsigned char *,
     unsigned char *, int, struct Colors *, int, int, RASTER_MAP_TYPE);
 int G__interpolate_color_rule(DCELL, unsigned char *, unsigned char *,
-    unsigned char *, struct _Color_Rule_ *);
+    unsigned char *, const struct _Color_Rule_ *);
 
 /* color_org.c */
 int G__organize_colors(struct Colors *);
-
-/* color_rain.c */
-int G_make_rainbow_colors(struct Colors *, CELL, CELL);
-int G_make_rainbow_fp_colors(struct Colors *, DCELL, DCELL);
-int G_add_rainbow_colors(struct Colors *, CELL, CELL);
-
-/* color_ramp.c */
-int G_make_ramp_colors(struct Colors *, CELL, CELL);
-int G_make_ramp_fp_colors(struct Colors *, DCELL, DCELL);
-int G_make_color_ramp(struct Colors *, CELL, CELL);
-int G_add_ramp_colors(struct Colors *, CELL, CELL);
 
 /* color_rand.c */
 int G_make_random_colors(struct Colors *, CELL, CELL);
@@ -332,30 +314,30 @@ int G_make_random_colors(struct Colors *, CELL, CELL);
 /* color_range.c */
 int G_set_color_range(CELL, CELL, struct Colors *);
 int G_set_d_color_range(DCELL, DCELL, struct Colors *);
-int G_get_color_range(CELL *, CELL *, struct Colors *);
-int G_get_d_color_range(DCELL *, DCELL *, struct Colors *);
+int G_get_color_range(CELL *, CELL *, const struct Colors *);
+int G_get_d_color_range(DCELL *, DCELL *, const struct Colors *);
 
 /* color_read.c */
 int G_read_colors(char *, char *, struct Colors *);
 int G_mark_colors_as_fp(struct Colors *);
 
 /* color_rule.c */
-int G_add_d_raster_color_rule(DCELL *, int, int, int, DCELL *, int, int, int,
+int G_add_d_raster_color_rule(const DCELL *, int, int, int, const DCELL *, int, int, int,
     struct Colors *);
-int G_add_f_raster_color_rule(FCELL *, int, int, int, FCELL *, int, int, int,
+int G_add_f_raster_color_rule(const FCELL *, int, int, int, const FCELL *, int, int, int,
     struct Colors *);
-int G_add_c_raster_color_rule(CELL *, int, int, int, CELL *, int, int, int,
+int G_add_c_raster_color_rule(const CELL *, int, int, int, const CELL *, int, int, int,
     struct Colors *);
-int G_add_raster_color_rule(void *, int, int, int, void *, int, int, int,
+int G_add_raster_color_rule(const void *, int, int, int, const void *, int, int, int,
     struct Colors *, RASTER_MAP_TYPE);
-int G_add_color_rule(CELL, int, int, int, CELL, int, int, int, struct Colors *);
-int G_add_modular_d_raster_color_rule(DCELL *, int, int, int, DCELL *, int,
+int G_add_color_rule(const CELL, int, int, int, const CELL, int, int, int, struct Colors *);
+int G_add_modular_d_raster_color_rule(const DCELL *, int, int, int, const DCELL *, int,
     int, int, struct Colors *);
-int G_add_modular_f_raster_color_rule(FCELL *, int, int, int, FCELL *, int,
+int G_add_modular_f_raster_color_rule(const FCELL *, int, int, int, const FCELL *, int,
     int, int, struct Colors *);
-int G_add_modular_c_raster_color_rule(CELL *, int, int, int, CELL *, int, int,
+int G_add_modular_c_raster_color_rule(const CELL *, int, int, int, const CELL *, int, int,
     int, struct Colors *);
-int G_add_modular_raster_color_rule(void *, int, int, int, void *, int, int,
+int G_add_modular_raster_color_rule(const void *, int, int, int, const void *, int, int,
     int, struct Colors *, RASTER_MAP_TYPE);
 int G_add_modular_color_rule(CELL, int, int, int, CELL, int, int, int,
     struct Colors *);
@@ -373,16 +355,10 @@ int G_make_colors(struct Colors *, const char *, CELL, CELL);
 int G_make_fp_colors(struct Colors *, const char *, DCELL, DCELL);
 
 /* color_rule_get.c */
-int G_colors_count ( struct Colors *);
+int G_colors_count ( const struct Colors *);
 int G_get_f_color_rule ( DCELL *, unsigned char *, unsigned char *, unsigned char *,
                          DCELL *, unsigned char *, unsigned char *, unsigned char *,
-                         struct Colors *, int);
-
-/* color_ryg.c */
-int G_make_ryg_colors(struct Colors *, CELL, CELL);
-int G_make_ryg_fp_colors(struct Colors *, DCELL, DCELL);
-int G_make_red_yel_grn(struct Colors *, CELL, CELL);
-int G_add_ryg_colors(struct Colors *, CELL, CELL);
+                         const struct Colors *, int);
 
 /* color_set.c */
 int G_set_color(CELL, int, int, int, struct Colors *);
@@ -397,12 +373,6 @@ int G_shift_d_colors(DCELL, struct Colors *);
 /* color_str.c */
 int G_str_to_color (const char *, int *, int *, int *);
 
-/* color_wave.c */
-int G_make_wave_colors(struct Colors *, CELL, CELL);
-int G_make_wave_fp_colors(struct Colors *, DCELL, DCELL);
-int G_make_color_wave(struct Colors *, CELL, CELL);
-int G_add_wave_colors(struct Colors *, CELL, CELL);
-
 /* color_write.c */
 int G_write_colors(char *, char *, struct Colors *);
 int G__write_colors(FILE *, struct Colors *);
@@ -416,7 +386,7 @@ int G_insert_commas(char *);
 int G_remove_commas(char *);
 
 /* copy.c */
-int G_copy(void *, void *, int);
+int G_copy(void *, const void *, int);
 
 /* copy_file.c */
 int G_copy_file(const char *infile, const char *outfile);
@@ -438,11 +408,11 @@ int G_get_datum_by_name(const char *);
 char *G_datum_name(int);
 char *G_datum_description(int);
 char *G_datum_ellipsoid(int);
-int G_get_datumparams_from_projinfo(struct Key_Value *projinfo, 
+int G_get_datumparams_from_projinfo(const struct Key_Value *projinfo, 
 				    char *datumname, char *params);
 
 /* debug.c */
-int G_debug(int,char *,...);
+int G_debug(int,const char *,...);
 
 /* distance.c */
 int G_begin_distance_calculations(void);
@@ -463,34 +433,34 @@ void G_tred2(double **, int, double [], double []);
 int G_is_little_endian(void);
 
 /* env.c */
-char *G_getenv(char *);
-char *G_getenv2(char *, int);
-char *G__getenv(char *);
-char *G__getenv2(char *, int);
-int G_setenv(char *, char *);
-int G_setenv2(char *, char *, int);
-int G__setenv(char *, char *);
-int G__setenv2(char *, char *, int);
-int G_unsetenv(char *);
-int G_unsetenv2(char *, int);
+char *G_getenv(const char *);
+char *G_getenv2(const char *, int);
+char *G__getenv(const char *);
+char *G__getenv2(const char *, int);
+int G_setenv(const char *, const char *);
+int G_setenv2(const char *, const char *, int);
+int G__setenv(const char *, const char *);
+int G__setenv2(const char *, const char *, int);
+int G_unsetenv(const char *);
+int G_unsetenv2(const char *, int);
 int G__write_env(void);
 char *G__env_name(int);
 int G__read_env(void);
 void G_set_gisrc_mode ( int );
 int G_get_gisrc_mode ( void );
-int G__set_gisrc_file(char *);
+int G__set_gisrc_file(const char *);
 char *G__get_gisrc_file(void);
 int G__create_alt_env(void);
 int G__switch_env(void);
 
 /* error.c */
 int G_info_format ( void );
-void G_message(char *,...);
-int G_fatal_error(char *,...) __attribute__((format(printf,1,2)));
-int G_warning(char *,...) __attribute__((format(printf,1,2)));
+void G_message(const char *,...);
+int G_fatal_error(const char *,...) __attribute__((format(printf,1,2)));
+int G_warning(const char *,...) __attribute__((format(printf,1,2)));
 int G_suppress_warnings(int);
 int G_sleep_on_error(int);
-int G_set_error_routine(int (*)(char *, int));
+int G_set_error_routine(int (*)(const char *, int));
 int G_unset_error_routine(void);
 
 /* file_name.c */
@@ -697,7 +667,7 @@ int G_is_mapset (const char *);
 /* key_value1.c */
 struct Key_Value *G_create_key_value(void);
 int G_set_key_value(const char *, const char *, struct Key_Value *);
-char *G_find_key_value(char *, struct Key_Value *);
+char *G_find_key_value(char *, const struct Key_Value *);
 int G_free_key_value(struct Key_Value *);
 
 /* key_value2.c */
@@ -827,9 +797,9 @@ char *G_color_name(int);
 void G_newlines_to_spaces(char *);
 
 /* nme_in_mps.c */
-int G__name_in_mapset(char *, char *, char *);
-int G__name_is_fully_qualified(char *, char *, char *);
-char *G_fully_qualified_name(char *, char *);
+int G__name_in_mapset(const char *, char *, char *);
+int G__name_is_fully_qualified(const char *, char *, char *);
+char *G_fully_qualified_name(const char *, const char *);
 
 /* null_val.c */
 void G__init_null_patterns (void);
@@ -987,7 +957,7 @@ int G_quant_truncate(struct Quant *);
 int G_quant_round(struct Quant *);
 int G_quant_get_limits(struct Quant *, DCELL *, DCELL *, CELL *, CELL *);
 int G_quant_nof_rules(struct Quant *);
-void G_quant_get_ith_rule(struct Quant *, int, DCELL *, DCELL *, CELL *,
+void G_quant_get_ith_rule(const struct Quant *, int, DCELL *, DCELL *, CELL *,
     CELL *);
 void G_quant_set_neg_infinite_rule(struct Quant *, DCELL, CELL);
 int G_quant_get_neg_infinite_rule(struct Quant *, DCELL *, CELL *);
@@ -1035,15 +1005,15 @@ int G_init_fp_range(struct FPRange *);
 int G_get_fp_range_min_max(struct FPRange *, DCELL *, DCELL *);
 
 /* raster.c */
-void *G_incr_void_ptr(void *, int);
-int G_raster_cmp(void *, void *, RASTER_MAP_TYPE);
-int G_raster_cpy(void *, void *, int, RASTER_MAP_TYPE);
+void *G_incr_void_ptr(const void *, int);
+int G_raster_cmp(const void *, const void *, RASTER_MAP_TYPE);
+int G_raster_cpy(void *, const void *, int, RASTER_MAP_TYPE);
 int G_set_raster_value_c(void *, CELL, RASTER_MAP_TYPE);
 int G_set_raster_value_f(void *, FCELL, RASTER_MAP_TYPE);
 int G_set_raster_value_d(void *, DCELL, RASTER_MAP_TYPE);
-CELL G_get_raster_value_c(void *, RASTER_MAP_TYPE);
-FCELL G_get_raster_value_f(void *, RASTER_MAP_TYPE);
-DCELL G_get_raster_value_d(void *, RASTER_MAP_TYPE);
+CELL G_get_raster_value_c(const void *, RASTER_MAP_TYPE);
+FCELL G_get_raster_value_f(const void *, RASTER_MAP_TYPE);
+DCELL G_get_raster_value_d(const void *, RASTER_MAP_TYPE);
 
 /* rd_cellhd.c */
 char *G__read_Cell_head(FILE *, struct Cell_head *, int);
@@ -1224,12 +1194,12 @@ int G_scan_resolution(char *, double *, int);
 
 /* window_map.c */
 int G__create_window_mapping(int);
-double G_northing_to_row(double, struct Cell_head *);
+double G_northing_to_row(double, const struct Cell_head *);
 double G_adjust_east_longitude(double, double);
-double G_adjust_easting(double, struct Cell_head *);
-double G_easting_to_col(double, struct Cell_head *);
-double G_row_to_northing(double, struct Cell_head *);
-double G_col_to_easting(double, struct Cell_head *);
+double G_adjust_easting(double, const struct Cell_head *);
+double G_easting_to_col(double, const struct Cell_head *);
+double G_row_to_northing(double, const struct Cell_head *);
+double G_col_to_easting(double, const struct Cell_head *);
 int G_window_rows(void);
 int G_window_cols(void);
 int G__init_window(void);

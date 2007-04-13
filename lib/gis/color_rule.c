@@ -2,8 +2,8 @@
 
 #define LIMIT(x) if (x < 0) x = 0; else if (x > 255) x = 255;
 
-static int add_color_rule (void *,int,int,int,
-           void *,int,int,int,
+static int add_color_rule (const void *,int,int,int,
+           const void *,int,int,int,
            struct _Color_Info_ *,int,
            DCELL *,DCELL *,RASTER_MAP_TYPE);
 
@@ -30,9 +30,9 @@ static int add_color_rule (void *,int,int,int,
  */
 
 int 
-G_add_d_raster_color_rule (DCELL *val1, int r1, int g1, int b1, DCELL *val2, int r2, int g2, int b2, struct Colors *colors)
+G_add_d_raster_color_rule (const DCELL *val1, int r1, int g1, int b1, const DCELL *val2, int r2, int g2, int b2, struct Colors *colors)
 {
-    add_color_rule ( (void *) val1, r1,g1,b1,  (void *) val2, r2,g2,b2, &colors->fixed, colors->version,
+    add_color_rule ( val1, r1,g1,b1,  val2, r2,g2,b2, &colors->fixed, colors->version,
 	&colors->cmin, &colors->cmax, DCELL_TYPE);
     return 1;
 }
@@ -60,9 +60,9 @@ G_add_d_raster_color_rule (DCELL *val1, int r1, int g1, int b1, DCELL *val2, int
  */
 
 int 
-G_add_f_raster_color_rule (FCELL *cat1, int r1, int g1, int b1, FCELL *cat2, int r2, int g2, int b2, struct Colors *colors)
+G_add_f_raster_color_rule (const FCELL *cat1, int r1, int g1, int b1, const FCELL *cat2, int r2, int g2, int b2, struct Colors *colors)
 {
-    add_color_rule ((void *) cat1, r1,g1,b1, (void *) cat2, r2,g2,b2, &colors->fixed, colors->version,
+    add_color_rule (cat1, r1,g1,b1, cat2, r2,g2,b2, &colors->fixed, colors->version,
 	&colors->cmin, &colors->cmax, FCELL_TYPE);
     return 1;
 }
@@ -86,9 +86,9 @@ G_add_f_raster_color_rule (FCELL *cat1, int r1, int g1, int b1, FCELL *cat2, int
  */
 
 int 
-G_add_c_raster_color_rule (CELL *cat1, int r1, int g1, int b1, CELL *cat2, int r2, int g2, int b2, struct Colors *colors)
+G_add_c_raster_color_rule (const CELL *cat1, int r1, int g1, int b1, const CELL *cat2, int r2, int g2, int b2, struct Colors *colors)
 {
-    add_color_rule ((void *) cat1, r1,g1,b1, (void *) cat2, r2,g2,b2, &colors->fixed, colors->version,
+    add_color_rule (cat1, r1,g1,b1, cat2, r2,g2,b2, &colors->fixed, colors->version,
 	&colors->cmin, &colors->cmax, CELL_TYPE);
     return 1;
 }
@@ -118,7 +118,7 @@ G_add_c_raster_color_rule (CELL *cat1, int r1, int g1, int b1, CELL *cat2, int r
  */
 
 int 
-G_add_raster_color_rule (void *val1, int r1, int g1, int b1, void *val2, int r2, int g2, int b2, struct Colors *colors, RASTER_MAP_TYPE data_type)
+G_add_raster_color_rule (const void *val1, int r1, int g1, int b1, const void *val2, int r2, int g2, int b2, struct Colors *colors, RASTER_MAP_TYPE data_type)
 {
     add_color_rule (val1, r1,g1,b1, val2, r2,g2,b2, &colors->fixed, colors->version,
 	&colors->cmin, &colors->cmax, data_type);
@@ -171,14 +171,14 @@ G_add_color_rule (CELL cat1, int r1, int g1, int b1, CELL cat2, int r2, int g2, 
 }
 
 int 
-G_add_modular_d_raster_color_rule (DCELL *val1, int r1, int g1, int b1, DCELL *val2, int r2, int g2, int b2, struct Colors *colors)
+G_add_modular_d_raster_color_rule (const DCELL *val1, int r1, int g1, int b1, const DCELL *val2, int r2, int g2, int b2, struct Colors *colors)
 {
     DCELL min, max;
     if (colors->version < 0)
 	return -1; /* can;t use this on 3.0 colors */
     min = colors->cmin;
     max = colors->cmax;
-    add_color_rule ((void *) val1, r1,g1,b1, (void *) val2, r2,g2,b2, &colors->modular, 0,
+    add_color_rule (val1, r1,g1,b1, val2, r2,g2,b2, &colors->modular, 0,
 	&colors->cmin, &colors->cmax, DCELL_TYPE);
     colors->cmin = min; /* don't reset these */
     colors->cmax = max;
@@ -187,14 +187,14 @@ G_add_modular_d_raster_color_rule (DCELL *val1, int r1, int g1, int b1, DCELL *v
 }
 
 int 
-G_add_modular_f_raster_color_rule (FCELL *val1, int r1, int g1, int b1, FCELL *val2, int r2, int g2, int b2, struct Colors *colors)
+G_add_modular_f_raster_color_rule (const FCELL *val1, int r1, int g1, int b1, const FCELL *val2, int r2, int g2, int b2, struct Colors *colors)
 {
     DCELL min, max;
     if (colors->version < 0)
 	return -1; /* can;t use this on 3.0 colors */
     min = colors->cmin;
     max = colors->cmax;
-    add_color_rule ((void *) val1, r1,g1,b1, (void *) val2, r2,g2,b2, &colors->modular, 0,
+    add_color_rule (val1, r1,g1,b1, val2, r2,g2,b2, &colors->modular, 0,
 	&colors->cmin, &colors->cmax, FCELL_TYPE);
     colors->cmin = min; /* don't reset these */
     colors->cmax = max;
@@ -203,13 +203,13 @@ G_add_modular_f_raster_color_rule (FCELL *val1, int r1, int g1, int b1, FCELL *v
 }
 
 int 
-G_add_modular_c_raster_color_rule (CELL *val1, int r1, int g1, int b1, CELL *val2, int r2, int g2, int b2, struct Colors *colors)
+G_add_modular_c_raster_color_rule (const CELL *val1, int r1, int g1, int b1, const CELL *val2, int r2, int g2, int b2, struct Colors *colors)
 {
     return G_add_modular_color_rule (*val1, r1,g1,b1, *val2, r2,g2,b2, colors);
 }
 
 int 
-G_add_modular_raster_color_rule (void *val1, int r1, int g1, int b1, void *val2, int r2, int g2, int b2, struct Colors *colors, RASTER_MAP_TYPE data_type)
+G_add_modular_raster_color_rule (const void *val1, int r1, int g1, int b1, const void *val2, int r2, int g2, int b2, struct Colors *colors, RASTER_MAP_TYPE data_type)
 {
     CELL min, max;
     if (colors->version < 0)
@@ -240,7 +240,7 @@ G_add_modular_color_rule (CELL cat1, int r1, int g1, int b1, CELL cat2, int r2, 
     return 1;
 }
 
-static int add_color_rule (void *pt1, int r1, int g1, int b1, void *pt2, int r2, int g2, int b2, struct _Color_Info_ *cp, int version, DCELL *cmin, DCELL *cmax, RASTER_MAP_TYPE data_type)
+static int add_color_rule (const void *pt1, int r1, int g1, int b1, const void *pt2, int r2, int g2, int b2, struct _Color_Info_ *cp, int version, DCELL *cmin, DCELL *cmax, RASTER_MAP_TYPE data_type)
 {
     struct _Color_Rule_ *rule, *next;
     unsigned char red, grn, blu;

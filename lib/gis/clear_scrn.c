@@ -8,7 +8,7 @@
 #include <stdlib.h>
 #include <grass/gis.h>
 
-int G_clear_screen()
+int G_clear_screen(void)
 {
 #ifdef __MINGW32__
     system ("cls");

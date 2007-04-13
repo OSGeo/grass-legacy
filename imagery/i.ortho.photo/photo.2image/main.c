@@ -134,7 +134,7 @@ int quit (int n)
     exit(n);
 }
 
-int error (char *msg, int fatal)
+int error (const char *msg, int fatal)
 {
     static char buf[200];
     int x,y,button;

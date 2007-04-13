@@ -110,7 +110,7 @@ G_datum_ellipsoid(int n)
  *           1 only datum name found, 2 params found
  ************************************************************/
 
-int G_get_datumparams_from_projinfo(struct Key_Value *projinfo, 
+int G_get_datumparams_from_projinfo(const struct Key_Value *projinfo, 
 				    char *datumname, char *params)
 {
     int returnval = -1;

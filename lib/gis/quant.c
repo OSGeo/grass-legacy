@@ -569,7 +569,7 @@ int G_quant_nof_rules (struct Quant *q)
 /*--------------------------------------------------------------------------*/
 
 void G_quant_get_ith_rule ( 
-     struct Quant *q,
+     const struct Quant *q,
      int i,
      DCELL *dLow,DCELL *dHigh,
      CELL *cLow,CELL *cHigh)

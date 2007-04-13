@@ -195,7 +195,7 @@ static expr_list *exprs;
 
 /****************************************************************************/
 
-static int error_handler(char *msg, int fatal)
+static int error_handler(const char *msg, int fatal)
 {
 	expr_list *l;
 

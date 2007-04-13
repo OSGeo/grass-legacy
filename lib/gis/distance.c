@@ -21,7 +21,6 @@
 
 static double min4(double, double, double, double);
 static double min2(double, double);
-static double dabs (double);
 
 
 static int projection = 0;
@@ -41,7 +40,7 @@ static double factor = 1.0;
  * \return 2 if projection is latitude-longitude
  */
 
-int G_begin_distance_calculations()
+int G_begin_distance_calculations(void)
 {
     double a, e2;
 
@@ -83,8 +82,6 @@ int G_begin_distance_calculations()
 
 double G_distance (double e1,double n1,double e2,double n2)
 {
-    double hypot();
-
     if (projection == PROJECTION_LL)
 	return G_geodesic_distance (e1, n1, e2, n2);
     else
@@ -163,7 +160,7 @@ G_distance_point_to_line_segment (
     if (dx == 0.0 && dy == 0.0)
 	return G_distance (x1,y1,xp,yp);
 
-    if (dabs(dy) > dabs(dx))
+    if (fabs(dy) > fabs(dx))
     {
 	xq = xp + dy;
 	yq = (dx/dy) * (xp - xq) + yp;
@@ -195,11 +192,6 @@ fprintf(stderr," code=%d P=(%f,%f) S=(%f,%f)(%f,%f)\n",t,xp,yp,x1,y1,x2,y2);
  * of the segment
  */
     return min2(G_distance (x1,y1,xp,yp), G_distance (x2,y2,xp,yp));
-}
-
-static double dabs ( double x)
-{
-    return x < 0 ? -x : x;
 }
 
 static double min4(double a,double b,double c,double d)
