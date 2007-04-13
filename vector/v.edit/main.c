@@ -24,6 +24,7 @@ int main (int argc, char *argv[])
 {
     int ret;
     FILE *output=stderr;
+    ascii = NULL;
 
     G_gisinit(argv[0]);
 
@@ -36,15 +37,16 @@ int main (int argc, char *argv[])
 	exit(EXIT_FAILURE);
 
     /* open input file */
-    if (in_opt -> answer) {
+    if (G_strcasecmp (in_opt -> answer, "-") == 0 ||
+	(action_mode != MODE_CREATE && in_opt -> answer == NULL)) {
+	ascii = stdin;
+    }
+    else if (in_opt -> answer) {
 	ascii = fopen (in_opt -> answer, "r");
 	if (ascii == NULL) {
 	    G_fatal_error(_("Could not open ASCII file <%s>"),
 			  in_opt -> answer);
 	}
-    }
-    else {
-	ascii = stdin;
     }
 
     if (action_mode == MODE_CREATE) {
@@ -56,35 +58,36 @@ int main (int argc, char *argv[])
 
 	G_debug(1, "Map created");
 	
-	Vect_hist_command (&Map);
-	
-	Vect_build (&Map, output);
-	Vect_close (&Map);
-
-	exit (EXIT_SUCCESS);
-    }
-
-    /* open selected vector file */    
-    mapset = G_find_vector2 (map_opt->answer, G_mapset()); 
-    if ( mapset == NULL ) {
-	G_fatal_error (_("Vector map <%s> not found in the current mapset"),
-		       map_opt->answer);
+	if (ascii) {
+	    /* also add new vector features */
+	    action_mode = MODE_ADD;
+	}
     }
     else {
-        if (action_mode != MODE_SELECT)
-            ret = Vect_open_update (&Map, map_opt->answer, mapset);
-        else
-            ret = Vect_open_old (&Map, map_opt->answer, mapset);
-	
-	if (ret < 2)
-	    G_fatal_error (_("Cannot open vector map <%s> at topo level [%d]"),
-			   map_opt -> answer, 2);
+	/* open selected vector file */    
+	mapset = G_find_vector2 (map_opt->answer, G_mapset()); 
+	if ( mapset == NULL ) {
+	    G_fatal_error (_("Vector map <%s> not found in the current mapset"),
+			   map_opt->answer);
+	}
+	else {
+	    if (action_mode != MODE_SELECT)
+		ret = Vect_open_update (&Map, map_opt->answer, mapset);
+	    else
+		ret = Vect_open_old (&Map, map_opt->answer, mapset);
+	    
+	    if (ret < 2)
+		G_fatal_error (_("Cannot open vector map <%s> at topo level [%d]"),
+			       map_opt -> answer, 2);
+	}
     }
 
     G_debug (1, "Map opened");
 
     /* perform requested editation */
     switch(action_mode) {
+    case MODE_CREATE:
+	break;
       case MODE_ADD:
         if ( ! n_flg->answer )
             read_head(ascii, &Map);
