@@ -608,7 +608,7 @@ static void save_rgn (char *name, char *tempfile, FILE *tmp, int *x, int *y, int
 				   file to color wave */
 
   G_init_colors(&colors);
-  G_make_color_wave(&colors, 1, class);
+  G_make_wave_colors(&colors, 1, class);
   G_write_colors(name, G_mapset(), &colors);
 
   				/* overlay the region file on the
@@ -710,15 +710,15 @@ again:
      G_write_colors(name, G_mapset(), &colors);
   }
   else if (d == 2) {
-     G_make_color_ramp(&colors, min, max);
+     G_make_ramp_colors(&colors, min, max);
      G_write_colors(name, G_mapset(), &colors);
   }
   else if (d == 3) {
-     G_make_color_wave(&colors, min, max);
+     G_make_wave_colors(&colors, min, max);
      G_write_colors(name, G_mapset(), &colors);
   }
   else if (d == 4){
-     G_make_grey_scale(&colors, min, max);
+     G_make_grey_scale_colors(&colors, min, max);
      G_write_colors(name, G_mapset(), &colors);
   }
   else if (d == 5) {

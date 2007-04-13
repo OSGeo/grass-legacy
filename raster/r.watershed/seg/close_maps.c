@@ -16,7 +16,7 @@ close_maps (void)
     if (asp_flag) {
 	cseg_write_cellfile (&asp, asp_name);
 	G_init_colors (&colors);
-	G_make_grey_scale (&colors, 1, 8);
+	G_make_grey_scale_colors (&colors, 1, 8);
 	G_write_colors (asp_name, this_mapset, &colors);
     }
     cseg_close (&asp);

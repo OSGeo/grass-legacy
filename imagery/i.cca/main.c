@@ -180,7 +180,7 @@ int main (int argc, char *argv[])
                             "outside the 0-255 range."), out_opt->answer, i);
                 }
 
-                G_make_grey_scale(&color_tbl, 0, outbandmax[i]);
+                G_make_grey_scale_colors(&color_tbl, 0, outbandmax[i]);
                 sprintf(tempname, "%s.%d", out_opt->answer, i);
 
                 /* write a color table */
