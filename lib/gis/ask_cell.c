@@ -19,8 +19,8 @@
  *       if cell file already exists
  *
  *   parms:
- *      char *prompt    optional prompt for user
- *      char *name      buffer to hold name of map found
+ *      const char *prompt    optional prompt for user
+ *      char *name            buffer to hold name of map found
  *
  *   returns:
  *      char *pointer to a string with name of mapset
@@ -49,7 +49,7 @@ static int lister(char *,char *,char *);
  */
 
 char *
-G_ask_cell_new  (char *prompt, char *name)
+G_ask_cell_new  (const char *prompt, char *name)
 
 {
 
@@ -69,7 +69,7 @@ G_ask_cell_new  (char *prompt, char *name)
  */
 
 char *
-G_ask_cell_old  (char *prompt, char *name)
+G_ask_cell_old  (const char *prompt, char *name)
 
 {
 	return G_ask_old_ext (prompt, name, "cell", "raster", _("with titles"), lister);
@@ -88,14 +88,14 @@ G_ask_cell_old  (char *prompt, char *name)
  */
 
 char *
-G_ask_cell_in_mapset  (char *prompt, char *name)
+G_ask_cell_in_mapset  (const char *prompt, char *name)
 
 {
 	return G_ask_in_mapset_ext (prompt, name, "cell", "raster", _("with titles"), lister);
 }
 
 char *
-G_ask_cell_any  (char *prompt, char *name)
+G_ask_cell_any  (const char *prompt, char *name)
 
 {
 	return G_ask_any_ext (prompt, name, "cell", "raster", 1, _("with titles"), lister);

@@ -75,7 +75,7 @@ int quit(int) __attribute__ ((__noreturn__));
 #else
 int quit(int);
 #endif
-int error(char *, int);
+int error(const char *, int);
 /* mark.c */
 int mark(int, int, int);
 int mark_point(View *, int, int);

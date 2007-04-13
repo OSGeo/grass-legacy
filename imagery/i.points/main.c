@@ -16,7 +16,6 @@ int quit (int) __attribute__ ((__noreturn__));
 #else
 int quit (int);
 #endif
-int error (char *, int);
 
 int main (int argc, char *argv[])
 {
@@ -170,7 +169,7 @@ int quit (int n)
     exit(n);
 }
 
-int error (char *msg, int fatal)
+int error (const char *msg, int fatal)
 {
     char buf[200];
     int x,y,button;

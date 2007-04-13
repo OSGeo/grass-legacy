@@ -154,7 +154,7 @@ int G_get_d_raster_color (DCELL *rast,
 
 
 /**
- * \fn int G_get_null_value_color (int *red, int *grn, int *blu, struct Colors *colors)
+ * \fn int G_get_null_value_color (int *red, int *grn, int *blu, const struct Colors *colors)
  *
  * \brief  Gets color for null value.
  *
@@ -169,7 +169,7 @@ int G_get_d_raster_color (DCELL *rast,
  */
 
 int G_get_null_value_color (int *red, int *grn, int *blu,
-    struct Colors *colors)
+    const struct Colors *colors)
 {
   if(colors->null_set)
   {
@@ -191,7 +191,7 @@ int G_get_null_value_color (int *red, int *grn, int *blu,
 
 
 /**
- * \fn int G_get_default_color (int *red, int *grn, int *blu, struct Colors *colors)
+ * \fn int G_get_default_color (int *red, int *grn, int *blu, const struct Colors *colors)
  *
  * \brief Gets default color.
  *
@@ -206,7 +206,7 @@ int G_get_null_value_color (int *red, int *grn, int *blu,
  */
 
 int G_get_default_color (int *red, int *grn, int *blu,
-    struct Colors *colors)
+    const struct Colors *colors)
 {
   if(colors->undef_set)
   {

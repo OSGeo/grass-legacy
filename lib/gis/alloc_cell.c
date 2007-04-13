@@ -42,7 +42,7 @@ int G_raster_size (RASTER_MAP_TYPE data_type)
 
 
 /**
- * \fn CELL *G_allocate_cell_buf ()
+ * \fn CELL *G_allocate_cell_buf (void)
  *
  * \brief Allocate memory for a CELL type raster map.
  *
@@ -64,7 +64,7 @@ int G_raster_size (RASTER_MAP_TYPE data_type)
  */
 
 CELL *
-G_allocate_cell_buf ()
+G_allocate_cell_buf (void)
 {
     return (CELL *) G_calloc (G_window_cols() + 1, sizeof(CELL));
 }
@@ -92,7 +92,7 @@ G_allocate_raster_buf  (RASTER_MAP_TYPE data_type)
 
 
 /**
- * \fn CELL *G_allocate_c_raster_buf ()
+ * \fn CELL *G_allocate_c_raster_buf (void)
  *
  * \brief Allocates memory for a raster map of type CELL.
  *
@@ -103,14 +103,14 @@ G_allocate_raster_buf  (RASTER_MAP_TYPE data_type)
  */
 
 CELL *
-G_allocate_c_raster_buf ()
+G_allocate_c_raster_buf (void)
 {
     return (CELL *) G_calloc (G_window_cols() + 1, sizeof(CELL));
 }
 
 
 /**
- * \fn FCELL *G_allocate_f_raster_buf ()
+ * \fn FCELL *G_allocate_f_raster_buf (void)
  *
  * \brief Allocates memory for a raster map of type FCELL.
  *
@@ -121,14 +121,14 @@ G_allocate_c_raster_buf ()
  */
 
 FCELL *
-G_allocate_f_raster_buf ()
+G_allocate_f_raster_buf (void)
 {
     return (FCELL *) G_calloc (G_window_cols() + 1, sizeof(FCELL));
 }
 
 
 /**
- * \fn DCELL *G_allocate_d_raster_buf ()
+ * \fn DCELL *G_allocate_d_raster_buf (void)
  *
  * \brief Allocates memory for a raster map of type DCELL.
  *
@@ -139,14 +139,14 @@ G_allocate_f_raster_buf ()
  */
 
 DCELL *
-G_allocate_d_raster_buf ()
+G_allocate_d_raster_buf (void)
 {
     return (DCELL *) G_calloc (G_window_cols() + 1, sizeof(DCELL));
 }
 
 
 /**
- * \fn char *G_allocate_null_buf ()
+ * \fn char *G_allocate_null_buf (void)
  *
  * \brief Allocates memory for a null buffer.
  *
@@ -157,7 +157,7 @@ G_allocate_d_raster_buf ()
  */
 
 char *
-G_allocate_null_buf ()
+G_allocate_null_buf (void)
 {
     return (char *) G_calloc (G_window_cols() + 1, sizeof(char));
 }

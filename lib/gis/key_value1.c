@@ -99,7 +99,7 @@ int G_set_key_value (
     return 2;
 }
 
-char *G_find_key_value (char *key, struct Key_Value *kv)
+char *G_find_key_value (char *key, const struct Key_Value *kv)
 {
     int n;
 

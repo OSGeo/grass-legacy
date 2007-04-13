@@ -15,7 +15,7 @@
 
 
 /**
- * \fn double G_planimetric_polygon_area (double *x, double *y, int n)
+ * \fn double G_planimetric_polygon_area (const double *x, const double *y, int n)
  *
  * \brief Calculates planimetric polygon area.
  *
@@ -25,7 +25,7 @@
  * \return double
  */
 
-double G_planimetric_polygon_area(double *x,double *y,int n)
+double G_planimetric_polygon_area(const double *x, const double *y, int n)
 {
     double x1,y1,x2,y2;
     double area;

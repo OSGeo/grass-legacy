@@ -106,8 +106,8 @@
 static char *ask_return_msg = 0 ;
 static char clear_return_msg = 0 ;
 static int (*no_lister)() = 0 ;
-static int parselist(char *, int , char *);
-static char *ask( char *,char *,char *,char *,char *, int (*)(),int );
+static int parselist(const char *, int , char *);
+static char *ask(const char *,char *,char *,char *,char *, int (*)(),int );
 
 
 /*!
@@ -127,13 +127,13 @@ static char *ask( char *,char *,char *,char *,char *, int (*)(),int );
  *  \return char * 
  */
 
-char *G_ask_new  (char *prompt, char *name, char *element, char *desc)
+char *G_ask_new  (const char *prompt, char *name, char *element, char *desc)
 
 {
     return ask (prompt, name, element, desc, (char *) NULL, no_lister, NEW);
 }
 
-char *G_ask_new_ext  (char *prompt, char *name, char *element, char *desc, char *option, int (*lister)())
+char *G_ask_new_ext  (const char *prompt, char *name, char *element, char *desc, char *option, int (*lister)())
 
 {
     return ask (prompt, name, element, desc, option, lister, NEW);
@@ -157,13 +157,13 @@ char *G_ask_new_ext  (char *prompt, char *name, char *element, char *desc, char 
  *  \return char * 
  */
 
-char *G_ask_old  (char *prompt, char *name, char *element, char *desc)
+char *G_ask_old  (const char *prompt, char *name, char *element, char *desc)
 
 {
     return ask (prompt, name, element, desc, (char *) NULL, no_lister, OLD);
 }
 
-char *G_ask_old_ext  (char *prompt, char *name, char *element, char *desc, char *option, int (*lister)())
+char *G_ask_old_ext  (const char *prompt, char *name, char *element, char *desc, char *option, int (*lister)())
 
 {
     return ask (prompt, name, element, desc, option, lister, OLD);
@@ -187,13 +187,13 @@ char *G_ask_old_ext  (char *prompt, char *name, char *element, char *desc, char 
  *  \return char * 
  */
 
-char *G_ask_any  (char *prompt, char *name, char *element, char *desc, int  warn)
+char *G_ask_any  (const char *prompt, char *name, char *element, char *desc, int  warn)
 
 {
     return ask (prompt, name, element, desc, (char *) NULL, no_lister, warn?ANY:ANY_NW);
 }
 
-char *G_ask_any_ext  (char *prompt, char *name, char *element, char *desc, int  warn, char *option, int (*lister)())
+char *G_ask_any_ext  (const char *prompt, char *name, char *element, char *desc, int  warn, char *option, int (*lister)())
 
 {
     return ask (prompt, name, element, desc, option, lister, warn?ANY:ANY_NW);
@@ -218,14 +218,14 @@ char *G_ask_any_ext  (char *prompt, char *name, char *element, char *desc, int  
  */
 
 char *
-G_ask_in_mapset  (char *prompt, char *name, char *element, char *desc)
+G_ask_in_mapset  (const char *prompt, char *name, char *element, char *desc)
 
 {
     return ask (prompt, name, element, desc, (char *) NULL, no_lister, PRJ);
 }
 
 char *
-G_ask_in_mapset_ext  (char *prompt, char *name, char *element, char *desc, char *option, int (*lister)())
+G_ask_in_mapset_ext  (const char *prompt, char *name, char *element, char *desc, char *option, int (*lister)())
 
 {
     return ask (prompt, name, element, desc, option, lister, PRJ);
@@ -245,7 +245,7 @@ G_ask_in_mapset_ext  (char *prompt, char *name, char *element, char *desc, char 
  */
 
 char *
-G_ask_new_file  (char *prompt, char *name, char *element, char *desc)
+G_ask_new_file  (const char *prompt, char *name, char *element, char *desc)
 
 {
     /* element is a dummy parameter for this function */
@@ -280,7 +280,7 @@ G_ask_new_file_ext (prompt, name, element, desc, option, lister)
  */
 
 char *
-G_ask_old_file  (char *prompt, char *name, char *element, char *desc)
+G_ask_old_file  (const char *prompt, char *name, char *element, char *desc)
 
 {
     /* element is a dummy parameter for this function */
@@ -313,7 +313,7 @@ G_ask_old_file_ext (prompt, name, element, desc, option, lister)
  *  \return int
  */
 
-int G_set_ask_return_msg (char *msg)
+int G_set_ask_return_msg (const char *msg)
 {
     if (ask_return_msg) G_free (ask_return_msg);
     ask_return_msg = G_store (msg);
@@ -341,7 +341,7 @@ char *G_get_ask_return_msg()
 }
 
 static char *ask (
-    char *prompt,
+    const char *prompt,
     char *name,
     char *element,
     char *desc,
@@ -392,15 +392,18 @@ static char *ask (
 	{
 	case NEW:
 	case NEW_FILE:
-	    sprintf(prompt = tprompt,_("Enter a new %s file name"), desc);
+	    sprintf(tprompt,_("Enter a new %s file name"), desc);
+	    prompt = tprompt;
 	    break;
 	case OLD:
 	case PRJ:
 	case OLD_FILE:
-	    sprintf(prompt = tprompt,_("Enter the name of an existing %s file"), desc);
+	    sprintf(tprompt,_("Enter the name of an existing %s file"), desc);
+	    prompt = tprompt;
 	    break;
 	default:
-	    sprintf(prompt = tprompt,_("Enter %s file name"), desc);
+	    sprintf(tprompt,_("Enter %s file name"), desc);
+	    prompt = tprompt;
 	    break;
 	}
     }
@@ -588,7 +591,7 @@ static char *ask (
     return NULL;
 }
 
-static int parselist ( char *input, int option, char *mapset)
+static int parselist ( const char *input, int option, char *mapset)
 {
     char list[30];
     char f1[30];

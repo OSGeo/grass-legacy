@@ -75,7 +75,8 @@
  **********************************************************************
  *
  *  G_copy_raster_cats (pcats_to, pcats_from)
- *      struct Categories *pcats_to, *pcats_from
+ *      struct Categories *pcats_to
+ *      const struct Categories *pcats_from
  *
  *  Allocates NEW space for quant rules and labels and copies
  *  all info from "from" cats to "to" cats
@@ -551,7 +552,7 @@ error:
  *  \return char * 
  */
 
-char *G_get_cats_title (struct Categories *pcats)
+char *G_get_cats_title (const struct Categories *pcats)
 {
    return G_get_raster_cats_title (pcats);
 }
@@ -566,7 +567,7 @@ char *G_get_cats_title (struct Categories *pcats)
  *  \return char * 
  */
 
-char *G_get_raster_cats_title (struct Categories *pcats)
+char *G_get_raster_cats_title (const struct Categories *pcats)
 {
     static char *none = "";
     return pcats->title ? pcats->title : none;
@@ -590,8 +591,7 @@ char *G_get_raster_cats_title (struct Categories *pcats)
 
 char *G_get_cat (CELL num, struct Categories *pcats)
 {
-    CELL tmp=num;
-    return G_get_c_raster_cat(&tmp, pcats);
+    return G_get_c_raster_cat(&num, pcats);
 }
 
 
@@ -1338,7 +1338,7 @@ int G__write_cats( char *element, char *name, struct Categories *cats)
  */
 
 char *G_get_ith_d_raster_cat (
-     struct Categories *pcats,
+     const struct Categories *pcats,
      int i,
      DCELL *rast1,DCELL *rast2)
 {
@@ -1369,7 +1369,7 @@ char *G_get_ith_d_raster_cat (
  */
 
 char *G_get_ith_f_raster_cat (
-     struct Categories *pcats,
+     const struct Categories *pcats,
      int i,
      void *rast1,void *rast2)
 {
@@ -1398,7 +1398,7 @@ char *G_get_ith_f_raster_cat (
  */
 
 char *G_get_ith_c_raster_cat (
-     struct Categories *pcats,
+     const struct Categories *pcats,
      int i,
      void *rast1,void *rast2)
 {
@@ -1429,7 +1429,7 @@ char *G_get_ith_c_raster_cat (
  */
 
 char *
-G_get_ith_raster_cat (struct Categories *pcats, int i, void *rast1, void *rast2, RASTER_MAP_TYPE data_type)  
+G_get_ith_raster_cat (const struct Categories *pcats, int i, void *rast1, void *rast2, RASTER_MAP_TYPE data_type)  
 {
      char *tmp;
      DCELL val1, val2;
@@ -1461,7 +1461,7 @@ G_get_ith_raster_cat (struct Categories *pcats, int i, void *rast1, void *rast2,
 
 int G_init_cats (
     CELL num,
-    char *title,
+    const char *title,
     struct Categories *pcats)
 {
     G_init_raster_cats (title, pcats);
@@ -1483,7 +1483,7 @@ int G_init_cats (
  */
 
 int 
-G_init_raster_cats (char *title, struct Categories *pcats)
+G_init_raster_cats (const char *title, struct Categories *pcats)
 {
     G_set_raster_cats_title (title, pcats);
     pcats->labels = NULL;
@@ -1513,7 +1513,7 @@ G_init_raster_cats (char *title, struct Categories *pcats)
  */
 
 int 
-G_set_cats_title (char *title, struct Categories *pcats)
+G_set_cats_title (const char *title, struct Categories *pcats)
 {
     G_set_raster_cats_title (title, pcats);
       return 0;
@@ -1531,7 +1531,7 @@ G_set_cats_title (char *title, struct Categories *pcats)
  */
 
 int 
-G_set_raster_cats_title (char *title, struct Categories *pcats)
+G_set_raster_cats_title (const char *title, struct Categories *pcats)
 {
     if (title == NULL) title="";
     pcats->title = G_store (title);
@@ -1540,7 +1540,7 @@ G_set_raster_cats_title (char *title, struct Categories *pcats)
       return 0;
 }
 
-int G_set_cats_fmt (char *fmt, double m1, double a1, double m2, double a2, struct Categories *pcats)
+int G_set_cats_fmt (const char *fmt, double m1, double a1, double m2, double a2, struct Categories *pcats)
 {
     G_set_raster_cats_fmt (fmt, m1, a1, m2, a2, pcats);
     return 0;
@@ -1561,7 +1561,7 @@ int G_set_cats_fmt (char *fmt, double m1, double a1, double m2, double a2, struc
  *  \return int
  */
 
-int G_set_raster_cats_fmt (char *fmt, double m1, double a1, double m2, double a2, struct Categories *pcats)
+int G_set_raster_cats_fmt (const char *fmt, double m1, double a1, double m2, double a2, struct Categories *pcats)
 {
     pcats->m1 = m1;
     pcats->a1 = a1;
@@ -1646,7 +1646,7 @@ int G_free_raster_cats (struct Categories *pcats)
  */
 
 int 
-G_copy_raster_cats (struct Categories *pcats_to, struct Categories *pcats_from)
+G_copy_raster_cats (struct Categories *pcats_to, const struct Categories *pcats_from)
 {
    int i;
    char *descr;

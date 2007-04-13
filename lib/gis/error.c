@@ -79,7 +79,7 @@
 #define ERR  2
 
 /* static int (*error)() = 0; */
-static int (*ext_error)() = 0; /* Roger Bivand 17 June 2000 */
+static int (*ext_error)(const char *, int); /* Roger Bivand 17 June 2000 */
 static int no_warn = 0;
 static int no_sleep = 1;
 static int message_id = 1;
@@ -88,19 +88,19 @@ extern char *getenv();
 static int print_word (FILE *, char **, int *, const int);
 static void print_sentence (FILE *, const int, const char *);
 static int print_error (const char *, const int);
-static int mail_msg (const char *, const int);
-static int write_error (const char *, const int, const char *, 
-                        const time_t, const char *);
-static int log_error (const char *, const int);
+static int mail_msg (const char *, int);
+static int write_error (const char *, int, const char *, 
+                        time_t, const char *);
+static int log_error (const char *, int);
 
 /*!
- * \fn void G_message (char *msg,...)
+ * \fn void G_message (const char *msg,...)
  *
  * \brief Print a message to stderr
  *
  * The output format depends on enviroment variable GRASS_MESSAGE_FORMAT
 */
-void G_message (char *msg,...)
+void G_message (const char *msg,...)
 {
     char buffer[2000];  /* G_asprintf does not work */
     va_list ap;
@@ -113,7 +113,7 @@ void G_message (char *msg,...)
 }
 
 /*!
- * \fn int G_fatal_error ( char *msg,...)
+ * \fn int G_fatal_error (const char *msg,...)
  *
  * \brief Print a fatal error message to stderr
  * 
@@ -130,7 +130,7 @@ void G_message (char *msg,...)
  * \return Terminates with an exit status of EXIT_FAILURE if no external
  * routine is specified by G_set_error_routine()
 */
-int G_fatal_error ( char *msg,...)
+int G_fatal_error (const char *msg,...)
 {
     char buffer[2000];  /* No novels to the error logs, OK? */
     va_list ap;
@@ -148,7 +148,7 @@ int G_fatal_error ( char *msg,...)
 
 /*!
  *
- * \fn int G_warning ( char *msg, ...)
+ * \fn int G_warning (const char *msg, ...)
  *
  * \brief Print a warning message to stderr
  * 
@@ -157,7 +157,7 @@ int G_fatal_error ( char *msg,...)
  *
  * A warning message can be suppressed by G_suppress_warnings()
 */
-int G_warning ( char *msg, ...)
+int G_warning (const char *msg, ...)
 {
     char buffer[2000];
     va_list ap;
@@ -208,7 +208,7 @@ int G_sleep_on_error (int flag)
 }
 
 /*!
- * \fn int G_set_error_routine ( int (*error_routine)())
+ * \fn int G_set_error_routine ( int (*error_routine)(char *, int))
  *
  * \brief Establishes error_routine as the routine that will handle
  * the printing of subsequent error messages.
@@ -218,14 +218,14 @@ int G_sleep_on_error (int flag)
  *
  * \return always null
 */
-int G_set_error_routine ( int (*error_routine)())
+int G_set_error_routine(int (*error_routine)(const char *, int))
 {
     ext_error = error_routine; /* Roger Bivand 17 June 2000 */
     return 0;
 }
 
 /*!
- * \fn int G_unset_error_routine ()
+ * \fn int G_unset_error_routine (void)
  *
  * \brief After this call subsequent error messages will be handled in the
  * default method.
@@ -234,7 +234,7 @@ int G_set_error_routine ( int (*error_routine)())
  *
  * \return null
 */
-int G_unset_error_routine ()
+int G_unset_error_routine(void)
 {
     ext_error = 0; /* Roger Bivand 17 June 2000 */
 
@@ -299,7 +299,7 @@ static int print_error(const char *msg, const int type)
     return 0;
 }
 
-static int log_error (const char *msg, const int fatal)
+static int log_error (const char *msg, int fatal)
 {
     FILE *pwd;
     char cwd[1024];
@@ -337,8 +337,8 @@ static int log_error (const char *msg, const int fatal)
 }
 
 /* Write a message to the log file */
-static int write_error (const char *msg, const int fatal,
-                        const char *dir, const time_t clock,
+static int write_error (const char *msg, int fatal,
+                        const char *dir, time_t clock,
                         const char *cwd)
 {
     char logfile[GNAME_MAX];
@@ -372,7 +372,7 @@ static int write_error (const char *msg, const int fatal,
 }
 
 /* Mail a message */
-static int mail_msg (const char *msg, const int fatal)
+static int mail_msg (const char *msg, int fatal)
 {
     FILE *mail;
     char command[64];

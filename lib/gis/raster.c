@@ -31,11 +31,11 @@
 
 void *G_incr_void_ptr(
 /* advances ptr by size bytes returns new position */
-   void *ptr,
+   const void *ptr,
    int size)
 {
    /* assuming that the size of unsigned char is 1 */
-   return (void *) ((unsigned char *) ptr + size);
+   return (void *) ((const unsigned char *) ptr + size);
 }
 
 
@@ -53,7 +53,7 @@ void *G_incr_void_ptr(
  *  \return int
  */
 
-int G_raster_cmp( void *v1,void *v2, RASTER_MAP_TYPE data_type)
+int G_raster_cmp( const void *v1, const void *v2, RASTER_MAP_TYPE data_type)
 {
     if(G_is_null_value(v1, data_type ) )
     {
@@ -66,19 +66,19 @@ int G_raster_cmp( void *v1,void *v2, RASTER_MAP_TYPE data_type)
 
     switch (data_type)
     {
-       case CELL_TYPE:  if(*((CELL *) v1) > *((CELL *) v2))
+       case CELL_TYPE:  if(*((const CELL *) v1) > *((const CELL *) v2))
 			     return 1;
-                        else if(*((CELL *) v1) == *((CELL *) v2))
+                        else if(*((const CELL *) v1) == *((const CELL *) v2))
 			     return 0;
                         else return -1;
-       case FCELL_TYPE: if(*((FCELL *) v1) > *((FCELL *) v2))
+       case FCELL_TYPE: if(*((const FCELL *) v1) > *((const FCELL *) v2))
 			     return 1;
-                        else if(*((FCELL *) v1) == *((FCELL *) v2))
+                        else if(*((const FCELL *) v1) == *((const FCELL *) v2))
 			     return 0;
                         else return -1;
-       case DCELL_TYPE: if(*((DCELL *) v1) > *((DCELL *) v2))
+       case DCELL_TYPE: if(*((const DCELL *) v1) > *((const DCELL *) v2))
 			     return 1;
-                        else if(*((DCELL *) v1) == *((DCELL *) v2))
+                        else if(*((const DCELL *) v1) == *((const DCELL *) v2))
 			     return 0;
                         else return -1;
      }
@@ -100,7 +100,7 @@ int G_raster_cmp( void *v1,void *v2, RASTER_MAP_TYPE data_type)
  */
 
 int G_raster_cpy(
-    void *v1,void *v2,
+    void *v1, const void *v2,
     int n,
     RASTER_MAP_TYPE data_type)
 {
@@ -235,7 +235,7 @@ int G_set_raster_value_d(
  */
 
 CELL G_get_raster_value_c(
-    void *rast,
+    const void *rast,
     RASTER_MAP_TYPE data_type)
 {
     CELL c;
@@ -246,9 +246,9 @@ CELL G_get_raster_value_c(
     }
     switch (data_type)
     {
-       case CELL_TYPE: return *((CELL *)rast);
-       case FCELL_TYPE: return (CELL) *((FCELL *)rast);
-       case DCELL_TYPE: return (CELL) *((DCELL *)rast);
+       case CELL_TYPE: return *((const CELL *)rast);
+       case FCELL_TYPE: return (CELL) *((const FCELL *)rast);
+       case DCELL_TYPE: return (CELL) *((const DCELL *)rast);
     }
 
     return 0;
@@ -270,7 +270,7 @@ CELL G_get_raster_value_c(
  */
 
 FCELL G_get_raster_value_f(
-    void *rast,
+    const void *rast,
     RASTER_MAP_TYPE data_type)
 {
     FCELL f;
@@ -281,9 +281,9 @@ FCELL G_get_raster_value_f(
     }
     switch (data_type)
     {
-       case CELL_TYPE: return (FCELL) *((CELL *)rast);
-       case FCELL_TYPE: return *((FCELL *)rast);
-       case DCELL_TYPE: return (FCELL) *((DCELL *)rast);
+       case CELL_TYPE: return (FCELL) *((const CELL *)rast);
+       case FCELL_TYPE: return *((const FCELL *)rast);
+       case DCELL_TYPE: return (FCELL) *((const DCELL *)rast);
     }
 
     return 0;
@@ -305,7 +305,7 @@ FCELL G_get_raster_value_f(
  */
 
 DCELL G_get_raster_value_d(
-    void *rast,
+    const void *rast,
     RASTER_MAP_TYPE data_type)
 {
     DCELL d;
@@ -316,9 +316,9 @@ DCELL G_get_raster_value_d(
     }
     switch (data_type)
     {
-       case CELL_TYPE: return (DCELL) *((CELL *)rast);
-       case FCELL_TYPE: return (DCELL) *((FCELL *)rast);
-       case DCELL_TYPE: return *((DCELL *)rast);
+       case CELL_TYPE: return (DCELL) *((const CELL *)rast);
+       case FCELL_TYPE: return (DCELL) *((const FCELL *)rast);
+       case DCELL_TYPE: return *((const DCELL *)rast);
     }
 
     return 0;

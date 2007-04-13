@@ -28,7 +28,7 @@ static int cell_dot (int,int);
 static int dcell_dot (int,int);
 static int cont (int,int);
 static int move (int,int);
-static int (*dot)();
+static int (*dot)(int,int);
 
 
 int 

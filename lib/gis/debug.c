@@ -42,7 +42,7 @@ static int grass_debug_level = -1;
  * \return 1 on success
  */
 
-int G_debug (int level, char *msg,...)
+int G_debug (int level, const char *msg,...)
 {
 #ifdef GDEBUG
     char    *lstr, *filen;
@@ -102,7 +102,7 @@ int G_debug (int level, char *msg,...)
 
 int G_dump(int fd)
 {
-    struct fileinfo *fcb = &G__.fileinfo[fd];
+    const struct fileinfo *fcb = &G__.fileinfo[fd];
 
     G_message("G_dump: memory allocated to G__");
     G_message("Size of cell in fp maps = %d", G__.fp_nbytes);

@@ -27,7 +27,7 @@
  */
 
 char *
-G_date()
+G_date(void)
 {
     time_t clock;
     struct tm *local;

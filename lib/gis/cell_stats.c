@@ -215,7 +215,7 @@ static int init_node(NODE *node,int idx,int offset)
 int G_find_cell_stat (
     CELL cat,
     long *count,
-    struct Cell_stats *s)
+    const struct Cell_stats *s)
 {
     register int q;
     register int idx;
@@ -419,7 +419,7 @@ int G_next_cell_stat (
  *  \return int
  */
 
-int G_get_stats_for_null_value (long *count, struct Cell_stats *s)
+int G_get_stats_for_null_value (long *count, const struct Cell_stats *s)
 {
     *count =  s->null_data_count;
     return 1;
