@@ -4,4 +4,5 @@ all = ["gismutils",
        "menudata",
        "menuform",
        "select",
+       "digit",
        ]
