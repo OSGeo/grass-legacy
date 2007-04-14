@@ -35,19 +35,9 @@
 int
 G_version (char **major, char **minor, char **release)
 {
-    int len;
-
-    len = strlen(GRASS_VERSION_MAJOR);
-    *major = G_malloc (len);
-    sprintf(*major, "%s", GRASS_VERSION_MAJOR);
-    
-    len = strlen(GRASS_VERSION_MINOR);
-    *minor = G_malloc (len);
-    sprintf(*minor, "%s", GRASS_VERSION_MINOR);
-    
-    len = strlen(GRASS_VERSION_RELEASE);
-    *release = G_malloc (len);
-    sprintf(*release, "%s", GRASS_VERSION_RELEASE);
+    *major = G_store(GRASS_VERSION_MAJOR);
+    *minor = G_store(GRASS_VERSION_MINOR);
+    *release = G_store(GRASS_VERSION_RELEASE);
 
     return 0;    
 }
