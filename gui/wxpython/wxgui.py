@@ -263,13 +263,10 @@ class GMFrame(wx.Frame):
         Page of notebook closed
         Also close associated map display
         """
-        closepage = event.GetSelection()
 
-        try:
-            if self.closepage.maptree.mapdisplay.Close(False):
-                self.closepage.maptree.mapdisplay.Close(True)
-        except:
-            pass
+        self.gm_cb.GetPage(event.GetSelection()).maptree.Map.Clean()
+        self.gm_cb.GetPage(event.GetSelection()).maptree.Close(True)
+        event.Skip()
 
     def runCmd(self,event):
         """Run command"""
@@ -538,6 +535,8 @@ class GMFrame(wx.Frame):
     def onCloseWindow(self, event):
         '''Cleanup when wxgui.py is quit'''
         try:
+            for page in range(self.gm_cb.GetPageCount()):
+                self.gm_cb.GetPage(page).maptree.Map.Clean()
             self.DeleteAllPages()
         except:
             self.DestroyChildren()
