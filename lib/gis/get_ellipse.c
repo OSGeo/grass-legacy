@@ -20,7 +20,7 @@ static int count = -1;
 /* static int get_a_e2 (char *, char *, double *,double *); */
 static int get_a_e2_f (const char*, const char *, double *, double *, double*);
 void ellipsoid_table_file(char *);
-static int compare_table_names(const struct table *, const struct table *);
+static int compare_table_names(const void *, const void *);
 static int read_ellipsoid_table(int );
 
 /*
@@ -375,10 +375,11 @@ void ellipsoid_table_file(char *file)
 }
 
 static int 
-compare_table_names(const struct table *a, const struct table *b)
+compare_table_names(const void *pa, const void *pb)
 {
-  /* return strcmp(a->name,b->name); */
-  return G_strcasecmp(a->name, b->name); 
+    const struct table *a = pa, *b = pb;
+    /* return strcmp(a->name,b->name); */
+    return G_strcasecmp(a->name, b->name); 
 }
 
 static int 
@@ -446,7 +447,7 @@ read_ellipsoid_table(int fatal)
     if (!err)
     {
     	/* over correct typed version */
-	qsort ((void *)table, (size_t)count, (size_t)sizeof(*table), (int (*)(const void*, const void *))(compare_table_names));
+	qsort (table, count, sizeof(*table), compare_table_names);
 	return 1;
     }
     
