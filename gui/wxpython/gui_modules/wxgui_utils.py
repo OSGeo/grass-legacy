@@ -165,6 +165,7 @@ class LayerTree(CT.CustomTreeCtrl):
         self.Bind(wx.EVT_TREE_DELETE_ITEM, self.onDeleteLayer)
         self.Bind(wx.EVT_TREE_BEGIN_DRAG, self.onBeginDrag)
         self.Bind(wx.EVT_TREE_END_DRAG, self.onEndDrag)
+        self.Bind(wx.EVT_CLOSE, self.onCloseWindow)
 
     def AddLayer(self, type):
         self.first = True
@@ -548,6 +549,9 @@ class LayerTree(CT.CustomTreeCtrl):
     def setNotebookPage(self,pg):
         self.Parent.notebook.SetSelection(pg)
 
+    def onCloseWindow(self, event):
+        self.Map.Clean()
+
 class TreeCtrlComboPopup(wx.combo.ComboPopup):
     """
     Create a tree ComboBox for selecting maps and other GIS elements
@@ -683,7 +687,6 @@ class TreeCtrlComboPopup(wx.combo.ComboPopup):
             self.value = item
             self.Dismiss()
         evt.Skip()
-
 
 
 class GMConsole(wx.Panel):
@@ -870,8 +873,11 @@ class GMConsole(wx.Panel):
                         self.cmd_output.write('East: '+rastqlist[0]+"\n")
                         self.cmd_output.write('North: '+rastqlist[1]+"\n")
                         self.cmd_output.write(rastqlist[2]+"\n")
-                        self.cmd_output.write('Category: '+rastqlist[3]+"\n")
-                        self.cmd_output.write('Label: '+rastqlist[4]+"\n")
+                        data = rastqlist[3:]
+                        print 'data=',data
+                        for x in range(0,len(data),2):
+                            self.cmd_output.write('Category: '+data[x]+"\n")
+                            self.cmd_output.write('Label: '+data[x+1]+"\n")
                     else:
                         self.cmd_output.write(oline+"\n")
                     print >> sys.stderr, oline
