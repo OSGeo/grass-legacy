@@ -139,7 +139,7 @@ static void G_gui (void);
 static void G_tcltk (void);
 static void G_usage_xml (void);
 static void G_usage_html (void);
-static void G_script ();
+static void G_script (void);
 
 
 /**
@@ -1304,7 +1304,7 @@ static void G_usage_xml (void)
 					if(opt->descs && opt->opts[i] && opt->descs[i]) {
 					    fprintf(stdout, "\t\t\t\t<description>");
 					    print_escaped_for_xml(stdout, opt->descs[i]);
-					    fprintf(stdout, "</description>");
+					    fprintf(stdout, "</description>\n");
 					}
 					fprintf(stdout, "\t\t\t</value>\n");
 					i++;
@@ -1584,10 +1584,9 @@ static void G_usage_html (void)
 			    int i = 0;
 
 			    while ( opt->opts[i] ) {
-				if (  !opt->descs[i] )
-				    continue;
-				fprintf(stdout, "<DD><b>%s</b>: %s</DD>\n", opt->opts[i], opt->descs[i]);
-				
+				if (  opt->descs[i] )
+				    fprintf(stdout, "<DD><b>%s</b>: %s</DD>\n",
+					    opt->opts[i], opt->descs[i]);
 				i++;
 			    }
 			}
@@ -1776,6 +1775,7 @@ static void generate_tcl(FILE *fp)
 			fprintf(fp, " desc {%s}\n", opt->description);
 			fprintf(fp, " required %d\n", opt->required);
 			fprintf(fp, " options {%s}\n", opt->options ? opt->options : "");
+			fprintf(fp, " descs {%s}\n", opt->descriptions ? opt->descriptions : "");
 			fprintf(fp, " answer {%s}\n", opt->answer ? opt->answer : "");
 			fprintf(fp, " prompt {%s}\n", opt->gisprompt ? opt->gisprompt : "");
 			/* It should be up to the gui as to what
