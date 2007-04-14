@@ -469,46 +469,57 @@ class GMFrame(wx.Frame):
 
 
     def addRaster(self, event):
+        self.notebook.SetSelection(0)
         self.curr_page.maptree.AddLayer('raster')
 
     def addRGB(self, event):
         """Add RGB layer"""
+        self.notebook.SetSelection(0)
         self.curr_page.maptree.AddLayer('rgb')
 
     def addHIS(self, event):
         """Add HIS layer"""
+        self.notebook.SetSelection(0)
         self.curr_page.maptree.AddLayer('his')
 
     def addRastLeg(self, event):
         """Add raster legend"""
+        self.notebook.SetSelection(0)
         self.curr_page.maptree.AddLayer('rastleg')
 
     def addVector(self, event):
         """Add vector layer"""
+        self.notebook.SetSelection(0)
         self.curr_page.maptree.AddLayer('vector')
 
     def addThemeMap(self, event):
         """Add thematic map layer"""
+        self.notebook.SetSelection(0)
         self.curr_page.maptree.AddLayer('thememap')
 
     def addThemeChart(self, event):
         """Add thematic chart layer"""
+        self.notebook.SetSelection(0)
         self.curr_page.maptree.AddLayer('themechart')
 
     def addCommand(self, event):
         """Add command line layer"""
+        self.notebook.SetSelection(0)
         self.curr_page.maptree.AddLayer('command')
 
     def addGroup(self, event):
         """Add layer group"""
+        self.notebook.SetSelection(0)
         self.curr_page.maptree.AddLayer('group')
 
     def addGrid(self, event):
         """Add layer grid"""
+        self.notebook.SetSelection(0)
         self.curr_page.maptree.AddLayer('grid')
 
     def addLabels(self, event):
         """Add layer vector labels"""
+        self.notebook.SetSelection(0)
         self.curr_page.maptree.AddLayer('labels')
 
     def GetSelectedDisplay(self):
