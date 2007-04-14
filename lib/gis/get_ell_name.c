@@ -20,7 +20,7 @@
 #include <grass/gis.h>
 #include <grass/glocale.h>
 
-int G_ask_ellipse_name( char *spheriod)
+int G_ask_ellipse_name( char *spheroid)
 { 
 	char buff[1024],answer[50];
         double aa,e2;
@@ -67,9 +67,9 @@ int G_ask_ellipse_name( char *spheriod)
             else break;
           }
         }
-        sprintf(spheriod,"%s",answer);
+        sprintf(spheroid,"%s",answer);
         remove ( Tmp_file );
-        if (strcmp(spheriod,"sphere") == 0) {
+        if (strcmp(spheroid,"sphere") == 0) {
           return 2;
         }
         return 1;
