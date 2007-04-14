@@ -16,7 +16,6 @@ int display(
     RASTER_MAP_TYPE data_type, int invert, int nocmd)
 {
     struct Colors colors ;
-    int offset ;
     int r,g,b;
 
     if (G_read_colors(name, mapset, &colors) == -1)
