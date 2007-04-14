@@ -665,18 +665,19 @@ class BufferedWindow(wx.Window):
             # querying
             elif self.mouse["box"] == "query":
                 east,north = self.Pixel2Cell(self.mouse['begin'][0],self.mouse['begin'][1])
-                if self.tree.GetSelection():
-                    layer =  self.tree.GetSelection()
-                    type =   self.tree.layertype[layer]
-                    dcmd = self.tree.GetPyData(layer)[0]
-                    mapname = None
-                    for item in dcmd.split(' '):
-                        if 'map=' in item:
-                            mapname = item.split('=')[1]
-
-                    self.parent.QueryMap(mapname,type,east,north)
-                else:
-                    print "Quering without gis manager not implemented yet"
+                self.Parent.QueryMap(east,north)
+#                if self.tree.GetSelection():
+#                    layer =  self.tree.GetSelection()
+#                    type =   self.tree.layertype[layer]
+#                    dcmd = self.tree.GetPyData(layer)[0]
+#                    mapname = None
+#                    for item in dcmd.split(' '):
+#                        if 'map=' in item:
+#                            mapname = item.split('=')[1]
+#
+#                    self.parent.QueryMap(mapname,type,east,north)
+#                else:
+#                    print "Quering without gis manager not implemented yet"
 
             # end drag of overlay decoration
             elif self.dragid != None:
@@ -911,17 +912,20 @@ class BufferedWindow(wx.Window):
         Set display geometry to match extents in
         saved region file
         """
-
-        print 'not yet functional'
-        pass
+        dlg = wx.MessageDialog(self, 'This is not yet functional',
+                           'Zoom to saved region extents', wx.OK | wx.ICON_INFORMATION)
+        dlg.ShowModal()
+        dlg.Destroy()
 
     def SaveDisplayRegion(self, event):
         """
         Save display extents to named region file.
         """
 
-        print 'not yet functional'
-        pass
+        dlg = wx.MessageDialog(self, 'This is not yet functional',
+                           'Save display extents to named region', wx.OK | wx.ICON_INFORMATION)
+        dlg.ShowModal()
+        dlg.Destroy()
 
 #        tmpreg = os.getenv("GRASS_REGION")
 #        os.unsetenv("GRASS_REGION")
@@ -987,8 +991,6 @@ class MapFrame(wx.Frame):
         #
         self.SetClientSize((600, 475))
 
-        # Set variables to associate display with GIS Manager page
-        self.disp_idx = idx
 
         #
         # Fancy gui
@@ -1254,7 +1256,10 @@ class MapFrame(wx.Frame):
 
         if dlg.ShowModal() == wx.ID_OK:
 #            data = dlg.GetPrintDialogData()
-            print 'printing not yet enabled'
+            dlg = wx.MessageDialog(self, 'This is not yet functional',
+                               'Map printing', wx.OK | wx.ICON_INFORMATION)
+            dlg.ShowModal()
+            dlg.Destroy()
 #            self.log.WriteText('GetAllPages: %d\n' % data.GetAllPages())
 
         dlg.Destroy()
@@ -1292,25 +1297,58 @@ class MapFrame(wx.Frame):
         # change the cursor
         self.MapWindow.SetCursor (self.cursors["cross"])
 
-    def QueryMap(self,mapname,type,x,y):
+    def QueryMap(self,x,y):
         """
         Run *.what command in gis manager output window
         """
         #set query snap distance for v.what at mapunit equivalent of 10 pixels
         qdist = 10.0 * ((self.Map.region['e'] - self.Map.region['w'])/self.Map.width)
 
-        if type == "raster":
-            cmd = "r.what -f input=%s east_north=%f,%f" %\
-                    (mapname, float(x), float(y))
+        if self.tree.GetSelections():
+            mapname = None
+            raststr = ''
+            vectstr = ''
+            rcmd = ''
+            vcmd = ''
+            for layer in self.tree.GetSelections():
+                type =   self.tree.layertype[layer]
+                dcmd = self.tree.GetPyData(layer)[0]
+                if type in ('raster', 'rgb', 'his'):
+                    for item in dcmd.split(' '):
+                        if 'map=' in item:
+                            raststr += "%s," % item.split('=')[1]
+                        elif 'red=' in item:
+                            raststr += "%s," % item.split('=')[1]
+                        elif 'h_map=' in item:
+                            raststr += "%s," % item.split('=')[1]
+                elif type in ('vector', 'thememap', 'themechart'):
+                    for item in dcmd.split(' '):
+                        if 'map=' in item:
+                            vectstr += "%s," % item.split('=')[1]
 
-        elif type == "vector":
-            cmd = "v.what -a map=%s east_north=%f,%f distance=%f" %\
-                    (mapname, float(x), float(y), qdist)
-
-        if self.gismanager:
-            self.gismanager.goutput.runCmd(cmd)
+            # build query commands for any selected rasters and vectors
+            if raststr != '':
+                raststr = raststr.rstrip(',')
+                rcmd = "r.what -f input=%s east_north=%f,%f" %\
+                    (raststr, float(x), float(y))
+            if vectstr != '':
+                vectstr = vectstr.rstrip(',')
+                vcmd = "v.what -a map=%s east_north=%f,%f distance=%f" %\
+                    (vectstr, float(x), float(y), qdist)
         else:
-            os.system(cmd)
+            dlg = wx.MessageDialog(self, 'You must select a map in the GIS Manager to query',
+                               'Nothing to query', wx.OK | wx.ICON_INFORMATION)
+            dlg.ShowModal()
+            dlg.Destroy()
+            return
+
+        # parse query command(s)
+        if self.gismanager:
+            if rcmd != '': self.gismanager.goutput.runCmd(rcmd)
+            if vcmd != '': self.gismanager.goutput.runCmd(vcmd)
+        else:
+            os.system(rcmd)
+            os.system(vcmd)
 
     # toolBar button handlers
     def onDecoration(self, event):
