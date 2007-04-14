@@ -529,7 +529,10 @@ class GMFrame(wx.Frame):
         """
         Delete selected map display layer in GIS Manager tree widget
         """
-        self.curr_page.maptree.Delete(self.curr_page.maptree.GetSelection())
+        for layer in self.curr_page.maptree.GetSelections():
+            if self.curr_page.maptree.layertype[layer] == 'group':
+                self.curr_page.maptree.DeleteChildren(layer)
+            self.curr_page.maptree.Delete(layer)
 
     #Misc methods
     def onCloseWindow(self, event):
