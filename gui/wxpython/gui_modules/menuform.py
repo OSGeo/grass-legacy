@@ -757,7 +757,7 @@ class cmdPanel(wx.Panel):
             if type( porf[ 'wxId' ] ) == type( 1 ) and porf['wxId'] == myId:
                 porf[ 'value' ] = me.GetValue()
         self.updateStatusLine()
-                
+
     def createCmd(self, ignoreErrors = False):
         """Produce a command line string for feeding into GRASS.
 
@@ -834,7 +834,7 @@ class GUI:
         else:
             get_dcmd = completed[0]
             layer = completed[1]
-            dcmd_params.update(completed[2])
+            if completed[2]: dcmd_params.update(completed[2])
         cmdlst = cmd.split(' ')
 
         if parentframe != -1:
