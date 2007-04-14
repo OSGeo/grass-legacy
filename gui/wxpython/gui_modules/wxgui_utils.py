@@ -39,7 +39,7 @@ class LayerTree(CT.CustomTreeCtrl):
                  size=wx.DefaultSize, style=wx.SUNKEN_BORDER,
                  ctstyle=CT.TR_HAS_BUTTONS | CT.TR_HAS_VARIABLE_ROW_HEIGHT |
                  CT.TR_HIDE_ROOT | CT.TR_ROW_LINES | CT.TR_FULL_ROW_HIGHLIGHT|
-                 CT.TR_EDIT_LABELS, idx=None, gismgr=None, notebook=None):
+                 CT.TR_EDIT_LABELS|CT.TR_MULTIPLE, idx=None, gismgr=None, notebook=None):
         CT.CustomTreeCtrl.__init__(self, parent, id, pos, size, style,ctstyle)
 
         self.SetAutoLayout(True)
@@ -169,6 +169,8 @@ class LayerTree(CT.CustomTreeCtrl):
     def AddLayer(self, type):
         self.first = True
         params = {} # no initial options parameters
+
+        if self.layer_selected: self.SelectItem(self.layer_selected, select=False)
 
         if type == 'command':
             # generic command layer
@@ -314,6 +316,8 @@ class LayerTree(CT.CustomTreeCtrl):
             self.Map.delLayer(item=layer)
 
         self.layertype.pop(layer)
+        self.Unselect()
+        self.layer_selected = None
 
     def onLayerChecked(self, event):
         layer = event.GetItem()
@@ -372,10 +376,12 @@ class LayerTree(CT.CustomTreeCtrl):
     def onBeginDrag(self, event):
         """ Drag and drop of single tree nodes
         """
-        self.drag = True
+
         # node cannot be a parent
         if self.GetChildrenCount(event.GetItem()) == 0:
             event.Allow()
+            self.drag = True
+            self.DoSelectItem(event.GetItem(), unselect_others=True)
 
             # save everthing associated with item to drag
             self.dragItem = event.GetItem()
