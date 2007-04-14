@@ -61,7 +61,6 @@ int main (int argc, char *argv[])
 int start_mon (char *name)
 {
 	struct MON_CAP *mon;
-	int pid;
 
 	if ((mon = R_parse_monitorcap(MON_NAME,name)) == NULL)
 		G_fatal_error("no such monitor '%s'", name);

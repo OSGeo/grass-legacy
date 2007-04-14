@@ -1,17 +1,16 @@
 /* select a monitor for graphics */
 
-#include <grass/raster.h>
-#include <grass/display.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include <grass/gis.h>
 #include <grass/monitors.h>
 #include <grass/glocale.h>
+#include <grass/raster.h>
+#include <grass/display.h>
 
 int 
 main (int argc, char *argv[])
 {
-	char command[1024];
 	char name[128];
 	const char *ftfont = getenv("GRASS_FT_FONT");
 	const char *ftenc = getenv("GRASS_FT_ENCODING");
@@ -24,10 +23,7 @@ main (int argc, char *argv[])
 	}
 
 	G_gisinit (argv[0]);
-    /* users objected to automatic release of current MONITOR
-	sprintf (command, "%s/etc/mon.release -v", G_gisbase());
-	system (command);
-    */
+
 	G_unsetenv ("MONITOR");
 
 	if (R_parse_monitorcap(MON_NAME,argv[1]) == NULL)
