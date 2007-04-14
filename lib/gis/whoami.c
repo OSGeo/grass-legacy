@@ -64,7 +64,6 @@ char *G_whoami(void)
 
     if (name == NULL)
     {
-	struct passwd *getpwuid();
 	struct passwd *p;
 	if((p = getpwuid (getuid())))
 	    name = G_store (p->pw_name);
