@@ -3,7 +3,7 @@
 
 char *color_list (void)
 {
-    char *color;
+    const char *color;
     int n;
     static char list[1024];
 

@@ -85,11 +85,11 @@
 #define NULL		0
 #endif
 
-static char *G_strend (char *S)
+static char *G_strend (const char *S)
 {
     while (*S)
 	S++;
-    return (S);
+    return (char *) S;
 }
 
 /*!
@@ -303,10 +303,10 @@ int G_strcasecmp(const char *x, const char *y)
  * \param[in] mainString string where to find sub-string
  * \param[in] subString sub-string
  */
-char *G_strstr(char *mainString, const char *subString)
+char *G_strstr(const char *mainString, const char *subString)
 {
     const char *p;
-    char *q;
+    const char *q;
     int length;
 
     p = subString;
@@ -323,7 +323,7 @@ char *G_strstr(char *mainString, const char *subString)
     if (*q == '\0') {				/* ran off end of mainString */
 	return NULL;
     } else {
-	return q;
+	return (char *) q;
     }
 }
 
@@ -469,7 +469,7 @@ char *G_str_replace(char* buffer, const char* old_str, const char* new_str)
  * \param[in,out] buf buffer to be worked on
  *
  */
-int G_strip ( register char *buf)
+int G_strip (char *buf)
 {
     register char *a, *b;
 

@@ -42,7 +42,7 @@ static int recursive_remove(const char *path);
  * \return -1 on error
  */
 
-int G_remove ( char *element, char *name)
+int G_remove ( const char *element, const char *name)
 {
     char path[1024];
     char *mapset;

@@ -2,8 +2,8 @@
 #include <grass/gis.h>
 #include <grass/glocale.h>
 
-static int lookup(char *, char *, char *, int);
-static int equal(char *, char *);
+static int lookup(const char *, const char *, char *, int);
+static int equal(const char *, const char *);
 static int lower(char);
 
 
@@ -22,7 +22,6 @@ char *G_database_unit_name(int plural)
 {
     int n;
     static char name[256];
-    char *G__unit_name();
 
     switch(n=G_projection())
     {
@@ -50,11 +49,10 @@ char *G_database_unit_name(int plural)
  *  \return char * 
  */
 
-char *G_database_projection_name()
+char *G_database_projection_name(void)
 {
     int n;
     static char name[256];
-    char *G__projection_name();
 
     switch(n=G_projection())
     {
@@ -81,7 +79,7 @@ char *G_database_projection_name()
  *  \return double
  */
 
-double G_database_units_to_meters_factor()
+double G_database_units_to_meters_factor(void)
 {
     char *unit;
     double factor;
@@ -118,7 +116,7 @@ double G_database_units_to_meters_factor()
 }
 
 /***********************************************************************
- * G_database_datum_name()
+ * G_database_datum_name(void)
  *
  * return name of datum of current database
  *
@@ -137,7 +135,7 @@ double G_database_units_to_meters_factor()
  *  \return char * 
  */
 
-char *G_database_datum_name()
+char *G_database_datum_name(void)
 {
   static char name[256], params[256];
   struct Key_Value *projinfo;
@@ -158,7 +156,7 @@ char *G_database_datum_name()
 }
 
 /***********************************************************************
- * G_database_ellipse_name()
+ * G_database_ellipse_name(void)
  *
  * return name of ellipsoid of current database
  *
@@ -166,7 +164,7 @@ char *G_database_datum_name()
  * NULL otherwise
  ***********************************************************************/
  
-char *G_database_ellipse_name()
+char *G_database_ellipse_name(void)
 {
   static char name[256];
   
@@ -181,9 +179,9 @@ char *G_database_ellipse_name()
   return name;
 }
 
-static int lookup(char *file, char *key, char *value, int len)
+static int lookup(const char *file, const char *key, char *value, int len)
 {
-    char path[1024];
+    char path[GPATH_MAX];
 
 /*
     G__file_name (path, "", file, G_mapset());
@@ -194,7 +192,7 @@ static int lookup(char *file, char *key, char *value, int len)
     return G_lookup_key_value_from_file(path, key, value, len) == 1;
 }
 
-static int equal(char *a, char *b)
+static int equal(const char *a, const char *b)
 {
     if (a == NULL || b == NULL)
 	return a==b;

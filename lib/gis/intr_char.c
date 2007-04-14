@@ -30,7 +30,7 @@
  *  \return char 
  */
 
-char G_intr_char()
+char G_intr_char(void)
 {
     char c = 0;
 #ifndef __MINGW32__    

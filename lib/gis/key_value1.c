@@ -3,7 +3,7 @@
 #include <grass/gis.h>
 
 struct Key_Value *
-G_create_key_value()
+G_create_key_value(void)
 {
     struct Key_Value *kv;
 
@@ -99,7 +99,7 @@ int G_set_key_value (
     return 2;
 }
 
-char *G_find_key_value (char *key, const struct Key_Value *kv)
+char *G_find_key_value (const char *key, const struct Key_Value *kv)
 {
     int n;
 

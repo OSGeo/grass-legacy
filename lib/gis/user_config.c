@@ -198,7 +198,7 @@ _elem_count_split (char *elems)
  * elements that begin with a '.' or any occurrences of '//'.
  *************************************************************************/
 static char *
-_make_sublevels(char *elems)
+_make_sublevels(const char *elems)
 {
     int i, status;
     char *cp, *path, *top, *ptr;
@@ -311,7 +311,7 @@ _make_sublevels(char *elems)
  */
 
 char *
-G_rc_path (char *element, char *item)
+G_rc_path (const char *element, const char *item)
 {
     size_t len;
     char *path, *ptr;

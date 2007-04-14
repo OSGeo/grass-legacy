@@ -10,7 +10,7 @@
 #include <grass/gis.h>
 
 char *
-G_get_dig_title (char *name, char *mapset)
+G_get_dig_title (const char *name, const char *mapset)
 {
     FILE *fd;
     int stat = -1;

@@ -214,7 +214,7 @@ int G_scan_timestamp (
     char *buf)
 {
     char temp[1024], *t;
-    char *slash;
+    const char *slash;
     DateTime dt1, dt2;
 
     G_init_timestamp(ts);
@@ -285,7 +285,7 @@ int G_get_timestamps (
  * -2 error - invalid datetime in ts
  */
 static int write_timestamp (
-    char *maptype,char *mapname,char *element,char *filename,
+    const char *maptype, const char *mapname, const char *element, const char *filename,
     struct TimeStamp *ts)
 {
     FILE *fd;
@@ -317,8 +317,8 @@ static int write_timestamp (
  * -2 error - invalid datetime values in timestamp file
  */
 static int read_timestamp (
-    char *maptype,char *mapname,char *mapset,
-    char *element,char *filename,
+    const char *maptype, const char *mapname, const char *mapset,
+    const char *element, const char *filename,
     struct TimeStamp *ts)
 {
     FILE *fd;
@@ -363,7 +363,7 @@ static int read_timestamp (
  *  \return int
  */
 int G_read_raster_timestamp (
-    char *name,char *mapset,
+    const char *name, const char *mapset,
     struct TimeStamp *ts)
 {
     char element[128];
@@ -385,7 +385,7 @@ int G_read_raster_timestamp (
  *  \param name
  *  \return int
  */
-int G_remove_raster_timestamp (char *name)
+int G_remove_raster_timestamp (const char *name)
 {
     char element[128];
 
@@ -408,7 +408,7 @@ int G_remove_raster_timestamp (char *name)
  *  \return int
  */
 int G_read_vector_timestamp (
-    char *name,char *mapset,
+    const char *name, const char *mapset,
     struct TimeStamp *ts)
 {
     char element[128];
@@ -433,7 +433,7 @@ int G_read_vector_timestamp (
  *  \param name
  *  \return int
  */
-int G_remove_vector_timestamp (char *name)
+int G_remove_vector_timestamp (const char *name)
 {
     char element[128];
 
@@ -454,7 +454,7 @@ int G_remove_vector_timestamp (char *name)
  *  \return int
  */
 int G_read_grid3_timestamp (
-    char *name,char *mapset,
+    const char *name, const char *mapset,
     struct TimeStamp *ts)
 {
     char element[128];
@@ -476,7 +476,7 @@ int G_read_grid3_timestamp (
  *  \param name
  *  \return int
  */
-int G_remove_grid3_timestamp (char *name)
+int G_remove_grid3_timestamp (const char *name)
 {
     char element[128];
 
@@ -499,7 +499,7 @@ int G_remove_grid3_timestamp (char *name)
  *  \return int
  */
 int G_write_raster_timestamp (
-    char *name,
+    const char *name,
     struct TimeStamp *ts)
 {
     char element[128];
@@ -523,7 +523,7 @@ int G_write_raster_timestamp (
  *  \return int
  */
 int G_write_vector_timestamp (
-    char *name,
+    const char *name,
     struct TimeStamp *ts)
 {
     char element[128];
@@ -546,7 +546,7 @@ int G_write_vector_timestamp (
  *  \return int
  */
 int G_write_grid3_timestamp (
-    char *name,
+    const char *name,
     struct TimeStamp *ts)
 {
     char element[128];

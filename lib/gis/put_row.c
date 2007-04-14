@@ -137,21 +137,21 @@
 
 static int _zeros_r_nulls = 1;
 
-static int put_raster_data(int,void *,int,int,int,int,RASTER_MAP_TYPE);
-static int put_data(int,CELL *,int, int,int,int);
+static int put_raster_data(int,const void *,int,int,int,int,RASTER_MAP_TYPE);
+static int put_data(int,const CELL *,int, int,int,int);
 static int check_open(const char *,int,int);
 static int adjust(int, int *, int *);
 static void write_error(int,int);
 static int same(const unsigned char *, const unsigned char *, int);
 static int seek_random(int, int, int);
 static void set_file_pointer(int,int);
-static int put_fp_data(int,void *,int,int,int,RASTER_MAP_TYPE);
-static int put_null_data(int,char *, int);
-static int convert_and_write_if(int, CELL *);
-static int convert_and_write_id(int, CELL *);
-static int convert_and_write_df(int, DCELL *);
-static int convert_and_write_fd(int, FCELL *);
-static int put_raster_row(int fd, void *buf, RASTER_MAP_TYPE data_type, int zeros_r_nulls);
+static int put_fp_data(int,const void *,int,int,int,RASTER_MAP_TYPE);
+static int put_null_data(int,const char *, int);
+static int convert_and_write_if(int, const CELL *);
+static int convert_and_write_id(int, const CELL *);
+static int convert_and_write_df(int, const DCELL *);
+static int convert_and_write_fd(int, const FCELL *);
+static int put_raster_row(int fd, const void *buf, RASTER_MAP_TYPE data_type, int zeros_r_nulls);
 
 /*--------------------------------------------------------------------------*/
 /*--------------------------------------------------------------------------*/
@@ -165,7 +165,7 @@ int G_zeros_r_nulls(int zeros_r_nulls)
     return _zeros_r_nulls;
 }
 
-int G_put_map_row_random(int fd, CELL *buf, int row, int col, int n)
+int G_put_map_row_random(int fd, const CELL *buf, int row, int col, int n)
 {
     struct fileinfo *fcb = &G__.fileinfo[fd];
 
@@ -188,7 +188,7 @@ int G_put_map_row_random(int fd, CELL *buf, int row, int col, int n)
     return 1;
 }
 
-int G__put_null_value_row(int fd, char *buf)
+int G__put_null_value_row(int fd, const char *buf)
 {
     struct fileinfo *fcb = &G__.fileinfo[fd];
 
@@ -203,7 +203,7 @@ int G__put_null_value_row(int fd, char *buf)
     return 1;
 }
 
-int G_put_map_row(int fd, CELL *buf)
+int G_put_map_row(int fd, const CELL *buf)
 {
     struct fileinfo *fcb = &G__.fileinfo[fd];
 
@@ -217,22 +217,22 @@ int G_put_map_row(int fd, CELL *buf)
     return put_raster_row(fd, buf, CELL_TYPE, _zeros_r_nulls);
 }
 
-int G_put_raster_row(int fd, void *buf, RASTER_MAP_TYPE data_type)
+int G_put_raster_row(int fd, const void *buf, RASTER_MAP_TYPE data_type)
 {
     return put_raster_row(fd, buf, data_type, 0);
 }
 
-int G_put_c_raster_row(int fd, CELL *buf)
+int G_put_c_raster_row(int fd, const CELL *buf)
 {
     return G_put_raster_row(fd, buf, CELL_TYPE);
 }
 
-int G_put_f_raster_row(int fd, FCELL *buf)
+int G_put_f_raster_row(int fd, const FCELL *buf)
 {
     return G_put_raster_row(fd, buf, FCELL_TYPE);
 }
 
-int G_put_d_raster_row(int fd, DCELL *buf)
+int G_put_d_raster_row(int fd, const DCELL *buf)
 {
     return G_put_raster_row(fd, buf, DCELL_TYPE);
 }
@@ -434,7 +434,7 @@ static int convert_double(
 
 /* writes data to fcell file for either full or partial rows */
 
-static int put_fp_data(int fd, void *rast, int row, int col, int n, RASTER_MAP_TYPE data_type)
+static int put_fp_data(int fd, const void *rast, int row, int col, int n, RASTER_MAP_TYPE data_type)
 {
     struct fileinfo *fcb = &G__.fileinfo[fd];
     int random     = (fcb->open_mode == OPEN_NEW_RANDOM);
@@ -620,7 +620,7 @@ static int zlib_compress(unsigned char *dst, unsigned char *src, int n, int nbyt
 
 /*--------------------------------------------------------------------------*/
 
-static int put_data(int fd, CELL *cell, int row, int col, int n, int zeros_r_nulls)
+static int put_data(int fd, const CELL *cell, int row, int col, int n, int zeros_r_nulls)
 {
     struct fileinfo *fcb = &G__.fileinfo[fd];
     int random     = (fcb->open_mode == OPEN_NEW_RANDOM);
@@ -705,7 +705,7 @@ static int put_data(int fd, CELL *cell, int row, int col, int n, int zeros_r_nul
 /*--------------------------------------------------------------------------*/
 /*--------------------------------------------------------------------------*/
 
-static int put_raster_data(int fd, void *rast, int row, int col, int n, int zeros_r_nulls, RASTER_MAP_TYPE map_type)
+static int put_raster_data(int fd, const void *rast, int row, int col, int n, int zeros_r_nulls, RASTER_MAP_TYPE map_type)
 {
     return (map_type == CELL_TYPE)
 	? put_data(fd, rast, row, col, n, zeros_r_nulls)
@@ -716,7 +716,7 @@ static int put_raster_data(int fd, void *rast, int row, int col, int n, int zero
 /*--------------------------------------------------------------------------*/
 /*--------------------------------------------------------------------------*/
 
-static int put_null_data(int fd, char *flags, int row)
+static int put_null_data(int fd, const char *flags, int row)
 {
     struct fileinfo *fcb = &G__.fileinfo[fd];
     int null_fd, i;
@@ -777,7 +777,7 @@ int G__open_null_write(int fd)
     return null_fd;
 }
 
-int G__write_null_bits(int null_fd, unsigned char *flags, int row, int cols, int fd)
+int G__write_null_bits(int null_fd, const unsigned char *flags, int row, int cols, int fd)
 {
     off_t offset;
     size_t size;
@@ -804,7 +804,7 @@ int G__write_null_bits(int null_fd, unsigned char *flags, int row, int cols, int
 /*--------------------------------------------------------------------------*/
 /*--------------------------------------------------------------------------*/
 
-static int convert_and_write_if(int fd, CELL *buf)
+static int convert_and_write_if(int fd, const CELL *buf)
 {
     struct fileinfo *fcb = &G__.fileinfo[fd];
     FCELL *p = (FCELL *) fcb->data;
@@ -819,7 +819,7 @@ static int convert_and_write_if(int fd, CELL *buf)
     return G_put_f_raster_row(fd, p);
 }
 
-static int convert_and_write_df(int fd, DCELL *buf)
+static int convert_and_write_df(int fd, const DCELL *buf)
 {
     struct fileinfo *fcb = &G__.fileinfo[fd];
     FCELL *p = (FCELL *) fcb->data;
@@ -834,7 +834,7 @@ static int convert_and_write_df(int fd, DCELL *buf)
     return G_put_f_raster_row(fd, p);
 }
 
-static int convert_and_write_id(int fd, CELL *buf)
+static int convert_and_write_id(int fd, const CELL *buf)
 {
     struct fileinfo *fcb = &G__.fileinfo[fd];
     DCELL *p = (DCELL *) fcb->data;
@@ -849,7 +849,7 @@ static int convert_and_write_id(int fd, CELL *buf)
     return G_put_d_raster_row(fd, p);
 }
 
-static int convert_and_write_fd(int fd, FCELL *buf)
+static int convert_and_write_fd(int fd, const FCELL *buf)
 {
     struct fileinfo *fcb = &G__.fileinfo[fd];
     DCELL *p = (DCELL *) fcb->data;
@@ -864,7 +864,7 @@ static int convert_and_write_fd(int fd, FCELL *buf)
     return G_put_d_raster_row(fd, p);
 }
 
-static int convert_and_write_fi(int fd, FCELL *buf)
+static int convert_and_write_fi(int fd, const FCELL *buf)
 {
     struct fileinfo *fcb = &G__.fileinfo[fd];
     CELL *p = (CELL *) fcb->data;
@@ -879,7 +879,7 @@ static int convert_and_write_fi(int fd, FCELL *buf)
     return G_put_c_raster_row(fd, p);
 }
 
-static int convert_and_write_di(int fd, DCELL *buf)
+static int convert_and_write_di(int fd, const DCELL *buf)
 {
     struct fileinfo *fcb = &G__.fileinfo[fd];
     CELL *p = (CELL *) fcb->data;
@@ -897,7 +897,7 @@ static int convert_and_write_di(int fd, DCELL *buf)
 /*--------------------------------------------------------------------------*/
 
 static int put_raster_row(
-    int fd, void *buf, RASTER_MAP_TYPE data_type, int zeros_r_nulls)
+    int fd, const void *buf, RASTER_MAP_TYPE data_type, int zeros_r_nulls)
 {
     struct fileinfo *fcb = &G__.fileinfo[fd];
 

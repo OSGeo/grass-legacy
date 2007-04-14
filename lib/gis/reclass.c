@@ -4,8 +4,8 @@
 
 static char *NULL_STRING = "null";
 static int reclass_type(FILE *,char *,char *);
-static FILE *fopen_cellhd_old( char *, char *);
-static FILE *fopen_cellhd_new(char *);
+static FILE *fopen_cellhd_old( const char *, const char *);
+static FILE *fopen_cellhd_new(const char *);
 static int get_reclass_table(FILE *, struct Reclass *);
 
 
@@ -27,7 +27,7 @@ static int get_reclass_table(FILE *, struct Reclass *);
  *  \return int
  */
 
-int G_is_reclass (char *name, char *mapset, char *rname, char *rmapset)
+int G_is_reclass (const char *name, const char *mapset, char *rname, char *rmapset)
 {
     FILE *fd;
     int type;
@@ -62,7 +62,7 @@ int G_is_reclass (char *name, char *mapset, char *rname, char *rmapset)
  *  \return int
  */
 
-int G_is_reclassed_to (char *name, char *mapset, int *nrmaps, char ***rmaps)
+int G_is_reclassed_to (const char *name, const char *mapset, int *nrmaps, char ***rmaps)
 {
     FILE *fd;
     int i, j, k, l;
@@ -124,7 +124,7 @@ int G_is_reclassed_to (char *name, char *mapset, int *nrmaps, char ***rmaps)
     return i;
 }
 
-int G_get_reclass (char *name, char *mapset, struct Reclass *reclass)
+int G_get_reclass (const char *name, const char *mapset, struct Reclass *reclass)
 {
     FILE *fd;
     int stat;
@@ -216,12 +216,12 @@ static int reclass_type( FILE *fd,char *rname,char *rmapset)
 	return -1;
 }
 
-static FILE *fopen_cellhd_old( char *name, char *mapset)
+static FILE *fopen_cellhd_old( const char *name, const char *mapset)
 {
     return G_fopen_old ("cellhd", name, mapset);
 }
 
-int G_put_reclass (char *name, struct Reclass *reclass)
+int G_put_reclass (const char *name, const struct Reclass *reclass)
 {
     FILE *fd;
     long min, max;
@@ -324,7 +324,7 @@ int G_put_reclass (char *name, struct Reclass *reclass)
     return 1;
 }
 
-static FILE *fopen_cellhd_new(char *name)
+static FILE *fopen_cellhd_new(const char *name)
 {
     return G_fopen_new ("cellhd", name);
 }

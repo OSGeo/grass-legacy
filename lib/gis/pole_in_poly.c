@@ -34,7 +34,7 @@ static int mystats(double,double,double,double,double *,double *);
  *  \return int
  */
 
-int G_pole_in_polygon(double *x,double *y, int n)
+int G_pole_in_polygon(const double *x,const double *y, int n)
 {
     int i;
     double len, area, total_len, total_area;

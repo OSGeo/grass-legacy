@@ -5,7 +5,7 @@
 
 #define LIST struct Histogram_list
 
-static FILE *fopen_histogram_new(char *);
+static FILE *fopen_histogram_new(const char *);
 static int cmp(const void *, const void *);
 static int cmp_count (const void *, const void *);
 
@@ -45,7 +45,7 @@ int G_init_histogram (
  */
 
 int G_read_histogram (
-    char *name,char *mapset,
+    const char *name, const char *mapset,
     struct Histogram *histogram)
 {
     FILE *fd = NULL;
@@ -109,8 +109,8 @@ int G_read_histogram (
  */
 
 int G_write_histogram (
-    char *name,
-    struct Histogram *histogram)
+    const char *name,
+    const struct Histogram *histogram)
 {
     FILE *fd;
     int n;
@@ -142,7 +142,7 @@ int G_write_histogram (
  */
 
 int G_write_histogram_cs (
-    char *name,
+    const char *name,
     struct Cell_stats *statf)
 {
     FILE *fd;
@@ -199,7 +199,7 @@ int G_make_histogram_cs (
  * \return  1  if successful,
  *              -1  on fail
  */
-int G_get_histogram_num (struct Histogram *histogram)
+int G_get_histogram_num (const struct Histogram *histogram)
 {
     return histogram->num;
 }
@@ -212,7 +212,7 @@ int G_get_histogram_num (struct Histogram *histogram)
  * \param histogram: struct for histogram
  * \return CELL
  */
-CELL G_get_histogram_cat (int n, struct Histogram *histogram)
+CELL G_get_histogram_cat (int n, const struct Histogram *histogram)
 {
     if (n < 0 || n >= histogram->num)
 	return 0;
@@ -229,7 +229,7 @@ CELL G_get_histogram_cat (int n, struct Histogram *histogram)
  * \param histogram: struct for histogram
  * \return count
  */
-long G_get_histogram_count (int n, struct Histogram *histogram)
+long G_get_histogram_count (int n, const struct Histogram *histogram)
 {
     if (n < 0 || n >= histogram->num)
 	return 0;
@@ -362,7 +362,7 @@ static int cmp_count(const void *aa, const void *bb)
     return 0;
 }
 
-static FILE *fopen_histogram_new ( char *name)
+static FILE *fopen_histogram_new ( const char *name)
 {
     char buf[100];
     FILE *fd;
@@ -384,7 +384,7 @@ static FILE *fopen_histogram_new ( char *name)
  * \return 0
  */
 
-int G_remove_histogram (char *name)
+int G_remove_histogram (const char *name)
 
 {
     char buf[100];

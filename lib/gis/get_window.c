@@ -128,7 +128,7 @@ int G_get_default_window ( struct Cell_head *window )
 }
 
 char *G__get_window ( struct Cell_head *window,
-       char *element, char *name, char *mapset)
+       const char *element, const char *name, const char *mapset)
 {
     FILE *fd ;
     char *err;

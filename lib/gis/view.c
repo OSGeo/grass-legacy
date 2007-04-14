@@ -20,9 +20,9 @@
 
 #define REQ_KEYS 8
 
-static int compare_wind(struct Cell_head *, struct Cell_head *);
-static int get_bool(char *);
-static void pr_winerr(int, char *);
+static int compare_wind(const struct Cell_head *, const struct Cell_head *);
+static int get_bool(const char *);
+static void pr_winerr(int, const char *);
 static void edge_sort (float sides[4]);
 static int read_old_format(struct G_3dview *, FILE *);
 
@@ -171,8 +171,8 @@ int G_get_3dview_defaults(struct G_3dview *v, struct Cell_head *w)
  * \return -1 on error
  */
 
-int G_put_3dview(char *fname, char *mapset,
-        struct G_3dview *View, struct Cell_head *Win)
+int G_put_3dview(const char *fname, const char *mapset,
+        const struct G_3dview *View, const struct Cell_head *Win)
 {
     FILE *fp;
 
@@ -254,7 +254,7 @@ int G_put_3dview(char *fname, char *mapset,
  * \return 0 if is older format (through 4.0)
  */
 
-int G_get_3dview(char *fname, char *mapset, struct G_3dview *View)
+int G_get_3dview(const char *fname, const char *mapset, struct G_3dview *View)
 {
     struct Cell_head curwin;
     FILE *fp;
@@ -495,7 +495,7 @@ int G_get_3dview(char *fname, char *mapset, struct G_3dview *View)
 
 /* returns the percentage of savedwin that overlaps curwin */
 
-static int compare_wind(struct Cell_head *savedwin, struct Cell_head *curwin)
+static int compare_wind(const struct Cell_head *savedwin, const struct Cell_head *curwin)
 {
     float e_ings[4], n_ings[4], area_lap, area_saved;
     int outside = 0;
@@ -526,7 +526,7 @@ static int compare_wind(struct Cell_head *savedwin, struct Cell_head *curwin)
 }
 
 
-static int get_bool(char *str)
+static int get_bool(const char *str)
 {
     if (str[0] == 'y' || str[0] == 'Y')
 	return (1);
@@ -539,7 +539,7 @@ static int get_bool(char *str)
 
 static void pr_winerr (
     int vis,         /* % of saved window overlapping current window */
-    char *viewname)
+    const char *viewname)
 {
     switch(vis)
     {

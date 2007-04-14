@@ -12,7 +12,7 @@
 #include <grass/gis.h>
 #include <grass/glocale.h>
 
-int G_put_cell_title (char *name, char *title)
+int G_put_cell_title (const char *name, const char *title)
 {
     char *mapset;
     FILE *in, *out;

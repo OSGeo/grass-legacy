@@ -30,7 +30,7 @@
 #include <grass/gis.h>
 #include <grass/glocale.h>
 char *
-G_mask_info ()
+G_mask_info (void)
 {
     static char text[200];
     char name[GNAME_MAX];

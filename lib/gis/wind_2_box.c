@@ -30,7 +30,7 @@
  */
 
 int G_adjust_window_to_box (
-    struct Cell_head *src,
+    const struct Cell_head *src,
     struct Cell_head *dst,
     int rows, int cols)
 {

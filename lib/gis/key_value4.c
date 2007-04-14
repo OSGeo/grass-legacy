@@ -6,7 +6,7 @@
  * -3 can't open file for re-write
  * -4 error writing the file (might be damaged)
  */
-int G_update_key_value_file (char *file,char *key,char *value)
+int G_update_key_value_file (const char *file, const char *key, const char *value)
 {
     struct Key_Value *kv;
     int stat;
@@ -32,8 +32,8 @@ int G_update_key_value_file (char *file,char *key,char *value)
  *           1 ok
  */
 int G_lookup_key_value_from_file(
-    char *file,
-    char *key,
+    const char *file,
+    const char *key,
     char value[],
     int n)
 {

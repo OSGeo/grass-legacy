@@ -288,7 +288,7 @@ static int read_data(int fd, int row, unsigned char *data_buf, int *nbytes)
 /* copy cell file data to user buffer translated by window column mapping */
 
 static void cell_values_int(
-    int fd, unsigned char *data, COLUMN_MAPPING *cmap, int nbytes,
+    int fd, const unsigned char *data, const COLUMN_MAPPING *cmap, int nbytes,
     void *cell, int n)
 {
     CELL *c = cell;
@@ -298,7 +298,7 @@ static void cell_values_int(
 
     for (i = 0; i < n; i++)
     {
-	unsigned char *d;
+	const unsigned char *d;
 	int neg;
 	CELL v;
 	int j;
@@ -340,7 +340,7 @@ static void cell_values_int(
 /*--------------------------------------------------------------------------*/
 
 static void cell_values_float(
-    int fd, unsigned char *data, COLUMN_MAPPING *cmap, int nbytes,
+    int fd, const unsigned char *data, const COLUMN_MAPPING *cmap, int nbytes,
     void *cell, int n)
 {
     struct fileinfo *fcb = &G__.fileinfo[fd];
@@ -384,7 +384,7 @@ static void cell_values_float(
 /*--------------------------------------------------------------------------*/
 
 static void cell_values_double(
-    int fd, unsigned char *data, COLUMN_MAPPING *cmap, int nbytes,
+    int fd, const unsigned char *data, const COLUMN_MAPPING *cmap, int nbytes,
     void *cell, int n)
 {
     struct fileinfo *fcb = &G__.fileinfo[fd];

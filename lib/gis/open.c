@@ -91,9 +91,9 @@ int _fmode = _O_BINARY;
 #endif 
 
 int G__open (
-    char *element,
-    char *name,
-    char *mapset,
+    const char *element,
+    const char *name,
+    const char *mapset,
     int mode)
 {
     char path[1024];
@@ -114,7 +114,7 @@ int G__open (
 	    }
 	    name = xname;
 	}
-	if ((dummy = G_find_file (element, name, mapset)) == NULL)
+	if ((dummy = G_find_file2 (element, name, mapset)) == NULL)
 	    return -1;
 	G_free (dummy);
 	G__file_name (path, element, name, mapset);
@@ -164,7 +164,7 @@ int G__open (
  *  \return int
  */
 
-int G_open_new (char *element,char *name)
+int G_open_new (const char *element,const char *name)
 {
     return G__open (element, name, G_mapset(), 1);
 }
@@ -185,7 +185,7 @@ int G_open_new (char *element,char *name)
  *  \return int
  */
 
-int G_open_old (char *element,char *name,char *mapset)
+int G_open_old (const char *element,const char *name,const char *mapset)
 {
     return G__open (element, name, mapset, 0);
 }
@@ -205,7 +205,7 @@ int G_open_old (char *element,char *name,char *mapset)
  *  \return int
  */
 
-int G_open_update (char *element,char *name)
+int G_open_update (const char *element,const char *name)
 {
     int fd;
     fd = G__open (element, name, G_mapset(), 2);
@@ -230,7 +230,7 @@ int G_open_update (char *element,char *name)
  *  \return FILE * 
  */
 
-FILE *G_fopen_new (char *element,char *name)
+FILE *G_fopen_new (const char *element,const char *name)
 {
     int fd;
 
@@ -259,7 +259,7 @@ FILE *G_fopen_new (char *element,char *name)
  */
 
 FILE *
-G_fopen_old (char *element,char *name,char *mapset)
+G_fopen_old (const char *element,const char *name,const char *mapset)
 {
     int fd;
 
@@ -271,7 +271,7 @@ G_fopen_old (char *element,char *name,char *mapset)
 }
 
 FILE *
-G_fopen_append (char *element,char *name)
+G_fopen_append (const char *element,const char *name)
 {
     int fd;
 
@@ -283,7 +283,7 @@ G_fopen_append (char *element,char *name)
     return fdopen (fd, "a");
 }
 
-FILE *G_fopen_modify (char *element,char *name)
+FILE *G_fopen_modify (const char *element,const char *name)
 {
     int fd;
 

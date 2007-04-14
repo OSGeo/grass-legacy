@@ -10,7 +10,7 @@
 ****************************************************************/
 #include <grass/gis.h>
 int G_histogram_eq (
-    struct Histogram *histo,
+    const struct Histogram *histo,
     unsigned char **map,
     CELL *min,CELL *max)
 {

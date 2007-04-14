@@ -14,14 +14,14 @@
  */
 
 char *
-G_index  (char *str, int delim)
+G_index  (const char *str, int delim)
 
 {
     while (*str && *str != delim)
 	str++;
     if (delim == 0)
-	return str;
-    return (*str ? str : NULL);
+	return (char *) str;
+    return *str ? (char *) str : NULL;
 }
 
 
@@ -36,10 +36,10 @@ G_index  (char *str, int delim)
  */
 
 char *
-G_rindex  (char *str, int delim)
+G_rindex  (const char *str, int delim)
 
 {
-    char *p;
+    const char *p;
 
     p = NULL;
     while (*str)
@@ -49,6 +49,6 @@ G_rindex  (char *str, int delim)
 	str ++;
     }
     if (delim == 0)
-	return str;
-    return (p);
+	return (char *) str;
+    return (char *) p;
 }

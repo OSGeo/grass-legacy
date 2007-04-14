@@ -73,7 +73,7 @@ static int format_max (char *, double);
  *  \return int
  */
 
-int G_write_colors (char *name, char *mapset, struct Colors *colors)
+int G_write_colors (const char *name, const char *mapset, struct Colors *colors)
 {
     char element[512];
     char xname[512], xmapset[512];

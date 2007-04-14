@@ -27,7 +27,7 @@
  */
 
 int G__write_Cell_head ( FILE *fd,
-    struct Cell_head *cellhd,int is_cellhd)
+    const struct Cell_head *cellhd,int is_cellhd)
 {
     char buf[1024];
     int fmt;
@@ -80,7 +80,7 @@ int G__write_Cell_head ( FILE *fd,
  */
 
 int G__write_Cell_head3 ( FILE *fd,
-    struct Cell_head *cellhd,int is_cellhd)
+    const struct Cell_head *cellhd,int is_cellhd)
 {
     char buf[1024];
     int fmt;

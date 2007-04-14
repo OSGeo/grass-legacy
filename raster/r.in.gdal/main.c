@@ -624,7 +624,7 @@ static void ImportBand( GDALRasterBandH hBand, const char *output,
     double dfNoData;
     char outputReal[GNAME_MAX], outputImg[GNAME_MAX];
     char *nullFlags = NULL;
-    int (*raster_open_new_func)(char *, RASTER_MAP_TYPE) = G_open_raster_new;
+    int (*raster_open_new_func)(const char *, RASTER_MAP_TYPE) = G_open_raster_new;
     struct History history;
 
 /* -------------------------------------------------------------------- */

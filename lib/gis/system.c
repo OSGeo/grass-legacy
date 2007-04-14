@@ -47,7 +47,7 @@
  * \return status on success
  */
 
-int G_system ( char *command)
+int G_system (const char *command)
 {
     int status, pid, w;
     void (*sigint)()

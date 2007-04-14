@@ -205,7 +205,7 @@ G_zlib_read  (int fd, int rbytes, unsigned char *dst, int nbytes)
 
 
 int
-G_zlib_write  (int fd, unsigned char *src, int nbytes)
+G_zlib_write  (int fd, const unsigned char *src, int nbytes)
 
 {
     int dst_sz, nwritten, err;
@@ -279,7 +279,7 @@ G_zlib_write  (int fd, unsigned char *src, int nbytes)
 
 
 int
-G_zlib_write_noCompress  (int fd, unsigned char *src, int nbytes)
+G_zlib_write_noCompress  (int fd, const unsigned char *src, int nbytes)
 
 {
     int err, nwritten;
@@ -315,7 +315,7 @@ G_zlib_write_noCompress  (int fd, unsigned char *src, int nbytes)
 
 
 int
-G_zlib_compress  (unsigned char *src, int src_sz, unsigned char *dst, int dst_sz)
+G_zlib_compress  (const unsigned char *src, int src_sz, unsigned char *dst, int dst_sz)
 
 {
     int err, nbytes, buf_sz;
@@ -341,7 +341,7 @@ G_zlib_compress  (unsigned char *src, int src_sz, unsigned char *dst, int dst_sz
 
     /* Set-up the stream */
     c_stream.avail_in  = src_sz;
-    c_stream.next_in   = src;
+    c_stream.next_in   = (char *) src;
     c_stream.avail_out = buf_sz;
     c_stream.next_out  = buf;
 
@@ -394,7 +394,7 @@ G_zlib_compress  (unsigned char *src, int src_sz, unsigned char *dst, int dst_sz
 } /* G_zlib_compress() */
 
 int
-G_zlib_expand  (unsigned char *src, int src_sz, unsigned char *dst, int dst_sz)
+G_zlib_expand  (const unsigned char *src, int src_sz, unsigned char *dst, int dst_sz)
 
 {
     int err, nbytes;
@@ -413,7 +413,7 @@ G_zlib_expand  (unsigned char *src, int src_sz, unsigned char *dst, int dst_sz)
 
     /* Set-up I/O streams */
     c_stream.avail_in  = src_sz;
-    c_stream.next_in   = src;
+    c_stream.next_in   = (char *) src;
     c_stream.avail_out = dst_sz;
     c_stream.next_out  = dst;
 

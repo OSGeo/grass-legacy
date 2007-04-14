@@ -434,14 +434,14 @@ int G_quant_init (struct Quant *quant)
 
 /*--------------------------------------------------------------------------*/
 
-int G_quant_is_truncate (struct Quant *quant)
+int G_quant_is_truncate (const struct Quant *quant)
 {
   return quant->truncate_only;
 }
 
 /*--------------------------------------------------------------------------*/
 
-int G_quant_is_round (struct Quant *quant)
+int G_quant_is_round (const struct Quant *quant)
 {
   return quant->round_only;
 }
@@ -538,7 +538,7 @@ static void quant_update_limits (
  */
 
 int G_quant_get_limits (
-     struct Quant *q,
+     const struct Quant *q,
      DCELL *dMin,DCELL *dMax,
      CELL *cMin,CELL *cMax)
 
@@ -560,7 +560,7 @@ int G_quant_get_limits (
 
 /*--------------------------------------------------------------------------*/
 
-int G_quant_nof_rules (struct Quant *q)
+int G_quant_nof_rules (const struct Quant *q)
 
 {
   return q->nofRules;
@@ -626,7 +626,7 @@ void G_quant_set_neg_infinite_rule (
 
 int G_quant_get_neg_infinite_rule (
 
-     struct Quant *q,
+     const struct Quant *q,
      DCELL *dLeft,
      CELL *c)
 
@@ -665,7 +665,7 @@ void G_quant_set_pos_infinite_rule (
 
 int G_quant_get_pos_infinite_rule (
 
-     struct Quant *q,
+     const struct Quant *q,
      DCELL *dRight,
      CELL *c)
 
@@ -902,7 +902,7 @@ CELL G_quant_get_cell_value ( struct Quant *q, DCELL dcellVal)
 
 void G_quant_perform_d ( 
      struct Quant *q,
-     DCELL *dcell,
+     const DCELL *dcell,
      CELL *cell,
      int n)
 
@@ -920,7 +920,7 @@ void G_quant_perform_d (
 
 void G_quant_perform_f ( 
      struct Quant *q,
-     FCELL *fcell,
+     const FCELL *fcell,
      CELL *cell,
      int n)
 
@@ -949,14 +949,14 @@ static int double_comp(const void *xx,const void *yy)
 /*--------------------------------------------------------------------------*/
 
 struct Quant_table *G__quant_get_rule_for_d_raster_val (
-   struct Quant *q,
+   const struct Quant *q,
    DCELL val)
 {
-   struct Quant_table *p;
+   const struct Quant_table *p;
    for (p = &(q->table[q->nofRules - 1]); p >= q->table; p--)
-   if ((val >= p->dLow) && (val <= p->dHigh))
-	     break;
-   if(p >= q->table) return p;
+       if ((val >= p->dLow) && (val <= p->dHigh))
+	   break;
+   if(p >= q->table) return (struct Quant_table *) p;
    else return (struct Quant_table *)  NULL;
 }
 

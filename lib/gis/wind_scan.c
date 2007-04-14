@@ -15,7 +15,7 @@
 #include <grass/gis.h>
 
 
-static int scan_double(char *,double *);
+static int scan_double(const char *,double *);
 
 
 /**
@@ -33,7 +33,7 @@ static int scan_double(char *,double *);
  * \return 1 on success
  */
 
-int G_scan_northing ( char *buf, double *northing, int projection)
+int G_scan_northing ( const char *buf, double *northing, int projection)
 {
     if (projection == PROJECTION_LL)
     {
@@ -64,7 +64,7 @@ int G_scan_northing ( char *buf, double *northing, int projection)
  * \return 1 on success
  */
 
-int G_scan_easting ( char *buf, double *easting, int projection)
+int G_scan_easting ( const char *buf, double *easting, int projection)
 {
     if (projection == PROJECTION_LL)
     {
@@ -99,7 +99,7 @@ int G_scan_easting ( char *buf, double *easting, int projection)
  * \return 1 on success
  */
 
-int G_scan_resolution ( char *buf, double *res,int projection)
+int G_scan_resolution ( const char *buf, double *res,int projection)
 {
     if (projection == PROJECTION_LL)
     {
@@ -111,7 +111,7 @@ int G_scan_resolution ( char *buf, double *res,int projection)
 }
 
 
-static int scan_double(char *buf, double *value)
+static int scan_double(const char *buf, double *value)
 {
     char junk[2];
 

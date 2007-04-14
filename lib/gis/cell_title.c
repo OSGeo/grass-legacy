@@ -24,7 +24,7 @@
  */
 
 char *
-G_get_cell_title  (char *name, char *mapset)
+G_get_cell_title  (const char *name, const char *mapset)
 
 {
     FILE *fd;

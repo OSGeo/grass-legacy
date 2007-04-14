@@ -18,13 +18,13 @@
 #define PERMANENT "PERMANENT"
 
 /*!
- * \fn struct Key_Value* G_get_projunits() 
+ * \fn struct Key_Value* G_get_projunits(void) 
  *
  * \brief Gets unit information for location
  *
  * \return pointer to Key_Value structure with key/value pairs
  */
-struct Key_Value* G_get_projunits() 
+struct Key_Value* G_get_projunits(void) 
 {
 	int stat;
         struct Key_Value *in_units_keys;
@@ -49,13 +49,13 @@ struct Key_Value* G_get_projunits()
 }
 
 /*!
- * \fn struct Key_Value* G_get_projinfo() 
+ * \fn struct Key_Value* G_get_projinfo(void) 
  *
  * \brief Gets projection information for location
  *
  * \return pointer to Key_Value structure with key/value pairs
  */
-struct Key_Value* G_get_projinfo() 
+struct Key_Value* G_get_projinfo(void) 
 {
 	int stat;
         struct Key_Value *in_proj_keys;

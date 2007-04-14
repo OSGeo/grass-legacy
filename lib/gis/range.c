@@ -1,8 +1,8 @@
 /**********************************************************************
  *
  *  G_read_range (name, mapset, range)
- *      char *name                   name of map
- *      char *mapset                 mapset that map belongs to
+ *      const char *name             name of map
+ *      const char *mapset           mapset that map belongs to
  *      struct Range *range          struct to hold range info
  *
  *  Reads the data range information associated with map layer "map"
@@ -18,8 +18,8 @@
  **********************************************************************
  *
  *  G_read_fp_range (name, mapset, range)
- *      char *name                   name of map
- *      char *mapset                 mapset that map belongs to
+ *      const char *name               name of map
+ *      const char *mapset             mapset that map belongs to
  *      struct FPRange *range          struct to hold range info
  *
  *  Reads the fp data range information associated with map layer "map"
@@ -35,7 +35,7 @@
  **********************************************************************
  *
  *  G_write_[fp_]range (name, range)
- *      char *name                  name of map
+ *      const char *name                name of map
  *      struct [FP]Range *range         struct holding range info
  *
  *  Writes the range information associated with map layer "map"
@@ -90,7 +90,7 @@
 /* range functions for type "Range" */
 
 /*-------------------------------------------------------------------------*/
-int G__remove_fp_range ( char *name)
+int G__remove_fp_range (const char *name)
 {
     char buf[200];
 
@@ -138,7 +138,7 @@ int G_construct_default_range ( struct Range *range)
  */
 
 int G_read_fp_range (
-    char *name,char *mapset,
+    const char *name, const char *mapset,
     struct FPRange *drange)
 {
     struct Range range;
@@ -231,7 +231,7 @@ error:
  */
 
 int G_read_range (
-    char *name,char *mapset,
+    const char *name, const char *mapset,
     struct Range *range)
 {
     FILE *fd;
@@ -340,7 +340,7 @@ error:
  *  \return int
  */
 
-int G_write_range ( char *name, struct Range *range)
+int G_write_range (const char *name, const struct Range *range)
 {
     FILE *fd;
     char buf[200];
@@ -389,7 +389,7 @@ error:
  *  \return int
  */
 
-int G_write_fp_range ( char *name, struct FPRange *range)
+int G_write_fp_range (const char *name, const struct FPRange *range)
 {
     int fd;
     char buf[200], xdr_buf[100];
@@ -410,8 +410,8 @@ int G_write_fp_range ( char *name, struct FPRange *range)
     xdrmem_create (&xdr_str, xdr_buf, (u_int) XDR_DOUBLE_NBYTES * 2,
 		   XDR_ENCODE);
 
-    if (! xdr_double (&xdr_str, &(range->min))) goto error;
-    if (! xdr_double (&xdr_str, &(range->max))) goto error;
+    if (! xdr_double (&xdr_str, (double *) &(range->min))) goto error;
+    if (! xdr_double (&xdr_str, (double *) &(range->max))) goto error;
 
     write (fd, xdr_buf, XDR_DOUBLE_NBYTES * 2);
     close (fd);
@@ -500,7 +500,7 @@ int G_update_fp_range ( DCELL val, struct FPRange *range)
  *  \return int
  */
 
-int G_row_update_range ( CELL *cell,int n, struct Range *range)
+int G_row_update_range (const CELL *cell,int n, struct Range *range)
 {
     G__row_update_range (cell, n, range, 0);
 
@@ -510,7 +510,7 @@ int G_row_update_range ( CELL *cell,int n, struct Range *range)
 /*-------------------------------------------------------------------------*/
 
 int G__row_update_range (
-    CELL *cell,int n,
+    const CELL *cell,int n,
     struct Range *range,
     int ignore_zeros)
 {
@@ -540,7 +540,7 @@ int G__row_update_range (
 /*-------------------------------------------------------------------------*/
 
 int G_row_update_fp_range (
-    void *rast,int n,
+    const void *rast,int n,
     struct FPRange *range,
     RASTER_MAP_TYPE data_type)
 {
@@ -625,7 +625,7 @@ int G_init_range (struct Range *range)
 
 
 int G_get_range_min_max(
-    struct Range *range,
+    const struct Range *range,
     CELL *min,CELL *max)
 {
     if(range->first_time)
@@ -688,7 +688,7 @@ int G_init_fp_range ( struct FPRange *range)
  */
 
 int G_get_fp_range_min_max(
-    struct FPRange *range,
+    const struct FPRange *range,
     DCELL *min,DCELL *max)
 {
     if(range->first_time)

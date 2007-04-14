@@ -21,7 +21,7 @@ static struct utsname attname;
 #endif
 
 char *
-G__machine_name()
+G__machine_name(void)
 {
     static char name[128];
 

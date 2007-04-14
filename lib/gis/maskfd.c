@@ -24,7 +24,7 @@
  * \return file descriptor if MASK
  */
 
-int G_maskfd ()
+int G_maskfd (void)
 {
 	G__check_for_auto_masking () ;
 

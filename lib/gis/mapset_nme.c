@@ -26,7 +26,7 @@ static char **mapset_name ;
 static char **mapset_name2 ;
 static int nmapset = 0;
 static int nmapset2 = 0;
-static int new_mapset(char *);
+static int new_mapset(const char *);
 static int get_list_of_mapsets(void);
 
 char *G__mapset_name (int n)
@@ -46,7 +46,7 @@ char *G__mapset_name (int n)
     return mapset_name[n];
 }
 
-static int get_list_of_mapsets()
+static int get_list_of_mapsets(void)
 {
     char name[GNAME_MAX];
     FILE *fd;
@@ -82,7 +82,7 @@ static int get_list_of_mapsets()
     return 0;
 }
 
-static int new_mapset(char *name)
+static int new_mapset(const char *name)
 {
 /*
  * extend mapset name list and store name
@@ -96,7 +96,7 @@ static int new_mapset(char *name)
 }
 
 
-int G__create_alt_search_path()
+int G__create_alt_search_path(void)
 {
     nmapset2 = nmapset;
     mapset_name2 = mapset_name;
@@ -107,7 +107,7 @@ int G__create_alt_search_path()
     get_list_of_mapsets();
 }
 
-int G__switch_search_path()
+int G__switch_search_path(void)
 {
     int n;
     char **names;
@@ -124,7 +124,7 @@ int G__switch_search_path()
     return 0;
 }
 
-int G_reset_mapsets()
+int G_reset_mapsets(void)
 {
     nmapset=0;
 
@@ -187,7 +187,7 @@ char **G_available_mapsets ( void )
  * Mapset is add in memory only, not to the SEARCH_PATH file!
  * List is check first if already exists.
  */
-void G_add_mapset_to_search_path ( char *mapset )
+void G_add_mapset_to_search_path ( const char *mapset )
 {
     int i;
 

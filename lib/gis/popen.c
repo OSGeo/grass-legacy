@@ -24,8 +24,8 @@ static  int     popen_pid[50];
 
 
 FILE *G_popen(
-    char    *cmd,
-    char    *mode)
+    const char *cmd,
+    const char *mode)
 {
 
 #ifdef __MINGW32__

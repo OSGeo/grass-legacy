@@ -16,11 +16,11 @@
 #include <grass/gis.h>
 #include <grass/glocale.h>
 
-int G__make_mapset_element (char *p_element)
+int G__make_mapset_element (const char *p_element)
 {
     char path[GPATH_MAX];
     char *p;
-    char *element;
+    const char *element;
 
     element = p_element;
     if (*element == 0)
@@ -61,7 +61,7 @@ int G__make_mapset_element (char *p_element)
 *          0 mapset exists, BUT user denied permission
 *         -1 mapset does not exist
 ****************************************************************/
-int G__mapset_permissions (char *mapset)
+int G__mapset_permissions (const char *mapset)
 {
     char path[GPATH_MAX];
     struct stat info;
@@ -92,7 +92,7 @@ int G__mapset_permissions (char *mapset)
 *          0 mapset exists, BUT user denied permission
 *         -1 mapset does not exist
 ****************************************************************/
-int G__mapset_permissions2 ( char * gisdbase, char * location, char *mapset )
+int G__mapset_permissions2 ( const char * gisdbase, const char * location, const char *mapset )
 {
     char path[GPATH_MAX];
     struct stat info;

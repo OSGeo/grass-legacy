@@ -22,7 +22,7 @@
  */
 
 char *
-G_gisdbase()
+G_gisdbase(void)
 {
     return G_getenv ("GISDBASE");
 }
