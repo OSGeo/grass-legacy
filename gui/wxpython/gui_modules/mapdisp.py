@@ -666,18 +666,6 @@ class BufferedWindow(wx.Window):
             elif self.mouse["box"] == "query":
                 east,north = self.Pixel2Cell(self.mouse['begin'][0],self.mouse['begin'][1])
                 self.Parent.QueryMap(east,north)
-#                if self.tree.GetSelection():
-#                    layer =  self.tree.GetSelection()
-#                    type =   self.tree.layertype[layer]
-#                    dcmd = self.tree.GetPyData(layer)[0]
-#                    mapname = None
-#                    for item in dcmd.split(' '):
-#                        if 'map=' in item:
-#                            mapname = item.split('=')[1]
-#
-#                    self.parent.QueryMap(mapname,type,east,north)
-#                else:
-#                    print "Quering without gis manager not implemented yet"
 
             # end drag of overlay decoration
             elif self.dragid != None:

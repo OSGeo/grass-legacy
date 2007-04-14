@@ -165,7 +165,7 @@ class LayerTree(CT.CustomTreeCtrl):
         self.Bind(wx.EVT_TREE_DELETE_ITEM, self.onDeleteLayer)
         self.Bind(wx.EVT_TREE_BEGIN_DRAG, self.onBeginDrag)
         self.Bind(wx.EVT_TREE_END_DRAG, self.onEndDrag)
-        self.Bind(wx.EVT_CLOSE, self.onCloseWindow)
+#        self.Bind(wx.EVT_CLOSE, self.onCloseWindow)
 
     def AddLayer(self, type):
         self.first = True
@@ -550,7 +550,8 @@ class LayerTree(CT.CustomTreeCtrl):
         self.Parent.notebook.SetSelection(pg)
 
     def onCloseWindow(self, event):
-        self.Map.Clean()
+        pass
+#        self.Map.Clean()
 
 class TreeCtrlComboPopup(wx.combo.ComboPopup):
     """
