@@ -13,7 +13,7 @@
 \fs24 \cf0 \
 \pard\tx1080\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\ql\qnatural\pardirnatural
 
-\f2\i \cf0 2007-4-7\
+\f2\i \cf0 2007-4-14\
 \pard\tx720\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\ql\qnatural\pardirnatural
 
 \f1\i0 \cf0 \
@@ -27,7 +27,7 @@ About\
 Building GRASS\
 	Build\
 	Universal Build*\
-	Example Configure*\
+	Configure Example*\
 	Building an Installer Package\
 	Bundling Libraries and Programs\
 Tcl/Tk\
@@ -89,7 +89,9 @@ Building GRASS as a Mac OS X application is pretty much the same as for a unix b
 \f1\fs24 \cf0 \
 With this option, the prefix specified is the path where GRASS.app will be installed.\
 \
-The default GRASS prefix is /usr/local, but for a Mac OS X application it should be 
+The default GRASS prefix is 
+\f3\fs20 /usr/local
+\f1\fs24 , but for a Mac OS X application it should be 
 \f3\fs20 /Applications
 \f1\fs24 .  It is not possible to have alternative default prefixes in configure, so you must set 
 \f3\fs20 --prefix=/Applications
@@ -187,7 +189,7 @@ export LDFLAGS="-arch ppc -arch i386 -isysroot $SDKROOT"\
 
 \f1\fs24 \cf0 \
 \pard\tx720\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\ql\qnatural\pardirnatural
-\cf0 \ul Example Configure\ulnone \
+\cf0 \ul Configure Example\ulnone \
 \
 As an example, to build GRASS using my frameworks (site link below) and Tcl/Tk as built in the build notes below, this should work 
 \f2\i (for a unix build, just remove the --prefix and --enable-macosx-app flags)
@@ -195,7 +197,7 @@ As an example, to build GRASS using my frameworks (site link below) and Tcl/Tk a
 \
 \pard\tx720\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\ql\qnatural\pardirnatural
 
-\f3\fs20 \cf0 ./configure --enable-sysv --with-freetype --with-freetype-includes="/Library/Frameworks/FreeType.framework/unix/include/freetype2 /Library/Frameworks/FreeType.framework/unix/include" --with-freetype-libs=/Library/Frameworks/FreeType.framework/unix/lib --with-gdal=/Library/Frameworks/GDAL.framework/Programs/gdal-config --with-proj --with-proj-includes=/Library/Frameworks/PROJ.framework/unix/include --with-proj-libs=/Library/Frameworks/PROJ.framework/unix/lib --with-proj-share=/Library/Frameworks/PROJ.framework/Resources/proj --with-jpeg-includes=/Library/Frameworks/UnixImageIO.framework/unix/include --with-jpeg-libs=/Library/Frameworks/UnixImageIO.framework/unix/lib --with-png-includes=/Library/Frameworks/UnixImageIO.framework/unix/include --with-png-libs=/Library/Frameworks/UnixImageIO.framework/unix/lib --with-tiff-includes=/Library/Frameworks/UnixImageIO.framework/unix/include --with-tiff-libs=/Library/Frameworks/UnixImageIO.framework/unix/lib --without-postgres --without-mysql --with-odbc --with-sqlite --with-sqlite-libs=/Library/Frameworks/SQLite3.framework/unix/lib --with-sqlite-includes=/Library/Frameworks/SQLite3.framework/unix/include --with-fftw-includes=/Library/Frameworks/FFTW3.framework/unix/include --with-fftw-libs=/Library/Frameworks/FFTW3.framework/unix/lib --with-cxx --with-tcltk-includes=/usr/local/tcltk/include --with-tcltk-libs=/usr/local/tcltk/lib --with-x --without-motif --without-glw --with-opengl=x11 --with-opengl-libs=/usr/X11R6/lib --without-readline --prefix=/Applications --enable-macosx-app
+\f3\fs20 \cf0 ./configure --with-freetype --with-freetype-includes="/Library/Frameworks/FreeType.framework/unix/include/freetype2 /Library/Frameworks/FreeType.framework/unix/include" --with-freetype-libs=/Library/Frameworks/FreeType.framework/unix/lib --with-gdal=/Library/Frameworks/GDAL.framework/Programs/gdal-config --with-proj --with-proj-includes=/Library/Frameworks/PROJ.framework/unix/include --with-proj-libs=/Library/Frameworks/PROJ.framework/unix/lib --with-proj-share=/Library/Frameworks/PROJ.framework/Resources/proj --with-jpeg-includes=/Library/Frameworks/UnixImageIO.framework/unix/include --with-jpeg-libs=/Library/Frameworks/UnixImageIO.framework/unix/lib --with-png-includes=/Library/Frameworks/UnixImageIO.framework/unix/include --with-png-libs=/Library/Frameworks/UnixImageIO.framework/unix/lib --with-tiff-includes=/Library/Frameworks/UnixImageIO.framework/unix/include --with-tiff-libs=/Library/Frameworks/UnixImageIO.framework/unix/lib --without-postgres --without-mysql --with-odbc --with-sqlite --with-sqlite-libs=/Library/Frameworks/SQLite3.framework/unix/lib --with-sqlite-includes=/Library/Frameworks/SQLite3.framework/unix/include --with-fftw-includes=/Library/Frameworks/FFTW3.framework/unix/include --with-fftw-libs=/Library/Frameworks/FFTW3.framework/unix/lib --with-cxx --with-tcltk-includes=/usr/local/tcltk/include --with-tcltk-libs=/usr/local/tcltk/lib --with-x --without-motif --without-glw --with-opengl=x11 --with-opengl-libs=/usr/X11R6/lib --without-readline --prefix=/Applications --enable-macosx-app
 \f1\fs24 \
 \
 That's a long line, but you have to be very explicit in the GRASS configure (and yes, the UnixImageIO framework is used multiple times).\
@@ -223,7 +225,7 @@ This installer currently does NOT do any verification of installed dependencies.
 \cf0 \ul Bundling Libraries and Programs\
 \pard\tx720\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\ql\qnatural\pardirnatural
 \cf0 \ulnone \
-With the installer package, additional dependent libraries and programs can be bundled with the application package to make a more portable and easily installed GRASS application.  See 
+With the installer package build, additional dependent libraries and programs can be bundled with the application package to make a more portable and easily installed GRASS application.  See 
 \f3\fs20 macosx/pkg/bundle.make
 \f1\fs24  for details.\
 \
