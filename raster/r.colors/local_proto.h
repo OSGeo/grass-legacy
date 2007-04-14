@@ -25,7 +25,6 @@
 int get_stats(char *, char *, struct Cell_stats *);
 /* main.c */
 int main(int, char *[]);
-int more_usage(void);
 /* rules.c */
 int read_color_rules(FILE *, struct Colors *, DCELL, DCELL, int);
 

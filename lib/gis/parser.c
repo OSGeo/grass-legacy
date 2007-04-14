@@ -1108,10 +1108,9 @@ int G_usage (void)
 			    int i = 0;
 
 			    while ( opt->opts[i] ) {
-				fprintf (stderr, "  %*s   %s: ", maxlen, " ", opt->opts[i] );
-
-				if (  opt->descs[i] )
-				    fprintf (stderr, "%s\n", opt->descs[i] );
+				if ( opt->descs[i] )
+				    fprintf (stderr, "  %*s   %s: %s\n",
+					     maxlen, " ", opt->opts[i], opt->descs[i]);
 				
 				i++;
 			    }
@@ -1302,7 +1301,7 @@ static void G_usage_xml (void)
 					fprintf(stdout, "\t\t\t\t<name>");
 					print_escaped_for_xml(stdout, opt->opts[i]);
 					fprintf(stdout, "</name>\n");
-					if(opt->descs && opt->opts[i]) {
+					if(opt->descs && opt->opts[i] && opt->descs[i]) {
 					    fprintf(stdout, "\t\t\t\t<description>");
 					    print_escaped_for_xml(stdout, opt->descs[i]);
 					    fprintf(stdout, "</description>");
@@ -1585,12 +1584,9 @@ static void G_usage_html (void)
 			    int i = 0;
 
 			    while ( opt->opts[i] ) {
-				fprintf(stdout, "<DD><b>%s</b>: ", opt->opts[i]);
-
-				if (  opt->descs[i] )
-				    fprintf (stdout, "%s", opt->descs[i] );
-				
-				fprintf(stdout, "</DD>\n");
+				if (  !opt->descs[i] )
+				    continue;
+				fprintf(stdout, "<DD><b>%s</b>: %s</DD>\n", opt->opts[i], opt->descs[i]);
 				
 				i++;
 			    }

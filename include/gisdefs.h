@@ -350,7 +350,9 @@ typedef int read_rule_fn(
 int G_parse_color_rule(DCELL, DCELL, const char *, DCELL *, int *, int *, int *, int *, int *, int *);
 const char *G_parse_color_rule_error(int);
 int G_read_color_rule(void *, DCELL, DCELL, DCELL *, int *, int *, int *, int *, int *, int *);
-int G_read_color_rules(struct Colors *, DCELL, DCELL, int, read_rule_fn *, void *);
+int G_read_color_rules(struct Colors *, DCELL, DCELL, read_rule_fn *, void *);
+int G_load_colors(struct Colors *, const char *, CELL, CELL);
+int G_load_fp_colors(struct Colors *, const char *, DCELL, DCELL);
 int G_make_colors(struct Colors *, const char *, CELL, CELL);
 int G_make_fp_colors(struct Colors *, const char *, DCELL, DCELL);
 
