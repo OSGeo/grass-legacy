@@ -137,6 +137,8 @@ class GMFrame(wx.Frame):
         self.disp_idx = 0 #index value for map displays and layer trees
         self.maptree = {} #dictionary to index a layer tree to accompanying a map display
         self.mapfocus = 0 #track which display currently has focus
+        self.curr_page   = '' # currently selected page for layer tree notebook
+        self.curr_pagenum = '' # currently selected page number for layer tree notebook
 
         self.Bind(wx.EVT_CLOSE, self.onCloseWindow)
         self.Bind(wx.EVT_LEFT_DOWN, self.addRaster)
@@ -246,32 +248,28 @@ class GMFrame(wx.Frame):
 
         old_pgnum = event.GetOldSelection()
         new_pgnum = event.GetSelection()
-        curr_pg   = self.gm_cb.GetCurrentPage()
-        sel_pgnum = self.gm_cb.GetSelection()
+        self.curr_page   = self.gm_cb.GetCurrentPage()
+        self.curr_pagenum = self.gm_cb.GetSelection()
+        try:
+            self.curr_page.maptree.mapdisplay.SetFocus()
+            self.curr_page.maptree.mapdisplay.Raise()
+        except:
+            pass
 
-        # get ID of associated display if more than one
-        disp_idx = track.Track().GetDisp_idx(curr_pg)
-        if disp_idx != None:
-            #get associated display and make it active
-            newdisp = track.Track().GetCtrls(disp_idx, 0)
-            newdisp.SetFocus()
-            newdisp.Raise()
         event.Skip()
 
     def onCBPageClosed(self, event):
-        """Page of notebook closed"""
+        """
+        Page of notebook closed
+        Also close associated map display
+        """
+        closepage = event.GetSelection()
 
-        curr_pg = self.gm_cb.GetCurrentPage()
-        disp_idx = track.Track().GetDisp_idx(curr_pg)
-        if disp_idx != None:
-            #get associated display and make it active
-            disp = track.Track().GetCtrls(disp_idx, 0)
-            try:
-                if self.mapdisplays.has_key(disp_idx):
-                    if self.mapdisplays[disp_idx].Close(False):
-                        self.mapdisplays[disp_idx].Close(True)
-            except:
-                pass
+        try:
+            if self.closepage.maptree.mapdisplay.Close(False):
+                self.closepage.maptree.mapdisplay.Close(True)
+        except:
+            pass
 
     def runCmd(self,event):
         """Run command"""
@@ -323,13 +321,15 @@ class GMFrame(wx.Frame):
                  )
 
     def ShowAttributeTable(self,event):
-
-        maptype = self.maptree.layertype[self.maptree.GetSelection()]
+        if self.curr_page.maptree.GetSelection() not in self.curr_page.maptree.layertype: return
+        maptype = self.curr_page.maptree.layertype[self.curr_page.maptree.GetSelection()]
         if maptype != 'vector':
             print 'Attribute management only available for vector files'
             return
 
-        dcmd = self.maptree.GetPyData(self.maptree.GetSelection())[0]
+        if not self.curr_page.maptree.GetPyData(self.curr_page.maptree.GetSelection()): return
+        dcmd = self.curr_page.maptree.GetPyData(self.curr_page.maptree.GetSelection())[0]
+        if not dcmd: return
         mapname = map = mapset = size = icon = None
         for item in dcmd.split(' '):
             if 'map=' in item:
@@ -351,45 +351,25 @@ class GMFrame(wx.Frame):
     def newDisplay(self, event=None):
         """Create new map display frame"""
 
-        newdisp = self.mapdisplays[self.disp_idx] = mapdisp.MapFrame(self,
-                                  id=wx.ID_ANY, pos=wx.DefaultPosition, size=wx.DefaultSize,
-                                  style=wx.DEFAULT_FRAME_STYLE,
-                                  cb=self.gm_cb, idx=self.disp_idx)
-        # title
-        newdisp.SetTitle(_("Map Display " + str(self.disp_idx)))
-        #self.maptree[self.disp_idx] = self.mapdisplays[self.disp_idx].getTree()
-
-        #add notebook page to GIS Manager
-
         # make a new page in the bookcontrol for the layer tree (on page 0 of the notebook)
         self.pg_panel = wx.Panel(self.gm_cb, id=wx.ID_ANY, style= wx.EXPAND)
         self.gm_cb.AddPage(self.pg_panel, text="Display "+ str(self.disp_idx), select = True)
-        self.cb_page = self.gm_cb.GetCurrentPage()
+        self.curr_page = self.gm_cb.GetCurrentPage()
 
         # create layer tree (tree control for managing GIS layers)  and put on new notebook page
-        self.maptree = wxgui_utils.LayerTree(self.cb_page, id=wx.ID_ANY, pos=wx.DefaultPosition,
+        self.curr_page.maptree = wxgui_utils.LayerTree(self.curr_page, id=wx.ID_ANY, pos=wx.DefaultPosition,
                                            size=wx.DefaultSize, style=wx.TR_HAS_BUTTONS
                                            |wx.TR_LINES_AT_ROOT|wx.TR_EDIT_LABELS|wx.TR_HIDE_ROOT
                                            |wx.TR_DEFAULT_STYLE|wx.NO_BORDER|wx.FULL_REPAINT_ON_RESIZE,
-                                           disp=newdisp)
+                                           idx=self.disp_idx, gismgr=self, notebook=self.gm_cb)
 
         # layout for controls
         cb_boxsizer = wx.BoxSizer(wx.VERTICAL)
-        cb_boxsizer.Add(self.maptree, proportion=1, flag=wx.EXPAND, border=1)
-        self.cb_page.SetSizer(cb_boxsizer)
-        cb_boxsizer.Fit(self.cb_page)
-        self.cb_page.Layout()
-        #self.cb_page.SetAutoLayout(True)
-        #self.Centre()
-
-        # store information about display and associated controls in a dictionary in track.py
-        track.Track().SetDisp(self.disp_idx,self)
-        track.Track().SetCtrlDict(self.disp_idx, newdisp, self.cb_page, self.maptree)
-
-        #show new display
-        self.mapdisplays[self.disp_idx].Show()
-        self.mapdisplays[self.disp_idx].Refresh()
-        self.mapdisplays[self.disp_idx].Update()
+        cb_boxsizer.Add(self.curr_page.maptree, proportion=1, flag=wx.EXPAND, border=1)
+        self.curr_page.SetSizer(cb_boxsizer)
+        cb_boxsizer.Fit(self.curr_page.maptree)
+        self.curr_page.Layout()
+        self.curr_page.maptree.Layout()
 
         self.disp_idx += 1
 
@@ -489,75 +469,62 @@ class GMFrame(wx.Frame):
 
 
     def addRaster(self, event):
-        self.SetTree('raster')
+        self.curr_page.maptree.AddLayer('raster')
 
     def addRGB(self, event):
         """Add RGB layer"""
-        self.SetTree('rgb')
+        self.curr_page.maptree.AddLayer('rgb')
 
     def addHIS(self, event):
         """Add HIS layer"""
-        self.SetTree('his')
+        self.curr_page.maptree.AddLayer('his')
 
     def addRastLeg(self, event):
         """Add raster legend"""
-        self.SetTree('rastleg')
+        self.curr_page.maptree.AddLayer('rastleg')
 
     def addVector(self, event):
         """Add vector layer"""
-        self.SetTree('vector')
+        self.curr_page.maptree.AddLayer('vector')
 
     def addThemeMap(self, event):
         """Add thematic map layer"""
-        self.SetTree('thememap')
+        self.curr_page.maptree.AddLayer('thememap')
 
     def addThemeChart(self, event):
         """Add thematic chart layer"""
-        self.SetTree('themechart')
+        self.curr_page.maptree.AddLayer('themechart')
 
     def addCommand(self, event):
         """Add command line layer"""
-        self.SetTree('command')
+        self.curr_page.maptree.AddLayer('command')
 
     def addGroup(self, event):
         """Add layer group"""
-        self.SetTree('group')
+        self.curr_page.maptree.AddLayer('group')
 
     def addGrid(self, event):
         """Add layer grid"""
-        self.SetTree('grid')
+        self.curr_page.maptree.AddLayer('grid')
 
     def addLabels(self, event):
         """Add layer vector labels"""
-        print 'labels 1', event
-        self.SetTree('labels')
+        self.curr_page.maptree.AddLayer('labels')
 
     def GetSelectedDisplay(self):
         return self.notebook.GetSelection()
-
-    def SetTree(self, layertype):
-        """
-        Add map display layer in GIS Manager tree widget
-        """
-        disp_idx = track.Track().GetDisp_idx(self.maptree)
-        if disp_idx != None:
-            self.maptree.AddLayer(disp_idx, layertype)
 
     def deleteLayer(self, event):
         """
         Delete selected map display layer in GIS Manager tree widget
         """
-        self.maptree.Delete(self.maptree.GetSelection())
+        self.curr_page.maptree.Delete(self.curr_page.maptree.GetSelection())
 
     #Misc methods
     def onCloseWindow(self, event):
         '''Cleanup when wxgui.py is quit'''
-        mdlist = range(0, self.disp_idx+1)
         try:
-            for md in mdlist:
-                if self.mapdisplays.has_key(md):
-                    if self.mapdisplays[md].Close(False):
-                        self.mapdisplays[md].Close(True)
+            self.DeleteAllPages()
         except:
             self.DestroyChildren()
         self.Destroy()
