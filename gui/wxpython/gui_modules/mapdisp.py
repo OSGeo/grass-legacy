@@ -950,7 +950,7 @@ class MapFrame(wx.Frame):
     def __init__(self, parent=None, id = wx.ID_ANY, title="Map display",
                  pos=wx.DefaultPosition, size=wx.DefaultSize,
                  style=wx.DEFAULT_FRAME_STYLE, toolbars=["map"],
-                 cb=None, gismgr=None, idx=None, Map=None):
+                 tree=None, notebook=None, gismgr=None, page=None, Map=None):
 
 
         """
@@ -966,16 +966,21 @@ class MapFrame(wx.Frame):
                 style   -- window style
                 toolbars-- array of default toolbars, which should appear
                            map, digit
-                cb      -- control book ID in GIS Manager
-                idx     -- index of display
+                notebook-- control book ID in GIS Manager
+                tree    -- associated layer tree
+                gismgr  -- GIS Manager panel
+                page    -- notebook page with layer tree
+                Map     -- instance of render.Map
         """
 
         wx.Frame.__init__(self, parent, id, title, pos, size, style)
 
         # most of the thime, this will be the gis manager
-        self.gismanager = gismgr
-        self.Map = Map
-        self.tree = parent
+        self.gismanager = gismgr # GIS Manager object
+        self.Map = Map # instance of render.Map
+        self.tree = tree # GIS Manager layer tree object
+        self.page = page # Notebook page holding the layer tree
+        self.layerbook = notebook #GIS Manager layer tree notebook
 
         #
         # Set the size
@@ -983,7 +988,6 @@ class MapFrame(wx.Frame):
         self.SetClientSize((600, 475))
 
         # Set variables to associate display with GIS Manager page
-        self.ctrlbk = cb
         self.disp_idx = idx
 
         #
@@ -1040,11 +1044,9 @@ class MapFrame(wx.Frame):
 
         #
         # Bind various events
-        # ONLY if we are running from GIS manager
         #
-        if self.disp_idx > -1:
-            self.Bind(wx.EVT_ACTIVATE, self.OnFocus)
-            self.Bind(wx.EVT_CLOSE,    self.OnCloseWindow)
+        self.Bind(wx.EVT_ACTIVATE, self.OnFocus)
+        self.Bind(wx.EVT_CLOSE,    self.OnCloseWindow)
 
         #
         # Update fancy gui style
@@ -1118,27 +1120,13 @@ class MapFrame(wx.Frame):
 
     def OnFocus(self, event):
         """
-        Store information about active display
-        in tracking variables and change choicebook
+        Change choicebook
         page to match display
         """
-        #get index number of active display
-        self.disp_idx = int(track.Track().GetDisp_idx(self))
 
-        #set active display tuple in track
-        track.Track().SetDisp(self.disp_idx, self)
-
-        # change bookcontrol page to page associted with display if > 1 display
-        pg = track.Track().GetCtrls(self.disp_idx, 1)
-        pg_count = self.ctrlbk.GetPageCount()
-        pgnum = '0'
-        if pg_count > 0:
-            for x in range(0,pg_count):
-                if self.ctrlbk.GetPage(x) == pg:
-                    pgnum = x
-                    break
-
-        self.ctrlbk.SetSelection(pgnum)
+        # change bookcontrol page to page associted with display
+        pgnum = self.layerbook.GetPageIndex(self.page)
+        if pgnum > -1: self.layerbook.SetSelection(pgnum)
         event.Skip()
 
     def OnMotion(self, event):
@@ -1274,25 +1262,14 @@ class MapFrame(wx.Frame):
     def OnCloseWindow(self, event):
         """
         Window closed
+        Also close associated layer tree page
         """
+        pgnum = None
         self.Map.Clean()
+        pgnum = self.layerbook.GetPageIndex(self.page)
         self.Destroy()
 
-        #close associated controls book page
-        #get index number of active display
-        self.disp_idx = track.Track().GetDisp_idx(self)
-
-        # delete associated bookcontrol page if it exists
-        if self.disp_idx != None:
-            pg = track.Track().GetCtrls(self.disp_idx, 1)
-            pg_count = self.ctrlbk.GetPageCount()
-            pgnum = '0'
-            if pg_count > 0:
-                for x in range(0,pg_count):
-                    if self.ctrlbk.GetPage(x) == pg:
-                        pgnum = x
-            track.Track().popCtrl(self.disp_idx)
-            self.ctrlbk.DeletePage(pgnum)
+        if pgnum > -1: self.layerbook.DeletePage(pgnum)
 
     def getRender(self):
         """

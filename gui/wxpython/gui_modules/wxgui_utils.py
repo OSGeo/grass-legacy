@@ -39,7 +39,7 @@ class LayerTree(CT.CustomTreeCtrl):
                  size=wx.DefaultSize, style=wx.SUNKEN_BORDER,
                  ctstyle=CT.TR_HAS_BUTTONS | CT.TR_HAS_VARIABLE_ROW_HEIGHT |
                  CT.TR_HIDE_ROOT | CT.TR_ROW_LINES | CT.TR_FULL_ROW_HIGHLIGHT|
-                 CT.TR_EDIT_LABELS, idx=None, gismgr=None, gm_cb=None):
+                 CT.TR_EDIT_LABELS, idx=None, gismgr=None, notebook=None):
         CT.CustomTreeCtrl.__init__(self, parent, id, pos, size, style,ctstyle)
 
         self.SetAutoLayout(True)
@@ -59,14 +59,16 @@ class LayerTree(CT.CustomTreeCtrl):
         self.drag = False # flag to indicate a drag event is in process
         self.disp_idx = idx
         self.gismgr = gismgr
-        self.gm_cb = gm_cb # GIS Manager notebook for layer tree
+        self.notebook = notebook # GIS Manager notebook for layer tree
         self.treepg = parent # notebook page holding layer tree
+
 
         # init associated map display
         self.mapdisplay = mapdisp.MapFrame(self,
                           id=wx.ID_ANY, pos=wx.DefaultPosition, size=wx.DefaultSize,
                           style=wx.DEFAULT_FRAME_STYLE,
-                          cb=self.gm_cb, gismgr=self.gismgr, idx=self.disp_idx, Map=self.Map)
+                          tree=self, notebook=self.notebook, gismgr=self.gismgr, page=self.treepg,
+                          Map=self.Map)
 
 
         # title
@@ -81,6 +83,7 @@ class LayerTree(CT.CustomTreeCtrl):
         self.mapdisplay.Show()
         self.mapdisplay.Refresh()
         self.mapdisplay.Update()
+
 
 
         self.Map = self.mapdisplay.getRender()
