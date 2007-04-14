@@ -51,7 +51,7 @@ int read_color_rules(FILE *fp, struct Colors *colors, DCELL min, DCELL max, int 
 	    fprintf(stderr, _("Data range is %ld to %ld\n"), (long) min, (long) max);
     }
 
-    if (!G_read_color_rules(colors, min, max, is_fp, read_rule, fp))
+    if (!G_read_color_rules(colors, min, max, read_rule, fp))
 	return 0;
 
     G_get_d_color_range (&rulemin, &rulemax, colors);

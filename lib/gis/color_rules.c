@@ -152,7 +152,7 @@ int G_read_color_rule(
     return 0;
 }
 
-int G_read_color_rules(struct Colors *colors, DCELL min, DCELL max, int is_fp, read_rule_fn *read_rule, void *closure)
+int G_read_color_rules(struct Colors *colors, DCELL min, DCELL max, read_rule_fn *read_rule, void *closure)
 {
     struct rule *rule = NULL;
     int nrules = 0;
@@ -199,10 +199,7 @@ int G_read_color_rules(struct Colors *colors, DCELL min, DCELL max, int is_fp, r
     {
 	const struct rule *p = &rule[0];
 
-	if (is_fp)
-	    G_set_d_color(p->val, p->r, p->g, p->b, colors);
-	else
-	    G_set_color((CELL)p->val, p->r, p->g, p->b, colors);
+	G_set_d_color(p->val, p->r, p->g, p->b, colors);
     }
 
     for (n = 1; n < nrules; n++)
@@ -210,16 +207,10 @@ int G_read_color_rules(struct Colors *colors, DCELL min, DCELL max, int is_fp, r
 	struct rule *lo = &rule[n-1];
 	struct rule *hi = &rule[n];
 
-	if (is_fp)
-	    G_add_d_raster_color_rule (
-		&lo->val, lo->r, lo->g, lo->b,
-		&hi->val, hi->r, hi->g, hi->b,
-		colors);
-	else
-	    G_add_color_rule (
-		(CELL) lo->val, lo->r, lo->g, lo->b,
-		(CELL) hi->val, hi->r, hi->g, hi->b,
-		colors);
+	G_add_d_raster_color_rule (
+	    &lo->val, lo->r, lo->g, lo->b,
+	    &hi->val, hi->r, hi->g, hi->b,
+	    colors);
     }
 
     /* null value and default color set up, if rules are set up by user */
@@ -232,32 +223,49 @@ int G_read_color_rules(struct Colors *colors, DCELL min, DCELL max, int is_fp, r
     return 1;
 }
 
-static int load_color_rules(struct Colors *colors, const char *name, DCELL min, DCELL max, int is_fp)
+static int load_rules_file(struct Colors *colors, const char *path, DCELL min, DCELL max)
 {
-    char path[GPATH_MAX];
     FILE *fp;
     int ret;
 
-    sprintf(path, "%s/etc/colors/%s", G_gisbase(), name);
     fp = fopen(path, "r");
 
     if (!fp)
 	return 0;
 
-    ret = G_read_color_rules(colors, min, max, is_fp, G_read_color_rule, (void *) fp);
+    ret = G_read_color_rules(colors, min, max, G_read_color_rule, (void *) fp);
 
     fclose(fp);
 
     return ret;
 }
 
+int G_load_colors(struct Colors *colors, const char *path, CELL min, CELL max)
+{
+    return load_rules_file(colors, path, (DCELL) min, (DCELL) max);
+}
+
+int G_load_fp_colors(struct Colors *colors, const char *path, DCELL min, DCELL max)
+{
+    return load_rules_file(colors, path, min, max);
+}
+
+static int load_rules_name(struct Colors *colors, const char *name, DCELL min, DCELL max)
+{
+    char path[GPATH_MAX];
+
+    sprintf(path, "%s/etc/colors/%s", G_gisbase(), name);
+
+    return load_rules_file(colors, path, min, max);
+}
+
 int G_make_colors(struct Colors *colors, const char *name, CELL min, CELL max)
 {
-    return load_color_rules(colors, name, (DCELL) min, (DCELL) max, 0);
+    return load_rules_name(colors, name, (DCELL) min, (DCELL) max);
 }
 
 int G_make_fp_colors(struct Colors *colors, const char *name, DCELL min, DCELL max)
 {
-    return load_color_rules(colors, name, min, max, 1);
+    return load_rules_name(colors, name, min, max);
 }
 
