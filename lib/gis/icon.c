@@ -15,20 +15,20 @@
 #include <math.h>
 #include <grass/gis.h>
 
-static int trans ( double *x, double *y, int n_points, double angle, double scale, 
-                     double xc, double yc ) {
+static void trans ( double *x, double *y, int n_points,
+		    double angle, double scale, double xc, double yc )
+{
+    double m[2][2];
     int i;
-    double r, a;
 
-    for ( i = 0; i < n_points; i++) {
-	r = scale * hypot ( x[i], y[i] );
-	a = atan2 ( y[i], x[i] );
-	a += angle;   
-	x[i] = r * cos(a) + xc;
-	y[i] = r * sin(a) + yc;
+    m[0][0] =  cos(angle) * scale;    m[0][1] = -sin(angle) * scale;
+    m[1][0] =  sin(angle) * scale;    m[1][1] =  cos(angle) * scale;
+
+    for ( i = 0; i < n_points; i++)
+    {
+	x[i] = scale * (m[0][0] * x[i] + m[0][1] * y[i]) + xc;
+	y[i] = scale * (m[1][0] * x[i] + m[1][1] * y[i]) + yc;
     }
-
-    return 1;
 }
 
 /**
