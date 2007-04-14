@@ -1,5 +1,6 @@
 
 #include <grass/gis.h>
+#include "his.h"
 
 /****************************************************************************
  * HIS_to_RGB() returns the R/G/B values for the proper HIS color associated
@@ -16,7 +17,7 @@
  * make_gray_scale() generates a gray-scale color lookup table 
  ****************************************************************************/
 
-int HIS_to_RGB (
+void HIS_to_RGB (
     int R,     /* red percent. for hue: value 0 - 255 */
     int G,     /* grn percent. for hue: value 0 - 255 */
     int B,     /* blu percent. for hue: value 0 - 255 */
