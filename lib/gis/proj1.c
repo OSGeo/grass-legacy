@@ -29,7 +29,7 @@
  *  \return int
  */
 
-int G_projection ()
+int G_projection (void)
 {
     struct Cell_head window;
 

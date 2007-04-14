@@ -27,8 +27,8 @@ enum signal_type
 	SST_CHILD,
 };
 
-extern int G_spawn(char *command, ...);
-extern int G_spawn_ex(char *command, ...);
+extern int G_spawn(const char *command, ...);
+extern int G_spawn_ex(const char *command, ...);
 
 #endif
 

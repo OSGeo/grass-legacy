@@ -43,7 +43,7 @@
  *  \return int
  */
 
-int G_get_cellhd  (char *name, char *mapset, struct Cell_head *cellhd)
+int G_get_cellhd  (const char *name, const char *mapset, struct Cell_head *cellhd)
 
 {
     FILE *fd;
@@ -51,7 +51,7 @@ int G_get_cellhd  (char *name, char *mapset, struct Cell_head *cellhd)
     char real_name[GNAME_MAX], real_mapset[GMAPSET_MAX];
     char buf[1024];
     char *tail;
-    char *err, *G__read_Cell_head();
+    char *err;
 
 /*
     is_reclass = G_is_reclass (name, mapset, real_name, real_mapset);

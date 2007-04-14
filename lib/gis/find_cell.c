@@ -61,7 +61,7 @@
  */
 
 char *
-G_find_cell  (char *name, char *mapset)
+G_find_cell  (char *name, const char *mapset)
 
 {
 	return G_find_file ("cell", name, mapset);
@@ -83,7 +83,7 @@ G_find_cell  (char *name, char *mapset)
  */
 
 char *
-G_find_cell2  (char *name, char *mapset)
+G_find_cell2  (const char *name, const char *mapset)
 
 {
 	return G_find_file2 ("cell", name, mapset);

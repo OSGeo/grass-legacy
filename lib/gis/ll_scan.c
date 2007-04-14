@@ -36,21 +36,21 @@
 ******************************************************************************/
 #include <grass/gis.h>
 
-static int scan_ll(char *,char *,double *,int);
-static int check_minutes(char *);
-static int check_seconds(char *);
+static int scan_ll(const char *,const char *,double *,int);
+static int check_minutes(const char *);
+static int check_seconds(const char *);
 
-int G_lat_scan ( char *buf, double *lat)
+int G_lat_scan ( const char *buf, double *lat)
 {
     return scan_ll (buf, "sn", lat, 90);
 }
 
-int G_lon_scan ( char *buf, double *lon)
+int G_lon_scan ( const char *buf, double *lon)
 {
     return scan_ll (buf, "we", lon, 180);
 }
 
-int G_llres_scan ( char *buf, double *res)
+int G_llres_scan ( const char *buf, double *res)
 {
     char tbuf[100];
 
@@ -60,8 +60,8 @@ int G_llres_scan ( char *buf, double *res)
 
 #define MARKER 1
 static int scan_ll (
-    char *buf,
-    char *dir,
+    const char *buf,
+    const char *dir,
     double *result,
     int max)
 {
@@ -148,7 +148,7 @@ static int scan_ll (
     return 1;
 }
 
-static int check_minutes(char *buf)
+static int check_minutes(const char *buf)
 {
 /* skip over degrees */
     while (*buf != ':')
@@ -163,7 +163,7 @@ static int check_minutes(char *buf)
     return (*buf < '0' || *buf > '9');
 }
 
-static int check_seconds(char *buf)
+static int check_seconds(const char *buf)
 {
 /* skip over degrees */
     while (*buf != ':')

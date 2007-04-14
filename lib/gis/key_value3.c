@@ -1,8 +1,8 @@
 #include <grass/gis.h>
 
 int G_write_key_value_file (
-    char *file,
-    struct Key_Value *kv,
+    const char *file,
+    const struct Key_Value *kv,
     int *stat)
 {
     FILE *fd;
@@ -16,7 +16,7 @@ int G_write_key_value_file (
     return (*stat != 0);
 }
 
-struct Key_Value *G_read_key_value_file(char *file, int *stat)
+struct Key_Value *G_read_key_value_file(const char *file, int *stat)
 {
     FILE *fd;
     struct Key_Value *kv;

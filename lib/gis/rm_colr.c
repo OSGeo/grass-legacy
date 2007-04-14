@@ -10,9 +10,9 @@
  *********************************************************************/
 
 #include <grass/gis.h>
-int G_remove_colr (char *name )
+int G_remove_colr (const char *name )
 {
-    char secondary[50];
+    char secondary[GNAME_MAX + 6];
 
     G_remove ("colr", name);
     sprintf (secondary,"colr2/%s", G_mapset());

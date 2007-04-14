@@ -32,7 +32,7 @@
  */
 
 char *
-G_myname()
+G_myname(void)
 {
     static char name[GNAME_MAX];
     char path[500];

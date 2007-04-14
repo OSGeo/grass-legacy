@@ -38,7 +38,7 @@
  */
 
 char *
-G_location_path()
+G_location_path(void)
 {
     char *location;
 
@@ -66,13 +66,13 @@ G_location_path()
  */
 
 char *
-G_location()
+G_location(void)
 {
     return G_getenv ("LOCATION_NAME");
 }
 
 char *
-G__location_path()
+G__location_path(void)
 {
     char *location = 0;
     char *base;

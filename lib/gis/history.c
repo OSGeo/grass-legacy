@@ -72,8 +72,8 @@
  */
 
 int G_read_history (
-    char *name,
-    char *mapset,
+    const char *name,
+    const char *mapset,
     struct History *hist)
 {
     FILE *fd;
@@ -153,7 +153,7 @@ error:
  */
 
 int G_write_history (
-    char *name,
+    const char *name,
     struct History *hist)
 {
     FILE *fd;
@@ -204,8 +204,8 @@ error:
  */
 
 int G_short_history (
-    char *name,
-    char *type,
+    const char *name,
+    const char *type,
     struct History *hist)
 {
     strncpy(hist->mapid, G_date(), RECORD_LEN);

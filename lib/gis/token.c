@@ -29,33 +29,34 @@
  * \return Pointer to string token
  */
 
-char **G_tokenize ( char *buf, char *delim)
+char **G_tokenize ( const char *buf, const char *delim)
 {
 	int i;
 	char **tokens;
+	char *p;
 
 	i = 0;
 	while (*buf == ' ' || *buf == '\t')  /* needed for G_free () */
 		buf++;
 
-	buf = G_store (buf);
+	p = G_store (buf);
 
 	tokens = (char **) G_malloc (sizeof (char *));
 
 	while (1)
 	{
-		while (*buf == ' ' || *buf == '\t')
-			buf++;
-		if (*buf == 0)
+		while (*p == ' ' || *p == '\t')
+			p++;
+		if (*p == 0)
 			break;
-		tokens[i++] = buf;
+		tokens[i++] = p;
 		tokens = (char **) G_realloc ((char *) tokens, (i+1) * sizeof (char *));
 
-		while (*buf && (G_index(delim,*buf) == NULL))
-			buf++;
-		if (*buf == 0)
+		while (*p && (G_index(delim,*p) == NULL))
+			p++;
+		if (*p == 0)
 			break;
-		*buf++ = 0;
+		*p++ = 0;
 	}
 	tokens[i] = NULL;
 

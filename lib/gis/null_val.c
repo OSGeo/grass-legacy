@@ -638,7 +638,7 @@ int G_insert_d_null_values (DCELL *dcellVal, char *null_row, int ncols)
 *   	    	n   	=>  ??
 * RETURN VAL:	??
 *****************************************************************************/
-int G__check_null_bit (unsigned char *flags, int bit_num, int n)
+int G__check_null_bit (const unsigned char *flags, int bit_num, int n)
 {
     int ind;
     int	offset;
@@ -673,7 +673,7 @@ int G__check_null_bit (unsigned char *flags, int bit_num, int n)
 *   	    	ncols	    =>	??
 * RETURN VAL:	??
 *****************************************************************************/
-int G__set_flags_from_01_random (char *zero_ones, unsigned char *flags, 
+int G__set_flags_from_01_random (const char *zero_ones, unsigned char *flags, 
     int col, int n, int ncols)
 {
     unsigned char   v;
@@ -726,7 +726,7 @@ int G__set_flags_from_01_random (char *zero_ones, unsigned char *flags,
 *   	    	n   	    =>	??
 * RETURN VAL:	??
 *****************************************************************************/
-int G__convert_01_flags (char *zero_ones, unsigned char *flags, int n)
+int G__convert_01_flags (const char *zero_ones, unsigned char *flags, int n)
 {
     unsigned char   *v;
     int	    	    count;
@@ -768,9 +768,9 @@ int G__convert_01_flags (char *zero_ones, unsigned char *flags, int n)
 *   	    	n   	    =>	??
 * RETURN VAL:	??
 *****************************************************************************/
-int G__convert_flags_01 (char *zero_ones, unsigned char *flags, int n)
+int G__convert_flags_01 (char *zero_ones, const unsigned char *flags, int n)
 {
-    unsigned char   *v;
+    const unsigned char *v;
     int      	    count;
     int	    	    size;
     int	    	    i, k;

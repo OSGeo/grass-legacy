@@ -34,7 +34,7 @@
 #include <grass/spawn.h>
 #define GEN_HELP	"gen_help"
 
-int G_gishelp( char *helpfile , char *request )
+int G_gishelp( const char *helpfile , const char *request )
 {
     char file[1024] ;
 

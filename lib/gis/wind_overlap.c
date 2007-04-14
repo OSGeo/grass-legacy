@@ -33,7 +33,7 @@
  * \return 0 if box does not overlap window
  */
 
-int G_window_overlap ( struct Cell_head *window,
+int G_window_overlap ( const struct Cell_head *window,
     double N,double S,double E,double W)
 {
     if (window->north <= S) return 0;
@@ -80,7 +80,7 @@ int G_window_overlap ( struct Cell_head *window,
  * \return Percentage of overlap
  */
 
-double G_window_percentage_overlap ( struct Cell_head *window,
+double G_window_percentage_overlap ( const struct Cell_head *window,
     double N,double S,double E,double W)
 {
     double V,H;

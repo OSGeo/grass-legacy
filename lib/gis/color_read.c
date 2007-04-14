@@ -25,7 +25,7 @@
 #include <grass/glocale.h>
 #include <string.h>
 
-static int read_colors(char *,char *,char *,struct Colors *);
+static int read_colors(const char *,const char *,const char *,struct Colors *);
 static int read_new_colors(FILE *,struct Colors *);
 static int read_old_colors(FILE *,struct Colors *);
 
@@ -58,8 +58,8 @@ static int read_old_colors(FILE *,struct Colors *);
  */
 
 int G_read_colors (
-    char *name ,
-    char *mapset ,
+    const char *name ,
+    const char *mapset ,
     struct Colors *colors )
 {
     int fp;
@@ -125,7 +125,7 @@ int G_read_colors (
     return -1;
 }
 
-static int read_colors( char *element , char *name , char *mapset , struct Colors *colors)
+static int read_colors( const char *element , const char *name , const char *mapset , struct Colors *colors)
 {
     FILE *fd ;
     int stat;

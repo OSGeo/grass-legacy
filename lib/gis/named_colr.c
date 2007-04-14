@@ -4,7 +4,7 @@
 
 static struct
 {
-    char *name;
+    const char *name;
     float r,g,b;
 }colors[] =
 {
@@ -29,7 +29,7 @@ static struct
 } ;
 
 int G_color_values (
-    char *name,
+    const char *name,
     float *r,float *g,float *b)
 {
     int i;
@@ -46,7 +46,7 @@ int G_color_values (
     return -1;
 }
 
-char *G_color_name (int n)
+const char *G_color_name (int n)
 {
     int i;
 
@@ -54,5 +54,5 @@ char *G_color_name (int n)
 	for (i = 0; colors[i].name[0]; i++)
 	    if (i == n)
 		return colors[i].name;
-    return (char *) NULL;
+    return NULL;
 }

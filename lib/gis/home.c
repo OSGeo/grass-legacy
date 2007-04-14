@@ -30,7 +30,7 @@
  */
 
 char *
-G_home ()
+G_home (void)
 {
     char *home;
     
@@ -44,7 +44,7 @@ G_home ()
  *  \return char * 
  */
 
-char *G_home();
+char *G_home(void);
 
     if ((home = G__home()))
 	return home;
@@ -54,10 +54,10 @@ char *G_home();
 }
 
 char *
-G__home ()
+G__home (void)
 {
     static char *home = 0;
-    char buf[1024];
+    char buf[GPATH_MAX];
 
     if (home)
         return home;
@@ -81,7 +81,7 @@ G__home ()
     }
 #else
     {
-	FILE *fd,*G_popen();
+	FILE *fd;
 
 /* first call must get home
 * execute the command "cd; pwd" and read the

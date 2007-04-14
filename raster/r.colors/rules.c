@@ -136,7 +136,7 @@ static int show_colors (FILE *fp)
 {
     int len;
     int i,n;
-    char *color;
+    const char *color;
 
     len = 0;
     for (i = 0; (color = G_color_name(i)); i++)

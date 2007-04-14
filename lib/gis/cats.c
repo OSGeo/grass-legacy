@@ -344,8 +344,8 @@ static int cmp (const void *, const void *);
  */
 
 int G_read_cats (
-    char *name ,
-    char *mapset ,
+    const char *name ,
+    const char *mapset ,
     struct Categories *pcats )
 {
     return G_read_raster_cats (name, mapset, pcats);
@@ -364,8 +364,8 @@ int G_read_cats (
  */
 
 int G_read_raster_cats (
-    char *name ,
-    char *mapset ,
+    const char *name ,
+    const char *mapset ,
     struct Categories *pcats )
 {
     char *type;
@@ -403,8 +403,8 @@ int G_read_raster_cats (
  */
 
 int G_read_vector_cats (
-    char *name ,
-    char *mapset ,
+    const char *name ,
+    const char *mapset ,
     struct Categories *pcats )
 {
     char *type;
@@ -427,8 +427,8 @@ int G_read_vector_cats (
 }
 
 CELL G_number_of_cats (
-    char *name ,
-    char *mapset)
+    const char *name ,
+    const char *mapset)
 {
     struct Range range;
     CELL min, max;
@@ -442,9 +442,9 @@ CELL G_number_of_cats (
 }
 
 CELL G__read_cats (
-    char *element,
-    char *name ,
-    char *mapset ,
+    const char *element,
+    const char *name ,
+    const char *mapset ,
     struct Categories *pcats,
     int full)
 {

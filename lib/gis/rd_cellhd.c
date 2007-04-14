@@ -8,10 +8,10 @@
 #include <string.h>
 
 #define ERROR(x,line) return error(x,line)
-static int scan_item(char *,char *,char *);
-static int scan_int(char *,int *);
-static double scan_double(char *,double *);
-static char *error(char *,int);
+static int scan_item(const char *,char *,char *);
+static int scan_int(const char *,int *);
+static double scan_double(const char *,double *);
+static char *error(const char *,int);
 
 #define F_PROJ   1
 #define F_ZONE   2
@@ -405,7 +405,7 @@ char *G__read_Cell_head_array ( char **array,
     return NULL;
 }
 
-static int scan_item(char *buf, char *label, char *value)
+static int scan_item(const char *buf, char *label, char *value)
 {
 /* skip blank lines */
     if (sscanf (buf, "%1s", label) != 1)
@@ -424,7 +424,7 @@ static int scan_item(char *buf, char *label, char *value)
     return 1;
 }
 
-static int scan_int(char *buf, int *n)
+static int scan_int(const char *buf, int *n)
 {
     char dummy[3];
 
@@ -432,7 +432,7 @@ static int scan_int(char *buf, int *n)
     return (sscanf (buf, "%d%1s", n, dummy) == 1 && *dummy == 0);
 }
 
-static double scan_double(char *buf, double *n)
+static double scan_double(const char *buf, double *n)
 {
     char dummy[3];
 
@@ -440,7 +440,7 @@ static double scan_double(char *buf, double *n)
     return (sscanf (buf, "%lf%1s", n, dummy) == 1 && *dummy == 0);
 }
 
-static char *error( char *msg, int line)
+static char *error( const char *msg, int line)
 {
     char buf[1024];
 

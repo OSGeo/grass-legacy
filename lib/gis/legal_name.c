@@ -32,7 +32,7 @@
  * \return -1 failure
  */
 
-int G_legal_filename (char *s)
+int G_legal_filename (const char *s)
 {
     if (*s == '.' || *s == 0) {
 	fprintf(stderr, _("Illegal filename.  Cannot be '.' or 'NULL'\n"));
@@ -65,7 +65,7 @@ int G_legal_filename (char *s)
  * \return 1 error
  */
 
-int G_check_input_output_name ( char * input, char * output, int error )
+int G_check_input_output_name ( const char * input, const char * output, int error )
 {
     char *mapset;
 
@@ -95,7 +95,8 @@ int G_check_input_output_name ( char * input, char * output, int error )
     }
 
     if ( strcmp(mapset,G_mapset()) == 0 ) {
-	char *in, nm[1000], ms[1000];
+	char nm[1000], ms[1000];
+	const char *in;
 	
         if ( G__name_is_fully_qualified(input,nm,ms) ) {
 	    in = nm;

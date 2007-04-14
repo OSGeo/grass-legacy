@@ -62,7 +62,7 @@ char *G_tempfile(void)
 
 char *G__tempfile (int pid)
 {
-    char path[1024];
+    char path[GPATH_MAX];
     char name[GNAME_MAX];
     char element[100];
     static int uniq = 0;
@@ -93,7 +93,7 @@ char *G__tempfile (int pid)
 
 int G__temp_element(char *element)
 {
-    char *machine;
+    const char *machine;
 
     strcpy (element, ".tmp");
     machine = G__machine_name();

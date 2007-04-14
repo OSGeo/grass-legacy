@@ -38,7 +38,7 @@
  */
  
 
-int G__make_mapset( char *gisdbase_name, char *location_name, char *mapset_name )
+int G__make_mapset( const char *gisdbase_name, const char *location_name, const char *mapset_name )
 {
     char	path[2048];
     struct Cell_head default_window;
@@ -101,7 +101,7 @@ int G__make_mapset( char *gisdbase_name, char *location_name, char *mapset_name 
  *         non-zero error code on failure, instead of terminating. 
 */
 
-int G_make_mapset( char *gisdbase_name, char *location_name, char *mapset_name )
+int G_make_mapset( const char *gisdbase_name, const char *location_name, const char *mapset_name )
 {
     int	err;
 

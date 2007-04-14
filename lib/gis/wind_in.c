@@ -47,7 +47,7 @@ int G_point_in_region(double easting, double northing)
  *
  */
 
-int G_point_in_window(double easting, double northing, struct Cell_head *window)
+int G_point_in_window(double easting, double northing, const struct Cell_head *window)
 {
 
     if ( easting > window->east || easting < window->west ||

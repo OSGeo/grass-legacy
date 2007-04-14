@@ -54,7 +54,7 @@
 
 #ifdef __MINGW32__
 
-int G_spawn(char *command, ...)
+int G_spawn(const char *command, ...)
 {
 	va_list va;
 	char *args[MAX_ARGS];
@@ -83,7 +83,7 @@ int G_spawn(char *command, ...)
 
 #else
 
-int G_spawn(char *command, ...)
+int G_spawn(const char *command, ...)
 {
 	va_list va;
 	char *args[MAX_ARGS];
@@ -359,7 +359,7 @@ static void do_bindings(struct binding *bindings, int num_bindings)
  * \return process status on success
  */
 
-int G_spawn_ex(char *command, ...)
+int G_spawn_ex(const char *command, ...)
 {
 	char *args[MAX_ARGS];
 	int num_args = 0;

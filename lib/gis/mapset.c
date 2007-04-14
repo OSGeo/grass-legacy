@@ -28,7 +28,7 @@
  */
 
 char *
-G_mapset()
+G_mapset(void)
 {
     static char mapset[30];
     static int first = 1;
@@ -65,7 +65,7 @@ G_mapset()
 }
 
 char *
-G__mapset()
+G__mapset(void)
 {
     return G__getenv("MAPSET");
 }

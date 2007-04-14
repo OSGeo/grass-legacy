@@ -172,11 +172,11 @@ static struct fileinfo *new_fileinfo(int fd)
  */
 
 
-static int G__open_raster_new(char *name, int open_mode);
+static int G__open_raster_new(const char *name, int open_mode);
 
 int G_open_cell_old (
-    char *name,
-    char *mapset)
+    const char *name,
+    const char *mapset)
 {
     int fd;
 
@@ -232,14 +232,14 @@ int G_open_cell_old (
  *  G__check_for_auto_masking() which is called by G_open_cell().
  ***********************************************************************/
 int G__open_cell_old (
-    char *name,
-    char *mapset)
+    const char *name,
+    const char *mapset)
 {
     struct fileinfo *fcb;
     int fd;
     char cell_dir[100];
-    char *r_name ;
-    char *r_mapset ;
+    const char *r_name ;
+    const char *r_mapset ;
     struct Cell_head cellhd ;
     int CELL_nbytes = 0;                   /* bytes per cell in CELL map */
     int INTERN_SIZE;
@@ -263,7 +263,7 @@ int G__open_cell_old (
         case 1:
             r_name = reclass.name ;
             r_mapset = reclass.mapset ;
-	    if (G_find_cell (r_name, r_mapset) == NULL)
+	    if (G_find_cell2 (r_name, r_mapset) == NULL)
 	    {
 		G_warning (
 		    _("unable to open [%s] in [%s] since it is a reclass of [%s] in [%s] which does not exist"),
@@ -457,7 +457,7 @@ static char cell_dir[100];
 /* The mapset element for the raster map to be open: fcell, or cell */
 
 
-int G_open_cell_new (char *name)
+int G_open_cell_new (const char *name)
 {
     WRITE_MAP_TYPE = CELL_TYPE;
     strcpy(cell_dir, "cell");
@@ -466,7 +466,7 @@ int G_open_cell_new (char *name)
     return G__open_raster_new (name, OPEN_NEW_COMPRESSED);
 }
 
-int G_open_cell_new_random (char *name)
+int G_open_cell_new_random (const char *name)
 {
     WRITE_MAP_TYPE = CELL_TYPE;
     /* bytes per cell for current map */
@@ -475,7 +475,7 @@ int G_open_cell_new_random (char *name)
     return G__open_raster_new (name, OPEN_NEW_RANDOM);
 }
 
-int G_open_cell_new_uncompressed (char *name)
+int G_open_cell_new_uncompressed (const char *name)
 {
     WRITE_MAP_TYPE = CELL_TYPE; /* a type of current map */
     strcpy(cell_dir, "cell");
@@ -517,7 +517,7 @@ int G_cellvalue_format (CELL v)
     return sizeof(CELL)-1;
 }
 
-int G_open_fp_cell_new (char *name)
+int G_open_fp_cell_new (const char *name)
 {
     /* use current float. type for writing float point maps */
     /* if the FP type was NOT explicitly set by G_set_fp_type()
@@ -543,7 +543,7 @@ int G_open_fp_cell_new (char *name)
 }	
 
 int 
-G_open_fp_cell_new_uncompressed (char *name)
+G_open_fp_cell_new_uncompressed (const char *name)
 {
     /* use current float. type for writing float point maps */
     if(!FP_TYPE_SET)
@@ -567,7 +567,7 @@ G_open_fp_cell_new_uncompressed (char *name)
 }	
 
 static int
-clean_check_raster_name (char *inmap, char **outmap, char **outmapset)
+clean_check_raster_name (const char *inmap, char **outmap, char **outmapset)
 {
 	/* Remove mapset part of name if exists.  Also, if mapset
 	 * part exists, make sure it matches current mapset.
@@ -602,7 +602,7 @@ clean_check_raster_name (char *inmap, char **outmap, char **outmapset)
 }
 	
 /* opens a f-cell or cell file depending on WRITE_MAP_TYPE */
-static int G__open_raster_new (char *name, int open_mode)
+static int G__open_raster_new (const char *name, int open_mode)
 {
     struct fileinfo *fcb;
     int i, null_fd, fd;
@@ -918,11 +918,11 @@ int G_set_fp_type (RASTER_MAP_TYPE map_type)
  *  \param mapset
  *  \return int
  */
-int G_raster_map_is_fp (char *name, char *mapset)
+int G_raster_map_is_fp (const char *name, const char *mapset)
 {
    char path[1024];
 
-   if (G_find_cell (name, mapset) == NULL)
+   if (G_find_cell2 (name, mapset) == NULL)
    {
       G_warning (_("unable to find [%s] in [%s]"),name,mapset);
       return -1;
@@ -952,20 +952,9 @@ int G_raster_map_is_fp (char *name, char *mapset)
  *  \param mapset
  *  \return RASTER_MAP_TYPE
  */
-RASTER_MAP_TYPE G_raster_map_type (char *name, char *mapset)
+RASTER_MAP_TYPE G_raster_map_type (const char *name, const char *mapset)
 {
-   char path[1024];
-
-   if (G_find_cell (name, mapset) == NULL)
-   {
-      G_warning (_("unable to find [%s] in [%s]"),name,mapset);
-      return -1;
-   }
-   G__file_name(path,"fcell", name, mapset);
-   if (access(path,0) == 0) return G__check_fp_type(name,mapset);
-   G__file_name(path, "g3dcell", name, mapset);
-   if (access(path,0) == 0) return DCELL_TYPE;
-   return CELL_TYPE;
+   return G_raster_map_type2(name, mapset);
 }
 
 
@@ -984,7 +973,7 @@ RASTER_MAP_TYPE G_raster_map_type (char *name, char *mapset)
  *  \param mapset
  *  \return RASTER_MAP_TYPE
  */
-RASTER_MAP_TYPE G_raster_map_type2 (char *name, char *mapset)
+RASTER_MAP_TYPE G_raster_map_type2 (const char *name, const char *mapset)
 {
    char path[1024];
 
@@ -1024,7 +1013,7 @@ RASTER_MAP_TYPE G_get_raster_map_type(int fd)
 
 
 
-RASTER_MAP_TYPE G__check_fp_type (char *name, char *mapset)
+RASTER_MAP_TYPE G__check_fp_type (const char *name, const char *mapset)
 /* determines whether the flotsing points cell file has double or float type */
 /* returns DCELL_TYPE for double, FCELL_TYPE for float, -1 for error */
 /* f_format file:
@@ -1081,7 +1070,7 @@ RASTER_MAP_TYPE G__check_fp_type (char *name, char *mapset)
    return map_type;
 } 
 
-int G_open_raster_new (char *name, RASTER_MAP_TYPE wr_type)
+int G_open_raster_new (const char *name, RASTER_MAP_TYPE wr_type)
 {
     int fd;
 
@@ -1099,7 +1088,7 @@ int G_open_raster_new (char *name, RASTER_MAP_TYPE wr_type)
     return fd;
 }
 
-int G_open_raster_new_uncompressed (char *name, RASTER_MAP_TYPE wr_type)
+int G_open_raster_new_uncompressed (const char *name, RASTER_MAP_TYPE wr_type)
 {
     int fd;
 

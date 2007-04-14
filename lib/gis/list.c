@@ -53,7 +53,8 @@
 
 static int broken_pipe;
 static int hit_return = 0;
-static int list_element(FILE *,char *,char *,char *,int (*)());
+static int list_element(FILE *,const char *,const char *,const char *,
+			int (*)(const char *, const char *, const char *));
 static void sigpipe_catch(int);
 static int pstrcmp(const void *, const void *);
 
@@ -64,10 +65,10 @@ int G_set_list_hit_return(int flag)
 }
 
 int G_list_element (
-    char *element,
-    char *desc,
-    char *mapset,
-    int (*lister)())
+    const char *element,
+    const char *desc,
+    const char *mapset,
+    int (*lister)(const char *, const char *, const char *))
 {
     int n;
     FILE *more;
@@ -150,8 +151,9 @@ static void sigpipe_catch(int n)
     signal (n,sigpipe_catch);
 }
 
-static int list_element( FILE *out, char *element,
-    char *desc, char *mapset, int (*lister)())
+static int list_element( FILE *out,
+    const char *element, const char *desc, const char *mapset,
+    int (*lister)(const char *, const char *, const char *))
 {
     char path[1000];
     DIR *dirp;
@@ -277,7 +279,9 @@ static int list_element( FILE *out, char *element,
 
 static int pstrcmp(const void *s1, const void *s2)
 {
-    return strcmp(*(char **)s1, *(char **)s2);
+    char * const *a = s1;
+    char * const *b = s2;
+    return strcmp(*a, *b);
 }
 
 /*!
@@ -290,7 +294,7 @@ static int pstrcmp(const void *s1, const void *s2)
  * \param mapset Mapset name
  * \return Zero terminated array of element names
  */
-char **G_list(int element, const char *gisbase, const char *location, const char* mapset)
+char **G_list(int element, const char *gisbase, const char *location, const char *mapset)
 {
     char *el;
     char *buf;

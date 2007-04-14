@@ -6,7 +6,7 @@
 
 int G_fwrite_key_value (
     FILE *fd,
-    struct Key_Value *kv)
+    const struct Key_Value *kv)
 {
     int n;
     int err;

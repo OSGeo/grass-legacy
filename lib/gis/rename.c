@@ -37,10 +37,10 @@
  * \return -1 on error
  */
 
-int G_rename ( char *element,
-    char *oldname, char *newname)
+int G_rename ( const char *element,
+    const char *oldname, const char *newname)
 {
-    char *mapset;
+    const char *mapset;
     char xname[512], xmapset[512];
     char from[512], to[512];
 

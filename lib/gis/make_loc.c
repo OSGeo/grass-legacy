@@ -41,7 +41,7 @@
  
 
 int G__make_location( 
-    char *location_name,
+    const char *location_name,
     struct Cell_head *wind, 
     struct Key_Value *proj_info, 
     struct Key_Value *proj_units,
@@ -125,7 +125,7 @@ int G__make_location(
 */
 
 int G_make_location( 
-    char *location_name,
+    const char *location_name,
     struct Cell_head *wind, 
     struct Key_Value *proj_info, 
     struct Key_Value *proj_units,
@@ -169,13 +169,13 @@ int G_make_location(
  */
   
 int 
-G_compare_projections( struct Key_Value *proj_info1, 
-                       struct Key_Value *proj_units1, 
-                       struct Key_Value *proj_info2, 
-                       struct Key_Value *proj_units2 )
+G_compare_projections( const struct Key_Value *proj_info1, 
+                       const struct Key_Value *proj_units1, 
+                       const struct Key_Value *proj_info2, 
+                       const struct Key_Value *proj_units2 )
 
 {
-    char *proj1, *proj2;
+    const char *proj1, *proj2;
     
     if( proj_info1 == NULL && proj_info2 == NULL )
         return TRUE;

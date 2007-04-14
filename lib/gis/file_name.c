@@ -1,10 +1,10 @@
 /**********************************************************************
  *  char *
  *  G__file_name (path, element, name, maps)
- *      char path[]       buffer to hold resultant full path to file.
- *      char *element     database element (eg, "cell", "cellhd", etc)
- *      char *name        name of file to build path to
- *      char *maps        mapset name
+ *      char path[]          buffer to hold resultant full path to file.
+ *      const char *element  database element (eg, "cell", "cellhd", etc)
+ *      const char *name     name of file to build path to
+ *      const char *mapset   mapset name
  *   
  *      builds full path names to GIS data files
  *
@@ -22,12 +22,13 @@
 
 char *G__file_name ( 
 	char *path,
-	char *element,
-	char *name,
-	char *mapset)
+	const char *element,
+	const char *name,
+	const char *mapset)
 {
 	char xname[512];
 	char xmapset[512];
+	const char *pname = name;
 	char *location = G__location_path();
 
 /*
@@ -37,7 +38,7 @@ char *G__file_name (
  */
 	if (name && *name && G__name_is_fully_qualified(name, xname, xmapset))
 	{
-		strcpy(name, xname);
+		pname = xname;
 		sprintf(path,"%s/%s", location, xmapset);
 	}
 	else if (mapset && *mapset)
@@ -53,14 +54,11 @@ char *G__file_name (
 		strcat (path, element);
 	}
 
-	if (name && *name)
+	if (pname && *pname)
 	{
 		strcat (path, "/");
-		strcat (path, name);
+		strcat (path, pname);
 	}
 
-/*
- * return pointer to users 'path' buffer
- */
 	return path;
 }

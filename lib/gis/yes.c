@@ -35,7 +35,7 @@
  * \return 1 for Yes
  */
 
-int G_yes (char *question,int dflt)
+int G_yes (const char *question,int dflt)
 {
     fflush (stdout);
 

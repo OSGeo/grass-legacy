@@ -64,7 +64,7 @@ int G_init_cell_stats(struct Cell_stats *s)
  *  \return int
  */
 
-int G_update_cell_stats (CELL *cell, int n, struct Cell_stats *s)
+int G_update_cell_stats (const CELL *cell, int n, struct Cell_stats *s)
 {
     CELL cat;
     register int p,q;

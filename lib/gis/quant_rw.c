@@ -61,7 +61,7 @@
 *
 **********************************************************************/
 
-int G_truncate_fp_map(char *name,char *mapset)
+int G_truncate_fp_map(const char *name, const char *mapset)
 {
     char buf[300];
     struct Quant quant;
@@ -77,7 +77,7 @@ int G_truncate_fp_map(char *name,char *mapset)
     return 1;
 }
 
-int G_round_fp_map(char *name,char *mapset)
+int G_round_fp_map(const char *name, const char *mapset)
 {
     char buf[300];
     struct Quant quant;
@@ -109,7 +109,7 @@ int G_round_fp_map(char *name,char *mapset)
  */
 
 int G_quantize_fp_map(
-    char *name,char *mapset,
+    const char *name, const char *mapset,
     CELL min,CELL max)
 {
     char buf[300];
@@ -157,7 +157,7 @@ int G_quantize_fp_map(
  */
 
 int G_quantize_fp_map_range(
-    char *name,char *mapset,
+    const char *name, const char *mapset,
     DCELL d_min,DCELL d_max,
     CELL min,CELL max)
 {
@@ -196,8 +196,8 @@ int G_quantize_fp_map_range(
  */
 
 int G_write_quant(
-     char *name,char *mapset,
-     struct Quant *quant)
+     const char *name, const char *mapset,
+     const struct Quant *quant)
 {
      CELL cell_min, cell_max;
      DCELL d_min, d_max;
@@ -246,7 +246,7 @@ int G_write_quant(
  */
 
 int G_read_quant(
-     char *name,char *mapset,
+     const char *name, const char *mapset,
      struct Quant *quant)
 {
      G_quant_init (quant);

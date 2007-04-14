@@ -18,19 +18,19 @@
 
 /* prototypes */
 static double raster_sample_nearest (int fd,
-                  struct Cell_head *window, 
+                  const struct Cell_head *window, 
                   struct Categories *cats,
                   double north, double east, int usedesc);
 static double raster_sample_bilinear (int fd,
-                  struct Cell_head *window, 
+                  const struct Cell_head *window, 
                   struct Categories *cats,
                   double north, double east, int usedesc);
 static double raster_sample_cubic (int fd,
-                  struct Cell_head *window, 
+                  const struct Cell_head *window, 
                   struct Categories *cats,
                   double north, double east, int usedesc);
-static double scancatlabel (char *);
-static void raster_row_error(struct Cell_head *window, double north, double east);
+static double scancatlabel (const char *);
+static void raster_row_error(const struct Cell_head *window, double north, double east);
 
 
 /*!
@@ -52,7 +52,7 @@ static void raster_row_error(struct Cell_head *window, double north, double east
  */
 
 double G_get_raster_sample (int fd,
-                struct Cell_head *window,
+                const struct Cell_head *window,
                 struct Categories *cats,
                 double north, double east,
                 int usedesc, INTERP_TYPE itype)
@@ -79,7 +79,7 @@ double G_get_raster_sample (int fd,
 
 
 static double raster_sample_nearest (int fd,
-                  struct Cell_head *window,
+                  const struct Cell_head *window,
                   struct Categories *cats,
                   double north, double east, int usedesc)
 {
@@ -117,7 +117,7 @@ static double raster_sample_nearest (int fd,
 
 
 static double raster_sample_bilinear (int fd,
-                  struct Cell_head *window,
+                  const struct Cell_head *window,
                   struct Categories *cats,
                   double north, double east, int usedesc)
 {
@@ -249,7 +249,7 @@ static double raster_sample_bilinear (int fd,
 
 
 static double raster_sample_cubic (int fd,
-                  struct Cell_head *window, 
+                  const struct Cell_head *window, 
                   struct Categories *cats,
                   double north, double east, int usedesc)
 {
@@ -457,7 +457,7 @@ static double raster_sample_cubic (int fd,
 }
 
 
-static double scancatlabel (char *str)
+static double scancatlabel (const char *str)
 {
     double val;
 
@@ -473,7 +473,7 @@ static double scancatlabel (char *str)
 }
 
 
-static void raster_row_error(struct Cell_head *window, double north, double east)
+static void raster_row_error(const struct Cell_head *window, double north, double east)
 {
     G_debug(3, "DIAG: \tRegion is: n=%g s=%g e=%g w=%g",
          window->north, window->south, window->east, window->west);

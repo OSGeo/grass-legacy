@@ -12,8 +12,9 @@
  * Note:
  *  Hopefully, cartographic style projection plotting will be added later.
  *******************************************************************/
-#include <grass/gis.h>
 #include <stdlib.h>
+#include <math.h>
+#include <grass/gis.h>
 
 static double xconv, yconv;
 static double left, right, top, bottom;
@@ -39,13 +40,8 @@ static int dotted_fill_gap = 2;
 static int ifloor(double);
 static int iceil(double);
 static int (*row_fill)() = row_solid_fill;
-static int (*move)() = NULL;
-static int (*cont)() = NULL;
-
-static double fabs(double x)
-{
-    return x>0?x:-x;
-}
+static int (*move)(int,int);
+static int (*cont)(int,int);
 
 /*!
  * \brief returns east larger than west
@@ -60,8 +56,6 @@ static double fabs(double x)
  *  \param region
  *  \return double
  */
-
-extern double G_adjust_easting();
 
 /*
  * G_setup_plot (t, b, l, r, Move, Cont)
@@ -102,8 +96,8 @@ extern double G_adjust_easting();
 
 int G_setup_plot (
     double t,double b,double l,double r,
-    int (*Move)(),
-    int (*Cont)())
+    int (*Move)(int,int),
+    int (*Cont)(int,int))
 {
     G_get_set_window (&window);
 
@@ -338,7 +332,7 @@ static int slowline(double x1,double y1,double x2,double y2)
 }
 
 static int plot_line(double east1,double north1,double east2,double north2,
-    int (*line)())
+    int (*line)(double,double,double,double))
 {
     double x1,x2,y1,y2;
 
@@ -441,7 +435,7 @@ static double nearest(double e0,double e1)
  */
 
 int G_plot_polygon (
-    double *x,double *y,
+    const double *x,const double *y,
     int n)
 {
     int i;
@@ -578,7 +572,7 @@ int G_plot_polygon (
  *  \return int
  */
 
-int G_plot_area (double **xs, double **ys, int *rpnts, int rings)
+int G_plot_area (double * const *xs, double * const *ys, int *rpnts, int rings)
 {
     int i, j, n;
     int pole;
@@ -744,7 +738,7 @@ static int edge (double x0,double y0,double x1,double y1)
     return 1;
 }
 
-static int edge_point( double x, register int y)
+static int edge_point( double x, int y)
 {
 
     if (y < ymin || y > ymax)
@@ -856,7 +850,7 @@ static int iceil(double x)
  */
 
 int G_plot_fx (
-    double (*f)(),
+    double (*f)(double),
     double east1,double east2)
 {
     double east,north,north1;
