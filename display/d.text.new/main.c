@@ -401,7 +401,8 @@ int main(int argc, char **argv)
     linefeed = 1;
     /* do the plotting */
     while (fgets(buf, 512, stdin)) {
-	char *buf_ptr, buf_len, *ptr;
+	int buf_len;
+	char *buf_ptr, *ptr;
 
 	fprintf(cmd_fp, "%s", buf);
 
