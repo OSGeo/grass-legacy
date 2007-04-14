@@ -213,14 +213,9 @@ proc GSelect_::create { element args } {
 			 exit
 		     }  
 		}
-		
-		if { $mapset == $current_mapset} {
-			append ret $file
-		} 
-	 
-		if {$mapset != $current_mapset} {
-			append ret "$file@$mapset"
-		}
+
+		append ret "$file@$mapset"
+
 		if {$len > 0 && $i < [expr $len-1]} {
 			append ret ","
 		}
