@@ -409,7 +409,7 @@ int map_type(const char *name, int mod)
 			handle = G3d_openCellOld(
 				tmpname, mapset, &current_region3,
 				G3D_TILE_SAME_AS_FILE, G3D_NO_CACHE);
-			result = (G3d_fileTypeMap == FCELL_TYPE)
+			result = (G3d_fileTypeMap(handle) == FCELL_TYPE)
 				? FCELL_TYPE
 				: DCELL_TYPE;
 			G3d_closeCell(handle);
