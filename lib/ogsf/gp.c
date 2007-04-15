@@ -200,7 +200,7 @@ void print_site_fields(geosite * gp)
     fprintf(stderr, "x_trans=%.2f x_trans=%.2f x_trans=%.2f\n",
 	    gp->x_trans, gp->y_trans, gp->z_trans);
     fprintf(stderr, "size = %.2f\n", gp->size);
-    fprintf(stderr, "points = %x\n", gp->points);
+    fprintf(stderr, "points = %lx\n", (unsigned long) gp->points);
     fprintf(stderr, "width = %d\n", gp->width);
     fprintf(stderr, "color = %x\n", gp->color);
     fprintf(stderr, "marker = %d\n", gp->marker);

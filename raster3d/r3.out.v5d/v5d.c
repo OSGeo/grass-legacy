@@ -1618,8 +1618,7 @@ static int read_v5d_header( v5dstruct *v )
             read_bytes( f, v->FileVersion, 10 );
             /* Check if reading a file made by a future version of Vis5D */
             if (strcmp(v->FileVersion, FILE_VERSION)>0) {
-               printf("Warning: Trying to read a version %s file, you should");
-               printf(" upgrade Vis5D.\n");
+               G_warning("Trying to read a version %s file, you should upgrade Vis5D", v->FileVersion);
             }
             break;
          case TAG_NUMTIMES:

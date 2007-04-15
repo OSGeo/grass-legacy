@@ -35,7 +35,6 @@ main (int argc, char *argv[])
     char *OUTPUT;
     char *INPUT;
     struct GModule *module;
-    struct Flag *flag1 ;
     struct Option *opt1 ;
     struct Option *opt2 ;
     struct Option *opt3 ;

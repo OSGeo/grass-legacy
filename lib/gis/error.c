@@ -140,8 +140,6 @@ int G_fatal_error (const char *msg,...)
     va_end(ap);
 
     print_error (buffer,ERR);
-
-    if ( ext_error ) return 0; /* do not exit error routine is specified */
     
     exit (EXIT_FAILURE);
 }

@@ -10,10 +10,19 @@
 #include "orthophoto.h"
 #include "elev.h"
 
+static int  which_env;
+
+char *elev_layer;
+char *mapset_elev;
+char *tl;
+char *math_exp;
+char *units;
+char *nd;
+
 int main (int argc, char *argv[])
 {
-    int i;
     char *group, *location, *mapset, buf[100];
+    int  stat;
 
 
     location    = (char *) G_malloc (80*sizeof (char));

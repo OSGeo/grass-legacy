@@ -125,7 +125,7 @@ int main (int argc, char *argv[])
 	G_free_tokens (tokens);
     }
     
-    for ( i = 0; i < nbgcmd; i++ ) G_debug (2, "cmd %d : %s", i, Bgcmd[i]);
+    for ( i = 0; i < nbgcmd; i++ ) G_debug (2, "cmd %d : %s", i, Bgcmd[i].cmd);
     
     Tool_next = TOOL_NOTHING;
     G_get_window(&GRegion);

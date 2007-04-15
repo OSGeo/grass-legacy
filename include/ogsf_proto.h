@@ -199,7 +199,7 @@ int GS_write_zoom(char *, unsigned int, unsigned int);
 void GS_draw_all_list(void);
 void GS_delete_list(GLuint);
 int GS_draw_legend(char *, GLuint, int, int *, float *, int *);
-int GS_draw_fringe(int, unsigned long, float, int *);
+void GS_draw_fringe(int, unsigned long, float, int *);
 void GS_getlight_position(int, float *, float *, float *, int *);
 void GS_getlight_color(int, float *, float *, float *);
 void GS_getlight_ambient(int, float *, float *, float *);

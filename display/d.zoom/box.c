@@ -6,8 +6,6 @@
 #include <grass/raster.h>
 #include "local_proto.h"
 
-static int max(int,int);
-
 int make_window_box ( struct Cell_head *window, double magnify, int full, int hand)
 {
     int screen_x, screen_y ;

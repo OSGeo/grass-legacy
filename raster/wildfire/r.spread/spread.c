@@ -71,7 +71,7 @@ spread (void)
 	pres_cell = (struct costHa *) G_malloc (sizeof(struct costHa));
 	get_minHa(heap, pres_cell, heap_len);
 	G_debug(2, "begin spread: cost(%d,%d)=%f",pres_cell->row, pres_cell->col, pres_cell->min_cost);
-	G_debug(2, "              heap_len=%d pres_cell->min_cost=%f time_lag=%d", heap_len, pres_cell->min_cost, time_lag);
+	G_debug(2, "              heap_len=%ld pres_cell->min_cost=%f time_lag=%d", heap_len, pres_cell->min_cost, time_lag);
 	while ( heap_len-- > 0 && pres_cell->min_cost < init_time + time_lag + 1.0 ) {
 		ros_max = DATA(map_max, pres_cell->row, pres_cell->col);
 		ros_base= DATA(map_base,pres_cell->row, pres_cell->col);
@@ -124,7 +124,7 @@ while (to_cell!=NULL) {printf("(%d,%d) ",to_cell->row,to_cell->col); to_cell=to_
                 }
 
 		get_minHa(heap, pres_cell, heap_len);
-		G_debug(2, "in while:     heap_len=%d pres_cell->min_cost=%f time_lag=%d", heap_len, pres_cell->min_cost, time_lag);
+		G_debug(2, "in while:     heap_len=%ld pres_cell->min_cost=%f time_lag=%d", heap_len, pres_cell->min_cost, time_lag);
 	} /*end 'while (heap_len-- >0)'*/
         G_free (pres_cell); 
 

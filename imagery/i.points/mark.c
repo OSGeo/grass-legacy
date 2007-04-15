@@ -3,11 +3,11 @@
 #include <grass/raster.h>
 
 static int get_point2 (double *,double *);
-static int keyboard();
-static int _keyboard();
+static int keyboard(void);
+static int _keyboard(void);
 static int screen (int,int,int);
-static int digitizer();
-static int cancel();
+static int digitizer(void);
+static int cancel(void);
 
 int mark(int x,int y,int button)
 {
@@ -74,11 +74,7 @@ static double N,E;
 
 static int get_point2 (double *east,double *north)
 {
-    int digitizer();
-    int keyboard();
     int stat;
-    int screen();
-    int cancel();
     static int use = 1;
     static Objects objects[] =
     {

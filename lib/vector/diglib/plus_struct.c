@@ -554,7 +554,7 @@ dig_Rd_Plus_head (   GVFILE * fp,
   
   /* bytes 6 - 9 : header size */
   if (0 >= dig__fread_port_L (&(ptr->head_size), 1, fp)) return (-1);
-  G_debug (2, "  header size %d", ptr->head_size );
+  G_debug (2, "  header size %ld", ptr->head_size );
 
   /* byte 10 : dimension 2D or 3D */
   if (0 >= dig__fread_port_C (buf, 1, fp)) return (-1);
@@ -598,7 +598,7 @@ dig_Rd_Plus_head (   GVFILE * fp,
   /* bytes 139 - 142 : Coor size and time */
   if (0 >= dig__fread_port_L (&(ptr->coor_size), 1, fp)) return (-1);
 
-  G_debug (2, "  coor size %d", ptr->coor_size );
+  G_debug (2, "  coor size %ld", ptr->coor_size );
 
   dig_fseek ( fp, ptr->head_size, SEEK_SET );
 
@@ -667,7 +667,7 @@ dig_Wr_Plus_head ( GVFILE * fp,
   /* bytes 139 - 142 : Coor size and time */
   if (0 >= dig__fwrite_port_L (&(ptr->coor_size), 1, fp)) return (-1);
 
-  G_debug (2, "topo body offset %d", dig_ftell( fp) );
+  G_debug (2, "topo body offset %ld", dig_ftell( fp) );
   
   return (0);
 }

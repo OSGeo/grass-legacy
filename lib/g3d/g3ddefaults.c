@@ -59,7 +59,7 @@ int g3d_cache_default = G3D_NO_DEFAULT;
 int g3d_cache_max = G3D_NO_DEFAULT; 
 int g3d_file_type = G3D_NO_DEFAULT;
 int g3d_tile_dimension[3] = {G3D_NO_DEFAULT, G3D_NO_DEFAULT, G3D_NO_DEFAULT};
-void (*g3d_error_fun)() = NULL;
+void (*g3d_error_fun)(const char *) = NULL;
 char *g3d_unit_default = NULL;
 extern char * G3d_getWindowParams(void);                                        
 
@@ -316,7 +316,7 @@ G3d_getTileDimension  (int *tileX, int *tileY, int *tileZ)
  */
 
 void
-G3d_setErrorFun  (void (*fun)())
+G3d_setErrorFun  (void (*fun)(const char *))
 
 {
   g3d_error_fun = fun;
@@ -589,7 +589,7 @@ G3d_initDefaults ()
 
     if (value != NULL) 
     {
-      g3d_error_fun = G3d_fatalError;
+      g3d_error_fun = G3d_fatalError_noargs;
     }
     else 
     {

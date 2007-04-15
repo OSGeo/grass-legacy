@@ -23,7 +23,7 @@
 int do_snap(struct Map_info *Map)
 {
     int type1, type2;
-    struct line_pnts *Points1, *Points2, *NPoints;
+    struct line_pnts *Points1, *Points2;
     struct line_cats *Cats1, *Cats2;
     int line1,line2;
     double distances[4];

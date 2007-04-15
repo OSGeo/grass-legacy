@@ -51,8 +51,6 @@ static int mouse (Objects *objects,int ax,int ay,int box)
     int stat;
     int x,y,button;
     Objects *obj;
-    Objects *find();
-
 
     first = !active;
     active = 1;

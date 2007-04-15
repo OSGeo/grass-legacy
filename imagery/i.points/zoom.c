@@ -1,15 +1,12 @@
 #include "globals.h"
 #include "local_proto.h"
 
-static int cancel();
+static int cancel(void);
 
 int 
 zoom (void)
 {
     static int use = 1;
-    int cancel();
-    int zoom_box();
-    int zoom_point();
 
 
     static Objects objects[]=

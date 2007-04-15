@@ -3,7 +3,8 @@
 #include "filter.h"
 #include "local_proto.h"
 
-#define ERROR(x) err=x;goto BAILOUT
+#define ERROR(err) G_fatal_error("%s%s%s", name, *name?": ":"", (err))
+
 
 FILTER *get_filter (char *name, int *nfilters, char *title)
 {
@@ -18,7 +19,6 @@ FILTER *get_filter (char *name, int *nfilters, char *title)
     int have_type ;
     int have_start ;
     int count;
-    char *err ;
 
     f = filter = 0 ;
     count = *nfilters = 0 ;
@@ -179,8 +179,4 @@ FILTER *get_filter (char *name, int *nfilters, char *title)
 
     *nfilters = count ;
     return filter;
-
-BAILOUT:
-    sprintf (buf, "%s%s%s", name, *name?": ":"", err);
-    G_fatal_error (buf);
 }

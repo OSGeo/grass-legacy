@@ -29,7 +29,6 @@ static void read_rows(int infile, int row)
 	int last_row  = row + neighbors;
 	int offset = first_row - cur_row;
 	int keep = end_row - first_row;
-	DCELL *tmp;
 	int i;
 
 	if (end_row >= last_row)
@@ -193,7 +192,6 @@ int main( int argc, char *argv[])
 			double north = G_row_to_northing(row + 0.5, &dst_w);
 			double maprow_f = G_northing_to_row(north, &src_w) - 0.5;
 			int maprow0 = (int) floor(maprow_f);
-			int maprow1 = maprow0 + 1;
 			double v = maprow_f - maprow0;
 
 			G_percent(row, dst_w.rows, 2);
@@ -239,8 +237,6 @@ int main( int argc, char *argv[])
 			double maprow_f = G_northing_to_row(north, &src_w) - 0.5;
 			int maprow1 = (int) floor(maprow_f);
 			int maprow0 = maprow1 - 1;
-			int maprow2 = maprow1 + 1;
-			int maprow3 = maprow1 + 2;
 			double v = maprow_f - maprow1;
 
 			G_percent(row, dst_w.rows, 2);

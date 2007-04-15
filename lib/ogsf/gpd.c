@@ -315,7 +315,7 @@ int gpd_2dsite(geosite * gp, geosurf * gs, int do_fast)
 	}
 
 	/* Get viewport parameters for view check */
-	gsd_getwindow(&window, &viewport, &modelMatrix, &projMatrix);
+	gsd_getwindow(window, viewport, modelMatrix, projMatrix);
 
 	gsd_pushmatrix();
 
@@ -399,7 +399,7 @@ int gpd_3dsite(geosite * gp, float xo, float yo, int do_fast)
 	return (0);
     }
 
-    gsd_getwindow(&window, &viewport, &modelMatrix, &projMatrix);
+    gsd_getwindow(window, viewport, modelMatrix, projMatrix);
 
     gsd_pushmatrix();
 

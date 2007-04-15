@@ -1,6 +1,3 @@
-#ifndef lint
-static char *SCCSid = "@(#)bilinear.c	v1.5 - 27 Jun 1995 	-emes-";
-#endif
 
 /*
  * Name

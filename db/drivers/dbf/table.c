@@ -220,7 +220,7 @@ int
 save_table ( int t)
 {
     int  i, j, ncols, nrows, ret, field, rec;
-    char name[2000], fname[20], element[100], cmd[2000];
+    char name[2000], fname[20], element[100];
     DBFHandle   dbf;
     ROW  *rows;
     VALUE *val;

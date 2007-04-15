@@ -35,7 +35,6 @@ int driver (void)
 static int 
 really_quit (void)
 {
-    int stop(), dont_stop();
     static Objects objects[] =
     {
 	INFO("Quit Program? ",&use),

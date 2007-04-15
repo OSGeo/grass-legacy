@@ -30,7 +30,6 @@ FCELL *dbuf;
 
     /* write grid vertices */
     {
-	double east, north;
 	double coordx, coordy, coordz;
 	int row, col;
 

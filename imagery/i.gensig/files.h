@@ -13,7 +13,6 @@ struct files
 int closefiles(struct files *);
 int compute_covariances(struct files *, struct Signature *);
 int get_training_classes(struct files *, struct Signature *);
-int initialize_signatures(struct files *, struct Signature *);
 int compute_means(struct files *, struct Signature *);
 int read_training_map(CELL *, int, int, struct files *);
 #ifdef _l_parms_h

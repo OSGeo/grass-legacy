@@ -8,7 +8,6 @@ int main(int argc,char *argv[])
 {
     struct GModule *module;
     struct Option *element, *prompt;
-    struct Flag *quiet;
     char *tempfile;
     char command[1024];
     FILE *fd;
@@ -33,12 +32,6 @@ int main(int argc,char *argv[])
     prompt->key_desc = "\"message\"";
     prompt->type = TYPE_STRING;
     prompt->description = "Short user prompt message";
-
-/*
-    quiet = G_define_flag();
-    quiet->key = 'q';
-    quiet->description = "quiet";
-*/
 
     G_disable_interactive();
     if (G_parser(argc,argv))

@@ -1,5 +1,6 @@
 #include <string.h>
 #include <unistd.h>
+#include <math.h>
 #include <grass/gis.h>
 #include "globals.h"
 #include <grass/raster.h>
@@ -147,10 +148,7 @@ int delete_control_point (int n)
 static int do_warp (void)
 {
     static int use = 1;
-    int warp();
-    int no_warp();
     int x,y;
-    int rast_redraw();
 
     static Objects objects[] =
 	{
@@ -317,7 +315,6 @@ static int compute_transformation (void)
     double d,d1,d2,sum;
     double e1, e2, n1, n2;
     double xval, yval, gval;
-    double sqrt();
     static int order_pnts[3] = { 3, 6, 10};
     char   msg[40];
 

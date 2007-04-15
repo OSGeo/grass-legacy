@@ -14,9 +14,6 @@ int
 zoom_box (void)
 {
     static int use = 1;
-    int cancel();
-    int zoom1();
-
 
     static Objects objects[]=
     {
@@ -33,8 +30,6 @@ zoom_box (void)
 static int zoom1(int x,int y)	/* called by Input_pointer */
 {
     static int use = 1;
-    int zoom2();
-	int cancel();
 
     static Objects objects[] =
     {

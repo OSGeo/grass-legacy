@@ -9,10 +9,7 @@
 
 int mod_elev_data (void)
 {
-    char buf1[60] ;
-    char buf2[60] ;
     short ok ;
-    int pid, status;
 
     tl = G_location();
     sprintf (units,"METERS");

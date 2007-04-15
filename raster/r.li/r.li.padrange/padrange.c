@@ -565,7 +565,6 @@ int calculateD(int fd, area_des ad, double *result)
     long *mask_patch_sup;
     long *mask_patch_corr;
     double indice = 0;
-    double area = 0;
     double rk = 0;
     avlID_tree albero = NULL;
     avlID_table *array = NULL;
@@ -995,7 +994,6 @@ int calculateF(int fd, area_des ad, double *result)
     long *mask_patch_sup;
     long *mask_patch_corr;
     double indice = 0;
-    double area = 0;
     double rk = 0;
     avlID_tree albero = NULL;
     avlID_table *array = NULL;
@@ -1090,7 +1088,7 @@ int calculateF(int fd, area_des ad, double *result)
 		    precCell = buf[i - 1 + ad->x];
 
 		if (j == 0)
-		    G_set_c_null_value(&supCell, 1);
+		    G_set_f_null_value(&supCell, 1);
 		else
 		    supCell = buf_sup[i + ad->x];
 

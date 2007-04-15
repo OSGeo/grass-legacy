@@ -303,17 +303,18 @@ void G3d_setFileType(int);
 int G3d_getFileType(void);
 void G3d_setTileDimension(int, int, int);
 void G3d_getTileDimension(int *, int *, int *);
-void G3d_setErrorFun(void (*)());
+void G3d_setErrorFun(void (*)(const char *));
 void G3d_setUnit(char *);
 void G3d_initDefaults(void);
 /* grass/src/libes/g3d/g3ddoubleio.c */
 int G3d_writeDoubles(int, int, double *, int);
 int G3d_readDoubles(int, int, double *, int);
 /* grass/src/libes/g3d/g3derror.c */
-void G3d_skipError(char *);
-void G3d_printError(char *);
-void G3d_fatalError(char *, ...);
-void G3d_error(char *);
+void G3d_skipError(const char *);
+void G3d_printError(const char *);
+void G3d_fatalError(const char *, ...);
+void G3d_fatalError_noargs(const char *);
+void G3d_error(const char *);
 /* grass/src/libes/g3d/g3dfpxdr.c */
 int G3d_isXdrNullNum(unsigned char *, int);
 int G3d_isXdrNullFloat(float *);

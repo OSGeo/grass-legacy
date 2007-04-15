@@ -408,9 +408,6 @@ int get_z_from_cell2 (double north, double east, double *height)
 int get_z_from_cell (double north, double east)
 { 
     char buf[100];
-    int row, col;
-    struct Cell_head elevhd;
-    RASTER_MAP_TYPE data_type;
 
     if ( !get_z_from_cell2 ( north, east, &Z ) )
     {

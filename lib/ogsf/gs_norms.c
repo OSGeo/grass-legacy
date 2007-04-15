@@ -95,7 +95,6 @@ int gs_calc_normals(geosurf * gs)
 {
     int row, col;
     int xcnt, ycnt;
-    char buf[80];
     int xmod, ymod;
 
     if (!gs->norm_needupdate || !gs->norms) {

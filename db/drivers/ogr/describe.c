@@ -64,7 +64,7 @@ int describe_table( OGRLayerH hLayer, dbTable **table, cursor *c)
     dbColumn *column;
     OGRFeatureDefnH hFeatureDefn;
     OGRFieldDefnH hFieldDefn;
-    char  *fieldName;
+    const char *fieldName;
     int   ogrType;
     int   *cols;
 

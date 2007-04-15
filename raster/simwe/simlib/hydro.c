@@ -35,7 +35,6 @@ void main_loop()
     double d1,addac, decr;
     double barea,sarea,walkwe;
     double gen, gen2,wei2, wei3,wei,weifac;
-    double zx, zy, zd, sinsl;
     float eff;
 
     nblock = 1;

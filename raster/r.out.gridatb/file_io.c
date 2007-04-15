@@ -4,11 +4,10 @@
 
 
 void
-rdwr_gridatb()
+rdwr_gridatb(void)
 {
 	FILE	*fp;
 	int	fd,row,col;
-	float	idx;
         int     adjcellhdval;
 	CELL	*cell;
 	DCELL	*dcell;

@@ -43,7 +43,7 @@ cursor * alloc_cursor()
     if ((ret != SQL_SUCCESS) && (ret != SQL_SUCCESS_WITH_INFO))
     {
         SQLGetDiagRec(SQL_HANDLE_DBC, ODconn, 1, NULL, &err, msg, sizeof(msg), NULL);
-        G_asprintf(&emsg, "AllocStatement()\n%s (%d)\n", msg, err);
+        G_asprintf(&emsg, "AllocStatement()\n%s (%d)\n", msg, (int) err);
         report_error(emsg);
         G_free(emsg);
 

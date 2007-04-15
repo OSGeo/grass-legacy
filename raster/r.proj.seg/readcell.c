@@ -1,6 +1,3 @@
-#ifndef lint 
-	static char *SCCSid= "@(#)readcell.c	v1.5 - 25 Jun 1995 	-emes-";
-#endif
 /*
  * readcell.c - reads an entire cell layer into a buffer
  *

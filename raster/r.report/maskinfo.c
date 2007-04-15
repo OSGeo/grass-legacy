@@ -13,7 +13,6 @@ maskinfo (void)
     char text[100];
     int next;
     int first;
-    char *append();
 
     results = NULL;
     if (G_find_cell ("MASK", G_mapset()) == NULL)

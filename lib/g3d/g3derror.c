@@ -23,7 +23,7 @@
  */
 
 void
-G3d_skipError  (char *msg)
+G3d_skipError  (const char *msg)
 
 {
 }
@@ -40,7 +40,7 @@ G3d_skipError  (char *msg)
  */
 
 void
-G3d_printError  (char *msg)
+G3d_printError  (const char *msg)
 
 {  
   fprintf (stderr, "ERROR: ");
@@ -60,7 +60,7 @@ G3d_printError  (char *msg)
  */
 
 void
-G3d_fatalError  (char *msg, ...)
+G3d_fatalError  (const char *msg, ...)
 
 {
     char buffer[2000];  /* No novels to the error logs, OK? */
@@ -70,12 +70,19 @@ G3d_fatalError  (char *msg, ...)
     vsprintf(buffer,msg,ap);
     va_end(ap);
 
-    G_fatal_error (buffer);
+    G_fatal_error ("%s", buffer);
 }
 
 void
-G3d_error  (char *msg)
+G3d_fatalError_noargs  (const char *msg)
 
 {
-  g3d_error_fun (msg);
+    G_fatal_error ("%s", msg);
+}
+
+void
+G3d_error  (const char *msg)
+
+{
+    (*g3d_error_fun) (msg);
 }

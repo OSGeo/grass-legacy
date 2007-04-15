@@ -17,7 +17,7 @@ static int uparrow(struct box *,int);
 static int dobox(struct box *,char *,int,int,int,int,int);
 static int dotext(char *,int ,int ,int ,int ,int );
 static int inbox(struct box *,int ,int );
-static int cancel_which();
+static int cancel_which(void);
 
 static int text_size;
 static int which;
@@ -34,7 +34,6 @@ int
 ask_gis_files (char *type, char *file, char *xname, char *xmapset, int position)
 {
     static int use = 1;
-    int pick();
     static Objects objects[]=
     {
 	OTHER(pick,&use),

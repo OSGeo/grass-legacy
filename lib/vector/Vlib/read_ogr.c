@@ -254,7 +254,7 @@ static int read_line ( struct Map_info *Map, OGRGeometryH hGeom, long offset, st
     /* Read coors if hGeom is a simple element (wkbPoint, wkbLineString) otherwise
      * descend to geometry specified by offset[offset] */
 
-    G_debug (4, "read_line() offset = %d", offset);
+    G_debug (4, "read_line() offset = %ld", offset);
 
     eType = wkbFlatten (OGR_G_GetGeometryType (hGeom));
     G_debug (4, "OGR Geometry of type: %d", eType);
@@ -343,7 +343,7 @@ V2_read_line_ogr (struct Map_info *Map, struct line_pnts *line_p,  struct line_c
 	return (GV_CENTROID);
     } else {
 	FID = Map->fInfo.ogr.offset[offset];
-        G_debug (4, "  FID = %d", FID);
+        G_debug (4, "  FID = %ld", FID);
 	
 	/* coordinates */
 	if (line_p != NULL) {

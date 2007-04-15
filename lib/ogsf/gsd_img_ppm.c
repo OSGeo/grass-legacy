@@ -207,12 +207,11 @@ int gsd_init_mpeg(char *name)
  * get RGB pixbuf and convert to YUV 4:2:0
  * image and write to mpeg stream
 *********************************************/
-int gsd_write_mpegframe()
+int gsd_write_mpegframe(void)
 {
 #ifdef HAVE_FFMPEG
         unsigned int xsize, ysize;
         int x, y, xy, xy_uv;
-        int length;
         int yy, uu, vv;
         unsigned char *pixbuf;
 

@@ -21,7 +21,6 @@ int output_data(int tt, double ft)
    int      fd14, fd15,fd16;
    int      i,iarc,j;
    float    gsmax=0,dismax=0.,gmax=0.,ermax=-1.e+12,ermin=1.e+12;
-   double   zx, zy, zd, sinsl;
    struct  Colors colors;
    struct History hist, hist1; /* hist2, hist3, hist4, hist5*/
    char    *depth0=NULL,*disch0=NULL,*err0=NULL;
@@ -495,7 +494,7 @@ int output_data(int tt, double ft)
     G_write_history (depth, &hist);
   }
 
-   if (disch == 1)
+   if (disch != NULL)
       {
         type = "raster";
 	if (ts == 0) {

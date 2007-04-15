@@ -34,7 +34,6 @@ main (int argc, char **argv)
 	struct GModule *module;
 	struct Option *opt_h, *opt_i, *opt_s;
 	struct Flag *nulldraw;
-	int offset ;
 	char window_name[64] ;
 	int t, b, l, r ;
 

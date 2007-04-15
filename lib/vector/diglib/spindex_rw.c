@@ -56,13 +56,13 @@ dig_Wr_spindx_head ( GVFILE * fp,
   if (0 >= dig__fwrite_port_L (&(ptr->Volume_spidx_offset), 1, fp)) return (-1);
   if (0 >= dig__fwrite_port_L (&(ptr->Hole_spidx_offset), 1, fp)) return (-1);
 
-  G_debug (3, "spidx offset node = %d line = %d, area = %d isle = %d", ptr->Node_spidx_offset,
+  G_debug (3, "spidx offset node = %ld line = %ld, area = %ld isle = %ld", ptr->Node_spidx_offset,
 	       ptr->Line_spidx_offset, ptr->Area_spidx_offset, ptr->Isle_spidx_offset);
 
   /* bytes 39 - 42 : Offsets */
   if (0 >= dig__fwrite_port_L (&(ptr->coor_size), 1, fp)) return (-1);
 
-  G_debug (2, "spidx body offset %d", dig_ftell( fp) );
+  G_debug (2, "spidx body offset %ld", dig_ftell( fp) );
 
   return (0);
 }
@@ -114,7 +114,7 @@ dig_Rd_spindx_head (   GVFILE * fp,
   
   /* bytes 6 - 9 : header size */
   if (0 >= dig__fread_port_L (&(ptr->spidx_head_size), 1, fp)) return (-1);
-  G_debug (2, "  header size %d", ptr->spidx_head_size );
+  G_debug (2, "  header size %ld", ptr->spidx_head_size );
 
   /* byte 10 : dimension 2D or 3D */ 
   if (0 >= dig__fread_port_C (buf, 1, fp)) return (-1);
@@ -132,7 +132,7 @@ dig_Rd_spindx_head (   GVFILE * fp,
 
   /* bytes 39 - 42 : Offsets */
   if (0 >= dig__fread_port_L (&coor_size, 1, fp)) return (-1);
-  G_debug (2, "  coor size %d", coor_size );
+  G_debug (2, "  coor size %ld", coor_size );
 
   dig_fseek ( fp, ptr->spidx_head_size, SEEK_SET );
 

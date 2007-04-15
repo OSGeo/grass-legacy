@@ -4,8 +4,6 @@
 #include <grass/display.h>
 #include "local_proto.h"
 
-static int max (int a, int b) {return a>b?a:b;}
-
 int make_window_center (struct Cell_head *window, double magnify, double east, double north)
 {
     char buffer[64] ;

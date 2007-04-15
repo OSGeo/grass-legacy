@@ -44,8 +44,6 @@ int bar (
 	long int max_tics;       /* maximum tics allowed on an axis */
 	long int xoffset;        /* offset for x-axis */
 	long int yoffset;        /* offset for y-axis */
-	long int cat_incr = 1;
-	long int stat_incr = 1;
 	long int stat_start;
 	long int stat_finis;
 	int text_height;
@@ -420,25 +418,25 @@ int bar (
 	if (tic_unit != 1)
 	{
 		if (type==COUNT)
-			sprintf(xlabel,"Y-AXIS: Number of cells %s",tic_name);
+			sprintf(ylabel,"Y-AXIS: Number of cells %s",tic_name);
 		else 
-			sprintf(xlabel,"Y-AXIS: Area %s sq. meters",tic_name);
+			sprintf(ylabel,"Y-AXIS: Area %s sq. meters",tic_name);
 	}
 	else
 	{
 		if (type==COUNT)
-			sprintf(xlabel,"Y-AXIS: Number of cells");
+			sprintf(ylabel,"Y-AXIS: Number of cells");
 		else
-			sprintf(xlabel,"Y-AXIS: Area");
+			sprintf(ylabel,"Y-AXIS: Area");
 	}
 
 	text_height = (b-t)*TEXT_HEIGHT;
 	text_width = (r-l)*TEXT_WIDTH;
 	R_text_size(text_width,text_height);
-	R_get_text_box(xlabel,&tt,&tb,&tl,&tr);
+	R_get_text_box(ylabel,&tt,&tb,&tl,&tr);
 	R_move_abs((int)(l+(r-l)/2-(tr-tl)/2),(int)(b-LABEL_2*(b-t)));
 	R_standard_color((int)color);
-	R_text(xlabel);
+	R_text(ylabel);
 
 	/* draw x and y axis lines */
 	R_standard_color(color);

@@ -144,7 +144,7 @@ int gvld_isosurf(geovol * gvl)
 	gvl->zres;
 
     /* get viewport */
-    gsd_getwindow(&window, &viewport, &modelMatrix, &projMatrix);
+    gsd_getwindow(window, viewport, modelMatrix, projMatrix);
 
     /* adjust window */
     window[0] += (int)(yres * 2);
@@ -430,7 +430,7 @@ int gvld_slices(geovol * gvl)
     GS_get_scale(&tx, &ty, &tz, 1);
 
     /* get viewport */
-    gsd_getwindow(&window, &viewport, &modelMatrix, &projMatrix);
+    gsd_getwindow(window, viewport, modelMatrix, projMatrix);
 
     gsd_colormode(CM_COLOR);
     gsd_pushmatrix();

@@ -3,7 +3,6 @@ MODULE_TOPDIR =../..
 PGM = r.li
 
 include $(MODULE_TOPDIR)/include/Make/Dir.make
-include $(MODULE_TOPDIR)/include/Make/Html.make
 
 #insert all subdirs AFTER r.li.daemon
 
@@ -24,7 +23,7 @@ SUBDIRS = \
 	r.li.cwed\
 	r.li.richness\
 	r.li.dominance\
-	
+
 default: subdirs htmldir
 	$(INSTALL) -m 644 description.html $(GISBASE)/docs/html/r.li.html
 

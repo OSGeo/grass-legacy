@@ -10,8 +10,8 @@ read_stats (FILE *fd, long *cat1, long *cat2, double *value)
 
     if (fgets(buf, sizeof buf, fd) == NULL) return 0;
 
-    if (sscanf (buf, "%ld %ld %lf", cat1, cat2, value) == 3)
-	    return 1;
-    
-    G_fatal_error (_("reading r.stats output"));
+    if (sscanf (buf, "%ld %ld %lf", cat1, cat2, value) != 3)
+	    G_fatal_error (_("reading r.stats output"));
+
+    return 1;
 }

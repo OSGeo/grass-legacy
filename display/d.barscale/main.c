@@ -157,7 +157,6 @@ int main (int argc, char **argv)
 	else if (mouse_query(top->answer))
 	{
 		char cmdbuf[255];
-		char buffer[255];
 		
 		sprintf(cmdbuf, "%s at=%f,%f", argv[0],east, north);
 

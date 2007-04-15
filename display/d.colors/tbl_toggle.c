@@ -1,7 +1,7 @@
 #include <grass/gis.h>
 #include "colors.h"
 
-int toggle_number = 0 ;
+static int toggle_number;
 
 int 
 table_toggle (char *name, char *mapset, struct Colors *colors)
@@ -14,8 +14,9 @@ table_toggle (char *name, char *mapset, struct Colors *colors)
     G_free_colors(colors);
     sprintf (info, "Color range: %d to %d\n", min, max);
 
-    toggle_number = ++toggle_number % 6 ;
-    switch(toggle_number & 0177)
+    toggle_number++ ;
+    toggle_number &= 6 ;
+    switch (toggle_number)
     {
         case 0:
 	    msg = "Original colors";

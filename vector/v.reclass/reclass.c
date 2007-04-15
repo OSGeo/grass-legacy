@@ -23,7 +23,7 @@
 
 int reclass ( struct Map_info *In, struct Map_info *Out, int type, int field, dbCatValArray *cvarr, int dissolve)
 {
-    int i, nlines, nareas, line, area, ltype, old_cat, new_cat;	
+    int i, nlines, line, ltype, old_cat, new_cat;	
     int nocat = 0, rclelem=0, negative=0;
     struct line_pnts *Points;
     struct line_cats *Cats, *NewCats;

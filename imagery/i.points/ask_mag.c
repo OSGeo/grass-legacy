@@ -18,7 +18,6 @@ int
 ask_magnification (int *magnification)
 {
     static int use = 1;
-    int incr();
     int x,y;
     int height;
     int stat;

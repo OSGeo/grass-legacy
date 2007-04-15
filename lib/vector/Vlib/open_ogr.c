@@ -140,7 +140,7 @@ V2_open_old_ogr (struct Map_info *Map )
     /* Body */
     /* bytes 6 - 9 : header size */
     if (0 >= dig__fread_port_L (&length, 1, &fp)) return (-1);
-    G_debug (3, "  header size %d", length );
+    G_debug (3, "  header size %ld", length );
     
     fseek ( fp.file, length, SEEK_SET);
     

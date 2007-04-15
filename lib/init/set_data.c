@@ -274,7 +274,6 @@ int main (int argc, char *argv[])
 int 
 list_locations (char *gisdbase)
 {
-    char buf[1024];
     fprintf(stderr, "\nAvailable locations:\n") ;
     fprintf(stderr, "----------------------\n") ;
     G_ls(gisdbase, stderr);

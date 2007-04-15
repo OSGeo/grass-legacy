@@ -128,8 +128,6 @@ int save_region(void);
 int set_signals(void);
 /* sigalarm.c */
 void sigalarm(int);
-/* sigint.c */
-int sigint(int);
 /* signature.c */
 int init_sig_routines(size_t);
 int prepare_signature(int);

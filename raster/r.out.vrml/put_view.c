@@ -6,7 +6,6 @@
 void vrml_put_view(FILE *vout, struct G_3dview *v3d)
 {
 char tbuf[512];
-double df3[3];
 
 
 #ifdef VRML2
