@@ -33,14 +33,13 @@ grass_ver=`cut -d . -f 1-2 $GISBASE/etc/VERSIONNUMBER`
 # for GDAL utils
 # hack - ideally user should have this in their PATH, but make sure here
 PATH="@GDAL_BIN_PATH@:$PATH"
-export PATH
 
-# xterm - make sure to use xterm instead of Terminal,
-# use path in case X11 not in users PATH
-if [ ! "$GRASS_XTERM" ] ; then
-	GRASS_XTERM=/usr/X11R6/bin/xterm
-	export GRASS_XTERM
+# xterm - make sure X11 is in PATH
+pathX11=`echo "$PATH" | grep '/usr/X11R6/bin'`
+if [ ! "$pathX11" ] ; then
+	PATH="$PATH:/usr/X11R6/bin"
 fi
+export PATH
 
 # default to internal X11 Tcl/Tk
 @TCLTK_INTERNAL@if [ ! "$GRASS_TCLSH" ] ; then
@@ -83,7 +82,7 @@ mkdir -p "$HOME/Library/GRASS/$grass_ver/Modules/docs/html"
 "$GISBASE/etc/build_html_user_index.sh" "$GISBASE"
 "$GISBASE/etc/build_gui_user_menu.sh"
 
-# start X11 if not running - no need to check if running by using 'open'
+# start X11 if not running - no need to check if running when using 'open'
 # some users may be annoyed by this, but X11 required for some stuff for now
 if [ -d "/Applications/Utilities/X11.app" ] ; then
 	open /Applications/Utilities/X11.app
