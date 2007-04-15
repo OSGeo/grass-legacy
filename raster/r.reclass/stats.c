@@ -1,8 +1,9 @@
 #include <grass/gis.h>
+#include "rule.h"
 
 #define LIST struct Histogram_list
 
-int 
+void
 new_stats (char *name, struct Reclass *reclass)
 {
     struct Histogram histo, histo2;

@@ -12,7 +12,6 @@ int
 setup_digitizer (void)
 {
     static int use = 1;
-    int setup(), no(), yes();
     static Objects objects[]=
     {
 	INFO("Do you wish to use the digitizer?  ", &use),

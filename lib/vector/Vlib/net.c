@@ -36,9 +36,9 @@ static int clipper ( dglGraph_s    *pgraph ,
     from = dglNodeGet_Id(pgraph, pargIn->pnNodeFrom);
     
     G_debug ( 3, "  Edge = %d NodeFrom = %d NodeTo = %d edge cost = %d", 
-	             dglEdgeGet_Id (pgraph, pargIn->pnEdge), 
-	             from, dglNodeGet_Id(pgraph, pargIn->pnNodeTo),
-		     pargOut->nEdgeCost);
+	             (int) dglEdgeGet_Id (pgraph, pargIn->pnEdge), 
+	             (int) from, (int) dglNodeGet_Id(pgraph, pargIn->pnNodeTo),
+		     (int) pargOut->nEdgeCost);
 
     if ( from != From_node ) { /* do not clip first */
 	if ( dglGet_NodeAttrSize(pgraph) > 0 ) {
@@ -47,7 +47,7 @@ static int clipper ( dglGraph_s    *pgraph ,
 	        G_debug ( 3, "  closed node" );
 		return 1;
 	    } else {
-		G_debug ( 3, "  EdgeCost += %d (node)", cost );
+		G_debug ( 3, "  EdgeCost += %d (node)", (int) cost );
 		pargOut->nEdgeCost += cost;
 	    }
 	}

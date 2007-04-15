@@ -84,7 +84,7 @@ struct Halfedge *curr;
 int 
 PQinitialize (void)
 {
-int i; struct Point *s;
+int i;
 
 	PQcount = 0;
 	PQmin = 0;

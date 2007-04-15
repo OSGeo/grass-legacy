@@ -86,7 +86,6 @@ int main(int argc, char *argv[])
     int fd;
     int nrows, ncols;
     double bias;
-    char fmt[20];
     struct GModule *module;
     struct
     {
@@ -139,35 +138,14 @@ int main(int argc, char *argv[])
     if (G_parser(argc, argv))
 	exit(EXIT_FAILURE);
 
-    strcpy (fmt, "%ld ");
     if (parm.hftype->answer != NULL)
-    {
         sscanf (parm.hftype->answer, "%d", &hfType);
-        if (hfType > 0)
-            sprintf (fmt, "%%%dld ", hfType);
-	else
-	    sprintf (fmt, "%%%dld", hfType);
-    }
 
-    strcpy(fmt, "%lf ");
     if (parm.bias->answer != NULL)
-    {
         sscanf (parm.bias->answer, "%lf", &bias);
-        if (bias > 0)
-            sprintf (fmt, "%%%dlf ", bias);
-	else
-	    sprintf (fmt, "%%%dlf", bias);
-    }
 	
-    strcpy(fmt, "%lf ");
     if (parm.scaleFactor->answer != NULL)
-    {
         sscanf (parm.scaleFactor->answer, "%lf", &verticalScale);
-        if (verticalScale > 0)
-            sprintf (fmt, "%%%dlf ", verticalScale);
-	else
-	    sprintf (fmt, "%%%dlf", verticalScale);
-    }
 
     name = parm.map->answer;
     mapset = G_find_cell2 (name, "");

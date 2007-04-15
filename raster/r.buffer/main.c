@@ -42,7 +42,6 @@ int main (int argc, char *argv[])
 
     struct GModule *module;
     struct Option *opt1, *opt2, *opt3, *opt4;
-    struct Flag *flag1;
     struct Flag *flag2;
     int ZEROFLAG;
 

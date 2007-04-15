@@ -112,7 +112,7 @@ void g3d_to_raster(void *map, G3D_Region region, int *fd)
     depths = region.depths;
 
 
-    G_debug(2, "g3d_to_raster: Writing %i raster maps with rows %i cols.",
+    G_debug(2, "g3d_to_raster: Writing %i raster maps with %i rows %i cols.",
 	    depths, rows, cols);
 
     typeIntern = G3d_tileTypeMap(map);

@@ -62,7 +62,7 @@ void removeDuplicates()
 int
 readsites ( void )
 {
-    int    i, type, nlines, line, size;
+    int    i, nlines, line;
     struct line_pnts *Points;
 
     Points = Vect_new_line_struct ();

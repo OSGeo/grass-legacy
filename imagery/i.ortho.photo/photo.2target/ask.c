@@ -34,7 +34,6 @@ int ask_gis_files (char *type, char *file,
     char *xname, char *xmapset, int position)
 {
     static int use = 1;
-    int pick();
     static Objects objects[]=
     {
 	OTHER(pick,&use),

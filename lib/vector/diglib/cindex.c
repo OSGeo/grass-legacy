@@ -268,7 +268,7 @@ dig_cidx_del_cat ( struct Plus_head *Plus, int field, int cat, int line, int typ
 	}
     }
     
-    G_debug (4, "position = %d" );
+    G_debug (4, "position = %d", position);
 
     if ( position == ci->n_cats ) {
 	G_warning ( "BUG: Category not found in category index." );

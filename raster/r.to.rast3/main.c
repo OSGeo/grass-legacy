@@ -108,7 +108,7 @@ void raster_to_g3d(void *map, G3D_Region region, int *fd)
 
     rast = G_allocate_raster_buf(globalRastMapType);
 
-    G_debug(3, "raster_to_g3d: Writing %i raster maps with rows %i cols.",
+    G_debug(3, "raster_to_g3d: Writing %i raster maps with %i rows %i cols.",
 	    depths, rows, cols);
 
     /*Every Rastermap */

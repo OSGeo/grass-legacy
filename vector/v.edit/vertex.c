@@ -224,7 +224,6 @@ int do_break(struct Map_info *Map)
 
 int do_remove_vertex(struct Map_info *Map)
 {
-    int res = 0;
     double east, north,xo,yo, dist;
     int line,j;
     double maxdist = 0.;
@@ -294,7 +293,6 @@ int do_remove_vertex(struct Map_info *Map)
 
 int do_split(struct Map_info *Map)
 {
-    int res = 0;
     double east, north;
     int line,j;
     double maxdist = 0.;

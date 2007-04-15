@@ -3,8 +3,7 @@
 #include <stdlib.h>
 #include "global.h"
 
-static int cmp(GSTATS *,GSTATS *);
-static int die();
+static int die(void);
 
 int 
 get_stats (void)
@@ -102,13 +101,3 @@ static int die (void)
     G_fatal_error ("OOPS - problem reading r.stats output\n");
 }
 
-static int cmp(GSTATS *a,GSTATS *b)
-{
-    int i;
-    for (i = 0; i < nlayers; i++)
-    {
-	if(a->cats[i] < b->cats[i]) return -1;
-	if(a->cats[i] > b->cats[i]) return 1;
-    }
-    return 0;
-}

@@ -324,7 +324,7 @@ void print_surf_fields(geosurf * s)
     fprintf(stderr, "ID: %d\n", s->gsurf_id);
     fprintf(stderr, "rows: %d cols: %d\n", s->rows, s->cols);
     fprintf(stderr, "draw_mode: %x\n", s->draw_mode);
-    fprintf(stderr, "wire_color: %x\n", s->wire_color);
+    fprintf(stderr, "wire_color: %lx\n", s->wire_color);
     fprintf(stderr, "ox: %lf oy: %lf\n", s->ox, s->oy);
     fprintf(stderr, "xres: %lf yres: %lf\n", s->xres, s->yres);
     fprintf(stderr, "z_exag: %f \n", s->z_exag);

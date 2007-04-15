@@ -1297,7 +1297,6 @@ void df_boundary (PATCH *tmp)
 
   static double  sumomega=0.0, sumomega2=0.0;
   static int     sumtwist=0, sumtwist2=0;
-  register int   i;
   double         meantwist=0.0, stdvtwist=0.0,
                  meanomega=0.0, stdvomega=0.0;
 
@@ -2214,7 +2213,6 @@ void m_boundary (PATCH *tmp, double **value, int index)
 
   static double  sumomega=0.0, sumomega2=0.0;
   static int     sumtwist=0, sumtwist2=0;
-  register int   i;
   double         meantwist=0.0, stdvtwist=0.0,
                  meanomega=0.0, stdvomega=0.0;
 

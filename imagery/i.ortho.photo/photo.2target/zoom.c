@@ -53,7 +53,7 @@ void source_to_target (double srx, double sry, double *trx, double *try )
 	G_debug ( 2, "target raster height: %.0f", spz ); 
     }
 
-    G_debug ( 2, "target rast center: %.0f %.0f", trx, try ); 
+    G_debug ( 2, "target rast center: %.0f %.0f", *trx, *try ); 
 }
 
 void auto_zoom (void )

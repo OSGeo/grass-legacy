@@ -6,12 +6,6 @@
 #include "globals.h"
 
 
-static char *intro[]=
-{
-"This program creates or modifies the initail exposure station parameters \n and thier apriori standard variances ",0
-};
-
-
 int main (int argc, char *argv[])
 {
     int have_old;

@@ -11,8 +11,6 @@ static int cancel(void);
 int 
 plotcell (int x, int y)
 {
-    int cancel();
-    int plot();
     static Objects objects[] =
     {
 	MENU("CANCEL", cancel, &use),

@@ -600,7 +600,7 @@ main (int argc,char *argv[])
 		P_Aux_to_Vector (&In_ext, &Out, driver, table_name);
 
 	    /* Dropping auxiliar table */
-	    G_debug (1, "%s: Dropping <s>", argv[0], table_name);
+	    G_debug (1, "%s: Dropping <%s>", argv[0], table_name);
 	    if (P_Drop_Aux_Table (driver, table_name) != DB_OK)
 		G_fatal_error(_("Auxiliar Table could not be dropped"));
 	}

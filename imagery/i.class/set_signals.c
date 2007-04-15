@@ -1,7 +1,18 @@
 #include <signal.h>
+#include <grass/config.h>
 #include "globals.h"
 #include "local_proto.h"
 
+static RETSIGTYPE do_quit(int sig)
+{
+	quit();
+}
+
+static RETSIGTYPE sigint(int sig)
+{
+	signal (sig, sigint);
+	signalflag.interrupt = sig;
+}
 
 int set_signals (void)
 {
@@ -14,7 +25,7 @@ int set_signals (void)
 	signalflag.interrupt = 0;
 	signal (SIGINT, sigint);
 
-	signal (SIGTERM, quit);
+	signal (SIGTERM, do_quit);
 
 	return 0;
 }

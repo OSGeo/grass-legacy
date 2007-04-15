@@ -295,8 +295,8 @@ int main ( int argc, char *argv[])
   if (G_parser (argc, argv))
     exit (EXIT_FAILURE);
 
-  mscale=flag.mscale->answer;
-  tserie=flag.tserie->answer;
+  mscale=flag.mscale->answer ? "m" : NULL;
+  tserie=flag.tserie->answer ? "t" : NULL;
 
   elevin = parm.elevin->answer;
   wdepth = parm.wdepth->answer;

@@ -78,7 +78,7 @@ int spot_dist(int fuel, float maxros, int speed, float angle, int row0, int col0
 	double		sqrd;		/* distance from cell0 to cell */
 	double		sin_a, cos_a;	/* of the wind angle */
 	double		sqr_ns, sqr_ew; /* square resolutions for speed */ 
-	register 	i;		/* for advance a step */
+	int		i;		/* for advance a step */
 
 	if (fuel == 8) 		/* no spotting from closed timber litter */
 		return (0); 

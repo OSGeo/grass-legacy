@@ -60,7 +60,6 @@ void mv_texture (int nrows, int ncols, double **buf, double **null_buf, double *
   register int  i, j;
   double    	*atts, *edgeatts, attr[4], diver[4], edge[4], tex[5], **weight, 
                **edgemat;
-  RASTER_MAP_TYPE data_type;
 
 					/* set the contents of the arrays used
 					   used to stored the results of the
@@ -658,7 +657,7 @@ void cal_divers (double **buf, double **null_buf, int i0, int j0, int nr, int nc
 {
   int           tot; 
   static int    *density;
-  register int  i, k=0;
+  register int  i;
   double    	p, entr;
 
 					/* if this is the first pixel, 

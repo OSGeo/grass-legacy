@@ -38,8 +38,6 @@ int	fd_out,			/* File descriptor of output raster     */
 #endif                       
 double	H;			/* Hausdorff-Besickovitch dimension.	*/
 
-/* close_down.c */
-int close_down(void);
 /* fft.c */
 int fft(int, double *[2], int, int, int);
 /* gauss.c */

@@ -52,7 +52,7 @@ dig_write_cidx_head ( GVFILE * fp, struct Plus_head *plus)
 
 	ci = &(plus->cidx[i]);
     
-	G_debug (3, "cidx %d head offset: %d", i, dig_ftell( fp) );
+	G_debug (3, "cidx %d head offset: %ld", i, dig_ftell( fp) );
 
 	/* Field number */
         if (0 >= dig__fwrite_port_I ( &(ci->field), 1, fp)) return (-1);
@@ -81,10 +81,10 @@ dig_write_cidx_head ( GVFILE * fp, struct Plus_head *plus)
 
 	/* Offset */
 	if (0 >= dig__fwrite_port_L ( &(ci->offset), 1, fp)) return (0);
-	G_debug (3, "cidx %d offset: %d", i, ci->offset);
+	G_debug (3, "cidx %d offset: %ld", i, ci->offset);
     }
 
-    G_debug (3, "cidx body offset %d", dig_ftell( fp) );
+    G_debug (3, "cidx body offset %ld", dig_ftell( fp) );
 
     return (0);
 }
@@ -134,7 +134,7 @@ dig_read_cidx_head (   GVFILE * fp, struct Plus_head *plus)
 
     /* bytes 6 - 9 : header size */
     if (0 >= dig__fread_port_L (&(plus->cidx_head_size), 1, fp)) return (-1);
-    G_debug (3, "  header size %d", plus->cidx_head_size );
+    G_debug (3, "  header size %ld", plus->cidx_head_size );
 
     /* Body of header - info about all fields */
     /* Number of fields */

@@ -14,7 +14,7 @@ o_median (char *basemap, char *covermap, char *outputmap, int usecats, struct Ca
   FILE *stats_fd, *reclass_fd;
   int first;
   long basecat, covercat, catb, catc;
-  double area, max;
+  double area;
   struct stats stats;
    
           

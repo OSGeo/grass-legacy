@@ -19,4 +19,4 @@ int input(char *);
 /* range.c */
 int new_range(char *, struct Reclass *);
 /* stats.c */
-int new_stats(char *, struct Reclass *);
+void new_stats(char *, struct Reclass *);

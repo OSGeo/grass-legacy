@@ -10,8 +10,7 @@ int ask_elev (char *group, char *location, char *mapset)
 {
     char buf[100];
     char t1[80]; 
-    char t2[80], t3[80];
-    char cur_location[30], cur_mapset[30];
+    char t2[80];
 
     sprintf (t1, "Please select the elevation raster map for group <%s>", group);
     sprintf (t2, "Elevation raster map: ");

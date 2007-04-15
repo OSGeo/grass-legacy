@@ -9,7 +9,6 @@
 int 
 main (int argc, char *argv[])
 {
-    static int i;
     static int have_old;
     char *group, *location, *mapset, *camera; 
 

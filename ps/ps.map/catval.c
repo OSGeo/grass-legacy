@@ -63,7 +63,7 @@ int load_catval_array_rgb (struct Map_info* map, int vec, dbCatValArray* cvarr_r
     G_debug(2, "\n%d records (rgbcol) selected from table", nrec);
     
     for (i = 0; i < cvarr_rgb -> n_values; i++) {
-	G_debug (4, "cat = %d val = %s", cvarr_rgb -> value[i].cat, cvarr_rgb -> value[i].val.s);
+	G_debug (4, "cat = %d val = %s", cvarr_rgb -> value[i].cat, cvarr_rgb -> value[i].val.s->string);
     }
     
     db_close_database_shutdown_driver (driver);

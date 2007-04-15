@@ -26,11 +26,10 @@ int
 main (int argc, char *argv[])
 {
     struct GModule *module;
-    struct Option *in_opt, *out_opt, *distance_opt, *layer_opt;
+    struct Option *in_opt, *out_opt, *distance_opt;
     struct Map_info In, Out;
     struct line_pnts *Points, *Points2;
     struct line_cats *Cats;
-    int    layer;
     int    line, nlines;
     double distance, tolerance;
 
@@ -72,7 +71,7 @@ main (int argc, char *argv[])
     nlines = Vect_get_num_lines ( &In );
 
     for ( line = 1; line <= nlines; line++ ) {
-	int ltype, cat;
+	int ltype;
 	
 	G_percent ( line, nlines, 1 );
 

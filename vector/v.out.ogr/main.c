@@ -218,7 +218,7 @@ main (int argc, char *argv[])
 	G_strchg(buf,' ','_');
 	if ( strcmp ( buf ,  frmt_opt->answer ) == 0 ) {
 	    drn = i;
-	    G_debug (2, " -> driver = %d" ); 
+	    G_debug (2, " -> driver = %d", drn); 
 	}
     }
     if ( drn == -1 ) G_fatal_error ( _("Driver %s not found"), frmt_opt->answer ); 

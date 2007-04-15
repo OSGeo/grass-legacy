@@ -8,7 +8,7 @@
 #define RECLASS "r.reclass"
 
 /* function prototypes */
-static int sum_out (FILE *, long, double);
+static void sum_out (FILE *, long, double);
 
 
 int
@@ -77,7 +77,7 @@ o_sum (char *basemap, char *covermap, char *outputmap, int usecats, struct Categ
 }
 
 
-static int
+static void
 sum_out (FILE *fd, long cat, double sum1)
 {
     char buf[64];

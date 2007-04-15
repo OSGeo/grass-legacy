@@ -170,14 +170,15 @@ extern int g3d_cache_default; /* in number of tiles; 0 ==> no cache */
 extern int g3d_cache_max; /* in bytes */
 extern int g3d_file_type; /* FCELL_TYPE or DCELL_TYPE */
 extern int g3d_tile_dimension[3]; 
-extern void (*g3d_error_fun) (); 
+extern void (*g3d_error_fun)(const char *); 
 extern char *g3d_unit_default;
 
 extern G3D_Region g3d_window;
 
 /*---------------------------------------------------------------------------*/
 
-extern void G3d_fatalError (/* msg */ char *, ...);
+extern void G3d_fatalError (const char * /* msg */ , ...);
+extern void G3d_fatalError_noargs (const char * /* msg */);
 
 /*---------------------------------------------------------------------------*/
 /*---------------------------------------------------------------------------*/

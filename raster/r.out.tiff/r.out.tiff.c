@@ -333,7 +333,7 @@ main (int argc, char *argv[])
 				    tptr += oskew*3;
 				}
 
-				G_debug (3, "row #: i %d tptr %d", i, tptr);
+				G_debug (3, "row #: i %d tptr %lx", i, (long) tptr);
 			    }
 	    
 			    G_debug (1, "Write Tile #: col %d row %d s %d", col, row, s);

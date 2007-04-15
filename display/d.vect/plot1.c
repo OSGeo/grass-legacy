@@ -14,6 +14,27 @@
 #define RENDER_POLYLINE 0
 #define RENDER_POLYGON  1
 
+int palette_ncolors = 16;
+
+struct rgb_color palette[16] =  {
+	{198, 198, 198}, /*  1: light gray */
+	{127, 127, 127}, /*  2: medium/dark gray */
+	{255,   0,   0}, /*  3: bright red */
+	{139,   0,   0}, /*  4: dark red */
+	{  0, 255,   0}, /*  5: bright green */
+	{  0, 139,   0}, /*  6: dark green */
+	{  0,   0, 255}, /*  7: bright blue */
+	{  0,   0, 139}, /*  8: dark blue   */
+	{255, 255,   0}, /*  9: yellow */
+	{139, 126,  10}, /* 10: olivey brown */
+	{255, 165,   0}, /* 11: orange */
+	{255, 192, 203}, /* 12: pink   */
+	{255,   0, 255}, /* 13: magenta */
+	{139,   0, 139}, /* 14: dark magenta */
+	{  0, 255, 255}, /* 15: cyan */
+	{  0, 139, 139}  /* 16: dark cyan */
+};
+
 /*local functions*/
 static void local_plot_poly(double *xf, double *yf, int n, int type);
 

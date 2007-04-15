@@ -214,7 +214,7 @@ void worker(char *raster, int f(int, char **, area_des, double *),\
 }
 
 char * mask_preprocessing(char *mask, char *raster,int  rl, int cl){
-	char *mapset, *tmp_file, c1[150];
+	char *mapset, *tmp_file;
 	struct Cell_head cell, oldcell;
 	int mask_fd, old_fd, *buf, i, j;
 	CELL *old;

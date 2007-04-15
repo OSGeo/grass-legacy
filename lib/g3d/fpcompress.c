@@ -660,7 +660,6 @@ G_fpcompress_writeXdrNums  (int fd, char *src, int nofNum, int precision, char *
   /* compression. the values in the table are either based on experience for */
   /* the small values, or guesses for the larger values. */
 
-  int *lzwbits;
   int status, rleLength, nBytes, offsetMantissa;
   char *dst, *srcStop;
 

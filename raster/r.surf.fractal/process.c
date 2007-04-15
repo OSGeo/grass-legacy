@@ -19,10 +19,7 @@ process (void)
     int         nrows,          /* Will store the current number of     */
                 ncols,          /* rows and columns in the raster.      */
 
-		nn,		/* Size of raster to nearest power of 2.*/
-
-                row,col;        /* Counts through each row and column   */
-                                /* of the input raster.                 */
+		nn;		/* Size of raster to nearest power of 2.*/
 
     double	*data[2];	/* Array holding complex data.		*/
                            

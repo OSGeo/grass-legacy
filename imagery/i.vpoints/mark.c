@@ -75,11 +75,7 @@ static double N,E;
 
 static int get_point2 (double *east,double *north)
 {
-    int digitizer();
-    int keyboard();
     int stat;
-    int screen();
-    int cancel();
     static int use = 1;
     static Objects objects[] =
     {

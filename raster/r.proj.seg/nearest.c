@@ -1,6 +1,3 @@
-#ifndef lint
-	static char *SCCSid= "@(#)nearest.c	v1.3 - 27 Jun 1995 	-emes-";
-#endif
 
 /*
  * 	nearest.c - returns the nearest neighbor to a given

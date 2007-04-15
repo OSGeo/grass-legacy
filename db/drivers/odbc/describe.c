@@ -34,7 +34,7 @@ int db__driver_describe_table (table_name, table)
     if ((ret != SQL_SUCCESS) && (ret != SQL_SUCCESS_WITH_INFO))
     {
         SQLGetDiagRec(SQL_HANDLE_STMT, c->stmt, 1, NULL, &err, msg, sizeof(msg), NULL);        
-	G_asprintf(&emsg, "SQLExecDirect():\n%s\n%s (%d)\n",s,msg,err);
+	G_asprintf(&emsg, "SQLExecDirect():\n%s\n%s (%d)\n",s,msg,(int) err);
         report_error(emsg);
         return DB_FAILED;
     }

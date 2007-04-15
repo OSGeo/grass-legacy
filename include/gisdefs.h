@@ -116,7 +116,7 @@ char *G_ask_vector_in_mapset(const char *, char *);
 *  the G_asprintf macro is disabled until a stable version of GDAL
 *  with a different function becomes widely used 
 */  
-int G_asprintf (char **, const char *, ...);
+int G_asprintf (char **, const char *, ...) __attribute__((format(printf,2,3)));
 
 /* auto_mask.c */
 int G__check_for_auto_masking(void);
@@ -389,7 +389,7 @@ int G_get_datumparams_from_projinfo(const struct Key_Value *projinfo,
 				    char *datumname, char *params);
 
 /* debug.c */
-int G_debug(int,const char *,...);
+int G_debug(int,const char *,...) __attribute__((format(printf,2,3)));
 
 /* distance.c */
 int G_begin_distance_calculations(void);
@@ -400,7 +400,7 @@ double G_distance_point_to_line_segment(double, double, double, double, double,
     double);
 
 /* done_msg.c */
-int G_done_msg(const char *, ...);
+int G_done_msg(const char *, ...) __attribute__((format(printf,1,2)));
 
 /* eigen_tools.c */
 int G_tqli(double [], double [], int, double **);
@@ -432,8 +432,8 @@ int G__switch_env(void);
 
 /* error.c */
 int G_info_format ( void );
-void G_message(const char *,...);
-int G_fatal_error(const char *,...) __attribute__((format(printf,1,2)));
+void G_message(const char *,...) __attribute__((format(printf,1,2)));
+int G_fatal_error(const char *,...) __attribute__((format(printf,1,2))) __attribute__((noreturn));
 int G_warning(const char *,...) __attribute__((format(printf,1,2)));
 int G_suppress_warnings(int);
 int G_sleep_on_error(int);
@@ -1045,7 +1045,7 @@ int G_get_site(FILE *, double *, double *, char **);
 int G_put_site(FILE *, double, double, char *);
 
 /* snprintf.c */
-int G_snprintf(char *, size_t, const char *, ...);
+int G_snprintf(char *, size_t, const char *, ...) __attribute__((format(printf,3,4)));
 
 /* squeeze.c */
 char *G_squeeze(char *);

@@ -39,9 +39,9 @@ int find_line ( struct Map_info *Map, int lfield, int cat );
     
 int main(int argc, char **argv)
 {
-    int    i, ret, points_written, lines_written, points_read, lines_read;
-    int    cat, *cats, ncat, lfield;
-    int    line, ltype;
+    int    ret, points_written, lines_written, points_read, lines_read;
+    int    lfield;
+    int    line;
     int    id, lid, lcat1, lcat2;
     double mpost, offset, mpost2, offset2, map_offset1, map_offset2, multip, side_offset;
     double x, y, z, angle, len;
@@ -54,11 +54,9 @@ int main(int argc, char **argv)
     struct Map_info In, Out;
     struct line_cats *LCats, *SCats; 
     struct line_pnts *LPoints, *SPoints;
-    struct field_info *Lfi;
     dbDriver *rsdriver;
     dbHandle rshandle;
     dbString rsstmt;	   
-    dbCursor rscursor;
 
     G_gisinit (argv[0]) ;
 

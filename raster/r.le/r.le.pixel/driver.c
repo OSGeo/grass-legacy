@@ -147,7 +147,7 @@ void texture_fore()
 void  mv_driver()
 {
   register int  i, j;
-  int      nr, nc, u_w, u_l, x0, y0, row, col, d, fmask, m, p, 
+  int      nr, nc, u_w, u_l, x0, y0, d, fmask, m, p, 
            cntwhole=0, b, *row_buf;
   char     *nul_buf, *nulltmp;
   int      *tmp;

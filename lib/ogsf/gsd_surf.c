@@ -181,7 +181,7 @@ int gsd_surf_map_old(geosurf * surf)
     ycnt = VROWS(surf);
 
     /* Get viewport */
-    gsd_getwindow(&window, &viewport, &modelMatrix, &projMatrix);
+    gsd_getwindow(window, viewport, modelMatrix, projMatrix);
     /* adjust window */
     window[0] += (int) (yres * 2);
     window[1] -= (int) (yres * 2);
@@ -749,7 +749,7 @@ int gsd_surf_const(geosurf * surf, float k)
     ymax = (surf->rows - 1) * surf->yres;
 
     /* Get Viewport */
-    gsd_getwindow(&window, &viewport, &modelMatrix, &projMatrix);
+    gsd_getwindow(window, viewport, modelMatrix, projMatrix);
     /* adjust window */
     window[0] += (int) (yres * 2);
     window[1] -= (int) (yres * 2);
@@ -2046,7 +2046,7 @@ int gsd_surf_map(geosurf * surf)
     ycnt = VROWS(surf);
 
     /* Get viewport */
-    gsd_getwindow(&window, &viewport, &modelMatrix, &projMatrix);
+    gsd_getwindow(window, viewport, modelMatrix, projMatrix);
     
 
     gsd_colormode(CM_DIFFUSE);

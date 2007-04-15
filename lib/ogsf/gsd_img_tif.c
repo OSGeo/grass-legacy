@@ -30,7 +30,6 @@ int GS_write_tif(char *name)
     int mapsize, linebytes;
     unsigned char *buf, *tmpptr;
     unsigned char *pixbuf;
-    int swapFlag;
 
     gsd_getimage(&pixbuf, &xsize, &ysize);
 

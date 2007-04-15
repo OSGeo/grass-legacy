@@ -40,7 +40,6 @@ I_compute_ref_equations (struct Ortho_Photo_Points *cp, double E12[3], double N1
     double s0,s1,s2,s3,s4,s5;
     double x0,x1,x2;
     double det;
-    double determinant();
     void (*sigfpe)();
     int i;
 

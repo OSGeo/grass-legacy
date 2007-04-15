@@ -108,12 +108,9 @@ getParams  (char **input, char **output, int *convertNull, double *nullValue)
 void convert  (char *openFile, G3D_Region *region, int convertNull, double nullValue)
 
 {
-  double tmp;
    v5dstruct v5d;
    int time, var;
          int nrncnl,cnt;
-         float min, max, sum, sumsum;
-         int missing, good; 
   int x, y, z;
   float value; 
   float res_r,res_c,res_l;
@@ -192,7 +189,6 @@ main  (int argc, char *argv[])
   int useTypeDefault, type, useLzwDefault, doLzw, useRleDefault, doRle;
   int usePrecisionDefault, precision, useDimensionDefault, tileX, tileY, tileZ;
   G3D_Region region;
-  FILE *fp;
   struct GModule *module;
 
   map = NULL;
@@ -225,6 +221,8 @@ main  (int argc, char *argv[])
   if (! G3d_closeCell (map)) 
     fatalError (_("Error closing 3d raster map"));
   map = NULL;
+
+  return 0;
 }
 
 /*---------------------------------------------------------------------------*/

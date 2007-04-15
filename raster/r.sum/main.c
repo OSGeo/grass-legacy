@@ -21,7 +21,6 @@ int main(
     char		*cellmap;
     FILEDESC    	cellfile = 0;
     FCELL		*dbuf, *ibuf; 
-    char 		errbuf[100];
     int			row, col, shh=0; 
     struct Cell_head    w;
 

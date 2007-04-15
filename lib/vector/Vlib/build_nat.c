@@ -69,7 +69,7 @@ Vect_build_line_area ( struct Map_info *Map, int iline, int side )
 	line = abs(lines[j]);
 	BLine = plus->Line[line];
 	offset = BLine->offset;
-	G_debug ( 3, "  line[%d] = %d, offset = %d", j, line, offset );
+	G_debug ( 3, "  line[%d] = %d, offset = %ld", j, line, offset );
 	type = Vect_read_line (Map, Points, NULL, line );
 	if ( lines[j] > 0 ) direction = GV_FORWARD; 
 	else direction = GV_BACKWARD;
@@ -247,7 +247,7 @@ Vect_attach_isle ( struct Map_info *Map, int isle )
     if ( sel_area > 0 ) {
 	Isle = plus->Isle[isle];
 	if ( Isle->area > 0 ) {
-	    G_debug (3, "Attempt to attach isle %d to more areas (=>topology is not clean)");
+	    G_debug (3, "Attempt to attach isle %d to more areas (=>topology is not clean)", isle);
 	} else {
 	    Isle->area = sel_area;
 	    dig_area_add_isle ( plus, sel_area, isle );

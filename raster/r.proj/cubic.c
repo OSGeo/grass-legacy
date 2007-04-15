@@ -1,6 +1,3 @@
-#ifndef lint 
-	static char *SCCSid= "@(#)cubic.c	v1.2 - 02 Jul 1995 	-emes-";
-#endif
 /*
  * Name
  *  cubic.c -- use cubic convolution interpolation for given row, col

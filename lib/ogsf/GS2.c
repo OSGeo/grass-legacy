@@ -658,9 +658,9 @@ void GS_draw_flowline_at_xy(int id, float x, float y)
 /*****************************************************************
  *  * draw fringe around data at selected corners
  *  *****************************************************************/
-int GS_draw_fringe(int id, unsigned long clr, float elev, int *where)
+void GS_draw_fringe(int id, unsigned long clr, float elev, int *where)
 {
-geosurf *gs;
+  geosurf *gs;
 
   if (gs = gs_get_surf(id)) 
              gsd_display_fringe(gs, clr, elev, where);

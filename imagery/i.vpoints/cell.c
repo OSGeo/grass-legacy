@@ -9,8 +9,6 @@ static int choose_cellfile (char *,char *);
 
 int plotcell(int x,int y)
 {
-    int cancel();
-    int plot();
     static Objects objects[] =
     {
 	MENU("CANCEL", cancel, &use),
