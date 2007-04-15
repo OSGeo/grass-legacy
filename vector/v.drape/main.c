@@ -115,7 +115,7 @@ int main(int argc, char *argv[])
     G_get_window(&window);
 
     /* check for the elev raster, and check for error condition */
-    if ((mapset = G_find_cell2(rast_opt->answer, "")) == NULL) {
+    if ((mapset = G_find_cell(rast_opt->answer, "")) == NULL) {
 	G_fatal_error(_("cell file [%s] not found"), rast_opt->answer);
     }
 
