@@ -160,15 +160,58 @@ def test_for_broken_SAX():
 
 class grassTask:
     """This class holds the structures needed for both filling by the parser and
-    use by the interface constructor."""
-    def __init__(self):
+    use by the interface constructor.
+
+    Use as either grassTask() for empty definition or grassTask( "grass.command" )
+    for parsed filling."""
+    def __init__(self, grassModule = None):
         self.name = _('unknown')
         self.params = []
         self.description = ''
         self.flags = []
+        if grassModule is not None:
+            xml.sax.parseString( getInterfaceDescription( grassModule ) , processTask( self ) )
 
-    def buildCmd(self): # TODO: It should be this class' responsibility to build the command, not the gui's.
-        pass
+    def get_param( self, aParam ):
+        """Find and return a param by name."""
+        for p in self.params:
+            if p['name'] == aParam:
+                return p
+        raise ValueError, "Parameter ot found"
+
+    def get_flag( self, aFlag ):
+        """Find and return a flag by name."""
+        for f in self.flags:
+            if f['name'] == aFlag:
+                return f
+        raise ValueError, "Falg not found"
+    
+    def getCmd(self, ignoreErrors = False):
+        """Produce an array of command name and arguments for feeding
+        into some execve-like command processor.
+
+        If ignoreErrors==True then it will return whatever has been
+        built so far, even though it would not be a correct command
+        for GRASS."""
+        cmd = [self.name]
+        errors = 0
+        errStr = ""
+
+        for flag in self.flags:
+            if 'value' in flag and flag['value']:
+                cmd += [ '-' + flag['name'] ]
+        for p in self.params:
+            if p.get('value','') == '' and p.get('required','no') != 'no':
+                cmd += [ '%s=%s' % ( p['name'], _('<required>') ) ]
+                errStr += _("Parameter %s (%s) is missing\n") % ( p['name'], p['description'] )
+                errors += 1
+            if p.get('value','') != '' and p['value'] != p.get('default','') :
+                cmd += [ '%s=%s' % ( p['name'], p['value'] ) ]
+        if errors and not ignoreErrors:
+            raise ValueError, errStr
+            return None
+
+        return cmd
 
 
 class processTask(HandlerBase):
@@ -778,33 +821,6 @@ class cmdPanel(wx.Panel):
                 porf[ 'value' ] = me.GetValue()
         self.OnUpdateValues()
 
-    def buildCmd(self, ignoreErrors = False):
-        """Produce an array of command name and arguments for feeding
-        into some execve-like command processor.
-
-        If ignoreErrors==True then it will return whatever has been
-        built so far, even though it would not be a correct command
-        for GRASS."""
-        cmd = [self.task.name]
-        errors = 0
-        errStr = ""
-        dcmd_params = {}
-
-        for flag in self.task.flags:
-            if 'value' in flag and flag['value']:
-                cmd += [ '-' + flag['name'] ]
-        for p in self.task.params:
-            if p.get('value','') == '' and p.get('required','no') != 'no':
-                cmd += [ p['name'] + '=' + _('<required>')]
-                errStr += _("Parameter %s (%s) is missing\n") % ( p['name'], p['description'] )
-                errors += 1
-            if p.get('value','') != '' and p['value'] != p.get('default','') :
-                cmd += [ p['name'] + '=' + p['value'] ]
-        if errors and not ignoreErrors:
-            self.OnError(errStr)
-            return None
-
-        return cmd
 
     def createCmd( self, ignoreErrors = False ):
         """Produce a command line string for feeding into GRASS.
@@ -812,12 +828,14 @@ class cmdPanel(wx.Panel):
         If ignoreErrors==True then it will return whatever has been
         built so far, even though it would not be a correct command
         for GRASS."""
-        return  ' '.join( self.buildCmd( ignoreErrors=ignoreErrors ) )
-
-    def OnError(self, errMsg):
-        dlg = wx.MessageDialog(self, errMsg, _("Error"), wx.OK | wx.ICON_ERROR)
-        dlg.ShowModal()
-        dlg.Destroy()
+        try:
+            cmd = ' '.join( self.task.getCmd( ignoreErrors=ignoreErrors ) )
+        except ValueError, err:
+            dlg = wx.MessageDialog(self, str(err), _("Error"), wx.OK | wx.ICON_ERROR)
+            dlg.ShowModal()
+            dlg.Destroy()
+            cmd = ''
+        return cmd
 
 
 def getInterfaceDescription( cmd ):
@@ -890,12 +908,17 @@ if __name__ == "__main__":
         print _("usage: %s <grass command>") % sys.argv[0]
         sys.exit()
     if sys.argv[1] != 'test':
-        grass_task = grassTask()
-        handler = processTask(grass_task)
-        xml.sax.parseString( getInterfaceDescription( sys.argv[1] ) , handler )
-        app = GrassGUIApp( grass_task )
-        app.MainLoop()
+        GrassGUIApp( grassTask( sys.argv[1] ) ).MainLoop()
     else: #Test
+        # Test grassTask from within a GRASS session
+        if os.getenv("GISBASE") != '':
+            task = grassTask( "d.vect" )
+            task.get_param('map')['value'] = "map_name"
+            task.get_flag('v')['value'] = True
+            task.get_param('layer')['value'] = 12
+            task.get_param('bcolor')['value'] = "red"
+            assert ' '.join( task.getCmd() ) == "d.vect -v map=map_name layer=12 bcolor=red"
+        # Test interface building with handmade grassTask
         task = grassTask()
         task.name = "TestTask"
         task.description = "This is a artificial grassTask() object intended for testing purposes"
