@@ -27,21 +27,28 @@ namespace eval GRMap {
     variable displayrequest # true if it wants to get displayed.
 
     # Something's modified the canvas or view
-
     # Degree of modification 0 - none, 1 - zoom, 2 - canvas
     variable array grcanmodified
-    variable grcan # The canvas widget of the georectify monitor
-    variable grmapframe # Frame widget
-    variable grcanvas_w # Width and height of canvas
+    # The canvas widget of the georectify monitor
+    variable grcan 
+    # Frame widget
+    variable grmapframe
+    # Width and height of canvas
+    variable grcanvas_w 
     variable grcanvas_h
-    variable driver_w # Actual width and height used while drawing / compositing
-    variable driver_h # Actual width and height used while drawing / compositing
-    variable map_ind # Indicator widgets
+    # Actual width and height used while drawing / compositing
+    variable driver_w 
+    # Actual width and height used while drawing / compositing
+    variable driver_h
+    # Indicator widgets
+    variable map_ind 
     variable initwd
     variable initht
     variable grcursor
-    variable tmpdir # TMP directory for raster display images used in canvas
-    variable msg # status bar message
+    # TMP directory for raster display images used in canvas
+    variable tmpdir
+    # status bar message
+    variable msg 
 
     # variables for coordinate conversions and zooming
     variable linex1
@@ -68,9 +75,12 @@ namespace eval GRMap {
 	variable areaY2
 
     #variable grcoords # geographic coordinates from mouse click
-    variable grcoords_mov # geographic coordinates from mouse movement to display in indicator widget
-    variable grfile # Driver output file (.ppm)
-    variable mappid #process id to use for temp files
+    # geographic coordinates from mouse movement to display in indicator widget
+    variable grcoords_mov
+    # Driver output file (.ppm)
+    variable grfile 
+    #process id to use for temp files
+    variable mappid 
 
     # Current region and region historys
     # Indexed by history (1 (current) - zoomhistories), part (n, s, e, w, nsres, ewres).
@@ -942,7 +952,7 @@ proc GRMap::gcpwin {} {
     set gcp_tb  [$gcp_mf addtoolbar]
     GRMap::gcptb $gcp_tb
 
-        # gcp form creation
+    # gcp form creation
     set gcp_sw [ScrolledWindow $gcp_frame.sw -relief flat \
         -borderwidth 1 ]
     set gcp_sf [ScrollableFrame $gcp_sw.sf -height 200 -width 750]
