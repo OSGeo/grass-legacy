@@ -1,4 +1,4 @@
-# translation of grasslibs_es.po to Español
+# translation of grasslibs_es.po to
 # Spanish translation of grasslibs.pot
 # This file is distributed under the same license as the GRASS package.
 # Copyright (C) 2004 GRASS Development Team
@@ -14,9 +14,9 @@ msgstr ""
 "Project-Id-Version: grasslibs_es\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2007-04-16 19:39+0200\n"
-"PO-Revision-Date: 2007-04-16 19:47+0200\n"
-"Last-Translator: Carlos Davila <carluti@users.sourceforge.net>\n"
-"Language-Team: Español <grass-es@grass.itc.it>\n"
+"PO-Revision-Date: 2007-04-16 23:19+0200\n"
+"Last-Translator: Roberto Antolin <tolanss@yahoo.es>\n"
+"Language-Team:  <es@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=ISO-8859-1\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -398,7 +398,7 @@ msgstr "No es posible abrir el archivo con la tabla de datos: %s"
 #: ../lib/proj/datum.c:425 ../lib/proj/datum.c:489 ../lib/gis/datum.c:196
 #, c-format
 msgid "error in datum table file, line %d"
-msgstr "error en el archivo de la tabla de datos, linea %d"
+msgstr "error en el archivo de la tabla de datos, línea %d"
 
 #: ../lib/proj/ellipse.c:77
 #, c-format
@@ -441,9 +441,8 @@ msgid "Use d.mon to select a monitor"
 msgstr "Use \"d.mon\" para seleccionar un monitor gráfico."
 
 #: ../lib/raster/io_sock.c:113
-#, fuzzy
 msgid "Trying to connect to something not a socket."
-msgstr "Cinectando a un dispositivo que no es un socket."
+msgstr "Conectando a un dispositivo que no es un socket."
 
 #: ../lib/raster/io_sock.c:114
 msgid "Probably program error."
@@ -451,12 +450,11 @@ msgstr "Probablemente error en el programa."
 
 #: ../lib/raster/io_sock.c:120
 msgid "Connect attempt timed out."
-msgstr ""
+msgstr "Tiempo de conexión excedido."
 
 #: ../lib/raster/io_sock.c:121
-#, fuzzy
 msgid "Probably an error with the server."
-msgstr "Tiempo de conexión excedido. Probablemente un error con el servidor.\n"
+msgstr "Probablemente un error con el servidor."
 
 #: ../lib/raster/io_sock.c:129
 msgid "Connection failed."
@@ -553,9 +551,9 @@ msgid "Jacobi -- iteration %5i error %g\n"
 msgstr "Jacobi -- iteración %5i error %g\n"
 
 #: ../lib/gpde/N_solvers.c:1077
-#, fuzzy, c-format
+#, c-format
 msgid "SOR -- iteration %5i error %g\n"
-msgstr "sistemas no lineales (SOR) -- iteración %5i error %g\n"
+msgstr "Resolviendo sistemas no lineales (SOR) -- iteración %5i error %g\n"
 
 #: ../lib/gpde/test/test_main.c:49
 msgid "Choose the unit tests to run"
@@ -801,31 +799,28 @@ msgstr ""
 
 #
 #: ../lib/gpde/test/test_tools.c:34
-#, fuzzy
 msgid ""
 "\n"
 "++ Running math tool unit tests ++"
 msgstr ""
 "\n"
-"++ Ejecutando pruebas de la unidad de solucionado ++"
+"++ Ejecutando pruebas de la unidad de herramientas matemáticas ++"
 
 #: ../lib/gpde/test/test_tools.c:39
-#, fuzzy
 msgid ""
 "\n"
 "-- math tool unit tests failure --"
 msgstr ""
 "\n"
-"-- Las pruebas de la unidad de solucionado fallaron --"
+"-- Las pruebas de la unidad de herramientas matemáticas fallaron --"
 
 #: ../lib/gpde/test/test_tools.c:41
-#, fuzzy
 msgid ""
 "\n"
 "-- math tool unit tests finished successfully --"
 msgstr ""
 "\n"
-"-- Las pruebas de la unidad de solucionado acabaron con éxito --"
+"-- Las pruebas de la unidad de herramientas matemátcias acabaron con éxito --"
 
 #: ../lib/gpde/test/test_solute_transport.c:43
 msgid ""
@@ -1123,7 +1118,7 @@ msgstr "Las lineas %s del archivo <%s> de la tabla del elipsoide son inválidas"
 #: ../lib/gis/get_ellipse.c:457
 #, c-format
 msgid "Line%s of ellipsoid table file <%s> is invalid"
-msgstr "La linea %s del archivo <%s> de la tabla del elipsoide es inválida"
+msgstr "La línea %s del archivo <%s> de la tabla del elipsoide es inválida"
 
 #: ../lib/gis/view.c:180
 #, c-format
@@ -1702,39 +1697,33 @@ msgid "%s complete. %s"
 msgstr "%s completo. %s"
 
 #: ../lib/gis/color_rules.c:113
-#, fuzzy
 msgid "syntax error"
-msgstr "Error del formato de entrada"
+msgstr "error sintáctico"
 
 #: ../lib/gis/color_rules.c:114
 msgid "R/G/B not in range 0-255"
-msgstr ""
+msgstr "El valor R/G/B no se encuentra en el rango 0-255"
 
 #: ../lib/gis/color_rules.c:115
-#, fuzzy
 msgid "invalid color name"
-msgstr "Coordenadas inválidas"
+msgstr "Nombre de color incorrecto"
 
 #: ../lib/gis/color_rules.c:116
 msgid "percentage not in range 0-100"
-msgstr ""
+msgstr "El valor de porcentage no se encuentra en el rango 0-100"
 
 #: ../lib/gis/color_rules.c:117
-#, fuzzy
 msgid "invalid value"
-msgstr ""
-"\n"
-"datum no válido\n"
+msgstr "valor incorrecto"
 
 #: ../lib/gis/color_rules.c:118
-#, fuzzy
 msgid "unknown error"
-msgstr "Tipo de vector desconocido"
+msgstr "error desconocido"
 
 #: ../lib/gis/color_rules.c:149
 #, c-format
 msgid "bad rule (%s): %s"
-msgstr ""
+msgstr "Regla erronea (%s): %s"
 
 #: ../lib/gis/error.c:250
 msgid "WARNING: "
@@ -2216,7 +2205,7 @@ msgstr "No se localiza el campo rows3 "
 #: ../lib/gis/rd_cellhd.c:448
 #, c-format
 msgid "line %d: <%s>"
-msgstr "linea %d: <%s>"
+msgstr "línea %d: <%s>"
 
 #: ../lib/gis/get_projname.c:35
 #, c-format
@@ -2368,9 +2357,8 @@ msgid "not known"
 msgstr "deconocido"
 
 #: ../lib/gis/parser.c:342
-#, fuzzy
 msgid "WHERE conditions of SQL statement without 'where' keyword"
-msgstr "Condiciones DONDE de sentencia SQL sin condición 'donde'."
+msgstr "Condiciones DONDE de sentencia SQL sin condición 'donde'"
 
 #: ../lib/gis/parser.c:343
 msgid "Example: income < 1000 and inhab >= 10000"
@@ -2923,26 +2911,24 @@ msgid "Output name '%s' is not valid vector name."
 msgstr "Nombre final '%s' no es un nombre de vector válido"
 
 #: ../lib/vector/Vlib/snap.c:122 ../lib/vector/Vlib/snap.c:161
-#, fuzzy
 msgid "Registering points"
-msgstr "Registrando lineas: "
+msgstr "Registrando puntos: "
 
 #: ../lib/vector/Vlib/snap.c:170
 msgid "All vertices"
-msgstr ""
+msgstr "Todos los vértices"
 
 #: ../lib/vector/Vlib/snap.c:171
-#, fuzzy
 msgid "Registered points"
-msgstr "Registrando lineas: "
+msgstr "Registrando puntos: "
 
 #: ../lib/vector/Vlib/snap.c:216
 msgid "Nodes marked as anchor"
-msgstr ""
+msgstr "Nodos marcados como fijos"
 
 #: ../lib/vector/Vlib/snap.c:217
 msgid "Nodes marked to be snapped"
-msgstr ""
+msgstr "Nodos marcados para eliminar"
 
 #: ../lib/vector/Vlib/snap.c:226
 msgid "Snaps"
@@ -2950,11 +2936,11 @@ msgstr ""
 
 #: ../lib/vector/Vlib/snap.c:370
 msgid "Snapped vertices"
-msgstr ""
+msgstr "Vértices eliminados"
 
 #: ../lib/vector/Vlib/snap.c:371
 msgid "New vertices"
-msgstr ""
+msgstr "Nuevos vértices"
 
 #: ../lib/vector/Vlib/write.c:23
 msgid "Vect_write_line() for this format/level not supported"
@@ -2975,7 +2961,7 @@ msgstr "El formato requerido no es compilabel en esta versión"
 
 #: ../lib/vector/Vlib/write.c:96
 msgid "Cannot write line, the map is not opened"
-msgstr "No es posible insertar una linea, el mapa no ha sido abierto"
+msgstr "No es posible insertar una línea, el mapa no ha sido abierto"
 
 #: ../lib/vector/Vlib/write.c:107
 msgid "Cannot write line (negative offset)"
@@ -2983,27 +2969,27 @@ msgstr "No es posbible escribir la línea (compensación negativa)"
 
 #: ../lib/vector/Vlib/write.c:143
 msgid "Cannot rewrite line, the map is not opened"
-msgstr "No es posible reescribir una linea, el mapa no ha sido abierto"
+msgstr "No es posible reescribir una línea, el mapa no ha sido abierto"
 
 #: ../lib/vector/Vlib/write.c:154
 msgid "Cannot rewrite line"
-msgstr "No es posible reescribir una linea"
+msgstr "No es posible reescribir una línea"
 
 #: ../lib/vector/Vlib/write.c:197
 #, c-format
 msgid "Cannot delete the line, map '%s' is not opened on level 2"
-msgstr "No es posible borrar la linea, el mapa '%s' no está abierto en nivel 2"
+msgstr "No es posible borrar la línea, el mapa '%s' no está abierto en nivel 2"
 
 #: ../lib/vector/Vlib/write.c:201
 #, c-format
 msgid "Cannot delete the line, map '%s' is not in opened in 'write' mode"
 msgstr ""
-"No es posible borrar la linea, el mapa '%s' no ha sido abierto en modo "
+"No es posible borrar la línea, el mapa '%s' no ha sido abierto en modo "
 "'escritura'"
 
 #: ../lib/vector/Vlib/write.c:213
 msgid "Cannot delete line"
-msgstr "No es posible borrar la linea"
+msgstr "No es posible borrar la línea"
 
 #: ../lib/vector/Vlib/build_ogr.c:258
 #, c-format
@@ -3025,94 +3011,87 @@ msgid "OGR feature without ID ignored."
 msgstr "Entidad OGR sin ID ignorada"
 
 #: ../lib/vector/Vlib/net.c:120
-#, fuzzy
 msgid "Building graph ..."
-msgstr "Creando topología ...\n"
+msgstr "Creando grafo"
 
 #: ../lib/vector/Vlib/net.c:156
 msgid "Cannot build network graph"
-msgstr ""
+msgstr "Imposible crear grafo"
 
 #: ../lib/vector/Vlib/net.c:162
 msgid "Forward costs column not specified"
-msgstr ""
+msgstr "Columna de costos no especificada"
 
 #: ../lib/vector/Vlib/net.c:168
 msgid "Arc field < 1"
 msgstr ""
 
 #: ../lib/vector/Vlib/net.c:170 ../lib/vector/Vlib/net.c:302
-#, fuzzy
 msgid "Cannot get field info"
 msgstr "No se puede obtener información de la capa"
 
 #: ../lib/vector/Vlib/net.c:175 ../lib/vector/Vlib/net.c:306
-#, fuzzy, c-format
+#, c-format
 msgid "Cannot open database <%s> by driver <%s>"
-msgstr "No se puede abrir la base de datos %s"
+msgstr "No se puede abrir la base de datos <%s> con el controlador <%s>"
 
 #: ../lib/vector/Vlib/net.c:180 ../lib/vector/Vlib/net.c:193
 #: ../lib/vector/Vlib/net.c:311
-#, fuzzy
 msgid "Cannot get column info"
-msgstr "No se puede obtener información de la capa"
+msgstr "No se puede obtener información de la columna"
 
 #: ../lib/vector/Vlib/net.c:185 ../lib/vector/Vlib/net.c:198
 #: ../lib/vector/Vlib/net.c:316
-#, fuzzy
 msgid "Column type not supported"
-msgstr "No se soportan entidades del tipo %d OGR"
+msgstr "No se soporta el tipo de columna"
 
 #: ../lib/vector/Vlib/net.c:208
-#, fuzzy
 msgid "Registering arcs ..."
-msgstr "Registrando lineas: "
+msgstr "Registrando arcos: "
 
 #: ../lib/vector/Vlib/net.c:230
 #, c-format
 msgid ""
 "Database record for line %d (cat = %d, forward/both direction(s)) not found "
 "(forward/both direction(s) of line skipped)"
-msgstr ""
+msgstr "El registro de la línea %d (cat = %d, directa/ambas direcciones) no se encuentra (se salta directa/ambas direcciones de línea)"
 
 #: ../lib/vector/Vlib/net.c:244
 #, c-format
 msgid ""
 "Database record for line %d (cat = %d, backword direction) not found"
 "(direction of line skipped)"
-msgstr ""
+msgstr "El registro de la línea %d (cat = %d, dirección inversa) no se encuentra (se salta la dirección de la línea)"
 
 #
 #: ../lib/vector/Vlib/net.c:277
-#, fuzzy
 msgid "Cannot add network arc"
-msgstr "No es posible leer la topología para las áreas"
+msgstr "No es posible añadir arco"
 
 #: ../lib/vector/Vlib/net.c:299
 msgid "Setting node costs ..."
-msgstr ""
+msgstr "Estableciendo costes ..."
 
 #: ../lib/vector/Vlib/net.c:344
-#, fuzzy, c-format
+#, c-format
 msgid "Database record for node %d (cat = %d) not found (cost set to 0)"
-msgstr "No se encuentran registros de base de datos para la categoría %d"
+msgstr "No se encuentra el registro para el nodo %d (cat = %d). El coste se establece como 0"
 
 #: ../lib/vector/Vlib/net.c:368
 msgid "Flattening the graph ..."
-msgstr ""
+msgstr "Suavizando el grafo"
 
 #: ../lib/vector/Vlib/net.c:370
 msgid "GngFlatten error"
-msgstr ""
+msgstr "Error 'GngFlatten'"
 
 #: ../lib/vector/Vlib/net.c:377
-#, fuzzy
 msgid "Graph was built"
-msgstr "La topología fue creada.\n"
+msgstr "El grafo fue creado"
 
 #: ../lib/vector/Vlib/net.c:501
 msgid "Wrong line direction in Vect_net_get_line_cost()"
-msgstr ""
+msgstr "Dirección de línea errónea en 'Vect_net_get_line_cost()'"
 
 #: ../lib/vector/Vlib/open.c:114
 msgid "Programmer requested unknown open_level"
@@ -3197,7 +3176,7 @@ msgstr "Por favor regenera la topología para el vector '%s@%s'"
 #: ../lib/vector/Vlib/read_nat.c:160
 #, c-format
 msgid "Attempt to read dead line [%d]"
-msgstr "Intento de leer una linea inexistente [%d]"
+msgstr "Intento de leer una línea inexistente [%d]"
 
 #: ../lib/vector/Vlib/build.c:135
 msgid "Building topology ...\n"
