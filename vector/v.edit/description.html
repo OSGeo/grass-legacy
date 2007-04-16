@@ -116,14 +116,14 @@ Additional parameters for vector feature specification are:
     
     <li><code>snap</code> - Snap one vector line to another.</li>
 
-    <li><code>vertexadd</code> - Add vertex to the given vector
+    <li><code>vertexadd</code> - Add vertex(ces) to the given vector
     line(s). Location of the new vertex is given by <code>coord<code>
     option.</li>
 
-    <li><code>vertexdel</code> - Remove vertex from given vector line(s)
-    specified by <code>coords</code> option.</li>
+    <li><code>vertexdel</code> - Remove vertex(ces) specified by
+    <code>coords</code> option.</li>
 
-    <li><code>vertexmove</code> - Move vertex(ces) specified
+    <li><code>vertexmove</code> - Move vertices specified
     by <code>coords</code> option. Direction of the movement is
     specified by the <code>move</code> option.</li>
     
@@ -240,6 +240,8 @@ v.edit tool=catdel map=roads id=1 cats=5
 
 <h3>Merge lines</h3>
 
+TODO
+
 <!--
 <p>
 Merge first line defined by coordinates 606853.875,4921332 with second
@@ -271,52 +273,38 @@ v.edit tool=merge map=vectmap cat=43,45
 -->
 
 <h3>Break (split) lines</h3>
-<!--
-<p>
-Split line on coordinates 344556.23,23445.2345.
-</p>
 
-<div class="code"><pre>
-v.edit tool=split map=vectmap coords=344556.23,23445.2345
-</pre></div>
-
-<p>
-Split line of category 45 at coords 345433.3,34567.32.
-</p>
-
-<div class="code"><pre>
-v.edit tool=split map=vectmap cat=45 coords=345433.3,34567.32
-</pre></div>
--->
+TODO
 
 <h3>Snap lines</h3>
 
+TODO
+
 <h3>Add vertex</h3>
 
-<h3>Delete verteces</h3>
-
-<!--
-<p>
-Remove vertex at coordinates 344556.23,23445.2345
-</p>
+Add new vertex to the line located at 600952,4926107, threshold is
+set to 1 map unit. Shape of modified line is not changed.
 
 <div class="code"><pre>
-v.edit tool=straight map=vectmap coords=344556.23,23445.2345
+v.edit tool=vertexadd map=roads coords=600952,4926107 thresh=1
 </pre></div>
--->
 
-<h3>Move verteces</h3>
+<h3>Delete vertices</h3>
 
-<!--
-<p>
-Move vertex on coordinates 344556.23,23445.2345 to
-545556.23,22445.2345
-</p>
+Delete vertex located at 604441,4921088 (threshold set to 0.01 map units). Modify only lines with category 6. 
 
 <div class="code"><pre>
-v.edit tool=vertex map=vectmap coords=344556.23,23445.2345 move=1000,-1000
+v.edit tool=vertexdel map=roads cats=6 coord=604441,4921088 thresh=1-e2
 </pre></div>
--->
+
+<h3>Move vertices</h3>
+
+Move vertices located at 604441,4921088 (threshold set to 100 map units). Modify only lines with category 6. 
+
+<div class="code"><pre>
+v.edit tool=vertexmove map=roads cats=6 coord=604441,4921088 thresh=100 move=1000,1000
+</pre></div>
+
 
 <h3>Select features and print their ID's</h3>
 
