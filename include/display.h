@@ -4,8 +4,6 @@
 #include <grass/gis.h>
 #include <grass/symbol.h>
 
-/* clip.c */
-int D_clip(register double, register double, register double, register double, register double *, register double *, register double *, register double *);
 /* cnversions.c */
 int D_do_conversions(struct Cell_head *, int, int, int, int);
 int D_is_lat_lon(void);
@@ -108,12 +106,6 @@ int D_c_color(CELL, struct Colors *);
 int D_d_color(DCELL, struct Colors *);
 int D_f_color(FCELL, struct Colors *);
 int D_color_of_type(void *, struct Colors *, RASTER_MAP_TYPE);
-/* scan_dbl.c */
-int D_scan_double(char *, double *);
-/* scan_float.c */
-int D_scan_float(char *, float *);
-/* scan_int.c */
-int D_scan_int(char *, int *);
 /* setup.c */
 int D_setup(int);
 /* symbol.c */

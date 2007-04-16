@@ -35,21 +35,22 @@
  *****************************************************************************/
 
 #include <stdlib.h>
+#include <limits.h>
 #include <sys/types.h>
 #include <unistd.h>
 #include <grass/gis.h>
 #include <grass/glocale.h>
 
-long newsize, oldsize;
-int process(char *, int);
-int doit(char *, int, RASTER_MAP_TYPE);
+static off_t newsize, oldsize;
+static int process(char *, int);
+static int doit(char *, int, RASTER_MAP_TYPE);
 
 int main (int argc, char *argv[])
 {
     int stat ;
     int n;
     char *name;
-	struct GModule *module;
+    struct GModule *module;
     struct Option *map;
     struct Flag *uncompress;
 
@@ -98,7 +99,7 @@ int main (int argc, char *argv[])
 }
 
 
-int 
+static int 
 process (char *name, int uncompress)
 {
     struct Colors colr;
@@ -109,9 +110,9 @@ process (char *name, int uncompress)
     int hist_ok;
     int cats_ok;
     int quant_ok;
-    long diff;
+    off_t diff;
     RASTER_MAP_TYPE map_type;
-    char rname[256], rmapset[256];
+    char rname[GNAME_MAX], rmapset[GMAPSET_MAX];
 
     if (G_find_cell (name, G_mapset()) == NULL)
     {
@@ -120,7 +121,10 @@ process (char *name, int uncompress)
     }
     if (G_is_reclass (name, G_mapset(), rname, rmapset) > 0)
     {
-	G_warning (_("[%s] is a reclass file of map <%s> in mapset <%s> - can't %scompress"), name, rname, rmapset, uncompress?"un":"");
+	G_warning (uncompress
+		   ? _("[%s] is a reclass file of map <%s> in mapset <%s> - can't uncompress")
+		   : _("[%s] is a reclass file of map <%s> in mapset <%s> - can't compress"),
+		   name, rname, rmapset);
 	return 1;
     }
 
@@ -155,26 +159,30 @@ process (char *name, int uncompress)
     }
     if (map_type != CELL_TYPE && quant_ok)
 	G_write_quant (name, G_mapset(), &quant);
+
     diff = newsize - oldsize;
     if (diff < 0)
-    {
 	diff = -diff;
-        G_message (_("DONE: %scompressed file is %ld byte%s smaller"), 
-                uncompress?"un":"", diff, diff==1?"":"s");
-    }
-    else if (diff > 0)
-    {
-        G_message (_("DONE: %scompressed file is %ld byte%s bigger"), 
-                uncompress?"un":"", diff, diff==1?"":"s");
-    }
+    if (sizeof(off_t) > sizeof(long) && diff > ULONG_MAX)
+	diff = ULONG_MAX;
+
+    if (newsize < oldsize)
+        G_message (uncompress
+		   ? _("DONE: uncompressed file is %lu bytes smaller")
+		   : _("DONE: compressed file is %lu bytes smaller"), 
+		   (unsigned long) diff);
+    else if (newsize > oldsize)
+        G_message (uncompress
+		   ? _("DONE: uncompressed file is %lu bytes bigger")
+		   : _("DONE: compressed file is %lu bytes bigger"),
+		   (unsigned long) diff);
     else
-    {
 	G_message ("same size");
-    }
+
     return 0;
 }
 
-int 
+static int 
 doit (char *name, int uncompress, RASTER_MAP_TYPE map_type)
 {
     struct Cell_head cellhd ;
@@ -183,9 +191,7 @@ doit (char *name, int uncompress, RASTER_MAP_TYPE map_type)
 
     if (G_get_cellhd (name, G_mapset(), &cellhd) < 0)
     {
-	char msg[100];
-	sprintf (msg,"%s: Problem reading cell header for [%s]", G_program_name(), name);
-	G_warning(msg);
+	G_warning("Problem reading cell header for [%s]", name);
 	return 1;
     }
 
@@ -231,7 +237,7 @@ doit (char *name, int uncompress, RASTER_MAP_TYPE map_type)
     nrows = G_window_rows();
     rast = G_allocate_raster_buf(map_type);
 
-    oldsize = lseek (old, 0L, 2);
+    oldsize = lseek (old, (off_t) 0, SEEK_END);
 
     /* the null file is written automatically */
     for (row = 0; row < nrows; row++)
@@ -252,7 +258,7 @@ doit (char *name, int uncompress, RASTER_MAP_TYPE map_type)
     G_close_cell (new);
     newsize = 0;
     old = G_open_cell_old (name, G_mapset());
-    newsize = lseek (old, 0L, 2);
+    newsize = lseek (old, (off_t) 0, SEEK_END);
     G_close_cell (old);
     return 0;
 }

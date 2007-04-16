@@ -11,10 +11,6 @@
 #include <sys/types.h>
 #endif
 
-#ifndef SEEK_OFFSET
-#define SEEK_OFFSET off_t
-#endif
-
 typedef struct
 {
     int open;		/* open flag */
@@ -36,13 +32,8 @@ typedef struct
     } *scb ;
     int nseg;		/* number of segments in memory */
     int cur;		/* last accessed segment */
-    SEEK_OFFSET offset;	/* offset of data past header */
+    int offset;		/* offset of data past header */
 } SEGMENT ;
-
-#ifndef HAVE_LSEEK
-SEEK_OFFSET lseek();
-#endif
-
 
 #include <grass/gis.h>
 

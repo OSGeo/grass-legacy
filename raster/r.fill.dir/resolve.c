@@ -132,7 +132,7 @@ void resolve(int fd, int nl, struct band3 *bnd)
       advance_band3(fd,bnd);
       for(i=1;i<nl-1;i++)
       {
-         lseek(fd,(i+1)*bnd->sz,SEEK_SET);
+         lseek(fd,(off_t)(i+1)*bnd->sz,SEEK_SET);
          advance_band3(fd,bnd);
 
          if(!active[i])continue;
@@ -151,7 +151,7 @@ void resolve(int fd, int nl, struct band3 *bnd)
             }
          }while(goagain);
 
-         lseek(fd,i*bnd->sz,SEEK_SET);
+         lseek(fd,(off_t)i*bnd->sz,SEEK_SET);
          write(fd,bnd->b[1],bnd->sz);
 
       }
@@ -166,12 +166,12 @@ void resolve(int fd, int nl, struct band3 *bnd)
       activity=0;
       G_message(_("Upward pass %d"),pass);
     
-      lseek(fd,(nl-1)*bnd->sz,SEEK_SET);
+      lseek(fd,(off_t)(nl-1)*bnd->sz,SEEK_SET);
       retreat_band3(fd,bnd);
       retreat_band3(fd,bnd);
       for(i=nl-2;i>=1;i-=1)
       {
-         lseek(fd,(i-1)*bnd->sz,SEEK_SET);
+         lseek(fd,(off_t)(i-1)*bnd->sz,SEEK_SET);
          retreat_band3(fd,bnd);
 
          if(!active[i])continue;
@@ -190,7 +190,7 @@ void resolve(int fd, int nl, struct band3 *bnd)
             }
          }while(goagain);
    
-         lseek(fd,i*bnd->sz,SEEK_SET);
+         lseek(fd,(off_t)i*bnd->sz,SEEK_SET);
          write(fd,bnd->b[1],bnd->sz);
       }
    

@@ -21,7 +21,7 @@
 
 static int _segment_format (int,int,int,int,int,int,int);
 static int write_int(int,int);
-static int zero_fill(int, long);
+static int zero_fill(int, off_t);
 
 /* fd must be open for write */
 
@@ -108,7 +108,7 @@ static int _segment_format(
 	int srows,int scols,
 	int len,int fill)
 {
-    long nbytes ;
+    off_t nbytes ;
     int spr, size;
 
     if (nrows <= 0 || ncols <= 0 || len <= 0 || srows <= 0 || scols <= 0)
@@ -167,7 +167,7 @@ static int write_int (int fd,int n)
 }
 
 
-static int zero_fill(int fd, long nbytes)
+static int zero_fill(int fd, off_t nbytes)
 {
 #ifndef HAVE_LSEEK
     char buf[10240];

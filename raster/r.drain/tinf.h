@@ -1,6 +1,7 @@
-#include <unistd.h>
-#include <math.h>
 #include <limits.h>
+#include <math.h>
+#include <unistd.h>
+#include <sys/types.h>
 /* #include <values.h> */
 
 /* to add a new multiple-type function first add three prototypes
@@ -37,9 +38,9 @@ int put_row_c(int, void *);
 int put_row_f(int, void *);
 int put_row_d(int, void *);
 
-void *get_buf_c();
-void *get_buf_f();
-void *get_buf_d();
+void *get_buf_c(void);
+void *get_buf_f(void);
+void *get_buf_d(void);
 
 void set_min_c(void *);
 void set_min_f(void *);

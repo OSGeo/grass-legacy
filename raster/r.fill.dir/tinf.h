@@ -1,6 +1,7 @@
-#include <unistd.h>
 #include <math.h>
 #include <limits.h>
+#include <unistd.h>
+#include <sys/types.h>
 
 /* to add a new multiple-type function first add three prototypes
  * (one for each type).  The functions themselves must be defined

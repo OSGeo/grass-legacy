@@ -156,18 +156,18 @@ void filldir(int fe, int fd, int nl, struct band3 *bnd)
    advance_band3(fe, bnd);
    for(i=1;i<nl-1;i+=1)
    {
-      lseek(fe,(i+1)*bnd->sz,SEEK_SET);
+      lseek(fe,(off_t)(i+1)*bnd->sz,SEEK_SET);
       advance_band3(fe, bnd);
       if(fill_row(nl,bnd->ns,bnd))
       {
-         lseek(fe,i*bnd->sz,SEEK_SET);
+         lseek(fe,(off_t)i*bnd->sz,SEEK_SET);
          write(fe,bnd->b[1],bnd->sz);
       }
    }
    advance_band3(0, bnd);
    if(fill_row(nl,bnd->ns,bnd))
    {
-      lseek(fe,i*bnd->sz,SEEK_SET);
+      lseek(fe,(off_t)i*bnd->sz,SEEK_SET);
       write(fe,bnd->b[1],bnd->sz);
    }
   
