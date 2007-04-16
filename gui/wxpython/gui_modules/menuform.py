@@ -31,9 +31,9 @@
 #
 # - verify option value types
 # - add tooltips
-# - use DOM instead of SAX !!!
+# - use DOM instead of SAX
 """
-__version__ ="$Revision $"
+__version__ ="$Revision$"
 
 import wx
 import sys
@@ -779,7 +779,7 @@ class cmdPanel(wx.Panel):
         self.OnUpdateValues()
 
     def buildCmd(self, ignoreErrors = False):
-        """Produce an array of command ame and arguments for feeding
+        """Produce an array of command name and arguments for feeding
         into some execve-like command processor.
 
         If ignoreErrors==True then it will return whatever has been
@@ -837,9 +837,6 @@ class GrassGUIApp(wx.App):
     """Stand-alone GRASS command GUI"""
     def __init__(self, grass_task):
         self.grass_task = grass_task
-#XXX        from pprint import pprint
-#        pprint( self.grass_task.params )
-
         wx.App.__init__(self)
 
     def OnInit(self):

@@ -126,7 +126,7 @@
 	How to set up rules for that (same problem for
 	<default>)?
 -->
-<!ELEMENT value	    (name|description|#PCDATA)>
+<!ELEMENT value	    (name, description?)>
 
 
 
