@@ -3,9 +3,9 @@
  * MODULE:     v.edit
  *
  * AUTHOR(S):  GRASS Development Team
+ *             Wolf Bergenheim, Jachym Cepicky, Martin Landa
  *
- * PURPOSE:    This module edits vector maps. It is inteded to be mainly
- * 	       used by the the new v.digit GUI.
+ * PURPOSE:    This module edits vector maps. 
  *
  * COPYRIGHT:  (C) 2002-2007 by the GRASS Development Team
  *
@@ -186,7 +186,7 @@ int main (int argc, char *argv[])
 	print = 0;
 	break;
     default:
-	G_warning(_("Operation not implemented."));
+	G_warning(_("Operation not implemented"));
 	ret = -1;
 	break;
     }
@@ -215,7 +215,7 @@ int main (int argc, char *argv[])
     
     G_debug(1, "Map closed");
 
-    G_done_msg ("");
+    G_done_msg (NULL);
 
     if (ret > -1) {
 	exit (EXIT_SUCCESS);
