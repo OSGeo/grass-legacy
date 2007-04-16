@@ -347,7 +347,9 @@ class BufferedWindow(wx.Window):
     	"""
         All that is needed here is to draw the buffer to screen
         """
-    	dc = wx.BufferedPaintDC(self)
+
+        self._Buffer = wx.EmptyBitmap(self.Map.width, self.Map.height)
+    	dc = wx.BufferedPaintDC(self, self._Buffer)
 
         # use PrepateDC to set position correctly
         self.PrepareDC(dc)
@@ -683,7 +685,6 @@ class BufferedWindow(wx.Window):
             # dragging or drawing box with left button
             if self.mouse['box'] == 'pan':
                 self.DragMap(end)
-                self.DragItem(99, event)
 
             # dragging decoration overlay item
             elif self.mouse['box'] == 'point' and self.dragid != None and self.dragid != 99:
@@ -1140,6 +1141,13 @@ class MapFrame(wx.Frame):
         """
         self.MapWindow.UpdateMap()
 
+    def ReRender(self, event):
+        """
+        Rerender button clicked
+        """
+        self.render = True
+        self.MapWindow.UpdateMap()
+
     def Pointer(self, event):
         """Pointer button clicled"""
         self.MapWindow.mouse['box'] = "point"
@@ -1217,13 +1225,29 @@ class MapFrame(wx.Frame):
         """
         Save to file
         """
+        filetype =  "PNG file (*.png)|*.png|"\
+                    "TIF file (*.tif)|*.tif|"\
+                    "GIF file (*.gif)|*.gif"
+
         dlg = wx.FileDialog(self, "Choose a file name to save the image as a PNG to",
             defaultDir = "",
             defaultFile = "",
-            wildcard = "*.png",
-            style=wx.SAVE)
+            wildcard = filetype,
+            style=wx.SAVE|wx.FD_OVERWRITE_PROMPT)
         if dlg.ShowModal() == wx.ID_OK:
-            self.MapWindow.SaveToFile(dlg.GetPath(), wx.BITMAP_TYPE_PNG)
+            base = os.path.splitext(dlg.GetPath())[0]
+            ext = os.path.splitext(dlg.GetPath())[1]
+            if dlg.GetFilterIndex() == 0:
+                type = wx.BITMAP_TYPE_PNG
+                path = dlg.GetPath()
+                if ext != '.png': path = base+'.png'
+            elif dlg.GetFilterIndex() == 1:
+                type = wx.BITMAP_TYPE_TIF
+                if ext != '.tif': path = base+'.tif'
+            elif dlg.GetFilterIndex() == 2:
+                type = wx.BITMAP_TYPE_TIF
+                if ext != '.gif': path = base+'.gif'
+            self.MapWindow.SaveToFile(path, type)
         dlg.Destroy()
 
     def PrintMap(self, event):
