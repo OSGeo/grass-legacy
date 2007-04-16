@@ -43,22 +43,17 @@ class Debug:
 
     def msg (self, level, message):
         self._update_level()
-        if self.debuglevel > 0 and level >= self.debuglevel:
-            print "D%d/%d: %s" % (level, level, message)
+        if self.debuglevel > 0 and level > 0 and level <= self.debuglevel:
+            print "GUI D%d/%d: %s" % (level, level, message)
 
+# Debug instance
+Debug = Debug()
 
 # testing
 if __name__ == "__main__":
     import cmd
     cmd.Command (cmd="g.gisenv set=DEBUG=3")
-
-    for unit in range (2):
-        if unit == 1:
-            cmd.Command (cmd="g.gisenv set=DEBUG=0")
-            
-        reload (grassenv) # reload GRASS environments !
-        debug = Debug()
-        
-        print "DEBUG=%d" % debug.debuglevel
-        for level in range (4):
-            debug.msg (level, "message level=%d" % level)
+    reload (grassenv) # reload GRASS environments !
+                
+    for level in range (4):
+        Debug.msg (level, "message level=%d" % level)
