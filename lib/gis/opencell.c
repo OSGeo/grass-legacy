@@ -1023,14 +1023,12 @@ RASTER_MAP_TYPE G__check_fp_type (const char *name, const char *mapset)
 
 {
    char path[1024];
-   char element[100];
    struct Key_Value *format_keys;
    int in_stat;
    char *str,*str1;
    RASTER_MAP_TYPE map_type;
 
-   sprintf(element,"cell_misc/%s",name); 
-   G__file_name(path,element,FORMAT_FILE,mapset);
+   G__file_name_misc(path,"cell_misc",FORMAT_FILE,name,mapset);
      
    if (access(path,0) != 0) {
       G_warning (_("unable to find [%s]"),path);
