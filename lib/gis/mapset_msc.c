@@ -54,6 +54,14 @@ int G__make_mapset_element (const char *p_element)
     }
 }
 
+int G__make_mapset_element_misc (const char *dir, const char *name)
+{
+    char buf[GNAME_MAX*2+1];
+
+    sprintf(buf, "%s/%s", dir, name);
+    return G__make_mapset_element(buf);
+}
+
 /****************************************************************
 * G__mapset_permissions (mapset)
 *

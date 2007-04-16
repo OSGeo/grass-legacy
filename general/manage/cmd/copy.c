@@ -12,7 +12,6 @@ int main (int argc, char *argv[])
     struct GModule *module;
     struct Option **parm, *p;
     char *from, *to;
-    char buf1[256], *location_path;
     int result = EXIT_SUCCESS;
 
     init (argv[0]);
@@ -42,8 +41,6 @@ int main (int argc, char *argv[])
 
     if (G_parser(argc, argv))
         exit(EXIT_FAILURE);
-
-    location_path = G__location_path();
 
     for (n = 0; n < nlist; n++)
     {
@@ -81,9 +78,7 @@ int main (int argc, char *argv[])
             {
                 result = EXIT_FAILURE;
             }
-	    sprintf (buf1, "%s/%s/cell_misc/%s/reclassed_to",
-			    location_path, mapset, to);
-	    remove(buf1);
+	    G_remove_misc("cell_misc", "reclassed_to", to);
         }
     }
 

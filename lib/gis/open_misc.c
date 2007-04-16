@@ -1,76 +1,22 @@
-/*
- *****************************************************************
- * open routines
+/****************************************************************************
  *
- * G__open (element, name, mapset, mode)
- *      char *element         database element name
- *      char *name            map file name
- *      char *mapset          mapset containing map "name"
- *      int mode              0=read, 1=write, 2=read/write
- * 
- *      this is the lowest level open routine.
- *      opens the file 'name' in 'element' ("cell", etc)
- *      in mapset 'mapset' according to the i/o 'mode'
+ * MODULE:       gis library
+ * AUTHOR(S):    Glynn Clements <glynn@gclements.plus.com>
+ * COPYRIGHT:    (C) 2007 Glynn Clements and the GRASS Development Team
  *
- *      mode = 0 (read) will look for 'name' in 'mapset'
- *               and open the file for read only
- *               the file must exist
+ * NOTE:         Based upon open.c
  *
- *      mode = 1 (write) will create an empty file 'name' in the
- *               current mapset and open the file for write only
- *               'mapset' ignored
+ *  This program is free software; you can redistribute it and/or modify
+ *  it under the terms of the GNU General Public License as published by
+ *  the Free Software Foundation; either version 2 of the License, or
+ *  (at your option) any later version.
  *
- *      mode = 2 (read and write) will open a file in the
- *               current mapset for reading and writing
- *               creating a new file if necessary
- *               'mapset' ignored
+ *  This program is distributed in the hope that it will be useful,
+ *  but WITHOUT ANY WARRANTY; without even the implied warranty of
+ *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ *  GNU General Public License for more details.
  *
- *      returns: open file descriptor (int)
- *               or -1 could not open
- *
- *******************************************************************
- * G_open_new (element, name)
- *      char *element         database element name
- *      char *name            map file name
- *
- *      creates 'name' in the current mapset and opens it
- *      for write only.
- *
- *      returns: open file descriptor (int)
- *               or -1 could not open
- *
- *******************************************************************
- * G_open_old (element, name, mapset)
- *      char *element         database element name
- *      char *name            map file name
- *      char *mapset          mapset containing map "name"
- *
- *      opens 'name' in 'mapset' for read only.
- *
- *      returns: open file descriptor (int)
- *               or -1 could not open
- *
- *******************************************************************
- * G_fopen_new (element, name)
- *      char *element         database element name
- *      char *name            map file name
- *
- *      creates 'name' in the current mapset and opens it
- *      for write only.
- *
- *      returns: open file descriptor (FILE *)
- *               or NULL could not open
- *
- *******************************************************************
- * G_fopen_old (element, name, mapset)
- *      char *element         database element name
- *      char *name            map file name
- *
- *      opens 'name' in 'mapset' for read only.
- *
- *      returns: open file descriptor (FILE *)
- *               or NULL could not open
- *******************************************************************/
+ *****************************************************************************/
 
 #include <grass/config.h>
 #include <string.h>
@@ -90,14 +36,15 @@
 int _fmode = _O_BINARY;
 #endif 
 
-static int G__open (
+static int G__open_misc (
+    const char *dir,
     const char *element,
     const char *name,
     const char *mapset,
     int mode)
 {
-    char path[1024];
-    char xname[512], xmapset[512], *dummy;
+    char path[GPATH_MAX];
+    char xname[GNAME_MAX], xmapset[GMAPSET_MAX], *dummy;
 
 
     G__check_gisinit();
@@ -114,10 +61,10 @@ static int G__open (
 	    }
 	    name = xname;
 	}
-	if ((dummy = G_find_file2 (element, name, mapset)) == NULL)
+	if ((dummy = G_find_file2_misc (dir, element, name, mapset)) == NULL)
 	    return -1;
 	G_free (dummy);
-	G__file_name (path, element, name, mapset);
+	G__file_name_misc (path, dir, element, name, mapset);
 
 	return open (path, 0);
     }
@@ -137,10 +84,10 @@ static int G__open (
 	if (G_legal_filename(name) == -1)
 	    return -1;
 
-	G__file_name (path, element, name, G_mapset());
+	G__file_name_misc (path, dir, element, name, G_mapset());
 	if(mode == 1 || access(path,0) != 0)
 	{
-	    G__make_mapset_element (element);
+	    G__make_mapset_element_misc (dir, name);
 	    close (creat (path, 0666));
 	}
 
@@ -164,9 +111,9 @@ static int G__open (
  *  \return int
  */
 
-int G_open_new (const char *element,const char *name)
+int G_open_new_misc (const char *dir,const char *element,const char *name)
 {
-    return G__open (element, name, G_mapset(), 1);
+    return G__open_misc (dir, element, name, G_mapset(), 1);
 }
 
 
@@ -185,9 +132,9 @@ int G_open_new (const char *element,const char *name)
  *  \return int
  */
 
-int G_open_old (const char *element,const char *name,const char *mapset)
+int G_open_old_misc (const char *dir,const char *element,const char *name,const char *mapset)
 {
-    return G__open (element, name, mapset, 0);
+    return G__open_misc (dir, element, name, mapset, 0);
 }
 
 
@@ -205,10 +152,10 @@ int G_open_old (const char *element,const char *name,const char *mapset)
  *  \return int
  */
 
-int G_open_update (const char *element,const char *name)
+int G_open_update_misc (const char *dir,const char *element,const char *name)
 {
     int fd;
-    fd = G__open (element, name, G_mapset(), 2);
+    fd = G__open_misc (dir, element, name, G_mapset(), 2);
     if (fd >= 0) lseek (fd, 0L, SEEK_END);
 
     return fd;
@@ -230,11 +177,11 @@ int G_open_update (const char *element,const char *name)
  *  \return FILE * 
  */
 
-FILE *G_fopen_new (const char *element,const char *name)
+FILE *G_fopen_new_misc (const char *dir,const char *element,const char *name)
 {
     int fd;
 
-    fd = G__open (element, name, G_mapset(), 1);
+    fd = G__open_misc (dir, element, name, G_mapset(), 1);
     if (fd < 0)
 	return (FILE *) 0;
 
@@ -259,11 +206,11 @@ FILE *G_fopen_new (const char *element,const char *name)
  */
 
 FILE *
-G_fopen_old (const char *element,const char *name,const char *mapset)
+G_fopen_old_misc (const char *dir,const char *element,const char *name,const char *mapset)
 {
     int fd;
 
-    fd = G__open (element, name, mapset, 0);
+    fd = G__open_misc (dir, element, name, mapset, 0);
     if (fd < 0)
 	return (FILE *) 0;
 
@@ -271,11 +218,11 @@ G_fopen_old (const char *element,const char *name,const char *mapset)
 }
 
 FILE *
-G_fopen_append (const char *element,const char *name)
+G_fopen_append_misc (const char *dir,const char *element,const char *name)
 {
     int fd;
 
-    fd = G__open (element, name, G_mapset(), 2);
+    fd = G__open_misc (dir, element, name, G_mapset(), 2);
     if (fd < 0)
 	return (FILE *) 0;
     lseek (fd, 0L, SEEK_END);
@@ -283,11 +230,11 @@ G_fopen_append (const char *element,const char *name)
     return fdopen (fd, "a");
 }
 
-FILE *G_fopen_modify (const char *element,const char *name)
+FILE *G_fopen_modify_misc (const char *dir,const char *element,const char *name)
 {
     int fd;
 
-    fd = G__open (element, name, G_mapset(), 2);
+    fd = G__open_misc (dir, element, name, G_mapset(), 2);
     if (fd < 0)
 	return (FILE *) 0;
     lseek (fd, 0L, SEEK_END);

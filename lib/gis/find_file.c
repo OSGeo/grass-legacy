@@ -2,13 +2,15 @@
 #include <unistd.h>
 #include <grass/gis.h>
 
-static char *G__find_file (
+static char *find_file (
+    int misc,
+    const char *dir,
     const char *element,
     const char *name,
     const char *mapset)
 {
-    char path[1000];
-    char xname[512], xmapset[512];
+    char path[GPATH_MAX];
+    char xname[GNAME_MAX], xmapset[GMAPSET_MAX];
     const char *pname, *pmapset;
     int n;
 
@@ -48,8 +50,13 @@ static char *G__find_file (
     {
 	int cnt = 0;
 	const char *pselmapset = NULL;
-	for (n = 0; (pmapset = G__mapset_name(n)); n++) {
-	    if (access(G__file_name (path, element, pname, pmapset), 0) == 0) {
+	for (n = 0; (pmapset = G__mapset_name(n)); n++)
+	{
+	    if (misc)
+		G__file_name_misc (path, dir, element, pname, pmapset);
+	    else
+		G__file_name (path, element, pname, pmapset);
+	    if (access(path, 0) == 0) {
 		if ( !pselmapset )
 		    pselmapset = pmapset;
 		else
@@ -72,13 +79,47 @@ static char *G__find_file (
  */
     else
     {
-	if (access(G__file_name (path, element, pname, pmapset),0) == 0)
-		return G_store (pmapset);
+	if (misc)
+	    G__file_name_misc (path, dir, element, pname, pmapset);
+	else
+	    G__file_name (path, element, pname, pmapset);
+	if (access(path,0) == 0)
+	    return G_store (pmapset);
     }
     return NULL;
 }
 
 
+
+static char *find_file1 (
+    int misc,
+    const char *dir,
+    const char *element,
+    char *name,
+    const char *mapset)
+{
+    char xname[GNAME_MAX], xmapset[GMAPSET_MAX];
+    const char *pname, *pmapset;
+    char *mp;
+
+    if (G__name_is_fully_qualified(name, xname, xmapset))
+    {
+	pname = xname;
+	pmapset = xmapset;
+    }
+    else
+    {
+	pname = name;
+	pmapset = mapset;
+    }
+
+    mp = find_file(misc, dir, element, pname, pmapset);
+
+    if (mp && name != pname)
+	strcpy(name, pname);
+
+    return mp;
+}
 
 /*!
  * \brief searches for a file from the mapset search list
@@ -110,29 +151,17 @@ char *G_find_file (
     char *name,
     const char *mapset)
 {
-    char xname[512], xmapset[512];
-    const char *pname, *pmapset;
-    char *mp;
-
-    if (G__name_is_fully_qualified(name, xname, xmapset))
-    {
-	pname = xname;
-	pmapset = xmapset;
-    }
-    else
-    {
-	pname = name;
-	pmapset = mapset;
-    }
-
-    mp = G__find_file (element, pname, pmapset);
-
-    if (mp && name != pname)
-	strcpy(name, pname);
-
-    return mp;
+    return find_file1(0, NULL, element, name, mapset);
 }
 
+char *G_find_file_misc (
+    const char *dir,
+    const char *element,
+    char *name,
+    const char *mapset)
+{
+    return find_file1(1, dir, element, name, mapset);
+}
 
 
 /*!
@@ -160,5 +189,14 @@ char *G_find_file2 (
     const char *name,
     const char *mapset)
 {
-    return G__find_file (element, name, mapset);
+    return find_file(0, NULL, element, name, mapset);
+}
+
+char *G_find_file2_misc (
+    const char *dir,
+    const char *element,
+    const char *name,
+    const char *mapset)
+{
+    return find_file(1, dir, element, name, mapset);
 }

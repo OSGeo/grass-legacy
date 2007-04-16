@@ -285,18 +285,18 @@ int G_get_timestamps (
  * -2 error - invalid datetime in ts
  */
 static int write_timestamp (
-    const char *maptype, const char *mapname, const char *element, const char *filename,
+    const char *maptype, const char *dir, const char *name,
     struct TimeStamp *ts)
 {
     FILE *fd;
     int stat;
 
-    fd = G_fopen_new (element, filename);
+    fd = G_fopen_new_misc (dir, "timestamp", name);
     if (fd == NULL)
     {
 	G_warning (
 		_("Can't create timestamp file for %s map %s in mapset %s"),
-		maptype, mapname, G_mapset());
+		maptype, name, G_mapset());
 	return -1;
     }
 
@@ -306,7 +306,7 @@ static int write_timestamp (
 	return 1;
     G_warning (
 	    _("Invalid timestamp specified for %s map %s in mapset %s"),
-	    maptype, mapname, G_mapset());
+	    maptype, name, G_mapset());
     return -2;
 }
 
@@ -317,21 +317,20 @@ static int write_timestamp (
  * -2 error - invalid datetime values in timestamp file
  */
 static int read_timestamp (
-    const char *maptype, const char *mapname, const char *mapset,
-    const char *element, const char *filename,
+    const char *maptype, const char *dir, const char *name, const char *mapset,
     struct TimeStamp *ts)
 {
     FILE *fd;
     int stat;
 
-    if (!G_find_file2 (element, filename, mapset))
+    if (!G_find_file2_misc (dir, "timestamp", name, mapset))
 	return 0;
-    fd = G_fopen_old (element, filename, mapset);
+    fd = G_fopen_old_misc (dir, "timestamp", name, mapset);
     if (fd == NULL)
     {
 	G_warning (
 		_("Can't open timestamp file for %s map %s in mapset %s"),
-		maptype, mapname, mapset);
+		maptype, name, mapset);
 	return -1;
     }
 
@@ -341,7 +340,7 @@ static int read_timestamp (
 	return 1;
     G_warning (
 	    _("Invalid timestamp file for %s map %s in mapset %s"),
-	    maptype, mapname, mapset);
+	    maptype, name, mapset);
     return -2;
 }
 
@@ -366,10 +365,7 @@ int G_read_raster_timestamp (
     const char *name, const char *mapset,
     struct TimeStamp *ts)
 {
-    char element[128];
-
-    sprintf (element, "%s/%s", RAST_MISC, name);
-    return read_timestamp ("raster", name, mapset, element, "timestamp", ts);
+    return read_timestamp ("raster", RAST_MISC, name, mapset, ts);
 }
 
 
@@ -387,10 +383,7 @@ int G_read_raster_timestamp (
  */
 int G_remove_raster_timestamp (const char *name)
 {
-    char element[128];
-
-    sprintf (element, "%s/%s", RAST_MISC, name);
-    return G_remove(element, "timestamp");
+    return G_remove_misc(RAST_MISC, "timestamp", name);
 }
 
 
@@ -411,10 +404,7 @@ int G_read_vector_timestamp (
     const char *name, const char *mapset,
     struct TimeStamp *ts)
 {
-    char element[128];
-
-    sprintf (element, "%s/%s", VECT_MISC, name);
-    return read_timestamp ("vector", name, mapset, element, "timestamp", ts);
+    return read_timestamp ("vector", VECT_MISC, name, mapset, ts);
 }
 
 
@@ -435,10 +425,7 @@ int G_read_vector_timestamp (
  */
 int G_remove_vector_timestamp (const char *name)
 {
-    char element[128];
-
-    sprintf (element, "%s/%s", VECT_MISC, name);
-    return G_remove(element, "timestamp");
+    return G_remove_misc(VECT_MISC, "timestamp", name);
 }
 
 
@@ -457,10 +444,7 @@ int G_read_grid3_timestamp (
     const char *name, const char *mapset,
     struct TimeStamp *ts)
 {
-    char element[128];
-
-    sprintf (element, "%s/%s", GRID3, name);
-    return read_timestamp ("grid3", name, mapset, element, "timestamp", ts);
+    return read_timestamp ("grid3", GRID3, name, mapset, ts);
 }
 
 
@@ -478,10 +462,7 @@ int G_read_grid3_timestamp (
  */
 int G_remove_grid3_timestamp (const char *name)
 {
-    char element[128];
-
-    sprintf (element, "%s/%s", GRID3, name);
-    return G_remove(element, "timestamp");
+    return G_remove_misc(GRID3, "timestamp", name);
 }
 
 
@@ -502,10 +483,7 @@ int G_write_raster_timestamp (
     const char *name,
     struct TimeStamp *ts)
 {
-    char element[128];
-
-    sprintf (element, "%s/%s", RAST_MISC, name);
-    return write_timestamp ("raster", name, element, "timestamp", ts);
+    return write_timestamp ("raster", RAST_MISC, name, ts);
 }
 
 
@@ -526,10 +504,7 @@ int G_write_vector_timestamp (
     const char *name,
     struct TimeStamp *ts)
 {
-    char element[128];
-
-    sprintf (element, "%s/%s", VECT_MISC, name);
-    return write_timestamp ("vector", name, element, "timestamp", ts);
+    return write_timestamp ("vector", VECT_MISC, name, ts);
 }
 
 
@@ -549,8 +524,5 @@ int G_write_grid3_timestamp (
     const char *name,
     struct TimeStamp *ts)
 {
-    char element[128];
-
-    sprintf (element, "%s/%s", GRID3, name);
-    return write_timestamp ("grid3", name, element, "timestamp", ts);
+    return write_timestamp ("grid3", GRID3, name, ts);
 }

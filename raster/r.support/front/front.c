@@ -238,8 +238,7 @@ int main(int argc, char *argv[])
             null_bits[col] = 0;
 
         /* Open null file for writing */
-        sprintf(element, "cell_misc/%s", raster->answer);
-        null_fd = G_open_new(element, "null");
+        null_fd = G_open_new_misc("cell_misc", "null", raster->answer);
  
         G_message(_("Writing new null file for [%s]... "), raster->answer);
         for (row = 0; row < cellhd.rows; row++) {
@@ -271,9 +270,8 @@ int main(int argc, char *argv[])
         /* Write a file of no-nulls */
         G_message(_("Removing null file for [%s]...\n"), raster->answer);
 
-        G_snprintf(element, sizeof(element), "cell_misc/%s", raster->answer);
-        null_fd = G_open_new(element, "null");
-        G__file_name(path, element, "null", mapset);
+        null_fd = G_open_new_misc("cell_misc", "null", raster->answer);
+        G__file_name_misc(path, "cell_misc", "null", raster->answer, mapset);
         unlink(path);
         close(null_fd);
 

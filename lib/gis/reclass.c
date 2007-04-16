@@ -66,16 +66,9 @@ int G_is_reclassed_to (const char *name, const char *mapset, int *nrmaps, char *
 {
     FILE *fd;
     int i, j, k, l;
-    char buf1[256], buf2[256], buf3[256], *p;
+    char buf2[256], buf3[256];
 
-    strcpy(buf2, name);
-    if ((p = strchr(buf2, '@')))
-        *p = 0;
-
-    sprintf (buf1, "%s/%s/cell_misc/%s/reclassed_to",
-    		G__location_path(), mapset, buf2);
-
-    fd = fopen(buf1, "r");
+    fd = G_fopen_old_misc("cell_misc", "reclassed_to", name, mapset);
 
     if (fd == NULL)
     {
@@ -226,7 +219,7 @@ int G_put_reclass (const char *name, const struct Reclass *reclass)
     FILE *fd;
     long min, max;
     int i;
-    char buf1[256], buf2[256], buf3[256], *p;
+    char buf1[GPATH_MAX], buf2[256], buf3[256], *p;
 
     switch (reclass->type)
     {
@@ -289,8 +282,7 @@ int G_put_reclass (const char *name, const struct Reclass *reclass)
     if ((p = strchr(buf2, '@')))
         *p = 0;
 
-    sprintf (buf1, "%s/%s/cell_misc/%s/reclassed_to",
-    		G__location_path(), reclass->mapset, buf2);
+    G__file_name_misc(buf1, "cell_misc", "reclassed_to", reclass->name, reclass->mapset);
 
     fd = fopen(buf1, "a+");
     if (fd == NULL)

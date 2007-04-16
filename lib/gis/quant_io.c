@@ -117,7 +117,7 @@ G__quant_import  (const char *name, const char *mapset, struct Quant *quant)
 {
   char buf[1024];
   char *err;
-  char xname[512], xmapset[512], element[512];
+  char xname[GNAME_MAX], xmapset[GMAPSET_MAX], element[GNAME_MAX+7];
   int parsStat;
   FILE *fd;
   
@@ -148,9 +148,7 @@ G__quant_import  (const char *name, const char *mapset, struct Quant *quant)
   }
 
   /* now try reading regular : cell_misc/name/quant file */
-  sprintf (element, "cell_misc/%s", name);
-
-  if (! (fd = G_fopen_old (element, QUANT_FILE_NAME, mapset))) {
+  if (! (fd = G_fopen_old_misc ("cell_misc", QUANT_FILE_NAME, name, mapset))) {
 
     /* int range doesn't exist anymore if (quant_load_range (quant, name, mapset)>0) return 3; */
     err = "missing";
@@ -282,8 +280,8 @@ int
 G__quant_export  (const char *name, const char *mapset, const struct Quant *quant)
 
 {
-  char element[512];
-  char xname[512], xmapset[512];
+  char element[GNAME_MAX+7];
+  char xname[GNAME_MAX], xmapset[GMAPSET_MAX];
   FILE *fd;
 
   if (G__name_is_fully_qualified (name, xname, xmapset)) {
@@ -293,10 +291,9 @@ G__quant_export  (const char *name, const char *mapset, const struct Quant *quan
 
   if(strcmp (G_mapset(), mapset) == 0)
   {
-     sprintf (element, "cell_misc/%s", name);
-     G_remove (element, QUANT_FILE_NAME);
-     G__make_mapset_element (element);
-     if (! (fd = G_fopen_new (element, QUANT_FILE_NAME))) return -1;
+     G_remove_misc("cell_misc", QUANT_FILE_NAME, name);
+     G__make_mapset_element_misc ("cell_misc", name);
+     if (! (fd = G_fopen_new_misc ("cell_misc", QUANT_FILE_NAME, name))) return -1;
   }
   else
   {

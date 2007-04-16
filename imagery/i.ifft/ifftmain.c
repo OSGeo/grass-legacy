@@ -34,7 +34,6 @@ main (int argc, char *argv[])
         char *realmapset, *imagmapset; /* the input mapset names */
         struct Cell_head orig_wind, realhead;
         CELL *cell_row, *maskbuf = NULL;
-        char buffer[100];
 
         int i,j;         /* Loop control variables */
         int or,oc;      /* Original dimensions of image */
@@ -42,7 +41,6 @@ main (int argc, char *argv[])
         long totsize;         /* Total number of data points */
         int halfrows, halfcols ;
         double *data[2]; /* Data structure containing real & complex values of FFT */
-        int inv_save_args(); /* function to stash the command line arguments */
         struct Option *op1, *op2, *op3;
         struct GModule *module;
         const char *me;
@@ -53,7 +51,7 @@ main (int argc, char *argv[])
         /* Set description */
         module              = G_define_module();
         module->keywords = _("imagery");
-    module->description = 
+	module->description = 
             _("Inverse Fast Fourier Transform (ifft) for image processing.");
 
         /* define options */
@@ -90,20 +88,18 @@ main (int argc, char *argv[])
         strcpy(Cellmap_orig, op3->answer) ;
 
         /* open input raster map */
-        if ((realmapset = G_find_cell2(Cellmap_real, "")) == NULL)
+        if ((realmapset = G_find_cell(Cellmap_real, "")) == NULL)
                 G_fatal_error(_("%s: %s - Unable to find the real-image map."),
                               me, Cellmap_real);
 
-        sprintf(buffer, "cell_misc/%s", Cellmap_real);
-        if ((realfp = G_fopen_old(buffer, FFTREAL, realmapset)) == NULL)
+        if ((realfp = G_fopen_old_misc("cell_misc", FFTREAL, Cellmap_real, realmapset)) == NULL)
                 G_fatal_error(_("Unable to open real-image in the cell_misc directory.\nInput map probably wasn't created by i.fft"));
 
-        if ((imagmapset = G_find_cell2(Cellmap_imag, "")) == NULL)
+        if ((imagmapset = G_find_cell(Cellmap_imag, "")) == NULL)
                 G_fatal_error(_("%s: %s - Unable to find the imaginary-image."),
                               me, Cellmap_imag);
 
-        sprintf(buffer, "cell_misc/%s", Cellmap_imag);
-        if ((imagfp = G_fopen_old(buffer, FFTIMAG, imagmapset)) == NULL)
+        if ((imagfp = G_fopen_old_misc("cell_misc", FFTIMAG, Cellmap_imag, imagmapset)) == NULL)
                 G_fatal_error(_("Unable to open imaginary-image in the cell_misc directory.\nInput map probably wasn't created by i.fft"));
 
         /* check command line args for validity */

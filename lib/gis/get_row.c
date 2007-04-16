@@ -856,7 +856,6 @@ static int open_null_read(int fd)
     struct fileinfo *fcb = &G__.fileinfo[fd];
     char *name, *mapset, *dummy;
     int null_fd;
-    char dir_name[GNAME_MAX];
 
     if (fcb->null_file_exists == 0)
 	return -1;
@@ -872,8 +871,7 @@ static int open_null_read(int fd)
 	mapset = fcb->mapset;
     }
 			 
-    sprintf(dir_name, "cell_misc/%s", name);
-    dummy = G_find_file(dir_name, NULL_FILE, mapset);
+    dummy = G_find_file_misc("cell_misc", NULL_FILE, name, mapset);
 
     if (!dummy)
     {
@@ -884,7 +882,7 @@ static int open_null_read(int fd)
 
     G_free(dummy);
  
-    null_fd = G_open_old(dir_name, NULL_FILE, mapset);
+    null_fd = G_open_old_misc("cell_misc", NULL_FILE, name, mapset);
     if (null_fd < 0)
 	return -1;
 
