@@ -183,7 +183,7 @@ class DigitToolbar:
 
         self.mapcontent = map
         self.parent     = parent
-        self.icons      = os.path.join (icons, "v.digit")
+        self.icons      = os.path.join (os.getenv("GISBASE"), "etc/v.digit")
 
         # selected map to digitize
         self.layerID    = -1
