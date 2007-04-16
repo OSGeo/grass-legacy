@@ -1,3 +1,21 @@
+/***********************************************************************
+ *
+ * MODULE:       lidarlib
+ *
+ * AUTHOR(S):    Roberto Antolin
+ *
+ * PURPOSE:      LIDAR library
+ *
+ * COPYRIGHT:    (C) 2006 by Politecnico di Milano -
+ *                           Polo Regionale di Como
+ *
+ *               This program is free software under the
+ *               GNU General Public License (>=v2).
+ *               Read the file COPYING that comes with GRASS
+ *               for details.
+ *
+ **************************************************************************/
+
 #ifndef _POLIMIFUNCT_H_
 #define _POLIMIFUNCT_H_
 
@@ -11,8 +29,8 @@
 /*----------------------------------------------------------------------------------------------------------*/
 /*CONSTANS DECLARATION*/
 
-#define NSPLX_MAX 		250		/* Maximum number of splines along East direction used in the subregions interpolation*/
-#define NSPLY_MAX		250		/* Maximum number of splines along North direction used in the subregions interpolation*/
+#define NSPLX_MAX 		150		/* Maximum number of splines along East direction used in the subregions interpolation*/
+#define NSPLY_MAX		150		/* Maximum number of splines along North direction used in the subregions interpolation*/
 #define OVERLAP_SIZE 		10		/* Subregions overlaping size.*/
 #define LATO 			2000		/* Side's size for v.to.qrast command.*/
 #define CONTOUR		15		/**/ 

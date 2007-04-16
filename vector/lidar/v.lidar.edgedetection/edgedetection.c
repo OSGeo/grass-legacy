@@ -1,3 +1,27 @@
+/**************************************************************
+ *									
+ * MODULE:       v.lidar.edgedetection				
+ * 								
+ * AUTHOR(S):    Original version in GRASS 5.4 (s.edgedetection):
+ * 		 Maria Antonia Brovelli, Massimiliano Cannata, 
+ *		 Ulisse Longoni and Mirko Reguzzoni
+ *
+ *		 Update for GRASS 6.X and improvements:
+ * 		 Roberto Antolin and Gonzalo Moreno
+ *               							
+ * PURPOSE:      Detection of object's edges on a LIDAR data set	
+ *               							
+ * COPYRIGHT:    (C) 2006 by Politecnico di Milano - 			
+ *			     Polo Regionale di Como			
+ *									
+ *               This program is free software under the 		
+ *               GNU General Public License (>=v2). 			
+ *               Read the file COPYING that comes with GRASS		
+ *               for details.					
+ *							
+ **************************************************************/
+
+/*INCLUDES*/
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
@@ -374,14 +398,14 @@ int Select (double *PartialX, double *PartialY, double *Interp, int line_num, db
 }
 
 
-int Create_AuxEdge_Table (dbDriver *driver, char *table_name)
+int Create_AuxEdge_Table (dbDriver *driver)
 {
 	dbTable *table;
 	dbColumn *ID_col, *Interp_col, *PartialX_col, *PartialY_col;
 	int created;
 
 	table = db_alloc_table (4);		
-	db_set_table_name (table, table_name);
+	db_set_table_name (table, "Auxiliar_edge_table");
 	db_set_table_description (table, "It is used for the intermediate interpolated and gradient values");
 			    
 	ID_col = db_get_table_column (table,0);
@@ -401,13 +425,25 @@ int Create_AuxEdge_Table (dbDriver *driver, char *table_name)
 	db_set_column_sqltype (PartialY_col, DB_SQL_TYPE_REAL);
 			    
 	if (db_create_table (driver, table) == DB_OK) {
-		G_debug (3, _("<%s> created in database."), table_name);
+		G_debug (3, _("<Auxiliar_edge_table> created in database."));
 		created = TRUE;
 	} 
 	else return FALSE;
 	
 	return created;
 }
+
+int Drop_Aux_Table (dbDriver *driver)
+{
+    dbString drop;
+
+    db_init_string (&drop);
+    db_append_string (&drop, "drop table ");
+    db_append_string (&drop, "Auxiliar_edge_table");
+    return db_execute_immediate (driver, &drop);
+
+} 
+
 
 int Create_Interpolation_Table (char * vect_name, dbDriver *driver)
 {

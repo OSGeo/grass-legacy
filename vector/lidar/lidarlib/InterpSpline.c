@@ -1,3 +1,21 @@
+/***********************************************************************
+ *
+ * MODULE:       lidarlib
+ *
+ * AUTHOR(S):    Roberto Antolin
+ *
+ * PURPOSE:      LIDAR Spline Interpolation
+ *
+ * COPYRIGHT:    (C) 2006 by Politecnico di Milano -
+ *                           Polo Regionale di Como
+ *
+ *               This program is free software under the
+ *               GNU General Public License (>=v2).
+ *               Read the file COPYING that comes with GRASS
+ *               for details.
+ *
+ **************************************************************************/
+
 #include <stdio.h>
 #include <stdlib.h>
 #include <float.h>

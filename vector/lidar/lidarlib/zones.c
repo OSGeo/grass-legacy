@@ -145,7 +145,7 @@ P_Mean_Calc (struct Cell_head *Elaboration, struct Point *obs, int npoints) {
 /*------------------------------------------------------------------------------------------------*/
 struct Point* 
 P_Read_Vector_Region_Map (struct Map_info *Map, struct Cell_head *Elaboration, int *num_points, int dim_vect) {
-    int line_num, pippo, npoints;
+    int line_num, pippo, npoints, cat;
     double x, y, z;
     struct Point *obs;
     struct line_pnts *points;
@@ -182,11 +182,14 @@ P_Read_Vector_Region_Map (struct Map_info *Map, struct Cell_head *Elaboration, i
 		obs = (struct Point *) G_realloc ((void *) obs, (signed int) pippo * sizeof(struct Point));
 	    }
 
-    /* Storing observation vector */
-	    obs[npoints-1].coordX = x;
-	    obs[npoints-1].coordY = y;
-	    obs[npoints-1].coordZ = z;
-	    obs[npoints-1].lineID = line_num;		/* Storing also the line's number */
+	   /* Storing observation vector */
+	   obs[npoints-1].coordX = x;
+	   obs[npoints-1].coordY = y;
+	   obs[npoints-1].coordZ = z;
+	   obs[npoints-1].lineID = line_num;		/* Storing also the line's number */
+	   Vect_cat_get ( categories, 1, &cat );
+	   obs[npoints-1].cat = cat;
+
 	}
     }
     Vect_destroy_line_struct(points);

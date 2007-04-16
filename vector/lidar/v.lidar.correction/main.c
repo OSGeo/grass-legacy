@@ -61,7 +61,7 @@ main (int argc,char *argv[])
 /*----------------------------------------------------------------------------------------------------------*/
 /* Options' declaration */
     module = G_define_module();
-    module->keywords = _("vector");
+    module->keywords = _("vector, LIDAR");
     module->description = _("Correction of the v.lidar.growing output. It is the last of the three algorithms for LIDAR filtering");
 
     in_opt = G_define_option () ;
@@ -70,7 +70,7 @@ main (int argc,char *argv[])
     	in_opt->key_desc     = "name";
 	in_opt->required     = YES;
 	in_opt->gisprompt    = "old,vector,vector";
-	in_opt->description = _("Input observation vector file name (v.lidar.growing output)");
+	in_opt->description = _("Input observation vector map name (v.lidar.growing output)");
 
     out_opt = G_define_option () ;
     	out_opt->key = "output";
@@ -78,7 +78,7 @@ main (int argc,char *argv[])
     	out_opt->key_desc     = "name";
 	out_opt->required     = YES;
 	out_opt->gisprompt    = "new,vector,vector";
-	out_opt->description = _("Output classified vector file name");
+	out_opt->description = _("Output classified vector map name");
 
     out_terrain_opt = G_define_option () ;
     	out_terrain_opt->key = "out_terrain";
@@ -86,7 +86,7 @@ main (int argc,char *argv[])
     	out_terrain_opt->key_desc     = "name";
 	out_terrain_opt->required     = YES;
 	out_terrain_opt->gisprompt    = "new,vector,vector";
-	out_terrain_opt->description = _("Output terrain only vector file name");
+	out_terrain_opt->description = _("Output terrain only vector map name");
 
     dbdatabase = G_define_option () ;
     	dbdatabase->key        	= "database" ;

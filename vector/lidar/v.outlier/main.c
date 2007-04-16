@@ -140,29 +140,29 @@ main (int argc,char *argv[])
     Vect_check_input_output_name ( in_opt->answer, out_opt->answer, GV_FATAL_EXIT );
 
     if ((mapset = G_find_vector2 (in_opt->answer, "")) == NULL) {
-	G_fatal_error ( _("It could not be find input map <%s>"), in_opt->answer);
+	G_fatal_error ( _("Vector map <%s> not found"), in_opt->answer);
     }
 
     /* Open output vector */
     if (qgis_opt->answer)  
 	if (0 > Vect_open_new (&Qgis, qgis_opt->answer, WITHOUT_Z))
-	    G_fatal_error (_("Vector <%s> could not be open"), qgis_opt->answer);
+	    G_fatal_error (_("Cannot open vector map <%s>"), qgis_opt->answer);
 
     if (0 > Vect_open_new (&Out, out_opt->answer, WITH_Z)) {
 	Vect_close (&Qgis);
-	G_fatal_error (_("Vector <%s> could not be open"), out_opt->answer);
+	G_fatal_error (_("Cannot open vector map <%s>"), out_opt->answer);
     }
 
     if (0 > Vect_open_new (&Outlier, outlier_opt->answer, WITH_Z)) {
 	Vect_close (&Out);
 	Vect_close (&Qgis);
-	G_fatal_error (_("Vector <%s> could not be open"), out_opt->answer);
+	G_fatal_error (_("Cannot open vector map <%s>"), out_opt->answer);
     }
 
     Vect_set_open_level (1);
     /* Open input vector */
     if (1 > Vect_open_old (&In, in_opt->answer, mapset))
-	G_fatal_error ( _("Vector <%s> could not be open at the topological level"), in_opt->answer);
+	G_fatal_error ( _("Cannot open vector map <%s> at the topological level"), in_opt->answer);
 
     /* Copy vector Head File */
     Vect_copy_head_data (&In, &Out);
@@ -227,7 +227,7 @@ main (int argc,char *argv[])
 	if (nsply > NSPLY_MAX) {
 	    nsply = NSPLY_MAX;
 	}
-	G_debug (1, _("nsply = %d"), nsply);
+	G_debug (1, "nsply = %d", nsply);
 
 	elaboration_reg.east = original_reg.west;
 	last_column = FALSE;
@@ -249,7 +249,7 @@ main (int argc,char *argv[])
 	    if (nsplx > NSPLX_MAX) {
 		nsplx = NSPLX_MAX;
 	    }
-	    G_debug (1, _("nsplx = %d"), nsplx);
+	    G_debug (1, "nsplx = %d", nsplx);
 
 	    /*Setting the active region*/
 	    dim_vect = nsplx * nsply;
@@ -264,7 +264,7 @@ main (int argc,char *argv[])
 		mean = P_Mean_Calc (&elaboration_reg, observ, npoints);
 
 		/* Least Squares system */
-		G_debug (1, _("Allocation memory for bilinear interpolation"));
+		G_debug (1, "Allocation memory for bilinear interpolation");
 		BW = P_get_BandWidth (P_BILINEAR, nsply);		/* Bilinear interpolation */
 		N = G_alloc_matrix (nparameters, BW);		/* Normal matrix */
 		TN = G_alloc_vector (nparameters);		/* vector */
@@ -282,7 +282,7 @@ main (int argc,char *argv[])
 		    Q[i] = 1;					/* Q=I */
 		}
 
-		G_debug (1, _("Bilinear interpolation"));
+		G_debug (1, "Bilinear interpolation");
 		normalDefBilin (N, TN, Q, obsVect, passoE, passoN, nsplx, nsply, elaboration_reg.west, elaboration_reg.south, \
 			npoints, nparameters, BW);
 		nCorrectGrad (N, lambda, nsplx, nsply, passoE, passoN);
@@ -293,7 +293,7 @@ main (int argc,char *argv[])
 		G_free_vector (Q);
 
 		if (flag_auxiliar == FALSE) {
-		    G_debug (1, _("Creating auxiliar table for archiving overlaping zones"));
+		    G_debug (1, "Creating auxiliar table for archiving overlaping zones");
 		    if ((flag_auxiliar = P_Create_Aux_Table (driver, table_name)) == FALSE)
 			G_fatal_error (_("It was impossible to create <Auxiliar_outlier_table>."));
 		}
@@ -318,7 +318,7 @@ main (int argc,char *argv[])
 
     /* Dropping auxiliar table */
     if (npoints > 0) {
-	G_debug (1, _("Dropping <%s>"), table_name);
+	G_debug (1, "Dropping <%s>", table_name);
 	if (P_Drop_Aux_Table (driver, table_name) != DB_OK)
 	    G_fatal_error(_("Auxiliar Table could not be dropped"));
     }
@@ -329,10 +329,11 @@ main (int argc,char *argv[])
     Vect_close (&Out);
     Vect_close (&Outlier);
     if (qgis_opt->answer) {
-	Vect_build (&Qgis, stdout);
+	Vect_build (&Qgis, stderr);
 	Vect_close (&Qgis);
     }
 
     G_done_msg("");
+
     exit(EXIT_SUCCESS);
 }	/*!END MAIN*/
