@@ -1,5 +1,6 @@
 #include <stdlib.h>
 #include <string.h>
+#include <limits.h>
 #include <grass/glocale.h>
 #include <grass/gis.h>
 
@@ -9,7 +10,7 @@
  *
  * RETURN: EXIT_SUCCESS
  */
-int factors(FILE *fd, long n, int div)
+int factors(FILE *fd, off_t n, int div)
 {
     long m;
     int len;
@@ -25,10 +26,13 @@ int factors(FILE *fd, long n, int div)
     /* Find the factors */
     for (m = 1; ; m++) {
         if (n%m == 0) {
-            long x = n / m;
+            off_t x = n / m;
 
             if (x < m)
                 break;
+
+	    if (sizeof(off_t) > sizeof(long) && x > ULONG_MAX)
+		continue;
 
             sprintf(buf, "%%%ld * %%-%ld", m, x);
             len = strlen(buf) + 3;

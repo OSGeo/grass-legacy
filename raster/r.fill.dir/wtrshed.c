@@ -1,11 +1,12 @@
 #include <unistd.h>
+#include <sys/types.h>
 #include <stdlib.h>
 #include <grass/gis.h>
 #include <grass/glocale.h>
 
 struct whereandwhat
 {
-   int offset;
+   off_t offset;
    CELL *p;
 };
 
@@ -95,7 +96,7 @@ void wtrshed(int fm, int fd, int nl, int ns, int mxbuf)
       rdline=1;
       for(i=0;i<mxbuf;i++)
       {
-         bas[i].offset=dir[i].offset=rdline*bufsz;
+         bas[i].offset=dir[i].offset=(off_t)rdline*bufsz;
 
          lseek(fm,bas[i].offset,SEEK_SET);
          read(fm,bas[i].p,bufsz);
@@ -132,7 +133,7 @@ void wtrshed(int fm, int fd, int nl, int ns, int mxbuf)
             for(j=1;j<mxbuf;j+=1)dir[j-1]=dir[j];
             dir[mxbuf-1]=hold;
           
-            bas[mxbuf-1].offset=dir[mxbuf-1].offset=rdline*bufsz;
+            bas[mxbuf-1].offset=dir[mxbuf-1].offset=(off_t)rdline*bufsz;
 
             lseek(fm,bas[mxbuf-1].offset,SEEK_SET);
             read(fm,bas[mxbuf-1].p,bufsz);
@@ -157,7 +158,7 @@ void wtrshed(int fm, int fd, int nl, int ns, int mxbuf)
       rdline=nl-2;
       for(i=mxbuf-1;i>=0;i-=1)
       {
-         bas[i].offset=dir[i].offset=rdline*bufsz;
+         bas[i].offset=dir[i].offset=(off_t)rdline*bufsz;
 
          lseek(fm,bas[i].offset,SEEK_SET);
          read(fm,bas[i].p,bufsz);
@@ -194,7 +195,7 @@ void wtrshed(int fm, int fd, int nl, int ns, int mxbuf)
             for(j=nline-1;j>0;j-=1)dir[j]=dir[j-1];
             dir[0]=hold;
           
-            bas[0].offset=dir[0].offset=rdline*bufsz;
+            bas[0].offset=dir[0].offset=(off_t)rdline*bufsz;
             
             lseek(fm,bas[0].offset,SEEK_SET);
             read(fm,bas[0].p,bufsz);

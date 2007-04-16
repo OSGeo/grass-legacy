@@ -14,7 +14,7 @@
  *
  * RETURN: 0 success : 1 failure
  */
-int check_uncompressed(struct Cell_head *cellhd, long filesize)
+int check_uncompressed(struct Cell_head *cellhd, off_t filesize)
 {
     long filesize_calc;
     FILE *fd;
@@ -22,7 +22,7 @@ int check_uncompressed(struct Cell_head *cellhd, long filesize)
     char command[256];
 
     /* Check for bad file size */
-    filesize_calc = cellhd->rows * cellhd->cols * cellhd->format;
+    filesize_calc = (off_t) cellhd->rows * cellhd->cols * cellhd->format;
     if (filesize_calc == filesize)
         return EXIT_FAILURE;
 

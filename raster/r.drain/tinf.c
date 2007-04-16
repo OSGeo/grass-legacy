@@ -1,9 +1,9 @@
+/* #include <limits.h> */
+#include <float.h>
 #include <math.h>
 #include <grass/gis.h>
 #define TINF_MAIN
 #include "tinf.h"
-/* #include <limits.h> */
-#include <float.h>
 
 /* To add a new multitype function, use the function below to initialize
  * the function pointer to each of the three typed functions.  The function
@@ -179,17 +179,17 @@ int put_row_d(int fd, void *row)
 }
 
 /* Allocate memory for one line of data */
-void *get_buf_c()
+void *get_buf_c(void)
 {
    return (void *)G_allocate_c_raster_buf();
 }
 
-void *get_buf_f()
+void *get_buf_f(void)
 {
    return (void *)G_allocate_f_raster_buf();
 }
 
-void *get_buf_d()
+void *get_buf_d(void)
 {
    return (void *)G_allocate_d_raster_buf();
 }
@@ -299,7 +299,7 @@ int retreat_band3(int fh, struct band3 *bnd)
    else
    {
       rc=read(fh,bnd->b[0],bnd->sz);
-      lseek(fh,-2*bnd->sz,SEEK_CUR);
+      lseek(fh,(off_t)-2*bnd->sz,SEEK_CUR);
    }
    return rc;
 }

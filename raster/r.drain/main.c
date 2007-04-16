@@ -394,7 +394,7 @@ int main(int argc, char **argv)
 		thispoint = thispoint->next;
 		continue;
 	    }
-	    lseek(fe, thispoint->row * bsz, SEEK_SET);
+	    lseek(fe, (off_t) thispoint->row * bsz, SEEK_SET);
 	    read(fe, in_buf, bsz);
 	    memcpy(&thispoint->value, (char *)in_buf + bpe() * thispoint->col,
 		   bpe());
@@ -458,7 +458,7 @@ struct point *drain(int fd, struct point *list, int nrow, int ncol)
     while (go) {
 
 	/* find flow direction at this point */
-	lseek(fd, list->row * ncol * sizeof(CELL), SEEK_SET);
+	lseek(fd, (off_t) list->row * ncol * sizeof(CELL), SEEK_SET);
 	read(fd, dir, ncol * sizeof(CELL));
 	direction = *(dir + list->col);
 	go = 0;

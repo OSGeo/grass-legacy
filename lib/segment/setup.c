@@ -45,7 +45,7 @@ int segment_setup (SEGMENT *SEG)
 	return -1;
     }
 
-    SEG->offset = lseek (SEG->fd, 0L, 1);
+    SEG->offset = (int) lseek (SEG->fd, 0L, SEEK_CUR);
 
     SEG->spr = SEG->ncols / SEG->scols ;
     SEG->spill = SEG->ncols % SEG->scols ;

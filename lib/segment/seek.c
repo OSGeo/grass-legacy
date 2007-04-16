@@ -35,9 +35,9 @@
 
 int segment_seek (SEGMENT *SEG,int n,int index)
 {
-    SEEK_OFFSET offset;
+    off_t offset;
 
-    offset = n * SEG->size + index + SEG->offset;
+    offset = (off_t) n * SEG->size + index + SEG->offset;
     if (lseek (SEG->fd, offset, SEEK_SET) == (off_t)-1)
     {
 	G_warning ("segment_seek: %s", strerror(errno));

@@ -1,6 +1,6 @@
 #include <stdlib.h>
 #include <string.h>
-#include <strings.h>
+#include <limits.h>
 #include <grass/gis.h>
 #include <grass/glocale.h>
 #include <grass/vask.h>
@@ -11,7 +11,7 @@
  *
  * RETURN: 0 success : -1 failure
  */
-int ask_format(char *name, struct Cell_head *cellhd, long filesize)
+int ask_format(char *name, struct Cell_head *cellhd, off_t filesize)
 {
     RASTER_MAP_TYPE maptype;
     char title[80];
@@ -44,10 +44,12 @@ int ask_format(char *name, struct Cell_head *cellhd, long filesize)
 
     /* If not compressed and filesize mismatch */
     if (maptype == CELL_TYPE && cellhd->compressed == 0 && 
-        cellhd->rows * cellhd->cols * cellhd->format != filesize) {
+        (off_t) cellhd->rows * cellhd->cols * cellhd->format != filesize) {
 
+	if (sizeof(off_t) > sizeof(long) && filesize > ULONG_MAX)
+	    filesize = 0;
         G_snprintf(buf, sizeof(buf), _("rows * cols * bytes per cell "
-                       "must be same as file size (%ld)"), filesize);
+                       "must be same as file size (%lu)"), (unsigned long) filesize);
         V_line(6, buf);
         V_line(7, _("If you need help figuring them out, just hit ESC"));
     }

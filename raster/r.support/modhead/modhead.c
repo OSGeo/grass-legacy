@@ -95,7 +95,7 @@ int main (int argc, char *argv[])
         G_fatal_error(_("Cannot open raster map [%s]!"), name);
 
     /* Determine file size */
-    filesize = lseek(fd, 0L, 2);
+    filesize = lseek(fd, 0L, SEEK_CUR);
     if (filesize == 0)
         G_fatal_error(_("Raster file [%s] is empty."), name);
     else if (filesize < 0)
@@ -133,7 +133,7 @@ int main (int argc, char *argv[])
 
     /* Look for pre3.0 compression */
     compressed_old = 0;
-    lseek(fd, 0L, 0);
+    lseek(fd, 0L, SEEK_SET);
     if (read(fd, buffer, (size_t)3) == 3 && buffer[0] == (char)251 &&
         buffer[1] == (char)255   && buffer[2] == (char)251) {
 
@@ -157,7 +157,7 @@ int main (int argc, char *argv[])
 
     /* Look for 3.0 compression */
     compressed_new = 0;
-    lseek(fd, 0L, 0);
+    lseek(fd, 0L, SEEK_SET);
     if (read(fd, buffer, (size_t)1) == 1 && buffer[0] > 0) {
         int nbytes;
 

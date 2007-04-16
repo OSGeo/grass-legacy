@@ -624,7 +624,7 @@ int error_Output(int out, msg m){
 
 int raster_Output(int fd, int aid, g_areas g, double res){
 	double toPut = res;
-	long offset = aid * sizeof(double);
+	off_t offset = (off_t) aid * sizeof(double);
 	if (lseek(fd, offset, SEEK_SET) != offset){
 		G_message( _("Cannot make lseek"));
 		return -1;
