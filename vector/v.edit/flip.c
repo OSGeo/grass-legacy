@@ -23,23 +23,16 @@
 /* 
  * flip direction of selected vector lines (i.e. GV_LINES)
  * return number of modified lines
+ * return -1 on error
  */
-int do_flip (struct Map_info *Map)
+int do_flip (struct Map_info *Map, struct ilist *List, int print)
 {
-    struct ilist *List;
     struct line_cats *Cats;
     struct line_pnts *Points, *Points_flipped;
-    int i, line, layer, type;
-    int nlines_modified;
+    int i, line, type;
+    int nlines_flipped;
 
-    layer = atoi(fld_opt->answer);
-    nlines_modified = 0;
-
-    /* select lines */
-    List = select_lines (Map);
-
-    if (List -> n_values < 1)
-	return 0;
+    nlines_flipped = 0;
 
     Points         = Vect_new_line_struct();
     Points_flipped = Vect_new_line_struct();
@@ -60,27 +53,27 @@ int do_flip (struct Map_info *Map)
 
 	Vect_append_points (Points_flipped, Points, GV_BACKWARD);
 
-	if (Vect_rewrite_line (Map, line, type, Points_flipped, Cats) < 0)
-	    G_fatal_error (_("Cannot rewrite line [%d]"),
-			   line);
+	if (Vect_rewrite_line (Map, line, type, Points_flipped, Cats) < 0) {
+	    G_warning (_("Cannot rewrite line [%d]"),
+		       line);
+	    return -1;
+	}
 
-	if (i_flg->answer) {
-	    fprintf(stdout,"%d,", line);
+	if (print) {
+	    fprintf(stdout, "%d%s",
+		    List -> value[i],
+		    i < List->n_values -1 ? "," : "");
 	    fflush (stdout);
 	}
 	    
-	nlines_modified++;
+	nlines_flipped++;
     }
-
-    if (i_flg->answer && nlines_modified > 0)
-	fprintf(stdout,"\n");
 
     /* destroy structures */
     Vect_destroy_line_struct(Points);
     Vect_destroy_cats_struct(Cats);
-    Vect_destroy_list(List);
 
-    G_message(_("Editing: [%d] lines modified"), nlines_modified);
+    G_message(_("[%d] lines flipped"), nlines_flipped);
 
-    return nlines_modified;
+    return nlines_flipped;
 }

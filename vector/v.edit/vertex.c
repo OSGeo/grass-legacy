@@ -4,369 +4,410 @@
  *
  * AUTHOR(S):  GRASS Development Team
  *             Jachym Cepicky <jachym  les-ejk cz>
+ *             Martin Landa
  *
- * PURPOSE:    This module edits vector maps. It is inteded to be mainly
- * 	       used by the the new v.digit GUI.
+ * PURPOSE:    This module edits vector maps. 
+ *             Vertex operations.
  *
- * COPYRIGHT:  (C) 2002-2006 by the GRASS Development Team
+ * COPYRIGHT:  (C) 2006-2007 by the GRASS Development Team
  *
  *             This program is free software under the
  *             GNU General Public License (>=v2).
  *             Read the file COPYING that comes with GRASS
  *             for details.
  *
- * TODO:       
  ****************************************************************/
 
 #include "global.h"
 
-int do_move_vertex(struct Map_info *Map)
+/* 
+ * move all vertices in the given bounding box(es)
+ *
+ * return number of moved vertices
+ * return -1 on error
+ */
+int do_move_vertex(struct Map_info *Map, struct ilist *List, int print,
+		   struct Option *coord, double thresh,
+		   double move_x, double move_y)
 {
-    int res;
+    int nvertices_moved;
 
+    int i, j, k;
+    int line, newline, type, rewrite;
     double east, north;
-    int line, j;
-    double maxdist;
-    char buff[16] = "";
-    float move[2];
-
-    int cat;
-    int type;
-    int field;
+    double *x, *y, *z;
+    char *moved;
 
     struct line_pnts *Points;
     struct line_cats *Cats;
-
-    /* for easier selection of points */
     BOUND_BOX bbox;
-    struct ilist *List;
-
-    line = res = 0;
-    maxdist = 0.;
-    field = atoi(fld_opt->answer);
-
-    if (coord_opt->answers){
-        east  = atof(coord_opt->answers[0]);
-        north = atof(coord_opt->answers[1]);
-    }
-
-    move[0] = atof(move_opt->answers[0]);
-    move[1] = atof(move_opt->answers[1]);
-
-    maxdist =  max_distance (atof(maxdist_opt->answer));
-
-    List = Vect_new_list ();
-
-    /* try to find bounding box */
-    if (bbox_opt->answers) {
-        float x1,x2,y1,y2;
-        x1 = atof(bbox_opt->answers[0]);
-        y1 = atof(bbox_opt->answers[1]);
-        x2 = atof(bbox_opt->answers[2]);
-        y2 = atof(bbox_opt->answers[3]);
-
-        bbox.N = y1 < y2 ? y2 : y1;
-        bbox.S = y1 < y2 ? y1 : y2;
-        bbox.W = x1 < x2 ? x1 : x2;
-        bbox.E = x1 < x2 ? x2 : x1;
-        bbox.T = 0.0;
-        bbox.B = 0.0;
-    }
-    /* try to defined boundinbg box from snapping distance */
-    else if (maxdist) {
-        bbox.N = north+maxdist;
-        bbox.S = north-maxdist;
-        bbox.W = east-maxdist;
-        bbox.E = east+maxdist;
-        bbox.T = 0.0;
-        bbox.B = 0.0;
-    }
-
-    /* select by coordinate */
-    if (coord_opt->answer) 
-        line = Vect_find_line (Map, east, north, 0.0,
-			      GV_POINT | GV_CENTROID | GV_LINE | GV_BOUNDARY | GV_FACE,
-			       maxdist, 0, 0);
-
-    /* select by bounding box */
-    if (line == 0) {
-
-        G_debug(1, "Vect_find_line found nothing, trying bbox: n=%f s=%f w=%f e=%f\n",
-		bbox.N, bbox.S, bbox.W, bbox.E);
-
-        Vect_select_lines_by_box (Map, &bbox,
-				  GV_POINTS | GV_LINES | GV_BOUNDARY | GV_CENTROID | GV_FACE,
-				  List);
-
-        /* get the only first one */
-        if (List->n_values < 1)
-            line = 0;
-        else 
-            line = List->value[0];
-    }
-
-
-    G_debug (2, "line = %d", line);
-
+    
+    nvertices_moved = 0;
+    moved = NULL;
 
     Points = Vect_new_line_struct();
     Cats = Vect_new_cats_struct();
+
+    for (i = 0; i < List -> n_values; i++) {
+	line = List -> value[i];
+	
+	if (!Vect_line_alive (Map, line))
+	    continue;
+	
+	type = Vect_read_line(Map, Points, Cats, line);
+
+	x = Points -> x;
+	y = Points -> y;
+	z = Points -> z;
+
+	/* vertex moved ? */
+	G_realloc ((void *) moved, Points -> n_points * sizeof (char));
+	G_zero (moved, sizeof (char));
+
+	rewrite = 0;
+	for (j = 0; coord -> answers[i]; i += 2) {
+	    east  = atof (coord -> answers[i]);
+	    north = atof (coord -> answers[i+1]);
+	    
+	    coord2bbox (east, north, thresh, &bbox);
+
+	    G_debug (3, "box: east=%g, north=%g", east, north);
+
+	    /* move all vertices in the bounding box */
+	    for (k = 0; k < Points -> n_points; k++) {
+		if (!moved[k] && Vect_point_in_box (x[k], y[k], z[k],
+						    &bbox)) {
+		    G_debug (5, "move vertex index=%d", k);
+		    x[k] += move_x;
+		    y[k] += move_y;
+
+		    moved[k] = 1;
+		    rewrite = 1;
+
+		    nvertices_moved++;
+		}
+	    } /* for each point at line */
+	}
+	
+	if (rewrite) {
+	    newline = Vect_rewrite_line (Map, line, type, Points, Cats);
+	    if (newline < 0)  {
+		G_warning(_("Cannot rewrite line [%d]"), line);
+		return -1;
+	    }
+	    
+	    if (print) {
+		fprintf(stdout, "%d%s",
+			line,
+			i < List->n_values -1 ? "," : "");
+		fflush (stdout);
+	    }
+	    Vect_list_append (List, newline);
+	}
+    } /* for each selected line */
+
+    /* destroy structures */
+    Vect_destroy_line_struct(Points);
+    Vect_destroy_cats_struct(Cats);
+    G_free ((void *) moved);
+
+    G_message(_("[%d] verteces moved"), nvertices_moved);
     
-    type = Vect_read_line(Map, Points, Cats, line);
-
-    cat = Vect_get_line_cat (Map, line, field);
-
-    if (cat > 0) 
-      sprintf(buff,_("category [%d]"),cat);
-        
-    G_debug(2, "Moving type [%d] number [%d] %s", type, line, buff);
-
-    /* move */
-    for (j = 0; j < Points->n_points; j++) {
-        if ((bbox.W <= Points->x[j] && Points->x[j] <= bbox.E) && 
-            (bbox.S <= Points->y[j] && Points->y[j] <= bbox.N)){
-            Points->x[j]+=move[0];
-            Points->y[j]+=move[1];
-            res++;
-        }
-    } /* for each point at line */
-
-    if (Vect_rewrite_line (Map, line, type, Points, Cats) < 0)  {
-	G_warning("Feature could not be moved");
-        return -1;
-    }
-
-    if (i_flg->answer) 
-	fprintf(stdout,"%d\n", line);
-
-    G_message(_("[%d] vertexes moved"), res);
-
-    return res;
+    return nvertices_moved;
 }
 
-int do_break(struct Map_info *Map)
+/* 
+ * breaks (add new vertex) line in the given bounding box(es)
+ *
+ * return number of added verteces
+ * return -1 on error
+ */
+int do_break(struct Map_info *Map, struct ilist *List, int print,
+	     struct Option* coord, double thresh)
 {
-    int res;
+    int i, j, k;
+    int type, line, seg;
+    int nlines_broken, broken, line_in_box;
     double east, north;
-    int line, j;
-    double maxdist;
-    char buff[16] = "";
-
-    int cat;
-    int type;
-    int field;
-
-    int seg;
     double px, py;
 
     struct line_pnts *Points,*NPoints;
     struct line_cats *Cats;
+    BOUND_BOX bbox;
 
-    res = seg = 0;
-    maxdist = 0.0;
+    nlines_broken = 0;
+    Points  = Vect_new_line_struct();
+    NPoints = Vect_new_line_struct();
+    Cats    = Vect_new_cats_struct();
 
-    field   = atoi(fld_opt->answer);
-    east    = atof(coord_opt->answers[0]);
-    north   = atof(coord_opt->answers[1]);
-    maxdist = max_distance(atof(maxdist_opt->answer));
+    for (i = 0; i < List -> n_values; i++) {
+	line = List -> value[i];
 
-    line = Vect_find_line(Map, east, north, 0.0,
-			  GV_LINE | GV_BOUNDARY | GV_FACE,
-			  maxdist, 0, 0);
+	if (!Vect_line_alive (Map, line))
+	    continue;
 
-
-    G_debug (2, "line = %d", line);
-
-    if (line > 1) {
-	Points  = Vect_new_line_struct();
-	NPoints = Vect_new_line_struct();
-	Cats    = Vect_new_cats_struct();
-        
         type = Vect_read_line(Map, Points, Cats, line);
 
-	cat = Vect_get_line_cat(Map, line, field);
+	G_debug(3, "Breaking line type [%d] number [%d]", type, line);
+	
+	broken = 0;
+	for (j = 0; !broken && coord -> answers[i]; i += 2) {
+	    east  = atof (coord -> answers[i]);
+	    north = atof (coord -> answers[i+1]);
+	    
+	    coord2bbox (east, north, thresh, &bbox);
 
-        if (cat > 0) 
-            sprintf(buff,"category [%d]",cat);
+	    /* line in the box ? */
+	    line_in_box = 0;
+	    for (k = 0; !line_in_box && k < Points -> n_points; k++) {
+		if (Vect_point_in_box (Points -> x[k],
+				       Points -> y[k],
+				       Points -> z[k],
+				       &bbox))
+		    line_in_box = 1;
+	    }
+	    
+	    if (!line_in_box)
+		continue;
 
-        G_debug(2, "Spliting type [%d] number [%d] %s", type, line, buff);
+	    seg = Vect_line_distance (Points,
+				      east, north, 0.0, /* standpoint */
+				      WITHOUT_Z,
+				      &px, &py, NULL, /* point on line */
+				      NULL, NULL, NULL);
+	    
+	    /* add new vertex */
+	    Vect_line_insert_point (Points, seg, px, py, 0.0);
+	    broken = 1;
+	} /* for each bounding box */
 
-        seg = Vect_line_distance ( Points, east, north, 0, 0,
-				   &px, &py, NULL, NULL, NULL, NULL);
+	/* rewrite the line */
+	if (broken) {
+	    if (Vect_rewrite_line (Map, line, type, NPoints, Cats) < 0) {
+		G_warning(_("Cannot rewrite line [%d]"), line);
+		return -1;
+		
+		if (print) {
+		    fprintf(stdout, "%d%s",
+			    line,
+			    i < List->n_values -1 ? "," : "");
+		    fflush (stdout);
+		}
+	    }
+	}
+    } /* for each line */
 
-        /* copy first line part */
-        for (j = 0; j < seg; j++) {
-            Vect_append_point(NPoints, Points->x[j],Points->y[j], Points->z[j]);
-        }
-
-        /* add split vertex */
-        Vect_append_point(NPoints, east, north, 0.0);
-
-        /* copy second line part */
-        for (j = seg; j < Points->n_points; j++) {
-            Vect_append_point(NPoints, Points->x[j], Points->y[j], Points->z[j]);
-        }
-
-        /* rewrite the line */
-        if (Vect_rewrite_line (Map, line, type, NPoints, Cats) < 0) {
-            G_warning("Line could not be split");
-            return -1;
-        }
-    }
-
-    if (i_flg->answer) 
-        fprintf(stdout,"%d\n", line);
-
-    G_message(_("Line [%d] broken"), line);
-
+    /* destroy structures */
+    Vect_destroy_line_struct(Points);
+    Vect_destroy_line_struct(NPoints);
+    Vect_destroy_cats_struct(Cats);
+    
+    G_message(_("[%d] lines broken"), line);
+    
     return 1;
 }
 
-int do_remove_vertex(struct Map_info *Map)
+/*
+ * remove vertex from line in the given bounading box(es)
+ *
+ * return number of removed vertices
+ * return -1 on error
+ */
+int do_remove_vertex(struct Map_info *Map, struct ilist *List, int print,
+		     struct Option *coord, double thresh)
 {
-    double east, north,xo,yo, dist;
-    int line,j;
-    double maxdist = 0.;
-    char buff[16] = "";
-
-    int type;
-    struct line_pnts *Points,*NPoints;
-    struct line_cats *Cats;
-    int cat;
-    int field=atoi(fld_opt->answer);
-    int seg = 0;
-
-    east = atof(coord_opt->answers[0]);
-    north = atof(coord_opt->answers[1]);
-    maxdist =  max_distance(atof(maxdist_opt->answer));
-
-    line = Vect_find_line(Map, east, north, 0.0, GV_LINE | GV_BOUNDARY | GV_FACE, maxdist, 0, 0);
-
-    G_debug (2, "line = %d", line);
-
-    if (line > 1) {
-	Points = Vect_new_line_struct();
-	NPoints = Vect_new_line_struct();
-	Cats = Vect_new_cats_struct();
-        Vect_reset_line(NPoints);
-        type = Vect_read_line(Map, Points, Cats, line);
-        if ((cat = Vect_get_line_cat(Map, line, field )) > 0) 
-            sprintf(buff,"category [%d]",cat);
-
-            
-        G_debug(2, "Spliting type [%d] number [%d] %s", type, line, buff);
-
-        /* find nearest vertex */
-
-        seg = Vect_line_distance ( Points, east, north, 0, 0, &xo, &yo, NULL, NULL, NULL, NULL );
-        dist = Vect_points_distance ( xo, yo, 0, Points->x[seg-1], Points->y[seg-1], 0, 0);
-
-        if ( dist < Vect_points_distance ( xo, yo, 0, Points->x[seg], Points->y[seg], 0, 0) ) {
-            seg -= 1;
-        }
-        xo = Points->x[seg];
-        yo = Points->y[seg];
-
-        /* remove vertex */
-        for (j = 0; j < Points->n_points; j++) {
-
-            if (xo == Points->x[j] && yo == Points->y[j]) 
-                continue;
-            Vect_append_point(NPoints,Points->x[j],Points->y[j], Points->z[j]);
-
-        }
-
-        /* rewrite the line */
-        if ( Vect_rewrite_line (Map, line, type, NPoints, Cats) < 0)  {
-            G_warning("Vertex could not be removed");
-            return -1;
-        }
-        /* attr_del(Map, layer, cat);*/
-    }
-
-    if (i_flg->answer) 
-        fprintf(stdout,"%d\n", line);
-    G_message(_("Vertex on line [%d] removed"), line);
-
-    return 1;
-}
-
-int do_split(struct Map_info *Map)
-{
+    int i, j, k;
+    int type, line, seg;
+    int nvertices_removed, rewrite, line_in_box;
     double east, north;
-    int line,j;
-    double maxdist = 0.;
-    char buff[16] = "";
+    double dist1, dist2;
+    double xo, yo;
+    double *x, *y, *z;
 
-    int type;
-    struct line_pnts *Points,*NPoints;
+    struct line_pnts *Points;
     struct line_cats *Cats;
-    int cat;
-    int field=atoi(fld_opt->answer);
-    int seg = 0;
-    double px,py;
+    BOUND_BOX bbox;
 
-    east = atof(coord_opt->answers[0]);
-    north = atof(coord_opt->answers[1]);
-    maxdist =  max_distance(atof(maxdist_opt->answer));
+    Points = Vect_new_line_struct();
+    Cats = Vect_new_cats_struct();
+    
+    for (i = 0; i < List -> n_values; i++) {
+	line = List -> value[i];
+	
+	if (!Vect_line_alive (Map, line))
+	    continue;
 
-    line = Vect_find_line(Map, east, north, 0.0, GV_LINE | GV_BOUNDARY | GV_FACE, maxdist, 0, 0);
-
-
-    G_debug (2, "line = %d", line);
-
-    if (line > 1) {
-	Points = Vect_new_line_struct();
-	NPoints = Vect_new_line_struct();
-	Cats = Vect_new_cats_struct();
-        Vect_reset_line(NPoints);
         type = Vect_read_line(Map, Points, Cats, line);
-        if ((cat = Vect_get_line_cat(Map, line, field )) > 0) 
-            sprintf(buff,"category [%d]",cat);
 
-        G_debug(2, "Spliting type [%d] number [%d] %s", type, line, buff);
+	x = Points -> x;
+	y = Points -> y;
+	z = Points -> z;
+	rewrite = 0;
+	for (j = 0; coord -> answers[i]; i += 2) {
+	    east  = atof (coord -> answers[i]);
+	    north = atof (coord -> answers[i+1]);
+	    
+	    coord2bbox (east, north, thresh, &bbox);
 
-        seg = Vect_line_distance ( Points, east, north, 0, 0, &px, &py, NULL, NULL, NULL, NULL );
+	    /* line in the box ? */
+	    line_in_box = 0;
+	    for (k = 0; !line_in_box && k < Points -> n_points; k++) {
+		if (Vect_point_in_box (x[k], y[k], z[k],
+				       &bbox))
+		    line_in_box = 1;
+	    }
+	    
+	    if (!line_in_box)
+		continue;
+    
+	    /* find nearest vertex */
+	    seg = Vect_line_distance (Points,
+				      east, north, 0.0, 
+				      WITHOUT_Z,
+				      &xo, &yo, NULL,
+				      NULL, NULL, NULL);
+	    
+	    dist1 = Vect_points_distance (xo, yo, 0.0,
+					  x[seg-1], y[seg-1], 0.0,
+					  WITHOUT_Z);
+	    dist2 = Vect_points_distance (xo, yo, 0.0,
+					  Points->x[seg], Points->y[seg], 0.0,
+					  WITHOUT_Z);
+	    if (dist1 < dist2) {
+		seg -= 1;
+	    }
 
-        /* copy first line part */
-        for (j = 0; j < seg; j++) {
+	    /* remove vertex */
+	    Vect_line_delete_point (Points, seg);
+	    rewrite = 1;
+	} /* for each bounding box */
+	
+	if (rewrite) {
+	    /* rewrite the line */
+	    if (Vect_rewrite_line (Map, line, type, Points, Cats) < 0) {
+		G_warning (_("Cannot rewrite line [%d]"), line);
+		return -1;
+	    }
+	    
+	    if (print) {
+		fprintf(stdout, "%d%s",
+			line,
+			i < List->n_values -1 ? "," : "");
+		fflush (stdout);
+	    }
+	}
+    } /* for each line */
 
-            Vect_append_point(NPoints,Points->x[j],Points->y[j], Points->z[j]);
+    /* destroy structures */
+    Vect_destroy_line_struct(Points);
+    Vect_destroy_cats_struct(Cats);
+    
+    G_message(_("[%d] vertices removed"), nvertices_removed);
 
-        }
+    return nvertices_removed;
+}
 
-        /* add last vertex */
-        Vect_append_point(NPoints,east,north,0.0);
+/*
+ * breaks (split) selected vector line on position(s) given by coord
+ *
+ * return number of modified lines
+ * return -1 on error
+ */
+int do_split(struct Map_info *Map, struct ilist *List, int print,
+	     struct Option* coord, double thresh)
+{
+    int i, j, k;
+    int type, line, seg;
+    int nlines_modified, line_in_box;
+    double east, north;
+    double px, py;
+    double *x, *y, *z;
 
-        /* rewrite the line */
-        if ( Vect_rewrite_line (Map, line, type, NPoints, Cats) < 0)  {
-            G_warning("Line could not be broken");
-            return -1;
-        }
-        /* attr_del(Map, layer, cat);*/
+    struct line_pnts *Points, *Points2;
+    struct line_cats *Cats;
+    BOUND_BOX bbox;
 
-        Vect_reset_line(NPoints);
+    Points = Vect_new_line_struct();
+    Points2 = Vect_new_line_struct();
+    Cats = Vect_new_cats_struct();
 
-        /* add last vertex */
-        Vect_append_point(NPoints,east,north,0.0);
+    for (i = 0; i < List -> n_values; i++) {
+	line = List -> value[i];
+	
+	if (!Vect_line_alive (Map, line))
+	    continue;
 
-        /* copy second line part */
-        for (j = seg; j < Points->n_points; j++) {
+        type = Vect_read_line(Map, Points, Cats, line);
 
-            Vect_append_point(NPoints,Points->x[j],Points->y[j], Points->z[j]);
+	x = Points -> x;
+	y = Points -> y;
+	z = Points -> z;
 
-        }
+	for (j = 0; coord -> answers[i]; i += 2) {
+	    east  = atof (coord -> answers[i]);
+	    north = atof (coord -> answers[i+1]);
+	    
+	    coord2bbox (east, north, thresh, &bbox);
 
-        /* rewrite the line */
-        if ( Vect_write_line (Map, type, NPoints, Cats) < 0)  {
-            G_warning("Line could not be split");
-            return -1;
-        }
-    }
+	    /* line in the box ? */
+	    line_in_box = 0;
+	    for (k = 0; !line_in_box && k < Points -> n_points; k++) {
+		if (Vect_point_in_box (x[k], y[k], z[k],
+				       &bbox))
+		    line_in_box = 1;
+	    }
+	    
+	    if (!line_in_box)
+		continue;
 
-    if (i_flg->answer) 
-        fprintf(stdout,"%d\n", line);
-    G_message(_("Line [%d] split"), line);
+	    seg = Vect_line_distance (Points, east, north, 0.0,
+				      WITHOUT_Z,
+				      &px, &py, NULL,
+				      NULL, NULL, NULL);
 
-    return 1;
+	    /* copy first line part */
+	    for (j = 0; j < seg; j++) {
+		Vect_append_point(Points2,
+				  x[j], y[j], z[j]);
+	    }
+	    
+	    /* add last vertex */
+	    Vect_append_point(Points2, east, north, 0.0);
+	    
+	    /* rewrite the line */
+	    if (Vect_rewrite_line (Map, line, type, Points2, Cats) < 0)  {
+		G_warning(_("Cannot rewrite line [%d]"), line);
+		return -1;
+	    }
+	    
+	    Vect_reset_line (Points2);
+
+	    /* add given vertex */
+	    Vect_append_point(Points2, east, north, 0.0);
+
+	    /* copy second line part */
+	    for (j = seg; j < Points->n_points; j++) {
+		Vect_append_point(Points2, 
+				  x[j], y[j], z[j]);
+	    }
+
+	    /* rewrite the line */
+	    if ( Vect_write_line (Map, type, Points2, Cats) < 0)  {
+		G_warning(_("Cannot rewrite line [%d]"), line);
+		return -1;
+	    }
+
+	    if (print) {
+		fprintf(stdout, "%d%s",
+			line,
+			i < List->n_values -1 ? "," : "");
+		fflush (stdout);
+	    }
+	    nlines_modified++;
+        } /* for each bounding box */
+    } /* for each selected line */
+
+    G_message(_("[%d] lines broken"), line);
+
+    return nlines_modified;
 }

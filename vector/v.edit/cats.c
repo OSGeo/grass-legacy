@@ -22,33 +22,29 @@
 /* cats 
  * edit category numbers of selected vector features
  * return number of modified features
+ * return -1 on error
  */
-int cats (struct Map_info *Map, int del)
+int cats (struct Map_info *Map, struct ilist *List, int print,
+	  int layer, int del, char *cats_list)
 {
     int i, j;
-    struct ilist *List;
     struct line_cats *Cats;
     struct line_pnts *Points;
     struct cat_list *Clist;
-    int line, type, cat, layer;
+    int line, type, cat;
     int nlines_modified, rewrite;
     
-    layer = atoi(fld_opt->answer);
     nlines_modified = 0;
 
     /* get list of categories */
     Clist = Vect_new_cat_list();
-    if (Vect_str_to_cat_list(cat_opt->answer, Clist)) 
-	G_fatal_error(_("Could not get cat list <%s>"), cat_opt->answer);
+    if (Vect_str_to_cat_list(cats_list, Clist)) {
+	G_warning (_("Could not get cat list <%s>, editing terminated"), cats_list);
+	return -1;
+    }
     
     /* features defined by cats */
-    if(cat_opt->answer != NULL && Clist->n_ranges > 0) {
-	/* select lines */
-	List = select_lines (Map);
-	
-	if (List -> n_values < 1)
-	    return 0;
-
+    if(Clist->n_ranges > 0) {
 	Cats   = Vect_new_cats_struct (); 
 	Points = Vect_new_line_struct();
 
@@ -89,23 +85,26 @@ int cats (struct Map_info *Map, int del)
 		continue;
 
 	    if (Vect_rewrite_line (Map, line, type, Points, Cats) < 0)  {
-		G_fatal_error (_("Cannot rewrite line [%d]"), line);
+		G_warning (_("Cannot rewrite line [%d]"), line);
+		return -1;
 	    }
 
 	    nlines_modified++;
 
-	    if (i_flg->answer) {
-		fprintf (stdout,"%d", line);
+	    if (print) {
+		fprintf(stdout, "%d%s",
+			line,
+			i < List->n_values -1 ? "," : "");
 		fflush (stdout);
 	    }
 	}
+
 	/* destroy structures */
 	Vect_destroy_line_struct(Points);
 	Vect_destroy_cats_struct(Cats);
-	Vect_destroy_list(List);
     }
 
-    G_message(_("Editing: [%d] lines modified"), nlines_modified);
+    G_message(_("[%d] features modified"), nlines_modified);
 
     return nlines_modified;
 }

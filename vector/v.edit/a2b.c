@@ -52,7 +52,7 @@ int asc_to_bin(FILE *ascii , struct Map_info *Map)
 		G_debug(2, "a2b: skipping commented line");
 		continue;
 	    }
-	    G_warning (_("Error reading ASCII file <%s>"), buff);
+	    G_warning (_("Error reading ASCII file: %s"), buff);
 	    return -1;
 	}
 	if (ctype == '#') {
@@ -90,7 +90,7 @@ int asc_to_bin(FILE *ascii , struct Map_info *Map)
 	    type = 0; /* dead -> ignore */
 	    break;
 	default:
-	    G_warning (_("Error reading ASCII file: <%s>"), buff) ;
+	    G_warning (_("Error reading ASCII file: %s"), buff) ;
 	    return -1;
 	}
 	G_debug(5, "feature type = %d", type);
@@ -115,7 +115,7 @@ int asc_to_bin(FILE *ascii , struct Map_info *Map)
 	    
 	    *z=0;
 	    if ( sscanf(buff, "%lf%lf%lf", x, y, z) < 2 ) {			
-		G_warning (_("Error reading ASCII file: <%s>"), buff) ;
+		G_warning (_("Error reading ASCII file: %s"), buff) ;
 		return -1;
 	    }    
 	    G_debug( 5, "coor in: %s -> x = %f y = %f z = %f", G_chop(buff), *x, *y, *z);
@@ -151,7 +151,7 @@ int asc_to_bin(FILE *ascii , struct Map_info *Map)
 	    }
 	    
 	    if ( sscanf(buff, "%u%u", &catn, &cat) != 2 ) {
-		G_warning (_("Error reading categories: <%s>"), buff) ;
+		G_warning (_("Error reading categories: %s"), buff) ;
 		return -1;
 	    }
 	    Vect_cat_set ( Cats, catn, cat );
@@ -190,7 +190,7 @@ read_head ( FILE * dascii, struct Map_info *Map )
 	    return 0;
 	
 	if (!(ptr = G_index (buff, ':')))
-	    G_fatal_error(_("Unexpected data in vector head.\n[%s]"), buff);
+	    G_fatal_error(_("Unexpected data in vector head: %s"), buff);
 	
 	ptr++;			/* Search for the start of text */
 	while (*ptr == ' ')
@@ -220,7 +220,7 @@ read_head ( FILE * dascii, struct Map_info *Map )
 	    Vect_set_thresh ( Map, atof (ptr) );  
 	else
         {
-	  G_warning(_("Unknown keyword <%s> in vector head."), buff);
+	  G_warning(_("Unknown keyword <%s> in vector head"), buff);
 	}
     }
     /* NOTREACHED */

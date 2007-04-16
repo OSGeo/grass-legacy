@@ -1,75 +1,73 @@
 /***************************************************************
  *
- * MODULE:       v.digit
+ * MODULE:     v.edit
  * 
  * AUTHOR(S):  GRASS Development Team
  *             Jachym Cepicky <jachym  les-ejk cz>
+ *             Martin Landa
  *               
- * PURPOSE:    This module edits vector maps. It is inteded to be mainly
- * 	       used by the the new v.digit GUI.
+ * PURPOSE:    This module edits vector maps.
+ *             Copy selected features.
  *
- * COPYRIGHT:    (C) 2001 by the GRASS Development Team
+ * COPYRIGHT:  (C) 2007 by the GRASS Development Team
  *
- *               This program is free software under the 
- *               GNU General Public License (>=v2). 
- *               Read the file COPYING that comes with GRASS
- *               for details.
+ *             This program is free software under the 
+ *             GNU General Public License (>=v2). 
+ *             Read the file COPYING that comes with GRASS
+ *             for details.
  *
  **************************************************************/
 
-#include <grass/glocale.h>
 #include "global.h"
 
-int do_copy (struct Map_info *Map)
+/*
+ * copy selected features
+ * return number of copied features
+ * return -1 on error 
+ */
+int do_copy (struct Map_info *Map, struct ilist *List, int print)
 {
-    struct ilist *List;
     struct line_cats *Cats;
     struct line_pnts *Points;
-    struct line_pnts *NPoints;
-    int i, j;
-    int type, cat;
-    int layer;
-    
-    layer = atoi(fld_opt->answer);
-    
-    /* Select features */
-    List = select_lines (Map);
+    int i;
+    int type, line;
+    int nlines_copied;
 
-    if (List->n_values <1) {
-        G_warning(_("No lines found"),List->n_values);
-        return 0;
-    }
-
-    Cats = Vect_new_cats_struct (); 
+    nlines_copied = 0;
+    Cats = Vect_new_cats_struct(); 
     Points = Vect_new_line_struct();
-    NPoints = Vect_new_line_struct();
-    Vect_reset_line(NPoints);
 
     /* for each line, make a copy */
-    for ( i = 0; i < List->n_values; i++) {
-        type = Vect_read_line(Map, Points, Cats, List->value[i]);
-        G_debug(2, "Copying type [%d] number [%d]", type, List->value[i]);
+    for (i = 0; i < List->n_values; i++) {
+	line = List -> value[i];
+
+	if (!Vect_line_alive(Map, line))
+	    continue;
+
+        type = Vect_read_line(Map, Points, Cats, line);
+
+        G_debug(3, "Copying line type [%d] number [%d]", type, line);
 
         /* copy */
-        for (j = 0; j < Points->n_points; j++) {
-
-            Vect_append_point(NPoints, 
-                            Points->x[j],Points->y[j], Points->z[j]);
-
-        }/* /for each point at line */
-
-        if ( Vect_write_line (Map, type, NPoints, Cats) < 0)  {
-            G_warning("Feature [%d] could not be copyed",List->value[i]);
-            return 0;
-        }
+        if (Vect_write_line (Map, type, Points, Cats) < 0) {
+            G_warning (_("Cannot copy line [%d], editing terminated"), line);
+	    return -1;
+	}
         
-        /* set new category to copyed image */
-        if ((cat = Vect_get_line_cat (Map, List->value[i], layer)) > 0) {
-            Vect_cat_set (Cats,layer, cat);
-        }
+	if (print) {
+	    fprintf(stdout, "%d%s",
+		    line,
+		    i < List->n_values -1 ? "," : "");
+	    fflush (stdout);
+	}
 
-        if (i_flg->answer) 
-            fprintf(stdout,"%d%s", List->value[i], i < List->n_values-1 ? "," : "\n");
+	nlines_copied++;
     }
-    return 1;
+
+    G_message (_("[%d] features copied"), nlines_copied);
+
+    Vect_destroy_line_struct (Points);
+    Vect_destroy_cats_struct (Cats);
+
+    return nlines_copied;
 }
