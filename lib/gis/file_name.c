@@ -62,3 +62,53 @@ char *G__file_name (
 
 	return path;
 }
+
+char *G__file_name_misc ( 
+	char *path,
+	const char *dir,
+	const char *element,
+	const char *name,
+	const char *mapset)
+{
+	char xname[512];
+	char xmapset[512];
+	const char *pname = name;
+	char *location = G__location_path();
+
+/*
+ * if a name is given, build a file name
+ * must split the name into name, mapset if it is
+ * in the name@mapset format
+ */
+	if (name && *name && G__name_is_fully_qualified(name, xname, xmapset))
+	{
+		pname = xname;
+		sprintf(path,"%s/%s", location, xmapset);
+	}
+	else if (mapset && *mapset)
+		sprintf(path,"%s/%s", location, mapset);
+	else
+		sprintf(path,"%s/%s", location, G_mapset());
+
+	G_free (location);
+	
+	if (dir && *dir)
+	{
+		strcat (path, "/");
+		strcat (path, dir);
+	}
+
+	if (pname && *pname)
+	{
+		strcat (path, "/");
+		strcat (path, pname);
+	}
+
+	if (element && *element)
+	{
+		strcat (path, "/");
+		strcat (path, element);
+	}
+
+	return path;
+}
