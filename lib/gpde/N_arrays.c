@@ -638,8 +638,8 @@ void N_print_array_2d(N_array_2d * data)
 
     N_print_array_2d_info(data);
 
-    for (j = 0; j < data->rows; j++) {
-	for (i = 0; i < data->cols; i++) {
+    for (j = 0 - data->offset; j < data->rows + data->offset; j++) {
+	for (i = 0  - data->offset; i < data->cols  + data->offset; i++) {
 	    if (data->type == CELL_TYPE)
 		fprintf(stdout, "%6d ", N_get_array_2d_c_value(data, i, j));
 	    else if (data->type == FCELL_TYPE)

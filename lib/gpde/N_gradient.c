@@ -114,7 +114,7 @@ int N_copy_gradient_2d(N_gradient_2d * source, N_gradient_2d * target)
 N_gradient_2d *N_get_gradient_2d(N_gradient_field_2d * field,
 				 N_gradient_2d * gradient, int col, int row)
 {
-    double NC, SC, WC, EC;
+    double NC = 0, SC = 0, WC = 0, EC = 0;
     N_gradient_2d *grad = gradient;
 
 

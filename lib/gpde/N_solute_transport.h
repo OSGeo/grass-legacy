@@ -39,8 +39,15 @@ typedef struct
 
   N_array_3d *status;		/*active/inactive/dirichlet cell status */
 
+  N_array_3d *disp_xx;		/*x part of the dispersivity tensor*/
+  N_array_3d *disp_yy;		/*x part of the dispersivity tensor*/
+  N_array_3d *disp_zz;		/*x part of the dispersivity tensor*/
+  N_array_3d *disp_xy;		/*xy part of the dispersivity tensor*/
+  N_array_3d *disp_xz;		/*xz part of the dispersivity tensor*/
+  N_array_3d *disp_yz;		/*yz part of the dispersivity tensor*/
+
   double dt;			/*calculation time */
-  double ax, ay, az;		/*dispersivity length */
+  double al, at;		/*dispersivity length longditudinal and transversal*/
 
 } N_solute_transport_data3d;
 
@@ -63,8 +70,12 @@ typedef struct
   N_array_2d *top;		/* top surface of the aquifer */
   N_array_2d *bottom;		/* bottom surface of the aquifer */
 
+  N_array_2d *disp_xx;		/*x part of the dispersivity tensor*/
+  N_array_2d *disp_yy;		/*x part of the dispersivity tensor*/
+  N_array_2d *disp_xy;		/*xy part of the dispersivity tensor*/
+
   double dt;			/*calculation time */
-  double ax, ay;		/*dispersivity length */
+  double al, at;		/*dispersivity length longditudinal and transversal*/
 
 } N_solute_transport_data2d;
 
@@ -75,5 +86,8 @@ extern N_solute_transport_data3d *N_alloc_solute_transport_data3d (int cols, int
 extern N_solute_transport_data2d *N_alloc_solute_transport_data2d (int cols, int rows);
 extern void N_free_solute_transport_data3d (N_solute_transport_data3d * data);
 extern void N_free_solute_transport_data2d (N_solute_transport_data2d * data);
+/*compute the dispersivity tensor*/
+extern void N_calc_solute_transport_disptensor_2d(N_solute_transport_data2d * data);
+extern void N_calc_solute_transport_disptensor_3d(N_solute_transport_data3d * data);
 
 #endif
