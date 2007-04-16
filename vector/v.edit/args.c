@@ -1,137 +1,144 @@
 #include "global.h"
 
-int parser(int argc, char*argv[])
+int parser(int argc, char*argv[], struct GParams *params,
+	   enum mode *action_mode)
 {
-    map_opt = G_define_standard_option(G_OPT_V_MAP);
+    params -> map = G_define_standard_option(G_OPT_V_MAP);
 
-    fld_opt = G_define_standard_option(G_OPT_V_FIELD);
+    params -> fld = G_define_standard_option(G_OPT_V_FIELD);
 
-    type_opt = G_define_standard_option(G_OPT_V_TYPE);
-    type_opt->answer           = "point,line,boundary,centroid" ;
-    type_opt->options          = "point,line,boundary,centroid" ;
+    params -> type = G_define_standard_option(G_OPT_V_TYPE);
+    params -> type->answer           = "point,line,boundary,centroid" ;
+    params -> type->options          = "point,line,boundary,centroid" ;
 
-    tool_opt = G_define_option();
-    tool_opt->key         = "tool";
-    tool_opt->type        = TYPE_STRING;
-    tool_opt->required    = YES;
-    tool_opt->multiple    = NO;
-    tool_opt->description = _("Editing tool");
-    tool_opt->descriptions = _("create;"
-			       "Create empty vector map;"
-			       "add;"
-			       "Add new feature(s) to existing vector map;"
-			       "delete;"
-			       "Delete feature(s) from vector map;"
-			       "move;"
-			       "Move feature(s) in vector map;"
-			       "vertex;"
-			       "Move one vertex;"
-			       "straight;"
-			       "Remove vertex;"
-			       "break;"
-			       "Add new vertex to existing vector line;"
-			       "merge;"
-			       "Merge vector line(s);"
-			       "split;"
-			       "Split line into two separate lines;"
-			       "select;"
-			       "Select lines and print their ID's;"
-			       "catadd;"
-			       "Set new category to selected line(s) for defined layer;"
-			       "catdel;"
-			       "Delete category to selected line(s) for defined layer;"
-			       "copy;"
-			       "Copy selected features;"
-			       "snap;"
-			       "Snap one line to another;"
-			       "flip;"
-			       "Flip direction of selected vector lines");
-    tool_opt->options     = "create,add,delete,copy,move,select,catadd,catdel,flip,merge,"
-      "break,split,snap,vertex,straight";
+    params -> tool = G_define_option();
+    params -> tool->key         = "tool";
+    params -> tool->type        = TYPE_STRING;
+    params -> tool->required    = YES;
+    params -> tool->multiple    = NO;
+    params -> tool->description = _("Editing tool");
+    params -> tool->descriptions = _("create;"
+				     "Create new (empty) vector map;"
+				     "add;"
+				     "Add new feature(s) to existing vector map;"
+				     "delete;"
+				     "Delete selected feature(s) from vector map;"
+				     "move;"
+				     "Move selected feature(s) in vector map;"
+				     "vertexmove;"
+				     "Move vertex(ces) of selected vector lines;"
+				     "vertexdel;"
+				     "Remove vertex;"
+				     "vertexadd;"
+				     "Add new vertex to existing vector line;"
+				     "merge;"
+				     "Merge selected vector lines;"
+				     "break;"
+				     "Break (split) vector line into two separate lines;"
+				     "select;"
+				     "Select lines and print their ID's;"
+				     "catadd;"
+				     "Set new category(ies) to selected vector feature(s) "
+				     "for defined layer;"
+				     "catdel;"
+				     "Delete category(ies) from selected vector feature(s) "
+				     "for defined layer;"
+				     "copy;"
+				     "Copy selected features;"
+				     "snap;"
+				     "Snap one vector line to another;"
+				     "flip;"
+				     "Flip direction of selected vector lines");
+    params -> tool->options     = "create,add,delete,copy,move,flip,catadd,catdel,"
+      "merge,break,snap,"
+      "vertexadd,vertexdel,vertexmove,select";
 
-    in_opt = G_define_standard_option (G_OPT_F_INPUT);
-    in_opt -> required = NO;
-    in_opt -> description = _("ASCII file to be converted to binary vector map, "
+    params -> in = G_define_standard_option (G_OPT_F_INPUT);
+    params -> in -> required = NO;
+    params -> in -> description = _("ASCII file to be converted to binary vector map, "
 			      "if not given (or \"-\") reads from standard input");
 
-    move_opt = G_define_option();
-    move_opt->key         = "move";
-    move_opt->key_desc    = "x,y";
-    move_opt->type        = TYPE_DOUBLE;
-    move_opt->required    = NO;
-    move_opt->multiple    = NO;
-    move_opt->description = _("Difference in x,y direction for moving feature or vertex");
+    params -> move = G_define_option();
+    params -> move->key         = "move";
+    params -> move->key_desc    = "x,y";
+    params -> move->type        = TYPE_DOUBLE;
+    params -> move->required    = NO;
+    params -> move->multiple    = NO;
+    params -> move->description = _("Difference in x,y direction for moving feature or vertex");
     
-    maxdist_opt = G_define_option();
-    maxdist_opt->key         = "thresh";
-    maxdist_opt->type        = TYPE_DOUBLE;
-    maxdist_opt->required    = NO;
-    maxdist_opt->multiple    = NO;
-    maxdist_opt->description = _("Threshold distance");
-    maxdist_opt->answer      = "0";
+    params -> maxdist = G_define_option();
+    params -> maxdist->key         = "thresh";
+    params -> maxdist->type        = TYPE_DOUBLE;
+    params -> maxdist->required    = NO;
+    params -> maxdist->multiple    = NO;
+    params -> maxdist->description = _("Threshold distance");
+    params -> maxdist->answer      = "0";
 
-    cat_opt = G_define_standard_option(G_OPT_V_CATS);
-    cat_opt->required    = NO;
+    params -> cat = G_define_standard_option(G_OPT_V_CATS);
+    params -> cat->required    = NO;
     
-    id_opt = G_define_standard_option(G_OPT_V_CATS);
-    id_opt->required    = NO;
-    id_opt->key         = "ids";
-    id_opt->label = _("ID values");
+    params -> id = G_define_standard_option(G_OPT_V_CATS);
+    params -> id->required    = NO;
+    params -> id->key         = "ids";
+    params -> id->label = _("ID values");
     
-    coord_opt = G_define_option();
-    coord_opt->key         = "coords";
-    coord_opt->key_desc    = "x,y";
-    coord_opt->type        = TYPE_DOUBLE;
-    coord_opt->required    = NO;
-    coord_opt->multiple    = YES;
-    coord_opt->description = _("List of point coordinates "
-			       "(required for add and move actions)");
+    params -> coord = G_define_option();
+    params -> coord->key         = "coords";
+    params -> coord->key_desc    = "x,y";
+    params -> coord->type        = TYPE_DOUBLE;
+    params -> coord->required    = NO;
+    params -> coord->multiple    = YES;
+    params -> coord->description = _("List of point coordinates");
     
-    bbox_opt =  G_define_option();
-    bbox_opt->key         = "bbox";
-    bbox_opt->key_desc    = "x1,y1,x2,y2";
-    bbox_opt->type        = TYPE_DOUBLE;
-    bbox_opt->required    = NO;
-    bbox_opt->multiple    = NO;
-    bbox_opt->description = _("Bounding box for selecting features");
+    params -> bbox =  G_define_option();
+    params -> bbox->key         = "bbox";
+    params -> bbox->key_desc    = "x1,y1,x2,y2";
+    params -> bbox->type        = TYPE_DOUBLE;
+    params -> bbox->required    = NO;
+    params -> bbox->multiple    = NO;
+    params -> bbox->description = _("Bounding box for selecting features");
 
-    poly_opt =  G_define_option();
-    poly_opt->key         = "polygon";
-    poly_opt->key_desc    = "x,y";
-    poly_opt->type        = TYPE_DOUBLE;
-    poly_opt->required    = NO;
-    poly_opt->multiple    = YES;
-    poly_opt->description = _("Polygon for selecting features");
+    params -> poly =  G_define_option();
+    params -> poly->key         = "polygon";
+    params -> poly->key_desc    = "x,y";
+    params -> poly->type        = TYPE_DOUBLE;
+    params -> poly->required    = NO;
+    params -> poly->multiple    = YES;
+    params -> poly->description = _("Polygon for selecting features");
 
-    where_opt = G_define_standard_option(G_OPT_WHERE);
+    params -> where = G_define_standard_option(G_OPT_WHERE);
 
-    t_flg = G_define_flag();
-    t_flg->key = 't';
-    t_flg->description = _("Do not build topology");
+    params -> topo = G_define_flag();
+    params -> topo -> key = 't';
+    params -> topo -> description = _("Do not build topology");
 
-    i_flg = G_define_flag();
-    i_flg->key = 'i';
-    i_flg->description = _("Print ID's of edited features");
+    params -> print = G_define_flag();
+    params -> print -> key = 'i';
+    params -> print -> description = _("Print ID's of edited features");
+    /*
+    params -> boundary = G_define_flag();
+    params -> boundary -> key = 'b';
+    params -> boundary -> description = _("Assign cats to boundaries too");
 
-    b_flg = G_define_flag();
-    b_flg->key = 'b';
-    b_flg->description = _("Assign cats to boundaries too");
-
-    c_flg = G_define_flag();
-    c_flg->key = 'c';
-    c_flg->description = _("Do not close boundaries");
-
-    n_flg = G_define_flag();
-    n_flg->key          = 'n';
-    n_flg->description  = _("Do not expect header of input data");
+    params -> close = G_define_flag();
+    params -> close -> key = 'c';
+    params -> close -> description = _("Do not close boundaries");
+    
+    params -> print_cat = G_define_flag();
+    params -> print_cat -> key = 'c';
+    params -> print_cat -> description = _("Print category numbers instead of ID's");
+    */
+    params -> header = G_define_flag();
+    params -> header -> key          = 'n';
+    params -> header -> description  = _("Do not expect header of input data");
 
     if(G_parser(argc, argv))
 	exit (EXIT_FAILURE);
 
     /* check for polygon param */
-    if (poly_opt->answers != NULL) {
+    if (params -> poly -> answers != NULL) {
         int i = 0;
-        while (poly_opt->answers[i++])
+        while (params -> poly -> answers[i++])
             ;
 
 	if (i < 6)
@@ -141,117 +148,105 @@ int parser(int argc, char*argv[])
     /*
       check that the given arguments makes sense together
     */
-    if(G_strcasecmp (tool_opt->answer, "create") == 0) { 
-	/* add requires a points argument */
-	action_mode = MODE_CREATE;
+    if(G_strcasecmp (params -> tool -> answer, "create") == 0) { 
+	*action_mode = MODE_CREATE;
     }
-    else if(G_strcasecmp (tool_opt->answer, "add") == 0) { 
-	/* add requires a points argument */
-	action_mode = MODE_ADD;
+    else if(G_strcasecmp (params -> tool -> answer, "add") == 0) { 
+	*action_mode = MODE_ADD;
     }
-    else if(G_strcasecmp (tool_opt->answer, "delete")==0) {
-	/* del requires a cats or or bbox or coords */
-	action_mode = MODE_DEL;
+    else if(G_strcasecmp (params -> tool -> answer, "delete")==0) {
+	*action_mode = MODE_DEL;
     }
-    else if(G_strcasecmp (tool_opt->answer, "move") == 0) {
-	/* move requires coords or cats arguments */
-	action_mode = MODE_MOVE;
+    else if(G_strcasecmp (params -> tool -> answer, "move") == 0) {
+	*action_mode = MODE_MOVE;
     }
-    else if(G_strcasecmp (tool_opt->answer, "merge") == 0) { 
-	/* del requires a cats or or bbox or coords */
-	action_mode = MODE_MERGE;
+    else if(G_strcasecmp (params -> tool -> answer, "merge") == 0) { 
+	*action_mode = MODE_MERGE;
     }
-    else if(G_strcasecmp (tool_opt->answer, "break") == 0) { 
-	/* break line requires a coord and at options */
-	action_mode = MODE_BREAK;
+    else if(G_strcasecmp (params -> tool -> answer, "break") == 0) { 
+	*action_mode = MODE_BREAK;
     }
-    else if(G_strcasecmp (tool_opt->answer, "vertex") == 0) { 
-	/* vertex requires a coord and snap or bbox options */
-        action_mode = MODE_VERTEX;
+    else if(G_strcasecmp (params -> tool -> answer, "addver") == 0) { 
+        *action_mode = MODE_VERTEX_ADD;
     }
-    else if(G_strcasecmp (tool_opt->answer, "split") ==0 ) { 
-        /* split line requires a coord and at options */
-	action_mode = MODE_SPLIT;
+    else if(G_strcasecmp (params -> tool -> answer, "deletever") ==0 ) { 
+	*action_mode = MODE_VERTEX_DELETE;
     }
-    else if(G_strcasecmp (tool_opt->answer, "straight") == 0) { 
-        /* remove vertex */
-	action_mode = MODE_STRAIGHTEN;
+    else if(G_strcasecmp (params -> tool -> answer, "movever") == 0) { 
+	*action_mode = MODE_VERTEX_MOVE;
     }
-    else if(G_strcasecmp (tool_opt->answer, "select") == 0) { 
+    else if(G_strcasecmp (params -> tool -> answer, "select") == 0) { 
         /* del requires a cats or or bbox or coords */
-	action_mode = MODE_SELECT;
+	*action_mode = MODE_SELECT;
     }
-    else if(G_strcasecmp (tool_opt->answer, "catadd") == 0) { 
+    else if(G_strcasecmp (params -> tool -> answer, "catadd") == 0) { 
         /* cat requires a cats or or bbox or coords */
-	action_mode = MODE_CATADD;
+	*action_mode = MODE_CATADD;
     }
-    else if(G_strcasecmp (tool_opt->answer, "catdel") == 0) {
+    else if(G_strcasecmp (params -> tool -> answer, "catdel") == 0) {
         /* cat requires a cats or or bbox or coords */
-	action_mode = MODE_CATDEL;
+	*action_mode = MODE_CATDEL;
     }
-    else if(G_strcasecmp(tool_opt->answer, "copy") == 0) { 
+    else if(G_strcasecmp(params -> tool -> answer, "copy") == 0) { 
         /* del requires a cats or or bbox or coords */
-	action_mode = MODE_COPY;
+	*action_mode = MODE_COPY;
     }
-    else if(G_strcasecmp (tool_opt->answer, "snap") == 0) {
+    else if(G_strcasecmp (params -> tool -> answer, "snap") == 0) {
 	/* del requires a cats or or bbox or coords */ 
-	action_mode = MODE_SNAP;
+	*action_mode = MODE_SNAP;
     }
-    else if(G_strcasecmp (tool_opt->answer, "flip") == 0) {
+    else if(G_strcasecmp (params -> tool -> answer, "flip") == 0) {
 	/* del requires a cats or or bbox or coords */ 
-	action_mode = MODE_FLIP;
+	*action_mode = MODE_FLIP;
     }
     else
     {
 	G_fatal_error (_("Operation <%s> not implemented."),
-		       tool_opt->answer);
+		       params -> tool -> answer);
     }
 
-    if (action_mode == MODE_DEL ||
-	action_mode == MODE_MOVE ||
-	action_mode == MODE_MERGE ||
-	action_mode == MODE_SELECT ||
-	action_mode == MODE_COPY ||
-	action_mode == MODE_SNAP)
+    if((*action_mode != MODE_CREATE && *action_mode != MODE_ADD) &&
+       (params -> cat   -> answers  == NULL) && 
+       (params -> coord -> answers  == NULL) &&
+       (params -> poly  -> answers  == NULL) &&
+       (params -> id    -> answers  == NULL) &&
+       (params -> bbox  -> answers  == NULL) &&
+       (params -> where -> answer   == NULL)) {
+	G_fatal_error (_("At least one option from <%s> must be specified"),
+		       "cats, ids, coords, bbox, polygon, where");
+    }
+    
+    if (*action_mode == MODE_MOVE ||
+	*action_mode == MODE_VERTEX_MOVE)
     {
-	if((cat_opt   -> answers  == NULL) && 
-           (coord_opt -> answers  == NULL) &&
-           (poly_opt  -> answers  == NULL) &&
-           (id_opt    -> answers  == NULL) &&
-           (bbox_opt  -> answers  == NULL) &&
-	   (where_opt -> answer   == NULL)) {
-	    G_fatal_error (_("At least one option from <%s> must be specified"),
-			   "cats, coords, bbox, polygon, id, where");
+	if(params -> move -> answers == NULL) { 
+            G_fatal_error (_("Tool <%s> requires option <%s>"),
+			   params -> tool -> answer,
+			   params -> move -> key);
+        }
+    }
+    
+    if (*action_mode == MODE_BREAK ||
+	*action_mode == MODE_VERTEX_ADD ||
+	*action_mode == MODE_VERTEX_DELETE ||
+	*action_mode == MODE_VERTEX_MOVE)
+    {
+	if(params -> coord -> answers == NULL) {
+	    G_fatal_error (_("Tool <%s> requires option <%s>"),
+			   params -> tool -> answer,
+			   params -> coord -> key);
 	}
     }
 
-    if (action_mode == MODE_MOVE ||
-	action_mode == MODE_VERTEX)
+    if (*action_mode == MODE_CATADD ||
+	*action_mode == MODE_CATDEL)
     {
-	if(move_opt->answers == NULL) { 
-            G_fatal_error (_("Option <%s> must be set"),
-			   "move");
-        }
-    }
-
-    if (action_mode == MODE_BREAK ||
-	action_mode == MODE_VERTEX ||
-	action_mode == MODE_SPLIT ||
-	action_mode == MODE_STRAIGHTEN)
-    {
-	if(coord_opt->answers == NULL) {
-	    G_fatal_error (_("Required parameter <%s> not set"),
-			   "coords");
-	}
-    }
-
-    if (action_mode == MODE_CATADD ||
-	action_mode == MODE_CATDEL)
-    {
-        if (cat_opt->answers == NULL) {
-            G_fatal_error (_("Required parameter <%s> not set"),
-			   "cats");
-        }
+        if (params -> cat -> answers == NULL)
+	  {
+	      G_fatal_error (_("Tool <%s> requires option <%s>"),
+			     params -> tool -> answer,
+			     params -> cat -> key);
+	  }
     }
 
     return 1;
