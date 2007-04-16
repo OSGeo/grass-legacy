@@ -177,14 +177,14 @@ class grassTask:
         for p in self.params:
             if p['name'] == aParam:
                 return p
-        raise ValueError, "Parameter ot found"
+        raise ValueError, "Parameter not found : %s" % aParam
 
     def get_flag( self, aFlag ):
         """Find and return a flag by name."""
         for f in self.flags:
             if f['name'] == aFlag:
                 return f
-        raise ValueError, "Falg not found"
+        raise ValueError, "Flag not found : %s" % aFlag
     
     def getCmd(self, ignoreErrors = False):
         """Produce an array of command name and arguments for feeding
@@ -209,7 +209,6 @@ class grassTask:
                 cmd += [ '%s=%s' % ( p['name'], p['value'] ) ]
         if errors and not ignoreErrors:
             raise ValueError, errStr
-            return None
 
         return cmd
 
@@ -564,22 +563,28 @@ class cmdPanel(wx.Panel):
         self.task = task
 
         # Determine tab layout
-        sections = [ _('Main') ]
+        sections = []
         is_section = {}
-        for task in self.task.params + self.task.flags:
-            if not task.has_key('guisection') or task['guisection']=='':
-                task['guisection'] = 'Options'
+        not_hidden = [ p for p in self.task.params + self.task.flags if not p.get( 'hidden','no' ) == 'yes' ]
+        for task in not_hidden:
+            if task.get( 'required','no' ) == 'yes':
+                # All required go into Main, even if they had defined another guisection
+                task['guisection'] = _( 'Main' )
+            if task.get( 'guisection','' ) == '':
+                # Undefined guisections end up into Options
+                task['guisection'] = _( 'Options' )
             if not is_section.has_key(task['guisection']):
+                # We do it like this to keep the original order, except for Main which goes first
                 is_section[task['guisection']] = 1
-                if task['guisection'] != _('Main'): # check for pre-existing parameters passed from layer tree
-                    sections.append( task['guisection'] )
-        there_is_main = False
-        for i in self.task.params+self.task.flags:
-            if i.has_key('required') and i['required'] == 'yes':
-                i['guisection'] = _('Main')
-                there_is_main = True
-        if not there_is_main:
-            sections = sections[1:]
+                sections.append( task['guisection'] )
+            else:
+                is_section[ task['guisection'] ] += 1
+        # Main goes first, Options goes second
+        for (newidx,content) in [ (0,_( 'Main' )), (1,_('Options')) ]:
+            if content in sections:
+                idx = sections.index( content )
+                sections[idx:idx+1] = []
+                sections[newidx:newidx] =  [content] 
 
         panelsizer = wx.BoxSizer(wx.VERTICAL)
         # Build notebook
@@ -844,8 +849,9 @@ def getInterfaceDescription( cmd ):
     The DTD must be located in $GISBASE/etx/wx/gui_modules/grass-interface.dtd,
     otherwise the parser will not succeed."""
     gmpath = os.getenv("GISBASE") + "/etc/wx/gui_modules"
-    cmd = cmd + r' --interface-description'
-    cmdout = os.popen(cmd, "r").read()
+    cmdout = os.popen(cmd + r' --interface-description', "r").read()
+    if not len(cmdout) > 0 :
+        raise IOError, "Couldn't make command %s provide its interface description." % cmd
     p = re.compile( '(grass-interface.dtd)')
     p.search( cmdout )
     cmdout = p.sub( gmpath+r'/grass-interface.dtd', cmdout)
