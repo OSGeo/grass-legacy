@@ -21,8 +21,8 @@ int do_move_vertex(struct Map_info *Map, struct ilist *List, int print,
 		   double move_x, double move_y);
 int do_remove_vertex(struct Map_info *Map, struct ilist *List, int print,
 		     struct Option *coord, double thresh);
-int do_break(struct Map_info *Map, struct ilist *List, int print,
-	     struct Option* coord, double thresh);
+int do_add_vertex(struct Map_info *Map, struct ilist *List, int print,
+		  struct Option* coord, double thresh);
 int do_split(struct Map_info *Map, struct ilist *List, int print,
 	     struct Option* coord, double thresh);
 
