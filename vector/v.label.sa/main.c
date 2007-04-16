@@ -34,10 +34,9 @@ int main (int argc, char *argv[])
     module->description =
 	_("Create optimally placed labels for vector map(s)");
 
-printf("parsing options and flags\n");
+	fprintf(stderr, "Parsing options and flags\n");
 	/* parse options and flags */
 	if(parse_args(argc, argv, &p)) exit(EXIT_FAILURE);
-printf("initialize labels\n");
 	/* initialize labels (get text from database, and get features)*/
 	labels = labels_init(&p, &n_labels);
 	/* start algorithm */
@@ -149,14 +148,13 @@ void print_label (FILE *labelf, label_t *label, struct params *p)
     fprintf (labelf, "background: %s\n", "none");
     fprintf (labelf, "border: %s\n", "none");
     fprintf (labelf, "opaque: %s\n", "yes");
-    if ( label->candidates[cc].rotation != 0 )
-        fprintf (labelf, "rotate: %f\n",
-				 label->candidates[cc].rotation*180.0/M_PI);
-/*	if(label->cat == 195)
-		fprintf (labelf, "text:%s (%d)\n\n", label->text,
-				 label->current_candidate);
-	else*/
-	fprintf (labelf, "text:%s\n\n", label->text);
+	fprintf (labelf, "rotate: %f\n",
+			 label->candidates[cc].rotation*180.0/M_PI);
+// /*	if(label->cat == 195)
+		fprintf (labelf, "text:%s\n\n", label->text);
+//				 label->cat, label->current_candidate);
+//	else*/
+//	fprintf (labelf, "text:%s\n\n", label->text);
 /*fprintf (labelf, "current_candidate: %d\n", label->current_candidate);
 fprintf (labelf, "label_width: %lf\n", label->bb.E-label->bb.W);
 fprintf (labelf, "label_height: %lf\n\n", label->bb.N-label->bb.S);
