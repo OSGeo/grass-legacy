@@ -66,7 +66,7 @@ void N_calc_gradient_field_2d_stats(N_gradient_field_2d * field)
  *
  *
  \verbatim
- ______________ 
+  ______________ 
  |    |    |    |
  |    |    |    |
  |----|-NC-|----|
@@ -210,7 +210,8 @@ N_gradient_field_2d *N_compute_gradient_field_2d(N_array_2d * pot,
  
  Based on this storages scheme the gradient vector for each cell is 
  calculated and stored in the provided  N_array_2d structures
- ______________ 
+
+  ______________ 
  |    |    |    |
  |    |    |    |
  |----|-NC-|----|
@@ -269,7 +270,7 @@ N_compute_gradient_field_components_2d(N_gradient_field_2d * field,
 	for (i = 0; i < cols; i++) {
 	    N_get_gradient_2d(field, &grad, i, j);
 	    vx = (grad.WC + grad.EC) / 2;
-	    vy = (grad.NC + grad.SC) / 2;	/*the gradient must be inverted, because grass counts the rows from north to south */
+	    vy = (grad.NC + grad.SC) / 2;
 	    N_put_array_2d_d_value(x, i, j, vx);
 	    N_put_array_2d_d_value(y, i, j, vy);
 	}
@@ -333,14 +334,14 @@ void N_calc_gradient_field_3d_stats(N_gradient_field_3d * field)
  *
  *
  \verbatim
- 
- |  /
- TC NC
- |/
+  
+       |  /
+      TC NC
+       |/
  --WC-----EC--
- /|
- SC BC
- /  |
+      /|
+    SC BC
+    /  |
  
  x - direction:
  
@@ -532,13 +533,13 @@ N_gradient_field_3d *N_compute_gradient_field_3d(N_array_3d * pot,
  calculated and stored in the provided  N_array_3d structures
  
  
- |  /
- TC NC
- |/
+       |  /
+      TC NC
+       |/
  --WC-----EC--
- /|
- SC BC
- /  |
+      /|
+    SC BC
+    /  |
  
  
  x vector component:
