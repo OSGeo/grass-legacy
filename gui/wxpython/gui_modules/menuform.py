@@ -31,8 +31,9 @@
 #
 # - verify option value types
 # - add tooltips
+# - use DOM instead of SAX !!!
 """
-__version__ ="$Date: 2006/08/06 21:21:01 $"
+__version__ ="$Revision $"
 
 import wx
 import sys
@@ -135,7 +136,7 @@ def normalize_whitespace(text):
 def text_beautify( someString ):
     "Make really long texts shorter"
     # TODO: remove magic number (calculate a correct value from
-    # pixelSize of text and the magic number for maximum size
+    # pixelSize of text and the magic number for maximum size)
     return escape_ampersand( os.linesep.join( textwrap.wrap( normalize_whitespace(someString), 70 ) ) )
 
 def escape_ampersand(text):
@@ -245,6 +246,19 @@ class processTask(HandlerBase):
         if self.inDefaultContent:
             self.param_default = self.param_default + ch
         if self.inValueContent and not self.inDescriptionContent:
+            # Beware: value_tmp will get anything outside of a <description>
+            # so in this snippet:
+            # <values>
+            #   <value>
+            #     <name> a </name>
+            #     <description> a desc </description>
+            #   </value>
+            # </values>
+            # 'a desc' will not be recorded anwhere; this unburdens further
+            # handling of value sets to distinguish between those that do define
+            # descriptions and those that do not.
+            #
+            # TODO: a set of flags to treat this case of a description sub-element
             self.value_tmp = self.value_tmp + ch
         if self.inGuisection:
             self.param_guisection = self.param_guisection + ch
@@ -764,32 +778,41 @@ class cmdPanel(wx.Panel):
                 porf[ 'value' ] = me.GetValue()
         self.OnUpdateValues()
 
-    def createCmd(self, ignoreErrors = False):
-        """Produce a command line string for feeding into GRASS.
+    def buildCmd(self, ignoreErrors = False):
+        """Produce an array of command ame and arguments for feeding
+        into some execve-like command processor.
 
         If ignoreErrors==True then it will return whatever has been
         built so far, even though it would not be a correct command
         for GRASS."""
-        cmd = self.task.name
+        cmd = [self.task.name]
         errors = 0
         errStr = ""
         dcmd_params = {}
 
         for flag in self.task.flags:
             if 'value' in flag and flag['value']:
-                cmd += ' -' + flag['name']
+                cmd += [ '-' + flag['name'] ]
         for p in self.task.params:
             if p.get('value','') == '' and p.get('required','no') != 'no':
-                cmd += ' ' + p['name'] + '=' + _('<required>')
+                cmd += [ p['name'] + '=' + _('<required>')]
                 errStr += _("Parameter %s (%s) is missing\n") % ( p['name'], p['description'] )
                 errors += 1
             if p.get('value','') != '' and p['value'] != p.get('default','') :
-                cmd += ' ' + p['name'] + '=' + p['value']
+                cmd += [ p['name'] + '=' + p['value'] ]
         if errors and not ignoreErrors:
             self.OnError(errStr)
             return None
 
         return cmd
+
+    def createCmd( self, ignoreErrors = False ):
+        """Produce a command line string for feeding into GRASS.
+
+        If ignoreErrors==True then it will return whatever has been
+        built so far, even though it would not be a correct command
+        for GRASS."""
+        return  ' '.join( self.buildCmd( ignoreErrors=ignoreErrors ) )
 
     def OnError(self, errMsg):
         dlg = wx.MessageDialog(self, errMsg, _("Error"), wx.OK | wx.ICON_ERROR)
@@ -905,6 +928,7 @@ if __name__ == "__main__":
             "name" : "transparent_color",
             "description" : "This color becomes transparent when set to none",
             "guisection" : "tab",
+            "gisprompt" : True,
             "prompt" : "color"
             },{
             "name" : "multi",
@@ -926,16 +950,17 @@ if __name__ == "__main__":
         task.flags = [
             {
             "name" : "a",
-            "description" : "Some flag",
+            "description" : "Some flag, will appear in Main since it is required",
             "required" : "yes"
             },{
             "name" : "b",
-            "description" : "pre-filled flag",
+            "description" : "pre-filled flag, will appear in options since it is not required",
             "value" : True
             },{
-            "name" : "h",
-            "description" : "hidden flag",
-            "hidden" : "yes"
+            "name" : "hidden_flag",
+            "description" : "hidden flag, should not be changeable",
+            "hidden" : "yes",
+            "value" : True
             }
             ]
         GrassGUIApp( task ).MainLoop()
