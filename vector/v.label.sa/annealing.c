@@ -29,7 +29,8 @@ void simulate_annealing(label_t *labels, int n_labels, struct params *p)
 			r = rand();
 			l = (int)((double)(n_labels) * (r / (RAND_MAX + 1.0)));
 			lp = &labels[l];
-			if(!lp->n_candidates) continue; /* skip labels without candidates */
+			/* skip labels without sufficient number of candidates */
+			if(lp->n_candidates < 2) continue;
 
 			cc = lp->current_candidate;
 //			} while(lp->candidates[cc].score < 0.1);
@@ -66,8 +67,9 @@ void simulate_annealing(label_t *labels, int n_labels, struct params *p)
 				p = pow(M_E, -dE/T);
 				r = rand() / (RAND_MAX + 1.0);
 				if(r < p) {
-//					printf("r<p: dE=%lf, p=%lf, T=%lf, r=%lf\n",
-//						   dE, p, T, r);
+//					if(dE > 40.0)
+//					printf("r<p: dE=%lf, p=%lf, T=%lf, r=%lf label=%s nc=%d cc=%d\n",
+//						   dE, p, T, r, lp->text, c, cc);
 					do_label_overlap(lp, cc, c);
 					lp->current_score += lp->candidates[c].score;
 					lp->current_candidate=c;
@@ -106,10 +108,10 @@ void simulate_annealing(label_t *labels, int n_labels, struct params *p)
 		T -= 0.1 * T;
 	}
 	G_percent(TEMP_DECS, TEMP_DECS, 1);
-	fprintf(stderr, "%u moves improving placing %u moves worsening placing %d ignored moves in %d rounds\n",
+/*	fprintf(stderr, "%u moves improving placing %u moves worsening placing %d ignored moves in %d rounds\n",
 			tot_better, tot_worse, tot_ign, t);
 	fprintf(stderr, "%u overlaps removed %u overlaps created\n",
-			overlaps_removed, overlaps_created);
+			overlaps_removed, overlaps_created);*/
 }
 
 static double calc_label_overlap(label_t *label, int cc, int nc)
@@ -137,7 +139,7 @@ static double calc_label_overlap(label_t *label, int cc, int nc)
 			new_overlaps++;
 		}
 	}
-	return (double)((new_overlaps*2) - old_overlaps) * 40.0;
+	return (double)((new_overlaps) - old_overlaps) * 80.0;
 }
 
 static void do_label_overlap(label_t *label, int cc, int nc)
@@ -152,7 +154,7 @@ static void do_label_overlap(label_t *label, int cc, int nc)
 		ol = label->candidates[cc].intersections[i].label;
 		oc = label->candidates[cc].intersections[i].candidate;
 		if(ol->current_candidate == oc) {
-			ol->current_score -= 40.0;
+			ol->current_score -= 80.0;
 			overlaps_removed++;
 		}
 	}
