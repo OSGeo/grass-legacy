@@ -14,8 +14,6 @@ Classes:
 * MapApp
 """
 
-DEBUG = False
-
 # Authors: Michael Barton and Jachym Cepicky
 # COPYRIGHT:	(C) 1999 - 2006 by the GRASS Development Team
 # Double buffered drawing concepts from the wxPython Cookbook
@@ -30,6 +28,7 @@ import grassenv
 import track
 import menuform
 from digit import Digit as Digit
+from debug import Debug as Debug
 
 import images
 imagepath = images.__path__[0]
@@ -53,8 +52,6 @@ if not os.getenv("GRASS_ICONPATH"):
 else:
     icons = os.environ["GRASS_ICONPATH"]
 
-#Map = render.Map() # instance of Map class to render GRASS display output to PPM file
-
 # for cmdlinef
 cmdfilename = None
 
@@ -69,7 +66,7 @@ class Command(Thread):
       global cmdfilename
 
       self.parent = parent
-      self.map = render.Map() # instance of Map class to render GRASS display output to PPM file
+      self.map = Map
       self.cmdfile = open(cmdfilename,"r")
 
     def run(self):
@@ -121,10 +118,7 @@ class Command(Thread):
                                 dispcmd[key] = value
 
 
-                    if DEBUG:
-                        print "Command.run(): ",
-                        print "opacity=%d name=%s mapset=%s" % (opacity, name, mapset),
-                        print dispcmd
+                    Debug.msg (3, "Command.run(): opacity=%d name=%s mapset=%s, cmd=%s" % (opacity, name, mapset, dispcmd))
 
                     if action == "d.rast":
                         self.map.AddRasterLayer(name=name,
@@ -494,8 +488,7 @@ class BufferedWindow(wx.Window):
 
     	"""
 
-        if DEBUG:
-            print "Buffered Window.UpdateMap(%s): render=%s" % (img, self.render)
+        Debug.msg (3, "BufferedWindow.UpdateMap(%s): render=%s" % (img, self.render))
 
         if self.render:
             # render new map images
@@ -532,9 +525,10 @@ class BufferedWindow(wx.Window):
     	self.resize = False
 
         # update statusbar
+        #Debug.msg (3, "BufferedWindow.UpdateMap(%s): region=%s" % self.Map.region)
         self.parent.statusbar.SetStatusText("Extents: %d(W)-%d(E), %d(N)-%d(S)" %
-                              (self.Map.region["w"], self.Map.region["e"],
-                               self.Map.region["n"], self.Map.region["s"]), 0)
+                                            (self.Map.region["w"], self.Map.region["e"],
+                                             self.Map.region["n"], self.Map.region["s"]), 0)
 
     def EraseMap(self):
         """
@@ -966,6 +960,8 @@ class MapFrame(wx.Frame):
                 Map     -- instance of render.Map
         """
 
+        Debug.msg (1, "MapFrame.__init__()")
+        
         wx.Frame.__init__(self, parent, id, title, pos, size, style)
 
         # most of the thime, this will be the gis manager
@@ -1000,7 +996,7 @@ class MapFrame(wx.Frame):
         #
     	self.statusbar = self.CreateStatusBar(number=2, style=0)
     	self.statusbar.SetStatusWidths([-2, -1])
-    	map_frame_statusbar_fields = ["Extents: %d(W)-%d(E), %d(N)-%d(S)" %
+        map_frame_statusbar_fields = ["Extents: %d(W)-%d(E), %d(N)-%d(S)" %
                                       (self.Map.region["w"], self.Map.region["e"],
                                        self.Map.region["n"], self.Map.region["s"]),
                                       "%s,%s" %(None, None)]
@@ -1116,8 +1112,10 @@ class MapFrame(wx.Frame):
         """
 
         # change bookcontrol page to page associted with display
-        pgnum = self.layerbook.GetPageIndex(self.page)
-        if pgnum > -1: self.layerbook.SetSelection(pgnum)
+        if self.page:
+           pgnum = self.layerbook.GetPageIndex(self.page)
+           if pgnum > -1:
+              self.layerbook.SetSelection(pgnum)
         event.Skip()
 
     def OnMotion(self, event):
@@ -1283,10 +1281,12 @@ class MapFrame(wx.Frame):
         """
         pgnum = None
         self.Map.Clean()
-        pgnum = self.layerbook.GetPageIndex(self.page)
+        if self.page:
+           pgnum = self.layerbook.GetPageIndex(self.page)
+           if pgnum > -1:
+              self.layerbook.DeletePage(pgnum)
+              
         self.Destroy()
-
-        if pgnum > -1: self.layerbook.DeletePage(pgnum)
 
     def getRender(self):
         """
@@ -1769,7 +1769,12 @@ class MapApp(wx.App):
 
     def OnInit(self):
         wx.InitAllImageHandlers()
-        self.mapFrm = MapFrame(parent=None, id=wx.ID_ANY)
+        if __name__ == "__main__":
+           Map = render.Map() # instance of Map class to render GRASS display output to PPM file
+        else:
+           Map = None
+           
+        self.mapFrm = MapFrame(parent=None, id=wx.ID_ANY, Map=Map)
         #self.SetTopWindow(Map)
         self.mapFrm.Show()
 

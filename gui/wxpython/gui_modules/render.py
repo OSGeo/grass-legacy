@@ -6,12 +6,12 @@ class Map
 
 import os,sys,glob
 import utils
+from debug import Debug as Debug
 
 # Authors  : Michael Barton, Jachym Cepicky, Martin Landa
 #
 # COPYRIGHT:(C) 1999 - 2007 by the GRASS Development Team
 
-DEBUG = False
 
 class GRASSLayer:
 	"""
@@ -56,10 +56,8 @@ class MapLayer:
 
 		self.grassLayer = GRASSLayer(dispcmd)
 
-		if DEBUG:
-			print "MapLayer.__init__(): name=%s, mapset=%s, opacity=%d" % \
-			    (name, mapset, opacity),
-			print dispcmd
+		Debug.msg (1, "MapLayer.__init__(): name=%s, mapset=%s, opacity=%d, %s" % 
+			   (name, mapset, opacity, dispcmd))
 
 		gtemp = utils.GetTempfile()
 		self.maskfile = gtemp + ".pgm"
@@ -81,9 +79,7 @@ class MapLayer:
 				else:
 					self.cmd += " -%s" % key
 
-			if DEBUG:
-				print "MapLayer.__renderRasterLayer():",
-				print self.cmd
+			Debug.msg (3, "MapLayer.__renderRasterLayer(): %s" % self.cmd)
 
 		except StandardError, e:
 			sys.stderr.write("Could not render raster layer <%s>: %s\n" %\
@@ -105,9 +101,7 @@ class MapLayer:
 				else:
 					self.cmd += " -%s" % key
 
-			if DEBUG:
-				print "MapLayer.__renderVectorLayer():",
-				print self.cmd
+			Debug.msg (3, "MapLayer.__renderVectorLayer(): %s" % self.cmd)
 
 		except StandardError, e:
 			sys.stderr.write("Could not render vector layer <%s>: %s\n" %\
@@ -206,7 +200,7 @@ class MapLayer:
 		#
 		if not self.cmd:
 			sys.stderr.write("Could not render layer <%s> with command: #%s#" %\
-						 (self.name, self.cmd))
+					 (self.name, self.cmd))
 			return None
 
 		if os.system(self.cmd):
@@ -569,8 +563,7 @@ class Map:
 		os.environ["GRASS_WIDTH"]  = str(self.width)
 		os.environ["GRASS_HEIGHT"] = str(self.height)
 
-		if DEBUG:
-			print ("Map.Render() force=%s" % (force))
+		Debug.msg (3, "Map.Render() force=%s" % (force))
 
 		try:
 			# render overlays
@@ -591,8 +584,6 @@ class Map:
 
 			# render map layers
 			for layer in self.layers:
-                                if DEBUG:
-                                    print "rendering", layer.name
 				# skip if hidden or not active
 				if layer.active == False or layer.hidden == True:
 					continue
@@ -610,8 +601,7 @@ class Map:
 				maps.append(layer.mapfile)
 				masks.append(layer.maskfile)
 				opacities.append(str(layer.opacity))
-                                if DEBUG:
-                                    print "rendered", layer.name
+                                Debug.msg (3, "Map.Render() layer=%s " % layer.name)
 
 			# make arrays to strings
 			mapstr = ",".join(maps)
@@ -626,7 +616,7 @@ class Map:
 			    " width=" + str(self.width) + \
 			    " height=" + str(self.height) + \
 			    " output=" + self.mapfile
-
+			
 			# render overlays
 
 			os.unsetenv("GRASS_REGION")
@@ -639,6 +629,8 @@ class Map:
 				sys.stderr.write("Could not run g.pnmcomp\n")
 				raise Exception (compcmd)
 
+			#Debug.msg (3, "Map.Render() file=%s,%s" % (self.mapfile, self.ovlist))
+			
 			return self.mapfile, self.ovlist
 
 		except Exception, e:
