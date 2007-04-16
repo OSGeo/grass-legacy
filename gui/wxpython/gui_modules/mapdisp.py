@@ -1635,7 +1635,7 @@ class DecDialog(wx.Dialog):
         """
 
         menuform.GUI().parseCommand(self.ovlcmd, gmpath,
-                                    completed=(self.parent.getOptData,self.ovltype,self.params),
+                                    completed=(self.Parent.getOptData,self.ovltype,self.params),
                                     parentframe=None)
 
 class TextDialog(wx.Dialog):
