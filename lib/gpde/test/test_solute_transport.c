@@ -144,6 +144,13 @@ N_solute_transport_data2d *create_solute_transport_data_2d()
 		N_put_array_2d_d_value(data->cs, i, j, 1.0);
 	}
     }
+   /*dispersivity length*/
+   data->al = 0.2;
+   data->at = 0.02;
+
+
+
+
 
     return data;
 }
@@ -162,6 +169,8 @@ int test_solute_transport_3d()
     N_set_les_callback_3d_func(call, (*N_callback_solute_transport_3d));	/*solute_transport 3d */
 
     data = create_solute_transport_data_3d();
+ 
+    N_calc_solute_transport_disptensor_3d(data);
 
     data->dt = 86400;
 
@@ -176,7 +185,6 @@ int test_solute_transport_3d()
     geom->depths = TEST_N_NUM_DEPTHS_LOCAL;
     geom->rows = TEST_N_NUM_ROWS_LOCAL;
     geom->cols = TEST_N_NUM_COLS_LOCAL;
-
     /*Assemble the matrix */
     /*  
      */
@@ -291,10 +299,12 @@ int test_solute_transport_2d()
     }
 
     field = N_compute_gradient_field_2d(pot, relax, relax, geom, NULL);
-    field = N_compute_gradient_field_2d(pot, relax, relax, geom, field);
-
     N_copy_gradient_field_2d(field, data->grad);
     N_free_gradient_field_2d(field);
+
+    N_compute_gradient_field_2d(pot, relax, relax, geom, data->grad);
+    /*The dispersivity tensor*/
+    N_calc_solute_transport_disptensor_2d(data);
 
     /*Assemble the matrix */
     /*  
