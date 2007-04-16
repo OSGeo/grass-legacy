@@ -115,18 +115,18 @@
 -->
 <!ELEMENT guisection	(#PCDATA)>
 
-<!--	contains a number of single values.
+<!--	contains a number of single values. Values may have name and description.
 -->
 <!ELEMENT values     (value+)>
 
 
 
 <!--	a potential value for a parameter. Hopefully
-	it does correposnd to the parameter type.
+	it does correpond to the parameter type.
 	How to set up rules for that (same problem for
 	<default>)?
 -->
-<!ELEMENT value	    (#PCDATA)>
+<!ELEMENT value	    (name|description|#PCDATA)>
 
 
 

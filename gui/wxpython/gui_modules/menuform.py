@@ -244,7 +244,7 @@ class processTask(HandlerBase):
             self.description = self.description + ch
         if self.inDefaultContent:
             self.param_default = self.param_default + ch
-        if self.inValueContent:
+        if self.inValueContent and not self.inDescriptionContent:
             self.value_tmp = self.value_tmp + ch
         if self.inGuisection:
             self.param_guisection = self.param_guisection + ch
