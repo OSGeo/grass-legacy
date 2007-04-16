@@ -86,8 +86,7 @@ main (int argc, char *argv[])
 		    char *p = strchr(rname, '@');
 		    if (p)
 			*p = '\0';
-		    sprintf (buf1, "%s/%s/cell_misc/%s/reclassed_to",
-				    location_path, rmapset, rname);
+		    G__file_name_misc(buf1, "cell_misc", "reclassed_to", rname, rmapset);
 		    sprintf(buf2, "%s@%s", name, mapset);
 
 		    if(nrmaps == 1 && !G_strcasecmp(rmaps[0], buf2))

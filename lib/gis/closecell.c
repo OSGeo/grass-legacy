@@ -35,6 +35,7 @@
 #include "G.h"
 
 #define FORMAT_FILE "f_format"
+#define QUANT_FILE  "f_quant"
 #define NULL_FILE   "null"
 
 static int close_old (int);
@@ -164,7 +165,6 @@ static int close_new (int fd,int ok)
     char path[4096];
     CELL cell_min, cell_max;
     int row, i, open_mode;
-    char element[100];
 
     if (ok) {
         switch (fcb->open_mode)
@@ -189,9 +189,8 @@ static int close_new (int fd,int ok)
 	}
 
         /* create path : full null file name */
-        sprintf(element,"cell_misc/%s",fcb->name);
-        G__file_name(path, element, NULL_FILE, G_mapset());
-        G__make_mapset_element(element);
+        G__make_mapset_element_misc("cell_misc", fcb->name);
+        G__file_name_misc(path, "cell_misc", NULL_FILE, fcb->name, G_mapset());
         remove ( path );
 
         if(fcb->null_cur_row > 0) {
@@ -255,8 +254,7 @@ static int close_new (int fd,int ok)
    	    G__file_name (path, "fcell", fcb->name, fcb->mapset);
             remove ( path );
             /* remove cell_misc/name/f_format */
-            sprintf(element,"cell_misc/%s",fcb->name);
-   	    G__file_name (path, element, "f_format", fcb->mapset);
+   	    G__file_name_misc(path, "cell_misc", FORMAT_FILE, fcb->name, fcb->mapset);
             remove ( path );
             strcpy(CELL_DIR, "cell");
             close (fd);
@@ -345,8 +343,7 @@ static int close_new (int fd,int ok)
                       G_warning(_("unable to write quant file!"));
         } else {
             /* remove cell_misc/name/f_quant */
-            sprintf(element,"cell_misc/%s",fcb->name);
-   	    G__file_name (path, element, "f_quant", fcb->mapset);
+   	    G__file_name_misc(path, "cell_misc", QUANT_FILE, fcb->name, fcb->mapset);
             remove ( path );
         }
 
@@ -386,7 +383,7 @@ int G__write_fp_format (int fd)
 {
    struct fileinfo *fcb = &G__.fileinfo[fd];
    struct Key_Value *format_kv;
-   char element[100], path[4096];
+   char path[GPATH_MAX];
    int stat;
 
    if(fcb->map_type == CELL_TYPE)
@@ -405,10 +402,8 @@ int G__write_fp_format (int fd)
    if (fcb->open_mode == OPEN_NEW_COMPRESSED)
       G_set_key_value ("lzw_compression_bits", "-1", format_kv);
 
-   sprintf(element,"cell_misc/%s",fcb->name);
-   G__file_name(path,element,FORMAT_FILE,fcb->mapset);
-
-   G__make_mapset_element(element);
+   G__make_mapset_element_misc("cell_misc", fcb->name);
+   G__file_name_misc(path, "cell_misc", FORMAT_FILE, fcb->name, fcb->mapset);
    G_write_key_value_file (path, format_kv, &stat);
 
    G_free_key_value(format_kv);

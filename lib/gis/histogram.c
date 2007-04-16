@@ -55,15 +55,14 @@ int G_read_histogram (
 
     G_init_histogram (histogram);
 
-    sprintf (buf,"cell_misc/%s", name);
-    if (G_find_file (buf, "histogram", mapset) == NULL)
+    if (G_find_file2_misc ("cell_misc", "histogram", name, mapset) == NULL)
     {
 	G_warning(_("Histogram for [%s in %s] missing (run r.support)"), name, mapset);
 
 	return 0;
     }
 
-    fd = G_fopen_old (buf, "histogram", mapset);
+    fd = G_fopen_old_misc ("cell_misc", "histogram", name, mapset);
     if (!fd)
     {
 	G_warning(_("Can't read histogram for [%s in %s]"), name, mapset);
@@ -364,11 +363,9 @@ static int cmp_count(const void *aa, const void *bb)
 
 static FILE *fopen_histogram_new ( const char *name)
 {
-    char buf[100];
     FILE *fd;
 
-    sprintf (buf,"cell_misc/%s", name);
-    fd = G_fopen_new (buf, "histogram");
+    fd = G_fopen_new_misc ("cell_misc", "histogram", name);
     if (fd == NULL)
 	G_warning(_("can't create histogram for [%s in %s]"), name, G_mapset());
 
@@ -387,10 +384,7 @@ static FILE *fopen_histogram_new ( const char *name)
 int G_remove_histogram (const char *name)
 
 {
-    char buf[100];
-
-    sprintf (buf,"cell_misc/%s", name);
-    G_remove(buf, "histogram");
+    G_remove_misc("cell_misc", "histogram", name);
 
     return 0;
 }

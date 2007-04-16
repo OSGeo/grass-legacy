@@ -442,6 +442,7 @@ int G_unset_error_routine(void);
 
 /* file_name.c */
 char *G__file_name(char *, const char *, const char *, const char *);
+char *G__file_name_misc(char *, const char *, const char *, const char *, const char *);
 
 /* find_cell.c */
 char *G_find_cell(char *, const char *);
@@ -450,6 +451,8 @@ char *G_find_cell2(const char *, const char *);
 /* find_file.c */
 char *G_find_file(const char *, char *, const char *);
 char *G_find_file2(const char *, const char *, const char *);
+char *G_find_file_misc(const char *, const char *, char *, const char *);
+char *G_find_file2_misc(const char *, const char *, const char *, const char *);
 
 /* find_vect.c */
 char *G_find_vector(char *, const char *);
@@ -745,6 +748,7 @@ char *G__mapset(void);
 
 /* mapset_msc.c */
 int G__make_mapset_element(const char *);
+int G__make_mapset_element_misc (const char *, const char *);
 int G__mapset_permissions(const char *);
 int G__mapset_permissions2(const char *, const char *, const char *);
 
@@ -800,7 +804,6 @@ int G__convert_flags_01 (char *, const unsigned char *, int);
 int G__init_null_bits (unsigned char *, int);
 
 /* open.c */
-int G__open(const char *, const char *, const char *, int);
 int G_open_new(const char *, const char *);
 int G_open_old(const char *, const char *, const char *);
 int G_open_update(const char *, const char *);
@@ -808,6 +811,15 @@ FILE *G_fopen_new(const char *, const char *);
 FILE *G_fopen_old(const char *, const char *, const char *);
 FILE *G_fopen_append(const char *, const char *);
 FILE *G_fopen_modify(const char *, const char *);
+
+/* open_misc.c */
+int G_open_new_misc(const char *, const char *, const char *);
+int G_open_old_misc(const char *, const char *, const char *, const char *);
+int G_open_update_misc(const char *, const char *, const char *);
+FILE *G_fopen_new_misc(const char *, const char *, const char *);
+FILE *G_fopen_old_misc(const char *, const char *, const char *, const char *);
+FILE *G_fopen_append_misc(const char *, const char *, const char *);
+FILE *G_fopen_modify_misc(const char *, const char *, const char *);
 
 /* opencell.c */
 int G_open_cell_old(const char *, const char *);
@@ -1006,6 +1018,7 @@ int G_put_reclass(const char *, const struct Reclass *);
 
 /* remove.c */
 int G_remove(const char *, const char *);
+int G_remove_misc (const char *, const char *, const char *);
 
 /* rename.c */
 int G_rename(const char *, const char *, const char *);

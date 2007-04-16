@@ -92,10 +92,7 @@
 /*-------------------------------------------------------------------------*/
 int G__remove_fp_range (const char *name)
 {
-    char buf[200];
-
-    sprintf (buf,"cell_misc/%s", name);
-    G_remove(buf, "f_range");
+    G_remove_misc("cell_misc", "f_range", name);
 
     return 0;
 }
@@ -169,10 +166,9 @@ int G_read_fp_range (
 
     fd = -1;
 
-    sprintf (buf,"cell_misc/%s", name);
-    if (G_find_file2 (buf, "f_range", mapset))
+    if (G_find_file2_misc ("cell_misc", "f_range", name, mapset))
     {
-        fd = G_open_old(buf, "f_range", mapset);
+        fd = G_open_old_misc("cell_misc", "f_range", name, mapset);
 	if (fd< 0 )
 	    goto error;
 
@@ -282,10 +278,9 @@ int G_read_range (
        return 3;
     }
 	 
-    sprintf (buf,"cell_misc/%s", name);
-    if (G_find_file2 (buf, "range", mapset))
+    if (G_find_file2_misc ("cell_misc", "range", name, mapset))
     {
-	fd = G_fopen_old (buf, "range", mapset);
+	fd = G_fopen_old_misc ("cell_misc", "range", name, mapset);
 	if (!fd)
 	    goto error;
 
@@ -350,8 +345,7 @@ int G_write_range (const char *name, const struct Range *range)
        sprintf(buf, "G_write_range(): the map is floating point!");
        goto error;
     }
-    sprintf (buf,"cell_misc/%s", name);
-    fd = G_fopen_new (buf, "range");
+    fd = G_fopen_new_misc ("cell_misc", "range", name);
     if (!fd)
 	goto error;
 
@@ -367,7 +361,7 @@ int G_write_range (const char *name, const struct Range *range)
     return 0;
 
 error:
-    G_remove(buf, "range"); /* remove the old file with this name */
+    G_remove_misc("cell_misc", "range", name); /* remove the old file with this name */
     sprintf (buf, _("can't write range file for [%s in %s]"),
 	name, G_mapset());
     G_warning (buf);

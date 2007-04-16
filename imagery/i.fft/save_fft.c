@@ -7,20 +7,17 @@ int save_fft (int total, double *data[2], double *maximum, double *minimum)
 {
         int i;
         double max, min, *temp;
-        char buffer[100];
         FILE *fp;
 
         max = *maximum;
         min = *minimum;
 
-        sprintf(buffer, "cell_misc/%s", Cellmap_real);
-        if ((fp = G_fopen_new(buffer, FFTREAL)) == NULL)
+        if ((fp = G_fopen_new_misc("cell_misc",FFTREAL,Cellmap_real)) == NULL)
                 G_fatal_error(_("Unable to open file in the cell_misc directory."));
         fwrite((char *) data[0], sizeof(double), (size_t)total, fp);
         fclose(fp);
 
-        sprintf(buffer, "cell_misc/%s", Cellmap_imag);
-        if ((fp = G_fopen_new(buffer, FFTIMAG)) == NULL)
+        if ((fp = G_fopen_new_misc("cell_misc",FFTIMAG,Cellmap_imag)) == NULL)
                 G_fatal_error(_("Unable to open file in the cell_misc directory."));
         fwrite((char *) data[1], sizeof(double), (size_t)total, fp);
         fclose(fp);

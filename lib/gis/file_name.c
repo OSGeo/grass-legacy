@@ -26,8 +26,8 @@ char *G__file_name (
 	const char *name,
 	const char *mapset)
 {
-	char xname[512];
-	char xmapset[512];
+	char xname[GNAME_MAX];
+	char xmapset[GMAPSET_MAX];
 	const char *pname = name;
 	char *location = G__location_path();
 
@@ -70,8 +70,8 @@ char *G__file_name_misc (
 	const char *name,
 	const char *mapset)
 {
-	char xname[512];
-	char xmapset[512];
+	char xname[GNAME_MAX];
+	char xmapset[GMAPSET_MAX];
 	const char *pname = name;
 	char *location = G__location_path();
 

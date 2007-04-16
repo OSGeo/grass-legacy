@@ -121,8 +121,7 @@ int main(int argc, char *argv[])
 
     map_type = G_raster_map_type(name, mapset);
 
-    sprintf(element, "cell_misc/%s", name);
-    if(only_null && G_find_file(element, "null", mapset))
+    if(only_null && G_find_file_misc("cell_misc", "null", name, mapset))
 	G_fatal_error ("%s already has a null bitmap file!", name);
 
     if(map_type == CELL_TYPE)
@@ -152,8 +151,7 @@ int main(int argc, char *argv[])
 	for (col = 0; col < G__null_bitstream_size(cellhd.cols); col++)
 	    null_bits[col] = 0;
 
-	sprintf(element,"cell_misc/%s",name);
-	null_fd = G_open_new (element, "null");
+	null_fd = G_open_new_misc ("cell_misc", "null", name);
  
 	G_message("Writing new null file for [%s]... ", name);
 	
@@ -173,9 +171,8 @@ int main(int argc, char *argv[])
     {
 	/* write a file of no-nulls */
 	G_message("Removing null file for [%s]... ", name);
-	sprintf(element,"cell_misc/%s",name);
-	null_fd = G_open_new (element, "null");
-        G__file_name(path, element, "null", mapset);
+	null_fd = G_open_new_misc ("cell_misc", "null", name);
+        G__file_name_misc(path, "cell_misc", "null", name, mapset);
 	unlink (path);
 	G_message("Done");
         exit(EXIT_SUCCESS);
