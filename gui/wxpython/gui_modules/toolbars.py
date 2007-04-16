@@ -50,6 +50,13 @@ class MapToolbar:
                                                     type=wx.BITMAP_TYPE_ANY),
                                                     bmpDisabled=wx.NullBitmap, kind=wx.ITEM_NORMAL,
                                                     shortHelp="Display map", longHelp="")
+
+        self.rendermap = self.toolbar.AddLabelTool(id=wx.ID_ANY, label="rendermap",
+                                                    bitmap=wx.Bitmap(name=os.path.join(icons,"gui-redraw.gif"),
+                                                    type=wx.BITMAP_TYPE_ANY),
+                                                    bmpDisabled=wx.NullBitmap, kind=wx.ITEM_NORMAL,
+                                                    shortHelp="Re-render map", longHelp="Force re-rendering of all layers")
+
     	self.erase = self.toolbar.AddLabelTool(wx.ID_ANY, "erase",
                                                wx.Bitmap(os.path.join(icons,"gui-erase.gif"),
                                                wx.BITMAP_TYPE_ANY),
@@ -147,6 +154,7 @@ class MapToolbar:
         self.toolbar.Realize()
 
     	self.mapdisplay.Bind(wx.EVT_TOOL,     self.mapdisplay.ReDraw,       self.displaymap)
+        self.mapdisplay.Bind(wx.EVT_TOOL,     self.mapdisplay.ReRender,       self.rendermap)
     	self.mapdisplay.Bind(wx.EVT_TOOL,     self.mapdisplay.Pointer,      self.pointer)
     	self.mapdisplay.Bind(wx.EVT_TOOL,     self.mapdisplay.OnZoomIn,     self.zoomin)
     	self.mapdisplay.Bind(wx.EVT_TOOL,     self.mapdisplay.OnZoomOut,    self.zoomout)
