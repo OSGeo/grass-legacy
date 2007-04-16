@@ -26,11 +26,11 @@ int parser(int argc, char*argv[], struct GParams *params,
 				     "move;"
 				     "Move selected feature(s) in vector map;"
 				     "vertexmove;"
-				     "Move vertex(ces) of selected vector lines;"
+				     "Move vertex of selected vector lines;"
 				     "vertexdel;"
-				     "Remove vertex;"
+				     "Remove vertex from selected vector lines;"
 				     "vertexadd;"
-				     "Add new vertex to existing vector line;"
+				     "Add new vertex to selected vector lines;"
 				     "merge;"
 				     "Merge selected vector lines;"
 				     "break;"
@@ -166,13 +166,13 @@ int parser(int argc, char*argv[], struct GParams *params,
     else if(G_strcasecmp (params -> tool -> answer, "break") == 0) { 
 	*action_mode = MODE_BREAK;
     }
-    else if(G_strcasecmp (params -> tool -> answer, "addver") == 0) { 
+    else if(G_strcasecmp (params -> tool -> answer, "vertexadd") == 0) { 
         *action_mode = MODE_VERTEX_ADD;
     }
-    else if(G_strcasecmp (params -> tool -> answer, "deletever") ==0 ) { 
+    else if(G_strcasecmp (params -> tool -> answer, "vertexdel") ==0 ) { 
 	*action_mode = MODE_VERTEX_DELETE;
     }
-    else if(G_strcasecmp (params -> tool -> answer, "movever") == 0) { 
+    else if(G_strcasecmp (params -> tool -> answer, "vertexmove") == 0) { 
 	*action_mode = MODE_VERTEX_MOVE;
     }
     else if(G_strcasecmp (params -> tool -> answer, "select") == 0) { 

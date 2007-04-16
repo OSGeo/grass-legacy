@@ -147,8 +147,8 @@ int main (int argc, char *argv[])
 			      move_x, move_y);
 	break;
     case MODE_VERTEX_ADD:
-	ret = do_break(&Map, List, print,
-		       params.coord, thresh);
+	ret = do_add_vertex (&Map, List, print,
+			     params.coord, thresh);
 	break;
     case MODE_VERTEX_DELETE:
 	ret = do_remove_vertex(&Map, List, print,
