@@ -377,6 +377,7 @@ class mainFrame(wx.Frame):
         self.notebookpanel = cmdPanel( parent=self, task=self.task, standalone=standalone )
         if standalone:
             self.goutput = self.notebookpanel.goutput
+        self.notebookpanel.OnUpdateValues = self.updateValuesHook
 
         guisizer.Add( self.notebookpanel, 1, flag = wx.EXPAND )
 
@@ -422,6 +423,8 @@ class mainFrame(wx.Frame):
         self.SetSizer(guisizer)
         self.Layout()
 
+    def updateValuesHook(self):
+        self.SetStatusText( self.notebookpanel.createCmd(ignoreErrors = True) )
 
     def OnOK(self, event):
         cmd = self.OnApply(event)
@@ -719,15 +722,14 @@ class cmdPanel(wx.Panel):
                     colorchooser.SetColour( new_color )
                     colorchooser.Refresh()
                     p[ 'value' ] = colorchooser.GetLabel()
-        self.updateStatusLine()
+        self.OnUpdateValues()
 
-    def updateStatusLine(self):
-        """If we were part of a richer interface, report back the current command being built."""
-        # TODO: don't tie this to a StatusLine
-        try:
-            self.GetParent().SetStatusText( self.createCmd(ignoreErrors = True) )
-        except:
-            pass
+    def OnUpdateValues(self):
+        """If we were part of a richer interface, report back the current command being built.
+
+        This method should be set by the parent of this panel if needed. It's a hook, actually.
+        Beware of what is "self" in the method def, though. It will be called with no arguments."""
+        pass
 
     def OnCheckBoxMulti(self, event):
         """Fill the values ,-separated string according to current status of the checkboxes."""
@@ -752,7 +754,7 @@ class cmdPanel(wx.Panel):
                 currentValueList.append( v )
         # Pack it back
         theParam['value'] = ','.join( currentValueList )
-        self.updateStatusLine()
+        self.OnUpdateValues()
 
     def OnSetValue(self, event):
         myId = event.GetId()
@@ -760,7 +762,7 @@ class cmdPanel(wx.Panel):
         for porf in self.task.params + self.task.flags:
             if 'wxId' in porf and type( porf[ 'wxId' ] ) == type( 1 ) and porf['wxId'] == myId:
                 porf[ 'value' ] = me.GetValue()
-        self.updateStatusLine()
+        self.OnUpdateValues()
 
     def createCmd(self, ignoreErrors = False):
         """Produce a command line string for feeding into GRASS.
