@@ -296,6 +296,9 @@ int G_get_d_color_range(DCELL *, DCELL *, const struct Colors *);
 int G_read_colors(const char *, const char *, struct Colors *);
 int G_mark_colors_as_fp(struct Colors *);
 
+/* color_remove.c */
+int G_remove_colors(const char *, const char *);
+
 /* color_rule.c */
 int G_add_d_raster_color_rule(const DCELL *, int, int, int, const DCELL *, int, int, int,
     struct Colors *);
