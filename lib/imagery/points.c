@@ -2,7 +2,7 @@
 
 #define POINT_FILE "POINTS"
 
-int I_read_control_points (
+static int I_read_control_points (
     FILE *fd,
     struct Control_Points *cp)
 {
@@ -80,7 +80,7 @@ int I_new_control_point (struct Control_Points *cp,
     return 0;
 }
 
-int I_write_control_points(FILE *fd, struct Control_Points *cp)
+static int I_write_control_points(FILE *fd, struct Control_Points *cp)
 {
     int i;
 

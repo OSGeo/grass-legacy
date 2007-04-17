@@ -1,29 +1,5 @@
 #include <grass/imagery.h>
 
-int I_ask_sigset_file_any(
-    char *prompt, char *group, char *subgroup, char *name)
-{
-    char element[200];
-    char desc[100];
-
-    sprintf (element, "group/%s/subgroup/%s/sigset", group, subgroup);
-
-    sprintf (desc,"subgroup [%s] signature", subgroup);
-    return G_ask_any (prompt, name, element, desc, 1) != NULL;
-}
-
-int I_ask_sigset_file_old(
-       char *prompt, char *group, char *subgroup, char *name)
-{
-    char element[200];
-    char desc[100];
-
-    sprintf (element, "group/%s/subgroup/%s/sigset", group, subgroup);
-
-    sprintf (desc,"subgroup [%s] signature", subgroup);
-    return G_ask_in_mapset (prompt, name, element, desc) != NULL;
-}
-
 FILE *I_fopen_sigset_file_new( char *group, char *subgroup, char *name)
 {
     char element[200];
