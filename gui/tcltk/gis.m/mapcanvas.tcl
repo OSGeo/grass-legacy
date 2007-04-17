@@ -1159,6 +1159,8 @@ proc MapCanvas::set_wind {mon args overwrite} {
 	global devnull
 
 	set values [MapCanvas::currentzoom $mon]
+	
+	set cmd "g.region"
 
 	set options {}
 	foreach attr $zoom_attrs value $values {
@@ -1168,12 +1170,9 @@ proc MapCanvas::set_wind {mon args overwrite} {
 	}
 
 	if {$overwrite == 1} {
-	
-		set cmd "g.region --o" 
-	} else {
-		set cmd "g.region"
+		lappend options "--overwrite" 
 	}
-	eval [list exec -- $cmd] $args >& $devnull
+	eval [list exec -- $cmd] $args $options >& $devnull
 }
 
 # zoom bindings
