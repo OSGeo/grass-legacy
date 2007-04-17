@@ -1,3 +1,4 @@
+#include <grass/config.h>
 #include <grass/imagery.h>
 #include <signal.h>
 
@@ -5,7 +6,6 @@ static int floating_exception;
 static void catch(int);
 static double determinant(double,double,
                 double,double,double,double,double,double,double);
-void (*sigfpe)();
 
 /* find coefficients A,B,C for e2 = A + B*e1 + C*n1
  * also compute the reverse equations
@@ -38,6 +38,7 @@ int I_compute_georef_equations(
     struct Control_Points *cp,
     double E12[3], double N12[3], double E21[3], double N21[3])
 {
+    RETSIGTYPE (*sigfpe)(int);
     double s0,s1,s2,s3,s4,s5;
     double x0,x1,x2;
     double det;

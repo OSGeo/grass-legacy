@@ -136,9 +136,7 @@ int I_open_group_file_old(char *, char *);
 /* percent.c */
 int I_percent(int, int, int);
 /* points.c */
-int I_read_control_points(FILE *, struct Control_Points *);
 int I_new_control_point(struct Control_Points *, double, double, double, double, int);
-int I_write_control_points(FILE *, struct Control_Points *);
 int I_get_control_points(char *, struct Control_Points *);
 int I_put_control_points(char *, struct Control_Points *);
 /* proj.c */
