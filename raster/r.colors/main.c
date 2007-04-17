@@ -99,6 +99,7 @@ int main(int argc, char **argv)
 {
     int overwrite;
     int interactive;
+    int remove;
     int have_colors;
     struct Colors colors, colors_tmp;
     struct Cell_stats statf;
@@ -111,7 +112,7 @@ int main(int argc, char **argv)
     int fp;
     struct GModule *module;
     struct {
-	struct Flag *w, *l, *g, *e, *i, *q;
+	struct Flag *r, *w, *l, *g, *e, *i, *q;
     } flag;
     struct {
 	struct Option *map, *colr, *rast, *rules;
@@ -157,6 +158,10 @@ int main(int argc, char **argv)
     opt.rules->description = _("Path to rules file");
     opt.rules->gisprompt   = "old_file,file,input";
 
+    flag.r = G_define_flag();
+    flag.r->key = 'r';  
+    flag.r->description = _("Remove existing color table");
+
     flag.w = G_define_flag();
     flag.w->key = 'w';
     flag.w->description = _("Keep existing color table");
@@ -197,11 +202,12 @@ int main(int argc, char **argv)
     if (flag.l->answer)
     {
 	list_rules();
-	return 0;
+	return EXIT_SUCCESS;
     }
 
-    overwrite = !flag.w->answer;
+    overwrite   = !flag.w->answer;
     interactive = flag.i->answer;
+    remove      = flag.r->answer;
 
     name = opt.map->answer;
 
@@ -212,8 +218,8 @@ int main(int argc, char **argv)
     if (!name)
 	G_fatal_error(_("No map specified"));
 
-    if (!cmap && !type && !rules && !interactive)
-	G_fatal_error(_("One of \"-i\" or options \"color\", \"rast\" OR \"rules\" MUST be specified!"));
+    if (!cmap && !type && !rules && !interactive && !remove)
+	G_fatal_error(_("One of \"-i\" or \"-r\" or options \"color\", \"rast\" or \"rules\" MUST be specified!"));
 
     if (interactive && type)
 	G_warning(_("Both \"-i\" AND \"color\" specified - ignoring color"));
@@ -236,6 +242,17 @@ int main(int argc, char **argv)
     mapset = G_find_cell2(name, "");
     if (mapset == NULL)
 	G_fatal_error(_("%s - map not found"), name);
+
+    if (remove)
+    {
+	int stat = G_remove_colors(name, mapset);
+
+	if (stat < 0)
+	    G_fatal_error(_("%s - unable to remove color table"), name);
+	if (stat == 0)
+	    G_warning(_("%s - color table not found"), name);
+	return EXIT_SUCCESS;
+    }
 
     G_suppress_warnings(1);
     have_colors = G_read_colors(name, mapset, &colors);
