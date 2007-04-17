@@ -315,6 +315,14 @@ int show_it (void)
 	    return 0;
     }
 
+#ifdef OUTPUT_ASCII
+    fprintf(stdout, "L 5\n");
+    for (i = 0; i < 5; i++) {
+	fprintf(stdout, " %f %f\n", D_d_to_u_col(xarr[i]), D_d_to_u_row(yarr[i]));
+    }
+    /* d.labels labfile | v.in.ascii -n out=labbox format=standard */
+#endif
+
     /* draw boxes */
     if(background) {
 	R_standard_color(background) ;
