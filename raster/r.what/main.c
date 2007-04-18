@@ -30,6 +30,7 @@ struct order {
     char north_buf[256];
     char east_buf[256];
     char lab_buf[256];
+    char clr_buf[NFILES][256];
     CELL value[NFILES];
     DCELL dvalue[NFILES];
 };
@@ -51,6 +52,8 @@ int main(int argc,char *argv[])
   int fd[NFILES];
   struct Categories cats[NFILES];
   struct Cell_head window;
+  struct Colors ncolor[NFILES];
+  struct Colors colors;
   RASTER_MAP_TYPE out_type[NFILES];
   CELL *cell[NFILES];
   DCELL *dcell[NFILES];
@@ -62,7 +65,7 @@ int main(int argc,char *argv[])
   char buffer[1024];
   char **ptr;
   struct Option *opt1, *opt2, *opt3, *opt4;
-  struct Flag *flag1, *flag2, *flag3;
+  struct Flag *flag1, *flag2, *flag3, *flag4;
   int Cache_size;
   int done = 0;
   int point, point_cnt;
@@ -74,6 +77,7 @@ int main(int argc,char *argv[])
   int pass = 0;
   int cache_report = 0;
   char tmp_buf[500], *null_str;
+  int red, green, blue;
   struct GModule *module;
   
 
@@ -128,6 +132,10 @@ int main(int argc,char *argv[])
   flag3->key = 'i';
   flag3->description = _("Output integer category values, not cell values");
 
+  flag4 = G_define_flag();
+  flag4->key = 'r';
+  flag4->description = _("Outoput color values as RRR:GGG:BBB");
+
   if (G_parser(argc, argv))
       exit(EXIT_FAILURE);
 
@@ -173,6 +181,12 @@ int main(int argc,char *argv[])
 
       out_type[nfiles] = G_get_raster_map_type(fd[nfiles]);
       if(flag3->answer) out_type[nfiles] = CELL_TYPE;
+
+      if(flag4->answer)
+      {
+              G_read_colors(name, mapset, &colors);
+              ncolor[nfiles] = colors;
+      }
 
       if (withcats && G_read_cats (name, mapset, &cats[nfiles]) < 0)
   	     die (name, " - can't read category file");
@@ -328,6 +342,18 @@ int main(int argc,char *argv[])
             else
 	       G_set_d_null_value(&(cache[point].dvalue[i]), 1);
          }
+        if (flag4->answer)
+        {
+                if (out_type[i] == CELL_TYPE)
+                        G_get_c_raster_color(&cell[i][cache[point].col],
+                                &red, &green, &blue, &ncolor[i]);
+                else
+                        G_get_d_raster_color(&dcell[i][cache[point].col],
+                                &red, &green, &blue, &ncolor[i]);
+
+                sprintf(cache[point].clr_buf[i], "%03d:%03d:%03d", red, green, blue);
+        }
+
       }
     } /* point loop */
 
@@ -370,6 +396,8 @@ int main(int argc,char *argv[])
          }
 	 if (withcats)
 	    fprintf (stdout,"|%s", G_get_cat (cache[point].value[i], &cats[i]));
+	 if (flag4->answer)
+	    fprintf (stdout,"|%s", cache[point].clr_buf[i]);
       }
       fprintf (stdout,"\n");
     }
