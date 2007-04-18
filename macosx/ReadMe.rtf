@@ -390,7 +390,7 @@ If you installed libusb, it will be found and built into gpsbabel.  The gpsbabel
 \pard\tx720\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\ql\qnatural\pardirnatural
 
 \f1\b0 \cf0 \
-NetPBM is not too hard to build, it's just weird.  These instructions use my UnixImageIO framework for the tiff, jpeg and png libraries.\
+NetPBM is not too hard to build, it's just weird.  These instructions use my UnixImageIO framework for the tiff, jpeg, png and jasper libraries.\
 \
 First, grab the {\field{\*\fldinst{HYPERLINK "http://netpbm.sourceforge.net/"}}{\fldrslt NetPBM}} source and unzip it.  Now it gets strange - it's an interactive configuration, and the various stages don't communicate with each other.  Cd to the source folder in a Terminal and:\
 \
@@ -503,13 +503,20 @@ library filename or 'none' [libz.so] ==>
 \f1\i0 \cf0 \
 \pard\tx720\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\ql\qnatural\pardirnatural
 
-\f3\fs20 \cf0 $ echo "CC = /usr/bin/gcc -arch ppc -arch i386 -isysroot /Developer/SDKs/MacOSX10.4u.sdk" >> Makefile.config\
+\f3\fs20 \cf0 $ echo "JASPERLIB = /Library/Frameworks/UnixImageIO.framework/unix/lib/libjasper.dylib" >> Makefile.config\
+$ echo "JASPERHDR_DIR = /Library/Frameworks/UnixImageIO.framework/Headers" >> Makefile.config\
+$ echo "CC = /usr/bin/gcc -arch ppc -arch i386 -isysroot /Developer/SDKs/MacOSX10.4u.sdk" >> Makefile.config\
 \
 $ make\
 \
 $ make package pkgdir=/path/to/some/temp/dir\
-	it will create the folder\
 \
+\pard\tx720\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\li360\ql\qnatural\pardirnatural
+
+\f2\i\fs24 \cf0 it will create the folder and copy all binaries there\
+\pard\tx720\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\ql\qnatural\pardirnatural
+
+\f3\i0\fs20 \cf0 \
 $ sudo ./installnetpbm\
 \pard\tx720\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\ql\qnatural\pardirnatural
 
@@ -520,8 +527,10 @@ then answer some more questions:\
 
 \f3\fs20 \cf0 Where is the install package you created with 'make package'?\
 package directory (/tmp/netpbm) ==> 
-\f0\b\fs24 /path/to/some/temp/dir
-\f1\b0 \
+\f0\b\fs24 /path/to/some/temp/dir\
+\pard\tx720\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\ql\qnatural\pardirnatural
+
+\f1\b0 \cf0 \
 \pard\tx720\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\li360\ql\qnatural\pardirnatural
 
 \f2\i \cf0 same location as specified in the make package step (lack of inter-communication!)\
@@ -531,8 +540,10 @@ package directory (/tmp/netpbm) ==>
 \pard\tx720\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\ql\qnatural\pardirnatural
 
 \f3\fs20 \cf0 install prefix (/usr/local/netpbm) ==> 
-\f0\b\fs24 /usr/local
-\f1\b0 \
+\f0\b\fs24 /usr/local\
+\pard\tx720\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\ql\qnatural\pardirnatural
+
+\f1\b0 \cf0 \
 \pard\tx720\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\li360\ql\qnatural\pardirnatural
 
 \f2\i \cf0 same location used for the Netpbm shared library directory (again, lack of inter-communication!)\
