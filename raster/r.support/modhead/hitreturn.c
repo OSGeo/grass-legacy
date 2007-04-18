@@ -3,7 +3,7 @@
 #include <stdlib.h>
 #include <grass/gis.h>
 #include <grass/glocale.h>
-
+#include "local_proto.h"
 
 int hitreturn(void)
 {

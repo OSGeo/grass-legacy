@@ -3,7 +3,7 @@
 #include <limits.h>
 #include <grass/glocale.h>
 #include <grass/gis.h>
-
+#include "local_proto.h"
 
 /*
  * factors()

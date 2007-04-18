@@ -4,7 +4,7 @@
 #include <grass/gis.h>
 #include <grass/glocale.h>
 #include <grass/vask.h>
-
+#include "local_proto.h"
 
 /*
  * ask_format()
