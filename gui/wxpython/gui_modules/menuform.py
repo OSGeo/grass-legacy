@@ -33,7 +33,7 @@
 # - add tooltips
 # - use DOM instead of SAX
 """
-__version__ ="$Revision $"
+__version__ ="$Revision$"
 
 import wx
 import sys
