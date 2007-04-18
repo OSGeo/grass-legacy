@@ -17,6 +17,7 @@ COPYRIGHT: (C) 2007 by the GRASS Development Team
 """
 
 import os, sys
+from debug import Debug as Debug
 
 usePopenClass = True
 
@@ -70,9 +71,11 @@ class Command:
         os.environ["GRASS_MESSAGE_FORMAT"] = "gui"
         # run command
         if not usePopenClass:
+           Debug.msg(3, "Command.__init__(): [popen3] cmd=%s" % cmd)
            (self.module_stdin, self.module_stdout, self.module_stderr) = \
                                os.popen3(self.cmd)
         else:
+           Debug.msg(3, "Command.__init__(): [Popen] cmd=%s" % cmd)
            self.module = subprocess.Popen(self.cmd, shell=True,
                                           stdin=subprocess.PIPE,
                                           stdout=subprocess.PIPE,
