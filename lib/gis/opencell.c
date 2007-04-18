@@ -920,7 +920,7 @@ int G_set_fp_type (RASTER_MAP_TYPE map_type)
  */
 int G_raster_map_is_fp (const char *name, const char *mapset)
 {
-   char path[1024];
+   char path[GPATH_MAX];
 
    if (G_find_cell2 (name, mapset) == NULL)
    {
@@ -975,7 +975,7 @@ RASTER_MAP_TYPE G_raster_map_type (const char *name, const char *mapset)
  */
 RASTER_MAP_TYPE G_raster_map_type2 (const char *name, const char *mapset)
 {
-   char path[1024];
+   char path[GPATH_MAX];
 
    if (G_find_cell2 (name, mapset) == NULL)
    {
@@ -1022,7 +1022,7 @@ RASTER_MAP_TYPE G__check_fp_type (const char *name, const char *mapset)
 */
 
 {
-   char path[1024];
+   char path[GPATH_MAX];
    struct Key_Value *format_keys;
    int in_stat;
    char *str,*str1;
