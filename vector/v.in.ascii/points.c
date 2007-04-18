@@ -169,7 +169,7 @@ int points_analyse(FILE * ascii_in, FILE * ascii, char *fs,
 			    }
 			}
 			else
-			    G_warning(_("Unparsable longitude value: [%s]"), tokens[i]);
+			    G_fatal_error(_("Unparsable longitude value: [%s]"), tokens[i]);
 		    }
 
 		    if (i == ycol) {
@@ -184,7 +184,7 @@ int points_analyse(FILE * ascii_in, FILE * ascii, char *fs,
 			    }
 			}
 			else
-			    G_warning(_("Unparsable latitude value: [%s]"), tokens[i]);
+			    G_fatal_error(_("Unparsable latitude value: [%s]"), tokens[i]);
 		    }
  		} /* if (x or y) */
 
