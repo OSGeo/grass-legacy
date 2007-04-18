@@ -109,6 +109,7 @@ SUBDIRS = \
 	r.water.outlet \
 	r.watershed \
 	r.what \
+	r.what.color \
 	simwe \
 	wildfire
 
