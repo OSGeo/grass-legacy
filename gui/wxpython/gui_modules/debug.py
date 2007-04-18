@@ -24,7 +24,7 @@ class Debug:
     Usage:
          import cmd
 
-         cmd.Command (cmd="g.gisenv set=DEBUG=3")
+         cmd.Command (cmd="g.gisenv set=DEBUG=3") # only GUI debug messages DEBUG=GUI:3
 
          import grassenv # or reload (grassenv)
 
@@ -32,12 +32,20 @@ class Debug:
          debug.msg (3, "message level=%d" % 3)
     """
     def __init__(self):
+        # default level
         self.debuglevel = 0
+        # update level
         self._update_level()
 
     def _update_level(self):
         if grassenv.env.has_key ("DEBUG"):
-            level = int (grassenv.env["DEBUG"])
+            debug = grassenv.env["DEBUG"].strip()
+            try:
+                # only GUI debug messages [GUI:level]
+                level = int (debug[-1])
+            except:
+                level = self.debuglevel
+                
             if self.debuglevel != level:
                 self.debuglevel = level
 
