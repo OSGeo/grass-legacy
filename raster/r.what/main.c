@@ -134,7 +134,7 @@ int main(int argc,char *argv[])
 
   flag4 = G_define_flag();
   flag4->key = 'r';
-  flag4->description = _("Outoput color values as RRR:GGG:BBB");
+  flag4->description = _("Output color values as RRR:GGG:BBB");
 
   if (G_parser(argc, argv))
       exit(EXIT_FAILURE);
