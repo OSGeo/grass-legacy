@@ -2,7 +2,7 @@ GRASS graphical user interface
 ==============================
 
 AUTHORS: Jachym, Michael, MartinL
-LAST CHANGE: 2007-04-06
+LAST CHANGE: $LastChangedDate$
 
 ---------------------------------------------------------------------
 Requirements:
@@ -108,4 +108,17 @@ You should be able to zoom && pan through the map, once the layers are
 displayed. You should be also able to store the display content as well as
 clear the display and start from scratch.
 
+5 - DEBUGGING
 
+To enable debugging messages use "GRASS standard way", e.g.
+
+$ g.gisenv set=DEBUG=3
+
+This enables all debug messages (GRASS modules + GUI). GUI debug
+messages starts with 'GUI', e.g.
+
+	GUI D1/1: MapFrame.__init__()
+
+If you want to enable *only* GUI debug messages set DEBUG variable to 'GUI:level', e.g.
+
+$ g.gisenv set=DEBUG=GUI:3
