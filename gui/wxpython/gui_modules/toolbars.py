@@ -11,6 +11,7 @@ import os
 #import wxgui_utils
 
 import cmd
+from debug import Debug as Debug
 
 #icons= os.path.split(icons)[0]
 #icons= os.path.split(icons)[0]
@@ -256,7 +257,7 @@ class DigitToolbar:
         self.parent.Bind(wx.EVT_COMBOBOX, self.OnSelectMap, self.comboid)
 
     def OnAddPoint(self,event):
-
+        Debug.msg (3, "DigitToolbar.OnAddPoint()")
         self.action="addpoint"
         #self.parent.MapWindow.mouse['box'] = "point"
 

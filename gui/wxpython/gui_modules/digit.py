@@ -1,5 +1,5 @@
 """
-PACKAGE: digit
+MODULE: digit
 
 CLASSES:
  * VEdit
@@ -23,6 +23,7 @@ COPYRIGHT: (C) 2007 by the GRASS Development Team
 """
 
 import cmd
+from debug import Debug as Debug
 
 #
 class Digit:
@@ -35,6 +36,8 @@ class Digit:
 class VEdit(Digit):
     """
     Prototype of digitization class based on v.edit command
+
+    Note: This should be replaced by VDigit class.
     """
     def AddPoint (self, map, x, y):
         """
@@ -42,16 +45,25 @@ class VEdit(Digit):
         """
         addstring="""P 1
                     %f %f""" % (x,y)
+
+        Debug.msg (3, "VEdit.AddPoint(): x=%f, y=%f" % (x, y))
+        self._AddFeature (map=map, input=addstring)
+
+    def _AddFeature (self, map, input):
+        """
+        General method which adds feature to the vector map
+        """
         command = """v.edit -n  map=%s tool=add""" % (map)
 
         # run the command
-        vedit = cmd.Command(cmd=command, stdin=addstring)
+        vedit = cmd.Command(cmd=command, stdin=input)
         
         # result?
         if vedit.returncode == 0:
             pass
         else:
-            print "FAILURE"
+            print "FAILURE (%d)" % vedit.returncode
+            print "cmd=%s; input=%s" % (command, input)
             for msg in vedit.module_msg:
                 print msg[1]
 

@@ -1,17 +1,27 @@
 """
-class GRASSLayer
-class MapLayer
-class Map
+MODULE: render
+
+CLASSES:
+ * GRASSLayer
+ * MapLayer
+ * Map
+
+PURPOSE: Rendering
+
+AUTHORS: The GRASS Development Team
+         Michael Barton, Jachym Cepicky, Martin Landa
+
+COPYRIGHT: (C) 2006-2007 by the GRASS Development Team
+           This program is free software under the GNU General Public
+           License (>=v2). Read the file COPYING that comes with GRASS
+           for details.
 """
 
 import os,sys,glob
 import utils
+
+import cmd
 from debug import Debug as Debug
-
-# Authors  : Michael Barton, Jachym Cepicky, Martin Landa
-#
-# COPYRIGHT:(C) 1999 - 2007 by the GRASS Development Team
-
 
 class GRASSLayer:
 	"""
@@ -56,13 +66,16 @@ class MapLayer:
 
 		self.grassLayer = GRASSLayer(dispcmd)
 
-		Debug.msg (1, "MapLayer.__init__(): name=%s, mapset=%s, opacity=%d, %s" % 
-			   (name, mapset, opacity, dispcmd))
+		Debug.msg (3, "MapLayer.__init__(): type=%s, name=%s, mapset=%s, opacity=%d, active=%d %s" % 
+			   (type, name, mapset, opacity, active, dispcmd))
 
 		gtemp = utils.GetTempfile()
 		self.maskfile = gtemp + ".pgm"
-		self.mapfile  = gtemp + ".ppm"
-		self.ovlfile = gtemp + ".png"
+		if self.type == "overlay":
+			self.mapfile = gtemp + ".png"
+		else:
+			self.mapfile = gtemp + ".ppm"
+
 
 	def __renderRasterLayer(self):
 		"""
@@ -126,17 +139,21 @@ class MapLayer:
 		Stores overlay command with all parameters in the self.cmd variable
 		"""
 
+		if not self.active:
+			return 
+
 		try:
 			if self.name != '':
 				self.cmd = self.name + " --q"
+				Debug.msg (3, "MapLayer.__renderOverlay(): cmd=%s" % self.name)
 			else:
 				self.cmd = None
-
+				
 		except StandardError, e:
 			sys.stderr.write("Could not render overlay <%s>: %s\n" %\
-						 (self.name, str(e)))
+					 (self.name, str(e)))
 			self.cmd = None
-
+				
 	def Render(self):
 		"""
 		Runs all d.* commands.
@@ -155,9 +172,9 @@ class MapLayer:
 		#
 
 		if self.type == 'overlay':
-			if not self.ovlfile:
+			if not self.mapfile:
 				gtemp = utils.GetTempfile()
-				self.ovlfile  = gtemp + ".png"
+				self.mapfile  = gtemp + ".png"
 		else:
 			if not self.mapfile:
 				gtemp = utils.GetTempfile()
@@ -189,22 +206,22 @@ class MapLayer:
 		#
 		# Start monitor
 		#
-		if self.type == 'overlay':
-			os.environ["GRASS_PNGFILE"] = self.ovlfile
-		else:
-			os.environ["GRASS_PNGFILE"] = self.mapfile
+
+		os.environ["GRASS_PNGFILE"] = self.mapfile
 		os.environ["GRASS_RENDER_IMMEDIATE"] = "TRUE"
 
 		#
 		# execute command
 		#
 		if not self.cmd:
-			sys.stderr.write("Could not render layer <%s> with command: #%s#" %\
+			sys.stderr.write("Cannot render layer <%s> with command: #%s#" %\
 					 (self.name, self.cmd))
 			return None
-
-		if os.system(self.cmd):
+		runcmd = cmd.Command(cmd=self.cmd)
+		if runcmd.returncode != 0:
 			print "Could not execute '%s'" % (self.cmd)
+			for msg in runcmd.msg:
+				print msg[1]
 			self.mapfile = None
 			self.maskfile = None
 			return None
@@ -215,12 +232,8 @@ class MapLayer:
 		os.unsetenv("GRASS_PNGFILE")
 		os.unsetenv("GRASS_RENDER_IMMEDIATE")
 
-		if self.type == 'overlay':
-			pass
-			return self.ovlfile
-		else:
-			return self.mapfile
-
+		return self.mapfile
+		
 class Map:
 	"""
 	This class serves for rendering of output images.
@@ -261,12 +274,11 @@ class Map:
 		self.height    = 400 # map height
 
 		self.layers    = []  # stack of available layer
-		self.overlays  = []
+		self.overlays  = []  # stack of available overlays
 		self.lookup    = {}  # lookup dictionary for tree items and layers
 		self.env       = {}  # enviroment variables, like MAPSET, LOCATION_NAME, etc.
 		self.verbosity = 0
 		self.mapfile   = utils.GetTempfile()
-		self.ovlist = []
 
 #		self.renderRegion = {
 #			"render" : True,     # should the region be displayed?
@@ -413,6 +425,7 @@ class Map:
 			self.region['rows'] = self.width
 			self.region['cols'] = self.height
 
+		Debug.msg (3, "Map.__adjustRegion(): %s" % self.region)
 
 	def GetRegion(self):
 		"""
@@ -438,6 +451,7 @@ class Map:
 		if tmpreg:
 			os.environ["GRASS_REGION"] = tmpreg
 
+		Debug.msg (3, "Map.GetRegion(): %s" % region)
 		return region
 
 	def SetRegion(self):
@@ -490,6 +504,7 @@ class Map:
 				else:
 					grass_region += key + ": "  + self.wind[key] + "; "
 
+			Debug.msg (4, "Map.SetRegion(): %s" % grass_region)
 			return grass_region
 
 		except:
@@ -497,13 +512,14 @@ class Map:
 
 	def GetListOfLayers(self, l_type=None, l_active=None, l_hidden=None):
 		"""
-		Returns list of layers of selected type or list of all layers. It
+		Returns list of layers (including overlays [l_type='overlay'] of
+		selected type or list of all layers. It
 		is also possible to get list of active or hidden layers.
 
 		Parameters:
-			l_type	 - layer type. raster/vector/wms/...
-			l_active - only layers with "active" attribute set to True or False
-			l_hidden - only layers with "hidden" attribute set to True or False
+			l_type	 - layer type, e.g. raster/vector/wms/overlay ...
+			l_active - only layers with 'active' attribute set to True or False
+			l_hidden - only layers with 'hidden' attribute set to True or False
 
 		Returns:
 			List of selected layers or None
@@ -512,9 +528,7 @@ class Map:
 		selected = []
 
 		# ["raster", "vector", "wms", ... ]
-
-		for layer in self.layers:
-
+		for layer in self.layers + self.overlays:
 			# specified type only
 			if l_type != None and layer.type != l_type:
 				continue
@@ -540,6 +554,7 @@ class Map:
 			else:
 				selected.append(layer)
 
+		Debug.msg (3, "Map.GetListOfLayers(): numberof=%d" % len(selected))
 		return selected
 		
 	def Render(self, force=False):
@@ -563,29 +578,11 @@ class Map:
 		os.environ["GRASS_WIDTH"]  = str(self.width)
 		os.environ["GRASS_HEIGHT"] = str(self.height)
 
-		Debug.msg (3, "Map.Render() force=%s" % (force))
-
 		try:
-			# render overlays
-			self.ovlist = []
-			for overlay in self.overlays:
-				if overlay == None or overlay.active == False:
-					continue
-
-				# render if there is no mapfile
-				if overlay.ovlfile == None:
-					overlay.Render()
-
-				# redraw layer content
-				if force:
-					if not overlay.Render():
-						continue
-				self.ovlist.append(overlay.ovlfile)
-
 			# render map layers
-			for layer in self.layers:
+			for layer in self.layers + self.overlays:
 				# skip if hidden or not active
-				if layer.active == False or layer.hidden == True:
+				if layer == None or layer.active == False or layer.hidden == True:
 					continue
 
 				# render if there is no mapfile
@@ -598,10 +595,12 @@ class Map:
 						continue
 
 				# add image to compositing list
-				maps.append(layer.mapfile)
-				masks.append(layer.maskfile)
-				opacities.append(str(layer.opacity))
-                                Debug.msg (3, "Map.Render() layer=%s " % layer.name)
+				if layer.type != "overlay":
+					maps.append(layer.mapfile)
+					masks.append(layer.maskfile)
+					opacities.append(str(layer.opacity))
+
+                                Debug.msg (3, "Map.Render() type=%s, layer=%s " % (layer.type, layer.name))
 
 			# make arrays to strings
 			mapstr = ",".join(maps)
@@ -629,9 +628,9 @@ class Map:
 				sys.stderr.write("Could not run g.pnmcomp\n")
 				raise Exception (compcmd)
 
-			#Debug.msg (3, "Map.Render() file=%s,%s" % (self.mapfile, self.ovlist))
-			
-			return self.mapfile, self.ovlist
+			Debug.msg (2, "Map.Render() force=%s file=%s" % (force, self.mapfile))
+
+			return self.mapfile
 
 		except Exception, e:
 			os.unsetenv("GRASS_REGION")
@@ -1005,8 +1004,7 @@ class Map:
 		return None
 
 	def addOverlay(self, type, command, mapset=None, l_active=True,
-				   l_hidden=False, l_opacity=1, l_render=False):
-
+		       l_hidden=False, l_opacity=1, l_render=False):
 		"""
 		Adds overlay (grid, barscale, others?) to list of overlays
 
@@ -1017,12 +1015,11 @@ class Map:
 
 		Returns:
                     Added layer on success or None
-
 		"""
 
+		Debug.msg (2, "Map.addOverlay(): name=%s, mapset=%s, render=%d" % (command, mapset, l_render))
 		overlay = MapLayer(type="overlay", name=command, mapset=mapset,
 				   active=l_active, hidden=l_hidden, opacity=l_opacity)
-
 
 		# add maplayer to the list of layers
 		self.overlays.append(overlay)
@@ -1035,8 +1032,11 @@ class Map:
 		return self.overlays[-1]
 
 	def changeOverlay(self, type, command, mapset=None, l_active=True,
-				   l_hidden=False, l_opacity=1, l_render=False):
-
+			  l_hidden=False, l_opacity=1, l_render=False):
+		"""
+		Change overlay properities
+		"""
+		
 		overlay = MapLayer('overlay', command, mapset,
 				 l_active, l_hidden, l_opacity)
 
@@ -1050,9 +1050,15 @@ class Map:
 		return self.overlays[-1]
 
 	def changeOverlayActive(self, type, activ):
-		overlay = self.overlays[type]
-		overlay.active = activ
-
+		"""
+		Change active status of overlay
+		"""
+		try:
+			overlay = self.overlays[type]
+			overlay.active = activ
+			Debug.msg (3, "Map.changeOverlayActive(): type=%d, active=%d" % (type, activ))
+		except:
+			sys.stderr.write("Cannot change status of overlay index [%d]\n" % type)
 
 	def Clean(self):
 		"""
