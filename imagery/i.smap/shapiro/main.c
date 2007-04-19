@@ -1,3 +1,22 @@
+/****************************************************************************
+ *
+ * MODULE:       i.smap
+ * AUTHOR(S):    Michael Shapiro (USACERL) (original contributor)
+ *               Markus Neteler <neteler itc.it>, 
+ *               Roberto Flor <flor itc.it>, 
+ *               Bernhard Reiter <bernhard intevation.de>, 
+ *               Brad Douglas <rez touchofmadness.com>, 
+ *               Glynn Clements <glynn gclements.plus.com>, 
+ *               Jan-Oliver Wagner <jan intevation.de>
+ * PURPOSE:      segment multispectral images using a spectral class model 
+ *               known as a Gaussian mixture distribution
+ * COPYRIGHT:    (C) 1999-2006 by the GRASS Development Team
+ *
+ *               This program is free software under the GNU General Public
+ *               License (>=v2). Read the file COPYING that comes with GRASS
+ *               for details.
+ *
+ *****************************************************************************/
 #include <stdlib.h>
 #include <unistd.h>
 #include <grass/imagery.h>
@@ -30,3 +49,6 @@ int main (int argc, char *argv[])
     closefiles(&parms, &files);
     exit(0);
 }
+
+
+

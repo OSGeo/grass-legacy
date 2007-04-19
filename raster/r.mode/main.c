@@ -1,3 +1,24 @@
+/****************************************************************************
+ *
+ * MODULE:       r.mode
+ * AUTHOR(S):    Michael Shapiro (CERL)  (original contributor),
+ *               Markus Neteler <neteler itc.it>,
+ *               Roberto Flor <flor itc.it>, 
+ *               Bernhard Reiter <bernhard intevation.de>, 
+ *               Glynn Clements <glynn gclements.plus.com>, 
+ *               Jachym Cepicky <jachym les-ejk.cz>, 
+ *               Jan-Oliver Wagner <jan intevation.de>
+ * PURPOSE:      calculates the most frequently occurring value (i. e., mode)
+ *               of data contained in a cover raster map layer for areas 
+ *               assigned the same category value in the user-specified 
+ *               base raster map
+ * COPYRIGHT:    (C) 1999-2006 by the GRASS Development Team
+ *
+ *               This program is free software under the GNU General Public
+ *               License (>=v2). Read the file COPYING that comes with GRASS
+ *               for details.
+ *
+ *****************************************************************************/
 #include <stdlib.h>
 #include <unistd.h>
 #include <string.h>
@@ -132,3 +153,6 @@ int main (int argc, char *argv[])
 
     exit(0);
 }
+
+
+

@@ -1,3 +1,19 @@
+/****************************************************************************
+ *
+ * MODULE:       photo.elev
+ * AUTHOR(S):    Mike Baba (original contributor)
+ *               Markus Neteler <neteler itc.it>, 
+ *               Roberto Flor <flor itc.it>, 
+ *               Bernhard Reiter <bernhard intevation.de>, 
+ *               Glynn Clements <glynn gclements.plus.com>
+ * PURPOSE:      select the elevation model
+ * COPYRIGHT:    (C) 1999-2007 by the GRASS Development Team
+ *
+ *               This program is free software under the GNU General Public
+ *               License (>=v2). Read the file COPYING that comes with GRASS
+ *               for details.
+ *
+ *****************************************************************************/
 /* main.c */
 
 /* read the target for the block and cast it into the alternate GRASS env */
@@ -125,3 +141,6 @@ int select_target_env (void)
 
     return 0;
 }
+
+
+

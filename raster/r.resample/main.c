@@ -1,3 +1,23 @@
+/****************************************************************************
+ *
+ * MODULE:       r.resample
+ * AUTHOR(S):    Michael Shapiro (original CERL contributor),
+ *               Markus Neteler <neteler itc.it>,
+ *               Roberto Flor <flor itc.it>, 
+ *               Bernhard Reiter <bernhard intevation.de>, 
+ *               Brad Douglas <rez touchofmadness.com>, 
+ *               Glynn Clements <glynn gclements.plus.com>, 
+ *               Jachym Cepicky <jachym les-ejk.cz>, 
+ *               Jan-Oliver Wagner <jan intevation.de>
+ * PURPOSE:      resamples the data values in a user-specified raster
+ *               input map layer
+ * COPYRIGHT:    (C) 1999-2006 by the GRASS Development Team
+ *
+ *               This program is free software under the GNU General Public
+ *               License (>=v2). Read the file COPYING that comes with GRASS
+ *               for details.
+ *
+ *****************************************************************************/
 #include <stdlib.h>
 #include <string.h>
 #include <stdio.h>
@@ -174,3 +194,6 @@ int main(int argc, char *argv[])
 
 	exit(EXIT_SUCCESS);
 }
+
+
+

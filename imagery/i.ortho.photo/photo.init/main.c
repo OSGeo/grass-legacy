@@ -1,4 +1,20 @@
-/* main.c */
+/****************************************************************************
+ *
+ * MODULE:       photo.init
+ * AUTHOR(S):    Mike Baba,  DBA Systems, Inc. (original contributor)
+ *               Markus Neteler <neteler itc.it>, 
+ *               Roberto Flor <flor itc.it>, 
+ *               Bernhard Reiter <bernhard intevation.de>, 
+ *               Glynn Clements <glynn gclements.plus.com>
+ * PURPOSE:      creates or modifies entries in a camera initial exposure
+ *               station file for imagery group referenced by a sub-block
+ * COPYRIGHT:    (C) 1999-2007 by the GRASS Development Team
+ *
+ *               This program is free software under the GNU General Public
+ *               License (>=v2). Read the file COPYING that comes with GRASS
+ *               for details.
+ *
+ *****************************************************************************/
 
 #define  MAIN  1
 #include <stdlib.h>
@@ -63,5 +79,8 @@ int main (int argc, char *argv[])
 
     exit(0);
 }
+
+
+
 
 

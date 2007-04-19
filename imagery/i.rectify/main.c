@@ -1,4 +1,26 @@
-/* CMD version based on INTER version from Bob Covill 2001 */
+/****************************************************************************
+ *
+ * MODULE:       i.rectify
+ * AUTHOR(S):    William R. Enslin, Michigan State U. (original contributor)
+ *               Luca Palmeri <palmeri ux1.unipd.it>
+ *               Bill Hughes,
+ *               Pierre de Mouveaux <pmx audiovu.com>,
+ *               Bob Covill (original CMD version), 
+ *               Markus Neteler <neteler itc.it>, 
+ *               Bernhard Reiter <bernhard intevation.de>, 
+ *               Glynn Clements <glynn gclements.plus.com>, 
+ *               Hamish Bowman <hamish_nospam yahoo.com>
+ * PURPOSE:      calculate a transformation matrix and then convert x,y cell 
+ *               coordinates to standard map coordinates for each pixel in the 
+ *               image (control points can come from i.points or i.vpoints)
+ * COPYRIGHT:    (C) 2002-2006 by the GRASS Development Team
+ *
+ *               This program is free software under the GNU General Public
+ *               License (>=v2). Read the file COPYING that comes with GRASS
+ *               for details.
+ *
+ *****************************************************************************/
+
 
 #define GLOBAL
 #include <stdlib.h>
@@ -173,3 +195,6 @@ void err_exit(char *file, char *grp)
  }
  G_fatal_error ("Exit!");
 }
+
+
+

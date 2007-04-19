@@ -1,3 +1,20 @@
+/****************************************************************************
+ *
+ * MODULE:       photo.2image
+ * AUTHOR(S):    Mike Baba,  DBA Systems, Inc. (original contributor)
+ *               Markus Neteler <neteler itc.it>, 
+ *               Roberto Flor <flor itc.it>, 
+ *               Bernhard Reiter <bernhard intevation.de>, 
+ *               Brad Douglas <rez touchofmadness.com>, 
+ *               Glynn Clements <glynn gclements.plus.com>
+ * PURPOSE:      mark fiducial or reseau points on an image
+ * COPYRIGHT:    (C) 1999-2007 by the GRASS Development Team
+ *
+ *               This program is free software under the GNU General Public
+ *               License (>=v2). Read the file COPYING that comes with GRASS
+ *               for details.
+ *
+ *****************************************************************************/
 #define GLOBAL
 
 #include <stdlib.h>
@@ -158,3 +175,6 @@ Curses_write_window (PROMPT_WINDOW,2,12,G_location());
 
     return 0;
 }
+
+
+

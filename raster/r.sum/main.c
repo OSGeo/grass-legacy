@@ -1,7 +1,23 @@
-/* Written by Bill Brown, UIUC GIS Laboratory
- */
+/****************************************************************************
+ *
+ * MODULE:       r.sum
+ * AUTHOR(S):    Bill Brown, UIUC GIS Laboratory (original contributor)
+ *               Markus Neteler <neteler itc.it>, 
+ *               Bernhard Reiter <bernhard intevation.de>, 
+ *               Glynn Clements <glynn gclements.plus.com>, 
+ *               Jachym Cepicky <jachym les-ejk.cz>, 
+ *               Jan-Oliver Wagner <jan intevation.de>
+ * PURPOSE:      sums up raster cell values
+ * COPYRIGHT:    (C) 1999-2007 by the GRASS Development Team
+ *
+ *               This program is free software under the GNU General Public
+ *               License (>=v2). Read the file COPYING that comes with GRASS
+ *               for details.
+ *
+ *****************************************************************************/
 
-/* this module should be removed before GRASS 7 released */
+/* this module should be removed before GRASS 7 released (functionality now
+   duplicated in r.statistics) */
 
 #include <stdlib.h>
 #include <stdio.h>
@@ -88,3 +104,6 @@ int main(
     return(0);
 
 }
+
+
+

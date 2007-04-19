@@ -1,18 +1,35 @@
+/****************************************************************************
+ *
+ * MODULE:       r.surf.idw
+ * AUTHOR(S):    Greg Koerper, Global Climate Research Project, US EPA
+ *               (original contributor)  <koerper cs.orst.edu>
+ *               Markus Neteler <neteler itc.it>, 
+ *               Bernhard Reiter <bernhard intevation.de>, 
+ *               Brad Douglas <rez touchofmadness.com>, 
+ *               Glynn Clements <glynn gclements.plus.com>, 
+ *               Jachym Cepicky <jachym les-ejk.cz>, 
+ *               Jan-Oliver Wagner <jan intevation.de>, 
+ *               Radim Blazek <radim.blazek gmail.com>
+ * PURPOSE:      spatial interpolation based on distance squared weighting of 
+ *               the values of nearest irregularly spaced data points
+ * COPYRIGHT:    (C) 1999-2007 by the GRASS Development Team
+ *
+ *               This program is free software under the GNU General Public
+ *               License (>=v2). Read the file COPYING that comes with GRASS
+ *               for details.
+ *
+ *****************************************************************************/
 
 /***************************************************************
- 
- 	This is the main program for generating a surface
- 	through a set of irregularly spaced data values
- 	using a two-dimensional interpolation technique which 
- 	uses inverse distance squared weighting.
  
 910110  extended to latitude/longitude projection type
 910115  modified rowlist array to include only those rows with data
 910124  added -e flag option for output of error associated with
          interpolation of known cell values
 
- 	send any comments to koerper@cs.orst.edu
- ***************************************************************/
+Further modifications tracked by CVS
+
+***************************************************************/
 
 #include <stdlib.h>
 #include <math.h>
@@ -729,3 +746,6 @@ int lookup_tables(SHORT nrows, SHORT ncols)
 	*nextcol = (double)i *i * ew2;
     return 0;
 }
+
+
+

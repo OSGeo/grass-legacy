@@ -1,3 +1,24 @@
+/****************************************************************************
+ *
+ * MODULE:       r.random.surface
+ * AUTHOR(S):    Charles Ehlschlaeger, Michael Goodchild, and Chih-chang Lin; 
+ *                      (National Center for Geographic Information and 
+ *                      Analysis, University of California, Santa Barbara)
+ *                      (original contributors)
+ *               Markus Neteler <neteler itc.it>, 
+ *               Bernhard Reiter <bernhard intevation.de>, 
+ *               Brad Douglas <rez touchofmadness.com>, 
+ *               Glynn Clements <glynn gclements.plus.com>, 
+ *               Jachym Cepicky <jachym les-ejk.cz>, 
+ *               Jan-Oliver Wagner <jan intevation.de>
+ * PURPOSE:      generates a spatially dependent random surface
+ * COPYRIGHT:    (C) 2000-2006 by the GRASS Development Team
+ *
+ *               This program is free software under the GNU General Public
+ *               License (>=v2). Read the file COPYING that comes with GRASS
+ *               for details.
+ *
+ *****************************************************************************/
 /* main.c */
 #include <stdlib.h>
 #include <stdio.h>
@@ -68,3 +89,6 @@ int main(int argc, char **argv)
 
 	return 0;
 }
+
+
+

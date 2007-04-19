@@ -1,3 +1,21 @@
+/****************************************************************************
+ *
+ * MODULE:       photo.2target
+ * AUTHOR(S):    Mike Baba,  DBA Systems, Inc. (original contributor)
+ *               Markus Neteler <neteler itc.it>, 
+ *               Bernhard Reiter <bernhard intevation.de>, 
+ *               Glynn Clements <glynn gclements.plus.com>, 
+ *               Radim Blazek <radim.blazek gmail.com>
+ * PURPOSE:      allow user to mark control points on an image to be 
+ *               ortho-rectified and then input the coordinates of each point 
+ *               for calculation of rectification parameters
+ * COPYRIGHT:    (C) 1999-2007 by the GRASS Development Team
+ *
+ *               This program is free software under the GNU General Public
+ *               License (>=v2). Read the file COPYING that comes with GRASS
+ *               for details.
+ *
+ *****************************************************************************/
 /* main.c */
 
 #define GLOBAL
@@ -304,3 +322,6 @@ Curses_clear_window (PROMPT_WINDOW);
 
     return 0;
 }
+
+
+
