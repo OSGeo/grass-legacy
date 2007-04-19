@@ -1,3 +1,20 @@
+/****************************************************************************
+ *
+ * MODULE:       photo.rectify
+ * AUTHOR(S):    Mike Baba,  DBA Systems, Inc. (original contributor)
+ *               Markus Neteler <neteler itc.it>, 
+ *               Bernhard Reiter <bernhard intevation.de>, 
+ *               Glynn Clements <glynn gclements.plus.com>, 
+ *               Hamish Bowman <hamish_nospam yahoo.com>
+ * PURPOSE:      rectifies an image by using the image to photo coordinate 
+ *               transformation matrix
+ * COPYRIGHT:    (C) 1999-2006 by the GRASS Development Team
+ *
+ *               This program is free software under the GNU General Public
+ *               License (>=v2). Read the file COPYING that comes with GRASS
+ *               for details.
+ *
+ *****************************************************************************/
 #define GLOBAL
 #include <stdlib.h>
 #include <string.h>
@@ -125,3 +142,6 @@ int main (int argc, char *argv[])
 
     exit(0);
 }
+
+
+

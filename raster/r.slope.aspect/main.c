@@ -1,3 +1,26 @@
+/****************************************************************************
+ *
+ * MODULE:       r.slope.aspect
+ * AUTHOR(S):    Michael Shapiro and 
+ *               Olga Waupotitsch (original CERL contributors), 
+ *               Markus Neteler <neteler itc.it>,
+ *               Bernhard Reiter <bernhard intevation.de>, 
+ *               Brad Douglas <rez touchofmadness.com>,
+ *               Glynn Clements <glynn gclements.plus.com>,
+ *               Hamish Bowman <hamish_nospam yahoo.com>,
+ *               Jachym Cepicky <jachym les-ejk.cz>,
+ *               Jan-Oliver Wagner <jan intevation.de>,
+ *               Radim Blazek <radim.blazek gmail.com>
+ * PURPOSE:      generates raster maps of slope, aspect, curvatures and
+ *               first and second order partial derivatives from a raster map
+ *               of true elevation values
+ * COPYRIGHT:    (C) 1999-2006 by the GRASS Development Team
+ *
+ *               This program is free software under the GNU General Public
+ *               License (>=v2). Read the file COPYING that comes with GRASS
+ *               for details.
+ *
+ *****************************************************************************/
 #include <stdlib.h>
 #include <string.h>
 #include <math.h>
@@ -1398,3 +1421,6 @@ int main (int argc, char *argv[])
 
     exit(EXIT_SUCCESS);
 }
+
+
+

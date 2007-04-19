@@ -1,3 +1,22 @@
+/****************************************************************************
+ *
+ * MODULE:       i.points
+ * AUTHOR(S):    Michael Shapiro, USACERL (original contributor)
+ *               Markus Neteler <neteler itc.it>,
+ *               Eric Mitchell,
+ *               Bernhard Reiter <bernhard intevation.de>, 
+ *               Glynn Clements <glynn gclements.plus.com>, 
+ *               Hamish Bowman <hamish_nospam yahoo.com>
+ * PURPOSE:      enables user to mark points on (raster) image to be rectified,
+ *               and then input the geographic coordinates of each point for
+ *               calculation of a coordinate transformation matrix
+ * COPYRIGHT:    (C) 1999-2007 by the GRASS Development Team
+ *
+ *               This program is free software under the GNU General Public
+ *               License (>=v2). Read the file COPYING that comes with GRASS
+ *               for details.
+ *
+ *****************************************************************************/
 #include <unistd.h>
 #include <stdlib.h>
 #include <string.h>
@@ -195,3 +214,6 @@ int error (const char *msg, int fatal)
 
     return 0;
 }
+
+
+

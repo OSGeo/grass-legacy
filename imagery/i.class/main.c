@@ -1,3 +1,22 @@
+/****************************************************************************
+ *
+ * MODULE:       i.class
+ * AUTHOR(S):    David Satnik, Central Washington University
+ *                      (original contributor)
+ *               Markus Neteler <neteler itc.it>,
+ *               Bernhard Reiter <bernhard intevation.de>, 
+ *               Brad Douglas <rez touchofmadness.com>, 
+ *               Glynn Clements <glynn gclements.plus.com>, 
+ *               Hamish Bowman <hamish_nospam yahoo.com>, 
+ *               Jan-Oliver Wagner <jan intevation.de>
+ * PURPOSE:      define training areas for supervised classification
+ * COPYRIGHT:    (C) 1999-2007 by the GRASS Development Team
+ *
+ *               This program is free software under the GNU General Public
+ *               License (>=v2). Read the file COPYING that comes with GRASS
+ *               for details.
+ *
+ *****************************************************************************/
 #define MAIN
 #define GLOBAL
 
@@ -218,3 +237,6 @@ static int check_files (char *img_group, char *img_subgroup,
 
     return 0;
 }
+
+
+

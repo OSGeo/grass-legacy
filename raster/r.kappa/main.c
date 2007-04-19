@@ -1,3 +1,24 @@
+/****************************************************************************
+ *
+ * MODULE:       r.kappa
+ * AUTHOR(S):    Tao Wen, UIUC (original contributor)
+ *               Markus Neteler <neteler itc.it>,
+ *               Roberto Flor <flor itc.it>, 
+ *               Bernhard Reiter <bernhard intevation.de>, 
+ *               Brad Douglas <rez touchofmadness.com>, 
+ *               Glynn Clements <glynn gclements.plus.com>, 
+ *               Jachym Cepicky <jachym les-ejk.cz>, 
+ *               Jan-Oliver Wagner <jan intevation.de>
+ * PURPOSE:      tabulates the error matrix of classification result by
+ *               crossing classified map layer with respect to reference map 
+ *               layer
+ * COPYRIGHT:    (C) 1999-2006 by the GRASS Development Team
+ *
+ *               This program is free software under the GNU General Public
+ *               License (>=v2). Read the file COPYING that comes with GRASS
+ *               for details.
+ *
+ *****************************************************************************/
 #include <stdlib.h>
 #include <stdio.h>
 #include <string.h>
@@ -135,3 +156,6 @@ static void layer(char *s)
   layers[n].mapset = mapset;
   G_read_cats (name, mapset, &layers[n].labels);
 } 
+
+
+

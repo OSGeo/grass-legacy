@@ -1,8 +1,23 @@
-/* this program makes an elevation raster map from a contour map
-** that has been converted to cell form.
-** last modified /06/07/91
-** by  Chuck Ehlschlaeger
-*/
+/****************************************************************************
+ *
+ * MODULE:       r.surf.contour
+ * AUTHOR(S):    Chuck Ehlschlaeger (original contributor)
+ *               Markus Neteler <neteler itc.it>,
+ *               Bernhard Reiter <bernhard intevation.de>, 
+ *               Brad Douglas <rez touchofmadness.com>, 
+ *               Huidae Cho <grass4u gmail.com>, 
+ *               Glynn Clements <glynn gclements.plus.com>, 
+ *               Hamish Bowman <hamish_nospam yahoo.com>, 
+ *               Jan-Oliver Wagner <jan intevation.de>
+ * PURPOSE:      interpolates a raster elevation map from a rasterized
+ *               contour map
+ * COPYRIGHT:    (C) 1999-2006 by the GRASS Development Team
+ *
+ *               This program is free software under the GNU General Public
+ *               License (>=v2). Read the file COPYING that comes with GRASS
+ *               for details.
+ *
+ *****************************************************************************/
 
 #include <stdlib.h>
 #include <stdio.h>
@@ -162,3 +177,6 @@ main (int argc, char *argv[])
 
 	exit (EXIT_SUCCESS);
 }
+
+
+

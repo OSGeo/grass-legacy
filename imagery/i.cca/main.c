@@ -1,7 +1,29 @@
-/***** Canonical Component Transformation of Satellite Data *****/
+/****************************************************************************
+ *
+ * MODULE:       i.cca
+ * AUTHOR(S):    David Satnik, Central Washington University, and  
+ *               Ali R. Vali, University of Texas (original contributors)
+ *               Markus Neteler <neteler itc.it>, 
+ *               Bernhard Reiter <bernhard intevation.de>, 
+ *               Brad Douglas <rez touchofmadness.com>, 
+ *               Glynn Clements <glynn gclements.plus.com>, 
+ *               Jan-Oliver Wagner <jan intevation.de>
+ * PURPOSE:      canonical components transformation: takes from two to eight
+ *               (raster) band files and a signature file, and outputs the same
+ *               number of raster band files transformed to provide maximum 
+ *               separability of the categories indicated by the signatures.  
+ * COPYRIGHT:    (C) 1999-2007 by the GRASS Development Team
+ *
+ *               This program is free software under the GNU General Public
+ *               License (>=v2). Read the file COPYING that comes with GRASS
+ *               for details.
+ *
+ *****************************************************************************/
+
 /*
 
-             Center for Space Research
+             Ali Vali contact info:
+	     Center for Space Research
              WRW 402
              University of Texas
              Austin, TX 78712-1085
@@ -192,3 +214,6 @@ int main (int argc, char *argv[])
 
 	exit(EXIT_SUCCESS);
 }
+
+
+

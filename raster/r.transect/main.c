@@ -1,3 +1,23 @@
+/****************************************************************************
+ *
+ * MODULE:       r.transect
+ * AUTHOR(S):    Michael Shapiro (CERL) (original contributor),
+ *               Markus Neteler <neteler itc.it>, 
+ *               Bernhard Reiter <bernhard intevation.de>, 
+ *               Glynn Clements <glynn gclements.plus.com>, 
+ *               Hamish Bowman <hamish_nospam yahoo.com>, 
+ *               Jan-Oliver Wagner <jan intevation.de>
+ * PURPOSE:      This program outputs, in ASCII, the values in a raster map
+ *               which lie along one or more user-defined transect lines.
+ *               The transects are described by their starting coordinates,
+ *               azimuth, and distance. 
+ * COPYRIGHT:    (C) 1999-2006 by the GRASS Development Team
+ *
+ *               This program is free software under the GNU General Public
+ *               License (>=v2). Read the file COPYING that comes with GRASS
+ *               for details.
+ *
+ *****************************************************************************/
 #include <string.h>
 #include <stdlib.h>
 #include <grass/gis.h>
@@ -134,3 +154,6 @@ int main (int argc, char *argv[])
     }
     exit (system(command));
 }
+
+
+

@@ -1,3 +1,19 @@
+/****************************************************************************
+ *
+ * MODULE:       photo.camera
+ * AUTHOR(S):    Mike Baba,  DBA Systems, Inc. (original contributor)
+ *               Markus Neteler <neteler itc.it>,
+ *               Roberto Flor <flor itc.it>, 
+ *               Bernhard Reiter <bernhard intevation.de>, 
+ *               Glynn Clements <glynn gclements.plus.com>
+ * PURPOSE:      creates or modifies entries in a camera reference file
+ * COPYRIGHT:    (C) 1999-2007 by the GRASS Development Team
+ *
+ *               This program is free software under the GNU General Public
+ *               License (>=v2). Read the file COPYING that comes with GRASS
+ *               for details.
+ *
+ *****************************************************************************/
 /* select_camera */
 /* select a camera reference file for a given imagery group */
 
@@ -54,4 +70,7 @@ main (int argc, char *argv[])
 
     exit(0);
 }
+
+
+
 

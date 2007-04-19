@@ -1,6 +1,22 @@
-/* parser support by Bob Covill, Tekmap 2001
- * <bcovill@tekmap.ns.ca>
- */
+/****************************************************************************
+ *
+ * MODULE:       i.group
+ * AUTHOR(S):    Michael Shapiro (USACERL) (original contributor)
+ *               Bob Covill <bcovill tekmap.ns.ca>,
+ *               Markus Neteler <neteler itc.it>,
+ *               Bernhard Reiter <bernhard intevation.de>, 
+ *               Brad Douglas <rez touchofmadness.com>, 
+ *               Glynn Clements <glynn gclements.plus.com>, 
+ *               Hamish Bowman <hamish_nospam yahoo.com>
+ * PURPOSE:      collect raster map layers into an imagery group by assigning 
+ *               them to user-named subgroups or other groups
+ * COPYRIGHT:    (C) 2001-2006 by the GRASS Development Team
+ *
+ *               This program is free software under the GNU General Public
+ *               License (>=v2). Read the file COPYING that comes with GRASS
+ *               for details.
+ *
+ *****************************************************************************/
 
 #include <stdlib.h>
 #include <string.h>
@@ -310,3 +326,6 @@ static int remove_subgroup_files(char group[INAME_LEN],
 
     return 0;
 }
+
+
+

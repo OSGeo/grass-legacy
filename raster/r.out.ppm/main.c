@@ -1,10 +1,20 @@
-/* Written by Bill Brown, USA-CERL
- * March 21, 1994
-*/
-
-/* Use to convert grass raster map to PPM
- * uses currently selected region
-*/
+/****************************************************************************
+ *
+ * MODULE:       r.out.ppm
+ * AUTHOR(S):    Bill Brown, USA-CERL (original contributor)
+ *               Markus Neteler <neteler itc.it>, 
+ *               Bernhard Reiter <bernhard intevation.de>, 
+ *               Glynn Clements <glynn gclements.plus.com>, 
+ *               Jachym Cepicky <jachym les-ejk.cz>, 
+ *               Jan-Oliver Wagner <jan intevation.de>
+ * PURPOSE:      converts a GRASS raster map into a PPM image (obeying REGION)
+ * COPYRIGHT:    (C) 1999-2007 by the GRASS Development Team
+ *
+ *               This program is free software under the GNU General Public
+ *               License (>=v2). Read the file COPYING that comes with GRASS
+ *               for details.
+ *
+ *****************************************************************************/
 
 #include <string.h>
 #include <stdlib.h>
@@ -246,6 +256,9 @@ int main( int argc, char *argv[])
 
     return(EXIT_SUCCESS);
 }
+
+
+
 
 
 

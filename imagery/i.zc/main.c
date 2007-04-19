@@ -1,11 +1,22 @@
-/*
-Zero Crossings for GRASS
- Central Washington University GIS Laboratory
- Programmer: David B. Satnik
-
- Based on code provided by Bill Hoff at University of Illinois.
-
-*/
+/****************************************************************************
+ *
+ * MODULE:       i.zc
+ * AUTHOR(S):    David B. Satnik Central Washington University GIS Laboratory 
+ *               (original contributor), based on code provided by Bill Hoff
+ *               at University of Illinois
+ *               Markus Neteler <neteler itc.it>,
+ *               Bernhard Reiter <bernhard intevation.de>, 
+ *               Brad Douglas <rez touchofmadness.com>, 
+ *               Glynn Clements <glynn gclements.plus.com>, 
+ *               Jan-Oliver Wagner <jan intevation.de>
+ * PURPOSE:      edge detection for imagery using zero crossings method
+ * COPYRIGHT:    (C) 1999-2006 by the GRASS Development Team
+ *
+ *               This program is free software under the GNU General Public
+ *               License (>=v2). Read the file COPYING that comes with GRASS
+ *               for details.
+ *
+ *****************************************************************************/
 
 #define MAIN
 
@@ -206,3 +217,6 @@ int main( int argc, char *argv[])
 }
 
 /*************************************************************************/
+
+
+

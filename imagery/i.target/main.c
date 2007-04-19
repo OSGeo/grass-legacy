@@ -1,3 +1,20 @@
+/****************************************************************************
+ *
+ * MODULE:       i.target
+ * AUTHOR(S):    Michael Shapiro (USACERL) and Bob Covill (original contributors)
+ *               Markus Neteler <neteler itc.it>, 
+ *               Bernhard Reiter <bernhard intevation.de>, 
+ *               Brad Douglas <rez touchofmadness.com>, 
+ *               Glynn Clements <glynn gclements.plus.com>
+ * PURPOSE:      targets an imagery group to a GRASS data base location name 
+ *               and mapset for reprojection
+ * COPYRIGHT:    (C) 2001-2007 by the GRASS Development Team
+ *
+ *               This program is free software under the GNU General Public
+ *               License (>=v2). Read the file COPYING that comes with GRASS
+ *               for details.
+ *
+ *****************************************************************************/
 /* 
  * Original INTER author: M. Shapiro
  * New cmd line version by Bob Covill 10/2001
@@ -70,3 +87,6 @@ main (int argc, char *argv[])
 
     return (EXIT_SUCCESS);
 }
+
+
+
