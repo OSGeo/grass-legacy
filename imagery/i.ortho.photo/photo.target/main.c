@@ -1,3 +1,19 @@
+/****************************************************************************
+ *
+ * MODULE:       photo.target
+ * AUTHOR(S):    Mike Baba,  DBA Systems, Inc. (original contributor)
+ *               Markus Neteler <neteler itc.it>,
+ *               Roberto Flor <flor itc.it>, 
+ *               Bernhard Reiter <bernhard intevation.de>, 
+ *               Glynn Clements <glynn gclements.plus.com>
+ * PURPOSE:      select target location and mapset
+ * COPYRIGHT:    (C) 1999-2006 by the GRASS Development Team
+ *
+ *               This program is free software under the GNU General Public
+ *               License (>=v2). Read the file COPYING that comes with GRASS
+ *               for details.
+ *
+ *****************************************************************************/
 /* main.c */
 #include <stdlib.h>
 #include <stdio.h>
@@ -32,3 +48,6 @@ int main (int argc, char *argv[])
 	group, location, mapset);
     exit(0);
 }
+
+
+

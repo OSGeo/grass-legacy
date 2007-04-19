@@ -1,3 +1,22 @@
+/****************************************************************************
+ *
+ * MODULE:       i.maxlik
+ * AUTHOR(S):    Michael Shapiro (USACERL) & Tao Wen (UIUC)
+ *               (original contributors)
+ *               Markus Neteler <neteler itc.it>,
+ *               Roberto Flor <flor itc.it>, 
+ *               Bernhard Reiter <bernhard intevation.de>, 
+ *               Brad Douglas <rez touchofmadness.com>, 
+ *               Glynn Clements <glynn gclements.plus.com>, 
+ *               Jan-Oliver Wagner <jan intevation.de>
+ * PURPOSE:      maximum likelihood classification of image groups
+ * COPYRIGHT:    (C) 1999-2006 by the GRASS Development Team
+ *
+ *               This program is free software under the GNU General Public
+ *               License (>=v2). Read the file COPYING that comes with GRASS
+ *               for details.
+ *
+ *****************************************************************************/
 #define GLOBAL
 #include <stdlib.h>
 #include <grass/gis.h>
@@ -166,3 +185,6 @@ int main(int argc,char *argv[])
 
     exit(0);
 }
+
+
+

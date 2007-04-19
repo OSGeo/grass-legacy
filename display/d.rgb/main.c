@@ -1,3 +1,21 @@
+/****************************************************************************
+ *
+ * MODULE:       d.rgb
+ * AUTHOR(S):    Glynn Clements <glynn gclements.plus.com> (original contributor)
+ *               Roberto Flor <flor itc.it>, 
+ *               Bernhard Reiter <bernhard intevation.de>, 
+ *               Hamish Bowman <hamish_nospam yahoo.com>, 
+ *               Markus Neteler <neteler itc.it>, 
+ *               Radim Blazek <radim.blazek gmail.com>
+ * PURPOSE:      combine three rasters to form a colour image using red, green,
+ *               and blue display channels
+ * COPYRIGHT:    (C) 2001-2007 by the GRASS Development Team
+ *
+ *               This program is free software under the GNU General Public
+ *               License (>=v2). Read the file COPYING that comes with GRASS
+ *               for details.
+ *
+ *****************************************************************************/
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
@@ -132,3 +150,6 @@ int main(int argc, char **argv)
 
 	exit(EXIT_SUCCESS);
 }
+
+
+

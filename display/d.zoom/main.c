@@ -1,8 +1,23 @@
-/*
- *   d.zoom
+/****************************************************************************
  *
- *   Get region through graphics
- */
+ * MODULE:       d.zoom
+ * AUTHOR(S):    Michael Shapiro (USACERL) (original contributor)
+ *               Radim Blazek <radim.blazek gmail.com>,
+ *               Stephan Holl <sholl gmx net>, 
+ *               Huidae Cho <grass4u gmail.com>, 
+ *               Florian Goessmann <florian wallweg39.de>, 
+ *               Glynn Clements <glynn gclements.plus.com>, 
+ *               Hamish Bowman <hamish_nospam yahoo.com>, 
+ *               Markus Neteler <neteler itc.it>, 
+ *               Paul Kelly <paul-grass stjohnspoint.co.uk>
+ * PURPOSE:      interactively change the current region using the mouse
+ * COPYRIGHT:    (C) 2002-2006 by the GRASS Development Team
+ *
+ *               This program is free software under the GNU General Public
+ *               License (>=v2). Read the file COPYING that comes with GRASS
+ *               for details.
+ *
+ *****************************************************************************/
 
 #include <stdlib.h>
 #include <string.h> 
@@ -356,3 +371,6 @@ main (int argc, char **argv)
     G_message(_("Zooming complete."));
     exit(stat);
 }
+
+
+
