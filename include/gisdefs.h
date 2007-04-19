@@ -457,6 +457,9 @@ char *G_find_file2(const char *, const char *, const char *);
 char *G_find_file_misc(const char *, const char *, char *, const char *);
 char *G_find_file2_misc(const char *, const char *, const char *, const char *);
 
+/* find_etc.c */
+char *G_find_etc(const char *);
+
 /* find_vect.c */
 char *G_find_vector(char *, const char *);
 char *G_find_vector2(const char *, const char *);
