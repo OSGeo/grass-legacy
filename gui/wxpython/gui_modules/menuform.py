@@ -15,7 +15,7 @@ Classes:
 # Author: Jan-Oliver Wagner <jan@intevation.de>
 # improved by: Bernhard Reiter   <bernhard@intevation.de>
 # Improved by: Michael Barton, Arizona State University
-# Improved by: Daniel Calvelo <dca@users.sf.net>
+# Improved by: Daniel Calvelo <dca.gis@gmail.com>
 #
 # This program is free software under the GPL (>=v2)
 # Read the file COPYING coming with GRASS for details.
@@ -24,7 +24,7 @@ Classes:
 # automatically build a GUI from a xml-based
 # GRASS user interface description.
 #
-# You need to have Python 2.4, wx.Python 2.6 and python-xml.
+# You need to have Python 2.4, wxPython 2.8 and python-xml.
 #
 # The XML stream is read from executing the command given in the
 # command line, thus you may call it for instance this way:
@@ -34,7 +34,8 @@ Classes:
 # Or you set an alias or wrap the call up in a nice
 # shell script, GUI environment ... please contribute your idea.
 #
-# Updated to wxPython 2.6 syntax. Methods added to make it callable by gui.
+# Updated to wxPython 2.8 syntax and contrib widgets.
+# Methods added to make it callable by gui.
 # Method added to automatically re-run with pythonw on a Mac.
 #
 # TODO:
@@ -95,34 +96,27 @@ STRING_ENTRY_WIDTH = 300
 BUTTON_HEIGHT = 44
 BUTTON_WIDTH = 100
 
-t_colors = "red,orange,yellow,green,blue,indigo,violet,white,black,gray,brown,magenta,aqua,grey,cyan,purple"
-t_rgb = ( # From lib/gis/col_str.c
-  (255,  0,  0),
-  (255,128,  0),
-  (255,255,  0),
-  (  0,255,  0),
-  (  0,  0,255),
-  (  0,128,255),
-  (128,  0,255),
-  (255,255,255),
-  (  0,  0,  0),
-  (128,128,128),
-  (180, 77, 25),
-  (255,  0,255),
-  (100,128,255),
-  (128,128,128),
-  (  0,255,255),
-  (128,  0,128)
-)
-t_color = t_colors.split(',')
-str2rgb = {}
+# From lib/gis/col_str.c, except purple which is mentioned
+# there but not given RGB values
+str2rgb = {'aqua': (100, 128, 255),
+ 'black': (0, 0, 0),
+ 'blue': (0, 0, 255),
+ 'brown': (180, 77, 25),
+ 'cyan': (0, 255, 255),
+ 'gray': (128, 128, 128),
+ 'green': (0, 255, 0),
+ 'grey': (128, 128, 128),
+ 'indigo': (0, 128, 255),
+ 'magenta': (255, 0, 255),
+ 'orange': (255, 128, 0),
+ 'purple': (128, 0, 128),
+ 'red': (255, 0, 0),
+ 'violet': (128, 0, 255),
+ 'white': (255, 255, 255),
+ 'yellow': (255, 255, 0)}
 rgb2str = {}
-for c in range(0,len(t_rgb)):
-    str2rgb[ t_color[c] ] = t_rgb[ c ]
-    rgb2str[ t_rgb[ c ] ] = t_color[ c ]
-del t_colors
-del t_color
-del t_rgb
+for (s,r) in str2rgb.items():
+    rgb2str[ r ] = s
 
 def color_resolve(color):
     if len(color)>0 and color[0] in "0123456789":
@@ -224,6 +218,7 @@ class grassTask:
                 errStr += _("Parameter %s (%s) is missing\n") % ( p['name'], p['description'] )
                 errors += 1
             if p.get('value','') != '' and p['value'] != p.get('default','') :
+                # Output only values that have been set, and different from defaults
                 cmd += [ '%s=%s' % ( p['name'], p['value'] ) ]
         if errors and not ignoreErrors:
             raise ValueError, errStr
@@ -338,9 +333,9 @@ class processTask(HandlerBase):
         if name == 'parameter':
             self.inParameter = False;
             # description -> label
-            if not self.param_label:
-                self.param_label = self.param_description
-                self.param_description = ''
+#            if not self.param_label:
+#                self.param_label = self.param_description
+#                self.param_description = ''
                 
             self.task.params.append({
                 "name" : self.param_name,
@@ -395,7 +390,7 @@ class helpPanel(wx.html.HtmlWindow):
 
     GISBASE must be set in the environment to find the html docs dir.
     The SYNOPSIS section is skipped, since this Panel is supposed to
-    be integrated into the cmdPanel.
+    be integrated into the cmdPanel and options are obvious there.
     """
     def __init__(self, grass_command = "index", *args, **kwargs):
         wx.html.HtmlWindow.__init__(self, *args, **kwargs)
@@ -407,14 +402,14 @@ class helpPanel(wx.html.HtmlWindow):
         aLink = re.compile( r'(<a href="?)(.+\.html?["\s]*>)', re.IGNORECASE )
         try:
             contents = [ '<head><base href="%s"></head>' % self.fspath ]
-            dont_skip = True
+            skip = False
             for l in file( htmlFile, "rb" ).readlines():
-                if "DESCRIPTION" in l: dont_skip = True
-                if dont_skip:
-                    if "SYNOPSIS" in l: dont_skip = False # do skip the options description
+                if "DESCRIPTION" in l: skip = False
+                if not skip:
+                    if "SYNOPSIS" in l: skip = True # do skip the options description
                     else:
                         findLink = aLink.search( l )
-                        if findLink is not None:
+                        if findLink is not None: # change URLs to file paths
                             contents.append( aLink.sub(findLink.group(1)+self.fspath+findLink.group(2),l) )
                         else:
                             contents.append( l )
@@ -507,7 +502,7 @@ class mainFrame(wx.Frame):
         btnsizer = wx.BoxSizer(orient=wx.HORIZONTAL)
         # cancel
         btn_cancel = wx.Button(parent=self, id=wx.ID_CANCEL)
-        btn_cancel.SetToolTipString(_("Cancel the command"))
+        btn_cancel.SetToolTipString(_("Cancel the command settings and ignore changes"))
         btnsizer.Add(item=btn_cancel, proportion=0, flag=wx.ALL | wx.ALIGN_CENTER, border=10)
         if self.get_dcmd is not None: # A callback has been set up
             btn_apply = wx.Button(self, wx.ID_APPLY, _("Apply") )
@@ -711,8 +706,12 @@ class cmdPanel(wx.Panel):
         for p in visible_params:
             which_sizer = tabsizer[ p['guisection'] ]
             which_panel = tab[ p['guisection'] ]
-            title = text_beautify( p['label'] )
-            tooltip = text_beautify (p['description'])
+            if p.get('label','') != '':
+                title = text_beautify( p['label'] )
+                tooltip = text_beautify ( p['description'] )
+            else:
+                title = text_beautify( p['description'] )
+                tooltip = ''
             txt = None
 
             # text style (required -> bold)
@@ -728,7 +727,7 @@ class cmdPanel(wx.Panel):
                     p['value'] = p.get('default','')
 
             if ( len(p.get('values',[]) ) > 0):
-                valuelist=map(str,p.get('values',[]))
+                valuelist=map( str, p.get('values',[]) )
                 # list of values
                 if p.get('multiple','no') == 'yes':
                     txt = wx.StaticBox (parent=which_panel, id=0, label=" " + title + ": ")
@@ -738,7 +737,7 @@ class cmdPanel(wx.Panel):
                     else:
                         hSizer=wx.StaticBoxSizer ( box=txt, orient=wx.HORIZONTAL )
                     isDefault = {}
-                    for defval in p['value'].split(','):
+                    for defval in p.get('value','').split(','):
                         isDefault[ defval ] = 'yes'
                         # for multi checkboxes, this is an array of all wx IDs
                         # for each individual checkbox
@@ -902,7 +901,7 @@ class cmdPanel(wx.Panel):
                 myIndex = p['wxId'].index( me )
         # Unpack current value list
         currentValues={}
-        for isThere in theParam['value'].split(','):
+        for isThere in theParam.get('value','').split(','):
             currentValues[isThere] = 1
         theValue = theParam['values'][myIndex]
         if event.Checked():
@@ -954,7 +953,7 @@ def getInterfaceDescription( cmd ):
     gmpath = os.getenv("GISBASE") + "/etc/wx/gui_modules"
     cmdout = os.popen(cmd + r' --interface-description', "r").read()
     if not len(cmdout) > 0 :
-        raise IOError, "Couldn't make command %s provide its interface description." % cmd
+        raise IOError, _("Couldn't fetch interface description for command <%s>.") % cmd
     p = re.compile( '(grass-interface.dtd)')
     p.search( cmdout )
     cmdout = p.sub( gmpath+r'/grass-interface.dtd', cmdout)
@@ -1032,13 +1031,15 @@ if __name__ == "__main__":
             task.get_param('bcolor')['value'] = "red"
             assert ' '.join( task.getCmd() ) == "d.vect -v map=map_name layer=1 bcolor=red"
         # Test interface building with handmade grassTask
+        # this doesn't need GRASS at all
         task = grassTask()
         task.name = "TestTask"
-        task.description = "This is a artificial grassTask() object intended for testing purposes"
+        task.description = "This is an artificial grassTask() object intended for testing purposes"
         task.params = [
             {
             "name" : "text",
-            "description" : "Enter some text"
+            "description" : "Descriptions go into tooltips if labels are present, like this one",
+            "label" : "Enter some text",
             },{
             "name" : "hidden_text",
             "description" : "This text should not appear in the form",
@@ -1078,6 +1079,12 @@ if __name__ == "__main__":
             "description" : "A single multiple-choice selection",
             'values': ['red', 'green', u'yellow', u'blue', u'purple', u'other'],
             "guisection" : "tab"
+            },{
+            "name" : "large_multi",
+            "description" : "A large multiple selection",
+            "gisprompt" : False,
+            "multiple" : "yes",
+            "values" : str2rgb.keys() + map( str, str2rgb.values() )
             }
             ]
         task.flags = [
