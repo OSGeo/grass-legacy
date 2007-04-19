@@ -83,11 +83,12 @@ class Command:
                                           close_fds=True)
            self.module_stdin  = self.module.stdin
            self.module_stderr = self.module.stderr
+           self.module_stdout = self.module.stdout
 
         if stdin:
            self.module_stdin.write(stdin)
            self.module_stdin.close()
-
+           
         os.environ["GRASS_MESSAGE_FORMAT"] = "text"
             
         try:
@@ -102,6 +103,7 @@ class Command:
         else:
             self.returncode = None
 
+        Debug.msg (3, "Command(): cmd=%s, wait=%d, returncode=%d" % (self.cmd, wait, self.returncode))
 
     def Run(self, verbose=False):
         """

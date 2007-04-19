@@ -1,6 +1,16 @@
 #! /usr/bin/python
 """ Construct simple wx.Python GUI from a GRASS command interface description.
 
+Classes:
+ * testSAXContentHandler
+ * grassTask
+ * processTask
+ * helpPanel
+ * mainFrame
+ * cmdPanel
+ * GrassGUIApp
+ * GUI
+ 
 # Copyright (C) 2000-2007 by the GRASS Development Team
 # Author: Jan-Oliver Wagner <jan@intevation.de>
 # improved by: Bernhard Reiter   <bernhard@intevation.de>
@@ -159,11 +169,13 @@ def test_for_broken_SAX():
     return 0
 
 class grassTask:
-    """This class holds the structures needed for both filling by the parser and
+    """
+    This class holds the structures needed for both filling by the parser and
     use by the interface constructor.
 
-    Use as either grassTask() for empty definition or grassTask( "grass.command" )
-    for parsed filling."""
+    Use as either grassTask() for empty definition or grassTask( 'grass.command' )
+    for parsed filling.
+    """
     def __init__(self, grassModule = None):
         self.name = _('unknown')
         self.params = []
@@ -173,30 +185,36 @@ class grassTask:
             xml.sax.parseString( getInterfaceDescription( grassModule ) , processTask( self ) )
 
     def get_param( self, aParam ):
-        """Find and return a param by name."""
+        """
+        Find and return a param by name.
+        """
         for p in self.params:
             if p['name'] == aParam:
                 return p
         raise ValueError, "Parameter not found : %s" % aParam
 
     def get_flag( self, aFlag ):
-        """Find and return a flag by name."""
+        """
+        Find and return a flag by name.
+        """
         for f in self.flags:
             if f['name'] == aFlag:
                 return f
         raise ValueError, "Flag not found : %s" % aFlag
     
     def getCmd(self, ignoreErrors = False):
-        """Produce an array of command name and arguments for feeding
+        """
+        Produce an array of command name and arguments for feeding
         into some execve-like command processor.
-
+        
         If ignoreErrors==True then it will return whatever has been
         built so far, even though it would not be a correct command
-        for GRASS."""
+        for GRASS.
+        """
         cmd = [self.name]
         errors = 0
         errStr = ""
-
+        
         for flag in self.flags:
             if 'value' in flag and flag['value']:
                 cmd += [ '-' + flag['name'] ]
@@ -214,17 +232,20 @@ class grassTask:
 
 
 class processTask(HandlerBase):
-    """A SAX handler for the --interface-description output, as
+    """
+    A SAX handler for the --interface-description output, as
     defined in grass-interface.dtd. Extend or modify this and the
-    DTD if the XML output of GRASS' parser is extended or modified."""
+    DTD if the XML output of GRASS' parser is extended or modified.
+    """
     def __init__(self, task_description):
-        self.inDescriptionContent = 0
-        self.inDefaultContent = 0
-        self.inValueContent = 0
-        self.inParameter = 0
-        self.inFlag = 0
-        self.inGispromptContent = 0
-        self.inGuisection = 0
+        self.inLabelContent = False
+        self.inDescriptionContent = False
+        self.inDefaultContent = False
+        self.inValueContent = False
+        self.inParameter = False
+        self.inFlag = False
+        self.inGispromptContent = False
+        self.inGuisection = False
         self.task = task_description
 
     def startElement(self, name, attrs):
@@ -233,7 +254,8 @@ class processTask(HandlerBase):
             self.task.name = attrs.get('name', None)
 
         if name == 'parameter':
-            self.inParameter = 1;
+            self.inParameter = True;
+            self.param_label = ''
             self.param_description = ''
             self.param_default = ''
             self.param_values = []
@@ -249,23 +271,27 @@ class processTask(HandlerBase):
             self.param_multiple = attrs.get('multiple', None)
 
         if name == 'flag':
-            self.inFlag = 1;
+            self.inFlag = True;
             self.flag_description = ''
             self.flag_default = ''
             self.flag_values = []
             # Look for the flag name
             self.flag_name = attrs.get('name', None)
 
+        if name == 'label':
+            self.inLabelContent = True
+            self.label = ''
+
         if name == 'description':
-            self.inDescriptionContent = 1
+            self.inDescriptionContent = True
             self.description = ''
 
         if name == 'default':
-            self.inDefaultContent = 1
+            self.inDefaultContent = True
             self.param_default = ''
 
         if name == 'value':
-            self.inValueContent = 1
+            self.inValueContent = True
             self.value_tmp = ''
 
         if name == 'gisprompt':
@@ -275,7 +301,7 @@ class processTask(HandlerBase):
             self.param_prompt = attrs.get('prompt', None)
 
         if name == 'guisection':
-            self.inGuisection = 1
+            self.inGuisection = True
             self.param_guisection = ''
 
     # works with python 2.0, but is not SAX compliant
@@ -283,6 +309,8 @@ class processTask(HandlerBase):
         self.my_characters(ch)
 
     def my_characters(self, ch):
+        if self.inLabelContent:
+            self.label = self.label + ch
         if self.inDescriptionContent:
             self.description = self.description + ch
         if self.inDefaultContent:
@@ -308,12 +336,18 @@ class processTask(HandlerBase):
     def endElement(self, name):
         # If it's not a parameter element, ignore it
         if name == 'parameter':
-            self.inParameter = 0;
+            self.inParameter = False;
+            # description -> label
+            if not self.param_label:
+                self.param_label = self.param_description
+                self.param_description = ''
+                
             self.task.params.append({
                 "name" : self.param_name,
                 "type" : self.param_type,
                 "required" : self.param_required,
                 "multiple" : self.param_multiple,
+                "label" : self.param_label,
                 "description" : self.param_description,
                 'gisprompt' : self.param_gisprompt,
                 'age' : self.param_age,
@@ -325,11 +359,14 @@ class processTask(HandlerBase):
                 "value" : '' })
 
         if name == 'flag':
-            self.inFlag = 0;
+            self.inFlag = False;
             self.task.flags.append({
                 "name" : self.flag_name,
                 "description" : self.flag_description } )
 
+        if name == 'label':
+            self.param_label = normalize_whitespace(self.label)
+            
         if name == 'description':
             if self.inParameter:
                 self.param_description = normalize_whitespace(self.description)
@@ -337,32 +374,34 @@ class processTask(HandlerBase):
                 self.flag_description = normalize_whitespace(self.description)
             else:
                 self.task.description = normalize_whitespace(self.description)
-            self.inDescriptionContent = 0
+            self.inDescriptionContent = False
 
         if name == 'default':
             self.param_default = normalize_whitespace(self.param_default)
-            self.inDefaultContent = 0
+            self.inDefaultContent = False
 
         if name == 'value':
             v = normalize_whitespace(self.value_tmp)
             self.param_values = self.param_values + [ normalize_whitespace(self.value_tmp) ]
-            self.inValueContent = 0
+            self.inValueContent = False
 
         if name == 'guisection':
             self.param_guisection = normalize_whitespace(self.param_guisection)
-            self.inGuisection = 0
+            self.inGuisection = False
 
 class helpPanel(wx.html.HtmlWindow):
-    """This panel holds the text from GRASS docs.
+    """
+    This panel holds the text from GRASS docs.
 
     GISBASE must be set in the environment to find the html docs dir.
     The SYNOPSIS section is skipped, since this Panel is supposed to
-    be integrated into the cmdPanel."""
+    be integrated into the cmdPanel.
+    """
     def __init__(self, grass_command = "index", *args, **kwargs):
         wx.html.HtmlWindow.__init__(self, *args, **kwargs)
         self.fspath = os.getenv( "GISBASE" ) + "/docs/html/"
-        self.SetStandardFonts( size = 11 )
-        self.fillContentsFromFile( self.fspath + grass_command + ".html" )
+        self.SetStandardFonts ( size = 10 )
+        self.fillContentsFromFile ( self.fspath + grass_command + ".html" )
 
     def fillContentsFromFile( self, htmlFile ):
         aLink = re.compile( r'(<a href="?)(.+\.html?["\s]*>)', re.IGNORECASE )
@@ -386,57 +425,77 @@ class helpPanel(wx.html.HtmlWindow):
 
 
 class mainFrame(wx.Frame):
-    """This is the Frame containing the dialog for options input.
+    """
+    This is the Frame containing the dialog for options input.
 
     The dialog is organized in a notebook according to the guisections
     defined by each GRASS command.
 
     If run with a parent, it may Apply, Ok or Cancel; the latter two close the dialog.
     The former two trigger a callback.
-
+    
     If run standalone, it will allow execution of the command.
 
-    The command is checked and sent to the clipboard when clicking "Copy". """
+    The command is checked and sent to the clipboard when clicking 'Copy'.
+    """
     def __init__(self, parent, ID, task_description, get_dcmd=None, layer=None):
 
         self.get_dcmd = get_dcmd
         self.layer = layer
         self.task = task_description
-
-        wx.Frame.__init__(self, parent, ID, self.task.name,
-            wx.DefaultPosition, style=wx.DEFAULT_FRAME_STYLE | wx.TAB_TRAVERSAL)
-
-        self.CreateStatusBar()
         self.parent = parent
-        self.SetIcon(wx.Icon(os.path.join(imagepath,'grass.form.gif'), wx.BITMAP_TYPE_ANY))
 
-        menu = wx.Menu()
-        menu.Append(wx.ID_ABOUT, _("&About GrassGUI"),
-            _("Information about GrassGUI") )
-        menu.Append(ID_ABOUT_COMMAND, _("&About %s") % self.task.name,
-            _("Short descripton of GRASS command %s") % self.task.name)
-        menu.AppendSeparator()
-        menu.Append(wx.ID_EXIT, _("E&xit"), _("Terminate the program") )
+        standalone = True
+        
+        wx.Frame.__init__(self, parent=parent, id=ID, title=self.task.name,
+                          pos=wx.DefaultPosition, style=wx.DEFAULT_FRAME_STYLE | wx.TAB_TRAVERSAL)
 
-        menuBar = wx.MenuBar()
-        menuBar.Append(menu, "&File");
+        # statusbar
+        self.CreateStatusBar()
+        # icon
+        self.SetIcon(wx.Icon(os.path.join(imagepath, 'grass.form.gif'), wx.BITMAP_TYPE_ANY))
 
-        self.SetMenuBar(menuBar)
+        # menu
+        #         menu = wx.Menu()
+        #         menu.Append(wx.ID_ABOUT, _("&About GrassGUI"),
+        #             _("Information about GrassGUI") )
+        #         menu.Append(ID_ABOUT_COMMAND, _("&About %s") % self.task.name,
+        #             _("Short descripton of GRASS command %s") % self.task.name)
+        #         menu.AppendSeparator()
+        #         menu.Append(wx.ID_EXIT, _("E&xit"), _("Terminate the program") )
+        #         menuBar = wx.MenuBar()
+        #         menuBar.Append(menu, "&File");
+        #         self.SetMenuBar(menuBar)
+        #wx.EVT_MENU(self, wx.ID_ABOUT, self.OnAbout)
+        #wx.EVT_MENU(self, ID_ABOUT_COMMAND, self.OnAboutCommand)
+        #wx.EVT_MENU(self, wx.ID_EXIT,  self.OnCancel)
+        
         guisizer = wx.BoxSizer(wx.VERTICAL)
 
         # set apropriate output window
-#        if self.parent:
-#            standalone=False
-#            self.goutput = self.parent.goutput
-#        else:
-        standalone=True
-        self.notebookpanel = cmdPanel( parent=self, task=self.task, standalone=standalone )
+        #        if self.parent:
+        #            standalone=False
+        #            self.goutput = self.parent.goutput
+        #        else:
+
+        # logo+description
+        topsizer = wx.BoxSizer(wx.HORIZONTAL)
+        # GRASS logo
+        self.logo = wx.StaticBitmap (parent=self, bitmap=wx.Bitmap(name=os.path.join(imagepath, 'grass-tiny-logo.png'), type=wx.BITMAP_TYPE_ANY))
+        topsizer.Add (item=self.logo, proportion=0, border=1, flag=wx.ALL)
+        # module description
+        self.description = wx.StaticText (parent=self, label=self.task.description)
+        topsizer.Add (item=self.description, proportion=0, border=5, flag=wx.ALL)
+        guisizer.Add (item=topsizer, proportion=0, flag=wx.ALIGN_BOTTOM)
+        
+        # notebooks
+        self.notebookpanel = cmdPanel (parent=self, task=self.task, standalone=standalone)
         if standalone:
             self.goutput = self.notebookpanel.goutput
         self.notebookpanel.OnUpdateValues = self.updateValuesHook
+        guisizer.Add (item=self.notebookpanel, proportion=1, flag=wx.EXPAND)
 
-        guisizer.Add( self.notebookpanel, 1, flag = wx.EXPAND )
-
+        # status bar
         status_text = _("Enter parameters for ") + self.task.name
         if self.notebookpanel.hasMain:
             # We have to wait for the notebookpanel to be filled in order
@@ -444,9 +503,12 @@ class mainFrame(wx.Frame):
             status_text += _(" (those of Main in bold typeface are required)")
         self.SetStatusText( status_text )
 
-        btnsizer = wx.BoxSizer(wx.HORIZONTAL)
-        btn_cancel = wx.Button(self, wx.ID_CANCEL, _("Cancel") )
-        btnsizer.Add( btn_cancel, 0, wx.ALL| wx.ALIGN_CENTER, 10)
+        # buttons
+        btnsizer = wx.BoxSizer(orient=wx.HORIZONTAL)
+        # cancel
+        btn_cancel = wx.Button(parent=self, id=wx.ID_CANCEL)
+        btn_cancel.SetToolTipString(_("Cancel the command"))
+        btnsizer.Add(item=btn_cancel, proportion=0, flag=wx.ALL | wx.ALIGN_CENTER, border=10)
         if self.get_dcmd is not None: # A callback has been set up
             btn_apply = wx.Button(self, wx.ID_APPLY, _("Apply") )
             btnsizer.Add( btn_apply, 0, wx.ALL| wx.ALIGN_CENTER, 10)
@@ -456,17 +518,18 @@ class mainFrame(wx.Frame):
             btn_apply.Bind(wx.EVT_BUTTON, self.OnApply)
             btn_ok.Bind(wx.EVT_BUTTON, self.OnOK)
         else: # We're standalone
-            btn_run = wx.Button(self, wx.ID_OK, _("Run") )
-            btnsizer.Add( btn_run, 0, wx.ALL| wx.ALIGN_CENTER, 10)
+            # run
+            btn_run = wx.Button(parent=self, id=wx.ID_OK, label= _("&Run"))
+            btn_run.SetToolTipString(_("Run the command"))
             btn_run.SetDefault()
             btn_run.Bind(wx.EVT_BUTTON, self.OnRun)
-            btn_clipboard = wx.Button(self, wx.ID_OK, _("Copy") )
-            btnsizer.Add(btn_clipboard, 0, wx.ALL| wx.ALIGN_CENTER, 10)
+            btnsizer.Add( item=btn_run, proportion=0, flag=wx.ALL| wx.ALIGN_CENTER, border=10)
+            # copy
+            btn_clipboard = wx.Button(parent=self, id=wx.ID_OK, label=_("C&opy") )
+            btn_clipboard.SetToolTipString(_("Copy the command to clipboard"))
             btn_clipboard.Bind(wx.EVT_BUTTON, self.OnCopy)
-        guisizer.Add(btnsizer, 0, wx.ALIGN_BOTTOM)
-        wx.EVT_MENU(self, wx.ID_ABOUT, self.OnAbout)
-        wx.EVT_MENU(self, ID_ABOUT_COMMAND, self.OnAboutCommand)
-        wx.EVT_MENU(self, wx.ID_EXIT,  self.OnCancel)
+            btnsizer.Add(item=btn_clipboard, proportion=0, flag=wx.ALL| wx.ALIGN_CENTER, border=10)
+        guisizer.Add(item=btnsizer, proportion=0, flag=wx.ALIGN_CENTER)
         btn_cancel.Bind(wx.EVT_BUTTON, self.OnCancel)
         self.Bind(wx.EVT_CLOSE, self.OnCloseWindow)
 
@@ -500,7 +563,14 @@ class mainFrame(wx.Frame):
     def OnRun(self, event):
         cmd = self.createCmd()
 
-        if cmd != None and cmd[0:2] != "d.":
+        if cmd == None:
+            return
+
+        # change page if needed
+        if self.notebookpanel.notebook.GetSelection() != self.notebookpanel.outpageid:
+            self.notebookpanel.notebook.SetSelection(self.notebookpanel.outpageid)
+
+        if cmd[0:2] != "d.":
             # Send any non-display command to parent window (probably wxgui.py)
             # put to parents
             try:
@@ -556,16 +626,20 @@ class mainFrame(wx.Frame):
 
 
 class cmdPanel(wx.Panel):
-    """A panel containing a notebook dividing in tabs the different guisections of the GRASS cmd."""
+    """
+    A panel containing a notebook dividing in tabs the different guisections of the GRASS cmd.
+    """
     def __init__( self, parent, task, standalone, *args, **kwargs ):
         wx.Panel.__init__( self, parent, *args, **kwargs )
 
         self.task = task
-
+        fontsize = 10
+        
         # Determine tab layout
         sections = []
         is_section = {}
         not_hidden = [ p for p in self.task.params + self.task.flags if not p.get( 'hidden','no' ) == 'yes' ]
+        
         for task in not_hidden:
             if task.get( 'required','no' ) == 'yes':
                 # All required go into Main, even if they had defined another guisection
@@ -579,6 +653,7 @@ class cmdPanel(wx.Panel):
                 sections.append( task['guisection'] )
             else:
                 is_section[ task['guisection'] ] += 1
+                
         # Main goes first, Options goes second
         for (newidx,content) in [ (0,_( 'Main' )), (1,_('Options')) ]:
             if content in sections:
@@ -586,85 +661,118 @@ class cmdPanel(wx.Panel):
                 sections[idx:idx+1] = []
                 sections[newidx:newidx] =  [content] 
 
-        panelsizer = wx.BoxSizer(wx.VERTICAL)
+        panelsizer = wx.BoxSizer(orient=wx.VERTICAL)
+        
         # Build notebook
         nbStyle=FN.FNB_NO_X_BUTTON|FN.FNB_VC8|FN.FNB_BACKGROUND_GRADIENT
-        notebook = FN.FlatNotebook( self, id=wx.ID_ANY, style=nbStyle)
-        notebook.SetTabAreaColour(wx.Colour(125,200,175))
-        notebook.Bind( FN.EVT_FLATNOTEBOOK_PAGE_CHANGED, self.OnPageChange )
+        self.notebook = FN.FlatNotebook( self, id=wx.ID_ANY, style=nbStyle)
+        self.notebook.SetTabAreaColour(wx.Colour(125,200,175))
+        self.notebook.Bind( FN.EVT_FLATNOTEBOOK_PAGE_CHANGED, self.OnPageChange )
         tab = {}
         tabsizer = {}
         for section in sections:
-            tab[section] = wx.ScrolledWindow( notebook )
+            tab[section] = wx.ScrolledWindow( parent=self.notebook )
             tab[section].SetScrollRate(10,10)
-            tabsizer[section] = wx.BoxSizer(wx.VERTICAL)
-            notebook.AddPage( tab[section], text = section )
+            tabsizer[section] = wx.BoxSizer(orient=wx.VERTICAL)
+            self.notebook.AddPage( tab[section], text=section )
 
         # are we running from command line?
         if standalone:
             from gui_modules import wxgui_utils
             self.goutput = wxgui_utils.GMConsole(self)
-            self.outpage = notebook.AddPage(self.goutput, text=_("Command output") )
+            self.outpage = self.notebook.AddPage(self.goutput, text=_("Command output") )
+            self.outpageid = self.notebook.GetPageCount() - 1
 
-        manual_tab =  helpPanel( parent = notebook, grass_command = self.task.name)
+        manual_tab =  helpPanel( parent = self.notebook, grass_command = self.task.name)
         if manual_tab.Ok:
             manual_tabsizer = wx.BoxSizer(wx.VERTICAL)
-            notebook.AddPage( manual_tab, text = _("Manual") )
+            self.notebook.AddPage( manual_tab, text = _("Manual") )
 
-        notebook.SetSelection(0)
-        panelsizer.Add( notebook, 1, flag=wx.EXPAND )
+        self.notebook.SetSelection(0)
+        panelsizer.Add( self.notebook, 1, flag=wx.EXPAND )
 
+        # flags
+        text_style = wx.FONTWEIGHT_NORMAL
+        visible_flags = [ f for f in self.task.flags if not f.get( 'hidden', 'no' ) == 'yes' ]
+        for f in visible_flags:
+            which_sizer = tabsizer[ f['guisection'] ]
+            which_panel = tab[ f['guisection'] ]
+            title = text_beautify( f['description'] )
+            chk = wx.CheckBox(parent=which_panel, label = title, style = wx.NO_BORDER)
+            if 'value' in f:
+                chk.SetValue( f['value'] )
+            chk.SetFont( wx.Font( pointSize=fontsize, family=wx.FONTFAMILY_DEFAULT, style=wx.NORMAL, weight=text_style))
+            which_sizer.Add( item=chk, proportion=0, flag=wx.EXPAND| wx.TOP | wx.LEFT, border=5)
+            f['wxId'] = chk.GetId()
+            chk.Bind(wx.EVT_CHECKBOX, self.OnSetValue)
+
+        # parameters
         visible_params = [ p for p in self.task.params if not p.get( 'hidden', 'no' ) == 'yes' ]
         for p in visible_params:
             which_sizer = tabsizer[ p['guisection'] ]
             which_panel = tab[ p['guisection'] ]
-            title = text_beautify( p['description'] )
-            text_style = wx.FONTWEIGHT_BOLD
+            title = text_beautify( p['label'] )
+            tooltip = text_beautify (p['description'])
             txt = None
+
+            # text style (required -> bold)
             if p.get('required','no') == 'no':
                 text_style = wx.FONTWEIGHT_NORMAL
+            else:
+                text_style = wx.FONTWEIGHT_BOLD
+
+            # title expansion
             if p.get('multiple','no') == 'yes' and len( p.get('values','') ) == 0:
                 title = _("[multiple]") + " " + title
-            if p.get('value','') ==  '' :
-                p['value'] = p.get('default','')
-            if ( len(p.get('values',[]) ) > 0):
+                if p.get('value','') ==  '' :
+                    p['value'] = p.get('default','')
 
+            if ( len(p.get('values',[]) ) > 0):
                 valuelist=map(str,p.get('values',[]))
+                # list of values
                 if p.get('multiple','no') == 'yes':
-                    txt = wx.StaticBox(which_panel,0,title+":")
-                    hSizer=wx.StaticBoxSizer( txt, wx.VERTICAL )
+                    txt = wx.StaticBox (parent=which_panel, id=0, label=" " + title + ": ")
+                    txt.SetToolTip(wx.ToolTip(tooltip))
+                    if len(valuelist) > 6:
+                        hSizer=wx.StaticBoxSizer ( box=txt, orient=wx.VERTICAL )
+                    else:
+                        hSizer=wx.StaticBoxSizer ( box=txt, orient=wx.HORIZONTAL )
                     isDefault = {}
                     for defval in p['value'].split(','):
                         isDefault[ defval ] = 'yes'
-                    # for multi checkboxes, this is an array of all wx IDs
-                    # for each individual checkbox
-                    p[ 'wxId' ]=[]
+                        # for multi checkboxes, this is an array of all wx IDs
+                        # for each individual checkbox
+                        p[ 'wxId' ]=[]
                     for val in valuelist:
-                        chkbox = wx.CheckBox( which_panel, label = text_beautify(val) )
+                        chkbox = wx.CheckBox( parent=which_panel, label = text_beautify(val) )
                         p[ 'wxId' ].append( chkbox.GetId() )
                         if isDefault.has_key(val): chkbox.SetValue( True )
-                        hSizer.Add( chkbox,0,wx.ADJUST_MINSIZE,5 )
+                        hSizer.Add( item=chkbox, proportion=0, flag=wx.ADJUST_MINSIZE | wx.ALL, border=1 )
                         chkbox.Bind(wx.EVT_CHECKBOX, self.OnCheckBoxMulti)
-                    which_sizer.Add( hSizer, 0, wx.ADJUST_MINSIZE, 5)
+                    which_sizer.Add( item=hSizer, proportion=0, flag=wx.ADJUST_MINSIZE | wx.ALL, border=5 )
+                # one value
                 elif len(valuelist) == 1:
-                    txt = wx.StaticText(which_panel,
-                                label = _('%s. Valid range=%s') % (title, str(valuelist).strip("[]'") + ':' ) )
-                    which_sizer.Add(txt, 0, wx.ADJUST_MINSIZE | wx.ALL, 5)
-                    txt2 = wx.TextCtrl(which_panel, value = p.get('default',''),
-                                            size = (STRING_ENTRY_WIDTH, ENTRY_HEIGHT))
-                    if p.get('value','') != '': txt2.SetValue(p['value']) # parameter previously set
-
-                    which_sizer.Add( txt2, 0, wx.ADJUST_MINSIZE, 5)
+                    txt = wx.StaticText(parent=which_panel,
+                                        label = _('%s. Valid range=%s') % (title, str(valuelist).strip("[]'") + ':' ) )
+                    which_sizer.Add(item=txt, proportion=0, flag=wx.ADJUST_MINSIZE | wx.TOP | wx.LEFT, border=5)
+                    
+                    txt2 = wx.TextCtrl(parent=which_panel, value = p.get('default',''),
+                                       size = (STRING_ENTRY_WIDTH, ENTRY_HEIGHT))
+                    if p.get('value','') != '':
+                        txt2.SetValue(p['value']) # parameter previously set
+                    which_sizer.Add(item=txt2, proportion=0, flag=wx.ADJUST_MINSIZE | wx.BOTTOM | wx.LEFT, border=5)
+                    
                     p['wxId'] = txt2.GetId()
                     txt2.Bind(wx.EVT_TEXT, self.OnSetValue)
                 else:
-                    txt = wx.StaticText(which_panel, label = title + ':' )
-                    which_sizer.Add(txt, 0, wx.ADJUST_MINSIZE | wx.ALL, 5)
+                    # combo
+                    txt = wx.StaticText(parent=which_panel, label = title + ':' )
+                    which_sizer.Add(item=txt, proportion=0, flag=wx.ADJUST_MINSIZE | wx.TOP | wx.LEFT, border=5)
                     cb = wx.ComboBox(which_panel, -1, p.get('default',''),
                                      wx.Point(-1, -1), wx.Size(STRING_ENTRY_WIDTH, -1),
                                      valuelist, wx.CB_DROPDOWN)
                     if p.get('value','') != '': cb.SetValue(p['value']) # parameter previously set
-                    which_sizer.Add( cb, 0, wx.ADJUST_MINSIZE, 5)
+                    which_sizer.Add( item=cb, proportion=0, flag=wx.ADJUST_MINSIZE | wx.BOTTOM | wx.LEFT, border=5)
                     p['wxId'] = cb.GetId()
                     cb.Bind( wx.EVT_COMBOBOX, self.OnSetValue)
 
@@ -674,25 +782,29 @@ class cmdPanel(wx.Panel):
                 and p.get('gisprompt',False) == False
                 and p.get('prompt','') != 'color'):
 
-                txt = wx.StaticText(which_panel, label = title + ':' )
-                which_sizer.Add(txt, 0, wx.ADJUST_MINSIZE | wx.ALL, 5)
+                txt = wx.StaticText(parent=which_panel, label = title + ':' )
+                which_sizer.Add(item=txt, proportion=0, flag=wx.TOP | wx.LEFT | wx.EXPAND, border=5)
 
-                txt3 = wx.TextCtrl(which_panel, value = p.get('default',''),
-                    size = (STRING_ENTRY_WIDTH, ENTRY_HEIGHT))
-                if p.get('value','') != '': txt3.SetValue(p['value']) # parameter previously set
-                which_sizer.Add( txt3, 0, wx.ADJUST_MINSIZE| wx.ALL, 5)
+                txt3 = wx.TextCtrl(parent=which_panel, value = p.get('default',''),
+                                   size = (STRING_ENTRY_WIDTH, ENTRY_HEIGHT))
+                
+                if p.get('value','') != '':
+                    txt3.SetValue(p['value']) # parameter previously set
+                    
+                which_sizer.Add(item=txt3, proportion=0, flag=wx.BOTTOM | wx.LEFT, border=5)
                 p['wxId'] = txt3.GetId()
                 txt3.Bind(wx.EVT_TEXT, self.OnSetValue)
 
             if p.get('type','string') == 'string' and p.get('gisprompt',False) == True:
-                txt = wx.StaticText(which_panel, label = title + ':')
-                which_sizer.Add(txt, 0, wx.ADJUST_MINSIZE | wx.ALL, 5)
+                txt = wx.StaticText(parent=which_panel, label = title + ':')
+                which_sizer.Add(item=txt, proportion=0, flag=wx.ADJUST_MINSIZE | wx.TOP | wx.LEFT, border=5)
                 # element selection tree combobox (maps, icons, regions, etc.)
                 if p.get('prompt','') != 'color':
-                    selection = select.Select(which_panel, id=wx.ID_ANY, size=(300,-1),
-                                                   type=p.get('element','') )
-                    if p.get('value','') != '': selection.SetValue(p['value']) # parameter previously set
-                    which_sizer.Add( selection, 0, wx.ADJUST_MINSIZE| wx.ALL, 5)
+                    selection = select.Select(parent=which_panel, id=wx.ID_ANY, size=(300,-1),
+                                              type=p.get('element','') )
+                    if p.get('value','') != '':
+                        selection.SetValue(p['value']) # parameter previously set
+                    which_sizer.Add(item=selection, proportion=0, flag=wx.ADJUST_MINSIZE| wx.BOTTOM | wx.LEFT, border=5)
                     # A select.Select is a combobox with two children: a textctl and a popupwindow;
                     # we target the textctl here
                     p['wxId'] = selection.GetChildren()[0].GetId()
@@ -706,11 +818,11 @@ class cmdPanel(wx.Panel):
                     if p.get('value','') != '': # parameter previously set
                         default_color, label_color = color_resolve( p['value'] )
                     if "none" in title:
-                        this_sizer = wx.BoxSizer( wx.HORIZONTAL )
+                        this_sizer = wx.BoxSizer(orient=wx.HORIZONTAL )
                     else:
                         this_sizer = which_sizer
                     btn_colour = csel.ColourSelect(which_panel, wx.ID_ANY, label_color, default_color, wx.DefaultPosition, (150,-1) )
-                    this_sizer.Add(btn_colour, 0, wx.ADJUST_MINSIZE| wx.ALL, 5)
+                    this_sizer.Add(item=btn_colour, proportion=0, flag=wx.ADJUST_MINSIZE | wx.BOTTOM | wx.LEFT, border=5)
                     # For color selectors, this is a two-member array, holding the IDs of
                     # the selector proper and either a "transparent" button or None
                     p['wxId'] = [btn_colour.GetId(),]
@@ -721,7 +833,7 @@ class cmdPanel(wx.Panel):
                             none_check.SetValue(True)
                         else:
                             none_check.SetValue(False)
-                        none_check.SetFont( wx.Font( 12, wx.FONTFAMILY_DEFAULT, wx.NORMAL, text_style, 0, ''))
+                        none_check.SetFont( wx.Font( fontsize, wx.FONTFAMILY_DEFAULT, wx.NORMAL, text_style, 0, ''))
                         this_sizer.Add(none_check, 0, wx.ADJUST_MINSIZE| wx.ALL, 5)
                         which_sizer.Add( this_sizer )
                         none_check.Bind(wx.EVT_CHECKBOX, self.OnColorChange)
@@ -729,19 +841,7 @@ class cmdPanel(wx.Panel):
                     else:
                         p['wxId'].append(None)
 	    if txt is not None:
-                txt.SetFont( wx.Font( 12, wx.FONTFAMILY_DEFAULT, wx.NORMAL, text_style, 0, ''))
-
-        visible_flags = [ f for f in self.task.flags if not f.get( 'hidden', 'no' ) == 'yes' ]
-        for f in visible_flags:
-            which_sizer = tabsizer[ f['guisection'] ]
-            which_panel = tab[ f['guisection'] ]
-            title = text_beautify( f['description'] )
-            chk = wx.CheckBox(which_panel,-1, label = title, style = wx.NO_BORDER)
-            if 'value' in f: chk.SetValue( f['value'] )
-            chk.SetFont( wx.Font( 12, wx.FONTFAMILY_DEFAULT, wx.NORMAL, text_style, 0, ''))
-            which_sizer.Add( chk, 0, wx.EXPAND| wx.ALL, 5)
-            f['wxId'] = chk.GetId()
-            chk.Bind(wx.EVT_CHECKBOX, self.OnSetValue)
+                txt.SetFont( wx.Font( fontsize, wx.FONTFAMILY_DEFAULT, wx.NORMAL, text_style, 0, ''))
 
         maxsizes = (0,0)
         for section in sections:
@@ -762,7 +862,6 @@ class cmdPanel(wx.Panel):
 
         self.SetSizer( panelsizer )
         self.hasMain = tab.has_key( _('Main') ) # publish, to enclosing Frame for instance
-
 
     def OnPageChange(self, event):
         self.Layout()
@@ -828,7 +927,8 @@ class cmdPanel(wx.Panel):
 
 
     def createCmd( self, ignoreErrors = False ):
-        """Produce a command line string for feeding into GRASS.
+        """
+        Produce a command line string for feeding into GRASS.
 
         If ignoreErrors==True then it will return whatever has been
         built so far, even though it would not be a correct command
@@ -839,15 +939,18 @@ class cmdPanel(wx.Panel):
             dlg = wx.MessageDialog(self, str(err), _("Error"), wx.OK | wx.ICON_ERROR)
             dlg.ShowModal()
             dlg.Destroy()
-            cmd = ''
+            cmd = None
+            
         return cmd
 
 
 def getInterfaceDescription( cmd ):
-    """Returns the XML description for the GRASS cmd.
+    """
+    Returns the XML description for the GRASS cmd.
 
     The DTD must be located in $GISBASE/etx/wx/gui_modules/grass-interface.dtd,
-    otherwise the parser will not succeed."""
+    otherwise the parser will not succeed.
+    """
     gmpath = os.getenv("GISBASE") + "/etc/wx/gui_modules"
     cmdout = os.popen(cmd + r' --interface-description', "r").read()
     if not len(cmdout) > 0 :
@@ -858,21 +961,25 @@ def getInterfaceDescription( cmd ):
     return cmdout
 
 class GrassGUIApp(wx.App):
-    """Stand-alone GRASS command GUI"""
+    """
+    Stand-alone GRASS command GUI
+    """
     def __init__(self, grass_task):
         self.grass_task = grass_task
         wx.App.__init__(self)
 
     def OnInit(self):
-        self.mf = mainFrame(None ,-1, self.grass_task )
+        self.mf = mainFrame(parent=None, ID=wx.ID_ANY, task_description=self.grass_task)
         self.mf.Show(True)
         self.SetTopWindow(self.mf)
         return True
 
 class GUI:
     def __init__(self, parent=-1):
-        '''Parses GRASS commands when module is imported and used
-        from wxgui.py'''
+        """
+        Parses GRASS commands when module is imported and used
+        from wxgui.py
+        """
         self.parent = parent
 
     def parseCommand(self, cmd, gmpath, completed=None, parentframe=-1 ):
@@ -921,9 +1028,9 @@ if __name__ == "__main__":
             task = grassTask( "d.vect" )
             task.get_param('map')['value'] = "map_name"
             task.get_flag('v')['value'] = True
-            task.get_param('layer')['value'] = 12
+            task.get_param('layer')['value'] = 1
             task.get_param('bcolor')['value'] = "red"
-            assert ' '.join( task.getCmd() ) == "d.vect -v map=map_name layer=12 bcolor=red"
+            assert ' '.join( task.getCmd() ) == "d.vect -v map=map_name layer=1 bcolor=red"
         # Test interface building with handmade grassTask
         task = grassTask()
         task.name = "TestTask"
