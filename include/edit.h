@@ -4,8 +4,8 @@
 #include <grass/gis.h>
 
 /* edit_cats.c */
-int E_edit_cats(char *, struct Categories *, int);
-int E_edit_fp_cats(char *, struct Categories *);
+int E_edit_cats(const char *, struct Categories *, int);
+int E_edit_fp_cats(const char *, struct Categories *);
 
 /* edit_cellhd.c */
 int E_edit_cellhd(struct Cell_head *, int);
