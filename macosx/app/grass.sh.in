@@ -72,10 +72,17 @@ else
 fi
 export GRASS_ADDON_PATH
 
+mkdir -p "$HOME/Library/GRASS/$grass_ver/Modules/etc"
+if [ "$GRASS_ADDON_ETC" ] ; then
+	GRASS_ADDON_ETC="$GRASS_ADDON_ETC:$HOME/Library/GRASS/$grass_ver/Modules/etc:/Library/GRASS/$grass_ver/Modules/etc"
+else
+	GRASS_ADDON_ETC="$HOME/Library/GRASS/$grass_ver/Modules/etc:/Library/GRASS/$grass_ver/Modules/etc"
+fi
+export GRASS_ADDON_ETC
+
 mkdir -p "$HOME/Library/GRASS/$grass_ver/Modules/lib"
 DYLD_LIBRARY_PATH="$HOME/Library/GRASS/$grass_ver/Modules/lib:/Library/GRASS/Modules/lib"
 export DYLD_LIBRARY_PATH
-mkdir -p "$HOME/Library/GRASS/$grass_ver/Modules/etc"
 mkdir -p "$HOME/Library/GRASS/$grass_ver/Modules/docs/html"
 
 # rebuild addon html index and gui menus
