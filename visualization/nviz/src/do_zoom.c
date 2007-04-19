@@ -247,7 +247,6 @@ int Create_OS_Ctx(int width, int height)
 	GLX_GREEN_SIZE, 1,
 	GLX_BLUE_SIZE, 1,
 	GLX_DEPTH_SIZE, 1,
-	GLX_DOUBLEBUFFER,
 	None
     };
     GLXContext ctx;
