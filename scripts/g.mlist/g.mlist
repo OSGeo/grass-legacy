@@ -19,16 +19,16 @@
 #%End
 #%flag
 #%  key: r
-#%  description: use regular expression instead of wildcard
+#%  description: Use regular expression instead of wildcard
 #%end
 #%flag
 #%  key: m
-#%  description: print mapset name
+#%  description: Print mapset name
 #%end
 #%option
 #% key: type
 #% type: string
-#% description: data type
+#% description: Data type
 #% answer: rast
 #% options: rast,rast3d,oldvect,vect,asciivect,icon,labels,sites,region,region3d,group,3dview,all
 #% required : yes
@@ -38,19 +38,19 @@
 #% key: mapset
 #% type: string
 #% multiple : yes
-#% description: mapset(s) to list (default: current mapset search path)
+#% description: Mapset(s) to list (default: current mapset search path)
 #% required : no
 #%end
 #%option
 #% key: sep
 #% type: string
-#% description: output separator (default: newline)
+#% description: Output separator (default: newline)
 #% required : no
 #%end
 #%option
 #% key: pattern
 #% type: string
-#% description: map name search pattern (default: all)
+#% description: Map name search pattern (default: all)
 #% answer: *
 #% required : no
 #%end
@@ -81,14 +81,14 @@ do_list() {
     for i in $sorted_list
     do
         if [ "$start" ] ; then
-    	if [ ! "$sep" ] ; then
-    	    printf "\n"
-    	else
-    	    printf "%s" "$sep"
-    	fi
+	    if [ -z "$sep" ] ; then
+		echo
+	    else
+		echo -n "$sep"
+	    fi
         fi
         start=1
-        printf "%s" "$i$MAPSET"
+        echo -n "$i$MAPSET"
     done
 }
 
@@ -145,6 +145,9 @@ for mapset in $mapsets
 do
     do_list
 done
+
+# print newline
+echo ""
 
 exit 0
 
