@@ -131,7 +131,7 @@ class MapLayer:
 
 		except StandardError, e:
 			sys.stderr.write("Could not render command layer <%s>: %s\n" %\
-						 (self.name, str(e)))
+					 (self.name, str(e)))
 			self.cmd = None
 
 	def __renderOverlay(self):
