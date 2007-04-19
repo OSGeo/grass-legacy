@@ -213,7 +213,7 @@ G_compare_projections( struct Key_Value *proj_info1,
         if(G_find_key_value( "meters", proj_units2) != NULL)
            a2 = atof(G_find_key_value( "meters", proj_units2 ));
 
-        if ( a1 && a2 && ( abs(a2-a1) > 0.000001 ) )
+        if ( a1 && a2 && ( fabs(a2-a1) > 0.000001 ) )
             return -2;
     }
 
@@ -229,7 +229,7 @@ G_compare_projections( struct Key_Value *proj_info1,
         if(G_find_key_value( "a", proj_info2) != NULL)
            a2 = atof(G_find_key_value( "a", proj_info2 ));
 
-        if ( a1 && a2 && ( abs(a2-a1) > 0.000001 ) )
+        if ( a1 && a2 && ( fabs(a2-a1) > 0.000001 ) )
             return -4;
     }
 
@@ -240,6 +240,36 @@ G_compare_projections( struct Key_Value *proj_info1,
         && atof(G_find_key_value( "zone", proj_info1 ))
 	   != atof(G_find_key_value( "zone", proj_info2 )) )
         return -5;
+
+/* -------------------------------------------------------------------- */
+/*      Do they both have the same false easting?                       */
+/* -------------------------------------------------------------------- */
+    
+    {
+        char *x_0_1 = NULL, *x_0_2 = NULL;
+       
+        x_0_1 = G_find_key_value( "x_0", proj_info1);
+        x_0_2 = G_find_key_value( "x_0", proj_info2);
+
+        if ( x_0_1 && x_0_2 && 
+	     ( fabs(atof(x_0_1) - atof(x_0_2)) > 0.000001 ) )
+            return -6;
+    }
+
+/* -------------------------------------------------------------------- */
+/*      Do they both have the same false northing?                       */
+/* -------------------------------------------------------------------- */
+    
+    {
+        char *y_0_1 = NULL, *y_0_2 = NULL;
+       
+        y_0_1 = G_find_key_value( "y_0", proj_info1);
+        y_0_2 = G_find_key_value( "y_0", proj_info2);
+
+        if ( y_0_1 && y_0_2 && 
+	     ( fabs(atof(y_0_1) - atof(y_0_2)) > 0.000001 ) )
+            return -7;
+    }
 
 /* -------------------------------------------------------------------- */
 /*      Add more details in later.                                      */
