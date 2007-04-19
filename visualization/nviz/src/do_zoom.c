@@ -236,19 +236,9 @@ int Create_OS_Ctx(int width, int height)
 #ifdef HAVE_PBUFFERS
     GLXFBConfig *fbc;
     int elements;
-    int pbuf_attrib[200];
-    int pbuf_cnt;
 #endif
 #ifdef HAVE_PIXMAPS
     XVisualInfo *vi;
-    Colormap cmap;
-    int att[] = { GLX_RGBA,
-	GLX_RED_SIZE, 1,
-	GLX_GREEN_SIZE, 1,
-	GLX_BLUE_SIZE, 1,
-	GLX_DEPTH_SIZE, 1,
-	None
-    };
     GLXContext ctx;
 #endif
 
@@ -270,21 +260,28 @@ int Create_OS_Ctx(int width, int height)
 #if defined(GLX_PBUFFER_WIDTH) && defined(GLX_PBUFFER_HEIGHT)
     if (!getenv("GRASS_NO_GLX_PBUFFERS"))
     {
-	fprintf(stderr, "Creating PBuffer Using GLX 1.3\n");
+	static int ver_major, ver_minor;
 
-	fbc = glXChooseFBConfig(dpy, scr, 0, &elements);
-	if (fbc)
+	if (!ver_major)
+	    glXQueryVersion(dpy, &ver_major, &ver_minor);
+
+	if (ver_minor >= 3)
 	{
-	    pbuf_cnt = 0;
-	    pbuf_attrib[pbuf_cnt++] = GLX_PBUFFER_WIDTH;
-	    pbuf_attrib[pbuf_cnt++] = width + 1;
-	    pbuf_attrib[pbuf_cnt++] = GLX_PBUFFER_HEIGHT;
-	    pbuf_attrib[pbuf_cnt++] = height + 1;
-	    pbuf_attrib[pbuf_cnt++] = None;
+	    fprintf(stderr, "Creating PBuffer Using GLX 1.3\n");
 
-	    pbuffer = glXCreatePbuffer(dpy, fbc[0], pbuf_attrib);
-	    if (pbuffer)
-		glXMakeContextCurrent(dpy, pbuffer, pbuffer, ctx_orig);
+	    fbc = glXChooseFBConfig(dpy, scr, 0, &elements);
+	    if (fbc)
+	    {
+		int pbuf_attrib[] = {
+		    GLX_PBUFFER_WIDTH, width + 1,
+		    GLX_PBUFFER_HEIGHT, height + 1,
+		    None
+		};
+
+		pbuffer = glXCreatePbuffer(dpy, fbc[0], pbuf_attrib);
+		if (pbuffer)
+		    glXMakeContextCurrent(dpy, pbuffer, pbuffer, ctx_orig);
+	    }
 	}
     }
 #endif
@@ -296,6 +293,14 @@ int Create_OS_Ctx(int width, int height)
 #endif
     if (!getenv("GRASS_NO_GLX_PIXMAPS"))
     {
+	int att[] = {
+	    GLX_RGBA,
+	    GLX_RED_SIZE, 1,
+	    GLX_GREEN_SIZE, 1,
+	    GLX_BLUE_SIZE, 1,
+	    GLX_DEPTH_SIZE, 1,
+	    None
+	};
 	fprintf(stderr, "Create PixMap Using GLX 1.1\n");
 
 	vi = glXChooseVisual(dpy, scr, att);
@@ -309,9 +314,6 @@ int Create_OS_Ctx(int width, int height)
 	    fprintf(stderr, "Unable to create context\n");
 	    return (-1);
 	}
-
-	cmap = XCreateColormap(dpy, RootWindow(dpy,vi->screen),
-			       vi->visual, AllocNone);
 
 	pixmap =
 	    XCreatePixmap(dpy, RootWindow(dpy, vi->screen), width, height,
