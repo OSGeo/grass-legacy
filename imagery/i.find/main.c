@@ -1,3 +1,21 @@
+/****************************************************************************
+ *
+ * MODULE:       i.find
+ * AUTHOR(S):    Markus Neteler <neteler itc.it> 
+ *               Bernhard Reiter <bernhard intevation.de>, 
+ *               Brad Douglas <rez touchofmadness.com>, 
+ *               Glynn Clements <glynn gclements.plus.com>, 
+ *               Paul Kelly <paul-grass stjohnspoint.co.uk>
+ * PURPOSE:      produces a file containing the names of files of type
+ *               element (cell, dig, etc) in the search path for the mapset 
+ *               in location
+ * COPYRIGHT:    (C) 1999-2006 by the GRASS Development Team
+ *
+ *               This program is free software under the GNU General Public
+ *               License (>=v2). Read the file COPYING that comes with GRASS
+ *               for details.
+ *
+ *****************************************************************************/
 /************************************************************************
  * usage: i.find location mapset element file [element2 file2]...
  *
@@ -132,3 +150,6 @@ static int find (FILE *fd, char *element)
 
     return 1;
 }
+
+
+

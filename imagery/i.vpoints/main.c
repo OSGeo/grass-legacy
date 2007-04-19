@@ -1,18 +1,29 @@
+/****************************************************************************
+ *
+ * MODULE:       i.vpoints
+ * AUTHOR(S):    Bill Enslin & Brian Buckley
+ *                     Center for Remote Sensing
+ *                     Michigan State University
+ *                     302 Berkey Hall
+ *                     East Lansing, MI 48824-1111 
+ *                     (517) - 353-7195 (original contributors)
+ *               Radim Blazek <radim.blazek gmail.com>
+ *               Markus Neteler <neteler itc.it>
+ *               Bernhard Reiter <bernhard intevation.de>, 
+ *               Glynn Clements <glynn gclements.plus.com>, 
+ *               Hamish Bowman <hamish_nospam yahoo.com>
+ * PURPOSE:      REVISION of i.points to work with vector map layers
+ *               and 2nd/3rd order transformations
+ * COPYRIGHT:    (C) 1999-2007 by the GRASS Development Team
+ *
+ *               This program is free software under the GNU General Public
+ *               License (>=v2). Read the file COPYING that comes with GRASS
+ *               for details.
+ *
+ *****************************************************************************/
 /*
-    REVISION of i.points to work with vector map layers
-	and 2nd/3rd order transformations
-
-	BY:  Bill Enslin & Brian Buckley
-	     Center for Remote Sensing
-	     Michigan State University
-	     302 Berkey Hall
-             East Lansing, MI 48824-1111
-
-	     (517) - 353-7195
-
+  
 $Id$
-
-VERSION DATE: 6-30-92          
 
 */
 
@@ -212,3 +223,6 @@ int error (const char *msg, int fatal)
 
     return 0;
 }
+
+
+
