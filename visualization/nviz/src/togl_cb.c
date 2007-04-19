@@ -145,3 +145,23 @@ void show_togl_win(void)
   GS_alldraw_wire();
   GS_done_draw();
 }
+
+#ifdef TOGL_X11
+
+Display *togl_display(void)
+{
+    return Togl_Display(Togl_cur);
+}
+
+Screen *togl_screen(void)
+{
+    return Togl_Screen(Togl_cur);
+}
+
+int togl_screen_number(void)
+{
+    return Togl_ScreenNumber(Togl_cur);
+}
+
+#endif
+

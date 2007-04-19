@@ -25,8 +25,8 @@
 #include <GL/glx.h>
 
 static Display *dpy;
-static Window root;
 static GLXContext ctx_orig;
+static GLXContext ctx;
 #ifdef HAVE_PBUFFERS
 static GLXPbuffer pbuffer;
 #endif
@@ -239,16 +239,14 @@ int Create_OS_Ctx(int width, int height)
 #endif
 #ifdef HAVE_PIXMAPS
     XVisualInfo *vi;
-    GLXContext ctx;
 #endif
 
-    dpy = XOpenDisplay(NULL);
+    dpy = togl_display();
     if (dpy == NULL) {
-	fprintf(stderr, "XOpenDisplay Failed!\n");
+	fprintf(stderr, "Togl_Display Failed!\n");
 	return (-1);
     }
-    scr = DefaultScreen(dpy);
-    root = RootWindow(dpy, scr);
+    scr = togl_screen_number();
 
     ctx_orig = glXGetCurrentContext();
     if (ctx_orig == NULL) {
@@ -323,6 +321,10 @@ int Create_OS_Ctx(int width, int height)
 	    return (-1);
 	}
 	glxpixmap = glXCreateGLXPixmap(dpy, vi, pixmap);
+	if (!glxpixmap) {
+	    fprintf(stderr, "Unable to create pixmap\n");
+	    return (-1);
+	}
 	glXMakeCurrent(dpy, glxpixmap, ctx);
     }
 #endif
@@ -369,31 +371,37 @@ int Destroy_OS_Ctx(void)
 #ifdef HAVE_PBUFFERS
     if (pbuffer)
     {
-	fprintf(stderr, "GLX -- destroy pbuffer\n");
+	fprintf(stderr, "Destroy pbuffer\n");
 	glXMakeCurrent(dpy, None, NULL);
 	glXDestroyPbuffer(dpy, pbuffer);
 	pbuffer = None;
-	GS_set_swap_func(swap_togl);
-	show_togl_win();
-	return (1);
     }
 #endif
 #ifdef HAVE_PIXMAPS
+    if (ctx)
+    {
+	fprintf(stderr, "Destroy Context\n");
+	glXMakeCurrent(dpy, None, NULL);
+	glXDestroyContext(dpy, ctx);
+	ctx = NULL;
+    }
     if (glxpixmap)
     {
-	fprintf(stderr, "Destroy Pixmap and GLXPixmap\n");
-	glXMakeCurrent(dpy, None, NULL);
+	fprintf(stderr, "Destroy GLXPixmap\n");
 	glXDestroyGLXPixmap(dpy, glxpixmap);
 	glxpixmap = None;
+    }
+    if (pixmap)
+    {
+	fprintf(stderr, "Destroy Pixmap\n");
 	XFreePixmap(dpy, pixmap);
 	pixmap = None;
-	GS_set_swap_func(swap_togl);
-	show_togl_win();
 	return (1);
     }
 
 #endif
-    XCloseDisplay(dpy);
+    GS_set_swap_func(swap_togl);
+    show_togl_win();
     dpy = NULL;
 #endif /* OPENGL_X11 */
 

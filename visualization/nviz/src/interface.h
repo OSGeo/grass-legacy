@@ -280,6 +280,11 @@ void flythrough_postdraw_cb();
 GLuint load_font(char *);
 void hide_togl_win(void);
 void show_togl_win(void);
+#ifdef OPENGL_X11
+Display *togl_display(void);
+Screen *togl_screen(void);
+int togl_screen_number(void);
+#endif
 
 
 /* tkAppInit.c */
