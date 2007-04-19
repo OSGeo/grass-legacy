@@ -56,7 +56,7 @@ datetime_set_type (DateTime *dt, int mode, int from, int to, int fracsec)
 }
 
 int 
-datetime_get_type (DateTime *dt, int *mode, int *from, int *to, int *fracsec)
+datetime_get_type (const DateTime *dt, int *mode, int *from, int *to, int *fracsec)
 {
     *mode = dt->mode;
     *to   = dt->to;
@@ -78,7 +78,7 @@ datetime_get_type (DateTime *dt, int *mode, int *from, int *to, int *fracsec)
  */
 
 int 
-datetime_is_valid_type (DateTime *dt)
+datetime_is_valid_type (const DateTime *dt)
 {
    /* Returns 0 if DateTime structure is not valid. */
     return datetime_check_type (dt) == 0;
@@ -115,7 +115,7 @@ datetime_is_valid_type (DateTime *dt)
  */
 
 int 
-datetime_check_type (DateTime *dt)
+datetime_check_type (const DateTime *dt)
 {
    /* Returns 0 for a valid DateTime structure.
       Sets the error code and error message if the structure is not
@@ -176,7 +176,7 @@ datetime_in_interval_day_second (int x)
  */
 
 int 
-datetime_is_absolute (DateTime *dt)
+datetime_is_absolute (const DateTime *dt)
 {
     return (dt->mode == DATETIME_ABSOLUTE);
 }
@@ -194,7 +194,7 @@ datetime_is_absolute (DateTime *dt)
  */
 
 int 
-datetime_is_relative (DateTime *dt)
+datetime_is_relative (const DateTime *dt)
 {
     return (dt->mode == DATETIME_RELATIVE);
 }

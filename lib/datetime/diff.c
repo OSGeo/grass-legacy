@@ -40,8 +40,8 @@
 	The difference will account for the differences in the time zones.
 */
 
-static int _datetime_ymd_to_ddays(DateTime *, double *);
-static int _datetime_compare(DateTime *,DateTime *);
+static int _datetime_ymd_to_ddays(const DateTime *, double *);
+static int _datetime_compare(const DateTime *, const DateTime *);
 
 
 /*!
@@ -78,7 +78,7 @@ static int _datetime_compare(DateTime *,DateTime *);
  */
 
 int
-datetime_difference (DateTime *a,DateTime *b,DateTime *result)
+datetime_difference (const DateTime *a, const DateTime *b, DateTime *result)
 {
     DateTime tb, ta, *early, *late;
     int compare, tzmin;
@@ -181,7 +181,7 @@ datetime_difference (DateTime *a,DateTime *b,DateTime *result)
 */ 
 /* only looks at from-to fields defined by a */
 
-static int _datetime_compare(DateTime *a,DateTime *b)
+static int _datetime_compare(const DateTime *a, const DateTime *b)
 {
      int i;
 
@@ -252,11 +252,9 @@ static int _datetime_compare(DateTime *a,DateTime *b)
 
 /*************************************************************/
 
-static int _datetime_ymd_to_ddays(
-DateTime *dtymd,
-double *days)          /* note extra precision! */
+static int _datetime_ymd_to_ddays(const DateTime *dtymd, double *days)          /* note extra precision! */
 {
-int yr, mo;
+    int yr, mo;
 
 
     *days = 0.0;

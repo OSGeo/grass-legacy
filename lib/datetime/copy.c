@@ -4,15 +4,8 @@
  * This program is free software under the GPL (>=v2)
  * Read the file GPL.TXT coming with GRASS for details.
  */
+#include <string.h>
 #include <grass/datetime.h>
-
-static void 
-copy (char *dst, char *src, int n)
-{
-      while (n-- > 0)
-  	*dst++ = *src++;
-}
-  
 
 /*!
  * \brief 
@@ -25,7 +18,7 @@ copy (char *dst, char *src, int n)
  */
 
 void 
-datetime_copy (DateTime *dst, DateTime *src)
+datetime_copy (DateTime *dst, const DateTime *src)
 {
-    copy ((char *)dst, (char *)src, sizeof(DateTime));
+    memcpy (dst, src, sizeof(DateTime));
 }

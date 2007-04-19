@@ -38,7 +38,7 @@
  */
 
 int 
-datetime_get_increment_type (DateTime *dt, int *mode, int *from, int *to, int *fracsec)
+datetime_get_increment_type (const DateTime *dt, int *mode, int *from, int *to, int *fracsec)
 {
     if (!datetime_is_valid_type(dt))
 	return datetime_error_code();
@@ -84,7 +84,7 @@ datetime_get_increment_type (DateTime *dt, int *mode, int *from, int *to, int *f
  */
 
 int 
-datetime_set_increment_type (DateTime *src, DateTime *incr)
+datetime_set_increment_type (const DateTime *src, DateTime *incr)
 {
     int mode, from, to, fracsec;
 

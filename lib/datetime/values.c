@@ -7,7 +7,7 @@
 #include <grass/datetime.h>
 
 
-static int have( int x, DateTime *dt)
+static int have( int x, const DateTime *dt)
 {
     return datetime_is_between(x, dt->from, dt->to);
 }
@@ -26,9 +26,7 @@ static int have( int x, DateTime *dt)
  *  \return int
  */
 
-int datetime_check_year (
-    DateTime *dt,
-    int year)
+int datetime_check_year (const DateTime *dt, int year)
 {
     if (!have(DATETIME_YEAR, dt))
 	return datetime_error(-2, "datetime has no year");
@@ -54,9 +52,7 @@ int datetime_check_year (
  *  \return int
  */
 
-int datetime_check_month (
-    DateTime *dt,
-    int month)
+int datetime_check_month (const DateTime *dt, int month)
 {
     if (!have(DATETIME_MONTH, dt))
 	return datetime_error(-2, "datetime has no month");
@@ -93,7 +89,7 @@ BILL CHANGED TO: */
  *  \return int
  */
 
-int datetime_check_day( DateTime *dt, int day)
+int datetime_check_day(const DateTime *dt, int day)
 {
     int month, year, ad;
     int stat;
@@ -130,9 +126,7 @@ int datetime_check_day( DateTime *dt, int day)
  *  \return int
  */
 
-int datetime_check_hour (
-    DateTime *dt,
-    int hour)
+int datetime_check_hour (const DateTime *dt, int hour)
 {
     if (!have(DATETIME_HOUR, dt))
 	return datetime_error(-2, "datetime has no hour");
@@ -158,9 +152,7 @@ int datetime_check_hour (
  *  \return int
  */
 
-int datetime_check_minute (
-    DateTime *dt,
-    int minute)
+int datetime_check_minute (const DateTime *dt, int minute)
 {
     if (!have(DATETIME_MINUTE, dt))
 	return datetime_error(-2, "datetime has no minute");
@@ -186,7 +178,7 @@ int datetime_check_minute (
  *  \return int
  */
 
-int datetime_check_second ( DateTime *dt, double second)
+int datetime_check_second (const DateTime *dt, double second)
 {
     if (!have(DATETIME_SECOND, dt))
 	return datetime_error(-2, "datetime has no second");
@@ -212,7 +204,7 @@ int datetime_check_second ( DateTime *dt, double second)
  *  \return int
  */
 
-int datetime_check_fracsec (DateTime *dt, int fracsec)
+int datetime_check_fracsec (const DateTime *dt, int fracsec)
 {
     if (!have(DATETIME_SECOND, dt))
 	return datetime_error(-2, "datetime has no fracsec");
@@ -232,7 +224,7 @@ int datetime_check_fracsec (DateTime *dt, int fracsec)
  *  \return int
  */
 
-int datetime_get_year( DateTime *dt, int *year)
+int datetime_get_year(const DateTime *dt, int *year)
 {
     int stat;
 
@@ -282,7 +274,7 @@ int datetime_set_year ( DateTime *dt, int year)
  *  \return int
  */
 
-int datetime_get_month( DateTime *dt, int *month)
+int datetime_get_month(const DateTime *dt, int *month)
 {
     int stat;
 
@@ -332,7 +324,7 @@ int datetime_set_month ( DateTime *dt, int month)
  *  \return int
  */
 
-int datetime_get_day( DateTime *dt, int *day)
+int datetime_get_day(const DateTime *dt, int *day)
 {
     int stat;
 
@@ -383,7 +375,7 @@ int datetime_set_day ( DateTime *dt, int day)
  *  \return int
  */
 
-int datetime_get_hour( DateTime *dt, int *hour)
+int datetime_get_hour(const DateTime *dt, int *hour)
 {
     int stat;
 
@@ -427,7 +419,7 @@ int datetime_set_hour( DateTime *dt, int hour)
  *  \return int
  */
 
-int datetime_get_minute( DateTime *dt, int *minute)
+int datetime_get_minute(const DateTime *dt, int *minute)
 {
     int stat;
 
@@ -471,7 +463,7 @@ int datetime_set_minute( DateTime *dt, int minute)
  *  \return int
  */
 
-int datetime_get_second(DateTime *dt, double *second)
+int datetime_get_second(const DateTime *dt, double *second)
 {
     int stat;
 
@@ -515,7 +507,7 @@ int datetime_set_second( DateTime *dt, double second)
  *  \return int
  */
 
-int datetime_get_fracsec( DateTime *dt, int *fracsec)
+int datetime_get_fracsec(const DateTime *dt, int *fracsec)
 {
     int stat;
 

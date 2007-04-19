@@ -19,7 +19,7 @@
  */
 
 int 
-datetime_is_positive (DateTime *dt)
+datetime_is_positive (const DateTime *dt)
 {
     return dt->positive != 0;
 }
@@ -36,7 +36,7 @@ datetime_is_positive (DateTime *dt)
  */
 
 int 
-datetime_is_negative (DateTime *dt)
+datetime_is_negative (const DateTime *dt)
 {
     return dt->positive == 0;
 }

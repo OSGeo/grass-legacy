@@ -4,17 +4,8 @@
  * This program is free software under the GPL (>=v2)
  * Read the file GPL.TXT coming with GRASS for details.
  */
+#include <string.h>
 #include <grass/datetime.h>
-
-
-static 
-int isequal (char *src, char *dst, int n)
-{
-    while (n-- > 0)
-	if(*dst++ != *src++)
-	    return(0);
-    return(1);
-}
 
 
 /*!
@@ -29,8 +20,9 @@ int isequal (char *src, char *dst, int n)
  *  \return int
  */
 
- int 
-datetime_is_same (DateTime *src, DateTime *dst)
+int 
+datetime_is_same (const DateTime *src, const DateTime *dst)
 {
-    return( isequal ((char *)src, (char *)dst, sizeof(DateTime)) );
+    /* WARNING: doesn't allow for padding */
+    return memcmp (src, dst, sizeof(DateTime)) == 0;
 }

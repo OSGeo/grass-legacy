@@ -1105,8 +1105,8 @@ int G__temp_element(char *);
 
 /* timestamp.c */
 void G_init_timestamp(struct TimeStamp *);
-void G_set_timestamp(struct TimeStamp *, DateTime *);
-void G_set_timestamp_range(struct TimeStamp *, DateTime *, DateTime *);
+void G_set_timestamp(struct TimeStamp *, const DateTime *);
+void G_set_timestamp_range(struct TimeStamp *, const DateTime *, const DateTime *);
 int G__read_timestamp(FILE *, struct TimeStamp *);
 int G__write_timestamp(FILE *, struct TimeStamp *);
 int G_get_timestamps(struct TimeStamp *, DateTime *, DateTime *, int *);
