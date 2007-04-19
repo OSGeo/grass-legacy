@@ -46,6 +46,7 @@ int G_parse_color_rule(
 {
     char value[16], color[16];
     double x;
+    char c;
 
     *norm = *nval = *dflt = 0;
 
@@ -86,7 +87,7 @@ int G_parse_color_rule(
 	return CR_OK;
     }
 
-    if (sscanf(value, "%lf%%", &x) == 1)
+    if (sscanf(value, "%lf%c", &x, &c) == 2 && c == '%')
     {
 	if (x < 0 || x > 100)
 	    return CR_ERROR_PERCENT;
