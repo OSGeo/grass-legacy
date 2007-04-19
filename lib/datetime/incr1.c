@@ -78,8 +78,9 @@ datetime_increment (DateTime *src, DateTime *incr)
 
     if(src->mode == DATETIME_RELATIVE){
 	datetime_copy (&cpdt, src);
-	relfrom = datetime_in_interval_day_second (src->from)? 
-		DATETIME_DAY: DATETIME_YEAR;
+	relfrom = datetime_in_interval_day_second (src->from)
+		? DATETIME_DAY
+		: DATETIME_YEAR;
 	datetime_change_from_to (&cpdt, relfrom, src->to, -1); /* min. from */
 	dt = &cpdt;
     }

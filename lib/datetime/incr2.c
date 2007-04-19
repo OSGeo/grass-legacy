@@ -19,7 +19,7 @@
  */
 
 int 
-datetime_is_valid_increment (DateTime *src, DateTime *incr)
+datetime_is_valid_increment (const DateTime *src, const DateTime *incr)
 {
     return datetime_check_increment (src, incr) == 0;
 }
@@ -59,7 +59,7 @@ datetime_is_valid_increment (DateTime *src, DateTime *incr)
  */
 
 int 
-datetime_check_increment (DateTime *src, DateTime *incr)
+datetime_check_increment (const DateTime *src, const DateTime *incr)
 {
     if (!datetime_is_valid_type(src))
 	return 1;

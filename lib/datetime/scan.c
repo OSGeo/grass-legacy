@@ -9,22 +9,22 @@
 #include <grass/datetime.h>
 
   
-static int scan_absolute (DateTime *,char *);
-static int more (char **);
-static int minus_sign(char **);
-static int is_bc (char **);
-static int is_relative(char *);
-static int relative_term( char **,double *,int *,int *, int *);
-static int scan_tz (char *, int *);
-static int get_word (char **, char *);
+static int scan_absolute (DateTime *,const char *);
+static int more (const char **);
+static int minus_sign(const char **);
+static int is_bc (const char **);
+static int is_relative(const char *);
+static int relative_term( const char **,double *,int *,int *, int *);
+static int scan_tz (const char *, int *);
+static int get_word (const char **, char *);
 static char lowercase (char );
-static int which_month (char *, int *);
-static int scan_relative (DateTime *, char *);
+static int which_month (const char *, int *);
+static int scan_relative (DateTime *, const char *);
 static int is_space(char);
 static int is_digit(char);
-static void skip_space(char **);
-static int get_int ( char **, int *, int *);
-static int get_double ( char **, double *, int *, int *);
+static void skip_space(const char **);
+static int get_int ( const char **, int *, int *);
+static int get_double ( const char **, double *, int *, int *);
 
 
 /*!
@@ -42,7 +42,7 @@ static int get_double ( char **, double *, int *, int *);
 
 int datetime_scan (
     DateTime *dt,
-    char *buf)
+    const char *buf)
   {
       if (is_relative(buf))
       {
@@ -53,10 +53,11 @@ int datetime_scan (
     return datetime_error(-2, "Invalid absolute datetime format");
 }
 
-static char *month_names[] = {"jan","feb","mar","apr","may","jun",
-                              "jul","aug","sep","oct","nov","dec"};
+static const char *month_names[] = {
+	"jan","feb","mar","apr","may","jun",
+	"jul","aug","sep","oct","nov","dec"};
 
-static int scan_absolute (DateTime *dt, char *buf)
+static int scan_absolute (DateTime *dt, const char *buf)
 {
     char word[1024];
     int n;
@@ -67,7 +68,7 @@ static int scan_absolute (DateTime *dt, char *buf)
     int to, fracsec = 0;
     int year, month, day=0, hour, minute;
     double second;
-    char *p;
+    const char *p;
 
     p = buf;
     if(!more(&p)) return 0;
@@ -156,9 +157,9 @@ set:
 }
 
 
-static int scan_relative (DateTime *dt, char *buf)
+static int scan_relative (DateTime *dt, const char *buf)
 {
-    char *p;
+    const char *p;
     double x;
     int ndigits, ndecimal;
     int pos;
@@ -225,15 +226,15 @@ static int is_digit(char c)
     return (c >= '0' && c <= '9');
 }
 
-static void skip_space(char **s)
+static void skip_space(const char **s)
 {
     while (is_space(**s))
 	(*s)++;
 }
 
-static int get_int ( char **s, int *n, int *ndigits)
+static int get_int ( const char **s, int *n, int *ndigits)
 {
-    char *p;
+    const char *p;
 
     *n = 0;
     skip_space(s);
@@ -250,14 +251,14 @@ static int get_int ( char **s, int *n, int *ndigits)
 }
 
 static int get_double (
-    char **s,
+    const char **s,
     double *x,
     int *ndigits, /* number of digits before decimal */
     int *ndecimal) /* number of decimal places */
 {
     char buf[1024];
     char *b;
-    char *p;
+    const char *p;
 
     skip_space (s);
 
@@ -306,9 +307,9 @@ is_wordend (pos, p)
 */
 
 /* get a word (between white space) and convert to lowercase */
-static int get_word (char **s, char *word)
+static int get_word (const char **s, char *word)
 {
-    char *p;
+    const char *p;
     int any;
 
     skip_space(s);
@@ -327,7 +328,7 @@ static char lowercase (char c)
     return c;
 }
 
-static int which_month (char *name, int *n)
+static int which_month (const char *name, int *n)
 {
     int i;
 
@@ -340,9 +341,9 @@ static int which_month (char *name, int *n)
     return 0;
 }
 
-static int is_bc (char **s)
+static int is_bc (const char **s)
 {
-    char *p;
+    const char *p;
     char word[1024];
 
     p = *s;
@@ -354,7 +355,7 @@ static int is_bc (char **s)
     return 1;
 }
 
-static int scan_tz (char *word, int *tz)
+static int scan_tz (const char *word, int *tz)
 {
     int neg = 0;
 
@@ -382,13 +383,13 @@ static int scan_tz (char *word, int *tz)
     1 valid term, but perhaps illiegal value
 */
 static int relative_term(
-    char **s,
+    const char **s,
     double *x,
     int *ndigits,int *ndecimal,
     int *pos)
 {
     char word[1024];
-    char *p;
+    const char *p;
 
     p = *s;
     if (!get_double (&p, x, ndigits, ndecimal) || !get_word (&p, word))
@@ -415,7 +416,7 @@ static int relative_term(
     return 1;
 }
 
-static int minus_sign(char **s)
+static int minus_sign(const char **s)
 {
     skip_space(s);
     if (**s == '-')
@@ -426,18 +427,18 @@ static int minus_sign(char **s)
     return 0;
 }
 
-static int is_relative(char *buf)
+static int is_relative(const char *buf)
 {
     int n;
     double x;
-    char *p;
+    const char *p;
 
     p = buf;
     (void)minus_sign(&p);
     return relative_term (&p, &x, &n, &n, &n) != 0;
 }
 
-static int more (char **s)
+static int more (const char **s)
 {
     skip_space(s);
     return **s != 0;

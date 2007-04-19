@@ -7,7 +7,7 @@
 #include <grass/datetime.h>
 
 
-static int have(int x, DateTime *dt)
+static int have(int x, const DateTime *dt)
 {
     return datetime_is_between(x, dt->from, dt->to);
 }
@@ -24,7 +24,7 @@ static int have(int x, DateTime *dt)
  */
 
 int datetime_check_timezone (
-    DateTime *dt,
+    const DateTime *dt,
     int minutes)
 {
     if (!datetime_is_absolute(dt))
@@ -49,7 +49,7 @@ int datetime_check_timezone (
  */
 
 int 
-datetime_get_timezone (DateTime *dt, int *minutes)
+datetime_get_timezone (const DateTime *dt, int *minutes)
 {
     int stat;
 

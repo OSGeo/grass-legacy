@@ -101,7 +101,7 @@ void G_init_timestamp (struct TimeStamp *ts)
     ts->count = 0;
 }
 
-void G_set_timestamp (struct TimeStamp *ts, DateTime *dt)
+void G_set_timestamp (struct TimeStamp *ts, const DateTime *dt)
 {
     datetime_copy (&ts->dt[0],dt);
     ts->count = 1;
@@ -109,7 +109,7 @@ void G_set_timestamp (struct TimeStamp *ts, DateTime *dt)
 
 void G_set_timestamp_range (
     struct TimeStamp *ts,
-    DateTime *dt1,DateTime *dt2)
+    const DateTime *dt1, const DateTime *dt2)
 {
     datetime_copy (&ts->dt[0], dt1);
     datetime_copy (&ts->dt[1], dt2);
