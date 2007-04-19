@@ -37,7 +37,7 @@
 
 
 int E_edit_cats (
-    char *name,
+    const char *name,
     struct Categories *cats, int option)
 {
     long incr ;
@@ -213,7 +213,7 @@ int E_edit_cats (
 #define NLINES 10
 
 int E_edit_fp_cats (
-    char *name,
+    const char *name,
     struct Categories *cats )
 {
     long incr ;

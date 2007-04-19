@@ -266,270 +266,270 @@ int E_edit_cellhd (struct Cell_head *cellhd , int type)
     format_resolution (cellhd->ew_res, ll_ewres, cellhd->proj);
     format_resolution (cellhd->ns_res, ll_nsres, cellhd->proj);
 
-while(1)
-{
-    ok = 1;
-
-    /* List window options on the screen for the user to answer */
-    switch(type)
+    while(1)
     {
-    case AS_CELLHD: screen = cellhd_screen; break;
-    case AS_DEF_WINDOW: screen = def_window_screen; break;
-    default: screen = window_screen; break;
-    }
+	ok = 1;
 
-    V_clear() ;
-    line = 0;
-    while (*screen)
-	V_line (line++, *screen++);
+	/* List window options on the screen for the user to answer */
+	switch(type)
+	{
+	case AS_CELLHD: screen = cellhd_screen; break;
+	case AS_DEF_WINDOW: screen = def_window_screen; break;
+	default: screen = window_screen; break;
+	}
 
-    /* V_ques ( variable, type, row, col, length) ; */
-    V_ques (ll_north, 's',  6, 36, 10);
-    V_ques (ll_south, 's', 10, 36, 10) ;
-    V_ques (ll_west,  's',  9, 12, 10) ;
-    V_ques (ll_east,  's',  9, 52, 10) ;
+	V_clear() ;
+	line = 0;
+	while (*screen)
+	    V_line (line++, *screen++);
 
-    if (type != AS_CELLHD)
-    {
-	V_ques (ll_ewres, 's', 18, 48, 10) ;
-	V_ques (ll_nsres, 's', 19, 48, 10) ;
-    }
-
-    if (type != AS_DEF_WINDOW)
-    {
-	V_const (ll_def_north, 's',  3, 36, 10) ;
-	V_const (ll_def_south, 's', 13, 36, 10) ;
-	V_const (ll_def_west,  's',  9,  1, 10) ;
-	V_const (ll_def_east,  's',  9, 65, 10) ;
+	/* V_ques ( variable, type, row, col, length) ; */
+	V_ques (ll_north, 's',  6, 36, 10);
+	V_ques (ll_south, 's', 10, 36, 10) ;
+	V_ques (ll_west,  's',  9, 12, 10) ;
+	V_ques (ll_east,  's',  9, 52, 10) ;
 
 	if (type != AS_CELLHD)
 	{
-	    V_const (ll_def_ewres, 's', 18, 21, 10) ;
-	    V_const (ll_def_nsres, 's', 19, 21, 10) ;
+	    V_ques (ll_ewres, 's', 18, 48, 10) ;
+	    V_ques (ll_nsres, 's', 19, 48, 10) ;
 	}
-    }
 
-    V_const (projection,   's', 15, 23, (int)strlen(projection));
-    V_const (&cellhd->zone,'i', 15,60,3);
-
-    V_intrpt_ok();
-    if(!V_call())
-	return -1;
-
-    G_squeeze (ll_north);
-    G_squeeze (ll_south);
-    G_squeeze (ll_east);
-    G_squeeze (ll_west);
-
-    if (type != AS_CELLHD)
-    {
-	G_squeeze (ll_ewres);
-	G_squeeze (ll_nsres);
-    }
-
-    if (!G_scan_northing (ll_north, &cellhd->north, cellhd->proj))
-    {
-        G_warning("Illegal value for north: %s", ll_north);
-	ok = 0;
-    }
-
-    if (!G_scan_northing (ll_south, &cellhd->south, cellhd->proj))
-    {
-        G_warning("Illegal value for south: %s", ll_south);
-	ok = 0;
-    }
-
-    if (!G_scan_easting (ll_east, &cellhd->east, cellhd->proj))
-    {
-        G_warning("Illegal value for east: %s", ll_east);
-	ok = 0;
-    }
-
-    if (!G_scan_easting (ll_west, &cellhd->west, cellhd->proj))
-    {
-        G_warning("Illegal value for west: %s", ll_west);
-	ok = 0;
-    }
-
-    if (type != AS_CELLHD)
-    {
-	if (!G_scan_resolution (ll_ewres, &cellhd->ew_res, cellhd->proj))
+	if (type != AS_DEF_WINDOW)
 	{
-	    G_warning("Illegal east-west resolution: %s", ll_ewres);
+	    V_const (ll_def_north, 's',  3, 36, 10) ;
+	    V_const (ll_def_south, 's', 13, 36, 10) ;
+	    V_const (ll_def_west,  's',  9,  1, 10) ;
+	    V_const (ll_def_east,  's',  9, 65, 10) ;
+
+	    if (type != AS_CELLHD)
+	    {
+		V_const (ll_def_ewres, 's', 18, 21, 10) ;
+		V_const (ll_def_nsres, 's', 19, 21, 10) ;
+	    }
+	}
+
+	V_const (projection,   's', 15, 23, (int)strlen(projection));
+	V_const (&cellhd->zone,'i', 15,60,3);
+
+	V_intrpt_ok();
+	if(!V_call())
+	    return -1;
+
+	G_squeeze (ll_north);
+	G_squeeze (ll_south);
+	G_squeeze (ll_east);
+	G_squeeze (ll_west);
+
+	if (type != AS_CELLHD)
+	{
+	    G_squeeze (ll_ewres);
+	    G_squeeze (ll_nsres);
+	}
+
+	if (!G_scan_northing (ll_north, &cellhd->north, cellhd->proj))
+	{
+	    G_warning("Illegal value for north: %s", ll_north);
 	    ok = 0;
 	}
 
-	if (!G_scan_resolution (ll_nsres, &cellhd->ns_res, cellhd->proj))
+	if (!G_scan_northing (ll_south, &cellhd->south, cellhd->proj))
 	{
-	    G_warning("Illegal north-south resolution: %s", ll_nsres);
+	    G_warning("Illegal value for south: %s", ll_south);
 	    ok = 0;
 	}
-    }
 
-    if (!ok)
-    {
-	hitreturn();
-	continue;
-    }
+	if (!G_scan_easting (ll_east, &cellhd->east, cellhd->proj))
+	{
+	    G_warning("Illegal value for east: %s", ll_east);
+	    ok = 0;
+	}
 
-    /* Adjust and complete the cell header */
-    north = cellhd->north;
-    south = cellhd->south;
-    east  = cellhd->east ;
-    west  = cellhd->west ;
-    nsres = cellhd->ns_res;
-    ewres = cellhd->ew_res;
+	if (!G_scan_easting (ll_west, &cellhd->west, cellhd->proj))
+	{
+	    G_warning("Illegal value for west: %s", ll_west);
+	    ok = 0;
+	}
 
-    if ((err = G_adjust_Cell_head(cellhd,type==AS_CELLHD,type==AS_CELLHD)))
-    {
-	G_message("%s", err);
-	hitreturn();
-	continue;
-    }
+	if (type != AS_CELLHD)
+	{
+	    if (!G_scan_resolution (ll_ewres, &cellhd->ew_res, cellhd->proj))
+	    {
+		G_warning("Illegal east-west resolution: %s", ll_ewres);
+		ok = 0;
+	    }
 
-    if (type==AS_CELLHD)
-    {
+	    if (!G_scan_resolution (ll_nsres, &cellhd->ns_res, cellhd->proj))
+	    {
+		G_warning("Illegal north-south resolution: %s", ll_nsres);
+		ok = 0;
+	    }
+	}
+
+	if (!ok)
+	{
+	    hitreturn();
+	    continue;
+	}
+
+	/* Adjust and complete the cell header */
+	north = cellhd->north;
+	south = cellhd->south;
+	east  = cellhd->east ;
+	west  = cellhd->west ;
 	nsres = cellhd->ns_res;
 	ewres = cellhd->ew_res;
-    }
 
-SHOW:
-    fprintf (stderr, "\n\n") ;
-    G_message("  projection:   %s", projection);
-    G_message("  zone:         %d", cellhd->zone);
-
-    G_format_northing (cellhd->north, buf,  cellhd->proj);
-    G_format_northing (north,         buf2, cellhd->proj);
-    fprintf (stderr, "  north:       %s", buf);
-
-    if (strcmp (buf, buf2) != 0)
-    {
-	ok = 0;
-        fprintf (stderr, "  (Changed to match resolution)");
-    }
-    fprintf (stderr, "\n");
-
-    G_format_northing (cellhd->south, buf,  cellhd->proj);
-    G_format_northing (south,         buf2, cellhd->proj);
-    fprintf (stderr, "  south:       %s", buf);
-    if (strcmp (buf, buf2) != 0)
-    {
-	ok = 0;
-        fprintf (stderr, "  (Changed to match resolution)");
-    }
-    fprintf (stderr, "\n");
-
-    G_format_easting (cellhd->east, buf,  cellhd->proj);
-    G_format_easting (east,         buf2, cellhd->proj);
-    fprintf (stderr, "  east:        %s", buf);
-    if (strcmp (buf, buf2) != 0)
-    {
-	ok = 0;
-        fprintf (stderr, "  (Changed to match resolution)");
-    }
-    fprintf (stderr, "\n");
-
-    G_format_easting (cellhd->west, buf,  cellhd->proj);
-    G_format_easting (west,         buf2, cellhd->proj);
-    fprintf (stderr, "  west:        %s", buf);
-    if (strcmp (buf, buf2) != 0)
-    {
-	ok = 0;
-        fprintf (stderr, "  (Changed to match resolution)");
-    }
-    fprintf (stderr, "\n\n");
-
-    G_format_resolution (cellhd->ew_res, buf,  cellhd->proj);
-    G_format_resolution (ewres,          buf2, cellhd->proj);
-    fprintf (stderr, "  e-w res:     %s", buf);
-    if (strcmp (buf, buf2) != 0)
-    {
-	ok = 0;
-        fprintf (stderr, "  (Changed to conform to grid)");
-    }
-    fprintf (stderr, "\n");
-
-    G_format_resolution (cellhd->ns_res, buf,  cellhd->proj);
-    G_format_resolution (nsres,          buf2, cellhd->proj);
-    fprintf (stderr, "  n-s res:     %s", buf);
-    if (strcmp (buf, buf2) != 0)
-    {
-	ok = 0;
-        fprintf (stderr, "  (Changed to conform to grid)");
-    }
-    fprintf (stderr, "\n\n");
-
-    G_message("  total rows:  %15d",    cellhd->rows);
-    G_message("  total cols:  %15d",    cellhd->cols);
-
-    sprintf(buf,"%lf",    (double) cellhd->rows * cellhd->cols);
-    *(p = strchr(buf, '.')) = 0;
-    G_insert_commas(buf);
-    G_message("  total cells: %15s",    buf);
-    fprintf (stderr, "\n");
-
-    if (type != AS_DEF_WINDOW)
-    {
-	if (cellhd->north > def_wind.north)
+	if ((err = G_adjust_Cell_head(cellhd,type==AS_CELLHD,type==AS_CELLHD)))
 	{
-	    G_warning("north falls outside the default region");
-	    ok = 0;
+	    G_message("%s", err);
+	    hitreturn();
+	    continue;
 	}
 
-	if (cellhd->south < def_wind.south)
+	if (type==AS_CELLHD)
 	{
-	    G_warning("south falls outside the default region");
-	    ok = 0;
+	    nsres = cellhd->ns_res;
+	    ewres = cellhd->ew_res;
 	}
 
-	if (cellhd->proj != PROJECTION_LL)
+    SHOW:
+	fprintf (stderr, "\n\n") ;
+	G_message("  projection:   %s", projection);
+	G_message("  zone:         %d", cellhd->zone);
+
+	G_format_northing (cellhd->north, buf,  cellhd->proj);
+	G_format_northing (north,         buf2, cellhd->proj);
+	fprintf (stderr, "  north:       %s", buf);
+
+	if (strcmp (buf, buf2) != 0)
 	{
-	    if (cellhd->east > def_wind.east)
+	    ok = 0;
+	    fprintf (stderr, "  (Changed to match resolution)");
+	}
+	fprintf (stderr, "\n");
+
+	G_format_northing (cellhd->south, buf,  cellhd->proj);
+	G_format_northing (south,         buf2, cellhd->proj);
+	fprintf (stderr, "  south:       %s", buf);
+	if (strcmp (buf, buf2) != 0)
+	{
+	    ok = 0;
+	    fprintf (stderr, "  (Changed to match resolution)");
+	}
+	fprintf (stderr, "\n");
+
+	G_format_easting (cellhd->east, buf,  cellhd->proj);
+	G_format_easting (east,         buf2, cellhd->proj);
+	fprintf (stderr, "  east:        %s", buf);
+	if (strcmp (buf, buf2) != 0)
+	{
+	    ok = 0;
+	    fprintf (stderr, "  (Changed to match resolution)");
+	}
+	fprintf (stderr, "\n");
+
+	G_format_easting (cellhd->west, buf,  cellhd->proj);
+	G_format_easting (west,         buf2, cellhd->proj);
+	fprintf (stderr, "  west:        %s", buf);
+	if (strcmp (buf, buf2) != 0)
+	{
+	    ok = 0;
+	    fprintf (stderr, "  (Changed to match resolution)");
+	}
+	fprintf (stderr, "\n\n");
+
+	G_format_resolution (cellhd->ew_res, buf,  cellhd->proj);
+	G_format_resolution (ewres,          buf2, cellhd->proj);
+	fprintf (stderr, "  e-w res:     %s", buf);
+	if (strcmp (buf, buf2) != 0)
+	{
+	    ok = 0;
+	    fprintf (stderr, "  (Changed to conform to grid)");
+	}
+	fprintf (stderr, "\n");
+
+	G_format_resolution (cellhd->ns_res, buf,  cellhd->proj);
+	G_format_resolution (nsres,          buf2, cellhd->proj);
+	fprintf (stderr, "  n-s res:     %s", buf);
+	if (strcmp (buf, buf2) != 0)
+	{
+	    ok = 0;
+	    fprintf (stderr, "  (Changed to conform to grid)");
+	}
+	fprintf (stderr, "\n\n");
+
+	G_message("  total rows:  %15d",    cellhd->rows);
+	G_message("  total cols:  %15d",    cellhd->cols);
+
+	sprintf(buf,"%lf",    (double) cellhd->rows * cellhd->cols);
+	*(p = strchr(buf, '.')) = 0;
+	G_insert_commas(buf);
+	G_message("  total cells: %15s",    buf);
+	fprintf (stderr, "\n");
+
+	if (type != AS_DEF_WINDOW)
+	{
+	    if (cellhd->north > def_wind.north)
 	    {
-		G_warning("east falls outside the default region");
+		G_warning("north falls outside the default region");
 		ok = 0;
 	    }
 
-	    if (cellhd->west < def_wind.west)
+	    if (cellhd->south < def_wind.south)
 	    {
-		G_warning("west falls outside the default region");
+		G_warning("south falls outside the default region");
 		ok = 0;
 	    }
+
+	    if (cellhd->proj != PROJECTION_LL)
+	    {
+		if (cellhd->east > def_wind.east)
+		{
+		    G_warning("east falls outside the default region");
+		    ok = 0;
+		}
+
+		if (cellhd->west < def_wind.west)
+		{
+		    G_warning("west falls outside the default region");
+		    ok = 0;
+		}
+	    }
 	}
-    }
 
-ASK:
-    fflush(stdin);
-    if (type == AS_CELLHD)
-        fprintf(stderr, "\nDo you accept this header? (y/n) [%s] > ",
-	            ok ? "y" : "n");
-    else
-        fprintf(stderr, "\nDo you accept this region? (y/n) [%s] > ",
-	            ok ? "y" : "n");
+    ASK:
+	fflush(stdin);
+	if (type == AS_CELLHD)
+	    fprintf(stderr, "\nDo you accept this header? (y/n) [%s] > ",
+		    ok ? "y" : "n");
+	else
+	    fprintf(stderr, "\nDo you accept this region? (y/n) [%s] > ",
+		    ok ? "y" : "n");
 
-    if(!G_gets(buf))
-	goto SHOW;
+	if(!G_gets(buf))
+	    goto SHOW;
 
-    G_strip (buf);
-    switch (*buf)
-    {
-    case 0:
+	G_strip (buf);
+	switch (*buf)
+	{
+	case 0:
 	    break;
-    case 'y':
-    case 'Y':
+	case 'y':
+	case 'Y':
 	    ok = 1 ;
 	    break;
-    case 'n':
-    case 'N':
+	case 'n':
+	case 'N':
 	    ok = 0;
 	    break;
-    default:
+	default:
 	    goto ASK;
-    }
+	}
 
-    if (ok)
-	return 0;
-}
+	if (ok)
+	    return 0;
+    }
 }
 
 
