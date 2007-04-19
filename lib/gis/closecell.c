@@ -300,7 +300,7 @@ static int close_new (int fd,int ok)
 
     if (ok) {
 	/* remove color table */
-	G_remove_colr (fcb->name);
+	G_remove_colors (fcb->name, "");
 
 	/* create a history file */
         G_short_history (fcb->name, "raster", &hist);
