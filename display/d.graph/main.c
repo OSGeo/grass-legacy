@@ -1,8 +1,29 @@
+/****************************************************************************
+ *
+ * MODULE:       d.graph
+ * AUTHOR(S):    Jim Westervelt (CERL) (original contributor)
+ *               Markus Neteler <neteler itc.it>,
+ *               Roberto Flor <flor itc.it>, 
+ *               Bernhard Reiter <bernhard intevation.de>, 
+ *               Cedric Shock <cedricgrass shockfamily.net>, 
+ *               Huidae Cho <grass4u gmail.com>, 
+ *               Eric G. Miller <egm2 jps.net>, 
+ *               Glynn Clements <glynn gclements.plus.com>, 
+ *               Hamish Bowman <hamish_nospam yahoo.com>, 
+ *               Jan-Oliver Wagner <jan intevation.de>
+ * PURPOSE:      Draw graphics in a graphics window. Graph lines come from 
+ *               stdin unless input specified.
+ * COPYRIGHT:    (C) 1999-2006 by the GRASS Development Team
+ *
+ *               This program is free software under the GNU General Public
+ *               License (>=v2). Read the file COPYING that comes with GRASS
+ *               for details.
+ *
+ *****************************************************************************/
 /*
  *   d.graph
  *
- *   Draw graphics in a graphics window.   Graph lines come from stdin,
- *      unless input specified.
+ *   
  *
  */
 
@@ -119,3 +140,6 @@ int main (int argc, char **argv)
 
 	exit(EXIT_SUCCESS);
 }
+
+
+

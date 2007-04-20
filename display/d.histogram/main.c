@@ -1,24 +1,31 @@
+/****************************************************************************
+ *
+ * MODULE:       d.histogram
+ * AUTHOR(S):    Dave Johnson, DBA Systems, Inc. (original contributor)
+ *               10560 Arrowhead Drive Fairfax, Virginia 22030
+ *               Markus Neteler <neteler itc.it> 
+ *               Bernhard Reiter <bernhard intevation.de>, 
+ *               Eric G. Miller <egm2 jps.net>, 
+ *               Glynn Clements <glynn gclements.plus.com>, 
+ *               Hamish Bowman <hamish_nospam yahoo.com>, 
+ *               Jan-Oliver Wagner <jan intevation.de>
+ * PURPOSE:      draw a bar-chart or a pie-chart representing the
+ *               histogram statistics of a cell-file
+ * COPYRIGHT:    (C) 1999-2007 by the GRASS Development Team
+ *
+ *               This program is free software under the GNU General Public
+ *               License (>=v2). Read the file COPYING that comes with GRASS
+ *               for details.
+ *
+ *****************************************************************************/
 /* main.c 
- *
- * function defined:
- *
- * main for program Dhistogram 
- *
- *
- * PURPOSE: To draw a bar-chart or a pie-chart representing the
- * histogram statistics of a cell-file
  *
  * The color option specifies the color for the labels, tic-marks,
  * and borders of the chart.  Use one of the 16 standard GRASS color
  * names.  The type option is either "area" or "count," the default
  * is "count" The style option is either "pie" or "bar," the default
  * is "bar"  
- *
- * Dave Johnson
- * DBA Systems, Inc.
- * 10560 Arrowhead Drive
- * Fairfax, Virginia 22030
- */
+ * */
 /******************************************************************************
  * NOTE (shapiro):
  *  This program can NOT handle area information.
@@ -199,3 +206,6 @@ int main (int argc, char **argv)
 	R_close_driver();
 	exit(EXIT_SUCCESS);
 }
+
+
+

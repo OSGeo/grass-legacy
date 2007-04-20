@@ -1,3 +1,21 @@
+/****************************************************************************
+ *
+ * MODULE:       d.mon
+ * AUTHOR(S):    Michael Shapiro, CERL (original contributor)
+ *               Markus Neteler <neteler itc.it>,
+ *               Roberto Flor <flor itc.it>, 
+ *               Bernhard Reiter <bernhard intevation.de>, 
+ *               Glynn Clements <glynn gclements.plus.com>, 
+ *               Hamish Bowman <hamish_nospam yahoo.com>, 
+ *               Jan-Oliver Wagner <jan intevation.de>
+ * PURPOSE:      control graphic monitors
+ * COPYRIGHT:    (C) 1999-2006 by the GRASS Development Team
+ *
+ *               This program is free software under the GNU General Public
+ *               License (>=v2). Read the file COPYING that comes with GRASS
+ *               for details.
+ *
+ *****************************************************************************/
 #include <stdlib.h>
 #include <string.h>
 #include <grass/gis.h>
@@ -142,3 +160,6 @@ int run (char *pgm, char *name)
     sprintf (command, "%s/etc/mon.%s %s", G_gisbase(), pgm, name);
     return system(command);
 }
+
+
+

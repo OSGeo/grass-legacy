@@ -1,8 +1,23 @@
-/*
- *   d.colortable
+/****************************************************************************
  *
- *   Print a colortable for a map 
- */
+ * MODULE:       d.colortable
+ * AUTHOR(S):    James Westervelt, CERL (original contributor)
+ *               Markus Neteler <neteler itc.it>,
+ *               Bernhard Reiter <bernhard intevation.de>, 
+ *               Eric G. Miller <egm2 jps.net>, 
+ *               Glynn Clements <glynn gclements.plus.com>, 
+ *               Hamish Bowman <hamish_nospam yahoo.com>, 
+ *               Jan-Oliver Wagner <jan intevation.de>
+ * PURPOSE:      display the color table associated with a raster map layer in
+ *               the active frame on the graphics monitor
+ * COPYRIGHT:    (C) 1999-2007 by the GRASS Development Team
+ *
+ *               This program is free software under the GNU General Public
+ *               License (>=v2). Read the file COPYING that comes with GRASS
+ *               for details.
+ *
+ *****************************************************************************/
+
 
 #include <stdlib.h>
 #include <math.h>
@@ -265,3 +280,6 @@ int main(int argc, char **argv)
 
 	return 0;
 }
+
+
+

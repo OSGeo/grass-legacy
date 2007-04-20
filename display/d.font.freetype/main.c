@@ -1,3 +1,18 @@
+/****************************************************************************
+ *
+ * MODULE:       d.font.freetype
+ * AUTHOR(S):    grass-i18n project members (original contributor)
+ *               Markus Neteler <neteler itc.it>,
+ *               Huidae Cho <grass4u gmail.com>, 
+ *               Glynn Clements <glynn gclements.plus.com>
+ * PURPOSE:      selects FreeType font to be used for text in monitor
+ * COPYRIGHT:    (C) 2004-2007 by the GRASS Development Team
+ *
+ *               This program is free software under the GNU General Public
+ *               License (>=v2). Read the file COPYING that comes with GRASS
+ *               for details.
+ *
+ *****************************************************************************/
 #include <stdlib.h>
 #include <string.h>
 #include <unistd.h>
@@ -254,3 +269,6 @@ find_font(capinfo *fonts, int fonts_count, char *name)
 
 	return -1;
 }
+
+
+

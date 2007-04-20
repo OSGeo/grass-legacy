@@ -1,3 +1,17 @@
+/****************************************************************************
+ *
+ * MODULE:       XDRIVER
+ * AUTHOR(S):    various authors at CERL (original contributor)
+ *               Glynn Clements <glynn gclements.plus.com> 
+ *               Huidae Cho <grass4u gmail.com>
+ * PURPOSE:      display driver for displaying in X11 environment
+ * COPYRIGHT:    (C) 2006-2007 by the GRASS Development Team
+ *
+ *               This program is free software under the GNU General Public
+ *               License (>=v2). Read the file COPYING that comes with GRASS
+ *               for details.
+ *
+ *****************************************************************************/
 
 #include <stdio.h>
 #include "XDRIVER.h"
@@ -43,4 +57,7 @@ int main(int argc, char **argv)
 
 	return LIB_main(argc, argv);
 }
+
+
+
 

@@ -1,3 +1,20 @@
+/****************************************************************************
+ *
+ * MODULE:       d.ask
+ * AUTHOR(S):    Michael Shapiro, CERL (original contributor)
+ *               Markus Neteler <neteler itc.it>, 
+ *               Bernhard Reiter <bernhard intevation.de>, 
+ *               Eric G. Miller <egm2 jps.net>, 
+ *               Glynn Clements <glynn gclements.plus.com>, 
+ *               Jan-Oliver Wagner <jan intevation.de>
+ * PURPOSE:      ask user to select a database file from mapset search path
+ * COPYRIGHT:    (C) 1999-2007 by the GRASS Development Team
+ *
+ *               This program is free software under the GNU General Public
+ *               License (>=v2). Read the file COPYING that comes with GRASS
+ *               for details.
+ *
+ *****************************************************************************/
 #include <unistd.h>
 #include <stdlib.h>
 #include <grass/gis.h>
@@ -74,3 +91,6 @@ int main(int argc,char *argv[])
 	exit(0);
     }
 }
+
+
+

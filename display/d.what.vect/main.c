@@ -1,8 +1,26 @@
+/****************************************************************************
+ *
+ * MODULE:       d.what.vect
+ * AUTHOR(S):    Jim Hinthorne, Central Washington U.(original contributor)
+ *               Dennis Finch, National Park Service,
+ *               Radim Blazek <radim.blazek gmail.com>, 
+ *               Stephan Holl <sholl gmx net>, 
+ *               Alex Shevlakov <sixote yahoo.com>, 
+ *               Glynn Clements <glynn gclements.plus.com>, 
+ *               Hamish Bowman <hamish_nospam yahoo.com>, 
+ *               Markus Neteler <neteler itc.it>
+ * PURPOSE:      query category values / attributes in vector maps
+ * COPYRIGHT:    (C) 2002-2007 by the GRASS Development Team
+ *
+ *               This program is free software under the GNU General Public
+ *               License (>=v2). Read the file COPYING that comes with GRASS
+ *               for details.
+ *
+ *****************************************************************************/
 /*
  *
  * attempt to auto-select vector maps displayed in monitor (like d.zoom)
  *
- * d.what.vect
 */
 
 #define MAIN
@@ -154,6 +172,9 @@ int main(int argc, char **argv)
   G_message(_("Done."));
   exit(EXIT_SUCCESS);
 }
+
+
+
 
 
 

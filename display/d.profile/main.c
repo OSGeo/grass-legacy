@@ -1,10 +1,22 @@
+/****************************************************************************
+ *
+ * MODULE:       d.profile
+ * AUTHOR(S):    Dave Johnson (original contributor)
+ *               DBA Systems, Inc. 10560 Arrowhead Drive Fairfax, VA 22030
+ *               Markus Neteler <neteler itc.it>, 
+ *               Bernhard Reiter <bernhard intevation.de>, 
+ *               Huidae Cho <grass4u gmail.com>, 
+ *               Eric G. Miller <egm2 jps.net>, 
+ *               Glynn Clements <glynn gclements.plus.com>
+ * PURPOSE:      user chooses transects path, and profile of raster data drawn
+ * COPYRIGHT:    (C) 1999-2007 by the GRASS Development Team
+ *
+ *               This program is free software under the GNU General Public
+ *               License (>=v2). Read the file COPYING that comes with GRASS
+ *               for details.
+ *
+ *****************************************************************************/
 
-/*
- *   main.c 
- *
- *   cell-file profiling.
- *
- */
 
 #define DEBUG 
 #define MAIN
@@ -438,3 +450,6 @@ void myDcell (char *name, char *mapset, int overlay)
 }
 
 /* vim: set softtabstop=4 shiftwidth=4 expandtab: */
+
+
+
