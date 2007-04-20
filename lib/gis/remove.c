@@ -58,13 +58,16 @@ static int G__remove (int misc, const char *dir, const char *element, const char
     char *mapset;
     char xname[GNAME_MAX], xmapset[GMAPSET_MAX];
 
-    if (G_legal_filename(name) < 0)
-	    return -1;
-
     /* name in mapset legal only if mapset is current mapset */
     mapset = G_mapset();
-    if (G__name_is_fully_qualified (name, xname, xmapset)
-	&& strcmp (mapset, xmapset))
+    if (G__name_is_fully_qualified (name, xname, xmapset))
+    {
+	if (strcmp (mapset, xmapset) != 0)
+	    return -1;
+	name = xname;
+    }
+
+    if (G_legal_filename(name) < 0)
 	    return -1;
 
     if (misc)
