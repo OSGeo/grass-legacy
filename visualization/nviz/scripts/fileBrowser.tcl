@@ -212,7 +212,7 @@ proc refresh_file_browser { w } {
     $w.main.files.f.list delete 0 end
     $w.main.directories.f.list insert end "."
     $w.main.directories.f.list insert end ".."
-    foreach i [glob -directory $cur_dir *] {
+    foreach i [glob -nocomplain -directory $cur_dir *] {
 	if {[file isdir $i]} {
 	    $w.main.directories.f.list insert end [file tail $i]
 	} else {
@@ -220,8 +220,3 @@ proc refresh_file_browser { w } {
 	}
     }
 }
-
-
-
-
-
