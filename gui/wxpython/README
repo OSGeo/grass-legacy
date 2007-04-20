@@ -122,3 +122,13 @@ messages starts with 'GUI', e.g.
 If you want to enable *only* GUI debug messages set DEBUG variable to 'GUI:level', e.g.
 
 $ g.gisenv set=DEBUG=GUI:3
+
+6 - ICON THEMES
+
+Currently only two icon themes are available:
+	* default (based on TCL/TK GUI prototype)
+ 	* Silk
+
+To enable 'Silk' icon theme set environment variable:
+
+$ export GRASS_ICONPATH=$GISBASE/etc/wx/icons/silk
