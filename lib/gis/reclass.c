@@ -3,7 +3,7 @@
 #include <grass/glocale.h>
 
 static char *NULL_STRING = "null";
-static int reclass_type(FILE *,char *,char *);
+static int reclass_type(FILE *,char **,char **);
 static FILE *fopen_cellhd_old( const char *, const char *);
 static FILE *fopen_cellhd_new(const char *);
 static int get_reclass_table(FILE *, struct Reclass *);
@@ -36,7 +36,7 @@ int G_is_reclass (const char *name, const char *mapset, char *rname, char *rmaps
     if (fd == NULL)
 	return -1;
     
-    type = reclass_type (fd, rname, rmapset);
+    type = reclass_type (fd, &rname, &rmapset);
     fclose (fd);
     if (type < 0)
 	return -1;
@@ -125,7 +125,9 @@ int G_get_reclass (const char *name, const char *mapset, struct Reclass *reclass
     fd = fopen_cellhd_old (name, mapset);
     if (fd == NULL)
 	return -1;
-    reclass->type = reclass_type (fd, reclass->name, reclass->mapset);
+    reclass->name = NULL;
+    reclass->mapset = NULL;
+    reclass->type = reclass_type (fd, &reclass->name, &reclass->mapset);
     if (reclass->type <= 0)
     {
 	fclose (fd);
@@ -144,14 +146,12 @@ int G_get_reclass (const char *name, const char *mapset, struct Reclass *reclass
     fclose (fd);
     if (stat < 0)
     {
-	char msg[100];
 	if (stat == -2)
-	    sprintf(msg, _("Too many reclass categories for [%s in %s]"),
-		    name, mapset);
+	    G_warning (_("Too many reclass categories for [%s in %s]"),
+		       name, mapset);
 	else
-	    sprintf(msg, _("Illegal reclass format in header file for [%s in %s]"),
-		    name, mapset);
-	G_warning (msg);
+	    G_warning (_("Illegal reclass format in header file for [%s in %s]"),
+		       name, mapset);
 	stat = -1;
     }
     return stat;
@@ -165,6 +165,12 @@ int G_free_reclass (struct Reclass *reclass)
 	if (reclass->num > 0)
 	    G_free (reclass->table);
 	reclass->num = 0;
+	if (reclass->name)
+	    G_free (reclass->name);
+	if (reclass->mapset)
+	    G_free (reclass->mapset);
+	reclass->name = NULL;
+	reclass->mapset = NULL;
 	break;
     default:
 	break;
@@ -173,7 +179,7 @@ int G_free_reclass (struct Reclass *reclass)
     return 0;
 }
 
-static int reclass_type( FILE *fd,char *rname,char *rmapset)
+static int reclass_type(FILE *fd, char **rname, char **rmapset)
 {
     char buf[128];
     char label[128], arg[128];
@@ -189,21 +195,34 @@ static int reclass_type( FILE *fd,char *rname,char *rmapset)
     type = RECLASS_TABLE;
 
 /* Read the mapset and file name of the REAL cell file */
-    *rname = *rmapset = 0;
+    if (*rname)
+	**rname = '\0';
+    if (*rmapset)
+	**rmapset = '\0';
     for (i=0; i<2; i++)
     {
 	if (fgets(buf,sizeof buf,fd) == NULL)
 	    return -1;
 	if(sscanf(buf,"%[^:]:%s", label, arg) != 2)
 	    return -1;
-	if (! strncmp(label, "maps", 4))
-	    strcpy(rmapset, arg) ;
-	else if (! strncmp(label, "name", 4))
-	    strcpy(rname, arg) ;
+	if (strncmp(label, "maps", 4) == 0)
+	{
+	    if (*rmapset)
+		strcpy(*rmapset, arg) ;
+	    else
+		*rmapset = G_store(arg);
+	}
+	else if (strncmp(label, "name", 4) == 0)
+	{
+	    if (*rname)
+		strcpy(*rname, arg) ;
+	    else
+		*rname = G_store(arg);
+	}
 	else
 	    return -1;
     } 
-    if (*rmapset && *rname)
+    if (**rmapset && **rname)
 	return type;
     else
 	return -1;
@@ -219,7 +238,7 @@ int G_put_reclass (const char *name, const struct Reclass *reclass)
     FILE *fd;
     long min, max;
     int i;
-    char buf1[GPATH_MAX], buf2[256], buf3[256], *p;
+    char buf1[GPATH_MAX], buf2[GNAME_MAX], buf3[GNAME_MAX], *p;
 
     switch (reclass->type)
     {
