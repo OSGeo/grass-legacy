@@ -45,6 +45,7 @@ int segment_setup (SEGMENT *SEG)
 	return -1;
     }
 
+    /* This is close to the beginning of the file, so doesn't need to be an off_t */
     SEG->offset = (int) lseek (SEG->fd, 0L, SEEK_CUR);
 
     SEG->spr = SEG->ncols / SEG->scols ;

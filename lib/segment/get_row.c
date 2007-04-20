@@ -38,7 +38,7 @@
  * \return -1 if unable to seek or read segment file
  */
 
-int segment_get_row (SEGMENT *SEG, void *buf,int row)
+int segment_get_row (const SEGMENT *SEG, void *buf, int row)
 {
     int size;
     int ncols;
@@ -57,7 +57,7 @@ int segment_get_row (SEGMENT *SEG, void *buf,int row)
 
 	if(read (SEG->fd, buf, size) != size)
 	{
-	    G_warning ("segment_get_row: %s\n",strerror(errno));
+	    G_warning ("segment_get_row: %s",strerror(errno));
 	    return -1;
 	}
 	
@@ -76,7 +76,7 @@ int segment_get_row (SEGMENT *SEG, void *buf,int row)
 
 	if(read (SEG->fd, buf, size) != size)
 	{
-	    G_warning ("segment_get_row: %s\n",strerror(errno));
+	    G_warning ("segment_get_row: %s",strerror(errno));
 	    return -1;
 	}
     }

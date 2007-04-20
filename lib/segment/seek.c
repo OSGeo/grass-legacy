@@ -33,7 +33,7 @@
  * \return -1 if unable to seek
  */
 
-int segment_seek (SEGMENT *SEG,int n,int index)
+int segment_seek (const SEGMENT *SEG,int n,int index)
 {
     off_t offset;
 

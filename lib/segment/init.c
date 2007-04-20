@@ -56,7 +56,7 @@ int segment_init (SEGMENT *SEG,int fd,int nseg)
 
     if (lseek (fd, 0L, SEEK_SET) < 0)
     {
-	G_warning ("segment_init: %s\n",strerror(errno));
+	G_warning ("segment_init: %s",strerror(errno));
 	return -1;
     }
 
@@ -77,7 +77,7 @@ static int read_int (int fd, int *n)
     int bytes_read;
 
     if((bytes_read = read (fd, n, sizeof(int))) == -1)
-        G_warning("read_int: %s\n",strerror(errno));
+        G_warning("read_int: %s",strerror(errno));
 
     bytes_read = (bytes_read == sizeof(int));
 
