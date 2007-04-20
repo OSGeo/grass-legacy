@@ -34,6 +34,10 @@ import images
 imagepath = images.__path__[0]
 sys.path.append(imagepath)
 
+import icons
+gmpath = icons.__path__[0]
+sys.path.append(gmpath)
+
 
 import gui_modules.track as track
 import gui_modules.wxgui_utils as wxgui_utils
@@ -42,6 +46,7 @@ import gui_modules.render as render
 import gui_modules.menudata as menudata
 import gui_modules.menuform as menuform
 import gui_modules.grassenv as grassenv
+from icons.icon import Icons as Icons
 
 """Main Python app to set up GIS Manager window and trap commands
 Only command console is working currently, but windows for
@@ -114,6 +119,7 @@ class GMFrame(wx.Frame):
     (and other) commands, tree widget page for managing GIS map layers.'''
     def __init__(self, parent, id, title):
         self.parent = parent
+        self.iconsize = (16, 16)
         wx.Frame.__init__(self, parent=parent, id=-1, title=title, style=wx.DEFAULT_FRAME_STYLE)
 
         # creating widgets
@@ -306,15 +312,15 @@ class GMFrame(wx.Frame):
     def toolbarData(self):
 
         return   (
-                 ('newdisplay', wx.Bitmap(os.path.join(wxgui_utils.icons,'gui-startmon.gif'), wx.BITMAP_TYPE_ANY), 'Start new display', self.newDisplay),
+                 ('newdisplay', Icons["newdisplay"].GetBitmap(), Icons["newdisplay"].GetLabel(), self.newDisplay),
                  ('', '', '', ''),
-                 ('addrast', wx.Bitmap(os.path.join(wxgui_utils.icons,'element-cell.gif'), wx.BITMAP_TYPE_ANY), 'Add raster layer', self.onRaster),
-                 ('addvect', wx.Bitmap(os.path.join(wxgui_utils.icons,'element-vector.gif'), wx.BITMAP_TYPE_ANY), 'Add vector layer', self.onVector),
-                 ('addcmd', wx.Bitmap(os.path.join(wxgui_utils.icons,'gui-cmd.gif'), wx.BITMAP_TYPE_ANY), 'Add command layer', self.addCommand),
-                 ('addgrp', wx.ArtProvider.GetBitmap(wx.ART_FOLDER, wx.ART_TOOLBAR, (16,16)), 'Add layer group', self.addGroup),
-                 ('addovl', wx.Bitmap(os.path.join(wxgui_utils.icons,'module-d.grid.gif'), wx.BITMAP_TYPE_ANY), 'Add grid or vector labels overlay', self.onOverlay),
-                 ('delcmd', wx.ArtProvider.GetBitmap(wx.ART_DELETE, wx.ART_TOOLBAR, (16,16)), 'Delete selected layer', self.deleteLayer),
-                 ('attributetable',wx.Bitmap(os.path.join(imagepath,'db_open_table.png'),wx.BITMAP_TYPE_ANY), 'Show attribute table', self.ShowAttributeTable),
+                 ('addrast', Icons["addrast"].GetBitmap(), Icons["addrast"].GetLabel(), self.onRaster),
+                 ('addvect', Icons["addvect"].GetBitmap(), Icons["addvect"].GetLabel(), self.onVector),
+                 ('addcmd',  Icons["addcmd"].GetBitmap(),  Icons["addcmd"].GetLabel(),  self.addCommand),
+                 ('addgrp',  wx.ArtProvider.GetBitmap(wx.ART_FOLDER, wx.ART_TOOLBAR, (16,16)),  Icons["addgrp"].GetLabel(), self.addGroup),
+                 ('addovl',  Icons["addovl"].GetBitmap(),  Icons["addovl"].GetLabel(), self.onOverlay),
+                 ('delcmd',  wx.ArtProvider.GetBitmap(wx.ART_DELETE, wx.ART_TOOLBAR, (16,16)), 'Delete selected layer', self.deleteLayer),
+                 ('attributetable', wx.Bitmap(os.path.join(imagepath,'db_open_table.png'),wx.BITMAP_TYPE_ANY), Icons['attributetable'].GetLabel(), self.ShowAttributeTable),
                  )
 
     def ShowAttributeTable(self,event):
@@ -376,27 +382,18 @@ class GMFrame(wx.Frame):
         point = wx.GetMousePosition()
         rastmenu = wx.Menu()
         # Add items to the menu
-        addrast = wx.MenuItem(rastmenu, -1,'Add raster map layer')
-        bmp = wx.Image(os.path.join(wxgui_utils.icons,'element-cell.gif'), wx.BITMAP_TYPE_GIF)
-        bmp.Rescale(16, 16)
-        bmp = bmp.ConvertToBitmap()
-        addrast.SetBitmap(bmp)
+        addrast = wx.MenuItem(rastmenu, -1, Icons["addrast"].GetLabel())
+        addrast.SetBitmap(Icons["addrast"].GetBitmap(self.iconsize))
         rastmenu.AppendItem(addrast)
         self.Bind(wx.EVT_MENU, self.addRaster, addrast)
 
-        addrgb = wx.MenuItem(rastmenu, -1,'Add RGB layer')
-        bmp = wx.Image(os.path.join(wxgui_utils.icons,'module-d.rgb.gif'), wx.BITMAP_TYPE_GIF)
-        bmp.Rescale(16, 16)
-        bmp = bmp.ConvertToBitmap()
-        addrgb.SetBitmap(bmp)
+        addrgb = wx.MenuItem(rastmenu, -1, Icons["addrgb"].GetLabel())
+        addrgb.SetBitmap(Icons["addrgb"].GetBitmap(self.iconsize))
         rastmenu.AppendItem(addrgb)
         self.Bind(wx.EVT_MENU, self.addRGB, addrgb)
 
-        addhis = wx.MenuItem(rastmenu, -1,'Add HIS layer')
-        bmp = wx.Image(os.path.join(wxgui_utils.icons,'channel-his.gif'), wx.BITMAP_TYPE_GIF)
-        bmp.Rescale(16, 16)
-        bmp = bmp.ConvertToBitmap()
-        addhis.SetBitmap(bmp)
+        addhis = wx.MenuItem(rastmenu, -1, Icons ["addhis"].GetLabel())
+        addhis.SetBitmap(Icons["addhis"].GetBitmap (self.iconsize))
         rastmenu.AppendItem(addhis)
         self.Bind(wx.EVT_MENU, self.addHIS, addhis)
 
@@ -410,27 +407,18 @@ class GMFrame(wx.Frame):
         point = wx.GetMousePosition()
         vectmenu = wx.Menu()
 
-        addvect = wx.MenuItem(vectmenu, -1,'Add vector map layer')
-        bmp = wx.Image(os.path.join(wxgui_utils.icons,'element-vector.gif'), wx.BITMAP_TYPE_GIF)
-        bmp.Rescale(16, 16)
-        bmp = bmp.ConvertToBitmap()
-        addvect.SetBitmap(bmp)
+        addvect = wx.MenuItem(vectmenu, -1, Icons["addvect"].GetLabel())
+        addvect.SetBitmap(Icons["addvect"].GetBitmap(self.iconsize))
         vectmenu.AppendItem(addvect)
         self.Bind(wx.EVT_MENU, self.addVector, addvect)
 
-        addtheme = wx.MenuItem(vectmenu, -1,'Add thematic map layer')
-        bmp = wx.Image(os.path.join(wxgui_utils.icons,'module-d.vect.thematic.gif'), wx.BITMAP_TYPE_GIF)
-        bmp.Rescale(16, 16)
-        bmp = bmp.ConvertToBitmap()
-        addtheme.SetBitmap(bmp)
+        addtheme = wx.MenuItem(vectmenu, -1, Icons["addthematic"].GetLabel())
+        addtheme.SetBitmap(Icons["addthematic"].GetBitmap(self.iconsize))
         vectmenu.AppendItem(addtheme)
         self.Bind(wx.EVT_MENU, self.addThemeMap, addtheme)
 
-        addchart = wx.MenuItem(vectmenu, -1,'Add thematic chart layer')
-        bmp = wx.Image(os.path.join(wxgui_utils.icons,'module-d.vect.chart.gif'), wx.BITMAP_TYPE_GIF)
-        bmp.Rescale(16, 16)
-        bmp = bmp.ConvertToBitmap()
-        addchart.SetBitmap(bmp)
+        addchart = wx.MenuItem(vectmenu, -1, Icons["addchart"].GetLabel())
+        addchart.SetBitmap(Icons["addchart"].GetBitmap(self.iconsize))
         vectmenu.AppendItem(addchart)
         self.Bind(wx.EVT_MENU, self.addThemeChart, addchart)
         # Popup the menu.  If an item is selected then its handler
