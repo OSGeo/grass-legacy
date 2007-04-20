@@ -1,15 +1,31 @@
+/****************************************************************************
+ *
+ * MODULE:       d.rast.edit
+ * AUTHOR(S):    Chris Rewerts, Agricultural Engineering, Purdue University 
+ *                    (original contributor)
+ *               Roberto Flor <flor itc.it>, 
+ *               Markus Neteler <neteler itc.it>, 
+ *               Bernhard Reiter <bernhard intevation.de>, 
+ *               Huidae Cho <grass4u gmail.com>, 
+ *               Eric G. Miller <egm2 jps.net>, 
+ *               Hamish Bowman <hamish_nospam yahoo.com>
+ * PURPOSE:      interactive editing of cell values
+ * COPYRIGHT:    (C) 1999-2007 by the GRASS Development Team
+ *
+ *               This program is free software under the GNU General Public
+ *               License (>=v2). Read the file COPYING that comes with GRASS
+ *               for details.
+ *
+ *****************************************************************************/
 /*
- * d.rast.edit
- * 
- * Usage:  d.rast.edit
- * 
- * Chris Rewerts, Agricultural Engineering, Purdue University April 1991 Update:
+ * Pre-CVS edit comments:
+ * April 1991 Update:
  * March 1992 (add vector overlay, misc touchups) Update: May 1992   (removed
  * parser routine to ask about grid color, since that can be changed easily
  * enough with the menu. added a lookup of cell value ranges, and ability to
  * edit negative cell values. also more misc touchups)
  * 
- * d.rast.edit is an graphically interactive cell editor which allows the user
+ * d.rast.edit is a graphically interactive cell editor which allows the user
  * to display a cell layer on the graphics monitor and use the mouse cursor
  * to indicate which cell values to edit by pointing to cells displayed.
  * 
@@ -201,3 +217,6 @@ int ext (void)
 	fprintf(stderr, "     +-------------------------------------------+\n\n");
 	exit(0);
 }
+
+
+

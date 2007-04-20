@@ -1,3 +1,22 @@
+/****************************************************************************
+ *
+ * MODULE:       d.his
+ * AUTHOR(S):    James Westervelt, CERL (original contributor)
+ *               Markus Neteler <neteler itc.it>, 
+ *               Bernhard Reiter <bernhard intevation.de>, 
+ *               Huidae Cho <grass4u gmail.com>, 
+ *               Glynn Clements <glynn gclements.plus.com>, 
+ *               Jan-Oliver Wagner <jan intevation.de>
+ * PURPOSE:      produces a raster map layer using hue, intensity, and
+ *               saturation values from two or three user-specified raster
+ *               map layers
+ * COPYRIGHT:    (C) 1999-2007 by the GRASS Development Team
+ *
+ *               This program is free software under the GNU General Public
+ *               License (>=v2). Read the file COPYING that comes with GRASS
+ *               for details.
+ *
+ *****************************************************************************/
 #include <stdlib.h>
 #include <stdio.h>
 #include <string.h>
@@ -255,3 +274,6 @@ main (int argc, char **argv)
 
 	exit(0);
 }
+
+
+

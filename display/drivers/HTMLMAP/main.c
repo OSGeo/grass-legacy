@@ -1,3 +1,16 @@
+/****************************************************************************
+ *
+ * MODULE:       HTMLMAP
+ * AUTHOR(S):    Glynn Clements <glynn gclements.plus.com> (original contributor)
+ *               
+ * PURPOSE:      driver to allow HTML image maps
+ * COPYRIGHT:    (C) 2007-2007 by the GRASS Development Team
+ *
+ *               This program is free software under the GNU General Public
+ *               License (>=v2). Read the file COPYING that comes with GRASS
+ *               for details.
+ *
+ *****************************************************************************/
 
 #include <stdio.h>
 #include "driver.h"
@@ -44,4 +57,7 @@ int main(int argc, char **argv)
 
 	return LIB_main(argc, argv);
 }
+
+
+
 

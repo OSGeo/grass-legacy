@@ -1,3 +1,22 @@
+/****************************************************************************
+ *
+ * MODULE:       d.geodesic
+ * AUTHOR(S):    Michael Shapiro (CERL) (original contributor)
+ *               Markus Neteler <neteler itc.it>,
+ *               Bernhard Reiter <bernhard intevation.de>, 
+ *               Eric G. Miller <egm2 jps.net>, 
+ *               Glynn Clements <glynn gclements.plus.com>, 
+ *               Hamish Bowman <hamish_nospam yahoo.com>, 
+ *               Jan-Oliver Wagner <jan intevation.de>
+ * PURPOSE:      displays a geodesic line in the active frame on the user's 
+ *               graphics monitor
+ * COPYRIGHT:    (C) 1999-2006 by the GRASS Development Team
+ *
+ *               This program is free software under the GNU General Public
+ *               License (>=v2). Read the file COPYING that comes with GRASS
+ *               for details.
+ *
+ *****************************************************************************/
 #include <stdlib.h>
 #include <string.h>
 #include <grass/gis.h>
@@ -122,4 +141,7 @@ int main (int argc, char *argv[])
     R_close_driver();
     exit(0);
 }
+
+
+
 

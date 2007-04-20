@@ -1,16 +1,26 @@
+/****************************************************************************
+ *
+ * MODULE:       d.colors
+ * AUTHOR(S):    Jim Westervelt (CERL) (original contributor)
+ *               Markus Neteler <neteler itc.it>,
+ *               Bernhard Reiter <bernhard intevation.de>, 
+ *               Eric G. Miller <egm2 jps.net>, 
+ *               Glynn Clements <glynn gclements.plus.com>, 
+ *               Hamish Bowman <hamish_nospam yahoo.com>
+ * PURPOSE:      user changes color table for raster map layers
+ * COPYRIGHT:    (C) 1999-2007 by the GRASS Development Team
+ *
+ *               This program is free software under the GNU General Public
+ *               License (>=v2). Read the file COPYING that comes with GRASS
+ *               for details.
+ *
+ *****************************************************************************/
 #include <stdlib.h>
 #include <grass/gis.h>
 #include <grass/glocale.h>
 #include <grass/display.h>
 #include <grass/raster.h>
 #include "colors.h"
-
-/*
- *   d.colors
- *
- *   Usage:  d.colors raster=name
- *
- */
 
 int 
 main (int argc, char **argv)
@@ -86,3 +96,6 @@ main (int argc, char **argv)
     R_close_driver();
     exit(0);
 }
+
+
+

@@ -1,3 +1,21 @@
+/****************************************************************************
+ *
+ * MODULE:       d.font
+ * AUTHOR(S):    James Westervelt (CERL) (original contributor)
+ *               Markus Neteler <neteler itc.it>,
+ *               Bernhard Reiter <bernhard intevation.de>, 
+ *               Huidae Cho <grass4u gmail.com>, 
+ *               Eric G. Miller <egm2 jps.net>, 
+ *               Glynn Clements <glynn gclements.plus.com>, 
+ *               Jan-Oliver Wagner <jan intevation.de>
+ * PURPOSE:      user selection of font for graphics monitor text
+ * COPYRIGHT:    (C) 1999-2007 by the GRASS Development Team
+ *
+ *               This program is free software under the GNU General Public
+ *               License (>=v2). Read the file COPYING that comes with GRASS
+ *               for details.
+ *
+ *****************************************************************************/
 #include <stdlib.h>
 #include <string.h>
 #include <sys/types.h>
@@ -225,4 +243,7 @@ static void print_font_list(FILE *fp)
 	for (i = 0; i < num_fonts; i++)
 		fprintf(fp, "%s\n", fonts[i]);
 }
+
+
+
 

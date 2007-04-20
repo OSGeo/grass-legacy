@@ -1,3 +1,24 @@
+/****************************************************************************
+ *
+ * MODULE:       d.mapgraph
+ * AUTHOR(S):    James Westervelt (original contributor)
+ *               Markus Neteler <neteler itc.it>,
+ *               Roberto Flor <flor itc.it>, 
+ *               Bernhard Reiter <bernhard intevation.de>, 
+ *               Cedric Shock <cedricgrass shockfamily.net>, 
+ *               Huidae Cho <grass4u gmail.com>, 
+ *               Eric G. Miller <egm2 jps.net>, 
+ *               Glynn Clements <glynn gclements.plus.com>, 
+ *               Hamish Bowman <hamish_nospam yahoo.com>, 
+ *               Jan-Oliver Wagner <jan intevation.de>
+ * PURPOSE:      draws graphs - now superceded by d.graph
+ * COPYRIGHT:    (C) 1999-2007 by the GRASS Development Team
+ *
+ *               This program is free software under the GNU General Public
+ *               License (>=v2). Read the file COPYING that comes with GRASS
+ *               for details.
+ *
+ *****************************************************************************/
 #include <stdlib.h>
 #include <unistd.h>
 #include <grass/gis.h>
@@ -151,3 +172,6 @@ main (int argc, char **argv)
 	R_close_driver();
 	exit (0);
 }
+
+
+
