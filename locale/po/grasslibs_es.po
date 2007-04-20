@@ -14,7 +14,7 @@ msgstr ""
 "Project-Id-Version: grasslibs_es\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2007-04-16 19:39+0200\n"
-"PO-Revision-Date: 2007-04-16 23:19+0200\n"
+"PO-Revision-Date: 2007-04-21 00:00+0200\n"
 "Last-Translator: Roberto Antolin <tolanss@yahoo.es>\n"
 "Language-Team:  <es@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -2871,7 +2871,7 @@ msgstr "Registrando lineas: "
 #: ../lib/vector/Vlib/build_nat.c:507
 #, c-format
 msgid "\r%d primitives registered      \n"
-msgstr "\r%d primitivos registrados      \n"
+msgstr "\r%d elementos registrados      \n"
 
 #: ../lib/vector/Vlib/build_nat.c:534
 #, c-format
@@ -3194,7 +3194,7 @@ msgstr "Número de nodos     :   %d\n"
 #: ../lib/vector/Vlib/build.c:161
 #, c-format
 msgid "Number of primitives:   %d\n"
-msgstr "Número de primitivos:   %d\n"
+msgstr "Número de elementos %d\n"
 
 #: ../lib/vector/Vlib/build.c:162
 #, c-format
