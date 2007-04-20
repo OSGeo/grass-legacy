@@ -98,8 +98,8 @@ class LayerTree(CT.CustomTreeCtrl):
         trgif = Icons["addrast"].GetBitmap(bmpsize)
         self.rast_icon = il.Add(trgif)
 
-        #trgif = Icons["addrgb"].GetBitmap(bmpsize), # ??
-        #self.rgb_icon = il.Add(trgif)
+        trgif = Icons["addrgb"].GetBitmap(bmpsize)
+        self.rgb_icon = il.Add(trgif)
 
         trgif = Icons["addhis"].GetBitmap(bmpsize)
         self.his_icon = il.Add(trgif)
