@@ -29,13 +29,6 @@
 #include <unistd.h>
 #include <fcntl.h>
 
-#ifdef __MINGW32__ 
-#include <stdlib.h> /*  _fmode */
-#include <fcntl.h> /*  _O_BINARY */
-#undef _fmode
-int _fmode = _O_BINARY;
-#endif 
-
 static int G__open_misc (
     const char *dir,
     const char *element,
