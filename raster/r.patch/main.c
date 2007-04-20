@@ -22,9 +22,9 @@
 
 int main (int argc, char *argv[])
 {
-    int infd[MAXFILES];
+    int *infd;
     struct Categories cats;
-    struct Cell_stats statf[MAXFILES];
+    struct Cell_stats *statf;
     struct Colors colr;
     int cats_ok;
     int colr_ok;
@@ -38,7 +38,6 @@ int main (int argc, char *argv[])
     int ok;
     int row,nrows,ncols;
     int ZEROFLAG;
-    char *name, *mapset;
     char *new_name;
     char **names;
     char **ptr; 
@@ -86,7 +85,6 @@ int main (int argc, char *argv[])
     zeroflag->description = _("Use zero (0) for transparency instead of NULL") ;
 
     ZEROFLAG = 0; /* default: use NULL for transparency */
-    nfiles = 0;
 
     if (G_parser(argc, argv))
         exit(EXIT_FAILURE);
@@ -103,47 +101,54 @@ int main (int argc, char *argv[])
     
     ok = 1;
     names = opt1->answers;
-    ptr = opt1->answers;
+    
     out_type = CELL_TYPE;
-    for (; *ptr != NULL; ptr++)
-    {
-        if (nfiles >= MAXFILES)
-            G_fatal_error (_("%s - too many patch files. only %d allowed"),
-                            G_program_name(), MAXFILES);
 
-        name = *ptr;
-        mapset = G_find_cell2 (name, "");
+    for (ptr = names, nfiles = 0; *ptr != NULL; ptr++, nfiles++)
+	    ;
+
+    if (nfiles < 2)
+        G_fatal_error(_("The minimum number of input maps is two."));
+
+    infd = G_malloc(nfiles * sizeof(int));
+    statf = G_malloc(nfiles * sizeof(struct Cell_stats));
+
+    for (i = 0; i < nfiles; i++)
+    {
+        const char *name = names[i];
+        const char *mapset = G_find_cell2 (name, "");
+	int fd;
+
         if (mapset == NULL)
         {
             G_warning (_("%s - %s not found"), G_program_name(), name);
             G_sleep(3);
             ok = 0;
         }
+
         if (!ok) 
             continue;
-        infd[nfiles] = G_open_cell_old (name, mapset);
-        if (infd[nfiles] < 0)
+
+        fd = G_open_cell_old (name, mapset);
+        if (fd < 0)
         {
             ok = 0;
             continue;
         }
 
-        map_type = G_get_raster_map_type(infd[nfiles]);
+	infd[i] = fd;
+
+        map_type = G_get_raster_map_type(fd);
 	if(map_type==FCELL_TYPE && out_type == CELL_TYPE)
 	       out_type = FCELL_TYPE;
         else if(map_type==DCELL_TYPE) 
 	       out_type = DCELL_TYPE;
 
-        G_init_cell_stats (&statf[nfiles]);
-    
-        nfiles++;
+        G_init_cell_stats (&statf[i]);
     }
 
     if (!ok)
-        exit(EXIT_FAILURE);
-
-    if (nfiles <= 1)
-        G_fatal_error(_("The minimum number of specified input maps is two."));
+        G_fatal_error(_("One or more input maps not found"));
 
     rname = opt2->answer;
     outfd = G_open_raster_new (new_name = rname, out_type);
