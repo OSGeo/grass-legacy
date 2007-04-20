@@ -378,7 +378,7 @@ int G__open_cell_old (
 
 /* if reclass, copy reclass structure */
     if ((fcb->reclass_flag = reclass_flag))
-	G_copy ((char *) &fcb->reclass, (char *) &reclass, sizeof(reclass));
+	G_copy (&fcb->reclass, &reclass, sizeof(reclass));
 
 /* check for compressed data format, making initial reads if necessary */
     if(G__check_format (fd) < 0)
