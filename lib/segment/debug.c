@@ -19,10 +19,11 @@
  */
 
 #include <stdio.h>
+#include <string.h>
 #include <grass/segment.h>
 
 
-static int check(SEGMENT *,int,int,char *);
+static int check(const SEGMENT *,int,int,char *);
 
 
 /**
@@ -45,10 +46,7 @@ static int check(SEGMENT *,int,int,char *);
 
 int segment_get (SEGMENT *SEG,void *buf,int row,int col)
 {
-    int n;
-    int index;
-    int i;
-    char *b, *p=buf;
+    int index, n;
 
     if (!check(SEG, row, col, "segment_get"))
 	return -1;
@@ -57,11 +55,7 @@ int segment_get (SEGMENT *SEG,void *buf,int row,int col)
     if((i = segment_pagein (SEG, n)) < 0)
 	return -1;
 
-    b = &SEG->scb[i].buf[index];
-
-    n = SEG->len;
-    while (n-- > 0)
-	*p++ = *b++;
+    memcpy(buf, &SEG->scb[i].buf[index], SEG->len);
     
     return 1;
 }
@@ -88,12 +82,9 @@ int segment_get (SEGMENT *SEG,void *buf,int row,int col)
  * \return -1 if unable to seek or write segment file
  */
 
-int segment_put (SEGMENT *SEG,void *buf,int row,int col)
+int segment_put (SEGMENT *SEG,const void *buf,int row,int col)
 {
-    int n;
-    int index;
-    int i;
-    char *b, *p = buf;
+    int index, n;
 
     if (!check(SEG, row, col, "segment_put"))
 	return -1;
@@ -102,26 +93,23 @@ int segment_put (SEGMENT *SEG,void *buf,int row,int col)
     if((i = segment_pagein (SEG, n)) < 0)
 	return -1;
 
-    b = &SEG->scb[i].buf[index];
     SEG->scb[i].dirty = 1;
 
-    n = SEG->len;
-    while (n-- > 0)
-	*b++ = *p++;
+    memcpy(&SEG->scb[i].buf[index], buf, SEG->len);
 
     return 1;
 }
 
 
-static int check(SEGMENT *SEG,int row,int col,char *me)
+static int check(const SEGMENT *SEG,int row,int col,char *me)
 {
-    int r,c;
-    r = row >= 0 && row < SEG->nrows;
-    c = col >= 0 && col < SEG->ncols;
+    int r = row >= 0 && row < SEG->nrows;
+    int c = col >= 0 && col < SEG->ncols;
+
     if (r && c) return 1;
 
     fprintf (stderr, "%s(SEG=%lx,fd=%d,row=%d,col=%d) ",
-	me, (long int)SEG, SEG->fd, row, col);
+	me, (unsigned long int)SEG, SEG->fd, row, col);
     if (!r)
     {
 	fprintf (stderr, "bad row ");

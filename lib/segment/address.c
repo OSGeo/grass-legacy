@@ -28,7 +28,7 @@
  */
 
 int segment_address (
-    SEGMENT *SEG, int row, int col,
+    const SEGMENT *SEG, int row, int col,
     int *n,
     int *index)
 {

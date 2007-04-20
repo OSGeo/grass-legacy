@@ -42,13 +42,13 @@
  * \return -1 if unable to seek or write segment file
  */
 
-int segment_put_row (SEGMENT *SEG, void *buf,int row)
+int segment_put_row (const SEGMENT *SEG, const void *buf,int row)
 {
     int size;
     int ncols;
     int scols;
     int n, index, col;
-	int result;
+    int result;
 
     ncols = SEG->ncols - SEG->spill ;
     scols = SEG->scols ;
@@ -60,14 +60,14 @@ int segment_put_row (SEGMENT *SEG, void *buf,int row)
 	segment_address (SEG, row, col, &n, &index) ;
 	if(segment_seek (SEG, n, index) < 0) {
 	    G_warning (
-	        "Failed seek in segment file for index = %d n = %d at col:row %d:%d\n",
+	        "Failed seek in segment file for index = %d n = %d at col:row %d:%d",
 	        index,n,col,row);
 	    return -1;
 	}
 
 	if((result = write (SEG->fd, buf, size)) != size)
 	{
-	    G_warning ("segment_put_row write error %s\n",strerror(errno));
+	    G_warning ("segment_put_row write error %s",strerror(errno));
 /*  	printf("segment_put_row result = %d. ncols: %d, scols %d, size: %d, col %d, row: %d,  SEG->fd: %d\n",result,ncols,scols,size,col,row, SEG->fd); */
 	    return -1;
 	}
@@ -77,7 +77,7 @@ int segment_put_row (SEGMENT *SEG, void *buf,int row)
 	/* pointer arithmetic (some compilers treat this as an error - SGI */
 	/* MIPSPro compiler for one). Since the read command is reading in */
 	/* "size" bytes, cast the buf variable to char * before incrementing */
-	buf = ((char *) buf) + size;
+	buf = ((const char *) buf) + size;
     }
 
     if ((size = SEG->spill * SEG->len))
@@ -85,13 +85,13 @@ int segment_put_row (SEGMENT *SEG, void *buf,int row)
 	segment_address (SEG, row, col, &n, &index) ;
 	if(segment_seek (SEG, n, index) < 0) {
 	    G_warning (
-	        "Failed seek in segment file for index = %d n = %d at col:row %d:%d\n",
+	        "Failed seek in segment file for index = %d n = %d at col:row %d:%d",
 	        index,n,col,row);
 	    return -1;
 	}
 	if(write (SEG->fd, buf, size) != size)
 	{
-	    G_warning ("segment_put_row final write error: %s\n",strerror(errno));
+	    G_warning ("segment_put_row final write error: %s",strerror(errno));
 	    return -1;
 	}
     }

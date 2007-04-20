@@ -169,7 +169,7 @@ static int write_int (int fd,int n)
 
 static int zero_fill(int fd, off_t nbytes)
 {
-#ifndef HAVE_LSEEK
+#ifndef USE_LSEEK
     char buf[10240];
     register char *b;
     register int n;
@@ -198,9 +198,7 @@ static int zero_fill(int fd, off_t nbytes)
      with ENOSPC ("No space left on device").
    */
 
-    char buf[10];
-
-    buf[0]=0x0;
+    static const char buf[10];
 
     G_debug(3,"Using new segmentation code...");
     if ( lseek(fd,nbytes-1,SEEK_CUR) < 0 ) { 
