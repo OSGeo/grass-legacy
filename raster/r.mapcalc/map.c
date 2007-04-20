@@ -222,7 +222,7 @@ static void set_read_row_type(int res_type)
 	read_row_type = res_type;
 }
 
-static int read_row(int fd, char *buf, int row, int dummy)
+static int read_row(int fd, void *buf, int row, int dummy)
 {
 	if (G_get_raster_row(fd, (DCELL *) buf, row, read_row_type) < 0)
 		G_fatal_error("read_row: error reading data");

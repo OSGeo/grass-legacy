@@ -31,6 +31,9 @@ static char* work_file_name;
 static int n_rows, n_cols, pad_size;
 static int box_right, box_left, box_top, box_bottom;
 
+extern CELL *get_a_row (int row);
+extern int put_a_row( int row, CELL *buf);
+
 int thin_lines (int iterations)
 {
    int j, i, col, deleted, row;
