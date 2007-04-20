@@ -2,12 +2,15 @@
 MODULE: debug
 
 CLASSES:
- * Debug
+ * DebugMsg
 
 PURPOSE: GRASS debugging
 
+         from debug import Debug as Debug
+         Debug.msg (3, 'debug message')
+         
 AUTHORS: The GRASS Development Team
-         Martin Landa
+         Martin Landa <landa.martin gmail.com>
 
 COPYRIGHT: (C) 2007 by the GRASS Development Team
            This program is free software under the GNU General Public
@@ -17,7 +20,7 @@ COPYRIGHT: (C) 2007 by the GRASS Development Team
 
 import grassenv
 
-class Debug:
+class DebugMsg:
     """
     GRASS Debugging
 
@@ -55,7 +58,7 @@ class Debug:
             print "GUI D%d/%d: %s" % (level, level, message)
 
 # Debug instance
-Debug = Debug()
+Debug = DebugMsg()
 
 # testing
 if __name__ == "__main__":
