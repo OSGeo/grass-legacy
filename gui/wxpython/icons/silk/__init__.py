@@ -15,5 +15,9 @@ IconsSilk = {
     "addgrp"     : 'folder_add.png',
     "addovl"     : 'images.png',
     "delcmd"     : 'cross.png',
-    "attributetable" : 'table_add.png'
+    "attributetable" : 'table_add.png',
+    "addrgb"     : 'rgb.png',
+    "addhis"     : 'his.png',
+    "addthematic": 'thematic.png',
+    "addchart"   : 'chart_bar.png'
     }
