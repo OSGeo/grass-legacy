@@ -13,9 +13,10 @@ Classes:
  
 # Copyright (C) 2000-2007 by the GRASS Development Team
 # Author: Jan-Oliver Wagner <jan@intevation.de>
-# improved by: Bernhard Reiter   <bernhard@intevation.de>
+# Improved by: Bernhard Reiter   <bernhard@intevation.de>
 # Improved by: Michael Barton, Arizona State University
 # Improved by: Daniel Calvelo <dca.gis@gmail.com>
+# Improved by: Martin Landa <landa.martin@gmail.com>
 #
 # This program is free software under the GPL (>=v2)
 # Read the file COPYING coming with GRASS for details.
@@ -134,7 +135,7 @@ def color_resolve(color):
 
 
 def normalize_whitespace(text):
-    "Remove redundant whitespace from a string"
+    """Remove redundant whitespace from a string"""
     return string.join( string.split(text), ' ')
 
 def text_beautify( someString ):
@@ -144,7 +145,7 @@ def text_beautify( someString ):
     return escape_ampersand( os.linesep.join( textwrap.wrap( normalize_whitespace(someString), 70 ) ) )
 
 def escape_ampersand(text):
-    "Escapes ampersands with additional ampersand for GUI"
+    """Escapes ampersands with additional ampersand for GUI"""
     return string.replace(text, "&", "&&")
 
 class testSAXContentHandler(HandlerBase):
@@ -241,13 +242,15 @@ class processTask(HandlerBase):
         self.inFlag = False
         self.inGispromptContent = False
         self.inGuisection = False
+        self.inKeywordsContent = False
         self.task = task_description
 
     def startElement(self, name, attrs):
 
         if name == 'task':
             self.task.name = attrs.get('name', None)
-
+            self.task.keywords = []
+            
         if name == 'parameter':
             self.inParameter = True;
             self.param_label = ''
@@ -299,6 +302,10 @@ class processTask(HandlerBase):
             self.inGuisection = True
             self.param_guisection = ''
 
+        if name == 'keywords':
+            self.inKeywordsContent = True
+            self.keyword = ''
+            
     # works with python 2.0, but is not SAX compliant
     def characters(self, ch):
         self.my_characters(ch)
@@ -327,15 +334,17 @@ class processTask(HandlerBase):
             self.value_tmp = self.value_tmp + ch
         if self.inGuisection:
             self.param_guisection = self.param_guisection + ch
+        if self.inKeywordsContent:
+            self.keyword = self.keyword + ch
 
     def endElement(self, name):
         # If it's not a parameter element, ignore it
         if name == 'parameter':
             self.inParameter = False;
             # description -> label
-#            if not self.param_label:
-#                self.param_label = self.param_description
-#                self.param_description = ''
+            #            if not self.param_label:
+            #                self.param_label = self.param_description
+            #                self.param_description = ''
                 
             self.task.params.append({
                 "name" : self.param_name,
@@ -351,7 +360,7 @@ class processTask(HandlerBase):
                 "guisection" : self.param_guisection,
                 "default" : self.param_default,
                 "values" : self.param_values,
-                "value" : '' })
+                "value" : ''})
 
         if name == 'flag':
             self.inFlag = False;
@@ -384,6 +393,11 @@ class processTask(HandlerBase):
             self.param_guisection = normalize_whitespace(self.param_guisection)
             self.inGuisection = False
 
+        if name == 'keywords':
+            for keyword in self.keyword.split(','):
+                self.task.keywords.append (normalize_whitespace(keyword))
+            self.inKeywordsContent = False
+            
 class helpPanel(wx.html.HtmlWindow):
     """
     This panel holds the text from GRASS docs.
@@ -441,8 +455,16 @@ class mainFrame(wx.Frame):
         self.parent = parent
 
         standalone = True
-        
-        wx.Frame.__init__(self, parent=parent, id=ID, title=self.task.name,
+
+        # module name + keywords
+        title = self.task.name + " ["
+        for keyId in range(len(self.task.keywords)):
+            if keyId != 0:
+                title += ", "
+            title += self.task.keywords[keyId]
+        title += "]"
+
+        wx.Frame.__init__(self, parent=parent, id=ID, title=title,
                           pos=wx.DefaultPosition, style=wx.DEFAULT_FRAME_STYLE | wx.TAB_TRAVERSAL)
 
         # statusbar
@@ -706,6 +728,7 @@ class cmdPanel(wx.Panel):
         for p in visible_params:
             which_sizer = tabsizer[ p['guisection'] ]
             which_panel = tab[ p['guisection'] ]
+            # label <-> description
             if p.get('label','') != '':
                 title = text_beautify( p['label'] )
                 tooltip = text_beautify ( p['description'] )
