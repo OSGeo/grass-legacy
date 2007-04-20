@@ -83,6 +83,7 @@ main (int argc, char **argv)
         opt2->required   = NO ;
         opt2->description=
 	   _("Text color, either a standard GRASS color or R:G:B triplet");
+        opt2->gisprompt  = GISPROMPT_COLOR;
 
         opt3 = G_define_option() ;
         opt3->key        = "line" ;

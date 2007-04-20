@@ -127,7 +127,7 @@ main(int argc, char **argv)
 	char	win_name[64];
 	rectinfo	win;
 	char	*text, *path, *charset, *tcolor;
-	int	bold, color;
+	int	bold;
 	double	east, north, size, rotation, linespacing;
 	int	i, l, ol, x, y;
 	unsigned char	*out;
@@ -190,6 +190,7 @@ main(int argc, char **argv)
 	param.color->answer      = DEFAULT_COLOR;
 	param.color->description =
 	    _("Text color, either a standard GRASS color or R:G:B triplet");
+	param.color->gisprompt   = GISPROMPT_COLOR;
 
 	param.size = G_define_option();
 	param.size->key         = "size";
