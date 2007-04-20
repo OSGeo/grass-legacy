@@ -31,21 +31,34 @@ static int do_value(const char *buf, RASTER_MAP_TYPE type, struct Colors *colors
 	{
 	case CELL_TYPE:
 		if (sscanf(buf, "%d", &ival) != 1)
+		{
+			fprintf(stdout, "*: *\n");
 			return 0;
+		}
 		if (!G_get_c_raster_color(&ival, &red, &grn, &blu, colors))
+		{
+			fprintf(stdout, "%d: *\n", ival);
 			return 0;
+		}
 		fprintf(stdout, "%d: %02x:%02x:%02x\n", ival, red, grn, blu);
 		return 1;
 
 	case FCELL_TYPE:
 	case DCELL_TYPE:
 		if (sscanf(buf, "%lf", &fval) != 1)
+		{
+			fprintf(stdout, "*: *\n");
 			return 0;
+		}
 		if (!G_get_d_raster_color(&fval, &red, &grn, &blu, colors))
+		{
+			fprintf(stdout, "%f: *\n", fval);
 			return 0;
+		}
 		fprintf(stdout, "%f: %02x:%02x:%02x\n", fval, red, grn, blu);
 		return 1;
 	default:
+		G_fatal_error("Invalid map type %d", type);
 		return 0;
 	}
 }
@@ -69,7 +82,7 @@ int main(int argc, char **argv)
 	module           = G_define_module();
 	module->keywords = _("raster");
 	module->description = 
-		_("Queries raster map layers on their category values and category labels.");
+		_("Queries colors for a raster map layer.");
 
 	opt.input = G_define_option() ;
 	opt.input->key          = "input" ;
