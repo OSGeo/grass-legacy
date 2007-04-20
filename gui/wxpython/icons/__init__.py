@@ -1,7 +1,4 @@
-"""
-Silk icon set, v1.3
-http://www.famfamfam.com/lab/icons/silk/
+all = [ "icon", "silk" ]
+        
 
-"""
-__author__ = "Mark James"
 
