@@ -1,4 +1,3 @@
-# translation of grasstcl_es.po to Español
 # translation of grasstcl_es.po to
 # This file is distributed under the same license as the GRASS package.
 # Copyright (C) 2006, GRASS Development Team
@@ -13,9 +12,9 @@ msgstr ""
 "Project-Id-Version: grasstcl_es\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2007-03-23 16:35+0100\n"
-"PO-Revision-Date: 2007-03-16 23:57+0100\n"
-"Last-Translator: Carlos Davila <carluti@users.sourceforge.net>\n"
-"Language-Team: Español <grass-es@grass.itc.it>\n"
+"PO-Revision-Date: 2007-04-20 23:58+0200\n"
+"Last-Translator: Roberto Antolin <tolanss@yahoo.es>\n"
+"Language-Team:  <es@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -62,10 +61,8 @@ msgstr "AVISO: localización no válida"
 
 #: ../lib/init/gis_set.tcl:140
 #, tcl-format
-msgid ""
-"Warning: location <%s> at GISDBASE <%s> is not a directory or does not exist."
-msgstr ""
-"AVISO: la localización <%s> en GISDBASE <%s> no es un directorio o no existe."
+msgid "Warning: location <%s> at GISDBASE <%s> is not a directory or does not exist."
+msgstr "AVISO: la localización <%s> en GISDBASE <%s> no es un directorio o no existe."
 
 #: ../lib/init/gis_set.tcl:185
 #, tcl-format
@@ -310,8 +307,7 @@ msgstr "Ruta de archivo georreferenciado"
 
 #: ../lib/init/file_option.tcl:102
 msgid "Path to georeferenced file (format must be readable by GDAL/OGR)"
-msgstr ""
-"Ruta a archivo georreferenciado (el formato debe ser legible por GDAL/OGR)"
+msgstr "Ruta a archivo georreferenciado (el formato debe ser legible por GDAL/OGR)"
 
 #: ../lib/init/file_option.tcl:106
 msgid "Browse to locate georeferenced file"
@@ -772,8 +768,7 @@ msgstr "Mapa de pendiente/intensidad"
 
 #: ../gui/tcltk/gis.m/rastarrows.tcl:132
 msgid "Display arrows whose orientations are based on raster aspect map"
-msgstr ""
-"Mostrar flechas cuya orientación esté basada en mapa ráster de orientación"
+msgstr "Mostrar flechas cuya orientación esté basada en mapa ráster de orientación"
 
 #: ../gui/tcltk/gis.m/rastarrows.tcl:138
 msgid "  (optionally, arrow lengths are based on slope or intensity map)"
@@ -986,8 +981,7 @@ msgstr "\tCobertura de color opcional. Usar mapa base para sombrear."
 
 #: ../gui/tcltk/gis.m/raster.tcl:188
 msgid "\tdrape map for color in color relief map or data fusion"
-msgstr ""
-"\tmapa de cobertura para mapa de relieve color en color o fusión de datos"
+msgstr "\tmapa de cobertura para mapa de relieve color en color o fusión de datos"
 
 #: ../gui/tcltk/gis.m/raster.tcl:193
 msgid "\tdrape map:  "
@@ -1024,8 +1018,7 @@ msgid "Raster map for blue or saturation channel"
 msgstr "Mapa ráster para el canal azul o de saturación"
 
 #: ../gui/tcltk/gis.m/rgbhis.tcl:133
-msgid ""
-"Display 3 raster maps as red/green/blue or hue/intensity/saturation channels"
+msgid "Display 3 raster maps as red/green/blue or hue/intensity/saturation channels"
 msgstr ""
 "Mostrar 3 mapas ráster como canales rojo/verde/azul o de tonalidad/"
 "intensidad/saturación"
@@ -1616,8 +1609,7 @@ msgstr "Salida - GIS.m"
 
 #: ../gui/tcltk/gis.m/frames.tcl:102
 msgid "Divide map display into frames for displaying multiple maps"
-msgstr ""
-"Dividir visualización de mapa en marcos para visualizar múltiples mapas"
+msgstr "Dividir visualización de mapa en marcos para visualizar múltiples mapas"
 
 #: ../gui/tcltk/gis.m/frames.tcl:109 ../gui/tcltk/d.m/frames.tcl:60
 msgid "create and select frame"
@@ -1656,8 +1648,7 @@ msgid "chart for %s"
 msgstr "gráfico para %s"
 
 #: ../gui/tcltk/gis.m/chart.tcl:155
-msgid ""
-"Display pie and bar charts of attribute values at vector object locations"
+msgid "Display pie and bar charts of attribute values at vector object locations"
 msgstr ""
 "Mostrar gráficos de tarta o de barras de los valores de atributos en las "
 "localizaciones de los objetos vectoriales"
@@ -1748,8 +1739,7 @@ msgstr "Zum a la región por defecto"
 
 #: ../gui/tcltk/gis.m/maptool.tcl:193
 msgid "Set current region (WIND file) to match display"
-msgstr ""
-"Establecer la región actual (archivo WIND) para ajustar a la visualización"
+msgstr "Establecer la región actual (archivo WIND) para ajustar a la visualización"
 
 #: ../gui/tcltk/gis.m/maptool.tcl:222 ../gui/tcltk/gis.m/mapcanvas.tcl:1698
 #: ../gui/tcltk/gis.m/gmmenu.tcl:583 ../gui/tcltk/d.m/menu.tcl:554
@@ -2143,8 +2133,7 @@ msgstr "leyenda para %s"
 
 #: ../gui/tcltk/gis.m/legend.tcl:147
 msgid "Display legend for raster map using cat values and labels"
-msgstr ""
-"Mostrar leyenda para mapa ráster usando valores de categorías y etiquetas"
+msgstr "Mostrar leyenda para mapa ráster usando valores de categorías y etiquetas"
 
 #: ../gui/tcltk/gis.m/legend.tcl:164
 msgid "Raster map: "
@@ -2666,8 +2655,7 @@ msgstr "Archivo DXF (ASCII)"
 
 #: ../gui/tcltk/gis.m/gmmenu.tcl:153 ../gui/tcltk/d.m/menu.tcl:138
 msgid "ASCII vector or point file/old GRASS ASCII vector file"
-msgstr ""
-"Vector ASCII de archivo de puntos/antiguo archivo vectorial GRASS ASCII"
+msgstr "Vector ASCII de archivo de puntos/antiguo archivo vectorial GRASS ASCII"
 
 #: ../gui/tcltk/gis.m/gmmenu.tcl:154 ../gui/tcltk/d.m/menu.tcl:139
 msgid "POV-Ray format"
@@ -2817,13 +2805,11 @@ msgstr "Administrar proyecciones"
 
 #: ../gui/tcltk/gis.m/gmmenu.tcl:208 ../gui/tcltk/d.m/menu.tcl:201
 msgid "Create/edit projection information for current location"
-msgstr ""
-"Crear/editar la información de la proyección para la localización activa"
+msgstr "Crear/editar la información de la proyección para la localización activa"
 
 #: ../gui/tcltk/gis.m/gmmenu.tcl:209 ../gui/tcltk/d.m/menu.tcl:202
 msgid "Show projection information and create projection files"
-msgstr ""
-"Mostrar información de la proyección y crear los archivos de proyección"
+msgstr "Mostrar información de la proyección y crear los archivos de proyección"
 
 #: ../gui/tcltk/gis.m/gmmenu.tcl:211 ../gui/tcltk/d.m/menu.tcl:204
 msgid "Convert coordinates from one projection to another"
@@ -2904,8 +2890,7 @@ msgstr "Volver a muestrear utilizando estadística de conjuntos"
 
 #: ../gui/tcltk/gis.m/gmmenu.tcl:234 ../gui/tcltk/d.m/menu.tcl:232
 msgid "Resample using regularized spline with tension method"
-msgstr ""
-"Volver a muestrear utilizando spline regularizada con el método de tensión"
+msgstr "Volver a muestrear utilizando spline regularizada con el método de tensión"
 
 #: ../gui/tcltk/gis.m/gmmenu.tcl:236 ../gui/tcltk/d.m/menu.tcl:235
 msgid "Support file creation and maintenance"
@@ -3157,9 +3142,8 @@ msgid "Configure and create patch map for analysis"
 msgstr "Configurar y crear mapa de parcelas para analizar"
 
 #: ../gui/tcltk/gis.m/gmmenu.tcl:313
-#, fuzzy
 msgid "Calculate contrast weighted edge density index"
-msgstr "Calcular índice de densidad de borde "
+msgstr "Calcular índice de densidad de borde"
 
 #: ../gui/tcltk/gis.m/gmmenu.tcl:314 ../gui/tcltk/gis.m/gmmenu.tcl:322
 msgid "Calculate dominance's diversity index"
@@ -3171,8 +3155,7 @@ msgstr "Calcular índice de densidad de borde usando un algoritmo de 4 vecinos"
 
 #: ../gui/tcltk/gis.m/gmmenu.tcl:316
 msgid "Calculate mean patch size index using a 4 neighbour algorithm"
-msgstr ""
-"Calcular índice de tamaño medio de parcela usando un algoritmo de 4 vecinos"
+msgstr "Calcular índice de tamaño medio de parcela usando un algoritmo de 4 vecinos"
 
 #: ../gui/tcltk/gis.m/gmmenu.tcl:317
 msgid "Calculate coefficient of variation of patch area"
@@ -3188,8 +3171,7 @@ msgstr "Calcular desviación estándar de superficie de parcela"
 
 #: ../gui/tcltk/gis.m/gmmenu.tcl:320
 msgid "Calculate patch density index using a 4 neighbour algorithm"
-msgstr ""
-"Calcular índice de densidad de parcela usando un algoritmo de 4 vecinos"
+msgstr "Calcular índice de densidad de parcela usando un algoritmo de 4 vecinos"
 
 #: ../gui/tcltk/gis.m/gmmenu.tcl:321
 msgid "Calculate patch number index using a 4 neighbour algorithm"
@@ -3275,8 +3257,7 @@ msgstr "Generar celdas aleatorias"
 
 #: ../gui/tcltk/gis.m/gmmenu.tcl:351 ../gui/tcltk/d.m/menu.tcl:332
 msgid "Generate random cells and vector points from raster map"
-msgstr ""
-"Generar celdas aleatorias y puntos vectoriales a partir de un mapa ráster"
+msgstr "Generar celdas aleatorias y puntos vectoriales a partir de un mapa ráster"
 
 #: ../gui/tcltk/gis.m/gmmenu.tcl:353 ../gui/tcltk/d.m/menu.tcl:334
 msgid "Generate surfaces"
@@ -3336,8 +3317,7 @@ msgstr "Interpolación de curvas de nivel ráster"
 
 #: ../gui/tcltk/gis.m/gmmenu.tcl:368 ../gui/tcltk/d.m/menu.tcl:348
 msgid "Inverse distance weighted interpolation from vector points"
-msgstr ""
-"Interpolación de distancia inversa ponderada a partir de puntos vectoriales"
+msgstr "Interpolación de distancia inversa ponderada a partir de puntos vectoriales"
 
 #: ../gui/tcltk/gis.m/gmmenu.tcl:369 ../gui/tcltk/d.m/menu.tcl:349
 msgid "Regularized spline tension interpolation from vector points or contours"
@@ -3569,8 +3549,7 @@ msgstr "Localizar las entidades más cercanas en puntos o centroides"
 
 #: ../gui/tcltk/gis.m/gmmenu.tcl:443 ../gui/tcltk/d.m/menu.tcl:415
 msgid "Generate Thiessen polygons around points (Voronoi diagram)"
-msgstr ""
-"Generar polígonos de Thiessen alrededor de puntos (diagrama de Voronoi)"
+msgstr "Generar polígonos de Thiessen alrededor de puntos (diagrama de Voronoi)"
 
 #: ../gui/tcltk/gis.m/gmmenu.tcl:444 ../gui/tcltk/d.m/menu.tcl:416
 msgid "Connect points to create Delaunay triangles"
@@ -3678,8 +3657,7 @@ msgstr "Muestrea mapas ráster"
 
 #: ../gui/tcltk/gis.m/gmmenu.tcl:479 ../gui/tcltk/d.m/menu.tcl:451
 msgid "Calculate statistics for raster map overlain by vector map"
-msgstr ""
-"Calcular estadísticas para mapas ráster cubiertos por mapas vectoriales"
+msgstr "Calcular estadísticas para mapas ráster cubiertos por mapas vectoriales"
 
 #: ../gui/tcltk/gis.m/gmmenu.tcl:480 ../gui/tcltk/d.m/menu.tcl:452
 msgid "Sample raster map at point locations"
@@ -3701,8 +3679,7 @@ msgstr "Eliminar outliers de conjunto de puntos vectoriales"
 
 #: ../gui/tcltk/gis.m/gmmenu.tcl:485 ../gui/tcltk/d.m/menu.tcl:456
 msgid "Transfer attribute data from queried vector map to points"
-msgstr ""
-"Transferir datos de atributo de las consultas del mapa vectorial a puntos"
+msgstr "Transferir datos de atributo de las consultas del mapa vectorial a puntos"
 
 #: ../gui/tcltk/gis.m/gmmenu.tcl:489 ../gui/tcltk/d.m/menu.tcl:460
 msgid "Basic information"
@@ -3722,8 +3699,7 @@ msgstr "Comprobar la normalidad de la distribución de puntos"
 
 #: ../gui/tcltk/gis.m/gmmenu.tcl:495 ../gui/tcltk/d.m/menu.tcl:466
 msgid "Calculate stats for raster map underlying vector objects"
-msgstr ""
-"Calcular estadísticas para objetos vectoriales superpuestos a un mapa ráster"
+msgstr "Calcular estadísticas para objetos vectoriales superpuestos a un mapa ráster"
 
 #: ../gui/tcltk/gis.m/gmmenu.tcl:496 ../gui/tcltk/d.m/menu.tcl:467
 msgid "Indices of point counts in quadrats"
@@ -3754,22 +3730,19 @@ msgid "Manage image colors"
 msgstr "Administrar colores de imágenes"
 
 #: ../gui/tcltk/gis.m/gmmenu.tcl:507 ../gui/tcltk/d.m/menu.tcl:478
-msgid ""
-"Color balance and enhance color tables of multiband imagery for rgb display"
+msgid "Color balance and enhance color tables of multiband imagery for rgb display"
 msgstr ""
 "Balance de color y mejora de tablas de color de imágenes multibanda  para "
 "visualización RGB"
 
 #: ../gui/tcltk/gis.m/gmmenu.tcl:508 ../gui/tcltk/d.m/menu.tcl:479
-msgid ""
-"Transform HIS (Hue/Intensity/Saturation) color image to RGB (Red/Green/Blue)"
+msgid "Transform HIS (Hue/Intensity/Saturation) color image to RGB (Red/Green/Blue)"
 msgstr ""
 "Transformar imagen de color HIS (tono/intensidad/saturación) a RGB (rojo/"
 "verde/azul)"
 
 #: ../gui/tcltk/gis.m/gmmenu.tcl:509 ../gui/tcltk/d.m/menu.tcl:480
-msgid ""
-"Transform RGB (Red/Green/Blue) color image to HIS (Hue/Intensity/Saturation)"
+msgid "Transform RGB (Red/Green/Blue) color image to HIS (Hue/Intensity/Saturation)"
 msgstr ""
 "Transformar imágenes de color RGB (rojo/verde/azul) a HIS (tono/intensidad/"
 "saturación)"
@@ -3847,9 +3820,8 @@ msgid "Spectral response"
 msgstr "Respuesta espectral"
 
 #: ../gui/tcltk/gis.m/gmmenu.tcl:536 ../gui/tcltk/d.m/menu.tcl:507
-#, fuzzy
 msgid "Tassled cap vegetation index"
-msgstr "Índice de vegetación Tassled cap"
+msgstr "Índice de vegetación 'Tassled cap'"
 
 #: ../gui/tcltk/gis.m/gmmenu.tcl:537 ../gui/tcltk/d.m/menu.tcl:508
 msgid "Transform image"
@@ -4117,8 +4089,7 @@ msgstr "Imprimir mapas ráster y vectoriales mediante ps.map"
 
 #: ../gui/tcltk/d.m/fttext.tcl:102
 msgid "     (leave blank to place with mouse; position will not save)"
-msgstr ""
-"      (dejar en blanco para colocar con el ratón; la posición no se guardará)"
+msgstr "      (dejar en blanco para colocar con el ratón; la posición no se guardará)"
 
 #: ../gui/tcltk/d.m/fttext.tcl:108
 msgid "     coordinate type"
@@ -4193,8 +4164,7 @@ msgstr "línea de escala en vez de barra de escala"
 
 #: ../gui/tcltk/d.m/barscale.tcl:118 ../gui/tcltk/d.m/legend.tcl:185
 msgid "place with mouse (cannot save placement with group)"
-msgstr ""
-"colocar con el ratón (no se puede guardar en el emplazamiento en grupo) "
+msgstr "colocar con el ratón (no se puede guardar en el emplazamiento en grupo) "
 
 #: ../gui/tcltk/d.m/vector.tcl:197
 msgid "Vector name:"
@@ -4746,11 +4716,3 @@ msgstr "Guardar y salir"
 msgid "mouse button actions (left, middle, right)"
 msgstr "Acciones de los botones del ratón (izquierda, central, derecha)"
 
-#~ msgid "integer"
-#~ msgstr "entero"
-
-#~ msgid "double precision"
-#~ msgstr "precisión doble"
-
-#~ msgid "varchar"
-#~ msgstr "varchar"
