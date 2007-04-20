@@ -1,5 +1,5 @@
 /* getrow.c */
-int getmaprow(int, CELL *, int, int);
-int getrow(int, CELL *, int, int);
+int getmaprow(int, void *, int, int);
+int getrow(int, void *, int, int);
 /* uppercase.c */
 int uppercase(char *);

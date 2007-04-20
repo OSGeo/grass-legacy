@@ -1,4 +1,5 @@
 #include <stdio.h>
+#include <string.h>
 #include <grass/rowio.h>
 
 
@@ -23,11 +24,9 @@
  *  \return int
  */
 
-int rowio_put ( ROWIO *R, char *buf,int row)
+int rowio_put (ROWIO *R, const void *buf, int row)
 {
     int i;
-    int col;
-    char *b;
 
     if (row < 0)
 	return 0;
@@ -35,9 +34,7 @@ int rowio_put ( ROWIO *R, char *buf,int row)
     for (i = 0; i < R->nrows; i++)
 	if (row == R->rcb[i].row)
 	{
-	    b = R->rcb[i].buf;
-	    for (col = 0; col < R->len; col++)
-		*b++ = *buf++;
+	    memcpy(R->rcb[i].buf, buf, R->len);
 	    R->rcb[i].dirty = 1;
 	    return 1;
 	}

@@ -25,8 +25,10 @@
  *  \return int
  */
 
-int rowio_setup (ROWIO *R,int fd, int nrows, int len,
-                 int (*getrow)(), int (*putrow)())
+int rowio_setup (ROWIO *R,
+		 int fd, int nrows, int len,
+                 int (*getrow)(int, void *, int, int),
+		 int (*putrow)(int, const void *, int, int))
 {
     int i;
 
