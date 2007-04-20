@@ -7,22 +7,20 @@ class:
 """
 
 import wx
-import os
+import os, sys
 #import wxgui_utils
+
+gmpath = os.getenv("GISBASE") + "/etc/wx/icons/"
+sys.path.append(gmpath)
 
 import cmd
 from debug import Debug as Debug
-
-#icons= os.path.split(icons)[0]
-#icons= os.path.split(icons)[0]
-#icons= os.path.split(icons)[0]
-#print icons
+from icon import Icons as Icons
 
 if not os.getenv("GRASS_ICONPATH"):
     icons = os.getenv("GISBASE") + "/etc/gui/icons/"
 else:
     icons = os.environ["GRASS_ICONPATH"]
-
 
 class MapToolbar:
     """
@@ -47,77 +45,67 @@ class MapToolbar:
         #
 
     	self.displaymap = self.toolbar.AddLabelTool(id=wx.ID_ANY, label="displaymap",
-                                                    bitmap=wx.Bitmap(name=os.path.join(icons,"gui-display.gif"),
-                                                    type=wx.BITMAP_TYPE_ANY),
+                                                    bitmap=Icons["displaymap"].GetBitmap(),
                                                     bmpDisabled=wx.NullBitmap, kind=wx.ITEM_NORMAL,
-                                                    shortHelp="Display map", longHelp="")
-
+                                                    shortHelp=Icons["displaymap"].GetLabel(), longHelp=Icons["displaymap"].GetDesc())
+        
         self.rendermap = self.toolbar.AddLabelTool(id=wx.ID_ANY, label="rendermap",
-                                                    bitmap=wx.Bitmap(name=os.path.join(icons,"gui-redraw.gif"),
-                                                    type=wx.BITMAP_TYPE_ANY),
-                                                    bmpDisabled=wx.NullBitmap, kind=wx.ITEM_NORMAL,
-                                                    shortHelp="Re-render map", longHelp="Force re-rendering of all layers")
-
-    	self.erase = self.toolbar.AddLabelTool(wx.ID_ANY, "erase",
-                                               wx.Bitmap(os.path.join(icons,"gui-erase.gif"),
-                                               wx.BITMAP_TYPE_ANY),
-                                               wx.NullBitmap, wx.ITEM_NORMAL, "Erase display", "")
+                                                   bitmap=Icons["rendermap"].GetBitmap(),
+                                                   bmpDisabled=wx.NullBitmap, kind=wx.ITEM_NORMAL,
+                                                   shortHelp=Icons["rendermap"].GetLabel(), longHelp=Icons["rendermap"].GetDesc())
+        
+        self.erase = self.toolbar.AddLabelTool(id=wx.ID_ANY, label="erase",
+                                               bitmap=Icons["erase"].GetBitmap(),
+                                               bmpDisabled=wx.NullBitmap, kind=wx.ITEM_NORMAL,
+                                               shortHelp=Icons["erase"].GetLabel(), longHelp=Icons["erase"].GetDesc())
     	self.toolbar.AddSeparator()
 
         #
         # Zooming, etc.
         #
     	self.pointer = self.toolbar.AddLabelTool(id=wx.ID_ANY, label="pointer",
-                                                 bitmap=wx.Bitmap(os.path.join(icons,"gui-pointer.gif"),
-                                                                  wx.BITMAP_TYPE_ANY),
+                                                 bitmap=Icons["pointer"].GetBitmap(),
                                                  bmpDisabled=wx.NullBitmap,
                                                  kind=wx.ITEM_RADIO,
-                                                 shortHelp="Pointer", longHelp="")
+                                                 shortHelp=Icons["pointer"].GetLabel(), longHelp=Icons["pointer"].GetDesc())
         self.zoomin  = self.toolbar.AddLabelTool(id=wx.ID_ANY, label="zoom_in",
-                                                 bitmap=wx.Bitmap(os.path.join(icons,"gui-zoom_in.gif"),
-                                                                  wx.BITMAP_TYPE_ANY),
+                                                 bitmap=Icons["zoom_in"].GetBitmap(),
                                                  bmpDisabled=wx.NullBitmap, kind=wx.ITEM_RADIO,
-                                                 shortHelp="Zoom in", longHelp="Drag or click mouse to zoom")
+                                                 shortHelp=Icons["zoom_in"].GetLabel(), longHelp=Icons["zoom_in"].GetDesc())
     	self.zoomout = self.toolbar.AddLabelTool(id=wx.ID_ANY, label="zoom_out",
-                                                 bitmap=wx.Bitmap(os.path.join(icons,"gui-zoom_out.gif"),
-                                                                  wx.BITMAP_TYPE_ANY),
+                                                 bitmap=Icons["zoom_out"].GetBitmap(),
                                                  bmpDisabled=wx.NullBitmap,
                                                  kind=wx.ITEM_RADIO,
-                                                 shortHelp="Zoom out", longHelp="Drag or click mouse to unzoom")
+                                                 shortHelp=Icons["zoom_out"].GetLabel(), longHelp=Icons["zoom_out"].GetDesc())
     	self.pan     = self.toolbar.AddLabelTool(id=wx.ID_ANY, label="pan",
-                                                 bitmap=wx.Bitmap(os.path.join(icons,"gui-pan.gif"),
-                                                                  wx.BITMAP_TYPE_ANY),
+                                                 bitmap=Icons["pan"].GetBitmap(),
                                                  bmpDisabled=wx.NullBitmap,
                                                  kind=wx.ITEM_RADIO,
-                                                 shortHelp="Pan", longHelp="Drag with mouse to pan")
-    	self.query     = self.toolbar.AddLabelTool(id=wx.ID_ANY, label="query",
-                                                 bitmap=wx.Bitmap(os.path.join(icons,"gui-query.gif"),
-                                                 wx.BITMAP_TYPE_ANY),
+                                                 shortHelp=Icons["pan"].GetLabel(), longHelp=Icons["pan"].GetDesc())
+    	self.query   = self.toolbar.AddLabelTool(id=wx.ID_ANY, label="query",
+                                                 bitmap=Icons["query"].GetBitmap(),
                                                  bmpDisabled=wx.NullBitmap,
                                                  kind=wx.ITEM_RADIO,
-                                                 shortHelp="Query", longHelp="Query selected map")
+                                                 shortHelp=Icons["query"].GetLabel(), longHelp=Icons["query"].GetDesc())
         self.toolbar.AddSeparator()
 
 
         self.zoomback = self.toolbar.AddLabelTool(id=wx.ID_ANY, label="zoom_back",
-                                                 bitmap=wx.Bitmap(os.path.join(icons,"gui-zoom_back.gif"),
-                                                                  wx.BITMAP_TYPE_ANY),
+                                                 bitmap=Icons["zoom_back"].GetBitmap(),
                                                  bmpDisabled=wx.NullBitmap, kind=wx.ITEM_NORMAL,
-                                                 shortHelp="Zoom options", longHelp="Display zoom management")
-        self.zoommenu     = self.toolbar.AddLabelTool(id=wx.ID_ANY, label="zoommenu",
-                                                 bitmap=wx.Bitmap(os.path.join(icons,"gui-mapzoom.gif"),
-                                                                  wx.BITMAP_TYPE_ANY),
-                                                 bmpDisabled=wx.NullBitmap,
-                                                 shortHelp="Decoration", longHelp="Add graphic overlays to map")
+                                                 shortHelp=Icons["zoom_back"].GetLabel(), longHelp=Icons["zoom_back"].GetDesc())
+        self.zoommenu = self.toolbar.AddLabelTool(id=wx.ID_ANY, label="zoommenu",
+                                                  bitmap=Icons["zoommenu"].GetBitmap(),
+                                                  bmpDisabled=wx.NullBitmap,
+                                                  shortHelp=Icons["zoommenu"].GetLabel(), longHelp=Icons["zoommenu"].GetDesc())
         self.toolbar.AddSeparator()
 
 
-        self.dec     = self.toolbar.AddLabelTool(id=wx.ID_ANY, label="dec",
-                                                 bitmap=wx.Bitmap(os.path.join(icons,"module-d.barscale.gif"),
-                                                                  wx.BITMAP_TYPE_ANY),
-                                                 bmpDisabled=wx.NullBitmap,
-                                                 shortHelp="Decoration",
-                                                 longHelp="Add graphic overlays to map")
+        self.dec = self.toolbar.AddLabelTool(id=wx.ID_ANY, label="dec",
+                                             bitmap=Icons["dec"].GetBitmap(),
+                                             bmpDisabled=wx.NullBitmap,
+                                             shortHelp=Icons["dec"].GetLabel(),
+                                             longHelp=Icons["dec"].GetDesc())
 
         self.toolbar.AddSeparator()
 
@@ -125,22 +113,17 @@ class MapToolbar:
         # Misc
         #
     	self.savefile = self.toolbar.AddLabelTool(id=wx.ID_ANY, label="savefile",
-                                                  #bitmap=wx.Bitmap(os.path.join(icons,"file-save.gif"),
-                                                  #wx.BITMAP_TYPE_ANY),
-                                                  # just testing wx.ArtProvider
                                                   bitmap=wx.ArtProvider.GetBitmap(id=wx.ART_FILE_SAVE, client=wx.ART_BUTTON, size=tsize),
                                                   bmpDisabled=wx.NullBitmap,
                                                   kind=wx.ITEM_NORMAL,
-                                                  shortHelp="Save display to PNG file",
-                                                  longHelp="")
+                                                  shortHelp=Icons["savefile"].GetLabel(),
+                                                  longHelp=Icons["savefile"].GetDesc())
 
         self.printmap = self.toolbar.AddLabelTool(id=wx.ID_ANY, label="printmap",
-                                                  #bitmap=wx.Bitmap(os.path.join(icons,"file-save.gif"),
-                                                  #wx.BITMAP_TYPE_ANY),
-                                                  # just testing wx.ArtProvider
                                                   bitmap=wx.ArtProvider.GetBitmap(id=wx.ART_PRINT, client=wx.ART_BUTTON),
                                                   bmpDisabled=wx.NullBitmap, kind=wx.ITEM_NORMAL,
-                                                  shortHelp="Print display", longHelp="")
+                                                  shortHelp=Icons["printmap"].GetLabel(),
+                                                  longHelp=Icons["printmap"].GetDesc())
 
         self.toolbar.AddSeparator()
 

@@ -21,6 +21,17 @@ Classes:
 import wx
 import wx.aui
 import os, sys, time, glob, math
+from threading import Thread
+try:
+   from subprocess import *
+except:
+   from compat import subprocess
+   from compat.subprocess import *
+
+gmpath = os.getenv("GISBASE") + "/etc/wx/gui_modules/"
+sys.path.append(gmpath)
+gmpath = os.getenv("GISBASE") + "/etc/wx/icons/"
+sys.path.append(gmpath)
 
 import render
 import toolbars
@@ -33,17 +44,6 @@ from debug import Debug as Debug
 import images
 imagepath = images.__path__[0]
 sys.path.append(imagepath)
-
-from threading import Thread
-
-try:
-   from subprocess import *
-except:
-   from compat import subprocess
-   from compat.subprocess import *
-
-gmpath = os.getenv("GISBASE") + "/etc/wx/gui_modules/"
-sys.path.append(gmpath)
 
 icons = ""
 
@@ -262,12 +262,12 @@ class BufferedWindow(wx.Window):
         #pdc.Clear() #FIXME (to avoid black background)
         self.Refresh()
 
-        Debug.msg (3, "BufferedWindow.Draw(): id=%d, pdctype=%s, coord=%s" % (drawid, pdctype, coords))
+        Debug.msg (3, "BufferedWindow.Draw(): id=%s, pdctype=%s, coord=%s" % (drawid, pdctype, coords))
         
         if pdctype == 'clear': # erase the display
             bg = wx.Brush(self.GetBackgroundColour())
             pdc.SetBackground(bg)
-            pdc.Clear()
+            #pdc.Clear()
             self.Refresh()
             pdc.EndDrawing()
             return
@@ -536,8 +536,8 @@ class BufferedWindow(wx.Window):
         """
         Erase the map display
         """
-#    	dc = wx.BufferedDC(wx.ClientDC(self), self._Buffer)
-#    	self.Draw(dc, dctype='clear')
+        # dc = wx.BufferedDC(wx.ClientDC(self), self._Buffer)
+        # self.Draw(dc, dctype='clear')
         self.Draw(self.pdc, pdctype='clear')
 
     def DragMap(self, moveto):
@@ -936,7 +936,7 @@ class MapFrame(wx.Frame):
     drawing window.
     """
 
-    def __init__(self, parent=None, id = wx.ID_ANY, title="Map display",
+    def __init__(self, parent=None, id = wx.ID_ANY, title="GRASS GIS Map display",
                  pos=wx.DefaultPosition, size=wx.DefaultSize,
                  style=wx.DEFAULT_FRAME_STYLE, toolbars=["map"],
                  tree=None, notebook=None, gismgr=None, page=None, Map=None):
@@ -1842,7 +1842,7 @@ if __name__ == "__main__":
 
     gm_map = MapApp(0)
     # set title
-    gm_map.mapFrm.SetTitle ("Map display " + title)
+    gm_map.mapFrm.SetTitle ("GRASS GIS - Map Display: " + title + " - Location: " + grassenv.env["LOCATION_NAME"])
     gm_map.MainLoop()
 
     if grassenv.env.has_key("MONITOR"):

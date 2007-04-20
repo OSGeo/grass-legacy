@@ -4,29 +4,25 @@ import wx.lib.customtreectrl as CT
 import wx.combo
 import string
 
+gmpath = os.getenv("GISBASE") + "/etc/wx/gui_modules/"
+sys.path.append(gmpath)
+gmpath = os.getenv("GISBASE") + "/etc/wx/icons/"
+sys.path.append(gmpath)
+
 import track
 import select
 import menuform
 import mapdisp
 import render
 import cmd
+import grassenv
 from debug import Debug as Debug
-
+from icon import Icons as Icons
 try:
    from subprocess import *
 except:
    from compat import subprocess
 
-
-gmpath = os.getenv("GISBASE") + "/etc/wx/gui_modules/"
-sys.path.append(gmpath)
-
-icons = ""
-
-if not os.getenv("GRASS_ICONPATH"):
-    icons = os.getenv("GISBASE") + "/etc/gui/icons/"
-else:
-    icons = os.environ["GRASS_ICONPATH"]
 
 class LayerTree(CT.CustomTreeCtrl):
     """
@@ -71,7 +67,7 @@ class LayerTree(CT.CustomTreeCtrl):
 
 
         # title
-        self.mapdisplay.SetTitle(_("Map Display " + str(self.disp_idx)))
+        self.mapdisplay.SetTitle(_("GRASS GIS - Map Display: " + str(self.disp_idx) + " - Location: " + grassenv.env["LOCATION_NAME"]))
         #self.maptree[self.disp_idx] = self.mapdisplays[self.disp_idx].getTree()
 
         # store information about display and associated controls in a dictionary in track.py
@@ -98,54 +94,35 @@ class LayerTree(CT.CustomTreeCtrl):
         trart = wx.ArtProvider.GetBitmap(wx.ART_FOLDER, wx.ART_OTHER, (16,16))
         self.folder = il.Add(trart)
 
-        trgif = wx.Image(icons + r'/element-cell.gif', wx.BITMAP_TYPE_GIF)
-        trgif.Rescale(16, 16)
-        trgif = trgif.ConvertToBitmap()
+        bmpsize = (16, 16)
+        trgif = Icons["addrast"].GetBitmap(bmpsize)
         self.rast_icon = il.Add(trgif)
 
-        trgif = wx.Image(icons + r'/module-d.rgb.gif', wx.BITMAP_TYPE_GIF)
-        trgif.Rescale(16, 16)
-        trgif = trgif.ConvertToBitmap()
-        self.rgb_icon = il.Add(trgif)
+        #trgif = Icons["addrgb"].GetBitmap(bmpsize), # ??
+        #self.rgb_icon = il.Add(trgif)
 
-        trgif = wx.Image(icons + r'/channel-his.gif', wx.BITMAP_TYPE_GIF)
-        trgif.Rescale(16, 16)
-        trgif = trgif.ConvertToBitmap()
+        trgif = Icons["addhis"].GetBitmap(bmpsize)
         self.his_icon = il.Add(trgif)
 
-        trgif = wx.Image(icons + r'/module-d.legend.gif', wx.BITMAP_TYPE_GIF)
-        trgif.Rescale(16, 16)
-        trgif = trgif.ConvertToBitmap()
+        trgif = Icons["addlegend"].GetBitmap(bmpsize)
         self.leg_icon = il.Add(trgif)
 
-        trgif = wx.Image(icons + r'/element-vector.gif', wx.BITMAP_TYPE_GIF)
-        trgif.Rescale(16, 16)
-        trgif = trgif.ConvertToBitmap()
+        trgif = Icons["elvect"].GetBitmap(bmpsize)
         self.vect_icon = il.Add(trgif)
-
-        trgif = wx.Image(icons + r'/module-d.vect.thematic.gif', wx.BITMAP_TYPE_GIF)
-        trgif.Rescale(16, 16)
-        trgif = trgif.ConvertToBitmap()
+        
+        trgif = Icons["addthematic"].GetBitmap(bmpsize)
         self.theme_icon = il.Add(trgif)
 
-        trgif = wx.Image(icons + r'/module-d.vect.chart.gif', wx.BITMAP_TYPE_GIF)
-        trgif.Rescale(16, 16)
-        trgif = trgif.ConvertToBitmap()
+        trgif = Icons["addchart"].GetBitmap(bmpsize)
         self.chart_icon = il.Add(trgif)
 
-        trgif = wx.Image(icons + r'/module-d.grid.gif', wx.BITMAP_TYPE_GIF)
-        trgif.Rescale(16, 16)
-        trgif = trgif.ConvertToBitmap()
+        trgif = Icons["addgrid"].GetBitmap(bmpsize)
         self.grid_icon = il.Add(trgif)
 
-        trgif = wx.Image(icons + r'/module-d.labels.gif', wx.BITMAP_TYPE_GIF)
-        trgif.Rescale(16, 16)
-        trgif = trgif.ConvertToBitmap()
+        trgif = Icons["addlabels"].GetBitmap(bmpsize)
         self.labels_icon = il.Add(trgif)
 
-        trgif = wx.Image(icons + r'/gui-cmd.gif', wx.BITMAP_TYPE_GIF)
-        trgif.Rescale(16, 16)
-        trgif = trgif.ConvertToBitmap()
+        trgif = Icons["addcmd"].GetBitmap(bmpsize)
         self.cmd_icon = il.Add(trgif)
 
         checksize = il.GetSize(0)
