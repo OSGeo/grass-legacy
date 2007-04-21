@@ -2,6 +2,49 @@
 
 <em>v.lrs.create</em> generates LRS (Linear Reference System).
 
+<h2>NOTES</h2>
+
+The mileposts (point) vector map columns <em>start_mp</em>, <em>start_off</em>,
+<em>end_mp</em>, <em>end_off</em> must be of 'double precision' type. For
+milepost ordering, it is sufficient to enter increasing numbers into the
+<em>start_mp</em> column indicating the order along the vector line.
+
+The <em>lidcol</em> and <em>pidcol</em> columns contain the line IDs which
+relate mileposts and vector line(s) to each other.
+
+<h2>EXAMPLE</h2>
+
+A vector map 'route' contains a single line with integer <em>lidcol</em> column
+value be '22' in this example (bus route). The attributes table looks like this:
+
+<div class="code"><pre>
+cat|lid
+1|22
+</pre></div>
+
+A point map 'stops' contains mileposts (bus stops) along this line (use <em>thresh</em>
+to define maximal accepted deviation from this line). The milepost attributes
+table looks like this:
+
+<div class="code"><pre>
+cat|lid|start_mp|start_off|end_mp|end_off
+1|22|1|||
+2|22|2|||
+3|22|3|||
+</pre></div>
+
+Offsets can be used in case the route or mileposts are later modified.
+<br>
+The linear reference network is created like this:
+
+<div class="code"><pre>
+v.lrs.create in_lines=route points=stops out=route_lrs err=lrs_error \
+             lidcol=lid pidcol=lid rstable=route_lrs thresh=50
+</pre></div>
+
+This will create the maps 'route_lrs' containing the LRS and 'lrs_error'
+containing the errors if any.
+
 <h2>SEE ALSO</h2>
 
 <em><a HREF="lrs.html">LRS tutorial</a></em>,<br>
