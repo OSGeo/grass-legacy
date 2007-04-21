@@ -864,16 +864,16 @@ class cmdPanel(wx.Panel):
                     else:
                         p['wxId'].append(None)
                 elif p.get('prompt','') != 'color' and p.get('element', '') == 'file':
-                    fbb = filebrowse.FileBrowseButton(which_panel, wx.ID_ANY, size=(450, -1), labelText='',
+                    fbb = filebrowse.FileBrowseButton(which_panel, wx.ID_ANY, size=(350, -1), labelText='',
                                    dialogTitle='Choose color table file', startDirectory=os.getcwd(), fileMode=0,
-                                   changeCallback=self.fbbCallback)
+                                   changeCallback=self.OnSetValue)
                     if p.get('value','') != '':
                         fbb.SetValue(p['value']) # parameter previously set
                     which_sizer.Add(item=fbb, proportion=0, flag=wx.ADJUST_MINSIZE| wx.BOTTOM | wx.LEFT, border=5)
-                    # A file browse button is a combobox with two children: a textctl and a popupwindow;
-                    # we target the textctl here
-                    p['wxId'] = fbb.GetChildren()[0].GetId()
-                    fbb.Bind(wx.EVT_TEXT, self.OnSetValue)
+                    # A file browse button is a combobox with two children: a textctl and a button;
+                    # we have to target the button here
+                    p['wxId'] = fbb.GetChildren()[1].GetId()
+
 	    if txt is not None:
                 txt.SetFont( wx.Font( fontsize, wx.FONTFAMILY_DEFAULT, wx.NORMAL, text_style, 0, ''))
 
@@ -960,6 +960,7 @@ class cmdPanel(wx.Panel):
         for porf in self.task.params + self.task.flags:
             if 'wxId' in porf and type( porf[ 'wxId' ] ) == type( 1 ) and porf['wxId'] == myId:
                 porf[ 'value' ] = me.GetValue()
+
         self.OnUpdateValues()
 
 
