@@ -28,8 +28,11 @@ static void trans ( double *x, double *y, int n_points,
 
     for ( i = 0; i < n_points; i++)
     {
-	x[i] = m[0][0] * x[i] + m[0][1] * y[i] + xc;
-	y[i] = m[1][0] * x[i] + m[1][1] * y[i] + yc;
+	double xi = x[i];
+	double yi = y[i];
+
+	x[i] = m[0][0] * xi + m[0][1] * yi + xc;
+	y[i] = m[1][0] * xi + m[1][1] * yi + yc;
     }
 }
 
