@@ -15,6 +15,19 @@ static int get_subclass_pi( FILE *, struct SubSig *);
 static int get_subclass_means ( FILE *, struct SubSig *, int );
 static int get_subclass_covar ( FILE *, struct SubSig *, int ); 
 
+static double **alloc_matrix (int rows, int cols)
+{
+    double **m;
+    int i;
+
+    m = (double **) G_calloc (rows, sizeof(double *));
+    m[0] = (double *) G_calloc (rows*cols, sizeof(double));
+    for (i = 1; i < rows; i++)
+	m[i] = m[i-1] + cols;
+
+    return m;
+}
+
 int I_SigSetNClasses(struct SigSet *S)
 {
     int i, count;
@@ -38,8 +51,8 @@ I_AllocClassData (
     Data = &(C->ClassData);
     Data->npixels = npixels;
     Data->count = 0;
-    Data->x = G_alloc_matrix (npixels, S->nbands);
-    Data->p = G_alloc_matrix (npixels, C->nsubclasses);
+    Data->x = alloc_matrix (npixels, S->nbands);
+    Data->p = alloc_matrix (npixels, C->nsubclasses);
     return Data;
 }
 
