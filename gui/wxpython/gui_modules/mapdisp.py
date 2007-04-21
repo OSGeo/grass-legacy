@@ -980,7 +980,7 @@ class MapFrame(wx.Frame):
         # self.MapWindow = DrawWindow(self)
         self.MapWindow = BufferedWindow(self, id = wx.ID_ANY, Map=self.Map, tree=self.tree) # initialize buffered DC
     	self.MapWindow.Bind(wx.EVT_MOTION, self.OnMotion)
-        self.MapWindow.SetCursor (self.cursors["cross"]) # default
+        self.MapWindow.SetCursor (self.cursors["default"]) # default
 
         #
         # Init zoomhistory
@@ -1105,7 +1105,7 @@ class MapFrame(wx.Frame):
         self.MapWindow.mouse['box'] = "point"
 
         # change the cursor
-        self.MapWindow.SetCursor (self.cursors["cross"]) # default
+        self.MapWindow.SetCursor (self.cursors["default"]) # default
 
     def OnZoomIn(self, event):
         """
