@@ -990,12 +990,12 @@ proc GRMap::gcpwin {} {
 
     set second [radiobutton $row.c -variable GRMap::rectorder -value 2 \
         -text [G_msg "2nd order"] -highlightthickness 0 -state $rbstate]
-        DynamicHelp::register $first balloon [G_msg "polynomial transformation \
+        DynamicHelp::register $second balloon [G_msg "polynomial transformation \
                 (rasters only). Requires 6+ GCPs."]
 
     set third [radiobutton $row.d -variable GRMap::rectorder -value 3 \
         -text [G_msg "3rd order"] -highlightthickness 0 -state $rbstate]
-        DynamicHelp::register $first balloon [G_msg "polynomial transformation \
+        DynamicHelp::register $third balloon [G_msg "polynomial transformation \
                 (rasters only). Requires 10+ GCPs."]
 
     pack $row.a $row.b $row.c $row.d -side left
