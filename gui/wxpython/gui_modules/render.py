@@ -66,7 +66,7 @@ class MapLayer:
 
 		self.grassLayer = GRASSLayer(dispcmd)
 
-		Debug.msg (3, "MapLayer.__init__(): type=%s, name=%s, mapset=%s, opacity=%d, active=%d %s" % 
+		Debug.msg (3, "MapLayer.__init__(): type=%s, name=%s, mapset=%s, opacity=%d, active=%d %s" %
 			   (type, name, mapset, opacity, active, dispcmd))
 
 		gtemp = utils.GetTempfile()
@@ -140,7 +140,7 @@ class MapLayer:
 		"""
 
 		if not self.active:
-			return 
+			return
 
 		try:
 			if self.name != '':
@@ -148,12 +148,12 @@ class MapLayer:
 				Debug.msg (3, "MapLayer.__renderOverlay(): cmd=%s" % self.name)
 			else:
 				self.cmd = None
-				
+
 		except StandardError, e:
 			sys.stderr.write("Could not render overlay <%s>: %s\n" %\
 					 (self.name, str(e)))
 			self.cmd = None
-				
+
 	def Render(self):
 		"""
 		Runs all d.* commands.
@@ -233,9 +233,9 @@ class MapLayer:
 		os.unsetenv("GRASS_RENDER_IMMEDIATE")
 
 		return self.mapfile
-		
+
 class Map:
-	"""
+    """
 	This class serves for rendering of output images.
 
 	Attributes:
@@ -260,25 +260,26 @@ class Map:
 			"width" : 3,
 			"render": True/False
 		mapfile   - rendered final image filename
-	"""
+    """
 
-	def __init__(self):
-		"""
+    def __init__(self):
+        """
 		While initalization, necessary variables are set, monitor size is
 		determined and
-		"""
+        """
 
-		self.wind      = {}  # WIND settings
-		self.region    = {}  # region settings
-		self.width     = 300 # map width
-		self.height    = 400 # map height
+        self.wind      = {}  # WIND settings
+        self.region    = {}  # region settings
+        self.width     = 300 # map width
+        self.height    = 400 # map height
 
-		self.layers    = []  # stack of available layer
-		self.overlays  = []  # stack of available overlays
-		self.lookup    = {}  # lookup dictionary for tree items and layers
-		self.env       = {}  # enviroment variables, like MAPSET, LOCATION_NAME, etc.
-		self.verbosity = 0
-		self.mapfile   = utils.GetTempfile()
+        self.layers    = []  # stack of available layer
+        self.overlays  = []  # stack of available overlays
+        self.lookup    = {}  # lookup dictionary for tree items and layers
+        self.ovlookup  = {}  # lookup dictionary for overlay items and overlays
+        self.env       = {}  # enviroment variables, like MAPSET, LOCATION_NAME, etc.
+        self.verbosity = 0
+        self.mapfile   = utils.GetTempfile()
 
 #		self.renderRegion = {
 #			"render" : True,     # should the region be displayed?
@@ -287,19 +288,19 @@ class Map:
 #			}
 
 		# setting some initial env. variables
-		self.__initEnv()
-		self.__initRegion()
-		os.environ["GRASS_TRANSPARENT"]     = "TRUE"
-		os.environ["GRASS_BACKGROUNDCOLOR"] = "ffffff"
-		os.environ["GRASS_HEIGHT"]          = str(self.height)
-		os.environ["GRASS_WIDTH"]           = str(self.width)
-		os.environ["GRASS_MESSAGE_FORMAT"]  = "gui"
-		os.environ["GRASS_PNG_AUTO_WRITE"]  = "TRUE"
-		os.environ["GRASS_TRUECOLOR"]       = "TRUE"
-		os.environ["GRASS_COMPRESSION"]     = "0"
-		os.environ["GRASS_VERBOSE"]         = str(self.verbosity)
+        self.__initEnv()
+        self.__initRegion()
+        os.environ["GRASS_TRANSPARENT"]     = "TRUE"
+        os.environ["GRASS_BACKGROUNDCOLOR"] = "ffffff"
+        os.environ["GRASS_HEIGHT"]          = str(self.height)
+        os.environ["GRASS_WIDTH"]           = str(self.width)
+        os.environ["GRASS_MESSAGE_FORMAT"]  = "gui"
+        os.environ["GRASS_PNG_AUTO_WRITE"]  = "TRUE"
+        os.environ["GRASS_TRUECOLOR"]       = "TRUE"
+        os.environ["GRASS_COMPRESSION"]     = "0"
+        os.environ["GRASS_VERBOSE"]         = str(self.verbosity)
 
-	def __initRegion(self):
+    def __initRegion(self):
 		"""
 		Reads current region settings from g.region command
 		"""
@@ -345,7 +346,7 @@ class Map:
 		# self.region['ewres'] = self.region['nsres'] = abs(float(self.region['e'])
 		# - float(self.region['w']))/self.width
 
-	def __initMonSize(self):
+    def __initMonSize(self):
 		"""
 		Reads current GRASS monitor dimensions from env or
 		use the default values [640x480]
@@ -363,7 +364,7 @@ class Map:
 			self.height = 480
 
 
-	def __initEnv(self):
+    def __initEnv(self):
 		"""
 		Stores environment variables to self.env variable
 		"""
@@ -382,7 +383,7 @@ class Map:
 			val = val.replace("'","")
 			self.env[key] = val
 
-	def __adjustRegion(self):
+    def __adjustRegion(self):
 		"""
 		Adjust region according to monitor size
 		"""
@@ -427,7 +428,7 @@ class Map:
 
 		Debug.msg (3, "Map.__adjustRegion(): %s" % self.region)
 
-	def GetRegion(self):
+    def GetRegion(self):
 		"""
 		Returns dictionary with output from g.region -gp
 
@@ -454,7 +455,7 @@ class Map:
 		Debug.msg (3, "Map.GetRegion(): %s" % region)
 		return region
 
-	def SetRegion(self):
+    def SetRegion(self):
 		"""
 		Render string for GRASS_REGION env. variable, so that the images will be rendred
 		from desired zoom level.
@@ -510,7 +511,7 @@ class Map:
 		except:
 			return None
 
-	def GetListOfLayers(self, l_type=None, l_active=None, l_hidden=None):
+    def GetListOfLayers(self, l_type=None, l_active=None, l_hidden=None):
 		"""
 		Returns list of layers (including overlays [l_type='overlay'] of
 		selected type or list of all layers. It
@@ -556,8 +557,8 @@ class Map:
 
 		Debug.msg (3, "Map.GetListOfLayers(): numberof=%d" % len(selected))
 		return selected
-		
-	def Render(self, force=False):
+
+    def Render(self, force=False):
 		"""
 		Creates final image composite
 
@@ -615,7 +616,7 @@ class Map:
 			    " width=" + str(self.width) + \
 			    " height=" + str(self.height) + \
 			    " output=" + self.mapfile
-			
+
 			# render overlays
 
 			os.unsetenv("GRASS_REGION")
@@ -639,7 +640,7 @@ class Map:
 				os.environ["GRASS_REGION"] = tmp_region
 			return None
 
-	def AddRasterLayer(self, name, mapset=None,
+    def AddRasterLayer(self, name, mapset=None,
 			   dispcmd = {},
 			   l_active=True, l_hidden=False, l_opacity=1, l_render=False):
 		"""
@@ -684,7 +685,7 @@ class Map:
 
 		return self.layers[-1]
 
-	def AddGraphLayer(self, name, graph=None, color="255:0:0",
+    def AddGraphLayer(self, name, graph=None, color="255:0:0",
 		coordsinmapunits=False,
 		l_active=True, l_hidden=True, l_opacity=1, l_render=False):
             """
@@ -725,7 +726,7 @@ class Map:
 
             return self.layers[-1]
 
-	def AddVectorLayer(self, name, mapset=None,
+    def AddVectorLayer(self, name, mapset=None,
 			   dispcmd={},
 			   l_active=True, l_hidden=False, l_opacity=1, l_render=False):
             """
@@ -766,7 +767,7 @@ class Map:
 
 	    return self.layers[-1]
 
-	def AddCommandLayer(self, name, mapset=None, l_active=True, l_hidden=False,
+    def AddCommandLayer(self, name, mapset=None, l_active=True, l_hidden=False,
 		l_opacity=1, l_render=False):
 		"""
 		Adds generic layer to list of layers
@@ -807,7 +808,7 @@ class Map:
 
 		return self.layers[-1]
 
-	def addLayer(self, item, command, mapset=None, l_active=True, l_hidden=False,
+    def addLayer(self, item, command, mapset=None, l_active=True, l_hidden=False,
 		l_opacity=1, l_render=False):
 		"""
 		Adds generic display command layer to list of layers
@@ -848,7 +849,7 @@ class Map:
 
 		return self.layers[-1]
 
-	def delLayer(self, item, name=None):
+    def delLayer(self, item, name=None):
 		"""
 		Removes layer from list of layers, defined by layer
 		tree item ID
@@ -875,7 +876,7 @@ class Map:
 
 		return None
 
-	def reorderLayers(self, item_list):
+    def reorderLayers(self, item_list):
 		"""
 		Make a new reordered list to match reordered
 		layer tree - for drag and drop
@@ -890,7 +891,7 @@ class Map:
 		self.layers = temp
 		return self.layers[-1]
 
-	def updateLookup(self, olditem, newitem):
+    def updateLookup(self, olditem, newitem):
 		"""
 		Changes layer tree item associatd with rendering layer
 		in the lookup dictionary. Used with layer drag and drop.
@@ -900,7 +901,7 @@ class Map:
 
 		# old lookup item will be deleted when layer is deleted
 
-	def changeLayer(self, item, command, mapset=None, l_active=True, l_hidden=False,
+    def changeLayer(self, item, command, mapset=None, l_active=True, l_hidden=False,
 		l_opacity=1, l_render=False):
 		"""
 		Change the command and other other options for a layer
@@ -931,7 +932,7 @@ class Map:
 
 		return self.layers[-1]
 
-	def changeOpacity(self, item, l_opacity):
+    def changeOpacity(self, item, l_opacity):
 		"""
 		Changes opacity value for rendering.
 		"""
@@ -941,14 +942,14 @@ class Map:
 		layer = self.lookup[item]
 		layer.opacity = l_opacity
 
-	def changeActive(self, item, activ):
+    def changeActive(self, item, activ):
 		"""
 		Change the active state of a layer
 		"""
 		layer = self.lookup[item]
 		layer.active = activ
 
-	def RemoveLayer(self, name=None, mapset=None, id=None):
+    def RemoveLayer(self, name=None, mapset=None, id=None):
 		"""
 		Removes layer from list of layers, defined by name@mapset or id
 
@@ -981,7 +982,7 @@ class Map:
 
 		return None
 
-	def GetLayerIndex(self, name, mapset=None):
+    def GetLayerIndex(self, name, mapset=None):
 		"""
 		Returns index of layer in layer list
 
@@ -1003,9 +1004,9 @@ class Map:
 
 		return None
 
-	def addOverlay(self, type, command, mapset=None, l_active=True,
+    def addOverlay(self, ovltype=None, type='overlay', command=None, mapset=None, l_active=True,
 		       l_hidden=False, l_opacity=1, l_render=False):
-		"""
+        """
 		Adds overlay (grid, barscale, others?) to list of overlays
 
 		Overlay Attributes:
@@ -1017,50 +1018,57 @@ class Map:
                     Added layer on success or None
 		"""
 
-		Debug.msg (2, "Map.addOverlay(): name=%s, mapset=%s, render=%d" % (command, mapset, l_render))
-		overlay = MapLayer(type="overlay", name=command, mapset=mapset,
+        Debug.msg (2, "Map.addOverlay(): name=%s, mapset=%s, render=%d" % (command, mapset, l_render))
+        overlay = MapLayer(type='overlay', name=command, mapset=mapset,
 				   active=l_active, hidden=l_hidden, opacity=l_opacity)
 
 		# add maplayer to the list of layers
-		self.overlays.append(overlay)
+        self.overlays.append(overlay)
 		# add item and layer to lookup dictionary
 
-		if l_render and command != '':
-			if not overlay.Render():
-				sys.stderr.write("Could not render overlay <%s>\n" % (command))
+        if l_render and command != '':
+            if not overlay.Render():
+                sys.stderr.write("Could not render overlay <%s>\n" % (command))
 
-		return self.overlays[-1]
+        self.ovlookup[ovltype] = overlay
 
-	def changeOverlay(self, type, command, mapset=None, l_active=True,
+        return self.overlays[-1]
+
+    def changeOverlay(self, ovltype, type, command, mapset=None, l_active=True,
 			  l_hidden=False, l_opacity=1, l_render=False):
-		"""
+        """
 		Change overlay properities
 		"""
-		
-		overlay = MapLayer('overlay', command, mapset,
+
+        newoverlay = MapLayer('overlay', command, mapset,
 				 l_active, l_hidden, l_opacity)
 
-		# add maplayer to the list of layers
-		self.overlays[type] = overlay
 
-		if l_render and command != '':
+        oldovlindex = self.overlays.index(self.ovlookup[ovltype])
+
+        # add overlay to the list of layers
+        if self.ovlookup[ovltype]:
+            self.overlays[oldovlindex] = newoverlay
+            self.ovlookup[ovltype] = newoverlay
+
+        if l_render and command != '':
 			if not overlay.Render():
 				sys.stderr.write("Could not render overlay <%s>\n" % (command))
 
-		return self.overlays[-1]
+        return self.overlays[-1]
 
-	def changeOverlayActive(self, type, activ):
+    def changeOverlayActive(self, ovltype, activ):
 		"""
 		Change active status of overlay
 		"""
 		try:
-			overlay = self.overlays[type]
+			overlay = self.ovlookup[ovltype]
 			overlay.active = activ
 			Debug.msg (3, "Map.changeOverlayActive(): type=%d, active=%d" % (type, activ))
 		except:
 			sys.stderr.write("Cannot change status of overlay index [%d]\n" % type)
 
-	def Clean(self):
+    def Clean(self):
 		"""
 		Go trough all layers and remove them from layer list
 		Removes also l_mapfile and l_maskfile
