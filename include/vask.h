@@ -40,7 +40,7 @@ struct ans_rec {
 *** page is an array of pointers to lines on a page.
 **/
 struct page {
-	char *line[MAX_LINE] ;
+	const char *line[MAX_LINE] ;
 };
 
 struct V__
@@ -63,19 +63,19 @@ extern struct V__ V__ ;
 
 #endif
 
-int V_float_accuracy (int);
+void V_float_accuracy(int);
 int V_call(void);
-int V_intrpt_ok(void);
-int V_intrpt_msg(const char *);
-int V_clear(void);
-int V_const(void *,char,int,int,int);
-int V_error(char *);
-int V_exit(void);
-int V_init(void);
-int V_line(register int,register char *);
-int V_ques(void *,char,int,int,int);
+void V_intrpt_ok(void);
+void V_intrpt_msg(const char *);
+void V_clear(void);
+int V_const(void *,int,int,int,int);
+void V_error(const char *, ...);
+void V_exit(void);
+void V_init(void);
+int V_line(int,const char *);
+int V_ques(void *,int,int,int,int);
 int V__dump_window(void);
-int V__remove_trail(int,char *);
-int V__trim_decimal(char *);
+void V__remove_trail(int,char *);
+void V__trim_decimal(char *);
 
 #endif /* __VASK_H__ */

@@ -38,9 +38,9 @@
  *  \return always returns 0
  */
 
-int V_clear()
+void V_clear(void)
 {
-	static char *text = "" ;
+	static const char text[] = "" ;
 	int at_answer ;
 
 	for (at_answer=0; at_answer < MAX_ANSW; at_answer++)  
@@ -57,11 +57,4 @@ int V_clear()
 	V__.NUM_LINE  = 0 ;
 	V_float_accuracy(DECIMAL_PLACES);
 	sprintf (V__.interrupt_msg, "CANCEL");
-
-/* please leave this code commented out 
-	fflush(stdout);
-	system("clear");
-*/
-
-	return 0;
 }

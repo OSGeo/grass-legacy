@@ -36,7 +36,7 @@
  * \return always returns 0
  */
 
-int V_init()	
+void V_init(void)
 {
     static int first = 1;
 
@@ -61,6 +61,4 @@ int V_init()
 #ifdef HAVE_KEYPAD
     keypad(stdscr, 1);
 #endif
-
-    return(0) ;
 }

@@ -81,8 +81,8 @@ ALGORITHM:
 #include <grass/vask.h>
 
 
-static int centered(const char *);
-static int fmt(char *,int,double);
+static void centered(const char *);
+static void fmt(char *,int,double);
 
 /* define the V__ struct defined in vask.h */
 struct V__ V__ ;
@@ -456,11 +456,9 @@ int V_call(void)
  * \return always returns 0
  */
 
-int V_intrpt_ok(void)
+void V_intrpt_ok(void)
 {
     interrupts_ok = 1;		/* will be set false when V_call() exists */
-
-    return 0;
 }
 
 
@@ -478,15 +476,13 @@ int V_intrpt_ok(void)
  * \return always returns 0
  */
 
-int V_intrpt_msg (const char *msg)
+void V_intrpt_msg(const char *msg)
 {
     strcpy (V__.interrupt_msg, msg);
-
-    return 0;
 }
 
 
-static int fmt(char *s,int n, double x)
+static void fmt(char *s,int n, double x)
 {
     char buf[20];
 
@@ -501,12 +497,10 @@ static int fmt(char *s,int n, double x)
     sprintf (s, buf, x);
     if (n < 0)
 	V__trim_decimal(s);
-
-    return 0;
 }
 
 
-static int centered(const char *msg)
+static void centered(const char *msg)
 {
     int indent;
 
@@ -516,6 +510,4 @@ static int centered(const char *msg)
 
     addstr(msg);
     addstr("\n");
-
-    return 0;
 }

@@ -44,16 +44,14 @@
  * \return -1 on error
  */
 
-int V_line(
-	register int linenumber ,
-	register char *text )
+int V_line(int linenumber, const char *text)
 {
 	if (linenumber >= MAX_LINE || linenumber < 0) 
 	{
 		V_error("Linenumber out of bounds in call to V_line") ;
 		return(-1) ;
 	}
-	V__.page.line[linenumber] = text ;
+	V__.page.line[linenumber] = text;
 
 	return 0;
 }
