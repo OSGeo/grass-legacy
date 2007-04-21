@@ -2,10 +2,15 @@
 #include <string.h>
 #include <grass/btree.h>
 
+static int cmp(const void *a, const void *b)
+{
+    return strcmp(a, b);
+}
+
 int main (void)
 {
     char key[100], data[100];
-    char *k, *d;
+    void *k, *d;
     BTREE B;
 
     btree_create (&B, strcmp, 10);
@@ -29,7 +34,7 @@ int main (void)
     fprintf (stdout,"final tree\n");
     btree_rewind (&B);
     while (btree_next (&B, &k, &d))
-	fprintf (stdout,"%s:%s\n", k, d);
+	fprintf (stdout,"%s:%s\n", (const char *) k, (const char *) d);
 
     return 0;
 }

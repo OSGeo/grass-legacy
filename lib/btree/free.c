@@ -1,9 +1,9 @@
 #include <grass/btree.h>
 #include <stdlib.h>
 
-int btree_free (BTREE *B)
+int btree_free(BTREE *B)
 {
-    char *data, *key;
+    void *data, *key;
 
     btree_rewind (B);
     while (btree_next (B, &key, &data))
