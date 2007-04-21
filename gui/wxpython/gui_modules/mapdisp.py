@@ -265,9 +265,11 @@ class BufferedWindow(wx.Window):
         Debug.msg (3, "BufferedWindow.Draw(): id=%s, pdctype=%s, coord=%s" % (drawid, pdctype, coords))
 
         if pdctype == 'clear': # erase the display
-            bg = wx.Brush(self.GetBackgroundColour())
+            print 'in clear'
+            bg = wx.WHITE_BRUSH
+#            bg = wx.Brush(self.GetBackgroundColour())
             pdc.SetBackground(bg)
-            #pdc.Clear()
+            pdc.Clear()
             self.Refresh()
             pdc.EndDrawing()
             return
@@ -495,6 +497,7 @@ class BufferedWindow(wx.Window):
         """
         # dc = wx.BufferedDC(wx.ClientDC(self), self._Buffer)
         # self.Draw(dc, dctype='clear')
+        print 'in erasemap'
         self.Draw(self.pdc, pdctype='clear')
 
     def DragMap(self, moveto):
