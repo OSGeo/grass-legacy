@@ -6,6 +6,7 @@ SUBDIRS = \
 	g.ask \
 	g.dirseps \
 	g.filename \
+	g.findetc \
 	g.findfile \
 	g.gisenv \
 	g.mapset \
