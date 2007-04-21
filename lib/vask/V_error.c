@@ -24,6 +24,7 @@
 
 #include <stdio.h>
 #include <stdarg.h>
+#include <grass/gis.h>
 #include <grass/vask.h>
 
 /**
@@ -45,4 +46,6 @@ void V_error(const char *fmt, ...)
 	fprintf(stderr,"V_ask error: ");
 	vfprintf(stderr, fmt, ap);
 	va_end(ap);
+
+	G_sleep(4);
 }
