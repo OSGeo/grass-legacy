@@ -19,10 +19,12 @@ static void trans ( double *x, double *y, int n_points,
 		    double angle, double scale, double xc, double yc )
 {
     double m[2][2];
+    double sin_a = sin(angle);
+    double cos_a = cos(angle);
     int i;
 
-    m[0][0] =  cos(angle) * scale;    m[0][1] = -sin(angle) * scale;
-    m[1][0] =  sin(angle) * scale;    m[1][1] =  cos(angle) * scale;
+    m[0][0] =  cos_a * scale;    m[0][1] = -sin_a * scale;
+    m[1][0] =  sin_a * scale;    m[1][1] =  cos_a * scale;
 
     for ( i = 0; i < n_points; i++)
     {
