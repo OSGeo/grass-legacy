@@ -36,14 +36,14 @@
  * \return always returns 0
  */
 
-int V__trim_decimal ( char *buf)
+void V__trim_decimal ( char *buf)
 {
     char *mark;
 
     /* find the . */
     while (*buf != '.')
 	if (*buf++ == '\0')
-	    return 0;
+	    return;
 
     mark = buf;
     while (*++buf)
@@ -52,6 +52,4 @@ int V__trim_decimal ( char *buf)
 
     while(*mark)
 	*mark++ = 0;
-
-	return 0;
 }

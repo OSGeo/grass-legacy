@@ -43,9 +43,7 @@
  *  \return always returns 0
  */
 
-int V_float_accuracy (int n)
+void V_float_accuracy(int n)
 {
     V__.decimal_places = n;
-
-	return 0;
 }

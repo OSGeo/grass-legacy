@@ -22,20 +22,9 @@
  * \date 1999-2006
  */
 
-#include <grass/config.h>
 #include <stdio.h>
-#include <unistd.h>
+#include <stdarg.h>
 #include <grass/vask.h>
-
-
-#ifdef __MINGW32__
-unsigned int sleep (unsigned int seconds)
-{
-    /* TODO: no sleep for now */
-    return 0;
-}
-#endif
-
 
 /**
  * \fn int V_error (char *message)
@@ -48,10 +37,12 @@ unsigned int sleep (unsigned int seconds)
  * \return always returns 0
  */
 
-int V_error( char *message )
+void V_error(const char *fmt, ...)
 {
-	fprintf(stderr,"V_ask error: %s\n", message) ;
-	sleep(4) ;
+	va_list ap;
 
-	return 0;
+	va_start(ap, fmt);
+	fprintf(stderr,"V_ask error: ");
+	vfprintf(stderr, fmt, ap);
+	va_end(ap);
 }

@@ -46,11 +46,8 @@
  */
 
 int V_const(
-    void  *src   ,
-    char  var_type ,
-    int   row      ,
-    int   col      ,
-    int   length   )
+    void *src, int var_type,
+    int row, int col, int length)
 {
     union target targetptr ;
     targetptr.i = src;
@@ -62,16 +59,12 @@ int V_const(
     }
     if ((row < 0) || (row >= MAX_LINE))
     {
-	char msg[80];
-	sprintf (msg,"Illegal row (%d) in call to V_const", row);
-	V_error(msg) ;
+	V_error("Illegal row (%d) in call to V_const", row) ;
 	return(-1) ;
     }
     if ((col < 0) || (col > 80))
     {
-	char msg[80];
-	sprintf (msg,"Illegal column (%d) in call to V_const", col);
-	V_error(msg) ;
+	V_error("Illegal column (%d) in call to V_const", col) ;
 	return(-1) ;
     }
     if ((length < 0) || ((length + col) > 80))

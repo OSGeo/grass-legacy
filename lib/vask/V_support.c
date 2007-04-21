@@ -44,23 +44,18 @@
  * \return -1 on error
  */
 
-int V__dump_window()
+int V__dump_window(void)
 {
 	int atrow, atcol ;
 	FILE *file ;
-	char home[80] ;
+	char home[GPATH_MAX];
 	int curx, cury ;
 
-#ifdef __MINGW32__
-        /* Quick hack in absence of understanding */ 
-        sprintf(home,"c:/visual_ask" ) ;
-#else        
-	sprintf(home,"%s/visual_ask", getpwuid(getuid())->pw_dir ) ;
-#endif
+	sprintf(home,"%s/visual_ask", G_home()) ;
     
 	if ((file=fopen(home, "a")) == NULL)
 	{
-		G_warning (_("Unable to open file %s"), home);
+		V_error(_("Unable to open file %s"), home);
 		return(-1) ;
 	}
 
@@ -86,30 +81,30 @@ int V__dump_window()
 
 
 /**
- * \fn int V__remove_trail (int ans_col, char *ANSWER)
+ * \fn int V__remove_trail (int ans_col, char *answer)
  *
- * \brief Remove trailing text from <b>ANSWER</b>?
+ * \brief Remove trailing text from <b>answer</b>?
  *
  * \param[in] ans_col
- * \param[in] ANSWER
+ * \param[in] answer
  * \return always returns 0;
  */
 
-int V__remove_trail( int ans_col , char *ANSWER )
+void V__remove_trail( int ans_col , char *answer )
 {
-	char *ANS_PTR ;
+	char *ans_ptr ;
 
-	ANS_PTR = ANSWER + ans_col ;
+	ans_ptr = answer + ans_col ;
 	while (ans_col>=0) 
 	{
-		int c = *(unsigned char *)ANS_PTR;
+		int c = *(unsigned char *)ans_ptr;
 		if (c > '\040' && c != '\177' && c != '_')
-			return 0 ;
+			return ;
 
-		*ANS_PTR = '\0' ;
+		*ans_ptr = '\0' ;
 		ans_col-- ;
-		ANS_PTR-- ;
+		ans_ptr-- ;
 	}
 
-	return 0;
+	return;
 }

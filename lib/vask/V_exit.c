@@ -35,7 +35,7 @@
  * \return always returns 0
  */
 
-int V_exit()
+void V_exit(void)
 {
 #ifdef HAVE_KEYPAD
 	keypad(stdscr, 0);
@@ -46,9 +46,9 @@ int V_exit()
     /* added for Mips' braindead implementation of curses 
      * and the ordering is important
      */
-	    echo();
-	    nl();
-	    noraw();
+	echo();
+	nl();
+	noraw();
 
 	endwin();
 	fflush(stdout);
@@ -63,6 +63,4 @@ int V_exit()
         setvbuf (stderr, NULL, _IONBF, 0);
         setvbuf (stdout, NULL, _IONBF, 0);
 #endif
-
-    return 0;
 }
