@@ -43,9 +43,12 @@ main (int argc, char **argv)
     struct Option *field_opt;
     struct Option *ocolor_opt, *colors_opt;
     struct Option *columns_opt, *sizecol_opt;
-    struct Flag *y_center_flag;
+    struct Flag *y_center_flag, *legend_flag;
 /*   struct Flag *horizontal_bar_flag; */
     struct Map_info Map;
+    char   **tokens;
+    int    ntokens;  /* number of tokens */
+
     COLOR defcols[] = { { 0,   0,   0, 255 }, /* blue */
                         { 0,   0, 255, 255 }, /* cyan */ 	
                         { 0,   0, 255,   0 }, /* green */ 	
@@ -114,7 +117,7 @@ main (int argc, char **argv)
     colors_opt->multiple   = YES ;
     colors_opt->description= _("Colors used to fill charts") ;
     colors_opt->gisprompt  = GISPROMPT_COLOR ;
-	
+
     y_center_flag = G_define_flag();
     y_center_flag->key = 'c';
     y_center_flag->description = _("Center the bar chart around a data point") ;
@@ -125,7 +128,11 @@ main (int argc, char **argv)
     max_reference_opt->required   = NO ;
     max_reference_opt->multiple   = YES;
     max_reference_opt->description= _("Maximum value used for bar plot reference") ;
-	
+
+    legend_flag = G_define_flag();
+    legend_flag->key = 'l';
+    legend_flag->description = _("Create legend information and send to stdout");
+
    /*
     horizontal_bar_flag = G_define_flag();
     horizontal_bar_flag->key = 'h';
@@ -142,7 +149,6 @@ main (int argc, char **argv)
 		y_center = 1; /* center the bar graphs around the y_coord of a point */
 	else
 		y_center = 0; /* do not center the bar graphs around the y_coord of a point */
-		
 
 
     /* Read options */
@@ -169,10 +175,10 @@ main (int argc, char **argv)
 
     /* Fill colors */
     colors = (COLOR *) G_malloc ( ncols * sizeof ( COLOR ) );
-    
+
     /* Fill max_reference values */
     max_reference = (double *) G_malloc ( ncols * sizeof ( double ) );
-    
+
     /* default colors */
     j = 0;
     for ( i = 0; i < ncols; i++ ) {
@@ -199,27 +205,38 @@ main (int argc, char **argv)
 	    }
 	}
     }
-    
+
+    if(legend_flag->answer) {
+	tokens = G_tokenize(columns_opt->answer, ",");
+	ntokens = G_number_of_tokens(tokens);
+
+	for ( i = 0; i < ntokens; i++ ) {
+	    fprintf(stdout, "%d|%s|%d:%d:%d\n",
+		i+1, tokens[i], colors[i].r, colors[i].g, colors[i].b);
+	}
+    }
+
     size = atoi (size_opt->answer);
     scale = atof (scale_opt->answer);
 
     /* Make sure map is available */
     mapset = G_find_vector2 (map_opt->answer, NULL) ; 
-    if (mapset == NULL) G_fatal_error(_("Vector file [%s] not available"), map_opt->answer) ;
+    if (mapset == NULL)
+	G_fatal_error(_("Vector file [%s] not available"), map_opt->answer);
 
     /* open vector */
     Vect_set_open_level (2);
     Vect_open_old (&Map, map_opt->answer, mapset);
-    
-    
+
+
     ctype = CTYPE_PIE;
     if ( ctype_opt->answer[0] == 'b' ) ctype = CTYPE_BAR;
     
     if (R_open_driver() != 0) G_fatal_error (_("No graphics device selected"));
-	
+
 	/* should we plot the maximum reference on bar plots? */
 	if(max_reference_opt->answer != NULL) {
-		
+
 		/* loop through the given values */
 		for ( i = 0; i < ncols; i++ ) {
 			if ( max_reference_opt->answers[i] == NULL ) break;
@@ -227,13 +244,13 @@ main (int argc, char **argv)
 			max_reference[i] = atof(max_reference_opt->answers[i]); /* remember to convert to float */
 		}
 	}
-	
-	
+
+
     D_setup(0);
 
     G_setup_plot (D_get_d_north(), D_get_d_south(), D_get_d_west(), D_get_d_east(),
 		  D_move_abs, D_cont_abs);
-	
+
     ret = plot( ctype, &Map, type, field, 
 	         columns_opt->answer, ncols, 
 		 sizecol_opt->answer, size, scale, 
