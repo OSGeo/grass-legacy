@@ -10,7 +10,7 @@ Classes:
  * cmdPanel
  * GrassGUIApp
  * GUI
- 
+
 # Copyright (C) 2000-2007 by the GRASS Development Team
 # Author: Jan-Oliver Wagner <jan@intevation.de>
 # Improved by: Bernhard Reiter   <bernhard@intevation.de>
@@ -55,6 +55,7 @@ import textwrap
 import select
 import wx.lib.flatnotebook as FN
 import wx.lib.colourselect as csel
+import wx.lib.filebrowsebutton as filebrowse
 import wx.html
 
 # Do the python 2.0 standard xml thing and map it on the old names
@@ -196,12 +197,12 @@ class grassTask:
             if f['name'] == aFlag:
                 return f
         raise ValueError, "Flag not found : %s" % aFlag
-    
+
     def getCmd(self, ignoreErrors = False):
         """
         Produce an array of command name and arguments for feeding
         into some execve-like command processor.
-        
+
         If ignoreErrors==True then it will return whatever has been
         built so far, even though it would not be a correct command
         for GRASS.
@@ -209,7 +210,7 @@ class grassTask:
         cmd = [self.name]
         errors = 0
         errStr = ""
-        
+
         for flag in self.flags:
             if 'value' in flag and flag['value']:
                 cmd += [ '-' + flag['name'] ]
@@ -250,7 +251,7 @@ class processTask(HandlerBase):
         if name == 'task':
             self.task.name = attrs.get('name', None)
             self.task.keywords = []
-            
+
         if name == 'parameter':
             self.inParameter = True;
             self.param_label = ''
@@ -305,7 +306,7 @@ class processTask(HandlerBase):
         if name == 'keywords':
             self.inKeywordsContent = True
             self.keyword = ''
-            
+
     # works with python 2.0, but is not SAX compliant
     def characters(self, ch):
         self.my_characters(ch)
@@ -345,7 +346,7 @@ class processTask(HandlerBase):
             #            if not self.param_label:
             #                self.param_label = self.param_description
             #                self.param_description = ''
-                
+
             self.task.params.append({
                 "name" : self.param_name,
                 "type" : self.param_type,
@@ -370,7 +371,7 @@ class processTask(HandlerBase):
 
         if name == 'label':
             self.param_label = normalize_whitespace(self.label)
-            
+
         if name == 'description':
             if self.inParameter:
                 self.param_description = normalize_whitespace(self.description)
@@ -397,7 +398,7 @@ class processTask(HandlerBase):
             for keyword in self.keyword.split(','):
                 self.task.keywords.append (normalize_whitespace(keyword))
             self.inKeywordsContent = False
-            
+
 class helpPanel(wx.html.HtmlWindow):
     """
     This panel holds the text from GRASS docs.
@@ -442,7 +443,7 @@ class mainFrame(wx.Frame):
 
     If run with a parent, it may Apply, Ok or Cancel; the latter two close the dialog.
     The former two trigger a callback.
-    
+
     If run standalone, it will allow execution of the command.
 
     The command is checked and sent to the clipboard when clicking 'Copy'.
@@ -486,7 +487,7 @@ class mainFrame(wx.Frame):
         #wx.EVT_MENU(self, wx.ID_ABOUT, self.OnAbout)
         #wx.EVT_MENU(self, ID_ABOUT_COMMAND, self.OnAboutCommand)
         #wx.EVT_MENU(self, wx.ID_EXIT,  self.OnCancel)
-        
+
         guisizer = wx.BoxSizer(wx.VERTICAL)
 
         # set apropriate output window
@@ -504,7 +505,7 @@ class mainFrame(wx.Frame):
         self.description = wx.StaticText (parent=self, label=self.task.description)
         topsizer.Add (item=self.description, proportion=0, border=5, flag=wx.ALL)
         guisizer.Add (item=topsizer, proportion=0, flag=wx.ALIGN_BOTTOM)
-        
+
         # notebooks
         self.notebookpanel = cmdPanel (parent=self, task=self.task, standalone=standalone)
         if standalone:
@@ -651,12 +652,12 @@ class cmdPanel(wx.Panel):
 
         self.task = task
         fontsize = 10
-        
+
         # Determine tab layout
         sections = []
         is_section = {}
         not_hidden = [ p for p in self.task.params + self.task.flags if not p.get( 'hidden','no' ) == 'yes' ]
-        
+
         for task in not_hidden:
             if task.get( 'required','no' ) == 'yes':
                 # All required go into Main, even if they had defined another guisection
@@ -670,16 +671,16 @@ class cmdPanel(wx.Panel):
                 sections.append( task['guisection'] )
             else:
                 is_section[ task['guisection'] ] += 1
-                
+
         # Main goes first, Options goes second
         for (newidx,content) in [ (0,_( 'Main' )), (1,_('Options')) ]:
             if content in sections:
                 idx = sections.index( content )
                 sections[idx:idx+1] = []
-                sections[newidx:newidx] =  [content] 
+                sections[newidx:newidx] =  [content]
 
         panelsizer = wx.BoxSizer(orient=wx.VERTICAL)
-        
+
         # Build notebook
         nbStyle=FN.FNB_NO_X_BUTTON|FN.FNB_VC8|FN.FNB_BACKGROUND_GRADIENT
         self.notebook = FN.FlatNotebook( self, id=wx.ID_ANY, style=nbStyle)
@@ -777,13 +778,13 @@ class cmdPanel(wx.Panel):
                     txt = wx.StaticText(parent=which_panel,
                                         label = _('%s. Valid range=%s') % (title, str(valuelist).strip("[]'") + ':' ) )
                     which_sizer.Add(item=txt, proportion=0, flag=wx.ADJUST_MINSIZE | wx.TOP | wx.LEFT, border=5)
-                    
+
                     txt2 = wx.TextCtrl(parent=which_panel, value = p.get('default',''),
                                        size = (STRING_ENTRY_WIDTH, ENTRY_HEIGHT))
                     if p.get('value','') != '':
                         txt2.SetValue(p['value']) # parameter previously set
                     which_sizer.Add(item=txt2, proportion=0, flag=wx.ADJUST_MINSIZE | wx.BOTTOM | wx.LEFT, border=5)
-                    
+
                     p['wxId'] = txt2.GetId()
                     txt2.Bind(wx.EVT_TEXT, self.OnSetValue)
                 else:
@@ -809,10 +810,10 @@ class cmdPanel(wx.Panel):
 
                 txt3 = wx.TextCtrl(parent=which_panel, value = p.get('default',''),
                                    size = (STRING_ENTRY_WIDTH, ENTRY_HEIGHT))
-                
+
                 if p.get('value','') != '':
                     txt3.SetValue(p['value']) # parameter previously set
-                    
+
                 which_sizer.Add(item=txt3, proportion=0, flag=wx.BOTTOM | wx.LEFT, border=5)
                 p['wxId'] = txt3.GetId()
                 txt3.Bind(wx.EVT_TEXT, self.OnSetValue)
@@ -821,7 +822,7 @@ class cmdPanel(wx.Panel):
                 txt = wx.StaticText(parent=which_panel, label = title + ':')
                 which_sizer.Add(item=txt, proportion=0, flag=wx.ADJUST_MINSIZE | wx.TOP | wx.LEFT, border=5)
                 # element selection tree combobox (maps, icons, regions, etc.)
-                if p.get('prompt','') != 'color':
+                if p.get('prompt','') != 'color' and p.get('element', '') != 'file':
                     selection = select.Select(parent=which_panel, id=wx.ID_ANY, size=(300,-1),
                                               type=p.get('element','') )
                     if p.get('value','') != '':
@@ -862,6 +863,17 @@ class cmdPanel(wx.Panel):
                         p['wxId'].append( none_check.GetId() )
                     else:
                         p['wxId'].append(None)
+                elif p.get('prompt','') != 'color' and p.get('element', '') == 'file':
+                    fbb = filebrowse.FileBrowseButton(which_panel, wx.ID_ANY, size=(450, -1), labelText='',
+                                   dialogTitle='Choose color table file', startDirectory=os.getcwd(), fileMode=0,
+                                   changeCallback=self.fbbCallback)
+                    if p.get('value','') != '':
+                        fbb.SetValue(p['value']) # parameter previously set
+                    which_sizer.Add(item=fbb, proportion=0, flag=wx.ADJUST_MINSIZE| wx.BOTTOM | wx.LEFT, border=5)
+                    # A file browse button is a combobox with two children: a textctl and a popupwindow;
+                    # we target the textctl here
+                    p['wxId'] = fbb.GetChildren()[0].GetId()
+                    fbb.Bind(wx.EVT_TEXT, self.OnSetValue)
 	    if txt is not None:
                 txt.SetFont( wx.Font( fontsize, wx.FONTFAMILY_DEFAULT, wx.NORMAL, text_style, 0, ''))
 
@@ -887,6 +899,9 @@ class cmdPanel(wx.Panel):
 
     def OnPageChange(self, event):
         self.Layout()
+
+    def fbbCallback(self, event):
+        print event.GetString()
 
     def OnColorChange( self, event ):
         myId = event.GetId()
@@ -962,7 +977,7 @@ class cmdPanel(wx.Panel):
             dlg.ShowModal()
             dlg.Destroy()
             cmd = None
-            
+
         return cmd
 
 
