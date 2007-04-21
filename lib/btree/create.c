@@ -2,7 +2,7 @@
 #include <stdlib.h>
 #include <grass/btree.h>
 
-int btree_create (BTREE *B,int (*cmp)(),int incr)
+int btree_create(BTREE *B, int (*cmp)(const void *, const void *), int incr)
 {
     if (incr <= 0)
 	incr = 1;

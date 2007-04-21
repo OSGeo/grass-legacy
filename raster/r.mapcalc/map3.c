@@ -169,9 +169,9 @@ static void write_row(void *handle, const char *buf, int type, int depth, int ro
 
 /****************************************************************************/
 
-static int compare_ints(int *a, int *b)
+static int compare_ints(const void *a, const void *b)
 {
-	return *a - *b;
+	return *(const int *) a - *(const int *) b;
 }
 
 static void init_colors(map *m)
@@ -274,6 +274,7 @@ static void translate_from_cats(map *m, CELL *cell, DCELL *xcell, int ncols)
 	CELL cat, key;
 	double vbuf[1<<SHIFT];
 	double *values;
+	void *ptr;
 	char *label;
 
 	btree = &m->btree;
@@ -300,7 +301,7 @@ static void translate_from_cats(map *m, CELL *cell, DCELL *xcell, int ncols)
 /* If key not already in the tree, sscanf() all cats for this key
  * and put them into the tree
  */
-		if (!btree_find(btree, (char *)&key, (char **)&values))
+		if (!btree_find(btree, &key, &ptr))
 		{
 			values = vbuf;
 			for (i = 0; i < NCATS; i++)
@@ -312,9 +313,12 @@ static void translate_from_cats(map *m, CELL *cell, DCELL *xcell, int ncols)
 			}
 
 			values = vbuf;
-			btree_update(btree, (char *)&key, sizeof(key),
-				      (char *)values, sizeof(vbuf));
+			btree_update(btree,
+				     &key, sizeof(key),
+				     vbuf, sizeof(vbuf));
 		}
+		else
+			values = ptr;
 
 /* and finally lookup the translated value */
 		if (IS_NULL_D(&values[idx]))

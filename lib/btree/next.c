@@ -1,6 +1,6 @@
 #include <grass/btree.h>
 
-int btree_next (BTREE *B,char **key,char **data)
+int btree_next(BTREE *B, void **key, void **data)
 {
     int q;
 

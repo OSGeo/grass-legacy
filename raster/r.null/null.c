@@ -16,8 +16,8 @@ int main(int argc, char *argv[])
 {
     char *name, *mapset;
     char rname[GNAME_MAX], rmapset[GMAPSET_MAX];
+    char path[GPATH_MAX];
     int row, col, null_fd;
-    char element[300], path[400];
     unsigned char *null_bits;
     RASTER_MAP_TYPE map_type;
     int change_null=0, create, remove, only_int, only_fp, only_null;

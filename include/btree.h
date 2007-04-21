@@ -1,7 +1,7 @@
 typedef struct
 {
-    char *key;
-    char *data;
+    void *key;
+    void *data;
     int left;
     int right;
 } BTREE_NODE;
@@ -13,18 +13,18 @@ typedef struct
     int N;              /* number of actual nodes in tree */
     int incr;		/* number of nodes to add at a time */
     int cur;
-    int (*cmp)();	/* routine to compare keys */
+    int (*cmp)(const void *, const void *);	/* routine to compare keys */
 } BTREE ;
 
 /* create.c */
-int btree_create(BTREE *, int (*)(), int);
+int btree_create(BTREE *, int (*)(const void *, const void *), int);
 /* find.c */
-int btree_find(BTREE *, char *, char **);
+int btree_find(const BTREE *, const void *, void **);
 /* free.c */
 int btree_free(BTREE *);
 /* next.c */
-int btree_next(BTREE *, char **, char **);
+int btree_next(BTREE *, void **, void **);
 /* rewind.c */
 int btree_rewind(BTREE *);
 /* update.c */
-int btree_update(BTREE *, char *, int, char *, int);
+int btree_update(BTREE *, const void *, int, const void *, int);

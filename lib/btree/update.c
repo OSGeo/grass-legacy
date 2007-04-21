@@ -1,12 +1,13 @@
 #include <stdio.h>
 #include <stdlib.h>
+#include <string.h>
 #include <grass/btree.h>
 
-static char *store(char *,int);
+static void *store(const void *, int);
 
 int btree_update (BTREE *B,
-    char *key,int keylen,
-    char *data,int datalen)
+    const void *key, int keylen,
+    const void *data, int datalen)
 {
     int p = 0;
     int q;
@@ -77,16 +78,18 @@ int btree_update (BTREE *B,
     return 1;
 }
 
-static char *store (char *s,int n)
+static void *store(const void *s, int n)
 {
-    char *b,*c;
+    void *b;
 
     if (n <= 0)
-	return (b = NULL);
-    c = b = malloc (n);
+	return NULL;
+
+    b = malloc(n);
     if (b == NULL)
 	return b;
-    while (n-- > 0)
-	*b++ = *s++;
-    return c;
+
+    memcpy(b, s, n);
+
+    return b;
 }

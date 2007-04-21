@@ -32,13 +32,12 @@
 
 int main(int argc, char *argv[])
 {
-    char rname[80];		/* Reclassed map name */
-    char rmapset[80];		/* Reclassed mapset   */
+    char rname[GNAME_MAX];	/* Reclassed map name */
+    char rmapset[GMAPSET_MAX];	/* Reclassed mapset   */
     char *mapset;		/* Raster mapset      */
     struct Cell_head cellhd;
     struct GModule *module;
     struct Option *raster, *title_opt, *history_opt, *map_opt;
-    char element[255];
     char buf[512];
     int cellhd_ok;		/* Is cell header OK? */
     int is_reclass;		/* Is raster reclass? */
@@ -260,7 +259,7 @@ int main(int argc, char *argv[])
             "(all zero cells will then be considered no data)? "), raster->answer);
     if (G_yes(buf, 0)) {
         int null_fd;
-        char path[400];
+        char path[GPATH_MAX];
 
         if (is_reclass)
             G_fatal_error(_("[%s] is a reclass of another map. Exiting."), raster->answer);
