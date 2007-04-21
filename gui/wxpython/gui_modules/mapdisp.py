@@ -263,7 +263,7 @@ class BufferedWindow(wx.Window):
         self.Refresh()
 
         Debug.msg (3, "BufferedWindow.Draw(): id=%s, pdctype=%s, coord=%s" % (drawid, pdctype, coords))
-        
+
         if pdctype == 'clear': # erase the display
             bg = wx.Brush(self.GetBackgroundColour())
             pdc.SetBackground(bg)
@@ -415,50 +415,7 @@ class BufferedWindow(wx.Window):
         for overlay in self.Map.GetListOfLayers(l_type="overlay", l_active=True):
             if os.path.isfile(overlay.mapfile) and os.path.getsize(overlay.mapfile):
                 img = wx.Image(overlay.mapfile, wx.BITMAP_TYPE_ANY)
-
-                #                     left = right = top = bottom = 0
-                #                     breakout = False
-                #                     # auto-crop scales and legends
-                #                     for w in range(img.GetWidth()): # set left edge
-                #                         for h in range(img.GetHeight()-1):
-                #                             if img.IsTransparent(w,h) == False:
-                #                                 left = w
-                #                                 breakout = True
-                #                                 break
-                #                         if breakout:
-                #                             breakout = False
-                #                             break
-                #                     for w in range(img.GetWidth()-1, 0, -1): # set right edge
-                #                         for h in range(img.GetHeight()-1):
-                #                             if img.IsTransparent(w,h) == False:
-                #                                 right = w
-                #                                 breakout = True
-                #                                 break
-                #                         if breakout:
-                #                             breakout = False
-                #                             break
-                #                     for h in range(img.GetHeight()): # set top edge
-                #                         for w in range(left,right):
-                #                             if img.IsTransparent(w,h) == False:
-                #                                 top = h
-                #                                 breakout = True
-                #                                 break
-                #                         if breakout:
-                #                             breakout = False
-                #                             break
-                #                     for h in range(img.GetHeight()-1, 0, - 1): # set top edge
-                #                         for w in range(left,right):
-                #                             if img.IsTransparent(w,h) == False:
-                #                                 bottom = h
-                #                                 breakout = True
-                #                                 break
-                #                         if breakout:
-                #                             breakout = False
-                #                             break
-                #                     cropwidth = right - left
-                #                     cropheight = bottom - top
                 pdc_id = self.Map.overlays.index(overlay)
-                #                     self.ovldict[pdc_id] = img,(cropwidth,cropheight)  # image and cropping information for each overlay image
                 self.ovldict[pdc_id] = img  # image information for each overlay image
                 self.imagedict[img] = pdc_id # set image PeudoDC ID
 
@@ -961,7 +918,7 @@ class MapFrame(wx.Frame):
         """
 
         Debug.msg (1, "MapFrame.__init__(): size=%d,%d" % (size[0], size[1]))
-        
+
         wx.Frame.__init__(self, parent, id, title, pos, size, style)
 
         # most of the thime, this will be the gis manager
@@ -981,7 +938,7 @@ class MapFrame(wx.Frame):
         # Set the size & cursor
         #
         self.SetClientSize(size)
-        
+
         #
         # Fancy gui
         #
@@ -1010,9 +967,9 @@ class MapFrame(wx.Frame):
 
 
         # d.barscale overlay added to rendering overlay list
-        self.Map.addOverlay(type=0, command='d.barscale', l_active=False, l_render=False)
+        self.Map.addOverlay(0, type='overlay', command='d.barscale', l_active=False, l_render=False)
         # d.barscale overlay added to rendering overlay list as placeholder for d.legend
-        self.Map.addOverlay(type=1, command='d.barscale', l_active=False, l_render=False)
+        self.Map.addOverlay(1, type='overlay', command='d.barscale', l_active=False, l_render=False)
 
         #
     	# Init map display
@@ -1024,7 +981,7 @@ class MapFrame(wx.Frame):
         self.MapWindow = BufferedWindow(self, id = wx.ID_ANY, Map=self.Map, tree=self.tree) # initialize buffered DC
     	self.MapWindow.Bind(wx.EVT_MOTION, self.OnMotion)
         self.MapWindow.SetCursor (self.cursors["cross"]) # default
-        
+
         #
         # Init zoomhistory
         #
@@ -1282,7 +1239,7 @@ class MapFrame(wx.Frame):
            pgnum = self.layerbook.GetPageIndex(self.page)
            if pgnum > -1:
               self.layerbook.DeletePage(pgnum)
-              
+
         self.Destroy()
 
     def getRender(self):
@@ -1407,15 +1364,15 @@ class MapFrame(wx.Frame):
             params = ''
 
         # get overlay images (overlay must be active)
-        if not self.Map.overlays[ovltype].active:
-            self.Map.changeOverlayActive(type=0, activ=True)
+        if not self.Map.ovlookup[ovltype].active:
+            self.Map.ovlookup[ovltype].active = True
             self.Map.Render(force=True)
-            
+
         ovldict = self.MapWindow.GetOverlay()
 
         if id not in ovldict:
             return
-        
+
         img = ovldict[id]
 
         if id not in self.ovlcoords:
@@ -1430,7 +1387,7 @@ class MapFrame(wx.Frame):
                         checktxt = "Show/hide scale and arrow",
                         ctrltxt = "scale object",
                         params = params)
-        
+
         dlg.CenterOnScreen()
 
         # If OK button pressed in decoration control dialog
@@ -1455,15 +1412,15 @@ class MapFrame(wx.Frame):
             params = ''
 
       # get overlay images (overlay must be active)
-        if not self.Map.overlays[ovltype].active:
-            self.Map.changeOverlayActive(type=0, activ=True)
+        if not self.Map.ovlookup[ovltype].active:
+            self.Map.ovlookup[ovltype].active = True
             self.Map.Render(force=True)
-            
+
         ovldict = self.MapWindow.GetOverlay()
-        
+
         if id not in ovldict:
             return
-        
+
         img = ovldict[id]
 
         if id not in self.ovlcoords:
@@ -1549,7 +1506,7 @@ class MapFrame(wx.Frame):
 
         # Reset comand and rendering options in render.Map. Always render decoration.
         # Showing/hiding handled by PseudoDC
-        self.Map.changeOverlay(type=type, command=dcmd, l_active=True, l_render=False)
+        self.Map.changeOverlay(ovltype=type, type='overlay', command=dcmd, l_active=True, l_render=False)
         self.params[type] = params
 
     def onZoomMenu(self, event):
@@ -1790,7 +1747,7 @@ class MapApp(wx.App):
            Map = render.Map() # instance of Map class to render GRASS display output to PPM file
         else:
            Map = None
-           
+
         self.mapFrm = MapFrame(parent=None, id=wx.ID_ANY, Map=Map, size=(640,480))
         #self.SetTopWindow(Map)
         self.mapFrm.Show()
