@@ -177,13 +177,13 @@ int main (int argc, char *argv[])
 
                 if ((datafds[i]=G_open_cell_old(refs.file[i-1].name,
                     refs.file[i-1].mapset)) < 0) {
-                        G_fatal_error(_("Unable to open cell man <%s> for input.\n"),
+                        G_fatal_error(_("Cannot open raster map <%s>"),
                                     refs.file[i-1].name);
                 }
 
                 sprintf(tempname, "%s.%d", out_opt->answer, i);
                 if ((outfds[i]=G_open_cell_new(tempname)) < 0)
-                        G_fatal_error(_("Unable to open cell map <%s> for output.\n"), tempname);
+                        G_fatal_error(_("Cannot create raster map <%s>"), tempname);
         }
 
         /* do the transform */
