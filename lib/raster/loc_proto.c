@@ -243,7 +243,7 @@ void LOC_cont_rel(int x, int y)
  *  \return int
  */
 
-void LOC_polydots_abs(int *xarray, int *yarray, int number)
+void LOC_polydots_abs(const int *xarray, const int *yarray, int number)
 {
 	COM_Polydots_abs(xarray, yarray, number);
 }
@@ -263,7 +263,7 @@ void LOC_polydots_abs(int *xarray, int *yarray, int number)
  *  \return int
  */
 
-void LOC_polydots_rel(int *xarray, int  *yarray, int number)
+void LOC_polydots_rel(const int *xarray, const int *yarray, int number)
 {
 	COM_Polydots_rel(xarray, yarray, number);
 }
@@ -284,7 +284,7 @@ void LOC_polydots_rel(int *xarray, int  *yarray, int number)
  *  \return int
  */
 
-void LOC_polyline_abs(int *xarray, int  *yarray, int number)
+void LOC_polyline_abs(const int *xarray, const int *yarray, int number)
 {
 	COM_Polyline_abs(xarray, yarray, number);
 }
@@ -306,7 +306,7 @@ void LOC_polyline_abs(int *xarray, int  *yarray, int number)
  *  \return int
  */
 
-void LOC_polyline_rel(int *xarray, int *yarray, int number)
+void LOC_polyline_rel(const int *xarray, const int *yarray, int number)
 {
 	COM_Polyline_rel(xarray, yarray, number);
 }
@@ -324,7 +324,7 @@ void LOC_polyline_rel(int *xarray, int *yarray, int number)
  *  \return int
  */
 
-void LOC_polygon_abs(int *xarray, int *yarray, int number)
+void LOC_polygon_abs(const int *xarray, const int *yarray, int number)
 {
 	COM_Polygon_abs(xarray, yarray, number);
 }
@@ -344,7 +344,7 @@ void LOC_polygon_abs(int *xarray, int *yarray, int number)
  *  \return int
  */
 
-void LOC_polygon_rel(int *xarray, int *yarray, int number)
+void LOC_polygon_rel(const int *xarray, const int *yarray, int number)
 {
 	COM_Polygon_rel(xarray, yarray, number);
 }
@@ -531,8 +531,8 @@ void LOC_begin_scaled_raster(int src[2][2], int dst[2][2])
 }
 
 int LOC_scaled_raster(int n, int row,
-	unsigned char *red, unsigned char *grn, unsigned char *blu,
-	unsigned char *nul)
+	const unsigned char *red, const unsigned char *grn, const unsigned char *blu,
+	const unsigned char *nul)
 {
 	return COM_scaled_raster(n, row, red, grn, blu, nul);
 }

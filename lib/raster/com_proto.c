@@ -227,7 +227,7 @@ void R_cont_rel(int x, int y)
  *  \return int
  */
 
-void R_polydots_abs(int *xarray, int *yarray, int number)
+void R_polydots_abs(const int *xarray, const int *yarray, int number)
 {
 	trans->polydots_abs(xarray, yarray, number);
 }
@@ -247,7 +247,7 @@ void R_polydots_abs(int *xarray, int *yarray, int number)
  *  \return int
  */
 
-void R_polydots_rel(int *xarray, int  *yarray, int number)
+void R_polydots_rel(const int *xarray, const int *yarray, int number)
 {
 	trans->polydots_rel(xarray, yarray, number);
 }
@@ -268,7 +268,7 @@ void R_polydots_rel(int *xarray, int  *yarray, int number)
  *  \return int
  */
 
-void R_polyline_abs(int *xarray, int  *yarray, int number)
+void R_polyline_abs(const int *xarray, const int *yarray, int number)
 {
 	trans->polyline_abs(xarray, yarray, number);
 }
@@ -290,7 +290,7 @@ void R_polyline_abs(int *xarray, int  *yarray, int number)
  *  \return int
  */
 
-void R_polyline_rel(int *xarray, int *yarray, int number)
+void R_polyline_rel(const int *xarray, const int *yarray, int number)
 {
 	trans->polyline_rel(xarray, yarray, number);
 }
@@ -308,7 +308,7 @@ void R_polyline_rel(int *xarray, int *yarray, int number)
  *  \return int
  */
 
-void R_polygon_abs(int *xarray, int *yarray, int number)
+void R_polygon_abs(const int *xarray, const int *yarray, int number)
 {
 	trans->polygon_abs(xarray, yarray, number);
 }
@@ -328,7 +328,7 @@ void R_polygon_abs(int *xarray, int *yarray, int number)
  *  \return int
  */
 
-void R_polygon_rel(int *xarray, int *yarray, int number)
+void R_polygon_rel(const int *xarray, const int *yarray, int number)
 {
 	trans->polygon_rel(xarray, yarray, number);
 }
@@ -508,8 +508,8 @@ void R_begin_scaled_raster(int s[2][2], int d[2][2])
 }
 
 int R_scaled_raster(int n, int row,
-	unsigned char *red, unsigned char *grn, unsigned char *blu,
-	unsigned char *nul)
+	const unsigned char *red, const unsigned char *grn, const unsigned char *blu,
+	const unsigned char *nul)
 {
 	return trans->scaled_raster(n, row, red, grn, blu, nul);
 }

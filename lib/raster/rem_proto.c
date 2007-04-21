@@ -247,7 +247,7 @@ void REM_cont_rel(int x, int y)
  *  \param number
  */
 
-void REM_polydots_abs(int *xarray, int *yarray, int number)
+void REM_polydots_abs(const int *xarray, const int *yarray, int number)
 {
 	_send_ident(POLYDOTS_ABS);
 	_send_int(&number);
@@ -269,7 +269,7 @@ void REM_polydots_abs(int *xarray, int *yarray, int number)
  *  \param number
  */
 
-void REM_polydots_rel(int *xarray, int  *yarray, int number)
+void REM_polydots_rel(const int *xarray, const int *yarray, int number)
 {
 	_send_ident(POLYDOTS_REL);
 	_send_int(&number);
@@ -292,7 +292,7 @@ void REM_polydots_rel(int *xarray, int  *yarray, int number)
  *  \param number
  */
 
-void REM_polyline_abs(int *xarray, int  *yarray, int number)
+void REM_polyline_abs(const int *xarray, const int *yarray, int number)
 {
 	_send_ident(POLYLINE_ABS);
 	_send_int(&number);
@@ -316,7 +316,7 @@ void REM_polyline_abs(int *xarray, int  *yarray, int number)
  *  \param number
  */
 
-void REM_polyline_rel(int *xarray, int *yarray, int number)
+void REM_polyline_rel(const int *xarray, const int *yarray, int number)
 {
 	_send_ident(POLYLINE_REL);
 	_send_int(&number);
@@ -336,7 +336,7 @@ void REM_polyline_rel(int *xarray, int *yarray, int number)
  *  \param number
  */
 
-void REM_polygon_abs(int *xarray, int *yarray, int number)
+void REM_polygon_abs(const int *xarray, const int *yarray, int number)
 {
 	_send_ident(POLYGON_ABS);
 	_send_int(&number);
@@ -358,7 +358,7 @@ void REM_polygon_abs(int *xarray, int *yarray, int number)
  *  \param number
  */
 
-void REM_polygon_rel(int *xarray, int *yarray, int number)
+void REM_polygon_rel(const int *xarray, const int *yarray, int number)
 {
 	_send_ident(POLYGON_REL);
 	_send_int(&number);
@@ -571,8 +571,8 @@ void REM_begin_scaled_raster(int src[2][2], int dst[2][2])
 }
 
 int REM_scaled_raster(int n, int row,
-	unsigned char *red, unsigned char *grn, unsigned char *blu,
-	unsigned char *nul)
+	const unsigned char *red, const unsigned char *grn, const unsigned char *blu,
+	const unsigned char *nul)
 {
 	int z = !!nul;
 	int t;

@@ -74,12 +74,12 @@ void R_move_abs(int,int);
 void R_move_rel(int,int);
 void R_cont_abs(int,int);
 void R_cont_rel(int,int);
-void R_polydots_abs(int *,int *,int);
-void R_polydots_rel(int *,int *,int);
-void R_polyline_abs(int *,int *,int);
-void R_polyline_rel(int *,int *,int);
-void R_polygon_abs(int *,int *,int);
-void R_polygon_rel(int *,int *,int);
+void R_polydots_abs(const int *,const int *,int);
+void R_polydots_rel(const int *,const int *,int);
+void R_polyline_abs(const int *,const int *,int);
+void R_polyline_rel(const int *,const int *,int);
+void R_polygon_abs(const int *,const int *,int);
+void R_polygon_rel(const int *,const int *,int);
 void R_box_abs(int,int,int,int);
 void R_box_rel(int,int);
 
@@ -98,7 +98,7 @@ void R_panel_delete(const char *);
 
 void R_begin_scaled_raster(int [2][2], int [2][2]);
 int R_scaled_raster(int, int,
-	unsigned char *, unsigned char *, unsigned char *, unsigned char *);
+		    const unsigned char *, const unsigned char *, const unsigned char *, const unsigned char *);
 void R_bitmap(int,int,int,const unsigned char *);
 
 #endif
