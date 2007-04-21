@@ -8,7 +8,7 @@
 </head>
 <body bgcolor="white">
 
-<img src="grass.smlogo.gif" alt="_\|/_ GRASS logo"><hr align=center size=6 noshade>
+<img src="grass_logo.png" alt="_\|/_ GRASS logo"><hr align=center size=6 noshade>
 
 <h2>LRS (Linear Reference System)</h2>
 LRS uses linear features and distance measured along those features
@@ -23,7 +23,7 @@ Typicaly MP is in kilometers and offset in meters.
 <p>
 The implementation of LRS in GRASS has some particularities.
 
-<h3>Double referenced system.</h3>
+<h3>Double referenced system</h3>
 This feature gives a possibility to continue to use most of 
 old mileposts if only small part of linear object in real world
 has changed. Example:
@@ -93,9 +93,36 @@ That means, that MP must be the beginning of antonomous segment
 and all parts which becomes longer then before must be referenced 
 from the last not changed MP.
 <p>
-The MP start_mp and end_mp columns may be decimal, but v.lrs.create takes the decimal part, 
-and adds its value to offset and print a warning.
+The MP <em>start_mp</em> and <em>end_mp</em> columns must be decimal, but 
+<em>v.lrs.create</em> takes only the decimal part, and adds its value to
+<!-- still true with warning? -->
+offset and prints a warning.
+<p>
 
+<h3>LRS table structure</h3>
+
+<table border=1>
+<tr><td><b>Attribute</b></td><td><b>Type</b></td><td><b>Description</b></td></tr>
+<tr><td>rsid</td><td> integer</td><td> reference segment ID, unique in the table</td></tr>
+<tr><td>lcat</td><td> integer</td><td> category of the line in the LRS map</td></tr>
+<tr><td>lid</td><td> integer</td><td> route ID (LID)</td></tr>
+<tr><td>start_map</td><td> double precision</td><td> distance measured along the line in LRS map from the beginning of the line to the beginning of the segment</td></tr>
+<tr><td>end_map</td><td> double precision</td><td> distance measured along the line in LRS map from the beginning of the line to the end of the segment</td></tr>
+<tr><td>start_mp</td><td> double precision</td><td> milepost assigned to the start of the segment</td></tr>
+<tr><td>start_off</td><td> double precision</td><td> distance from start_mp to the start of the segment measured along the physical object</td></tr>
+<tr><td>end_mp</td><td> double precision</td><td> milepost assigned to the end of the segment</td></tr>
+<tr><td>end_off</td><td> double precision</td><td> distance from end_mp to end of the segment measured along the physical object</td></tr>
+</table>
+
+<h3>Available commands</h3>
+<ul>
+<li><a href="v.lrs.create.html">v.lrs.create</a> to create a linear reference system,
+<li><a href="v.lrs.label.html">v.lrs.label</a> to create stationing on the LRS,
+<li><a href="v.lrs.segment.html">v.lrs.segment</a> to create points/segments on LRS,
+ and
+<li><a href="v.lrs.where.html">v.lrs.where</a> to find line id and real km+offset
+for given points in vector map using linear reference system.
+</ul>
 
 <h3>Input lines for v.lrs.segment and v.lrs.label</h3>
 v.lrs.create joins all connected lines of the same line ID into one line, 
