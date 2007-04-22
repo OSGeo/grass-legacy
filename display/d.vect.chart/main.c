@@ -50,17 +50,19 @@ main (int argc, char **argv)
     int    ntokens;  /* number of tokens */
 
     COLOR defcols[] = { { 0,   0,   0, 255 }, /* blue */
-                        { 0,   0, 255, 255 }, /* cyan */ 	
-                        { 0,   0, 255,   0 }, /* green */ 	
-                        { 0, 255, 255,   0 }, /* yellow */ 	
-                        { 0, 255,   0,   0 }, /* red */ 	
-                        { -1,  0,   0,   0 }  /* END */ 	
+			{ 0,   0, 255, 255 }, /* cyan */	
+			{ 0,   0, 255,   0 }, /* green */	
+			{ 0, 255, 255,   0 }, /* yellow */	
+			{ 0, 255,   0,   0 }, /* red */
+			{ 0, 255,   0, 255 }, /* magenta */
+			{ -1,  0,   0,   0 }  /* END */
 		      };
-    
+
     module = G_define_module();
     module->keywords = _("display");
-    module->description = _("Displays charts of GRASS vector data in the active frame on the "
-	                  "graphics monitor");
+    module->description =
+	_("Displays charts of GRASS vector data in the active frame "
+	  "on the graphics monitor");
 
     map_opt = G_define_standard_option(G_OPT_V_MAP); 
 
