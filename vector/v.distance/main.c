@@ -103,38 +103,45 @@ int main (int argc, char *argv[])
 
     module = G_define_module();
     module->keywords = _("vector, database, attribute table");
-    module->description = _("Find the nearest element in vector 'to' for elements in vector 'from'. "
-			    "Various information about this relation may be uploaded to the attribute table of "
-			    "input vector 'from' or printed to stdout.");
+    module->description =
+	_("Find the nearest element in vector 'to' for elements in vector 'from'. "
+	  "Various information about this relation may be uploaded to the "
+	  "attribute table of input vector 'from' or printed to stdout.");
 
     from_opt = G_define_standard_option(G_OPT_V_INPUT);
     from_opt->key         = "from" ;
     from_opt->description = _("Name of existing vector map");
+    from_opt->guisection  = _("From_map");
 
     to_opt = G_define_standard_option(G_OPT_V_INPUT);
     to_opt->key         = "to" ;
     to_opt->description = _("Name of existing vector map");
+    to_opt->guisection  = _("To_map");
 
     from_type_opt = G_define_standard_option(G_OPT_V_TYPE); 
-    from_type_opt->key         = "from_type";
-    from_type_opt->options     = "point,centroid";
-    from_type_opt->answer      = "point";
-    from_type_opt->description = _("From type");
+    from_type_opt->key     = "from_type";
+    from_type_opt->options = "point,centroid";
+    from_type_opt->answer  = "point";
+    from_type_opt->label   = _("From type");
+    from_type_opt->guisection  = _("From_map");
 
     to_type_opt = G_define_standard_option(G_OPT_V_TYPE); 
-    to_type_opt->key         = "to_type";
-    to_type_opt->options     = "point,line,boundary,centroid,area";
-    to_type_opt->answer      = "point,line,area";
-    to_type_opt->description = _("To type");
+    to_type_opt->key     = "to_type";
+    to_type_opt->options = "point,line,boundary,centroid,area";
+    to_type_opt->answer  = "point,line,area";
+    to_type_opt->label   = _("To type");
+    to_type_opt->guisection  = _("To_map");
 
     from_field_opt = G_define_standard_option(G_OPT_V_FIELD) ;     
-    from_field_opt->key         = "from_layer";
-    from_field_opt->description = _("From layer");
-    
+    from_field_opt->key   = "from_layer";
+    from_field_opt->label = _("From layer");
+    from_field_opt->guisection  = _("From_map");
+
     to_field_opt = G_define_standard_option(G_OPT_V_FIELD) ;     
-    to_field_opt->key         = "to_layer";
-    to_field_opt->description = _("To layer");
-    
+    to_field_opt->key   = "to_layer";
+    to_field_opt->label = _("To layer");
+    to_field_opt->guisection  = _("To_map");
+
     out_opt = G_define_standard_option(G_OPT_V_OUTPUT);
     out_opt->key         = "output";
     out_opt->required    = NO;
@@ -153,51 +160,57 @@ int main (int argc, char *argv[])
     upload_opt->required = YES;
     upload_opt->multiple = YES;
     upload_opt->options = "cat,dist,to_x,to_y,to_along,to_angle,to_attr";
-    upload_opt->description = _("Values describing the relation between two nearest features:\n"
-	"\tcat - category of the nearest feature\n"
-	"\tdist - minimum distance to nearest feature\n"
-	"\tto_x - x coordinate of the nearest point on 'to' feature\n"
-	"\tto_y - y coordinate of the nearest point on 'to' feature\n"
-	"\tto_along - distance to the nearest point on 'from' feature along linear feature\n"
-	"\tto_angle - angle of linear feature in nearest point, counterclockwise from positive " 
-	              "x axis, in radians, which is between -PI and PI inclusive\n"
-	"\tto_attr - attribute of nearest feature given by to_column option");
-
-     /*	"\tfrom_x - x coordinate of the nearest point on 'from' feature\n" */
-     /*	"\tfrom_y - y coordinate of the nearest point on 'from' feature\n" */
-     /* "\tfrom_along - distance to the nearest point on 'from' feature along linear feature\n" */
+    upload_opt->description = _("Values describing the relation between two nearest features");
+    upload_opt->descriptions =
+	 _("cat;category of the nearest feature;"
+	"dist;minimum distance to nearest feature;"
+	"to_x;x coordinate of the nearest point on 'to' feature;"
+	"to_y;y coordinate of the nearest point on 'to' feature;"
+	"to_along;distance to the nearest point on 'from' feature along linear feature;"
+	"to_angle;angle of linear feature in nearest point, counterclockwise from positive " 
+	    "x axis, in radians, which is between -PI and PI inclusive;"
+	"to_attr;attribute of nearest feature given by to_column option");
+     /*	"from_x - x coordinate of the nearest point on 'from' feature;" */
+     /*	"from_y - y coordinate of the nearest point on 'from' feature;" */
+     /* "from_along - distance to the nearest point on 'from' feature along linear feature;" */
     
     column_opt = G_define_option();
     column_opt->key = "column";
     column_opt->type = TYPE_STRING;
     column_opt->required = YES;
     column_opt->multiple = YES;
-    column_opt->description = _("Column name(s) where values specified by 'upload' option will be uploaded");
+    column_opt->description =
+	_("Column name(s) where values specified by 'upload' option will be uploaded");
+    column_opt->guisection  = _("From_map");
 
     to_column_opt = G_define_option();
     to_column_opt->key = "to_column";
     to_column_opt->type = TYPE_STRING;
     to_column_opt->required = NO;
     to_column_opt->multiple = NO;
-    to_column_opt->description = _("Column name of nearest feature (used with upload=to_attr)");
+    to_column_opt->description =
+	_("Column name of nearest feature (used with upload=to_attr)");
+    to_column_opt->guisection  = _("To_map");
 
     table_opt = G_define_option();
     table_opt->key = "table";
     table_opt->type = TYPE_STRING;
     table_opt->required = NO;
     table_opt->multiple = NO;
-    table_opt->description = _("The name of the table created for output when -a flag is used");
+    table_opt->description =
+	_("The name of the table created for output when the distance to all flag is used");
 
     print_flag = G_define_flag();
     print_flag->key = 'p';
-    print_flag->description = _("Print output to stdout, don't update attribute table. "
-	    "First column is always category of 'from' feature called from_cat");
+    print_flag->label = _("Print output to stdout, don't update attribute table");
+    print_flag->description =
+	_("First column is always category of 'from' feature called from_cat");
     
     all_flag = G_define_flag();
     all_flag->key = 'a';
-    all_flag->description = _("Calculate distances to all features within the threshold. "
-      "The output is written to stdout but may be uploaded to a new table created by this module. "
-      "From categories are may be multiple");
+    all_flag->label =  _("Calculate distances to all features within the threshold");
+    all_flag->description = _("The output is written to stdout but may be uploaded "
+	"to a new table created by this module. From categories are may be multiple."); /* huh? */
     
     if (G_parser(argc, argv))
         exit(EXIT_FAILURE);
