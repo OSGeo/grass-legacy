@@ -1,4 +1,3 @@
-
 import  wx
 
 #----------------------------------------------------------------------
@@ -75,9 +74,6 @@ class MapPrint(wx.Printout):
 
         return True
 
-
-
-
 class PrintOptions:
     def __init__(self, parent, mapwin):
         self.mapframe = parent
@@ -118,7 +114,7 @@ class PrintOptions:
 
         pfrm.Initialize()
         pfrm.SetPosition(self.mapframe.GetPosition())
-        pfrm.SetSize(self.mapframe.GetSize())
+        pfrm.SetSize(self.mapframe.GetClientSize())
         pfrm.Show(True)
 
     def OnDoPrint(self, event):
