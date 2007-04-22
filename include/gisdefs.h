@@ -1052,17 +1052,6 @@ long sleep_ltp( double);
 int time_ltp( double *);
 unsigned int G_sleep (unsigned int);
 
-/* sites.c */
-int cleanse_string(char *);
-char *next_att(char *);
-char *G_ask_sites_old(char *, char *);
-char *G_ask_sites_any(char *, char *);
-char *G_ask_sites_in_mapset(char *, char *);
-FILE *G_fopen_sites_old(char *, char *);
-FILE *G_fopen_sites_new(char *);
-int G_get_site(FILE *, double *, double *, char **);
-int G_put_site(FILE *, double, double, char *);
-
 /* snprintf.c */
 int G_snprintf(char *, size_t, const char *, ...) __attribute__((format(printf,3,4)));
 
@@ -1108,19 +1097,19 @@ void G_init_timestamp(struct TimeStamp *);
 void G_set_timestamp(struct TimeStamp *, const DateTime *);
 void G_set_timestamp_range(struct TimeStamp *, const DateTime *, const DateTime *);
 int G__read_timestamp(FILE *, struct TimeStamp *);
-int G__write_timestamp(FILE *, struct TimeStamp *);
-int G_get_timestamps(struct TimeStamp *, DateTime *, DateTime *, int *);
+int G__write_timestamp(FILE *, const struct TimeStamp *);
+int G_get_timestamps(const struct TimeStamp *, DateTime *, DateTime *, int *);
 int G_read_raster_timestamp(const char *, const char *, struct TimeStamp *);
 int G_read_vector_timestamp(const char *, const char *, struct TimeStamp *);
-int G_write_raster_timestamp(const char *, struct TimeStamp *);
-int G_write_vector_timestamp(const char *, struct TimeStamp *);
-int G_format_timestamp ( struct TimeStamp *, char *);
+int G_write_raster_timestamp(const char *, const struct TimeStamp *);
+int G_write_vector_timestamp(const char *, const struct TimeStamp *);
+int G_format_timestamp ( const struct TimeStamp *, char *);
 int G_scan_timestamp ( struct TimeStamp *, char *);
 int G_remove_raster_timestamp (const char *);
 int G_remove_vector_timestamp (const char *);
 int G_read_grid3_timestamp (const char *,const char *, struct TimeStamp *);
 int G_remove_grid3_timestamp (const char *);
-int G_write_grid3_timestamp (const char *, struct TimeStamp *);
+int G_write_grid3_timestamp (const char *, const struct TimeStamp *);
 
 /* token.c */
 char **G_tokenize(const char *, const char *);

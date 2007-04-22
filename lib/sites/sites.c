@@ -32,7 +32,8 @@
 #define isbslash(c) (c==BSLASH)
 
 static int format_double ( double , char *);
-char *next_att (char *);
+static char *next_att (const char *);
+static int cleanse_string(char *);
 
 static int site_att_cmp ( const void *pa, const void *pb) {
     const SITE_ATT *a = pa, *b = pb;
@@ -100,7 +101,7 @@ int G_site_get ( FILE *fptr, Site *s)
 
 
 /* Writes a site to file open on fptr. */
-int G_site_put ( FILE *fptr, Site *s)
+int G_site_put ( FILE *fptr, const Site *s)
 {
     struct Map_info *Map;
     static struct line_pnts *Points = NULL;
@@ -285,37 +286,37 @@ int G_site_get_head (FILE *ptr, Site_head *head)
  *
  **********************************************************************/
 
-char * G_find_sites (char *name,char *mapset)
+char * G_find_sites (char *name, const char *mapset)
 {
   return G_find_vector (name, mapset);
 }
 
 
-char * G_find_sites2 (char *name,char *mapset)
+char * G_find_sites2 (const char *name, const char *mapset)
 {
   return G_find_vector2 (name, mapset);
 }
 
 
-char * G_ask_sites_new (char *prompt,char *name)
+char * G_ask_sites_new (const char *prompt, char *name)
 {
   return G_ask_new (prompt, name, "vector", "vector");
 }
 
 
-char * G_ask_sites_old (char *prompt,char *name)
+char * G_ask_sites_old (const char *prompt, char *name)
 {
   return G_ask_old (prompt, name, "vector", "vector");
 }
 
 
-char * G_ask_sites_any (char *prompt,char *name)
+char * G_ask_sites_any (const char *prompt, char *name)
 {
   return G_ask_any (prompt, name, "vector", "vector", 1);
 }
 
 
-char * G_ask_sites_in_mapset (char *prompt,char *name)
+char * G_ask_sites_in_mapset (const char *prompt, char *name)
 {
   return G_ask_in_mapset (prompt, name, "vector", "vector");
 }
@@ -522,7 +523,7 @@ int G_get_site ( FILE *fd, double *east,double *north, char **desc)
 }
 
 
-int G_put_site ( FILE *fd, double east,double north, char *desc)
+int G_put_site ( FILE *fd, double east,double north, const char *desc)
 {
     /* TODO ? */
     G_fatal_error ( "G_put_site() not yet updated.");
@@ -936,12 +937,11 @@ int G_oldsite_describe ( FILE *ptr,
   return 0;
 }
 
-int G_site_in_region ( Site *site, struct Cell_head *region)
+int G_site_in_region ( const Site *site, const struct Cell_head *region)
 /* returns 1 if site is contained within region, 0 otherwise */
 {
 /* northwest corner is in region, southeast corner is not. */
-double e_ing;
-double G_adjust_easting();
+  double e_ing;
 
   e_ing = G_adjust_easting (site->east, region);
   if (e_ing >= region->west &&
@@ -1015,7 +1015,7 @@ int cleanse_string (char *buf)
   return (int) (stop - buf);
 }
 
-char *next_att (char *buf)
+static char *next_att (const char *buf)
 {
   while (!isspace (*buf) && !isnull(*buf))
     buf++;
@@ -1025,7 +1025,7 @@ char *next_att (char *buf)
     while (isspace (*(buf + 1)) && !isnull(*(buf + 1)))
       buf++;
   buf++;
-  return buf;
+  return (char *) buf;
 }
 
 int G_site_c_cmp (const void *a, const void *b)
@@ -1089,12 +1089,12 @@ int G_oldsite_s_cmp (const void *a, const void *b)
  *
  **********************************************************************/
 
-FILE * G_oldsites_open_old (char *name,char *mapset)
+FILE * G_oldsites_open_old (const char *name, const char *mapset)
 {
   return G_fopen_old ("site_lists", name, mapset);
 }
 
-FILE * G_oldsites_open_new (char *name)
+FILE * G_oldsites_open_new (const char *name)
 {
   return G_fopen_new ("site_lists", name);
 }
@@ -1105,14 +1105,15 @@ FILE * G_oldsites_open_new (char *name)
 /* compatability while porting applications  */
 /*********************************************/
 
-char *G_site_format (Site *s, char *fs, int id)
+char *G_site_format (const Site *s, const char *fs, int id)
 /* sprintf analog to G_site_put with the addition of a field seperator fs 
    and option of printing site attribute identifiers
  */
 {
   char ebuf[MAX_SITE_STRING], nbuf[MAX_SITE_STRING];
   char xbuf[MAX_SITE_STRING];
-  char *nfs, *buf;
+  const char *nfs;
+  char *buf;
   int fmt, i, j, k;
 
   buf=(char *)G_malloc(MAX_SITE_LEN*sizeof(char));
