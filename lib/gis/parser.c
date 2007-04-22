@@ -1109,9 +1109,9 @@ int G_usage (void)
 
 			    while ( opt->opts[i] ) {
 				if ( opt->descs[i] )
-				    fprintf (stderr, "  %*s   %s: %s\n",
+				    fprintf (stderr, "  %*s    %s: %s\n",
 					     maxlen, " ", opt->opts[i], opt->descs[i]);
-				
+
 				i++;
 			    }
 			}
