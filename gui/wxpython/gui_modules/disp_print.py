@@ -1,4 +1,13 @@
 import  wx
+# Based on wxPython demo
+# This is the header from the main.py wxPython calling program
+#
+# Author:       Robin Dunn
+#
+# Created:      A long time ago, in a galaxy far, far away...
+# RCS-ID:       $Id: Main.py,v 1.213 2007/01/17 23:39:00 RD Exp $
+# Copyright:    (c) 1999 by Total Control Software
+# Licence:      wxWindows license
 
 #----------------------------------------------------------------------
 
