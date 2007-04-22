@@ -34,10 +34,15 @@ $~ cd grassaddons/gui
 
 1 - INSTALLATION
 
-Put everything from gui into a new directory $GISBASE/etc/wx.
+1.a) Put everything from gui into a new directory $GISBASE/etc/wx.
+     Or, easier, in GRASS:
+         cd /path/to/grassaddons/gui
+         ln -s `pwd` $GISBASE/etc/wx
 
-Move the script "wxgrass" into $GISBASE/scripts
-
+1.b) Move the script "wxgrass" into $GISBASE/scripts.
+     Or, easier, in GRASS:
+         cd /path/to/grassaddons/gui
+         ln -s `pwd`/wxgrass $GISBASE/scripts
 
 2 - STARTUP WITH GRASS INITIALIZATION
 
