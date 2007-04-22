@@ -21,6 +21,8 @@
 #include <grass/gis.h>
 #include <grass/glocale.h>
 
+static const char *fmt;
+
 static int do_value(const char *buf, RASTER_MAP_TYPE type, struct Colors *colors)
 {
 	CELL ival;
@@ -40,7 +42,9 @@ static int do_value(const char *buf, RASTER_MAP_TYPE type, struct Colors *colors
 			fprintf(stdout, "%d: *\n", ival);
 			return 0;
 		}
-		fprintf(stdout, "%d: %02x:%02x:%02x\n", ival, red, grn, blu);
+		fprintf(stdout, "%d: ", ival);
+		fprintf(stdout, fmt, red, grn, blu);
+		fprintf(stdout, "\n");
 		return 1;
 
 	case FCELL_TYPE:
@@ -55,7 +59,9 @@ static int do_value(const char *buf, RASTER_MAP_TYPE type, struct Colors *colors
 			fprintf(stdout, "%f: *\n", fval);
 			return 0;
 		}
-		fprintf(stdout, "%f: %02x:%02x:%02x\n", fval, red, grn, blu);
+		fprintf(stdout, "%f: ", fval);
+		fprintf(stdout, fmt, red, grn, blu);
+		fprintf(stdout, "\n");
 		return 1;
 	default:
 		G_fatal_error("Invalid map type %d", type);
@@ -67,7 +73,7 @@ int main(int argc, char **argv)
 {
 	struct GModule *module;
 	struct {
-		struct Option *input, *value;
+		struct Option *input, *value, *format;
 	} opt;
 	struct {
 		struct Flag *i;
@@ -99,6 +105,13 @@ int main(int argc, char **argv)
 	opt.value->multiple     = YES;
 	opt.value->description  = _("Values to query colors for");
 
+	opt.format = G_define_option() ;
+	opt.format->key          = "format";
+	opt.format->type         = TYPE_STRING;
+	opt.format->required     = NO;
+	opt.format->answer       = "%d:%d:%d";
+	opt.format->description  = _("Output format (printf-style)");
+
 	flag.i = G_define_flag() ;
 	flag.i->key             = 'i' ;
 	flag.i->description     = _("Read values from stdin") ;
@@ -121,6 +134,8 @@ int main(int argc, char **argv)
 
 	if (G_read_colors(name, mapset, &colors) < 0)
 		G_fatal_error("Unable to read colors for input map %s", name);
+
+	fmt = opt.format->answer;
 
 	if (flag.i->answer)
 	{
