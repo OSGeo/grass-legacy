@@ -94,7 +94,7 @@ int D_set_clip_window (int Top, int Bottom, int Left, int Right)
  *  \return int
  */
 
-int D_set_clip_window_to_map_window ()
+int D_set_clip_window_to_map_window (void)
 {
     D_set_clip_window (
 	(int)D_get_d_north(),
@@ -117,7 +117,7 @@ int D_set_clip_window_to_map_window ()
  *  \return int
  */
 
-int D_set_clip_window_to_screen_window ()
+int D_set_clip_window_to_screen_window (void)
 {
     D_get_screen_window (&top, &bottom, &left, &right);
     D_set_clip_window(top, bottom, left, right);
@@ -231,7 +231,7 @@ int D_move_rel (int x,int y)
 #define X(y)  line_eq(y,y0,x0,dy,dx,yround)
 
 
-static int clip ()
+static int clip (void)
 {
     register int x0,y0;
     register int dx,dy;

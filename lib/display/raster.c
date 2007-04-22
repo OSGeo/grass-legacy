@@ -33,11 +33,11 @@ extern int D__overlay_mode;
 
 static int src[2][2], dst[2][2];
 
-static int draw_cell(int,void *,struct Colors *,RASTER_MAP_TYPE);
+static int draw_cell(int,const void *,struct Colors *,RASTER_MAP_TYPE);
 
 int D_draw_raster(
     int A_row,
-    void *array,
+    const void *array,
     struct Colors *colors,
     RASTER_MAP_TYPE data_type)
 {
@@ -46,26 +46,26 @@ int D_draw_raster(
 
 int D_draw_d_raster(
     int A_row,
-    DCELL *darray,
+    const DCELL *darray,
     struct Colors *colors)
 {
-    return draw_cell(A_row, (void *) darray, colors, DCELL_TYPE);
+    return draw_cell(A_row, darray, colors, DCELL_TYPE);
 }
 
 int D_draw_f_raster(
     int A_row,
-    FCELL *farray,
+    const FCELL *farray,
     struct Colors *colors)
 {
-    return draw_cell(A_row, (void *) farray, colors, FCELL_TYPE);
+    return draw_cell(A_row, farray, colors, FCELL_TYPE);
 }
 
 int D_draw_c_raster(
     int A_row,
-    CELL *carray,
+    const CELL *carray,
     struct Colors *colors)
 {
-    return draw_cell(A_row, (void *) carray, colors, CELL_TYPE);
+    return draw_cell(A_row, carray, colors, CELL_TYPE);
 }
 
 
@@ -87,15 +87,15 @@ int D_draw_c_raster(
 
 int D_draw_cell(
     int A_row,
-    CELL *carray,
+    const CELL *carray,
     struct Colors *colors)
 {
-    return draw_cell(A_row, (void *) carray, colors, CELL_TYPE);
+    return draw_cell(A_row, carray, colors, CELL_TYPE);
 }
 
 static int draw_cell(
     int A_row,
-    void *array,
+    const void *array,
     struct Colors *colors,
     RASTER_MAP_TYPE data_type)
 {
@@ -165,7 +165,7 @@ int D_cell_draw_setup(int t,int b,int l,int r)
 
 int D_draw_raster_RGB(
     int A_row,
-    void *r_raster, void *g_raster, void *b_raster,
+    const void *r_raster, const void *g_raster, const void *b_raster,
     struct Colors *r_colors, struct Colors *g_colors, struct Colors *b_colors,
     RASTER_MAP_TYPE r_type, RASTER_MAP_TYPE g_type, RASTER_MAP_TYPE b_type)
 {

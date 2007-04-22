@@ -8,10 +8,10 @@
  *
  */
 
-#include "grass/gis.h"
-#include "grass/raster.h"
-#include "grass/symbol.h"
-#include "grass/glocale.h"
+#include <grass/gis.h>
+#include <grass/raster.h>
+#include <grass/symbol.h>
+#include <grass/glocale.h>
 
 /*!
  * \brief draw a symbol at pixel coordinates
@@ -37,11 +37,11 @@
  *  \return int
  */
 
-int D_symbol(SYMBOL *Symb, int x0, int y0, RGBA_Color *line_color, RGBA_Color *fill_color)
+int D_symbol(const SYMBOL *Symb, int x0, int y0, const RGBA_Color *line_color, const RGBA_Color *fill_color)
 {
     int i, j, k;
-    SYMBPART *part;
-    SYMBCHAIN *chain;
+    const SYMBPART *part;
+    const SYMBCHAIN *chain;
     int xp, yp;
     int *x, *y;
 

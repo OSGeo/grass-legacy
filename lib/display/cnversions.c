@@ -65,7 +65,7 @@ static struct vector resolution;
  *  \return int
  */
 
-int D_do_conversions(struct Cell_head *window , int t,int b,int l,int r)
+int D_do_conversions(const struct Cell_head *window , int t,int b,int l,int r)
 {
 	struct vector ARRAY_SIZE;
 	struct rectangle WIND;

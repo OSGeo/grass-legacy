@@ -65,7 +65,7 @@ int G_get_color (CELL n, int *red, int *grn, int *blu, struct Colors *colors)
  *  \return int
  */
 
-int G_get_raster_color (void *rast,
+int G_get_raster_color (const void *rast,
     int *red, int *grn, int *blu,
     struct Colors *colors, RASTER_MAP_TYPE map_type)
 {
@@ -97,7 +97,7 @@ int G_get_raster_color (void *rast,
  *  \return int
  */
 
-int G_get_c_raster_color (CELL *rast,
+int G_get_c_raster_color (const CELL *rast,
     int *red, int *grn, int *blu,
     struct Colors *colors)
 {
@@ -121,7 +121,7 @@ int G_get_c_raster_color (CELL *rast,
  *  \return int
  */
 
-int G_get_f_raster_color (FCELL *rast,
+int G_get_f_raster_color (const FCELL *rast,
     int *red, int *grn, int *blu,
     struct Colors *colors)
 {
@@ -145,7 +145,7 @@ int G_get_f_raster_color (FCELL *rast,
  *  \return int
  */
 
-int G_get_d_raster_color (DCELL *rast,
+int G_get_d_raster_color (const DCELL *rast,
     int *red, int *grn, int *blu,
     struct Colors *colors)
 {

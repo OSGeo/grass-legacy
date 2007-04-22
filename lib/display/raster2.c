@@ -136,7 +136,7 @@ int D_f_color (
  *  \return int
  */
 
-int D_color_of_type( void *raster,
+int D_color_of_type(const void *raster,
     struct Colors *colors,
     RASTER_MAP_TYPE data_type)
 {

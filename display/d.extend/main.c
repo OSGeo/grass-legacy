@@ -11,7 +11,6 @@
 
 #include <stdlib.h>
 #include <grass/gis.h>
-#include <grass/site.h>
 #include <grass/Vect.h>
 #include <grass/raster.h>
 #include <grass/display.h>
@@ -23,8 +22,8 @@ main (int argc, char **argv)
     struct GModule *module;
     int i, first=1;
     char *mapset;
-    char **rast, **vect, **site;
-    int nrasts, nvects, nsites;
+    char **rast, **vect;
+    int nrasts, nvects;
     struct Cell_head window, temp_window;
 
     G_gisinit(argv[0]) ;
@@ -32,8 +31,8 @@ main (int argc, char **argv)
     module = G_define_module();
     module->keywords = _("display, setup");
     module->description =
-		"Set window region so that all currently displayed raster, "
-		"vector and sites maps can be shown in a monitor.";
+		"Set window region so that all currently displayed raster "
+		"and vector maps can be shown in a monitor.";
 
     if(argc > 1 && G_parser(argc, argv))
 	    exit(-1);
@@ -48,13 +47,10 @@ main (int argc, char **argv)
     if(D_get_dig_list (&vect, &nvects) < 0)
 	vect = NULL;
 
-    if(D_get_site_list (&site, &nsites) < 0)
-	site = NULL;
-
     R_close_driver();
 
-    if (rast == NULL && vect == NULL && site == NULL)
-    	G_fatal_error("No raster, vector or sites file displayed");
+    if (rast == NULL && vect == NULL)
+    	G_fatal_error("No raster or vector map displayed");
 
     G_get_window(&window);
 
@@ -63,11 +59,7 @@ main (int argc, char **argv)
 	for(i=0; i<nrasts; i++){
     		mapset = G_find_cell2 (rast[i], "");
     		if (mapset == NULL)
-    		{
-			char msg[256];
-			sprintf(msg,"Raster file [%s] not available", rast[i]);
-			G_fatal_error(msg) ;
-		}
+			G_fatal_error("Raster file [%s] not available", rast[i]) ;
 	 	if(G_get_cellhd(rast[i], mapset, &temp_window) >= 0)
 		{
 			if(first)
@@ -108,11 +100,7 @@ main (int argc, char **argv)
 	for(i=0; i<nvects; i++){
     		mapset = G_find_vector2 (vect[i], "");
     		if (mapset == NULL)
-    		{
-			char msg[256];
-			sprintf(msg,"Vector file [%s] not available", vect[i]);
-			G_fatal_error(msg) ;
-		}
+			G_fatal_error("Vector file [%s] not available", vect[i]) ;
 		if(Vect_open_old_head(&Map, vect[i], mapset) == 2)
 		{
 			if(first)
@@ -135,83 +123,6 @@ main (int argc, char **argv)
 					window.north = Map.plus.box.N;
 			}
 			Vect_close(&Map);
-		}
-	}
-
-	if(window.north == window.south)
-	{
-		window.north += 0.5 * temp_window.ns_res;
-		window.south -= 0.5 * temp_window.ns_res;
-	}
-	if(window.east == window.west)
-	{
-		window.east += 0.5 * temp_window.ew_res;
-		window.west -= 0.5 * temp_window.ew_res;
-	}
-
-	G_align_window(&window, &temp_window);
-    }
-
-    if (site)
-    {
-	FILE *fp;
-	Site *s;
-	int rtype, ndim, nstr, ndec;
-
-	G_copy(&temp_window, &window, sizeof(window));
-
-	for(i=0; i<nsites; i++){
-    		mapset = G_find_sites2 (site[i], "");
-    		if (mapset == NULL)
-    		{
-			char msg[256];
-			sprintf(msg,"Site file [%s] not available", site[i]);
-			G_fatal_error(msg) ;
-		}
-		if(NULL != (fp = G_fopen_sites_old(site[i], mapset)))
-		{
-			rtype = -1;
-			G_site_describe(fp, &ndim, &rtype, &nstr, &ndec);
-			s = G_site_new_struct(rtype, ndim, nstr, ndec);
-			/*
-			while(G_site_get(fp, s) == 0)
-			{
-			*/
-			while(!feof(fp))
-			{
-				if(G_site_get(fp, s))
-					continue;
-				if(first)
-				{
-					first = 0;
-					window.east = s->east;
-					window.west = s->east;
-					window.south = s->north;
-					window.north = s->north;
-				}
-				else
-				{
-					if(window.east < s->east)
-						window.east = s->east;
-					if(window.west > s->east)
-						window.west = s->east;
-					if(window.south > s->north)
-						window.south = s->north;
-					if(window.north < s->north)
-						window.north = s->north;
-				}
-			}
-
-			/* is 100 enough to contain one point from
-			 * boundary?
-			east += 100;
-			west -= 100;
-			south -= 100;
-			north += 100;
-			 */
-
-			G_free(s);
-			fclose(fp);
 		}
 	}
 

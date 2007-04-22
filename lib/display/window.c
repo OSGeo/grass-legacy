@@ -149,25 +149,25 @@ int D_new_window_percent(char *name, float b, float t, float l, float r)
  *  \return int
  */
 
-int D_set_cur_wind( char *name )
+int D_set_cur_wind(const char *name )
 {
 	char pad_cur[64] ;
 	int stat ;
 	int not_same_window ;
 	int t, b, l, r ;
 
-/* Abort if window name is null */
+	/* Abort if window name is null */
 	if (! strlen(name))
 		return(-1) ;
 
-/* Abort if window name is not available */
+	/* Abort if window name is not available */
 	if ((stat = R_pad_select(name)))
 		return(stat) ;
 	
-/* Get name of current window pad */
+	/* Get name of current window pad */
 	D_get_cur_wind(pad_cur) ;
 
-/* Establish whether it is the same as the currently selected pad */
+	/* Establish whether it is the same as the currently selected pad */
 	if (strlen(pad_cur))
 	{
 		not_same_window = strcmp(name, pad_cur) ;
@@ -226,8 +226,8 @@ int D_set_cur_wind( char *name )
 
 int D_get_cur_wind( char *name )
 {
-    int count;
-    int stat ;
+	int count;
+	int stat ;
 	char **list ;
 
 	if ((stat = R_pad_select("")))
@@ -485,7 +485,7 @@ void D_erase_window(void)
 	R_flush();
 }
 
-void D_erase(char *color)
+void D_erase(const char *color)
 {
 	int t, b, l, r;
 	int colorindex;
