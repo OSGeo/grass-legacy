@@ -144,7 +144,7 @@ int G__read_timestamp (FILE *fd, struct TimeStamp *ts)
  *  \param ts    TimeStamp struct
  *  \return int  exit value
  */
-int G__write_timestamp ( FILE *fd, struct TimeStamp *ts)
+int G__write_timestamp ( FILE *fd, const struct TimeStamp *ts)
 {
     char buf[1024];
 
@@ -171,7 +171,7 @@ int G__write_timestamp ( FILE *fd, struct TimeStamp *ts)
  *  \return int  exit value
  */
 int G_format_timestamp (
-    struct TimeStamp *ts,
+    const struct TimeStamp *ts,
     char *buf)
 {
     char temp1[128], temp2[128];
@@ -259,7 +259,7 @@ int G_scan_timestamp (
  *  \return int   always 0
  */
 int G_get_timestamps (
-    struct TimeStamp *ts,
+    const struct TimeStamp *ts,
     DateTime *dt1,DateTime *dt2,
     int *count)
 {
@@ -286,7 +286,7 @@ int G_get_timestamps (
  */
 static int write_timestamp (
     const char *maptype, const char *dir, const char *name,
-    struct TimeStamp *ts)
+    const struct TimeStamp *ts)
 {
     FILE *fd;
     int stat;
@@ -481,7 +481,7 @@ int G_remove_grid3_timestamp (const char *name)
  */
 int G_write_raster_timestamp (
     const char *name,
-    struct TimeStamp *ts)
+    const struct TimeStamp *ts)
 {
     return write_timestamp ("raster", RAST_MISC, name, ts);
 }
@@ -502,7 +502,7 @@ int G_write_raster_timestamp (
  */
 int G_write_vector_timestamp (
     const char *name,
-    struct TimeStamp *ts)
+    const struct TimeStamp *ts)
 {
     return write_timestamp ("vector", VECT_MISC, name, ts);
 }
@@ -522,7 +522,7 @@ int G_write_vector_timestamp (
  */
 int G_write_grid3_timestamp (
     const char *name,
-    struct TimeStamp *ts)
+    const struct TimeStamp *ts)
 {
     return write_timestamp ("grid3", GRID3, name, ts);
 }
