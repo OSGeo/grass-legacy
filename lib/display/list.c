@@ -73,7 +73,7 @@
  *  \return int
  */
 
-int D_set_cell_name( char *name )
+int D_set_cell_name(const char *name )
 {
 	R_pad_delete_item("cell") ;
 
@@ -116,7 +116,7 @@ int D_get_cell_name(char *name )
  *  \return int
  */
 
-int D_set_dig_name( char *name )
+int D_set_dig_name(const char *name )
 {
 	R_pad_delete_item("dig") ;
 
@@ -149,49 +149,7 @@ int D_get_dig_name(char *name )
 }
 
 
-/*!
- * \brief add site map name to display list
- *
- * Stores the site map <b>name</b> in the information associated with the
- * current frame.
- *
- *  \param name
- *  \return int
- */
-
-int D_set_site_name( char *name )
-{
-	R_pad_delete_item("site") ;
-
-	return(R_pad_set_item ("site", name)) ;
-}
-
-
-/*!
- * \brief retrieve site map name
- *
- * Returns the <b>name</b> of the site map associated with the current frame.
- *
- *  \param name
- *  \return int
- */
-
-int D_get_site_name(char *name )
-{
-	int stat ;
-	char **list ;
-	int count ;
-
-	if ((stat = R_pad_get_item ("site", &list, &count)))
-		return(-1) ;
-
-	strcpy(name, list[0]) ;
-
-	R_pad_freelist (list,count) ;
-	return(0) ;
-}
-
-int D_add_to_cell_list( char *name )
+int D_add_to_cell_list(const char *name )
 {
 	return(R_pad_append_item ("cell_list", name, 1)) ;
 }
@@ -206,7 +164,7 @@ int D_get_cell_list(char ***list, int *count )
 	return(0) ;
 }
 
-int D_add_to_dig_list( char *name )
+int D_add_to_dig_list(const char *name )
 {
 	return(R_pad_append_item ("dig_list", name, 1)) ;
 }
@@ -216,21 +174,6 @@ int D_get_dig_list(char ***list, int *count )
 	int stat ;
 
 	if ((stat = R_pad_get_item ("dig_list", list, count)))
-		return(-1) ;
-
-	return(0) ;
-}
-
-int D_add_to_site_list( char *name )
-{
-	return(R_pad_append_item ("site_list", name, 1)) ;
-}
-
-int D_get_site_list(char ***list, int *count )
-{
-	int stat ;
-
-	if ((stat = R_pad_get_item ("site_list", list, count)))
 		return(-1) ;
 
 	return(0) ;
@@ -251,7 +194,7 @@ int D_get_site_list(char ***list, int *count )
  *  \return int
  */
 
-int D_add_to_list( char *string)
+int D_add_to_list(const char *string)
 {
 	return(R_pad_append_item("list", string, 0)) ;
 }
@@ -301,7 +244,7 @@ int D_clear_window(void)
 	return 0;
 }
 
-int D_set_erase_color( char *colorname)
+int D_set_erase_color(const char *colorname)
 {
 	R_pad_delete_item("erase");
 

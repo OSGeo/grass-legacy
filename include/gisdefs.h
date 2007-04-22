@@ -243,11 +243,11 @@ int G__color_reset(struct Colors *);
 
 /* color_get.c */
 int G_get_color(CELL, int *, int *, int *, struct Colors *);
-int G_get_raster_color(void *, int *, int *, int *, struct Colors *,
+int G_get_raster_color(const void *, int *, int *, int *, struct Colors *,
     RASTER_MAP_TYPE);
-int G_get_c_raster_color(CELL *, int *, int *, int *, struct Colors *);
-int G_get_f_raster_color(FCELL *, int *, int *, int *, struct Colors *);
-int G_get_d_raster_color(DCELL *, int *, int *, int *, struct Colors *);
+int G_get_c_raster_color(const CELL *, int *, int *, int *, struct Colors *);
+int G_get_f_raster_color(const FCELL *, int *, int *, int *, struct Colors *);
+int G_get_d_raster_color(const DCELL *, int *, int *, int *, struct Colors *);
 int G_get_null_value_color(int *, int *, int *, const struct Colors *);
 int G_get_default_color(int *, int *, int *, const struct Colors *);
 
