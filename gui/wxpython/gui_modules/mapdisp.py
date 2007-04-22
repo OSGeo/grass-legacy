@@ -9,7 +9,6 @@ mapdisp Package
 Classes:
 * Command
 * BufferedWindow
-* DrawWindow
 * MapFrame
 * MapApp
 """
@@ -145,11 +144,6 @@ class BufferedWindow(wx.Window):
     """
     A Buffered window class.
 
-    To use it, subclass it and define a Draw(DC) method that takes a DC
-    to draw to. In that method, put the code needed to draw the picture
-    you want. The window will automatically be double buffered, and the
-    screen will be automatically updated when a Paint event is received.
-
     When the drawing needs to change, you app needs to call the
     UpdateMap() method. Since the drawing is stored in a bitmap, you
     can also save the drawing to file by calling the
@@ -276,9 +270,6 @@ class BufferedWindow(wx.Window):
 
         if pdctype == 'image':
             bitmap = wx.BitmapFromImage(img)
-            #            if drawid in self.ovldict:
-            #                w,h = self.ovldict[drawid][1]
-            #            else:
             w,h = bitmap.GetSize()
             pdc.DrawBitmap(bitmap, coords[0], coords[1], True) # draw the composite map
             pdc.SetIdBounds(drawid, (coords[0],coords[1],w,h))
@@ -346,10 +337,9 @@ class BufferedWindow(wx.Window):
         All that is needed here is to draw the buffer to screen
         """
 
-        self._Buffer = wx.EmptyBitmap(self.Map.width, self.Map.height)
-    	dc = wx.BufferedPaintDC(self, self._Buffer)
+        dc = wx.BufferedPaintDC(self)
 
-        # use PrepateDC to set position correctly
+        # use PrepareDC to set position correctly
         self.PrepareDC(dc)
         # we need to clear the dc BEFORE calling PrepareDC
         bg = wx.Brush(self.GetBackgroundColour())
@@ -372,14 +362,8 @@ class BufferedWindow(wx.Window):
         # set size of the input image
     	self.Map.width, self.Map.height = self.GetClientSize()
 
-    	# Make new off screen bitmap: this bitmap will always have the
-    	# current drawing in it, so it can be used to save the image to
-    	# a file, or whatever.
-    	self._Buffer = wx.EmptyBitmap(self.Map.width, self.Map.height)
-
         # get the image to be rendered
     	self.img = self.GetImage()
-
 
         # update map display
     	if self.img and self.Map.width + self.Map.height > 0: # scale image during resize
@@ -407,6 +391,7 @@ class BufferedWindow(wx.Window):
     	to the specified file. See the wx.Windows docs for
     	wx.Bitmap::SaveFile for the details
         """
+        self.pdc.DrawToDC(self._Buffer)
     	self._Buffer.SaveFile(FileName, FileType)
 
     def GetOverlay(self):
@@ -495,9 +480,6 @@ class BufferedWindow(wx.Window):
         """
         Erase the map display
         """
-        # dc = wx.BufferedDC(wx.ClientDC(self), self._Buffer)
-        # self.Draw(dc, dctype='clear')
-        print 'in erasemap'
         self.Draw(self.pdc, pdctype='clear')
 
     def DragMap(self, moveto):
@@ -505,7 +487,7 @@ class BufferedWindow(wx.Window):
         Drag a bitmap image for panning.
         """
 
-    	dc = wx.BufferedDC(wx.ClientDC(self), self._Buffer)
+    	dc = wx.BufferedDC(wx.ClientDC(self))
     	dc.SetBackground(wx.Brush("White"))
     	bitmap = wx.BitmapFromImage(self.img)
     	self.dragimg = wx.DragImage(bitmap)
