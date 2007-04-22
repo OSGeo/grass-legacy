@@ -37,6 +37,7 @@ import toolbars
 import grassenv
 import track
 import menuform
+import disp_print
 from digit import Digit as Digit
 from debug import Debug as Debug
 
@@ -989,6 +990,12 @@ class MapFrame(wx.Frame):
         self._mgr.AddPane(self.MapWindow, wx.CENTER)
         self._mgr.Update()
 
+        #
+        # Init print module and classes
+        #
+        plog = ''
+        self.printopt = disp_print.PrintOptions(self, self.MapWindow)
+
     def AddToolbar(self, name):
         """
         Add defined toolbar to the window
@@ -1187,31 +1194,55 @@ class MapFrame(wx.Frame):
             self.MapWindow.SaveToFile(path, type)
         dlg.Destroy()
 
-    def PrintMap(self, event):
+    def PrintMenu(self, event):
         """
         Print map display
         """
 
-        pdata = wx.PrintDialogData()
+        """
+        Decorations overlay menu
+        """
+        point = wx.GetMousePosition()
+        printmenu = wx.Menu()
+        # Add items to the menu
+        setup = wx.MenuItem(printmenu, -1,'Page setup')
+        printmenu.AppendItem(setup)
+        self.Bind(wx.EVT_MENU, self.printopt.OnPageSetup, setup)
 
-        pdata.EnableSelection(True)
-        pdata.EnablePrintToFile(True)
-        pdata.EnablePageNumbers(True)
-        pdata.SetMinPage(1)
-        pdata.SetMaxPage(5)
-        pdata.SetAllPages(True)
+        preview = wx.MenuItem(printmenu, -1,'Print preview')
+        printmenu.AppendItem(preview)
+        self.Bind(wx.EVT_MENU, self.printopt.OnPrintPreview, preview)
 
-        dlg = wx.PrintDialog(self, pdata)
+        doprint = wx.MenuItem(printmenu, -1,'Print display')
+        printmenu.AppendItem(doprint)
+        self.Bind(wx.EVT_MENU, self.printopt.OnDoPrint, doprint)
 
-        if dlg.ShowModal() == wx.ID_OK:
-#            data = dlg.GetPrintDialogData()
-            dlg = wx.MessageDialog(self, 'This is not yet functional',
-                               'Map printing', wx.OK | wx.ICON_INFORMATION)
-            dlg.ShowModal()
-            dlg.Destroy()
-#            self.log.WriteText('GetAllPages: %d\n' % data.GetAllPages())
+        # Popup the menu.  If an item is selected then its handler
+        # will be called before PopupMenu returns.
+        self.PopupMenu(printmenu)
+        printmenu.Destroy()
 
-        dlg.Destroy()
+
+#        pdata = wx.PrintDialogData()
+#
+#        pdata.EnableSelection(True)
+#        pdata.EnablePrintToFile(True)
+#        pdata.EnablePageNumbers(True)
+#        pdata.SetMinPage(1)
+#        pdata.SetMaxPage(5)
+#        pdata.SetAllPages(True)
+#
+#        dlg = wx.PrintDialog(self, pdata)
+#
+#        if dlg.ShowModal() == wx.ID_OK:
+##            data = dlg.GetPrintDialogData()
+#            dlg = wx.MessageDialog(self, 'This is not yet functional',
+#                               'Map printing', wx.OK | wx.ICON_INFORMATION)
+#            dlg.ShowModal()
+#            dlg.Destroy()
+##            self.log.WriteText('GetAllPages: %d\n' % data.GetAllPages())
+#
+#        dlg.Destroy()
 
     def OnCloseWindow(self, event):
         """
@@ -1545,7 +1576,6 @@ class MapFrame(wx.Frame):
         # will be called before PopupMenu returns.
         self.PopupMenu(zoommenu)
         zoommenu.Destroy()
-
 
 # end of class MapFrame
 
