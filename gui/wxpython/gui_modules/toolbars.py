@@ -48,12 +48,12 @@ class MapToolbar:
                                                     bitmap=Icons["displaymap"].GetBitmap(),
                                                     bmpDisabled=wx.NullBitmap, kind=wx.ITEM_NORMAL,
                                                     shortHelp=Icons["displaymap"].GetLabel(), longHelp=Icons["displaymap"].GetDesc())
-        
+
         self.rendermap = self.toolbar.AddLabelTool(id=wx.ID_ANY, label="rendermap",
                                                    bitmap=Icons["rendermap"].GetBitmap(),
                                                    bmpDisabled=wx.NullBitmap, kind=wx.ITEM_NORMAL,
                                                    shortHelp=Icons["rendermap"].GetLabel(), longHelp=Icons["rendermap"].GetDesc())
-        
+
         self.erase = self.toolbar.AddLabelTool(id=wx.ID_ANY, label="erase",
                                                bitmap=Icons["erase"].GetBitmap(),
                                                bmpDisabled=wx.NullBitmap, kind=wx.ITEM_NORMAL,
@@ -65,7 +65,6 @@ class MapToolbar:
         #
     	self.pointer = self.toolbar.AddLabelTool(id=wx.ID_ANY, label="pointer",
                                                  bitmap=Icons["pointer"].GetBitmap(),
-                                                 bmpDisabled=wx.NullBitmap,
                                                  kind=wx.ITEM_RADIO,
                                                  shortHelp=Icons["pointer"].GetLabel(), longHelp=Icons["pointer"].GetDesc())
         self.zoomin  = self.toolbar.AddLabelTool(id=wx.ID_ANY, label="zoom_in",
@@ -138,7 +137,7 @@ class MapToolbar:
         self.toolbar.Realize()
 
     	self.mapdisplay.Bind(wx.EVT_TOOL,     self.mapdisplay.ReDraw,       self.displaymap)
-        self.mapdisplay.Bind(wx.EVT_TOOL,     self.mapdisplay.ReRender,       self.rendermap)
+        self.mapdisplay.Bind(wx.EVT_TOOL,     self.mapdisplay.ReRender,     self.rendermap)
     	self.mapdisplay.Bind(wx.EVT_TOOL,     self.mapdisplay.Pointer,      self.pointer)
     	self.mapdisplay.Bind(wx.EVT_TOOL,     self.mapdisplay.OnZoomIn,     self.zoomin)
     	self.mapdisplay.Bind(wx.EVT_TOOL,     self.mapdisplay.OnZoomOut,    self.zoomout)
@@ -149,7 +148,7 @@ class MapToolbar:
         self.mapdisplay.Bind(wx.EVT_TOOL,     self.mapdisplay.OnQuery,      self.query)
     	self.mapdisplay.Bind(wx.EVT_TOOL,     self.mapdisplay.OnErase,      self.erase)
     	self.mapdisplay.Bind(wx.EVT_TOOL,     self.mapdisplay.SaveToFile,   self.savefile)
-        self.mapdisplay.Bind(wx.EVT_TOOL,     self.mapdisplay.PrintMap,     self.printmap)
+        self.mapdisplay.Bind(wx.EVT_TOOL,     self.mapdisplay.PrintMenu,     self.printmap)
         self.mapdisplay.Bind(wx.EVT_COMBOBOX, self.OnSelect,                self.comboid)
 
     def OnSelect(self,event):
