@@ -38,6 +38,11 @@ db_start_driver (char *name)
     int stat;
     dbConnection connection;
     char ebuf[5];
+#ifdef __MINGW32__
+    int stdin_orig, stdout_orig;
+    int have_stdin, have_stdout;
+    int stdin_fd, stdout_fd;
+#endif
 
     /* Set some enviroment variables which are later read by driver.
      * This is necessary when application is running without GISRC file and all
