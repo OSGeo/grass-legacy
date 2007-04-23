@@ -223,6 +223,7 @@ class BufferedWindow(wx.Window):
 
         # create a PseudoDC for map decorations like scales and legends
         self.pdc = wx.PseudoDC()
+        self._Buffer = '' # will store an off screen empty bitmap for saving to file
 
         self.Bind(wx.EVT_ERASE_BACKGROUND, lambda x:None)
 
@@ -338,7 +339,7 @@ class BufferedWindow(wx.Window):
         All that is needed here is to draw the buffer to screen
         """
 
-        dc = wx.BufferedPaintDC(self)
+    	dc = wx.BufferedPaintDC(self, self._Buffer)
 
         # use PrepareDC to set position correctly
         self.PrepareDC(dc)
@@ -362,6 +363,11 @@ class BufferedWindow(wx.Window):
 
         # set size of the input image
     	self.Map.width, self.Map.height = self.GetClientSize()
+
+    	# Make new off screen bitmap: this bitmap will always have the
+    	# current drawing in it, so it can be used to save the image to
+    	# a file, or whatever.
+    	self._Buffer = wx.EmptyBitmap(self.Map.width, self.Map.height)
 
         # get the image to be rendered
     	self.img = self.GetImage()
@@ -392,7 +398,8 @@ class BufferedWindow(wx.Window):
     	to the specified file. See the wx.Windows docs for
     	wx.Bitmap::SaveFile for the details
         """
-        self.pdc.DrawToDC(self._Buffer)
+        dc = wx.BufferedPaintDC(self, self._Buffer)
+        self.pdc.DrawToDC(dc)
     	self._Buffer.SaveFile(FileName, FileType)
 
     def GetOverlay(self):
@@ -993,7 +1000,6 @@ class MapFrame(wx.Frame):
         #
         # Init print module and classes
         #
-        plog = ''
         self.printopt = disp_print.PrintOptions(self, self.MapWindow)
 
     def AddToolbar(self, name):
@@ -1200,7 +1206,7 @@ class MapFrame(wx.Frame):
         """
 
         """
-        Decorations overlay menu
+        Print options and output menu
         """
         point = wx.GetMousePosition()
         printmenu = wx.Menu()
@@ -1221,28 +1227,6 @@ class MapFrame(wx.Frame):
         # will be called before PopupMenu returns.
         self.PopupMenu(printmenu)
         printmenu.Destroy()
-
-
-#        pdata = wx.PrintDialogData()
-#
-#        pdata.EnableSelection(True)
-#        pdata.EnablePrintToFile(True)
-#        pdata.EnablePageNumbers(True)
-#        pdata.SetMinPage(1)
-#        pdata.SetMaxPage(5)
-#        pdata.SetAllPages(True)
-#
-#        dlg = wx.PrintDialog(self, pdata)
-#
-#        if dlg.ShowModal() == wx.ID_OK:
-##            data = dlg.GetPrintDialogData()
-#            dlg = wx.MessageDialog(self, 'This is not yet functional',
-#                               'Map printing', wx.OK | wx.ICON_INFORMATION)
-#            dlg.ShowModal()
-#            dlg.Destroy()
-##            self.log.WriteText('GetAllPages: %d\n' % data.GetAllPages())
-#
-#        dlg.Destroy()
 
     def OnCloseWindow(self, event):
         """
