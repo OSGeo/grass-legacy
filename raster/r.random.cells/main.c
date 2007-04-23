@@ -6,7 +6,8 @@
  *               Markus Neteler <neteler itc.it>
  *               Roberto Flor <flor itc.it>,
  *               Brad Douglas <rez touchofmadness.com>, Glynn Clements <glynn gclements.plus.com>
- * PURPOSE:      
+ * PURPOSE:      generates a random sets of cells that are at least
+ *               some distance apart
  * COPYRIGHT:    (C) 1999-2006 by the GRASS Development Team
  *
  *               This program is free software under the GNU General Public
