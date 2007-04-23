@@ -1,6 +1,24 @@
-/* r.out.pov v1.0 beta 
-   convert grass raster to tga height-field for POVray.
-   
+/****************************************************************************
+ *
+ * MODULE:       r.out.pov
+ * AUTHOR(S):    Klaus D. Meyer, <GEUM.tec geum.de> (original contributor)
+ *               Markus Neteler <neteler itc.it>, 
+ *               Roberto Flor <flor itc.it>, 
+ *               Bernhard Reiter <bernhard intevation.de>, 
+ *               Glynn Clements <glynn gclements.plus.com>, 
+ *               Hamish Bowman <hamish_nospam yahoo.com>, 
+ *               Jan-Oliver Wagner <jan intevation.de>
+ * PURPOSE:      converts a user-specified raster map layer into a
+ *               height-field file for POVray
+ * COPYRIGHT:    (C) 2000-2007 by the GRASS Development Team
+ *
+ *               This program is free software under the GNU General Public
+ *               License (>=v2). Read the file COPYING that comes with GRASS
+ *               for details.
+ *
+ *****************************************************************************/
+
+/*  
    Persistence of Vision (POV) raytracer can use a height-field
    defined in a Targa (.TGA) image file format where the RGB pixel
    values are 24 bits (3 bytes). A 16 bit unsigned integer height-field
@@ -277,3 +295,6 @@ void processProfiles (int inputFile, FILE *outputF)
    }
    G_percent (r, rowCount, 2); /* 100% \n */
 }
+
+
+
