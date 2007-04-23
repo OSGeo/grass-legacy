@@ -12,27 +12,65 @@
 
 #include <string.h>
 #include <stdlib.h>
+#ifndef __MINGW32__
+#include <unistd.h>
+#include <fcntl.h>
+#include <sys/types.h>
+#include <sys/stat.h>
+#include <sys/mman.h>
+#endif
 
 #include <grass/gis.h>
 #include "pngdriver.h"
 
 char *file_name;
 int currentColor;
-unsigned int *xpixels;
 int true_color;
 int auto_write;
 int has_alpha;
+int mapped;
 
 int clip_top, clip_bot, clip_left, clip_rite;
 int width, height;
+void *image;
 unsigned int *grid;
 unsigned char palette[256][4];
-unsigned int transparent;
 unsigned int background;
 int modified;
 
+static void map_file(void)
+{
+#ifndef __MINGW32__
+	size_t size = HEADER_SIZE + width * height * sizeof(unsigned int);
+	void *ptr;
+	int fd;
+
+	if (!mapped)
+		return;
+
+	mapped = 0;
+	write_image();
+
+	fd = open(file_name, O_RDWR);
+	if (fd < 0)
+		return;
+
+	ptr = mmap(NULL, size, PROT_READ|PROT_WRITE, MAP_SHARED, fd, (off_t ) 0);
+	if (ptr == MAP_FAILED)
+		return;
+
+	G_free(grid);
+	grid = (int *)((char *) ptr + HEADER_SIZE);
+
+	close(fd);
+
+	mapped = 1;
+#endif
+}
+
 int PNG_Graph_set(int argc, char **argv)
 {
+	unsigned int red, grn, blu;
 	char *p;
 
 	G_gisinit("PNG driver") ;
@@ -52,6 +90,9 @@ int PNG_Graph_set(int argc, char **argv)
 	p = getenv("GRASS_PNG_AUTO_WRITE");
 	auto_write = p && strcmp(p, "TRUE") == 0;
 
+	p = getenv("GRASS_PNG_MAPPED");
+	mapped = p && strcmp(p, "TRUE") == 0;
+
 	width = screen_right - screen_left;
 	height = screen_bottom - screen_top;
 
@@ -62,26 +103,25 @@ int PNG_Graph_set(int argc, char **argv)
 
 	grid = G_malloc(width * height * sizeof(unsigned int));
 
+	p = getenv("GRASS_TRANSPARENT");
+	if (p && strcmp(p, "TRUE") == 0)
+		has_alpha = 1;
+
+	init_color_table();
+
 	p = getenv("GRASS_BACKGROUNDCOLOR");
-	if (!p || !*p || sscanf(p, "%x", &background) != 1)
+	if (p && *p && sscanf(p, "%02x%02x%02x", &red, &grn, &blu) == 3)
+		background = get_color(red, grn, blu, has_alpha ? 255 : 0);
+	else
 	{
 		/* 0xffffff = white, 0x000000 = black */
 		if(strcmp(DEFAULT_FG_COLOR, "white") == 0)
 			/* foreground: white, background: black */
-			background = 0;
+			background = get_color(0, 0, 0, has_alpha ? 255 : 0);
 		else
 			/* foreground: black, background: white */
-			background = 0xffffff;
+			background = get_color(255, 255, 255, has_alpha ? 255 : 0);
 	}
-
-	p = getenv("GRASS_TRANSPARENT");
-	if (p && strcmp(p, "TRUE") == 0)
-	{
-		has_alpha = 1;
-		transparent = background;
-	}
-
-	init_color_table();
 
 	PNG_Erase();
 
@@ -93,6 +133,9 @@ int PNG_Graph_set(int argc, char **argv)
 	p = getenv("GRASS_PNG_READ");
 	if (p && strcmp(p, "TRUE") == 0)
 		read_image();
+
+	if (mapped)
+		map_file();
 
 	return 0;
 }

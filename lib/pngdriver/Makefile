@@ -27,8 +27,10 @@ LIB_OBJS =	\
 	Set_window.o		\
 	read.o			\
 	read_ppm.o		\
+	read_bmp.o		\
 	write.o			\
-	write_ppm.o		
+	write_ppm.o		\
+	write_bmp.o		
 
 ifneq ($(USE_PNG),)
   LIB_OBJS += read_png.o write_png.o

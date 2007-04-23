@@ -11,6 +11,7 @@ void read_ppm(void)
 	FILE *input;
 	int x, y;
 	int i_width, i_height, maxval;
+	unsigned int rgb_mask = get_color(255,255,255,0);
 	unsigned int *p;
 
 	if (!true_color)
@@ -44,8 +45,8 @@ void read_ppm(void)
 			g = g * 255 / maxval;
 			b = b * 255 / maxval;
 
-			c &= 0xFF000000;
-			c |= (r << 16) | (g << 8) | (b << 0);
+			c &= ~rgb_mask;
+			c |= get_color(r, g, b, 0);
 
 			*p = c;
 		}
@@ -60,6 +61,7 @@ void read_pgm(void)
 	FILE *input;
 	int x, y;
 	int i_width, i_height, maxval;
+	unsigned int rgb_mask = get_color(255,255,255,0);
 	unsigned int *p;
 
 	if (!true_color)
@@ -93,8 +95,8 @@ void read_pgm(void)
 
 			k = k * 255 / maxval;
 
-			c &= 0x00FFFFFF;
-			c |= (k << 24);
+			c &= rgb_mask;
+			c |= get_color(0, 0, 0, 255 - k);
 
 			*p = c;
 		}

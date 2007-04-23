@@ -17,6 +17,8 @@ void read_image(void)
 		if (has_alpha)
 			read_pgm();
 	}
+	else if (G_strcasecmp(p, ".bmp") == 0)
+		read_bmp();
 #ifdef HAVE_PNG_H
 	else if (G_strcasecmp(p, ".png") == 0)
 		read_png();

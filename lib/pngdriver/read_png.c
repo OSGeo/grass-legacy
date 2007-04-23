@@ -108,7 +108,7 @@ void read_png(void)
 				int g = *q++;
 				int b = *q++;
 				int a = *q++;
-				unsigned int c = (r << 16) | (g << 8) | (b << 0) | (a << 24);
+				unsigned int c = get_color(r, g, b, a);
 				*p = c;
 			}
 		else

@@ -23,19 +23,13 @@ void write_ppm(void)
 		for (x = 0; x < width; x++, p++)
 		{
 			unsigned int c = *p;
+			int r, g, b, a;
 
-			if (true_color)
-			{
-				fputc((unsigned char) (c >> 16), output);
-				fputc((unsigned char) (c >>  8), output);
-				fputc((unsigned char) (c >>  0), output);
-			}
-			else
-			{
-				fputc(palette[c][0], output);
-				fputc(palette[c][1], output);
-				fputc(palette[c][2], output);
-			}
+			get_pixel(c, &r, &g, &b, &a);
+
+			fputc((unsigned char) r, output);
+			fputc((unsigned char) g, output);
+			fputc((unsigned char) b, output);
 		}
 	}
 
@@ -64,11 +58,11 @@ void write_pgm(void)
 		for (x = 0; x < width; x++, p++)
 		{
 			unsigned int c = *p;
+			int r, g, b, a;
 
-			if (true_color)
-				fputc(255 - (unsigned char) (c >> 24), output);
-			else
-				fputc(255 - palette[c][3], output);
+			get_pixel(c, &r, &g, &b, &a);
+
+			fputc((unsigned char) (255 - a), output);
 		}
 	}
 

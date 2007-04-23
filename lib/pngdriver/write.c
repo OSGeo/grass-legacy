@@ -14,12 +14,17 @@ void write_image(void)
 	if (!modified)
 		return;
 
+	if (mapped)
+		return;
+
 	if (G_strcasecmp(p, ".ppm") == 0)
 	{
 		write_ppm();
 		if (has_alpha)
 			write_pgm();
 	}
+	else if (G_strcasecmp(p, ".bmp") == 0)
+		write_bmp();
 #ifdef HAVE_PNG_H
 	else if (G_strcasecmp(p, ".png") == 0)
 		write_png();

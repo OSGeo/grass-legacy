@@ -5,19 +5,19 @@
 
 #define FILE_NAME  "map.png"
 
+#define HEADER_SIZE 54
+
 extern char *file_name;
-extern FILE *output;
 extern int currentColor;
-extern unsigned int *xpixels;
 extern int true_color;
 extern int auto_write;
 extern int has_alpha;
+extern int mapped;
 
 extern int clip_top, clip_bot, clip_left, clip_rite;
 extern int width, height;
 extern unsigned int *grid;
 extern unsigned char palette[256][4];
-extern unsigned int transparent;
 extern unsigned int background;
 extern int modified;
 
@@ -26,14 +26,18 @@ extern int linewidth;
 extern void read_image(void);
 extern void read_ppm(void);
 extern void read_pgm(void);
+extern void read_bmp(void);
 extern void read_png(void);
 
 extern void write_image(void);
 extern void write_ppm(void);
 extern void write_pgm(void);
+extern void write_bmp(void);
 extern void write_png(void);
 
 extern void init_color_table(void);
+extern unsigned int get_color(int, int, int, int);
+extern void get_pixel(unsigned int, int *, int *, int *, int *);
 
 extern const struct driver *PNG_Driver(void);
 
