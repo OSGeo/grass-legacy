@@ -83,10 +83,13 @@ void write_png(void)
 			for (x = 0; x < width; x++, p++)
 			{
 				unsigned int c = *p;
-				*q++ = (png_byte) (c >> 16);
-				*q++ = (png_byte) (c >>  8);
-				*q++ = (png_byte) (c >>  0);
-				*q++ = (png_byte) (c >> 24);
+				int r, g, b, a;
+
+				get_pixel(c, &r, &g, &b, &a);
+				*q++ = (png_byte) r;
+				*q++ = (png_byte) g;
+				*q++ = (png_byte) b;
+				*q++ = (png_byte) a;
 			}
 		else
 			for (x = 0; x < width; x++, p++, q++)
