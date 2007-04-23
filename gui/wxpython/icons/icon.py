@@ -27,7 +27,7 @@ icons_default = {
     # map display
     "displaymap" : 'gui-display.gif',
     "rendermap"  : 'gui-redraw.gif',
-    "erase"      : 'gui-display.gif',
+    "erase"      : 'gui-erase.gif',
     "pointer"    : 'gui-pointer.gif', 
     "zoom_in"    : 'gui-zoom_in.gif', 
     "zoom_out"   : 'gui-zoom_out.gif', 
