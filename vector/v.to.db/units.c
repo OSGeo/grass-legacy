@@ -1,5 +1,5 @@
-#include "global.h"
 #include <string.h>
+#include "global.h"
 
 int 
 conv_units ()

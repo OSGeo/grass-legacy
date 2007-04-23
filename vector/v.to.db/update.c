@@ -1,11 +1,10 @@
 #include <stdio.h>
 #include <stdlib.h>
-#include <grass/gis.h>
-#include "global.h"
 #include <grass/dbmi.h>
+#include <grass/glocale.h>
+#include "global.h"
 
 static int srch(); 
-
 
 int 
 update (struct Map_info *Map)
@@ -25,12 +24,12 @@ update (struct Map_info *Map)
     db_init_string (&stmt);	
 
     if ( (Fi = Vect_get_field ( Map, options.field)) == NULL)
-         G_fatal_error("Database connection not defined for layer <%d>. Use v.db.connect first.", options.field);
+         G_fatal_error(_("Database connection not defined for layer [%d]. Use v.db.connect first"), options.field);
 
     /* Open driver */
     driver = db_start_driver_open_database ( Fi->driver, Fi->database );
     if ( driver == NULL ) {
-        G_fatal_error ( "Cannot open database %s by driver %s", Fi->database, Fi->driver );
+        G_fatal_error (_("Cannot open database <%s> by driver <%s>"), Fi->database, Fi->driver );
     }
     
     db_begin_transaction ( driver );
@@ -61,7 +60,7 @@ update (struct Map_info *Map)
     } 
 
     /* update */
-    fprintf ( stderr, "Updating database ... " );
+    G_message (_("Updating database ..."));
     for ( i = 0; i < vstat.rcat; i++ ) {
 	G_percent( i+1, vstat.rcat, 1 );
 	
@@ -88,7 +87,7 @@ update (struct Map_info *Map)
     	    case O_START:
     	    case O_END:
 		if ( Values[i].count1 > 1 ){
-		    G_warning ( "More elements of category %d, nothing loaded to DB", Values[i].cat);
+		    G_warning (_("More elements of category [%d], nothing loaded to DB"), Values[i].cat);
 		    vstat.dupl++;
 		    continue;
 		}		
@@ -167,13 +166,13 @@ update (struct Map_info *Map)
 	        upd = 1;
 	        vstat.notexist++;
 	    } else { /* cat exists in DB */
-		G_warning ( "Cat %d: row already exists (not inserted)\n", fcat);
+		G_warning (_("Cat [%d]: row already exists (not inserted)"), fcat);
 		upd = 0;
 		vstat.exist++;
 	    }
 	} else { 
 	    if ( cex == NULL ){ /* cat does not exist in DB */
-		G_warning ( "Cat %d row does not exist (not updated)\n", fcat);
+		G_warning (_("Cat [%d]: row does not exist (not updated)"), fcat);
 		upd = 0;
 		vstat.notexist++;
 	    } else {  /* cat exists in DB */ 

@@ -1,7 +1,6 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <math.h>
-#include <grass/Vect.h>
 #include "global.h"
 
 /* This function now does one of 3 things:

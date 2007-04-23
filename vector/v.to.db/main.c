@@ -15,10 +15,8 @@
  *****************************************************************************/
 
 #define MAIN
-#include <grass/gis.h>
-#include "global.h"
 #include <grass/glocale.h>
-#include <grass/Vect.h>
+#include "global.h"
 
 int 
 main (int argc, char *argv[])
@@ -31,7 +29,7 @@ main (int argc, char *argv[])
     G_gisinit(argv[0]);
 
     module = G_define_module();
-    module->keywords = _("vector");
+    module->keywords = _("vector, database, attribute table");
     module->label    = _("Populate database values from vector features.");
     module->description = _("Load values from vector to database. For "
 	"uploaded/printed category values '-1' is used for 'no category' "
@@ -89,6 +87,3 @@ main (int argc, char *argv[])
 
     exit(EXIT_SUCCESS);
 }
-
-
-
