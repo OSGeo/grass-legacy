@@ -45,12 +45,6 @@ static void map_file(void)
 	void *ptr;
 	int fd;
 
-	if (!mapped)
-		return;
-
-	mapped = 0;
-	write_image();
-
 	fd = open(file_name, O_RDWR);
 	if (fd < 0)
 		return;
@@ -59,7 +53,8 @@ static void map_file(void)
 	if (ptr == MAP_FAILED)
 		return;
 
-	G_free(grid);
+	if (grid)
+		G_free(grid);
 	grid = (int *)((char *) ptr + HEADER_SIZE);
 
 	close(fd);
@@ -71,6 +66,8 @@ static void map_file(void)
 int PNG_Graph_set(int argc, char **argv)
 {
 	unsigned int red, grn, blu;
+	int do_read = 0;
+	int do_map = 0;
 	char *p;
 
 	G_gisinit("PNG driver") ;
@@ -91,7 +88,17 @@ int PNG_Graph_set(int argc, char **argv)
 	auto_write = p && strcmp(p, "TRUE") == 0;
 
 	p = getenv("GRASS_PNG_MAPPED");
-	mapped = p && strcmp(p, "TRUE") == 0;
+	do_map = p && strcmp(p, "TRUE") == 0;
+
+	if (do_map)
+	{
+		char *ext = file_name + strlen(file_name) - 4;
+		if (G_strcasecmp(ext, ".bmp") != 0)
+			do_map = 0;
+	}
+
+	p = getenv("GRASS_PNG_READ");
+	do_read = p && strcmp(p, "TRUE") == 0;
 
 	width = screen_right - screen_left;
 	height = screen_bottom - screen_top;
@@ -101,11 +108,8 @@ int PNG_Graph_set(int argc, char **argv)
 	clip_left = screen_left;
 	clip_rite = screen_right;
 
-	grid = G_malloc(width * height * sizeof(unsigned int));
-
 	p = getenv("GRASS_TRANSPARENT");
-	if (p && strcmp(p, "TRUE") == 0)
-		has_alpha = 1;
+	has_alpha = p && strcmp(p, "TRUE") == 0;
 
 	init_color_table();
 
@@ -123,19 +127,29 @@ int PNG_Graph_set(int argc, char **argv)
 			background = get_color(255, 255, 255, has_alpha ? 255 : 0);
 	}
 
-	PNG_Erase();
-
 	G_message("PNG: collecting to file: %s,\n     GRASS_WIDTH=%d, GRASS_HEIGHT=%d",
 		file_name, width, height);
 
-	modified = 1;
+	if (do_read && do_map)
+		map_file();
 
-	p = getenv("GRASS_PNG_READ");
-	if (p && strcmp(p, "TRUE") == 0)
+	if (!mapped)
+		grid = G_malloc(width * height * sizeof(unsigned int));
+
+	if (!do_read)
+	{
+		PNG_Erase();
+		modified = 1;
+	}
+
+	if (do_read && !mapped)
 		read_image();
 
-	if (mapped)
+	if (do_map && !mapped)
+	{
+		write_image();
 		map_file();
+	}
 
 	return 0;
 }
