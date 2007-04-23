@@ -4,6 +4,9 @@
 # This window's parent's descendant has the focus (keyboard or mouse pointer in)
 # We use the parent because the scrollbars are in the parent, and two scrollable
 # Things shouldn't have the same parent.
+
+set bind_scroll_list {}
+
 proc handle_scroll {ammount} {
     global bind_scroll_list
 
