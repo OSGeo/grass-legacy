@@ -51,26 +51,26 @@ main (int argc, char *argv[])
     module->description =
 	_("Create new vector (points) from database table containing coordinates.");
 
+    table_opt              = G_define_option();
+    table_opt->key         = "table";
+    table_opt->type        = TYPE_STRING;
+    table_opt->required    = YES;
+    table_opt->description = _("Input table name");
+
     driver_opt 		    = G_define_option();
     driver_opt->key 	    = "driver";
     driver_opt->type 	    = TYPE_STRING;
     driver_opt->options     = db_list_drivers();
-    driver_opt->required    = YES;
+    driver_opt->required    = NO;
     driver_opt->description = _("Input driver name");
     driver_opt->answer      = db_get_default_driver_name();
 
     database_opt 	      = G_define_option();
     database_opt->key 	      = "database";
     database_opt->type        = TYPE_STRING;
-    database_opt->required    = YES;
+    database_opt->required    = NO;
     database_opt->description = _("Input database name");
     database_opt->answer      = db_get_default_database_name();
-
-    table_opt 		   = G_define_option();
-    table_opt->key 	   = "table";
-    table_opt->type 	   = TYPE_STRING;
-    table_opt->required    = YES;
-    table_opt->description = _("Input table name");
 
     xcol_opt 		  = G_define_option();
     xcol_opt->key 	  = "x";
