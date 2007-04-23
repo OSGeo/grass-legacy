@@ -1,9 +1,8 @@
 #include <stdlib.h>
 #include <stdio.h>
 #include <string.h>
-#include "global.h"
-#include <grass/Vect.h>
 #include <grass/glocale.h>
+#include "global.h"
 
 int parse_units();
 int parse_option();
@@ -73,6 +72,7 @@ parse_command_line (int argc, char *argv[])
     parms.units->required = NO ;
     parms.units->multiple = NO ;
     parms.units->options      = "mi,miles,f,feet,me,meters,k,kilometers,a,acres,h,hectares";
+    parms.units->label = _("Units");
     parms.units->description = _("mi(les),f(eet),me(ters),k(ilometers),a(cres),h(ectares)");
 
     parms.col = G_define_option();
@@ -81,7 +81,7 @@ parse_command_line (int argc, char *argv[])
     parms.col->required = NO ;
     parms.col->multiple = YES ;
     parms.col->gisprompt  = "column(s)" ;
-    parms.col->description = _("column(s)");
+    parms.col->description = _("Column(s)");
 
     parms.qcol = G_define_option();
     parms.qcol->key    = "qcolumn";
@@ -89,15 +89,16 @@ parse_command_line (int argc, char *argv[])
     parms.qcol->required = NO ;
     parms.qcol->multiple = NO ;
     parms.qcol->gisprompt  = "query column";
-    parms.qcol->description = _("Query column used for 'query' option. E.g. 'cat', 'count(*)', 'sum(val)'");
+    parms.qcol->label = _("Query column used for 'query' option");
+    parms.qcol->description = _("E.g. 'cat', 'count(*)', 'sum(val)'");
 
     flags.p = G_define_flag();
     flags.p->key = 'p';
-    flags.p->description = _("print only");
+    flags.p->description = _("Print only");
     
     flags.s = G_define_flag();
     flags.s->key = 's';
-    flags.s->description = _("only print sql statements");	
+    flags.s->description = _("Only print sql statements");	
     
     flags.t = G_define_flag();
     flags.t->key = 'c';
@@ -113,7 +114,7 @@ parse_command_line (int argc, char *argv[])
     options.mapset = G_find_vector2 (options.name, NULL);
 
     if (options.mapset == NULL) 
-	G_fatal_error ( _("%s: <%s> vector map not found"), G_program_name(), options.name);
+	G_fatal_error ( _("Vector map <%s> not found"), options.name);
 
     options.type = Vect_option_to_types ( parms.type ); 
     options.field = atoi( parms.field->answer );
@@ -200,6 +201,6 @@ match (char *s, char *key, int min)
 
     if (!s) return 0;
     len = strlen (s);
-    if (len < min) return 0;
+    if (len < (size_t) min) return 0;
     return strncmp (s, key, len) == 0;
 }

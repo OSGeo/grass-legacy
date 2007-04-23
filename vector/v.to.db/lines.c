@@ -1,6 +1,5 @@
 #include <stdio.h>
 #include <stdlib.h>
-#include <grass/Vect.h>
 #include "global.h"
 
 /* Read area cats for one side 

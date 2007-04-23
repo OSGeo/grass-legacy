@@ -1,4 +1,5 @@
 #include <grass/dbmi.h>
+#include <grass/glocale.h>
 #include "global.h"
 
 int 
@@ -145,14 +146,14 @@ report (void)
 int 
 print_stat (void)
 {
-    fprintf (stderr,"%d categories read from map\n", vstat.rcat);        
-    fprintf (stderr,"%d records selected from table\n", vstat.select);        
-    fprintf (stderr,"%d categories read from map exist in selection from table\n", vstat.exist);
-    fprintf (stderr,"%d categories read from map don't exist in selection from table\n", vstat.notexist);    
-    fprintf (stderr,"%d records updated/inserted\n", vstat.update);    
-    fprintf (stderr,"%d update/insert errors\n", vstat.error);
+    G_message (_("[%d] categories read from map"), vstat.rcat);        
+    G_message (_("[%d] records selected from table"), vstat.select);        
+    G_message (_("[%d] categories read from map exist in selection from table"), vstat.exist);
+    G_message (_("[%d] categories read from map don't exist in selection from table"), vstat.notexist);    
+    G_message (_("[%d] records updated/inserted"), vstat.update);    
+    G_message (_("[%d] update/insert errors"), vstat.error);
     if ( vstat.dupl > 0 )
-	fprintf (stderr,"%d categories with more points (coordinates not loaded)\n", vstat.dupl);        
+	G_message (_("[%d] categories with more points (coordinates not loaded)"), vstat.dupl);        
 
     return 0;
 }    

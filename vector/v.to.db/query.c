@@ -1,7 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <grass/dbmi.h>
-#include <grass/Vect.h>
+#include <grass/glocale.h>
 #include "global.h"
 
 /* Query database for qfield. */
@@ -22,7 +22,7 @@ query (struct Map_info *Map )
     Cats = Vect_new_cats_struct ();
 
     /* Cycle through all lines and make a list of categories of 'qfield' for each category given by 'field' */
-    fprintf ( stderr, "Reading data trom the map ... " );
+    G_message (_("Reading data trom the map ..."));
     nlines = Vect_get_num_lines ( Map );
     for (line_num = 1 ; line_num <= nlines; line_num++) {
 	G_percent( line_num, nlines, 1 );
@@ -73,15 +73,15 @@ query (struct Map_info *Map )
     db_init_string (&value_string);
 
     if ( (Fi = Vect_get_field ( Map, options.qfield)) == NULL)
-	G_fatal_error("Database connection not defined for layer <%d>. Use v.db.connect first.", options.qfield);
+	G_fatal_error(_("Database connection not defined for layer [%d]. Use v.db.connect first"), options.qfield);
 
     /* Open driver */
     driver = db_start_driver_open_database ( Fi->driver, Fi->database );
     if ( driver == NULL )
-	G_fatal_error ( "Cannot open database %s by driver %s", Fi->database, Fi->driver );
+	G_fatal_error (_("Cannot open database <%s> by driver <%s>"), Fi->database, Fi->driver );
     
     /* Query the database for each category */
-    fprintf ( stderr, "Querying database ... " );
+    G_message (_("Querying database ... "));
     for ( i = 0; i < vstat.rcat; i++ ) {
 	int  j, ctype, nrows, more;
         char buf[2000];
@@ -96,8 +96,8 @@ query (struct Map_info *Map )
 	/* Skip if cat is zero and large number of query categories (many features without category).
 	 * It would cause problems on server side and take long time. Postgres limit is 10000 */
 	if ( Values[i].cat == 0 && Values[i].nqcats > 1000 ) {
-	    G_warning ( "Query for category '0' (no category) was not executed because of too many "
-	        "(%d) query categories. All later reported values for cat 0 are not valid.", 
+	    G_warning (_("Query for category '0' (no category) was not executed because of too many "
+			 "(%d) query categories. All later reported values for cat 0 are not valid"), 
 		Values[i].nqcats ); 
 	    continue;
 	}
@@ -130,13 +130,13 @@ query (struct Map_info *Map )
 	    
 	    if ( nrows != 1 ) {
                 if ( nrows > 1 ) {
-		    G_warning ("Multiple query results, output value set to NULL (category %d)", 
-			          Values[i].cat);
+		    G_warning (_("Multiple query results, output value set to NULL (category [%d])"), 
+			       Values[i].cat);
 		}
 		Values[i].null = 1;
 	    } else {
 		if(db_fetch (&cursor, DB_NEXT, &more) != DB_OK)
-		    G_fatal_error("Cannot fetch record");
+		    G_fatal_error(_("Cannot fetch record"));
 
 	        db_convert_column_value_to_string(column, &stmt);
 	        G_debug (4, "  value = %s", db_get_string(&stmt) );
@@ -171,4 +171,3 @@ query (struct Map_info *Map )
 
     return 0;
 }
-
