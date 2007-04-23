@@ -1,15 +1,19 @@
-/**
- * \file init.c
+/****************************************************************************
  *
- * \brief Segment initialization routines.
+ * MODULE:       segment
+ * AUTHOR(S):    CERL
+ *               Bernhard Reiter <bernhard intevation.de>, 
+ *               Brad Douglas <rez touchofmadness.com>, 
+ *               Glynn Clements <glynn gclements.plus.com>, 
+ *               Markus Neteler <neteler itc.it>
+ * PURPOSE:      Segment initialization routines
+ * COPYRIGHT:    (C) 2000-2006 by the GRASS Development Team
  *
- * This program is free software under the GNU General Public License
- * (>=v2). Read the file COPYING that comes with GRASS for details.
+ *               This program is free software under the GNU General Public
+ *               License (>=v2). Read the file COPYING that comes with GRASS
+ *               for details.
  *
- * \author GRASS GIS Development Team
- *
- * \date 2005-2006
- */
+ *****************************************************************************/
 
 #include <stdio.h>
 #include <unistd.h>
