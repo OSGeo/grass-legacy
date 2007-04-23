@@ -42,7 +42,7 @@ static int read_bmp_header(const unsigned char *p)
 
 	if (get_4(&p) != width)
 		return 0;
-	if (get_4(&p) != height)
+	if (get_4(&p) != -height)
 		return 0;
 
 	get_2(&p);
