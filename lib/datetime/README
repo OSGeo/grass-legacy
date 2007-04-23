@@ -1,24 +1,21 @@
-/* Copyright Notice
- * ---------------- 
- * Written by Bill Brown & Michael Shapiro, 1995 
- * brown@gis.uiuc.edu
+/****************************************************************************
  *
- * This program is free software; you can redistribute it and/or
- * modify it under the terms of the GNU General Public License
- * as published by the Free Software Foundation; either version 2
- * of the License, or (at your option) any later version.
+ * MODULE:       datetime
+ * AUTHOR(S):    Bill Brown <brown gis.uiuc.edu> and Michael Shapiro (CERL)
+ *               (original contributors, 1995)
+ *               Brad Douglas <rez touchofmadness.com>,
+ *               Markus Neteler <neteler itc.it>,
+ *               Bernhard Reiter <bernhard intevation.de>, 
+ *               Radim Blazek <radim.blazek gmail.com>
+ *               Glynn Clements <glynn gclements.plus.com>, 
+ * PURPOSE:      library for date time structure
+ * COPYRIGHT:    (C) 2002-2007 by the GRASS Development Team
  *
- * This program is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU General Public License for more details.
+ *               This program is free software under the GNU General Public
+ *               License (>=v2). Read the file COPYING that comes with GRASS
+ *               for details.
  *
- * You should have received a copy of the GNU General Public License
- * along with this program; if not, write to the
- *   Free Software Foundation, Inc.,
- *   59 Temple Place - Suite 330,
- *   Boston, MA  02111-1307, USA.
-*/
+ *****************************************************************************/
 
 Note: The timestamp routines 
        G_read_grid3_timestamp +
