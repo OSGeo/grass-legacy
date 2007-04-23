@@ -1,3 +1,22 @@
+/****************************************************************************
+ *
+ * MODULE:       d.what.rast
+ * AUTHOR(S):    Michael Shapiro (CERL) (original contributor)
+ *               Markus Neteler <neteler itc.it>, 
+ *               Andreas Lange <andreas.lange rhein-main.de>, 
+ *               Bernhard Reiter <bernhard intevation.de>, 
+ *               Huidae Cho <grass4u gmail.com>, 
+ *               Eric G. Miller <egm2 jps.net>, 
+ *               Glynn Clements <glynn gclements.plus.com>, 
+ *               Hamish Bowman <hamish_nospam yahoo.com>
+ * PURPOSE:      interactive query of cat/label of raster map in display
+ * COPYRIGHT:    (C) 1999-2006 by the GRASS Development Team
+ *
+ *               This program is free software under the GNU General Public
+ *               License (>=v2). Read the file COPYING that comes with GRASS
+ *               for details.
+ *
+ *****************************************************************************/
 #define GLOBAL
 #include <stdlib.h>
 #include <string.h>
@@ -148,3 +167,6 @@ int main (int argc, char **argv)
 	R_close_driver();
 	exit(EXIT_SUCCESS);
 }
+
+
+

@@ -1,21 +1,20 @@
-/* Written by Bill Brown, USACERL (brown@zorro.cecer.army.mil)
- * May 2-12, 1994
- * Upgraded for floating point grass Oct 1995
+/****************************************************************************
  *
- * This code is in the public domain. Specifically, we give to the public
- * domain all rights for future licensing of the source code, all resale
- * rights, and all publishing rights.
- * 
- * We ask, but do not require, that the following message be included in
- * all derived works:
- *     "Portions developed at the US Army Construction Engineering 
- *     Research Laboratories, Champaign, Illinois."
- * 
- * USACERL GIVES NO WARRANTY, EXPRESSED OR IMPLIED,
- * FOR THE SOFTWARE AND/OR DOCUMENTATION PROVIDED, INCLUDING, WITHOUT
- * LIMITATION, WARRANTY OF MERCHANTABILITY AND WARRANTY OF FITNESS FOR A
- * PARTICULAR PURPOSE.
-*/
+ * MODULE:       xganim
+ * AUTHOR(S):    Bill Brown <brown gis.uiuc.edu> CERL (original contributor),
+ *               Markus Neteler <neteler itc.it>,
+ *               Roberto Flor <flor itc.it>, 
+ *               Bernhard Reiter <bernhard intevation.de>, 
+ *               Brad Douglas <rez touchofmadness.com>, 
+ *               Glynn Clements <glynn gclements.plus.com>
+ * PURPOSE:      a tool for animating a series of GRASS raster files
+ * COPYRIGHT:    (C) 1999-2006 by the GRASS Development Team
+ *
+ *               This program is free software under the GNU General Public
+ *               License (>=v2). Read the file COPYING that comes with GRASS
+ *               for details.
+ *
+ *****************************************************************************/
 
 #include <stdio.h>
 #include <string.h>
@@ -599,3 +598,6 @@ static void parse_command(int argc, char **argv,
 	}
     }
 }
+
+
+
