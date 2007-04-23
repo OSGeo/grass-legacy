@@ -1,3 +1,20 @@
+/****************************************************************************
+ *
+ * MODULE:       bitmap
+ * AUTHOR(S):    David Gerdes (CERL) (original contributor)
+ *               Markus Neteler <neteler itc.it>, 
+ *               Bernhard Reiter <bernhard intevation.de>, 
+ *               Brad Douglas <rez touchofmadness.com>, 
+ *               Glynn Clements <glynn gclements.plus.com>
+ * PURPOSE:      provides basic support for the creation and manipulation of
+ *               two dimensional bitmap arrays
+ * COPYRIGHT:    (C) 1999-2006 by the GRASS Development Team
+ *
+ *               This program is free software under the GNU General Public
+ *               License (>=v2). Read the file COPYING that comes with GRASS
+ *               for details.
+ *
+ *****************************************************************************/
 #include <stdio.h>
 #include <stdlib.h>
 #include <grass/bitmap.h>
@@ -84,3 +101,6 @@ dump_map (struct BM *map)
 	fprintf (stdout, "\n");
     }
 }
+
+
+

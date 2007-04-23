@@ -1,3 +1,20 @@
+/****************************************************************************
+ *
+ * MODULE:       d.paint.labels
+ * AUTHOR(S):    Jim Westervelt (CERL) (original contributor)
+ *               Radim Blazek <radim.blazek gmail.com>, 
+ *               Stephan Holl <sholl gmx net>, 
+ *               Glynn Clements <glynn gclements.plus.com>, 
+ *               Hamish Bowman <hamish_nospam yahoo.com>, 
+ *               Markus Neteler <neteler itc.it>
+ * PURPOSE:      displays a paint label file in the active display frame
+ * COPYRIGHT:    (C) 2003-2006 by the GRASS Development Team
+ *
+ *               This program is free software under the GNU General Public
+ *               License (>=v2). Read the file COPYING that comes with GRASS
+ *               for details.
+ *
+ *****************************************************************************/
 #include <stdlib.h>
 #include <math.h>
 #include <grass/gis.h>
@@ -128,3 +145,6 @@ int main (int argc, char **argv)
 
     exit(0);
 }
+
+
+

@@ -1,3 +1,24 @@
+/****************************************************************************
+ *
+ * MODULE:       d.measure
+ * AUTHOR(S):    James Westervelt and Michael Shapiro 
+ *                (CERL - original contributors)
+ *               Markus Neteler <neteler itc.it>, 
+ *               Reinhard Brunzema <r.brunzema@web.de>, 
+ *               Bernhard Reiter <bernhard intevation.de>, 
+ *               Huidae Cho <grass4u gmail.com>, 
+ *               Eric G. Miller <egm2 jps.net>, 
+ *               Glynn Clements <glynn gclements.plus.com>, 
+ *               Hamish Bowman <hamish_nospam yahoo.com>, 
+ *               Jan-Oliver Wagner <jan intevation.de>
+ * PURPOSE:      interactive line and polygon measurement in display
+ * COPYRIGHT:    (C) 1999-2006 by the GRASS Development Team
+ *
+ *               This program is free software under the GNU General Public
+ *               License (>=v2). Read the file COPYING that comes with GRASS
+ *               for details.
+ *
+ *****************************************************************************/
 #include <stdlib.h>
 #include <grass/gis.h>
 #include <grass/display.h>
@@ -82,3 +103,6 @@ int main (int argc, char **argv)
 
 	exit(EXIT_SUCCESS);
 }
+
+
+
