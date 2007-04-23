@@ -1,3 +1,17 @@
+/****************************************************************************
+ *
+ * MODULE:       dbmi_base
+ * AUTHOR(S):    Radim Blazek <radim.blazek gmail.com> (original contributor)
+ *               Brad Douglas <rez touchofmadness.com>, 
+ *               Markus Neteler <neteler itc.it>
+ * PURPOSE:      database management functions for modules and drivers
+ * COPYRIGHT:    (C) 2003-2006 by the GRASS Development Team
+ *
+ *               This program is free software under the GNU General Public
+ *               License (>=v2). Read the file COPYING that comes with GRASS
+ *               for details.
+ *
+ *****************************************************************************/
 #include "xdr.h"
 
 static FILE *_send, *_recv;
@@ -41,3 +55,6 @@ xdr_end_recv(XDR *xdrs)
 
     return 0;
 }
+
+
+
