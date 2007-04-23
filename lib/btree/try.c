@@ -1,3 +1,18 @@
+/****************************************************************************
+ *
+ * MODULE:       btree
+ * AUTHOR(S):    CERL (present in ver 4.x)
+ *               Radim Blazek <radim.blazek gmail.com>
+ *               Glynn Clements <glynn gclements.plus.com>
+ * PURPOSE:      balanced tree - possibly duplicating libavl functionality; see
+ *               http://grass.itc.it/pipermail/grass-dev/2007-April/030396.html
+ * COPYRIGHT:    (C) 2002-2007 by the GRASS Development Team
+ *
+ *               This program is free software under the GNU General Public
+ *               License (>=v2). Read the file COPYING that comes with GRASS
+ *               for details.
+ *
+ *****************************************************************************/
 #include <stdio.h>
 #include <string.h>
 #include <grass/btree.h>
@@ -38,3 +53,6 @@ int main (void)
 
     return 0;
 }
+
+
+
