@@ -8,8 +8,8 @@ __version__ = "1.3"
 
 IconsSilk = {
     # map display
-    "displaymap" : 'application.png',
-    "rendermap"  : 'application_lightning.png',
+    "displaymap" : 'map_go.png',
+    "rendermap"  : 'arrow_refresh.png',
     "erase"      : 'cross.png',
     "pointer"    : 'cursor.png',
     "zoom_in"    : 'zoom_in.png',
@@ -19,6 +19,14 @@ IconsSilk = {
     "query"      : 'information.png',
     "savefile"   : 'picture_save.png',
     "printmap"   : 'printer.png',
+    "dec"        : 'overlays.png',
+    "pan"        : 'mouse.png', # should be changed, not nice icon
+    # digit
+    "addvpoint"  : 'bullet_add.png',
+    "addvline"   : 'vector_add.png',
+    "addvbound"  : 'plugin_add.png',
+    "addvcentr"  : 'shape_square_add.png',
+    "exit"       : 'door_in.png',
     # gis manager
     "newdisplay" : 'application_add.png',
     "addrast"    : 'image_add.png',
@@ -27,7 +35,7 @@ IconsSilk = {
     "addgrp"     : 'folder_add.png',
     "addovl"     : 'images.png',
     "delcmd"     : 'cross.png',
-    "attributetable" : 'table_add.png',
+    "attrtable" :  'application_view_columns.png',
     "addrgb"     : 'rgb.png',
     "addhis"     : 'his.png',
     "addthematic": 'thematic.png',

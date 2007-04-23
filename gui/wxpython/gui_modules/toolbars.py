@@ -112,14 +112,14 @@ class MapToolbar:
         # Misc
         #
     	self.savefile = self.toolbar.AddLabelTool(id=wx.ID_ANY, label="savefile",
-                                                  bitmap=wx.ArtProvider.GetBitmap(id=wx.ART_FILE_SAVE, client=wx.ART_BUTTON, size=tsize),
+                                                  bitmap=Icons["savefile"].GetBitmap(),
                                                   bmpDisabled=wx.NullBitmap,
                                                   kind=wx.ITEM_NORMAL,
                                                   shortHelp=Icons["savefile"].GetLabel(),
                                                   longHelp=Icons["savefile"].GetDesc())
 
         self.printmap = self.toolbar.AddLabelTool(id=wx.ID_ANY, label="printmap",
-                                                  bitmap=wx.ArtProvider.GetBitmap(id=wx.ART_PRINT, client=wx.ART_BUTTON),
+                                                  bitmap=Icons["printmap"].GetBitmap(),
                                                   bmpDisabled=wx.NullBitmap, kind=wx.ITEM_NORMAL,
                                                   shortHelp=Icons["printmap"].GetLabel(),
                                                   longHelp=Icons["printmap"].GetDesc())
@@ -191,47 +191,42 @@ class DigitToolbar:
 
         self.toolbar.AddSeparator()
 
-        self.point = self.toolbar.AddLabelTool(id=wx.ID_ANY, label="point",
-                                               bitmap=wx.Bitmap(os.path.join(self.icons,"new.point.gif"),
-                                                                wx.BITMAP_TYPE_ANY),
+        self.point = self.toolbar.AddLabelTool(id=wx.ID_ANY, label="addvpoint",
+                                               bitmap=Icons["addvpoint"].GetBitmap(),
                                                bmpDisabled=wx.NullBitmap,
                                                kind=wx.ITEM_RADIO,
-                                               shortHelp="Digitize new point",
-                                               longHelp="")
+                                               shortHelp=Icons["addvpoint"].GetLabel(),
+                                               longHelp=Icons["addvpoint"].GetDesc())
 
-    	self.line = self.toolbar.AddLabelTool(id=wx.ID_ANY, label="line",
-                                              bitmap=wx.Bitmap(os.path.join(self.icons,"new.line.gif"),
-                                                               wx.BITMAP_TYPE_ANY),
+    	self.line = self.toolbar.AddLabelTool(id=wx.ID_ANY, label="addvline",
+                                              bitmap=Icons["addvline"].GetBitmap(),
                                               bmpDisabled=wx.NullBitmap,
                                               kind=wx.ITEM_RADIO,
-                                              shortHelp="Digitize new line",
-                                              longHelp="")
+                                              shortHelp=Icons["addvline"].GetLabel(),
+                                              longHelp=Icons["addvline"].GetDesc())
 
-    	self.boundary = self.toolbar.AddLabelTool(id=wx.ID_ANY, label="boundary",
-                                                  bitmap=wx.Bitmap(os.path.join(self.icons,"new.boundary.gif"),
-                                                                   wx.BITMAP_TYPE_ANY),
+    	self.boundary = self.toolbar.AddLabelTool(id=wx.ID_ANY, label="addvbound",
+                                                  bitmap=Icons["addvbound"].GetBitmap(),
                                                   bmpDisabled=wx.NullBitmap,
                                                   kind=wx.ITEM_RADIO,
-                                                  shortHelp="Digitize new boundary",
-                                                  longHelp="")
+                                                  shortHelp=Icons["addvbound"].GetLabel(),
+                                                  longHelp=Icons["addvbound"].GetDesc())
 
-    	self.centroid = self.toolbar.AddLabelTool(id=wx.ID_ANY, label="centroid",
-                                                  bitmap=wx.Bitmap(os.path.join(self.icons,"new.centroid.gif"),
-                                                                   wx.BITMAP_TYPE_ANY),
+    	self.centroid = self.toolbar.AddLabelTool(id=wx.ID_ANY, label="addvcentr",
+                                                  bitmap=Icons["addvcentr"].GetBitmap(),
                                                   bmpDisabled=wx.NullBitmap,
                                                   kind=wx.ITEM_RADIO,
-                                                  shortHelp="Digitize new centroid",
-                                                  longHelp="")
+                                                  shortHelp=Icons["addvcentr"].GetLabel(),
+                                                  longHelp=Icons["addvcentr"].GetDesc())
 
         self.toolbar.AddSeparator()
 
     	self.exit = self.toolbar.AddLabelTool(id=wx.ID_ANY, label="exit",
-                                              bitmap=wx.Bitmap(os.path.join(self.icons,"exit.gif"),
-                                                               wx.BITMAP_TYPE_ANY),
+                                              bitmap=Icons["exit"].GetBitmap(),
                                               bmpDisabled=wx.NullBitmap,
                                               kind=wx.ITEM_NORMAL,
-                                              shortHelp="Quit digitization tool",
-                                              longHelp="")
+                                              shortHelp=Icons["exit"].GetLabel(),
+                                              longHelp=Icons["exit"].GetDesc())
 
         # Bindings
     	self.parent.Bind(wx.EVT_TOOL,     self.OnAddPoint,  self.point)
