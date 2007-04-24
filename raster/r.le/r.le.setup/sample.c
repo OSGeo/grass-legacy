@@ -22,6 +22,7 @@
 
 #include <stdlib.h>
 #include <grass/gis.h>
+#include <grass/site.h>
 #include "setup.h"
 #include <grass/config.h>
 #include <grass/raster.h>
