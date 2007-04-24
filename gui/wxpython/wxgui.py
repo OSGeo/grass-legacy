@@ -327,7 +327,9 @@ class GMFrame(wx.Frame):
         if self.curr_page.maptree.GetSelection() not in self.curr_page.maptree.layertype: return
         maptype = self.curr_page.maptree.layertype[self.curr_page.maptree.GetSelection()]
         if maptype != 'vector':
-            print 'Attribute management only available for vector files'
+            dlg = wx.MessageDialog(self, _("Attribute management is available only for vector map layers"), _("Error"), wx.OK | wx.ICON_ERROR)
+            dlg.ShowModal()
+            dlg.Destroy()
             return
 
         if not self.curr_page.maptree.GetPyData(self.curr_page.maptree.GetSelection()): return
