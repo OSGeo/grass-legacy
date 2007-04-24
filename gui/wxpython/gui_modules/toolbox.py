@@ -30,7 +30,15 @@ test_modules = {"g.gisenv":"""
 	<option key="feature" answer="line" hidden="yes" />
 	<flag key="s" answer="on" hidden="yes" />
 </qgisgrassmodule>
-"""}
+""","v.surf.idw":"""
+<qgisgrassmodule label="Interpolate attribute values (IDW)" module="v.surf.idw">
+        <option key="input" layeroption="layer" typemask="point,line" id="input" />
+        <field key="column" layerid="input" type="integer,double" label="Attribute field (interpolated values)" />
+        <option key="npoints" />
+        <option key="output" />
+</qgisgrassmodule>
+"""
+}
 import xml.dom.minidom
 import menuform
 
@@ -79,6 +87,8 @@ class handleQgisGrassModule:
                 self.handleOption( inner )
             elif it == 'flag':
                 self.handleFlag( inner )
+            elif it is not None:
+                self.handleOther( inner )
 
     def handleAttributes( self, node ):
         for (l,a) in node.attributes.items():
@@ -93,20 +103,22 @@ class handleQgisGrassModule:
     def handleFlag( self, flag ):
         self.handleAttributes( flag )
 
+    def handleOther( self, other ):
+        self.handleAttributes( other )
+
 class printQgisGrassModule( handleQgisGrassModule ):
 
     def __init__( self, qgisgrassmodule):
+        self.handleOption = self.printHandler
+        self.handleFlag = self.printHandler
+        self.handleOther = self.printHandler
         print "in qgisgrassmodule"
         handleQgisGrassModule.__init__( self, qgisgrassmodule )
 
-    def handleOption( self, opt ):
-        print "Option"
-        handleQgisGrassModule.handleOption( self, opt )
+    def printHandler( self, opt ):
+        print opt.localName
+        handleQgisGrassModule.handleOther( self, opt )
         print
-
-    def handleFlag( self, flag ):
-        print "Flag"
-        handleQgisGrassModule.handleFlag( self, flag )
 
     def handleAttribute( self, label, value, option ):
         print "%s:%s" % (label, value)
@@ -124,10 +136,34 @@ class wxQgisGrassModule( handleQgisGrassModule ):
     def handleOption( self, opt, getit = menuform.grassTask.get_param ):
         a = dict(opt.attributes.items())
         p = getit( self.task, a['key'] )
-        p['hidden'] = 'no' # unhide params
-        p['guisection'] = _( 'Main' ) # this should be the only tab present in the end
-        if a.get('hidden','no') == 'yes': p['hidden'] = 'yes' #except when explicitly hidden
-        if a.has_key( 'answer' ): p['value'] = a.get('answer')
+        # visibility:
+        p['guisection'] = _( 'Main' ) # this should be the only tab present
+        p['hidden'] = 'no' # unhide params ...
+        if a.get('hidden','no') == 'yes': p['hidden'] = 'yes' # ...except when explicitly hidden
+        # overrides:
+        if a.has_key( 'answer' ): p['value'] = a['answer']
+        if a.has_key( 'label' ): p['description'] = a['label']
+        # exclusions:
+        if a.has_key('exclude'):
+            vals = p['value'].split(',')
+            exclusions = a['exclude'].split( ',' )
+            for excluded in exclusions:
+                if excluded in vals:
+                    idx = vals.index(excluded)
+                    vals[ idx:idx+1 ] = []
+            p['value'] = ','.join( vals )
+            if p.get('default','') in exclusions: p['default'] = ''
+
+    def handleOther( self, opt ):
+        tag = opt.localName
+        att = dict( opt.attributes.items() )
+        if tag == 'field':
+            pass
+        elif tag == 'file':
+            pass
+        elif tag == 'selection':
+            pass
+        
 
     def handleFlag( self, flag ):
         self.handleOption( flag, getit = menuform.grassTask.get_flag )
@@ -137,7 +173,7 @@ class wxQgisGrassModule( handleQgisGrassModule ):
             if label=='module':
                 self.task = menuform.grassTask( grassModule = value )
                 for pf in self.task.params + self.task.flags:
-                    pf['hidden'] = 'yes'
+                    pf['hidden'] = 'yes' # hide eveything initially
             if label=='label':
                 self.description = value
 
