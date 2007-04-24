@@ -458,12 +458,11 @@ class mainFrame(wx.Frame):
         standalone = True
 
         # module name + keywords
-        title = self.task.name + " ["
-        for keyId in range(len(self.task.keywords)):
-            if keyId != 0:
-                title += ", "
-            title += self.task.keywords[keyId]
-        title += "]"
+        title = self.task.name
+        try:
+            title +=  " [" + ', '.join( self.task.keywords ) + "]"
+        except ValueError:
+            pass
 
         wx.Frame.__init__(self, parent=parent, id=ID, title=title,
                           pos=wx.DefaultPosition, style=wx.DEFAULT_FRAME_STYLE | wx.TAB_TRAVERSAL)
@@ -1074,6 +1073,7 @@ if __name__ == "__main__":
         task = grassTask()
         task.name = "TestTask"
         task.description = "This is an artificial grassTask() object intended for testing purposes"
+        task.keywords = ["grass","task"]
         task.params = [
             {
             "name" : "text",
@@ -1124,6 +1124,11 @@ if __name__ == "__main__":
             "gisprompt" : False,
             "multiple" : "yes",
             "values" : str2rgb.keys() + map( str, str2rgb.values() )
+            },{
+            "name" : "a_file",
+            "description" : "A file selector",
+            "gisprompt" : True,
+            "element" : "file"
             }
             ]
         task.flags = [
