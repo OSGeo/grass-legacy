@@ -140,10 +140,15 @@ def normalize_whitespace(text):
     return string.join( string.split(text), ' ')
 
 def text_beautify( someString ):
-    "Make really long texts shorter"
+    """
+    Make really long texts shorter, clean up whitespace and
+    remove trailing punctuation.
+    """
     # TODO: remove magic number (calculate a correct value from
     # pixelSize of text and the magic number for maximum size)
-    return escape_ampersand( os.linesep.join( textwrap.wrap( normalize_whitespace(someString), 70 ) ) )
+    return escape_ampersand( string.strip(
+        os.linesep.join( textwrap.wrap( normalize_whitespace(someString), 70 ) ),
+        ".,;:" ) )
 
 def escape_ampersand(text):
     """Escapes ampersands with additional ampersand for GUI"""
@@ -342,11 +347,9 @@ class processTask(HandlerBase):
         # If it's not a parameter element, ignore it
         if name == 'parameter':
             self.inParameter = False;
-            # description -> label
-            #            if not self.param_label:
-            #                self.param_label = self.param_description
-            #                self.param_description = ''
-
+            # description -> label substitution is delegated to the client;
+            # we deal in the parser only with getting interface-description
+            # verbatim
             self.task.params.append({
                 "name" : self.param_name,
                 "type" : self.param_type,
@@ -543,7 +546,7 @@ class mainFrame(wx.Frame):
             btnsizer.Add( item=btn_run, proportion=0, flag=wx.ALL| wx.ALIGN_CENTER, border=10)
             # copy
             btn_clipboard = wx.Button(parent=self, id=wx.ID_OK, label=_("C&opy") )
-            btn_clipboard.SetToolTipString(_("Copy the command to clipboard"))
+            btn_clipboard.SetToolTipString(_("Copy the current command string to the clipboard"))
             btn_clipboard.Bind(wx.EVT_BUTTON, self.OnCopy)
             btnsizer.Add(item=btn_clipboard, proportion=0, flag=wx.ALL| wx.ALIGN_CENTER, border=10)
         guisizer.Add(item=btnsizer, proportion=0, flag=wx.ALIGN_CENTER)
@@ -670,7 +673,8 @@ class cmdPanel(wx.Panel):
                 sections.append( task['guisection'] )
             else:
                 is_section[ task['guisection'] ] += 1
-
+        del is_section
+        
         # Main goes first, Options goes second
         for (newidx,content) in [ (0,_( 'Main' )), (1,_('Options')) ]:
             if content in sections:
@@ -833,23 +837,27 @@ class cmdPanel(wx.Panel):
                     selection.Bind(wx.EVT_TEXT, self.OnSetValue)
                 # color entry
                 elif p.get('prompt','') == 'color':
+                    # Heuristic way of finding whether transparent is allowed
+                    handle_transparency =  'none' in title
                     default_color = (200,200,200)
                     label_color = _("Select Color")
                     if p.get('default','') != '':
                         default_color, label_color = color_resolve( p['default'] )
                     if p.get('value','') != '': # parameter previously set
                         default_color, label_color = color_resolve( p['value'] )
-                    if "none" in title:
+                    if handle_transparency:
                         this_sizer = wx.BoxSizer(orient=wx.HORIZONTAL )
                     else:
                         this_sizer = which_sizer
-                    btn_colour = csel.ColourSelect(which_panel, wx.ID_ANY, label_color, default_color, wx.DefaultPosition, (150,-1) )
+                    btn_colour = csel.ColourSelect(parent=which_panel, id=wx.ID_ANY,
+                                                   label=label_color, colour=default_color,
+                                                   position=wx.DefaultPosition, size=(150,-1) )
                     this_sizer.Add(item=btn_colour, proportion=0, flag=wx.ADJUST_MINSIZE | wx.BOTTOM | wx.LEFT, border=5)
                     # For color selectors, this is a two-member array, holding the IDs of
                     # the selector proper and either a "transparent" button or None
                     p['wxId'] = [btn_colour.GetId(),]
                     btn_colour.Bind(csel.EVT_COLOURSELECT,  self.OnColorChange )
-                    if "none" in title:
+                    if handle_transparency:
                         none_check = wx.CheckBox(which_panel, wx.ID_ANY, _("Transparent") )
                         if p.get('value','') != '' and p.get('value',[''])[0] == "none":
                             none_check.SetValue(True)
@@ -862,10 +870,12 @@ class cmdPanel(wx.Panel):
                         p['wxId'].append( none_check.GetId() )
                     else:
                         p['wxId'].append(None)
+                # file selector
                 elif p.get('prompt','') != 'color' and p.get('element', '') == 'file':
-                    fbb = filebrowse.FileBrowseButton(which_panel, wx.ID_ANY, size=(350, -1), labelText='',
-                                   dialogTitle='Choose color table file', startDirectory=os.getcwd(), fileMode=0,
-                                   changeCallback=self.OnSetValue)
+                    fbb = filebrowse.FileBrowseButton(parent=which_panel, id=wx.ID_ANY, size=(350, -1), labelText='',
+                                                      dialogTitle=_( 'Choose %s' ) % p.get('description',_('File')), buttonText=_( 'Browse' ),
+                                                      startDirectory=os.getcwd(), fileMode=0,
+                                                      changeCallback=self.OnSetValue)
                     if p.get('value','') != '':
                         fbb.SetValue(p['value']) # parameter previously set
                     which_sizer.Add(item=fbb, proportion=0, flag=wx.ADJUST_MINSIZE| wx.BOTTOM | wx.LEFT, border=5)
@@ -899,9 +909,6 @@ class cmdPanel(wx.Panel):
     def OnPageChange(self, event):
         self.Layout()
 
-    def fbbCallback(self, event):
-        print event.GetString()
-
     def OnColorChange( self, event ):
         myId = event.GetId()
         for p in self.task.params:
@@ -922,14 +929,18 @@ class cmdPanel(wx.Panel):
         self.OnUpdateValues()
 
     def OnUpdateValues(self):
-        """If we were part of a richer interface, report back the current command being built.
+        """
+        If we were part of a richer interface, report back the current command being built.
 
         This method should be set by the parent of this panel if needed. It's a hook, actually.
-        Beware of what is "self" in the method def, though. It will be called with no arguments."""
+        Beware of what is "self" in the method def, though. It will be called with no arguments.
+        """
         pass
 
     def OnCheckBoxMulti(self, event):
-        """Fill the values ,-separated string according to current status of the checkboxes."""
+        """
+        Fill the values as a ','-separated string according to current status of the checkboxes.
+        """
         me = event.GetId()
         theParam = None
         for p in self.task.params:
@@ -954,6 +965,11 @@ class cmdPanel(wx.Panel):
         self.OnUpdateValues()
 
     def OnSetValue(self, event):
+        """
+        Retrieve the widget value and set the task value field accordingly.
+
+        Use for widgets that have a proper GetValue() method, i.e. not for selectors.
+        """
         myId = event.GetId()
         me = wx.FindWindowById( myId )
         for porf in self.task.params + self.task.flags:
@@ -969,7 +985,8 @@ class cmdPanel(wx.Panel):
 
         If ignoreErrors==True then it will return whatever has been
         built so far, even though it would not be a correct command
-        for GRASS."""
+        for GRASS.
+        """
         try:
             cmd = ' '.join( self.task.getCmd( ignoreErrors=ignoreErrors ) )
         except ValueError, err:
@@ -1012,11 +1029,11 @@ class GrassGUIApp(wx.App):
         return True
 
 class GUI:
+    """
+    Parses GRASS commands when module is imported and used
+    from wxgui.py
+    """
     def __init__(self, parent=-1):
-        """
-        Parses GRASS commands when module is imported and used
-        from wxgui.py
-        """
         self.parent = parent
 
     def parseCommand(self, cmd, gmpath, completed=None, parentframe=-1 ):
@@ -1068,12 +1085,12 @@ if __name__ == "__main__":
             task.get_param('layer')['value'] = 1
             task.get_param('bcolor')['value'] = "red"
             assert ' '.join( task.getCmd() ) == "d.vect -v map=map_name layer=1 bcolor=red"
-        # Test interface building with handmade grassTask
-        # this doesn't need GRASS at all
+        # Test interface building with handmade grassTask,
+        # possibly outside of a GRASS session.
         task = grassTask()
         task.name = "TestTask"
-        task.description = "This is an artificial grassTask() object intended for testing purposes"
-        task.keywords = ["grass","task"]
+        task.description = "This is an artificial grassTask() object intended for testing purposes."
+        task.keywords = ["grass","test","task"]
         task.params = [
             {
             "name" : "text",
@@ -1123,6 +1140,7 @@ if __name__ == "__main__":
             "description" : "A large multiple selection",
             "gisprompt" : False,
             "multiple" : "yes",
+            # values must be an array of strings
             "values" : str2rgb.keys() + map( str, str2rgb.values() )
             },{
             "name" : "a_file",
