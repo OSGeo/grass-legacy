@@ -12,8 +12,8 @@
 
 #include <string.h>
 #include <stdlib.h>
-#ifndef __MINGW32__
 #include <unistd.h>
+#ifndef __MINGW32__
 #include <fcntl.h>
 #include <sys/types.h>
 #include <sys/stat.h>
@@ -99,6 +99,9 @@ int PNG_Graph_set(int argc, char **argv)
 
 	p = getenv("GRASS_PNG_READ");
 	do_read = p && strcmp(p, "TRUE") == 0;
+
+	if (do_read && access(file_name, 0) != 0)
+		do_read = 0;
 
 	width = screen_right - screen_left;
 	height = screen_bottom - screen_top;
