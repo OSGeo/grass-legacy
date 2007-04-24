@@ -113,4 +113,4 @@ cleanup
 # write cmd history:
 v.support ${GIS_OPT_OUTPUT} cmdhist="${CMDLINE}"
 
-exit $0
+exit 0
