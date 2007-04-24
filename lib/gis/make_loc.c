@@ -32,6 +32,7 @@
 #include <string.h>
 #include <unistd.h>
 #include <sys/stat.h>
+#include <math.h>
 
 #ifdef __MINGW32__
 # define mkdir(name, mode) ((mkdir) (name))
