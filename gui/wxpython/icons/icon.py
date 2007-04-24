@@ -21,6 +21,7 @@ import os
 import wx
 
 iconpath_default = os.getenv("GISBASE") + "/etc/gui/icons/"
+iconpath_vdigit  = os.getenv("GISBASE") + "/etc/v.digit/"
 iconpath = os.getenv("GRASS_ICONPATH")
 
 icons_default = {
@@ -36,14 +37,14 @@ icons_default = {
     "zoom_back"  : 'gui-zoom_back.gif', 
     "zoommenu"   : 'gui-mapzoom.gif', 
     "dec"        : 'module-d.barscale.gif', 
-    "savefile"   : wx.ART_FILE_SAVE, 
-    "printmap"   : wx.ART_PRINT,
+    "savefile"   : 'file-save.gif', 
+    "printmap"   : 'file-print.gif',
     # digit
-    "addvpoint"  : wx.ART_ERROR,
-    "addvline"   : wx.ART_ERROR,
-    "addvbound"  : wx.ART_ERROR,
-    "addvcentr"  : wx.ART_ERROR,
-    "exit"       : wx.ART_ERROR,
+    "digaddpoint": 'new.point.gif',
+    "digaddline" : 'new.line.gif',
+    "digaddbound": 'new.boundary.gif',
+    "digaddcentr": 'new.centroid.gif',
+    "digexit"    : 'exit.gif',
     # gis manager
     "newdisplay" : 'gui-startmon.gif', 
     "addrast"    : 'element-cell.gif', 
@@ -52,7 +53,7 @@ icons_default = {
     "addgrp"     : wx.ART_ERROR, 
     "addovl"     : 'module-d.grid.gif', 
     "delcmd"     : wx.ART_ERROR, 
-    "attrtable"  : wx.ART_ERROR,
+    "attrtable"  : 'db-values.gif',
     "addrgb"     : 'module-d.rgb.gif',
     "addhis"     : 'channel-his.gif',
     "addlegend"  : 'module-d.legend.gif',
@@ -70,7 +71,10 @@ if iconpath and iconpath.find('silk') > -1: # silk icon theme
     for key, img in icons_default.iteritems():
         if not icons_img.has_key(key): # add key 
             icons_img[key] = img
-            iconpath_tmp = iconpath_default
+            if key[0:3] == 'dig':
+                iconpath_tmp = iconpath_vdigit
+            else:
+                iconpath_tmp = iconpath_default
         else:
             iconpath_tmp = iconpath
 
@@ -81,8 +85,11 @@ else: # default icons
     icons_img = icons_default
     for key, img in icons_img.iteritems():
         if img and type (icons_img[key]) == type(''):
-            icons_img[key] = os.path.join(iconpath_default, img)
-
+            if key[0:3] == 'dig':
+                icons_img[key] = os.path.join(iconpath_vdigit, img)
+            else:
+                icons_img[key] = os.path.join(iconpath_default, img)
+                
 class MetaIcon:
     """
     Handle icon metadata (image path, tooltip, ...)
@@ -167,15 +174,14 @@ Icons = {
     "addgrid"    : MetaIcon (img=icons_img["addgrid"], label="Add grid layer"),
     "addlabels"  : MetaIcon (img=icons_img["addlabels"], label="Add labels"),
     # digit
-    "addvpoint"  : MetaIcon (img=icons_img["addvpoint"], label="Digitize new point"),
-    "addvline"   : MetaIcon (img=icons_img["addvline"], label="Digitize new line"),
-    "addvbound"  : MetaIcon (img=icons_img["addvbound"], label="Digitize new boundary"),
-    "addvcentr"  : MetaIcon (img=icons_img["addvcentr"], label="Digitize new centroid"),
-    "exit"       : MetaIcon (img=icons_img["exit"], label="Quit digitization tool")}
+    "digaddpoint": MetaIcon (img=icons_img["digaddpoint"], label="Digitize new point"),
+    "digaddline" : MetaIcon (img=icons_img["digaddline"], label="Digitize new line"),
+    "digaddbound": MetaIcon (img=icons_img["digaddbound"], label="Digitize new boundary"),
+    "digaddcentr": MetaIcon (img=icons_img["digaddcentr"], label="Digitize new centroid"),
+    "digexit"    : MetaIcon (img=icons_img["digexit"], label="Quit digitization tool")}
 
 # testing ...
 if __name__ == "__main__":
     for k,v in Icons.iteritems():
         print k, "/", v
 
-    print icons_default["savefile"]

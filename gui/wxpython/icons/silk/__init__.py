@@ -22,11 +22,11 @@ IconsSilk = {
     "dec"        : 'overlays.png',
     "pan"        : 'mouse.png', # should be changed, not nice icon
     # digit
-    "addvpoint"  : 'bullet_add.png',
-    "addvline"   : 'vector_add.png',
-    "addvbound"  : 'plugin_add.png',
-    "addvcentr"  : 'shape_square_add.png',
-    "exit"       : 'door_in.png',
+    "digaddpoint": 'bullet_add.png',
+    "digaddline" : 'vector_add.png',
+    "digaddbound": 'plugin_add.png',
+    "digaddcentr": 'shape_square_add.png',
+    "digexit"    : 'door_in.png',
     # gis manager
     "newdisplay" : 'application_add.png',
     "addrast"    : 'image_add.png',
