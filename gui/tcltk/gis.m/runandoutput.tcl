@@ -227,8 +227,10 @@ proc guarantee_xmon {} {
 		}
 
 	}
-	close $input
-
+	if {[catch {close $input} error]} {
+	    puts $error
+	    exit 1
+	}
 	set xmon  [lindex $xmonlist 0]
 	spawn d.mon start=$xmon
 }
