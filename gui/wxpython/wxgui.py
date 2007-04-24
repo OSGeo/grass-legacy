@@ -431,19 +431,13 @@ class GMFrame(wx.Frame):
         point = wx.GetMousePosition()
         ovlmenu = wx.Menu()
 
-        addgrid = wx.MenuItem(ovlmenu, -1,'Add grid overlay')
-        bmp = wx.Image(os.path.join(wxgui_utils.icons,'module-d.grid.gif'), wx.BITMAP_TYPE_GIF)
-        bmp.Rescale(16, 16)
-        bmp = bmp.ConvertToBitmap()
-        addgrid.SetBitmap(bmp)
+        addgrid = wx.MenuItem(ovlmenu, -1, Icons["addgrid"].GetLabel())
+        addgrid.SetBitmap(Icons["addgrid"].GetBitmap(self.iconsize))
         ovlmenu.AppendItem(addgrid)
         self.Bind(wx.EVT_MENU, self.addGrid, addgrid)
 
-        addlbl = wx.MenuItem(ovlmenu, -1,'Add vector labels overlay (create with v.label)')
-        bmp = wx.Image(os.path.join(wxgui_utils.icons,'module-d.labels.gif'), wx.BITMAP_TYPE_GIF)
-        bmp.Rescale(16, 16)
-        bmp = bmp.ConvertToBitmap()
-        addlbl.SetBitmap(bmp)
+        addlbl = wx.MenuItem(ovlmenu, -1, Icons["addlabels"].GetLabel())
+        addlbl.SetBitmap(Icons["addlabels"].GetBitmap(self.iconsize))
         ovlmenu.AppendItem(addlbl)
         self.Bind(wx.EVT_MENU, self.addLabels, addlbl)
 
