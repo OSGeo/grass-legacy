@@ -36,7 +36,7 @@ icons_default = {
     "query"      : 'gui-query.gif', 
     "zoom_back"  : 'gui-zoom_back.gif', 
     "zoommenu"   : 'gui-mapzoom.gif', 
-    "dec"        : 'module-d.barscale.gif', 
+    "dec"        : 'module-d.barscale.gif',
     "savefile"   : 'file-save.gif', 
     "printmap"   : 'file-print.gif',
     # digit
@@ -61,7 +61,8 @@ icons_default = {
     "addthematic": 'module-d.vect.thematic.gif',
     "addchart"   : 'module-d.vect.chart.gif',
     "addgrid"    : 'module-d.grid.gif',
-    "addlabels"  : 'module-d.labels.gif'
+    "addlabels"  : 'module-d.labels.gif',
+    "addtext"    : 'gui-font.gif',
     }
 
 # merge icons dictionaries, join paths
@@ -154,6 +155,7 @@ Icons = {
     "zoom_back"  : MetaIcon (img=icons_img["zoom_back"], label="Return to previous zoom"),
     "zoommenu"   : MetaIcon (img=icons_img["zoommenu"], label="Zoom options", desc="Display zoom management"),
     "dec"        : MetaIcon (img=icons_img["dec"], label="Decoration", desc="Add graphic overlays to map"),
+    "addbarscale": MetaIcon (img=icons_img["dec"], label="Scalebar and north arrow"),
     "savefile"   : MetaIcon (img=icons_img["savefile"], label="Save display to PNG file"),
     "printmap"   : MetaIcon (img=icons_img["printmap"], label="Print display"),
     # gis manager
@@ -173,6 +175,7 @@ Icons = {
     "addchart"   : MetaIcon (img=icons_img["addchart"], label="Add thematic chart layer"),
     "addgrid"    : MetaIcon (img=icons_img["addgrid"], label="Add grid layer"),
     "addlabels"  : MetaIcon (img=icons_img["addlabels"], label="Add labels"),
+    "addtext"    : MetaIcon (img=icons_img["addtext"], label="Add text layer"),
     # digit
     "digaddpoint": MetaIcon (img=icons_img["digaddpoint"], label="Digitize new point"),
     "digaddline" : MetaIcon (img=icons_img["digaddline"], label="Digitize new line"),

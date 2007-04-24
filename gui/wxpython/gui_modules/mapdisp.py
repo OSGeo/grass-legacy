@@ -40,6 +40,7 @@ import menuform
 import disp_print
 from digit import Digit as Digit
 from debug import Debug as Debug
+from icon import Icons as Icons
 
 import images
 imagepath = images.__path__[0]
@@ -938,7 +939,8 @@ class MapFrame(wx.Frame):
         # Set the size & cursor
         #
         self.SetClientSize(size)
-
+        self.iconsize = (16, 16)
+        
         #
         # Fancy gui
         #
@@ -1332,27 +1334,18 @@ class MapFrame(wx.Frame):
         point = wx.GetMousePosition()
         decmenu = wx.Menu()
         # Add items to the menu
-        addscale = wx.MenuItem(decmenu, -1,'Scalebar and north arrow')
-        bmp = wx.Image(os.path.join(icons,'module-d.barscale.gif'), wx.BITMAP_TYPE_GIF)
-        bmp.Rescale(16, 16)
-        bmp = bmp.ConvertToBitmap()
-        addscale.SetBitmap(bmp)
+        addscale = wx.MenuItem(decmenu, -1, Icons["addbarscale"].GetLabel())
+        addscale.SetBitmap(Icons["addbarscale"].GetBitmap(self.iconsize))
         decmenu.AppendItem(addscale)
         self.Bind(wx.EVT_MENU, self.addBarscale, addscale)
 
-        addlegend = wx.MenuItem(decmenu, -1,'Legend')
-        bmp = wx.Image(os.path.join(icons,'module-d.legend.gif'), wx.BITMAP_TYPE_GIF)
-        bmp.Rescale(16, 16)
-        bmp = bmp.ConvertToBitmap()
-        addlegend.SetBitmap(bmp)
+        addlegend = wx.MenuItem(decmenu, -1, Icons["addlegend"].GetLabel())
+        addlegend.SetBitmap(Icons["addlegend"].GetBitmap(self.iconsize))
         decmenu.AppendItem(addlegend)
         self.Bind(wx.EVT_MENU, self.addLegend, addlegend)
 
-        addtext = wx.MenuItem(decmenu, -1,'Text')
-        bmp = wx.Image(os.path.join(icons,'gui-font.gif'), wx.BITMAP_TYPE_GIF)
-        bmp.Rescale(16, 16)
-        bmp = bmp.ConvertToBitmap()
-        addtext.SetBitmap(bmp)
+        addtext = wx.MenuItem(decmenu, -1, Icons["addtext"].GetLabel())
+        addtext.SetBitmap(Icons["addtext"].GetBitmap(self.iconsize))
         decmenu.AppendItem(addtext)
         self.Bind(wx.EVT_MENU, self.addText, addtext)
 
