@@ -1890,7 +1890,10 @@ proc GRMap::zoom_gregion { args} {
             set value [string trim $value]
             set parts($key) $value
         }
-        close $input
+	if {[catch {close $input} error]} {
+	    puts $error
+	    exit 1
+	}
 
         GRMap::zoom_new $parts(north) $parts(south) $parts(east) $parts(west) $parts(nsres) $parts(ewres)
         set gregionproj "proj: $parts(projection); zone: $parts(zone); "
