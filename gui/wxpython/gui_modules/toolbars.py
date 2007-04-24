@@ -191,42 +191,42 @@ class DigitToolbar:
 
         self.toolbar.AddSeparator()
 
-        self.point = self.toolbar.AddLabelTool(id=wx.ID_ANY, label="addvpoint",
-                                               bitmap=Icons["addvpoint"].GetBitmap(),
+        self.point = self.toolbar.AddLabelTool(id=wx.ID_ANY, label="digaddpoint",
+                                               bitmap=Icons["digaddpoint"].GetBitmap(),
                                                bmpDisabled=wx.NullBitmap,
                                                kind=wx.ITEM_RADIO,
-                                               shortHelp=Icons["addvpoint"].GetLabel(),
-                                               longHelp=Icons["addvpoint"].GetDesc())
+                                               shortHelp=Icons["digaddpoint"].GetLabel(),
+                                               longHelp=Icons["digaddpoint"].GetDesc())
 
-    	self.line = self.toolbar.AddLabelTool(id=wx.ID_ANY, label="addvline",
-                                              bitmap=Icons["addvline"].GetBitmap(),
+    	self.line = self.toolbar.AddLabelTool(id=wx.ID_ANY, label="digaddline",
+                                              bitmap=Icons["digaddline"].GetBitmap(),
                                               bmpDisabled=wx.NullBitmap,
                                               kind=wx.ITEM_RADIO,
-                                              shortHelp=Icons["addvline"].GetLabel(),
-                                              longHelp=Icons["addvline"].GetDesc())
+                                              shortHelp=Icons["digaddline"].GetLabel(),
+                                              longHelp=Icons["digaddline"].GetDesc())
 
-    	self.boundary = self.toolbar.AddLabelTool(id=wx.ID_ANY, label="addvbound",
-                                                  bitmap=Icons["addvbound"].GetBitmap(),
+    	self.boundary = self.toolbar.AddLabelTool(id=wx.ID_ANY, label="digaddbound",
+                                                  bitmap=Icons["digaddbound"].GetBitmap(),
                                                   bmpDisabled=wx.NullBitmap,
                                                   kind=wx.ITEM_RADIO,
-                                                  shortHelp=Icons["addvbound"].GetLabel(),
-                                                  longHelp=Icons["addvbound"].GetDesc())
+                                                  shortHelp=Icons["digaddbound"].GetLabel(),
+                                                  longHelp=Icons["digaddbound"].GetDesc())
 
-    	self.centroid = self.toolbar.AddLabelTool(id=wx.ID_ANY, label="addvcentr",
-                                                  bitmap=Icons["addvcentr"].GetBitmap(),
+    	self.centroid = self.toolbar.AddLabelTool(id=wx.ID_ANY, label="digaddcentr",
+                                                  bitmap=Icons["digaddcentr"].GetBitmap(),
                                                   bmpDisabled=wx.NullBitmap,
                                                   kind=wx.ITEM_RADIO,
-                                                  shortHelp=Icons["addvcentr"].GetLabel(),
-                                                  longHelp=Icons["addvcentr"].GetDesc())
+                                                  shortHelp=Icons["digaddcentr"].GetLabel(),
+                                                  longHelp=Icons["digaddcentr"].GetDesc())
 
         self.toolbar.AddSeparator()
 
-    	self.exit = self.toolbar.AddLabelTool(id=wx.ID_ANY, label="exit",
-                                              bitmap=Icons["exit"].GetBitmap(),
+    	self.exit = self.toolbar.AddLabelTool(id=wx.ID_ANY, label="digexit",
+                                              bitmap=Icons["digexit"].GetBitmap(),
                                               bmpDisabled=wx.NullBitmap,
                                               kind=wx.ITEM_NORMAL,
-                                              shortHelp=Icons["exit"].GetLabel(),
-                                              longHelp=Icons["exit"].GetDesc())
+                                              shortHelp=Icons["digexit"].GetLabel(),
+                                              longHelp=Icons["digexit"].GetDesc())
 
         # Bindings
     	self.parent.Bind(wx.EVT_TOOL,     self.OnAddPoint,  self.point)

@@ -604,8 +604,15 @@ class BufferedWindow(wx.Window):
                 if self.parent.digittoolbar.action == "addpoint":
                     #self.SetCursor (self.parent.cursors["cross"])
                     east,north= self.Pixel2Cell(self.mouse['begin'][0],self.mouse['begin'][1])
-                    Digit.AddPoint(self.parent.digittoolbar.layers[self.parent.digittoolbar.layerID],
-                                         east,north)
+                    Debug.msg (3, "BufferedWindow.MouseAction(): layerID=%d" % self.parent.digittoolbar.layerID)
+                    try:
+                       Digit.AddPoint(self.parent.digittoolbar.layers[self.parent.digittoolbar.layerID],
+                                      east,north)
+                    except IndexError:
+                       dlg = wx.MessageDialog(self, _("Choose vector layer for editing"), _("Error"), wx.OK | wx.ICON_ERROR)
+                       dlg.ShowModal()
+                       dlg.Destroy()
+                       
                 # redraw map
                 self.render=True
                 self.UpdateMap()
@@ -1021,6 +1028,7 @@ class MapFrame(wx.Frame):
 
         elif name == "digit":
             self.digittoolbar = toolbars.DigitToolbar(self, self.Map)
+            self.digittoolbar.layerID = -1
 
             self._mgr.AddPane(self.digittoolbar.toolbar, wx.aui.AuiPaneInfo().
                               Name("digittoolbar").Caption("Digit Toolbar").
