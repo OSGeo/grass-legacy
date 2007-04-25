@@ -9,7 +9,6 @@ sys.path.append(gmpath)
 gmpath = os.getenv("GISBASE") + "/etc/wx/icons/"
 sys.path.append(gmpath)
 
-import track
 import select
 import menuform
 import mapdisp
@@ -70,10 +69,6 @@ class LayerTree(CT.CustomTreeCtrl):
         self.mapdisplay.SetTitle(_("GRASS GIS - Map Display: " + str(self.disp_idx) + " - Location: " + grassenv.env["LOCATION_NAME"]))
         #self.maptree[self.disp_idx] = self.mapdisplays[self.disp_idx].getTree()
 
-        # store information about display and associated controls in a dictionary in track.py
-        track.Track().SetDisp(self.disp_idx,self.mapdisplay)
-        track.Track().SetCtrlDict(self.disp_idx, self.mapdisplay, self.treepg, self)
-
         #show new display
         self.mapdisplay.Show()
         self.mapdisplay.Refresh()
@@ -109,7 +104,7 @@ class LayerTree(CT.CustomTreeCtrl):
 
         trgif = Icons["elvect"].GetBitmap(bmpsize)
         self.vect_icon = il.Add(trgif)
-        
+
         trgif = Icons["addthematic"].GetBitmap(bmpsize)
         self.theme_icon = il.Add(trgif)
 
@@ -694,34 +689,34 @@ class GMConsole(wx.Panel):
 
         global goutput
         goutput = self.cmd_output
-    	self.console_clear = wx.Button(self, -1, "Clear")
-    	self.console_save = wx.Button(self, -1, "Save")
+        self.console_clear = wx.Button(self, -1, "Clear")
+        self.console_save = wx.Button(self, -1, "Save")
 
         self.console_progressbar = wx.Gauge(self, -1, 100, (110, 50), (250, 25))
 
-    	self.Bind(wx.EVT_BUTTON, self.clearHistory, self.console_clear)
-    	self.Bind(wx.EVT_BUTTON, self.saveHistory, self.console_save)
+        self.Bind(wx.EVT_BUTTON, self.clearHistory, self.console_clear)
+        self.Bind(wx.EVT_BUTTON, self.saveHistory, self.console_save)
 
-		# output control layout
-    	boxsizer1 = wx.BoxSizer(wx.VERTICAL)
-    	gridsizer1 = wx.GridSizer(1, 2, 0, 0)
-    	boxsizer1.Add(self.cmd_output, 1,
+        # output control layout
+        boxsizer1 = wx.BoxSizer(wx.VERTICAL)
+        gridsizer1 = wx.GridSizer(1, 2, 0, 0)
+        boxsizer1.Add(self.cmd_output, 1,
                               wx.EXPAND|wx.ADJUST_MINSIZE, 0)
-    	gridsizer1.Add(self.console_clear, 0,
+        gridsizer1.Add(self.console_clear, 0,
                                wx.ALIGN_CENTER_HORIZONTAL|wx.ADJUST_MINSIZE, 0)
-    	gridsizer1.Add(self.console_save, 0,
+        gridsizer1.Add(self.console_save, 0,
                                wx.ALIGN_CENTER_HORIZONTAL|wx.ADJUST_MINSIZE, 0)
 
 
         boxsizer1.Add((0,5))
-    	boxsizer1.Add(gridsizer1, 0, wx.EXPAND|wx.ALIGN_CENTRE_VERTICAL)
+        boxsizer1.Add(gridsizer1, 0, wx.EXPAND|wx.ALIGN_CENTRE_VERTICAL)
         boxsizer1.Add((0,5))
-    	boxsizer1.Add(self.console_progressbar, 0,
+        boxsizer1.Add(self.console_progressbar, 0,
                               wx.EXPAND|wx.ADJUST_MINSIZE, 0)
         boxsizer1.Fit(self)
-    	boxsizer1.SetSizeHints(self)
-    	self.SetAutoLayout(True)
-    	self.SetSizer(boxsizer1)
+        boxsizer1.SetSizeHints(self)
+        self.SetAutoLayout(True)
+        self.SetSizer(boxsizer1)
 
     def getGRASSCmds(self):
         '''
@@ -735,33 +730,31 @@ class GMConsole(wx.Panel):
         return self.gcmdlst
 
     def runCmd(self, command):
-    	"""
+        """
         Run in GUI or shell GRASS (or other) commands typed into
-    	console command text widget, echo command to
-    	output text widget, and send stdout output to output
-    	text widget.
+        console command text widget, echo command to
+        output text widget, and send stdout output to output
+        text widget.
 
         TODO: Display commands (*.d) are captured and
-    	processed separately by mapdisp.py. Display commands are
-    	rendered in map display widget that currently has
-    	the focus (as indicted by mdidx).
+        processed separately by mapdisp.py. Display commands are
+        rendered in map display widget that currently has
+        the focus (as indicted by mdidx).
         """
 
-    	gcmdlst = self.getGRASSCmds()
-    	cmdlst = []
+        gcmdlst = self.getGRASSCmds()
+        cmdlst = []
         #    	cmd = self.console_command.GetLineText(0)
-    	cmdlst = command.split(' ')
+        cmdlst = command.split(' ')
         try:
-           #            disp_idx = int(track.Track().GetDisp()[0])
-           #            curr_disp = track.Track().GetDisp()[1]
            curr_disp = self.Parent.Parent.curr_page.maptree.mapdisplay
         except:
            #            disp_idx = None
-            curr_disp = None
+           curr_disp = None
 
-    	if len(cmdlst) == 1 and command in gcmdlst:
-           # Send GRASS command without arguments to GUI command interface
-           # except display commands (they are handled differently)
+        if len(cmdlst) == 1 and command in gcmdlst:
+            # Send GRASS command without arguments to GUI command interface
+            # except display commands (they are handled differently)
             global gmpath
             if command[0:2] == "d.":
                 if command == 'd.rast':
@@ -786,10 +779,7 @@ class GMConsole(wx.Panel):
                     print 'Command type not yet implemented'
                     return
 
-#                if disp_idx != None:
-#                    # get layer tree for active display
-#                    layertree = track.Track().GetCtrls(disp_idx, 2)
-                    # add layer
+                # add layer
                 self.Parent.Parent.curr_page.maptree.AddLayer(layertype)
 
             else:
@@ -797,7 +787,7 @@ class GMConsole(wx.Panel):
                 self.command_output.write(cmdlst[0] +
                                                           "\n----------\n")
 
-    	elif command[0:2] == "d." and len(cmdlst) > 1 and cmdlst[0] in gcmdlst:
+        elif command[0:2] == "d." and len(cmdlst) > 1 and cmdlst[0] in gcmdlst:
             """
             Send GRASS display command(s)with arguments
             to the display processor and echo to command output console.
@@ -810,7 +800,7 @@ class GMConsole(wx.Panel):
             curr_disp.addMapsToList(type='command', map=dcmds, mset=None)
             curr_disp.ReDrawCommand()
 
-    	else:
+        else:
            # Send any other command to the shell. Send output to
            # console output window.
             try:
@@ -872,8 +862,8 @@ class GMConsole(wx.Panel):
 
 
     def clearHistory(self, event):
-       self.cmd_output.Clear()
-       self.console_progressbar.SetValue(0)
+        self.cmd_output.Clear()
+        self.console_progressbar.SetValue(0)
 
     def saveHistory(self, event):
         self.history = self.cmd_output.GetStringSelection()
