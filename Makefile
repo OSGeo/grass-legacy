@@ -93,8 +93,12 @@ default: builddemolocation
 	-cp -f ${ARCH_BINDIR}/grass${GRASS_VERSION_MAJOR}${GRASS_VERSION_MINOR} ${ARCH_DISTDIR}/grass${GRASS_VERSION_MAJOR}${GRASS_VERSION_MINOR}.tmp
 	@(cd tools ; sh -c "./build_html_index.sh")
 	@echo "--"                           >> $(GRASS_HOME)/error.log
+	@echo "In case of errors please change into the directory with error and run 'make'." >> $(GRASS_HOME)/error.log
+	@echo "If you get multiple errors, you need to deal with them in the order they"      >> $(GRASS_HOME)/error.log
+	@echo "appear in the error log. If you get an error building a library, you will"     >> $(GRASS_HOME)/error.log
+	@echo "also get errors from anything which uses the library."                         >> $(GRASS_HOME)/error.log
+	@echo "--"                           >> $(GRASS_HOME)/error.log
 	@echo "Finished compilation: `date`" >> $(GRASS_HOME)/error.log
-	@echo "(In case of errors please change into the directory with error and run 'make')" >> $(GRASS_HOME)/error.log
 	@cat $(GRASS_HOME)/error.log
 	@if [ `cat "$(GRASS_HOME)/error.log" | wc -l` -gt 8 ] ; then false ; else true ; fi
 
