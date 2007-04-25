@@ -27,6 +27,15 @@ except:
    from compat import subprocess
    from compat.subprocess import *
 
+try:
+   import subprocess
+except:
+   CompatPath = os.getenv("GISBASE") + "/etc/wx"
+   sys.path.append(CompatPath)
+   from compat import subprocess
+
+import grassenv
+
 gmpath = os.getenv("GISBASE") + "/etc/wx/gui_modules/"
 sys.path.append(gmpath)
 gmpath = os.getenv("GISBASE") + "/etc/wx/icons/"
@@ -834,7 +843,9 @@ class BufferedWindow(wx.Window):
         cols = math.fabs(round(self.Map.region['n'] - self.Map.region['s']))
         rows = math.fabs(round(self.Map.region['e'] - self.Map.region['w']))
 
-        os.popen("g.region n=%d s=%d e=%d w=%d nsres=30.0 ewres=30.0" % (
+        # We ONLY want to set extents here. Don't mess with resolution. Leave that
+        # for user to set explicitly with g.region
+        os.popen("g.region n=%d s=%d e=%d w=%d" % (
                      self.Map.region['n'],
                      self.Map.region['s'],
                      self.Map.region['e'],
@@ -860,7 +871,25 @@ class BufferedWindow(wx.Window):
                              loadsave='load')
         dlg.ShowModal()
         wind = dlg.wind
-        print 'wind=', wind
+        cmd = "g.region region=%s" % wind
+
+        try:
+            p = Popen(cmd, shell=True, stdin=PIPE, stdout=PIPE, stderr=PIPE, close_fds=True)
+
+            output = p.stdout.read().split('\n')
+            if p.stdout < 0:
+                print >> sys.stderr, "Child was terminated by signal", p.stdout
+            elif p.stdout > 0:
+                #print >> sys.stderr, p.stdout
+                pass
+        except OSError, e:
+            print >> sys.stderr, "Execution failed:", e
+
+        self.Map.region = self.Map.GetRegion()
+        self.Map.SetRegion()
+        self.ZoomHistory(self.Map.region['n'],self.Map.region['s'],self.Map.region['e'],self.Map.region['w'])
+        self.UpdateMap()
+
         dlg.Destroy()
 
     def SaveDisplayRegion(self, event):
@@ -886,36 +915,41 @@ class BufferedWindow(wx.Window):
         # test to see if it already exists and ask permission to overwrite
         windpath = os.path.join(env["GISDBASE"], env["LOCATION_NAME"],
                                 env["MAPSET"],"windows",wind)
-        print 'windpath =', windpath
 
-        if os.path.exists(windpath):
+        if not os.path.exists(windpath):
+            self.saveRegion(wind)
+        elif os.path.exists(windpath):
             overwrite = wx.MessageBox("Do you want to overwrite it?","The file %s already exists" % wind, wx.YES_NO)
             if (overwrite == wx.YES):
-                print 'overwrite it'
-                # g.region save = windpath
-            else:
-                print 'dont overwrite it'
+                self.saveRegion(wind)
 
         dlg.Destroy()
 
+    def saveRegion(self, wind):
+        # set extents to even increments of resolution
+        self.Map.region['n'] = round(self.Map.region['n']/self.Map.region['nsres']) * self.Map.region['nsres']
+        self.Map.region['s'] = round(self.Map.region['s']/self.Map.region['nsres']) * self.Map.region['nsres']
+        self.Map.region['e'] = round(self.Map.region['e']/self.Map.region['ewres']) * self.Map.region['ewres']
+        self.Map.region['w'] = round(self.Map.region['w']/self.Map.region['ewres']) * self.Map.region['ewres']
 
-#        tmpreg = os.getenv("GRASS_REGION")
-#        os.unsetenv("GRASS_REGION")
-#
-#        # set extents to even increments of resolution
-#        self.Map.region['n'] = round(self.Map.region['n']/self.Map.region['nsres']) * self.Map.region['nsres']
-#        self.Map.region['s'] = round(self.Map.region['s']/self.Map.region['nsres']) * self.Map.region['nsres']
-#        self.Map.region['e'] = round(self.Map.region['e']/self.Map.region['ewres']) * self.Map.region['ewres']
-#        self.Map.region['w'] = round(self.Map.region['w']/self.Map.region['ewres']) * self.Map.region['ewres']
-#
-#        os.popen("g.region n=%d s=%d e=%d w=%d" % (
-#                     self.Map.region['n'],
-#                     self.Map.region['s'],
-#                     self.Map.region['e'],
-#                     self.Map.region['w']) )
-#
-#        if tmpreg:
-#            os.environ["GRASS_REGION"] = tmpreg
+        cmd = "g.region -u n=%d s=%d e=%d w=%d save=%s" % (
+             self.Map.region['n'],
+             self.Map.region['s'],
+             self.Map.region['e'],
+             self.Map.region['w'],
+             wind)
+
+        try:
+            p = Popen(cmd, shell=True, stdin=PIPE, stdout=PIPE, stderr=PIPE, close_fds=True)
+
+            output = p.stdout.read().split('\n')
+            if p.stdout < 0:
+                print >> sys.stderr, "Child was terminated by signal", p.stdout
+            elif p.stdout > 0:
+                #print >> sys.stderr, p.stdout
+                pass
+        except OSError, e:
+            print >> sys.stderr, "Execution failed:", e
 
 class MapFrame(wx.Frame):
     """
@@ -1756,6 +1790,7 @@ class SavedRegion(wx.Dialog):
         """
 
         self.loadsave = loadsave
+        self.wind = ''
 
         sizer = wx.BoxSizer(wx.VERTICAL)
 
