@@ -617,8 +617,8 @@ int print_window(struct Cell_head *window, int print_flag)
 		fprintf(stdout, "ll_s=%.8f\n", sh_ll_s);
 		fprintf(stdout, "ll_w=%.8f\n", sh_ll_w);
 		fprintf(stdout, "ll_e=%.8f\n", sh_ll_e);
-		fprintf(stdout, "ll_clat=%.8f\n", (sh_ll_e - sh_ll_w)/2. + sh_ll_w);
-		fprintf(stdout, "ll_clon=%.8f\n", (sh_ll_n - sh_ll_s)/2. + sh_ll_s);
+		fprintf(stdout, "ll_clon=%.8f\n", (sh_ll_e - sh_ll_w)/2. + sh_ll_w);
+		fprintf(stdout, "ll_clat=%.8f\n", (sh_ll_n - sh_ll_s)/2. + sh_ll_s);
 	    }
 	    else
 	    {
