@@ -107,10 +107,14 @@ VECTOR="$GIS_OPT_VECTOR"
 RASTER="$GIS_OPT_RASTER"
 COLPREFIX="$GIS_OPT_COLPREFIX"
 
-#check the input vector map
-eval `g.findfile element=vector file=$VECTOR`
+### setup enviro vars ###
+eval `g.gisenv`
+: ${GISBASE?} ${GISDBASE?} ${LOCATION_NAME?} ${MAPSET?}
+
+# does map exist in CURRENT mapset?
+eval `g.findfile element=vector file=$VECTOR mapset=$MAPSET`
 if [ ! "$file" ] ; then
-  g.message -e "Input vector map $VECTOR not found"
+  g.message -e "Vector map '$VECTOR' not found in current mapset"
   exit 1
 fi
 #check the input raster map
