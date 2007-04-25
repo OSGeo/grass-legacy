@@ -217,14 +217,6 @@ class VirtualAttributeList(wx.ListCtrl, listmix.ListCtrlAutoWidthMixin, listmix.
         event.Skip()
 
     def RedrawMap(self):
-
-#            gism = self.parent.gismanager
-#            curr_pg = gism.gm_cb.GetCurrentPage()
-#            disp_idx = gism.track.Track().GetDisp_idx(curr_pg)
-
-#            mapdisp =  self.parent.gismanager.mapdisplays[disp_idx]
-#            map = gism.maptree.Map
-
         if self.lastTurnSelectedCats[:] != self.selectedCats[:]:
             if self.qlayer: self.map.delLayer(item='qlayer')
 
