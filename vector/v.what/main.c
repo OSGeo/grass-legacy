@@ -66,6 +66,17 @@ main(int argc, char **argv)
         R_close_driver();
    }
 
+    module = G_define_module();
+    module->keywords = _("vector");
+    module->description = 
+    _("Allows the user to interactively query a vector map layer "
+      "at user-selected locations within the current geographic region");
+
+    opt1 = G_define_standard_option(G_OPT_V_MAP);
+    opt1->multiple   = YES;
+    if (vect)
+          opt1->answers = vect;
+
     opt4 = G_define_option() ;
     opt4->key        = "east_north";
     opt4->type       = TYPE_DOUBLE;
@@ -80,16 +91,6 @@ main(int argc, char **argv)
     maxdistance->answer = "0";
     maxdistance->multiple = NO;
     maxdistance->description = _("Query threshold distance");
-
-    opt1 = G_define_option() ;
-    opt1->key        = "map" ;
-    opt1->type       = TYPE_STRING ;
-    opt1->multiple   = YES;
-    if (vect)
-          opt1->answers = vect;
-    opt1->required   = YES;
-    opt1->gisprompt  = "old,vector,vector" ;
-    opt1->description= _("Name of existing vector map") ;
   
     topo_flag = G_define_flag();
     topo_flag->key = 'd';
@@ -102,12 +103,6 @@ main(int argc, char **argv)
     stdin_flag = G_define_flag();
     stdin_flag->key = 's';
     stdin_flag->description = _("Read coordinates from standard input");
-
-    module = G_define_module();
-    module->keywords = _("vector");
-    module->description = 
-    _("Allows the user to interactively query a vector map layer "
-      "at user-selected locations within the current geographic region");
 
     if(!vect)
         opt1->required = YES;
