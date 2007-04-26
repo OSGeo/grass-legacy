@@ -200,8 +200,8 @@ static int re_reclass(/* const */ RULE *rules, struct Categories *cats,
 {
     struct Reclass mid;
 
-    strcpy(mid.name, input_name);
-    strcpy(mid.mapset, input_mapset);
+    mid.name = G_store(input_name);
+    mid.mapset = G_store(input_mapset);
 
     _reclass(rules, cats, &mid);
 
@@ -225,14 +225,14 @@ int reclass (char *old_name, char *old_mapset,
 
     if (is_reclass)
     {
-	strcpy (new.name, old.name);
-	strcpy (new.mapset, old.mapset);
+	new.name = G_store(old.name);
+	new.mapset = G_store(old.mapset);
 	re_reclass (rules, cats, &old, &new, old_name, old_mapset);
     }
     else
     {
-	strcpy (new.name, old_name);
-	strcpy (new.mapset, old_mapset);
+	new.name = G_store(old.name);
+	new.mapset = G_store(old.mapset);
 	_reclass (rules, cats, &new);
     }
 

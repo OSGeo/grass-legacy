@@ -1138,9 +1138,6 @@ int G_verbose_std(void);
 int G_verbose_max(void);
 int G_set_verbose (int);
 
-/* version.c */
-int G_version(char **, char **, char **);
-
 /* view.c */
 int G_3dview_warning(int);
 int G_get_3dview_defaults(struct G_3dview *, struct Cell_head *);
