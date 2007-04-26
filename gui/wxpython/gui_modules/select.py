@@ -1,3 +1,20 @@
+"""
+MODULE: select
+
+CLASSES:
+ * Select
+ * TreeCrtlComboPopup
+ 
+PURPOSE: 
+         
+AUTHORS: The GRASS Development Team
+
+COPYRIGHT: (C) 2007 by the GRASS Development Team
+           This program is free software under the GNU General Public
+           License (>=v2). Read the file COPYING that comes with GRASS
+           for details.
+"""
+
 import os
 import wx
 import wx.combo
@@ -30,11 +47,11 @@ class TreeCtrlComboPopup(wx.combo.ComboPopup):
 
     def Create(self, parent):
         self.seltree = wx.TreeCtrl(parent, style=wx.TR_HIDE_ROOT
-                                |wx.TR_HAS_BUTTONS
-                                |wx.TR_SINGLE
-                                |wx.TR_LINES_AT_ROOT
-                                |wx.SIMPLE_BORDER
-                                |wx.TR_FULL_ROW_HIGHLIGHT)
+                                   |wx.TR_HAS_BUTTONS
+                                   |wx.TR_SINGLE
+                                   |wx.TR_LINES_AT_ROOT
+                                   |wx.SIMPLE_BORDER
+                                   |wx.TR_FULL_ROW_HIGHLIGHT)
         self.seltree.Bind(wx.EVT_MOTION, self.OnMotion)
         self.seltree.Bind(wx.EVT_LEFT_DOWN, self.OnLeftDown)
         self.seltree.Bind(wx.EVT_TREE_ITEM_EXPANDING, self.mapsetExpanded)
@@ -60,12 +77,10 @@ class TreeCtrlComboPopup(wx.combo.ComboPopup):
     def GetControl(self):
         return self.seltree
 
-
     def GetStringValue(self):
         if self.value:
             return self.seltree.GetItemText(self.value)
         return ""
-
 
     def OnPopup(self):
         if self.value:
@@ -126,7 +141,7 @@ class TreeCtrlComboPopup(wx.combo.ComboPopup):
         for dir in mapsets:
             if dir == curr_mapset:
                 dir_node = self.AddItem('Mapset: '+dir)
-                self.seltree.SetItemTextColour(dir_node,wx.Colour(50,50,200))
+                self.seltree.SetItemTextColour(dir_node, wx.Colour(50,50,200))
                 try:
                     elem_list = os.listdir(os.path.join (location_path, dir, element))
                     for elem in elem_list:
@@ -140,7 +155,7 @@ class TreeCtrlComboPopup(wx.combo.ComboPopup):
                 # if self.layertype[self.layer_selected] == 'group':
                 # KeyError: <wx._controls.TreeItemId; proxy of <Swig Object of type 'wxTreeItemId *' at 0xeac7d0> >
                 # -------- ERROR END --------------
-#                self.seltree.Expand(dir_node)
+                # self.seltree.Expand(dir_node)
 
             else:
                 dir_node = self.AddItem('Mapset: '+dir)
@@ -151,6 +166,9 @@ class TreeCtrlComboPopup(wx.combo.ComboPopup):
                         self.AddItem(elem+'@'+dir, parent=dir_node)
                 except:
                     continue
+
+        # expand all items
+        self.seltree.ExpandAll()
 
     # helpers
     def FindItem(self, parentItem, text):
@@ -171,7 +189,7 @@ class TreeCtrlComboPopup(wx.combo.ComboPopup):
                 root = self.seltree.AddRoot("<hidden root>")
             parent = root
 
-        item = self.seltree.AppendItem(parent, value)
+        item = self.seltree.AppendItem(parent, text=value)
         return item
 
     def OnMotion(self, evt):
@@ -187,7 +205,12 @@ class TreeCtrlComboPopup(wx.combo.ComboPopup):
         item, flags = self.seltree.HitTest(evt.GetPosition())
         if item and flags & wx.TREE_HITTEST_ONITEMLABEL:
             self.curitem = item
-            self.value = item
+            (child, cookie) = self.seltree.GetFirstChild(item)
+            if child: # cannot select mapset item
+                self.value = None
+            else:
+                self.value = item
+                
             self.Dismiss()
         evt.Skip()
 
