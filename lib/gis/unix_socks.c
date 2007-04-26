@@ -98,7 +98,7 @@ _get_make_sock_path (void)
     if ( (lock = getenv ( "GIS_LOCK" )) == NULL )
 	G_fatal_error ("Cannot get GIS_LOCK enviroment variable value");
 
-    len = strlen(prefix) + strlen(user) + strlen(GRASS_VERSION_MAJOR) + strlen(GRASS_VERSION_MINOR) + strlen(lock) + 3;
+    len = strlen(prefix) + strlen(user) + strlen(lock) + 3;
     path = G_malloc (len);
     
     sprintf (path, "%s-%s-%s", prefix, user, lock);
