@@ -1,12 +1,18 @@
-/* symbol.c  draw a symbol at pixel coordinates
+/****************************************************************************
  *
- *  by Hamish Bowman 19 Dec. 2005
- *  adapted from Radim Blazek's d.vect code
- *  (c) 2005-6  M. Hamish Bowman, and The GRASS GIS Development Team
+ * MODULE:       display
+ * AUTHOR(S):    Hamish Bowman <hamish_nospam yahoo.com> (original contributor)
+ *                      (adapted from Radim Blazek's d.vect code)
+ *               Glynn Clements <glynn gclements.plus.com>
+ * PURPOSE:      draw a symbol at pixel coordinates
+ * COPYRIGHT:    (C) 2005-2007 by M. Hamish Bowman, and
+ *                              the GRASS Development Team
  *
- * License: GNU GPL version 2, or newer. See GPL.TXT for details.
+ *               This program is free software under the GNU General Public
+ *               License (>=v2). Read the file COPYING that comes with GRASS
+ *               for details.
  *
- */
+ *****************************************************************************/
 
 #include <grass/gis.h>
 #include <grass/raster.h>
@@ -122,3 +128,6 @@ int D_symbol(const SYMBOL *Symb, int x0, int y0, const RGBA_Color *line_color, c
     } /* for loop */
     return 0;
 }
+
+
+
