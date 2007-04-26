@@ -1036,6 +1036,9 @@ double G_rhumbline_lat_from_lon(double);
 /* rm_colr.c */
 int G_remove_colr(const char *);
 
+/* rotate.c */
+int G_rotate_around_pt(int, int, int *, int *, double);
+
 /* sample.c */
 double G_get_raster_sample(int, const struct Cell_head *, struct Categories *,
              double, double, int, INTERP_TYPE);

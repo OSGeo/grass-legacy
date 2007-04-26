@@ -37,9 +37,10 @@ add_coor ( SYMBCHAIN *chain, int x, int y)
 /* draw chain
 *   s - scale
 *   ch - chain number 
+*   rotation - degrees CCW from East
 */
 int 
-stroke_chain ( SYMBPART *part, int ch, double s ) 
+stroke_chain ( SYMBPART *part, int ch, double s, double rotation )
 { 
     int k, l, first;
     SYMBEL *elem;
@@ -59,10 +60,16 @@ stroke_chain ( SYMBPART *part, int ch, double s )
 	    case S_LINE:
                 G_debug ( 5, "    LINE count = %d", elem->coor.line.count );
 		for (l = 0; l < elem->coor.line.count; l++) {
-		    add_coor ( chain, s * elem->coor.line.x[l], s * elem->coor.line.y[l] );
+		    x = s * elem->coor.line.x[l];
+		    y = s * elem->coor.line.y[l];
+
+		    if(rotation != 0.0)
+			G_rotate_around_pt(0, 0, &x, &y, rotation);
+
+		    add_coor ( chain, x, y );
 		    if ( first ) {
-			x0 = s * elem->coor.line.x[l];
-			y0 = s * elem->coor.line.y[l];
+			x0 = x;
+			y0 = y;
 			first = 0;
 		    }
 		}
@@ -82,6 +89,10 @@ stroke_chain ( SYMBPART *part, int ch, double s )
 		    while (1) {
 		        x = s * elem->coor.arc.x + s * r * cos(a1);
 		        y = s * elem->coor.arc.y + s * r * sin(a1);
+
+			if(rotation != 0.0)
+			    G_rotate_around_pt(0, 0, &x, &y, rotation);
+
 		        add_coor ( chain, x, y);
 			if ( first ) {
 			    x0 = x;
@@ -97,6 +108,10 @@ stroke_chain ( SYMBPART *part, int ch, double s )
 		    while (1) {
 		        x = s * elem->coor.arc.x + s * r * cos(a1);
 		        y = s * elem->coor.arc.y + s * r * sin(a1);
+
+			if(rotation != 0.0)
+			    G_rotate_around_pt(0, 0, &x, &y, rotation);
+
 		        add_coor ( chain, x, y);
 			if ( first ) {
 			    x0 = x;
@@ -121,7 +136,7 @@ stroke_chain ( SYMBPART *part, int ch, double s )
 /* 
 *  Stroke symbol to form used for Xdriver.
 *
-*  rotation and tolerance currently not supported
+*  tolerance currently not supported
 */
 void
 S_stroke ( SYMBOL *Symb, int size, double rotation, int tolerance )
@@ -132,7 +147,7 @@ S_stroke ( SYMBOL *Symb, int size, double rotation, int tolerance )
 
     G_debug ( 3, "S_stroke(): size = %d rotation = %f tolerance = %d", size, rotation, tolerance );
 
-    /* TODO: support for rotation and tolerance */
+    /* TODO: support for tolerance */
 
     s = size * Symb->scale;
     
@@ -142,11 +157,11 @@ S_stroke ( SYMBOL *Symb, int size, double rotation, int tolerance )
 	switch ( part->type ) {
 	    case S_POLYGON: 
 		for ( j = 0; j < part->count; j++ ) { /* RINGS */
-		    stroke_chain ( part, j, s);
+		    stroke_chain ( part, j, s, rotation);
 		}
 		break;
 	    case S_STRING: /* string has 1 chain */
-		stroke_chain ( part, 0, s);
+		stroke_chain ( part, 0, s, rotation);
 		break;
 	}
     }
