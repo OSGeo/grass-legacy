@@ -4,13 +4,22 @@
 *   	    	
 * AUTHOR(S):    lex.l and yac.y were originaly taken from unixODBC and
 *               probably written by Peter Harvey <pharvey@codebydesigns.com>,
-*               modifications and other code by Radim Blazek
+*               original modifications & added code by 
+*                     Radim Blazek <radim.blazek gmail.com>
+*               Glynn Clements <glynn gclements.plus.com>,
+*               Markus Neteler <neteler itc.it>,
+*               Martin Landa <landa.martin gmail.com>,
+*               Moritz Lennert <mlennert club.worldonline.be>,
+*               Hamish Bowman <hamish_nospam yahoo.com>,
+*               Daniel Calvelo Aros <dca.gis gmail.com>,
+*               Paul Kelly <paul-grass stjohnspoint.co.uk>,
+*               Alex Shevlakov <sixote yahoo.com>
 *
 * PURPOSE:      Parse input string containing SQL statement to 
 *               SQLPSTMT structure.
 *               SQL parser may be used by simple database drivers. 
 *
-* COPYRIGHT:    (C) 2000 by the GRASS Development Team
+* COPYRIGHT:    (C) 2000-2007 by the GRASS Development Team
 *
 *               This program is free software under the GNU General Public
 *   	    	License (>=v2). Read the file COPYING that comes with GRASS
