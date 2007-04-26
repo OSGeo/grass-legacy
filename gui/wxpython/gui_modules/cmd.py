@@ -24,8 +24,8 @@ usePopenClass = True
 try:
    import subprocess
 except:
-   CombatPath = os.getenv("GISBASE") + "/etc/wx"
-   sys.path.append(CombatPath)
+   CompatPath = os.getenv("GISBASE") + "/etc/wx"
+   sys.path.append(CompatPath)
    from compat import subprocess
 
 import grassenv
