@@ -1,12 +1,14 @@
 /****************************************************************************
 *
-* MODULE:       DBMI Library
+* MODULE:       DBMI Library - dbmi_client column lib
 *   	    	
-* AUTHOR(S):    Radim Blazek
+* AUTHOR(S):    Radim Blazek (original contributor)
+*               Glynn Clement <glynn gclements.plus.com>,
+*               Martin Landa <landa.martin gmail.com>
 *
 * PURPOSE:      Higher level functions for DBMI DataBase Management Interface
 *
-* COPYRIGHT:    (C) 2001 by the GRASS Development Team
+* COPYRIGHT:    (C) 2001-2007 by the GRASS Development Team
 *
 *               This program is free software under the GNU General Public
 *   	    	License (>=v2). Read the file COPYING that comes with GRASS
