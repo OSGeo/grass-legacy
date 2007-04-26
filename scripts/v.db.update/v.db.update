@@ -103,11 +103,19 @@ fi
 database=`v.db.connect $GIS_OPT_MAP -g | grep -w $GIS_OPT_LAYER | awk '{print $4}'`
 driver=`v.db.connect $GIS_OPT_MAP -g | grep -w $GIS_OPT_LAYER | awk '{print $5}'`
 
+# checking column types
+coltype=`v.info -c map=$GIS_OPT_MAP --q | grep -w $GIS_OPT_COLUMN | cut -d'|' -f1`
+if [ "$coltype" = "INTEGER" -o "$coltype" = "DOUBLE PRECISION" ] ; then
+    value=$GIS_OPT_VALUE
+else
+    value=\'$GIS_OPT_VALUE\'
+fi
+
 if [ -n "$GIS_OPT_WHERE" ]
   then
-	echo "UPDATE $table SET $GIS_OPT_COLUMN='$GIS_OPT_VALUE' WHERE $GIS_OPT_WHERE" | db.execute database=$database driver=$driver
-  else
-	echo "UPDATE $table SET $GIS_OPT_COLUMN='$GIS_OPT_VALUE'" | db.execute database=$database driver=$driver
+    echo "UPDATE $table SET $GIS_OPT_COLUMN=$value WHERE $GIS_OPT_WHERE" | db.execute database=$database driver=$driver
+else
+    echo "UPDATE $table SET $GIS_OPT_COLUMN=$value" | db.execute database=$database driver=$driver
 fi
 
 # write cmd history:
