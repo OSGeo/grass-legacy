@@ -28,7 +28,7 @@ int graphics (FILE *infile)
 			got_new = G_getl2(buff, 128, infile);
 			break;
 		case 'r':
-			do_text_rotate(buff);
+			do_rotate(buff);
 			got_new = G_getl2(buff, 128, infile);
 			break;
 		case 'p':
