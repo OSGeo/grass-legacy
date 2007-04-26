@@ -17,6 +17,9 @@
 #include <stdlib.h>
 #include <string.h>
 #include <dirent.h>
+#include <sys/types.h>
+#include <sys/stat.h>
+#include <errno.h>
 #include <grass/dbmi.h>
 #include <grass/gis.h>
 #include "globals.h"
@@ -78,11 +81,23 @@ int db__driver_open_database(dbHandle * handle)
 
     G_debug(2, "db.name = %s", db.name);
 
+    errno = 0;
     dir = opendir(db.name);
     if (dir == NULL) {
-	append_error("Cannot open dbf database: %s\n", name);
-	report_error();
-	return DB_FAILED;
+	if (errno == ENOENT) {
+	    int status;
+
+	    status = G_mkdir(db.name);
+	    if (status != 0) {	/* mkdir failed */
+		append_error("Cannot create dbf database: %s\n", name);
+		report_error();
+		return DB_FAILED;
+	    }
+	} else { /* some other problem */
+	    append_error("Cannot open dbf database: %s\n", name);
+	    report_error();
+	    return DB_FAILED;
+	}
     }
 
     while ((ent = readdir(dir))) {
