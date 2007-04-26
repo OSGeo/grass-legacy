@@ -231,8 +231,8 @@ int reclass (char *old_name, char *old_mapset,
     }
     else
     {
-	new.name = G_store(old.name);
-	new.mapset = G_store(old.mapset);
+	new.name = G_store(old_name);
+	new.mapset = G_store(old_mapset);
 	_reclass (rules, cats, &new);
     }
 
