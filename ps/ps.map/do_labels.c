@@ -93,6 +93,7 @@ do_label (FILE *fd, int font_override)
     char value[1024];
     char ch, buf[1024];
     double atof();
+    int X_just_offset, Y_just_offset;
 
     /* initialize */
     north = PS.w.north;
@@ -111,6 +112,7 @@ do_label (FILE *fd, int font_override)
     rotate = 0., 
     size = 0.;
     fontsize = 0;
+    X_just_offset = Y_just_offset = 0;
 
     /* read the labels file */
     while (fgets (buf, sizeof buf, fd))
@@ -129,6 +131,29 @@ do_label (FILE *fd, int font_override)
 	    y = YCONV(north);
 	    */
 	    G_plot_where_xy(east, north, &x_int, &y_int);
+
+	    /* justification based padding */
+	    if (xref == LEFT)
+		X_just_offset =  35;
+	    if (xref == RIGHT)
+		X_just_offset = -35;
+	    if (xref == CENTER)
+		X_just_offset =   0;
+	    if (yref == UPPER)
+		Y_just_offset =  35;
+	    if (yref == LOWER)
+		Y_just_offset = -35;
+	    if (yref == CENTER)
+		Y_just_offset =   0;
+
+	    /* adjust padding for given rotation */
+	    if(rotate != 0.0)
+		G_rotate_around_pt(0, 0, &X_just_offset, &Y_just_offset, rotate);
+
+	    /* apply padding */
+	    x_int += X_just_offset;
+	    y_int -= Y_just_offset;
+
 	    x = (double) x_int / 10.;
 	    y = (double) y_int / 10.;
 
