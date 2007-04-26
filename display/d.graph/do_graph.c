@@ -18,6 +18,8 @@ static int *yarray ;
 static float xincr ;
 static float yincr ;
 
+static double rotation;  /* degrees counter-clockwise from east */
+
 static RGBA_Color last_color;
 
 int set_graph_stuff (void)
@@ -26,6 +28,8 @@ int set_graph_stuff (void)
 	if (xincr < 0.0) xincr = -xincr; /* mod: shapiro 13 jun 1991 */
 	yincr = (float)(b - t)/100. ;
 	if (yincr < 0.0) yincr = -yincr; /* mod: shapiro 13 jun 1991 */
+
+	rotation = 0.0; /* init */
 
 	return 0;
 }
@@ -227,17 +231,15 @@ int do_size (char *buff)
 	return(0) ;
 }
 
-int do_text_rotate (char *buff)
+int do_rotate (char *buff)
 {
-	float rotation; /* degrees counter-clockwise from east */
-
-	if ( 1 != sscanf(buff, "%*s %f", &rotation) ) {
+	if ( 1 != sscanf(buff, "%*s %lf", &rotation) ) {
 	    G_warning(_("Problem parsing command [%s]"), buff);
 	    return(-1);
 	}
 
-	R_text_rotation(rotation);
-	G_debug(3,"text rotation set to %.1f degrees", rotation);	
+	R_text_rotation((float)rotation);
+	G_debug(3,"rotation set to %.1f degrees", rotation);
 
 	return(0);
 }
@@ -349,7 +351,6 @@ int do_symbol(char *buff)
     int ix, iy;
     char *symb_name;
     SYMBOL *Symb;
-    double rotation = 0.0;
     char *line_color_str, *fill_color_str;
     RGBA_Color *line_color, *fill_color;
     int R, G, B, ret;
@@ -421,7 +422,7 @@ int do_symbol(char *buff)
 	G_warning(_("Cannot read symbol, cannot display points"));
 	return(-1);
     }
-    else S_stroke ( Symb, size, rotation, 0 );
+    else S_stroke ( Symb, size, -1*rotation, 0 );
 
     D_symbol(Symb, ix, iy, line_color, fill_color);
 
