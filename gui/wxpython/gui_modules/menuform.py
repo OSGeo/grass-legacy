@@ -757,7 +757,7 @@ class cmdPanel(wx.Panel):
                 valuelist=map( str, p.get('values',[]) )
                 # list of values
                 if p.get('multiple','no') == 'yes':
-                    txt = wx.StaticBox (parent=which_panel, id=0, label=" " + title + ": ")
+                    txt = wx.StaticBox (parent=which_panel, id=0, label=" " + title + ":")
                     txt.SetToolTip(wx.ToolTip(tooltip))
                     if len(valuelist) > 6:
                         hSizer=wx.StaticBoxSizer ( box=txt, orient=wx.VERTICAL )
@@ -830,6 +830,7 @@ class cmdPanel(wx.Panel):
                                               type=p.get('element','') )
                     if p.get('value','') != '':
                         selection.SetValue(p['value']) # parameter previously set
+
                     which_sizer.Add(item=selection, proportion=0, flag=wx.ADJUST_MINSIZE| wx.BOTTOM | wx.LEFT, border=5)
                     # A select.Select is a combobox with two children: a textctl and a popupwindow;
                     # we target the textctl here
@@ -933,7 +934,7 @@ class cmdPanel(wx.Panel):
         If we were part of a richer interface, report back the current command being built.
 
         This method should be set by the parent of this panel if needed. It's a hook, actually.
-        Beware of what is "self" in the method def, though. It will be called with no arguments.
+        Beware of what is 'self' in the method def, though. It will be called with no arguments.
         """
         pass
 
