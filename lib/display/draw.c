@@ -1,3 +1,19 @@
+/****************************************************************************
+ *
+ * MODULE:       display
+ * AUTHOR(S):    CERL (original contributors)
+ *               Bernhard Reiter <bernhard intevation.de>, 
+ *               Markus Neteler <neteler itc.it>, 
+ *               Glynn Clements <glynn gclements.plus.com>, 
+ *               Hamish Bowman <hamish_nospam yahoo.com>
+ * PURPOSE:      
+ * COPYRIGHT:    (C) 1999-2007 by the GRASS Development Team
+ *
+ *               This program is free software under the GNU General Public
+ *               License (>=v2). Read the file COPYING that comes with GRASS
+ *               for details.
+ *
+ *****************************************************************************/
 /*******************************************************************
  * Line drawing in the current window.
  *
@@ -381,3 +397,6 @@ static int line_eq(int x,int x0,int y0,int dx,int dy,int round)
 
     return (y0 + t / dx);
 }
+
+
+
