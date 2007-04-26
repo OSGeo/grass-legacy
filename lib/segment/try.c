@@ -1,16 +1,19 @@
-/**
- * \file try.c
+/****************************************************************************
  *
- * \brief Segment library test program.
+ * MODULE:       segment
+ * AUTHOR(S):    CERL (original contributors)
+ *               Markus Neteler <neteler itc.it>, 
+ *               Bernhard Reiter <bernhard intevation.de>, 
+ *               Brad Douglas <rez touchofmadness.com>, 
+ *               Glynn Clements <glynn gclements.plus.com>
+ * PURPOSE:      Segment test routines
+ * COPYRIGHT:    (C) 1999-2006 by the GRASS Development Team
  *
- * This program is free software under the GNU General Public License
- * (>=v2). Read the file COPYING that comes with GRASS for details.
+ *               This program is free software under the GNU General Public
+ *               License (>=v2). Read the file COPYING that comes with GRASS
+ *               for details.
  *
- * \author GRASS GIS Development Team
- *
- * \date 2005-2006
- */
-
+ *****************************************************************************/
 
 #include <stdlib.h>
 #include <stdio.h>
@@ -110,3 +113,6 @@ fprintf (stdout,"writing seg.file\n");
 
     return 0;
 }
+
+
+

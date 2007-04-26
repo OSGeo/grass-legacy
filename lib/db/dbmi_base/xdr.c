@@ -1,7 +1,8 @@
 /****************************************************************************
  *
  * MODULE:       dbmi_base
- * AUTHOR(S):    Radim Blazek <radim.blazek gmail.com> (original contributor)
+ * AUTHOR(S):    CERL (Joel Jones + possible other original contributors)
+ *               Radim Blazek <radim.blazek gmail.com>,
  *               Brad Douglas <rez touchofmadness.com>, 
  *               Markus Neteler <neteler itc.it>
  * PURPOSE:      database management functions for modules and drivers
