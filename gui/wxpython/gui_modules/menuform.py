@@ -852,7 +852,7 @@ class cmdPanel(wx.Panel):
                         this_sizer = which_sizer
                     btn_colour = csel.ColourSelect(parent=which_panel, id=wx.ID_ANY,
                                                    label=label_color, colour=default_color,
-                                                   position=wx.DefaultPosition, size=(150,-1) )
+                                                   pos=wx.DefaultPosition, size=(150,-1) )
                     this_sizer.Add(item=btn_colour, proportion=0, flag=wx.ADJUST_MINSIZE | wx.BOTTOM | wx.LEFT, border=5)
                     # For color selectors, this is a two-member array, holding the IDs of
                     # the selector proper and either a "transparent" button or None
