@@ -30,31 +30,26 @@ OBJS =	at_exit_funcs.o \
 	main.o
 
 default: $(SRCS) $(HDRS) $(OBJS)
-	$(CC) $(DEBUG) $(OBJS) -o gem6 $(CFLAGS) $(CLIBS) $(LDFLAGS)
+	$(CC) $(OBJS) -o gem6 $(CFLAGS) $(CLIBS) $(LDFLAGS)
 
-at_exit_funcs.o: at_exit_funcs.c at_exit_funcs.h globals.h
-	$(CC) $(DEBUG) -c at_exit_funcs.c $(CFLAGS) $(CLIBS) $(LDFLAGS)	
+%.o: %.c
+	$(CC) $(CFLAGS) $(CPPFLAGS) -o $@ -c $<
 
-error.o: error.c error.h globals.h
-	$(CC) $(DEBUG) -c error.c $(CFLAGS) $(CLIBS) $(LDFLAGS)		
-	
-tools.o: tools.c tools.h globals.h
-	$(CC) $(DEBUG) -c tools.c $(CFLAGS) $(CLIBS) $(LDFLAGS)	
-	
-reg_deps.o: reg_deps.c reg_deps.h globals.h
-	$(CC) $(DEBUG) -c reg_deps.c $(CFLAGS) $(CLIBS) $(LDFLAGS)
-	
-reg_entries.o: reg_entries.c reg_entries.h globals.h
-	$(CC) $(DEBUG) -c reg_entries.c $(CFLAGS) $(CLIBS) $(LDFLAGS)	
-	
-reg_html.o: reg_html.c reg_html.h globals.h
-	$(CC) $(DEBUG) -c reg_html.c $(CFLAGS) $(CLIBS) $(LDFLAGS)	
+at_exit_funcs.o: at_exit_funcs.h globals.h
 
-actions.o: actions.c actions.h globals.h
-	$(CC) $(DEBUG) -c actions.c $(CFLAGS) $(CLIBS) $(LDFLAGS)	
-	
-main.o:	main.c globals.h
-	$(CC) $(DEBUG) -c main.c $(CFLAGS) $(CLIBS) $(LDFLAGS)
+error.o: error.h globals.h
+
+tools.o: tools.h globals.h
+
+reg_deps.o: reg_deps.h globals.h
+
+reg_entries.o: reg_entries.h globals.h
+
+reg_html.o: reg_html.h globals.h
+
+actions.o: actions.h globals.h
+
+main.o:	globals.h
 
 install: gem6
 	strip gem6;
