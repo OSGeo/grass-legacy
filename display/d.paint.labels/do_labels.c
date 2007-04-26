@@ -283,15 +283,15 @@ int show_it (void)
     ll_y = lr_y = B + Y_just_offset;
     ll_x = ul_x = L + X_just_offset;
     lr_x = ur_x = R + X_just_offset;
-    rotate_around_pt(X, Y0, &ll_x, &ll_y, rotation);
-    rotate_around_pt(X, Y0, &ul_x, &ul_y, rotation);
-    rotate_around_pt(X, Y0, &ur_x, &ur_y, rotation);
-    rotate_around_pt(X, Y0, &lr_x, &lr_y, rotation);
+    G_rotate_around_pt(X, Y0, &ll_x, &ll_y, rotation);
+    G_rotate_around_pt(X, Y0, &ul_x, &ul_y, rotation);
+    G_rotate_around_pt(X, Y0, &ur_x, &ur_y, rotation);
+    G_rotate_around_pt(X, Y0, &lr_x, &lr_y, rotation);
 
     /* rotate lower starting corner of text */
     text_x = X + X_just_offset;
     text_y = Y + Y_just_offset;
-    rotate_around_pt(X, Y0, &text_x, &text_y, rotation);
+    G_rotate_around_pt(X, Y0, &text_x, &text_y, rotation);
 
     /* define rotated bounding box */
     xarr[0] = ll_x + Xoffset;
@@ -361,9 +361,9 @@ int show_it (void)
 
 	    /* figure out text placement */
 	    Y = (int)(D_u_to_d_row(north - (line_size*1.2) - ((i-1)*line_size) ));
-	    text_x = X + X_just_offset; /* reset after rotate_around_pt() */
+	    text_x = X + X_just_offset; /* reset after G_rotate_around_pt() */
 	    text_y = Y + Y_just_offset;
-	    rotate_around_pt(X, Y0, &text_x, &text_y, rotation);
+	    G_rotate_around_pt(X, Y0, &text_x, &text_y, rotation);
 
 	    for(j = 1; j <= highlight_width; j++) {
 		/* smear it around. probably a better way (knight's move? rand?) */
@@ -416,9 +416,9 @@ int show_it (void)
 
 	/* figure out text placement */
 	Y = (int)(D_u_to_d_row(north - (line_size*1.2) - ((i-1)*line_size) ));
-	text_x = X + X_just_offset; /* reset after rotate_around_pt() */
+	text_x = X + X_just_offset; /* reset after G_rotate_around_pt() */
 	text_y = Y + Y_just_offset;
-	rotate_around_pt(X, Y0, &text_x, &text_y, rotation);
+	G_rotate_around_pt(X, Y0, &text_x, &text_y, rotation);
 
 	R_move_abs(text_x + Xoffset, text_y + Yoffset);
 	R_text(line);
