@@ -1,3 +1,4 @@
+
 /*****************************************************************************
 *
 * MODULE:       DBF driver 
@@ -13,110 +14,99 @@
 *   	    	for details.
 *
 *****************************************************************************/
-#include <stdlib.h> 
+#include <stdlib.h>
 #include <string.h>
 #include <dirent.h>
 #include <grass/dbmi.h>
 #include <grass/gis.h>
 #include "globals.h"
-#include "proto.h" 
+#include "proto.h"
 
-int
-db__driver_open_database  (dbHandle *handle)
-
+int db__driver_open_database(dbHandle * handle)
 {
-    char   *name;
-    int    len; 
+    char *name;
+    int len;
     dbConnection connection;
-    char   buf[1024];
-    DIR    *dir;
+    char buf[1024];
+    DIR *dir;
     struct dirent *ent;
     char **tokens;
     int no_tokens, n;
-	 
-    G_debug (2, "DBF: db__driver_open_database() name = '%s'", db_get_handle_dbname(handle) );
+
+    G_debug(2, "DBF: db__driver_open_database() name = '%s'",
+	    db_get_handle_dbname(handle));
 
     db.name[0] = '\0';
     db.tables = NULL;
     db.atables = 0;
     db.ntables = 0;
-    
-    db_get_connection( &connection );
-    name = db_get_handle_dbname(handle);
-    
-    /* if name is empty use connection.databaseName*/
-    if( strlen(name) == 0 )
-    {
-        name = connection.databaseName;
-    } 
 
-    strcpy ( db.name, name );
-    
+    db_get_connection(&connection);
+    name = db_get_handle_dbname(handle);
+
+    /* if name is empty use connection.databaseName */
+    if (strlen(name) == 0) {
+	name = connection.databaseName;
+    }
+
+    strcpy(db.name, name);
+
     /* open database dir and read table ( *.dbf files ) names 
-     * to structure */ 
+     * to structure */
 
     /* parse variables in db.name if present */
-    if ( db.name[0] == '$' )
-    {
-     tokens = G_tokenize (db.name, "/");
-     no_tokens=G_number_of_tokens(tokens);
-     db.name[0] = '\0'; /* re-init */
-     
-     for (n = 0; n < no_tokens ; n++)
-     {
-       G_debug (3, "tokens[%d] = %s", n, tokens[n] );
-       if ( tokens[n][0] == '$' )
-       {
-         G_strchg(tokens[n],'$', ' ' );
-         G_chop(tokens[n]);
-         strcat(db.name, G__getenv(tokens[n]) );
-	 G_debug (3, "   -> %s", G__getenv(tokens[n]) );
-       }
-       else
-         strcat(db.name, tokens[n]);
-         
-       strcat(db.name, "/");
-     }
-     G_free_tokens(tokens);
+    if (db.name[0] == '$') {
+	tokens = G_tokenize(db.name, "/");
+	no_tokens = G_number_of_tokens(tokens);
+	db.name[0] = '\0';	/* re-init */
+
+	for (n = 0; n < no_tokens; n++) {
+	    G_debug(3, "tokens[%d] = %s", n, tokens[n]);
+	    if (tokens[n][0] == '$') {
+		G_strchg(tokens[n], '$', ' ');
+		G_chop(tokens[n]);
+		strcat(db.name, G__getenv(tokens[n]));
+		G_debug(3, "   -> %s", G__getenv(tokens[n]));
+	    }
+	    else
+		strcat(db.name, tokens[n]);
+
+	    strcat(db.name, "/");
+	}
+	G_free_tokens(tokens);
     }
-	 
-    G_debug (2, "db.name = %s", db.name );
+
+    G_debug(2, "db.name = %s", db.name);
 
     dir = opendir(db.name);
-    if (dir == NULL)
-      {
-	append_error ( "Cannot open dbf database: %s\n", name );
-	report_error( );
+    if (dir == NULL) {
+	append_error("Cannot open dbf database: %s\n", name);
+	report_error();
 	return DB_FAILED;
-      }
-    
-    while ( ( ent = readdir (dir) ) )
-      {         
-	len = strlen ( ent->d_name ) - 4;      
-	if ( (len > 0) && ( G_strcasecmp ( ent->d_name + len, ".dbf") == 0) )
-          {
-	    strcpy ( buf, ent->d_name );
+    }
+
+    while ((ent = readdir(dir))) {
+	len = strlen(ent->d_name) - 4;
+	if ((len > 0) && (G_strcasecmp(ent->d_name + len, ".dbf") == 0)) {
+	    strcpy(buf, ent->d_name);
 	    buf[len] = '\0';
-            add_table ( buf, ent->d_name );
-	  }
-      } 
-    
-    closedir ( dir );
+	    add_table(buf, ent->d_name);
+	}
+    }
+
+    closedir(dir);
     return DB_OK;
 }
 
-int
-db__driver_close_database()
+int db__driver_close_database()
 {
     int i;
 
-    for ( i = 0; i < db.ntables; i++)
-      {
-	save_table (i);  
-	free_table (i);  
-      }
-    G_free ( db.tables );
-    
+    for (i = 0; i < db.ntables; i++) {
+	save_table(i);
+	free_table(i);
+    }
+    G_free(db.tables);
+
     return DB_OK;
 }
-
