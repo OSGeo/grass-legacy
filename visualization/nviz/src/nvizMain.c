@@ -8,9 +8,9 @@
  *               Bernhard Reiter <bernhard intevation.de>, 
  *               Glynn Clements <glynn gclements.plus.com>,
  *               Huidae Cho <grass4u gmail.com>,
- *               Philip Warner
+ *               Philip Warner <pjw rhyme.com.au>
  * PURPOSE:      main app for nviz visualization and animation tool
- * COPYRIGHT:    (C) 2002-2005 by the GRASS Development Team
+ * COPYRIGHT:    (C) 2002-2007 by the GRASS Development Team
  *
  *               This program is free software under the GNU General Public
  *               License (>=v2). Read the file COPYING that comes with GRASS
