@@ -15,7 +15,7 @@ main (int argc, char *argv[])
     char *name, *mapset;
     char rname[256], rmapset[256];
     int nrmaps;
-    char **rmaps, *location_path, buf1[256], buf2[256];
+    char **rmaps, *location_path;
     FILE *fp;
     int result = EXIT_SUCCESS;
     int force = 0;
@@ -82,17 +82,17 @@ main (int argc, char *argv[])
 		if(G_is_reclass(name, mapset, rname, rmapset) > 0 &&
 		   G_is_reclassed_to(rname, rmapset, &nrmaps, &rmaps) > 0)
 		{
-
+		    char path[GPATH_MAX];
 		    char *p = strchr(rname, '@');
+		    char *qname = G_fully_qualified_name(name, mapset);
 		    if (p)
 			*p = '\0';
-		    G__file_name_misc(buf1, "cell_misc", "reclassed_to", rname, rmapset);
-		    sprintf(buf2, "%s@%s", name, mapset);
+		    G__file_name_misc(path, "cell_misc", "reclassed_to", rname, rmapset);
 
-		    if(nrmaps == 1 && !G_strcasecmp(rmaps[0], buf2))
+		    if(nrmaps == 1 && !G_strcasecmp(rmaps[0], qname))
 		    {
 			
-		        if (  remove(buf1) < 0 ) {
+		        if (  remove(path) < 0 ) {
                             G_warning(
                             _("Removing information about reclassed map from [%s@%s] failed"),
                                                 rname, rmapset);
@@ -101,10 +101,10 @@ main (int argc, char *argv[])
 		    }
 		    else
 		    {
-		        if ( (fp = fopen(buf1, "w")) ) {
+		        if ( (fp = fopen(path, "w")) ) {
                             for(; *rmaps; rmaps++)
                             {
-                                if(G_strcasecmp(*rmaps, buf2))
+                                if(G_strcasecmp(*rmaps, qname))
                                     fprintf(fp, "%s\n", *rmaps);
                             }
                             fclose(fp);
