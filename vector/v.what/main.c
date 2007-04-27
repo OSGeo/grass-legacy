@@ -5,10 +5,10 @@
 *
 * AUTHOR(S):    Trevor Wiens - derived from d.what.vect - 15 Jan 2006
 *
-* PURPOSE:     To select and report attribute information for objects at  a
-*                       user specified location. This replaces d.what.vect by removing
-*                       the interactive component to enable its use with the new 
-*                       gis.m and future GUI.
+* PURPOSE:     To select and report attribute information for objects at a
+*               user specified location. This replaces d.what.vect by removing
+*               the interactive component to enable its use with the new 
+*               gis.m and future GUI.
 *
 * COPYRIGHT:    (C) 2006 by the GRASS Development Team
 *
@@ -69,8 +69,7 @@ main(int argc, char **argv)
     module = G_define_module();
     module->keywords = _("vector");
     module->description = 
-    _("Allows the user to interactively query a vector map layer "
-      "at user-selected locations within the current geographic region");
+	_("Queries a vector map layer at given locations");
 
     opt1 = G_define_standard_option(G_OPT_V_MAP);
     opt1->multiple   = YES;
@@ -84,18 +83,18 @@ main(int argc, char **argv)
     opt4->required   = NO;
     opt4->multiple   = YES;
     opt4->description= _("Coordinates for query");
-   
+
     maxdistance = G_define_option();
     maxdistance->type = TYPE_DOUBLE;
     maxdistance->key = "distance";
     maxdistance->answer = "0";
     maxdistance->multiple = NO;
     maxdistance->description = _("Query threshold distance");
-  
+
     topo_flag = G_define_flag();
     topo_flag->key = 'd';
     topo_flag->description = _("Print topological information (debugging)");
- 
+
     printattributes = G_define_flag();
     printattributes->key = 'a';
     printattributes->description = _("Print attribute information");
@@ -106,7 +105,7 @@ main(int argc, char **argv)
 
     if(!vect)
         opt1->required = YES;
-    	  	      
+
     if((argc > 1 || !vect) && G_parser(argc,argv))
         exit(EXIT_FAILURE);
 
@@ -185,12 +184,15 @@ main(int argc, char **argv)
 	  if( ret == 2) {
 	       what(xval, yval, maxd, width, mwidth, topo_flag->answer,printattributes->answer);
 	  } else {
-	        G_warning ( "Wrong input format: %s", buf);
+	        G_warning ( _("Wrong input format: %s"), buf);
 		continue;
 	  }
       };
 
   } else {
+      if( !opt4->answer)
+	G_fatal_error(_("No input coordinates provided"));
+
       xval = atof(opt4->answers[0]);
       yval = atof(opt4->answers[1]);
       what(xval, yval, maxd, width, mwidth, topo_flag->answer,printattributes->answer); 
