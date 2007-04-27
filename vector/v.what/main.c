@@ -108,8 +108,12 @@ main(int argc, char **argv)
         vect = opt1->answers;
 
    maxd = atof(maxdistance->answer);
-   xval = atof(opt4->answers[0]);
-   yval = atof(opt4->answers[1]);
+   if(opt4->answer) {
+	xval = atof(opt4->answers[0]);
+	yval = atof(opt4->answers[1]);
+   } else {
+	G_fatal_error(_("No input coordinates provided"));
+   }
 
 /*  
 *  fprintf(stdout, maxdistance->answer);
