@@ -1,3 +1,25 @@
+/****************************************************************************
+ *
+ * MODULE:       dspf library
+ * AUTHOR(S):    Appeared in GRASS 5.0beta_2i**, authors listed as:
+ *               Bill Brown*, Brook Milligan, Bill Hughes*,
+ *               Helena Mitasova,
+ *               Markus Neteler <neteler itc.it> (original contributors)
+ *               * marks probable actual authors based on comments
+ *               ** (this file has an earlier date - possibly was standalone?)
+ *               Subsequent (post-CVS) contributors:
+ *               Glynn Clements <glynn gclements.plus.com>,
+ *               Markus Neteler <neteler itc.it>,
+ *               Bernhard Reiter <bernhard intevation.de>,
+ * PURPOSE:      libraries for NVIZ: display volumes
+ * COPYRIGHT:    (C) 1996-2006 by the GRASS Development Team
+ *
+ *               This program is free software under the GNU General Public
+ *               License (>=v2). Read the file COPYING that comes with GRASS
+ *               for details.
+ *
+ *****************************************************************************/
+
 Info in .grid3 headers:
    version number
    xdim ydim zdim

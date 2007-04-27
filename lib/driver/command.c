@@ -1,3 +1,16 @@
+/****************************************************************************
+ *
+ * MODULE:       driver
+ * AUTHOR(S):    Glynn Clements <glynn gclements.plus.com> (original contributor)
+ *               Jachym Cepicky <jachym les-ejk.cz>
+ * PURPOSE:      
+ * COPYRIGHT:    (C) 2006-2007 by the GRASS Development Team
+ *
+ *               This program is free software under the GNU General Public
+ *               License (>=v2). Read the file COPYING that comes with GRASS
+ *               for details.
+ *
+ *****************************************************************************/
 #include <stdio.h>
 #include <string.h>
 #include <stdlib.h>
@@ -616,4 +629,7 @@ static int RESULT(int n)
 
     return 0;
 }
+
+
+
 
