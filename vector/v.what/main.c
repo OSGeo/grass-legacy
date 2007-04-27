@@ -68,8 +68,7 @@ main(int argc, char **argv)
     module = G_define_module();
     module->keywords = _("vector");
     module->description = 
-    _("Allows the user to interactively query a vector map layer "
-      "at user-selected locations within the current geographic region");
+	_("Queries a vector map layer at given locations");
 
     opt1 = G_define_standard_option(G_OPT_V_MAP);
     opt1->multiple   = YES;
@@ -80,7 +79,7 @@ main(int argc, char **argv)
     opt4->key        = "east_north";
     opt4->type       = TYPE_DOUBLE;
     opt4->key_desc   = "east,north";
-    opt4->required   = NO;
+    opt4->required   = YES;
     opt4->multiple   = YES;
     opt4->description= _("Coordinates for query");
    
