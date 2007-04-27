@@ -1,7 +1,7 @@
 /****************************************************************************
  *
  * MODULE:       driver
- * AUTHOR(S):    Glynn Clements <glynn gclements.plus.com> (original contributor)
+ * AUTHOR(S):    Glynn Clements <glynn gclements.plus.com>(original contributor)
  *               Jachym Cepicky <jachym les-ejk.cz>
  * PURPOSE:      graphics monitor driver
  * COPYRIGHT:    (C) 2006-2007 by the GRASS Development Team

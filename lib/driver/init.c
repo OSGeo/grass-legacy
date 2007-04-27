@@ -1,3 +1,16 @@
+/****************************************************************************
+ *
+ * MODULE:       driver
+ * AUTHOR(S):    Glynn Clements <glynn gclements.plus.com> (original contributor)
+ *               Huidae Cho <grass4u gmail.com>
+ * PURPOSE:      
+ * COPYRIGHT:    (C) 2006-2006 by the GRASS Development Team
+ *
+ *               This program is free software under the GNU General Public
+ *               License (>=v2). Read the file COPYING that comes with GRASS
+ *               for details.
+ *
+ *****************************************************************************/
 #include <grass/config.h>
 
 #include <stdio.h>
@@ -71,4 +84,7 @@ int LIB_init(const struct driver *drv, int argc, char **argv)
 
 	return 0;
 }
+
+
+
 
