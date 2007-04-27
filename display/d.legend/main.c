@@ -576,7 +576,6 @@ int main( int argc, char **argv )
 	    }
 
 	    /* Draw colors */
-	    R_move_abs(x0, y0);
 	    for (k = 0; k < lleg; k++) {
 		if (!fp) {
 		    if(!flip)
@@ -593,8 +592,10 @@ int main( int argc, char **argv )
 		    D_d_color(val,&colors) ;
 		}
 
-		R_cont_rel(dx,dy) ;
-		R_move_rel(dx? -dx:1,dy? -dy:1) ;
+		if(dx < dy)
+		    R_box_abs(x0 + k, y0, x0 + k + (dx? -dx:1), y0 - (dy? -dy:1));
+		else
+		    R_box_abs(x0, y0 + k, x0 - (dx? -dx:1), y0 + k + (dy? -dy:1));
 	    }
 
 	    /* Format text */
