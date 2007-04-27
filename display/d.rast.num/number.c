@@ -45,7 +45,7 @@
 #include <grass/glocale.h>
 
 #define MAIN
-int draw_number(double, RASTER_MAP_TYPE);
+int draw_number(double, int, RASTER_MAP_TYPE);
 
 int D_x, D_y ;
 double D_ew, D_ns;
@@ -71,10 +71,11 @@ int main (int argc, char **argv)
 	int layer_fd;
 	int nrows, ncols, row, col;
 	int t, b, l, r ;
+	int digits;
 	struct Cell_head window ;
 	struct Colors colors;
 	struct GModule *module;
-	struct Option *opt1, *opt2, *opt3 ;
+	struct Option *opt1, *opt2, *opt3, *prec;
 	struct Flag *text_color; 
 	RASTER_MAP_TYPE map_type, inmap_type;
 
@@ -83,7 +84,7 @@ int main (int argc, char **argv)
 
 	module = G_define_module();
 	module->keywords = _("display");
-    module->description =
+    	module->description =
 		_("Overlays cell category values on a raster map layer "
 		"displayed to the graphics monitor.");
 
@@ -113,6 +114,15 @@ int main (int argc, char **argv)
         opt3->options     = D_COLOR_LIST;
 	opt3->key_desc    = "color";
         opt3->description = _("Color for drawing text");
+
+        prec              = G_define_option();
+        prec->key         = "dp";
+        prec->type        = TYPE_DOUBLE;
+        prec->required    = NO;
+        prec->answer      = "1";
+        prec->options     = "0,1,2,3,4,5,6,7,8,9";
+	prec->key_desc    = "dp";
+        prec->description = _("Number of significant digits (floating point only)");
 
     	text_color              = G_define_flag();
     	text_color->key         = 'f';
@@ -199,7 +209,7 @@ int main (int argc, char **argv)
 	nrows = window.rows;
 	ncols = window.cols;
 
-	if ((nrows > 75) || (ncols > 75)){
+       if ((nrows > 75) || (ncols > 75)){
 	    G_warning("!!!");
 	    G_message(_("Current window size:"));
 	    G_message(_("rows:    %d"), nrows);
@@ -210,7 +220,7 @@ int main (int argc, char **argv)
 	      " small for cell category number to be visible."));
 	    G_message(" ");
 	}
-	if ((nrows > 200) || (ncols > 200)) {
+       if ((nrows > 200) || (ncols > 200)) {
 	    G_fatal_error(_("Aborting."));
 	}
 
@@ -221,6 +231,9 @@ int main (int argc, char **argv)
 	/* how many screen units of distance for each cell */
 	D_ew = (D_east - D_west) / ncols;
 	D_ns = (D_south - D_north) / nrows;
+
+	/*set the number of significant digits*/
+	sscanf(prec->answer, "%i", &digits);
 
 	/*-- DEBUG ----------------------------------------
 	fprintf (stdout,"ew_res:  %.2f\n", window.ew_res);
@@ -299,7 +312,7 @@ int main (int argc, char **argv)
 			R_RGB_color(R, G, B);
 		    }
 
-		    draw_number(cell[col], inmap_type);
+		    draw_number(cell[col], digits, inmap_type);
 		}
 	}
 
@@ -312,7 +325,7 @@ int main (int argc, char **argv)
 /* --- end of main --- */
 
 
-int draw_number (double number, RASTER_MAP_TYPE map_type)
+int draw_number (double number, int prec, RASTER_MAP_TYPE map_type)
 {
 	extern double D_ew, D_ns;
 	extern int D_x, D_y;
@@ -333,7 +346,7 @@ int draw_number (double number, RASTER_MAP_TYPE map_type)
 	    sprintf(no,"N");
 	}else{
 	  if(!G_is_d_null_value(&dcell))
-	    sprintf(no,"%.1f", number);
+	    sprintf(no,"%.*f", prec, number);
 	  else
 	   sprintf(no,"N");
 	}
@@ -352,10 +365,10 @@ int draw_number (double number, RASTER_MAP_TYPE map_type)
 	R_text_size(text_size,text_size);
 	R_get_text_box(no,&tt,&tb,&tl,&tr);
 	/*
-    R_get_text_box(num,&tt,&tb,&tl,&tr);
-    R_move_abs(D_x+(int)(D_ew*0.1),D_y+(int)(D_ns*0.5)) ;
-    R_move_abs(D_x,D_y+(int)(dots_per_line - 1)) ;
-    */
+	R_get_text_box(num,&tt,&tb,&tl,&tr);
+	R_move_abs(D_x+(int)(D_ew*0.1),D_y+(int)(D_ns*0.5)) ;
+	R_move_abs(D_x,D_y+(int)(dots_per_line - 1)) ;
+	*/
 	R_move_abs((int) (D_x+((float) D_ew/2)- ((float)(tr-tl)/2)),(int)(D_y+D_ns*0.7)) ;
 	R_text(no);
 
