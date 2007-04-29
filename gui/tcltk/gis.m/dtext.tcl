@@ -10,7 +10,7 @@
 ##########################################################################
 
 namespace eval GmDtext {
-    variable array opt # d.text.new options
+    variable array opt # d.text options
     variable count 1
     variable array lfile 
     variable array lfilemask
@@ -18,15 +18,9 @@ namespace eval GmDtext {
     variable first
     variable array dup 
     variable placement 
-    variable currfont
     variable optlist
-
-	#store current GRASS_FONT value to reset at end
-	if {[info exists env(GRASS_FONT)]} {
-		set currfont env(GRASS_FONT)
-	} else {
-		set currfont ""
-	}
+    global env
+	
 }
 
 proc GmDtext::create { tree parent } {
@@ -38,7 +32,7 @@ proc GmDtext::create { tree parent } {
     variable first
 	variable dup
 	variable optlist
-    global iconpath
+    global iconpath env
     
     set node "dtext:$count"
 
@@ -78,8 +72,16 @@ proc GmDtext::create { tree parent } {
     set opt($count,1,align) "lower_left" 
     set opt($count,1,line)  10
     set opt($count,1,rotate) 0
-    set opt($count,1,font) "romans" 
-    set opt($count,1,fonttype) "grassfont" 
+    
+	#set font to anything currently set for default font
+	if {[info exists env(GRASS_FONT)] && $env(GRASS_FONT) != ""} {
+		set opt($count,1,font) $env(GRASS_FONT)
+		set opt($count,1,fonttype) "truetype" 
+	} else {
+		set opt($count,1,fonttype) "grassfont" 
+		set opt($count,1,font) "romans" 
+	}
+
     set opt($count,1,bold) 0 
 	set opt($count,1,size) 10
     set opt($count,1,color) \#000000 
@@ -108,10 +110,9 @@ proc GmDtext::create { tree parent } {
 proc GmDtext::select_font { id frm } {
 	global mon env xfontdir
 	variable opt
-    
-    # tcltk font selection widget - fonts done work for GRASS?
-    #set fon [SelectFont $frm.fontset -type dialog -sampletext 1 -title "Select font"]
-	#if { $fon != "" } {set opt($id,1,font) $fon}
+
+	set systemtype [exec uname -s]
+	set systemtype [string trim $systemtype]
 	
 	# initialize fontdir
 	set fontdir ""
@@ -120,8 +121,12 @@ proc GmDtext::select_font { id frm } {
 		set fontdir "$env(GISBASE)/fonts"
 	} elseif { $opt($id,1,fonttype) == "x11font" } {
 		set fontdir $xfontdir
-	} else {
-		if { [info exists env(HOME)] } {
+	} elseif { $opt($id,1,fonttype) == "truetype" } {
+		if { $systemtype == "Darwin"} {
+			if {[file isdirectory "/Library/Fonts"]} {
+				set fontdir "/Library/Fonts"
+			}
+		} elseif {[info exists env(HOME)] } {
 			set fontdir $env(HOME)
 		} else {
 			set fontdir ""
@@ -206,7 +211,7 @@ proc GmDtext::options { id frm } {
     LabelEntry $row.a -label [G_msg "Text to display: "] -textvariable GmDtext::opt($id,1,text) -width 51
     Button $row.b -text [G_msg "Help"] \
             -image [image create photo -file "$iconpath/gui-help.gif"] \
-            -command "spawn g.manual --q d.text.new" \
+            -command "spawn g.manual --q d.text" \
             -background $bgcolor \
             -helptext [G_msg "Help"]
     pack $row.a $row.b -side left
@@ -254,13 +259,12 @@ proc GmDtext::options { id frm } {
     set gfont [radiobutton $row.b -variable GmDtext::opt($id,1,fonttype) -value "grassfont" \
         -text [G_msg "GRASS"] -highlightthickness 0]
         DynamicHelp::register $gfont balloon [G_msg "GRASS stroke fonts"]
-        $gfont select
-    set xfont [radiobutton $row.c -variable GmDtext::opt($id,1,fonttype) -value "x11font" \
+    set ofont [radiobutton $row.c -variable GmDtext::opt($id,1,fonttype) -value "truetype" \
+        -text [G_msg "TrueType"] -highlightthickness 0]
+        DynamicHelp::register $ofont balloon [G_msg "Custom font path"]
+    set xfont [radiobutton $row.d -variable GmDtext::opt($id,1,fonttype) -value "x11font" \
         -text [G_msg "X11 TrueType"] -highlightthickness 0]
         DynamicHelp::register $xfont balloon [G_msg "TrueType fonts from x11 directory"]
-    set ofont [radiobutton $row.d -variable GmDtext::opt($id,1,fonttype) -value "other" \
-        -text [G_msg "Other"] -highlightthickness 0]
-        DynamicHelp::register $ofont balloon [G_msg "Custom font path"]
     pack $row.a $row.b $row.c $row.d -side left
     pack $row -side top -fill both -expand yes
 
@@ -297,8 +301,6 @@ proc GmDtext::save { tree depth node } {
     variable opt
     variable optlist
     global mon
-    
-    puts "optlist is $optlist"
 
     set id [GmTree::node_id $node]
 
@@ -318,7 +320,6 @@ proc GmDtext::display { node mod } {
     variable dup
     variable count
     variable first
-    variable currfont
     
  	set line ""
     set input ""
@@ -360,7 +361,7 @@ proc GmDtext::display { node mod } {
     	set at $opt($id,1,at)
     }
   
-    set cmd "d.text.new -s size=$opt($id,1,size) color=$color \
+    set cmd "d.text -s size=$opt($id,1,size) color=$color \
     	at=$at align=$align  rotation=$opt($id,1,rotate) \
     	linespacing=$opt($id,1,linespace) --q {text=$opt($id,1,text)}"
   
@@ -376,7 +377,13 @@ proc GmDtext::display { node mod } {
     	append cmd " -g"
     }
     
-    
+    # check value of GRASS_FONT variable prior to display
+	if {[info exists env(GRASS_FONT)]} {
+		set currfont $env(GRASS_FONT)
+	} else {
+		set currfont ""
+	}
+
     # set grass font environmental variable to user selection"
 	if { $opt($id,1,font) != ""} { set env(GRASS_FONT) $opt($id,1,font) }
 
