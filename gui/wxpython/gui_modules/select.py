@@ -4,10 +4,10 @@ MODULE: select
 CLASSES:
  * Select
  * TreeCrtlComboPopup
- 
-PURPOSE: 
-         
-AUTHORS: The GRASS Development Team
+
+PURPOSE: Custon control that selects GRASS GIS elements
+
+AUTHORS: The GRASS Development Team. Michael Barton & Martin Landa
 
 COPYRIGHT: (C) 2007 by the GRASS Development Team
            This program is free software under the GNU General Public
@@ -210,7 +210,7 @@ class TreeCtrlComboPopup(wx.combo.ComboPopup):
                 self.value = None
             else:
                 self.value = item
-                
+
             self.Dismiss()
         evt.Skip()
 
