@@ -107,23 +107,8 @@ main(int argc, char **argv)
     if (opt1->answers && opt1->answers[0])
         vect = opt1->answers;
 
-   maxd = atof(maxdistance->answer);
-   if(opt4->answer) {
-	xval = atof(opt4->answers[0]);
-	yval = atof(opt4->answers[1]);
-   } else {
-	G_fatal_error(_("No input coordinates provided"));
-   }
+    maxd = atof(maxdistance->answer);
 
-/*  
-*  fprintf(stdout, maxdistance->answer);
-*  fprintf(stdout, "Maxd is %f", maxd);
-*  fprintf(stdout, xcoord->answer);
-*  fprintf(stdout, "xval is %f", xval);
-*  fprintf(stdout, ycoord->answer);
-*  fprintf(stdout, "yval is %f", yval);
-*/
-  
     if (maxd == 0.0) 
     {
         G_get_window (&window);
@@ -177,7 +162,16 @@ main(int argc, char **argv)
        }
     }
 
-  what(xval, yval, maxd, width, mwidth, topo_flag->answer,printattributes->answer); 
+
+   if(opt4->answer) {
+	for(i=0; opt4->answers[i] != NULL; i+=2) {
+	    xval = atof(opt4->answers[i]);
+	    yval = atof(opt4->answers[i+1]);
+	    what(xval, yval, maxd, width, mwidth, topo_flag->answer,printattributes->answer); 
+	}
+   } else {
+	G_fatal_error(_("No input coordinates provided"));
+   }
 
   for(i=0; i<nvects; i++)
       Vect_close (&Map[i]);
