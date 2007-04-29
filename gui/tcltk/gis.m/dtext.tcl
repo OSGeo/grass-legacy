@@ -273,7 +273,7 @@ proc GmDtext::options { id frm } {
     Label $row.a -text [G_msg "     font "] 
     Button $row.b -image [image create photo -file "$iconpath/gui-font.gif"] \
         -highlightthickness 0 -takefocus 0 -relief raised -borderwidth 1  \
-        -helptext [G_msg "select font for text (default is GRASS romans)"] \
+        -helptext [G_msg "select font for text"] \
 	    -command "GmDtext::select_font $id $frm"
     Entry $row.c -width 30 -text "$opt($id,1,font)" \
 	    -textvariable GmDtext::opt($id,1,font) 
