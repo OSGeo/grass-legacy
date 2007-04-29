@@ -46,6 +46,7 @@ import gui_modules.render as render
 import gui_modules.menudata as menudata
 import gui_modules.menuform as menuform
 import gui_modules.grassenv as grassenv
+import gui_modules.defaultfont as defaultfont
 from icons.icon import Icons as Icons
 
 """Main Python app to set up GIS Manager window and trap commands
@@ -291,6 +292,11 @@ class GMFrame(wx.Frame):
         cmd = menucmd[itemtext]
         global gmpath
         menuform.GUI().parseCommand(cmd,gmpath, parentframe=self)
+
+    def defaultFont(self, event):
+        """Set default font for GRASS displays"""
+
+        defaultfont.SetDefaultFont(self)
 
     def __createToolBar(self):
         """Creates toolbar"""
@@ -546,17 +552,17 @@ class GMApp(wx.App):
         return 1
 
 def reexec_with_pythonw():
-	if sys.platform == 'darwin' and\
-		not sys.executable.endswith('MacOS/Python'):
-		print >>sys.stderr,'re-executing using pythonw'
-		os.execvp('pythonw',['pythonw',__file__] + sys.argv[1:])
+  if sys.platform == 'darwin' and\
+    not sys.executable.endswith('MacOS/Python'):
+    print >>sys.stderr,'re-executing using pythonw'
+    os.execvp('pythonw',['pythonw',__file__] + sys.argv[1:])
 
 
 if __name__ == "__main__":
 
-	reexec_with_pythonw()
+  reexec_with_pythonw()
 
-	import gettext
-	gettext.install("GMApp") # replace with the appropriate catalog name
-	app = GMApp(0)
-	app.MainLoop()
+  import gettext
+  gettext.install("GMApp") # replace with the appropriate catalog name
+  app = GMApp(0)
+  app.MainLoop()

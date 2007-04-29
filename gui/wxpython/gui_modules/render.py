@@ -209,7 +209,6 @@ class MapLayer:
 
         os.environ["GRASS_PNGFILE"] = self.mapfile
         os.environ["GRASS_RENDER_IMMEDIATE"] = "TRUE"
-        os.environ["GRASS_FONT"] = "/Library/Fonts/Arial"
         #
         # execute command
         #
@@ -265,7 +264,7 @@ class Map:
 
     def __init__(self):
         """
-        While initalization, necessary variables are set, monitor size is
+        During initalization, necessary variables are set, monitor size is
         determined and
         """
 
