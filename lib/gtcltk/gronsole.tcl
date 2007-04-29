@@ -217,7 +217,8 @@ proc Gronsole::create_command {path cmd} {
 	}
 	pack $frame.cmdline.cmd -side left -expand yes -fill x
 	pack $frame.cmdline -side top -expand yes -fill x
-	set pbar [ProgressBar $frame.progress -fg green -height 1 -relief raised -maximum 100 -variable Gronsole::_data($path,$ci,progress)]
+	set pbar [ProgressBar $frame.progress -fg green -bg white -height 20 -relief raised \
+		-maximum 100 -variable Gronsole::_data($path,$ci,progress)] 
 	pack $pbar -side left
 	set _data($path,$ci,progress) -1
 	set _data($path,$ci,progressbar) $pbar
@@ -239,6 +240,8 @@ proc Gronsole::create_command {path cmd} {
 
 	set pspace 12
 	$pbar configure -width [expr [winfo width $textarea] - $pspace]
+#	$pbar configure -width [expr [winfo width $textarea] - $pspace] -height 20
+
 	bind $textarea <Configure> "+catch {$pbar configure -width \[expr \[winfo width $textarea\] - $pspace\]}"
 
 
@@ -308,10 +311,17 @@ proc Gronsole::remove_tag {path ci tag} {
 ##########################################################################
 # Private (stuff done when commands are run)
 
+# This procedure doesn't really seem necessary. I've left it in
+# in case there is something I'm missing (M. Barton 29 April 2007)
 proc Gronsole::progress {path ci percent} {
 	variable _data
-	set _data($path,$ci,progress) $percent
-	set pbar $_data($path,$ci,progressbar)
+
+	if {[info exists _data($path,$ci,progress)]} {
+		set _data($path,$ci,progress) $percent
+	}
+	if {[info exists _data($path,$ci,progressbar)]} {
+		set pbar $_data($path,$ci,progressbar)
+	}
 
 	if {$percent == -1} {
 		$pbar configure -height 1
@@ -348,9 +358,12 @@ proc Gronsole::output_to_gronsole {path mark ci tags str} {
 		}
 		$outtext insert $mark $val $tagbase
 	} elseif { [regexp -- {^GRASS_INFO_PERCENT: (.+)$} $str match val rest] } {
-		Gronsole::progress $path $ci $val
-		if { $val >= 100 } { 
-			Gronsole::progress $path $ci -1
+		if { $val > 0 && $val < 100} { 
+			set Gronsole::_data($path,$ci,progress) $val
+#			Gronsole::progress $path $ci $val
+		} else {
+#			Gronsole::progress $path $ci -1
+			set Gronsole::_data($path,$ci,progress) -1
 			$outtext insert $mark "\n" $tags
 		}
 	} elseif { [regexp -- {^GRASS_INFO_END.+} $str match key rest] } {
@@ -376,12 +389,17 @@ proc Gronsole::readeof {path ci mark fh} {
 }
 
 proc Gronsole::readout {path ci mark fh} {
-	set str [read $fh]
-	if {[string length $str] != 0} {
+
+	set lines {}
+	
+	while {[gets $fh line] >= 0} {
+		lappend lines $line
+	}
+	
+	if {[llength $lines] != 0} {
 		Gronsole::add_data_tag $path $ci out
 	}
-	set lines [split $str "\n"]
-	foreach line [lrange $lines 0 [expr [llength $lines] - 2]] {
+	foreach line $lines {
 		Gronsole::output_to_gronsole $path $mark $ci [list cmd$ci cmd$ci-out] "$line\n"
 	}
 	set last [lindex $lines end]
@@ -393,9 +411,13 @@ proc Gronsole::readout {path ci mark fh} {
 
 proc Gronsole::done_command {path ci} {
 	variable _data
-	set donecmd $_data($path,$ci,donecmd)
-	set _data($path,$ci,donecmd) {}
-	if {$donecmd != {}} {
+
+	if {[info exists _data($path,$ci,donecmd)] && $_data($path,$ci,donecmd) != {}} {
+		set donecmd $_data($path,$ci,donecmd)
+		set _data($path,$ci,donecmd) {}
+	}
+
+	if {[info exists donecmd] && $donecmd != {}} {
 		eval $donecmd
 	}
 }
