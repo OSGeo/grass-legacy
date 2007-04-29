@@ -235,6 +235,7 @@ class BufferedWindow(wx.Window):
         # create a PseudoDC for map decorations like scales and legends
       self.pdc = wx.PseudoDC()
       self._Buffer = '' # will store an off screen empty bitmap for saving to file
+      self.Map.SetRegion() # make sure that extents are updated at init
 
       self.Bind(wx.EVT_ERASE_BACKGROUND, lambda x:None)
 
@@ -490,7 +491,8 @@ class BufferedWindow(wx.Window):
 
         # update statusbar
         #Debug.msg (3, "BufferedWindow.UpdateMap(%s): region=%s" % self.Map.region)
-        self.parent.statusbar.SetStatusText("Extents: %d(W)-%d(E), %d(N)-%d(S)" %
+        self.Map.SetRegion()
+        self.parent.statusbar.SetStatusText("Extents: %.2f(W)-%.2f(E), %.2f(N)-%.2f(S)" %
                                             (self.Map.region["w"], self.Map.region["e"],
                                              self.Map.region["n"], self.Map.region["s"]), 0)
 
@@ -862,21 +864,36 @@ class BufferedWindow(wx.Window):
         Set display geometry to match extents in
         saved region file
         """
-#        dlg = wx.MessageDialog(self, 'This is not yet functional',
-#                           'Zoom to saved region extents', wx.OK | wx.ICON_INFORMATION)
+
+        zoomreg = {}
 
         dlg = SavedRegion(self, wx.ID_ANY, "Zoom to saved region extents",
                              pos=wx.DefaultPosition, size=wx.DefaultSize,
                              style=wx.DEFAULT_DIALOG_STYLE,
                              loadsave='load')
-        dlg.ShowModal()
+
+        if dlg.ShowModal() == wx.ID_CANCEL:
+            dlg.Destroy()
+            return
+
         wind = dlg.wind
-        cmd = "g.region region=%s" % wind
+        cmd = "g.region -ugp region=%s" % wind
 
         try:
             p = Popen(cmd, shell=True, stdin=PIPE, stdout=PIPE, stderr=PIPE, close_fds=True)
 
             output = p.stdout.read().split('\n')
+            for line in output:
+                line = line.strip()
+                if '=' in line: key,val = line.split('=')
+                zoomreg[key] = float(val)
+            self.Map.region['n'] = zoomreg['n']
+            self.Map.region['s'] = zoomreg['s']
+            self.Map.region['e'] = zoomreg['e']
+            self.Map.region['w'] = zoomreg['w']
+            self.ZoomHistory(self.Map.region['n'],self.Map.region['s'],self.Map.region['e'],self.Map.region['w'])
+            self.UpdateMap()
+
             if p.stdout < 0:
                 print >> sys.stderr, "Child was terminated by signal", p.stdout
             elif p.stdout > 0:
@@ -885,10 +902,8 @@ class BufferedWindow(wx.Window):
         except OSError, e:
             print >> sys.stderr, "Execution failed:", e
 
-        self.Map.region = self.Map.GetRegion()
-        self.Map.SetRegion()
-        self.ZoomHistory(self.Map.region['n'],self.Map.region['s'],self.Map.region['e'],self.Map.region['w'])
-        self.UpdateMap()
+#        self.Map.region = self.Map.GetRegion()
+#        self.Map.SetRegion()
 
         dlg.Destroy()
 
@@ -909,39 +924,41 @@ class BufferedWindow(wx.Window):
                              pos=wx.DefaultPosition, size=wx.DefaultSize,
                              style=wx.DEFAULT_DIALOG_STYLE,
                              loadsave='save')
-        dlg.ShowModal()
+        if dlg.ShowModal() == wx.ID_CANCEL:
+            dlg.Destroy()
+            return
+
         wind = dlg.wind
 
         # test to see if it already exists and ask permission to overwrite
-        windpath = os.path.join(env["GISDBASE"], env["LOCATION_NAME"],
-                                env["MAPSET"],"windows",wind)
+        windpath = os.path.join(self.Map.env["GISDBASE"], self.Map.env["LOCATION_NAME"],
+                                self.Map.env["MAPSET"],"windows",wind)
 
-        if not os.path.exists(windpath):
+        if windpath and not os.path.exists(windpath):
             self.saveRegion(wind)
-        elif os.path.exists(windpath):
+        elif windpath and os.path.exists(windpath):
             overwrite = wx.MessageBox("Do you want to overwrite it?","The file %s already exists" % wind, wx.YES_NO)
             if (overwrite == wx.YES):
                 self.saveRegion(wind)
+        else:
+            pass
 
         dlg.Destroy()
 
     def saveRegion(self, wind):
-        # set extents to even increments of resolution
-        self.Map.region['n'] = round(self.Map.region['n']/self.Map.region['nsres']) * self.Map.region['nsres']
-        self.Map.region['s'] = round(self.Map.region['s']/self.Map.region['nsres']) * self.Map.region['nsres']
-        self.Map.region['e'] = round(self.Map.region['e']/self.Map.region['ewres']) * self.Map.region['ewres']
-        self.Map.region['w'] = round(self.Map.region['w']/self.Map.region['ewres']) * self.Map.region['ewres']
+        new = self.Map.alignResolution()
 
-        cmd = "g.region -u n=%d s=%d e=%d w=%d save=%s" % (
-             self.Map.region['n'],
-             self.Map.region['s'],
-             self.Map.region['e'],
-             self.Map.region['w'],
+        cmd = "g.region -u n=%f s=%f e=%f w=%f rows=%f cols=%f save=%s --o" % (
+             new['n'], new['s'], new['e'], new['w'], new['rows'], new['cols'],
              wind)
+
+        tmpreg = os.getenv("GRASS_REGION")
+        os.unsetenv("GRASS_REGION")
+
+#        os.popen(cmd)
 
         try:
             p = Popen(cmd, shell=True, stdin=PIPE, stdout=PIPE, stderr=PIPE, close_fds=True)
-
             output = p.stdout.read().split('\n')
             if p.stdout < 0:
                 print >> sys.stderr, "Child was terminated by signal", p.stdout
@@ -950,6 +967,9 @@ class BufferedWindow(wx.Window):
                 pass
         except OSError, e:
             print >> sys.stderr, "Execution failed:", e
+
+        if tmpreg:
+            os.environ["GRASS_REGION"] = tmpreg
 
 class MapFrame(wx.Frame):
     """
@@ -1023,7 +1043,8 @@ class MapFrame(wx.Frame):
         #
         self.statusbar = self.CreateStatusBar(number=2, style=0)
         self.statusbar.SetStatusWidths([-2, -1])
-        map_frame_statusbar_fields = ["Extents: %d(W)-%d(E), %d(N)-%d(S)" %
+        self.Map.SetRegion()
+        map_frame_statusbar_fields = ["Extents: %.2f(W)-%.2f(E), %.2f(N)-%.2f(S)" %
                                       (self.Map.region["w"], self.Map.region["e"],
                                        self.Map.region["n"], self.Map.region["s"]),
                                       "%s,%s" %(None, None)]
@@ -1151,10 +1172,9 @@ class MapFrame(wx.Frame):
         # store current mouse position
         posx, posy = event.GetPositionTuple()
 
-
         # upsdate coordinates
         x, y = self.MapWindow.Pixel2Cell(posx, posy)
-        self.statusbar.SetStatusText("%d,%d" % (x, y), 1)
+        self.statusbar.SetStatusText("%.2f,%.2f" % (x, y), 1)
 
         event.Skip()
 
@@ -1809,6 +1829,7 @@ class SavedRegion(wx.Dialog):
             self.textentry = wx.TextCtrl(self, -1, "", size=(200,-1))
             box.Add(self.textentry, 0, wx.ALIGN_CENTRE|wx.ALL, 5)
             self.textentry.Bind(wx.EVT_TEXT, self.onText)
+
         sizer.Add(box, 0, wx.GROW|wx.ALIGN_CENTER_VERTICAL|wx.ALL, 5)
 
         line = wx.StaticLine(self, -1, size=(20,-1), style=wx.LI_HORIZONTAL)
@@ -1823,6 +1844,7 @@ class SavedRegion(wx.Dialog):
         btn = wx.Button(self, wx.ID_CANCEL)
         btnsizer.AddButton(btn)
         btnsizer.Realize()
+
 
         sizer.Add(btnsizer, 0, wx.ALIGN_CENTER_VERTICAL|wx.ALL, 5)
 
