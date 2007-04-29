@@ -47,6 +47,7 @@ main(int argc, char **argv)
   double xval, yval, xres, yres, maxd, x;
   double EW_DIST1, EW_DIST2, NS_DIST1, NS_DIST2;
   char nsres[30], ewres[30];
+  char ch;
   
     /* Initialize the GIS calls */
     G_gisinit (argv[0]) ;
@@ -180,22 +181,25 @@ main(int argc, char **argv)
       setvbuf(stdin,  NULL, _IOLBF, 0);
       setvbuf(stdout, NULL, _IOLBF, 0);
       while ( fgets (buf, sizeof(buf), stdin) != NULL ) { 
-          ret=sscanf( buf, "%lf,%lf", &xval, &yval);
-	  if( ret == 2) {
-	       what(xval, yval, maxd, width, mwidth, topo_flag->answer,printattributes->answer);
+	  ret=sscanf( buf, "%lf%c%lf", &xval, &ch, &yval);
+	  if(ret == 3 && (ch == ',' || ch == ' ' || ch == '\t') ) {
+		what(xval, yval, maxd, width, mwidth, topo_flag->answer,printattributes->answer);
 	  } else {
-	        G_warning ( _("Wrong input format: %s"), buf);
+	        G_warning ( _("Unknown input format, skipping: %s"), buf);
 		continue;
 	  }
       };
 
   } else {
+	/* take coords from the command line */
       if( !opt4->answer)
 	G_fatal_error(_("No input coordinates provided"));
 
-      xval = atof(opt4->answers[0]);
-      yval = atof(opt4->answers[1]);
-      what(xval, yval, maxd, width, mwidth, topo_flag->answer,printattributes->answer); 
+      for(i=0; opt4->answers[i] != NULL; i+=2) {
+	xval = atof(opt4->answers[i]);
+	yval = atof(opt4->answers[i+1]);
+	what(xval, yval, maxd, width, mwidth, topo_flag->answer,printattributes->answer); 
+      }
   }
 
   for(i=0; i<nvects; i++)
