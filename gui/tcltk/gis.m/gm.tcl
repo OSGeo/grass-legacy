@@ -86,9 +86,13 @@ if {[info exists env(OS)] && $env(OS) == "Windows_NT"} {
 
 
 #fetch GRASS Version number:
-set fp [open $env(GISBASE)/etc/VERSIONNUMBER r]
+catch {set fp [open $env(GISBASE)/etc/VERSIONNUMBER r]}
 set GRASSVERSION [read -nonewline $fp]
-close $fp
+
+if {[catch {close $fp} error]} {
+	puts $error
+}
+
 
 source $env(GISBASE)/etc/gui.tcl
 # gui.tcl also sources these:
@@ -135,9 +139,12 @@ proc read_moncap {} {
 
 	set moncap {}
 
-	set file [open [file join $env(GISBASE) etc monitorcap] r]
+	catch {set file [open [file join $env(GISBASE) etc monitorcap] r]}
 	set data [read $file]
-	close $file
+	
+	if {[catch {close $file} error]} {
+		puts $error
+	}
 
 	set data [subst -nocommands -novariables $data]
 	foreach line [split $data \n] {

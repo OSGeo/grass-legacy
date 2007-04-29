@@ -218,32 +218,17 @@ proc GmRnums::display { node mod } {
 	# only run if less than 100x100 cells
 	set string ""
 	set cells 0
-	set rest ""
-	set rc [open "|g.region -ugp" r]
+	
+	catch {set rc [open "|g.region -ugp" r]}
 	set rowscolumns [read $rc]
+	puts "rowscoloumns=$rowscolumns"
 	if {[catch {close $rc} error]} {
 		puts $error
 	}
-	
-# 	close  $rc
 	regexp {rows=(\d*)} $rowscolumns string rows
 	regexp {cols=(\d*)} $rowscolumns string cols
 	set cells [expr $rows * $cols]
 	if {$cells < 1} {return}
-	
-# 	if {![catch {[open "|g.region -ugp 2> $devnull" r]} rc]} {
-# 		set rowscolumns [read $rc]
-# 		puts "rowscoloumns=$rowscolumns"
-# 		if {[catch {close $rc} error]} {
-# 			puts $error
-# 		}
-# 		regexp {rows=(\d*)} $rowscolumns string rows
-# 		regexp {cols=(\d*)} $rowscolumns string cols
-# 		set cells [expr $rows * $cols]
-# 	} else {
-# 		set cells 10001
-# 	}
-
 
 	# can only display if 10K cells or less in region
 	if { $cells <= 10000} {
