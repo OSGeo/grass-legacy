@@ -213,9 +213,11 @@ proc GmHist::display { node mod } {
 
     # set steps
     if { $opt($id,1,nsteps) != "" } { 
-		set rt [open "|r.info map=$opt($id,1,map) -t" r]
+		catch {set rt [open "|r.info map=$opt($id,1,map) -t" r]}
 		set rasttype [read $rt]
-		close $rt
+		if {[catch {close $rt} error]} {
+			puts $error
+		}
 		if {[regexp -nocase ".=FCELL" $rasttype] || [regexp -nocase ".=DCELL" $rasttype]} {
             append cmd " nsteps=$opt($id,1,nsteps)"
         }
