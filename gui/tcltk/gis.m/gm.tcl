@@ -453,6 +453,27 @@ proc Gm::SaveFileBox { } {
 };
 
 ###############################################################################
+# sets default display font
+proc Gm:DefaultFont { } {
+	global env
+
+	set systemtype [exec uname -s]
+	set systemtype [string trim $systemtype]
+	if { $systemtype == "Darwin"} {
+		set fontpath "/Library/Fonts"
+	} else {
+		set fontpath ""
+	}
+
+	set fontname [tk_getOpenFile -initialdir $fontpath \
+		-title [G_msg "Select font file"] ]
+	if { $fontname == "" } { return}
+	
+	set env(GRASS_FONT) $fontname
+
+};
+
+###############################################################################
 
 proc Gm::cleanup { } {
 	global mon
