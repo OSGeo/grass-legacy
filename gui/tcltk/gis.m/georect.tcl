@@ -260,11 +260,12 @@ proc GRMap::getxygroup { vgcreate } {
     # First, switch to xy mapset
     GRMap::setxyenv $xymset $xyloc
     set m [GSelect group]
+    set mname [lindex [split $m "@"] 0]
     # Return to georectified mapset
     GRMap::resetenv
 
-    if { $m != "" } {
-            set GRMap::xygroup $m
+    if { $mname != "" } {
+            set GRMap::xygroup $mname
     }
 
     # are we creating a vector group?
@@ -297,6 +298,7 @@ proc GRMap::getxygroup { vgcreate } {
     } elseif { $maptype == "vect" } {
         # check to see if a vector group exists
         set groupfile "$xygdb/$xyloc/$xymset/group/$xygroup/VREF"
+        puts "groupfile = $groupfile"
         if {![file exists $groupfile] } {
             set GRMap::xygroup ""
             set msg "There is no vector group file (VREF). You must select \
@@ -322,13 +324,15 @@ proc GRMap::getxymap { type } {
 
     if { $type == "rast" } {
         set m [GSelect cell]
-        if { $m != "" } {
-            set GRMap::xymap $m
+    	set mname [lindex [split $m "@"] 0]
+        if { $mname != "" } {
+            set GRMap::xymap $mname
         }
     } elseif {$type == "vect" } {
         set m [GSelect vector]
-        if { $m != "" } {
-            set GRMap::xymap $m
+        set mname [lindex [split $m "@"] 0]
+        if { $mname != "" } {
+            set GRMap::xymap $mname
         }
     }
 
@@ -507,11 +511,12 @@ proc GRMap::getxyvect { } {
     GRMap::setxyenv $xymset $xyloc
 
     set m [GSelect vector]
-    if { $m != "" } {
+    set mname [lindex [split $m "@"] 0]
+    if { $mname != "" } {
         if { $GRMap::xyvect == "" } {
-            set GRMap::xyvect $m
+            set GRMap::xyvect $mname
         } else {
-            append xyvect ",$m"
+            append xyvect ",$mname"
         }
     }
 
@@ -532,9 +537,12 @@ proc GRMap::read_vgroup { xygroup } {
 
     # do the import
     set xyvect ""
-    set vlist [open $vgfile]
+    catch {set vlist [open $vgfile]}
     set vectnames [read $vlist]
-    close $vlist
+	if {[catch {close $vlist} error]} {
+		puts $error
+	}
+   
     set vlines [split $vectnames "\n"]
     foreach vect $vlines {
         if { $xyvect == "" } {
@@ -565,11 +573,13 @@ proc GRMap::write_vgroup {xygroup xyvect} {
 
     # write out vector group file
     set vlist [split $xyvect ,]
-    set output [open $vgfile w ]
-            foreach vect $vlist {
-                    puts $output $vect
-            }
-    close $output
+    catch {set output [open $vgfile w ]}
+		foreach vect $vlist {
+			puts $output $vect
+		}
+	if {[catch {close $output} error]} {
+		puts $error
+	}
 
 }
 
@@ -621,10 +631,10 @@ proc GRMap::startup { } {
         -text [G_msg "Georeference vector"] -highlightthickness 0 \
         -activebackground $bgcolor -highlightbackground $bgcolor  -bg $bgcolor]
     pack $selrast $selvect -side left
-    pack $grstart_tb -side left -fill both -expand no
+    pack $grstart_tb -side left -fill both -expand no -padx 5 -pady 3
 
     # set xy mapset
-    set row [ frame $grstartup.mset ]
+    set row [ frame $grstartup.mset -bg $bgcolor]
     Button $row.a -text [G_msg "1. Select mapset"] \
         -highlightthickness 0 -takefocus 0 -relief raised -borderwidth 1  \
         -helptext [G_msg "Mapset of xy raster group"]\
@@ -633,20 +643,20 @@ proc GRMap::startup { } {
     Entry $row.b -width 35 -text "$GRMap::xymset" \
           -textvariable GRMap::xymset
     pack $row.a $row.b -side left
-    pack $row -side top -fill both -expand yes
+    pack $row -side top -fill both -expand yes -padx 5 -pady 1
 
     # Create raster or vector group
-    set row [ frame $grstartup.group ]
+    set row [ frame $grstartup.group -bg $bgcolor]
     Button $row.a -text [G_msg "2. Create/edit group"] \
         -highlightthickness 0 -takefocus 0 -relief raised -borderwidth 1  \
         -helptext [G_msg "Create/edit group (rasters or vectors to georectify)"] \
         -width 16 -anchor w \
         -command {GRMap::group}
     pack $row.a -side left
-    pack $row -side top -fill both -expand yes
+    pack $row -side top -fill both -expand yes -padx 5 -pady 1
 
     # set xy group
-    set row [ frame $grstartup.selgroup ]
+    set row [ frame $grstartup.selgroup -bg $bgcolor]
     Button $row.a -text [G_msg "3. Select group"] \
         -highlightthickness 0 -takefocus 0 -relief raised -borderwidth 1  \
         -helptext [G_msg "Select existing group to georectify"]\
@@ -655,10 +665,10 @@ proc GRMap::startup { } {
     Entry $row.b -width 35 -text "$GRMap::xygroup" \
           -textvariable GRMap::xygroup
     pack $row.a $row.b -side left
-    pack $row -side top -fill both -expand yes
+    pack $row -side top -fill both -expand yes -padx 5 -pady 1
 
     # set xy raster or vector
-    set row [ frame $grstartup.map ]
+    set row [ frame $grstartup.map -bg $bgcolor]
     Button $row.a -text [G_msg "4. Select map"] \
         -highlightthickness 0 -takefocus 0 -relief raised -borderwidth 1  \
         -helptext [G_msg "Select non-georectified raster or vector to display for marking ground control points"]\
@@ -667,27 +677,27 @@ proc GRMap::startup { } {
     Entry $row.b -width 35 -text "$GRMap::xymap" \
           -textvariable GRMap::xymap
     pack $row.a $row.b -side left
-    pack $row -side top -fill both -expand yes
+    pack $row -side top -fill both -expand yes -padx 5 -pady 1
 
     # Start georectify canvas
-    set row [ frame $grstartup.start ]
+    set row [ frame $grstartup.start -bg $bgcolor]
     Button $row.a -text [G_msg "5. Start georectifying"] \
         -highlightthickness 0 -takefocus 0 -relief raised -borderwidth 1  \
         -helptext [G_msg "Start georectifying"]\
         -width 16 -anchor w -highlightthickness 0 \
                 -command "GRMap::refmap"
     pack $row.a -side left
-    pack $row -side top -fill both -expand yes
+    pack $row -side top -fill both -expand yes -padx 5 -pady 1
 
     # quit
-    set row [ frame $grstartup.quit ]
+    set row [ frame $grstartup.quit -bg $bgcolor]
     Button $row.a -text [G_msg "Cancel"] \
         -highlightthickness 0 -takefocus 0 -relief raised -borderwidth 1  \
         -helptext [G_msg "Cancel georectification"]\
         -width 16 -anchor w -highlightthickness 0 \
         -command "destroy .grstart"
     pack $row.a -side left
-    pack $row -side top -fill both -expand yes
+    pack $row -side top -fill both -expand yes -padx 5 -pady 1
 
 
     pack $grstart_mf
@@ -1130,9 +1140,11 @@ proc GRMap::get_gcp { } {
     if {[file exists $gcpfile] } {
         # do the import
         set gcpnum 1
-        set pfile [open $gcpfile]
+        catch {set pfile [open $gcpfile]}
         set points [read $pfile]
-        close $pfile
+		if {[catch {close $pfile} error]} {
+			puts $error
+		}
         regsub -all {[ ]+} $points " " points
         set plines [split $points "\n"]
         foreach gcpline $plines {
@@ -1166,7 +1178,7 @@ proc GRMap::savegcp {} {
     variable array gcpline #array to store gcp coordinates as text for output
 
     set gcpfile "$xygdb/$xyloc/$xymset/group/$xygroup/POINTS"
-    set output [open $gcpfile w ]
+    catch {set output [open $gcpfile w ]}
     puts $output "# Ground Control Points File"
     puts $output "# "
     puts $output "# target location: $currloc"
@@ -1194,7 +1206,11 @@ proc GRMap::savegcp {} {
             }
         }
     }
-    close $output
+    
+	if {[catch {close $output} error]} {
+		puts $error
+	}
+
 }
 
 
@@ -1229,9 +1245,12 @@ proc GRMap::gcp_error { } {
     # First, switch to xy mapset
     GRMap::setxyenv $xymset $xyloc
     # calculate diagonal distance error for each GCP
-    set input [open "|g.transform group=$xygroup order=$rectorder"]
+    catch {set input [open "|g.transform group=$xygroup order=$rectorder"]}
     set errorlist [read $input]
-    catch {close $input}
+	if {[catch {close $input} error]} {
+		puts $error
+	}
+
     # Return to georectified mapset
     GRMap::resetenv
 
@@ -1278,9 +1297,12 @@ proc GRMap::rectify { } {
 
     # count useable GCP's in points file
     set gcpcnt 0
-    set pfile [open $gcpfile]
+    catch {set pfile [open $gcpfile]}
     set points [read $pfile]
-    close $pfile
+	if {[catch {close $pfile} error]} {
+		puts $error
+	}
+
     regsub -all {[ ]+} $points " " points
     set plines [split $points "\n"]
     foreach gcpline $plines {
@@ -1515,7 +1537,6 @@ proc GRMap::runprograms { mod } {
 		}
 		if {[catch {close $input} error]} {
 			puts $error
-			exit 1
 		}
 		# Finally put this into wind file format to use with GRASS_REGION
 		regexp -nocase {^.* (\(.*\))} $parts(projection) trash end
@@ -1581,9 +1602,12 @@ proc GRMap::runprograms { mod } {
 		if {[file exists $gcpfile] } {
 			# do the import
 			set gcpnum 1
-			set pfile [open $gcpfile]
+			catch {set pfile [open $gcpfile]}
 			set points [read $pfile]
-			close $pfile
+			if {[catch {close $pfile} error]} {
+				puts $error
+			}
+
 			regsub -all {[ ]+} $points " " points
 			set plines [split $points "\n"]
 			foreach gcpline $plines {
