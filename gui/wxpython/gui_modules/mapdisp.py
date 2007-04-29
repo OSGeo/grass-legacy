@@ -831,33 +831,26 @@ class BufferedWindow(wx.Window):
         tmpreg = os.getenv("GRASS_REGION")
         os.unsetenv("GRASS_REGION")
 
-        # get current resolution
-        grass_region = self.Map.GetRegion()
-        ewres = grass_region['ewres']
-        nsres = grass_region['nsres']
-
-        # set extents to even increments of resolution
-        self.Map.region['n'] = round(self.Map.region['n']/nsres) * nsres
-        self.Map.region['s'] = round(self.Map.region['s']/nsres) * nsres
-        self.Map.region['e'] = round(self.Map.region['e']/nsres) * ewres
-        self.Map.region['w'] = round(self.Map.region['w']/nsres) * ewres
-
-        cols = math.fabs(round(self.Map.region['n'] - self.Map.region['s']))
-        rows = math.fabs(round(self.Map.region['e'] - self.Map.region['w']))
-
         # We ONLY want to set extents here. Don't mess with resolution. Leave that
         # for user to set explicitly with g.region
-        os.popen("g.region n=%d s=%d e=%d w=%d" % (
-                     self.Map.region['n'],
-                     self.Map.region['s'],
-                     self.Map.region['e'],
-                     self.Map.region['w']) )
+        new = self.Map.alignResolution()
+
+        cmd = "g.region n=%f s=%f e=%f w=%f rows=%f cols=%f --o" % (
+             new['n'], new['s'], new['e'], new['w'], new['rows'], new['cols'])
+
+        try:
+            p = Popen(cmd, shell=True, stdin=PIPE, stdout=PIPE, stderr=PIPE, close_fds=True)
+            output = p.stdout.read().split('\n')
+            if p.stdout < 0:
+                print >> sys.stderr, "Child was terminated by signal", p.stdout
+            elif p.stdout > 0:
+                #print >> sys.stderr, p.stdout
+                pass
+        except OSError, e:
+            print >> sys.stderr, "Execution failed:", e
 
         if tmpreg:
             os.environ["GRASS_REGION"] = tmpreg
-
-        self.ZoomHistory(self.Map.region['n'],self.Map.region['s'],self.Map.region['e'],self.Map.region['w'])
-        self.UpdateMap()
 
     def ZoomToSaved(self, event):
         """
@@ -901,9 +894,6 @@ class BufferedWindow(wx.Window):
                 pass
         except OSError, e:
             print >> sys.stderr, "Execution failed:", e
-
-#        self.Map.region = self.Map.GetRegion()
-#        self.Map.SetRegion()
 
         dlg.Destroy()
 
