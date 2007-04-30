@@ -10,13 +10,19 @@
 ##########################################################################
 #
 # TODO - Bugs and missing features. Maris Nartiss, 14.02.2007.
+#	(with comments by CM Barton 29 4 2007
 #	* Not all label file options are in use, also not all options are in labelfiles.
+#	(because this is TclTk text, v.label options don't exactly map onto what is available
+#	 in TclTk. AFAICT, all possible matches are implemented)
 #	* Label configuration options are not separated from displayed label options. It causes
 #	label options to change after every screen redraw. This way it was already working :)
+#	(Unless you check the "override" box, it will default to the values in the labels file.
+#	 I fixed a few that might not have been sticking also - CMB)
 #	* Ability to override single option. Like: use whatever defined in labelfile, except font size
-#	* Label rotation.
-#	* Somtime label enclosing box height is not calculated correctly.
-#	* Ability to display label point and configure it.
+# 	(Agreed. A TODO if there is time. Needs substantial reconfiguration of options panel)
+#	* Label rotation. (not available in TclTk - CMB)
+#	* Somtime label enclosing box height is not calculated correctly. 
+#	* Ability to display label point and configure it. (I don't understand this)
 #
 
 namespace eval GmCLabels {
@@ -90,8 +96,10 @@ proc GmCLabels::create { tree parent } {
     set opt($count,1,lboxlenable) 1
     set opt($count,1,override) 0
 
-	set optlist { _check xcoord ycoord xoffset yoffset labels lfont lfill lwidth \
-		lanchor ljust ltxt lhoffset lvoffset lopaque lborder override }
+	set optlist { _check xcoord ycoord xoffset yoffset labels lfont lfontfamily lfontsize \
+		lfontweight lfontslant lfontunderline lfontoverstrike lfill lwidth \
+		lanchor ljust ltxt lhoffset lvoffset lopaque lboxbenable lborder lbackground \
+		lbwidth lboxlenable override }
 
     foreach key $optlist {
 		set opt($count,0,$key) $opt($count,1,$key)
@@ -309,7 +317,7 @@ proc GmCLabels::display { node } {
     if { ! ( $opt($id,1,_check) ) } { return } 
     
     # open the v.label file for reading
-	set labelfile [open $labelpath r]
+	catch {set labelfile [open $labelpath r]}
 	
 	#loop through coordinates and options for each label
     while { [gets $labelfile in] > -1 } {
@@ -375,6 +383,7 @@ proc GmCLabels::display { node } {
 				}
 			}
 			"font" {
+				# set independently in TclTk
 				set x ""
 			}
 			"color" {
@@ -392,9 +401,11 @@ proc GmCLabels::display { node } {
 				if { $opt($id,1,override) == 0 } {set opt($id,1,lbwidth) $val}
 			}
 			"hcolor" {
+				# not available in TclTk
 				set x ""
 			}
 			"hwidth" {
+				# not available in TclTk
 				set x ""
 			}
 			"background" {
@@ -411,6 +422,7 @@ proc GmCLabels::display { node } {
 				if { $opt($id,1,override) == 0 } {set opt($id,1,lopaque) $val}
 			}
 			"rotate" {
+				# not available in TclTk
 				set x ""
 			}
 			"size"   {
@@ -465,7 +477,9 @@ proc GmCLabels::display { node } {
 		}
 	}
 	# close labels file
-	close $labelfile
+	if {[catch {close $labelfile} error]} {
+		puts $error
+	}
 }
 
 
