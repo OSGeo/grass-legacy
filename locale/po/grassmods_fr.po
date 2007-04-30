@@ -40,19 +40,16 @@ msgid "Using private colormap for DirectColor visual."
 msgstr ""
 "Utilisation d'une table de couleur privée pour la visualisation DirectColor"
 
-# c-format
 #: ../visualization/xganim/main.c:337
 #, c-format
 msgid "Reading file [%s] ..."
 msgstr "Lecture du fichier [%s]..."
 
-# c-format
 #: ../visualization/xganim/main.c:341
 #, c-format
 msgid "%s: cellfile [%s] not found."
 msgstr "%s: fichier de cellules [%s] non trouvé"
 
-# c-format
 #: ../visualization/xganim/main.c:346
 #, c-format
 msgid "Unable to open cellfile [%s]."
@@ -181,7 +178,6 @@ msgstr "Calcul de la moyenne de classe..."
 msgid "Calculating class means ..."
 msgstr "Calcul des moyennes de classes..."
 
-# c-format
 #: ../imagery/i.gensig/print_sig.c:14
 #, c-format
 msgid "#%s"
@@ -203,19 +199,16 @@ msgstr "sous-groupe contenant les fichiers image"
 msgid "resultant signature file"
 msgstr "fichier signature résultat"
 
-# c-format
 #: ../imagery/i.gensig/parse.c:48
 #, c-format
 msgid "Training map [%s] not found."
 msgstr "couche d'apprentissage raster [%s] non trouvée"
 
-# c-format
 #: ../imagery/i.gensig/parse.c:51 ../imagery/i.smap/shapiro/parse.c:68
 #, c-format
 msgid "Group [%s] not found."
 msgstr "Groupe [%s] non trouvé"
 
-# c-format
 #: ../imagery/i.gensig/parse.c:54 ../imagery/i.smap/shapiro/parse.c:71
 #, c-format
 msgid "Subgroup [%s] not found."
@@ -260,7 +253,6 @@ msgstr "Signature [%d] ne peut avoir de valeur eigen"
 msgid "Signature [%d] not positive definite."
 msgstr "Signature [%d] non positive"
 
-# c-format
 #: ../imagery/i.gensig/opencell.c:14 ../imagery/i.smap/shapiro/opencell.c:16
 #, c-format
 msgid "Unable to open raster map [%s]."
@@ -286,7 +278,6 @@ msgstr ""
 "Impossible de créer le fichier signature [%s] du sous-groupe [%s] dans le "
 "groupe [%s]."
 
-# c-format
 #: ../imagery/i.gensig/write_sig.c:18
 #, c-format
 msgid "Writing signature file [%s] ..."
@@ -346,7 +337,6 @@ msgstr "Erreur de lecture de la couche raster en entrée"
 msgid "Error while writing new cell map."
 msgstr "Erreur de suppression de l'ancienne couche MASK."
 
-# c-format
 #: ../imagery/i.his.rgb/openfiles.c:16 ../imagery/i.his.rgb/openfiles.c:18
 #: ../imagery/i.his.rgb/openfiles.c:20 ../imagery/i.rgb.his/openfiles.c:30
 #: ../imagery/i.rgb.his/openfiles.c:32 ../imagery/i.rgb.his/openfiles.c:34
@@ -361,7 +351,6 @@ msgstr "impossible d'ouvrir le fichier en sortie <%s>"
 msgid "Unable to allocate the input row buffer"
 msgstr "Impossible d'allouer de la mémoire pour les pointeurs de ligne"
 
-# c-format
 #: ../imagery/i.his.rgb/openfiles.c:32 ../imagery/i.his.rgb/openfiles.c:34
 #: ../imagery/i.his.rgb/openfiles.c:36 ../imagery/i.rgb.his/openfiles.c:15
 #: ../imagery/i.rgb.his/openfiles.c:17 ../imagery/i.rgb.his/openfiles.c:19
@@ -445,7 +434,6 @@ msgstr ""
 "Sous-groupe trop grand. Le nombre maximum de bandes est %\n"
 "."
 
-# c-format
 #: ../imagery/i.cca/main.c:158
 #, c-format
 msgid "Unable to open cell man <%s> for input.\n"
@@ -503,7 +491,6 @@ msgstr "Partie imaginaire en sortie stockée sous forme de fichier raster"
 msgid "Range of values in output display files"
 msgstr "Intervalle de valeurs dans les fichiers d'affichage en sortie"
 
-# c-format
 #: ../imagery/i.fft/fftmain.c:102
 #, c-format
 msgid "%s: %s - Unable to open the input raster map\n"
@@ -799,7 +786,6 @@ msgstr "Fichier signature [%s] manquant ou impossible à lire."
 msgid "Signature file [%s] is invalid."
 msgstr "Fichier signature [%s] invalide"
 
-# c-format
 #: ../imagery/i.smap/shapiro/write_img.c:15
 #, c-format
 msgid "Writing [%s] ..."
