@@ -41,20 +41,20 @@ class LayerTree(CT.CustomTreeCtrl):
         self.EnableSelectionGradient(True)
         self.SetFirstGradientColour(wx.Colour(150, 150, 150))
 
-        self.Map = render.Map() # instance of render.Map to be associated with display
-        self.root = ""      # ID of layer tree root node
+        self.Map = render.Map()  # instance of render.Map to be associated with display
+        self.root = ""           # ID of layer tree root node
         self.groupnode = 0       # index value for layers
-        self.optpage = {}   # dictionary of notebook option pages for each map layer
-        self.layer_selected = ""   # ID of currently selected layer
-        self.layertype = {} # dictionary of layer types for each layer
-        self.layerctrl = {} # dictionary of layers indexed by special wind controls (spinctrl and textctrl)
-        self.saveitem = {} # dictionary to preserve layer attributes for drag and drop
-        self.first = True # indicates if a layer is just added or not
-        self.drag = False # flag to indicate a drag event is in process
+        self.optpage = {}        # dictionary of notebook option pages for each map layer
+        self.layer_selected = "" # ID of currently selected layer
+        self.layertype = {}      # dictionary of layer types for each layer
+        self.layerctrl = {}      # dictionary of layers indexed by special wind controls (spinctrl and textctrl)
+        self.saveitem = {}       # dictionary to preserve layer attributes for drag and drop
+        self.first = True        # indicates if a layer is just added or not
+        self.drag = False        # flag to indicate a drag event is in process
         self.disp_idx = idx
         self.gismgr = gismgr
         self.notebook = notebook # GIS Manager notebook for layer tree
-        self.treepg = parent # notebook page holding layer tree
+        self.treepg = parent     # notebook page holding layer tree
 
 
         # init associated map display
@@ -142,23 +142,58 @@ class LayerTree(CT.CustomTreeCtrl):
     def OnContextMenu (self, event):
         """Context Layer Menu"""
 
-        if self.layertype[self.layer_selected] == "group":
+        type = self.layertype[self.layer_selected]
+        
+        if type == "group":
             return
         
         if not hasattr (self, "popupID1"):
             self.popupID1 = wx.NewId()
-            
+            self.popupID2 = wx.NewId()
             self.Bind (wx.EVT_MENU, self.OnPopupProperties, id=self.popupID1)
+            self.Bind (wx.EVT_MENU, self.ShowAttributeTable, id=self.popupID2)
 
         menu = wx.Menu()
         item = wx.MenuItem (parentMenu=menu, id=self.popupID1, text=_("Properties"))
         menu.AppendItem (item)
+
+        if type == "vector":
+            menu.AppendSeparator()
+            menu.Append (self.popupID2, _("Show attribute table"))
+            
         self.PopupMenu (menu)
         menu.Destroy()
 
     def OnPopupProperties (self, event):
         """Popup properties dialog"""
         self.PropertiesDialog(self.layer_selected)
+
+    def ShowAttributeTable(self, event):
+        maptype = self.layertype[self.layer_selected]
+        if maptype != 'vector':
+            dlg = wx.MessageDialog(self, _("Attribute management is available only for vector map layers"), _("Error"), wx.OK | wx.ICON_ERROR)
+            dlg.ShowModal()
+            dlg.Destroy()
+            return
+
+        if not self.GetPyData(self.layer_selected): return
+        dcmd = self.GetPyData(self.layer_selected)[0]
+        if not dcmd: return
+        mapname = map = mapset = size = icon = None
+        for item in dcmd.split(' '):
+            if 'map=' in item:
+                mapname = item.split('=')[1]
+            elif 'size=' in item:
+                size = item.split('=')[1]
+            elif 'icon=' in item:
+                icon = item.split('=')[1]
+
+        pointdata = (icon,size)
+
+        from gui_modules import dbm
+        self.dbmanager = dbm.AttributeManager(parent=self, id=wx.ID_ANY, title="GRASS Attribute Table Manager: %s" % mapname,
+                                              size=wx.Size(500,300), vectmap=mapname,
+                                              pointdata=pointdata)
         
     def AddLayer(self, type):
         """Add layer, create MapLayer instance"""

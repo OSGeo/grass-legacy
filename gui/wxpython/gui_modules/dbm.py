@@ -1,27 +1,26 @@
 """
-Database browser for GRASS GIS >= 7
+MODULE:    dbm.py
 
-This program is based on FileHunter, publicated in "The wxPython Linux
-Tutorial" on wxPython WIKI pages.
+PURPOSE:   GRASS attribute table manager
 
-It also uses some functions from http://aspn.activestate.com/ASPN/Cookbook/Python/Recipe/426407
+    This program is based on FileHunter, publicated in 'The wxPython Linux
+    Tutorial' on wxPython WIKI pages.
 
-Usage:
-    dbm.py table_name
+    It also uses some functions at
+    http://aspn.activestate.com/ASPN/Cookbook/Python/Recipe/426407
 
+    dbm.py vectorm@mapset
+
+AUTHOR(S): GRASS Development Tean
+    Jachym Cepicky <jachym.cepicky gmail.com>
+
+COPYRIGHT: (C) 2007 by the GRASS Development Team
+
+    This program is free software under the GNU General Public
+    License (>=v2). Read the file COPYING that comes with GRASS
+    for details.
 """
-############################################################################
-#
-# MODULE:       dbm.py
-# AUTHOR(S):    Jachym Cepicky <jachym les-ejk cz>
-# PURPOSE:      GRASS attribute table manager
-# COPYRIGHT:    (C) 2007 by the GRASS Development Team
-#
-#               This program is free software under the GNU General Public
-#               License (>=v2). Read the file COPYING that comes with GRASS
-#               for details.
-#
-#############################################################################
+
 import wx
 import wx.lib.mixins.listctrl  as  listmix
 
@@ -29,13 +28,15 @@ import sys,os,locale,string
 import grassenv
 
 try:
-   from subprocess import *
+    import subprocess
 except:
-   from compat import subprocess
-   from compat.subprocess import *
+    gmpath = os.getenv("GISBASE") + "/etc/wx"
+    sys.path.append(gmpath)
+    from compat import subprocess
 
 class Log:
-    r"""\brief Needed by the wxdemos.
+    """
+    Needed by the wxdemos.
     The log output is redirected to the status bar of the containing frame.
     """
     def __init__(self,parent):
@@ -44,12 +45,11 @@ class Log:
     def write(self,text_string):
         self.parent.SetStatusText(text_string.strip())
 
-#----------------------------------------------------------------------
-# The panel you want to test (VirtualAttributeList)
-#----------------------------------------------------------------------
-
 class VirtualAttributeList(wx.ListCtrl, listmix.ListCtrlAutoWidthMixin, listmix.ColumnSorterMixin):
-    def __init__(self, parent,log,vectmap,pointdata=None):
+    """
+    The panel you want to test (VirtualAttributeList)
+    """
+    def __init__(self, parent, log, vectmap, pointdata=None):
         wx.ListCtrl.__init__( self, parent, -1, style=wx.LC_REPORT|wx.LC_HRULES|wx.LC_VRULES) #wx.VIRTUAL
 
         self.log=log
@@ -85,11 +85,15 @@ class VirtualAttributeList(wx.ListCtrl, listmix.ListCtrlAutoWidthMixin, listmix.
         self.sm_dn = self.il.Add(wx.ArtProvider_GetBitmap(wx.ART_GO_DOWN,wx.ART_TOOLBAR,(16,16)))
         self.SetImageList(self.il, wx.IMAGE_LIST_SMALL)
 
-        # show us the result in map display
-        if self.Parent.gismanager:
+        # GISManager running?
+        if self.parent.parent and self.parent.parent.gismgr:
+            self.gismgr = True
+        else:
+            self.gismgr = False
 
-            self.mapdisp =  self.Parent.gismanager.curr_page.maptree.mapdisplay
-            self.map = self.Parent.gismanager.curr_page.maptree.Map
+        if self.gismgr: # self.parent.parent -> LayerTree Class Instance
+            self.mapdisp = self.parent.parent.mapdisplay
+            self.map     = self.parent.parent.Map
 
 
         #building the columns
@@ -147,7 +151,7 @@ class VirtualAttributeList(wx.ListCtrl, listmix.ListCtrlAutoWidthMixin, listmix.
         #self.list.Bind(wx.EVT_LEFT_DCLICK, self.OnDoubleClick)
         #self.list.Bind(wx.EVT_RIGHT_DOWN, self.OnRightDown)
 
-        if self.Parent.gismanager:
+        if self.gismgr:
             self.mapdisp.MapWindow.Bind(wx.EVT_LEFT_DOWN, self.onMapClick)
 
             self.timer = wx.PyTimer(self.RedrawMap)
@@ -259,8 +263,8 @@ class VirtualAttributeList(wx.ListCtrl, listmix.ListCtrlAutoWidthMixin, listmix.
             if self.icon: cmd = cmd +"  icon=%s" % (self.icon)
             if self.pointsize: cmd = cmd + " size=%s" % (self.pointsize)
 
-            self.qlayer = self.map.AddLayer(item='qlayer', command=cmd, l_active=True,
-                                        l_hidden=False, l_opacity=1, l_render=False)
+            self.qlayer = self.map.AddLayer(item='qlayer', type="vector", name='', command=cmd,
+                                            l_active=True, l_hidden=True, l_opacity=1, l_render=False)
             self.mapdisp.ReDraw(None)
             self.lastTurnSelectedCats = self.selectedCats[:]
 
@@ -470,29 +474,16 @@ class VirtualAttributeList(wx.ListCtrl, listmix.ListCtrlAutoWidthMixin, listmix.
 #        except OSError, e:
 #            print >> sys.stderr, "Execution failed:", e
 
-
-
-
-
-
-
-
-
-
-
-
-#----------------------------------------------------------------------
-# The main window
-#----------------------------------------------------------------------
-# This is where you populate the frame with a panel from the demo.
-#  original line in runTest (in the demo source):
-#    win = TestPanel(nb, log)
-#  this is changed to:
-#    self.win=TestPanel(self,log)
-#----------------------------------------------------------------------
-
 class AttributeManager(wx.Frame):
-
+    """
+    The main window
+    
+    This is where you populate the frame with a panel from the demo.
+    original line in runTest (in the demo source):
+    win = TestPanel(nb, log)
+    this is changed to:
+    self.win=TestPanel(self,log)
+    """
     def __init__(self, parent, id, title, size, style = wx.DEFAULT_FRAME_STYLE,
                  vectmap=None,pointdata=None):
 
@@ -500,14 +491,12 @@ class AttributeManager(wx.Frame):
 
         self.CreateStatusBar(1)
         self.vectmap=vectmap
-
+        self.parent = parent
+        
         log=Log(self)
 
-        # probably
-        self.gismanager = parent
-
         # most importand part
-        self.win = VirtualAttributeList(self, log,vectmap=vectmap,pointdata=pointdata)
+        self.win = VirtualAttributeList(self, log, vectmap=vectmap,pointdata=pointdata)
 
         # buttons
         self.btn_apply = wx.Button(self, -1, "Apply")
@@ -579,7 +568,7 @@ def main(argv=None):
         argv = sys.argv
 
     if len(argv) != 2:
-        print >>sys.stderr, __doc__
+        print >> sys.stderr, __doc__
         sys.exit()
 
     # Command line arguments of the script to be run are preserved by the
@@ -593,8 +582,6 @@ def main(argv=None):
     app = wx.PySimpleApp()
     f = AttributeManager(None, -1, "GRASS Attribute Table Manager",wx.Size(700,600),vectmap=argv[1])
     app.MainLoop()
-
-
 
 if __name__ == '__main__':
     main()
