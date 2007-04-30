@@ -22,7 +22,7 @@
 
 int main( int   argc, char *argv[])
 {
-	char file[1024], name[200], *mapset;
+	char file[1024], name[GNAME_MAX], *mapset;
 	char *search_mapset;
 	struct GModule *module;
 	struct Option *opt1 ;
@@ -65,7 +65,17 @@ int main( int   argc, char *argv[])
 	if(strcmp (".", search_mapset) == 0)
 	    search_mapset = G_mapset();
 
-	strcpy (name, opt3->answer);
+	if ( opt2->answer ){
+	   char **map_mapset = G_tokenize(opt3->answer, "@");
+	   
+	   G_debug(0, "file <%s>, mapset <%s>",map_mapset[1], opt2->answer);
+	   if( !strcmp(map_mapset[1],opt2->answer) )
+		G_fatal_error(_("Parameter 'file' contains <%s> mapset reference, but mapset parameter <%s> does not correspond"), map_mapset[1], opt2->answer);
+	   G_free_tokens(map_mapset);
+	   if (map_mapset == NULL)
+		strcpy (name, opt3->answer);
+	} else
+	   strcpy (name, opt3->answer);
 
 	mapset = G_find_file2 (opt1->answer, name, search_mapset);
 	if (mapset)
