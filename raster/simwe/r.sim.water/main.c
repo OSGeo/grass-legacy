@@ -133,7 +133,7 @@ int main ( int argc, char *argv[])
   parm.elevin->type = TYPE_STRING;
   parm.elevin->required = YES;
   parm.elevin->gisprompt = "old,cell,raster";
-  parm.elevin->description = _("Name of the elevation raster map");
+  parm.elevin->description = _("Name of the elevation raster map, same units as N,E: [m] or [ft] ");
   parm.elevin->guisection  = _("Input_options");
 
   parm.dxin = G_define_option();
@@ -141,7 +141,7 @@ int main ( int argc, char *argv[])
   parm.dxin->type = TYPE_STRING;
   parm.dxin->required = YES;
   parm.dxin->gisprompt = "old,cell,raster";
-  parm.dxin->description = _("Name of the x-derivatives raster map");
+  parm.dxin->description = _("Name of the x-derivatives raster map [m/m] or [ft/ft]");
   parm.dxin->guisection  = _("Input_options");
 
   parm.dyin = G_define_option();
@@ -149,7 +149,7 @@ int main ( int argc, char *argv[])
   parm.dyin->type = TYPE_STRING;
   parm.dyin->required = YES;
   parm.dyin->gisprompt = "old,cell,raster";
-  parm.dyin->description = _("Name of the y-derivatives raster map");
+  parm.dyin->description = _("Name of the y-derivatives raster map [m/m] or [ft/ft]");
   parm.dyin->guisection  = _("Input_options");
 
   parm.rain = G_define_option();
@@ -157,7 +157,7 @@ int main ( int argc, char *argv[])
   parm.rain->type = TYPE_STRING;
   parm.rain->required = YES;
   parm.rain->gisprompt = "old,cell,raster";
-  parm.rain->description = _("Name of the rainfall excess raster map");
+  parm.rain->description = _("Name of the rainfall excess rate (rain-infilt) raster map [mm/hr]");
   parm.rain->guisection  = _("Input_options");
 
   parm.infil = G_define_option();
@@ -165,7 +165,7 @@ int main ( int argc, char *argv[])
   parm.infil->type = TYPE_STRING;
   parm.infil->required = YES;
   parm.infil->gisprompt = "old,cell,raster";
-  parm.infil->description = _("Name of the infiltration excess raster map");
+  parm.infil->description = _("Name of the runoff infiltration rate raster map [mm/hr]");
   parm.infil->guisection  = _("Input_options");
 
   parm.traps = G_define_option();
@@ -173,7 +173,7 @@ int main ( int argc, char *argv[])
   parm.traps->type = TYPE_STRING;
   parm.traps->required = NO;
   parm.traps->gisprompt = "old,cell,raster";
-  parm.traps->description = _("Name of the flow control raster map");
+  parm.traps->description = _("Name of the flow controls raster map (permeability ratio 0-1)");
   parm.traps->guisection  = _("Input_options");
 
   parm.manin = G_define_option();
@@ -190,7 +190,7 @@ int main ( int argc, char *argv[])
   parm.sfile->type = TYPE_STRING;
   parm.sfile->required = NO;
   parm.sfile->gisprompt = "old,site_lists,sites";
-  parm.sfile->description = _("Name of the site file with x,y locations");
+  parm.sfile->description = _("Name of the site map with x,y locations");
   parm.sfile->guisection  = _("Input_options");
 
   parm.depth = G_define_option();
@@ -222,7 +222,7 @@ int main ( int argc, char *argv[])
   parm.outwalk->type = TYPE_STRING;
   parm.outwalk->required = NO;
   parm.outwalk->gisprompt = "new,site_lists,sites";
-  parm.outwalk->description = _("Name of the output walkers site file");
+  parm.outwalk->description = _("Name of the output walkers site map");
   parm.outwalk->guisection  = _("Output_options");
 
   parm.nwalk = G_define_option();
@@ -301,7 +301,7 @@ int main ( int argc, char *argv[])
   if (G_parser (argc, argv))
     exit (EXIT_FAILURE);
 
-  mscale=flag.mscale->answer ? "m" : NULL;
+  mscale=flag.mscale->answer;
   ts=flag.tserie->answer;
 
   elevin = parm.elevin->answer;
@@ -327,6 +327,7 @@ int main ( int argc, char *argv[])
   sscanf(parm.halpha->answer, "%lf", &halpha);
   sscanf(parm.hbeta->answer, "%lf", &hbeta);
 
+  /* compute how big the raster is and set this to appr 2 walkers per cell */
     rwalk = (double) maxwa;
 
   if (conv != 1.0) 
@@ -338,7 +339,7 @@ int main ( int argc, char *argv[])
    */
 
   if ((depth == NULL) && (disch == NULL) && (err == NULL) && (outwalk == NULL))
-    G_warning(_("You are not outputing any raster or site files"));
+    G_warning(_("You are not outputing any raster or site maps"));
 
   ret_val = input_data();
   if (ret_val != 1)
