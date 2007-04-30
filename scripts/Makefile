@@ -7,6 +7,7 @@ include $(MODULE_TOPDIR)/include/Make/Dir.make
 SUBDIRS = \
 	d.correlate \
 	d.font.freetype \
+	d.freetypecap \
 	d.monsize \
 	d.mvmon \
 	d.out.gpsdrive \
