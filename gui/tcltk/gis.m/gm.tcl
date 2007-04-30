@@ -534,8 +534,6 @@ proc Gm::SelectFont { } {
 	variable fonttype
 	variable fontpath
 	
-	puts "fonttype = $fonttype"
-	
 	set systemtype [exec uname -s]
 	set systemtype [string trim $systemtype]
 
