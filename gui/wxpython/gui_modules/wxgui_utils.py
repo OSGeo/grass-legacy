@@ -136,8 +136,30 @@ class LayerTree(CT.CustomTreeCtrl):
         self.Bind(wx.EVT_TREE_DELETE_ITEM, self.onDeleteLayer)
         self.Bind(wx.EVT_TREE_BEGIN_DRAG, self.onBeginDrag)
         self.Bind(wx.EVT_TREE_END_DRAG, self.onEndDrag)
+        self.Bind(wx.EVT_CONTEXT_MENU, self.OnContextMenu)
         # self.Bind(wx.EVT_CLOSE, self.onCloseWindow)
 
+    def OnContextMenu (self, event):
+        """Context Layer Menu"""
+
+        if self.layertype[self.layer_selected] == "group":
+            return
+        
+        if not hasattr (self, "popupID1"):
+            self.popupID1 = wx.NewId()
+            
+            self.Bind (wx.EVT_MENU, self.OnPopupProperties, id=self.popupID1)
+
+        menu = wx.Menu()
+        item = wx.MenuItem (parentMenu=menu, id=self.popupID1, text=_("Properties"))
+        menu.AppendItem (item)
+        self.PopupMenu (menu)
+        menu.Destroy()
+
+    def OnPopupProperties (self, event):
+        """Popup properties dialog"""
+        self.PropertiesDialog(self.layer_selected)
+        
     def AddLayer(self, type):
         """Add layer, create MapLayer instance"""
         self.first = True
@@ -200,48 +222,30 @@ class LayerTree(CT.CustomTreeCtrl):
         if type == 'raster':
             self.SetItemImage(layer, self.rast_icon)
             self.SetItemText(layer, 'raster (double click to set properties)')
-            # launch the properties dialog
-            menuform.GUI().parseCommand('d.rast', gmpath, completed=(self.getOptData,layer,params), parentframe=self)
         elif type == 'rgb':
             self.SetItemImage(layer, self.rgb_icon)
             self.SetItemText(layer, 'RGB (double click to set properties)')
-            # launch the properties dialog
-            menuform.GUI().parseCommand('d.rgb', gmpath, completed=(self.getOptData,layer,params), parentframe=self)
         elif type == 'his':
             self.SetItemImage(layer, self.his_icon)
             self.SetItemText(layer, 'HIS (double click to set properties)')
-            # launch the properties dialog
-            menuform.GUI().parseCommand('d.his', gmpath, completed=(self.getOptData,layer,params), parentframe=self)
         elif type == 'rastleg':
             self.SetItemImage(layer, self.leg_icon)
             self.SetItemText(layer, 'legend (double click to set properties)')
-            # launch the properties dialog
-            menuform.GUI().parseCommand('d.legend', gmpath, completed=(self.getOptData,layer,params), parentframe=self)
         elif type == 'vector':
             self.SetItemImage(layer, self.vect_icon)
             self.SetItemText(layer, 'vector (double click to set properties)')
-            # launch the properties dialog
-            menuform.GUI().parseCommand('d.vect', gmpath, completed=(self.getOptData,layer,params), parentframe=self)
         elif type == 'thememap':
             self.SetItemImage(layer, self.theme_icon)
             self.SetItemText(layer, 'thematic map (double click to set properties)')
-            # launch the properties dialog
-            menuform.GUI().parseCommand('d.vect.thematic', gmpath, completed=(self.getOptData,layer,params), parentframe=self)
         elif type == 'themechart':
             self.SetItemImage(layer, self.chart_icon)
             self.SetItemText(layer, 'thematic charts (double click to set properties)')
-            # launch the properties dialog
-            menuform.GUI().parseCommand('d.vect.chart', gmpath, completed=(self.getOptData,layer,params), parentframe=self)
         elif type == 'grid':
             self.SetItemImage(layer, self.grid_icon)
             self.SetItemText(layer, 'grid (double click to set properties)')
-            # launch the properties dialog
-            menuform.GUI().parseCommand('d.grid', gmpath, completed=(self.getOptData,layer,params), parentframe=self)
         elif type == 'labels':
             self.SetItemImage(layer, self.labels_icon)
             self.SetItemText(layer, 'vector labels (double click to set properties)')
-            # launch the properties dialog
-            menuform.GUI().parseCommand('d.labels', gmpath, completed=(self.getOptData,layer,params), parentframe=self)
         elif type == 'command':
             self.SetItemImage(layer, self.cmd_icon)
         elif type == 'group':
@@ -251,33 +255,45 @@ class LayerTree(CT.CustomTreeCtrl):
 
         self.first = False
 
-    def onActivateLayer(self, event):
+        self.PropertiesDialog(layer)
+        
+    def PropertiesDialog (self, layer):
+        """Launch the properties dialog"""
         global gmpath
-        layer = event.GetItem()
-        self.layer_selected = layer
         completed = ''
         params = self.GetPyData(layer)[1]
-
-        # When double clicked or first added, open options dialog
-        if self.layertype[layer] == 'raster':
+        type   = self.layertype[layer]
+        
+        if type == 'raster':
             menuform.GUI().parseCommand('d.rast', gmpath, completed=(self.getOptData,layer,params), parentframe=self)
-        elif self.layertype[layer] == 'rgb':
+        elif type == 'rgb':
             menuform.GUI().parseCommand('d.rgb', gmpath, completed=(self.getOptData,layer,params), parentframe=self)
-        elif self.layertype[layer] == 'his':
+        elif type == 'his':
             menuform.GUI().parseCommand('d.his', gmpath, completed=(self.getOptData,layer,params), parentframe=self)
-        elif self.layertype[layer] == 'rastleg':
+        elif type == 'rastleg':
             menuform.GUI().parseCommand('d.legend', gmpath, completed=(self.getOptData,layer,params), parentframe=self)
-        elif self.layertype[layer] == 'vector':
+        elif type == 'vector':
             menuform.GUI().parseCommand('d.vect', gmpath, completed=(self.getOptData,layer,params), parentframe=self)
-        elif self.layertype[layer] == 'thememap':
+        elif type == 'thememap':
             menuform.GUI().parseCommand('d.vect.thematic', gmpath, completed=(self.getOptData,layer,params), parentframe=self)
-        elif self.layertype[layer] == 'themechart':
+        elif type == 'themechart':
             menuform.GUI().parseCommand('d.vect.chart', gmpath, completed=(self.getOptData,layer,params), parentframe=self)
-        elif self.layertype[layer] == 'grid':
+        elif type == 'grid':
             menuform.GUI().parseCommand('d.grid', gmpath, completed=(self.getOptData,layer,params), parentframe=self)
-        elif self.layertype[layer] == 'labels':
+        elif type == 'labels':
             menuform.GUI().parseCommand('d.labels', gmpath, completed=(self.getOptData,layer,params), parentframe=self)
-        elif self.layertype[layer] == 'group':
+        elif type == 'command':
+            pass
+        elif type == 'group':
+            pass
+        
+    def onActivateLayer(self, event):
+        layer = event.GetItem()
+        self.layer_selected = layer
+
+        self.PropertiesDialog (layer)
+        
+        if self.layertype[layer] == 'group':
             if self.IsExpanded(layer):
                 self.Collapse(layer)
             else:
