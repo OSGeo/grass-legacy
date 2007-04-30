@@ -332,8 +332,7 @@ set descmenu [subst  {
 	}}
 	{separator}
 	{cascad {[G_msg "Change category values and labels"]} {} "" $tmenu {			
-		{command {[G_msg "Edit category values of individual cells for displayed raster map"]} {} "d.rast.edit" {} \
-		-command {guarantee_xmon; term d.rast.edit }}
+		{command {[G_msg "Edit category values of individual cells for displayed raster map"]} {} "d.rast.edit" {} -command {execute d.rast.edit }}
 		{separator}
 		{command {[G_msg "Reclassify categories for areas of specified sizes"]} {} "r.reclass.area" {} -command {execute r.reclass.area }}
 		{command {[G_msg "Reclassify categories using rules"]} {} "r.reclass.rules" {} -command {execute $env(GISBASE)/etc/gm/script/r.reclass.rules }}
