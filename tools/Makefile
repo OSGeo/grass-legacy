@@ -1,16 +1,9 @@
 MODULE_TOPDIR = ..
 
-PGM1=timer
+include $(MODULE_TOPDIR)/include/Make/Dir.make
 
-PROGDIR =  $(GISBASE)/scripts/
+SUBDIRS = timer mkftcap
 
-include $(MODULE_TOPDIR)/include/Make/Module.make
+default: subdirs
 
-PGM1:
-	$(MAKE) -C timer
-
-default: PGM1
-
-clean:
-	-rm -rf $(OBJDIR)
-	$(MAKE) -C timer clean
+clean: cleansubdirs
