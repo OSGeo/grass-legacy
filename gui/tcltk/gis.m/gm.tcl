@@ -112,8 +112,10 @@ namespace eval Gm {
     variable moncount
     variable prgtext
     variable mainwindow
-    variable dfont
+    variable dfont 
     variable fonttype
+    variable fontpath
+    variable encoding
 	global array filename # mon
 
 }
@@ -230,6 +232,10 @@ proc Gm::create { } {
     variable gm_mainframe
     variable tree
 	variable moncount
+	variable fontpath
+	variable fonttype
+	variable dfont
+	variable ecoding
     global gmpath
     global mon
     global tree_pane
@@ -238,6 +244,11 @@ proc Gm::create { } {
     global prgindic
     global keycontrol
     global env
+
+	set fontpath ""
+	set Gm::fonttype "grassfont"
+	set Gm::dfont "romans"
+	set Gm::encoding "ISO-8859-1"
 
 	set moncount 1
 
@@ -467,13 +478,10 @@ proc Gm:DefaultFont { } {
 	global env iconpath
 	variable dfont
 	variable fonttype
+	variable encoding
 
 	# create a dialog with selector for stroke font and true type font, and
 	# text entry for character encoding
-	
-	set Gm::fonttype "grassfont"
-	set dfont "romans"
-	set encoding "ISO-8859-1"
 
     toplevel .dispfont
     wm title .dispfont [G_msg "Select default font for GRASS displays"]
@@ -495,21 +503,21 @@ proc Gm:DefaultFont { } {
         -highlightthickness 0 -takefocus 0 -relief raised -borderwidth 1  \
         -helptext [G_msg "Select font"] \
 	    -command "Gm::SelectFont"
-    Entry $row.c -width 30 -text "$dfont" \
+    Entry $row.c -width 30 -text "$Gm::dfont" \
 	    -textvariable Gm::dfont
     pack $row.c $row.b $row.a -side right -anchor e
     pack $row -side top -fill both -expand yes -pady 3 -padx 5
     
  	set row [ frame .dispfont.fontopt3 ]
     Label $row.a -text [G_msg "Character encoding: "] 
-    Entry $row.b -width 30 -text $encoding \
-	    -textvariable encoding
+    Entry $row.b -width 30 -text "$Gm::encoding" \
+	    -textvariable Gm::encoding
     pack $row.b $row.a -side right -anchor e
     pack $row -side top -fill both -expand yes -pady 3 -padx 5
     
 	set row [ frame .dispfont.buttons ]
     Button $row.ok -text [G_msg "OK"] -width 8 -bd 1 \
-    	-command "Gm::SetFont $dfont $encoding; destroy .dispfont"
+    	-command "Gm::SetFont ; destroy .dispfont"
     pack $row.ok -side left -fill x -expand 0
     button $row.cancel -text [G_msg "Cancel"] -width 8 -bd 1 \
     	-command "destroy .dispfont"
@@ -521,16 +529,19 @@ proc Gm:DefaultFont { } {
 
 
 proc Gm::SelectFont { } {
-	global env
+	global env 
 	variable dfont
 	variable fonttype
+	variable fontpath
 	
 	set systemtype [exec uname -s]
 	set systemtype [string trim $systemtype]
 
 	if {$Gm::fonttype == "grassfont"} {
-		set fontpath  [file join "$env(GISBASE)" "fonts"]
-	} elseif {$Gm::fonttype == "truetype"} {
+		set initdir  [file join "$env(GISBASE)" "fonts"]
+	} elseif {$Gm::fonttype == "truetype" && $fontpath != ""} {
+		set initdir $fontpath
+	} elseif {$Gm::fonttype == "truetype" && $fontpath == ""} {
 		if {$systemtype == "Darwin"} {
 			set fontpath [file join "/Library" "Fonts"]
 		} elseif {$systemtype == "MINGW"} {
@@ -540,26 +551,35 @@ proc Gm::SelectFont { } {
 		} else {
 			set fontpath [file join "/usr" "lib" "X11" "fonts"]
 		}
+		set initdir $fontpath
 	}
 	
-	if {![file exists $fontpath]} {set fontpath ""}
+	if {![file exists $fontpath]} {set initdir ""}
 
-	set fontname [tk_getOpenFile -initialdir $fontpath \
+	set fontname [tk_getOpenFile -initialdir $initdir \
 		-title [G_msg "Select font"] ]
-
+		
 	set Gm::dfont $fontname
+
+	if {$dfont != ""} {set fontpath [file dirname $dfont]}
 
 };
 
-proc Gm::SetFont { dfont encoding } {
+proc Gm::SetFont { } {
+	global env
+	variable dfont
+	variable encoding
+	
 	# Set GRASS environmental variables for default display font and
 	# character encoding
 
-    if { $encoding != "" && $encoding != "ISO-8859-1"} {
-    	set env(GRASS_FT_ENCODING) $encoding
+    if { $Gm::encoding != "" && $Gm::encoding != "ISO-8859-1"} {
+    	set env(GRASS_FT_ENCODING) $Gm::encoding
     }
     
-    if {$dfont != ""} {set env(GRASS_FONT) $dfont}
+    if {$Gm::dfont != ""} {
+    	set env(GRASS_FONT) $Gm::dfont
+    }
 
 };
 
