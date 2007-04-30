@@ -5,12 +5,16 @@
 #   andreas.philipp geo.uni-augsburg.de
 # modified by JH, HM, MN
 
-dem=elevation.10m
+dem=elevation.dem
 g.region rast=${dem} -p
 
+# Manning n
 man05=0.05
-# this is excess rate, not mm/h:
-rain01=0.00001
+
+# rainfall [mm/hr]
+rain01=5
+
+# infitration [mm/hr]
 infil0=0.
 
 echo "Preparing input maps..."
@@ -37,3 +41,5 @@ echo "Written:
  Output simulation error raster file: ${dem}_err
 "
 
+# cleanup
+g.remove --q rast=${dem}_dx,${dem}_dy,${dem}_rain,${dem}_manin,${dem}_infil
