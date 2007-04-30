@@ -534,14 +534,16 @@ proc Gm::SelectFont { } {
 	variable fonttype
 	variable fontpath
 	
+	puts "fonttype = $fonttype"
+	
 	set systemtype [exec uname -s]
 	set systemtype [string trim $systemtype]
 
-	if {$Gm::fonttype == "grassfont"} {
+	if {$fonttype == "grassfont"} {
 		set initdir  [file join "$env(GISBASE)" "fonts"]
-	} elseif {$Gm::fonttype == "truetype" && $fontpath != ""} {
+	} elseif {$fonttype == "truetype" && $fontpath != ""} {
 		set initdir $fontpath
-	} elseif {$Gm::fonttype == "truetype" && $fontpath == ""} {
+	} elseif {$fonttype == "truetype" && $fontpath == ""} {
 		if {$systemtype == "Darwin"} {
 			set fontpath [file join "/Library" "Fonts"]
 		} elseif {$systemtype == "MINGW"} {
@@ -554,14 +556,14 @@ proc Gm::SelectFont { } {
 		set initdir $fontpath
 	}
 	
-	if {![file exists $fontpath]} {set initdir ""}
+	if {![file exists $initdir]} {set initdir ""}
 
 	set fontname [tk_getOpenFile -initialdir $initdir \
 		-title [G_msg "Select font"] ]
 		
 	set Gm::dfont $fontname
 
-	if {$dfont != ""} {set fontpath [file dirname $dfont]}
+	if {$dfont != "" && $fonttype == "truetype"} {set fontpath [file dirname $dfont]}
 
 };
 
@@ -569,16 +571,21 @@ proc Gm::SetFont { } {
 	global env
 	variable dfont
 	variable encoding
-	
+	variable fonttype
+
 	# Set GRASS environmental variables for default display font and
 	# character encoding
 
-    if { $Gm::encoding != "" && $Gm::encoding != "ISO-8859-1"} {
-    	set env(GRASS_FT_ENCODING) $Gm::encoding
+    if { $encoding != "" && $encoding != "ISO-8859-1"} {
+    	set env(GRASS_FT_ENCODING) $encoding
     }
     
-    if {$Gm::dfont != ""} {
-    	set env(GRASS_FONT) $Gm::dfont
+    if {$fonttype == "grassfont"} {
+    	set dfont [file rootname [file tail $dfont]]
+    }
+    
+    if {$dfont != ""} {
+    	set env(GRASS_FONT) $dfont
     }
 
 };
