@@ -24,13 +24,13 @@
  *
  * The arguments are values to compute the local peclet number
  *
- * \param vector double -- the direction part of the velocity vector between two points
+ * \param sprod double -- the scalar produkt between the velocity vector and the normal vector between two points
  * \param distance double -- distance between two points
  * \param D double -- diffusion/dispersion tensor part between two points
  *
  * \return the weighting factor
  * */
-double N_full_upwinding(double vector, double distance, double D)
+double N_full_upwinding(double sprod, double distance, double D)
 {
     double z;
 
@@ -38,7 +38,7 @@ double N_full_upwinding(double vector, double distance, double D)
     	return 0.5;
 
     /*compute the local peclet number*/
-    z = vector * distance / D;
+    z = sprod * distance / D;
 
     if (z > 0)
         return 1;
@@ -55,13 +55,13 @@ double N_full_upwinding(double vector, double distance, double D)
  *
  * The arguments are values to compute the local peclet number
  *
- * \param vector double -- the direction part of the velocity vector between two points
+ * \param sprod double -- the scalar produkt between the velocity vector and the normal vector between two points
  * \param distance double -- distance between two points
  * \param D double -- diffusion/dispersion tensor part between two points
  *
  * \return the weighting factor
  * */
-double N_exp_upwinding(double vector, double distance, double D)
+double N_exp_upwinding(double sprod, double distance, double D)
 {
     double z;
 
@@ -69,7 +69,7 @@ double N_exp_upwinding(double vector, double distance, double D)
     	return 0.5;
 
     /*compute the local peclet number*/
-    z = vector * distance / D;
+    z = sprod * distance / D;
 
     if(z != 0)
       return (1 - (1/z)*(1 - (z/(exp(z) - 1))));

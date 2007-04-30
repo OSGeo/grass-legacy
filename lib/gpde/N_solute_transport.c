@@ -8,7 +8,7 @@
 * PURPOSE:      solute transport in porous media
 * 		part of the gpde library
 *
-* COPYRIGHT:    (C) 2000 by the GRASS Development Team
+* COPYRIGHT:    (C) 2007 by the GRASS Development Team
 *
 *               This program is free software under the GNU General Public
 *               License (>=v2). Read the file COPYING that comes with GRASS
@@ -267,10 +267,23 @@ N_data_star *N_callback_solute_transport_2d(void *solutedata,
     /*get the surrounding dispersion tensor entries */
     disp_x = N_get_array_2d_d_value(data->disp_xx, col, row);
     disp_y = N_get_array_2d_d_value(data->disp_yy, col, row);
-    disp_xw = N_get_array_2d_d_value(data->disp_xx, col - 1, row);
-    disp_xe = N_get_array_2d_d_value(data->disp_xx, col + 1, row);
-    disp_yn = N_get_array_2d_d_value(data->disp_yy, col, row - 1);
-    disp_ys = N_get_array_2d_d_value(data->disp_yy, col, row + 1);
+    if(N_get_array_2d_d_value(data->status, col - 1, row) == N_CELL_TRANSMISSION) {
+	disp_xw = disp_x;
+    }else{
+      disp_xw = N_get_array_2d_d_value(data->disp_xx, col - 1, row);
+    }if(N_get_array_2d_d_value(data->status, col + 1, row) == N_CELL_TRANSMISSION){
+	disp_xe = disp_x;
+    }else{
+    	disp_xe = N_get_array_2d_d_value(data->disp_xx, col + 1, row);
+    }if(N_get_array_2d_d_value(data->status, col, row - 1) == N_CELL_TRANSMISSION){
+	disp_yn = disp_y;
+    }else{
+    	disp_yn = N_get_array_2d_d_value(data->disp_yy, col, row - 1);
+    }if(N_get_array_2d_d_value(data->status, col, row + 1) == N_CELL_TRANSMISSION){
+	disp_ys = disp_y;
+    }else{
+    	disp_ys = N_get_array_2d_d_value(data->disp_yy, col, row + 1);
+    }
 
     /* calculate the dispersion at the cell borders using the harmonical mean */
     Ds_w = N_calc_harmonic_mean(disp_xw, disp_x);
@@ -320,20 +333,21 @@ N_data_star *N_callback_solute_transport_2d(void *solutedata,
 	(Dn + vn * rn) * dx * z_n + Az * z * R / data->dt - q / nf;
 
     /*the entry in the right side b of Ax = b */
-    V = (cs + cg_start * Az * z * R / data->dt - q / nf * cin);
+    V = (cs + cg_start * Az * z * R / data->dt + q / nf * cin);
 
     /*
-     * printf("nf %g\n", nf);
-     * printf("q %g\n", q);
-     * printf("cs %g\n", cs);
-     * printf("cin %g\n", cin);
-     * printf("cg %g\n", cg);
-     * printf("cg_start %g\n", cg_start);
-     * printf("Az %g\n", Az);
-     * printf("z %g\n", z);
-     * printf("R %g\n", R);
-     * printf("dt %g\n", data->dt);
-     */
+      fprintf(stderr, "nf %g\n", nf);
+      fprintf(stderr, "q %g\n", q);
+      fprintf(stderr, "cs %g\n", cs);
+      fprintf(stderr, "cin %g\n", cin);
+      fprintf(stderr, "cg %g\n", cg);
+      fprintf(stderr, "cg_start %g\n", cg_start);
+      fprintf(stderr, "Az %g\n", Az);
+      fprintf(stderr, "z %g\n", z);
+      fprintf(stderr, "R %g\n", R);
+      fprintf(stderr, "dt %g\n", data->dt);
+    /*
+     
     G_debug(6, "N_callback_solute_transport_2d: called [%i][%i]", row, col);
 
     /*create the 5 point star entries */
@@ -514,6 +528,75 @@ void N_free_solute_transport_data2d(N_solute_transport_data2d * data)
     G_free(data);
 
     data = NULL;
+
+    return;
+}
+/*!
+ * \brief Compute the transmission boundary condition in 2d
+ *
+ * This function calculates the transmission boundary condition
+ * for each cell with status N_CELL_TRANSMISSION. The surrounding
+ * gradient field is used to verfiy the flow direction. If a flow
+ * goes into a cell, the concentration (data->c) from the neighbour cell is
+ * added to the transmission cell. If the flow from several neighbour 
+ * cells goes into the cell, the concentration mean is calculated.
+ * 
+ * The new concentrations are written into the data->c_start array,
+ * so they can be handled by the matrix assembling function.
+ *
+ * \param data N_solute_transport_data2d *
+ * \return void *
+ * */
+void N_calc_solute_transport_transmission_2d(N_solute_transport_data2d * data)
+{
+    int i, j, count = 1;
+    int cols, rows;
+    double c;
+    N_gradient_2d grad;
+
+    cols = data->grad->cols;
+    rows = data->grad->rows;
+
+    G_debug(2,
+	    "N_calc_solute_transport_transmission_2d: calculating transmission boundary");
+
+    for (j = 0; j < rows; j++) {
+	for (i = 0; i < cols; i++) {
+	    if(N_get_array_2d_d_value(data->status, i, j) == N_CELL_TRANSMISSION) {
+	      count = 0;
+	      /*get the gradient neighbours */
+	      N_get_gradient_2d(data->grad, &grad, i, j);
+	      c = 0;
+	      /*
+	      c = N_get_array_2d_d_value(data->c_start, i, j);
+	      if(c > 0)
+		count++;
+	       */
+
+	      if(grad.WC > 0 && !N_is_array_2d_value_null(data->c, i - 1, j)) {
+	        c += N_get_array_2d_d_value(data->c, i - 1, j);
+		count++;
+	      }
+	      if(grad.EC < 0 && !N_is_array_2d_value_null(data->c, i + 1, j)) {
+	        c += N_get_array_2d_d_value(data->c, i + 1, j);
+		count++;
+	      }
+	      if(grad.NC < 0 && !N_is_array_2d_value_null(data->c, i, j - 1)) {
+	        c += N_get_array_2d_d_value(data->c, i, j - 1);
+		count++;
+	      }
+	      if(grad.SC > 0 && !N_is_array_2d_value_null(data->c, i, j + 1)) {
+	        c += N_get_array_2d_d_value(data->c, i, j + 1);
+		count++;
+	      }
+	      if(count != 0)
+	        c = c/(double)count;
+	      /*make sure it is not NAN*/
+	      if(c > 0 || c == 0 || c < 0)
+      	        N_put_array_2d_d_value(data->c_start, i, j, c);
+	    }
+	}
+    }
 
     return;
 }

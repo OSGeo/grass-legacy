@@ -89,5 +89,6 @@ extern void N_free_solute_transport_data2d (N_solute_transport_data2d * data);
 /*compute the dispersivity tensor*/
 extern void N_calc_solute_transport_disptensor_2d(N_solute_transport_data2d * data);
 extern void N_calc_solute_transport_disptensor_3d(N_solute_transport_data3d * data);
-
+extern void N_calc_solute_transport_transmission_2d(N_solute_transport_data2d * data);
+extern void N_calc_solute_transport_transmission_3d(N_solute_transport_data3d * data);
 #endif

@@ -368,8 +368,8 @@ extern inline double N_calc_quad_mean_n(double *a, int size);
 /* *************** UPWIND STABILIZATION ALGORITHMS *************** */
 /* *************************************************************** */
 
-extern inline double N_full_upwinding(double vector, double distance, double D);
-extern inline double N_exp_upwinding(double vector, double distance, double D);
+extern inline double N_full_upwinding(double sprod, double distance, double D);
+extern inline double N_exp_upwinding(double sprod, double distance, double D);
 
 
 /* *************************************************************** */
