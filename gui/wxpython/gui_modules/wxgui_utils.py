@@ -18,9 +18,9 @@ import grassenv
 from debug import Debug as Debug
 from icon import Icons as Icons
 try:
-   from subprocess import *
+    from subprocess import *
 except:
-   from compat import subprocess
+    from compat import subprocess
 
 
 class LayerTree(CT.CustomTreeCtrl):
@@ -143,7 +143,7 @@ class LayerTree(CT.CustomTreeCtrl):
         params = {} # no initial options parameters
 
         if self.layer_selected:
-           self.SelectItem(self.layer_selected, select=False)
+            self.SelectItem(self.layer_selected, select=False)
 
         Debug.msg (3, "LayerTree().AddLayer(): type=%s" % (type))
         if type == 'command':
@@ -257,13 +257,13 @@ class LayerTree(CT.CustomTreeCtrl):
         completed = ''
         params = self.GetPyData(layer)[1]
 
-       # When double clicked or first added, open options dialog
+        # When double clicked or first added, open options dialog
         if self.layertype[layer] == 'raster':
             menuform.GUI().parseCommand('d.rast', gmpath, completed=(self.getOptData,layer,params), parentframe=self)
         elif self.layertype[layer] == 'rgb':
             menuform.GUI().parseCommand('d.rgb', gmpath, completed=(self.getOptData,layer,params), parentframe=self)
         elif self.layertype[layer] == 'his':
-             menuform.GUI().parseCommand('d.his', gmpath, completed=(self.getOptData,layer,params), parentframe=self)
+            menuform.GUI().parseCommand('d.his', gmpath, completed=(self.getOptData,layer,params), parentframe=self)
         elif self.layertype[layer] == 'rastleg':
             menuform.GUI().parseCommand('d.legend', gmpath, completed=(self.getOptData,layer,params), parentframe=self)
         elif self.layertype[layer] == 'vector':
@@ -747,10 +747,10 @@ class GMConsole(wx.Panel):
         #    	cmd = self.console_command.GetLineText(0)
         cmdlst = command.split(' ')
         try:
-           curr_disp = self.Parent.Parent.curr_page.maptree.mapdisplay
+            curr_disp = self.Parent.Parent.curr_page.maptree.mapdisplay
         except:
-           #            disp_idx = None
-           curr_disp = None
+            #            disp_idx = None
+            curr_disp = None
 
         if len(cmdlst) == 1 and command in gcmdlst:
             # Send GRASS command without arguments to GUI command interface
@@ -801,8 +801,8 @@ class GMConsole(wx.Panel):
             curr_disp.ReDrawCommand()
 
         else:
-           # Send any other command to the shell. Send output to
-           # console output window.
+            # Send any other command to the shell. Send output to
+            # console output window.
             try:
                 os.environ["GRASS_MESSAGE_FORMAT"] = "gui"
                 #self.cmd_output.write(command+"\n----------\n")
@@ -853,13 +853,12 @@ class GMConsole(wx.Panel):
                     oline = p.module_stdout.readline()
                 #self.cmd_output.write("\n==========\n")
                 if p.module_stdout < 0:
-                   print >> sys.stderr, "Child was terminated by signal", p.module_stdout
+                    print >> sys.stderr, "Child was terminated by signal", p.module_stdout
                 elif p.module_stdout > 0:
-                   #print >> sys.stderr, p.module_stdout
-                   pass
+                    #print >> sys.stderr, p.module_stdout
+                    pass
             except OSError, e:
-               print >> sys.stderr, "Execution failed:", e
-
+                print >> sys.stderr, "Execution failed:", e
 
     def clearHistory(self, event):
         self.cmd_output.Clear()
