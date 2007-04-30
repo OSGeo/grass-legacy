@@ -93,56 +93,14 @@ class Command(Thread):
 
             if line:
                 try:
-                    dispcmd = {}
-                    name = None
-                    mapset = None
-                    opacity = 1
+                   Debug.msg (3, "Command.run(): cmd=%s" % (line))
 
-                    cmd = list(line.strip().split())
-                    action = cmd[0]
-                    cmd = cmd[1:]
-
-                    for kv in cmd:
-                        if kv[0] == '-': # flag
-                            dispcmd[kv[1:]] = True
-                        else: # option
-                            try:
-                                key,value = kv.split('=')
-                            except:
-                                # fisrt option
-                                key = "map"
-                                value = kv
-
-                            if key == "opacity":
-                                try:
-                                    # opacity in [%]
-                                    opacity = int (value) / 100.
-                                except:
-                                    pass
-                            elif key == "map":
-                                try:
-                                    name,mapset = value.split('@')
-                                except:
-                                    name = value
-                                    mapset = None
-                            else:
-                                dispcmd[key] = value
-
-
-                    Debug.msg (3, "Command.run(): opacity=%d name=%s mapset=%s, cmd=%s" % (opacity, name, mapset, dispcmd))
-
-                    if action == "d.rast":
-                        self.map.AddRasterLayer(name=name,
-                                                mapset=mapset,
-                                                l_opacity=opacity,
-                                                dispcmd=dispcmd)
-                    elif action == "d.vect":
-                        self.map.AddVectorLayer(name=name,
-                                                mapset=mapset,
-                                                l_opacity=opacity,
-                                                dispcmd=dispcmd)
-
-                    self.parent.redraw =True
+                   self.map.AddLayer(item=None, type="raster",
+                                     name='',
+                                     command=line,
+                                     l_opacity=1)
+                   
+                   self.parent.redraw =True
 
                 except Exception, e:
                     print "Command Thread: ",e
@@ -173,26 +131,26 @@ class BufferedWindow(wx.Window):
       self.Map = Map
       self.tree = tree
 
-        #
-        # Flags
-        #
+      #
+      # Flags
+      #
       self.render = True  # re-render the map from GRASS or just redraw image
       self.resize = False # indicates whether or not a resize event has taken place
       self.dragimg = None # initialize variable for map panning
       self.pen = None     # pen for drawing zoom boxes, etc.
 
-        #
-        # Event bindings
-        #
+      #
+      # Event bindings
+      #
       self.Bind(wx.EVT_PAINT,        self.OnPaint)
       self.Bind(wx.EVT_SIZE,         self.OnSize)
       self.Bind(wx.EVT_IDLE,         self.OnIdle)
       self.Bind(wx.EVT_MOTION,       self.MouseActions)
       self.Bind(wx.EVT_MOUSE_EVENTS, self.MouseActions)
 
-        #
-        # Render output objects
-  #
+      #
+      # Render output objects
+      #
       self.mapfile = None # image file to be rendered
       self.img = ""       # wx.Image object (self.mapfile)
       self.ovldict = {}   # list of images for overlays
@@ -205,16 +163,16 @@ class BufferedWindow(wx.Window):
       self.currtxtid = None # PseudoDC id for currently selected text
 
       #
-        # Zoom objects
-        #
+      # Zoom objects
+      #
       self.zoomhistory = [] # list of past zoom extents
       self.currzoom = 0 # current set of extents in zoom history being used
 
 
-        #
+      #
       # mouse attributes like currently pressed buttons, position on
       # the screen, begin and end of dragging, and type of drawing
-        #
+      #
       self.mouse = {
           'l': False,
           'r': False,
@@ -230,16 +188,16 @@ class BufferedWindow(wx.Window):
       # OnSize called to make sure the buffer is initialized.
       # This might result in OnSize getting called twice on some
       # platforms at initialization, but little harm done.
-        #!!! self.OnSize(None)
-
-        # create a PseudoDC for map decorations like scales and legends
+      #!!! self.OnSize(None)
+      
+      # create a PseudoDC for map decorations like scales and legends
       self.pdc = wx.PseudoDC()
       self._Buffer = '' # will store an off screen empty bitmap for saving to file
       self.Map.SetRegion() # make sure that extents are updated at init
 
       self.Bind(wx.EVT_ERASE_BACKGROUND, lambda x:None)
 
-        # vars for handling mouse clicks
+      # vars for handling mouse clicks
       self.dragid = -1
       self.lastpos = (0,0)
 

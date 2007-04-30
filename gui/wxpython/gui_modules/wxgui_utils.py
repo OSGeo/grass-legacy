@@ -136,9 +136,10 @@ class LayerTree(CT.CustomTreeCtrl):
         self.Bind(wx.EVT_TREE_DELETE_ITEM, self.onDeleteLayer)
         self.Bind(wx.EVT_TREE_BEGIN_DRAG, self.onBeginDrag)
         self.Bind(wx.EVT_TREE_END_DRAG, self.onEndDrag)
-#        self.Bind(wx.EVT_CLOSE, self.onCloseWindow)
+        # self.Bind(wx.EVT_CLOSE, self.onCloseWindow)
 
     def AddLayer(self, type):
+        """Add layer, create MapLayer instance"""
         self.first = True
         params = {} # no initial options parameters
 
@@ -192,8 +193,8 @@ class LayerTree(CT.CustomTreeCtrl):
 
         # add layer to layers list in render.Map
         if self.layertype[layer] != 'group':
-            self.Map.addLayer(item=layer, command='', l_active=False,
-                                      l_hidden=False, l_opacity=1, l_render=False)
+            self.Map.AddLayer(item=layer, type="command", name='', command='',
+                              l_active=False, l_hidden=False, l_opacity=1, l_render=False)
 
         # add text and icons for each layer type
         if type == 'raster':
@@ -473,7 +474,7 @@ class LayerTree(CT.CustomTreeCtrl):
         self.CheckItem(layer, checked=True)
 
         # change parameters for item in layers list in render.Map
-        self.changeLayer(layer)
+        self.changeLayer(layer, mapname)
 
 
     def writeDCommand(self, dcmd):
@@ -501,23 +502,22 @@ class LayerTree(CT.CustomTreeCtrl):
         treelayers.reverse()
         self.Map.reorderLayers(treelayers)
 
-    def changeLayer(self, layer):
+    def changeLayer(self, layer, mapname):
         if self.layertype[layer] == 'command':
             if self.GetItemWindow(layer).GetValue() != None:
                 cmd = self.GetItemWindow(layer).GetValue()
                 opac = 1.0
                 chk = self.IsItemChecked(layer)
                 hidden = not self.IsVisible(layer)
-                self.Map.changeLayer(item=layer, command=cmd, l_active=chk,
-                                  l_hidden=hidden, l_opacity=opac, l_render=False)
         elif self.layertype[layer] != 'group':
             if self.GetPyData(layer)[0] != None:
                 cmd = self.GetPyData(layer)[0]
                 opac = float(self.GetItemWindow(layer).GetValue())/100
                 chk = self.IsItemChecked(layer)
                 hidden = not self.IsVisible(layer)
-                self.Map.changeLayer(item=layer, command=cmd, l_active=chk,
-                                  l_hidden=hidden, l_opacity=opac, l_render=False)
+
+        self.Map.changeLayer(item=layer, type=self.layertype[layer], name=mapname, command=cmd, 
+                             l_active=chk, l_hidden=hidden, l_opacity=opac, l_render=False)
 
     def setNotebookPage(self,pg):
         self.Parent.notebook.SetSelection(pg)

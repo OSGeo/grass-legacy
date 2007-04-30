@@ -18,28 +18,28 @@ import utils
 import cmd
 from debug import Debug as Debug
 
-class GRASSLayer:
-    """
-    This class stores GRASS layer metainformation
-    (command line parameters and flags) needed for creating
-    MapLayer instance
+# class GRASSLayer:
+#     """
+#     This class stores GRASS layer metainformation
+#     (command line parameters and flags) needed for creating
+#     MapLayer instance
 
-    Attributes:
-    params - based on a given GRASS layer (raster, vector, graph, etc.
-    """
+#     Attributes:
+#     params - based on a given GRASS layer (raster, vector, graph, etc.)
+#     """
 
-    def __init__(self, parameters):
-        self.params = parameters
+#     def __init__(self, parameters):
+#         self.params = parameters
 
 class MapLayer:
     """
     This class serves for storing map layers to be displayed
 
     Common layer attributes:
-    name	- layer name
-    mapset	- mapset name
-    type     - layer type
-
+    type     - layer type (raster, vector, overlay, command)
+    name     - layer name, e.g. map name
+    cmd      - GRASS command string
+    
     active   - layer is active, will be rendered only if True
     hidden   - layer is hidden, won't be listed in GIS Manager if True
     opacity  - layer opacity [0-1]
@@ -47,22 +47,18 @@ class MapLayer:
     mapfile  - file name of rendered layer
     maskfile - mask name of rendered layer
     """
-
-    def __init__(self, type, name, mapset,
-                 active, hidden, opacity,
-                 dispcmd={}):
-        self.name   = name
-        self.mapset = mapset
-
+    def __init__(self, type, name, cmd,
+                 active=True, hidden=False, opacity=1):
         self.type    = type
+        self.name    = name
+        self.cmd     = cmd
+        
         self.active  = active
         self.hidden  = hidden
         self.opacity = opacity
 
-        self.grassLayer = GRASSLayer(dispcmd)
-
-        Debug.msg (3, "MapLayer.__init__(): type=%s, name=%s, mapset=%s, opacity=%d, active=%d %s" %
-                   (type, name, mapset, opacity, active, dispcmd))
+        Debug.msg (3, "MapLayer.__init__(): type=%s, name=%s, cmd=%s, active=%d, opacity=%d, hidden=%d" %
+                       (type, name, cmd, active, opacity, hidden))
 
         gtemp = utils.GetTempfile()
         self.maskfile = gtemp + ".pgm"
@@ -72,58 +68,14 @@ class MapLayer:
             self.mapfile = gtemp + ".ppm"
 
 
-    def __renderRasterLayer(self):
-        """
-        Stores d.rast command with all parameters in the self.cmd variable
-        """
-
-        try:
-            self.cmd = "d.rast -o map=%s@%s" % (self.name, self.mapset)
-
-            for key,value in self.grassLayer.params.iteritems():
-                if type(value) != type(None):
-                    self.cmd += " %s=%s" % \
-                        (key, value)
-                else:
-                    self.cmd += " -%s" % key
-
-            Debug.msg (3, "MapLayer.__renderRasterLayer(): %s" % self.cmd)
-
-        except tandardError, e:
-            sys.stderr.write("Could not render raster layer <%s>: %s\n" %\
-                             (self.name, str(e)))
-            self.cmd = None
-
-    def __renderVectorLayer(self):
-        """
-        Stores d.vect command with all parameters in the self.cmd variable
-        """
-
-        try:
-            self.cmd = "d.vect map=%s@%s" % (self.name, self.mapset)
-
-            for key,value in self.grassLayer.params.iteritems():
-                if type(value) != type(None):
-                    self.cmd += " %s=%s" % \
-                        (key, value)
-                else:
-                    self.cmd += " -%s" % key
-
-            Debug.msg (3, "MapLayer.__renderVectorLayer(): %s" % self.cmd)
-
-        except StandardError, e:
-            sys.stderr.write("Could not render vector layer <%s>: %s\n" %\
-                   (self.name, str(e)))
-            self.cmd = None
-
-    def __renderCommandLayer(self):
+    def __renderLayer(self):
         """
         Stores generic command with all parameters in the self.cmd variable
         """
-
         try:
-            self.cmd = self.name + " --q"
-
+            self.cmd += " --q" # quite
+            Debug.msg (3, "MapLayer.__renderLayer(): cmd=%s" % self.cmd)
+            
         except StandardError, e:
             sys.stderr.write("Could not render command layer <%s>: %s\n" %\
                  (self.name, str(e)))
@@ -138,8 +90,8 @@ class MapLayer:
             return
 
         try:
-            if self.name != '':
-                self.cmd = self.name + " --q"
+            if self.cmd != '':
+                self.cmd += " --q"
                 Debug.msg (3, "MapLayer.__renderOverlay(): cmd=%s" % self.name)
             else:
                 self.cmd = None
@@ -157,15 +109,12 @@ class MapLayer:
             Name of file with rendered image or None
         """
 
-        #
-        # create command variable
-        #
-        self.cmd = ""
-
+        Debug.msg (3, "MapLayer.Render(): type=%s" % \
+                   (self.type))
+        
         #
         # to be sure, set temporary file with layer and mask
         #
-
         if self.type == 'overlay':
             if not self.mapfile:
                 gtemp = utils.GetTempfile()
@@ -180,30 +129,22 @@ class MapLayer:
         #
         # prepare command for each layer
         #
-        if self.type == "raster":
-            self.__renderRasterLayer()
-
-        elif self.type == "vector":
-            self.__renderVectorLayer()
-
-        elif self.type == "command":
-            self.__renderCommandLayer()
-
+        if self.type == "command" or self.type == "raster" or self.type == "vector":
+            self.__renderLayer()
         elif self.type == "overlay":
             self.__renderOverlay()
-
         elif self.type == "wms":
             print "Type wms is not supported yet"
         else:
             print "Type <%s> of layer <%s> is not supported yet" % \
-                (self.type, self.name)
+                  (self.type, self.name)
 
         #
-        # Start monitor
+        # start monitor
         #
-
         os.environ["GRASS_PNGFILE"] = self.mapfile
         os.environ["GRASS_RENDER_IMMEDIATE"] = "TRUE"
+
         #
         # execute command
         #
@@ -222,7 +163,7 @@ class MapLayer:
             return None
 
         #
-        # Stop monitor
+        # stop monitor
         #
         os.unsetenv("GRASS_PNGFILE")
         os.unsetenv("GRASS_RENDER_IMMEDIATE")
@@ -244,16 +185,16 @@ class Map:
         e-w resol: 30;
         ...
     region - g.region -gp output
-        "n":1000,
-        "s":0,
-        "e":1000,
-        "w":0,
+        'n':1000,
+        's':0,
+        'e':1000,
+        'w':0,
         ...
     layers - list of all available layers
     renderRegion - dictionary:
-        "color" : "RRR:GGG:BBB",
-        "width" : 3,
-        "render": True/False
+        'color' : 'RRR:GGG:BBB',
+        'width' : 3,
+        'render': True/False
     mapfile   - rendered final image filename
     """
 
@@ -609,7 +550,6 @@ class Map:
             Name of file with rendered image or None
         """
 
-        ## FIXME: not needed?
         maps = []
         masks =[]
         opacities = []
@@ -640,8 +580,8 @@ class Map:
                     maps.append(layer.mapfile)
                     masks.append(layer.maskfile)
                     opacities.append(str(layer.opacity))
-
-            Debug.msg (3, "Map.Render() type=%s, layer=%s " % (layer.type, layer.name))
+                    
+                Debug.msg (3, "Map.Render() type=%s, layer=%s " % (layer.type, layer.name))
 
             # make arrays to strings
             mapstr = ",".join(maps)
@@ -680,207 +620,37 @@ class Map:
                 os.environ["GRASS_REGION"] = tmp_region
             return None
 
-    def AddRasterLayer(self, name, mapset=None,
-         dispcmd = {},
-         l_active=True, l_hidden=False, l_opacity=1, l_render=False):
-        """
-        Adds raster layer to list of layers
-
-        Layer Attributes:
-            name	   - raster layer name
-            mapset	   - mapset name, default: current
-            dicpcmd    - display parameters (catlist, vallist, -i, etc.)
-
-            l_active   - see MapLayer class
-            l_hidden
-            l_opacity
-            l_render   - render an image
-
-        Returns:
-            Added layer on success or None
-
-        """
-
-        if not mapset:
-            mapset = self.env["MAPSET"]
-
-        # l_opacity must be <0;1>
-        if l_opacity < 0: l_opacity = 0
-        elif l_opacity > 1: l_opacity = 1
-
-        layer = MapLayer(type="raster", name=name, mapset=mapset,
-             active=l_active, hidden=l_hidden, opacity=l_opacity,
-             dispcmd=dispcmd)
-
-        layer.id = len(self.layers)-1
-
-        # add maplayer to the list of layers
-        self.layers.append(layer)
-
-
-        if l_render:
-            if not layer.Render():
-                sys.stderr.write("Could not render layer <%s@%s>\n" % \
-                       (name,mapset))
-
-        return self.layers[-1]
-
-    def AddGraphLayer(self, name, graph=None, color="255:0:0",
-        coordsinmapunits=False,
-        l_active=True, l_hidden=True, l_opacity=1, l_render=False):
-        """
-        Adds graph layer to list of layers (for d.graph definition)
-
-        Layer attributes:
-            name             - graphics name
-            graph            - graphics definition (string)
-            color            - color triplet
-
-            coordsinmapunits - coordinates are given in map units
-
-            l_active         - see MapLayer class
-            l_hidden
-            l_opacity
-            l_render         - render an image
-
-        Returns:
-            Added layer on success or None
-        """
-
-        # l_opacity must be <0;1>
-        if l_opacity < 0: l_opacity = 0
-        elif l_opacity > 1: l_opacity = 1
-
-        layer = MapLayer("graph", name, "", # current mapset
-               l_active, l_hidden, l_opacity,
-               color = color,
-               coordsinmapunits = coordsinmapunits)
-
-        self.layers.append(layer)
-        layer.id = len(self.layers)-1
-
-        if l_render:
-            if not layer.Render():
-                sys.stderr.write ("Could not render layer <%s>\n" % \
-                                  (name))
-
-        return self.layers[-1]
-
-    def AddVectorLayer(self, name, mapset=None,
-         dispcmd={},
-         l_active=True, l_hidden=False, l_opacity=1, l_render=False):
-        """
-        Adds vector layer to list of layers
-
-        Layer attributes:
-            name	- raster layer name
-            mapset	- mapset name, default: current
-            dispcmd     - see d.vect
-
-            l_active  - see MapLayer class
-            l_hidden
-            l_opacity
-            l_render  - render an image
-
-        Returns:
-            Added layer if succeeded or None
-        """
-
-        if not mapset:
-            mapset = self.env["MAPSET"]
-
-        # l_opacity must be <0;1>
-        if l_opacity < 0: l_opacity = 0
-        elif l_opacity > 1: l_opacity = 1
-
-        maplayer = MapLayer(type="vector", name=name, mapset=mapset,
-        dispcmd=dispcmd,
-        active=l_active, hidden=l_hidden, opacity=l_opacity)
-
-        self.layers.append(maplayer)
-        maplayer.id = len(self.layers)-1
-
-        if l_render:
-            if not maplayer.Render():
-                sys.stderr.write("Could not render layer <%s@%s>\n" % \
-     (name,mapset))
-
-        return self.layers[-1]
-
-    def AddCommandLayer(self, name, mapset=None, l_active=True, l_hidden=False,
-                        l_opacity=1, l_render=False):
-        """
-        Adds generic layer to list of layers
-
-        Layer Attributes:
-            name	   - raster layer name
-            mapset	   - mapset name, default: current
-
-            l_active   - see MapLayer class
-            l_hidden
-            l_opacity
-            l_render   - render an image
-
-        Returns:
-            Added layer on success or None
-
-        """
-        if not mapset:
-            mapset = self.env["MAPSET"]
-
-        # l_opacity must be <0;1>
-        if l_opacity < 0: l_opacity = 0
-        elif l_opacity > 1: l_opacity = 1
-            # the following won't work in all situations. What
-            # if opacity had somehow been set to 1000?
-        #			l_opacity = float(l_opacity) / 100
-
-        layer = MapLayer("command", name, mapset,
-             l_active, l_hidden, l_opacity)
-
-        # add maplayer to the list of layers
-        self.layers.append(layer)
-
-        if l_render:
-            if not layer.Render():
-                sys.stderr.write("Could not render layer <%s@%s>\n" % \
-                       (name, mapset))
-
-        return self.layers[-1]
-
-    def addLayer(self, item, command, mapset=None, l_active=True, l_hidden=False,
-    l_opacity=1, l_render=False):
+    def AddLayer(self, item, type, name, command,
+                 l_active=True, l_hidden=False, l_opacity=1, l_render=False):
         """
         Adds generic display command layer to list of layers
 
         Layer Attributes:
-            command	   	- display command
-            mapset	   	- mapset name for backward compatibility.
-                - included in mapname in command
-
-            l_active   	- checked/not checked for display in layer tree
-            l_hidden	- not used here
-            l_opacity	- range from 0-1
-            l_render   	- render an image if False
+        type - layer type
+        name - layer name
+        cmd  - GRASS command string
+        
+        l_active   - checked/not checked for display in layer tree
+        l_hidden   - not used here
+        l_opacity  - range from 0-1
+        l_render   - render an image if False
 
         Returns:
             Added layer on success or None
 
         """
-        if not mapset:
-            mapset = self.env["MAPSET"]
-
         # l_opacity must be <0;1>
         if l_opacity < 0: l_opacity = 0
         elif l_opacity > 1: l_opacity = 1
 
-        layer = MapLayer("command", command, mapset,
-             l_active, l_hidden, l_opacity)
+        layer = MapLayer(type=type, name=name, cmd=command,
+                         active=l_active, hidden=l_hidden, opacity=l_opacity)
 
         # add maplayer to the list of layers
         self.layers.append(layer)
-        # add item and layer to lookup dictionary
-        self.lookup[item] = layer
+        if item:
+            # add item and layer to lookup dictionary
+            self.lookup[item] = layer
 
         if l_render:
             if not layer.Render():
@@ -941,21 +711,20 @@ class Map:
 
         # old lookup item will be deleted when layer is deleted
 
-    def changeLayer(self, item, command, mapset=None, l_active=True, l_hidden=False,
-        l_opacity=1, l_render=False):
+    def changeLayer(self, item, type, name, command, 
+                    l_active=True, l_hidden=False, l_opacity=1, l_render=False):
         """
         Change the command and other other options for a layer
         """
-
-        if not mapset:
-            mapset = self.env["MAPSET"]
 
         # l_opacity must be <0;1>
         if l_opacity < 0: l_opacity = 0
         elif l_opacity > 1: l_opacity = 1
 
-        newlayer = MapLayer("command", command, mapset,
-             l_active, l_hidden, l_opacity)
+        Debug.msg (3, "Map.changeLayer():")
+
+        newlayer = MapLayer(type=type, name=name, cmd=command,
+                            active=l_active, hidden=l_hidden, opacity=l_opacity)
 
         oldlayerindex = self.layers.index(self.lookup[item])
 
@@ -963,7 +732,6 @@ class Map:
         if self.lookup[item]:
             self.layers[oldlayerindex] = newlayer
             self.lookup[item] = newlayer
-
 
         if l_render:
             if not layer.Render():
@@ -1044,8 +812,8 @@ class Map:
 
         return None
 
-    def addOverlay(self, ovltype=None, type='overlay', command=None, mapset=None, l_active=True,
-           l_hidden=False, l_opacity=1, l_render=False):
+    def addOverlay(self, ovltype=None, type='overlay', command=None,
+                   l_active=True, l_hidden=False, l_opacity=1, l_render=False):
         """
         Adds overlay (grid, barscale, others?) to list of overlays
 
@@ -1058,9 +826,9 @@ class Map:
             Added layer on success or None
         """
 
-        Debug.msg (2, "Map.addOverlay(): name=%s, mapset=%s, render=%d" % (command, mapset, l_render))
-        overlay = MapLayer(type='overlay', name=command, mapset=mapset,
-           active=l_active, hidden=l_hidden, opacity=l_opacity)
+        Debug.msg (2, "Map.addOverlay(): cmd=%s, render=%d" % (command, l_render))
+        overlay = MapLayer(type='overlay', name=None, cmd=command,
+                           active=l_active, hidden=l_hidden, opacity=l_opacity)
 
         # add maplayer to the list of layers
         self.overlays.append(overlay)
@@ -1153,15 +921,14 @@ if __name__ == "__main__":
     map.width = 300
     map.height = 400
 
-    map.AddRasterLayer(name="elevation.dem", mapset="PERMANENT", dispcmd = {"catlist" : "1000-1500", "i" : None},
-           l_opacity=.7)
+    map.AddLayer(item=None, type="raster", name="elevation.dem", command = "d.rast elevation.dem@PERMANENT catlist=1000-1500 -i", l_opacity=.7)
 
-    map.AddVectorLayer(name="streams", mapset="PERMANENT", dispcmd = {"color" : "red", "width" : 3, "type" : "line"})
+    map.AddLayer(item=None, type="vector", name="streams", command = "d.vect streams@PERMANENT color=red width=3 type=line")
 
     image = map.Render(force=True)
 
     if image:
-        os.system("display %s" % image[0])
+        os.system("display %s" % image)
 
     #image = map.Render()
     #os.system("display %s" % image)

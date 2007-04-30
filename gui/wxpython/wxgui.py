@@ -394,7 +394,6 @@ class GMFrame(wx.Frame):
         addrast.SetBitmap(Icons["addrast"].GetBitmap(self.iconsize))
         rastmenu.AppendItem(addrast)
         self.Bind(wx.EVT_MENU, self.addRaster, addrast)
-
         addrgb = wx.MenuItem(rastmenu, -1, Icons["addrgb"].GetLabel())
         addrgb.SetBitmap(Icons["addrgb"].GetBitmap(self.iconsize))
         rastmenu.AppendItem(addrgb)
