@@ -1,6 +1,6 @@
 MODULE_TOPDIR = ../..
 
-PGM = d.freetypecap
+PGM = mkftcap
 
 CAPFILE = $(ETC)/freetypecap
 

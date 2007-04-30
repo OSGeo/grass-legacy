@@ -6,10 +6,10 @@ then
 	exit 1
 fi
 
-for dir in /usr/lib/X11/fonts /usr/share/fonts /Library/Fonts "$WINDIR/Fonts" ; do
+for dir in /usr/lib/X11/fonts /usr/share/X11/fonts /usr/share/fonts /Library/Fonts "$WINDIR/Fonts" ; do
     if [ -d "$dir" ] ; then
 	find "$dir" -type f -iname '*.ttf' -printf '%f:%p:utf-8:\n' \
 	| sed 's/.ttf:/:/'
     fi
-done > $GISBASE/etc/freetypecap
+done > "$GISBASE/etc/freetypecap"
 
