@@ -131,7 +131,9 @@ proc GmChart::show_data { id } {
 	set layer $opt($id,1,layer)
 	if ![catch {open "|v.db.connect map=$mapname layer=$layer -g" r} vdb] {
 		set vectdb [read $vdb]
-		catch {close $vdb}
+		if {[catch {close $vdb} error]} {
+			puts $error
+		}
 		set vdblist [split $vectdb " "]
 		set tbl [lindex $vdblist 1]
 		set db [lindex $vdblist 3]
