@@ -306,7 +306,9 @@ proc GmRaster::display { node mod } {
     set rt ""
     if {![catch {open "|r.info map=$opt($id,1,map) -t" r} rt]} {
         set rasttype [read $rt]
-        catch {close $rt}
+		if {[catch {close $rt} error]} {
+			puts $error
+		}
     }
 
     if {$rasttype == "" || [regexp -nocase ".=CELL" $rasttype]} {

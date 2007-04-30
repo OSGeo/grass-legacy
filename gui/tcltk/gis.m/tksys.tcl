@@ -213,22 +213,23 @@ proc sys_wininfo { } \
     return
 }
 
-proc sys_save { } \
-{
+proc sys_save { } {
     global sys range items
 
     set file [tk_getSaveFile -initialdir . \
 		  -defaultextension ".txt" \
 		  -title "Enter filename to save info text"]
-    if {[string length $file] == 0 } \
-    {
-	return
+    if {[string length $file] == 0 } {
+		return
     }
     if [catch {open $file w} out] {
-	tk_messageBox -type ok -message $out
-    } else {
-	sys_putinfo $out
-	close $out
+		tk_messageBox -type ok -message $out
+		} else {
+		sys_putinfo $out
+		if {[catch {close $out} error]} {
+			puts $error
+		}
+
     }
 
     return

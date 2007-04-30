@@ -93,7 +93,7 @@ proc psprint::init { } {
 		set cmd "gs"
 	}
 
-	if ![catch {set input [exec $cmd -help]}] {
+	if {![catch {set input [exec $cmd -help]}]} {
 		regexp ".*Available devices:(.*)Search path:" $input string gsdevices 
 		set gsstate "normal"
 		set printmode "lpr"
@@ -404,7 +404,7 @@ proc psprint::print { cv } {
 	
 	# lpr printing		
     if { $printmode == "lpr" } {
-		set printmap [open "$tmppsfile" w]
+		catch {set printmap [open "$tmppsfile" w]}
 		if { $orient == "portrait" } {
 			if { [expr $docht / $docwd] < [expr $pght / $pgwd] } {
 				$cv postscript -pageheight $cdocht -channel $printmap
@@ -419,14 +419,17 @@ proc psprint::print { cv } {
 			}
 		}		
 		after 500
-		close $printmap
+		if {[catch {close $printmap} error]} {
+			puts $error
+		}
+
 		exec $cmd  $format -sDEVICE#png16m -r$res -sNOPAUSE -sOutputFile#$tmppngfile -dBATCH -- $tmppsfile  
 		exec lpr $tmppngfile 
     }
 
 	# postsript printing via ghostsript
     if { $printmode == "psprint" && $printer != "" } {
-		set printmap [open "$tmppsfile" w]
+		catch {set printmap [open "$tmppsfile" w]}
 		if { $orient == "portrait" } {
 			if { [expr $docht / $docwd] < [expr $pght / $pgwd] } {
 				$cv postscript -pageheight $cdocht -channel $printmap
@@ -441,13 +444,15 @@ proc psprint::print { cv } {
 			}
 		}		
 		after 500
-		close $printmap
+		if {[catch {close $printmap} error]} {
+			puts $error
+		}
 		exec $cmd  $format -sDEVICE#$printer -r$res -sNOPAUSE -dBATCH -- $tmppsfile 
 	}
 
 	# output to pdf file via ghostscript	
 	if { $printmode == "pdf" && $pdffile != "" } {
-		set printmap [open "$tmppsfile" w]
+		catch {set printmap [open "$tmppsfile" w]}
 		if { $orient == "portrait" } {
 			if { [expr $docht / $docwd] < [expr $pght / $pgwd] } {
 				$cv postscript -pageheight $cdocht -channel $printmap
@@ -462,7 +467,9 @@ proc psprint::print { cv } {
 			}
 		}		
 		after 500
-		close $printmap
+		if {[catch {close $printmap} error]} {
+			puts $error
+		}
 		exec $cmd  $format -sDEVICE#pdfwrite -r$res -sNOPAUSE -sOutputFile#$pdffile -dBATCH -- $tmppsfile 
 	}
 
