@@ -33,6 +33,7 @@ int input_data()
 	int 	fd9, fd10, fd11, fd12;
         int     l,j;
         int nn,cc,ii,dd;
+        double unitconv=0.0000002; /* mm/hr to m/s */
 	char *mapset;
 	Site *site;
 	char msg[1024];
@@ -257,57 +258,66 @@ fclose(fdsfile);
 	if(v1[row_rev][j] == UNDEF || v2[row_rev][j] == UNDEF)
 		zz[row_rev][j] = UNDEF; /* undef all area if something's missing */
 	   
+/* should be ? if(v1[row_rev][j] == UNDEF || v2[row_rev][j] == UNDEF || zz[row_rev][j] = UNDEF)
+  * {v1[row_rev][j] == UNDEF;
+  * v2[row_rev][j] == UNDEF;
+  * zz[row_rev][j] = UNDEF;}
+  * printout warning?
+  */      
 	  if(rain != NULL)
 		  if(!G_is_d_null_value(cell4+j))
-           si[row_rev][j] = (double ) cell4[j]; /* add conv */
+            si[row_rev][j] = ((double ) cell4[j]) * unitconv; /*conv mm/hr to m/s*/
+ /*        printf("\n INPUTrain, convert %f %f",si[row_rev][j],unitconv); */
+
 		  else {
 			  si[row_rev][j] = UNDEF;
 			zz[row_rev][j] = UNDEF;
 		  }
           if(infil != NULL)
 		  if(!G_is_d_null_value(cell4a+j))
-           inf[row_rev][j] = (double ) cell4a[j]; /* add conv */
+           inf[row_rev][j] = (double ) cell4a[j] * unitconv;  /*conv mm/hr to m/s*/
+ /*        printf("\n INPUT infilt, convert %f %f",inf[row_rev][j],unitconv); */
 		  else {
 			  inf[row_rev][j] = UNDEF;
                         zz[row_rev][j] = UNDEF;
 		  }
           if(traps != NULL)
 		  if(!G_is_f_null_value(cell4b+j))
-           trap[row_rev][j] = (float) cell4b[j]; /* add conv */
+           trap[row_rev][j] = (float) cell4b[j]; /* no conv, unitless */
 		  else {
 			  trap[row_rev][j] = UNDEF;
                         zz[row_rev][j] = UNDEF;
 		  }
 	  if(!G_is_f_null_value(cell5+j))
-           cchez[row_rev][j] = (float ) cell5[j]; /* add conv? */
+           cchez[row_rev][j] = (float ) cell5[j]; /* units in manual */
 	  else {
 		  cchez[row_rev][j] = UNDEF;
                         zz[row_rev][j] = UNDEF;
 	  }
         if(detin != NULL)
 		if(!G_is_f_null_value(cell9+j))
-           dc[row_rev][j] = (float ) cell9[j];
+           dc[row_rev][j] = (float ) cell9[j]; /*units in manual*/
 		else {
 			dc[row_rev][j] = UNDEF;
                         zz[row_rev][j] = UNDEF;
 		}
         if(tranin != NULL)
 		if(!G_is_f_null_value(cell10+j))
-           ct[row_rev][j] = (float ) cell10[j];
+           ct[row_rev][j] = (float ) cell10[j]; /*units in manual*/
 		else {
 			ct[row_rev][j] = UNDEF;
                         zz[row_rev][j] = UNDEF;
 		}
         if(tauin != NULL)
 		if(!G_is_f_null_value(cell11+j))
-           tau[row_rev][j] = (float ) cell11[j];
+           tau[row_rev][j] = (float ) cell11[j]; /*units in manual*/
 		else {
 			tau[row_rev][j] = UNDEF;
                         zz[row_rev][j] = UNDEF;
 		}
         if(wdepth != NULL)
 		if(!G_is_d_null_value(cell12+j))
-           gama[row_rev][j] = (double ) cell12[j];
+           gama[row_rev][j] = (double ) cell12[j]; /*units in manual*/
 		else {
 			gama[row_rev][j] = UNDEF;
                         zz[row_rev][j] = UNDEF;
