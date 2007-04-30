@@ -49,7 +49,7 @@ int input_data()
         fw=fopen("simwe_data.txt","w"); /* open ascii file for ascii output of gamma */
 
 
-  mapset = G_find_file ("site_lists", sfile, "");
+  mapset = G_find_sites (sfile, "");
   if (mapset == NULL)
   {
     sprintf (msg, "file [%s] not found", sfile);
@@ -89,7 +89,7 @@ if((points[npoints].east/conv <= cellhd.east && points[npoints].east/conv >= cel
         (points[npoints].north/conv <= cellhd.north && points[npoints].north/conv >= cellhd.south))
         npoints++;
     }
-fclose(fdsfile);
+G_sites_close(fdsfile);
 
 	}
 

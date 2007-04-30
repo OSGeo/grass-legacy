@@ -195,11 +195,11 @@ int main ( int argc, char *argv[])
 
 /* needs to be updated to GRASS 6 vector format !! */
   parm.sfile = G_define_option ();
-  parm.sfile->key = "sites";
+  parm.sfile->key = "vector";
   parm.sfile->type = TYPE_STRING;
   parm.sfile->required = NO;
-  parm.sfile->gisprompt = "old,site_lists,sites";
-  parm.sfile->description = _("Name of the site file with x,y locations");
+  parm.sfile->gisprompt = "old,vector,vector";
+  parm.sfile->description = _("Name of the vector points map with x,y locations");
   parm.sfile->guisection  = _("Input_options");
 
   parm.tc = G_define_option();
@@ -422,7 +422,7 @@ int main ( int argc, char *argv[])
     fclose (fdwalkers);
 
   if (sfile != NULL)
-                fclose(fw);
+                G_sites_close(fw);
 
   exit (EXIT_SUCCESS);
 }

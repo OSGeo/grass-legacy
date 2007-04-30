@@ -186,11 +186,11 @@ int main ( int argc, char *argv[])
 
 /* needs to be updated to GRASS 6 vector format !! */
   parm.sfile = G_define_option ();
-  parm.sfile->key = "sites";
+  parm.sfile->key = "vector";
   parm.sfile->type = TYPE_STRING;
   parm.sfile->required = NO;
-  parm.sfile->gisprompt = "old,site_lists,sites";
-  parm.sfile->description = _("Name of the site map with x,y locations");
+  parm.sfile->gisprompt = "old,vector,vector";
+  parm.sfile->description = _("Name of the vector points map with x,y locations");
   parm.sfile->guisection  = _("Input_options");
 
   parm.depth = G_define_option();
@@ -221,8 +221,8 @@ int main ( int argc, char *argv[])
   parm.outwalk->key = "outwalk";
   parm.outwalk->type = TYPE_STRING;
   parm.outwalk->required = NO;
-  parm.outwalk->gisprompt = "new,site_lists,sites";
-  parm.outwalk->description = _("Name of the output walkers site map");
+  parm.outwalk->gisprompt = "new,vector,vector";
+  parm.outwalk->description = _("Name of the output walkers vector points map");
   parm.outwalk->guisection  = _("Output_options");
 
   parm.nwalk = G_define_option();
@@ -339,7 +339,7 @@ int main ( int argc, char *argv[])
    */
 
   if ((depth == NULL) && (disch == NULL) && (err == NULL) && (outwalk == NULL))
-    G_warning(_("You are not outputing any raster or site maps"));
+    G_warning(_("You are not outputting any raster or vector points maps"));
 
   ret_val = input_data();
   if (ret_val != 1)
