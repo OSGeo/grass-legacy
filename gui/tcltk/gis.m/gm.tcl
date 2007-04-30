@@ -532,17 +532,17 @@ proc Gm::SelectFont { } {
 		set fontpath  [file join "$env(GISBASE)" "fonts"]
 	} elseif {$Gm::fonttype == "truetype"} {
 		if {$systemtype == "Darwin"} {
-			set fontpath [file join "Library" "Fonts"]
+			set fontpath [file join "/Library" "Fonts"]
 		} elseif {$systemtype == "MINGW"} {
 			set fontpath [file joint $WINDIR "Fonts"]
-		} elseif $systemtype == "CYGWIN"} {
+		} elseif {$systemtype == "CYGWIN"} {
 			set fontpath [file joint $WINDIR "Fonts"]
 		} else {
-			set fontpath [file join "usr" "lib" "X11" "fonts"]
+			set fontpath [file join "/usr" "lib" "X11" "fonts"]
 		}
 	}
 	
-	if {![file isdirectory fontpath]} {set fontpath ""}
+	if {![file exists $fontpath]} {set fontpath ""}
 
 	set fontname [tk_getOpenFile -initialdir $fontpath \
 		-title [G_msg "Select font"] ]
