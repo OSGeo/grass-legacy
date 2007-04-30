@@ -259,7 +259,7 @@ class VirtualAttributeList(wx.ListCtrl, listmix.ListCtrlAutoWidthMixin, listmix.
             if self.icon: cmd = cmd +"  icon=%s" % (self.icon)
             if self.pointsize: cmd = cmd + " size=%s" % (self.pointsize)
 
-            self.qlayer = self.map.addLayer(item='qlayer', command=cmd, l_active=True,
+            self.qlayer = self.map.AddLayer(item='qlayer', command=cmd, l_active=True,
                                         l_hidden=False, l_opacity=1, l_render=False)
             self.mapdisp.ReDraw(None)
             self.lastTurnSelectedCats = self.selectedCats[:]
