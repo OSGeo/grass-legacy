@@ -506,7 +506,7 @@ proc gisSetWindow {} {
     	-text [G_msg "EPSG codes"] \
     	-width 20 \
     	-relief raised \
-    	-command {epsgLocCom}
+    	-command {epsgOpt::epsgLocCom}
 
     button .frame0.frameNMS.seventh.button \
     	-text [G_msg "Projection values"] \

@@ -13,6 +13,9 @@
 #         VERSION:  1.2
 #         CREATED:  04/01/2004
 #        REVISION:  22/04/2006 (Michael Barton, Arizona State University)
+#       CHANGELOG:  20/12/2006 - EPSG code search and epsgOpt::create_loc. Michael Barton.
+#                   08/12/2006 - Fixed directory choosing dialogs. Maris Nartiss.
+#
 #=====================================================================================
 #
 #
@@ -45,268 +48,361 @@
 #
 #############################################################################
 
-global browsedepsg 
+namespace eval epsgOpt {
+	variable browsedepsg #path to EPSG code file
+	variable epsgLocation #name of new location to be created
+	variable epsg_code  #EPSG code number
+	variable searchterm #text string searched in EPSG file
+	variable dir 
+	variable start #starting index for searching EPSG text widget
+	variable epsgtxt #text widget with EPSG definitions and codes
+	global env
+	global database 
+	global refresh
+	global mingw #test to see if we are running a windows version in mingw
+}
 
 # G_msg.tcl should be sourced first for internationalized strings.
 
 # the frame used to set EPSG parameters 
-proc epsgLocCom args {
-        #vars declaration
-        global database
-        global epsgLocation 
-        global epsg_code
-        global env
-        global thelocation
-        global browsedepsg 
-        global locpath
+proc epsgOpt::epsgLocCom args {
+	#Create main panel for setting location with EPSG code
+	variable epsgLocation 
+	variable epsg_code
+	variable browsedepsg 
+	variable searchterm
+	variable dir
+	variable start
+	variable searchterm
+	global database
+	global env
+	global mingw
+	
+	#initialize some variables
+	set searchterm ""
+	set dir "f"
+	set start 1.0
+	#Mac framework location for EPSG file
+	#set env(PROJSHARE) "/Library/Frameworks/PROJ.framework/Resources/proj"
         
 	# NOTE: the epsg file is generated in GDAL for PROJ4 
 	# with gdal/pymod/epsg_tr.py
-	set browsedepsg "PROJSHARE/epsg"
-        set epsgLocation "newLocation"
-        set epsg_code ""
-        set locpath $database
-        
-        # creation of the parameter window
-        toplevel .optPopup
-        wm title .optPopup {Define location using EPSG projection codes}
-        # put it in the middle of the screen
-        update idletasks
-        set winWidth [winfo reqwidth .optPopup]
-        set winHeight [winfo reqheight .optPopup]
-        set scrnWidth [winfo screenwidth .optPopup]
-        set scrnHeight [winfo screenheight .optPopup]
-        set x [expr ($scrnWidth - $winWidth) / 2-250]
-        set y [expr ($scrnHeight  - $winHeight) / 2]
-        wm geometry .optPopup +$x+$y
-        wm deiconify .optPopup
-        
-        #create the form and buttons
-        label .optPopup.input1_ppb -text [G_msg "Name of new location"] -justify right -height 2
-        entry .optPopup.input1_ppbEntry -textvariable epsgLocation -width 35 -bg white
-        label .optPopup.input2_ppb -text [G_msg "Path to new location"] -justify right -height 2
-        entry .optPopup.input2_ppbEntry -textvariable locpath  -width 35 -bg white
-        label .optPopup.input3_ppb -text [G_msg "Path to the EPSG-codes file"] -justify right -height 2
-        entry .optPopup.input3_ppbEntry -textvariable browsedepsg  -width 35 -bg white
-        label .optPopup.input4_ppb -text [G_msg "EPSG code number of projection"] -justify right -height 2
-        entry .optPopup.input4_ppbEntry -textvariable epsg_code  -width 35 -bg white
-        
-		#browse for database path
-        button .optPopup.db -justify center -width 12 -text [G_msg "Browse..."] \
-			-command "set locpath \[tk_getOpenFile\]" 
+	set epsgOpt::browsedepsg "PROJSHARE/epsg"
+	set epsgOpt::epsgLocation "newLocation"
+	set epsgOpt::epsg_code ""
 
-        bind .optPopup.db <Leave> {
-             if {$locpath == ""} {
-                set locpath $database
-            }
-        }
+	# creation of the parameter window
+	set epsg_win [toplevel .optPopup]
+	wm title $epsg_win [ G_msg "Define location using EPSG projection codes" ]
+	# put it in the middle of the screen
+	update idletasks
+	set winWidth [winfo reqwidth $epsg_win]
+	set winHeight [winfo reqheight $epsg_win]
+	set scrnWidth [winfo screenwidth $epsg_win]
+	set scrnHeight [winfo screenheight $epsg_win]
+	set x [expr ($scrnWidth - $winWidth) / 2-250]
+	set y [expr ($scrnHeight  - $winHeight) / 2]
+	wm geometry $epsg_win +$x+$y
+	wm deiconify $epsg_win
 
-		#browse for epsg file
-        button .optPopup.browseepsgfile -justify center -width 12 -text [G_msg "Browse..."] \
-			-command "set browsedepsg \[tk_getOpenFile\]" 
-                                        
-        bind .optPopup.input3_ppbEntry <Leave> {
-             if {$browsedepsg == ""} {
-                set browsedepsg "PROJSHARE/epsg"
-            }
-        }
+	#create the form and buttons
 
-		#browse epsg codes in file
-        button .optPopup.codes 	-justify center -width 12 -text [G_msg "Browse..."] \
-			-command {
-				if {[file exists $browsedepsg]== 0} {
-					DialogGen .wrnDlg [G_msg "WARNING: epsg-codes file not found"] warning \
-					[G_msg "WARNING: The epsg-codes file was not found!"] \
-					0 OK;
-				}
-				if {[file exists $browsedepsg]== 1} {
-					codesEpsg;
-				}
+	set row1 [frame $epsg_win.row1]
+	set row2 [frame $epsg_win.row2]
+	set row3 [frame $epsg_win.row3]
+	set row4 [frame $epsg_win.row4]
+
+	LabelEntry $row1.newloc -label [G_msg "Name of new location"] \
+		-labeljustify right -labelanchor e -labelwidth 30 \
+		-textvariable epsgOpt::epsgLocation -width 35 \
+		-helptext [G_msg "Enter name of location to be created"]
+
+	pack $row1.newloc -side left -expand 0 -fill x -padx 2
+
+	LabelEntry $row2.epsgpath -label [G_msg "Path to the EPSG-codes file"] \
+		-labeljustify right -labelanchor e -labelwidth 30 \
+		-textvariable epsgOpt::browsedepsg  -width 35 \
+		-helptext [G_msg "Path to EPSG codes file"]
+	 	
+	#browse for epsg file
+	Button $row2.browseepsgfile -justify center -width 10 -bd 1 -text [G_msg "Browse..."] \
+		-helptext [G_msg "Browse to locate EPSG file"] \
+		-command "set browsedepsg \[tk_getOpenFile -initialdir PROJSHARE -initialfile epsg \
+		-parent .optPopup -title \[ G_msg \"Choose EPSG file\" \] -multiple false\]" 
+
+	pack $row2.epsgpath $row2.browseepsgfile -side left -expand 0 -fill x -padx 2
+
+	#browse epsg codes in file
+	LabelEntry $row3.code_entry -label [G_msg "EPSG code number of projection"] \
+		-labeljustify right -labelanchor e -labelwidth 30 \
+		-textvariable epsgOpt::epsg_code  -width 35 \
+		-helptext [G_msg "Enter EPSG code for selected projection"]
+
+	Button $row3.codebutton -justify center -width 10 -bd 1 -text [G_msg "Browse..."] \
+		-helptext [G_msg "View EPSG codes and projection information."] \
+		-command {
+			if {[file exists $epsgOpt::browsedepsg]} {
+				set epsgOpt::epsg_code ""
+				epsgOpt::codesEpsg
+			} else {
+				DialogGen .wrnDlg [G_msg "WARNING: epsg-codes file not found"] warning \
+				[G_msg "WARNING: The epsg-codes file was not found!"] \
+				0 OK
 			}
-                                
-                                     
-        pack .optPopup.codes -side left -fill both -expand 0
-        
-        button .optPopup.param 	-justify center -bg honeydew2 -text [G_msg "Help"] \
-                        -command {infoEpsg}
-        pack .optPopup.param -side left -fill both -expand 0
-        
-        button .optPopup.submit 	-justify center -width 15 -text [G_msg "Define location"] -state disabled\
-			-command {
-				set thelocation "$locpath/$epsgLocation";
-				if {[file exists $thelocation ]== 1} {
-					DialogGen .wrnDlg [G_msg "WARNING: location exists"] warning \
-					[G_msg "WARNING: The location '$thelocation' already exists, please try another name"] \
-					0 OK;
-				}
-				if {[file exists $browsedepsg]== 0} {
-					DialogGen .wrnDlg [G_msg "WARNING: epsg-codes file not found"] warning \
-					[G_msg "WARNING: The epsg-codes file was not found!"] \
-					0 OK;
-				}
-				if {[file exists $browsedepsg]== 1} {
-					if {[file exists $thelocation ]==0} {  
-						destroy .optPopup; 
-						exec -- $env(GISBASE)/etc/grass-xterm-wrapper -e $env(GISBASE)/etc/make_location_epsg.sh \
-							$epsg_code $epsgLocation $locpath >@stdout 2>@stderr; 
-						DialogGen .wrnDlg [G_msg "WARNING: restart GRASS please"] warning \
-						[G_msg "WARNING: Please restart GRASS in order find the created location in the list (closing it for you now)"] \
-							0 OK; 
-						set env(EPSGSCRIPT) {yes};
-						puts stdout "exit";
-						destroy . 
-					}
-				}
-				set thelocation ""
-			 }
-			
-        bind .optPopup.input4_ppbEntry <KeyRelease> {
-            .optPopup.submit configure -state active
-        }
+		}
 
-        pack .optPopup.submit -side left -fill both -expand 0
-        
-        button .optPopup.cancel -justify center -width 15 -text [G_msg "Cancel"] \
-                        -command {destroy .optPopup}
-        pack .optPopup.submit -side left -fill both -expand 0
+	pack $row3.code_entry $row3.codebutton -side left -fill x -expand 0 -padx 2
 
-        # geometry
-        grid .optPopup.input1_ppb -row 0 -column 0 -sticky e
-        grid .optPopup.input1_ppbEntry 	-row 0 -column 1 -columnspan 2
-        
-        grid .optPopup.input2_ppb 	-row 1 -column 0 -sticky e
-        grid .optPopup.input2_ppbEntry 	-row 1 -column 1 -columnspan 2
-        grid .optPopup.db   -row 1 -column 3 
-        
-        grid .optPopup.input3_ppb 	-row 2 -column 0 -sticky e
-        grid .optPopup.input3_ppbEntry 	-row 2 -column 1 -columnspan 2
-        grid .optPopup.browseepsgfile   -row 2 -column 3 
-        
-        grid .optPopup.input4_ppb 	-row 3 -column 0 -sticky e
-        grid .optPopup.input4_ppbEntry 	-row 3 -column 1 -columnspan 2
-        grid .optPopup.codes 		-row 3 -column 3 
-        
-        grid .optPopup.submit 		-row 4 -column 0
-        grid .optPopup.cancel 		-row 4 -column 1
-        grid .optPopup.param 		-row 4 -column 2 
+	Button $row4.submit -justify center -width 15 -text [G_msg "Define location"] \
+	 	-command "epsgOpt::def_loc" -bd 1
+
+	Button $row4.cancel -justify center -width 15 -text [G_msg "Cancel"] \
+	 	-command {destroy .optPopup} -bd 1
+
+	pack $row4.submit -side left -fill x -expand 0
+	pack $row4.cancel -side right -fill x -expand 0
+
+	pack $row1 $row2 $row3 $row4 -side top -fill both -expand 1 -padx 3 -pady 3
+
 }
 
-# listing of the EPSG codes
-proc codesEpsg args {
-    
-        global browsedepsg
-    
-        toplevel .infoPopup
-        wm title .infoPopup {EPSG-codes}
-        update idletasks
-        set winWidth [winfo reqwidth .infoPopup]
-        set winHeight [winfo reqheight .infoPopup]
-        set scrnWidth [winfo screenwidth .infoPopup]
-        set scrnHeight [winfo screenheight .infoPopup]
-        set x [expr ($scrnWidth - $winWidth) / 2-230]
-        set y [expr ($scrnHeight  - $winHeight) / 2 - 110]
-        wm geometry .infoPopup +$x+$y
-        wm deiconify .infoPopup
-        
-        text .infoPopup.text -width 100 -height 50\
-                   -wrap word \
-                   -relief raised \
-                   -yscrollcommand ".infoPopup.vscroll set"
-                   
-        # tag configuration
-        .infoPopup.text tag configure underline -underline 1
-        .infoPopup.text tag configure title -relief sunken -borderwidth 2 \
-        	-background white -foreground "medium blue" -justify center
-        .infoPopup.text tag configure lefttitle -relief flat  
-        .infoPopup.text tag configure subtitle -relief flat -background beige
-    
-        
-        # the text to be inserted
-        .infoPopup.text insert end [format " \n %s\n\n" [format [G_msg "EPSG CODES (from file: %s)"] $browsedepsg]] title
-        .infoPopup.text insert end " \n" lefttitle
-        .infoPopup.text insert end " \n\n" subtitle
-        
-        # open the file 
-        set f [open $browsedepsg "r"]
-        set found ""
-        while { [eof $f] == 0 } {
-            set line [gets $f]
-            set firstdash [string first # $line]
-            set firstminor [string first < $line]
-            if {$firstdash == "0"} {
-                .infoPopup.text insert end "\n$line\n" lefttitle
-                set found "yes"
-            }
-            if {$firstminor == "0"} {
-                .infoPopup.text insert end "\n$line\n\n" subtitle
-            }
-            if {$firstminor != "0" && $firstdash != "0" && $found != "yes"} {
-                .infoPopup.text insert end [format "\n\n%s\n\n" [G_msg "GUESS THAT IS NOT THE EPSG FILE"]] title;
-                break;
-            }
-        }
-        
-        pack .infoPopup.text -side left -fill y 
-        
-        scrollbar .infoPopup.vscroll \
-                    -relief sunken \
-                    -command ".infoPopup.text yview"
-        pack .infoPopup.vscroll -side right -fill y
-        
-        button .infoPopup.ex -justify center -width 6 -text [G_msg "Close"] \
-                             -command {destroy .infoPopup}			
-        pack .infoPopup.ex -side bottom -expand 1 -fill both
+
+proc epsgOpt::def_loc { } {
+# define new location using EPSG code
+	global refresh
+	variable epsg_code
+	variable epsgLocation
+	global env
+	global database
+	global locpath
+
+	set locpath $database
+
+	if {$epsg_code==""} {return}
+
+	if {![string is integer $epsg_code]} {
+		tk_messageBox -type ok -icon error \
+		    -message [G_msg "WARNING: Please supply a\nvalid EPSG code (integer)"]
+		return
+	}
+
+	if {[file exists "$locpath/$epsgLocation" ]== 1} {
+		tk_messageBox -type ok -icon error \
+		    -message [G_msg "WARNING: The location '$epsgLocation'\nalready exists, please try another name"]
+		set epsgLocation ""
+		return
+	}
+
+	if {[file exists $epsgLocation ]==0} {  
+		destroy .optPopup
+
+		exec -- $env(GISBASE)/etc/grass-xterm-wrapper -e $env(GISBASE)/etc/make_location_epsg.sh \
+			$epsg_code $epsgLocation $locpath >@stdout 2>@stderr; 
+		DialogGen .wrnDlg [G_msg "WARNING: restart GRASS please"] warning \
+			[G_msg "WARNING: Please restart GRASS in order find the created location in the list (closing it for you now)"] \
+			0 OK; 
+		set env(EPSGSCRIPT) {yes};
+		# complains that exit needs a numeric arg, but then if you give
+		#  it one with [list "exit" "2"] it then complains that you gave
+		#  it too many args. ARgh!
+		puts stdout "exit";
+		destroy .
+
+		set refresh 1
+		return
+	}
+
 }
 
-# help for the EPSG Location creation
-proc infoEpsg args {
+proc epsgOpt::codesEpsg args {
+# text widget for listing EPSG codes
 
-        toplevel .infoPopup
-        wm title .infoPopup {Info}
-        update idletasks
-        set winWidth [winfo reqwidth .infoPopup]
-        set winHeight [winfo reqheight .infoPopup]
-        set scrnWidth [winfo screenwidth .infoPopup]
-        set scrnHeight [winfo screenheight .infoPopup]
-        set x [expr ($scrnWidth - $winWidth) / 2-230]
-        set y [expr ($scrnHeight  - $winHeight) / 2]
-        wm geometry .infoPopup +$x+$y
-        wm deiconify .infoPopup
-        
-        text .infoPopup.text -width 40 -height 30\
-                   -wrap word \
-                   -relief raised \
-                   -yscrollcommand ".infoPopup.vscroll set"
-                   
-        # tag configuration
-        .infoPopup.text tag configure underline -underline 1
-        .infoPopup.text tag configure title -relief raised -borderwidth 2 -background grey -justify center
-        .infoPopup.text tag configure subtitle -relief flat -borderwidth 1 
-        .infoPopup.text tag configure info -relief sunken -borderwidth 1 -background white 
-    
-        # the text to be inserted
-        .infoPopup.text insert end [G_msg " \nCREATION OF A NEW GRASS LOCATION WITH EPSG\n "] title
-        .infoPopup.text insert end [G_msg "- needed parameters -\n\n"] title
-        .infoPopup.text insert end "\n" 
-        .infoPopup.text insert end [G_msg "\n   Name of new location:\n\n"] subtitle
-        .infoPopup.text insert end [G_msg "\nRequires as input the name of the new location to be created\n\n"] info
-        .infoPopup.text insert end "\n" 
-        .infoPopup.text insert end [G_msg "\n   Path to location:\n\n"] subtitle
-        .infoPopup.text insert end [G_msg "\nThe folder (GRASS database) in which the location should be created\n\n"] info
-        .infoPopup.text insert end "\n" 
-        .infoPopup.text insert end [G_msg "\n   EPSG code number of projection:\n\n"] subtitle
-        .infoPopup.text insert end [G_msg "\nEPSG code number of projection (see PROJSHARE/epsg or push the 'EPSG-codes' button)\n\n"] info
-        
-        pack .infoPopup.text -side left -fill both 
-        
-        scrollbar .infoPopup.vscroll \
-                    -relief raised \
-                    -command ".infoPopup.text yview"
-        pack .infoPopup.vscroll -side right -fill y
-        
-        button .infoPopup.ex -justify center -width 6 -text [G_msg "OK"] \
-                             -command {destroy .infoPopup}			
-        pack .infoPopup.ex -side bottom -expand 1 -fill both
+	variable browsedepsg
+	variable epsgtxt
+	variable epsg_code
+
+	toplevel .infoPopup
+	wm title .infoPopup {EPSG-codes}
+	update idletasks
+	wm geometry .infoPopup +250+10
+	wm deiconify .infoPopup
+
+	set epsgfr [frame .infoPopup.fr]
+
+	set titlefr [frame $epsgfr.top -relief groove -bd 2 -bg white]
+	label $titlefr.title1 -text [G_msg "EPSG CODES (from file: $epsgOpt::browsedepsg)"] \
+		-fg mediumblue -bg white
+	label $titlefr.title2 -bg white \
+		-text [G_msg "You can select EPSG code (in <braces>) and copy it for later use." ]
+	pack $titlefr.title1 $titlefr.title2 -side top
+	pack $titlefr -side top -fill x -expand 0
+
+	frame $epsgfr.mid
+	set epsgtxt [text $epsgfr.mid.text \
+		-wrap word -exportselection 1 \
+	 	-relief flat -selectbackground lightgreen \
+	 	-yscrollcommand "$epsgfr.mid.vscroll set"]
+
+	scrollbar $epsgfr.mid.vscroll \
+		-relief sunken \
+		-command "$epsgtxt yview"
+	  
+	# tag configuration
+	$epsgtxt tag configure underline -underline 1
+	$epsgtxt tag configure title -relief sunken -borderwidth 2 \
+		-background white -foreground "mediumblue" -justify center
+	#$epsgtxt tag configure lefttitle -relief flat -background beige
+	# Do not set background color for subtitle. It will override selection background color!
+	$epsgtxt tag configure subtitle -relief flat
+
+	# open the file 
+	set f [open $epsgOpt::browsedepsg "r"]
+	set found ""
+	while { [eof $f] == 0 } {
+		set line [gets $f]
+		set firstdash [string first # $line]
+		set firstminor [string first < $line]
+		if {$firstdash == "0"} {
+			$epsgtxt insert end "\n$line\n" lefttitle
+			set found "yes"
+		}
+		if {$firstminor == "0"} {
+			$epsgtxt insert end "\n$line\n\n" subtitle
+		}
+		if {$firstminor != "0" && $firstdash != "0" && $found != "yes"} {
+			$epsgtxt insert end [format "\n\n%s\n\n" [G_msg "GUESS THAT IS NOT THE EPSG FILE"]] title;
+			break;
+		}
+	}
+
+	set controls [frame .infoPopup.buttons]
+	button $controls.search -text [G_msg "Search"] -command "epsgOpt::search_epsg $epsgtxt" \
+		-bd 1
+
+	Button $controls.grab -text [G_msg "Grab code"] -width 8 -bd 1 \
+		-command "epsgOpt::grabcode"
+
+	pack $controls.search $controls.grab -side left -fill x -expand 0
+
+	button $controls.close -width 6 -text [G_msg "Close"] \
+		-command {destroy .infoPopup} -bd 1
+	pack $controls.close -side right -fill x -expand 0		    
+
+	pack $controls -side bottom -fill x -expand 0 -padx 5 -pady 4	   
+	pack $epsgtxt -side left -fill both -expand 1
+	pack $epsgfr.mid.vscroll -side right -fill both -expand 0
+	pack $epsgfr.mid -side top -fill both -expand 1
+	pack $epsgfr -fill both -expand 1
 }
 
+
+proc epsgOpt::search_epsg { epsgtxt } {
+# Widget for searching EPSG file. Selects EPSG code associated with found search term.
+# Argument is text widget
+
+	variable searchterm
+	variable dir
+	variable start
+
+	# Create a popup search dialog
+	toplevel .search_epsg
+	wm title .search_epsg [G_msg "Search"]
+	set row1 [frame .search_epsg.frame1]
+	set row2 [frame .search_epsg.frame2]
+	set row3 [frame .search_epsg.frame3]
+	set row4 [frame .search_epsg.frame4]
+
+	Label $row1.label -text [G_msg "Search text: "] \
+	    -helptext [G_msg "Search for entered text in EPSG file"]
+	set searchentry [entry $row1.enter -relief sunken -textvariable epsgOpt::searchterm]
+	pack $row1.label $row1.enter -side left -fill x -expand 0 -anchor w
+	pack $row1 -side top -padx 3 -pady 4 -expand 1 -fill both
+
+	radiobutton $row2.forward -text [G_msg "forward search"] -variable epsgOpt::dir -value "f"
+	radiobutton $row2.backward -text [G_msg "backward search"] -variable epsgOpt::dir -value "b"
+	$row2.forward select
+	pack $row2.forward $row2.backward -side left \
+	    -anchor w -fill x -expand 0
+	pack $row2 -side top -padx 3 -expand 1 -fill both
+
+	Button $row4.search -text [G_msg "Search"] -width 8 -bd 1 \
+	    -command "epsgOpt::textsearch"
+	pack $row4.search -side left -fill x -expand 0
+	button $row4.cancel -text [G_msg "Close"] -width 8 -bd 1 -command "destroy .search_epsg"
+	pack $row4.cancel -side right -fill x -expand 0
+	pack $row4 -side top -pady 3 -expand 1 -fill both
+}
+
+
+proc epsgOpt::textsearch { } {
+# Search for text in EPSG text widget and return the EPSG code
+	variable epsgtxt
+	variable searchterm
+	variable dir
+	variable start
+	variable epsg_code
+	set strlength 0
+
+	catch {$epsgtxt tag remove sel [lindex [$epsgtxt tag ranges sel] 0] [lindex [$epsgtxt tag ranges sel] 1]}
+
+	if {$dir == "f"} {
+		catch {set start [$epsgtxt search -forwards -nocase -count strlength -- $epsgOpt::searchterm $start]}
+		catch {set newstart [$epsgtxt index "$start +[expr 1+$strlength] c"]}
+	} else {
+		catch {set start [$epsgtxt search -backwards -nocase -count strlength -- $epsgOpt::searchterm $start]}
+		catch {set newstart [$epsgtxt index "$start -1 c"]}
+	}
+
+	update idletasks
+
+	if {$start != 0 && $strlength !=0} {
+		$epsgtxt tag add sel "$start"
+		$epsgtxt see $start
+		catch {set start $newstart}
+		set currpos [$epsgtxt index sel.first]
+		if { [$epsgtxt get "$currpos linestart"] == "<" } {
+		    set codestart [$epsgtxt index "$currpos linestart +1c"]
+		    set codeend [$epsgtxt index [$epsgtxt search -forwards -- {>} $codestart]]
+		} else {
+		    set codestart [$epsgtxt index "[$epsgtxt search -forwards -- {<} $currpos] +1c"]
+		    set codeend [$epsgtxt index [$epsgtxt search -forwards -- {>} $codestart]]
+		}
+
+		$epsgtxt tag remove sel [$epsgtxt index sel.first]
+		$epsgtxt tag add sel "$codestart" "$codeend"
+		set epsg_code [$epsgtxt get $codestart $codeend]
+	} else {
+		set start 1.0
+		return
+	}
+}
+
+
+proc epsgOpt::grabcode { } {
+# put the code in the EPSG code entry and activate the define location button
+# Will grab the code of the entry where the insertion cursor is located if nothing found search
+
+	variable epsgtxt
+	variable searchterm
+	variable dir
+	variable start
+	variable epsg_code
+
+	if { $epsg_code == "" } {
+		set currpos [$epsgtxt index insert]
+		if { [$epsgtxt get "$currpos linestart"] == "<" } {
+		    set codestart [$epsgtxt index "$currpos linestart +1c"]
+		    set codeend [$epsgtxt index [$epsgtxt search -forwards -- {>} $codestart]]
+		} else {
+		    set codestart [$epsgtxt index "[$epsgtxt search -forwards -- {<} $currpos] +1c"]
+		    set codeend [$epsgtxt index [$epsgtxt search -forwards -- {>} $codestart]]
+		}
+
+		$epsgtxt tag remove sel [$epsgtxt index insert]
+		$epsgtxt tag add sel "$codestart" "$codeend"
+		set epsg_code [$epsgtxt get $codestart $codeend]
+	}
+
+	destroy .infoPopup
+}
 
