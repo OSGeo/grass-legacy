@@ -545,9 +545,9 @@ proc Gm::SelectFont { } {
 		if {$systemtype == "Darwin"} {
 			set fontpath [file join "/Library" "Fonts"]
 		} elseif {$systemtype == "MINGW"} {
-			set fontpath [file joint $WINDIR "Fonts"]
+			set fontpath [file join $WINDIR "Fonts"]
 		} elseif {$systemtype == "CYGWIN"} {
-			set fontpath [file joint $WINDIR "Fonts"]
+			set fontpath [file join [exec cygpath -u $env(WINDIR)] "Fonts"]
 		} else {
 			set fontpath [file join "/usr" "lib" "X11" "fonts"]
 		}
