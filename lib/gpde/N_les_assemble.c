@@ -845,7 +845,8 @@ N_les *N_assemble_les_2d(int les_type, N_geom_data * geom, N_array_2d * status,
 		N_get_array_2d_d_value(cell_count, i, j);
 
 
-	    if (N_get_array_2d_d_value(status, i - 1, j) == N_CELL_DIRICHLET) {
+	    if (N_get_array_2d_d_value(status, i - 1, j) == N_CELL_DIRICHLET ||
+		N_get_array_2d_d_value(status, i - 1, j) == N_CELL_TRANSMISSION) {
 		les->b[count] -=
 		    N_get_array_2d_d_value(start_val, i - 1, j) * items->W;
 	    }
@@ -873,7 +874,8 @@ N_les *N_assemble_les_2d(int les_type, N_geom_data * geom, N_array_2d * status,
 		N_get_array_2d_d_value(cell_count, i, j);
 
 
-	    if (N_get_array_2d_d_value(status, i + 1, j) == N_CELL_DIRICHLET) {
+	    if (N_get_array_2d_d_value(status, i + 1, j) == N_CELL_DIRICHLET ||
+		N_get_array_2d_d_value(status, i + 1, j) == N_CELL_TRANSMISSION) {
 		les->b[count] -=
 		    N_get_array_2d_d_value(start_val, i + 1, j) * items->E;
 	    }
@@ -900,7 +902,8 @@ N_les *N_assemble_les_2d(int les_type, N_geom_data * geom, N_array_2d * status,
 		N_get_array_2d_d_value(cell_count, i, j);
 
 
-	    if (N_get_array_2d_d_value(status, i, j - 1) == N_CELL_DIRICHLET) {
+	    if (N_get_array_2d_d_value(status, i, j - 1) == N_CELL_DIRICHLET ||
+		N_get_array_2d_d_value(status, i, j - 1) == N_CELL_TRANSMISSION) {
 		les->b[count] -=
 		    N_get_array_2d_d_value(start_val, i, j - 1) * items->N;
 	    }
@@ -927,7 +930,8 @@ N_les *N_assemble_les_2d(int les_type, N_geom_data * geom, N_array_2d * status,
 		N_get_array_2d_d_value(cell_count, i, j);
 
 
-	    if (N_get_array_2d_d_value(status, i, j + 1) == N_CELL_DIRICHLET) {
+	    if (N_get_array_2d_d_value(status, i, j + 1) == N_CELL_DIRICHLET ||
+		N_get_array_2d_d_value(status, i, j + 1) == N_CELL_TRANSMISSION) {
 		les->b[count] -=
 		    N_get_array_2d_d_value(start_val, i, j + 1) * items->S;
 	    }
@@ -945,7 +949,7 @@ N_les *N_assemble_les_2d(int les_type, N_geom_data * geom, N_array_2d * status,
 	    }
 	}
 
-	/*Wie viele Eintrage gibt es */
+	/*How many entries in the les */
 	if (les->type == N_SPARSE_LES) {
 	    spvect->cols = pos + 1;
 	    N_add_spvector_to_les(les, spvect, count);
