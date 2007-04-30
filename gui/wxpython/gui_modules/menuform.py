@@ -620,9 +620,11 @@ class mainFrame(wx.Frame):
                             (self.createCmd(ignoreErrors=True)))
 
     def OnCancel(self, event):
+        self.MakeModal(False)
         self.Destroy()
-
+        
     def OnCloseWindow(self, event):
+        self.MakeModal(False)
         self.Destroy()
 
     def OnAbout(self, event):
@@ -1066,8 +1068,9 @@ class GUI:
                 if 'params' in dcmd_params: self.grass_task.params = dcmd_params['params']
                 if 'flags' in dcmd_params: self.grass_task.flags = dcmd_params['flags']
 
-            self.mf = mainFrame(self.parent ,-1, self.grass_task, get_dcmd, layer)
+            self.mf = mainFrame(parent=self.parent, ID=wx.ID_ANY, task_description=self.grass_task, get_dcmd=get_dcmd, layer=layer)
             self.mf.Show(True)
+            self.mf.MakeModal(True)
 
 
 if __name__ == "__main__":
