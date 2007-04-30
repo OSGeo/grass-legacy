@@ -51,7 +51,7 @@ class MapLayer:
                  active=True, hidden=False, opacity=1):
         self.type    = type
         self.name    = name
-        self.cmd     = cmd
+        self.cmd     = cmd + " --q" # quite
         
         self.active  = active
         self.hidden  = hidden
@@ -73,31 +73,10 @@ class MapLayer:
         Stores generic command with all parameters in the self.cmd variable
         """
         try:
-            self.cmd += " --q" # quite
             Debug.msg (3, "MapLayer.__renderLayer(): cmd=%s" % self.cmd)
             
         except StandardError, e:
             sys.stderr.write("Could not render command layer <%s>: %s\n" %\
-                 (self.name, str(e)))
-            self.cmd = None
-
-    def __renderOverlay(self):
-        """
-        Stores overlay command with all parameters in the self.cmd variable
-        """
-
-        if not self.active:
-            return
-
-        try:
-            if self.cmd != '':
-                self.cmd += " --q"
-                Debug.msg (3, "MapLayer.__renderOverlay(): cmd=%s" % self.name)
-            else:
-                self.cmd = None
-
-        except StandardError, e:
-            sys.stderr.write("Could not render overlay <%s>: %s\n" %\
                  (self.name, str(e)))
             self.cmd = None
 
@@ -129,10 +108,8 @@ class MapLayer:
         #
         # prepare command for each layer
         #
-        if self.type == "command" or self.type == "raster" or self.type == "vector":
+        if self.type == "command" or self.type == "raster" or self.type == "vector" or self.type == "overlay":
             self.__renderLayer()
-        elif self.type == "overlay":
-            self.__renderOverlay()
         elif self.type == "wms":
             print "Type wms is not supported yet"
         else:

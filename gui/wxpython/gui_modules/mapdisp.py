@@ -623,14 +623,15 @@ class BufferedWindow(wx.Window):
             if not l:
                 return
             id = l[0]
-            if self.pdc.GetIdGreyedOut(id) == True:
-                self.pdc.SetIdGreyedOut(id, False)
-            else:
-                self.pdc.SetIdGreyedOut(id, True)
-
-            r = self.pdc.GetIdBounds(id)
-            r.Inflate(4,4)
-            self.RefreshRect(r, False)
+            if id != 99:
+                if self.pdc.GetIdGreyedOut(id) == True:
+                    self.pdc.SetIdGreyedOut(id, False)
+                else:
+                    self.pdc.SetIdGreyedOut(id, True)
+                    
+                    r = self.pdc.GetIdBounds(id)
+                    r.Inflate(4,4)
+                    self.RefreshRect(r, False)
 
         # store current mouse position
         self.mouse['pos'] = event.GetPositionTuple()[:]
