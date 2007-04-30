@@ -172,7 +172,9 @@ proc GmThematic::show_data { id } {
 	set layer $opt($id,1,layer)
 	if {![catch {open "|v.db.connect map=$mapname layer=$layer -g" r} vdb]} {
 		set vectdb [read $vdb]
-		catch {close $vdb}
+		if {[catch {close $vdb} error]} {
+			puts $error
+		}
 		set vdblist [split $vectdb " "]
 		set tbl [lindex $vdblist 1]
 		set db [lindex $vdblist 3]
@@ -671,7 +673,7 @@ proc GmThematic::tleg_item { mon id } {
 	set tmpdir [file dirname [exec g.tempfile pid=$mappid]]
 	set legfile "$tmpdir/gismlegend.txt"
 	if {![file exists $legfile]} {return}
-	set ltxt [open $legfile r]
+	catch {set ltxt [open $legfile r]}
 	set x1 30
 	set y1 40
 	set txtx 60
@@ -767,7 +769,10 @@ proc GmThematic::tleg_item { mon id } {
 			incr y1 $yinc
 		}
 	}
-	close $ltxt
+	if {[catch {close $ltxt} error]} {
+		puts $error
+	}
+
 	return
 }
 

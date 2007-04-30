@@ -729,7 +729,10 @@ proc GmTree::save { spth } {
     }
     GmGroup::save $tree($mon) 0 "root"
 
-    close $rcfile
+	if {[catch {close $rcfile} error]} {
+		puts $error
+	}
+
 }
 
 
@@ -873,7 +876,7 @@ proc GmTree::load { lpth } {
     GmTree::new
     set filename($mon) $fpath
 
-    set rcfile [open $fpath r]
+    catch {set rcfile [open $fpath r]}
     set file_size [file size $fpath]
     set nrows [expr {$file_size / 16}]
 
@@ -1042,7 +1045,10 @@ proc GmTree::load { lpth } {
 		if { $prg > $max_prgindic } { set prg $max_prgindic }
 		set Gm::prgindic $prg
 	} 
-    close $rcfile
+	if {[catch {close $rcfile} error]} {
+		puts $error
+	}
+
     set Gm::prgindic $max_prgindic
     set prgtext [G_msg "Layers loaded"]
 }
