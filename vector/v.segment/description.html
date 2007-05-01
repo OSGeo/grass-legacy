@@ -27,7 +27,35 @@ P 2 495 12.31
 </pre></div>
 (pipe into the command).<br>
 For points, to calculate the offset (half of the length) the command <em>v.to.db</em>
-can be used.
+can be used (<em>option=length</em>).
+
+<h2>EXAMPLE</h2>
+
+Spearfish location:
+
+<div class="code"><pre>
+# insert kilometric nodes to railroad map:
+v.extract railroads out=myrr list=1
+
+# join segments into polyline
+v.build.polylines myrr out=myrr_pol
+v.category myrr out=myrailroads option=add
+
+# show line, category, direction (to find the beginning)
+d.vect myrailroads disp=shape,cat,dir
+
+# set node at 5000m from beginning of line 1
+echo "P 1 1 5000 0" | v.segment myrailroads out=myrailroads_segp
+d.erase
+d.vect myrailroads
+d.vect myrailroads_segp col=red
+
+# extract line segment from 400m to 5000m from beginning of line 1
+echo "L 1 1 400 5000 0" | v.segment myrailroads out=myrailroads_segl
+d.erase
+d.vect myrailroads
+d.vect myrailroads_segl col=green
+</pre></div>
 
 <h2>SEE ALSO</h2>
 
