@@ -2,8 +2,7 @@
 # script to launch GRASS commands
 
 # change console title to name of module
-#  non-bash proof? need to test $SHELL or $BASH?
-if [ "$TERM" = "xterm" ] ; then
+if [ "$TERM" = "xterm" ] && [ -n "$BASH" ] ; then
    TITLE="GRASS: $1"
    echo -e "\033]0;${TITLE}\007\c"
 fi
@@ -31,7 +30,7 @@ echo
 
 EXIT_VAL=$?
 if [ $EXIT_VAL -ne 0 ] ; then
-   echo -e "\r"
+   echo
    echo "ERROR: $1 exited abnormally. Press <enter> to continue."
    read
 fi
