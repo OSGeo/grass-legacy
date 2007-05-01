@@ -1,5 +1,6 @@
 #include <string.h>
 #include <stdio.h>
+#include <stdlib.h>
 #include <grass/gis.h>
 #include <grass/display.h>
 #include <grass/raster.h>
@@ -35,11 +36,11 @@ static int opaque ;
 static double rotation;
 static char text[MTEXT] ;
 static char font[256];
+static const char *std_font;
 
 static int ymatch ( char *);
 static int xmatch (char *);
 
-#define STANDARD_FONT "romans"
 
 int initialize_options (void)
 {
@@ -59,7 +60,10 @@ int initialize_options (void)
     border = D_translate_color("black") ;
     opaque = YES ;
     rotation = 0.0;
-    strcpy (font, STANDARD_FONT);
+    std_font = getenv("GRASS_FONT");
+    if (!std_font)
+	std_font = "romans";
+    strcpy (font, std_font);
 
     return 0;
 }
@@ -125,7 +129,7 @@ do_labels (FILE *infile, int do_rotation)
 	{
 		if (sscanf (text, "%*s %s", font) != 1
 		||  !strcmp (font, "standard"))
-			strcpy (font, STANDARD_FONT);
+			strcpy (font, std_font);
 	}
 	else if (! strncmp (text, "rot", 3))
 	{
