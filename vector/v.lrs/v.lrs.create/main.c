@@ -274,11 +274,18 @@ int main(int argc, char **argv)
         G_fatal_error(_("Cannot open database for reference table"));
 
     /* Create new reference table */
+    /* perhaps drop table to be conditionalized upon --o ?*/
+    db_init_string ( &rsstmt );
+    sprintf ( buf, "drop table %s", table_opt->answer);
+    db_append_string ( &rsstmt, buf);
+    if ( db_execute_immediate (rsdriver, &rsstmt) != DB_OK )
+	G_warning (_("Cannot drop table: %s"), buf );
+
+    db_init_string ( &rsstmt );
     sprintf ( buf, "create table %s (rsid int, lcat int, lid int, start_map double precision, "
 	    "end_map double precision, start_mp double precision, start_off double precision, "
 	    "end_mp double precision, end_off double precision, end_type int)", table_opt->answer);
     G_debug(debug, "ref tab SQL: %s", buf);
-    db_init_string ( &rsstmt );
     db_append_string ( &rsstmt, buf);
     if ( db_execute_immediate (rsdriver, &rsstmt) != DB_OK )
 	G_fatal_error (_("Cannot create table: %s"), buf );
