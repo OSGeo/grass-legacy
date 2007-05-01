@@ -39,7 +39,7 @@ v.extract railroads out=myrr list=1
 
 # join segments into polyline
 v.build.polylines myrr out=myrr_pol
-v.category myrr out=myrailroads option=add
+v.category myrr_pol out=myrailroads option=add
 
 # show line, category, direction (to find the beginning)
 d.vect myrailroads disp=shape,cat,dir
