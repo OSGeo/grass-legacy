@@ -317,7 +317,14 @@ set descmenu [subst  {
 	{separator}
 	{cascad {[G_msg "Change category values and labels"]} {} "" $tmenu {			
 		{command {[G_msg "Edit category values of individual cells for displayed raster map"]} {} "d.rast.edit" {} \
-			-state disabled -command {guarantee_xmon; term d.rast.edit }}
+			-command { tk_messageBox -type ok -icon error -title "d.rast.edit" \
+			-message "Terribly sorry, but this command has been found to not work correctly from the GRASS 6.2 GUI menu.\
+			However, it may be run from the GRASS command prompt, as follows:\n\n\
+			d.mon x0\n\
+			g.region rast=mapname\n\
+			d.rast mapname\n\
+			d.rast.edit\n\
+			\nIn the next version of GRASS this module will be replaced with something better." }}
 		{separator}
 		{command {[G_msg "Reclassify categories for areas of specified sizes"]} {} "r.reclass.area" {} -command {execute r.reclass.area }}
 		{command {[G_msg "Reclassify categories using rules"]} {} "r.reclass.rules" {} -command {execute $env(GISBASE)/etc/gm/script/r.reclass.rules }}
