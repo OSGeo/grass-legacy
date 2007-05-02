@@ -1563,7 +1563,7 @@ msgstr "Zeichne Raster"
 
 #: ../gui/tcltk/gis.m/gridline.tcl:138
 msgid "geodetic grid  "
-msgstr "Geofätisches Gradnetz"
+msgstr "Geodätisches Gradnetz"
 
 #: ../gui/tcltk/gis.m/gridline.tcl:140
 msgid " grid & text color   "
