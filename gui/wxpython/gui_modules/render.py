@@ -719,13 +719,14 @@ class Map:
 
         return self.layers[-1]
 
-    def changeOpacity(self, item, l_opacity):
+    def ChangeOpacity(self, item, l_opacity):
         """
-        Changes opacity value for rendering.
+        Changes opacity value for rendering
         """
         # l_opacity must be <0;1>
         if l_opacity < 0: l_opacity = 0
         elif l_opacity > 1: l_opacity = 1
+        
         layer = self.lookup[item]
         layer.opacity = l_opacity
 

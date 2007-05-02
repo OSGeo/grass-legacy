@@ -197,7 +197,7 @@ class LayerTree(CT.CustomTreeCtrl):
                                     style=wx.SP_ARROW_KEYS)
             self.ctrl.SetRange(1,100)
             self.ctrl.SetValue(100)
-            self.ctrl.Bind(wx.EVT_TEXT, self.onOpacity)
+            self.Bind(wx.EVT_SPINCTRL, self.OnOpacity, self.ctrl)
 
         if (self.layer_selected and self.layer_selected != self.GetRootItem() and \
                 self.layertype[self.layer_selected] != 'group'):
@@ -355,16 +355,21 @@ class LayerTree(CT.CustomTreeCtrl):
             self.changeLayer(layer)
         event.Skip()
 
-    def onOpacity(self, event):
+    def OnOpacity(self, event):
+        """
+        Set opacity level for map layer
+        """
+        Debug.msg (3, "LayerTree.OnOpacity(): %s" % event.GetInt())
+        
         if 'Spin' in str(event.GetEventObject()):
             layer = self.layerctrl[event.GetEventObject()]
         else:
             layer = self.layerctrl[event.GetEventObject().GetParent()]
-        opacity = float(event.GetString())/100
+        opacity = float(event.GetInt()) / 100
 
         if self.drag == False:
             # change opacity parameter for item in layers list in render.Map
-            self.Map.changeOpacity(layer, opacity)
+            self.Map.ChangeOpacity(layer, opacity)
 
     def onChangeSel(self, event):
         layer = event.GetItem()
@@ -431,7 +436,7 @@ class LayerTree(CT.CustomTreeCtrl):
                                     style=wx.SP_ARROW_KEYS)
             newctrl.SetRange(1,100)
             newctrl.SetValue(100)
-            newctrl.Bind(wx.EVT_TEXT, self.onOpacity)
+            newctrl.Bind(wx.EVT_TEXT, self.OnOpacity)
 
         # Decide where to put new layer and put it there
         flag = self.HitTest(event.GetPoint())[1]
