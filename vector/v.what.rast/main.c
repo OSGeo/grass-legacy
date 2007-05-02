@@ -110,13 +110,13 @@ int main(int argc,char *argv[])
 
     /* Open vector */
     if ( (mapset = G_find_vector2 (vect_opt->answer, "")) == NULL) 
-	G_fatal_error ( _("Cannot find vector map"));
+	G_fatal_error ( _("Vector map <%s> not found"), vect_opt->answer);
 
     Vect_set_open_level (2); 
     Vect_open_old (&Map, vect_opt->answer, mapset);
 
     Fi = Vect_get_field ( &Map, field);
-    if ( Fi == NULL ) G_fatal_error ( _("Cannot get layer info for vector map"));
+    if ( Fi == NULL ) G_fatal_error(_("Database connection not defined for layer <%d>"), field);
     
     /* Open driver */
     driver = db_start_driver_open_database ( Fi->driver, Fi->database );
@@ -126,10 +126,10 @@ int main(int argc,char *argv[])
     
     /* Open raster */
     if ( (mapset = G_find_cell2 ( rast_opt->answer, "") ) == NULL )
-	G_fatal_error ( _("Cannot find raster map"));
+	G_fatal_error ( _("Raster map <%s> not found"), rast_opt->answer);
     
     if( (fd = G_open_cell_old (rast_opt->answer, mapset)) < 0 )
-	G_fatal_error ( _("Cannot open raster map"));
+	G_fatal_error ( _("Cannot open raster map <%s>"), rast_opt->answer);
 
     out_type = G_get_raster_map_type(fd);
 
@@ -204,6 +204,7 @@ int main(int argc,char *argv[])
     }
 
     Vect_set_db_updated ( &Map );
+    Vect_hist_command ( &Map );
     Vect_close ( &Map );
 
     /* Cache may contain duplicate categories, sort by cat, find and remove duplicates 
