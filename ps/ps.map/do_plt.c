@@ -98,10 +98,10 @@ int do_plt (int after_masking)
 	break;
 
     case 'P':
-	i = sscanf (buf,"P %d %lf %lf %d %d %d %d %d %d %lf %s",
+	i = sscanf (buf,"P %d %lf %lf %d %d %d %d %d %d %lf %lf %s",
 	    &masked, &e1, &n1, &color_R, &color_G, &color_B,
-	    &fcolor_R, &fcolor_G, &fcolor_B, &size, symb);
-	if ( i == 11 )
+	    &fcolor_R, &fcolor_G, &fcolor_B, &size, &rotate, symb);
+	if ( i == 12 )
 	{
 	    if ( masked &&  after_masking) continue;
 	    if (!masked && !after_masking) continue;
@@ -130,14 +130,14 @@ int do_plt (int after_masking)
 		set_color(&pfcolor, fcolor_R, fcolor_G, fcolor_B);
 
 
-	    width = 0.05 * size; /* TODO: Something better */ 
+	    width = 0.05 * size; /* TODO: Something better */
 
 	    /* Read symbol */
 	    sprintf( sname, "POINTSYMBOL%d", snum);
             Symb = S_read ( symb );
             if ( Symb == NULL ) G_warning (_("Cannot read symbol, using default icon"));
 	    symbol_save ( Symb, &pcolor, &pfcolor, sname );
-            symbol_draw ( sname, x, y, size, 0.0, width);
+            symbol_draw ( sname, x, y, size, rotate, width);
 						
             snum++;    
 	}

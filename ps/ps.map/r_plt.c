@@ -11,7 +11,7 @@ int read_point (double e, double n)
     int color_R, color_G, color_B;
     int fcolor_R, fcolor_G, fcolor_B;
     int ret;
-    double size;
+    double size, rotate;
     int have_icon;
     char *key, *data;
     int masked;
@@ -22,11 +22,13 @@ int read_point (double e, double n)
 	"fcolor fill color",
 	"symbol group/symbol",
 	"size   #",
+	"rotate #",
 	"masked [y|n]",
 	""
     };
 
     size = 6.0;
+    rotate = 0.0;
     have_icon = 0;
     masked = 0;
     color_R = color_G = color_B = 0;
@@ -88,12 +90,21 @@ int read_point (double e, double n)
 	    }
 	    continue;
 	}
+	if (KEY("rotate"))
+	{
+	    if (sscanf(data, "%lf", &rotate) != 1 )
+	    {
+		rotate = 0.0;
+		error(key, data, "illegal rotate request");
+	    }
+	    continue;
+	}
 
 	error(key, data, "illegal point request");
     }
 
-    sprintf(buf, "P %d %f %f %d %d %d %d %d %d %f %s", masked, e, n, 
-	color_R, color_G, color_B, fcolor_R, fcolor_G, fcolor_B, size, symb);
+    sprintf(buf, "P %d %f %f %d %d %d %d %d %d %f %f %s", masked, e, n, 
+	color_R, color_G, color_B, fcolor_R, fcolor_G, fcolor_B, size, rotate, symb);
 
     add_to_plfile(buf);
 
