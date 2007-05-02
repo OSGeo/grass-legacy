@@ -64,7 +64,7 @@ stroke_chain ( SYMBPART *part, int ch, double s, double rotation )
 		    y = s * elem->coor.line.y[l];
 
 		    if(rotation != 0.0)
-			G_rotate_around_pt(0, 0, &x, &y, rotation);
+			G_rotate_around_point_int(0, 0, &x, &y, rotation);
 
 		    add_coor ( chain, x, y );
 		    if ( first ) {
@@ -91,7 +91,7 @@ stroke_chain ( SYMBPART *part, int ch, double s, double rotation )
 		        y = s * elem->coor.arc.y + s * r * sin(a1);
 
 			if(rotation != 0.0)
-			    G_rotate_around_pt(0, 0, &x, &y, rotation);
+			    G_rotate_around_point_int(0, 0, &x, &y, rotation);
 
 		        add_coor ( chain, x, y);
 			if ( first ) {
@@ -110,7 +110,7 @@ stroke_chain ( SYMBPART *part, int ch, double s, double rotation )
 		        y = s * elem->coor.arc.y + s * r * sin(a1);
 
 			if(rotation != 0.0)
-			    G_rotate_around_pt(0, 0, &x, &y, rotation);
+			    G_rotate_around_point_int(0, 0, &x, &y, rotation);
 
 		        add_coor ( chain, x, y);
 			if ( first ) {

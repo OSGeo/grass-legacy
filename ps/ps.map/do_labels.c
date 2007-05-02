@@ -148,7 +148,7 @@ do_label (FILE *fd, int font_override)
 
 	    /* adjust padding for given rotation */
 	    if(rotate != 0.0)
-		G_rotate_around_pt(0, 0, &X_just_offset, &Y_just_offset, rotate);
+		G_rotate_around_point_int(0, 0, &X_just_offset, &Y_just_offset, -1*rotate);
 
 	    /* apply padding */
 	    x_int += X_just_offset;
