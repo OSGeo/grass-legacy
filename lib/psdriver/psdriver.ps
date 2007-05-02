@@ -73,27 +73,31 @@
   false 3 colorimage
 } bind def
 /RASTERMASK {
-  4 dict begin
+  6 dict begin
+    /ncomp exch def
     /mat exch def
     /rows exch def
     /cols exch def
+    /tmpstr ncomp 1 add cols mul string def
     /imgdict 4 dict def
     imgdict begin
       /ImageType 3 def
       /InterleaveType 1 def
-      /DataDict 7 dict def
-      /MaskDict 7 dict def
-      DataDict begin
+      /MaskDict 6 dict def
+      MaskDict begin
 	/ImageType 1 def
 	/Width cols def
 	/Height rows def
 	/ImageMatrix mat def
-	/DataSource currentfile /ASCIIHexDecode filter def
 	/BitsPerComponent 8 def
 	/Decode [0 1] def
       end
-      DataDict MaskDict copy
-      MaskDict /DataSource undef
+      /DataDict 7 dict def
+      MaskDict DataDict copy pop
+      DataDict begin
+	/DataSource {currentfile tmpstr readhexstring pop} def
+	/Decode [0 1 0 1 0 1] 0 ncomp 2 mul getinterval def
+      end
     end
     imgdict image
   end
@@ -101,13 +105,13 @@
 /RASTERGRAYMASK {
   gsave
     /DeviceGray setcolorspace
-    RASTERMASK
+    1 RASTERMASK
   grestore
 } bind def
 /RASTERRGBMASK {
   gsave
     /DeviceRGB setcolorspace
-    RASTERMASK
+    3 RASTERMASK
   grestore
 } bind def
 /POLYGONSTART {
