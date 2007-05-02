@@ -71,7 +71,7 @@ int main(int argc, char **argv)
     struct line_cats *Cats;
 
     /* Attributes */
-    int nrecords;
+    int field, nrecords;
     int ctype;
     struct field_info *Fi;
     dbDriver *Driver;
@@ -86,12 +86,8 @@ int main(int argc, char **argv)
     module->keywords = _("vector");
     module->description = _("Sample a raster map at vector point locations");
 
-    parm.input = G_define_option();
-    parm.input->key = "input";
-    parm.input->type = TYPE_STRING;
-    parm.input->required = YES;
+    parm.input = G_define_standard_option(G_OPT_V_INPUT);
     parm.input->description = _("Vector map defining sample points");
-    parm.input->gisprompt = "old,vector,vector";
 
     parm.column = G_define_option();
     parm.column->key = "column";
@@ -100,19 +96,12 @@ int main(int argc, char **argv)
     parm.column->description =
         _("Vector map attribute column to use for comparison");
 
-    parm.output = G_define_option();
-    parm.output->key = "output";
-    parm.output->type = TYPE_STRING;
-    parm.output->required = YES;
+    parm.output = G_define_standard_option(G_OPT_V_OUTPUT);
     parm.output->description = _("Vector map to store differences");
-    parm.output->gisprompt = "new,vector,vector";
 
-    parm.rast = G_define_option();
+    parm.rast = G_define_standard_option(G_OPT_R_INPUT);
     parm.rast->key = "rast";
-    parm.rast->type = TYPE_STRING;
-    parm.rast->required = YES;
     parm.rast->description = _("Raster map to be sampled");
-    parm.rast->gisprompt = "old,cell,raster";
 
     parm.z = G_define_option();
     parm.z->key = "z";
@@ -150,7 +139,7 @@ int main(int argc, char **argv)
         if (flag.B->answer)
             method = BILINEAR;
         if (flag.B->answer && flag.C->answer)
-            G_fatal_error(_("flags -B & -C are mutually exclusive. Choose only one."));
+            G_fatal_error(_("Flags -b & -c are mutually exclusive. Choose only one."));
     } else {
         method = NEAREST;
     }
@@ -159,26 +148,26 @@ int main(int argc, char **argv)
 
     /* Open input */
     if ((mapset = G_find_vector2(parm.input->answer, "")) == NULL)
-        G_fatal_error(_("could not find input map <%s>"), parm.input->answer);
+        G_fatal_error(_("Vector map <%s> not found"), parm.input->answer);
 
     Vect_set_open_level(2);
     Vect_open_old(&In, parm.input->answer, mapset);
 
     if ((mapset = G_find_cell2(parm.rast->answer, "")) == NULL)
-        G_fatal_error(_("Raster map [%s] not found"), parm.rast->answer);
+        G_fatal_error(_("Raster map <%s> not found"), parm.rast->answer);
 
     if ((fdrast = G_open_cell_old(parm.rast->answer, mapset)) < 0)
-        G_fatal_error(_("unable to open raster map [%s]"), parm.rast->answer);
+        G_fatal_error(_("Cannot open raster map <%s>"), parm.rast->answer);
 
     /* Read attributes */
-    Fi = Vect_get_field(&In, 1);
+    field=1;
+    Fi = Vect_get_field(&In, field);
     if (Fi == NULL)
-        G_fatal_error(_("cannot get layer info for vector map"));
+        G_fatal_error(_("Database connection not defined for layer <%d>"), field);
 
     Driver = db_start_driver_open_database(Fi->driver, Fi->database);
     if (Driver == NULL)
-        G_fatal_error(_("cannot open database %s by driver %s"),
-                      Fi->database, Fi->driver);
+        G_fatal_error("Cannot open database <%s> by driver <%s>", Fi->database, Fi->driver);
 
     nrecords = db_select_CatValArray(Driver, Fi->table, Fi->key, 
                       parm.column->answer, NULL, &cvarr);
@@ -186,10 +175,10 @@ int main(int argc, char **argv)
 
     ctype = cvarr.ctype;
     if (ctype != DB_C_TYPE_INT && ctype != DB_C_TYPE_DOUBLE)
-        G_fatal_error(_("column type not supported"));
+        G_fatal_error(_("Column type not supported"));
 
     if (nrecords < 0)
-        G_fatal_error(_("cannot select data from table"));
+        G_fatal_error(_("Cannot select data from table"));
 
     G_message(_("%d records selected from table"), nrecords);
 
@@ -209,7 +198,7 @@ int main(int argc, char **argv)
 
     Driver = db_start_driver_open_database(Fi->driver, Vect_subst_var(Fi->database, &Out));
     if (Driver == NULL)
-        G_fatal_error(_("cannot open database %s by driver %s"), 
+        G_fatal_error(_("Cannot open database <%s> by driver <%s>"), 
                       Fi->database, Fi->driver);
 
     sprintf(buf,
@@ -218,13 +207,13 @@ int main(int argc, char **argv)
     db_set_string(&sql, buf);
 
     if (db_execute_immediate(Driver, &sql) != DB_OK)
-        G_fatal_error(_("cannot create table: %s"), db_get_string(&sql));
+        G_fatal_error(_("Cannot create table <%s>"), db_get_string(&sql));
 
     if (db_create_index2(Driver, Fi->table, Fi->key) != DB_OK)
-        G_warning(_("cannot create index"));
+        G_warning(_("Cannot create index"));
 
     if (db_grant_on_table(Driver, Fi->table, DB_PRIV_SELECT, DB_GROUP | DB_PUBLIC) != DB_OK)
-        G_fatal_error(_("cannot grant privileges on table %s"), Fi->table);
+        G_fatal_error(_("Cannot grant privileges on table <%s>"), Fi->table);
 
     if (flag.q->answer)
         G_message(_("Checking vector points ..."));
@@ -266,7 +255,7 @@ int main(int argc, char **argv)
         }
 	else
         {
-            G_fatal_error(_("column type  not supported"));
+            G_fatal_error(_("Column type  not supported"));
         }
 
         G_debug(4, "actual = %e", actual);
