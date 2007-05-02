@@ -100,7 +100,7 @@ int main(int argc, char **argv)
     parm.output->description = _("Vector map to store differences");
 
     parm.rast = G_define_standard_option(G_OPT_R_INPUT);
-    parm.rast->key = "rast";
+    parm.rast->key = "raster";
     parm.rast->description = _("Raster map to be sampled");
 
     parm.z = G_define_option();
