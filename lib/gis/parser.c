@@ -1853,11 +1853,10 @@ static void G_tcltk (void)
 
 static int show_options(int maxlen,char *str)
 {
-	char buff[1024] ;
+	char *buff = G_store(str) ;
 	char *p1, *p2 ;
 	int totlen, len ;
 
-	strcpy(buff, str) ;
 	fprintf (stderr, _("  %*s   options: "), maxlen, " ") ;
 	totlen = maxlen + 13 ;
 	p1 = buff ;
@@ -1878,6 +1877,8 @@ static int show_options(int maxlen,char *str)
 	if ((len + totlen) > 76 )
 		fprintf(stderr, "\n %*s", maxlen + 13, " ") ;
 	fprintf (stderr, "%s\n",  p1) ;
+
+	G_free(buff);
 
         return 0;
 }
