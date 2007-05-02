@@ -2,25 +2,26 @@
 
 exts='ttf pfa pfb'
 
-for ext in $exts ; do
-    (
+(
     for dir in /usr/lib/X11/fonts /usr/share/X11/fonts /usr/share/fonts \
-	"$HOME/Library/Fonts" /Library/Fonts /System/Library/Fonts \
-	"$WINDIR/Fonts" \
-	"$@"
+        "$HOME/Library/Fonts" /Library/Fonts /System/Library/Fonts \
+        "$WINDIR/Fonts" \
+        "$@"
     do
-	if [ -d "$dir" ] ; then
-	    find "$dir" -type f -iname '*.'"$ext" -print \
-		| sed 's!^\(.*\)/\(.*\)$!\2:\1/\2:utf-8:!' \
-		| sed 's/\.'"$ext"':/:/'
-	fi
+        if [ -d "$dir" ] ; then
+            for ext in $exts ; do
+                find "$dir" -type f -iname '*.'"$ext" -print \
+                    | sed 's!^\(.*\)/\(.*\)$!\2:\1/\2:utf-8:!' \
+                    | sed 's/\.'"$ext"':/:/'
+            done
+        fi
     done
-
+    
     if which fc-list >&/dev/null ; then
-	fc-list :outline file index \
-	    | sed -n \
-		    -e 's!^\(.*\)/\(.*\)\.\('"$ext"'\): :index=0$!\2:\1/\2.\3:utf-8:!p' \
-	            -e 's!^\(.*\)/\(.*\)\.\('"$ext"'\): :index=\([0-9]\+\)$!\2:\1/\2.\3|\4:utf-8:!p'
+        fc-list :outline file index \
+            | sed -n \
+                  -e 's!^\(.*\)/\(.*\)\.\([^.]*\): :index=0$!\2:\1/\2.\3:utf-8:!p' \
+                  -e 's!^\(.*\)/\(.*\)\.\([^.]*\): :index=\([0-9]\+\)$!\2:\1/\2.\3|\4:utf-8:!p'
     fi
-    ) | sort | uniq
-done
+
+) | sort | uniq
