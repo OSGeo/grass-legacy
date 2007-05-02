@@ -530,8 +530,10 @@ class GMFrame(wx.Frame):
         if not self.curr_page.maptree.GetSelections():
             self.MsgNoLayerSelected()
             return
-        
-        dlg = wx.MessageDialog (parent=self, message=_("Are you sure you want delete item: "), caption=_("Delete layer"),
+
+        dlg = wx.MessageDialog (parent=self, message=_("Are you sure you want delete layer <" + \
+                                                       str(self.curr_page.maptree.GetItemText(self.curr_page.maptree.layer_selected)) + ">?"),
+                                caption=_("Delete layer"),
                                 style=wx.YES_NO | wx.NO_DEFAULT | wx.CANCEL | wx.ICON_QUESTION)
 
         if dlg.ShowModal() in [wx.ID_NO, wx.ID_CANCEL]:
@@ -562,8 +564,8 @@ class GMFrame(wx.Frame):
         event.Skip()
 
     def MsgNoLayerSelected(self):
-        """Show dialog message 'No map layer selected'"""
-        dlg = wx.MessageDialog(self, _("No map layer selected"), _("Error"), wx.OK | wx.ICON_ERROR)
+        """Show dialog message 'No layer selected'"""
+        dlg = wx.MessageDialog(self, _("No layer selected"), _("Error"), wx.OK | wx.ICON_ERROR)
         dlg.ShowModal()
         dlg.Destroy()        
 
