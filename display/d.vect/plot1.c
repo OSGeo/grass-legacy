@@ -137,14 +137,12 @@ int plot1 (
     int table_colors_flag, int cats_color_flag, char *rgb_column,
     int default_width, char *width_column, double width_scale)
 {
-    int i, j, k, ltype, nlines = 0, line, cat = -1;
-    double *x, *y, xd, yd, xd0 = 0, yd0 = 0;
+    int i, ltype, nlines = 0, line, cat = -1;
+    double *x, *y;
     struct line_pnts *Points, *PPoints;
     struct line_cats *Cats;
     double msize;
-    SYMBPART *part;
-    SYMBCHAIN *chain;
-    int x0, y0, xp, yp;
+    int x0, y0;
 
     struct field_info *fi = NULL;
     dbDriver *driver = NULL;
@@ -153,11 +151,31 @@ int plot1 (
     int nrec_rgb = 0, nrec_width = 0;
 
     int open_db;
-    int rgb = 0; /* 0|1 */
+    int custom_rgb = FALSE;
     char colorstring[12]; /* RRR:GGG:BBB */
     int red, grn, blu;
+    RGBA_Color *line_color, *fill_color;
     unsigned char which;
     int width;
+
+    line_color = G_malloc(sizeof(RGBA_Color));
+    fill_color = G_malloc(sizeof(RGBA_Color));
+
+/* change function prototype to pass RGBA_Color instead of color_rgb? */
+    if(color)
+	line_color->a = RGBA_COLOR_OPAQUE;
+    else
+	line_color->a = RGBA_COLOR_NONE;
+
+    if(fcolor) {
+	fill_color->r = fcolor->r;
+	fill_color->g = fcolor->g;
+	fill_color->b = fcolor->b;
+	fill_color->a = RGBA_COLOR_OPAQUE;
+    }
+    else
+	fill_color->a = RGBA_COLOR_NONE;
+
 
     msize = size * ( D_d_to_u_col(2.0) - D_d_to_u_col(1.0) ); /* do it better */
     
@@ -295,6 +313,7 @@ int plot1 (
 	        if (Cats->n_cats > 0 && !found) continue;
 	}
 
+
 	if( table_colors_flag ) {
 
 	  /* only first category */
@@ -306,9 +325,8 @@ int plot1 (
 	    G_debug (3, "display element %d, cat %d", line, cat);
 	    
 	    /* Read RGB colors from db for current area # */
-	   
 	    if (db_CatValArray_get_value (&cvarr_rgb, cat, &cv_rgb) != DB_OK) {
-	      rgb = 0;
+	      custom_rgb = FALSE;
 	    }
 	    else {
 	      sprintf (colorstring, "%s", db_get_string(cv_rgb -> val.s));
@@ -317,30 +335,31 @@ int plot1 (
 		G_debug (3, "element %d: colorstring: %s", line, colorstring);
 		
 		if ( G_str_to_color(colorstring, &red, &grn, &blu) == 1) {
-		  rgb = 1;
+		  custom_rgb = TRUE;
 		  G_debug (3, "element:%d  cat %d r:%d g:%d b:%d", line, cat, red, grn, blu);
 		} 
 		else { 
-		  rgb = 0;
+		  custom_rgb = FALSE;
 		  G_warning(_("Error in color definition column (%s), element %d "
 		    "with cat %d: colorstring [%s]"), rgb_column, line, cat, colorstring);
 		}
 	      }
 	      else {
-		rgb = 0;
+		custom_rgb = FALSE;
 		G_warning (_("Error in color definition column (%s), element %d with cat %d"),
 		    rgb_column, line, cat);
 	      }
 	    }
 	  } /* end if cat */
 	  else {
-	    rgb = 0;
-	  } 
+	    custom_rgb = FALSE;
+	  }
 	} /* end if table_colors_flag */
+
 
 	/* random colors */
 	if( cats_color_flag ) {
-	  rgb = 0;
+	  custom_rgb = FALSE;
 	  if(Clist->field > 0){
 	    cat = Vect_get_line_cat ( Map, line, Clist->field );
 	    if( cat >= 0 ) {
@@ -350,7 +369,7 @@ int plot1 (
 	      G_debug (3,"cat:%d which color:%d r:%d g:%d b:%d", cat, which, 
 		    palette[which].R, palette[which].G, palette[which].B);
 
-	      rgb = 1;
+	      custom_rgb = TRUE;
 	      red = palette[which].R;
 	      grn = palette[which].G;
 	      blu = palette[which].B;
@@ -362,12 +381,13 @@ int plot1 (
 	    G_debug (3,"layer:%d which color:%d r:%d g:%d b:%d", Cats->field[0],
 		   which, palette[which].R, palette[which].G, palette[which].B);
 
-	    rgb = 1;
+	    custom_rgb = TRUE;
 	    red = palette[which].R;
 	    grn = palette[which].G;
 	    blu = palette[which].B;
 	  }
 	}
+
 
 	if( nrec_width ) {
 
@@ -401,124 +421,49 @@ int plot1 (
 	  D_line_width(width);
 	} /* end if nrec_width */
 
+
+	/* enough of the prep work, lets start plotting stuff */
 	x = Points->x;
 	y = Points->y;
 
         if ( (ltype & GV_POINTS) && Symb != NULL ) {
-	  /* Note: this could/should be updated to use the new D_symbol() library function */
-	  if ((color || fcolor) || rgb) {
+	    if( !(color || fcolor || custom_rgb) )
+		continue;
+
 	    G_plot_where_xy(x[0], y[0], &x0, &y0);
-	  }  
- 
-            for ( i = 0; i < Symb->count; i++ ) {
-                part = Symb->part[i];
 
-	        switch ( part->type ) {
-		    case S_POLYGON:
-			/* Note: it may seem to be strange to calculate coor in pixels, then convert
-			 *       to E-N and plot. I hope that we get some D_polygon later. */
-			if ( (part->fcolor.color == S_COL_DEFAULT && fcolor) ||
-			      part->fcolor.color == S_COL_DEFINED || rgb) 
-			{
-			    if (!table_colors_flag && !cats_color_flag) {
-			      if ( part->fcolor.color == S_COL_DEFAULT )
-				R_RGB_color(fcolor->r, fcolor->g, fcolor->b);
-			      else
-				R_RGB_color ( part->fcolor.r, part->fcolor.g, part->fcolor.b );
-			  }
-			  else {
-			    if (rgb) {
-			      R_RGB_color ((unsigned char) red, (unsigned char) grn, (unsigned char) blu);
-			    }
-			    else {
-			      R_RGB_color(fcolor->r, fcolor->g, fcolor->b);
-			    }
-			  }
+	    /* skip if the point is outside of the display window */
+	    /*      xy<0 tests make it go ever-so-slightly faster */
+	    if( x0 < 0 || y0 < 0 ||
+		    x0 > D_get_d_east()  || x0 < D_get_d_west() ||
+		    y0 > D_get_d_south() || y0 < D_get_d_north() )
+		continue;
 
-			    Vect_reset_line ( PPoints );
+	    /* use random or RGB column color if given, otherwise reset */
+	    if (custom_rgb) {
+		line_color->r = (unsigned char)red;
+		line_color->g = (unsigned char)grn;
+		line_color->b = (unsigned char)blu;
+		line_color->a = RGBA_COLOR_OPAQUE;
+	    } else {
+		if(color) {
+		    line_color->r = color->r;
+		    line_color->g = color->g;
+		    line_color->b = color->b;
+		    line_color->a = RGBA_COLOR_OPAQUE;
+		}
+		else
+		    line_color->a = RGBA_COLOR_NONE;
+	    }
 
-			    for ( j = 0; j < part->count; j++ ) { /* Construct polygon */
-				chain = part->chain[j];
-				for ( k = 0; k < chain->scount; k++ ) { 
-				    xp  = x0 + chain->sx[k];
-				    yp  = y0 - chain->sy[k];
-				    G_plot_where_en ( xp, yp, &xd, &yd );
-				    Vect_append_point ( PPoints, xd, yd, 0.0);
-				}
-				if ( j == 0 ) {
-				    xd0 = PPoints->x[0];
-				    yd0 = PPoints->y[0];
-				} else {
-				    Vect_append_point ( PPoints, xd0, yd0, 0.0);
-				}
-			    }
+	    D_symbol(Symb, x0, y0, line_color, fill_color);
 
-			    plot_polygon ( PPoints->x, PPoints->y, PPoints->n_points);
-
-			}
-			if ( (part->color.color == S_COL_DEFAULT && color ) ||
-			      part->color.color == S_COL_DEFINED  ) 
-			{
-			    if ( part->color.color == S_COL_DEFAULT ) {
-			        R_RGB_color(color->r, color->g, color->b);
-			    } else {
-			        R_RGB_color ( part->color.r, part->color.g, part->color.b );
-			    }
-
-			    for ( j = 0; j < part->count; j++ ) { 
-				chain = part->chain[j];
-				for ( k = 0; k < chain->scount; k++ ) { 
-				    xp  = x0 + chain->sx[k];
-				    yp  = y0 - chain->sy[k];
-				    if ( k == 0 ) D_move_abs ( xp, yp );
-				    else D_cont_abs ( xp, yp );
-
-				}
-			    }
-			    
-			}
-			
-                        break;
-                    case S_STRING: 
-			if ( part->color.color == S_COL_NONE || !color) break;
-
-			if (!table_colors_flag && !cats_color_flag) {
-			    if ( part->color.color == S_COL_DEFAULT )
-			        R_RGB_color(color->r, color->g, color->b);
-			    else R_RGB_color ( part->color.r, part->color.g, part->color.b );
-			}
-			else {
-			    if (ltype == GV_CENTROID) {
-				R_RGB_color(color->r, color->g, color->b);
-			    }
-			    else {
-				if (rgb) {
-				    R_RGB_color ((unsigned char) red, (unsigned char) grn, (unsigned char) blu);
-				}
-				else {
-				    R_RGB_color(color->r, color->g, color->b);
-				}
-			    }
-			}
-			    
-			chain = part->chain[0];
-
-                        for ( j = 0; j < chain->scount; j++ ) { 
-			    xp  = x0 + chain->sx[j];
-			    yp  = y0 - chain->sy[j];
-			    if ( j == 0 ) D_move_abs ( xp, yp );
-			    else D_cont_abs ( xp, yp );
-
-                        }
-                        break;
-                }
-            }
-	} else if (color || rgb) {
+	} else if (color || custom_rgb) {
 	  if (!table_colors_flag && !cats_color_flag) {
 	    R_RGB_color(color->r, color->g, color->b);
 	  }
 	  else {
-	    if (rgb) {
+	    if (custom_rgb) {
 	      R_RGB_color ((unsigned char) red, (unsigned char) grn, (unsigned char) blu);
 	    }
 	    else {
@@ -537,8 +482,6 @@ int plot1 (
 
     Vect_destroy_line_struct (Points);
     Vect_destroy_cats_struct (Cats);
-    
+
     return 0; /* not reached */
 }
-
-
