@@ -704,15 +704,16 @@ USAGE:	<B>point</B> east north
 	<B>fcolor</B> color
 	<B>symbol</B> symbol group/name
 	<B>size</B> #
+	<B>rotate</B> #
 	<B>masked</B> [y|n]
 	<B>end</B>	
 </PRE>
 The point location is entered in the main instruction line by giving either the map 
 coordinates or by using percentages of the geographic region.
 The user may also specify the point <B>color</B>,
-the <B>size</B> is size of symbol in point 
-and whether the point is to be <B>masked</B>
-by the current mask.
+the <B>size</B> of symbol in points,
+the rotation angle (in degrees CCW), 
+and whether the point is to be <B>masked</B> by the current mask.
 (See manual entry for <EM> <A HREF="r.mask.html">r.mask</A>
 </EM> for more information on the mask.)
 <P>
@@ -1332,6 +1333,7 @@ USAGE:	<B>vpoints</B> vectormap
 	<B>eps</B> epsfile	
 	<B>symbol</B> symbol group/name	
 	<B>size</B> #
+	<B>rotate</B> #
 	<B>sizecolumn</B> attribute column used for symbol sizing
 	<B>scale</B> scaling factor for sizecol values
 	<B>label</B> legend label
@@ -1340,9 +1342,10 @@ USAGE:	<B>vpoints</B> vectormap
 </PRE>
 The user may specify the
 the <B>color</B> of the sites (see section on <a href="#NAMED_COLORS">NAMED COLORS</a>);
+either the GRASS <B>symbol</B> or
 the <B>eps</B> Encapsulated Postscript file to be used to represent the presence of a site
 (if '<B>$</B>' is used in the EPS file path it will be replaced by category number); 
-and <B>rotate</B> in degrees for clockwise rotation (EPS files only).
+and <B>rotate</B> (in degrees) for counterclockwise rotation.
 <BR>
 The size of the icon (number of times larger than the size it is in
 the icon file) is typically given by the <B>size</B> option. Alternatively
