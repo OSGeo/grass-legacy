@@ -10,7 +10,8 @@ for ext in $exts ; do
 	"$@"
     do
 	if [ -d "$dir" ] ; then
-	    find "$dir" -type f  -iname '*.'"$ext" -printf '%f:%p:utf-8:\n' \
+	    find "$dir" -type f -iname '*.'"$ext" -print \
+		| sed 's!^\(.*\)/\(.*\)$!\2:\1/\2:utf-8:!' \
 		| sed 's/\.'"$ext"':/:/'
 	fi
     done
