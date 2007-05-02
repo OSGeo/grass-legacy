@@ -1,20 +1,35 @@
+#include <stdlib.h>
 #include <string.h>
+#include <grass/gis.h>
 #include "driverlib.h"
 
-static char filename[256];
-static char charset[50] = "ISO-8859-1";
+static char *filename;
+static int font_index;
+static char *charset;
 
 int font_init_freetype(const char *name)
 {
-	strncpy(filename, name, sizeof(filename));
-	filename[sizeof(filename) - 1] = '\0';
+	char *p;
+
+	if (filename)
+		G_free(filename);
+	filename = G_store(name);
+
+	p = strrchr(filename, '|');
+	if (p)
+	{
+		*p++ = '\0';
+		font_index = atoi(p);
+	}
+	
 	return 0;
 }
 
 int font_init_charset(const char *str)
 {
-	strncpy(charset, str, sizeof(charset));
-	charset[sizeof(charset) - 1] = '\0';
+	if (charset)
+		G_free(charset);
+	charset = G_store(str);
 	return 0;
 }
 
@@ -25,6 +40,12 @@ const char *font_get_freetype_name(void)
 
 const char *font_get_charset(void)
 {
+	if (!charset)
+		charset = G_store("ISO-8859-1");
 	return charset;
 }
 
+int font_get_index(void)
+{
+	return font_index;
+}

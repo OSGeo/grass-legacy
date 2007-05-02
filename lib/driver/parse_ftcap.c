@@ -8,8 +8,8 @@
 
 struct FT_CAP *parse_freetypecap(void)
 {
-	char *capfile, file[4096];
-	char buf[4096], iname[128], ipath[4096];
+	char *capfile, file[GPATH_MAX];
+	char buf[GPATH_MAX], iname[128], ipath[GPATH_MAX];
 	FILE *fp, *fp2;
 	int fonts_count = 0;
 	struct FT_CAP *fonts = NULL;
@@ -39,6 +39,9 @@ struct FT_CAP *parse_freetypecap(void)
 			if(sscanf(buf, "%[^:]:%[^:]", iname, ipath) != 2)
 				continue;
 
+			p = strrchr(ipath, '|');
+			if(p)
+				*p = 0;
 			if((fp2 = fopen(ipath, "r")) == NULL)
 				continue;
 			fclose(fp2);
