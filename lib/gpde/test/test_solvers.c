@@ -47,53 +47,63 @@ int unit_test_solvers()
 }
 
 /* *************************************************************** */
-/* create a normal matrix with values **************************** */
+/* create a normal matrix with values ** Hilbert matrix ********** */
 /* *************************************************************** */
 N_les *create_normal_les(int rows)
 {
     N_les *les;
     int i, j;
+    int size =rows;
+    double val;
 
     les = N_alloc_les(rows, N_NORMAL_LES);
-
-    for (i = 0; i < rows; i++) {
-	for (j = 0; j < rows; j++) {
-	    if (i > 1)
-		les->A[i][j] = 2e-2;
-
-	    les->A[i][i] = -1e2 - i;
+    for(i = 0; i < size; i++) {
+    	val = 0.0;
+    	for(j = 0; j < size; j++) {
+		les->A[i][j] = (double)(1.0/(((double)size - (double)i + 1.0) + 
+				((double)size - (double)j + 1.0) - 1.0));
+		val += les->A[i][j];
 	}
-	les->x[i] = 273.15 + i;
-	les->b[i] = 0;
+	les->b[i] = val;
+    }
+
+    for(i = 0; i < size; i++) {
+    	val = 0.0;
+    	for(j = 0; j < size; j++) {
+		les->A[i][j] = (double)(1.0/(((double)i + 1.0) + 
+				((double)j + 1.0) - 1.0));
+		val += les->A[i][j];
+	}
+	les->b[i] = val;
     }
 
     return les;
 }
 
 /* *************************************************************** */
-/* create a sparse matrix with values **************************** */
+/* create a sparse matrix with values ** Hilbert matrix ********** */
 /* *************************************************************** */
 N_les *create_sparse_les(int rows)
 {
     N_les *les;
     N_spvector *spvector;
     int i, j;
+    double val;
 
     les = N_alloc_les(rows, N_SPARSE_LES);
 
     for (i = 0; i < rows; i++) {
 	spvector = N_alloc_spvector(rows);
+	val = 0;
 
-	for (j = 0; j < rows; j++)
-	    if (j > 1)
-		spvector->index[j] = 2e-2;
-
-	spvector->index[0] = i;
-	spvector->values[0] = -1e2 - i;
+	for (j = 0; j < rows; j++) {
+		spvector->values[j] = (double)(1.0/(((double)i + 1.0) + ((double)j + 1.0) - 1.0));
+		spvector->index[j] = j;
+		val += spvector->values[j];
+	}
 
 	N_add_spvector_to_les(les, spvector, i);
-	les->x[i] = 273.15 + i;
-	les->b[i] = 0;
+	les->b[i] = val;
     }
 
 
@@ -181,7 +191,6 @@ int test_solvers()
     /*N_print_les(les); */
 
     N_free_les(les);
-
 
     return 0;
 }

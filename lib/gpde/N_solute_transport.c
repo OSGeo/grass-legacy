@@ -346,7 +346,7 @@ N_data_star *N_callback_solute_transport_2d(void *solutedata,
       fprintf(stderr, "z %g\n", z);
       fprintf(stderr, "R %g\n", R);
       fprintf(stderr, "dt %g\n", data->dt);
-    /*
+    */
      
     G_debug(6, "N_callback_solute_transport_2d: called [%i][%i]", row, col);
 

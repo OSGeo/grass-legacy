@@ -95,13 +95,18 @@ N_les *N_alloc_les(int rows, int type)
     if (type == N_SPARSE_LES) {
 	les->Asp = (N_spvector **) G_calloc(rows, sizeof(N_spvector *));
 	les->type = N_SPARSE_LES;
+	for (i = 0; i < rows; i++) {
+	    les->x[i] = 0.0;
+	    les->b[i] = 0.0;
+	    }
     }
     else {
 	les->A = (double **)G_calloc(rows, sizeof(double *));
-
-	for (i = 0; i < rows; i++)
+	for (i = 0; i < rows; i++) {
 	    les->A[i] = (double *)G_calloc(rows, sizeof(double));
-
+	    les->x[i] = 0.0;
+	    les->b[i] = 0.0;
+	    }
 	les->type = N_NORMAL_LES;
     }
 

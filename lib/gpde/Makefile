@@ -9,7 +9,7 @@ include $(MODULE_TOPDIR)/include/Make/Doxygen.make
 default: headers lib
 
 headers:
-	for file in ./*.h ; do $(INSTALL_DATA) $$file $(GISBASE)/include/grass/ ; done
+	for file in ./N_*.h ; do $(INSTALL_DATA) $$file $(GISBASE)/include/grass/ ; done
 
 #doxygen:
 DOXNAME=gpde

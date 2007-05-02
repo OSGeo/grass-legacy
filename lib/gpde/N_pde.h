@@ -334,6 +334,7 @@ extern N_les *N_assemble_les_3d (int les_type, N_geom_data * geom, N_array_3d * 
 extern N_les *N_assemble_les_2d (int les_type, N_geom_data * geom, N_array_2d * status, N_array_2d * start_val,
 				 void *data, N_les_callback_2d * callback);
 
+extern int N_les_pivot_create(N_les *les);
 /* *************************************************************** */
 /* *************** GPDE STANDARD OPTIONS ************************* */
 /* *************************************************************** */
