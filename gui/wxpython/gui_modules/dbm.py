@@ -85,15 +85,9 @@ class VirtualAttributeList(wx.ListCtrl, listmix.ListCtrlAutoWidthMixin, listmix.
         self.sm_dn = self.il.Add(wx.ArtProvider_GetBitmap(wx.ART_GO_DOWN,wx.ART_TOOLBAR,(16,16)))
         self.SetImageList(self.il, wx.IMAGE_LIST_SMALL)
 
-        # GISManager running?
-        if self.parent.parent and self.parent.parent.gismgr:
-            self.gismgr = True
-        else:
-            self.gismgr = False
-
-        if self.gismgr: # self.parent.parent -> LayerTree Class Instance
-            self.mapdisp = self.parent.parent.mapdisplay
-            self.map     = self.parent.parent.Map
+        if self.parent.gismgr: # GIS Manager is running?
+            self.mapdisp = self.parent.gismgr.curr_page.maptree.mapdisplay
+            self.map     = self.parent.gismgr.curr_page.maptree.Map
 
 
         #building the columns
@@ -151,7 +145,7 @@ class VirtualAttributeList(wx.ListCtrl, listmix.ListCtrlAutoWidthMixin, listmix.
         #self.list.Bind(wx.EVT_LEFT_DCLICK, self.OnDoubleClick)
         #self.list.Bind(wx.EVT_RIGHT_DOWN, self.OnRightDown)
 
-        if self.gismgr:
+        if self.parent.gismgr:
             self.mapdisp.MapWindow.Bind(wx.EVT_LEFT_DOWN, self.onMapClick)
 
             self.timer = wx.PyTimer(self.RedrawMap)
@@ -495,6 +489,8 @@ class AttributeManager(wx.Frame):
         
         log=Log(self)
 
+        self.gismgr = parent
+         
         # most importand part
         self.win = VirtualAttributeList(self, log, vectmap=vectmap,pointdata=pointdata)
 
