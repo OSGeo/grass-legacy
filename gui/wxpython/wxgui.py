@@ -327,7 +327,48 @@ class GMFrame(wx.Frame):
                  ('addgrp',  wx.ArtProvider.GetBitmap(wx.ART_FOLDER, wx.ART_TOOLBAR, (16,16)),  Icons["addgrp"].GetLabel(), self.addGroup),
                  ('addovl',  Icons["addovl"].GetBitmap(),  Icons["addovl"].GetLabel(), self.onOverlay),
                  ('delcmd',  wx.ArtProvider.GetBitmap(wx.ART_DELETE, wx.ART_TOOLBAR, (16,16)), 'Delete selected layer', self.deleteLayer),
-                 )
+                 ('attrtable', Icons["attrtable"].GetBitmap(), Icons["attrtable"].GetLabel(), self.ShowAttributeTable)
+                  )
+
+    def ShowAttributeTable(self, event):
+        """
+        Show attribute table of the given vector map layer
+        """
+        layer = self.curr_page.maptree.layer_selected
+        # no map layer selected
+        if not layer:
+            dlg = wx.MessageDialog(self, _("No map layer selected"), _("Error"), wx.OK | wx.ICON_ERROR)
+            dlg.ShowModal()
+            dlg.Destroy()
+            return
+        
+        # available only for vector map layers
+        maptype = self.curr_page.maptree.layertype[layer]
+        if maptype != 'vector':
+            dlg = wx.MessageDialog(self, _("Attribute management is available only for vector map layers"), _("Error"), wx.OK | wx.ICON_ERROR)
+            dlg.ShowModal()
+            dlg.Destroy()
+            return
+
+        if not self.curr_page.maptree.GetPyData(layer):
+            return
+        dcmd = self.curr_page.maptree.GetPyData(layer)[0]
+        if not dcmd: return
+        mapname = map = mapset = size = icon = None
+        for item in dcmd.split(' '):
+            if 'map=' in item:
+                mapname = item.split('=')[1]
+            elif 'size=' in item:
+                size = item.split('=')[1]
+            elif 'icon=' in item:
+                icon = item.split('=')[1]
+
+        pointdata = (icon, size)
+
+        from gui_modules import dbm
+        self.dbmanager = dbm.AttributeManager(parent=self, id=wx.ID_ANY, title="GRASS Attribute Table Manager: %s" % mapname,
+                                              size=wx.Size(500,300), vectmap=mapname,
+                                              pointdata=pointdata)
 
     def newDisplay(self, event=None):
         """Create new map display frame"""

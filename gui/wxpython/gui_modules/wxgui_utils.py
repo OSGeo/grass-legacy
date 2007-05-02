@@ -150,7 +150,7 @@ class LayerTree(CT.CustomTreeCtrl):
             self.popupID3 = wx.NewId()
             self.Bind (wx.EVT_MENU, self.OnPopupProperties,  id=self.popupID1)
             self.Bind (wx.EVT_MENU, self.gismgr.deleteLayer, id=self.popupID2)
-            self.Bind (wx.EVT_MENU, self.ShowAttributeTable, id=self.popupID3)
+            self.Bind (wx.EVT_MENU, self.gismgr.ShowAttributeTable, id=self.popupID3)
 
         menu = wx.Menu()
         if type != "command" and type != "group": # properties
@@ -171,33 +171,6 @@ class LayerTree(CT.CustomTreeCtrl):
         """Popup properties dialog"""
         self.PropertiesDialog(self.layer_selected)
 
-    def ShowAttributeTable(self, event):
-        maptype = self.layertype[self.layer_selected]
-        if maptype != 'vector':
-            dlg = wx.MessageDialog(self, _("Attribute management is available only for vector map layers"), _("Error"), wx.OK | wx.ICON_ERROR)
-            dlg.ShowModal()
-            dlg.Destroy()
-            return
-
-        if not self.GetPyData(self.layer_selected): return
-        dcmd = self.GetPyData(self.layer_selected)[0]
-        if not dcmd: return
-        mapname = map = mapset = size = icon = None
-        for item in dcmd.split(' '):
-            if 'map=' in item:
-                mapname = item.split('=')[1]
-            elif 'size=' in item:
-                size = item.split('=')[1]
-            elif 'icon=' in item:
-                icon = item.split('=')[1]
-
-        pointdata = (icon,size)
-
-        from gui_modules import dbm
-        self.dbmanager = dbm.AttributeManager(parent=self, id=wx.ID_ANY, title="GRASS Attribute Table Manager: %s" % mapname,
-                                              size=wx.Size(500,300), vectmap=mapname,
-                                              pointdata=pointdata)
-        
     def AddLayer(self, type):
         """Add layer, create MapLayer instance"""
         self.first = True
