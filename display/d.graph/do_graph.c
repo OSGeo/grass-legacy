@@ -422,7 +422,7 @@ int do_symbol(char *buff)
 	G_warning(_("Cannot read symbol, cannot display points"));
 	return(-1);
     }
-    else S_stroke ( Symb, size, -1*rotation, 0 );
+    else S_stroke ( Symb, size, rotation, 0 );
 
     D_symbol(Symb, ix, iy, line_color, fill_color);
 

@@ -1,7 +1,7 @@
 /* rotate.c
  *
- *   Copyright (C) 2007 by Hamish Bowman, and the GRASS Development Team
- *   Author(s): Hamish Bowman, Dunedin, New Zealand
+ *   Copyright (C) 2007 by Hamish Bowman, Glynn Clements
+ *   Author(s): Hamish Bowman, Glynn Clements
  *
  *   This program is free software under the GNU General Public
  *   License (>=v2). Read the file COPYING that comes with GRASS
@@ -14,39 +14,59 @@
 # define D2R(d) (double)(d * RpD)       /* degrees->radians */
 # define R2D(d) (double)(d / RpD)       /* radians->degrees */
 
+
+
 /*!
- * \fn int G_rotate_around_pt(int, int, int, int, double)
+ * \fn void G_rotate_around_point(double, double, double*, double*, double)
  *
  * \desc given a point, angle, and origin, rotate the point around the origin 
- * by the given angle. Uses int as it's designed for use with the display.
+ * by the given angle. Coordinates and results are double prec floating point.
  *
  * \param X0  X component of origin (center of circle)
  * \param Y0  Y component of origin (center of circle)
  * \param X1  X component of point to be rotated (variable is modified!)
  * \param Y1  Y component of point to be rotated (variable is modified!)
  * \param angle  in degrees, measured CCW from east
- * \return always returns 0
+ * \return void
  */
-
-int G_rotate_around_pt(int X0, int Y0, int *X1, int *Y1, double angle)
+void G_rotate_around_point(double X0, double Y0, double *X1, double *Y1, double angle)
 {
-    double linelength, theta;
-    int Xadj, Yadj;
+	double dx = *X1 - X0;
+	double dy = *Y1 - Y0;
+	double c = cos(D2R(angle));
+	double s = sin(D2R(angle));
+	double dx1 = dx * c - dy * s;
+	double dy1 = dx * s + dy * c;
 
-    /* convert ray to polar coords */
-    linelength = sqrt(pow(X0-*X1, 2) + pow(Y0-*Y1, 2));
-    theta = atan2((Y0-*Y1), (X0-*X1));
+	*X1 = X0 + dx1;
+	*Y1 = Y0 + dy1;
+}
 
-    /* adjust angle */
-    theta -= D2R(angle);
 
-    /* convert back to cartesian coords */
-    Xadj = (int)floor( (linelength * cos(theta)) + 0.5 );
-    Yadj = (int)floor( (linelength * sin(theta)) + 0.5 );
 
-    /* calculate new point from origin+adjustments */
-    *X1 = X0 - Xadj;
-    *Y1 = Y0 - Yadj;
+/*!
+ * \fn void G_rotate_around_point_int(int, int, int*, int*, double)
+ *
+ * \desc given a point, angle, and origin, rotate the point around the origin 
+ * by the given angle. Coordinates are given in integer and results are rounded
+ * back to integer.
+ *
+ * \param X0  X component of origin (center of circle)
+ * \param Y0  Y component of origin (center of circle)
+ * \param X1  X component of point to be rotated (variable is modified!)
+ * \param Y1  Y component of point to be rotated (variable is modified!)
+ * \param angle  in degrees, measured CCW from east
+ * \return void
+ */
+void G_rotate_around_point_int(int X0, int Y0, int *X1, int *Y1, double angle)
+{
+    double x = (double)*X1;
+    double y = (double)*Y1;
 
-    return 0;
+    if( angle == 0.0 ) return;
+
+    G_rotate_around_point((double)X0, (double)Y0, &x, &y, angle);
+
+    *X1 = (int)floor( x + 0.5 );
+    *Y1 = (int)floor( y + 0.5 );
 }
