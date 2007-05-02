@@ -88,7 +88,7 @@ int do_snap(struct Map_info *Map, struct ilist *List, int print)
     if (print) 
         fprintf(stdout,"%d,%d\n", line1, line2);
 
-    G_message(_("Line [%d] snaped to line [%d]"), line2, line1);
+    G_message(_("Line [%d] snapped to line [%d]"), line2, line1);
 
     return 1;
 }
