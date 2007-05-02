@@ -180,6 +180,7 @@ static void read_freetype_fonts(void)
 	for (;;)
 	{
 		char buf[1024], ifont[256], ipath[1024];
+		char *p;
 		FILE *fontfp;
 
 		if (!fgets(buf, sizeof(buf), fp))
@@ -190,6 +191,10 @@ static void read_freetype_fonts(void)
 
 		if(sscanf(buf, "%[^:]:%[^:]", ifont, ipath) != 2)
 			continue;
+
+		p = strrchr(ipath, '|');
+		if (p)
+			*p = '\0';
 
 		fontfp = fopen(ipath, "r");
 		if (!fontfp)

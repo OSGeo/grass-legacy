@@ -53,12 +53,14 @@ static void draw_main(
 	FT_Error ans;
 	const char *filename;
 	const char *charset;
+	int font_index;
 	unsigned char *out;
 	int outlen;
 
 	/* get file name */
 	filename = font_get_freetype_name();
 	charset = font_get_charset();
+	font_index = font_get_index();
 
 	/* set freetype */
 	ans = FT_Init_FreeType(&library);
@@ -67,7 +69,7 @@ static void draw_main(
 		/* DEBUG_LOG("Text3 error: ft init\n"); */
 		return;
 	}
-	ans = FT_New_Face(library,filename,0,&face);
+	ans = FT_New_Face(library,filename,font_index,&face);
 	if (ans == FT_Err_Unknown_File_Format)
 	{
 		/* DEBUG_LOG("Text3 error: ft new face 1\n"); */

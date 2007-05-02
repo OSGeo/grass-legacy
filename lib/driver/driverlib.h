@@ -29,6 +29,7 @@ int font_init_freetype(const char *);
 int font_init_charset(const char *);
 const char *font_get_freetype_name(void);
 const char *font_get_charset(void);
+int font_get_index(void);
 
 /* connect_sock.c */
 int get_connection_sock(int,int *,int *,int);
