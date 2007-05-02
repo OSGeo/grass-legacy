@@ -114,11 +114,12 @@ class GRasterDialog(wx.Frame):
         sizer.Fit(self)
         self.Layout()
 
-
 class GMFrame(wx.Frame):
-    '''GIS Manager frame with notebook widget for controlling
+    """
+    GIS Manager frame with notebook widget for controlling
     GRASS GIS. Includes command console page for typing GRASS
-    (and other) commands, tree widget page for managing GIS map layers.'''
+    (and other) commands, tree widget page for managing GIS map layers.
+    """
     def __init__(self, parent, id, title):
         self.parent = parent
         self.iconsize = (16, 16)
@@ -337,9 +338,7 @@ class GMFrame(wx.Frame):
         layer = self.curr_page.maptree.layer_selected
         # no map layer selected
         if not layer:
-            dlg = wx.MessageDialog(self, _("No map layer selected"), _("Error"), wx.OK | wx.ICON_ERROR)
-            dlg.ShowModal()
-            dlg.Destroy()
+            self.MsgNoLayerSelected()
             return
         
         # available only for vector map layers
@@ -527,6 +526,20 @@ class GMFrame(wx.Frame):
         Delete selected map display layer in GIS Manager tree widget
         """
         Debug.msg (3, "GMFrame.deleteLayer(): type=layertype[layer]")
+
+        if not self.curr_page.maptree.GetSelections():
+            self.MsgNoLayerSelected()
+            return
+        
+        dlg = wx.MessageDialog (parent=self, message=_("Are you sure you want delete item: "), caption=_("Delete layer"),
+                                style=wx.YES_NO | wx.NO_DEFAULT | wx.CANCEL | wx.ICON_QUESTION)
+
+        if dlg.ShowModal() in [wx.ID_NO, wx.ID_CANCEL]:
+            dlg.Destroy()
+            return
+
+        dlg.Destroy()
+        
         for layer in self.curr_page.maptree.GetSelections():
             if self.curr_page.maptree.layertype[layer] == 'group':
                 self.curr_page.maptree.DeleteChildren(layer)
@@ -548,19 +561,25 @@ class GMFrame(wx.Frame):
         pass
         event.Skip()
 
+    def MsgNoLayerSelected(self):
+        """Show dialog message 'No map layer selected'"""
+        dlg = wx.MessageDialog(self, _("No map layer selected"), _("Error"), wx.OK | wx.ICON_ERROR)
+        dlg.ShowModal()
+        dlg.Destroy()        
+
 class GMApp(wx.App):
     """
     GMApp class
     """
     def OnInit(self):
-##	  reexec_with_pythonw()
+        # reexec_with_pythonw()
         # initialize all available image handlers
         wx.InitAllImageHandlers()
         # create and show main frame
-        mainframe = GMFrame(None, -1, "" )
+        mainframe = GMFrame(parent=None, id=wx.ID_ANY, title="")
         self.SetTopWindow(mainframe)
         mainframe.Show()
-        return 1
+        return True
 
 def reexec_with_pythonw():
   if sys.platform == 'darwin' and\
@@ -568,9 +587,7 @@ def reexec_with_pythonw():
     print >>sys.stderr,'re-executing using pythonw'
     os.execvp('pythonw',['pythonw',__file__] + sys.argv[1:])
 
-
 if __name__ == "__main__":
-
   reexec_with_pythonw()
 
   import gettext

@@ -128,41 +128,51 @@ class LayerTree(CT.CustomTreeCtrl):
         # self.tree.SetItemImage(self.root, fldridx, wx.TreeItemIcon_Normal)
         # self.tree.SetItemImage(self.root, fldropenidx, wx.TreeItemIcon_Expanded)
 
-        self.Bind(wx.EVT_TREE_ITEM_EXPANDING, self.onExpandNode)
-        self.Bind(wx.EVT_TREE_ITEM_COLLAPSED, self.onCollapseNode)
-        self.Bind(wx.EVT_TREE_ITEM_ACTIVATED, self.onActivateLayer)
-        self.Bind(wx.EVT_TREE_SEL_CHANGED,    self.onChangeSel)
-        self.Bind(CT.EVT_TREE_ITEM_CHECKED,   self.onLayerChecked)
-        self.Bind(wx.EVT_TREE_DELETE_ITEM,    self.onDeleteLayer)
-        self.Bind(wx.EVT_TREE_BEGIN_DRAG,     self.onBeginDrag)
-        self.Bind(wx.EVT_TREE_END_DRAG,       self.onEndDrag)
-        self.Bind(wx.EVT_CONTEXT_MENU,        self.OnContextMenu)
+        self.Bind(wx.EVT_TREE_ITEM_EXPANDING,   self.onExpandNode)
+        self.Bind(wx.EVT_TREE_ITEM_COLLAPSED,   self.onCollapseNode)
+        self.Bind(wx.EVT_TREE_ITEM_ACTIVATED,   self.onActivateLayer)
+        self.Bind(wx.EVT_TREE_SEL_CHANGED,      self.onChangeSel)
+        self.Bind(CT.EVT_TREE_ITEM_CHECKED,     self.onLayerChecked)
+        self.Bind(wx.EVT_TREE_DELETE_ITEM,      self.onDeleteLayer)
+        self.Bind(wx.EVT_TREE_BEGIN_DRAG,       self.onBeginDrag)
+        self.Bind(wx.EVT_TREE_END_DRAG,         self.onEndDrag)
+        self.Bind(wx.EVT_CONTEXT_MENU, self.OnContextMenu)
         # self.Bind(wx.EVT_CLOSE, self.onCloseWindow)
 
     def OnContextMenu (self, event):
         """Context Layer Menu"""
 
+        if not self.layer_selected:
+            event.Skip()
+            return
+        
         type = self.layertype[self.layer_selected]
         
         if not hasattr (self, "popupID1"):
             self.popupID1 = wx.NewId()
             self.popupID2 = wx.NewId()
             self.popupID3 = wx.NewId()
-            self.Bind (wx.EVT_MENU, self.OnPopupProperties,  id=self.popupID1)
-            self.Bind (wx.EVT_MENU, self.gismgr.deleteLayer, id=self.popupID2)
-            self.Bind (wx.EVT_MENU, self.gismgr.ShowAttributeTable, id=self.popupID3)
-
+            self.popupID4 = wx.NewId()
+            
+            self.Bind (wx.EVT_MENU, self.gismgr.deleteLayer,        id=self.popupID1)
+            self.Bind (wx.EVT_MENU, self.RenameLayer,               id=self.popupID2)
+            self.Bind (wx.EVT_MENU, self.OnPopupProperties,         id=self.popupID3)
+            self.Bind (wx.EVT_MENU, self.gismgr.ShowAttributeTable, id=self.popupID4)
+            
         menu = wx.Menu()
+        # general item
+        menu.Append (self.popupID1, _("Delete"))
+        menu.Append (self.popupID2, _("Rename"))
+
+        # map layer items
         if type != "command" and type != "group": # properties
-            item = wx.MenuItem (parentMenu=menu, id=self.popupID1, text=_("Properties"))
-            menu.AppendItem (item)
+            menu.AppendSeparator()
+            menu.Append (self.popupID3, text=_("Properties"))
 
-        # remove item
-        menu.Append (self.popupID2, _("Remove"))
-
+        # specific items
         if type == "vector": # show attribute table
             menu.AppendSeparator()
-            menu.Append (self.popupID3, _("Show attribute table"))
+            menu.Append (self.popupID4, _("Show attribute table"))
             
         self.PopupMenu (menu)
         menu.Destroy()
@@ -171,6 +181,10 @@ class LayerTree(CT.CustomTreeCtrl):
         """Popup properties dialog"""
         self.PropertiesDialog(self.layer_selected)
 
+    def RenameLayer (self, event):
+        """Rename layer"""
+        pass
+    
     def AddLayer(self, type):
         """Add layer, create MapLayer instance"""
         self.first = True
@@ -183,13 +197,13 @@ class LayerTree(CT.CustomTreeCtrl):
         if type == 'command':
             # generic command layer
             self.ctrl = wx.TextCtrl(self, id=wx.ID_ANY, value='',
-                               pos=wx.DefaultPosition, size=(250,40),
-                               style=wx.TE_MULTILINE|wx.TE_WORDWRAP)
+                                    pos=wx.DefaultPosition, size=(250,40),
+                                    style=wx.TE_MULTILINE|wx.TE_WORDWRAP)
             self.ctrl.Bind(wx.EVT_TEXT_ENTER, self.onCmdChanged)
             self.ctrl.Bind(wx.EVT_TEXT, self.onCmdChanged)
         elif type == 'group':
             self.ctrl = None
-            grouptext = 'Layer group:'+str(self.groupnode)
+            grouptext = 'Layer group:' + str(self.groupnode)
             self.groupnode += 1
         else:
             # all other layers
