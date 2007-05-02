@@ -440,7 +440,8 @@ int plot1 (
 		continue;
 
 	    /* use random or RGB column color if given, otherwise reset */
-	    if (custom_rgb) {
+	    /* centroids always use default color to stand out from underlying area */
+	    if (custom_rgb && (ltype != GV_CENTROID) ) {
 		line_color->r = (unsigned char)red;
 		line_color->g = (unsigned char)grn;
 		line_color->b = (unsigned char)blu;
