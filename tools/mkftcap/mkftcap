@@ -1,19 +1,25 @@
 #!/bin/sh
 
-if  [ -z "$GISBASE" ]
-then
-	echo "You must be in GRASS GIS to run this program" >&2
-	exit 1
-fi
+exts='ttf pfa pfb'
 
-for dir in /usr/lib/X11/fonts /usr/share/X11/fonts /usr/share/fonts \
-    "$HOME/Library/Fonts" /Library/Fonts /System/Library/Fonts \
-    "$WINDIR/Fonts" \
-    "$@"
-do
-    if [ -d "$dir" ] ; then
-	find "$dir" -type f -iname '*.ttf' -printf '%f:%p:utf-8:\n' \
-	| sed 's/.ttf:/:/'
+for ext in $exts ; do
+    (
+    for dir in /usr/lib/X11/fonts /usr/share/X11/fonts /usr/share/fonts \
+	"$HOME/Library/Fonts" /Library/Fonts /System/Library/Fonts \
+	"$WINDIR/Fonts" \
+	"$@"
+    do
+	if [ -d "$dir" ] ; then
+	    find "$dir" -type f  -iname '*.'"$ext" -printf '%f:%p:utf-8:\n' \
+		| sed 's/\.'"$ext"':/:/'
+	fi
+    done
+
+    if which fc-list >&/dev/null ; then
+	fc-list :outline file index \
+	    | sed -n \
+		    -e 's!^\(.*\)/\(.*\)\.\('"$ext"'\): :index=0$!\2:\1/\2.\3:utf-8:!p' \
+	            -e 's!^\(.*\)/\(.*\)\.\('"$ext"'\): :index=\([0-9]\+\)$!\2:\1/\2.\3|\4:utf-8:!p'
     fi
+    ) | sort | uniq
 done
-
