@@ -642,13 +642,14 @@ class Map:
         tree item ID
 
         Parameters:
-            item	- wxPython ID for layer tree item
+            item - wxPython ID for layer tree item
 
         Returns:
             Removed layer on success or None
         """
         layer = self.lookup[item]
 
+        Debug.msg (3, "Map.delLayer(): cmd=%s" % layer.cmd)
         if layer in self.layers:
             if layer.mapfile:
                 base = os.path.split(layer.mapfile)[0]
@@ -658,6 +659,7 @@ class Map:
                 for f in glob.glob(basefile):
                     os.remove(f)
             self.layers.remove(layer)
+
             del self.lookup[item]
             return layer
 

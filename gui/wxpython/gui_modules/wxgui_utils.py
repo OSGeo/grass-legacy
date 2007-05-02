@@ -131,12 +131,12 @@ class LayerTree(CT.CustomTreeCtrl):
         self.Bind(wx.EVT_TREE_ITEM_EXPANDING, self.onExpandNode)
         self.Bind(wx.EVT_TREE_ITEM_COLLAPSED, self.onCollapseNode)
         self.Bind(wx.EVT_TREE_ITEM_ACTIVATED, self.onActivateLayer)
-        self.Bind(wx.EVT_TREE_SEL_CHANGED, self.onChangeSel)
-        self.Bind(CT.EVT_TREE_ITEM_CHECKED, self.onLayerChecked)
-        self.Bind(wx.EVT_TREE_DELETE_ITEM, self.onDeleteLayer)
-        self.Bind(wx.EVT_TREE_BEGIN_DRAG, self.onBeginDrag)
-        self.Bind(wx.EVT_TREE_END_DRAG, self.onEndDrag)
-        self.Bind(wx.EVT_CONTEXT_MENU, self.OnContextMenu)
+        self.Bind(wx.EVT_TREE_SEL_CHANGED,    self.onChangeSel)
+        self.Bind(CT.EVT_TREE_ITEM_CHECKED,   self.onLayerChecked)
+        self.Bind(wx.EVT_TREE_DELETE_ITEM,    self.onDeleteLayer)
+        self.Bind(wx.EVT_TREE_BEGIN_DRAG,     self.onBeginDrag)
+        self.Bind(wx.EVT_TREE_END_DRAG,       self.onEndDrag)
+        self.Bind(wx.EVT_CONTEXT_MENU,        self.OnContextMenu)
         # self.Bind(wx.EVT_CLOSE, self.onCloseWindow)
 
     def OnContextMenu (self, event):
@@ -144,22 +144,25 @@ class LayerTree(CT.CustomTreeCtrl):
 
         type = self.layertype[self.layer_selected]
         
-        if type == "group":
-            return
-        
         if not hasattr (self, "popupID1"):
             self.popupID1 = wx.NewId()
             self.popupID2 = wx.NewId()
-            self.Bind (wx.EVT_MENU, self.OnPopupProperties, id=self.popupID1)
-            self.Bind (wx.EVT_MENU, self.ShowAttributeTable, id=self.popupID2)
+            self.popupID3 = wx.NewId()
+            self.Bind (wx.EVT_MENU, self.OnPopupProperties,  id=self.popupID1)
+            self.Bind (wx.EVT_MENU, self.gismgr.deleteLayer, id=self.popupID2)
+            self.Bind (wx.EVT_MENU, self.ShowAttributeTable, id=self.popupID3)
 
         menu = wx.Menu()
-        item = wx.MenuItem (parentMenu=menu, id=self.popupID1, text=_("Properties"))
-        menu.AppendItem (item)
+        if type != "command" and type != "group": # properties
+            item = wx.MenuItem (parentMenu=menu, id=self.popupID1, text=_("Properties"))
+            menu.AppendItem (item)
 
-        if type == "vector":
+        # remove item
+        menu.Append (self.popupID2, _("Remove"))
+
+        if type == "vector": # show attribute table
             menu.AppendSeparator()
-            menu.Append (self.popupID2, _("Show attribute table"))
+            menu.Append (self.popupID3, _("Show attribute table"))
             
         self.PopupMenu (menu)
         menu.Destroy()
@@ -335,6 +338,10 @@ class LayerTree(CT.CustomTreeCtrl):
                 self.Expand(layer)
 
     def onDeleteLayer(self, event):
+        """Remove selected layer for the layer tree"""
+        
+        Debug.msg (3, "LayerTree.onDeleteLayer():")
+
         layer = event.GetItem()
 
         # delete layer in render.Map
