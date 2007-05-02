@@ -47,7 +47,8 @@ import gui_modules.menudata as menudata
 import gui_modules.menuform as menuform
 import gui_modules.grassenv as grassenv
 import gui_modules.defaultfont as defaultfont
-from icons.icon import Icons as Icons
+from   icons.icon import Icons as Icons
+from   gui_modules.debug import Debug as Debug
 
 """Main Python app to set up GIS Manager window and trap commands
 Only command console is working currently, but windows for
@@ -484,6 +485,7 @@ class GMFrame(wx.Frame):
         """
         Delete selected map display layer in GIS Manager tree widget
         """
+        Debug.msg (3, "GMFrame.deleteLayer(): type=layertype[layer]")
         for layer in self.curr_page.maptree.GetSelections():
             if self.curr_page.maptree.layertype[layer] == 'group':
                 self.curr_page.maptree.DeleteChildren(layer)
