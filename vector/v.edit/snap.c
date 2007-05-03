@@ -27,11 +27,12 @@
  * return 1 on successs
  * return -1 on error
  */
-int do_snap(struct Map_info *Map, struct ilist *List, int print)
+int do_snap(struct Map_info *Map, struct ilist *List, int print,
+	    int layer)
 {
     struct line_pnts *Points1, *Points2;
     struct line_cats *Cats1, *Cats2;
-    int line1, line2, type1, type2;
+    int line1, line2, type1, type2, cat1, cat2;
     double mindist;
     int mindistidx;
     
@@ -41,8 +42,8 @@ int do_snap(struct Map_info *Map, struct ilist *List, int print)
     Cats2 = Vect_new_cats_struct();
 
     if (List->n_values != 2) {
-        G_message(_("Cannot snap selected lines. Only 2 lines can be snapped at the time,"
-		    "but [%d] lines selected"), List->n_values);
+        G_message(_("Cannot snap selected lines. Only 2 lines can be snapped at the time"));
+		    
         return -1;
     }
 
@@ -51,7 +52,7 @@ int do_snap(struct Map_info *Map, struct ilist *List, int print)
     type1 = Vect_read_line(Map, Points1, Cats1, line1);
     type2 = Vect_read_line(Map, Points2, Cats2, line2);
 
-    /* find mininal distance and its index */
+    /* find mininal distance and its indexes */
     mindist = min_distance_line (Points1, Points2,
 				 &mindistidx);
 
@@ -88,7 +89,12 @@ int do_snap(struct Map_info *Map, struct ilist *List, int print)
     if (print) 
         fprintf(stdout,"%d,%d\n", line1, line2);
 
-    G_message(_("Line [%d] snapped to line [%d]"), line2, line1);
+    Vect_cat_get (Cats1, layer, &cat1); /* if not found, cat1 is set to -1 */
+    Vect_cat_get (Cats2, layer, &cat2);
+
+    G_message(_("Line id/cat [%d/%d] snapped to line [%d/%d]"),
+	      line2, cat2,
+	      line1, cat1);
 
     return 1;
 }

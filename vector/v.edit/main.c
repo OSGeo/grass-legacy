@@ -177,7 +177,8 @@ int main (int argc, char *argv[])
 	ret = do_copy(&Map, List, print);
 	break;
     case MODE_SNAP:
-	ret = do_snap(&Map, List, print);
+	ret = do_snap(&Map, List, print,
+		      layer);
 	break;
     case MODE_FLIP:
 	ret = do_flip(&Map, List, print);
