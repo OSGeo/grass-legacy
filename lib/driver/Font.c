@@ -28,7 +28,7 @@ void COM_Font_get(const char *name)
 	{
 		static char prefix[4096];
 
-		if (font_exists(name))
+		if (!font_exists(name))
 			return;
 
 		if (!*prefix)
