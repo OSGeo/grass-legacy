@@ -628,7 +628,7 @@ class BufferedWindow(wx.Window):
                     self.pdc.SetIdGreyedOut(id, False)
                 else:
                     self.pdc.SetIdGreyedOut(id, True)
-                    
+
                     r = self.pdc.GetIdBounds(id)
                     r.Inflate(4,4)
                     self.RefreshRect(r, False)
@@ -852,14 +852,6 @@ class BufferedWindow(wx.Window):
         """
         Save display extents to named region file.
         """
-
-        env= {}
-        for line in os.popen("g.gisenv").readlines():
-            line = line.strip()
-            key, val = line.split("=")
-            val = val.replace(";","")
-            val = val.replace("'","")
-            env[key] = val
 
         dlg = SavedRegion(self, wx.ID_ANY, "Save display extents to region file",
                              pos=wx.DefaultPosition, size=wx.DefaultSize,
