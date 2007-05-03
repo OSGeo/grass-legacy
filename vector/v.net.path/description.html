@@ -70,8 +70,9 @@ v.db.update myroads col=forward val=75 where="label='interstate'"
 v.db.update myroads col=backward val=75 where="label='interstate'"
 v.db.update myroads col=forward val=5 where="label='unimproved road'"
 v.db.update myroads col=backward val=5 where="label='unimproved road'"
+v.db.update myroads col=forward val=25 where="label='light-duty road, improved surface'"
+v.db.update myroads col=backward val=25 where="label='light-duty road, improved surface'"
 v.db.select myroads
-
 echo "1|601653.5|4922869.2|start|0|0
 2|593330.8|4924096.6|end|0|0" | v.in.ascii cat=1 x=2 y=3 out=startend col="cat integer, \
                          east double precision, north double precision, label varchar(43), \
@@ -89,17 +90,24 @@ d.vect connect col=green
 # note that tables needs to be identical for v.patch:
 db.describe myroads -c
 v.db.addtable connect col="label varchar(43), forward double precision, backward double precision"
-v.info -c connect
+# add categories, use cat 0 (no data) for both roads as "off-road":
+v.category in=connect out=connect_cat cat=0 step=0
+# insert attributes:
+echo "INSERT INTO connect_cat (cat, label, forward, backward) VALUES (0, 'no data', 50, 50)" | db.execute
+v.db.select connect_cat
+
+v.info -c connect_cat
 v.info -c startend
 
 #merge all maps into a new one: streets, connections, points:
-v.patch -e myroads,connect,startend out=myroads_n
+v.patch -e myroads,connect_cat,startend out=myroads_n
 
 #fix the topology: break lines, snap to nodes:
 # (note: this removes overpasses, better use v.edit)
 v.clean myroads_n output=myroads_net tool=snap,break,rmdupl thresh=1,0,0
 v.db.select myroads_net
-d.vect myroads_net disp=shape,cat type=point
+d.vect myroads_net icon=basic/triangle fcol=green size=12
+d.vect myroads_net disp=cat type=point lsize=14
 # ... the 'start' and 'end' nodes have category number 9 and 10
 
 # ID as first number, then cat1 and cat2
