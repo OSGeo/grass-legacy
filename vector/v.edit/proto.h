@@ -30,7 +30,8 @@ int do_split(struct Map_info *Map, struct ilist *List, int print,
 int do_merge(struct Map_info *Map, struct ilist *List, int print);
 
 /* snap.c */
-int do_snap(struct Map_info *Map, struct ilist *List, int print);
+int do_snap(struct Map_info *Map, struct ilist *List, int print,
+	    int layer);
 
 /* select.c */
 int do_print_selected(struct ilist *List);
