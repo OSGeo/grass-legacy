@@ -214,7 +214,7 @@
 #%end
 
 if  [ -z "$GISBASE" ] ; then
-    echo "You must be in GRASS GIS to run this program."
+    echo "You must be in GRASS GIS to run this program." >&2
  exit 1
 fi   
 
@@ -226,7 +226,7 @@ PROG=`basename $0`
 
 #### check if we have awk
 if [ ! -x "`which awk`" ] ; then
-    echo "$PROG: awk required, please install awk or gawk first" 2>&1
+    g.message "$PROG: awk required, please install awk or gawk first" 
     exit 1
 fi
 
@@ -244,56 +244,56 @@ COLTYPE="`v.info -c $GIS_OPT_MAP layer=1 2> /dev/null | grep -w $GIS_OPT_COLUMN 
 
 #COLTYPE=... 
 if [ -z "$COLTYPE" ] ; then 
-   echo "ERROR: No such column [$GIS_OPT_COLUMN]" 
+   g.message -e "No such column [$GIS_OPT_COLUMN]" 
    exit 1 
 fi 
 
 if [ "$COLTYPE" = "integer" -o "$COLTYPE" = "double precision" ] ; then
-	echo ""
+	echo -n ""
 else
-	echo "ERROR: Column <$GIS_OPT_COLUMN> is of type <$COLTYPE> which is not numeric."
+	g.message -e "Column <$GIS_OPT_COLUMN> is of type <$COLTYPE> which is not numeric."
 	exit 1
 fi
 
 # create temporary file to hold output from v.univar
 TMP1="`g.tempfile pid=$$`"
 if [ $? -ne 0 ] || [ -z "$TMP1" ] ; then
-    echo "ERROR: unable to create temporary file for statistics" 1>&2
+    g.message -e "Unable to create temporary file for statistics"
     exit 1
 fi
 
 # create temporary file to hold d.graph commands for legend
 TMP2="`g.tempfile pid=$$`"
 if [ $? -ne 0 ] || [ -z "$TMP2" ] ; then
-    echo "ERROR: unable to create temporary file for legend" 1>&2
+    g.message -e "Unable to create temporary file for legend"
     exit 1
 fi
 
 # Create temporary file to commands for GIS Manager group
 TMP3="`g.tempfile pid=$$`"
 if [ $? -ne 0 ] || [ -z "$TMP3" ] ; then
-    echo "ERROR: unable to create temporary file for group" 1>&2
+    g.message -e "Unable to create temporary file for group"
     exit 1
 fi
 
 # Create temporary file for commands for ps.map map file
 TMP4="`g.tempfile pid=$$`"
 if [ $? -ne 0 ] || [ -z "$TMP4" ] ; then
-    echo "ERROR: unable to create temporary file for ps.map legend" 1>&2
+    g.message -e "ERROR: unable to create temporary file for ps.map legend"
     exit 1
 fi
 
 # Create temporary file for commands for ps.map legend file
 TMP5="`g.tempfile pid=$$`"
 if [ $? -ne 0 ] || [ -z "$TMP5" ] ; then
-    echo "ERROR: unable to create temporary file for ps.map legend" 1>&2
+    g.message -e "Unable to create temporary file for ps.map legend"
     exit 1
 fi
 
 # create file to hold elements for GIS Manager legend
 TMP6="`g.tempfile pid=$$`"
 if [ $? -ne 0 ] || [ -z "$TMP6" ] ; then
-    echo "ERROR: unable to create temporary file for GIS Manager legend" 1>&2
+    g.message -e "Unable to create temporary file for GIS Manager legend" 
     exit 1
 fi
 
@@ -326,7 +326,7 @@ cleanup()
 # what to do in case of user break:
 exitprocedure()
 {
-    echo "User break!"
+    g.message -e "User break!"
     cleanup
     exit 1
 }
@@ -337,9 +337,7 @@ trap "exitprocedure" 2 3 15
 currmon=`eval d.mon -L | grep "(selected)" | awk '{print $1}'`
 
 if [ -z "$currmon" -a "$GIS_FLAG_S" -ne 1 ] ; then
-	echo ""
-	echo "*** You must open a display monitor ***"
-	echo ""
+        g.message -e "*** You must open a display monitor ***"
 	cleanup
 	exit 2
 fi
@@ -350,7 +348,7 @@ driver=`v.db.connect $GIS_OPT_MAP -g | grep -w $GIS_OPT_LAYER | awk '{print $5}'
 
 if [ -z "$table" ]
     then
-    echo "No table connected or layer <$GIS_OPT_LAYER> doesn't exist!"
+    g.message -e "No table connected or layer <$GIS_OPT_LAYER> doesn't exist!"
     exit 1
  fi
 
@@ -358,7 +356,7 @@ if [ -z "$table" ]
 if [ "$GIS_FLAG_U" -eq 1 ] ; then
     # test, if the column GRASSRGB is in the table
     if [ -z "`db.columns table=$table database=$database driver=$driver| grep -i grassrgb`" ] ; then
-        echo "Creating column 'grassrgb' in table '$table'"
+        g.message "Creating column 'grassrgb' in table '$table'"
         echo "ALTER TABLE $table ADD COLUMN grassrgb varchar(11)" | db.execute database=$database
     fi
 fi
@@ -390,7 +388,7 @@ q4=$max
 ptsize=$GIS_OPT_SIZE
 
 if [ -n "$GIS_OPT_BREAKPOINTS" ] && [ "$GIS_OPT_THEMECALC" != "custom_breaks" ] ; then
-    echo "WARNING: Custom breakpoints ignored due to themecalc setting."
+    g.message -w "Custom breakpoints ignored due to themecalc setting."
 fi
 
 # set interval for each thematic map calculation type
@@ -428,7 +426,7 @@ case "$GIS_OPT_THEMECALC" in
     ;;
 
  "*")
-    echo "Unknown themecalc type"
+    g.message -e "Unknown themecalc type"
     cleanup
     exit
 esac
@@ -462,9 +460,8 @@ echo "text 4% 90% Value range: $min - $max" >> "$TMP5"
 echo "  ref bottom left" >> $TMP5
 echo "end" >> $TMP5
 
-echo "Thematic map legend for column $GIS_OPT_COLUMN of map $GIS_OPT_MAP"
-echo ""
-echo "Value range: $min - $max"
+g.message "Thematic map legend for column $GIS_OPT_COLUMN of map $GIS_OPT_MAP"
+g.message "Value range: $min - $max"
 
 # graduated color thematic mapping
 
@@ -517,7 +514,7 @@ if [ "$GIS_OPT_THEMETYPE" = "graduated_colors" ] ; then
 	    fi
 	    ;;
         "*")
-	    echo "This should not happen: gparser error. Unknown color scheme $GIS_OPT_COLORSCHEME"
+	    g.message -e "This should not happen: gparser error. Unknown color scheme $GIS_OPT_COLORSCHEME"
 	    cleanup
 	    exit
 	    ;;
@@ -548,7 +545,7 @@ if [ "$GIS_OPT_THEMETYPE" = "graduated_colors" ] ; then
         echo "  ref bottom left" >> $TMP5
         echo "end" >> $TMP5
 
-        echo "Mapped by $numint intervals of $step"
+        g.message "Mapped by $numint intervals of $step"
     fi
 
     # display graduated color themes for standard deviation units
@@ -563,7 +560,7 @@ if [ "$GIS_OPT_THEMETYPE" = "graduated_colors" ] ; then
         echo "  ref bottom left" >> $TMP5
         echo "end" >> $TMP5
 
-        echo "Mapped by standard deviation units of $sd (mean =$mean)"
+        g.message "Mapped by standard deviation units of $sd (mean =$mean)"
     fi
 
     # display graduated color themes for quartiles
@@ -580,7 +577,7 @@ if [ "$GIS_OPT_THEMETYPE" = "graduated_colors" ] ; then
 
 	
 
-        echo "Mapped by quartiles (median =$q2)"
+        g.message "Mapped by quartiles (median = $q2)"
     fi
 
     echo "move 4 83" >> "$TMP2"
@@ -607,7 +604,6 @@ if [ "$GIS_OPT_THEMETYPE" = "graduated_colors" ] ; then
     echo "end" >> $TMP5
 
 
-    echo ""
     echo "Color(R:G:B)" "Value" | awk '{print $1 "\t" $2}'
     echo "============" "==========" | awk '{print $1 "\t" $2}'
 
@@ -893,7 +889,7 @@ if [ "$GIS_OPT_THEMETYPE" = "graduated_points" -o "$GIS_OPT_THEMETYPE" = "gradua
         echo "  ref bottom left" >> $TMP5
         echo "end" >> $TMP5
 
-        echo "Mapped by $numint intervals of $step"
+        g.message "Mapped by $numint intervals of $step"
     fi
         
     # display graduated points/lines for standard deviation units
@@ -908,7 +904,7 @@ if [ "$GIS_OPT_THEMETYPE" = "graduated_points" -o "$GIS_OPT_THEMETYPE" = "gradua
 		echo "  ref bottom left" >> $TMP5
 		echo "end" >> $TMP5
 	
-        echo "Mapped by standard deviation units of $sd (mean =$mean)"
+        g.message "Mapped by standard deviation units of $sd (mean =$mean)"
     fi
     
     # display graduated points/lines for quartiles
@@ -923,7 +919,7 @@ if [ "$GIS_OPT_THEMETYPE" = "graduated_points" -o "$GIS_OPT_THEMETYPE" = "gradua
         echo "  ref bottom left" >> $TMP5
         echo "end" >> $TMP5
 
-        echo "Mapped by quartiles (median =$q2)"
+        g.message "Mapped by quartiles (median = $q2)"
     fi
         
     line1=76
@@ -952,8 +948,6 @@ if [ "$GIS_OPT_THEMETYPE" = "graduated_points" -o "$GIS_OPT_THEMETYPE" = "gradua
     echo "end" >> $TMP5
 
     
-
-    echo ""
     echo "Size/width" "Value" | awk '{print $1 " " $2"\t"$3}'
     echo "==========" "=====" | awk '{print $1 "\t" $2}'
 
@@ -1180,8 +1174,6 @@ fi
 
 # Create graphic legend
 if [ "$GIS_FLAG_L" -eq 1 -a "$GIS_OPT_MONITOR" != "none" ] ; then
-    echo ""
-    echo ""
     if [ `eval d.mon -L | grep $GIS_OPT_MONITOR | awk '{print $5}'` = "not" ] ; then
         d.mon start=$GIS_OPT_MONITOR > /dev/null
     else 
