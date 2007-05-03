@@ -26,8 +26,8 @@ The map must contain at least one center
 
 echo "591228.7|4926317.2|1" | v.in.ascii out=startnode
 v.patch in=roads,startnode out=roads_n
-v.clean roads_n out=roads_net tool=break,snap thresh=0,10
-v.net.iso input=roads_net output=isomap ccats=1 costs=1000,2000,5000
+v.clean roads_n out=roads_net tool=snap,break thresh=5,0
+v.net.iso input=roads_net output=isomap ccats=1 costs=1000,2000,5000 nlayer=1
 </pre></div>
 
 that should cut network to 4 categories:
