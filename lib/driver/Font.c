@@ -26,15 +26,13 @@ void COM_Font_get(const char *name)
 {
 	if (name[0] == '/')
 	{
-		char prefix[4096];
-		FILE *fp;
+		static char prefix[4096];
 
-		fp = fopen(name, "r");
-		if (!fp)
+		if (font_exists(name))
 			return;
-		fclose(fp);
 
-		sprintf(prefix, "%s/fonts/", G_gisbase());
+		if (!*prefix)
+			sprintf(prefix, "%s/fonts/", G_gisbase());
 
 		if (strncmp(name, prefix, strlen(prefix)) == 0)
 			stroke_set(name);

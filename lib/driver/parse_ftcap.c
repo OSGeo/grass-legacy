@@ -4,13 +4,32 @@
 #include <grass/gis.h>
 #include <grass/glocale.h>
 #include <grass/freetypecap.h>
+#include "driverlib.h"
 
+int font_exists(const char *name)
+{
+	char path[GPATH_MAX];
+	char *p;
+	FILE *fp;
+
+	strcpy(path, name);
+
+	p = strrchr(path, '|');
+	if(p)
+		*p = '\0';
+	fp = fopen(path, "r");
+	if (!fp)
+		return 0;
+
+	fclose(fp);
+	return 1;
+}
 
 struct FT_CAP *parse_freetypecap(void)
 {
 	char *capfile, file[GPATH_MAX];
 	char buf[GPATH_MAX], iname[128], ipath[GPATH_MAX];
-	FILE *fp, *fp2;
+	FILE *fp;
 	int fonts_count = 0;
 	struct FT_CAP *fonts = NULL;
 
@@ -39,12 +58,8 @@ struct FT_CAP *parse_freetypecap(void)
 			if(sscanf(buf, "%[^:]:%[^:]", iname, ipath) != 2)
 				continue;
 
-			p = strrchr(ipath, '|');
-			if(p)
-				*p = 0;
-			if((fp2 = fopen(ipath, "r")) == NULL)
+			if (!font_exists(ipath))
 				continue;
-			fclose(fp2);
 
 			fonts = (struct FT_CAP *)G_realloc(fonts,
 				(fonts_count + 1) * sizeof(struct FT_CAP));

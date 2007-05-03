@@ -41,5 +41,6 @@ int get_command(char *);
 int process_command(int);
 
 /* parse_ftcap.c */
+extern int font_exists(const char *name);
 extern struct FT_CAP *parse_freetypecap(void);
 extern void free_freetypecap(struct FT_CAP *ftcap);
