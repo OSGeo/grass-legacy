@@ -274,7 +274,7 @@ int path ( struct Map_info *In, struct Map_info *Out, int nfield, double maxdist
     if ( nopoint )
 	G_warning (_("[%d] points of given category missing"), nopoint );
     if ( unreachable )
-	G_warning (_("[%d] destinations unreachable (including points out"
+	G_warning (_("[%d] destinations unreachable (including points out "
 		     "of threshold)"), unreachable );
 
     return 1;
