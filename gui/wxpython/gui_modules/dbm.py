@@ -3,29 +3,32 @@ MODULE:    dbm.py
 
 PURPOSE:   GRASS attribute table manager
 
-    This program is based on FileHunter, publicated in 'The wxPython Linux
-    Tutorial' on wxPython WIKI pages.
+           This program is based on FileHunter, publicated in 'The wxPython Linux
+           Tutorial' on wxPython WIKI pages.
 
-    It also uses some functions at
-    http://aspn.activestate.com/ASPN/Cookbook/Python/Recipe/426407
+           It also uses some functions at
+            http://aspn.activestate.com/ASPN/Cookbook/Python/Recipe/426407
 
-    dbm.py vectorm@mapset
+           dbm.py vectorm@mapset
 
 AUTHOR(S): GRASS Development Tean
-    Jachym Cepicky <jachym.cepicky gmail.com>
+           Original author: Jachym Cepicky <jachym.cepicky gmail.com>
+           Martin Landa <landa.martin gmail.com>
 
 COPYRIGHT: (C) 2007 by the GRASS Development Team
 
-    This program is free software under the GNU General Public
-    License (>=v2). Read the file COPYING that comes with GRASS
-    for details.
+           This program is free software under the GNU General Public
+           License (>=v2). Read the file COPYING that comes with GRASS
+           for details.
 """
 
-import wx
-import wx.lib.mixins.listctrl  as  listmix
+import sys, os, locale, string
 
-import sys,os,locale,string
+import wx
+import wx.lib.mixins.listctrl as listmix
+
 import grassenv
+import cmd
 
 try:
     import subprocess
@@ -58,9 +61,6 @@ class VirtualAttributeList(wx.ListCtrl, listmix.ListCtrlAutoWidthMixin, listmix.
         if not "@" in self.vectmap:
             self.vectmap = self.vectmap+"@"+grassenv.env["MAPSET"]
         self.mapname, self.mapset = self.vectmap.split("@")
-        self.layer,self.tablename, self.column, self.database, self.driver =\
-                 os.popen("v.db.connect -g map=%s" %\
-                (self.vectmap)).readlines()[0].strip().split()
 
         self.icon = ''
         self.pointsize = ''
@@ -92,11 +92,11 @@ class VirtualAttributeList(wx.ListCtrl, listmix.ListCtrlAutoWidthMixin, listmix.
 
         #building the columns
         i = 0
-        # FIXME: subprocess.Popen should be used
         # FIXME: Maximal number of columns, when the GUI is still usable
-        for line in os.popen("db.describe -c table=%s driver=%s database=%s" %\
-                (self.tablename, self.driver, self.database)).readlines()[1:]:
-
+        dbDescribe = cmd.Command (cmd= "db.describe -c table=%s driver=%s database=%s" % \
+                                  (self.parent.tablename, self.parent.driver, self.parent.database))
+        
+        for line in dbDescribe.module_stdout.readlines()[1:]:
             x,column,type,length = line.strip().split(":")
             # FIXME: here will be more types
             if type.lower().find("integer") > -1:
@@ -154,20 +154,22 @@ class VirtualAttributeList(wx.ListCtrl, listmix.ListCtrlAutoWidthMixin, listmix.
 
     def LoadData(self,where=None):
 
-        cmd = """db.select -c table=%s database=%s driver=%s """ %\
-                (self.tablename,self.database,self.driver)
+        # prepare command string
+        cmdstr = """db.select -c table=%s database=%s driver=%s """ % \
+                 (self.parent.tablename, self.parent.database, self.parent.driver)
 
         if where:
             self.ClearAll()
-            cmd = """db.select -c sql="SELECT * FROM %s WHERE %s" database=%s driver=%s """ %\
-                (self.tablename,where,self.database,self.driver)
+            cmdstr = """db.select -c sql="SELECT * FROM %s WHERE %s" database=%s driver=%s """ %\
+                     (self.parent.tablename, where, self.parent.database, self.parent.driver)
 
-
-        # FIXME: subprocess.Popen should be used
+        # run command
+        vDbSelect = cmd.Command (cmd=cmdstr)
+        
         # FIXME: Max. number of rows, while the GUI is still usable
         i = 0
         # read data
-        for line in os.popen(cmd):
+        for line in vDbSelect.module_stdout.readlines():
             attributes = line.strip().split("|")
             self.itemDataMap[i] = []
 
@@ -478,44 +480,62 @@ class AttributeManager(wx.Frame):
     this is changed to:
     self.win=TestPanel(self,log)
     """
-    def __init__(self, parent, id, title, size, style = wx.DEFAULT_FRAME_STYLE,
-                 vectmap=None,pointdata=None):
+    def __init__(self, parent, id, title, vectmap, size = wx.DefaultSize, style = wx.DEFAULT_FRAME_STYLE,
+                 pointdata=None):
+
+        # get list of attribute tables (TODO: open more tables)
+        vDbConnect = cmd.Command (cmd="v.db.connect -g map=%s" % (vectmap))
+
+        try:
+            if vDbConnect.returncode == 0:
+                (self.layer, self.tablename, self.column, self.database, self.driver) = vDbConnect.module_stdout.readlines()[0].strip().split()
+            else:
+                raise
+        except:
+            self.layer = None
+
+        if not self.layer:
+            dlg = wx.MessageDialog(parent, _("No attribute table available for vector map <%s>") % vectmap, _("Error"), wx.OK | wx.ICON_ERROR)
+            dlg.ShowModal()
+            dlg.Destroy()
+            return
 
         wx.Frame.__init__(self, parent, id, title, size=size, style=style)
 
         self.CreateStatusBar(1)
-        self.vectmap=vectmap
-        self.parent = parent
         
+        self.vectmap = vectmap
+        self.parent  = parent
+        self.gismgr  = parent
+
         log=Log(self)
 
-        self.gismgr = parent
-         
-        # most importand part
-        self.win = VirtualAttributeList(self, log, vectmap=vectmap,pointdata=pointdata)
+        # most important part
+        self.win = VirtualAttributeList(self, log, vectmap=vectmap, pointdata=pointdata)
 
         # buttons
         self.btn_apply = wx.Button(self, -1, "Apply")
-        #self.btn_unselect = wx.Button(self, -1, "Unselect")
+        # self.btn_unselect = wx.Button(self, -1, "Unselect")
         self.btn_sqlbuilder = wx.Button(self, -1, "SQL Builder")
-
+        
         # check
-        #self.check_add_to_selection = wx.CheckBox(self, -1, "Add to selection")
+        # self.check_add_to_selection = wx.CheckBox(self, -1, "Add to selection")
+
         # textarea
         self.text_query = wx.TextCtrl(self,-1,"")
-        # label
-        self.sqlabel=wx.StaticText(self,-1,"SELECT * FROM %s WHERE " % self.win.tablename)
-        self.label_query = wx.StaticText(self,-1,"")
 
+        # label
+        self.sqlabel=wx.StaticText(self,-1,"SELECT * FROM %s WHERE " % self.tablename)
+        self.label_query = wx.StaticText(self,-1,"")
+        
         # box
         self.sqlbox = wx.StaticBox(self, -1, "SQL Query:")
-
-
+        
         self.btn_sqlbuilder.Bind(wx.EVT_BUTTON, self.OnBuilder)
-
+        
         self.__layout()
         self.Show()
-
+        
     def OnBuilder(self,event):
         import sqlbuilder
         self.builder = sqlbuilder.SQLFrame(self,-1,"SQL Builder",self.vectmap)
@@ -576,7 +596,7 @@ def main(argv=None):
     #wx.InitAllImageHandlers()
 
     app = wx.PySimpleApp()
-    f = AttributeManager(None, -1, "GRASS Attribute Table Manager",wx.Size(700,600),vectmap=argv[1])
+    f = AttributeManager(parent=None, id=wx.ID_ANY, title="GRASS Attribute Table Manager", size=(700,600), vectmap=argv[1])
     app.MainLoop()
 
 if __name__ == '__main__':
