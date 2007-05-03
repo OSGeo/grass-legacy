@@ -36,8 +36,10 @@ double D_get_ew_resolution(void);
 void D_get_u(double [2][2]);
 void D_get_a(int [2][2]);
 void D_get_d(int [2][2]);
+
 /* color_list.c */
 char *D_color_list(void);
+
 /* draw.c */
 int D_set_clip_window(int, int, int, int);
 int D_set_clip_window_to_map_window(void);
@@ -46,6 +48,7 @@ int D_cont_abs(int, int);
 int D_cont_rel(int, int);
 int D_move_abs(int, int);
 int D_move_rel(int, int);
+
 /* draw2.c */
 void D_set_clip(double, double, double, double);
 void D_set_clip_margin(double);
@@ -65,10 +68,13 @@ void D_polyline(const double *, const double *, int);
 void D_polygon(const double *, const double *, int);
 void D_box(double, double, double, double);
 void D_line_width(double);
+
 /* get_win.c */
 int get_win_w_mouse(float *, float *, float *, float *);
+
 /* ident_win.c */
 int ident_win(char *);
+
 /* list.c */
 int D_set_cell_name(const char *);
 int D_get_cell_name(char *);
@@ -83,8 +89,10 @@ int D_get_list(char ***, int *);
 int D_clear_window(void);
 int D_set_erase_color(const char *);
 int D_get_erase_color(char *);
+
 /* popup.c */
 int D_popup(int, int, int, int, int, int, char *[]);
+
 /* raster.c */
 int D_draw_raster(int, const void *, struct Colors *, RASTER_MAP_TYPE);
 int D_draw_d_raster(int, const DCELL *, struct Colors *);
@@ -95,6 +103,7 @@ int D_cell_draw_setup(int, int, int, int);
 int D_draw_raster_RGB(int, const void *, const void *, const void *,
 		      struct Colors *, struct Colors *, struct Colors *,
 		      RASTER_MAP_TYPE, RASTER_MAP_TYPE, RASTER_MAP_TYPE);
+
 /* raster2.c */
 int D_set_overlay_mode(int);
 int D_color(CELL, struct Colors *);
@@ -102,16 +111,21 @@ int D_c_color(CELL, struct Colors *);
 int D_d_color(DCELL, struct Colors *);
 int D_f_color(FCELL, struct Colors *);
 int D_color_of_type(const void *, struct Colors *, RASTER_MAP_TYPE);
+
 /* setup.c */
 int D_setup(int);
+
 /* symbol.c */
-int D_symbol(const SYMBOL *, int, int, const RGBA_Color *, const RGBA_Color *);
+void D_symbol(const SYMBOL *, int, int, const RGBA_Color *, const RGBA_Color *);
+void D_symbol2(const SYMBOL *, int, int, const RGBA_Color *, const RGBA_Color *);
+
 /* tran_colr.c */
 int D_translate_color(const char *);
 int D_translate_or_add_color(const char *, int);
 int D_allocate_color(void);
 int D_parse_color(const char *, int);
 int D_raster_use_color(int);
+
 /* window.c */
 int D_new_window(char *, int, int, int, int);
 int D_new_window_percent(char *, float, float, float, float);
