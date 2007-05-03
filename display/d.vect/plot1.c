@@ -154,16 +154,23 @@ int plot1 (
     int custom_rgb = FALSE;
     char colorstring[12]; /* RRR:GGG:BBB */
     int red, grn, blu;
-    RGBA_Color *line_color, *fill_color;
+    RGBA_Color *line_color, *fill_color, *primary_color;
     unsigned char which;
     int width;
 
     line_color = G_malloc(sizeof(RGBA_Color));
     fill_color = G_malloc(sizeof(RGBA_Color));
+    primary_color = G_malloc(sizeof(RGBA_Color));
+
+    primary_color->a = RGBA_COLOR_OPAQUE;
 
 /* change function prototype to pass RGBA_Color instead of color_rgb? */
-    if(color)
+    if(color) {
+	line_color->r = color->r;
+	line_color->g = color->g;
+	line_color->b = color->b;
 	line_color->a = RGBA_COLOR_OPAQUE;
+    }
     else
 	line_color->a = RGBA_COLOR_NONE;
 
@@ -442,42 +449,30 @@ int plot1 (
 	    /* use random or RGB column color if given, otherwise reset */
 	    /* centroids always use default color to stand out from underlying area */
 	    if (custom_rgb && (ltype != GV_CENTROID) ) {
-		line_color->r = (unsigned char)red;
-		line_color->g = (unsigned char)grn;
-		line_color->b = (unsigned char)blu;
-		line_color->a = RGBA_COLOR_OPAQUE;
-	    } else {
-		if(color) {
-		    line_color->r = color->r;
-		    line_color->g = color->g;
-		    line_color->b = color->b;
-		    line_color->a = RGBA_COLOR_OPAQUE;
-		}
-		else
-		    line_color->a = RGBA_COLOR_NONE;
+		primary_color->r = (unsigned char)red;
+		primary_color->g = (unsigned char)grn;
+		primary_color->b = (unsigned char)blu;
+		D_symbol2(Symb, x0, y0, primary_color, line_color);
 	    }
+	    else
+		D_symbol(Symb, x0, y0, line_color, fill_color);
 
-	    D_symbol(Symb, x0, y0, line_color, fill_color);
 
 	} else if (color || custom_rgb) {
-	  if (!table_colors_flag && !cats_color_flag) {
-	    R_RGB_color(color->r, color->g, color->b);
-	  }
-	  else {
-	    if (custom_rgb) {
-	      R_RGB_color ((unsigned char) red, (unsigned char) grn, (unsigned char) blu);
-	    }
+	    if (!table_colors_flag && !cats_color_flag)
+		R_RGB_color(color->r, color->g, color->b);
 	    else {
-	      R_RGB_color(color->r, color->g, color->b);
+		if (custom_rgb)
+		    R_RGB_color((unsigned char)red, (unsigned char)grn, (unsigned char)blu);
+		else
+		    R_RGB_color(color->r, color->g, color->b);
 	    }
-	  }
+
 	    /* Plot the lines */
-	    if ( Points->n_points == 1 ) { /* line with one coor */
+	    if ( Points->n_points == 1 )  /* line with one coor */
 		D_polydots_clip(x, y, Points->n_points);
-	    } else {
-	        /*use different user defined render methods*/
-	        plot_polyline(x, y, Points->n_points);
-	    }
+	    else  /*use different user defined render methods*/
+		plot_polyline(x, y, Points->n_points);
 	}
     }
 
