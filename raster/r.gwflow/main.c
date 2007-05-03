@@ -60,9 +60,7 @@ void set_params()
     param.status->type = TYPE_STRING;
     param.status->required = YES;
     param.status->gisprompt = "old,raster,raster";
-    param.status->description =
-	_
-	("The status for each cell, = 0 - inactive, 1 - active, 2 - dirichlet");
+    param.status->description = _("boundary condition status, 0-inactive, 1-active, 2-dirichlet");
 
     param.hc_x = G_define_option();
     param.hc_x->key = "hc_x";
@@ -70,7 +68,7 @@ void set_params()
     param.hc_x->required = YES;
     param.hc_x->gisprompt = "old,raster,raster";
     param.hc_x->description =
-	_("The x-part of the hydraulic conductivity tensor in [m/s]");
+	_("X-part of the hydraulic conductivity tensor in [m/s]");
 
     param.hc_y = G_define_option();
     param.hc_y->key = "hc_y";
@@ -78,14 +76,14 @@ void set_params()
     param.hc_y->required = YES;
     param.hc_y->gisprompt = "old,raster,raster";
     param.hc_y->description =
-	_("The y-part of the hydraulic conductivity tensor in [m/s]");
+	_("Y-part of the hydraulic conductivity tensor in [m/s]");
 
     param.q = G_define_option();
     param.q->key = "q";
     param.q->type = TYPE_STRING;
     param.q->required = NO;
     param.q->gisprompt = "old,raster,raster";
-    param.q->description = _("Sources and sinks in [m^3/s]");
+    param.q->description = _("Water sources and sinks in [m^3/s]");
 
     param.s = G_define_option();
     param.s->key = "s";
@@ -99,7 +97,7 @@ void set_params()
     param.r->type = TYPE_STRING;
     param.r->required = NO;
     param.r->gisprompt = "old,raster,raster";
-    param.r->description = _("Reacharge raster map in [m^3/s]");
+    param.r->description = _("Reacharge map e.g: 6*10^-9 per cell in [m^3/s*m^2]");
 
     param.top = G_define_option();
     param.top->key = "top";
@@ -122,7 +120,7 @@ void set_params()
     param.output->gisprompt = "new,raster,raster";
     param.output->description =
 	_
-	("The piezometric head result of the numerical calculation will be written to this map.");
+	("The map storing the numerical result [m].");
 
     param.vector = G_define_option();
     param.vector->key = "velocity";
@@ -131,7 +129,8 @@ void set_params()
     param.vector->gisprompt = "new,raster,raster";
     param.vector->description =
 	_
-	("Calculate the groundwater distance velocity vector field and write the x, and y components to maps named name_[xy]. name is the basename for the new raster maps.");
+	("Calculate the groundwater filter velocity vector field [m/s]\n"
+         "and write the x, and y components to maps named name_[xy]\n");
 
     param.type = G_define_option();
     param.type->key = "type";
@@ -140,7 +139,7 @@ void set_params()
     param.type->answer = "confined";
     param.type->options = "confined,unconfined";
     param.type->description =
-	_("Which type of groundwater flow? confined or unconfined.");
+	_("The type of groundwater flow.");
 
     param.dt = N_define_standard_option(N_OPT_CALC_TIME);
     param.maxit = N_define_standard_option(N_OPT_MAX_ITERATIONS);
@@ -152,7 +151,7 @@ void set_params()
     param.sparse->key = 's';
     param.sparse->description =
 	_
-	("Use a sparse linear equation system, only available with iterative solvers");
+	("Use a sparse matrix, only available with iterative solvers");
 
 }
 
@@ -232,6 +231,7 @@ int main(int argc, char *argv[])
 
     /*Set the calculation time */
     sscanf(param.dt->answer, "%lf", &(data->dt));
+    G_message("Calculation time: %g", data->dt);
 
     /*read all input maps into the memory and take care of the
      * null values.*/
@@ -378,7 +378,7 @@ int main(int argc, char *argv[])
 
 
 /* ************************************************************************* */
-/* this function copies the result from the x vector to a N_array_2d array * */
+/* this function copies the result from the x vector to a N_array_2d struct  */
 /* ************************************************************************* */
 void
 copy_result(N_array_2d * status, N_array_2d * phead_start, double *result,
