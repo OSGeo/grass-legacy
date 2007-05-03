@@ -96,9 +96,10 @@ v.info -c startend
 v.patch -e myroads,connect,startend out=myroads_n
 
 #fix the topology: break lines, snap to nodes:
-# note: this removes overpasses, better use v.edit
-v.clean myroads_n output=myroads_net tool=break,snap,rmdupl thresh=0,5,0
+# (note: this removes overpasses, better use v.edit)
+v.clean myroads_n output=myroads_net tool=snap,break,rmdupl thresh=1,0,0
 v.db.select myroads_net
+d.vect myroads_net disp=shape,cat type=point
 # ... the 'start' and 'end' nodes have category number 9 and 10
 
 # ID as first number, then cat1 and cat2
