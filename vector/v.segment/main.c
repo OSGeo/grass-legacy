@@ -3,6 +3,7 @@
  * MODULE:       v.segment
  * 
  * AUTHOR(S):    Radim Blazek
+ *               Hamish Bowman (offset bits)
  *               
  * PURPOSE:      Generate segments or points from input map and segments read from stdin 
  *               
@@ -16,6 +17,7 @@
  **************************************************************/
 #include <stdlib.h>
 #include <string.h>
+#include <math.h>
 #include <time.h>
 #include <grass/gis.h>
 #include <grass/Vect.h>
@@ -23,7 +25,8 @@
 #include <grass/glocale.h>
 
 int find_line ( struct Map_info *Map, int lfield, int cat );
-    
+void offset_pt_90(double *, double *, double, double);
+
 int main(int argc, char **argv)
 {
     int    ret, points_written, lines_written, points_read, lines_read;
@@ -39,7 +42,7 @@ int main(int argc, char **argv)
     char   *mapset, buf[2000];
     struct Map_info In, Out;
     struct line_cats *LCats, *SCats; 
-    struct line_pnts *LPoints, *SPoints;
+    struct line_pnts *LPoints, *SPoints, *PlPoints;
 
     G_gisinit (argv[0]) ;
 
@@ -49,30 +52,34 @@ int main(int argc, char **argv)
 	_("Create points/segments from input lines and and positions.");
 
     in_opt = G_define_standard_option(G_OPT_V_INPUT);
-    in_opt->description = "Input map containing lines";
+    in_opt->description = _("Input map containing lines");
     
     out_opt = G_define_standard_option(G_OPT_V_OUTPUT); 
-    out_opt->description = "Output map where segments will be written";
+    out_opt->description = _("Output map where segments will be written");
 
     lfield_opt = G_define_standard_option(G_OPT_V_FIELD);
     lfield_opt->key = "llayer";
     lfield_opt->answer = "1";
-    lfield_opt->description = "Line layer";
+    lfield_opt->description = _("Line layer");
     
-    if(G_parser(argc,argv)) exit(1);
+    if(G_parser(argc,argv))
+	exit(EXIT_FAILURE);
+
 
     LCats = Vect_new_cats_struct ();
     SCats = Vect_new_cats_struct ();
     LPoints = Vect_new_line_struct ();
     SPoints = Vect_new_line_struct ();
-    
+    PlPoints = Vect_new_line_struct ();
+
     lfield = atoi (lfield_opt->answer);
 
     Vect_check_input_output_name ( in_opt->answer, out_opt->answer, GV_FATAL_EXIT );
 
     /* Open input lines */
     mapset = G_find_vector2 (in_opt->answer, NULL); 
-    if(mapset == NULL) G_fatal_error ("Could not find input %s\n", in_opt->answer);
+    if(mapset == NULL)
+	G_fatal_error (_("Vector map <%s> not found"), in_opt->answer);
     Vect_set_open_level ( 2 );
     Vect_open_old (&In, in_opt->answer, mapset); 
     
@@ -89,12 +96,14 @@ int main(int argc, char **argv)
 	side_offset = 0;
 	Vect_reset_line ( SPoints );
 	Vect_reset_cats ( SCats );
+	Vect_reset_line ( PlPoints );
+	
 	switch ( buf[0] ) {
 	    case 'P':
 		side_offset = 0;
 		ret = sscanf ( buf, "%c %d %d %lf %lf", &stype, &id, &lcat, &offset1, &side_offset);
 		if ( ret < 4 ) { 
-		    G_warning ( "Cannot read input: %s", buf);
+		    G_warning ( _("Cannot read input: %s"), buf);
 		    break;
 		}
 		points_read++;
@@ -104,7 +113,7 @@ int main(int argc, char **argv)
 		/* OK, write point */
                 line = find_line ( &In, lfield, lcat );
 		if ( line == 0 ) {
-		    G_warning ( "Cannot find line of cat %d", lcat);
+		    G_warning ( _("Cannot find line of cat %d"), lcat);
 		    break;
 		}
 
@@ -112,10 +121,13 @@ int main(int argc, char **argv)
 		ret = Vect_point_on_line ( LPoints, offset1, &x, &y, &z, &angle, NULL);
                 if ( ret == 0 ) {
 		    len = Vect_line_length ( LPoints );
-		    G_warning ( "Cannot get point on line: cat = %d offset = %f (line length = %f)\n%s",
+		    G_warning ( _("Cannot get point on line: cat = %d offset = %f (line length = %f)\n%s"),
 			         lcat, offset1, len, buf);
 		    break;
 		}
+
+		if(fabs(side_offset) > 0.0)
+		    offset_pt_90(&x, &y, angle, side_offset);
 
                 Vect_append_point ( SPoints, x, y, z );
 		Vect_cat_set ( SCats, 1, id );
@@ -128,7 +140,7 @@ int main(int argc, char **argv)
 		ret = sscanf ( buf, "%c %d %d %lf %lf %lf", &stype, &id, &lcat, 
 			             &offset1, &offset2, &side_offset);
 		if ( ret < 5 ) { 
-		    G_warning ( "Cannot read input: %s", buf);
+		    G_warning ( _("Cannot read input: %s"), buf);
 		    break;
 		}
 		lines_read++;
@@ -136,7 +148,7 @@ int main(int argc, char **argv)
 		
                 line = find_line ( &In, lfield, lcat );
 		if ( line == 0 ) {
-		    G_warning ( "Cannot find line of cat %d", lcat);
+		    G_warning ( _("Cannot find line of cat %d"), lcat);
 		    break;
 		}
 
@@ -144,26 +156,33 @@ int main(int argc, char **argv)
 		
 		len = Vect_line_length ( LPoints );
 		if ( offset2 > len ) {
-		    G_warning ( "End of segment > line length -> cut"); 
+		    G_warning ( _("End of segment > line length -> cut")); 
 		    offset2 = len;
 		}
 		    
 		ret = Vect_line_segment ( LPoints, offset1, offset2, SPoints );
                 if ( ret == 0 ) {
-		    G_warning ( "Cannot make line segment: cat = %d : %f - %f (line length = %f)\n%s", 
+		    G_warning ( _("Cannot make line segment: cat = %d : %f - %f (line length = %f)\n%s"), 
 			                      lcat, offset1, offset2, len, buf);
 		    break;
 		}
-		
+
 		Vect_cat_set ( SCats, 1, id );
 
-		Vect_write_line ( &Out, GV_LINE, SPoints, SCats);
-	        G_debug ( 3, "  segment n_points = %d", SPoints->n_points);
+		if(fabs(side_offset) > 0.0) {
+		    Vect_line_parallel(SPoints, -1*side_offset, side_offset/10., TRUE, PlPoints);
+		    Vect_write_line ( &Out, GV_LINE, PlPoints, SCats);
+	            G_debug ( 3, "  segment n_points = %d", PlPoints->n_points);
+		}
+		else {
+		    Vect_write_line ( &Out, GV_LINE, SPoints, SCats);
+	            G_debug ( 3, "  segment n_points = %d", SPoints->n_points);
+		}
 
 		lines_written++;
 		break;
 	    default:
-		G_warning ("Incorrect segment type: %s", buf );
+		G_warning (_("Incorrect segment type: %s"), buf );
 	}
 
     }
@@ -174,15 +193,16 @@ int main(int argc, char **argv)
     Vect_close(&In);
     Vect_close(&Out);
 
-    fprintf ( stdout, "%d points read from input\n", points_read);
-    fprintf ( stdout, "%d points written to output map (%d lost)\n", 
+    fprintf ( stdout, _("%d points read from input\n"), points_read);
+    fprintf ( stdout, _("%d points written to output map (%d lost)\n"), 
 	                    points_written, points_read-points_written);
-    fprintf ( stdout, "%d lines read from input\n", lines_read);
-    fprintf ( stdout, "%d lines written to output map (%d lost)\n", 
+    fprintf ( stdout, _("%d lines read from input\n"), lines_read);
+    fprintf ( stdout, _("%d lines written to output map (%d lost)\n"), 
 	                   lines_written, lines_read-lines_written);
 
-    exit(0);
+    exit(EXIT_SUCCESS);
 }
+
 
 /* Find line by cat, returns 0 if not found */
 int 
@@ -203,4 +223,14 @@ find_line ( struct Map_info *Map, int lfield, int lcat )
     }
 
     return 0;
+}
+
+
+/* calculate a point perpendicular to the current line angle, offset by a distance
+ * works in the x,y plane.
+ */
+void offset_pt_90(double *x, double *y, double angle, double distance)
+{
+    *x -= distance * cos(M_PI_2 - angle);
+    *y += distance * sin(M_PI_2 - angle);
 }
