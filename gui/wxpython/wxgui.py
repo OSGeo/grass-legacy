@@ -148,6 +148,8 @@ class GMFrame(wx.Frame):
         self.mapfocus = 0 #track which display currently has focus
         self.curr_page   = '' # currently selected page for layer tree notebook
         self.curr_pagenum = '' # currently selected page number for layer tree notebook
+        self.fonttype = 'grassfont' # stroke or truetype font for default display font
+        self.encoding = 'ISO-8859-1' # default encoding for display fonts
 
         self.Bind(wx.EVT_CLOSE, self.onCloseWindow)
         self.Bind(wx.EVT_LEFT_DOWN, self.addRaster)
@@ -298,7 +300,28 @@ class GMFrame(wx.Frame):
     def defaultFont(self, event):
         """Set default font for GRASS displays"""
 
-        defaultfont.SetDefaultFont(self)
+        dlg = defaultfont.SetDefaultFont(self, wx.ID_ANY, 'Select default display font',
+                                   pos=wx.DefaultPosition, size=wx.DefaultSize,
+                                   style=wx.DEFAULT_DIALOG_STYLE,
+                                   fonttype=self.fonttype, encoding=self.encoding)
+        if dlg.ShowModal() == wx.ID_CANCEL:
+            dlg.Destroy()
+            return
+
+        # set default font type, font, and encoding to whatever selected in dialog
+        if dlg.fonttype != None:
+            self.fonttype = dlg.fonttype
+        if dlg.font != None:
+            self.font = dlg.font
+        if dlg.encoding != None:
+            self.encoding = dlg.encoding
+
+        dlg.Destroy()
+
+        # set default font and encoding environmental variables
+        os.environ["GRASS_FONT"] = self.font
+        if self.encoding != None and self.encoding != "ISO-8859-1":
+            os.environ[GRASS_FT_ENCODING] = self.encoding
 
     def __createToolBar(self):
         """Creates toolbar"""
@@ -341,7 +364,7 @@ class GMFrame(wx.Frame):
         if not layer:
             self.MsgNoLayerSelected()
             return
-        
+
         # available only for vector map layers
         maptype = self.curr_page.maptree.layertype[layer]
         if maptype != 'vector':
@@ -542,7 +565,7 @@ class GMFrame(wx.Frame):
             return
 
         dlg.Destroy()
-        
+
         for layer in self.curr_page.maptree.GetSelections():
             if self.curr_page.maptree.layertype[layer] == 'group':
                 self.curr_page.maptree.DeleteChildren(layer)
@@ -568,7 +591,7 @@ class GMFrame(wx.Frame):
         """Show dialog message 'No layer selected'"""
         dlg = wx.MessageDialog(self, _("No layer selected"), _("Error"), wx.OK | wx.ICON_ERROR)
         dlg.ShowModal()
-        dlg.Destroy()        
+        dlg.Destroy()
 
 class GMApp(wx.App):
     """
