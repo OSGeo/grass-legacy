@@ -1531,7 +1531,8 @@ class MapFrame(wx.Frame):
 
         # Reset comand and rendering options in render.Map. Always render decoration.
         # Showing/hiding handled by PseudoDC
-        self.Map.changeOverlay(ovltype=type, type='overlay', command=dcmd, l_active=True, l_render=False)
+        self.Map.ChangeOverlay(ovltype=type, type='overlay', name='', command=dcmd,
+                               l_active=True, l_render=False)
         self.params[type] = params
 
     def onZoomMenu(self, event):

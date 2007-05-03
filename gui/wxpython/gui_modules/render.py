@@ -822,16 +822,15 @@ class Map:
 
         return self.overlays[-1]
 
-    def changeOverlay(self, ovltype, type, command, mapset=None, l_active=True,
-        l_hidden=False, l_opacity=1, l_render=False):
+    def ChangeOverlay(self, ovltype, type, name, command,
+                      l_active=True, l_hidden=False, l_opacity=1, l_render=False):
         """
         Change overlay properities
         """
 
-        newoverlay = MapLayer('overlay', command, mapset,
-         l_active, l_hidden, l_opacity)
-
-
+        newoverlay = MapLayer(type='overlay', name=name, cmd=command,
+                              active=l_active, hidden=l_hidden, opacity=l_opacity)
+        
         oldovlindex = self.overlays.index(self.ovlookup[ovltype])
 
         # add overlay to the list of layers
