@@ -149,6 +149,25 @@ static void read_stroke_fonts(void)
 	closedir(dirp);
 }
 
+static int font_exists(const char *name)
+{
+	char path[GPATH_MAX];
+	char *p;
+	FILE *fp;
+
+	strcpy(path, name);
+
+	p = strrchr(path, '|');
+	if(p)
+		*p = '\0';
+	fp = fopen(path, "r");
+	if (!fp)
+		return 0;
+
+	fclose(fp);
+	return 1;
+}
+
 static void read_freetype_fonts(void)
 {
 	char *capfile;
@@ -180,8 +199,6 @@ static void read_freetype_fonts(void)
 	for (;;)
 	{
 		char buf[1024], ifont[256], ipath[1024];
-		char *p;
-		FILE *fontfp;
 
 		if (!fgets(buf, sizeof(buf), fp))
 			break;
@@ -192,14 +209,8 @@ static void read_freetype_fonts(void)
 		if(sscanf(buf, "%[^:]:%[^:]", ifont, ipath) != 2)
 			continue;
 
-		p = strrchr(ipath, '|');
-		if (p)
-			*p = '\0';
-
-		fontfp = fopen(ipath, "r");
-		if (!fontfp)
+		if (!font_exists(ipath))
 			continue;
-		fclose(fontfp);
 
 		if (num_fonts >= max_fonts)
 		{
