@@ -170,7 +170,7 @@ int main(int argc, char **argv)
 		Vect_cat_set ( SCats, 1, id );
 
 		if(fabs(side_offset) > 0.0) {
-		    Vect_line_parallel(SPoints, -1*side_offset, side_offset/10., TRUE, PlPoints);
+		    Vect_line_parallel(SPoints, side_offset, side_offset/10., TRUE, PlPoints);
 		    Vect_write_line ( &Out, GV_LINE, PlPoints, SCats);
 	            G_debug ( 3, "  segment n_points = %d", PlPoints->n_points);
 		}
@@ -231,6 +231,6 @@ find_line ( struct Map_info *Map, int lfield, int lcat )
  */
 void offset_pt_90(double *x, double *y, double angle, double distance)
 {
-    *x -= distance * cos(M_PI_2 - angle);
-    *y += distance * sin(M_PI_2 - angle);
+    *x -= distance * cos(M_PI_2 + angle);
+    *y -= distance * sin(M_PI_2 + angle);
 }
