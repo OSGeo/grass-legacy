@@ -13,7 +13,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: grasslibs_es\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2007-04-21 10:57+0000\n"
+"POT-Creation-Date: 2007-04-27 16:06+0000\n"
 "PO-Revision-Date: 2007-04-21 00:00+0200\n"
 "Last-Translator: Roberto Antolin <tolanss@yahoo.es>\n"
 "Language-Team:  <es@li.org>\n"
@@ -295,7 +295,7 @@ msgstr "La estructura del vector no está inicializada"
 msgid "Input format error"
 msgstr "Error del formato de entrada"
 
-#: ../lib/driver/main.c:76
+#: ../lib/driver/main.c:89
 #, c-format
 msgid "Graphics driver [%s] started"
 msgstr "Controlador gráfico [%s] iniciado"
@@ -2775,7 +2775,7 @@ msgstr ""
 "Nombre de tabla de mapa <%s> no admitido. El carácter <%c> no está "
 "permitido.\n"
 
-#: ../lib/db/dbmi_client/column.c:104
+#: ../lib/db/dbmi_client/column.c:106
 #, c-format
 msgid "Cannot describe table <%s>"
 msgstr "No se puede describir la tabla <%s>"
