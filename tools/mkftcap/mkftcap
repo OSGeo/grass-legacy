@@ -1,6 +1,6 @@
 #!/bin/sh
 
-exts='ttf pfa pfb'
+exts='ttf pfa pfb dfont oft'
 
 (
     for dir in /usr/lib/X11/fonts /usr/share/X11/fonts /usr/share/fonts \
