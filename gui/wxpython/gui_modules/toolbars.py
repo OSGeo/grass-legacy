@@ -293,7 +293,7 @@ class DigitToolbar:
             self.layers.append (layer.name)
 
         if updateTool: # update toolbar
-            if self.layerID == -1:
+            if self.layerID == None:
                 value = 'Select vector map'
             else:
                 value = 'x'

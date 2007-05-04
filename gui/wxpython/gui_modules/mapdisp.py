@@ -544,18 +544,19 @@ class BufferedWindow(wx.Window):
             # digitizing
             elif self.parent.digittoolbar:
                 if self.parent.digittoolbar.action == "add":
-                    east, north = self.Pixel2Cell(self.mouse['begin'][0],self.mouse['begin'][1])
                     try:
+                        map = self.parent.digittoolbar.layers[self.parent.digittoolbar.layerID]
+                        east, north = self.Pixel2Cell(self.mouse['begin'][0],self.mouse['begin'][1])
                         if self.parent.digittoolbar.type in ["point", "centroid"]:
                             # add new point
-                            Digit.AddPoint(map=self.parent.digittoolbar.layers[self.parent.digittoolbar.layerID],
+                            Digit.AddPoint(map=map,
                                            type=self.parent.digittoolbar.type,
                                            x=east, y=north)
                         elif self.parent.digittoolbar.type in ["line", "boundary"]:
                             # add new point to the line
                             self.savedpos.append ((east, north))
-                    except IndexError:
-                        dlg = wx.MessageDialog(self, _("Choose vector layer for editing"), _("Error"), wx.OK | wx.ICON_ERROR)
+                    except:
+                        dlg = wx.MessageDialog(self, _("No vector map layer is selected"), _("Error"), wx.OK | wx.ICON_ERROR)
                         dlg.ShowModal()
                         dlg.Destroy()
 
@@ -580,15 +581,22 @@ class BufferedWindow(wx.Window):
         elif event.RightUp():
             if self.parent.digittoolbar and self.parent.digittoolbar.action == "add":
                 if self.parent.digittoolbar.type in ["line", "boundary"]:
-                    # add new line
-                    Digit.AddLine(map=self.parent.digittoolbar.layers[self.parent.digittoolbar.layerID],
-                                   type=self.parent.digittoolbar.type,
-                                   xy=self.savedpos)
-                    # clean up
-                    self.savedpos = []
-                    # redraw map
-                    self.render=True
-                    self.UpdateMap()
+                    try:
+                        map = self.parent.digittoolbar.layers[self.parent.digittoolbar.layerID]
+                        # add new line
+                        Digit.AddLine(map=self.parent.digittoolbar.layers[self.parent.digittoolbar.layerID],
+                                      type=self.parent.digittoolbar.type,
+                                      xy=self.savedpos)
+                        # clean up
+                        self.savedpos = []
+                        # redraw map
+                        self.render=True
+                        self.UpdateMap()
+                    except:
+                        dlg = wx.MessageDialog(self, _("No vector map layer is selected"), _("Error"), wx.OK | wx.ICON_ERROR)
+                        dlg.ShowModal()
+                        dlg.Destroy()
+
         # double click 
         elif event.ButtonDClick():
             # select overlay decoration options dialog
@@ -1064,7 +1072,6 @@ class MapFrame(wx.Frame):
 
         elif name == "digit":
             self.digittoolbar = toolbars.DigitToolbar(self, self.Map)
-            self.digittoolbar.layerID = -1
 
             self._mgr.AddPane(self.digittoolbar.toolbar, wx.aui.AuiPaneInfo().
                               Name("digittoolbar").Caption("Digit Toolbar").
