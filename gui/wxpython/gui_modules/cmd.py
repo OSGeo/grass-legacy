@@ -42,20 +42,20 @@ class Command:
     Run command on the background
     
     Usage:
-        cmd = Command(cmd="d.rast elevation.dem", verbose=True, wait=True)
+        cmd = Command(cmd='d.rast elevation.dem', verbose=True, wait=True)
 
         if cmd.returncode == None:
-            print "RUNNING"
+            print 'RUNNING'
         elif cmd.returncode == 0:
-            print "SUCCESS"
+            print 'SUCCESS'
         else:
-            print "FAILURE (%d)" % cmd.returncode
+            print 'FAILURE (%d)' % cmd.returncode
         
         for msg in cmd.module_msg:
-            if msg[0] == "GRASS_INFO_PERCENT":
-                print "Percent done: %d" % (int(msg[1]))
+            if msg[0] == 'GRASS_INFO_PERCENT':
+                print 'Percent done: %d' % (int(msg[1]))
             else:
-                print "General message:", msg[1]
+                print 'General message:', msg[1]
     """
     def __init__ (self, cmd, stdin=None, verbose=False, wait=True):
         # input

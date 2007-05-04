@@ -13,7 +13,7 @@ import os, sys
 gmpath = os.getenv("GISBASE") + "/etc/wx/icons/"
 sys.path.append(gmpath)
 
-import cmd
+import cmd, grassenv
 from debug import Debug as Debug
 from icon import Icons as Icons
 
@@ -171,24 +171,26 @@ class DigitToolbar:
         # selected map to digitize
         self.layerID    = -1
         # action (digitize new point, line, etc.
-        self.action     = None
-        # list of available vector maps
-        self.layers     = self._getListOfLayers()
-
+        self.action     = "addpoint"
         self.addString  = ""
 
+        # list of available vector maps
+        self.UpdateListOfLayers(updateTool=False)
+                
         # create toolbar
     	self.toolbar = wx.ToolBar(parent=self.parent, id=wx.ID_ANY)
         self.toolbar.SetToolBitmapSize(wx.Size(24,24))
 
+        # create toolbar
         self.initToolbar()
-
+        self.toolbar.Realize()
+        
     def initToolbar(self):
         self.combo = wx.ComboBox(self.toolbar, id=wx.ID_ANY, value='Select vector map',
                                  choices=self.layers, size=(150, -1))
-
+        
         self.comboid = self.toolbar.AddControl(self.combo)
-
+        
         self.toolbar.AddSeparator()
 
         self.point = self.toolbar.AddLabelTool(id=wx.ID_ANY, label="digaddpoint",
@@ -257,10 +259,26 @@ class DigitToolbar:
 
         # digitize (self.layers[self.layerID], mapset)
 
-    def _getListOfLayers(self):
-        layers = []
+    def UpdateListOfLayers (self, updateTool=False):
+        """Update list of avaliable vector map layers"""
+        self.layers = []
 
-        for layer in self.mapcontent.GetListOfLayers(l_type="vector"):
-            layers.append (layer.name)
+        # select vector map layer in the current mapset
+        for layer in self.mapcontent.GetListOfLayers(l_type="vector", l_mapset=grassenv.env["MAPSET"]):
+            self.layers.append (layer.name)
 
-        return layers
+        if updateTool: # update toolbar
+            if self.layerID == -1:
+                value = 'Select vector map'
+            else:
+                value = 'x'
+
+            print self.layers
+            self.combo = wx.ComboBox(self.toolbar, id=wx.ID_ANY, value=value,
+                                     choices=self.layers, size=(150, -1))
+
+            # ugly ...
+            self.toolbar.DeleteToolByPos (0)
+            self.comboid = self.toolbar.InsertControl(0, self.combo)
+            self.toolbar.Realize()
+        
