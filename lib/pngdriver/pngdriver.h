@@ -17,7 +17,7 @@ extern int mapped;
 extern int clip_top, clip_bot, clip_left, clip_rite;
 extern int width, height;
 extern unsigned int *grid;
-extern unsigned char palette[256][4];
+extern unsigned char png_palette[256][4];
 extern unsigned int background;
 extern int modified;
 

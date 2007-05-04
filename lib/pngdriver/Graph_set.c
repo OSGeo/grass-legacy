@@ -34,7 +34,7 @@ int clip_top, clip_bot, clip_left, clip_rite;
 int width, height;
 void *image;
 unsigned int *grid;
-unsigned char palette[256][4];
+unsigned char png_palette[256][4];
 unsigned int background;
 int modified;
 

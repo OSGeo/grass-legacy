@@ -87,9 +87,9 @@ void read_png(void)
 
 		for (i = 0; i < num_palette; i++)
 		{
-			palette[i][0] = png_pal[i].red;
-			palette[i][1] = png_pal[i].green;
-			palette[i][2] = png_pal[i].blue;
+			png_palette[i][0] = png_pal[i].red;
+			png_palette[i][1] = png_pal[i].green;
+			png_palette[i][2] = png_pal[i].blue;
 		}
 	}
 

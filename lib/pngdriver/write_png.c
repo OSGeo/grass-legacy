@@ -53,9 +53,9 @@ void write_png(void)
 
 		for (i = 0; i < 256; i++)
 		{
-			png_pal[i].red   = palette[i][0];
-			png_pal[i].green = palette[i][1];
-			png_pal[i].blue  = palette[i][2];
+			png_pal[i].red   = png_palette[i][0];
+			png_pal[i].green = png_palette[i][1];
+			png_pal[i].blue  = png_palette[i][2];
 		}
 
 		png_set_PLTE(png_ptr, info_ptr, png_pal, 256);
