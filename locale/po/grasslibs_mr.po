@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Grass 6.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2007-03-23 16:35+0100\n"
+"POT-Creation-Date: 2007-04-27 16:06+0000\n"
 "PO-Revision-Date: 2005-06-02 18:00+0530\n"
 "Last-Translator: Swapnil Hajare <dreamil@gmail.com>\n"
 "Language-Team: Marathi <www.janabhaaratii.org.in>\n"
@@ -274,7 +274,7 @@ msgstr ""
 msgid "Input format error"
 msgstr ""
 
-#: ../lib/driver/main.c:102
+#: ../lib/driver/main.c:89
 #, c-format
 msgid "Graphics driver [%s] started"
 msgstr ""
@@ -289,12 +289,12 @@ msgstr ""
 msgid "%s: No FreeType definition file"
 msgstr ""
 
-#: ../lib/driver/command.c:499
+#: ../lib/driver/command.c:481
 #, c-format
 msgid "Unknown command: %d last: %d"
 msgstr ""
 
-#: ../lib/driver/command.c:541
+#: ../lib/driver/command.c:523
 msgid "Monitor: get_command: Premature EOF"
 msgstr ""
 
@@ -380,108 +380,55 @@ msgstr ""
 msgid "No ellipsoid info given in file"
 msgstr ""
 
-#: ../lib/proj/ellipse.c:220 ../lib/gis/get_ellipse.c:406
+#: ../lib/proj/ellipse.c:220 ../lib/gis/get_ellipse.c:407
 #, c-format
 msgid "unable to open ellipsoid table file: %s"
 msgstr ""
 
-#: ../lib/raster/io_fifo.c:341 ../lib/raster/io_sock.c:65
-#, c-format
-msgid "No graphics monitor has been selected for output.\n"
+#: ../lib/raster/io_sock.c:65
+msgid "No graphics monitor has been selected for output."
 msgstr ""
 
-#: ../lib/raster/io_fifo.c:342 ../lib/raster/io_sock.c:66
-#, c-format
-msgid "Please run \"d.mon\" to select a graphics monitor.\n"
+#: ../lib/raster/io_sock.c:66
+msgid "Please run \"d.mon\" to select a graphics monitor."
 msgstr ""
 
-#: ../lib/raster/io_fifo.c:352
+#: ../lib/raster/io_sock.c:75
 #, c-format
-msgid "No such graphics monitor as <%s>.\n"
+msgid "Failed to get socket name for monitor <%s>."
 msgstr ""
 
-#: ../lib/raster/io_fifo.c:353
+#: ../lib/raster/io_sock.c:85
 #, c-format
-msgid "Please run \"d.mon\" to select a valid graphics monitor.\n"
+msgid "No socket to connect to for monitor <%s>."
 msgstr ""
 
-#: ../lib/raster/io_fifo.c:365
-#, c-format
-msgid "Can't stat %s\n"
+#: ../lib/raster/io_sock.c:105
+msgid "Socket is already in use or not accepting connections."
 msgstr ""
 
-#: ../lib/raster/io_fifo.c:381
-#, c-format
-msgid "Error - Monitor <%s> is in use.\n"
+#: ../lib/raster/io_sock.c:106
+msgid "Use d.mon to select a monitor"
 msgstr ""
 
-#: ../lib/raster/io_fifo.c:383
-#, c-format
-msgid "Error - Monitor <%s> is in use by %s.\n"
+#: ../lib/raster/io_sock.c:113
+msgid "Trying to connect to something not a socket."
 msgstr ""
 
-#: ../lib/raster/io_fifo.c:393
-#, c-format
-msgid "Error - Could not complete locking process for monitor <%s>.\n"
+#: ../lib/raster/io_sock.c:114
+msgid "Probably program error."
 msgstr ""
 
-#: ../lib/raster/io_fifo.c:407
-#, c-format
-msgid "Error - Can't set up pipe to graphics device.\n"
+#: ../lib/raster/io_sock.c:120
+msgid "Connect attempt timed out."
 msgstr ""
 
-#: ../lib/raster/io_fifo.c:413
-#, c-format
-msgid "Error - Graphics monitor <%s> not running!\n"
+#: ../lib/raster/io_sock.c:121
+msgid "Probably an error with the server."
 msgstr ""
 
-#: ../lib/raster/io_fifo.c:417
-#, c-format
-msgid "Please start graphics monitor <%s>.\n"
-msgstr ""
-
-#: ../lib/raster/io_sock.c:77
-#, c-format
-msgid "Failed to get socket name for monitor <%s>.\n"
-msgstr ""
-
-#: ../lib/raster/io_sock.c:90
-#, c-format
-msgid "No socket to connect to for monitor <%s>.\n"
-msgstr ""
-
-#: ../lib/raster/io_sock.c:117
-#, c-format
-msgid ""
-"Socket is already in use or not accepting connections.\n"
-"Use d.mon to select a monitor\n"
-msgstr ""
-
-#: ../lib/raster/io_sock.c:125
-#, c-format
-msgid ""
-"Trying to connect to something not a socket.\n"
-"Probably program error.\n"
-msgstr ""
-
-#: ../lib/raster/io_sock.c:132
-#, c-format
-msgid "Connect attempt timed out. Probably an error with the server.\n"
-msgstr ""
-
-#: ../lib/raster/io_sock.c:139
-#, c-format
-msgid "Not connected...\n"
-msgstr ""
-
-#: ../lib/raster/io_sock.c:142
-#, c-format
-msgid "Couldn't connect to monitor. Will try once more.\n"
-msgstr ""
-
-#: ../lib/raster/io_sock.c:148
-#, c-format
-msgid "Connection failed.\n"
+#: ../lib/raster/io_sock.c:129
+msgid "Connection failed."
 msgstr ""
 
 #: ../lib/raster/rem_io.c:43
@@ -494,93 +441,30 @@ msgstr ""
 msgid "Unable to allocate memory\n"
 msgstr ""
 
-#: ../lib/raster/rem_io.c:219
+#: ../lib/raster/rem_io.c:225
 #, c-format
 msgid "ERROR - eof from graphics monitor.\n"
 msgstr ""
 
-#: ../lib/raster/rem_io.c:236
+#: ../lib/raster/rem_io.c:244
 #, c-format
 msgid "Warning - no response from graphics monitor <%s>.\n"
 msgstr ""
 
-#: ../lib/raster/rem_io.c:238
+#: ../lib/raster/rem_io.c:246
 #, c-format
 msgid "Check to see if the mouse is still active.\n"
 msgstr ""
 
-#: ../lib/raster/rem_io.c:241
+#: ../lib/raster/rem_io.c:251
 #, c-format
 msgid "ERROR - no response from graphics monitor <%s>.\n"
 msgstr ""
 
-#: ../lib/vask/V_support.c:63
+#: ../lib/vask/V_support.c:58
 #, fuzzy, c-format
 msgid "Unable to open file %s"
 msgstr "%s उघडता आले नाही"
-
-#: ../lib/gpde/N_arrays.c:1042
-#, c-format
-msgid "Requested raster map <%s> not found"
-msgstr ""
-
-#: ../lib/gpde/N_arrays.c:1054 ../lib/gpde/N_arrays.c:1169
-#, c-format
-msgid "Error opening raster map %s"
-msgstr ""
-
-#: ../lib/gpde/N_arrays.c:1083
-#, fuzzy, c-format
-msgid "Reading raster map <%s> into memory"
-msgstr "%s@%s हा रास्टर नकाशा रिक्त आहे"
-
-#: ../lib/gpde/N_arrays.c:1090
-msgid "Could not get raster row"
-msgstr ""
-
-#: ../lib/gpde/N_arrays.c:1124 ../lib/gpde/N_arrays.c:1210
-#, fuzzy
-msgid "Unable to close input map"
-msgstr "%s उघडता आले नाही"
-
-#: ../lib/gpde/N_arrays.c:1157
-msgid "N_array_2d * array is empty"
-msgstr ""
-
-#: ../lib/gpde/N_arrays.c:1178
-#, c-format
-msgid "Write 2d array to raster map <%s>"
-msgstr ""
-
-#: ../lib/gpde/N_arrays.c:1194 ../lib/gpde/N_arrays.c:1199
-#: ../lib/gpde/N_arrays.c:1204
-#, c-format
-msgid "Unable to write rast row %i"
-msgstr ""
-
-#: ../lib/gpde/N_arrays.c:2182
-#, c-format
-msgid "Requested g3d map <%s> not found"
-msgstr ""
-
-#: ../lib/gpde/N_arrays.c:2190 ../lib/gpde/N_arrays.c:2323
-#, c-format
-msgid "Error opening g3d map <%s>"
-msgstr ""
-
-#: ../lib/gpde/N_arrays.c:2218
-#, c-format
-msgid "Read g3d map <%s> into the memory"
-msgstr ""
-
-#: ../lib/gpde/N_arrays.c:2263 ../lib/gpde/N_arrays.c:2364
-msgid "Error closing g3d file"
-msgstr ""
-
-#: ../lib/gpde/N_arrays.c:2325
-#, c-format
-msgid "Write 3d array to g3d map <%s>"
-msgstr ""
 
 #: ../lib/gpde/N_solvers.c:227
 #, c-format
@@ -635,7 +519,7 @@ msgstr ""
 
 #: ../lib/gpde/N_solvers.c:1077
 #, c-format
-msgid "Gauss-Seidel -- iteration %5i error %g\n"
+msgid "SOR -- iteration %5i error %g\n"
 msgstr ""
 
 #: ../lib/gpde/test/test_main.c:49
@@ -666,27 +550,27 @@ msgstr ""
 msgid "Performs unit and integration tests for gpde library"
 msgstr ""
 
-#: ../lib/gpde/test/test_arrays.c:44
+#: ../lib/gpde/test/test_arrays.c:43
 msgid ""
 "\n"
 "++ Running array unit tests ++"
 msgstr ""
 
-#: ../lib/gpde/test/test_arrays.c:46
+#: ../lib/gpde/test/test_arrays.c:45
 msgid "\t 1. testing 2d arrays"
 msgstr ""
 
-#: ../lib/gpde/test/test_arrays.c:49
+#: ../lib/gpde/test/test_arrays.c:48
 msgid "\t 2. testing 3d arrays"
 msgstr ""
 
-#: ../lib/gpde/test/test_arrays.c:53
+#: ../lib/gpde/test/test_arrays.c:52
 msgid ""
 "\n"
 "-- Array unit tests failure --"
 msgstr ""
 
-#: ../lib/gpde/test/test_arrays.c:55
+#: ../lib/gpde/test/test_arrays.c:54
 msgid ""
 "\n"
 "-- Array unit tests finished successfully --"
@@ -832,6 +716,24 @@ msgid ""
 "-- Solver unit tests finished successfully --"
 msgstr ""
 
+#: ../lib/gpde/test/test_tools.c:34
+msgid ""
+"\n"
+"++ Running math tool unit tests ++"
+msgstr ""
+
+#: ../lib/gpde/test/test_tools.c:39
+msgid ""
+"\n"
+"-- math tool unit tests failure --"
+msgstr ""
+
+#: ../lib/gpde/test/test_tools.c:41
+msgid ""
+"\n"
+"-- math tool unit tests finished successfully --"
+msgstr ""
+
 #: ../lib/gpde/test/test_solute_transport.c:43
 msgid ""
 "\n"
@@ -910,6 +812,69 @@ msgstr ""
 
 #: ../lib/gpde/N_parse_options.c:105
 msgid "The calculation time in seconds"
+msgstr ""
+
+#: ../lib/gpde/N_arrays_io.c:55
+#, c-format
+msgid "Requested raster map <%s> not found"
+msgstr ""
+
+#: ../lib/gpde/N_arrays_io.c:67 ../lib/gpde/N_arrays_io.c:178
+#, c-format
+msgid "Error opening raster map %s"
+msgstr ""
+
+#: ../lib/gpde/N_arrays_io.c:96
+#, fuzzy, c-format
+msgid "Reading raster map <%s> into memory"
+msgstr "%s@%s हा रास्टर नकाशा रिक्त आहे"
+
+#: ../lib/gpde/N_arrays_io.c:103
+msgid "Could not get raster row"
+msgstr ""
+
+#: ../lib/gpde/N_arrays_io.c:137 ../lib/gpde/N_arrays_io.c:219
+#, fuzzy
+msgid "Unable to close input map"
+msgstr "%s उघडता आले नाही"
+
+#: ../lib/gpde/N_arrays_io.c:166
+msgid "N_array_2d * array is empty"
+msgstr ""
+
+#: ../lib/gpde/N_arrays_io.c:187
+#, c-format
+msgid "Write 2d array to raster map <%s>"
+msgstr ""
+
+#: ../lib/gpde/N_arrays_io.c:203 ../lib/gpde/N_arrays_io.c:208
+#: ../lib/gpde/N_arrays_io.c:213
+#, c-format
+msgid "Unable to write rast row %i"
+msgstr ""
+
+#: ../lib/gpde/N_arrays_io.c:270
+#, c-format
+msgid "Requested g3d map <%s> not found"
+msgstr ""
+
+#: ../lib/gpde/N_arrays_io.c:278 ../lib/gpde/N_arrays_io.c:408
+#, c-format
+msgid "Error opening g3d map <%s>"
+msgstr ""
+
+#: ../lib/gpde/N_arrays_io.c:306
+#, c-format
+msgid "Read g3d map <%s> into the memory"
+msgstr ""
+
+#: ../lib/gpde/N_arrays_io.c:351 ../lib/gpde/N_arrays_io.c:449
+msgid "Error closing g3d file"
+msgstr ""
+
+#: ../lib/gpde/N_arrays_io.c:410
+#, c-format
+msgid "Write 3d array to g3d map <%s>"
 msgstr ""
 
 #: ../lib/display/tran_colr.c:132 ../lib/display/tran_colr.c:134
@@ -1043,12 +1008,12 @@ msgstr ""
 msgid "No ellipsoid info given in file %s in %s"
 msgstr ""
 
-#: ../lib/gis/get_ellipse.c:455
+#: ../lib/gis/get_ellipse.c:456
 #, c-format
 msgid "Lines%s of ellipsoid table file <%s> are invalid"
 msgstr ""
 
-#: ../lib/gis/get_ellipse.c:456
+#: ../lib/gis/get_ellipse.c:457
 #, c-format
 msgid "Line%s of ellipsoid table file <%s> is invalid"
 msgstr ""
@@ -1101,12 +1066,12 @@ msgstr ""
 msgid "Invalid timestamp specified for %s map %s in mapset %s"
 msgstr ""
 
-#: ../lib/gis/timestamp.c:333
+#: ../lib/gis/timestamp.c:332
 #, c-format
 msgid "Can't open timestamp file for %s map %s in mapset %s"
 msgstr ""
 
-#: ../lib/gis/timestamp.c:343
+#: ../lib/gis/timestamp.c:342
 #, c-format
 msgid "Invalid timestamp file for %s map %s in mapset %s"
 msgstr ""
@@ -1268,30 +1233,30 @@ msgstr ""
 msgid "Top must be larger than Bottom"
 msgstr ""
 
-#: ../lib/gis/closecell.c:224
+#: ../lib/gis/closecell.c:223
 #, c-format
 msgid ""
 "closecell: can't move %s\n"
 "to null file %s"
 msgstr ""
 
-#: ../lib/gis/closecell.c:244
+#: ../lib/gis/closecell.c:243
 #, c-format
 msgid "Error writing floating point format file for map %s"
 msgstr ""
 
-#: ../lib/gis/closecell.c:291
+#: ../lib/gis/closecell.c:289
 #, c-format
 msgid ""
 "closecell: can't move %s\n"
 "to cell file %s"
 msgstr ""
 
-#: ../lib/gis/closecell.c:345
+#: ../lib/gis/closecell.c:343
 msgid "unable to write quant file!"
 msgstr ""
 
-#: ../lib/gis/closecell.c:394
+#: ../lib/gis/closecell.c:391
 msgid "unable to write f_format file for CELL maps"
 msgstr ""
 
@@ -1305,17 +1270,17 @@ msgstr ""
 msgid "Cannot open debug file '%s'"
 msgstr "temp फाइल उघडता आली नाही"
 
-#: ../lib/gis/cats.c:384
+#: ../lib/gis/cats.c:385
 #, c-format
 msgid "category support for [%s] in mapset [%s] %s"
 msgstr ""
 
-#: ../lib/gis/cats.c:423
+#: ../lib/gis/cats.c:424
 #, c-format
 msgid "category support for vector map [%s] in mapset [%s] %s"
 msgstr ""
 
-#: ../lib/gis/proj3.c:68 ../lib/vector/Vlib/header.c:488
+#: ../lib/gis/proj3.c:66 ../lib/vector/Vlib/header.c:488
 msgid "Unknown projection"
 msgstr ""
 
@@ -1328,42 +1293,42 @@ msgstr ""
 msgid "Enter a new %s file name"
 msgstr "एक नवीन %s फाइलचे नाव द्या"
 
-#: ../lib/gis/ask.c:400
+#: ../lib/gis/ask.c:401
 #, c-format
 msgid "Enter the name of an existing %s file"
 msgstr ""
 
-#: ../lib/gis/ask.c:403
+#: ../lib/gis/ask.c:405
 #, c-format
 msgid "Enter %s file name"
 msgstr ""
 
-#: ../lib/gis/ask.c:422
+#: ../lib/gis/ask.c:425
 #, c-format
 msgid "Enter 'list' for a list of existing %s files\n"
 msgstr ""
 
-#: ../lib/gis/ask.c:425
+#: ../lib/gis/ask.c:428
 #, c-format
 msgid "Enter 'list -f' for "
 msgstr ""
 
-#: ../lib/gis/ask.c:427
+#: ../lib/gis/ask.c:430
 #, c-format
 msgid "a list %s"
 msgstr "%s यादी"
 
-#: ../lib/gis/ask.c:429
+#: ../lib/gis/ask.c:432
 #, c-format
 msgid "an extended list"
 msgstr ""
 
-#: ../lib/gis/ask.c:433
+#: ../lib/gis/ask.c:436
 #, c-format
 msgid "Hit RETURN %s\n"
 msgstr ""
 
-#: ../lib/gis/ask.c:455 ../lib/gis/ask.c:562 ../lib/gis/ask.c:584
+#: ../lib/gis/ask.c:458 ../lib/gis/ask.c:565 ../lib/gis/ask.c:587
 #, c-format
 msgid ""
 "\n"
@@ -1372,35 +1337,35 @@ msgstr ""
 "\n"
 "** %s - मिळाली नाही **\n"
 
-#: ../lib/gis/ask.c:462 ../lib/gis/ask.c:548
+#: ../lib/gis/ask.c:465 ../lib/gis/ask.c:551
 #, c-format
 msgid ""
 "\n"
 "** %s exists. ok to overwrite? "
 msgstr ""
 
-#: ../lib/gis/ask.c:508
+#: ../lib/gis/ask.c:511
 #, c-format
 msgid ""
 "\n"
 "**<%s> illegal name **\n"
 msgstr ""
 
-#: ../lib/gis/ask.c:523
+#: ../lib/gis/ask.c:526
 #, c-format
 msgid ""
 "\n"
 "** %s - illegal request **\n"
 msgstr ""
 
-#: ../lib/gis/ask.c:538
+#: ../lib/gis/ask.c:541
 #, c-format
 msgid ""
 "\n"
 "** %s - exists, select another name **\n"
 msgstr ""
 
-#: ../lib/gis/ask.c:566
+#: ../lib/gis/ask.c:569
 msgid "ask: can't happen"
 msgstr ""
 
@@ -1568,7 +1533,7 @@ msgstr ""
 msgid "Cannot find input map '%s'"
 msgstr ""
 
-#: ../lib/gis/legal_name.c:108 ../lib/gis/legal_name.c:110
+#: ../lib/gis/legal_name.c:109 ../lib/gis/legal_name.c:111
 #: ../lib/vector/Vlib/legal_vname.c:93 ../lib/vector/Vlib/legal_vname.c:95
 #, c-format
 msgid "Output map '%s' is used as input"
@@ -1583,11 +1548,41 @@ msgstr ""
 msgid "%s complete. %s"
 msgstr ""
 
-#: ../lib/gis/error.c:252
+#: ../lib/gis/color_rules.c:114
+msgid "syntax error"
+msgstr ""
+
+#: ../lib/gis/color_rules.c:115
+msgid "R/G/B not in range 0-255"
+msgstr ""
+
+#: ../lib/gis/color_rules.c:116
+#, fuzzy
+msgid "invalid color name"
+msgstr "अवैध निर्देशक"
+
+#: ../lib/gis/color_rules.c:117
+msgid "percentage not in range 0-100"
+msgstr ""
+
+#: ../lib/gis/color_rules.c:118
+msgid "invalid value"
+msgstr ""
+
+#: ../lib/gis/color_rules.c:119
+msgid "unknown error"
+msgstr ""
+
+#: ../lib/gis/color_rules.c:150
+#, c-format
+msgid "bad rule (%s): %s"
+msgstr ""
+
+#: ../lib/gis/error.c:250
 msgid "WARNING: "
 msgstr "ताकिद: "
 
-#: ../lib/gis/error.c:253
+#: ../lib/gis/error.c:251
 msgid "ERROR: "
 msgstr "त्रुटी: "
 
@@ -1686,26 +1681,26 @@ msgstr ""
 msgid "%s not set"
 msgstr ""
 
-#: ../lib/gis/home.c:52
+#: ../lib/gis/home.c:40
 msgid "unable to determine user's home directory"
 msgstr ""
 
-#: ../lib/gis/list.c:123
+#: ../lib/gis/list.c:124
 #, c-format
 msgid "no %s files available in current mapset\n"
 msgstr ""
 
-#: ../lib/gis/list.c:125
+#: ../lib/gis/list.c:126
 #, c-format
 msgid "no %s files available in mapset %s\n"
 msgstr ""
 
-#: ../lib/gis/list.c:139
+#: ../lib/gis/list.c:140
 #, c-format
 msgid "hit RETURN to continue -->"
 msgstr "पुढे जाण्यासाठी RETURN टाइप करा -->"
 
-#: ../lib/gis/list.c:223
+#: ../lib/gis/list.c:225
 #, c-format
 msgid "%s files available in mapset %s:\n"
 msgstr ""
@@ -1720,7 +1715,7 @@ msgstr ""
 msgid "The integer data range for %s@%s is empty"
 msgstr ""
 
-#: ../lib/gis/quant_io.c:169
+#: ../lib/gis/quant_io.c:167
 #, c-format
 msgid "quantization file [%s] in mapset [%s] %s"
 msgstr ""
@@ -1769,17 +1764,17 @@ msgstr ""
 msgid "can't write category information for [%s] in [%s]"
 msgstr ""
 
-#: ../lib/gis/range.c:199
+#: ../lib/gis/range.c:195
 #, c-format
 msgid "can't read f_range file for [%s in %s]"
 msgstr ""
 
-#: ../lib/gis/range.c:317
+#: ../lib/gis/range.c:312
 #, c-format
 msgid "can't read range file for [%s in %s]"
 msgstr ""
 
-#: ../lib/gis/range.c:371 ../lib/gis/range.c:422
+#: ../lib/gis/range.c:365 ../lib/gis/range.c:416
 #, c-format
 msgid "can't write range file for [%s in %s]"
 msgstr ""
@@ -1827,28 +1822,27 @@ msgstr ""
 msgid "Can't write embedded null values for map open for random access"
 msgstr ""
 
-#: ../lib/gis/opencell.c:927 ../lib/gis/opencell.c:961
-#: ../lib/gis/opencell.c:993
+#: ../lib/gis/opencell.c:927 ../lib/gis/opencell.c:982
 #, c-format
 msgid "unable to find [%s] in [%s]"
 msgstr ""
 
-#: ../lib/gis/opencell.c:1047
+#: ../lib/gis/opencell.c:1034
 #, c-format
 msgid "unable to find [%s]"
 msgstr ""
 
-#: ../lib/gis/opencell.c:1053
+#: ../lib/gis/opencell.c:1040
 #, c-format
 msgid "Unable to open %s"
 msgstr "%s उघडता आले नाही"
 
-#: ../lib/gis/opencell.c:1062
+#: ../lib/gis/opencell.c:1049
 #, c-format
 msgid "invalid type: field %s in file %s "
 msgstr ""
 
-#: ../lib/gis/opencell.c:1107
+#: ../lib/gis/opencell.c:1094
 #, c-format
 msgid "%s - ** illegal name **"
 msgstr ""
@@ -1878,12 +1872,12 @@ msgstr ""
 msgid "error reading map [%s] in mapset [%s], row %d"
 msgstr ""
 
-#: ../lib/gis/get_row.c:917 ../lib/gis/get_row.c:923
+#: ../lib/gis/get_row.c:915 ../lib/gis/get_row.c:921
 #, c-format
 msgid "error reading null row %d"
 msgstr ""
 
-#: ../lib/gis/get_row.c:1004
+#: ../lib/gis/get_row.c:1002
 msgid "Could not realloc buffer"
 msgstr ""
 
@@ -1900,22 +1894,22 @@ msgstr ""
 msgid "Not enough room in history file for command line (truncated)."
 msgstr ""
 
-#: ../lib/gis/histogram.c:61
+#: ../lib/gis/histogram.c:60
 #, c-format
 msgid "Histogram for [%s in %s] missing (run r.support)"
 msgstr ""
 
-#: ../lib/gis/histogram.c:69
+#: ../lib/gis/histogram.c:68
 #, c-format
 msgid "Can't read histogram for [%s in %s]"
 msgstr ""
 
-#: ../lib/gis/histogram.c:80 ../lib/gis/histogram.c:90
+#: ../lib/gis/histogram.c:79 ../lib/gis/histogram.c:89
 #, c-format
 msgid "Invalid histogram file for [%s in %s]"
 msgstr ""
 
-#: ../lib/gis/histogram.c:373
+#: ../lib/gis/histogram.c:370
 #, c-format
 msgid "can't create histogram for [%s in %s]"
 msgstr ""
@@ -2086,7 +2080,7 @@ msgid ""
 "invalid projection\n"
 msgstr ""
 
-#: ../lib/gis/set_window.c:60
+#: ../lib/gis/set_window.c:82
 msgid ""
 "G_set_window(): projection/zone differs from that of currently open raster "
 "maps"
@@ -2115,30 +2109,30 @@ msgid ""
 "%s"
 msgstr ""
 
-#: ../lib/gis/reclass.c:156
+#: ../lib/gis/reclass.c:150
 #, c-format
 msgid "Too many reclass categories for [%s in %s]"
 msgstr ""
 
-#: ../lib/gis/reclass.c:159
+#: ../lib/gis/reclass.c:153
 #, c-format
 msgid "Illegal reclass format in header file for [%s in %s]"
 msgstr ""
 
-#: ../lib/gis/reclass.c:236
+#: ../lib/gis/reclass.c:248
 msgid "Illegal reclass request"
 msgstr ""
 
-#: ../lib/gis/reclass.c:241
+#: ../lib/gis/reclass.c:253
 msgid "Illegal reclass type"
 msgstr ""
 
-#: ../lib/gis/reclass.c:248
+#: ../lib/gis/reclass.c:260
 #, c-format
 msgid "Unable to create header file for [%s in %s]"
 msgstr ""
 
-#: ../lib/gis/reclass.c:299
+#: ../lib/gis/reclass.c:310
 #, c-format
 msgid "Unable to create dependency file in [%s in %s]"
 msgstr ""
@@ -2197,7 +2191,7 @@ msgid "not known"
 msgstr "अज्ञात"
 
 #: ../lib/gis/parser.c:342
-msgid "WHERE conditions of SQL statement without 'where' keyword."
+msgid "WHERE conditions of SQL statement without 'where' keyword"
 msgstr ""
 
 #: ../lib/gis/parser.c:343
@@ -2366,58 +2360,58 @@ msgstr ""
 msgid "  %*s   default: %s\n"
 msgstr ""
 
-#: ../lib/gis/parser.c:1844
+#: ../lib/gis/parser.c:1861
 #, c-format
 msgid "  %*s   options: "
 msgstr ""
 
-#: ../lib/gis/parser.c:1891 ../lib/gis/parser.c:1908
+#: ../lib/gis/parser.c:1908 ../lib/gis/parser.c:1925
 #, c-format
 msgid "Sorry, <%c> is not a valid flag\n"
 msgstr ""
 
-#: ../lib/gis/parser.c:1963
+#: ../lib/gis/parser.c:1980
 #, c-format
 msgid "Sorry, <%s=> is ambiguous\n"
 msgstr ""
 
-#: ../lib/gis/parser.c:1970
+#: ../lib/gis/parser.c:1987
 #, c-format
 msgid "Sorry, <%s> is not a valid parameter\n"
 msgstr ""
 
-#: ../lib/gis/parser.c:2055
+#: ../lib/gis/parser.c:2072
 #, c-format
 msgid ""
 "\n"
 "ERROR: illegal range syntax for parameter <%s>\n"
 msgstr ""
 
-#: ../lib/gis/parser.c:2057
+#: ../lib/gis/parser.c:2074
 #, c-format
 msgid "       Presented as: %s\n"
 msgstr ""
 
-#: ../lib/gis/parser.c:2060
+#: ../lib/gis/parser.c:2077
 #, c-format
 msgid ""
 "\n"
 "ERROR: value <%s> out of range for parameter <%s>\n"
 msgstr ""
 
-#: ../lib/gis/parser.c:2062
+#: ../lib/gis/parser.c:2079
 #, c-format
 msgid "       Legal range: %s\n"
 msgstr ""
 
-#: ../lib/gis/parser.c:2065
+#: ../lib/gis/parser.c:2082
 #, c-format
 msgid ""
 "\n"
 "ERROR: Missing value for parameter <%s>\n"
 msgstr ""
 
-#: ../lib/gis/parser.c:2225
+#: ../lib/gis/parser.c:2242
 #, c-format
 msgid ""
 "\n"
@@ -2425,82 +2419,82 @@ msgid ""
 "    (%s).\n"
 msgstr ""
 
-#: ../lib/gis/parser.c:2328
+#: ../lib/gis/parser.c:2345
 #, c-format
 msgid ""
 "\n"
 "ERROR: option <%s> must be provided in multiples of %d\n"
 msgstr ""
 
-#: ../lib/gis/parser.c:2330
+#: ../lib/gis/parser.c:2347
 #, c-format
 msgid "       You provided %d items:\n"
 msgstr ""
 
-#: ../lib/gis/parser.c:2385
+#: ../lib/gis/parser.c:2402
 #, c-format
 msgid "ERROR: option <%s>: <%s> exists.\n"
 msgstr ""
 
-#: ../lib/gis/parser.c:2432
+#: ../lib/gis/parser.c:2449
 #, c-format
 msgid ""
 "\n"
 "FLAG: Set the following flag?\n"
 msgstr ""
 
-#: ../lib/gis/parser.c:2446
+#: ../lib/gis/parser.c:2463
 #, c-format
 msgid ""
 "\n"
 "OPTION:   %s\n"
 msgstr ""
 
-#: ../lib/gis/parser.c:2447
+#: ../lib/gis/parser.c:2464
 #, c-format
 msgid "     key: %s\n"
 msgstr ""
 
-#: ../lib/gis/parser.c:2449
+#: ../lib/gis/parser.c:2466
 #, c-format
 msgid "  format: %s\n"
 msgstr ""
 
-#: ../lib/gis/parser.c:2451
+#: ../lib/gis/parser.c:2468
 #, c-format
 msgid " default: %s\n"
 msgstr ""
 
-#: ../lib/gis/parser.c:2452
+#: ../lib/gis/parser.c:2469
 #, c-format
 msgid "required: %s\n"
 msgstr ""
 
-#: ../lib/gis/parser.c:2454
+#: ../lib/gis/parser.c:2471
 #, c-format
 msgid "multiple: %s\n"
 msgstr ""
 
-#: ../lib/gis/parser.c:2456
+#: ../lib/gis/parser.c:2473
 #, c-format
 msgid " options: %s\n"
 msgstr ""
 
-#: ../lib/gis/parser.c:2471
+#: ../lib/gis/parser.c:2488
 #, c-format
 msgid "enter option > "
 msgstr ""
 
-#: ../lib/gis/parser.c:2485 ../lib/gis/parser.c:2496
+#: ../lib/gis/parser.c:2502 ../lib/gis/parser.c:2513
 msgid "   Try again? "
 msgstr ""
 
-#: ../lib/gis/parser.c:2494
+#: ../lib/gis/parser.c:2511
 #, c-format
 msgid "Sorry, %s is not accepted.\n"
 msgstr ""
 
-#: ../lib/gis/parser.c:2505
+#: ../lib/gis/parser.c:2522
 #, c-format
 msgid ""
 "\n"
@@ -2508,11 +2502,11 @@ msgid ""
 "  %s\n"
 msgstr ""
 
-#: ../lib/gis/parser.c:2506
+#: ../lib/gis/parser.c:2523
 msgid "Is this correct? "
 msgstr ""
 
-#: ../lib/gis/parser.c:2575
+#: ../lib/gis/parser.c:2592
 msgid "to accept the default"
 msgstr ""
 
@@ -2553,7 +2547,7 @@ msgstr ""
 msgid "Illegal table map name <%s>. Character <%c> not allowed.\n"
 msgstr ""
 
-#: ../lib/db/dbmi_client/column.c:104
+#: ../lib/db/dbmi_client/column.c:106
 #, fuzzy, c-format
 msgid "Cannot describe table <%s>"
 msgstr "temp फाइल उघडता आली नाही"
@@ -2707,6 +2701,38 @@ msgstr ""
 msgid "Output name '%s' is not valid vector name."
 msgstr ""
 
+#: ../lib/vector/Vlib/snap.c:122 ../lib/vector/Vlib/snap.c:161
+msgid "Registering points"
+msgstr ""
+
+#: ../lib/vector/Vlib/snap.c:170
+msgid "All vertices"
+msgstr ""
+
+#: ../lib/vector/Vlib/snap.c:171
+msgid "Registered points"
+msgstr ""
+
+#: ../lib/vector/Vlib/snap.c:216
+msgid "Nodes marked as anchor"
+msgstr ""
+
+#: ../lib/vector/Vlib/snap.c:217
+msgid "Nodes marked to be snapped"
+msgstr ""
+
+#: ../lib/vector/Vlib/snap.c:226
+msgid "Snaps"
+msgstr ""
+
+#: ../lib/vector/Vlib/snap.c:370
+msgid "Snapped vertices"
+msgstr ""
+
+#: ../lib/vector/Vlib/snap.c:371
+msgid "New vertices"
+msgstr ""
+
 #: ../lib/vector/Vlib/write.c:23
 msgid "Vect_write_line() for this format/level not supported"
 msgstr ""
@@ -2771,6 +2797,91 @@ msgstr ""
 
 #: ../lib/vector/Vlib/build_ogr.c:357
 msgid "OGR feature without ID ignored."
+msgstr ""
+
+#: ../lib/vector/Vlib/net.c:120
+msgid "Building graph ..."
+msgstr ""
+
+#: ../lib/vector/Vlib/net.c:156
+msgid "Cannot build network graph"
+msgstr ""
+
+#: ../lib/vector/Vlib/net.c:162
+msgid "Forward costs column not specified"
+msgstr ""
+
+#: ../lib/vector/Vlib/net.c:168
+msgid "Arc field < 1"
+msgstr ""
+
+#: ../lib/vector/Vlib/net.c:170 ../lib/vector/Vlib/net.c:302
+#, fuzzy
+msgid "Cannot get field info"
+msgstr "temp फाइल उघडता आली नाही"
+
+#: ../lib/vector/Vlib/net.c:175 ../lib/vector/Vlib/net.c:306
+#, fuzzy, c-format
+msgid "Cannot open database <%s> by driver <%s>"
+msgstr "temp फाइल उघडता आली नाही"
+
+#: ../lib/vector/Vlib/net.c:180 ../lib/vector/Vlib/net.c:193
+#: ../lib/vector/Vlib/net.c:311
+#, fuzzy
+msgid "Cannot get column info"
+msgstr "सध्याची विंडो = %p\n"
+
+#: ../lib/vector/Vlib/net.c:185 ../lib/vector/Vlib/net.c:198
+#: ../lib/vector/Vlib/net.c:316
+msgid "Column type not supported"
+msgstr ""
+
+#: ../lib/vector/Vlib/net.c:208
+msgid "Registering arcs ..."
+msgstr ""
+
+#: ../lib/vector/Vlib/net.c:230
+#, c-format
+msgid ""
+"Database record for line %d (cat = %d, forward/both direction(s)) not found "
+"(forward/both direction(s) of line skipped)"
+msgstr ""
+
+#: ../lib/vector/Vlib/net.c:244
+#, c-format
+msgid ""
+"Database record for line %d (cat = %d, backword direction) not found"
+"(direction of line skipped)"
+msgstr ""
+
+#: ../lib/vector/Vlib/net.c:277
+#, fuzzy
+msgid "Cannot add network arc"
+msgstr "temp फाइल उघडता आली नाही"
+
+#: ../lib/vector/Vlib/net.c:299
+msgid "Setting node costs ..."
+msgstr ""
+
+#: ../lib/vector/Vlib/net.c:344
+#, c-format
+msgid "Database record for node %d (cat = %d) not found (cost set to 0)"
+msgstr ""
+
+#: ../lib/vector/Vlib/net.c:368
+msgid "Flattening the graph ..."
+msgstr ""
+
+#: ../lib/vector/Vlib/net.c:370
+msgid "GngFlatten error"
+msgstr ""
+
+#: ../lib/vector/Vlib/net.c:377
+msgid "Graph was built"
+msgstr ""
+
+#: ../lib/vector/Vlib/net.c:501
+msgid "Wrong line direction in Vect_net_get_line_cost()"
 msgstr ""
 
 #: ../lib/vector/Vlib/open.c:114
@@ -3140,10 +3251,6 @@ msgstr ""
 
 #, fuzzy
 #~ msgid "Current window not settable"
-#~ msgstr "सध्याची विंडो = %p\n"
-
-#, fuzzy
-#~ msgid "Cannot use current window"
 #~ msgstr "सध्याची विंडो = %p\n"
 
 #, fuzzy
