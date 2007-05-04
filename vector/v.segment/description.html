@@ -30,8 +30,9 @@ beginning of the vector line.
 <p>
 The side offset is the orthogonal distance from the line. Positive side
 offsets are to the right side of the line going forward, negative offsets
-are to the left. As the segment distance is measured along the original
-line, side-offset lines will be longer than the start-end segment distance
+are to the left (<em>d.vect</em> with <em>display=shape,dir</em> shows
+the direction of vector lines). As the segment distance is measured along the
+original line, side-offset lines will be longer than the start-end segment distance
 for outside corners of curving lines, and shorter for inside corners.
 <P>
 All offsets are measured in map units (see "<em>g.proj -p</em>").
@@ -113,6 +114,7 @@ There is a problem with side-offset parallel line generation for inside corners.
 
 <em>
 <a href="lrs.html">LRS tutorial</a> (Linear Reference System),<BR>
+<a href="d.vect.html">d.vect</a>,
 <a href="v.build.polylines.html">v.build.polylines</a>,
 <a href="v.lrs.segment.html">v.lrs.segment</a>,
 <a href="v.parallel.html">v.parallel</a>,
