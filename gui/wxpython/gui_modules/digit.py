@@ -39,14 +39,38 @@ class VEdit(Digit):
 
     Note: This should be replaced by VDigit class.
     """
-    def AddPoint (self, map, x, y):
+    def AddPoint (self, map, type, x, y):
         """
-        Add point to the vector map
+        Add point/centroid to the vector map layer
         """
-        addstring="""P 1
-                    %f %f""" % (x,y)
+        if type == "centroid":
+            key = "C"
+        else:
+            key = "P"
+            
+        addstring="""%s 1
+                    %f %f""" % (key, x, y)
 
-        Debug.msg (3, "VEdit.AddPoint(): x=%f, y=%f" % (x, y))
+        self._AddFeature (map=map, input=addstring)
+
+    def AddLine (self, map, type, xy):
+        """
+        Add line/boundary to the vector map layer
+        """
+        if len(xy) < 2:
+            return
+
+        if type == "boundary":
+            key = "B"
+        else:
+            key = "L"
+            
+        addstring="%s %d 1\n" % (key, len(xy))
+        for point in xy:
+            addstring += "%f %f\n" % (point[0], point [1])
+
+        addstring += "1 1"
+        
         self._AddFeature (map=map, input=addstring)
 
     def _AddFeature (self, map, input):

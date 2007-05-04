@@ -586,7 +586,6 @@ class LayerTree(CT.CustomTreeCtrl):
             if mapidx > -1:
                 mapset = mapset[mapidx+1:]
 
-        print "#", mapset
         self.Map.ChangeLayer(item=layer, type=self.layertype[layer], command=cmd, name=mapname, mapset=mapset,
                              l_active=chk, l_hidden=hidden, l_opacity=opac, l_render=False)
 
