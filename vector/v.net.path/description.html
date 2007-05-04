@@ -64,14 +64,16 @@ Shortest path from two digitized nodes:
 <div class="code"><pre>
 g.copy vect=roads,myroads
 v.db.addcol myroads col="forward double precision, backward double precision"
-v.db.update myroads col=forward val=50
-v.db.update myroads col=backward val=50
-v.db.update myroads col=forward val=75 where="label='interstate'"
-v.db.update myroads col=backward val=75 where="label='interstate'"
-v.db.update myroads col=forward val=5 where="label='unimproved road'"
-v.db.update myroads col=backward val=5 where="label='unimproved road'"
-v.db.update myroads col=forward val=25 where="label='light-duty road, improved surface'"
-v.db.update myroads col=backward val=25 where="label='light-duty road, improved surface'"
+
+# define traveling costs as inverse of speed limit:
+v.db.update myroads col=forward val=1/50
+v.db.update myroads col=backward val=1/50
+v.db.update myroads col=forward val=1/75 where="label='interstate'"
+v.db.update myroads col=backward val=1/75 where="label='interstate'"
+v.db.update myroads col=forward val=1/5 where="label='unimproved road'"
+v.db.update myroads col=backward val=1/5 where="label='unimproved road'"
+v.db.update myroads col=forward val=1/25 where="label='light-duty road, improved surface'"
+v.db.update myroads col=backward val=1/25 where="label='light-duty road, improved surface'"
 v.db.select myroads
 echo "1|601653.5|4922869.2|start|0|0
 2|593330.8|4924096.6|end|0|0" | v.in.ascii cat=1 x=2 y=3 out=startend col="cat integer, \
