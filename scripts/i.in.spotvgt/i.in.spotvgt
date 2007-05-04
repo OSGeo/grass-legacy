@@ -210,7 +210,7 @@ g.remove rast=$NAME 2>&1 >/dev/null
 g.rename rast=${NAME}_$PID,${NAME} >/dev/null
 
 #apply color table:
-r.colors ${NAME} rules=ndvi 2>&1 >/dev/null
+r.colors ${NAME} color=ndvi 2>&1 >/dev/null
 
 ##########################
 # second, optionally process the SM quality map:
@@ -272,7 +272,7 @@ EOF
 
   g.message "Filtering NDVI map by Status Map quality layer..."
   r.mapcalc "${NAME}_filt=if($NAME.sm >= 248, $NAME, null() )"
-  r.colors ${NAME}_filt rules=ndvi 2>&1 >/dev/null
+  r.colors ${NAME}_filt color=ndvi 2>&1 >/dev/null
   g.message "Filtered SPOT VEGETATION NDVI map <${NAME}_filt>."
 fi
 
