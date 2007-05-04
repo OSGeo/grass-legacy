@@ -12,24 +12,11 @@ COPYRIGHT: (C) 2006-2007 by the GRASS Development Team
          for details.
 """
 
-import os,sys,glob, math
+import os, sys, glob, math
 import utils
 
 import cmd
 from debug import Debug as Debug
-
-# class GRASSLayer:
-#     """
-#     This class stores GRASS layer metainformation
-#     (command line parameters and flags) needed for creating
-#     MapLayer instance
-
-#     Attributes:
-#     params - based on a given GRASS layer (raster, vector, graph, etc.)
-#     """
-
-#     def __init__(self, parameters):
-#         self.params = parameters
 
 class MapLayer:
     """
@@ -38,6 +25,7 @@ class MapLayer:
     Common layer attributes:
     type     - layer type (raster, vector, overlay, command)
     name     - layer name, e.g. map name
+    mapset   - mapset of layer
     cmd      - GRASS command string
     
     active   - layer is active, will be rendered only if True
@@ -47,19 +35,20 @@ class MapLayer:
     mapfile  - file name of rendered layer
     maskfile - mask name of rendered layer
     """
-    def __init__(self, type, name, cmd,
+    def __init__(self, type, cmd, name=None, mapset=None,
                  active=True, hidden=False, opacity=1):
         self.type    = type
         self.name    = name
+        self.mapset  = mapset
         self.cmd     = cmd + " --q" # quite
         
         self.active  = active
         self.hidden  = hidden
         self.opacity = opacity
 
-        Debug.msg (3, "MapLayer.__init__(): type=%s, name=%s, cmd=%s, active=%d, opacity=%d, hidden=%d" %
-                       (type, name, cmd, active, opacity, hidden))
-
+        Debug.msg (3, "MapLayer.__init__(): type=%s, cmd='%s', name=%s, mapset=%s, active=%d, opacity=%d, hidden=%d" %
+                       (type, cmd, name, mapset, active, opacity, hidden))
+        
         gtemp = utils.GetTempfile()
         self.maskfile = gtemp + ".pgm"
         if self.type == "overlay":
@@ -469,7 +458,7 @@ class Map:
         return new
 
 
-    def GetListOfLayers(self, l_type=None, l_active=None, l_hidden=None):
+    def GetListOfLayers(self, l_type=None, l_mapset=None, l_active=None, l_hidden=None):
         """
         Returns list of layers (including overlays [l_type='overlay'] of
         selected type or list of all layers. It
@@ -492,11 +481,15 @@ class Map:
             if l_type != None and layer.type != l_type:
                 continue
 
+            # mapset
+            if l_mapset != None and layer.mapset != l_mapset:
+                continue
+            
             # hidden and active layers
             if l_active != None and \
-                  l_hidden != None:
+                   l_hidden != None:
                 if layer.active == l_active and \
-                      layer.hidden == l_hidden:
+                       layer.hidden == l_hidden:
                     selected.append(layer)
 
             # active layers
@@ -514,6 +507,7 @@ class Map:
                 selected.append(layer)
 
         Debug.msg (3, "Map.GetListOfLayers(): numberof=%d" % len(selected))
+        
         return selected
 
     def Render(self, force=False):
@@ -597,7 +591,7 @@ class Map:
                 os.environ["GRASS_REGION"] = tmp_region
             return None
 
-    def AddLayer(self, item, type, name, command,
+    def AddLayer(self, item, type, command, name=None, mapset=None,
                  l_active=True, l_hidden=False, l_opacity=1, l_render=False):
         """
         Adds generic display command layer to list of layers
@@ -690,7 +684,7 @@ class Map:
 
         # old lookup item will be deleted when layer is deleted
 
-    def changeLayer(self, item, type, name, command, 
+    def ChangeLayer(self, item, type, command, name=None, mapset=None,
                     l_active=True, l_hidden=False, l_opacity=1, l_render=False):
         """
         Change the command and other other options for a layer
@@ -700,9 +694,9 @@ class Map:
         if l_opacity < 0: l_opacity = 0
         elif l_opacity > 1: l_opacity = 1
 
-        Debug.msg (3, "Map.changeLayer():")
+        Debug.msg (3, "Map.ChangeLayer():")
 
-        newlayer = MapLayer(type=type, name=name, cmd=command,
+        newlayer = MapLayer(type=type, cmd=command, name=name, mapset=mapset,
                             active=l_active, hidden=l_hidden, opacity=l_opacity)
 
         oldlayerindex = self.layers.index(self.lookup[item])
@@ -737,6 +731,19 @@ class Map:
         layer = self.lookup[item]
         layer.active = activ
 
+    def ChangeLayerName (self, item, name, mapset=None):
+        """
+        Change name/mapset of the layer
+        """
+        try:
+            layer = self.lookup[item]
+        except IndexError:
+            return
+        
+        layer.name =  name
+        if mapset:
+            layer.mapset = mapset
+            
     def RemoveLayer(self, name=None, mapset=None, id=None):
         """
         Removes layer from list of layers, defined by name@mapset or id

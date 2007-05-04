@@ -136,9 +136,16 @@ class LayerTree(CT.CustomTreeCtrl):
         self.Bind(wx.EVT_TREE_DELETE_ITEM,      self.onDeleteLayer)
         self.Bind(wx.EVT_TREE_BEGIN_DRAG,       self.onBeginDrag)
         self.Bind(wx.EVT_TREE_END_DRAG,         self.onEndDrag)
-        self.Bind(wx.EVT_CONTEXT_MENU, self.OnContextMenu)
+        self.Bind(wx.EVT_CONTEXT_MENU,          self.OnContextMenu)
+        self.Bind(wx.EVT_TREE_END_LABEL_EDIT,   self.OnChangeLayerName)
         # self.Bind(wx.EVT_CLOSE, self.onCloseWindow)
 
+    def OnChangeLayerName (self, event):
+        """Change layer name"""
+        Debug.msg (3, "LayerTree.OnChangeLayerName: name=%s" % event.GetLabel())
+
+        self.Map.ChangeLayerName (self.layer_selected, event.GetLabel())
+        
     def OnContextMenu (self, event):
         """Context Layer Menu"""
 
@@ -240,7 +247,7 @@ class LayerTree(CT.CustomTreeCtrl):
 
         # add layer to layers list in render.Map
         if self.layertype[layer] != 'group':
-            self.Map.AddLayer(item=layer, type="command", name='', command='',
+            self.Map.AddLayer(item=layer, type="command", command='',
                               l_active=False, l_hidden=False, l_opacity=1, l_render=False)
 
         # add text and icons for each layer type
@@ -259,6 +266,9 @@ class LayerTree(CT.CustomTreeCtrl):
         elif type == 'vector':
             self.SetItemImage(layer, self.vect_icon)
             self.SetItemText(layer, 'vector (double click to set properties)')
+            # if digitization tool enable, update list of available vector maps
+            if self.mapdisplay.digittoolbar:
+                self.mapdisplay.digittoolbar.UpdateListOfLayers(updateTool=True)
         elif type == 'thememap':
             self.SetItemImage(layer, self.theme_icon)
             self.SetItemText(layer, 'thematic map (double click to set properties)')
@@ -366,7 +376,7 @@ class LayerTree(CT.CustomTreeCtrl):
 
         if self.drag == False:
             # change parameters for item in layers list in render.Map
-            self.changeLayer(layer)
+            self.ChangeLayer(layer)
         event.Skip()
 
     def OnOpacity(self, event):
@@ -524,7 +534,7 @@ class LayerTree(CT.CustomTreeCtrl):
         self.CheckItem(layer, checked=True)
 
         # change parameters for item in layers list in render.Map
-        self.changeLayer(layer, mapname)
+        self.ChangeLayer(layer, mapname)
 
 
     def writeDCommand(self, dcmd):
@@ -552,7 +562,8 @@ class LayerTree(CT.CustomTreeCtrl):
         treelayers.reverse()
         self.Map.reorderLayers(treelayers)
 
-    def changeLayer(self, layer, mapname):
+    def ChangeLayer(self, layer, mapname):
+        """Change layer"""
         if self.layertype[layer] == 'command':
             if self.GetItemWindow(layer).GetValue() != None:
                 cmd = self.GetItemWindow(layer).GetValue()
@@ -566,7 +577,17 @@ class LayerTree(CT.CustomTreeCtrl):
                 chk = self.IsItemChecked(layer)
                 hidden = not self.IsVisible(layer)
 
-        self.Map.changeLayer(item=layer, type=self.layertype[layer], name=mapname, command=cmd, 
+        # mapset?
+        mapset = None
+        mapidx = cmd.find("map=")
+        if mapidx > -1:
+            mapset=cmd[mapidx:].split(' ')[0]
+            mapidx = mapset.find('@')
+            if mapidx > -1:
+                mapset = mapset[mapidx+1:]
+
+        print "#", mapset
+        self.Map.ChangeLayer(item=layer, type=self.layertype[layer], command=cmd, name=mapname, mapset=mapset,
                              l_active=chk, l_hidden=hidden, l_opacity=opac, l_render=False)
 
     def setNotebookPage(self,pg):
