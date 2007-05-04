@@ -138,8 +138,23 @@ int describe_table( sqlite3_stmt *statement,
 	    continue;
 	}
 
-        fsize = 99999; /* sqlite doesn't care, it must be long enough to
+	switch ( litetype) {
+	case SQLITE_INTEGER:
+	    fsize = 20;
+	    break;
+
+	case SQLITE_TEXT:
+	    fsize = 255;
+	    break;
+	    
+	case SQLITE_FLOAT:
+	    fsize = 20;
+	    break;
+	    
+	default:
+	    fsize = 99999; /* sqlite doesn't care, it must be long enough to
                           satisfy tests in GRASS */
+	}
 
 	column = db_get_table_column(*table, nkcols);
 
@@ -188,7 +203,7 @@ void get_column_info ( sqlite3_stmt *statement, int col,
     decltype = sqlite3_column_decltype ( statement, col );
     if ( decltype ) 
     {
-	G_debug ( 4, "decltype = %s", decltype );
+	G_debug ( 4, "column: %s, decltype = %s", sqlite3_column_name ( statement, col), decltype );
 	*litetype = affinity_type ( decltype );
     }
     else
@@ -245,13 +260,14 @@ int affinity_type ( const char *declared )
 
     lc = strdup ( declared );
     G_tolcase ( lc );
+    G_debug(4, "affinity_type: %s", lc);
 
     if ( strstr(lc,"int") )
     {
         aff = SQLITE_INTEGER;
     }
     else if ( strstr(lc,"char") || strstr(lc,"clob")
-              || strstr(lc,"text") )
+              || strstr(lc,"text") || strstr(lc,"date") )
     {
         aff = SQLITE_TEXT;
     }

@@ -1,5 +1,12 @@
 SQLite driver
 
+Note:
+If SQL types are wrongly detected as "numeric", check
+(at least) the function affinity_type() in describe.c.
+
+#####################################################
+# email from 10/2005:
+
 To use it, you have to set driver and database, e.g.:
 db.connect driver=sqlite \
     database='$GISDBASE/$LOCATION_NAME/$MAPSET/sqlite.db'
