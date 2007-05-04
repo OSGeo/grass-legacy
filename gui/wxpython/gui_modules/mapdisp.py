@@ -21,20 +21,15 @@ import wx
 import wx.aui
 import os, sys, time, glob, math
 from threading import Thread
-try:
-    from subprocess import *
-except:
-    from compat import subprocess
-    from compat.subprocess import *
 
 try:
     import subprocess
+    from subprocess import *
 except:
     CompatPath = os.getenv("GISBASE") + "/etc/wx"
     sys.path.append(CompatPath)
     from compat import subprocess
-
-import grassenv
+    from compat.subprocess import *
 
 gmpath = os.getenv("GISBASE") + "/etc/wx/gui_modules/"
 sys.path.append(gmpath)
