@@ -146,15 +146,15 @@ class BufferedWindow(wx.Window):
         #
         # Render output objects
         #
-        self.mapfile = None # image file to be rendered
-        self.img = ""       # wx.Image object (self.mapfile)
-        self.ovldict = {}   # list of images for overlays
-        self.ovlcoords = {} # positioning coordinates for decoration overlay
-        self.ovlchk = {}    # showing/hiding decorations
-        self.imagedict = {} # images and their PseudoDC ID's for painting and dragging
-        self.crop = {} # coordinates to crop overlays to their data, indexed by image ID
-        self.select = {} # selecting/unselecting decorations for dragging
-        self.textdict = {} # text, font, and color indexed by id
+        self.mapfile = None   # image file to be rendered
+        self.img = ""         # wx.Image object (self.mapfile)
+        self.ovldict = {}     # list of images for overlays
+        self.ovlcoords = {}   # positioning coordinates for decoration overlay
+        self.ovlchk = {}      # showing/hiding decorations
+        self.imagedict = {}   # images and their PseudoDC ID's for painting and dragging
+        self.crop = {}        # coordinates to crop overlays to their data, indexed by image ID
+        self.select = {}      # selecting/unselecting decorations for dragging
+        self.textdict = {}    # text, font, and color indexed by id
         self.currtxtid = None # PseudoDC id for currently selected text
 
         #
@@ -162,7 +162,6 @@ class BufferedWindow(wx.Window):
         #
         self.zoomhistory = [] # list of past zoom extents
         self.currzoom = 0 # current set of extents in zoom history being used
-
 
         #
         # mouse attributes like currently pressed buttons, position on
@@ -193,8 +192,9 @@ class BufferedWindow(wx.Window):
         self.Bind(wx.EVT_ERASE_BACKGROUND, lambda x:None)
 
         # vars for handling mouse clicks
-        self.dragid = -1
-        self.lastpos = (0,0)
+        self.dragid   = -1
+        self.lastpos  = (0, 0)
+        self.savedpos = []
 
     def Draw(self, pdc, img=None, drawid=None, pdctype='image', coords=[0,0,0,0]):
         """
@@ -522,31 +522,14 @@ class BufferedWindow(wx.Window):
         wheel = event.GetWheelRotation() # +- int
         hitradius = 10 # distance for selecting map decorations
 
-        # left mouse button pressed; get decoration ID
+        # left mouse button pressed
         if event.LeftDown():
+            # get decoration id
             self.lastpos = self.mouse['begin'] = event.GetPositionTuple()[:]
             # idlist = self.pdc.FindObjectsByBBox(self.lastpos[0],self.lastpos[1])
             idlist  = self.pdc.FindObjects(self.lastpos[0],self.lastpos[1], hitradius)
             if idlist != []:
                 self.dragid = idlist[0]
-        # double click to select overlay decoration options dialog
-        elif event.ButtonDClick():
-            # start point of drag
-            clickposition = event.GetPositionTuple()[:]
-            # get decoration ID
-            # idlist = self.pdc.FindObjectsByBBox(clickposition[0], clickposition[1])
-            idlist  = self.pdc.FindObjects(clickposition[0], clickposition[1], hitradius)
-            if idlist == []: return
-            self.dragid = idlist[0]
-
-            self.ovlcoords[self.dragid] = self.pdc.GetIdBounds(self.dragid)
-            if self.dragid > 100:
-                self.currtxtid = self.dragid
-                self.parent.addText(None)
-            elif self.dragid == 0:
-                self.parent.addBarscale(None)
-            elif self.dragid == 1:
-                self.parent.addLegend(None)
         # left mouse button released and not just a pointer
         elif event.LeftUp():
             if self.mouse['box'] != "point" and self.mouse['box'] != "query":
@@ -560,13 +543,17 @@ class BufferedWindow(wx.Window):
                 self.UpdateMap()
             # digitizing
             elif self.parent.digittoolbar:
-                if self.parent.digittoolbar.action == "addpoint":
-                    #self.SetCursor (self.parent.cursors["cross"])
-                    east,north= self.Pixel2Cell(self.mouse['begin'][0],self.mouse['begin'][1])
-                    Debug.msg (3, "BufferedWindow.MouseAction(): layerID=%d" % self.parent.digittoolbar.layerID)
+                if self.parent.digittoolbar.action == "add":
+                    east, north = self.Pixel2Cell(self.mouse['begin'][0],self.mouse['begin'][1])
                     try:
-                        Digit.AddPoint(self.parent.digittoolbar.layers[self.parent.digittoolbar.layerID],
-                                       east,north)
+                        if self.parent.digittoolbar.type in ["point", "centroid"]:
+                            # add new point
+                            Digit.AddPoint(map=self.parent.digittoolbar.layers[self.parent.digittoolbar.layerID],
+                                           type=self.parent.digittoolbar.type,
+                                           x=east, y=north)
+                        elif self.parent.digittoolbar.type in ["line", "boundary"]:
+                            # add new point to the line
+                            self.savedpos.append ((east, north))
                     except IndexError:
                         dlg = wx.MessageDialog(self, _("Choose vector layer for editing"), _("Error"), wx.OK | wx.ICON_ERROR)
                         dlg.ShowModal()
@@ -586,6 +573,41 @@ class BufferedWindow(wx.Window):
                 self.currtxtid = None
                 id = None
                 self.Update()
+        # right mouse button pressed
+        elif event.RightDown():
+            pass
+        # right mouse button released
+        elif event.RightUp():
+            if self.parent.digittoolbar and self.parent.digittoolbar.action == "add":
+                if self.parent.digittoolbar.type in ["line", "boundary"]:
+                    # add new line
+                    Digit.AddLine(map=self.parent.digittoolbar.layers[self.parent.digittoolbar.layerID],
+                                   type=self.parent.digittoolbar.type,
+                                   xy=self.savedpos)
+                    # clean up
+                    self.savedpos = []
+                    # redraw map
+                    self.render=True
+                    self.UpdateMap()
+        # double click 
+        elif event.ButtonDClick():
+            # select overlay decoration options dialog
+            # start point of drag
+            clickposition = event.GetPositionTuple()[:]
+            # get decoration ID
+            # idlist = self.pdc.FindObjectsByBBox(clickposition[0], clickposition[1])
+            idlist  = self.pdc.FindObjects(clickposition[0], clickposition[1], hitradius)
+            if idlist == []: return
+            self.dragid = idlist[0]
+
+            self.ovlcoords[self.dragid] = self.pdc.GetIdBounds(self.dragid)
+            if self.dragid > 100:
+                self.currtxtid = self.dragid
+                self.parent.addText(None)
+            elif self.dragid == 0:
+                self.parent.addBarscale(None)
+            elif self.dragid == 1:
+                self.parent.addLegend(None)
         # drag
         elif event.Dragging():
             currpos = event.GetPositionTuple()[:]

@@ -169,9 +169,10 @@ class DigitToolbar:
         self.icons      = os.path.join (os.getenv("GISBASE"), "etc/v.digit")
 
         # selected map to digitize
-        self.layerID    = -1
+        self.layerID    = None
         # action (digitize new point, line, etc.
-        self.action     = "addpoint"
+        self.action     = "add"
+        self.type       = "point"
         self.addString  = ""
 
         # list of available vector maps
@@ -231,14 +232,38 @@ class DigitToolbar:
                                               longHelp=Icons["digexit"].GetDesc())
 
         # Bindings
-    	self.parent.Bind(wx.EVT_TOOL,     self.OnAddPoint,  self.point)
+    	self.parent.Bind(wx.EVT_TOOL,     self.OnAddPoint,    self.point)
+        self.parent.Bind(wx.EVT_TOOL,     self.OnAddLine,     self.line)
+        self.parent.Bind(wx.EVT_TOOL,     self.OnAddBoundary, self.boundary)
+        self.parent.Bind(wx.EVT_TOOL,     self.OnAddCentroid, self.centroid)
+        
         self.parent.Bind(wx.EVT_TOOL,     self.OnExit,      self.exit)
         self.parent.Bind(wx.EVT_COMBOBOX, self.OnSelectMap, self.comboid)
 
-    def OnAddPoint(self,event):
+    def OnAddPoint(self, event):
+        """Add point to the vector map layer"""
         Debug.msg (3, "DigitToolbar.OnAddPoint()")
-        self.action="addpoint"
-        #self.parent.MapWindow.mouse['box'] = "point"
+        self.action = "add"
+        self.type   = "point"
+
+    def OnAddLine(self, event):
+        """Add line to the vector map layer"""
+        Debug.msg (3, "DigitToolbar.OnAddLine()")
+        self.action = "add"
+        self.type   = "line"
+
+    def OnAddBoundary(self, event):
+        """Add boundary to the vector map layer"""
+        Debug.msg (3, "DigitToolbar.OnAddBoundary()")
+        self.action = "add"
+        self.type   = "boundary"
+
+    def OnAddCentroid(self, event):
+        """Add centroid to the vector map layer"""
+        Debug.msg (3, "DigitToolbar.OnAddCentroid()")
+        self.action = "add"
+        self.type   = "centroid"
+
 
     def OnExit (self, event):
         """
