@@ -604,12 +604,21 @@ clean_check_raster_name (const char *inmap, char **outmap, char **outmapset)
 /* opens a f-cell or cell file depending on WRITE_MAP_TYPE */
 static int G__open_raster_new (const char *name, int open_mode)
 {
+    char xname[GNAME_MAX], xmapset[GMAPSET_MAX];
     struct fileinfo *fcb;
     int i, null_fd, fd;
     char *tempname;
     char *map;
     char *mapset;
-    
+
+/* check for fully-qualfied name */
+    if (G__name_is_fully_qualified(name, xname, xmapset))
+    {
+	if (strcmp(xmapset, G_mapset()) != 0)
+	    G_fatal_error ("%s is not in the current mapset (%s)", name, G_mapset());
+	name = xname;
+    }
+
 /* check for legal grass name */
     if (G_legal_filename (name) < 0)
     {
@@ -1070,36 +1079,20 @@ RASTER_MAP_TYPE G__check_fp_type (const char *name, const char *mapset)
 
 int G_open_raster_new (const char *name, RASTER_MAP_TYPE wr_type)
 {
-    int fd;
-
-    if (G_legal_filename (name) < 0)
-	G_fatal_error ("%s - ** illegal name **", name);
-
     if(wr_type == CELL_TYPE)
        return G_open_cell_new (name);
-    else
-    {
-        G_set_fp_type(wr_type);
-        fd = G_open_fp_cell_new (name);
-    }
 
-    return fd;
+    G_set_fp_type(wr_type);
+    return G_open_fp_cell_new (name);
 }
 
 int G_open_raster_new_uncompressed (const char *name, RASTER_MAP_TYPE wr_type)
 {
-    int fd;
-
-    if (G_legal_filename (name) < 0)
-	G_fatal_error (_("%s - ** illegal name **"), name);
-
     if(wr_type == CELL_TYPE)
        return G_open_cell_new_uncompressed (name);
 
     G_set_fp_type(wr_type);
-    fd = G_open_fp_cell_new_uncompressed (name);
-
-    return fd;
+    return G_open_fp_cell_new_uncompressed (name);
 }
 
 
