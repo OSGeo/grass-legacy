@@ -148,15 +148,6 @@ class TreeCtrlComboPopup(wx.combo.ComboPopup):
                         self.AddItem(elem+'@'+dir, parent=dir_node)
                 except:
                     continue
-                # FIXME: This introduces error and so it is commented out
-                # -------- ERROR BEGIN --------------
-                # Traceback (most recent call last):
-                # File "/hardmnt/moll0/ssi/cepicky/src/gis/grass/grass6/dist.x86_64-unknown-linux-gnu/etc/wx/gui_modules/wxgui_utils.py", line 348, in onExpandNode
-                # if self.layertype[self.layer_selected] == 'group':
-                # KeyError: <wx._controls.TreeItemId; proxy of <Swig Object of type 'wxTreeItemId *' at 0xeac7d0> >
-                # -------- ERROR END --------------
-                # self.seltree.Expand(dir_node)
-
             else:
                 dir_node = self.AddItem('Mapset: '+dir)
                 self.seltree.SetItemTextColour(dir_node,wx.Colour(50,50,200))
@@ -167,8 +158,8 @@ class TreeCtrlComboPopup(wx.combo.ComboPopup):
                 except:
                     continue
 
-        # expand all items
-        self.seltree.ExpandAll()
+            if self.seltree.ItemHasChildren(dir_node):
+                self.seltree.Expand(dir_node)
 
     # helpers
     def FindItem(self, parentItem, text):
@@ -205,13 +196,14 @@ class TreeCtrlComboPopup(wx.combo.ComboPopup):
         item, flags = self.seltree.HitTest(evt.GetPosition())
         if item and flags & wx.TREE_HITTEST_ONITEMLABEL:
             self.curitem = item
-            (child, cookie) = self.seltree.GetFirstChild(item)
-            if child: # cannot select mapset item
-                self.value = None
+            
+            if self.seltree.GetRootItem() == self.seltree.GetItemParent(item): 
+                self.value = None # cannot select mapset item
             else:
                 self.value = item
 
             self.Dismiss()
+            
         evt.Skip()
 
 
