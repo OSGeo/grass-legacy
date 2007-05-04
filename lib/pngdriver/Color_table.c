@@ -11,10 +11,10 @@ static int Red[256], Grn[256], Blu[256];
 
 static void set_color(int i, int red, int grn, int blu)
 {
-	palette[i][0] = red;
-	palette[i][1] = grn;
-	palette[i][2] = blu;
-	palette[i][3] = 0;
+	png_palette[i][0] = red;
+	png_palette[i][1] = grn;
+	png_palette[i][2] = blu;
+	png_palette[i][3] = 0;
 }
 
 static void init_colors_rgb(void)
@@ -111,10 +111,10 @@ static void get_pixel_rgb(unsigned int pixel, int *r, int *g, int *b, int *a)
 
 static void get_pixel_indexed(unsigned int pixel, int *r, int *g, int *b, int *a)
 {
-	*r = palette[pixel][0];
-	*g = palette[pixel][1];
-	*b = palette[pixel][2];
-	*a = palette[pixel][3];
+	*r = png_palette[pixel][0];
+	*g = png_palette[pixel][1];
+	*b = png_palette[pixel][2];
+	*a = png_palette[pixel][3];
 }
 
 
