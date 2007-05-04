@@ -150,7 +150,9 @@ class SetDefaultFont(wx.Dialog):
             # parse the freetypecap file
             fontinfo = open(freetypecap).read().strip().split('\n')
             for item in fontinfo:
-                if not item.startswith('#'):
+                # ignore duplicate fonts and those starting with #
+                if not item.startswith('#') and \
+                    item.split(':')[0] != fontinfo[fontinfo.index(item)-1].split(':')[0]:
                     fontlist.append(item.split(':')[0])
 
         return fontlist
