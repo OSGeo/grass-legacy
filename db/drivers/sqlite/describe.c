@@ -138,8 +138,23 @@ int describe_table( sqlite3_stmt *statement,
 	    continue;
 	}
 
-        fsize = 99999; /* sqlite doesn't care, it must be long enough to
+	switch ( litetype) {
+	case SQLITE_INTEGER:
+	    fsize = 20;
+	    break;
+
+	case SQLITE_TEXT:
+	    fsize = 255;
+	    break;
+	    
+	case SQLITE_FLOAT:
+	    fsize = 20;
+	    break;
+	    
+	default:
+	    fsize = 99999; /* sqlite doesn't care, it must be long enough to
                           satisfy tests in GRASS */
+	}
 
 	column = db_get_table_column(*table, nkcols);
 
