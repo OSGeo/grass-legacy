@@ -66,6 +66,7 @@ icons_default = {
     # histogram
     "font"       : 'gui-font.gif',
     "histogram"  : 'module-d.histogram.gif',
+    "color"      : 'edit-color.gif',
     "options"    : wx.ART_ERROR,
     }
 
@@ -189,6 +190,7 @@ Icons = {
     # histogram
     "histogram"  : MetaIcon (img=icons_img["histogram"], label="Create histogram of image or raster file"),
     "font"       : MetaIcon (img=icons_img["font"], label="Select font"),
+    "color"      : MetaIcon (img=icons_img["color"], label="Select color"),
     "options"    : MetaIcon (img=icons_img["options"], label="Set histogram options")}
 
 # testing ...
