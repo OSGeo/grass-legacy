@@ -177,7 +177,7 @@ class DigitToolbar:
 
         # list of available vector maps
         self.UpdateListOfLayers(updateTool=False)
-                
+
         # create toolbar
         self.toolbar = wx.ToolBar(parent=self.parent, id=wx.ID_ANY)
         self.toolbar.SetToolBitmapSize(wx.Size(24,24))
@@ -185,13 +185,13 @@ class DigitToolbar:
         # create toolbar
         self.initToolbar()
         self.toolbar.Realize()
-        
+
     def initToolbar(self):
         self.combo = wx.ComboBox(self.toolbar, id=wx.ID_ANY, value='Select vector map',
                                  choices=self.layers, size=(150, -1))
-        
+
         self.comboid = self.toolbar.AddControl(self.combo)
-        
+
         self.toolbar.AddSeparator()
 
         self.point = self.toolbar.AddLabelTool(id=wx.ID_ANY, label="digaddpoint",
@@ -232,15 +232,10 @@ class DigitToolbar:
                                               longHelp=Icons["digexit"].GetDesc())
 
         # Bindings
-<<<<<<< .mine
-        self.parent.Bind(wx.EVT_TOOL,     self.OnAddPoint,  self.point)
-=======
-    	self.parent.Bind(wx.EVT_TOOL,     self.OnAddPoint,    self.point)
+        self.parent.Bind(wx.EVT_TOOL,     self.OnAddPoint,    self.point)
         self.parent.Bind(wx.EVT_TOOL,     self.OnAddLine,     self.line)
         self.parent.Bind(wx.EVT_TOOL,     self.OnAddBoundary, self.boundary)
         self.parent.Bind(wx.EVT_TOOL,     self.OnAddCentroid, self.centroid)
-        
->>>>>>> .r617
         self.parent.Bind(wx.EVT_TOOL,     self.OnExit,      self.exit)
         self.parent.Bind(wx.EVT_COMBOBOX, self.OnSelectMap, self.comboid)
 
@@ -310,4 +305,4 @@ class DigitToolbar:
             self.toolbar.DeleteToolByPos (0)
             self.comboid = self.toolbar.InsertControl(0, self.combo)
             self.toolbar.Realize()
-        
+
