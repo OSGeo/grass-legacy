@@ -30,7 +30,7 @@
 
 
 /* function prototypes */
-static inline CELL round_c (double);
+static CELL round_c (double);
 static int set_output_scale (struct Option *, int *, int *, int *);
 static int calc_mu (int *, double *, int);
 static int calc_covariance (int *, double **, double *, int);
@@ -174,7 +174,7 @@ int main (int argc, char *argv[])
 }
 
 
-static inline CELL round_c (double x)
+static CELL round_c (double x)
 {
     CELL n;
 

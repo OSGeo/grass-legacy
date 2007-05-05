@@ -62,9 +62,9 @@ void free_stat_table(stat_table * stats);
 void print_stat_table(stat_table * stats);
 void update_stat_table(stat_table * stats, G3D_Region * region);
 void heapsort_eqvals(equal_val_array * data, int n);
-static inline void downheap_eqvals(equal_val_array * data, int n, int k);
-static inline void check_range_value(stat_table * stats, double value);
-static inline void tree_search_range(stat_table * stats, int left, int right,
+static void downheap_eqvals(equal_val_array * data, int n, int k);
+static void check_range_value(stat_table * stats, double value);
+static void tree_search_range(stat_table * stats, int left, int right,
 				     double value);
 
 /* *************************************************************** */
@@ -356,7 +356,7 @@ void print_stat_table(stat_table * stats)
 /* *************************************************************** */
 /*  Make an entry in the statistic table based on range value check */
 /* *************************************************************** */
-inline void check_range_value(stat_table * stats, double value)
+void check_range_value(stat_table * stats, double value)
 {
 
     /* this is very expensive for large range arrays! */

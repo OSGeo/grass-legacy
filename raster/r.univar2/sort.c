@@ -10,9 +10,9 @@
  */
 
 #include "globals.h"
-static inline void downheap_int (int *array, int n, int k);
-static inline void downheap_float (float *array, int n, int k);
-static inline void downheap_double (double *array, int n, int k);
+static void downheap_int (int *array, int n, int k);
+static void downheap_float (float *array, int n, int k);
+static void downheap_double (double *array, int n, int k);
 
 /* *************************************************************** */
 /* *************************************************************** */

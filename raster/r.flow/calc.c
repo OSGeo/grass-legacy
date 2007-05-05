@@ -135,7 +135,7 @@ height_angle_bounding_box (int sub, double cut, int horiz, point *p, bbox b)
  * on_map: returns map boundary condition for continuing current line
  * globals r:  region
  */
-static inline int on_map(int sub,double cut,int horiz)
+static int on_map(int sub,double cut,int horiz)
 {
     return
 	(sub >= 0 && cut >= 0.0 &&
