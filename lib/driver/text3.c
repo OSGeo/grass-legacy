@@ -136,45 +136,38 @@ static void set_matrix(FT_Matrix *matrix, double rotation)
 
 static int convert_str(const char *from, const char *in, unsigned char **out)
 {
-	iconv_t cd;
-	size_t ret;
-	size_t len = 0;
-	size_t i = 0;
-	int res = 0;
+	size_t len, i, res;
 	const unsigned char *p1;
 	unsigned char *p2;
 
 	len = strlen(in);
 	res = 2*(len+1);
-/* 	res = 4*(len+1); */
 
-	*out = G_malloc(res);
-	memset(*out,0,res);
+	*out = G_calloc(1, res);
 	p1 = in;
 	p2 = *out;
 
+#ifdef HAVE_ICONV_H
+	{     
+	size_t ret;
+	iconv_t cd;
+	
 	i = res;
 	if( (cd = iconv_open("UCS-2BE",from)) < 0 )
-/* 	if( (cd = iconv_open("UCS-4",from)) < 0 ) */
-/* 	if( (cd = iconv_open("UTF-8",from)) < 0 ) */
 		return -1;
 	ret = iconv(cd,(char **)&p1,&len,(char **)&p2,&i);
-	/*
-	if(ret == -1){
-		if(errno == E2BIG){
-			{DEBUG_LOG("E2BIG\n")}
-		}
-		if(errno == EILSEQ){
-			{DEBUG_LOG("EILSEQ\n")}
-		}
-		if(errno == EINVAL){
-			{DEBUG_LOG("EILSEQ\n")}
-		}
-	}
-	*/
 	iconv_close(cd);
 
 	res -= i;
+	}   
+#else
+	for(i = 0; i <= len; i++)
+	    /* Pad each character out to 2 bytes, i.e. UCS-2 Big Endian encoding
+	     * (note low byte has already been zeroed by G_calloc() call) */
+	    p2[2*i + 1] = p1[i];
+
+	res = 2 * len;
+#endif   
 
 	return res;
 }
