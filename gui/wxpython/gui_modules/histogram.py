@@ -71,9 +71,6 @@ class BufferedWindow(wx.Window):
         self.Bind(wx.EVT_PAINT,        self.OnPaint)
         self.Bind(wx.EVT_SIZE,         self.OnSize)
         self.Bind(wx.EVT_IDLE,         self.OnIdle)
-#        self.Bind(wx.EVT_MOTION,       self.MouseActions)
-#        self.Bind(wx.EVT_MOUSE_EVENTS, self.MouseActions)
-
 
         #
         # Render output objects
@@ -91,7 +88,7 @@ class BufferedWindow(wx.Window):
 
     def Draw(self, pdc, img=None, drawid=None, pdctype='image', coords=[0,0,0,0]):
         """
-        Draws map decorations on top of map
+        Draws histogram or clears window
         """
 
         if drawid == None:
@@ -106,12 +103,10 @@ class BufferedWindow(wx.Window):
 
         pdc.BeginDrawing()
 
-
         Debug.msg (3, "BufferedWindow.Draw(): id=%s, pdctype=%s, coord=%s" % (drawid, pdctype, coords))
 
         if pdctype == 'clear': # erase the display
             bg = wx.WHITE_BRUSH
-#            bg = wx.Brush(self.GetBackgroundColour())
             pdc.SetBackground(bg)
             pdc.Clear()
             self.Refresh()
@@ -119,9 +114,8 @@ class BufferedWindow(wx.Window):
             return
 
         if pdctype == 'image':
-            bg = wx.Brush(self.GetBackgroundColour())
+            bg = wx.TRANSPARENT_BRUSH
             pdc.SetBackground(bg)
-            self.Refresh()
             bitmap = wx.BitmapFromImage(img)
             w,h = bitmap.GetSize()
             pdc.DrawBitmap(bitmap, coords[0], coords[1], True) # draw the composite map
@@ -132,7 +126,7 @@ class BufferedWindow(wx.Window):
 
     def OnPaint(self, event):
         """
-        All that is needed here is to draw the buffer to screen
+        Draw psuedo DC to buffer
         """
 
         dc = wx.BufferedPaintDC(self, self._Buffer)
@@ -153,9 +147,8 @@ class BufferedWindow(wx.Window):
 
     def OnSize(self, event):
         """
-            The Buffer init is done here, to make sure the buffer is always
-        the same size as the Window
-            """
+         Init image size to match window size
+        """
 
             # set size of the input image
         self.Map.width, self.Map.height = self.GetClientSize()
@@ -179,7 +172,7 @@ class BufferedWindow(wx.Window):
 
     def OnIdle(self, event):
         """
-            Only re-render a compsite map image from GRASS during
+        Only re-render a histogram image from GRASS during
         idle time instead of multiple times during resizing.
             """
 
@@ -214,11 +207,7 @@ class BufferedWindow(wx.Window):
 
     def UpdateHist(self, img=None):
         """
-        This would get called if the drawing needed to change, for whatever reason.
-
-        The idea here is that the drawing is based on some data generated
-        elsewhere in the system. IF that data changes, the drawing needs to
-        be updated.
+        Update canvas if histogram options changes or window changes geometry
         """
 
         Debug.msg (2, "BufferedWindow.UpdateHist(%s): render=%s" % (img, self.render))
@@ -317,15 +306,11 @@ class HistFrame(wx.Frame):
         self.InitDisplay() # initialize region values
 
         # initialize buffered DC
-        # self.HistWindow = DrawWindow(self)
         self.HistWindow = BufferedWindow(self, id = wx.ID_ANY, Map=self.Map) # initialize buffered DC
-#        self.HistWindow.Bind(wx.EVT_MOTION, self.OnMotion)
-#        self.HistWindow.SetCursor (self.cursors["default"]) # default
 
         #
         # Bind various events
         #
-#        self.Bind(wx.EVT_ACTIVATE, self.OnFocus)
         self.Bind(wx.EVT_CLOSE,    self.OnCloseWindow)
 
         #
@@ -342,7 +327,7 @@ class HistFrame(wx.Frame):
         toolbar.Realize()
 
     def AddToolbarButton(self, toolbar, label, icon, help, handler):
-        """Adds button to the given toolbar"""
+        """Adds buttons to the toolbar"""
 
         if not label:
             toolbar.AddSeparator()
@@ -353,9 +338,8 @@ class HistFrame(wx.Frame):
     def toolbarData(self):
 
         return   (
-                 ('histogram', Icons["histogram"].GetBitmap(), Icons["histogram"].GetLabel(), self.OnUpdate),
+                 ('histogram', Icons["histogram"].GetBitmap(), Icons["histogram"].GetLabel(), self.OnOptions),
                  ('erase', Icons["erase"].GetBitmap(), Icons["erase"].GetLabel(), self.OnErase),
-                 ('options',  wx.ArtProvider.GetBitmap(wx.ART_LIST_VIEW, wx.ART_TOOLBAR, (16,16)),  Icons["options"].GetLabel(), self.OnOptions),
                  ('font', Icons["font"].GetBitmap(), Icons["font"].GetLabel(), self.SetHistFont),
                  ('', '', '', ''),
                  ('save',  Icons["savefile"].GetBitmap(),  Icons["savefile"].GetLabel(),  self.SaveToFile),
@@ -368,9 +352,6 @@ class HistFrame(wx.Frame):
         """
         self.width, self.height = self.GetClientSize()
         self.Map.geom = self.width, self.height
-
-    def OnUpdate(self, event):
-        self.HistWindow.UpdateHist()
 
     def OnOptions(self, event):
         global gmpath
@@ -401,10 +382,12 @@ class HistFrame(wx.Frame):
         self.Map.changeLayer(item="histlayer", type="command", name='', command=dcmd,
                              l_active=True, l_hidden=False, l_opacity=1, l_render=False)
         self.params = params
+        self.HistWindow.UpdateHist()
 
     def SetHistFont(self, event):
         """
-        Set font for histogram
+        Set font for histogram. If not
+        set, font will be default display font.
         """
 
         dlg = defaultfont.SetDefaultFont(self, wx.ID_ANY, 'Select font for histogram text',
@@ -425,6 +408,7 @@ class HistFrame(wx.Frame):
             self.encoding = dlg.encoding
 
         dlg.Destroy()
+        self.HistWindow.UpdateHist()
 
     def OnErase(self, event):
         """
@@ -463,10 +447,6 @@ class HistFrame(wx.Frame):
 
     def PrintMenu(self, event):
         """
-        Print map display
-        """
-
-        """
         Print options and output menu
         """
         point = wx.GetMousePosition()
@@ -492,11 +472,10 @@ class HistFrame(wx.Frame):
     def OnCloseWindow(self, event):
         """
         Window closed
-        Also close associated layer tree page
+        Also remove associated rendered images
         """
 
         self.Map.Clean()
-
         self.Destroy()
 
 
