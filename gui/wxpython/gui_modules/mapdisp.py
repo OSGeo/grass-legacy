@@ -198,7 +198,7 @@ class BufferedWindow(wx.Window):
 
     def Draw(self, pdc, img=None, drawid=None, pdctype='image', coords=[0,0,0,0]):
         """
-        Draws map decorations on top of map
+        Draws map and overlay decorations
         """
 
         if drawid == None:
@@ -300,7 +300,7 @@ class BufferedWindow(wx.Window):
 
     def OnPaint(self, event):
         """
-        All that is needed here is to draw the buffer to screen
+        Draw psuedo DC to buffered paint DC
         """
 
         dc = wx.BufferedPaintDC(self, self._Buffer)
@@ -321,9 +321,9 @@ class BufferedWindow(wx.Window):
 
     def OnSize(self, event):
         """
-            The Buffer init is done here, to make sure the buffer is always
+        Scale map image so that it is
         the same size as the Window
-            """
+        """
 
             # set size of the input image
         self.Map.width, self.Map.height = self.GetClientSize()
@@ -347,9 +347,9 @@ class BufferedWindow(wx.Window):
 
     def OnIdle(self, event):
         """
-            Only re-render a compsite map image from GRASS during
+        Only re-render a compsite map image from GRASS during
         idle time instead of multiple times during resizing.
-            """
+        """
 
         if self.resize:
             self.render = True
@@ -358,9 +358,8 @@ class BufferedWindow(wx.Window):
 
     def SaveToFile(self, FileName, FileType):
         """
-        This will save the contents of the buffer
-        to the specified file. See the wx.Windows docs for
-        wx.Bitmap::SaveFile for the details
+        This draws the psuedo DC to a buffer that
+        can be saved to a file.
         """
         dc = wx.BufferedPaintDC(self, self._Buffer)
         self.pdc.DrawToDC(dc)
@@ -368,7 +367,7 @@ class BufferedWindow(wx.Window):
 
     def GetOverlay(self):
         """
-        Converts overlay files to wx.Image
+        Converts rendered overlay files to wx.Image
         """
         self.ovldict = {}
         for overlay in self.Map.GetListOfLayers(l_type="overlay", l_active=True):
@@ -384,7 +383,7 @@ class BufferedWindow(wx.Window):
 
     def GetImage(self):
         """
-        Converts files to wx.Image
+        Converts redered map files to wx.Image
         """
         if self.Map.mapfile and os.path.isfile(self.Map.mapfile) and \
                 os.path.getsize(self.Map.mapfile):
@@ -398,11 +397,8 @@ class BufferedWindow(wx.Window):
 
     def UpdateMap(self, img=None):
         """
-        This would get called if the drawing needed to change, for whatever reason.
-
-        The idea here is that the drawing is based on some data generated
-        elsewhere in the system. IF that data changes, the drawing needs to
-        be updated.
+        Updates the canvas anytime there is a change to the underlying images
+        or to the geometry of the canvas.
         """
 
         Debug.msg (2, "BufferedWindow.UpdateMap(%s): render=%s" % (img, self.render))
@@ -456,8 +452,8 @@ class BufferedWindow(wx.Window):
 
     def DragMap(self, moveto):
         """
-            Drag a bitmap image for panning.
-            """
+        Drag the entire map image for panning.
+        """
 
         dc = wx.BufferedDC(wx.ClientDC(self))
         dc.SetBackground(wx.Brush("White"))
@@ -471,6 +467,9 @@ class BufferedWindow(wx.Window):
         self.dragimg.EndDrag()
 
     def DragItem(self, id, event):
+        """
+        Drag an overlay decoration item
+        """
         x,y = self.lastpos
         dx = event.GetX() - x
         dy = event.GetY() - y
