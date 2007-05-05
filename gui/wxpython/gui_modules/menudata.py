@@ -12,7 +12,7 @@ class Data:
           ("Config", (
               ("Region", "Set region", "self.runMenuCmd", "g.region"),
               ("","","", ""),
-              ("Set display font", "Set default font for GRASS displays", "self.defaultFont", ""),
+              ("Set display font", "Set default font for GRASS displays", "self.DefaultFont", ""),
               )),
           ("Raster", (
               ("Develop map", (
@@ -293,6 +293,7 @@ class Data:
                 ("Zero edge crossing detection", "Zero edge crossing detection", "self.runMenuCmd", "i.zc"),
                 ("User defined matrix/convolving filter", "User defined matrix/convolving filter", "self.runMenuCmd", "r.mfilter"),
                 )),
+              ("Histogram image", "Histogram image", "self.DispHistogram", ""),
               ("Spectral response", "Spectral response", "self.runMenuCmd", "i.spectral"),
               ("Tasseled cap vegetation index", "Tasseled cap vegetation index", "self.runMenuCmd", "i.tasscap"),
               ("Transform image", (
