@@ -62,9 +62,11 @@ icons_default = {
     "addchart"   : 'module-d.vect.chart.gif',
     "addgrid"    : 'module-d.grid.gif',
     "addlabels"  : 'module-d.labels.gif',
-    "addtext"    : 'gui-font.gif',
+    "addtext"    : 'module-d.text.gif',
     # histogram
-    "histogram" : 'module-d.histogram.gif',
+    "font"       : 'gui-font.gif',
+    "histogram"  : 'module-d.histogram.gif',
+    "options"    : wx.ART_ERROR,
     }
 
 # merge icons dictionaries, join paths
@@ -183,7 +185,11 @@ Icons = {
     "digaddline" : MetaIcon (img=icons_img["digaddline"], label="Digitize new line"),
     "digaddbound": MetaIcon (img=icons_img["digaddbound"], label="Digitize new boundary"),
     "digaddcentr": MetaIcon (img=icons_img["digaddcentr"], label="Digitize new centroid"),
-    "digexit"    : MetaIcon (img=icons_img["digexit"], label="Quit digitization tool")}
+    "digexit"    : MetaIcon (img=icons_img["digexit"], label="Quit digitization tool"),
+    # histogram
+    "histogram"  : MetaIcon (img=icons_img["histogram"], label="Create histogram of image or raster file"),
+    "font"       : MetaIcon (img=icons_img["font"], label="Select font"),
+    "options"    : MetaIcon (img=icons_img["options"], label="Set histogram options")}
 
 # testing ...
 if __name__ == "__main__":
