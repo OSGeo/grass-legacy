@@ -62,6 +62,7 @@ int drawcell (View *view)
 	    break;
 	D_draw_c_raster (row, cell, colors);
     }
+    D_cell_draw_end();
     G_close_cell (fd);
     G_free (cell);
 

@@ -55,6 +55,7 @@ extern void LOC_panel_restore(const char *name);
 extern void LOC_panel_delete(const char *name);
 extern void LOC_begin_scaled_raster(int s[2][2], int d[2][2]);
 extern int  LOC_scaled_raster(int n, int row, const unsigned char *red, const unsigned char *grn, const unsigned char *blu, const unsigned char *nul);
+extern void LOC_end_scaled_raster(void);
 extern void LOC_bitmap(int ncols, int nrows, int threshold, const unsigned char *buf);
 
 extern void REM_get_location_with_box(int cx,int cy, int *wx, int *wy, int *button);
@@ -110,6 +111,7 @@ extern void REM_panel_restore(const char *name);
 extern void REM_panel_delete(const char *name);
 extern void REM_begin_scaled_raster(int s[2][2], int d[2][2]);
 extern int  REM_scaled_raster(int n, int row, const unsigned char *red, const unsigned char *grn, const unsigned char *blu, const unsigned char *nul);
+extern void REM_end_scaled_raster(void);
 extern void REM_bitmap(int ncols, int nrows, int threshold, const unsigned char *buf);
 
 struct transport
@@ -154,6 +156,7 @@ struct transport
 	void (*panel_delete)(const char *);
 	void (*begin_scaled_raster)(int [2][2], int [2][2]);
 	int  (*scaled_raster)(int, int, const unsigned char *, const unsigned char *, const unsigned char *, const unsigned char *);
+	void (*end_scaled_raster)(void);
 	void (*bitmap)(int, int, int, const unsigned char *);
 
 	void (*get_location_with_box)(int, int, int *, int *, int *);

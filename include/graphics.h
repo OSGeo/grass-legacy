@@ -79,6 +79,7 @@
 /* scaled raster */
 #define BEGIN_SCALED_RASTER         84
 #define SCALED_RASTER               85
+#define END_SCALED_RASTER           86
 
 /* return codes for pad routines */
 

@@ -514,6 +514,11 @@ int R_scaled_raster(int n, int row,
 	return trans->scaled_raster(n, row, red, grn, blu, nul);
 }
 
+void R_end_scaled_raster(void)
+{
+	return trans->end_scaled_raster();
+}
+
 void R_bitmap(int ncols, int nrows, int threshold, const unsigned char *buf)
 {
 	trans->bitmap(ncols, nrows, threshold, buf);

@@ -98,7 +98,11 @@ void R_panel_delete(const char *);
 
 void R_begin_scaled_raster(int [2][2], int [2][2]);
 int R_scaled_raster(int, int,
-		    const unsigned char *, const unsigned char *, const unsigned char *, const unsigned char *);
+		    const unsigned char *,
+		    const unsigned char *,
+		    const unsigned char *,
+		    const unsigned char *);
+void R_end_scaled_raster(void);
 void R_bitmap(int,int,int,const unsigned char *);
 
 #endif

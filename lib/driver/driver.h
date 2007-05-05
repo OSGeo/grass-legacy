@@ -52,6 +52,7 @@ struct driver
 		const unsigned char *,
 		const unsigned char *,
 		const unsigned char *);
+	void (*End_scaled_raster)(void);
 	void (*Respond)(void);
 	int (*Work_stream)(void);
 	void (*Do_work)(int);
@@ -124,6 +125,7 @@ extern void COM_Polyline_rel(const int *,const int *,int);
 /* Raster.c */
 extern void COM_begin_scaled_raster(int [2][2], int [2][2]);
 extern int COM_scaled_raster(int, int, const unsigned char *, const unsigned char *, const unsigned char *, const unsigned char *);
+extern void COM_end_scaled_raster(void);
 
 /* Respond.c */
 extern void COM_Respond(void);

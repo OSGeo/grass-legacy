@@ -78,6 +78,7 @@ int drawcell (View *view, int initflag)
 	    break;
 	D_draw_d_raster (row, dcell, colors);
     }
+    D_cell_draw_end();
 
     /* only set if cell is on the target side (always a group map on the source side) */
     if (view == VIEW_MAP2 || view == VIEW_MAP2_ZOOM)

@@ -27,3 +27,9 @@ int COM_scaled_raster(
 	return -1;
 }
 
+void COM_end_scaled_raster(void)
+{
+	if (driver->End_scaled_raster)
+		(*driver->End_scaled_raster)();
+}
+

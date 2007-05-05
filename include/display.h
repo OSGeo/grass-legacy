@@ -103,6 +103,7 @@ int D_cell_draw_setup(int, int, int, int);
 int D_draw_raster_RGB(int, const void *, const void *, const void *,
 		      struct Colors *, struct Colors *, struct Colors *,
 		      RASTER_MAP_TYPE, RASTER_MAP_TYPE, RASTER_MAP_TYPE);
+void D_cell_draw_end(void);
 
 /* raster2.c */
 int D_set_overlay_mode(int);

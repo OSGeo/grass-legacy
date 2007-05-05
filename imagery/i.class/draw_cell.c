@@ -59,6 +59,7 @@ int draw_cell (View *view, int overlay)
         break;
       D_draw_d_raster (row, dcell, &colr);
     }
+  D_cell_draw_end();
   G_close_cell (fd);
   G_free (dcell);
   G_free_colors (&colr);
