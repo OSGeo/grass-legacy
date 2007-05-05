@@ -18,14 +18,9 @@ gmpath = os.getenv("GISBASE") + "/etc/wx/icons/"
 sys.path.append(gmpath)
 
 import render
-import toolbars
-import grassenv
-import track
 import menuform
-import select
 import disp_print
 import gui_modules.defaultfont as defaultfont
-from digit import Digit as Digit
 from debug import Debug as Debug
 from icon import Icons as Icons
 
@@ -85,14 +80,8 @@ class BufferedWindow(wx.Window):
         #
         self.mapfile = None # image file to be rendered
         self.img = ""       # wx.Image object (self.mapfile)
-        self.ovldict = {}   # list of images for overlays
-        self.ovlcoords = {} # positioning coordinates for decoration overlay
-        self.ovlchk = {}    # showing/hiding decorations
+
         self.imagedict = {} # images and their PseudoDC ID's for painting and dragging
-        self.crop = {} # coordinates to crop overlays to their data, indexed by image ID
-        self.select = {} # selecting/unselecting decorations for dragging
-        self.textdict = {} # text, font, and color indexed by id
-        self.currtxtid = None # PseudoDC id for currently selected text
 
         self.pdc = wx.PseudoDC()
         self._Buffer = '' # will store an off screen empty bitmap for saving to file
@@ -113,19 +102,10 @@ class BufferedWindow(wx.Window):
             else:
                 drawid = wx.NewId()
         else:
-            self.ovlcoords[drawid] = coords
-            self.ovlchk[drawid] = True
             pdc.SetId(drawid)
-            self.select[drawid] = False
 
         pdc.BeginDrawing()
-        if drawid != 99:
-            bg = wx.TRANSPARENT_BRUSH
-        else:
-            bg = wx.Brush(self.GetBackgroundColour())
-        pdc.SetBackground(bg)
-        #pdc.Clear() #FIXME (to avoid black background)
-        self.Refresh()
+
 
         Debug.msg (3, "BufferedWindow.Draw(): id=%s, pdctype=%s, coord=%s" % (drawid, pdctype, coords))
 
@@ -139,44 +119,16 @@ class BufferedWindow(wx.Window):
             return
 
         if pdctype == 'image':
+            bg = wx.Brush(self.GetBackgroundColour())
+            pdc.SetBackground(bg)
+            self.Refresh()
             bitmap = wx.BitmapFromImage(img)
             w,h = bitmap.GetSize()
             pdc.DrawBitmap(bitmap, coords[0], coords[1], True) # draw the composite map
             pdc.SetIdBounds(drawid, (coords[0],coords[1],w,h))
 
-
-        elif pdctype == 'text': # draw text on top of map
-            text = img[0]
-            rotation = float(img[3])
-            w,h = self.GetFullTextExtent(img[0])[0:2]
-            pdc.SetFont(img[1])
-            pdc.SetTextForeground(img[2])
-            coords,w,h = self.textBounds(img,coords)
-            if rotation == 0:
-                pdc.DrawText(img[0], coords[0], coords[1])
-            else:
-                pdc.DrawRotatedText(img[0], coords[0], coords[1], rotation)
-            pdc.SetIdBounds(drawid, (coords[0], coords[1], w, h))
-            self.ovlcoords[drawid] = coords
-
         pdc.EndDrawing()
         self.Refresh()
-
-    def textBounds(self, textinfo, coords):
-        rotation = float(textinfo[3])
-        self.Update()
-        self.Refresh()
-        self.SetFont(textinfo[1])
-        w,h = self.GetTextExtent(textinfo[0])
-        if rotation == 0:
-            coords[2], coords[3] = coords[0] + w, coords[1] + h
-            return coords,w,h
-        else:
-            boxh = math.fabs(math.sin(math.radians(rotation)) * w) + h
-            boxw = math.fabs(math.cos(math.radians(rotation)) * w) + h
-            coords[2] = coords[0] + boxw
-            coords[3] = coords[1] + boxh
-            return coords,boxw,boxh
 
     def OnPaint(self, event):
         """
@@ -279,7 +231,7 @@ class BufferedWindow(wx.Window):
             # set default font and encoding environmental variables
             if "GRASS_FONT" in os.environ:
                 oldfont = os.environ["GRASS_FONT"]
-            os.environ["GRASS_FONT"] = self.parent.font
+            if self.parent.font != "": os.environ["GRASS_FONT"] = self.parent.font
             if "GRASS_FT_ENCODING" in os.environ:
                 oldencoding = os.environ["GRASS_FT_ENCODING"]
             if self.parent.encoding != None and self.parent.encoding != "ISO-8859-1":
@@ -300,11 +252,6 @@ class BufferedWindow(wx.Window):
         self.pdc.Clear()
         self.pdc.RemoveAll()
         self.Draw(self.pdc, self.img, drawid=id) # draw map image background
-
-        if self.textdict != None: # draw text overlays
-            for id in self.textdict:
-                self.Draw(self.pdc, img=self.textdict[id], drawid=id,
-                          pdctype='text', coords=self.ovlcoords[id])
 
         self.resize = False
 
@@ -350,8 +297,8 @@ class HistFrame(wx.Frame):
         # Init variables
         self.params = {} # previously set histogram parameters
 
-        self.font = "romans"
-        self.fonttype = 'grassfont' # stroke or truetype font for default display font
+        self.font = ""
+        self.fonttype = 'truetype' # stroke or truetype font for default display font
         self.encoding = 'ISO-8859-1' # default encoding for display fonts
 
         #
@@ -483,7 +430,7 @@ class HistFrame(wx.Frame):
         """
         Erase the histogram display
         """
-        self.Draw(self.pdc, pdctype='clear')
+        self.HistWindow.Draw(self.HistWindow.pdc, pdctype='clear')
 
     def SaveToFile(self, event):
         """
