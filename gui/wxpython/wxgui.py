@@ -47,6 +47,7 @@ import gui_modules.menudata as menudata
 import gui_modules.menuform as menuform
 import gui_modules.grassenv as grassenv
 import gui_modules.defaultfont as defaultfont
+import gui_modules.histogram as histogram
 from   icons.icon import Icons as Icons
 from   gui_modules.debug import Debug as Debug
 
@@ -297,7 +298,7 @@ class GMFrame(wx.Frame):
         global gmpath
         menuform.GUI().parseCommand(cmd,gmpath, parentframe=self)
 
-    def defaultFont(self, event):
+    def DefaultFont(self, event):
         """Set default font for GRASS displays"""
 
         dlg = defaultfont.SetDefaultFont(self, wx.ID_ANY, 'Select default display font',
@@ -321,7 +322,21 @@ class GMFrame(wx.Frame):
         # set default font and encoding environmental variables
         os.environ["GRASS_FONT"] = self.font
         if self.encoding != None and self.encoding != "ISO-8859-1":
-            os.environ[GRASS_FT_ENCODING] = self.encoding
+            os.environ["GRASS_FT_ENCODING"] = self.encoding
+
+    def DispHistogram(self, event):
+        # Init histogram display canvas
+        self.histogram = histogram.HistFrame(self,
+                                           id=wx.ID_ANY, pos=wx.DefaultPosition, size=(400,300),
+                                           style=wx.DEFAULT_FRAME_STYLE)
+
+        # title
+#        self.histogram.SetTitle(_("GRASS GIS - Map Display: " + str(self.disp_idx) + " - Location: " + grassenv.env["LOCATION_NAME"]))
+
+        #show new display
+        self.histogram.Show()
+        self.histogram.Refresh()
+        self.histogram.Update()
 
     def __createToolBar(self):
         """Creates toolbar"""
