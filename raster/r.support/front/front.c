@@ -84,9 +84,9 @@ int main(int argc, char *argv[])
 
     /* Make sure raster exists and set mapset */
     infile = raster->answer;
-    mapset = G_find_cell2(infile, "");
+    mapset = G_find_cell2(infile, G_mapset()); /* current mapset only for editing */
     if (mapset == NULL)
-        G_fatal_error(_("Raster map <%s> not found"), infile);
+        G_fatal_error(_("Raster map <%s> not found in current mapset"), infile);
 
     cellhd_ok = (G_get_cellhd(raster->answer, mapset, &cellhd) >= 0);
     is_reclass = (G_is_reclass(raster->answer, mapset, rname, rmapset) > 0);
