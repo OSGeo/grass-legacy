@@ -34,9 +34,9 @@ class MapToolbar:
         self.mapcontent = map
         self.mapdisplay = mapdisplay
 
-    	self.toolbar = wx.ToolBar(parent=self.mapdisplay, id=wx.ID_ANY)
+        self.toolbar = wx.ToolBar(parent=self.mapdisplay, id=wx.ID_ANY)
 
-    	#self.SetToolBar(self.toolbar)
+      #self.SetToolBar(self.toolbar)
         tsize = (24, 24)
         self.toolbar.SetToolBitmapSize(tsize)
 
@@ -44,7 +44,7 @@ class MapToolbar:
         # Draw
         #
 
-    	self.displaymap = self.toolbar.AddLabelTool(id=wx.ID_ANY, label="displaymap",
+        self.displaymap = self.toolbar.AddLabelTool(id=wx.ID_ANY, label="displaymap",
                                                     bitmap=Icons["displaymap"].GetBitmap(),
                                                     bmpDisabled=wx.NullBitmap, kind=wx.ITEM_NORMAL,
                                                     shortHelp=Icons["displaymap"].GetLabel(), longHelp=Icons["displaymap"].GetDesc())
@@ -58,12 +58,12 @@ class MapToolbar:
                                                bitmap=Icons["erase"].GetBitmap(),
                                                bmpDisabled=wx.NullBitmap, kind=wx.ITEM_NORMAL,
                                                shortHelp=Icons["erase"].GetLabel(), longHelp=Icons["erase"].GetDesc())
-    	self.toolbar.AddSeparator()
+        self.toolbar.AddSeparator()
 
         #
         # Zooming, etc.
         #
-    	self.pointer = self.toolbar.AddLabelTool(id=wx.ID_ANY, label="pointer",
+        self.pointer = self.toolbar.AddLabelTool(id=wx.ID_ANY, label="pointer",
                                                  bitmap=Icons["pointer"].GetBitmap(),
                                                  kind=wx.ITEM_RADIO,
                                                  shortHelp=Icons["pointer"].GetLabel(), longHelp=Icons["pointer"].GetDesc())
@@ -71,17 +71,17 @@ class MapToolbar:
                                                  bitmap=Icons["zoom_in"].GetBitmap(),
                                                  bmpDisabled=wx.NullBitmap, kind=wx.ITEM_RADIO,
                                                  shortHelp=Icons["zoom_in"].GetLabel(), longHelp=Icons["zoom_in"].GetDesc())
-    	self.zoomout = self.toolbar.AddLabelTool(id=wx.ID_ANY, label="zoom_out",
+        self.zoomout = self.toolbar.AddLabelTool(id=wx.ID_ANY, label="zoom_out",
                                                  bitmap=Icons["zoom_out"].GetBitmap(),
                                                  bmpDisabled=wx.NullBitmap,
                                                  kind=wx.ITEM_RADIO,
                                                  shortHelp=Icons["zoom_out"].GetLabel(), longHelp=Icons["zoom_out"].GetDesc())
-    	self.pan     = self.toolbar.AddLabelTool(id=wx.ID_ANY, label="pan",
+        self.pan     = self.toolbar.AddLabelTool(id=wx.ID_ANY, label="pan",
                                                  bitmap=Icons["pan"].GetBitmap(),
                                                  bmpDisabled=wx.NullBitmap,
                                                  kind=wx.ITEM_RADIO,
                                                  shortHelp=Icons["pan"].GetLabel(), longHelp=Icons["pan"].GetDesc())
-    	self.query   = self.toolbar.AddLabelTool(id=wx.ID_ANY, label="query",
+        self.query   = self.toolbar.AddLabelTool(id=wx.ID_ANY, label="query",
                                                  bitmap=Icons["query"].GetBitmap(),
                                                  bmpDisabled=wx.NullBitmap,
                                                  kind=wx.ITEM_RADIO,
@@ -100,18 +100,18 @@ class MapToolbar:
         self.toolbar.AddSeparator()
 
 
-        self.dec = self.toolbar.AddLabelTool(id=wx.ID_ANY, label="dec",
-                                             bitmap=Icons["dec"].GetBitmap(),
+        self.dec = self.toolbar.AddLabelTool(id=wx.ID_ANY, label="overlay",
+                                             bitmap=Icons["overlay"].GetBitmap(),
                                              bmpDisabled=wx.NullBitmap,
-                                             shortHelp=Icons["dec"].GetLabel(),
-                                             longHelp=Icons["dec"].GetDesc())
+                                             shortHelp=Icons["overlay"].GetLabel(),
+                                             longHelp=Icons["overlay"].GetDesc())
 
         self.toolbar.AddSeparator()
 
         #
         # Misc
         #
-    	self.savefile = self.toolbar.AddLabelTool(id=wx.ID_ANY, label="savefile",
+        self.savefile = self.toolbar.AddLabelTool(id=wx.ID_ANY, label="savefile",
                                                   bitmap=Icons["savefile"].GetBitmap(),
                                                   bmpDisabled=wx.NullBitmap,
                                                   kind=wx.ITEM_NORMAL,
@@ -136,18 +136,18 @@ class MapToolbar:
 
         self.toolbar.Realize()
 
-    	self.mapdisplay.Bind(wx.EVT_TOOL,     self.mapdisplay.ReDraw,       self.displaymap)
+        self.mapdisplay.Bind(wx.EVT_TOOL,     self.mapdisplay.ReDraw,       self.displaymap)
         self.mapdisplay.Bind(wx.EVT_TOOL,     self.mapdisplay.ReRender,     self.rendermap)
-    	self.mapdisplay.Bind(wx.EVT_TOOL,     self.mapdisplay.Pointer,      self.pointer)
-    	self.mapdisplay.Bind(wx.EVT_TOOL,     self.mapdisplay.OnZoomIn,     self.zoomin)
-    	self.mapdisplay.Bind(wx.EVT_TOOL,     self.mapdisplay.OnZoomOut,    self.zoomout)
-    	self.mapdisplay.Bind(wx.EVT_TOOL,     self.mapdisplay.OnPan,        self.pan)
+        self.mapdisplay.Bind(wx.EVT_TOOL,     self.mapdisplay.Pointer,      self.pointer)
+        self.mapdisplay.Bind(wx.EVT_TOOL,     self.mapdisplay.OnZoomIn,     self.zoomin)
+        self.mapdisplay.Bind(wx.EVT_TOOL,     self.mapdisplay.OnZoomOut,    self.zoomout)
+        self.mapdisplay.Bind(wx.EVT_TOOL,     self.mapdisplay.OnPan,        self.pan)
         self.mapdisplay.Bind(wx.EVT_TOOL,     self.mapdisplay.OnZoomBack,   self.zoomback)
         self.mapdisplay.Bind(wx.EVT_TOOL,     self.mapdisplay.onDecoration, self.dec)
         self.mapdisplay.Bind(wx.EVT_TOOL,     self.mapdisplay.onZoomMenu,   self.zoommenu)
         self.mapdisplay.Bind(wx.EVT_TOOL,     self.mapdisplay.OnQuery,      self.query)
-    	self.mapdisplay.Bind(wx.EVT_TOOL,     self.mapdisplay.OnErase,      self.erase)
-    	self.mapdisplay.Bind(wx.EVT_TOOL,     self.mapdisplay.SaveToFile,   self.savefile)
+        self.mapdisplay.Bind(wx.EVT_TOOL,     self.mapdisplay.OnErase,      self.erase)
+        self.mapdisplay.Bind(wx.EVT_TOOL,     self.mapdisplay.SaveToFile,   self.savefile)
         self.mapdisplay.Bind(wx.EVT_TOOL,     self.mapdisplay.PrintMenu,     self.printmap)
         self.mapdisplay.Bind(wx.EVT_COMBOBOX, self.OnSelect,                self.comboid)
 
@@ -179,7 +179,7 @@ class DigitToolbar:
         self.UpdateListOfLayers(updateTool=False)
                 
         # create toolbar
-    	self.toolbar = wx.ToolBar(parent=self.parent, id=wx.ID_ANY)
+        self.toolbar = wx.ToolBar(parent=self.parent, id=wx.ID_ANY)
         self.toolbar.SetToolBitmapSize(wx.Size(24,24))
 
         # create toolbar
@@ -201,21 +201,21 @@ class DigitToolbar:
                                                shortHelp=Icons["digaddpoint"].GetLabel(),
                                                longHelp=Icons["digaddpoint"].GetDesc())
 
-    	self.line = self.toolbar.AddLabelTool(id=wx.ID_ANY, label="digaddline",
+        self.line = self.toolbar.AddLabelTool(id=wx.ID_ANY, label="digaddline",
                                               bitmap=Icons["digaddline"].GetBitmap(),
                                               bmpDisabled=wx.NullBitmap,
                                               kind=wx.ITEM_RADIO,
                                               shortHelp=Icons["digaddline"].GetLabel(),
                                               longHelp=Icons["digaddline"].GetDesc())
 
-    	self.boundary = self.toolbar.AddLabelTool(id=wx.ID_ANY, label="digaddbound",
+        self.boundary = self.toolbar.AddLabelTool(id=wx.ID_ANY, label="digaddbound",
                                                   bitmap=Icons["digaddbound"].GetBitmap(),
                                                   bmpDisabled=wx.NullBitmap,
                                                   kind=wx.ITEM_RADIO,
                                                   shortHelp=Icons["digaddbound"].GetLabel(),
                                                   longHelp=Icons["digaddbound"].GetDesc())
 
-    	self.centroid = self.toolbar.AddLabelTool(id=wx.ID_ANY, label="digaddcentr",
+        self.centroid = self.toolbar.AddLabelTool(id=wx.ID_ANY, label="digaddcentr",
                                                   bitmap=Icons["digaddcentr"].GetBitmap(),
                                                   bmpDisabled=wx.NullBitmap,
                                                   kind=wx.ITEM_RADIO,
@@ -224,7 +224,7 @@ class DigitToolbar:
 
         self.toolbar.AddSeparator()
 
-    	self.exit = self.toolbar.AddLabelTool(id=wx.ID_ANY, label="digexit",
+        self.exit = self.toolbar.AddLabelTool(id=wx.ID_ANY, label="digexit",
                                               bitmap=Icons["digexit"].GetBitmap(),
                                               bmpDisabled=wx.NullBitmap,
                                               kind=wx.ITEM_NORMAL,
@@ -232,11 +232,15 @@ class DigitToolbar:
                                               longHelp=Icons["digexit"].GetDesc())
 
         # Bindings
+<<<<<<< .mine
+        self.parent.Bind(wx.EVT_TOOL,     self.OnAddPoint,  self.point)
+=======
     	self.parent.Bind(wx.EVT_TOOL,     self.OnAddPoint,    self.point)
         self.parent.Bind(wx.EVT_TOOL,     self.OnAddLine,     self.line)
         self.parent.Bind(wx.EVT_TOOL,     self.OnAddBoundary, self.boundary)
         self.parent.Bind(wx.EVT_TOOL,     self.OnAddCentroid, self.centroid)
         
+>>>>>>> .r617
         self.parent.Bind(wx.EVT_TOOL,     self.OnExit,      self.exit)
         self.parent.Bind(wx.EVT_COMBOBOX, self.OnSelectMap, self.comboid)
 
