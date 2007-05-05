@@ -36,9 +36,9 @@ icons_default = {
     "query"      : 'gui-query.gif',
     "zoom_back"  : 'gui-zoom_back.gif',
     "zoommenu"   : 'gui-mapzoom.gif',
-    "dec"        : 'module-d.barscale.gif',
     "savefile"   : 'file-save.gif',
     "printmap"   : 'file-print.gif',
+    "overlay"    : 'gui-overlay.gif',
     # digit
     "digaddpoint": 'new.point.gif',
     "digaddline" : 'new.line.gif',
@@ -159,8 +159,8 @@ Icons = {
     "query"      : MetaIcon (img=icons_img["query"], label="Query", desc="Query selected map"),
     "zoom_back"  : MetaIcon (img=icons_img["zoom_back"], label="Return to previous zoom"),
     "zoommenu"   : MetaIcon (img=icons_img["zoommenu"], label="Zoom options", desc="Display zoom management"),
-    "dec"        : MetaIcon (img=icons_img["dec"], label="Decoration", desc="Add graphic overlays to map"),
-    "addbarscale": MetaIcon (img=icons_img["dec"], label="Scalebar and north arrow"),
+    "overlay"    : MetaIcon (img=icons_img["overlay"], label="overlay", desc="Add graphic overlays to map"),
+    "addbarscale": MetaIcon (img=icons_img["dec"], label="Add scalebar and north arrow"),
     "savefile"   : MetaIcon (img=icons_img["savefile"], label="Save display to PNG file"),
     "printmap"   : MetaIcon (img=icons_img["printmap"], label="Print display"),
     # gis manager
