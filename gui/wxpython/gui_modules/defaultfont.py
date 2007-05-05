@@ -91,6 +91,7 @@ class SetDefaultFont(wx.Dialog):
         label = wx.StaticText(self, -1, "Character encoding:")
         box.Add(label, 0, wx.ALIGN_RIGHT|wx.RIGHT, 5)
         self.textentry = wx.TextCtrl(self, -1, "", size=(200,-1))
+        self.textentry.SetValue(self.encoding)
         box.Add(self.textentry, 0, wx.ALIGN_LEFT)
         self.textentry.Bind(wx.EVT_TEXT, self.OnEncoding)
         sizer.Add(box, 0, wx.GROW|wx.ALIGN_CENTER_VERTICAL|wx.ALL, 8)
