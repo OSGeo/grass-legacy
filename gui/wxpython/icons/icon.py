@@ -63,6 +63,7 @@ icons_default = {
     "addgrid"    : 'module-d.grid.gif',
     "addlabels"  : 'module-d.labels.gif',
     "addtext"    : 'module-d.text.gif',
+    "addbarscale": 'module-d.barscale.gif',
     # histogram
     "font"       : 'gui-font.gif',
     "histogram"  : 'module-d.histogram.gif',
@@ -160,7 +161,7 @@ Icons = {
     "zoom_back"  : MetaIcon (img=icons_img["zoom_back"], label="Return to previous zoom"),
     "zoommenu"   : MetaIcon (img=icons_img["zoommenu"], label="Zoom options", desc="Display zoom management"),
     "overlay"    : MetaIcon (img=icons_img["overlay"], label="overlay", desc="Add graphic overlays to map"),
-    "addbarscale": MetaIcon (img=icons_img["dec"], label="Add scalebar and north arrow"),
+    "addbarscale": MetaIcon (img=icons_img["addbarscale"], label="Add scalebar and north arrow"),
     "savefile"   : MetaIcon (img=icons_img["savefile"], label="Save display to PNG file"),
     "printmap"   : MetaIcon (img=icons_img["printmap"], label="Print display"),
     # gis manager
