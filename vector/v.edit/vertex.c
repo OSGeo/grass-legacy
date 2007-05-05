@@ -111,7 +111,7 @@ int do_move_vertex(struct Map_info *Map, struct ilist *List, int print,
     /* destroy structures */
     Vect_destroy_line_struct(Points);
     Vect_destroy_cats_struct(Cats);
-//    G_free ((void *) moved);
+/*     G_free ((void *) moved); */
 
     G_message(_("[%d] vertices moved"), nvertices_moved);
     G_message(_("[%d] lines modified"), nlines_modified);
