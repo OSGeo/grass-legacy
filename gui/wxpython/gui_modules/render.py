@@ -27,7 +27,7 @@ class MapLayer:
     name     - layer name, e.g. map name
     mapset   - mapset of layer
     cmd      - GRASS command string
-    
+
     active   - layer is active, will be rendered only if True
     hidden   - layer is hidden, won't be listed in GIS Manager if True
     opacity  - layer opacity [0-1]
@@ -41,7 +41,7 @@ class MapLayer:
         self.name    = name
         self.mapset  = mapset
         self.cmd     = cmd + " --q" # quite
-        
+
         self.active  = active
         self.hidden  = hidden
         self.opacity = opacity
@@ -63,7 +63,7 @@ class MapLayer:
         """
         try:
             Debug.msg (3, "MapLayer.__renderLayer(): cmd=%s" % self.cmd)
-            
+
         except StandardError, e:
             sys.stderr.write("Could not render command layer <%s>: %s\n" %\
                  (self.name, str(e)))
@@ -79,7 +79,7 @@ class MapLayer:
 
         Debug.msg (3, "MapLayer.Render(): type=%s" % \
                    (self.type))
-        
+
         #
         # to be sure, set temporary file with layer and mask
         #
@@ -551,7 +551,7 @@ class Map:
                     maps.append(layer.mapfile)
                     masks.append(layer.maskfile)
                     opacities.append(str(layer.opacity))
-                    
+
                 Debug.msg (3, "Map.Render() type=%s, layer=%s " % (layer.type, layer.name))
 
             # make arrays to strings
@@ -597,10 +597,11 @@ class Map:
         Adds generic display command layer to list of layers
 
         Layer Attributes:
+        item - gis manager layer tree item
         type - layer type
         name - layer name
         cmd  - GRASS command string
-        
+
         l_active   - checked/not checked for display in layer tree
         l_hidden   - not used here
         l_opacity  - range from 0-1
@@ -684,7 +685,11 @@ class Map:
 
         # old lookup item will be deleted when layer is deleted
 
+<<<<<<< .mine
+    def changeLayer(self, item, type, name, command,
+=======
     def ChangeLayer(self, item, type, command, name=None, mapset=None,
+>>>>>>> .r610
                     l_active=True, l_hidden=False, l_opacity=1, l_render=False):
         """
         Change the command and other other options for a layer
@@ -720,7 +725,7 @@ class Map:
         # l_opacity must be <0;1>
         if l_opacity < 0: l_opacity = 0
         elif l_opacity > 1: l_opacity = 1
-        
+
         layer = self.lookup[item]
         layer.opacity = l_opacity
 
@@ -837,7 +842,7 @@ class Map:
 
         newoverlay = MapLayer(type='overlay', name=name, cmd=command,
                               active=l_active, hidden=l_hidden, opacity=l_opacity)
-        
+
         oldovlindex = self.overlays.index(self.ovlookup[ovltype])
 
         # add overlay to the list of layers
