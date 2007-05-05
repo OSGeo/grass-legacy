@@ -106,6 +106,7 @@ static int cell_draw(
 	cur_A_row = D_draw_raster(cur_A_row, xarray, colors, data_type) ;
 
     }
+    D_cell_draw_end();
     R_flush() ;
     G_percent(nrows, nrows, 2);
 

@@ -59,9 +59,11 @@ int PS_scaled_raster(
 
 	output("\n");
 
-	if (row + 1 >= src[1][1])
-		output("grestore\n");
-
 	return row + 1;
+}
+
+void PS_end_scaled_raster(void)
+{
+	output("grestore\n");
 }
 

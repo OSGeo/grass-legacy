@@ -43,6 +43,7 @@ int main(int argc, char **argv)
 	drv.Set_window		= XD_Set_window;
 	drv.Begin_scaled_raster	= XD_begin_scaled_raster;
 	drv.Scaled_raster	= XD_scaled_raster;
+	drv.End_scaled_raster	= NULL;
 	drv.Respond		= XD_Respond;
 	drv.Work_stream		= XD_Work_stream;
 	drv.Do_work		= XD_Do_work;
@@ -57,7 +58,4 @@ int main(int argc, char **argv)
 
 	return LIB_main(argc, argv);
 }
-
-
-
 

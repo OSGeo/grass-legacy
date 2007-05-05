@@ -260,6 +260,7 @@ main (int argc, char **argv)
 			break;
 	}
 	G_percent (window.rows, window.rows, 5);
+	D_cell_draw_end();
 
 	/* Close down connection to display driver */
 	D_add_to_list(G_recreate_command()) ;

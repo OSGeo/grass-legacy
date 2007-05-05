@@ -588,6 +588,11 @@ int REM_scaled_raster(int n, int row,
 	return t;
 }
 
+void REM_end_scaled_raster(void)
+{
+	_send_ident(END_SCALED_RASTER);
+}
+
 void REM_bitmap(int ncols, int nrows, int threshold, const unsigned char *buf)
 {
 	_send_ident(BITMAP);

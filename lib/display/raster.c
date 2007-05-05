@@ -212,3 +212,8 @@ int D_draw_raster_RGB(
 	: -1;
 }
 
+void D_cell_draw_end(void)
+{
+    R_end_scaled_raster();
+}
+

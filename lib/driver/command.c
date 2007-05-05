@@ -241,6 +241,9 @@ int process_command(int c)
 	ret = COM_scaled_raster(x, y, reda, grna, blua, t ? nula : NULL);
 	SEND(&ret, sizeof ret);
 	break;
+    case END_SCALED_RASTER:
+	COM_end_scaled_raster();
+	break;
     case POLYGON_ABS:
 	REC(&number, sizeof number);
 	xarray = (int *) xalloc(xarray, &n_xarray, number, sizeof(*xarray));
@@ -629,7 +632,4 @@ static int RESULT(int n)
 
     return 0;
 }
-
-
-
 

@@ -137,6 +137,7 @@ int main(int argc, char **argv)
 			break;
 	}
 	G_percent(window.rows, window.rows, 5);
+	D_cell_draw_end();
 
 	/* Close down connection to window driver */
 	if ( !flag_x->answer )

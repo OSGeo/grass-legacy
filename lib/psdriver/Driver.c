@@ -49,6 +49,7 @@ const struct driver *PS_Driver(void)
 	drv.Set_window		= PS_Set_window;
 	drv.Begin_scaled_raster	= PS_begin_scaled_raster;
 	drv.Scaled_raster	= PS_scaled_raster;
+	drv.End_scaled_raster	= PS_end_scaled_raster;
 	drv.Respond		= PS_Respond;
 	drv.Work_stream		= NULL;
 	drv.Do_work		= NULL;

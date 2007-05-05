@@ -43,6 +43,7 @@ int main(int argc, char **argv)
 	drv.Set_window		= NULL;
 	drv.Begin_scaled_raster	= NULL;
 	drv.Scaled_raster	= NULL;
+	drv.End_scaled_raster	= NULL;
 	drv.Respond		= NULL;
 	drv.Work_stream		= NULL;
 	drv.Do_work		= NULL;

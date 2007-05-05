@@ -49,6 +49,7 @@ const struct driver *PNG_Driver(void)
 	drv.Set_window		= PNG_Set_window;
 	drv.Begin_scaled_raster	= PNG_begin_scaled_raster;
 	drv.Scaled_raster	= PNG_scaled_raster;
+	drv.End_scaled_raster	= NULL;
 	drv.Respond		= PNG_Respond;
 	drv.Work_stream		= NULL;
 	drv.Do_work		= NULL;

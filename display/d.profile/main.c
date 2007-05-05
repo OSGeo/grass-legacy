@@ -441,6 +441,7 @@ void myDcell (char *name, char *mapset, int overlay)
         }
         i = D_draw_cell(i, cell, &clr);
     }
+    D_cell_draw_end();
     
     /* Only one cell, always set the name */
     D_set_cell_name (G_fully_qualified_name(name, mapset));
