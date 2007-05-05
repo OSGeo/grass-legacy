@@ -29,15 +29,15 @@ icons_default = {
     "displaymap" : 'gui-display.gif',
     "rendermap"  : 'gui-redraw.gif',
     "erase"      : 'gui-erase.gif',
-    "pointer"    : 'gui-pointer.gif', 
-    "zoom_in"    : 'gui-zoom_in.gif', 
-    "zoom_out"   : 'gui-zoom_out.gif', 
-    "pan"        : 'gui-pan.gif', 
-    "query"      : 'gui-query.gif', 
-    "zoom_back"  : 'gui-zoom_back.gif', 
-    "zoommenu"   : 'gui-mapzoom.gif', 
+    "pointer"    : 'gui-pointer.gif',
+    "zoom_in"    : 'gui-zoom_in.gif',
+    "zoom_out"   : 'gui-zoom_out.gif',
+    "pan"        : 'gui-pan.gif',
+    "query"      : 'gui-query.gif',
+    "zoom_back"  : 'gui-zoom_back.gif',
+    "zoommenu"   : 'gui-mapzoom.gif',
     "dec"        : 'module-d.barscale.gif',
-    "savefile"   : 'file-save.gif', 
+    "savefile"   : 'file-save.gif',
     "printmap"   : 'file-print.gif',
     # digit
     "digaddpoint": 'new.point.gif',
@@ -46,13 +46,13 @@ icons_default = {
     "digaddcentr": 'new.centroid.gif',
     "digexit"    : 'exit.gif',
     # gis manager
-    "newdisplay" : 'gui-startmon.gif', 
-    "addrast"    : 'element-cell.gif', 
-    "addvect"    : 'element-vector.gif', 
-    "addcmd"     : 'gui-cmd.gif', 
-    "addgrp"     : wx.ART_ERROR, 
-    "addovl"     : 'module-d.grid.gif', 
-    "delcmd"     : wx.ART_ERROR, 
+    "newdisplay" : 'gui-startmon.gif',
+    "addrast"    : 'element-cell.gif',
+    "addvect"    : 'element-vector.gif',
+    "addcmd"     : 'gui-cmd.gif',
+    "addgrp"     : wx.ART_ERROR,
+    "addovl"     : 'module-d.grid.gif',
+    "delcmd"     : wx.ART_ERROR,
     "attrtable"  : 'db-values.gif',
     "addrgb"     : 'module-d.rgb.gif',
     "addhis"     : 'channel-his.gif',
@@ -63,6 +63,8 @@ icons_default = {
     "addgrid"    : 'module-d.grid.gif',
     "addlabels"  : 'module-d.labels.gif',
     "addtext"    : 'gui-font.gif',
+    # histogram
+    "histogram" : 'module-d.histogram.gif',
     }
 
 # merge icons dictionaries, join paths
@@ -70,7 +72,7 @@ if iconpath and iconpath.find('silk') > -1: # silk icon theme
     from silk import IconsSilk as icons_img
     # use default icons if needed
     for key, img in icons_default.iteritems():
-        if not icons_img.has_key(key): # add key 
+        if not icons_img.has_key(key): # add key
             icons_img[key] = img
             if key[0:3] == 'dig':
                 iconpath_tmp = iconpath_vdigit
@@ -90,7 +92,7 @@ else: # default icons
                 icons_img[key] = os.path.join(iconpath_vdigit, img)
             else:
                 icons_img[key] = os.path.join(iconpath_default, img)
-                
+
 class MetaIcon:
     """
     Handle icon metadata (image path, tooltip, ...)
@@ -119,7 +121,7 @@ class MetaIcon:
     def GetBitmap (self, size=None):
         """Get bitmap"""
         bmp = None
-        
+
         if self.type == 'wx':
             bmp = wx.ArtProvider.GetBitmap(id=self.imagepath, client=wx.ART_TOOLBAR, size=size)
         elif self.type == 'img':
