@@ -4,7 +4,8 @@
 */
 
  /******************************************************************************
- * Copyright (c) 2004, Radim Blazek (blazek@itc.it)
+ * Copyright (c) 2004-2007, Radim Blazek (blazek@itc.it),
+ *			    Hamish Bowman (side_offset bits)
  *
  * Permission is hereby granted, free of charge, to any person obtaining a
  * copy of this software and associated documentation files (the "Software"),
@@ -36,7 +37,9 @@
 #include "../lib/lrs.h"
 
 int find_line ( struct Map_info *Map, int lfield, int cat );
-    
+void offset_pt_90(double *, double *, double, double);
+
+
 int main(int argc, char **argv)
 {
     int    ret, points_written, lines_written, points_read, lines_read;
@@ -54,7 +57,7 @@ int main(int argc, char **argv)
     char   *drv, *db;
     struct Map_info In, Out;
     struct line_cats *LCats, *SCats; 
-    struct line_pnts *LPoints, *SPoints;
+    struct line_pnts *LPoints, *SPoints, *PlPoints;
     dbDriver *rsdriver;
     dbHandle rshandle;
     dbString rsstmt;	   
@@ -63,8 +66,9 @@ int main(int argc, char **argv)
 
     module = G_define_module();
     module->keywords = _("vector, LRS, networking");
-    module->description = _("Create points/segments from input lines, "
-			    "linear reference system and positions read from stdin");
+    module->description =
+	_("Create points/segments from input lines, linear reference "
+	  "system and positions read from stdin");
 
     in_opt = G_define_standard_option(G_OPT_V_INPUT);
     in_opt->description = _("Input vector map containing lines");
@@ -99,21 +103,23 @@ int main(int argc, char **argv)
     table_opt->required    = YES; 
     table_opt->description = _("Name of the reference system table");
     
-    if(G_parser(argc,argv)) exit(EXIT_FAILURE);
+    if(G_parser(argc,argv))
+	exit(EXIT_FAILURE);
+
 
     LCats = Vect_new_cats_struct ();
     SCats = Vect_new_cats_struct ();
     LPoints = Vect_new_line_struct ();
     SPoints = Vect_new_line_struct ();
-    
+    PlPoints = Vect_new_line_struct ();
+
     lfield = atoi (lfield_opt->answer);
     multip = 1000; /* Number of map units per MP unit */
 
     /* Open input lines */
     mapset = G_find_vector2 (in_opt->answer, NULL); 
     if(mapset == NULL)
-	G_fatal_error ("Vector map <%s> not found",
-		       in_opt->answer);
+	G_fatal_error(_("Vector map <%s> not found"), in_opt->answer);
 
     Vect_set_open_level ( 2 );
     Vect_open_old (&In, in_opt->answer, mapset); 
@@ -139,16 +145,15 @@ int main(int argc, char **argv)
 	switch ( buf[0] ) {
 	    case 'P':
 		side_offset = 0;
-		ret = sscanf ( buf, "%c %d %d %lf+%lf %lf", &stype, &id, &lid, &mpost, &offset, 
-			                           &side_offset);
+		ret = sscanf ( buf, "%c %d %d %lf+%lf %lf", &stype, &id,
+				&lid, &mpost, &offset, &side_offset);
 		if ( ret < 5 ) { 
 		    G_warning (_("Cannot read input: %s"), buf);
 		    break;
 		}
 		points_read++;
 		G_debug (2, "point: %d %d %f+%f %f", id, lid, mpost, offset, side_offset);
-		
-		
+
 	        ret = LR_get_offset( rsdriver, table_opt->answer, "lcat", "lid", 
 			"start_map", "end_map", "start_mp", "start_off", "end_mp", "end_off",
                         lid, mpost, offset, multip, &lcat1, &map_offset1 );
@@ -160,6 +165,7 @@ int main(int argc, char **argv)
 		    G_warning (_("More than one record in LR table for: %s"), buf);
 		    break;
 		}
+
 		/* OK, write point */
                 line = find_line ( &In, lfield, lcat1 );
 		if ( line == 0 ) {
@@ -177,6 +183,9 @@ int main(int argc, char **argv)
 		    break;
 		}
 
+		if(fabs(side_offset) > 0.0)
+		    offset_pt_90(&x, &y, angle, side_offset);
+
                 Vect_append_point ( SPoints, x, y, z );
 		Vect_cat_set ( SCats, 1, id );
 
@@ -185,8 +194,8 @@ int main(int argc, char **argv)
 		break;
 	    case 'L':
 		side_offset = 0;
-		ret = sscanf ( buf, "%c %d %d %lf+%lf %lf+%lf %lf", &stype, &id, &lid, &mpost, &offset, 
-			              &mpost2, &offset2, &side_offset);
+		ret = sscanf ( buf, "%c %d %d %lf+%lf %lf+%lf %lf", &stype, &id,
+			&lid, &mpost, &offset, &mpost2, &offset2, &side_offset);
 		if ( ret < 7 ) { 
 		    G_warning (_("Cannot read input: %s"), buf);
 		    break;
@@ -240,7 +249,7 @@ int main(int argc, char **argv)
 		}
 
 	        Vect_read_line ( &In, LPoints, LCats, line );
-		
+
 		len = Vect_line_length ( LPoints );
 		if ( map_offset2 > len ) {
 		    /* This is mostly caused by calculation only -> use a threshold for warning */
@@ -250,7 +259,7 @@ int main(int argc, char **argv)
                     }
 		    map_offset2 = len;
 		}
-		    
+
 		ret = Vect_line_segment ( LPoints, map_offset1, map_offset2, SPoints );
                 if ( ret == 0 ) {
 		    G_warning (_("Cannot make line segment: cat = %d : "
@@ -261,8 +270,15 @@ int main(int argc, char **argv)
 		
 		Vect_cat_set ( SCats, 1, id );
 
-		Vect_write_line ( &Out, GV_LINE, SPoints, SCats);
-	        G_debug ( 3, "  segment n_points = %d", SPoints->n_points);
+		if(fabs(side_offset) > 0.0) {
+		    Vect_line_parallel(SPoints, side_offset, side_offset/10., TRUE, PlPoints);
+		    Vect_write_line ( &Out, GV_LINE, PlPoints, SCats);
+		    G_debug ( 3, "  segment n_points = %d", PlPoints->n_points);
+		}
+		else {
+		    Vect_write_line ( &Out, GV_LINE, SPoints, SCats);
+		    G_debug ( 3, "  segment n_points = %d", SPoints->n_points);
+		}
 
 		lines_written++;
 	        G_debug ( 3, "  -> written.");
@@ -287,7 +303,7 @@ int main(int argc, char **argv)
     G_message (_("[%d] lines written to output map (%d lost)"), 
 	      lines_written, lines_read-lines_written);
 
-    exit(EXIT_FAILURE);
+    exit(EXIT_SUCCESS);
 }
 
 /* Find line by cat, returns 0 if not found */
@@ -310,4 +326,16 @@ find_line ( struct Map_info *Map, int lfield, int lcat )
     }
 
     return 0;
+}
+
+
+
+
+/* calculate a point perpendicular to the current line angle, offset by a distance
+ * works in the x,y plane.
+ */
+void offset_pt_90(double *x, double *y, double angle, double distance)
+{
+    *x -= distance * cos(M_PI_2 + angle);
+    *y -= distance * sin(M_PI_2 + angle);
 }
