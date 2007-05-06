@@ -69,6 +69,9 @@ icons_default = {
     "histogram"  : 'module-d.histogram.gif',
     "color"      : 'edit-color.gif',
     "options"    : wx.ART_ERROR,
+    # histogram
+    "transect"   : 'gui-profiledefine.gif',
+    "profile"    : 'gui-profiledraw.gif',
     }
 
 # merge icons dictionaries, join paths
@@ -188,6 +191,9 @@ Icons = {
     "digaddbound": MetaIcon (img=icons_img["digaddbound"], label="Digitize new boundary"),
     "digaddcentr": MetaIcon (img=icons_img["digaddcentr"], label="Digitize new centroid"),
     "digexit"    : MetaIcon (img=icons_img["digexit"], label="Quit digitization tool"),
+    # profile
+    "transect"   : MetaIcon (img=icons_img["transect"], label="Draw transect to profile"),
+    "profile"    : MetaIcon (img=icons_img["profile"], label="Create profile"),
     # histogram
     "histogram"  : MetaIcon (img=icons_img["histogram"], label="Create histogram of image or raster file"),
     "font"       : MetaIcon (img=icons_img["font"], label="Select font"),
