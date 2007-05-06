@@ -42,6 +42,7 @@ void offset_pt_90(double *, double *, double, double);
 
 int main(int argc, char **argv)
 {
+    FILE   *in_file;
     int    ret, points_written, lines_written, points_read, lines_read;
     int    lfield;
     int    line;
@@ -50,7 +51,7 @@ int main(int argc, char **argv)
     double x, y, z, angle, len;
     char   stype;
     struct Option *in_opt, *out_opt, *driver_opt, *database_opt;
-    struct Option *lfield_opt;
+    struct Option *lfield_opt, *file_opt;
     struct Option *table_opt;
     struct GModule *module;
     char   *mapset, buf[2000];
@@ -68,7 +69,7 @@ int main(int argc, char **argv)
     module->keywords = _("vector, LRS, networking");
     module->description =
 	_("Create points/segments from input lines, linear reference "
-	  "system and positions read from stdin");
+	  "system and positions read from stdin or a file");
 
     in_opt = G_define_standard_option(G_OPT_V_INPUT);
     in_opt->description = _("Input vector map containing lines");
@@ -102,7 +103,13 @@ int main(int argc, char **argv)
     table_opt->type        = TYPE_STRING ;
     table_opt->required    = YES; 
     table_opt->description = _("Name of the reference system table");
-    
+
+    file_opt = G_define_standard_option(G_OPT_F_INPUT);
+    file_opt->key = "file";
+    file_opt->required = NO;
+    file_opt->description = _("Name of file containing segment rules. "
+	"If not given, read from stdin");
+
     if(G_parser(argc,argv))
 	exit(EXIT_FAILURE);
 
@@ -115,6 +122,12 @@ int main(int argc, char **argv)
 
     lfield = atoi (lfield_opt->answer);
     multip = 1000; /* Number of map units per MP unit */
+
+    if(file_opt->answer) {
+	/* open input file */
+	if((in_file = fopen(file_opt->answer, "r" )) == NULL )
+	    G_fatal_error(_("Could not open input file <%s>."), file_opt->answer);
+    }
 
     /* Open input lines */
     mapset = G_find_vector2 (in_opt->answer, NULL); 
@@ -137,8 +150,16 @@ int main(int argc, char **argv)
     points_read = 0; lines_read = 0;
     points_written = 0; lines_written = 0;
 
-    while ( fgets (buf, sizeof(buf), stdin) != NULL ) {
-	G_debug ( 2, "SEGMENT: %s", G_chop(buf));
+    while (1) {
+
+	if(!file_opt->answer) {
+	    if(fgets(buf, sizeof(buf), stdin) == NULL) break;
+	}
+	else {
+	    if(G_getl2(buf, sizeof(buf)-1, in_file) == 0) break;
+	}
+
+    	G_debug ( 2, "SEGMENT: %s", G_chop(buf));
 	side_offset = 0;
 	Vect_reset_line ( SPoints );
 	Vect_reset_cats ( SCats );
@@ -296,6 +317,9 @@ int main(int argc, char **argv)
     Vect_close(&In);
     Vect_close(&Out);
 
+    if(file_opt->answer)
+	fclose(in_file);
+
     G_message (_("[%d] points read from input"), points_read);
     G_message (_("[%d] points written to output map (%d lost)"), 
 	      points_written, points_read-points_written);
@@ -305,6 +329,7 @@ int main(int argc, char **argv)
 
     exit(EXIT_SUCCESS);
 }
+
 
 /* Find line by cat, returns 0 if not found */
 /* TODO: use category index */
@@ -327,8 +352,6 @@ find_line ( struct Map_info *Map, int lfield, int lcat )
 
     return 0;
 }
-
-
 
 
 /* calculate a point perpendicular to the current line angle, offset by a distance
