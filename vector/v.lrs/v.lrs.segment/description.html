@@ -1,12 +1,12 @@
 <h2>DESCRIPTION</h2>
 
 <em>v.lrs.segment</em> creates points/segments from input lines,
-linear reference system and positions read from standard in format,
-with pid: point id; sid: segment id; lid: line id:
+linear reference system and positions read from standard in or a file.
+The format is as follows:<BR>
 
 <div class="code"><pre>
-P &lt;pid&gt; &lt;lid&gt; &lt;milepost&gt;+&lt;offset&gt; [&lt;side offset&gt;]
-L &lt;sid&gt; &lt;lid&gt; &lt;milepost&gt;+&lt;offset&gt; &lt;milepost&gt;+&lt;offset&gt; [&lt;side offset&gt;]
+P &lt;point_id&gt; &lt;line_id&gt; &lt;milepost&gt;+&lt;offset&gt; [&lt;side offset&gt;]
+L &lt;segment_id&gt; &lt;line_id&gt; &lt;milepost&gt;+&lt;offset&gt; &lt;milepost&gt;+&lt;offset&gt; [&lt;side offset&gt;]
 </pre></div>
 
 

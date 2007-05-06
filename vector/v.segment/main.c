@@ -29,6 +29,7 @@ void offset_pt_90(double *, double *, double, double);
 
 int main(int argc, char **argv)
 {
+    FILE   *in_file;
     int    ret, points_written, lines_written, points_read, lines_read;
     int    lfield;
     int    line;
@@ -37,7 +38,7 @@ int main(int argc, char **argv)
     double x, y, z, angle, len;
     char   stype;
     struct Option *in_opt, *out_opt;
-    struct Option *lfield_opt;
+    struct Option *lfield_opt, *file_opt;
     struct GModule *module;
     char   *mapset, buf[2000];
     struct Map_info In, Out;
@@ -49,7 +50,7 @@ int main(int argc, char **argv)
     module = G_define_module();
     module->keywords = _("vector, geometry");
     module->description =
-	_("Create points/segments from input lines and and positions.");
+	_("Create points/segments from input lines and positions.");
 
     in_opt = G_define_standard_option(G_OPT_V_INPUT);
     in_opt->description = _("Input map containing lines");
@@ -61,7 +62,13 @@ int main(int argc, char **argv)
     lfield_opt->key = "llayer";
     lfield_opt->answer = "1";
     lfield_opt->description = _("Line layer");
-    
+
+    file_opt = G_define_standard_option(G_OPT_F_INPUT);
+    file_opt->key = "file";
+    file_opt->required = NO;
+    file_opt->description = _("Name of file containing segment rules. "
+	"If not given, read from stdin");
+
     if(G_parser(argc,argv))
 	exit(EXIT_FAILURE);
 
@@ -75,6 +82,12 @@ int main(int argc, char **argv)
     lfield = atoi (lfield_opt->answer);
 
     Vect_check_input_output_name ( in_opt->answer, out_opt->answer, GV_FATAL_EXIT );
+
+    if(file_opt->answer) {
+	/* open input file */
+	if((in_file = fopen(file_opt->answer, "r" )) == NULL )
+	    G_fatal_error(_("Could not open input file <%s>."), file_opt->answer);
+    }
 
     /* Open input lines */
     mapset = G_find_vector2 (in_opt->answer, NULL); 
@@ -91,7 +104,15 @@ int main(int argc, char **argv)
     points_read = 0; lines_read = 0;
     points_written = 0; lines_written = 0;
 
-    while ( fgets (buf, sizeof(buf), stdin) != NULL ) {
+    while (1) {
+
+	if(!file_opt->answer) {
+	    if(fgets(buf, sizeof(buf), stdin) == NULL) break;
+	}
+	else {
+	    if(G_getl2(buf, sizeof(buf)-1, in_file) == 0) break;
+	}
+
 	G_debug ( 2, "SEGMENT: %s", G_chop(buf));
 	side_offset = 0;
 	Vect_reset_line ( SPoints );
@@ -192,6 +213,9 @@ int main(int argc, char **argv)
     /* Free, close ... */
     Vect_close(&In);
     Vect_close(&Out);
+
+    if(file_opt->answer)
+	fclose(in_file);
 
     fprintf ( stdout, _("%d points read from input\n"), points_read);
     fprintf ( stdout, _("%d points written to output map (%d lost)\n"), 
