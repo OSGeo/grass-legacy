@@ -525,9 +525,9 @@ void LOC_panel_delete(const char *name)
 	remove(name);
 }
 
-void LOC_begin_scaled_raster(int src[2][2], int dst[2][2])
+void LOC_begin_scaled_raster(int mask, int src[2][2], int dst[2][2])
 {
-	COM_begin_scaled_raster(src, dst);
+	COM_begin_scaled_raster(mask, src, dst);
 }
 
 int LOC_scaled_raster(int n, int row,

@@ -563,9 +563,10 @@ void REM_panel_delete(const char *name)
 	unlink(name);
 }
 
-void REM_begin_scaled_raster(int src[2][2], int dst[2][2])
+void REM_begin_scaled_raster(int mask, int src[2][2], int dst[2][2])
 {
 	_send_ident(BEGIN_SCALED_RASTER);
+	_send_int(&mask);
 	_send_int_array(4, &src[0][0]);
 	_send_int_array(4, &dst[0][0]);
 }
