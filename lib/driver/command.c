@@ -222,9 +222,10 @@ int process_command(int c)
 	COM_Bitmap(x, y, index, blua);
 	break;
     case BEGIN_SCALED_RASTER:
+	REC(&index, sizeof(int));
 	REC(&src[0][0], 4 * sizeof(int));
 	REC(&dst[0][0], 4 * sizeof(int));
-	COM_begin_scaled_raster(src, dst);
+	COM_begin_scaled_raster(index, src, dst);
 	break;
     case SCALED_RASTER:
 	REC(&x, sizeof x);

@@ -502,9 +502,9 @@ void R_panel_delete(const char *name)
 	trans->panel_delete(name);
 }
 
-void R_begin_scaled_raster(int s[2][2], int d[2][2])
+void R_begin_scaled_raster(int mask, int src[2][2], int dst[2][2])
 {
-	return trans->begin_scaled_raster(s, d);
+	return trans->begin_scaled_raster(mask, src, dst);
 }
 
 int R_scaled_raster(int n, int row,

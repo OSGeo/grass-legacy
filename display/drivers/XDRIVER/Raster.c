@@ -17,6 +17,7 @@
 static int *trans;
 static int ncols;
 static int nalloc;
+static int masked;
 static int src[2][2];
 static int dst[2][2];
 static XImage *img;
@@ -64,7 +65,7 @@ static void raster_row(int x0, int y0, int ncols, int nrows, const unsigned char
 {
 	int i, j;
 
-	if (!nul)
+	if (!masked || !nul)
 	{
 		for (j = 0; j < nrows; j++)
 			XPutImage(dpy, bkupmap, gc, img, 0, 0, x0, y0 + j, ncols, 1);
@@ -110,7 +111,7 @@ static void alloc_ximage(void)
 		G_fatal_error("unable to allocate XImage");
 }
 
-void XD_begin_scaled_raster(int s[2][2], int d[2][2])
+void XD_begin_scaled_raster(int mask, int s[2][2], int d[2][2])
 {
 	int i;
 
@@ -118,6 +119,7 @@ void XD_begin_scaled_raster(int s[2][2], int d[2][2])
 
 	memcpy(src, s, sizeof(src));
 	memcpy(dst, d, sizeof(dst));
+	masked = mask;
 
 	alloc_buffers();
 	alloc_ximage();
@@ -143,7 +145,7 @@ int XD_scaled_raster(
 		int j = trans[x];
 		int c;
 
-		if (nul && nul[j])
+		if (masked && nul && nul[j])
 			continue;
 
 		c = find_color(red[j], grn[j], blu[j]);

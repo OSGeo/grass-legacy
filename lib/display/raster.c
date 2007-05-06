@@ -158,7 +158,7 @@ int D_cell_draw_setup(int t,int b,int l,int r)
     D_get_a(src);
     D_get_d(dst);
 
-    R_begin_scaled_raster(src, dst);
+    R_begin_scaled_raster(D__overlay_mode, src, dst);
 
     return 0;
 }

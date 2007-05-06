@@ -83,9 +83,9 @@ static int cell_draw(
 
     /* Set up the screen, conversions, and graphics */
     D_get_screen_window(&t, &b, &l, &r) ;
+    D_set_overlay_mode(overlay);
     if (D_cell_draw_setup(t, b, l, r))
 	G_fatal_error(_("Cannot use current window")) ;
-    D_set_overlay_mode(overlay);
 
     /* Make sure map is available */
     if ((cellfile = G_open_cell_old(name, mapset)) == -1)

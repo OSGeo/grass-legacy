@@ -112,6 +112,7 @@ main (int argc, char **argv)
 
 	/* Prepare the raster cell drawing functions */
 	D_get_screen_window(&t, &b, &l, &r) ;
+	D_set_overlay_mode(nulldraw->answer ? 1 : 0);
 	D_cell_draw_setup(t, b, l, r) ;
 
 	/* Get name of layer to be used for hue */
@@ -202,8 +203,6 @@ main (int argc, char **argv)
 
 	/* Make color table */
 	make_gray_scale(&gray_colors) ;
-
-	D_set_overlay_mode(nulldraw->answer ? 1 : 0);
 
 	/* Now do the work */
 	intensity =  255 ;  /* default is to not change intensity */

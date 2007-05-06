@@ -47,7 +47,7 @@ extern void PNG_Erase(void);
 extern void PNG_Graph_close(void);
 extern int PNG_Graph_set(int,char **);
 extern void PNG_Line_width(int);
-extern void PNG_begin_scaled_raster(int [2][2], int [2][2]);
+extern void PNG_begin_scaled_raster(int, int [2][2], int [2][2]);
 extern int PNG_scaled_raster(int, int, const unsigned char *, const unsigned char *, const unsigned char *, const unsigned char *);
 extern void PNG_Respond(void);
 extern void PNG_Set_window(int, int, int, int);

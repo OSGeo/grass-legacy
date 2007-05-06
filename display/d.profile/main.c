@@ -417,6 +417,7 @@ void myDcell (char *name, char *mapset, int overlay)
 
     D_get_screen_window (&t, &b, &l, &r);
 
+    D_set_overlay_mode (overlay);
     D_cell_draw_setup (t, b, l, r);
 
     cell = G_allocate_c_raster_buf();
@@ -428,7 +429,6 @@ void myDcell (char *name, char *mapset, int overlay)
     if (G_read_colors (name, mapset, &clr) < 0)
         G_fatal_error(_("%s: Couldn't read color table for <%s@%s>"),
                             G_program_name(), name, mapset);
-    D_set_overlay_mode (overlay);
 
     for (i = 0; i >= 0; )
     {

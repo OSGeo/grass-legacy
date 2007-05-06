@@ -15,6 +15,7 @@
 static int *trans;
 static int ncols;
 static int nalloc;
+static int masked;
 static int src[2][2];
 static int dst[2][2];
 
@@ -55,7 +56,7 @@ static void alloc_buffers(void)
 	trans = G_realloc(trans, nalloc * sizeof(int));
 }
 
-void PNG_begin_scaled_raster(int s[2][2], int d[2][2])
+void PNG_begin_scaled_raster(int mask, int s[2][2], int d[2][2])
 {
 	int i;
 
@@ -63,6 +64,7 @@ void PNG_begin_scaled_raster(int s[2][2], int d[2][2])
 
 	memcpy(src, s, sizeof(src));
 	memcpy(dst, d, sizeof(dst));
+	masked = mask;
 
 	alloc_buffers();
 
@@ -92,7 +94,7 @@ int PNG_scaled_raster(
 		int j = trans[x];
 		int c;
 
-		if (nul && nul[j])
+		if (masked && nul && nul[j])
 			continue;
 
 		c = PNG_lookup_color(red[j], grn[j], blu[j]);

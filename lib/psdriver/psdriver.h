@@ -29,7 +29,7 @@ extern void PS_draw_bitmap(int,int,int,const unsigned char *);
 extern void PS_draw_line(int,int,int,int);
 extern void PS_draw_point(int,int);
 extern int PS_lookup_color(int, int, int);
-extern void PS_begin_scaled_raster(int [2][2], int [2][2]);
+extern void PS_begin_scaled_raster(int, int [2][2], int [2][2]);
 extern int PS_scaled_raster(int, int, const unsigned char *, const unsigned char *, const unsigned char *, const unsigned char *);
 extern void PS_end_scaled_raster(void);
 extern void PS_Polygon_abs(const int *, const int *, int);

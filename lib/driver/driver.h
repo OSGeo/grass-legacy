@@ -45,7 +45,7 @@ struct driver
 	void (*Polygon_abs)(const int *,const int *,int);
 	void (*Polygon_rel)(const int *,const int *,int);
 	void (*Set_window)(int, int, int, int);
-	void (*Begin_scaled_raster)(int [2][2], int [2][2]);
+	void (*Begin_scaled_raster)(int, int [2][2], int [2][2]);
 	int (*Scaled_raster)(
 		int,int,
 		const unsigned char *,
@@ -123,7 +123,7 @@ extern void COM_Polygon_rel(const int *,const int *,int);
 extern void COM_Polyline_abs(const int *,const int *,int);
 extern void COM_Polyline_rel(const int *,const int *,int);
 /* Raster.c */
-extern void COM_begin_scaled_raster(int [2][2], int [2][2]);
+extern void COM_begin_scaled_raster(int, int [2][2], int [2][2]);
 extern int COM_scaled_raster(int, int, const unsigned char *, const unsigned char *, const unsigned char *, const unsigned char *);
 extern void COM_end_scaled_raster(void);
 

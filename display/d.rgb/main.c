@@ -87,6 +87,7 @@ int main(int argc, char **argv)
 	    G_fatal_error(_("No graphics device selected"));
 
 	D_get_screen_window(&t, &b, &l, &r) ;
+	D_set_overlay_mode(flag_o->answer);
 	D_cell_draw_setup(t, b, l, r) ;
 
 	for (i = 0; i < 3; i++)
@@ -113,8 +114,6 @@ int main(int argc, char **argv)
 
 	/* read in current window */
 	G_get_window(&window) ;
-
-	D_set_overlay_mode(flag_o->answer);
 
 	next_row = 0;
 	for (row = 0; row < window.rows; )
