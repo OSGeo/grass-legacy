@@ -401,7 +401,7 @@ set descmenu [subst  {
 		{command {[G_msg "Add missing centroids"]} {} "v.centroids" {} -command {execute v.centroids }}
 		{separator}
 		{command {[G_msg "Build polylines from adjacent segments"]} {} "v.build.polylines" {} -command {execute v.build.polylines }}
-		{command {[G_msg "Split polylines into segments"]} {} "v.segment" {} -command {execute v.segment }}
+		{command {[G_msg "Create points and line segments along a vector line"]} {} "v.segment" {} -command {execute v.segment }}
 		{command {[G_msg "Create lines parallel to existing lines"]} {} "v.parallel" {} -command {execute v.parallel }}
 		{command {[G_msg "Dissolve common boundaries"]} {} "v.dissolve" {} -command {execute v.dissolve }}
 		{separator}
@@ -429,9 +429,9 @@ set descmenu [subst  {
 	}}
 	{cascad {[G_msg "Linear referencing for vectors"]} {} "" $tmenu {			
 		{command {[G_msg "Create linear reference system"]} {} "v.lrs.create" {} -command {execute v.lrs.create }}
-		{command {[G_msg "Create stationing from imput lines, and linear reference system"]} {} "v.lrs.label" {} -command {execute v.lrs.label }}
-		{command {[G_msg "Create points/segments from input lines, linear reference system and positions read from stdin"]} {} "v.lrs.segment" {} -command {execute v.lrs.segment }}
-		{command {[G_msg "Find line id and real km+offset for given points in vector map using linear reference system"]} {} "v.lrs.where" {} -command {execute v.lrs.where }}
+		{command {[G_msg "Create stationing from input lines and a linear reference system"]} {} "v.lrs.label" {} -command {execute v.lrs.label }}
+		{command {[G_msg "Create points and line segments along a linear reference system"]} {} "v.lrs.segment" {} -command {execute v.lrs.segment }}
+		{command {[G_msg "Find line ID and real km+offset for given points in vector map using linear reference system"]} {} "v.lrs.where" {} -command {execute v.lrs.where }}
 	}}
 	{cascad {[G_msg "Neighborhood analysis"]} {} "" $tmenu {			
 		{command {[G_msg "Locate nearest features to points or centroids"]} {} "v.distance" {} -command {execute v.distance }}
