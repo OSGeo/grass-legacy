@@ -529,7 +529,7 @@ proc Gm:DefaultFont { } {
 
 
 proc Gm::SelectFont { } {
-	global env 
+	global env, tcl_platform
 	variable dfont
 	variable fonttype
 	variable fontpath
@@ -542,12 +542,11 @@ proc Gm::SelectFont { } {
 	} elseif {$fonttype == "truetype" && $fontpath != ""} {
 		set initdir $fontpath
 	} elseif {$fonttype == "truetype" && $fontpath == ""} {
-		if {$systemtype == "Darwin"} {
+		if {$tcl_platform(platform) == "macintosh" || \
+			$tcl_platform(os) == "Darwin"} {
 			set fontpath [file join "/Library" "Fonts"]
-		} elseif {$systemtype == "MINGW"} {
+		} elseif {$tcl_platform(platform) == "windows"} {
 			set fontpath [file join $WINDIR "Fonts"]
-		} elseif {$systemtype == "CYGWIN"} {
-			set fontpath [file join [exec cygpath -u $env(WINDIR)] "Fonts"]
 		} else {
 			set fontpath [file join "/usr" "lib" "X11" "fonts"]
 		}
