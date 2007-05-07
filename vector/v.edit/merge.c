@@ -194,8 +194,6 @@ int do_merge(struct Map_info *Map, struct ilist *List, int print)
     Vect_destroy_cats_struct(Cats1);
     Vect_destroy_cats_struct(Cats2);
     
-    Vect_destroy_list(List);
-    
     G_message (_("[%d] lines merged"),
 	       nlines_merged);
     
