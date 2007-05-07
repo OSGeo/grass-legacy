@@ -557,10 +557,8 @@ static void pbutton (int opt)
 
 
 
-				/* SAVE THE REGION */
-
+/* SAVE THE REGION */
 static void save_rgn (char *name, char *tempfile, FILE *tmp, int *x, int *y, int pts, int class, int opt)
-
 {
   char               *cmd;
   struct Cell_head   wind;
@@ -620,7 +618,7 @@ static void save_rgn (char *name, char *tempfile, FILE *tmp, int *x, int *y, int
   sprintf(cmd, "d.rast -o  %s", name);
   G_system(cmd);
   G_free (cmd);
-  sleep(4);			/* hold the screen for 4 seconds */
+  G_sleep(4);			/* hold the screen for 4 seconds */
   R_open_driver();
   return;
 }
