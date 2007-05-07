@@ -39,40 +39,19 @@ class SetDefaultFont(wx.Dialog):
     """
 
     def __init__(self, parent, ID, title, pos=wx.DefaultPosition, size=wx.DefaultSize,
-            style=wx.DEFAULT_DIALOG_STYLE, fonttype = 'grassfont', encoding='ISO-8859-1'):
+            style=wx.DEFAULT_DIALOG_STYLE, encoding='ISO-8859-1'):
         wx.Dialog.__init__(self, parent, ID, title, pos, size, style)
 
-
         if "GRASS_FONT" in os.environ:
-#            self.fontpath = os.path.dirname(os.environ["GRASS_FONT"])
             self.font = os.environ["GRASS_FONT"]
         else:
-#            self.fontpath = None
             self.font = None
 
-        self.fonttype = fonttype
-        if self.fonttype == 'grassfont':
-            rbsel = 0
-        elif self.fonttype == 'truetype':
-            rbsel = 1
-
-        self.fontlist = self.GetFonts(fonttype)
+        self.fontlist = self.GetFonts()
 
         self.encoding = encoding
 
         sizer = wx.BoxSizer(wx.VERTICAL)
-
-        box = wx.BoxSizer(wx.HORIZONTAL)
-        fonttypes = ['GRASS stroke fonts', 'TrueType fonts']
-        rb = wx.RadioBox(
-                self, -1, "Select font type:", wx.DefaultPosition, wx.DefaultSize,
-                fonttypes, 2, wx.RA_SPECIFY_COLS
-                )
-        box.Add(rb, 0, wx.EXPAND|wx.GROW|wx.ALIGN_RIGHT|wx.ALL, 5)
-        self.Bind(wx.EVT_RADIOBOX, self.EvtRadioBox, rb)
-        rb.SetToolTip(wx.ToolTip("Select type of font to use for GRASS text displays"))
-        rb.SetSelection(rbsel)
-        sizer.Add(box, 0, wx.GROW|wx.ALIGN_CENTER_VERTICAL|wx.ALIGN_CENTER_HORIZONTAL|wx.RIGHT|wx.LEFT|wx.TOP, 5)
 
         box = wx.BoxSizer(wx.HORIZONTAL)
         label = wx.StaticText(self, -1, "Select Font:", (15, 50))
@@ -134,26 +113,30 @@ class SetDefaultFont(wx.Dialog):
         self.font = event.GetString()
         event.Skip()
 
-    def GetFonts(self, fonttype):
+    def GetFonts(self):
         """
         parses fonts directory or fretypecap file to get a list of fonts for the listbox
         """
-        grassfontpath = os.path.join(os.environ["GISBASE"], "fonts")
-        freetypecap = os.path.join(os.environ["GISBASE"], "etc", "freetypecap")
         fontlist = []
 
-        if fonttype == 'grassfont':
-            # parse the fonts in the fonts folder
-            fontfiles = os.listdir(grassfontpath)
-            for file in fontfiles:
-                fontlist.append(file.split('.')[0])
-        elif fonttype == 'truetype':
-            # parse the freetypecap file
-            fontinfo = open(freetypecap).read().strip().split('\n')
-            for item in fontinfo:
+        cmd = "d.font -l"
+
+        try:
+            p = Popen(cmd, shell=True, stdin=PIPE, stdout=PIPE, stderr=PIPE, close_fds=True)
+
+            dfonts = p.stdout.read().strip().split('\n')
+            dfonts.sort(lambda x,y: cmp(x.lower(), y.lower()))
+            for item in range(len(dfonts)):
                 # ignore duplicate fonts and those starting with #
-                if not item.startswith('#') and \
-                    item.split(':')[0] != fontinfo[fontinfo.index(item)-1].split(':')[0]:
-                    fontlist.append(item.split(':')[0])
+                if not dfonts[item].startswith('#') and \
+                    dfonts[item] != dfonts[item-1]:
+                    fontlist.append(dfonts[item])
+            if p.stdout < 0:
+                print >> sys.stderr, "Child was terminated by signal", p.stdout
+            elif p.stdout > 0:
+                #print >> sys.stderr, p.stdout
+                pass
+        except OSError, e:
+            print >> sys.stderr, "Execution failed:", e
 
         return fontlist

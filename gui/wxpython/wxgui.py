@@ -149,7 +149,6 @@ class GMFrame(wx.Frame):
         self.mapfocus = 0 #track which display currently has focus
         self.curr_page   = '' # currently selected page for layer tree notebook
         self.curr_pagenum = '' # currently selected page number for layer tree notebook
-        self.fonttype = 'grassfont' # stroke or truetype font for default display font
         self.encoding = 'ISO-8859-1' # default encoding for display fonts
 
         self.Bind(wx.EVT_CLOSE, self.onCloseWindow)
@@ -304,14 +303,13 @@ class GMFrame(wx.Frame):
         dlg = defaultfont.SetDefaultFont(self, wx.ID_ANY, 'Select default display font',
                                    pos=wx.DefaultPosition, size=wx.DefaultSize,
                                    style=wx.DEFAULT_DIALOG_STYLE,
-                                   fonttype=self.fonttype, encoding=self.encoding)
+                                   encoding=self.encoding)
         if dlg.ShowModal() == wx.ID_CANCEL:
             dlg.Destroy()
             return
 
         # set default font type, font, and encoding to whatever selected in dialog
-        if dlg.fonttype != None:
-            self.fonttype = dlg.fonttype
+
         if dlg.font != None:
             self.font = dlg.font
         if dlg.encoding != None:

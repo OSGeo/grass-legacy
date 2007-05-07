@@ -287,7 +287,6 @@ class HistFrame(wx.Frame):
         self.params = {} # previously set histogram parameters
 
         self.font = ""
-        self.fonttype = 'truetype' # stroke or truetype font for default display font
         self.encoding = 'ISO-8859-1' # default encoding for display fonts
 
         #
@@ -393,15 +392,13 @@ class HistFrame(wx.Frame):
         dlg = defaultfont.SetDefaultFont(self, wx.ID_ANY, 'Select font for histogram text',
                                    pos=wx.DefaultPosition, size=wx.DefaultSize,
                                    style=wx.DEFAULT_DIALOG_STYLE,
-                                   fonttype=self.fonttype, encoding=self.encoding)
+                                   encoding=self.encoding)
         dlg.fontlb.SetStringSelection(self.font, True)
         if dlg.ShowModal() == wx.ID_CANCEL:
             dlg.Destroy()
             return
 
         # set default font type, font, and encoding to whatever selected in dialog
-        if dlg.fonttype != None:
-            self.fonttype = dlg.fonttype
         if dlg.font != None:
             self.font = dlg.font
         if dlg.encoding != None:
