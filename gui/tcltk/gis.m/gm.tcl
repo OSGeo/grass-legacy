@@ -529,14 +529,12 @@ proc Gm:DefaultFont { } {
 
 
 proc Gm::SelectFont { } {
-	global env, tcl_platform
+	global env
+	global tcl_platform
 	variable dfont
 	variable fonttype
 	variable fontpath
 	
-	set systemtype [exec uname -s]
-	set systemtype [string trim $systemtype]
-
 	if {$fonttype == "grassfont"} {
 		set initdir  [file join "$env(GISBASE)" "fonts"]
 	} elseif {$fonttype == "truetype" && $fontpath != ""} {
@@ -546,7 +544,7 @@ proc Gm::SelectFont { } {
 			$tcl_platform(os) == "Darwin"} {
 			set fontpath [file join "/Library" "Fonts"]
 		} elseif {$tcl_platform(platform) == "windows"} {
-			set fontpath [file join $WINDIR "Fonts"]
+			set fontpath [file join $env(WINDIR) "Fonts"]
 		} else {
 			set fontpath [file join "/usr" "lib" "X11" "fonts"]
 		}
@@ -555,8 +553,15 @@ proc Gm::SelectFont { } {
 	
 	if {![file exists $initdir]} {set initdir ""}
 
-	set fontname [tk_getOpenFile -initialdir $initdir \
-		-title [G_msg "Select font"] ]
+	if {$tcl_platform(platform) == "windows"} {
+		# Use native Tk file browser rather than Windows one as
+		# is faster and works properly   
+		set fontname [::tk::dialog::file:: open -initialdir $initdir \
+			-title [G_msg "Select font"] ]
+	} else {
+		set fontname [tk_getOpenFile -initialdir $initdir \
+			-title [G_msg "Select font"] ]
+	}
 		
 	set Gm::dfont $fontname
 
