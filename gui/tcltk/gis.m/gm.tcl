@@ -529,8 +529,7 @@ proc Gm:DefaultFont { } {
 
 
 proc Gm::SelectFont { } {
-	global env
-	global tcl_platform
+	global env tcl_platform
 	variable dfont
 	variable fonttype
 	variable fontpath
