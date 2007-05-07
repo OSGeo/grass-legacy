@@ -38,7 +38,6 @@ static void  ask_fromto(void);
 				   LIMITS */
 
 int ask_group (char **sel)
-
 {
 
                                 /* show the option menu using GRASS VASK
@@ -80,87 +79,66 @@ int ask_group (char **sel)
 }
 
 
-
-
-
-
-				/* DRIVER TO LOOK FOR OLD VERSION OF GROUP/
-				   CLASS FILES, SETUP NEW FILES, AND PRINT
-				   A MESSAGE ABOUT THESE FILES */
+/* DRIVER TO LOOK FOR OLD VERSION OF GROUP/CLASS FILES, SETUP NEW FILES,
+   AND PRINT A MESSAGE ABOUT THESE FILES */
 
 int get_group_drv (char **sel)
-
 {
-
 
   if (sel[0][0] == 'x') {
     	ask_reclass();
         fprintf(stderr, "\n    The attribute groups are saved in \"r.le.para/recl_tb\".");
-        
-        sleep(2);
+	G_sleep(2);
   }
   if (sel[1][0] == 'x') {
 	ask_limits("size", "    SIZE CLASSES");
         fprintf(stderr, "\n    The size classes are saved in \"r.le.para/size\".");
-
-	sleep(2);
+	G_sleep(2);
   }
   if (sel[2][0] == 'x') {
 	ask_limits("shape_PA", "    SHAPE CLASSES: PERIMETER/AREA");
         fprintf(stderr, "\n    The shape (P/A) classes are saved in \"r.le.para/shape_PA\".");
-
-	sleep(2);
+	G_sleep(2);
   }
   if (sel[3][0] == 'x') {
 	ask_limits("shape_CPA", "    SHAPE CLASSES: CORRECTED PERIMETER/AREA");
         fprintf(stderr, "\n    The shape (CPA) classes are saved in \"r.le.para/shape_CPA\".");
-
-	sleep(2);
+	G_sleep(2);
   }
   if (sel[4][0] == 'x') {
 	ask_limits("shape_RCC", "    SHAPE CLASSES: RELATED CIRCUMSCRIBING CIRCLE");
         fprintf(stderr, "\n    The shape (RCC) classes are saved in \"r.le.para/shape_RCC\".");
-
-	sleep(2);
+	G_sleep(2);
   }
   if (sel[5][0] == 'x') {
 	ask_limits("dist_cc", "    DISTANCE CLASSES: CENTER-CENTER");
         fprintf(stderr, "\n    The distance (CC) classes are saved in \"r.le.para/dist_cc\".");
-
-	sleep(2);
+	G_sleep(2);
   }
   if (sel[6][0] == 'x') {
 	ask_limits("dist_ce", "    DISTANCE CLASSES: CENTER-EDGE");
         fprintf(stderr, "\n    The distance (CE) classes are saved in \"r.le.para/dist_ce\".");
-
-	sleep(2);
+	G_sleep(2);
   }
   if (sel[7][0] == 'x') {
 	ask_limits("dist_ee", "    DISTANCE CLASSES: EDGE-EDGE");
         fprintf(stderr, "\n    The distance (EE) classes are saved in \"r.le.para/dist_ee\".");
-
-	sleep(2);
+	G_sleep(2);
   }
   if (sel[8][0] == 'x') {
 	ask_fromto();
         fprintf(stderr, "\n    The attribute groups are saved in \"r.le.para/from_to\".");
-
-	sleep(2);
+	G_sleep(2);
   }
   return(0);
 }
 
 
 
-
-
-
-
-				/* GET THE LOWER LIMITS OF THE MEASURE INDEX
-				   CLASSES FROM THE SCREEN, AND PUT THEM IN A FILE */
+/* GET THE LOWER LIMITS OF THE MEASURE INDEX CLASSES FROM THE SCREEN,
+   AND PUT THEM IN A FILE */
 
 static void ask_limits (char *name, char *str)
-
 {
   FILE *fp;
   char s[30];
@@ -177,11 +155,7 @@ static void ask_limits (char *name, char *str)
 
 
 
-
-
-
-				/* READ IN THE LOWER LIMITS OF THE MEASURE
-				   INDEX CLASSES FROM THE SCREEN */
+/* READ IN THE LOWER LIMITS OF THE MEASURE INDEX CLASSES FROM THE SCREEN */
 
 static void get_index (FILE *fp)
 
@@ -210,11 +184,7 @@ static void get_index (FILE *fp)
 
 
 
-
-
-
-				/* GET THE ATTRIBUTE GROUP LIMITS FROM THE
-				   USER AND SAVE THEM IN FILE RECL_TB */
+/* GET THE ATTRIBUTE GROUP LIMITS FROM THE USER AND SAVE THEM IN FILE RECL_TB */
 
 static void  ask_reclass(void)
 {
@@ -224,8 +194,7 @@ static void  ask_reclass(void)
 
   G_sleep_on_error(0);
 
-				/* display a message on the screen about
-				   inputing attribute gps */
+/* display a message on the screen about inputing attribute gps */
 
   G_system("clear");
   fprintf(stderr, "\n\n    Please input attribute groups in table form just like in a");
@@ -265,8 +234,7 @@ back:
 
 
 
-				/* READ IN 1 LINE OF THE ATTRIBUTE GP
-				   RULE FROM THE SCREEN */
+/* READ IN 1 LINE OF THE ATTRIBUTE GP RULE FROM THE SCREEN */
 
 static void get_1recl (char *buf, int singles)
 
@@ -332,9 +300,8 @@ static void get_1recl (char *buf, int singles)
 
 
 
-				/* PUT THE FROM & TO ATTRIBUTE GPS FOR
-				   DISTANCE METHOD di2=M7 to M9 INTO THE
-				   FILE R.LE.PARA/FROM_TO */
+/* PUT THE FROM & TO ATTRIBUTE GPS FOR DISTANCE METHOD di2=M7 to M9 INTO THE
+  FILE R.LE.PARA/FROM_TO */
 
 static void  ask_fromto(void)
 {
@@ -363,10 +330,7 @@ static void  ask_fromto(void)
 
 
 
-
-				/* FUNCTION TO OPEN A FILE AND DISPLAY
-				   AN ERROR MESSAGE IF THE FILE IS NOT
-				   FOUND */
+/* FUNCTION TO OPEN A FILE AND DISPLAY AN ERROR MESSAGE IF THE FILE IS NOT FOUND */
 
 FILE *fopen0 (char *name, char *flag)
 
@@ -380,4 +344,3 @@ FILE *fopen0 (char *name, char *flag)
   }
   return fp;
 }
-
