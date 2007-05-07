@@ -41,6 +41,27 @@ int G_is_dirsep(char c)
 }
 
 /**
+ * \brief Checks if a specified path looks like an absolute
+ *        path on the host system
+ *
+ * \param path String containing path to check
+ *
+ * \return 1 if path looks like an absolute path, 0 if not
+ **/
+
+int G_is_absolute_path(const char *path)
+{
+    if ( G_is_dirsep(path[0])
+#ifdef __MINGW32__	
+	|| ((path[1] == ':') && G_is_dirsep(path[2])) 
+#endif
+       )
+        return 1;
+    else
+        return 0;
+}
+   
+/**
  * \brief Converts directory separator characters in a string to the
  *        native host separator character (/ on Unix, \ on Windows)
  *

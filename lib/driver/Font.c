@@ -24,21 +24,8 @@ static void freetype_set(const char *filename)
 
 void COM_Font_get(const char *name)
 {
-	if (name[0] == '/')
-	{
-		static char prefix[4096];
-
-		if (!font_exists(name))
-			return;
-
-		if (!*prefix)
-			sprintf(prefix, "%s/fonts/", G_gisbase());
-
-		if (strncmp(name, prefix, strlen(prefix)) == 0)
-			stroke_set(name);
-		else
-			freetype_set(name);
-	}
+	if (G_is_absolute_path(name))
+		freetype_set(name);
 	else
 	{
 		char filename[4096];
