@@ -18,5 +18,3 @@ def GetTempfile( pref=None):
         if pref:
             file = "%s%s" % (pref,file)
         return os.path.join(path,file)
-
-
