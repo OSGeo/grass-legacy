@@ -685,11 +685,7 @@ class Map:
 
         # old lookup item will be deleted when layer is deleted
 
-<<<<<<< .mine
-    def changeLayer(self, item, type, name, command,
-=======
     def ChangeLayer(self, item, type, command, name=None, mapset=None,
->>>>>>> .r610
                     l_active=True, l_hidden=False, l_opacity=1, l_render=False):
         """
         Change the command and other other options for a layer
