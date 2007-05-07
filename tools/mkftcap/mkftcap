@@ -1,6 +1,6 @@
 #!/bin/sh
 
-exts='ttf pfa pfb dfont oft'
+exts='ttf TTF pfa PFA pfb PFB dfont DFONT oft OFT'
 
 (
     for dir in /usr/lib/X11/fonts /usr/share/X11/fonts /usr/share/fonts \
@@ -10,7 +10,7 @@ exts='ttf pfa pfb dfont oft'
     do
         if [ -d "$dir" ] ; then
             for ext in $exts ; do
-                find "$dir" -type f -iname '*.'"$ext" -print \
+                find "$dir" -type f -name '*.'"$ext" -print \
                     | sed 's!^\(.*\)/\(.*\)$!\2:\1/\2:utf-8:!' \
                     | sed 's/\.'"$ext"':/:/'
             done
