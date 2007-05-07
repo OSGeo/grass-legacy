@@ -17,26 +17,31 @@ v.what.rast vect=pnt rast=demf col=valf
 </pre></div>
 
 <P>
-B) In case of a vector map without attached attribute table, first one row for
-each category has to be generated. Then the new table can be populated with values
-from the raster map query:
+B) In case of a vector map without attached attribute table, first add
+a new attribute table. This table is then populated with values
+queried from the raster map:
 <br>
 <div class="code"><pre>
 v.db.connect -p vectpoints
 # .. no table yet.
 
-v.db.addtable vectpoints col="cat integer, value integer"
+# add new table, link to map:
+v.db.addtable vectpoints col="cat integer, myvalue integer, otherval double precision"
 
-#query raster map and write values into vector table:
-v.what.rast vect=vectpoints rast=rastmap col=value
+# query raster map and upload values to vector table into specified column:
+v.what.rast vect=vectpoints rast=rastmap col=myvalue
 
-#verify statistics of uploaded values:
-v.univar map=vectpoints col=value type=point
+# verify new attribute table:
+v.db.select vectpoints
+
+# verify statistics of uploaded values:
+v.univar map=vectpoints col=myvalue type=point
 </pre></div>
 
 <H2>SEE ALSO</H2>
 
 <EM>
+<a href="v.db.addtable.html">v.db.addtable</a>,
 <A HREF="v.drape.html">v.drape</A>,
 <a href="v.what.vect.html">v.what.vect</a>
 </EM>
