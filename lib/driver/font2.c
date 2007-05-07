@@ -2,6 +2,7 @@
 #include <stdlib.h>
 #include <string.h>
 #include <unistd.h>
+#include <errno.h>
 #include <sys/types.h>
 #include <sys/stat.h>
 #include <fcntl.h>
@@ -152,7 +153,8 @@ static void read_fontmap(const char *name)
 	fp = fopen(buf, "r");
 	if (!fp)
 	{
-		G_warning("unable to open font map '%s'", name);
+		G_warning("unable to open font map '%s': %s", buf,
+			  strerror(errno));
 		return;
 	}
 
@@ -185,9 +187,6 @@ static void load_font(void)
 
 int font_init(const char *name)
 {
-	if (strchr(name, '/'))
-		name = strrchr(name, '/') + 1;
-
 	if (strcmp(name, current_font) == 0)
 		return 0;
 
