@@ -16,12 +16,21 @@ int do_remove (int n, char *old)
     char *mapset;
     int result = 0;
     int removed = 0;
+    char xname[GNAME_MAX], xmapset[GMAPSET_MAX];
 
     G_message (_("Removing %s <%s>"), list[n].maindesc, old);
 
     /* len = get_description_len(n); */
 
     hold_signals(1);
+
+    if (G__name_is_fully_qualified(old, xname, xmapset))
+    {
+	if (strcmp(xmapset, G_mapset()) != 0)
+	    G_fatal_error ("%s is not in the current mapset (%s)", old, G_mapset());
+	old = xname;
+    }
+
     if ( G_strcasecmp(list[n].alias, "vect") == 0 ) {
 	if ((mapset = G_find_vector2 (old, "")) == NULL) {
 	    G_warning(_("Vector map <%s> not found"), old);
