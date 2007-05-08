@@ -134,14 +134,6 @@ static int parse_command(Nv_data * data, Tcl_Interp * interp,	/* Current interpr
 	exit(EXIT_FAILURE);
     /* [?!]: Exit status is zero to avoid TCL complaints */
 
-
-    /* bug exists in at least GRASS 6.2.0, 6.2.1 */
-    if(vol->answer)
-	G_warning(_("There is a bug in NVIZ's volume code! Work-around: "
-	  "Start with \"nviz -q\" and add the volume map manually from "
-	  "the Volume Panel."));
-
-
     {
 	float defs[MAX_ATTS];
 
