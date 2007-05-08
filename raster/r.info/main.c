@@ -101,6 +101,7 @@ int main(int argc, char *argv[])
     if (G_parser(argc, argv))
 	exit(EXIT_FAILURE);
 
+
     name = G_store(opt1->answer);
     if ((mapset = G_find_cell2(name, "")) == NULL)
 	G_fatal_error(_("Cannot find %s"), name);
@@ -214,19 +215,31 @@ int main(int argc, char *argv[])
 	    else
 		G_fatal_error(_("Cannot allocate memory for string"));
 
-	    if (G_asprintf
-		(&line, "  Total Cells:  %ld",
-		 (long)cellhd.rows * cellhd.cols) > 0)
+	    if (G_asprintf(&line, "  Total Cells:  %ld",
+			(long)cellhd.rows * cellhd.cols) > 0)
 		printline(line);
 	    else
 		G_fatal_error(_("Cannot allocate memory for string"));
 
-	    if (G_asprintf
-		(&line, "       Projection: %s (zone %d)",
-		 G_database_projection_name(), G_zone()) > 0)
-		printline(line);
+	    /* This is printed as a guide to what the following eastings and
+	       * northings are printed in. This data is NOT from the values
+	       * stored in the map's Cell_head */
+	    if(G_projection() == PROJECTION_UTM)
+	    {
+		if (G_asprintf(&line, "       Projection: %s (zone %d)",
+				G_database_projection_name(), G_zone()) > 0)
+		    printline(line);
+		else
+		    G_fatal_error(_("Cannot allocate memory for string"));
+	    }
 	    else
-		G_fatal_error(_("Cannot allocate memory for string"));
+	    {
+		if (G_asprintf(&line, "       Projection: %s",
+				G_database_projection_name()) > 0)
+		    printline(line);
+		else
+		    G_fatal_error(_("Cannot allocate memory for string"));
+	    }
 
 	    G_format_northing(cellhd.north, tmp1, cellhd.proj);
 	    G_format_northing(cellhd.south, tmp2, cellhd.proj);
@@ -271,18 +284,20 @@ int main(int argc, char *argv[])
 	printline("");
 
 	if (hist_ok) {
-	    printline("  Data Source:");
-	    if (G_asprintf(&line, "   %s", hist.datsrc_1) > 0)
-		printline(line);
-	    else
-		G_fatal_error(_("Cannot allocate memory for string"));
+	    if( hist.datsrc_1[0] != '\0' || hist.datsrc_2[0] != '\0') {
+		printline("  Data Source:");
+		if (G_asprintf(&line, "   %s", hist.datsrc_1) > 0)
+		    printline(line);
+		else
+		    G_fatal_error(_("Cannot allocate memory for string"));
 
-	    if (G_asprintf(&line, "   %s", hist.datsrc_2) > 0)
-		printline(line);
-	    else
-		G_fatal_error(_("Cannot allocate memory for string"));
+		if (G_asprintf(&line, "   %s", hist.datsrc_2) > 0)
+		    printline(line);
+		else
+		    G_fatal_error(_("Cannot allocate memory for string"));
 
-	    printline("");
+		printline("");
+	    }
 
 	    printline("  Data Description:");
 	    if (G_asprintf(&line, "   %s", hist.keywrd) > 0)
@@ -294,15 +309,11 @@ int main(int argc, char *argv[])
 	    if (hist.edlinecnt) {
 		printline("  Comments:  ");
 
-		for (i = 0; i < hist.edlinecnt; i++)
-
-	    /**************************************/
-		{
+		for (i = 0; i < hist.edlinecnt; i++) {
 		    if (G_asprintf(&line, "   %s", hist.edhist[i]) > 0)
 			printline(line);
 		    else
 			G_fatal_error(_("Cannot allocate memory for string"));
-
 		}
 	    }
 
