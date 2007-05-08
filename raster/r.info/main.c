@@ -96,8 +96,7 @@ int main(int argc, char *argv[])
     timestampflag = G_define_flag();
     timestampflag->key = 'p';
     timestampflag->description =
-	_
-	("Print raster map timestamp (day.month.year hour:minute:seconds) only");
+	_("Print raster map timestamp (day.month.year hour:minute:seconds) only");
 
     if (G_parser(argc, argv))
 	exit(EXIT_FAILURE);
@@ -169,14 +168,14 @@ int main(int argc, char *argv[])
 	    G_format_timestamp(&ts, timebuff);
 
 	    /*Create the r.info timestamp string */
-	    if (G_asprintf(&line, "timestamp: %s", timebuff) > 0)
+	    if (G_asprintf(&line, "Timestamp: %s", timebuff) > 0)
 		printline(line);
 	    else
 		G_fatal_error(_("Cannot allocate memory for string"));
 
 	}
 	else {
-	    if (G_asprintf(&line, "timestamp: none") > 0)
+	    if (G_asprintf(&line, "Timestamp: none") > 0)
 		printline(line);
 	    else
 		G_fatal_error(_("Cannot allocate memory for string"));
@@ -367,7 +366,6 @@ int main(int argc, char *argv[])
     }
     else {			/* rflag or sflag or tflag or gflag or hflag */
 
-
 	if (rflag->answer) {
 	    if (data_type == CELL_TYPE) {
 		if( 2 == G_read_range(name, mapset, &crange) ) {
@@ -384,7 +382,7 @@ int main(int argc, char *argv[])
 		fprintf(out, "max=%f\n", zmax);
 	    }
 	}
-	else if (gflag->answer) {
+	if (gflag->answer) {
 	    G_format_northing(cellhd.north, tmp1, cellhd.proj);
 	    G_format_northing(cellhd.south, tmp2, cellhd.proj);
 	    fprintf(out, "north=%s\n", tmp1);
@@ -395,34 +393,20 @@ int main(int argc, char *argv[])
 	    fprintf(out, "east=%s\n", tmp1);
 	    fprintf(out, "west=%s\n", tmp2);
 	}
-	else if (sflag->answer) {
+	if (sflag->answer) {
 	    G_format_resolution(cellhd.ns_res, tmp3, cellhd.proj);
 	    fprintf(out, "nsres=%s\n", tmp3);
 
 	    G_format_resolution(cellhd.ew_res, tmp3, cellhd.proj);
 	    fprintf(out, "ewres=%s\n", tmp3);
 	}
-	else if (tflag->answer) {
+	if (tflag->answer) {
 	    fprintf(out, "datatype=%s\n",
 		    (data_type == CELL_TYPE ? "CELL" :
 		     (data_type == DCELL_TYPE ? "DCELL" :
 		      (data_type == FCELL_TYPE ? "FCELL" : "??"))));
 	}
-	else if (hflag->answer) {
-	    if (hist_ok) {
-		fprintf(out, "Data Source:\n");
-		fprintf(out, "   %s\n", hist.datsrc_1);
-		fprintf(out, "   %s\n", hist.datsrc_2);
-		fprintf(out, "Data Description:\n");
-		fprintf(out, "   %s\n", hist.keywrd);
-		if (hist.edlinecnt) {
-		    fprintf(out, "Comments:\n");
-		    for (i = 0; i < hist.edlinecnt; i++)
-			fprintf(out, "   %s\n", hist.edhist[i]);
-		}
-	    }
-	}
-	else if (timestampflag->answer) {
+	if (timestampflag->answer) {
 	    if (time_ok && (first_time_ok || second_time_ok)) {
 
 		G_format_timestamp(&ts, timebuff);
@@ -436,6 +420,20 @@ int main(int argc, char *argv[])
 	    }
 	}
 
+	if (hflag->answer) {
+	    if (hist_ok) {
+		fprintf(out, "Data Source:\n");
+		fprintf(out, "   %s\n", hist.datsrc_1);
+		fprintf(out, "   %s\n", hist.datsrc_2);
+		fprintf(out, "Data Description:\n");
+		fprintf(out, "   %s\n", hist.keywrd);
+		if (hist.edlinecnt) {
+		    fprintf(out, "Comments:\n");
+		    for (i = 0; i < hist.edlinecnt; i++)
+			fprintf(out, "   %s\n", hist.edhist[i]);
+		}
+	    }
+	}
     }				/* else rflag or sflag or tflag or gflag or hflag */
 
     return EXIT_SUCCESS;
