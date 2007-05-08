@@ -33,7 +33,6 @@ void COM_Font_get(const char *name)
 	}   
 	else
 	{
-		char filename[4096];
 		int i;
 
 		/* check if freetype font is available in freetypecap */
@@ -44,8 +43,7 @@ void COM_Font_get(const char *name)
 				return;
 			}
 
-		sprintf(filename, "%s/fonts/%s", G_gisbase(), name);
-		stroke_set(filename);
+		stroke_set(name);
 	}
 }
 
