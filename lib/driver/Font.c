@@ -25,7 +25,12 @@ static void freetype_set(const char *filename)
 void COM_Font_get(const char *name)
 {
 	if (G_is_absolute_path(name))
+	{
+		if (!font_exists(name))
+			return;
+	   
 		freetype_set(name);
+	}   
 	else
 	{
 		char filename[4096];
