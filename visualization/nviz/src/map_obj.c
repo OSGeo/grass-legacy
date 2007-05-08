@@ -437,6 +437,7 @@ int Nnew_map_obj_cmd(Nv_data * data, Tcl_Interp * interp, int argc,
     char const_string[] = "constant";
     char zero_string[] = "0";
     int new_id;
+    int rows, cols, depths, max;
     int *surf_list, num_surfs, i;
     Nv_clientData *new_data;
     int file_used = 0;
@@ -571,6 +572,27 @@ int Nnew_map_obj_cmd(Nv_data * data, Tcl_Interp * interp, int argc,
 		}
 		file_used = 1;
     }
+
+	/** Initilaze defaults for GUI **/
+        /** should proably be called seperately with set_att **/
+        GVL_get_dims(new_id, &rows, &cols, &depths);
+        max = (rows > cols) ? rows : cols;
+        max = (depths > max) ? depths : max;
+        max = max / 35;
+        if (max < 1)
+            max = 1;
+
+        if (max > cols) max = cols / 2;
+        if (max > rows) max = rows / 2;
+        if (max > depths) max = depths / 2;
+
+        /* set default drawres and drawmode for isosurfaces */
+        GVL_isosurf_set_drawres(new_id, max, max, max);
+        GVL_isosurf_set_drawmode(new_id, DM_GOURAUD);
+
+        /* set default drawres and drawmode for slices */
+        GVL_slice_set_drawres(new_id, 1., 1., 1.);
+        GVL_slice_set_drawmode(new_id, DM_GOURAUD | DM_POLY);
 
     sprintf(id, "Nvol%d", new_id);
 
@@ -830,13 +852,14 @@ int get_drawmode(int type, int id, Nv_data * data, Tcl_Interp * interp)
     }
 
     /* Parse mode returned for shade style and surface style */
-    if (mode & DM_GOURAUD)
+    G_debug(3,"drawmode: %d",mode);
+    if (mode & DM_GOURAUD || mode == 2308) /* DM_GRID_SURF|DM_GOURAUD|DM_POLY*/
     strcpy(shade, "gouraud");
     else if (mode & DM_FLAT)
     strcpy(shade, "flat");
     else {
     Tcl_SetResult(interp,
-              "Internal Error: unknown shade style returned in get_drawmode",
+              "Internal Error map_obj.c: unknown shade style returned in get_drawmode",
               TCL_VOLATILE);
     return (TCL_ERROR);
     }
@@ -1288,7 +1311,7 @@ int get_nozero(int id, int type, Nv_data * data, Tcl_Interp * interp,
  * select_surf --
  *     Syntax: <map_obj> select_surf <map_obj>
  *     Select the given surface as the drape surface for
- *     either a site or vector file.  The surface to drape over
+ *     either a site or vector map.  The surface to drape over
  *     is passed as the second argument.
  */
 int select_surf(Tcl_Interp * interp, int id, int type, int argc, char *argv[])
@@ -1324,7 +1347,7 @@ int select_surf(Tcl_Interp * interp, int id, int type, int argc, char *argv[])
  * unselect_surf --
  *     Syntax: <map_obj> unselect_surf <map_obj>
  *     Unselect the given surface as the drape surface for
- *     either a site or vector file.  The surface to undrape over
+ *     either a site or vector map.  The surface to undrape over
  *     is passed as the second argument.
  */
 int unselect_surf(int id, int type, int argc, char *argv[],
