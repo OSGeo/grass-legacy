@@ -175,7 +175,7 @@ int main(int argc, char **argv)
 
     ctype = cvarr.ctype;
     if (ctype != DB_C_TYPE_INT && ctype != DB_C_TYPE_DOUBLE)
-        G_fatal_error(_("Column type not supported"));
+        G_fatal_error(_("Column type <%s> not supported (must be integer or double precision)"), db_sqltype_name(ctype));
 
     if (nrecords < 0)
         G_fatal_error(_("Cannot select data from table"));
