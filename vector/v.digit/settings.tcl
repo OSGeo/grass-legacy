@@ -144,7 +144,7 @@ proc settings {} {
     set clw 30
     
     if {![info exists GVariable(linewidth)]} {
-    	set GVariable(linewidth) 3
+    	set GVariable(linewidth) 2
     }
 
     if { [winfo exists .settings] } {
