@@ -205,11 +205,11 @@ if [ $GIS_FLAG_P -ne 1 ] ; then
 fi
 
 # Remember the intial field seperator
-defaultIFS=$IFS
+defaultIFS="$IFS"
 
 # Remember the previous path
-prevPATH=$PATH
-PATH=$PATH:${GISBASE}/etc/r.in.wms/
+prevPATH="$PATH"
+PATH="$PATH:${GISBASE}/etc/r.in.wms/"
 export PATH
 
 #####################
@@ -233,7 +233,7 @@ exitprocedure()
 	message 0 "User break!"
 	PATH=$prevPATH
 	export PATH
-	rm -f ${TMP}*
+	rm -f "${TMP}*"
 	exit 1
 }
 trap "exitprocedure" 2 3 15
@@ -305,15 +305,15 @@ listLayers() {
 		echo "Note: xml2 NOT avaliable"
 		cat $CAPABILITIES_FILE | \
 		grep "Name\|Title\|Style\|Layer" | \
-		sed -e "s/<Layer .*>/LAYER:/i"| \
-		sed -e "s/<\/Layer.*>//i"| \
-		sed -e "s/<Name>\s*\(\w*\)/~\1~/ig" | \
-		sed -e "s/<\/Name>\n//ig" | \
-		sed -e "s/<Style>\n*\s*\(\w*\)/Style: \1/i" |\
-		sed -e "s/<\/Style>//i" |\
-		sed -e "s/<Title>\(.*\)<\/Title>/\t --\1 /i" | \
-		sed -e "s/<\/Title>//i" | \
-		sed -e "s/<\/*.*\/*\/*>//i"
+		sed -e "s/<Layer .*>/LAYER:/"| \
+		sed -e "s/<\/Layer.*>//"| \
+		sed -e "s/<Name>\s*\(\w*\)/~\1~/g" | \
+		sed -e "s/<\/Name>\n//g" | \
+		sed -e "s/<Style>\n*\s*\(\w*\)/Style: \1/" |\
+		sed -e "s/<\/Style>//" |\
+		sed -e "s/<Title>\(.*\)<\/Title>/\t --\1 /" | \
+		sed -e "s/<\/Title>//" | \
+		sed -e "s/<\/*.*\/*\/*>//"
 	fi
 
 	if [ -e $CAPABILITIES_FILE ]; then
@@ -419,7 +419,7 @@ file "$FILES" | grep HTML > /dev/null
 if [ $? -eq 0 ] ; then
   echo "#################################"
   cat "$FILES"
-  rm -f ${TMP}*
+  rm -f "${TMP}*"
   exit 1
 fi
 
@@ -427,5 +427,5 @@ message 0 "r.in.gdalwarp $GDALWARP"
 eval "r.in.gdalwarp $GDALWARP"
 
 # Clean up:
-rm -f ${TMP}*
+rm -f "${TMP}*"
 

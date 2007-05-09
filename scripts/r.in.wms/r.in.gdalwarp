@@ -107,7 +107,7 @@ if [ $GIS_FLAG_P -ne 1 ] ; then
     fi
 fi
 
-defaultIFS=$IFS
+defaultIFS="$IFS"
 
 # warpimport file map
 # Warps and imports a single file as a named map
@@ -155,9 +155,16 @@ $CHANNEL_SUFFIXES" | sort -u`
 	# Calculate the new maps:
 	for SUFFIX in $CHANNEL_SUFFIXES ; do
 		eval "$SUFFIX"
+
+		# if no suffix, processing is simple (e.g. elevation has only 1 band)
+		if [ -z "$sfx" ] ; then
+		    # run r.mapcalc to crop to region
+		    r.mapcalc "${MAP}${sfx} = ${TMPMAPNAME}${sfx}"
+		    continue
+		fi
+
 		# Use alpha channel for nulls:
-		GRASS_VERBOSE=1 \
-		  r.mapcalc "${MAP}${sfx} = if( $ALPHALAYER, ${TMPMAPNAME}${sfx}, null() )"
+		r.mapcalc "${MAP}${sfx} = if( $ALPHALAYER, ${TMPMAPNAME}${sfx}, null() )"
 		# Copy the color tables:
 		r.colors map=${MAP}${sfx} rast=${TMPMAPNAME}${sfx}
 
@@ -176,7 +183,7 @@ $CHANNEL_SUFFIXES" | sort -u`
 }
 
 nowarpimport () {
-	FILE=$1
+	FILE="$1"
 	MAP=$2
 
 	r.in.gdal -o $FLAGS input="$FILE" output="$MAP"
@@ -191,9 +198,15 @@ nowarpimport () {
 	SUFFIXES=`echo "$SUFFIXES
 $CHANNEL_SUFFIXES" | sort -u`
 
-	IFS=$defaultIFS
+	IFS="$defaultIFS"
 	for SUFFIX in $CHANNEL_SUFFIXES ; do
 		eval "$SUFFIX"
+
+		# skip if only one band ($sfx is empty)
+		if [ -z "$sfx" ] ; then
+		    continue
+		fi
+
 		# Make patch lists:
 		sfx2=`echo $sfx | sed "s/\./_/"`
 		# This is a hack to make the patch lists empty:
