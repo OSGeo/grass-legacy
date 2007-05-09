@@ -958,9 +958,6 @@ struct libavl_allocator tavl_allocator_default =
     tavl_free
   };
 
-#undef NDEBUG
-#include <assert.h>
-
 /* Asserts that |tavl_insert()| succeeds at inserting |item| into |table|. */
 void
 (tavl_assert_insert) (struct tavl_table *table, void *item)
