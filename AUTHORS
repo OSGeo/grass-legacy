@@ -38,6 +38,12 @@ their bright minds.
 Email addresses below have been spam-proofed to protect the innocent;
 add "@" and "." as needed.
 
+A list of contributors with write access is available in
+./contributors.csv
+
+A list of contributors without write access is available in
+./contributors_extra.csv
+
 
 New contributions specific to GRASS 6.1 and 6.2:
 -------------------------------------------------
