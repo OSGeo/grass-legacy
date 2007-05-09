@@ -502,6 +502,14 @@ proc Gm:DefaultFont { } {
     foreach item $fontlist {
     	$fontlb insert end $item
     }
+    
+    if {[info exists env(GRASS_FONT)] && $env(GRASS_FONT) != ""} {
+    	set fontindex [lsearch $fontlist $env(GRASS_FONT)]
+    	if {$fontindex > -1} {
+    		$fontlb selection set $fontindex
+    		$fontlb see $fontindex
+    	}
+    }
 
     pack $row.vscrollbar -side right -fill y
     pack $row.b -side right
