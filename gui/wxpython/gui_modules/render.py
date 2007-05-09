@@ -48,7 +48,7 @@ class MapLayer:
 
         Debug.msg (3, "MapLayer.__init__(): type=%s, cmd='%s', name=%s, mapset=%s, active=%d, opacity=%d, hidden=%d" %
                        (type, cmd, name, mapset, active, opacity, hidden))
-        
+
         gtemp = utils.GetTempfile()
         self.maskfile = gtemp + ".pgm"
         if self.type == "overlay":
@@ -484,7 +484,7 @@ class Map:
             # mapset
             if l_mapset != None and layer.mapset != l_mapset:
                 continue
-            
+
             # hidden and active layers
             if l_active != None and \
                    l_hidden != None:
@@ -507,7 +507,7 @@ class Map:
                 selected.append(layer)
 
         Debug.msg (3, "Map.GetListOfLayers(): numberof=%d" % len(selected))
-        
+
         return selected
 
     def Render(self, force=False):
@@ -529,6 +529,7 @@ class Map:
         os.environ["GRASS_REGION"] = self.SetRegion()
         os.environ["GRASS_WIDTH"]  = str(self.width)
         os.environ["GRASS_HEIGHT"] = str(self.height)
+
 
         try:
             # render map layers
@@ -552,7 +553,7 @@ class Map:
                     masks.append(layer.maskfile)
                     opacities.append(str(layer.opacity))
 
-                Debug.msg (3, "Map.Render() type=%s, layer=%s " % (layer.type, layer.name))
+            Debug.msg (3, "Map.Render() type=%s, layer=%s " % (layer.type, layer.name))
 
             # make arrays to strings
             mapstr = ",".join(maps)
@@ -740,11 +741,11 @@ class Map:
             layer = self.lookup[item]
         except IndexError:
             return
-        
+
         layer.name =  name
         if mapset:
             layer.mapset = mapset
-            
+
     def RemoveLayer(self, name=None, mapset=None, id=None):
         """
         Removes layer from list of layers, defined by name@mapset or id
@@ -896,7 +897,7 @@ class Map:
 
 
 if __name__ == "__main__":
-    print """
+    """
     Test of Display class.
     Usage: display=Render()
     """
