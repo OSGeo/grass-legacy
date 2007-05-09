@@ -37,12 +37,12 @@ int main(int argc, char *argv[])
     char *mapset;		/* Raster mapset      */
     struct Cell_head cellhd;
     struct GModule *module;
-    struct Option *raster, *title_opt, *history_opt, *map_opt;
+    struct Option *raster, *title_opt, *history_opt, *datasrc_opt, *map_opt;
     char buf[512];
     int cellhd_ok;		/* Is cell header OK? */
     int is_reclass;		/* Is raster reclass? */
     char *infile, *cmapset;
-    char title[MAX_TITLE_LEN+1];
+    char title[MAX_TITLE_LEN+1], datasrc[RECORD_LEN+1];
     struct History hist;
 
     /* Initialize GIS engine */
@@ -70,6 +70,13 @@ int main(int argc, char *argv[])
     history_opt->type        = TYPE_STRING;
     history_opt->required    = NO;
     history_opt->description = _("Text to append to the next line of the map's metadata file");
+
+    datasrc_opt = G_define_option();
+    datasrc_opt->key = "organization";
+    datasrc_opt->key_desc   = "\"phrase\"";
+    datasrc_opt->type        = TYPE_STRING;
+    datasrc_opt->required    = NO;
+    datasrc_opt->description = _("Organization where raster map was created");
 
     map_opt = G_define_option();
     map_opt->key = "rast";
@@ -140,6 +147,17 @@ int main(int argc, char *argv[])
                         strlen (hist.edhist[hist.edlinecnt]));
         }
 
+	G_write_history(raster->answer, &hist);
+	exit(EXIT_SUCCESS);
+    }
+
+    if(datasrc_opt->answer) {
+	G_read_history (raster->answer, mapset, &hist);
+	strncpy(datasrc, datasrc_opt->answer, RECORD_LEN);
+	datasrc[RECORD_LEN] = '\0'; /* strncpy doesn't null terminate oversized input */
+	G_strip(datasrc);
+	G_debug(3, "map datasrc= [%s]  (%d chars)", datasrc, strlen(datasrc));
+	strncpy (hist.datsrc_1, datasrc, RECORD_LEN);
 	G_write_history(raster->answer, &hist);
 	exit(EXIT_SUCCESS);
     }
