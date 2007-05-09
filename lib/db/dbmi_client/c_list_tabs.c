@@ -1,5 +1,14 @@
+#include <stdlib.h>
+#include <string.h>
 #include <grass/dbmi.h>
 #include "macros.h"
+
+static int cmp_dbstr(const void *pa, const void *pb)
+{
+    const char *a = db_get_string((dbString *)pa);
+    const char *b = db_get_string((dbString *)pb);
+    return strcmp(a, b);
+}
 
 /*!
  \fn int db_list_tables (dbDriver *driver, dbString **names, int *count, int system)
@@ -29,6 +38,8 @@ db_list_tables (dbDriver *driver, dbString **names, int *count, int system)
 
 /* results */
     DB_RECV_STRING_ARRAY (names, count);
+
+    qsort(*names, *count, sizeof(dbString), cmp_dbstr);
 
     return DB_OK;
 }
