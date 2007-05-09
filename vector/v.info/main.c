@@ -40,7 +40,7 @@ main (int argc, char *argv[])
 {
   struct GModule *module;
   struct Option *in_opt, *fieldopt;
-  struct Flag *histf, *columns, *gflag, *tflag;
+  struct Flag *histf, *columns, *gflag, *tflag, *mflag;
   struct Map_info Map;
   struct dig_head v_head;
   BOUND_BOX box;
@@ -78,6 +78,10 @@ main (int argc, char *argv[])
   gflag->key            = 'g';
   gflag->description    = _("Print vector map region only");
   
+  mflag = G_define_flag();
+  mflag->key            = 'm';
+  mflag->description    = _("Print map title only");
+
   tflag = G_define_flag();
   tflag->key            = 't';
   tflag->description    = _("Print topology information only");
@@ -100,6 +104,9 @@ main (int argc, char *argv[])
       while ( Vect_hist_read ( buf, 1000, &Map ) != NULL ) {
 	 fprintf ( stdout, "%s\n", buf );
       }
+  }
+  else if ( mflag->answer ) {
+	fprintf ( stdout, "%s\n", Vect_get_map_name(&Map));
   }
   else if (gflag->answer || tflag->answer ){
        if (gflag->answer) {
