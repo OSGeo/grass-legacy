@@ -14,12 +14,12 @@ INST_DIR_MACOSX = ${prefix}/${MACOSX_APPDIR}
 default: modbuild
 
 modbuild: ReadMe.rtf
-	@test -d $(ARCH_DISTDIR)/modbuild || mkdir -p $(ARCH_DISTDIR)/modbuild
+	mkdir -p $(ARCH_DISTDIR)/modbuild
 	-cp -f ReadMe.rtf $(ARCH_DISTDIR)/modbuild/
-	@test -d $(ARCH_DISTDIR)/modbuild/dist.$(ARCH) || mkdir -p $(ARCH_DISTDIR)/modbuild/dist.$(ARCH)
+	mkdir -p $(ARCH_DISTDIR)/modbuild/dist.$(ARCH)
 	-cp -rf $(ARCH_DISTDIR)/demolocation $(ARCH_DISTDIR)/modbuild/dist.$(ARCH)/
-	@test -d $(ARCH_DISTDIR)/modbuild/module || mkdir -p $(ARCH_DISTDIR)/modbuild/module
-	@test -d $(ARCH_DISTDIR)/modbuild/include/Make || mkdir -p $(ARCH_DISTDIR)/modbuild/include/Make
+	mkdir -p $(ARCH_DISTDIR)/modbuild/module
+	mkdir -p $(ARCH_DISTDIR)/modbuild/include/Make
 	-cp $(ARCH_DISTDIR)/include/Make/Dir.make $(ARCH_DISTDIR)/modbuild/include/Make/
 	-cp $(ARCH_DISTDIR)/include/Make/Doxygen.make $(ARCH_DISTDIR)/modbuild/include/Make/
 	@# need a little change in Grass.make
@@ -51,8 +51,9 @@ modbuild: ReadMe.rtf
 	-cp $(ARCH_DISTDIR)/include/Make/Script.make $(ARCH_DISTDIR)/modbuild/include/Make/
 	-cp $(ARCH_DISTDIR)/include/Make/Shlib.make $(ARCH_DISTDIR)/modbuild/include/Make/
 	-cp $(ARCH_DISTDIR)/include/Make/Stlib.make $(ARCH_DISTDIR)/modbuild/include/Make/
-	@test -d $(ARCH_DISTDIR)/modbuild/tools/g.html2man || mkdir -p $(ARCH_DISTDIR)/modbuild/tools/g.html2man
+	mkdir -p $(ARCH_DISTDIR)/modbuild/tools/g.html2man
 	-cp ../../tools/g.html2man/g.html2man $(ARCH_DISTDIR)/modbuild/tools/g.html2man/
+	-cp ../../tools/mkhtml.sh $(ARCH_DISTDIR)/modbuild/tools/
 
 clean: 
 	
