@@ -17,6 +17,14 @@ void PNG_color(int number)
 		return;
 	}
 
-	currentColor = number;
+	if (true_color)
+	{
+		int r = (number >> 16) & 0xFF;
+		int g = (number >>  8) & 0xFF;
+		int b = (number >>  0) & 0xFF;
+		currentColor = get_color(r, g, b, 0);
+	}
+	else
+		currentColor = number;
 }
 

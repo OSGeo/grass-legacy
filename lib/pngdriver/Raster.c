@@ -97,7 +97,7 @@ int PNG_scaled_raster(
 		if (masked && nul && nul[j])
 			continue;
 
-		c = PNG_lookup_color(red[j], grn[j], blu[j]);
+		c = get_color(red[j], grn[j], blu[j], 0);
 
 		for (y = y0; y < y1; y++)
 		{
