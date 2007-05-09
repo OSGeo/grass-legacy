@@ -78,7 +78,7 @@ cleanup()
 # what to do in case of user break:
 exitprocedure()
 {
- g.message -e "User break!"
+ g.message -e 'User break!'
  cleanup
  exit 1
 }
@@ -98,7 +98,7 @@ if [ -z "$GIS_OPT_COLUMN" ] ; then
 else
    table=`v.db.connect $GIS_OPT_INPUT -g | grep -w $GIS_OPT_LAYER | awk '{print $2}'`
    if [ -z "$table" ] ; then
-      g.message -e "There is no table connected to this map!"
+      g.message -e 'There is no table connected to this map!'
       cleanup
       exit 1
    fi

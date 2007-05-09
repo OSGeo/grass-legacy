@@ -56,7 +56,7 @@ elif [ "$OSTYPE" = "cygwin" ] ; then
         fi
     done
     if [ "$i" = "NOT_FOUND" ] ; then
-        g.messge -e "Cannot find GRASS document base."
+        g.message -e "Cannot find GRASS document base."
         exit 1
     fi
     BROWSERNAME=`basename "$GRASS_HTML_BROWSER" | sed 's/\.exe$//i'`

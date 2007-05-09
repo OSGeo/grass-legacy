@@ -171,7 +171,8 @@ echo "(${GIS_OPT_FORMULA})" | sed \
 	-e "s/\([^a-zA-Z0-9]\)F\([^a-zA-Z0-9]\)/\1 \"$GIS_OPT_FGRID\" \2/g"
 `
 
-g.message "r3.mapcalc \"$GIS_OPT_OUTFILE\" = \"$command\"" # Show the resulting commandline
+# Show the resulting commandline
+g.message message="r3.mapcalc \"$GIS_OPT_OUTFILE\" = \"$command\""
 
 r3.mapcalc "$GIS_OPT_OUTFILE" = "$command" # Start the command
 
@@ -181,6 +182,6 @@ if [ $? -ne 0 ]; then
 	exit 1
 fi
 
-g.message "Done"
+g.message "Done."
 
 exit 0

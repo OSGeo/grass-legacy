@@ -114,7 +114,7 @@ else
    if [ "$PROJ" -ne 1 ] ; then
       g.message "GpsDrive assumes northings are not rotated compared to true-geographic north."
       g.message "If you are using a projection with significant curvature away from the central"
-      g.message "meridian, then you will likely end up with a distorted background map!"
+      g.message 'meridian, then you will likely end up with a distorted background map!'
       g.message "Keeping the area small will lessen the error, but not eliminate it."
       g.message "Consider output from a Lat/Lon location."
    fi
@@ -204,4 +204,4 @@ echo "$output $LAT $LON $SCALE" >> $HOME/.gpsdrive/map_koord.txt
 g.message "Center lat,lon is [$LAT,$LON]"
 g.message "Center lat,lon is [$LAT,$LON]"
 
-g.message "Done"
+g.message "Done."

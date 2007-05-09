@@ -163,8 +163,8 @@
 #%end
 
 if  [ -z "$GISBASE" ] ; then
-    g.message -e "You must be in GRASS GIS to run this program."
- exit 1
+    echo "You must be in GRASS GIS to run this program."
+    exit 1
 fi
 
 if [ "$1" != "@ARGS_PARSED@" ] ; then
@@ -230,7 +230,7 @@ message () {
 #
 exitprocedure()
 {
-	message 0 "User break!"
+	g.message -e 'User break!'
 	PATH=$prevPATH
 	export PATH
 	\rm -f "${TMP}*"

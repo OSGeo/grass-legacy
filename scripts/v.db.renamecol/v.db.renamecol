@@ -65,7 +65,7 @@ PROG=`basename $0`
 
 #### check if we have awk
 if [ ! -x "`which awk`" ] ; then
-    g.messsage -e "awk required, please install awk or gawk first"
+    g.message -e "awk required, please install awk or gawk first"
     exit 1
 fi
 
@@ -77,7 +77,7 @@ export LC_NUMERIC
 #### setup temporary file
 TMP="`g.tempfile pid=$$`"
 if [ $? -ne 0 ] || [ -z "$TMP" ] ; then
-    g.message -e "unable to create temporary files" 
+    g.message -e "Unable to create temporary files" 
     exit 1
 fi
 
@@ -89,7 +89,7 @@ cleanup()
 # what to do in case of user break:
 exitprocedure()
 {
- g.message -e "User break!"
+ g.message -e 'User break!'
  cleanup
  exit 1
 }
@@ -115,7 +115,7 @@ fi
 
 table=`v.db.connect $GIS_OPT_MAP -g | grep -w $GIS_OPT_LAYER | awk '{print $2}'`
 if [ -z "$table" ] ; then
-   g.message "There is no table connected to this map! Cannot rename any column."
+   g.message 'There is no table connected to this map! Cannot rename any column.'
    cleanup
    exit 1
 fi
@@ -125,7 +125,8 @@ oldcol="`echo $GIS_OPT_COLUMN | cut -d',' -f1`"
 newcol="`echo $GIS_OPT_COLUMN | cut -d',' -f2`"
 
 if [ "$col" = "cat" ] ; then
-   g.message -e "Cannot rename <$col> column as it is needed to keep table connected to vector map"
+   g.message -e "Cannot rename <$col> column as it is needed to keep table \
+     connected to vector map"
    cleanup
    exit 1
 fi

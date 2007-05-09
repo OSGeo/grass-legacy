@@ -63,7 +63,8 @@ if [ "$1" != "@ARGS_PARSED@" ] ; then
   exec g.parser "$0" "$@"
 fi
 
-g.message -w "This module is superseded and will be removed in future versions of GRASS. Use the v.univar instead."
+g.message -w "This module is superseded and will be removed in future \
+  versions of GRASS. Use the v.univar instead."
 
 PROG=`basename $0`
 
@@ -93,7 +94,7 @@ cleanup()
 # what to do in case of user break:
 exitprocedure()
 {
- g.message -e "User break!"
+ g.message -e 'User break!'
  cleanup
  exit 1
 }

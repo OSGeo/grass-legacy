@@ -86,7 +86,7 @@ LOCATION=$GISDBASE/$LOCATION_NAME/$MAPSET
 # what to do in case of user break:
 exitprocedure()
 {
- g.message -e "User break!"
+ g.message -e 'User break!'
  #delete internal mask and any TMP files:
  g.remove rast=$TMP1,$TMP1.buf,${TMP1}_filled > /dev/null
  g.remove vect=${VECTTMP} > /dev/null
@@ -199,7 +199,7 @@ if [ $POINTSNUMBER -lt 2 ] ; then
   exit 1
 fi
 
-g.message "Note: Below warnings may be ignored."
+g.message "Note: The following warnings may be ignored."
 
 #remove internal MASK first -- WHY???? MN 10/2005
 g.remove MASK > /dev/null

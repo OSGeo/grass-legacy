@@ -81,7 +81,7 @@
 # what to do in case of user break:
 exitprocedure()
 {
- g.message -e "User break!"
+ g.message -e message='User break!'
  cleanup
  exit 1
 }
@@ -140,7 +140,7 @@ fi
 #save current settings:
 g.region save=i.fusion.brovey.$TMP > /dev/null
 
-g.message "Temporarily setting raster resolution to PAN resolution: $PANRES"
+g.message message="Temporarily setting raster resolution to PAN resolution: $PANRES"
 g.region res=$PANRES -ap > /dev/null
 
 g.message "Performing Brovey transformation..."
@@ -158,21 +158,21 @@ g.message "Performing Brovey transformation..."
 # r.mapcalc "brov.blue= 1. * spot.ms.1 / (spot.ms.1 + spot.ms.2 + spot.ms.3) * spot.p"
 # note: for RGB composite then revert brov.red and brov.green!
 
-g.message  "Calculating $GIS_OPT_OUTPUTPREFIX.red: ...(step 1/4)"
+g.message message="Calculating $GIS_OPT_OUTPUTPREFIX.red: ...(step 1/4)"
 r.mapcalc   $GIS_OPT_OUTPUTPREFIX.red="1. * $GIS_OPT_MS3 / ($GIS_OPT_MS1 + $GIS_OPT_MS2 + $GIS_OPT_MS3) * $GIS_OPT_PAN"
 if [ $? -ne 0 ] ; then
  g.message -e "An error occurred while running r.mapcalc"
  exit 1
 fi
 
-g.message "Calculating $GIS_OPT_OUTPUTPREFIX.green: ...(step 2/4)"
+g.message message="Calculating $GIS_OPT_OUTPUTPREFIX.green: ...(step 2/4)"
 r.mapcalc   $GIS_OPT_OUTPUTPREFIX.green="1. * $GIS_OPT_MS2 / ($GIS_OPT_MS1 + $GIS_OPT_MS2 + $GIS_OPT_MS3) * $GIS_OPT_PAN"
 if [ $? -ne 0 ] ; then
  g.message -e "An error occurred while running r.mapcalc"
  exit 1
 fi
 
-g.message  "Calculating $GIS_OPT_OUTPUTPREFIX.blue: ...(step 3/4)"
+g.message message="Calculating $GIS_OPT_OUTPUTPREFIX.blue: ...(step 3/4)"
 r.mapcalc   $GIS_OPT_OUTPUTPREFIX.blue="1. * $GIS_OPT_MS1 / ($GIS_OPT_MS1 + $GIS_OPT_MS2 + $GIS_OPT_MS3) * $GIS_OPT_PAN"
 if [ $? -ne 0 ] ; then
  g.message -e "An error occurred while running r.mapcalc"
@@ -193,7 +193,7 @@ fi
 
 if [ $GIS_FLAG_S -eq 1 ] ; then
  #apect table is nice for SPOT:
- g.message "Assigning color tables for SPOT ...(step 4/4)"
+ g.message message="Assigning color tables for SPOT ...(step 4/4)"
  r.colors $GIS_OPT_OUTPUTPREFIX.blue col=aspect
  r.colors $GIS_OPT_OUTPUTPREFIX.green col=aspect
  r.colors $GIS_OPT_OUTPUTPREFIX.red col=aspect
@@ -203,7 +203,7 @@ if [ $GIS_FLAG_S -eq 1 ] ; then
  g.rename $GIS_OPT_OUTPUTPREFIX.$TMP,$GIS_OPT_OUTPUTPREFIX.red > /dev/null
 else
  #aspect table is nice for LANDSAT and QuickBird:
- g.messge "Assigning color tables for LANDSAT or QuickBird ...(step 4/4)"
+ g.message message="Assigning color tables for LANDSAT or QuickBird ...(step 4/4)"
  r.colors $GIS_OPT_OUTPUTPREFIX.blue col=aspect
  r.colors $GIS_OPT_OUTPUTPREFIX.green col=aspect
  r.colors $GIS_OPT_OUTPUTPREFIX.red col=aspect
@@ -217,9 +217,9 @@ echo "$GIS_OPT_OUTPUTPREFIX.red"
 echo "$GIS_OPT_OUTPUTPREFIX.green"
 echo "$GIS_OPT_OUTPUTPREFIX.blue"
 g.message "To visualize output, run:"
-g.message "g.region -p rast=$GIS_OPT_OUTPUTPREFIX.red ; d.erase"
-g.message "d.rgb r=$GIS_OPT_OUTPUTPREFIX.red g=$GIS_OPT_OUTPUTPREFIX.green b=$GIS_OPT_OUTPUTPREFIX.blue"
-g.message "If desired, combine channels with 'r.composite' to a single map"
+g.message message="g.region -p rast=$GIS_OPT_OUTPUTPREFIX.red ; d.erase"
+g.message message="d.rgb r=$GIS_OPT_OUTPUTPREFIX.red g=$GIS_OPT_OUTPUTPREFIX.green b=$GIS_OPT_OUTPUTPREFIX.blue"
+g.message "If desired, combine channels with 'r.composite' to a single map."
 
 # write cmd history:
 r.support $GIS_OPT_OUTPUTPREFIX.red history="${CMDLINE}"

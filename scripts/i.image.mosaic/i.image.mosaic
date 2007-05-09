@@ -86,7 +86,7 @@ eval `g.gisenv`
 : ${GISBASE?} ${GISDBASE?} ${LOCATION_NAME?} ${MAPSET?}
 CURRLOCATION=$GISDBASE/$LOCATION_NAME/$MAPSET
 
-g.message -w "Do not forget to set region properly to cover all images!"
+g.message -w message='Do not forget to set region properly to cover all images!'
 
 # two images to patch
 if [ -z "$GIS_OPT_IMAGE3" -a  -z "$GIS_OPT_IMAGE4" ]; then
@@ -105,7 +105,7 @@ if [ -z "$GIS_OPT_IMAGE3" -a  -z "$GIS_OPT_IMAGE4" ]; then
      mapset2="${mapset}"
      cat $GISDBASE/$LOCATION_NAME/$mapset2/colr/$GIS_OPT_IMAGE2 | grep -v '%' | tr -s ' ' '\012' | awk -F':' '{print $1+256":"$2":"$3":"$4}'>>$CURRLOCATION/colr/$GIS_OPT_IMAGE1.$GIS_OPT_IMAGE2.mosaic
      
-     g.message "Ready. File $GIS_OPT_IMAGE1.$GIS_OPT_IMAGE2.mosaic created."
+     g.message message="Ready. File $GIS_OPT_IMAGE1.$GIS_OPT_IMAGE2.mosaic created."
 
      # write cmd history:
      r.support $GIS_OPT_IMAGE1.$GIS_OPT_IMAGE2.mosaic history="${CMDLINE}"
@@ -121,7 +121,7 @@ if [ -z "$GIS_OPT_IMAGE3" -o  -z "$GIS_OPT_IMAGE4" ]; then
      tail -256 $CURRLOCATION/colr/$GIS_OPT_IMAGE1 >> $CURRLOCATION/colr/$GIS_OPT_IMAGE1.$GIS_OPT_IMAGE2.$GIS_OPT_IMAGE3.mosaic
      tail -256 $CURRLOCATION/colr/$GIS_OPT_IMAGE2 |awk -F':' '{print $1+256":"$2":"$3":"$4}'>>$CURRLOCATION/colr/$GIS_OPT_IMAGE1.$GIS_OPT_IMAGE2.$GIS_OPT_IMAGE3.mosaic
      tail -256 $CURRLOCATION/colr/$GIS_OPT_IMAGE3 |awk -F':' '{print $1+512":"$2":"$3":"$4}'>>$CURRLOCATION/colr/$GIS_OPT_IMAGE1.$GIS_OPT_IMAGE2.$GIS_OPT_IMAGE3.mosaic
-     g.message "Ready. File $GIS_OPT_IMAGE1.$GIS_OPT_IMAGE2.$GIS_OPT_IMAGE3.mosaic created."
+     g.message message="Ready. File $GIS_OPT_IMAGE1.$GIS_OPT_IMAGE2.$GIS_OPT_IMAGE3.mosaic created."
 
      # write cmd history:
      r.support $GIS_OPT_IMAGE1.$GIS_OPT_IMAGE2.$GIS_OPT_IMAGE3.mosaic history="${CMDLINE}"
@@ -138,7 +138,7 @@ if [ $GIS_OPT_IMAGE3 != "" -a  $GIS_OPT_IMAGE4 != "" ]; then
      tail -256 $CURRLOCATION/colr/$GIS_OPT_IMAGE2 |awk -F':' '{print $1+256":"$2":"$3":"$4}'>>$CURRLOCATION/colr/$GIS_OPT_IMAGE1.$GIS_OPT_IMAGE2.$GIS_OPT_IMAGE3.$GIS_OPT_IMAGE4.mosaic
      tail -256 $CURRLOCATION/colr/$GIS_OPT_IMAGE3 |awk -F':' '{print $1+512":"$2":"$3":"$4}'>>$CURRLOCATION/colr/$GIS_OPT_IMAGE1.$GIS_OPT_IMAGE2.$GIS_OPT_IMAGE3.$GIS_OPT_IMAGE4.mosaic
      tail -256 $CURRLOCATION/colr/$GIS_OPT_IMAGE4 |awk -F':' '{print $1+768":"$2":"$3":"$4}'>>$CURRLOCATION/colr/$GIS_OPT_IMAGE1.$GIS_OPT_IMAGE2.$GIS_OPT_IMAGE3.$GIS_OPT_IMAGE4.mosaic
-     g.message "Ready. File $GIS_OPT_IMAGE1.$GIS_OPT_IMAGE2.$GIS_OPT_IMAGE3.$GIS_OPT_IMAGE4.mosaic created."
+     g.message message="Ready. File $GIS_OPT_IMAGE1.$GIS_OPT_IMAGE2.$GIS_OPT_IMAGE3.$GIS_OPT_IMAGE4.mosaic created."
 
      # write cmd history:
      r.support $GIS_OPT_IMAGE1.$GIS_OPT_IMAGE2.$GIS_OPT_IMAGE3.$GIS_OPT_IMAGE4.mosaic history="${CMDLINE}"

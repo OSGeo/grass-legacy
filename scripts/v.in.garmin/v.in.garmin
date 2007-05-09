@@ -124,7 +124,7 @@ fi
 
 
 #### trap ctrl-c so that we can clean up tmp
-trap 'rm -f ${TMP}*' 2 3 15
+trap 'rm -f "${TMP}*"' 2 3 15
 
 
 #### process command line arguments 
@@ -138,25 +138,25 @@ fi
 if [ -n "$GIS_OPT_OUTPUT" ] ; then
     NAME="$GIS_OPT_OUTPUT"
     if [ $VERBOSE -eq 1 ] ; then
-	g.message "output=$NAME"
+	g.message message="output=$NAME"
     fi
 fi
 if [ -n "$GIS_OPT_PORT" ] ; then
     GPSPORT="-p$GIS_OPT_PORT"
     if [ $VERBOSE -eq 1 ] ; then
-	g.message "port=$GIS_OPT_PORT"
+	g.message message="port=$GIS_OPT_PORT"
     fi
 fi
 
 if [ $GIS_FLAG_W -eq 1 ] && ([ $GIS_FLAG_R -eq 1 ] || [ $GIS_FLAG_T -eq 1 ]) ; then
     g.message -e "One feature at a time please. Use v.patch if you need to combine them."
-    rm -f ${TMP}*
+    rm -f "${TMP}*"
     exit 1
 fi
 # logic eludes me at pressent..  [combine with above]
 if [ $GIS_FLAG_R -eq 1 ] && [ $GIS_FLAG_T -eq 1 ] ; then
     g.message -e "One feature at a time please. Use v.patch if you need to combine them."
-    rm -f ${TMP}*
+    rm -f "${TMP}*"
     exit 1
 fi
 
@@ -182,7 +182,7 @@ fi
 
 if [ "`expr $WPT + $TRK + $RTE`" -eq 0 ] ; then
     g.message -e  "Must request either waypoints, route, or track."
-    rm -f ${TMP}*
+    rm -f "${TMP}*"
     exit 1
 fi
 
@@ -191,8 +191,8 @@ fi
 # sadly gpstrans 0.39 returns 0 after timeout.. hopefully fixed someday.
 gpstrans "$GPSPORT" -i 1> /dev/null
 if [ $? -ne 0 ] ; then
-    g.message -e "Receiver on $GPSPORT not responding, exiting"
-    rm -f ${TMP}*
+    g.message -e message="Receiver on $GPSPORT not responding, exiting"
+    rm -f "${TMP}*"
     exit 1
 fi
 
@@ -202,17 +202,17 @@ OUT_PROJ="`g.proj -jf`"
 PROJ_TYPE=`g.region -p | grep 'projection' | cut -f2 -d" "`
 if [ $PROJ_TYPE -eq 0 ] && [ $KEEP_WGS84 -ne 1 ] ; then
     g.message -e "Cannot project to a XY location."
-    rm -f ${TMP}*
+    rm -f "${TMP}*"
     exit 1
 fi
 
 #### receive data
 if [ $WPT -eq 1 ] ; then
-    g.message  "Uploading Waypoints"
+    g.message "Uploading Waypoints"
     gpstrans "$GPSPORT" -dw > "$TMP".gpst 2>/dev/null
 fi
 if [ $RTE -eq 1 ] ; then
-    g.message  "Uploading Routes"
+    g.message "Uploading Routes"
     gpstrans "$GPSPORT" -dr > "$TMP".gpst 2>/dev/null
 fi
 if [ $TRK -eq 1 ] ; then
@@ -223,7 +223,7 @@ fi
 #### check success/failure
 if [ $? -ne 0 ] ; then
     g.message -e "Retrieving data"
-    rm -f ${TMP}*
+    rm -f "${TMP}*"
     exit 1
 fi
 
@@ -231,14 +231,14 @@ fi
 #### check which projection we are working with
 PROJ="`head -n 1 "$TMP".gpst | sed -e 's/Format: //' | sed -e 's/  UTC.*//'`"
 if [ $VERBOSE -eq 1 ] ; then
-    g.message "Coordinate format: ${PROJ}"
+    g.message message="Coordinate format: ${PROJ}"
 fi
 if [ "$PROJ" != "DDD" ] ; then
     # Why? Because v.in.ascii cannot, and cs2cs with trouble deals with DMS 
     # or DM.MM formatted input and I'm not going to start doing that sort
     # of math in a shell script.
-    g.message -e "Only DDD coordinates currently supported. [$PROJ]"
-    rm -f ${TMP}*
+    g.message -e message="Only DDD coordinates currently supported. [$PROJ]"
+    rm -f "${TMP}*"
     exit 1
 fi
 IS_WGS84="`head -n 1 "$TMP".gpst | grep 'WGS 84'`"
@@ -311,7 +311,7 @@ if [ $CREATE_POINTS -eq 1 ] ; then
 
 	if [ $EXITCODE -ne 0 ] ; then
 	    g.message "Importing data"
-	    rm -f ${TMP}*
+	    rm -f "${TMP}*"
 	    exit 1
 	fi
 
@@ -412,7 +412,7 @@ EOF
 
 	#### check success/failure
 	if [ $? -eq 0 ] ; then
-	    g.message "Line vector \"$NAME@$MAPSET\" successfully created"
+	    g.message message="Line vector \"$NAME@$MAPSET\" successfully created"
 	else
 	    g.message -e "An error occured on creating \"$NAME\" in mapset \"$MAPSET\", please check!"
 	    exit 1
@@ -465,13 +465,13 @@ fi  # if CREATE_POINTS or CREATE_LINES
 
 # list column names
 if [ $VERBOSE -eq 1 ] && [ -n "$NAME" ] ; then
-    g.message "<$NAME> columns:"
+    g.message message="<$NAME> columns:"
     db.columns "$NAME"
 fi
 
 
 #### clean up the mess
-rm -f ${TMP}* 1>&2 > /dev/null
+rm -f "${TMP}*" 1>&2 > /dev/null
 
 #### end
 g.message "Done." 

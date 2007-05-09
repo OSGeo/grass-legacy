@@ -135,7 +135,7 @@ if [ $? -ne 0 ] || [ -z "$TMP" ] ; then
 fi
 
 #### trap ctrl-c so that we can clean up tmp
-trap 'rm -f ${TMP}.*' 2 3 15
+trap 'rm -f "${TMP}.*"' 2 3 15
 
 
 #### process command line arguments 
@@ -150,26 +150,26 @@ fi
 if [ -n "$GIS_OPT_OUTPUT" ] ; then
     NAME="$GIS_OPT_OUTPUT"
     if [ $VERBOSE -eq 1 ] ; then
-	g.message "output=$NAME" 
+	g.message message="output=$NAME" 
     fi
 fi
 if [ -n "$GIS_OPT_INPUT" ] ; then
     GPSdevice="-f $GIS_OPT_INPUT"
     if [ $VERBOSE -eq 1 ] ; then
-	g.message "file=$GIS_OPT_INPUT"
+	g.message message="file=$GIS_OPT_INPUT"
     fi
 fi
 
 
 if [ $GIS_FLAG_W -eq 1 ] && ([ $GIS_FLAG_R -eq 1 ] || [ $GIS_FLAG_T -eq 1 ]) ; then
     g.message -e "One feature at a time please. Use v.patch if you need to combine them."
-    rm -f ${TMP}.*
+    rm -f "${TMP}.*"
     exit 1
 fi
 # logic eludes me at pressent..  [combine with above]
 if [ $GIS_FLAG_R -eq 1 ] && [ $GIS_FLAG_T -eq 1 ] ; then
     g.message -e "One feature at a time please. Use v.patch if you need to combine them."
-    rm -f ${TMP}.*
+    rm -f "${TMP}.*"
     exit 1
 fi
 
@@ -217,7 +217,7 @@ read PROJ_TYPE < $TMP.tmp
 
 if [ $PROJ_TYPE -eq 0 ] && [ $KEEP_WGS84 -ne 1 ] ; then
     g.message -e "Cannot project to a XY location." 
-    rm -f ${TMP}.*
+    rm -f "${TMP}.*"
     exit 1
 fi
 
@@ -253,7 +253,7 @@ fi
 #### check success/failure
 if [ $EXITCODE -ne 0 ] ; then
     g.message -e "Error retrieving data"
-    rm -f ${TMP}.*
+    rm -f "${TMP}.*"
     exit 1
 fi
 
@@ -335,7 +335,7 @@ if [ $CREATE_POINTS -eq 1 ] ; then
 
 	if [ $EXITCODE -ne 0 ] ; then
 	    g.message -e "Error importing data"
-	    rm -f ${TMP}.*
+	    rm -f "${TMP}.*"
 	    exit 1
 	fi
 
@@ -498,7 +498,7 @@ else # CREATE_LINES
 	cat "${TMP}.base" | awk 'BEGIN {;} $1=="L" { print } ; \
 	    $1!="L" { " %s %s\n", $1, $2) } END {;}' > "${TMP}.P_base"
     else
-	g.messge "Attempting waypoint projection transform with cs2cs" 
+	g.message "Attempting waypoint projection transform with cs2cs" 
 	cs2cs -tL -f %.7f $IN_PROJ +to $OUT_PROJ < "${TMP}.base" > "${TMP}.P_mid"
 	EXITCODE=$?
 	 # check if transform REALLY worked (e.g. grid file not found)
@@ -550,9 +550,9 @@ EOF
 
 	#### check success/failure
 	if [ $? -eq 0 ] ; then
-	    g.message "Line vector \"$NAME@$MAPSET\" successfully created"
+	    g.message message="Line vector \"$NAME@$MAPSET\" successfully created"
 	else
-	    g.message -e "An error occured on creating \"$NAME\" in mapset \"$MAPSET\", please check!" 
+	    g.message -e message="An error occured on creating \"$NAME\" in mapset \"$MAPSET\", please check!" 
 	    exit 1
 	fi
 
@@ -603,15 +603,15 @@ fi  # if CREATE_POINTS or CREATE_LINES
 
 # list column names
 if [ $VERBOSE -eq 1 ] && [ -n "$NAME" ] ; then
-    g.message "<$NAME> columns:"
+    g.message message="<$NAME> columns:"
     db.columns "$NAME"
 fi
 
 
 #### clean up the mess
-rm -f ${TMP}.* 1>&2 > /dev/null
+rm -f "${TMP}.*" 1>&2 > /dev/null
 
 #### end
-g.message "Done" 
+g.message "Done." 
 
 exit 0

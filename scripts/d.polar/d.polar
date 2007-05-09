@@ -48,8 +48,8 @@
 #%end
 
 
-if  [ -z "$GISBASE" ] ; then
-    g.message -e "You must be in GRASS GIS to run this program." 1>&2
+if [ -z "$GISBASE" ] ; then
+    echo "You must be in GRASS GIS to run this program." 1>&2
     exit 1
 fi
 
