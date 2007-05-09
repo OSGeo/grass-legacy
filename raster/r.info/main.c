@@ -63,6 +63,7 @@ int main(int argc, char *argv[])
     struct Flag *timestampflag;
     struct Flag *gflag;
     struct Flag *hflag;
+    struct Flag *mflag;
 
     G_gisinit(argv[0]);
 
@@ -92,6 +93,10 @@ int main(int argc, char *argv[])
     hflag = G_define_flag();
     hflag->key = 'h';
     hflag->description = _("Print raster history instead of info");
+
+    mflag = G_define_flag();
+    mflag->key = 'm';
+    mflag->description = _("Print raster map title only");
 
     timestampflag = G_define_flag();
     timestampflag->key = 'p';
@@ -129,7 +134,7 @@ int main(int argc, char *argv[])
     out = stdout;
 
     if (!rflag->answer && !sflag->answer && !tflag->answer && !gflag->answer &&
-	!hflag->answer && !timestampflag->answer) {
+	!hflag->answer && !timestampflag->answer && !mflag->answer) {
 	divider('+');
 
 	if (G_asprintf
@@ -375,7 +380,7 @@ int main(int argc, char *argv[])
 
 	fprintf(out, "\n");
     }
-    else {			/* rflag or sflag or tflag or gflag or hflag */
+    else {			/* rflag or sflag or tflag or gflag or hflag or mflag */
 
 	if (rflag->answer) {
 	    if (data_type == CELL_TYPE) {
@@ -417,6 +422,9 @@ int main(int argc, char *argv[])
 		     (data_type == DCELL_TYPE ? "DCELL" :
 		      (data_type == FCELL_TYPE ? "FCELL" : "??"))));
 	}
+	if (mflag->answer) {
+	    fprintf(out, "title=%s (%s)\n", cats_ok ? cats.title : "??", hist_ok ? hist.title : "??");
+	}
 	if (timestampflag->answer) {
 	    if (time_ok && (first_time_ok || second_time_ok)) {
 
@@ -445,7 +453,7 @@ int main(int argc, char *argv[])
 		}
 	    }
 	}
-    }				/* else rflag or sflag or tflag or gflag or hflag */
+    }				/* else rflag or sflag or tflag or gflag or hflag or mflag*/
 
     return EXIT_SUCCESS;
 }
