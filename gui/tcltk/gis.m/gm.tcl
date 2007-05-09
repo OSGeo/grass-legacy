@@ -475,9 +475,9 @@ proc Gm::SaveFileBox { } {
 ###############################################################################
 # sets default display font
 proc Gm:DefaultFont { } {
-	global env iconpath
+	global env 
+	global iconpath
 	variable dfont
-	variable fonttype
 	variable encoding
 
 	# create a dialog with selector for stroke font and true type font, and
@@ -485,32 +485,32 @@ proc Gm:DefaultFont { } {
 
     toplevel .dispfont
     wm title .dispfont [G_msg "Select default font for GRASS displays"]
-    
-    set row [ frame .dispfont.fontopt1 ]
-    Label $row.a -text [G_msg "Font type: "] 
-    set gfont [radiobutton $row.b -variable Gm::fonttype -value "grassfont" \
-        -text [G_msg "GRASS stroke font"] -highlightthickness 0]
-        DynamicHelp::register $gfont balloon [G_msg "GRASS stroke fonts"]
-    set ofont [radiobutton $row.c -variable Gm::fonttype -value "truetype" \
-        -text [G_msg "TrueType font"] -highlightthickness 0]
-        DynamicHelp::register $ofont balloon [G_msg "Custom font path"]
-    pack $row.c $row.b $row.a -side right -anchor e
-    pack $row -side top -fill both -expand yes -pady 3 -padx 5
 
-	set row [ frame .dispfont.fontopt2 ]
+    set fontlist [string trim [exec d.font -l]]
+    set fontlist [split $fontlist "\n"]
+    set fontlist [lsort -unique $fontlist]
+   
+    set row [ frame .dispfont.fontlb ]
     Label $row.a -text [G_msg "Font: "] 
-    Button $row.b -image [image create photo -file "$iconpath/gui-font.gif"] \
-        -highlightthickness 0 -takefocus 0 -relief raised -borderwidth 1  \
-        -helptext [G_msg "Select font"] \
-	    -command "Gm::SelectFont"
-    Entry $row.c -width 30 -text "$Gm::dfont" \
-	    -textvariable Gm::dfont
-    pack $row.c $row.b $row.a -side right -anchor e
+    set fontlb [ listbox $row.b -bg white -width 30 \
+    	-yscrollcommand "$row.vscrollbar set"]
+
+    scrollbar $row.vscrollbar -width 12 \
+    	-command "$row.b yview" \
+    	-relief {sunken}
+
+    foreach item $fontlist {
+    	$fontlb insert end $item
+    }
+
+    pack $row.vscrollbar -side right -fill y
+    pack $row.b -side right
+    pack $row.a -side right -anchor n
     pack $row -side top -fill both -expand yes -pady 3 -padx 5
     
  	set row [ frame .dispfont.fontopt3 ]
     Label $row.a -text [G_msg "Character encoding: "] 
-    Entry $row.b -width 30 -text "$Gm::encoding" \
+    Entry $row.b -width 20 -text "$Gm::encoding" \
 	    -textvariable Gm::encoding
     pack $row.b $row.a -side right -anchor e
     pack $row -side top -fill both -expand yes -pady 3 -padx 5
@@ -524,55 +524,16 @@ proc Gm:DefaultFont { } {
     pack $row.cancel -side right -fill x -expand 0
     pack $row -side bottom -pady 3  -padx 5 -expand 0 -fill x 
     
-    #tkwait window .dispfont
-}
-
-
-proc Gm::SelectFont { } {
-	global env tcl_platform
-	variable dfont
-	variable fonttype
-	variable fontpath
-	
-	if {$fonttype == "grassfont"} {
-		set initdir  [file join "$env(GISBASE)" "fonts"]
-	} elseif {$fonttype == "truetype" && $fontpath != ""} {
-		set initdir $fontpath
-	} elseif {$fonttype == "truetype" && $fontpath == ""} {
-		if {$tcl_platform(platform) == "macintosh" || \
-			$tcl_platform(os) == "Darwin"} {
-			set fontpath [file join "/Library" "Fonts"]
-		} elseif {$tcl_platform(platform) == "windows"} {
-			set fontpath [file join $env(WINDIR) "Fonts"]
-		} else {
-			set fontpath [file join "/usr" "lib" "X11" "fonts"]
-		}
-		set initdir $fontpath
-	}
-	
-	if {![file exists $initdir]} {set initdir ""}
-
-	if {$tcl_platform(platform) == "windows"} {
-		# Use native Tk file browser rather than Windows one as
-		# is faster and works properly   
-		set fontname [::tk::dialog::file:: open -initialdir $initdir \
-			-title [G_msg "Select font"] ]
-	} else {
-		set fontname [tk_getOpenFile -initialdir $initdir \
-			-title [G_msg "Select font"] ]
-	}
-		
-	set Gm::dfont $fontname
-
-	if {$dfont != "" && $fonttype == "truetype"} {set fontpath [file dirname $dfont]}
-
+    bind $fontlb <<ListboxSelect>> {
+    	set Gm::dfont [%W get [%W curselection]]
+    }
 };
+
 
 proc Gm::SetFont { } {
 	global env
 	variable dfont
 	variable encoding
-	variable fonttype
 
 	# Set GRASS environmental variables for default display font and
 	# character encoding
@@ -580,11 +541,7 @@ proc Gm::SetFont { } {
     if { $encoding != "" && $encoding != "ISO-8859-1"} {
     	set env(GRASS_FT_ENCODING) $encoding
     }
-    
-    if {$fonttype == "grassfont"} {
-    	set dfont [file rootname [file tail $dfont]]
-    }
-    
+        
     if {$dfont != ""} {
     	set env(GRASS_FONT) $dfont
     }
