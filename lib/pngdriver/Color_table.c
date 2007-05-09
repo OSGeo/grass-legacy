@@ -135,6 +135,8 @@ unsigned int get_color(int r, int g, int b, int a)
 
 int PNG_lookup_color(int r, int g, int b)
 {
-	return (int) get_color(r, g, b, 0);
+	return true_color
+		? ((r << 16) | (g << 8) | (b << 0))
+		: Red[r] + Grn[g] + Blu[b] + has_alpha;
 }
 
