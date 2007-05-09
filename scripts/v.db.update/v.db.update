@@ -97,7 +97,7 @@ fi
 
 table=`v.db.connect $GIS_OPT_MAP -g | grep -w $GIS_OPT_LAYER | awk '{print $2}'`
 if [ -z "$table" ] ; then
-   g.message -e "There is no table connected to this map !\nRun v.db.connect or v.db.addtable first."
+   g.message -e 'There is no table connected to this map! Run v.db.connect or v.db.addtable first.'
    exit 1
 fi
 database=`v.db.connect $GIS_OPT_MAP -g | grep -w $GIS_OPT_LAYER | awk '{print $4}'`

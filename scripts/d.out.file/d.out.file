@@ -191,7 +191,7 @@ GRASS_PNG_COMPRESSION=$old_COMPRESSION
 export GRASS_PNG_COMPRESSION
 
 
-g.message "Screen export complete (writing the file may take a small amount of time)"
+g.message "Screen export complete. (writing the file may take a small amount of time)"
 
 
 if [ "$GIS_OPT_FORMAT" != "png" -a  "$GIS_OPT_FORMAT" != "ppm" ] ; then
@@ -222,6 +222,4 @@ if [ "$GIS_OPT_FORMAT" = "bmp" ] ; then
     rm $output
 fi
 
-    g.message "Done" 
-
-
+g.message "Done." 

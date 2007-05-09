@@ -76,16 +76,19 @@ fi
 
 PROG=`basename $0`
 
-g.message -w "This module is superseded and will be removed in future versions of GRASS. Use the much faster r.out.gdal instead."
+g.message -w "This module is superseded and will be removed in future \
+  versions of GRASS. Use the much faster r.out.gdal instead."
 
 #check gdal_translate exists
 if [ -z "`which gdal_translate`" ] ; then
-   g.messge -e "Required program gdal_translate is missing.Full GDAL binaries with GDAL/GRASS support are needed to use $PROG."
+   g.message -e "Required program gdal_translate is missing. Full GDAL \
+     binaries with GDAL/GRASS support are needed to use $PROG."
    exit 1
 fi
 #check that gdal's grass plugin exists
 if [ -z "`gdalinfo --formats | grep -i GRASS`" ] ; then
-   g.message -e "Required GRASS plugin for GDAL is missing. GDAL must be built with GRASS support to use $PROG."
+   g.message -e "Required GRASS plugin for GDAL is missing. GDAL must be \
+     built with GRASS support to use $PROG."
    exit 1
 fi
 
@@ -131,8 +134,8 @@ if [ -z "$OUTPUT" ] ; then
 fi
 
 if [ -z "$TYPE" ] ; then
-  g.messge -e  "Output TYPE not specified"
-  g.message -e "(Raster map type is `r.info -t $INPUT | cut -d'=' -f2`)"
+  g.message -e "Output TYPE not specified"
+  g.message -e message="(Raster map type is `r.info -t $INPUT | cut -d'=' -f2`)"
   exit 1
 fi
 
@@ -145,8 +148,8 @@ fi
 
 #do it
 CELLHD=`echo $file | sed 's+/cell/+/cellhd/+g'`
-g.message "Writing format: $FORMAT"
-g.message "Writing type:   $TYPE"
+g.message message="Writing format: $FORMAT"
+g.message message="Writing type:   $TYPE"
 gdal_translate -of $FORMAT -ot $TYPE $CREATEKEY $METAKEY $CELLHD $OUTPUT 
 
 if [ $GIS_FLAG_R -eq 1 ] ; then

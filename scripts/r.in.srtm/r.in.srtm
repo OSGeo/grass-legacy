@@ -69,7 +69,7 @@
 # what to do in case of user break:
 exitprocedure()
 {
-    g.message -e "User break!"
+    g.message -e 'User break!'
     exit 1
 }
 trap "exitprocedure" 2 3 15
@@ -109,8 +109,8 @@ PERM="$GISDBASE/$LOCATION_NAME/PERMANENT"
 
 grep -i 'proj: ll' "$PERM/PROJ_INFO" > /dev/null
 if [ $? -ne 0 ] ; then
-    g.message -e "SRTM data are in Latitude/Longitude. The current"
-    g.message -e "location projection differs. STOP."
+    g.message -e "SRTM data are in Latitude/Longitude. The current\
+      location's projection differs. STOP."
     exit 1
 fi
 

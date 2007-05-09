@@ -66,7 +66,7 @@ PROG=`basename $0`
 
 #### check if we have awk
 if [ ! -x "`which awk`" ] ; then
-    g.messsage -e "awk required, please install awk or gawk first"
+    g.message -e "awk required, please install awk or gawk first"
     exit 1
 fi
 
@@ -78,7 +78,7 @@ export LC_NUMERIC
 #### setup temporary file
 TMP="`g.tempfile pid=$$`"
 if [ $? -ne 0 ] || [ -z "$TMP" ] ; then
-    g.message -e "unable to create temporary files" 
+    g.message -e "Unable to create temporary files" 
     exit 1
 fi
 
@@ -90,7 +90,7 @@ cleanup()
 # what to do in case of user break:
 exitprocedure()
 {
- g.message -e "User break!"
+ g.message -e 'User break!'
  cleanup
  exit 1
 }
@@ -110,7 +110,7 @@ fi
 
 table=`v.db.connect $GIS_OPT_MAP -g | grep -w $GIS_OPT_LAYER | awk '{print $2}'`
 if [ -z "$table" ] ; then
-   g.message "There is no table connected to this map! Cannot delete any column."
+   g.message 'There is no table connected to this map! Cannot delete any column.'
    cleanup
    exit 1
 fi
@@ -119,14 +119,15 @@ driver=`v.db.connect $GIS_OPT_MAP -g | grep -w $GIS_OPT_LAYER | awk '{print $5}'
 col="$GIS_OPT_COLUMN"
 
 if [ "$col" = "cat" ] ; then
-   g.message -e "Cannot delete <$col> column as it is needed to keep table connected to vector map"
+   g.message -e "Cannot delete <$col> column as it is needed to keep table\
+      connected to the vector map"
    cleanup
    exit 1
 fi
 
 v.info --q -c $GIS_OPT_MAP layer=$GIS_OPT_LAYER | cut -d'|' -f1,2 | grep "|${col}$" 2>&1 >/dev/null
 if [ $? -ne 0 ] ; then
-	g.message -e "column <$col> not found in table"
+	g.message -e "Column <$col> not found in table"
 	cleanup
 	exit 1
 fi

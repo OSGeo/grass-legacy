@@ -142,7 +142,7 @@ cat "${TMP}" >> "${TMP}.dig"
 
 #### if no name for vector file given, cat to stdout
 if [ "$NAME" = "" ] ; then
-    g.message "output to stdout" 
+    g.message "Output to stdout" 
     cat "${TMP}.dig" 2>/dev/null
 else
     #### import to binary vector file
@@ -151,9 +151,9 @@ else
 
     #### check success/failure
     if [ $? -eq 0 ] ; then
-	g.message "\"$NAME@$MAPSET\" successfully created." 
+	g.message message="\"$NAME@$MAPSET\" successfully created." 
     else
-	g.message -e "An error occured on creating \"$NAME\" in mapset \"$MAPSET\", please check!"
+	g.message -e "An error occured on creating \"$NAME\" in mapset \"$MAPSET\", please check"'!'
     fi
 fi
 

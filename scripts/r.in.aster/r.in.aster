@@ -143,22 +143,22 @@ tempfile=`g.tempfile $$`.tif
 
 #run gdalwarp with selected options (must be in $PATH)
 #to translate aster image to geotiff
-g.message "Georeferencing aster image"
+g.message "Georeferencing aster image ..."
 g.message -d "gdalwarp -t_srs \"`g.proj -jf`\" $srcfile $tempfile"
 
 gdalwarp -t_srs "`g.proj -jf`" $srcfile $tempfile
 
 #import geotiff to GRASS
-g.message "Importing into GRASS"
+g.message "Importing into GRASS ..."
 
 r.in.gdal input=$tempfile output=$GIS_OPT_OUTPUT
 
 #cleanup
-g.message "Cleaning up"
+g.message "Cleaning up ..."
 rm -f $tempfile
 
 # write cmd history:
 r.support $GIS_OPT_OUTPUT history="${CMDLINE}"
 
-g.message "Done"
+g.message "Done."
 

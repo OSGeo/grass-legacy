@@ -33,6 +33,7 @@
 #% type: integer
 #% description: Percentile to calculate (requires -e flag)
 #% answer : 90
+#% options: 0-100
 #% required : no
 #%End
 
@@ -45,7 +46,8 @@ if [ "$1" != "@ARGS_PARSED@" ] ; then
   exec g.parser "$0" "$@"
 fi
 
-g.message -w "This module is superseded and will be removed in future versions of GRASS. Use the much faster r.univar instead." 
+g.message -w "This module is superseded and will be removed in future \
+  versions of GRASS. Use the much faster r.univar instead." 
 
 
 PROG=`basename $0`
@@ -65,21 +67,10 @@ COVER="$GIS_OPT_MAP"
 
 TMP="`g.tempfile pid=$$`"
 if [ $? -ne 0 ] || [ -z "$TMP" ] ; then
-    g.messge -e "Unable to create temporary files"
+    g.message -e "Unable to create temporary files"
     exit 1
 fi
 
-echo "$GIS_OPT_PERCENTILE" | grep '\.' > /dev/null
-if [ $? -eq 0 ] || [ -z "$GIS_OPT_PERCENTILE" ] ; then
-	g.message -e  "Percentile must be between 0 and 100"
-        exit 1
-fi
-
-if test $GIS_OPT_PERCENTILE -lt 0 -o $GIS_OPT_PERCENTILE -gt 100
-then
-        g.message -e "Percentile must be between 0 and 100" 
-        exit 1
-fi
 
 cleanup()
 {
@@ -89,7 +80,7 @@ cleanup()
 # what to do in case of user break:
 exitprocedure()
 {
- g.message -e "User break!" 
+ g.message -e 'User break!' 
  cleanup
  exit 1
 }

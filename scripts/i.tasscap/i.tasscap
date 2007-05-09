@@ -145,7 +145,7 @@ else
    g.message "Calculating fourth TC component $GIS_OPT_OUTPREFIX.4. (Haze) ..."
    r.mapcalc $GIS_OPT_OUTPREFIX.4 = "0.0805 * $GIS_OPT_BAND1 - 0.0498 * $GIS_OPT_BAND2 + 0.1950 * $GIS_OPT_BAND3 - 0.1327 * $GIS_OPT_BAND4 + 0.5752 * $GIS_OPT_BAND5 - 0.7775 * $GIS_OPT_BAND7"
   else
-   g.message -e "Select LANDSAT satellite by flag!"
+   g.message -e 'Select LANDSAT satellite by flag!'
    exit 1
   fi
  fi

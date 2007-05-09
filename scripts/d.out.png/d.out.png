@@ -128,7 +128,7 @@ export GRASS_TRUECOLOR
 GRASS_PNGFILE=map.png
 export GRASS_PNGFILE
 
-g.message "Done (writing the file may take a small amount of time)"
+g.message "Done. (writing the file may take a small amount of time)"
 
 exit 0
 

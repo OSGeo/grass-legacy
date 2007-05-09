@@ -93,7 +93,7 @@ export LC_NUMERIC
 
 #### check for cs2cs
 if [ ! -x "`which cs2cs`" ] ; then
-   g.message -e "cs2cs program not found, install it first"
+   g.message -e "cs2cs program not found, install PROJ.4 first"
    g.message "http://proj.maptools.org"
    exit 1
 fi
@@ -167,8 +167,8 @@ if [ -z "$OUT_PROJ" ] ; then
    exit 1
 fi
 
-g.message "input parameters=[$IN_PROJ]"
-g.message "output parameters=[$OUT_PROJ]"
+g.message message="input parameters=[$IN_PROJ]"
+g.message message="output parameters=[$OUT_PROJ]"
 
 #### setup temporary file
 TMP="`g.tempfile pid=$$`"
@@ -209,10 +209,10 @@ fi
 outfile="$GIS_OPT_OUTPUT"
 
 if [ -n "$infile" ] ; then
-    g.message "input file=[$infile]"
+    g.message message="input file=[$infile]"
 fi
 if [ -n "$outfile" ] ; then
-    g.message "output file=[$outfile]" 
+    g.message message="output file=[$outfile]" 
 fi
 
 #### setup output style

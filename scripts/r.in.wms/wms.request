@@ -134,13 +134,13 @@ SED="sed"
 GREP="grep"
 # check if we have sed
 if [ ! -x "`which $SED`" ] ; then
-    g.message "$SED is required, please install it first" 1>&2
+    g.message "$SED is required, please install it first"
     exit 1
 fi
 
 # check if we have grep
 if [ ! -x "`which $GREP`" ] ; then
-    g.message "$GREP is required, please install it first" 1>&2
+    g.message "$GREP is required, please install it first"
     exit 1
 fi
 
@@ -192,7 +192,7 @@ GetTiles() {
   message 1 "r.tileset -g sourceproj=\"$PROJ4_SRS\" sourcescale=\"$SRS_SCALE\" overlap=2 maxcols=${MAXCOLS} maxrows=${MAXROWS} $TILESET_OPTIONS"
   TILES=`eval "GRASS_VERBOSE=1 r.tileset -g sourceproj=\"$PROJ4_SRS\" sourcescale=\"$SRS_SCALE\" overlap=2 maxcols=${MAXCOLS} maxrows=${MAXROWS} $TILESET_OPTIONS"`
   if [ $? -ne 0 ] ; then
-     g.message -e "r.tileset failure" 1>&2
+     g.message -e "r.tileset failure"
      exit 1
   fi
 
@@ -202,7 +202,7 @@ GetTiles() {
 	NUMBER_OF_TILES=`expr $NUMBER_OF_TILES + 1`
   done
 
-  g.message "Requesting ${NUMBER_OF_TILES} tiles!"
+  g.message "Requesting ${NUMBER_OF_TILES} tiles."
   
   NUMBER_OF_TILES=0 #The number of the tiles 
 

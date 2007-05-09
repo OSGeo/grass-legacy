@@ -49,7 +49,7 @@
 
 if test "$GISBASE" = ""; then
     echo "You must be in GRASS GIS to run this program." >&2
- exit 1
+    exit 1
 fi
 
 # save command line
@@ -82,7 +82,7 @@ LOCATION="$GISDBASE"/"$LOCATION_NAME"/"$MAPSET"
 
 #### check for gdalinfo (just to check if installation is complete)
 if [ ! -x "`which gdalinfo`" ] ; then
-    g.message -e "'gdalinfo' program not found, install GDAL first (http://www.gdal.org)"
+    g.message -e "'gdalinfo' not found, install GDAL tools first (http://www.gdal.org)"
     exit 1
 fi
 
@@ -161,13 +161,13 @@ else
 fi
 
 if [ ! -z `g.findfile elem=cell file="$NAME" | grep ^file | cut -f2 -d=` ] ; then
-	g.message -e "<$NAME> already exists! Aborting."
+	g.message -e message="<$NAME> already exists. Aborting."
 	exit 1
 fi
 
 # still a ZIP file?
 if [ "`file -ib $GIS_OPT_FILE`" = "application/x-zip" ] ; then
-  g.message -e "Please extract $GIS_OPT_FILE before import."
+  g.message -e message="Please extract $GIS_OPT_FILE before import."
   exit 1
 fi
 
@@ -182,14 +182,14 @@ rm -f $VRTFILE
 create_VRT_file $VRTFILE $GIS_OPT_FILE
 
 ## let's import the NDVI map...
-g.message "Import SPOT VGT NDVI map..."
+g.message "Importing SPOT VGT NDVI map..."
 r.in.gdal $VRTFILE output=$NAME
 if [ $? -eq 1 ] ; then
    g.message -e "An error occurred. Stop."
    exit 1
 fi
 
-g.message "Imported SPOT VEGETATION NDVI map <$NAME>."
+g.message message="Imported SPOT VEGETATION NDVI map <$NAME>."
 
 #################
 ## http://www.vgt.vito.be/faq/FAQS/faq19.html
@@ -241,7 +241,7 @@ r.colors ${NAME} color=ndvi 2>&1 >/dev/null
 # A good map threshold: >= 248
 
 if [ $GIS_FLAG_A -eq 1 ] ; then
-  g.message "Import SPOT VGT NDVI quality map..."
+  g.message "Importing SPOT VGT NDVI quality map..."
   rm -f $VRTFILE
   create_VRT_file $VRTFILE `echo ${GIS_OPT_FILE} | sed 's+NDV+SM+g'`
 
@@ -267,13 +267,13 @@ r.colors $NAME.sm col=rules << EOF
 252 green
 EOF
 
-  g.message "Imported SPOT VEGETATION SM quality map <$NAME.sm>."
-  g.message "Note: A snow map can be extracted by category 252 (d.rast $NAME.sm cat=252)"
-
-  g.message "Filtering NDVI map by Status Map quality layer..."
+  g.message message="Imported SPOT VEGETATION SM quality map <$NAME.sm>."
+  g.message message="Note: A snow map can be extracted by category 252 (d.rast $NAME.sm cat=252)"
+  g.message ""
+  g.message message="Filtering NDVI map by Status Map quality layer..."
   r.mapcalc "${NAME}_filt=if($NAME.sm >= 248, $NAME, null() )"
   r.colors ${NAME}_filt color=ndvi 2>&1 >/dev/null
-  g.message "Filtered SPOT VEGETATION NDVI map <${NAME}_filt>."
+  g.message message="Filtered SPOT VEGETATION NDVI map <${NAME}_filt>."
 fi
 
 # restore user settings:
@@ -287,7 +287,7 @@ rm -f $VRTFILE $TMPFILE
 # write cmd history:
 r.support ${NAME} history="${CMDLINE}"
 
-g.message "Done"
+g.message "Done."
 
 exit 0
 

@@ -97,6 +97,6 @@ r.support ${GIS_OPT_OUTPUT}.g history="${CMDLINE}"
 r.support ${GIS_OPT_OUTPUT}.b history="${CMDLINE}"
 
 g.message "Done. Use the following command to visualize the result:"
-g.message "d.rgb r=${GIS_OPT_OUTPUT}.r g=${GIS_OPT_OUTPUT}.g b=${GIS_OPT_OUTPUT}.b"
+g.message message="d.rgb r=${GIS_OPT_OUTPUT}.r g=${GIS_OPT_OUTPUT}.g b=${GIS_OPT_OUTPUT}.b"
 
 exit 0

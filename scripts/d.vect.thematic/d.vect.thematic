@@ -226,7 +226,7 @@ PROG=`basename $0`
 
 #### check if we have awk
 if [ ! -x "`which awk`" ] ; then
-    g.message "$PROG: awk required, please install awk or gawk first" 
+    g.message -e "awk required, please install awk or gawk first" 
     exit 1
 fi
 
@@ -244,14 +244,14 @@ COLTYPE="`v.info -c $GIS_OPT_MAP layer=1 2> /dev/null | grep -w $GIS_OPT_COLUMN 
 
 #COLTYPE=... 
 if [ -z "$COLTYPE" ] ; then 
-   g.message -e "No such column [$GIS_OPT_COLUMN]" 
+   g.message -e message="No such column [$GIS_OPT_COLUMN]" 
    exit 1 
 fi 
 
 if [ "$COLTYPE" = "integer" -o "$COLTYPE" = "double precision" ] ; then
 	echo -n ""
 else
-	g.message -e "Column <$GIS_OPT_COLUMN> is of type <$COLTYPE> which is not numeric."
+	g.message -e message="Column <$GIS_OPT_COLUMN> is of type <$COLTYPE> which is not numeric."
 	exit 1
 fi
 
@@ -279,7 +279,7 @@ fi
 # Create temporary file for commands for ps.map map file
 TMP4="`g.tempfile pid=$$`"
 if [ $? -ne 0 ] || [ -z "$TMP4" ] ; then
-    g.message -e "ERROR: unable to create temporary file for ps.map legend"
+    g.message -e "Unable to create temporary file for ps.map legend"
     exit 1
 fi
 
@@ -326,7 +326,7 @@ cleanup()
 # what to do in case of user break:
 exitprocedure()
 {
-    g.message -e "User break!"
+    g.message -e message='User break!'
     cleanup
     exit 1
 }
@@ -337,7 +337,7 @@ trap "exitprocedure" 2 3 15
 currmon=`eval d.mon -L | grep "(selected)" | awk '{print $1}'`
 
 if [ -z "$currmon" -a "$GIS_FLAG_S" -ne 1 ] ; then
-        g.message -e "*** You must open a display monitor ***"
+        g.message -e message='*** You must open a display monitor ***'
 	cleanup
 	exit 2
 fi
@@ -348,7 +348,7 @@ driver=`v.db.connect $GIS_OPT_MAP -g | grep -w $GIS_OPT_LAYER | awk '{print $5}'
 
 if [ -z "$table" ]
     then
-    g.message -e "No table connected or layer <$GIS_OPT_LAYER> doesn't exist!"
+    g.message -e message="No table connected or layer <$GIS_OPT_LAYER> does not exist."
     exit 1
  fi
 
@@ -356,7 +356,7 @@ if [ -z "$table" ]
 if [ "$GIS_FLAG_U" -eq 1 ] ; then
     # test, if the column GRASSRGB is in the table
     if [ -z "`db.columns table=$table database=$database driver=$driver| grep -i grassrgb`" ] ; then
-        g.message "Creating column 'grassrgb' in table '$table'"
+        g.message message="Creating column 'grassrgb' in table '$table'"
         echo "ALTER TABLE $table ADD COLUMN grassrgb varchar(11)" | db.execute database=$database
     fi
 fi
@@ -460,8 +460,8 @@ echo "text 4% 90% Value range: $min - $max" >> "$TMP5"
 echo "  ref bottom left" >> $TMP5
 echo "end" >> $TMP5
 
-g.message "Thematic map legend for column $GIS_OPT_COLUMN of map $GIS_OPT_MAP"
-g.message "Value range: $min - $max"
+g.message message="Thematic map legend for column $GIS_OPT_COLUMN of map $GIS_OPT_MAP"
+g.message message="Value range: $min - $max"
 
 # graduated color thematic mapping
 
@@ -514,7 +514,7 @@ if [ "$GIS_OPT_THEMETYPE" = "graduated_colors" ] ; then
 	    fi
 	    ;;
         "*")
-	    g.message -e "This should not happen: gparser error. Unknown color scheme $GIS_OPT_COLORSCHEME"
+	    g.message -e message="This should not happen: gparser error. Unknown color scheme $GIS_OPT_COLORSCHEME"
 	    cleanup
 	    exit
 	    ;;
@@ -545,7 +545,7 @@ if [ "$GIS_OPT_THEMETYPE" = "graduated_colors" ] ; then
         echo "  ref bottom left" >> $TMP5
         echo "end" >> $TMP5
 
-        g.message "Mapped by $numint intervals of $step"
+        g.message message="Mapped by $numint intervals of $step"
     fi
 
     # display graduated color themes for standard deviation units
@@ -560,7 +560,7 @@ if [ "$GIS_OPT_THEMETYPE" = "graduated_colors" ] ; then
         echo "  ref bottom left" >> $TMP5
         echo "end" >> $TMP5
 
-        g.message "Mapped by standard deviation units of $sd (mean =$mean)"
+        g.message message="Mapped by standard deviation units of $sd (mean =$mean)"
     fi
 
     # display graduated color themes for quartiles
@@ -577,7 +577,7 @@ if [ "$GIS_OPT_THEMETYPE" = "graduated_colors" ] ; then
 
 	
 
-        g.message "Mapped by quartiles (median = $q2)"
+        g.message message="Mapped by quartiles (median = $q2)"
     fi
 
     echo "move 4 83" >> "$TMP2"
@@ -889,7 +889,7 @@ if [ "$GIS_OPT_THEMETYPE" = "graduated_points" -o "$GIS_OPT_THEMETYPE" = "gradua
         echo "  ref bottom left" >> $TMP5
         echo "end" >> $TMP5
 
-        g.message "Mapped by $numint intervals of $step"
+        g.message message="Mapped by $numint intervals of $step"
     fi
         
     # display graduated points/lines for standard deviation units
@@ -904,7 +904,7 @@ if [ "$GIS_OPT_THEMETYPE" = "graduated_points" -o "$GIS_OPT_THEMETYPE" = "gradua
 		echo "  ref bottom left" >> $TMP5
 		echo "end" >> $TMP5
 	
-        g.message "Mapped by standard deviation units of $sd (mean =$mean)"
+        g.message message="Mapped by standard deviation units of $sd (mean =$mean)"
     fi
     
     # display graduated points/lines for quartiles
@@ -919,7 +919,7 @@ if [ "$GIS_OPT_THEMETYPE" = "graduated_points" -o "$GIS_OPT_THEMETYPE" = "gradua
         echo "  ref bottom left" >> $TMP5
         echo "end" >> $TMP5
 
-        g.message "Mapped by quartiles (median = $q2)"
+        g.message message="Mapped by quartiles (median = $q2)"
     fi
         
     line1=76

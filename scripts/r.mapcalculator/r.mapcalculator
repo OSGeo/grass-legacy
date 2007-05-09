@@ -143,13 +143,13 @@ fi
 
 # Check for required arguments
 if [ -z "$GIS_OPT_FORMULA" ]; then
-	g.message -e "Missing formula!"
+	g.message -e message='Missing formula!'
 	g.message -e "Please enter a formula in the field formula"
 	exit 1
 fi
 
 if [ -z "$GIS_OPT_OUTFILE" ]; then
-	g.message -e "Missing name of outputfile!"
+	g.message -e message='Missing name of outputfile!'
 	g.message -e "Please enter a name for the resulting map and try again."
 	exit 1
 elif [ "$GIS_FLAG_O" = 1 ]; then
@@ -185,7 +185,7 @@ fi
 
 if [ "$GRASS_VERBOSE" -ge 1 ] ; then
     # Show the resulting commandline
-    g.message "r.mapcalc \"$GIS_OPT_OUTFILE\" = \"$command\" "
+    g.message message="r.mapcalc \"$GIS_OPT_OUTFILE\" = \"$command\""
 fi
 
 r.mapcalc "$GIS_OPT_OUTFILE" = "$command" # Start the command
@@ -197,7 +197,7 @@ if [ $? -ne 0 ]; then
 fi
 
 if [ "$GRASS_VERBOSE" -ge 2 ] ; then
-    g.message "Done"
+    g.message "Done."
 fi
 
 exit 0

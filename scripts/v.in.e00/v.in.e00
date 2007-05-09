@@ -237,7 +237,7 @@ cd ..
 rmdir "$TMPDIR"
 
 #### end
-g.message "Done"
+g.message "Done."
 
 # write cmd history:
 v.support $NAME cmdhist="${CMDLINE}"

@@ -65,7 +65,7 @@ defaultIFS=$IFS
 #
 exitprocedure()
 {
-	g.message -e "User break!"
+	g.message -e 'User break!'
 	rm -f ${TMP}*
 	exit 1
 }
@@ -112,7 +112,7 @@ GetTiles() {
     g.message -w "$NUMBER_OF_TILES failed to download"
     return 1
   else
-    g.message  "All tiles downloaded successfully"
+    g.message "All tiles downloaded successfully"
     return 0
   fi
 }
@@ -126,7 +126,7 @@ GetData() {
    #download the File from the Server
    wget ${WGET_OPTIONS}  --post-data=${STRING} ${SERVER} -O ${OUTPUT_FILE} 
    if [ $? -ne 0 ]; then
-     g.message -e "wget failed downloading the data"
+     g.message -e "wget failed while downloading the data"
      return 1
    fi
    if [ -f "${OUTPUT_FILE}" ]; then 
