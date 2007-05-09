@@ -23,8 +23,10 @@ int do_remove_vertex(struct Map_info *Map, struct ilist *List, int print,
 		     struct Option *coord, double thresh);
 int do_add_vertex(struct Map_info *Map, struct ilist *List, int print,
 		  struct Option* coord, double thresh);
-int do_split(struct Map_info *Map, struct ilist *List, int print,
-	     struct Option* coord, double thresh);
+
+/* break.c */
+int do_break (struct Map_info *Map, struct ilist *List, int print,
+	      struct Option* coord, double thresh);
 
 /* merge.c */
 int do_merge(struct Map_info *Map, struct ilist *List, int print);

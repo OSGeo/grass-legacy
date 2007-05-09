@@ -26,7 +26,7 @@ int main (int argc, char *argv[])
     struct Map_info Map;
     char *mapset;
     enum mode action_mode;
-    FILE *ascii, *output;
+    FILE *ascii;
 
     int ret, print, layer;
     double move_x, move_y, thresh;
@@ -34,7 +34,6 @@ int main (int argc, char *argv[])
     struct ilist *List;
 
     ascii  = NULL;
-    output = stderr;
     List   = NULL;
 
     G_gisinit(argv[0]);
@@ -62,7 +61,7 @@ int main (int argc, char *argv[])
 
     if (action_mode == MODE_CREATE) {
 	/* 3D vector maps? */
-	if (-1 == Vect_open_new (&Map, params.map -> answer, 0)) {
+	if (-1 == Vect_open_new (&Map, params.map -> answer, 0)) { /* new */
 	    G_fatal_error (_("Cannot create vector map <%s>"),
 			   params.map -> answer);
 	}
@@ -74,49 +73,50 @@ int main (int argc, char *argv[])
 	    action_mode = MODE_ADD;
 	}
     }
-    else {
-	/* open selected vector file */    
+    else { /* open selected vector file */
 	mapset = G_find_vector2 (params.map -> answer, G_mapset()); 
 	if ( mapset == NULL ) {
 	    G_fatal_error (_("Vector map <%s> not found in the current mapset"),
 			   params.map -> answer);
 	}
-	else {
-	    if (action_mode != MODE_SELECT)
-		ret = Vect_open_update (&Map, params.map -> answer, mapset);
-	    else
-		ret = Vect_open_old (&Map, params.map -> answer, mapset);
-	    
-	    if (ret < 2)
-		G_fatal_error (_("Cannot open vector map <%s> at topo level [%d]"),
-			       params.map -> answer, 2);
+	else if (action_mode == MODE_ADD) { /* write */
+	    ret = Vect_open_update (&Map, params.map -> answer, mapset); 
+	}
+	else { /* read-only -- select features */
+	    ret = Vect_open_old (&Map, params.map -> answer, mapset);
 	}
 	
+	if (ret < 2)
+	    G_fatal_error (_("Cannot open vector map <%s> at topo level [%d]"),
+			   params.map -> answer, 2);
     }
-
+    
     G_debug (1, "Map opened");
-
+    
     print = params.print -> answer ? 1 : 0;
     layer = atoi (params.fld -> answer);
     thresh = atof (params.maxdist -> answer);
+    
+    if (action_mode != MODE_CREATE && action_mode != MODE_ADD) {
+	/* select lines */
+	List = Vect_new_list();
+	List = select_lines(&Map, action_mode,
+			    &params,
+			    List);
+    }
 
-    if (action_mode != MODE_CREATE) {
-	if (action_mode != MODE_ADD) {
-	    /* select lines */
-	    List = Vect_new_list();
-	    List = select_lines(&Map, action_mode,
-				&params,
-				List);
+    if ((action_mode != MODE_CREATE && action_mode != MODE_ADD &&
+	 action_mode != MODE_SELECT)) {
+	if (List -> n_values < 1) {
+	    G_warning (_("No features selected, nothing to edit"));
+	    action_mode = MODE_NONE;
+	    ret = 0;
 	}
-    }    
-
-    if ((action_mode != MODE_CREATE &&
-	 action_mode != MODE_ADD &&
-	 action_mode != MODE_SELECT) &&
-	List -> n_values < 1) {
-	G_warning (_("No features selected, nothing to edit"));
-	action_mode = MODE_NONE;
-	ret = 0;
+	else {
+	    /* reopen the map for updating */
+	    Vect_close (&Map);
+	    Vect_open_update (&Map, params.map -> answer, mapset); 
+	}
     }
 
     /* perform requested editation */
@@ -155,7 +155,7 @@ int main (int argc, char *argv[])
 			       params.coord, thresh);
 	break;
     case MODE_BREAK:
-	ret = do_split(&Map, List, print,
+	ret = do_break(&Map, List, print,
 		       params.coord, thresh);
 	break;
     case MODE_MERGE:
@@ -199,14 +199,10 @@ int main (int argc, char *argv[])
 
     Vect_hist_command(&Map);
     
-    if (ret == 0) {
-	output = NULL;
-    }
-
     /* build topology only if requested or if tool!=select */
-    if  (!(action_mode == MODE_SELECT || params.topo -> answer == 1)) {
+    if  (!(action_mode == MODE_SELECT || params.topo -> answer == 1 || !MODE_NONE)) {
         Vect_build_partial(&Map, GV_BUILD_NONE, NULL);
-        Vect_build (&Map, output);
+        Vect_build (&Map, stderr);
     }
 
     if (List)

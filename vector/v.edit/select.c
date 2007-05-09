@@ -21,6 +21,8 @@
 #include <grass/dbmi.h>
 #include "global.h"
 
+static char first_selection = 1;
+
 /* merge two list, i.e. store only duplicate items */
 static int merge_lists (struct ilist* alist, struct ilist* blist);
 
@@ -35,19 +37,19 @@ struct ilist *select_lines(struct Map_info *Map, enum mode action_mode,
     type   = Vect_option_to_types (params -> type);
     thresh = atof (params -> maxdist -> answer);
 
+    /* select by id's */
+    if (params -> id -> answer != NULL) {
+	sel_by_id(Map,
+		  layer, type, params -> id -> answer,
+		  List);
+    }
+
     /* select by category (ignore tools catdel and catadd) */
     if((action_mode != MODE_CATADD && action_mode != MODE_CATDEL) &&
        params -> cat -> answer != NULL) {
 	sel_by_cat(Map, NULL,
 		   layer, type, params -> cat -> answer,
 		   List);
-    }
-
-    /* select by id's */
-    if (params -> id -> answer != NULL) {
-	sel_by_id(Map,
-		  layer, type, params -> id -> answer,
-		  List);
     }
     
     /* select by coordinates (+threshold) */
@@ -117,12 +119,11 @@ int sel_by_cat(struct Map_info *Map, struct cat_list *cl_orig,
     struct ilist *List_tmp, *List_tmp1;
     struct cat_list *cl;
 
-    int i, cat, nlines;
+    int i, cat;
 
-    nlines = List -> n_values;
-
-    if (nlines == 0) {
+    if (first_selection || cl_orig) {
 	List_tmp = List;
+	first_selection = 0;
     }
     else {
 	List_tmp = Vect_new_list();
@@ -146,6 +147,8 @@ int sel_by_cat(struct Map_info *Map, struct cat_list *cl_orig,
         }
     }
 
+    G_debug (1, "  %d lines selected (by category)", List_tmp -> n_values);
+
     /* merge lists (only duplicate items) */
     if (List_tmp != List) {
 	merge_lists (List, List_tmp);
@@ -153,8 +156,6 @@ int sel_by_cat(struct Map_info *Map, struct cat_list *cl_orig,
     }
 
     Vect_destroy_list (List_tmp1);
-
-    G_debug (1, "  %d lines selected (by category)", List->n_values);
 
     return List -> n_values;
 }
@@ -168,16 +169,15 @@ int sel_by_coordinates(struct Map_info *Map,
 		       int layer, int type, struct Option *coords, double thresh,
 		       struct ilist* List)
 {
-    int i, nlines;
+    int i;
     double east, north, maxdist;
 
     struct ilist* List_tmp, *List_in_box;
     BOUND_BOX box;
 
-    nlines = List -> n_values;
-
-    if (nlines == 0) {
+    if (first_selection) {
 	List_tmp = List;
+	first_selection = 0;
     }
     else {
 	List_tmp = Vect_new_list();
@@ -200,6 +200,8 @@ int sel_by_coordinates(struct Map_info *Map,
 	    Vect_list_append_list (List_tmp, List_in_box);
     }
 
+    G_debug (1, "  %d lines selected (by coordinates)", List_tmp -> n_values);
+
     /* merge lists (only duplicate items) */
     if (List_tmp != List) {
 	merge_lists (List, List_tmp);
@@ -207,8 +209,6 @@ int sel_by_coordinates(struct Map_info *Map,
     }
 
     Vect_destroy_list (List_in_box);
-
-    G_debug (1, "  %d lines selected (by coordinates)", List->n_values);
 
     return List -> n_values;
 }
@@ -224,14 +224,12 @@ int sel_by_bbox(struct Map_info *Map,
 {
     BOUND_BOX bbox;
     double x1, x2, y1, y2;
-    int nlines;
 
     struct ilist* List_tmp;
 
-    nlines = List -> n_values;
-
-    if (nlines == 0) {
+    if (first_selection) {
 	List_tmp = List;
+	first_selection = 0;
     }
     else {
 	List_tmp = Vect_new_list();
@@ -251,14 +249,14 @@ int sel_by_bbox(struct Map_info *Map,
 
     Vect_select_lines_by_box (Map, &bbox, type, List_tmp);
 
+    G_debug (1, "  %d lines selected (by bbox)", List_tmp -> n_values);
+
     /* merge lists (only duplicate items) */
     if (List_tmp != List) {
 	merge_lists (List, List_tmp);
 	Vect_destroy_list (List_tmp);
     }
     
-    G_debug (1, "  %d lines selected (by bbox)", List->n_values);
-
     return List -> n_values;
 }
 
@@ -274,12 +272,11 @@ int sel_by_polygon(struct Map_info *Map,
     struct ilist *List_tmp;
     struct line_pnts *Polygon;
 
-    int i, nlines;
+    int i;
 
-    nlines = List -> n_values;
-
-    if (nlines == 0) {
+    if (first_selection) {
 	List_tmp = List;
+	first_selection = 0;
     }
     else {
 	List_tmp = Vect_new_list();
@@ -305,13 +302,13 @@ int sel_by_polygon(struct Map_info *Map,
     /* no isles */
     Vect_select_lines_by_polygon (Map, Polygon, 0, NULL, type, List_tmp);
 
+    G_debug (1, "  %d lines selected (by polygon)", List_tmp -> n_values);
+
     /* merge lists (only duplicate items) */
     if (List_tmp != List) {
 	merge_lists (List, List_tmp);
 	Vect_destroy_list (List_tmp);
     }
-
-    G_debug (1, "  %d lines selected (by polygon)", List->n_values);
 
     return List -> n_values;
 }
@@ -326,14 +323,13 @@ int sel_by_id(struct Map_info *Map,
 	      struct ilist* List)
 {
     int i, j;
-    int nlines, num, id;
+    int num, id;
     struct cat_list *il; /* NOTE: this is not cat list, but list of id's */
     struct ilist *List_tmp;
 
-    nlines = List -> n_values;
-
-    if (nlines == 0) {
+    if (first_selection) {
 	List_tmp = List;
+	first_selection = 0;
     }
     else {
 	List_tmp = Vect_new_list();
@@ -354,7 +350,7 @@ int sel_by_id(struct Map_info *Map,
         }
     }
     
-    G_debug (1, "  %d lines selected (by id)", List->n_values);
+    G_debug (1, "  %d lines selected (by id)", List_tmp -> n_values);
 
     /* merge lists (only duplicate items) */
     if (List_tmp != List) {
@@ -382,12 +378,11 @@ int sel_by_where (struct Map_info *Map,
     dbDriver* driver;
     dbHandle handle;
 
-    int *cats, ncats, nlines;
+    int *cats, ncats;
 
-    nlines = List -> n_values;
-
-    if (nlines == 0) {
+    if (first_selection) {
 	List_tmp = List;
+	first_selection = 0;
     }
     else {
 	List_tmp = Vect_new_list();
@@ -435,6 +430,8 @@ int sel_by_where (struct Map_info *Map,
 		layer, type, NULL,
 		List_tmp);
 
+    G_debug (1, "  %d lines selected (by where)", List_tmp -> n_values);
+
     /* merge lists (only duplicate items) */
     if (List_tmp != List) {
 	merge_lists (List, List_tmp);
@@ -442,8 +439,6 @@ int sel_by_where (struct Map_info *Map,
     }
 
     Vect_destroy_cat_list (cat_list);
-
-    G_debug (1, "  %d lines selected (by id)", List->n_values);
 
     return List -> n_values;
 }

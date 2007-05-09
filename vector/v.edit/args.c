@@ -54,9 +54,9 @@ int parser(int argc, char*argv[], struct GParams *params,
       "vertexadd,vertexdel,vertexmove,select";
 
     params -> in = G_define_standard_option (G_OPT_F_INPUT);
-    params -> in -> required = NO;
-    params -> in -> description = _("ASCII file to be converted to binary vector map, "
-			      "if not given (or \"-\") reads from standard input");
+    params -> in -> required    = NO;
+    params -> in -> label       = _("ASCII file to be converted to binary vector map");
+    params -> in -> description = _("If not given (or \"-\") reads from standard input");
 
     params -> move = G_define_option();
     params -> move->key         = "move";
@@ -74,13 +74,13 @@ int parser(int argc, char*argv[], struct GParams *params,
     params -> maxdist->description = _("Threshold distance");
     params -> maxdist->answer      = "0";
 
-    params -> cat = G_define_standard_option(G_OPT_V_CATS);
-    params -> cat->required    = NO;
-    
     params -> id = G_define_standard_option(G_OPT_V_CATS);
     params -> id->required    = NO;
     params -> id->key         = "ids";
     params -> id->label = _("ID values");
+
+    params -> cat = G_define_standard_option(G_OPT_V_CATS);
+    params -> cat->required    = NO;
     
     params -> coord = G_define_option();
     params -> coord->key         = "coords";

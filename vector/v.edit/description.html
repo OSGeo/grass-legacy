@@ -1,8 +1,8 @@
 <h2>DESCRIPTION</h2>
 
 <p>
-<em>v.edit</em> allows the user to edit a vector map via Command Line
-Interface. This can be very useful in scripts.
+The module <em>v.edit</em> allows the user to edit a vector map layer
+via <em>Command Line Interface</em> (CLI). Very useful feature for scripts.
 </p>
 
 <p>
@@ -10,20 +10,20 @@ Interface. This can be very useful in scripts.
 centroids, lines, boundaries. Currently, only 2D region is supported.
 
 <p>
-<em>v.edit</em> provide editing features' geometry. Attribute data connected
-to the vector map are not modified. For this
-purpose, <code>db.*</code> commands shall be used.
+Provides editing features' geometry. Attribute data connected
+to the vector map layer are not modified. For this
+purpose, use <code>db.*</code> commands.
 </p>
 
 <p>
-Vector features can be selected either by category number
-<code>cats</code>, id's <code>id</code>, coordinates
-<code>coords</code>, bounding box <code>bbox</code>, polygon
-<code>polygon</code> or 'where' statement (attribute table)
-<code>where</code>. Selecting features by coordinates is affected by
-the current 2D resolution. It can be changed using threshold distance
-<code>thresh</code>. These options are <em>orthogonal</em>, i.e. can
-be used in various combinations. For example:
+Vector features can be selected either by internal id's <code>id</code>,
+category number <code>cats</code>, coordinates <code>coords</code>,
+bounding box <code>bbox</code>, polygon <code>polygon</code> or
+'where' statement (attribute data) <code>where</code>. Selecting
+features by coordinates is affected by the current 2D resolution. It
+can be changed using threshold distance <code>thresh</code>. These
+options are <em>orthogonal</em>, i.e. can be used in various
+combinations. For example:
 </p>
 
 <div class="code"><pre>
@@ -39,7 +39,12 @@ label='interstate'.
 
 <h2>NOTES</h2>
 <p>
-This module can be buggy, still under development. So please feel free
+If no vector features are selected or the flag <code>-t</code> is
+used, topology is not build.
+</p>
+
+<p>
+This module can be &quot;buggy&quot;, still under development. So please feel free
 to report all bugs or wanted features. Also this manual page should be
 updated.
 </p>
@@ -53,48 +58,47 @@ Vector features can be selected in several
 ways:
 </p>
 <ul>
+    <li><code>ids</code> - using internal (unique) line id's</li>
     <li><code>cats</code> - using category numbers</li>
-    <li><code>ids</code> - using internal line id's</li>
-    <li><code>coords</code> - using x,y coordinate pairs</li>
+    <li><code>coords</code> - using x,y coordinate pairs (center of bounding box, size defined by <code>thresh</code>)</li>
     <li><code>bbox</code> - using bounding box</li>
     <li><code>polygon</code> - using polygon (at least 3 coordinate pairs have to be set)</li>
-    <li><code>where</code> - using 'where' statement (attribute table)
+    <li><code>where</code> - using 'where' statement (attribute data)
 </ul>
 
 <p>
 Additional parameters for vector feature specification are:
 </p>
 <ul>
-    <li><code>layer</code> - layer number</li>
+    <li><code>layer</code> - layer number (used only with <code>cats</code> or <code>where</code> option)</li>
     <li><code>thresh</code> - threshold distance used for selecting vector features by coordinates</li>
 </ul>
 
 <h3>Tool description</h3>
 
 <ul>
-    <li><code>create</code> - Create new (empty) vector map
+    <li><code>create</code> - Create new (empty) vector map layer
     (see <code><a href="v.in.ascii.html">v.in.ascii</a>
-    -e</code>). Optionally vector features (in GRASS ASCII format) can
+    -e</code>). Optionally vector features (in GRASS ASCII standard format) can
     be read from standard input (<code>input=-</code>) or from the
-    text file given by the <code>input</code> option, see also
-    <code>add</code> tool.</li>
+    text file given by the <code>input</code> option.</li>
 
     <li><code>add</code> - Add new vector features (stored in GRASS
-    ASCII standard format) to existing vector map. Features can be read
+    ASCII standard format) to existing vector map layer. Features can be read
     from standard input or from the given text file
     (<code>input</code> option). If no header is given, the <code>-n</code>
     flag must be used.
 
     <li><code>delete</code> - Delete selected vector features from
-    existing vector map.</li>
+    existing vector map layer.</li>
    
     <li><code>copy</code> - Make identical copy of
     selected vector features.</li>
 
-    <li><code>move</code> - Move selected features in existing vector
-    map relatively to their current location. For this purpose, option
-    <code>move</code> must be used. This option defines coordinates of
-    the movement direction.</li>
+    <li><code>move</code> - Move selected features of existing vector
+    map layer relatively to their current location. This tool requires
+    <code>move</code> option. The option defines coordinates of the
+    movement direction.</li>
 
     <li><code>flip</code> - Flip direction of selected vector lines
     (lines or boundaries).</li>
@@ -111,20 +115,20 @@ Additional parameters for vector feature specification are:
     nodes of both lines is found. The second line from two selected
     lines can eventually be flipped in it's direction.</li>
 
-    <li><code>break</code> - Split (break) given vector line into
-    two on location given by
-    <code>coords</code> </li>
+    <li><code>break</code> - Split (break) given vector line(s) into
+    two lines on location given by <code>coords</code>. Shape of the
+    line is not changed.</li>
     
     <li><code>snap</code> - Snap one vector line to another.</li>
 
     <li><code>vertexadd</code> - Add vertex(ces) to the given vector
-    line(s). Location of the new vertex is given by <code>coord<code>
+    line(s). Location of the new vertex is given by <code>coord</code>
     option.</li>
 
     <li><code>vertexdel</code> - Remove vertex(ces) specified by
     <code>coords</code> option.</li>
 
-    <li><code>vertexmove</code> - Move vertices specified
+    <li><code>vertexmove</code> - Move vertex(ces) specified
     by <code>coords</code> option. Direction of the movement is
     specified by the <code>move</code> option.</li>
     
@@ -134,27 +138,32 @@ Additional parameters for vector feature specification are:
 
 <h2>EXAMPLES</h2>
 
-<h3>Create new vector map</h3>
+<h3>Create new vector map layer</h3>
 <p>
-Create new <em>empty</em> vector map:
+Create new <em>empty</em> vector map layer:
 </p>
 <div class="code"><pre>
 v.edit tool=create map=vectmap
 </pre></div>
 
 <p>
-Create new vector map and read data from file 'roads.txt' (i.e. create
-a copy of vector map 'roads', but without attribute data):
+Create new vector map layer and read data from file 'roads.txt' (i.e. create
+a copy of vector map layer 'roads'):
 </p>
 <div class="code"><pre>
 v.out.ascii in=roads format=standard > roads.txt;
 v.edit tool=create map=vectmap input=roads.txt
 </pre></div>
 
-<h3>Add new features to existing vector map</h3>
+or alternatively
+<div class="code"><pre>
+cat roads.txt | v.edit tool=create map=vectmap input=-
+</pre></div>
+
+<h3>Add new features to existing vector map layer</h3>
 
 <p>
-Add new features read from standard input without header:
+Add point to the vector map layer (without header):
 </p>
 <div class="code"><pre>
 echo "P 1 1
@@ -169,10 +178,10 @@ Add new features read from standard input:
 v.out.ascii in=railroads format=standard | v.edit tool=add map=vectmap
 </pre></div>
 
-<h3>Delete selected features from vector map</h3>
+<h3>Delete selected features from vector map layer</h3>
 
 <p>
-Remove all vector features with category 1 or 2:
+Remove all vector features with category number 1 or 2:
 </p>
 <div class="code"><pre>
 v.edit tool=delete map=roads cats=1,2
@@ -190,7 +199,7 @@ v.edit tool=delete map=roads cats=1,2 coords=600952.625,4926107
 <p>
 Remove all features with category 1 and 2 covered by two bounding boxes
 (center coordinates 592542.892,4924766.996 and 603389.062,4918292.187, 
-width 2000 map units):
+size 2000 map units):
 </p>
 <div class="code"><pre>
 v.edit map=roads tool=delete coord=592542.892,4924766.996,603389.062,4918292.187 thresh=1000 cat=1,2
@@ -286,7 +295,11 @@ v.edit tool=merge map=vectmap cat=43,45
 
 <h3>Break (split) lines</h3>
 
-TODO
+Break line id 810 on coordinates 604268,4923570:
+
+<div class="code"><pre>
+v.edit map=roads tool=break coords=604268,4923570 id=810
+</pre></div>
 
 <h3>Snap lines</h3>
 
@@ -303,20 +316,20 @@ v.edit tool=vertexadd map=roads coords=600952,4926107 thresh=1
 
 <h3>Delete vertices</h3>
 
-Delete vertex located at 604441,4921088 (threshold set to 0.01 map units).
-Modify only lines with category 6:
+Delete vertex located at 593191.608,4925684.849 (threshold set to 0.1 map units).
+Modify only lines with category 1:
 
 <div class="code"><pre>
-v.edit tool=vertexdel map=roads cats=6 coord=604441,4921088 thresh=1-e2
+v.edit tool=vertexdel map=roads coord=593191.608,4925684.849 thresh=1-e1 cats=1
 </pre></div>
 
 <h3>Move vertices</h3>
 
 Move vertices located at 604441,4921088 (threshold set to 100 map units).
-Modify only lines with category 6:
+Modify only lines with categories 1-10:
 
 <div class="code"><pre>
-v.edit tool=vertexmove map=roads cats=6 coord=604441,4921088 thresh=100 move=1000,1000
+v.edit tool=vertexmove map=roads cats=1-10 coord=604441,4921088 thresh=100 move=1000,1000
 </pre></div>
 
 
@@ -353,7 +366,7 @@ d.vect -i map=roads cats=`v.edit map=roads tool=select coord=592542.89243878,492
 <h2>AUTHOR</h2>
 
 Wolf Bergenheim - independent developer<br>
-Jachym Cepicky, Department of Geoinformation Technologies, 
+J&#225chym &#268epick&#253, Department of Geoinformation Technologies, 
  Mendel University of Agriculture and Forestry in Brno, Czech Republic<br>
 Martin Landa, FBK-irst (formerly ITC-irst), Trento, Italy
 
