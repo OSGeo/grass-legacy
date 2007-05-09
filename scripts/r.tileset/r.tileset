@@ -20,10 +20,22 @@
 #  sed
 
 # Bugs:
-#  Does not know about meridians in projections. However, unlike the usual hack used to find meridians, this code is perfectly happy with arbitrary rotations and flips
-#  The following are planned to be fixed in a future version, if it turns out to be necessary for someone:
-#   Does not generate optimal tilings. This means that between an appropriate projection for a region and latitude longitude projection, in the degenerate case, it may create tiles demanding up to twice the necessary information. Requesting data from cylindrical projections near their poles results in divergence. You really don't want to use source data from someone who put it in a cylindrical projection near a pole, do you?
-#   Not generating "optimal" tilings has another side effect; the sanity of the destination region will not carry over to generating tiles of realistic aspect ratio. This might be a problem for some WMS servers presenting data in a highly inappropriate projection. Do you really want their data?
+#  Does not know about meridians in projections. However, unlike the usual
+#   hack used to find meridians, this code is perfectly happy with arbitrary
+#   rotations and flips
+#  The following are planned to be fixed in a future version, if it turns out
+#   to be necessary for someone:
+#   Does not generate optimal tilings. This means that between an appropriate
+#    projection for a region and latitude longitude projection, in the
+#    degenerate case, it may create tiles demanding up to twice the necessary
+#    information. Requesting data from cylindrical projections near their poles
+#    results in divergence. You really don't want to use source data from
+#    someone who put it in a cylindrical projection near a pole, do you?
+#   Not generating "optimal" tilings has another side effect; the sanity
+#    of the destination region will not carry over to generating tiles of
+#    realistic aspect ratio. This might be a problem for some WMS servers
+#    presenting data in a highly inappropriate projection. Do you really
+#    want their data?
 
 # Usage example
 #  r.tileset -w sourceproj="+init=epsg:4326" maxcols=4096 maxrows=4096
@@ -34,8 +46,8 @@
 #   Added extra cells for overlap
 
 #%Module
-#%  description: Produces tilings of the source projection for use in the destination region and projection.
-#%  keywords: raster, tiling
+#% description: Produces tilings of the source projection for use in the destination region and projection.
+#% keywords: raster, tiling
 #%End
 #%flag
 #% key: g
@@ -124,25 +136,25 @@ CS2CS="cs2cs"
 
 # check if we have bc
 if [ ! -x "`which $BC`" ] ; then
-    g.message -e "$BC is required, please install it first" 
+    g.message -e "$BC is required, please install it first"
     exit 1
 fi
 
 # check if we have sed
 if [ ! -x "`which $SED`" ] ; then
-    g.message -e  "$SED is required, please install it first" 
+    g.message -e "$SED is required, please install it first"
     exit 1
 fi
 
 # check if we have grep
 if [ ! -x "`which $GREP`" ] ; then
-    g.message -e  "$GREP is required, please install it first" 
+    g.message -e "$GREP is required, please install it first"
     exit 1
 fi
 
 # check if we have cs2cs
 if [ ! -x "`which $CS2CS`" ] ; then
-    g.message -e  "$CS2CS is required, please install it first" 
+    g.message -e "$CS2CS is required, please install it first"
     exit 1
 fi
 
@@ -157,6 +169,18 @@ defaultIFS=$IFS
 # An array of points indexed by 0 for "x" and 4 for "y" + by number 0, 1, 2, and 3
 # A reprojector [0] is name of source projection, [1] is name of destination
 # A projection - [0] is proj.4 text, [1] is scale
+
+#####################
+# name:     message
+# purpose:  displays messages to the user
+# usage: message level text
+
+message () {
+	if [ $1 -lt $GIS_OPT_V ] ; then
+		shift
+		echo "$@"  
+	fi
+}
 
 #########################
 # name: lookup
@@ -191,7 +215,7 @@ lookup () {
 # usage: varname "expr"
 
 calculate() {
-	g.message "$2"
+	message 3 "$2"
 	c_tmp=`echo "$2" | $BC $BCARGS`
 	eval $1=$c_tmp
 }
@@ -227,10 +251,10 @@ project() {
 	calculate p_x1 "$1 * $p_source_units"
 	calculate p_y1 "$2 * $p_source_units"
 
-	g.message "echo \"$p_x1 $p_y1\" | $CS2CS -f \"%f\" $p_source_proj +to $p_dest_proj"
+	message 3 "echo \"$p_x1 $p_y1\" | $CS2CS -f \"%f\" $p_source_proj +to $p_dest_proj"
 
 	answer=`echo "$p_x1 $p_y1" | $CS2CS -f "%f" $p_source_proj +to $p_dest_proj`
-	g.message "$answer"
+	message 3 "$answer"
 	eval `echo $answer | $SED "s/^/p_x2=/" | $SED "s/ /;p_y2=/" | $SED "s/ /;p_z2=/"`
 	
 	calculate p_x2 "$p_x2 / $p_dest_units"
@@ -370,7 +394,7 @@ OVERLAP=$GIS_OPT_OVERLAP
 calculate MAX_COLS "$GIS_OPT_MAXCOLS - $OVERLAP"
 calculate MAX_ROWS "$GIS_OPT_MAXROWS - $OVERLAP"
 
-g.message "Getting destination projection:"
+g.message "Getting destination projection"
 
 if [ -z "$GIS_OPT_DESTPROJ" ] ; then
 	DEST_PROJ=`g.proj -j`
@@ -378,7 +402,7 @@ else
 	DEST_PROJ=`echo $GIS_OPT_DESTPROJ`
 fi
 
-	g.message "Getting projection scale:"
+	g.message "Getting projection scale"
 
 if [ -z "$GIS_OPT_DESTSCALE" ] ; then
 	eval `g.proj -p | $GREP '^meters' | $SED -e "s/:/=/" -e "s/ //g"`
@@ -395,7 +419,7 @@ SOURCE_PROJ=`echo $SOURCE_PROJ`
 makeProjector SOURCE_PROJ $SOURCE_SCALE DEST_PROJ $DEST_SCALE SOURCE_TO_DEST
 makeProjector DEST_PROJ $DEST_SCALE SOURCE_PROJ $SOURCE_SCALE DEST_TO_SOURCE
 
-g.message "Getting destination region:"
+g.message "Getting destination region"
 if [ -z $GIS_OPT_REGION ] ; then
 	eval `g.region -g`
 else
@@ -412,14 +436,14 @@ DEST_EWRES=$ewres
 calculate DEST_ROWS "($n - $s) / $nsres"
 calculate DEST_COLS "($e - $w) / $ewres"
 
-g.message "Rows: $DEST_ROWS, Cols: $DEST_COLS"
+message 1 "Rows: $DEST_ROWS, Cols: $DEST_COLS"
 
 ### Project the destination region into the source:
-g.message "Projecting destination region into source:"
+g.message "Projecting destination region into source"
 
 bboxToPoints DEST_BBOX DEST_BBOX_POINTS
 
-g.message "${DEST_BBOX_POINTS[@]}"
+message 1 "${DEST_BBOX_POINTS[@]}"
 
 # echo "${DEST_TO_SOURCE[@]}"
 # echo "${DEST_TO_SOURCE[0]}"
@@ -431,30 +455,30 @@ g.message "${DEST_BBOX_POINTS[@]}"
 
 projectPoints DEST_BBOX_POINTS DEST_BBOX_SOURCE_POINTS DEST_TO_SOURCE 
 
-g.message "${DEST_BBOX_SOURCE_POINTS[@]}"
+message 1 "${DEST_BBOX_SOURCE_POINTS[@]}"
 
 pointsToBbox DEST_BBOX_SOURCE_POINTS SOURCE_BBOX
 
-g.message "${SOURCE_BBOX[@]}"
+message 1 "${SOURCE_BBOX[@]}"
 
-g.message "Projecting source bounding box into destination:"
+g.message "Projecting source bounding box into destination"
 
 bboxToPoints SOURCE_BBOX SOURCE_BBOX_POINTS
 
-g.message "${SOURCE_BBOX_POINTS[@]}"
+message 1 "${SOURCE_BBOX_POINTS[@]}"
 
 projectPoints SOURCE_BBOX_POINTS SOURCE_BBOX_DEST_POINTS SOURCE_TO_DEST 
 
-g.message "${SOURCE_BBOX_DEST_POINTS[@]}"
+message 1 "${SOURCE_BBOX_DEST_POINTS[@]}"
 
 calculate X_METRIC "1 / $DEST_EWRES"
 calculate Y_METRIC "1 / $DEST_NSRES"
 
-g.message "Computing length of sides of source bounding box:"
+g.message "Computing length of sides of source bounding box"
 
 sideLengths  SOURCE_BBOX_DEST_POINTS $X_METRIC $Y_METRIC SOURCE_BBOX_DEST_LENGTHS
 
-g.message "${SOURCE_BBOX_DEST_LENGTHS[@]}"
+message 1 "${SOURCE_BBOX_DEST_LENGTHS[@]}"
 
 # Find the skewedness of the two directions.
 # Define it to be greater than one
@@ -483,7 +507,7 @@ MAX[1]=$MAX_ROWS
 # I'm going to make the numbers all simpler and add this extra cell to
 # every tile.
 
-g.message "Computing tiling:"
+g.message "Computing tiling"
 
 for i in 0 1 ; do
 	# Make these into integers.

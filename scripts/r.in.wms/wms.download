@@ -74,13 +74,13 @@ trap "exitprocedure" 2 3 15
 BC="bc"
 BCARGS="-l"
 
-#####################3
+#####################
 # name: calculate
 # purpose: perform calculations
 # usage: varname "expr"
 
 calculate() {
-	g.message "$2"
+	g.message message="$2"
 	c_tmp=`echo "$2" | $BC $BCARGS`
 	eval $1=$c_tmp
 }
@@ -95,7 +95,7 @@ GetTiles() {
 
   NUMBER_OF_TILES=0
   for line in $CONTENTS ; do
-	g.message "$line"
+	g.message -d message="$line"
 	eval "$line"
 	emptyness=`file "$OUTPUT_FILE" | grep empty$`
 	if [ -f "$OUTPUT_FILE" ] && [ -z "$emptyness" ] ; then
@@ -109,7 +109,7 @@ GetTiles() {
   done
 
   if [ $NUMBER_OF_TILES -ne 0 ] ; then
-    g.messages -w "$NUMBER_OF_TILES failed to download"
+    g.message -w "$NUMBER_OF_TILES failed to download"
     return 1
   else
     g.message  "All tiles downloaded successfully"
@@ -121,8 +121,8 @@ GetTiles() {
 #Get the data from the WMS server
 GetData() {
    g.message "Downloading data"
-   g.message "Requesting Data from ${SERVER}:"
-   g.message "$STRING"
+   g.message message="Requesting Data from ${SERVER}:"
+   g.message message="$STRING"
    #download the File from the Server
    wget ${WGET_OPTIONS}  --post-data=${STRING} ${SERVER} -O ${OUTPUT_FILE} 
    if [ $? -ne 0 ]; then

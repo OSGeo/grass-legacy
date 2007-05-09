@@ -142,7 +142,7 @@
 #% key: wgetoptions
 #% type: string
 #% description: Additional options for wget
-#% answer: -c -t 5 --user-agent=MSIE5.5 
+#% answer: -c -t 5 -nv
 #% required : no
 #% guisection: Download
 #%end
@@ -205,11 +205,11 @@ if [ $GIS_FLAG_P -ne 1 ] ; then
 fi
 
 # Remember the intial field seperator
-defaultIFS=$IFS
+defaultIFS="$IFS"
 
 # Remember the previous path
-prevPATH=$PATH
-PATH=$PATH:${GISBASE}/etc/r.in.wms/
+prevPATH="$PATH"
+PATH="$PATH:${GISBASE}/etc/r.in.wms/"
 export PATH
 
 #####################
@@ -233,7 +233,7 @@ exitprocedure()
 	message 0 "User break!"
 	PATH=$prevPATH
 	export PATH
-	rm -f ${TMP}*
+	\rm -f "${TMP}*"
 	exit 1
 }
 trap "exitprocedure" 2 3 15
@@ -281,7 +281,7 @@ calculate() {
 
 listLayers() {
 
-	CAPABILITIES_FILE=${TMP}capabilities.xml
+	CAPABILITIES_FILE="${TMP}capabilities.xml"
     
 	STRING="service=WMS&request=GetCapabilities&${GIS_OPT_WMSQUERY}";
 
@@ -292,32 +292,31 @@ listLayers() {
 
 	# use xml2
 	if [ -x "`which xml2`" ]; then
-		cat $CAPABILITIES_FILE | xml2 | \
+		cat "$CAPABILITIES_FILE" | xml2 | \
 		grep "Layer/SRS=\|Layer/Name=\|Layer/Title=\|Style/Name=\|Style/Title=\|Layer/Abstract=" | \
-		sed -e          "s/.*Layer\\/Name=/LAYER: /" | \
-		sed -e           "s/.*Layer\\/SRS=/  SRS: /" | \
- 		sed -e         "s/.*Layer\\/Title=/  Title: /" | \
-		sed -e      "s/.*Layer\\/Abstract=/  |/" | \
-		sed -e  "s/.*Layer\\/Style\\/Name=/  STYLE: /" | \
-		sed -e "s/.*Layer\\/Style\\/Title=/    Style title: /"
+		sed -e          "s/.*Layer\\/Name=/LAYER: /" \
+		    -e	     "s/.*Layer\\/SRS=/  SRS: /" \
+		    -e	   "s/.*Layer\\/Title=/  Title: /" \
+		    -e	"s/.*Layer\\/Abstract=/  |/" \
+		    -e  "s/.*Layer\\/Style\\/Name=/  STYLE: /" \
+		    -e "s/.*Layer\\/Style\\/Title=/    Style title: /"
 
 	else : # xml2 is not available
 		g.message -w "xml2 NOT avaliable"
-		cat $CAPABILITIES_FILE | \
-		grep "Name\|Title\|Style\|Layer" | \
-		sed -e "s/<Layer .*>/LAYER:/i"| \
-		sed -e "s/<\/Layer.*>//i"| \
-		sed -e "s/<Name>\s*\(\w*\)/~\1~/ig" | \
-		sed -e "s/<\/Name>\n//ig" | \
-		sed -e "s/<Style>\n*\s*\(\w*\)/Style: \1/i" |\
-		sed -e "s/<\/Style>//i" |\
-		sed -e "s/<Title>\(.*\)<\/Title>/\t --\1 /i" | \
-		sed -e "s/<\/Title>//i" | \
-		sed -e "s/<\/*.*\/*\/*>//i"
+		grep "Name\|Title\|Style\|Layer" "$CAPABILITIES_FILE" | \
+		  sed -e "s/<Layer .*>/LAYER:/" \
+		      -e "s/<\/Layer.*>//" \
+		      -e "s/<Name>\s*\(\w*\)/~\1~/g" \
+		      -e "s/<\/Name>\n//g" \
+		      -e "s/<Style>\n*\s*\(\w*\)/Style: \1/" \
+		      -e "s/<\/Style>//" \
+		      -e "s/<Title>\(.*\)<\/Title>/\t --\1 /" \
+		      -e "s/<\/Title>//" \
+		      -e "s/<\/*.*\/*\/*>//"
 	fi
 
-	if [ -e $CAPABILITIES_FILE ]; then
-		rm -f $CAPABILITIES_FILE
+	if [ -e "$CAPABILITIES_FILE" ]; then
+	    \rm -f "$CAPABILITIES_FILE"
         fi
         exit 1;
 }
@@ -345,14 +344,14 @@ eval `g.gisenv`
 
 #Job number one: pick a folder
 if [ -z "${GIS_OPT_FOLDER}" ] ; then
-	GIS_OPT_FOLDER=${GISDBASE}/wms_download
+	GIS_OPT_FOLDER="${GISDBASE}/wms_download"
 fi
 
-PREFIX=${GIS_OPT_OUTPUT}
-REQUESTFILE=${GIS_OPT_FOLDER}/${PREFIX}_${GIS_OPT_REGION}.wget
+PREFIX="${GIS_OPT_OUTPUT}"
+REQUESTFILE="${GIS_OPT_FOLDER}/${PREFIX}_${GIS_OPT_REGION}.wget"
 
 if [ ! -z "$GIS_OPT_REGION" ] ; then
-   eval `g.findfile element=windows file=$GIS_OPT_REGION`
+   eval `g.findfile element=windows file="$GIS_OPT_REGION"`
    if [ ! "$file" ] ; then
       g.message -e "Region file '$GIS_OPT_REGION' not found."
       exit 1
@@ -376,7 +375,7 @@ addargument REQUEST maxrows ${GIS_OPT_MAXROWS}
 addargument REQUEST tileoptions "${GIS_OPT_TILEOPTIONS}"
 
 if [ $GIS_FLAG_D -eq 0 ] ; then
-	message 0 "wms.request $REQUEST"
+	message 1 "wms.request $REQUEST"
 	eval "wms.request $REQUEST"
 	if [ $? -ne 0 ] ; then
 	   g.message -e "wms.request failure" 
@@ -387,7 +386,7 @@ fi
 addargument DOWNLOAD requestfile "${REQUESTFILE}"
 addargument DOWNLOAD wgetoptions "${GIS_OPT_WGETOPTIONS}"
 
-message 0 "wms.download $DOWNLOAD"
+message 1 "wms.download $DOWNLOAD"
 eval "wms.download $DOWNLOAD"
 
 # Job 2: make list of files
@@ -419,13 +418,13 @@ file "$FILES" | grep HTML > /dev/null
 if [ $? -eq 0 ] ; then
   g.message "#################################"
   cat "$FILES"
-  rm -f ${TMP}*
+  \rm -f "${TMP}*"
   exit 1
 fi
 
-message 0 "r.in.gdalwarp $GDALWARP"
+message 1 "r.in.gdalwarp $GDALWARP"
 eval "r.in.gdalwarp $GDALWARP"
 
 # Clean up:
-rm -f ${TMP}*
+\rm -f "${TMP}*"
 
