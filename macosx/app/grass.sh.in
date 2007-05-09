@@ -26,9 +26,9 @@ trap "echo 'User break!' ; exit" 2 3 9 15
 GRASS_OS_STARTUP="Mac.app"
 export GRASS_OS_STARTUP
 
-GISBASE="`dirname $0`"
+GISBASE=`dirname "$0"`
 export GISBASE
-grass_ver=`cut -d . -f 1-2 $GISBASE/etc/VERSIONNUMBER`
+grass_ver=`cut -d . -f 1-2 "$GISBASE/etc/VERSIONNUMBER"`
 
 # for GDAL utils
 # hack - ideally user should have this in their PATH, but make sure here
