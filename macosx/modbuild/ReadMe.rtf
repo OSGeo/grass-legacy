@@ -16,15 +16,13 @@ GEM is a nice idea, but there are a few issues.  Not many modules are setup for 
 \
 The method is similar to GEM in that it uses a minimal template of the GRASS source and uses the needed headers and libraries from GRASS.app.  But there is less setup needed (for developers), and you don't need admin privileges to install and use the module, except in some more complex cases.  Though a user does need to do a little setup, unlike with GEM.\
 \
-It's really rough right now.  Dealing with a module that has support that is expected to be installed in the GRASS 
-\f2\fs24 etc
-\f1\fs28  folder is tricky.  That would require changing the application package by copying those files to the application, but should work if you want to try, or patching the source to try the external support folder.  It doesn't have a module registry like GEM.  It doesn't add modules to the GUI menu, though the menu is dynamically maintained by the GRASS.app startup.\
+It's really rough right now.  It doesn't have a module registry like GEM.  It doesn't add modules to the GUI menu, though the menu is dynamically maintained by the GRASS.app startup.\
 \
 I haven't tried it with a module that also includes its own library.\
 \
 
 \f0\b Note:
-\f1\b0  if there is no makefile in the module source, it's probably just a script that you can just copy to the bin folder (see \ul Use\ulnone  section below).\
+\f1\b0  if there is no makefile in the module source, it's probably just a script that you can simply copy to the bin folder (see \ul Use\ulnone  section below).\
 \
 \
 
@@ -73,6 +71,16 @@ I haven't tried it with a module that also includes its own library.\
 \f0\b NOTE:
 \f1\b0  make sure that there are no spaces in the path to the modbuild folder.\
 \
+- If the module uses extra data file(s) that are stored in the 
+\f2\fs24 etc/
+\f1\fs28  folder (v.in.dwg does this), make sure it uses the new 
+\f2\fs24 G_find_etc()
+\f1\fs28  function (for C modules) or the 
+\f2\fs24 g.findetc
+\f1\fs28  module (for script modules) instead of the hardwired 
+\f2\fs24 $GISBASE/etc/
+\f1\fs28 .  This will mean either asking the author to make this change or attempting it yourself.\
+\
 - In a Terminal, 
 \f2\fs24 cd
 \f1\fs28  to the module source folder, then:\
@@ -117,23 +125,23 @@ The module executable will be in the
 \f1\b0  and 
 \f0\b binary
 \f1\b0  executables can be run from the same location, so install them in the 
-\f2\fs24 bin
+\f2\fs24 bin/
 \f1\fs28  folder.\
 - Any 
 \f0\b libraries
 \f1\b0  should go in the 
-\f2\fs24 lib
+\f2\fs24 lib/
 \f1\fs28  folder.\
 - 
 \f0\b Documentation
 \f1\b0  goes in the 
-\f2\fs24 docs/html
+\f2\fs24 docs/html/
 \f1\fs28  folder.\
 - 
 \f0\b Data
 \f1\b0  files should go into 
-\f2\fs24 etc
-\f1\fs28 , but only if the module has been patched to account for this.  No details yet, so ask if you have a module with data files.\
+\f2\fs24 etc/
+\f1\fs28 .\
 \pard\tx720\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\ql\qnatural
 \cf0 \
 \
