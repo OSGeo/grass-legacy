@@ -1,3 +1,16 @@
+/****************************************************************************
+ *
+ * MODULE:       v.mapcalc
+ * AUTHOR(S):    Christoph Simon (original contributor)
+ *               
+ * PURPOSE:      
+ * COPYRIGHT:    (C) 2002 by the GRASS Development Team
+ *
+ *               This program is free software under the GNU General Public
+ *               License (>=v2). Read the file COPYING that comes with GRASS
+ *               for details.
+ *
+ *****************************************************************************/
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
@@ -323,3 +336,4 @@ mapop (int op, SYMBOL *map1, SYMBOL *map2)
 
   return res;
 }
+
