@@ -2,16 +2,34 @@
 
 <p>
 This program is to be used in shell/perl/python scripts, so the author does not
-need to use <code>echo</code> program. Advantage of <code>g.message</code> is,
-that it formats messages just like other GRASS modules do and that it's
-functionality is influenced by <code>GRASS_VERBOSE</code> environment variable.
+need to use <code>echo</code> program. The advantage of <em>g.message</em> is
+that it formats messages just like other GRASS modules do and that its
+functionality is influenced by the <code>GRASS_VERBOSE</code> environment variable.
 </p>
 <p>
 The program can be used for standard informative messages as well as warnings 
-(flag <code>-w</code>) and fatal errors (flag <code>-e</code>). For debugging
-purposes, flag <code>-d</code> will cause <code>g.message</code> to print level
-1 debugging message.
+(<b>-w</b> flag) and fatal errors (<b>-e</b> flag). For debugging
+purposes, the <b>-d</b> flag will cause <em>g.message</em> to print level
+<tt>1</tt> debugging message.
 </p>
+
+<h2>NOTES</h2>
+
+Messages containing "<tt>=</tt>" must use the <b>message=</b> syntax so the
+parser doesn't get confused.
+<P>
+Messges containing '<tt>!</tt>' and '<tt>$</tt>' must use single 'quotes' to
+avoid unwanted shell translation.
+<P>
+If you want a long message (mutli-line) to be dealt with as a single
+paragraph, use a single call to <em>g.message</em> with text split in the
+script using the backslash as the last character. (In shell scripts don't
+close the "quote")
+<P>
+A blank line may be obtained with: <tt>g.message ""</tt>
+<P>
+Redundant whitespace will be stripped away.
+
 
 <h2>SEE ALSO</h2>
  
