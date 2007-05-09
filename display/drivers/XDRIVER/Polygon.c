@@ -11,6 +11,9 @@ void XD_Polygon_abs(const int *xarray, const int *yarray, int number)
 	XPoint *xpnts = alloc_xpoints(number);
 	int i;
 
+	if (number < 1)
+		return;
+
 	for (i = 0; i < number; i++)
 	{
 		xpnts[i].x = (short) xarray[i];
@@ -25,6 +28,9 @@ void XD_Polygon_rel(const int *xarray, const int *yarray, int number)
 {
 	XPoint *xpnts = alloc_xpoints(number);
 	int i;
+
+	if (number < 1)
+		return;
 
 	xpnts[0].x = (short) (xarray[0] + cur_x);
 	xpnts[0].y = (short) (yarray[0] + cur_y);
