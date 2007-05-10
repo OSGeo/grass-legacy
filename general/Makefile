@@ -12,6 +12,7 @@ SUBDIRS = \
 	g.mapset \
 	g.mapsets \
 	g.message \
+	g.mkfontcap \
 	g.parser \
 	g.proj \
 	g.pnmcomp \

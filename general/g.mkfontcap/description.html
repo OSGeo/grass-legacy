@@ -1,0 +1,42 @@
+<H2>DESCRIPTION</H2>
+
+<p>
+<EM>g.mkfontcap</EM> is a utilty to generate a GRASS font configuration file
+("fontcap") containing details of the fonts available on the current system.
+If <a href="http://freetype.sourceforge.net/">Freetype</a> is not installed,
+the font list will be limited to the set of Hershey stroke fonts supplied
+with GRASS. With Freetype enabled however, the module will recursively scan 
+all files within a predefined hierarchy to find Freetype-compatible scalable
+fonts. The list of directories scanned is currently:
+<div class="code"><pre>
+    /usr/lib/X11/fonts
+    /usr/share/X11/fonts
+    /usr/share/fonts
+    ${HOME}/Library/Fonts
+    /Library/Fonts
+    /System/Library/Fonts
+    ${WINDIR}/Fonts
+</pre></div>
+These correspond to directories where fonts can be found on some common
+operating systems. Extra directories to search can easily by added using the
+<em>extradirs</em> parameter, which accepts a comma-separated list.</p>
+
+<p>The module will normally write to the standard fontcap file location,
+<tt>$GISBASE/etc/fontcap</tt>. If the environment variable
+<strong>GRASS_FONT_CAP</strong> is set, the output will instead be written 
+to the file specifed by that variable.</p>
+
+<p>The output list of fonts is sorted first by type (Stoke fonts first,
+followed by Freetype) and within each type by the full name of the font. The
+full name normally consists of the font face famlily name followed by the
+font style (i.e. Regular, Italic etc.).</p>
+
+<H2>SEE ALSO</H2>
+ 
+<EM><a href="d.font.html">d.font</a></EM>
+
+<H2>AUTHOR</H2>
+
+Paul Kelly
+
+<p><i>Last changed: $Date$</i>
