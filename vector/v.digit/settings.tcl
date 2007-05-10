@@ -305,7 +305,7 @@ proc settings {} {
     Label $row.a -anchor w -text [G_msg "Line width in screen pixels"]
     SpinBox $row.b -range {1 50 1} -textvariable GVariable(linewidth) \
 		   -width 2 -helptext [G_msg "Set line width in pixels"] -entrybg white \
-		   -modifycmd {c_var_set linewidth $GVariable(linewidth)}    
+		   -modifycmd {c_var_set linewidth $GVariable(linewidth); c_next_tool redraw}
     pack $row.a -side left; pack $row.b -side right;
     pack $row -side top -fill x -expand no -anchor n
 
