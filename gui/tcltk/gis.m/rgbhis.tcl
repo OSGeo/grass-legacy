@@ -306,7 +306,9 @@ proc GmRgbhis::duplicate { tree parent node id } {
 
     image create photo rgbico -file "$iconpath/module-d.rgb.gif"
     set ico [label $frm.ico -image rgbico -bd 1 -relief raised]
-    
+
+    bind $ico <ButtonPress-1> "GmTree::selectn $tree $node"
+
     pack $check $ico -side left
 
 	# where to insert new layer
