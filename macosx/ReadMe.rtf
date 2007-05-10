@@ -13,7 +13,7 @@
 \fs24 \cf0 \
 \pard\tx1080\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\ql\qnatural\pardirnatural
 
-\f2\i \cf0 2007-4-14\
+\f2\i \cf0 2007-5-10\
 \pard\tx720\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\ql\qnatural\pardirnatural
 
 \f1\i0 \cf0 \
@@ -105,7 +105,7 @@ The makefile tries to figure out the Tcl/Tk prefix from the configuration.  This
 \pard\tx720\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\ql\qnatural\pardirnatural
 
 \f1\fs24 \cf0 \
-It also tries to figure out the location of the GDAL programs, from the configured GDAL libs.  This is set in grass.sh, and if it doesn't correctly figure it out, set GDAL_BIN before running make:\
+It also tries to figure out the location of the GDAL programs, from the configured GDAL libs.  This is set in grass.sh, and if it doesn't correctly figure it out (some GRASS commands fail to find needed GDAL commands), set GDAL_BIN before running make:\
 \
 \pard\tx720\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\ql\qnatural\pardirnatural
 
@@ -209,13 +209,37 @@ If you don't have the PROJ framework programs folder in your shell PATH, it will
 \pard\tx720\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\ql\qnatural\pardirnatural
 
 \f1\fs24 \cf0 \
+Sometimes, for mysterious reasons so far, the automatic check for X11 fails.  Depending on various conditions, you may immediately notice this because configure stops.  Other symptoms include failing to build NVIZ.  If X11 isn't found automatically, add this to the configure line 
+\f2\i (this applies to both the unix build and app build)
+\f1\i0 :\
+\
+\pard\tx720\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\ql\qnatural\pardirnatural
+
+\f3\fs20 \cf0 --x-includes=/usr/X11R6/include --x-libraries=/usr/X11R6/lib\
+\pard\tx720\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\ql\qnatural\pardirnatural
+
+\f1\fs24 \cf0 \
+If there are still problems building NVIZ, add this to configure:\
+\
+\pard\tx720\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\ql\qnatural\pardirnatural
+
+\f3\fs20 \cf0 --with-opengl-includes=/usr/X11R6/include\
+\pard\tx720\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\ql\qnatural\pardirnatural
+
+\f1\fs24 \cf0 \
 \pard\tx720\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\ql\qnatural\pardirnatural
 \cf0 \ul Building an Installer Package\
 \pard\tx720\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\ql\qnatural\pardirnatural
 \cf0 \ulnone \
 After running make, 
 \f3\fs20 make bindist
-\f1\fs24  will assemble an installer package.  This will have the name "GRASS-[version].pkg" and will be found in the macosx folder in the GRASS source.  There will be some non-fatal errors - this is normal and the installer package is still generated correctly.\
+\f1\fs24  will assemble an installer package.  This will have the name "GRASS-[version].pkg" and will be found in the macosx folder in the GRASS source.  There 
+\f0\b will
+\f1\b0  be some 
+\f0\b non-fatal errors
+\f1\b0  - 
+\f2\i this is normal
+\f1\i0  and the installer package is still generated correctly.\
 \
 The installer takes care of binary installation, and creating the /Library/GRASS support folder and Help Viewer link.\
 \
