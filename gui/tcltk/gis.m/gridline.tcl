@@ -40,6 +40,8 @@ proc GmGridline::create { tree parent } {
     image create photo gico -file "$iconpath/module-d.grid.gif"
     set gdico [label $frm.gdico -image gico -bd 1 -relief raised]
     
+    bind $gdico <ButtonPress-1> "GmTree::selectn $tree $node"
+
     pack $check $gdico -side left
     
 	#insert new layer

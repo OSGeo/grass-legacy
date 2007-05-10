@@ -44,6 +44,8 @@ proc GmRaster::create { tree parent } {
     set ico [label $frm.ico -image rico -bd 1 -relief raised]
     pack $check $ico -side left
 
+    bind $ico <ButtonPress-1> "GmTree::selectn $tree $node"
+
     #insert new layer
     if {[$tree selection get] != "" } {
         set sellayer [$tree index [$tree selection get]]
@@ -304,7 +306,9 @@ proc GmRaster::display { node mod } {
     set rt ""
     if {![catch {open "|r.info map=$opt($id,1,map) -t" r} rt]} {
         set rasttype [read $rt]
-        catch {close $rt}
+	if {[catch {close $rt} error]} {
+	    puts $error
+	}
     }
 
     if {$rasttype == "" || [regexp -nocase ".=CELL" $rasttype]} {
@@ -376,6 +380,8 @@ proc GmRaster::duplicate { tree parent node id } {
 
     image create photo rico -file "$iconpath/element-cell.gif"
     set ico [label $frm.ico -image rico -bd 1 -relief raised]
+
+    bind $ico <ButtonPress-1> "GmTree::selectn $tree $node"
 
     pack $check $ico -side left
 

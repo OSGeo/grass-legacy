@@ -81,6 +81,8 @@ proc GmVector::legend { id } {
 	set y2 [expr {$yc + $size / 2 + 1} ]
 
     if { $opt($id,1,type_point) || $opt($id,1,type_centroid) } {
+	set lwidth  $opt($id,1,lwidth)
+	if { $lwidth == 0 } { set lwidth 1 }
         $leg create line $x1 $yc $x2 $yc -fill $opt($id,1,color) -width $lwidth
 		$leg create line $xc $y1 $xc $y2 -fill $opt($id,1,color) -width $lwidth
     }
@@ -110,6 +112,8 @@ proc GmVector::create { tree parent } {
                      -height $GmTree::legend_height ]
     set opt($count,1,_legend) $can
     pack $check $can -side left
+
+    bind $can <ButtonPress-1> "GmTree::selectn $tree $node"
 
 	#insert new layer
 	if {[$tree selection get] != "" } {
@@ -245,7 +249,9 @@ proc GmVector::show_data { id } {
 	set layernum $opt($id,1,layer)
 	if {![catch {open "|v.db.connect map=$mapname layer=$layernum -g" r} vdb]} {
 		set vectdb [read $vdb]
-		catch {close $vdb}
+		if {[catch {close $vdb} error]} {
+		    puts $error
+		}
 		set vdblist [split $vectdb " "]
 		set tbl [lindex $vdblist 1]
 		set db [lindex $vdblist 3]
@@ -543,7 +549,10 @@ proc GmVector::vecttype { vect } {
 
 	set rv [open "|v.info map=$vect" r]
 	set vinfo [read $rv]
-	catch {close $rv}
+	if {[catch {close $rv} error]} {
+	    puts $error
+	}
+
 	regexp {points:       (\d*)} $vinfo string points
 	if { $points > 0} {
 		set vecttype "points"
@@ -734,6 +743,8 @@ proc GmVector::duplicate { tree parent node id } {
                      -height $GmTree::legend_height -borderwidth 0 ]
     set opt($count,1,_legend) $can
     pack $check $can -side left
+
+    bind $can <ButtonPress-1> "GmTree::selectn $tree $node"
 
 	#insert new layer
 	if {[$tree selection get] != "" } {

@@ -63,7 +63,14 @@ proc GmTree::create { mon } {
 	$pgs raise page_$mon
 
 	# destroy old panel with options
-    destroy $options.fr
+	destroy $options.fr
+
+	set pgtitle [label $pg($mon).title -text "Map Layers for Display $mon" \
+		-font bolddefault -fg mediumblue -bg grey95]
+	pack $pgtitle -side top -expand 0 -fill x -anchor n
+
+	Separator $pg($mon).sep -orient horizontal
+	pack $pg($mon).sep -side top -expand 0 -fill x -anchor n
 
 	set sw    [ScrolledWindow $pg($mon).sw \
 		-relief flat -borderwidth 0 ]
@@ -77,10 +84,12 @@ proc GmTree::create { mon } {
             -opencmd   "GmTree::open_node $sw.tree_$mon" \
             -closecmd  "GmTree::close_node $sw.tree_$mon" \
             -deltay $lh -padx $lw ]
-            
-	$tree($mon) configure -height $treeht
-	$pgs configure -height [expr {$treeht * $lh}]
-	
+
+    # this height setting is needed to make adding new layers look nice when they
+    # scroll off the pane at the bottom (at least in the x11 interface).
+    $tree($mon) configure -height $treeht
+    $pgs configure -height [expr {$treeht * $lh} + {$legend_height}]
+
     $sw setwidget $tree($mon)
 
     bind_scroll $tree($mon)

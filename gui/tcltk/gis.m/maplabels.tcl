@@ -35,7 +35,9 @@ proc GmCLabels::create { tree parent } {
 
     image create photo clabels_ico -file "$iconpath/gui-maplabels.gif"
     set ico [label $frm.ico -image clabels_ico -bd 1 -relief raised]
-    
+
+    bind $ico <ButtonPress-1> "GmTree::selectn $tree $node"
+
     pack $check $ico -side left
 
 	#insert new layer
@@ -367,7 +369,9 @@ proc GmCLabels::duplicate { tree parent node id } {
 
     image create photo clabels_ico -file "$iconpath/gui-maplabels.gif"
     set ico [label $frm.ico -image clabels_ico -bd 1 -relief raised]
-    
+
+    bind $ico <ButtonPress-1> "GmTree::selectn $tree $node"
+
     pack $check $ico -side left
 	
 	#insert new layer

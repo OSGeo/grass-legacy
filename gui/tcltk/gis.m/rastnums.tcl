@@ -39,7 +39,9 @@ proc GmRnums::create { tree parent } {
 
     image create photo nico -file "$iconpath/module-d.rast.num.gif"
     set ico [label $frm.ico -image nico -bd 1 -relief raised]
-    
+
+    bind $ico <ButtonPress-1> "GmTree::selectn $tree $node"
+
     pack $check $ico -side left
         
 	#insert new layer
@@ -217,12 +219,15 @@ proc GmRnums::display { node mod } {
 	set string ""
 	set cells 0
 	set rest ""
-	set rc [open "|g.region -gu" r]
+	catch {set rc [open "|g.region -gu" r]}
 	set rowscolumns [read $rc]
-	close $rc
+	if {[catch {close $rc} error]} {
+	    puts $error
+	}
 	regexp {rows=(\d*)} $rowscolumns string rows
 	regexp {cols=(\d*)} $rowscolumns string cols
 	set cells [expr $rows * $cols]
+	if {$cells < 1} {return}
 
 	# can only display if 10K cells or less in region
 	if { $cells <= 10000} {
@@ -275,7 +280,9 @@ proc GmRnums::duplicate { tree parent node id } {
 
     image create photo nico -file "$iconpath/module-d.rast.num.gif"
     set ico [label $frm.ico -image nico -bd 1 -relief raised]
-    
+
+    bind $ico <ButtonPress-1> "GmTree::selectn $tree $node"
+
     pack $check $ico -side left
 
 	# where to insert new layer

@@ -84,7 +84,7 @@ proc psprint::init { } {
 	set psprint::mbottom 1
 	
 	# check for ghostscript
-	if ![catch {set input [exec gs -help]}] {
+	if {![catch {set input [exec gs -help]}]} {
 		regexp ".*Available devices:(.*)Search path:" $input string gsdevices 
 		set gsstate "normal"
 		set printmode "lpr"

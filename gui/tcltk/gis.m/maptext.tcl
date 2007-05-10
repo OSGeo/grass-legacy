@@ -30,7 +30,9 @@ proc GmCtext::create { tree parent } {
 
     image create photo ctico -file "$iconpath/gui-maptext.gif"
     set ico [label $frm.ico -image ctico -bd 1 -relief raised]
-    
+
+    bind $ico <ButtonPress-1> "GmTree::selectn $tree $node"
+
     pack $check $ico -side left
     
 	#insert new layer
@@ -236,7 +238,9 @@ proc GmCtext::duplicate { tree parent node id } {
 
     image create photo ctico -file "$iconpath/gui-maptext.gif"
     set ico [label $frm.ico -image ctico -bd 1 -relief raised]
-    
+
+    bind $ico <ButtonPress-1> "GmTree::selectn $tree $node"
+
     pack $check $ico -side left
     
 	#insert new layer

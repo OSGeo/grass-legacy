@@ -39,7 +39,9 @@ proc GmHist::create { tree parent } {
 
     image create photo hico -file "$iconpath/module-d.histogram.gif"
     set ico [label $frm.ico -image hico -bd 1 -relief raised]
-    
+
+    bind $ico <ButtonPress-1> "GmTree::selectn $tree $node"
+
     pack $check $ico -side left
         
 	#insert new layer
@@ -213,7 +215,9 @@ proc GmHist::display { node mod } {
     if { $opt($id,1,nsteps) != "" } { 
 		set rt [open "|r.info map=$opt($id,1,map) -t" r]
 		set rasttype [read $rt]
-		close $rt
+		if {[catch {close $rt} error]} {
+		    puts $error
+		}
 		if {[regexp -nocase ".=FCELL" $rasttype] || [regexp -nocase ".=DCELL" $rasttype]} {
             append cmd " nsteps=$opt($id,1,nsteps)"
         }
@@ -261,7 +265,9 @@ proc GmHist::duplicate { tree parent node id } {
 
     image create photo hico -file "$iconpath/module-d.histogram.gif"
     set ico [label $frm.ico -image hico -bd 1 -relief raised]
-    
+
+    bind $ico <ButtonPress-1> "GmTree::selectn $tree $node"
+
     pack $check $ico -side left
 
 	#insert new layer

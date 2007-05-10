@@ -42,6 +42,8 @@ proc GmThematic::create { tree parent } {
 
     image create photo thematicico -file "$iconpath/module-d.vect.thematic.gif"
     set ico [label $frm.ico -image thematicico -bd 1 -relief raised]
+
+    bind $ico <ButtonPress-1> "GmTree::selectn $tree $node"
     
     pack $check $ico -side left
     
@@ -170,7 +172,9 @@ proc GmThematic::show_data { id } {
 	set layer $opt($id,1,layer)
 	if {![catch {open "|v.db.connect map=$mapname layer=$layer -g" r} vdb]} {
 		set vectdb [read $vdb]
-		catch {close $vdb}
+		if {[catch {close $vdb} error]} {
+		    puts $error
+		}
 		set vdblist [split $vectdb " "]
 		set tbl [lindex $vdblist 1]
 		set db [lindex $vdblist 3]
@@ -557,7 +561,9 @@ proc GmThematic::duplicate { tree parent node id } {
 
     image create photo thematicico -file "$iconpath/module-d.vect.thematic.gif"
     set ico [label $frm.ico -image thematicico -bd 1 -relief raised]
-    
+
+    bind $ico <ButtonPress-1> "GmTree::selectn $tree $node"
+
     pack $check $ico -side left
 
 	#insert new layer
@@ -617,7 +623,7 @@ proc GmThematic::tlegend { mon id } {
 
 	if { [winfo exists .tlegend($mon,$id)] } {return}
 
-	set legendtitle "Legend for Map $mon, $opt($id,1,map)"
+	set legendtitle "Legend for Map $mon $opt($id,1,map)"
 	toplevel .tlegend($mon,$id)
     wm title .tlegend($mon,$id) [G_msg $legendtitle]
 

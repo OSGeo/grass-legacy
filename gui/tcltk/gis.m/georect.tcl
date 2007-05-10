@@ -1237,7 +1237,10 @@ proc GRMap::gcp_error { } {
     # calculate diagonal distance error for each GCP
     set input [open "|g.transform group=$xygroup order=$rectorder"]
     set errorlist [read $input]
-    catch {close $input}
+    if {[catch {close $input} error]} {
+	puts $error
+    }
+
     # Return to georectified mapset
     GRMap::resetenv
 
@@ -1521,7 +1524,6 @@ proc GRMap::runprograms { mod } {
 		}
 		if {[catch {close $input} error]} {
 			puts $error
-			exit 1
 		}
 		# Finally put this into wind file format to use with GRASS_REGION
 		regexp -nocase {^.* (\(.*\))} $parts(projection) trash end
@@ -1896,7 +1898,9 @@ proc GRMap::zoom_gregion { args} {
             set value [string trim $value]
             set parts($key) $value
         }
-        close $input
+	if {[catch {close $input} error]} {
+	    puts $error
+	}
 
         GRMap::zoom_new $parts(north) $parts(south) $parts(east) $parts(west) $parts(nsres) $parts(ewres)
         set gregionproj "proj: $parts(projection); zone: $parts(zone); "
