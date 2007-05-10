@@ -86,9 +86,9 @@ if [ -z "$GIS_OPT_TABLE" ] ; then
        g.message -e "No table assigned to layer <$GIS_OPT_LAYER>"
        exit 1
     fi
-    g.message "Removing following table name connected to selected layer: ${GIS_OPT_MAP}" 
+    # Removing table name connected to selected layer
 else
-    g.message "Removing user specified table name: $GIS_OPT_TABLE" 
+    # Removing user specified table
     existingtable=`v.db.connect $GIS_OPT_MAP -g | grep -w $GIS_OPT_LAYER | awk '{print $2}'`
     table=$GIS_OPT_TABLE
     if [ "$existingtable" != "$table" ] ; then
@@ -109,7 +109,7 @@ driver=`v.db.connect $GIS_OPT_MAP -g | grep -w $GIS_OPT_LAYER | awk '{print $5}'
 g.message "Removing table <$table> linked to layer <$GIS_OPT_LAYER> of vector map <$GIS_OPT_MAP>" 
 
 if [ $GIS_FLAG_f -eq 0 ] ; then
-   g.message "You must use the force flag to actually remove the the table. Exiting."
+   g.message "You must use the force flag to actually remove the table. Exiting."
    exit 0
 else
    ans="y"
@@ -126,9 +126,12 @@ if [ "$ans" = "y" -o "$ans" = "Y" ] ; then
    v.db.connect -d map=$GIS_OPT_MAP layer=$GIS_OPT_LAYER
 
    g.message "Current attribute table link(s):" 
-   v.db.connect -p $GIS_OPT_MAP
+   # silently test first to avoid confusing error messages
+   v.db.connect --q -p $GIS_OPT_MAP > /dev/null 2> /dev/null
    if [ $? -ne 0 ] ; then
       g.message "(No database links remaining)"
+   else
+     v.db.connect -p $GIS_OPT_MAP
    fi
 
    # write cmd history:
