@@ -182,7 +182,7 @@ typedef enum {
     G_OPT_V_CATS,   /* more categories */
 
     G_OPT_F_INPUT,  /* old input file */
-    G_OPT_F_OUTPUT  /* new output file */
+    G_OPT_F_OUTPUT, /* new output file */
     G_OPT_F_SEP     /* data field separator */
 } STD_OPT;
 
