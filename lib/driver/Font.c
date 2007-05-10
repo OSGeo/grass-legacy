@@ -57,3 +57,31 @@ int font_is_freetype(void)
 	return font_type == FREETYPE;
 }
 
+void COM_Font_list(char ***list, int *count)
+{
+	char **fonts;
+	int num_fonts;
+	int i;
+
+	for (i = 0; ftcap[i].name; i++)
+		;
+
+	num_fonts = i;
+
+	fonts = G_malloc(num_fonts * sizeof(const char *));
+
+	for (i = 0; i < num_fonts; i++)
+		fonts[i] = G_store(ftcap[i].name);
+
+	*list = fonts;
+	*count = num_fonts;
+}
+
+void free_font_list(char **fonts, int count)
+{
+	int i;
+
+	for (i = 0; i < count; i++)
+		G_free(fonts[i]);
+	G_free(fonts);
+}

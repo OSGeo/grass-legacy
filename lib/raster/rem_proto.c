@@ -3,6 +3,7 @@
 #ifdef HAVE_SOCKET
 
 #include <stdio.h>
+#include <string.h>
 
 #include <sys/types.h>
 #include <sys/stat.h>
@@ -532,6 +533,23 @@ void REM_charset(const char *name)
 {
 	_send_ident(CHARSET);
 	_send_text(name);
+}
+
+void REM_font_list(char ***list, int *count)
+{
+	char **fonts;
+	int num_fonts;
+	int i;
+
+	_send_ident(FONT_LIST);
+	_get_int(&num_fonts);
+
+	fonts = G_malloc(num_fonts * sizeof(char *));
+	for (i = 0; i < num_fonts; i++)
+		fonts[i] = G_store(_get_text_2());
+
+	*list = fonts;
+	*count = num_fonts;
 }
 
 void REM_panel_save(const char *name, int t, int b, int l, int r)

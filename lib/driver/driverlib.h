@@ -44,3 +44,4 @@ int process_command(int);
 extern int font_exists(const char *name);
 extern struct FT_CAP *parse_freetypecap(void);
 extern void free_freetypecap(struct FT_CAP *ftcap);
+extern void free_font_list(char **fonts, int num_fonts);
