@@ -1,5 +1,9 @@
 # gpsbabel XCSV style file
 #
+# http://www.gpsbabel.org/htmldoc-development/styles_intro.html
+# http://www.gpsbabel.org/htmldoc-development/Styles.html
+# http://www.gpsbabel.org/htmldoc-development/style_intro2.html
+#
 # Format: GRASS ASCII Vector style
 # Author: Spano Lucio Davide & Claudio Porta
 #   Date: 31 May 2005
