@@ -561,7 +561,9 @@ proc GmThematic::duplicate { tree parent node id } {
 
     image create photo thematicico -file "$iconpath/module-d.vect.thematic.gif"
     set ico [label $frm.ico -image thematicico -bd 1 -relief raised]
-    
+
+    bind $ico <ButtonPress-1> "GmTree::selectn $tree $node"
+
     pack $check $ico -side left
 
 	#insert new layer
