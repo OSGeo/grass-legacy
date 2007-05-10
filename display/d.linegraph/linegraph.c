@@ -35,8 +35,8 @@ int default_y_colors[] = {
 int 
 main (int argc, char **argv)
 {
-    int xoffset;	        /* offset for x-axis */
-    int yoffset;	        /* offset for y-axis */
+    int xoffset;	/* offset for x-axis */
+    int yoffset;	/* offset for y-axis */
     int text_height;
     int text_width;
     int i;
@@ -58,14 +58,14 @@ main (int argc, char **argv)
     
     struct in_file
     {
-       int num_pnts;         /* number of lines in file  */
-       int color;             /* color to use for y lines */
-       float max;             /* maximum value in file    */
-       float min;             /* minimum value in file    */
-       float value;           /* current value read in    */
-       char name[1024];       /* name of file             */
-       char full_name[1024];  /* path/name of file        */
-       FILE *fp;              /* pointer to file          */
+       int num_pnts;		/* number of lines in file  */
+       int color;		/* color to use for y lines */
+       float max;		/* maximum value in file    */
+       float min;		/* minimum value in file    */
+       float value;		/* current value read in    */
+       char name[1024]; 	/* name of file	     */
+       char full_name[1024];	/* path/name of file	*/
+       FILE *fp;		/* pointer to file	  */
     };
     
     struct in_file in[12];
@@ -84,89 +84,87 @@ main (int argc, char **argv)
     
     FILE  *fopen();
  
-    struct Option *dir_opt;
-    struct Option *x_opt;
-    struct Option *y_opt;
+    struct Option *dir_opt, *x_opt, *y_opt;
     struct Option *y_color_opt;
     struct Option *title[3];
     struct Option *t_color_opt;
-          
+	  
 /* Initialize the GIS calls */
     G_gisinit(argv[0]) ;
 
     /* Set description */
-    module              = G_define_module();
-    module->keywords = _("display");
-    module->description = ""\
-    "Generates and displays simple line graphs in the active graphics monitor display frame.";
+    module		= G_define_module();
+    module->keywords	= _("display");
+    module->description =
+	_("Generates and displays simple line graphs in the active graphics monitor display frame.");
     
-    x_opt             = G_define_option() ;
-    x_opt->key        = "x_file" ;
-    x_opt->description= "Name of data file for X axis of graph" ;
+    x_opt	      = G_define_option() ;
+    x_opt->key	      = "x_file" ;
+    x_opt->description= _("Name of data file for X axis of graph");
     x_opt->type       = TYPE_STRING ;
     x_opt->required   = YES ;
 
-    y_opt             = G_define_option() ;
-    y_opt->key        = "y_file" ;
-    y_opt->description= "Name of data file(s) for Y axis of graph" ;
+    y_opt	      = G_define_option() ;
+    y_opt->key	      = "y_file" ;
+    y_opt->description= _("Name of data file(s) for Y axis of graph");
     y_opt->type       = TYPE_STRING ;
     y_opt->required   = YES ;
     y_opt->multiple   = YES ;
 
-    dir_opt             = G_define_option() ;
-    dir_opt->key        = "directory" ;
-    dir_opt->description= "Path to file location" ;
+    dir_opt		= G_define_option() ;
+    dir_opt->key	= "directory" ;
+    dir_opt->description= _("Path to file location");
     dir_opt->type       = TYPE_STRING ;
     dir_opt->required   = NO ;
     dir_opt->answer     = ".";
    
-    y_color_opt             = G_define_option() ;
-    y_color_opt->key        = "y_color" ;
-    y_color_opt->description= "Color for Y data";
+    y_color_opt		    = G_define_option() ;
+    y_color_opt->key	    = "y_color" ;
+    y_color_opt->description= _("Color for Y data");
     y_color_opt->type       = TYPE_STRING ;
     y_color_opt->required   = NO ;
     y_color_opt->multiple   = YES;
     y_color_opt->answers    = NULL;
     y_color_opt->options    = D_COLOR_LIST;
     
-    t_color_opt             = G_define_option() ;
-    t_color_opt->key        = "title_color" ;
-    t_color_opt->description= "Color for axis, tics, numbers, and title";
+    t_color_opt		= G_define_option() ;
+    t_color_opt->key	    = "title_color" ;
+    t_color_opt->description= _("Color for axis, tics, numbers, and title");
     t_color_opt->type       = TYPE_STRING ;
     t_color_opt->required   = NO ;
     t_color_opt->answer     = DEFAULT_FG_COLOR ;
     t_color_opt->options    = D_COLOR_LIST;
 
-    title[0]             = G_define_option() ;
-    title[0]->key        = "x_title" ;
-    title[0]->description= "Title for X data";
+    title[0]		 = G_define_option() ;
+    title[0]->key	 = "x_title" ;
+    title[0]->description= _("Title for X data");
     title[0]->type       = TYPE_STRING ;
     title[0]->required   = NO ;
     title[0]->answer     = "";
 
-    title[1]             = G_define_option() ;
-    title[1]->key        = "y_title" ;
-    title[1]->description= "Title for Y data";
+    title[1]		 = G_define_option() ;
+    title[1]->key	 = "y_title" ;
+    title[1]->description= _("Title for Y data");
     title[1]->type       = TYPE_STRING ;
     title[1]->required   = NO ;
     title[1]->answer     = "";
 
-    title[2]             = G_define_option() ;
-    title[2]->key        = "title" ;
-    title[2]->description= "Title for Graph";
+    title[2]		 = G_define_option() ;
+    title[2]->key	 = "title" ;
+    title[2]->description= _("Title for Graph");
     title[2]->type       = TYPE_STRING ;
     title[2]->required   = NO ;
     title[2]->answer     = "";
 
 
     if (G_parser(argc, argv))
-        exit(1) ;
+	exit(EXIT_FAILURE) ;
  
     for (i = 0; i < 3; i++)
     {
     for (j = 0; j < strlen(title[i]->answer); j++)
-        if(title[i]->answer[j] == '_')
-            title[i]->answer[j] = ' ';
+	if(title[i]->answer[j] == '_')
+	    title[i]->answer[j] = ' ';
     }
 
 /* build path to X data file and open for reading
@@ -177,35 +175,23 @@ main (int argc, char **argv)
     sprintf(in[0].name, "%s", x_opt->answer);
 
     if ((in[0].fp = fopen (in[0].full_name, "r")) == NULL)
-    {
-            sprintf (txt,"%s: <%s> not found", G_program_name(), 
-            in[0].full_name);
-            G_fatal_error (txt);
-            exit(1);
-    }
+	G_fatal_error(_("Could not open input file <%s>."), in[0].full_name);
+
     num_y_files = 0;
     
 /* open all Y data files */
 
-    for (i = 0, j = 1; name = y_opt->answers[i]; i++, j++)
+    for (i = 0, j = 1; (name = y_opt->answers[i]); i++, j++)
     {
-         sprintf(in[j].full_name, "%s/%s", dir_opt->answer, name);
-         sprintf(in[j].name, "%s", name);
+	 sprintf(in[j].full_name, "%s/%s", dir_opt->answer, name);
+	 sprintf(in[j].name, "%s", name);
 
-        if ((in[j].fp = fopen (in[j].full_name, "r")) == NULL)
-        {
-            sprintf (txt,"%s: <%s> not found", G_program_name(), 
-            in[j].full_name);
-            G_fatal_error (txt);
-            exit(1);
-        }
-        num_y_files++;
-        if(num_y_files > 10)
-        {
-            sprintf (txt,"%s: 10 Y data files is the maximum", G_program_name());
-            G_fatal_error (txt);
-            exit(1);
-        }
+	if ((in[j].fp = fopen (in[j].full_name, "r")) == NULL)
+	    G_fatal_error(_("Could not open input file <%s>."), in[j].full_name);
+
+	num_y_files++;
+	if(num_y_files > 10)
+	    G_fatal_error(_("Maximum of 10 Y data files exceeded"));
     }
     
 /* set colors  */
@@ -221,42 +207,37 @@ main (int argc, char **argv)
     j = 1;
     if (y_color_opt->answer != NULL)
     {
-        for (i =0; i <= (strlen(y_color_opt->answer)); i++)
+	for (i =0; i <= (strlen(y_color_opt->answer)); i++)
        {
-           if((y_color_opt->answer[i] == ',') || 
-           (i == (strlen(y_color_opt->answer))))
-           {
-               color_name[c] = '\0';
-               in[j].color = D_translate_color(color_name);
-               j++;
-               c = 0;
-           }
-           else
-           {
-               color_name[c++] = y_color_opt->answer[i];
-           }
-        }
+	   if((y_color_opt->answer[i] == ',') || 
+	   (i == (strlen(y_color_opt->answer))))
+	   {
+	       color_name[c] = '\0';
+	       in[j].color = D_translate_color(color_name);
+	       j++;
+	       c = 0;
+	   }
+	   else
+	   {
+	       color_name[c++] = y_color_opt->answer[i];
+	   }
+	}
 /* this is lame. I could come up with a color or prompt for one or something */  
-        if(j < num_y_files)
-        {
-            sprintf(txt, "%s: Only <%d> colors given for <%d> lines\n", 
-            G_program_name(), j, num_y_files);
-            G_fatal_error(txt);
-            exit(1);
-        }
+	if(j < num_y_files)
+	    G_fatal_error(_("Only <%d> colors given for <%d> lines"), j, num_y_files);
      }
      else
 /* no colors given on command line, use default list */
      {
-         for (i = 1; i <= num_y_files; i++)
-         {
-             in[i].color = default_y_colors[i];
-         }
+	 for (i = 1; i <= num_y_files; i++)
+	 {
+	     in[i].color = default_y_colors[i];
+	 }
      }
      
 /* get coordinates of current screen window, in pixels */
     if (R_open_driver() != 0)
-	    G_fatal_error ("No graphics device selected");
+	    G_fatal_error (_("No graphics device selected"));
     D_get_screen_window (&t, &b, &l, &r);
     R_set_window (t, b, l, r);
 
@@ -281,37 +262,37 @@ main (int argc, char **argv)
     for (i = 0; i <= num_y_files; i++)
     {
     
-        in[i].min = 99999.9;
-        in[i].max = -99999.9;
-        in[i].value = 0.0;
-        in[i].num_pnts = 0;
-            
-        while((err = fscanf(in[i].fp, "%f", &in[i].value)) != EOF)
-        {
-            in[i].num_pnts++;
-            in[i].max = MAX(in[i].max, in[i].value);
-            in[i].min = MIN(in[i].min, in[i].value);
-            if (i > 0) /* if we have a y file */
-            {
-               min_y = MIN(min_y, in[i].value);
-               max_y = MAX(max_y, in[i].value);
-            }
-        }
-        if ((i > 0) && (in[0].num_pnts != in[i].num_pnts))
-        {
-            fprintf (stdout,"WARNING: Y input file <%s>\n", in[i].name);
-            fprintf (stdout,"contains %s data points than the X input file\n",
-            ((in[i].num_pnts < in[0].num_pnts) ? "fewer" : "more"));
-            if (in[i].num_pnts > in[0].num_pnts)
-                fprintf (stdout,"The last %d point(s) will be ignored\n", 
-                (in[i].num_pnts - in[0].num_pnts));
-        }
+	in[i].min = 99999.9;
+	in[i].max = -99999.9;
+	in[i].value = 0.0;
+	in[i].num_pnts = 0;
+	    
+	while((err = fscanf(in[i].fp, "%f", &in[i].value)) != EOF)
+	{
+	    in[i].num_pnts++;
+	    in[i].max = MAX(in[i].max, in[i].value);
+	    in[i].min = MIN(in[i].min, in[i].value);
+	    if (i > 0) /* if we have a y file */
+	    {
+	       min_y = MIN(min_y, in[i].value);
+	       max_y = MAX(max_y, in[i].value);
+	    }
+	}
+	if ((i > 0) && (in[0].num_pnts != in[i].num_pnts))
+	{
+	    G_warning(_("Y input file <%s> contains %s data points than the X input file"),
+		in[i].name, ((in[i].num_pnts < in[0].num_pnts) ? "fewer" : "more"));
+
+	    if (in[i].num_pnts > in[0].num_pnts)
+		G_message(_("The last %d point(s) will be ignored"),
+			(in[i].num_pnts - in[0].num_pnts));
+	}
     }
 
 /* close all files */
 
     for (i = 0; i <= num_y_files; i++)
-        fclose(in[i].fp);
+	fclose(in[i].fp);
     
 /* figure scaling factors and offsets */
 
@@ -325,33 +306,33 @@ main (int argc, char **argv)
    tic_every tells how often to place a tic-number.  tic_unit tells
    the unit to use in expressing tic-numbers. */
     
-        if (xscale < XTIC_DIST)
-        {
-                max_tics = (x_line[2]-x_line[1])/XTIC_DIST;
-                i=1;
-                while (((in[0].max-in[0].min)/tics[i].every) > max_tics)
-                        i++;
-                tic_every = tics[i].every;
-                tic_unit = tics[i].unit;
-                strcpy(tic_name,tics[i].name);
-        }
-        else
-        {   
-                tic_every = 1;
-                tic_unit = 1;
-                strcpy(tic_name, "");
-        }
+	if (xscale < XTIC_DIST)
+	{
+		max_tics = (x_line[2]-x_line[1])/XTIC_DIST;
+		i=1;
+		while (((in[0].max-in[0].min)/tics[i].every) > max_tics)
+			i++;
+		tic_every = tics[i].every;
+		tic_unit = tics[i].unit;
+		strcpy(tic_name,tics[i].name);
+	}
+	else
+	{   
+		tic_every = 1;
+		tic_unit = 1;
+		strcpy(tic_name, "");
+	}
 
  
  /* open all the data files again */
 
     for (i = 0; i <= num_y_files; i++)
     {
-        if ((in[i].fp = fopen (in[i].full_name, "r")) == NULL)
-        {
-            sprintf (txt,"<%s> not found", in[i].full_name);
-            death (txt);
-        }
+	if ((in[i].fp = fopen (in[i].full_name, "r")) == NULL)
+	{
+	    sprintf (txt, "Could not open input file <%s>.", in[i].full_name);
+	    death (txt);
+	}
     }
 
 /* loop through number of lines in x data file, 
@@ -370,62 +351,62 @@ main (int argc, char **argv)
 /* didn't find a number or hit EOF before our time */
     	if ((err != 1) || (err == EOF))  
     	{
-    	    sprintf(txt, "problem reading X data file at line %d", line);
+    	    sprintf(txt, _("Problem reading X data file at line %d"), line);
     	    death(txt);
     	}
 
 /* for each Y data file, get a value and compute where to draw it */
-        for (i = 1; i <= num_y_files; i++)
-        {
+	for (i = 1; i <= num_y_files; i++)
+	{
 /* check to see that we do indeed have data for this point */    
-           if (line < in[i].num_pnts)
-           {
-            err = fscanf(in[i].fp, "%f", &in[i].value);
-            if ((in[i].num_pnts >= line) && (err != 1))
-            {
-    	        sprintf(txt, "problem reading <%s>\n data file at line %d", 
-    	        in[i].name, line);
-    	        death(txt);
-            }
-            
+	   if (line < in[i].num_pnts)
+	   {
+	    err = fscanf(in[i].fp, "%f", &in[i].value);
+	    if ((in[i].num_pnts >= line) && (err != 1))
+	    {
+    		sprintf(txt, _("Problem reading <%s> data file at line %d"), 
+    		in[i].name, line);
+    		death(txt);
+	    }
+	    
 /* in case the Y file has fewer lines than the X file, we will skip
    trying to draw when we run out of data */
    
 /* draw increment of each Y file's data */
 
-                R_standard_color (in[i].color);
+		R_standard_color (in[i].color);
 
 /* find out position of where Y should be drawn. */
 /* if our minimum value of y is not negative, this is easy */
 
-                if (min_y >= 0)
-                    new_y[i] = (int)(yoffset - yscale * (in[i].value - min_y));
-                    
+		if (min_y >= 0)
+		    new_y[i] = (int)(yoffset - yscale * (in[i].value - min_y));
+		    
 /* if our minimum value of y is negative, then we have two
    cases:  our current value to plot is pos or neg */
    
-                else
-                {
-                    if (in[i].value < 0)
-                        new_y[i] = (int)(yoffset - yscale * (-1 * 
-                        (min_y - in[i].value)));
-                    else
-                        new_y[i] = (int)(yoffset - yscale * (in[i].value +
-                        (min_y * -1)));
-                }
+		else
+		{
+		    if (in[i].value < 0)
+			new_y[i] = (int)(yoffset - yscale * (-1 * 
+			(min_y - in[i].value)));
+		    else
+			new_y[i] = (int)(yoffset - yscale * (in[i].value +
+			(min_y * -1)));
+		}
 
-                new_x = xoffset + (line * xscale);
-                if (line == 0)
-	        {
-	            prev_x = xoffset;
-	            prev_y[i] = yoffset;
-	        }
-	        R_move_abs (prev_x, prev_y[i]);
-	        R_cont_abs (new_x, new_y[i]);
-	        prev_y[i] = new_y[i];
+		new_x = xoffset + (line * xscale);
+		if (line == 0)
+		{
+		    prev_x = xoffset;
+		    prev_y[i] = yoffset;
+		}
+		R_move_abs (prev_x, prev_y[i]);
+		R_cont_abs (new_x, new_y[i]);
+		prev_y[i] = new_y[i];
 	     }
-            }
-            prev_x = new_x;
+	    }
+	    prev_x = new_x;
 
 /* draw x-axis tic-marks and numbers */
 
@@ -439,9 +420,9 @@ main (int argc, char **argv)
 		(int) (b - ORIGIN_Y * (b - t)));
 	    R_cont_rel ((int) 0, (int) (BIG_TIC * (b - t)));
 	    if ((in[0].value >= 1) || (in[0].value <= -1) || (in[0].value == 0))
-	        sprintf (txt, "%.0f", (in[0].value/tic_unit));
+		sprintf (txt, "%.0f", (in[0].value/tic_unit));
 	    else
-	        sprintf (txt, "%.2f", (in[0].value));
+		sprintf (txt, "%.2f", (in[0].value));
 	    text_height = (b - t) * TEXT_HEIGHT;
 	    text_width = (r - l) * TEXT_WIDTH;
 	    R_text_size (text_width, text_height);
@@ -472,14 +453,14 @@ main (int argc, char **argv)
 /* close all input files */
     for (i = 0; i <= num_y_files; i++)
     {
-        fclose(in[i].fp);
+	fclose(in[i].fp);
     }
 
 /* draw the x-axis label */
     if ((strcmp(title[0]->answer, "") == 0) && (strcmp(tic_name, "") == 0))
-        *xlabel = '\0';
+	*xlabel = '\0';
     else
-        sprintf (xlabel, "X: %s %s", title[0]->answer, tic_name);
+	sprintf (xlabel, "X: %s %s", title[0]->answer, tic_name);
     text_height = (b - t) * TEXT_HEIGHT;
     text_width = (r - l) * TEXT_WIDTH * 1.5;
     R_text_size (text_width, text_height);
@@ -494,22 +475,22 @@ main (int argc, char **argv)
    tic_every tells how often to place a tic-number.  tic_unit tells
    the unit to use in expressing tic-numbers. */
    
-        if (yscale < YTIC_DIST)
-        {
-                max_tics = (y_line[1]-y_line[0])/YTIC_DIST;
-                i=1;
-                while (((max_y-min_y)/tics[i].every) > max_tics)
-                        i++;
-                tic_every = tics[i].every;
-                tic_unit = tics[i].unit;
-                strcpy(tic_name,tics[i].name);
-        }
-        else
-        {   
-                tic_every = 1;
-                tic_unit = 1;
-                strcpy(tic_name,"");
-        }
+	if (yscale < YTIC_DIST)
+	{
+		max_tics = (y_line[1]-y_line[0])/YTIC_DIST;
+		i=1;
+		while (((max_y-min_y)/tics[i].every) > max_tics)
+			i++;
+		tic_every = tics[i].every;
+		tic_unit = tics[i].unit;
+		strcpy(tic_name,tics[i].name);
+	}
+	else
+	{   
+		tic_every = 1;
+		tic_unit = 1;
+		strcpy(tic_name,"");
+	}
 
 /* Y-AXIS LOOP */
 
@@ -552,9 +533,9 @@ main (int argc, char **argv)
 
 /* draw the y-axis label */
     if ((strcmp(title[1]->answer, "") == 0) && (strcmp(tic_name, "") == 0))
-        *xlabel = '\0';
+	*xlabel = '\0';
     else
-        sprintf (xlabel, "Y: %s %s", title[1]->answer, tic_name);
+	sprintf (xlabel, "Y: %s %s", title[1]->answer, tic_name);
     text_height = (b - t) * TEXT_HEIGHT;
     text_width = (r - l) * TEXT_WIDTH * 1.5;
     R_text_size (text_width, text_height);
@@ -585,7 +566,7 @@ main (int argc, char **argv)
 
     R_flush ();
     R_close_driver ();
-    exit(0);
+    exit(EXIT_SUCCESS);
 }
 
 float rem (long int x, long int y)
@@ -594,15 +575,11 @@ float rem (long int x, long int y)
     return ((float) (x - y * d));
 }
 
-/* a function for making an exit after the R_driver is open */
 
+/* a function for making an exit after the R_driver is open */
 int death (char *gasp)
 {
-    char cough[1024];
-    
-    sprintf(cough, "%s: %s\n\n", G_program_name(), gasp);
     R_flush ();
     R_close_driver ();
-    G_fatal_error(cough);
-    exit(1);
+    G_fatal_error("%s", gasp);
 }
