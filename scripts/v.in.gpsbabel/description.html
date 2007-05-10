@@ -8,30 +8,6 @@ GPS data of many common formats. Translation is done via the
 <P>
 This software is not intended as a primary means of navigation.
 
-<H2>EXAMPLES</H2>
-
-Import waypoint data from a Garmin GPS connected at /dev/ttyS0 and save
-to a GRASS vector map named <i>waypoints</i>.
-<div class="code"><pre>
-v.in.gpsbabel -w input=/dev/ttyS0 format=garmin output=waypoints
-</pre></div>
-
-<p>
-Import track data from a GPX text file and save to a GRASS vector map 
-named <i>tracks</i>. <!-- (currently buggy) The gpxlogger program distributed with 
-<a href="http://gpsd.berlios.de/">GPSd</a> >2.30 is a good program for 
-creating these logs. -->
-<div class="code"><pre>
-v.in.gpsbabel -t input=gpslog.gpx format=gpx output=tracks
-</pre></div>
-
-<p>
-Import route data as a series of points from a Garmin GPS connected at 
-/dev/gps and save to a GRASS vector map named <i>routePoints</i>.
-<div class="code"><pre>
-v.in.gpsbabel -r -p file=/dev/gps format=garmin output=routePoints
-</pre></div>
-
 <H2>NOTES</H2>
 
 <em>v.in.gpsbabel</em> automatically reprojects data using the 
@@ -53,7 +29,46 @@ flag, otherwise they will be imported as lines. You can run <EM>v.in.gpsbabel</E
 multiple times and merge the line and point vectors with the <EM>v.patch</EM>
 command if you want, but take care when merging dissimilar attribute tables.
 
-<P>
+<H2>EXAMPLES</H2>
+
+<h3>GPS device connected via USB adapter</h3>
+
+Import waypoints, tracks, routes from /dev/ttyUSB0 and save
+to a GRASS vector map:
+<div class="code"><pre>
+v.in.gpsbabel -w input=/dev/ttyUSB0 format=garmin output=waypoints
+v.in.gpsbabel -t input=/dev/ttyUSB0 format=garmin output=tracks
+v.in.gpsbabel -r input=/dev/ttyUSB0 format=garmin output=routes
+</pre></div>
+
+<h3>GPS device connected via serial adapter</h3>
+
+Import waypoint data from a Garmin GPS connected at /dev/ttyS0 and save
+to a GRASS vector map named <i>waypoints</i>:
+<div class="code"><pre>
+v.in.gpsbabel -w input=/dev/ttyS0 format=garmin output=waypoints
+</pre></div>
+
+<h3>Import track data from a GPX</h3>
+
+Import track data from a GPX text file and save to a GRASS vector map 
+named <i>tracks</i>.
+<!-- (currently buggy) The gpxlogger program distributed with 
+<a href="http://gpsd.berlios.de/">GPSd</a> >2.30 is a good program for 
+creating these logs. -->
+<div class="code"><pre>
+v.in.gpsbabel -t input=gpslog.gpx format=gpx output=tracks
+</pre></div>
+
+<h3>Import route data from GPS connected at /dev/gps</h3>
+
+Import route data as a series of points from a Garmin GPS connected at 
+/dev/gps and save to a GRASS vector map named <i>routePoints</i>:
+<div class="code"><pre>
+v.in.gpsbabel -r -p file=/dev/gps format=garmin output=routePoints
+</pre></div>
+
+
 <H2>SEE ALSO</H2>
 <EM><A HREF="db.execute.html">db.execute</A></EM><BR>
 <EM><A HREF="v.in.ascii.html">v.in.ascii</A></EM><BR>
@@ -74,11 +89,6 @@ Based on <em>v.in.garmin</em> for GRASS 6.0 by Hamish Bowman<br>
 and <em>v.in.garmin.sh</em> for GRASS 5 by Andreas Lange
 <BR>
 
-
-<H2>BUGS</h2>
-
-Please send any bug reports to 
-<a href="mailto:spano@cli.di.unipi.it">spano@cli.di.unipi.it</a>
 <!--
 When we tested the script with a Garmin GPS we noticed that importing waypoints 
 the <i>time</i> field is not correctly set. The data reported is 
