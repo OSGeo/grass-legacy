@@ -757,6 +757,8 @@ proc GmVector::duplicate { tree parent node id } {
     set opt($count,1,_legend) $can
     pack $check $can -side left
 
+    bind $can <ButtonPress-1> "GmTree::selectn $tree $node"
+
 	#insert new layer
 	if {[$tree selection get] != "" } {
 		set sellayer [$tree index [$tree selection get]]
