@@ -561,7 +561,7 @@ G_define_standard_option (int opt)
 	    Opt->type         = TYPE_STRING;
 	    Opt->key_desc     = "character";
 	    Opt->required     = NO;
-	    Opt->answer       = "|"
+	    Opt->answer       = "|";
 	    Opt->description  = _("Field separator");
 	    break;
     }
