@@ -556,6 +556,14 @@ G_define_standard_option (int opt)
 	    Opt->gisprompt    = "new_file,file,output";
 	    Opt->description  = _("Name for output file");
 	    break;
+	case G_OPT_F_SEP:
+	    Opt->key          = "fs";
+	    Opt->type         = TYPE_STRING;
+	    Opt->key_desc     = "character";
+	    Opt->required     = NO;
+	    Opt->answer       = "|"
+	    Opt->description  = _("Field separator");
+	    break;
     }
 
     return(Opt);
