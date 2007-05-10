@@ -503,6 +503,11 @@ void LOC_charset(const char *name)
 	COM_Font_init_charset(name);
 }
 
+void LOC_font_list(char ***list, int *count)
+{
+	COM_Font_list(list, count);
+}
+
 void LOC_panel_save(const char *name, int t, int b, int l, int r)
 {
 	close(creat(name, 0666));

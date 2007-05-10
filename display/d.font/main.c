@@ -31,7 +31,6 @@ static int num_fonts;
 
 static void read_stroke_fonts(void);
 static void read_freetype_fonts(void);
-static char *make_font_list(void);
 static void print_font_list(FILE *fp);
 
 int main( int argc , char **argv )
@@ -48,15 +47,10 @@ int main( int argc , char **argv )
 			_("Selects the font in which text will be displayed "
 			"on the user's graphics monitor.");
 
-	/* find out what fonts we have */
-	read_stroke_fonts();
-	read_freetype_fonts();
-
 	opt1 = G_define_option();
 	opt1->key	= "font";
 	opt1->type	= TYPE_STRING;
 	opt1->required	= NO;
-	opt1->options	= make_font_list();
 	opt1->answer	= "romans";
 	opt1->description = _("Choose new current font");
 
@@ -149,112 +143,37 @@ static void read_stroke_fonts(void)
 	closedir(dirp);
 }
 
-static int font_exists(const char *name)
-{
-	char path[GPATH_MAX];
-	char *p;
-	FILE *fp;
-
-	strcpy(path, name);
-
-	p = strrchr(path, '|');
-	if(p)
-		*p = '\0';
-	fp = fopen(path, "r");
-	if (!fp)
-		return 0;
-
-	fclose(fp);
-	return 1;
-}
-
 static void read_freetype_fonts(void)
 {
-	char *capfile;
-	FILE *fp = NULL;
-
-	capfile = getenv("GRASS_FT_CAP");
-	if (capfile)
-	{
-		fp = fopen(capfile, "r");
-		if(!fp)
-			G_warning("%s: Unable to read FreeType definition file; use the default", capfile);
-	}
-
-	if (!fp)
-	{
-		const char *gisbase = G_gisbase();
-
-		capfile = G_malloc(strlen(gisbase) + 16 + 1);
-		sprintf(capfile, "%s/etc/freetypecap", gisbase);
-
-		fp = fopen(capfile, "r");
-		if (!fp)
-			G_warning("Missing FreeType definition file: %s", capfile);
-	}
-
-	if (!fp)
-		return;
-
-	for (;;)
-	{
-		char buf[1024], ifont[256], ipath[1024];
-
-		if (!fgets(buf, sizeof(buf), fp))
-			break;
-
-		if (buf[0] == '#')
-			continue;
-
-		if(sscanf(buf, "%[^:]:%[^:]", ifont, ipath) != 2)
-			continue;
-
-		if (!font_exists(ipath))
-			continue;
-
-		if (num_fonts >= max_fonts)
-		{
-			max_fonts += 20;
-			fonts = G_realloc(fonts, max_fonts * sizeof(char *));
-		}
-
-		fonts[num_fonts++] = G_store(ifont);
-	}
-
-	fclose(fp);
-}
-
-static char *make_font_list(void)
-{
-	char *list, *p;
-	int len = 0;
+	char **list;
+	int count;
 	int i;
 
-	for (i = 0; i < num_fonts; i++)
-		len += strlen(fonts[i]) + 1;
+	R__open_quiet();
+	if (R_open_driver() != 0)
+		return;
 
-	list = G_malloc(len);
-	p = list;
+	R_font_list(&list, &count);
 
-	for (i = 0; i < num_fonts; i++)
+	R_close_driver();
+
+	if (max_fonts < num_fonts + count)
 	{
-		char *q;
-
-		if (i > 0)
-			*p++ = ',';
-
-		for (q = fonts[i]; *q; )
-			*p++ = *q++;
+		max_fonts = num_fonts + count;
+		fonts = G_realloc(fonts, max_fonts * sizeof(char *));
 	}
 
-	*p++ = '\0';
-
-	return list;
+	for (i = 0; i < count; i++)
+		fonts[num_fonts++] = list[i];
 }
 
 static void print_font_list(FILE *fp)
 {
 	int i;
+
+	/* find out what fonts we have */
+	read_stroke_fonts();
+	read_freetype_fonts();
 
 	for (i = 0; i < num_fonts; i++)
 		fprintf(fp, "%s\n", fonts[i]);

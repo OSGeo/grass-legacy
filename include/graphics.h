@@ -68,6 +68,7 @@
 #define PAD_SET_ITEM                75
 
 /* freetype */
+#define FONT_LIST                   77
 #define CHARSET                     78
 
 /* line attributes */

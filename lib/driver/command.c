@@ -35,8 +35,8 @@
 
 static int rec(void *,int);
 static int rectext(char **,int *);
-static int _send(void *,int);
-static int sendtext(char *);
+static int _send(const void *,int);
+static int sendtext(const char *);
 static int RESULT(int);
 
 static int _wfd;
@@ -332,6 +332,19 @@ int process_command(int c)
 	RECTEXT(text, text_size);
 	COM_Font_init_charset(text);
 	break;
+    case FONT_LIST:
+	{
+	    char **fonts;
+	    int num_fonts;
+	    int i;
+
+	    COM_Font_list(&fonts, &num_fonts);
+	    SEND(&num_fonts, sizeof num_fonts);
+	    for (i = 0; i < num_fonts; i++)
+		SENDTEXT(fonts[i]);
+	    free_font_list(fonts, num_fonts);
+	}
+	break;
     case TEXT:
 	RECTEXT(text, text_size);
 	COM_Text(text);
@@ -600,9 +613,9 @@ static int rectext(char **buff_p, int *size_p)
     }
 }
 
-static int _send(void *buf, int n)
+static int _send(const void *buf, int n)
 {
-    int r = write(_wfd, (char *)buf, n);
+    int r = write(_wfd, buf, n);
     if (r < 0)
     {
 	perror("Monitor: _send: write");
@@ -618,7 +631,7 @@ static int _send(void *buf, int n)
     return 0;
 }
 
-static int sendtext(char *s)
+static int sendtext(const char *s)
 {
     SEND(s, strlen(s) + 1);
     return 0;
