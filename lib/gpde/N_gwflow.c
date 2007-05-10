@@ -349,10 +349,22 @@ N_data_star *N_callback_gwflow_2d(void *gwdata, N_geom_data * geom, int col,
     }
 
     /*geometrical mean of cell height*/
-    z_w = N_calc_geom_mean(z_xw, z);
-    z_e = N_calc_geom_mean(z_xe, z);
-    z_n = N_calc_geom_mean(z_yn, z);
-    z_s = N_calc_geom_mean(z_ys, z);
+    if(z_w > 0 || z_w < 0)
+      z_w = N_calc_geom_mean(z_xw, z);
+    else
+      z_w = z;
+    if(z_e > 0 || z_e < 0)
+      z_e = N_calc_geom_mean(z_xe, z);
+    else
+      z_e = z;
+    if(z_n > 0 || z_n < 0)
+      z_n = N_calc_geom_mean(z_yn, z);
+    else
+      z_n = z;
+    if(z_s > 0 || z_s < 0)
+      z_s = N_calc_geom_mean(z_ys, z);
+    else
+      z_s = z;
 
     /* Inner sources */
     q = N_get_array_2d_d_value(data->q, col, row);
