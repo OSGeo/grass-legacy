@@ -221,7 +221,6 @@ proc GmRnums::display { node mod } {
 	
 	catch {set rc [open "|g.region -ugp" r]}
 	set rowscolumns [read $rc]
-	puts "rowscoloumns=$rowscolumns"
 	if {[catch {close $rc} error]} {
 		puts $error
 	}
