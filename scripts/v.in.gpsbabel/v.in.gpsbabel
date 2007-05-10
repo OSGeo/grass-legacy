@@ -240,12 +240,12 @@ if [ $CREATE_POINTS -eq 1 ] ; then
 else
     if [ $RTE -eq 1 ] ; then
 	g.message "Downloading Routes from GPS" 
-	gpsbabel -r -i $GIS_OPT_FORMAT $GPSdevice $PROGVERBOSE -o gpx,style="$STYLE" -F "$TMP".gpx
+	gpsbabel -r -i $GIS_OPT_FORMAT $GPSdevice $PROGVERBOSE -o xcsv,style="$STYLE" -F "$TMP".gpx
 	EXITCODE=$?
     fi
     if [ $TRK -eq 1 ] ; then
 	g.message "Downloading Tracks from GPS" 
-	gpsbabel -t -i $GIS_OPT_FORMAT $GPSdevice $PROGVERBOSE -o gpx,style="$STYLE" -F "$TMP".gpx
+	gpsbabel -t -i $GIS_OPT_FORMAT $GPSdevice $PROGVERBOSE -o xcsv,style="$STYLE" -F "$TMP".gpx
 	EXITCODE=$?
     fi
 fi
