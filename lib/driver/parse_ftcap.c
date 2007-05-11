@@ -8,16 +8,9 @@
 
 int font_exists(const char *name)
 {
-	char path[GPATH_MAX];
-	char *p;
 	FILE *fp;
 
-	strcpy(path, name);
-
-	p = strrchr(path, '|');
-	if(p)
-		*p = '\0';
-	fp = fopen(path, "r");
+	fp = fopen(name, "r");
 	if (!fp)
 		return 0;
 
@@ -25,62 +18,71 @@ int font_exists(const char *name)
 	return 1;
 }
 
-struct FT_CAP *parse_freetypecap(void)
+struct GFONT_CAP *parse_freetypecap(void)
 {
 	char *capfile, file[GPATH_MAX];
-	char buf[GPATH_MAX], iname[128], ipath[GPATH_MAX];
+	char buf[GPATH_MAX];
 	FILE *fp;
 	int fonts_count = 0;
-	struct FT_CAP *fonts = NULL;
+	struct GFONT_CAP *fonts = NULL;
 
 	fp = NULL;
-	if((capfile = getenv("GRASS_FT_CAP")))
+	if((capfile = getenv("GRASS_FONT_CAP")))
 	{
 		if((fp = fopen(capfile, "r")) == NULL)
-			G_warning(_("%s: Unable to read FreeType definition file; use the default"), capfile);
+			G_warning(_("%s: Unable to read font definition file; use the default"), capfile);
 	}
 	if(fp == NULL)
 	{
-		sprintf(file, "%s/etc/freetypecap", G_gisbase());
+		sprintf(file, "%s/etc/fontcap", G_gisbase());
 		if((fp = fopen(file, "r")) == NULL)
-			G_warning(_("%s: No FreeType definition file"), file);
+			G_warning(_("%s: No font definition file"), file);
 	}
 
 	if(fp != NULL){
 		while(fgets(buf, sizeof(buf), fp) && !feof(fp))
 		{
-			char *p;
+			char name[GNAME_MAX], longname[GNAME_MAX], 
+		             path[GPATH_MAX], encoding[128];
+		        int type, index;
+		        char *p;
 
 			p = strchr(buf, '#');
 			if(p)
 				*p = 0;
 
-			if(sscanf(buf, "%[^:]:%[^:]", iname, ipath) != 2)
+			if(sscanf(buf, "%[^|]|%[^|]|%d|%[^|]|%d|%[^|]|", 
+				  name, longname, &type, path, &index, encoding)
+			          != 6)
 				continue;
 
-			if (!font_exists(ipath))
+			if (!font_exists(path))
 				continue;
 
-			fonts = (struct FT_CAP *)G_realloc(fonts,
-				(fonts_count + 1) * sizeof(struct FT_CAP));
+			fonts = (struct GFONT_CAP *)G_realloc(fonts,
+				(fonts_count + 1) * sizeof(struct GFONT_CAP));
 
-			fonts[fonts_count].name = G_store(iname);
-			fonts[fonts_count].path = G_store(ipath);
+			fonts[fonts_count].name = G_store(name);
+			fonts[fonts_count].longname = G_store(longname);
+			fonts[fonts_count].type = type;
+			fonts[fonts_count].path = G_store(path);
+			fonts[fonts_count].index = index;
+			fonts[fonts_count].encoding = G_store(encoding);
 
 			fonts_count++;
 		}
 		fclose(fp);
 	}
 
-	fonts = (struct FT_CAP *)G_realloc(fonts, (fonts_count + 1) *
-			sizeof(struct FT_CAP));
+	fonts = (struct GFONT_CAP *)G_realloc(fonts, (fonts_count + 1) *
+			sizeof(struct GFONT_CAP));
 	fonts[fonts_count].name = NULL;
 	fonts[fonts_count].path = NULL;
 
 	return fonts;
 }
 
-void free_freetypecap(struct FT_CAP *ftcap)
+void free_freetypecap(struct GFONT_CAP *ftcap)
 {
 	int i;
 
@@ -90,7 +92,9 @@ void free_freetypecap(struct FT_CAP *ftcap)
 	for(i=0; ftcap[i].name; i++)
 	{
 		G_free(ftcap[i].name);
+		G_free(ftcap[i].longname);
 		G_free(ftcap[i].path);
+		G_free(ftcap[i].encoding);
 	}
 
 	G_free(ftcap);

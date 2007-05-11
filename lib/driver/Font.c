@@ -5,21 +5,18 @@
 #include "driver.h"
 #include "driverlib.h"
 
-#define STROKE      0
-#define FREETYPE    1
-
-static int font_type = STROKE;
+static int font_type = GFONT_STROKE;
 
 static void stroke_set(const char *filename)
 {
 	if (font_init(filename) == 0)
-		font_type = STROKE;
+		font_type = GFONT_STROKE;
 }
 
-static void freetype_set(const char *filename)
+static void freetype_set(const char *filename, int index)
 {
-	if (font_init_freetype(filename) == 0)
-		font_type = FREETYPE;
+	if (font_init_freetype(filename, index) == 0)
+		font_type = GFONT_FREETYPE;
 }
 
 void COM_Font_get(const char *name)
@@ -29,7 +26,7 @@ void COM_Font_get(const char *name)
 		if (!font_exists(name))
 			return;
 	   
-		freetype_set(name);
+		freetype_set(name, 0);
 	}   
 	else
 	{
@@ -39,11 +36,19 @@ void COM_Font_get(const char *name)
 		for (i = 0; ftcap[i].name; i++)
 			if (strcmp(name, ftcap[i].name) == 0)
 			{
-				freetype_set(ftcap[i].path);
+			        switch(ftcap[i].type)
+			        {
+				    case GFONT_FREETYPE:
+				       freetype_set(ftcap[i].path, ftcap[i].index);
+				       font_init_charset(ftcap[i].encoding);
+				       break;
+				    case GFONT_STROKE:
+ 		                       stroke_set(ftcap[i].name);
+				       break;
+				}			   
 				return;
 			}
 
-		stroke_set(name);
 	}
 }
 
@@ -54,7 +59,7 @@ void COM_Font_init_charset(const char *charset)
 
 int font_is_freetype(void)
 {
-	return font_type == FREETYPE;
+	return font_type == GFONT_FREETYPE;
 }
 
 void COM_Font_list(char ***list, int *count)

@@ -22,6 +22,8 @@
 
 #include <grass/config.h>
 #include <grass/gis.h>
+#include <grass/freetypecap.h>
+
 #include "local_proto.h"
 
 #ifdef HAVE_FT2BUILD_H

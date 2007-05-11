@@ -6,7 +6,7 @@ CAPFILE = $(ETC)/freetypecap
 
 include $(MODULE_TOPDIR)/include/Make/Script.make
 
-default: script $(CAPFILE)
+default: script
 
 $(CAPFILE): $(PROGDIR)/$(PGM)
 	$< > $@
