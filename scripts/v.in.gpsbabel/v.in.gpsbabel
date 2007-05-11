@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/bin/bash
 # 
 ############################################################################
 #
@@ -19,6 +19,8 @@
 #		Based on v.in.garmin for GRASS 6 by Hamish Bowman
 #		and v.in.garmin.sh for GRASS 5 by Andreas Lange
 #
+# TODO: - remove bash-isms
+#       - check if attributes are shifted by one row (for certain Garmins)
 #############################################################################
 #
 # REQUIREMENTS:
@@ -109,33 +111,33 @@ PROG=`basename $0`
 
 #### check for gpsbabel 
  if [ ! -x "`which gpsbabel`" ] ; then
-    echo "$PROG: The gpsbabel program was not found, please install it first." 1>&2
+    echo "The gpsbabel program was not found, please install it first." 1>&2
     echo "       http://gpsbabel.sourceforge.net" 1>&2
     exit 1
 fi
 
 #### check for cs2cs
 if [ ! -x "`which cs2cs`" ] ; then
-    echo "$PROG: The cs2cs program was not found, please install it first." 1>&2
-    echo "       http://proj.maptools.org" 1>&2
+    echo "The cs2cs program was not found, please install it first." 1>&2
+    echo "http://proj.maptools.org" 1>&2
     exit 1
 fi
 
 #### check if we have awk
 if [ ! -x "`which awk`" ] ; then
-    echo "$PROG: awk is required, please install awk or gawk first." 1>&2
+    echo "awk is required, please install awk or gawk first." 1>&2
     exit 1
 fi
 
 #### set temporary files
 TMP="`g.tempfile pid=$$`"
 if [ $? -ne 0 ] || [ -z "$TMP" ] ; then
-    echo "ERROR: unable to create temporary files" 1>&2
+    echo "Unable to create temporary files" 1>&2
     exit 1
 fi
 
 #### trap ctrl-c so that we can clean up tmp
-trap 'rm -f ${TMP}.*' 2 3 15
+trap 'rm -f "${TMP}.*"' 2 3 15
 
 
 #### process command line arguments 
@@ -162,14 +164,14 @@ fi
 
 
 if [ $GIS_FLAG_W -eq 1 ] && ([ $GIS_FLAG_R -eq 1 ] || [ $GIS_FLAG_T -eq 1 ]) ; then
-    echo "One feature at a time please. Use v.patch if you need to combine them."
-    rm -f ${TMP}.*
+    echo "One feature at a time please. Use v.patch if you need to combine them." 1>&2
+    rm -f "${TMP}.*"
     exit 1
 fi
 # logic eludes me at pressent..  [combine with above]
 if [ $GIS_FLAG_R -eq 1 ] && [ $GIS_FLAG_T -eq 1 ] ; then
-    echo "One feature at a time please. Use v.patch if you need to combine them."
-    rm -f ${TMP}.*
+    echo "One feature at a time please. Use v.patch if you need to combine them." 1>&2
+    rm -f "${TMP}.*"
     exit 1
 fi
 
@@ -217,7 +219,7 @@ read PROJ_TYPE < $TMP.tmp
 
 if [ $PROJ_TYPE -eq 0 ] && [ $KEEP_WGS84 -ne 1 ] ; then
     echo "Cannot project to a XY location." 1>&2
-    rm -f ${TMP}.*
+    rm -f "${TMP}.*"
     exit 1
 fi
 
@@ -240,20 +242,20 @@ if [ $CREATE_POINTS -eq 1 ] ; then
 else
     if [ $RTE -eq 1 ] ; then
 	echo "Downloading Routes from GPS" 1>&2
-	gpsbabel -r -i $GIS_OPT_FORMAT $GPSdevice $PROGVERBOSE -o gpx,style="$STYLE" -F "$TMP".gpx
+	gpsbabel -r -i $GIS_OPT_FORMAT $GPSdevice $PROGVERBOSE -o gpx -F "$TMP".gpx
 	EXITCODE=$?
     fi
     if [ $TRK -eq 1 ] ; then
 	echo "Downloading Tracks from GPS" 1>&2
-	gpsbabel -t -i $GIS_OPT_FORMAT $GPSdevice $PROGVERBOSE -o gpx,style="$STYLE" -F "$TMP".gpx
+	gpsbabel -t -i $GIS_OPT_FORMAT $GPSdevice $PROGVERBOSE -o gpx -F "$TMP".gpx
 	EXITCODE=$?
     fi
 fi
 
 #### check success/failure
 if [ $EXITCODE -ne 0 ] ; then
-    echo "$PROG: Error retrieving data" 1>&2
-    rm -f ${TMP}.*
+    echo "Error retrieving data" 1>&2
+    rm -f "${TMP}.*"
     exit 1
 fi
 
@@ -311,7 +313,7 @@ if [ $CREATE_POINTS -eq 1 ] ; then
     else
 	#### import into new ascii points file
 	if [ $WPT -eq 1 ] ; then
-	    echo "Importing Waypoints..."
+	    echo "Importing Waypoints..." 1>&2
 	    #linea modificata
 	    cat "${TMP}.asc" | v.in.ascii output="$NAME" cat=0 \
 #HB#???? fix:: see v.in.garmin & edit grass.style
@@ -319,14 +321,14 @@ if [ $CREATE_POINTS -eq 1 ] ; then
 	    EXITCODE=$?
 	fi
 	if [ $RTE -eq 1 ] ; then
-	    echo "Importing Routes as points..."
+	    echo "Importing Routes as points..." 1>&2
 	    #linea modificata
 	    cat "${TMP}.asc" | v.in.ascii output="$NAME" cat=0 \
 		columns='x double precision, y double precision, altitude double precision, creatdate varchar(10), time varchar(11), comments varchar(40)'
 	    EXITCODE=$?
 	fi
 	if [ $TRK -eq 1 ] ; then
-	    echo "Importing Track as points..."
+	    echo "Importing Track as points..." 1>&2
 	    #linea modificata
 	    cat "${TMP}.asc" | v.in.ascii output="$NAME" cat=0 \
 		columns='x double precision, y double precision, altitude double precision, creatdate varchar(10), time varchar(11), comments varchar(40)'
@@ -334,8 +336,8 @@ if [ $CREATE_POINTS -eq 1 ] ; then
 	fi
 
 	if [ $EXITCODE -ne 0 ] ; then
-	    echo "$PROG: Error importing data" 1>&2
-	    rm -f ${TMP}.*
+	    echo "Error importing data" 1>&2
+	    rm -f "${TMP}.*"
 	    exit 1
 	fi
 
@@ -419,7 +421,7 @@ else # CREATE_LINES
 
 	# list of bytes where tracks finish
 	cat "$TMP.gpx" | grep -n "</trkseg>" > "$TMP.bytes"
-	# number of routes
+	# number of tracks
 	cat "$TMP.bytes" | grep -c "</trkseg>" > "$TMP.var"
 	TRACK_NUMBER=0 
 	read TRACK_NUMBER < "$TMP.var" # route number to process
@@ -550,10 +552,9 @@ EOF
 
 	#### check success/failure
 	if [ $? -eq 0 ] ; then
-	    echo "$PROG: line vector \"$NAME@$MAPSET\" successfully created" 1>&2
+	    echo "Line vector \"$NAME@$MAPSET\" successfully created" 1>&2
 	else
-	    echo "$PROG: An error occured on creating \"$NAME\" in mapset \"$MAPSET\"," 1>&2
-	    echo "please check!" 1>&2
+	    echo "An error occured on creating \"$NAME\" in mapset \"$MAPSET\", please check!" 1>&2
 	    exit 1
 	fi
 
@@ -561,7 +562,7 @@ EOF
 	DRIVER="`db.connect -p | grep '^driver:' | cut -f2 -d:`"
 	DATABASE="`db.connect -p | grep '^database:' | cut -f2 -d:`"
 	if [ "$DRIVER" = "(null)" ] || [ "$DATABASE" = "(null)" ] ; then
-	    echo "Setting default database driver to DBF."
+	    echo "Setting default database driver to DBF." 1>&2
 	    db.connect driver=dbf database='$GISDBASE/$LOCATION_NAME/$MAPSET/dbf/'
 	fi
 	DRIVER="`db.connect -p | grep '^driver:' | cut -f2 -d:`"
@@ -569,10 +570,10 @@ EOF
 	    mkdir "$LOCATION/dbf/"
 	fi
 
-	echo "Creating new table.."
+	echo "Creating new table.." 1>&2
 	echo "CREATE TABLE $NAME ($ATTR_COLS)" | db.execute
 
-	echo "Populating table with attributes.."
+	echo "Populating table with attributes.." 1>&2
 	# echo "COPY $NAME FROM '$ATTR_FILE'" | db.execute
 
 	# "COPY table FROM 'filename.txt'" does not work for DBF and there is no
@@ -581,21 +582,33 @@ EOF
 ### <hack>
 	if [ $RTE -eq 1 ] ; then
 	    # =>  echo "INSERT INTO $NAME VALUES (2, 1, 'AB', 'B')" | db.execute
+	    # 'if' tests to work around Garmin firmware bug ($7 is even different!)
 	    cat "$ATTR_FILE" | \
-	      awk -F'\t' '{ printf("echo \"INSERT INTO $NAME VALUES (%d, %d, ^%s^, ^%s^)\" | db.execute\n", $1, $2, $3, $4) }' \
+	      awk -F'\t' '{
+		if($3 == " "){$3 = "NULL"}
+		if($4 == " "){$4 = "NULL"}
+		if($6 == " "){$6 = "NULL"}
+		if($7 == ""){$7 = "NULL"}
+		printf("echo \"INSERT INTO $NAME VALUES (%d, %d, ^%s^, ^%s^)\" | db.execute\n", $1, $2, $3, $4) }' \
 		| tr '^' \' >  "$ATTR_FILE"_exe
 	fi
 	if [ $TRK -eq 1 ] ; then
 	    # =>  echo "INSERT INTO $NAME VALUES ()" | db.execute
+	    # 'if' tests to work around Garmin firmware bug ($7 is even different!)
 	    cat "$ATTR_FILE" | \
-	      awk -F'\t' '{ printf("echo \"INSERT INTO $NAME VALUES (%d, ^%s^, %s, %s, ^%s^, %s, %s)\" | db.execute\n", $1, $2, $3, $4, $5, $6, $7) }' \
+	      awk -F'\t' '{
+		if($3 == " "){$3 = "NULL"}
+		if($4 == " "){$4 = "NULL"}
+		if($6 == " "){$6 = "NULL"}
+		if($7 == ""){$7 = "NULL"}
+		printf("echo \"INSERT INTO $NAME VALUES (%d, ^%s^, %s, %s, ^%s^, %s, %s)\" | db.execute\n", $1, $2, $3, $4, $5, $6, $7) }' \
 		| tr '^' \' >  "$ATTR_FILE"_exe
 	fi
 
 	. "$ATTR_FILE"_exe
 ### </hack>
 
-	echo "Connecting attribute table to vector file.."
+	echo "Connecting attribute table to vector file.." 1>&2
 	v.db.connect map="$NAME" table="$NAME"
     fi
 
@@ -604,17 +617,15 @@ fi  # if CREATE_POINTS or CREATE_LINES
 
 # list column names
 if [ $VERBOSE -eq 1 ] && [ -n "$NAME" ] ; then
-    echo
-    echo "<$NAME> columns:"
+    echo "<$NAME> columns:" 1>&2
     db.columns "$NAME"
 fi
 
 
 #### clean up the mess
-rm -f ${TMP}.* 1>&2 > /dev/null
+rm -f "${TMP}.*" 1>&2 > /dev/null
 
 #### end
-echo 1>&2
 echo "Done." 1>&2
 
 exit 0
