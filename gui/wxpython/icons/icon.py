@@ -69,7 +69,7 @@ icons_default = {
     "histogram"  : 'module-d.histogram.gif',
     "color"      : 'edit-color.gif',
     "options"    : wx.ART_ERROR,
-    # histogram
+    # profile
     "transect"   : 'gui-profiledefine.gif',
     "profile"    : 'gui-profiledraw.gif',
     }
