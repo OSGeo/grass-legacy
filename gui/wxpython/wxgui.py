@@ -48,6 +48,7 @@ import gui_modules.menuform as menuform
 import gui_modules.grassenv as grassenv
 import gui_modules.defaultfont as defaultfont
 import gui_modules.histogram as histogram
+import gui_modules.profile as profile
 from   icons.icon import Icons as Icons
 from   gui_modules.debug import Debug as Debug
 
@@ -323,7 +324,9 @@ class GMFrame(wx.Frame):
             os.environ["GRASS_FT_ENCODING"] = self.encoding
 
     def DispHistogram(self, event):
-        # Init histogram display canvas
+        """
+        Init histogram display canvas and tools
+        """
         self.histogram = histogram.HistFrame(self,
                                            id=wx.ID_ANY, pos=wx.DefaultPosition, size=(400,300),
                                            style=wx.DEFAULT_FRAME_STYLE)
@@ -335,6 +338,18 @@ class GMFrame(wx.Frame):
         self.histogram.Show()
         self.histogram.Refresh()
         self.histogram.Update()
+
+    def DispProfile(self, event):
+        """
+        Init profile canvas and tools
+        """
+        self.profile = profile.ProfileFrame(self,
+                                           id=wx.ID_ANY, pos=wx.DefaultPosition, size=(400,300),
+                                           style=wx.DEFAULT_FRAME_STYLE)
+        self.profile.Show()
+        self.profile.Refresh()
+        self.profile.Update()
+
 
     def __createToolBar(self):
         """Creates toolbar"""
