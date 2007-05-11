@@ -121,6 +121,11 @@ gisenv variable (see below). If this shell variable exists at GRASS startup,
 it will determine the GUI used. If it is not defined startup will default
 to the last GUI used.
 
+<p>GRASS_FONT_CAP
+<br>[g.mkfontcap, d.font, display drivers]
+<br>&nbsp; Specifies an alternative location (to $GISBASE/etc/fontcap) for 
+the font configuration file.
+
 <p>GRASS_HEIGHT
 <br>[d.mon]
 <br>&nbsp; defines the height of GRASS monitor, see also GRASS_WIDTH
@@ -261,15 +266,9 @@ the contents of $GRASS_PNGFILE
 <P></P>
 
 <p>GRASS_FONT
-<br>&nbsp; specifies the font as either the name of a stroke font in
-$GISBASE/etc/fonts, the full path to a stroke font (which must begin
-with $GISBASE/etc/fonts/), the name of a FreeType font from
-$GISBASE/etc/freetypecap, or the full path to a FreeType font file.
-
-<p>GRASS_FT_FONT
-<br>&nbsp; specifies a FreeType font as a full path to the font file. 
-If both GRASS_FONT and GRASS_FT_FONT are specified, GRASS_FT_FONT
-takes precedence.
+<br>&nbsp; specifies the font as either the name of a font from
+$GISBASE/etc/fontcap (or alternative fontcap file specifed by GRASS_FONT_CAP),
+or alternatively the full path to a FreeType font file.
 
 <p>GRASS_FT_ENCODING
 <br>&nbsp; the encoding to be assumed for text which is drawn using a
