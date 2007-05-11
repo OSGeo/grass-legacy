@@ -7,20 +7,13 @@ static char *filename;
 static int font_index;
 static char *charset;
 
-int font_init_freetype(const char *name)
+int font_init_freetype(const char *name, int index)
 {
-	char *p;
-
 	if (filename)
 		G_free(filename);
 	filename = G_store(name);
 
-	p = strrchr(filename, '|');
-	if (p)
-	{
-		*p++ = '\0';
-		font_index = atoi(p);
-	}
+	font_index = index;
 	
 	return 0;
 }

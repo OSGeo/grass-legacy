@@ -24,7 +24,7 @@
 
 const struct driver *driver;
 
-struct FT_CAP *ftcap;
+struct GFONT_CAP *ftcap;
 
 int NCOLORS;
 

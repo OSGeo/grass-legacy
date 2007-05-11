@@ -20,7 +20,7 @@ extern double text_rotation;
 
 extern int mouse_button[];
 
-extern struct FT_CAP *ftcap;
+extern struct GFONT_CAP *ftcap;
 
 struct driver
 {

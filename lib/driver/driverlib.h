@@ -25,7 +25,7 @@ void get_text_ext_freetype(int*,int*,int*,int*);
 int font_init(const char *);
 int get_char_vects(unsigned char,int *,unsigned char **,unsigned char **);
 /* font_freetype.c */
-int font_init_freetype(const char *);
+int font_init_freetype(const char *, int);
 int font_init_charset(const char *);
 const char *font_get_freetype_name(void);
 const char *font_get_charset(void);
@@ -42,6 +42,6 @@ int process_command(int);
 
 /* parse_ftcap.c */
 extern int font_exists(const char *name);
-extern struct FT_CAP *parse_freetypecap(void);
-extern void free_freetypecap(struct FT_CAP *ftcap);
+extern struct GFONT_CAP *parse_freetypecap(void);
+extern void free_freetypecap(struct GFONT_CAP *ftcap);
 extern void free_font_list(char **fonts, int num_fonts);

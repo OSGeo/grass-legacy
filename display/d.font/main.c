@@ -16,10 +16,8 @@
  *               for details.
  *
  *****************************************************************************/
+#include <stdio.h>
 #include <stdlib.h>
-#include <string.h>
-#include <sys/types.h>
-#include <dirent.h>
 #include <grass/gis.h>
 #include <grass/display.h>
 #include <grass/raster.h>
@@ -29,7 +27,6 @@ static char **fonts;
 static int max_fonts;
 static int num_fonts;
 
-static void read_stroke_fonts(void);
 static void read_freetype_fonts(void);
 static void print_font_list(FILE *fp);
 
@@ -58,7 +55,7 @@ int main( int argc , char **argv )
 	opt2->key	= "path";
 	opt2->type	= TYPE_STRING;
 	opt2->required	= NO;
-	opt2->description = _("Path to TrueType font including file name");
+	opt2->description = _("Path to Freetype-compatible font including file name");
 	opt2->gisprompt	= "old_file,file,font";
 
 	opt3 = G_define_option();
@@ -71,8 +68,6 @@ int main( int argc , char **argv )
 	flag1 = G_define_flag();
 	flag1->key	= 'l';
 	flag1->description = _("List fonts");
-
-	G_gisinit(argv[0]);
 
 	if (G_parser(argc, argv))
 		exit(EXIT_FAILURE);
@@ -101,46 +96,6 @@ int main( int argc , char **argv )
 	R_close_driver();
 
 	exit(EXIT_SUCCESS);
-}
-
-static void read_stroke_fonts(void)
-{
-	char buf[GPATH_MAX];
-	DIR *dirp;
-
-	sprintf (buf, "%s/fonts", G_gisbase());
-	dirp = opendir(buf);
-
-	if (!dirp)
-		return;
-
-	for (;;)
-	{
-		struct dirent *dp = readdir(dirp);
-		char *name;
-
-		if (!dp)
-			break;
-
-		if(dp->d_name[0] == '.')
-			continue;
-
-		if (!strstr(dp->d_name, ".hmp"))
-			continue;
-
-		name = G_store(dp->d_name);
-		*(strstr(name, ".hmp")) = '\0';
-
-		if (num_fonts >= max_fonts)
-		{
-			max_fonts += 20;
-			fonts = G_realloc(fonts, max_fonts * sizeof(char *));
-		}
-
-		fonts[num_fonts++] = name;
-	}
-
-	closedir(dirp);
 }
 
 static void read_freetype_fonts(void)
@@ -172,7 +127,6 @@ static void print_font_list(FILE *fp)
 	int i;
 
 	/* find out what fonts we have */
-	read_stroke_fonts();
 	read_freetype_fonts();
 
 	for (i = 0; i < num_fonts; i++)

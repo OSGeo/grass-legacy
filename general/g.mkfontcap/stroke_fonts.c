@@ -14,7 +14,9 @@
  *****************************************************************************/
 
 #include <string.h>
+
 #include <grass/gis.h>
+#include <grass/freetypecap.h>
 
 #include "local_proto.h"
 

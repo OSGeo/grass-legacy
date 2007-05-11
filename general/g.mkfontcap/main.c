@@ -24,6 +24,7 @@
 #include <errno.h>
 
 #include <grass/gis.h>
+#include <grass/freetypecap.h>
 
 #include "local_proto.h"
 
@@ -185,7 +186,7 @@ int main(int argc, char *argv[])
 		    fontcap[i].longname, fontcap[i].path, fontcap[i].index,
 		    fontcap[i].encoding);
         else
-	    fprintf(outstream, "%s|%s|%d|%s|%d|%s\n", fontcap[i].name,
+	    fprintf(outstream, "%s|%s|%d|%s|%d|%s|\n", fontcap[i].name,
 		    fontcap[i].longname, fontcap[i].type, fontcap[i].path,
 		    fontcap[i].index, fontcap[i].encoding);
     }
