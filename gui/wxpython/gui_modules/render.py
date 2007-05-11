@@ -109,7 +109,6 @@ class MapLayer:
         # start monitor
         #
         os.environ["GRASS_PNGFILE"] = self.mapfile
-#        os.environ["GRASS_RENDER_IMMEDIATE"] = "TRUE"
 
         #
         # execute command
@@ -132,7 +131,6 @@ class MapLayer:
         # stop monitor
         #
         os.unsetenv("GRASS_PNGFILE")
-#        os.unsetenv("GRASS_RENDER_IMMEDIATE")
 
         return self.mapfile
 
