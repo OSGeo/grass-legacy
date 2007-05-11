@@ -141,7 +141,9 @@ class GMFrame(wx.Frame):
         self.SetTitle(_("GRASS GIS Manager - wxPython Prototype"))
         self.SetMinSize((450, 450))
         self.SetIcon(wx.Icon(os.path.join(imagepath,'grass.smlogo.gif'), wx.BITMAP_TYPE_ANY))
-        # self.nb_panel = wx.Panel(self)
+
+        # set environmental variables
+        os.environ["GRASS_RENDER_IMMEDIATE"] = "TRUE"
 
         # initialize variables
         self.mapdisplays = {} #dictionary to index open map displays
