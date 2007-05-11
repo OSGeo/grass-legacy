@@ -74,8 +74,6 @@ class LayerTree(CT.CustomTreeCtrl):
         self.mapdisplay.Refresh()
         self.mapdisplay.Update()
 
-
-
         self.Map = self.mapdisplay.getRender()
 
         self.root = self.AddRoot("Map Layers")
@@ -145,27 +143,27 @@ class LayerTree(CT.CustomTreeCtrl):
         Debug.msg (3, "LayerTree.OnChangeLayerName: name=%s" % event.GetLabel())
 
         self.Map.ChangeLayerName (self.layer_selected, event.GetLabel())
-        
+
     def OnContextMenu (self, event):
         """Context Layer Menu"""
 
         if not self.layer_selected:
             event.Skip()
             return
-        
+
         type = self.layertype[self.layer_selected]
-        
+
         if not hasattr (self, "popupID1"):
             self.popupID1 = wx.NewId()
             self.popupID2 = wx.NewId()
             self.popupID3 = wx.NewId()
             self.popupID4 = wx.NewId()
-            
+
             self.Bind (wx.EVT_MENU, self.gismgr.deleteLayer,        id=self.popupID1)
             self.Bind (wx.EVT_MENU, self.RenameLayer,               id=self.popupID2)
             self.Bind (wx.EVT_MENU, self.OnPopupProperties,         id=self.popupID3)
             self.Bind (wx.EVT_MENU, self.gismgr.ShowAttributeTable, id=self.popupID4)
-            
+
         menu = wx.Menu()
         # general item
         menu.Append (self.popupID1, _("Delete"))
@@ -180,7 +178,7 @@ class LayerTree(CT.CustomTreeCtrl):
         if type == "vector": # show attribute table
             menu.AppendSeparator()
             menu.Append (self.popupID4, _("Show attribute table"))
-            
+
         self.PopupMenu (menu)
         menu.Destroy()
 
@@ -191,7 +189,7 @@ class LayerTree(CT.CustomTreeCtrl):
     def RenameLayer (self, event):
         """Rename layer"""
         pass
-    
+
     def AddLayer(self, type):
         """Add layer, create MapLayer instance"""
         self.first = True
@@ -291,14 +289,14 @@ class LayerTree(CT.CustomTreeCtrl):
         self.first = False
 
         self.PropertiesDialog(layer)
-        
+
     def PropertiesDialog (self, layer):
         """Launch the properties dialog"""
         global gmpath
         completed = ''
         params = self.GetPyData(layer)[1]
         type   = self.layertype[layer]
-        
+
         if type == 'raster':
             menuform.GUI().parseCommand('d.rast', gmpath, completed=(self.getOptData,layer,params), parentframe=self)
         elif type == 'rgb':
@@ -321,13 +319,13 @@ class LayerTree(CT.CustomTreeCtrl):
             pass
         elif type == 'group':
             pass
-        
+
     def onActivateLayer(self, event):
         layer = event.GetItem()
         self.layer_selected = layer
 
         self.PropertiesDialog (layer)
-        
+
         if self.layertype[layer] == 'group':
             if self.IsExpanded(layer):
                 self.Collapse(layer)
@@ -336,7 +334,7 @@ class LayerTree(CT.CustomTreeCtrl):
 
     def onDeleteLayer(self, event):
         """Remove selected layer for the layer tree"""
-        
+
         Debug.msg (3, "LayerTree.onDeleteLayer():")
 
         layer = event.GetItem()
@@ -384,7 +382,7 @@ class LayerTree(CT.CustomTreeCtrl):
         Set opacity level for map layer
         """
         Debug.msg (3, "LayerTree.OnOpacity(): %s" % event.GetInt())
-        
+
         if 'Spin' in str(event.GetEventObject()):
             layer = self.layerctrl[event.GetEventObject()]
         else:
