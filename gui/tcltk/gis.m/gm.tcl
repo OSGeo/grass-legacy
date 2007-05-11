@@ -244,7 +244,8 @@ proc Gm::create { } {
     global prgindic
     global keycontrol
     global env
-
+    
+    set env(GRASS_RENDER_IMMEDIATE) "TRUE"
 	set fontpath ""
 	set Gm::fonttype "grassfont"
 	set Gm::dfont "romans"
