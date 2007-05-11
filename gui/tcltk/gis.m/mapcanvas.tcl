@@ -600,12 +600,11 @@ proc MapCanvas::runprograms { mon mod } {
 	# only use dynamic region for display geometry; use WIND for computational geometry
 	set env(GRASS_REGION) $gregion
 
-	set env(GRASS_RENDER_IMMEDIATE) "TRUE"
+	
 
 	# Setting the font really only needs to be done once per display start
 	incr drawprog
 	GmGroup::display "root" $mod
-	unset env(GRASS_RENDER_IMMEDIATE)
 	unset env(GRASS_REGION)
 	incr drawprog
 }
