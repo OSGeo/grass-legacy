@@ -1204,7 +1204,7 @@ dnl AC_CHECK_TOOL(AR, ar)
 		LD_SEARCH_FLAGS=${CC_SEARCH_FLAGS}
 	    else
 		SHLIB_CFLAGS="-KPIC"
-		SHLIB_LD="/usr/ccs/bin/ld -G -z text"
+		SHLIB_LD="CC -G -z text"
 		CC_SEARCH_FLAGS='-Wl,-R,${LIB_RUNTIME_DIR}'
 		LD_SEARCH_FLAGS='-R ${LIB_RUNTIME_DIR}'
 	    fi
