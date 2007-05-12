@@ -221,7 +221,11 @@ set descmenu [subst  {
  } 
  {[G_msg "&Raster"]} all options $tmenu {
 	{cascad {[G_msg "Develop map"]} {} "" $tmenu {			
-		{command {[G_msg "Digitize raster"]} {} "r.digit" {} -command {guarantee_xmon; term r.digit }}
+		{command {[G_msg "Digitize raster"]} {} "r.digit" {} -command {
+			unset env(GRASS_RENDER_IMMEDIATE)
+			guarantee_xmon
+			term r.digit 
+			set env(GRASS_RENDER_IMMEDIATE) "TRUE"}}
 		{separator}
 		{command {[G_msg "Compress/decompress raster file"]} {} "r.compress" {} -command {execute r.compress }}
 		{command {[G_msg "Manage boundary definitions"]} {} "r.region" {} -command {execute r.region }}
@@ -274,7 +278,6 @@ set descmenu [subst  {
 		{command {[G_msg "Calculate cumulative movement costs between locales"]} {} "r.walk" {} -command {execute r.walk }}
 		{command {[G_msg "Cost surface"]} {} "r.cost" {} -command {execute r.cost }}
 		{command {[G_msg "Least cost route or flow"]} {} "r.drain" {} -command {execute r.drain }}
-		{command {[G_msg "Profile analysis"]} {} "d.profile" {} -command {guarantee_xmon; execute d.profile }}
 		{command {[G_msg "Shaded relief map"]} {} "r.shaded.relief" {} -command {execute r.shaded.relief }}
 		{command {[G_msg "Slope and aspect"]} {} "r.slope.aspect" {} -command {execute r.slope.aspect }}
 		{command {[G_msg "Terrain parameters"]} {} "r.param.scale" {} -command {execute r.param.scale }}
@@ -302,7 +305,11 @@ set descmenu [subst  {
 		{command {[G_msg "Watershed basin creation"]} {} "r.water.outlet" {} -command {execute r.water.outlet }}
 	}}
 	{cascad {[G_msg "Landscape structure modeling"]} {} "" $tmenu {			
-		{command {[G_msg "Set up sampling and analysis framework"]} {} "r.le.setup" {} -command {guarantee_xmon; term r.le.setup }}
+		{command {[G_msg "Set up sampling and analysis framework"]} {} "r.le.setup" {} -command {
+			unset env(GRASS_RENDER_IMMEDIATE)
+			guarantee_xmon
+			term r.le.setup 
+			set env(GRASS_RENDER_IMMEDIATE) "TRUE"}}
 		{separator}
 		{command {[G_msg "Analyze landscape characteristics"]} {} "r.le.pixel" {} -command {execute r.le.pixel }}
 		{command {[G_msg "Analyze landscape patch characteristics"]} {} " r.le.patch" {} -command {execute r.le.patch }}
@@ -442,7 +449,11 @@ set descmenu [subst  {
 		{command {[G_msg "Allocate subnets"]} {} "v.net.alloc" {} -command {execute v.net.alloc }}
 		{command {[G_msg "Network maintenance"]} {} "v.net" {} -command {execute v.net }}
 		{command {[G_msg "Shortest route"]} {} "v.net.path" {} -command {execute v.net.path }}
-		{command {[G_msg "Shortest route (visualization only)"]} {} "d.path" {} -command {guarantee_xmon; spawn d.path.sh -b --ui }}
+		{command {[G_msg "Shortest route (visualization only)"]} {} "d.path" {} -command {
+			unset env(GRASS_RENDER_IMMEDIATE)
+			guarantee_xmon
+			spawn d.path.sh -b --ui
+			set env(GRASS_RENDER_IMMEDIATE) "TRUE"}}
 		{command {[G_msg "Split net to bands between cost isolines"]} {} "v.net.iso" {} -command {execute v.net.iso }}
 		{command {[G_msg "Steiner tree"]} {} "v.net.steiner" {} -command {execute v.net.steiner }}
 		{command {[G_msg "Traveling salesman analysis"]} {} "v.net.salesman" {} -command {execute v.net.salesman }}
@@ -503,14 +514,11 @@ set descmenu [subst  {
 		{command {[G_msg "Transform HIS (Hue/Intensity/Saturation) color image to RGB (Red/Green/Blue)"]} {} "i.his.rgb" {} -command {execute i.his.rgb }}
 		{command {[G_msg "Transform RGB (Red/Green/Blue) color image to HIS (Hue/Intensity/Saturation)"]} {} "i.rgb.his" {} -command {execute i.rgb.his }}
 	}}
-	{cascad {[G_msg "Rectify and georeference image group"]} {} "" $tmenu {			
-		{command {[G_msg "Set ground control points (GCP's) from raster map or keyboard entry"]} {} "i.points" {} \
-		-command {guarantee_xmon; term i.points }}
-		{command {[G_msg "Set ground control points (GCP's) from vector map or keyboard entry"]} {} "i.vpoints" {} \
-		-command {guarantee_xmon; term i.vpoints }}
-		{command {[G_msg "Affine and Polynomial rectification (rubber sheet)"]} {} "i.rectify" {} -command {execute i.rectify }}
-		{command {[G_msg "Ortho photo rectification"]} {} "i.ortho.photo" {} -command {term i.ortho.photo }}
-	}}
+	{command {[G_msg "Ortho photo rectification"]} {} "i.ortho.photo" {} -command {
+		unset env(GRASS_RENDER_IMMEDIATE)
+		guarantee_xmon
+		term i.ortho.photo 
+		set env(GRASS_RENDER_IMMEDIATE) "TRUE"}}
 	{separator}
 	{command {[G_msg "Brovey transformation and pan sharpening"]} {} "i.fusion.brovey" {} -command {execute i.fusion.brovey }}
 	{cascad {[G_msg "Classify image"]} {} "" $tmenu {			
