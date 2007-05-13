@@ -35,6 +35,8 @@ if not os.getenv("GRASS_ICONPATH"):
 else:
     icons = os.environ["GRASS_ICONPATH"]
 
+os.environ["GRASS_BACKGROUNDCOLOR"] = "blue"
+
 class BufferedWindow(wx.Window):
     """
     A Buffered window class.
@@ -378,7 +380,7 @@ class HistFrame(wx.Frame):
             if 'map=' in item:
                 self.mapname = item.split('=')[1]
 
-        self.Map.changeLayer(item="histlayer", type="command", name='', command=dcmd,
+        self.Map.ChangeLayer(item="histlayer", type="command", name='', command=dcmd,
                              l_active=True, l_hidden=False, l_opacity=1, l_render=False)
         self.params = params
         self.HistWindow.UpdateHist()
