@@ -22,8 +22,9 @@ typedef struct { /* category index */
 
 int cmp ( const void *, const void *);
 
-int path ( struct Map_info *In, struct Map_info *Out, int nfield, double maxdist, int segments)
+int path ( struct Map_info *In, struct Map_info *Out, char *filename, int nfield, double maxdist, int segments)
 {
+    FILE *in_file;
     int    i, nlines, line, npoints, type, cat, id, fcat, tcat, fline, tline, fnode, tnode, count;
     int    ret, sp, input_mode, unreachable, nopoint, formaterr;
     struct ilist *AList;
@@ -38,6 +39,12 @@ int path ( struct Map_info *In, struct Map_info *Out, int nfield, double maxdist
     dbString sql;
     dbDriver *driver;
     struct field_info *Fi;
+
+    if(filename) {
+       /* open input file */
+       if((in_file = fopen(filename, "r" )) == NULL )
+           G_fatal_error(_("Could not open input file <%s>."), filename);
+				                                }
 
     AList = Vect_new_list ();
     Points = Vect_new_line_struct ();
@@ -106,7 +113,16 @@ int path ( struct Map_info *In, struct Map_info *Out, int nfield, double maxdist
     /* Read stdin, find shortest path, and write connectin line and new database record */
     cat = 0;
     formaterr = nopoint = unreachable = 0;
-    while ( fgets (buf, sizeof(buf), stdin) != NULL ) {
+    while (1) {
+    
+        if(!filename) {
+	    if( fgets (buf, sizeof(buf), stdin) == NULL ) break; 
+	}
+	else{
+            if(G_getl2(buf, sizeof(buf)-1, in_file) == 0) break;
+	}
+	 
+	 
 	double fdist, tdist;
 
 	G_chop(buf);
@@ -268,6 +284,9 @@ int path ( struct Map_info *In, struct Map_info *Out, int nfield, double maxdist
     Vect_destroy_line_struct(Points);
     Vect_destroy_line_struct(OPoints);
     Vect_destroy_cats_struct(Cats);
+    
+    if(filename)
+       fclose(in_file);
 
     if ( formaterr )
 	G_warning (_("[%d] input format errors"), formaterr );
