@@ -2,12 +2,12 @@
 #
 ############################################################################
 #
-# MODULE:	d.out.file for GRASS 6 (2005/9/3)
-# AUTHOR(S):	Michael Barton
-#		 Routine to read current display geometry written by
-#		 Hamish Bowman & Glynn Clements
+# MODULE:	d.out.file for GRASS 6 (2005/9/3; 2007/5/14)
+# AUTHOR(S):	Michael Barton and Hamish Bowman
+#		  Original routine to read current display geometry
+#		  written by Hamish Bowman & Glynn Clements
 # PURPOSE:	To redraw current displayed maps to graphics file output
-# COPYRIGHT:	(C) 2005 by the GRASS Development Team
+# COPYRIGHT:	(C) 2005-2007 by the GRASS Development Team
 #
 #		This program is free software under the GNU General Public
 #		License (>=v2). Read the file COPYING that comes with GRASS
@@ -15,211 +15,282 @@
 #
 #############################################################################
 
-
 #%Module
-#%  description: Saves active display monitor to graphics file in home directory
+#%  description: Saves active display monitor to graphics file
 #%  keywords: display, export
 #%End
 #%option
 #% key: output
 #% type: string
-#% description: Name of output file (do NOT add extension)
+#% description: Name for output file (do NOT add extension)
+#% gisprompt: new_file,file,output
 #% required : yes
-#%end
-#%option
-#% key: res
-#% type: integer
-#% answer: 1
-#% description: Resolution of output file (single=1, double=2, quad=4)
-#% required : no
 #%end
 #%option
 #% key: format
 #% type: string
-#% options: png,ppm,tif,jpg,bmp
+#% options: png,ppm,tif,jpg,bmp,ps
 #% answer: png
 #% description: Graphics file format
 #% required : yes
 #%end
 #%option
-#% key: compression
-#% type: string
-#% options: 0,1,9
-#% answer: 0
-#% description: Compression for PNG files (0=none, 1=fastest, 9=most)
+#% key: resolution
+#% type: integer
+#% answer: 1
+#% label: Dimensions of output file versus current window size
+#% description: (single=1, double=2, quadruple=4)
+#% guisection: Images
 #% required : no
 #%end
 #%option
-#% key: quality
-#% type: string
-#% answer: 75
-#% description: Size/quality for JPEG files (10=smallest/worst, 100=largest/best)
+#% key: size
+#% type: integer
+#% key_desc: width,height
+#% description: Width and height of output image (overrides resolution setting)
+#% guisection: Images
 #% required : no
 #%end
-#%flag
-#%key: t
-#%description: Transparent background
+#%option
+#% key: compression
+#% type: integer
+#% options: 0-9
+#% answer: 9
+#% label: Compression for PNG files
+#% description: (0=none, 1=fastest, 9=most; lossless, only time vs. filesize)
+#% required : no
+#% guisection: Images
+#%end
+#%option
+#% key: quality
+#% type: integer
+#% answer: 75
+#% options: 10-100
+#% label: File size/quality for JPEG files
+#% description: (10=smallest/worst, 100=largest/best)
+#### 10 is hardcoded as smallest value in gdal/frmts/jpeg/jpgdataset.cpp. why not 0?
+#% required : no
+#% guisection: Images
+#%end
+#%option
+#% key: paper
+#% type: string
+#% answer: a4
+#% description: Paper size for PostScript output
+#% options: a4,a3,a2,a1,a0,us-letter,us-legal,us-tabloid
+#### Sizes from lib/psdriver/Graph_set.c
+#% guisection: PostScript
+#% required : no
+#%end
+#### margin setting not currently allowed in PS driver
+## #%option
+## #% key: margins
+## #% type: integer
+## #% key_desc: bottom,top,left,right
+## #% description: Margins (in points) for PostScript output
+## #% guisection: PostScript
+## #% required : no
+## #%end
+#%option
+#% key: ps_level
+#% type: integer
+#% options: 1-3
+#% answer: 2
+#% description: PostScript level (only limits functionality!)
+#% guisection: PostScript
+#% required : no
 #%end
 #%flag
 #%key: b
 #%description: Set background color to black (white default)
 #%end
+#%flag
+#%key: t
+#%description: Set transparent background
+#% guisection: Images
+#%end
+#%flag
+#%key: r
+#%description: Set paper orientation to landscape (for PostScript output)
+#% guisection: PostScript
+#%end
 
 
 if  [ -z "$GISBASE" ] ; then
-  echo "You must be in GRASS GIS to run this program."
- exit 1
+   echo "You must be in GRASS GIS to run this program." 1>&2
+   exit 1
 fi
 
 if [ "$1" != "@ARGS_PARSED@" ] ; then
-  exec g.parser "$0" "$@"
+   exec g.parser "$0" "$@"
 fi
 
-# setting environment, so that awk works properly in all languages
+#### set environment so that awk works properly in all languages
 unset LC_ALL
 LC_NUMERIC=C
 export LC_NUMERIC
 
-# Check the current status of the monitor
-monitorcheck=`d.mon -p|sed s/'No monitor currently selected for output'//`
 
-if  [ "$monitorcheck" = "" ]
-then
-	g.message -e "You must select a display monitor"
-	exit 1
+#### Check the current status of the monitor
+monitorcheck1="`d.mon -p | grep -v "No monitor currently selected"`"
+monitorcheck2="`d.mon -L | tail -n+3 | grep -v "not running"`"
+
+if  [ -z "$monitorcheck1" ] || [ -z "$monitorcheck2" ] ; then
+   g.message -e "You must select a display monitor"
+   exit 1
 fi
 
-
-# Save old settings
-old_GRASSW=`eval g.gisenv get=GRASS_WIDTH`
-old_GRASSH=`eval g.gisenv get=GRASS_HEIGHT`
-old_TRUECOLOR=`eval g.gisenv get=GRASS_TRUECOLOR`
-old_TRANSPARENT=`eval g.gisenv get=GRASS_BACKGROUNDCOLOR`
-old_BACKGROUND=`eval g.gisenv get=GRASS_TRANSPARENT`
-old_COMPRESSION=`eval g.gisenv get=GRASS_PNG_COMPRESSION`
+curr_mon="`d.mon -p | cut -f2 -d: | awk '{print $1}'`"
 
 
-curr_mon=`d.mon -p | awk '{printf "%s", $4}'`
-
-#setting variables (get rid of extra png)
-#output="`basename $GIS_OPT_OUTPUT .png`"
-res="$GIS_OPT_RES"
-
-#get GRASS version for display monitor name
-GRASS_VER=`g.version | awk '{printf "%s", $1 " " $2}'`
+#### set variables
+res="$GIS_OPT_RESOLUTION"
 
 #capture current display monitor and geometry
 # identify current monitor
-currmon=`eval d.mon -L | grep "(selected)" | awk '{print $1}'`
-curr_width=`d.frame -D | sed -n -e '1,/^FRAME: full_screen/d' -e 's/d_win://p' | awk '{printf $4}'`
-curr_height=`d.frame -D | sed -n -e '1,/^FRAME: full_screen/d' -e 's/d_win://p' | awk '{printf $2}'`
+currmon="`d.mon -L | grep "(selected)" | awk '{print $1}'`"
+curr_width="`d.info -d | cut -f2 -d' '`"
+curr_height="`d.info -d | cut -f3 -d' '`"
 
-#set resolution for PNG output
-out_width=`expr $res \* $curr_width`
-out_height=`expr $res \* $curr_height`
+if [ -z "$GIS_OPT_SIZE" ] ; then
+   #set dimension multiplier
+   out_width="`expr $res \* $curr_width`"
+   out_height="`expr $res \* $curr_height`"
+else
+   out_width="`echo $GIS_OPT_SIZE | cut -f1 -d,`"
+   out_height="`echo $GIS_OPT_SIZE | cut -f2 -d,`"
+fi
 
-#set window geometry for PNG output
-unset GRASS_WIDTH
-unset GRASS_HEIGHT
-GRASS_WIDTH=$out_width
+#set output geometry
+GRASS_WIDTH="$out_width"
 export GRASS_WIDTH
-GRASS_HEIGHT=$out_height
+GRASS_HEIGHT="$out_height"
 export GRASS_HEIGHT
 
-#make sure that output is 24 bit color
-GRASS_TRUECOLOR=TRUE
-export GRASS_TRUECOLOR
 
 #set other output options
-
 if [ "$GIS_FLAG_B" -eq 1 ] ; then
     GRASS_BACKGROUNDCOLOR=000000
-    export GRASS_BACKGROUNDCOLOR
 else
     GRASS_BACKGROUNDCOLOR=FFFFFF
-    export GRASS_BACKGROUNDCOLOR
 fi
+export GRASS_BACKGROUNDCOLOR
 
 if [ "$GIS_FLAG_T" -eq 1 ] ; then
     GRASS_TRANSPARENT=TRUE
-    export GRASS_TRANSPARENT
 else
     GRASS_TRANSPARENT=FALSE
-    export GRASS_TRANSPARENT
 fi
+export GRASS_TRANSPARENT
 
-GRASS_PNG_COMPRESSION=$GIS_OPT_COMPRESSION
-export GRASS_PNG_COMPRESSION
 
 #set output file name and format
-if [ "$GIS_OPT_FORMAT" = "png" ] ; then
-    output=$GIS_OPT_OUTPUT".png"
+case "$GIS_OPT_FORMAT" in
+   png | ppm | ps)
+     output="${GIS_OPT_OUTPUT}.${GIS_OPT_FORMAT}"
+     ;;
+   tif | jpg | bmp)
+     output="`g.tempfile pid=$$`.ppm"
+     ;;
+esac
+
+outname="${GIS_OPT_OUTPUT}.${GIS_OPT_FORMAT}"
+
+#is there a simpler way of testing for --overwrite?
+if [ -e "$outname" ] ; then
+   if [ -z "$GRASS_OVERWRITE" ] || [ "$GRASS_OVERWRITE" -ne 1 ] ; then
+      g.message -e "File <$outname> already exists"
+      exit 1
+   fi
 fi
 
-if [ "$GIS_OPT_FORMAT" != "png" ] ; then
-    output=$GIS_OPT_OUTPUT".ppm"
+
+if [ "$GIS_OPT_FORMAT" != "ps" ] ; then
+    GRAPHICS_DRIVER=PNG
+    GRASS_PNGFILE="$output"
+    export GRASS_PNGFILE
+
+    #make sure that output is 24 bit color
+    GRASS_TRUECOLOR=TRUE
+    export GRASS_TRUECOLOR
+
+    GRASS_PNG_COMPRESSION="$GIS_OPT_COMPRESSION"
+    export GRASS_PNG_COMPRESSION
+
+else
+    GRAPHICS_DRIVER=PS
+    GRASS_PSFILE="$output"
+    export GRASS_PSFILE
+
+    GRASS_PAPER="$GIS_OPT_PAPER"
+    export GRASS_PAPER
+
+    if [ "$GIS_OPT_PS_LEVEL" -lt 2 ] ; then
+	GRASS_TRUECOLOR=FALSE
+    else
+	GRASS_TRUECOLOR=TRUE
+    fi
+    export GRASS_TRUECOLOR
+
+    if [ "$GIS_FLAG_R" -eq 1 ] ; then
+	GRASS_LANDSCAPE=TRUE
+	export GRASS_LANDSCAPE
+    else
+	unset GRASS_LANDSCAPE
+    fi
 fi
 
-g.message "Saving display from [$GRASS_VER- Monitor: $curr_mon] to $output"
-g.message "in home directory at $out_width x $out_height resolution"
 
-GRASS_PNGFILE=$output
-export GRASS_PNGFILE
+g.message "Saving display from Monitor: [$curr_mon] to <$outname>."
+g.message "Image size [$out_width x $out_height]"
 
-#export display to PNG driver
+
+################################
+#export display to PNG/PS driver
 dsave=`d.save -a`
-d.mon start=PNG
+
+d.mon start=$GRAPHICS_DRIVER --quiet
 eval "$dsave"
-d.mon stop=PNG
-
-
-#returning old settings
-d.mon select=$curr_mon
-GRASS_WIDTH=$old_GRASSW
-export GRASS_WIDTH
-GRASS_HEIGHT=$old_GRASSH
-export GRASS_HEIGHT
-GRASS_TRUECOLOR=$old_TRUECOLOR
-export GRASS_TRUECOLOR
-GRASS_PNGFILE=map.png
-export GRASS_PNGFILE
-GRASS_BACKGROUNDCOLOR=$old_TRANSPARENT
-export GRASS_BACKGROUNDCOLOR
-GRASS_TRANSPARENT=$old_BACKGROUND
-export GRASS_TRANSPARENT
-GRASS_PNG_COMPRESSION=$old_COMPRESSION
-export GRASS_PNG_COMPRESSION
-
+d.mon stop=$GRAPHICS_DRIVER --quiet
+################################
 
 g.message "Screen export complete. (writing the file may take a small amount of time)"
 
+d.mon select="$curr_mon"
 
-if [ "$GIS_OPT_FORMAT" != "png" -a  "$GIS_OPT_FORMAT" != "ppm" ] ; then
-    output2=$GIS_OPT_OUTPUT"."$GIS_OPT_FORMAT
-    sleep 5
-else
-    exit 1
-fi
-#size=`ls -s $output | awk '{printf $1}'`
+case "$GIS_OPT_FORMAT" in
+   png | ppm | ps)
+     g.message "Done."
+     exit
+     ;;
+   tif | jpg | bmp)
+     # delay not needed if using GRASS_PNG_AUTO_WRITE ?
+     g.message "Waiting for file to write ..."
+     sleep 5
+     ;;
+esac
 
-g.message "Waiting for file to write"
 
-if [ "$GIS_OPT_FORMAT" = "tif" ] ; then
-    g.message "Translating to TIFF format" 
-    gdal_translate $output $output2 -of GTIFF
-    rm $output
-fi
+case "$GIS_OPT_FORMAT" in
+   tif)
+     g.message "Translating to TIFF format" 
+     gdal_translate "$output" "$outname" -of GTIFF
+     EXITCODE=$?
+     ;;
+   jpg)
+     g.message "Translating to JPEG format" 
+     gdal_translate "$output" "$outname" -of JPEG -co QUALITY="$GIS_OPT_QUALITY"
+     EXITCODE=$?
+     ;;
+   bmp)
+     g.message "Translating to BMP format" 
+     gdal_translate "$output" "$outname" -of BMP
+     EXITCODE=$?
+     ;;
+esac
 
-if [ "$GIS_OPT_FORMAT" = "jpg" ] ; then
-    g.message "Translating to JPEG format" 
-    gdal_translate $output $output2 -of JPEG -co QUALITY=$GIS_OPT_QUALITY
-    rm $output
-fi
-
-if [ "$GIS_OPT_FORMAT" = "bmp" ] ; then
-    g.message "Translating to BMP format" 
-    gdal_translate $output $output2 -of BMP
-    rm $output
-fi
+\rm "$output"
 
 g.message "Done." 
+
+exit $EXITCODE
