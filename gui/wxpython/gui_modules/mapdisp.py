@@ -14,7 +14,7 @@ Classes:
 """
 
 # Authors: Michael Barton and Jachym Cepicky
-# COPYRIGHT:	(C) 1999 - 2006 by the GRASS Development Team
+# COPYRIGHT:	(C) 1999 - 2007 by the GRASS Development Team
 # Double buffered drawing concepts from the wxPython Cookbook
 
 import wx
@@ -26,14 +26,14 @@ try:
     import subprocess
     from subprocess import *
 except:
-    CompatPath = os.getenv("GISBASE") + "/etc/wx"
+    CompatPath = os.path.join( os.getenv("GISBASE"),"etc","wx")
     sys.path.append(CompatPath)
     from compat import subprocess
     from compat.subprocess import *
 
-gmpath = os.getenv("GISBASE") + "/etc/wx/gui_modules/"
+gmpath = os.path.join( os.getenv("GISBASE"),"etc","wx","gui_modules" )
 sys.path.append(gmpath)
-gmpath = os.getenv("GISBASE") + "/etc/wx/icons/"
+gmpath = os.path.join( os.getenv("GISBASE"),"etc","wx","icons" )
 sys.path.append(gmpath)
 
 import render
