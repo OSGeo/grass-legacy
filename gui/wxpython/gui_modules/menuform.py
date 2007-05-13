@@ -69,8 +69,17 @@ from os import system
 import gettext
 gettext.install("wxgrass")
 
-sys.path.append(os.path.join(os.getenv("GISBASE"),"etc","wx"))
-imagepath = os.path.join(os.getenv("GISBASE"),"etc","wx","images")
+
+gisbase = os.getenv("GISBASE")
+if gisbase is None:
+    print >>sys.stderr, "We don't seem to be properly installed, or we are being run outside GRASS. Expect glitches."
+    gisbase = os.path.join(os.path.dirname( sys.argv[0] ), os.path.pardir)
+    wxbase = gisbase
+else:
+    wxbase = os.path.join(gisbase,"etc","wx")
+
+sys.path.append( wxbase)
+imagepath = os.path.join(wxbase,"images")
 sys.path.append(imagepath)
 
 try:
@@ -410,13 +419,26 @@ class helpPanel(wx.html.HtmlWindow):
     The SYNOPSIS section is skipped, since this Panel is supposed to
     be integrated into the cmdPanel and options are obvious there.
     """
-    def __init__(self, grass_command = "index", *args, **kwargs):
-        wx.html.HtmlWindow.__init__(self, *args, **kwargs)
-        self.fspath = os.getenv( "GISBASE" ) + "/docs/html/"
-        self.SetStandardFonts ( size = 10 )
-        self.fillContentsFromFile ( self.fspath + grass_command + ".html" )
+    def __init__(self, grass_command = "index", text = None, skip_description=False, *args, **kwargs):
+        """
+        If grass_command is given, the corresponding HTML help file will be presented, with all links
+        pointing to absolute paths of local files.
 
-    def fillContentsFromFile( self, htmlFile ):
+        If 'skip_description' is True, the HTML corresponding to SYNOPSIS will be skipped, thus only
+        presenting the help file from the DESCRIPTION section onwards.
+
+        If 'text' is given, it must be the HTML text to be presented in the Panel.
+        """
+        wx.html.HtmlWindow.__init__(self, *args, **kwargs)
+        self.fspath = gisbase + "/docs/html/"
+        self.SetStandardFonts ( size = 10 )
+        if text is None:
+            self.fillContentsFromFile ( self.fspath + grass_command + ".html", skip_description=skip_description )
+        else:
+            self.SetPage( text )
+            self.Ok = True
+
+    def fillContentsFromFile( self, htmlFile, skip_description=True ):
         aLink = re.compile( r'(<a href="?)(.+\.html?["\s]*>)', re.IGNORECASE )
         try:
             contents = [ '<head><base href="%s"></head>' % self.fspath ]
@@ -424,7 +446,7 @@ class helpPanel(wx.html.HtmlWindow):
             for l in file( htmlFile, "rb" ).readlines():
                 if "DESCRIPTION" in l: skip = False
                 if not skip:
-                    if "SYNOPSIS" in l: skip = True # do skip the options description
+                    if "SYNOPSIS" in l: skip = skip_description # do skip the options description if requested
                     else:
                         findLink = aLink.search( l )
                         if findLink is not None: # change URLs to file paths
@@ -1008,7 +1030,7 @@ def getInterfaceDescription( cmd ):
     The DTD must be located in $GISBASE/etx/wx/gui_modules/grass-interface.dtd,
     otherwise the parser will not succeed.
     """
-    gmpath = os.getenv("GISBASE") + "/etc/wx/gui_modules"
+    gmpath = os.path.join(wxbase,"gui_modules")
     cmdout = os.popen(cmd + r' --interface-description', "r").read()
     if not len(cmdout) > 0 :
         raise IOError, _("Couldn't fetch interface description for command <%s>.") % cmd
@@ -1082,7 +1104,7 @@ if __name__ == "__main__":
         GrassGUIApp( grassTask( sys.argv[1] ) ).MainLoop()
     else: #Test
         # Test grassTask from within a GRASS session
-        if os.getenv("GISBASE") != '':
+        if os.getenv("GISBASE") is not None:
             task = grassTask( "d.vect" )
             task.get_param('map')['value'] = "map_name"
             task.get_flag('v')['value'] = True
