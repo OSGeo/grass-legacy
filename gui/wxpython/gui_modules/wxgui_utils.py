@@ -4,9 +4,9 @@ import wx.lib.customtreectrl as CT
 import wx.combo
 import string
 
-gmpath = os.getenv("GISBASE") + "/etc/wx/gui_modules/"
+gmpath = os.path.join( os.getenv("GISBASE"),"etc","wx","gui_modules" )
 sys.path.append(gmpath)
-gmpath = os.getenv("GISBASE") + "/etc/wx/icons/"
+gmpath = os.path.join( os.getenv("GISBASE"),"etc","wx","icons")
 sys.path.append(gmpath)
 
 import select
@@ -825,25 +825,17 @@ class GMConsole(wx.Panel):
             # except display commands (they are handled differently)
             global gmpath
             if command[0:2] == "d.":
-                if command == 'd.rast':
-                    layertype = 'raster'
-                elif command == 'd.rgb':
-                    layertype = 'rgb'
-                elif command == 'd.his':
-                    layertype = 'his'
-                elif command == 'd.legend':
-                    layertype = 'rastleg'
-                elif command == 'd.vect':
-                    layertype = 'vector'
-                elif command == 'd.vect.thematic':
-                    layertype = 'thememap'
-                elif command == 'd.vect.chart':
-                    layertype = 'themechart'
-                elif command == 'd.grid':
-                    layertype = 'grid'
-                elif command == 'd.labels':
-                    layertype = 'labels'
-                else:
+                try:
+                    layertype = {'d.rast': 'raster',
+                        'd.rgb'          : 'rgb',
+                        'd.his'          : 'his',
+                        'd.legend'       : 'rastleg',
+                        'd.vect'         : 'vector',
+                        'd.vect.thematic': 'thememap',
+                        'd.vect.chart'   : 'themechart',
+                        'd.grid'         : 'grid',
+                        'd.labels'       : 'labels'} [command]
+                except KeyError:
                     print 'Command type not yet implemented'
                     return
 
