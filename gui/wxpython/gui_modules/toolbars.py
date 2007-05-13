@@ -97,6 +97,11 @@ class MapToolbar:
                                                   bitmap=Icons["zoommenu"].GetBitmap(),
                                                   bmpDisabled=wx.NullBitmap,
                                                   shortHelp=Icons["zoommenu"].GetLabel(), longHelp=Icons["zoommenu"].GetDesc())
+        self.analyze = self.toolbar.AddLabelTool(id=wx.ID_ANY, label="analyze",
+                                             bitmap=Icons["analyze"].GetBitmap(),
+                                             bmpDisabled=wx.NullBitmap,
+                                             shortHelp=Icons["analyze"].GetLabel(),
+                                             longHelp=Icons["analyze"].GetDesc())
         self.toolbar.AddSeparator()
 
 
@@ -143,12 +148,13 @@ class MapToolbar:
         self.mapdisplay.Bind(wx.EVT_TOOL,     self.mapdisplay.OnZoomOut,    self.zoomout)
         self.mapdisplay.Bind(wx.EVT_TOOL,     self.mapdisplay.OnPan,        self.pan)
         self.mapdisplay.Bind(wx.EVT_TOOL,     self.mapdisplay.OnZoomBack,   self.zoomback)
-        self.mapdisplay.Bind(wx.EVT_TOOL,     self.mapdisplay.onDecoration, self.dec)
-        self.mapdisplay.Bind(wx.EVT_TOOL,     self.mapdisplay.onZoomMenu,   self.zoommenu)
+        self.mapdisplay.Bind(wx.EVT_TOOL,     self.mapdisplay.OnDecoration, self.dec)
+        self.mapdisplay.Bind(wx.EVT_TOOL,     self.mapdisplay.OnZoomMenu,   self.zoommenu)
         self.mapdisplay.Bind(wx.EVT_TOOL,     self.mapdisplay.OnQuery,      self.query)
+        self.mapdisplay.Bind(wx.EVT_TOOL,     self.mapdisplay.OnAnalyze,    self.analyze)
         self.mapdisplay.Bind(wx.EVT_TOOL,     self.mapdisplay.OnErase,      self.erase)
         self.mapdisplay.Bind(wx.EVT_TOOL,     self.mapdisplay.SaveToFile,   self.savefile)
-        self.mapdisplay.Bind(wx.EVT_TOOL,     self.mapdisplay.PrintMenu,     self.printmap)
+        self.mapdisplay.Bind(wx.EVT_TOOL,     self.mapdisplay.PrintMenu,    self.printmap)
         self.mapdisplay.Bind(wx.EVT_COMBOBOX, self.OnSelect,                self.comboid)
 
     def OnSelect(self,event):
