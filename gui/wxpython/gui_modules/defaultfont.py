@@ -57,7 +57,7 @@ class SetDefaultFont(wx.Dialog):
         label = wx.StaticText(self, -1, "Select Font:", (15, 50))
         box.Add(label, 0, wx.EXPAND|wx.GROW|wx.ALIGN_TOP|wx.RIGHT, 5)
         self.fontlb = wx.ListBox(self, wx.ID_ANY, pos=wx.DefaultPosition,
-                                 size=(200,100), choices=self.fontlist,
+                                 size=(280,150), choices=self.fontlist,
                                  style=wx.LB_SINGLE|wx.LB_SORT)
         self.Bind(wx.EVT_LISTBOX, self.EvtListBox, self.fontlb)
         self.Bind(wx.EVT_LISTBOX_DCLICK, self.EvtListBoxDClick, self.fontlb)
