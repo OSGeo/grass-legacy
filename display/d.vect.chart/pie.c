@@ -51,7 +51,7 @@ pie ( double cx, double cy, int size, double *val, int ncols, COLOR *ocolor, COL
 
 	if(!colors[i].none) {
 	    R_RGB_color ( colors[i].r, colors[i].g, colors[i].b );
-	    G_plot_polygon ( Points->x, Points->y, Points->n_points);
+	    D_polygon( Points->x, Points->y, Points->n_points);
 	}
 
 	R_RGB_color ( ocolor->r, ocolor->g, ocolor->b );
