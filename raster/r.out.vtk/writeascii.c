@@ -191,7 +191,7 @@ write_vtk_structured_coordinates(int fd, FILE * fp, char *varname,
 	    ewpos -= x_extent;
 
 	    value = get_raster_value_as_double(out_type, ptr, nullvalue);
-	    fprintf(fp, "%9f %9f %9f\n", ewpos, nspos, value);
+	    fprintf(fp, "%9f %9f %9f\n", ewpos, nspos, value*scale);
 
 	    colcount++;
 	}
@@ -248,7 +248,7 @@ write_vtk_polygonal_coordinates(int fd, FILE * fp, char *varname,
 	    ewpos -= x_extent;
 
 	    value = get_raster_value_as_double(out_type, ptr, nullvalue);
-	    fprintf(fp, "%9f %9f %9f\n", ewpos, nspos, value);
+	    fprintf(fp, "%9f %9f %9f\n", ewpos, nspos, value*scale);
 
 	    colcount++;
 	}
