@@ -43,6 +43,9 @@ import track
 import menuform
 import select
 import disp_print
+import defaultfont as defaultfont
+import histogram as histogram
+import profile as profile
 from digit import Digit as Digit
 from debug import Debug as Debug
 from icon import Icons as Icons
@@ -611,9 +614,9 @@ class BufferedWindow(wx.Window):
                 self.currtxtid = self.dragid
                 self.parent.addText(None)
             elif self.dragid == 0:
-                self.parent.addBarscale(None)
+                self.parent.AddBarscale(None)
             elif self.dragid == 1:
-                self.parent.addLegend(None)
+                self.parent.AddLegend(None)
         # drag
         elif event.Dragging():
             currpos = event.GetPositionTuple()[:]
@@ -1364,8 +1367,65 @@ class MapFrame(wx.Frame):
             os.system(rcmd)
             os.system(vcmd)
 
-    # toolBar button handlers
-    def onDecoration(self, event):
+    def OnAnalyze(self, event):
+        """
+        Analysis tools menu
+        """
+        point = wx.GetMousePosition()
+        toolsmenu = wx.Menu()
+        # Add items to the menu
+        measure = wx.MenuItem(toolsmenu, -1, Icons["measure"].GetLabel())
+        measure.SetBitmap(Icons["measure"].GetBitmap(self.iconsize))
+        toolsmenu.AppendItem(measure)
+        self.Bind(wx.EVT_MENU, self.Measure, measure)
+
+        profile = wx.MenuItem(toolsmenu, -1, Icons["profile"].GetLabel())
+        profile.SetBitmap(Icons["profile"].GetBitmap(self.iconsize))
+        toolsmenu.AppendItem(profile)
+        self.Bind(wx.EVT_MENU, self.Profile, profile)
+
+        histogram = wx.MenuItem(toolsmenu, -1, Icons["histogram"].GetLabel())
+        histogram.SetBitmap(Icons["histogram"].GetBitmap(self.iconsize))
+        toolsmenu.AppendItem(histogram)
+        self.Bind(wx.EVT_MENU, self.Histogram, histogram)
+
+        # Popup the menu.  If an item is selected then its handler
+        # will be called before PopupMenu returns.
+        self.PopupMenu(toolsmenu)
+        toolsmenu.Destroy()
+
+    def Measure(self, event):
+        pass
+
+    def Profile(self, event):
+        """
+        Init profile canvas and tools
+        """
+        self.profile = profile.ProfileFrame(self,
+                                           id=wx.ID_ANY, pos=wx.DefaultPosition, size=(400,300),
+                                           style=wx.DEFAULT_FRAME_STYLE)
+        self.profile.Show()
+        self.profile.Refresh()
+        self.profile.Update()
+
+    def Histogram(self, event):
+        """
+        Init histogram display canvas and tools
+        """
+        self.histogram = histogram.HistFrame(self,
+                                           id=wx.ID_ANY, pos=wx.DefaultPosition, size=(400,300),
+                                           style=wx.DEFAULT_FRAME_STYLE)
+
+        # title
+#        self.histogram.SetTitle(_("GRASS GIS - Map Display: " + str(self.disp_idx) + " - Location: " + grassenv.env["LOCATION_NAME"]))
+
+        #show new display
+        self.histogram.Show()
+        self.histogram.Refresh()
+        self.histogram.Update()
+
+
+    def OnDecoration(self, event):
         """
         Decorations overlay menu
         """
@@ -1375,24 +1435,24 @@ class MapFrame(wx.Frame):
         addscale = wx.MenuItem(decmenu, -1, Icons["addbarscale"].GetLabel())
         addscale.SetBitmap(Icons["addbarscale"].GetBitmap(self.iconsize))
         decmenu.AppendItem(addscale)
-        self.Bind(wx.EVT_MENU, self.addBarscale, addscale)
+        self.Bind(wx.EVT_MENU, self.AddBarscale, addscale)
 
-        addlegend = wx.MenuItem(decmenu, -1, Icons["addlegend"].GetLabel())
-        addlegend.SetBitmap(Icons["addlegend"].GetBitmap(self.iconsize))
-        decmenu.AppendItem(addlegend)
-        self.Bind(wx.EVT_MENU, self.addLegend, addlegend)
+        AddLegend = wx.MenuItem(decmenu, -1, Icons["addlegend"].GetLabel())
+        AddLegend.SetBitmap(Icons["addlegend"].GetBitmap(self.iconsize))
+        decmenu.AppendItem(AddLegend)
+        self.Bind(wx.EVT_MENU, self.AddLegend, AddLegend)
 
         addtext = wx.MenuItem(decmenu, -1, Icons["addtext"].GetLabel())
         addtext.SetBitmap(Icons["addtext"].GetBitmap(self.iconsize))
         decmenu.AppendItem(addtext)
-        self.Bind(wx.EVT_MENU, self.addText, addtext)
+        self.Bind(wx.EVT_MENU, self.AddText, addtext)
 
         # Popup the menu.  If an item is selected then its handler
         # will be called before PopupMenu returns.
         self.PopupMenu(decmenu)
         decmenu.Destroy()
 
-    def addBarscale(self, event):
+    def AddBarscale(self, event):
         """
         Handler for scale/arrow map decoration menu selection.
         """
@@ -1445,7 +1505,7 @@ class MapFrame(wx.Frame):
         self.MapWindow.UpdateMap()
         dlg.Destroy()
 
-    def addLegend(self, event):
+    def AddLegend(self, event):
         """
         Handler for legend map decoration menu selection.
         """
@@ -1498,7 +1558,7 @@ class MapFrame(wx.Frame):
         self.MapWindow.UpdateMap()
         dlg.Destroy()
 
-    def addText(self, event):
+    def AddText(self, event):
         """
         Handler for text decoration menu selection.
         """
@@ -1558,7 +1618,7 @@ class MapFrame(wx.Frame):
                                l_active=True, l_render=False)
         self.params[type] = params
 
-    def onZoomMenu(self, event):
+    def OnZoomMenu(self, event):
         """
         Decorations overlay menu
         """

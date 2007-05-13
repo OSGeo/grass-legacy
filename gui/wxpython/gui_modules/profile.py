@@ -40,7 +40,7 @@ class BufferedWindow(wx.Window):
     A Buffered window class.
 
     When the drawing needs to change, you app needs to call the
-    UpdateHist() method. Since the drawing is stored in a bitmap, you
+    UpdateProfile() method. Since the drawing is stored in a bitmap, you
     can also save the drawing to file by calling the
     SaveToFile(self,file_name,file_type) method.
     """
@@ -165,7 +165,7 @@ class BufferedWindow(wx.Window):
         if self.img and self.Map.width + self.Map.height > 0: # scale image during resize
             self.img = self.img.Scale(self.Map.width, self.Map.height)
             self.render = False
-            self.UpdateHist()
+            self.UpdateProfile()
 
         # re-render image on idle
         self.resize = True
@@ -178,7 +178,7 @@ class BufferedWindow(wx.Window):
 
         if self.resize:
             self.render = True
-            self.UpdateHist()
+            self.UpdateProfile()
         event.Skip()
 
     def SaveToFile(self, FileName, FileType):
@@ -205,12 +205,12 @@ class BufferedWindow(wx.Window):
         return img
 
 
-    def UpdateHist(self, img=None):
+    def UpdateProfile(self, img=None):
         """
         Update canvas if histogram options changes or window changes geometry
         """
 
-        Debug.msg (2, "BufferedWindow.UpdateHist(%s): render=%s" % (img, self.render))
+        Debug.msg (2, "BufferedWindow.UpdateProfile(%s): render=%s" % (img, self.render))
         oldfont = ""
         oldencoding = ""
 
@@ -245,7 +245,7 @@ class BufferedWindow(wx.Window):
         self.resize = False
 
         # update statusbar
-        #Debug.msg (3, "BufferedWindow.UpdateHist(%s): region=%s" % self.Map.region)
+        #Debug.msg (3, "BufferedWindow.UpdateProfile(%s): region=%s" % self.Map.region)
         self.Map.SetRegion()
         self.parent.statusbar.SetStatusText("Histogramming %s" % self.parent.mapname)
 
@@ -311,8 +311,10 @@ class ProfileFrame(wx.Frame):
         #
         # Bind various events
         #
-        self.Bind(wx.EVT_CLOSE,    self.OnCloseWindow)
-
+        self.Bind(wx.EVT_CLOSE, self.OnCloseWindow)
+        self.mapwin = self.Parent.MapWindow
+        self.mapwin.Bind(wx.EVT_ACTIVATE, self.OnActivate)
+        self.ProfileWindow.Bind(wx.EVT_MOUSE_EVENTS, self.OnMouse)
         #
         # Init print module and classes
         #
@@ -340,7 +342,7 @@ class ProfileFrame(wx.Frame):
         return   (
                  ('raster', Icons["addrast"].GetBitmap(), Icons["addrast"].GetLabel(), self.SelectRaster),
                  ('transect', Icons["transect"].GetBitmap(), Icons["transect"].GetLabel(), self.DrawTransect),
-                 ('profile', Icons["profile"].GetBitmap(), Icons["profile"].GetLabel(), self.CreateProfile),
+                 ('profiledraw', Icons["profiledraw"].GetBitmap(), Icons["profiledraw"].GetLabel(), self.CreateProfile),
                  ('font', Icons["font"].GetBitmap(), Icons["font"].GetLabel(), self.SetProfileFont),
                  ('erase', Icons["erase"].GetBitmap(), Icons["erase"].GetLabel(), self.OnErase),
                  ('', '', '', ''),
@@ -357,6 +359,28 @@ class ProfileFrame(wx.Frame):
 
     def SelectRaster(self, event):
         pass
+
+    def OnActivate(self, event):
+        print "window=",event.GetEventObject()
+        event.Skip()
+
+    def OnMouse(self, event):
+
+        if event.LeftDown():
+            self.mapwin = self.Parent.MapWindow
+            print "position=",event.GetPositionTuple()
+            pass
+
+        elif event.LeftUp():
+            pass
+
+        elif event.ButtonDClick():
+            pass
+
+        elif event.Dragging():
+            pass
+
+        event.Skip()
 
     def DrawTransect(self, event):
         pass
@@ -389,7 +413,7 @@ class ProfileFrame(wx.Frame):
             self.encoding = dlg.encoding
 
         dlg.Destroy()
-        self.ProfileWindow.UpdateHist()
+        self.ProfileWindow.UpdateProfile()
 
     def OnErase(self, event):
         """
