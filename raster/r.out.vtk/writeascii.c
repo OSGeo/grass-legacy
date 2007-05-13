@@ -190,7 +190,7 @@ writeVTKStructuredCoordinates(int fd, FILE * fp, char *varname,
 	    ewpos -= x_extent;
 
 	    value = GetRasterValueAsDouble(out_type, ptr, nullvalue);
-	    fprintf(fp, "%9f %9f %9f\n", ewpos, nspos, value);
+	    fprintf(fp, "%9f %9f %9f\n", ewpos, nspos, value*scale);
 
 	    colcount++;
 	}
@@ -247,7 +247,7 @@ writeVTKPolygonalCoordinates(int fd, FILE * fp, char *varname,
 	    ewpos -= x_extent;
 
 	    value = GetRasterValueAsDouble(out_type, ptr, nullvalue);
-	    fprintf(fp, "%9f %9f %9f\n", ewpos, nspos, value);
+	    fprintf(fp, "%9f %9f %9f\n", ewpos, nspos, value*scale);
 
 	    colcount++;
 	}
