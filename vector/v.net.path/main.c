@@ -19,12 +19,12 @@
 #include <grass/Vect.h>
 #include <grass/glocale.h>
 
-int path ( struct Map_info *, struct Map_info *, int, double, int );
+int path ( struct Map_info *, struct Map_info *, char *, int, double, int );
 
 int main(int argc, char **argv)
 {
     struct Option *input_opt, *output_opt, *afield_opt, *nfield_opt, *afcol, *abcol, *ncol, *type_opt;
-    struct Option *max_dist;
+    struct Option *max_dist, *file_opt;
     struct Flag   *geo_f, *segments_f;
     struct GModule *module;
     char   *mapset;
@@ -56,6 +56,13 @@ int main(int argc, char **argv)
     nfield_opt->key = "nlayer";
     nfield_opt->answer = "2";
     nfield_opt->description = _("Node layer");
+
+    file_opt = G_define_standard_option(G_OPT_F_INPUT);
+    file_opt->key = "file";
+    file_opt->required = NO;
+    file_opt->description = _("Name of file containing start and end points. "
+        "If not given, read from stdin");
+
 
     afcol = G_define_option() ;
     afcol->key         = "afcolumn" ;
@@ -131,7 +138,7 @@ int main(int argc, char **argv)
     Vect_net_build_graph ( &In, type, afield, nfield, afcol->answer, abcol->answer, 
 	                   ncol->answer, geo, 0 );
 
-    path ( &In, &Out, nfield, maxdist, segments_f->answer ); 
+    path ( &In, &Out, file_opt->answer, nfield, maxdist, segments_f->answer ); 
 
     Vect_close(&In);
 
