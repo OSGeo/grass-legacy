@@ -476,7 +476,7 @@ proc Gm::SaveFileBox { } {
 ###############################################################################
 # sets default display font
 proc Gm:DefaultFont { } {
-	global env iconpath devnull
+	global env iconpath
 	variable dfont
 	variable encoding
 
@@ -486,7 +486,7 @@ proc Gm:DefaultFont { } {
     toplevel .dispfont
     wm title .dispfont [G_msg "Select default font for GRASS displays"]
 
-    set fontlist [string trim [exec d.font -l 2> $devnull]]
+    set fontlist [string trim [exec d.font --q -l]]
     set fontlist [split $fontlist "\n"]
     set fontlist [lsort -unique $fontlist]
    
