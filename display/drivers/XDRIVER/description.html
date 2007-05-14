@@ -28,10 +28,19 @@ Variables:
 <br>&nbsp; set the x size in pixel for the XDRIVER (default: 640)
 <li>GRASS_HEIGHT
 <br>&nbsp; set the y size in pixel for the XDRIVER (default: 480)
+<!-- ??? -->
+<li>XDRIVER_TRUECOLOR=[TRUE|FALSE]
+<br>&nbsp; Look for a TrueColor visual (?)
+<li>XDRIVER_WINDOW
+<br>&nbsp; ?
+<li>XDRIVER_PRIVATE_CMAP
+<br>&nbsp; Private color map (?)
+
+<!-- removed? -->
 <li>XDRIVER_LEFT
-<br>&nbsp; defines the left position of GRASS monitor
+<br>&nbsp; defines the left position of GRASS monitor (<i>removed?</i>)
 <li>XDRIVER_TOP
-<br>&nbsp; define the upper position of GRASS monitor
+<br>&nbsp; define the upper position of GRASS monitor (<i>removed?</i>)
 </ul>
 
 <h3>Set the XDRIVER size</h3>
@@ -53,16 +62,24 @@ To control the XDRIVER, use the <A HREF="d.mon.html">d.mon</A> module.
 The maximum color depth depends on the current X Server settings.
 
 <H2>SEE ALSO</H2>
-<EM><A HREF="g.region.html">g.region</A>,
+<EM>
+<A HREF="htmlmapdriver.html">HTML map driver</A>,
+<A HREF="pngdriver.html">PNG driver</A>,
+<A HREF="psdriver.html">PostScript driver</A>
+<BR>
+<A HREF="d.frame.html">d.frame</A>,
 <A HREF="d.mon.html">d.mon</A>,
-<A HREF="pngdriver.html">pngdriver</A>
-</EM><BR>
+<A HREF="g.region.html">g.region</A>
+</EM>
+<BR>
 
 <H2>AUTHORS</H2>
 CERL<br>
 various improvements from several authors.<br>
 Rewritten 2001 by Glynn Clements
 
-<p><i>Last changed: $Date$</i>
+<p>
+<i>Last changed: $Date$</i>
+</p>
 </body>
 </html>
