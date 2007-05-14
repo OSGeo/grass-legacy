@@ -1034,9 +1034,6 @@ int G_rename(const char *, const char *, const char *);
 int G_begin_rhumbline_equation(double, double, double, double);
 double G_rhumbline_lat_from_lon(double);
 
-/* rm_colr.c */
-int G_remove_colr(const char *);
-
 /* rotate.c */
 void G_rotate_around_point(double, double, double *, double *, double);
 void G_rotate_around_point_int(int, int, int *, int *, double);
@@ -1053,8 +1050,6 @@ int G_set_window(struct Cell_head *);
 int G_shortest_way(double *, double *);
 
 /* sleep.c */
-long sleep_ltp( double);
-int time_ltp( double *);
 unsigned int G_sleep (unsigned int);
 
 /* snprintf.c */
@@ -1134,7 +1129,6 @@ int G_sock_bind(const char *);
 int G_sock_listen(int, unsigned int);
 int G_sock_accept(int);
 int G_sock_connect(const char *);
-int G_sock_socketpair(int, int, int, int *);
 
 /* verbose.c */
 int G_verbose(void);
