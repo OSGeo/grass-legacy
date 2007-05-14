@@ -118,6 +118,7 @@ LIBDIRS = \
 
 # Compile libraries only
 libs:
+	make -C lib/ headers
 	@list='$(LIBDIRS)'; \
 	for subdir in $$list; do \
 		$(MAKE) -C $$subdir; \
