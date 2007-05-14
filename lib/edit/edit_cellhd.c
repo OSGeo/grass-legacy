@@ -1,3 +1,22 @@
+/****************************************************************************
+ *
+ * MODULE:       edit library functions
+ * AUTHOR(S):    Originally part of gis lib dir in CERL GRASS code
+ *               Subsequent (post-CVS) contributors:
+ *               Glynn Clements <glynn gclements.plus.com>,
+ *               Radim Blazek <radim.blazek gmail.com>,
+ *               Eric G. Miller <egm2 jps.net>,
+ *               Markus Neteler <neteler itc.it>,
+ *               Brad Douglas <rez touchofmadness.com>,
+ *               Bernhard Reiter <bernhard intevation.de>
+ * PURPOSE:      libraries for interactively editing raster support data
+ * COPYRIGHT:    (C) 1996-2006 by the GRASS Development Team
+ *
+ *               This program is free software under the GNU General Public
+ *               License (>=v2). Read the file COPYING that comes with GRASS
+ *               for details.
+ *
+ *****************************************************************************/
 #define AS_CELLHD 1
 #define AS_WINDOW 0
 #define AS_DEF_WINDOW -1
