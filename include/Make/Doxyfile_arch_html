@@ -434,6 +434,8 @@ INPUT                  = .
 
 FILE_PATTERNS          = *.h \
                          *.c \
+			 *.i \
+                         *.py \
                          *.dox
 
 # The RECURSIVE tag can be used to turn specify whether or not subdirectories 
