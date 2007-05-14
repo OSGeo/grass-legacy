@@ -3,7 +3,7 @@
  * MODULE:       r.out.tiff
  *   
  * AUTHOR(S):    Sam Leffler
- *               Updated by Marco Valagussa <marco@duffy.crcc.it>,
+ *               Updated by Marco Valagussa <marco duffy.crcc.it>,
  *               Markus Neteler, Eric G. Miller, Luca Cristelli
  *
  * PURPOSE:      Exports a GRASS raster map to a 8/24bit TIFF image file
@@ -20,7 +20,7 @@
  * $Id$
  *
  * Added support for Tiled TIFF output ( -l switch )
- * Luca Cristelli (luca.cristelli@ies.it) 1/2001
+ * Luca Cristelli (luca.cristelli ies.it) 1/2001
  * 
  * Added flag to write a TIFF World file like r.out.arctiff
  * Eric G. Miller 4-Nov-2000
@@ -28,11 +28,11 @@
  * removed LZW support 5/5000
  *
  * Corrected G_set_window to G_get_window to make r.out.tiff sensitive
- * to region settings.   - Markus Neteler  (neteler@geog.uni-hannover.de
+ * to region settings.   - Markus Neteler  (neteler geog.uni-hannover.de
  * 8/98        
  *
  * This r.tiff version uses the standard libtiff from your system.
- *  8. June 98 Marco Valagussa <marco@duffy.crcc.it>
+ *  8. June 98 Marco Valagussa <marco duffy.crcc.it>
  *
  * Original version:
  * Portions Copyright (c) 1988, 1990 by Sam Leffler.
@@ -109,7 +109,7 @@ main (int argc, char *argv[])
 	outopt->type            =  TYPE_STRING;
 	outopt->required        =  YES;
 	outopt->gisprompt	= "new_file,tiff,tiff";
-	outopt->description     = _("File name for new TIFF file.");
+	outopt->description     = _("Name for new TIFF file.");
 
 	compopt = G_define_option();
 	compopt->key		= "compression";
