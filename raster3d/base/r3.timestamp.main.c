@@ -1,10 +1,21 @@
+/****************************************************************************
+ *
+ * MODULE:       r3.timestamp
+ * AUTHOR(S):    Michael Pelizzari <michael.pelizzari lmco.com> 
+ *                     (original contributor)
+ *               Glynn Clements <glynn gclements.plus.com> Markus Neteler <neteler itc.it>
+ * PURPOSE:      Stamps grid3 files with date and time.  
+ * COPYRIGHT:    (C) 2001-2006 by the GRASS Development Team
+ *
+ *               This program is free software under the GNU General Public
+ *               License (>=v2). Read the file COPYING that comes with GRASS
+ *               for details.
+ *
+ *****************************************************************************/
+
 /* based on r.timestamp by Michael Shapiro and v.timestamp by Markus Neteler:
  * 
- * r3.timestamp by Michael Pelizzari 3/2001
- *                 michael.pelizzari@lmco.com
- *                 Lockheed Martin Space Systems
- *
- * Stamps grid3 files with date and time.  This main.c is linked to functions 
+  * Stamps grid3 files with date and time.  This main.c is linked to functions 
  * currently residing in lib/gis/timestamp.c
  *
  */
@@ -80,3 +91,6 @@ int main(int argc, char *argv[])
     G_write_grid3_timestamp(name, &ts);
     exit(EXIT_SUCCESS);
 }
+
+
+
