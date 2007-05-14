@@ -109,97 +109,96 @@ int main(int argc, char **argv)
     dbColumn *lcolumn, *pcolumn;
     dbValue  *lvalue, *pvalue;
     int lcoltype, lccoltype;
+    int debug=2;
 
     G_gisinit (argv[0]) ;
 
     module = G_define_module();
     module->keywords = _("vector, LRS, networking");
-    module->description = "Create Linear reference system";
+    module->description = _("Create Linear Reference System");
 
     in_lines_opt = G_define_standard_option(G_OPT_V_INPUT);
     in_lines_opt->key = "in_lines";
-    in_lines_opt->description = "Input map containing lines";
+    in_lines_opt->description = _("Input vector map containing lines");
     
     out_lines_opt = G_define_standard_option(G_OPT_V_OUTPUT); 
     out_lines_opt->key = "out_lines";
-    out_lines_opt->description = "Output map where oriented lines are written";
+    out_lines_opt->description = _("Output vector map where oriented lines are written");
     
     err_opt = G_define_standard_option(G_OPT_V_OUTPUT); 
     err_opt->key = "err";
     err_opt->required = NO;
-    err_opt->description = "Output map of errors";
+    err_opt->description = _("Output vector map of errors");
 
     points_opt = G_define_standard_option(G_OPT_V_INPUT);
     points_opt->key = "points";
-    points_opt->description = "Input map containing reference points";
+    points_opt->description = _("Input vector map containing reference points");
 
     lfield_opt = G_define_standard_option(G_OPT_V_FIELD);
     lfield_opt->key = "llayer";
-    lfield_opt->answer = "1";
-    lfield_opt->description = "Line layer";
+    lfield_opt->description = _("Line layer");
     
     pfield_opt = G_define_standard_option(G_OPT_V_FIELD);
     pfield_opt->key = "player";
-    pfield_opt->answer = "1";
-    pfield_opt->description = "Point layer";
+    pfield_opt->description = _("Point layer");
     
     lidcol_opt = G_define_option() ;
     lidcol_opt->key         = "lidcol" ;
-    lidcol_opt->type        = TYPE_STRING ;
+    lidcol_opt->type        = TYPE_STRING;
     lidcol_opt->required    = YES; 
-    lidcol_opt->description = "Column containing line identifiers for lines";
+    lidcol_opt->description = _("Column containing line identifiers for lines");
     
     pidcol_opt = G_define_option() ;
     pidcol_opt->key         = "pidcol" ;
     pidcol_opt->type        = TYPE_STRING ;
     pidcol_opt->required    = YES; 
-    pidcol_opt->description = "Column containing line identifiers for points";
+    pidcol_opt->description = _("Column containing line identifiers for points");
     
     start_mp_opt = G_define_option() ;
     start_mp_opt->key         = "start_mp" ;
     start_mp_opt->type        = TYPE_STRING ;
     start_mp_opt->required    = NO; 
     start_mp_opt->answer      = "start_mp"; 
-    start_mp_opt->description = "Column containing milepost position for the beginning "
-	                       "of next segment";
+    start_mp_opt->description = _("Column containing milepost position for the beginning "
+				  "of next segment");
     
     start_off_opt = G_define_option() ;
     start_off_opt->key         = "start_off" ;
     start_off_opt->type        = TYPE_STRING ;
     start_off_opt->required    = NO; 
     start_off_opt->answer      = "start_off"; 
-    start_off_opt->description = "Column containing offset from milepost for the beginning "
-	                        "of next segment";
+    start_off_opt->description = _("Column containing offset from milepost for the beginning "
+				   "of next segment");
     
     end_mp_opt = G_define_option() ;
     end_mp_opt->key         = "end_mp" ;
     end_mp_opt->type        = TYPE_STRING ;
     end_mp_opt->required    = NO; 
     end_mp_opt->answer      = "end_mp"; 
-    end_mp_opt->description = "Column containing milepost position for the end "
-	                       "of previous segment";
+    end_mp_opt->description = _("Column containing milepost position for the end "
+				"of previous segment");
     
     end_off_opt = G_define_option() ;
     end_off_opt->key         = "end_off" ;
     end_off_opt->type        = TYPE_STRING ;
     end_off_opt->required    = NO; 
     end_off_opt->answer      = "end_off"; 
-    end_off_opt->description = "Column containing offset from milepost for the end "
-	                      "of previous segment.";
+    end_off_opt->description = _("Column containing offset from milepost for the end "
+				 "of previous segment");
     
     table_opt = G_define_option() ;
     table_opt->key         = "rstable" ;
     table_opt->type        = TYPE_STRING ;
     table_opt->required    = YES; 
-    table_opt->description = "Name of table where the reference system will be written "
-	                     "(New table is created by this module)";
+    table_opt->label       = _("Name of table where the reference system will be written");
+    table_opt->description = _("New table is created by this module");
     
     thresh_opt = G_define_option() ;
     thresh_opt->key         = "thresh" ;
     thresh_opt->type        = TYPE_DOUBLE ;
     thresh_opt->required    = NO ; 
     thresh_opt->answer      = "1"; 
-    thresh_opt->description = "Maximum distance of point to line allowed";
+    thresh_opt->description = _("Maximum distance of point to line allowed");
     
     if(G_parser(argc,argv)) exit(EXIT_FAILURE);
 
@@ -213,16 +212,21 @@ int main(int argc, char **argv)
     pfield = atoi (pfield_opt->answer);
     thresh = atof (thresh_opt->answer);
 
-    G_debug(2, "Creating LRS ...");
+    G_debug(debug, "Creating LRS ...");
     
     /* Open input lines */
     mapset = G_find_vector2 (in_lines_opt->answer, NULL); 
-    if(mapset == NULL) G_fatal_error ("Could not find input %s\n", in_lines_opt->answer);
+    if(mapset == NULL)
+	G_fatal_error (_("Vector map <%s> not found"),
+		       in_lines_opt->answer);
+
     Vect_open_old (&In, in_lines_opt->answer, mapset); 
     
     /* Open input ipoints */
     mapset = G_find_vector2 (points_opt->answer, NULL); 
-    if(mapset == NULL) G_fatal_error ("Could not find input %s\n", points_opt->answer);
+    if(mapset == NULL)
+	G_fatal_error (_("Vector map <%s> not found"),
+		       points_opt->answer);
     
     Vect_open_old (&PMap, points_opt->answer, mapset); 
 
@@ -241,23 +245,25 @@ int main(int argc, char **argv)
     
     /* Open the database for lines and points */
     Lfi = Vect_get_field( &In, lfield);
-    if ( Lfi == NULL ) G_fatal_error ("Cannot get layer info for lines.");
+    if ( Lfi == NULL ) G_fatal_error (_("Cannot get layer info for lines"));
     Pfi = Vect_get_field( &PMap, pfield);
-    if ( Pfi == NULL ) G_fatal_error ("Cannot get layer info for points.");
+    if ( Pfi == NULL ) G_fatal_error (_("Cannot get layer info for points"));
 
     db_init_handle (&lhandle);
     db_init_string (&lstmt);
     ldriver = db_start_driver(Lfi->driver);
     db_set_handle (&lhandle, Lfi->database, NULL);
     if (db_open_database(ldriver, &lhandle) != DB_OK)
-        G_fatal_error("Cannot open database %s", Lfi->database) ;
+        G_fatal_error(_("Cannot open database <%s> by driver <%s>"),
+		      Lfi->database, Lfi->driver) ;
     
     db_init_handle (&phandle);
     db_init_string (&pstmt);
     pdriver = db_start_driver(Pfi->driver);
     db_set_handle (&phandle, Pfi->database, NULL);
     if (db_open_database(pdriver, &phandle) != DB_OK)
-        G_fatal_error("Cannot open database %s", Pfi->database) ;
+        G_fatal_error(_("Cannot open database <%s> by driver <%s>"),
+		      Pfi->database, Pfi->driver) ;
     
     /* Open database for RS table */
     db_init_handle (&rshandle);
@@ -265,24 +271,34 @@ int main(int argc, char **argv)
     rsdriver = db_start_driver(NULL);
     db_set_handle (&rshandle, NULL, NULL);
     if (db_open_database(rsdriver, &rshandle) != DB_OK)
-        G_fatal_error("Cannot open database for reference table");
+        G_fatal_error(_("Cannot open database for reference table"));
 
     /* Create new reference table */
+    /* perhaps drop table to be conditionalized upon --o ?*/
+    if ( db_table_exists ( db_get_default_driver_name(),
+			            db_get_default_database_name(), table_opt->answer) == 1 ) {
+       db_init_string ( &rsstmt );
+       sprintf ( buf, "drop table %s", table_opt->answer);
+       db_append_string ( &rsstmt, buf);
+       if ( db_execute_immediate (rsdriver, &rsstmt) != DB_OK )
+	  G_warning (_("Cannot drop table: %s"), buf );
+    }
+    db_init_string ( &rsstmt );
     sprintf ( buf, "create table %s (rsid int, lcat int, lid int, start_map double precision, "
 	    "end_map double precision, start_mp double precision, start_off double precision, "
 	    "end_mp double precision, end_off double precision, end_type int)", table_opt->answer);
-    G_debug(1, "  SQL: %s", buf);
-    db_init_string ( &rsstmt );
+    G_debug(debug, "ref tab SQL: %s", buf);
     db_append_string ( &rsstmt, buf);
     if ( db_execute_immediate (rsdriver, &rsstmt) != DB_OK )
-       G_fatal_error ( "Cannot create RS table:\n%s", buf );
+	G_fatal_error (_("Cannot create table: %s"), buf );
 
     /* Select all lid from line table */
     sprintf ( buf, "select %s from %s", lidcol_opt->answer, Lfi->table );
-    G_debug(2, "SQL: %s", buf);
+    G_debug(debug, "line tab lid SQL: %s", buf);
     db_append_string ( &lstmt, buf);
     if (db_open_select_cursor(ldriver, &lstmt, &lcursor, DB_SEQUENTIAL) != DB_OK)
-        G_fatal_error ("Cannot select line id values from %s.%s.", Lfi->table, lidcol_opt->answer);
+        G_fatal_error (_("Cannot select line id values from %s.%s."),
+		       Lfi->table, lidcol_opt->answer);
 
     /* TODO: we expect line id to be integer, extend to string later */
     ltable = db_get_cursor_table (&lcursor);
@@ -291,18 +307,18 @@ int main(int argc, char **argv)
     lccoltype = db_sqltype_to_Ctype(lcoltype);
 
     if ( lccoltype != DB_C_TYPE_INT )
-        G_fatal_error ("Line id column must be integer");
+        G_fatal_error (_("Line id column must be integer"));
 
     lvalue  = db_get_column_value(lcolumn);
 
     /* Fetch all line id and store it as unique value */
-    G_debug(2, "Fetch all line id");
+    G_debug(debug, "Fetch all line id");
     nLid = 0;
     aLid = 1;
     Lid_int = (int *) G_malloc ( aLid * sizeof (int) );
     while(1) {
 	if( db_fetch(&lcursor, DB_NEXT, &more) != DB_OK)
-            G_fatal_error ("Cannot fetch line id from line table");
+            G_fatal_error (_("Cannot fetch line id from line table"));
 			      
         if (!more) break;
 
@@ -310,13 +326,13 @@ int main(int argc, char **argv)
 	found = 0;
 	for ( i = 0; i < nLid; i++ ) {
 	    if ( Lid_int[i] == lid ) {
-                G_debug(2, "lid = %d (duplicate)", lid);
+                G_debug(debug, "lid = %d (duplicate)", lid);
                 found = 1;
 		break;
 	    }
 	}
 	if ( !found ) { /* add new lid */
-            G_debug(2, "lid = %d (new)", lid);
+            G_debug(debug, "lid = %d (new)", lid);
 	    if ( nLid == aLid ) {
 	        aLid += 1;
 		Lid_int = (int *) G_realloc ( Lid_int, aLid * sizeof (int) );
@@ -333,17 +349,17 @@ int main(int argc, char **argv)
     mposts = (MILEPOST *) G_malloc ( Vect_get_num_lines(&PMap) * sizeof(MILEPOST) );
     
     /* Go throuhg each line id */
-    G_debug(2, "Process each line id");
+    G_debug(debug, "Process each line id");
     rsid = 1;
     for ( i = 0; i < nLid; i++ ) {
 	lid = Lid_int[i];
-        G_debug(2, "lid = %d", lid);
+        G_debug(debug, "lid = %d", lid);
 
 	/* Select all LINES for current lid */
 	
         sprintf ( buf, "%s = %d", lidcol_opt->answer, lid );
 	ncat = db_select_int( ldriver, Lfi->table, Lfi->key, buf, &cats);
-        G_debug(2, "  %d cats selected:", ncat);
+        G_debug(debug, "  %d cats selected:", ncat);
 	
 	/* Go through all lines and store numbers of those matching category */
 	nrlines = 0;
@@ -351,7 +367,8 @@ int main(int argc, char **argv)
 	    type = Vect_read_line ( &In, LPoints, LCats, line);
 	    if ( !(type & GV_LINES) ) continue; 
 	    if ( !(Vect_cat_get(LCats, lfield, &cat)) ) {
-		G_warning ("Line %d without category (layer %d)", line, lfield );
+		G_warning (_("Line [%d] without category (layer [%d])"),
+			   line, lfield );
 		continue; 
 	    }
 	    for ( j = 0; j < ncat; j++ ) {
@@ -366,11 +383,11 @@ int main(int argc, char **argv)
 		}
 	    }
 	} 
-	G_debug(2, "  %d lines selected for line id %d", nrlines, lid);
+	G_debug(debug, "  %d lines selected for line id %d", nrlines, lid);
         free ( cats );
 
 	if ( nrlines == 0 ) {
-	    G_warning ("No lines selected for line id %d", lid);
+	    G_warning (_("No lines selected for line id [%d]"), lid);
 	    continue;
 	}
 
@@ -384,12 +401,13 @@ int main(int argc, char **argv)
 	       start_mp_opt->answer, start_off_opt->answer, 
 	       end_mp_opt->answer, end_off_opt->answer,
 	       Pfi->table, pidcol_opt->answer, lid );
-        G_debug(2, "  SQL: %s", buf);
+        G_debug(debug, "  SQL: %s", buf);
 	db_init_string ( &pstmt );
         db_append_string ( &pstmt, buf);
 
 	if (db_open_select_cursor(pdriver, &pstmt, &pcursor, DB_SEQUENTIAL) != DB_OK)
-            G_fatal_error ("Cannot select point attributes from %s.", Pfi->table);
+            G_fatal_error (_("Cannot select point attributes from <%s>"),
+			   Pfi->table);
 
 	ptable = db_get_cursor_table (&pcursor);
 
@@ -397,7 +415,7 @@ int main(int argc, char **argv)
 	while(1) {
 	    double mp_tmp, mp_tmp2, off_tmp, off_tmp2;
 	    if( db_fetch(&pcursor, DB_NEXT, &more) != DB_OK)
-		G_fatal_error ("Cannot fetch line id from line table");
+		G_fatal_error (_("Cannot fetch line id from line table"));
 				  
 	    if (!more) break;
 
@@ -417,7 +435,7 @@ int main(int argc, char **argv)
 	    if ( floor(mp_tmp) != mp_tmp ) {
 		mp_tmp2 = floor(mp_tmp);
 		off_tmp2 = off_tmp + multip * (mp_tmp - mp_tmp2);
-		G_warning ("Milepost (start) %f+%f used as %f+%f (change MP to integer)", 
+		G_warning (_("Milepost (start) %f+%f used as %f+%f (change MP to integer)"), 
 			   mp_tmp, off_tmp, mp_tmp2, off_tmp2 );
 	    } else {
 		mp_tmp2 = mp_tmp;
@@ -438,7 +456,7 @@ int main(int argc, char **argv)
 	    if ( floor(mp_tmp) != mp_tmp ) {
 		mp_tmp2 = floor(mp_tmp);
 		off_tmp2 = off_tmp + multip * (mp_tmp - mp_tmp2);
-		G_warning ("Milepost (end) %f+%f used as %f+%f (change MP to integer)", 
+		G_warning (_("Milepost (end) %f+%f used as %f+%f (change MP to integer)"), 
 			   mp_tmp, off_tmp, mp_tmp2, off_tmp2 );
 	    } else {
 		mp_tmp2 = mp_tmp;
@@ -454,7 +472,7 @@ int main(int argc, char **argv)
 	}
         db_close_cursor(&pcursor); 
 
-        G_debug(2, "  %d mileposts selected from db", nmposts);
+        G_debug(debug, "  %d mileposts selected from db", nmposts);
 	
 	/* Go through all points and store numbers of those matching category and within
 	*  threshold of any line*/
@@ -462,7 +480,8 @@ int main(int argc, char **argv)
 	    type = Vect_read_line ( &PMap, PPoints, PCats, point);
 	    if ( !(type & GV_POINT) ) continue; 
 	    if ( !(Vect_cat_get(PCats, pfield, &cat)) ) {
-		G_warning ("Point %d without category (layer %d)", point, pfield );
+		G_warning (_("Point [%d] without category (layer [%d])"),
+			   point, pfield );
 		continue; 
 	    }
 	    mpost = -1;
@@ -473,7 +492,7 @@ int main(int argc, char **argv)
 		}
 	    }
 	    if ( mpost >= 0 ) {
-	        G_debug(2, "  Point %d:", point);
+	        G_debug(debug, "  Point %d:", point);
 		mposts[mpost].line_idx = ERR_OK;
 		mposts[mpost].x = PPoints->x[0];
 		mposts[mpost].y = PPoints->y[0];
@@ -485,7 +504,7 @@ int main(int argc, char **argv)
 	            Vect_read_line ( &In, LPoints, NULL, line);
 		    Vect_line_distance ( LPoints, PPoints->x[0], PPoints->y[0], 0, 0,
 			                 NULL, NULL, NULL, &dist_to, NULL, &dist_along);
-		    G_debug(2, " line %d dist to line = %f, dist along line = %f", 
+		    G_debug(debug, " line %d dist to line = %f, dist along line = %f", 
 			                 line, dist_to, dist_along); 
 		    if ( dist_to < distance_to ) {
 			distance_to = dist_to;
@@ -495,20 +514,20 @@ int main(int argc, char **argv)
 		}
 		/* Check if in threshold*/
 		if ( distance_to <= thresh ) {
-		    G_debug(2, "Point = %d cat = %d line = %d, distance = %f", 
+		    G_debug(debug, "Point = %d cat = %d line = %d, distance = %f", 
 			         point, cat, mposts[mpost].line_idx, distance_to );
-		    G_debug(2, "  start_mp = %f start_off = %f end_mp = %f end_off = %f", 
+		    G_debug(debug, "  start_mp = %f start_off = %f end_mp = %f end_off = %f", 
 			       mposts[mpost].start_mp, mposts[mpost].start_off,
 			       mposts[mpost].end_mp, mposts[mpost].end_off);
 		} else {
 	            mposts[mpost].line_idx = PORT_INT_MAX;
 		    mposts[mpost].err = ERR_THRESHOLD;
-		    G_warning ("Point %d cat %d is out of threshold (distance = %f)", 
-			                    point, cat, distance_to );
+		    G_warning (_("Point [%d] cat [%d] is out of threshold (distance = %f)"), 
+			       point, cat, distance_to );
 		}
 	    }  
 	} 
-	G_debug(2, "  %d points attached to line(s) of line id %d", nmposts, lid);
+	G_debug(debug, "  %d points attached to line(s) of line id %d", nmposts, lid);
 	
 	/* Sort MPs according to line_idx, and dist_along */
 	qsort ( (void *)mposts, nmposts, sizeof(MILEPOST), cmp_along );
@@ -521,12 +540,12 @@ int main(int argc, char **argv)
 		break;
 	    }
 	}
-        G_debug(2, "  %d mileposts attached to line(s)", nmposts);
+        G_debug(debug, "  %d mileposts attached to line(s)", nmposts);
 	
 	/* Go thourough all attached MPs and fill in info about MPs to 'lines' table */
 	last = -1;
 	for (j = 0; j < nmposts; j++ ) {
-            G_debug(2, " line_idx = %d, point cat = %d dist_along = %f", mposts[j].line_idx,
+            G_debug(debug, " line_idx = %d, point cat = %d dist_along = %f", mposts[j].line_idx,
                                        mposts[j].cat, mposts[j].dist_along );
 	    
 	    if ( mposts[j].line_idx != last) { /* line_index changed */
@@ -542,7 +561,7 @@ int main(int argc, char **argv)
 	 * 2) Guess direction: find direction for each segment between 2 MPs and at the end
 	 *  compare number of segmnets in both directions, if equal assign DIR_UNKNOWN. */
 	for (j = 0; j < nrlines; j++ ) {
-            G_debug(2, " Guess direction line_idx = %d, cat = %d, nmposts = %d first_mpost_idx = %d", 
+            G_debug(debug, " Guess direction line_idx = %d, cat = %d, nmposts = %d first_mpost_idx = %d", 
 		              j, rlines[j].cat, rlines[j].nmposts, rlines[j].first_mpost_idx);
 
 	    forward = 0; backward = 0;
@@ -566,26 +585,26 @@ int main(int argc, char **argv)
 		       ( mposts[k].start_off < mposts[k+1].start_off) ) )
 		{
 		    forward++;      
-		    G_debug(2, "    segment direction forward"); 
+		    G_debug(debug, "    segment direction forward %d", mposts[k].cat);
 		} else {
 		    backward++;
-		    G_debug(2, "    segment direction backward"); 
+		    G_debug(debug, "    segment direction backward %d", mposts[k].cat);
 		}
 	    }
-	    G_debug(2, "  forward = %d backward = %d", forward, backward); 
+	    G_debug(debug, "  forward = %d backward = %d", forward, backward); 
 	    if ( forward > backward ) {
 		rlines[j].direction = DIR_FORWARD;      
-		G_debug(2, "  line direction forward"); 
+		G_debug(debug, "  line direction forward"); 
 	    } else if ( forward < backward ){
 		rlines[j].direction = DIR_BACKWARD;      
 		/* Recalculate distances from the other end */
 		for (k = first; k <= last; k++ )
 		    mposts[k].dist_along = rlines[j].length - mposts[k].dist_along;
 			
-		G_debug(2, "  line direction backward"); 
+		G_debug(debug, "  line direction backward"); 
 	    } else {
 		rlines[j].err = ERR_NO_DIR;
-		G_debug(2, "  line direction unknown"); 
+		G_debug(debug, "  line direction unknown"); 
 	    }
 	}
 	
@@ -594,7 +613,7 @@ int main(int argc, char **argv)
 
         /* Check order of MPs along the line and write LRS for line */
 	for (j = 0; j < nrlines; j++ ) {
-            G_debug(2, "MAKE LR: line_idx = %d, nmposts = %d first_mpost_idx = %d", 
+            G_debug(debug, "MAKE LR: line_idx = %d, nmposts = %d first_mpost_idx = %d", 
 		              j, rlines[j].nmposts, rlines[j].first_mpost_idx);
 
 
@@ -605,12 +624,12 @@ int main(int argc, char **argv)
 	    order = 0; /* wrong order in case nmposts < 2 or DIR_UNKNOWN */
 	    if (  rlines[j].nmposts >= 2 && rlines[j].direction != DIR_UNKNOWN ) {
 		/* Note: some MP could have more errors at the time, only first is recorded */
-		G_debug(2, "Check order of MPs along the line"); 
+		G_debug(debug, "Check order of MPs along the line"); 
 		order = 1; /* first we expect that MP order is OK */
 		for (k = first; k <= last; k++ ) {
-		    G_debug(2, "  point cat = %d dist_along = %f", mposts[k].cat, 
+		    G_debug(debug, "  point cat = %d dist_along = %f", mposts[k].cat, 
 					       mposts[k].dist_along );
-		    G_debug(2, "    start_mp = %f start_off = %f end_mp = %f end_off = %f", 
+		    G_debug(debug, "    start_mp = %f start_off = %f end_mp = %f end_off = %f", 
 			       mposts[k].start_mp, mposts[k].start_off,
 			       mposts[k].end_mp, mposts[k].end_off);
 
@@ -619,7 +638,7 @@ int main(int argc, char **argv)
 		    ret = LR_cmp_mileposts ( mposts[k].end_mp, mposts[k].end_off, 
 				       mposts[k].start_mp, mposts[k].start_off );
 		    if ( ret == 1 ) { /* end > start */
-			G_warning ("End > start for point cat %d", mposts[k].cat);
+			G_warning (_("End > start for point cat [%d]"), mposts[k].cat);
 			mposts[k].err = ERR_END_GT_START;
 			order = 0;
 			continue;
@@ -631,8 +650,9 @@ int main(int argc, char **argv)
 			    ret = LR_cmp_mileposts ( mposts[k].start_mp, mposts[k].start_off, 
 					       mposts[k+1].end_mp, mposts[k+1].end_off );
 			    if ( ret > -1 ) { /* start >= end */
-				G_warning ("start of 1. MP >= end of 2. MP for points' cats %d, %d", 
-							mposts[k].cat, mposts[k+1].cat);
+				G_warning (_("Start of 1. MP >= end of 2. MP for points' "
+					     "cats %[d], [%d]"), 
+					     mposts[k].cat, mposts[k+1].cat);
 				mposts[k].err = ERR_END_GT_START;
 				order = 0;
 				continue;
@@ -643,9 +663,9 @@ int main(int argc, char **argv)
 			    ret = LR_cmp_mileposts ( mposts[k].start_mp, mposts[k].start_off, 
 					       mposts[k+1].start_mp, mposts[k+1].start_off );
 			    if ( ret > -1 ) { /* start > end */
-				G_warning ("start of 1. MP >= start of 2. MP for points' cats %d, %d", 
-							mposts[k].cat, mposts[k+1].cat);
-				
+				G_warning (_("Start of 1. MP >= start of 2. MP for points' "
+					     "cats [%d], [%d]"), 
+					     mposts[k].cat, mposts[k+1].cat);
 				mposts[k].err = ERR_END_GT_START;
 				order = 0;
 				continue;
@@ -653,8 +673,9 @@ int main(int argc, char **argv)
 			}
 			/* 4) For 2 MPs must be distance along line different (duplicate points) */
 			if ( mposts[k].dist_along == mposts[k+1].dist_along ) {
-			    G_warning ("Distance along line identical for points' cats %d, %d", 
-							mposts[k].cat, mposts[k+1].cat);
+			    G_warning (_("Distance along line identical for points' "
+					 "cats [%d], [%d]"), 
+					 mposts[k].cat, mposts[k+1].cat);
 			    mposts[k].err = ERR_IDENT;
 			    mposts[k+1].err = ERR_IDENT;
 			    order = 0;
@@ -666,12 +687,16 @@ int main(int argc, char **argv)
 	    /* Write errors if any ( and continue ) */
 	    if ( !order ) { /* something is wrong */
 		if ( rlines[j].nmposts < 2 ){ /* Impossible to get reference/direction */
-		    G_warning ("Not enough points (%d) attached to the line (cat %d), line skip.", 
-			    rlines[j].nmposts, rlines[j].cat  );
+		    G_warning (_("Not enough points (%d) attached to the line (cat %d), "
+				 "line skip."), 
+			       rlines[j].nmposts, rlines[j].cat  );
 		} else if ( rlines[j].direction == DIR_UNKNOWN ){ /* Unknown direction */
-		    G_warning ("Could not guess direction for the line (cat %d), line skip.", rlines[j].cat);
+		    G_warning (_("Could not guess direction for the line (cat %d), "
+				 "line skip."),
+			       rlines[j].cat);
 		} else {
-	            G_warning ("Incorrect order of points along line cat %d", rlines[j].cat );
+	            G_warning (_("Incorrect order of points along line cat [%d]"),
+			       rlines[j].cat );
 		    rlines[j].err = ERR_LINE_ORDER;
 		}
 
@@ -688,7 +713,7 @@ int main(int argc, char **argv)
 	    }
 
 	    /* Order is correct and we can store reference records for this line */
-	    G_debug(2, "  lcat |   lid | start_map |   end_map |  start_mp | start_off |    end_mp |   end_off | end type"); 
+	    G_debug(debug, "  lcat |   lid | start_map |   end_map |  start_mp | start_off |    end_mp |   end_off | end type"); 
 	    for (k = first; k < last; k++ ) {
 		/* Decide which value to use for end */
 		if ( mposts[k+1].end_mp > 0 ||  mposts[k+1].end_off > 0 ) { /* TODO: use NULL ? */
@@ -700,7 +725,7 @@ int main(int argc, char **argv)
 		   end_mp = mposts[k+1].start_mp;
 		   end_off = mposts[k+1].start_off;
 		}  
-		G_debug(2, " %5d | %5d | %9.3f | %9.3f | %9.3f | %9.3f | %9.3f | %9.3f | %1d", 
+		G_debug(debug, " %5d | %5d | %9.3f | %9.3f | %9.3f | %9.3f | %9.3f | %9.3f | %1d", 
 			   rlines[j].cat, lid,
 			   mposts[k].dist_along, mposts[k+1].dist_along,
 			   mposts[k].start_mp, mposts[k].start_off,
@@ -713,11 +738,11 @@ int main(int argc, char **argv)
 			   mposts[k].dist_along, mposts[k+1].dist_along,
 			   mposts[k].start_mp, mposts[k].start_off,
 			   end_mp, end_off, totype);
-		G_debug(2, "  SQL: %s", buf);
+		G_debug(debug, "  SQL: %s", buf);
 		db_init_string ( &rsstmt );
 		db_append_string ( &rsstmt, buf);
 		if ( db_execute_immediate (rsdriver, &rsstmt) != DB_OK )
-                   G_fatal_error ( "Cannot insert reference records:\n%s", buf );
+		    G_fatal_error (_("Cannot insert reference records: %s"), buf );
 		rsid++;
 
 	    }
@@ -755,14 +780,14 @@ int main(int argc, char **argv)
     Vect_close(&In);
     Vect_close(&PMap);
 
-    fprintf ( stdout, "Building topology for output (out_lines) map ...\n" );
-    Vect_build (&Out, stdout);
+    G_message (_("Building topology for output (out_lines) map ..."));
+    Vect_build (&Out, stderr);
     Vect_close(&Out);
 
     /* Write errors */
     if ( err_opt->answer ) {
-        fprintf ( stdout, "Building topology for error (err) map ...\n" );
-        Vect_build (&EMap, stdout);
+        G_message (_("Building topology for error (err) map ..."));
+        Vect_build (&EMap, stderr);
         Vect_close(&EMap);
     }
 
@@ -782,5 +807,3 @@ int cmp_along ( const void *pa, const void *pb)
     if( p1->dist_along > p2->dist_along ) return 1;
     return 0;
 }
-
-
