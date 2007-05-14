@@ -22,6 +22,7 @@ enum mode {
     /* geometry of features changed */
     MODE_MERGE,          /* merge vector lines */
     MODE_BREAK,          /* break (split) vector lines */
+    MODE_CONNECT,        /* connect *two* lines */
     MODE_SNAP,           /* snap vector lines */
     /* geometry of feature changed */
     MODE_VERTEX_ADD,     /* add vertex */

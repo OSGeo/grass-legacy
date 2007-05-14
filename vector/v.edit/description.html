@@ -35,8 +35,6 @@ covered by two bounding boxes (center at 599505,4921010 and
 603389.0625,4918292.1875, size 2*10000) with attribute
 label='interstate'.
 
-
-
 <h2>NOTES</h2>
 <p>
 If no vector features are selected or the flag <code>-t</code> is
@@ -120,6 +118,11 @@ Additional parameters for vector feature specification are:
     line is not changed.</li>
     
     <li><code>snap</code> - Snap one vector line to another.</li>
+
+    <li><code>connect</code> - Connect selected lines, the first given
+    line is connected to the second one. The second line is broken if
+    necessary. The lines are connected regarding threshold distance
+    (<code>thresh</code>).</li>
 
     <li><code>vertexadd</code> - Add vertex(ces) to the given vector
     line(s). Location of the new vertex is given by <code>coord</code>
@@ -304,6 +307,21 @@ v.edit map=roads tool=break coords=604268,4923570 id=810
 <h3>Snap lines</h3>
 
 TODO
+
+<h3>Connect lines</h3>
+
+Connect line id 48 to line id 565:
+
+<div class="code"><pre>
+v.edit map=roads tool=connect id=48,565
+</pre></div>
+
+Connect line id 48 to line id 565 and line id 60 to line id
+50. Maximum threshold distance is 700 map units:
+
+<div class="code"><pre>
+v.edit map=roads tool=connect id=48,565,60,50 thresh=700
+</pre></div>
 
 <h3>Add vertex</h3>
 

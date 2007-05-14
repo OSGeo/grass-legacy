@@ -30,11 +30,16 @@ int main (int argc, char *argv[])
 
     int ret, print, layer;
     double move_x, move_y, thresh;
-	    
+    
+    int coords_npoints;
+    double* coords_x, *coords_y, *coords_z;
+
     struct ilist *List;
 
     ascii  = NULL;
     List   = NULL;
+    coords_npoints = 0;
+    coords_x = coords_y = coords_z = NULL;
 
     G_gisinit(argv[0]);
 
@@ -119,6 +124,22 @@ int main (int argc, char *argv[])
 	}
     }
 
+    /* coords option -> array */
+    if (params.coord -> answers) {
+	int i, j;
+	for (i = 0; params.coord -> answers[i]; i += 2)
+	    coords_npoints++;
+	 
+	coords_x = (double *) G_calloc (coords_npoints, sizeof (double));
+	coords_y = (double *) G_calloc (coords_npoints, sizeof (double));
+	/* coords_z = (double *) G_calloc (coords_npoints, sizeof (double)); */
+
+	for (i = 0, j = 0; params.coord -> answers[i]; i += 2, j++) {
+	    coords_x[j] = atof (params.coord -> answers[i]);
+	    coords_y[j] = atof (params.coord -> answers[i+1]);
+	}
+    }
+
     /* perform requested editation */
     switch(action_mode) {
     case MODE_CREATE:
@@ -156,8 +177,13 @@ int main (int argc, char *argv[])
 	break;
     case MODE_BREAK:
 	ret = do_break(&Map, List, print,
-		       params.coord, thresh);
+		       coords_npoints, coords_x, coords_y, coords_z, thresh,
+		       NULL); /* do not use list of updated lines */
 	break;
+    case MODE_CONNECT:
+	ret = do_connect(&Map, List, print,
+			 thresh);
+      	break;
     case MODE_MERGE:
 	ret = do_merge(&Map, List, print);
 	break;

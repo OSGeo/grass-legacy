@@ -23,9 +23,6 @@
 
 static char first_selection = 1;
 
-/* merge two list, i.e. store only duplicate items */
-static int merge_lists (struct ilist* alist, struct ilist* blist);
-
 struct ilist *select_lines(struct Map_info *Map, enum mode action_mode,
 			   struct GParams *params,
 			   struct ilist *List)
@@ -340,10 +337,10 @@ int sel_by_id(struct Map_info *Map,
 
     num = Vect_get_num_lines (Map);
 
-    for (i = 1; i <= num; i++) {
-        for(j = 0; j < il->n_ranges; j++) {
-	    for(id = il->min[j]; id <= il->max[j]; id++) {
-                if (id == i) {
+    for(i = 0; i < il -> n_ranges; i++) {
+	for(id = il -> min[i]; id <= il -> max[i]; id++) {
+	    for (j = 1; j <= num; j++) {
+		if (id == j) {
 		    Vect_list_append (List_tmp, id);
 		}
             }
@@ -443,7 +440,8 @@ int sel_by_where (struct Map_info *Map,
     return List -> n_values;
 }
 
-static int merge_lists (struct ilist* alist, struct ilist* blist)
+/* merge two list, i.e. store only duplicate items */
+int merge_lists (struct ilist* alist, struct ilist* blist)
 {
     int i;
 
