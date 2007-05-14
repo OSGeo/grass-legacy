@@ -276,8 +276,6 @@ int main (int argc, char **argv)
 	/* allocate the cell array */
 	cell  = G_allocate_raster_buf (map_type);
 
-	R_font("romans");
-
 	/* read the color table in the color structures of the displayed map */
 	if (G_read_colors(full_name, mapset, &colors) == -1)
 	    G_fatal_error(_("Color file for [%s] not available"), full_name);
