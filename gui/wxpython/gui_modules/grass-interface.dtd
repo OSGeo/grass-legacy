@@ -1,9 +1,14 @@
 <!--	grass-interface.dtd
 
-	Copyright (C) 2000 by the GRASS Development Team
+	Copyright (C) 2000-2007 by the GRASS Development Team
 	Author: Jan-Oliver Wagner <jan@intevation.de>
+	
+	Changes: 
+	2007-04 by Daniel Calvelo <dca.gis@gmail.com>
+	   * added guisection element
+	   * added name-description pair for value sets
 
-	Changes: 2001-06-07 by Eric G. Miller <egm2@jps.net>
+	2001-06-07 by Eric G. Miller <egm2@jps.net>
 	   * make <parameter-group> optional
 	   * move descriptions first, always optional
 	   * make <default> optional  // Should it reference <value> ?
