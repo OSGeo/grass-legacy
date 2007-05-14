@@ -1,7 +1,5 @@
 /*************************************************************
 * I_ask_group_old (prompt,group)
-* I_ask_group_new (prompt,group)
-* I_ask_group_any (prompt,group)
 *
 * prompt the user for an imagery group file name
 *************************************************************/
