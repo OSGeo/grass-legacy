@@ -388,7 +388,7 @@ set descmenu [subst  {
 		{command {[G_msg "Add missing centroids"]} {} "v.centroids" {} -command {execute v.centroids }}
 		{separator}
 		{command {[G_msg "Build polylines from adjacent segments"]} {} "v.build.polylines" {} -command {execute v.build.polylines }}
-		{command {[G_msg "Split polylines into segments"]} {} "v.segment" {} -command {execute v.segment }}
+		{command {[G_msg "Create points and line segments along a vector line"]} {} "v.segment" {} -command {execute v.segment }}
 		{command {[G_msg "Create lines parallel to existing lines"]} {} "v.parallel" {} -command {execute v.parallel }}
 		{command {[G_msg "Dissolve common boundaries"]} {} "v.dissolve" {} -command {execute v.dissolve }}
 		{separator}
@@ -412,6 +412,8 @@ set descmenu [subst  {
 	{separator}
 	{command {[G_msg "Create vector buffers"]} {} "v.buffer" {} -command {execute v.buffer }}
 	{cascad {[G_msg "Linear referencing for vectors"]} {} "" $tmenu {			
+		{command {[G_msg "Some LRS modules require redirection of data from the command prompt"]} {} "" {} -state disabled }
+		{separator}
 		{command {[G_msg "Create linear reference system"]} {} "v.lrs.create" {} -command {execute v.lrs.create }}
 		{command {[G_msg "Create stationing from imput lines, and linear reference system"]} {} "v.lrs.label" {} -command {execute v.lrs.label }}
 		{command {[G_msg "Create points/segments from input lines, linear reference system and positions read from stdin"]} {} "v.lrs.segment" {} -command {execute v.lrs.segment }}
