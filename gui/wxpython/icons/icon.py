@@ -72,6 +72,7 @@ icons_default = {
     # profile
     "transect"   : 'gui-profiledefine.gif',
     "profile"    : 'gui-profiledraw.gif',
+    "analyze"    : 'gui-rastanalyze.gif', # TODO: fix?
     }
 
 # merge icons dictionaries, join paths
@@ -198,7 +199,9 @@ Icons = {
     "histogram"  : MetaIcon (img=icons_img["histogram"], label="Create histogram of image or raster file"),
     "font"       : MetaIcon (img=icons_img["font"], label="Select font"),
     "color"      : MetaIcon (img=icons_img["color"], label="Select color"),
-    "options"    : MetaIcon (img=icons_img["options"], label="Set histogram options")}
+    "options"    : MetaIcon (img=icons_img["options"], label="Set histogram options"),
+    "analyze"    : MetaIcon (img=icons_img["analyze"], label="Analyze")}
+
 
 # testing ...
 if __name__ == "__main__":
