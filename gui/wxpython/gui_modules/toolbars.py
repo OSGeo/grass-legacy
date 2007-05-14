@@ -192,8 +192,8 @@ class DigitToolbar:
         layer_name = []
         for layer in self.layers:
             layer_name.append (layer.name)
-            
-            self.combo = wx.ComboBox(self.toolbar, id=wx.ID_ANY, value='Select vector map',
+
+        self.combo = wx.ComboBox(self.toolbar, id=wx.ID_ANY, value='Select vector map',
                                      choices=layer_name,
                                      size=(150, -1))
 
