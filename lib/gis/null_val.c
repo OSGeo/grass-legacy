@@ -206,7 +206,7 @@ void G__set_null_value (void *rast, int numVals, int null_is_zero,
 * void G_set_null_value (void *buf, int numVals, RASTER_MAP_TYPE data_type)
 *
 * PURPOSE: 	To set one or more raster values to null.
-* INPUT VARS:	rast	    =>	pointer to values to set to null
+* INPUT VARS:	buf	    =>	pointer to values to set to null
 *   	    	numVals     =>	number of values to set to null
 *   	    	data_type   =>	type of raster - CELL, FCELL, DCELL
 * RETURN VAL:	none
