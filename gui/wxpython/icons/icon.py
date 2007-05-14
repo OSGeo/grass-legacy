@@ -163,7 +163,7 @@ Icons = {
     "query"      : MetaIcon (img=icons_img["query"], label="Query", desc="Query selected map"),
     "zoom_back"  : MetaIcon (img=icons_img["zoom_back"], label="Return to previous zoom"),
     "zoommenu"   : MetaIcon (img=icons_img["zoommenu"], label="Zoom options", desc="Display zoom management"),
-    "overlay"    : MetaIcon (img=icons_img["overlay"], label="overlay", desc="Add graphic overlays to map"),
+    "overlay"    : MetaIcon (img=icons_img["overlay"], label="Add overlay", desc="Add graphic overlays to map"),
     "addbarscale": MetaIcon (img=icons_img["addbarscale"], label="Add scalebar and north arrow"),
     "savefile"   : MetaIcon (img=icons_img["savefile"], label="Save display to PNG file"),
     "printmap"   : MetaIcon (img=icons_img["printmap"], label="Print display"),

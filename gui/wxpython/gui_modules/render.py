@@ -777,27 +777,38 @@ class Map:
 
         return None
 
-    def GetLayerIndex(self, name, mapset=None):
+    def GetLayer (self, item):
         """
-        Returns index of layer in layer list
+        Return MapLayer instance identified by item
+        """
+        if item in self.lookup:
+            return self.lookup[item]
+        else:
+            return None
+        
+    def GetLayerIndex(self, layer):
+        """
+        Returns index of layer in layer list.
 
         Parameters:
-            name	- map name
-            mapset	- mapset name, default: current
+         layer - 
 
         Returns:
-            Integer or None
+         Integer or None
         """
 
-        if not mapset:
-            mapset = self.env['MAPSET']
+        #         if not mapset:
+        #             mapset = self.env['MAPSET']
+        
+        #         for i in range(0, len(self.layers)):
+        #             if self.layers[i].name == name and \
+        #                   self.layers[i].mapset == mapset:
+        #                 return i
 
-        for i in range(0, len(self.layers)):
-            if self.layers[i].name == name and \
-                  self.layers[i].mapset == mapset:
-                return i
-
-        return None
+        if layer in self.layers:
+            return self.layers.index(layer)
+        else:
+            return None
 
     def addOverlay(self, ovltype=None, type='overlay', command=None,
                    l_active=True, l_hidden=False, l_opacity=1, l_render=False):
