@@ -275,12 +275,14 @@ int main(int argc, char **argv)
 
     /* Create new reference table */
     /* perhaps drop table to be conditionalized upon --o ?*/
-    db_init_string ( &rsstmt );
-    sprintf ( buf, "drop table %s", table_opt->answer);
-    db_append_string ( &rsstmt, buf);
-    if ( db_execute_immediate (rsdriver, &rsstmt) != DB_OK )
-	G_warning (_("Cannot drop table: %s"), buf );
-
+    if ( db_table_exists ( db_get_default_driver_name(),
+			            db_get_default_database_name(), table_opt->answer) == 1 ) {
+       db_init_string ( &rsstmt );
+       sprintf ( buf, "drop table %s", table_opt->answer);
+       db_append_string ( &rsstmt, buf);
+       if ( db_execute_immediate (rsdriver, &rsstmt) != DB_OK )
+	  G_warning (_("Cannot drop table: %s"), buf );
+    }
     db_init_string ( &rsstmt );
     sprintf ( buf, "create table %s (rsid int, lcat int, lid int, start_map double precision, "
 	    "end_map double precision, start_mp double precision, start_off double precision, "
