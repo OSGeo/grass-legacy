@@ -44,6 +44,8 @@ if [ "$1" != "@ARGS_PARSED@" ] ; then
   exec g.parser "$0" "$@"
 fi
 
+g.message -w "This module has been superseded. Please use d.out.file instead."
+
 PROG=`basename $0`
 
 #### check if we have awk
