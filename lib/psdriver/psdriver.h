@@ -5,10 +5,11 @@
 
 #define FILE_NAME  "map.ps"
 
-extern char *file_name;
+extern const char *file_name;
 extern FILE *outfp;
 extern int true_color;
 extern int width, height;
+extern int encapsulated;
 
 extern void output(const char *, ...);
 

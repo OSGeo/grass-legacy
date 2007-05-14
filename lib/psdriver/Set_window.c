@@ -20,6 +20,6 @@
 
 void PS_Set_window(int t, int b, int l, int r)
 {
-	output("%d %d %d %d WINDOW\n", t, b, l, r);
+	output("%d %d %d %d %s\n", t, b, l, r, encapsulated ? "EPSWINDOW" : "WINDOW");
 }
 
