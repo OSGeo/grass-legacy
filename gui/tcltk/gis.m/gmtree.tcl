@@ -66,7 +66,7 @@ proc GmTree::create { mon } {
 	destroy $options.fr
 
 	set pgtitle [label $pg($mon).title -text "Map Layers for Display $mon" \
-		-font bolddefault -fg mediumblue -bg grey95]
+		-font default -fg mediumblue -bg grey95]
 	pack $pgtitle -side top -expand 0 -fill x -anchor n
 
 	Separator $pg($mon).sep -orient horizontal
