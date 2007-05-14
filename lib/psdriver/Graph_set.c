@@ -13,24 +13,32 @@
 #include <string.h>
 #include <stdlib.h>
 #include <stdarg.h>
+#include <time.h>
 
 #include <grass/gis.h>
 #include "psdriver.h"
 
+#define DATE_FORMAT "%c"
+
+const char *file_name;
 FILE *outfp;
 int true_color;
 int width, height;
+int encapsulated;
+
+static int landscape;
+static int left, right, bot, top;
 
 struct paper
 {
 	const char *name;
 	double width, height;
-	double left, right, top, bot;
+	double left, right, bot, top;
 };
 
 static const struct paper papers[] =
 {
-	/* name		width	height	left	right	top	bottom */
+	/* name		width	height	left	right	bottom	top */
 	{ "a4",		8.268,	11.693,	0.5,	0.5,	1.0,	1.0 },
 	{ "a3",		11.693,	16.535,	0.5,	0.5,	1.0,	1.0 },
 	{ "a2",		16.54,	23.39,	1.0,	1.0,	1.0,	1.0 },
@@ -45,7 +53,12 @@ static const struct paper papers[] =
 static void write_prolog(void)
 {
 	char prolog_file[GPATH_MAX];
+	char date_str[256];
 	FILE *prolog_fp;
+	time_t t = time(NULL);
+	struct tm *tm = localtime(&t);
+
+	strftime(date_str, sizeof(date_str), DATE_FORMAT, tm);
 
 	sprintf(prolog_file, "%s/etc/psdriver.ps", G_gisbase());
 
@@ -53,6 +66,21 @@ static void write_prolog(void)
 	if (!prolog_fp)
 		G_fatal_error("Unable to open prolog file");
 
+	if (encapsulated)
+		output("%%!PS-Adobe-3.0 EPSF-3.0\n");
+	else
+		output("%%!PS-Adobe-3.0\n");
+
+	output("%%%%LanguageLevel: %d\n", 3);
+	output("%%%%Creator: GRASS PS Driver\n");
+	output("%%%%Title: %s\n", file_name);
+	output("%%%%For: %s\n", G_whoami());
+	output("%%%%Orientation: %s\n", landscape ? "Landscape" : "Portrait");
+	output("%%%%BoundingBox: %d %d %d %d\n", left, bot, right, top);
+	output("%%%%CreationDate: %s\n", date_str);
+	output("%%%%EndComments\n");
+
+	output("%%%%BeginProlog\n");
 	while (!feof(prolog_fp))
 	{
 		char buf[256];
@@ -62,6 +90,7 @@ static void write_prolog(void)
 
 		fputs(buf, outfp);
 	}
+	output("%%%%EndProlog\n");
 
 	fclose(prolog_fp);
 }
@@ -71,11 +100,26 @@ static int in2pt(double x)
 	return (int) (x * 72);
 }
 
-static void set_paper(void)
+static void swap(int *x, int *y)
+{
+	int tmp = *x;
+	*x = *y;
+	*y = tmp;
+}
+
+static void get_paper(void)
 {
 	const char *name = getenv("GRASS_PAPER");
 	const struct paper *paper;
 	int i;
+
+	width  = screen_right  - screen_left;
+	height = screen_bottom - screen_top;
+
+	left  = 0;
+	right = width;
+	bot   = 0;
+	top   = height;
 
 	if (!name)
 		return;
@@ -91,17 +135,24 @@ static void set_paper(void)
 			break;
 	}
 
-	width  = in2pt(paper->width ) - in2pt(paper->left) - in2pt(paper->right);
-	height = in2pt(paper->height) - in2pt(paper->top ) - in2pt(paper->bot  );
+	left  = in2pt(paper->left);
+	right = in2pt(paper->width)  - in2pt(paper->right);
+	bot   = in2pt(paper->bot);
+	top   = in2pt(paper->height) - in2pt(paper->top);
 
-	output("%d %d translate\n", in2pt(paper->left), in2pt(paper->bot));
+	width  = right - left;
+	height = in2pt(paper->height) - in2pt(paper->top)  - in2pt(paper->bot);
+
+	if (landscape)
+		swap(&width, &height);
+
+	screen_right  = screen_left + width;
+	screen_bottom = screen_top + height;
 }
 
 int PS_Graph_set(int argc, char **argv)
 {
-	const char *file_name;
-	int landscape;
-	char *p;
+	const char *p;
 
 	G_gisinit("PS driver") ;
 
@@ -110,15 +161,19 @@ int PS_Graph_set(int argc, char **argv)
 		p = FILE_NAME;
 
 	file_name = p;
+	p = file_name + strlen(file_name) - 4;
+	encapsulated = (G_strcasecmp(p, ".eps") == 0);
 
 	p = getenv("GRASS_TRUECOLOR");
 	true_color = p && strcmp(p, "TRUE") == 0;
 
+	p = getenv("GRASS_LANDSCAPE");
+	landscape = p && strcmp(p, "TRUE") == 0;
+
 	G_message("PS: GRASS_TRUECOLOR status: %s",
 		true_color ? "TRUE" : "FALSE");
 
-	width = screen_right - screen_left;
-	height = screen_bottom - screen_top;
+	get_paper();
 
 	init_color_table();
 
@@ -129,28 +184,22 @@ int PS_Graph_set(int argc, char **argv)
 
 	write_prolog();
 
-	set_paper();
+	output("%%%%BeginSetup\n");
 
-	p = getenv("GRASS_LANDSCAPE");
-	landscape = p && strcmp(p, "TRUE") == 0;
+	output("%d %d translate\n", left, bot);
 
 	if (landscape)
-	{
-		int tmp = width;
-		width = height;
-		height = tmp;
 		output("90 rotate 0 1 -1 scale\n");
-	}
 	else
 		output("0 %d translate 1 -1 scale\n", height);
 
-	screen_right  = screen_left + width;
-	screen_bottom = screen_top + height;
-
-	PS_Erase();
+	output("%d %d BEGIN\n", width, height);
 
 	G_message("PS: collecting to file: %s,\n     GRASS_WIDTH=%d, GRASS_HEIGHT=%d",
 		file_name, width, height);
+
+	output("%%%%EndSetup\n");
+	output("%%%%Page: 1 1\n");
 
 	fflush(outfp);
 

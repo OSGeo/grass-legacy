@@ -7,7 +7,9 @@
 
 void PS_Graph_close(void)
 {
+	output("%%%%BeginTrailer\n");
 	output("END\n");
+	output("%%%%EndTrailer\n");
 	fclose(outfp);
 }
 
