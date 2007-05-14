@@ -1,3 +1,22 @@
+/****************************************************************************
+ *
+ * MODULE:       mkdspf
+ * AUTHOR(S):    Originally by Bill Brown, with contributions from
+ *               Bill Hughes, Brook Milligan, Helena Mitasova
+ *               Started in GRASS 4.x as makedspf program, then split
+ *               into module and dspf lib in GRASS 5.0beta_2i**. 
+ *               Subsequent (post-CVS) contributors:
+ *               Markus Neteler <neteler itc.it> 
+ *               Bernhard Reiter <bernhard intevation.de>, 
+ *               Bob Covill <bcovill tekmap.ns.ca>
+ * PURPOSE:      
+ * COPYRIGHT:    (C) 1999-2004 by the GRASS Development Team
+ *
+ *               This program is free software under the GNU General Public
+ *               License (>=v2). Read the file COPYING that comes with GRASS
+ *               for details.
+ *
+ *****************************************************************************/
 /* 9/2/94
    This program modified to be included within tcl/tk in the
    Nvision application by M. Astley.
@@ -189,3 +208,6 @@ static struct_copy(To, From, size)
     for (; size; size--)
 	*To++ = *From++;
 }
+
+
+
