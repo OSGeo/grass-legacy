@@ -48,9 +48,11 @@ int parser(int argc, char*argv[], struct GParams *params,
 				     "snap;"
 				     "Snap one vector line to another;"
 				     "flip;"
-				     "Flip direction of selected vector lines");
+				     "Flip direction of selected vector lines;"
+				     "connect;"
+				     "Connect two lines");
     params -> tool->options     = "create,add,delete,copy,move,flip,catadd,catdel,"
-      "merge,break,snap,"
+      "merge,break,snap,connect,"
       "vertexadd,vertexdel,vertexmove,select";
 
     params -> in = G_define_standard_option (G_OPT_F_INPUT);
@@ -71,8 +73,8 @@ int parser(int argc, char*argv[], struct GParams *params,
     params -> maxdist->type        = TYPE_DOUBLE;
     params -> maxdist->required    = NO;
     params -> maxdist->multiple    = NO;
-    params -> maxdist->description = _("Threshold distance");
-    params -> maxdist->answer      = "0";
+    params -> maxdist->description = _("Threshold distance (-1 for no limit)");
+    params -> maxdist->answer      = "-1";
 
     params -> id = G_define_standard_option(G_OPT_V_CATS);
     params -> id->required    = NO;
@@ -165,6 +167,9 @@ int parser(int argc, char*argv[], struct GParams *params,
     }
     else if(G_strcasecmp (params -> tool -> answer, "break") == 0) { 
 	*action_mode = MODE_BREAK;
+    }
+    else if(G_strcasecmp (params -> tool -> answer, "connect") == 0) { 
+	*action_mode = MODE_CONNECT;
     }
     else if(G_strcasecmp (params -> tool -> answer, "vertexadd") == 0) { 
         *action_mode = MODE_VERTEX_ADD;

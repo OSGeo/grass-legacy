@@ -26,7 +26,9 @@ int do_add_vertex(struct Map_info *Map, struct ilist *List, int print,
 
 /* break.c */
 int do_break (struct Map_info *Map, struct ilist *List, int print,
-	      struct Option* coord, double thresh);
+	      int opt_npoints, double opt_x[], double opt_y[], double opt_z[], double thresh, struct ilist*);
+int do_connect (struct Map_info *Map, struct ilist *List, int print,
+		double thresh);
 
 /* merge.c */
 int do_merge(struct Map_info *Map, struct ilist *List, int print);
@@ -37,6 +39,7 @@ int do_snap(struct Map_info *Map, struct ilist *List, int print,
 
 /* select.c */
 int do_print_selected(struct ilist *List);
+int merge_lists (struct ilist* alist, struct ilist* blist);
 struct ilist* select_lines(struct Map_info *Map, enum mode action_mode,
 			   struct GParams *params,
 			   struct ilist *List);

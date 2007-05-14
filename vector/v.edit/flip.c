@@ -28,15 +28,14 @@
 int do_flip (struct Map_info *Map, struct ilist *List, int print)
 {
     struct line_cats *Cats;
-    struct line_pnts *Points, *Points_flipped;
+    struct line_pnts *Points;
     int i, line, type;
     int nlines_flipped;
 
     nlines_flipped = 0;
 
-    Points         = Vect_new_line_struct();
-    Points_flipped = Vect_new_line_struct();
-    Cats           = Vect_new_cats_struct();
+    Points = Vect_new_line_struct();
+    Cats   = Vect_new_cats_struct();
 
     for (i = 0; i < List -> n_values; i++) {
 	line = List -> value[i];
@@ -49,11 +48,9 @@ int do_flip (struct Map_info *Map, struct ilist *List, int print)
 	if (!(type & GV_LINES))
 	    continue;
 
-	Vect_reset_line (Points_flipped);
+	Vect_line_reverse (Points);
 
-	Vect_append_points (Points_flipped, Points, GV_BACKWARD);
-
-	if (Vect_rewrite_line (Map, line, type, Points_flipped, Cats) < 0) {
+	if (Vect_rewrite_line (Map, line, type, Points, Cats) < 0) {
 	    G_warning (_("Cannot rewrite line [%d]"),
 		       line);
 	    return -1;
