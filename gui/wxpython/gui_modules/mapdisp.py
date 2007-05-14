@@ -1,21 +1,21 @@
 """
-To be used either from GIS Manager or as p.mon backend
+MODULE:    mapdisp
 
-Usage:
-    python mapdisp.py monitor-identifier /path/to/command/file
+PURPOSE:   To be used either from GIS Manager or as p.mon backend
 
-mapdisp Package
+           Usage:
+            python mapdisp.py monitor-identifier /path/to/command/file
 
-Classes:
-* Command
-* BufferedWindow
-* MapFrame
-* MapApp
+AUTHORS:   The GRASS Development Team
+           Michael Barton
+           Jachym Cepicky
+           Martin Landa
+         
+COPYRIGHT: (C) 2006-2007 by the GRASS Development Team
+           This program is free software under the GNU General Public
+           License (>=v2). Read the file COPYING that comes with GRASS
+           for details.
 """
-
-# Authors: Michael Barton and Jachym Cepicky
-# COPYRIGHT:	(C) 1999 - 2007 by the GRASS Development Team
-# Double buffered drawing concepts from the wxPython Cookbook
 
 import wx
 import wx.aui
@@ -24,12 +24,10 @@ from threading import Thread
 
 try:
     import subprocess
-    from subprocess import *
 except:
     CompatPath = os.path.join( os.getenv("GISBASE"),"etc","wx")
     sys.path.append(CompatPath)
     from compat import subprocess
-    from compat.subprocess import *
 
 gmpath = os.path.join( os.getenv("GISBASE"),"etc","wx","gui_modules" )
 sys.path.append(gmpath)
@@ -43,6 +41,7 @@ import track
 import menuform
 import select
 import disp_print
+import cmd
 import defaultfont as defaultfont
 import histogram as histogram
 import profile as profile
@@ -546,7 +545,7 @@ class BufferedWindow(wx.Window):
             elif self.parent.digittoolbar:
                 if self.parent.digittoolbar.action == "add":
                     try:
-                        map = self.parent.digittoolbar.layers[self.parent.digittoolbar.layerID]
+                        map = self.parent.digittoolbar.layers[self.parent.digittoolbar.layerID].name
                         east, north = self.Pixel2Cell(self.mouse['begin'][0],self.mouse['begin'][1])
                         if self.parent.digittoolbar.type in ["point", "centroid"]:
                             # add new point
@@ -583,7 +582,7 @@ class BufferedWindow(wx.Window):
             if self.parent.digittoolbar and self.parent.digittoolbar.action == "add":
                 if self.parent.digittoolbar.type in ["line", "boundary"]:
                     try:
-                        map = self.parent.digittoolbar.layers[self.parent.digittoolbar.layerID]
+                        map = self.parent.digittoolbar.layers[self.parent.digittoolbar.layerID].name
                         # add new line
                         Digit.AddLine(map=self.parent.digittoolbar.layers[self.parent.digittoolbar.layerID],
                                       type=self.parent.digittoolbar.type,
@@ -747,47 +746,42 @@ class BufferedWindow(wx.Window):
         or vector map.
         """
 
-        if not self.tree.GetSelection(): return
-        layer =  self.tree.GetSelection()
-        type =   self.tree.layertype[layer]
-        dcmd = self.tree.GetPyData(layer)[0]
+        if not self.tree.GetSelection():
+            return
+
+        layer = self.tree.GetSelection()
+        type  = self.tree.layertype[layer]
+        dcmd  = self.tree.GetPyData(layer)[0]
         mapname = None
+        
         for item in dcmd.split(' '):
             if 'map=' in item:
                 mapname = item.split('=')[1]
 
         # selected layer must be a valid map
         if type in ('raster', 'rgb', 'his'):
-            cmd = "r.info -g map=%s" % mapname
+            cmdString = "r.info -gx map=%s" % mapname
         elif type in ('vector', 'thememap', 'themechart'):
-            cmd = "v.info -g map=%s" % mapname
+            cmdString = "v.info -g map=%s" % mapname
         else:
             return
-        try:
-            p = Popen(cmd, shell=True, stdin=PIPE, stdout=PIPE, stderr=PIPE, close_fds=True)
 
-            output = p.stdout.read().split('\n')
-            for oline in output:
-                extent = oline.split('=')
-                if extent[0] == 'north':
-                    self.Map.region['n'] = float(extent[1])
-                elif extent[0] == 'south':
-                    self.Map.region['s'] = float(extent[1])
-                elif extent[0] == 'east':
-                    self.Map.region['e'] = float(extent[1])
-                elif extent[0] == 'west':
-                    self.Map.region['w'] = float(extent[1])
-
-            self.ZoomHistory(self.Map.region['n'],self.Map.region['s'],self.Map.region['e'],self.Map.region['w'])
-            self.UpdateMap()
-
-            if p.stdout < 0:
-                print >> sys.stderr, "Child was terminated by signal", p.stdout
-            elif p.stdout > 0:
-                #print >> sys.stderr, p.stdout
-                pass
-        except OSError, e:
-            print >> sys.stderr, "Execution failed:", e
+        p = cmd.Command (cmdString)
+        
+        output = p.module_stdout.read().split('\n')
+        for oline in output:
+            extent = oline.split('=')
+            if extent[0] == 'north':
+                self.Map.region['n'] = float(extent[1])
+            elif extent[0] == 'south':
+                self.Map.region['s'] = float(extent[1])
+            elif extent[0] == 'east':
+                self.Map.region['e'] = float(extent[1])
+            elif extent[0] == 'west':
+                self.Map.region['w'] = float(extent[1])
+                
+        self.ZoomHistory(self.Map.region['n'],self.Map.region['s'],self.Map.region['e'],self.Map.region['w'])
+        self.UpdateMap()
 
     def ZoomToWind(self, event):
         """

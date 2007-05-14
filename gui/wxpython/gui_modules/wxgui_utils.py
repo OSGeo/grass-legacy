@@ -158,30 +158,65 @@ class LayerTree(CT.CustomTreeCtrl):
             self.popupID2 = wx.NewId()
             self.popupID3 = wx.NewId()
             self.popupID4 = wx.NewId()
+            self.popupID5 = wx.NewId()
+            self.popupID6 = wx.NewId()
 
             self.Bind (wx.EVT_MENU, self.gismgr.deleteLayer,        id=self.popupID1)
             self.Bind (wx.EVT_MENU, self.RenameLayer,               id=self.popupID2)
             self.Bind (wx.EVT_MENU, self.OnPopupProperties,         id=self.popupID3)
             self.Bind (wx.EVT_MENU, self.gismgr.ShowAttributeTable, id=self.popupID4)
-
-        menu = wx.Menu()
+            self.Bind (wx.EVT_MENU, self.OnStartEditing,            id=self.popupID5)
+            self.Bind (wx.EVT_MENU, self.OnStopEditing,             id=self.popupID6)
+            
+        self.popupMenu = wx.Menu()
         # general item
-        menu.Append (self.popupID1, _("Delete"))
-        menu.Append (self.popupID2, _("Rename"))
+        self.popupMenu.Append (self.popupID1, _("Delete"))
+        self.popupMenu.Append (self.popupID2, _("Rename"))
 
         # map layer items
         if type != "command" and type != "group": # properties
-            menu.AppendSeparator()
-            menu.Append (self.popupID3, text=_("Properties"))
+            self.popupMenu.AppendSeparator()
+            self.popupMenu.Append (self.popupID3, text=_("Properties"))
 
         # specific items
         if type == "vector": # show attribute table
-            menu.AppendSeparator()
-            menu.Append (self.popupID4, _("Show attribute table"))
+            self.popupMenu.AppendSeparator()
+            self.popupMenu.Append (self.popupID4, _("Show attribute table"))
+            self.popupMenu.Append (self.popupID5, _("Start editing"))
+            layer = self.Map.GetLayer (self.layer_selected)
+            # enable editing only for vector map layers available in the current mapset
+            if layer.mapset != grassenv.env["MAPSET"]: 
+                self.popupMenu.Enable (self.popupID5, False)
+            self.popupMenu.Append (self.popupID6, _("Stop editing"))
+            self.popupMenu.Enable (self.popupID6, False)
 
-        self.PopupMenu (menu)
-        menu.Destroy()
+        self.PopupMenu (self.popupMenu)
+        self.popupMenu.Destroy()
 
+    def OnStartEditing (self, event):
+        """
+        Editing of vector map layer requested by the user
+        """
+        layer = self.Map.GetLayer (self.layer_selected)
+
+        if not layer:
+            event.Skip()
+            return
+        
+        if not self.mapdisplay.digittoolbar: # activate tool
+            self.mapdisplay.AddToolbar("digit")
+        else: # tool already active
+            pass
+
+        # mark layer as 'edited'
+        print "#", self.mapdisplay.digittoolbar.StartEditing (layer)
+        
+        # enable 'stop editing'
+        self.popupMenu.Enable (self.popupID6, True)
+
+    def OnStopEditing (self, event):
+        pass
+    
     def OnPopupProperties (self, event):
         """Popup properties dialog"""
         self.PropertiesDialog(self.layer_selected)

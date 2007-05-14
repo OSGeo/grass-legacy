@@ -1,14 +1,11 @@
 """
-PACKAGE: digit
+PACKAGE:   cmd
 
-CLASSES:
- * EndOfCommand
- * Command
+PURPOSE:   Command interface 
 
-PURPOSE: Command interface 
-
-AUTHORS: The GRASS Development Team
-         Jachym Cepicky, Martin Landa
+AUTHORS:   The GRASS Development Team
+           Original author: Jachym Cepicky
+           Martin Landa
 
 COPYRIGHT: (C) 2007 by the GRASS Development Team
            This program is free software under the GNU General Public
@@ -17,6 +14,8 @@ COPYRIGHT: (C) 2007 by the GRASS Development Team
 """
 
 import os, sys
+import wx
+
 from debug import Debug as Debug
 
 usePopenClass = True
@@ -26,7 +25,7 @@ try:
 except:
    CompatPath = os.getenv("GISBASE") + "/etc/wx"
    sys.path.append(CompatPath)
-   from compat import subprocess
+   from compat import subprocess as subprocess
 
 import grassenv
 
@@ -40,7 +39,14 @@ class EndOfCommand(Exception):
 class Command:
     """
     Run command on the background
-    
+
+    Parameters:
+     cmd     - command string
+     stdin   - standard input stream
+     verbose - verbose mode (GRASS commands '--v')
+     wait    - wait for childer execution
+     dlgMsg  - type of error message (None, gui, txt) [only if wait=True]
+     
     Usage:
         cmd = Command(cmd='d.rast elevation.dem', verbose=True, wait=True)
 
@@ -57,7 +63,7 @@ class Command:
             else:
                 print 'General message:', msg[1]
     """
-    def __init__ (self, cmd, stdin=None, verbose=False, wait=True):
+    def __init__ (self, cmd, stdin=None, verbose=False, wait=True, dlgMsg='gui'):
         # input
         self.module_stdin = None
         self.cmd    = cmd
@@ -100,6 +106,21 @@ class Command:
             if wait:
                 self.module.wait()
             self.returncode = self.module.returncode
+
+            # failed?
+            if dlgMsg and self.returncode != 0:
+               # print error messages
+               for msg in self.module_msg:
+                  print sys.stderr >> msg
+
+               if dlgMsg == "gui":
+                  dlg = wx.MessageDialog(None, _("Execution failed: '%s'") % self.cmd, _("Error"), wx.OK | wx.ICON_ERROR)
+                  dlg.ShowModal()
+                  dlg.Destroy()
+               else: # otherwise 'txt'
+                  print sys.stderr >> "Execution failed: %s" % self.cmd
+
+               
         else:
             self.returncode = None
 

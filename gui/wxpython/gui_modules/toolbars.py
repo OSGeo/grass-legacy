@@ -17,33 +17,24 @@ import cmd, grassenv
 from debug import Debug as Debug
 from icon import Icons as Icons
 
-if not os.getenv("GRASS_ICONPATH"):
-    icons = os.getenv("GISBASE") + "/etc/gui/icons/"
-else:
-    icons = os.environ["GRASS_ICONPATH"]
-
 class MapToolbar:
     """
     Main Map Display toolbar
     """
 
     def __init__(self, mapdisplay, map):
-
-        global icons
-
         self.mapcontent = map
         self.mapdisplay = mapdisplay
 
         self.toolbar = wx.ToolBar(parent=self.mapdisplay, id=wx.ID_ANY)
 
-      #self.SetToolBar(self.toolbar)
+        # self.SetToolBar(self.toolbar)
         tsize = (24, 24)
         self.toolbar.SetToolBitmapSize(tsize)
 
         #
         # Draw
         #
-
         self.displaymap = self.toolbar.AddLabelTool(id=wx.ID_ANY, label="displaymap",
                                                     bitmap=Icons["displaymap"].GetBitmap(),
                                                     bmpDisabled=wx.NullBitmap, kind=wx.ITEM_NORMAL,
@@ -157,7 +148,10 @@ class MapToolbar:
         self.mapdisplay.Bind(wx.EVT_TOOL,     self.mapdisplay.PrintMenu,    self.printmap)
         self.mapdisplay.Bind(wx.EVT_COMBOBOX, self.OnSelect,                self.comboid)
 
-    def OnSelect(self,event):
+    def OnSelect(self, event):
+        """
+        Select / enable tool available in tools list
+        """
         tool =  event.GetString()
 
         if tool == "Digitize" and not self.mapdisplay.digittoolbar:
@@ -169,13 +163,12 @@ class DigitToolbar:
     """
 
     def __init__(self, parent, map):
-
         self.mapcontent = map
         self.parent     = parent
-        self.icons      = os.path.join (os.getenv("GISBASE"), "etc/v.digit")
 
         # selected map to digitize
         self.layerID    = None
+        self.layers     = []
         # action (digitize new point, line, etc.
         self.action     = "add"
         self.type       = "point"
@@ -193,8 +186,16 @@ class DigitToolbar:
         self.toolbar.Realize()
 
     def initToolbar(self):
-        self.combo = wx.ComboBox(self.toolbar, id=wx.ID_ANY, value='Select vector map',
-                                 choices=self.layers, size=(150, -1))
+        """
+        Init digitization toolbar
+        """
+        layer_name = []
+        for layer in self.layers:
+            layer_name.append (layer.name)
+            
+            self.combo = wx.ComboBox(self.toolbar, id=wx.ID_ANY, value='Select vector map',
+                                     choices=layer_name,
+                                     size=(150, -1))
 
         self.comboid = self.toolbar.AddControl(self.combo)
 
@@ -274,7 +275,6 @@ class DigitToolbar:
         """
         Quit digitization tool
         """
-
         self.parent.RemoveToolbar ("digit")
 
     def OnSelectMap (self, event):
@@ -284,28 +284,44 @@ class DigitToolbar:
         If any vector map is activated for digitization this action
         is firstly terminated
         """
-
         self.layerID = self.combo.GetCurrentSelection()
-
+        Debug.msg (3, "DigitToolbar.OnSelectMap(): layerID=%d", self.layerID)
+        
         # digitize (self.layers[self.layerID], mapset)
 
+    def StartEditing (self, layerSelected):
+        """
+        Mark map layer enabled for digitization
+
+        Return True on success or False if layer cannot be edited
+        """
+        if layerSelected in self.layers:
+            return True
+
+        return False
+            
     def UpdateListOfLayers (self, updateTool=False):
-        """Update list of avaliable vector map layers"""
-        self.layers = []
+        """
+        Update list of available vector map layers.
+        This list consists only editable layers (in the current mapset)
+
+        Optionaly also update toolbar
+        """
 
         # select vector map layer in the current mapset
-        for layer in self.mapcontent.GetListOfLayers(l_type="vector", l_mapset=grassenv.env["MAPSET"]):
-            self.layers.append (layer.name)
-
+        layer_name = []
+        self.layers = self.mapcontent.GetListOfLayers(l_type="vector", l_mapset=grassenv.env["MAPSET"])
+        for layer in self.layers:
+            layer_name.append (layer.name)
+        
         if updateTool: # update toolbar
             if self.layerID == None:
                 value = 'Select vector map'
             else:
                 value = 'x'
 
-            print self.layers
             self.combo = wx.ComboBox(self.toolbar, id=wx.ID_ANY, value=value,
-                                     choices=self.layers, size=(150, -1))
+                                     choices=self.layer_name, size=(150, -1))
 
             # ugly ...
             self.toolbar.DeleteToolByPos (0)
