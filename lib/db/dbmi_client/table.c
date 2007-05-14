@@ -4,8 +4,11 @@
 #include <grass/dbmi.h>
 
 /*!
- \fn 
- \brief 
+ \fn int db_table_exists ( char *, char *, char *)
+ \brief check if table exists
+ \param drvname: driver name
+ \param dbname: database name
+ \param tabname: table name
  \return: 1 exist, 0 doesn't exist, -1 error
  \param 
 */
