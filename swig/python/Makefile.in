@@ -12,7 +12,7 @@ SWIG=swig
 
 CFLAGS=-c -fpic -I/usr/include/python$(PYTHONVERSION) -I./ -I$(ARCH_DISTDIR)/include
 
-LDFLAGS=-shared -L$(ARCH_LIBDIR) -lgrass_D -lgrass_I -lgrass_Iortho -lgrass_bitmap -lgrass_btree -lgrass_cdhc -lgrass_datetime -lgrass_dbmibase -lgrass_dbmiclient -lgrass_dbmidriver -lgrass_dbstubs -lgrass_dgl -lgrass_display -lgrass_dspf -lgrass_edit -lgrass_form -lgrass_g3d -lgrass_gis -lgrass_gmath -lgrass_gproj -lgrass_interpdata -lgrass_interpfl -lgrass_linkm -lgrass_qtree -lgrass_raster -lgrass_rowio -lgrass_rtree -lgrass_segment -lgrass_shape -lgrass_sites -lgrass_symb -lgrass_trans -lgrass_vask -lgrass_vect
+LDFLAGS=-shared -L$(ARCH_LIBDIR) -lgrass_I -lgrass_Iortho -lgrass_bitmap -lgrass_btree -lgrass_cdhc -lgrass_datetime -lgrass_dbmibase -lgrass_dbmiclient -lgrass_dbmidriver -lgrass_dbstubs -lgrass_dgl -lgrass_display -lgrass_dspf -lgrass_edit -lgrass_form -lgrass_g3d -lgrass_gis -lgrass_gmath -lgrass_gproj -lgrass_interpdata -lgrass_interpfl -lgrass_linkm -lgrass_qtree -lgrass_raster -lgrass_rowio -lgrass_rtree -lgrass_segment -lgrass_shape -lgrass_sites -lgrass_symb -lgrass_trans -lgrass_vask -lgrass_vect -lgrass_psdriver
 
 default: python_grass6.so
 
