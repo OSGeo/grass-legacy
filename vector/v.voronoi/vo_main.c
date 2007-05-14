@@ -1,3 +1,20 @@
+/****************************************************************************
+ *
+ * MODULE:       v.voronoi
+ * AUTHOR(S):    James McCauley <mccauley ecn.purdue.edu>, s.voronoi, based
+ *                     on netlib code (see README) (original contributor)
+ *               Andrea Aime <aaime libero.it>
+ *               Radim Blazek <radim.blazek gmail.com> (GRASS 5.1 v.voronoi) 
+ *               Glynn Clements <glynn gclements.plus.com>,  
+ *               Markus Neteler <neteler itc.it>
+ * PURPOSE:      produce a Voronoi diagram using vector points
+ * COPYRIGHT:    (C) 1993-2006 by the GRASS Development Team
+ *
+ *               This program is free software under the GNU General Public
+ *               License (>=v2). Read the file COPYING that comes with GRASS
+ *               for details.
+ *
+ *****************************************************************************/
 /*-s.voronoi
 **
 ** Author: James Darrell McCauley (mccauley@ecn.purdue.edu)
@@ -315,4 +332,7 @@ main (int argc, char **argv)
 
   return 0;
 }
+
+
+
 
