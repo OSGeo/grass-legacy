@@ -1,3 +1,21 @@
+/****************************************************************************
+ *
+ * MODULE:       i.fft
+ * AUTHOR(S):    David B. Satnik and Ali R. Vali (original contributors),
+ *               Markus Neteler <neteler itc.it>
+ *               Bernhard Reiter <bernhard intevation.de>, 
+ *               Brad Douglas <rez touchofmadness.com>, 
+ *               Glynn Clements <glynn gclements.plus.com>
+ * PURPOSE:      processes a single input raster map layer
+ *               and constructs the real and imaginary Fourier
+ *               components in frequency space
+ * COPYRIGHT:    (C) 1999-2007 by the GRASS Development Team
+ *
+ *               This program is free software under the GNU General Public
+ *               License (>=v2). Read the file COPYING that comes with GRASS
+ *               for details.
+ *
+ *****************************************************************************/
 /*
 FFT for GRASS by:
  Central Washington University GIS Laboratory
