@@ -88,14 +88,8 @@ int main (int argc, char **argv)
 		_("Overlays cell category values on a raster map layer "
 		"displayed to the graphics monitor.");
 
-	opt1              = G_define_option() ;
-	opt1->key         = "map" ;
-	opt1->type        = TYPE_STRING ;
+	opt1              = G_define_standard_option(G_OPT_R_MAP);
 	opt1->required    = NO ;
-	opt1->multiple    = NO ;
-	opt1->gisprompt   = "old,cell,raster" ;
-	opt1->key_desc    = "name";
-	opt1->description = _("Name of existing raster map to be displayed");
 
         opt2              = G_define_option() ;
         opt2->key         = "grid_color" ;
@@ -117,11 +111,10 @@ int main (int argc, char **argv)
 
         prec              = G_define_option();
         prec->key         = "dp";
-        prec->type        = TYPE_DOUBLE;
+        prec->type        = TYPE_INTEGER;
         prec->required    = NO;
         prec->answer      = "1";
         prec->options     = "0,1,2,3,4,5,6,7,8,9";
-	prec->key_desc    = "dp";
         prec->description = _("Number of significant digits (floating point only)");
 
     	text_color              = G_define_flag();
