@@ -70,29 +70,40 @@ of HTMLMAP.
   point.  <BR><BR></LI></UL>
 <P>
 <H3>Typical usage</H3>
-<NL>
+<UL>
 <LI>Start up the driver<BR><PRE>         d.mon start=HTMLMAP
          d.mon select=HTMLMAP
          </PRE>
-<LI>Display text strings (HREF's) and polygons<BR><PRE>         echo "http://www.no-such-place.net/area51/" | d.text
+<LI>Display text strings (HREF's) and polygons
+<BR>
+<PRE>
+         echo "http://www.no-such-place.net/area51/" | d.text
          d.vect map=area51
          echo "http://www.roswell-nm.net/little/green/men.html" | d.text
          d.vect map=roswell
-         </PRE>
+</PRE>
 <LI>Stop the driver when all polygon have been displayed. This will cause a file 
-named 'htmlmap' to be created in your current directory.<BR><PRE>         d.mon stop=HTMLMAP
-         </PRE>
-<LI>You will also want to create an image for your image map. Use the CELL 
-driver and other utilities to create .gif, .jpg, or .png files<BR><PRE>         # using previous GRASS_WIDTH &amp; GRASS_HEIGHT
-         d.mon start=CELL
-         d.mon select=CELL
+named 'htmlmap' to be created in your current directory.
+<BR>
+<PRE>
+         d.mon stop=HTMLMAP
+</PRE>
+<LI>You will also want to create an image for your image map. Use the PNG 
+driver and other utilities to create .gif or .jpg files.
+<i>The following example is somewhat out of date and refers to options
+available in GRASS 5.</i>
+<BR>
+<PRE>
+         # using previous GRASS_WIDTH &amp; GRASS_HEIGHT
+         d.mon start=PNG
+         d.mon select=PNG
          d.rast map=terrain
          d.vect map=area51  fillcolor=white  linecolor=blue
          d.vect map=roswell fillcolor=yellow linecolor=blue
          d.vect map=states  color=green
          d.vect map=roads   color=black
-         d.mon stop=CELL
-
+         d.mon stop=PNG
+<!-- ????  FIXME -->
          # make the region the same as the newly created cell for ppm export
          g.region save=saved.reg
          g.region raster=D_cell
@@ -112,24 +123,38 @@ driver and other utilities to create .gif, .jpg, or .png files<BR><PRE>         
          # take a look and test it out
          netscape file:`pwd`/alien.html &amp;
 
-     </PRE><BR></NL>
+     </PRE>
+<BR>
+</UL>
 
 <H2>NOTES</H2>
 
 HTMLMAP was adapted from the CELL driver in GRASS 4.3. 
 Point-in-polygon test code was lifted from Randolph Franklin's web page, see 
-<BR><a href="http://www.ecse.rpi.edu/Homepages/wrf/">http://www.ecse.rpi.edu/Homepages/wrf/</A><BR><a href="http://www.ecse.rpi.edu/Homepages/wrf/research/geom/pnpoly.html">http://www.ecse.rpi.edu/Homepages/wrf/research/geom/pnpoly.html</A>
+<UL>
+<a href="http://www.ecse.rpi.edu/Homepages/wrf/">http://www.ecse.rpi.edu/Homepages/wrf/</A>
+<BR>
+<a href="http://www.ecse.rpi.edu/Homepages/wrf/research/geom/pnpoly.html">http://www.ecse.rpi.edu/Homepages/wrf/research/geom/pnpoly.html</A>
+</UL>
 <P>If you create an HTML file with two or more images and image maps, you will 
 need to edit the map names. The HTMLMAP driver creates its map with the name 
 <I>map</I>. A small sed script can easily change the map name: </P>
-<PRE>sed -e 's/NAME="map"/NAME="foomap"/' &lt;htmlmap &gt;foomap.html
+<PRE>sed -e 's/NAME="map"/NAME="foomap"/' &lt; htmlmap &gt; foomap.html
 </PRE>
 
 <H2>SEE ALSO</H2>
 
-<EM><a href="pngdriver.html">pngdriver</A></EM>, 
-<EM><a href="xdriver.html">XDRIVER</A></EM>, 
-<EM><a href="d.text.html">d.text</A></EM>, 
-<EM><a href="d.vect.html">d.vect</A></EM> 
+<EM>
+<a href="pngdriver.html">PNG driver</A>,
+<a href="psdriver.html">PostScript driver</A>,
+<a href="xdriver.html">XDRIVER</A>
+<BR>
+<A HREF="d.frame.html">d.frame</A>,
+<A href="d.mon.html">d.mon</A>,
+<A href="d.rast.html">d.rast</A>,
+<a href="d.text.html">d.text</A>, 
+<a href="d.vect.html">d.vect</A>
+</EM> 
 
-<p><i>Last changed: $Date$</i>
+<p>
+<i>Last changed: $Date$</i>
