@@ -1,6 +1,6 @@
 /**************************************************************
  *
- * MODULE:       vector library
+ * MODULE:       Vector library
  *  
  * AUTHOR(S):    Radim Blazek
  *               
@@ -20,9 +20,25 @@
 #include <grass/Vect.h>
 #include <grass/glocale.h>
 
+/*!
+ * \file snap.c
+ *
+ * \brief Vector library 
+ *
+ * Clean lines
+ *
+ * \author Radim Blazek
+ *
+ * (C) 2001 by the GRASS Development Team
+ *
+ * This program is free software under the 
+ * GNU General Public License (>=v2). 
+ * Read the file COPYING that comes with GRASS
+ * for details.
+ */
+
 /* function prototypes */
 static int sort_new(const void *pa, const void *pb);
-
 
 /* Vertex */
 typedef struct {
@@ -46,22 +62,22 @@ int add_item(int id, struct ilist *list)
 
 
 /*!
- \fn void Vect_snap_lines ( struct Map_info *Map, int type, double thresh, 
-                              struct Map_info *Err, FILE *msgout)
- \brief Snap all lines to existing vertex in threshold.
-
- Snap all lines to existing vertices.
-
- Warning: Lines are not necessarily snapped to nearest vertex, but to vertex in threshold! 
-
- Lines showing how vertices were snapped may be optionaly written to error map. 
- Input map must be opened on level 2 for update at least on GV_BUILD_BASE.
-
- \param Map input map where vertices will be snapped
- \param type type of line to be snap
- \param thresh threshold in which snap vertices
- \param Err vector map where lines representing snap are written or NULL
- \param msgout file pointer where messages will be written or NULL
+ * \fn void Vect_snap_lines_list (struct Map_info *Map, struct ilist *List_lines, double thresh, struct Map_info *Err, FILE *msgout)
+ *
+ * \brief Snap selected lines to existing vertex in threshold.
+ *
+ * Snap selected lines to existing vertices.
+ * 
+ * \warning Lines are not necessarily snapped to nearest vertex, but to vertex in threshold! 
+  
+ * Lines showing how vertices were snapped may be optionaly written to error map. 
+ * Input map must be opened on level 2 for update at least on GV_BUILD_BASE.
+ *
+ * \param[in] Map input map where vertices will be snapped
+ * \param[in] List_lines list of lines to snap
+ * \param[in] thresh threshold in which snap vertices
+ * \param[out] Err vector map where lines representing snap are written or NULL
+ * \param[out] msgout file pointer where messages will be written or NULL
  \return
 */
 
@@ -77,13 +93,12 @@ int add_item(int id, struct ilist *list)
      |	
 */
 
-
 void 
-Vect_snap_lines ( struct Map_info *Map, int type, double thresh, struct Map_info *Err, FILE *msgout )
+Vect_snap_lines_list (struct Map_info *Map, struct ilist *List_lines, double thresh, struct Map_info *Err, FILE *msgout)
 {
     struct line_pnts *Points, *NPoints;
     struct line_cats *Cats;
-    int    nlines, line, ltype;
+    int    nlines, line, ltype, line_idx;
     double thresh2;
     int    printed;
 
@@ -101,6 +116,9 @@ Vect_snap_lines ( struct Map_info *Map, int type, double thresh, struct Map_info
     int aindex = 0;     /* allocated Index */
     int width  = 26;    /* fprintf width */
 
+    if (List_lines -> n_values < 1)
+	return;
+
     Points = Vect_new_line_struct ();
     NPoints = Vect_new_line_struct ();
     Cats = Vect_new_cats_struct ();
@@ -108,8 +126,7 @@ Vect_snap_lines ( struct Map_info *Map, int type, double thresh, struct Map_info
     RTree = RTreeNewIndex();
     
     thresh2 = thresh * thresh;
-    nlines = Vect_get_num_lines (Map);
-
+ 
     G_debug (3, "nlines =  %d", nlines );
     
     /* Go through all lines in vector, and add each point to structure of points */
@@ -120,15 +137,16 @@ Vect_snap_lines ( struct Map_info *Map, int type, double thresh, struct Map_info
     printed = 0;
 
     if ( msgout ) fprintf (msgout, "%s ...", _("Registering points")); 
-    
-    for ( line = 1; line <= nlines; line++ ){ 
+
+    for ( line_idx = 0; line_idx < List_lines -> n_values; line_idx++ ){ 
 	int v;
 	
+	line = List_lines -> value[line_idx];
+
 	G_debug (3, "line =  %d", line);
 	if ( !Vect_line_alive ( Map, line ) ) continue;
 
 	ltype = Vect_read_line (Map, Points, Cats, line);
-	if ( !(ltype & type) ) continue;
 
 	for ( v = 0; v <  Points->n_points; v++ ){ 
 	    G_debug (3, "  vertex v = %d", v);
@@ -225,16 +243,17 @@ Vect_snap_lines ( struct Map_info *Map, int type, double thresh, struct Map_info
     nsnapped = ncreated = 0;
     if ( msgout ) fprintf (msgout, "%-*s: %4d", width, _("Snaps"), nsnapped + ncreated ); 
     
-    for ( line = 1; line <= nlines; line++ ){ 
+    for ( line_idx = 0; line_idx < List_lines -> n_values; line_idx++ ){ 
 	int v, spoint, anchor;
 	int changed = 0;
 	
+	line = List_lines -> value[line_idx];
+
 	G_debug (3, "line =  %d", line);
 	if ( !Vect_line_alive ( Map, line ) ) continue;
 
 	ltype = Vect_read_line (Map, Points, Cats, line);
-	if ( !(ltype & type) ) continue;
-
+	
 	if ( Points->n_points >= aindex ) {
 	    aindex = Points->n_points;
 	    Index = (int *) G_realloc ( Index, aindex * sizeof(int) );
@@ -359,7 +378,7 @@ Vect_snap_lines ( struct Map_info *Map, int type, double thresh, struct Map_info
 	}
 
 	if ( msgout && printed > 1000 ) {
-  	    fprintf (msgout, "\rSnaps: %5d  (line = %d)", nsnapped + ncreated, line ); 
+  	    fprintf (msgout, "\r%s: %5d  (line = %d)", _("Snaps"), nsnapped + ncreated, line ); 
 	    fflush ( msgout );
 	    printed = 0;
 	}
@@ -391,3 +410,55 @@ static int sort_new(const void *pa, const void *pb)
     return 1;
 }
 
+/*!
+ * \fn void Vect_snap_lines (struct Map_info *Map, int type, double thresh, struct Map_info *Err, FILE *msgout )
+ *
+ * \brief Snap all lines to existing vertex in threshold.
+ *
+ * See Vect_snap_lines_list()
+ *
+ * \param[in] Map input map where vertices will be snapped
+ * \param[in] type type of lines to snap
+ * \param[in] thresh threshold in which snap vertices
+ * \param[out] Err vector map where lines representing snap are written or NULL
+ * \param[out] msgout file pointer where messages will be written or NULL
+ \return
+*/
+void 
+Vect_snap_lines (struct Map_info *Map, int type, double thresh, struct Map_info *Err, FILE *msgout )
+{
+    int line, nlines, ltype;
+    
+    struct ilist* List;
+    
+    struct line_pnts *Points;
+    struct line_cats *Cats;
+    
+    List   = Vect_new_list();
+    Points = Vect_new_line_struct();
+    Cats   = Vect_new_cats_struct();
+    
+    nlines = Vect_get_num_lines (Map);
+    
+    for (line = 1; line <= nlines; line++) {
+	G_debug (3, "line =  %d", line);
+	
+	if (!Vect_line_alive (Map, line))
+	    continue;
+	
+	ltype = Vect_read_line (Map, Points, Cats, line);
+	
+	if (!(ltype & type))
+	    continue;
+	
+	Vect_list_append (List, line);
+    }
+    
+    Vect_snap_lines_list (Map, List, thresh, Err, msgout);
+
+    Vect_destroy_cats_struct (Cats);
+    Vect_destroy_line_struct (Points);
+    Vect_destroy_list (List);
+
+    return;
+}
