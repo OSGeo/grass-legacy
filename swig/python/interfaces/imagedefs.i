@@ -11,8 +11,6 @@ double ***I_alloc_double3(int, int, int);
 int I_free_double3(double ***);
 /* ask_group.c */
 int I_ask_group_old(char *, char *);
-int I_ask_group_new(char *, char *);
-int I_ask_group_any(char *, char *);
 /* eol.c */
 int I_get_to_eol(char *, int, FILE *);
 /* find.c */
@@ -72,8 +70,6 @@ int I_read_one_signature(FILE *, struct Signature *);
 int I_read_signatures(FILE *, struct Signature *);
 int I_write_signatures(FILE *, struct Signature *);
 /* sigfile.c */
-int I_ask_signature_file_any(char *, char *, char *, char *);
-int I_ask_signature_file_old(char *, char *, char *, char *);
 FILE *I_fopen_signature_file_new(char *, char *, char *);
 FILE *I_fopen_signature_file_old(char *, char *, char *);
 /* sigset.c */
@@ -90,8 +86,6 @@ int I_SetClassTitle(struct ClassSig *, char *);
 char *I_GetClassTitle(struct ClassSig *);
 int I_WriteSigSet(FILE *, struct SigSet *);
 /* sigsetfile.c */
-int I_ask_sigset_file_any(char *, char *, char *, char *);
-int I_ask_sigset_file_old(char *, char *, char *, char *);
 FILE *I_fopen_sigset_file_new(char *, char *, char *);
 FILE *I_fopen_sigset_file_old(char *, char *, char *);
 /* target.c */
