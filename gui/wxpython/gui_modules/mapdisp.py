@@ -538,7 +538,7 @@ class BufferedWindow(wx.Window):
                 self.dragid = idlist[0]
         # left mouse button released and not just a pointer
         elif event.LeftUp():
-            if self.mouse['use'] != "pointer" and self.mouse['use'] != "query":
+            if self.mouse['use'] == "zoom" or self.mouse['use'] == "pan":
                 # end point of zoom box or drag
                 self.mouse['end'] = event.GetPositionTuple()[:]
 
@@ -547,6 +547,22 @@ class BufferedWindow(wx.Window):
                 # redraw map
                 self.render=True
                 self.UpdateMap()
+            # querying
+            elif self.mouse["use"] == "query":
+                self.Parent.QueryMap(self.mouse['begin'][0],self.mouse['begin'][1])
+
+            # creating measurement line
+            elif self.mouse["use"] == "measure":
+                self.mouse['end'] = event.GetPositionTuple()[:]
+                self.Parent.MeasureDist(self.mouse['begin'],self.mouse['end'])
+
+            # end drag of overlay decoration
+            elif self.dragid != None:
+                self.ovlcoords[self.dragid] = self.pdc.GetIdBounds(self.dragid)
+                self.dragid = None
+                self.currtxtid = None
+                id = None
+                self.Update()
             # digitizing
             elif self.parent.digittoolbar:
                 if self.parent.digittoolbar.action == "add":
@@ -574,17 +590,6 @@ class BufferedWindow(wx.Window):
                 # redraw map
                 self.render=True
                 self.UpdateMap()
-            # querying
-            elif self.mouse["use"] == "query":
-                east,north = self.Pixel2Cell(self.mouse['begin'][0],self.mouse['begin'][1])
-                self.Parent.QueryMap(east,north)
-            # end drag of overlay decoration
-            elif self.dragid != None:
-                self.ovlcoords[self.dragid] = self.pdc.GetIdBounds(self.dragid)
-                self.dragid = None
-                self.currtxtid = None
-                id = None
-                self.Update()
         # right mouse button pressed
         elif event.RightDown():
             pass
@@ -1332,6 +1337,7 @@ class MapFrame(wx.Frame):
         """
         #set query snap distance for v.what at mapunit equivalent of 10 pixels
         qdist = 10.0 * ((self.Map.region['e'] - self.Map.region['w'])/self.Map.width)
+        east,north = self.MapWindow.Pixel2Cell(x,y)
 
         if self.tree.GetSelections():
             mapname = None
@@ -1359,11 +1365,11 @@ class MapFrame(wx.Frame):
             if raststr != '':
                 raststr = raststr.rstrip(',')
                 rcmd = "r.what -f input=%s east_north=%f,%f" %\
-                    (raststr, float(x), float(y))
+                    (raststr, float(east), float(north))
             if vectstr != '':
                 vectstr = vectstr.rstrip(',')
                 vcmd = "v.what -a map=%s east_north=%f,%f distance=%f" %\
-                    (vectstr, float(x), float(y), qdist)
+                    (vectstr, float(east), float(north), qdist)
         else:
             dlg = wx.MessageDialog(self, 'You must select a map in the GIS Manager to query',
                                'Nothing to query', wx.OK | wx.ICON_INFORMATION)
@@ -1419,6 +1425,14 @@ class MapFrame(wx.Frame):
 
         # change the cursor
         self.MapWindow.SetCursor (self.cursors["cross"])
+
+    def MeasureDist(self, beginpt, endpt):
+        x1,y1 = beginpt
+        x2,y2 = endpt
+        east = (x2-x1) * self.Map.region["ewres"]
+        north = (y2-y1) * self.Map.region["nsres"]
+        dist = math.sqrt(math.pow((east),2) + math.pow((north),2))
+        print 'dist=',dist
 
     def Profile(self, event):
         """
