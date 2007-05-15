@@ -126,7 +126,7 @@ class MapToolbar:
         # Optional toolbars
         #
         self.combo = wx.ComboBox(parent=self.toolbar, id=wx.ID_ANY, value='Tools',
-                choices=['Digitize'], style=wx.CB_READONLY, size=(110, -1))
+                                 choices=['Digitize'], style=wx.CB_READONLY, size=(90, -1))
 
         self.comboid = self.toolbar.AddControl(self.combo)
 
@@ -174,8 +174,7 @@ class DigitToolbar:
         self.type       = "point"
         self.addString  = ""
 
-        # list of available vector maps
-        self.UpdateListOfLayers(updateTool=False)
+        self.comboid    = None
 
         # create toolbar
         self.toolbar = wx.ToolBar(parent=self.parent, id=wx.ID_ANY)
@@ -183,22 +182,16 @@ class DigitToolbar:
 
         # create toolbar
         self.initToolbar()
+
+        # list of available vector maps
+        self.UpdateListOfLayers(updateTool=True)
+
         self.toolbar.Realize()
 
     def initToolbar(self):
         """
         Init digitization toolbar
         """
-        layer_name = []
-        for layer in self.layers:
-            layer_name.append (layer.name)
-
-        self.combo = wx.ComboBox(self.toolbar, id=wx.ID_ANY, value='Select vector map',
-                                     choices=layer_name,
-                                     size=(150, -1))
-
-        self.comboid = self.toolbar.AddControl(self.combo)
-
         self.toolbar.AddSeparator()
 
         self.point = self.toolbar.AddLabelTool(id=wx.ID_ANY, label="digaddpoint",
@@ -275,31 +268,44 @@ class DigitToolbar:
         """
         Quit digitization tool
         """
+        Debug.msg (3, "DigitToolbar.OnExit(): layer=%s" % \
+                   self.layers[self.layerID].name)
+
+        # deactive the toolbar
         self.parent.RemoveToolbar ("digit")
 
     def OnSelectMap (self, event):
         """
-        Select vector map to digitize
+        Select vector map layer for editing 
 
-        If any vector map is activated for digitization this action
-        is firstly terminated
+        If there is a vector map layer already edited, this action is
+        firstly terminated. The map layer is closed. After this the
+        selected map layer activated for editing.
         """
-        self.layerID = self.combo.GetCurrentSelection()
-        Debug.msg (3, "DigitToolbar.OnSelectMap(): layerID=%d", self.layerID)
-        
-        # digitize (self.layers[self.layerID], mapset)
+        if self.layerID: # deactive map layer for editing
+            # TODO
+            pass
 
+        # select the given map layer for editing 
+        self.layerID = self.combo.GetCurrentSelection()
+
+        Debug.msg (3, "DigitToolbar.OnSelectMap(): layerID=%d layer=%s" % \
+                   (self.layerID, self.layers[self.layerID].name))
+                   
     def StartEditing (self, layerSelected):
         """
         Mark map layer enabled for digitization
 
         Return True on success or False if layer cannot be edited
         """
-        if layerSelected in self.layers:
+        try:
+            self.layerID = self.layers.index(layerSelected)
+            self.combo.SetValue (layerSelected.name)
+            self.parent.maptoolbar.combo.SetValue ('Digitize')
             return True
-
-        return False
-            
+        except:
+            return False
+    
     def UpdateListOfLayers (self, updateTool=False):
         """
         Update list of available vector map layers.
@@ -308,23 +314,32 @@ class DigitToolbar:
         Optionaly also update toolbar
         """
 
+        layerNameSelected = None
+        if self.layerID != None: # name of currently selected layer
+            layerNameSelected = self.layers[self.layerID].name
+        
         # select vector map layer in the current mapset
-        layer_name = []
+        layerNameList = []
         self.layers = self.mapcontent.GetListOfLayers(l_type="vector", l_mapset=grassenv.env["MAPSET"])
         for layer in self.layers:
-            layer_name.append (layer.name)
-        
+            if not layer.name in layerNameList: # do not duplicate layer
+                layerNameList.append (layer.name)
+
         if updateTool: # update toolbar
             if self.layerID == None:
                 value = 'Select vector map'
             else:
-                value = 'x'
-
-            self.combo = wx.ComboBox(self.toolbar, id=wx.ID_ANY, value=value,
-                                     choices=self.layer_name, size=(150, -1))
+                value = layerNameSelected
 
             # ugly ...
-            self.toolbar.DeleteToolByPos (0)
+            if self.comboid:
+                self.toolbar.DeleteToolByPos(0)
+                #self.combo.Destroy()
+                    
+            self.combo = wx.ComboBox(self.toolbar, id=wx.ID_ANY, value=value,
+                                     choices=layerNameList, size=(150, -1))
+            
             self.comboid = self.toolbar.InsertControl(0, self.combo)
             self.toolbar.Realize()
 
+        return layerNameList

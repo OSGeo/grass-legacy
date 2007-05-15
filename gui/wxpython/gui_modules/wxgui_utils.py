@@ -22,7 +22,6 @@ try:
 except:
     from compat import subprocess
 
-
 class LayerTree(CT.CustomTreeCtrl):
     """
     Creates layer tree structure
@@ -63,7 +62,6 @@ class LayerTree(CT.CustomTreeCtrl):
                                            style=wx.DEFAULT_FRAME_STYLE,
                                            tree=self, notebook=self.notebook, gismgr=self.gismgr, page=self.treepg,
                                            Map=self.Map)
-
 
         # title
         self.mapdisplay.SetTitle(_("GRASS GIS - Map Display: " + str(self.disp_idx) + " - Location: " + grassenv.env["LOCATION_NAME"]))
@@ -198,7 +196,7 @@ class LayerTree(CT.CustomTreeCtrl):
 
     def OnStartEditing (self, event):
         """
-        Editing of vector map layer requested by the user
+        Start editing vector map layer requested by the user
         """
         layer = self.Map.GetLayer(self.layer_selected)
 
@@ -212,11 +210,13 @@ class LayerTree(CT.CustomTreeCtrl):
             pass
 
         # mark layer as 'edited'
-        print "#", self.mapdisplay.digittoolbar.StartEditing (layer)
+        self.mapdisplay.digittoolbar.StartEditing (layer)
 
         # enable 'stop editing'
+        self.popupMenu.Enable (self.popupID5, False)
         self.popupMenu.Enable (self.popupID6, True)
-
+        self.popupMenu.UpdateUI(self)
+        
     def OnStopEditing (self, event):
         pass
 
@@ -305,9 +305,6 @@ class LayerTree(CT.CustomTreeCtrl):
         elif ltype == 'vector':
             self.SetItemImage(layer, self.vect_icon)
             self.SetItemText(layer, 'vector (double click to set properties)')
-            # if digitization tool enable, update list of available vector maps
-            if self.mapdisplay.digittoolbar:
-                self.mapdisplay.digittoolbar.UpdateListOfLayers(updateTool=True)
         elif ltype == 'thememap':
             self.SetItemImage(layer, self.theme_icon)
             self.SetItemText(layer, 'thematic map (double click to set properties)')
@@ -629,6 +626,10 @@ class LayerTree(CT.CustomTreeCtrl):
 
         self.Map.ChangeLayer(item=layer, type='command', command=cmd, name=mapname, mapset=mapset,
                              l_active=chk, l_hidden=hidden, l_opacity=opac, l_render=False)
+
+        # if digitization tool enabled -> update list of available vector map layers
+        if self.mapdisplay.digittoolbar:
+            self.mapdisplay.digittoolbar.UpdateListOfLayers(updateTool=True)
 
     def setNotebookPage(self,pg):
         self.Parent.notebook.SetSelection(pg)

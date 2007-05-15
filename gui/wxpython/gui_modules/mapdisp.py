@@ -441,7 +441,7 @@ class BufferedWindow(wx.Window):
         # update statusbar
         #Debug.msg (3, "BufferedWindow.UpdateMap(%s): region=%s" % self.Map.region)
         self.Map.SetRegion()
-        self.parent.statusbar.SetStatusText("Extents: %.2f(W)-%.2f(E), %.2f(N)-%.2f(S)" %
+        self.parent.statusbar.SetStatusText("Ext: %.2f(W)-%.2f(E), %.2f(N)-%.2f(S)" %
                                             (self.Map.region["w"], self.Map.region["e"],
                                              self.Map.region["n"], self.Map.region["s"]), 0)
 
@@ -546,6 +546,14 @@ class BufferedWindow(wx.Window):
                 if self.parent.digittoolbar.action == "add":
                     try:
                         map = self.parent.digittoolbar.layers[self.parent.digittoolbar.layerID].name
+                    except:
+                        map = None
+                        dlg = wx.MessageDialog(self, _("No vector map layer selected for editing"),
+                                               _("Error"), wx.OK | wx.ICON_ERROR)
+                        dlg.ShowModal()
+                        dlg.Destroy()
+
+                    if map:
                         east, north = self.Pixel2Cell(self.mouse['begin'][0],self.mouse['begin'][1])
                         if self.parent.digittoolbar.type in ["point", "centroid"]:
                             # add new point
@@ -554,12 +562,9 @@ class BufferedWindow(wx.Window):
                                            x=east, y=north)
                         elif self.parent.digittoolbar.type in ["line", "boundary"]:
                             # add new point to the line
+                            Debug.msg (3, "BufferedWindow.MouseAction(): new saved pos=%f,%f" % (east, north))
                             self.savedpos.append ((east, north))
-                    except:
-                        dlg = wx.MessageDialog(self, _("No vector map layer is selected"), _("Error"), wx.OK | wx.ICON_ERROR)
-                        dlg.ShowModal()
-                        dlg.Destroy()
-
+                    
                 # redraw map
                 self.render=True
                 self.UpdateMap()
@@ -583,19 +588,22 @@ class BufferedWindow(wx.Window):
                 if self.parent.digittoolbar.type in ["line", "boundary"]:
                     try:
                         map = self.parent.digittoolbar.layers[self.parent.digittoolbar.layerID].name
+                    except:
+                        map = None
+                        dlg = wx.MessageDialog(self, _("No vector map layer is selected"), _("Error"), wx.OK | wx.ICON_ERROR)
+                        dlg.ShowModal()
+                        dlg.Destroy()
+
+                    if map:
                         # add new line
-                        Digit.AddLine(map=self.parent.digittoolbar.layers[self.parent.digittoolbar.layerID],
+                        Digit.AddLine(map=map,
                                       type=self.parent.digittoolbar.type,
                                       xy=self.savedpos)
-                        # clean up
+                        # clean up saved positions
                         self.savedpos = []
                         # redraw map
                         self.render=True
                         self.UpdateMap()
-                    except:
-                        dlg = wx.MessageDialog(self, _("No vector map layer is selected"), _("Error"), wx.OK | wx.ICON_ERROR)
-                        dlg.ShowModal()
-                        dlg.Destroy()
 
         # double click
         elif event.ButtonDClick():
@@ -995,9 +1003,9 @@ class MapFrame(wx.Frame):
         # Add statusbar
         #
         self.statusbar = self.CreateStatusBar(number=2, style=0)
-        self.statusbar.SetStatusWidths([-2, -1])
+        self.statusbar.SetStatusWidths([-5, -2])
         self.Map.SetRegion()
-        map_frame_statusbar_fields = ["Extents: %.2f(W)-%.2f(E), %.2f(N)-%.2f(S)" %
+        map_frame_statusbar_fields = ["Ext: %.2f(W)-%.2f(E), %.2f(N)-%.2f(S)" %
                                       (self.Map.region["w"], self.Map.region["e"],
                                        self.Map.region["n"], self.Map.region["s"]),
                                       "%s,%s" %(None, None)]
