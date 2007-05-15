@@ -155,7 +155,7 @@ class GMFrame(wx.Frame):
         self.encoding = 'ISO-8859-1' # default encoding for display fonts
 
         self.Bind(wx.EVT_CLOSE, self.onCloseWindow)
-        self.Bind(wx.EVT_LEFT_DOWN, self.addRaster)
+        self.Bind(wx.EVT_LEFT_DOWN, self.AddRaster)
 
         # item, proportion, flag, border, userData
         self.sizer.Add(self.notebook, proportion=1, flag=wx.EXPAND, border=1)
@@ -457,16 +457,27 @@ class GMFrame(wx.Frame):
         addrast = wx.MenuItem(rastmenu, -1, Icons["addrast"].GetLabel())
         addrast.SetBitmap(Icons["addrast"].GetBitmap(self.iconsize))
         rastmenu.AppendItem(addrast)
-        self.Bind(wx.EVT_MENU, self.addRaster, addrast)
+        self.Bind(wx.EVT_MENU, self.AddRaster, addrast)
+
         addrgb = wx.MenuItem(rastmenu, -1, Icons["addrgb"].GetLabel())
         addrgb.SetBitmap(Icons["addrgb"].GetBitmap(self.iconsize))
         rastmenu.AppendItem(addrgb)
-        self.Bind(wx.EVT_MENU, self.addRGB, addrgb)
+        self.Bind(wx.EVT_MENU, self.AddRGB, addrgb)
 
         addhis = wx.MenuItem(rastmenu, -1, Icons ["addhis"].GetLabel())
         addhis.SetBitmap(Icons["addhis"].GetBitmap (self.iconsize))
         rastmenu.AppendItem(addhis)
-        self.Bind(wx.EVT_MENU, self.addHIS, addhis)
+        self.Bind(wx.EVT_MENU, self.AddHIS, addhis)
+
+#        addrastarrow = wx.MenuItem(rastmenu, -1, Icons ["addrarrow"].GetLabel())
+#        addrastarrow.SetBitmap(Icons["addrarrow"].GetBitmap (self.iconsize))
+#        rastmenu.AppendItem(addrastarrow)
+#        self.Bind(wx.EVT_MENU, self.AddRastarrow, addrastarrow)
+#
+#        addrastnums = wx.MenuItem(rastmenu, -1, Icons ["addrnum"].GetLabel())
+#        addrastnums.SetBitmap(Icons["addrnum"].GetBitmap (self.iconsize))
+#        rastmenu.AppendItem(addrastnums)
+#        self.Bind(wx.EVT_MENU, self.AddRastnum, addrastnums)
 
         # Popup the menu.  If an item is selected then its handler
         # will be called before PopupMenu returns.
@@ -518,24 +529,29 @@ class GMFrame(wx.Frame):
         ovlmenu.Destroy()
 
 
-    def addRaster(self, event):
+    def AddRaster(self, event):
         self.notebook.SetSelection(0)
         self.curr_page.maptree.AddLayer('raster')
 
-    def addRGB(self, event):
+    def AddRGB(self, event):
         """Add RGB layer"""
         self.notebook.SetSelection(0)
         self.curr_page.maptree.AddLayer('rgb')
 
-    def addHIS(self, event):
+    def AddHIS(self, event):
         """Add HIS layer"""
         self.notebook.SetSelection(0)
         self.curr_page.maptree.AddLayer('his')
 
-    def addRastLeg(self, event):
-        """Add raster legend"""
+    def AddRastarrow(self, event):
+        """Add raster flow arrows map"""
         self.notebook.SetSelection(0)
-        self.curr_page.maptree.AddLayer('rastleg')
+        self.curr_page.maptree.AddLayer('rastarrow')
+
+    def AddRastnum(self, event):
+        """Add raster map with cell numbers"""
+        self.notebook.SetSelection(0)
+        self.curr_page.maptree.AddLayer('rastnum')
 
     def addVector(self, event):
         """Add vector layer"""

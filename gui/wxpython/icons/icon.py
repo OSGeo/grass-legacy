@@ -56,7 +56,8 @@ icons_default = {
     "attrtable"  : 'db-values.gif',
     "addrgb"     : 'module-d.rgb.gif',
     "addhis"     : 'channel-his.gif',
-    "addlegend"  : 'module-d.legend.gif',
+    "addrarrow"  : 'module-d.rast.arrow.gif',
+    "addrnum"    : 'module-d.rast.num.gif',
     "elvect"     : 'element-vector.gif',
     "addthematic": 'module-d.vect.thematic.gif',
     "addchart"   : 'module-d.vect.chart.gif',
@@ -64,14 +65,16 @@ icons_default = {
     "addlabels"  : 'module-d.labels.gif',
     "addtext"    : 'module-d.text.gif',
     "addbarscale": 'module-d.barscale.gif',
-    # histogram
+    # analyze raster
+    "analyze"    : 'gui-rastanalyze.gif',
+    "measure"    : 'gui-measure.gif',
     "font"       : 'gui-font.gif',
     "histogram"  : 'module-d.histogram.gif',
     "color"      : 'edit-color.gif',
     "options"    : wx.ART_ERROR,
-    # profile
+    "profile"    : 'gui-profile.gif',
     "transect"   : 'gui-profiledefine.gif',
-    "profile"    : 'gui-profiledraw.gif',
+    "profiledraw": 'gui-profiledraw.gif',
     "analyze"    : 'gui-rastanalyze.gif', # TODO: fix?
     }
 
@@ -179,7 +182,8 @@ Icons = {
     "attrtable"  : MetaIcon (img=icons_img["attrtable"], label="Show attribute table"),
     "addrgb"     : MetaIcon (img=icons_img["addrgb"], label="Add RGB layer"),
     "addhis"     : MetaIcon (img=icons_img["addhis"], label="Add HIS layer"),
-    "addlegend"  : MetaIcon (img=icons_img["addlegend"], label="Add legend"),
+    "addrarrow"  : MetaIcon (img=icons_img["addrarrow"], label="Add raster flow arrows"),
+    "addrnum"    : MetaIcon (img=icons_img["addrnum"], label="Add raster cell numbers"),
     "elvect"     : MetaIcon (img=icons_img["elvect"], label=""),
     "addthematic": MetaIcon (img=icons_img["addthematic"], label="Add thematic layer"),
     "addchart"   : MetaIcon (img=icons_img["addchart"], label="Add thematic chart layer"),
@@ -192,10 +196,12 @@ Icons = {
     "digaddbound": MetaIcon (img=icons_img["digaddbound"], label="Digitize new boundary"),
     "digaddcentr": MetaIcon (img=icons_img["digaddcentr"], label="Digitize new centroid"),
     "digexit"    : MetaIcon (img=icons_img["digexit"], label="Quit digitization tool"),
-    # profile
+    # analyze raster
+    "analyze"    : MetaIcon (img=icons_img["analyze"], label="Analyze map"),
+    "measure"    : MetaIcon (img=icons_img["measure"], label="Measure distance"),
     "transect"   : MetaIcon (img=icons_img["transect"], label="Draw transect to profile"),
-    "profile"    : MetaIcon (img=icons_img["profile"], label="Create profile"),
-    # histogram
+    "profile"    : MetaIcon (img=icons_img["profile"], label="Profile surface map"),
+    "profiledraw": MetaIcon (img=icons_img["profiledraw"], label="Create profile"),
     "histogram"  : MetaIcon (img=icons_img["histogram"], label="Create histogram of image or raster file"),
     "font"       : MetaIcon (img=icons_img["font"], label="Select font"),
     "color"      : MetaIcon (img=icons_img["color"], label="Select color"),
