@@ -149,7 +149,10 @@ int main (int argc, char *argv[])
 	print = 0;
 	if (!params.header -> answer)
 	    read_head(ascii, &Map);
-	ret = asc_to_bin(ascii, &Map) ;
+	ret = asc_to_bin(ascii, &Map);
+	if (ret > 0 && !params.close -> answer) { /* close boundaries */
+	    do_close (&Map, GV_BOUNDARY, thresh);
+	}
 	break;
     case MODE_DEL:
 	ret = do_del(&Map, List, print);
