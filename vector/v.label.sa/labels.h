@@ -1,5 +1,6 @@
-/*
- * This file defines the main datastructures used in this module
+/**
+ * @file labels.h
+ * This file defines the main datastructures used in this module.
  */
 #ifndef _LABELS_H
 #define _LABELS_H
@@ -45,7 +46,8 @@ struct _label {
     char * text;                 /**< The label text */
 	int cat;                     /**< the cat of the feature */
 	int type;                    /**< The feture type (point, line, area) */
-	struct line_pnts * shape;
+	struct line_pnts * shape;    /**< The points for the feature that this
+								  * label belongs to */
 };
 
 /**
@@ -62,11 +64,17 @@ struct _label_candidate {
 	int above;
 };
 
+/**
+ * This structire represents an intersection of two labels
+ */
 struct _label_intersection {
-	label_t *label;
-	int candidate;
+	label_t *label; /**< A pointer to the #label_t structure */
+	int candidate; /**< The number of the candidate */
 };
 
+/**
+ * These are the input options
+ */
 struct params {
 	struct Option *map;
 	struct Option *type;
@@ -92,9 +100,21 @@ label_t * labels_init(struct params *p, int *n_labels);
  * @param n_labels The size of the array
  */
 void label_candidates(label_t *labels, int n_labels);
+
+/**
+ * This function checks for all possible label overlap situations
+ * @param labels The array of labels to check
+ * @param n_labels The size of the labels array
+ */
 void label_candidate_overlap(label_t *labels, int n_labels);
 
-
+/**
+ * This function performs the actual annealing function. See documentation for
+ * more information on simulated Annealing.
+ * @param labels The labels to perform annealing on
+ * @param n_labels The size of the labels array
+ * @param p The program parametrs.
+ */
 void simulate_annealing(label_t *labels, int n_labels, struct params *p);
 
 /**

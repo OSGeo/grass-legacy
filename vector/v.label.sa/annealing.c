@@ -1,8 +1,14 @@
 #include "labels.h"
 #ifndef M_E
+/**
+ * This is simply Euler's number
+ */
 # define M_E 2.7182818284590452353602874713526625L
 #endif
 
+/**
+ * How many times to decrease the Temperature T.
+ */
 #define TEMP_DECS 50
 
 static double calc_label_overlap(label_t *label, int cc, int nc);
@@ -12,7 +18,10 @@ static unsigned int overlaps_created=0, overlaps_removed=0;
 
 void simulate_annealing(label_t *labels, int n_labels, struct params *p)
 {
-	double T, dE;
+	/* The temperature of the system */
+	double T;
+	/* The change in energy */
+	double dE;
 	T = -1.0/log(1.0/3.0);
 	unsigned int t, tot_better=0, tot_worse=0, tot_ign=0;
 
@@ -25,7 +34,6 @@ void simulate_annealing(label_t *labels, int n_labels, struct params *p)
 			label_t *lp;
 			
 			/* pick a random label*/
-//			do {
 			r = rand();
 			l = (int)((double)(n_labels) * (r / (RAND_MAX + 1.0)));
 			lp = &labels[l];
@@ -33,7 +41,6 @@ void simulate_annealing(label_t *labels, int n_labels, struct params *p)
 			if(lp->n_candidates < 2) continue;
 
 			cc = lp->current_candidate;
-//			} while(lp->candidates[cc].score < 0.1);
 			/*, and a random new candidate place */
 			c = (int)((double)(lp->n_candidates) * 
 					  (rand() / (RAND_MAX + 1.0)));
@@ -44,14 +51,6 @@ void simulate_annealing(label_t *labels, int n_labels, struct params *p)
 			/* calc dE */
 			dE = lp->candidates[c].score - lp->candidates[cc].score;
 			dE += calc_label_overlap(lp, cc, c);
-/*			printf("%s:\n"
-				   "\tPoint at (%lf,%lf), candidate %d at (%lf,%lf)\n"
-				   "\tbb (NEWS)=(%lf,%lf,%lf,%lf)\n", lp->text,
-				   lp->shape->x[0],lp->shape->y[0], c,
-				   lp->candidates[c].point.x, lp->candidates[c].point.y,
-				   lp->bb.N, lp->bb.E, lp->bb.W, lp->bb.S);*/
-/*			fprintf(stderr, "T=%lf dE=%lf, i=%d l=%d cc=%d c=%d\r",
-					T,dE,i,l,cc,c);*/
 			
 			/* if dE < 0 accept */
 			if(dE < 0.0) {
@@ -67,9 +66,6 @@ void simulate_annealing(label_t *labels, int n_labels, struct params *p)
 				p = pow(M_E, -dE/T);
 				r = rand() / (RAND_MAX + 1.0);
 				if(r < p) {
-//					if(dE > 40.0)
-//					printf("r<p: dE=%lf, p=%lf, T=%lf, r=%lf label=%s nc=%d cc=%d\n",
-//						   dE, p, T, r, lp->text, c, cc);
 					do_label_overlap(lp, cc, c);
 					lp->current_score += lp->candidates[c].score;
 					lp->current_candidate=c;
@@ -85,21 +81,6 @@ void simulate_annealing(label_t *labels, int n_labels, struct params *p)
 				break;
 			}
 		}
-/*		if(t % 10000 == 0)
-		{
-			char *tmp;
-			FILE *labelf;
-			tmp = G_tempfile();
-			fprintf(stderr, "\nWriting labels to file %s: ...", tmp);
-			labelf = fopen(tmp, "w");
-			for(i=0; i < n_labels;i++) {
-				if(labels[i].n_candidates > 0)
-					print_label(labelf, &labels[i], p);
-				G_percent(i, (n_labels-1), 1);
-			}
-			fclose(labelf);
-		}
-*/
 		G_percent(t, TEMP_DECS, 1);
 		/* we have found an optimal solution */
 		if(successes == 0) {
@@ -108,12 +89,19 @@ void simulate_annealing(label_t *labels, int n_labels, struct params *p)
 		T -= 0.1 * T;
 	}
 	G_percent(TEMP_DECS, TEMP_DECS, 1);
-/*	fprintf(stderr, "%u moves improving placing %u moves worsening placing %d ignored moves in %d rounds\n",
-			tot_better, tot_worse, tot_ign, t);
-	fprintf(stderr, "%u overlaps removed %u overlaps created\n",
-			overlaps_removed, overlaps_created);*/
 }
 
+/**
+ * This function calculates the change in E (dE) if the given label would
+ * be moved to the new place. Contrary to the original algorithm this function
+ * requires twice as much energy to overlap two labels then is released by
+ * resolving an overlap. I don't have and scientific fact but it seems to
+ * improve the result.
+ * @param label The label in question
+ * @param cc The current candidate
+ * @param nc The new potential candidate location
+ * @return The dE value.
+ */
 static double calc_label_overlap(label_t *label, int cc, int nc)
 {
 	int i, old_overlaps=0, new_overlaps=0;
@@ -142,6 +130,12 @@ static double calc_label_overlap(label_t *label, int cc, int nc)
 	return (double)((new_overlaps) - old_overlaps) * 80.0;
 }
 
+/**
+ * This function commits the label change to the new location.
+ * @param label The label to move
+ * @param cc The current candidate
+ * @param nc The new potential candidate location
+ */
 static void do_label_overlap(label_t *label, int cc, int nc)
 {
 	int i;
@@ -171,3 +165,4 @@ static void do_label_overlap(label_t *label, int cc, int nc)
 		}
 	}
 }
+
