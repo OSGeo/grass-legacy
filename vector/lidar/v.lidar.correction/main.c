@@ -46,7 +46,7 @@ main (int argc,char *argv[])
     double **N, **obsVect;			/* Interpolation and least-square matrix */
 
     struct Map_info In, Out, Out_Terrain;
-    struct Option *in_opt, *out_opt, *out_terrain_opt, *dbdriver, *dbdatabase, *passoE_opt, *passoN_opt, \
+    struct Option *in_opt, *out_opt, *out_terrain_opt, *passoE_opt, *passoN_opt, \
     	*lambda_f_opt, *Thresh_A_opt, *Thresh_B_opt; 
     struct GModule *module;
 
@@ -64,48 +64,19 @@ main (int argc,char *argv[])
     module->keywords = _("vector, LIDAR");
     module->description = _("Correction of the v.lidar.growing output. It is the last of the three algorithms for LIDAR filtering");
 
-    in_opt = G_define_option () ;
-    	in_opt->key = "input";
-    	in_opt->type = TYPE_STRING;
-    	in_opt->key_desc     = "name";
-	in_opt->required     = YES;
-	in_opt->gisprompt    = "old,vector,vector";
+    in_opt = G_define_standard_option (G_OPT_V_INPUT);
 	in_opt->description = _("Input observation vector map name (v.lidar.growing output)");
 
-    out_opt = G_define_option () ;
-    	out_opt->key = "output";
-    	out_opt->type = TYPE_STRING;
-    	out_opt->key_desc     = "name";
-	out_opt->required     = YES;
-	out_opt->gisprompt    = "new,vector,vector";
+    out_opt = G_define_standard_option (G_OPT_V_OUTPUT);
 	out_opt->description = _("Output classified vector map name");
 
     out_terrain_opt = G_define_option () ;
-    	out_terrain_opt->key = "out_terrain";
+    	out_terrain_opt->key = "terrain";
     	out_terrain_opt->type = TYPE_STRING;
     	out_terrain_opt->key_desc     = "name";
 	out_terrain_opt->required     = YES;
 	out_terrain_opt->gisprompt    = "new,vector,vector";
 	out_terrain_opt->description = _("Output terrain only vector map name");
-
-    dbdatabase = G_define_option () ;
-    	dbdatabase->key        	= "database" ;
-    	dbdatabase->type       	= TYPE_STRING ;
-    	dbdatabase->required   	= NO ;
-    	dbdatabase->multiple   	= NO ;
-    	dbdatabase->description	= _("Database name");
-    if ( (db=G__getenv2("DB_DATABASE",G_VAR_MAPSET)) )
-	    dbdatabase->answer = G_store ( db );
-
-    dbdriver = G_define_option () ;
-   	dbdriver->key         = "driver" ;
-    	dbdriver->type        = TYPE_STRING ;
-    	dbdriver->options     = db_list_drivers();
-    	dbdriver->required    = NO  ;
-    	dbdriver->multiple    = NO ;
-    	dbdriver->description = _("Driver name");
-    if ( (dvr = G__getenv2("DB_DRIVER",G_VAR_MAPSET)) )
-	    dbdriver->answer = G_store ( dvr );
 
     passoE_opt = G_define_option ();
     	passoE_opt->key = "sce";
@@ -117,7 +88,7 @@ main (int argc,char *argv[])
     passoN_opt = G_define_option ();
     	passoN_opt->key = "scn";
     	passoN_opt->type = TYPE_DOUBLE;
-    	passoN_opt->required = YES;
+    	passoN_opt->required = NO;
     	passoN_opt->answer = "25";
     	passoN_opt->description = _("Interpolation spline step value in north direction");
 
@@ -153,6 +124,8 @@ main (int argc,char *argv[])
     lambda = atof (lambda_f_opt->answer);
     HighThresh = atof (Thresh_A_opt->answer);
     LowThresh = atof (Thresh_B_opt->answer);
+    dvr = G__getenv2 ("DB_DRIVER",G_VAR_MAPSET);
+    db = G__getenv2 ("DB_DATABASE",G_VAR_MAPSET);
 
 /* Setting auxiliar table's name */
     sprintf (table_name, "%s_aux", out_opt->answer);
@@ -189,9 +162,9 @@ main (int argc,char *argv[])
     Vect_hist_command (&Out_Terrain);
 
 /* Start driver and open db*/
-    driver = db_start_driver_open_database (dbdriver->answer, dbdatabase->answer);
+    driver = db_start_driver_open_database (dvr, db);
     if (driver == NULL)
-	G_fatal_error( _("No database connection for driver <%s> is defined. Run db.connect"), dbdriver->answer);
+	G_fatal_error( _("No database connection for driver <%s> is defined. Run db.connect"), dvr);
 
 /* Setting regions and boxes */    
     G_get_set_window (&original_reg);
