@@ -79,11 +79,14 @@ int parser(int argc, char*argv[], struct GParams *params,
     params -> id = G_define_standard_option(G_OPT_V_CATS);
     params -> id->required    = NO;
     params -> id->key         = "ids";
-    params -> id->label = _("ID values");
+    params -> id->label       = _("ID values");
+    params -> id->guisection  = _("Query");
+
 
     params -> cat = G_define_standard_option(G_OPT_V_CATS);
     params -> cat->required    = NO;
-    
+    params -> cat->guisection  = _("Query");
+
     params -> coord = G_define_option();
     params -> coord->key         = "coords";
     params -> coord->key_desc    = "x,y";
@@ -91,7 +94,8 @@ int parser(int argc, char*argv[], struct GParams *params,
     params -> coord->required    = NO;
     params -> coord->multiple    = YES;
     params -> coord->description = _("List of point coordinates");
-    
+    params -> coord->guisection  = _("Query");
+
     params -> bbox =  G_define_option();
     params -> bbox->key         = "bbox";
     params -> bbox->key_desc    = "x1,y1,x2,y2";
@@ -99,6 +103,7 @@ int parser(int argc, char*argv[], struct GParams *params,
     params -> bbox->required    = NO;
     params -> bbox->multiple    = NO;
     params -> bbox->description = _("Bounding box for selecting features");
+    params -> bbox->guisection  = _("Query");
 
     params -> poly =  G_define_option();
     params -> poly->key         = "polygon";
@@ -107,9 +112,11 @@ int parser(int argc, char*argv[], struct GParams *params,
     params -> poly->required    = NO;
     params -> poly->multiple    = YES;
     params -> poly->description = _("Polygon for selecting features");
+    params -> poly->guisection  = _("Query");
 
     params -> where = G_define_standard_option(G_OPT_WHERE);
-
+    params -> where->guisection  = _("Query");
+	
     params -> topo = G_define_flag();
     params -> topo -> key = 't';
     params -> topo -> description = _("Do not build topology");
