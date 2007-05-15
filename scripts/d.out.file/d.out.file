@@ -29,7 +29,7 @@
 #%option
 #% key: format
 #% type: string
-#% options: png,ppm,tif,jpg,bmp,ps
+#% options: png,ppm,tif,jpg,bmp,ps,eps
 #% answer: png
 #% description: Graphics file format
 #% required : yes
@@ -39,7 +39,7 @@
 #% type: integer
 #% answer: 1
 #% label: Dimensions of output file versus current window size
-#% description: (single=1, double=2, quadruple=4)
+#% description: (same=1, double size=2, quadruple size=4)
 #% guisection: Images
 #% required : no
 #%end
@@ -186,7 +186,7 @@ export GRASS_TRANSPARENT
 
 #set output file name and format
 case "$GIS_OPT_FORMAT" in
-   png | ppm | ps)
+   png | ppm | ps | eps)
      output="${GIS_OPT_OUTPUT}.${GIS_OPT_FORMAT}"
      ;;
    tif | jpg | bmp)
@@ -205,25 +205,17 @@ if [ -e "$outname" ] ; then
 fi
 
 
-if [ "$GIS_OPT_FORMAT" != "ps" ] ; then
-    GRAPHICS_DRIVER=PNG
-    GRASS_PNGFILE="$output"
-    export GRASS_PNGFILE
-
-    #make sure that output is 24 bit color
-    GRASS_TRUECOLOR=TRUE
-    export GRASS_TRUECOLOR
-
-    GRASS_PNG_COMPRESSION="$GIS_OPT_COMPRESSION"
-    export GRASS_PNG_COMPRESSION
-
-else
+if [ "$GIS_OPT_FORMAT" = "ps" ] || [ "$GIS_OPT_FORMAT" = "eps" ] ; then
     GRAPHICS_DRIVER=PS
     GRASS_PSFILE="$output"
     export GRASS_PSFILE
 
-    GRASS_PAPER="$GIS_OPT_PAPER"
-    export GRASS_PAPER
+    if [ "$GIS_OPT_FORMAT" = "ps" ] ; then
+	GRASS_PAPER="$GIS_OPT_PAPER"
+	export GRASS_PAPER
+    else
+	unset GRASS_PAPER
+    fi
 
     if [ "$GIS_OPT_PS_LEVEL" -lt 2 ] ; then
 	GRASS_TRUECOLOR=FALSE
@@ -238,12 +230,27 @@ else
     else
 	unset GRASS_LANDSCAPE
     fi
+
+else
+    GRAPHICS_DRIVER=PNG
+    GRASS_PNGFILE="$output"
+    export GRASS_PNGFILE
+
+    #make sure that output is 24 bit color
+    GRASS_TRUECOLOR=TRUE
+    export GRASS_TRUECOLOR
+
+    GRASS_PNG_COMPRESSION="$GIS_OPT_COMPRESSION"
+    export GRASS_PNG_COMPRESSION
 fi
 
 
 g.message "Saving display from Monitor: [$curr_mon] to <$outname>."
-g.message "Image size [$out_width x $out_height]"
-
+if [ "$GIS_OPT_FORMAT" != "ps" ] ; then
+    g.message "Image size [$out_width x $out_height]"
+else
+    g.message "Image size [$GRASS_PAPER]"
+fi
 
 ################################
 #export display to PNG/PS driver
@@ -259,7 +266,7 @@ g.message "Screen export complete. (writing the file may take a small amount of 
 d.mon select="$curr_mon"
 
 case "$GIS_OPT_FORMAT" in
-   png | ppm | ps)
+   png | ppm | ps | eps)
      g.message "Done."
      exit
      ;;
