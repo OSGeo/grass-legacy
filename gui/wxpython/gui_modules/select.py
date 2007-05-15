@@ -144,6 +144,7 @@ class TreeCtrlComboPopup(wx.combo.ComboPopup):
                 self.seltree.SetItemTextColour(dir_node, wx.Colour(50,50,200))
                 try:
                     elem_list = os.listdir(os.path.join (location_path, dir, element))
+                    elem_list.sort
                     for elem in elem_list:
                         self.AddItem(elem+'@'+dir, parent=dir_node)
                 except:
@@ -196,14 +197,14 @@ class TreeCtrlComboPopup(wx.combo.ComboPopup):
         item, flags = self.seltree.HitTest(evt.GetPosition())
         if item and flags & wx.TREE_HITTEST_ONITEMLABEL:
             self.curitem = item
-            
-            if self.seltree.GetRootItem() == self.seltree.GetItemParent(item): 
+
+            if self.seltree.GetRootItem() == self.seltree.GetItemParent(item):
                 self.value = None # cannot select mapset item
             else:
                 self.value = item
 
             self.Dismiss()
-            
+
         evt.Skip()
 
 
