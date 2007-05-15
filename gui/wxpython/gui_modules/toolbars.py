@@ -58,6 +58,16 @@ class MapToolbar:
                                                  bitmap=Icons["pointer"].GetBitmap(),
                                                  kind=wx.ITEM_RADIO,
                                                  shortHelp=Icons["pointer"].GetLabel(), longHelp=Icons["pointer"].GetDesc())
+        self.query   = self.toolbar.AddLabelTool(id=wx.ID_ANY, label="query",
+                                                 bitmap=Icons["query"].GetBitmap(),
+                                                 bmpDisabled=wx.NullBitmap,
+                                                 kind=wx.ITEM_RADIO,
+                                                 shortHelp=Icons["query"].GetLabel(), longHelp=Icons["query"].GetDesc())
+        self.pan     = self.toolbar.AddLabelTool(id=wx.ID_ANY, label="pan",
+                                                 bitmap=Icons["pan"].GetBitmap(),
+                                                 bmpDisabled=wx.NullBitmap,
+                                                 kind=wx.ITEM_RADIO,
+                                                 shortHelp=Icons["pan"].GetLabel(), longHelp=Icons["pan"].GetDesc())
         self.zoomin  = self.toolbar.AddLabelTool(id=wx.ID_ANY, label="zoom_in",
                                                  bitmap=Icons["zoom_in"].GetBitmap(),
                                                  bmpDisabled=wx.NullBitmap, kind=wx.ITEM_RADIO,
@@ -67,19 +77,6 @@ class MapToolbar:
                                                  bmpDisabled=wx.NullBitmap,
                                                  kind=wx.ITEM_RADIO,
                                                  shortHelp=Icons["zoom_out"].GetLabel(), longHelp=Icons["zoom_out"].GetDesc())
-        self.pan     = self.toolbar.AddLabelTool(id=wx.ID_ANY, label="pan",
-                                                 bitmap=Icons["pan"].GetBitmap(),
-                                                 bmpDisabled=wx.NullBitmap,
-                                                 kind=wx.ITEM_RADIO,
-                                                 shortHelp=Icons["pan"].GetLabel(), longHelp=Icons["pan"].GetDesc())
-        self.query   = self.toolbar.AddLabelTool(id=wx.ID_ANY, label="query",
-                                                 bitmap=Icons["query"].GetBitmap(),
-                                                 bmpDisabled=wx.NullBitmap,
-                                                 kind=wx.ITEM_RADIO,
-                                                 shortHelp=Icons["query"].GetLabel(), longHelp=Icons["query"].GetDesc())
-        self.toolbar.AddSeparator()
-
-
         self.zoomback = self.toolbar.AddLabelTool(id=wx.ID_ANY, label="zoom_back",
                                                  bitmap=Icons["zoom_back"].GetBitmap(),
                                                  bmpDisabled=wx.NullBitmap, kind=wx.ITEM_NORMAL,
@@ -88,6 +85,9 @@ class MapToolbar:
                                                   bitmap=Icons["zoommenu"].GetBitmap(),
                                                   bmpDisabled=wx.NullBitmap,
                                                   shortHelp=Icons["zoommenu"].GetLabel(), longHelp=Icons["zoommenu"].GetDesc())
+
+        self.toolbar.AddSeparator()
+
         self.analyze = self.toolbar.AddLabelTool(id=wx.ID_ANY, label="analyze",
                                              bitmap=Icons["analyze"].GetBitmap(),
                                              bmpDisabled=wx.NullBitmap,
@@ -276,7 +276,7 @@ class DigitToolbar:
 
     def OnSelectMap (self, event):
         """
-        Select vector map layer for editing 
+        Select vector map layer for editing
 
         If there is a vector map layer already edited, this action is
         firstly terminated. The map layer is closed. After this the
@@ -286,12 +286,12 @@ class DigitToolbar:
             # TODO
             pass
 
-        # select the given map layer for editing 
+        # select the given map layer for editing
         self.layerID = self.combo.GetCurrentSelection()
 
         Debug.msg (3, "DigitToolbar.OnSelectMap(): layerID=%d layer=%s" % \
                    (self.layerID, self.layers[self.layerID].name))
-                   
+
     def StartEditing (self, layerSelected):
         """
         Mark map layer enabled for digitization
@@ -305,7 +305,7 @@ class DigitToolbar:
             return True
         except:
             return False
-    
+
     def UpdateListOfLayers (self, updateTool=False):
         """
         Update list of available vector map layers.
@@ -317,7 +317,7 @@ class DigitToolbar:
         layerNameSelected = None
         if self.layerID != None: # name of currently selected layer
             layerNameSelected = self.layers[self.layerID].name
-        
+
         # select vector map layer in the current mapset
         layerNameList = []
         self.layers = self.mapcontent.GetListOfLayers(l_type="vector", l_mapset=grassenv.env["MAPSET"])
@@ -335,10 +335,10 @@ class DigitToolbar:
             if self.comboid:
                 self.toolbar.DeleteToolByPos(0)
                 #self.combo.Destroy()
-                    
+
             self.combo = wx.ComboBox(self.toolbar, id=wx.ID_ANY, value=value,
                                      choices=layerNameList, size=(150, -1))
-            
+
             self.comboid = self.toolbar.InsertControl(0, self.combo)
             self.toolbar.Realize()
 
