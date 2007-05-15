@@ -22,32 +22,53 @@ if [ -e "$GISBASE/etc/module_sysnopsis.txt" ] ; then
 #  echo "ERROR: module_sysnopsis.txt already exists" 1>&2
 #  exit 1
    #blank it
-   echo 'Overwriting "$GISBASE/etc/module_sysnopsis.txt"' 1>&2
+   g.message -w 'Overwriting "$GISBASE/etc/module_sysnopsis.txt"'
    \rm $GISBASE/etc/module_sysnopsis.txt
 fi
 
+TMP="`g.tempfile pid=$$`"
+if [ $? -ne 0 ] || [ -z "$TMP" ] ; then
+    g.message -e "Unable to create temporary files" 
+    exit 1
+fi
 
-echo "Generating module synopsis ..."  1>&2
-cd "$GISBASE"/bin
 
+g.message "Generating module synopsis ..."
 
-for MODULE in ?\.* ; do
-  unset label
-  unset desc
-#  echo "[$MODULE]"
+cd "$GISBASE"
 
-  if [ "$MODULE" = g.parser ] || [ "$MODULE" = r.mapcalc ] ; then
-    continue
-  fi
+for DIR in bin scripts ; do
+  cd $DIR
 
-  eval `$MODULE --tcltk | head -n 3 | tail -n 2 |  tr '"' "'" | \
+  for MODULE in ?\.* r3.* ; do
+    unset label
+    unset desc
+#    echo "[$MODULE]"
+
+    case "$MODULE" in
+      g.parser | r.mapcalc | r3.mapcalc | mkftcap | p.out.vrml| d.paint.labels)
+	continue
+	;;
+    esac
+
+    eval `$MODULE --tcltk | head -n 3 | tail -n 2 |  tr '"' "'" | \
         sed -e 's/^ //' -e 's/ {/="/' -e 's/}$/"/'`
-  if [ -z "$label" ] && [ -z "$desc" ] ; then
-     continue
-  fi
-  if [ -z "$label" ] ; then
-    echo "$MODULE: $desc" >> "$GISBASE/etc/module_sysnopsis.txt"
-  else
-    echo "$MODULE: $label" >> "$GISBASE/etc/module_sysnopsis.txt"
-  fi
+    if [ -z "$label" ] && [ -z "$desc" ] ; then
+	continue
+    fi
+    if [ -z "$label" ] ; then
+	echo "$MODULE: $desc" >> "$TMP"
+    else
+	echo "$MODULE: $label" >> "$TMP"
+    fi
+  done
+
+  cd ..
 done
+
+echo "g.parser: Full parser support for GRASS scripts." >> "$TMP"
+echo "r.mapcalc: Performs arithmetic on raster map layers." >> "$TMP"
+echo "r3.mapcalc: Performs arithmetic on 3D grid volume data." >> "$TMP"
+
+sort --dictionary-order "$TMP" > "$GISBASE/etc/module_sysnopsis.txt"
+\rm "$TMP"
