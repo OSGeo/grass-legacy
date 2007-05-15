@@ -252,7 +252,9 @@ echo "</ul>" >> $FILENAME
 echo "<p>"   >> $FILENAME
 
 #insert a special comment so that GEM will know where to merge docs of extensions
-echo -e "\n<!-- GEM Extensions StartHTML. Do not delete or change this comment! -->\n" >> $FILENAME
+echo  >> $FILENAME
+echo "<!-- GEM Extensions StartHTML. Do not delete or change this comment! -->" >> $FILENAME
+echo  >> $FILENAME
 
 
 #############
