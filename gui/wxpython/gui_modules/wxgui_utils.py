@@ -170,7 +170,7 @@ class LayerTree(CT.CustomTreeCtrl):
             self.Bind (wx.EVT_MENU, self.gismgr.ShowAttributeTable, id=self.popupID4)
             self.Bind (wx.EVT_MENU, self.OnStartEditing,            id=self.popupID5)
             self.Bind (wx.EVT_MENU, self.OnStopEditing,             id=self.popupID6)
-            
+
         self.popupMenu = wx.Menu()
         # general item
         self.popupMenu.Append (self.popupID1, _("Delete"))
@@ -179,33 +179,33 @@ class LayerTree(CT.CustomTreeCtrl):
         # map layer items
         if ltype != "command" and ltype != "group": # properties
             self.popupMenu.AppendSeparator()
-            self.popupMenu.Append (self.popupID3, text=_("Properties"))
+            self.popupMenu.Append(self.popupID3, text=_("Properties"))
 
         # specific items
         if ltype == "vector": # show attribute table
             self.popupMenu.AppendSeparator()
-            self.popupMenu.Append (self.popupID4, _("Show attribute table"))
-            self.popupMenu.Append (self.popupID5, _("Start editing"))
-            layer = self.Map.GetLayer (self.layer_selected)
+            self.popupMenu.Append(self.popupID4, _("Show attribute table"))
+            self.popupMenu.Append(self.popupID5, _("Start editing"))
+            layer = self.Map.GetLayer(self.layer_selected)
             # enable editing only for vector map layers available in the current mapset
-            if layer.mapset != grassenv.env["MAPSET"]: 
+            if layer.mapset != grassenv.env["MAPSET"]:
                 self.popupMenu.Enable (self.popupID5, False)
-            self.popupMenu.Append (self.popupID6, _("Stop editing"))
-            self.popupMenu.Enable (self.popupID6, False)
+            self.popupMenu.Append(self.popupID6, _("Stop editing"))
+            self.popupMenu.Enable(self.popupID6, False)
 
-        self.PopupMenu (self.popupMenu)
+        self.PopupMenu(self.popupMenu)
         self.popupMenu.Destroy()
 
     def OnStartEditing (self, event):
         """
         Editing of vector map layer requested by the user
         """
-        layer = self.Map.GetLayer (self.layer_selected)
+        layer = self.Map.GetLayer(self.layer_selected)
 
         if not layer:
             event.Skip()
             return
-        
+
         if not self.mapdisplay.digittoolbar: # activate tool
             self.mapdisplay.AddToolbar("digit")
         else: # tool already active
@@ -213,13 +213,13 @@ class LayerTree(CT.CustomTreeCtrl):
 
         # mark layer as 'edited'
         print "#", self.mapdisplay.digittoolbar.StartEditing (layer)
-        
+
         # enable 'stop editing'
         self.popupMenu.Enable (self.popupID6, True)
 
     def OnStopEditing (self, event):
         pass
-    
+
     def OnPopupProperties (self, event):
         """Popup properties dialog"""
         self.PropertiesDialog(self.layer_selected)
@@ -627,7 +627,7 @@ class LayerTree(CT.CustomTreeCtrl):
             if mapidx > -1:
                 mapset = mapset[mapidx+1:]
 
-        self.Map.ChangeLayer(item=layer, type=self.layertype[layer], command=cmd, name=mapname, mapset=mapset,
+        self.Map.ChangeLayer(item=layer, type='command', command=cmd, name=mapname, mapset=mapset,
                              l_active=chk, l_hidden=hidden, l_opacity=opac, l_render=False)
 
     def setNotebookPage(self,pg):
