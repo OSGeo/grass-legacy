@@ -8,8 +8,8 @@ int parser(int argc, char*argv[], struct GParams *params,
     params -> fld = G_define_standard_option(G_OPT_V_FIELD);
 
     params -> type = G_define_standard_option(G_OPT_V_TYPE);
-    params -> type->answer           = "point,line,boundary,centroid" ;
-    params -> type->options          = "point,line,boundary,centroid" ;
+    params -> type->answer           = "point,line,boundary,centroid";
+    params -> type->options          = "point,line,boundary,centroid";
 
     params -> tool = G_define_option();
     params -> tool->key         = "tool";
@@ -121,11 +121,11 @@ int parser(int argc, char*argv[], struct GParams *params,
     params -> boundary = G_define_flag();
     params -> boundary -> key = 'b';
     params -> boundary -> description = _("Assign cats to boundaries too");
-
+    */
     params -> close = G_define_flag();
     params -> close -> key = 'c';
     params -> close -> description = _("Do not close boundaries");
-    
+    /*
     params -> print_cat = G_define_flag();
     params -> print_cat -> key = 'c';
     params -> print_cat -> description = _("Print category numbers instead of ID's");

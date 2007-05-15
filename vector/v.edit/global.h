@@ -38,7 +38,7 @@ struct GParams {
     struct Option *map, *in, *maxdist, *tool,
 	*coord, *cat, *move, *bbox, *fld,
 	*poly, *type, *id, *where;
-    struct Flag *header, *topo, *print;
+    struct Flag *header, *topo, *print, *close;
 };
 
 # include "proto.h"

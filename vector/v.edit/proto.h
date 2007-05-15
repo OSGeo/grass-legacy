@@ -10,6 +10,7 @@ int do_del(struct Map_info *Map, struct ilist *List, int print);
 /* a2b.c */
 int asc_to_bin(FILE *, struct Map_info *);
 int read_head ( FILE * dascii, struct Map_info *Map );
+int do_close(struct Map_info *Map, int type, double thresh);
 
 /* move.c */
 int do_move(struct Map_info *Map, struct ilist *List, int print,
