@@ -90,13 +90,13 @@ P_get_orlo (int interpolator, struct Reg_dimens *dim, double pe, double pn){
 /* Set the orlo regions dimension->
  * Returns 1 on success of bilinear; 2 on success of bicubic, 0 on failure-> */
     if (interpolator == 1) {		/* the interpolator's bilinear */
-	dim->orlo_v = 4 * pe;
-	dim->orlo_h = 4 * pn;
+	dim->orlo_v = 30 * pe;	/*4*/
+	dim->orlo_h = 30 * pn;
 	return 1; 
     }
     else if (interpolator == 0) {	/* the interpolator's bicubic */
-	dim->orlo_v = 3 * pe;
-	dim->orlo_h = 3 * pn;
+	dim->orlo_v = 40 * pe;	/*3*/
+	dim->orlo_h = 40 * pn;
 	return 2;
     }
     else return 0; 	/* The interpolator it's not bilinear nor bicubic!! */

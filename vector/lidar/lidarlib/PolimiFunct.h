@@ -29,9 +29,9 @@
 /*----------------------------------------------------------------------------------------------------------*/
 /*CONSTANS DECLARATION*/
 
-#define NSPLX_MAX 		150		/* Maximum number of splines along East direction used in the subregions interpolation*/
-#define NSPLY_MAX		150		/* Maximum number of splines along North direction used in the subregions interpolation*/
-#define OVERLAP_SIZE 		10		/* Subregions overlaping size.*/
+#define NSPLX_MAX 		200		/* Maximum number of splines along East direction used in the subregions interpolation*/
+#define NSPLY_MAX		200		/* Maximum number of splines along North direction used in the subregions interpolation*/
+#define OVERLAP_SIZE 		20		/* Subregions overlaping size.*/
 #define LATO 			2000		/* Side's size for v.to.qrast command.*/
 #define CONTOUR		15		/**/ 
 
