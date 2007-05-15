@@ -58,7 +58,7 @@ PROG=`basename $0`
 
 #### check if we have awk
 if [ ! -x "`which awk`" ] ; then
-    echo "$PROG: awk required, please install awk or gawk first" 2>&1
+    echo "$PROG: awk required, please install awk or gawk first" 1>&2
     exit 1
 fi
 
@@ -76,7 +76,8 @@ fi
 
 table=`v.db.connect $GIS_OPT_MAP -g | grep -w $GIS_OPT_LAYER | awk '{print $2}'`
 if [ -z "$table" ] ; then
-   echo -e "\nERROR: There is no table connected to this map !\nRun v.db.connect or v.db.addtable first.\n"
+   echo 'ERROR: There is no table connected to this map!' 1>&2
+   echo "Run v.db.connect or v.db.addtable first." 1>&2
    exit 1
 fi
 
@@ -91,13 +92,13 @@ while [ "$n" -le "$colnum" ]
     col=`echo $GIS_OPT_COLUMNS | cut -d',' -f$n`
     
     if [ -z "$col" ] ; then
-      echo -e "\nERROR: There is an empty column !\nDid you leave a trailing comma?\n"
+      echo 'ERROR: There is an empty column! Did you leave a trailing comma?' 1>&2
       exit 1
     fi
     
     echo "ALTER TABLE $table ADD COLUMN $col" | db.execute database=$database driver=$driver
     if [ $? -eq 1 ] ; then
-      echo "ERROR: Cannot continue (problem adding column)."
+      echo "ERROR: Cannot continue (problem adding column)." 1>&2
       exit 1
     fi
     n=`expr $n + 1` 
