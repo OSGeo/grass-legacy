@@ -16,7 +16,7 @@
 #############################################################################
 
 #%Module
-#%  description: Saves active display monitor to graphics file
+#%  description: Saves the contents of the active display monitor to a graphics file.
 #%  keywords: display, export
 #%End
 #%option
@@ -133,14 +133,18 @@ export LC_NUMERIC
 
 #### Check the current status of the monitor
 monitorcheck1="`d.mon -p | grep -v "No monitor currently selected"`"
-monitorcheck2="`d.mon -L | tail -n+3 | grep -v "not running"`"
-
-if  [ -z "$monitorcheck1" ] || [ -z "$monitorcheck2" ] ; then
-   g.message -e "You must select a display monitor"
+if [ -z "$monitorcheck1" ] ; then
+   g.message -e "You must select a display monitor."
    exit 1
 fi
 
 curr_mon="`d.mon -p | cut -f2 -d: | awk '{print $1}'`"
+
+monitorcheck2="`d.mon -L | grep "^$curr_mon" | grep -v "not running"`"
+if [ -z "$monitorcheck2" ] ; then
+   g.message -e "Selected display monitor not running."
+   exit 1
+fi
 
 
 #### set variables
