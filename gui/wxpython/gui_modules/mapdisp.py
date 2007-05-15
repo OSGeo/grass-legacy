@@ -10,7 +10,7 @@ AUTHORS:   The GRASS Development Team
            Michael Barton
            Jachym Cepicky
            Martin Landa
-         
+
 COPYRIGHT: (C) 2006-2007 by the GRASS Development Team
            This program is free software under the GNU General Public
            License (>=v2). Read the file COPYING that comes with GRASS
@@ -176,6 +176,7 @@ class BufferedWindow(wx.Window):
             'pos': [None, None],
             'begin': [0, 0],
             'end': [0, 0],
+            'use': "pointer",
             'box': "point"
             }
 
@@ -532,7 +533,7 @@ class BufferedWindow(wx.Window):
                 self.dragid = idlist[0]
         # left mouse button released and not just a pointer
         elif event.LeftUp():
-            if self.mouse['box'] != "point" and self.mouse['box'] != "query":
+            if self.mouse['use'] != "pointer" and self.mouse['use'] != "query":
                 # end point of zoom box or drag
                 self.mouse['end'] = event.GetPositionTuple()[:]
 
@@ -564,12 +565,12 @@ class BufferedWindow(wx.Window):
                             # add new point to the line
                             Debug.msg (3, "BufferedWindow.MouseAction(): new saved pos=%f,%f" % (east, north))
                             self.savedpos.append ((east, north))
-                    
+
                 # redraw map
                 self.render=True
                 self.UpdateMap()
             # querying
-            elif self.mouse["box"] == "query":
+            elif self.mouse["use"] == "query":
                 east,north = self.Pixel2Cell(self.mouse['begin'][0],self.mouse['begin'][1])
                 self.Parent.QueryMap(east,north)
             # end drag of overlay decoration
@@ -631,11 +632,11 @@ class BufferedWindow(wx.Window):
                              currpos[1]-self.mouse['begin'][1])
 
             # dragging or drawing box with left button
-            if self.mouse['box'] == 'pan':
+            if self.mouse['use'] == 'pan':
                 self.DragMap(end)
 
             # dragging decoration overlay item
-            elif self.mouse['box'] == 'point' and self.dragid != None and self.dragid != 99:
+            elif self.mouse['use'] == 'pointer' and self.dragid != None and self.dragid != 99:
                 self.DragItem(self.dragid, event)
 
             # dragging anything else - rubber band box or line
@@ -761,7 +762,7 @@ class BufferedWindow(wx.Window):
         type  = self.tree.layertype[layer]
         dcmd  = self.tree.GetPyData(layer)[0]
         mapname = None
-        
+
         for item in dcmd.split(' '):
             if 'map=' in item:
                 mapname = item.split('=')[1]
@@ -775,7 +776,7 @@ class BufferedWindow(wx.Window):
             return
 
         p = cmd.Command (cmdString)
-        
+
         output = p.module_stdout.read().split('\n')
         for oline in output:
             extent = oline.split('=')
@@ -787,7 +788,7 @@ class BufferedWindow(wx.Window):
                 self.Map.region['e'] = float(extent[1])
             elif extent[0] == 'west':
                 self.Map.region['w'] = float(extent[1])
-                
+
         self.ZoomHistory(self.Map.region['n'],self.Map.region['s'],self.Map.region['e'],self.Map.region['w'])
         self.UpdateMap()
 
@@ -1153,6 +1154,7 @@ class MapFrame(wx.Frame):
 
     def Pointer(self, event):
         """Pointer button clicled"""
+        self.MapWindow.mouse['use'] = "pointer"
         self.MapWindow.mouse['box'] = "point"
 
         # change the cursor
@@ -1161,8 +1163,9 @@ class MapFrame(wx.Frame):
     def OnZoomIn(self, event):
         """
         Zoom in the map.
-        Set mouse pointer and zoom direction
+        Set mouse cursor, zoombox attributes, and zoom direction
         """
+        self.MapWindow.mouse['use'] = "zoom"
         self.MapWindow.mouse['box'] = "box"
         self.MapWindow.zoomtype = 1
         self.MapWindow.pen = wx.Pen(colour='Red', width=2, style=wx.SHORT_DASH)
@@ -1173,8 +1176,9 @@ class MapFrame(wx.Frame):
     def OnZoomOut(self, event):
         """
         Zoom out the map.
-        Set mouse pointer and zoom direction
+        Set mouse cursor, zoombox attributes, and zoom direction
         """
+        self.MapWindow.mouse['use'] = "zoom"
         self.MapWindow.mouse['box'] = "box"
         self.MapWindow.zoomtype = -1
         self.MapWindow.pen = wx.Pen(colour='Red', width=2, style=wx.SHORT_DASH)
@@ -1192,6 +1196,7 @@ class MapFrame(wx.Frame):
         """
         Panning, set mouse to drag
         """
+        self.MapWindow.mouse['use'] = "pan"
         self.MapWindow.mouse['box'] = "pan"
         self.MapWindow.zoomtype = 0
         event.Skip()
@@ -1306,10 +1311,10 @@ class MapFrame(wx.Frame):
         Query currrent or last map
         """
         # switch GIS Manager to output console to show query results
-
         self.gismanager.notebook.SetSelection(1)
 
-        self.MapWindow.mouse['box'] = "query"
+        self.MapWindow.mouse['use'] = "query"
+        self.MapWindow.mouse['box'] = "point"
         self.MapWindow.zoomtype = 0
         # event.Skip()
 
@@ -1397,7 +1402,18 @@ class MapFrame(wx.Frame):
         toolsmenu.Destroy()
 
     def Measure(self, event):
-        pass
+        # switch GIS Manager to output console to show measure results
+        self.gismanager.notebook.SetSelection(1)
+
+        # change mouse to draw line for measurement
+        self.MapWindow.mouse['use'] = "measure"
+        self.MapWindow.mouse['box'] = "line"
+        self.MapWindow.zoomtype = 0
+        self.MapWindow.pen = wx.Pen(colour='Red', width=2, style=wx.SHORT_DASH)
+        # event.Skip()
+
+        # change the cursor
+        self.MapWindow.SetCursor (self.cursors["cross"])
 
     def Profile(self, event):
         """
