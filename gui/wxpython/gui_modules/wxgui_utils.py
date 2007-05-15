@@ -97,8 +97,11 @@ class LayerTree(CT.CustomTreeCtrl):
         trgif = Icons["addhis"].GetBitmap(bmpsize)
         self.his_icon = il.Add(trgif)
 
-        trgif = Icons["addlegend"].GetBitmap(bmpsize)
-        self.leg_icon = il.Add(trgif)
+        trgif = Icons["addrarrow"].GetBitmap(bmpsize)
+        self.rarrow_icon = il.Add(trgif)
+
+        trgif = Icons["addrnum"].GetBitmap(bmpsize)
+        self.rnum_icon = il.Add(trgif)
 
         trgif = Icons["elvect"].GetBitmap(bmpsize)
         self.vect_icon = il.Add(trgif)
@@ -151,7 +154,7 @@ class LayerTree(CT.CustomTreeCtrl):
             event.Skip()
             return
 
-        type = self.layertype[self.layer_selected]
+        ltype = self.layertype[self.layer_selected]
 
         if not hasattr (self, "popupID1"):
             self.popupID1 = wx.NewId()
@@ -174,12 +177,12 @@ class LayerTree(CT.CustomTreeCtrl):
         self.popupMenu.Append (self.popupID2, _("Rename"))
 
         # map layer items
-        if type != "command" and type != "group": # properties
+        if ltype != "command" and ltype != "group": # properties
             self.popupMenu.AppendSeparator()
             self.popupMenu.Append (self.popupID3, text=_("Properties"))
 
         # specific items
-        if type == "vector": # show attribute table
+        if ltype == "vector": # show attribute table
             self.popupMenu.AppendSeparator()
             self.popupMenu.Append (self.popupID4, _("Show attribute table"))
             self.popupMenu.Append (self.popupID5, _("Start editing"))
@@ -225,7 +228,7 @@ class LayerTree(CT.CustomTreeCtrl):
         """Rename layer"""
         pass
 
-    def AddLayer(self, type):
+    def AddLayer(self, ltype):
         """Add layer, create MapLayer instance"""
         self.first = True
         params = {} # no initial options parameters
@@ -233,15 +236,15 @@ class LayerTree(CT.CustomTreeCtrl):
         if self.layer_selected:
             self.SelectItem(self.layer_selected, select=False)
 
-        Debug.msg (3, "LayerTree().AddLayer(): type=%s" % (type))
-        if type == 'command':
+        Debug.msg (3, "LayerTree().AddLayer(): ltype=%s" % (ltype))
+        if ltype == 'command':
             # generic command layer
             self.ctrl = wx.TextCtrl(self, id=wx.ID_ANY, value='',
                                     pos=wx.DefaultPosition, size=(250,40),
                                     style=wx.TE_MULTILINE|wx.TE_WORDWRAP)
             self.ctrl.Bind(wx.EVT_TEXT_ENTER, self.onCmdChanged)
             self.ctrl.Bind(wx.EVT_TEXT, self.onCmdChanged)
-        elif type == 'group':
+        elif ltype == 'group':
             self.ctrl = None
             grouptext = 'Layer group:' + str(self.groupnode)
             self.groupnode += 1
@@ -269,7 +272,7 @@ class LayerTree(CT.CustomTreeCtrl):
         self.SelectItem(layer)
 
         # add to layertype and layerctrl dictionaries
-        self.layertype[layer] = type
+        self.layertype[layer] = ltype
         self.layerctrl[self.ctrl] = layer
 
         # add a data object to hold the layer's command (does not apply to generic command layers)
@@ -283,40 +286,43 @@ class LayerTree(CT.CustomTreeCtrl):
             self.Map.AddLayer(item=layer, type="command", command='',
                               l_active=False, l_hidden=False, l_opacity=1, l_render=False)
 
-        # add text and icons for each layer type
-        if type == 'raster':
+        # add text and icons for each layer ltype
+        if ltype == 'raster':
             self.SetItemImage(layer, self.rast_icon)
             self.SetItemText(layer, 'raster (double click to set properties)')
-        elif type == 'rgb':
+        elif ltype == 'rgb':
             self.SetItemImage(layer, self.rgb_icon)
             self.SetItemText(layer, 'RGB (double click to set properties)')
-        elif type == 'his':
+        elif ltype == 'his':
             self.SetItemImage(layer, self.his_icon)
             self.SetItemText(layer, 'HIS (double click to set properties)')
-        elif type == 'rastleg':
-            self.SetItemImage(layer, self.leg_icon)
-            self.SetItemText(layer, 'legend (double click to set properties)')
-        elif type == 'vector':
+        elif ltype == 'rastnum':
+            self.SetItemImage(layer, self.rnum_icon)
+            self.SetItemText(layer, 'raster cell numbers (double click to set properties)')
+        elif ltype == 'rastarrow':
+            self.SetItemImage(layer, self.rarrow_icon)
+            self.SetItemText(layer, 'raster flow arrows (double click to set properties)')
+        elif ltype == 'vector':
             self.SetItemImage(layer, self.vect_icon)
             self.SetItemText(layer, 'vector (double click to set properties)')
             # if digitization tool enable, update list of available vector maps
             if self.mapdisplay.digittoolbar:
                 self.mapdisplay.digittoolbar.UpdateListOfLayers(updateTool=True)
-        elif type == 'thememap':
+        elif ltype == 'thememap':
             self.SetItemImage(layer, self.theme_icon)
             self.SetItemText(layer, 'thematic map (double click to set properties)')
-        elif type == 'themechart':
+        elif ltype == 'themechart':
             self.SetItemImage(layer, self.chart_icon)
             self.SetItemText(layer, 'thematic charts (double click to set properties)')
-        elif type == 'grid':
+        elif ltype == 'grid':
             self.SetItemImage(layer, self.grid_icon)
             self.SetItemText(layer, 'grid (double click to set properties)')
-        elif type == 'labels':
+        elif ltype == 'labels':
             self.SetItemImage(layer, self.labels_icon)
             self.SetItemText(layer, 'vector labels (double click to set properties)')
-        elif type == 'command':
+        elif ltype == 'command':
             self.SetItemImage(layer, self.cmd_icon)
-        elif type == 'group':
+        elif ltype == 'group':
             self.SetItemImage(layer, self.folder)
             self.SetItemText(layer, grouptext)
             self.CheckItem(layer, checked=True)
@@ -330,29 +336,31 @@ class LayerTree(CT.CustomTreeCtrl):
         global gmpath
         completed = ''
         params = self.GetPyData(layer)[1]
-        type   = self.layertype[layer]
+        ltype   = self.layertype[layer]
 
-        if type == 'raster':
+        if ltype == 'raster':
             menuform.GUI().parseCommand('d.rast', gmpath, completed=(self.getOptData,layer,params), parentframe=self)
-        elif type == 'rgb':
+        elif ltype == 'rgb':
             menuform.GUI().parseCommand('d.rgb', gmpath, completed=(self.getOptData,layer,params), parentframe=self)
-        elif type == 'his':
+        elif ltype == 'his':
             menuform.GUI().parseCommand('d.his', gmpath, completed=(self.getOptData,layer,params), parentframe=self)
-        elif type == 'rastleg':
-            menuform.GUI().parseCommand('d.legend', gmpath, completed=(self.getOptData,layer,params), parentframe=self)
-        elif type == 'vector':
+        elif ltype == 'rastarrow':
+            menuform.GUI().parseCommand('d.rast.arrow', gmpath, completed=(self.getOptData,layer,params), parentframe=self)
+        elif ltype == 'rastnum':
+            menuform.GUI().parseCommand('d.rast.num', gmpath, completed=(self.getOptData,layer,params), parentframe=self)
+        elif ltype == 'vector':
             menuform.GUI().parseCommand('d.vect', gmpath, completed=(self.getOptData,layer,params), parentframe=self)
-        elif type == 'thememap':
+        elif ltype == 'thememap':
             menuform.GUI().parseCommand('d.vect.thematic', gmpath, completed=(self.getOptData,layer,params), parentframe=self)
-        elif type == 'themechart':
+        elif ltype == 'themechart':
             menuform.GUI().parseCommand('d.vect.chart', gmpath, completed=(self.getOptData,layer,params), parentframe=self)
-        elif type == 'grid':
+        elif ltype == 'grid':
             menuform.GUI().parseCommand('d.grid', gmpath, completed=(self.getOptData,layer,params), parentframe=self)
-        elif type == 'labels':
+        elif ltype == 'labels':
             menuform.GUI().parseCommand('d.labels', gmpath, completed=(self.getOptData,layer,params), parentframe=self)
-        elif type == 'command':
+        elif ltype == 'command':
             pass
-        elif type == 'group':
+        elif ltype == 'group':
             pass
 
     def onActivateLayer(self, event):
@@ -453,7 +461,7 @@ class LayerTree(CT.CustomTreeCtrl):
 
             # save everthing associated with item to drag
             self.dragItem = event.GetItem()
-            self.saveitem['type'] = self.layertype[self.dragItem]
+            self.saveitem['ltype'] = self.layertype[self.dragItem]
             self.saveitem['check'] = self.IsItemChecked(self.dragItem)
             self.saveitem['image'] = self.GetItemImage(self.dragItem, 0)
             self.saveitem['text'] = self.GetItemText(self.dragItem)
@@ -525,7 +533,7 @@ class LayerTree(CT.CustomTreeCtrl):
                                   ct_type=1, wnd=newctrl, image=self.saveitem['image'], \
                                   data=self.saveitem['data'])
 
-        self.layertype[new] = self.saveitem['type']
+        self.layertype[new] = self.saveitem['ltype']
         self.CheckItem(new, checked=self.saveitem['check'])
         if self.layertype[new] != 'group':
             self.layerctrl[newctrl] = new
@@ -865,6 +873,8 @@ class GMConsole(wx.Panel):
                         'd.rgb'          : 'rgb',
                         'd.his'          : 'his',
                         'd.legend'       : 'rastleg',
+                        'd.rast.arrow'   : 'rastarrow',
+                        'd.rast.num'     : 'rastnum',
                         'd.vect'         : 'vector',
                         'd.vect.thematic': 'thememap',
                         'd.vect.chart'   : 'themechart',
@@ -892,8 +902,10 @@ class GMConsole(wx.Panel):
             #self.cmd_output.write(command + "\n----------\n")
             self.cmd_output.write("$" + command)
             dcmds = command.split(',')
-            curr_disp.addMapsToList(type='command', map=dcmds, mset=None)
-            curr_disp.ReDrawCommand()
+            # TODO This needs to be fixed to use current rendering procedures
+
+#            curr_disp.addMapsToList(type='command', map=dcmds, mset=None)
+#            curr_disp.ReDrawCommand()
 
         else:
             # Send any other command to the shell. Send output to
