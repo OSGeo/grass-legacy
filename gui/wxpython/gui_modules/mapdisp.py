@@ -246,14 +246,21 @@ class BufferedWindow(wx.Window):
         elif pdctype == 'box': # draw a box on top of the map
             pdc.SetBrush(wx.Brush(wx.CYAN, wx.TRANSPARENT))
             pdc.SetPen(self.pen)
-            pdc.DrawRectangle(coords[0], coords[1], coords[2], coords[3])
-            pdc.SetIdBounds(drawid,(coords[0], coords[1], coords[2], coords[3]))
+            x2 = max(coords[0],coords[2])
+            x1 = min(coords[0],coords[2])
+            y2 = max(coords[1],coords[3])
+            y1 = min(coords[1],coords[3])
+            rwidth = x2-x1
+            rheight = y2-y1
+            rect = wx.Rect(x1,y1,rwidth,rheight)
+            pdc.DrawRectangleRect(rect)
+            pdc.SetIdBounds(drawid,rect)
             self.ovlcoords[drawid] = coords
 
         elif pdctype == 'line': # draw a line on top of the map
             pdc.SetBrush(wx.Brush(wx.CYAN, wx.TRANSPARENT))
             pdc.SetPen(self.pen)
-            dc.DrawLine(coords[0], coords[1], coords[2], coords[3])
+            pdc.DrawLine(coords[0], coords[1], coords[2], coords[3])
             pdc.SetIdBounds(drawid,(coords[0], coords[1], coords[2], coords[3]))
             self.ovlcoords[drawid] = coords
 
@@ -497,8 +504,7 @@ class BufferedWindow(wx.Window):
         boxid = wx.ID_NEW
         if self.mouse['box'] == "box":
             mousecoords = [self.mouse['begin'][0], self.mouse['begin'][1], \
-                           self.mouse['end'][0] - self.mouse['begin'][0], \
-                           self.mouse['end'][1] - self.mouse['begin'][1]]
+                           self.mouse['end'][0], self.mouse['end'][1]]
             r = self.pdc.GetIdBounds(boxid)
             r.Inflate(4,4)
             self.pdc.ClearId(boxid)
@@ -507,8 +513,7 @@ class BufferedWindow(wx.Window):
             self.Draw(self.pdc, drawid=boxid, pdctype='box', coords=mousecoords)
         elif self.mouse['box'] == "line":
             mousecoords = [self.mouse['begin'][0], self.mouse['begin'][1], \
-                           self.mouse['end'][0] - self.mouse['begin'][0], \
-                           self.mouse['end'][1] - self.mouse['begin'][1]]
+                           self.mouse['end'][0], self.mouse['end'][1]]
             r = self.pdc.GetIdBounds(boxid)
             r.Inflate(4,4)
             self.pdc.ClearId(boxid)
@@ -1384,7 +1389,7 @@ class MapFrame(wx.Frame):
         measure = wx.MenuItem(toolsmenu, -1, Icons["measure"].GetLabel())
         measure.SetBitmap(Icons["measure"].GetBitmap(self.iconsize))
         toolsmenu.AppendItem(measure)
-        self.Bind(wx.EVT_MENU, self.Measure, measure)
+        self.Bind(wx.EVT_MENU, self.OnMeasure, measure)
 
         profile = wx.MenuItem(toolsmenu, -1, Icons["profile"].GetLabel())
         profile.SetBitmap(Icons["profile"].GetBitmap(self.iconsize))
@@ -1401,7 +1406,7 @@ class MapFrame(wx.Frame):
         self.PopupMenu(toolsmenu)
         toolsmenu.Destroy()
 
-    def Measure(self, event):
+    def OnMeasure(self, event):
         # switch GIS Manager to output console to show measure results
         self.gismanager.notebook.SetSelection(1)
 
