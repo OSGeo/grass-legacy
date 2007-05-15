@@ -15,6 +15,7 @@ default: modbuild
 
 modbuild: ReadMe.rtf
 	mkdir -p $(ARCH_DISTDIR)/modbuild
+	-cp -f License.rtf $(ARCH_DISTDIR)/modbuild/
 	-cp -f ReadMe.rtf $(ARCH_DISTDIR)/modbuild/
 	mkdir -p $(ARCH_DISTDIR)/modbuild/dist.$(ARCH)
 	-cp -rf $(ARCH_DISTDIR)/demolocation $(ARCH_DISTDIR)/modbuild/dist.$(ARCH)/
