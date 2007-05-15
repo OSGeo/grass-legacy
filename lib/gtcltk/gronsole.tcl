@@ -402,10 +402,6 @@ proc Gronsole::readout {path ci mark fh} {
 	foreach line $lines {
 		Gronsole::output_to_gronsole $path $mark $ci [list cmd$ci cmd$ci-out] "$line\n"
 	}
-	set last [lindex $lines end]
-	if {$last != {}} {
-		Gronsole::output_to_gronsole $path $mark $ci [list cmd$ci cmd$ci-out] $last
-	}
 	$path.text see $mark
 }
 
