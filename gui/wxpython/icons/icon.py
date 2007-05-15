@@ -65,6 +65,7 @@ icons_default = {
     "addlabels"  : 'module-d.labels.gif',
     "addtext"    : 'module-d.text.gif',
     "addbarscale": 'module-d.barscale.gif',
+    "addlegend"  : 'module-d.legend.gif',
     # analyze raster
     "analyze"    : 'gui-rastanalyze.gif',
     "measure"    : 'gui-measure.gif',
@@ -169,6 +170,7 @@ Icons = {
     "zoommenu"   : MetaIcon (img=icons_img["zoommenu"], label="Zoom options", desc="Display zoom management"),
     "overlay"    : MetaIcon (img=icons_img["overlay"], label="Add overlay", desc="Add graphic overlays to map"),
     "addbarscale": MetaIcon (img=icons_img["addbarscale"], label="Add scalebar and north arrow"),
+    "addlegend"  : MetaIcon (img=icons_img["addlegend"], label="Add legend"),
     "savefile"   : MetaIcon (img=icons_img["savefile"], label="Save display to PNG file"),
     "printmap"   : MetaIcon (img=icons_img["printmap"], label="Print display"),
     # gis manager
