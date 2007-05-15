@@ -51,6 +51,9 @@ class VEdit(Digit):
         addstring="""%s 1
                     %f %f""" % (key, x, y)
 
+        Debug.msg (3, "VEdit.AddPoint(): map=%s, type=%s, x=%f, y=%f" % \
+                   (map, type, x, y))
+        
         self._AddFeature (map=map, input=addstring)
 
     def AddLine (self, map, type, xy):
@@ -70,7 +73,10 @@ class VEdit(Digit):
             addstring += "%f %f\n" % (point[0], point [1])
 
         addstring += "1 1"
-        
+
+        Debug.msg (3, "VEdit.AddPoint(): map=%s, type=%s" % \
+                   (map, type))
+
         self._AddFeature (map=map, input=addstring)
 
     def _AddFeature (self, map, input):
