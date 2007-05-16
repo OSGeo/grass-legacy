@@ -509,7 +509,7 @@ void R_panel_delete(const char *name)
 
 void R_begin_scaled_raster(int mask, int src[2][2], int dst[2][2])
 {
-	return trans->begin_scaled_raster(mask, src, dst);
+	trans->begin_scaled_raster(mask, src, dst);
 }
 
 int R_scaled_raster(int n, int row,
@@ -521,7 +521,7 @@ int R_scaled_raster(int n, int row,
 
 void R_end_scaled_raster(void)
 {
-	return trans->end_scaled_raster();
+	trans->end_scaled_raster();
 }
 
 void R_bitmap(int ncols, int nrows, int threshold, const unsigned char *buf)
