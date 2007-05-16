@@ -212,7 +212,7 @@ proc GmRgbhis::options { id frm } {
     Label $row.a -anchor w -text [G_msg "HIS brightness adjustment"]
     set GmRgbhis::opt($id,1,brighten) "0"
     SpinBox $row.b -range {-99 99 1} -textvariable GmRgbhis::opt($id,1,brighten) \
-		-width 3 -helptext [G_msg "Adjusts the HIS intensity map brightness"] \
+		-width 3 -helptext [G_msg "Adjusts the HIS intensity channel brightness"] \
 		-entrybg white
     pack $row.b $row.a -side left
     pack $row -side top -fill both -expand yes
