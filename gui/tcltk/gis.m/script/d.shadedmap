@@ -2,7 +2,7 @@
 #
 ############################################################################
 #
-# MODULE:	d.shadedmap for GRASS 5.7
+# MODULE:	d.shadedmap
 # AUTHOR(S):	Unknown; updated to GRASS 5.7 by Michael Barton 
 # PURPOSE:	Uses d.his to drape a color raster over a shaded relief map
 # COPYRIGHT:	(C) 2004 by the GRASS Development Team
@@ -15,7 +15,7 @@
 
 
 #%Module
-#%  description: d.shadedmap - Uses d.his to drape a color raster over a shaded relief map
+#% description: Drapes a color raster over a shaded relief map using d.his
 #%End
 #%option
 #% key: reliefmap
@@ -31,15 +31,23 @@
 #% description: Name of raster to drape over relief map
 #% required : yes
 #%end
+#%option
+#% key: brighten
+#% type: integer
+#% description: Percent to brighten
+#% options: -99-99
+#% answer: 0
+#%end
 
 
 if  [ -z "$GISBASE" ] ; then
- echo "You must be in GRASS GIS to run this program."
- exit 1
+  echo "You must be in GRASS GIS to run this program." 1>&2
+  exit 1
 fi   
 
 if [ "$1" != "@ARGS_PARSED@" ] ; then
   exec g.parser "$0" "$@"
 fi
 
-exec d.his "h_map=$GIS_OPT_DRAPEMAP" "i_map=$GIS_OPT_RELIEFMAP"
+exec d.his "h_map=$GIS_OPT_DRAPEMAP" "i_map=$GIS_OPT_RELIEFMAP" \
+	"brighten=$GIS_OPT_BRIGHTEN"
