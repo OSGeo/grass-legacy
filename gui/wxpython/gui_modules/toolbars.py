@@ -38,17 +38,20 @@ class MapToolbar:
         self.displaymap = self.toolbar.AddLabelTool(id=wx.ID_ANY, label="displaymap",
                                                     bitmap=Icons["displaymap"].GetBitmap(),
                                                     bmpDisabled=wx.NullBitmap, kind=wx.ITEM_NORMAL,
-                                                    shortHelp=Icons["displaymap"].GetLabel(), longHelp=Icons["displaymap"].GetDesc())
+                                                    shortHelp=Icons["displaymap"].GetLabel(),
+                                                  longHelp=Icons["displaymap"].GetDesc())
 
         self.rendermap = self.toolbar.AddLabelTool(id=wx.ID_ANY, label="rendermap",
                                                    bitmap=Icons["rendermap"].GetBitmap(),
                                                    bmpDisabled=wx.NullBitmap, kind=wx.ITEM_NORMAL,
-                                                   shortHelp=Icons["rendermap"].GetLabel(), longHelp=Icons["rendermap"].GetDesc())
+                                                   shortHelp=Icons["rendermap"].GetLabel(),
+                                                  longHelp=Icons["rendermap"].GetDesc())
 
         self.erase = self.toolbar.AddLabelTool(id=wx.ID_ANY, label="erase",
                                                bitmap=Icons["erase"].GetBitmap(),
                                                bmpDisabled=wx.NullBitmap, kind=wx.ITEM_NORMAL,
-                                               shortHelp=Icons["erase"].GetLabel(), longHelp=Icons["erase"].GetDesc())
+                                               shortHelp=Icons["erase"].GetLabel(),
+                                                  longHelp=Icons["erase"].GetDesc())
         self.toolbar.AddSeparator()
 
         #
@@ -57,34 +60,41 @@ class MapToolbar:
         self.pointer = self.toolbar.AddLabelTool(id=wx.ID_ANY, label="pointer",
                                                  bitmap=Icons["pointer"].GetBitmap(),
                                                  kind=wx.ITEM_RADIO,
-                                                 shortHelp=Icons["pointer"].GetLabel(), longHelp=Icons["pointer"].GetDesc())
+                                                 shortHelp=Icons["pointer"].GetLabel(),
+                                                  longHelp=Icons["pointer"].GetDesc())
         self.query   = self.toolbar.AddLabelTool(id=wx.ID_ANY, label="query",
                                                  bitmap=Icons["query"].GetBitmap(),
                                                  bmpDisabled=wx.NullBitmap,
                                                  kind=wx.ITEM_RADIO,
-                                                 shortHelp=Icons["query"].GetLabel(), longHelp=Icons["query"].GetDesc())
+                                                 shortHelp=Icons["query"].GetLabel(),
+                                                  longHelp=Icons["query"].GetDesc())
         self.pan     = self.toolbar.AddLabelTool(id=wx.ID_ANY, label="pan",
                                                  bitmap=Icons["pan"].GetBitmap(),
                                                  bmpDisabled=wx.NullBitmap,
                                                  kind=wx.ITEM_RADIO,
-                                                 shortHelp=Icons["pan"].GetLabel(), longHelp=Icons["pan"].GetDesc())
+                                                 shortHelp=Icons["pan"].GetLabel(),
+                                                  longHelp=Icons["pan"].GetDesc())
         self.zoomin  = self.toolbar.AddLabelTool(id=wx.ID_ANY, label="zoom_in",
                                                  bitmap=Icons["zoom_in"].GetBitmap(),
                                                  bmpDisabled=wx.NullBitmap, kind=wx.ITEM_RADIO,
-                                                 shortHelp=Icons["zoom_in"].GetLabel(), longHelp=Icons["zoom_in"].GetDesc())
+                                                 shortHelp=Icons["zoom_in"].GetLabel(),
+                                                  longHelp=Icons["zoom_in"].GetDesc())
         self.zoomout = self.toolbar.AddLabelTool(id=wx.ID_ANY, label="zoom_out",
                                                  bitmap=Icons["zoom_out"].GetBitmap(),
                                                  bmpDisabled=wx.NullBitmap,
                                                  kind=wx.ITEM_RADIO,
-                                                 shortHelp=Icons["zoom_out"].GetLabel(), longHelp=Icons["zoom_out"].GetDesc())
+                                                 shortHelp=Icons["zoom_out"].GetLabel(),
+                                                  longHelp=Icons["zoom_out"].GetDesc())
         self.zoomback = self.toolbar.AddLabelTool(id=wx.ID_ANY, label="zoom_back",
                                                  bitmap=Icons["zoom_back"].GetBitmap(),
                                                  bmpDisabled=wx.NullBitmap, kind=wx.ITEM_NORMAL,
-                                                 shortHelp=Icons["zoom_back"].GetLabel(), longHelp=Icons["zoom_back"].GetDesc())
+                                                 shortHelp=Icons["zoom_back"].GetLabel(),
+                                                  longHelp=Icons["zoom_back"].GetDesc())
         self.zoommenu = self.toolbar.AddLabelTool(id=wx.ID_ANY, label="zoommenu",
                                                   bitmap=Icons["zoommenu"].GetBitmap(),
                                                   bmpDisabled=wx.NullBitmap,
-                                                  shortHelp=Icons["zoommenu"].GetLabel(), longHelp=Icons["zoommenu"].GetDesc())
+                                                  shortHelp=Icons["zoommenu"].GetLabel(),
+                                                  longHelp=Icons["zoommenu"].GetDesc())
 
         self.toolbar.AddSeparator()
 
