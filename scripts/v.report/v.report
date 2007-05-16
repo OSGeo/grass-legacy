@@ -5,7 +5,7 @@
 # MODULE:	v.report
 # AUTHOR(S):	Markus Neteler
 # PURPOSE:	Reports geometry statistics for vector maps
-# COPYRIGHT:	(C) 2005 by the GRASS Development Team
+# COPYRIGHT:	(C) 2005, 2007 by MN and the GRASS Development Team
 #
 #		This program is free software under the GNU General Public
 #		License (>=v2). Read the file COPYING that comes with GRASS
@@ -50,7 +50,7 @@
 #% key: units
 #% type: string
 #% description: mi(les),f(eet),me(ters),k(ilometers),a(cres),h(ectares)
-#% options: mi,miles,f,feet,me,meters,k,kilometers,a,acres,h,hectares
+#% options: mi,miles,f,feet,me,meters,k,kilometers,a,acres,h,hectares,p,percent
 #% required: no
 #%end
 
@@ -85,6 +85,8 @@ fi
 ### secure temporary files:
 TMP1="`g.tempfile pid=$$`"
 TMP2="`g.tempfile pid=$$`"
+TMP3="`g.tempfile pid=$$`"
+TMP4="`g.tempfile pid=$$`"
 
 MAP=$GIS_OPT_MAP
 OPTION=$GIS_OPT_OPTION
@@ -111,7 +113,11 @@ fi
 
 #check for optional units parameter:
 if  [ ! -z $GIS_OPT_UNITS ] ; then
-  UNITSPARAM="units=$GIS_OPT_UNITS"
+    UNITSPARAM="units=$GIS_OPT_UNITS"
+    # reset to meters since percent are unsupported in v.to.db
+    if [ "$GIS_OPT_UNITS" = "p" -o "$GIS_OPT_UNITS" = "percent" ] ; then
+       UNITSPARAM="units=meters"
+    fi
 fi   
 
 ## NOTE: we suppress -1 cat and 0 cat
@@ -133,17 +139,38 @@ fi
 #make and print the table:
 NUMCOLS=`echo "$COLNAMES$EXTRACOLNAMES" | tr -s '|' ' ' | wc -w | awk '{print $1}'`
 
+# save pre-table
 echo "$COLNAMES$EXTRACOLNAMES"
+paste -d'|' "$TMP1" "$TMP2" > "$TMP3"
+
+
+if  [ ! -z $GIS_OPT_UNITS ] ; then
+    if [ "$GIS_OPT_UNITS" = "p" -o "$GIS_OPT_UNITS" = "percent" ] ; then
+    
+       # calculate total area value
+       AREATOT=`cat "$TMP3" | cut -d'|' -f$NUMCOLS | awk  -F '|' 'BEGIN {sum = 0.0}
+       NR == 1{}
+               {sum += $1}
+       END{
+       print sum
+       }'`
+
+       # calculate area percentages
+       cat "$TMP3" | cut -d'|' -f$NUMCOLS | awk '{printf "%f\n", $1/'$AREATOT' * 100.}'  > "$TMP4"
+       paste -d'|' "$TMP1" "$TMP4" > "$TMP3"
+    fi
+fi
+
 if [ $GIS_FLAG_S -eq 1 ] ; then
 	# sort
-	paste -d'|' "$TMP1" "$TMP2" | sort -n -t'|' -k${NUMCOLS}
+	cat "$TMP3" | sort -n -t'|' -k${NUMCOLS}
 else
 	if [ $GIS_FLAG_R -eq 1 ] ; then
 	# reverse sort
-	paste -d'|' "$TMP1" "$TMP2" | sort -n -r -t'|' -k${NUMCOLS}
+	cat "$TMP3" | sort -n -r -t'|' -k${NUMCOLS}
         else
 	   # no sort (order by cat)
-	   paste -d'|' "$TMP1" "$TMP2"
+	   cat "$TMP3"
         fi
 fi
 
@@ -151,5 +178,7 @@ fi
 #cleanup:
 rm -f "$TMP1"
 rm -f "$TMP2"
+rm -f "$TMP3"
+rm -f "$TMP4"
 
 exit 0
