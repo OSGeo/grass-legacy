@@ -104,7 +104,7 @@ main (int argc, char **argv)
 	    exit(EXIT_FAILURE);
 
 
-	/* it's not truely the percentage brighten,
+	/* it's not truly the percentage to brighten,
 	    but saying that makes the option easy to use */
 	bright_mult = 1 + 0.01*atoi(brighten->answer);
 
