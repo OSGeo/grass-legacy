@@ -1,6 +1,7 @@
 #include <string.h>
-#include "rule.h"
 #include <grass/gis.h>
+#include <grass/glocale.h>
+#include "rule.h"
 
 static int scan_value (CELL *);
 static char *cur;
@@ -39,10 +40,10 @@ int parse (char *line,RULE **rules,RULE **tail,struct Categories *cats)
             save = cur;
             if(!strncmp(cur, "help", 4)) /* help text */
 	    {
-                fprintf (stdout, "Enter a rule in one of these formats:\n");
-                fprintf (stdout, "1 3 5      = 1   poor quality\n");
+		fprintf (stdout, _("Enter a rule in one of these formats:\n"));
+                fprintf (stdout, "1 3 5      = 1   %s\n", _("poor quality"));
                 fprintf (stdout, "1 thru 10  = 1\n");
-                fprintf (stdout, "20 thru 50 = 2   medium quality\n");
+                fprintf (stdout, "20 thru 50 = 2   %s\n", _("medium quality"));
                 fprintf (stdout, "*          = NULL\n");
                 state = 0;
                 cur += 4;
@@ -59,7 +60,7 @@ int parse (char *line,RULE **rules,RULE **tail,struct Categories *cats)
 		return -1;
             if(G_is_c_null_value(&v)) 
             {
-              G_warning("can't have null on the left-hand side of the rule");
+              G_warning(_("Can't have null on the left-hand side of the rule"));
               return -1;
             }
             state = 1;
@@ -88,7 +89,7 @@ int parse (char *line,RULE **rules,RULE **tail,struct Categories *cats)
 		continue;
             if(last_null)
             {
-               G_warning("can't have null on the right-hand side of the rule");;
+               G_warning(_("Can't have null on the right-hand side of the rule"));
                return -1;
             }
 	    cur += 4;
@@ -101,7 +102,7 @@ int parse (char *line,RULE **rules,RULE **tail,struct Categories *cats)
 		return -1;
             if(G_is_c_null_value(&v)) 
             {
-               G_warning("can't have null on the right-hand side of the rule");;
+               G_warning(_("Can't have null on the right-hand side of the rule"));
                return -1;
             }
 
@@ -207,7 +208,7 @@ static int scan_value (CELL *v)
        *v = sign * (CELL) fv;
 
        if(dec && state)
-	    fprintf(stdout, "%f rounded up to %d\n", sign*fv, *v);
+	    fprintf(stdout, _("%f rounded up to %d\n"), sign*fv, *v);
     }
 
     switch (*cur)
@@ -222,4 +223,3 @@ static int scan_value (CELL *v)
 		return 0;
     }
 }
-
