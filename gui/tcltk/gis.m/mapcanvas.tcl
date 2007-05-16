@@ -1182,6 +1182,7 @@ proc MapCanvas::zoombind { mon zoom } {
 	variable areaX2 
 	variable areaY2
 	variable msg
+	global outfmt_coords
 
 	# initialize zoom rectangle corners
 
@@ -1206,12 +1207,12 @@ proc MapCanvas::zoombind { mon zoom } {
 		global mon
 		set scrxmov %x
 		set scrymov %y
-		set eastcoord [eval MapCanvas::scrx2mape $mon %x]
-		set northcoord [eval MapCanvas::scry2mapn $mon %y]
+		set eastcoord  [format $outfmt_coords [eval MapCanvas::scrx2mape $mon %x] ]
+		set northcoord [format $outfmt_coords [eval MapCanvas::scry2mapn $mon %y] ]
 		set coords($mon) "$eastcoord $northcoord"
 		MapCanvas::drawzoom $mon %x %y
 	}
-	
+
 	bind $can($mon) <ButtonRelease-1> "MapCanvas::zoomregion $mon $zoom"
 
 }
@@ -1428,6 +1429,7 @@ proc MapCanvas::zoom_back { mon } {
 proc MapCanvas::panbind { mon } {
 	variable can
 	variable msg
+	global outfmt_coords
 
 	set MapCanvas::msg($mon) [G_msg "Drag with mouse to pan"]
 
@@ -1439,8 +1441,8 @@ proc MapCanvas::panbind { mon } {
 		global mon
 		set scrxmov %x
 		set scrymov %y
-		set eastcoord [eval MapCanvas::scrx2mape $mon %x]
-		set northcoord [eval MapCanvas::scry2mapn $mon %y]
+		set eastcoord  [format $outfmt_coords [eval MapCanvas::scrx2mape $mon %x] ]
+		set northcoord [format $outfmt_coords [eval MapCanvas::scry2mapn $mon %y] ]
 		set coords($mon) "$eastcoord $northcoord"
 		MapCanvas::dragpan $mon %x %y
 	}
@@ -1551,6 +1553,7 @@ proc MapCanvas::measurebind { mon } {
 	variable linex2 
 	variable liney2
 	variable msg
+	global outfmt_coords
 
 	set mapunits [MapCanvas::get_mapunits]
 
@@ -1567,8 +1570,8 @@ proc MapCanvas::measurebind { mon } {
 		global mon
 		set scrxmov %x
 		set scrymov %y
-		set eastcoord [eval MapCanvas::scrx2mape $mon %x]
-		set northcoord [eval MapCanvas::scry2mapn $mon %y]
+		set eastcoord  [format $outfmt_coords [eval MapCanvas::scrx2mape $mon %x] ]
+		set northcoord [format $outfmt_coords [eval MapCanvas::scry2mapn $mon %y] ]
 		set coords($mon) "$eastcoord $northcoord"
 		MapCanvas::drawmline $mon %x %y
 		}
