@@ -130,7 +130,7 @@ proc GmRgbhis::options { id frm } {
 
     # Panel heading
     set row [ frame $frm.heading ]
-    Label $row.a -text [G_msg "Display 3 raster maps as red/green/blue or hue/intensity/saturation channels"] \
+    Label $row.a -text [G_msg "Display 3 raster maps as Red/Green/Blue or Hue/Intensity/Saturation channels"] \
     	-fg MediumBlue
     pack $row.a -side left
     pack $row -side top -fill both -expand yes
@@ -150,7 +150,7 @@ proc GmRgbhis::options { id frm } {
     Label $row.a -text [G_msg "\tred (RGB) or hue (HIS):\t"]
     Button $row.b -image [image create photo -file "$iconpath/channel-red.gif"] \
         -highlightthickness 0 -takefocus 0 -relief raised -borderwidth 1  \
-        -helptext [G_msg "raster map for red or hue channel"]\
+        -helptext [G_msg "raster map for red or hue channel (HIS drape)"]\
 		-command "GmRgbhis::select_map1 $id" -height 26
     Entry $row.c -width 30 -text " $opt($id,1,map1)" \
           -textvariable GmRgbhis::opt($id,1,map1)
@@ -162,7 +162,7 @@ proc GmRgbhis::options { id frm } {
     Label $row.a -text [G_msg "\tgreen (RGB) or intensity (HIS):"]
     Button $row.b -image [image create photo -file "$iconpath/channel-green.gif"] \
         -highlightthickness 0 -takefocus 0 -relief raised -borderwidth 1  \
-        -helptext [G_msg "raster map for green or intensity channel"]\
+        -helptext [G_msg "raster map for green or intensity channel (HIS relief)"]\
 		-command "GmRgbhis::select_map2 $id" -height 26
     Entry $row.c -width 30 -text " $opt($id,1,map2)" \
           -textvariable GmRgbhis::opt($id,1,map2) 
@@ -202,12 +202,24 @@ proc GmRgbhis::options { id frm } {
 
     # overlay
     set row [ frame $frm.over ]
-    checkbutton $row.a -text [G_msg "overlay maps from other layers (transparent null value cells)"] -variable \
-        GmRgbhis::opt($id,1,overlay) 
+    checkbutton $row.a -text [G_msg "overlay maps from other layers (transparent null value cells)"] \
+	-variable GmRgbhis::opt($id,1,overlay) 
     pack $row.a -side left
     pack $row -side top -fill both -expand yes
 
-	set opt($id,1,mod) "1"
+    # HIS brightness
+    set row [ frame $frm.bright ]
+    Label $row.a -anchor w -text [G_msg "HIS brightness adjustment"]
+    set GmRgbhis::opt($id,1,brighten) "0"
+    SpinBox $row.b -range {-99 99 1} -textvariable GmRgbhis::opt($id,1,brighten) \
+		-width 3 -helptext [G_msg "Adjusts the HIS intensity map brightness"] \
+		-entrybg white
+    pack $row.b $row.a -side left
+    pack $row -side top -fill both -expand yes
+
+
+    # something changed, redraw needed
+    set opt($id,1,mod) "1"
 
 }
 
@@ -259,28 +271,32 @@ proc GmRgbhis::display { node mod} {
      }
 
     if { $opt($id,1,his) == 1 } { 
-        set cmd2 "d.his h_map=$opt($id,1,map1)" 
-        if { $opt($id,1,map2) != "" } {        
-            append cmd2 " i_map=$opt($id,1,map2)"
-         }
-        if { $opt($id,1,map3) != "" } {        
-            append cmd2 " s_map=$opt($id,1,map2)"
-         }
-     }
+	set cmd2 "d.his h_map=$opt($id,1,map1)"
 
-	# overlay
-	if { $opt($id,1,overlay) && $opt($id,1,rgb) == 1 } { 
-		append cmd1 " -o"
+	if { $opt($id,1,map2) != "" } {
+	    append cmd2 " i_map=$opt($id,1,map2)"
 	}
-
-	if { $opt($id,1,overlay) && $opt($id,1,his) == 1 } { 
-		append cmd2 " -n"
+	if { $opt($id,1,map3) != "" } {
+	    append cmd2 " s_map=$opt($id,1,map3)"
 	}
+	if { $opt($id,1,brighten) != "0" } {
+	    append cmd2 " brighten=$opt($id,1,brighten)"
+	}
+    }
 
-	# Decide whether to run, run commands, and copy files to temp
-	# Original logic here was to erase before drawing his if both exist
-	# Was this really supposed to be mutually exclusive?
-	GmCommonLayer::display_commands [namespace current] $id [list $cmd1 $cmd2]
+    # overlay
+    if { $opt($id,1,overlay) && $opt($id,1,rgb) == 1 } { 
+	append cmd1 " -o"
+    }
+
+    if { $opt($id,1,overlay) && $opt($id,1,his) == 1 } { 
+	append cmd2 " -n"
+    }
+
+    # Decide whether to run, run commands, and copy files to temp
+    # Original logic here was to erase before drawing his if both exist
+    # Was this really supposed to be mutually exclusive?
+    GmCommonLayer::display_commands [namespace current] $id [list $cmd1 $cmd2]
 }
 
 
