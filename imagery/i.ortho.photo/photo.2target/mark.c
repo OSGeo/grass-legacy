@@ -414,7 +414,7 @@ int get_z_from_cell (double north, double east)
         Curses_write_window (INFO_WINDOW, 5, 1, "point not on elevation map");
         Curses_write_window (INFO_WINDOW, 6, 1, "no elevation data available");
         Beep();
-        sleep (3);
+        G_sleep (3);
         Curses_clear_window (INFO_WINDOW);
 
 	while(1)

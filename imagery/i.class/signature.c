@@ -391,7 +391,7 @@ int write_signatures (void)
   Menu_msg("Saving Signature File...");
     I_write_signatures (outsig_fd, &Sigs);
     fclose (outsig_fd);
-  sleep(1);
+  G_sleep(1);
   Menu_msg("Done.");
 
   return 0;

@@ -23,7 +23,7 @@ make_window (int top, int bottom, int left, int right)
 	End_curses();
 	G_warning(_("make_window(%d,%d,%d,%d): illegal screen values."),
 		top, bottom, left, right);
-	sleep(3);
+	G_sleep(3);
 	exit(1);
     }
     window = (Window *) G_malloc (sizeof(Window));

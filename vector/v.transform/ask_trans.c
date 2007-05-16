@@ -82,7 +82,7 @@ int ask_transform_coor (int n_points)
 	{
 		V_exit ();
 		G_message ( _("ask_transform_coor():  Leaving session.. \n"));
-		sleep(2);
+		G_sleep(2);
 		return(-1);
 	}
 

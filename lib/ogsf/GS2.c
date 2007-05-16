@@ -1991,7 +1991,7 @@ int GS_get_exag_guess(int id, float *exag)
 #ifdef DEBUG_MSG
 	{
 	    fprintf(stderr, "%f %f\n", gs->zrange_nz, Longdim);
-	    sleep(1);
+	    G_sleep(1);
 	}
 #endif
 

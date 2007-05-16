@@ -33,7 +33,7 @@ int get_target (void)
 fprintf (stderr,"target location: %s\n", location);
 fprintf (stderr,"target mapset: %s\n", mapset);
 fprintf (stderr,"Checking target access\n");
-sleep (3);
+G_sleep (3);
 ****/
     sprintf (buf, "%s/%s", G_gisdbase(), location);
     if (access(buf,0) != 0)
@@ -55,7 +55,7 @@ sleep (3);
            /* get the block elevation layer raster map  in target location */
 /***
 fprintf (stderr,"Looking for elevation file in block: %s\n", block.name);
-sleep (3);
+G_sleep (3);
 ***/
        /* Return the elev name from the group file ELEVATION */
        if (!I_get_group_elev (group.name, elev_layer, mapset_elev, 
@@ -67,7 +67,7 @@ sleep (3);
           }
 /**
 fprintf (stderr,"Block elevation: %s in %s\n", elev_layer, mapset_elev);
-sleep (3);
+G_sleep (3);
 **/
        return 1;
       }
