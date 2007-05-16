@@ -146,6 +146,11 @@ if [ -z "$monitorcheck2" ] ; then
    exit 1
 fi
 
+if [ `echo "$curr_mon" | grep -c '^x.$'` -ne 1 ] ; then
+   g.message -e "Only X monitors are supported."
+   exit 1
+fi
+
 
 #### set variables
 res="$GIS_OPT_RESOLUTION"
@@ -219,6 +224,9 @@ if [ "$GIS_OPT_FORMAT" = "ps" ] || [ "$GIS_OPT_FORMAT" = "eps" ] ; then
 	export GRASS_PAPER
     else
 	unset GRASS_PAPER
+	if [ `d.save -a | grep '^d.frame' | grep -c -v full_screen` -gt 0 ] ; then
+	    g.message -w 'Encapsulated PostScript and mutil-frame displays do not mix!'
+	fi
     fi
 
     if [ "$GIS_OPT_PS_LEVEL" -lt 2 ] ; then
