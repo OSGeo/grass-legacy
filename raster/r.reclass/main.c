@@ -64,13 +64,13 @@ int main (int argc, char *argv[])
 
     old_mapset = G_find_cell2 (parm.input->answer, "");
     if (old_mapset == NULL)
-	G_fatal_error(_("Raster map [%s] not found"), parm.input->answer);
+	G_fatal_error(_("Raster map <%s> not found"), parm.input->answer);
 
     if (G_legal_filename (parm.output->answer) < 0)
-	G_fatal_error(_("[%s] is an illegal file name"), parm.output->answer);
+	G_fatal_error(_("<%s> is an illegal file name"), parm.output->answer);
 
     if (strcmp(parm.input->answer , parm.output->answer ) == 0 && strcmp(old_mapset,G_mapset())==0)
-	G_fatal_error (_("input map can NOT be the same as output map"));
+	G_fatal_error (_("Input map can NOT be the same as output map"));
 
     G_init_cats (0, "", &cats);
     fp = G_raster_map_is_fp (parm.input->answer, old_mapset);
@@ -81,11 +81,11 @@ int main (int argc, char *argv[])
 
     if(isatty(0))
 	{ 
-	  fprintf (stdout, "Enter rule(s), \"end\" when done, \"help\" if you need it\n");
+	  fprintf (stdout, _("Enter rule(s), \"end\" when done, \"help\" if you need it\n"));
 	  if (fp)
-	    fprintf (stdout, "fp: Data range is %.25f to %.25f\n", (double)min, (double)max);
+	    fprintf (stdout, _("fp: Data range is %.25f to %.25f\n"), (double)min, (double)max);
 	  else
-	    fprintf (stdout, "Data range is %ld to %ld\n", (long)min, (long)max);
+	    fprintf (stdout, _("Data range is %ld to %ld\n"), (long)min, (long)max);
 	}
 
     while (input(buf))
@@ -95,12 +95,12 @@ int main (int argc, char *argv[])
 	case -1:
 	    if (isatty(0))
 	    {
-		fprintf (stderr, "illegal reclass rule.");
-		fprintf (stderr, " ignored\n");
+		fprintf (stderr, _("Illegal reclass rule -"));
+		fprintf (stderr, _(" ignored\n"));
 	    }
 	    else
 	    {
-		strcat (buf, " - invalid reclass rule");
+		strcat (buf, _(" - invalid reclass rule"));
 		G_fatal_error(buf);
 	    }
 	    break;
@@ -114,9 +114,9 @@ int main (int argc, char *argv[])
     if (!any)
     {
 	if (isatty(0))
-	    G_fatal_error(_("no rules specified. [%s] not created"), parm.output->answer);
+	    G_fatal_error(_("No rules specified. Raster map <%s> not created"), parm.output->answer);
 	else
-	    G_fatal_error(_("no rules specified"));
+	    G_fatal_error(_("No rules specified"));
     }
 
     reclass (parm.input->answer, old_mapset, parm.output->answer, rules, &cats, parm.title->answer);
