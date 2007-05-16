@@ -264,7 +264,7 @@ proc GmRgbhis::display { node mod} {
             append cmd2 " i_map=$opt($id,1,map2)"
          }
         if { $opt($id,1,map3) != "" } {        
-            append cmd2 " s_map=$opt($id,1,map2)"
+            append cmd2 " s_map=$opt($id,1,map3)"
          }
      }
 
