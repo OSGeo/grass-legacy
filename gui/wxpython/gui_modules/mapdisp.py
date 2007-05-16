@@ -851,21 +851,21 @@ class BufferedWindow(wx.Window):
         zoomreg = {}
 
         dlg = SavedRegion(self, wx.ID_ANY, "Zoom to saved region extents",
-                             pos=wx.DefaultPosition, size=wx.DefaultSize,
-                             style=wx.DEFAULT_DIALOG_STYLE,
-                             loadsave='load')
+                          pos=wx.DefaultPosition, size=wx.DefaultSize,
+                          style=wx.DEFAULT_DIALOG_STYLE,
+                          loadsave='load')
 
         if dlg.ShowModal() == wx.ID_CANCEL:
             dlg.Destroy()
             return
 
         wind = dlg.wind
-        cmd = "g.region -ugp region=%s" % wind
+        cmdString = "g.region -ugp region=%s" % wind
 
-        try:
-            p = Popen(cmd, shell=True, stdin=PIPE, stdout=PIPE, stderr=PIPE, close_fds=True)
+        p = cmd.Command (cmdString)
 
-            output = p.stdout.read().split('\n')
+        if p.returncode == 0:
+            output = p.module_stdout.read().split('\n')
             for line in output:
                 line = line.strip()
                 if '=' in line: key,val = line.split('=')
@@ -876,14 +876,6 @@ class BufferedWindow(wx.Window):
             self.Map.region['w'] = zoomreg['w']
             self.ZoomHistory(self.Map.region['n'],self.Map.region['s'],self.Map.region['e'],self.Map.region['w'])
             self.UpdateMap()
-
-            if p.stdout < 0:
-                print >> sys.stderr, "Child was terminated by signal", p.stdout
-            elif p.stdout > 0:
-                #print >> sys.stderr, p.stdout
-                pass
-        except OSError, e:
-            print >> sys.stderr, "Execution failed:", e
 
         dlg.Destroy()
 
