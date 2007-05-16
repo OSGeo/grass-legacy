@@ -1,7 +1,8 @@
 <H2>DESCRIPTION</H2>
-
+<EM>(GRASS Shell Script)</EM>
+<P>
 <EM><b>d.out.file</b></EM> uses <em>d.save</em>, the GRASS PNG or PostScript
-driver, and <tt>gdal_translate</tt> to export the currently selected display
+driver, and <tt>gdal_translate</tt> to export the currently selected X display
 monitor to a graphics file of several formats. Output image size can be set
 prior to export.
 <P>
@@ -15,10 +16,15 @@ compression/quality are supported for JPEG files.
 Graphic files are exported to the user's current working directory by
 default, but different paths may be specified in the output field.
 <P>
-<EM>(GRASS Shell Script)</EM>
+EPS files are not compatible with <em>d.frame</em>, as it is not possible to nest
+encapsulation. Only the first frame will be drawn. Regular PostScript files may
+contain subframes.
 
-<H2>EXAMPLE</H2>
-(<i>Speafish dataset</i>)
+
+<H2>EXAMPLES</H2>
+
+<h4>Speafish dataset</h4>
+
 <div class="code"><pre>
   g.region rast=slope -p
   d.mon x0
@@ -27,6 +33,32 @@ default, but different paths may be specified in the output field.
   d.barscale at=0,94.5
   d.out.file spearfish_pic format=png size=800,600
   d.out.file spearfish_pic format=ps -r paper=a4
+</pre></div>
+<BR>
+
+<h4>Multi-pane PostScript output using a shaded relief map and 
+<a href="http://grass.gdf-hannover.de/wiki/GRASS_AddOns#Display_add-ons">d.frame.quarter</a>
+from the Wiki-Addons site</h4>
+
+<div class="code"><pre>
+  g.region rast=elevation.dem
+  r.shaded.relief map=elevation.dem shad=elev.shad_relf
+  d.mon x1
+  d.frame.quarter
+  d.frame uno
+  d.his h=elevation.dem i=elev.shad_relf brighten=50
+  echo "A" | d.text -b color=black size=10 at=93,5
+  d.frame dos
+  d.his h=slope i=elev.shad_relf brighten=40
+  echo "B" | d.text -b color=black size=10 at=93,5
+  d.frame tres
+  d.his h=landcover.30m i=elev.shad_relf brighten=55
+  echo "C" | d.text -b color=black size=10 at=93,5
+  d.frame cuatro
+  d.his h=trn.sites i=elev.shad_relf brighten=15
+  echo "D" | d.text -b color=black size=10 at=93,5
+  d.frame full_screen
+  d.out.file spearfish_4 format=ps -r paper=a4
 </pre></div>
 
 
