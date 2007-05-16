@@ -36,7 +36,7 @@ Alternately, the user can run the program interactively by
 typing <B>d.his</B> without naming parameter values on the
 command line.  In this case, the program will prompt the
 user for parameter values using the standard GRASS 
-<A HREF="parser.html">parser</A> interface.
+GUI interface.
 
 <P>
 
@@ -57,6 +57,12 @@ to leave out the elevation information for a first try.)
 Ideally, the resulting image should resemble the view from
 an aircraft looking at a terrain on a sunny day with a bit
 of haze in the valleys.
+
+<P>
+The <b>brighten</b> option does not truly represent a percentage,
+but calling it that makes the option easy to understand, and it
+sounds better than <i>Normalized Scaling Factor</i>.
+
 
 <H2>THE PROCESS</H2>
 
@@ -99,24 +105,41 @@ map layers may be omitted. This means that it is possible
 to produce output images that represent combinations of
 <EM>his, hi,</EM> or <EM>hs</EM>.
 
+<P>
 Users wishing to store the result in new raster map layers
 instead of displaying it on the monitor should use the
 program <EM><A HREF="r.his.html">r.his</A></EM>.
 
+
+<H2>EXAMPLE</H2>
+<h4>Spearfish dataset</h4>
+
+<div class="code"><pre>
+  g.region rast=elevation.dem
+  r.shaded.relief map=elevation.dem shad=elev.shad_relf
+  d.mon x1
+  d.his h=elevation.dem i=elev.shad_relf brighten=50
+</pre></div>
+<BR>
+
 <H2>SEE ALSO</H2>
 
-<EM><A HREF="d.colors.html">d.colors</A></EM>,
-<EM><A HREF="d.colortable.html">d.colortable</A></EM>,
-<EM><A HREF="r.colors.html">r.colors</A></EM>,
-<EM><A HREF="r.his.html">r.his</A></EM>,
-<EM><A HREF="i.his.rgb.html">i.his.rgb</A></EM>,
-<EM><A HREF="i.rgb.his.html">i.rgb.his</A></EM>,
-<EM><A HREF="hsv.rgb.sh.html">hsv.rgb.sh</A></EM>,
-<EM><A HREF="rgb.hsv.sh.html">rgb.hsv.sh</A></EM>,
-<EM><A HREF="parser.html">parser</A></EM>
+<EM>
+<A HREF="d.colors.html">d.colors</A>,
+<A HREF="d.colortable.html">d.colortable</A>,
+<A HREF="d.frame.html">d.frame</A>,
+<A HREF="d.rgb.html">d.rgb</A>,
+<A HREF="r.colors.html">r.colors</A>,
+<A HREF="r.his.html">r.his</A>,
+<A HREF="i.his.rgb.html">i.his.rgb</A>,
+<A HREF="i.rgb.his.html">i.rgb.his</A>,
+<A HREF="hsv.rgb.sh.html">hsv.rgb.sh</A>,
+<A HREF="rgb.hsv.sh.html">rgb.hsv.sh</A>
+</EM>
 
 <H2>AUTHOR</H2>
 
 James Westervelt, U.S. Army Construction Engineering Research Laboratory
 
-<p><i>Last changed: $Date$</i>
+<p>
+<i>Last changed: $Date$</i>
