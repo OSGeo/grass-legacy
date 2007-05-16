@@ -17,8 +17,11 @@ Graphic files are exported to the user's current working directory by
 default, but different paths may be specified in the output field.
 <P>
 EPS files are not compatible with <em>d.frame</em>, as it is not possible to nest
-encapsulation. Only the first frame will be drawn. Regular PostScript files may
-contain subframes.
+encapsulation. Only the first frame will be drawn. In these cases it is
+recommended to output to regular PostScript format and then use a utility
+like <tt>ps2epsi</tt> to convert to an EPS file.
+Output from this module using the regular PostScript format may contain
+subframes.
 
 
 <H2>EXAMPLES</H2>
