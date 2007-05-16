@@ -1442,7 +1442,7 @@ int gsd_ortho_wall(int np, int ns, geosurf ** gsurfs, Point3 ** points,
 					fprintf(stderr,
 						"crossing going up at surf %d no. %d\n",
 						n, i);
-					sleep(1);
+					G_sleep(1);
 				    }
 #endif
 
@@ -1483,7 +1483,7 @@ int gsd_ortho_wall(int np, int ns, geosurf ** gsurfs, Point3 ** points,
 					fprintf(stderr,
 						"crossing going down at surf %d no. %d\n",
 						n, i);
-					sleep(1);
+					G_sleep(1);
 				    }
 #endif
 
@@ -1533,7 +1533,7 @@ int gsd_ortho_wall(int np, int ns, geosurf ** gsurfs, Point3 ** points,
 					fprintf(stderr,
 						"lower crossing at surf %d no. %d between surfs %d & %d\n",
 						n, i, bn, bnl);
-					sleep(1);
+					G_sleep(1);
 				    }
 #endif
 

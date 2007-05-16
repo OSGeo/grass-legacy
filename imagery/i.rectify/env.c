@@ -39,7 +39,7 @@ int show_env (void)
     fprintf (stderr, "env(%d) switch to LOCATION %s, MAPSET %s\n", which_env,
     G__getenv("LOCATION_NAME")==NULL ? "?" : G__getenv("LOCATION_NAME"),
     G__getenv("MAPSET")==NULL ? "?" : G__getenv("MAPSET"));
-    sleep(2);
+    G_sleep(2);
 
     return 0;
 }

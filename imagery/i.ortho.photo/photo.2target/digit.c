@@ -58,7 +58,7 @@ static int setup (void)
     if (system (command))
     {
 	use_digitizer = 0;
-	sleep(3);
+	G_sleep(3);
     }
     Resume_curses();
 
@@ -81,7 +81,7 @@ int digitizer_point (double *east, double *north)
     Suspend_curses();
     if(system (command))
     {
-	sleep(3);
+	G_sleep(3);
 	Resume_curses();
 	oops();
 	return 0;
