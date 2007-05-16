@@ -121,6 +121,9 @@ static void get_paper(void)
 	bot   = 0;
 	top   = height;
 
+	if (landscape)
+		swap(&right, &top);
+
 	if (!name)
 		return;
 
