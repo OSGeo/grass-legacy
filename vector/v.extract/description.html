@@ -65,6 +65,20 @@ v.extract input=forest output=forest_gaps where="CANOPY is NULL"
 v.extract input=forest output=forest_canopy where="CANOPY not NULL"
 </pre></div>
 
+<h3>Reverse extracting (behaves like selective vector objects deleting):</h3>
+
+Remove unreferenced stations from the GlobalSOD database:
+<div class="code"><pre>
+# check what to delete:
+v.db.select gsod_stationlist where="latitude < -91"
+
+# perform reverse selection
+v.extract -r gsod_stationlist out=gsod_stationlist_clean where="latitude < -91"
+
+v.db.select gsod_stationlist_clean
+</pre></div>
+
+
 <h3>Dissolving based on column attributes:</h3>
 <div class="code"><pre>
 # check column names:
@@ -95,6 +109,7 @@ v.extract -d in=map_with_islands out=maps_without_islands
 <h2>SEE ALSO</h2>
 
 <em><a HREF="v.category.html">v.category</a></em>,
+<em><a HREF="v.dissolve.html">v.dissolve</a></em>,
 <em><a HREF="v.reclass.html">v.reclass</a></em>,
 <em><a HREF="sql.html">GRASS SQL interface</a></em>
 
