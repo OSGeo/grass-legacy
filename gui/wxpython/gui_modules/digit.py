@@ -83,7 +83,7 @@ class VEdit(Digit):
         """
         General method which adds feature to the vector map
         """
-        command = """v.edit -n  map=%s tool=add""" % (map)
+        command = ["v.edit", "-n", "map=%s" % map, "tool=add"]
 
         # run the command
         vedit = cmd.Command(cmd=command, stdin=input)

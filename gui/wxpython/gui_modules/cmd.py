@@ -82,7 +82,7 @@ class Command:
                                os.popen3(self.cmd)
         else:
            Debug.msg(3, "Command.__init__(): [Popen] cmd=%s" % cmd)
-           self.module = subprocess.Popen(self.cmd, shell=True,
+           self.module = subprocess.Popen(self.cmd,
                                           stdin=subprocess.PIPE,
                                           stdout=subprocess.PIPE,
                                           stderr=subprocess.PIPE,
@@ -156,7 +156,7 @@ if __name__ == "__main__":
     # d.rast verbosely, wait for process termination
     print "Running d.rast..."
 
-    cmd = Command(cmd="d.rast elevation.dem", verbose=True, wait=True)
+    cmd = Command(cmd=["d.rast", "elevation.dem"], verbose=True, wait=True)
 
     if cmd.returncode == None:
         print "RUNNING"
@@ -174,7 +174,7 @@ if __name__ == "__main__":
     # v.net.path silently, wait for process termination
     print "Running v.net.path for 0 593527.6875 4925297.0625 602083.875 4917545.8125..."
 
-    cmd = Command(cmd="v.net.path in=roads@PERMANENT out=tmp dmax=100000 --o",
+    cmd = Command(cmd=["v.net.path", "in=roads@PERMANENT", "out=tmp dmax=100000", "--o"],
                   stdin="0 593527.6875 4925297.0625 602083.875 4917545.8125",
                   verbose=False,
                   wait=True)
@@ -190,7 +190,7 @@ if __name__ == "__main__":
     # returncode will be None
     print "Running d.vect tmp..."
 
-    cmd = Command("d.vect tmp", verbose=False, wait=False)
+    cmd = Command(["d.vect", "tmp"], verbose=False, wait=False)
 
     if cmd.returncode == None:
         print "RUNNING"

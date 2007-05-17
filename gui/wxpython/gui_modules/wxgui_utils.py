@@ -919,7 +919,7 @@ class GMConsole(wx.Panel):
                 tmpreg = os.getenv("GRASS_REGION")
                 os.unsetenv("GRASS_REGION")
 
-                p = cmd.Command(cmd=command + " --verbose")
+                p = cmd.Command(cmd=cmdlst + ["--verbose"])
 
                 # deactivate computational region and return to display settings
                 if tmpreg:

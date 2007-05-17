@@ -846,13 +846,13 @@ class BufferedWindow(wx.Window):
 
         # selected layer must be a valid map
         if type in ('raster', 'rgb', 'his'):
-            cmdString = "r.info -gx map=%s" % mapname
+            cmdVec = ["r.info", "-gx", "map=%s" % mapname]
         elif type in ('vector', 'thememap', 'themechart'):
-            cmdString = "v.info -g map=%s" % mapname
+            cmdVec = ["v.info", "-g", "map=%s" % mapname]
         else:
             return
 
-        p = cmd.Command (cmdString)
+        p = cmd.Command (cmdVec)
 
         output = p.module_stdout.read().split('\n')
         for oline in output:
@@ -892,11 +892,16 @@ class BufferedWindow(wx.Window):
         # for user to set explicitly with g.region
         new = self.Map.alignResolution()
 
-        cmd = "g.region n=%f s=%f e=%f w=%f rows=%f cols=%f --o" % (
-             new['n'], new['s'], new['e'], new['w'], new['rows'], new['cols'])
+        cmd = ["g.region", "--o",
+	       "n=%f"    % new['n'],
+	       "s=%f"    % new['s'],
+	       "e=%f"    % new['e'],
+	       "w=%f"    % new['w'],
+	       "rows=%f" % new['rows'],
+	       "cols=%f" % new['cols']]
 
         try:
-            p = Popen(cmd, shell=True, stdin=PIPE, stdout=PIPE, stderr=PIPE, close_fds=True)
+            p = Popen(cmd, stdin=PIPE, stdout=PIPE, stderr=PIPE, close_fds=True)
             output = p.stdout.read().split('\n')
             if p.stdout < 0:
                 print >> sys.stderr, "Child was terminated by signal", p.stdout
@@ -927,9 +932,8 @@ class BufferedWindow(wx.Window):
             return
 
         wind = dlg.wind
-        cmdString = "g.region -ugp region=%s" % wind
 
-        p = cmd.Command (cmdString)
+        p = cmd.Command (["g.region", "-ugp", "region=%s" % wind])
 
         if p.returncode == 0:
             output = p.module_stdout.read().split('\n')
