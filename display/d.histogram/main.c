@@ -18,14 +18,6 @@
  *               for details.
  *
  *****************************************************************************/
-/* main.c 
- *
- * The color option specifies the color for the labels, tic-marks,
- * and borders of the chart.  Use one of the 16 standard GRASS color
- * names.  The type option is either "area" or "count," the default
- * is "count" The style option is either "pie" or "bar," the default
- * is "bar"  
- * */
 /******************************************************************************
  * NOTE (shapiro):
  *  This program can NOT handle area information.
@@ -55,42 +47,47 @@ int main (int argc, char **argv)
 	struct Categories cats ;
 	struct Range range ;
 	struct Colors pcolors ;
+	int bgcolor;
 	char title[512];
 	int tt,tb,tl,tr;
 	int t,b,l,r;
 	int quiet;
 	struct GModule *module;
 	struct Option *opt1 ;
-	struct Option *opt2 ;
+	struct Option *opt2, *bg_opt;
 	struct Option *opt4 ;
 	struct Option *opt5 ;
 	struct Flag *flag1 ;
 	struct Flag *flag2 ;
 	struct Flag *flag3 ;
 
+
 	/* Initialize the GIS calls */
 	G_gisinit(argv[0]) ;
 
 	module = G_define_module();
 	module->keywords = _("display");
-    module->description =
-		_("Displays a histogram in the form of a pie or bar chart "
+	module->description =
+	    _("Displays a histogram in the form of a pie or bar chart "
 		"for a user-specified raster map.");
 
-	opt1             = G_define_option() ;
-	opt1->key        = "map" ;
+	opt1 = G_define_standard_option(G_OPT_R_MAP);
 	opt1->description= _("Raster map for which histogram will be displayed");
-	opt1->type       = TYPE_STRING ;
-	opt1->required   = YES ;
-	opt1->gisprompt  = "old,cell,raster" ;
 
-	opt2             = G_define_option() ;
-	opt2->key        = "color" ;
-	opt2->description= _("Color for legend and title");
-	opt2->type       = TYPE_STRING ;
-	opt2->required   = NO ;
-	opt2->answer     = DEFAULT_FG_COLOR ;
-	opt2->options    = D_color_list();
+	opt4             = G_define_option() ;
+	opt4->key        = "style" ;
+	opt4->description= _("Indicate if a pie or bar chart is desired");
+	opt4->type       = TYPE_STRING ;
+	opt4->required   = NO ;
+	opt4->options    = "pie,bar";
+	opt4->answer     = "bar" ;
+
+	/* The color option specifies the color for the labels, tic-marks,
+	 * and borders of the chart. */
+	opt2 = G_define_standard_option(G_OPT_C_FG);
+	opt2->label = _("Color for text and axes");
+
+	bg_opt = G_define_standard_option(G_OPT_C_BG);
 
 #ifdef CAN_DO_AREAS
 	opt3             = G_define_option() ;
@@ -101,13 +98,6 @@ int main (int argc, char **argv)
 	opt3->answer     = "count" ;
 	opt3->options    = "count,area";
 #endif
-
-	opt4             = G_define_option() ;
-	opt4->key        = "style" ;
-	opt4->description= _("Indicate if a pie or bar chart is desired");
-	opt4->type       = TYPE_STRING ;
-	opt4->required   = NO ;
-	opt4->answer     = "bar" ;
 
 	opt5             = G_define_option() ;
 	opt5->key        = "nsteps" ;
@@ -129,11 +119,13 @@ int main (int argc, char **argv)
 	flag3->description= _("Report for ranges defined in cats file (fp maps only)");
 
 	if (G_parser(argc, argv))
-		exit(EXIT_FAILURE) ;
+	    exit(EXIT_FAILURE) ;
+
 
 	map_name = opt1->answer ;
 
-	color = D_translate_color(opt2->answer) ;
+	color = D_parse_color(opt2->answer, FALSE);
+	bgcolor = D_parse_color(bg_opt->answer, TRUE);
 
 	type = COUNT;
 #ifdef CAN_DO_AREAS
@@ -182,17 +174,24 @@ int main (int argc, char **argv)
 	if (R_open_driver() != 0)
 	    G_fatal_error(_("No graphics device selected"));
 
-	D_setup(1); /* 1 = clear frame */
+	D_setup(0); /* 0 = don't clear frame */
+	D_get_screen_window(&t, &b, &l, &r);
+
+	/* clear the frame, if requested to do so */
+	if (strcmp(bg_opt->answer, "none")) {
+/*	    D_clear_window(); */  /* clears d.save history: but also any font setting! */
+	    D_raster_use_color(bgcolor);
+	    R_box_abs(l, t, r, b);
+	}
 
 	/* draw a title for */
 	sprintf(title,"%s in mapset %s",map_name,mapset);
-	D_get_screen_window(&t, &b, &l, &r);
 	text_height = (b-t)*0.05;
 	text_width = (r-l)*0.05*0.50;
 	R_text_size(text_width,text_height);
 	R_get_text_box(title,&tt,&tb,&tl,&tr);
 	R_move_abs((int)(l+(r-l)/2-(tr-tl)/2),(int)(t+(b-t)*0.07));
-	R_standard_color(color);
+	D_raster_use_color(color);
 	R_text(title);
 
 	/* plot the distributrion statistics */
@@ -204,8 +203,6 @@ int main (int argc, char **argv)
 	R_flush();
 	D_add_to_list(G_recreate_command()) ;
 	R_close_driver();
+
 	exit(EXIT_SUCCESS);
 }
-
-
-
