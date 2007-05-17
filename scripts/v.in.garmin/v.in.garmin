@@ -257,8 +257,9 @@ if [ $CREATE_POINTS -eq 1 ] ; then
  	cat "${TMP}.gpst" | sed -e '1d' | grep '^W' | cut -f1,2,3 | tr '\t' '|' > "$TMP".attributes
     fi
     if [ $TRK -eq 1 ] ; then
- 	cat "${TMP}.gpst" | sed -e '1d' | grep '^T' | awk -F '\t' '{print $4 " " $3}' > "$TMP".base
- 	cat "${TMP}.gpst" | sed -e '1d' | grep '^T' | cut -f1,2 | tr '\t' '|' > "$TMP".attributes
+	# we use uniq here as gpstrans can dupe up track points !?
+	uniq "${TMP}.gpst" | sed -e '1d' | grep '^T' | awk -F '\t' '{print $4 " " $3}' > "$TMP".base
+	uniq "${TMP}.gpst" | sed -e '1d' | grep '^T' | cut -f1,2 | tr '\t' '|' > "$TMP".attributes
     fi
 
     #### reproject if needed
@@ -270,11 +271,15 @@ if [ $CREATE_POINTS -eq 1 ] ; then
 	cs2cs -f %.7f $IN_PROJ +to $OUT_PROJ < "${TMP}.base" > "${TMP}.P_base"
 	EXITCODE=$?
 	# check if transform REALLY worked (e.g. grid file not found)
-	if [ -n "`head -n 1 "${TMP}.P_base" | grep "^*"`" ] ; then
+	BAD_PTS="`grep -c "^*" "${TMP}.P_base"`"
+	if [ "$BAD_PTS" -gt 0 ] ; then
+	    echo 1>&2
+	    echo "WARNING: $BAD_PTS point(s) failed reprojection." 1>&2
 	    EXITCODE=1
 	fi
 	if [ $EXITCODE -ne 0 ] ; then
 	    echo "Projection transform failed, retaining WGS84" 1>&2
+	    echo 1>&2
 	    cp -f "${TMP}.base" "${TMP}.P_base"
 	fi
     fi
@@ -365,11 +370,15 @@ else # CREATE_LINES
     	cs2cs -tL -f %.7f $IN_PROJ +to $OUT_PROJ < "${TMP}.base" > "${TMP}.P_mid"
 	EXITCODE=$?
 	# check if transform REALLY worked (e.g. grid file not found)
-	if [ -n "`head -n 2 "${TMP}.P_mid" | grep "^*"`" ] ; then
+	BAD_PTS="`grep -c "^*" "${TMP}.P_mid"`"
+	if [ "$BAD_PTS" -gt 0 ] ; then
+	    echo 1>&2
+	    echo "WARNING: $BAD_PTS vertices failed reprojection." 1>&2
 	    EXITCODE=1
 	fi
     	if [ $EXITCODE -ne 0 ] ; then
     	    echo "Projection transform failed, retaining WGS84" 1>&2
+	    echo 1>&2
 	    cat "${TMP}.base" | awk 'BEGIN {;} $1=="L" { print } ; \
 		$1!="L" { printf(" %.7f %.7f\n", $1, $2) } END {;}' > "${TMP}.P_base"
     	else
@@ -415,7 +424,7 @@ EOF
 	    echo "$PROG: line vector \"$NAME@$MAPSET\" successfully created" 1>&2
 	else
 	    echo "$PROG: An error occured on creating \"$NAME\" in mapset \"$MAPSET\"," 1>&2
-	    echo "please check!" 1>&2
+	    echo 'please check!' 1>&2
 	    exit 1
 	fi
 
@@ -473,7 +482,7 @@ fi
 
 
 #### clean up the mess
-rm -f ${TMP}* 1>&2 > /dev/null
+rm -f "${TMP}"*
 
 #### end
 echo 1>&2
