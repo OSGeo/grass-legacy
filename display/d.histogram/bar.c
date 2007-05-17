@@ -308,7 +308,7 @@ int bar (
 		      && !(nodata && i==dist_stats->mincat+1))
 		{
 			/* draw a numbered tic-mark */
-			R_standard_color(color);
+			D_raster_use_color(color);
 			R_move_abs( (int)(xoffset+(i-dist_stats->mincat)*xscale - 0.5 * xscale),
 			    (int)(b-ORIGIN_Y*(b-t)) );
 			R_cont_rel( (int)0 , (int)(BIG_TIC*(b-t)) );
@@ -336,7 +336,7 @@ int bar (
 		else if (rem(i,tic_unit)==(float)0)
 		{
 			/* draw a tic-mark */
-			R_standard_color(color);
+			D_raster_use_color(color);
 			R_move_abs( (int)(xoffset+(i-dist_stats->mincat)*xscale- 0.5 * xscale),
 			    (int)(b-ORIGIN_Y*(b-t)) );
 			R_cont_rel( (int)0 , (int)(SMALL_TIC*(b-t)) );
@@ -353,7 +353,7 @@ int bar (
 	R_text_size(text_width,text_height);
 	R_get_text_box(xlabel,&tt,&tb,&tl,&tr);
 	R_move_abs( (int) (l+(r-l)/2-(tr-tl)/2) , (int) (b-LABEL_1*(b-t)) );
-	R_standard_color((int)color);
+	D_raster_use_color(color);
 	R_text(xlabel);
 
 	/* DRAW Y-AXIS TIC-MARKS AND NUMBERS
@@ -435,11 +435,11 @@ int bar (
 	R_text_size(text_width,text_height);
 	R_get_text_box(ylabel,&tt,&tb,&tl,&tr);
 	R_move_abs((int)(l+(r-l)/2-(tr-tl)/2),(int)(b-LABEL_2*(b-t)));
-	R_standard_color((int)color);
+	D_raster_use_color(color);
 	R_text(ylabel);
 
 	/* draw x and y axis lines */
-	R_standard_color(color);
+	D_raster_use_color(color);
 	R_polyline_abs(x_line,y_line,3);
 
 	return 0;
