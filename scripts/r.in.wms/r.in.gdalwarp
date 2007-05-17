@@ -94,7 +94,7 @@ fi
 exitprocedure()
 {
 	g.message -e 'User break!'
-	rm -f "${TMP}*"
+	rm -f "${TMP}"*
 	exit 1
 }
 trap "exitprocedure" 2 3 15
@@ -311,4 +311,4 @@ if [ $COLORS -eq 3 ] && [ $GIS_FLAG_C -eq 1 ] ; then
 fi
 
 # Clean up:
-rm -f "${TMP}*"
+rm -f "${TMP}"*
