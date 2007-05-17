@@ -57,7 +57,7 @@ main (int argc, char *argv[])
 	    new = parm[n]->answers[i++];
 	    if(!find (n, old, mapset))
 	    {
-		G_warning (_("<%s> not found"), old);
+		G_warning (_("%s file <%s> not found"), list[n].maindesc, old);
 		continue;
 	    }
 	    if (find (n, new, "") && !(module->overwrite))
