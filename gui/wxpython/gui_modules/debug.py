@@ -27,7 +27,7 @@ class DebugMsg:
     Usage:
          import cmd
 
-         cmd.Command (cmd="g.gisenv set=DEBUG=3") # only GUI debug messages DEBUG=GUI:3
+         cmd.Command (cmd=["g.gisenv", "set=DEBUG=3"]) # only GUI debug messages DEBUG=GUI:3
 
          import grassenv # or reload (grassenv)
 
@@ -63,7 +63,7 @@ Debug = DebugMsg()
 # testing
 if __name__ == "__main__":
     import cmd
-    cmd.Command (cmd="g.gisenv set=DEBUG=3")
+    cmd.Command (cmd=["g.gisenv", "set=DEBUG=3"])
     reload (grassenv) # reload GRASS environments !
                 
     for level in range (4):

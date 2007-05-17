@@ -93,8 +93,10 @@ class VirtualAttributeList(wx.ListCtrl, listmix.ListCtrlAutoWidthMixin, listmix.
         #building the columns
         i = 0
         # FIXME: Maximal number of columns, when the GUI is still usable
-        dbDescribe = cmd.Command (cmd= "db.describe -c table=%s driver=%s database=%s" % \
-                                  (self.parent.tablename, self.parent.driver, self.parent.database))
+        dbDescribe = cmd.Command (cmd = ["db.describe", "-c",
+					 "table=%s" % self.parent.tablename,
+					 "driver=%s" % self.parent.driver,
+					 "database=%s" % self.parent.database])
         
         for line in dbDescribe.module_stdout.readlines()[1:]:
             x,column,type,length = line.strip().split(":")
@@ -155,16 +157,20 @@ class VirtualAttributeList(wx.ListCtrl, listmix.ListCtrlAutoWidthMixin, listmix.
     def LoadData(self,where=None):
 
         # prepare command string
-        cmdstr = """db.select -c table=%s database=%s driver=%s """ % \
-                 (self.parent.tablename, self.parent.database, self.parent.driver)
+        cmdv = ["db.select", "-c",
+		"table=%s" % self.parent.tablename,
+		"database=%s" % self.parent.database,
+		"driver=%s" % self.parent.driver]
 
         if where:
             self.ClearAll()
-            cmdstr = """db.select -c sql="SELECT * FROM %s WHERE %s" database=%s driver=%s """ %\
-                     (self.parent.tablename, where, self.parent.database, self.parent.driver)
+            cmdv = ["db.select", "-c",
+		    "sql=SELECT * FROM %s WHERE %s" % (self.parent.tablename, where),
+		    "database=%s" % self.parent.database,
+		    "driver=%s" % self.parent.driver]
 
         # run command
-        vDbSelect = cmd.Command (cmd=cmdstr)
+        vDbSelect = cmd.Command (cmd=cmdv)
         
         # FIXME: Max. number of rows, while the GUI is still usable
         i = 0
@@ -484,7 +490,7 @@ class AttributeManager(wx.Frame):
                  pointdata=None):
 
         # get list of attribute tables (TODO: open more tables)
-        vDbConnect = cmd.Command (cmd="v.db.connect -g map=%s" % (vectmap))
+        vDbConnect = cmd.Command (cmd=["v.db.connect", "-g", "map=%s" % vectmap])
 
         try:
             if vDbConnect.returncode == 0:
