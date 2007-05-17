@@ -234,7 +234,6 @@ STYLE="$GISBASE/etc/grass_write_ascii.style"
 
 #### receive data ...
 
-# makes tracks as points impossible??
 if [ $CREATE_POINTS -eq 1 ] ; then
     if [ $WPT -eq 1 ] ; then
 	g.message "Loading Waypoints from <$GIS_OPT_INPUT> ..." 
@@ -288,7 +287,7 @@ if [ $CREATE_POINTS -eq 1 ] ; then
 ###################################
 
     cat "${TMP}.xcsv" | cut -f 1,2 -d '|'| tr '|' ' '  > "$TMP".base
-# FIXME: if last field (comments) is empty it causes a non-enough fields error in v.in.ascii
+# FIXME: if last field (comments) is empty it causes a not-enough fields error in v.in.ascii
     cat "${TMP}.xcsv" | tr '+' '|' | cut -f3,4,5,6 -d '|' | \
 	sed -e 's/-99999999.000000//' -e 's/|$/|_/' > "$TMP".attributes
 
