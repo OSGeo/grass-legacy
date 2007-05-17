@@ -183,7 +183,10 @@ typedef enum {
 
     G_OPT_F_INPUT,  /* old input file */
     G_OPT_F_OUTPUT, /* new output file */
-    G_OPT_F_SEP     /* data field separator */
+    G_OPT_F_SEP,    /* data field separator */
+
+    G_OPT_C_FG,     /* foreground color */
+    G_OPT_C_BG      /* background color */
 } STD_OPT;
 
 /* Message format */

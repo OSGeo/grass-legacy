@@ -564,6 +564,28 @@ G_define_standard_option (int opt)
 	    Opt->answer       = "|";
 	    Opt->description  = _("Field separator");
 	    break;
+
+	/* colors */
+	case G_OPT_C_FG:
+	    Opt->key          = "color";
+	    Opt->type         = TYPE_STRING;
+	    Opt->key_desc     = "name";
+	    Opt->required     = NO;
+	    Opt->answer       = DEFAULT_FG_COLOR;
+	    Opt->gisprompt    = GISPROMPT_COLOR;
+	    Opt->label        = _("Color");
+	    Opt->description  = _("Either a standard color name or R:G:B triplet");
+	    break;
+	case G_OPT_C_BG:
+	    Opt->key          = "bgcolor";
+	    Opt->type         = TYPE_STRING;
+	    Opt->key_desc     = "name";
+	    Opt->required     = NO;
+	    Opt->answer       = DEFAULT_BG_COLOR;
+	    Opt->gisprompt    = GISPROMPT_COLOR;
+	    Opt->label        = _("Background color");
+	    Opt->description  = _("Either a standard GRASS color, R:G:B triplet, or \"none\"");
+	    break;
     }
 
     return(Opt);
