@@ -134,7 +134,15 @@ class BufferedWindow(wx.Window):
         self.render = True  # re-render the map from GRASS or just redraw image
         self.resize = False # indicates whether or not a resize event has taken place
         self.dragimg = None # initialize variable for map panning
+
+        #
+        # Variable for drawing on DC
+        #
         self.pen = None     # pen for drawing zoom boxes, etc.
+        self.polypen = None # pen for drawing polylines (measurements, profiles, etc)
+        self.polycoords = []  # List of wx.Point tuples defining a polyline
+        self.lineid = None #ID of rubber band line
+        self.plineid = None #ID of poly line resulting from cumulative rubber band lines (e.g. measurement)
 
         #
         # Event bindings
@@ -263,6 +271,26 @@ class BufferedWindow(wx.Window):
             pdc.DrawLine(coords[0], coords[1], coords[2], coords[3])
             pdc.SetIdBounds(drawid,(coords[0], coords[1], coords[2], coords[3]))
             self.ovlcoords[drawid] = coords
+
+        elif pdctype == 'polyline': # draw a polyline on top of the map
+            pdc.SetBrush(wx.Brush(wx.CYAN, wx.TRANSPARENT))
+            pdc.SetPen(self.polypen)
+            pdc.DrawLines(self.polycoords)
+
+            # get bounding rectangle for polyline
+            xlist = []
+            ylist = []
+            if len(self.polycoords) > 0:
+                for point in self.polycoords:
+                    x,y = point
+                    xlist.append(x)
+                    ylist.append(y)
+                x1=min(xlist)
+                x2=max(xlist)
+                y1=min(ylist)
+                y2=max(ylist)
+                pdc.SetIdBounds(drawid,(x1,y1,x2,y2))
+                self.ovlcoords[drawid] = [x1,y1,x2,y2]
 
         elif pdctype == 'point': #draw point
             pen = self.RandomPen()
@@ -501,8 +529,8 @@ class BufferedWindow(wx.Window):
         """
         Mouse zoom rectangles and lines
         """
-        boxid = wx.ID_NEW
         if self.mouse['box'] == "box":
+            boxid = wx.ID_NEW
             mousecoords = [self.mouse['begin'][0], self.mouse['begin'][1], \
                            self.mouse['end'][0], self.mouse['end'][1]]
             r = self.pdc.GetIdBounds(boxid)
@@ -512,14 +540,28 @@ class BufferedWindow(wx.Window):
             self.pdc.SetId(boxid)
             self.Draw(self.pdc, drawid=boxid, pdctype='box', coords=mousecoords)
         elif self.mouse['box'] == "line":
+            self.lineid = wx.ID_NEW
             mousecoords = [self.mouse['begin'][0], self.mouse['begin'][1], \
                            self.mouse['end'][0], self.mouse['end'][1]]
-            r = self.pdc.GetIdBounds(boxid)
+            x1=min(self.mouse['begin'][0],self.mouse['end'][0])
+            x2=max(self.mouse['begin'][0],self.mouse['end'][0])
+            y1=min(self.mouse['begin'][1],self.mouse['end'][1])
+            y2=max(self.mouse['begin'][1],self.mouse['end'][1])
+            r = wx.Rect(x1,y1,x2-x1,y2-y1)
             r.Inflate(4,4)
-            self.pdc.ClearId(boxid)
+            try:
+                self.pdc.ClearId(self.lineid)
+            except:
+                pass
             self.RefreshRect(r, False)
-            self.pdc.SetId(boxid)
-            self.Draw(self.pdc, drawid=boxid, pdctype='line', coords=mousecoords)
+            self.pdc.SetId(self.lineid)
+
+            self.Draw(self.pdc, drawid=self.lineid, pdctype='line', coords=mousecoords)
+
+    def DrawLines(self):
+        self.plineid = wx.ID_NEW+1
+        if len(self.polycoords) > 0:
+            self.Draw(self.pdc, drawid=self.plineid, pdctype='polyline', coords=self.polycoords)
 
     def MouseActions(self, event):
         """
@@ -530,12 +572,21 @@ class BufferedWindow(wx.Window):
 
         # left mouse button pressed
         if event.LeftDown():
-            # get decoration id
-            self.lastpos = self.mouse['begin'] = event.GetPositionTuple()[:]
-            # idlist = self.pdc.FindObjectsByBBox(self.lastpos[0],self.lastpos[1])
-            idlist  = self.pdc.FindObjects(self.lastpos[0],self.lastpos[1], hitradius)
-            if idlist != []:
-                self.dragid = idlist[0]
+            if self.mouse["use"] == "measure":
+                if len(self.polycoords) == 0:
+                    self.mouse['begin'] = event.GetPositionTuple()[:]
+                    self.polycoords.append(self.mouse['begin'])
+                else:
+                    self.mouse['begin'] = self.mouse['end']
+
+            else:
+                # get decoration id
+                self.lastpos = self.mouse['begin'] = event.GetPositionTuple()[:]
+                # idlist = self.pdc.FindObjectsByBBox(self.lastpos[0],self.lastpos[1])
+                idlist  = self.pdc.FindObjects(self.lastpos[0],self.lastpos[1], hitradius)
+                if idlist != []:
+                    self.dragid = idlist[0]
+
         # left mouse button released and not just a pointer
         elif event.LeftUp():
             if self.mouse['use'] == "zoom" or self.mouse['use'] == "pan":
@@ -555,6 +606,12 @@ class BufferedWindow(wx.Window):
             elif self.mouse["use"] == "measure":
                 self.mouse['end'] = event.GetPositionTuple()[:]
                 self.Parent.MeasureDist(self.mouse['begin'],self.mouse['end'])
+                self.polycoords.append(self.mouse['end'])
+                try:
+                    self.pdc.ClearId(self.lineid)
+                    self.DrawLines()
+                except:
+                    pass
 
             # end drag of overlay decoration
             elif self.dragid != None:
@@ -618,23 +675,33 @@ class BufferedWindow(wx.Window):
 
         # double click
         elif event.ButtonDClick():
-            # select overlay decoration options dialog
-            # start point of drag
-            clickposition = event.GetPositionTuple()[:]
-            # get decoration ID
-            # idlist = self.pdc.FindObjectsByBBox(clickposition[0], clickposition[1])
-            idlist  = self.pdc.FindObjects(clickposition[0], clickposition[1], hitradius)
-            if idlist == []: return
-            self.dragid = idlist[0]
+            if self.mouse["use"] == "measure":
+                self.pdc.ClearId(self.lineid)
+                self.pdc.ClearId(self.plineid)
+                self.polycoords = []
+                self.mouse['use'] = 'pointer'
+                self.mouse['box'] = 'point'
+                self.mouse['end'] = [0, 0]
+                self.Refresh()
+                self.SetCursor(self.parent.cursors["default"])
+            else:
+                # select overlay decoration options dialog
+                # start point of drag
+                clickposition = event.GetPositionTuple()[:]
+                # get decoration ID
+                # idlist = self.pdc.FindObjectsByBBox(clickposition[0], clickposition[1])
+                idlist  = self.pdc.FindObjects(clickposition[0], clickposition[1], hitradius)
+                if idlist == []: return
+                self.dragid = idlist[0]
 
-            self.ovlcoords[self.dragid] = self.pdc.GetIdBounds(self.dragid)
-            if self.dragid > 100:
-                self.currtxtid = self.dragid
-                self.parent.addText(None)
-            elif self.dragid == 0:
-                self.parent.AddBarscale(None)
-            elif self.dragid == 1:
-                self.parent.AddLegend(None)
+                self.ovlcoords[self.dragid] = self.pdc.GetIdBounds(self.dragid)
+                if self.dragid > 100:
+                    self.currtxtid = self.dragid
+                    self.parent.addText(None)
+                elif self.dragid == 0:
+                    self.parent.AddBarscale(None)
+                elif self.dragid == 1:
+                    self.parent.AddLegend(None)
         # drag
         elif event.Dragging():
             currpos = event.GetPositionTuple()[:]
@@ -977,9 +1044,11 @@ class MapFrame(wx.Frame):
         self.layerbook = notebook #GIS Manager layer tree notebook
         # available cursors
         self.cursors = {
-            "default" : wx.StockCursor (wx.CURSOR_DEFAULT),
-            "cross"   : wx.StockCursor (wx.CURSOR_CROSS),
-            "hand"    : wx.StockCursor (wx.CURSOR_HAND)
+            "default" : wx.StockCursor(wx.CURSOR_DEFAULT),
+            "cross"   : wx.StockCursor(wx.CURSOR_CROSS),
+            "hand"    : wx.StockCursor(wx.CURSOR_HAND),
+            "pencil"  : wx.StockCursor(wx.CURSOR_PENCIL),
+            "sizenwse": wx.StockCursor(wx.CURSOR_SIZENWSE)
             }
 
         #
@@ -1026,11 +1095,13 @@ class MapFrame(wx.Frame):
         #
         self.InitDisplay() # initialize region values
 
+        self.dist = 0.0 #segment length for measurement
+        self.totaldist = 0.0 # total length measured
         # initialize buffered DC
         # self.MapWindow = DrawWindow(self)
         self.MapWindow = BufferedWindow(self, id = wx.ID_ANY, Map=self.Map, tree=self.tree) # initialize buffered DC
         self.MapWindow.Bind(wx.EVT_MOTION, self.OnMotion)
-        self.MapWindow.SetCursor (self.cursors["default"]) # default
+        self.MapWindow.SetCursor(self.cursors["default"]) # default
 
         #
         # Init zoomhistory
@@ -1160,7 +1231,7 @@ class MapFrame(wx.Frame):
         self.MapWindow.mouse['box'] = "point"
 
         # change the cursor
-        self.MapWindow.SetCursor (self.cursors["default"]) # default
+        self.MapWindow.SetCursor(self.cursors["default"]) # default
 
     def OnZoomIn(self, event):
         """
@@ -1173,7 +1244,7 @@ class MapFrame(wx.Frame):
         self.MapWindow.pen = wx.Pen(colour='Red', width=2, style=wx.SHORT_DASH)
 
         # change the cursor
-        self.MapWindow.SetCursor (self.cursors["cross"])
+        self.MapWindow.SetCursor(self.cursors["cross"])
 
     def OnZoomOut(self, event):
         """
@@ -1186,7 +1257,7 @@ class MapFrame(wx.Frame):
         self.MapWindow.pen = wx.Pen(colour='Red', width=2, style=wx.SHORT_DASH)
 
         # change the cursor
-        self.MapWindow.SetCursor (self.cursors["cross"])
+        self.MapWindow.SetCursor(self.cursors["cross"])
 
     def OnZoomBack(self, event):
         """
@@ -1201,10 +1272,10 @@ class MapFrame(wx.Frame):
         self.MapWindow.mouse['use'] = "pan"
         self.MapWindow.mouse['box'] = "pan"
         self.MapWindow.zoomtype = 0
-        event.Skip()
+#        event.Skip()
 
         # change the cursor
-        self.MapWindow.SetCursor (self.cursors["hand"])
+        self.MapWindow.SetCursor(self.cursors["hand"])
 
     def OnErase(self, event):
         """
@@ -1219,7 +1290,7 @@ class MapFrame(wx.Frame):
         self.Map.getRegion()
         self.Map.getResolution()
         self.UpdateMap()
-        event.Skip()
+#        event.Skip()
 
     def OnAlignRegion(self, event):
         """
@@ -1229,7 +1300,7 @@ class MapFrame(wx.Frame):
             self.Map.alignRegion = True
         else:
             self.Map.alignRegion = False
-        event.Skip()
+#        event.Skip()
 
     def SaveToFile(self, event):
         """
@@ -1321,7 +1392,7 @@ class MapFrame(wx.Frame):
         # event.Skip()
 
         # change the cursor
-        self.MapWindow.SetCursor (self.cursors["cross"])
+        self.MapWindow.SetCursor(self.cursors["cross"])
 
     def QueryMap(self,x,y):
         """
@@ -1413,18 +1484,22 @@ class MapFrame(wx.Frame):
         self.MapWindow.mouse['box'] = "line"
         self.MapWindow.zoomtype = 0
         self.MapWindow.pen = wx.Pen(colour='Red', width=2, style=wx.SHORT_DASH)
-        # event.Skip()
+        self.MapWindow.polypen = wx.Pen(colour='green', width=2, style=wx.SHORT_DASH)
 
         # change the cursor
-        self.MapWindow.SetCursor (self.cursors["cross"])
+        self.MapWindow.SetCursor(self.cursors["pencil"])
+
+        # initiating output
+        self.gismanager.goutput.cmd_output.write('\nMeasuring distance:\n')
 
     def MeasureDist(self, beginpt, endpt):
         x1,y1 = beginpt
         x2,y2 = endpt
         east = (x2-x1) * self.Map.region["ewres"]
         north = (y2-y1) * self.Map.region["nsres"]
-        dist = math.sqrt(math.pow((east),2) + math.pow((north),2))
-        print 'dist=',dist
+        self.dist = math.sqrt(math.pow((east),2) + math.pow((north),2))
+        self.totaldist += self.dist
+        self.gismanager.goutput.cmd_output.write('segment = '+str(self.dist)+'\ttotal distance = '+str(self.totaldist)+'\n')
 
     def Profile(self, event):
         """
