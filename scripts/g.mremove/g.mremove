@@ -209,6 +209,7 @@ fi
 if [ $force -eq 0 ] ; then
     g.message "The following files would be deleted:"
     echo "g.remove $rast $rast3d $vect $icon $labels $region $group $dview"
+    g.message message=""
     g.message "You must use the force flag to actually remove them. Exiting."
     exit 0
 fi
