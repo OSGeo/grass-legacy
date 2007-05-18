@@ -3,9 +3,10 @@
 ############################################################################
 #
 # MODULE:       v.db.update
-# AUTHOR(S):   	Moritz Lennert 
+# AUTHOR(S):    Moritz Lennert
+#               extensions by Markus Neteler
 # PURPOSE:      interface to db.execute to update a column in the attribute table connected to a given map
-# COPYRIGHT:    (C) 2005 by the GRASS Development Team
+# COPYRIGHT:    (C) 2005,2007 by the GRASS Development Team
 #
 #               This program is free software under the GNU General Public
 #               License (>=v2). Read the file COPYING that comes with GRASS
@@ -46,7 +47,14 @@
 #% key: value
 #% type: string
 #% description: New value to assign to the column (varchar values have to be in single quotes, ex: 'grass')
-#% required : yes
+#% required : no
+#%end
+
+#%option
+#% key: qcolumn
+#% type: string
+#% description: Column to query
+#% required : no
 #%end
 
 #%option
@@ -105,10 +113,20 @@ driver=`v.db.connect $GIS_OPT_MAP -g | grep -w $GIS_OPT_LAYER | awk '{print $5}'
 
 # checking column types
 coltype=`v.info -c map=$GIS_OPT_MAP --q | grep -w $GIS_OPT_COLUMN | cut -d'|' -f1`
-if [ "$coltype" = "INTEGER" -o "$coltype" = "DOUBLE PRECISION" ] ; then
-    value=$GIS_OPT_VALUE
+if [ -n "$GIS_OPT_QCOLUMN" ] ; then
+   if [ -n "$GIS_OPT_VALUE" ] ; then
+      g.message -e 'Either value or qcolumn parameter have to be used'
+      exit 1
+   fi
+   # special case: we copy from another column
+   value="$GIS_OPT_QCOLUMN"
 else
-    value=\'$GIS_OPT_VALUE\'
+   # we insert a value
+   if [ "$coltype" = "INTEGER" -o "$coltype" = "DOUBLE PRECISION" ] ; then
+       value=$GIS_OPT_VALUE
+   else
+       value=\'$GIS_OPT_VALUE\'
+   fi
 fi
 
 if [ -n "$GIS_OPT_WHERE" ]
