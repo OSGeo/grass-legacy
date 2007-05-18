@@ -11,8 +11,9 @@
 unsigned int G_sleep (unsigned int seconds)
 {
 #ifdef __MINGW32__
-    /* verify if it does the right thing */
-    return Sleep((seconds)*1000); 
+    /* note: Sleep() cannot be interrupted */
+    Sleep((seconds)*1000);
+    return 0; 
 #else
     return sleep(seconds);
 #endif
