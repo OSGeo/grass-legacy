@@ -893,12 +893,12 @@ class BufferedWindow(wx.Window):
         new = self.Map.alignResolution()
 
         cmd = ["g.region", "--o",
-	       "n=%f"    % new['n'],
-	       "s=%f"    % new['s'],
-	       "e=%f"    % new['e'],
-	       "w=%f"    % new['w'],
-	       "rows=%f" % new['rows'],
-	       "cols=%f" % new['cols']]
+         "n=%f"    % new['n'],
+         "s=%f"    % new['s'],
+         "e=%f"    % new['e'],
+         "w=%f"    % new['w'],
+         "rows=%f" % new['rows'],
+         "cols=%f" % new['cols']]
 
         try:
             p = Popen(cmd, stdin=PIPE, stdout=PIPE, stderr=PIPE, close_fds=True)
@@ -1090,9 +1090,9 @@ class MapFrame(wx.Frame):
 
 
         # d.barscale overlay added to rendering overlay list
-        self.Map.addOverlay(0, type='overlay', command='d.barscale', l_active=False, l_render=False)
+        self.Map.addOverlay(0, type='overlay', command=['d.barscale'], l_active=False, l_render=False)
         # d.barscale overlay added to rendering overlay list as placeholder for d.legend
-        self.Map.addOverlay(1, type='overlay', command='d.barscale', l_active=False, l_render=False)
+        self.Map.addOverlay(1, type='overlay', command=['d.barscale'], l_active=False, l_render=False)
 
         #
         # Init map display
@@ -1494,7 +1494,9 @@ class MapFrame(wx.Frame):
         self.MapWindow.SetCursor(self.cursors["pencil"])
 
         # initiating output
-        self.gismanager.goutput.cmd_output.write('\nMeasuring distance:\n')
+        projinfo = self.Map.ProjInfo()
+        if projinfo['proj'] != 'xy': units = projinfo['units']
+        self.gismanager.goutput.cmd_output.write('\nMeasuring distance ('+units+'):\n')
 
     def MeasureDist(self, beginpt, endpt):
         x1,y1 = beginpt
@@ -1503,7 +1505,10 @@ class MapFrame(wx.Frame):
         north = (y2-y1) * self.Map.region["nsres"]
         self.dist = math.sqrt(math.pow((east),2) + math.pow((north),2))
         self.totaldist += self.dist
-        self.gismanager.goutput.cmd_output.write('segment = '+str(self.dist)+'\ttotal distance = '+str(self.totaldist)+'\n')
+        self.gismanager.goutput.cmd_output.write('segment = '+
+                                                 str(self.dist)+
+                                                 '\ttotal distance = '+
+                                                 str(self.totaldist)+'\n')
 
     def Profile(self, event):
         """
