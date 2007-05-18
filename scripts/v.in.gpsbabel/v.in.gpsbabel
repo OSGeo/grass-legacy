@@ -33,10 +33,6 @@
 #	 gpsbabel -^2 | tr '\t' ';' | sort -t';' -k3
 #
 #############################################################################
-#
-### TODO: check if attributes are shifted by one row (for certain Garmins)
-#
-
 
 #%Module
 #%  description: Download Waypoints, Routes, and Tracks from a GPS receiver or a GPS ascii file into a vector map.
@@ -247,12 +243,14 @@ if [ $CREATE_POINTS -eq 1 ] ; then
 	TYPE="-t"
     fi
 
-    gpsbabel $TYPE -i $GIS_OPT_FORMAT $GPSdevice $PROGVERBOSE -o xcsv,style="$STYLE" -F "$TMP".xcsv
+    gpsbabel $TYPE -i $GIS_OPT_FORMAT $GPSdevice $PROGVERBOSE \
+	-o xcsv,style="$STYLE" -F "$TMP".xcsv
     EXITCODE=$?
 
-    if [ "`wc -l "${TMP}.xcsv"`" -eq 0 ] ; then
-	g.message -e 'No data!'
-	EXITCODE=1
+    if [ "`wc -l < "${TMP}.xcsv"`" -eq 0 ] ; then
+	g.message -w 'No data! Exiting.'
+	rm -f "${TMP}."*
+	exit 0
     fi
 
 else
@@ -265,12 +263,15 @@ else
 	TYPE="-t"
 	EXITCODE=$?
     fi
-    gpsbabel $TYPE -i $GIS_OPT_FORMAT $GPSdevice $PROGVERBOSE -o gpx -F "$TMP".gpx
+    gpsbabel $TYPE -i $GIS_OPT_FORMAT $GPSdevice $PROGVERBOSE \
+	-o gpx -F "$TMP".gpx
     EXITCODE=$?
 
-    if [ -z "`grep '<rte>' "${TMP}.gpx"`" ] && [ -z "`grep '<trk>' "${TMP}.gpx"`" ]; then
-	g.message -e 'No data!'
-	EXITCODE=1
+    if [ "`grep -c '<rte>' "${TMP}.gpx"`" -eq 0 ] && \
+       [ "`grep -c '<trk>' "${TMP}.gpx"`" -eq 0 ]; then
+	g.message -e 'No data! Exiting.'
+	rm -f "${TMP}."*
+	exit 0
     fi
 fi
 
@@ -288,8 +289,11 @@ if [ $CREATE_POINTS -eq 1 ] ; then
 
     cat "${TMP}.xcsv" | cut -f 1,2 -d '|'| tr '|' ' '  > "$TMP".base
 # FIXME: if last field (comments) is empty it causes a not-enough fields error in v.in.ascii
+
     cat "${TMP}.xcsv" | tr '+' '|' | cut -f3,4,5,6 -d '|' | \
-	sed -e 's/-99999999.000000//' -e 's/|$/|_/' > "$TMP".attributes
+	sed -e 's/-99999999.000000//' -e 's/|$/|_/' \
+	    -e 's/01\/01\/1970|00:00:00 AM/|/' > "$TMP".attributes
+
 
     #### reproject if needed
     if [ "$IN_PROJ" = "$OUT_PROJ" ] || [ $KEEP_WGS84 -eq 1 ] ; then
@@ -335,8 +339,10 @@ if [ $CREATE_POINTS -eq 1 ] ; then
 
 	cat "${TMP}.asc" | v.in.ascii output="$NAME" cat=0 \
 	  columns='x double precision, y double precision, altitude double precision, gmt_date varchar(10), gmt_time varchar(11), comments varchar(40)'
+	EXITCODE=$?
 
-	if [ $? -ne 0 ] ; then
+	# EXITCODE also used at pgm termination below!
+	if [ $EXITCODE -ne 0 ] ; then
 	    g.message -e "While Importing data with v.in.ascii"
 	    rm -f "${TMP}."*
 	    exit 1
@@ -402,7 +408,19 @@ else # CREATE_LINES
 	    START_PNT=""
 	    read START_PNT < "$TMP.var" # read the name of start point
 
+# check that numberic values don't try and pass an empty string
+### variable names don't line up with column names ?!
+if [ -z "$ROUTE_ID" ] ; then
+    ROUTE_ID="NULL"
+    g.message -w "Route $ROUTE_NUMBER: category number was empty. Bug?"
+fi
+if [ -z "$NUMBER" ] ; then
+    NUMBER="NULL"
+    g.message -w "Route $ROUTE_NUMBER: route ID was empty. Bug?"
+fi
+
 	    echo "$ROUTE_ID|$NUMBER|$R_NAME|$START_PNT" >> "$TMP.route_atts"
+
 	    ROUTE_NUMBER="`expr $ROUTE_NUMBER - 1`"
 
 	    # eat files
@@ -481,7 +499,31 @@ else # CREATE_LINES
 	    read E_TIME < "$TMP.var"
 
 	    TRACK_ID="`expr $TRACK_ID + 1`"
+
+# check that numberic values don't try and pass an empty string
+if [ -z "$TRACK_ID" ] ; then
+    TRACK_ID="NULL"
+    g.message -w "Track $TRACK_NUMBER: category number was empty. Bug?"
+fi
+if [ -z "$S_LAT" ] ; then
+    S_LAT="NULL"
+    g.message -w "Track $TRACK_NUMBER:  starting lat was empty. Bug?"
+fi
+if [ -z "$S_LON" ] ; then
+    S_LON="NULL"
+    g.message -w "Track $TRACK_NUMBER:  starting lon was empty. Bug?"
+fi
+if [ -z "$E_LAT" ] ; then
+    E_LAT="NULL"
+    g.message -w "Track $TRACK_NUMBER:  ending lat was empty. Bug?"
+fi
+if [ -z "$E_LON" ] ; then
+    E_LON="NULL"
+    g.message -w "Track $TRACK_NUMBER:  ending lon was empty. Bug?"
+fi
+
 	    echo "$TRACK_ID|$S_TIME|$S_LAT|$S_LON|$E_TIME|$E_LAT|$E_LON" >> "$TMP.track_atts"
+
 	    TRACK_NUMBER="`expr $TRACK_NUMBER - 1`"
 
 	    # eat files
@@ -601,25 +643,15 @@ EOF
 ### <hack>
 	if [ $RTE -eq 1 ] ; then
 	    # =>  echo "INSERT INTO $NAME VALUES (2, 1, 'AB', 'B')" | db.execute
-	    # 'if($3)' tests to work around Garmin firmware bug ($7 is even different!)
 	    cat "$ATTR_FILE" | \
 	      awk -F'|' '{
-		if($3 == " "){$3 = "NULL"}
-		if($4 == " "){$4 = "NULL"}
-		if($6 == " "){$6 = "NULL"}
-		if($7 == ""){$7 = "NULL"}
 		printf("echo \"INSERT INTO $NAME VALUES (%d, %d, ^%s^, ^%s^)\" | db.execute\n", $1, $2, $3, $4) }' \
 		    | tr '^' \' > "$ATTR_FILE"_exe
 	fi
 	if [ $TRK -eq 1 ] ; then
 	    # =>  echo "INSERT INTO $NAME VALUES ()" | db.execute
-	    # 'if($3)' tests to work around Garmin firmware bug ($7 is even different!)
 	    cat "$ATTR_FILE" | \
 	      awk -F'|' '{
-		if($3 == " "){$3 = "NULL"}
-		if($4 == " "){$4 = "NULL"}
-		if($6 == " "){$6 = "NULL"}
-		if($7 == ""){$7 = "NULL"}
 		printf("echo \"INSERT INTO $NAME VALUES (%d, ^%s^, %s, %s, ^%s^, %s, %s)\" | db.execute\n", $1, $2, $3, $4, $5, $6, $7) }' \
 		    | tr '^' \' > "$ATTR_FILE"_exe
 	fi
@@ -643,7 +675,7 @@ fi
 
 
 #### clean up the mess
-rm -f "${TMP}."*
+rm -f "${TMP}."* "${TMP}"
 
 #### end
 g.message "Done." 
