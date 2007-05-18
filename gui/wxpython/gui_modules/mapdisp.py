@@ -840,7 +840,7 @@ class BufferedWindow(wx.Window):
         dcmd  = self.tree.GetPyData(layer)[0]
         mapname = None
 
-        for item in dcmd.split(' '):
+        for item in dcmd:
             if 'map=' in item:
                 mapname = item.split('=')[1]
 
