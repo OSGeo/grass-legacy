@@ -597,7 +597,7 @@ class mainFrame(wx.Frame):
 
         if cmd is not None and self.get_dcmd is not None:
             # return d.* command to layer tree for rendering
-            self.get_dcmd(cmd, self.layer, {"params":self.task.params,"flags":self.task.flags} )
+            self.get_dcmd(cmd, self.layer, {"params":self.task.params,"flags":self.task.flags}, self )
             # echo d.* command to output console
 #            self.parent.writeDCommand(cmd)
         return cmd
@@ -1092,7 +1092,7 @@ class GUI:
 
             self.mf = mainFrame(parent=self.parent, ID=wx.ID_ANY, task_description=self.grass_task, get_dcmd=get_dcmd, layer=layer)
             self.mf.Show(True)
-            self.mf.MakeModal(True)
+            self.mf.MakeModal(False)
 
 
 if __name__ == "__main__":
