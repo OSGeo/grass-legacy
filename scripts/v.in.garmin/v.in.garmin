@@ -229,6 +229,12 @@ if [ $? -ne 0 ] ; then
     exit 1
 fi
 
+if [ `wc -l < "$TMP".gpst` -le 1 ] ; then
+    g.message -w 'No Data! Exiting.'
+    rm -f "${TMP}"*
+    exit 0
+fi
+
 
 #### check which projection we are working with
 PROJ="`head -n 1 "$TMP".gpst | sed -e 's/Format: //' | sed -e 's/  UTC.*//'`"
