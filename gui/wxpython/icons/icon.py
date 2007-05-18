@@ -66,6 +66,7 @@ icons_default = {
     "addtext"    : 'module-d.text.gif',
     "addbarscale": 'module-d.barscale.gif',
     "addlegend"  : 'module-d.legend.gif',
+    "quit"       : wx.ART_ERROR,
     # analyze raster
     "analyze"    : 'gui-rastanalyze.gif',
     "measure"    : 'gui-measure.gif',
@@ -181,6 +182,7 @@ Icons = {
     "addgrp"     : MetaIcon (img=icons_img["addgrp"], label="Add layer group"),
     "addovl"     : MetaIcon (img=icons_img["addovl"], label="Add grid or vector labels overlay"),
     "delcmd"     : MetaIcon (img=icons_img["delcmd"], label="Delete selected layer"),
+    "quit"       : MetaIcon (img=icons_img["quit"], label="Quit"),
     "attrtable"  : MetaIcon (img=icons_img["attrtable"], label="Show attribute table"),
     "addrgb"     : MetaIcon (img=icons_img["addrgb"], label="Add RGB layer"),
     "addhis"     : MetaIcon (img=icons_img["addhis"], label="Add HIS layer"),
