@@ -47,10 +47,7 @@ db__driver_fetch (dbCursor *cn, int position, int *more)
 	case DB_FIRST:
 
             if ( position == DB_FIRST ) 
-	    {
-		sqlite3_reset ( c->statement );
 	        c->row = -1;
-	    }
 
 	    ret = sqlite3_step ( c->statement );
 	    if ( ret != SQLITE_ROW )
@@ -62,6 +59,7 @@ db__driver_fetch (dbCursor *cn, int position, int *more)
 		    report_error();
 		    return DB_FAILED;
 		}
+		sqlite3_reset ( c->statement );
 		*more = 0;
 		return DB_OK;
 	    }
