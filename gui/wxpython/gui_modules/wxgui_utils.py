@@ -44,6 +44,7 @@ class LayerTree(CT.CustomTreeCtrl):
         self.root = ""           # ID of layer tree root node
         self.groupnode = 0       # index value for layers
         self.optpage = {}        # dictionary of notebook option pages for each map layer
+        self.properties = {}     # dictionary of menuform dialog instances, indexed by layer
         self.layer_selected = "" # ID of currently selected layer
         self.layertype = {}      # dictionary of layer types for each layer
         self.layerctrl = {}      # dictionary of layers indexed by special wind controls (spinctrl and textctrl)
@@ -127,14 +128,14 @@ class LayerTree(CT.CustomTreeCtrl):
         # self.tree.SetItemImage(self.root, fldridx, wx.TreeItemIcon_Normal)
         # self.tree.SetItemImage(self.root, fldropenidx, wx.TreeItemIcon_Expanded)
 
-        self.Bind(wx.EVT_TREE_ITEM_EXPANDING,   self.onExpandNode)
-        self.Bind(wx.EVT_TREE_ITEM_COLLAPSED,   self.onCollapseNode)
+        self.Bind(wx.EVT_TREE_ITEM_EXPANDING,   self.OnExpandNode)
+        self.Bind(wx.EVT_TREE_ITEM_COLLAPSED,   self.OnCollapseNode)
         self.Bind(wx.EVT_TREE_ITEM_ACTIVATED,   self.onActivateLayer)
-        self.Bind(wx.EVT_TREE_SEL_CHANGED,      self.onChangeSel)
-        self.Bind(CT.EVT_TREE_ITEM_CHECKED,     self.onLayerChecked)
-        self.Bind(wx.EVT_TREE_DELETE_ITEM,      self.onDeleteLayer)
-        self.Bind(wx.EVT_TREE_BEGIN_DRAG,       self.onBeginDrag)
-        self.Bind(wx.EVT_TREE_END_DRAG,         self.onEndDrag)
+        self.Bind(wx.EVT_TREE_SEL_CHANGED,      self.OnChangeSel)
+        self.Bind(CT.EVT_TREE_ITEM_CHECKED,     self.OnLayerChecked)
+        self.Bind(wx.EVT_TREE_DELETE_ITEM,      self.OnDeleteLayer)
+        self.Bind(wx.EVT_TREE_BEGIN_DRAG,       self.OnBeginDrag)
+        self.Bind(wx.EVT_TREE_END_DRAG,         self.OnEndDrag)
         self.Bind(wx.EVT_CONTEXT_MENU,          self.OnContextMenu)
         self.Bind(wx.EVT_TREE_END_LABEL_EDIT,   self.OnChangeLayerName)
         # self.Bind(wx.EVT_CLOSE, self.onCloseWindow)
@@ -242,8 +243,8 @@ class LayerTree(CT.CustomTreeCtrl):
             self.ctrl = wx.TextCtrl(self, id=wx.ID_ANY, value='',
                                     pos=wx.DefaultPosition, size=(250,40),
                                     style=wx.TE_MULTILINE|wx.TE_WORDWRAP)
-            self.ctrl.Bind(wx.EVT_TEXT_ENTER, self.onCmdChanged)
-            self.ctrl.Bind(wx.EVT_TEXT, self.onCmdChanged)
+            self.ctrl.Bind(wx.EVT_TEXT_ENTER, self.OnCmdChanged)
+            self.ctrl.Bind(wx.EVT_TEXT, self.OnCmdChanged)
         elif ltype == 'group':
             self.ctrl = None
             grouptext = 'Layer group:' + str(self.groupnode)
@@ -372,12 +373,18 @@ class LayerTree(CT.CustomTreeCtrl):
             else:
                 self.Expand(layer)
 
-    def onDeleteLayer(self, event):
+    def OnDeleteLayer(self, event):
         """Remove selected layer for the layer tree"""
 
-        Debug.msg (3, "LayerTree.onDeleteLayer():")
+        Debug.msg (3, "LayerTree.OnDeleteLayer():")
 
         layer = event.GetItem()
+        if layer in self.properties:
+            try:
+                self.properties[layer].Close(True)
+            except:
+                pass
+            self.properties.pop(layer)
 
         # delete layer in render.Map
         if self.layertype[layer] != 'group':
@@ -387,7 +394,7 @@ class LayerTree(CT.CustomTreeCtrl):
         self.Unselect()
         self.layer_selected = None
 
-    def onLayerChecked(self, event):
+    def OnLayerChecked(self, event):
         layer = event.GetItem()
         checked = layer.IsChecked()
 
@@ -408,7 +415,7 @@ class LayerTree(CT.CustomTreeCtrl):
                 self.Map.changeActive(layer, checked)
 
 
-    def onCmdChanged(self, event):
+    def OnCmdChanged(self, event):
         layer = self.layerctrl[event.GetEventObject()]
         cmd = event.GetString()
 
@@ -433,20 +440,20 @@ class LayerTree(CT.CustomTreeCtrl):
             # change opacity parameter for item in layers list in render.Map
             self.Map.ChangeOpacity(layer, opacity)
 
-    def onChangeSel(self, event):
+    def OnChangeSel(self, event):
         layer = event.GetItem()
         self.layer_selected = layer
 
-    def onCollapseNode(self, event):
+    def OnCollapseNode(self, event):
         if self.layertype[self.layer_selected] == 'group':
             self.SetItemImage(self.layer_selected, self.folder)
 
-    def onExpandNode(self, event):
+    def OnExpandNode(self, event):
         self.layer_selected = event.GetItem()
         if self.layertype[self.layer_selected] == 'group':
             self.SetItemImage(self.layer_selected, self.folder_open)
 
-    def onBeginDrag(self, event):
+    def OnBeginDrag(self, event):
         """ Drag and drop of single tree nodes
         """
 
@@ -472,7 +479,7 @@ class LayerTree(CT.CustomTreeCtrl):
         else:
             print ("Can't drag a node that has children")
 
-    def onEndDrag(self, event):
+    def OnEndDrag(self, event):
         """
         Insert copy of layer in new position and
         delete original at old position
@@ -490,7 +497,7 @@ class LayerTree(CT.CustomTreeCtrl):
             newctrl = wx.TextCtrl(self, id=wx.ID_ANY, value='',
                                pos=wx.DefaultPosition, size=(250,40),
                                style=wx.TE_MULTILINE|wx.TE_WORDWRAP)
-            newctrl.Bind(wx.EVT_TEXT_ENTER, self.onCmdChanged)
+            newctrl.Bind(wx.EVT_TEXT_ENTER, self.OnCmdChanged)
         elif self.layertype[old] == 'group':
             newctrl = None
         else:
@@ -541,15 +548,15 @@ class LayerTree(CT.CustomTreeCtrl):
             self.Map.updateLookup(old, new)
 
         # delete layer at original position
-        self.Delete(old) # entry in render.Map layers list automatically deleted by onDeleteLayer handler
+        self.Delete(old) # entry in render.Map layers list automatically deleted by OnDeleteLayer handler
 
         # reorder layers in render.Map to match new order after drag and drop
-        self.reorderLayers()
+        self.ReorderLayers()
 
         # completed drag and drop
         self.drag = False
 
-    def getOptData(self, dcmd, layer, params):
+    def getOptData(self, dcmd, layer, params, propwin):
         for item in dcmd:
             if 'map=' in item:
                 mapname = item.split('=')[1]
@@ -574,13 +581,16 @@ class LayerTree(CT.CustomTreeCtrl):
         # change parameters for item in layers list in render.Map
         self.ChangeLayer(layer, mapname)
 
+        # set the layer properties dialog dictionary entry
+        self.properties[layer] = propwin
+
 
     def writeDCommand(self, dcmd):
         # echos d.* command to output console
         global goutput
         goutput.write(dcmd+"\n----------\n")
 
-    def reorderLayers(self):
+    def ReorderLayers(self):
         """
         add commands from data associated with
         any valid layers (checked or not) to layer list in order to
