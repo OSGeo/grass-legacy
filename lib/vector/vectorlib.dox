@@ -8,68 +8,68 @@ http://grass.itc.it
 
 Specifications:
 
-- \subpage \ref background
-- \subpage \ref intro
-- \subpage \ref libraries
-- \subpage \ref vlib_topology_management
-- \subpage \ref vlib_spidx
-- \subpage \ref vlib_categories_layers
-- \subpage \ref vlibtin
-- \subpage \ref vlib_attributes
-- \subpage \ref grassdglib
-- \subpage \ref vlibascii
+- \subpage background
+- \subpage intro
+- \subpage libraries
+- \subpage vlib_topology_management
+- \subpage vlib_spidx
+- \subpage vlib_categories_layers
+- \subpage vlibtin
+- \subpage vlib_attributes
+- \subpage grassdglib
+- \subpage vlibascii
 
 Functions:
 
-- \subpage \ref vlibfunc
-- \subpage \ref area
-- \subpage \ref array
-- \subpage \ref box
-- \subpage \ref break_lines
-- \subpage \ref break_polygons
-- \subpage \ref bridges
-- \subpage \ref buffer
-- \subpage \ref build
-- \subpage \ref build_nat
-- \subpage \ref build_ogr
-- \subpage \ref cats
-- \subpage \ref cindex
-- \subpage \ref clean_nodes
-- \subpage \ref close
-- \subpage \ref constraint
-- \subpage \ref dangles
-- \subpage \ref dbcolumns
-- \subpage \ref error
-- \subpage \ref field
-- \subpage \ref find
-- \subpage \ref graph
-- \subpage \ref header
-- \subpage \ref hist
-- \subpage \ref init_head
-- \subpage \ref intersect
-- \subpage \ref legal_vname
-- \subpage \ref level
-- \subpage \ref level_two
-- \subpage \ref line
-- \subpage \ref list
-- \subpage \ref map
-- \subpage \ref net
-- \subpage \ref open
-- \subpage \ref overlay
-- \subpage \ref poly
-- \subpage \ref read
-- \subpage \ref remove_areas
-- \subpage \ref remove_duplicates
-- \subpage \ref rewind
-- \subpage \ref select
-- \subpage \ref sindex
-- \subpage \ref snap
-- \subpage \ref tin
-- \subpage \ref type
-- \subpage \ref write
-- \subpage \ref contacts
-- \subpage \ref references
-- \subpage \ref seealso
+- \subpage vlibfunc
+- \subpage area
+- \subpage array
+- \subpage box
+- \subpage break_lines
+- \subpage break_polygons
+- \subpage bridges
+- \subpage buffer
+- \subpage build
+- \subpage build_nat
+- \subpage build_ogr
+- \subpage cats
+- \subpage cindex
+- \subpage clean_nodes
+- \subpage close
+- \subpage constraint
+- \subpage dangles
+- \subpage dbcolumns
+- \subpage error
+- \subpage field
+- \subpage find
+- \subpage graph
+- \subpage header
+- \subpage hist
+- \subpage init_head
+- \subpage intersect
+- \subpage legal_vname
+- \subpage level
+- \subpage level_two
+- \subpage line
+- \subpage list
+- \subpage map
+- \subpage net
+- \subpage open
+- \subpage overlay
+- \subpage poly
+- \subpage read
+- \subpage remove_areas
+- \subpage remove_duplicates
+- \subpage rewind
+- \subpage select
+- \subpage sindex
+- \subpage snap
+- \subpage tin
+- \subpage type
+- \subpage write
+- \subpage contacts
+- \subpage references
+- \subpage seealso
 
 
 \section background Background
