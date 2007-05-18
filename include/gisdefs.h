@@ -116,7 +116,8 @@ char *G_ask_vector_in_mapset(const char *, char *);
 *  the G_asprintf macro is disabled until a stable version of GDAL
 *  with a different function becomes widely used 
 */  
-int G_asprintf (char **, const char *, ...) __attribute__((format(printf,2,3)));
+int G_vasprintf(char **, const char *, va_list);
+int G_asprintf(char **, const char *, ...) __attribute__((format(printf,2,3)));
 
 /* auto_mask.c */
 int G__check_for_auto_masking(void);
@@ -1050,7 +1051,7 @@ int G_set_window(struct Cell_head *);
 int G_shortest_way(double *, double *);
 
 /* sleep.c */
-unsigned int G_sleep (unsigned int);
+void G_sleep(unsigned int);
 
 /* snprintf.c */
 int G_snprintf(char *, size_t, const char *, ...) __attribute__((format(printf,3,4)));

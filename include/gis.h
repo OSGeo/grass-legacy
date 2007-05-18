@@ -23,9 +23,8 @@
 /*============================= Include Files ==============================*/
 
 /* System include files */
-#ifndef FILE
 #include <stdio.h>
-#endif
+#include <stdarg.h>
 
 /* Grass and local include files */
 #include <grass/config.h>

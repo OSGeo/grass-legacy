@@ -2,14 +2,15 @@
 #ifndef GRASS_SPAWN_H
 #define GRASS_SPAWN_H
 
-#define SF_REDIRECT_FILE		((char *) 1)
-#define SF_REDIRECT_DESCRIPTOR		((char *) 2)
-#define SF_CLOSE_DESCRIPTOR		((char *) 3)
-#define SF_SIGNAL			((char *) 4)
-#define SF_VARIABLE			((char *) 5)
-#define SF_BINDING			((char *) 6)
-#define SF_BACKGROUND			((char *) 7)
-#define SF_DIRECTORY			((char *) 8)
+#define SF_REDIRECT_FILE		((const char *) 1)
+#define SF_REDIRECT_DESCRIPTOR		((const char *) 2)
+#define SF_CLOSE_DESCRIPTOR		((const char *) 3)
+#define SF_SIGNAL			((const char *) 4)
+#define SF_VARIABLE			((const char *) 5)
+#define SF_BINDING			((const char *) 6)
+#define SF_BACKGROUND			((const char *) 7)
+#define SF_DIRECTORY			((const char *) 8)
+#define SF_ARGVEC			((const char *) 9)
 
 enum signal_action
 {
@@ -29,6 +30,7 @@ enum signal_type
 
 extern int G_spawn(const char *command, ...);
 extern int G_spawn_ex(const char *command, ...);
+extern int G_vspawn_ex(const char *command, const char **args);
 
 #endif
 
