@@ -437,7 +437,7 @@ class Map:
                     val = val.strip()
                     projinfo[key] = val
                 elif "XY location (unprojected)" in line:
-                    projinfo[proj] = "xy"
+                    projinfo['proj'] = "xy"
             return projinfo
         else:
             return
