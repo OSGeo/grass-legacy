@@ -314,7 +314,7 @@ care of following rules:
 
 
 24. Add/update, if required the related GUI menus:
-     gui/tcltk/menus/menu.tcl
+     gui/tcltk/gis.m/gmmenu.tcl
 
 
 25. For consistency, use README rather than README.txt for any README files.
