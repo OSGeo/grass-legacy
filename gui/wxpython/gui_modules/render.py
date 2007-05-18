@@ -40,7 +40,7 @@ class MapLayer:
         self.type    = type
         self.name    = name
         self.mapset  = mapset
-        self.cmd     = cmd + ["--q"] # quiet
+        self.cmdlist     = cmd + ["--q"] # quiet
 
         self.active  = active
         self.hidden  = hidden
@@ -59,15 +59,15 @@ class MapLayer:
 
     def __renderLayer(self):
         """
-        Stores generic command with all parameters in the self.cmd variable
+        Stores generic command with all parameters in the self.cmdlist variable
         """
         try:
-            Debug.msg (3, "MapLayer.__renderLayer(): cmd=%s" % self.cmd)
+            Debug.msg (3, "MapLayer.__renderLayer(): cmd=%s" % self.cmdlist)
 
         except StandardError, e:
             sys.stderr.write("Could not render command layer <%s>: %s\n" %\
                  (self.name, str(e)))
-            self.cmd = None
+            self.cmdlist = None
 
     def Render(self):
         """
@@ -113,14 +113,14 @@ class MapLayer:
         #
         # execute command
         #
-        if not self.cmd:
+        if not self.cmdlist:
             sys.stderr.write("Cannot render layer <%s> with command: #%s#" %\
-                             (self.name, self.cmd))
+                             (self.name, self.cmdlist))
             return None
 
-        runcmd = cmd.Command(cmd=self.cmd)
+        runcmd = cmd.Command(cmd=self.cmdlist)
         if runcmd.returncode != 0:
-            print "Could not execute '%s'" % (self.cmd)
+            print "Could not execute '%s'" % (self.cmdlist)
             for msg in runcmd.msg:
                 print msg[1]
             self.mapfile = None
@@ -420,6 +420,28 @@ class Map:
         except:
             return None
 
+    def ProjInfo(self):
+        # get map units from PROJ_UNITS
+
+        projinfo = {}
+        cmdlist = ['g.proj', '-p']
+
+        p = cmd.Command(cmdlist)
+
+        if p.returncode == 0:
+            output = p.module_stdout.read().split('\n')
+            for line in output:
+                if ':' in line:
+                    key,val = line.split(':')
+                    key = key.strip()
+                    val = val.strip()
+                    projinfo[key] = val
+                elif "XY location (unprojected)" in line:
+                    projinfo[proj] = "xy"
+            return projinfo
+        else:
+            return
+
     def alignResolution(self):
         """
         Sets display extents to even multiple of
@@ -643,7 +665,9 @@ class Map:
         """
         layer = self.lookup[item]
 
-        Debug.msg (3, "Map.delLayer(): cmd=%s" % layer.cmd)
+        #TODO something wrong with this dbug statement layerl.cmd doesn't exist
+
+        #Debug.msg (3, "Map.delLayer(): cmd=%s" % str(layer.cmd))
         if layer in self.layers:
             if layer.mapfile:
                 base = os.path.split(layer.mapfile)[0]
@@ -785,13 +809,13 @@ class Map:
             return self.lookup[item]
         else:
             return None
-        
+
     def GetLayerIndex(self, layer):
         """
         Returns index of layer in layer list.
 
         Parameters:
-         layer - 
+         layer -
 
         Returns:
          Integer or None
@@ -799,7 +823,7 @@ class Map:
 
         #         if not mapset:
         #             mapset = self.env['MAPSET']
-        
+
         #         for i in range(0, len(self.layers)):
         #             if self.layers[i].name == name and \
         #                   self.layers[i].mapset == mapset:

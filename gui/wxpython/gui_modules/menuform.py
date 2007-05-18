@@ -585,7 +585,7 @@ class mainFrame(wx.Frame):
         self.Layout()
 
     def updateValuesHook(self):
-        self.SetStatusText( self.notebookpanel.createCmd(ignoreErrors = True) )
+        self.SetStatusText( ''.join(self.notebookpanel.createCmd(ignoreErrors = True)) )
 
     def OnOK(self, event):
         cmd = self.OnApply(event)
@@ -644,7 +644,7 @@ class mainFrame(wx.Frame):
     def OnCancel(self, event):
         self.MakeModal(False)
         self.Destroy()
-        
+
     def OnCloseWindow(self, event):
         self.MakeModal(False)
         self.Destroy()
@@ -698,7 +698,7 @@ class cmdPanel(wx.Panel):
             else:
                 is_section[ task['guisection'] ] += 1
         del is_section
-        
+
         # Main goes first, Options goes second
         for (newidx,content) in [ (0,_( 'Main' )), (1,_('Options')) ]:
             if content in sections:
@@ -908,7 +908,7 @@ class cmdPanel(wx.Panel):
                     # we have to target the button here
                     p['wxId'] = fbb.GetChildren()[1].GetId()
 
-	    if txt is not None:
+            if txt is not None:
                 txt.SetFont( wx.Font( fontsize, wx.FONTFAMILY_DEFAULT, wx.NORMAL, text_style, 0, ''))
 
         maxsizes = (0,0)
@@ -1013,7 +1013,7 @@ class cmdPanel(wx.Panel):
         for GRASS.
         """
         try:
-            cmd = ' '.join( self.task.getCmd( ignoreErrors=ignoreErrors ) )
+            cmd = self.task.getCmd( ignoreErrors=ignoreErrors )
         except ValueError, err:
             dlg = wx.MessageDialog(self, str(err), _("Error"), wx.OK | wx.ICON_ERROR)
             dlg.ShowModal()

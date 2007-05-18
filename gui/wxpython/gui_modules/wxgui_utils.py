@@ -216,7 +216,7 @@ class LayerTree(CT.CustomTreeCtrl):
         self.popupMenu.Enable (self.popupID5, False)
         self.popupMenu.Enable (self.popupID6, True)
         self.popupMenu.UpdateUI(self)
-        
+
     def OnStopEditing (self, event):
         pass
 
@@ -237,7 +237,7 @@ class LayerTree(CT.CustomTreeCtrl):
             self.SelectItem(self.layer_selected, select=False)
 
         Debug.msg (3, "LayerTree().AddLayer(): ltype=%s" % (ltype))
-        if ltype == 'command':
+        if ltype == 'cmdlayer':
             # generic command layer
             self.ctrl = wx.TextCtrl(self, id=wx.ID_ANY, value='',
                                     pos=wx.DefaultPosition, size=(250,40),
@@ -283,7 +283,7 @@ class LayerTree(CT.CustomTreeCtrl):
 
         # add layer to layers list in render.Map
         if self.layertype[layer] != 'group':
-            self.Map.AddLayer(item=layer, type="command", command='',
+            self.Map.AddLayer(item=layer, type="command", command=[],
                               l_active=False, l_hidden=False, l_opacity=1, l_render=False)
 
         # add text and icons for each layer ltype
@@ -317,7 +317,7 @@ class LayerTree(CT.CustomTreeCtrl):
         elif ltype == 'labels':
             self.SetItemImage(layer, self.labels_icon)
             self.SetItemText(layer, 'vector labels (double click to set properties)')
-        elif ltype == 'command':
+        elif ltype == 'cmdlayer':
             self.SetItemImage(layer, self.cmd_icon)
         elif ltype == 'group':
             self.SetItemImage(layer, self.folder)
@@ -355,7 +355,7 @@ class LayerTree(CT.CustomTreeCtrl):
             menuform.GUI().parseCommand('d.grid', gmpath, completed=(self.getOptData,layer,params), parentframe=self)
         elif ltype == 'labels':
             menuform.GUI().parseCommand('d.labels', gmpath, completed=(self.getOptData,layer,params), parentframe=self)
-        elif ltype == 'command':
+        elif ltype == 'cmdlayer':
             pass
         elif ltype == 'group':
             pass
@@ -486,7 +486,7 @@ class LayerTree(CT.CustomTreeCtrl):
             return
 
         # recreate spin/text control for layer
-        if self.layertype[old] == 'command':
+        if self.layertype[old] == 'cmdlayer':
             newctrl = wx.TextCtrl(self, id=wx.ID_ANY, value='',
                                pos=wx.DefaultPosition, size=(250,40),
                                style=wx.TE_MULTILINE|wx.TE_WORDWRAP)
@@ -550,7 +550,7 @@ class LayerTree(CT.CustomTreeCtrl):
         self.drag = False
 
     def getOptData(self, dcmd, layer, params):
-        for item in dcmd.split(' '):
+        for item in dcmd:
             if 'map=' in item:
                 mapname = item.split('=')[1]
             elif 'red=' in item:
@@ -602,29 +602,21 @@ class LayerTree(CT.CustomTreeCtrl):
 
     def ChangeLayer(self, layer, mapname):
         """Change layer"""
-        if self.layertype[layer] == 'command':
+        if self.layertype[layer] == 'cmdlayer':
             if self.GetItemWindow(layer).GetValue() != None:
-                cmd = self.GetItemWindow(layer).GetValue()
+                cmdlist = [self.GetItemWindow(layer).GetValue()]
                 opac = 1.0
                 chk = self.IsItemChecked(layer)
                 hidden = not self.IsVisible(layer)
         elif self.layertype[layer] != 'group':
             if self.GetPyData(layer)[0] != None:
-                cmd = self.GetPyData(layer)[0]
+                cmdlist = self.GetPyData(layer)[0]
                 opac = float(self.GetItemWindow(layer).GetValue())/100
                 chk = self.IsItemChecked(layer)
                 hidden = not self.IsVisible(layer)
 
-        # mapset?
-        mapset = None
-        mapidx = cmd.find("map=")
-        if mapidx > -1:
-            mapset=cmd[mapidx:].split(' ')[0]
-            mapidx = mapset.find('@')
-            if mapidx > -1:
-                mapset = mapset[mapidx+1:]
-
-        self.Map.ChangeLayer(item=layer, type='command', command=cmd, name=mapname, mapset=mapset,
+        # mapset is unnecessary
+        self.Map.ChangeLayer(item=layer, type='command', command=cmdlist, name=mapname, mapset=None,
                              l_active=chk, l_hidden=hidden, l_opacity=opac, l_render=False)
 
         # if digitization tool enabled -> update list of available vector map layers
