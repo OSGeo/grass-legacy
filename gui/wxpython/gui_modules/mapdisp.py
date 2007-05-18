@@ -1134,6 +1134,11 @@ class MapFrame(wx.Frame):
         #
         self.printopt = disp_print.PrintOptions(self, self.MapWindow)
 
+        #
+        # Current location information
+        #
+        self.projinfo = self.Map.ProjInfo()
+
     def AddToolbar(self, name):
         """
         Add defined toolbar to the window
@@ -1494,18 +1499,30 @@ class MapFrame(wx.Frame):
         self.MapWindow.SetCursor(self.cursors["pencil"])
 
         # initiating output
-        projinfo = self.Map.ProjInfo()
-        if projinfo['proj'] != 'xy': units = projinfo['units']
-        self.gismanager.goutput.cmd_output.write('\nMeasuring distance ('+units+'):\n')
+        if self.projinfo['proj'] != 'xy':
+            units = self.projinfo['units']
+            self.gismanager.goutput.cmd_output.write('\nMeasuring distance ('+units+'):\n')
+        else:
+            self.gismanager.goutput.cmd_output.write('\nMeasuring distance:\n')
 
     def MeasureDist(self, beginpt, endpt):
         x1,y1 = beginpt
         x2,y2 = endpt
         east = (x2-x1) * self.Map.region["ewres"]
         north = (y2-y1) * self.Map.region["nsres"]
-        self.dist = math.sqrt(math.pow((east),2) + math.pow((north),2))
+        self.dist = round(math.sqrt(math.pow((east),2) + math.pow((north),2)),3)
         self.totaldist += self.dist
-        self.gismanager.goutput.cmd_output.write('segment = '+
+
+        if self.projinfo['proj'] == 'xy' or 'degree' not in self.projinfo['unit']:
+            angle = int(math.degrees(math.atan2(north,east)) + 0.5)
+            angle = angle+90
+            if angle < 0: angle = 360+angle
+            self.gismanager.goutput.cmd_output.write('segment = '+
+                                                 str(self.dist)+
+                                                 '\ttotal distance = '+
+                                                 str(self.totaldist)+'\tbearing = '+str(angle)+'\n')
+        else:
+            self.gismanager.goutput.cmd_output.write('segment = '+
                                                  str(self.dist)+
                                                  '\ttotal distance = '+
                                                  str(self.totaldist)+'\n')
