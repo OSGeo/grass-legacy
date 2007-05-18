@@ -1,12 +1,34 @@
 <h2>DESCRIPTION</h2>
 
 <em>v.db.update</em> allows to assign a new value to a column in the
-attribute table connected to a given map.
+attribute table connected to a given map. Alternatively, values can
+be copied from another column in the table.
 
 <h2>NOTES</h2>
 
 <em>v.db.update</em> is just a front-end to <em>db.execute</em> to allow easier usage.
 For complex SQL UPDATE statements, <em>db.execute</em> should be used.
+
+<h2>EXAMPLES</h2>
+
+Spearfish: adding new column, inserting selectively a specified value:
+<div class="code"><pre>
+g.copy vect=fields,myfields
+v.db.addcol myfields col="polynum integer"
+v.db.update myfields col=polynum val=42 where="label='V. White#1'"
+v.db.select myfields
+</pre></div>
+
+<p>
+Spearfish: adding new column, copying values from other table column with
+on the fly calculation:
+<div class="code"><pre>
+g.copy vect=fields,myfields
+v.db.addcol myfields col="polynum integer"
+v.db.update myfields col=polynum qcol="cat*2"
+v.db.select myfields
+</pre></div>
+
 
 <h2>SEE ALSO</h2>
 
