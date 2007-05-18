@@ -8,14 +8,13 @@
 #include <grass/gis.h>
 
 /* Sleep */
-unsigned int G_sleep (unsigned int seconds)
+void G_sleep (unsigned int seconds)
 {
 #ifdef __MINGW32__
     /* note: Sleep() cannot be interrupted */
     Sleep((seconds)*1000);
-    return 0; 
 #else
-    return sleep(seconds);
+    sleep(seconds);
 #endif
 }
 

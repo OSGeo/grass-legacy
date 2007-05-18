@@ -55,20 +55,14 @@
 
 #ifdef HAVE_ASPRINTF 
 
-int G_asprintf(char **out, const char *fmt, ...)
+int G_vasprintf(char **out, const char *fmt, va_list ap)
 {
-    va_list ap;
-    int count;
-
-    va_start(ap, fmt);
-    count = vasprintf (out, fmt, ap);
-    va_end(ap);
-
-    return count;
+    return vasprintf (out, fmt, ap);
 }
 
 #else
-int G_asprintf(char **out, const char *fmt, ...)
+
+int G_vasprintf(char **out, const char *fmt, va_list ap)
 {
     va_list ap;
     int ret_status = EOF;
@@ -78,8 +72,6 @@ int G_asprintf(char **out, const char *fmt, ...)
     char *work = NULL;
 
     assert(out != NULL && fmt != NULL);
-
-    va_start(ap, fmt);
 
     /* Warning: tmpfile() does not work well on Windows (MinGW)
      *          if user does not have write access on the drive where 
@@ -114,11 +106,23 @@ int G_asprintf(char **out, const char *fmt, ...)
 	unlink ( file_name );
 #endif /* __MINGW32__ */
     }
-    va_end(ap);
     *out = work;
 
     return ret_status;
 }
+
 #endif /* HAVE_ASPRINTF */
+
+int G_asprintf(char **out, const char *fmt, ...)
+{
+    va_list ap;
+    int count;
+
+    va_start(ap, fmt);
+    count = G_vasprintf(out, fmt, ap);
+    va_end(ap);
+
+    return count;
+}
 
 #endif /* G_asprintf */

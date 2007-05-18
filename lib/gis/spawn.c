@@ -163,12 +163,13 @@ error_1:
 	return status;
 }
 
+#endif /*__MINGW32__*/
 
 struct redirect
 {
 	int dst_fd;
 	int src_fd;
-	char *file;
+	const char *file;
 	int mode;
 };
 
@@ -184,9 +185,31 @@ struct signal
 
 struct binding
 {
-	char *var;
-	char *val;
+	const char *var;
+	const char *val;
 };
+
+static const char *args[MAX_ARGS];
+static int num_args;
+static struct redirect redirects[MAX_REDIRECTS];
+static int num_redirects;
+static struct signal signals[MAX_SIGNALS];
+static int num_signals;
+static struct binding bindings[MAX_BINDINGS];
+static int num_bindings;
+static int background;
+static const char *directory;
+
+#ifdef __MINGW32__
+
+static int do_spawn(const char *command)
+{
+	G_warning("do_spawn: not implemented");
+
+	return -1;
+}
+
+#else
 
 static int undo_signals(struct signal *signals, int num_signals, int which)
 {
@@ -346,99 +369,10 @@ static void do_bindings(struct binding *bindings, int num_bindings)
     }
 }
 
-
-/**
- * \fn int G_spawn_ex(char *command, ...)
- *
- * \brief Spawn new process based on <b>command</b>.
- *
- * This is a more advanced version of G_spawn().
- *
- * \param[in] command
- * \return -1 on error
- * \return process status on success
- */
-
-int G_spawn_ex(const char *command, ...)
+static int do_spawn(const char *command)
 {
-	char *args[MAX_ARGS];
-	int num_args = 0;
-	struct redirect redirects[MAX_REDIRECTS];
-	int num_redirects = 0;
-	struct signal signals[MAX_SIGNALS];
-	int num_signals = 0;
-	struct binding bindings[MAX_BINDINGS];
-	int num_bindings = 0;
-	int background = 0;
-	char *directory = NULL;
-	va_list va;
-	char *var, *val;
 	int status = -1;
 	pid_t pid;
-
-	va_start(va, command);
-
-	for (;;)
-	{
-		char *arg = va_arg(va, char *);
-
-		switch ((int)arg)
-		{
-		case 0:
-			args[num_args++] = NULL;
-			break;
-		case ((int) SF_REDIRECT_FILE):
-			redirects[num_redirects].dst_fd = va_arg(va, int);
-			redirects[num_redirects].src_fd = -1;
-			redirects[num_redirects].mode = va_arg(va, int);
-			redirects[num_redirects].file = va_arg(va, char *);
-			num_redirects++;
-			break;
-		case ((int) SF_REDIRECT_DESCRIPTOR):
-			redirects[num_redirects].dst_fd = va_arg(va, int);
-			redirects[num_redirects].src_fd = va_arg(va, int);
-			redirects[num_redirects].file = NULL;
-			num_redirects++;
-			break;
-		case ((int) SF_CLOSE_DESCRIPTOR):
-			redirects[num_redirects].dst_fd = va_arg(va, int);
-			redirects[num_redirects].src_fd = -1;
-			redirects[num_redirects].file = NULL;
-			num_redirects++;
-			break;
-		case ((int) SF_SIGNAL):
-			signals[num_signals].which = va_arg(va, int);
-			signals[num_signals].action = va_arg(va, int);
-			signals[num_signals].signum = va_arg(va, int);
-			signals[num_signals].valid = 0;;
-			num_signals++;
-			break;
-		case ((int) SF_VARIABLE):
-			var = va_arg(va, char *);
-			val = getenv(var);
-			args[num_args++] = val ? val : "";
-			break;
-		case ((int) SF_BINDING):
-			bindings[num_bindings].var = va_arg(va, char *);
-			bindings[num_bindings].val = va_arg(va, char *);
-			num_bindings++;
-			break;
-		case ((int) SF_BACKGROUND):
-			background = 1;
-			break;
-		case ((int) SF_DIRECTORY):
-			directory = va_arg(va, char *);
-			break;
-		default:
-			args[num_args++] = arg;
-			break;
-		}
-
-		if (!arg)
-			break;
-	}
-
-	va_end(va);
 
 	if (!do_signals(signals, num_signals, SST_PRE))
             return status;
@@ -470,7 +404,7 @@ int G_spawn_ex(const char *command, ...)
 		do_redirects(redirects, num_redirects);
 		do_bindings(bindings, num_bindings);
 
-		execvp(command, args);
+		execvp(command, (char **) args);
 		G_warning(_("Unable to execute command"));
 		_exit(127);
 	}
@@ -496,4 +430,185 @@ int G_spawn_ex(const char *command, ...)
 	return status;
 }
 
-#endif /*#ifdef __MINGW32__*/
+#endif /* __MINGW32__*/
+
+static void begin_spawn(void)
+{
+	num_args = 0;
+	num_redirects = 0;
+	num_signals = 0;
+	num_bindings = 0;
+	background = 0;
+	directory = NULL;
+}
+
+#define NEXT_ARG(var, type) ((type) *(var)++)
+
+static void parse_argvec(const char **va)
+{
+	for (;;)
+	{
+		const char *arg = NEXT_ARG(va, const char *);
+		const char *var, *val;
+
+		switch ((int)arg)
+		{
+		case 0:
+			args[num_args++] = NULL;
+			break;
+		case ((int) SF_REDIRECT_FILE):
+			redirects[num_redirects].dst_fd = NEXT_ARG(va, int);
+			redirects[num_redirects].src_fd = -1;
+			redirects[num_redirects].mode = NEXT_ARG(va, int);
+			redirects[num_redirects].file = NEXT_ARG(va, const char *);
+			num_redirects++;
+			break;
+		case ((int) SF_REDIRECT_DESCRIPTOR):
+			redirects[num_redirects].dst_fd = NEXT_ARG(va, int);
+			redirects[num_redirects].src_fd = NEXT_ARG(va, int);
+			redirects[num_redirects].file = NULL;
+			num_redirects++;
+			break;
+		case ((int) SF_CLOSE_DESCRIPTOR):
+			redirects[num_redirects].dst_fd = NEXT_ARG(va, int);
+			redirects[num_redirects].src_fd = -1;
+			redirects[num_redirects].file = NULL;
+			num_redirects++;
+			break;
+		case ((int) SF_SIGNAL):
+			signals[num_signals].which = NEXT_ARG(va, int);
+			signals[num_signals].action = NEXT_ARG(va, int);
+			signals[num_signals].signum = NEXT_ARG(va, int);
+			signals[num_signals].valid = 0;
+			num_signals++;
+			break;
+		case ((int) SF_VARIABLE):
+			var = NEXT_ARG(va, const char *);
+			val = getenv(var);
+			args[num_args++] = val ? val : "";
+			break;
+		case ((int) SF_BINDING):
+			bindings[num_bindings].var = NEXT_ARG(va, const char *);
+			bindings[num_bindings].val = NEXT_ARG(va, const char *);
+			num_bindings++;
+			break;
+		case ((int) SF_BACKGROUND):
+			background = 1;
+			break;
+		case ((int) SF_DIRECTORY):
+			directory = NEXT_ARG(va, const char *);
+			break;
+		case ((int) SF_ARGVEC):
+			parse_argvec(NEXT_ARG(va, const char **));
+			break;
+		default:
+			args[num_args++] = arg;
+			break;
+		}
+
+		if (!arg)
+			break;
+	}
+}
+
+static void parse_arglist(va_list va)
+{
+	for (;;)
+	{
+		const char *arg = va_arg(va, const char *);
+		const char *var, *val;
+
+		switch ((int)arg)
+		{
+		case 0:
+			args[num_args++] = NULL;
+			break;
+		case ((int) SF_REDIRECT_FILE):
+			redirects[num_redirects].dst_fd = va_arg(va, int);
+			redirects[num_redirects].src_fd = -1;
+			redirects[num_redirects].mode = va_arg(va, int);
+			redirects[num_redirects].file = va_arg(va, const char *);
+			num_redirects++;
+			break;
+		case ((int) SF_REDIRECT_DESCRIPTOR):
+			redirects[num_redirects].dst_fd = va_arg(va, int);
+			redirects[num_redirects].src_fd = va_arg(va, int);
+			redirects[num_redirects].file = NULL;
+			num_redirects++;
+			break;
+		case ((int) SF_CLOSE_DESCRIPTOR):
+			redirects[num_redirects].dst_fd = va_arg(va, int);
+			redirects[num_redirects].src_fd = -1;
+			redirects[num_redirects].file = NULL;
+			num_redirects++;
+			break;
+		case ((int) SF_SIGNAL):
+			signals[num_signals].which = va_arg(va, int);
+			signals[num_signals].action = va_arg(va, int);
+			signals[num_signals].signum = va_arg(va, int);
+			signals[num_signals].valid = 0;
+			num_signals++;
+			break;
+		case ((int) SF_VARIABLE):
+			var = va_arg(va, char *);
+			val = getenv(var);
+			args[num_args++] = val ? val : "";
+			break;
+		case ((int) SF_BINDING):
+			bindings[num_bindings].var = va_arg(va, const char *);
+			bindings[num_bindings].val = va_arg(va, const char *);
+			num_bindings++;
+			break;
+		case ((int) SF_BACKGROUND):
+			background = 1;
+			break;
+		case ((int) SF_DIRECTORY):
+			directory = va_arg(va, const char *);
+			break;
+		case ((int) SF_ARGVEC):
+			parse_argvec(va_arg(va, const char **));
+			break;
+		default:
+			args[num_args++] = arg;
+			break;
+		}
+
+		if (!arg)
+			break;
+	}
+}
+
+int G_vspawn_ex(const char *command, const char **args)
+{
+	begin_spawn();
+
+	parse_argvec(args);
+
+	return do_spawn(command);
+}
+
+/**
+ * \fn int G_spawn_ex(char *command, ...)
+ *
+ * \brief Spawn new process based on <b>command</b>.
+ *
+ * This is a more advanced version of G_spawn().
+ *
+ * \param[in] command
+ * \return -1 on error
+ * \return process status on success
+ */
+
+int G_spawn_ex(const char *command, ...)
+{
+	va_list va;
+
+	begin_spawn();
+
+	va_start(va, command);
+	parse_arglist(va);
+	va_end(va);
+
+	return do_spawn(command);
+}
+
