@@ -345,7 +345,7 @@ class HistFrame(wx.Frame):
                  ('', '', '', ''),
                  ('save',  Icons["savefile"].GetBitmap(),  Icons["savefile"].GetLabel(),  self.SaveToFile),
                  ('print',  Icons["printmap"].GetBitmap(),  Icons["printmap"].GetLabel(),  self.PrintMenu),
-                  )
+                 ('quit',  wx.ArtProvider.GetBitmap(wx.ART_QUIT, wx.ART_TOOLBAR, (16,16)),  Icons["quit"].GetLabel(), self.OnQuit),                  )
 
     def InitDisplay(self):
         """
@@ -467,6 +467,9 @@ class HistFrame(wx.Frame):
         # will be called before PopupMenu returns.
         self.PopupMenu(printmenu)
         printmenu.Destroy()
+
+    def OnQuit(self, event):
+        self.Close(True)
 
     def OnCloseWindow(self, event):
         """
