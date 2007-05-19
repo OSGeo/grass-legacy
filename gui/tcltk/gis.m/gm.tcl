@@ -525,7 +525,7 @@ proc Gm:DefaultFont { source } {
     
 	set row [ frame .dispfont.buttons ]
 	Button $row.ok -text [G_msg "OK"] -width 8 -bd 1 \
-			-command "Gm::SetFont $source ; destroy .dispfont"
+			-command "Gm::SetFont $source; destroy .dispfont"
     pack $row.ok -side left -fill x -expand 0
     button $row.cancel -text [G_msg "Cancel"] -width 8 -bd 1 \
     	-command "destroy .dispfont"
@@ -535,6 +535,8 @@ proc Gm:DefaultFont { source } {
     bind $fontlb <<ListboxSelect>> {
     	set Gm::dfont [%W get [%W curselection]]
     }
+	    
+    
 };
 
 

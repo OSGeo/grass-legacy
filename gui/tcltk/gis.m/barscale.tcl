@@ -68,6 +68,7 @@ proc GmBarscale::create { tree parent } {
     set opt($count,1,tcolor) \#000000 
     set opt($count,1,bcolor) \#FFFFFF 
     set opt($count,1,bcolor_none) 0
+    set opt($count,1,font) "romans"
     set opt($count,1,line) 0 
     set opt($count,1,at) "2,2" 
     set opt($count,1,feet) 0 
@@ -78,7 +79,7 @@ proc GmBarscale::create { tree parent } {
     set opt($count,1,mouseset) 0
     set first 1
         
-    set optlist { _check opacity bcolor bcolor_none tcolor at feet line top arrow scale mouseset}
+    set optlist { _check opacity bcolor bcolor_none font tcolor at feet line top arrow scale mouseset}
     
     foreach key $optlist {
 		set opt($count,0,$key) $opt($count,1,$key)
@@ -121,6 +122,17 @@ proc GmBarscale::mouseset { id } {
 
 }
 
+##########################################################################
+proc GmBarscale::set_font { id } {
+	variable opt
+
+	
+	Gm:DefaultFont dbarscale
+	tkwait variable Gm::dfont
+	set GmBarscale::opt($id,1,font) $Gm::dfont
+
+}
+
 
 ###############################################################################
 # barscale options
@@ -148,33 +160,44 @@ proc GmBarscale::options { id frm } {
     pack $row.a $row.b $row.c -side left
     pack $row -side top -fill both -expand yes	
 	
-    # at
+    # at1
     set row [ frame $frm.at1 ]
     Label $row.a -text [G_msg "Scale placement: 0-100% from top left of display"]
     pack $row.a -side left
     pack $row -side top -fill both -expand yes
         
-    # at
+    # at2
     set row [ frame $frm.at2 ]
-    Label $row.a -text [G_msg "\tenter x,y of scale/arrow upper left corner"]
+    Label $row.a -text [G_msg "\t enter x,y of scale/arrow upper left corner"]
     set placement [LabelEntry $row.b -width 8 \
     	-textvariable GmBarscale::opt($id,1,at)]
-    checkbutton $row.c -text [G_msg "place with mouse"] \
+    Label $row.c -text [G_msg "    "]
+    Button $row.d -text [G_msg "Help"] \
+            -image [image create photo -file "$iconpath/gui-help.gif"] \
+            -command "spawn g.manual --q d.barscale" \
+            -background $bgcolor \
+            -helptext [G_msg "Help"]
+    pack $row.a $row.b $row.c $row.d -side left
+    pack $row -side top -fill both -expand yes
+
+    # at3
+    set row [ frame $frm.at3 ]
+    Label $row.a -text [G_msg "\t "]
+    checkbutton $row.b -text [G_msg "place with mouse"] \
     	-variable GmBarscale::opt($id,1,mouseset) \
     	-command "GmBarscale::mouseset $id"
-    pack $row.a $row.b $row.c -side left
+    pack $row.a $row.b -side left
     pack $row -side top -fill both -expand yes
 
     # color
     set row [ frame $frm.color ]
     Label $row.a -text [G_msg "Scale appearance:  text color"] 
     SelectColor $row.b -type menubutton -variable GmBarscale::opt($id,1,tcolor)
-    Label $row.c -text "   "
-    Button $row.d -text [G_msg "Help"] \
-            -image [image create photo -file "$iconpath/gui-help.gif"] \
-            -command "spawn g.manual --q d.barscale" \
-            -background $bgcolor \
-            -helptext [G_msg "Help"]
+    Label $row.c -text [G_msg "  font "]
+    Button $row.d -image [image create photo -file "$iconpath/gui-font.gif"] \
+        -highlightthickness 0 -takefocus 0 -relief raised -borderwidth 1  \
+        -helptext [G_msg "select font for text"] \
+	    -command "GmBarscale::set_font $id"
     pack $row.a $row.b $row.c $row.d -side left
     pack $row -side top -fill both -expand yes
     
@@ -190,7 +213,7 @@ proc GmBarscale::options { id frm } {
 
     # arrow or scale only
     set row [ frame $frm.arrow ]
-    Label $row.a -text "    "
+    Label $row.a -text "\t "
     checkbutton $row.b -text [G_msg "display N. arrow only"] \
     	-variable GmBarscale::opt($id,1,arrow) 
     checkbutton $row.c -text [G_msg "display scale only"] \
@@ -200,7 +223,7 @@ proc GmBarscale::options { id frm } {
 
     # text on top
     set row [ frame $frm.textontop ]
-    Label $row.a -text "    " 
+    Label $row.a -text "\t " 
     checkbutton $row.b -text [G_msg "text on top of scale, instead of to right"] \
     	-variable GmBarscale::opt($id,1,top) 
     pack $row.a $row.b -side left
@@ -208,7 +231,7 @@ proc GmBarscale::options { id frm } {
 
     # scale options
     set row [ frame $frm.opts ]
-    Label $row.a -text "    " 
+    Label $row.a -text "\t " 
     checkbutton $row.b -text [G_msg "line scale instead of bar"] \
     	-variable GmBarscale::opt($id,1,line) 
     checkbutton $row.c -text [G_msg "use feet/miles instead of meters"] \
@@ -238,6 +261,7 @@ proc GmBarscale::save { tree depth node } {
 
 proc GmBarscale::display { node mod } {
     global mon
+    global env
     variable optlist
     variable lfile 
     variable lfilemask
@@ -294,8 +318,27 @@ proc GmBarscale::display { node mod } {
 		append cmd " -s"
 	}
 
+    # check value of GRASS_FONT variable prior to display
+	if {[info exists env(GRASS_FONT)]} {
+		set currfont $env(GRASS_FONT)
+	} else {
+		set currfont ""
+	}
+
+    # set grass font environmental variable to user selection"
+	if { $GmBarscale::opt($id,1,font) != ""} { set env(GRASS_FONT) $GmBarscale::opt($id,1,font) }
+
 	# Decide whether to run, run command, and copy files to temp
 	GmCommonLayer::display_command [namespace current] $id $cmd
+	
+	# set grass font environmental variable to whatever it was when we started
+	# this lets different text layers have different fonts
+	
+	if {$currfont == "" && [info exists env(GRASS_FONT]} {
+		unset env(GRASS_FONT)
+	} else {
+		set env(GRASS_FONT) $currfont
+	}
 }
 
 ###############################################################################

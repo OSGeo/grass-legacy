@@ -65,13 +65,14 @@ proc GmHist::create { tree parent } {
     set opt($count,1,bgcolor) #ffffff
     set opt($count,1,bgcolor_none) 0
     set opt($count,1,style) "bar" 
+    set opt($count,1,font) "romans" 
     set opt($count,1,nsteps) 255 
     set opt($count,1,nulls) 0 
     
     set opt($count,1,mod) 1
     set first 1
 
-	set optlist {_check map opacity color bgcolor style nsteps nulls}
+	set optlist {_check map opacity color bgcolor style font nsteps nulls}
 
     foreach key $optlist {
 		set opt($count,0,$key) $opt($count,1,$key)
@@ -95,6 +96,7 @@ proc GmHist::set_option { node key value } {
     set opt($id,1,$key) $value
 }
 
+##########################################################################
 proc GmHist::select_map { id } {
     variable tree
     variable node
@@ -107,6 +109,18 @@ proc GmHist::select_map { id } {
     }
 }
 
+##########################################################################
+proc GmHist::set_font { id } {
+	variable opt
+
+	
+	Gm:DefaultFont dhist
+	tkwait variable Gm::dfont
+	set GmHist::opt($id,1,font) $Gm::dfont
+
+}
+
+##########################################################################
 # display histogram options
 proc GmHist::options { id frm } {
     variable opt
@@ -155,7 +169,7 @@ proc GmHist::options { id frm } {
     Button $row.d -image [image create photo -file "$iconpath/gui-font.gif"] \
         -highlightthickness 0 -takefocus 0 -relief raised -borderwidth 1  \
         -helptext [G_msg "select font for text"] \
-	    -command "Gm:DefaultFont dtext"
+	    -command "GmHist::set_font $id"
     pack $row.a $row.b $row.c $row.d -side left
     pack $row -side top -fill both -expand yes
     
@@ -183,6 +197,7 @@ proc GmHist::options { id frm } {
     pack $row -side top -fill both -expand yes
 }
 
+##########################################################################
 proc GmHist::save { tree depth node } {
     variable opt
     variable optlist
@@ -195,6 +210,7 @@ proc GmHist::save { tree depth node } {
     } 
 }
 
+##########################################################################
 proc GmHist::display { node mod } {
     global mon
     global env
@@ -253,10 +269,11 @@ proc GmHist::display { node mod } {
 	}
 
     # set grass font environmental variable to user selection"
-	if { $Gm::dfont != ""} { set env(GRASS_FONT) $Gm::dfont }
+	if { $GmHist::opt($id,1,font) != ""} { set env(GRASS_FONT) $GmHist::opt($id,1,font) }
 
 	# Decide whether to run, run command, and copy files to temp
 	GmCommonLayer::display_command [namespace current] $id $cmd
+	
 	# set grass font environmental variable to whatever it was when we started
 	# this lets different text layers have different fonts
 	
@@ -267,6 +284,7 @@ proc GmHist::display { node mod } {
 	}
 }
     
+##########################################################################
 proc GmHist::mapname { node } {
     variable opt
     variable tree
@@ -284,6 +302,7 @@ proc GmHist::mapname { node } {
     return $mapname
 }
 
+##########################################################################
 proc GmHist::duplicate { tree parent node id } {
     variable optlist
     variable lfile

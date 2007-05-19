@@ -72,16 +72,7 @@ proc GmDtext::create { tree parent } {
     set opt($count,1,align) "lower_left" 
     set opt($count,1,line)  10
     set opt($count,1,rotate) 0
-    
-	#set font to anything currently set for default font
-	if {[info exists env(GRASS_FONT)] && $env(GRASS_FONT) != ""} {
-		set opt($count,1,font) $env(GRASS_FONT)
-		set opt($count,1,fonttype) "truetype" 
-	} else {
-		set opt($count,1,fonttype) "grassfont" 
-		set opt($count,1,font) "romans" 
-	}
-
+	set opt($count,1,font) "romans" 
     set opt($count,1,bold) 0 
 	set opt($count,1,size) 10
     set opt($count,1,color) \#000000 
@@ -112,6 +103,17 @@ proc GmDtext::set_option { node key value } {
 
     set id [GmTree::node_id $node]
     set opt($id,1,$key) $value
+}
+
+##########################################################################
+proc GmDtext::set_font { id } {
+	variable opt
+
+	
+	Gm:DefaultFont dbarscale
+	tkwait variable Gm::dfont
+	set GmDtext::opt($id,1,font) $Gm::dfont
+
 }
 
 ###############################################################################
@@ -217,7 +219,7 @@ proc GmDtext::options { id frm } {
     Button $row.b -image [image create photo -file "$iconpath/gui-font.gif"] \
         -highlightthickness 0 -takefocus 0 -relief raised -borderwidth 1  \
         -helptext [G_msg "select font for text"] \
-	    -command "Gm:DefaultFont dtext"
+	    -command "GmDtext::set_font $id"
     Label $row.c -text [G_msg "  color"] 
     SelectColor $row.d -type menubutton -variable GmDtext::opt($id,1,color)
     checkbutton $row.e -padx 10 -text [G_msg "bold text"] -variable \
@@ -325,7 +327,7 @@ proc GmDtext::display { node mod } {
 	}
 
     # set grass font environmental variable to user selection"
-	if { $Gm::dfont != ""} { set env(GRASS_FONT) $Gm::dfont }
+	if { $GmDtext::opt($id,1,font) != ""} { set env(GRASS_FONT) $GmDtext::opt($id,1,font) }
 
 	# Decide whether to run, run command, and copy files to temp
 	GmCommonLayer::display_command [namespace current] $id $cmd
