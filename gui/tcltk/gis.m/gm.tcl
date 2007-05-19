@@ -475,7 +475,7 @@ proc Gm::SaveFileBox { } {
 
 ###############################################################################
 # sets default display font
-proc Gm:DefaultFont { } {
+proc Gm:DefaultFont { source } {
 	global env iconpath
 	variable dfont
 	variable encoding
@@ -524,8 +524,8 @@ proc Gm:DefaultFont { } {
     pack $row -side top -fill both -expand yes -pady 3 -padx 5
     
 	set row [ frame .dispfont.buttons ]
-    Button $row.ok -text [G_msg "OK"] -width 8 -bd 1 \
-    	-command "Gm::SetFont ; destroy .dispfont"
+	Button $row.ok -text [G_msg "OK"] -width 8 -bd 1 \
+			-command "Gm::SetFont $source ; destroy .dispfont"
     pack $row.ok -side left -fill x -expand 0
     button $row.cancel -text [G_msg "Cancel"] -width 8 -bd 1 \
     	-command "destroy .dispfont"
@@ -538,21 +538,21 @@ proc Gm:DefaultFont { } {
 };
 
 
-proc Gm::SetFont { } {
+proc Gm::SetFont { source } {
 	global env
 	variable dfont
 	variable encoding
 
 	# Set GRASS environmental variables for default display font and
 	# character encoding
+	
+	if { $encoding != "" && $encoding != "ISO-8859-1"} {
+		set env(GRASS_FT_ENCODING) $encoding
+	}
 
-    if { $encoding != "" && $encoding != "ISO-8859-1"} {
-    	set env(GRASS_FT_ENCODING) $encoding
-    }
-        
-    if {$dfont != ""} {
-    	set env(GRASS_FONT) $dfont
-    }
+	if { $source == "menu" && $dfont != "" } {
+		set env(GRASS_FONT) $dfont
+	}
 
 };
 
