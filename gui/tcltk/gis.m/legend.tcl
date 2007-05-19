@@ -67,6 +67,7 @@ proc GmLegend::create { tree parent } {
     set opt($count,1,color) "black" 
     set opt($count,1,lines) 0 
     set opt($count,1,thin) 1 
+    set opt($count,1,font) "romans" 
     set opt($count,1,mouseset) 0
     set opt($count,1,labelnum) 5 
     set opt($count,1,at) "5,90" 
@@ -82,7 +83,7 @@ proc GmLegend::create { tree parent } {
     set opt($count,1,mod) 1
     
 	set optlist { _check map opacity color lines thin labelnum at height width \
-             mouseset use range nolbl noval skip smooth flip}
+             font mouseset use range nolbl noval skip smooth flip}
              
     foreach key $optlist {
 		set opt($count,0,$key) $opt($count,1,$key)
@@ -107,7 +108,18 @@ proc GmLegend::set_option { node key value } {
     set opt($id,1,$key) $value
 }
 
-###############################################################################
+##########################################################################
+proc GmLegend::set_font { id } {
+	variable opt
+
+	
+	Gm:DefaultFont dgrid
+	tkwait variable Gm::dfont
+	set GmLegend::opt($id,1,font) $Gm::dfont
+
+}
+
+##########################################################################
 
 proc GmLegend::mouseset { id } {
 	# use mouse to set scalebar placement coordinates
@@ -205,13 +217,18 @@ proc GmLegend::options { id frm } {
     pack $row.a $row.b $row.c $row.d $row.e -side left
     pack $row -side top -fill both -expand yes
 
-    # text color
+    # text
     set row [ frame $frm.color ]
     Label $row.a -text [G_msg "Legend appearance: text color"] 
     ComboBox $row.b -padx 0 -width 10 -textvariable GmLegend::opt($id,1,color) \
 		-values {"white" "grey" "gray" "black" "brown" "red" "orange" \
 		"yellow" "green" "aqua" "cyan" "indigo" "blue" "purple" "violet" "magenta"}
-    pack $row.a $row.b -side left
+    Label $row.c -text [G_msg "  legend text font "]
+    Button $row.d -highlightthickness 0 -takefocus 0 -relief raised -borderwidth 1  \
+        -helptext [G_msg "select font for text"] \
+	    -command "GmLegend::set_font $id"
+	icon_configure $row.d gui font
+    pack $row.a $row.b $row.c $row.d -side left
     pack $row -side top -fill both -expand yes
     
     # no category labels or numbers
@@ -304,6 +321,7 @@ proc GmLegend::save { tree depth node } {
 # render and composite legend layer
 proc GmLegend::display { node mod } {
     global mon
+    global env
     variable optlist
     variable lfile 
     variable lfilemask
@@ -369,8 +387,27 @@ proc GmLegend::display { node mod } {
         append cmd " -f"
     }
     
+    # check value of GRASS_FONT variable prior to display
+	if {[info exists env(GRASS_FONT)]} {
+		set currfont $env(GRASS_FONT)
+	} else {
+		set currfont ""
+	}
+
+    # set grass font environmental variable to user selection"
+	if { $GmLegend::opt($id,1,font) != ""} { set env(GRASS_FONT) $GmLegend::opt($id,1,font) }
+
 	# Decide whether to run, run command, and copy files to temp
-	GmCommonLayer::display_command [namespace current] $id $cmd
+	GmCommonLayer::display_command [namespace current] $id $cmd 
+	
+	# set grass font environmental variable to whatever it was when we started
+	# this lets different text layers have different fonts
+	
+	if {$currfont == "" && [info exists env(GRASS_FONT]} {
+		unset env(GRASS_FONT)
+	} else {
+		set env(GRASS_FONT) $currfont
+	}
 }
 
 
