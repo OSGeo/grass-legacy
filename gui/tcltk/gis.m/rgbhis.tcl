@@ -145,78 +145,80 @@ proc GmRgbhis::options { id frm } {
     pack $row.a $row.b $row.c -side left
     pack $row -side top -fill both -expand yes	
 	
+    # display type
+    set row [ frame $frm.type ]
+    radiobutton $row.a -variable GmRgbhis::opt($id,1,rgb) -value "1" \
+		-highlightthickness 0 
+	Label $row.b -anchor w -text [G_msg "display maps as RGB"]
+    Button $row.c -text [G_msg "Help"] \
+            -image [image create photo -file "$iconpath/gui-help.gif"] \
+            -command "spawn g.manual --q d.rgb" \
+            -background $bgcolor \
+            -helptext [G_msg "Help for RGB"]
+    Label $row.d -text " \t"
+    radiobutton $row.e -variable GmRgbhis::opt($id,1,rgb) -value "0" \
+		-highlightthickness 0 
+	Label $row.f -anchor w -text [G_msg "display maps as HIS"]
+    Button $row.g -text [G_msg "Help"] \
+            -image [image create photo -file "$iconpath/gui-help.gif"] \
+            -command "spawn g.manual --q d.his" \
+            -background $bgcolor \
+            -helptext [G_msg "Help for HIS"]
+    pack $row.a $row.b $row.c $row.d $row.e $row.f $row.g -side left
+    pack $row -side top -fill both -expand yes -padx 5 -pady 1
+
     # raster1 name
     set row [ frame $frm.name1 ]
-    Label $row.a -text [G_msg "\tred (RGB) or hue (HIS):\t"]
+    Label $row.a -text [G_msg "red (RGB) or hue (HIS): "]
     Button $row.b -image [image create photo -file "$iconpath/channel-red.gif"] \
         -highlightthickness 0 -takefocus 0 -relief raised -borderwidth 1  \
         -helptext [G_msg "raster map for red or hue channel (HIS drape)"]\
 		-command "GmRgbhis::select_map1 $id" -height 26
     Entry $row.c -width 30 -text " $opt($id,1,map1)" \
           -textvariable GmRgbhis::opt($id,1,map1)
-    pack $row.a $row.b $row.c -side left
-    pack $row -side top -fill both -expand yes
+    pack $row.c $row.b $row.a -side right -padx 3
+    pack $row -side top -fill both -expand yes -padx 5 -pady 1
 
     # raster2 name
     set row [ frame $frm.name2 ]
-    Label $row.a -text [G_msg "\tgreen (RGB) or intensity (HIS):"]
+    Label $row.a -text [G_msg "green (RGB) or intensity (HIS): "]
     Button $row.b -image [image create photo -file "$iconpath/channel-green.gif"] \
         -highlightthickness 0 -takefocus 0 -relief raised -borderwidth 1  \
         -helptext [G_msg "raster map for green or intensity channel (HIS relief)"]\
 		-command "GmRgbhis::select_map2 $id" -height 26
     Entry $row.c -width 30 -text " $opt($id,1,map2)" \
           -textvariable GmRgbhis::opt($id,1,map2) 
-    pack $row.a $row.b $row.c -side left
-    pack $row -side top -fill both -expand yes
+    pack $row.c $row.b $row.a -side right -padx 3
+    pack $row -side top -fill both -expand yes -padx 5 -pady 1
 
     # raster3 name
     set row [ frame $frm.name3 ]
-    Label $row.a -text [G_msg "\tblue (RGB) or saturation (HIS):"]
+    Label $row.a -text [G_msg "blue (RGB) or saturation (HIS): "]
     Button $row.b -image [image create photo -file "$iconpath/channel-blue.gif"] \
         -highlightthickness 0 -takefocus 0 -relief raised -borderwidth 1  \
         -helptext [G_msg "raster map for blue or saturation channel"]\
 		-command "GmRgbhis::select_map3 $id" -height 26
     Entry $row.c -width 30 -text " $opt($id,1,map3)" \
           -textvariable GmRgbhis::opt($id,1,map3) 
-    pack $row.a $row.b $row.c -side left
-    pack $row -side top -fill both -expand yes
+    pack $row.c $row.b $row.a -side right -padx 3
+    pack $row -side top -fill both -expand yes -padx 5 -pady 1
     
-    # display type
-    set row [ frame $frm.type ]
-    checkbutton $row.a -text [G_msg "display maps as RGB"] -variable \
-        GmRgbhis::opt($id,1,rgb) 
-    Button $row.b -text [G_msg "Help"] \
-            -image [image create photo -file "$iconpath/gui-help.gif"] \
-            -command "spawn g.manual --q d.rgb" \
-            -background $bgcolor \
-            -helptext [G_msg "Help for RGB"]
-    checkbutton $row.c -text [G_msg "display maps as HIS"] -variable \
-        GmRgbhis::opt($id,1,his) 
-    Button $row.d -text [G_msg "Help"] \
-            -image [image create photo -file "$iconpath/gui-help.gif"] \
-            -command "spawn g.manual --q d.his" \
-            -background $bgcolor \
-            -helptext [G_msg "Help for HIS"]
-    pack $row.a $row.b $row.c $row.d -side left
-    pack $row -side top -fill both -expand yes
+    # HIS brightness
+    set row [ frame $frm.bright ]
+    Label $row.a -anchor w -text [G_msg "HIS brightness adjustment\t "]
+    set GmRgbhis::opt($id,1,brighten) "0"
+    SpinBox $row.b -range {-99 99 1} -textvariable GmRgbhis::opt($id,1,brighten) \
+		-width 3 -helptext [G_msg "Adjusts the HIS intensity channel brightness"] \
+		-entrybg white
+    pack $row.a $row.b -side left
+    pack $row -side top -fill both -expand yes -padx 5 -pady 1
 
     # overlay
     set row [ frame $frm.over ]
     checkbutton $row.a -text [G_msg "overlay maps from other layers (transparent null value cells)"] \
 	-variable GmRgbhis::opt($id,1,overlay) 
     pack $row.a -side left
-    pack $row -side top -fill both -expand yes
-
-    # HIS brightness
-    set row [ frame $frm.bright ]
-    Label $row.a -anchor w -text [G_msg "HIS brightness adjustment"]
-    set GmRgbhis::opt($id,1,brighten) "0"
-    SpinBox $row.b -range {-99 99 1} -textvariable GmRgbhis::opt($id,1,brighten) \
-		-width 3 -helptext [G_msg "Adjusts the HIS intensity channel brightness"] \
-		-entrybg white
-    pack $row.b $row.a -side left
-    pack $row -side top -fill both -expand yes
-
+    pack $row -side top -fill both -expand yes -padx 5 -pady 1
 
     # something changed, redraw needed
     set opt($id,1,mod) "1"
@@ -252,7 +254,6 @@ proc GmRgbhis::display { node mod} {
     set input ""
     
     set cmd1 ""
-    set cmd2 ""
 
     set tree($mon) $GmTree::tree($mon)
     set id [GmTree::node_id $node]
@@ -268,35 +269,31 @@ proc GmRgbhis::display { node mod} {
   
     if { $opt($id,1,rgb) == 1 } { 
         set cmd1 "d.rgb red=$opt($id,1,map1) green=$opt($id,1,map2) blue=$opt($id,1,map3)" 
-     }
-
-    if { $opt($id,1,his) == 1 } { 
-	set cmd2 "d.his h_map=$opt($id,1,map1)"
-
-	if { $opt($id,1,map2) != "" } {
-	    append cmd2 " i_map=$opt($id,1,map2)"
-	}
-	if { $opt($id,1,map3) != "" } {
-	    append cmd2 " s_map=$opt($id,1,map3)"
-	}
-	if { $opt($id,1,brighten) != "0" } {
-	    append cmd2 " brighten=$opt($id,1,brighten)"
-	}
-    }
+     } else { 
+		set cmd1 "d.his h_map=$opt($id,1,map1)"
+	
+		if { $opt($id,1,map2) != "" } {
+			append cmd1 " i_map=$opt($id,1,map2)"
+		}
+		if { $opt($id,1,map3) != "" } {
+			append cmd1 " s_map=$opt($id,1,map3)"
+		}
+		if { $opt($id,1,brighten) != "0" } {
+			append cmd1 " brighten=$opt($id,1,brighten)"
+		}
+    }		
 
     # overlay
     if { $opt($id,1,overlay) && $opt($id,1,rgb) == 1 } { 
-	append cmd1 " -o"
-    }
-
-    if { $opt($id,1,overlay) && $opt($id,1,his) == 1 } { 
-	append cmd2 " -n"
+		append cmd1 " -o"
+    } else {
+		append cmd1 " -n"
     }
 
     # Decide whether to run, run commands, and copy files to temp
     # Original logic here was to erase before drawing his if both exist
     # Was this really supposed to be mutually exclusive?
-    GmCommonLayer::display_commands [namespace current] $id [list $cmd1 $cmd2]
+    GmCommonLayer::display_commands [namespace current] $id [list $cmd1]
 }
 
 
