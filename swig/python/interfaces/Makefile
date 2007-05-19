@@ -13,3 +13,5 @@ vector:
 	echo "/* auto-generate swig typedef file */" > vect.i
 	cat ../../../include/Vect.h | grep -v 'V1_\|V2_' >> vect.i
 
+distclean:
+	-rm -f gisdefs.i dig_structs.i vect.i
