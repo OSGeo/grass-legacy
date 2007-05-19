@@ -676,6 +676,16 @@ case $? in
     	exit 1 ;;
 esac
 
+# build user fontcaps if specified but not present
+if [ "$GRASS_FONT_CAP" ] && [ ! -f "$GRASS_FONT_CAP" ] ; then
+	echo "Building user fontcap ..."
+	g.mkfontcap -o
+fi
+if [ "$GRASS_FT_CAP" ] && [ ! -f "$GRASS_FT_CAP" ] ; then
+	echo "Building user freetypecap ..."
+	g.mkfontcap -o -f
+fi
+
 trap "" 2 3 15
 
 # cygwin has many problems with the shell setup
