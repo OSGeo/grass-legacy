@@ -107,48 +107,6 @@ proc GmDtext::create { tree parent } {
 }
 
 ###############################################################################
-proc GmDtext::select_font { id frm } {
-	global mon env xfontdir
-	variable opt
-
-	set systemtype [exec uname -s]
-	set systemtype [string trim $systemtype]
-	
-	# initialize fontdir
-	set fontdir ""
-	
-	if { $opt($id,1,fonttype) == "grassfont" } {
-		set fontdir "$env(GISBASE)/fonts"
-	} elseif { $opt($id,1,fonttype) == "x11font" } {
-		set fontdir $xfontdir
-	} elseif { $opt($id,1,fonttype) == "truetype" } {
-		if { $systemtype == "Darwin"} {
-			if {[file isdirectory "/Library/Fonts"]} {
-				set fontdir "/Library/Fonts"
-			}
-		} elseif {[info exists env(HOME)] } {
-			set fontdir $env(HOME)
-		} else {
-			set fontdir ""
-		}
-	}
-
-	if { $fontdir != "" } {
-		set fontpath [tk_getOpenFile -initialdir $fontdir \
-			-title [G_msg "Select font file"]]
-	} else {
-		set fontpath [tk_getOpenFile  \
-			 -title [G_msg "Select font file"]]
-	}
-	
-	set GmDtext::opt($id,1,font) $fontpath
-
-	# reinitialize fontdir
-	set fontdir ""
-
-}
-
-###############################################################################
 proc GmDtext::set_option { node key value } {
     variable opt
 
@@ -255,35 +213,17 @@ proc GmDtext::options { id frm } {
 
     # font options1
     set row [ frame $frm.fontopt1 ]
-    Label $row.a -text [G_msg "Text options: font type"] 
-    set gfont [radiobutton $row.b -variable GmDtext::opt($id,1,fonttype) -value "grassfont" \
-        -text [G_msg "GRASS"] -highlightthickness 0]
-        DynamicHelp::register $gfont balloon [G_msg "GRASS stroke fonts"]
-    set ofont [radiobutton $row.c -variable GmDtext::opt($id,1,fonttype) -value "truetype" \
-        -text [G_msg "TrueType"] -highlightthickness 0]
-        DynamicHelp::register $ofont balloon [G_msg "Custom font path"]
-    set xfont [radiobutton $row.d -variable GmDtext::opt($id,1,fonttype) -value "x11font" \
-        -text [G_msg "X11 TrueType"] -highlightthickness 0]
-        DynamicHelp::register $xfont balloon [G_msg "TrueType fonts from x11 directory"]
-    pack $row.a $row.b $row.c $row.d -side left
-    pack $row -side top -fill both -expand yes
-
-	# font options2
-	set row [ frame $frm.fontopt2 ]
-    Label $row.a -text [G_msg "     font "] 
+    Label $row.a -text [G_msg "Text options: font "] 
     Button $row.b -image [image create photo -file "$iconpath/gui-font.gif"] \
         -highlightthickness 0 -takefocus 0 -relief raised -borderwidth 1  \
         -helptext [G_msg "select font for text"] \
-	    -command "GmDtext::select_font $id $frm"
-    Entry $row.c -width 30 -text "$opt($id,1,font)" \
-	    -textvariable GmDtext::opt($id,1,font) 
-    Label $row.d -text [G_msg "  color"] 
-    SelectColor $row.e -type menubutton -variable GmDtext::opt($id,1,color)
-    checkbutton $row.f -padx 10 -text [G_msg "bold text"] -variable \
+	    -command "Gm:DefaultFont dtext"
+    Label $row.c -text [G_msg "  color"] 
+    SelectColor $row.d -type menubutton -variable GmDtext::opt($id,1,color)
+    checkbutton $row.e -padx 10 -text [G_msg "bold text"] -variable \
         GmDtext::opt($id,1,bold) 
-    pack $row.a $row.b $row.c $row.d $row.e $row.f -side left
+    pack $row.a $row.b $row.c $row.d $row.e -side left
     pack $row -side top -fill both -expand yes
-	
 
     # font options3
     set row [ frame $frm.fontopt3 ]
@@ -385,7 +325,7 @@ proc GmDtext::display { node mod } {
 	}
 
     # set grass font environmental variable to user selection"
-	if { $opt($id,1,font) != ""} { set env(GRASS_FONT) $opt($id,1,font) }
+	if { $Gm::dfont != ""} { set env(GRASS_FONT) $Gm::dfont }
 
 	# Decide whether to run, run command, and copy files to temp
 	GmCommonLayer::display_command [namespace current] $id $cmd
@@ -393,7 +333,7 @@ proc GmDtext::display { node mod } {
 	# set grass font environmental variable to whatever it was when we started
 	# this lets different text layers have different fonts
 	
-	if {$currfont == ""} {
+	if {$currfont == "" && [info exists env(GRASS_FONT]} {
 		unset env(GRASS_FONT)
 	} else {
 		set env(GRASS_FONT) $currfont
