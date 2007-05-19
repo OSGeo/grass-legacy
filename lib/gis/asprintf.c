@@ -64,7 +64,6 @@ int G_vasprintf(char **out, const char *fmt, va_list ap)
 
 int G_vasprintf(char **out, const char *fmt, va_list ap)
 {
-    va_list ap;
     int ret_status = EOF;
     char dir_name[2001];
     char file_name[2000];

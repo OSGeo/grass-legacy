@@ -78,7 +78,7 @@ int G_spawn(const char *command, ...)
 		return -1;
 	}
 
-	return _spawnv(_P_WAIT, command, args);
+	return _spawnv(_P_WAIT, (char *) command, args);
 }
 
 #else
@@ -179,8 +179,10 @@ struct signal
 	int action;
 	int signum;
 	int valid;
+#ifndef __MINGW32__
 	struct sigaction old_act;
 	sigset_t old_mask;
+#endif
 };
 
 struct binding
