@@ -30,9 +30,60 @@ GISBASE=`dirname "$0"`
 export GISBASE
 grass_ver=`cut -d . -f 1-2 "$GISBASE/etc/VERSIONNUMBER"`
 
+GISBASE_USER="$HOME/Library/GRASS/$grass_ver"
+GISBASE_SYSTEM="/Library/GRASS/$grass_ver"
+
 # for GDAL utils
 # hack - ideally user should have this in their PATH, but make sure here
 PATH="@GDAL_BIN_PATH@:$PATH"
+
+# add some OS X style app support paths, and create user one if missing.
+mkdir -p "$GISBASE_USER/Modules/bin"
+if [ "$GRASS_ADDON_PATH" ] ; then
+	GRASS_ADDON_PATH="$GRASS_ADDON_PATH:$GISBASE_USER/Modules/bin:$GISBASE_SYSTEM/Modules/bin"
+else
+	GRASS_ADDON_PATH="$GISBASE_USER/Modules/bin:$GISBASE_SYSTEM/Modules/bin"
+fi
+export GRASS_ADDON_PATH
+
+mkdir -p "$GISBASE_USER/Modules/etc"
+if [ "$GRASS_ADDON_ETC" ] ; then
+	GRASS_ADDON_ETC="$GRASS_ADDON_ETC:$GISBASE_USER/Modules/etc:$GISBASE_SYSTEM/Modules/etc"
+else
+	GRASS_ADDON_ETC="$GISBASE_USER/Modules/etc:$GISBASE_SYSTEM/Modules/etc"
+fi
+export GRASS_ADDON_ETC
+
+mkdir -p "$GISBASE_USER/Modules/lib"
+if [ "$DYLD_LIBRARY_PATH" ] ; then
+	DYLD_LIBRARY_PATH="$GISBASE_USER/Modules/lib:$GISBASE_SYSTEM/Modules/lib:$DYLD_LIBRARY_PATH"
+else
+	DYLD_LIBRARY_PATH="$GISBASE_USER/Modules/lib:$GISBASE_SYSTEM/Modules/lib"
+fi
+export DYLD_LIBRARY_PATH
+
+mkdir -p "$GISBASE_USER/Modules/docs/html"
+
+# rebuild addon html index and gui menus
+"$GISBASE/etc/build_html_user_index.sh" "$GISBASE"
+"$GISBASE/etc/build_gui_user_menu.sh"
+
+# user fontcap files
+if [ ! "$GRASS_FONT_CAP" ] ; then
+	GRASS_FONT_CAP="$GISBASE_USER/Modules/etc/fontcap"
+fi
+if [ ! "$GRASS_FT_CAP" ] ; then
+	GRASS_FT_CAP="$GISBASE_USER/Modules/etc/freetypecap"
+fi
+export GRASS_FONT_CAP GRASS_FT_CAP
+
+### X11 stuff
+
+# start X11 if not running - no need to check if running when using 'open'
+# some users may be annoyed by this, but X11 required for some stuff for now
+if [ -d "/Applications/Utilities/X11.app" ] ; then
+	open /Applications/Utilities/X11.app
+fi
 
 # xterm - make sure X11 is in PATH
 pathX11=`echo "$PATH" | grep '/usr/X11R6/bin'`
@@ -61,39 +112,7 @@ if [ ! "$DISPLAY" ] ; then
 	DISPLAY=:0.0
 	export DISPLAY
 fi
-
-# add some OS X style app support paths, and create user one if missing.
-mkdir -p "$HOME/Library/GRASS/$grass_ver/Modules/bin"
-if [ "$GRASS_ADDON_PATH" ] ; then
-	GRASS_ADDON_PATH="$GRASS_ADDON_PATH:$HOME/Library/GRASS/$grass_ver/Modules/bin:/Library/GRASS/$grass_ver/Modules/bin"
-else
-	GRASS_ADDON_PATH="$HOME/Library/GRASS/$grass_ver/Modules/bin:/Library/GRASS/$grass_ver/Modules/bin"
-	
-fi
-export GRASS_ADDON_PATH
-
-mkdir -p "$HOME/Library/GRASS/$grass_ver/Modules/etc"
-if [ "$GRASS_ADDON_ETC" ] ; then
-	GRASS_ADDON_ETC="$GRASS_ADDON_ETC:$HOME/Library/GRASS/$grass_ver/Modules/etc:/Library/GRASS/$grass_ver/Modules/etc"
-else
-	GRASS_ADDON_ETC="$HOME/Library/GRASS/$grass_ver/Modules/etc:/Library/GRASS/$grass_ver/Modules/etc"
-fi
-export GRASS_ADDON_ETC
-
-mkdir -p "$HOME/Library/GRASS/$grass_ver/Modules/lib"
-DYLD_LIBRARY_PATH="$HOME/Library/GRASS/$grass_ver/Modules/lib:/Library/GRASS/Modules/lib"
-export DYLD_LIBRARY_PATH
-mkdir -p "$HOME/Library/GRASS/$grass_ver/Modules/docs/html"
-
-# rebuild addon html index and gui menus
-"$GISBASE/etc/build_html_user_index.sh" "$GISBASE"
-"$GISBASE/etc/build_gui_user_menu.sh"
-
-# start X11 if not running - no need to check if running when using 'open'
-# some users may be annoyed by this, but X11 required for some stuff for now
-if [ -d "/Applications/Utilities/X11.app" ] ; then
-	open /Applications/Utilities/X11.app
-fi
+### end X11 block
 
 # if gisrc has text startup, switch back to Terminal (gotta duplicate some init.sh stuff)
 # eventually, when TclTk optional, can run appropriate apps per GUI here (ie X11)
