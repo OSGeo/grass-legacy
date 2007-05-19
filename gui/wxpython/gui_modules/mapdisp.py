@@ -846,7 +846,7 @@ class BufferedWindow(wx.Window):
 
         # selected layer must be a valid map
         if type in ('raster', 'rgb', 'his'):
-            cmdVec = ["r.info", "-gx", "map=%s" % mapname]
+            cmdVec = ["r.info", "-g", "map=%s" % mapname]
         elif type in ('vector', 'thememap', 'themechart'):
             cmdVec = ["v.info", "-g", "map=%s" % mapname]
         else:
