@@ -61,7 +61,9 @@ proc GmHist::create { tree parent } {
     
     set opt($count,1,map) "" 
 	set opt($count,1,opacity) 1.0
-    set opt($count,1,color) "black" 
+    set opt($count,1,color) #000000
+    set opt($count,1,bgcolor) #ffffff
+    set opt($count,1,bgcolor_none) 0
     set opt($count,1,style) "bar" 
     set opt($count,1,nsteps) 255 
     set opt($count,1,nulls) 0 
@@ -69,7 +71,7 @@ proc GmHist::create { tree parent } {
     set opt($count,1,mod) 1
     set first 1
 
-	set optlist {_check map opacity color style nsteps nulls}
+	set optlist {_check map opacity color bgcolor style nsteps nulls}
 
     foreach key $optlist {
 		set opt($count,0,$key) $opt($count,1,$key)
@@ -144,18 +146,29 @@ proc GmHist::options { id frm } {
     pack $row.a $row.b $row.c $row.d $row.e -side left
     pack $row -side top -fill both -expand yes
 
-    # graph style and color
+    # graph style
     set row [ frame $frm.style ]
     Label $row.a -text [G_msg "Graph style"]
     ComboBox $row.b -padx 2 -width 4 -textvariable GmHist::opt($id,1,style) \
 		-values {"bar" "pie"} 
-    # histogram color
-    Label $row.c -text [G_msg "Histogram frame and text color"]
-    ComboBox $row.d -padx 2 -width 10 -textvariable GmHist::opt($id,1,color) \
-		-values {"white" "grey" "gray" "black" "brown" "red" "orange" \
-		"yellow" "green" "aqua" "cyan" "indigo" "blue" "purple" "violet" \
-		"magenta"} 
+    Label $row.c -text [G_msg "\ttext font "]
+    Button $row.d -image [image create photo -file "$iconpath/gui-font.gif"] \
+        -highlightthickness 0 -takefocus 0 -relief raised -borderwidth 1  \
+        -helptext [G_msg "select font for text"] \
+	    -command "Gm:DefaultFont dtext"
     pack $row.a $row.b $row.c $row.d -side left
+    pack $row -side top -fill both -expand yes
+    
+    # color
+    set row [ frame $frm.color ]
+    Label $row.a -text [G_msg "Histogram color: text & frame"]
+    SelectColor $row.b -type menubutton -variable GmHist::opt($id,1,color) 
+    Label $row.c -text [G_msg "  background"] 
+    SelectColor $row.d -type menubutton -variable GmHist::opt($id,1,bgcolor)
+    Label $row.e -text "  " 
+    checkbutton $row.f -text [G_msg "transparent background"] \
+    	-variable GmHist::opt($id,1,bgcolor_none) 
+    pack $row.a $row.b $row.c $row.d $row.e $row.f -side left
     pack $row -side top -fill both -expand yes
     
     # steps for fp maps and nulls
@@ -184,6 +197,7 @@ proc GmHist::save { tree depth node } {
 
 proc GmHist::display { node mod } {
     global mon
+    global env
     variable optlist
     variable lfile 
     variable lfilemask
@@ -202,9 +216,17 @@ proc GmHist::display { node mod } {
     if {$mod} {set opt($id,1,mod) 1}
 
     if { $opt($id,1,map) == "" } { return } 
+    
+	set color [Gm::color $opt($id,1,color)]
+    set bgcolor [Gm::color $opt($id,1,bgcolor)]
+
+    # transparent background color
+    if { $opt($id,1,bgcolor_none) == 1 } { 
+        set bgcolor "none"
+    }
 
     set cmd "d.histogram --q map=$opt($id,1,map) style=$opt($id,1,style) \
-    	color=$opt($id,1,color)"
+    	color=$color bgcolor=$bgcolor"
 
     # include nulls
     if { $opt($id,1,nulls) } { 
@@ -223,8 +245,26 @@ proc GmHist::display { node mod } {
         }
 	}
 
+    # check value of GRASS_FONT variable prior to display
+	if {[info exists env(GRASS_FONT)]} {
+		set currfont $env(GRASS_FONT)
+	} else {
+		set currfont ""
+	}
+
+    # set grass font environmental variable to user selection"
+	if { $Gm::dfont != ""} { set env(GRASS_FONT) $Gm::dfont }
+
 	# Decide whether to run, run command, and copy files to temp
 	GmCommonLayer::display_command [namespace current] $id $cmd
+	# set grass font environmental variable to whatever it was when we started
+	# this lets different text layers have different fonts
+	
+	if {$currfont == "" && [info exists env(GRASS_FONT]} {
+		unset env(GRASS_FONT)
+	} else {
+		set env(GRASS_FONT) $currfont
+	}
 }
     
 proc GmHist::mapname { node } {
