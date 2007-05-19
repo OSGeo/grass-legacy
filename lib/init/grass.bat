@@ -5,9 +5,6 @@ rem #		GRASS Initialization
 rem #
 rem #########################################################################
 
-set WINGISBASE=GISBASE_VALUE
-"%WINGISBASE%\etc\init.bat" %*
-
 rem *******Environment variables***********
 rem Uncomment and set the following values if they differ from the indicated default
 
@@ -25,3 +22,7 @@ rem GRASS_HTML_BROWSER=%SYSTEMDRIVE%/PROGRA~1/INTERN~1/IEXPLORE.EX
 
 rem Path to the proj files (notably the epsg projection list)
 rem GRASS_PROJSHARE=/c/grass/share/proj
+
+set WINGISBASE=GISBASE_VALUE
+"%WINGISBASE%\etc\init.bat" %*
+
