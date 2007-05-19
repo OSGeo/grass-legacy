@@ -72,7 +72,7 @@ int db__driver_open_database(dbHandle *handle)
 
 #else
 
-    /* Embeded version */
+    /* Embedded version */
   {
     char *datadir, *database;
     char *server_args[4];
@@ -80,7 +80,7 @@ int db__driver_open_database(dbHandle *handle)
 
     if ( !replace_variables ( name, &datadir, &database ) )
     {
-	append_error ( _("Cannot parse MySQL embeded database name") );
+	append_error ( _("Cannot parse MySQL embedded database name") );
         append_error ( mysql_error(connection) );
 	report_error ();
 	return DB_FAILED;
@@ -97,7 +97,7 @@ int db__driver_open_database(dbHandle *handle)
 
     if ( mysql_server_init(4, server_args, NULL) )
     {
-	append_error ( _("Cannot initialize MySQL embeded server") );
+	append_error ( _("Cannot initialize MySQL embedded server") );
         append_error ( mysql_error(connection) );
 	report_error ();
 	free ( datadir );
@@ -115,7 +115,7 @@ int db__driver_open_database(dbHandle *handle)
     
     if ( res == NULL ) 
     {
-	append_error ( _("Cannot connect to MySQL: ") );
+	append_error ( _("Cannot connect to MySQL embedded server: ") );
         append_error ( mysql_error(connection) );
 	report_error ();
 	return DB_FAILED;
