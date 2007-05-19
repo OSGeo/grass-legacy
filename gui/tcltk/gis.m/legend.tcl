@@ -113,7 +113,7 @@ proc GmLegend::set_font { id } {
 	variable opt
 
 	
-	Gm:DefaultFont dgrid
+	Gm:DefaultFont dlegend
 	tkwait variable Gm::dfont
 	set GmLegend::opt($id,1,font) $Gm::dfont
 

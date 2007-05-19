@@ -64,9 +64,10 @@ proc GmRnums::create { tree parent } {
     set opt($count,1,grid_color) "grey" 
     set opt($count,1,text_color) "black" 
     set opt($count,1,cellcolor) 0 
+    set opt($count,1,font) "romans" 
     set opt($count,1,mod) 1
 
-	set optlist {_check map opacity grid_color text_color cellcolor}
+	set optlist {_check map opacity grid_color text_color cellcolor font}
 
     foreach key $optlist {
 		set opt($count,0,$key) $opt($count,1,$key)
@@ -101,6 +102,17 @@ proc GmRnums::select_map { id } {
         set GmRnums::opt($id,1,map) $m
         GmTree::autonamel [format [G_msg "cell values for %s"] $m]
     }
+}
+
+##########################################################################
+proc GmRnums::set_font { id } {
+	variable opt
+
+	
+	Gm:DefaultFont drastnum
+	tkwait variable Gm::dfont
+	set GmRnums::opt($id,1,font) $Gm::dfont
+
 }
 
 ###############################################################################
@@ -155,7 +167,12 @@ proc GmRnums::options { id frm } {
 		-values {"white" "grey" "gray" "black" "brown" "red" "orange" \
 		"yellow" "green" "aqua" "cyan" "indigo" "blue" "purple" "violet" \
 		"magenta"}
-    pack $row.a $row.b -side left
+    Label $row.c -text [G_msg "  cell values font "]
+    Button $row.d -image [image create photo -file "$iconpath/gui-font.gif"] \
+        -highlightthickness 0 -takefocus 0 -relief raised -borderwidth 1  \
+        -helptext [G_msg "select font for text"] \
+	    -command "GmRnums::set_font $id"
+    pack $row.a $row.b $row.c $row.d -side left
     pack $row -side top -fill both -expand yes
 
     # text color
@@ -229,6 +246,16 @@ proc GmRnums::display { node mod } {
 	set cells [expr $rows * $cols]
 	if {$cells < 1} {return}
 
+    # check value of GRASS_FONT variable prior to display
+	if {[info exists env(GRASS_FONT)]} {
+		set currfont $env(GRASS_FONT)
+	} else {
+		set currfont ""
+	}
+
+    # set grass font environmental variable to user selection"
+	if { $GmRnums::opt($id,1,font) != ""} { set env(GRASS_FONT) $GmRnums::opt($id,1,font) }
+
 	# can only display if 10K cells or less in region
 	if { $cells <= 10000} {
 		# Decide whether to run, run command, and copy files to temp
@@ -240,6 +267,15 @@ proc GmRnums::display { node mod } {
 		set answer [tk_messageBox -message $msgtxt -type ok -parent .mapcan($mon)]
 		if { $answer == "ok" } {return}
     }
+	
+	# set grass font environmental variable to whatever it was when we started
+	# this lets different text layers have different fonts
+	
+	if {$currfont == "" && [info exists env(GRASS_FONT]} {
+		unset env(GRASS_FONT)
+	} else {
+		set env(GRASS_FONT) $currfont
+	}
 
 }
     
