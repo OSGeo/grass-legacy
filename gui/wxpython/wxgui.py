@@ -13,7 +13,6 @@ import wx.combo
 import wx.lib.customtreectrl as CT
 import wx.lib.flatnotebook as FN
 import wx.stc
-import wx.richtext
 
 import sys, os, time, traceback, types
 
@@ -240,7 +239,6 @@ class GMFrame(wx.Frame):
         # create command output text area and add it to main notebook page
         #self.outpanel = wx.Panel(self,-1, style = wx.EXPAND)
         self.goutput = wxgui_utils.GMConsole(self)
-        #self.goutput =  wx.richtext.RichTextCtrl(self,style=wx.VSCROLL|wx.HSCROLL|wx.NO_BORDER)
         self.outpage = self.notebook.AddPage(self.goutput, text="Command output")
 
         self.Bind(FN.EVT_FLATNOTEBOOK_PAGE_CHANGED, self.onCBPageChanged, self.gm_cb)
