@@ -441,8 +441,14 @@ class LayerTree(CT.CustomTreeCtrl):
             self.Map.ChangeOpacity(layer, opacity)
 
     def OnChangeSel(self, event):
+        oldlayer = event.GetOldItem()
         layer = event.GetItem()
         self.layer_selected = layer
+        try:
+            self.RefreshLine(oldlayer)
+            self.RefreshLine(layer)
+        except:
+            pass
 
     def OnCollapseNode(self, event):
         if self.layertype[self.layer_selected] == 'group':
