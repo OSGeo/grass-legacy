@@ -7,7 +7,7 @@
 	<key>CFBundleIdentifier</key>
 	<string>it.itc.grass</string>
 	<key>CFBundleShortVersionString</key>
-	<string>@GRASS_VERSION_MAJOR@.@GRASS_VERSION_MINOR@.@GRASS_VERSION_RELEASE@</string>
+	<string>@GRASS_VERSION_MAJOR@.@VER_MINOR_REL@.@VER_DATE@</string>
 	<key>IFMajorVersion</key>
 	<integer>@GRASS_VERSION_MAJOR@</integer>
 	<key>IFMinorVersion</key>
