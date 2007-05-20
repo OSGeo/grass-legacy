@@ -12,8 +12,7 @@ int
 main (int argc, char *argv[])
 {
 	char name[128];
-	const char *ftfont = getenv("GRASS_FT_FONT");
-	const char *ftenc = getenv("GRASS_FT_ENCODING");
+	const char *fenc = getenv("GRASS_ENCODING");
 	const char *font = getenv("GRASS_FONT");
 
 	if (argc != 2)
@@ -43,10 +42,10 @@ main (int argc, char *argv[])
 	if (R_open_driver() != 0)
 	    exit(EXIT_FAILURE);
 
-	R_font((ftfont ? ftfont : (font ? font : "romans")));
+	R_font(font ? font : "romans");
 
-	if (ftenc)
-		R_charset(ftenc);
+	if (fenc)
+		R_charset(fenc);
 
 	if (D_get_cur_wind(name) != 0)
 		D_new_window("full_screen",

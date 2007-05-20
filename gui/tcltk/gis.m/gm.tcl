@@ -549,7 +549,7 @@ proc Gm::SetFont { source } {
 	# character encoding
 	
 	if { $encoding != "" && $encoding != "ISO-8859-1"} {
-		set env(GRASS_FT_ENCODING) $encoding
+		set env(GRASS_ENCODING) $encoding
 	}
 
 	if { $source == "menu" && $dfont != "" } {
