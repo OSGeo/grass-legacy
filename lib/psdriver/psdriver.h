@@ -10,6 +10,7 @@ extern FILE *outfp;
 extern int true_color;
 extern int width, height;
 extern int encapsulated;
+extern int no_header, no_trailer;
 
 extern void output(const char *, ...);
 
