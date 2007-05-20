@@ -24,8 +24,7 @@ extern const struct driver *PS_Driver(void);
 static void LOC_init(void)
 {
 	const char *name = "full_screen";
-	const char *ftfont = getenv("GRASS_FT_FONT");
-	const char *ftenc = getenv("GRASS_FT_ENCODING");
+	const char *fenc = getenv("GRASS_ENCODING");
 	const char *font = getenv("GRASS_FONT");
 	int t = R_screen_top();
 	int b = R_screen_bot();
@@ -33,15 +32,10 @@ static void LOC_init(void)
 	int r = R_screen_rite();
 	char buff[256];
 
-	if (ftfont)
-		R_font(ftfont);
-	else if (font)
-		R_font(font);
-	else
-		R_font("romans");
+	R_font(font ? font : "romans");
 
-	if (ftenc)
-		R_charset(ftenc);
+	if (fenc)
+		R_charset(fenc);
 
 	R_pad_select("");
 	R_pad_set_item("time", "1");
