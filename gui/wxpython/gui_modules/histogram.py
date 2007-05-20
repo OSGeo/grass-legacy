@@ -223,10 +223,10 @@ class BufferedWindow(wx.Window):
             if "GRASS_FONT" in os.environ:
                 oldfont = os.environ["GRASS_FONT"]
             if self.parent.font != "": os.environ["GRASS_FONT"] = self.parent.font
-            if "GRASS_FT_ENCODING" in os.environ:
-                oldencoding = os.environ["GRASS_FT_ENCODING"]
+            if "GRASS_ENCODING" in os.environ:
+                oldencoding = os.environ["GRASS_ENCODING"]
             if self.parent.encoding != None and self.parent.encoding != "ISO-8859-1":
-                os.environ[GRASS_FT_ENCODING] = self.parent.encoding
+                os.environ[GRASS_ENCODING] = self.parent.encoding
 
             self.Map.width, self.Map.height = self.GetClientSize()
             self.mapfile = self.Map.Render(force=self.render)
@@ -255,7 +255,7 @@ class BufferedWindow(wx.Window):
         if oldfont != "":
             os.environ["GRASS_FONT"] = oldfont
         if oldencoding != "":
-            os.environ["GRASS_FT_ENCODING"] = oldencoding
+            os.environ["GRASS_ENCODING"] = oldencoding
 
     def EraseMap(self):
         """

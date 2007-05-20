@@ -321,7 +321,7 @@ class GMFrame(wx.Frame):
         # set default font and encoding environmental variables
         os.environ["GRASS_FONT"] = self.font
         if self.encoding != None and self.encoding != "ISO-8859-1":
-            os.environ["GRASS_FT_ENCODING"] = self.encoding
+            os.environ["GRASS_ENCODING"] = self.encoding
 
     def DispHistogram(self, event):
         """
