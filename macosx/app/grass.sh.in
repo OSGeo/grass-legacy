@@ -72,10 +72,7 @@ mkdir -p "$GISBASE_USER/Modules/docs/html"
 if [ ! "$GRASS_FONT_CAP" ] ; then
 	GRASS_FONT_CAP="$GISBASE_USER/Modules/etc/fontcap"
 fi
-if [ ! "$GRASS_FT_CAP" ] ; then
-	GRASS_FT_CAP="$GISBASE_USER/Modules/etc/freetypecap"
-fi
-export GRASS_FONT_CAP GRASS_FT_CAP
+export GRASS_FONT_CAP
 
 ### X11 stuff
 
