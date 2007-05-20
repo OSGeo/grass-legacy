@@ -7,6 +7,8 @@ MACOSX_APPDIR = ${MACOSX_APP_NAME}/Contents/Resources
 INST_DIR_MACOSX = ${prefix}/${MACOSX_APPDIR}
 MACOSX_SUPPDIR = /Library/GRASS/${GRASS_VERSION_MAJOR}.${GRASS_VERSION_MINOR}
 MACOSX_BUNDLE_PREFIX = ${GRASS_HOME}/macosx/dist/${MACOSX_APPDIR}
+VER_MINOR_REL = `printf "%d0%d" ${GRASS_VERSION_MINOR} ${GRASS_VERSION_RELEASE}`
+VER_DATE = `date +"%g%m%d"`
 MAKE_DIR_CMD = mkdir -p -m 755
 INSTALL_BIN = ${INSTALL} -m 755
 LN = /bin/ln -sf
@@ -86,7 +88,7 @@ bindist-macosx:
 	-sed -e "s#@INST_DIR@#${INST_DIR}#g" -e "s#@MACOSX_SUPPDIR@#${MACOSX_SUPPDIR}#g" -e "s#@GRASS_VER@#${GRASS_VERSION_MAJOR}.${GRASS_VERSION_MINOR}#g" pkg/resources/postflight.in > dist/resources/postflight
 	-chmod a+rx dist/resources/postflight
 	-sed -e "s#@GRASS_VER@#${GRASS_VERSION_MAJOR}.${GRASS_VERSION_MINOR}#g" pkg/resources/Description.plist.in > dist/Description.plist
-	-sed -e "s#@GRASS_VERSION_MAJOR@#${GRASS_VERSION_MAJOR}#g" -e "s#@GRASS_VERSION_MINOR@#${GRASS_VERSION_MINOR}#g" -e "s#@GRASS_VERSION_RELEASE@#${GRASS_VERSION_RELEASE}#g" -e "s#@PKG_INST_DIR@#${prefix}/${MACOSX_APP_NAME}#g" pkg/resources/Info.plist.in > dist/Info.plist
+	-sed -e "s#@GRASS_VERSION_MAJOR@#${GRASS_VERSION_MAJOR}#g" -e "s#@GRASS_VERSION_MINOR@#${GRASS_VERSION_MINOR}#g" -e "s#@GRASS_VERSION_RELEASE@#${GRASS_VERSION_RELEASE}#g" -e "s#@VER_MINOR_REL@#${VER_MINOR_REL}#g" -e "s#@VER_DATE@#${VER_DATE}#g" -e "s#@PKG_INST_DIR@#${prefix}/${MACOSX_APP_NAME}#g" pkg/resources/Info.plist.in > dist/Info.plist
 	-${INSTALL_DATA} pkg/resources/License.rtf dist/resources
 	-${INSTALL_DATA} pkg/resources/ReadMe.rtf dist/resources
 	-cd ${GISBASE} ; tar cBf - modbuild | (cd ${GRASS_HOME}/macosx/dist/resources ; tar xBf - ) 2>/dev/null
