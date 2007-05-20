@@ -7,9 +7,13 @@
 
 void PS_Graph_close(void)
 {
-	output("%%%%BeginTrailer\n");
-	output("END\n");
-	output("%%%%EndTrailer\n");
+	if (!no_trailer)
+	{
+		output("%%%%BeginTrailer\n");
+		output("END\n");
+		output("%%%%EndTrailer\n");
+	}
+
 	fclose(outfp);
 }
 

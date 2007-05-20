@@ -25,6 +25,7 @@ FILE *outfp;
 int true_color;
 int width, height;
 int encapsulated;
+int no_header, no_trailer;
 
 static int landscape;
 static int left, right, bot, top;
@@ -93,6 +94,23 @@ static void write_prolog(void)
 	output("%%%%EndProlog\n");
 
 	fclose(prolog_fp);
+}
+
+void write_setup(void)
+{
+	output("%%%%BeginSetup\n");
+
+	output("%d %d translate\n", left, bot);
+
+	if (landscape)
+		output("90 rotate 0 1 -1 scale\n");
+	else
+		output("0 %d translate 1 -1 scale\n", height);
+
+	output("%d %d BEGIN\n", width, height);
+
+	output("%%%%EndSetup\n");
+	output("%%%%Page: 1 1\n");
 }
 
 static int in2pt(double x)
@@ -173,6 +191,12 @@ int PS_Graph_set(int argc, char **argv)
 	p = getenv("GRASS_LANDSCAPE");
 	landscape = p && strcmp(p, "TRUE") == 0;
 
+	p = getenv("GRASS_PS_HEADER");
+	no_header = p && strcmp(p, "FALSE") == 0;
+
+	p = getenv("GRASS_PS_TRAILER");
+	no_trailer = p && strcmp(p, "FALSE") == 0;
+
 	G_message("PS: GRASS_TRUECOLOR status: %s",
 		true_color ? "TRUE" : "FALSE");
 
@@ -180,29 +204,19 @@ int PS_Graph_set(int argc, char **argv)
 
 	init_color_table();
 
-	outfp = fopen(file_name, "w");
+	outfp = fopen(file_name, no_header ? "a" : "w");
 
 	if (!outfp)
 		G_fatal_error("Unable to open output file: %s", file_name);
 
-	write_prolog();
-
-	output("%%%%BeginSetup\n");
-
-	output("%d %d translate\n", left, bot);
-
-	if (landscape)
-		output("90 rotate 0 1 -1 scale\n");
-	else
-		output("0 %d translate 1 -1 scale\n", height);
-
-	output("%d %d BEGIN\n", width, height);
+	if (!no_header)
+	{
+		write_prolog();
+		write_setup();
+	}
 
 	G_message("PS: collecting to file: %s,\n     GRASS_WIDTH=%d, GRASS_HEIGHT=%d",
 		file_name, width, height);
-
-	output("%%%%EndSetup\n");
-	output("%%%%Page: 1 1\n");
 
 	fflush(outfp);
 

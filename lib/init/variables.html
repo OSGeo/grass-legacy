@@ -247,15 +247,45 @@ transparent background
 <br>&nbsp; tells the PNG driver to write the image to a file whenever a
 client disconnects, rather than waiting until you stop the monitor
 
-<p>GRASS_RENDER_IMMEDIATE
-<br>&nbsp; tells the raster library to use its built-in PNG driver rather
-than connecting to an external monitor process using sockets. If
-GRASS_RENDER_IMMEDIATE=TRUE is set, there is no need to run 
-"<tt>d.mon&nbsp;start=PNG</tt>"
-
 <p>GRASS_PNG_READ
 <br>&nbsp; if "TRUE", the PNG driver will initialize the image from
 the contents of $GRASS_PNGFILE
+
+<h3>List of selected GRASS PS driver environment variables</h3>
+<blockquote>
+[ These variables control the function of the
+   <a href="psdriver.html">PS Driver</a>. ]
+</blockquote>
+<P></P>
+
+<p>GRASS_PSFILE
+<br>&nbsp; name of output file. If it ends with ".eps" an EPS file
+will be created.
+
+<p>GRASS_PAPER <br>&nbsp; sets the screen dimensions and margins to
+fit a standard paper size, see also GRASS_WIDTH, GRASS_HEIGHT.
+
+<p>GRASS_WIDTH
+<br>&nbsp; defines the width of the screen, see also GRASS_HEIGHT
+
+<p>GRASS_HEIGHT
+<br>&nbsp; defines the height of the screen, see also GRASS_WIDTH
+
+<p>GRASS_TRUECOLOR
+<br>&nbsp; if "TRUE", the PS driver generates color output, otherwise
+monochrome.
+
+<p>GRASS_LANDSCAPE
+<br>&nbsp; if "TRUE", the screen is rotated 90 degrees
+counter-clockwise so that a "landscape" screen fits better on
+"portrait" paper.
+
+<p>GRASS_PS_HEADER
+<br>&nbsp; if "FALSE", the output is appended to any existing file,
+and no prolog or setup sections are generated.
+
+<p>GRASS_PS_TRAILER
+<br>&nbsp; if "FALSE", no trailer section is generated.
 
 <h3>List of selected GRASS environment variables for direct rendering</h3>
 <blockquote>
@@ -264,6 +294,12 @@ the contents of $GRASS_PNGFILE
  affect direct rendering. ]
 </blockquote>
 <P></P>
+
+<p>GRASS_RENDER_IMMEDIATE
+<br>&nbsp; tells the raster library to use its built-in PNG/PS driver rather
+than connecting to an external monitor process using sockets. If
+GRASS_RENDER_IMMEDIATE=TRUE is set, there is no need to run 
+"<tt>d.mon&nbsp;start=PNG</tt>"
 
 <p>GRASS_FONT
 <br>&nbsp; specifies the font as either the name of a font from
