@@ -37,7 +37,9 @@ int main(int argc, char *argv[])
     char *mapset;		/* Raster mapset      */
     struct Cell_head cellhd;
     struct GModule *module;
-    struct Option *raster, *title_opt, *history_opt, *datasrc_opt, *map_opt, *units_opt, *vdatum_opt;
+    struct Option *raster, *title_opt, *history_opt;
+    struct Option *datasrc1_opt, *datasrc2_opt, *datadesc_opt;
+    struct Option *map_opt, *units_opt, *vdatum_opt;
     char buf[512];
     int cellhd_ok;		/* Is cell header OK? */
     int is_reclass;		/* Is raster reclass? */
@@ -53,49 +55,61 @@ int main(int argc, char *argv[])
     module->description = _("Allows creation and/or modification of "
                           "raster map layer support files.");
 
-    raster = G_define_standard_option(G_OPT_R_INPUT);
-    raster->key = "map";
-    raster->required = YES;
+    raster = G_define_standard_option(G_OPT_R_MAP);
 
     title_opt = G_define_option();
-    title_opt->key = "title";
-    title_opt->key_desc   = "\"phrase\"";
+    title_opt->key         = "title";
+    title_opt->key_desc    = "\"phrase\"";
     title_opt->type        = TYPE_STRING;
     title_opt->required    = NO;
-    title_opt->description = _("Text to use for new map title");
+    title_opt->description = _("Text to use for map title");
 
     history_opt = G_define_option();
-    history_opt->key = "history";
-    history_opt->key_desc   = "\"phrase\"";
+    history_opt->key         = "history";
+    history_opt->key_desc    = "\"phrase\"";
     history_opt->type        = TYPE_STRING;
     history_opt->required    = NO;
     history_opt->description = _("Text to append to the next line of the map's metadata file");
 
     units_opt = G_define_option();
-    units_opt->key = "units";
+    units_opt->key         = "units";
     units_opt->type        = TYPE_STRING;
     units_opt->required    = NO;
     units_opt->description = _("Text to use for map data units");
 
     vdatum_opt = G_define_option();
-    vdatum_opt->key = "vdatum";
+    vdatum_opt->key         = "vdatum";
     vdatum_opt->type        = TYPE_STRING;
     vdatum_opt->required    = NO;
     vdatum_opt->description = _("Text to use for map vertical datum");
 
-    datasrc_opt = G_define_option();
-    datasrc_opt->key = "organization";
-    datasrc_opt->key_desc   = "\"phrase\"";
-    datasrc_opt->type        = TYPE_STRING;
-    datasrc_opt->required    = NO;
-    datasrc_opt->description = _("Organization where raster map was created");
+    datasrc1_opt = G_define_option();
+    datasrc1_opt->key         = "source1";
+    datasrc1_opt->key_desc    = "\"phrase\"";
+    datasrc1_opt->type        = TYPE_STRING;
+    datasrc1_opt->required    = NO;
+    datasrc1_opt->description = _("Text to use for data source, line 1");
+
+    datasrc2_opt = G_define_option();
+    datasrc2_opt->key         = "source2";
+    datasrc2_opt->key_desc    = "\"phrase\"";
+    datasrc2_opt->type        = TYPE_STRING;
+    datasrc2_opt->required    = NO;
+    datasrc2_opt->description = _("Text to use for data source, line 2");
+
+    datadesc_opt = G_define_option();
+    datadesc_opt->key         = "description";
+    datadesc_opt->key_desc    = "\"phrase\"";
+    datadesc_opt->type        = TYPE_STRING;
+    datadesc_opt->required    = NO;
+    datadesc_opt->description = _("Text to use for data description or keyword(s)");
 
     map_opt = G_define_option();
-    map_opt->key = "rast";
-    map_opt->type = TYPE_STRING;
-    map_opt->required = NO;
-    map_opt->gisprompt = "old,cell,raster";
-    map_opt->description = _("Raster map name from which to copy category table");
+    map_opt->key         = "raster";
+    map_opt->type        = TYPE_STRING;
+    map_opt->required    = NO;
+    map_opt->gisprompt   = "old,cell,raster";
+    map_opt->description = _("Raster map from which to copy category table");
 
 
     /* Parse command-line options */
@@ -166,21 +180,34 @@ int main(int argc, char *argv[])
     if(vdatum_opt->answer)
 	G_write_raster_vdatum(raster->answer, vdatum_opt->answer);
 
-    if(datasrc_opt->answer) {
+    if(datasrc1_opt->answer || datasrc2_opt->answer || datadesc_opt->answer) {
 	G_read_history (raster->answer, mapset, &hist);
-	strncpy(datasrc, datasrc_opt->answer, RECORD_LEN);
-	datasrc[RECORD_LEN] = '\0'; /* strncpy doesn't null terminate oversized input */
-	G_strip(datasrc);
-	G_debug(3, "map datasrc= [%s]  (%d chars)", datasrc, strlen(datasrc));
-	strncpy (hist.datsrc_1, datasrc, RECORD_LEN);
+
+	if(datasrc1_opt->answer) {
+	    strncpy(datasrc, datasrc1_opt->answer, RECORD_LEN);
+	    datasrc[RECORD_LEN] = '\0'; /* strncpy doesn't null terminate oversized input */
+	    G_strip(datasrc);
+	    G_debug(3, "map datasrc1= [%s]  (%d chars)", datasrc, strlen(datasrc));
+	    strncpy (hist.datsrc_1, datasrc, RECORD_LEN);
+	}
+	if(datasrc2_opt->answer) {
+	    strncpy(datasrc, datasrc2_opt->answer, RECORD_LEN);
+	    datasrc[RECORD_LEN] = '\0'; /* strncpy doesn't null terminate oversized input */
+	    G_strip(datasrc);
+	    G_debug(3, "map datasrc2= [%s]  (%d chars)", datasrc, strlen(datasrc));
+	    strncpy (hist.datsrc_2, datasrc, RECORD_LEN);
+	}
+
+	if(datadesc_opt->answer) {
+	    strncpy(datasrc, datadesc_opt->answer, RECORD_LEN);
+	    datasrc[RECORD_LEN] = '\0'; /* strncpy doesn't null terminate oversized input */
+	    G_strip(datasrc);
+	    G_debug(3, "map datadesc= [%s]  (%d chars)", datasrc, strlen(datasrc));
+	    strncpy (hist.keywrd, datasrc, RECORD_LEN);
+	}
+
 	G_write_history(raster->answer, &hist);
     }
-
-    if(title_opt->answer || history_opt->answer || units_opt->answer
-			 || vdatum_opt->answer || datasrc_opt->answer)
-	exit(EXIT_SUCCESS);
-
-
 
     if (map_opt->answer) {	/* use cats from another map */
 	int fd;
@@ -201,8 +228,14 @@ int main(int argc, char *argv[])
 	    G_message(_("cats table for [%s] set to %s"), infile, map_opt->answer);
 	G_close_cell(fd);
 	G_free_cats(&cats);
-	exit(EXIT_SUCCESS);
     }
+
+
+    if(title_opt->answer || history_opt->answer || units_opt->answer
+	    || vdatum_opt->answer || datasrc1_opt->answer || datasrc2_opt->answer
+	    || datadesc_opt->answer || map_opt->answer)
+	exit(EXIT_SUCCESS);
+
 
     /* Cell header */
     sprintf(buf, _("Edit header for [%s]? "), raster->answer);
