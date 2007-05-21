@@ -426,7 +426,6 @@ proc MapCanvas::get_mapunits {} {
 	    }
 	    if {[catch {close $input} error]} {
 	    	puts $error
-	    	exit 1
 	    } 
 	}
 	# Length is calculated from the map canvas arrows
@@ -584,7 +583,6 @@ proc MapCanvas::runprograms { mon mod } {
 		}
 		if {[catch {close $input} error]} {
 			puts $error
-			exit 1
 		}
 		# Finally put this into wind file format to use with GRASS_REGION
 		regexp -nocase {^.* (\(.*\))} $parts(projection) trash end
@@ -1119,7 +1117,6 @@ proc MapCanvas::zoom_gregion {mon args} {
 		
 		if {[catch {close $input} error]} {
 			puts $error
-			exit 1
 		}
 		
 		#set start point (sw corner)
@@ -1147,7 +1144,6 @@ proc MapCanvas::zoom_gregion {mon args} {
 
 	} else {
 		puts $input
-		exit 1
 	}
 }
 
