@@ -140,7 +140,7 @@ scaling.
 <B>Note.</B> A space must separate <EM>xper</EM> and <EM>yper</EM>.
 
 <a name="symbol"></a>
-<DT><B>symbol</B> <EM>type size xper yper line_color fill_color</EM>
+<DT><B>symbol</B> <EM>type size xper yper [line_color [fill_color]]</EM>
 <DD>A symbol is drawn at the given size on the display monitor. The
 <EM>xper</EM> and <EM>yper</EM> options define the center of the icon and
 are given as a percentage of the display frame (<tt>0,0</tt> is lower left).
@@ -149,6 +149,8 @@ The symbol can be any of those stored in <tt>$GISBASE/etc/symbol/</tt>
 form <tt>$MAPSET/symbol/</tt><em>type/name</em>.
 The colors may be either a standard color name, an R:G:B triplet,
 or "none". If using an R:G:B triplet, each color value can range from 0-255.
+If not specified the default <EM>line_color</EM> is black and the default 
+<EM>fill_color</EM> is grey.
 
 <a name="rotation"></a>
 <DT><B>rotation</B> <EM>angle</EM> 

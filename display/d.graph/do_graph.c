@@ -365,8 +365,12 @@ int do_symbol(char *buff)
 
     G_debug(3, "do_symbol() [%s]", buff);
 
+    /* set default colors so colors are optional */
+    strcpy(line_color_str, DEFAULT_FG_COLOR);
+    strcpy(fill_color_str, "grey");
+
     if ( sscanf(buff, "%*s %s %d %lf %lf %s %s", symb_name, &size, &xper, &yper,
-      line_color_str, fill_color_str) != 6 ) {
+		line_color_str, fill_color_str) < 4 ) {
 	G_warning(_("Problem parsing command [%s]"), buff);
 	return(-1);
     }
