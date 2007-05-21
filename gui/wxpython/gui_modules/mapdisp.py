@@ -572,13 +572,20 @@ class BufferedWindow(wx.Window):
 
         # left mouse button pressed
         if event.LeftDown():
-            if self.mouse["use"] == "measure":
+            if self.mouse["use"] == "measure" or self.mouse["use"] == "profile":
                 if len(self.polycoords) == 0:
                     self.mouse['begin'] = event.GetPositionTuple()[:]
+                    self.mouse['end'] = self.mouse['begin']
                     self.polycoords.append(self.mouse['begin'])
+                    try:
+                        self.pdc.ClearId(self.lineid)
+                        self.pdc.ClearId(self.plineid)
+                        self.Refresh()
+                    except:
+                        pass
+
                 else:
                     self.mouse['begin'] = self.mouse['end']
-
             else:
                 # get decoration id
                 self.lastpos = self.mouse['begin'] = event.GetPositionTuple()[:]
@@ -603,11 +610,12 @@ class BufferedWindow(wx.Window):
                 self.Parent.QueryMap(self.mouse['begin'][0],self.mouse['begin'][1])
 
             # creating measurement line
-            elif self.mouse["use"] == "measure":
+            elif self.mouse["use"] == "measure" or self.mouse["use"] == "profile":
                 self.mouse['end'] = event.GetPositionTuple()[:]
-                self.Parent.MeasureDist(self.mouse['begin'],self.mouse['end'])
-                self.polycoords.append(self.mouse['end'])
+                if self.mouse["use"] == "measure":
+                    self.Parent.MeasureDist(self.mouse['begin'],self.mouse['end'])
                 try:
+                    self.polycoords.append(self.mouse['end'])
                     self.pdc.ClearId(self.lineid)
                     self.DrawLines()
                 except:
@@ -647,61 +655,7 @@ class BufferedWindow(wx.Window):
                 # redraw map
                 self.render=True
                 self.UpdateMap()
-        # right mouse button pressed
-        elif event.RightDown():
-            pass
-        # right mouse button released
-        elif event.RightUp():
-            if self.parent.digittoolbar and self.parent.digittoolbar.action == "add":
-                if self.parent.digittoolbar.type in ["line", "boundary"]:
-                    try:
-                        map = self.parent.digittoolbar.layers[self.parent.digittoolbar.layerID].name
-                    except:
-                        map = None
-                        dlg = wx.MessageDialog(self, _("No vector map layer is selected"), _("Error"), wx.OK | wx.ICON_ERROR)
-                        dlg.ShowModal()
-                        dlg.Destroy()
 
-                    if map:
-                        # add new line
-                        Digit.AddLine(map=map,
-                                      type=self.parent.digittoolbar.type,
-                                      xy=self.savedpos)
-                        # clean up saved positions
-                        self.savedpos = []
-                        # redraw map
-                        self.render=True
-                        self.UpdateMap()
-
-        # double click
-        elif event.ButtonDClick():
-            if self.mouse["use"] == "measure":
-                self.pdc.ClearId(self.lineid)
-                self.pdc.ClearId(self.plineid)
-                self.polycoords = []
-                self.mouse['use'] = 'pointer'
-                self.mouse['box'] = 'point'
-                self.mouse['end'] = [0, 0]
-                self.Refresh()
-                self.SetCursor(self.parent.cursors["default"])
-            else:
-                # select overlay decoration options dialog
-                # start point of drag
-                clickposition = event.GetPositionTuple()[:]
-                # get decoration ID
-                # idlist = self.pdc.FindObjectsByBBox(clickposition[0], clickposition[1])
-                idlist  = self.pdc.FindObjects(clickposition[0], clickposition[1], hitradius)
-                if idlist == []: return
-                self.dragid = idlist[0]
-
-                self.ovlcoords[self.dragid] = self.pdc.GetIdBounds(self.dragid)
-                if self.dragid > 100:
-                    self.currtxtid = self.dragid
-                    self.parent.addText(None)
-                elif self.dragid == 0:
-                    self.parent.AddBarscale(None)
-                elif self.dragid == 1:
-                    self.parent.AddLegend(None)
         # drag
         elif event.Dragging():
             currpos = event.GetPositionTuple()[:]
@@ -727,6 +681,41 @@ class BufferedWindow(wx.Window):
             end = [self.Map.width - self.Map.width/4,
           self.Map.height - self.Map.height/4]
         # right mouse button pressed;
+        # double click
+        elif event.ButtonDClick():
+            if self.mouse["use"] == "measure":
+                self.pdc.ClearId(self.lineid)
+                self.pdc.ClearId(self.plineid)
+                self.polycoords = []
+                self.mouse['use'] = 'pointer'
+                self.mouse['box'] = 'point'
+                self.mouse['end'] = [0, 0]
+                self.Refresh()
+                self.SetCursor(self.parent.cursors["default"])
+            elif self.mouse["use"] == "profile":
+                pass
+#                self.pdc.ClearId(self.lineid)
+#                self.pdc.ClearId(self.plineid)
+#                print 'coordinates: ',self.polycoords
+#                self.polycoords = []
+#                self.mouse['begin'] = self.mouse['end'] = [0, 0]
+#                self.Refresh()
+            else:
+                # select overlay decoration options dialog
+                clickposition = event.GetPositionTuple()[:]
+                idlist  = self.pdc.FindObjects(clickposition[0], clickposition[1], hitradius)
+                if idlist == []: return
+                self.dragid = idlist[0]
+
+                self.ovlcoords[self.dragid] = self.pdc.GetIdBounds(self.dragid)
+                if self.dragid > 100:
+                    self.currtxtid = self.dragid
+                    self.parent.addText(None)
+                elif self.dragid == 0:
+                    self.parent.AddBarscale(None)
+                elif self.dragid == 1:
+                    self.parent.AddLegend(None)
+
         elif event.RightDown():
             x,y = event.GetPositionTuple()[:]
             #l = self.pdc.FindObjectsByBBox(x, y)
@@ -743,6 +732,29 @@ class BufferedWindow(wx.Window):
                     r = self.pdc.GetIdBounds(id)
                     r.Inflate(4,4)
                     self.RefreshRect(r, False)
+
+        # right mouse button released
+        elif event.RightUp():
+            if self.parent.digittoolbar and self.parent.digittoolbar.action == "add":
+                if self.parent.digittoolbar.type in ["line", "boundary"]:
+                    try:
+                        map = self.parent.digittoolbar.layers[self.parent.digittoolbar.layerID].name
+                    except:
+                        map = None
+                        dlg = wx.MessageDialog(self, _("No vector map layer is selected"), _("Error"), wx.OK | wx.ICON_ERROR)
+                        dlg.ShowModal()
+                        dlg.Destroy()
+
+                    if map:
+                        # add new line
+                        Digit.AddLine(map=map,
+                                      type=self.parent.digittoolbar.type,
+                                      xy=self.savedpos)
+                        # clean up saved positions
+                        self.savedpos = []
+                        # redraw map
+                        self.render=True
+                        self.UpdateMap()
 
         # store current mouse position
         self.mouse['pos'] = event.GetPositionTuple()[:]
@@ -852,7 +864,7 @@ class BufferedWindow(wx.Window):
         else:
             return
 
-        p = cmd.Command (cmdVec)
+        p = cmd.Command(cmdVec)
 
         output = p.module_stdout.read().split('\n')
         for oline in output:
@@ -1533,7 +1545,7 @@ class MapFrame(wx.Frame):
         Init profile canvas and tools
         """
         self.profile = profile.ProfileFrame(self,
-                                           id=wx.ID_ANY, pos=wx.DefaultPosition, size=(400,300),
+                                           id=wx.ID_ANY, pos=wx.DefaultPosition, size=(600,300),
                                            style=wx.DEFAULT_FRAME_STYLE)
         self.profile.Show()
         self.profile.Refresh()

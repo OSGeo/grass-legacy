@@ -1,6 +1,25 @@
 import wx
 import wx.aui
 import os, sys, time, glob, math
+import wx.lib.plot as plot
+#Needs Numeric or numarray or NumPy
+#try:
+#    import numpy.oldnumeric as _Numeric
+#except:
+#    try:
+#        import numarray as _Numeric     #if numarray is used it is renamed Numeric
+#    except:
+#        try:
+#            import Numeric as _Numeric
+#        except:
+#            msg= """
+#            This module requires the Numeric/numarray or NumPy module,
+#            which could not be imported.  It probably is not installed
+#            (it's not part of the standard Python distribution). See the
+#            Numeric Python site (http://numpy.scipy.org) for information on
+#            downloading source or binaries."""
+#            raise ImportError, "Numeric,numarray or NumPy not found. \n" + msg
+
 from threading import Thread
 
 try:
@@ -20,6 +39,8 @@ sys.path.append(gmpath)
 import render
 import menuform
 import disp_print
+import select
+import cmd
 import gui_modules.defaultfont as defaultfont
 from debug import Debug as Debug
 from icon import Icons as Icons
@@ -35,236 +56,9 @@ if not os.getenv("GRASS_ICONPATH"):
 else:
     icons = os.environ["GRASS_ICONPATH"]
 
-class BufferedWindow(wx.Window):
-    """
-    A Buffered window class.
-
-    When the drawing needs to change, you app needs to call the
-    UpdateProfile() method. Since the drawing is stored in a bitmap, you
-    can also save the drawing to file by calling the
-    SaveToFile(self,file_name,file_type) method.
-    """
-
-    def __init__(self, parent, id,
-                 pos = wx.DefaultPosition,
-                 size = wx.DefaultSize,
-                 style=wx.NO_FULL_REPAINT_ON_RESIZE,
-                 Map=None):
-
-        wx.Window.__init__(self, parent, id, pos, size, style)
-
-        self.parent = parent
-        self.Map = Map
-        self.mapname = self.parent.mapname
-
-        #
-        # Flags
-        #
-        self.render = True  # re-render the map from GRASS or just redraw image
-        self.resize = False # indicates whether or not a resize event has taken place
-        self.dragimg = None # initialize variable for map panning
-        self.pen = None     # pen for drawing zoom boxes, etc.
-
-        #
-        # Event bindings
-        #
-        self.Bind(wx.EVT_PAINT,        self.OnPaint)
-        self.Bind(wx.EVT_SIZE,         self.OnSize)
-        self.Bind(wx.EVT_IDLE,         self.OnIdle)
-
-        #
-        # Render output objects
-        #
-        self.mapfile = None # image file to be rendered
-        self.img = ""       # wx.Image object (self.mapfile)
-
-        self.imagedict = {} # images and their PseudoDC ID's for painting and dragging
-
-        self.pdc = wx.PseudoDC()
-        self._Buffer = '' # will store an off screen empty bitmap for saving to file
-        self.Map.SetRegion() # make sure that extents are updated at init
-
-        self.Bind(wx.EVT_ERASE_BACKGROUND, lambda x:None)
-
-    def Draw(self, pdc, img=None, drawid=None, pdctype='image', coords=[0,0,0,0]):
-        """
-        Draws histogram or clears window
-        """
-
-        if drawid == None:
-            if pdctype == 'image' :
-                drawid = imagedict[img]
-            elif pdctype == 'clear':
-                drawid == None
-            else:
-                drawid = wx.NewId()
-        else:
-            pdc.SetId(drawid)
-
-        pdc.BeginDrawing()
-
-        Debug.msg (3, "BufferedWindow.Draw(): id=%s, pdctype=%s, coord=%s" % (drawid, pdctype, coords))
-
-        if pdctype == 'clear': # erase the display
-            bg = wx.WHITE_BRUSH
-            pdc.SetBackground(bg)
-            pdc.Clear()
-            self.Refresh()
-            pdc.EndDrawing()
-            return
-
-        if pdctype == 'image':
-            bg = wx.TRANSPARENT_BRUSH
-            pdc.SetBackground(bg)
-            bitmap = wx.BitmapFromImage(img)
-            w,h = bitmap.GetSize()
-            pdc.DrawBitmap(bitmap, coords[0], coords[1], True) # draw the composite map
-            pdc.SetIdBounds(drawid, (coords[0],coords[1],w,h))
-
-        pdc.EndDrawing()
-        self.Refresh()
-
-    def OnPaint(self, event):
-        """
-        Draw psuedo DC to buffer
-        """
-
-        dc = wx.BufferedPaintDC(self, self._Buffer)
-
-        # use PrepareDC to set position correctly
-        self.PrepareDC(dc)
-        # we need to clear the dc BEFORE calling PrepareDC
-        bg = wx.Brush(self.GetBackgroundColour())
-        dc.SetBackground(bg)
-        dc.Clear()
-        # create a clipping rect from our position and size
-        # and the Update Region
-        rgn = self.GetUpdateRegion()
-        r = rgn.GetBox()
-        # draw to the dc using the calculated clipping rect
-        self.pdc.DrawToDCClipped(dc,r)
-
-
-    def OnSize(self, event):
-        """
-         Init image size to match window size
-        """
-
-            # set size of the input image
-        self.Map.width, self.Map.height = self.GetClientSize()
-
-        # Make new off screen bitmap: this bitmap will always have the
-        # current drawing in it, so it can be used to save the image to
-        # a file, or whatever.
-        self._Buffer = wx.EmptyBitmap(self.Map.width, self.Map.height)
-
-        # get the image to be rendered
-        self.img = self.GetImage()
-
-        # update map display
-        if self.img and self.Map.width + self.Map.height > 0: # scale image during resize
-            self.img = self.img.Scale(self.Map.width, self.Map.height)
-            self.render = False
-            self.UpdateProfile()
-
-        # re-render image on idle
-        self.resize = True
-
-    def OnIdle(self, event):
-        """
-        Only re-render a histogram image from GRASS during
-        idle time instead of multiple times during resizing.
-            """
-
-        if self.resize:
-            self.render = True
-            self.UpdateProfile()
-        event.Skip()
-
-    def SaveToFile(self, FileName, FileType):
-        """
-        This will save the contents of the buffer
-        to the specified file. See the wx.Windows docs for
-        wx.Bitmap::SaveFile for the details
-        """
-        dc = wx.BufferedPaintDC(self, self._Buffer)
-        self.pdc.DrawToDC(dc)
-        self._Buffer.SaveFile(FileName, FileType)
-
-    def GetImage(self):
-        """
-        Converts files to wx.Image
-        """
-        if self.Map.mapfile and os.path.isfile(self.Map.mapfile) and \
-                os.path.getsize(self.Map.mapfile):
-            img = wx.Image(self.Map.mapfile, wx.BITMAP_TYPE_ANY)
-        else:
-            img = None
-
-        self.imagedict[img] = 99 # set image PeudoDC ID
-        return img
-
-
-    def UpdateProfile(self, img=None):
-        """
-        Update canvas if histogram options changes or window changes geometry
-        """
-
-        Debug.msg (2, "BufferedWindow.UpdateProfile(%s): render=%s" % (img, self.render))
-        oldfont = ""
-        oldencoding = ""
-
-        if self.render:
-            # render new map images
-
-            # set default font and encoding environmental variables
-            if "GRASS_FONT" in os.environ:
-                oldfont = os.environ["GRASS_FONT"]
-            if self.parent.font != "": os.environ["GRASS_FONT"] = self.parent.font
-            if "GRASS_ENCODING" in os.environ:
-                oldencoding = os.environ["GRASS_ENCODING"]
-            if self.parent.encoding != None and self.parent.encoding != "ISO-8859-1":
-                os.environ[GRASS_ENCODING] = self.parent.encoding
-
-            self.Map.width, self.Map.height = self.GetClientSize()
-            self.mapfile = self.Map.Render(force=self.render)
-            self.img = self.GetImage()
-            self.resize = False
-
-        if not self.img: return
-        try:
-            id = self.imagedict[self.img]
-        except:
-            return
-
-        # paint images to PseudoDC
-        self.pdc.Clear()
-        self.pdc.RemoveAll()
-        self.Draw(self.pdc, self.img, drawid=id) # draw map image background
-
-        self.resize = False
-
-        # update statusbar
-        #Debug.msg (3, "BufferedWindow.UpdateProfile(%s): region=%s" % self.Map.region)
-        self.Map.SetRegion()
-        self.parent.statusbar.SetStatusText("Histogramming %s" % self.parent.mapname)
-
-        # set default font and encoding environmental variables
-        if oldfont != "":
-            os.environ["GRASS_FONT"] = oldfont
-        if oldencoding != "":
-            os.environ["GRASS_ENCODING"] = oldencoding
-
-    def EraseMap(self):
-        """
-        Erase the map display
-        """
-        self.Draw(self.pdc, pdctype='clear')
-
 class ProfileFrame(wx.Frame):
     """
-    Main frame for hisgram display window.
-    Uses d.histogram rendered onto canvas
+    Main frame profile of raster map. Uses wx.lib.plot.
     """
 
     def __init__(self, parent=None, id = wx.ID_ANY, title="Profile of transect in raster map",
@@ -283,42 +77,56 @@ class ProfileFrame(wx.Frame):
         self.SetClientSize(size)
         self.iconsize = (16, 16)
 
-        # Init variables
-        self.params = {} # previously set histogram parameters
-
-        self.font = ""
-        self.fonttype = 'truetype' # stroke or truetype font for default display font
-        self.encoding = 'ISO-8859-1' # default encoding for display fonts
-
         #
         # Add statusbar
         #
-        self.mapname = ''
+        self.rast = ''
         self.statusbar = self.CreateStatusBar(number=2, style=0)
         self.statusbar.SetStatusWidths([-2, -1])
-        hist_frame_statusbar_fields = ["Histogramming %s" % self.mapname]
-        for i in range(len(hist_frame_statusbar_fields)):
-            self.statusbar.SetStatusText(hist_frame_statusbar_fields[i], i)
+        profile_frame_statusbar_fields = ["Profiling %s" % self.rast]
+        for i in range(len(profile_frame_statusbar_fields)):
+            self.statusbar.SetStatusText(profile_frame_statusbar_fields[i], i)
 
-        #
         # Init map display
-        #
         self.InitDisplay() # initialize region values
 
         # initialize buffered DC
-        self.ProfileWindow = BufferedWindow(self, id = wx.ID_ANY, Map=self.Map) # initialize buffered DC
+#        self.ProfileWindow = BufferedWindow(self, id = wx.ID_ANY, Map=self.Map) # initialize buffered DC
 
-        #
         # Bind various events
-        #
         self.Bind(wx.EVT_CLOSE, self.OnCloseWindow)
+
+
         self.mapwin = self.Parent.MapWindow
-        self.mapwin.Bind(wx.EVT_ACTIVATE, self.OnActivate)
-        self.ProfileWindow.Bind(wx.EVT_MOUSE_EVENTS, self.OnMouse)
-        #
+        self.mapwin.Bind(wx.EVT_MOUSE_EVENTS, self.mapwin.MouseActions)
+
+        # plot canvas settings
+        self.client = plot.PlotCanvas(self)
+        #define the function for drawing pointLabels
+        self.client.SetPointLabelFunc(self.DrawPointLabel)
+        # Create mouse event for showing cursor coords in status bar
+        self.client.canvas.Bind(wx.EVT_LEFT_DOWN, self.OnMouseLeftDown)
+        # Show closest point when enabled
+        self.client.canvas.Bind(wx.EVT_MOTION, self.OnMotion)
+
         # Init print module and classes
-        #
-        self.printopt = disp_print.PrintOptions(self, self.ProfileWindow)
+#        self.printopt = disp_print.PrintOptions(self, self.ProfileWindow)
+
+        # Init variables
+        self.seglist = [] # segment endpoint list
+        self.datalist = [] # profile data list
+        self.pline = '' # profile line data
+        self.ppoints = '' # segment endpoints data
+        self.profile = '' # plot draw object
+        self.title = 'Profile of %s' % self.rast
+        self.xaxis = "Distance"
+        self.yaxis = "Raster values"
+        self.font = wx.Font(10,wx.SWISS,wx.NORMAL,wx.NORMAL)
+        self.axisfontsize = 10
+        self.legendfontsize = 10
+        self.enablegrid = True
+        self.gridcolor = 'light grey'
+        self.enablelegend = True
 
     def __createToolBar(self):
         """Creates toolbar"""
@@ -343,112 +151,277 @@ class ProfileFrame(wx.Frame):
                  ('raster', Icons["addrast"].GetBitmap(), Icons["addrast"].GetLabel(), self.SelectRaster),
                  ('transect', Icons["transect"].GetBitmap(), Icons["transect"].GetLabel(), self.DrawTransect),
                  ('profiledraw', Icons["profiledraw"].GetBitmap(), Icons["profiledraw"].GetLabel(), self.CreateProfile),
-                 ('font', Icons["font"].GetBitmap(), Icons["font"].GetLabel(), self.SetProfileFont),
-                 ('erase', Icons["erase"].GetBitmap(), Icons["erase"].GetLabel(), self.OnErase),
+                 ('options', Icons["font"].GetBitmap(), 'Profile options', self.ProfileOptionsMenu),
+                 ('unzoom', Icons['zoom_back'].GetBitmap(), 'Unzoom profile', self.OnRedraw),
+                 ('erase', Icons["erase"].GetBitmap(), 'Erase profile', self.OnErase),
                  ('', '', '', ''),
-                 ('save',  Icons["savefile"].GetBitmap(),  Icons["savefile"].GetLabel(),  self.SaveToFile),
-                 ('print',  Icons["printmap"].GetBitmap(),  Icons["printmap"].GetLabel(),  self.PrintMenu),
+                 ('save',  Icons["savefile"].GetBitmap(),  'Save profile',  self.SaveToFile),
+                 ('print',  Icons["printmap"].GetBitmap(),  'Print profile',  self.PrintMenu),
+                 ('quit',  wx.ArtProvider.GetBitmap(wx.ART_QUIT, wx.ART_TOOLBAR, (16,16)),  Icons["quit"].GetLabel(), self.OnQuit),
                   )
 
     def InitDisplay(self):
         """
-        Initialize histogram display, set dimensions and region
+        Initialize profile display, set dimensions and region
         """
         self.width, self.height = self.GetClientSize()
         self.Map.geom = self.width, self.height
 
     def SelectRaster(self, event):
-        pass
+        """
+        Select raster map to profile (i.e., to get distance,value data)
+        """
+        dlg = SetRaster(self, wx.ID_ANY, "Select raster to profile",
+                          pos=wx.DefaultPosition, size=wx.DefaultSize,
+                          style=wx.DEFAULT_DIALOG_STYLE)
+
+        if dlg.ShowModal() == wx.ID_CANCEL:
+            dlg.Destroy()
+            return
+
+        self.rast = dlg.rast
+        self.SetStatusText("Profiling %s" % self.rast)
+        self.SetTitle("Profile of transect across %s" % self.rast)
+        self.title = 'Profile of %s' % self.rast
 
     def OnActivate(self, event):
         print "window=",event.GetEventObject()
         event.Skip()
 
-    def OnMouse(self, event):
-
-        if event.LeftDown():
-            self.mapwin = self.Parent.MapWindow
-            print "position=",event.GetPositionTuple()
-            pass
-
-        elif event.LeftUp():
-            pass
-
-        elif event.ButtonDClick():
-            pass
-
-        elif event.Dragging():
-            pass
-
-        event.Skip()
-
     def DrawTransect(self, event):
-        pass
+        self.seglist = []
+        self.datalist = []
+        self.pline = ''
+        self.ppoints = ''
+        self.Parent.SetFocus()
+        self.Parent.Raise()
+        self.mapwin.mouse['use'] = 'profile'
+        self.mapwin.mouse['box'] = 'line'
+        self.mapwin.pen = wx.Pen(colour='Red', width=2, style=wx.SHORT_DASH)
+        self.mapwin.polypen = wx.Pen(colour='dark green', width=2, style=wx.SHORT_DASH)
+        self.mapwin.SetCursor(self.Parent.cursors["cross"])
+
+    def SetGraphStyle(self):
+        """Just to reset the fonts back to the PlotCanvas defaults"""
+        self.client.SetFont(self.font)
+        self.client.SetFontSizeAxis(self.axisfontsize)
+        self.client.SetFontSizeLegend(self.legendfontsize)
+        self.client.setLogScale((False,False))
+        self.client.SetEnableZoom(True)
+#        self.client.SetEnableDrag(True)
+        self.client.SetEnableGrid(self.enablegrid)
+        self.client.SetGridColour(self.gridcolor)
+        self.client.SetShowScrollbars(True)
+        self.client.SetXSpec('auto')
+        self.client.SetYSpec('auto')
+        self.client.SetEnableLegend(self.enablelegend)
+
+    def DrawPointLabel(self, dc, mDataDict):
+        """This is the fuction that defines how the pointLabels are plotted
+            dc - DC that will be passed
+            mDataDict - Dictionary of data that you want to use for the pointLabel
+
+            As an example I have decided I want a box at the curve point
+            with some text information about the curve plotted below.
+            Any wxDC method can be used.
+        """
+        # ----------
+        dc.SetPen(wx.Pen(wx.BLACK))
+        dc.SetBrush(wx.Brush( wx.BLACK, wx.SOLID ) )
+
+        sx, sy = mDataDict["scaledXY"] #scaled x,y of closest point
+        dc.DrawRectangle( sx-5,sy-5, 10, 10)  #10by10 square centered on point
+        px,py = mDataDict["pointXY"]
+        cNum = mDataDict["curveNum"]
+        pntIn = mDataDict["pIndex"]
+        legend = mDataDict["legend"]
+        #make a string to display
+        s = "Crv# %i, '%s', Pt. (%.2f,%.2f), PtInd %i" %(cNum, legend, px, py, pntIn)
+        dc.DrawText(s, sx , sy+1)
+        # -----------
+
+    def OnMouseLeftDown(self,event):
+        s= "Left Mouse Down at Point: (%.4f, %.4f)" % self.client._getXY(event)
+        self.SetStatusText(s)
+        event.Skip()            #allows plotCanvas OnMouseLeftDown to be called
+
+    def OnMotion(self, event):
+        # indicate when mouse is outside the plot area
+        if self.client.OnLeave(event): print 'out of area'
+        #show closest point (when enbled)
+        if self.client.GetEnablePointLabel() == True:
+            #make up dict with info for the pointLabel
+            #I've decided to mark the closest point on the closest curve
+            dlst= self.client.GetClosetPoint( self.client._getXY(event), pointScaled= True)
+            if dlst != []:      #returns [] if none
+                curveNum, legend, pIndex, pointXY, scaledXY, distance = dlst
+                #make up dictionary to pass to my user function (see DrawPointLabel)
+                mDataDict= {"curveNum":curveNum, "legend":legend, "pIndex":pIndex,\
+                    "pointXY":pointXY, "scaledXY":scaledXY}
+                #pass dict to update the pointLabel
+                self.client.UpdatePointLabel(mDataDict)
+        event.Skip()           #go to next handler
 
     def CreateProfile(self, event):
-        pass
-
-
-    def SetProfileFont(self, event):
         """
-        Set font for histogram. If not
-        set, font will be default display font.
+        Main routine for creating a profile. Uses r.profile to create a list
+        of distance,cell value pairs. This is passed to plot to create a
+        line graph of the profile. If the profile transect is in multiple
+        segments, these are drawn as points. Profile transect is drawn, using
+        methods in mapdisp.py
         """
-
-        dlg = defaultfont.SetDefaultFont(self, wx.ID_ANY, 'Select font for histogram text',
-                                   pos=wx.DefaultPosition, size=wx.DefaultSize,
-                                   style=wx.DEFAULT_DIALOG_STYLE,
-                                   fonttype=self.fonttype, encoding=self.encoding)
-        dlg.fontlb.SetStringSelection(self.font, True)
-        if dlg.ShowModal() == wx.ID_CANCEL:
+        if self.rast == '':
+            dlg = wx.MessageDialog(self, 'You must select a raster map to profile',
+                               'Nothing to profile', wx.OK | wx.ICON_INFORMATION)
+            dlg.ShowModal()
             dlg.Destroy()
             return
 
-        # set default font type, font, and encoding to whatever selected in dialog
-        if dlg.fonttype != None:
-            self.fonttype = dlg.fonttype
-        if dlg.font != None:
-            self.font = dlg.font
-        if dlg.encoding != None:
-            self.encoding = dlg.encoding
+        self.mapwin.SetCursor(self.Parent.cursors["default"])
+        coordstr = ''
+        dist = 0
+        cumdist = 0
+        lasteast = lastnorth = None
+        for point in self.mapwin.polycoords:
+            # convert screen coordinates to map coordinates for transect
+            east, north = self.mapwin.Pixel2Cell(point[0],point[1])
 
-        dlg.Destroy()
-        self.ProfileWindow.UpdateProfile()
+            # build string of coordinate points for r.profile
+            if coordstr == '':
+                coordstr = '%d,%d' % (east,north)
+            else:
+                coordstr = '%s,%d,%d' % (coordstr,east,north)
+
+            # get value of raster cell at coordinate point
+            cmdlist = ['r.what', 'input=%s' % self.rast, 'east_north=%d,%d' % (east,north)]
+            p = cmd.Command(cmdlist)
+            output = p.module_stdout.read().strip().split('|')
+            val = output[3]
+
+            # calculate distance between coordinate points
+            if lasteast and lastnorth:
+                 dist = math.sqrt(math.pow((lasteast-east),2) + math.pow((lastnorth-north),2))
+            cumdist += dist
+
+            # build a list of distance,value pairs for each segment of transect
+            self.seglist.append((cumdist,val))
+            lasteast = east
+            lastnorth = north
+
+        # build a list of distance, value pairs for points along transect
+        cmdlist = ['r.profile', 'input=%s' % self.rast, 'profile=%s' % coordstr, 'null=nan']
+        p = cmd.Command(cmdlist)
+        output = p.module_stdout.read().strip().split('\n')
+        for outline in output:
+            dist,elev = outline.split(' ')
+            self.datalist.append((dist,elev))
+
+        # graph the distance, value pairs for the transect
+        self.pline = plot.PolyLine(self.datalist, colour='blue', width=2, legend='Profile')
+        self.ppoints = plot.PolyMarker(self.seglist, legend='Segment breaks', colour='red', size=2,
+                                  fillstyle = wx.TRANSPARENT, marker='circle')
+
+        self.profile = plot.PlotGraphics([self.pline, self.ppoints], self.title, self.xaxis, self.yaxis)
+
+        # this is where we can set plot styles
+        self.SetGraphStyle()
+        self.client.Draw(self.profile)
+
+        # reset transect
+        self.mapwin.polycoords = []
+        self.mapwin.mouse['begin'] = self.mapwin.mouse['end'] = (0.0,0.0)
+        self.mapwin.mouse['use'] = 'pointer'
+        self.mapwin.mouse['box'] = 'point'
+
+    def OnRedraw(self, event):
+        """
+        Redraw the profile window
+        """
+        self.client.Reset()
+        self.client.Redraw()
+        self.client.Draw(self.profile)
 
     def OnErase(self, event):
         """
-        Erase the histogram display
+        Erase the profile window
         """
-        self.ProfileWindow.Draw(self.ProfileWindow.pdc, pdctype='clear')
+        self.client.Clear()
+        try:
+            self.mapwin.pdc.ClearId(self.mapwin.lineid)
+            self.mapwin.pdc.ClearId(self.mapwin.plineid)
+            self.mapwin.Refresh()
+        except:
+            pass
+
 
     def SaveToFile(self, event):
         """
-        Save to file
+        Save profile to graphics file
         """
-        filetype =  "PNG file (*.png)|*.png|"\
-                    "TIF file (*.tif)|*.tif|"\
-                    "GIF file (*.gif)|*.gif"
+        self.client.SaveFile()
 
-        dlg = wx.FileDialog(self, "Choose a file name to save the image as a PNG to",
-            defaultDir = "",
-            defaultFile = "",
-            wildcard = filetype,
-            style=wx.SAVE|wx.FD_OVERWRITE_PROMPT)
-        if dlg.ShowModal() == wx.ID_OK:
-            base = os.path.splitext(dlg.GetPath())[0]
-            ext = os.path.splitext(dlg.GetPath())[1]
-            if dlg.GetFilterIndex() == 0:
-                type = wx.BITMAP_TYPE_PNG
-                path = dlg.GetPath()
-                if ext != '.png': path = base+'.png'
-            elif dlg.GetFilterIndex() == 1:
-                type = wx.BITMAP_TYPE_TIF
-                if ext != '.tif': path = base+'.tif'
-            elif dlg.GetFilterIndex() == 2:
-                type = wx.BITMAP_TYPE_TIF
-                if ext != '.gif': path = base+'.gif'
-            self.ProfileWindow.SaveToFile(path, type)
+
+    def ProfileOptionsMenu(self, event):
+        """
+        Set various profile options.
+        """
+
+        point = wx.GetMousePosition()
+        popt = wx.Menu()
+        # Add items to the menu
+        settext = wx.MenuItem(popt, -1, 'Set title and axis labels')
+        popt.AppendItem(settext)
+        self.Bind(wx.EVT_MENU, self.SetText, settext)
+
+        setfonts = wx.MenuItem(popt, -1, 'Set font for title and labels')
+        popt.AppendItem(setfonts)
+        self.Bind(wx.EVT_MENU, self.SetFonts, setfonts)
+
+        setgrid = wx.MenuItem(popt, -1, 'Grid settings')
+        popt.AppendItem(setgrid)
+        self.Bind(wx.EVT_MENU, self.GridOptions, setgrid)
+
+        setlegend = wx.MenuItem(popt, -1, 'Legend settings')
+        popt.AppendItem(setlegend)
+        self.Bind(wx.EVT_MENU, self.LegendOptions, setlegend)
+
+        # Popup the menu.  If an item is selected then its handler
+        # will be called before PopupMenu returns.
+        self.PopupMenu(popt)
+        popt.Destroy()
+
+    def NotFunctional(self):
+        dlg = wx.MessageDialog(self, 'This feature is not yet functional',
+                           'Under Construction', wx.OK | wx.ICON_INFORMATION)
+        dlg.ShowModal()
         dlg.Destroy()
+
+
+    def SetText(self, event):
+        """
+        Set custom text values for profile
+        title and axis labels.
+        """
+        self.NotFunctional()
+
+    def SetFonts(self, event):
+        """
+        Set custom fonts for profile title
+        and axis labels
+        """
+        self.NotFunctional()
+
+    def GridOptions(self, event):
+        """
+        Set grid color, enable/disable grid
+        """
+        self.NotFunctional()
+
+    def LegendOptions(self, event):
+        """
+        Set legend font, enable/disable legend
+        """
+        self.NotFunctional()
 
     def PrintMenu(self, event):
         """
@@ -459,20 +432,32 @@ class ProfileFrame(wx.Frame):
         # Add items to the menu
         setup = wx.MenuItem(printmenu, -1,'Page setup')
         printmenu.AppendItem(setup)
-        self.Bind(wx.EVT_MENU, self.printopt.OnPageSetup, setup)
+        self.Bind(wx.EVT_MENU, self.OnPageSetup, setup)
 
         preview = wx.MenuItem(printmenu, -1,'Print preview')
         printmenu.AppendItem(preview)
-        self.Bind(wx.EVT_MENU, self.printopt.OnPrintPreview, preview)
+        self.Bind(wx.EVT_MENU, self.OnPrintPreview, preview)
 
         doprint = wx.MenuItem(printmenu, -1,'Print display')
         printmenu.AppendItem(doprint)
-        self.Bind(wx.EVT_MENU, self.printopt.OnDoPrint, doprint)
+        self.Bind(wx.EVT_MENU, self.OnDoPrint, doprint)
 
         # Popup the menu.  If an item is selected then its handler
         # will be called before PopupMenu returns.
         self.PopupMenu(printmenu)
         printmenu.Destroy()
+
+    def OnPageSetup(self, event):
+        self.client.PageSetup()
+
+    def OnPrintPreview(self, event):
+        self.client.PrintPreview()
+
+    def OnDoPrint(self, event):
+        self.client.Printout()
+
+    def OnQuit(self, event):
+        self.Close(True)
 
     def OnCloseWindow(self, event):
         """
@@ -480,7 +465,53 @@ class ProfileFrame(wx.Frame):
         Also remove associated rendered images
         """
 
-        self.Map.Clean()
         self.Destroy()
+
+class SetRaster(wx.Dialog):
+    def __init__(self, parent, id, title="", pos=wx.DefaultPosition, size=wx.DefaultSize,
+            style=wx.DEFAULT_DIALOG_STYLE):
+        wx.Dialog.__init__(self, parent, id, title, pos, size, style)
+        """
+        Select raster map to profile
+        """
+
+        self.rast = ''
+
+        sizer = wx.BoxSizer(wx.VERTICAL)
+
+        box = wx.BoxSizer(wx.HORIZONTAL)
+
+        label = wx.StaticText(self, -1, "Select raster:")
+        box.Add(label, 0, wx.ALIGN_CENTRE|wx.ALL, 5)
+        self.selection = select.Select(self, id=wx.ID_ANY, size=(300,-1),
+                                          type='cell')
+        box.Add(self.selection, 0, wx.ALIGN_CENTRE|wx.ALL, 5)
+        self.selection.Bind(wx.EVT_TEXT, self.onSelection)
+
+        sizer.Add(box, 0, wx.GROW|wx.ALIGN_CENTER_VERTICAL|wx.ALL, 5)
+
+        line = wx.StaticLine(self, -1, size=(20,-1), style=wx.LI_HORIZONTAL)
+        sizer.Add(line, 0, wx.GROW|wx.ALIGN_CENTER_VERTICAL|wx.RIGHT|wx.TOP, 5)
+
+        btnsizer = wx.StdDialogButtonSizer()
+
+        btn = wx.Button(self, wx.ID_OK)
+        btn.SetDefault()
+        btnsizer.AddButton(btn)
+
+        btn = wx.Button(self, wx.ID_CANCEL)
+        btnsizer.AddButton(btn)
+        btnsizer.Realize()
+
+        sizer.Add(btnsizer, 0, wx.ALIGN_CENTER_VERTICAL|wx.ALL, 5)
+
+        self.SetSizer(sizer)
+        sizer.Fit(self)
+
+    def onSelection(self, event):
+        self.rast = event.GetString()
+
+    def onText(self, event):
+        self.rast = event.GetString()
 
 
