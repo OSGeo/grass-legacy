@@ -342,9 +342,9 @@ care of following rules:
     The first letters for module name should be:
 	d. 	- display commands
 	db. 	- database commands
-	g. 	- general commands
+	g. 	- general GIS management commands
 	i. 	- imagery commands
-	p. 	- paint commands
+	m. 	- miscellaneous tool commands
 	ps. 	- postscript commands
 	r. 	- raster commands
 	r3. 	- raster3D commands
