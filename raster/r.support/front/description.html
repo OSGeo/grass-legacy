@@ -7,16 +7,17 @@ another raster map.
 
 <h2>NOTES</h2>
 
-If the <b>title</b> or <b>history</b> options are given the module will run 
-non-interactively. If only the map name is given <em>r.support</em> will
-run interactively within a terminal shell and the user with be prompted for
-input.
+If metadata options such as <b>title</b> or <b>history</b> are given the
+module will run  non-interactively. If only the map name is given
+<em>r.support</em> will run interactively within a terminal shell and the
+user with be prompted for input.
 <P>
-Map metadata information is stored in a "hist" file which may be 
+Freeform metadata information is stored in a "<tt>hist</tt>" file which may be
 appended to by using the <b>history</b> option. Currently this is limited to
 50 lines of text with a maximum line length of 78 characters. Any input
 larger than this will be wrapped to the next line.
-
+All other metadata strings available as standard options are limited to
+79 characters.
 
 <h2>SEE ALSO</h2>
 <em>
@@ -27,7 +28,7 @@ larger than this will be wrapped to the next line.
 <a href="r.region.html">r.region</a>,
 <a href="r.report.html">r.report</a>,
 <a href="r.timestamp.html">r.timestamp</a>
-
+</em>
 
 <h2>AUTHORS</h2>
 
@@ -36,4 +37,6 @@ Micharl Shapiro, CERL: Original author<BR>
 M. Hamish Bowman: command line enhancements<br>
 Markus Neteler: category copy from other map
 
-<p><i>Last changed: $Date$</i> </p>
+<p>
+<i>Last changed: $Date$</i>
+</p>
