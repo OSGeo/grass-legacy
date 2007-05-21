@@ -616,7 +616,7 @@ class LayerTree(CT.CustomTreeCtrl):
         treelayers.reverse()
         self.Map.reorderLayers(treelayers)
 
-    def ChangeLayer(self, layer, mapname):
+    def ChangeLayer(self, layer, name):
         """Change layer"""
         if self.layertype[layer] == 'cmdlayer':
             if self.GetItemWindow(layer).GetValue() != None:
@@ -631,8 +631,15 @@ class LayerTree(CT.CustomTreeCtrl):
                 chk = self.IsItemChecked(layer)
                 hidden = not self.IsVisible(layer)
 
-        # mapset is unnecessary
-        self.Map.ChangeLayer(item=layer, type='command', command=cmdlist, name=mapname, mapset=None,
+        idxAt = name.find('@')
+        if idxAt > -1:
+            mapName   = name[0:idxAt]
+            mapMapset = name[idxAt+1:]
+        else:
+            mapName   = name
+            mapMapset = None
+        
+        self.Map.ChangeLayer(item=layer, type='command', command=cmdlist, name=mapName, mapset=mapMapset,
                              l_active=chk, l_hidden=hidden, l_opacity=opac, l_render=False)
 
         # if digitization tool enabled -> update list of available vector map layers
