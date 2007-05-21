@@ -8,10 +8,58 @@ number of vector overlays, text labels, decorations, and other spatial data.
 A file of mapping instructions that describes the various spatial and textual
 information to be printed must be prepared prior to running <EM>ps.map</EM>.
 
+
+<H2>NOTES</H2> 
+
 <P>
 The order of commands is generally unimportant but may affect how some layers
 are drawn. For example to plot <B>vpoints</B> above <B>vareas</B> list the
-<B>vpoints</B> entry first.
+<B>vpoints</B> entry first. Raster maps are always drawn first, and only a
+single raster map (or 3 if part of a RGB group) may be used.
+
+<P>
+The hash character ('<tt>#</tt>') may be used at the beginning of a line
+to indicate that the line is a comment. Blank lines will also be ignored.
+
+<P>
+Be aware that some mapping instructions require the <i>end</i> command
+and some do not. Any instruction that allows subcommands will require
+it, any instruction that does not allow subcommands will not.
+
+<P>
+The resolution and extent of raster maps plotted with <EM>ps.map</EM> are
+controlled by the current region settings via the
+<a href="g.region.html">g.region</a> module. The output filesize is largely
+a function of the region resolution, so special care should be taken
+if working with large raster datasets. For example if the desired output is
+US-Letter sized paper at 300dpi, with 1" margins and the raster filling the
+entire page, the usable area on the page will be 6.5" x 9", which at 300
+dots/inch is equivalent to a region of 1950 columns x 2700 rows (see 
+"<tt>g.region -p</tt>"). Any higher resolution settings will make the
+output file larger, but with a consumer printer you probably won't be able
+to resolve any better detail in the hardcopy.
+
+<P>
+The user can specify negative or greater than 100 percentage values for
+positioning several map decorations and embedded EPS-files, to move them
+outside the current map box region (for example to position a caption,
+barscale, or legend above or below the map box).
+
+<P>
+One "pixel" is 1/72 of an inch.
+
+<P>
+For users wanting to use special characters (such as accented characters) it
+is important to note that <em>ps.map</em> uses <tt>ISO-8859-1</tt> encoding.
+This means that your instructions file will have to be encoded in this
+encoding. If you normally work in a different encoding environment (such as
+<tt>UTF-8</tt>), you have to transform your file to the <tt>ISO-8859-1</tt>
+encoding, for example by using the <tt>iconv</tt> utility:
+</P>
+<DIV class="code"><PRE>
+iconv -f UTF-8 -t ISO_8859-1 utf_file > iso_file
+</PRE></DIV>
+
 
 <P><P>
 
@@ -1508,46 +1556,16 @@ This script file can be entered at the command line:
 </PRE>
 
 <P>
-More samples can be found on the
+More examples can be found on the
 <a href="http://grass.gdf-hannover.de/wiki/Ps.map_scripts">GRASS Wiki</a>
 help site.
 <P>
 
 
-<H2>NOTES</H2> 
-<P>
-The user can specify negative values for position of EPS-files in ps.map
-to move them outside the current region (to position a barscale or other
-legend entries).
-</P>
-<P>
-One "pixel" is 1/72 of an inch.
-<P>
-For users wanting to use special characters (such as accented characters) it
-is important to note that <em>ps.map</em> uses <tt>ISO-8859-1</tt> encoding.
-This means that your instructions file will have to be encoded in this
-encoding. If you normally work in a different encoding environment (such as
-<tt>UTF-8</tt>), you have to transform your file to the <tt>ISO-8859-1</tt>
-encoding, for example by using <EM>iconv</EM>:
-</P>
-<DIV class="code"><PRE>
-iconv -f UTF-8 -t ISO_8859-1 utf_file > iso_file
-</PRE></DIV>
-
-<P>
-The hash character ('<tt>#</tt>') may be used at the beginning of a line
-to indicate that the line is a comment. Blank lines will also be
-ignored.
-
-<P>
-Be aware that some mapping instructions require the <i>end</i> command
-and some do not. Any instruction that allows subcommands will require
-it, any instruction that does not allow subcommands will not.
-
-
 <H2>CHANGES BETWEEN VERSION 5.0.x/5.4.x and 6.0</H2>
 <UL>
-<LI>Devices and ps.select do not exist any more. Paper is defined in <EM>paper</EM> instruction.</LI> 
+<LI>Devices and ps.select do not exist any more. Paper is defined by the
+<EM>paper</EM> instruction.</LI> 
 <LI><EM>vpoints</EM> are used instead of <EM>sites</EM> (points are read from vector).</LI>
 <LI><EM>vector</EM> is substituted by <EM>vpoints</EM>, <EM>vlines</EM> and <EM>vareas</EM>.</LI>
 <LI>Symbols are used instead of icons (different format and directory).</LI>
@@ -1556,11 +1574,14 @@ it, any instruction that does not allow subcommands will not.
 
 
 <H2>SEE ALSO</H2>
+<em>
+<a href="g.region.html">g.region</a>,
 <a href="v.label.html">v.label</a>
-
+</em>
 
 <H2>AUTHOR</H2>
 
 Paul Carlson, USDA, SCS, NHQ-CGIS<BR>
 Modifications: Radim Blazek, Glynn Clements, Bob Covill, Hamish Bowman
-<p><i>Last changed: $Date$</i>
+<p>
+<i>Last changed: $Date$</i>
