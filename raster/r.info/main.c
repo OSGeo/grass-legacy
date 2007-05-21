@@ -28,16 +28,18 @@
         fprintf(out,"-");\
     fprintf (out,"%c\n",x)
 
-/*local prototype */
+/* local prototypes */
 void format_double(double value, char *buf);
 void compose_line(FILE *,const char *, ...);
 
 /**************************************************************************/
+
 int main(int argc, char *argv[])
 {
     char *name, *mapset;
     char tmp1[100], tmp2[100], tmp3[100];
     char timebuff[256];
+    char units[GNAME_MAX], vdatum[GNAME_MAX];
     int i;
     CELL mincat = 0, maxcat = 0, cat;
     double zmin, zmax;		/* min and max data values */
@@ -55,7 +57,8 @@ int main(int argc, char *argv[])
     struct Reclass reclass;
     struct GModule *module;
     struct Option *opt1;
-    struct Flag *rflag, *sflag, *tflag, *gflag, *hflag, *mflag, *timestampflag;
+    struct Flag *rflag, *sflag, *tflag, *gflag, *hflag, *mflag;
+    struct Flag *uflag, *dflag, *timestampflag;
 
 
     G_gisinit(argv[0]);
@@ -87,6 +90,14 @@ int main(int argc, char *argv[])
     hflag->key = 'h';
     hflag->description = _("Print raster history instead of info");
 
+    uflag = G_define_flag();
+    uflag->key = 'u';
+    uflag->description = _("Print raster map data units only");
+
+    dflag = G_define_flag();
+    dflag->key = 'd';
+    dflag->description = _("Print raster map vertical datum only");
+
     mflag = G_define_flag();
     mflag->key = 'm';
     mflag->description = _("Print raster map title only");
@@ -110,6 +121,11 @@ int main(int argc, char *argv[])
     is_reclass = G_get_reclass(name, mapset, &reclass);
     data_type = G_raster_map_type(name, mapset);
 
+    if( G_read_raster_units(name, mapset, units) != 0)
+	units[0] = '\0';
+    if( G_read_raster_vdatum(name, mapset, vdatum) != 0)
+	vdatum[0] = '\0';
+
     /*Check the Timestamp */
     time_ok = G_read_raster_timestamp(name, mapset, &ts) > 0;
     /*Check for valid entries, show none if no timestamp available */
@@ -126,8 +142,10 @@ int main(int argc, char *argv[])
 
     out = stdout;
 
-    if (!rflag->answer && !sflag->answer && !tflag->answer && !gflag->answer &&
-	!hflag->answer && !timestampflag->answer && !mflag->answer) {
+    if (!rflag->answer && !sflag->answer && !tflag->answer &&
+	!gflag->answer && !hflag->answer && !timestampflag->answer &&
+	!mflag->answer && !uflag->answer && !dflag->answer)
+    {
 	divider('+');
 
 	compose_line(out, "Layer:    %-29.29s  Date: %s", name,
@@ -155,7 +173,7 @@ int main(int argc, char *argv[])
 	if (cats_ok) {
 	    format_double((double)cats.num, tmp1);
 	}
-	
+
 	compose_line(out, "  Type of Map:  %-20.20s Number of Categories: %-9s",
 	     hist_ok ? hist.maptype : "??", cats_ok ? tmp1 : "??");
 
@@ -164,6 +182,13 @@ int main(int argc, char *argv[])
 			(data_type == DCELL_TYPE ? "DCELL" :
 			 (data_type == FCELL_TYPE ? "FCELL" : "??"))));
 
+	/* For now hide these unless they exist to keep the noise low. In
+	  *   future when the two are used more widely they can be printed
+	  *   along with the standard set. */
+	if(units[0] || vdatum[0]) {
+	    compose_line(out, "  Data Units:   %-20.20s Vertical datum: %s",
+		units, vdatum);
+	}
 
 	if (head_ok) {
 	    compose_line(out, "  Rows:         %d", cellhd.rows);
@@ -282,7 +307,7 @@ int main(int argc, char *argv[])
 
 	fprintf(out, "\n");
     }
-    else {			/* rflag or sflag or tflag or gflag or hflag or mflag */
+    else {  /* rflag or sflag or tflag or gflag or hflag or mflag */
 
 	if (rflag->answer) {
 	    if (data_type == CELL_TYPE) {
@@ -341,6 +366,10 @@ int main(int argc, char *argv[])
 		fprintf(out, "timestamp=\"none\"\n");
 	    }
 	}
+	if (uflag->answer)
+	    fprintf(out, "units=%s\n", units);
+	if (dflag->answer)
+	    fprintf(out, "vertical_datum=%s\n", vdatum);
 
 	if (hflag->answer) {
 	    if (hist_ok) {
@@ -356,7 +385,7 @@ int main(int argc, char *argv[])
 		}
 	    }
 	}
-    }				/* else rflag or sflag or tflag or gflag or hflag or mflag*/
+    }	/* else rflag or sflag or tflag or gflag or hflag or mflag*/
 
     return EXIT_SUCCESS;
 }

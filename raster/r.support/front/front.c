@@ -37,7 +37,7 @@ int main(int argc, char *argv[])
     char *mapset;		/* Raster mapset      */
     struct Cell_head cellhd;
     struct GModule *module;
-    struct Option *raster, *title_opt, *history_opt, *datasrc_opt, *map_opt;
+    struct Option *raster, *title_opt, *history_opt, *datasrc_opt, *map_opt, *units_opt, *vdatum_opt;
     char buf[512];
     int cellhd_ok;		/* Is cell header OK? */
     int is_reclass;		/* Is raster reclass? */
@@ -71,6 +71,18 @@ int main(int argc, char *argv[])
     history_opt->required    = NO;
     history_opt->description = _("Text to append to the next line of the map's metadata file");
 
+    units_opt = G_define_option();
+    units_opt->key = "units";
+    units_opt->type        = TYPE_STRING;
+    units_opt->required    = NO;
+    units_opt->description = _("Text to use for map data units");
+
+    vdatum_opt = G_define_option();
+    vdatum_opt->key = "vdatum";
+    vdatum_opt->type        = TYPE_STRING;
+    vdatum_opt->required    = NO;
+    vdatum_opt->description = _("Text to use for map vertical datum");
+
     datasrc_opt = G_define_option();
     datasrc_opt->key = "organization";
     datasrc_opt->key_desc   = "\"phrase\"";
@@ -84,6 +96,7 @@ int main(int argc, char *argv[])
     map_opt->required = NO;
     map_opt->gisprompt = "old,cell,raster";
     map_opt->description = _("Raster map name from which to copy category table");
+
 
     /* Parse command-line options */
     if (G_parser(argc,argv))
@@ -104,9 +117,6 @@ int main(int argc, char *argv[])
 	G_strip(title);
 	G_debug(3, "map title= [%s]  (%d chars)", title, strlen(title));
 	G_put_cell_title(raster->answer, title);
-
-	if(! history_opt->answer)
-	    exit(EXIT_SUCCESS);
     }
 
     if(history_opt->answer) {
@@ -148,8 +158,13 @@ int main(int argc, char *argv[])
         }
 
 	G_write_history(raster->answer, &hist);
-	exit(EXIT_SUCCESS);
     }
+
+    if(units_opt->answer)
+	G_write_raster_units(raster->answer, units_opt->answer);
+
+    if(vdatum_opt->answer)
+	G_write_raster_vdatum(raster->answer, vdatum_opt->answer);
 
     if(datasrc_opt->answer) {
 	G_read_history (raster->answer, mapset, &hist);
@@ -159,8 +174,13 @@ int main(int argc, char *argv[])
 	G_debug(3, "map datasrc= [%s]  (%d chars)", datasrc, strlen(datasrc));
 	strncpy (hist.datsrc_1, datasrc, RECORD_LEN);
 	G_write_history(raster->answer, &hist);
-	exit(EXIT_SUCCESS);
     }
+
+    if(title_opt->answer || history_opt->answer || units_opt->answer
+			 || vdatum_opt->answer || datasrc_opt->answer)
+	exit(EXIT_SUCCESS);
+
+
 
     if (map_opt->answer) {	/* use cats from another map */
 	int fd;
