@@ -40,7 +40,7 @@ class MapLayer:
         self.type    = type
         self.name    = name
         self.mapset  = mapset
-        self.cmdlist     = cmd + ["--q"] # quiet
+        self.cmdlist = cmd + ["--q"] # quiet
 
         self.active  = active
         self.hidden  = hidden
