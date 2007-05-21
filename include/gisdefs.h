@@ -23,11 +23,11 @@
 
 /*=========================== Constants/Defines ============================*/
 
-/* none */
+/* none (look in gis.h) */
 
 /*=========================== Typedefs/Structures ==========================*/
 
-/* none */
+/* none (look in gis.h) */
 
 /*============================== Prototypes ================================*/
 
@@ -1012,6 +1012,14 @@ int G_set_raster_value_d(void *, DCELL, RASTER_MAP_TYPE);
 CELL G_get_raster_value_c(const void *, RASTER_MAP_TYPE);
 FCELL G_get_raster_value_f(const void *, RASTER_MAP_TYPE);
 DCELL G_get_raster_value_d(const void *, RASTER_MAP_TYPE);
+
+/* raster_metadata.c */
+int G_read_raster_units(const char *, const char *, char *);
+int G_read_raster_vdatum(const char *, const char *, char *);
+int G_write_raster_units(const char *, const char *);
+int G_write_raster_vdatum(const char *, const char *);
+int G__raster_misc_read_line(const char *, const char *, const char *, char *);
+int G__raster_misc_write_line(const char *, const char *, const char *);
 
 /* rd_cellhd.c */
 char *G__read_Cell_head(FILE *, struct Cell_head *, int);
