@@ -16,9 +16,10 @@
 *****************************************************************************/
 #include <stdlib.h>
 #include <string.h>
+#include <stdarg.h>
 #include <grass/gis.h>
-#include "local_proto.h"
 #include <grass/glocale.h>
+#include "local_proto.h"
 
 #define printline(x) fprintf (out," | %-74.74s |\n",x)
 #define divider(x) \
@@ -28,17 +29,16 @@
     fprintf (out,"%c\n",x)
 
 /*local prototype */
-int format_double(double value, char *buf);
-static char *name;
+void format_double(double value, char *buf);
+void compose_line(FILE *,const char *, ...);
 
 /**************************************************************************/
 int main(int argc, char *argv[])
 {
-    char *mapset;
-    char *line = NULL;
+    char *name, *mapset;
     char tmp1[100], tmp2[100], tmp3[100];
     char timebuff[256];
-    int i, ret;
+    int i;
     CELL mincat = 0, maxcat = 0, cat;
     double zmin, zmax;		/* min and max data values */
     FILE *out;
@@ -49,28 +49,21 @@ int main(int argc, char *argv[])
     struct History hist;
     struct TimeStamp ts;
     int time_ok = 0, first_time_ok = 0, second_time_ok = 0;
-    int head_ok;
-    int cats_ok;
-    int hist_ok;
+    int head_ok, cats_ok, hist_ok;
     int is_reclass;
     RASTER_MAP_TYPE data_type;
     struct Reclass reclass;
     struct GModule *module;
     struct Option *opt1;
-    struct Flag *rflag;
-    struct Flag *sflag;
-    struct Flag *tflag;
-    struct Flag *timestampflag;
-    struct Flag *gflag;
-    struct Flag *hflag;
-    struct Flag *mflag;
+    struct Flag *rflag, *sflag, *tflag, *gflag, *hflag, *mflag, *timestampflag;
+
 
     G_gisinit(argv[0]);
 
     module = G_define_module();
     module->keywords = _("raster");
     module->description =
-	_("Outputs basic information about a user-specified raster map layer.");
+	_("Output basic information about a raster map layer.");
 
     opt1 = G_define_standard_option(G_OPT_R_MAP);
 
@@ -137,54 +130,23 @@ int main(int argc, char *argv[])
 	!hflag->answer && !timestampflag->answer && !mflag->answer) {
 	divider('+');
 
-	if (G_asprintf
-	    (&line, "Layer:    %-29.29s  Date: %s", name,
-	     hist_ok ? hist.mapid : "??") > 0)
-	    printline(line);
-	else
-	    G_fatal_error(_("Cannot allocate memory for string"));
-
-	if (G_asprintf
-	    (&line, "Mapset:   %-29.29s  Login of Creator: %s", mapset,
-	     hist_ok ? hist.creator : "??") > 0)
-	    printline(line);
-	else
-	    G_fatal_error(_("Cannot allocate memory for string"));
-
-	if (G_asprintf(&line, "Location: %s", G_location()) > 0)
-	    printline(line);
-	else
-	    G_fatal_error(_("Cannot allocate memory for string"));
-
-	if (G_asprintf(&line, "DataBase: %s", G_gisdbase()) > 0)
-	    printline(line);
-	else
-	    G_fatal_error(_("Cannot allocate memory for string"));
-
-	if (G_asprintf
-	    (&line, "Title:    %s ( %s )", cats_ok ? cats.title : "??",
-	     hist_ok ? hist.title : "??") > 0)
-	    printline(line);
-	else
-	    G_fatal_error(_("Cannot allocate memory for string"));
+	compose_line(out, "Layer:    %-29.29s  Date: %s", name,
+	     hist_ok ? hist.mapid : "??");
+	compose_line(out, "Mapset:   %-29.29s  Login of Creator: %s",
+		mapset, hist_ok ? hist.creator : "??");
+	compose_line(out, "Location: %s", G_location());
+	compose_line(out, "DataBase: %s", G_gisdbase());
+	compose_line(out, "Title:    %s ( %s )",
+		cats_ok ? cats.title : "??",
+		hist_ok ? hist.title : "??");
 
 	/*This shows the TimeStamp */
 	if (time_ok && (first_time_ok || second_time_ok)) {
-
 	    G_format_timestamp(&ts, timebuff);
-
-	    /*Create the r.info timestamp string */
-	    if (G_asprintf(&line, "Timestamp: %s", timebuff) > 0)
-		printline(line);
-	    else
-		G_fatal_error(_("Cannot allocate memory for string"));
-
+	    compose_line(out, "Timestamp: %s", timebuff);
 	}
 	else {
-	    if (G_asprintf(&line, "Timestamp: none") > 0)
-		printline(line);
-	    else
-		G_fatal_error(_("Cannot allocate memory for string"));
+	    compose_line(out, "Timestamp: none");
 	}
 
 	divider('|');
@@ -193,96 +155,58 @@ int main(int argc, char *argv[])
 	if (cats_ok) {
 	    format_double((double)cats.num, tmp1);
 	}
+	
+	compose_line(out, "  Type of Map:  %-20.20s Number of Categories: %-9s",
+	     hist_ok ? hist.maptype : "??", cats_ok ? tmp1 : "??");
 
-	if (G_asprintf
-	    (&line, "  Type of Map:  %-20.20s Number of Categories: %-9s",
-	     hist_ok ? hist.maptype : "??", cats_ok ? tmp1 : "??") > 0)
-	    printline(line);
-	else
-	    G_fatal_error(_("Cannot allocate memory for string"));
-
-	if (G_asprintf(&line, "  Data Type:    %s",
+	compose_line(out, "  Data Type:    %s",
 		       (data_type == CELL_TYPE ? "CELL" :
 			(data_type == DCELL_TYPE ? "DCELL" :
-			 (data_type == FCELL_TYPE ? "FCELL" : "??")))) > 0)
-	    printline(line);
-	else
-	    G_fatal_error(_("Cannot allocate memory for string"));
+			 (data_type == FCELL_TYPE ? "FCELL" : "??"))));
+
 
 	if (head_ok) {
-	    if (G_asprintf(&line, "  Rows:         %d", cellhd.rows) > 0)
-		printline(line);
-	    else
-		G_fatal_error(_("Cannot allocate memory for string"));
-
-	    if (G_asprintf(&line, "  Columns:      %d", cellhd.cols) > 0)
-		printline(line);
-	    else
-		G_fatal_error(_("Cannot allocate memory for string"));
-
-	    if (G_asprintf(&line, "  Total Cells:  %ld",
-			(long)cellhd.rows * cellhd.cols) > 0)
-		printline(line);
-	    else
-		G_fatal_error(_("Cannot allocate memory for string"));
+	    compose_line(out, "  Rows:         %d", cellhd.rows);
+	    compose_line(out, "  Columns:      %d", cellhd.cols);
+	    compose_line(out, "  Total Cells:  %ld",
+			(long)cellhd.rows * cellhd.cols);
 
 	    /* This is printed as a guide to what the following eastings and
 	       * northings are printed in. This data is NOT from the values
 	       * stored in the map's Cell_head */
 	    if(G_projection() == PROJECTION_UTM)
 	    {
-		if (G_asprintf(&line, "       Projection: %s (zone %d)",
-				G_database_projection_name(), G_zone()) > 0)
-		    printline(line);
-		else
-		    G_fatal_error(_("Cannot allocate memory for string"));
+		compose_line(out, "       Projection: %s (zone %d)",
+				G_database_projection_name(), G_zone());
 	    }
 	    else
 	    {
-		if (G_asprintf(&line, "       Projection: %s",
-				G_database_projection_name()) > 0)
-		    printline(line);
-		else
-		    G_fatal_error(_("Cannot allocate memory for string"));
+		compose_line(out, "       Projection: %s",
+				G_database_projection_name());
 	    }
 
 	    G_format_northing(cellhd.north, tmp1, cellhd.proj);
 	    G_format_northing(cellhd.south, tmp2, cellhd.proj);
 	    G_format_resolution(cellhd.ns_res, tmp3, cellhd.proj);
-	    if (G_asprintf
-		(&line, "           N: %10s    S: %10s   Res: %5s", tmp1, tmp2,
-		 tmp3) > 0)
-		printline(line);
-	    else
-		G_fatal_error(_("Cannot allocate memory for string"));
+	    compose_line(out, "           N: %10s    S: %10s   Res: %5s",
+		tmp1, tmp2, tmp3);
 
 	    G_format_easting(cellhd.east, tmp1, cellhd.proj);
 	    G_format_easting(cellhd.west, tmp2, cellhd.proj);
 	    G_format_resolution(cellhd.ew_res, tmp3, cellhd.proj);
-	    if (G_asprintf(&line, "           E: %10s    W: %10s   Res: %5s",
-			   tmp1, tmp2, tmp3) > 0)
-		printline(line);
-	    else
-		G_fatal_error(_("Cannot allocate memory for string"));
+	    compose_line(out, "           E: %10s    W: %10s   Res: %5s",
+			   tmp1, tmp2, tmp3);
 
 	    if (data_type == CELL_TYPE) {
 		if( 2 == G_read_range(name, mapset, &crange) )
-		    ret = G_asprintf(&line, "  Range of data:    min = NULL  max = NULL");
+		    compose_line(out, "  Range of data:    min = NULL  max = NULL");
 		else
-		    ret = G_asprintf(&line, "  Range of data:    min = %i  max = %i",
-		      (CELL) zmin, (CELL) zmax);
-
-		if (ret > 0)
-		    printline(line);
-		else
-		    G_fatal_error(_("Cannot allocate memory for string"));
+		    compose_line(out, "  Range of data:    min = %i  max = %i",
+			(CELL) zmin, (CELL) zmax);
 	    }
 	    else {
-		if (G_asprintf(&line, "  Range of data:    min = %f  max = %f",
-			zmin, zmax) > 0)
-		    printline(line);
-		else
-		    G_fatal_error(_("Cannot allocate memory for string"));
+		compose_line(out, "  Range of data:    min = %f  max = %f",
+			zmin, zmax);
 	    }
 	}
 
@@ -291,34 +215,20 @@ int main(int argc, char *argv[])
 	if (hist_ok) {
 	    if( hist.datsrc_1[0] != '\0' || hist.datsrc_2[0] != '\0') {
 		printline("  Data Source:");
-		if (G_asprintf(&line, "   %s", hist.datsrc_1) > 0)
-		    printline(line);
-		else
-		    G_fatal_error(_("Cannot allocate memory for string"));
-
-		if (G_asprintf(&line, "   %s", hist.datsrc_2) > 0)
-		    printline(line);
-		else
-		    G_fatal_error(_("Cannot allocate memory for string"));
-
+		compose_line(out, "   %s", hist.datsrc_1);
+		compose_line(out, "   %s", hist.datsrc_2);
 		printline("");
 	    }
 
 	    printline("  Data Description:");
-	    if (G_asprintf(&line, "   %s", hist.keywrd) > 0)
-		printline(line);
-	    else
-		G_fatal_error(_("Cannot allocate memory for string"));
+	    compose_line(out, "   %s", hist.keywrd);
 
 	    printline("");
 	    if (hist.edlinecnt) {
 		printline("  Comments:  ");
 
 		for (i = 0; i < hist.edlinecnt; i++) {
-		    if (G_asprintf(&line, "   %s", hist.edhist[i]) > 0)
-			printline(line);
-		    else
-			G_fatal_error(_("Cannot allocate memory for string"));
+		    compose_line(out, "   %s", hist.edhist[i]);
 		}
 	    }
 
@@ -329,11 +239,9 @@ int main(int argc, char *argv[])
 	    int first = 1;
 
 	    divider('|');
-	    if (G_asprintf(&line, "  Reclassification of [%s] in mapset [%s]",
-			   reclass.name, reclass.mapset) > 0)
-		printline(line);
-	    else
-		G_fatal_error(_("Cannot allocate memory for string"));
+
+	    compose_line(out, "  Reclassification of [%s] in mapset [%s]",
+			   reclass.name, reclass.mapset);
 
 	    printline("");
 	    printline("        Category        Original categories");
@@ -364,13 +272,7 @@ int main(int argc, char *argv[])
 		    next = 0;
 		    do {
 			next = reclass_text(text, cat, &reclass, next);
-			if (G_asprintf
-			    (&line, "     %5s              %s", num, text) > 0)
-			    printline(line);
-			else
-			    G_fatal_error(_
-					  ("Cannot allocate memory for string"));
-
+			compose_line(out, "     %5s              %s", num, text);
 			*num = 0;
 		    }
 		    while (next >= 0);
@@ -423,7 +325,8 @@ int main(int argc, char *argv[])
 		      (data_type == FCELL_TYPE ? "FCELL" : "??"))));
 	}
 	if (mflag->answer) {
-	    fprintf(out, "title=%s (%s)\n", cats_ok ? cats.title : "??", hist_ok ? hist.title : "??");
+	    fprintf(out, "title=%s (%s)\n", cats_ok ? cats.title :
+				"??", hist_ok ? hist.title : "??");
 	}
 	if (timestampflag->answer) {
 	    if (time_ok && (first_time_ok || second_time_ok)) {
@@ -458,12 +361,28 @@ int main(int argc, char *argv[])
     return EXIT_SUCCESS;
 }
 
-/**************************************************************************/
-int format_double(double value, char *buf)
-{
 
+/**************************************************************************/
+void format_double(double value, char *buf)
+{
     sprintf(buf, "%.8lf", value);
     G_trim_decimal(buf);
-    return 0;
 }
 
+
+void compose_line(FILE *out, const char *fmt, ...)
+{
+    char *line = NULL;
+    va_list ap;
+
+    va_start(ap, fmt);
+
+    if( G_vasprintf(&line, fmt, ap) <= 0 )
+	G_fatal_error(_("Cannot allocate memory for string"));
+
+    va_end(ap);
+
+    printline(line);
+    G_free(line);
+
+}
