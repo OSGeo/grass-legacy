@@ -404,15 +404,18 @@ class GMFrame(wx.Frame):
         if not self.curr_page.maptree.GetPyData(layer):
             return
         dcmd = self.curr_page.maptree.GetPyData(layer)[0]
-        if not dcmd: return
+        if not dcmd:
+            return
+
         mapname = map = mapset = size = icon = None
-        for item in dcmd.split(' '):
-            if 'map=' in item:
-                mapname = item.split('=')[1]
-            elif 'size=' in item:
-                size = item.split('=')[1]
-            elif 'icon=' in item:
-                icon = item.split('=')[1]
+        
+        for option in dcmd:
+            if option.find('map') > -1:
+                mapname = option.split('=')[1]
+            elif option.find('size') > -1:
+                size = option.split('=')[1]
+            elif option.find('icon') > -1:
+                icon = option.split('=')[1]
 
         pointdata = (icon, size)
 
