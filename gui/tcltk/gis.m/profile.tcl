@@ -10,26 +10,26 @@
 ##########################################################################
 
 namespace eval GmProfile {
-	variable pcan
-	variable status ""
+    variable pcan
+    variable status ""
     variable pmap ""
     variable pmainframe
-	variable transect ""
-	variable tottransect ""
-	variable pcoords ""
-	variable pcoordslist ""
-	variable profilelist ""
-	variable x
-	variable y
-	variable first 1
+    variable transect ""
+    variable tottransect ""
+    variable pcoords ""
+    variable pcoordslist ""
+    variable profilelist ""
+    variable x
+    variable y
+    variable first 1
     variable firsteast 0.0
     variable firstnorth 0.0
     variable east1 0.0
     variable north1 0.0
     variable east2 0.0
     variable north2 0.0
-	variable tlength 0.0
-	variable tottlength 0.0
+    variable tlength 0.0
+    variable tottlength 0.0
     variable linex1 0.0
     variable liney1 0.0
     variable linex2 0.0
@@ -48,8 +48,8 @@ namespace eval GmProfile {
 
 # select base raster map from list and put name in layer tree node
 proc GmProfile::select_rast { } {
-	variable pmap
-	variable status
+    variable pmap
+    variable status
     
     set m [GSelect cell title "Raster map for profile" parent [winfo containing [winfo pointerx .] [winfo pointery .]]]
     if { $m != "" } { 
@@ -64,8 +64,8 @@ proc GmProfile::select_rast { } {
 ###############################################################################
 # create canvas for displaying profile
 proc GmProfile::create { mapcan } {
-	global gmpath
-	global iconpath
+    global gmpath
+    global iconpath
     global env
     global bgcolor
     global mon
@@ -167,7 +167,6 @@ proc GmProfile::setelev { pmap } {
 		}
 		if {[catch {close $input} error]} {
 			puts $error
-			exit 1
 		}
 	
 		set elevmax $elev(max)
@@ -211,13 +210,13 @@ proc GmProfile::profilebind { mapcan } {
 	variable measurement_annotation_handle
 	variable tlength 
 	variable tottlength
-    variable linex1 
-    variable liney1
-    variable linex2
-    variable liney2
-    variable first
-    variable msg
-    global mon
+	variable linex1 
+	variable liney1
+	variable linex2
+	variable liney2
+	variable first
+	variable msg
+	global mon
 		
 	# Make the output for the measurement
 	set measurement_annotation_handle [monitor_annotation_start $mon "Measurement" {}]
@@ -231,7 +230,7 @@ proc GmProfile::profilebind { mapcan } {
 	bind $mapcan <B1-Motion> "GmProfile::drawtransect $mapcan %x %y"
 	bind $mapcan <ButtonRelease-1> "GmProfile::getcoords $mapcan"
 	
-    set GmProfile::msg "Draw profile transect with mouse"
+	set GmProfile::msg "Draw profile transect with mouse"
 		
 	MapCanvas::setcursor $mon "pencil"
 	set tlength 0
@@ -244,21 +243,21 @@ proc GmProfile::marktransect {mapcan x y} {
 	variable transect
 	variable tlength 
 	variable tottlength
-    variable linex1 
-    variable liney1
-    variable linex2
-    variable liney2
-    variable first
-    variable firsteast
-    variable firstnorth
-    variable pcoords
-    global mon
-    
-    #start line
-    if { ![info exists linex1] } {
-    	set linex1 [$mapcan canvasx $x]
-    	set liney1 [$mapcan canvasy $y]
-    }
+	variable linex1 
+	variable liney1
+	variable linex2
+	variable liney2
+	variable first
+	variable firsteast
+	variable firstnorth
+	variable pcoords
+	global mon
+
+	#start line
+	if { ![info exists linex1] } {
+	    set linex1 [$mapcan canvasx $x]
+	    set liney1 [$mapcan canvasy $y]
+	}
 
 	if { $first == 1 } {
 		set firsteast  [MapCanvas::scrx2mape $mon $linex1]
@@ -269,11 +268,11 @@ proc GmProfile::marktransect {mapcan x y} {
 	set first 0
 
 	#check for click with no drag
-    if { ![info exists linex2] } {
-		set linex2 $linex1
+	if { ![info exists linex2] } {
+	    set linex2 $linex1
 	}
-    if { ![info exists liney2] } {
-		set liney2 $liney1
+	if { ![info exists liney2] } {
+	    set liney2 $liney1
 	}
 
     $mapcan delete transect
@@ -285,12 +284,12 @@ proc GmProfile::drawtransect { mapcan x y } {
 	variable transect
 	variable tlength 
 	variable tottlength
-    variable linex1 
-    variable liney1
-    variable linex2
-    variable liney2
-    variable pcoords
-    global mon
+	variable linex1 
+	variable liney1
+	variable linex2
+	variable liney2
+	variable pcoords
+	global mon
 	    
 	set scrxmov $x
 	set scrymov $y
@@ -318,20 +317,20 @@ proc GmProfile::getcoords { mapcan } {
 	variable tottransect
 	variable tlength 
 	variable tottlength
-    variable linex1 
-    variable liney1
-    variable linex2
-    variable liney2
-    variable pcoords
-    variable firsteast
-    variable east1
-    variable north1
-    variable east2
-    variable north2
-    variable pcoords
-    variable pcoordslist
-    global mon
-		
+	variable linex1 
+	variable liney1
+	variable linex2
+	variable liney2
+	variable pcoords
+	variable firsteast
+	variable east1
+	variable north1
+	variable east2
+	variable north2
+	variable pcoords
+	variable pcoordslist
+	global mon
+	
 	# draw cumulative line
 	$mapcan addtag tottransect withtag \
 		[$mapcan create line $linex1 $liney1 $linex2 $liney2 \
@@ -370,12 +369,12 @@ proc GmProfile::getcoords { mapcan } {
 ###############################################################################
 # draw profile
 proc GmProfile::pdraw { } {
-	variable pcan
-	variable pmap
-	variable tottlength
-	variable elevrange
-	variable elevmax
-	variable elevmin
+    variable pcan
+    variable pmap
+    variable tottlength
+    variable elevrange
+    variable elevmax
+    variable elevmin
     variable firsteast
     variable firstnorth
     variable east1
@@ -406,7 +405,6 @@ proc GmProfile::pdraw { } {
 	}
 	if {[catch {close $input} error]} {
 	    puts $error
-	    exit 1
 	} 
     }
 
@@ -432,7 +430,7 @@ proc GmProfile::pdraw { } {
 			return
 		}
 	}    
-	
+
 	if {$pcoords == ""} {
 		tk_messageBox -message [G_msg "You must draw a transect to profile"] -type ok -icon warning \
 		-title [G_msg "No transect drawn"] -parent .profile
@@ -526,7 +524,6 @@ proc GmProfile::pdraw { } {
 		}
 		if {[catch {close $input} error]} {
 			puts $error
-			exit 1
 		}
 	}
 
@@ -612,7 +609,6 @@ proc GmProfile::pdraw { } {
 		}
 		if {[catch {close $input} error]} {
 			puts $error
-			exit 1
 		}
 	}
 
