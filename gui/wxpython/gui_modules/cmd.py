@@ -41,14 +41,14 @@ class Command:
     Run command on the background
 
     Parameters:
-     cmd     - command string
+     cmd     - command string (given as list)
      stdin   - standard input stream
      verbose - verbose mode (GRASS commands '--v')
      wait    - wait for childer execution
      dlgMsg  - type of error message (None, gui, txt) [only if wait=True]
      
     Usage:
-        cmd = Command(cmd='d.rast elevation.dem', verbose=True, wait=True)
+        cmd = Command(cmd=['d.rast', 'elevation.dem'], verbose=True, wait=True)
 
         if cmd.returncode == None:
             print 'RUNNING'
@@ -114,7 +114,7 @@ class Command:
                   print sys.stderr >> msg
 
                if dlgMsg == "gui":
-                  dlg = wx.MessageDialog(None, _("Execution failed: '%s'") % self.cmd, _("Error"), wx.OK | wx.ICON_ERROR)
+                  dlg = wx.MessageDialog(None, _("Execution failed: '%s'") % ' '.join(self.cmd), _("Error"), wx.OK | wx.ICON_ERROR)
                   dlg.ShowModal()
                   dlg.Destroy()
                else: # otherwise 'txt'
