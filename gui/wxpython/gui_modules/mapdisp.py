@@ -904,24 +904,16 @@ class BufferedWindow(wx.Window):
         # for user to set explicitly with g.region
         new = self.Map.alignResolution()
 
-        cmd = ["g.region", "--o",
-         "n=%f"    % new['n'],
-         "s=%f"    % new['s'],
-         "e=%f"    % new['e'],
-         "w=%f"    % new['w'],
-         "rows=%f" % new['rows'],
-         "cols=%f" % new['cols']]
+        cmdRegion = ["g.region", "--o",
+                     "n=%f"    % new['n'],
+                     "s=%f"    % new['s'],
+                     "e=%f"    % new['e'],
+                     "w=%f"    % new['w'],
+                     "rows=%f" % new['rows'],
+                     "cols=%f" % new['cols']]
 
-        try:
-            p = Popen(cmd, stdin=PIPE, stdout=PIPE, stderr=PIPE, close_fds=True)
-            output = p.stdout.read().split('\n')
-            if p.stdout < 0:
-                print >> sys.stderr, "Child was terminated by signal", p.stdout
-            elif p.stdout > 0:
-                #print >> sys.stderr, p.stdout
-                pass
-        except OSError, e:
-            print >> sys.stderr, "Execution failed:", e
+        print cmdRegion
+        p = cmd.Command(cmdRegion)
 
         if tmpreg:
             os.environ["GRASS_REGION"] = tmpreg
