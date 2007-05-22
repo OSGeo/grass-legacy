@@ -17,9 +17,6 @@ rem set GRASS_WISH=wish.exe
 rem Path to the shell command 
 rem set GRASS_SH=c:\msys\1.0\bin\sh.exe
 
-rem You also might want to add the shell's bin and lib directory to PATH (not done by default)
-rem set PATH=%PATH%;c:\msys\1.0\lib;\c:\msys\1.0\bin
-
 rem Path to your web browser
 rem set GRASS_HTML_BROWSER=%SYSTEMDRIVE%/PROGRA~1/INTERN~1/IEXPLORE.EX
 
