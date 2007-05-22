@@ -17,7 +17,37 @@ import cmd, grassenv
 from debug import Debug as Debug
 from icon import Icons as Icons
 
-class MapToolbar:
+class AbstractToolbar:
+    """Abstract toolbar class"""
+    def __init__():
+        pass
+
+    def InitToolbar(self, parent):
+        """Initialize toolbar, i.e. add tools to the toolbar"""
+
+        for tool in self.ToolbarData():
+            self.CreateTool(parent, self.toolbar, *tool)
+
+    def ToolbarData(self):
+        """Toolbar data"""
+
+        return None
+
+    def CreateTool(self, parent, toolbar, tool, label, bitmap, kind,
+                   shortHelp, longHelp, handler):
+        """Add tool to the toolbar"""
+        
+        bmpDisabled=wx.NullBitmap
+
+        if label:
+            tool = toolbar.AddLabelTool(wx.ID_ANY, label, bitmap,
+                                             bmpDisabled, kind,
+                                             shortHelp, longHelp)
+            parent.Bind(wx.EVT_TOOL, handler, tool)
+        else: # add separator
+            toolbar.AddSeparator()
+
+class MapToolbar(AbstractToolbar):
     """
     Main Map Display toolbar
     """
@@ -32,131 +62,75 @@ class MapToolbar:
         tsize = (24, 24)
         self.toolbar.SetToolBitmapSize(tsize)
 
-        #
-        # Draw
-        #
-        self.displaymap = self.toolbar.AddLabelTool(id=wx.ID_ANY, label="displaymap",
-                                                    bitmap=Icons["displaymap"].GetBitmap(),
-                                                    bmpDisabled=wx.NullBitmap, kind=wx.ITEM_NORMAL,
-                                                    shortHelp=Icons["displaymap"].GetLabel(),
-                                                  longHelp=Icons["displaymap"].GetDesc())
+        self.InitToolbar(self.mapdisplay)
 
-        self.rendermap = self.toolbar.AddLabelTool(id=wx.ID_ANY, label="rendermap",
-                                                   bitmap=Icons["rendermap"].GetBitmap(),
-                                                   bmpDisabled=wx.NullBitmap, kind=wx.ITEM_NORMAL,
-                                                   shortHelp=Icons["rendermap"].GetLabel(),
-                                                  longHelp=Icons["rendermap"].GetDesc())
-
-        self.erase = self.toolbar.AddLabelTool(id=wx.ID_ANY, label="erase",
-                                               bitmap=Icons["erase"].GetBitmap(),
-                                               bmpDisabled=wx.NullBitmap, kind=wx.ITEM_NORMAL,
-                                               shortHelp=Icons["erase"].GetLabel(),
-                                                  longHelp=Icons["erase"].GetDesc())
-        self.toolbar.AddSeparator()
-
-        #
-        # Zooming, etc.
-        #
-        self.pointer = self.toolbar.AddLabelTool(id=wx.ID_ANY, label="pointer",
-                                                 bitmap=Icons["pointer"].GetBitmap(),
-                                                 kind=wx.ITEM_RADIO,
-                                                 shortHelp=Icons["pointer"].GetLabel(),
-                                                  longHelp=Icons["pointer"].GetDesc())
-        self.query   = self.toolbar.AddLabelTool(id=wx.ID_ANY, label="query",
-                                                 bitmap=Icons["query"].GetBitmap(),
-                                                 bmpDisabled=wx.NullBitmap,
-                                                 kind=wx.ITEM_RADIO,
-                                                 shortHelp=Icons["query"].GetLabel(),
-                                                  longHelp=Icons["query"].GetDesc())
-        self.pan     = self.toolbar.AddLabelTool(id=wx.ID_ANY, label="pan",
-                                                 bitmap=Icons["pan"].GetBitmap(),
-                                                 bmpDisabled=wx.NullBitmap,
-                                                 kind=wx.ITEM_RADIO,
-                                                 shortHelp=Icons["pan"].GetLabel(),
-                                                  longHelp=Icons["pan"].GetDesc())
-        self.zoomin  = self.toolbar.AddLabelTool(id=wx.ID_ANY, label="zoom_in",
-                                                 bitmap=Icons["zoom_in"].GetBitmap(),
-                                                 bmpDisabled=wx.NullBitmap, kind=wx.ITEM_RADIO,
-                                                 shortHelp=Icons["zoom_in"].GetLabel(),
-                                                  longHelp=Icons["zoom_in"].GetDesc())
-        self.zoomout = self.toolbar.AddLabelTool(id=wx.ID_ANY, label="zoom_out",
-                                                 bitmap=Icons["zoom_out"].GetBitmap(),
-                                                 bmpDisabled=wx.NullBitmap,
-                                                 kind=wx.ITEM_RADIO,
-                                                 shortHelp=Icons["zoom_out"].GetLabel(),
-                                                  longHelp=Icons["zoom_out"].GetDesc())
-        self.zoomback = self.toolbar.AddLabelTool(id=wx.ID_ANY, label="zoom_back",
-                                                 bitmap=Icons["zoom_back"].GetBitmap(),
-                                                 bmpDisabled=wx.NullBitmap, kind=wx.ITEM_NORMAL,
-                                                 shortHelp=Icons["zoom_back"].GetLabel(),
-                                                  longHelp=Icons["zoom_back"].GetDesc())
-        self.zoommenu = self.toolbar.AddLabelTool(id=wx.ID_ANY, label="zoommenu",
-                                                  bitmap=Icons["zoommenu"].GetBitmap(),
-                                                  bmpDisabled=wx.NullBitmap,
-                                                  shortHelp=Icons["zoommenu"].GetLabel(),
-                                                  longHelp=Icons["zoommenu"].GetDesc())
-
-        self.toolbar.AddSeparator()
-
-        self.analyze = self.toolbar.AddLabelTool(id=wx.ID_ANY, label="analyze",
-                                             bitmap=Icons["analyze"].GetBitmap(),
-                                             bmpDisabled=wx.NullBitmap,
-                                             shortHelp=Icons["analyze"].GetLabel(),
-                                             longHelp=Icons["analyze"].GetDesc())
-        self.toolbar.AddSeparator()
-
-
-        self.dec = self.toolbar.AddLabelTool(id=wx.ID_ANY, label="overlay",
-                                             bitmap=Icons["overlay"].GetBitmap(),
-                                             bmpDisabled=wx.NullBitmap,
-                                             shortHelp=Icons["overlay"].GetLabel(),
-                                             longHelp=Icons["overlay"].GetDesc())
-
-        self.toolbar.AddSeparator()
-
-        #
-        # Misc
-        #
-        self.savefile = self.toolbar.AddLabelTool(id=wx.ID_ANY, label="savefile",
-                                                  bitmap=Icons["savefile"].GetBitmap(),
-                                                  bmpDisabled=wx.NullBitmap,
-                                                  kind=wx.ITEM_NORMAL,
-                                                  shortHelp=Icons["savefile"].GetLabel(),
-                                                  longHelp=Icons["savefile"].GetDesc())
-
-        self.printmap = self.toolbar.AddLabelTool(id=wx.ID_ANY, label="printmap",
-                                                  bitmap=Icons["printmap"].GetBitmap(),
-                                                  bmpDisabled=wx.NullBitmap, kind=wx.ITEM_NORMAL,
-                                                  shortHelp=Icons["printmap"].GetLabel(),
-                                                  longHelp=Icons["printmap"].GetDesc())
-
-        self.toolbar.AddSeparator()
-
-        #
-        # Optional toolbars
-        #
+        # optional tools
         self.combo = wx.ComboBox(parent=self.toolbar, id=wx.ID_ANY, value='Tools',
                                  choices=['Digitize'], style=wx.CB_READONLY, size=(90, -1))
 
         self.comboid = self.toolbar.AddControl(self.combo)
+        self.mapdisplay.Bind(wx.EVT_COMBOBOX, self.OnSelect, self.comboid)
 
+        # realize the toolbar
         self.toolbar.Realize()
 
-        self.mapdisplay.Bind(wx.EVT_TOOL,     self.mapdisplay.ReDraw,       self.displaymap)
-        self.mapdisplay.Bind(wx.EVT_TOOL,     self.mapdisplay.ReRender,     self.rendermap)
-        self.mapdisplay.Bind(wx.EVT_TOOL,     self.mapdisplay.Pointer,      self.pointer)
-        self.mapdisplay.Bind(wx.EVT_TOOL,     self.mapdisplay.OnZoomIn,     self.zoomin)
-        self.mapdisplay.Bind(wx.EVT_TOOL,     self.mapdisplay.OnZoomOut,    self.zoomout)
-        self.mapdisplay.Bind(wx.EVT_TOOL,     self.mapdisplay.OnPan,        self.pan)
-        self.mapdisplay.Bind(wx.EVT_TOOL,     self.mapdisplay.OnZoomBack,   self.zoomback)
-        self.mapdisplay.Bind(wx.EVT_TOOL,     self.mapdisplay.OnDecoration, self.dec)
-        self.mapdisplay.Bind(wx.EVT_TOOL,     self.mapdisplay.OnZoomMenu,   self.zoommenu)
-        self.mapdisplay.Bind(wx.EVT_TOOL,     self.mapdisplay.OnQuery,      self.query)
-        self.mapdisplay.Bind(wx.EVT_TOOL,     self.mapdisplay.OnAnalyze,    self.analyze)
-        self.mapdisplay.Bind(wx.EVT_TOOL,     self.mapdisplay.OnErase,      self.erase)
-        self.mapdisplay.Bind(wx.EVT_TOOL,     self.mapdisplay.SaveToFile,   self.savefile)
-        self.mapdisplay.Bind(wx.EVT_TOOL,     self.mapdisplay.PrintMenu,    self.printmap)
-        self.mapdisplay.Bind(wx.EVT_COMBOBOX, self.OnSelect,                self.comboid)
+    def ToolbarData(self):
+        """Toolbar data"""
+
+        self.displaymap = self.rendermap = self.erase = \
+        self.pointer = self.query = self.pan = self.zoomin = self.zoomout = \
+        self.zoomback = self.zoommenu = self.analyze = self.dec = self.savefile = self.printmap =None
+
+        # tool, label, bitmap, kind, shortHelp, longHelp, handler
+        return (
+            (self.displaymap, "displaymap", Icons["displaymap"].GetBitmap(),
+             wx.ITEM_NORMAL, Icons["displaymap"].GetLabel(), Icons["displaymap"].GetDesc(),
+             self.mapdisplay.ReDraw),
+            (self.rendermap, "rendermap", Icons["rendermap"].GetBitmap(),
+             wx.ITEM_NORMAL, Icons["rendermap"].GetLabel(), Icons["rendermap"].GetDesc(),
+             self.mapdisplay.ReRender),
+            (self.erase, "erase", Icons["erase"].GetBitmap(),
+             wx.ITEM_NORMAL, Icons["erase"].GetLabel(), Icons["erase"].GetDesc(),
+             self.mapdisplay.OnErase),
+            ("", "", "", "", "", "", ""), 
+            (self.pointer, "pointer", Icons["pointer"].GetBitmap(),
+             wx.ITEM_RADIO, Icons["pointer"].GetLabel(), Icons["pointer"].GetDesc(),
+             self.mapdisplay.Pointer),
+            (self.query, "query", Icons["query"].GetBitmap(),
+             wx.ITEM_RADIO, Icons["query"].GetLabel(), Icons["query"].GetDesc(),
+             self.mapdisplay.OnQuery),
+            (self.pan, "pan", Icons["pan"].GetBitmap(),
+             wx.ITEM_RADIO, Icons["pan"].GetLabel(), Icons["pan"].GetDesc(),
+             self.mapdisplay.OnPan), 
+            (self.zoomin, "zoom_in", Icons["zoom_in"].GetBitmap(),
+             wx.ITEM_RADIO, Icons["zoom_in"].GetLabel(), Icons["zoom_in"].GetDesc(),
+             self.mapdisplay.OnZoomIn),
+            (self.zoomout, "zoom_out", Icons["zoom_out"].GetBitmap(),
+             wx.ITEM_RADIO, Icons["zoom_out"].GetLabel(), Icons["zoom_out"].GetDesc(),
+             self.mapdisplay.OnZoomOut),
+            (self.zoomback, "zoom_back", Icons["zoom_back"].GetBitmap(),
+             wx.ITEM_NORMAL, Icons["zoom_back"].GetLabel(), Icons["zoom_back"].GetDesc(),
+             self.mapdisplay.OnZoomBack),
+            (self.zoommenu, "zoommenu", Icons["zoommenu"].GetBitmap(),
+             wx.ITEM_NORMAL, Icons["zoommenu"].GetLabel(), Icons["zoommenu"].GetDesc(),
+             self.mapdisplay.OnZoomMenu),
+            ("", "", "", "", "", "", ""),
+            (self.analyze, "analyze", Icons["analyze"].GetBitmap(),
+             wx.ITEM_NORMAL, Icons["analyze"].GetLabel(), Icons["analyze"].GetDesc(),
+             self.mapdisplay.OnAnalyze),
+            ("", "", "", "", "", "", ""),
+            (self.dec, "overlay", Icons["overlay"].GetBitmap(),
+             wx.ITEM_NORMAL, Icons["overlay"].GetLabel(), Icons["overlay"].GetDesc(),
+             self.mapdisplay.OnDecoration),
+            ("", "", "", "", "", "", ""),
+            (self.savefile, "savefile", Icons["savefile"].GetBitmap(),
+             wx.ITEM_NORMAL, Icons["savefile"].GetLabel(), Icons["savefile"].GetDesc(),
+             self.mapdisplay.SaveToFile),
+            (self.printmap, "printmap", Icons["printmap"].GetBitmap(),
+             wx.ITEM_NORMAL, Icons["printmap"].GetLabel(), Icons["printmap"].GetDesc(),
+             self.mapdisplay.PrintMenu),
+            ("", "", "", "", "", "", "")
+            )
 
     def OnSelect(self, event):
         """
@@ -167,7 +141,7 @@ class MapToolbar:
         if tool == "Digitize" and not self.mapdisplay.digittoolbar:
             self.mapdisplay.AddToolbar("digit")
 
-class DigitToolbar:
+class DigitToolbar(AbstractToolbar):
     """
     Toolbar for digitization
     """
@@ -191,63 +165,41 @@ class DigitToolbar:
         self.toolbar.SetToolBitmapSize(wx.Size(24,24))
 
         # create toolbar
-        self.initToolbar()
+        self.InitToolbar(self.parent)
 
         # list of available vector maps
         self.UpdateListOfLayers(updateTool=True)
 
+        # additional bindings
+        self.parent.Bind(wx.EVT_COMBOBOX, self.OnSelectMap, self.comboid)
+
+        # realize toolbar
         self.toolbar.Realize()
 
-    def initToolbar(self):
+    def ToolbarData(self):
         """
-        Init digitization toolbar
+        Toolbar data
         """
-        self.toolbar.AddSeparator()
 
-        self.point = self.toolbar.AddLabelTool(id=wx.ID_ANY, label="digaddpoint",
-                                               bitmap=Icons["digaddpoint"].GetBitmap(),
-                                               bmpDisabled=wx.NullBitmap,
-                                               kind=wx.ITEM_RADIO,
-                                               shortHelp=Icons["digaddpoint"].GetLabel(),
-                                               longHelp=Icons["digaddpoint"].GetDesc())
+        self.point = self.line = self.boundary = self.centroid = self.exit = None
 
-        self.line = self.toolbar.AddLabelTool(id=wx.ID_ANY, label="digaddline",
-                                              bitmap=Icons["digaddline"].GetBitmap(),
-                                              bmpDisabled=wx.NullBitmap,
-                                              kind=wx.ITEM_RADIO,
-                                              shortHelp=Icons["digaddline"].GetLabel(),
-                                              longHelp=Icons["digaddline"].GetDesc())
-
-        self.boundary = self.toolbar.AddLabelTool(id=wx.ID_ANY, label="digaddbound",
-                                                  bitmap=Icons["digaddbound"].GetBitmap(),
-                                                  bmpDisabled=wx.NullBitmap,
-                                                  kind=wx.ITEM_RADIO,
-                                                  shortHelp=Icons["digaddbound"].GetLabel(),
-                                                  longHelp=Icons["digaddbound"].GetDesc())
-
-        self.centroid = self.toolbar.AddLabelTool(id=wx.ID_ANY, label="digaddcentr",
-                                                  bitmap=Icons["digaddcentr"].GetBitmap(),
-                                                  bmpDisabled=wx.NullBitmap,
-                                                  kind=wx.ITEM_RADIO,
-                                                  shortHelp=Icons["digaddcentr"].GetLabel(),
-                                                  longHelp=Icons["digaddcentr"].GetDesc())
-
-        self.toolbar.AddSeparator()
-
-        self.exit = self.toolbar.AddLabelTool(id=wx.ID_ANY, label="digexit",
-                                              bitmap=Icons["digexit"].GetBitmap(),
-                                              bmpDisabled=wx.NullBitmap,
-                                              kind=wx.ITEM_NORMAL,
-                                              shortHelp=Icons["digexit"].GetLabel(),
-                                              longHelp=Icons["digexit"].GetDesc())
-
-        # Bindings
-        self.parent.Bind(wx.EVT_TOOL,     self.OnAddPoint,    self.point)
-        self.parent.Bind(wx.EVT_TOOL,     self.OnAddLine,     self.line)
-        self.parent.Bind(wx.EVT_TOOL,     self.OnAddBoundary, self.boundary)
-        self.parent.Bind(wx.EVT_TOOL,     self.OnAddCentroid, self.centroid)
-        self.parent.Bind(wx.EVT_TOOL,     self.OnExit,      self.exit)
-        self.parent.Bind(wx.EVT_COMBOBOX, self.OnSelectMap, self.comboid)
+        return (("", "", "", "", "", "", ""),
+                (self.point, "digaddpoint", Icons["digaddpoint"].GetBitmap(),
+                 wx.ITEM_RADIO, Icons["digaddpoint"].GetLabel(), Icons["digaddpoint"].GetDesc(),
+                 self.OnAddPoint),
+                (self.line, "digaddline", Icons["digaddline"].GetBitmap(),
+                 wx.ITEM_RADIO, Icons["digaddline"].GetLabel(), Icons["digaddline"].GetDesc(),
+                 self.OnAddLine),
+                (self.boundary, "digaddbound", Icons["digaddbound"].GetBitmap(),
+                 wx.ITEM_RADIO, Icons["digaddbound"].GetLabel(), Icons["digaddbound"].GetDesc(),
+                 self.OnAddBoundary),
+                (self.centroid, "digaddcentr", Icons["digaddcentr"].GetBitmap(),
+                 wx.ITEM_RADIO, Icons["digaddcentr"].GetLabel(), Icons["digaddcentr"].GetDesc(),
+                 self.OnAddCentroid),
+                ("", "", "", "", "", "", ""),
+                (self.exit, "digexit", Icons["digexit"].GetBitmap(),
+                 wx.ITEM_NORMAL, Icons["digexit"].GetLabel(), Icons["digexit"].GetDesc(),
+                 self.OnExit))
 
     def OnAddPoint(self, event):
         """Add point to the vector map layer"""
