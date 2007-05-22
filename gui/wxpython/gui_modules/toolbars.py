@@ -1,19 +1,25 @@
 """
-toolbars package
+MODULE: toolbar
 
-class:
-* MapToolbar
-* DigitToolbar
+PURPOSE: Toolbars for Map Display window
+
+AUTHORS: The GRASS Development Team
+         Michael Barton, Martin Landa, Jachym Cepicky
+
+COPYRIGHT: (C) 2007 by the GRASS Development Team
+           This program is free software under the GNU General Public
+           License (>=v2). Read the file COPYING that comes with GRASS
+           for details.
 """
 
 import wx
 import os, sys
-#import wxgui_utils
 
-gmpath = os.getenv("GISBASE") + "/etc/wx/icons/"
+gmpath = os.path.join( os.getenv("GISBASE"),"etc","wx","icons")
 sys.path.append(gmpath)
 
-import cmd, grassenv
+import cmd
+import grassenv
 from debug import Debug as Debug
 from icon import Icons as Icons
 
@@ -230,8 +236,11 @@ class DigitToolbar(AbstractToolbar):
         """
         Quit digitization tool
         """
-        Debug.msg (3, "DigitToolbar.OnExit(): layer=%s" % \
-                   self.layers[self.layerID].name)
+        if self.layerID:
+            Debug.msg (3, "DigitToolbar.OnExit(): layer=%s" % \
+                       self.layers[self.layerID].name)
+        else:
+            Debug.msg (3, "DigitToolbar.OnExit()")
 
         # deactive the toolbar
         self.parent.RemoveToolbar ("digit")
