@@ -206,18 +206,22 @@ class LayerTree(CT.CustomTreeCtrl):
         self.popupMenu.Append (self.popupID2, _("Rename"))
 
         # map layer items
-        if ltype != "command" and ltype != "group": # properties
+        if ltype != "group": # properties
             self.popupMenu.AppendSeparator()
             self.popupMenu.Append(self.popupID3, text=_("Properties"))
 
         # specific items
-        if ltype == "vector": # show attribute table
+        try:
+            mltype = self.layers[self.layer_selected].maplayer.type
+        except:
+            mltype = None
+        if mltype and mltype == "vector": # show attribute table
             self.popupMenu.AppendSeparator()
             self.popupMenu.Append(self.popupID4, _("Show attribute table"))
             self.popupMenu.Append(self.popupID5, _("Start editing"))
             layer = self.Map.GetLayer(self.layer_selected)
             # enable editing only for vector map layers available in the current mapset
-            if layer.mapset != grassenv.env["MAPSET"]:
+            if layer.GetMapset() != grassenv.env["MAPSET"]:
                 self.popupMenu.Enable (self.popupID5, False)
             self.popupMenu.Append(self.popupID6, _("Stop editing"))
             self.popupMenu.Enable(self.popupID6, False)
