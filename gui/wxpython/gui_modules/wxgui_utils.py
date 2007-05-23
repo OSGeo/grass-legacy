@@ -409,19 +409,19 @@ class LayerTree(CT.CustomTreeCtrl):
     def OnDeleteLayer(self, event):
         """Remove selected layer for the layer tree"""
 
-        Debug.msg (3, "LayerTree.OnDeleteLayer():")
-
         layer = event.GetItem()
-        if layer in self.properties:
-            try:
-                self.properties[layer].Close(True)
-            except:
-                pass
-            self.properties.pop(layer)
 
+        try:
+            layer.properties.Close(True)
+        except:
+            pass
+        
         # delete layer in render.Map
         if self.layers[layer].type != 'group':
             self.Map.delLayer(item=layer)
+
+        Debug.msg (3, "LayerTree.OnDeleteLayer(): name=%s" % \
+                   (self.layers[layer].name))
 
         self.Unselect()
         self.layer_selected = None
@@ -668,6 +668,9 @@ class LayerTree(CT.CustomTreeCtrl):
         self.Map.ChangeLayer(item=layer, type=self.layers[layer].maplayer.type, command=cmdlist, name=name,
                              l_active=chk, l_hidden=hidden, l_opacity=opac, l_render=False)
 
+        if not self.layers[layer].name:
+            self.layers[layer].name = name
+            
         # if digitization tool enabled -> update list of available vector map layers
         if self.mapdisplay.digittoolbar:
             self.mapdisplay.digittoolbar.UpdateListOfLayers(updateTool=True)
