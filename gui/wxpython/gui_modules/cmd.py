@@ -77,11 +77,11 @@ class Command:
         os.environ["GRASS_MESSAGE_FORMAT"] = "gui"
         # run command
         if not usePopenClass:
-           Debug.msg(3, "Command.__init__(): [popen3] cmd=%s" % cmd)
+           Debug.msg(3, "Command.__init__(): [popen3] cmd=%s" % ' '.join(cmd))
            (self.module_stdin, self.module_stdout, self.module_stderr) = \
-                               os.popen3(self.cmd)
+                               os.popen3(' '.join(self.cmd))
         else:
-           Debug.msg(3, "Command.__init__(): [Popen] cmd=%s" % cmd)
+           Debug.msg(3, "Command.__init__(): [Popen] cmd=%s" % ' '.join(cmd))
            self.module = subprocess.Popen(self.cmd,
                                           stdin=subprocess.PIPE,
                                           stdout=subprocess.PIPE,
@@ -111,14 +111,14 @@ class Command:
             if dlgMsg and self.returncode != 0:
                # print error messages
                for msg in self.module_msg:
-                  print sys.stderr >> msg
+                  print >> sys.stderr, msg[1]
 
                if dlgMsg == "gui":
                   dlg = wx.MessageDialog(None, _("Execution failed: '%s'") % ' '.join(self.cmd), _("Error"), wx.OK | wx.ICON_ERROR)
                   dlg.ShowModal()
                   dlg.Destroy()
                else: # otherwise 'txt'
-                  print sys.stderr >> "Execution failed: %s" % self.cmd
+                  print >> sys.stderr, _("Execution failed: '%s'") % self.cmd
 
                
         else:

@@ -960,9 +960,9 @@ class BufferedWindow(wx.Window):
         """
 
         dlg = SavedRegion(self, wx.ID_ANY, "Save display extents to region file",
-                             pos=wx.DefaultPosition, size=wx.DefaultSize,
-                             style=wx.DEFAULT_DIALOG_STYLE,
-                             loadsave='save')
+                          pos=wx.DefaultPosition, size=wx.DefaultSize,
+                          style=wx.DEFAULT_DIALOG_STYLE,
+                          loadsave='save')
         if dlg.ShowModal() == wx.ID_CANCEL:
             dlg.Destroy()
             return
@@ -974,38 +974,36 @@ class BufferedWindow(wx.Window):
                                 self.Map.env["MAPSET"],"windows",wind)
 
         if windpath and not os.path.exists(windpath):
-            self.saveRegion(wind)
+            self.SaveRegion(wind)
         elif windpath and os.path.exists(windpath):
-            overwrite = wx.MessageBox("Do you want to overwrite it?","The file %s already exists" % wind, wx.YES_NO)
+            overwrite = wx.MessageBox(_("Region file <%s>already exists.\nDo you want to overwrite it?") % (wind),
+                                      _("Warning"), wx.YES_NO)
             if (overwrite == wx.YES):
-                self.saveRegion(wind)
+                self.SaveRegion(wind)
         else:
             pass
 
         dlg.Destroy()
 
-    def saveRegion(self, wind):
+    def SaveRegion(self, wind):
+        """Save region settings"""
         new = self.Map.alignResolution()
 
-        cmd = "g.region -u n=%f s=%f e=%f w=%f rows=%f cols=%f save=%s --o" % (
-             new['n'], new['s'], new['e'], new['w'], new['rows'], new['cols'],
-             wind)
+        cmdRegion = ["g.region",
+                     "-u",
+                     "n=%f" % new['n'],
+                     "s=%f" % new['s'],
+                     "e=%f" % new['e'],
+                     "w=%f" % new['w'],
+                     "rows=%d" % new['rows'],
+                     "cols=%d" % new['cols'],
+                     "save=%s" % wind,
+                     "--o"]
 
         tmpreg = os.getenv("GRASS_REGION")
         os.unsetenv("GRASS_REGION")
 
-#        os.popen(cmd)
-
-        try:
-            p = Popen(cmd, shell=True, stdin=PIPE, stdout=PIPE, stderr=PIPE, close_fds=True)
-            output = p.stdout.read().split('\n')
-            if p.stdout < 0:
-                print >> sys.stderr, "Child was terminated by signal", p.stdout
-            elif p.stdout > 0:
-                #print >> sys.stderr, p.stdout
-                pass
-        except OSError, e:
-            print >> sys.stderr, "Execution failed:", e
+        p = cmd.Command(cmdRegion)
 
         if tmpreg:
             os.environ["GRASS_REGION"] = tmpreg
@@ -2001,10 +1999,12 @@ class SavedRegion(wx.Dialog):
             box.Add(self.textentry, 0, wx.ALIGN_CENTRE|wx.ALL, 5)
             self.textentry.Bind(wx.EVT_TEXT, self.onText)
 
-        sizer.Add(box, 0, wx.GROW|wx.ALIGN_CENTER_VERTICAL|wx.ALL, 5)
+        sizer.Add(item=box, proportion=0, flag=wx.GROW|wx.ALIGN_CENTER_VERTICAL|wx.ALL,
+                  border=5)
 
         line = wx.StaticLine(self, -1, size=(20,-1), style=wx.LI_HORIZONTAL)
-        sizer.Add(line, 0, wx.GROW|wx.ALIGN_CENTER_VERTICAL|wx.RIGHT|wx.TOP, 5)
+        sizer.Add(item=line, proportion=0,
+                  flag=wx.GROW|wx.ALIGN_CENTER_VERTICAL|wx.LEFT|wx.RIGHT, border=5)
 
         btnsizer = wx.StdDialogButtonSizer()
 
@@ -2017,7 +2017,7 @@ class SavedRegion(wx.Dialog):
         btnsizer.Realize()
 
 
-        sizer.Add(btnsizer, 0, wx.ALIGN_CENTER_VERTICAL|wx.ALL, 5)
+        sizer.Add(item=btnsizer, proportion=0, flag=wx.ALIGN_CENTER|wx.ALL, border=5)
 
         self.SetSizer(sizer)
         sizer.Fit(self)
