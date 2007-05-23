@@ -75,6 +75,14 @@ case "$GIS_OPT_TYPE" in
     TYPE_CNV="face,boundary" ;;
   "boundary to face")
     TYPE_CNV="boundary,face" ;;
+  "point to kernel")
+    TYPE_CNV="point,kernel" ;;
+  "kernel to point")
+    TYPE_CNV="kernel,point" ;;
+  "line to face")
+    TYPE_CNV="line,face" ;;
+  "face to line")
+    TYPE_CNV="face,line" ;;
 esac
 
 exec v.type input="$GIS_OPT_INPUT" output="$GIS_OPT_OUTPUT" type="$TYPE_CNV"
