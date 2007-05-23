@@ -394,7 +394,7 @@ class GMFrame(wx.Frame):
             return
 
         # available only for vector map layers
-        maptype = self.curr_page.maptree.layertype[layer]
+        maptype = self.curr_page.maptree.layers[layer].type
         if maptype != 'vector':
             dlg = wx.MessageDialog(self, _("Attribute management is available only for vector map layers"), _("Error"), wx.OK | wx.ICON_ERROR)
             dlg.ShowModal()
@@ -596,7 +596,6 @@ class GMFrame(wx.Frame):
         """
         Delete selected map display layer in GIS Manager tree widget
         """
-        Debug.msg (3, "GMFrame.deleteLayer(): type=layertype[layer]")
 
         if not self.curr_page.maptree.GetSelections():
             self.MsgNoLayerSelected()
@@ -614,7 +613,7 @@ class GMFrame(wx.Frame):
         dlg.Destroy()
 
         for layer in self.curr_page.maptree.GetSelections():
-            if self.curr_page.maptree.layertype[layer] == 'group':
+            if self.curr_page.maptree.layers[layer].type == 'group':
                 self.curr_page.maptree.DeleteChildren(layer)
             self.curr_page.maptree.Delete(layer)
 
