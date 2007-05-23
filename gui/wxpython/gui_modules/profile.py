@@ -1,7 +1,18 @@
 import wx
 import wx.aui
 import os, sys, time, glob, math
-import wx.lib.plot as plot
+try:
+    import wx.lib.plot as plot
+except:
+    msg= """
+    This module requires the Numeric/numarray or NumPy module,
+    which could not be imported.  It probably is not installed
+    (it's not part of the standard Python distribution). See the
+    Numeric Python site (http://numpy.scipy.org) for information on
+    downloading source or binaries."""
+    print >> sys.stderr, "profile.py: " + msg
+    #raise ImportError, "Numeric,numarray or NumPy not found. \n" + msg
+
 #Needs Numeric or numarray or NumPy
 #try:
 #    import numpy.oldnumeric as _Numeric
