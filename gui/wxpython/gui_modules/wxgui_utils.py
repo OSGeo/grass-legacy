@@ -38,7 +38,7 @@ class Layer:
                (type, name))
         self.type = type
         self.name = name
-        self.opacityCtrl = ocacityCtrl
+        self.opacityCtrl = opacityCtrl
         
         # reference to MapLayer instance
         self.maplayer = None
