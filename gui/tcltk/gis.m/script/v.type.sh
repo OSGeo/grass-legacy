@@ -41,7 +41,7 @@
 #% type: string
 #% required: no
 #% multiple: no
-#% options: point to centroid,centroid to point,line to boundary,boundary to line,kernel to centroid,centroid to kernel,face to boundary,boundary to face
+#% options: point to centroid,point to kernel,centroid to point,centroid to kernel,kernel to point,kernel to centroid,line to boundary,line to face,boundary to line,boundary to face,face to line,face to boundary
 #% description: Conversion
 #% answer: boundary to line
 #%End
