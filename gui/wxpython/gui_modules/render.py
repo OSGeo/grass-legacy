@@ -134,7 +134,9 @@ class MapLayer:
 
     def GetMapset (self):
         """Return mapset name of the layer or None"""
-
+        if not self.name:
+            return None
+        
         idxAt = self.name.find('@')
         if idxAt > -1:
             return self.name[idxAt+1:]
