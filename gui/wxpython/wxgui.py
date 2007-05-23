@@ -394,8 +394,11 @@ class GMFrame(wx.Frame):
             return
 
         # available only for vector map layers
-        maptype = self.curr_page.maptree.layers[layer].type
-        if maptype != 'vector':
+        try:
+            maptype = self.curr_page.maptree.layers[layer].maplayer.type
+        except:
+            maptype = None
+        if not maptype or maptype != 'vector':
             dlg = wx.MessageDialog(self, _("Attribute management is available only for vector map layers"), _("Error"), wx.OK | wx.ICON_ERROR)
             dlg.ShowModal()
             dlg.Destroy()
