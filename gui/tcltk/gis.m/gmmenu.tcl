@@ -175,7 +175,7 @@ set descmenu [subst  {
 		{command {[G_msg "Raster map series to volume"]} {} "r.to.rast3" {} -command {execute r.to.rast3 }}
 		{command {[G_msg "Raster 2.5D map to volume"]} {} "r.to.rast3elev" {} -command {execute r.to.rast3elev }}
 		{command {[G_msg "Vector to raster"]} {} "v.to.rast" {} -command {execute v.to.rast }}
-		{command {[G_msg "Vector to vector"]} {} "v.type" {} -command {execute v.type }}
+		{command {[G_msg "Vector to vector"]} {} "v.type" {} -command {execute v.type.sh }}
 		{command {[G_msg "Vector lines to points"]} {} "v.to.points" {} -command {execute v.to.points }}
 		{command {[G_msg "Vector 3D points to volume voxels"]} {} "v.to.rast3" {} -command {execute v.to.rast3 }}
 		{command {[G_msg "Sites (GRASS 5) to vector"]} {} "v.in.sites" {} -command {execute v.in.sites }}
@@ -412,7 +412,7 @@ set descmenu [subst  {
 		{command {[G_msg "Create lines parallel to existing lines"]} {} "v.parallel" {} -command {execute v.parallel }}
 		{command {[G_msg "Dissolve common boundaries"]} {} "v.dissolve" {} -command {execute v.dissolve }}
 		{separator}
-		{command {[G_msg "Convert vector feature types"]} {} "v.type" {} -command {execute v.type }}
+		{command {[G_msg "Convert vector feature types"]} {} "v.type" {} -command {execute v.type.sh }}
 		{command {[G_msg "Convert 2D vector to 3D by sampling raster"]} {} "v.drape" {} -command {execute v.drape }}
 		{command {[G_msg "Extrude 2D vector into 3D vector"]} {} "v.extrude" {} -command {execute v.extrude }}
 		{separator}
