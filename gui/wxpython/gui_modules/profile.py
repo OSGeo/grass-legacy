@@ -126,15 +126,16 @@ class ProfileFrame(wx.Frame):
         self.datalist = [] # profile data list
         self.pline = '' # profile line data
         self.ppoints = '' # segment endpoints data
-        self.profile = '' # plot draw object
-        self.title = 'Profile of %s' % self.rast
-        self.xaxis = "Distance"
-        self.yaxis = "Raster values"
-        self.font = wx.Font(10,wx.SWISS,wx.NORMAL,wx.NORMAL)
+        self.profile = None # plot draw object
+        self.ptitle = 'Profile of %s' % self.rast
+        self.xlabel = "Distance"
+        self.ylabel = "Raster values"
+        self.font = wx.Font(12,wx.FONTFAMILY_SWISS,wx.FONTSTYLE_NORMAL,wx.FONTWEIGHT_NORMAL)
+        self.titlefontsize = 14
         self.axisfontsize = 10
         self.legendfontsize = 10
         self.enablegrid = True
-        self.gridcolor = 'light grey'
+        self.gridcolor = wx.Colour(200,200,200)
         self.enablelegend = True
 
     def __createToolBar(self):
@@ -191,7 +192,7 @@ class ProfileFrame(wx.Frame):
         self.rast = dlg.rast
         self.SetStatusText("Profiling %s" % self.rast)
         self.SetTitle("Profile of transect across %s" % self.rast)
-        self.title = 'Profile of %s' % self.rast
+        self.ptitle = 'Profile of %s' % self.rast
 
     def OnActivate(self, event):
         print "window=",event.GetEventObject()
@@ -211,7 +212,9 @@ class ProfileFrame(wx.Frame):
         self.mapwin.SetCursor(self.Parent.cursors["cross"])
 
     def SetGraphStyle(self):
-        """Just to reset the fonts back to the PlotCanvas defaults"""
+        """
+        Set plot and text options
+        """
         self.client.SetFont(self.font)
         self.client.SetFontSizeAxis(self.axisfontsize)
         self.client.SetFontSizeLegend(self.legendfontsize)
@@ -224,6 +227,7 @@ class ProfileFrame(wx.Frame):
         self.client.SetXSpec('auto')
         self.client.SetYSpec('auto')
         self.client.SetEnableLegend(self.enablelegend)
+        self.client.SetFontSizeTitle(self.titlefontsize)
 
     def DrawPointLabel(self, dc, mDataDict):
         """This is the fuction that defines how the pointLabels are plotted
@@ -317,6 +321,14 @@ class ProfileFrame(wx.Frame):
             lasteast = east
             lastnorth = north
 
+        # delete first and last segment point
+        try:
+            self.seglist.pop(0)
+            self.seglist.pop()
+        except:
+            pass
+
+
         # build a list of distance, value pairs for points along transect
         cmdlist = ['r.profile', 'input=%s' % self.rast, 'profile=%s' % coordstr, 'null=nan']
         p = cmd.Command(cmdlist)
@@ -326,11 +338,11 @@ class ProfileFrame(wx.Frame):
             self.datalist.append((dist,elev))
 
         # graph the distance, value pairs for the transect
-        self.pline = plot.PolyLine(self.datalist, colour='blue', width=2, legend='Profile')
-        self.ppoints = plot.PolyMarker(self.seglist, legend='Segment breaks', colour='red', size=2,
+        self.pline = plot.PolyLine(self.datalist, colour='blue', width=2, legend=' Profile')
+        self.ppoints = plot.PolyMarker(self.seglist, legend=' Segment breaks', colour='red', size=2,
                                   fillstyle = wx.TRANSPARENT, marker='circle')
 
-        self.profile = plot.PlotGraphics([self.pline, self.ppoints], self.title, self.xaxis, self.yaxis)
+        self.profile = plot.PlotGraphics([self.pline, self.ppoints], self.ptitle, self.xlabel, self.ylabel)
 
         # this is where we can set plot styles
         self.SetGraphStyle()
@@ -378,21 +390,13 @@ class ProfileFrame(wx.Frame):
         point = wx.GetMousePosition()
         popt = wx.Menu()
         # Add items to the menu
-        settext = wx.MenuItem(popt, -1, 'Set title and axis labels')
+        settext = wx.MenuItem(popt, -1, 'Title and axis labels')
         popt.AppendItem(settext)
-        self.Bind(wx.EVT_MENU, self.SetText, settext)
+        self.Bind(wx.EVT_MENU, self.PText, settext)
 
-        setfonts = wx.MenuItem(popt, -1, 'Set font for title and labels')
-        popt.AppendItem(setfonts)
-        self.Bind(wx.EVT_MENU, self.SetFonts, setfonts)
-
-        setgrid = wx.MenuItem(popt, -1, 'Grid settings')
+        setgrid = wx.MenuItem(popt, -1, 'Grid and legend settings')
         popt.AppendItem(setgrid)
-        self.Bind(wx.EVT_MENU, self.GridOptions, setgrid)
-
-        setlegend = wx.MenuItem(popt, -1, 'Legend settings')
-        popt.AppendItem(setlegend)
-        self.Bind(wx.EVT_MENU, self.LegendOptions, setlegend)
+        self.Bind(wx.EVT_MENU, self.POptions, setgrid)
 
         # Popup the menu.  If an item is selected then its handler
         # will be called before PopupMenu returns.
@@ -406,21 +410,35 @@ class ProfileFrame(wx.Frame):
         dlg.Destroy()
 
 
-    def SetText(self, event):
+    def PText(self, event):
         """
         Set custom text values for profile
         title and axis labels.
         """
-        self.NotFunctional()
+        dlg = TextDialog(self, -1, 'Profile text settings')
 
-    def SetFonts(self, event):
-        """
-        Set custom fonts for profile title
-        and axis labels
-        """
-        self.NotFunctional()
+        if dlg.ShowModal() == wx.ID_OK:
+            self.ptitle = dlg.ptitle
+            self.xlabel = dlg.xlabel
+            self.ylabel = dlg.ylabel
+            self.font = dlg.font
+            self.titlefontsize = dlg.titlefontsize
+            self.axisfontsize = dlg.axisfontsize
+            self.client.SetFont(dlg.font)
+            self.client.SetFontSizeTitle(self.titlefontsize)
+            self.client.SetFontSizeAxis(self.axisfontsize)
 
-    def GridOptions(self, event):
+            try:
+                self.profile.setTitle(dlg.ptitle)
+                self.profile.setXLabel(dlg.xlabel)
+                self.profile.setYLabel(dlg.ylabel)
+            except:
+                pass
+
+        dlg.Destroy()
+        self.OnRedraw(event=None)
+
+    def POptions(self, event):
         """
         Set grid color, enable/disable grid
         """
@@ -500,7 +518,7 @@ class SetRaster(wx.Dialog):
         sizer.Add(box, 0, wx.GROW|wx.ALIGN_CENTER_VERTICAL|wx.ALL, 5)
 
         line = wx.StaticLine(self, -1, size=(20,-1), style=wx.LI_HORIZONTAL)
-        sizer.Add(line, 0, wx.GROW|wx.ALIGN_CENTER_VERTICAL|wx.RIGHT|wx.TOP, 5)
+        sizer.Add(line, 0, wx.EXPAND|wx.RIGHT|wx.TOP, 5)
 
         btnsizer = wx.StdDialogButtonSizer()
 
@@ -522,5 +540,183 @@ class SetRaster(wx.Dialog):
 
     def onText(self, event):
         self.rast = event.GetString()
+
+class TextDialog(wx.Dialog):
+    def __init__(self, parent, id, title, pos=wx.DefaultPosition, size=wx.DefaultSize,
+            style=wx.DEFAULT_DIALOG_STYLE):
+        wx.Dialog.__init__(self, parent, id, title, pos, size, style)
+        """
+        Controls setting options and displaying/hiding map overlay decorations
+        """
+        self.parent = parent
+        self.ptitle = self.parent.ptitle
+        self.titlefontsize = self.parent.titlefontsize
+        self.xlabel = self.parent.xlabel
+        self.ylabel = self.parent.ylabel
+        self.axisfontsize = self.parent.axisfontsize
+        self.font = self.parent.font
+        self.fontfamily = self.parent.font.GetFamilyString()
+        self.fontstyle = self.parent.font.GetStyleString()
+        self.fontweight = self.parent.font.GetWeightString()
+
+
+#        self.legendfontsize = 10
+#        self.enablegrid = True
+#        self.gridcolor = wx.Colour(200,200,200)
+#        self.enablelegend = True
+
+
+        sizer = wx.BoxSizer(wx.VERTICAL)
+
+        box = wx.BoxSizer(wx.HORIZONTAL)
+        label = wx.StaticText(self, -1, "Profile title:")
+        box.Add(label, 0, wx.ALIGN_CENTER_VERTICAL|wx.ALIGN_RIGHT|wx.RIGHT|wx.LEFT, 5)
+        self.ptitleentry = wx.TextCtrl(self, -1, "", size=(200,-1))
+        self.ptitleentry.SetFont(self.font)
+        self.ptitleentry.SetValue(self.ptitle)
+        box.Add(self.ptitleentry, 0, wx.ALIGN_CENTER_VERTICAL|wx.ALIGN_RIGHT|wx.RIGHT|wx.LEFT, 5)
+        sizer.Add(box, 0, wx.ALIGN_CENTER_VERTICAL|wx.ALIGN_RIGHT|wx.ALL, 5)
+
+        box = wx.BoxSizer(wx.HORIZONTAL)
+        tlabel = wx.StaticText(self, -1, "Title font size (pts):")
+        box.Add(tlabel, 0, wx.ALIGN_CENTER_VERTICAL|wx.ALIGN_RIGHT|wx.RIGHT|wx.LEFT, 5)
+        self.ptitlesize = wx.SpinCtrl(self, id=wx.ID_ANY, value="", pos=(30, 50),
+                        size=(50,-1), style=wx.SP_ARROW_KEYS)
+        self.ptitlesize.SetRange(5,100)
+        self.ptitlesize.SetValue(int(self.titlefontsize))
+        box.Add(self.ptitlesize, 0, wx.ALIGN_CENTER_VERTICAL|wx.ALIGN_RIGHT|wx.RIGHT|wx.LEFT, 5)
+        sizer.Add(box, 0, wx.ALIGN_CENTER_VERTICAL|wx.ALIGN_RIGHT|wx.ALL, 5)
+
+        box = wx.BoxSizer(wx.HORIZONTAL)
+        label = wx.StaticText(self, -1, "X-axis label:")
+        box.Add(label, 0, wx.wx.ALIGN_CENTER_VERTICAL|wx.ALIGN_RIGHT|wx.RIGHT|wx.LEFT, 5)
+        self.xlabelentry = wx.TextCtrl(self, -1, "", size=(200,-1))
+        self.xlabelentry.SetFont(self.font)
+        self.xlabelentry.SetValue(self.xlabel)
+        box.Add(self.xlabelentry, 0, wx.ALIGN_CENTER_VERTICAL|wx.ALIGN_RIGHT|wx.RIGHT|wx.LEFT, 5)
+        sizer.Add(box, 0, wx.ALIGN_CENTER_VERTICAL|wx.ALIGN_RIGHT|wx.ALL, 5)
+
+        box = wx.BoxSizer(wx.HORIZONTAL)
+        label = wx.StaticText(self, -1, "Y-axis label:")
+        box.Add(label, 0, wx.wx.ALIGN_CENTER_VERTICAL|wx.ALIGN_RIGHT|wx.RIGHT|wx.LEFT, 5)
+        self.ylabelentry = wx.TextCtrl(self, -1, "", size=(200,-1))
+        self.ylabelentry.SetFont(self.font)
+        self.ylabelentry.SetValue(self.ylabel)
+        box.Add(self.ylabelentry, 0, wx.ALIGN_CENTER_VERTICAL|wx.ALIGN_RIGHT|wx.RIGHT|wx.LEFT, 5)
+        sizer.Add(box, 0, wx.ALIGN_CENTER_VERTICAL|wx.ALIGN_RIGHT|wx.ALL, 5)
+
+        box = wx.BoxSizer(wx.HORIZONTAL)
+        llabel = wx.StaticText(self, -1, "Label font size (pts):")
+        box.Add(llabel, 0, wx.ALIGN_CENTER_VERTICAL|wx.ALIGN_RIGHT|wx.RIGHT|wx.LEFT, 5)
+        self.axislabelsize = wx.SpinCtrl(self, id=wx.ID_ANY, value="", pos=(30, 50),
+                        size=(50,-1), style=wx.SP_ARROW_KEYS)
+        self.axislabelsize.SetRange(5,100)
+        self.axislabelsize.SetValue(int(self.axisfontsize))
+        box.Add(self.axislabelsize, 0, wx.ALIGN_CENTER_VERTICAL|wx.ALIGN_RIGHT|wx.RIGHT|wx.LEFT, 5)
+        sizer.Add(box, 0, wx.ALIGN_CENTER_VERTICAL|wx.ALIGN_RIGHT|wx.ALL, 5)
+
+        box = wx.BoxSizer(wx.HORIZONTAL)
+        label = wx.StaticText(self, -1, "Font for title, axis labels, and legend")
+        box.Add(label, 0, wx.ALIGN_CENTRE|wx.RIGHT|wx.LEFT, 5)
+        sizer.Add(box, 0, wx.ALIGN_CENTER|wx.VERTICAL, 5)
+
+
+        ffamilylist = ['wx.FONTFAMILY_DEFAULT', 'wx.FONTFAMILY_DECORATIVE', 'wx.FONTFAMILY_ROMAN', 'wx.FONTFAMILY_SCRIPT', 'wx.FONTFAMILY_SWISS', 'wx.FONTFAMILY_MODERN', 'wx.FONTFAMILY_TELETYPE']
+        fstylelist = ['wx.FONTSTYLE_NORMAL', 'wx.FONTSTYLE_SLANT', 'wx.FONTSTYLE_ITALIC']
+        fwtlist = ['wx.FONTWEIGHT_NORMAL', 'wx.FONTWEIGHT_LIGHT', 'wx.FONTWEIGHT_BOLD']
+
+        box = wx.BoxSizer(wx.HORIZONTAL)
+        label1 = wx.StaticText(self, -1, "Font family:")
+        box.Add(label1, 0, wx.ALIGN_CENTER_VERTICAL|wx.ALIGN_RIGHT|wx.RIGHT|wx.LEFT, 5)
+        ffamilycb = wx.ComboBox(
+            self, 500, self.fontfamily, (90, 50),
+            (200, -1), ffamilylist, wx.CB_DROPDOWN #|wxTE_PROCESS_ENTER
+            )
+        box.Add(ffamilycb, 0, wx.ALIGN_CENTER_VERTICAL|wx.ALIGN_RIGHT|wx.RIGHT|wx.LEFT, 5)
+        sizer.Add(box, 0, wx.ALIGN_CENTER_VERTICAL|wx.ALIGN_RIGHT|wx.ALL, 2)
+
+        box = wx.BoxSizer(wx.HORIZONTAL)
+        label2 = wx.StaticText(self, -1, " Style:")
+        box.Add(label2, 0, wx.ALIGN_CENTER_VERTICAL|wx.ALIGN_RIGHT|wx.RIGHT|wx.LEFT, 5)
+        fstylecb = wx.ComboBox(
+            self, 501, self.fontstyle, (90, 50),
+            (200, -1), fstylelist, wx.CB_DROPDOWN #|wxTE_PROCESS_ENTER
+            )
+        box.Add(fstylecb, 0, wx.ALIGN_CENTER_VERTICAL|wx.ALIGN_RIGHT|wx.RIGHT|wx.LEFT, 5)
+        sizer.Add(box, 0, wx.ALIGN_CENTER_VERTICAL|wx.ALIGN_RIGHT|wx.ALL, 2)
+
+        box = wx.BoxSizer(wx.HORIZONTAL)
+        label3 = wx.StaticText(self, -1, " Weight:")
+        box.Add(label3, 0, wx.ALIGN_CENTER_VERTICAL|wx.ALIGN_RIGHT|wx.RIGHT|wx.LEFT, 5)
+        fwtcb = wx.ComboBox(
+            self, 502, self.fontweight, (90, 50),
+            (200, -1), fwtlist, wx.CB_DROPDOWN #|wxTE_PROCESS_ENTER
+            )
+        box.Add(fwtcb, 0, wx.ALIGN_CENTER_VERTICAL|wx.ALIGN_RIGHT|wx.RIGHT|wx.LEFT, 5)
+        sizer.Add(box, 0, wx.ALIGN_CENTER_VERTICAL|wx.ALIGN_RIGHT|wx.ALL, 2)
+
+        line = wx.StaticLine(self, -1, size=(20,-1), style=wx.LI_HORIZONTAL)
+        sizer.Add(line, 0, wx.EXPAND|wx.ALIGN_CENTER|wx.RIGHT|wx.TOP, 5)
+
+        btnsizer = wx.StdDialogButtonSizer()
+
+        btn = wx.Button(self, wx.ID_OK)
+        btn.SetDefault()
+        btnsizer.AddButton(btn)
+
+        btn = wx.Button(self, wx.ID_CANCEL)
+        btnsizer.AddButton(btn)
+        btnsizer.Realize()
+
+        sizer.Add(btnsizer, 0, wx.ALIGN_CENTER_VERTICAL|wx.ALL, 5)
+
+        self.SetSizer(sizer)
+        sizer.Fit(self)
+
+        self.ptitleentry.Bind(wx.EVT_TEXT, self.OnTitle)
+        self.xlabelentry.Bind(wx.EVT_TEXT, self.OnXLabel)
+        self.ylabelentry.Bind(wx.EVT_TEXT, self.OnYLabel)
+        self.ptitlesize.Bind(wx.EVT_TEXT, self.OnPtitlesize)
+        self.axislabelsize.Bind(wx.EVT_TEXT, self.OnAxislabelsize)
+        self.Bind(wx.EVT_COMBOBOX, self.OnFFamily, ffamilycb)
+        self.Bind(wx.EVT_COMBOBOX, self.OnFstyle, fstylecb)
+        self.Bind(wx.EVT_COMBOBOX, self.OnFWeight, fwtcb)
+
+    def OnPtitlesize(self, event):
+        self.titlefontsize = event.GetString()
+
+    def OnAxislabelsize(self, event):
+        self.axisfontsize = event.GetString()
+
+    def OnTitle(self, event):
+        self.ptitle = event.GetString()
+
+    def OnXLabel(self, event):
+        self.xlabel = event.GetString()
+
+    def OnYLabel(self, event):
+        self.xlabel = event.GetString()
+
+    def OnFFamily(self, event):
+        family = eval(event.GetString())
+        self.font.SetFamily(family)
+        self.UpdateDialog()
+
+    def OnFstyle(self, event):
+        style = eval(event.GetString())
+        self.font.SetStyle(style)
+        self.UpdateDialog()
+
+    def OnFWeight(self, event):
+        weight = eval(event.GetString())
+        self.font.SetWeight(weight)
+        self.UpdateDialog()
+
+    def UpdateDialog(self):
+        self.ptitleentry.SetFont(self.font)
+        self.xlabelentry.SetFont(self.font)
+        self.ylabelentry.SetFont(self.font)
+        self.Layout()
+
 
 
