@@ -226,7 +226,7 @@ proc GmCLabels::display { node } {
     if { ! ( $opt($id,1,_check) ) } { return } 
     
     # open the v.label file for reading
-	set labelfile [open $labelpath r]
+	catch {set labelfile [open $labelpath r]}
 	
 	#loop through coordinates and options for each label
     while { [gets $labelfile in] > -1 } {
@@ -344,7 +344,10 @@ proc GmCLabels::display { node } {
 		}
 	}
 	# close labels file
-	close $labelfile
+	if {[catch {close $labelfile} error]} {
+		puts $error
+	}
+
 }
 
 

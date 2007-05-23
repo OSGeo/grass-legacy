@@ -390,7 +390,7 @@ proc psprint::print { cv } {
 
 	# lpr printing		
     if { $printmode == "lpr" } {
-		set printmap [open "$tmppsfile" w]
+		catch {set printmap [open "$tmppsfile" w]}
 		if { $orient == "portrait" } {
 			if { [expr $docht / $docwd] < [expr $pght / $pgwd] } {
 				$cv postscript -pageheight $cdocht -channel $printmap
@@ -405,7 +405,10 @@ proc psprint::print { cv } {
 			}
 		}		
 		after 500
-		close $printmap
+		if {[catch {close $printmap} error]} {
+			puts $error
+		}
+
 		exec cat $tmppsfile | gs  $format -sDEVICE=png16m -r$res -sNOPAUSE -sOutputFile=$tmppngfile -dBATCH -  
 		exec lpr $tmppngfile 
 		puts "lpr printing"
@@ -413,7 +416,7 @@ proc psprint::print { cv } {
 
 	# postsript printing via ghostsript
     if { $printmode == "psprint" && $printer != "" } {
-		set printmap [open "$tmppsfile" w]
+		catch {set printmap [open "$tmppsfile" w]}
 		if { $orient == "portrait" } {
 			if { [expr $docht / $docwd] < [expr $pght / $pgwd] } {
 				$cv postscript -pageheight $cdocht -channel $printmap
@@ -428,14 +431,17 @@ proc psprint::print { cv } {
 			}
 		}		
 		after 500
-		close $printmap
+		if {[catch {close $printmap} error]} {
+			puts $error
+		}
+
 		exec cat $tmppsfile | gs  $format -sDEVICE=$printer -r$res -sNOPAUSE -dBATCH - 
 		puts "ps printing"
 	}
 
 	# output to pdf file via ghostscript	
 	if { $printmode == "pdf" && $pdffile != "" } {
-		set printmap [open "$tmppsfile" w]
+		catch {set printmap [open "$tmppsfile" w]}
 		if { $orient == "portrait" } {
 			if { [expr $docht / $docwd] < [expr $pght / $pgwd] } {
 				$cv postscript -pageheight $cdocht -channel $printmap
@@ -450,7 +456,10 @@ proc psprint::print { cv } {
 			}
 		}		
 		after 500
-		close $printmap
+		if {[catch {close $printmap} error]} {
+			puts $error
+		}
+
 		exec cat $tmppsfile | gs  $format -sDEVICE=pdfwrite -r$res -sNOPAUSE -sOutputFile=$pdffile -dBATCH - 
 		puts "pdf printing"
 	}

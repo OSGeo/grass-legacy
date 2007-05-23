@@ -213,7 +213,7 @@ proc GmHist::display { node mod } {
 
     # set steps
     if { $opt($id,1,nsteps) != "" } { 
-		set rt [open "|r.info map=$opt($id,1,map) -t" r]
+		catch {set rt [open "|r.info map=$opt($id,1,map) -t" r]}
 		set rasttype [read $rt]
 		if {[catch {close $rt} error]} {
 		    puts $error

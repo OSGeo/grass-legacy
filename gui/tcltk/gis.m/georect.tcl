@@ -538,9 +538,12 @@ proc GRMap::read_vgroup { xygroup } {
 
     # do the import
     set xyvect ""
-    set vlist [open $vgfile]
+    catch {set vlist [open $vgfile]}
     set vectnames [read $vlist]
-    close $vlist
+    if {[catch {close $vlist} error]} {
+	puts $error
+    }
+
     set vlines [split $vectnames "\n"]
     foreach vect $vlines {
         if { $xyvect == "" } {
@@ -571,14 +574,13 @@ proc GRMap::write_vgroup {xygroup xyvect} {
 
     # write out vector group file
     set vlist [split $xyvect ,]
-    set output [open $vgfile w ]
-            foreach vect $vlist {
-                    puts $output $vect
-            }
-    close $output
-
-}
-
+    catch {set output [open $vgfile w ]}
+    foreach vect $vlist {
+	puts $output $vect
+    }
+    if {[catch {close $output} error]} {
+	puts $error
+    }
 
 
 ###############################################################################
@@ -1136,9 +1138,11 @@ proc GRMap::get_gcp { } {
     if {[file exists $gcpfile] } {
         # do the import
         set gcpnum 1
-        set pfile [open $gcpfile]
+        catch {set pfile [open $gcpfile]}
         set points [read $pfile]
-        close $pfile
+	if {[catch {close $pfile} error]} {
+	    puts $error
+	}
         regsub -all {[ ]+} $points " " points
         set plines [split $points "\n"]
         foreach gcpline $plines {
@@ -1172,7 +1176,7 @@ proc GRMap::savegcp {} {
     variable array gcpline #array to store gcp coordinates as text for output
 
     set gcpfile "$xygdb/$xyloc/$xymset/group/$xygroup/POINTS"
-    set output [open $gcpfile w ]
+    catch {set output [open $gcpfile w ]}
     puts $output "# Ground Control Points File"
     puts $output "# "
     puts $output "# target location: $currloc"
@@ -1200,7 +1204,10 @@ proc GRMap::savegcp {} {
             }
         }
     }
-    close $output
+    if {[catch {close $output} error]} {
+	puts $error
+    }
+
 }
 
 
@@ -1235,7 +1242,7 @@ proc GRMap::gcp_error { } {
     # First, switch to xy mapset
     GRMap::setxyenv $xymset $xyloc
     # calculate diagonal distance error for each GCP
-    set input [open "|g.transform group=$xygroup order=$rectorder"]
+    catch {set input [open "|g.transform group=$xygroup order=$rectorder"]}
     set errorlist [read $input]
     if {[catch {close $input} error]} {
 	puts $error
@@ -1287,9 +1294,12 @@ proc GRMap::rectify { } {
 
     # count useable GCP's in points file
     set gcpcnt 0
-    set pfile [open $gcpfile]
+    catch {set pfile [open $gcpfile]}
     set points [read $pfile]
-    close $pfile
+    if {[catch {close $pfile} error]} {
+	puts $error
+    }
+
     regsub -all {[ ]+} $points " " points
     set plines [split $points "\n"]
     foreach gcpline $plines {
@@ -1589,9 +1599,12 @@ proc GRMap::runprograms { mod } {
 		if {[file exists $gcpfile] } {
 			# do the import
 			set gcpnum 1
-			set pfile [open $gcpfile]
+			catch {set pfile [open $gcpfile]}
 			set points [read $pfile]
-			close $pfile
+			if {[catch {close $pfile} error]} {
+				puts $error
+			}
+
 			regsub -all {[ ]+} $points " " points
 			set plines [split $points "\n"]
 			foreach gcpline $plines {
