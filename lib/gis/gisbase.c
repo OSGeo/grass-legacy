@@ -31,7 +31,7 @@
   char command[200];
 
   sprintf (command, "%s/etc/sroff", G_gisbase( ) );
-  system (command);
+  G_spawn (command, "sroff", NULL);
  \endcode
  *
  *  \param void
