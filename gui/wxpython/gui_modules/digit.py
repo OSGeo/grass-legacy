@@ -25,14 +25,12 @@ COPYRIGHT: (C) 2007 by the GRASS Development Team
 import cmd
 from debug import Debug as Debug
 
-#
 class Digit:
     """
     Abstract digitization class
     """
     pass
 
-#
 class VEdit(Digit):
     """
     Prototype of digitization class based on v.edit command
@@ -88,16 +86,6 @@ class VEdit(Digit):
         # run the command
         vedit = cmd.Command(cmd=command, stdin=input)
         
-        # result?
-        if vedit.returncode == 0:
-            pass
-        else:
-            print "FAILURE (%d)" % vedit.returncode
-            print "cmd=%s; input=%s" % (command, input)
-            for msg in vedit.module_msg:
-                print msg[1]
-
-#
 class VDigit(Digit):
     """
     Prototype of digitization class based on v.digit reimplementation
