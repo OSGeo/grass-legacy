@@ -581,7 +581,7 @@ proc GRMap::write_vgroup {xygroup xyvect} {
     if {[catch {close $output} error]} {
 	puts $error
     }
-
+}
 
 ###############################################################################
 # create dialog to select mapset (and location) and raster map to profile,
