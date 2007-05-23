@@ -1971,13 +1971,13 @@ class TextDialog(wx.Dialog):
 
 class SavedRegion(wx.Dialog):
     def __init__(self, parent, id, title="", pos=wx.DefaultPosition, size=wx.DefaultSize,
-            style=wx.DEFAULT_DIALOG_STYLE,
-            loadsave='load'):
-        wx.Dialog.__init__(self, parent, id, title, pos, size, style)
+                 style=wx.DEFAULT_DIALOG_STYLE,
+                 loadsave='load'):
         """
         Loading and saving of display extents to saved region file
         """
-
+        wx.Dialog.__init__(self, parent, id, title, pos, size, style)
+        
         self.loadsave = loadsave
         self.wind = ''
 

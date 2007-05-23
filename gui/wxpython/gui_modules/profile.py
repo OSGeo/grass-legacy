@@ -35,12 +35,10 @@ from threading import Thread
 
 try:
     import subprocess
-    from subprocess import *
 except:
-    CompatPath = os.getenv("GISBASE") + "/etc/wx"
+    CompatPath = os.path.join( os.getenv("GISBASE"),"etc","wx")
     sys.path.append(CompatPath)
-    from compat import subprocess
-    from compat.subprocess import *
+    from compat import subprocess as subprocess
 
 gmpath = os.getenv("GISBASE") + "/etc/wx/gui_modules/"
 sys.path.append(gmpath)
