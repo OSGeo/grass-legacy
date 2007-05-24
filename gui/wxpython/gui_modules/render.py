@@ -45,7 +45,7 @@ class MapLayer:
         self.opacity = opacity
 
         Debug.msg (3, "MapLayer.__init__(): type=%s, cmd='%s', name=%s, active=%d, opacity=%d, hidden=%d" %
-                       (type, cmd, name, active, opacity, hidden))
+                       (self.type, self.cmdlist, self.name, self.active, self.opacity, self.hidden))
 
         gtemp = utils.GetTempfile()
         self.maskfile = gtemp + ".pgm"
@@ -184,7 +184,6 @@ class Map:
 
         self.layers    = []  # stack of available layer
         self.overlays  = []  # stack of available overlays
-        self.lookup    = {}  # lookup dictionary for tree items and layers
         self.ovlookup  = {}  # lookup dictionary for overlay items and overlays
         self.env       = {}  # enviroment variables, like MAPSET, LOCATION_NAME, etc.
         self.verbosity = 0
@@ -620,7 +619,7 @@ class Map:
                 os.environ["GRASS_REGION"] = tmp_region
             return None
 
-    def AddLayer(self, item, type, command, name=None,
+    def AddLayer(self, type, command, name=None,
                  l_active=True, l_hidden=False, l_opacity=1, l_render=False):
         """
         Adds generic display command layer to list of layers
@@ -649,18 +648,16 @@ class Map:
 
         # add maplayer to the list of layers
         self.layers.append(layer)
-        if item:
-            # add item and layer to lookup dictionary
-            self.lookup[item] = layer
 
+        Debug.msg (3, "Map.AddLayer(): layer=%s" % layer.name)
         if l_render:
             if not layer.Render():
-                sys.stderr.write("Could not render layer <%s>\n" % \
-                       (name))
+                print >> sys.stderr, _("Could not render layer <%s>\n") % \
+                                      (name)
 
         return self.layers[-1]
 
-    def delLayer(self, item, name=None):
+    def DeleteLayer(self, layer):
         """
         Removes layer from list of layers, defined by layer
         tree item ID
@@ -671,11 +668,8 @@ class Map:
         Returns:
             Removed layer on success or None
         """
-        layer = self.lookup[item]
 
-        #TODO something wrong with this dbug statement layerl.cmd doesn't exist
-
-        #Debug.msg (3, "Map.delLayer(): cmd=%s" % str(layer.cmd))
+        Debug.msg (3, "Map.DeleteLayer(): name=%s" % layer.name)
         if layer in self.layers:
             if layer.mapfile:
                 base = os.path.split(layer.mapfile)[0]
@@ -685,38 +679,18 @@ class Map:
                 for f in glob.glob(basefile):
                     os.remove(f)
             self.layers.remove(layer)
-
-            del self.lookup[item]
             return layer
 
         return None
 
-    def reorderLayers(self, item_list):
+    def ReorderLayers(self, layerList):
         """
         Make a new reordered list to match reordered
         layer tree - for drag and drop
         """
-        temp = []
-
-        for item in item_list:
-            layer = self.lookup[item]
-            temp.append(layer)
-
-        # replace original layers list with reordered one
-        self.layers = temp
-        return self.layers[-1]
-
-    def updateLookup(self, olditem, newitem):
-        """
-        Changes layer tree item associatd with rendering layer
-        in the lookup dictionary. Used with layer drag and drop.
-        """
-        layer = self.lookup[olditem]
-        self.lookup[newitem] = layer
-
-        # old lookup item will be deleted when layer is deleted
-
-    def ChangeLayer(self, item, type, command, name=None,
+        self.layers = layerList
+        
+    def ChangeLayer(self, layer, type, command, name=None,
                     l_active=True, l_hidden=False, l_opacity=1, l_render=False):
         """
         Change the command and other other options for a layer
@@ -731,12 +705,11 @@ class Map:
         newlayer = MapLayer(type=type, cmd=command, name=name,
                             active=l_active, hidden=l_hidden, opacity=l_opacity)
 
-        oldlayerindex = self.layers.index(self.lookup[item])
+        oldlayerindex = self.layers.index(layer)
 
         # add maplayer to the list of layers
-        if self.lookup[item]:
+        if layer:
             self.layers[oldlayerindex] = newlayer
-            self.lookup[item] = newlayer
 
         if l_render:
             if not layer.Render():
@@ -745,7 +718,7 @@ class Map:
 
         return self.layers[-1]
 
-    def ChangeOpacity(self, item, l_opacity):
+    def ChangeOpacity(self, layer, l_opacity):
         """
         Changes opacity value for rendering
         """
@@ -753,25 +726,21 @@ class Map:
         if l_opacity < 0: l_opacity = 0
         elif l_opacity > 1: l_opacity = 1
 
-        layer = self.lookup[item]
         layer.opacity = l_opacity
 
-    def changeActive(self, item, activ):
+    def ChangeActive(self, layer, active):
         """
         Change the active state of a layer
         """
-        layer = self.lookup[item]
-        layer.active = activ
+        layer.active = active
 
-    def ChangeLayerName (self, item, name):
+        Debug.msg (3, "Map.ChangeActive(): layer=%s, active=%d" % \
+                   (layer.name, layer.active))
+
+    def ChangeLayerName (self, layer, name):
         """
         Change name of the layer
         """
-        try:
-            layer = self.lookup[item]
-        except IndexError:
-            return
-
         layer.name =  name
 
     def RemoveLayer(self, name=None, id=None):
@@ -801,15 +770,6 @@ class Map:
             return self.layers.pop(id)
 
         return None
-
-    def GetLayer (self, item):
-        """
-        Return MapLayer instance identified by item
-        """
-        if item in self.lookup:
-            return self.lookup[item]
-        else:
-            return None
 
     def GetLayerIndex(self, layer):
         """
@@ -847,7 +807,6 @@ class Map:
 
         # add maplayer to the list of layers
         self.overlays.append(overlay)
-        # add item and layer to lookup dictionary
 
         if l_render and command != '':
             if not overlay.Render():
