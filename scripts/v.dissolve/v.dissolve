@@ -57,13 +57,7 @@ if  [ -z "$GISBASE" ] ; then
     exit 1
 fi
 
-# save command line
 if [ "$1" != "@ARGS_PARSED@" ] ; then
-    CMDLINE="`basename $0`"
-    for arg in "$@" ; do
-        CMDLINE="$CMDLINE \"$arg\""
-    done
-    export CMDLINE
     exec g.parser "$0" "$@"
 fi
 
@@ -78,7 +72,7 @@ cleanup()
 # what to do in case of user break:
 exitprocedure()
 {
- g.message -e 'User break!'
+ echo "User break!"
  cleanup
  exit 1
 }
@@ -88,7 +82,7 @@ trap "exitprocedure" 2 3 15
 # does map exist?
 eval `g.findfile element=vector file=$GIS_OPT_INPUT`
 if [ ! "$file" ] ; then
-   g.message -e "Vector map '$GIS_OPT_INPUT' not found in mapset search path"
+   echo "Vector map '$GIS_OPT_INPUT' not found in mapset search path"
    exit 1
 fi
 
@@ -98,7 +92,7 @@ if [ -z "$GIS_OPT_COLUMN" ] ; then
 else
    table=`v.db.connect $GIS_OPT_INPUT -g | grep -w $GIS_OPT_LAYER | awk '{print $2}'`
    if [ -z "$table" ] ; then
-      g.message -e 'There is no table connected to this map!'
+      echo -e "\nERROR: There is no table connected to this map!"
       cleanup
       exit 1
    fi
@@ -110,7 +104,5 @@ fi
 
 cleanup
 
-# write cmd history:
-v.support ${GIS_OPT_OUTPUT} cmdhist="${CMDLINE}"
-
 exit 0
+
