@@ -792,7 +792,7 @@ class TextDialog(wx.Dialog):
         self.xlabel = event.GetString()
 
     def OnYLabel(self, event):
-        self.xlabel = event.GetString()
+        self.ylabel = event.GetString()
 
     def OnFFamily(self, event):
         family = eval(event.GetString())
