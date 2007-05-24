@@ -408,16 +408,16 @@ else # CREATE_LINES
 	    START_PNT=""
 	    read START_PNT < "$TMP.var" # read the name of start point
 
-# check that numberic values don't try and pass an empty string
+	    # check that numberic values don't try and pass an empty string
 ### variable names don't line up with column names ?!
-if [ -z "$ROUTE_ID" ] ; then
-    ROUTE_ID="NULL"
-    g.message -w "Route $ROUTE_NUMBER: category number was empty. Bug?"
-fi
-if [ -z "$NUMBER" ] ; then
-    NUMBER="NULL"
-    g.message -w "Route $ROUTE_NUMBER: route ID was empty. Bug?"
-fi
+	    if [ -z "$ROUTE_ID" ] ; then
+		ROUTE_ID="NULL"
+        	g.message -w "Route $ROUTE_NUMBER: category number was empty. Bug?"
+	    fi
+	    if [ -z "$NUMBER" ] ; then
+		NUMBER="NULL"
+		g.message -w "Route $ROUTE_NUMBER: route ID was empty. Bug?"
+	    fi
 
 	    echo "$ROUTE_ID|$NUMBER|$R_NAME|$START_PNT" >> "$TMP.route_atts"
 
@@ -500,27 +500,27 @@ fi
 
 	    TRACK_ID="`expr $TRACK_ID + 1`"
 
-# check that numberic values don't try and pass an empty string
-if [ -z "$TRACK_ID" ] ; then
-    TRACK_ID="NULL"
-    g.message -w "Track $TRACK_NUMBER: category number was empty. Bug?"
-fi
-if [ -z "$S_LAT" ] ; then
-    S_LAT="NULL"
-    g.message -w "Track $TRACK_NUMBER:  starting lat was empty. Bug?"
-fi
-if [ -z "$S_LON" ] ; then
-    S_LON="NULL"
-    g.message -w "Track $TRACK_NUMBER:  starting lon was empty. Bug?"
-fi
-if [ -z "$E_LAT" ] ; then
-    E_LAT="NULL"
-    g.message -w "Track $TRACK_NUMBER:  ending lat was empty. Bug?"
-fi
-if [ -z "$E_LON" ] ; then
-    E_LON="NULL"
-    g.message -w "Track $TRACK_NUMBER:  ending lon was empty. Bug?"
-fi
+	    # check that numberic values don't try and pass an empty string
+	    if [ -z "$TRACK_ID" ] ; then
+		TRACK_ID="NULL"
+		g.message -w "Track $TRACK_NUMBER: category number was empty. Bug?"
+	    fi
+	    if [ -z "$S_LAT" ] ; then
+		S_LAT="NULL"
+		g.message -w "Track $TRACK_NUMBER:  starting lat was empty. Bug?"
+	    fi
+	    if [ -z "$S_LON" ] ; then
+		S_LON="NULL"
+		g.message -w "Track $TRACK_NUMBER:  starting lon was empty. Bug?"
+	    fi
+	    if [ -z "$E_LAT" ] ; then
+		E_LAT="NULL"
+		g.message -w "Track $TRACK_NUMBER:  ending lat was empty. Bug?"
+	    fi
+	    if [ -z "$E_LON" ] ; then
+		E_LON="NULL"
+		g.message -w "Track $TRACK_NUMBER:  ending lon was empty. Bug?"
+	    fi
 
 	    echo "$TRACK_ID|$S_TIME|$S_LAT|$S_LON|$E_TIME|$E_LAT|$E_LON" >> "$TMP.track_atts"
 
