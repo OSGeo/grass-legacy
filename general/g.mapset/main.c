@@ -24,6 +24,7 @@
 #include <grass/raster.h>
 #include <grass/display.h>
 #include <grass/glocale.h>
+#include <grass/spawn.h>
 
 int 
 main (int argc, char *argv[])
@@ -36,7 +37,8 @@ main (int argc, char *argv[])
     char   *gisdbase_new, *location_new, *mapset_new;
     char   *gis_lock; 
     char   *mapset_old_path, *mapset_new_path;
-    char   *lock_prog, *buf;
+    char   *lock_prog;
+    char   path[GPATH_MAX];
     char   *shell, *monitor;
     struct MON_CAP *cap;
 
@@ -129,12 +131,11 @@ main (int argc, char *argv[])
 
     G_asprintf ( &lock_prog, "%s/etc/lock", G_gisbase() );
     
-    G_asprintf ( &buf, "%s %s/.gislock %s", lock_prog, mapset_new_path, gis_lock );
-    G_debug ( 2, buf );
+    sprintf(path, "%s/.gislock", mapset_new_path);
+    G_debug ( 2, path );
 
-    ret = system ( buf ) ;
+    ret = G_spawn(lock_prog, lock_prog, path, gis_lock, NULL);
     G_debug ( 2, "lock result = %d", ret );
-    G_free( buf );
     G_free( lock_prog );
 
     /* Warning: the value returned by system() is not that returned by exit() in executed program
@@ -159,11 +160,9 @@ main (int argc, char *argv[])
 	G_setenv ( "MONITOR", monitor );
 
     /* Clean temporary directory */
-    G_asprintf ( &buf, "/bin/sh -c \"%s/etc/clean_temp > /dev/null\"", 
-		G_gisbase() );
+    sprintf(path, "%s/etc/clean_temp", G_gisbase());
     G_message ( _("Cleaning up temporary files ..." ));
-    system( buf );
-    G_free( buf );
+    G_spawn(path, "clean_temp", NULL);
     
     /* Reset variables */
     G_setenv ( "GISDBASE", gisdbase_new );
@@ -171,10 +170,9 @@ main (int argc, char *argv[])
     G_setenv ( "MAPSET", mapset_new );
 
     /* Remove old lock */
-    G_asprintf ( &buf, "%s/.gislock", mapset_old_path );
+    sprintf ( path, "%s/.gislock", mapset_old_path );
+    remove( path );
 
-    unlink ( buf );
-    G_free( buf );
     G_free( mapset_old_path );
 
     G_warning ( _("Your shell continues to use the history for the old mapset.") );
