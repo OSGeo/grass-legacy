@@ -124,6 +124,7 @@ class ProfileFrame(wx.Frame):
         # Init variables
         self.seglist = [] # segment endpoint list
         self.datalist = [] # profile data list
+        self.plotlist = [] # list of things to plot
         self.pline = '' # profile line data
         self.ppoints = '' # segment endpoints data
         self.profile = None # plot draw object
@@ -337,12 +338,18 @@ class ProfileFrame(wx.Frame):
             dist,elev = outline.split(' ')
             self.datalist.append((dist,elev))
 
-        # graph the distance, value pairs for the transect
-        self.pline = plot.PolyLine(self.datalist, colour='blue', width=2, legend=' Profile')
-        self.ppoints = plot.PolyMarker(self.seglist, legend=' Segment breaks', colour='red', size=2,
-                                  fillstyle = wx.TRANSPARENT, marker='circle')
 
-        self.profile = plot.PlotGraphics([self.pline, self.ppoints], self.ptitle, self.xlabel, self.ylabel)
+        # graph the distance, value pairs for the transect
+        if len(self.datalist) > 0:
+            self.pline = plot.PolyLine(self.datalist, colour='blue', width=2, legend=' Profile')
+            self.plotlist.append(self.pline)
+
+        if len(self.seglist) > 0 :
+            self.ppoints = plot.PolyMarker(self.seglist, legend=' Segment breaks', colour='red', size=2,
+                                  fillstyle = wx.TRANSPARENT, marker='circle')
+            self.plotlist.append(self.ppoints)
+
+        self.profile = plot.PlotGraphics(self.plotlist, self.ptitle, self.xlabel, self.ylabel)
 
         # this is where we can set plot styles
         self.SetGraphStyle()
@@ -717,6 +724,33 @@ class TextDialog(wx.Dialog):
         self.xlabelentry.SetFont(self.font)
         self.ylabelentry.SetFont(self.font)
         self.Layout()
+
+    def OnGridEnable(self, event):
+        pass
+
+    def SetGridColor(self, event):
+        pass
+
+    def OnAxisType(self, event):
+        pass
+
+    def OnAxisMax(self, event):
+        pass
+
+    def OnAxisMin(self, event):
+        pass
+
+    def OnLogScale(self, event):
+        pass
+
+    def OnLegendEnable(self, event):
+        pass
+
+    def OnZoomEnable(self, event):
+        pass
+
+    def OnDragEnable(self, event):
+        pass
 
 
 
