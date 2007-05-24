@@ -376,7 +376,7 @@ class GMFrame(wx.Frame):
                  ('addrast', Icons["addrast"].GetBitmap(), Icons["addrast"].GetLabel(), self.onRaster),
                  ('addvect', Icons["addvect"].GetBitmap(), Icons["addvect"].GetLabel(), self.onVector),
                  ('addcmd',  Icons["addcmd"].GetBitmap(),  Icons["addcmd"].GetLabel(),  self.addCommand),
-                 ('addgrp',  wx.ArtProvider.GetBitmap(wx.ART_FOLDER, wx.ART_TOOLBAR, (16,16)),  Icons["addgrp"].GetLabel(), self.addGroup),
+                 ('addgrp',  wx.ArtProvider.GetBitmap(wx.ART_FOLDER, wx.ART_TOOLBAR, (16,16)),  Icons["addgrp"].GetLabel(), self.AddGroup),
                  ('addovl',  Icons["addovl"].GetBitmap(),  Icons["addovl"].GetLabel(), self.onOverlay),
                  ('delcmd',  wx.ArtProvider.GetBitmap(wx.ART_DELETE, wx.ART_TOOLBAR, (16,16)), 'Delete selected layer', self.deleteLayer),
                  ('', '', '', ''),
@@ -577,7 +577,7 @@ class GMFrame(wx.Frame):
         self.notebook.SetSelection(0)
         self.curr_page.maptree.AddLayer('command')
 
-    def addGroup(self, event):
+    def AddGroup(self, event):
         """Add layer group"""
         self.notebook.SetSelection(0)
         self.curr_page.maptree.AddLayer('group')

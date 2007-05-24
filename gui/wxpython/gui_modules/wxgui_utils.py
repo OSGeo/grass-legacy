@@ -18,26 +18,38 @@ import grassenv
 from debug import Debug as Debug
 from icon import Icons as Icons
 try:
-    from subprocess import *
+    import subprocess
 except:
     from compat import subprocess
 
-class Layer:
+class AbstractLayer:
     """
-    This class represents one item in LayerTree
+    Abstract layer in LayerTree
+    
+    Attributes:
+    * type - layer type ('cmdlayer', 'group', etc) -- see LayerTree.AddLayer() 
+    * name - layer name (by default same as MapLayer.name, may not be unique,
+             see LayerTree.RenameLayer())
+    """
+
+    def __init__(self, type):
+        Debug.msg (3, "Layer.__init__(): type=%s" % \
+                   (type))
+        self.type = type
+        
+class Layer(AbstractLayer):
+    """
+    This class represents general item in LayerTree
 
     Attributes:
-    * type       - layer type ('command', 'group')
-    * name       - layer name (by default same as MapLayer.name, may not be unique,
-                               see LayerTree.RenameLayer())
     * maplayer   - reference to MapLayer instance
     * properties - menuform properties (needed for PropertiesDialog)
     """
-    def __init__ (self, type, name, opacityCtrl=None):
-        Debug.msg (3, "Layer.__init__(): type=%s, name=%s" % \
-               (type, name))
-        self.type = type
-        self.name = name
+    def __init__ (self, type, opacityCtrl=None):
+        AbstractLayer.__init__(self, type)
+
+        Debug.msg (3, "CmdLayer.__init__():")
+
         self.opacityCtrl = opacityCtrl
         
         # reference to MapLayer instance
@@ -53,7 +65,7 @@ class Layer:
     def AddProperties (self, properties):
         """Add menuform properties"""
         self.properties = properties
-        
+
 class LayerTree(CT.CustomTreeCtrl):
     """
     Creates layer tree structure
@@ -267,7 +279,8 @@ class LayerTree(CT.CustomTreeCtrl):
         """Add layer, create MapLayer instance"""
         self.first = True
         params = {} # no initial options parameters
-
+        layerGroup = None
+        
         if self.layer_selected:
             self.SelectItem(self.layer_selected, select=False)
 
@@ -292,34 +305,27 @@ class LayerTree(CT.CustomTreeCtrl):
             self.Bind(wx.EVT_SPINCTRL, self.OnOpacity, ctrl)
 
         if (self.layer_selected and self.layer_selected != self.GetRootItem() and \
-                self.layers[self.layer_selected].type != 'group'):
+            self.layers[self.layer_selected].type != 'group'): # add layer to the layer tree
             parent = self.GetItemParent(self.layer_selected)
             layer = self.InsertItem(parent, self.GetPrevSibling(self.layer_selected),
-                                '', ct_type=1, wnd=ctrl )
+                                    '', ct_type=1, wnd=ctrl)
         elif (self.layer_selected and self.layer_selected != self.GetRootItem() and \
-                self.layers[self.layer_selected].type == 'group'):
+              self.layers[self.layer_selected].type == 'group'): # add layer to the group
             layer = self.PrependItem(self.layer_selected,
-                                '', ct_type=1, wnd=ctrl )
+                                     '', ct_type=1, wnd=ctrl )
+            layerGroup = self.layers[self.layer_selected]
             self.Expand(self.layer_selected)
-        else:
+        else: # add first layer to the layer tree
             layer = self.PrependItem(self.root, '', ct_type=1, wnd=ctrl)
 
         # select item
         self.SelectItem(layer)
-
-        # create Layer instance
-        self.layers[layer] = Layer(type="command", name=None, opacityCtrl=ctrl)
 
         # add a data object to hold the layer's command (does not apply to generic command layers)
         self.SetPyData(layer, (None,None))
 
         # layer is initially unchecked as inactive
         self.CheckItem(layer, checked=False)
-
-        # add layer to layers list in render.Map
-        if self.layers.has_key(layer) and self.layers[layer].type != 'group':
-            self.layers[layer].AddMapLayer(self.Map.AddLayer(item=layer, type=ltype, command=[],
-                                                        l_active=False, l_hidden=False, l_opacity=1, l_render=False))
 
         # add text and icons for each layer ltype
         if ltype == 'raster':
@@ -361,14 +367,20 @@ class LayerTree(CT.CustomTreeCtrl):
 
         self.first = False
 
-        self.PropertiesDialog(layer)
+        # create Layer instance & add to self.layer dictionary
+        newlayer = self.layers[layer] = Layer(type=ltype, opacityCtrl=ctrl)
+
+        if ltype != 'group':
+            self.layers[layer].AddMapLayer(self.Map.AddLayer(type=ltype, command=[],
+                                                             l_active=False, l_hidden=False, l_opacity=1, l_render=False))
+            self.PropertiesDialog(layer)
 
     def PropertiesDialog (self, layer):
         """Launch the properties dialog"""
         global gmpath
         completed = ''
         params = self.GetPyData(layer)[1]
-        ltype  = self.layers[layer].maplayer.type
+        ltype  = self.layers[layer].type
 
         Debug.msg (3, "LayerTree.PropertiesDialog(): ltype=%s" % \
                    ltype)
@@ -413,42 +425,45 @@ class LayerTree(CT.CustomTreeCtrl):
     def OnDeleteLayer(self, event):
         """Remove selected layer for the layer tree"""
 
-        layer = event.GetItem()
+        item = event.GetItem()
 
         try:
-            layer.properties.Close(True)
+            item.properties.Close(True)
         except:
             pass
         
-        # delete layer in render.Map
-        if self.layers[layer].type != 'group':
-            self.Map.delLayer(item=layer)
-
         Debug.msg (3, "LayerTree.OnDeleteLayer(): name=%s" % \
-                   (self.layers[layer].name))
+                   (self.GetItemText(item)))
 
+        # unselect item
         self.Unselect()
         self.layer_selected = None
 
+        layer = self.layers[item]
+        if layer.type != 'group':
+            self.Map.DeleteLayer(layer.maplayer)
+
+        self.layers.pop(item)
+
     def OnLayerChecked(self, event):
-        layer = event.GetItem()
-        checked = layer.IsChecked()
+        item    = event.GetItem()
+        checked = item.IsChecked()
 
         if self.drag == False and self.first == False:
             # change active parameter for item in layers list in render.Map
-            if self.layers[layer].type == 'group':
-                childitem = self.GetFirstChild(layer)
+            if self.layers[item].type == 'group':
+                childitem = self.GetFirstChild(item)
                 child = childitem[0]
                 cookie = childitem[1]
-                for n in range(0,self.GetChildrenCount(layer)):
+                for n in range(0,self.GetChildrenCount(item)):
                     if checked == False:
                         childchecked = False
                     else:
                         childchecked = child.IsChecked()
-                    self.Map.changeActive(child, childchecked)
-                    child = self.GetNextChild(layer, cookie)[0]
+                    self.Map.ChangeActive(child, childchecked)
+                    child = self.GetNextChild(item, cookie)[0]
             else:
-                self.Map.changeActive(layer, checked)
+                self.Map.ChangeActive(self.layers[item].maplayer, checked)
 
 
     def OnCmdChanged(self, event):
@@ -491,49 +506,38 @@ class LayerTree(CT.CustomTreeCtrl):
             self.SetItemImage(self.layer_selected, self.folder)
 
     def OnExpandNode(self, event):
+        """Expand node"""
         self.layer_selected = event.GetItem()
         if self.layers[self.layer_selected].type == 'group':
             self.SetItemImage(self.layer_selected, self.folder_open)
 
     def OnBeginDrag(self, event):
-        """ Drag and drop of single tree nodes
-        """
+        """ Drag and drop of single tree nodes"""
+        
+        item  = event.GetItem()
+        Debug.msg (3, "LayerTree.OnBeginDrag(): layer=%s" % \
+                   (self.layers[item].type))
 
-        # node cannot be a parent
-        if self.GetChildrenCount(event.GetItem()) == 0:
-            event.Allow()
-            self.drag = True
-            self.DoSelectItem(event.GetItem(), unselect_others=True)
-
-            # save everthing associated with item to drag
-            self.dragItem = event.GetItem()
-            self.saveitem['ltype'] = self.layers[self.dragItem].type
-            self.saveitem['check'] = self.IsItemChecked(self.dragItem)
-            self.saveitem['image'] = self.GetItemImage(self.dragItem, 0)
-            self.saveitem['text'] = self.GetItemText(self.dragItem)
-            self.saveitem['wind'] = self.GetItemWindow(self.dragItem)
-            if self.layers[self.dragItem].type == 'group':
-                self.saveitem['windval'] = None
-                self.saveitem['data'] = None
-            else:
-                self.saveitem['windval'] = self.GetItemWindow(self.dragItem).GetValue()
-                self.saveitem['data'] = self.GetPyData(self.dragItem)
-        else:
-            print ("Can't drag a node that has children")
+        event.Allow()
+        self.drag = True
+        self.DoSelectItem(item, unselect_others=True)
+        
+        # save everthing associated with item to drag
+        self.dragItem = item
 
     def OnEndDrag(self, event):
-        """
-        Insert copy of layer in new position and
-        delete original at old position
-        """
+        """Insert copy of layer in new
+        position and delete original at old position."""
 
         self.drag = True
-        # Make sure this memeber exists.
+        # make sure this member exists
         try:
             old = self.dragItem
         except:
             return
 
+        Debug.msg (3, "LayerTree.OnEndDrag(): layer=%s" % \
+                   (self.layers[old].type))
         # recreate spin/text control for layer
         if self.layers[old].type == 'cmdlayer':
             newctrl = wx.TextCtrl(self, id=wx.ID_ANY, value='',
@@ -552,16 +556,26 @@ class LayerTree(CT.CustomTreeCtrl):
         # Decide where to put new layer and put it there
         flag = self.HitTest(event.GetPoint())[1]
 
+        text    = self.GetItemText(self.dragItem)
+        image   = self.GetItemImage(self.dragItem, 0)
+        wind    = self.GetItemWindow(self.dragItem)
+        checked = self.IsItemChecked(self.dragItem) 
+        if self.layers[self.dragItem].type == 'group':
+            windval = None
+            data    = None
+        else:
+            windval = self.GetItemWindow(self.dragItem).GetValue()
+            data    = self.GetPyData(self.dragItem)
+        
         if flag & wx.TREE_HITTEST_ABOVE:
-            new = self.PrependItem(self.root, text=self.saveitem['text'], \
-                              ct_type=1, wnd=newctrl, image=self.saveitem['image'], \
-                              data=self.saveitem['data'])
+            new = self.PrependItem(self.root, text=text, \
+                                   ct_type=1, wnd=newctrl, image=image, \
+                                   data=data)
         elif (flag &  wx.TREE_HITTEST_BELOW) or (flag & wx.TREE_HITTEST_NOWHERE) \
             or (flag & wx.TREE_HITTEST_TOLEFT) or (flag & wx.TREE_HITTEST_TORIGHT):
-            new = self.AppendItem(self.root, text=self.saveitem['text'], \
-                              ct_type=1, wnd=newctrl, image=self.saveitem['image'], \
-                              data=self.saveitem['data'])
-
+            new = self.AppendItem(self.root, text=text, \
+                                  ct_type=1, wnd=newctrl, image=image, \
+                                  data=data)
         else:
             if not event.GetItem():
                 return
@@ -569,28 +583,44 @@ class LayerTree(CT.CustomTreeCtrl):
                 afteritem = event.GetItem()
                 if self.layers[afteritem].type == 'group':
                     parent = afteritem
-                    new = self.AppendItem(parent, text=self.saveitem['text'], \
-                                  ct_type=1, wnd=newctrl, image=self.saveitem['image'], \
-                                  data=self.saveitem['data'])
+                    new = self.AppendItem(parent, text=text, \
+                                          ct_type=1, wnd=newctrl, image=image, \
+                                          data=data)
                     self.Expand(afteritem)
                 else:
                     parent = self.GetItemParent(afteritem)
-                    new = self.InsertItem(parent, afteritem, text=self.saveitem['text'], \
-                                  ct_type=1, wnd=newctrl, image=self.saveitem['image'], \
-                                  data=self.saveitem['data'])
+                    new = self.InsertItem(parent, afteritem, text=text, \
+                                          ct_type=1, wnd=newctrl, image=image, \
+                                          data=data)
 
-        # self.layertype[new] = self.saveitem['ltype']
-        self.CheckItem(new, checked=self.saveitem['check'])
-        if self.layers[new].type != 'group':
-            self.layerctrl[newctrl] = new
-            newctrl.SetValue(self.saveitem['windval'])
+        self.CheckItem(new, checked=checked)
+            
+        # add layer at new position
+        self.layers[new] = self.layers[old]
 
-        # update lookup dictionary in render.Map
-        if self.layers[new].type != 'group':
-            self.Map.updateLookup(old, new)
+        newlayer = self.layers[new]
+
+        if newlayer.type == 'group':
+            child = self.GetFirstChild (old)
+            cookei = child[1]
+            if child[0]:
+                while child[0]:
+                    newingroup = self.AppendItem(new, text=self.GetItemText(child[0]), \
+                                                 ct_type=1,
+                                                 wnd=self.layers[child[0]].opacityCtrl,
+                                                 image=self.GetItemImage(child[0], 0), \
+                                                 data=self.GetPyData(child[0]))
+                    self.layers[newingroup] = self.layers[child[0]]
+                    self.layers.pop(child[0])
+                    self.Expand(new)
+                    child = self.GetNextChild(old, cookei)
 
         # delete layer at original position
         self.Delete(old) # entry in render.Map layers list automatically deleted by OnDeleteLayer handler
+        try:
+            self.layers.pop(old)
+        except:
+            pass
 
         # reorder layers in render.Map to match new order after drag and drop
         self.ReorderLayers()
@@ -621,7 +651,7 @@ class LayerTree(CT.CustomTreeCtrl):
         self.CheckItem(layer, checked=True)
 
         # change parameters for item in layers list in render.Map
-        self.ChangeLayer(layer, mapname)
+        self.ChangeLayer(layer)
 
         # set the layer properties dialog dictionary entry
         self.layers[layer].AddProperties (propwin)
@@ -633,48 +663,50 @@ class LayerTree(CT.CustomTreeCtrl):
         goutput.write(dcmd+"\n----------\n")
 
     def ReorderLayers(self):
-        """
-        add commands from data associated with
+        """Add commands from data associated with
         any valid layers (checked or not) to layer list in order to
-        match layers in layer tree
-        """
+        match layers in layer tree."""
 
+        Debug.msg (3, "LayerTree.ReoderLayers():")
         # make a list of visible layers
         treelayers = []
         vislayer = self.GetFirstVisibleItem()
-        for item in range(0,self.GetCount()):
+        if not vislayer:
+            return
+        for item in range(0, self.GetCount()):
             if self.layers[vislayer].type != 'group':
-                treelayers.append(vislayer)
-            if self.GetNextVisible(vislayer) == None:
+                treelayers.append(self.layers[vislayer].maplayer)
+
+            if not self.GetNextVisible(vislayer):
                 break
             else:
                 vislayer = self.GetNextVisible(vislayer)
+
+        # reorder map layers
         treelayers.reverse()
-        self.Map.reorderLayers(treelayers)
+        self.Map.ReorderLayers(treelayers)
 
-    def ChangeLayer(self, layer, name):
+    def ChangeLayer(self, item):
         """Change layer"""
-        ltype = self.layers[layer].type
+        layer = self.layers[item]
         
-        if ltype == 'cmdlayer':
-            if self.GetItemWindow(layer).GetValue() != None:
-                cmdlist = [self.GetItemWindow(layer).GetValue()]
+        if layer.type == 'cmdlayer':
+            if self.GetItemWindow(item).GetValue() != None:
+                cmdlist = [self.GetItemWindow(item).GetValue()]
                 opac = 1.0
-                chk = self.IsItemChecked(layer)
-                hidden = not self.IsVisible(layer)
-        elif ltype != 'group':
-            if self.GetPyData(layer)[0] != None:
-                cmdlist = self.GetPyData(layer)[0]
-                opac = float(self.GetItemWindow(layer).GetValue())/100
-                chk = self.IsItemChecked(layer)
-                hidden = not self.IsVisible(layer)
+                chk = self.IsItemChecked(item)
+                hidden = not self.IsVisible(item)
+        elif layer.type != 'group':
+            if self.GetPyData(item)[0] != None:
+                cmdlist = self.GetPyData(item)[0]
+                opac = float(self.GetItemWindow(item).GetValue())/100
+                chk = self.IsItemChecked(item)
+                hidden = not self.IsVisible(item)
 
-        self.Map.ChangeLayer(item=layer, type=self.layers[layer].maplayer.type, command=cmdlist, name=name,
-                             l_active=chk, l_hidden=hidden, l_opacity=opac, l_render=False)
+        
+        layer.maplayer = self.Map.ChangeLayer(layer=layer.maplayer, type=layer.maplayer.type, command=cmdlist, name=self.GetItemText(item),
+                                              l_active=chk, l_hidden=hidden, l_opacity=opac, l_render=False)
 
-        if not self.layers[layer].name:
-            self.layers[layer].name = name
-            
         # if digitization tool enabled -> update list of available vector map layers
         if self.mapdisplay.digittoolbar:
             self.mapdisplay.digittoolbar.UpdateListOfLayers(updateTool=True)
