@@ -70,7 +70,7 @@ class ProfileFrame(wx.Frame):
     Main frame profile of raster map. Uses wx.lib.plot.
     """
 
-    def __init__(self, parent=None, id = wx.ID_ANY, title="Profile of transect in raster map",
+    def __init__(self, parent=None, id = wx.ID_ANY, title="Profile Analysis",
                  pos=wx.DefaultPosition, size=wx.DefaultSize,
                  style=wx.DEFAULT_FRAME_STYLE):
 
@@ -89,12 +89,12 @@ class ProfileFrame(wx.Frame):
         #
         # Add statusbar
         #
-        self.rast = ''
+        self.rast1 = ''
+        self.rast2 = ''
+        self.rast3 = ''
+
         self.statusbar = self.CreateStatusBar(number=2, style=0)
         self.statusbar.SetStatusWidths([-2, -1])
-        profile_frame_statusbar_fields = ["Profiling %s" % self.rast]
-        for i in range(len(profile_frame_statusbar_fields)):
-            self.statusbar.SetStatusText(profile_frame_statusbar_fields[i], i)
 
         # Init map display
         self.InitDisplay() # initialize region values
@@ -118,19 +118,30 @@ class ProfileFrame(wx.Frame):
         # Show closest point when enabled
         self.client.canvas.Bind(wx.EVT_MOTION, self.OnMotion)
 
-        # Init print module and classes
-#        self.printopt = disp_print.PrintOptions(self, self.ProfileWindow)
-
         # Init variables
         self.seglist = [] # segment endpoint list
-        self.datalist = [] # profile data list
+        self.datalist1 = [] # profile data list
         self.plotlist = [] # list of things to plot
-        self.pline = '' # profile line data
         self.ppoints = '' # segment endpoints data
         self.profile = None # plot draw object
-        self.ptitle = 'Profile of %s' % self.rast
+        self.ptitle = 'Profile of %s %s %s' % (self.rast1, self.rast2, self.rast3)
         self.xlabel = "Distance"
         self.ylabel = "Raster values"
+        self.pline1 = None # first (default) profile line
+        self.pcolor1 = wx.Colour(0,0,255)
+        self.pwidth1 = 1
+        self.pstyle1 = wx.SOLID
+        self.plegend1 = ' Profile'
+        self.pline2 = None # second (optional) profile line
+        self.pcolor2 = wx.Colour(255,0,0)
+        self.pwidth2 = 1
+        self.pstyle2 = wx.SOLID
+        self.plegend2 = ' Profile'
+        self.pline3 = None # third (optional) profile line
+        self.pcolor3 = wx.Colour(0,255,0)
+        self.pwidth3 = 1
+        self.pstyle3 =wx.SOLID
+        self.plegend3 = ' Profile'
         self.font = wx.Font(12,wx.FONTFAMILY_SWISS,wx.FONTSTYLE_NORMAL,wx.FONTWEIGHT_NORMAL)
         self.titlefontsize = 14
         self.axisfontsize = 10
@@ -163,6 +174,8 @@ class ProfileFrame(wx.Frame):
                  ('transect', Icons["transect"].GetBitmap(), Icons["transect"].GetLabel(), self.DrawTransect),
                  ('profiledraw', Icons["profiledraw"].GetBitmap(), Icons["profiledraw"].GetLabel(), self.CreateProfile),
                  ('options', Icons["font"].GetBitmap(), 'Profile options', self.ProfileOptionsMenu),
+                 ('drag', Icons['pan'].GetBitmap(), 'Enable drag', self.OnDrag),
+                 ('zoom', Icons['zoom_in'].GetBitmap(), 'Enable zoom', self.OnZoom),
                  ('unzoom', Icons['zoom_back'].GetBitmap(), 'Unzoom profile', self.OnRedraw),
                  ('erase', Icons["erase"].GetBitmap(), 'Erase profile', self.OnErase),
                  ('', '', '', ''),
@@ -190,10 +203,25 @@ class ProfileFrame(wx.Frame):
             dlg.Destroy()
             return
 
-        self.rast = dlg.rast
-        self.SetStatusText("Profiling %s" % self.rast)
-        self.SetTitle("Profile of transect across %s" % self.rast)
-        self.ptitle = 'Profile of %s' % self.rast
+        self.rast1 = dlg.rast1
+        self.rast2 = dlg.rast2
+        self.rast3 = dlg.rast3
+        self.plegend1 = (' Profile of '+self.rast1)
+
+        # set default title and legend text
+        self.ptitle = 'Profile of %s' % self.rast1
+
+        if self.rast2 == '' and self.rast3 != '':
+            self.rast2 = self.rast3
+            self.rast3 = ''
+
+        if self.rast2 != '' and self.rast3 != '':
+            self.ptitle += (', '+self.rast2+', and '+self.rast3)
+            self.plegend2 = (' Profile of '+self.rast2)
+            self.plegend3 = (' Profile of '+self.rast3)
+        elif self.rast2 != '':
+            self.plegend2 = (' Profile of '+self.rast2)
+            self.ptitle += (' and '+self.rast2)
 
     def OnActivate(self, event):
         print "window=",event.GetEventObject()
@@ -201,8 +229,7 @@ class ProfileFrame(wx.Frame):
 
     def DrawTransect(self, event):
         self.seglist = []
-        self.datalist = []
-        self.pline = ''
+        self.datalist1 = []
         self.ppoints = ''
         self.Parent.SetFocus()
         self.Parent.Raise()
@@ -220,8 +247,8 @@ class ProfileFrame(wx.Frame):
         self.client.SetFontSizeAxis(self.axisfontsize)
         self.client.SetFontSizeLegend(self.legendfontsize)
         self.client.setLogScale((False,False))
-        self.client.SetEnableZoom(True)
-#        self.client.SetEnableDrag(True)
+        self.client.SetEnableZoom(False)
+        self.client.SetEnableDrag(False)
         self.client.SetEnableGrid(self.enablegrid)
         self.client.SetGridColour(self.gridcolor)
         self.client.SetShowScrollbars(True)
@@ -229,6 +256,7 @@ class ProfileFrame(wx.Frame):
         self.client.SetYSpec('auto')
         self.client.SetEnableLegend(self.enablelegend)
         self.client.SetFontSizeTitle(self.titlefontsize)
+#        self.client.SetPointLabelFunc(self.DrawPointLabel())
 
     def DrawPointLabel(self, dc, mDataDict):
         """This is the fuction that defines how the pointLabels are plotted
@@ -276,6 +304,28 @@ class ProfileFrame(wx.Frame):
                 self.client.UpdatePointLabel(mDataDict)
         event.Skip()           #go to next handler
 
+    def CreatePline(self, raster, coords, colour='blue', width=2, style=wx.SOLID, legend=' Profile'):
+        """
+        Build a list of distance, value pairs for points along transect
+        """
+
+        datalist = []
+        cmdlist = ['r.profile', 'input=%s' % raster, 'profile=%s' % coords, 'null=nan']
+        p = cmd.Command(cmdlist)
+        output = p.module_stdout.read().strip().split('\n')
+        for outline in output:
+            dist,elev = outline.split(' ')
+            datalist.append((dist,elev))
+
+        # graph the distance, value pairs for the transect
+        if len(datalist) > 0:
+            pline = plot.PolyLine(datalist,
+                                  colour=colour,
+                                  width=width,
+                                  style=style,
+                                  legend=legend)
+        return pline
+
     def CreateProfile(self, event):
         """
         Main routine for creating a profile. Uses r.profile to create a list
@@ -284,8 +334,8 @@ class ProfileFrame(wx.Frame):
         segments, these are drawn as points. Profile transect is drawn, using
         methods in mapdisp.py
         """
-        if self.rast == '':
-            dlg = wx.MessageDialog(self, 'You must select a raster map to profile',
+        if self.rast1 == '':
+            dlg = wx.MessageDialog(self, 'You must select at least one raster map to profile',
                                'Nothing to profile', wx.OK | wx.ICON_INFORMATION)
             dlg.ShowModal()
             dlg.Destroy()
@@ -295,6 +345,7 @@ class ProfileFrame(wx.Frame):
         coordstr = ''
         dist = 0
         cumdist = 0
+        self.plotlist = []
         lasteast = lastnorth = None
         for point in self.mapwin.polycoords:
             # convert screen coordinates to map coordinates for transect
@@ -307,7 +358,7 @@ class ProfileFrame(wx.Frame):
                 coordstr = '%s,%d,%d' % (coordstr,east,north)
 
             # get value of raster cell at coordinate point
-            cmdlist = ['r.what', 'input=%s' % self.rast, 'east_north=%d,%d' % (east,north)]
+            cmdlist = ['r.what', 'input=%s' % self.rast1, 'east_north=%d,%d' % (east,north)]
             p = cmd.Command(cmdlist)
             output = p.module_stdout.read().strip().split('|')
             val = output[3]
@@ -329,24 +380,35 @@ class ProfileFrame(wx.Frame):
         except:
             pass
 
+        self.pline1 = self.CreatePline(self.rast1, coordstr,
+                                       colour=self.pcolor1,
+                                       width=self.pwidth1,
+                                       style=self.pstyle1,
+                                       legend=self.plegend1)
 
-        # build a list of distance, value pairs for points along transect
-        cmdlist = ['r.profile', 'input=%s' % self.rast, 'profile=%s' % coordstr, 'null=nan']
-        p = cmd.Command(cmdlist)
-        output = p.module_stdout.read().strip().split('\n')
-        for outline in output:
-            dist,elev = outline.split(' ')
-            self.datalist.append((dist,elev))
+        self.plotlist.append(self.pline1)
 
+        if self.rast2 != '':
+            self.pline2 = self.CreatePline(self.rast2, coordstr,
+                                           colour=self.pcolor2,
+                                           width=self.pwidth2,
+                                           style=self.pstyle2,
+                                           legend=self.plegend2)
 
-        # graph the distance, value pairs for the transect
-        if len(self.datalist) > 0:
-            self.pline = plot.PolyLine(self.datalist, colour='blue', width=2, legend=' Profile')
-            self.plotlist.append(self.pline)
+            self.plotlist.append(self.pline2)
+
+        if self.rast3 != '':
+            self.pline3 = self.CreatePline(self.rast3, coordstr,
+                                           colour=self.pcolor3,
+                                           width=self.pwidth3,
+                                           style=self.pstyle3,
+                                           legend=self.plegend3)
+
+            self.plotlist.append(self.pline3)
 
         if len(self.seglist) > 0 :
-            self.ppoints = plot.PolyMarker(self.seglist, legend=' Segment breaks', colour='red', size=2,
-                                  fillstyle = wx.TRANSPARENT, marker='circle')
+            self.ppoints = plot.PolyMarker(self.seglist, legend=' Segment breaks', colour='black', size=3,
+                                  fillstyle = wx.TRANSPARENT, marker='plus')
             self.plotlist.append(self.ppoints)
 
         self.profile = plot.PlotGraphics(self.plotlist, self.ptitle, self.xlabel, self.ylabel)
@@ -360,6 +422,14 @@ class ProfileFrame(wx.Frame):
         self.mapwin.mouse['begin'] = self.mapwin.mouse['end'] = (0.0,0.0)
         self.mapwin.mouse['use'] = 'pointer'
         self.mapwin.mouse['box'] = 'point'
+
+    def OnZoom(self, event):
+        self.client.SetEnableZoom(True)
+        self.client.SetEnableDrag(False)
+
+    def OnDrag(self, event):
+        self.client.SetEnableDrag(True)
+        self.client.SetEnableZoom(False)
 
     def OnRedraw(self, event):
         """
@@ -509,19 +579,32 @@ class SetRaster(wx.Dialog):
         Select raster map to profile
         """
 
-        self.rast = ''
+        self.rast1 = ''
+        self.rast2 = ''
+        self.rast3 = ''
 
         sizer = wx.BoxSizer(wx.VERTICAL)
 
         box = wx.BoxSizer(wx.HORIZONTAL)
-
-        label = wx.StaticText(self, -1, "Select raster:")
+        label = wx.StaticText(self, -1, "Select raster 1 (required):")
         box.Add(label, 0, wx.ALIGN_CENTRE|wx.ALL, 5)
-        self.selection = select.Select(self, id=wx.ID_ANY, size=(300,-1),
-                                          type='cell')
-        box.Add(self.selection, 0, wx.ALIGN_CENTRE|wx.ALL, 5)
-        self.selection.Bind(wx.EVT_TEXT, self.onSelection)
+        self.selection1 = select.Select(self, id=wx.ID_ANY, size=(300,-1),type='cell')
+        box.Add(self.selection1, 0, wx.ALIGN_CENTRE|wx.ALL, 5)
+        sizer.Add(box, 0, wx.GROW|wx.ALIGN_CENTER_VERTICAL|wx.ALL, 5)
 
+        box = wx.BoxSizer(wx.HORIZONTAL)
+        label = wx.StaticText(self, -1, "Select raster 2 (optional):")
+        box.Add(label, 0, wx.ALIGN_CENTRE|wx.ALL, 5)
+        self.selection2 = select.Select(self, id=wx.ID_ANY, size=(300,-1),type='cell')
+        box.Add(self.selection2, 0, wx.ALIGN_CENTRE|wx.ALL, 5)
+
+        sizer.Add(box, 0, wx.GROW|wx.ALIGN_CENTER_VERTICAL|wx.ALL, 5)
+
+        box = wx.BoxSizer(wx.HORIZONTAL)
+        label = wx.StaticText(self, -1, "Select raster 3 (optional):")
+        box.Add(label, 0, wx.ALIGN_CENTRE|wx.ALL, 5)
+        self.selection3 = select.Select(self, id=wx.ID_ANY, size=(300,-1),type='cell')
+        box.Add(self.selection3, 0, wx.ALIGN_CENTRE|wx.ALL, 5)
         sizer.Add(box, 0, wx.GROW|wx.ALIGN_CENTER_VERTICAL|wx.ALL, 5)
 
         line = wx.StaticLine(self, -1, size=(20,-1), style=wx.LI_HORIZONTAL)
@@ -542,11 +625,18 @@ class SetRaster(wx.Dialog):
         self.SetSizer(sizer)
         sizer.Fit(self)
 
-    def onSelection(self, event):
-        self.rast = event.GetString()
+        self.selection1.Bind(wx.EVT_TEXT, self.onSelection1)
+        self.selection2.Bind(wx.EVT_TEXT, self.onSelection2)
+        self.selection3.Bind(wx.EVT_TEXT, self.onSelection3)
 
-    def onText(self, event):
-        self.rast = event.GetString()
+    def onSelection1(self, event):
+        self.rast1 = event.GetString()
+
+    def onSelection2(self, event):
+        self.rast2 = event.GetString()
+
+    def onSelection3(self, event):
+        self.rast3 = event.GetString()
 
 class TextDialog(wx.Dialog):
     def __init__(self, parent, id, title, pos=wx.DefaultPosition, size=wx.DefaultSize,
@@ -746,11 +836,6 @@ class TextDialog(wx.Dialog):
     def OnLegendEnable(self, event):
         pass
 
-    def OnZoomEnable(self, event):
-        pass
-
-    def OnDragEnable(self, event):
-        pass
 
 
 
