@@ -407,8 +407,8 @@ class ProfileFrame(wx.Frame):
             self.plotlist.append(self.pline3)
 
         if len(self.seglist) > 0 :
-            self.ppoints = plot.PolyMarker(self.seglist, legend=' Segment breaks', colour='black', size=3,
-                                  fillstyle = wx.TRANSPARENT, marker='plus')
+            self.ppoints = plot.PolyMarker(self.seglist, legend=' Segment breaks', colour='black', size=2,
+                                  fillstyle = wx.TRANSPARENT, marker='triangle')
             self.plotlist.append(self.ppoints)
 
         self.profile = plot.PlotGraphics(self.plotlist, self.ptitle, self.xlabel, self.ylabel)
