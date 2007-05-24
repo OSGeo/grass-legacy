@@ -1,6 +1,7 @@
 #include <unistd.h>
 #include <stdlib.h>
 #include <grass/gis.h>
+#include <grass/spawn.h>
 
 
 /* 
@@ -10,13 +11,12 @@
  */
 int run_etc_support(char *pgm, char *rast)
 {
-    char buf[1024];
+    char path[GPATH_MAX];
     int stat;
 
-    G_snprintf(buf, sizeof(buf), "%s/etc/support/%s '%s'",
-             G_gisbase(), pgm, rast);
+    sprintf(path, "%s/etc/support/%s", G_gisbase(), pgm);
 
-    if ((stat = G_system(buf)))
+    if ((stat = G_spawn(path, pgm, rast, NULL)))
 	G_sleep(3);
 
     return stat;
@@ -30,11 +30,9 @@ int run_etc_support(char *pgm, char *rast)
  */
 int run_system(char *pgm)
 {
-    char buf[1024];
     int stat;
 
-    G_snprintf(buf, sizeof(buf), "%s", pgm);
-    if ((stat = G_system(buf)))
+    if ((stat = G_spawn(pgm, pgm, NULL)))
 	G_sleep(3);
 
     return stat;
