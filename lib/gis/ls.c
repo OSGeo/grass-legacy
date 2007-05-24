@@ -95,12 +95,43 @@ void G_ls(const char *dir, FILE *stream)
     int i, n;
     char **dir_listing;
    
-    int perline;
-    int field_width, max_len = 0;
-    int screen_width = 80; /* Default width of 80 columns */
-   
     dir_listing = G__ls(dir, &n);
 
+    G_ls_format(dir_listing, n, 0, stream);
+
+    for (i = 0; i < n; i++)
+        G_free(dir_listing[i]);
+   
+    G_free(dir_listing);
+   
+    return;
+}
+
+/**
+ * \brief Prints a listing of items to a stream, in prettified column format
+ * 
+ * Lists the contents of the array passed to the given stream, e.g. stderr.
+ * Prints the number of items specifed by "perline" to each line, unless
+ * perline is given as 0 in which case the function tries to determine an 
+ * appropriate column width to keep the number of lines used to a minimum
+ * and look pretty on the screen.
+ * 
+ * \param list      Array of strings containing items to be printed
+ * \param num_items Number of items in the array
+ * \param perline   Number of items to print per line, 0 for autodetect
+ * \param stream    Stream to print listing to
+ **/
+
+void G_ls_format(const char **list, int num_items, int perline, FILE *stream)
+{
+    int i, j;
+
+    int field_width, column_height;
+    int screen_width = 80; /* Default width of 80 columns */
+   
+    if (num_items < 1)
+        return; /* Nothing to print */
+   
 #ifdef TIOCGWINSZ
     /* Determine screen_width if possible */
     {	
@@ -109,34 +140,42 @@ void G_ls(const char *dir, FILE *stream)
         if (ioctl(fileno(stream), TIOCGWINSZ, (char *) &size) == 0)
 	    screen_width = size.ws_col;
     }   
-#endif       
+#endif                  
 
-    for (i=0; i < n; i++)
+    if (perline == 0) 
     {	
-        /* Find maximum filename length */
-        if (strlen(dir_listing[i]) > max_len)
-            max_len = strlen(dir_listing[i]);
-    }
-    
-    /* Num filenames that will fit per line (+1 because of space after name) */
-    perline = screen_width / (max_len + 1);
+        int max_len = 0;
+
+        for (i=0; i < num_items; i++)
+        {	
+            /* Find maximum filename length */
+            if (strlen(list[i]) > max_len)
+                max_len = strlen(list[i]);
+        }
+                      /* Auto-fit the number of items that will
+                       * fit per line (+1 because of space after item) */
+        perline = screen_width / (max_len + 1);
+    }   
+   
     /* Field width to accomodate longest filename */
     field_width = screen_width / perline;
+    /* Longest column height (i.e. num_items <= perline * column_height) */
+    column_height = (int)ceil((double)num_items / perline);
 
-    for (i=0; i < n; i++)
+    for (i=0; i < column_height; i++)     
     {	
-        /* Print filenames in left-justified fixed-width fields, adding
-	 * a newline after every 'perline' names */
-        fprintf(stream, "%-*s%s", field_width, dir_listing[i], 
-		                  (i + 1) % perline? "" : "\n");
-        G_free(dir_listing[i]);
-    }   
-
-    if (n % perline)
-        /* Closing newline required */
+        for (j=0; j < perline; j++)
+	{
+	    int cur = j * column_height + i;
+	   
+	    if (cur >= num_items)
+	        continue; /* No more items to print in this row */
+	   
+            /* Print filenames in left-justified fixed-width fields */
+            fprintf(stream, "%-*s", field_width, list[cur]);
+	}       
         fprintf(stream, "\n");
-   
-    G_free(dir_listing);
+    }   
    
     return;
 }
