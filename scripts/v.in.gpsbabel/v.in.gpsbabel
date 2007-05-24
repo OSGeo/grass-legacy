@@ -7,7 +7,7 @@
 # PURPOSE:     Import GPS data from a GPS receiver or file into a GRASS
 #	       vector map using gpsbabel
 #
-# COPYRIGHT:   (c) 2000-2006 the GRASS Development Team
+# COPYRIGHT:   (c) 2000-2007 the GRASS Development Team
 #	       This program is free software under the GNU General Public
 #	       License (>=v2). Read the file COPYING that comes with GRASS
 #	       for details.
@@ -16,11 +16,11 @@
 #		  Science, University of Pisa (Italy).
 #		Commission from Faunalia Pontedera (PI)
 #
+#               With updates by Markus Neteler and Hamish Bowman
+#
 #		Based on v.in.garmin for GRASS 6 by Hamish Bowman
 #		and v.in.garmin.sh for GRASS 5 by Andreas Lange
 #
-# TODO: - remove bash-isms
-#       - check if attributes are shifted by one row (for certain Garmins)
 #############################################################################
 #
 # REQUIREMENTS:
@@ -40,51 +40,51 @@
 #%End
 #%flag
 #%  key: v
-#%  description: verbose mode
+#%  description: Verbose mode
 #%end
 #%flag
 #%  key: w
-#%  description: upload Waypoints from GPS
+#%  description: Upload Waypoints from GPS
 #%end
 #%flag
 #%  key: r
-#%  description: upload Routes from GPS
+#%  description: Upload Routes from GPS
 #%end
 #%flag
 #%  key: t
-#%  description: upload Track from GPS
+#%  description: Upload Track from GPS
 #%end
 #%flag
 #%  key: p
-#%  description: force vertices of track or route data as points
+#%  description: Force vertices of track or route data as points
 #%end
 #%flag
 #%  key: k
-#%  description: do not attempt projection transform from WGS84
+#%  description: Do not attempt projection transform from WGS84
 #%end
 #%option
 #% key: input
 #% type: string
-#% description: device or file used to import data
-#% required : yes
+#% description: Device or file used to import data
+#% answer: /dev/gps
 #%end
 #%option
 #% key: output
 #% type: string
 #% gisprompt: new,vector,vector
-#% description: name for new vector map (omit for display to stdout)
+#% description: Name for new vector map (omit for display to stdout)
 #% required : no
 #%end
 #%option
 #% key: format
 #% type: string
-#% description: format of GPS input data (use gpsbabel supported formats)
-#% required: yes
+#% description: Format of GPS input data (use gpsbabel supported formats)
+#% answer: garmin
 #%end
 #%option
 #% key: proj
 #% type: string
-#% description: projection of input data (use PROJ.4 options), if not set the input is assumed to be Lat/Lon WGS84
+#% description: Projection of input data (PROJ.4 style), if not set Lat/Lon WGS84 is assumed
 #% required: no
 #%end
 
@@ -107,37 +107,36 @@ eval `g.gisenv`
 LOCATION="$GISDBASE"/"$LOCATION_NAME"/"$MAPSET"
 
 PROG=`basename $0`
-# linea modificata  
 
 #### check for gpsbabel 
  if [ ! -x "`which gpsbabel`" ] ; then
-    echo "The gpsbabel program was not found, please install it first." 1>&2
+    echo "ERROR: The gpsbabel program was not found, please install it first." 1>&2
     echo "       http://gpsbabel.sourceforge.net" 1>&2
     exit 1
 fi
 
 #### check for cs2cs
 if [ ! -x "`which cs2cs`" ] ; then
-    echo "The cs2cs program was not found, please install it first." 1>&2
-    echo "http://proj.maptools.org" 1>&2
+    echo "ERROR: The cs2cs program was not found, please install it first." 1>&2
+    echo "       http://proj.maptools.org" 1>&2
     exit 1
 fi
 
 #### check if we have awk
 if [ ! -x "`which awk`" ] ; then
-    echo "awk is required, please install awk or gawk first." 1>&2
+    echo "ERROR: awk is required, please install awk or gawk first." 1>&2
     exit 1
 fi
 
 #### set temporary files
 TMP="`g.tempfile pid=$$`"
 if [ $? -ne 0 ] || [ -z "$TMP" ] ; then
-    echo "Unable to create temporary files" 1>&2
+    echo "ERROR: Unable to create temporary files" 1>&2
     exit 1
 fi
 
 #### trap ctrl-c so that we can clean up tmp
-trap 'rm -f "${TMP}.*"' 2 3 15
+trap 'rm -f "${TMP}."*' 2 3 15
 
 
 #### process command line arguments 
@@ -164,14 +163,14 @@ fi
 
 
 if [ $GIS_FLAG_W -eq 1 ] && ([ $GIS_FLAG_R -eq 1 ] || [ $GIS_FLAG_T -eq 1 ]) ; then
-    echo "One feature at a time please. Use v.patch if you need to combine them." 1>&2
-    rm -f "${TMP}.*"
+    echo "ERROR: One feature at a time please. Use v.patch if you need to combine them." 1>&2
+    rm -f "${TMP}"
     exit 1
 fi
 # logic eludes me at pressent..  [combine with above]
 if [ $GIS_FLAG_R -eq 1 ] && [ $GIS_FLAG_T -eq 1 ] ; then
-    echo "One feature at a time please. Use v.patch if you need to combine them." 1>&2
-    rm -f "${TMP}.*"
+    echo "ERROR: One feature at a time please. Use v.patch if you need to combine them." 1>&2
+    rm -f "${TMP}"
     exit 1
 fi
 
@@ -180,13 +179,11 @@ CREATE_POINTS=0
 if [ $GIS_FLAG_W -eq 1 ] ; then
     WPT=1
     CREATE_POINTS=1
-fi
-if [ $GIS_FLAG_R -eq 1 ] ; then
+elif [ $GIS_FLAG_R -eq 1 ] ; then
     WPT=0
     RTE=1
     CREATE_POINTS=0
-fi
-if [ $GIS_FLAG_T -eq 1 ] ; then
+elif [ $GIS_FLAG_T -eq 1 ] ; then
     WPT=0
     TRK=1
     CREATE_POINTS=0
@@ -200,26 +197,24 @@ if [ $GIS_FLAG_K -eq 1 ] ; then
 fi
 
 if [ $GIS_FLAG_W -eq 0 ] && [ $GIS_FLAG_R -eq 0 ] && [ $GIS_FLAG_T -eq 0 ] ; then
-	CREATE_POINTS=1
-	WPT=1
+    echo "WARNING: No features requested for download. Assuming waypoints." 1>&2
+    WPT=1
+    CREATE_POINTS=1
 fi
 
 
 #### set up projection info
-if [ -n "$GIS_OPT_PROJ"] ; then
-    IN_PROJ="+proj=longlat +towgs84=0.000,0.000,0.000"
-else
+if [ -n "$GIS_OPT_PROJ" ] ; then
     IN_PROJ="$GIS_OPT_PROJ"
+else
+    IN_PROJ="+proj=longlat +towgs84=0.000,0.000,0.000"
 fi
-g.proj -jf > $TMP.tmp
-read OUT_PROJ < $TMP.tmp
-
-g.region -p | grep projection | cut -f2 -d" " > $TMP.tmp
-read PROJ_TYPE < $TMP.tmp
+OUT_PROJ="`g.proj -jf`"
+PROJ_TYPE=`g.region -p | grep 'projection' | cut -f2 -d" "`
 
 if [ $PROJ_TYPE -eq 0 ] && [ $KEEP_WGS84 -ne 1 ] ; then
-    echo "Cannot project to a XY location." 1>&2
-    rm -f "${TMP}.*"
+    echo "ERROR: Cannot project to a XY location." 1>&2
+    rm -f "${TMP}"
     exit 1
 fi
 
@@ -233,29 +228,57 @@ STYLE="$GISBASE/etc/grass_write_ascii.style"
 #(GPX file example):
 # gpsbabel -w -i gpx -o xcsv,style=grass_write_ascii.style outfile.csv
 
-#### receive data ... modificato
+#### receive data ...
 
 if [ $CREATE_POINTS -eq 1 ] ; then
-    echo "Downloading Waypoints from GPS" 1>&2
-    gpsbabel -w -i $GIS_OPT_FORMAT $GPSdevice $PROGVERBOSE -o xcsv,style="$STYLE" -F "$TMP".gpst
+    if [ $WPT -eq 1 ] ; then
+	echo "Loading Waypoints from <$GIS_OPT_INPUT> ..." 1>&2
+	TYPE="-w"
+	EXITCODE=$?
+    elif [ $RTE -eq 1 ] ; then
+	echo "Loading Routes as points from <$GIS_OPT_INPUT> ..." 1>&2
+	TYPE="-r"
+    elif [ $TRK -eq 1 ] ; then
+	echo "Loading Tracks as points from <$GIS_OPT_INPUT> ..." 1>&2
+	TYPE="-t"
+    fi
+
+    gpsbabel $TYPE -i $GIS_OPT_FORMAT $GPSdevice $PROGVERBOSE \
+	-o xcsv,style="$STYLE" -F "$TMP".xcsv
     EXITCODE=$?
+
+    if [ "`wc -l < "${TMP}.xcsv"`" -eq 0 ] ; then
+	echo 'WARNING: No data! Exiting.' 1>&2
+	rm -f "${TMP}."*
+	exit 0
+    fi
+
 else
     if [ $RTE -eq 1 ] ; then
-	echo "Downloading Routes from GPS" 1>&2
-	gpsbabel -r -i $GIS_OPT_FORMAT $GPSdevice $PROGVERBOSE -o gpx -F "$TMP".gpx
+	echo "Loading Routes from <$GIS_OPT_INPUT> ..." 1>&2
+	TYPE="-r"
+	EXITCODE=$?
+    elif [ $TRK -eq 1 ] ; then
+	echo "Loading Tracks from <$GIS_OPT_INPUT> ..." 1>&2
+	TYPE="-t"
 	EXITCODE=$?
     fi
-    if [ $TRK -eq 1 ] ; then
-	echo "Downloading Tracks from GPS" 1>&2
-	gpsbabel -t -i $GIS_OPT_FORMAT $GPSdevice $PROGVERBOSE -o gpx -F "$TMP".gpx
-	EXITCODE=$?
+    gpsbabel $TYPE -i $GIS_OPT_FORMAT $GPSdevice $PROGVERBOSE \
+	-o gpx -F "$TMP".gpx
+    EXITCODE=$?
+
+    if [ "`grep -c '<rte>' "${TMP}.gpx"`" -eq 0 ] && \
+       [ "`grep -c '<trk>' "${TMP}.gpx"`" -eq 0 ]; then
+	echo 'ERROR No data! Exiting.' 1>&2
+	rm -f "${TMP}."*
+	exit 0
     fi
 fi
 
 #### check success/failure
 if [ $EXITCODE -ne 0 ] ; then
-    echo "Error retrieving data" 1>&2
-    rm -f "${TMP}.*"
+    echo "ERROR: Error loading data from gpsbabel" 1>&2
+    rm -f "${TMP}."*
     exit 1
 fi
 
@@ -264,25 +287,15 @@ fi
 if [ $CREATE_POINTS -eq 1 ] ; then
 ###################################
 
-    if [ $WPT -eq 1 ] ; then
-	# linea modificata
-	cat "${TMP}.gpst" | cut -f 1,2 -d '|'| tr '|' ' '  > "$TMP".base
-	cat "${TMP}.gpst" | tr '+' '|' | cut -f3,4,5,6 -d '|'> "$TMP".attributes
-    fi
-    if [ $RTE -eq 1 ] ; then
-	# linea modificata
-	cat "${TMP}.gpst" | cut -f 1,2 -d '|'| tr '|' ' '  > "$TMP".base
-	cat "${TMP}.gpst" | tr '+' '|' | cut -f3,4,5,6 -d '|'> "$TMP".attributes
-    fi
-    if [ $TRK -eq 1 ] ; then
-       # linea modificata
-	cat "${TMP}.gpst" | cut -f 1,2 -d '|'| tr '|' ' '  > "$TMP".base
-	cat "${TMP}.gpst" | tr '+' '|' | cut -f3,4,5,6 -d '|'> "$TMP".attributes
-    fi
+    cat "${TMP}.xcsv" | cut -f 1,2 -d '|'| tr '|' ' '  > "$TMP".base
+# FIXME: if last field (comments) is empty it causes a not-enough fields error in v.in.ascii
+
+    cat "${TMP}.xcsv" | tr '+' '|' | cut -f3,4,5,6 -d '|' | \
+	sed -e 's/-99999999.000000//' -e 's/|$/|_/' \
+	    -e 's/01\/01\/1970|00:00:00 AM/|/' > "$TMP".attributes
+
 
     #### reproject if needed
-    # linea modificata
-
     if [ "$IN_PROJ" = "$OUT_PROJ" ] || [ $KEEP_WGS84 -eq 1 ] ; then
 	echo "No projection transformation performed" 1>&2
 	cp "${TMP}.base" "${TMP}.P_base"
@@ -291,53 +304,47 @@ if [ $CREATE_POINTS -eq 1 ] ; then
 	cs2cs -f %.7f $IN_PROJ +to $OUT_PROJ < "${TMP}.base" > "${TMP}.P_base"
 	EXITCODE=$?
 	# check if transform REALLY worked (e.g. when the grid file is not found)
-	if [ -n "`head -n 1 "${TMP}.P_base" | grep "^*"`" ] ; then
+	BAD_PTS="`grep -c "^*" "${TMP}.P_base"`"
+	if [ "$BAD_PTS" -gt 0 ] ; then
+	    echo 1>&2
+	    echo "WARNING: $BAD_PTS point(s) failed reprojection." 1>&2
 	    EXITCODE=1
 	fi
 	if [ $EXITCODE -ne 0 ] ; then
-	    echo "Projection transform failed, retaining WGS84" 1>&2
+	    echo "WARNING: Projection transform failed, retaining WGS84" 1>&2
+	    echo 1>&2
 	    cp -f "${TMP}.base" "${TMP}.P_base"
 	fi
     fi
-    # linea modificata
+
     cat "${TMP}.P_base" | awk '{print $1 "|" $2}' > "${TMP}.vertices"
 
     #### and put back together
     # wpt list:   x|y|<attr1>|...|<attr n>
     paste -d"|" "$TMP".vertices "$TMP".attributes > "$TMP".asc
 
-
+    #### output or import
     if [ -z "$NAME" ] ; then
 	echo "ASCII file redirected to stdout" 1>&2
 	cat "${TMP}.asc" 2> /dev/null
     else
-	#### import into new ascii points file
+	#### import into new points file
 	if [ $WPT -eq 1 ] ; then
 	    echo "Importing Waypoints..." 1>&2
-	    #linea modificata
-	    cat "${TMP}.asc" | v.in.ascii output="$NAME" cat=0 \
-#HB#???? fix:: see v.in.garmin & edit grass.style
-		columns='x double precision, y double precision, altitude double precision, creatdate varchar(10), time varchar(11), comments varchar(40)'
-	    EXITCODE=$?
-	fi
-	if [ $RTE -eq 1 ] ; then
+	elif [ $RTE -eq 1 ] ; then
 	    echo "Importing Routes as points..." 1>&2
-	    #linea modificata
-	    cat "${TMP}.asc" | v.in.ascii output="$NAME" cat=0 \
-		columns='x double precision, y double precision, altitude double precision, creatdate varchar(10), time varchar(11), comments varchar(40)'
-	    EXITCODE=$?
-	fi
-	if [ $TRK -eq 1 ] ; then
-	    echo "Importing Track as points..." 1>&2
-	    #linea modificata
-	    cat "${TMP}.asc" | v.in.ascii output="$NAME" cat=0 \
-		columns='x double precision, y double precision, altitude double precision, creatdate varchar(10), time varchar(11), comments varchar(40)'
-	EXITCODE=$?
+	elif [ $TRK -eq 1 ] ; then
+	    echo "Importing Tracks as points..." 1>&2
 	fi
 
+	cat "${TMP}.asc" | v.in.ascii output="$NAME" cat=0 \
+	  columns='x double precision, y double precision, altitude double precision, gmt_date varchar(10), gmt_time varchar(11), comments varchar(40)'
+	EXITCODE=$?
+
+	# EXITCODE also used at pgm termination below!
 	if [ $EXITCODE -ne 0 ] ; then
-	    echo "Error importing data" 1>&2
-	    rm -f "${TMP}.*"
+	    echo "ERROR: While Importing data with v.in.ascii" 1>&2
+	    rm -f "${TMP}."*
 	    exit 1
 	fi
 
@@ -363,13 +370,16 @@ else # CREATE_LINES
 	READ_BYTES=0 # offset of bytes already read
 	cp "$TMP.gpx" "$TMP.gpx2" # file to be "eaten" by head commands in while 
 	ROUTE_ID=0 # route identifier
-	while (($ROUTE_NUMBER>0)); do
+
+	while [ "$ROUTE_NUMBER" -gt 0 ] ; do
 	    head -n 1 "$TMP.bytes" | cut -f 1 -d ':'> "$TMP.var"
 	    END_BYTE=0
 	    read END_BYTE < "$TMP.var" # this route ends at END_BYTE in $TMP.gpx file
+
 	    TO_READ=0
-	    ((TO_READ=$END_BYTE-$READ_BYTES)) # bytes to read from $TMP.gpx2 file 
-	    ((READ_BYTES=$READ_BYTES+$TO_READ))# update readed bytes
+	    TO_READ="`expr $END_BYTE - $READ_BYTES`"    # bytes to read from $TMP.gpx2 file 
+	    READ_BYTES="`expr $READ_BYTES + $TO_READ`"  # update readed bytes
+
 	    # list of points in route
 	    head -n $TO_READ "$TMP.gpx2" | grep "<rtept" > "$TMP.points" 
 	    POINTS=0 # number of points in route
@@ -385,19 +395,34 @@ else # CREATE_LINES
 	    read OFFSET < "$TMP.var"
 	    head -n $OFFSET "$TMP.gpx2"> "$TMP.rte_attr"
 	    # read needed attributes
-	    ((ROUTE_ID++))
+	    ROUTE_ID="`expr $ROUTE_ID + 1`"
 	    cat "$TMP.rte_attr"| grep "<number" | tail -n 1 | cut -f2 -d'<' | cut -f2 -d'>' > "$TMP.var"
 	    NUMBER=0
 	    read NUMBER < "$TMP.var" # read the route number
 	    cat "$TMP.rte_attr"| grep "<name" | tail -n 1 | cut -f2 -d'<' | cut -f2 -d'>' > "$TMP.var"
 	    R_NAME=""
 	    read R_NAME < "$TMP.var" # read the route name
-	    ((OFFSET=$TO_READ-$OFFSET))
+
+	    OFFSET="`expr $TO_READ - $OFFSET`"
 	    head -n$TO_READ "$TMP.gpx2" | tail -n$OFFSET | grep "<name" | head -n 1 | cut -f2 -d'<' | cut -f2 -d'>' > "$TMP.var"
 	    START_PNT=""
 	    read START_PNT < "$TMP.var" # read the name of start point
-	    echo -e "$ROUTE_ID \t$NUMBER \t$R_NAME \t$START_PNT ">> "$TMP.route_atts"
-	    ((ROUTE_NUMBER--))
+
+	    # check that numberic values don't try and pass an empty string
+### variable names don't line up with column names ?!
+	    if [ -z "$ROUTE_ID" ] ; then
+		ROUTE_ID="NULL"
+        	echo "WARNING: Route $ROUTE_NUMBER: category number was empty. Bug?" 1>&2
+	    fi
+	    if [ -z "$NUMBER" ] ; then
+		NUMBER="NULL"
+		echo "WARNING: Route $ROUTE_NUMBER: route ID was empty. Bug?" 1>&2
+	    fi
+
+	    echo "$ROUTE_ID|$NUMBER|$R_NAME|$START_PNT" >> "$TMP.route_atts"
+
+	    ROUTE_NUMBER="`expr $ROUTE_NUMBER - 1`"
+
 	    # eat files
 	    tail -n $ROUTE_NUMBER "$TMP.bytes" > "$TMP.bytes2"
 	    mv "$TMP.bytes2" "$TMP.bytes"
@@ -408,7 +433,7 @@ else # CREATE_LINES
 	    B_PNT=0
 	    stat -c%s "$TMP.points" > "$TMP.var"
 	    read B_PNT < "$TMP.var"
-	    ((TO_READ=$B_GPX-$B_PNT))
+	    TO_READ="`expr $B_GPX - $B_PNT`"
 	    tail -c$TO_READ "$TMP.gpx2" > "$TMP.points"
 	    mv "$TMP.points" "$TMP.gpx2"
 	done
@@ -428,13 +453,15 @@ else # CREATE_LINES
 	READ_BYTES=0 # offset of bytes already read
 	cp "$TMP.gpx" "$TMP.gpx2" # file to be "eaten" by head commands in while 
 	TRACK_ID=0 # track identifier
-	while (($TRACK_NUMBER>0)); do
+	while [ "$TRACK_NUMBER" -gt 0 ] ; do
 	    head -n 1 "$TMP.bytes" | cut -f 1 -d ':'> "$TMP.var"
 	    END_BYTE=0
 	    read END_BYTE < "$TMP.var" # this route ends at END_BYTE in $TMP.gpx file
 	    TO_READ=0
-	    ((TO_READ=$END_BYTE-$READ_BYTES)) # bytes to read from $TMP.gpx2 file 
-	    ((READ_BYTES=$READ_BYTES+$TO_READ))# update readed bytes
+
+	    TO_READ="`expr $END_BYTE - $READ_BYTES`"    # bytes to read from $TMP.gpx2 file 
+	    READ_BYTES="`expr $READ_BYTES + $TO_READ`"  # update readed bytes
+
 	    # list of points in route
 	    head -n $TO_READ "$TMP.gpx2" | grep "<trkpt" > "$TMP.points" 
 	    POINTS=0 # number of points in track 
@@ -460,7 +487,9 @@ else # CREATE_LINES
 	    E_LON=""
 	    tail -n 1 "$TMP.latlon" | cut -f2 > "$TMP.var"
 	    read E_LON < "$TMP.var"
-	    ((OFFSET=$TO_READ-$OFFSET))
+
+	    OFFSET="`expr $TO_READ - $OFFSET`"
+
 	    head -n $TO_READ "$TMP.gpx2" | tail -n $OFFSET | grep "<time" > "$TMP.time"
 	    S_TIME=""
 	    head -n 1 "$TMP.time"| cut -f 2 -d'>'| cut -f1 -d'<'> "$TMP.var"
@@ -468,9 +497,35 @@ else # CREATE_LINES
 	    E_TIME=""
 	    tail -n 1 "$TMP.time"| cut -f 2 -d'>'| cut -f1 -d'<'> "$TMP.var"
 	    read E_TIME < "$TMP.var"
-	    ((TRACK_ID++))
-	    echo -e "$TRACK_ID \t$S_TIME \t$S_LAT \t$S_LON \t$E_TIME \t$E_LAT \t$E_LON">> "$TMP.track_atts"
-	    ((TRACK_NUMBER--))
+
+	    TRACK_ID="`expr $TRACK_ID + 1`"
+
+	    # check that numberic values don't try and pass an empty string
+	    if [ -z "$TRACK_ID" ] ; then
+		TRACK_ID="NULL"
+		echo "WARNING: Track $TRACK_NUMBER: category number was empty. Bug?" 1>&2
+	    fi
+	    if [ -z "$S_LAT" ] ; then
+		S_LAT="NULL"
+		echo "WARNING: Track $TRACK_NUMBER:  starting lat was empty. Bug?" 1>&2
+	    fi
+	    if [ -z "$S_LON" ] ; then
+		S_LON="NULL"
+		echo "WARNING: Track $TRACK_NUMBER:  starting lon was empty. Bug?" 1>&2
+	    fi
+	    if [ -z "$E_LAT" ] ; then
+		E_LAT="NULL"
+		echo "WARNING: Track $TRACK_NUMBER:  ending lat was empty. Bug?" 1>&2
+	    fi
+	    if [ -z "$E_LON" ] ; then
+		E_LON="NULL"
+		echo "WARNING: Track $TRACK_NUMBER:  ending lon was empty. Bug?" 1>&2
+	    fi
+
+	    echo "$TRACK_ID|$S_TIME|$S_LAT|$S_LON|$E_TIME|$E_LAT|$E_LON" >> "$TMP.track_atts"
+
+	    TRACK_NUMBER="`expr $TRACK_NUMBER - 1`"
+
 	    # eat files
 	    tail -n $TRACK_NUMBER "$TMP.bytes" > "$TMP.bytes2"
 	    mv "$TMP.bytes2" "$TMP.bytes"
@@ -481,7 +536,9 @@ else # CREATE_LINES
 	    B_PNT=0
 	    stat -c%s "$TMP.points" > "$TMP.var"
 	    read B_PNT < "$TMP.var"
-	    ((TO_READ=$B_GPX-$B_PNT))
+
+	    TO_READ="`expr $B_GPX - $B_PNT`"
+	    
 	    tail -c$TO_READ "$TMP.gpx2" > "$TMP.points"
 	    mv "$TMP.points" "$TMP.gpx2"
 	done
@@ -504,11 +561,15 @@ else # CREATE_LINES
 	cs2cs -tL -f %.7f $IN_PROJ +to $OUT_PROJ < "${TMP}.base" > "${TMP}.P_mid"
 	EXITCODE=$?
 	 # check if transform REALLY worked (e.g. grid file not found)
-	if [ -n "`head -n 2 "${TMP}.P_mid" | grep "^*"`" ] ; then
+	 BAD_PTS="`grep -c "^*" "${TMP}.P_mid"`"
+	if [ "$BAD_PTS" -gt 0 ] ; then
+	    echo 1>&2
+	    echo "WARNING: $BAD_PTS vertices failed reprojection." 1>&2
 	    EXITCODE=1
 	fi
 	if [ $EXITCODE -ne 0 ] ; then
 	    echo "Projection transform failed, retaining WGS84" 1>&2
+	    echo 1>&2
 	    cat "${TMP}.base" | awk 'BEGIN {;} $1=="L" { print } ; \
 		$1!="L" { printf(" %s %s\n", $1, $2) } END {;}' > "${TMP}.P_base"
 	else
@@ -538,7 +599,7 @@ VERTI:
 EOF
 
     #### merge in vertices
-#HB#?? locale test fixed this   
+#HB#?? locale test fixed this
     cat "${TMP}.P_baseC" | tr ',' '.' >> "${TMP}.dig"
 
     #### if no name for vector file given, cat to stdout
@@ -552,13 +613,13 @@ EOF
 
 	#### check success/failure
 	if [ $? -eq 0 ] ; then
-	    echo "Line vector \"$NAME@$MAPSET\" successfully created" 1>&2
+	    echo "Line vector <$NAME> successfully created." 1>&2
 	else
-	    echo "An error occured on creating \"$NAME\" in mapset \"$MAPSET\", please check!" 1>&2
+	    echo 'ERROR: An error occured on creating <$NAME>, please check!' 1>&2
 	    exit 1
 	fi
 
-	## create db links if they don't exist  (Markus made it automatic now?)
+	## create db links if they don't exist  (Markus made it automatic now? MN: yes.)
 	DRIVER="`db.connect -p | grep '^driver:' | cut -f2 -d:`"
 	DATABASE="`db.connect -p | grep '^database:' | cut -f2 -d:`"
 	if [ "$DRIVER" = "(null)" ] || [ "$DATABASE" = "(null)" ] ; then
@@ -582,27 +643,17 @@ EOF
 ### <hack>
 	if [ $RTE -eq 1 ] ; then
 	    # =>  echo "INSERT INTO $NAME VALUES (2, 1, 'AB', 'B')" | db.execute
-	    # 'if' tests to work around Garmin firmware bug ($7 is even different!)
 	    cat "$ATTR_FILE" | \
-	      awk -F'\t' '{
-		if($3 == " "){$3 = "NULL"}
-		if($4 == " "){$4 = "NULL"}
-		if($6 == " "){$6 = "NULL"}
-		if($7 == ""){$7 = "NULL"}
+	      awk -F'|' '{
 		printf("echo \"INSERT INTO $NAME VALUES (%d, %d, ^%s^, ^%s^)\" | db.execute\n", $1, $2, $3, $4) }' \
-		| tr '^' \' >  "$ATTR_FILE"_exe
+		    | tr '^' \' > "$ATTR_FILE"_exe
 	fi
 	if [ $TRK -eq 1 ] ; then
 	    # =>  echo "INSERT INTO $NAME VALUES ()" | db.execute
-	    # 'if' tests to work around Garmin firmware bug ($7 is even different!)
 	    cat "$ATTR_FILE" | \
-	      awk -F'\t' '{
-		if($3 == " "){$3 = "NULL"}
-		if($4 == " "){$4 = "NULL"}
-		if($6 == " "){$6 = "NULL"}
-		if($7 == ""){$7 = "NULL"}
+	      awk -F'|' '{
 		printf("echo \"INSERT INTO $NAME VALUES (%d, ^%s^, %s, %s, ^%s^, %s, %s)\" | db.execute\n", $1, $2, $3, $4, $5, $6, $7) }' \
-		| tr '^' \' >  "$ATTR_FILE"_exe
+		    | tr '^' \' > "$ATTR_FILE"_exe
 	fi
 
 	. "$ATTR_FILE"_exe
@@ -610,6 +661,7 @@ EOF
 
 	echo "Connecting attribute table to vector file.." 1>&2
 	v.db.connect map="$NAME" table="$NAME"
+	EXITCODE=$?
     fi
 
 fi  # if CREATE_POINTS or CREATE_LINES
@@ -617,15 +669,15 @@ fi  # if CREATE_POINTS or CREATE_LINES
 
 # list column names
 if [ $VERBOSE -eq 1 ] && [ -n "$NAME" ] ; then
-    echo "<$NAME> columns:" 1>&2
+    echo "<$NAME> columns:"
     db.columns "$NAME"
 fi
 
 
 #### clean up the mess
-rm -f "${TMP}.*" 1>&2 > /dev/null
+rm -f "${TMP}."* "${TMP}"
 
 #### end
 echo "Done." 1>&2
 
-exit 0
+exit $EXITCODE
