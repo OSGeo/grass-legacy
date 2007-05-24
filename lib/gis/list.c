@@ -155,10 +155,8 @@ static int list_element( FILE *out,
     const char *element, const char *desc, const char *mapset,
     int (*lister)(const char *, const char *, const char *))
 {
-    char path[1000];
-    DIR *dirp;
-    struct dirent *dp;
-    int count = 0, maxlen = 0, num_cols = 1;
+    char path[GPATH_MAX];
+    int count = 0, maxlen = 0;
     char **list;
     int i;
 
@@ -187,38 +185,7 @@ static int list_element( FILE *out,
  * otherwise the ls must be forced into columnar form.
  */
 
-    if ((dirp = opendir(path)) == NULL)
-    	G_fatal_error("ERROR: %s: open failed.", path);
-
-    if (!lister)
-    {
-    	while((dp = readdir(dirp)) != NULL)
-    	{
-    		if (dp->d_name[0] == '.')
-    			continue;
-    		if (maxlen < (i = strlen(dp->d_name)))
-    			maxlen = i;
-    	}
-    	rewinddir(dirp);
-
-    	num_cols = 80 / (maxlen + 1); /* + 1: column separator */
-    }
-
-    if (num_cols < 1)
-        num_cols = 1;
-
-    list = NULL;
-    while ((dp = readdir(dirp)) != NULL)
-    {
-        if (dp->d_name[0] == '.')
-    	    continue;
-
-        if ((list=(char **)G_realloc(list, (count+1)*sizeof(char *))) == NULL ||
-           (list[count] = (char *)G_malloc(strlen(dp->d_name)+1)) == NULL)
-    	    G_fatal_error("ERROR: memory allocation error!");
-        strcpy(list[count++], dp->d_name);
-    }
-    closedir(dirp);
+    list = G__ls(path, &count);
 
     if (count > 0)
     {
@@ -235,11 +202,9 @@ static int list_element( FILE *out,
         }
     }
 
-    qsort(list, (size_t)count, sizeof(char *), pstrcmp);
-
-    for(i = 0; i < count; i++)
+    if (lister)
     {
-        if (lister)
+        for(i = 0; i < count; i++)
         {
 	    char title[400];
             char *b;
@@ -251,37 +216,19 @@ static int list_element( FILE *out,
     
             lister (list[i], mapset, title);
             fprintf(out,"%-18s %-.60s\n",list[i],title);
-        }
-        else
-	{
-	    if ((i+1) % num_cols)
-                fprintf(out,"%-*s", maxlen+1, list[i]);
-	    else
-                fprintf(out,"%s", list[i]);
 	}
-
-        if (!lister && !((i+1) % num_cols))
-            fprintf(out, "\n");
-
-	G_free(list[i]);
     }
-
-    if (!lister && (count % num_cols))
-        fprintf(out,"\n");
+    else
+        G_ls_format(list, count, 0, out);
 
     fprintf(out, "\n");
 
+    for(i = 0; i < count; i++)       
+	G_free(list[i]);
     if (list)
         G_free(list);
 
     return count;
-}
-
-static int pstrcmp(const void *s1, const void *s2)
-{
-    char * const *a = s1;
-    char * const *b = s2;
-    return strcmp(*a, *b);
 }
 
 /*!
