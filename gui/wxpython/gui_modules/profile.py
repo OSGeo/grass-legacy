@@ -144,7 +144,7 @@ class ProfileFrame(wx.Frame):
         self.plegend3 = ' Profile'
         self.font = wx.Font(12,wx.FONTFAMILY_SWISS,wx.FONTSTYLE_NORMAL,wx.FONTWEIGHT_NORMAL)
         self.titlefontsize = 14
-        self.axisfontsize = 10
+        self.axisfontsize = 12
         self.legendfontsize = 10
         self.enablegrid = True
         self.gridcolor = wx.Colour(200,200,200)
