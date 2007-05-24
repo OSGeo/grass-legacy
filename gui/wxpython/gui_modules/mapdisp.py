@@ -848,7 +848,7 @@ class BufferedWindow(wx.Window):
             return
 
         layer = self.tree.GetSelection()
-        type  = self.tree.layertype[layer]
+        type  = self.tree.layers[layer].type
         dcmd  = self.tree.GetPyData(layer)[0]
         mapname = None
 
@@ -1421,7 +1421,7 @@ class MapFrame(wx.Frame):
             rcmd = ''
             vcmd = ''
             for layer in self.tree.GetSelections():
-                type =   self.tree.layertype[layer]
+                type =   self.tree.layers[layer].type
                 dcmd = self.tree.GetPyData(layer)[0]
                 if type in ('raster', 'rgb', 'his'):
                     for item in dcmd.split(' '):
