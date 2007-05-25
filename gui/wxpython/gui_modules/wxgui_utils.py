@@ -458,7 +458,7 @@ class LayerTree(CT.CustomTreeCtrl):
         """Remove selected layer for the layer tree"""
 
         item = event.GetItem()
-
+        
         try:
             item.properties.Close(True)
         except:
@@ -535,21 +535,28 @@ class LayerTree(CT.CustomTreeCtrl):
             pass
 
     def OnCollapseNode(self, event):
+        """
+        Collapse node
+        """
         if self.layers[self.layer_selected].type == 'group':
             self.SetItemImage(self.layer_selected, self.folder)
 
     def OnExpandNode(self, event):
-        """Expand node"""
+        """
+        Expand node
+        """
         self.layer_selected = event.GetItem()
         if self.layers[self.layer_selected].type == 'group':
             self.SetItemImage(self.layer_selected, self.folder_open)
 
     def OnBeginDrag(self, event):
-        """ Drag and drop of single tree nodes"""
+        """
+        Drag and drop of tree nodes
+        """
         
         item  = event.GetItem()
         Debug.msg (3, "LayerTree.OnBeginDrag(): layer=%s" % \
-                   (self.layers[item].type))
+                   (self.GetItemText(item)))
 
         event.Allow()
         self.drag = True
@@ -559,8 +566,10 @@ class LayerTree(CT.CustomTreeCtrl):
         self.dragItem = item
 
     def OnEndDrag(self, event):
-        """Insert copy of layer in new
-        position and delete original at old position."""
+        """
+        Insert copy of layer in new
+        position and delete original at old position
+        """
 
         self.drag = True
         # make sure this member exists
@@ -570,18 +579,19 @@ class LayerTree(CT.CustomTreeCtrl):
             return
 
         Debug.msg (3, "LayerTree.OnEndDrag(): layer=%s" % \
-                   (self.layers[old].type))
+                   (self.GetItemText(old)))
+        
         # recreate spin/text control for layer
         if self.layers[old].type == 'cmdlayer':
             newctrl = wx.TextCtrl(self, id=wx.ID_ANY, value='',
-                               pos=wx.DefaultPosition, size=(250,40),
-                               style=wx.TE_MULTILINE|wx.TE_WORDWRAP)
+                                  pos=wx.DefaultPosition, size=(250,40),
+                                  style=wx.TE_MULTILINE|wx.TE_WORDWRAP)
             newctrl.Bind(wx.EVT_TEXT_ENTER, self.OnCmdChanged)
         elif self.layers[old].type == 'group':
             newctrl = None
         else:
             newctrl = wx.SpinCtrl(self, id=wx.ID_ANY, value="", pos=(30, 50),
-                                    style=wx.SP_ARROW_KEYS)
+                                  style=wx.SP_ARROW_KEYS)
             newctrl.SetRange(1,100)
             newctrl.SetValue(100)
             newctrl.Bind(wx.EVT_TEXT, self.OnOpacity)
@@ -626,13 +636,17 @@ class LayerTree(CT.CustomTreeCtrl):
                                           ct_type=1, wnd=newctrl, image=image, \
                                           data=data)
 
-        self.CheckItem(new, checked=checked)
+        if newctrl:
+            self.Bind(wx.EVT_SPINCTRL, self.OnOpacity, newctrl)
+            newctrl.SetValue(int (self.layers[old].maplayer.opacity * 100))
             
         # add layer at new position
         self.layers[new] = self.layers[old]
-
+        self.layers[new].opacityCtrl = newctrl
+        
+        self.CheckItem(new, checked=checked)
+        
         newlayer = self.layers[new]
-
         if newlayer.type == 'group':
             child = self.GetFirstChild (old)
             cookei = child[1]
@@ -650,10 +664,7 @@ class LayerTree(CT.CustomTreeCtrl):
 
         # delete layer at original position
         self.Delete(old) # entry in render.Map layers list automatically deleted by OnDeleteLayer handler
-        try:
-            self.layers.pop(old)
-        except:
-            pass
+        # self.layers.pop(old)
 
         # reorder layers in render.Map to match new order after drag and drop
         self.ReorderLayers()
