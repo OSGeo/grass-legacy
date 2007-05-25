@@ -235,7 +235,7 @@ class BufferedWindow(wx.Window):
         #pdc.Clear() #FIXME (to avoid black background)
         self.Refresh()
 
-        Debug.msg (3, "BufferedWindow.Draw(): id=%s, pdctype=%s, coord=%s" % (drawid, pdctype, coords))
+        Debug.msg (5, "BufferedWindow.Draw(): id=%s, pdctype=%s, coord=%s" % (drawid, pdctype, coords))
 
         if pdctype == 'clear': # erase the display
             bg = wx.WHITE_BRUSH
@@ -598,6 +598,7 @@ class BufferedWindow(wx.Window):
             
         # dragging
         elif event.Dragging():
+            Debug.msg (5, "BufferedWindow.MouseAction(): Dragging")
             currpos = event.GetPositionTuple()[:]
             end = (currpos[0]-self.mouse['begin'][0], \
                              currpos[1]-self.mouse['begin'][1])
@@ -1469,13 +1470,13 @@ class MapFrame(wx.Frame):
             mapname = None
             raststr = ''
             vectstr = ''
-            rcmd = ''
-            vcmd = ''
+            rcmd = []
+            vcmd = []
             for layer in self.tree.GetSelections():
                 type =   self.tree.layers[layer].type
                 dcmd = self.tree.GetPyData(layer)[0]
                 if type in ('raster', 'rgb', 'his'):
-                    for item in dcmd.split(' '):
+                    for item in dcmd:
                         if 'map=' in item:
                             raststr += "%s," % item.split('=')[1]
                         elif 'red=' in item:
@@ -1483,33 +1484,40 @@ class MapFrame(wx.Frame):
                         elif 'h_map=' in item:
                             raststr += "%s," % item.split('=')[1]
                 elif type in ('vector', 'thememap', 'themechart'):
-                    for item in dcmd.split(' '):
+                    for item in dcmd:
                         if 'map=' in item:
                             vectstr += "%s," % item.split('=')[1]
 
             # build query commands for any selected rasters and vectors
             if raststr != '':
                 raststr = raststr.rstrip(',')
-                rcmd = "r.what -f input=%s east_north=%f,%f" %\
-                    (raststr, float(east), float(north))
+                rcmd = ['r.what',
+                        '-f',
+                        'input=%s' % (raststr),
+                        'east_north=%f,%f' % (float(east), float(north))]
             if vectstr != '':
                 vectstr = vectstr.rstrip(',')
-                vcmd = "v.what -a map=%s east_north=%f,%f distance=%f" %\
-                    (vectstr, float(east), float(north), qdist)
+                vcmd = ['v.what',
+                        '-a'
+                        'map=%s' % vectstr,
+                        'east_north=%f,%f' % (float(east), float(north)),
+                        'distance=%f' % qdist]
         else:
-            dlg = wx.MessageDialog(self, 'You must select a map in the GIS Manager to query',
-                               'Nothing to query', wx.OK | wx.ICON_INFORMATION)
+            dlg = wx.MessageDialog(self, _('You must select a map in the GIS Manager to query'),
+                                   _('Nothing to query'), wx.OK | wx.ICON_INFORMATION)
             dlg.ShowModal()
             dlg.Destroy()
             return
 
         # parse query command(s)
         if self.gismanager:
-            if rcmd != '': self.gismanager.goutput.runCmd(rcmd)
-            if vcmd != '': self.gismanager.goutput.runCmd(vcmd)
+            if rcmd:
+                self.gismanager.goutput.runCmd(' '.join(rcmd))
+            if vcmd:
+                self.gismanager.goutput.runCmd(' '.join(vcmd))
         else:
-            os.system(rcmd)
-            os.system(vcmd)
+            os.system(' '.join(rcmd))
+            os.system(' '.join(vcmd))
 
     def OnAnalyze(self, event):
         """
