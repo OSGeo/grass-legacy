@@ -188,8 +188,9 @@ class BufferedWindow(wx.Window):
             'box': "point"
             }
 
-        self.zoomtype = 1  # 1 zoom in, 0 no zoom, -1 zoom out
-
+        self.zoomtype = 1   # 1 zoom in, 0 no zoom, -1 zoom out
+        self.hitradius = 10 # distance for selecting map decorations
+        
         # OnSize called to make sure the buffer is initialized.
         # This might result in OnSize getting called twice on some
         # platforms at initialization, but little harm done.
@@ -568,7 +569,24 @@ class BufferedWindow(wx.Window):
         Mouse motion and button click notifier
         """
         wheel = event.GetWheelRotation() # +- int
-        hitradius = 10 # distance for selecting map decorations
+
+        # zoom with mouse wheel
+        if wheel != 0:
+            Debug.msg (5, "BufferedWindow.MouseAction(): wheel=%d" % wheel)
+            # zoom 1/2 of the screen
+            begin = [self.Map.width/4, self.Map.height/4]
+            end = [self.Map.width - self.Map.width/4,
+                   self.Map.height - self.Map.height/4]
+            if wheel > 0:
+                zoomtype = 1
+            else:
+                zoomtype = -1
+            # zoom
+            self.Zoom(begin, end, zoomtype)
+            # redraw map
+            self.render=True
+            self.UpdateMap()
+            return
 
         # left mouse button pressed
         if event.LeftDown():
@@ -597,12 +615,6 @@ class BufferedWindow(wx.Window):
                 self.mouse['end'] = event.GetPositionTuple()[:]
                 self.MouseDraw()
                 
-        # zoom with mouse wheel
-        elif wheel != 0:
-            # zoom 1/2 of the screen
-            begin = [self.Map.width/4, self.Map.height/4]
-            end = [self.Map.width - self.Map.width/4,
-          self.Map.height - self.Map.height/4]
             
         # double click
         elif event.ButtonDClick():
@@ -614,7 +626,7 @@ class BufferedWindow(wx.Window):
             
         # right mouse button released
         elif event.RightUp():
-            self.onRightUp(event)
+            self.OnRightUp(event)
             
         # store current mouse position
         self.mouse['pos'] = event.GetPositionTuple()[:]
@@ -623,6 +635,7 @@ class BufferedWindow(wx.Window):
         """
         Left mouse button pressed
         """
+        Debug.msg (5, "BufferedWindow.OnLeftDown():")
         if self.mouse["use"] == "measure" or self.mouse["use"] == "profile":
             if len(self.polycoords) == 0:
                 self.mouse['begin'] = event.GetPositionTuple()[:]
@@ -640,7 +653,7 @@ class BufferedWindow(wx.Window):
             # get decoration id
             self.lastpos = self.mouse['begin'] = event.GetPositionTuple()[:]
             # idlist = self.pdc.FindObjectsByBBox(self.lastpos[0],self.lastpos[1])
-            idlist  = self.pdc.FindObjects(self.lastpos[0],self.lastpos[1], hitradius)
+            idlist  = self.pdc.FindObjects(self.lastpos[0],self.lastpos[1], self.hitradius)
             if idlist != []:
                 self.dragid = idlist[0]
 
@@ -648,6 +661,7 @@ class BufferedWindow(wx.Window):
         """
         Left mouse button released
         """
+        Debug.msg (5, "BufferedWindow.OnLeftUp():")
         # end point of zoom box or drag
         if self.mouse['use'] == "zoom" or self.mouse['use'] == "pan":
 
@@ -714,6 +728,7 @@ class BufferedWindow(wx.Window):
         """
         Mouse button double click
         """
+        Debug.msg (5, "BufferedWindow.OnButtonDClick():")
         if self.mouse["use"] == "measure":
             self.pdc.ClearId(self.lineid)
             self.pdc.ClearId(self.plineid)
@@ -734,7 +749,7 @@ class BufferedWindow(wx.Window):
         else:
             # select overlay decoration options dialog
             clickposition = event.GetPositionTuple()[:]
-            idlist  = self.pdc.FindObjects(clickposition[0], clickposition[1], hitradius)
+            idlist  = self.pdc.FindObjects(clickposition[0], clickposition[1], self.hitradius)
             if idlist == []:
                 return
             self.dragid = idlist[0]
@@ -752,9 +767,10 @@ class BufferedWindow(wx.Window):
         """
         Right mouse button pressed
         """
+        Debug.msg (5, "BufferedWindow.OnRightDown():")
         x,y = event.GetPositionTuple()[:]
         #l = self.pdc.FindObjectsByBBox(x, y)
-        l = self.pdc.FindObjects(x, y, hitradius)
+        l = self.pdc.FindObjects(x, y, self.hitradius)
         if not l:
             return
         id = l[0]
@@ -772,6 +788,7 @@ class BufferedWindow(wx.Window):
         """
         Right mouse button released
         """
+        Debug.msg (5, "BufferedWindow.OnRightUp():")
         if self.parent.digittoolbar and self.parent.digittoolbar.action == "add":
             if self.parent.digittoolbar.type in ["line", "boundary"]:
                 try:
