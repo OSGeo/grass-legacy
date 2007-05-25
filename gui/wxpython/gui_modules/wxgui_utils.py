@@ -28,8 +28,6 @@ class AbstractLayer:
     
     Attributes:
     * type - layer type ('cmdlayer', 'group', etc) -- see LayerTree.AddLayer() 
-    * name - layer name (by default same as MapLayer.name, may not be unique,
-             see LayerTree.RenameLayer())
     """
 
     def __init__(self, type):
@@ -279,7 +277,6 @@ class LayerTree(CT.CustomTreeCtrl):
         """Add layer, create MapLayer instance"""
         self.first = True
         params = {} # no initial options parameters
-        layerGroup = None
         
         if self.layer_selected:
             self.SelectItem(self.layer_selected, select=False)
@@ -288,10 +285,10 @@ class LayerTree(CT.CustomTreeCtrl):
         if ltype == 'cmdlayer':
             # generic command layer
             ctrl = wx.TextCtrl(self, id=wx.ID_ANY, value='',
-                                    pos=wx.DefaultPosition, size=(250,40),
-                                    style=wx.TE_MULTILINE|wx.TE_WORDWRAP)
+                               pos=wx.DefaultPosition, size=(250,40),
+                               style=wx.TE_MULTILINE|wx.TE_WORDWRAP)
             ctrl.Bind(wx.EVT_TEXT_ENTER, self.OnCmdChanged)
-            ctrl.Bind(wx.EVT_TEXT, self.OnCmdChanged)
+            ctrl.Bind(wx.EVT_TEXT,       self.OnCmdChanged)
         elif ltype == 'group':
             ctrl = None
             grouptext = 'Layer group:' + str(self.groupnode)
@@ -299,24 +296,26 @@ class LayerTree(CT.CustomTreeCtrl):
         else:
             # all other layers
             ctrl = wx.SpinCtrl(self, id=wx.ID_ANY, value="", pos=(30, 50),
-                                    style=wx.SP_ARROW_KEYS)
+                               style=wx.SP_ARROW_KEYS)
             ctrl.SetRange(1,100)
             ctrl.SetValue(100)
             self.Bind(wx.EVT_SPINCTRL, self.OnOpacity, ctrl)
 
+        # add layer to the layer tree
         if (self.layer_selected and self.layer_selected != self.GetRootItem() and \
-            self.layers[self.layer_selected].type != 'group'): # add layer to the layer tree
+            self.layers[self.layer_selected].type != 'group'): 
             parent = self.GetItemParent(self.layer_selected)
             layer = self.InsertItem(parent, self.GetPrevSibling(self.layer_selected),
-                                    '', ct_type=1, wnd=ctrl)
+                                    text='', ct_type=1, wnd=ctrl)
+        # add layer to the group
         elif (self.layer_selected and self.layer_selected != self.GetRootItem() and \
-              self.layers[self.layer_selected].type == 'group'): # add layer to the group
-            layer = self.PrependItem(self.layer_selected,
-                                     '', ct_type=1, wnd=ctrl )
-            layerGroup = self.layers[self.layer_selected]
+              self.layers[self.layer_selected].type == 'group'): 
+            layer = self.PrependItem(parent=self.layer_selected,
+                                     text='', ct_type=1, wnd=ctrl)
             self.Expand(self.layer_selected)
-        else: # add first layer to the layer tree
-            layer = self.PrependItem(self.root, '', ct_type=1, wnd=ctrl)
+        # add first layer to the layer tree
+        else: 
+            layer = self.PrependItem(parent=self.root, text='', ct_type=1, wnd=ctrl)
 
         # select item
         self.SelectItem(layer)
@@ -448,23 +447,23 @@ class LayerTree(CT.CustomTreeCtrl):
     def OnLayerChecked(self, event):
         item    = event.GetItem()
         checked = item.IsChecked()
-
+        layer   = self.layers[item]
+        
         if self.drag == False and self.first == False:
             # change active parameter for item in layers list in render.Map
-            if self.layers[item].type == 'group':
+            if layer.type == 'group':
                 childitem = self.GetFirstChild(item)
                 child = childitem[0]
                 cookie = childitem[1]
-                for n in range(0,self.GetChildrenCount(item)):
+                for n in range(0, self.GetChildrenCount(item)):
                     if checked == False:
                         childchecked = False
                     else:
                         childchecked = child.IsChecked()
-                    self.Map.ChangeActive(child, childchecked)
+                    self.Map.ChangeLayerActive(self.layers[child].maplayer, childchecked)
                     child = self.GetNextChild(item, cookie)[0]
             else:
-                self.Map.ChangeActive(self.layers[item].maplayer, checked)
-
+                self.Map.ChangeLayerActive(self.layers[item].maplayer, checked)
 
     def OnCmdChanged(self, event):
         layer = self.layerctrl[event.GetEventObject()]
@@ -481,15 +480,16 @@ class LayerTree(CT.CustomTreeCtrl):
         """
         Debug.msg (3, "LayerTree.OnOpacity(): %s" % event.GetInt())
 
-        if 'Spin' in str(event.GetEventObject()):
-            layer = self.layerctrl[event.GetEventObject()]
-        else:
-            layer = self.layerctrl[event.GetEventObject().GetParent()]
-        opacity = float(event.GetInt()) / 100
+        ctrl = event.GetEventObject()
+        maplayer = None
+        for layer in self.layers.itervalues():
+            if layer.opacityCtrl == ctrl:
+                maplayer = layer.maplayer
 
-        if self.drag == False:
-            # change opacity parameter for item in layers list in render.Map
-            self.Map.ChangeOpacity(layer, opacity)
+        opacity = event.GetInt() / 100.
+        # change opacity parameter for item in layers list in render.Map
+        if maplayer and self.drag == False:
+            self.Map.ChangeOpacity(maplayer, opacity)
 
     def OnChangeSel(self, event):
         oldlayer = event.GetOldItem()
