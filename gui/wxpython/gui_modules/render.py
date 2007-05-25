@@ -727,14 +727,17 @@ class Map:
         elif l_opacity > 1: l_opacity = 1
 
         layer.opacity = l_opacity
+        Debug.msg (3, "Map.ChangeOpacity(): layer=%s, opacity=%f" % \
+                   (layer.name, layer.opacity))
 
-    def ChangeActive(self, layer, active):
+
+    def ChangeLayerActive(self, layer, active):
         """
         Change the active state of a layer
         """
         layer.active = active
 
-        Debug.msg (3, "Map.ChangeActive(): layer=%s, active=%d" % \
+        Debug.msg (3, "Map.ChangeLayerActive(): layer=%s, active=%d" % \
                    (layer.name, layer.active))
 
     def ChangeLayerName (self, layer, name):

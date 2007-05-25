@@ -1,3 +1,17 @@
+"""
+MODULE: histogram
+
+PURPOSE: Plotting histogram
+
+AUTHORS: The GRASS Development Team
+         Michael Barton
+
+COPYRIGHT: (C) 2007 by the GRASS Development Team
+           This program is free software under the GNU General Public
+           License (>=v2). Read the file COPYING that comes with GRASS
+           for details.
+"""
+
 import wx
 import wx.aui
 import os, sys, time, glob, math
@@ -5,16 +19,14 @@ from threading import Thread
 
 try:
     import subprocess
-    from subprocess import *
 except:
-    CompatPath = os.getenv("GISBASE") + "/etc/wx"
+    CompatPath = os.path.join( os.getenv("GISBASE"), "etc", "wx")
     sys.path.append(CompatPath)
     from compat import subprocess
-    from compat.subprocess import *
 
-gmpath = os.getenv("GISBASE") + "/etc/wx/gui_modules/"
+gmpath = os.path.join( os.getenv("GISBASE"),"etc","wx","gui_modules" )
 sys.path.append(gmpath)
-gmpath = os.getenv("GISBASE") + "/etc/wx/icons/"
+gmpath = os.path.join( os.getenv("GISBASE"),"etc","wx","icons")
 sys.path.append(gmpath)
 
 import render
@@ -27,13 +39,6 @@ from icon import Icons as Icons
 import images
 imagepath = images.__path__[0]
 sys.path.append(imagepath)
-
-icons = ""
-
-if not os.getenv("GRASS_ICONPATH"):
-    icons = os.getenv("GISBASE") + "/etc/gui/icons/"
-else:
-    icons = os.environ["GRASS_ICONPATH"]
 
 os.environ["GRASS_BACKGROUNDCOLOR"] = "blue"
 
@@ -277,8 +282,8 @@ class HistFrame(wx.Frame):
 
         toolbar = self.__createToolBar()
 
-        self.Map = render.Map()  # instance of render.Map to be associated with display
-
+        self.Map   = render.Map()  # instance of render.Map to be associated with display
+        self.layer = None          # reference to layer with histogram
         #
         # Set the size & cursor
         #
@@ -360,11 +365,11 @@ class HistFrame(wx.Frame):
         completed = ''
 
         if self.Map.layers == []:
-            self.Map.AddLayer(item="histlayer", type="command", name='', command=['d.histogram'],
-                          l_active=False, l_hidden=False, l_opacity=1, l_render=False)
+            self.layer = self.Map.AddLayer(type="command", name='', command=['d.histogram'],
+                                           l_active=False, l_hidden=False, l_opacity=1, l_render=False)
 
         menuform.GUI().parseCommand('d.histogram', gmpath,
-                                    completed=(self.GetOptData,"hist",self.params),
+                                    completed=(self.GetOptData, "hist", self.params),
                                     parentframe=None)
 
 
@@ -381,8 +386,8 @@ class HistFrame(wx.Frame):
             if 'map=' in item:
                 self.mapname = item.split('=')[1]
 
-        self.Map.ChangeLayer(item="histlayer", type="command", name='', command=dcmd,
-                             l_active=True, l_hidden=False, l_opacity=1, l_render=False)
+        self.layer = self.Map.ChangeLayer(layer=self.layer, type="command", name='', command=dcmd,
+                                          l_active=True, l_hidden=False, l_opacity=1, l_render=False)
         self.params = params
         self.propwin = propwin
         self.HistWindow.UpdateHist()
