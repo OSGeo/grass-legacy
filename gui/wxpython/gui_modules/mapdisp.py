@@ -1546,11 +1546,8 @@ class MapFrame(wx.Frame):
         Init histogram display canvas and tools
         """
         self.histogram = histogram.HistFrame(self,
-                                           id=wx.ID_ANY, pos=wx.DefaultPosition, size=(400,300),
-                                           style=wx.DEFAULT_FRAME_STYLE)
-
-        # title
-#        self.histogram.SetTitle(_("GRASS GIS - Map Display: " + str(self.disp_idx) + " - Location: " + grassenv.env["LOCATION_NAME"]))
+                                             id=wx.ID_ANY, pos=wx.DefaultPosition, size=(400,300),
+                                             style=wx.DEFAULT_FRAME_STYLE)
 
         #show new display
         self.histogram.Show()

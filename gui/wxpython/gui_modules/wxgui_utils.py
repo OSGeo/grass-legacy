@@ -15,6 +15,7 @@ import mapdisp
 import render
 import cmd
 import grassenv
+import histogram
 from debug import Debug as Debug
 from icon import Icons as Icons
 try:
@@ -206,9 +207,6 @@ class LayerTree(CT.CustomTreeCtrl):
             self.Bind (wx.EVT_MENU, self.gismgr.deleteLayer,        id=self.popupID1)
             self.Bind (wx.EVT_MENU, self.RenameLayer,               id=self.popupID2)
             self.Bind (wx.EVT_MENU, self.OnPopupProperties,         id=self.popupID3)
-            self.Bind (wx.EVT_MENU, self.gismgr.ShowAttributeTable, id=self.popupID4)
-            self.Bind (wx.EVT_MENU, self.OnStartEditing,            id=self.popupID5)
-            self.Bind (wx.EVT_MENU, self.OnStopEditing,             id=self.popupID6)
 
         self.popupMenu = wx.Menu()
         # general item
@@ -224,26 +222,61 @@ class LayerTree(CT.CustomTreeCtrl):
         try:
             mltype = self.layers[self.layer_selected].maplayer.type
         except:
-            mltype = None
-        if mltype and mltype == "vector": # show attribute table
+            return
+        # vector specific items
+        if mltype == "vector": 
             self.popupMenu.AppendSeparator()
             self.popupMenu.Append(self.popupID4, _("Show attribute table"))
             self.popupMenu.Append(self.popupID5, _("Start editing"))
-            layer = self.Map.GetLayer(self.layer_selected)
+            layer = self.layers[self.layer_selected].maplayer
             # enable editing only for vector map layers available in the current mapset
             if layer.GetMapset() != grassenv.env["MAPSET"]:
                 self.popupMenu.Enable (self.popupID5, False)
             self.popupMenu.Append(self.popupID6, _("Stop editing"))
             self.popupMenu.Enable(self.popupID6, False)
 
+            self.Bind (wx.EVT_MENU, self.gismgr.ShowAttributeTable, id=self.popupID4)
+            self.Bind (wx.EVT_MENU, self.OnStartEditing,            id=self.popupID5)
+            self.Bind (wx.EVT_MENU, self.OnStopEditing,             id=self.popupID6)
+
+        # raster
+        elif mltype == "raster":
+            self.popupMenu.AppendSeparator()
+            self.popupMenu.Append(self.popupID4, _("Histogram"))
+            self.Bind (wx.EVT_MENU, self.OnHistogram, id=self.popupID4)
+
         self.PopupMenu(self.popupMenu)
         self.popupMenu.Destroy()
 
+    def OnHistogram(self, event):
+        """
+        Plot histogram for given raster map layer
+        """
+        rastName = self.layers[self.layer_selected].maplayer.name
+
+        if not hasattr (self, "histogramFrame"):
+            self.histogramFrame = None
+
+        if hasattr (self.mapdisplay, "histogram") and self.mapdisplay.histogram:
+            self.histogramFrame = self.mapdisplay.histogram
+        
+        if not self.histogramFrame:
+            self.histogramFrame = histogram.HistFrame(self,
+                                                      id=wx.ID_ANY, pos=wx.DefaultPosition, size=(400,300),
+                                                      style=wx.DEFAULT_FRAME_STYLE)
+            # show new display
+            self.histogramFrame.Show()
+            
+        self.histogramFrame.SetHistLayer(['d.histogram', 'map=%s' % rastName])
+        self.histogramFrame.HistWindow.UpdateHist()
+        self.histogramFrame.Refresh()
+        self.histogramFrame.Update()
+        
     def OnStartEditing (self, event):
         """
         Start editing vector map layer requested by the user
         """
-        layer = self.Map.GetLayer(self.layer_selected)
+        layer = self.layers[self.layer_selected].maplayer
 
         if not layer:
             event.Skip()
