@@ -1498,7 +1498,7 @@ class MapFrame(wx.Frame):
             if vectstr != '':
                 vectstr = vectstr.rstrip(',')
                 vcmd = ['v.what',
-                        '-a'
+                        '-a',
                         'map=%s' % vectstr,
                         'east_north=%f,%f' % (float(east), float(north)),
                         'distance=%f' % qdist]
