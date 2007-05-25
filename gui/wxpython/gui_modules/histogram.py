@@ -254,7 +254,7 @@ class BufferedWindow(wx.Window):
         # update statusbar
         #Debug.msg (3, "BufferedWindow.UpdateHist(%s): region=%s" % self.Map.region)
         self.Map.SetRegion()
-        self.parent.statusbar.SetStatusText("Histogramming %s" % self.parent.mapname)
+        self.parent.statusbar.SetStatusText("Histogramming <%s>" % self.parent.mapname)
 
         # set default font and encoding environmental variables
         if oldfont != "":
@@ -274,7 +274,7 @@ class HistFrame(wx.Frame):
     Uses d.histogram rendered onto canvas
     """
 
-    def __init__(self, parent=None, id = wx.ID_ANY, title="Histogram of image or raster file",
+    def __init__(self, parent=None, id = wx.ID_ANY, title="Histogram of image or raster map",
                  pos=wx.DefaultPosition, size=wx.DefaultSize,
                  style=wx.DEFAULT_FRAME_STYLE):
 
@@ -325,6 +325,13 @@ class HistFrame(wx.Frame):
         #
         self.printopt = disp_print.PrintOptions(self, self.HistWindow)
 
+        #
+        # Add layer to the map
+        #
+        self.layer = self.Map.AddLayer(type="command", name='', command=['d.histogram'],
+                                       l_active=False, l_hidden=False, l_opacity=1, l_render=False)
+
+
     def __createToolBar(self):
         """Creates toolbar"""
 
@@ -364,10 +371,6 @@ class HistFrame(wx.Frame):
         global gmpath
         completed = ''
 
-        if self.Map.layers == []:
-            self.layer = self.Map.AddLayer(type="command", name='', command=['d.histogram'],
-                                           l_active=False, l_hidden=False, l_opacity=1, l_render=False)
-
         menuform.GUI().parseCommand('d.histogram', gmpath,
                                     completed=(self.GetOptData, "hist", self.params),
                                     parentframe=None)
@@ -382,16 +385,26 @@ class HistFrame(wx.Frame):
         # Reset comand and rendering options in render.Map. Always render decoration.
         # Showing/hiding handled by PseudoDC
 
-        for item in dcmd:
-            if 'map=' in item:
-                self.mapname = item.split('=')[1]
-
-        self.layer = self.Map.ChangeLayer(layer=self.layer, type="command", name='', command=dcmd,
-                                          l_active=True, l_hidden=False, l_opacity=1, l_render=False)
+        self.SetHistLayer(dcmd)
         self.params = params
         self.propwin = propwin
+
         self.HistWindow.UpdateHist()
 
+    def SetHistLayer(self, cmd):
+        """
+        Set histogram layer
+        """
+
+        for item in cmd:
+            if 'map=' in item:
+                self.mapname = item.split('=')[1]
+                
+        self.layer = self.Map.ChangeLayer(layer=self.layer, type="command", name='', command=cmd,
+                                          l_active=True, l_hidden=False, l_opacity=1, l_render=False)
+
+        return self.layer
+        
     def SetHistFont(self, event):
         """
         Set font for histogram. If not
