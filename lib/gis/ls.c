@@ -21,6 +21,7 @@
 
 #include <grass/gis.h>
 #include <grass/config.h>
+#include <grass/glocale.h>
 
 #ifdef HAVE_SYS_IOCTL_H
 #  include <sys/ioctl.h>
@@ -59,7 +60,7 @@ char **G__ls(const char *dir, int *num_files)
     int n = 0;
 
     if ((dfd = opendir(dir)) == NULL)
-       G_fatal_error("Can't open directory %s", dir);
+       G_fatal_error(_("Can't open directory %s"), dir);
 
     while ((dp = readdir(dfd)) != NULL)
     {
