@@ -1,16 +1,16 @@
 
 MODULE_TOPDIR = ../..
 
-SUBDIRS = HTMLMAP PS
+SUBDIRS = 
 
 include $(MODULE_TOPDIR)/include/Make/Dir.make
 
 # compile PNGdriver if lib available:
-ifneq ($(USE_PNG),)
-  SUBDIRS += PNG
-endif
+ifneq ($(HAVE_SOCKET),)
+  SUBDIRS += PNG HTMLMAP PS
 ifneq ($(USE_X11),)
   SUBDIRS += XDRIVER
+endif
 endif
 
 default: subdirs $(ETC)/monitorcap
