@@ -190,7 +190,7 @@ class BufferedWindow(wx.Window):
 
         self.zoomtype = 1   # 1 zoom in, 0 no zoom, -1 zoom out
         self.hitradius = 10 # distance for selecting map decorations
-        
+
         # OnSize called to make sure the buffer is initialized.
         # This might result in OnSize getting called twice on some
         # platforms at initialization, but little harm done.
@@ -591,11 +591,11 @@ class BufferedWindow(wx.Window):
         # left mouse button pressed
         if event.LeftDown():
             self.OnLeftDown(event)
-            
+
         # left mouse button released
         elif event.LeftUp():
             self.OnLeftUp(event)
-            
+
         # dragging
         elif event.Dragging():
             Debug.msg (5, "BufferedWindow.MouseAction(): Dragging")
@@ -615,20 +615,20 @@ class BufferedWindow(wx.Window):
             else:
                 self.mouse['end'] = event.GetPositionTuple()[:]
                 self.MouseDraw()
-                
-            
+
+
         # double click
         elif event.ButtonDClick():
             self.OnButtonDClick(event)
-            
+
         # right mouse button pressed
         elif event.RightDown():
             self.OnRightDown(event)
-            
+
         # right mouse button released
         elif event.RightUp():
             self.OnRightUp(event)
-            
+
         # store current mouse position
         self.mouse['pos'] = event.GetPositionTuple()[:]
 
@@ -667,7 +667,7 @@ class BufferedWindow(wx.Window):
         if self.mouse['use'] == "zoom" or self.mouse['use'] == "pan":
 
             self.mouse['end'] = event.GetPositionTuple()[:]
-            
+
             # set region in zoom or pan
             self.Zoom(self.mouse['begin'], self.mouse['end'], self.zoomtype)
             # redraw map
@@ -780,7 +780,7 @@ class BufferedWindow(wx.Window):
                 self.pdc.SetIdGreyedOut(id, False)
             else:
                 self.pdc.SetIdGreyedOut(id, True)
-                
+
                 r = self.pdc.GetIdBounds(id)
                 r.Inflate(4,4)
                 self.RefreshRect(r, False)
@@ -799,7 +799,7 @@ class BufferedWindow(wx.Window):
                     dlg = wx.MessageDialog(self, _("No vector map layer is selected"), _("Error"), wx.OK | wx.ICON_ERROR)
                     dlg.ShowModal()
                     dlg.Destroy()
-                    
+
                 if map:
                     # add new line
                     Digit.AddLine(map=map,
@@ -1597,8 +1597,6 @@ class MapFrame(wx.Frame):
                                            id=wx.ID_ANY, pos=wx.DefaultPosition, size=(600,300),
                                            style=wx.DEFAULT_FRAME_STYLE)
         self.profile.Show()
-        self.profile.Refresh()
-        self.profile.Update()
 
     def Histogram(self, event):
         """
@@ -2033,7 +2031,7 @@ class SavedRegion(wx.Dialog):
         Loading and saving of display extents to saved region file
         """
         wx.Dialog.__init__(self, parent, id, title, pos, size, style)
-        
+
         self.loadsave = loadsave
         self.wind = ''
 
