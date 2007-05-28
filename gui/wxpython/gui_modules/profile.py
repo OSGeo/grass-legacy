@@ -1,3 +1,22 @@
+"""
+MODULE: profile
+
+CLASSES:
+ * ProfileFrame
+ * SetRaster
+ * Textdialog
+ * OptDialog
+
+PURPOSE: Profile analysis of GRASS raster maps and images. Uses PyPlot (wx.lib.plot.py)
+
+AUTHORS: The GRASS Development Team. Michael Barton
+
+COPYRIGHT: (C) 2007 by the GRASS Development Team
+           This program is free software under the GNU General Public
+           License (>=v2). Read the file COPYING that comes with GRASS
+           for details.
+"""
+
 import wx
 import wx.aui
 import os, sys, time, glob, math
@@ -50,7 +69,7 @@ else:
 
 class ProfileFrame(wx.Frame):
     """
-    Main frame profile of raster map. Uses wx.lib.plot.
+    Mainframe for displaying profile of raster map. Uses wx.lib.plot.
     """
 
     def __init__(self, parent=None, id = wx.ID_ANY, title="Profile Analysis",
@@ -196,7 +215,7 @@ class ProfileFrame(wx.Frame):
 
     def DrawTransect(self, event):
         """
-        draw transect to profile in map display
+        Draws transect to profile in map display
         """
         self.mapwin.polycoords = []
         self.seglist = []
@@ -212,7 +231,9 @@ class ProfileFrame(wx.Frame):
 
     def SelectRaster(self, event):
         """
-        Select raster map to profile (i.e., to get distance,value data)
+        Select raster map to profile (i.e., to get distance,value data).
+        Create coordinate string for profiling. Create segment list for
+        transect segment markers.
         """
 
         # create list of coordinate points for r.profile
@@ -420,6 +441,11 @@ class ProfileFrame(wx.Frame):
         self.mapwin.mouse['box'] = 'point'
 
     def DrawPlot(self):
+        """
+        Draw line and point plot from transect datalist and
+        transect segment endpoint coordinates.
+        """
+
         # graph the distance, value pairs for the transect
         self.plotlist = []
         if len(self.datalist1) > 0:
@@ -472,12 +498,20 @@ class ProfileFrame(wx.Frame):
         self.client.Draw(self.profile, self.xaxis, self.yaxis)
 
     def OnZoom(self, event):
+        """
+        Enable zooming and disable dragging
+        """
+
         self.zoom = True
         self.drag = False
         self.client.SetEnableZoom(self.zoom)
         self.client.SetEnableDrag(self.drag)
 
     def OnDrag(self, event):
+        """
+        Enable dragging and disable zooming
+        """
+
         self.zoom = False
         self.drag = True
         self.client.SetEnableDrag(self.drag)
@@ -485,12 +519,16 @@ class ProfileFrame(wx.Frame):
 
     def OnRedraw(self, event):
         """
-        Redraw the profile window
+        Redraw the profile window. Unzoom to original size
         """
         self.client.Reset()
         self.client.Redraw()
 
     def Update(self):
+        """
+        Update profile after changing options
+        """
+
         self.SetGraphStyle()
         self.DrawPlot()
 
@@ -562,7 +600,7 @@ class ProfileFrame(wx.Frame):
 
     def ProfileOptionsMenu(self, event):
         """
-        Set various profile options.
+        Popup menu for profile and text options
         """
 
         point = wx.GetMousePosition()
@@ -582,6 +620,10 @@ class ProfileFrame(wx.Frame):
         popt.Destroy()
 
     def NotFunctional(self):
+        """
+        Creates a 'not functional' message dialog
+        """
+
         dlg = wx.MessageDialog(self, 'This feature is not yet functional',
                            'Under Construction', wx.OK | wx.ICON_INFORMATION)
         dlg.ShowModal()
@@ -618,7 +660,9 @@ class ProfileFrame(wx.Frame):
 
     def POptions(self, event):
         """
-        Set grid color, enable/disable grid
+        Set various profile options, including: line width, color, style;
+        marker size, color, fill, and style; grid and legend options.
+        Calls OptDialog class.
         """
         dlg = OptDialog(self, -1, 'Profile settings')
 
@@ -662,12 +706,6 @@ class ProfileFrame(wx.Frame):
         else:
             pass
         dlg.Destroy()
-
-    def LegendOptions(self, event):
-        """
-        Set legend font, enable/disable legend
-        """
-        self.NotFunctional()
 
     def PrintMenu(self, event):
         """
@@ -723,7 +761,7 @@ class SetRaster(wx.Dialog):
             style=wx.DEFAULT_DIALOG_STYLE):
         wx.Dialog.__init__(self, parent, id, title, pos, size, style)
         """
-        Select raster map to profile
+        Dialog to select raster maps to profile.
         """
 
         self.parent = parent
@@ -816,7 +854,8 @@ class TextDialog(wx.Dialog):
             style=wx.DEFAULT_DIALOG_STYLE):
         wx.Dialog.__init__(self, parent, id, title, pos, size, style)
         """
-        Controls setting options and displaying/hiding map overlay decorations
+        Dialog to set profile text options: font, title
+        and font size, axis labels and font size
         """
         # initialize variables
 
@@ -1017,7 +1056,8 @@ class OptDialog(wx.Dialog):
             style=wx.DEFAULT_DIALOG_STYLE):
         wx.Dialog.__init__(self, parent, id, title, pos, size, style)
         """
-        Controls setting options and displaying/hiding map overlay decorations
+        Dialog to set various profile options, including: line width, color, style;
+        marker size, color, fill, and style; grid and legend options.
         """
         # init variables
 
