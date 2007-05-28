@@ -910,10 +910,10 @@ class BufferedWindow(wx.Window):
             layer = self.tree.layers[item].maplayer
         except:
             return
-        
+
         Debug.msg (3, "BufferedWindow.ZoomToMap(): layer=%s, type=%s" % \
                    (layer.name, layer.type))
-        
+
         # selected layer must be a valid map
         if layer.type in ('raster', 'rgb', 'his'):
             cmdVec = ["r.info", "-g", "map=%s" % layer.name]
@@ -1600,7 +1600,7 @@ class MapFrame(wx.Frame):
         Init profile canvas and tools
         """
         self.profile = profile.ProfileFrame(self,
-                                           id=wx.ID_ANY, pos=wx.DefaultPosition, size=(600,300),
+                                           id=wx.ID_ANY, pos=wx.DefaultPosition, size=(700,300),
                                            style=wx.DEFAULT_FRAME_STYLE)
         self.profile.Show()
 
