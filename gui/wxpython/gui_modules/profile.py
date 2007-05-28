@@ -432,6 +432,7 @@ class ProfileFrame(wx.Frame):
 
         self.mapwin.SetCursor(self.Parent.cursors["default"])
         self.SetCursor(self.Parent.cursors["default"])
+        self.SetGraphStyle()
 
         self.DrawPlot()
 
@@ -476,7 +477,7 @@ class ProfileFrame(wx.Frame):
             self.plotlist.append(self.pline3)
 
         if len(self.seglist) > 0 :
-            self.ppoints = plot.PolyMarker(self.seglist, legend=(' '+self.ptlegend),
+            self.ppoints = plot.PolyMarker(self.seglist, legend=' '+self.ptlegend,
                                            colour=self.ptcolor,
                                            size=self.ptsize,
                                            fillstyle = self.ptfill,
@@ -752,7 +753,7 @@ class ProfileFrame(wx.Frame):
         self.mapwin.mouse['use'] = 'pointer'
         self.mapwin.mouse['box'] = 'point'
         self.mapwin.polycoords = []
-        self.mapwin.SetCursor(self.Parent.cursors["dafault"])
+        self.mapwin.SetCursor(self.Parent.cursors["default"])
 
         self.Destroy()
 
