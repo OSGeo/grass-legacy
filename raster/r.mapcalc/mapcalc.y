@@ -200,7 +200,7 @@ exp_logand	: exp_bitor
 		| exp_logand LOGAND2 exp_bitor	{ $$ = operator("and2","&&&",10,pair($1,$3));	}
 		;
 
-exp_logor	: exp_bitand
+exp_logor	: exp_logand
 		| exp_logor LOGOR exp_logand	{ $$ = operator("or", "||",11,pair($1,$3));	}
 		| exp_logor LOGOR2 exp_logand	{ $$ = operator("or2", "|||",11,pair($1,$3));	}
 		;
