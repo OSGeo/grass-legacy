@@ -33,17 +33,21 @@ static int syntax_error_occurred;
 %token <fval> FLOAT
 %token <fval> DOUBLE
 
-%token GT GE LT LE EQ NE AND OR AND2 OR2
+%token GT GE LT LE EQ NE LOGAND LOGOR LOGAND2 LOGOR2 BITAND BITOR LSH RSH RSHU
 
 %type <exp> exp
 %type <exp> exp_atom
-%type <exp> exp_neg
-%type <exp> exp_not
+%type <exp> exp_pre
 %type <exp> exp_pow
 %type <exp> exp_mul
 %type <exp> exp_add
+%type <exp> exp_sh
 %type <exp> exp_cmp
-%type <exp> exp_log
+%type <exp> exp_eq
+%type <exp> exp_bitand
+%type <exp> exp_bitor
+%type <exp> exp_logand
+%type <exp> exp_logor
 %type <exp> exp_cond
 %type <exp> exp_let
 
@@ -145,16 +149,14 @@ exp_atom	: '(' exp ')'		{ $$ = $2;			}
 		| DOUBLE		{ $$ = constant_double($1);	}
 		;
 
-exp_neg		: exp_atom
+exp_pre		: exp_atom
 		| '-' exp_atom		{ $$ = operator("neg","-",1,singleton($2));	}
+		| '~' exp_atom		{ $$ = operator("bitnot","~",1,singleton($2));	}
+		| '!' exp_atom		{ $$ = operator("not","!",1,singleton($2));	}
 		;
 
-exp_not		: exp_neg
-		| '!' exp_neg		{ $$ = operator("not","!",1,singleton($2));	}
-		;
-
-exp_pow		: exp_not
-		| exp_not '^' exp_pow	{ $$ = operator("pow","^",2,pair($1,$3));	}
+exp_pow		: exp_pre
+		| exp_pre '^' exp_pow	{ $$ = operator("pow","^",2,pair($1,$3));	}
 		;
 
 exp_mul		: exp_pow
@@ -168,25 +170,44 @@ exp_add		: exp_mul
 		| exp_add '-' exp_mul	{ $$ = operator("sub","-",4,pair($1,$3));	}
 		;
 
-exp_cmp		: exp_add
-		| exp_cmp GT exp_add	{ $$ = operator("gt",">", 5,pair($1,$3));	}
-		| exp_cmp GE exp_add	{ $$ = operator("ge",">=",5,pair($1,$3));	}
-		| exp_cmp LT exp_add	{ $$ = operator("lt","<", 5,pair($1,$3));	}
-		| exp_cmp LE exp_add	{ $$ = operator("le","<=",5,pair($1,$3));	}
-		| exp_cmp EQ exp_add	{ $$ = operator("eq","==",5,pair($1,$3));	}
-		| exp_cmp NE exp_add	{ $$ = operator("ne","!=",5,pair($1,$3));	}
+exp_sh		: exp_add
+		| exp_sh LSH exp_add	{ $$ = operator("shiftl","<<",5,pair($1,$3));	}
+		| exp_sh RSH exp_add	{ $$ = operator("shiftr",">>",5,pair($1,$3));	}
+		| exp_sh RSHU exp_add	{ $$ = operator("shiftru",">>>",5,pair($1,$3));	}
 		;
 
-exp_log		: exp_cmp
-		| exp_log OR exp_cmp	{ $$ = operator("or", "||",6,pair($1,$3));	}
-		| exp_log AND exp_cmp	{ $$ = operator("and","&&",6,pair($1,$3));	}
-		| exp_log OR2 exp_cmp	{ $$ = operator("or2", "|||",6,pair($1,$3));	}
-		| exp_log AND2 exp_cmp	{ $$ = operator("and2","&&&",6,pair($1,$3));	}
+exp_cmp		: exp_sh
+		| exp_cmp GT exp_sh	{ $$ = operator("gt",">", 6,pair($1,$3));	}
+		| exp_cmp GE exp_sh	{ $$ = operator("ge",">=",6,pair($1,$3));	}
+		| exp_cmp LT exp_sh	{ $$ = operator("lt","<", 6,pair($1,$3));	}
+		| exp_cmp LE exp_sh	{ $$ = operator("le","<=",6,pair($1,$3));	}
+
+exp_eq		: exp_cmp
+		| exp_eq EQ exp_cmp	{ $$ = operator("eq","==",7,pair($1,$3));	}
+		| exp_eq NE exp_cmp	{ $$ = operator("ne","!=",7,pair($1,$3));	}
 		;
 
-exp_cond	: exp_log
-		| exp_log '?' exp_cond ':' exp_cond
-					{ $$ = operator("if","?:",7,triple($1,$3,$5));	}
+exp_bitand	: exp_eq
+		| exp_bitand BITAND exp_eq	{ $$ = operator("bitand","&",8,pair($1,$3));	}
+		;
+
+exp_bitor	: exp_bitand
+		| exp_bitor BITOR exp_bitand	{ $$ = operator("bitor", "|",9,pair($1,$3));	}
+		;
+
+exp_logand	: exp_bitor
+		| exp_logand LOGAND exp_bitor	{ $$ = operator("and","&&",10,pair($1,$3));	}
+		| exp_logand LOGAND2 exp_bitor	{ $$ = operator("and2","&&&",10,pair($1,$3));	}
+		;
+
+exp_logor	: exp_bitand
+		| exp_logor LOGOR exp_logand	{ $$ = operator("or", "||",11,pair($1,$3));	}
+		| exp_logor LOGOR2 exp_logand	{ $$ = operator("or2", "|||",11,pair($1,$3));	}
+		;
+
+exp_cond	: exp_logor
+		| exp_logor '?' exp_cond ':' exp_cond
+					{ $$ = operator("if","?:",12,triple($1,$3,$5));	}
 		;
 
 exp_let		: exp_cond

@@ -31,6 +31,15 @@ func_desc func_descs[] = {
 
 	{"not",		c_not,		f_not		},
 
+	{"bitand",	c_logop,	f_bitand	},
+	{"bitor",	c_logop,	f_bitor		},
+	{"xor",		c_logop,	f_bitxor	},
+	{"shiftl",	c_logop,	f_shiftl	},
+	{"shiftr",	c_logop,	f_shiftr	},
+	{"shiftru",	c_logop,	f_shiftru	},
+
+	{"bitnot",	c_not,		f_bitnot	},
+
 	{"sqrt",	c_double1,	f_sqrt		},
 	{"sin",		c_double1,	f_sin		},
 	{"cos",		c_double1,	f_cos		},

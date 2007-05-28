@@ -43,24 +43,31 @@ The following operators are supported:
 <div class="code"><PRE>
      Operator   Meaning                    Type        Precedence
      --------------------------------------------------------------
-     !          not                        Logical     6
-     ^          exponentiation             Arithmetic  5
-     %          modulus                    Arithmetic  4
-     /          division                   Arithmetic  4
-     *          multiplication             Arithmetic  4
-     +          addition                   Arithmetic  3
-     -          subtraction                Arithmetic  3
-     ==         equal                      Logical     2
-     !=         not equal                  Logical     2
-     &gt;          greater than               Logical     2
-     &gt;=         greater than or equal      Logical     2
-     &lt;          less than                  Logical     2
-     &lt;=         less than or equal         Logical     2
-     &amp;&amp;         and                        Logical     1
-     ||         or                         Logical     1
-     &amp;&amp;&amp;        and[1]                     Logical     1
-     |||        or[1]                      Logical     1
-     #          color separator operator   Arithmetic   
+     -          negation                   Arithmetic  12
+     ~          2's complement             Bitwise     12
+     !          not                        Logical     12
+     ^          exponentiation             Arithmetic  11
+     %          modulus                    Arithmetic  10
+     /          division                   Arithmetic  10
+     *          multiplication             Arithmetic  10
+     +          addition                   Arithmetic   9
+     -          subtraction                Arithmetic   9
+     &lt;&lt;         left shift                 Bitwise      8
+     &gt;&gt;         right shift                Bitwise      8
+     &gt;&gt;&gt;        right shift (unsigned)     Bitwise      8
+     &gt;          greater than               Logical      7
+     &gt;=         greater than or equal      Logical      7
+     &lt;          less than                  Logical      7
+     &lt;=         less than or equal         Logical      7
+     ==         equal                      Logical      6
+     !=         not equal                  Logical      6
+     &amp;          bitwise and                Bitwise      5
+     |          bitwise or                 Bitwise      4
+     &amp;&amp;         logical and                Logical      3
+     &amp;&amp;&amp;        logical and[1]             Logical      3
+     ||         logical or                 Logical      2
+     |||        logical or[1]              Logical      2
+     ?:         conditional                Logical      1
 </PRE></div>
 (modulus is the remainder upon division)
 <P>
@@ -200,6 +207,7 @@ round(x)		round x to nearest integer			I
 sin(x)			sine of x (x is in degrees)			F
 sqrt(x)			square root of x				F
 tan(x)			tangent of x (x is in degrees)			F
+xor(x,y)		exclusive-or (XOR) of x and y			I
 </PRE></div>
 <div class="code"><PRE>
 Internal variables:

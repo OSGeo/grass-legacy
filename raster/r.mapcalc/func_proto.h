@@ -25,9 +25,16 @@ extern func_t f_and	;
 extern func_t f_or	;
 extern func_t f_and2	;
 extern func_t f_or2	;
+extern func_t f_bitand	;
+extern func_t f_bitor	;
+extern func_t f_bitxor	;
+extern func_t f_shiftl	;
+extern func_t f_shiftr	;
+extern func_t f_shiftru	;
 extern args_t c_logop	;
 
 extern func_t f_not	;
+extern func_t f_bitnot	;
 extern args_t c_not	;
 
 extern func_t f_sqrt	;

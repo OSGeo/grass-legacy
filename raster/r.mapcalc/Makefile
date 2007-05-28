@@ -25,6 +25,10 @@ COMMON = \
 	$(OBJDIR)/xacos.o \
 	$(OBJDIR)/xasin.o \
 	$(OBJDIR)/xatan.o \
+	$(OBJDIR)/xbitand.o \
+	$(OBJDIR)/xbitnot.o \
+	$(OBJDIR)/xbitor.o \
+	$(OBJDIR)/xbitxor.o \
 	$(OBJDIR)/xcos.o \
 	$(OBJDIR)/xdiv.o \
 	$(OBJDIR)/xdouble.o \
@@ -57,6 +61,9 @@ COMMON = \
 	$(OBJDIR)/xrand.o \
 	$(OBJDIR)/xround.o \
 	$(OBJDIR)/xrowcol.o \
+	$(OBJDIR)/xshiftl.o \
+	$(OBJDIR)/xshiftr.o \
+	$(OBJDIR)/xshiftru.o \
 	$(OBJDIR)/xsin.o \
 	$(OBJDIR)/xsqrt.o \
 	$(OBJDIR)/xsub.o \
