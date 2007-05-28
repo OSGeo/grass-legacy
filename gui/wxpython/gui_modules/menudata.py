@@ -7,7 +7,7 @@ class Data:
               ("Import", "Import files", "self.runMenuCmd", "r.in.gdal"),
               ("Export", "Export files", "self.runMenuCmd", "r.out.gdal"),
               ("","","", ""),
-              ("E&xit", "Exit from wxgui.py", "self.onCloseWindow", "")
+              ("E&xit", "Exit from wxgui.py", "self.OnCloseWindow", "")
               )),
           ("Config", (
               ("Region", "Set region", "self.runMenuCmd", "g.region"),

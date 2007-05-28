@@ -38,14 +38,14 @@ class MapLayer:
                  active=True, hidden=False, opacity=1):
         self.type    = type
         self.name    = name
-        self.cmdlist = cmd + ["--q"] # quiet
+        self.cmdlist = cmd
 
         self.active  = active
         self.hidden  = hidden
         self.opacity = opacity
 
-        Debug.msg (3, "MapLayer.__init__(): type=%s, cmd='%s', name=%s, active=%d, opacity=%d, hidden=%d" %
-                       (self.type, self.cmdlist, self.name, self.active, self.opacity, self.hidden))
+        Debug.msg (3, "MapLayer.__init__(): type=%s, cmd=%s, name=%s, active=%d, opacity=%d, hidden=%d" %
+                       (self.type, self.GetCmd(string=True), self.name, self.active, self.opacity, self.hidden))
 
         gtemp = utils.GetTempfile()
         self.maskfile = gtemp + ".pgm"
@@ -54,7 +54,10 @@ class MapLayer:
         else:
             self.mapfile = gtemp + ".ppm"
 
-
+    def __del__(self):
+        Debug.msg (3, "MapLayer.__del__(): layer=%s, cmd=%s" %
+                   (self.name, self.GetCmd(string=True)))
+    
     def __renderLayer(self):
         """
         Stores generic command with all parameters in the self.cmdlist variable
@@ -116,7 +119,7 @@ class MapLayer:
                              (self.name, self.cmdlist))
             return None
 
-        runcmd = cmd.Command(cmd=self.cmdlist)
+        runcmd = cmd.Command(cmd=self.cmdlist + ['--q']) # run quiet
         if runcmd.returncode != 0:
             print "Could not execute '%s'" % (self.cmdlist)
             for msg in runcmd.msg:
@@ -132,7 +135,7 @@ class MapLayer:
 
         return self.mapfile
 
-    def GetMapset (self):
+    def GetMapset(self):
         """Return mapset name of the layer or None"""
         if not self.name:
             return None
@@ -142,6 +145,20 @@ class MapLayer:
             return self.name[idxAt+1:]
         else:
             return None
+
+    def GetCmd(self, string=False):
+        """Get command list/string"""
+        if string:
+            return ' '.join(self.cmdlist)
+        else:
+            return self.cmdlist
+
+    def GetOpacity(self, float=False):
+        """Get opacity level"""
+        if float:
+            return self.opacity
+        else:
+            return int (self.opacity * 100)
 
 class Map:
     """
@@ -689,6 +706,13 @@ class Map:
         layer tree - for drag and drop
         """
         self.layers = layerList
+
+        layerNameList = ""
+        for layer in self.layers:
+            if layer.name:
+                layerNameList += layer.name + ','
+        Debug.msg (4, "Map.ReoderLayers(): layers=%s" % \
+                   (layerNameList))
         
     def ChangeLayer(self, layer, type, command, name=None,
                     l_active=True, l_hidden=False, l_opacity=1, l_render=False):
@@ -744,6 +768,8 @@ class Map:
         """
         Change name of the layer
         """
+        Debug.msg (3, "Map.ChangeLayerName(): from=%s to=%s" % \
+                   (layer.name, name))
         layer.name =  name
 
     def RemoveLayer(self, name=None, id=None):
