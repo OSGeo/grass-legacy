@@ -655,7 +655,7 @@ EOF
 	    # need to connect it before we can delete it. :-/
 	    v.db.connect map="$NAME" table="$NAME" 2> /dev/null
 	    v.db.droptable -f map=$NAME --quiet
-#	    rm -f "${TMP}"*
+	    rm -f "${TMP}"*
 	    exit 1
 	fi
 ### </hack>
