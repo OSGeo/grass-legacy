@@ -77,6 +77,7 @@ icons_default = {
     "profile"    : 'gui-profile.gif',
     "transect"   : 'gui-profiledefine.gif',
     "profiledraw": 'gui-profiledraw.gif',
+    "profileopt" : 'gui-profileopt.gif',
     "analyze"    : 'gui-rastanalyze.gif', # TODO: fix?
     }
 
@@ -206,6 +207,7 @@ Icons = {
     "transect"   : MetaIcon (img=icons_img["transect"], label="Draw transect to profile"),
     "profile"    : MetaIcon (img=icons_img["profile"], label="Profile surface map"),
     "profiledraw": MetaIcon (img=icons_img["profiledraw"], label="Create profile"),
+    "profileopt" : MetaIcon (img=icons_img["profileopt"], label="Profile options"),
     "histogram"  : MetaIcon (img=icons_img["histogram"], label="Create histogram of image or raster file"),
     "font"       : MetaIcon (img=icons_img["font"], label="Select font"),
     "color"      : MetaIcon (img=icons_img["color"], label="Select color"),
