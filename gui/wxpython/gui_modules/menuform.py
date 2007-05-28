@@ -585,7 +585,7 @@ class mainFrame(wx.Frame):
         self.Layout()
 
     def updateValuesHook(self):
-        self.SetStatusText( ''.join(self.notebookpanel.createCmd(ignoreErrors = True)) )
+        self.SetStatusText(' '.join(self.notebookpanel.createCmd(ignoreErrors = True)) )
 
     def OnOK(self, event):
         cmd = self.OnApply(event)
