@@ -153,7 +153,7 @@ class GMFrame(wx.Frame):
         self.curr_pagenum = '' # currently selected page number for layer tree notebook
         self.encoding = 'ISO-8859-1' # default encoding for display fonts
 
-        self.Bind(wx.EVT_CLOSE, self.onCloseWindow)
+        self.Bind(wx.EVT_CLOSE, self.OnCloseWindow)
         self.Bind(wx.EVT_LEFT_DOWN, self.AddRaster)
 
         # item, proportion, flag, border, userData
@@ -165,7 +165,7 @@ class GMFrame(wx.Frame):
         wx.CallAfter(self.notebook.SetSelection, 0)
 
         # start default initial display
-        self.newDisplay()
+        self.NewDisplay()
 
     def __createCommandInput(self):
         """Creates command input area"""
@@ -371,14 +371,14 @@ class GMFrame(wx.Frame):
     def toolbarData(self):
 
         return   (
-                 ('newdisplay', Icons["newdisplay"].GetBitmap(), Icons["newdisplay"].GetLabel(), self.newDisplay),
+                 ('newdisplay', Icons["newdisplay"].GetBitmap(), Icons["newdisplay"].GetLabel(), self.NewDisplay),
                  ('', '', '', ''),
-                 ('addrast', Icons["addrast"].GetBitmap(), Icons["addrast"].GetLabel(), self.onRaster),
-                 ('addvect', Icons["addvect"].GetBitmap(), Icons["addvect"].GetLabel(), self.onVector),
-                 ('addcmd',  Icons["addcmd"].GetBitmap(),  Icons["addcmd"].GetLabel(),  self.addCommand),
+                 ('addrast', Icons["addrast"].GetBitmap(), Icons["addrast"].GetLabel(), self.OnRaster),
+                 ('addvect', Icons["addvect"].GetBitmap(), Icons["addvect"].GetLabel(), self.OnVector),
+                 ('addcmd',  Icons["addcmd"].GetBitmap(),  Icons["addcmd"].GetLabel(),  self.AddCommand),
                  ('addgrp',  wx.ArtProvider.GetBitmap(wx.ART_FOLDER, wx.ART_TOOLBAR, (16,16)),  Icons["addgrp"].GetLabel(), self.AddGroup),
-                 ('addovl',  Icons["addovl"].GetBitmap(),  Icons["addovl"].GetLabel(), self.onOverlay),
-                 ('delcmd',  wx.ArtProvider.GetBitmap(wx.ART_DELETE, wx.ART_TOOLBAR, (16,16)), 'Delete selected layer', self.deleteLayer),
+                 ('addovl',  Icons["addovl"].GetBitmap(),  Icons["addovl"].GetLabel(), self.OnOverlay),
+                 ('delcmd',  wx.ArtProvider.GetBitmap(wx.ART_DELETE, wx.ART_TOOLBAR, (16,16)), 'Delete selected layer', self.DeleteLayer),
                  ('', '', '', ''),
                  ('attrtable', Icons["attrtable"].GetBitmap(), Icons["attrtable"].GetLabel(), self.ShowAttributeTable)
                   )
@@ -427,7 +427,7 @@ class GMFrame(wx.Frame):
                                               size=wx.Size(500,300), vectmap=mapname,
                                               pointdata=pointdata)
 
-    def newDisplay(self, event=None):
+    def NewDisplay(self, event=None):
         """Create new map display frame"""
 
         # make a new page in the bookcontrol for the layer tree (on page 0 of the notebook)
@@ -453,7 +453,7 @@ class GMFrame(wx.Frame):
         self.disp_idx += 1
 
     # toolBar button handlers
-    def onRaster(self, event):
+    def OnRaster(self, event):
         """Add raster menu"""
         point = wx.GetMousePosition()
         rastmenu = wx.Menu()
@@ -473,22 +473,22 @@ class GMFrame(wx.Frame):
         rastmenu.AppendItem(addhis)
         self.Bind(wx.EVT_MENU, self.AddHIS, addhis)
 
-#        addrastarrow = wx.MenuItem(rastmenu, -1, Icons ["addrarrow"].GetLabel())
-#        addrastarrow.SetBitmap(Icons["addrarrow"].GetBitmap (self.iconsize))
-#        rastmenu.AppendItem(addrastarrow)
-#        self.Bind(wx.EVT_MENU, self.AddRastarrow, addrastarrow)
-#
-#        addrastnums = wx.MenuItem(rastmenu, -1, Icons ["addrnum"].GetLabel())
-#        addrastnums.SetBitmap(Icons["addrnum"].GetBitmap (self.iconsize))
-#        rastmenu.AppendItem(addrastnums)
-#        self.Bind(wx.EVT_MENU, self.AddRastnum, addrastnums)
+        #        addrastarrow = wx.MenuItem(rastmenu, -1, Icons ["addrarrow"].GetLabel())
+        #        addrastarrow.SetBitmap(Icons["addrarrow"].GetBitmap (self.iconsize))
+        #        rastmenu.AppendItem(addrastarrow)
+        #        self.Bind(wx.EVT_MENU, self.AddRastarrow, addrastarrow)
+        #
+        #        addrastnums = wx.MenuItem(rastmenu, -1, Icons ["addrnum"].GetLabel())
+        #        addrastnums.SetBitmap(Icons["addrnum"].GetBitmap (self.iconsize))
+        #        rastmenu.AppendItem(addrastnums)
+        #        self.Bind(wx.EVT_MENU, self.AddRastnum, addrastnums)
 
         # Popup the menu.  If an item is selected then its handler
         # will be called before PopupMenu returns.
         self.PopupMenu(rastmenu)
         rastmenu.Destroy()
 
-    def onVector(self, event):
+    def OnVector(self, event):
         """Add vector menu"""
         point = wx.GetMousePosition()
         vectmenu = wx.Menu()
@@ -512,7 +512,7 @@ class GMFrame(wx.Frame):
         self.PopupMenu(vectmenu)
         vectmenu.Destroy()
 
-    def onOverlay(self, event):
+    def OnOverlay(self, event):
         """Add overlay menu"""
         point = wx.GetMousePosition()
         ovlmenu = wx.Menu()
@@ -520,10 +520,10 @@ class GMFrame(wx.Frame):
         addgrid = wx.MenuItem(ovlmenu, -1, Icons["addgrid"].GetLabel())
         addgrid.SetBitmap(Icons["addgrid"].GetBitmap(self.iconsize))
         ovlmenu.AppendItem(addgrid)
-        self.Bind(wx.EVT_MENU, self.addGrid, addgrid)
+        self.Bind(wx.EVT_MENU, self.AddGrid, addgrid)
 
         addlbl = wx.MenuItem(ovlmenu, -1, Icons["addlabels"].GetLabel())
-        addlbl.SetBitmap(Icons["addlabels"].GetBitmap(self.iconsize))
+        addlbl.SetBitmap(Icons["Addlabels"].GetBitmap(self.iconsize))
         ovlmenu.AppendItem(addlbl)
         self.Bind(wx.EVT_MENU, self.addLabels, addlbl)
 
@@ -572,7 +572,7 @@ class GMFrame(wx.Frame):
         self.notebook.SetSelection(0)
         self.curr_page.maptree.AddLayer('themechart')
 
-    def addCommand(self, event):
+    def AddCommand(self, event):
         """Add command line layer"""
         self.notebook.SetSelection(0)
         self.curr_page.maptree.AddLayer('command')
@@ -582,12 +582,12 @@ class GMFrame(wx.Frame):
         self.notebook.SetSelection(0)
         self.curr_page.maptree.AddLayer('group')
 
-    def addGrid(self, event):
+    def AddGrid(self, event):
         """Add layer grid"""
         self.notebook.SetSelection(0)
         self.curr_page.maptree.AddLayer('grid')
 
-    def addLabels(self, event):
+    def AddLabels(self, event):
         """Add layer vector labels"""
         self.notebook.SetSelection(0)
         self.curr_page.maptree.AddLayer('labels')
@@ -595,7 +595,7 @@ class GMFrame(wx.Frame):
     def GetSelectedDisplay(self):
         return self.notebook.GetSelection()
 
-    def deleteLayer(self, event):
+    def DeleteLayer(self, event):
         """
         Delete selected map display layer in GIS Manager tree widget
         """
@@ -621,8 +621,8 @@ class GMFrame(wx.Frame):
             self.curr_page.maptree.Delete(layer)
 
     #Misc methods
-    def onCloseWindow(self, event):
-        '''Cleanup when wxgui.py is quit'''
+    def OnCloseWindow(self, event):
+        """Cleanup when wxgui.py is quit"""
         try:
             for page in range(self.gm_cb.GetPageCount()):
                 self.gm_cb.GetPage(page).maptree.Map.Clean()

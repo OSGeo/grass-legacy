@@ -905,20 +905,20 @@ class BufferedWindow(wx.Window):
         if not self.tree.GetSelection():
             return
 
-        layer = self.tree.GetSelection()
-        type  = self.tree.layers[layer].type
-        dcmd  = self.tree.GetPyData(layer)[0]
-        mapname = None
-
-        for item in dcmd:
-            if 'map=' in item:
-                mapname = item.split('=')[1]
-
+        item  = self.tree.GetSelection()
+        try:
+            layer = self.tree.layers[item].maplayer
+        except:
+            return
+        
+        Debug.msg (3, "BufferedWindow.ZoomToMap(): layer=%s, type=%s" % \
+                   (layer.name, layer.type))
+        
         # selected layer must be a valid map
-        if type in ('raster', 'rgb', 'his'):
-            cmdVec = ["r.info", "-g", "map=%s" % mapname]
-        elif type in ('vector', 'thememap', 'themechart'):
-            cmdVec = ["v.info", "-g", "map=%s" % mapname]
+        if layer.type in ('raster', 'rgb', 'his'):
+            cmdVec = ["r.info", "-g", "map=%s" % layer.name]
+        elif layer.type in ('vector', 'thememap', 'themechart'):
+            cmdVec = ["v.info", "-g", "map=%s" % layer.name]
         else:
             return
 
