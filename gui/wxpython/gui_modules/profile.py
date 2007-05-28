@@ -7,31 +7,12 @@ try:
     import wx.lib.plot as plot
 except:
     msg= """
-    This module requires the Numeric/numarray or NumPy module,
+    This module requires the NumPy module,
     which could not be imported.  It probably is not installed
     (it's not part of the standard Python distribution). See the
     Numeric Python site (http://numpy.scipy.org) for information on
     downloading source or binaries."""
     print >> sys.stderr, "profile.py: " + msg
-    #raise ImportError, "Numeric,numarray or NumPy not found. \n" + msg
-
-#Needs Numeric or numarray or NumPy
-#try:
-#    import numpy.oldnumeric as _Numeric
-#except:
-#    try:
-#        import numarray as _Numeric     #if numarray is used it is renamed Numeric
-#    except:
-#        try:
-#            import Numeric as _Numeric
-#        except:
-#            msg= """
-#            This module requires the Numeric/numarray or NumPy module,
-#            which could not be imported.  It probably is not installed
-#            (it's not part of the standard Python distribution). See the
-#            Numeric Python site (http://numpy.scipy.org) for information on
-#            downloading source or binaries."""
-#            raise ImportError, "Numeric,numarray or NumPy not found. \n" + msg
 
 from threading import Thread
 
@@ -202,7 +183,7 @@ class ProfileFrame(wx.Frame):
                  ('transect', Icons["transect"].GetBitmap(), Icons["transect"].GetLabel(), self.DrawTransect),
                  ('raster', Icons["addrast"].GetBitmap(), Icons["addrast"].GetLabel(), self.SelectRaster),
                  ('profiledraw', Icons["profiledraw"].GetBitmap(), Icons["profiledraw"].GetLabel(), self.CreateProfile),
-                 ('options', Icons["font"].GetBitmap(), 'Profile options', self.ProfileOptionsMenu),
+                 ('options', Icons["profileopt"].GetBitmap(), 'Profile options', self.ProfileOptionsMenu),
                  ('drag', Icons['pan'].GetBitmap(), 'Enable drag', self.OnDrag),
                  ('zoom', Icons['zoom_in'].GetBitmap(), 'Enable zoom', self.OnZoom),
                  ('unzoom', Icons['zoom_back'].GetBitmap(), 'Unzoom profile', self.OnRedraw),
@@ -261,19 +242,18 @@ class ProfileFrame(wx.Frame):
                           pos=wx.DefaultPosition, size=wx.DefaultSize,
                           style=wx.DEFAULT_DIALOG_STYLE)
 
-        if dlg.ShowModal() == wx.ID_CANCEL:
+        if dlg.ShowModal() == wx.ID_OK:
+            self.rast1 = dlg.rast1
+            self.rast2 = dlg.rast2
+            self.rast3 = dlg.rast3
+
+        elif dlg.ShowModal() == wx.ID_CANCEL:
             dlg.Destroy()
             return
 
-        self.rast1 = dlg.rast1
-        self.rast2 = dlg.rast2
-        self.rast3 = dlg.rast3
-
-        self.datalist1 = dlg.datalist1
-        self.datalist2 = dlg.datalist2
-        self.datalist3 = dlg.datalist3
-
-        self.plegend1 = (' Profile of '+self.rast1)
+        self.datalist1 = self.CreateDatalist(self.rast1, self.coordstr)
+        self.plegend1 = ' Profile of %s' % self.rast1
+        print 'legend1=',self.plegend1
 
         # set default title and legend text
         self.ptitle = 'Profile of %s' % self.rast1
@@ -282,35 +262,60 @@ class ProfileFrame(wx.Frame):
             self.rast2 = self.rast3
             self.rast3 = ''
 
+        if self.rast2 != '':
+            print 'check rast2', self.rast2
+            self.datalist2 = self.CreateDatalist(self.rast2, self.coordstr)
+
+        if self.rast3 != '':
+            self.datalist3 = self.CreateDatalist(self.rast3, self.coordstr)
+
         if self.rast2 != '' and self.rast3 != '':
-            self.ptitle += (', '+self.rast2+', and '+self.rast3)
-            self.plegend2 = (' Profile of '+self.rast2)
-            self.plegend3 = (' Profile of '+self.rast3)
+            self.ptitle += ', %s, and %s' % (self.rast2,self.rast3)
+            self.plegend2 = 'Profile of %s' % self.rast2
+            self.plegend3 = 'Profile of %s' % self.rast3
         elif self.rast2 != '':
-            self.plegend2 = (' Profile of '+self.rast2)
-            self.ptitle += (' and '+self.rast2)
+            self.plegend2 = 'Profile of %s' % self.rast2
+            self.ptitle += ' and %s' % self.rast2
 
         # create list of coordinates for transect segment markers
-        if len(self.mapwin.polycoords) > 0:
+        if len(self.mapwin.polycoords) > 0 and self.rast1 != '':
             for point in self.mapwin.polycoords:
                 # convert screen coordinates to map coordinates for transect
                 east, north = self.mapwin.Pixel2Cell(point[0],point[1])
 
                 # get value of raster cell at coordinate point
-                cmdlist = ['r.what', 'input=%s' % self.rast1, 'east_north=%d,%d' % (east,north)]
-                p = cmd.Command(cmdlist)
-                output = p.module_stdout.read().strip().split('|')
-                val = output[3]
+                try:
+                    cmdlist = ['r.what', 'input=%s' % self.rast1, 'east_north=%d,%d' % (east,north)]
+                    p = cmd.Command(cmdlist)
+                    if p.returncode == 0:
+                        output = p.module_stdout.read().strip().split('|')
+                        val = output[3]
 
-                # calculate distance between coordinate points
-                if lasteast and lastnorth:
-                     dist = math.sqrt(math.pow((lasteast-east),2) + math.pow((lastnorth-north),2))
-                cumdist += dist
+                        # calculate distance between coordinate points
+                        if lasteast and lastnorth:
+                             dist = math.sqrt(math.pow((lasteast-east),2) + math.pow((lastnorth-north),2))
+                        cumdist += dist
 
-                # build a list of distance,value pairs for each segment of transect
-                self.seglist.append((cumdist,val))
-                lasteast = east
-                lastnorth = north
+                        # build a list of distance,value pairs for each segment of transect
+                        self.seglist.append((cumdist,val))
+                        lasteast = east
+                        lastnorth = north
+#                    output = os.popen('r.what input=%s east_north=%d,%d' % (self.rast1,east,north), "r").read().strip().split('|')
+#                    val = output[3]
+#
+#                    # calculate distance between coordinate points
+#                    if lasteast and lastnorth:
+#                         dist = math.sqrt(math.pow((lasteast-east),2) + math.pow((lastnorth-north),2))
+#                    cumdist += dist
+#
+#                    # build a list of distance,value pairs for each segment of transect
+#                    self.seglist.append((cumdist,val))
+#                    lasteast = east
+#                    lastnorth = north
+
+                except:
+                    pass
+
 
             # delete first and last segment point
             try:
@@ -371,14 +376,23 @@ class ProfileFrame(wx.Frame):
         Build a list of distance, value pairs for points along transect
         """
         datalist = []
-        cmdlist = ['r.profile', 'input=%s' % raster, 'profile=%s' % coords, 'null=nan']
-        p = cmd.Command(cmdlist)
-        output = p.module_stdout.read().strip().split('\n')
-        for outline in output:
-            dist,elev = outline.split(' ')
-            datalist.append((dist,elev))
+        try:
+#            cmdlist = ['r.profile', 'input=%s' % raster, 'profile=%s' % coords, 'null=nan', '--quiet']
+#            p = cmd.Command(cmdlist, wait=False)
+#            output = p.module_stdout.read().strip().split('\n')
+#            if p.returncode == 0:
+#                for outline in output:
+#                    dist,elev = outline.split(' ')
+#                    datalist.append((dist,elev))
 
-        return datalist
+            output = os.popen('r.profile input=%s profile=%s null=nan --quiet' % (raster,coords), "r").read().strip().split('\n')
+            for outline in output:
+                dist,elev = outline.split(' ')
+                datalist.append((dist,elev))
+
+            return datalist
+        except:
+            return None
 
     def CreateProfile(self, event):
         """
@@ -413,7 +427,7 @@ class ProfileFrame(wx.Frame):
                                         colour=self.pcolor1,
                                         width=self.pwidth1,
                                         style=self.pstyle1,
-                                        legend=(' '+self.plegend1))
+                                        legend=' '+self.plegend1)
 
         self.plotlist.append(self.pline1)
 
@@ -422,7 +436,7 @@ class ProfileFrame(wx.Frame):
                                         colour=self.pcolor2,
                                         width=self.pwidth2,
                                         style=self.pstyle2,
-                                        legend=(' '+self.plegend2))
+                                        legend=' '+self.plegend2)
             self.plotlist.append(self.pline2)
 
 
@@ -432,7 +446,7 @@ class ProfileFrame(wx.Frame):
                                         colour=self.pcolor3,
                                         width=self.pwidth3,
                                         style=self.pstyle3,
-                                        legend=(' '+self.plegend3))
+                                        legend=' '+self.plegend3)
             self.plotlist.append(self.pline3)
 
         if len(self.seglist) > 0 :
@@ -612,12 +626,12 @@ class ProfileFrame(wx.Frame):
             self.pcolor1 = dlg.pcolor1
             self.pwidth1 = dlg.pwidth1
             self.pstyle1 = dlg.pstyle1
-            self.plegend1 = dlg.plegend2
+            self.plegend1 = dlg.plegend1
 
             self.pcolor2 = dlg.pcolor2
             self.pwidth2 = dlg.pwidth2
             self.pstyle2 = dlg.pstyle2
-            self.plegend2 = dlg.plegend3
+            self.plegend2 = dlg.plegend2
 
             self.pcolor3 = dlg.pcolor3
             self.pwidth3 = dlg.pwidth3
@@ -736,6 +750,10 @@ class SetRaster(wx.Dialog):
         label = wx.StaticText(self, -1, "Select raster 1 (required):")
         box.Add(label, 0, wx.ALIGN_CENTRE|wx.ALL, 5)
         selection1 = select.Select(self, id=wx.ID_ANY, size=(300,-1),type='cell')
+        try:
+            selection1.SetValue(self.rast1)
+        except:
+            pass
         box.Add(selection1, 0, wx.ALIGN_CENTRE|wx.ALL, 5)
         sizer.Add(box, 0, wx.GROW|wx.ALIGN_CENTER_VERTICAL|wx.ALL, 5)
 
@@ -743,6 +761,10 @@ class SetRaster(wx.Dialog):
         label = wx.StaticText(self, -1, "Select raster 2 (optional):")
         box.Add(label, 0, wx.ALIGN_CENTRE|wx.ALL, 5)
         selection2 = select.Select(self, id=wx.ID_ANY, size=(300,-1),type='cell')
+        try:
+            selection2.SetValue(self.rast2)
+        except:
+            pass
         box.Add(selection2, 0, wx.ALIGN_CENTRE|wx.ALL, 5)
 
         sizer.Add(box, 0, wx.GROW|wx.ALIGN_CENTER_VERTICAL|wx.ALL, 5)
@@ -751,6 +773,10 @@ class SetRaster(wx.Dialog):
         label = wx.StaticText(self, -1, "Select raster 3 (optional):")
         box.Add(label, 0, wx.ALIGN_CENTRE|wx.ALL, 5)
         selection3 = select.Select(self, id=wx.ID_ANY, size=(300,-1),type='cell')
+        try:
+            selection3.SetValue(self.rast3)
+        except:
+            pass
         box.Add(selection3, 0, wx.ALIGN_CENTRE|wx.ALL, 5)
         sizer.Add(box, 0, wx.GROW|wx.ALIGN_CENTER_VERTICAL|wx.ALL, 5)
 
@@ -772,21 +798,18 @@ class SetRaster(wx.Dialog):
         self.SetSizer(sizer)
         sizer.Fit(self)
 
-        selection1.Bind(wx.EVT_TEXT, self.onSelection1)
-        selection2.Bind(wx.EVT_TEXT, self.onSelection2)
-        selection3.Bind(wx.EVT_TEXT, self.onSelection3)
+        selection1.Bind(wx.EVT_TEXT, self.OnSelection1)
+        selection2.Bind(wx.EVT_TEXT, self.OnSelection2)
+        selection3.Bind(wx.EVT_TEXT, self.OnSelection3)
 
-    def onSelection1(self, event):
+    def OnSelection1(self, event):
         self.rast1 = event.GetString()
-        self.datalist1 = self.parent.CreateDatalist(self.rast1, self.coordstr)
 
-    def onSelection2(self, event):
+    def OnSelection2(self, event):
         self.rast2 = event.GetString()
-        self.datalist2 = self.parent.CreateDatalist(self.rast2, self.coordstr)
 
-    def onSelection3(self, event):
+    def OnSelection3(self, event):
         self.rast3 = event.GetString()
-        self.datalist3 = self.parent.CreateDatalist(self.rast3, self.coordstr)
 
 class TextDialog(wx.Dialog):
     def __init__(self, parent, id, title, pos=wx.DefaultPosition, size=wx.DefaultSize,
@@ -797,7 +820,7 @@ class TextDialog(wx.Dialog):
         """
         # initialize variables
 
-                # combo box entry lists
+        # combo box entry lists
         self.ffamilydict = {'default':wx.FONTFAMILY_DEFAULT,
                        'decorative':wx.FONTFAMILY_DECORATIVE,
                        'roman':wx.FONTFAMILY_ROMAN,
