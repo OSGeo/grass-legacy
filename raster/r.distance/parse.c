@@ -1,3 +1,20 @@
+/****************************************************************************
+ *
+ * MODULE:       r.distance
+ *
+ * AUTHOR(S):    Michael Shapiro - CERL
+ *
+ * PURPOSE:      Locates the closest points between objects in two
+ *               raster maps.
+ *
+ * COPYRIGHT:    (C) 2003 by the GRASS Development Team
+ *
+ *               This program is free software under the GNU General Public
+ *               License (>=v2). Read the file COPYING that comes with GRASS
+ *               for details.
+ *
+ ***************************************************************************/
+
 #include <stdlib.h>
 #include <stdio.h>
 #include "defs.h"
@@ -8,7 +25,7 @@ void
 parse (int argc, char *argv[], struct Parms *parms)
 {
     struct Option *maps, *fs;
-    struct Flag *quiet, *labels;
+    struct Flag *quiet, *labels, *overlap;
     char *name, *mapset;
 
     maps = G_define_option();
@@ -32,6 +49,10 @@ parse (int argc, char *argv[], struct Parms *parms)
     labels = G_define_flag();
     labels -> key = 'l';
     labels->description = _("Include category labels in the output");
+
+    overlap = G_define_flag();
+    overlap -> key = 'o';
+    overlap->description = _("Report zero distance if rasters are overlapping");
 
     quiet = G_define_flag();
     quiet -> key = 'q';
@@ -57,4 +78,5 @@ parse (int argc, char *argv[], struct Parms *parms)
     parms->verbose = quiet->answer ? 0 : 1;
     parms->labels = labels->answer ? 1 : 0;
     parms->fs = fs->answer;
+    parms->overlap = overlap->answer ? 1:0;
 }

@@ -1,3 +1,20 @@
+/****************************************************************************
+ *
+ * MODULE:       r.distance
+ *
+ * AUTHOR(S):    Michael Shapiro - CERL
+ *
+ * PURPOSE:      Locates the closest points between objects in two
+ *               raster maps.
+ *
+ * COPYRIGHT:    (C) 2003 by the GRASS Development Team
+ *
+ *               This program is free software under the GNU General Public
+ *               License (>=v2). Read the file COPYING that comes with GRASS
+ *               for details.
+ *
+ ***************************************************************************/
+
 #include "defs.h"
 
 void 
@@ -21,8 +38,7 @@ report (struct Parms *parms)
     map2 = &parms->map2;
     fs   = parms->fs;
 
-    if (parms->verbose)
-	fprintf (stderr, "Processing...\n");
+    G_message (_("Processing..."));
 
     for (i1 = 0; i1 < map1->edges.ncats; i1++)
     {
@@ -31,7 +47,7 @@ report (struct Parms *parms)
 	{
 	    list2 = &map2->edges.catlist[i2];
 	    find_minimum_distance (list1, list2,
-		&east1, &north1, &east2, &north2, &distance, &region);
+		&east1, &north1, &east2, &north2, &distance, &region, parms->overlap, map1->name, map2->name);
 
 	/* print cat numbers */
 	    fprintf (stdout,"%ld%s%ld", (long)list1->cat, fs, (long)list2->cat) ;
