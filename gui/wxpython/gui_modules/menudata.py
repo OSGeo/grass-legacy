@@ -63,7 +63,6 @@ class Data:
                 ("Calculate cumulative movement costs between locales", "Calculate cumulative movement costs between locales", "self.runMenuCmd", "r.walk"),
                 ("cost surface", "cost surface", "self.runMenuCmd", "r.cost"),
                 ("Least cost route or flow", "Least cost route or flow", "self.runMenuCmd", "r.drain"),
-                ("Profile", "Profile of transect", "self.DispProfile", ""),
                 ("Shaded relief map", "Shaded relief map", "self.runMenuCmd", "r.shaded.relief"),
                 ("Slope and aspect", "Slope and aspect", "self.runMenuCmd", "r.slope.aspect"),
                 ("Terrain parameters", "Terrain parameters", "self.runMenuCmd", "r.param.scale"),
