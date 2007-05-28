@@ -523,9 +523,9 @@ class GMFrame(wx.Frame):
         self.Bind(wx.EVT_MENU, self.AddGrid, addgrid)
 
         addlbl = wx.MenuItem(ovlmenu, -1, Icons["addlabels"].GetLabel())
-        addlbl.SetBitmap(Icons["Addlabels"].GetBitmap(self.iconsize))
+        addlbl.SetBitmap(Icons["addlabels"].GetBitmap(self.iconsize))
         ovlmenu.AppendItem(addlbl)
-        self.Bind(wx.EVT_MENU, self.addLabels, addlbl)
+        self.Bind(wx.EVT_MENU, self.AddLabels, addlbl)
 
         # Popup the menu.  If an item is selected then its handler
         # will be called before PopupMenu returns.
