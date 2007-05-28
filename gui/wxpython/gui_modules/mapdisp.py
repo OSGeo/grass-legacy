@@ -642,12 +642,7 @@ class BufferedWindow(wx.Window):
                 self.mouse['begin'] = event.GetPositionTuple()[:]
                 self.mouse['end'] = self.mouse['begin']
                 self.polycoords.append(self.mouse['begin'])
-                try:
-                    self.pdc.ClearId(self.lineid)
-                    self.pdc.ClearId(self.plineid)
-                    self.Refresh()
-                except:
-                    pass
+                self.ClearLines()
             else:
                 self.mouse['begin'] = self.mouse['end']
         else:
@@ -731,8 +726,7 @@ class BufferedWindow(wx.Window):
         """
         Debug.msg (5, "BufferedWindow.OnButtonDClick():")
         if self.mouse["use"] == "measure":
-            self.pdc.ClearId(self.lineid)
-            self.pdc.ClearId(self.plineid)
+            self.ClearLines()
             self.polycoords = []
             self.mouse['use'] = 'pointer'
             self.mouse['box'] = 'point'
@@ -810,6 +804,18 @@ class BufferedWindow(wx.Window):
                     # redraw map
                     self.render=True
                     self.UpdateMap()
+
+    def ClearLines(self):
+        """
+        Clears lines drawn for measurement and profiling
+        """
+        try:
+            self.pdc.ClearId(self.lineid)
+            self.pdc.ClearId(self.plineid)
+            self.Refresh()
+        except:
+            pass
+
 
     def Pixel2Cell(self, x, y):
         """
