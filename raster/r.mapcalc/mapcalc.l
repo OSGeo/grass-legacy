@@ -94,8 +94,9 @@ static int get_input_stream(char *buf, int max_size)
 %}
 
 W		[ \t\r]+
-N		[^ ^#@,"'\000-\037()\[\]+\-*/%><!=&|?:;]+
+N		[^ ^#@,"'\000-\037()\[\]+\-*/%><!=&|?:;~]+
 I		[0-9]+
+X		[0][xX][0-9a-fA-F]+
 E		[eE][-+]?[0-9]+
 F		[fF]
 
@@ -130,6 +131,11 @@ F		[fF]
 			return INTEGER;
 		}
 
+{X}		{
+			yylval.ival = (int) strtoul(yytext, NULL, 16);
+			return INTEGER;
+		}
+
 {N}		{
 			yylval.sval = strdup(yytext);
 			return is_var(yytext) ? VARNAME : NAME; 
@@ -156,17 +162,25 @@ F		[fF]
 "%"		{	return '%';	}
 
 "!"		{	return '!';	}
+"~"		{	return '~';	}
 
-"&&"		{	return AND;	}
-"||"		{	return OR;	}
+"&&&"		{	return LOGAND2;	}
+"&&"		{	return LOGAND;	}
+"&"		{	return BITAND;	}
 
-"&&&"		{	return AND2;	}
-"|||"		{	return OR2;	}
+"|||"		{	return LOGOR2;	}
+"||"		{	return LOGOR;	}
+"|"		{	return BITOR;	}
+
+"<<"		{	return LSH;	}
+">>>"		{	return RSHU;	}
+">>"		{	return RSH;	}
 
 ">"		{	return GT;	}
 ">="		{	return GE;	}
 "<"		{	return LT;	}
 "<="		{	return LE;	}
+
 "=="		{	return EQ;	}
 "!="		{	return NE;	}
 
