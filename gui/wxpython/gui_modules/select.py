@@ -20,13 +20,13 @@ import wx
 import wx.combo
 
 class Select(wx.combo.ComboCtrl):
-    def __init__(self, parent, id, size, type, style=0):
+    def __init__(self, parent, id, size, type):
         """
         Custom control to create a ComboBox with a tree control
         to display GIS elements within acessible mapsets.
         Elements can be selected with mouse.
         """
-        wx.combo.ComboCtrl.__init__(self, parent=parent, id=id, size=size, style=style)
+        wx.combo.ComboCtrl.__init__(self, parent=parent, id=id, size=size)
         tcp = TreeCtrlComboPopup()
         self.SetPopupControl(tcp)
         self.SetPopupExtents(0,100)
