@@ -118,13 +118,13 @@ int main(int argc, char **argv)
 	struct Option *map, *colr, *rast, *rules;
     } opt;
 
+
     G_gisinit(argv[0]);
 
     module = G_define_module();
     module->keywords = _("raster");
     module->description =
-		_("Creates/Modifies the color table associated with "
-		"a raster map layer.");
+	_("Creates/Modifies the color table associated with a raster map layer.");
 
     opt.map = G_define_standard_option(G_OPT_R_MAP);
     opt.map->required      = NO;
@@ -312,8 +312,15 @@ int main(int argc, char **argv)
     }
     else if (rules)
     {
-	if (!G_load_fp_colors(&colors, rules, min, max))
-	    G_fatal_error(_("Unable to load rules file %s"), rules);
+	if (!G_load_fp_colors(&colors, rules, min, max)) {
+	    /* for backwards compatibility try as std name; remove for GRASS 7 */
+	    char path[GPATH_MAX];
+	    /* don't bother with native dirsep as not needed for backwards compatibility */
+	    sprintf(path, "%s/etc/colors/%s", G_gisbase(), rules);
+
+	    if (!G_load_fp_colors(&colors, path, min, max))
+		G_fatal_error(_("Unable to load rules file %s"), rules);
+	}
     }
     else
     {
