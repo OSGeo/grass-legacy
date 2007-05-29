@@ -279,19 +279,19 @@ class LayerTree(CT.CustomTreeCtrl):
         """
         Start editing vector map layer requested by the user
         """
-        layer = self.layers[self.layer_selected].maplayer
-
-        if not layer:
+        try:
+            maplayer = self.layers[self.layer_selected].maplayer
+        except:
             event.Skip()
             return
 
-        if not self.mapdisplay.digittoolbar: # activate tool
+        if not self.mapdisplay.digittoolbar: # enable tool
             self.mapdisplay.AddToolbar("digit")
-        else: # tool already active
+        else: # tool already enabled
             pass
 
         # mark layer as 'edited'
-        self.mapdisplay.digittoolbar.StartEditing (layer)
+        self.mapdisplay.digittoolbar.StartEditing (maplayer)
 
         # enable 'stop editing'
         self.popupMenu.Enable (self.popupID5, False)
@@ -423,25 +423,25 @@ class LayerTree(CT.CustomTreeCtrl):
                    ltype)
         
         if ltype == 'raster':
-            menuform.GUI().parseCommand('d.rast', gmpath, completed=(self.getOptData,layer,params), parentframe=self)
+            menuform.GUI().ParseCommand('d.rast', gmpath, completed=(self.getOptData,layer,params), parentframe=self)
         elif ltype == 'rgb':
-            menuform.GUI().parseCommand('d.rgb', gmpath, completed=(self.getOptData,layer,params), parentframe=self)
+            menuform.GUI().ParseCommand('d.rgb', gmpath, completed=(self.getOptData,layer,params), parentframe=self)
         elif ltype == 'his':
-            menuform.GUI().parseCommand('d.his', gmpath, completed=(self.getOptData,layer,params), parentframe=self)
+            menuform.GUI().ParseCommand('d.his', gmpath, completed=(self.getOptData,layer,params), parentframe=self)
         elif ltype == 'rastarrow':
-            menuform.GUI().parseCommand('d.rast.arrow', gmpath, completed=(self.getOptData,layer,params), parentframe=self)
+            menuform.GUI().ParseCommand('d.rast.arrow', gmpath, completed=(self.getOptData,layer,params), parentframe=self)
         elif ltype == 'rastnum':
-            menuform.GUI().parseCommand('d.rast.num', gmpath, completed=(self.getOptData,layer,params), parentframe=self)
+            menuform.GUI().ParseCommand('d.rast.num', gmpath, completed=(self.getOptData,layer,params), parentframe=self)
         elif ltype == 'vector':
-            menuform.GUI().parseCommand('d.vect', gmpath, completed=(self.getOptData,layer,params), parentframe=self)
+            menuform.GUI().ParseCommand('d.vect', gmpath, completed=(self.getOptData,layer,params), parentframe=self)
         elif ltype == 'thememap':
-            menuform.GUI().parseCommand('d.vect.thematic', gmpath, completed=(self.getOptData,layer,params), parentframe=self)
+            menuform.GUI().ParseCommand('d.vect.thematic', gmpath, completed=(self.getOptData,layer,params), parentframe=self)
         elif ltype == 'themechart':
-            menuform.GUI().parseCommand('d.vect.chart', gmpath, completed=(self.getOptData,layer,params), parentframe=self)
+            menuform.GUI().ParseCommand('d.vect.chart', gmpath, completed=(self.getOptData,layer,params), parentframe=self)
         elif ltype == 'grid':
-            menuform.GUI().parseCommand('d.grid', gmpath, completed=(self.getOptData,layer,params), parentframe=self)
+            menuform.GUI().ParseCommand('d.grid', gmpath, completed=(self.getOptData,layer,params), parentframe=self)
         elif ltype == 'labels':
-            menuform.GUI().parseCommand('d.labels', gmpath, completed=(self.getOptData,layer,params), parentframe=self)
+            menuform.GUI().ParseCommand('d.labels', gmpath, completed=(self.getOptData,layer,params), parentframe=self)
         elif ltype == 'cmdlayer':
             pass
         elif ltype == 'group':
@@ -969,8 +969,8 @@ class GMConsole(wx.Panel):
 
         self.console_progressbar = wx.Gauge(self, -1, 100, (110, 50), (250, 25))
 
-        self.Bind(wx.EVT_BUTTON, self.clearHistory, self.console_clear)
-        self.Bind(wx.EVT_BUTTON, self.saveHistory, self.console_save)
+        self.Bind(wx.EVT_BUTTON, self.ClearHistory, self.console_clear)
+        self.Bind(wx.EVT_BUTTON, self.SaveHistory, self.console_save)
 
         # output control layout
         boxsizer1 = wx.BoxSizer(wx.VERTICAL)
@@ -993,23 +993,26 @@ class GMConsole(wx.Panel):
         self.SetAutoLayout(True)
         self.SetSizer(boxsizer1)
 
-    def getGRASSCmds(self):
-        '''
+    def GetGRASSCmds(self):
+        """
         Create list of all available GRASS commands to use when
         parsing string from the command line
-        '''
+        """
         self.gcmdlst = []
         gisbase = os.environ['GISBASE']
         self.gcmdlst = os.listdir(gisbase+r'/bin')
         self.gcmdlst = self.gcmdlst + os.listdir(gisbase+r'/scripts')
+        
         return self.gcmdlst
 
-    def runCmd(self, command):
+    def RunCmd(self, command):
         """
         Run in GUI or shell GRASS (or other) commands typed into
         console command text widget, echo command to
         output text widget, and send stdout output to output
         text widget.
+
+        Note: 'command' is given as list
 
         TODO: Display commands (*.d) are captured and
         processed separately by mapdisp.py. Display commands are
@@ -1017,46 +1020,44 @@ class GMConsole(wx.Panel):
         the focus (as indicted by mdidx).
         """
 
-        gcmdlst = self.getGRASSCmds()
-        cmdlst = []
-        #    	cmd = self.console_command.GetLineText(0)
-        cmdlst = command.split(' ')
+        # create list of available GRASS commands
+        gcmdlst = self.GetGRASSCmds()
+        # cmd = self.console_command.GetLineText(0)
         try:
             curr_disp = self.Parent.Parent.curr_page.maptree.mapdisplay
         except:
             #            disp_idx = None
             curr_disp = None
 
-        if len(cmdlst) == 1 and command in gcmdlst:
-            # Send GRASS command without arguments to GUI command interface
+        if len(command) == 1 and command[0] in gcmdlst:
+            # send GRASS command without arguments to GUI command interface
             # except display commands (they are handled differently)
             global gmpath
-            if command[0:2] == "d.":
+            if command[0][0:2] == "d.":
                 try:
-                    layertype = {'d.rast': 'raster',
-                        'd.rgb'          : 'rgb',
-                        'd.his'          : 'his',
-                        'd.legend'       : 'rastleg',
-                        'd.rast.arrow'   : 'rastarrow',
-                        'd.rast.num'     : 'rastnum',
-                        'd.vect'         : 'vector',
-                        'd.vect.thematic': 'thememap',
-                        'd.vect.chart'   : 'themechart',
-                        'd.grid'         : 'grid',
-                        'd.labels'       : 'labels'} [command]
+                    layertype = {'d.rast'         : 'raster',
+                                 'd.rgb'          : 'rgb',
+                                 'd.his'          : 'his',
+                                 'd.legend'       : 'rastleg',
+                                 'd.rast.arrow'   : 'rastarrow',
+                                 'd.rast.num'     : 'rastnum',
+                                 'd.vect'         : 'vector',
+                                 'd.vect.thematic': 'thememap',
+                                 'd.vect.chart'   : 'themechart',
+                                 'd.grid'         : 'grid',
+                                 'd.labels'       : 'labels'}[command[0]]
                 except KeyError:
-                    print 'Command type not yet implemented'
+                    print _('Command type not yet implemented')
                     return
 
                 # add layer
                 self.Parent.Parent.curr_page.maptree.AddLayer(layertype)
 
             else:
-                menuform.GUI().parseCommand(command, gmpath, parentframe=None)
-                self.command_output.write(cmdlst[0] +
-                                                          "\n----------\n")
+                menuform.GUI().ParseCommand(command[0], gmpath, parentframe=None)
+                self.command_output.write(command[0] + "\n----------\n")
 
-        elif command[0:2] == "d." and len(cmdlst) > 1 and cmdlst[0] in gcmdlst:
+        elif command[0][0:2] == "d." and len(command) > 1 and command[0] in gcmdlst:
             """
             Send GRASS display command(s)with arguments
             to the display processor and echo to command output console.
@@ -1064,12 +1065,11 @@ class GMConsole(wx.Panel):
             Display with focus receives display command(s).
             """
             #self.cmd_output.write(command + "\n----------\n")
-            self.cmd_output.write("$" + command)
-            dcmds = command.split(',')
+            self.cmd_output.write("$" + ' '.join(command))
             # TODO This needs to be fixed to use current rendering procedures
-
-#            curr_disp.addMapsToList(type='command', map=dcmds, mset=None)
-#            curr_disp.ReDrawCommand()
+            # dcmds = command.split(',')
+            #            curr_disp.addMapsToList(type='command', map=dcmds, mset=None)
+            #            curr_disp.ReDrawCommand()
 
         else:
             # Send any other command to the shell. Send output to
@@ -1077,17 +1077,16 @@ class GMConsole(wx.Panel):
             try:
                 os.environ["GRASS_MESSAGE_FORMAT"] = "gui"
                 #self.cmd_output.write(command+"\n----------\n")
-                self.cmd_output.write("$ " + command + "\n")
+                self.cmd_output.write("$ " + ' '.join(command) + "\n")
                 # activate compuational region (set with g.region) for all non-display commands.
                 tmpreg = os.getenv("GRASS_REGION")
                 os.unsetenv("GRASS_REGION")
 
-                p = cmd.Command(cmd=cmdlst + ["--verbose"])
+                p = cmd.Command(command + ["--verbose"])
 
                 # deactivate computational region and return to display settings
                 if tmpreg:
                     os.environ["GRASS_REGION"] = tmpreg
-
 
                 oline = p.module_stderr.readline()
                 while oline:
@@ -1104,11 +1103,10 @@ class GMConsole(wx.Panel):
                     elif oline.find("GRASS_INFO_ERROR")>-1:
                         self.cmd_output.write("ERROR: "+string.split(oline,maxsplit=1)[1]+"\n")
 
-
                 oline = p.module_stdout.readline()
                 while oline:
                     oline = oline.strip()
-                    if command.split(' ')[0] == 'r.what':
+                    if command[0] == 'r.what':
                         rastqlist = oline.split('|')
                         self.cmd_output.write('East: '+rastqlist[0]+"\n")
                         self.cmd_output.write('North: '+rastqlist[1]+"\n")
@@ -1123,6 +1121,7 @@ class GMConsole(wx.Panel):
                     print >> sys.stderr, oline
                     oline = p.module_stdout.readline()
                 #self.cmd_output.write("\n==========\n")
+                self.cmd_output.write("\n")
                 if p.module_stdout < 0:
                     print >> sys.stderr, "Child was terminated by signal", p.module_stdout
                 elif p.module_stdout > 0:
@@ -1131,11 +1130,13 @@ class GMConsole(wx.Panel):
             except OSError, e:
                 print >> sys.stderr, "Execution failed:", e
 
-    def clearHistory(self, event):
+    def ClearHistory(self, event):
+        """Clear history of commands"""
         self.cmd_output.Clear()
         self.console_progressbar.SetValue(0)
 
-    def saveHistory(self, event):
+    def SaveHistory(self, event):
+        """Save history of commands"""
         self.history = self.cmd_output.GetStringSelection()
         if self.history == "":
             self.cmd_output.SetSelection(-1,-1)

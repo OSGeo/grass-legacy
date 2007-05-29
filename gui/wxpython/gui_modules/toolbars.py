@@ -157,7 +157,7 @@ class DigitToolbar(AbstractToolbar):
         self.parent     = parent
 
         # selected map to digitize
-        self.layerID    = None
+        self.layerSelectedID    = None
         self.layers     = []
         # action (digitize new point, line, etc.
         self.action     = "add"
@@ -236,13 +236,10 @@ class DigitToolbar(AbstractToolbar):
         """
         Quit digitization tool
         """
-        if self.layerID:
-            Debug.msg (3, "DigitToolbar.OnExit(): layer=%s" % \
-                       self.layers[self.layerID].name)
-        else:
-            Debug.msg (3, "DigitToolbar.OnExit()")
-
-        # deactive the toolbar
+        # stop editing of the currently selected map layer
+        self.StopEditing()
+        
+        # disable the toolbar
         self.parent.RemoveToolbar ("digit")
 
     def OnSelectMap (self, event):
@@ -253,30 +250,40 @@ class DigitToolbar(AbstractToolbar):
         firstly terminated. The map layer is closed. After this the
         selected map layer activated for editing.
         """
-        if self.layerID: # deactive map layer for editing
+        if self.layerSelectedID: # deactive map layer for editing
             # TODO
             pass
 
         # select the given map layer for editing
-        self.layerID = self.combo.GetCurrentSelection()
-
-        Debug.msg (3, "DigitToolbar.OnSelectMap(): layerID=%d layer=%s" % \
-                   (self.layerID, self.layers[self.layerID].name))
+        layerSelectedID = self.combo.GetCurrentSelection()
+        self.StartEditing(self.layers[layerSelectedID])
 
     def StartEditing (self, layerSelected):
         """
-        Mark map layer enabled for digitization
+        Mark selected map layer as enabled for digitization
 
         Return True on success or False if layer cannot be edited
         """
         try:
-            self.layerID = self.layers.index(layerSelected)
+            self.layerSelectedID = self.layers.index(layerSelected)
             self.combo.SetValue (layerSelected.name)
             self.parent.maptoolbar.combo.SetValue ('Digitize')
+            Debug.msg (4, "DigitToolbar.StartEditing(): layerSelectedID=%d layer=%s" % \
+                       (self.layerSelectedID, self.layers[self.layerSelectedID].name))
             return True
         except:
             return False
 
+    def StopEditing (self):
+        """
+        Unmark currently enabled map layer.
+        """
+        Debug.msg (4, "DigitToolbar.StopEditing(): layer=%s" % \
+                   self.layers[self.layerSelectedID].name)
+        self.layerSelectedID = None
+        self.combo.SetValue ('Select vector map')
+        # TODO
+        
     def UpdateListOfLayers (self, updateTool=False):
         """
         Update list of available vector map layers.
@@ -286,8 +293,8 @@ class DigitToolbar(AbstractToolbar):
         """
 
         layerNameSelected = None
-        if self.layerID != None: # name of currently selected layer
-            layerNameSelected = self.layers[self.layerID].name
+        if self.layerSelectedID != None: # name of currently selected layer
+            layerNameSelected = self.layers[self.layerSelectedID].name
 
         # select vector map layer in the current mapset
         layerNameList = []
@@ -297,7 +304,7 @@ class DigitToolbar(AbstractToolbar):
                 layerNameList.append (layer.name)
 
         if updateTool: # update toolbar
-            if self.layerID == None:
+            if self.layerSelectedID == None:
                 value = 'Select vector map'
             else:
                 value = layerNameSelected

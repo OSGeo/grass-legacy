@@ -96,11 +96,11 @@ class Command:
            self.module_stdin.close()
            
         os.environ["GRASS_MESSAGE_FORMAT"] = "text"
-            
+
         try:
-            self.Run(verbose)
+           self.Run(verbose)
         except EndOfCommand:
-            pass
+           pass
 
         if self.module:
             if wait:
