@@ -1820,9 +1820,9 @@ static void generate_tcl(FILE *fp)
 	{
 		fprintf(fp, "add_xflag %d {\n", optn);
 		fprintf(fp, " name {overwrite}\n");
-		fprintf(fp, " desc {Allow output files to overwrite existing files}\n");
+		fprintf(fp, " desc {%s}\n", _("Allow output files to overwrite existing files"));
 		fprintf(fp, " answer %d\n", overwrite);
-		fprintf(fp, " label {Allow overwrite}\n");
+		fprintf(fp, " label {%s}\n", _("Allow overwrite"));
 		fprintf(fp, " guisection {}\n");
 		fprintf(fp, "}\n");
 		optn++;
