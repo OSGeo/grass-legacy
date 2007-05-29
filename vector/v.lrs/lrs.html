@@ -11,14 +11,22 @@
 <img src="grass_logo.png" alt="_\|/_ GRASS logo"><hr align=center size=6 noshade>
 
 <h2>LRS (Linear Reference System)</h2>
-LRS uses linear features and distance measured along those features
-to positionate objects. 
+A Linear Reference System (LRS) is a system where features (points
+or segments) are localized by a measure along a linear element. The
+LRS can be used to reference events for any network of linear
+features, for example roads, railways, rivers, pipelines, electric and
+telephone lines, water and sewer networks. An event is defined in LRS
+by a route ID and a measure. A route is a path on the network, usually
+composed from more features in the input map.  Events can be either
+points or lines (segments).
+<p>
+
 LRS is created from input lines and points in vector map. 
 Points - MP (mileposts) must have attached attributes specifying 
 line and distance. 
 The distances from the beginning of the linear feature in real world
 are specified by MP+offset. 
-Typicaly MP is in kilometers and offset in meters.
+Typically, MP is in kilometers and offset in meters.
 
 <p>
 The implementation of LRS in GRASS has some particularities.
