@@ -585,41 +585,45 @@ class mainFrame(wx.Frame):
         self.Layout()
 
     def updateValuesHook(self):
+        """Update status bar data"""
         self.SetStatusText(' '.join(self.notebookpanel.createCmd(ignoreErrors = True)) )
 
     def OnOK(self, event):
+        """OK button pressed"""
         cmd = self.OnApply(event)
         if cmd is not None and self.get_dcmd is not None:
             self.OnCancel(event)
 
     def OnApply(self, event):
+        """Apply the command"""
         cmd = self.createCmd()
 
         if cmd is not None and self.get_dcmd is not None:
             # return d.* command to layer tree for rendering
             self.get_dcmd(cmd, self.layer, {"params":self.task.params,"flags":self.task.flags}, self )
             # echo d.* command to output console
-#            self.parent.writeDCommand(cmd)
+            # self.parent.writeDCommand(cmd)
         return cmd
 
     def OnRun(self, event):
+        """Run the command"""
         cmd = self.createCmd()
 
-        if cmd == None:
+        if cmd == []:
             return
 
         # change page if needed
         if self.notebookpanel.notebook.GetSelection() != self.notebookpanel.outpageid:
             self.notebookpanel.notebook.SetSelection(self.notebookpanel.outpageid)
 
-        if cmd[0:2] != "d.":
+        if cmd[0][0:2] != "d.":
             # Send any non-display command to parent window (probably wxgui.py)
             # put to parents
             try:
-                self.goutput.runCmd(cmd)
+                self.goutput.RunCmd(cmd)
             except AttributeError,e:
-                print >>sys.stderr, "%s: Propably not running in wxgui.py session?" % (e)
-                print >>sys.stderr, "parent window is: %s" % (str(self.parent))
+                print >> sys.stderr, "%s: Propably not running in wxgui.py session?" % (e)
+                print >> sys.stderr, "parent window is: %s" % (str(self.parent))
             # Send any other command to the shell.
         else:
             try:
@@ -632,6 +636,7 @@ class mainFrame(wx.Frame):
                 print >>sys.stderr, "Execution failed:", e
 
     def OnCopy(self, event):
+        """Copy the command"""
         cmddata = wx.TextDataObject()
         cmddata.SetText(self.createCmd(ignoreErrors=True))
         if wx.TheClipboard.Open():
@@ -642,14 +647,17 @@ class mainFrame(wx.Frame):
                             (self.createCmd(ignoreErrors=True)))
 
     def OnCancel(self, event):
+        """Cancel button pressed"""
         self.MakeModal(False)
         self.Destroy()
 
     def OnCloseWindow(self, event):
+        """Close the main window"""
         self.MakeModal(False)
         self.Destroy()
 
     def OnAbout(self, event):
+        """General 'about' information"""
         dlg = wx.MessageDialog(self, _("This is a sample program for\n"
             "GRASS command interface parsing\n"
             "and automatic GUI building. \n%s") %(__version__),
@@ -658,6 +666,7 @@ class mainFrame(wx.Frame):
         dlg.Destroy()
 
     def OnAboutCommand(self, event):
+        """About command"""
         dlg = wx.MessageDialog(self,
             self.task.name+": "+self.task.description,
             "About " + self.task.name,
@@ -666,6 +675,7 @@ class mainFrame(wx.Frame):
         dlg.Destroy()
 
     def createCmd(self, ignoreErrors = False):
+        """Create command string (python list)"""
         return self.notebookpanel.createCmd(ignoreErrors=ignoreErrors)
 
 
@@ -1006,7 +1016,7 @@ class cmdPanel(wx.Panel):
 
     def createCmd( self, ignoreErrors = False ):
         """
-        Produce a command line string for feeding into GRASS.
+        Produce a command line string (list) or feeding into GRASS.
 
         If ignoreErrors==True then it will return whatever has been
         built so far, even though it would not be a correct command
@@ -1029,6 +1039,8 @@ def getInterfaceDescription( cmd ):
 
     The DTD must be located in $GISBASE/etx/wx/gui_modules/grass-interface.dtd,
     otherwise the parser will not succeed.
+
+    Note: 'cmd' is given as string
     """
     gmpath = os.path.join(wxbase,"gui_modules")
     cmdout = os.popen(cmd + r' --interface-description', "r").read()
@@ -1061,8 +1073,12 @@ class GUI:
     def __init__(self, parent=-1):
         self.parent = parent
 
-    def parseCommand(self, cmd, gmpath, completed=None, parentframe=-1 ):
+    def ParseCommand(self, cmd, gmpath, completed=None, parentframe=-1 ):
+        """
+        Parse command
 
+        Note: cmd is given as string
+        """
         dcmd_params = {}
         if completed == None:
             get_dcmd = None
@@ -1072,13 +1088,12 @@ class GUI:
             get_dcmd = completed[0]
             layer = completed[1]
             if completed[2]: dcmd_params.update(completed[2])
-        cmdlst = cmd.split(' ')
 
         if parentframe != -1:
             self.parent = parentframe
 
-        if len(cmdlst) > 1:
-            raise ValueError, _("usage: %s <grass command> ") % cmdlst[0]
+        if ' ' in cmd:
+            raise ValueError, _("usage: %s <grass command> ") % cmd
         else:
             # parse the interface decription
             self.grass_task = grassTask()
