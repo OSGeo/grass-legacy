@@ -1,29 +1,36 @@
 #!/usr/bin/env python
+
 """
-Classes:
-* GRasterDialog
-* GMFrame
-* SetVal
-* GMApp
+MODULE:  wxgui.py
+
+PURPOSE: Main Python app to set up GIS Manager window and trap commands
+         Only command console is working currently, but windows for
+         panels and layer tree done and demo tree items appear
+         
+AUTHORS: The GRASS Development Team
+         Michael Barton (Arizona State University) &
+         Jachym Cepicky (Mendel University of Agriculture)
+         Martin Landa
+
+COPYRIGHT: (C) 2006-2007 by the GRASS Development Team
+           This program is free software under the GNU General Public
+           License (>=v2). Read the file COPYING that comes with GRASS
+           for details.
+
 """
+
 import sys
 import os
+import time
+import traceback
+import types
+
 import wx
 import wx.combo
+import wx.html
+import wx.stc
 import wx.lib.customtreectrl as CT
 import wx.lib.flatnotebook as FN
-import wx.stc
-
-import sys, os, time, traceback, types
-
-import wx                  # This module uses the new wx namespace
-import wx.html
-
-
-# try:
-#    import subprocess
-#except:
-#    from compat import subprocess
 
 import gui_modules
 gmpath = gui_modules.__path__[0]
@@ -37,7 +44,6 @@ import icons
 gmpath = icons.__path__[0]
 sys.path.append(gmpath)
 
-
 import gui_modules.track as track
 import gui_modules.wxgui_utils as wxgui_utils
 import gui_modules.mapdisp as mapdisp
@@ -50,27 +56,6 @@ import gui_modules.histogram as histogram
 import gui_modules.profile as profile
 from   icons.icon import Icons as Icons
 from   gui_modules.debug import Debug as Debug
-
-"""Main Python app to set up GIS Manager window and trap commands
-Only command console is working currently, but windows for
-panels and layer tree done and demo tree items appear"""
-
-##########################################################################
-#
-# wxgui.py - wxPython prototype GUI for GRASS 6+
-#
-# Authors: Michael Barton (Arizona State University) &
-#	Jachym Cepicky (Mendel University of Agriculture)
-#
-# August 2006
-#
-# COPYRIGHT:	(C) 1999 - 2006 by the GRASS Development Team
-#
-#		This program is free software under the GNU General Public
-#		License (>=v2). Read the file COPYING that comes with GRASS
-#		for details.
-#
-##########################################################################
 
 menucmd = {}
 
@@ -648,12 +633,24 @@ class GMApp(wx.App):
     """
     def OnInit(self):
         # reexec_with_pythonw()
+
         # initialize all available image handlers
         wx.InitAllImageHandlers()
+
+        # create splash screen
+        introImagePath = os.path.join(os.getenv("GISBASE"), "etc", "gm", "intro.gif")
+        introImage     = wx.Image(introImagePath, wx.BITMAP_TYPE_GIF)
+        introBmp       = introImage.ConvertToBitmap()
+        wx.SplashScreen (bitmap=introBmp, splashStyle=wx.SPLASH_CENTRE_ON_SCREEN | wx.SPLASH_TIMEOUT,
+                         milliseconds=1500, parent=None, id=wx.ID_ANY)
+        wx.Yield()
+        
         # create and show main frame
         mainframe = GMFrame(parent=None, id=wx.ID_ANY, title="")
-        self.SetTopWindow(mainframe)
+
         mainframe.Show()
+        self.SetTopWindow(mainframe)
+        
         return True
 
 def reexec_with_pythonw():
