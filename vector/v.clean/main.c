@@ -46,7 +46,8 @@ main (int argc, char *argv[])
 	G_gisinit(argv[0]);
 
 	module = G_define_module();
-	module->description = _("Toolset to clean vector topology");
+	module->keywords = _("vector");
+    module->description = _("Toolset to clean vector topology");
 
 	in_opt = G_define_standard_option(G_OPT_V_INPUT);
 	out_opt = G_define_standard_option(G_OPT_V_OUTPUT);

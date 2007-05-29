@@ -119,7 +119,7 @@ read_scalebar (void)
 		continue;
 	}
 
-	error(key, data, "illegal request");
+	error(key, data, "illegal request (scalebar)");
 	
      }
      

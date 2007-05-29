@@ -93,6 +93,7 @@ default: builddemolocation
 	@echo "Finished compilation: `date`" >> $(GRASS_HOME)/error.log
 	@echo "(In case of errors please change into the directory with error and run 'make')" >> $(GRASS_HOME)/error.log
 	@cat $(GRASS_HOME)/error.log
+	@if [ `cat "$(GRASS_HOME)/error.log" | wc -l` -gt 8 ] ; then false ; else true ; fi
 
 LIBDIRS = \
 	lib/external/shapelib \
@@ -106,6 +107,7 @@ LIBDIRS = \
 
 # Compile libraries only
 libs:
+	make -C lib/ headers
 	@list='$(LIBDIRS)'; \
 	for subdir in $$list; do \
 		$(MAKE) -C $$subdir; \
@@ -168,7 +170,7 @@ distclean: clean
 	-rm -f config.cache config.log config.status config.status.${ARCH} 2>/dev/null
 	-rm -f ChangeLog ChangeLog.bak error.log grass.pc
 	-rm -f include/config.h include/version.h include/winname.h include/Make/Grass.make include/Make/Platform.make 2>/dev/null
-	-rm -f swig/perl/Makefile.PL swig/python/Makefile 2>/dev/null
+	-rm -f swig/perl/Makefile.PL swig/perl2/make.pl swig/python/Makefile swig/python/grass.i 2>/dev/null
 
 strip: FORCE
 	@ if [ ! -f ${ARCH_BINDIR}/grass${GRASS_VERSION_MAJOR}${GRASS_VERSION_MINOR} ] ; then \

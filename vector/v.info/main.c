@@ -58,7 +58,8 @@ main (int argc, char *argv[])
   G_gisinit (argv[0]);
 
   module = G_define_module();
-  module->description = _("Outputs basic information about a user-specified vector map layer.");
+  module->keywords = _("vector");
+    module->description = _("Outputs basic information about a user-specified vector map layer.");
 
   /* get G_OPT_ from include/gis.h */
   in_opt = G_define_standard_option(G_OPT_V_MAP);

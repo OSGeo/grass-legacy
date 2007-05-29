@@ -1,9 +1,14 @@
 MODULE_TOPDIR = ..
 
-include $(MODULE_TOPDIR)/include/Make/Doxygen.make
+all:
+	doxygen $(MODULE_TOPDIR)/include/Make/Doxyfile_arch_html
+	@echo ""
+	@echo "RFC list generated: html/index.html"
 
-default:
+htmldocs-single: all
 
-#doxygen:
-DOXNAME=
-DOXINPUT=rfc_list.dox
+clean:
+	rm -fr latex/ html/
+cleandocs: clean
+
+htmldocs:

@@ -50,6 +50,7 @@ static int parse_command(Nv_data * data, Tcl_Interp * interp,	/* Current interpr
      */
 
     module = G_define_module();
+    module->keywords = _("visualization");
     module->description =
 	_("nviz - Visualization and animation tool for GRASS data");
 
@@ -127,10 +128,11 @@ static int parse_command(Nv_data * data, Tcl_Interp * interp,	/* Current interpr
     state->required = NO;
     state->description = _("Load previosly saved state file");
 
+
+    /* BUG?: warning: passing arg 2 of `G_parser' from incompatible pointer type */
     if (G_parser(argc, argv))
 	exit(EXIT_FAILURE);
-
-    /* Exit status is zero to avoid TCL complaints */
+    /* [?!]: Exit status is zero to avoid TCL complaints */
 
     {
 	float defs[MAX_ATTS];

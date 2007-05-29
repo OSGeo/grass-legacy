@@ -46,12 +46,14 @@ SUBDIRS = \
 	r.univar.sh \
 	r3.mapcalculator \
 	v.build.all \
+	v.centroids \
 	v.convert.all \
 	v.db.addcol \
 	v.db.addtable \
 	v.db.droptable \
 	v.db.reconnect.all \
 	v.db.update \
+	v.dissolve \
 	v.in.garmin \
 	v.in.e00 \
 	v.in.gns \

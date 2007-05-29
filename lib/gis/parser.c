@@ -322,10 +322,27 @@ G_define_option (void)
 	return(opt) ;
 }
 
+
+/*!
+ * \brief Create standardised Option structure
+ *
+ * This function will create a standardised Option structure
+ * defined by parameter opt. A list of valid parameters can be found in gis.h.
+ * It allocates memory for the Option structure and returns a pointer to
+ * this memory (of <i>type struct Option *).</i>
+ *
+ * If an invalid parameter was specified a empty Option structure will be returned (not NULL).
+ *
+ * \param opt
+ *
+ *  \return Option * 
+ */
+
+
 struct Option *
 G_define_standard_option (int opt)
 {
-    struct Option *Opt ;
+    struct Option *Opt;
     
     Opt = G_define_option();
 
@@ -338,6 +355,7 @@ G_define_standard_option (int opt)
 	    Opt->description  = _("WHERE conditions of SQL statement without 'where' keyword. (example: income < 1000 and inhab >= 10000)");
 	    break;
 	    
+	/*raster maps*/    
 	case G_OPT_R_INPUT:
 	    Opt->key          = "input";
 	    Opt->type         = TYPE_STRING;
@@ -345,6 +363,15 @@ G_define_standard_option (int opt)
 	    Opt->required     = YES;
 	    Opt->gisprompt    = "old,cell,raster";
 	    Opt->description  = _("Name of input raster map");
+	    break;
+	case G_OPT_R_INPUTS:
+	    Opt->key          = "input";
+	    Opt->type         = TYPE_STRING;
+	    Opt->key_desc     = "name";
+	    Opt->required     = YES;
+	    Opt->multiple     = YES;
+	    Opt->gisprompt    = "old,cell,raster";
+	    Opt->description  = _("Name of input raster map(s)");
 	    break;
 	case G_OPT_R_OUTPUT:
 	    Opt->key          = "output";
@@ -387,7 +414,52 @@ G_define_standard_option (int opt)
 	    Opt->gisprompt    = "old,cell,raster";
 	    Opt->description  = _("Name of cover raster map");
 	    break;
-	    
+	case G_OPT_R_ELEV:
+	    Opt->key          = "elevation";
+	    Opt->type         = TYPE_STRING;
+	    Opt->key_desc     = "name";
+	    Opt->required     = YES;
+	    Opt->gisprompt    = "old,cell,raster";
+	    Opt->description  = _("Name of elevation raster map");
+	    break;
+	case G_OPT_R_ELEVS:
+	    Opt->key          = "elevation";
+	    Opt->type         = TYPE_STRING;
+	    Opt->key_desc     = "name";
+	    Opt->required     = YES;
+	    Opt->multiple     = YES;
+	    Opt->gisprompt    = "old,cell,raster";
+	    Opt->description  = _("Name of elevation raster map(s)");
+	    break;
+
+	/*g3d maps*/    
+    	case G_OPT_R3_INPUT:
+	    Opt->key          = "input";
+	    Opt->type         = TYPE_STRING;
+	    Opt->key_desc     = "name";
+	    Opt->required     = YES;
+	    Opt->gisprompt    = "old,grid3,3d-raster";
+	    Opt->description  = _("Name of input raster3d map");
+	    break;
+	case G_OPT_R3_INPUTS:
+	    Opt->key          = "input";
+	    Opt->type         = TYPE_STRING;
+	    Opt->key_desc     = "name";
+	    Opt->required     = YES;
+	    Opt->multiple     = YES;
+	    Opt->gisprompt    = "old,grid3,3d-raster";
+	    Opt->description  = _("Name of input raster3d map(s)");
+	    break;
+	case G_OPT_R3_OUTPUT:
+	    Opt->key          = "output";
+	    Opt->type         = TYPE_STRING;
+	    Opt->key_desc     = "name";
+	    Opt->required     = YES;
+	    Opt->gisprompt    = "new,grid3,3d-raster";
+	    Opt->description  = _("Name for output raster3d map");
+	    break;
+
+	/*vector maps*/    
 	case G_OPT_V_INPUT:
 	    Opt->key          = "input";
 	    Opt->type         = TYPE_STRING;
@@ -790,6 +862,10 @@ int G_usage (void)
 		fprintf (stderr, _("\nDescription:\n"));
 		fprintf (stderr, " %s\n", module_info.description);
 	}
+	if (module_info.keywords) {
+		fprintf (stderr, _("\nKeywords:\n"));
+		fprintf (stderr, " %s\n", module_info.keywords);
+	}
 
 	fprintf (stderr, _("\nUsage:\n "));
 
@@ -992,6 +1068,12 @@ static void G_usage_xml (void)
 		fprintf(stdout, "\n\t</description>\n");
 	}
 
+	if (module_info.keywords) {
+		fprintf(stdout, "\t<keywords>\n\t\t");
+		print_escaped_for_xml (stdout, module_info.keywords);
+		fprintf(stdout, "\n\t</keywords>\n");
+	}
+
 	/***** Don't use parameter-groups for now.  We'll reimplement this later 
 	 ***** when we have a concept of several mutually exclusive option
 	 ***** groups
@@ -1179,6 +1261,12 @@ static void G_usage_html (void)
 	if (module_info.description) {
 		fprintf(stdout, " - ");
 		fprintf(stdout, "%s", module_info.description);
+		fprintf(stdout, "\n");
+	}
+
+	fprintf(stdout, "<h2>KEYWORDS</h2>\n");
+	if (module_info.keywords) {
+		fprintf(stdout, "%s", module_info.keywords);
 		fprintf(stdout, "\n");
 	}
 	fprintf(stdout, "<h2>SYNOPSIS</h2>\n");
@@ -1370,12 +1458,14 @@ static void G_usage_html (void)
 
 static void generate_tcl(FILE *fp)
 {
+	int new_prompt = uses_new_gisprompt();
 	char *type;
 	int optn;
 
 	fprintf(fp, "begin_dialog {%s} {\n", pgm_name);
 	fprintf(fp, " label {%s}\n", module_info.label ? module_info.label : "");
 	fprintf(fp, " desc {%s}\n", module_info.description ? module_info.description : "");
+	fprintf(fp, " key {%s}\n", module_info.keywords ? module_info.keywords : "");
 	fprintf(fp, "}\n");
 
 	optn = 1;
@@ -1438,6 +1528,18 @@ static void generate_tcl(FILE *fp)
 		}
 	}
    
+	if (new_prompt)
+	{
+		fprintf(fp, "add_xflag %d {\n", optn);
+		fprintf(fp, " name {overwrite}\n");
+		fprintf(fp, " desc {Force overwrite of output files}\n");
+		fprintf(fp, " answer %d\n", overwrite);
+		fprintf(fp, " label {Overwrite}\n");
+		fprintf(fp, " guisection {}\n");
+		fprintf(fp, "}\n");
+		optn++;
+	}
+
 	fprintf(fp, "end_dialog %d\n", optn - 1);
 }
 

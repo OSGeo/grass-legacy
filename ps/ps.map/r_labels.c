@@ -40,7 +40,7 @@ read_labels (char *name, char *mapset)
 	    labels.font[labels.count] = G_store(data);
 	    continue;
 	}
-	error(key, "", "illegal request");
+	error(key, "", "illegal request (labels)");
     }
 
     labels.count++;

@@ -20,6 +20,7 @@
 #include <grass/gis.h>
 #include <grass/Vect.h>
 #include <grass/dbmi.h>
+#include <grass/glocale.h>
 
 typedef struct {
     int cat;   /* category number */
@@ -53,6 +54,7 @@ int main(int argc, char **argv)
     G_gisinit (argv[0]) ;
 
     module = G_define_module();
+    module->keywords = _("vector, networking");
     module->description = "Allocate subnets for nearest centres (direction from centre). "
            "Centre node must be opened (costs >= 0). Costs of centre node are used in calculation";
 

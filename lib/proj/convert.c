@@ -611,12 +611,16 @@ static const char *papszDatumEquiv[] =
     "European_Terrestrial_Reference_System_1989",
     "European_Reference_System_1989",
     "European_Terrestrial_Reference_System_1989",
+    "ETRS_1989",
+    "European_Terrestrial_Reference_System_1989",
     "NZGD_2000",
     "New_Zealand_Geodetic_Datum_2000",
     "Monte_Mario_Rome",
     "Monte_Mario",
     "Campo_Inchauspe_1969",
     "Campo_Inchauspe",
+    "S_JTSK_Ferro",
+    "Militar_Geographische_Institut",
     NULL
 };
 

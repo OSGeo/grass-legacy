@@ -24,6 +24,7 @@ int main (int argc, char *argv[])
     G_gisinit (argv[0]);
 
     module = G_define_module();
+    module->keywords = _("imagery");
     module->description = _("Create control points on an image "
                             "to be ortho-rectified.");
 

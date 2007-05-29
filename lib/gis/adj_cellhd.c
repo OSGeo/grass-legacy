@@ -304,7 +304,9 @@ char *G_adjust_Cell_head3(struct Cell_head *cellhd,int row_flag,int col_flag, in
     }
     if (cellhd->east <= cellhd->west)
 	return (_("East must be larger than West"));
-
+    if (cellhd->top <= cellhd->bottom)
+        return (_("Top must be larger than Bottom"));
+    
 
 /* compute rows and columns, if not set */
     if (!row_flag)
@@ -331,7 +333,7 @@ char *G_adjust_Cell_head3(struct Cell_head *cellhd,int row_flag,int col_flag, in
     if (!depth_flag)
     {
 	cellhd->depths = (cellhd->top - cellhd->bottom + cellhd->tb_res/2.0) / cellhd->tb_res;
-	if (cellhd->depths < 0)
+	if (cellhd->depths == 0)
 	    cellhd->depths = 1;
 
     }

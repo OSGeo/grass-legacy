@@ -16,6 +16,7 @@
 
 #include <grass/config.h>
 #include <stdio.h>
+#include <errno.h>
 #include <grass/gis.h>
 #include <grass/gprojects.h>
 #include <grass/glocale.h>
@@ -56,6 +57,7 @@ int main(int argc, char *argv[])
     G_gisinit(argv[0]);
 
     module = G_define_module();
+    module->keywords = _("general");
     module->description =
 	_("Prints and manipulates GRASS projection information files.");
 

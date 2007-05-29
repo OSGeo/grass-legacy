@@ -28,7 +28,11 @@
 #include <grass/gis.h>
 
 
-
+static void ask_limits (char *name, char *str);
+static void get_index (FILE *fp);
+static void  ask_reclass(void);
+static void get_1recl (char *buf, int singles);
+static void  ask_fromto(void);
 
 				/* PROMPT THE USER TO SELECT THE GROUP/CLASS
 				   LIMITS */
@@ -155,7 +159,7 @@ int get_group_drv (char **sel)
 				/* GET THE LOWER LIMITS OF THE MEASURE INDEX
 				   CLASSES FROM THE SCREEN, AND PUT THEM IN A FILE */
 
-void ask_limits (char *name, char *str)
+static void ask_limits (char *name, char *str)
 
 {
   FILE *fp;
@@ -179,7 +183,7 @@ void ask_limits (char *name, char *str)
 				/* READ IN THE LOWER LIMITS OF THE MEASURE
 				   INDEX CLASSES FROM THE SCREEN */
 
-void get_index (FILE *fp)
+static void get_index (FILE *fp)
 
 {
    double low, tmp=-999;
@@ -212,7 +216,7 @@ void get_index (FILE *fp)
 				/* GET THE ATTRIBUTE GROUP LIMITS FROM THE
 				   USER AND SAVE THEM IN FILE RECL_TB */
 
-void  ask_reclass()
+static void  ask_reclass(void)
 {
   char *line, str[5];
   FILE *fp;
@@ -264,7 +268,7 @@ back:
 				/* READ IN 1 LINE OF THE ATTRIBUTE GP
 				   RULE FROM THE SCREEN */
 
-void get_1recl (char *buf, int singles)
+static void get_1recl (char *buf, int singles)
 
 {
   register int i=0;
@@ -332,7 +336,7 @@ void get_1recl (char *buf, int singles)
 				   DISTANCE METHOD di2=M7 to M9 INTO THE
 				   FILE R.LE.PARA/FROM_TO */
 
-void  ask_fromto()
+static void  ask_fromto(void)
 {
   register int  i;
   FILE    	*fp;

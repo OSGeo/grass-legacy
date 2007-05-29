@@ -2,6 +2,7 @@
 #include <stdlib.h>
 #include <stdio.h>
 #include <grass/gis.h>
+#include <grass/glocale.h>
 
 int main( int   argc, char *argv[])
 {
@@ -13,6 +14,7 @@ int main( int   argc, char *argv[])
 	struct Option *opt3 ;
 
 	module = G_define_module();
+	module->keywords = _("general");
 	module->description =
 		"Searches for GRASS data base files "
 		"and sets variables for the shell.";

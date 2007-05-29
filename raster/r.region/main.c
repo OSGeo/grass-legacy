@@ -49,7 +49,8 @@ int main (int argc, char *argv[])
 	G_gisinit (argv[0]);
 
 	module = G_define_module();
-	module->description =
+	module->keywords = _("raster");
+    module->description =
 		_("Sets the boundary definitions for a raster map.");
 
 	G_get_window(&window);
@@ -369,6 +370,7 @@ int main (int argc, char *argv[])
 	if (G_put_cellhd(parm.map->answer, &cellhd) < 0)
 		G_fatal_error(_("unable to update boundaries"));
 
+	G_done_msg("");
 	return 0;
 }
 

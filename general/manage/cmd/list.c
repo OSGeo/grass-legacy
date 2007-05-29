@@ -20,7 +20,8 @@ main (int argc, char *argv[])
 	init (argv[0]);
 
 	module = G_define_module();
-	module->description =
+	module->keywords = _("general");
+    module->description =
 		_("Lists available GRASS data base files "
 		"of the user-specified data type to standard output.");
 

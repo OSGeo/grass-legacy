@@ -52,6 +52,7 @@ main (int argc, char *argv[])
     double total_size = 0.0;     /* total size: length/area */
     
     module = G_define_module();
+    module->keywords = _("vector");
     module->description = _("Calculates univariate statistics for attribute. Variance and standard "
 	                  "deviation is calculated only for points if specified");
 

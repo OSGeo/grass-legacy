@@ -27,7 +27,6 @@ proc GmArrows::create { tree parent } {
     variable opt
     variable count
     variable dup
-    global gmpath
     global iconpath
     global mon
 
@@ -40,6 +39,8 @@ proc GmArrows::create { tree parent } {
 
     image create photo aico -file "$iconpath/module-d.rast.arrow.gif"
     set ico [label $frm.ico -image aico -bd 1 -relief raised]
+
+    bind $ico <ButtonPress-1> "GmTree::selectn $tree $node"
     
     pack $check $ico -side left
         
@@ -69,7 +70,7 @@ proc GmArrows::create { tree parent } {
     set opt($count,1,scale) 1.0 
     set opt($count,1,mod) 1
 
-	set optlist {_check map type arrow_color grid_color x_color unknown_color \
+	set optlist {_check map opacity type arrow_color grid_color x_color unknown_color \
     	skip magnitude_map scale} 
 
     foreach key $optlist {
@@ -123,7 +124,6 @@ proc GmArrows::select_magmap { id } {
 # display histogram options
 proc GmArrows::options { id frm } {
     variable opt
-    global gmpath
     global bgcolor
     global iconpath
 
@@ -247,11 +247,6 @@ proc GmArrows::save { tree depth node } {
 ###############################################################################
 proc GmArrows::display { node mod} {
     global mon
-    global mapfile
-    global maskfile
-    global complist
-    global opclist
-    global masklist
     variable optlist
     variable lfile 
     variable lfilemask
@@ -259,11 +254,6 @@ proc GmArrows::display { node mod} {
     variable tree
     variable dup
     variable count
-
-    set currmon ""
-    set input ""
-    global gmpath
-    global mon
 
     set tree($mon) $GmTree::tree($mon)
     set id [GmTree::node_id $node]
@@ -312,7 +302,6 @@ proc GmArrows::duplicate { tree parent node id } {
     variable opt
     variable count
     variable dup
-    global gmpath
     global iconpath
     global mon
     
@@ -326,7 +315,9 @@ proc GmArrows::duplicate { tree parent node id } {
 
     image create photo aico -file "$iconpath/module-d.rast.arrow.gif"
     set ico [label $frm.ico -image aico -bd 1 -relief raised]
-    
+
+    bind $ico <ButtonPress-1> "GmTree::selectn $tree $node"
+
     pack $check $ico -side left
 
 	# where to insert new layer

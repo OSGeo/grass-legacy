@@ -12,7 +12,7 @@ int scan_gis (char *element, char *desc, char *key, char *data,
     *mapset = 0;
     if (sscanf (data, "%s %s", name, mapset) < 1)
     {
-	error (key,data,"illegal request");
+	error (key,data,"illegal request (scan_gis)");
 	if (gobble)
 	    gobble_input();
 	return 0;

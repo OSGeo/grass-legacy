@@ -83,7 +83,7 @@ int write_grid (struct grid_description *grid_info,
   for (k = 0; k < num_v_cols; ++k)
   {
     y = grid_info->origin_y;
-    G_percent (i, num_v_cols, 2);
+    G_percent (k, num_v_cols, 2);
 
     for (i = 0; i < rows; ++i)
     {

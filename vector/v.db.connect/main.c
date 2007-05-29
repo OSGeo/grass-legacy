@@ -47,6 +47,7 @@ int main (int argc, char **argv)
     /* set up the options and flags for the command line parser */
 
     module = G_define_module();
+    module->keywords = _("vector, database, attribute table");
     module->description =
 	_("Prints/sets DB connection for a vector map to attribute table");
 
@@ -227,7 +228,7 @@ int main (int argc, char **argv)
 	       else
 	       {
 		   if( db_table_exists ( dbdriver->answer, dbdatabase->answer, dbtable->answer) < 1 )
-		       G_warning(_("Table <%s> does not exist in database <%s>"),dbtable->answer, dbdatabase->answer);
+		       G_fatal_error(_("Table <%s> does not exist in database <%s>"),dbtable->answer, dbdatabase->answer);
 		   ret = Vect_map_del_dblink (  &Map, atoi(field_opt->answer) );
 		   if( Vect_map_add_dblink ( &Map, atoi(field_opt->answer), 
 					     fi->name, fi->table, fi->key, fi->database, fi->driver) == 0) 

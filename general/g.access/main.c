@@ -18,6 +18,7 @@ main (int argc, char *argv[])
     G_gisinit(argv[0]);
 
     module = G_define_module();
+    module->keywords = _("general");
     module->description = "This program allows the user to control access to the current mapset.";
 
     group_opt = G_define_option();

@@ -165,7 +165,7 @@ void contour (
 		    current.c = startcol;
 		    current.edge = 0;
 		    outside = getnewcell(&current, nrow, ncol, z);
-		    if ( checkedge ( current.z[0], current.z[1], level))
+		    if ( !outside && checkedge ( current.z[0], current.z[1], level))
 		    {
 			getpoint (&current, level, Cell, Points);
 			hit[current.r][current.c] +=
@@ -174,8 +174,9 @@ void contour (
 			outside = getnewcell(&current,nrow, ncol, z);
 
 			/* while not back to starting point, follow line */
-			while ( (current.edge != 0) || 
-			  ((current.r != startrow) || (current.c != startcol)))
+			while ( !outside &&
+				((current.edge != 0) || 
+				 ((current.r != startrow) || (current.c != startcol))))
 			{
 			    hit[current.r][current.c] += 
 				findcrossing(&current, level, Cell, Points, noerr);

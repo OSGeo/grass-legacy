@@ -1,9 +1,9 @@
-#include <grass/gis.h>
-#include <grass/display.h>
-#include <grass/raster.h>
 #include <stdio.h>
 #include <string.h>
 #include <stdlib.h>
+#include <grass/gis.h>
+#include <grass/display.h>
+#include <grass/raster.h>
 
 /* List the maps currently displayed in GRASS monitor MN + Huidae Cho 8/2001 */
 
@@ -18,10 +18,7 @@ main (void)
     int stat ;
     char **rast, **vect, **site;
     int nrasts, nvects, nsites, nlists;
-    char *cmd;
-    
-    rast = vect = site = NULL;
-    nrasts = nvects = nsites = 0;
+
 
     if (R_open_driver() != 0)
 	G_fatal_error ("No graphics device selected");
@@ -33,10 +30,13 @@ main (void)
     if(stat)
 	G_fatal_error ("Failed to process the screen pad");
 
-    for(p=0; p<npads; p++)
+    for(p = npads-1; p >=0; p--)
     {
+	rast = vect = site = list = NULL;
+	nrasts = nvects = nsites = nlists = 0;
+
 	R_pad_select(pads[p]);
-/*	fprintf(stdout, "frame: %s\n", pads[p]);*/
+	fprintf(stdout, "frame: %s\n", pads[p]);
 
         if(D_get_cell_list (&rast, &nrasts) < 0)
             rast = NULL;

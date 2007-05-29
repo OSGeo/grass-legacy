@@ -28,7 +28,6 @@ proc GmHist::create { tree parent } {
     variable first
 	variable dup
     global mon
-    global gmpath
     global iconpath
 
     set node "histogram:$count"
@@ -40,7 +39,9 @@ proc GmHist::create { tree parent } {
 
     image create photo hico -file "$iconpath/module-d.histogram.gif"
     set ico [label $frm.ico -image hico -bd 1 -relief raised]
-    
+
+    bind $ico <ButtonPress-1> "GmTree::selectn $tree $node"
+
     pack $check $ico -side left
         
 	#insert new layer
@@ -68,7 +69,7 @@ proc GmHist::create { tree parent } {
     set opt($count,1,mod) 1
     set first 1
 
-	set optlist {_check map color style nsteps nulls}
+	set optlist {_check map opacity color style nsteps nulls}
 
     foreach key $optlist {
 		set opt($count,0,$key) $opt($count,1,$key)
@@ -107,7 +108,6 @@ proc GmHist::select_map { id } {
 # display histogram options
 proc GmHist::options { id frm } {
     variable opt
-    global gmpath
     global bgcolor
     global iconpath
 
@@ -184,11 +184,6 @@ proc GmHist::save { tree depth node } {
 
 proc GmHist::display { node mod } {
     global mon
-    global mapfile
-    global maskfile
-    global complist
-    global opclist
-    global masklist
     variable optlist
     variable lfile 
     variable lfilemask
@@ -199,12 +194,6 @@ proc GmHist::display { node mod } {
     variable first
 
     set rasttype ""
-    set currmon ""
-    set line ""
-    set input ""
-    global gmpath
-    global mon
-
     set tree($mon) $GmTree::tree($mon)
     set id [GmTree::node_id $node]
 
@@ -224,9 +213,11 @@ proc GmHist::display { node mod } {
 
     # set steps
     if { $opt($id,1,nsteps) != "" } { 
-		set rt [open "|r.info map=$opt($id,1,map) -t" r]
+		catch {set rt [open "|r.info map=$opt($id,1,map) -t" r]}
 		set rasttype [read $rt]
-		close $rt
+		if {[catch {close $rt} error]} {
+		    puts $error
+		}
 		if {[regexp -nocase ".=FCELL" $rasttype] || [regexp -nocase ".=DCELL" $rasttype]} {
             append cmd " nsteps=$opt($id,1,nsteps)"
         }
@@ -260,8 +251,8 @@ proc GmHist::duplicate { tree parent node id } {
     variable opt
     variable count
 	variable dup
+	variable first
 	global iconpath
-	global first
 
     set node "hist:$count"
 	set dup($count) 1
@@ -274,7 +265,9 @@ proc GmHist::duplicate { tree parent node id } {
 
     image create photo hico -file "$iconpath/module-d.histogram.gif"
     set ico [label $frm.ico -image hico -bd 1 -relief raised]
-    
+
+    bind $ico <ButtonPress-1> "GmTree::selectn $tree $node"
+
     pack $check $ico -side left
 
 	#insert new layer

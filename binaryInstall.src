@@ -3,10 +3,10 @@
 ##########################################################################
 #
 # IMPORTANT: The binaryInstall.src file is a source file, NOT an
-# executable shell script!! Used to generate grass5install.sh by
+# executable shell script!! Used to generate grass-MAJ.MIN.VER-ARCH-DD_MM_YYYY-install.sh by
 # make bindist
 #  
-# GRASS 5.7 binary package installation tool
+# GRASS binary package installation tool
 # platform independent
 #
 # $Id$

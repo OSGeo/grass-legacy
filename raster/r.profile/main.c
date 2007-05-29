@@ -49,6 +49,7 @@ int main(int argc, char *argv[])
 
     /* Set description */
     module = G_define_module();
+    module->keywords = _("raster");
     module->description =
 	_("Outputs the raster map layer values lying on user-defined line(s).");
 
@@ -59,7 +60,7 @@ int main(int argc, char *argv[])
     parm.output->type = TYPE_STRING;
     parm.output->required = NO;
     parm.output->answer     = "-";
-    parm.output->gisprompt = "old,cell,raster";
+    parm.output->gisprompt = "new_file,file,output";
     parm.output->description = _("Name of file for output (use output=- for stdout)");
 
     parm.profile = G_define_option();
@@ -102,8 +103,6 @@ int main(int argc, char *argv[])
     if (G_parser(argc, argv))
 	exit(EXIT_FAILURE);
 
-    if ((!parm.i->answer) && (!parm.profile->answer))
-	G_fatal_error(_("Either -i flag and/or profile parameter must be used."));
 
     clr = 0;
     if (parm.c->answer)

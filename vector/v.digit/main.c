@@ -99,6 +99,7 @@ int main (int argc, char *argv[])
     G_gisinit(argv[0]);
 
     module = G_define_module(); 
+    module->keywords = _("vector");
     module->description = _("Interactive editing and digitization of vector maps.");
 
     map_opt = G_define_standard_option(G_OPT_V_MAP);

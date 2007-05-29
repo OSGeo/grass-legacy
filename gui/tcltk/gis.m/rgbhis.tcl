@@ -27,7 +27,6 @@ proc GmRgbhis::create { tree parent } {
     variable opt
     variable count
     variable dup
-    global gmpath
     global iconpath
     global mon
 
@@ -41,6 +40,8 @@ proc GmRgbhis::create { tree parent } {
     image create photo rgbico -file "$iconpath/module-d.rgb.gif"
     set ico [label $frm.ico -image rgbico -bd 1 -relief raised]
     
+    bind $ico <ButtonPress-1> "GmTree::selectn $tree $node"
+
     pack $check $ico -side left
     
 	#insert new layer
@@ -69,7 +70,7 @@ proc GmRgbhis::create { tree parent } {
     set opt($count,1,mod) 1
 
 
-	set optlist { _check map1 map2 map3 rgb his overlay}
+	set optlist { _check map1 map2 map3 opacity rgb his overlay}
 
     foreach key $optlist {
 		set opt($count,0,$key) $opt($count,1,$key)
@@ -124,7 +125,6 @@ proc GmRgbhis::select_map3 { id } {
 # display RGB and HIS options
 proc GmRgbhis::options { id frm } {
     variable opt
-    global gmpath
     global bgcolor
     global iconpath
 
@@ -228,11 +228,6 @@ proc GmRgbhis::save { tree depth node } {
 ###############################################################################
 proc GmRgbhis::display { node mod} {
     global mon
-    global mapfile
-    global maskfile
-    global complist
-    global opclist
-    global masklist
     variable optlist
     variable lfile 
     variable lfilemask
@@ -243,7 +238,7 @@ proc GmRgbhis::display { node mod} {
     
     set line ""
     set input ""
-    global gmpath
+    
     set cmd1 ""
     set cmd2 ""
 
@@ -269,7 +264,7 @@ proc GmRgbhis::display { node mod} {
             append cmd2 " i_map=$opt($id,1,map2)"
          }
         if { $opt($id,1,map3) != "" } {        
-            append cmd2 " s_map=$opt($id,1,map2)"
+            append cmd2 " s_map=$opt($id,1,map3)"
          }
      }
 
@@ -298,7 +293,6 @@ proc GmRgbhis::duplicate { tree parent node id } {
     variable opt
     variable count
     variable dup
-    global gmpath
     global iconpath
     global mon
 
@@ -312,7 +306,9 @@ proc GmRgbhis::duplicate { tree parent node id } {
 
     image create photo rgbico -file "$iconpath/module-d.rgb.gif"
     set ico [label $frm.ico -image rgbico -bd 1 -relief raised]
-    
+
+    bind $ico <ButtonPress-1> "GmTree::selectn $tree $node"
+
     pack $check $ico -side left
 
 	# where to insert new layer

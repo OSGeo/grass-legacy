@@ -90,6 +90,7 @@ parse_command_line(int argc, char *argv[])
 
     /* Set description */
     module              = G_define_module();
+    module->keywords = _("database, SQL");
     module->description = _("List all tables for a given database.");
 
 

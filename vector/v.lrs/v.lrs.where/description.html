@@ -3,6 +3,23 @@
 <em>v.lrs.where</em> identifies line id and real milepost+offset for
 points in vector map using linear reference system.
 
+<h2>EXAMPLE</h2>
+
+In this example, the 'route_lrs' shall be queried for unknown
+positions (points) along the LRS:
+
+<div class="code"><pre>
+v.lrs.where lines=route_lrs points=newpoints rstable=route_lrs
+1|22|1.000000+432.113931
+[1] points read from input
+[1] positions found
+</pre></div>
+
+<!-- unclear to me, 432.113931 is too short in my test:
+Result: The point contained in the 'newpoints' map is located
+432.113931 map units after milepost 1.
+-->
+
 <h2>SEE ALSO</h2>
 
 <em><a HREF="lrs.html">LRS tutorial</a></em>,<br>

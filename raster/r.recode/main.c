@@ -19,9 +19,13 @@ main (int argc, char *argv[])
 	struct Flag *a, *d;
     } parm;
 
+    /* any interaction must run in a term window */
+    G_putenv("GRASS_UI_TERM","1");
+
     G_gisinit (argv[0]);
 
     module = G_define_module();
+    module->keywords = _("raster");
     module->description =
 		_("Recode raster maps.");
 					        

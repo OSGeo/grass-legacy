@@ -52,6 +52,20 @@ When writing out GeoTIFF format for users of ESRI software or ImageMagick,
 the band interleaving should be switched to pixel interleaving using
 <em>createopt="INTERLEAVE=PIXEL"</em>. Multiple options have to be
 specified as comma separated list (<em>createopt=TFW=YES,COMPRESS=DEFLATE</em>).
+<p>
+Out of the GDAL data types, the closest match for GRASS CELL, FCELL and DCELL
+rasters are respectively Int32, Float32 and Float64. These are not exact
+equivalents, but they will preserve the max possible data range and number of
+decimal places for each respective GRASS data type. Please keep in mind, that
+not all CELL rasters will require Int32 - e.g., 0-255 CELL raster are covered
+by the Byte <em>type</em> as well. Moreover, some GDAL-supported formats do not
+support all the data types possible in GDAL and GRASS. Use
+<em><a href="r.info">r.info</a></em> to check the data type and range for your
+GRASS raster, refer to specific format documentation
+(<a href="http://www.gdal.org/">GDAL website</a>, format vendor's docs) and
+e.g. the Wikipedia article
+<em><a href="http://en.wikipedia.org/wiki/C_syntax#Typical_boundaries_of_primitive_integral_types">Typical boundaries of primitive integral types</a></em>
+for details.
 
 <H2>EXAMPLE</H2>
 
@@ -72,9 +86,7 @@ r.out.gdal elevation.dem format=GTiff type=Int16 output=elev_dem.tif
 <EM><A HREF="r.out.arc.html">r.out.arc</A></EM>,
 <EM><A HREF="r.out.ascii.html">r.out.ascii</A></EM>,
 <EM><A HREF="r.out.tiff.html">r.out.tiff</A></EM>
-<p>
-Data types:<br>
-<EM><A HREF="http://en.wikipedia.org/wiki/C_syntax#Typical_boundaries_of_primitive_integral_types">Typical boundaries of primitive integral types</A></EM>
+
 <H2>AUTHOR</H2>
 
 Markus Neteler, ITC-irst, Italy

@@ -29,7 +29,6 @@ proc GmDframe::create { tree parent } {
     variable first
 	variable dup
     global mon
-    global gmpath
     global iconpath
 
     set node "dframe:$count"
@@ -95,7 +94,6 @@ proc GmDframe::set_option { node key value } {
 # frame options
 proc GmDframe::options { id frm } {
     variable opt
-    global gmpath
     global bgcolor
     global iconpath
 
@@ -158,12 +156,6 @@ proc GmDframe::save { tree depth node } {
 
 proc GmDframe::display { node mod } {
     global mon
-    global mapfile
-    global maskfile
-    global complist
-    global opclist
-    global masklist
-    global gmpath
     variable optlist
     variable lfile 
     variable lfilemask

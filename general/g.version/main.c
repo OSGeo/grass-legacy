@@ -30,6 +30,7 @@ int main(int argc, char *argv[])
     G_gisinit(argv[0]);
 
     module = G_define_module();
+    module->keywords = _("general");
     module->description = _("Displays version and copyright information");
 
     copyright = G_define_flag();

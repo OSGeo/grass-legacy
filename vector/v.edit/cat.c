@@ -36,9 +36,9 @@ cat_init (struct Map_info *Map)
 
     /* Read the map and set maximum categories */
     nlines = Vect_get_num_lines ( Map );
-//    G_message(_("Reading vector: "));
+/*     G_message(_("Reading vector: ")); */
     for ( line = 1; line <= nlines; line++ ) {
-//	G_percent(line, nlines, 1);
+/* 	G_percent(line, nlines, 1); */
 	Vect_read_line ( Map, NULL, Cats, line ); 
 	for ( i = 0; i < Cats->n_cats; i++ ) {
 	    G_debug(2,"i=%d, Cats->n_cats=%d, Cats->field[%d]=%d, Cats->cat[%d]=%d\n",

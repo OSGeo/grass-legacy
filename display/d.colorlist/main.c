@@ -1,6 +1,4 @@
 /*
- * $Id$
- *
  ****************************************************************************
  *
  * MODULE:       d.colorlist
@@ -20,6 +18,7 @@
 #include <string.h>
 #include <stdlib.h>
 #include <grass/gis.h>
+#include <grass/glocale.h>
 #include <grass/display.h>
 
 int main(int argc, char **argv)
@@ -33,6 +32,7 @@ int main(int argc, char **argv)
   G_gisinit(argv[0]);
 
   module = G_define_module();
+  module->keywords = _("display");
   module->description = 
     "Output a list of all available display colors with a configurable "
     "separator (default is comma)."; 

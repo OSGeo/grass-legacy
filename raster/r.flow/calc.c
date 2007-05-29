@@ -203,6 +203,7 @@ int next_point(
     int      horiz;
     int      semi;
     double   length, delta;
+    double   deltaz;
 
     double   oldz	= p->z;
     int	     oldtheta	= p->theta;
@@ -274,8 +275,18 @@ int next_point(
     {
 	if (parm.dsout && (ads.row != a->row || ads.col != a->col))
 	    put(ds, a->row, a->col, get(ds, a->row, a->col) + 1);
+/*	if (parm.lgout) 
+ *	*l += parm.l3d ? hypot(length, oldz - p->z) : length; this did not work, helena*/
 	if (parm.lgout)
-	    *l += parm.l3d ? hypot(length, oldz - p->z) : length;
+	{  
+            if (parm.l3d)
+            {
+	    deltaz = oldz - p->z;  /*fix by helena Dec. 06*/
+	    *l += hypot(length, deltaz);
+	    }
+	   else
+            *l += length;
+	}
 	return 1;
     }
 
@@ -301,7 +312,7 @@ void calculate()
     int		 loopstep = (!parm.dsout && !parm.lgout && parm.flout) ?
 			    parm.skip : 1;
 
-    diag("Working...");
+    G_message(_("Calculating maps ..."));
 
     fls.px = (double *) G_calloc(parm.bound, sizeof (double));
     fls.py = (double *) G_calloc(parm.bound, sizeof (double));
@@ -357,7 +368,7 @@ void calculate()
 		do
 		    add_to_line(&pts, &fls);
 		while (fls.index <= parm.bound &&
-		       (pts.z != UNDEFZ && pts.theta != UNDEF) && 
+		       (pts.z != UNDEFZ && pts.theta >= 0 && pts.theta <= 360) &&
 		 /*  (!G_is_d_null_value(&pts.z) && pts.theta != UNDEF) &&*/
 		       next_point(&pts, &ads, bbs, &length));
 	    }
@@ -387,7 +398,6 @@ void calculate()
 
     if (parm.lgout)
         G_close_cell(lgfd);
-    diag("done.\n");
 }
 
 int main(int argc, char	*argv[])

@@ -97,8 +97,8 @@ p_bilinear (
 
 
 	result = ((1 - t - u + tu) * ibuffer[y1][x1]) +
-		((u - tu) * ibuffer[y1][x2]) +
-		((t - tu) * ibuffer[y2][x1]) +
+		((t - tu) * ibuffer[y1][x2]) +
+		((u - tu) * ibuffer[y2][x1]) +
 		(tu * ibuffer[y2][x2]);
 
 	switch (cell_type) {

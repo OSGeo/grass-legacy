@@ -1,8 +1,11 @@
+#ifndef __GLOBAL_H__
+#define __GLOBAL_H__
+
 
 #ifdef MAIN
     int n_polygons = 0;
 #else
-    extern n_polygons;
+    extern int n_polygons;
 #endif
 
 
@@ -12,3 +15,6 @@ typedef struct {
     struct line_cats *cats;
     int valid;
 } CENTR;
+
+
+#endif /* __GLOBAL_H__ */

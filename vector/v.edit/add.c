@@ -86,7 +86,7 @@ int do_add(struct Map_info *Map)
 	    }
 	    cat_max_set(layer, next_cat);
 	    next_cat = _get_next_cat(&ci, cl, next_cat);
-	    //	    Vect_destroy_line_struct(point);
+	    /* Vect_destroy_line_struct(point); */
 	}
 	break;
       case GV_LINE:
@@ -145,7 +145,7 @@ int do_add(struct Map_info *Map)
 		double xc, yc;
 		int ret;
 
-//		ret = Vect_get_point_in_poly(line, &xc, &yc);
+		/* ret = Vect_get_point_in_poly(line, &xc, &yc); */
 		ret = Vect_get_point_in_poly_isl(line, NULL, 0, &xc, &yc);
 		if(ret < 0) { /* could not find point inside polygon */
 		    return 0;
@@ -167,13 +167,13 @@ int do_add(struct Map_info *Map)
 	    }
 	    cat_max_set(layer, cc);
 	    next_cat = _get_next_cat(&ci, cl, cc);
-	    //	    Vect_destroy_line_struct(point);
+	    /* Vect_destroy_line_struct(point); */
 	}
 	else {
 	    cat_max_set(layer, next_cat);
 	    next_cat = _get_next_cat(&ci, cl, next_cat);
 	}
-	//	Vect_destroy_line_struct(line);
+	/* Vect_destroy_line_struct(line); */
 	break;
       default:
 	G_warning("This should not happen");

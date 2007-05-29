@@ -20,6 +20,7 @@
 #include <grass/gis.h>
 #include <grass/Vect.h>
 #include <grass/dbmi.h>
+#include <grass/glocale.h>
 
 /* TODO: Use some better algorithm */
 
@@ -87,6 +88,7 @@ int main(int argc, char **argv)
     G_gisinit (argv[0]) ;
 
     module = G_define_module();
+    module->keywords = _("vector, networking");
     module->description = "Create a cycle connecting given nodes (Traveling salesman problem). "
 	    "Note that TSP is NP-hard, heuristic algorithm is used by this module "
 	    "and created cycle may be sub optimal.";

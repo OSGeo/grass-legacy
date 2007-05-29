@@ -20,6 +20,7 @@
 #include <grass/gis.h>
 #include <grass/Vect.h>
 #include <grass/dbmi.h>
+#include <grass/glocale.h>
 
 typedef struct {
     int cat;   /* category number */
@@ -64,6 +65,7 @@ int main(int argc, char **argv)
 
     module = G_define_module();
     module->label = "Split net by cost isolines";
+    module->keywords = _("vector, networking");
     module->description = "Split net to bands between cost isolines (direction from centre). "
            "Centre node must be opened (costs >= 0). Costs of centre node are used in calculation";
 

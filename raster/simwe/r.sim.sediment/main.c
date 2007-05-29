@@ -49,6 +49,7 @@
 #include <grass/linkm.h>
 #include <grass/bitmap.h>
 #include <grass/site.h>
+#include <grass/glocale.h>
 
 #define MAIN
 #include <grass/waterglobs.h>
@@ -74,12 +75,13 @@ int main ( int argc, char *argv[])
   G_gisinit (argv[0]);
 
   module = G_define_module();
+  module->keywords = _("raster");
   module->description =        
                   "Overland flow hydrologic model based on duality "
-                  "particle-field concept (SIMWE) ";
+                  "particle-field concept (SIMWE)";
                   
   if (G_get_set_window (&cellhd) == -1)
-    exit (0);
+    exit (EXIT_FAILURE);
 
   conv = G_database_units_to_meters_factor();
 
@@ -268,7 +270,7 @@ int main ( int argc, char *argv[])
 
 
   if (G_parser (argc, argv))
-    exit (1);
+    exit (EXIT_FAILURE);
 
   mscale=flag.mscale->answer;
   tserie=flag.tserie->answer;

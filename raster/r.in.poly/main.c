@@ -12,7 +12,8 @@ int main (int argc, char *argv[])
     G_gisinit (argv[0]);
 
 	module = G_define_module();
-	module->description =
+	module->keywords = _("raster");
+    module->description =
 		_("Create raster maps from ascii polygon/line data files "
 		"in the current directory.");
 

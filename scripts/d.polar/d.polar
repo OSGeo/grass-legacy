@@ -18,7 +18,8 @@
 #############################################################################
 
 #%Module
-#% description: Draws polar diagram of angle map such as aspect or flow directions
+#%  description: Draws polar diagram of angle map such as aspect or flow directions
+#%  keywords: display, diagram
 #%End
 #%option
 #% key: map
@@ -133,7 +134,7 @@ cat ${TMP}_binned | awk '{printf "%f\n", (3.14159265 * $1 ) / 180.}'  > ${TMP}_b
 # generate numbers for max circle
 TOTALVALIDNUMBER=`wc -l ${TMP}_binned_radians | awk '{print $1}'`
 
-if [ $TOTALVALIDNUMBER == 0 ] ; then
+if [ "$TOTALVALIDNUMBER" -eq 0 ] ; then
    echo "No data pixel found" 1>&2
    cleanup
    exit 1

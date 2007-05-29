@@ -16,10 +16,12 @@
 
 #define _MAIN_C_
 #include <stdio.h>
+#include <stdlib.h>
 #include <string.h>
 #include <grass/gis.h>
 #include <grass/dbmi.h>
 #include <grass/Vect.h>
+#include <grass/glocale.h>
 #include "global.h"
 
 /* size of text compared to screen=1 */
@@ -42,6 +44,7 @@ int main(int argc, char *argv[])
 
     /* Set description */
     module = G_define_module();
+    module->keywords = _("vector");
     module->description = _("Exports GRASS vector files to DXF file format.");
 
     input = G_define_standard_option(G_OPT_V_INPUT);

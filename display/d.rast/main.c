@@ -30,7 +30,8 @@ int main(
     G_gisinit(argv[0]) ;
 
 	module = G_define_module();
-	module->description =
+	module->keywords = _("display");
+    module->description =
 		_("Displays and overlays raster map layers "
 		"in the active display frame on the graphics monitor");
 

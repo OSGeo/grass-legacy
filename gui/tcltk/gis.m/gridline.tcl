@@ -28,7 +28,6 @@ proc GmGridline::create { tree parent } {
     variable first
 	variable dup
     global mon
-    global gmpath
     global iconpath
 
     set node "gridline:$count"
@@ -41,6 +40,8 @@ proc GmGridline::create { tree parent } {
     image create photo gico -file "$iconpath/module-d.grid.gif"
     set gdico [label $frm.gdico -image gico -bd 1 -relief raised]
     
+    bind $gdico <ButtonPress-1> "GmTree::selectn $tree $node"
+
     pack $check $gdico -side left
     
 	#insert new layer
@@ -81,7 +82,7 @@ proc GmGridline::create { tree parent } {
     set first 1
     set opt($count,1,mod) 1
     
-	set optlist { _check gridcolor gridborder gridsize gridorigin griddraw gridgeod \
+	set optlist { _check opacity gridcolor gridborder gridsize gridorigin griddraw gridgeod \
     			borderdraw textdraw rhumbdraw rhumbcoor geoddraw geodcoor geodcolor \
     			geodtxtcolor} 
 
@@ -109,8 +110,7 @@ proc GmGridline::set_option { node key value } {
 
 # display gridline options
 proc GmGridline::options { id frm } {
-    variable opt
-    global gmpath
+    variable opt    
     global bgcolor
     global iconpath
 
@@ -135,9 +135,9 @@ proc GmGridline::options { id frm } {
     set row [ frame $frm.grid1 ]
     Label $row.a -text "Grid options: "
     checkbutton $row.b -text [G_msg "draw grid"] -variable GmGridline::opt($id,1,griddraw) 
-    checkbutton $row.c -text [G_msg "geodetic grid"] -variable GmGridline::opt($id,1,gridgeod) 
+    checkbutton $row.c -text [G_msg "geodetic grid  "] -variable GmGridline::opt($id,1,gridgeod) 
     SelectColor $row.d -type menubutton -variable GmGridline::opt($id,1,gridcolor)    
-    Label $row.e -text [G_msg " grid color   "] 
+    Label $row.e -text [G_msg " grid & text color   "] 
     Button $row.f -text [G_msg "Help"] \
             -image [image create photo -file "$iconpath/gui-help.gif"] \
             -command "run g.manual d.grid" \
@@ -149,11 +149,11 @@ proc GmGridline::options { id frm } {
 
     # grid options 2
     set row [ frame $frm.grid2 ]
-    Label $row.a -text [G_msg "     "]
+    Label $row.a -text [G_msg "   "]
     checkbutton $row.b -text [G_msg "draw grid border"] -variable GmGridline::opt($id,1,borderdraw) 
-    checkbutton $row.c -text [G_msg "draw border text"] -variable GmGridline::opt($id,1,textdraw) 
-    Label $row.d -text [G_msg " border & text color"] 
-    SelectColor $row.e -type menubutton -variable GmGridline::opt($id,1,gridborder)
+    checkbutton $row.c -text [G_msg "draw border text  "] -variable GmGridline::opt($id,1,textdraw) 
+    SelectColor $row.d -type menubutton -variable GmGridline::opt($id,1,gridborder)
+    Label $row.e -text [G_msg " border color"] 
     pack $row.a $row.b $row.c $row.d $row.e -side left
     pack $row -side top -fill both -expand yes
 
@@ -237,11 +237,6 @@ proc GmGridline::save { tree depth node } {
 
 proc GmGridline::display { node mod } {
     global mon
-    global mapfile
-    global maskfile
-    global complist
-    global opclist
-    global masklist
     variable optlist
     variable lfile 
     variable lfilemask
@@ -305,8 +300,8 @@ proc GmGridline::duplicate { tree parent node id } {
     variable opt
     variable count
 	variable dup
+	variable first
 	global iconpath
-	global first
 
     set node "gridline:$count"
 	set dup($count) 1

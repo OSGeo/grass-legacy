@@ -28,6 +28,7 @@
 
 #%Module
 #%  description: Brovey transform to merge multispectral and high-res panchromatic channels
+#%  keywords: raster, imagery, fusion
 #%End
 #%Flag
 #%  key: l
@@ -106,7 +107,8 @@ fi
 
 # setting environment, so that awk works properly in all languages
 unset LC_ALL
-export LC_NUMERIC=C
+LC_NUMERIC=C
+export LC_NUMERIC
 
 cleanup()
 {

@@ -20,6 +20,7 @@
 #include <grass/display.h>
 #include <grass/raster.h>
 #include <grass/gis.h>
+#include <grass/glocale.h>
 #define MAIN
 #include "options.h"
 #include "local_proto.h"
@@ -38,6 +39,7 @@ int main (int argc, char **argv)
 	G_gisinit(argv[0]) ;
 
 	module = G_define_module();
+	module->keywords = _("display");
 	module->description =
 		"Outputs a TITLE for a raster map layer in a form suitable "
 		"for display by d.text.";

@@ -13,9 +13,10 @@
 
 #include <string.h>
 #include <stdlib.h>
+#include <math.h>
 #include <grass/gis.h>
 #include <grass/gmath.h>
-#include <math.h>
+#include <grass/glocale.h>
 
 static CELL round_c (double x)
 {
@@ -59,7 +60,8 @@ int main (int argc, char *argv[])
   struct Option *opt1, *opt2, *opt3 ;
 
   module = G_define_module();
-  module->description =
+  module->keywords = _("imagery");
+    module->description =
 	"Principal components analysis (pca) "
 	"program for image processing.";
 

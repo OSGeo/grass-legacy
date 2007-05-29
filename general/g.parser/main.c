@@ -87,6 +87,12 @@ static void parse_module(struct context *ctx, const char *cmd, const char *arg)
 	return;
     }
 
+    if (strcasecmp(cmd, "keywords") == 0)
+    {
+        ctx->module->keywords = translate(strdup(arg));
+        return;
+    }
+
     if (strcasecmp(cmd, "end") == 0)
     {
 	ctx->state = S_TOPLEVEL;

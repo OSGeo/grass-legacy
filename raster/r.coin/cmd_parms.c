@@ -19,7 +19,8 @@ command_version (int argc, char *argv[])
     } flag;
 
 	module = G_define_module();
-	module->description =
+	module->keywords = _("raster");
+    module->description =
 			"Tabulates the mutual occurrence (coincidence) "
 			"of categories for two raster map layers.";
 

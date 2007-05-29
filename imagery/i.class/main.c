@@ -21,7 +21,8 @@ int main (int argc, char *argv[])
   G_gisinit(argv[0]);
 
   module = G_define_module();
-  module->description =
+  module->keywords = _("imagery");
+    module->description =
 	_("An imagery function that generates spectral signatures "
 	"for an image by allowing the user to outline regions of "
 	"interest. The resulting signature file can be used as "

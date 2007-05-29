@@ -33,7 +33,7 @@ v.db.connect -c map=vectormap
 
 <h3>Connect vector map to database (DBF driver)</h3>
 
-<em>Connect vector map to database with variables</em><br>
+<em>Connect vector map to DBF table without or with variables</em><br>
 
 Using default DB connection:<br>
 <div class="code"><pre>
@@ -42,7 +42,7 @@ v.db.connect map=vectormap table=table
 
 <p>
 
-Using hardcoded path to DBF directory:<br>
+Using hardcoded path to DBF directory (not recommended):<br>
 <div class="code"><pre>
 v.db.connect map=vectormap table=table database=/home/user/grassdata/spearfish60/PERMANENT/dbf
 </pre></div>
@@ -55,20 +55,37 @@ v.db.connect map=vectormap table=table database='$GISDBASE/$LOCATION_NAME/$MAPSE
 </pre></div>
 
 <p>
-
 <em>Connect vector map layer 2 and key ID to database with variables</em><br>
 (note: if needed, single quotes must be used for the <em>database</em> parameter)<br>
 <div class="code"><pre>
 v.db.connect map=vectormap table=table layer=2 key=ID
 </pre></div>
 
+
+<h3>Connect vector map to database (MySQL driver)</h3>
+
+<div class="code"><pre>
+# note: connection which requires password
+db.connect driver=mysql database="host=dbserver.foo.org,dbname=my_database"
+db.login user=joshua [password=xxx]
+# ... or enter password interactively.
+
+db.tables -p
+
+# connect external table to layer 2:
+v.db.connect map=my_map table=my_mysql_table key=baz layer=2
+v.db.connect -p my_map
+</pre></div>
+
+
 <h3>Connect vector map to database (PostgreSQL driver)</h3>
 
 <div class="code"><pre>
+# note: connection without password being asked
 v.db.connect map=vectormap table=table layer=1 key=oid driver=pg \
-database="host=myserver.itc.it,dbname=mydb,user=name" table=mytable key=id
+             database="host=myserver.itc.it,dbname=mydb,user=name" \
+             table=mytable key=id
 </pre></div>
-
 
 <H3>Store geometry in GRASS but attributes in PostgreSQL</H3>
 

@@ -11,7 +11,7 @@ EXTRA_INC = -I$(GRASS_LIBDIR)/db/dbmi_driver
 
 LIBES = $(DBMIDRIVERLIB) $(DBMIBASELIB) $(DBMIEXTRALIB) $(SQLPLIB) $(SHAPELIB) $(DBSTUBSLIB) $(GISLIB) $(DATETIMELIB)
 
-DRVDOC=$(GISBASE)/docs/html/dbf.html
+DRVDOC=$(GISBASE)/docs/html/grass-dbf.html
 
 OBJS 	=  \
 	column.o \
@@ -37,5 +37,5 @@ default: $(DRIVER) $(DRVDOC)
 $(DRIVER): $(ARCH_OBJS)
 	$(CC) $(LDFLAGS) -o $@ $(ARCH_OBJS) $(FMODE_OBJ) $(LIBES) $(MATHLIB) $(XDRLIB)
 
-$(DRVDOC): dbf.html
-	$(INSTALL) -m 644 dbf.html $(DRVDOC)
+$(DRVDOC): grass-dbf.html
+	$(INSTALL) -m 644 grass-dbf.html $(DRVDOC)

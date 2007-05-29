@@ -25,7 +25,8 @@ main (int argc, char **argv)
 	G_gisinit(argv[0]) ;
 
 	module = G_define_module();
-	module->description =
+	module->keywords = _("display");
+    module->description =
 		_("Generates and displays simple graphics on map "
 		"layers drawn in the active graphics monitor display frame.");
 

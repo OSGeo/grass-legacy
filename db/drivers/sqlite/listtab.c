@@ -29,7 +29,7 @@ int db__driver_list_tables (dbString **tlist, int *tcount, int system)
     init_error();
 
     ret = sqlite3_prepare ( sqlite, 
-	"select name from sqlite_master where type = 'table'",
+	"select name from sqlite_master where type = 'table' or type = 'view'",
 	 -1, &statement, &rest );
 
     if ( ret != SQLITE_OK ) {

@@ -39,7 +39,7 @@ void cell_clip_drv (int col0, int row0, int ncols, int nrows, double **value, in
   double       *rich, *richtmp;	 
   char         *name, *mapset;
   DCELL        **buf;
-  char         **null_buf;
+  DCELL        **null_buf;
   RASTER_MAP_TYPE data_type;
 
 /*
@@ -73,9 +73,9 @@ void cell_clip_drv (int col0, int row0, int ncols, int nrows, double **value, in
 				   buffer that will hold the null values for
 				   the clipped area */
 
-  null_buf = (char **)G_calloc(nrows + 3, sizeof(char *));
+  null_buf = (DCELL **)G_calloc(nrows + 3, sizeof(DCELL *));
   for (i = 0; i < nrows + 3; i++)
-     null_buf[i] = (char *)G_calloc(ncols + 3, sizeof(char));
+     null_buf[i] = (DCELL *)G_calloc(ncols + 3, sizeof(DCELL));
      
 					/* call the cell_clip routine */
 

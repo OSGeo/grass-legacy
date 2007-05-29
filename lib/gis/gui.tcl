@@ -182,6 +182,11 @@ proc mkcmd {dlg} {
 				lappend cmd "-$opt($dlg,$i,name)"
 			}
 		}
+		xflag {
+			if {$opt($dlg,$i,val) == 1} {
+				lappend cmd "--$opt($dlg,$i,name)"
+			}
+		}
 		}
 	}
 
@@ -650,6 +655,10 @@ proc dialog_set_command {dlg cmd} {
 			if {! [info exists args($name)] } continue
 			set opt($dlg,$i,val) $args($name)
 		}
+		xflag {
+			set name --$opt($dlg,$i,name)
+			set opt($dlg,$i,val) [expr [info exists args($name)] ? 1 : 0]
+		}
 		flag {
 			set name -$opt($dlg,$i,name)
 			set opt($dlg,$i,val) [expr [info exists args($name)] ? 1 : 0]
@@ -778,6 +787,33 @@ proc add_flag {optn optlist} {
 	array set opts $optlist
 
 	set opt($dlg,$optn,class) flag
+
+	foreach key {name desc label guisection} {
+		set opt($dlg,$optn,$key) $opts($key)
+	}
+	set opt($dlg,$optn,val) $opts(answer)
+
+	set opt($dlg,optn_index,-$opts(name)) $optn
+
+	choose_help_text $dlg $optn
+
+	normalize_guisection $dlg $optn
+
+	set suf [layout_get_frame $dlg $opt($dlg,$optn,guisection) $optn]
+
+	frame $suf.val$optn
+	checkbutton $suf.val$optn.chk -text $opt($dlg,$optn,label_text) -variable opt($dlg,$optn,val) -onvalue 1 -offvalue 0 -anchor w
+	pack $suf.val$optn.chk -side left
+	pack $suf.val$optn -side top -fill x
+	DynamicHelp::register $suf.val$optn balloon $opt($dlg,$optn,help_text)
+}
+
+proc add_xflag {optn optlist} {
+	global opt dlg
+	
+	array set opts $optlist
+
+	set opt($dlg,$optn,class) xflag
 
 	foreach key {name desc label guisection} {
 		set opt($dlg,$optn,$key) $opts($key)

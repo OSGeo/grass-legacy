@@ -1,8 +1,23 @@
+/*
+ * MODULE:       g.pnmcomp
+ * AUTHOR(S):    Glynn Clements
+ * PURPOSE:      g.pnmcomp isn't meant for end users. It's an internal tool for use by
+ * 		 a Tcl/Tk GUI.
+ * 		 In essence, g.pnmcomp generates a PPM image by overlaying a series of
+ * 		 PPM/PGM pairs (PPM = RGB image, PGM = alpha channel).
+ * COPYRIGHT:    (C) 2006 by the GRASS Development Team
+ *
+ *               This program is free software under the GNU General Public
+ *               License (>=v2). Read the file COPYING that comes with GRASS
+ *               for details.
+ *
+ */
 
 #include <stdio.h>
 #include <stdlib.h>
 #include <stdarg.h>
 #include <grass/gis.h>
+#include <grass/glocale.h>
 
 static int width, height;
 static char *in_buf;
@@ -255,7 +270,8 @@ main(int argc, char *argv[])
 	G_gisinit(argv[0]);
 
 	module = G_define_module();
-	module->description =
+	module->keywords = _("general");
+    module->description =
 		"Overlays multiple PPM image files.";
 
 	opt.in = G_define_option();

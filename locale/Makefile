@@ -67,6 +67,7 @@ mo:
 		install -d $(MO_DIR)/$$lingua/LC_MESSAGES/ ; \
 		echo -n $$po": "; \
 		if [ $$prefix = $(TCLDOMAIN) ]; then\
+		install -d $(MSG_DIR) ; \
 		msgfmt --statistics --tcl -l $$lingua \
 			-d $(MSG_DIR)/ $$po ;\
 		else \

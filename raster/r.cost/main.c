@@ -97,6 +97,8 @@ int main(int argc, char *argv[])
     G_gisinit(argv[0]);
 
     module = G_define_module();
+    module->keywords = _("raster map, cost surface, cumulative costs");
+    module->keywords = _("raster");
     module->description =
 	_("Outputs a raster map layer showing the "
 	  "cumulative cost of moving between different "

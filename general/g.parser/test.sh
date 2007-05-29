@@ -3,7 +3,8 @@
 # g.parser demo script
 
 #%Module
-#%  description: g.parser test script   
+#%  description: g.parser test script
+#%  keywords: keyword1, keyword2 
 #%End
 #%flag
 #%  key: f
@@ -31,7 +32,7 @@
 #%end
 
 if [ "$1" != "@ARGS_PARSED@" ] ; then
-  exec $GISBASE/etc/bin/cmd/g.parser "$0" "$@"
+  exec $GISBASE/bin/g.parser "$0" "$@"
 fi
 
 #add your code here

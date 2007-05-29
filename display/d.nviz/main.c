@@ -65,6 +65,7 @@ int main(int argc, char *argv[])
 
     /* Set description */
     module = G_define_module();
+    module->keywords = _("display");
     module->description = _("" "Create fly-through script to run in NVIZ");
 
     parm.opt1 = G_define_option();
@@ -389,6 +390,9 @@ int main(int argc, char *argv[])
 
     G_close_cell(fd);
     fclose(fp);
+
+    sprintf(buf1, _("Created NVIZ script <%s>."), outfile);
+    G_done_msg(buf1);
 
     exit(EXIT_SUCCESS);
 

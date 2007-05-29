@@ -78,6 +78,7 @@ main(int argc, char *argv[])
 
     /* Set description */
     module              = G_define_module();
+    module->keywords = _("database, SQL");
     module->description = _("Prints/sets general DB connection for current mapset and exits.");
 
 

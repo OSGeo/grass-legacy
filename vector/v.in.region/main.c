@@ -30,14 +30,15 @@ int main(int argc, char **argv)
     struct Cell_head window;
     struct line_cats *Cats; 
     struct line_pnts *Points;
+    double diff_long, mid_long;
 
     G_gisinit (argv[0]) ;
 
     module = G_define_module();
+    module->keywords = _("vector");
     module->description = "Create a new vector from current region.";
 
     out_opt = G_define_standard_option(G_OPT_V_OUTPUT); 
-    out_opt->description = "Output map where points will be written";
 
     type_opt = G_define_standard_option(G_OPT_V_TYPE) ;
     type_opt->multiple = NO;
@@ -53,6 +54,8 @@ int main(int argc, char **argv)
     type = Vect_option_to_types ( type_opt );
 
     G_get_window (&window);
+    diff_long = window.east - window.west;
+    mid_long = (window.west + window.east) / 2;
     
     /* Open output segments */
     Vect_open_new ( &Out, out_opt->answer, 0 );
@@ -61,8 +64,12 @@ int main(int argc, char **argv)
     /* Rectangle */
     
     Vect_append_point ( Points, window.west, window.south, 0.0 );
+    if (window.proj == PROJECTION_LL && diff_long >= 179)
+	    Vect_append_point ( Points, mid_long, window.south, 0.0 );
     Vect_append_point ( Points, window.east, window.south, 0.0 );
     Vect_append_point ( Points, window.east, window.north, 0.0 );
+    if (window.proj == PROJECTION_LL && diff_long >= 179)
+	    Vect_append_point ( Points, mid_long, window.north, 0.0 );
     Vect_append_point ( Points, window.west, window.north, 0.0 );
     Vect_append_point ( Points, window.west, window.south, 0.0 );
 

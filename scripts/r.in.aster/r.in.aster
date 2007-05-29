@@ -15,6 +15,7 @@
 
 #%Module
 #%  description: r.in.aster - georeferencing, rectification, and import of Terra-ASTER imagery and relative DEM's using gdalwarp
+#%  keywords: raster, imagery, import
 #%End
 #%option
 #% key: input

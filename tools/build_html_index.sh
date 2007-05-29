@@ -142,7 +142,8 @@ cp -f $GEMDIR/docs/GEM-Manual/img* $HTMLDIR/gem/
 cd $HTMLDIR
 
 #get list of available GRASS modules:
-CMDLIST=`ls -1 *.*.html | grep -v "$FULLINDEX" | grep -v index.html | grep -v "\($EXCLUDEHTML\)" | cut -d'.' -f1 | sort -u`
+CMDLIST=`ls -1 *.*.html | grep -v "$FULLINDEX" | grep -v index.html | \
+  grep -v gis.m.html | grep -v "\($EXCLUDEHTML\)" | cut -d'.' -f1 | sort -u`
 CMDLISTNO=`echo $CMDLIST | wc -w | awk '{print $1}'`
 
 #write main index:
@@ -153,14 +154,17 @@ echo "<table border=0>" >> $FULLINDEX
 echo "<tr><td>&nbsp;&nbsp;d.*  </td><td>display commands</td></tr>" >> $FULLINDEX
 echo "<tr><td>&nbsp;&nbsp;db.* </td><td>database commands</td></tr>" >> $FULLINDEX
 echo "<tr><td>&nbsp;&nbsp;g.*  </td><td>general commands</td></tr>" >> $FULLINDEX
-echo "<tr><td>&nbsp;&nbsp;g3.* </td><td>general3D commands</td></tr>" >> $FULLINDEX
+#echo "<tr><td>&nbsp;&nbsp;g3.* </td><td>general3D commands</td></tr>" >> $FULLINDEX
 echo "<tr><td>&nbsp;&nbsp;i.*  </td><td>imagery commands</td></tr>" >> $FULLINDEX
-echo "<tr><td>&nbsp;&nbsp;p.*  </td><td>paint commands</td></tr>" >> $FULLINDEX
+echo "<tr><td>&nbsp;&nbsp;m.*  </td><td>miscellaneous commands</td></tr>" >> $FULLINDEX
+#echo "<tr><td>&nbsp;&nbsp;p.*  </td><td>paint commands</td></tr>" >> $FULLINDEX
 echo "<tr><td>&nbsp;&nbsp;ps.* </td><td>postscript commands</td></tr>" >> $FULLINDEX
 echo "<tr><td>&nbsp;&nbsp;r.*  </td><td>raster commands</td></tr>" >> $FULLINDEX
 echo "<tr><td>&nbsp;&nbsp;r3.* </td><td>raster3D commands</td></tr>" >> $FULLINDEX
 echo "<tr><td>&nbsp;&nbsp;v.*  </td><td>vector commands</td></tr>" >> $FULLINDEX
-echo "<tr><td>&nbsp;&nbsp;nviz </td><td>visualization command</td></tr>" >> $FULLINDEX
+echo "<tr><td>&nbsp;&nbsp;<a href=\"gis.m.html\">gis.m</a> </td><td>GUI frontend to GIS menus and display</td></tr>" >> $FULLINDEX
+echo "<tr><td>&nbsp;&nbsp;<a href=\"nviz.html\">nviz</a> </td><td>visualization suite</td></tr>" >> $FULLINDEX
+echo "<tr><td>&nbsp;&nbsp;<a href=\"xganim.html\">xganim</a> </td><td>raster map slideshow</td></tr>" >> $FULLINDEX
 echo "</table>" >> $FULLINDEX
 echo "<p>" >> $FULLINDEX
 
@@ -240,7 +244,7 @@ do
 done
 
 #extra stuff for 'nviz' and 'xganim' and GUIs:
-echo "<li><a href=\"d.m.html\">d.m</a> and <a href=\"gis.m.html\">gis.m</a> GIS managers</li>" >> $FILENAME
+echo "<li><a href=\"gis.m.html\">gis.m</a> and <a href=\"d.m.html\">d.m</a> GIS managers</li>" >> $FILENAME
 echo "<li><a href=\"nviz.html\">nviz</a> visualization and animation tool</li>" >> $FILENAME
 echo "<li><a href=\"xganim.html\">xganim</a> tool  for animating a raster map series</li>" >> $FILENAME
 	      
@@ -248,7 +252,9 @@ echo "</ul>" >> $FILENAME
 echo "<p>"   >> $FILENAME
 
 #insert a special comment so that GEM will know where to merge docs of extensions
-echo -e "\n<!-- GEM Extensions StartHTML. Do not delete or change this comment! -->\n" >> $FILENAME
+echo  >> $FILENAME
+echo "<!-- GEM Extensions StartHTML. Do not delete or change this comment! -->" >> $FILENAME
+echo  >> $FILENAME
 
 
 #############

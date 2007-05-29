@@ -15,6 +15,7 @@
 
 #%Module
 #%  description: Blends color components of two raster maps by a given ratio
+#%  keywords: raster
 #%End
 #%option
 #% key: first

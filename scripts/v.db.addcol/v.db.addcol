@@ -4,7 +4,8 @@
 #
 # MODULE:       v.db.addcolumn
 # AUTHOR(S):   	Moritz Lennert 
-# PURPOSE:      interface to db.execute to add a column to the attribute table connected to a given vector map
+# PURPOSE:      interface to db.execute to add a column to the attribute table
+#               connected to a given vector map
 # COPYRIGHT:    (C) 2005 by the GRASS Development Team
 #
 #               This program is free software under the GNU General Public
@@ -15,14 +16,16 @@
 
 
 #%Module
-#%  description: adds one or more columns to the attribute table connected to a given vector map
+#%  description: Adds one or more columns to the attribute table connected to a given vector map
+#%  keywords: vector, database, attribute table
 #%End
 
 #%option
 #% key: map
 #% type: string
 #% gisprompt: old,vector,vector
-#% description: vector map for which to edit attribute table
+#% key_desc : name
+#% description: Vector map for which to edit attribute table
 #% required : yes
 #%end
 
@@ -37,7 +40,7 @@
 #%option
 #% key: columns
 #% type: string
-#% description: name and type of the new column(s) (types depend on database backend, but all support VARCHAR, INT, DOUBLE PRECISION/REAL and DATE)
+#% description: Name and type of the new column(s) (types depend on database backend, but all support VARCHAR, INT, DOUBLE PRECISION/REAL and DATE)
 #% required : yes
 #%end
 
@@ -55,23 +58,31 @@ PROG=`basename $0`
 
 #### check if we have awk
 if [ ! -x "`which awk`" ] ; then
-    echo "$PROG: awk required, please install awk or gawk first" 2>&1
+    echo "$PROG: awk required, please install awk or gawk first" 1>&2
     exit 1
 fi
 
 # setting environment, so that awk works properly in all languages
 unset LC_ALL
-export LC_NUMERIC=C
+LC_NUMERIC=C
+export LC_NUMERIC
 
-
-table=`v.db.connect $GIS_OPT_MAP -g | grep -w $GIS_OPT_LAYER | awk '{print $2}'`
-database=`v.db.connect $GIS_OPT_MAP -g | grep -w $GIS_OPT_LAYER | awk '{print $4}'`
-driver=`v.db.connect $GIS_OPT_MAP -g | grep -w $GIS_OPT_LAYER | awk '{print $5}'`
-
-if [ -z "$table" ] ; then
-   echo -e "\nERROR: There is no table connected to this map !\nRun v.db.connect or v.db.addtable first.\n"
+# does map exist?
+eval `g.findfile element=vector file=$GIS_OPT_MAP`
+if [ ! "$file" ] ; then
+   echo "Vector map '$GIS_OPT_MAP' not found in mapset search path"
    exit 1
 fi
+
+table=`v.db.connect $GIS_OPT_MAP -g | grep -w $GIS_OPT_LAYER | awk '{print $2}'`
+if [ -z "$table" ] ; then
+   echo 'ERROR: There is no table connected to this map!' 1>&2
+   echo "Run v.db.connect or v.db.addtable first." 1>&2
+   exit 1
+fi
+
+database=`v.db.connect $GIS_OPT_MAP -g | grep -w $GIS_OPT_LAYER | awk '{print $4}'`
+driver=`v.db.connect $GIS_OPT_MAP -g | grep -w $GIS_OPT_LAYER | awk '{print $5}'`
 
 colnum=`echo $GIS_OPT_COLUMNS | awk -F, '{print NF}'`
 
@@ -81,16 +92,16 @@ while [ "$n" -le "$colnum" ]
     col=`echo $GIS_OPT_COLUMNS | cut -d',' -f$n`
     
     if [ -z "$col" ] ; then
-      echo -e "\nERROR: There is an empty column !\nDid you leave a trailing comma?\n"
+      echo 'ERROR: There is an empty column! Did you leave a trailing comma?' 1>&2
       exit 1
     fi
     
     echo "ALTER TABLE $table ADD COLUMN $col" | db.execute database=$database driver=$driver
     if [ $? -eq 1 ] ; then
-      echo "ERROR: Cannot continue (problem adding column)."
+      echo "ERROR: Cannot continue (problem adding column)." 1>&2
       exit 1
     fi
-    let "n += 1"
+    n=`expr $n + 1` 
   done
 
 exit 0

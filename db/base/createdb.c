@@ -57,6 +57,7 @@ parse_command_line(int argc, char *argv[])
 
     /* Set description */
     module              = G_define_module();
+    module->keywords = _("database, SQL");
     module->description = ""\
     "Create an empty database.";
 

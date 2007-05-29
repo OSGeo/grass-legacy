@@ -74,7 +74,7 @@ proc DmChart::show_columns { id } {
 	global bgcolor
 	set mapname $opt($id,map)
 	set layernum $opt($id,layer)
-	exec xterm -bg $bgcolor -title "$mapname columns" \
+	exec $env(GISBASE)/etc/grass-xterm-wrapper -bg $bgcolor -title "$mapname columns" \
 		-geometry 40x25-10+30 -sb -hold -e v.info -c map=$mapname \
 		layer=$layernum &		
 }

@@ -11,12 +11,13 @@
  *       0,0 is lower left; 100,100 is upper right
  */
 
+#include <string.h>
+#include <stdlib.h>
 #include <grass/gis.h>
 #include <grass/display.h>
 #include <grass/D.h>
-#include <string.h>
-#include <stdlib.h>
 #include <grass/raster.h>
+#include <grass/glocale.h>
 
 
 int 
@@ -43,7 +44,8 @@ main (int argc, char *argv[])
     G_gisinit(argv[0]);
 
 	module = G_define_module();
-	module->description =
+	module->keywords = _("display");
+    module->description =
 		"Manages display frames on the user's graphics monitor.";
 
     flag.create = G_define_flag();

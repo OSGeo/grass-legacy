@@ -21,25 +21,25 @@
 #include <stdlib.h>
 #include <string.h>
 #include <unistd.h>
+#include <grass/config.h>
 #include <grass/gis.h>
 #include <grass/raster.h>
 #include <grass/display.h>
-#include <grass/config.h>
+#include <grass/glocale.h>
+
 #include "r.le.trace.h"
 #include "local_proto.h"
+
 struct CHOICE 		*choice;
 int   			finput;
 int   			total_patches=0;
 PATCH 			*patch_list = NULLPTR;
 FILE  			*fp;
 
-
-
 				/* MAIN PROGRAM */
-
 int main (int argc, char *argv[])
-
 {
+  struct GModule *module;
   struct Cell_head  window;
   int               bot, right, t0, b0, l0, r0, clear=0;
   double 	    Rw_l, Rscr_wl;
@@ -48,15 +48,21 @@ int main (int argc, char *argv[])
 
   setbuf (stdout, NULL);	/* unbuffered */
   setbuf (stderr, NULL);
+
   G_gisinit(argv[0]); 
 
-
   choice = (struct CHOICE *) G_calloc(1, sizeof(struct CHOICE));
+
+    module = G_define_module();
+    module->keywords = _("raster");
+    module->description =
+      _("Display the boundary of each r.le patch and show how the boundary "
+	"is traced, display the attribute, size, perimeter, and shape "
+	"indices for each patch, and save the data in an output file.");
 
   user_input(argc,argv) ;
 
   				/* setup the current window for display */
-
   G_system(" d.colormode float");
   G_system(" d.frame -e");
   Rw_l = (double)G_window_cols()/G_window_rows();
@@ -94,6 +100,8 @@ int main (int argc, char *argv[])
      set_map(choice->fn, window, t0, bot, l0, right, NULL);
 
   G_free (choice) ;
+
+  return (EXIT_SUCCESS);
 }
 
 
@@ -1290,14 +1298,14 @@ i,j,i+1,j-1,*(*(buf + i + 1) + j - 1),*(*(patchmap + i + 1) + j - 1),
 
         twist2 = (int ***)G_calloc(trows + 3, sizeof(int **));
         for (i = 0; i < trows + 3; i++) {
-           twist2[i] = (int **)G_calloc(tcols + 3, sizeof(int));
+           twist2[i] = (int **)G_calloc(tcols + 3, sizeof(int*));
            for (j = 0; j < tcols + 3; j++)
               twist2[i][j] = (int *)G_calloc(7, sizeof(int));
         }
 
         twistP = (float ***)G_calloc(trows + 3, sizeof(float **));
         for (i = 0; i < trows + 3; i++) {
-          twistP[i] = (float **)G_calloc(tcols + 3, sizeof(float));
+          twistP[i] = (float **)G_calloc(tcols + 3, sizeof(float*));
           for (j = 0; j < tcols + 3; j++)
              twistP[i][j] = (float *)G_calloc(7, sizeof(float));
         }
@@ -1636,8 +1644,3 @@ void clockwise (int *i, int *j)
      *i += *j;
   return;
 }
-
-
-
-
-

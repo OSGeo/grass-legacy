@@ -17,6 +17,7 @@ int main(int argc, char *argv[])
     G_no_gisinit();
 
     module = G_define_module();
+    module->keywords = _("general");
     module->description =
 		_("Outputs and modifies the user's current GRASS variable settings.");
 

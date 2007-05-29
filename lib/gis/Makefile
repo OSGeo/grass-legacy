@@ -22,9 +22,9 @@ default: lib \
 	$(ETC)/state83 \
 	$(ETC)/gui.tcl
 
-$(FMODE_OBJ):
+$(FMODE_OBJ): fmode.dat
 	@test -d $(OBJDIR) || mkdir $(OBJDIR)
-	echo -e "#include <stdlib.h>\n#include <fcntl.h>\n#undef _fmode\nint _fmode = _O_BINARY;" > $(OBJDIR)/fmode.c
+	cat fmode.dat > $(OBJDIR)/fmode.c
 	$(CC) $(CFLAGS) $(INC) -o $(FMODE_OBJ) -c $(OBJDIR)/fmode.c
 
 $(ETC)/ellipse.table: ellipse.table

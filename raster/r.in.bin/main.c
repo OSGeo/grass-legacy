@@ -108,7 +108,8 @@ int main (int argc, char *argv[])
 	
 	/* Set description */
 	module              = G_define_module();
-	module->description =
+	module->keywords = _("raster");
+    module->description =
 	_("Import a binary raster file into a GRASS raster map layer.");
 
 	flag.s = G_define_flag();
@@ -488,12 +489,18 @@ int main (int argc, char *argv[])
 				/* Import 2 byte Short */
 				if (swap)
 					SwabShort(&x_s[col]);
-				cell[col] = (CELL) x_s[col] ;
+				if (sflag)
+					cell[col] = (CELL) (signed short) x_s[col] ;
+				else
+					cell[col] = (CELL) (unsigned short) x_s[col] ;
 			} else {
 				/* Import 4 byte Int */
 				if (swap)
 					SwabLong(&x_i[col]);
-				cell[col] = (CELL) x_i[col] ;
+				if (sflag)
+					cell[col] = (CELL) (signed int) x_i[col] ;
+				else
+					cell[col] = (CELL) (unsigned int) x_i[col] ;
 			}
 			if(parm.anull->answer) {
 				if(flag.f->answer) {

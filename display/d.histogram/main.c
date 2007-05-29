@@ -66,7 +66,8 @@ int main (int argc, char **argv)
 	G_gisinit(argv[0]) ;
 
 	module = G_define_module();
-	module->description =
+	module->keywords = _("display");
+    module->description =
 		_("Displays a histogram in the form of a pie or bar chart "
 		"for a user-specified raster file.");
 
@@ -175,8 +176,7 @@ int main (int argc, char **argv)
 	if (R_open_driver() != 0)
 	    G_fatal_error(_("No graphics device selected"));
 
-	Dclearscreen();
-	D_setup(0);
+	D_setup(1); /* 1 = clear frame */
 	D_set_colors(&pcolors);
 
 	/* draw a title for */

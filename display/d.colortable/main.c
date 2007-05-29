@@ -10,6 +10,7 @@
 #include <grass/gis.h>
 #include <grass/D.h>
 #include <grass/raster.h>
+#include <grass/glocale.h>
 
 int main(int argc, char **argv)
 {
@@ -47,6 +48,7 @@ int main(int argc, char **argv)
 	G_gisinit(argv[0]) ;
 
 	module = G_define_module();
+	module->keywords = _("display, setup");
 	module->description =
 		"To display the color table associated with a raster "
 		"map layer.";

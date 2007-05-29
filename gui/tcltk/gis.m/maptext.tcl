@@ -19,7 +19,6 @@ proc GmCtext::create { tree parent } {
     variable count
 	variable dup
     global iconpath
-    global frm
     global env
 
     set node "ctext:$count"
@@ -31,7 +30,9 @@ proc GmCtext::create { tree parent } {
 
     image create photo ctico -file "$iconpath/gui-maptext.gif"
     set ico [label $frm.ico -image ctico -bd 1 -relief raised]
-    
+
+    bind $ico <ButtonPress-1> "GmTree::selectn $tree $node"
+
     pack $check $ico -side left
     
 	#insert new layer
@@ -50,7 +51,7 @@ proc GmCtext::create { tree parent } {
     set opt($count,text) "" 
     set opt($count,xcoord) 100
     set opt($count,ycoord) 100
-    set opt($count,font) "times 12" 
+    set opt($count,font) default
     set opt($count,fill) \#000000 
     set opt($count,width)  100
     set opt($count,anchor) "center_left" 
@@ -61,12 +62,11 @@ proc GmCtext::create { tree parent } {
     return $node
 }
 
-proc GmCtext::select_font { id } {
+proc GmCtext::select_font { id frm } {
 	global mon
-	global frm
 	variable opt
     
-    set fon [SelectFont $frm.font -type dialog -sampletext 1 -title "Select font"]
+    set fon [SelectFont $frm.fontset -type dialog -sampletext 1 -title "Select font"]
 	if { $fon != "" } {set opt($id,font) $fon}
 }
 
@@ -138,7 +138,7 @@ proc GmCtext::options { id frm } {
     Button $row.b -image [image create photo -file "$iconpath/gui-font.gif"] \
         -highlightthickness 0 -takefocus 0 -relief raised -borderwidth 1  \
         -helptext [G_msg "select font for text"] \
-	    -command "GmCtext::select_font $id"
+	    -command "GmCtext::select_font $id $frm"
     Entry $row.c -width 15 -text "$opt($id,font)" \
 	    -textvariable GmCtext::opt($id,font) 
     Label $row.d -text [G_msg "  color"] 
@@ -165,11 +165,12 @@ proc GmCtext::display { node } {
     variable tree
     variable can
     global mon
-    global canvas_w
-    global canvas_h
 
     set tree($mon) $GmTree::tree($mon)
     set id [GmTree::node_id $node]
+    set canvas_w($mon) $MapCanvas::canvas_w($mon)
+    set canvas_h($mon) $MapCanvas::canvas_h($mon)
+    
 
     set can($mon) $MapCanvas::can($mon)
     
@@ -227,7 +228,6 @@ proc GmCtext::duplicate { tree parent node id } {
     variable count
 	variable dup
     global iconpath
-    global frm
 
     set node "ctext:$count"
 
@@ -238,7 +238,9 @@ proc GmCtext::duplicate { tree parent node id } {
 
     image create photo ctico -file "$iconpath/gui-maptext.gif"
     set ico [label $frm.ico -image ctico -bd 1 -relief raised]
-    
+
+    bind $ico <ButtonPress-1> "GmTree::selectn $tree $node"
+
     pack $check $ico -side left
     
 	#insert new layer

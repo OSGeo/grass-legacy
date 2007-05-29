@@ -1,9 +1,13 @@
 <h2>DESCRIPTION</h2>
 
-<em>v.clean</em> allows the user to automatically change (repair) vector files.
-The user does <em>not</em> have to run  <em><a HREF="v.build.html">v.build</a></em> afterwards.
+<em>v.clean</em> allows the user to automatically fix topology of vector files.
 
 <h2>NOTES</h2>
+
+The user does <b>not</b> have to run <em><a HREF="v.build.html">v.build</a></em>
+on the <em>output</em> vector, unless the <em>-b</em> flag was used. The
+<em>-b</em> flag affects <b>only</b> the <em>output</em> vector - topology is
+always built for <em>error</em> vector.
 
 <h3>Removing small angles between lines at nodes</h3>
 
@@ -24,7 +28,7 @@ remove the bridge from the map:
     |            P|  P: polygon |            P|   |            P|
     |    +---+    |  I: island  |    +---+    |   |    +---+    |
     |    | I |    |  B: bridge  |    | I |    |   |    | I |    |
-    |    |   |    |  :  line    |    |   |    |   |    |   |    |
+    |    |   |    |  L: line    |    |   |    |   |    |   |    |
     |    +-+-+    |             |    +---+    |   |    +-.-+    |
     |      |      |             |             |   |      .      |
     |      | B    |             |             |   |      . L    |
@@ -42,10 +46,10 @@ v.clean input=testmap output=cleanmap tool=snap thresh=1
 
 <h3>Cleaning OGR imported data (Simple Feature data)</h3>
 
-The import of areas with <a HREF="v.in.ogr.html">v.in.ogr</a> requires a subsequent run of
-<a HREF="v.clean.html">v.clean</a> to update the map to a topologically
-valid structure (removal of duplicate collinear lines etc). The tools
-used for that are 'rmdupl' and 'bpol':
+The import of areas with <em><a HREF="v.in.ogr.html">v.in.ogr</a></em>
+requires a subsequent run of <em>v.clean</em> to update the map to a
+topologically valid structure (removal of duplicate collinear lines etc). The
+tools used for that are 'rmdupl' and 'bpol':
 <div class="code"><pre>
 v.clean input=areamap output=areamap_clean tool=rmdupl,bpol 
 </pre></div>

@@ -29,7 +29,8 @@ int main (int argc, char **argv)
 	G_gisinit(argv[0]) ;
 
 	module = G_define_module();
-	module->description =
+	module->keywords = _("display");
+    module->description =
 		_("Program for generating and displaying simple graphics on the "
 		"display monitor.");
 
@@ -69,6 +70,10 @@ int main (int argc, char **argv)
 	    infile = stdin;
 
 
+	/* open graphics window */
+	if (R_open_driver() != 0)
+	    G_fatal_error(_("No graphics device selected"));
+
 	/* Parse and select color */
 	if (opt2->answer != NULL) {
 	    color = G_str_to_color(opt2->answer, &R, &G, &B);
@@ -86,10 +91,6 @@ int main (int argc, char **argv)
 
 	if(mapcoords->answer) mapunits = TRUE;
 	else mapunits = FALSE;
-
-	/* open graphics window */
-	if (R_open_driver() != 0)
-	    G_fatal_error(_("No graphics device selected"));
 
 	if (D_get_cur_wind(window_name))
 	    G_fatal_error(_("No current window"));

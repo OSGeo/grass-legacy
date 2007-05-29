@@ -216,7 +216,7 @@ void df_patch  (PATCH *patch_list)
 
   type_dens = (int *)G_calloc(25, sizeof(int));
   for (i = 0; i < 25; i++)
-     type_dens[i] == 0;
+     type_dens[i] = 0;
 
 			/* for each patch on the patch list */
 
@@ -420,10 +420,12 @@ void save_att (double w_att, double w_att2, double t_size, double t_size2, doubl
 			/* write a8 = eff. mesh no. */
 
   if (choice->att[8])
-     if (t_size2 > 0.0)
+  {
+     if (t_size2 > 0.0) 
         fprintf(a8, "      %11.3f\n", (t_size*t_size)/t_size2);
-     else
+     else 
         fprintf(a8, "      %11.3f\n", t_size2);
+  }	
 
   return;
 }
@@ -776,8 +778,6 @@ void save_size (double sum2, double msize, double *msize1, double *sum22, int *d
 {
   register int	i, j;
   double    tmp, stdv;
-  FILE   	*fp;
-
 
 /* variables:
      IN:
@@ -1047,7 +1047,6 @@ void save_shape (double sq1, double sq2, double sq3, double *sqr11, double *sqr2
 {
   register int	i, j;
   double    tmp, stdv;
-  FILE   	*fp;
 
 /* variables:
      IN:

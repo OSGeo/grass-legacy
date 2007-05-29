@@ -20,6 +20,7 @@
 #include <grass/gis.h>
 #include <grass/Vect.h>
 #include <grass/dbmi.h>
+#include <grass/glocale.h>
 
 /* costs between 2 terminals */
 typedef struct {
@@ -315,6 +316,7 @@ int main(int argc, char **argv)
     G_gisinit (argv[0]) ;
 
     module = G_define_module();
+    module->keywords = _("vector, networking");
     module->description = "Create Steiner tree for the network and given terminals. "
 	    "Note that 'Minimum Steiner Tree' problem is NP-hard "
 	    "and heuristic algorithm is used in this module so the the result may be sub optimal.";
@@ -422,7 +424,7 @@ int main(int argc, char **argv)
     } 
     fprintf ( stdout, "Number of Steiner points set to %d\n", nsp );
     
-    testnode = (int *) G_malloc ( (nnodes + 1) * sizeof(int *) );
+    testnode = (int *) G_malloc ( (nnodes + 1) * sizeof(int) );
     for ( i = 1; i <= nnodes; i++) 
 	testnode[i] = 1;
     
@@ -574,7 +576,7 @@ int main(int argc, char **argv)
     Vect_close(&Map);
     Vect_close(&Out);
 
-    exit(0);
+    exit(EXIT_SUCCESS);
 }
 
 int cmp ( const void *pa, const void *pb)

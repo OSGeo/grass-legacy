@@ -18,6 +18,10 @@
 *				                           *
 ************************************************************/
 
+#ifndef __PATCH_H__
+#define __PATCH_H__
+
+
 #include <grass/config.h>
 #include <stdio.h>
 #include <sys/types.h>
@@ -163,3 +167,4 @@ void    save_shape();
 void    fit();
 
 
+#endif /* __PATCH_H__ */

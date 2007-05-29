@@ -43,7 +43,8 @@
 #########################
 
 #%Module
-#% description: Import SRTM HGT files into GRASS
+#%  description: Import SRTM HGT files into GRASS
+#%  keywords: raster, import
 #%End
 #%option
 #% key: input
@@ -98,7 +99,8 @@ fi
 
 # setting environment, so that awk works properly in all languages
 unset LC_ALL
-export LC_NUMERIC=C
+LC_NUMERIC=C
+export LC_NUMERIC
 
 eval `g.gisenv`
 : ${GISBASE?} ${GISDBASE?} ${LOCATION_NAME?} ${MAPSET?}
@@ -191,6 +193,7 @@ NBITS 16
 BANDROWBYTES 2402
 TOTALROWBYTES 2402
 BANDGAPBYTES 0
+PIXELTYPE SIGNEDINT
 NODATA -32768
 ULXMAP $ULXMAP
 ULYMAP $ULYMAP
@@ -207,6 +210,7 @@ NBITS 16
 BANDROWBYTES 7202
 TOTALROWBYTES 7202
 BANDGAPBYTES 0
+PIXELTYPE SIGNEDINT
 NODATA -32768
 ULXMAP $ULXMAP
 ULYMAP $ULYMAP

@@ -2,6 +2,7 @@
 #include <string.h>
 #include <stdlib.h>
 #include <grass/gis.h>
+#include <grass/glocale.h>
 
 int main(int   argc, char *argv[])
 {
@@ -18,8 +19,9 @@ int main(int   argc, char *argv[])
 
     G_gisinit (argv[0]);
 
-	module = G_define_module();
-	module->description =
+    module = G_define_module();
+    module->keywords = _("general");
+    module->description =
 		"Prompts the user for the names of GRASS data base files.";
 
     /* Define the different options */

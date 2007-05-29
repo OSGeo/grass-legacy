@@ -92,7 +92,7 @@ htmldesc = \
 	GISBASE=$(GISBASE) \
 	PATH=$(GISBASE)/bin:$$PATH \
 	$(LD_LIBRARY_PATH_VAR)="$(GISBASE)/lib:$($(LD_LIBRARY_PATH_VAR))" \
-	$(1) --html-description | grep -v '</body>\|</html>' > $(PGM).tmp.html ; true
+	LC_ALL=C $(1) --html-description | grep -v '</body>\|</html>' > $(PGM).tmp.html ; true
 
 # html rules for cmd commands
 htmlcmd: htmlcmd1 htmlgen

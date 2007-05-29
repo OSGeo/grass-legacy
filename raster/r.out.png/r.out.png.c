@@ -1,6 +1,4 @@
 /*
- * $Id$
- *
  ****************************************************************************
  *
  * MODULE:       r.out.png
@@ -39,6 +37,7 @@
 #endif /* _MYINCLUDE_H */
 
 #include <grass/gis.h>
+#include <grass/glocale.h>
 
 #define DEF_RED 255
 #define DEF_GRN 255
@@ -131,6 +130,7 @@ int main(int argc, char *argv[])
      */
 
     module = G_define_module();
+    module->keywords = _("raster");
     module->description =
 	"Export GRASS raster as non-georeferenced PNG image format.";
 

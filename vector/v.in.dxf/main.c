@@ -26,6 +26,8 @@
 
 #define _MAIN_C_
 #include <stdlib.h>
+#include <grass/gis.h>
+#include <grass/glocale.h>
 #include "global.h"
 
 int main(int argc, char *argv[])
@@ -54,6 +56,7 @@ int main(int argc, char *argv[])
     G_gisinit(argv[0]);
 
     module = G_define_module();
+    module->keywords = _("vector");
     module->description =
 	_("Converts files in DXF format to GRASS vector file format.");
 

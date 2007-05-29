@@ -1,5 +1,5 @@
 /*-
- * s.qcount - GRASS program to sample a raster file at site locations.
+ * from s.qcount - GRASS program to sample a raster file at site locations.
  * Copyright (C) 1993-1995. James Darrell McCauley.
  *
  * Author: James Darrell McCauley darrell@mccauley-usa.com
@@ -37,6 +37,7 @@
 #include <math.h>
 #include <grass/gis.h>
 #include <grass/Vect.h>
+#include <grass/glocale.h>
 #include "quaddefs.h"
 
 int main ( int argc, char **argv)
@@ -63,6 +64,7 @@ int main ( int argc, char **argv)
   G_gisinit (argv[0]);
 
   module = G_define_module();
+  module->keywords = _("vector, statistics");
   module->description = "indices for quadrat counts of sites lists";
                   
   parm.input = G_define_option ();
