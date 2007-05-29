@@ -164,11 +164,11 @@ int main(int argc, char **argv)
 
     flag.w = G_define_flag();
     flag.w->key = 'w';
-    flag.w->description = _("Keep existing color table");
+    flag.w->description = _("Only write new color table if one doesn't already exist");
 
     flag.l = G_define_flag();
     flag.l->key = 'l';
-    flag.l->description = _("List rules");
+    flag.l->description = _("List available rules then exit");
 
     flag.g = G_define_flag();
     flag.g->key = 'g';  
