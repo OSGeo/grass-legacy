@@ -274,7 +274,6 @@ class ProfileFrame(wx.Frame):
 
         self.datalist1 = self.CreateDatalist(self.rast1, self.coordstr)
         self.plegend1 = ' Profile of %s' % self.rast1
-        print 'legend1=',self.plegend1
 
         # set default title and legend text
         self.ptitle = 'Profile of %s' % self.rast1
