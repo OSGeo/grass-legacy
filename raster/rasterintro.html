@@ -136,6 +136,20 @@ Hydrologic simulation model are available as
 <a href="r.sim.water.html">r.sim.water</a>, and
 <a href="r.topmodel.html">r.topmodel</a>.
 
+<h3>Raster format</h3>
+
+Raster data can be stored in GRASS as a 2D integer grid, 2D floating
+point grid (single or double precision), or as a 3D floating point
+grid (single or double precision). The internal raster format is
+architecture independent and portable between 32bit and 64bit
+machines.  Internally, the integer format is called CELL, single
+precision floating point is called FCELL, double precision floating
+point is DCELL, and 3D raster is called GRID3D. The choice of the
+integer or floating point data depends on the application.
+<p>
+
+GRASS distinguishes NULL and zero. When working with NULL data, it is
+important to know that operations on NULL cells lead to NULL cells.
 
 <h3>See also</h3>
 
