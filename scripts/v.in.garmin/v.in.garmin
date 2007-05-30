@@ -25,7 +25,6 @@
 #             ftp://www.mayko.com/pub/gpstrans
 #      OR
 #      - garmin-utils:  http://www.snafu.org
-#                       http://pkgsrc.se/geography/garmin-utils
 #        At the time of writing, garmin-utils is at version 2.5.
 #
 #      -  unix tools: grep, cat, tac, cut, paste, awk/nawk or gawk, sed
@@ -105,23 +104,23 @@ PROG=`basename $0`
 if [ $GIS_FLAG_U -eq 0 ] ; then
     #### check for gpstrans
     if [ ! -x "`which gpstrans`" ] ; then
-	g.message -e "gpstrans program not found, install it first"
-	g.message -e "http://gpstrans.sourceforge.net"
+	g.message -e "gpstrans program not found, install it first\
+	  http://gpstrans.sourceforge.net"
 	exit 1
     fi
 else
     #### check for gardump from garmin-utils
     if [ ! -x "`which gardump`" ] ; then
-	g.message -e "gardump program not found (from garmin-utils), install it first"
-	g.message -e "http://www.snafu.org"
+	g.message -e "gardump program not found (from garmin-utils), install it first\
+	  http://www.snafu.org"
 	exit 1
     fi
 fi
 
 #### check for cs2cs
 if [ ! -x "`which cs2cs`" ] ; then
-    g.message -e "cs2cs program not found, install it first"
-    g.message -e " http://proj.maptools.org"
+    g.message -e "cs2cs program not found, install it first\
+      http://proj.maptools.org"
     exit 1
 fi
 
@@ -475,7 +474,7 @@ else # CREATE_LINES
 	    cat "${TMP}.gpst" | sed -e '1d' | grep '^R' -A 1 | grep '^W' | cut -f2 > "${TMP}.route_start"
 	    paste "${TMP}.route_ids" "${TMP}.route_start" > "${TMP}.route_atts"
 	    ATTR_FILE="${TMP}.route_atts"
-	    ATTR_COLS='cat int, route_id INT, name VARCHAR(20), start_wpt VARCHAR(10)'
+	    ATTR_COLS='cat INT, route_id INT, name VARCHAR(20), start_wpt VARCHAR(10)'
 
 	elif [ $TRK -eq 1 ] ; then
 	    # add vertex counts
