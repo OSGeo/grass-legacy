@@ -1,6 +1,8 @@
 <h2>DESCRIPTION</h2>
+
 For basic information about Grass <em>mapset</em>, <em>location</em>
 and <em>data base</em> refer to <a HREF="helptext.html">GRASS Quickstart</a>.
+
 <p>
 A <em>mapset</em> holds a distinct set of data layers,
 each relevant to the same (or a subset of the same) geographic region,
@@ -10,17 +12,17 @@ GRASS data base, location, and mapset that are to be the
 user's <em>current data base</em>, <em>current location</em>,
 and <em>current mapset</em> for the duration of the session;
 any maps created by the user during the session
-will be stored under the <em>current mapset</em> (<kbd>$MAPSET</kbd>)
-set at the session's outset.
-
-
+will be stored under the <em>current mapset</em> set at the session's outset.
+(see <em><a href="g.mapset.html">g.mapset</a></em> [without an "s"] and
+ <em><a href="g.gisenv.html">g.gisenv</a></em> for changing the mapset
+ with a session)
 
 <p>
-
 The user can add, modify, and delete data layers that exist
 under his <em>current mapset</em>.  Although the user can
 also <em>access</em> (i.e., use) data that are stored under
-<em>other</em> mapsets in the same GRASS location, the user
+<em>other</em> mapsets in the same GRASS location using the
+<tt>mapname@mapsetname</tt> notation or mapset search path, the user
 can only make permanent changes (create or modify data)
 located in the <em>current mapset</em>.  The user's
 <em>mapset search path</em> lists the order in which other
@@ -31,11 +33,14 @@ modifying the mapset search path; this can be done using
 the <em>g.mapsets</em> command.  This program allows the
 user to use other's relevant map data without altering the
 original data layer, and without taking up disk space with
-a copy of the original map.
+a copy of the original map. The <tt>mapname@mapsetname</tt>
+notation may be used irrespective of the mapset search path,
+i.e., any map found in another mapset with sufficient
+<em><a href="g.access.html">g.access</a></em> privileges may
+be called in such a manner.
 
 
 <p>
-
 <em>g.mapsets</em> shows the user available mapsets under
 the current GRASS location, lists mapsets to which the user
 currently has access, and lists the order in which
@@ -46,7 +51,6 @@ path, or modify the order in which mapsets will be
 accessed.
 
 <p>
-
 When the user specifies the name of a data base element file
 (e.g., a particular vector map, raster map, 
 <a HREF="i.group.html">imagery</a> group file, etc.)
@@ -67,7 +71,6 @@ ensures that a new file named <em>my.soils</em> is to be a copy of
 the file <em>soils.file</em> from the mapset PERMANENT.)
 
 <p>
-
 It is common for a user to have the special mapset
 <b>PERMANENT</b> included in his mapset search path, as
 this mapset typically contains finished base maps relevant
@@ -81,35 +84,12 @@ map layers to which the user wants access.  The mapset
 <em>search path</em> variable.
 
 <p>
-
 The <em>mapset search path</em> is saved as part of the
 current mapset.  When the user works with that mapset in
 subsequent GRASS sessions, the previously saved mapset
 search path will be used (and will continue to be used
 until it is modified by the user with <em>g.mapsets</em>).
 
-<!-- unused
-<h2>OPTIONS</h2>
-
-<h3>Flags:</h3>
-
-<dl>
-<dt><b>-l</b> 
-<dd>List all available mapsets under the user's current location.
-<dt><b>-p</b> 
-<dd>Print the user's current mapset search path to standard output.
-</dl>
-
-<h3>Parameters:</h3>
-
-<dl>
-<dt><b>mapset=</b><em>name</em>[,<em>name</em>,...]
-
-<dd>Name(s) of existing GRASS mapset(s) under the current location.
-<dt><b>addmapset=</b><em>name</em>[,<em>name</em>,...]
-<dd>Name(s) of existing mapset(s) to add to search list
-</dl>
--->
 
 <h2>NOTES</h2>
 
@@ -123,12 +103,10 @@ list available mapsets, and prompt the user for a new
 mapset search path listing.
 
 <p>
-
 The <em>addmapset</em> parameter allows for extending an existing
 <em>mapset search path</em>.
 
 <p>
-
 Users can restrict others' access to their mapset files
 through use of the GRASS program
 
@@ -140,21 +118,22 @@ mapsets will remain restricted.
 
 <h2>SEE ALSO</h2>
 
-<em><a HREF="g.access.html">g.access</a></em><br>
-<em><a HREF="g.copy.html">g.copy</a></em><br>
-<em><a HREF="g.gisenv.html">g.gisenv</a></em><br>
-<em><a HREF="g.list.html">g.list</a></em>
+<em><a HREF="g.access.html">g.access</a><br>
+<a HREF="g.copy.html">g.copy</a><br>
+<a HREF="g.gisenv.html">g.gisenv</a><br>
+<a HREF="g.list.html">g.list</a><br>
+<a HREF="g.mapset.html">g.mapset</a>
+</em>
 
 <h2>AUTHOR</h2>
 
 Michael Shapiro,
 U.S.Army Construction Engineering 
 Research Laboratory
-
 <p>
-
 Greg Koerper, 
 ManTech Environmental Technology, Inc.
 
 
-<p><i>Last changed: $Date$</i>
+<p>
+<i>Last changed: $Date$</i>
