@@ -1,4 +1,18 @@
-/*  g.mapsets	Allow user to select new mapset path */
+/****************************************************************************
+ *
+ * MODULE:       g.mapsets
+ * AUTHOR(S):    Michael Shapiro (CERL), Greg Koerper (ManTech Environmental
+ *                    Technology) (original contributors), 
+ *               Markus Neteler <neteler itc.it>
+ *               Glynn Clements <glynn gclements.plus.com>
+ * PURPOSE:      Allow user to select new mapset path
+ * COPYRIGHT:    (C) 1994-2006 by the GRASS Development Team
+ *
+ *               This program is free software under the GNU General Public
+ *               License (>=v2). Read the file COPYING that comes with GRASS
+ *               for details.
+ *
+ *****************************************************************************/
 
 #define MAIN
 #include "externs.h"
@@ -25,3 +39,6 @@ main (int argc, char **argv)
 
     return 0;
 }
+
+
+

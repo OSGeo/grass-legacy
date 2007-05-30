@@ -1,6 +1,21 @@
-/*  g.mapsets   set current mapset path
+/****************************************************************************
  *
- */
+ * MODULE:       g.mapsets
+ * AUTHOR(S):    Michael Shapiro (CERL), Greg Koerper (ManTech Environmental
+ *                    Technology) (original contributors), 
+ *               Glynn Clements <glynn gclements.plus.com>
+ *               Hamish Bowman <hamish_nospam yahoo.com>, 
+ *               Markus Neteler <neteler itc.it>, 
+ *               Moritz Lennert <mlennert club.worldonline.be>
+ * PURPOSE:      set current mapset path
+ * COPYRIGHT:    (C) 1994-2007 by the GRASS Development Team
+ *
+ *               This program is free software under the GNU General Public
+ *               License (>=v2). Read the file COPYING that comes with GRASS
+ *               for details.
+ *
+ *****************************************************************************/
+
 #define MAIN
 #include <string.h>
 #include <stdlib.h>
@@ -192,3 +207,6 @@ DISPLAY:
 
     exit(EXIT_SUCCESS);
 }
+
+
+
