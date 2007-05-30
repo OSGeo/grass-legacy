@@ -1,11 +1,16 @@
-/**************************************************************
- * db.execute driver=name database=name [input=filename]
+/****************************************************************************
  *
+ * MODULE:       db.execute
+ * AUTHOR(S):    Radim Blazek <radim.blazek gmail.com> (original contributor)
+ *               Huidae Cho <grass4u gmail.com>, Glynn Clements <glynn gclements.plus.com>, Hamish Bowman <hamish_nospam yahoo.com>, Markus Neteler <neteler itc.it>, Stephan Holl
+ * PURPOSE:      process one non-select sql statement
+ * COPYRIGHT:    (C) 2002-2006 by the GRASS Development Team
  *
- *   process one non-select sql statement.
- *   errors cause an error message to be printed to stderr and exit(1)
- *   successful execution results in exit(0)
- ****************************************************************/
+ *               This program is free software under the GNU General Public
+ *               License (>=v2). Read the file COPYING that comes with GRASS
+ *               for details.
+ *
+ *****************************************************************************/
 
 #include <stdlib.h>
 #include <string.h>
@@ -169,3 +174,4 @@ int stmt_is_empty (dbString *stmt)
 
     return (sscanf (db_get_string(stmt), "%1s", dummy) != 1);
 }
+

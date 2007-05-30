@@ -1,20 +1,17 @@
-/*
- **************************************************************
- * db.select -cdh driver=name database=name \
- *	      [fs=|] [vs=] [nv=null-indicator] [input=filename]
+/****************************************************************************
  *
+ * MODULE:       db.select
+ * AUTHOR(S):    Radim Blazek <radim.blazek gmail.com> (original contributor)
+ *               Huidae Cho <grass4u gmail.com>, Glynn Clements <glynn gclements.plus.com>, Jachym Cepicky <jachym les-ejk.cz>, Markus Neteler <neteler itc.it>, Stephan Holl
+ * PURPOSE:      process one sql select statement
+ * COPYRIGHT:    (C) 2002-2007 by the GRASS Development Team
  *
- *   process one sql select statement.
- *   errors cause an error message to be printed to stderr and exit(1)
- *   successful execution results in exit(0)
+ *               This program is free software under the GNU General Public
+ *               License (>=v2). Read the file COPYING that comes with GRASS
+ *               for details.
  *
- *   fs = output field separator
- *   vs = output vertical record separator
- *   nv = value to represent null values
- *   -c = output the column names
- *   -d = describe query only, don't run it
- *   -h = use horizontal output format instead of vertical
- ****************************************************************/
+ *****************************************************************************/
+
 #include <stdlib.h>
 #include <grass/gis.h>
 #include <grass/dbmi.h>
@@ -323,3 +320,4 @@ print_column_definition(dbColumn *column)
     if (parms.vs)
 	fprintf (stdout, "%s\n", parms.vs);
 }
+
