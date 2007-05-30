@@ -1,10 +1,12 @@
 /****************************************************************************
  *
- * MODULE:       seg - uses the GRASS segmentation library
+ * MODULE:       r.watershed/seg - uses the GRASS segmentation library
  * AUTHOR(S):    Charles Ehlschlaeger, CERL (original contributor)
- *               Markus Neteler <neteler itc.it>, Roberto Flor <flor itc.it>,
- *               Brad Douglas <rez touchofmadness.com>, Hamish Bowman <hamish_nospam yahoo.com>
- * PURPOSE:      Watershed determination
+ *               Markus Neteler <neteler itc.it>, 
+ *               Roberto Flor <flor itc.it>,
+ *               Brad Douglas <rez touchofmadness.com>, 
+ *               Hamish Bowman <hamish_nospam yahoo.com>
+ * PURPOSE:      Watershed determination using the GRASS segmentation lib
  * COPYRIGHT:    (C) 1999-2006 by the GRASS Development Team
  *
  *               This program is free software under the GNU General Public
