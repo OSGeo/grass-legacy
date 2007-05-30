@@ -325,7 +325,7 @@ listLayers() {
 	else
 	    cat "${TMP}capabilities.txt"
 	fi
-
+	g.message message=""
 
 	if [ -e "$CAPABILITIES_FILE" ] ; then
 	    \rm -f "$CAPABILITIES_FILE" "${TMP}capabilities.txt" "$TMP"
