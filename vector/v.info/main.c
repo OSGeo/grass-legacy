@@ -35,8 +35,10 @@
    lib/vector/Vlib/level_two.c
 */
 
-int
-main (int argc, char *argv[])
+void format_double(double,char *);
+
+
+int main (int argc, char *argv[])
 {
   struct GModule *module;
   struct Option *in_opt, *fieldopt;
@@ -248,19 +250,36 @@ main (int argc, char *argv[])
       }
 
       printline ("");
-      sprintf (line, "  Projection: %s (zone %d)", Vect_get_proj_name(&Map), Vect_get_zone(&Map));
+      /* this differs from r.info in that proj info IS taken from the map here, not the location settings */
+      /* Vect_get_proj_name() and _zone() are typically unset?! */
+      if(G_projection() == PROJECTION_UTM)
+	sprintf (line, "        Projection: %s (zone %d)",
+		 Vect_get_proj_name(&Map), Vect_get_zone(&Map));
+      else
+	sprintf (line, "        Projection: %s", Vect_get_proj_name(&Map));
       printline (line);
 
       Vect_get_map_box (&Map, &box );
-      sprintf (line, "           N: %-10.3f    S: %-10.3f", box.N, box.S);
+
+      G_format_northing (box.N, tmp1, G_projection());
+      G_format_northing (box.S, tmp2, G_projection());
+      sprintf (line, "              N: %17s    S: %17s", tmp1, tmp2);
       printline (line);
-      sprintf (line, "           E: %-10.3f    W: %-10.3f", box.E, box.W);
+
+      G_format_easting (box.E, tmp1, G_projection());
+      G_format_easting (box.W, tmp2, G_projection());
+      sprintf (line, "              E: %17s    W: %17s", tmp1, tmp2);
       printline (line);
-      sprintf (line, "           B: %-6.3f        T: %-6.3f", box.B, box.T);
+
+      format_double(box.B, tmp1);
+      format_double(box.T, tmp2);
+      sprintf (line, "              B: %17s    T: %17s", tmp1, tmp2);
       printline (line);
 
       printline ("");
-      sprintf (line, "  Digitize threshold: %.5f", Vect_get_thresh(&Map));
+
+      format_double(Vect_get_thresh(&Map), tmp1);
+      sprintf (line, "  Digitization threshold: %s", tmp1);
       printline (line);
       sprintf (line, "  Comments:");
       printline (line);
@@ -276,3 +295,10 @@ main (int argc, char *argv[])
   return (EXIT_SUCCESS);
 }
 
+
+/* cloned from lib/gis/wind_format.c */
+void format_double ( double value, char *buf)
+{
+    sprintf (buf, "%.8f", value);
+    G_trim_decimal (buf);
+}
