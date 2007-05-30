@@ -103,7 +103,7 @@ int points_analyse(FILE * ascii_in, FILE * ascii, char *fs,
 	    break;		/* EOF */
 
 	if (row <= skip_lines) {
-	    G_debug(3, "skipping header row %d : %d chars", row, strlen(buf));
+	    G_debug(3, "skipping header row %d : %d chars", row, (int) strlen(buf));
 	    /* this fn is read-only, write to hist with points_to_bin() */
 	    fprintf(ascii, "%s\n", buf);
 	    len = strlen(buf) + 1;
@@ -115,12 +115,12 @@ int points_analyse(FILE * ascii_in, FILE * ascii, char *fs,
 	}
 
 	if ( (buf[0] == '#') || (buf[0] == '\0') ) {
-	    G_debug(3, "skipping comment row %d : %d chars", row, strlen(buf));
+	    G_debug(3, "skipping comment row %d : %d chars", row, (int) strlen(buf));
 	    continue;
 	}
 
 	/* no G_chop() as first/last column may be empty fs=tab value */
-	G_debug(3, "row %d : %d chars", row, strlen(buf));
+	G_debug(3, "row %d : %d chars", row, (int) strlen(buf));
 
 	/* G_tokenize() will modify the buffer, so we make a copy */
 	strcpy(buf_raw, buf);
@@ -169,7 +169,7 @@ int points_analyse(FILE * ascii_in, FILE * ascii, char *fs,
 			    }
 			}
 			else
-			    G_fatal_error(_("Unparsable longitude value: [%s]"), tokens[i]);
+			    G_fatal_error(_("Unparsable longitude value: %s"), tokens[i]);
 		    }
 
 		    if (i == ycol) {
@@ -184,7 +184,7 @@ int points_analyse(FILE * ascii_in, FILE * ascii, char *fs,
 			    }
 			}
 			else
-			    G_fatal_error(_("Unparsable latitude value: [%s]"), tokens[i]);
+			    G_fatal_error(_("Unparsable latitude value: %s"), tokens[i]);
 		    }
  		} /* if (x or y) */
 
@@ -254,7 +254,7 @@ int points_analyse(FILE * ascii_in, FILE * ascii, char *fs,
     G_free(tmp_token);
 
     if (region_flag)
-	G_message(_("Skipping %d of %d rows falling outside of current region"),
+	G_message(_("Skipping [%d] of [%d] rows falling outside of current region"),
 		  skipped, row-1);
 
     return 0;
@@ -307,7 +307,7 @@ int points_to_bin(FILE * ascii, int rowlen, struct Map_info *Map,
 
 	if (row <= skip_lines) {
 	    G_debug(4, "writing skip line %d to hist : %d chars", row,
-		    strlen(buf));
+		    (int) strlen(buf));
 	    Vect_hist_write(Map, buf);
 	    Vect_hist_write(Map, "\n");
 	    row++;

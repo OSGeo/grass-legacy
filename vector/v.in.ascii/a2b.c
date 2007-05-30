@@ -139,7 +139,7 @@ int asc_to_bin(
 	    for( i=0; i<n_cats; i++)
 	    {
 		    if ( G_getl2(buff,BUFFSIZE-1,ascii) == 0 ) {
-			G_warning (_("End of ascii file reached before end of categories.")) ;
+			G_warning (_("End of ASCII file reached before end of categories"));
 			return 0;
 		    }
 		    if (buff[0] == '\0') {

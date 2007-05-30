@@ -21,7 +21,7 @@ read_head ( FILE * dascii, struct Map_info *Map )
 	return (0);
 	
       if (!(ptr = G_index (buff, ':')))
-	G_fatal_error(_("Unexpected data in vector head.\n[%s]"), buff);
+	  G_fatal_error(_("Unexpected data in vector head:\n%s"), buff);
 
       ptr++;			/* Search for the start of text */
       while (*ptr == ' ')
@@ -51,7 +51,7 @@ read_head ( FILE * dascii, struct Map_info *Map )
 	  Vect_set_thresh ( Map, atof (ptr) );  
       else
         {
-	  G_warning(_("Unknown keyword [%s] in vector head."), buff);
+	    G_warning(_("Unknown keyword <%s> in vector head"), buff);
 	}
     }
   /* NOTREACHED */
