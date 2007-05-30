@@ -1,3 +1,19 @@
+/****************************************************************************
+ *
+ * MODULE:       d.linegraph
+ * AUTHOR(S):    Chris Rewerts, Agricultural Engineering, Purdue University (original contributor)
+ *               Markus Neteler <neteler itc.it>
+ *               Roberto Flor <flor itc.it>, Bernhard Reiter <bernhard intevation.de>, 
+ *               Huidae Cho <grass4u gmail.com>, Glynn Clements <glynn gclements.plus.com>, 
+ *               Hamish Bowman <hamish_nospam yahoo.com>
+ * PURPOSE:      
+ * COPYRIGHT:    (C) 1999-2007 by the GRASS Development Team
+ *
+ *               This program is free software under the GNU General Public
+ *               License (>=v2). Read the file COPYING that comes with GRASS
+ *               for details.
+ *
+ *****************************************************************************/
 /* Chris Rewerts
    rewerts@ecn.purdue.edu
    Agricultural Engineering, Purdue University
@@ -583,3 +599,4 @@ int death (char *gasp)
     R_close_driver ();
     G_fatal_error("%s", gasp);
 }
+
