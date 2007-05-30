@@ -1,3 +1,22 @@
+/****************************************************************************
+ *
+ * MODULE:       cmd
+ * AUTHOR(S):    CERL (original contributor)
+ *               Radim Blazek <radim.blazek gmail.com>, 
+ *               Cedric Shock <cedricgrass shockfamily.net>, 
+ *               Huidae Cho <grass4u gmail.com>, 
+ *               Glynn Clements <glynn gclements.plus.com>, 
+ *               Jachym Cepicky <jachym les-ejk.cz>, 
+ *               Markus Neteler <neteler itc.it>, 
+ *               Martin Landa <landa.martin gmail.com>
+ * PURPOSE:      lets users remove GRASS database files
+ * COPYRIGHT:    (C) 1999-2007 by the GRASS Development Team
+ *
+ *               This program is free software under the GNU General Public
+ *               License (>=v2). Read the file COPYING that comes with GRASS
+ *               for details.
+ *
+ *****************************************************************************/
 #include <stdlib.h>
 #include <string.h>
 #include <grass/glocale.h>
@@ -125,3 +144,6 @@ main (int argc, char *argv[])
     }
     exit(result);
 }
+
+
+
