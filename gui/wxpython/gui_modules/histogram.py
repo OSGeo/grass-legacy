@@ -371,7 +371,7 @@ class HistFrame(wx.Frame):
         global gmpath
         completed = ''
 
-        menuform.GUI().parseCommand('d.histogram', gmpath,
+        menuform.GUI().ParseCommand('d.histogram', gmpath,
                                     completed=(self.GetOptData, "hist", self.params),
                                     parentframe=None)
 
