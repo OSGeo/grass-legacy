@@ -281,17 +281,17 @@ calculate() {
 
 listLayers() {
 
-	CAPABILITIES_FILE=${TMP}capabilities.xml
+	CAPABILITIES_FILE="${TMP}capabilities.xml"
     
 	STRING="service=WMS&request=GetCapabilities&${GIS_OPT_WMSQUERY}";
 
 	### wget the XML and grep the lines with layer names
 	echo "List of layers for server ${GIS_OPT_MAPSERVER}:"
-	wget ${GIS_OPT_WGETOPT} --post-data=${STRING} $GIS_OPT_MAPSERVER -O $CAPABILITIES_FILE;
-	message 1 wget ${GIS_OPT_WGETOPT} --post-data=${STRING} $GIS_OPT_MAPSERVER -O $CAPABILITIES_FILE;
+	wget ${GIS_OPT_WGETOPTIONS} --post-data=${STRING} $GIS_OPT_MAPSERVER -O $CAPABILITIES_FILE;
+	message 1 wget ${GIS_OPT_WGETOPTIONS} --post-data=${STRING} $GIS_OPT_MAPSERVER -O $CAPABILITIES_FILE;
 
 	# use xml2
-	if [ -x "`which xml2`" ]; then
+	if [ -x "`which xml2`" ] ; then
 		cat $CAPABILITIES_FILE | xml2 | \
 		grep "Layer/SRS=\|Layer/Name=\|Layer/Title=\|Style/Name=\|Style/Title=\|Layer/Abstract=" | \
 		sed -e          "s/.*Layer\\/Name=/LAYER: /" | \
@@ -299,7 +299,8 @@ listLayers() {
  		sed -e         "s/.*Layer\\/Title=/  Title: /" | \
 		sed -e      "s/.*Layer\\/Abstract=/  |/" | \
 		sed -e  "s/.*Layer\\/Style\\/Name=/  STYLE: /" | \
-		sed -e "s/.*Layer\\/Style\\/Title=/    Style title: /"
+		sed -e "s/.*Layer\\/Style\\/Title=/    Style title: /" \
+		  > "${TMP}capabilities.txt"
 
 	else : # xml2 is not available
 		echo "Note: xml2 NOT avaliable"
@@ -313,11 +314,22 @@ listLayers() {
 		sed -e "s/<\/Style>//" |\
 		sed -e "s/<Title>\(.*\)<\/Title>/\t --\1 /" | \
 		sed -e "s/<\/Title>//" | \
-		sed -e "s/<\/*.*\/*\/*>//"
+		sed -e "s/<\/*.*\/*\/*>//" \
+		  > "${TMP}capabilities.txt"
 	fi
 
-	if [ -e $CAPABILITIES_FILE ]; then
-		rm -f $CAPABILITIES_FILE
+	if [ `wc -l < "${TMP}capabilities.txt"` -eq 0 ] ; then
+	    echo
+	    echo "ERROR: Parsing XML file"
+	    echo "------------------------"
+	    cat "$CAPABILITIES_FILE"
+	else
+	    cat "${TMP}capabilities.txt"
+	fi
+
+
+	if [ -e $CAPABILITIES_FILE ] ; then
+	    rm -f "$CAPABILITIES_FILE" "${TMP}capabilities.txt" "$TMP"
         fi
         exit 1;
 }
