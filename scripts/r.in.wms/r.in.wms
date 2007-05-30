@@ -426,10 +426,10 @@ addargument GDALWARP method ${GIS_OPT_METHOD}
 addargument GDALWARP s_srs ${GIS_OPT_SRS}
 
 # check for error like 'Service Exception Report'
-file "$FILES" | grep HTML > /dev/null
-if [ $? -eq 0 ] ; then
+if [ `file -b "$FILES" | grep -c "^HTML\|^XML"` -eq 1 ] ; then
   g.message "#################################"
   cat "$FILES"
+  g.message message=""
   \rm -f "${TMP}"*
   exit 1
 fi
