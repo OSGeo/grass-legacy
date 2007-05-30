@@ -18,12 +18,20 @@
 <P>
 There are two types of variables:
 <ul>
-<li><a href="#enviro">environment</a> variables,</li>
+<li><a href="#enviro">shell environment</a> variables,</li>
 <li><a href="#gisenv">GRASS gisenv</a> variables.</li>
 </ul>
 
+There are a number of shell environment variable groups:
+<ul>
+<li><a href="#png">PNG driver</a>
+<li><a href="#ps">PS driver (PostScript)</a>
+<li><a href="#dirrend">variables for direct rendering</a>
+<li><a href="#internal">variables for internal use</a>
+</ul>
+
 Any setting which needs to be modifiable by a GRASS program (e.g. MONITOR)
-has to be a GRASS variable.
+has to be a GRASS <i>gisenv</i> variable.
 
 
 <h2>GRASS-related Files</h2>
@@ -214,6 +222,8 @@ d.mon x0).
 <br>[nviz]
 <br>&nbsp; set to any value to disable the use of GLX Pixmaps
 
+
+<a name="png"></a>
 <h3>List of selected GRASS PNG driver environment variables</h3>
 <blockquote>
 [ These variables control the function of the
@@ -251,6 +261,8 @@ client disconnects, rather than waiting until you stop the monitor
 <br>&nbsp; if "TRUE", the PNG driver will initialize the image from
 the contents of $GRASS_PNGFILE
 
+
+<a name="ps"></a>
 <h3>List of selected GRASS PS driver environment variables</h3>
 <blockquote>
 [ These variables control the function of the
@@ -287,6 +299,8 @@ and no prolog or setup sections are generated.
 <p>GRASS_PS_TRAILER
 <br>&nbsp; if "FALSE", no trailer section is generated.
 
+
+<a name="dirrend"></a>
 <h3>List of selected GRASS environment variables for direct rendering</h3>
 <blockquote>
 [ In addition to those which are understood by the
@@ -310,6 +324,8 @@ or alternatively the full path to a FreeType font file.
 <br>&nbsp; the encoding to be assumed for text which is drawn using a
 freetype font; may be any encoding know to "iconv".
 
+
+<a name="internal"></a>
 <h3>List of selected internal GRASS environment variables</h3>
 <blockquote>
 [ These variables are intended <b>for internal use only</b> by the GRASS
