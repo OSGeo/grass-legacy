@@ -324,10 +324,12 @@ locally for specific commands. ]
 <p>GRASS_OVERWRITE
 <br>[all modules]
 <br>&nbsp; toggles map overwrite.
-<br>&nbsp; &nbsp; With 0 maps are protected (default), 
-<br>&nbsp; &nbsp; With 1 maps with identical names will be overwritten.
-<br>
-This variable is automatically created by g.parser so that "--o" option will
+<ul>
+<li> 0 - maps are protected (default),
+<li> 1 - maps with identical names will be overwritten.
+</ul>
+This variable is automatically created by g.parser so that the
+"<tt>--overwrite</tt>" option will
 be inherited by dependant modules as the script runs. Setting either the
 GRASS_OVERWRITE environment variable or the OVERWRITE gisenv variable detailed
 below will cause maps with identical names to be overwritten.
@@ -335,12 +337,15 @@ below will cause maps with identical names to be overwritten.
 <p>GRASS_VERBOSE
 <br>[all modules]
 <br>&nbsp; toggles verbosity level
-<br>&nbsp; &nbsp; With 0 only errors and warnings are printed
-<br>&nbsp; &nbsp; With 1 progress messages are printed
-<br>&nbsp; &nbsp; With 2 all module messages are printed
-<br>
-This variable is automatically created by g.parser so that "--v" or "--q" option will
-be inherited by dependant modules as the script runs.
+<ul>
+<li> 0 - only errors and warnings are printed
+<li> 1 - progress messages are printed (percent complete)
+<li> 2 - all module messages are printed
+<li> 3 - additional verbose messages are printed
+</ul>
+This variable is automatically created by <em><a href="g.parser.html">g.parser</a></em>
+so that the "<tt>--verbose</tt>" or "<tt>--quiet</tt>" flags will be inherited
+by dependant modules as the script runs.
 
 <P>GRASS_REGION
 <br>[libgis]
@@ -436,11 +441,13 @@ Error and warning messages encountered while using the GUI menus are not logged.
 
 
 <h3>SEE ALSO</h3>
+<em>
+<a href="g.gisenv.html">g.gisenv</a>,
+<a href="g.parser.html">g.parser</a>
+</em>
 
-<a href="g.gisenv.html">g.gisenv</a>
-
-
-<p><i>Last changed: $Date$</i>
+<p>
+<i>Last changed: $Date$</i>
 <HR>
 <P><a href=index.html>Help Index</a></p>
 </body></html>

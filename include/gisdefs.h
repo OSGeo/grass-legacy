@@ -437,6 +437,7 @@ int G__switch_env(void);
 /* error.c */
 int G_info_format ( void );
 void G_message(const char *,...) __attribute__((format(printf,1,2)));
+void G_verbose_message(const char *,...) __attribute__((format(printf,1,2)));
 int G_fatal_error(const char *,...) __attribute__((format(printf,1,2))) __attribute__((noreturn));
 int G_warning(const char *,...) __attribute__((format(printf,1,2)));
 int G_suppress_warnings(int);
