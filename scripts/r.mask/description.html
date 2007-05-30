@@ -27,8 +27,8 @@ it using "<tt>r.mask -r</tt>" or <EM><A HREF="g.remove.html">g.remove</A></EM>.
 As long as the file named MASK exists in the current mapset, most
 raster operations will only take place in the grid cells specified by
 the MASK. Grid cells in the MASK map containing <tt>0</tt> or <tt>NULL</tt>
-will be masked, cells containing other values will allow data to pass
-through unaltered.
+will replace data with NULL, cells containing other values will allow
+data to pass through unaltered.
 
 <p>
 To restore raster operations to normal (i.e., all cells of the current region),
