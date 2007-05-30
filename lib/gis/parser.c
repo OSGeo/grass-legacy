@@ -94,6 +94,7 @@ static int interactive_ok = 1 ;
 static int n_opts = 0 ;
 static int n_flags = 0 ;
 static int overwrite = 0 ;
+static int quiet = 0 ;
 
 static struct Flag first_flag;    /* First flag in a linked list      */
 static struct Flag *current_flag; /* Pointer for traversing list      */
@@ -849,6 +850,7 @@ int G_parser (int argc, char **argv)
 			    module_info.verbose = G_verbose_min();
                             sprintf(buff,"GRASS_VERBOSE=%d",G_verbose_min()) ;
                             putenv(G_store(buff));
+			    quiet = 1; /* for passing to gui init */
 			}
 
 
@@ -1827,6 +1829,15 @@ static void generate_tcl(FILE *fp)
 		fprintf(fp, "}\n");
 		optn++;
 	}
+
+	fprintf(fp, "add_xflag %d {\n", optn);
+	fprintf(fp, " name {quiet}\n");
+	fprintf(fp, " desc {%s}\n", _("Run with minimal output messages"));
+	fprintf(fp, " answer %d\n", quiet);
+	fprintf(fp, " label {%s}\n", _("Run quietly"));
+	fprintf(fp, " guisection {}\n");
+	fprintf(fp, "}\n");
+	optn++;
 
 	fprintf(fp, "end_dialog %d\n", optn - 1);
 }
