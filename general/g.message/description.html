@@ -2,21 +2,22 @@
 
 <p>
 This program is to be used in shell/perl/python scripts, so the author does not
-need to use <code>echo</code> program. The advantage of <em>g.message</em> is
+need to use the <tt>echo</tt> program. The advantage of <em>g.message</em> is
 that it formats messages just like other GRASS modules do and that its
-functionality is influenced by the <code>GRASS_VERBOSE</code> environment variable.
+functionality is influenced by the <tt>GRASS_VERBOSE</tt> and
+<tt>GRASS_MESSAGE_FORMAT</tt> environment variables.
 </p>
 <p>
 The program can be used for standard informative messages as well as warnings 
 (<b>-w</b> flag) and fatal errors (<b>-e</b> flag). For debugging
-purposes, the <b>-d</b> flag will cause <em>g.message</em> to print level
-<tt>1</tt> debugging message.
+purposes, the <b>-d</b> flag will cause <em>g.message</em> to print a debugging
+message at the given level.
 </p>
 
 <h2>NOTES</h2>
 
-Messages containing "<tt>=</tt>" must use the <b>message=</b> syntax so the
-parser doesn't get confused.
+Messages containing "<tt>=</tt>" must use the full <b>message=</b> syntax so
+the parser doesn't get confused.
 <P>
 Messges containing '<tt>!</tt>' and '<tt>$</tt>' must use single 'quotes' to
 avoid unwanted shell translation.
@@ -29,17 +30,40 @@ close the "quote")
 A blank line may be obtained with: <tt>g.message ""</tt>
 <P>
 Redundant whitespace will be stripped away.
+<P>
 
+<h4>VERBOSITY LEVELS</h4>
+Controlled by the "<tt>GRASS_VERBOSE</tt>" environment variable. Typically this
+is set using the <tt>--quiet</tt> or <tt>--verbose</tt> command line options.
+<ul>
+<li>0 - only errors and warnings are printed 
+<li>1 - progress messages are printed 
+<li>2 - all module messages are printed 
+<li>3 - additional verbose messages are printed
+</ul>
+
+<h4>DEBUG LEVELS</h4>
+Controlled by the "<tt>DEBUG</tt>" GRASS <i>gisenv</i> variable. (set with
+<em><a href="g.gisenv.html">g.gisenv</a></em>)
+<BR>
+Recommended levels:
+<ul>
+<li>1 - message is printed once or few times per module
+<li>3 - each row (raster) or line (vector)
+<li>5 - each cell (raster) or point (vector) 
+</ul>
 
 <h2>SEE ALSO</h2>
- 
 <em>
 <a href="variables.html">GRASS variables and environment variables</a>,<br>
-<a href="g.parser.html">g.parser</a></em>
+<a href="g.gisenv.html">g.gisenv</a>,
+<a href="g.parser.html">g.parser</a>
+</em>
 
 
 <h2>AUTHOR</h2>
 
 Jachym Cepicky
 
-<p><i>Last changed: $Date$</i>
+<p>
+<i>Last changed: $Date$</i>

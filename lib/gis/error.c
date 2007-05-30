@@ -113,6 +113,28 @@ void G_message (const char *msg,...)
 }
 
 /*!
+ * \fn void G_verbose_message (const char *msg,...)
+ *
+ * \brief Print a message to stderr but only if module is in verbose mode
+ *
+ * The output format depends on enviroment variables
+ *  GRASS_MESSAGE_FORMAT and GRASS_VERBOSE
+*/
+void G_verbose_message (const char *msg, ...)
+{
+    char buffer[2000];  /* G_asprintf does not work */
+    va_list ap;
+
+    if( G_verbose() > G_verbose_std() ) {
+	va_start(ap, msg);
+	vsprintf(buffer,msg,ap);
+	va_end(ap);
+
+	G_message(buffer);
+    }
+}
+
+/*!
  * \fn int G_fatal_error (const char *msg,...)
  *
  * \brief Print a fatal error message to stderr
