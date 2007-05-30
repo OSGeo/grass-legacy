@@ -8,8 +8,12 @@ control raster operations.
 The MASK will block out certain areas of a raster map from analysis, by
 "hiding" them from sight of other GRASS modules. While a mask exists, most
 GRASS raster modules will operate only on data falling inside the masked
-area, and ignore any data falling outside of the mask (those will be treated
-as if their values were NULL).
+area, and treat any data falling outside of the mask as if its value were
+NULL.
+
+<P>
+The mask is only applied when <em>reading</em> an existing GRASS raster map,
+for example when used in a module as an input map.
 
 <P>
 <em>r.mask</em> uses <em>r.reclass</em> to create a reclassification of an
