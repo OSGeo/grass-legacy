@@ -27,6 +27,8 @@ As a general rule in GRASS:
 of the current region.
 <li> Raster input maps are automatically cropped/padded and rescaled
 (using nearest-neighbour resampling) to match the current region.
+<li> Raster input maps are automatically masked if a raster map named
+     MASK exists.
 </ol>
 
 There are a few exceptions to this:
@@ -70,6 +72,12 @@ differs from that of the input raster map(s), on-the-fly resampling is
 performed (nearest neighbor resampling). If this is not desired, the
 input map(s) has/have to be resampled beforehand with one of the dedicated
 modules.
+<P>
+If a raster map named "MASK" exists, most GRASS raster modules will operate
+only on data falling inside the masked area, and treat any data falling
+outside of the mask as if its value were NULL. The mask is only applied
+when <em>reading</em> an existing GRASS raster map, for example when used
+in a module as an input map. (see <a href="r.mask.html">r.mask</a>)
 
 <h3>Raster map statistics</h3>
 
@@ -159,6 +167,9 @@ important to know that operations on NULL cells lead to NULL cells.
 </ul>
 
 <HR>
-<P><a href="index.html">Main index</a> - <a href="raster.html">raster index</a> - <a href="full_index.html">full index</a>
+<P>
+<a href="index.html">Main index</a> - <a href="raster.html">raster index</a>
+ - <a href="full_index.html">full index</a>
+</P>
 </body>
 </html>
