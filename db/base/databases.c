@@ -1,3 +1,16 @@
+/****************************************************************************
+ *
+ * MODULE:       db.databases
+ * AUTHOR(S):    Radim Blazek <radim.blazek gmail.com> (original contributor)
+ *               Glynn Clements <glynn gclements.plus.com>, Markus Neteler <neteler itc.it>
+ * PURPOSE:      lists all databases for a given driver
+ * COPYRIGHT:    (C) 2002-2006 by the GRASS Development Team
+ *
+ *               This program is free software under the GNU General Public
+ *               License (>=v2). Read the file COPYING that comes with GRASS
+ *               for details.
+ *
+ *****************************************************************************/
 #include <stdlib.h>
 #include <grass/dbmi.h>
 #include <grass/gis.h>
@@ -80,3 +93,4 @@ parse_command_line(int argc, char *argv[])
     parms.driver     = driver->answer;
     parms.location   = location->answer;
 }
+
