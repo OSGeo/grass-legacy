@@ -1,9 +1,16 @@
-/**************************************************************
- * db.describe driver=name database=name table=name
+/****************************************************************************
  *
+ * MODULE:       db.describe
+ * AUTHOR(S):    Radim Blazek <radim.blazek gmail.com> (original contributor)
+ *               Glynn Clements <glynn gclements.plus.com>, Markus Neteler <neteler itc.it>, Stephan Holl
+ * PURPOSE:      displays table information
+ * COPYRIGHT:    (C) 2002-2007 by the GRASS Development Team
  *
- *   describe a table
- ****************************************************************/
+ *               This program is free software under the GNU General Public
+ *               License (>=v2). Read the file COPYING that comes with GRASS
+ *               for details.
+ *
+ *****************************************************************************/
 
 #include <stdlib.h>
 #include <grass/gis.h>
@@ -121,3 +128,4 @@ parse_command_line(int argc, char *argv[])
     parms.table		= table->answer;
     parms.printcolnames = cols->answer;
 }
+

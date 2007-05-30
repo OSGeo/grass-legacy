@@ -1,3 +1,17 @@
+/****************************************************************************
+ *
+ * MODULE:       db.connect
+ * AUTHOR(S):    Radim Blazek <radim.blazek gmail.com> (original contributor)
+ *               Alex Shevlakov <sixote yahoo.com>, 
+ *               Glynn Clements <glynn gclements.plus.com>, Markus Neteler <neteler itc.it>
+ * PURPOSE:      set parameters for connection to database
+ * COPYRIGHT:    (C) 2002-2006 by the GRASS Development Team
+ *
+ *               This program is free software under the GNU General Public
+ *               License (>=v2). Read the file COPYING that comes with GRASS
+ *               for details.
+ *
+ *****************************************************************************/
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
