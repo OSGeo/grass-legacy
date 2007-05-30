@@ -1,41 +1,69 @@
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
-<html>
-<head>
-</head>
-<body>
 <h2>DESCRIPTION</h2>
 
-
 <em><b>r.mask</b></em> - Facilitates creation of a raster "MASK" map to
-control raster operations. <em>r.mask</em> uses <em>r.reclass</em> to create
-a reclassification of an existing raster map and name it MASK. The
-user can select cat values to use in the MASK.<br>
+control raster operations.
 
-<br>
+<!-- a bit of repetition here, requires some consolidation -->
 
+The MASK will block out certain areas of a raster map from analysis, by
+"hiding" them from sight of other GRASS modules. While a mask exists, most
+GRASS raster modules will operate only on data falling inside the masked
+area, and ignore any data falling outside of the mask (those will be treated
+as if their values were NULL).
+
+<P>
+<em>r.mask</em> uses <em>r.reclass</em> to create a reclassification of an
+existing raster map and name it MASK. The user can select cat values to use
+in the MASK.
+
+<P>
+Because the mask is actually only a reclass map named "MASK", it can be
+copied, renamed, removed, and used in analyses, just like other GRASS
+raster map layers.  The user should be aware that a mask remains in
+place until a user renames it to something other than "MASK", or removes
+it using "<tt>r.mask -r</tt>" or <EM><A HREF="g.remove.html">g.remove</A></EM>.
+
+<p>
 As long as the file named MASK exists in the current mapset, most
 raster operations will only take place in the grid cells specified by
-the MASK. To restore raster operations to normal (i.e., all cells of
-the current region), remove the MASK file by setting the remove MASK flag (-r). A MASK also can&nbsp;be removed by using <a href="g.remove.html">g.remove</a>
-or by rename it to any other name with <a href="g.rename.html">g.rename</a>.
-<p>
+the MASK. Grid cells in the mask containing <tt>0</tt> or <tt>NULL</tt>
+will be masked, cells covered by other values will be passed through unaltered.
 
+<p>
+To restore raster operations to normal (i.e., all cells of the current region),
+remove the MASK file by setting the <B>-r</B> remove MASK flag.
+A MASK also can&nbsp;be removed by using <em><a href="g.remove.html">g.remove</a></em>
+or by renaming it to any other name with <em><a href="g.rename.html">g.rename</a></em>.
+
+
+<H2>NOTES</H2>
+
+The above method for specifying a "mask" may seem
+counterintuitive.  Areas inside the mask are not hidden;
+areas outside the mask will be ignored until the MASK file
+is removed.
+
+<P>
+Somewhat similar program functions to those performed by
+<EM>r.mask</EM> can be done using
+<EM><A HREF="r.mapcalc.html">r.mapcalc</A></EM>, 
+<EM><A HREF="g.region.html">g.region</A></EM>,
+and other programs.
+
+<p>
 <em>(GRASS Shell Script)</em>
 
-</p>
+
 <h2>SEE ALSO</h2>
-
-
 <em>
+<A HREF="g.region.html">g.region</A>,
+<A HREF="r.mapcalc.html">r.mapcalc</A>,
 <a href="r.reclass.html">r.reclass</a>
 </em>
 
-
 <h2>AUTHOR</h2>
-
 
 Michael Barton, Arizona State University
 
-<p><i>Last changed: $Date$</i></p>
-</body>
-</html>
+<p>
+<i>Last changed: $Date$</i></p>
