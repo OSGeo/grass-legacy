@@ -1,3 +1,17 @@
+/****************************************************************************
+ *
+ * MODULE:       monitor
+ * AUTHOR(S):    Michael Shapiro, U.S. Army CERL (original contributor)
+ *               Markus Neteler <neteler itc.it>
+ *               Mike Thomas <miketh@brisbane.paradigmgeo.com>, Roberto Flor <flor itc.it>, Bernhard Reiter <bernhard intevation.de>, Eric G. Miller <egm2 jps.net>, Glynn Clements <glynn gclements.plus.com>, Jachym Cepicky <jachym les-ejk.cz>
+ * PURPOSE:      GRASS monitor
+ * COPYRIGHT:    (C) 1999-2007 by the GRASS Development Team
+ *
+ *               This program is free software under the GNU General Public
+ *               License (>=v2). Read the file COPYING that comes with GRASS
+ *               for details.
+ *
+ *****************************************************************************/
 /* 
  * Changed for truecolor 24bit support by 
  * Roberto Flor/ITC-Irst, Trento, Italy
