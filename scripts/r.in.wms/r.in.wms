@@ -263,7 +263,7 @@ addflag() {
 	fi
 }
 
-#####################3
+######################
 # name: calculate
 # purpose: perform calculations
 # usage: varname "expr"
@@ -287,19 +287,28 @@ listLayers() {
 
 	### wget the XML and grep the lines with layer names
 	g.message "List of layers for server ${GIS_OPT_MAPSERVER}:"
-	wget ${GIS_OPT_WGETOPT} --post-data=${STRING} $GIS_OPT_MAPSERVER -O $CAPABILITIES_FILE;
-	message 1 wget ${GIS_OPT_WGETOPT} --post-data=${STRING} $GIS_OPT_MAPSERVER -O $CAPABILITIES_FILE;
+	wget ${GIS_OPT_WGETOPTIONS} --post-data=${STRING} $GIS_OPT_MAPSERVER -O $CAPABILITIES_FILE;
+	message 1 wget ${GIS_OPT_WGETOPTIONS} --post-data=${STRING} $GIS_OPT_MAPSERVER -O $CAPABILITIES_FILE;
 
 	# use xml2
-	if [ -x "`which xml2`" ]; then
+	if [ -x "`which xml2`" ] ; then
 		cat "$CAPABILITIES_FILE" | xml2 | \
-		grep "Layer/SRS=\|Layer/Name=\|Layer/Title=\|Style/Name=\|Style/Title=\|Layer/Abstract=" | \
-		sed -e          "s/.*Layer\\/Name=/LAYER: /" \
-		    -e	     "s/.*Layer\\/SRS=/  SRS: /" \
-		    -e	   "s/.*Layer\\/Title=/  Title: /" \
-		    -e	"s/.*Layer\\/Abstract=/  |/" \
-		    -e  "s/.*Layer\\/Style\\/Name=/  STYLE: /" \
-		    -e "s/.*Layer\\/Style\\/Title=/    Style title: /"
+		  grep "Layer/SRS=\|Layer/Name=\|Layer/Title=\|Style/Name=\|Style/Title=\|Layer/Abstract=" | \
+		  sed -e "s/.*Layer\\/Name=/LAYER: /" \
+		      -e "s/.*Layer\\/SRS=/  SRS: /" \
+		      -e "s/.*Layer\\/Title=/  Title: /" \
+		      -e "s/.*Layer\\/Abstract=/  |/" \
+		      -e "s/.*Layer\\/Style\\/Name=/  STYLE: /" \
+		      -e "s/.*Layer\\/Style\\/Title=/    Style title: /" \
+		  > "${TMP}capabilities.txt"
+		if [ `wc -l < "${TMP}capabilities.txt"` -eq 0 ] ; then
+		    g.message message=""
+		    g.message -e "Parsing XML file"
+		    g.message message="------------------------"
+		    cat "$CAPABILITIES_FILE"
+		else
+		    cat "${TMP}capabilities.txt"
+		fi
 
 	else : # xml2 is not available
 		g.message -w "xml2 NOT avaliable"
@@ -312,11 +321,20 @@ listLayers() {
 		      -e "s/<\/Style>//" \
 		      -e "s/<Title>\(.*\)<\/Title>/\t --\1 /" \
 		      -e "s/<\/Title>//" \
-		      -e "s/<\/*.*\/*\/*>//"
+		      -e "s/<\/*.*\/*\/*>//" \
+		    > "${TMP}capabilities.txt"
+		if [ `wc -l < "${TMP}capabilities.txt"` -eq 0 ] ; then
+		    g.message message=""
+		    g.message -e "Parsing XML file"
+		    g.message message="------------------------"
+		    cat "$CAPABILITIES_FILE"
+		else
+		    cat "${TMP}capabilities.txt"
+		fi
 	fi
 
-	if [ -e "$CAPABILITIES_FILE" ]; then
-	    \rm -f "$CAPABILITIES_FILE"
+	if [ -e "$CAPABILITIES_FILE" ] ; then
+	    \rm -f "$CAPABILITIES_FILE" "${TMP}capabilities.txt" "$TMP"
         fi
         exit 1;
 }
