@@ -301,14 +301,6 @@ listLayers() {
 		      -e "s/.*Layer\\/Style\\/Name=/  STYLE: /" \
 		      -e "s/.*Layer\\/Style\\/Title=/    Style title: /" \
 		  > "${TMP}capabilities.txt"
-		if [ `wc -l < "${TMP}capabilities.txt"` -eq 0 ] ; then
-		    g.message message=""
-		    g.message -e "Parsing XML file"
-		    g.message message="------------------------"
-		    cat "$CAPABILITIES_FILE"
-		else
-		    cat "${TMP}capabilities.txt"
-		fi
 
 	else : # xml2 is not available
 		g.message -w "xml2 NOT avaliable"
@@ -323,15 +315,17 @@ listLayers() {
 		      -e "s/<\/Title>//" \
 		      -e "s/<\/*.*\/*\/*>//" \
 		    > "${TMP}capabilities.txt"
-		if [ `wc -l < "${TMP}capabilities.txt"` -eq 0 ] ; then
-		    g.message message=""
-		    g.message -e "Parsing XML file"
-		    g.message message="------------------------"
-		    cat "$CAPABILITIES_FILE"
-		else
-		    cat "${TMP}capabilities.txt"
-		fi
 	fi
+
+	if [ `wc -l < "${TMP}capabilities.txt"` -eq 0 ] ; then
+	    g.message message=""
+	    g.message -e "Parsing XML file"
+	    g.message message="------------------------"
+	    cat "$CAPABILITIES_FILE"
+	else
+	    cat "${TMP}capabilities.txt"
+	fi
+
 
 	if [ -e "$CAPABILITIES_FILE" ] ; then
 	    \rm -f "$CAPABILITIES_FILE" "${TMP}capabilities.txt" "$TMP"
