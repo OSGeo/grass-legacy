@@ -91,10 +91,6 @@ class ProfileFrame(wx.Frame):
         #
         # Add statusbar
         #
-        self.rast1 = ''
-        self.rast2 = ''
-        self.rast3 = ''
-
         self.statusbar = self.CreateStatusBar(number=2, style=0)
         self.statusbar.SetStatusWidths([-2, -1])
 
@@ -115,6 +111,12 @@ class ProfileFrame(wx.Frame):
         self.client.canvas.Bind(wx.EVT_MOTION, self.OnMotion)
 
         # Init variables
+        self.rast1 = '' # default raster map to profile
+        self.rast2 = '' # optional raster map to profile
+        self.rast3 = '' # optional raster map to profile
+        self.rastunits1 = '' # map data units (used for y axis legend)
+        self.rastunits2 = '' # map data units (used for y axis legend)
+        self.rastunits3 = '' # map data units (used for y axis legend)
         self.coordstr = '' #string of coordinates for r.profile
         self.seglist = [] # segment endpoint list
         self.plotlist = [] # list of things to plot
@@ -123,7 +125,7 @@ class ProfileFrame(wx.Frame):
 
         self.ptitle = 'Profile of %s %s %s' % (self.rast1, self.rast2, self.rast3)
         self.xlabel = "Distance"
-        self.ylabel = "Raster values"
+        self.ylabel = "Cell values"
 
         self.datalist1 = [] #list of distance,value pairs for plotting profile
         self.pline1 = None # first (default) profile line
@@ -278,24 +280,58 @@ class ProfileFrame(wx.Frame):
         # set default title and legend text
         self.ptitle = 'Profile of %s' % self.rast1
 
+        # set self.ylabel to match units if they exist
+        cmdlist = ['r.info', 'map=%s' % self.rast1, '-u', '--quiet']
+        p = cmd.Command(cmdlist)
+        try:
+            units1 = p.module_stdout.read().strip().split('=')[1]
+        except:
+            pass
+
+        if units1 == '': units1 = 'Raster values'
+        if units1 != 'Raster values':
+            self.ylabel = units1
+
         if self.rast2 == '' and self.rast3 != '':
             self.rast2 = self.rast3
             self.rast3 = ''
 
         if self.rast2 != '':
-            print 'check rast2', self.rast2
             self.datalist2 = self.CreateDatalist(self.rast2, self.coordstr)
+            cmdlist = ['r.info', 'map=%s' % self.rast2, '-u', '--quiet']
+            p = cmd.Command(cmdlist)
+            try:
+                units2 = p.module_stdout.read().strip().split('=')[1]
+            except:
+                pass
+
+            if units2 == '': units2 = 'Raster values'
+
+            self.ptitle += ' and %s' % self.rast2
+            self.plegend2 = 'Profile of %s' % self.rast2
+
+            if units1 == 'Raster values' and units2 == 'Raster values':
+                self.ylabel = 'Raster values'
+            else:
+                self.ylabel = '%s (1), %s (2)' % (units1,units2)
 
         if self.rast3 != '':
             self.datalist3 = self.CreateDatalist(self.rast3, self.coordstr)
+            cmdlist = ['r.info', 'map=%s' % self.rast3, '-u', '--quiet']
+            p = cmd.Command(cmdlist)
+            try:
+                units3 = p.module_stdout.read().strip().split('=')[1]
+            except:
+                units3 = 'Raster values'
 
-        if self.rast2 != '' and self.rast3 != '':
             self.ptitle += ', %s, and %s' % (self.rast2,self.rast3)
             self.plegend2 = 'Profile of %s' % self.rast2
             self.plegend3 = 'Profile of %s' % self.rast3
-        elif self.rast2 != '':
-            self.plegend2 = 'Profile of %s' % self.rast2
-            self.ptitle += ' and %s' % self.rast2
+
+            if units1 == 'Raster values' and units2 == 'Raster values' and units3 == 'Raster values':
+                self.ylabel = 'Raster values'
+            else:
+                self.ylabel = '%s (1), %s (2), %s (3)' % (units1,units2,units3)
 
         # create list of coordinates for transect segment markers
         if len(self.mapwin.polycoords) > 0 and self.rast1 != '':
