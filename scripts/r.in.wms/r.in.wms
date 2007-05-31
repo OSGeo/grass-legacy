@@ -286,7 +286,7 @@ listLayers() {
 	STRING="service=WMS&request=GetCapabilities&${GIS_OPT_WMSQUERY}";
 
 	### wget the XML and grep the lines with layer names
-	g.message "List of layers for server ${GIS_OPT_MAPSERVER}:"
+	g.message message="List of layers for server ${GIS_OPT_MAPSERVER}:"
 	wget ${GIS_OPT_WGETOPTIONS} --post-data=${STRING} $GIS_OPT_MAPSERVER -O $CAPABILITIES_FILE;
 	message 1 wget ${GIS_OPT_WGETOPTIONS} --post-data=${STRING} $GIS_OPT_MAPSERVER -O $CAPABILITIES_FILE;
 
