@@ -703,6 +703,16 @@ the points with i.rectify.<BR>
 <H2>EXAMPLES</H2>
 
 <h3>GTOPO30 DEM</h3>
+
+To avoid that the GTOPO30 data are read incorrectly, you can add a new line
+"PIXELTYPE SIGNEDINT" in the .HDR to force interpretation of the file as
+signed rather than unsigned integers. Then the .DEM file can be imported.
+Finally, e.g. the 'terrain' color table can be assigned to the imported map
+with <em>r.colors</em>.
+
+
+<h3>GLOBE DEM</h3>
+
 To import <A HREF="http://www.ngdc.noaa.gov/seg/topo/gltiles.shtml">GLOBE DEM tiles</a>
 (approx 1km resolution, better than GTOPO30 DEM data), the user has to download
 additionally the related <A HREF="ftp://ftp.ngdc.noaa.gov/GLOBE_DEM/data/elev/esri/hdr/">HDR file(s)</a>.
