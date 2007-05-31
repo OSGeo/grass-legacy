@@ -164,7 +164,13 @@ main (int argc, char **argv)
              is_ok(method->answer, outputmap->answer);
              o_sum(basemap->answer, covermap->answer,
                     outputmap->answer, flag_c->answer, &cats); 
+             break;	     
+	case DIV:
+             is_ok(method->answer, outputmap->answer);
+             o_divr(basemap->answer, covermap->answer,
+                    outputmap->answer, flag_c->answer, &cats); 
              break;	            
+       
 	default:
           G_fatal_error(_("Not yet implemented!")); 
     }    		

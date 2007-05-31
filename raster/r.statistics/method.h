@@ -10,6 +10,7 @@
 #define MIN	9	/* Minimum		 */
 #define MAX	10	/* Maximum		 */
 #define SUM	11	/* Sum  		 */
+#define DIV	12	/* Diversity  		 */
 
 struct stats
 {
@@ -32,6 +33,7 @@ struct menu
 
 /* modify this table to add new methods */
     struct menu menu[] = {
+    {"diversity",    DIV,     "diversity of values in specified objects in %%"},
     {"distribution", DISTRIB, "distribution of values in specified objects in %%"},
     {"average",      AVERAGE, "average of values in specified objects"},
     {"mode",         MODE,    "mode of values in specified objects"},
@@ -41,14 +43,15 @@ struct menu
     {"variance",     VARIANC, "Variance of values in specified objects"},
     {"skewness",     SKEWNES, "Skewnes of values in specified objects"},
     {"kurtosis",     KURTOSI, "Kurtosis of values in specified objects"},
-    {"min",	    MIN,     "Minimum of values in specified objects"},
-    {"max",	    MAX,     "Maximum of values in specified objects"},
-    {"sum",	    SUM,     "Sum of values in specified objects"},    
-    {0,0,0} };
+    {"min",	     MIN,     "Minimum of values in specified objects"},
+    {"max",	     MAX,     "Maximum of values in specified objects"},
+    {"sum",	     SUM,     "Sum of values in specified objects"},
+	 {0,0,0} };
 
 #else
     extern struct menu menu[];
 #endif
+
 
 /* o_adev.c */
 int o_adev(char *, char *, char *, int, struct Categories *);
@@ -74,6 +77,8 @@ int o_skew(char *, char *, char *, int, struct Categories *);
 int o_sum(char *, char *, char *, int, struct Categories *);
 /* o_var.c */
 int o_var(char *, char *, char *, int, struct Categories *);
+/* o_divr.c */
+int o_divr(char *, char *, char *, int, struct Categories *);
 /* read_stats.c */
 int read_stats(FILE *, long *, long *, double *);
 /* write_rec.c */
