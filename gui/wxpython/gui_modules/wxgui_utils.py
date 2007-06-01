@@ -197,6 +197,9 @@ class LayerTree(CT.CustomTreeCtrl):
             event.Skip()
             return
 
+        pos = event.GetPosition()
+        pos = self.ScreenToClient(pos)
+        
         ltype = self.layers[self.layer_selected].type
 
         if not hasattr (self, "popupID1"):
@@ -248,7 +251,7 @@ class LayerTree(CT.CustomTreeCtrl):
             self.popupMenu.Append(self.popupID4, _("Histogram"))
             self.Bind (wx.EVT_MENU, self.OnHistogram, id=self.popupID4)
 
-        self.PopupMenu(self.popupMenu)
+        self.PopupMenu(self.popupMenu, pos)
         self.popupMenu.Destroy()
 
     def OnHistogram(self, event):

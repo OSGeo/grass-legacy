@@ -310,7 +310,7 @@ class BufferedWindow(wx.Window):
             w,h = self.GetFullTextExtent(img[0])[0:2]
             pdc.SetFont(img[1])
             pdc.SetTextForeground(img[2])
-            coords,w,h = self.textBounds(img,coords)
+            coords,w,h = self.TextBounds(img,coords)
             if rotation == 0:
                 pdc.DrawText(img[0], coords[0], coords[1])
             else:
@@ -321,21 +321,28 @@ class BufferedWindow(wx.Window):
         pdc.EndDrawing()
         self.Refresh()
 
-    def textBounds(self, textinfo, coords):
+    def TextBounds(self, textinfo, coords):
+        """
+        Return text boundary data
+        """
         rotation = float(textinfo[3])
+        
+        Debug.msg (4, "BufferedWindow.TextBounds(): text=%s, rotation=%f" % \
+                   (textinfo[0], rotation))
+
         self.Update()
         self.Refresh()
         self.SetFont(textinfo[1])
         w,h = self.GetTextExtent(textinfo[0])
         if rotation == 0:
             coords[2], coords[3] = coords[0] + w, coords[1] + h
-            return coords,w,h
+            return coords, w, h
         else:
             boxh = math.fabs(math.sin(math.radians(rotation)) * w) + h
             boxw = math.fabs(math.cos(math.radians(rotation)) * w) + h
             coords[2] = coords[0] + boxw
             coords[3] = coords[1] + boxh
-            return coords,boxw,boxh
+            return coords, boxw, boxh
 
     def OnPaint(self, event):
         """
@@ -636,8 +643,12 @@ class BufferedWindow(wx.Window):
         """
         Left mouse button pressed
         """
-        Debug.msg (5, "BufferedWindow.OnLeftDown():")
-        if self.mouse["use"] == "measure" or self.mouse["use"] == "profile":
+        Debug.msg (5, "BufferedWindow.OnLeftDown(): use=%s" % \
+                   self.mouse["use"])
+        
+        if self.mouse["use"] == "measure" or self.mouse["use"] == "profile" or \
+               (self.mouse["use"] == "pointer" and self.parent.digittoolbar):
+            # measure || profile || digit tool
             if len(self.polycoords) == 0:
                 self.mouse['begin'] = event.GetPositionTuple()[:]
                 self.mouse['end'] = self.mouse['begin']
@@ -645,11 +656,9 @@ class BufferedWindow(wx.Window):
                 self.ClearLines()
             else:
                 self.mouse['begin'] = self.mouse['end']
-        else:
-            # get decoration id
+        else: # get decoration id
             self.lastpos = self.mouse['begin'] = event.GetPositionTuple()[:]
-            # idlist = self.pdc.FindObjectsByBBox(self.lastpos[0],self.lastpos[1])
-            idlist  = self.pdc.FindObjects(self.lastpos[0],self.lastpos[1], self.hitradius)
+            idlist  = self.pdc.FindObjects(x=self.lastpos[0], y=self.lastpos[1], radius=self.hitradius)
             if idlist != []:
                 self.dragid = idlist[0]
 
@@ -657,75 +666,79 @@ class BufferedWindow(wx.Window):
         """
         Left mouse button released
         """
-        Debug.msg (5, "BufferedWindow.OnLeftUp():")
-        # end point of zoom box or drag
+        Debug.msg (5, "BufferedWindow.OnLeftUp(): use=%s" % \
+                   self.mouse["use"])
+        
         if self.mouse['use'] == "zoom" or self.mouse['use'] == "pan":
-
+            # end point of zoom box or drag
             self.mouse['end'] = event.GetPositionTuple()[:]
 
             # set region in zoom or pan
             self.Zoom(self.mouse['begin'], self.mouse['end'], self.zoomtype)
+
             # redraw map
             self.render=True
             self.UpdateMap()
-
-        # querying
         elif self.mouse["use"] == "query":
-            self.Parent.QueryMap(self.mouse['begin'][0],self.mouse['begin'][1])
-
-        # creating measurement line
-        elif self.mouse["use"] == "measure" or self.mouse["use"] == "profile":
+            # querying
+            self.parent.QueryMap(self.mouse['begin'][0],self.mouse['begin'][1])
+        elif self.mouse["use"] == "measure" or self.mouse["use"] == "profile" or \
+                 (self.mouse["use"] == "pointer" and self.parent.digittoolbar):
+            # measure || profile || digit tool
             self.mouse['end'] = event.GetPositionTuple()[:]
             if self.mouse["use"] == "measure":
-                self.Parent.MeasureDist(self.mouse['begin'],self.mouse['end'])
+                self.parent.MeasureDist(self.mouse['begin'],self.mouse['end'])
             try:
                 self.polycoords.append(self.mouse['end'])
                 self.pdc.ClearId(self.lineid)
                 self.DrawLines()
             except:
                 pass
-
-        # end drag of overlay decoration
         elif self.dragid != None:
+            # end drag of overlay decoration
             self.ovlcoords[self.dragid] = self.pdc.GetIdBounds(self.dragid)
             self.dragid = None
             self.currtxtid = None
             id = None
             self.Update()
-        # digitizing
-        elif self.parent.digittoolbar:
-            if self.parent.digittoolbar.action == "add":
-                try:
-                    map = self.parent.digittoolbar.layers[self.parent.digittoolbar.layerID].name
-                except:
-                    map = None
-                    dlg = wx.MessageDialog(self, _("No vector map layer selected for editing"),
-                                           _("Error"), wx.OK | wx.ICON_ERROR)
-                    dlg.ShowModal()
-                    dlg.Destroy()
 
-                if map:
-                    east, north = self.Pixel2Cell(self.mouse['begin'][0],self.mouse['begin'][1])
-                    if self.parent.digittoolbar.type in ["point", "centroid"]:
-                        # add new point
-                        Digit.AddPoint(map=map,
-                                       type=self.parent.digittoolbar.type,
-                                       x=east, y=north)
-                    elif self.parent.digittoolbar.type in ["line", "boundary"]:
-                        # add new point to the line
-                        Debug.msg (3, "BufferedWindow.MouseAction(): new saved pos=%f,%f" % (east, north))
-                        self.savedpos.append ((east, north))
+#         # digitizing
+#         elif self.parent.digittoolbar:
+#             if self.parent.digittoolbar.action == "add":
+#                 try:
+#                     map = self.parent.digittoolbar.layers[self.parent.digittoolbar.layerID].name
+#                 except:
+#                     map = None
+#                     dlg = wx.MessageDialog(self, _("No vector map layer selected for editing"),
+#                                            _("Error"), wx.OK | wx.ICON_ERROR)
+#                     dlg.ShowModal()
+#                     dlg.Destroy()
 
-            # redraw map
-            self.render=True
-            self.UpdateMap()
+#                 if map:
+#                     east, north = self.Pixel2Cell(self.mouse['begin'][0],self.mouse['begin'][1])
+#                     if self.parent.digittoolbar.type in ["point", "centroid"]:
+#                         # add new point
+#                         Digit.AddPoint(map=map,
+#                                        type=self.parent.digittoolbar.type,
+#                                        x=east, y=north)
+#                     elif self.parent.digittoolbar.type in ["line", "boundary"]:
+#                         # add new point to the line
+#                         Debug.msg (3, "BufferedWindow.MouseAction(): new saved pos=%f,%f" % (east, north))
+#                         self.savedpos.append ((east, north))
+
+#             # redraw map
+#             self.render=True
+#             self.UpdateMap()
 
     def OnButtonDClick(self, event):
         """
         Mouse button double click
         """
-        Debug.msg (5, "BufferedWindow.OnButtonDClick():")
+        Debug.msg (5, "BufferedWindow.OnButtonDClick(): use=%s" % \
+                   self.mouse["use"])
+        
         if self.mouse["use"] == "measure":
+            # measure
             self.ClearLines()
             self.polycoords = []
             self.mouse['use'] = 'pointer'
@@ -734,6 +747,7 @@ class BufferedWindow(wx.Window):
             self.Refresh()
             self.SetCursor(self.parent.cursors["default"])
         elif self.mouse["use"] == "profile":
+            # profile
             pass
         #                self.pdc.ClearId(self.lineid)
         #                self.pdc.ClearId(self.plineid)
@@ -752,7 +766,7 @@ class BufferedWindow(wx.Window):
             self.ovlcoords[self.dragid] = self.pdc.GetIdBounds(self.dragid)
             if self.dragid > 100:
                 self.currtxtid = self.dragid
-                self.parent.addText(None)
+                self.parent.AddText(None)
             elif self.dragid == 0:
                 self.parent.AddBarscale(None)
             elif self.dragid == 1:
@@ -762,13 +776,16 @@ class BufferedWindow(wx.Window):
         """
         Right mouse button pressed
         """
-        Debug.msg (5, "BufferedWindow.OnRightDown():")
+        Debug.msg (5, "BufferedWindow.OnRightDown(): use=%s" % \
+                   self.mouse["use"])
+        
         x,y = event.GetPositionTuple()[:]
-        #l = self.pdc.FindObjectsByBBox(x, y)
-        l = self.pdc.FindObjects(x, y, self.hitradius)
+        l = self.pdc.FindObjects(x=x, y=y, radius=self.hitradius)
         if not l:
             return
+        
         id = l[0]
+        
         if id != 99:
             if self.pdc.GetIdGreyedOut(id) == True:
                 self.pdc.SetIdGreyedOut(id, False)
@@ -783,7 +800,9 @@ class BufferedWindow(wx.Window):
         """
         Right mouse button released
         """
-        Debug.msg (5, "BufferedWindow.OnRightUp():")
+        Debug.msg (5, "BufferedWindow.OnRightUp(): use=%s" % \
+                   self.mouse["use"])
+        
         if self.parent.digittoolbar and self.parent.digittoolbar.action == "add":
             if self.parent.digittoolbar.type in ["line", "boundary"]:
                 try:
@@ -813,8 +832,9 @@ class BufferedWindow(wx.Window):
             self.pdc.ClearId(self.lineid)
             self.pdc.ClearId(self.plineid)
             self.Refresh()
+            return True
         except:
-            pass
+            return False
 
 
     def Pixel2Cell(self, x, y):
@@ -826,6 +846,7 @@ class BufferedWindow(wx.Window):
         """
         newx = self.Map.region['w'] + x * self.Map.region["ewres"]
         newy = self.Map.region['n'] - y * self.Map.region["nsres"]
+        
         return newx, newy
 
     def Zoom(self, begin, end, zoomtype):
@@ -850,16 +871,14 @@ class BufferedWindow(wx.Window):
 
             # zoom out
             elif zoomtype < 0:
-                newreg['w'], newreg['n'] = self.Pixel2Cell(-x1*2,-y1*2)
-                newreg['e'], newreg['s'] = self.Pixel2Cell(
-                                           self.Map.width+2*(self.Map.width-x2),
-                                           self.Map.height+2*(self.Map.height-y2))
+                newreg['w'], newreg['n'] = self.Pixel2Cell(-x1 * 2, -y1 * 2)
+                newreg['e'], newreg['s'] = self.Pixel2Cell(self.Map.width  + 2 * (self.Map.width  - x2),
+                                                           self.Map.height + 2 * (self.Map.height - y2))
         # pan
         elif zoomtype == 0:
-            newreg['w'], newreg['n'] = self.Pixel2Cell(x1-x2, y1-y2)
-            newreg['e'], newreg['s'] = self.Pixel2Cell(
-                                           self.Map.width+x1-x2,
-                                           self.Map.height+y1-y2)
+            newreg['w'], newreg['n'] = self.Pixel2Cell(x1 - x2, y1 - y2)
+            newreg['e'], newreg['s'] = self.Pixel2Cell(self.Map.width  + x1 - x2,
+                                                       self.Map.height + y1 - y2)
 
         # if new region has been calculated, set the values
         if newreg :
@@ -868,7 +887,7 @@ class BufferedWindow(wx.Window):
             self.Map.region['e'] = newreg['e']
             self.Map.region['w'] = newreg['w']
 
-            self.ZoomHistory(newreg['n'],newreg['s'],newreg['e'],newreg['w'])
+            self.ZoomHistory(newreg['n'], newreg['s'], newreg['e'], newreg['w'])
 
     def ZoomBack(self):
         """
@@ -1675,34 +1694,35 @@ class MapFrame(wx.Frame):
         if id not in self.ovlcoords:
             self.ovlcoords[id] = [10,10]
 
-        # Decoration overlay control dialog
-        dlg = DecDialog(self, wx.ID_ANY, 'Scale and North arrow', size=(350, 200),
+        # decoration overlay control dialog
+        dlg = DecDialog(self, wx.ID_ANY, _('Scale and North arrow'), size=(350, 200),
                         style=wx.DEFAULT_DIALOG_STYLE,
                         ovltype=ovltype,
                         cmd='d.barscale',
                         drawid=id,
-                        checktxt = "Show/hide scale and arrow",
-                        ctrltxt = "scale object",
+                        checktxt = _("Show/hide scale and arrow"),
+                        ctrltxt = _("scale object"),
                         params = params)
 
         dlg.CenterOnScreen()
 
-        # If OK button pressed in decoration control dialog
-        val = dlg.ShowModal()
-        if val == wx.ID_OK:
+        # if OK button pressed in decoration control dialog
+        if dlg.ShowModal() == wx.ID_OK:
             if self.ovlchk[id] == True:
                 self.MapWindow.Draw(self.MapWindow.pdc, drawid=id,
                                     img=img, pdctype='image',
                                     coords=self.ovlcoords[id])
 
+        # update the map canvas
         self.MapWindow.UpdateMap()
+            
         dlg.Destroy()
 
         # close properties dialog if open
-#        try:
-#            self.propwin[ovltype].Close(True)
-#        except:
-#            pass
+        #        try:
+        #            self.propwin[ovltype].Close(True)
+        #        except:
+        #            pass
 
     def AddLegend(self, event):
         """
@@ -1766,17 +1786,19 @@ class MapFrame(wx.Frame):
         Handler for text decoration menu selection.
         """
         ovltype = 2 # index for overlay layer in render
+
+        # default values
         maptext = ''
         textfont = self.GetFont()
         textcolor = wx.BLACK
-        textcoords = [10,10,10,10]
-        rotation = 0
+        textcoords = [10, 10, 10, 10]
+        rotation = 0.0
 
         if self.MapWindow.currtxtid == None: # text doesn't already exist
-            id = wx.NewId()+100
+            id = wx.NewId() + 100
         else: # text already exists
             id = self.MapWindow.currtxtid
-            textcoords=self.ovlcoords[id]
+            textcoords = self.ovlcoords[id]
 
         dlg = TextDialog(self, wx.ID_ANY, 'Text', size=(400, 200),
                          style=wx.DEFAULT_DIALOG_STYLE,
@@ -1788,11 +1810,11 @@ class MapFrame(wx.Frame):
         # If OK button pressed in decoration control dialog
         val = dlg.ShowModal()
         if val == wx.ID_OK:
-            maptext = dlg.currText
-            textfont = dlg.currFont
-            textcolor = dlg.currClr
-            rotation = dlg.currRot
-            coords,w,h = self.MapWindow.textBounds((maptext,textfont,textcolor,rotation),textcoords)
+            maptext    = dlg.currText
+            textfont   = dlg.currFont
+            textcolor  = dlg.currClr
+            rotation   = dlg.currRot
+            coords,w,h = self.MapWindow.TextBounds((maptext, textfont, textcolor, rotation),textcoords)
 
         # delete object if if it has no text
         if maptext == '':
@@ -1857,20 +1879,23 @@ class MapFrame(wx.Frame):
 # end of class MapFrame
 
 class DecDialog(wx.Dialog):
+    """
+    Controls setting options and displaying/hiding map overlay decorations
+    """
     def __init__(self, parent, id, title, pos=wx.DefaultPosition, size=wx.DefaultSize,
-            style=wx.DEFAULT_DIALOG_STYLE, ovltype=0, cmd='d.barscale',
-            drawid=None, checktxt='', ctrltxt='', params=''):
+                 style=wx.DEFAULT_DIALOG_STYLE, ovltype=0, cmd='d.barscale',
+                 drawid=None, checktxt='', ctrltxt='', params=''):
         wx.Dialog.__init__(self, parent, id, title, pos, size, style)
-        """
-        Controls setting options and displaying/hiding map overlay decorations
-        """
 
         self.ovltype = ovltype
-        self.drawid = drawid
-        self.ovlcmd = cmd
-        self.ovlchk = self.Parent.MapWindow.ovlchk
-        self.params = params #previously set decoration options to pass back to options dialog
+        self.drawid  = drawid
+        self.ovlcmd  = cmd
+        self.parent  = parent
+        self.ovlchk  = self.parent.MapWindow.ovlchk
+        self.params  = params #previously set decoration options to pass back to options dialog
 
+        #self.MakeModal(True)
+        
         sizer = wx.BoxSizer(wx.VERTICAL)
 
         box = wx.BoxSizer(wx.HORIZONTAL)
@@ -1909,51 +1934,55 @@ class DecDialog(wx.Dialog):
         self.SetSizer(sizer)
         sizer.Fit(self)
 
-        self.Bind(wx.EVT_CHECKBOX, self.onCheck, self.chkbox)
-        self.Bind(wx.EVT_BUTTON, self.onOptions, optnbtn)
+        self.Bind(wx.EVT_CHECKBOX, self.OnCheck,   self.chkbox)
+        self.Bind(wx.EVT_BUTTON,   self.OnOptions, optnbtn)
 
-    def onCheck(self, event):
+    def OnCheck(self, event):
         """
         Handler for checkbox for displaying/hiding decoration
         """
         check = event.IsChecked()
         self.ovlchk[self.drawid] = check
 
-    def onOptions(self, event):
+    def OnOptions(self, event):
         """
         Sets option for decoration map overlays
         """
-
-        menuform.GUI().parseCommand(self.ovlcmd, gmpath,
-                                    completed=(self.Parent.GetOptData,self.ovltype,self.params),
-                                    parentframe=None)
+        # display properties dialog (modal mode)
+        menuform.GUI().ParseCommand(self.ovlcmd, gmpath,
+                                    completed=(self.parent.GetOptData, self.ovltype, self.params),
+                                    parentframe=self, modal=True)
 
 class TextDialog(wx.Dialog):
+    """
+    Controls setting options and displaying/hiding map overlay decorations
+    """
+
     def __init__(self, parent, id, title, pos=wx.DefaultPosition, size=wx.DefaultSize,
-            style=wx.DEFAULT_DIALOG_STYLE,
-            ovltype=2,drawid=None):
+                 style=wx.DEFAULT_DIALOG_STYLE,
+                 ovltype=2,drawid=None):
+        
         wx.Dialog.__init__(self, parent, id, title, pos, size, style)
-        """
-        Controls setting options and displaying/hiding map overlay decorations
-        """
 
         self.ovltype = ovltype
-        self.drawid = drawid
-
-        if drawid in self.Parent.MapWindow.textdict:
-            self.currText,self.currFont,self.currClr,self.currRot = self.Parent.MapWindow.textdict[drawid]
+        self.drawid  = drawid
+        self.parent  = parent
+        
+        if drawid in self.parent.MapWindow.textdict:
+            self.currText, self.currFont, self.currClr, self.currRot = self.parent.MapWindow.textdict[drawid]
         else:
             self.currClr = wx.BLACK
             self.currText = ''
             self.currFont = self.GetFont()
-            self.currRot = 0
+            self.currRot = 0.0
 
         sizer = wx.BoxSizer(wx.VERTICAL)
 
         box = wx.BoxSizer(wx.HORIZONTAL)
-        label = wx.StaticText(self, -1, "Enter text:")
+        label = wx.StaticText(self, wx.ID_ANY, _("Enter text:"))
         box.Add(label, 0, wx.ALIGN_CENTRE|wx.ALL, 5)
-        self.textentry = wx.TextCtrl(self, -1, "", size=(200,-1))
+        
+        self.textentry = wx.TextCtrl(self, wx.ID_ANY, "", size=(200,-1))
         self.textentry.SetFont(self.currFont)
         self.textentry.SetForegroundColour(self.currClr)
         self.textentry.SetValue(self.currText)
@@ -1961,11 +1990,11 @@ class TextDialog(wx.Dialog):
         sizer.Add(box, 0, wx.GROW|wx.ALIGN_CENTER_VERTICAL|wx.ALL, 5)
 
         box = wx.BoxSizer(wx.HORIZONTAL)
-        label = wx.StaticText(self, -1, "Rotation:")
+        label = wx.StaticText(self, wx.ID_ANY, "Rotation:")
         box.Add(label, 0, wx.ALIGN_CENTRE|wx.ALL, 5)
         self.rotation = wx.SpinCtrl(self, id=wx.ID_ANY, value="", pos=(30, 50),
                         size=(75,-1), style=wx.SP_ARROW_KEYS)
-        self.rotation.SetRange(-360,360)
+        self.rotation.SetRange(-360, 360)
         self.rotation.SetValue(int(self.currRot))
         box.Add(self.rotation, 0, wx.ALIGN_CENTRE|wx.ALL, 5)
         sizer.Add(box, 0, wx.GROW|wx.ALIGN_CENTER_VERTICAL|wx.ALL, 5)
@@ -1976,11 +2005,11 @@ class TextDialog(wx.Dialog):
         sizer.Add(box, 0, wx.GROW|wx.ALIGN_CENTER_VERTICAL|wx.ALL, 5)
 
         box = wx.BoxSizer(wx.HORIZONTAL)
-        label = wx.StaticText(self, -1, ("Drag text with mouse in pointer mode\nto position. Double-click to change options"))
+        label = wx.StaticText(self, wx.ID_ANY, ("Drag text with mouse in pointer mode\nto position. Double-click to change options"))
         box.Add(label, 0, wx.ALIGN_CENTRE|wx.ALL, 5)
         sizer.Add(box, 0, wx.GROW|wx.ALIGN_CENTER_VERTICAL|wx.ALL, 5)
 
-        line = wx.StaticLine(self, -1, size=(20,-1), style=wx.LI_HORIZONTAL)
+        line = wx.StaticLine(self, wx.ID_ANY, size=(20,-1), style=wx.LI_HORIZONTAL)
         sizer.Add(line, 0, wx.GROW|wx.ALIGN_CENTER_VERTICAL|wx.RIGHT|wx.TOP, 5)
 
         btnsizer = wx.StdDialogButtonSizer()
@@ -1998,17 +2027,25 @@ class TextDialog(wx.Dialog):
         self.SetSizer(sizer)
         sizer.Fit(self)
 
-        self.Bind(wx.EVT_BUTTON, self.onSelectFont, fontbtn)
-        self.textentry.Bind(wx.EVT_TEXT, self.onText)
-        self.rotation.Bind(wx.EVT_TEXT, self.onRotation)
-
-    def onText(self, event):
+        # bindings
+        self.Bind(wx.EVT_BUTTON,     self.OnSelectFont, fontbtn)
+        self.Bind(wx.EVT_TEXT,       self.OnText,       self.textentry)
+        self.Bind(wx.EVT_SPINCTRL,   self.OnRotation,   self.rotation)
+        
+    def OnText(self, event):
+        """Change text string"""
         self.currText = event.GetString()
 
-    def onRotation(self, event):
-        self.currRot = event.GetString()
+    def OnRotation(self, event):
+        """Change rotation"""
+        self.currRot = event.GetInt()
+        Debug.msg (5, "TextDialog.OnRotation(): rotation=%f" % \
+               self.currRot)
 
-    def onSelectFont(self, event):
+        event.Skip()
+        
+    def OnSelectFont(self, event):
+        """Change font"""
         data = wx.FontData()
         data.EnableEffects(True)
         data.SetColour(self.currClr)         # set colour
@@ -2045,7 +2082,7 @@ class SavedRegion(wx.Dialog):
 
         box = wx.BoxSizer(wx.HORIZONTAL)
         if loadsave == 'load':
-            label = wx.StaticText(self, -1, "Load region:")
+            label = wx.StaticText(self, wx.ID_ANY, "Load region:")
             box.Add(label, 0, wx.ALIGN_CENTRE|wx.ALL, 5)
             self.selection = select.Select(self, id=wx.ID_ANY, size=(300,-1),
                                               type='windows')
@@ -2053,16 +2090,16 @@ class SavedRegion(wx.Dialog):
             self.selection.Bind(wx.EVT_TEXT, self.onSelection)
 
         elif loadsave == 'save':
-            label = wx.StaticText(self, -1, "Save region:")
+            label = wx.StaticText(self, wx.ID_ANY, "Save region:")
             box.Add(label, 0, wx.ALIGN_CENTRE|wx.ALL, 5)
-            self.textentry = wx.TextCtrl(self, -1, "", size=(200,-1))
+            self.textentry = wx.TextCtrl(self, wx.ID_ANY, "", size=(200,-1))
             box.Add(self.textentry, 0, wx.ALIGN_CENTRE|wx.ALL, 5)
             self.textentry.Bind(wx.EVT_TEXT, self.onText)
 
         sizer.Add(item=box, proportion=0, flag=wx.GROW|wx.ALIGN_CENTER_VERTICAL|wx.ALL,
                   border=5)
 
-        line = wx.StaticLine(self, -1, size=(20,-1), style=wx.LI_HORIZONTAL)
+        line = wx.StaticLine(self, wx.ID_ANY, size=(20,-1), style=wx.LI_HORIZONTAL)
         sizer.Add(item=line, proportion=0,
                   flag=wx.GROW|wx.ALIGN_CENTER_VERTICAL|wx.LEFT|wx.RIGHT, border=5)
 

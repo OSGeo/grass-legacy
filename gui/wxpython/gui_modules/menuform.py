@@ -110,21 +110,21 @@ BUTTON_WIDTH = 100
 # From lib/gis/col_str.c, except purple which is mentioned
 # there but not given RGB values
 str2rgb = {'aqua': (100, 128, 255),
- 'black': (0, 0, 0),
- 'blue': (0, 0, 255),
- 'brown': (180, 77, 25),
- 'cyan': (0, 255, 255),
- 'gray': (128, 128, 128),
- 'green': (0, 255, 0),
+           'black': (0, 0, 0),
+           'blue': (0, 0, 255),
+           'brown': (180, 77, 25),
+           'cyan': (0, 255, 255),
+           'gray': (128, 128, 128),
+           'green': (0, 255, 0),
  'grey': (128, 128, 128),
- 'indigo': (0, 128, 255),
- 'magenta': (255, 0, 255),
- 'orange': (255, 128, 0),
- 'purple': (128, 0, 128),
- 'red': (255, 0, 0),
- 'violet': (128, 0, 255),
- 'white': (255, 255, 255),
- 'yellow': (255, 255, 0)}
+           'indigo': (0, 128, 255),
+           'magenta': (255, 0, 255),
+           'orange': (255, 128, 0),
+           'purple': (128, 0, 128),
+           'red': (255, 0, 0),
+           'violet': (128, 0, 255),
+           'white': (255, 255, 255),
+           'yellow': (255, 255, 0)}
 rgb2str = {}
 for (s,r) in str2rgb.items():
     rgb2str[ r ] = s
@@ -1073,7 +1073,7 @@ class GUI:
     def __init__(self, parent=-1):
         self.parent = parent
 
-    def ParseCommand(self, cmd, gmpath, completed=None, parentframe=-1 ):
+    def ParseCommand(self, cmd, gmpath, completed=None, parentframe=-1, modal=False):
         """
         Parse command
 
@@ -1107,7 +1107,7 @@ class GUI:
 
             self.mf = mainFrame(parent=self.parent, ID=wx.ID_ANY, task_description=self.grass_task, get_dcmd=get_dcmd, layer=layer)
             self.mf.Show(True)
-            self.mf.MakeModal(False)
+            self.mf.MakeModal(modal)
 
 
 if __name__ == "__main__":
