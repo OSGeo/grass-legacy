@@ -33,13 +33,14 @@
 #include <grass/G3d.h>
 #include <grass/dbmi.h>
 #include <grass/Vect.h>
+#include <grass/bitmap.h>
+#include <grass/glocale.h>
 #include "oct.h"
 #include "surf.h"
 #include "dataoct.h"
 #include "userextern.h"
 #include "userglobs.h"
 #include "user.h"
-#include <grass/bitmap.h>
 
 
 /*
@@ -59,7 +60,7 @@
      (mca 2/12/96)    
  */
 
-int INPUT ( struct Map_info *In, char *column, char *scol)
+int INPUT ( struct Map_info *In, char *column, char *scol, char *wheresql)
 {
   struct quadruple   *point;
   double          x, y, z, w, nz = 0., sm;
@@ -88,32 +89,31 @@ int INPUT ( struct Map_info *In, char *column, char *scol)
   if (scol != NULL)
   db_CatValArray_init ( &sarray );
   Fi = Vect_get_field( In, 1);
-
-  if ( Fi == NULL ) G_fatal_error ("Cannot read field info");
+  if ( Fi == NULL ) G_fatal_error (_("Cannot get layer info"));
 
   Driver = db_start_driver_open_database ( Fi->driver, Fi->database );
   if (Driver == NULL) 
-      G_fatal_error("Cannot open database %s by driver %s", Fi->database, Fi->driver);
+      G_fatal_error(_("Cannot open database %s"), Fi->database);
 
-  nrec = db_select_CatValArray ( Driver, Fi->table, Fi->key, column, NULL, &cvarr );
+  nrec = db_select_CatValArray ( Driver, Fi->table, Fi->key, column, wheresql, &cvarr );
   ctype = cvarr.ctype;
   G_debug (3, "nrec = %d", nrec );
 
   if ( ctype != DB_C_TYPE_INT && ctype != DB_C_TYPE_DOUBLE )
-      G_fatal_error ( "Column type not supported" );
+      G_fatal_error ( _("Column type of wcolumn is not supported (must be integer or double)") );
 
   if ( nrec < 0 ) G_fatal_error ("Cannot select data from table");
   G_message ( "%d records selected from table", nrec);
 
   if (scol != NULL) {
 
-  nrec1 = db_select_CatValArray ( Driver, Fi->table, Fi->key, scol, NULL, &sarray );
+  nrec1 = db_select_CatValArray ( Driver, Fi->table, Fi->key, scol, wheresql, &sarray );
   sctype = cvarr.ctype;
   
   if ( sctype == -1 ) G_fatal_error ( "Cannot read column type of smooth column" );
   if ( sctype == DB_C_TYPE_DATETIME ) G_fatal_error ( "Column type of smooth column (datetime) is not supported" );
   if ( sctype != DB_C_TYPE_INT && sctype != DB_C_TYPE_DOUBLE )
-      G_fatal_error ( "Column type of s column is not supported (must be integer or double)" );
+      G_fatal_error ( _("Column type of smooth column is not supported (must be integer or double)") );
   }
   
   Points = Vect_new_line_struct ();
@@ -149,8 +149,13 @@ int INPUT ( struct Map_info *In, char *column, char *scol)
     }
 
     if ( ret != DB_OK ) {
-	G_warning ("No record for point (cat = %d)", cat );
-	continue;
+      if (wheresql != NULL )
+        /* G_message(_("Database record for cat %d not used due to SQL statement")); */
+        /* do nothing in this case to not confuse user. Or implement second cat list */
+        ;
+      else
+        G_warning(_("Database record for cat %d not found"), cat);
+        continue;
     }
 
     if ( rsm == -1 && scol != NULL ) {
@@ -186,7 +191,7 @@ int INPUT ( struct Map_info *In, char *column, char *scol)
       OUTRANGE++;
     } else {
       if (!(point = point_new (x, y, z, w, sm))) {
-	clean_fatal_error("cannot allocate memory for point");
+	clean_fatal_error("Cannot allocate memory for point");
       }
 	  
       a=OT_insert_oct (point, root);
@@ -194,7 +199,7 @@ int INPUT ( struct Map_info *In, char *column, char *scol)
 	NPOINT++;
       }
       if(a<0) {
-	fprintf (stderr,"can't insert %lf,%lf,%lf,%lf,%lf a=%d\n",x,y,z,w,sm,a);
+	G_warning("Can't insert %lf,%lf,%lf,%lf,%lf a=%d\n",x,y,z,w,sm,a);
 	return -1;
       }
 	  

@@ -66,6 +66,69 @@ be larger than <i>segmax</i> and less than 700. This limit of 700 was
 selected to ensure the numerical stability and efficiency of the
 algorithm. </p>
 
+<h3>EXAMPLE</h3>
+
+<!-- TODO: find better data -->
+Spearfish example (we simulate 3D soil range data):
+
+<div class="code"><pre>
+g.region -dp
+# define volume
+g.region res=50 tbres=50 b=0 t=1500 -ap3
+
+# random elevation extraction (2D)
+r.random elevation.10m vector_output=elevrand n=200
+
+# conversion to 3D
+v.db.addcol elevrand col="x double precision, y double precision"
+v.to.db elevrand option=coor col=x,y
+v.db.select elevrand
+
+# create new 3D map
+v.in.db elevrand out=elevrand_3d x=x y=y z=value key=cat
+v.info -c elevrand_3d
+v.info -t elevrand_3d
+
+# remove the now superfluous 'x', 'y' and 'value' (z) columns
+v.db.dropcol elevrand_3d col=x
+v.db.dropcol elevrand_3d col=y
+v.db.dropcol elevrand_3d col=value
+
+# add attribute to interpolate
+# (Soil range types taken from the USDA Soil Survey)
+d.rast soils.range
+d.vect elevrand_3d
+v.db.addcol elevrand_3d col="soilrange integer"
+v.what.rast elevrand_3d col=soilrange rast=soils.range
+
+# fix 0 (no data in raster map) to NULL:
+v.db.update elevrand_3d col=soilrange value=NULL where="soilrange=0"
+v.db.select elevrand_3d
+
+# interpolate volume
+v.vol.rst elevrand_3d wcol=soilrange elev=soilrange
+
+# visualize
+nviz elevation.10m vol=soilrange
+
+# export to Paraview
+r.out.vtk elevation.10m out=elev.vtk
+r3.out.vtk elevrand_3d out=volume.vtk
+paraview
+</pre></div>
+
+
+<h3>SQL support</h3>
+
+Using the <em>where</em> parameter, the interpolation can be limited to use
+only a subset of the input vectors.
+
+<div class="code"><pre>
+# preparation as in above example
+v.vol.rst elevrand_3d wcol=soilrange elev=soilrange where="soilrange > 3"
+</pre></div>
+
+
 <h3>Cross validation procedure</h3>
 
 Sometimes it can be difficult to figure out the proper values of

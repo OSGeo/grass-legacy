@@ -183,8 +183,8 @@ int main (int argc, char *argv[])
 
     struct
     {
-       struct Option  *input, *colnum, *scol, *rescalex, *fi, *segmax, *dmin1, *npmin, *wmult,
- 	     *outz, *rsm, *maskmap,*zmult, *cvdev,
+       struct Option  *input, *colnum, *scol, *wheresql, *rescalex, *fi, *segmax, *dmin1,
+             *npmin, *wmult, *outz, *rsm, *maskmap,*zmult, *cvdev,
  	     *gradient,*aspect1,*aspect2,*ncurv,*gcurv,*mcurv,*cellinp,*cellout,*devi;
     }  parm;
 
@@ -272,6 +272,8 @@ int main (int argc, char *argv[])
     parm.scol->description =
         _("Name of the column with smoothing parameters");
     parm.scol->guisection  = _("Settings");
+
+    parm.wheresql = G_define_standard_option(G_OPT_WHERE);
 
     parm.devi = G_define_option ();
     parm.devi->key = "devi";
@@ -528,9 +530,9 @@ int main (int argc, char *argv[])
     Vect_open_old ( &In, input, "" );
 
     if ( !Vect_is_3d(&In) )
-	G_warning ( "The vector is not 3D" );
+	G_warning (_("Vector is not 3D")); 
 
-    ii=INPUT( &In, parm.colnum->answer, parm.scol->answer);
+    ii=INPUT( &In, parm.colnum->answer, parm.scol->answer, parm.wheresql->answer);
 
     Vect_close ( &In );
 
