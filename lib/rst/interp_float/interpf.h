@@ -67,7 +67,7 @@ struct interp_params
    double (*interp) ();                     /* radial  based interp. function*/
    int    (*interpder) ();                  /* interp. func. for derivatives */
    int    (*wr_temp) ();                    /* writes temp files */
-
+   char   *wheresql;                        /* SQL statement to select input points */
 };
 /* distance.c */
 double IL_dist_square(double *, double *, int);
@@ -81,7 +81,7 @@ void IL_init_params_2d(struct interp_params *, FILE *, int, int, double,
    double, int, int, int, int, double,
    char *, char *, char *, char *, char *, char *,
    double, double, double, int, double, double,
-   FILE *, FILE *, FILE *, FILE *, FILE *, FILE *, FILE *, struct TimeStamp *,int);
+   FILE *, FILE *, FILE *, FILE *, FILE *, FILE *, FILE *, struct TimeStamp *, int, char *);
 
 void IL_init_func_2d(struct interp_params *, int (*)(), int (*)(), int (*)(), int (*)(), double (*)(), int (*)(), int (*)());
 /* input2d.c */

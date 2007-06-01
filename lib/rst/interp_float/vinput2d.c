@@ -69,7 +69,7 @@ int IL_vector_input_data_2d (
   OUTRANGE = 0;
   npoint = 0;
 
- G_debug(2, "IL_vector_input_data_2d(): field = %d, zcol = %s, scol = %s", field, zcol, scol);
+  G_debug(2, "IL_vector_input_data_2d(): field = %d, zcol = %s, scol = %s", field, zcol, scol);
   ns_res = (data->ymax - data->y_orig) / data->n_rows;
   ew_res = (data->xmax - data->x_orig) / data->n_cols;
   dmax2=*dmax * *dmax;
@@ -81,7 +81,7 @@ int IL_vector_input_data_2d (
 	G_fatal_error(_("Vector is not 3D"));
 
   if ( field > 0 && zcol != NULL ) { /* open db driver */
-    fprintf (stdout, "Loading data from attribute table ...\n");
+    G_message(_("Loading data from attribute table ..."));
     Fi = Vect_get_field( Map, field);
     if ( Fi == NULL )
 	G_fatal_error(_("Cannot get layer info"));   
@@ -101,7 +101,8 @@ int IL_vector_input_data_2d (
 	G_fatal_error(_("Column type of z column is not supported (must be integer or double)"));
 
     db_CatValArray_init ( &zarray );
-    db_select_CatValArray ( driver, Fi->table, Fi->key, zcol, NULL, &zarray );
+    G_debug ( 3, "RST SQL WHERE: %s", params->wheresql);
+    db_select_CatValArray ( driver, Fi->table, Fi->key, zcol, params->wheresql, &zarray );
 
     if ( scol != NULL ) {
 	sctype = db_column_Ctype ( driver, Fi->table, scol );
@@ -114,14 +115,14 @@ int IL_vector_input_data_2d (
 	    G_fatal_error(_("Column type of s column is not supported (must be integer or double)"));
 
 	db_CatValArray_init ( &sarray );
-	db_select_CatValArray ( driver, Fi->table, Fi->key, scol, NULL, &sarray );
+	db_select_CatValArray ( driver, Fi->table, Fi->key, scol, params->wheresql, &sarray );
     }
 
   db_close_database_shutdown_driver ( driver );
   }
 	
   /* Lines without nodes */
-  fprintf (stderr, "Reading lines from vector map ... ");
+  G_message( _("Reading lines from vector map ... "));
   sm = 0;
   line=1;
   while ( (ltype=Vect_read_next_line(Map, Points, Cats)) != -2 ) { 
@@ -145,7 +146,12 @@ int IL_vector_input_data_2d (
 	    }
 
 	    if ( ret != DB_OK ) {
-		G_warning(_("Database record for cat %d not found"), cat);
+		if (params->wheresql != NULL )
+		    /* G_message(_("Database record for cat %d not used due to SQL statement")); */
+		    /* do nothing in this case to not confuse user. Or implement second cat list */
+		   ;
+		else
+		    G_warning(_("Database record for cat %d not found"), cat);
 		continue;
 	    }
 		
@@ -209,7 +215,7 @@ int IL_vector_input_data_2d (
   }
 
     /* Process all nodes */
-  fprintf (stderr, "Reading nodes from vector map ... ");
+  G_message ( _("Reading nodes from vector map ... "));
   nnodes = Vect_get_num_nodes (Map);
   for (k1 = 1; k1 <= nnodes; k1++) {
     G_debug ( 5, "  node %d", k1 );
@@ -236,8 +242,13 @@ int IL_vector_input_data_2d (
             }
 
             if ( ret != DB_OK ) {
-                G_warning(_("Database record for cat %d not found"), cat);
-                continue;
+		if (params->wheresql != NULL )
+		    /* G_message(_("Database record for cat %d not used due to SQL statement")); */
+		    /* do nothing in this case to not confuse user. Or implement second cat list */
+		   ;
+		else
+		    G_warning(_("Database record for cat %d not found"), cat);
+		continue;
             }
 
             if ( scol != NULL ) {

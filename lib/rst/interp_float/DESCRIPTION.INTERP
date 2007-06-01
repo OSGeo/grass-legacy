@@ -42,7 +42,8 @@ struct interp_params
    double (*interp) ();                     /* radial basis function */
    int    (*interpder) ();                  /* derivatives of radial basis function */
    int    (*wr_temp) ();                    /* writes temp files */
-
+   int c,                                   /* cross validation */
+   char *wheresql                           /* SQL WHERE */
 };
 
 

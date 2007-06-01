@@ -88,6 +88,7 @@ char *input;
 int field;
 char *zcol;
 char *scol;
+char *wheresql;
 char *mapset = NULL;
 char *mapset1 = NULL;
 char *elev = NULL;
@@ -131,7 +132,7 @@ int main(int argc, char *argv[])
     double x_orig, y_orig, dnorm, deltx, delty, xm, ym;
     char dmaxchar[200];
     char dminchar[200];
-    Site_head inhead, devihead;
+    Site_head inhead;
     struct quaddata *data;
     struct multfunc *functions;
     struct multtree *tree;
@@ -141,7 +142,7 @@ int main(int argc, char *argv[])
     struct GModule *module;
     struct
     {
-	struct Option *input, *field, *zcol, *scol, *elev, *slope, *aspect,
+	struct Option *input, *field, *zcol, *wheresql, *scol, *elev, *slope, *aspect,
 	    *pcurv, *tcurv, *mcurv, *treefile, *overfile, *maskmap, *dmin,
 	    *dmax, *zmult, *fi, *rsm, *segmax, *npmin, *cvdev, *devi, 
 	    *theta, *scalex;
@@ -197,12 +198,7 @@ int main(int argc, char *argv[])
 	_("Output partial derivatives instead of topographic parameters");
     flag.deriv->guisection  = _("Output_options");
 
-    parm.input = G_define_option();
-    parm.input->key = "input";
-    parm.input->type = TYPE_STRING;
-    parm.input->required = YES;
-    parm.input->gisprompt = "old,vector,vector";
-    parm.input->description = _("Name of the vector map with input data");
+    parm.input = G_define_standard_option(G_OPT_V_INPUT);
 
     parm.field = G_define_standard_option(G_OPT_V_FIELD);
     parm.field->description =
@@ -215,6 +211,8 @@ int main(int argc, char *argv[])
     parm.zcol->required = NO;
     parm.zcol->description =
 	_("Name of the attribute column with values to be used for approximation (if layer>0)");
+
+    parm.wheresql = G_define_standard_option(G_OPT_WHERE);
 
     parm.elev = G_define_option();
     parm.elev->key = "elev";
@@ -396,6 +394,7 @@ int main(int argc, char *argv[])
     field = atoi(parm.field->answer);
     zcol = parm.zcol->answer;
     scol = parm.scol->answer;
+    wheresql = parm.wheresql->answer;
     maskmap = parm.maskmap->answer;
     elev = parm.elev->answer;
     devi = parm.devi->answer;
@@ -420,7 +419,10 @@ int main(int argc, char *argv[])
 	  && (cvdev == NULL) )
 	G_warning(_("You are not outputing any raster or vector maps"));
 
-
+    if ( parm.wheresql->answer != NULL ) {
+        if ( field < 1 )
+            G_fatal_error ( _("'layer' must be > 0 for 'where'.") );
+    }
     cond2 = ((pcurv != NULL) || (tcurv != NULL) || (mcurv != NULL));
     cond1 = ((slope != NULL) || (aspect != NULL) || cond2);
     deriv = flag.deriv->answer;
@@ -658,7 +660,7 @@ int main(int argc, char *argv[])
 		      SCIK1, SCIK2, SCIK3, rsm, elev, slope, aspect, pcurv,
 		      tcurv, mcurv, dmin, x_orig, y_orig, deriv, theta,
 		      scalex, Tmp_fd_z, Tmp_fd_dx, Tmp_fd_dy, Tmp_fd_xx,
-		      Tmp_fd_yy, Tmp_fd_xy, devi, inhead.time, cv);
+		      Tmp_fd_yy, Tmp_fd_xy, devi, inhead.time, cv, parm.wheresql->answer);
 
     IL_init_func_2d(&params, IL_grid_calc_2d, IL_matrix_create,
 		    IL_check_at_points_2d, IL_secpar_loop_2d, IL_crst,
