@@ -1,4 +1,4 @@
-# translation of grasslibs_es.po to español
+# translation of grasslibs_es.po to Español
 # translation of grasslibs_es.po to
 # Spanish translation of grasslibs.pot
 # This file is distributed under the same license as the GRASS package.
@@ -14,10 +14,10 @@ msgid ""
 msgstr ""
 "Project-Id-Version: grasslibs_es\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2007-05-21 00:24+0200\n"
-"PO-Revision-Date: 2007-05-25 08:11+0200\n"
+"POT-Creation-Date: 2007-06-01 16:56+0200\n"
+"PO-Revision-Date: 2007-06-01 16:59+0200\n"
 "Last-Translator: Carlos Davila <carluti@users.sourceforge.net>\n"
-"Language-Team: español <grass-es@itc.it.org>\n"
+"Language-Team: Español <grass-es@grass.itc.it>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=ISO-8859-1\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -36,6 +36,10 @@ msgstr ""
 #: ../lib/rst/interp_float/vinput2d.c:81
 msgid "Vector is not 3D"
 msgstr "El vector no es 3D"
+
+#: ../lib/rst/interp_float/vinput2d.c:84
+msgid "Loading data from attribute table ..."
+msgstr "Cargando datos de la tabla de atributos..."
 
 #: ../lib/rst/interp_float/vinput2d.c:87
 msgid "Cannot get layer info"
@@ -57,41 +61,49 @@ msgstr ""
 msgid "Column type of z column is not supported (must be integer or double)"
 msgstr "No se soportan columnas con valores z (debe ser entero o doble)"
 
-#: ../lib/rst/interp_float/vinput2d.c:110
+#: ../lib/rst/interp_float/vinput2d.c:111
 msgid "Cannot read column type of smooth column"
 msgstr "No se puede leer una columna del tipo columna con valores suavizados"
 
-#: ../lib/rst/interp_float/vinput2d.c:112
+#: ../lib/rst/interp_float/vinput2d.c:113
 msgid "Column type of smooth column (datetime) is not supported"
 msgstr ""
 "No se soportan columnas del tipo columna con valores suavizados (fecha / "
 "hora)"
 
-#: ../lib/rst/interp_float/vinput2d.c:114
+#: ../lib/rst/interp_float/vinput2d.c:115
 msgid "Column type of s column is not supported (must be integer or double)"
 msgstr "No se soportan columnas del tipo columna s (debe ser entero o doble)"
 
-#: ../lib/rst/interp_float/vinput2d.c:148
-#: ../lib/rst/interp_float/vinput2d.c:239
+#: ../lib/rst/interp_float/vinput2d.c:125
+msgid "Reading lines from vector map ... "
+msgstr "Leyendo líneas del mapa vectorial... "
+
+#: ../lib/rst/interp_float/vinput2d.c:154
+#: ../lib/rst/interp_float/vinput2d.c:250
 #, c-format
 msgid "Database record for cat %d not found"
 msgstr "No se encuentran registros de base de datos para la categoría %d"
 
-#: ../lib/rst/interp_float/vinput2d.c:277
+#: ../lib/rst/interp_float/vinput2d.c:218
+msgid "Reading nodes from vector map ... "
+msgstr "Leyendo nodos del mapa vectorial... "
+
+#: ../lib/rst/interp_float/vinput2d.c:288
 msgid "strip exists with insufficient data"
 msgstr "La franja no tiene suficientes datos"
 
-#: ../lib/rst/interp_float/vinput2d.c:291
+#: ../lib/rst/interp_float/vinput2d.c:302
 #, c-format
 msgid "there are points outside specified 2D/3D region--ignored %d points"
 msgstr "Hay puntos fuera de la región 2D/3D especificada -- se ignoraron %d puntos"
 
-#: ../lib/rst/interp_float/vinput2d.c:293
+#: ../lib/rst/interp_float/vinput2d.c:304
 #, c-format
 msgid "ignoring %d points -- too dense"
 msgstr "Se ignoran %d puntos -- demasiado denso"
 
-#: ../lib/rst/interp_float/vinput2d.c:299
+#: ../lib/rst/interp_float/vinput2d.c:310
 #, c-format
 msgid ""
 "%d points given for interpolation (after thinning) is less than given NPMIN=%"
@@ -100,7 +112,7 @@ msgstr ""
 "Los %d puntos empledos para la interpolación (después de afinar) son menos "
 "que los especificados inicialmente NPMIN =%d"
 
-#: ../lib/rst/interp_float/vinput2d.c:316
+#: ../lib/rst/interp_float/vinput2d.c:327
 #, c-format
 msgid ""
 "There are less than %d points for interpolation. No segmentation is "
@@ -110,7 +122,7 @@ msgstr ""
 "segmentación, para ejecutar el programa más rápido ajuste segmax=%d "
 "(consulte el manual)"
 
-#: ../lib/rst/interp_float/vinput2d.c:368
+#: ../lib/rst/interp_float/vinput2d.c:379
 msgid "some points outside of region -- will ignore..."
 msgstr "algunos puntos están fuera de la región -- se ignorarán"
 
@@ -1726,11 +1738,11 @@ msgstr "error desconocido"
 msgid "bad rule (%s): %s"
 msgstr "Regla erronea (%s): %s"
 
-#: ../lib/gis/error.c:250
+#: ../lib/gis/error.c:272
 msgid "WARNING: "
 msgstr "ATENCIÓN: "
 
-#: ../lib/gis/error.c:251
+#: ../lib/gis/error.c:273
 msgid "ERROR: "
 msgstr "ERROR:"
 
@@ -1833,25 +1845,34 @@ msgstr "%s no inicializado"
 msgid "unable to determine user's home directory"
 msgstr "no es posible determinar el directorio home del usuario"
 
-#: ../lib/gis/list.c:124
+#: ../lib/gis/ls.c:63
 #, c-format
-msgid "no %s files available in current mapset\n"
-msgstr "no hay archivos %s disponibles en el directorio de mapas actual\n"
+msgid "Can't open directory %s"
+msgstr "No se puede abrir el directorio %s"
 
-#: ../lib/gis/list.c:126
+#: ../lib/gis/list.c:125
 #, c-format
-msgid "no %s files available in mapset %s\n"
-msgstr " %s archivos no están disponibles en el directorio de mapas %s\n"
+msgid "no <%s> files available in current mapset\n"
+msgstr "no hay archivos <%s> disponibles en el directorio de mapas actual\n"
 
-#: ../lib/gis/list.c:140
+#: ../lib/gis/list.c:127
+#, c-format
+msgid "no <%s> files available in mapset <%s>\n"
+msgstr "no hay archivos <%s> disponibles en el directorio de mapas <%s>\n"
+
+#: ../lib/gis/list.c:141
 #, c-format
 msgid "hit RETURN to continue -->"
 msgstr "Presiona ENTER para continuar -->"
 
-#: ../lib/gis/list.c:225
+#: ../lib/gis/list.c:193
 #, c-format
-msgid "%s files available in mapset %s:\n"
-msgstr "%s archivos disponibles en el directorio de mapas %s:\n"
+msgid "<%s> files available in mapset <%s>:\n"
+msgstr "<%s> archivos disponibles en el directorio de mapas <%s>:\n"
+
+#: ../lib/gis/list.c:273
+msgid "G_list: Unknown element type"
+msgstr "G_list: tipo de elemento desconocido"
 
 #: ../lib/gis/quant_io.c:92
 #, c-format
@@ -1915,6 +1936,16 @@ msgstr "G_put_title - no es posible reabrir el archivo temporal"
 #, c-format
 msgid "can't write category information for [%s] in [%s]"
 msgstr "no es posible escribir la categoría para [%s] en [%s]"
+
+#: ../lib/gis/raster_metadata.c:111
+#, c-format
+msgid "Can't read %s for [%s in %s]"
+msgstr "No se puede leer %s para [%s en %s]"
+
+#: ../lib/gis/raster_metadata.c:143
+#, c-format
+msgid "Can't create %s metadata file for [%s in %s]"
+msgstr "No se puede crear el archivo de metadatos de %s para [%s en %s]"
 
 #: ../lib/gis/range.c:195
 #, c-format
@@ -2352,92 +2383,92 @@ msgstr "Ninguno"
 msgid "not known"
 msgstr "deconocido"
 
-#: ../lib/gis/parser.c:342
+#: ../lib/gis/parser.c:343
 msgid "WHERE conditions of SQL statement without 'where' keyword"
 msgstr "Condiciones DONDE de sentencia SQL sin condición 'donde'"
 
-#: ../lib/gis/parser.c:343
+#: ../lib/gis/parser.c:344
 msgid "Example: income < 1000 and inhab >= 10000"
 msgstr "Ejemplo: salario < 1000 y habitantes >=10000"
 
-#: ../lib/gis/parser.c:351
+#: ../lib/gis/parser.c:352
 msgid "Name of attribute column"
 msgstr "Nombre de la columna de atributos"
 
-#: ../lib/gis/parser.c:359
+#: ../lib/gis/parser.c:360
 msgid "Name of attribute column(s)"
 msgstr "Nombre de la columna(s) de atributos"
 
-#: ../lib/gis/parser.c:368
+#: ../lib/gis/parser.c:369
 msgid "Name of input imagery group"
 msgstr "Nombre del grupo de imágenes"
 
-#: ../lib/gis/parser.c:377 ../lib/gis/parser.c:402
+#: ../lib/gis/parser.c:378 ../lib/gis/parser.c:403
 msgid "Name of input raster map"
 msgstr "Nombre del raster de entrada"
 
-#: ../lib/gis/parser.c:386 ../lib/gis/parser.c:411
+#: ../lib/gis/parser.c:387 ../lib/gis/parser.c:412
 msgid "Name of input raster map(s)"
 msgstr "Nombre del raster de entrada"
 
-#: ../lib/gis/parser.c:394
+#: ../lib/gis/parser.c:395
 msgid "Name for output raster map"
 msgstr "Nombre del raster de salida"
 
-#: ../lib/gis/parser.c:419
+#: ../lib/gis/parser.c:420
 msgid "Name of base raster map"
 msgstr "Nombre del raster de entrada"
 
-#: ../lib/gis/parser.c:427
+#: ../lib/gis/parser.c:428
 msgid "Name of cover raster map"
 msgstr "Nombre del raster de salida"
 
-#: ../lib/gis/parser.c:435
+#: ../lib/gis/parser.c:436
 msgid "Name of elevation raster map"
 msgstr "Nombre del archivo raster de elevaciones"
 
-#: ../lib/gis/parser.c:444
+#: ../lib/gis/parser.c:445
 msgid "Name of elevation raster map(s)"
 msgstr "Nombre del mapa (o mapas) raster de elevaciones"
 
-#: ../lib/gis/parser.c:454
+#: ../lib/gis/parser.c:455
 msgid "Name of input raster3d map"
 msgstr "Nombre del mapa de entrada raster3d"
 
-#: ../lib/gis/parser.c:463
+#: ../lib/gis/parser.c:464
 msgid "Name of input raster3d map(s)"
 msgstr "Nombre del mapa(s) ráster 3D de entrada"
 
-#: ../lib/gis/parser.c:471
+#: ../lib/gis/parser.c:472
 msgid "Name for output raster3d map"
 msgstr "Nombre del mapa(s) ráster de salida"
 
-#: ../lib/gis/parser.c:481 ../lib/gis/parser.c:506
+#: ../lib/gis/parser.c:482 ../lib/gis/parser.c:507
 msgid "Name of input vector map"
 msgstr "Nombre del mapa vectorial de entrada"
 
-#: ../lib/gis/parser.c:490
+#: ../lib/gis/parser.c:491
 msgid "Name of input vector map(s)"
 msgstr "Nombre del mapa(s) vectorial de entrada"
 
-#: ../lib/gis/parser.c:498
+#: ../lib/gis/parser.c:499
 msgid "Name for output vector map"
 msgstr "Nombre del mapa vectorial de salida"
 
-#: ../lib/gis/parser.c:515
+#: ../lib/gis/parser.c:516
 msgid "Type"
 msgstr "Tipo"
 
-#: ../lib/gis/parser.c:516
+#: ../lib/gis/parser.c:517
 msgid "Feature type(s)"
 msgstr "Tipo(s) de elemento"
 
-#: ../lib/gis/parser.c:523
+#: ../lib/gis/parser.c:524
 msgid "Layer number"
 msgstr "Número de capa"
 
 #
-#: ../lib/gis/parser.c:524
+#: ../lib/gis/parser.c:525
 msgid ""
 "A single vector map can be connected to multiple database tables. This "
 "number determines which table to use."
@@ -2445,54 +2476,54 @@ msgstr ""
 "Un solo mapa vectorial puede conectarse a más de una tabla. Este número "
 "determina que tabla usar."
 
-#: ../lib/gis/parser.c:531
+#: ../lib/gis/parser.c:532
 msgid "Category value"
 msgstr "Valor de la categoria"
 
-#: ../lib/gis/parser.c:538
+#: ../lib/gis/parser.c:539
 msgid "Category values"
 msgstr "Valores de categoría"
 
-#: ../lib/gis/parser.c:539
+#: ../lib/gis/parser.c:540
 msgid "Example: 1,3,7-9,13"
 msgstr "Ejemplo: 1,3,7-9,13"
 
 #
-#: ../lib/gis/parser.c:549
+#: ../lib/gis/parser.c:550
 msgid "Name of input file"
 msgstr "Nombre del archivo de entrada"
 
 #
-#: ../lib/gis/parser.c:557
+#: ../lib/gis/parser.c:558
 msgid "Name for output file"
 msgstr "Nombre del archivo de salida"
 
-#: ../lib/gis/parser.c:565
+#: ../lib/gis/parser.c:566
 msgid "Field separator"
 msgstr "Separador de campos"
 
-#: ../lib/gis/parser.c:576
+#: ../lib/gis/parser.c:577
 msgid "Color"
 msgstr "Color"
 
-#: ../lib/gis/parser.c:577
+#: ../lib/gis/parser.c:578
 msgid "Either a standard color name or R:G:B triplet"
 msgstr "Un nombre de color estándar o un triplete R:G:B"
 
-#: ../lib/gis/parser.c:586
+#: ../lib/gis/parser.c:587
 msgid "Background color"
 msgstr "Color de fondo"
 
-#: ../lib/gis/parser.c:587
+#: ../lib/gis/parser.c:588
 msgid "Either a standard GRASS color, R:G:B triplet, or \"none\""
 msgstr "Un color estándar de GRASS, un triplete R:G:B o \"ninguno\""
 
-#: ../lib/gis/parser.c:886
+#: ../lib/gis/parser.c:888
 #, c-format
 msgid "Sorry <%s> is not a valid option\n"
 msgstr "Lo siento <%s> no es una opción válida\n"
 
-#: ../lib/gis/parser.c:996
+#: ../lib/gis/parser.c:998
 #, c-format
 msgid ""
 "\n"
@@ -2501,7 +2532,7 @@ msgstr ""
 "\n"
 "Descripción:\n"
 
-#: ../lib/gis/parser.c:1003
+#: ../lib/gis/parser.c:1005
 #, c-format
 msgid ""
 "\n"
@@ -2510,7 +2541,7 @@ msgstr ""
 "\n"
 "Palabras clave:\n"
 
-#: ../lib/gis/parser.c:1007
+#: ../lib/gis/parser.c:1009
 #, c-format
 msgid ""
 "\n"
@@ -2521,7 +2552,7 @@ msgstr ""
 "Uso:\n"
 " "
 
-#: ../lib/gis/parser.c:1079
+#: ../lib/gis/parser.c:1081
 #, c-format
 msgid ""
 "\n"
@@ -2530,19 +2561,19 @@ msgstr ""
 "\n"
 "Opciones:\n"
 
-#: ../lib/gis/parser.c:1102
+#: ../lib/gis/parser.c:1104 ../lib/gis/parser.c:1825
 msgid "Allow output files to overwrite existing files"
 msgstr "Permitir a los archivos de salida sobreescribir los archivos existentes"
 
-#: ../lib/gis/parser.c:1104
+#: ../lib/gis/parser.c:1106
 msgid "Verbose module output"
 msgstr "Salida verbal del módulo"
 
-#: ../lib/gis/parser.c:1105
+#: ../lib/gis/parser.c:1107
 msgid "Quiet module output"
 msgstr "Salida silenciosa del módulo"
 
-#: ../lib/gis/parser.c:1111
+#: ../lib/gis/parser.c:1113
 #, c-format
 msgid ""
 "\n"
@@ -2551,32 +2582,44 @@ msgstr ""
 "\n"
 "Parametros:\n"
 
-#: ../lib/gis/parser.c:1134
+#: ../lib/gis/parser.c:1136
 #, c-format
 msgid "  %*s   default: %s\n"
 msgstr "  %*s   defecto: %s\n"
 
-#: ../lib/gis/parser.c:1890
+#: ../lib/gis/parser.c:1827
+msgid "Allow overwrite"
+msgstr "Permitir sobrescribir"
+
+#: ../lib/gis/parser.c:1835
+msgid "Run with minimal output messages"
+msgstr "Ejecutar con el mínimo de mensajes de salida"
+
+#: ../lib/gis/parser.c:1837
+msgid "Run quietly"
+msgstr "Ejecutar silenciosamente"
+
+#: ../lib/gis/parser.c:1901
 #, c-format
 msgid "  %*s   options: "
 msgstr "  %*s   opciones: "
 
-#: ../lib/gis/parser.c:1939 ../lib/gis/parser.c:1956
+#: ../lib/gis/parser.c:1950 ../lib/gis/parser.c:1967
 #, c-format
 msgid "Sorry, <%c> is not a valid flag\n"
 msgstr "Lo sentimos, <%c> no es una opción válida\n"
 
-#: ../lib/gis/parser.c:2011
+#: ../lib/gis/parser.c:2022
 #, c-format
 msgid "Sorry, <%s=> is ambiguous\n"
 msgstr "Lo sentimos, <%s=> es ambigüo\n"
 
-#: ../lib/gis/parser.c:2018
+#: ../lib/gis/parser.c:2029
 #, c-format
 msgid "Sorry, <%s> is not a valid parameter\n"
 msgstr "Lo sentimos, <%s> no es un parametro válido\n"
 
-#: ../lib/gis/parser.c:2103
+#: ../lib/gis/parser.c:2114
 #, c-format
 msgid ""
 "\n"
@@ -2585,12 +2628,12 @@ msgstr ""
 "\n"
 "ERROR: sintaxis del rango no admitida para el parámetro <%s>\n"
 
-#: ../lib/gis/parser.c:2105
+#: ../lib/gis/parser.c:2116
 #, c-format
 msgid "       Presented as: %s\n"
 msgstr "       Presentado como: %s\n"
 
-#: ../lib/gis/parser.c:2108
+#: ../lib/gis/parser.c:2119
 #, c-format
 msgid ""
 "\n"
@@ -2599,12 +2642,12 @@ msgstr ""
 "\n"
 "ERROR: valor <%s> fuera del rango para el parámetro <%s>\n"
 
-#: ../lib/gis/parser.c:2110
+#: ../lib/gis/parser.c:2121
 #, c-format
 msgid "       Legal range: %s\n"
 msgstr "       Intervalo legal: %s\n"
 
-#: ../lib/gis/parser.c:2113
+#: ../lib/gis/parser.c:2124
 #, c-format
 msgid ""
 "\n"
@@ -2613,7 +2656,7 @@ msgstr ""
 "\n"
 "ERROR: falta el valor del parametro <%s>\n"
 
-#: ../lib/gis/parser.c:2273
+#: ../lib/gis/parser.c:2284
 #, c-format
 msgid ""
 "\n"
@@ -2624,7 +2667,7 @@ msgstr ""
 "ERROR: Parametro requerido  <%s> no ha sido inicializado:\n"
 "    (%s).\n"
 
-#: ../lib/gis/parser.c:2376
+#: ../lib/gis/parser.c:2387
 #, c-format
 msgid ""
 "\n"
@@ -2633,17 +2676,17 @@ msgstr ""
 "\n"
 "ERROR: la opción <%s> debe proporcionarse en múltiplos de %d\n"
 
-#: ../lib/gis/parser.c:2378
+#: ../lib/gis/parser.c:2389
 #, c-format
 msgid "       You provided %d items:\n"
 msgstr "       Tu proporcionaste %d elementos:\n"
 
-#: ../lib/gis/parser.c:2433
+#: ../lib/gis/parser.c:2444
 #, c-format
 msgid "ERROR: option <%s>: <%s> exists.\n"
 msgstr "ERROR: la opción <%s>: <%s> existe.\n"
 
-#: ../lib/gis/parser.c:2480
+#: ../lib/gis/parser.c:2491
 #, c-format
 msgid ""
 "\n"
@@ -2652,7 +2695,7 @@ msgstr ""
 "\n"
 "OPCIÓN: ¿Definir la siguiente opción?\n"
 
-#: ../lib/gis/parser.c:2494
+#: ../lib/gis/parser.c:2505
 #, c-format
 msgid ""
 "\n"
@@ -2661,51 +2704,51 @@ msgstr ""
 "\n"
 "OPCIÓN:   %s\n"
 
-#: ../lib/gis/parser.c:2495
+#: ../lib/gis/parser.c:2506
 #, c-format
 msgid "     key: %s\n"
 msgstr "     clave: %s\n"
 
-#: ../lib/gis/parser.c:2497
+#: ../lib/gis/parser.c:2508
 #, c-format
 msgid "  format: %s\n"
 msgstr "  formato: %s\n"
 
-#: ../lib/gis/parser.c:2499
+#: ../lib/gis/parser.c:2510
 #, c-format
 msgid " default: %s\n"
 msgstr " defecto: %s\n"
 
-#: ../lib/gis/parser.c:2500
+#: ../lib/gis/parser.c:2511
 #, c-format
 msgid "required: %s\n"
 msgstr "se requiere: %s\n"
 
-#: ../lib/gis/parser.c:2502
+#: ../lib/gis/parser.c:2513
 #, c-format
 msgid "multiple: %s\n"
 msgstr "multiple: %s\n"
 
-#: ../lib/gis/parser.c:2504
+#: ../lib/gis/parser.c:2515
 #, c-format
 msgid " options: %s\n"
 msgstr " opciones: %s\n"
 
-#: ../lib/gis/parser.c:2519
+#: ../lib/gis/parser.c:2530
 #, c-format
 msgid "enter option > "
 msgstr "introduce una opción > "
 
-#: ../lib/gis/parser.c:2533 ../lib/gis/parser.c:2544
+#: ../lib/gis/parser.c:2544 ../lib/gis/parser.c:2555
 msgid "   Try again? "
 msgstr "   ¿Intentar de nuevo? "
 
-#: ../lib/gis/parser.c:2542
+#: ../lib/gis/parser.c:2553
 #, c-format
 msgid "Sorry, %s is not accepted.\n"
 msgstr "Lo siento, %s no se acepta.\n"
 
-#: ../lib/gis/parser.c:2553
+#: ../lib/gis/parser.c:2564
 #, c-format
 msgid ""
 "\n"
@@ -2716,11 +2759,11 @@ msgstr ""
 "Usted ha seleccionado:\n"
 "  %s\n"
 
-#: ../lib/gis/parser.c:2554
+#: ../lib/gis/parser.c:2565
 msgid "Is this correct? "
 msgstr "¿Es correcto? "
 
-#: ../lib/gis/parser.c:2623
+#: ../lib/gis/parser.c:2634
 msgid "to accept the default"
 msgstr "para aceptar los valores por defecto"
 
