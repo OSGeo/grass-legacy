@@ -102,9 +102,9 @@ else
       cleanup
       exit 1
    fi
-   v.reclass input="$GIS_OPT_INPUT" output="$GIS_OPT_INPUT"_${TMP} layer="$GIS_OPT_LAYER" \
+   v.reclass input="$GIS_OPT_INPUT" output="$GIS_OPT_OUTPUT"_${TMP} layer="$GIS_OPT_LAYER" \
              column="$GIS_OPT_COLUMN"
-   v.extract -d input="$GIS_OPT_INPUT"_${TMP} output="$GIS_OPT_OUTPUT" type=area \
+   v.extract -d input="$GIS_OPT_OUTPUT"_${TMP} output="$GIS_OPT_OUTPUT" type=area \
              layer="$GIS_OPT_LAYER"
 fi
 
