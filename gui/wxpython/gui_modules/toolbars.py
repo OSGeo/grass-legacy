@@ -278,8 +278,12 @@ class DigitToolbar(AbstractToolbar):
         """
         Unmark currently enabled map layer.
         """
-        Debug.msg (4, "DigitToolbar.StopEditing(): layer=%s" % \
-                   self.layers[self.layerSelectedID].name)
+        if self.layerSelectedID:
+            Debug.msg (4, "DigitToolbar.StopEditing(): layer=%s" % \
+                       self.layers[self.layerSelectedID].name)
+        else:
+            Debug.msg (4, "DigitToolbar.StopEditing(): layer=None")
+        
         self.layerSelectedID = None
         self.combo.SetValue ('Select vector map')
         # TODO
