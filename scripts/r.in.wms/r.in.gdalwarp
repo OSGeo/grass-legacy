@@ -123,8 +123,19 @@ warpimport () {
 	echo "gdalwarp -s_srs \"$GIS_OPT_S_SRS\" -t_srs \"`g.proj -wf`\" \"$FILE\" \"$WARPFILE\" " $GIS_OPT_WARPOPTIONS $METHOD 1>&2
 	gdalwarp -s_srs "$GIS_OPT_S_SRS" -t_srs "`g.proj -wf`" "$FILE" "$WARPFILE" $GIS_OPT_WARPOPTIONS $METHOD
 
+	if [ $? -ne 0 ] ; then
+	    echo "ERROR: `basename $0`: gdalwarp failure." 1>&2
+	    rm -f "${TMP}"*
+	    exit 1
+	fi
+
 	#Import it into a temporary map:
 	r.in.gdal $FLAGS input="$WARPFILE" output="$TMPMAPNAME"
+	if [ $? -ne 0 ] ; then
+	    echo "ERROR: `basename $0`: r.in.gdal failure." 1>&2
+	    rm -f "${TMP}"*
+	    exit 1
+	fi
 
 	# Remove temporary file
 	rm -f "$WARPFILE"
@@ -187,6 +198,11 @@ nowarpimport () {
 	MAP=$2
 
 	r.in.gdal -o $FLAGS input="$FILE" output="$MAP"
+	if [ $? -ne 0 ] ; then
+	    echo "ERROR: `basename $0`: r.in.gdal failure." 1>&2
+	    rm -f "${TMP}"*
+	    exit 1
+	fi
 
 	#Get a list of channels:
 	PATTERN="$MAP*"
@@ -254,7 +270,7 @@ for input in $GIS_OPT_INPUT ; do
 		else
 			warpimport $input $TMPTILENAME
 		fi
-		((TITER++))
+		TITER="`expr $TITER + 1`"
 	else
 		echo "Missing input $input" 1>&2
 	fi
@@ -296,7 +312,7 @@ for SUFFIX in $SUFFIXES ; do
 		COLORS=4 # Can only go up from here ;)
 	fi
 	if [ "$sfx" = ".red" ] || [ "$sfx" = ".green" ] || [ "$sfx" = ".blue" ]; then
-		((COLORS++))
+	    COLORS="`expr $COLORS + 1`"
 	fi
 done
 
