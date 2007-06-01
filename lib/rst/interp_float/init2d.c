@@ -36,37 +36,35 @@ void IL_init_params_2d (
     DCELL *ar5,
     DCELL *ar6,	/* arrays for interpolated
 						 * values */
-    double tension,		/* tension */
-    int k3,			/* max num. of points for interp. */
+    double tension,	/* tension */
+    int k3,		/* max num. of points for interp. */
     int sc1,
     int sc2,
     int sc3,		/* multipliers for interp. values */
-    double sm,			/* smoothing */
+    double sm,		/* smoothing */
     char *f1,
     char *f2,
     char *f3,
     char *f4,
     char *f5,
-    char *f6,	/* output files */
-    double dm,			/* min distance between points */
+    char *f6,		/* output files */
+    double dm,		/* min distance between points */
     double x_or,
-    double y_or,		/* origin */
-    int der,			/* 1 if compute partial derivs */
-   double tet,                            /* anisotropy angle, 0=East,counter-clockwise */
-   double scl,                          /* anisotropy scaling factor */
+    double y_or,	/* origin */
+    int der,		/* 1 if compute partial derivs */
+   double tet,          /* anisotropy angle, 0=East,counter-clockwise */
+   double scl,          /* anisotropy scaling factor */
     FILE *t1,
     FILE *t2,
     FILE *t3,
     FILE *t4,
     FILE *t5,
-    FILE *t6,	/* temp files for writing interp.
-					 * values */
+    FILE *t6,		/* temp files for writing interp. values */
     FILE *dev,			/* pointer to deviations file */
     struct TimeStamp *ts,
-    int c
+    int c,                      /* cross validation */
+    char *wheresql              /* SQL WHERE */
 )
-
-
 {
   params->fdinp = inp;
   params->elatt = elatt;
@@ -84,7 +82,7 @@ void IL_init_params_2d (
   params->adyy = ar5;
   params->adxy = ar6;
   params->fi = tension,
-    params->KMAX2 = k3;
+  params->KMAX2 = k3;
   params->scik1 = sc1;
   params->scik2 = sc2;
   params->scik3 = sc3;
@@ -110,7 +108,7 @@ void IL_init_params_2d (
   params->fddevi = dev;
   params->ts = ts;
   params->cv = c;
-
+  params->wheresql = wheresql;
 }
 
 void IL_init_func_2d (
