@@ -1,4 +1,4 @@
-These are gif icons.
+These are gif icons. (Tcl doesn't like PNG)
 
 They are installed in $(GISBASE)/etc/gui/icons
 
@@ -7,33 +7,47 @@ They follow the following naming scheme:
 
 The following classes are being used:
 
-element
 
-These are icons for grass database elements such as cell, rast3, vector, windows, etc. and for symbol, the other type of thing that the tcl GSelect procedure handles.
+ELEMENT
 
-module
+These are icons for grass database elements such as cell, rast3, vector,
+windows, etc. and for symbol, the other type of thing that the tcl GSelect
+procedure handles.
 
-Members of module are programs or parts of programs. For example module-d.nviz.gif. The program name can consist of just the first few . seperated parts of the name. For example module-r.gif could be used for all raster programs. The last . must be removed; module-v.in..gif won't match anything.
 
-gui
+MODULE
+
+Members of module are programs or parts of programs. For example
+module-d.nviz.gif. The program name can consist of just the first few '.'
+seperated parts of the name. For example module-r.gif could be used for
+all raster programs. The last . must be removed; module-v.in..gif won't
+match anything.
+
+
+GUI
 
 Icons used by gui.tcl.
 gui-cmd.gif is needed for one version of gui.tcl
 
-file
+
+FILE
 
 Icons for file operations like open, close, etc.
 file-open.gif is needed for one version of gui.tcl
 
-edit
+
+EDIT
 
 Icons for edit operations like cut, copy, paste, etc.
 edit-copy.gif is needed for one version of gui.tcl
 
-status
 
-Status icons for grass. Any lowercase key to GRASS_INFO_*, like warning, error, message. Also success and failure for exit codes.
+STATUS
 
-channel
+Status icons for grass. Any lowercase key to GRASS_INFO_*, like warning,
+error, message. Also success and failure for exit codes.
+
+
+CHANNEL
 
 Icons for channels of images
