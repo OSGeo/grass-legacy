@@ -153,6 +153,16 @@ program <EM><A HREF="r.reclass.html">r.reclass</A></EM>)
 that contains only the desired categories, 
 and then use the reclassed raster map layer as input to <EM>r.random</B>.</EM> 
 
+<H2>EXAMPLES</H2>
+
+Random vector elevation points sampled from elevation map in the Spearfish region:
+
+<div class="code"><pre>
+r.random elevation.10m vector_output=elevrand n=100
+v.db.select elevrand
+v.univar elevrand col=value type=point
+</pre></div>
+
 <H2>BUGS</H2>
 
 It's not possible to use the <B>-i</B> flag and not also specify the <B>n</B> 
