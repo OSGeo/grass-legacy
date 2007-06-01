@@ -543,8 +543,14 @@ class mainFrame(wx.Frame):
             # We have to wait for the notebookpanel to be filled in order
             # to know if there actually is a Main tab
             status_text += _(" (those of Main in bold typeface are required)")
-        self.SetStatusText( status_text )
+        try:
+            self.task.getCmd()
+            self.updateValuesHook()
+        except ValueError:
+            self.SetStatusText( status_text )
 
+        
+        
         # buttons
         btnsizer = wx.BoxSizer(orient=wx.HORIZONTAL)
         # cancel
@@ -1087,7 +1093,8 @@ class GUI:
         else:
             get_dcmd = completed[0]
             layer = completed[1]
-            if completed[2]: dcmd_params.update(completed[2])
+            if completed[2]:
+                dcmd_params.update(completed[2])
 
         if parentframe != -1:
             self.parent = parentframe
@@ -1102,9 +1109,11 @@ class GUI:
 
             # if layer parameters previously set, re-insert them into dialog
             if completed is not None:
-                if 'params' in dcmd_params: self.grass_task.params = dcmd_params['params']
-                if 'flags' in dcmd_params: self.grass_task.flags = dcmd_params['flags']
-
+                if 'params' in dcmd_params:
+                    self.grass_task.params = dcmd_params['params']
+                if 'flags' in dcmd_params:
+                    self.grass_task.flags = dcmd_params['flags']
+            
             self.mf = mainFrame(parent=self.parent, ID=wx.ID_ANY, task_description=self.grass_task, get_dcmd=get_dcmd, layer=layer)
             self.mf.Show(True)
             self.mf.MakeModal(modal)
