@@ -73,17 +73,17 @@
 
 if  [ -z "$GISBASE" ] ; then
     echo "You must be in GRASS GIS to run this program." 1>&2
- exit 1
+    exit 1
 fi
 
 if [ "$1" != "@ARGS_PARSED@" ] ; then
-  exec g.parser "$0" "$@"
+    exec g.parser "$0" "$@"
 fi
 
 #### setup temporary file
 TMP="`g.tempfile pid=$$`"
 if [ $? -ne 0 ] || [ -z "$TMP" ] ; then
-    g.message -e "ERROR: unable to create temporary files"
+    g.message -e "Unable to create temporary files"
     exit 1
 fi
 
@@ -121,10 +121,23 @@ warpimport () {
 
 	# Warp it and convert it to geotiff with alpha band to be sure we get nulls:
 	g.message -d message="gdalwarp -s_srs \"$GIS_OPT_S_SRS\" -t_srs \"`g.proj -wf`\" \"$FILE\" \"$WARPFILE\" $GIS_OPT_WARPOPTIONS $METHOD"
-	gdalwarp -s_srs "$GIS_OPT_S_SRS" -t_srs "`g.proj -wf`" "$FILE" "$WARPFILE" $GIS_OPT_WARPOPTIONS $METHOD
+
+	gdalwarp -s_srs "$GIS_OPT_S_SRS" -t_srs "`g.proj -wf`" \
+	   "$FILE" "$WARPFILE" $GIS_OPT_WARPOPTIONS $METHOD
+
+	if [ $? -ne 0 ] ; then
+	    g.message -e message="`basename $0`: gdalwarp failure."
+	    rm -f "${TMP}"*
+	    exit 1
+	fi
 
 	#Import it into a temporary map:
 	r.in.gdal $FLAGS input="$WARPFILE" output="$TMPMAPNAME"
+	if [ $? -ne 0 ] ; then
+	    g.message -e message="`basename $0`: r.in.gdal failure."
+	    rm -f "${TMP}"*
+	    exit 1
+	fi
 
 	# Remove temporary file
 	rm -f "$WARPFILE"
@@ -190,6 +203,11 @@ nowarpimport () {
 	MAP=$2
 
 	r.in.gdal -o $FLAGS input="$FILE" output="$MAP"
+	if [ $? -ne 0 ] ; then
+	    g.message -e message="`basename $0`: r.in.gdal failure."
+	    rm -f "${TMP}"*
+	    exit 1
+	fi
 
 	#Get a list of channels:
 	PATTERN="$MAP*"
@@ -249,20 +267,20 @@ SUFFIXES=""
 TITER=0
 # Import all the tiles:
 for input in $GIS_OPT_INPUT ; do
-	IFS=$defaultIFS
-	TMPTILENAME=${GIS_OPT_OUTPUT}_tile_$TITER
+	IFS="$defaultIFS"
+	TMPTILENAME="${GIS_OPT_OUTPUT}_tile_$TITER"
 	if [ -f "$input" ] ; then
 		if [ $GIS_FLAG_P -eq 1 ] ; then
-			nowarpimport $input $TMPTILENAME
+			nowarpimport "$input" "$TMPTILENAME"
 		else
-			warpimport $input $TMPTILENAME
+			warpimport "$input" "$TMPTILENAME"
 		fi
-		((TITER++))
+		TITER="`expr $TITER + 1`"
 	else
-		g.message -w "Missing input $input" 
+		g.message -w message="Missing input $input"
 	fi
 done
-NUM_TILES=$TITER
+NUM_TILES="$TITER"
 
 # If there's more than one tile patch them together, otherwise just rename that tile.
 if [ $NUM_TILES -eq 1 ] ; then
@@ -270,20 +288,20 @@ if [ $NUM_TILES -eq 1 ] ; then
 		eval "$SUFFIX"
 		#Rename tile 0 to be the output
 		GRASS_VERBOSE=1 \
-		  g.rename rast=${GIS_OPT_OUTPUT}_tile_0${sfx},${GIS_OPT_OUTPUT}${sfx}
+		  g.rename rast="${GIS_OPT_OUTPUT}_tile_0${sfx}","${GIS_OPT_OUTPUT}${sfx}"
 	done
 else
 	# Patch together each channel:
-	IFS=$defaultIFS
+	IFS="$defaultIFS"
 	for SUFFIX in $SUFFIXES ; do
 		eval "$SUFFIX"
 		sfx2=`echo $sfx | sed "s/\./_/"`
 		eval "PATCHES=\${PATCHES_$sfx2}"
 		# Patch these together (using nulls only):
 		g.message "Patching [$sfx] channel" 
-		r.patch input=$PATCHES output=${GIS_OPT_OUTPUT}${sfx}
+		r.patch input="$PATCHES" output="${GIS_OPT_OUTPUT}${sfx}"
 		# Remove the temporary patches we made
-		g.remove rast=$PATCHES
+		g.remove rast="$PATCHES"
 	done
 fi
 
@@ -299,15 +317,16 @@ for SUFFIX in $SUFFIXES ; do
 		COLORS=4 # Can only go up from here ;)
 	fi
 	if [ "$sfx" = ".red" ] || [ "$sfx" = ".green" ] || [ "$sfx" = ".blue" ]; then
-		((COLORS++))
+	    COLORS="`expr $COLORS + 1`"
 	fi
 done
 
 # Make a composite image if asked for and colors exist
 if [ $COLORS -eq 3 ] && [ $GIS_FLAG_C -eq 1 ] ; then
 	g.message "Building Color Image" 
-	r.composite red=${GIS_OPT_OUTPUT}.red green=${GIS_OPT_OUTPUT}.green blue=${GIS_OPT_OUTPUT}.blue output=${GIS_OPT_OUTPUT}
-	g.message "Written: ${GIS_OPT_OUTPUT}"
+	r.composite red="${GIS_OPT_OUTPUT}.red" green="${GIS_OPT_OUTPUT}.green" \
+	   blue="${GIS_OPT_OUTPUT}.blue" output="${GIS_OPT_OUTPUT}"
+	g.message message="Written: ${GIS_OPT_OUTPUT}"
 fi
 
 # Clean up:
