@@ -306,7 +306,7 @@ int main(int argc, char **argv)
 		exit(EXIT_FAILURE); 
 	}
 	else if (find_rule(type))
-	    G_make_colors(&colors, type, min, max);
+	    G_make_fp_colors(&colors, type, min, max);
 	else
 	    G_fatal_error(_("%s - unknown color request"), type);
     }
