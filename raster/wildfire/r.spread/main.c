@@ -113,7 +113,8 @@ main (int argc, char *argv[])
 	parm.max->key        = "max" ;        
 	parm.max->type       = TYPE_STRING ;  
 	parm.max->required   = YES ;
-	parm.max->gisprompt  = "old,cell,raster" ;
+	parm.max->gisprompt  = "old,cell,raster";
+	parm.max->guisection = _("Input");
 	parm.max->description =
 	  _("Name of raster map containing MAX rate of spread (ROS) (cm/min)");
 
@@ -122,6 +123,7 @@ main (int argc, char *argv[])
 	parm.dir->type       = TYPE_STRING ;
 	parm.dir->required   = YES ;
 	parm.dir->gisprompt  = "old,cell,raster" ;
+	parm.dir->guisection = _("Input");
 	parm.dir->description =
 	  _("Name of raster map containing DIRections of max ROS (degree)");
 
@@ -130,6 +132,7 @@ main (int argc, char *argv[])
 	parm.base->type       = TYPE_STRING ;
 	parm.base->required   = YES ;
 	parm.base->gisprompt  = "old,cell,raster" ;
+	parm.base->guisection = _("Input");
 	parm.base->description = _("Name of raster map containing BASE ROS (cm/min)") ;
 
 	parm.start = G_define_option() ;
@@ -137,12 +140,14 @@ main (int argc, char *argv[])
 	parm.start->type       = TYPE_STRING ;
 	parm.start->required   = YES ;
 	parm.start->gisprompt  = "old,cell,raster" ;
+	parm.start->guisection = _("Input");
 	parm.start->description = _("Name of raster map containing STARTing sources") ;
 
 	parm.spotdist = G_define_option() ;
 	parm.spotdist->key        = "spot_dist" ;
 	parm.spotdist->type       = TYPE_STRING ;
 	parm.spotdist->gisprompt  = "old,cell,raster" ;
+	parm.spotdist->guisection = _("Input");
 	parm.spotdist->description =
 	  _("Name of raster map containing max SPOTting DISTance (m) (required w/ -s)") ;
 
@@ -150,6 +155,7 @@ main (int argc, char *argv[])
         parm.velocity->key        = "w_speed" ;
         parm.velocity->type       = TYPE_STRING ;
         parm.velocity->gisprompt  = "old,cell,raster" ;
+	parm.velocity->guisection = _("Input");
         parm.velocity->description =
 	  _("Name of raster map containing midflame Wind SPEED (ft/min) (required w/ -s)");
 
@@ -157,6 +163,7 @@ main (int argc, char *argv[])
         parm.mois->key        = "f_mois" ;
         parm.mois->type       = TYPE_STRING ;
         parm.mois->gisprompt  = "old,cell,raster" ;
+	parm.mois->guisection = _("Input");
         parm.mois->description =
 	  _("Name of raster map containing fine Fuel MOISture of the cell receiving a spotting firebrand (%) (required w/ -s)");
 
@@ -198,18 +205,21 @@ main (int argc, char *argv[])
 	parm.out->type       = TYPE_STRING ;
 	parm.out->required   = YES ;
 	parm.out->gisprompt  = "new,cell,raster" ;
+	parm.out->guisection = _("Output");
 	parm.out->description = _("Name of raster map to contain OUTPUT spread time (min)");
 
 	parm.x_out = G_define_option() ;
 	parm.x_out->key        = "x_output" ;
 	parm.x_out->type       = TYPE_STRING ;
 	parm.x_out->gisprompt  = "new,cell,raster" ;
+	parm.x_out->guisection = _("Output");
 	parm.x_out->description = _("Name of raster map to contain X_BACK coordiates");
 
 	parm.y_out = G_define_option() ;
 	parm.y_out->key        = "y_output" ;
 	parm.y_out->type       = TYPE_STRING ;
 	parm.y_out->gisprompt  = "new,cell,raster" ;
+	parm.y_out->guisection = _("Output");
 	parm.y_out->description = _("Name of raster map to contain Y_BACK coordiates");
 
         /* please, remove before GRASS 7 released */
