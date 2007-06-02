@@ -262,7 +262,7 @@ cat << EOF > "${TMP}.tex"
 \makeatother
 \begin{document}
 \begin{center}\includegraphics[%
-  scale=0.5]{grasslogo_vector.eps}\end{center}
+  width=0.5\textwidth]{grasslogo_vector.pdf}\end{center}
 
 \begin{center}{\huge `g.version | cut -f1 -d'('` Command list}\end{center}{\huge \par}
 
@@ -361,27 +361,22 @@ EOF
 
 g.message "Converting to PDF ..."
 
-# pdflatex and texi2pdf don't like .eps files, so we go the long way around.
-for PGM in texi2dvi dvips a2ps ps2pdf ; do
+for PGM in pdflatex ; do
    if [ ! -x `which $PGM` ] ; then
-	g.message -e "texi2dvi, dvips, a2ps, and ps2pdf needed for this PDF conversion."
+	g.message -e "pdflatex needed for this PDF conversion."
 	g.message "Done."
 	exit 1
    fi
 done
 
 TMPDIR="`dirname "$TMP"`"
-cp "$OLDDIR/grasslogo_vector.eps" "$TMPDIR"
+cp "$OLDDIR/grasslogo_vector.pdf" "$TMPDIR"
 cd "$TMPDIR"
 
-texi2dvi --quiet --clean "$GISBASE/etc/module_synopsis.tex"
-dvips -q module_synopsis.dvi
-a2ps --quiet module_synopsis.ps -o module_synopsis_2.ps
-ps2pdf module_synopsis_2.ps module_synopsis.pdf
-
+pdflatex "$GISBASE/etc/module_synopsis.tex"
 
 \rm -f module_synopsis.dvi module_synopsis.ps \
-       module_synopsis_2.ps grasslogo_vector.eps
+       module_synopsis_2.ps grasslogo_vector.pdf
 
 if [ ! -d "$GISBASE/docs/pdf" ] ; then
     mkdir "$GISBASE/docs/pdf"
@@ -389,5 +384,5 @@ fi
 \mv module_synopsis.pdf "$GISBASE/docs/pdf/"
 
 
-g.message "Done."
+g.message "Done (PDF written to $GISBASE/docs/pdf/)."
 
