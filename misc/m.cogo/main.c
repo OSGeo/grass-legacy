@@ -244,11 +244,12 @@ main (int argc, char **argv)
    
    G_gisinit(argv[0]);
 
-   module                  = G_define_module();
-   module->keywords        = _("miscellaneous");
-   module->description     = _("A simple utility for converting bearing and "
-	"distance measurements to coordinates and vice versa. "
-	"It assumes a cartesian coordinate system");
+   module           = G_define_module();
+   module->keywords = _("miscellaneous");
+   module->label    =_("A simple utility for converting bearing and "
+	"distance measurements to coordinates and vice versa.");
+   module->description     =
+	_("It assumes a cartesian coordinate system");
 
    format                  = G_define_flag();
    format->key             = 'l';
@@ -262,20 +263,14 @@ main (int argc, char **argv)
    reverse->key            = 'r';
    reverse->description    = _("Convert from coordinates to bearing and distance");
 
-   input                   = G_define_option();
-   input->key              = "input";
-   input->type             = TYPE_STRING;
+   input                   = G_define_standard_option(G_OPT_F_INPUT);
    input->required         = NO;
-   input->description      = _("Path to the input file");
    input->answer           = "-";
 
-   output                  = G_define_option();
-   output->key             = "output";
-   output->type            = TYPE_STRING;
+   output                  = G_define_standard_option(G_OPT_F_OUTPUT);
    output->required        = NO;
-   output->description     = _("Path to an output file");
    output->answer          = "-";
-   
+
    coords                  = G_define_option();
    coords->key             = "coord";
    coords->key_desc        = "x,y";
