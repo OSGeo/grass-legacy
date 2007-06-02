@@ -45,7 +45,7 @@ print_coin_hdr (int Conformat)
     G_format_easting  (window.east,  east,  window.proj);
     G_format_easting  (window.west,  west,  window.proj);
 
-    fprintf(dumpfile,"\n\n\n");
+    fprintf(dumpfile,"\n");
     fprintf(dumpfile,"+%78.78s+\n",midline);
     fprintf(dumpfile,"|%24.24sCOINCIDENCE TABULATION REPORT%25.25s|\n",
 	    fill,fill);
