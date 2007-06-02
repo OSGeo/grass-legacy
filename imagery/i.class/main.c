@@ -64,17 +64,15 @@ int main (int argc, char *argv[])
     img_subgrp = G_define_standard_option (G_OPT_I_GROUP);
     img_subgrp->key = "subgroup";
 
-    out_sig = G_define_option ();
+    out_sig = G_define_standard_option(G_OPT_F_OUTPUT);
     out_sig->key         = "outsig";
-    out_sig->type        = TYPE_STRING;
     out_sig->required    = YES;
-    out_sig->description = _("File contains result signatures");
+    out_sig->description = _("File to contain result signatures");
 
-    in_sig = G_define_option ();
+    in_sig = G_define_standard_option(G_OPT_F_INPUT);
     in_sig->key         = "insig";
-    in_sig->type        = TYPE_STRING;
     in_sig->required    = NO;
-    in_sig->description = _("File contains input signatures");
+    in_sig->description = _("File containing input signatures (seed)");
 
     if (G_parser(argc, argv) < 0)
 	exit(EXIT_FAILURE);
@@ -133,6 +131,7 @@ int main (int argc, char *argv[])
     exit (EXIT_SUCCESS);
 }
 
+
 void quit (void)
 {
   write_signatures();
@@ -141,6 +140,7 @@ void quit (void)
 
     exit (EXIT_SUCCESS);
 }
+
 
 int error (const char *msg, int fatal) 
 {
@@ -238,6 +238,3 @@ static int check_files (char *img_group, char *img_subgroup,
 
     return 0;
 }
-
-
-
