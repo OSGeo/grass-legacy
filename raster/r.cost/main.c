@@ -352,7 +352,7 @@ int main(int argc, char *argv[])
         G_message(_("Source map is: Floating point (double) cell type"));
         break;
     }
-    G_message(_(" %d rows, %d cols."), nrows, ncols);
+    G_message(_(" %d rows, %d cols"), nrows, ncols);
 
     srows = scols = SEGCOLSIZE;
     if (maxmem > 0)
@@ -910,7 +910,7 @@ int main(int argc, char *argv[])
      if (data_type == CELL_TYPE) {
 	int *p;
 	int *p2;
-        G_message(_("Integer cell type.\nWriting"));
+        G_message(_("Integer cell type.\nWriting..."));
 	for (row = 0; row < nrows; row++) {
             G_percent(row, nrows, 2);
 	    if (keep_nulls) {
@@ -942,7 +942,7 @@ int main(int argc, char *argv[])
     else if (data_type == FCELL_TYPE) {
 	float *p;
 	float *p2;
-        G_message(_("Float cell type.\nWriting"));
+        G_message(_("Float cell type.\nWriting..."));
 	for (row = 0; row < nrows; row++) {
             G_percent(row, nrows, 2);
 	    if (keep_nulls) {
@@ -974,7 +974,7 @@ int main(int argc, char *argv[])
     else if (data_type == DCELL_TYPE) {
 	double *p;
 	double *p2;
-        G_message(_("Double cell type.\nWriting"));
+        G_message(_("Double cell type.\nWriting..."));
 	for (row = 0; row < nrows; row++) {
             G_percent(row, nrows, 2);
 	    if (keep_nulls) {

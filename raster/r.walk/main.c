@@ -599,7 +599,7 @@ int main(int argc, char *argv[])
 		      ("COST_Source map is: Floating point (double) cell type"));
 	    break;
 	}
-	G_message(_(" %d rows, %d cols."), cost_cellhd.rows, cost_cellhd.cols);
+	G_message(_(" %d rows, %d cols"), cost_cellhd.rows, cost_cellhd.cols);
     
     if (cost_data_type != dtm_data_type) {
 	switch (cost_data_type) {
@@ -636,7 +636,7 @@ int main(int argc, char *argv[])
 	    G_message(_("Output map is: Floating point (double) cell type"));
 	    break;
 	}
-	G_message(_(" %d rows, %d cols."), nrows, ncols);
+	G_message(_(" %d rows, %d cols"), nrows, ncols);
 	G_format_resolution(window.ew_res, buf, window.proj);
 	G_message(_(" EW resolution %s (%lf)"), buf, window.ew_res);
 	G_format_resolution(window.ns_res, buf, window.proj);

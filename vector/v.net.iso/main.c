@@ -211,7 +211,7 @@ int main(int argc, char **argv)
     G_message (_("Number of centres: [%d] (nlayer: [%d])"), ncentres, nfield );
 
     if ( ncentres == 0 )
-	G_warning (_("Not enough centres for selected nlayer. Nothing will be allocated"));
+	G_warning (_("Not enough centres for selected nlayer. Nothing will be allocated."));
     
     /* alloc and reset space for all nodes */
     Nodes = (NODE *) G_calloc ( ( nnodes + 1 ), sizeof(NODE) );

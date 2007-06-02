@@ -68,7 +68,7 @@ seq_MAP_routine (
 
     /* allocate memory */
     if((N=(double ***)multialloc(sizeof(double),3,2,3,2))==NULL)
-        G_fatal_error(_("Unable to allocate memory."));
+        G_fatal_error(_("Unable to allocate memory"));
 
     regionary = (struct Region *)G_malloc((D+1)*sizeof(struct Region));
     period = (int *)G_malloc(D*sizeof(int));
