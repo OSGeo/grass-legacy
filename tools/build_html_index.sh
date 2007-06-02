@@ -163,7 +163,7 @@ CMDLISTNO=`echo $CMDLIST | wc -w | awk '{print $1}'`
 #write main index:
 echo "Generating HTML manual pages index (help system)..."
 write_html_header $FULLINDEX "GRASS GIS $GRASSVERSION Reference Manual"
-echo "<h3>Full command index:</h3>" >> $FULLINDEX
+echo "<BR><h3>Full command index:</h3>" >> $FULLINDEX
 echo "<table border=0>" >> $FULLINDEX
 echo "<tr><td>&nbsp;&nbsp;d.*  </td><td>display commands</td></tr>" >> $FULLINDEX
 echo "<tr><td>&nbsp;&nbsp;db.* </td><td>database commands</td></tr>" >> $FULLINDEX
@@ -182,7 +182,7 @@ echo "<tr><td>&nbsp;&nbsp;<a href=\"xganim.html\">xganim</a> </td><td>raster map
 echo "</table>" >> $FULLINDEX
 
 #generate main index of all modules:
-echo "[ " >> $FULLINDEX
+echo "<BR><BR>[ " >> $FULLINDEX
 k=0
 for i in $CMDLIST
 do
@@ -194,14 +194,14 @@ do
 done
 
 echo " ]
-
+<BR>
 " >> $FULLINDEX
 
 #for all module groups:
 for i in $CMDLIST
 do 
   echo "<a name=\"$i\"></a>" >> $FULLINDEX
-  echo "<b>$i.* commands:</b>" >> $FULLINDEX
+  echo "<BR><BR><h3>$i.* commands:</h3>" >> $FULLINDEX
   echo "<table>" >> $FULLINDEX
 
   #for all modules:  
