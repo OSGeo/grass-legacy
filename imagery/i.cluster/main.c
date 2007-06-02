@@ -55,17 +55,14 @@ main (int argc, char *argv[])
 
 	module = G_define_module();
 	module->keywords = _("imagery");
-    module->description =
-		_("An imagery function that generates spectral signatures for "
-		"land cover types in an image using a clustering algorithm. "
-		"The resulting signature file is used as input for i.maxlik, "
-		"to generate an unsupervised image classification.");
+	module->label =
+	   _("Generates spectral signatures for land cover "
+	     "types in an image using a clustering algorithm.");
+	module->description =
+	   _("The resulting signature file is used as input for i.maxlik, "
+	     "to generate an unsupervised image classification.");
 
-
-    parm.group_name = G_define_option();
-    parm.group_name->key = "group";
-    parm.group_name->type = TYPE_STRING;
-    parm.group_name->required = YES;
+    parm.group_name = G_define_standard_option(G_OPT_I_GROUP);
     parm.group_name->description = _("Group of imagery files to be clustered");
 
     parm.subgroup_name = G_define_option();
@@ -74,11 +71,10 @@ main (int argc, char *argv[])
     parm.subgroup_name->required = YES;
     parm.subgroup_name->description = _("Subgroup name in the above group");
 
-    parm.out_sig = G_define_option();
+    parm.out_sig = G_define_standard_option(G_OPT_F_OUTPUT);
     parm.out_sig->key = "sigfile";
-    parm.out_sig->type = TYPE_STRING;
     parm.out_sig->required = YES;
-    parm.out_sig->description = _("File contains result signatures");
+    parm.out_sig->description = _("File to contain result signatures");
 
     parm.class = G_define_option();
     parm.class->key = "classes";
@@ -87,11 +83,10 @@ main (int argc, char *argv[])
     parm.class->required = YES;
     parm.class->description = _("Initial number of classes");
 
-    parm.seed_sig = G_define_option();
+    parm.seed_sig = G_define_standard_option(G_OPT_F_INPUT);
     parm.seed_sig->key = "seed";
-    parm.seed_sig->type = TYPE_STRING;
     parm.seed_sig->required = NO;
-    parm.seed_sig->description = _("File contains initial signatures");
+    parm.seed_sig->description = _("File containing initial signatures");
 
     parm.sample_interval = G_define_option();
     parm.sample_interval->key = "sample";
@@ -130,18 +125,18 @@ main (int argc, char *argv[])
     parm.min_size->description = _("Minimum number of pixels in a class");
     parm.min_size->answer = "17";
 
-    parm.report_file = G_define_option();
+    parm.report_file = G_define_standard_option(G_OPT_F_OUTPUT);
     parm.report_file->key = "reportfile";
-    parm.report_file->type = TYPE_STRING;
     parm.report_file->required = NO;
-    parm.report_file->description = _("Name of an output file to contain final report");
+    parm.report_file->description = _("Output file to contain final report");
 
     flag.q = G_define_flag();
     flag.q->key = 'q';
-    flag.q->description = "quiet";
+    flag.q->description = _("Quiet");
 
     if (G_parser(argc,argv))
-      exit(-1);
+      exit(EXIT_FAILURE);
+
 
     G_get_window (&window);
     nrows = G_window_rows();
@@ -156,14 +151,14 @@ main (int argc, char *argv[])
     if (G_legal_filename(outsigfile) < 0) {
       G_warning(_("\n<%s> -- illegal result signature file name"), outsigfile);
       G_usage();
-      exit(1);
+      exit(EXIT_FAILURE);
     }
 
     if (sscanf(parm.class->answer, "%d", &maxclass) != 1 || maxclass < 1 
 	|| maxclass>255) {
       G_warning(_("\n<%s> -- illegal number of initial classes"), parm.class->answer);
       G_usage();
-      exit(1);
+      exit(EXIT_FAILURE);
     }      
 
     insigfile = parm.seed_sig->answer;
@@ -176,7 +171,7 @@ main (int argc, char *argv[])
         G_warning(_("\n<%s> -- illegal value(s) of sample intervals"),
 		parm.sample_interval->answer);
         G_usage();
-        exit(1);
+        exit(EXIT_FAILURE);
       }
     }
     else {
@@ -192,28 +187,28 @@ main (int argc, char *argv[])
     {
       G_warning(_("\n<%s> -- illegal value of iterations"), parm.iterations->answer);
       G_usage();
-      exit(1);
+      exit(EXIT_FAILURE);
     }
 
     if(sscanf(parm.convergence->answer,"%lf", &conv)!=1 || conv<0.0 || conv>100.0)
     {
       G_warning(_("\n<%s> -- illegal value of convergence"), parm.convergence->answer);
       G_usage();
-      exit(1);
+      exit(EXIT_FAILURE);
     }
 
     if(sscanf(parm.separation->answer,"%lf", &sep)!=1 || sep < 0.0 )
     {
       G_warning(_("\n<%s> -- illegal value of separation"), parm.separation->answer);
       G_usage();
-      exit(1);
+      exit(EXIT_FAILURE);
     }
 
     if(sscanf(parm.min_size->answer,"%d", &mcs)!=1 || mcs < 2 )
     {
       G_warning(_("\n<%s> -- illegal value of min_size"), parm.min_size->answer);
       G_usage();
-      exit(1);
+      exit(EXIT_FAILURE);
     }
 
     verbose = !flag.q->answer;
@@ -226,7 +221,7 @@ main (int argc, char *argv[])
     {
         G_warning(_("Can't creat reportfile: "));
 	perror (reportfile);
-	exit(1);
+	exit(EXIT_FAILURE);
     }
 
     open_files();
@@ -278,7 +273,7 @@ main (int argc, char *argv[])
 	    G_percent (row, nrows, 2);
 	for (n=0; n < ref.nfiles; n++)
 	    if (G_get_c_raster_row (cellfd[n], cell[n], row) < 0)
-		exit(1);
+		exit(EXIT_FAILURE);
 	for (col = sample_cols-1; col < ncols; col += sample_cols)
 	{
 	    count++;
@@ -332,8 +327,7 @@ main (int argc, char *argv[])
         I_cluster_nclasses(&C,1), (double) C.percent_stable);
     fprintf (report, _("\n######## CLUSTER END (%s) ########\n"), G_date());
     fclose (report);
-    exit(0);
+
+    exit(EXIT_SUCCESS);
+
 }
-
-
-
