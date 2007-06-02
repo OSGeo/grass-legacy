@@ -46,7 +46,7 @@ SYNOP="$GISBASE/etc/module_synopsis.txt"
 OLDDIR="`pwd`"
 cd "$GISBASE"
 
-# etc/photo.* ps.map
+
 for DIR in bin scripts ; do
   cd $DIR
 
@@ -244,11 +244,12 @@ EOF
 
 g.message "Converting to PDF ..."
 
-# pdflatex and texi2pdf don't like .eps files, so we go the long way aroung.
-for PGM in texi2dvi dvips a2ps ps2pdf13 ; do
+# pdflatex and texi2pdf don't like .eps files, so we go the long way around.
+for PGM in texi2dvi dvips a2ps ps2pdf ; do
    if [ ! -x `which $PGM` ] ; then
-	g.message -e "texi2dvi, dvips, a2ps, and ps2pdf13 needed for this PDF conversion."
+	g.message -e "texi2dvi, dvips, a2ps, and ps2pdf needed for this PDF conversion."
 	g.message "Done."
+	exit 1
    fi
 done
 
@@ -259,7 +260,7 @@ cd "$TMPDIR"
 texi2dvi --quiet --clean "$GISBASE/etc/module_synopsis.tex"
 dvips -q module_synopsis.dvi
 a2ps --quiet module_synopsis.ps -o module_synopsis_2.ps
-ps2pdf13 module_synopsis_2.ps module_synopsis.pdf
+ps2pdf module_synopsis_2.ps module_synopsis.pdf
 
 
 \rm -f module_synopsis.dvi module_synopsis.ps \
@@ -268,3 +269,4 @@ ps2pdf13 module_synopsis_2.ps module_synopsis.pdf
 
 
 g.message "Done."
+
