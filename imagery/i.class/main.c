@@ -36,22 +36,22 @@ static int check_files (char *, char *, char *, char *);
 int main (int argc, char *argv[])
 {
     char *mapset;
-  struct Cell_head cellhd;
-  struct GModule *module;
-  struct Option *bg_map, *img_grp, *img_subgrp, *out_sig, *in_sig;
+    struct Cell_head cellhd;
+    struct GModule *module;
+    struct Option *bg_map, *img_grp, *img_subgrp, *out_sig, *in_sig;
 
     /* must run in a term window */
     G_putenv("GRASS_UI_TERM","1");
 
-  /* Initialize the gis library */
-  G_gisinit(argv[0]);
+    /* Initialize the gis library */
+    G_gisinit(argv[0]);
 
-  module = G_define_module();
-  module->keywords = _("imagery");
-  module->label =
+    module = G_define_module();
+    module->keywords = _("imagery");
+    module->label =
 	_("Generates spectral signatures for an image by allowing the user "
 	  "to outline regions of interest.");
-  module->description =
+    module->description =
 	_("The resulting signature file can be used as input for "
 	  "i.maxlik or as a seed signature file for i.cluster.");
 
@@ -63,6 +63,8 @@ int main (int argc, char *argv[])
 
     img_subgrp = G_define_standard_option (G_OPT_I_GROUP);
     img_subgrp->key = "subgroup";
+    img_subgrp->gisprompt    = "old,subgroup,subgroup";
+    img_subgrp->description  = _("Name of input imagery subgroup");
 
     out_sig = G_define_standard_option(G_OPT_F_OUTPUT);
     out_sig->key         = "outsig";
