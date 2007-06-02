@@ -78,6 +78,7 @@
  */
 #define ERR  2
 
+
 /* static int (*error)() = 0; */
 static int (*ext_error)(const char *, int); /* Roger Bivand 17 June 2000 */
 static int no_warn = 0;
@@ -93,6 +94,7 @@ static int write_error (const char *, int, const char *,
                         time_t, const char *);
 static int log_error (const char *, int);
 
+
 /*!
  * \fn void G_message (const char *msg,...)
  *
@@ -105,12 +107,15 @@ void G_message (const char *msg,...)
     char buffer[2000];  /* G_asprintf does not work */
     va_list ap;
 
-    va_start(ap, msg);
-    vsprintf(buffer,msg,ap);
-    va_end(ap);
+    if( G_verbose() >= G_verbose_std() ) {
+	va_start(ap, msg);
+	vsprintf(buffer,msg,ap);
+	va_end(ap);
 
-    print_error (buffer,MSG);
+	print_error (buffer,MSG);
+    }
 }
+
 
 /*!
  * \fn void G_verbose_message (const char *msg,...)
@@ -133,6 +138,34 @@ void G_verbose_message (const char *msg, ...)
 	G_message(buffer);
     }
 }
+
+
+/*!
+ * \fn void G_important_message (const char *msg,...)
+ *
+ * \brief Print a message to stderr even in brief mode (verbosity=1)
+ *
+ * Ususally just G_percent()/G_clicker() would be shown at this level.
+ * This allows important non-error/warning messages to display as well.
+ *
+ * The output format depends on enviroment variables
+ *  GRASS_MESSAGE_FORMAT and GRASS_VERBOSE
+*/
+void G_important_message(const char *msg, ...)
+{
+    char buffer[2000];  /* G_asprintf does not work */
+    va_list ap;
+
+    if( G_verbose() > G_verbose_min() ) {
+	va_start(ap, msg);
+	vsprintf(buffer,msg,ap);
+	va_end(ap);
+
+	print_error (buffer,MSG);
+    }
+}
+
+
 
 /*!
  * \fn int G_fatal_error (const char *msg,...)
@@ -273,14 +306,10 @@ static int print_error(const char *msg, const int type)
 	prefix_std[2] = _("ERROR: ");
     }
 
-    /* messages will be printed only when verbosity level is 2> */
-    if (G_verbose() < 2 && type == MSG) 
-        return 0;
-
     if ( type == ERR )
-	fatal = 1;
+	fatal = TRUE;
     else /* WARN */
-	fatal = 0;
+	fatal = FALSE;
 
     if ( (type == WARN || type == ERR) && ext_error) { /* Function defined by application */
 	ext_error (msg, fatal);

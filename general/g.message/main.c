@@ -21,7 +21,7 @@
 
 int main(int argc, char *argv[])
 {
-    struct Flag *warning, *fatal, *debug_flag, *verbose;
+    struct Flag *warning, *fatal, *debug_flag, *verbose, *important;
     struct Option *message, *debug_opt;
     struct GModule *module;
     int debug_level;
@@ -52,6 +52,12 @@ int main(int argc, char *argv[])
     debug_flag->guisection = "Input";
     debug_flag->description =
 	_("Print message as GRASS debug message");
+
+    important = G_define_flag();
+    important->key = 'i';
+    important->guisection = "Input";
+    important->description =
+	_("Print message in all but full quiet mode");
 
     verbose = G_define_flag();
     verbose->key = 'v';
@@ -89,14 +95,22 @@ int main(int argc, char *argv[])
 
     if(fatal->answer)
 	G_fatal_error(message->answer);
+
     else if(warning->answer)
 	G_warning(message->answer);
+
     else if(debug_flag->answer)
 	G_debug(debug_level, message->answer);
+
     else if(verbose->answer)
 	G_verbose_message(message->answer);
+
+    else if(important->answer)
+	G_important_message(message->answer);
+
     else
         G_message(message->answer);
    
+
     exit(EXIT_SUCCESS);
 }
