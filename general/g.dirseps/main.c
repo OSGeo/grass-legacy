@@ -17,6 +17,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <grass/gis.h>
+#include <grass/glocale.h>
 
 int main(int argc, char *argv[])
 {
@@ -29,6 +30,8 @@ int main(int argc, char *argv[])
 
     module = G_define_module();
     module->keywords = "general";
+    module->label =
+	_("Internal GRASS utility for converting directory separator characters.");
     module->description = 
      "Internal GRASS utility. Converts any directory separator characters in "
      "the input string to or from native host format, and writes the changed "
