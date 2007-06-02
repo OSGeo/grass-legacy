@@ -383,7 +383,7 @@ ps2pdf module_synopsis_2.ps module_synopsis.pdf
 \rm -f module_synopsis.dvi module_synopsis.ps \
        module_synopsis_2.ps grasslogo_vector.eps
 
-if [ ! -d "$GISBASE/docs/pdf" ] ;
+if [ ! -d "$GISBASE/docs/pdf" ] ; then
     mkdir "$GISBASE/docs/pdf"
 fi
 \mv module_synopsis.pdf "$GISBASE/docs/pdf/"
