@@ -71,12 +71,13 @@ int main (int argc, char **argv)
     /* set up the options and flags for the command line parser */
     module = G_define_module();
     module->keywords = _("vector");
-    module->description =
+    module->label =
 	_("Selects vector objects from an existing vector map and "
-	"creates a new map containing only the selected objects. "
-	"If 'list', 'file' and 'where' options are not specified, "
-	"all features of given type and layer are extracted, categories "
-	"are not changed in that case.");
+	  "creates a new map containing only the selected objects.");
+    module->description =
+	_("If 'list', 'file' and 'where' options are not specified, "
+	  "all features of given type and layer are extracted, categories "
+	  "are not changed in that case.");
 
     d_flag = G_define_flag();
     d_flag->key              = 'd';
@@ -132,6 +133,7 @@ int main (int argc, char **argv)
     /* heeeerrrrrre's the   PARSER */
     if (G_parser (argc, argv))
         exit (EXIT_FAILURE);
+
 
     /* start checking options and flags */
     type_only = 0;
@@ -376,6 +378,8 @@ int main (int argc, char **argv)
     exit(EXIT_SUCCESS);
 }
 
+
+
 int 
 scan_cats (char *s, int *x, int *y)
 {
@@ -399,5 +403,3 @@ scan_cats (char *s, int *x, int *y)
     }
     return 0;
 }
-
-
