@@ -61,7 +61,7 @@ int poly_to_rast (char *input_file, char *raster_map, char *title, int nrows)
 	    }
 	}
 
-	G_message (_("Writing raster map ... "));
+	G_message (_("Writing raster map... "));
 	stat = output_raster(rfd);
     } while (stat == 0);
     /* stat: 0 means repeat

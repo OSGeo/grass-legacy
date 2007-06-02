@@ -395,7 +395,7 @@ int update_labels (char *rast_name, char *vector_map, int field,
         map_type = G_raster_map_type (rast_name, mapset);
 
         if (!(rowbuf = G_allocate_raster_buf (map_type)))
-            G_fatal_error (_("Unable to allocate memory for row buffer"));
+            G_fatal_error (_("Cannot allocate memory for row buffer"));
 
         G_init_cell_stats (&stats);
         G_set_raster_cats_title ("Categories", &rast_cats);
