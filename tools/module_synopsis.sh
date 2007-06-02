@@ -21,7 +21,7 @@ if  [ -z "$GISBASE" ] ; then
     exit 1
 fi
 
-for FILE in txt tex pdf ; do
+for FILE in txt tex ; do
     if [ -e "$GISBASE/etc/module_synopsis.$FILE" ] ; then
     #  echo "ERROR: module_synopsis.$FILE already exists" 1>&2
     #  exit 1
@@ -114,14 +114,131 @@ sort "$TMP" > "$SYNOP"
 \rm -f "$TMP"
 
 
-####### create LaTeX source #######
-g.message "Generating LaTeX souce ..."
 
 # add missing periods at end of descriptions
 sed -e 's/[^\.]$/&./' "$SYNOP" > "${TMP}.txt"
 
 
-#### save header
+####### create HTML source #######
+# poor cousin to full_index.html
+# todo $MODULE.html links
+g.message "Generating HTML source ..."
+
+#### write header
+cat << EOF > "${TMP}.html"
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+<head>
+<title>`g.version | cut -f1 -d'('` Command list</title>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<link rel="stylesheet" href="grassdocs.css" type="text/css">
+</head>
+<body bgcolor="white">
+
+<img src="grass_logo.png" alt="_\|/_ GRASS logo"><hr align=center size=6 noshade>
+
+<center>
+<H1>`g.version | cut -f1 -d'('` Command list</H1>
+<h3>`date "+%e %B %Y"`</h3>
+</center>
+<BR><BR><BR>
+
+<h4>Command types:</h4>
+<ul>
+<li> d.* - <a href="#d">display commands</a>
+<li> db.* - <a href="#db">database</a> commands
+<li> g.* - <a href="#g">general</a> commands
+<li> i.* - <a href="#i">imagery</a> commands
+<li> m.* - <a href="#m">miscellanous</a> commands
+<li> ps.* - <a href="#ps">PostScript</a> commands
+<li> r.* - <a href="#r">raster</a> commands
+<li> r3.* - <a href="#r3">raster3D</a> commands
+<li> v.* - <a href="#v">vector</a> commands
+<li> gis.m - GUI frontend (Tcl/Tk)
+<li> nviz - visualization suite
+<li> xganim - raster map slideshow
+EOF
+
+
+#### fill in module entries
+
+for SECTION in d db g i m ps r r3 v ; do
+    SEC_TYPE="commands"
+    case $SECTION in
+      d)
+	SEC_NAME="Display" ;;
+      db)
+	SEC_NAME="Database management" ;;
+      g)
+	SEC_NAME="General GIS management" ;;
+      i)
+	SEC_NAME="Imagery" ;;
+      m)
+	SEC_NAME="Miscellaneous"
+	SEC_TYPE="tools" ;;
+      ps)
+	SEC_NAME="PostScript" ;;
+      r)
+	SEC_NAME="Raster" ;;
+      r3)
+	SEC_NAME="Raster 3D" ;;
+      v)
+	SEC_NAME="Vector" ;;
+    esac
+
+
+    cat << EOF >> "${TMP}.html"
+</ul>
+<BR>
+
+<a name="$SECTION"></a>
+<H3>$SEC_NAME $SEC_TYPE:</H3>
+
+<ul>
+EOF
+
+    grep "^${SECTION}\." "${TMP}.txt" | \
+      sed -e 's/^/<li> <B>/' -e 's+: +</B>: +' -e 's/&/\&amp;/g' \
+	  >> "${TMP}.html"
+
+    if [ "$SECTION" = "i" ] ; then
+	# include imagery photo subsection
+	cat << EOF >> "${TMP}.html"
+</ul>
+
+<h4>Imagery photo.* commands:</h4>
+
+<ul>
+EOF
+
+	grep "^photo\." "${TMP}.txt" | \
+	  sed -e 's/^/<li> <B>/' -e 's+: +</B>: +' -e 's/&/\&amp;/g' \
+	      >> "${TMP}.html"
+    fi
+
+done
+
+
+#### save footer
+cat << EOF >> "${TMP}.html"
+</ul>
+
+<hr>
+<p><a href="index.html">Help Index</a> | <a href="full_index.html">Full Index</a><br>
+&copy; 2007 <a href="http://grass.itc.it">GRASS Development Team</a></p>
+
+</BODY>
+</HTML>
+EOF
+
+\mv "${TMP}.html" "$GISBASE/docs/html/module_synopsis.html"
+
+
+
+####### create LaTeX source #######
+g.message "Generating LaTeX source ..."
+
+#### write header
 cat << EOF > "${TMP}.tex"
 %% Adapted from LyX 1.3 LaTeX export. (c) 2007 The GRASS Development Team
 \documentclass[american]{article}
@@ -265,7 +382,11 @@ ps2pdf module_synopsis_2.ps module_synopsis.pdf
 
 \rm -f module_synopsis.dvi module_synopsis.ps \
        module_synopsis_2.ps grasslogo_vector.eps
-\mv module_synopsis.pdf "$GISBASE/etc/"
+
+if [ ! -d "$GISBASE/docs/pdf" ] ;
+    mkdir "$GISBASE/docs/pdf"
+fi
+\mv module_synopsis.pdf "$GISBASE/docs/pdf/"
 
 
 g.message "Done."
