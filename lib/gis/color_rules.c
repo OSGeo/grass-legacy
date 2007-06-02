@@ -44,7 +44,7 @@ int G_parse_color_rule(
     DCELL *val, int *r, int *g, int *b,
     int *norm, int *nval, int *dflt)
 {
-    char value[16], color[16];
+    char value[80], color[80];
     double x;
     char c;
 
