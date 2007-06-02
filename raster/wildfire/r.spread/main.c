@@ -30,11 +30,11 @@
 #include <sys/types.h>
 #include <unistd.h>
 #include <grass/gis.h>
+#include <grass/glocale.h>
 #include "cmd_line.h"
 #include "costHa.h"
 #include "cell_ptrHa.h"
 #include "local_proto.h"
-#include <grass/glocale.h>
 
 #define DATA(map, r, c)		(map)[(r) * ncols + (c)]
 
@@ -100,26 +100,30 @@ main (int argc, char *argv[])
 	/* Set description */
 	module              = G_define_module();
 	module->keywords = _("raster");
+	module->label =
+	  _("Simulates elliptically anisotropic spread on a graphics window and "
+	    "and generates a raster map of the cumulative time of spread, "
+	    "given raster maps containing the rates of spread (ROS), the ROS "
+	    "directions and the spread origins.");
 	module->description =
-	_("Simulates elliptically anisotropic spread on a graphics window and "
-	"generates a raster map of the cumulative time of spread, "
-	"given raster maps containing the rates of spread (ROS), the ROS "
-	"directions and the spread origins. It optionally produces raster maps "
-	"to contain backlink UTM coordinates for tracing spread paths.");
+	  _("It optionally produces raster maps to contain backlink UTM "
+	    "coordinates for tracing spread paths.");
 
 	parm.max = G_define_option() ;        
 	parm.max->key        = "max" ;        
 	parm.max->type       = TYPE_STRING ;  
 	parm.max->required   = YES ;
 	parm.max->gisprompt  = "old,cell,raster" ;
-	parm.max->description = _("Name of raster map containing MAX rate of spread (ROS) (cm/min)");
+	parm.max->description =
+	  _("Name of raster map containing MAX rate of spread (ROS) (cm/min)");
 
         parm.dir = G_define_option() ;
 	parm.dir->key        = "dir" ;
 	parm.dir->type       = TYPE_STRING ;
 	parm.dir->required   = YES ;
 	parm.dir->gisprompt  = "old,cell,raster" ;
-	parm.dir->description = _("Name of raster map containing DIRections of max ROS (degree)");
+	parm.dir->description =
+	  _("Name of raster map containing DIRections of max ROS (degree)");
 
         parm.base = G_define_option() ;
 	parm.base->key        = "base" ;
@@ -139,32 +143,37 @@ main (int argc, char *argv[])
 	parm.spotdist->key        = "spot_dist" ;
 	parm.spotdist->type       = TYPE_STRING ;
 	parm.spotdist->gisprompt  = "old,cell,raster" ;
-	parm.spotdist->description = _("Name of raster map containing max SPOTting DISTance (m) (required w/ -s)") ;
+	parm.spotdist->description =
+	  _("Name of raster map containing max SPOTting DISTance (m) (required w/ -s)") ;
 
         parm.velocity = G_define_option() ;
         parm.velocity->key        = "w_speed" ;
         parm.velocity->type       = TYPE_STRING ;
         parm.velocity->gisprompt  = "old,cell,raster" ;
-        parm.velocity->description = _("Name of raster map containing midflame Wind SPEED (ft/min) (required w/ -s)");
+        parm.velocity->description =
+	  _("Name of raster map containing midflame Wind SPEED (ft/min) (required w/ -s)");
 
         parm.mois = G_define_option() ;
         parm.mois->key        = "f_mois" ;
         parm.mois->type       = TYPE_STRING ;
         parm.mois->gisprompt  = "old,cell,raster" ;
-        parm.mois->description = _("Name of raster map containing fine Fuel MOISture of the cell receiving a spotting firebrand (%) (required w/ -s)");
+        parm.mois->description =
+	  _("Name of raster map containing fine Fuel MOISture of the cell receiving a spotting firebrand (%) (required w/ -s)");
 
         parm.least = G_define_option() ;
         parm.least->key        = "least_size" ;
         parm.least->type       = TYPE_STRING ;
         parm.least->key_desc   = "odd int" ;
         parm.least->options 	  = "3,5,7,9,11,13,15" ;
-        parm.least->description = _("Basic sampling window SIZE needed to meet certain accuracy (3)") ;
+        parm.least->description =
+	  _("Basic sampling window SIZE needed to meet certain accuracy (3)") ;
 
         parm.comp_dens = G_define_option() ;
         parm.comp_dens->key        = "comp_dens" ;
         parm.comp_dens->type       = TYPE_STRING ;
         parm.comp_dens->key_desc   = "decimal" ;
-        parm.comp_dens->description = _("Sampling DENSity for additional COMPutin (range: 0.0 - 1.0 (0.5))") ;
+        parm.comp_dens->description =
+	  _("Sampling DENSity for additional COMPutin (range: 0.0 - 1.0 (0.5))") ;
 
         parm.init_time = G_define_option() ;
         parm.init_time->key        = "init_time" ;
@@ -219,6 +228,7 @@ main (int argc, char *argv[])
 	/*   Parse command line */
 	if (G_parser(argc, argv))
 		exit(EXIT_FAILURE);
+
 
 	srand(getpid()); 
 
