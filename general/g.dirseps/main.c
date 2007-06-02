@@ -33,7 +33,7 @@ int main(int argc, char *argv[])
     module->label =
 	_("Internal GRASS utility for converting directory separator characters.");
     module->description = 
-     "Internal GRASS utility. Converts any directory separator characters in "
+     "Converts any directory separator characters in "
      "the input string to or from native host format, and writes the changed "
      "path to standard output. Useful in scripts for Windows compatibility.";
    
