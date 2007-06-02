@@ -48,12 +48,12 @@ int main (int argc, char *argv[])
 
   module = G_define_module();
   module->keywords = _("imagery");
-    module->description =
-	_("An imagery function that generates spectral signatures "
-	"for an image by allowing the user to outline regions of "
-	"interest. The resulting signature file can be used as "
-	"input for i.maxlik or as a seed signature file for "
-	"i.cluster.");
+  module->label =
+	_("Generates spectral signatures for an image by allowing the user "
+	  "to outline regions of interest.");
+  module->description =
+	_("The resulting signature file can be used as input for "
+	  "i.maxlik or as a seed signature file for i.cluster.");
 
     bg_map = G_define_standard_option(G_OPT_R_MAP);
     bg_map->description =
@@ -78,6 +78,7 @@ int main (int argc, char *argv[])
 
     if (G_parser(argc, argv) < 0)
 	exit(EXIT_FAILURE);
+
 
   /* must have a graphics terminal selected */
   if (R_open_driver() != 0)
