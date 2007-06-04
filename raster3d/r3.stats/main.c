@@ -574,12 +574,12 @@ int main(int argc, char *argv[])
     steps->type = TYPE_INTEGER;
     steps->required = NO;
     steps->answer = "20";
-    steps->description = _("Number of subranges to collect stats from");
+    steps->description = _("Number of sub-ranges to collect stats from");
 
 
     equal = G_define_flag();
     equal->key = 'e';
-    equal->description = _("Calculate statsitics based on equal value groups");
+    equal->description = _("Calculate statistics based on equal value groups");
 
     if (G_parser(argc, argv))
 	exit(EXIT_FAILURE);
