@@ -49,16 +49,50 @@ int unit_test_les_creation()
 /* *************************************************************** */
 int test_les()
 {
-    N_spvector *spvector;
-    N_les *les;
-    N_les *sples;
+    N_spvector *spvector = NULL;
+    N_les *les = NULL;
+    N_les *sples = NULL;
     int i, j;
 
-    G_message(_("\t * testing les creation in parallel\n"));
+
+    les = N_alloc_les(TEST_N_NUM_ROWS, N_NORMAL_LES);
+    N_print_les(les);
+    N_free_les(les);
+
+    les = N_alloc_les_A(TEST_N_NUM_ROWS, N_NORMAL_LES);
+    N_print_les(les);
+    N_free_les(les);
+
+    les = N_alloc_les_Ax(TEST_N_NUM_ROWS, N_NORMAL_LES);
+    N_print_les(les);
+    N_free_les(les);
+
+    les = N_alloc_les_Ax_b(TEST_N_NUM_ROWS, N_NORMAL_LES);
+    N_print_les(les);
+    N_free_les(les);
+
+    les = N_alloc_nquad_les(6, 3, N_NORMAL_LES);
+    N_print_les(les);
+    N_free_les(les);
+
+    les = N_alloc_nquad_les_A(6, 3, N_NORMAL_LES);
+    N_print_les(les);
+    N_free_les(les);
+
+    les = N_alloc_nquad_les_Ax(6, 3, N_NORMAL_LES);
+    N_print_les(les);
+    N_free_les(les);
+
+    les = N_alloc_nquad_les_Ax_b(6, 3, N_NORMAL_LES);
+    N_print_les(les);
+    N_free_les(les);
+
 
     les = N_alloc_les(TEST_N_NUM_ROWS, N_NORMAL_LES);
     sples = N_alloc_les(TEST_N_NUM_ROWS, N_SPARSE_LES);
 
+
+    G_message(_("\t * testing les creation in parallel\n"));
 #pragma omp parallel for private(i, j) shared(les)
     for (i = 0; i < TEST_N_NUM_ROWS; i++) {
 	for (j = 0; j < TEST_N_NUM_ROWS; j++) {

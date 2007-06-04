@@ -146,7 +146,6 @@ int test_solvers()
     N_free_les(les);
     N_free_les(sples);
 
-
     G_message("\t * testing cg solver\n");
 
     les = create_normal_les(TEST_N_NUM_ROWS);
@@ -160,11 +159,23 @@ int test_solvers()
     N_free_les(les);
     N_free_les(sples);
 
-    G_message("\t * testing bicgstab solver\n");
+    G_message("\t * testing pcg solver\n");
 
     les = create_normal_les(TEST_N_NUM_ROWS);
     sples = create_sparse_les(TEST_N_NUM_ROWS);
 
+    N_solver_pcg(les, 100, 0.1e-8);
+    /*N_print_les(les); */
+    N_solver_pcg(sples, 100, 0.1e-8);
+    /*N_print_les(sples); */
+
+    N_free_les(les);
+    N_free_les(sples);
+
+    G_message("\t * testing bicgstab solver\n");
+
+    les = create_normal_les(TEST_N_NUM_ROWS);
+    sples = create_sparse_les(TEST_N_NUM_ROWS);
 
     N_solver_bicgstab(les, 100, 0.1e-8);
     /*N_print_les(les); */
