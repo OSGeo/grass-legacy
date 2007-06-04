@@ -549,6 +549,7 @@ set descmenu [subst  {
 		{command {[G_msg "Login to database"]} {} "db.login" {} -command {execute db.login }}
 		{separator}
 		{command {[G_msg "Copy table"]} {} "db.copy" {} -command {execute db.copy }}
+		{command {[G_msg "Add table to map"]} {} "v.db.addtable" {} -command {execute v.db.addtable }}
 		{command {[G_msg "Add columns to table"]} {} "v.db.addcol" {} -command {execute v.db.addcol }}
 		{command {[G_msg "Change values in a column"]} {} "v.db.update" {} -command {execute v.db.update }}
 		{command {[G_msg "Test database"]} {} "db.test" {} -command {execute db.test }}
