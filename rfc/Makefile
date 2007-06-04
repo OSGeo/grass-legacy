@@ -16,6 +16,3 @@ cleandocs: clean
 DOXNAME=rfc_list
 DOXINPUT=$(DOXNAME).dox
 DOXOUTPUT=$(DOXNAME)
-
-pdfdocs:
-	@echo "disabled for now due to Latex error (why fails?)"

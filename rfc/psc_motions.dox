@@ -11,6 +11,12 @@ See also: <a href="http://grass.gdf-hannover.de/wiki/PSC_Agenda">PSC Agenda</a>.
 </ul>
 -->
 
+\section motions2007 Motions of 2007
+
+<ul>
+<li> CVS write access to P. Marcondes for PT translations (granted, 2 June 2007)
+</ul>
+
 \section motions2006 Motions of 2006
 
 <ul>
@@ -21,5 +27,4 @@ See also: <a href="http://grass.gdf-hannover.de/wiki/PSC_Agenda">PSC Agenda</a>.
 <li> \link rfc2_psc RFC 2: Legal aspects of code contributions\endlink (adopted 8 Dec 2006)
 </ul>
 
-<p><i>Last changed: $Date$</i></p>
 */
