@@ -53,7 +53,7 @@ struct Option *N_define_standard_option(int opt)
 	Opt->required = NO;
 	Opt->key_desc = "name";
 	Opt->answer = "cg";
-	Opt->options = "gauss,lu,jacobi,sor,cg,bicgstab";
+	Opt->options = "gauss,lu,jacobi,sor,cg,bicgstab,pcg";
 	Opt->description =
 	    _
 	    ("The type of solver which should solve the symmetric linear equation system.");
