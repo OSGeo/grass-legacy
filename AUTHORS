@@ -44,8 +44,11 @@ A list of contributors with write access is available in
 A list of contributors without write access is available in
 ./contributors_extra.csv
 
+A list of translators is available in
+./translators.csv
 
-New contributions specific to GRASS 6.1 and 6.2:
+
+New contributions specific to GRASS 6.1 - 6.3:
 -------------------------------------------------
 (work in progress: please complete and correct, this list may be incomplete)
 
@@ -80,12 +83,13 @@ Institutions:
 VECTOR
  - Radim Blazek <blazek itc it>: vector engine core developer
  - David D Gray: vector engine contributions
- - modules: see individual authors
+ - modules: see individual authors and ./contributors.csv
  
 DBMI
  - based on original code from GRASS 5.0 (developer unknown, CERL?)
  - Radim Blazek <blazek itc it>: core developer of 5.7 enhancements
  - Alexander Shevlakov: drivers and sqlp contributions
+ - modules: see individual authors and ./contributors.csv
 
 DGLib: vector networking
  - Roberto Micarelli <mi ro iol it>: LIBDGL - graph library for vector
@@ -98,12 +102,15 @@ RASTER
  - Modules: see 5.4 authors below + individual modules
  - Integration of raster modules: Markus Neteler <neteler itc it>
  - Large file support (LFS): Glynn Clements  <glynn gclements.plus.com>
+ - modules: see individual authors and ./contributors.csv
 
 3D RASTER
  - Grid3D library by CERL and GMSL/University of Illinois
  - Jaro Hofierka <hofierka geomodel sk>
  - Helena Mitasova <hmitaso unity ncsu edu>
  - Alfonso Vitti <alfonso vitti ing unitn it>: important bugfixes
+ - Soeren Gebbert <soeren.gebbert gmx de>: important bugfixes
+ - modules: see individual authors and ./contributors.csv
 
 PROJ
  - Integrated by Paul Kelly <paul-grass stjohnspoint co uk>
