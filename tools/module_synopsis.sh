@@ -236,9 +236,9 @@ cat << EOF >> "${TMP}.html"
 
 <hr>
 <p>
-<a href="index.html">Help Index</a> | 
-<a href="full_index.html">Full Index</a><br>
-&copy; 2007 <a href="http://grass.itc.it">GRASS Development Team</a></p>
+<a href="index.html">Help Index</a><br>
+&copy; 2007 <a href="http://grass.itc.it">GRASS Development Team</a>
+</p>
 
 </BODY>
 </HTML>
