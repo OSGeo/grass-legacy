@@ -5,8 +5,8 @@
 * AUTHOR(S):    Soeren Gebbert, Berlin (GER) Dec 2006
 * 		soerengebbert <at> gmx <dot> de
 *               
-* PURPOSE:      linear equation system solvers
-* 		part of the gpde library
+* PURPOSE:      linear equation system pivoting strategy
+*  		part of the gpde library
 *               
 * COPYRIGHT:    (C) 2000 by the GRASS Development Team
 *
@@ -32,11 +32,11 @@
  * \brief Optimize the structure of the linear equation system with a common pivoting strategy
  *
  * Create a optimized linear equation system for
- * direct solver like gauss and lu decomposition.
+ * direct solvers: gauss and lu decomposition.
  *
  * The rows are permuted based on the pivot elements.
  *
- * This algorithm will change the provided linear equation system
+ * This algorithm will modify the provided linear equation system
  * and should only be used with the gauss elimination and lu decomposition solver.
  *
  * \param les * N_les -- the linear equation system
@@ -52,8 +52,6 @@ int N_les_pivot_create(N_les * les)
     int number = 0;
     double tmpval = 0.0, s = 0.0;
     double *link = NULL;
-
-    /*N_print_les(les); */
 
     G_debug(2, "N_les_pivot_create: swap rows if needed");
     for (i = 0; i < les->rows; i++) {
@@ -89,8 +87,6 @@ int N_les_pivot_create(N_les * les)
 	    num++;
 	}
     }
-
-    /*N_print_les(les); */
 
     return num;
 }
