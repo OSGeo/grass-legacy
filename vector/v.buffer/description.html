@@ -5,6 +5,13 @@ have a category in the given <em>layer</em>. The <em>tolerance</em> controls
 the number of vector segments being generated (the smaller the value, the more
 vector segments are generated).
 
+
+<h2>NOTES</h2>
+
+Attributes are not transferred due to potential buffer overlap, which
+cannot be resolved automatically.
+
+
 <h2>EXAMPLES</h2>
 
 <h4>Buffer around input lines</h4>
@@ -20,8 +27,6 @@ v.buffer input=map output=buffer type=line buffer=100
 v.buffer input=pointsmap output=circles type=point buffer=1000 
 </pre></div>
 <BR>
-Note that attributes are not transferred (due to potential buffer overlap which
-cannot be resolved automatically).
 
 <h4>Non-overlapping circles around input points with attribute transfer</h4>
 
