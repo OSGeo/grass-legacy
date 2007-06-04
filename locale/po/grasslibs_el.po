@@ -1,4 +1,4 @@
-# translation of grasslibs_es.po to Greek
+# translation of grasslibs_el.po to Greek
 # Greek translation of grasslibs.pot
 # This file is distributed under the same license as the GRASS package.
 # Copyright (C) 2007 GRASS Development Team
