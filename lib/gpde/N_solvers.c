@@ -23,6 +23,13 @@
 #include "grass/N_pde.h"
 #include "solvers_local_proto.h"
 
+/*prototypes */
+static void gauss_elimination(double **A, double *b, int rows);
+static void lu_decomposition(double **A, int rows);
+static void backward_solving(double **A, double *x, double *b, int rows);
+static void forward_solving(double **A, double *x, double *b, int rows);
+
+
 /***********************************************************
  * GAUSS elimination solver for Ax = b *********************
  * ********************************************************/
@@ -41,7 +48,11 @@ int N_solver_gauss(N_les * les)
     if (les->type != N_NORMAL_LES)
 	G_fatal_error
 	    (_
-	     ("The gauss elimination solver works only with normal quadratic matrices"));
+	     ("The gauss elimination solver does not works with sparse matrices"));
+
+    if (les->quad != 1)
+	G_fatal_error(_("The linear equation system is not quadratic"));
+
 
     G_message(_("Starting gauss elimination solver"));
 
@@ -70,8 +81,11 @@ int N_solver_lu(N_les * les)
     double *c, *tmpv;
 
     if (les->type != N_NORMAL_LES)
-	G_fatal_error
-	    (_("The lu solver works only with normal quadratic matrices"));
+	G_fatal_error(_("The lu solver does not works with sparse matrices"));
+
+    if (les->quad != 1)
+	G_fatal_error(_("The linear equation system is not quadratic"));
+
 
     G_message(_("Starting lu solver method"));
 
@@ -164,11 +178,8 @@ void lu_decomposition(double **A, int rows)
 
 #pragma omp parallel for schedule (static) private(i, j) shared(k, A, rows)
 	for (i = k + 1; i < rows; i++) {
-
 	    A[i][k] = A[i][k] / A[k][k];
-
 	    for (j = k + 1; j < rows; j++) {
-
 		A[i][j] = A[i][j] - A[i][k] * A[k][j];
 	    }
 	}
@@ -292,5 +303,3 @@ double *vectmem(int rows)
     vector = (double *)(G_calloc(rows, (sizeof(double))));
     return vector;
 }
-
-
