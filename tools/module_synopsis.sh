@@ -27,7 +27,16 @@ for FILE in txt tex ; do
     #  exit 1
        #blank it
        g.message -w "Overwriting \"\$GISBASE/etc/module_synopsis.$FILE\""
-       \rm $GISBASE/etc/module_synopsis.$FILE
+       \rm "$GISBASE/etc/module_synopsis.$FILE"
+    fi
+done
+for FILE in html pdf ; do
+    if [ -e "$GISBASE/docs/$FILE/module_synopsis.$FILE" ] ; then
+    #  echo "ERROR: module_synopsis.$FILE already exists" 1>&2
+    #  exit 1
+       #blank it
+       g.message -w "Overwriting \"\$GISBASE/docs/$FILE/module_synopsis.$FILE\""
+       \rm "$GISBASE/docs/$FILE/module_synopsis.$FILE"
     fi
 done
 
@@ -39,7 +48,7 @@ if [ $? -ne 0 ] || [ -z "$TMP" ] ; then
 fi
 
 
-g.message "Generating module synopsis ..."
+g.message "Generating module synopsis (writing to \$GISBASE/etc/) ..."
 
 SYNOP="$GISBASE/etc/module_synopsis.txt"
 
@@ -120,9 +129,9 @@ sed -e 's/[^\.]$/&./' "$SYNOP" > "${TMP}.txt"
 
 
 ####### create HTML source #######
-# poor cousin to full_index.html
+# poor cousin to full_index.html from tools/build_html_index.sh
 # todo $MODULE.html links
-g.message "Generating HTML source ..."
+g.message "Generating HTML (writing to \$GISBASE/docs/html/) ..."
 
 #### write header
 cat << EOF > "${TMP}.html"
@@ -198,8 +207,9 @@ for SECTION in d db g i m ps r r3 v ; do
 EOF
 
     grep "^${SECTION}\." "${TMP}.txt" | \
-      sed -e 's/^/<li> <B>/' -e 's+: +</B>: +' -e 's/&/\&amp;/g' \
-	  >> "${TMP}.html"
+      sed -e 's/: /| /' -e 's/^.*|/<li> <a href="&.html">&<\/a>:/' \
+	  -e 's/|.html">/.html">/' -e 's+|</a>:+</a>:+' \
+	  -e 's/&/\&amp;/g' >> "${TMP}.html"
 
     if [ "$SECTION" = "i" ] ; then
 	# include imagery photo subsection
@@ -212,8 +222,9 @@ EOF
 EOF
 
 	grep "^photo\." "${TMP}.txt" | \
-	  sed -e 's/^/<li> <B>/' -e 's+: +</B>: +' -e 's/&/\&amp;/g' \
-	      >> "${TMP}.html"
+	  sed -e 's/: /| /' -e 's/^.*|/<li> <a href="&.html">&<\/a>:/' \
+	      -e 's/|.html">/.html">/' -e 's+|</a>:+</a>:+' \
+	      -e 's/&/\&amp;/g' >> "${TMP}.html"
     fi
 
 done
@@ -224,7 +235,9 @@ cat << EOF >> "${TMP}.html"
 </ul>
 
 <hr>
-<p><a href="index.html">Help Index</a> | <a href="full_index.html">Full Index</a><br>
+<p>
+<a href="index.html">Help Index</a> | 
+<a href="full_index.html">Full Index</a><br>
 &copy; 2007 <a href="http://grass.itc.it">GRASS Development Team</a></p>
 
 </BODY>
@@ -236,12 +249,12 @@ EOF
 
 
 ####### create LaTeX source #######
-g.message "Generating LaTeX source ..."
+g.message "Generating LaTeX source (writing to \$GISBASE/etc/) ..."
 
 #### write header
 cat << EOF > "${TMP}.tex"
 %% Adapted from LyX 1.3 LaTeX export. (c) 2007 The GRASS Development Team
-\documentclass[american]{article}
+\documentclass[a4paper]{article}
 \usepackage{palatino}
 \usepackage[T1]{fontenc}
 \usepackage[latin1]{inputenc}
@@ -258,7 +271,8 @@ cat << EOF > "${TMP}.tex"
       \renewcommand{\makelabel}[1]{##1\hfil}}}
    {\end{list}}
 
-\usepackage{babel}
+%% last language is the default
+\usepackage[german, english]{babel}
 \makeatother
 \begin{document}
 \begin{center}\includegraphics[%
@@ -359,7 +373,7 @@ EOF
 
 
 
-g.message "Converting to PDF ..."
+g.message "Converting LaTeX to PDF (writing to \$GISBASE/docs/pdf/) ..."
 
 for PGM in pdflatex ; do
    if [ ! -x `which $PGM` ] ; then
@@ -373,6 +387,8 @@ TMPDIR="`dirname "$TMP"`"
 cp "$OLDDIR/grasslogo_vector.pdf" "$TMPDIR"
 cd "$TMPDIR"
 
+#once working nicely make it quieter
+#pdflatex --interaction batchmode "$GISBASE/etc/module_synopsis.tex"
 pdflatex "$GISBASE/etc/module_synopsis.tex"
 
 \rm -f module_synopsis.dvi module_synopsis.ps \
@@ -384,5 +400,5 @@ fi
 \mv module_synopsis.pdf "$GISBASE/docs/pdf/"
 
 
-g.message "Done (PDF written to $GISBASE/docs/pdf/)."
+g.message "Done."
 
