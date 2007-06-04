@@ -404,6 +404,7 @@ copy_result(N_array_2d * status, N_array_2d * phead_start, double *result,
 	    else if (stat == N_CELL_DIRICHLET) {	/*dirichlet cells */
 		d1 = N_get_array_2d_d_value(phead_start, x, y);
 		val = (DCELL) d1;
+		count++;
 	    }
 	    else {
 		G_set_null_value(&val, 1, DCELL_TYPE);
@@ -428,12 +429,14 @@ N_les *create_solve_les(N_geom_data * geom, N_gwflow_data2d * data,
     /*assemble the linear equation system */
     if (param.sparse->answer)
 	les =
-	    N_assemble_les_2d(N_SPARSE_LES, geom, data->status, data->phead,
+	    N_assemble_les_2d_dirichlet(N_SPARSE_LES, geom, data->status, data->phead,
 			      (void *)data, call);
     else
 	les =
-	    N_assemble_les_2d(N_NORMAL_LES, geom, data->status, data->phead,
+	    N_assemble_les_2d_dirichlet(N_NORMAL_LES, geom, data->status, data->phead,
 			      (void *)data, call);
+
+    N_les_integrate_dirichlet_2d(les, geom, data->status, data->phead);			
 
     /*solve the equation system */
     if (strcmp(solver, N_SOLVER_ITERATIVE_JACOBI) == 0) 
@@ -444,6 +447,9 @@ N_les *create_solve_les(N_geom_data * geom, N_gwflow_data2d * data,
 
     if (strcmp(solver, N_SOLVER_ITERATIVE_CG) == 0) 
 	N_solver_cg(les, maxit, error);
+
+    if (strcmp(solver, N_SOLVER_ITERATIVE_PCG) == 0) 
+	N_solver_pcg(les, maxit, error);
 
     if (strcmp(solver, N_SOLVER_ITERATIVE_BICGSTAB) == 0) 
 	N_solver_bicgstab(les, maxit, error);
