@@ -23,6 +23,13 @@
 #include "grass/N_pde.h"
 #include "solvers_local_proto.h"
 
+static int sparse_jacobi_gauss(N_les * L, int maxit, double sor, double error,
+			       const char *type);
+static int jacobi(double **M, double *b, double *x, int rows, int maxit,
+		  double sor, double error);
+static int gauss_seidel(double **M, double *b, double *x, int rows, int maxit,
+			double sor, double error);
+
 /* ******************************************************* *
  * ******** overrelaxed jacobian ************************* *
  * ******************************************************* */
@@ -40,10 +47,17 @@
  * \param maxit int -- the maximum number of iterations
  * \param sor double -- defines the successive overrelaxion parameter [0:1]
  * \param error double -- defines the error break criteria
+ * \return int -- 1=success, -1=could not solve the les
  * 
  * */
 int N_solver_jacobi(N_les * L, int maxit, double sor, double error)
 {
+
+    if (L->quad != 1) {
+	G_warning(_("The linear equation system is not quadratic"));
+	return -1;
+    }
+
     if (L->type == N_NORMAL_LES)
 	return jacobi(L->A, L->b, L->x, L->rows, maxit, sor, error);
     else
@@ -69,11 +83,18 @@ int N_solver_jacobi(N_les * L, int maxit, double sor, double error)
  * \param maxit int -- the maximum number of iterations
  * \param sor double -- defines the successive overrelaxion parameter [0:1]
  * \param error double -- defines the error break criteria
+ * \return int -- 1=success, -1=could not solve the les
  * 
  * */
 
 int N_solver_SOR(N_les * L, int maxit, double sor, double error)
 {
+
+    if (L->quad != 1) {
+	G_warning(_("The linear equation system is not quadratic"));
+	return -1;
+    }
+
     if (L->type == N_NORMAL_LES)
 	return gauss_seidel(L->A, L->b, L->x, L->rows, maxit, sor, error);
     else

@@ -23,14 +23,32 @@
 #include "grass/N_pde.h"
 #include "solvers_local_proto.h"
 
+/*local protos */
+static void scalar_product(double *a, double *b, double *scalar, int rows);
+static void sub_vectors(double *source_a, double *source_b, double *result,
+			int row);
+static void sub_vectors_scalar(double *source_a, double *source_b,
+			       double *result, double scalar_b, int rows);
+static void add_vectors(double *source_a, double *source_b, double *result,
+			int rows);
+static void add_vectors_scalar(double *source_a, double *source_b,
+			       double *result, double scalar_b, int rows);
+static void add_vectors_scalar2(double *source_a, double *source_b,
+				double *result, double scalar_a,
+				double scalar_b, int rows);
+static void scalar_vector_product(double *a, double *result, double scalar,
+				  int rows);
+static void sync_vectors(double *source, double *target, int rows);
+
+
 /* ******************************************************* *
- * ****************** conjugate gradients **************** *
+ * *** preconditioned conjugate gradients **************** *
  * ******************************************************* */
 /*!
- * \brief The iterative conjugate gradients solver for symmetric positive definite matrices
+ * \brief The iterative preconditioned conjugate gradients solver for symmetric positive definite matrices
  *
- * The result is written to the vector L->x of the les.
- * This iterative solver works with sparse matrices and regular quadratic matrices.
+ * This iterative solver works with symmetric positive definite sparse matrices and 
+ * symmetric positive definite regular quadratic matrices.
  *
  * The parameter <i>maxit</i> specifies the maximum number of iterations. If the maximum is reached, the
  * solver will abort the calculation and writes the current result into the vector L->x.
@@ -39,6 +57,177 @@
  * \param L N_les *  -- the linear equatuin system
  * \param maxit int -- the maximum number of iterations
  * \param err double -- defines the error break criteria
+ * \return int -- 1 - success, 2 - not finisehd but success, 0 - matrix singular, -1 - could not solve the les
+ * 
+ * */
+int N_solver_pcg(N_les * L, int maxit, double err)
+{
+    double *r, *z;
+    double *p;
+    double *v;
+    double *x, *b;
+    double s = 0.0;
+    double a0 = 0, a1 = 0, mygamma, tmp = 0;
+    int m, rows, i;
+    int finished = 2;
+    N_les *M;
+
+    if (L->quad != 1) {
+	G_warning(_("The linear equation system is not quadratic"));
+	return -1;
+    }
+
+    /* check for symmetry */
+    if (check_symmetry(L) != 1) {
+	G_warning(_("Matrix is not symmetric"));
+	return -1;
+    }
+
+    x = L->x;
+    b = L->b;
+    rows = L->rows;
+
+    r = vectmem(rows);
+    p = vectmem(rows);
+    v = vectmem(rows);
+    z = vectmem(rows);
+
+    /*compute the preconditioning matrix */
+    M = N_create_diag_precond_matrix(L);
+
+    /*
+     * residual calculation 
+     */
+#pragma omp parallel
+    {
+	/* matrix vector multiplication */
+	if (L->type == N_SPARSE_LES)
+	    N_sparse_matrix_vector_product(L, x, v);
+	else
+	    N_matrix_vector_product(L, x, v);
+
+	sub_vectors(b, v, r, rows);
+	/*performe the preconditioning */
+	N_sparse_matrix_vector_product(M, r, p);
+
+	/* scalar product */
+#pragma omp for schedule (static) private(i) reduction(+:s)
+	for (i = 0; i < rows; i++) {
+	    s += p[i] * r[i];
+	}
+    }
+
+    a0 = s;
+    s = 0.0;
+
+    /* ******************* */
+    /* start the iteration */
+    /* ******************* */
+    for (m = 0; m < maxit; m++) {
+#pragma omp parallel default(shared)
+	{
+	    /* matrix vector multiplication */
+	    if (L->type == N_SPARSE_LES)
+		N_sparse_matrix_vector_product(L, p, v);
+	    else
+		N_matrix_vector_product(L, p, v);
+
+
+	    /* scalar product */
+#pragma omp for schedule (static) private(i) reduction(+:s)
+	    for (i = 0; i < rows; i++) {
+		s += v[i] * p[i];
+	    }
+
+	    /* barrier */
+#pragma omp single
+	    {
+		tmp = s;
+		mygamma = a0 / tmp;
+		s = 0.0;
+	    }
+
+	    add_vectors_scalar(x, p, x, mygamma, rows);
+
+	    if (m % 50 == 1) {
+		/* matrix vector multiplication */
+		if (L->type == N_SPARSE_LES)
+		    N_sparse_matrix_vector_product(L, x, v);
+		else
+		    N_matrix_vector_product(L, x, v);
+
+		sub_vectors(b, v, r, rows);
+
+	    }
+	    else {
+		sub_vectors_scalar(r, v, r, mygamma, rows);
+	    }
+
+	    /*performe the preconditioning */
+	    N_sparse_matrix_vector_product(M, r, z);
+
+	    /* scalar product */
+#pragma omp for schedule (static) private(i) reduction(+:s)
+	    for (i = 0; i < rows; i++) {
+		s += z[i] * r[i];
+	    }
+
+	    /* barrier */
+#pragma omp single
+	    {
+		a1 = s;
+		tmp = a1 / a0;
+		a0 = a1;
+		s = 0.0;
+
+		if (a1 < 0 || a1 == 0 || a1 > 0) {
+		    ;
+		}
+		else {
+		    G_warning(_("unable to solve the linear equation system"));
+		    return -1;
+		}
+	    }
+	    add_vectors_scalar(z, p, p, tmp, rows);
+	}
+
+	if (L->type == N_SPARSE_LES)
+	    G_message(_("sparse PCG -- iteration %i error  %g\n"), m, a0);
+	else
+	    G_message(_("PCG -- iteration %i error  %g\n"), m, a0);
+
+	if (a0 < err) {
+	    finished = 1;
+	    break;
+	}
+    }
+
+    G_free(r);
+    G_free(p);
+    G_free(v);
+    G_free(z);
+
+    return finished;
+}
+
+
+/* ******************************************************* *
+ * ****************** conjugate gradients **************** *
+ * ******************************************************* */
+/*!
+ * \brief The iterative conjugate gradients solver for symmetric positive definite matrices
+ *
+ * This iterative solver works with symmetric positive definite sparse matrices and 
+ * symmetric positive definite regular quadratic matrices.
+ *
+ * The parameter <i>maxit</i> specifies the maximum number of iterations. If the maximum is reached, the
+ * solver will abort the calculation and writes the current result into the vector L->x.
+ * The parameter <i>err</i> defines the error break criteria for the solver.
+ *
+ * \param L N_les *  -- the linear equatuin system
+ * \param maxit int -- the maximum number of iterations
+ * \param err double -- defines the error break criteria
+ * \return int -- 1 - success, 2 - not finisehd but success, 0 - matrix singular, -1 - could not solve the les
  * 
  * */
 int N_solver_cg(N_les * L, int maxit, double err)
@@ -50,7 +239,18 @@ int N_solver_cg(N_les * L, int maxit, double err)
     double s = 0.0;
     double a0 = 0, a1 = 0, mygamma, tmp = 0;
     int m, rows, i;
-    int finished = 0;
+    int finished = 2;
+
+    if (L->quad != 1) {
+	G_warning(_("The linear equation system is not quadratic"));
+	return -1;
+    }
+
+    /* check for symmetry */
+    if (check_symmetry(L) != 1) {
+	G_warning(_("Matrix is not symmetric"));
+	return -1;
+    }
 
     x = L->x;
     b = L->b;
@@ -67,9 +267,9 @@ int N_solver_cg(N_les * L, int maxit, double err)
     {
 	/* matrix vector multiplication */
 	if (L->type == N_SPARSE_LES)
-	    sparse_matrix_vector_product(L, x, v);
+	    N_sparse_matrix_vector_product(L, x, v);
 	else
-	    matrix_vector_product(L, x, v);
+	    N_matrix_vector_product(L, x, v);
 
 	sub_vectors(b, v, r, rows);
 	sync_vectors(r, p, rows);
@@ -92,9 +292,9 @@ int N_solver_cg(N_les * L, int maxit, double err)
 	{
 	    /* matrix vector multiplication */
 	    if (L->type == N_SPARSE_LES)
-		sparse_matrix_vector_product(L, p, v);
+		N_sparse_matrix_vector_product(L, p, v);
 	    else
-		matrix_vector_product(L, p, v);
+		N_matrix_vector_product(L, p, v);
 
 
 	    /* scalar product */
@@ -112,7 +312,19 @@ int N_solver_cg(N_les * L, int maxit, double err)
 	    }
 
 	    add_vectors_scalar(x, p, x, mygamma, rows);
-	    sub_vectors_scalar(r, v, r, mygamma, rows);
+
+	    if (m % 50 == 1) {
+		/* matrix vector multiplication */
+		if (L->type == N_SPARSE_LES)
+		    N_sparse_matrix_vector_product(L, x, v);
+		else
+		    N_matrix_vector_product(L, x, v);
+
+		sub_vectors(b, v, r, rows);
+	    }
+	    else {
+		sub_vectors_scalar(r, v, r, mygamma, rows);
+	    }
 
 	    /* scalar product */
 #pragma omp for schedule (static) private(i) reduction(+:s)
@@ -127,6 +339,14 @@ int N_solver_cg(N_les * L, int maxit, double err)
 		tmp = a1 / a0;
 		a0 = a1;
 		s = 0.0;
+
+		if (a1 < 0 || a1 == 0 || a1 > 0) {
+		    ;
+		}
+		else {
+		    G_warning(_("unable to solve the linear equation system"));
+		    return -1;
+		}
 	    }
 	    add_vectors_scalar(r, p, p, tmp, rows);
 	}
@@ -153,7 +373,7 @@ int N_solver_cg(N_les * L, int maxit, double err)
  * ************ biconjugate gradients ******************** *
  * ******************************************************* */
 /*!
- * \brief The iterative biconjugate gradients solver with stabilization for unsymmetric nondefinite matrices
+ * \brief The iterative biconjugate gradients solver with stabilization for unsymmetric non-definite matrices
  *
  * The result is written to the vector L->x of the les.
  * This iterative solver works with sparse matrices and regular quadratic matrices.
@@ -165,6 +385,7 @@ int N_solver_cg(N_les * L, int maxit, double err)
  * \param L N_les *  -- the linear equatuin system
  * \param maxit int -- the maximum number of iterations
  * \param err double -- defines the error break criteria
+ * \return int -- 1 - success, 2 - not finisehd but success, 0 - matrix singular, -1 - could not solve the les
  * 
  * 
  * */
@@ -180,7 +401,13 @@ int N_solver_bicgstab(N_les * L, int maxit, double err)
     double s1 = 0.0, s2 = 0.0, s3 = 0.0;
     double alpha = 0, beta = 0, omega, rr0 = 0, error;
     int m, rows, i;
-    int finished = 0;
+    int finished = 2;
+
+    if (L->quad != 1) {
+	G_warning(_("The linear equation system is not quadratic"));
+	return -1;
+    }
+
 
     x = L->x;
     b = L->b;
@@ -195,9 +422,9 @@ int N_solver_bicgstab(N_les * L, int maxit, double err)
 #pragma omp parallel
     {
 	if (L->type == N_SPARSE_LES)
-	    sparse_matrix_vector_product(L, x, v);
+	    N_sparse_matrix_vector_product(L, x, v);
 	else
-	    matrix_vector_product(L, x, v);
+	    N_matrix_vector_product(L, x, v);
 	sub_vectors(b, v, r, rows);
 	sync_vectors(r, r0, rows);
 	sync_vectors(r, p, rows);
@@ -213,9 +440,9 @@ int N_solver_bicgstab(N_les * L, int maxit, double err)
 #pragma omp parallel default(shared)
 	{
 	    if (L->type == N_SPARSE_LES)
-		sparse_matrix_vector_product(L, p, v);
+		N_sparse_matrix_vector_product(L, p, v);
 	    else
-		matrix_vector_product(L, p, v);
+		N_matrix_vector_product(L, p, v);
 
 	    /* scalar product */
 #pragma omp for schedule (static) private(i) reduction(+:s1, s2, s3)
@@ -228,6 +455,15 @@ int N_solver_bicgstab(N_les * L, int maxit, double err)
 #pragma omp single
 	    {
 		error = s1;
+
+		if (error < 0 || error == 0 || error > 0) {
+		    ;
+		}
+		else {
+		    G_warning(_("unable to solve linear equation system"));
+		    return -1;
+		}
+
 		rr0 = s2;
 		alpha = rr0 / s3;
 		s1 = s2 = s3 = 0.0;
@@ -235,9 +471,9 @@ int N_solver_bicgstab(N_les * L, int maxit, double err)
 
 	    sub_vectors_scalar(r, v, s, alpha, rows);
 	    if (L->type == N_SPARSE_LES)
-		sparse_matrix_vector_product(L, s, t);
+		N_sparse_matrix_vector_product(L, s, t);
 	    else
-		matrix_vector_product(L, s, t);
+		N_matrix_vector_product(L, s, t);
 
 	    /* scalar product */
 #pragma omp for schedule (static) private(i) reduction(+:s1, s2)
@@ -294,9 +530,6 @@ int N_solver_bicgstab(N_les * L, int maxit, double err)
     return finished;
 }
 
-/* ******************************************************* *
- * ******************************************************* *
- * ******************************************************* */
 /*!
  * \brief Calculates the scalar product of vector a and b 
  *
@@ -323,9 +556,6 @@ void scalar_product(double *a, double *b, double *scalar, int rows)
     return;
 }
 
-/* ******************************************************* *
- * ******************************************************* *
- * ******************************************************* */
 /*!
  * \brief Calculates the matrix - vector product of matrix L->A and vector x 
  *
@@ -338,7 +568,7 @@ void scalar_product(double *a, double *b, double *scalar, int rows)
  * \return void
  *
  * */
-void matrix_vector_product(N_les * L, double *x, double *result)
+void N_matrix_vector_product(N_les * L, double *x, double *result)
 {
     int i, j;
     double tmp;
@@ -346,7 +576,7 @@ void matrix_vector_product(N_les * L, double *x, double *result)
 #pragma omp for schedule (static) private(i, j, tmp)
     for (i = 0; i < L->rows; i++) {
 	tmp = 0;
-	for (j = 0; j < L->rows; j++) {
+	for (j = 0; j < L->cols; j++) {
 	    tmp += L->A[i][j] * x[j];
 	}
 	result[i] = tmp;
@@ -354,9 +584,6 @@ void matrix_vector_product(N_les * L, double *x, double *result)
     return;
 }
 
-/* ******************************************************* *
- * ******************************************************* *
- * ******************************************************* */
 /*!
  * \brief Calculates the matrix - vector product of sparse matrix L->Asp and vector x 
  *
@@ -369,7 +596,7 @@ void matrix_vector_product(N_les * L, double *x, double *result)
  * \return void
  *
  * */
-void sparse_matrix_vector_product(N_les * L, double *x, double *result)
+void N_sparse_matrix_vector_product(N_les * L, double *x, double *result)
 {
     int i, j;
     double tmp;
@@ -385,9 +612,6 @@ void sparse_matrix_vector_product(N_les * L, double *x, double *result)
     return;
 }
 
-/* ******************************************************* *
- * ******************************************************* *
- * ******************************************************* */
 /*!
  * \brief Multipiles the vector a and b with the scalars scalar_a and scalar_b and adds them
  *
@@ -416,9 +640,6 @@ add_vectors_scalar2(double *a, double *b, double *result, double scalar_a,
     return;
 }
 
-/* ******************************************************* *
- * ******************************************************* *
- * ******************************************************* */
 /*!
  * \brief Multipiles the vector b with the scalar scalar_b and adds  a to b
  *
@@ -446,9 +667,6 @@ add_vectors_scalar(double *a, double *b, double *result, double scalar_b,
     return;
 }
 
-/* ******************************************************* *
- * ******************************************************* *
- * ******************************************************* */
 /*!
  * \brief Multipiles the vector b with the scalar scalar_b and substracts b from a
  *
@@ -476,9 +694,6 @@ sub_vectors_scalar(double *a, double *b, double *result, double scalar_b,
     return;
 }
 
-/* ******************************************************* *
- * ******************************************************* *
- * ******************************************************* */
 /*!
  * \brief Adds a to b
  *
@@ -503,12 +718,6 @@ void add_vectors(double *a, double *b, double *result, int rows)
     return;
 }
 
-/* ******************************************************* *
- * ******************************************************* *
- * ******************************************************* */
-/* ******************************************************* *
- * ******************************************************* *
- * ******************************************************* */
 /*!
  * \brief Substracts b from a 
  *
@@ -533,9 +742,6 @@ void sub_vectors(double *a, double *b, double *result, int rows)
     return;
 }
 
-/* ******************************************************* *
- * ******************************************************* *
- * ******************************************************* */
 /*!
  * \brief Multipiles the vector a with the scalar named scalar
  *
@@ -560,9 +766,6 @@ void scalar_vector_product(double *a, double *result, double scalar, int rows)
     return;
 }
 
-/* ******************************************************* *
- * ******************************************************* *
- * ******************************************************* */
 /*!
  * \brief Copies the source vector to the target vector
  *
@@ -581,5 +784,121 @@ void sync_vectors(double *source, double *target, int rows)
     }
 
     return;
+}
+
+/* ******************************************************* *
+ * ***** Check if matrix is symmetric ******************** *
+ * ******************************************************* */
+/*!
+ * \brief Check if the matrix in les is symmetric
+ *
+ * \param L N_les* -- the linear equation system
+ * \return int -- 1 = symmetric, 0 = unsymmetric
+ * 
+ * */
+
+int check_symmetry(N_les * L)
+{
+    int i, j, k;
+    double value1 = 0;
+    double value2 = 0;
+    int index;
+    int symm = 1;
+
+    if (L->quad != 1) {
+	G_warning(_("The linear equation system is not quadratic"));
+	return 0;
+    }
+
+    G_debug(2, "check_symmetry: Check if matrix is symmetric");
+
+    if (L->type == N_SPARSE_LES) {
+	for (i = 0; i < L->rows; i++) {
+	    for (j = 0; j < L->Asp[i]->cols; j++) {
+		value1 = 0;
+		value2 = 0;
+		index = 0;
+
+		index = L->Asp[i]->index[j];
+		value1 = L->Asp[i]->values[j];
+
+		for (k = 0; k < L->Asp[index]->cols; k++) {
+		    if (L->Asp[index]->index[k] == i) {
+			value2 = L->Asp[index]->values[k];
+			if ((value1 != value2)) {
+			    symm = 0;	/*matrix is unsymmetric */
+			    if (((fabs(value1) - fabs(value2)) >
+				 SYMM_TOLERANCE)) {
+				symm = 1;	/*matrix is unsymmetric, but within tolerance */
+				G_debug(5,
+					"check_symmetry: sparse matrix is unsymmetric, but within tolerance");
+			    }
+			    else
+				break;
+			}
+		    }
+		}
+	    }
+	}
+    }
+    else {
+	for (i = 0; i < L->rows; i++) {
+	    for (j = 0; j < L->rows; j++) {
+		if (L->A[i][j] != L->A[j][i]) {
+		    symm = 0;	/*matrix is unsymmetric */
+		    if (((fabs(L->A[i][j]) - fabs(L->A[j][i])) >
+			 SYMM_TOLERANCE)) {
+			symm = 1;	/*matrix is unsymmetric, but within tolerance */
+			G_debug(5,
+				"check_symmetry: matrix is unsymmetric, but within tolerance");
+		    }
+		    else
+			break;
+		}
+	    }
+	}
+    }
+
+    return symm;
+}
+
+
+/*!
+ * \brief Compute a diagonal preconditioning matrix for krylov space solver
+ *
+ * \param les N_les* 
+ * \return M N_les* -- the preconditioning matrix
+ *
+ * */
+N_les *N_create_diag_precond_matrix(N_les * L)
+{
+    N_les *L_new;
+    int rows = L->rows;
+    int i;
+
+    L_new = N_alloc_les_A(rows, N_SPARSE_LES);
+
+    if (L->type == N_NORMAL_LES) {
+#pragma omp parallel for schedule (static) private(i) shared(L_new, L, rows)
+	for (i = 0; i < rows; i++) {
+	    N_spvector *spvect = N_alloc_spvector(1);
+	    spvect->values[0] = L->A[i][i];
+	    spvect->index[0] = i;
+	    spvect->cols = 1;;
+	    N_add_spvector_to_les(L_new, spvect, i);
+
+	}
+    }
+    else {
+#pragma omp parallel for schedule (static) private(i) shared(L_new, L, rows)
+	for (i = 0; i < rows; i++) {
+	    N_spvector *spvect = N_alloc_spvector(1);
+	    spvect->values[0] = L->Asp[i]->values[0];
+	    spvect->index[0] = i;
+	    spvect->cols = 1;;
+	    N_add_spvector_to_les(L_new, spvect, i);
+	}
+    }
+    return L_new;
 }
 
