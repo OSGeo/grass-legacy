@@ -106,28 +106,40 @@ N_array_2d *N_read_rast_to_array_2d(char *name, N_array_2d * array)
 	for (x = 0, ptr = rast; x < cols;
 	     x++, ptr = G_incr_void_ptr(ptr, G_raster_size(type))) {
 	    if (type == CELL_TYPE) {
-		if (data->type == CELL_TYPE)
-		    N_put_array_2d_c_value(data, x, y, (CELL) * (CELL *) ptr);
-		if (data->type == FCELL_TYPE)
-		    N_put_array_2d_f_value(data, x, y, (FCELL) * (CELL *) ptr);
-		if (data->type == DCELL_TYPE)
-		    N_put_array_2d_d_value(data, x, y, (DCELL) * (CELL *) ptr);
+		if(G_is_c_null_value(ptr)) {
+		    N_put_array_2d_value_null(data, x, y);
+		} else {
+		    if (data->type == CELL_TYPE)
+		        N_put_array_2d_c_value(data, x, y, (CELL) * (CELL *) ptr);
+		    if (data->type == FCELL_TYPE)
+		        N_put_array_2d_f_value(data, x, y, (FCELL) * (CELL *) ptr);
+		    if (data->type == DCELL_TYPE)
+		        N_put_array_2d_d_value(data, x, y, (DCELL) * (CELL *) ptr);
+		}
 	    }
 	    if (type == FCELL_TYPE) {
-		if (data->type == CELL_TYPE)
-		    N_put_array_2d_c_value(data, x, y, (CELL) * (FCELL *) ptr);
-		if (data->type == FCELL_TYPE)
-		    N_put_array_2d_f_value(data, x, y, (FCELL) * (FCELL *) ptr);
-		if (data->type == DCELL_TYPE)
-		    N_put_array_2d_d_value(data, x, y, (DCELL) * (FCELL *) ptr);
+		if(G_is_f_null_value(ptr)) {
+		    N_put_array_2d_value_null(data, x, y);
+		} else {
+		    if (data->type == CELL_TYPE)
+		        N_put_array_2d_c_value(data, x, y, (CELL) * (FCELL *) ptr);
+		    if (data->type == FCELL_TYPE)
+		        N_put_array_2d_f_value(data, x, y, (FCELL) * (FCELL *) ptr);
+		    if (data->type == DCELL_TYPE)
+		        N_put_array_2d_d_value(data, x, y, (DCELL) * (FCELL *) ptr);
+		}
 	    }
 	    if (type == DCELL_TYPE) {
-		if (data->type == CELL_TYPE)
-		    N_put_array_2d_c_value(data, x, y, (CELL) * (DCELL *) ptr);
-		if (data->type == FCELL_TYPE)
-		    N_put_array_2d_f_value(data, x, y, (FCELL) * (DCELL *) ptr);
-		if (data->type == DCELL_TYPE)
-		    N_put_array_2d_d_value(data, x, y, (DCELL) * (DCELL *) ptr);
+		if(G_is_d_null_value(ptr)) {
+		    N_put_array_2d_value_null(data, x, y);
+		} else {
+		    if (data->type == CELL_TYPE)
+		        N_put_array_2d_c_value(data, x, y, (CELL) * (DCELL *) ptr);
+		    if (data->type == FCELL_TYPE)
+		        N_put_array_2d_f_value(data, x, y, (FCELL) * (DCELL *) ptr);
+		    if (data->type == DCELL_TYPE)
+		        N_put_array_2d_d_value(data, x, y, (DCELL) * (DCELL *) ptr);
+		}
 	    }
 	}
     }
@@ -322,17 +334,25 @@ N_array_3d *N_read_rast3d_to_array_3d(char *name, N_array_3d * array, int mask)
 	    for (x = 0; x < cols; x++) {
 		if (type == FCELL_TYPE) {
 		    G3d_getValue(map, x, y, z, &f1, type);
-		    if (data->type == FCELL_TYPE)
-			N_put_array_3d_f_value(data, x, y, z, f1);
-		    if (data->type == DCELL_TYPE)
-			N_put_array_3d_d_value(data, x, y, z, (double)f1);
+		    if(G_is_f_null_value((void*)&f1)) {
+		        N_put_array_3d_value_null(data, x, y, z);
+		    } else {
+		        if (data->type == FCELL_TYPE)
+			    N_put_array_3d_f_value(data, x, y, z, f1);
+		        if (data->type == DCELL_TYPE)
+			    N_put_array_3d_d_value(data, x, y, z, (double)f1);
+		    }
 		}
 		else {
 		    G3d_getValue(map, x, y, z, &d1, type);
-		    if (data->type == FCELL_TYPE)
-			N_put_array_3d_f_value(data, x, y, z, (float)d1);
-		    if (data->type == DCELL_TYPE)
-			N_put_array_3d_d_value(data, x, y, z, d1);
+		    if(G_is_d_null_value((void*)&d1)) {
+		        N_put_array_3d_value_null(data, x, y, z);
+		    } else {
+		        if (data->type == FCELL_TYPE)
+			    N_put_array_3d_f_value(data, x, y, z, (float)d1);
+		        if (data->type == DCELL_TYPE)
+			    N_put_array_3d_d_value(data, x, y, z, d1);
+		    }
 
 		}
 	    }

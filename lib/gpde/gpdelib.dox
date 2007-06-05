@@ -341,11 +341,11 @@ The following functions should be used to create and handle the N_data_star stru
 
 <p>
 Memory allocation<br>
-N_data_star *#N_alloc_5star();
+N_data_star *#N_alloc_5star(void);
 <p>
-N_data_star *#N_alloc_7star();
+N_data_star *#N_alloc_7star(void);
 <p>
-N_data_star *#N_alloc_9star();
+N_data_star *#N_alloc_9star(void);
 <p>
 Memory allocation with initialisation<br>
 N_data_star *#N_create_5star(double C, double W, double E, double N, double S, double V);
@@ -367,9 +367,9 @@ void #N_set_les_callback_2d_func(N_les_callback_2d * data, N_data_star * (*callb
 <p>
 Allocation the callback structure for 2d and 3d
 <p>
-N_les_callback_3d *#N_alloc_les_callback_3d();
+N_les_callback_3d *#N_alloc_les_callback_3d(void);
 <p>
-N_les_callback_2d *#N_alloc_les_callback_2d();
+N_les_callback_2d *#N_alloc_les_callback_2d(void);
 
 <p>
 Assemble the linear equation system in 2d or 3d
@@ -406,9 +406,11 @@ int #N_solver_lu (N_les * les);
 The iterative solvers work with regular quadartic and sparse matrices.
 <p>
 To solve symmetric and positive definite linear equation systems the iterative 
-conjugated gradient method is implemented.
+conjugated gradient method with additional diagonal preconditioning are implemented.
 
 int #N_solver_cg(N_les * les, int maxit, double error);
+<p>
+int #N_solver_pcg(N_les * les, int maxit, double error);
 
 <p>
 To solve unsymmetric non definite linear equation system the iterative BiCGSatb method is implemented
@@ -529,7 +531,7 @@ Use the follwoing functions to handle the geometric data structures:
 
 <p>
 Creating a N_geom_data structure<br>
-N_geom_data *#N_alloc_geom_data ();
+N_geom_data *#N_alloc_geom_data (void);
 <p>
 Releasing memory<br>
 void #N_free_geom_data (N_geom_data *geodata);
@@ -765,7 +767,7 @@ Use the following functions for allocation and data handling:
 <p>
 Functions to handle a 2d gradient
 <p>
-N_gradient_2d * #N_alloc_gradient_2d();
+N_gradient_2d * #N_alloc_gradient_2d(void);
 <p>
 void #N_free_gradient_2d(N_gradient_2d * grad);
 <p>
@@ -779,7 +781,7 @@ N_gradient_2d * #N_get_gradient_2d(N_gradient_field_2d *field, N_gradient_2d * g
 Functions to handle a 2d gradient
 <p>
 
-N_gradient_3d * #N_alloc_gradient_3d();
+N_gradient_3d * #N_alloc_gradient_3d(void);
 <p>
 void #N_free_gradient_3d(N_gradient_3d * grad);
 <p>
@@ -793,7 +795,7 @@ N_gradient_3d * #N_get_gradient_3d(N_gradient_field_3d *field, N_gradient_3d * g
 Functions to handle gradient neighbours in x direction of the center cell
 <p>
 
-N_gradient_neighbours_x  * #N_alloc_gradient_neighbours_x();
+N_gradient_neighbours_x  * #N_alloc_gradient_neighbours_x(void);
 <p>
 void #N_free_gradient_neighbours_x(N_gradient_neighbours_x  *grad);
 <p>
@@ -805,7 +807,7 @@ int #N_copy_gradient_neighbours_x(N_gradient_neighbours_x * source, N_gradient_n
 Functions to handle gradient neighbours in y direction of the center cell
 <p>
 
-N_gradient_neighbours_y  * #N_alloc_gradient_neighbours_y();
+N_gradient_neighbours_y  * #N_alloc_gradient_neighbours_y(void);
 <p>
 void #N_free_gradient_neighbours_y(N_gradient_neighbours_y *grad);
 <p>
@@ -817,7 +819,7 @@ int #N_copy_gradient_neighbours_y(N_gradient_neighbours_y * source, N_gradient_n
 Functions to handle gradient neighbours in z direction of the center cell
 <p>
 
-N_gradient_neighbours_z  * #N_alloc_gradient_neighbours_z();
+N_gradient_neighbours_z  * #N_alloc_gradient_neighbours_z(void);
 <p>
 void #N_free_gradient_neighbours_z(N_gradient_neighbours_z  *grad);
 <p>
@@ -830,7 +832,7 @@ int #N_copy_gradient_neighbours_z(N_gradient_neighbours_z * source, N_gradient_n
 Functions to handle a 2d gradient neighbour structure of the center cell
 <p>
 
-N_gradient_neighbours_2d * #N_alloc_gradient_neighbours_2d();
+N_gradient_neighbours_2d * #N_alloc_gradient_neighbours_2d(void);
 <p>
 void #N_free_gradient_neighbours_2d(N_gradient_neighbours_2d *grad);
 <p>
@@ -842,7 +844,7 @@ int #N_copy_gradient_neighbours_2d(N_gradient_neighbours_2d *source, N_gradient_
 <p>
 Functions to handle a 2d gradient neighbour structure of the center cell
 <p>
-N_gradient_neighbours_3d * #N_alloc_gradient_neighbours_3d();
+N_gradient_neighbours_3d * #N_alloc_gradient_neighbours_3d(void);
 <p>
 void #N_free_gradient_neighbours_3d(N_gradient_neighbours_3d *grad);
 <p>
